@@ -48,7 +48,7 @@ These rules are non-negotiable. Violating them causes state drift and broken dep
 
 ## Git
 
-- Working branch: `DEV`. Production: `main`.
+- Working branch: `CLOUD`. Portal submodule uses `DEV`/`PROD`.
 - Terraform binary: `.tools/terraform.exe`
 - On Git Bash: `export MSYS_NO_PATHCONV=1` before importing resources with `/` paths.
 
