@@ -36,6 +36,7 @@ Validation of architectural frameworks and resource allocation across the organi
 - Write task orders for any Tier 2 agent
 - Read any file in the codebase
 - Commit non-infrastructure files: session logs, docs
+- **Initiate and operate agent conversation threads** — create threads between select agents, configure context injection, and run the orchestrator end-to-end (`org/threads/create-thread.sh` + `org/threads/orchestrator.sh`). See `org/threads/README.md` for the full protocol.
 
 ### CANNOT DO
 - Deploy AWS resources (DT/AE responsibility)

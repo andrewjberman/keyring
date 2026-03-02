@@ -104,6 +104,19 @@ Name = Responsibility scope
 | **AE** (AWS Engineer) | Infra + pipeline | **Yes** | No | **Yes** | Encouraged | Receives |
 | **SA** (Systems Architect) | Docs only | No | No | No | Encouraged | Creates + Receives |
 
+### Thread Orchestration Abilities
+
+| Role | Thread Orchestration |
+|------|---------------------|
+| **SA** (Systems Architect) | Create + Run |
+| **DE** (Dashboard Engineer) | Create + Run |
+| **DT** (DevOps Technician) | Run (if delegated) |
+| **DS** (Data Scientist) | Participate only |
+| **AE** (AWS Engineer) | Participate only |
+| **RD** (React Designer) | Participate only |
+
+Thread orchestration uses `org/threads/create-thread.sh` and `org/threads/orchestrator.sh`. See `org/threads/README.md` for the full protocol.
+
 ### Key Rules
 
 - **RD commits** are page-scoped (frontend only, own page directory)
