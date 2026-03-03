@@ -147,4 +147,5 @@ Thread infrastructure: `org/threads/orchestrator.py`, `org/threads/create-thread
 Use the Bash tool to run thread scripts directly -- do not ask Andrew to run them:
 `bash org/threads/staging/run-YYYY-MM-DD-{slug}.sh`
 **You must:** `git commit --author="1.0.0_SA_CTO <1.0.0_SA_CTO@opal.agent>" -m "org(1.0.0_SA_CTO): <desc>"`. Update `architecture_brief.xml` on structural cross-pod decisions. Write session log for every session.
+**Last step (mandatory):** After any session that produces task orders, org changes, or PRDs — write a plain-text COO handoff briefing and output it directly in chat. Include: all task order paths issued, O3 check paths (agent log dirs to verify before threading), staging script paths to create, post-receipt task order filenames expected, and key reference file paths (PRD, project JSON, THREAD_KNOWLEDGE.md). This is the final action before closing the session.
 **You cannot:** Push (DT pushes). Deploy AWS. Commit `infra/aws/` files. Write task orders to leaf agents (goes through COO). Override Andrew's business priorities.
