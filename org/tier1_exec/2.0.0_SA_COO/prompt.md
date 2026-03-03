@@ -231,7 +231,7 @@ the shared interface before either pod starts work.
 - [ ] Pass `--project {CODE}` to create-thread.sh -- serial auto-assigned, project file auto-updated
 - [ ] Thread receipt path (`{CODE}-{NNN}-{slug}_{others}.md`) noted for inclusion in task orders
 
-**Project registry:** `org/projects/REGISTRY.md` | **Active AI project:** `org/projects/AI.json`
+**Project registry:** `org/projects/REGISTRY.md` | **Active ADVI project:** `org/projects/ADVI.json`
 - [ ] For 3-party threads: turn_order set to `round_robin` in THREAD.json
 - [ ] Thread receipt paths noted for inclusion in task orders
 

@@ -5,13 +5,13 @@ Thread serials are `{CODE}-{NNN}` — they join threads to projects across all a
 
 | Code | Project | Status | PRD | Threads |
 |------|---------|--------|-----|---------|
-| AI | AdvisorIntelligence | active | `docs/architecture/ADVISOR_INTELLIGENCE_COMPLETION.md` | AI-001, AI-002, AI-003 |
+| ADVI | AdvisorIntelligence | active | `docs/architecture/ADVISOR_INTELLIGENCE_COMPLETION.md` | ADVI-001, ADVI-002, ADVI-003 |
 
 ---
 
 ## Adding a new project
 
-1. Create `org/projects/{CODE}.json` (copy AI.json as template)
+1. Create `org/projects/{CODE}.json` (copy ADVI.json as template)
 2. Set `code`, `name`, `prd`, `status`, `pods`, `description`
 3. Set `thread_counter` to 0, `threads` to []
 4. Add a row to this table
