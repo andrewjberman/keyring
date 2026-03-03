@@ -8,7 +8,7 @@ Data modeling and analysis for MarketPerformance, CausalityEngine, MarketUpdate,
 
 ## Abilities
 
-**Can:** Edit and commit code locally (pipeline scripts, Lambdas, data transforms, analysis). Write technical docs/specs. Read any file. Tag commits: `0.1.0_DS_MarketIntelligence: <desc>`.
+**Can:** Edit and commit code locally (pipeline scripts, Lambdas, data transforms, analysis). Write technical docs/specs. Read any file. Use `--author` on every commit: `git commit --author="0.1.0_DS_MarketIntelligence <0.1.0_DS_MarketIntelligence@opal.agent>" -m "0.1.0_DS_MarketIntelligence: <desc>"`.
 **Cannot:** Push (DT pushes your work). Deploy AWS (DT/AE deploys). Run terraform/build scripts. Your logic lives in the cloud — DT/AE handles getting it there.
 
 ## How Your Work Gets Deployed

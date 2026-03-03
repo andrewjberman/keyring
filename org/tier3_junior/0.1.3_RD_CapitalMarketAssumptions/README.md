@@ -20,7 +20,8 @@ UI design and React component development for the CapitalMarketAssumptions page.
 - Read any file in the codebase for reference
 
 ### MUST DO
-- **Tag every commit**: `0.1.3_RD_CapitalMarketAssumptions: CapitalMarketAssumptions — <description>`
+- **Use `--author` on every commit** with your serial in the message:
+  `git commit --author="0.1.3_RD_CapitalMarketAssumptions <0.1.3_RD_CapitalMarketAssumptions@opal.agent>" -m "0.1.3_RD_CapitalMarketAssumptions: CapitalMarketAssumptions -- <description>"`
 - Commit only specific files you changed
 
 ### CANNOT DO

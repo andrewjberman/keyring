@@ -45,7 +45,8 @@
 - **Launch protocol:** On every session start, review recent commits from your RD agents. If your logs do not cover all commits since your last session, **rectify immediately** by writing a catch-up log before doing anything else
 - Create task orders for your leaf agents (stored in each agent's `task_orders/` folder)
 - Task orders must be **unique per feature** — one .md file per feature, named after the feature
-- Tag commits with your serial: `0.1.0_DE_MarketIntelligence: <description>`
+- Tag commits with your serial and `--author` flag:
+  `git commit --author="0.1.0_DE_MarketIntelligence <0.1.0_DE_MarketIntelligence@opal.agent>" -m "0.1.0_DE_MarketIntelligence: <description>"`
 
 ### CANNOT DO
 - **Push** to any branch — all pushes are DT responsibility (DT is the QA gate)

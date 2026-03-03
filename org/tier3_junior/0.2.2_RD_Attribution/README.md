@@ -20,7 +20,8 @@ UI design and React component development for the Attribution page.
 - Read any file in the codebase for reference
 
 ### MUST DO
-- **Tag every commit**: `0.2.2_RD_Attribution: Attribution — <description>`
+- **Use `--author` on every commit** with your serial in the message:
+  `git commit --author="0.2.2_RD_Attribution <0.2.2_RD_Attribution@opal.agent>" -m "0.2.2_RD_Attribution: Attribution -- <description>"`
 - Commit only specific files you changed
 
 ### CANNOT DO

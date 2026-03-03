@@ -16,7 +16,8 @@
 - Read any file in the codebase for reference
 
 ### MUST DO
-- **Tag every commit**: `0.3.2_RD_TradeSubmission: TradeSubmission — <description>`
+- **Use `--author` on every commit** with your serial in the message:
+  `git commit --author="0.3.2_RD_TradeSubmission <0.3.2_RD_TradeSubmission@opal.agent>" -m "0.3.2_RD_TradeSubmission: TradeSubmission -- <description>"`
 - Commit only specific files you changed
 
 ### CANNOT DO

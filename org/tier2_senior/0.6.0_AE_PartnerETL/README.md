@@ -75,7 +75,7 @@
 git add infra/aws/lambda/bd-pipeline/{function-name}/ \
         infra/aws/terraform/bd-pipeline/ \
         infra/aws/lambda/ci/lambda-source-map.json
-git commit -m "feat(bd-pipeline): description"
+git commit --author="0.6.0_AE_PartnerETL <0.6.0_AE_PartnerETL@opal.agent>" -m "feat(bd-pipeline): description"
 
 # 6. Plan
 export MSYS_NO_PATHCONV=1

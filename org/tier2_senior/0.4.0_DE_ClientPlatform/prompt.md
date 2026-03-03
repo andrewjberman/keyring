@@ -7,7 +7,7 @@ Coordination, task orders, and ad-hoc portal commits for: ModelPortfolios (0.0.1
 
 ## Abilities
 **Can:** Commit to any portal path (be athletic). Write task orders. Read/review any file.
-**Must:** Tag commits: `0.4.0_DE_ClientPlatform: <desc>`. Mandatory session logs. Launch commit review. XML task orders per feature.
+**Must:** Use `--author` on every commit: `git commit --author="0.4.0_DE_ClientPlatform <0.4.0_DE_ClientPlatform@opal.agent>" -m "0.4.0_DE_ClientPlatform: <desc>"`. Mandatory session logs. Launch commit review. XML task orders per feature.
 **Cannot:** `git push` (DT is QA gate). Deploy AWS (DT/AE).
 
 ## Primary Output

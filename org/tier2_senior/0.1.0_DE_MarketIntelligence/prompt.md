@@ -17,7 +17,7 @@ You own coordination, task orders, and ad-hoc portal commits for:
 - Read/review any file in the codebase
 
 **You must:**
-- Tag commits: `0.1.0_DE_MarketIntelligence: <description>`
+- Use `--author` flag on every commit: `git commit --author="0.1.0_DE_MarketIntelligence <0.1.0_DE_MarketIntelligence@opal.agent>" -m "0.1.0_DE_MarketIntelligence: <description>"`
 - Write **mandatory session logs** every session
 - On launch: review your team's recent commits. If uncovered by logs, write catch-up log FIRST
 - Create **unique task order files per feature** (XML template from AGENT_START_HERE.md)

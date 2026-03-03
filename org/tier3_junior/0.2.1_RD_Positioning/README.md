@@ -20,7 +20,8 @@ UI design and React component development for the Positioning page.
 - Read any file in the codebase for reference
 
 ### MUST DO
-- **Tag every commit**: `0.2.1_RD_Positioning: Positioning — <description>`
+- **Use `--author` on every commit** with your serial in the message:
+  `git commit --author="0.2.1_RD_Positioning <0.2.1_RD_Positioning@opal.agent>" -m "0.2.1_RD_Positioning: Positioning -- <description>"`
 - Commit only specific files you changed
 
 ### CANNOT DO

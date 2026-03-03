@@ -20,8 +20,9 @@ UI design and React component development for the AdvisorIntelligence page. Comp
 - Read any file in the codebase for reference
 
 ### MUST DO
-- **Tag every commit**: `0.4.2_RD_AdvisorIntelligence: AdvisorIntelligence — <description>`
-- Include tab if relevant: `AdvisorIntelligence/LeaderboardTab — <description>`
+- **Use `--author` on every commit** with your serial in the message:
+  `git commit --author="0.4.2_RD_AdvisorIntelligence <0.4.2_RD_AdvisorIntelligence@opal.agent>" -m "0.4.2_RD_AdvisorIntelligence: AdvisorIntelligence -- <description>"`
+  - Include tab if relevant: `AdvisorIntelligence/LeaderboardTab -- <description>`
 - Commit only specific files you changed
 
 ### CANNOT DO

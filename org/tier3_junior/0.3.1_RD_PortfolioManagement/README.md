@@ -20,8 +20,9 @@ UI design and React component development for the PortfolioManagement page. This
 - Read any file in the codebase for reference
 
 ### MUST DO
-- **Tag every commit**: `0.3.1_RD_PortfolioManagement: PortfolioManagement — <description>`
-- Include tab if relevant: `PortfolioManagement/TradeTab — <description>`
+- **Use `--author` on every commit** with your serial in the message:
+  `git commit --author="0.3.1_RD_PortfolioManagement <0.3.1_RD_PortfolioManagement@opal.agent>" -m "0.3.1_RD_PortfolioManagement: PortfolioManagement -- <description>"`
+  - Include tab if relevant: `PortfolioManagement/TradeTab -- <description>`
 - Commit only specific files you changed
 
 ### CANNOT DO

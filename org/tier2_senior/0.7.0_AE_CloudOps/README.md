@@ -74,7 +74,7 @@
 
 # 2. Commit BEFORE applying
 git add infra/aws/terraform/{module}/
-git commit -m "infra(cloudops): description"
+git commit --author="0.7.0_AE_CloudOps <0.7.0_AE_CloudOps@opal.agent>" -m "infra(cloudops): description"
 
 # 3. Plan
 export MSYS_NO_PATHCONV=1

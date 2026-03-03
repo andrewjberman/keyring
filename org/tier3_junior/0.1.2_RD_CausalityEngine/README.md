@@ -21,9 +21,9 @@ UI design and React component development for the CausalityEngine and MarketUpda
 - Read any file in the codebase for reference
 
 ### MUST DO
-- **Tag every commit** with your agent serial: `0.1.2_RD_CausalityEngine: <page> — <description>`
-  - Example: `0.1.2_RD_CausalityEngine: CausalityEngine — add causal graph visualization`
-  - Example: `0.1.2_RD_CausalityEngine: MarketUpdate — fix news card layout`
+- **Use `--author` on every commit** with your serial in the message:
+  `git commit --author="0.1.2_RD_CausalityEngine <0.1.2_RD_CausalityEngine@opal.agent>" -m "0.1.2_RD_CausalityEngine: CausalityEngine -- <description>"`
+  - For MarketUpdate page: `0.1.2_RD_CausalityEngine: MarketUpdate -- <description>`
 - Commit only specific files you changed (no `git add .`)
 
 ### CANNOT DO

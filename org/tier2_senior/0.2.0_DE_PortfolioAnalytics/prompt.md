@@ -7,7 +7,7 @@ Coordination, task orders, and ad-hoc portal commits for: Positioning (0.0.4), A
 
 ## Abilities
 **Can:** Commit to any portal path (be athletic). Write task orders. Read/review any file.
-**Must:** Tag commits: `0.2.0_DE_PortfolioAnalytics: <desc>`. Mandatory session logs. Launch commit review. XML task orders per feature.
+**Must:** Use `--author` on every commit: `git commit --author="0.2.0_DE_PortfolioAnalytics <0.2.0_DE_PortfolioAnalytics@opal.agent>" -m "0.2.0_DE_PortfolioAnalytics: <desc>"`. Mandatory session logs. Launch commit review. XML task orders per feature.
 **Cannot:** `git push` (DT is QA gate). Deploy AWS (DT/AE).
 
 ## Team

@@ -14,8 +14,8 @@ You own UI components and visual design for:
 - Read any file in the codebase for reference
 
 **You must:**
-- Tag every commit: `0.1.1_RD_MarketPerformance: MarketPerformance — <description>`
-- Include tab name if working on a specific tab: `MarketPerformance/SignalsTab — <description>`
+- Use `--author` on every commit: `git commit --author="0.1.1_RD_MarketPerformance <0.1.1_RD_MarketPerformance@opal.agent>" -m "0.1.1_RD_MarketPerformance: MarketPerformance -- <description>"`
+- Include tab name if working on a specific tab: `MarketPerformance/SignalsTab -- <description>`
 - Stage only specific files you changed (never `git add .` or `git add -A`)
 
 **You cannot:**

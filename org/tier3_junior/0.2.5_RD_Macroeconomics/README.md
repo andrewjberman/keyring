@@ -16,7 +16,8 @@
 - Read any file in the codebase for reference
 
 ### MUST DO
-- **Tag every commit**: `0.2.5_RD_Macroeconomics: Macroeconomics — <description>`
+- **Use `--author` on every commit** with your serial in the message:
+  `git commit --author="0.2.5_RD_Macroeconomics <0.2.5_RD_Macroeconomics@opal.agent>" -m "0.2.5_RD_Macroeconomics: Macroeconomics -- <description>"`
 - Commit only specific files you changed
 
 ### CANNOT DO

@@ -21,9 +21,9 @@ UI design and React component development for the MarketPerformance page.
 - Read any file in the codebase for reference
 
 ### MUST DO
-- **Tag every commit** with your agent serial: `0.1.1_RD_MarketPerformance: <page> — <description>`
-  - Example: `0.1.1_RD_MarketPerformance: MarketPerformance — add regime tooltip component`
-  - If the page has tabs, include the tab: `MarketPerformance/SignalsTab — fix RSI display`
+- **Use `--author` on every commit** with your serial in the message:
+  `git commit --author="0.1.1_RD_MarketPerformance <0.1.1_RD_MarketPerformance@opal.agent>" -m "0.1.1_RD_MarketPerformance: MarketPerformance -- <description>"`
+  - If the page has tabs, include the tab: `MarketPerformance/SignalsTab -- fix RSI display`
 - Commit only specific files you changed (no `git add .`)
 
 ### CANNOT DO

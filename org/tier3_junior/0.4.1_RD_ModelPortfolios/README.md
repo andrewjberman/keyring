@@ -16,7 +16,8 @@
 - Read any file in the codebase for reference
 
 ### MUST DO
-- **Tag every commit**: `0.4.1_RD_ModelPortfolios: ModelPortfolios — <description>`
+- **Use `--author` on every commit** with your serial in the message:
+  `git commit --author="0.4.1_RD_ModelPortfolios <0.4.1_RD_ModelPortfolios@opal.agent>" -m "0.4.1_RD_ModelPortfolios: ModelPortfolios -- <description>"`
 - Commit only specific files you changed
 
 ### CANNOT DO

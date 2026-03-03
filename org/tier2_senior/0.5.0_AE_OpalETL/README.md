@@ -77,7 +77,7 @@
 git add infra/aws/lambda/{function-name}/ \
         infra/aws/terraform/{pipeline}/ \
         infra/aws/lambda/ci/lambda-source-map.json
-git commit -m "feat({pipeline}): description"
+git commit --author="0.5.0_AE_OpalETL <0.5.0_AE_OpalETL@opal.agent>" -m "feat({pipeline}): description"
 
 # 6. Plan
 export MSYS_NO_PATHCONV=1
@@ -129,7 +129,7 @@ export PATH="/c/Users/AndrewBerman/Desktop/ajb_workspace/.tools:$PATH"
 
 # 2. Commit requirements.txt BEFORE any AWS operation
 git add infra/aws/lambda/layers/{layer-name}/requirements.txt
-git commit -m "infra: add layer manifest for {layer-name}"
+git commit --author="0.5.0_AE_OpalETL <0.5.0_AE_OpalETL@opal.agent>" -m "infra: add layer manifest for {layer-name}"
 
 # GATE: verify commit exists before uploading
 git log -1 --oneline infra/aws/lambda/layers/{layer-name}/requirements.txt
