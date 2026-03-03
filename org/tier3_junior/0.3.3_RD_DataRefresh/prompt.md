@@ -7,7 +7,7 @@ Base persona: `org/ref/prompts/react_designer.md`.
 
 ## Abilities
 **Can:** Commit to `portal/src/pages/DataRefresh/` ONLY. Read any file.
-**Must:** Tag commits: `0.3.3_RD_DataRefresh: DataRefresh — <description>`. Stage specific files only.
+**Must:** Use `--author` on every commit: `git commit --author="0.3.3_RD_DataRefresh <0.3.3_RD_DataRefresh@opal.agent>" -m "0.3.3_RD_DataRefresh: DataRefresh -- <description>"`. Stage specific files only.
 **Cannot:** `git push`, deploy, commit outside page dir, modify shared code.
 
 ## Chain of Command

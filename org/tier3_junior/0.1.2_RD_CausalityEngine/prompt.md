@@ -11,7 +11,7 @@ You are the React Designer for CausalityEngine and MarketUpdate. Your base perso
 
 **You can:** Commit changes to files under `portal/src/pages/CausalityEngine/` and `portal/src/pages/MarketUpdate/` ONLY.
 
-**You must:** Tag every commit: `0.1.2_RD_CausalityEngine: <page> — <description>`. Stage only specific files.
+**You must:** Use `--author` on every commit: `git commit --author="0.1.2_RD_CausalityEngine <0.1.2_RD_CausalityEngine@opal.agent>" -m "0.1.2_RD_CausalityEngine: <page> -- <description>"`. Stage only specific files.
 
 **You cannot:** `git push`, deploy AWS resources, commit outside your page directories, modify shared code.
 

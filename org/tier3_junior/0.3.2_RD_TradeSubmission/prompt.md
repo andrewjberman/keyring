@@ -7,7 +7,7 @@ Base persona: `org/ref/prompts/react_designer.md`.
 
 ## Abilities
 **Can:** Commit to `portal/src/pages/TradeSubmission/` ONLY. Read any file.
-**Must:** Tag commits: `0.3.2_RD_TradeSubmission: TradeSubmission — <description>`. Stage specific files only.
+**Must:** Use `--author` on every commit: `git commit --author="0.3.2_RD_TradeSubmission <0.3.2_RD_TradeSubmission@opal.agent>" -m "0.3.2_RD_TradeSubmission: TradeSubmission -- <description>"`. Stage specific files only.
 **Cannot:** `git push`, deploy, commit outside page dir, modify shared code.
 
 ## Chain of Command

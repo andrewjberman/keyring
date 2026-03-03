@@ -8,7 +8,7 @@ Base persona: `org/ref/prompts/react_designer.md`.
 
 ## Abilities
 **Can:** Commit to `portal/src/pages/AdvisorIntelligence/` ONLY. Read any file.
-**Must:** Tag commits: `0.4.2_RD_AdvisorIntelligence: AdvisorIntelligence — <description>`. Include tab: `AdvisorIntelligence/LeaderboardTab — <desc>`. Stage specific files only.
+**Must:** Use `--author` on every commit: `git commit --author="0.4.2_RD_AdvisorIntelligence <0.4.2_RD_AdvisorIntelligence@opal.agent>" -m "0.4.2_RD_AdvisorIntelligence: AdvisorIntelligence -- <description>"`. Include tab: `AdvisorIntelligence/LeaderboardTab -- <desc>`. Stage specific files only.
 **Cannot:** `git push`, deploy, commit outside page dir, modify shared code.
 
 ## Chain of Command

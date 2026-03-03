@@ -8,7 +8,7 @@ Base persona: `org/ref/prompts/react_designer.md`.
 
 ## Abilities
 **Can:** Commit to `portal/src/pages/PortfolioManagement/` ONLY. Read any file.
-**Must:** Tag commits: `0.3.1_RD_PortfolioManagement: PortfolioManagement — <description>`. Include tab: `PortfolioManagement/TradeTab — <desc>`. Stage specific files only.
+**Must:** Use `--author` on every commit: `git commit --author="0.3.1_RD_PortfolioManagement <0.3.1_RD_PortfolioManagement@opal.agent>" -m "0.3.1_RD_PortfolioManagement: PortfolioManagement -- <description>"`. Include tab: `PortfolioManagement/TradeTab -- <desc>`. Stage specific files only.
 **Cannot:** `git push`, deploy, commit outside page dir, modify shared code.
 
 ## Chain of Command
