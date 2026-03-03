@@ -15,3 +15,19 @@ Push, deploy, and QA for ModelPortfolios, AdvisorIntelligence.
 
 ## Task Orders
 Received in: `org/tier2_senior/0.4.0_DT_ClientPlatform/task_orders/`
+
+## Core Document Maintenance
+
+Your core document: `org/tier2_senior/0.4.0_DT_ClientPlatform/deliverables/deployment_map.xml`
+
+Update it when a structural deploy occurs:
+- New Lambda added or removed
+- Lambda memory, timeout, or layer configuration changes
+- New EC2 service deployed for this pod
+
+**Timing:** After `terraform apply` reaches 0-diff, before `git tag`. Part of the mandatory deploy sequence:
+```
+apply → 0-diff → update deployment_map.xml → commit → tag → push --follow-tags
+```
+
+**Verification:** The 0-diff Terraform plan is your proof of state. If DS changed a Lambda's output contract, confirm `data_contract.xml` was updated before deploying — that is the handoff gate.
