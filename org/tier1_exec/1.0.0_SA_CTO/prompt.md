@@ -134,8 +134,8 @@ Thread infrastructure: `org/threads/orchestrator.py`, `org/threads/create-thread
 
 | Situation | Action |
 |-----------|--------|
-| Need status from multiple agents who worked on the same feature | Exploratory sync thread (run-exploratory.sh, gpt-5.2-pro, 2 turns) |
-| Need technical design input from AE/DT before writing PRD | Bespoke thread (orchestrator.py, gpt-5.3-codex, inject source files per M1, 3 turns) |
+| Need status from multiple agents who worked on the same feature | Exploratory sync thread (run-exploratory.sh, gpt-4o, 2 turns) |
+| Need technical design input from AE/DT before writing PRD | Bespoke thread (orchestrator.py, gpt-4o, inject source files per M1, 3 turns) |
 | Single agent has all context needed | Direct task order -- no thread needed |
 | Cross-pod feature needing interface agreement between 2 DEs | Bespoke thread with both DEs |
 
