@@ -161,7 +161,7 @@ replaces vague PRD descriptions with specific agreements:
 
 **Participants:** DS + DE + RD (3-party, round-robin)
 **Script:** Bespoke via Claude Code -> `org/threads/staging/run-{slug}.sh`
-**Model:** gpt-4o | **Max turns:** 3 | **Turn order:** round_robin | **Tools:** ENABLED
+**Model:** gpt-5.3-codex | **Max turns:** 3 | **Turn order:** round_robin | **Tools:** ENABLED
 **CONTEXT.json MUST include (M1):**
   - PRD section being discussed (inline note or doc reference)
   - Current TypeScript types file (`types.ts`) for the relevant page
@@ -190,7 +190,7 @@ what's in-flight, what's blocked. Run this BEFORE Pattern 0 threads if agents
 have been working since the last COO session.
 **Participants:** Pod DE + Pod DT (2-party)
 **Script:** `./org/threads/run-exploratory.sh {DE_serial} {DT_serial}`
-**Model:** gpt-4o-mini | **Max turns:** 2 | **Tools:** disabled
+**Model:** gpt-5.2-pro | **Max turns:** 2 | **Tools:** disabled
 **Prerequisite:** Both agents must have recent session logs (O3 risk if not).
 **Output:** Thread receipts -> COO knows exact state before issuing anything.
 
@@ -202,7 +202,7 @@ have been working since the last COO session.
 written. AE/DT answering specific infrastructure questions.
 **Participants:** DS + AE or DT (2-party, knowledge source vs receiver)
 **Script:** Bespoke via Claude Code
-**Model:** gpt-4o | **Max turns:** 3 | **Tools:** ENABLED for AE/DT
+**Model:** gpt-5.3-codex | **Max turns:** 3 | **Tools:** ENABLED for AE/DT
 **CONTEXT.json MUST include (M1):** Lambda source, Terraform files, endpoint contract
 **Opening message MUST include (M2):** DS pushback instruction on unanchored answers.
 **Output:** Grounded technical answers -> feeds CTO's PRD, not task orders directly.
@@ -215,7 +215,7 @@ written. AE/DT answering specific infrastructure questions.
 the shared interface before either pod starts work.
 **Participants:** Both pod DEs (+ CTO in thread if needed, or CTO reviews receipt)
 **Script:** Bespoke via Claude Code
-**Model:** gpt-4o | **Max turns:** 3
+**Model:** gpt-5.2-pro | **Max turns:** 3
 **CONTEXT.json:** CTO's cross-pod spec, both pods' pod_inventory.xml
 **Output:** Agreed interface contract -> COO issues task orders to both pods referencing it.
 
