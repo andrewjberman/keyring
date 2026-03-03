@@ -126,10 +126,11 @@ After alignment threads complete, write task orders with:
 </dependencies>
 ```
 
-**Step 4 — Store task orders:**
+**Step 4 — Store task orders (as drafts):**
 `org/{tier}/{serial}/task_orders/{CODE}-{NNN}-{feature_slug}.md` (project thread)
 `org/{tier}/{serial}/task_orders/{feature_slug}.md` (ad-hoc)
-One file per feature per agent. Reference PRD and thread receipt in every task order:
+One file per feature per agent. Reference PRD and thread receipt in every task order.
+Write with `<status>draft</status>` in XML metadata — do NOT commit yet.
 ```xml
 <references>
   <ref type="prd">docs/architecture/{feature}.md</ref>
@@ -137,13 +138,30 @@ One file per feature per agent. Reference PRD and thread receipt in every task o
 </references>
 ```
 
+**Step 4.5 — Pattern R: CTO task order review (mandatory before commit):**
+After writing all draft task orders for a thread batch, generate and run a Pattern R
+review thread using `org/threads/staging/REVIEW_TEMPLATE.sh`. Inject:
+  - All draft task order files
+  - The thread receipt(s) they were derived from
+  - Source files cited as data sources in the task orders
+  - PRD section for the streams being reviewed
+
+CTO reads drafts + source files with full tool access. Outputs corrections or APPROVED.
+The review thread is the permanent record — it replaces the manual CTO chat review step.
+
+After CTO review thread completes:
+  - Apply all corrections from CTO review receipt
+  - Update `<status>` from `draft` to `pending` in each task order XML
+  - Commit all task orders in a single commit
+
 **Step 5 — Track and unblock:**
 Monitor `<status>` fields. When a blocker surfaces, flag to CTO if it requires
 architecture re-design. Resolve operationally if it's a scheduling or resource issue.
 
 ## Thread Orchestration Playbook
 
-Before creating any thread: read `org/threads/THREAD_KNOWLEDGE.md` (mandates M1-M7).
+Before creating any thread: read `org/threads/THREAD_KNOWLEDGE.md` (mandates M1-M11 + Pattern R).
+Pattern R (CTO review) template: `org/threads/staging/REVIEW_TEMPLATE.sh`
 
 ---
 
