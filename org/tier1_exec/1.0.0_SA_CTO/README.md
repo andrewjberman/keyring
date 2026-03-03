@@ -35,7 +35,7 @@ Strategy and framework design for the entire Opal Capital portal product. Owns a
 - Read any file in the codebase to inform designs
 - Write task orders for any Tier 2 agent
 - Commit non-infrastructure files: session logs, docs in `docs/architecture/`
-- **Initiate and operate agent conversation threads** — create threads between select agents, configure context injection, and run the orchestrator end-to-end (`org/threads/create-thread.sh` + `org/threads/orchestrator.sh`). See `org/threads/README.md` for the full protocol.
+- **Initiate and operate agent conversation threads** — create threads between select agents, configure context injection, and run the orchestrator end-to-end. See `org/threads/README.md` for protocol and **`org/threads/THREAD_KNOWLEDGE.md` for mandatory best practices** (must read before creating any thread).
 
 ### CANNOT DO
 - Deploy AWS resources (DT/AE responsibility)

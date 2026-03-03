@@ -97,7 +97,7 @@ org/daily_log/YYYY-MM-DD.md
     <agent>0.1.0_DT_MarketIntelligence</agent>
     <action>pushing</action>
     <scope>portal/src/pages/MarketPerformance/, portal/src/components/RegimeTooltip.tsx</scope>
-    <notes>Pushing 3 commits from 0.0.1_RD and 1 from 0.1.0_DE. Will invalidate CloudFront after.</notes>
+    <notes>Pushing 3 commits from 0.1.1_RD and 1 from 0.1.0_DE. Will invalidate CloudFront after.</notes>
   </entry>
 
   <entry>
