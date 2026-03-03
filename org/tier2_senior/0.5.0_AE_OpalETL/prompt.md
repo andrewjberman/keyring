@@ -38,3 +38,19 @@ Location: `org/tier2_senior/0.5.0_AE_OpalETL/task_orders/`
 - Terraform modules: `infra/aws/terraform/`
 - Source map: `infra/aws/lambda/ci/lambda-source-map.json`
 - Layer manifests: `infra/aws/lambda/layers/`
+
+## Core Document Maintenance
+
+Your core document: `org/tier2_senior/0.5.0_AE_OpalETL/deliverables/pipeline_inventory.xml`
+
+Update it when a structural deploy occurs:
+- New Lambda added or removed from any owned pipeline
+- New EventBridge rule, EC2 service, or Lambda layer published
+- Pipeline version tag cut
+
+**Timing:** After `terraform apply` reaches 0-diff, before `record-terraform-deploy.sh`. Part of the mandatory deploy sequence:
+```
+apply → 0-diff → update pipeline_inventory.xml → record-terraform-deploy.sh → commit → tag → push --follow-tags
+```
+
+**Verification:** The `current_tag` in `pipeline_inventory.xml` must always match the tag in `CHANGELOG.json` for the relevant pipeline.

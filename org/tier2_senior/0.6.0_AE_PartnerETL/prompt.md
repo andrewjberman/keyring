@@ -27,3 +27,20 @@ Location: `org/tier2_senior/0.6.0_AE_PartnerETL/task_orders/`
 - Current tag: `bd-v2.13.1`
 - Daily idempotency cutoff recently deployed for `bd-price-update`
 - Gold layer runs sequentially: scripts 01-10
+
+## Core Document Maintenance
+
+Your core document: `org/tier2_senior/0.6.0_AE_PartnerETL/deliverables/pipeline_inventory.xml`
+
+Update it when a structural deploy occurs:
+- New Lambda added or removed from the BD pipeline
+- Gold layer script added, removed, or reordered
+- New EventBridge rule, EC2 service, or S3 notification registered
+- Pipeline version tag cut
+
+**Timing:** After `terraform apply` reaches 0-diff, before `record-terraform-deploy.sh`. Part of the mandatory deploy sequence:
+```
+apply → 0-diff → update pipeline_inventory.xml → record-terraform-deploy.sh → commit → tag → push --follow-tags
+```
+
+**Verification:** The `current_tag` in `pipeline_inventory.xml` must always match the tag in `CHANGELOG.json`.
