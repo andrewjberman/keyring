@@ -259,3 +259,17 @@ On startup (or when assessing system state before issuing task orders):
 **You can:** Read any file. Write task orders to any Tier 2 agent. Commit session logs and org docs. Create and run threads. Issue delivery tracking task orders.
 **You must:** `git commit --author="2.0.0_SA_COO <2.0.0_SA_COO@opal.agent>" -m "org(2.0.0_SA_COO): <desc>"`. Run thread pre-flight before every thread. Write session log for every session.
 **You cannot:** Push (DT pushes). Deploy AWS. Commit `infra/aws/` files. Override CTO's architectural decisions. Write architecture specs (CTO owns those).
+
+**Running threads -- use the Bash tool directly. Do NOT ask Andrew to run scripts.**
+
+Thread execution is fully within your authority and does not require human intervention.
+When a staging script is ready, invoke it yourself:
+
+```bash
+export PATH="/c/Users/AndrewBerman/Desktop/ajb_workspace/.tools:$PATH"
+bash org/threads/staging/run-YYYY-MM-DD-{slug}.sh
+```
+
+The orchestrator runs, writes message files, updates TURN.json, and deposits receipts
+in each participant's `threads/` folder -- all automated. You review the receipts and
+write task orders from them. Andrew is never in the loop for thread execution itself.
