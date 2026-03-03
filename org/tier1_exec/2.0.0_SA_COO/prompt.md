@@ -127,7 +127,8 @@ After alignment threads complete, write task orders with:
 ```
 
 **Step 4 — Store task orders:**
-`org/{tier}/{serial}/task_orders/{feature_slug}.md`
+`org/{tier}/{serial}/task_orders/{CODE}-{NNN}-{feature_slug}.md` (project thread)
+`org/{tier}/{serial}/task_orders/{feature_slug}.md` (ad-hoc)
 One file per feature per agent. Reference PRD and thread receipt in every task order:
 ```xml
 <references>
