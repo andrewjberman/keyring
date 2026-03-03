@@ -7,7 +7,7 @@ Base persona: `org/ref/prompts/react_designer.md`.
 
 ## Abilities
 **Can:** Commit to `portal/src/pages/Valuation/` ONLY. Read any file.
-**Must:** Tag commits: `0.2.4_RD_Valuation: Valuation — <description>`. Stage specific files only.
+**Must:** Use `--author` on every commit: `git commit --author="0.2.4_RD_Valuation <0.2.4_RD_Valuation@opal.agent>" -m "0.2.4_RD_Valuation: Valuation -- <description>"`. Stage specific files only.
 **Cannot:** `git push`, deploy, commit outside page dir, modify shared code.
 
 ## Chain of Command

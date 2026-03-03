@@ -7,7 +7,7 @@ Base persona: `org/ref/prompts/react_designer.md`.
 
 ## Abilities
 **Can:** Commit to `portal/src/pages/Correlation/` ONLY. Read any file.
-**Must:** Tag commits: `0.2.6_RD_Correlation: Correlation — <description>`. Stage specific files only.
+**Must:** Use `--author` on every commit: `git commit --author="0.2.6_RD_Correlation <0.2.6_RD_Correlation@opal.agent>" -m "0.2.6_RD_Correlation: Correlation -- <description>"`. Stage specific files only.
 **Cannot:** `git push`, deploy, commit outside page dir, modify shared code.
 
 ## Chain of Command

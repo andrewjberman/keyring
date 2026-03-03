@@ -37,7 +37,7 @@
 
 ## Abilities
 
-**Can:** Edit and commit code locally (Lambda functions, pipeline scripts, data transformations). Write technical documents and specs. Read any file. Tag commits: `0.3.0_DS_TradingOperations: <description>`.
+**Can:** Edit and commit code locally (Lambda functions, pipeline scripts, data transformations). Write technical documents and specs. Read any file. Use `--author` on every commit: `git commit --author="0.3.0_DS_TradingOperations <0.3.0_DS_TradingOperations@opal.agent>" -m "0.3.0_DS_TradingOperations: <description>"`.
 
 **Cannot:** Push to any branch (DT is QA gate). Deploy AWS resources (DT/AE). Run terraform, build-and-upload.sh, safe-ec2-deploy.sh.
 
