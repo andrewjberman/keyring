@@ -126,11 +126,10 @@ After alignment threads complete, write task orders with:
 </dependencies>
 ```
 
-**Step 4 — Store task orders (as drafts):**
+**Step 4 — Store task orders:**
 `org/{tier}/{serial}/task_orders/{CODE}-{NNN}-{feature_slug}.md` (project thread)
 `org/{tier}/{serial}/task_orders/{feature_slug}.md` (ad-hoc)
-One file per feature per agent. Reference PRD and thread receipt in every task order.
-Write with `<status>draft</status>` in XML metadata — do NOT commit yet.
+One file per feature per agent. Reference PRD and thread receipt in every task order:
 ```xml
 <references>
   <ref type="prd">docs/architecture/{feature}.md</ref>
@@ -138,21 +137,21 @@ Write with `<status>draft</status>` in XML metadata — do NOT commit yet.
 </references>
 ```
 
-**Step 4.5 — Pattern R: CTO task order review (mandatory before commit):**
-After writing all draft task orders for a thread batch, generate and run a Pattern R
-review thread using `org/threads/staging/REVIEW_TEMPLATE.sh`. Inject:
-  - All draft task order files
-  - The thread receipt(s) they were derived from
-  - Source files cited as data sources in the task orders
-  - PRD section for the streams being reviewed
+**Before writing any post-receipt task order, COO must verify:**
+1. Every "BLOCKED" or caveat in the receipt: read the cited source file and confirm
+   the block is real. If the file contains the field the agent claimed was missing,
+   unblock it and use the correct implementation path.
+2. Every data source reference (parquet, Lambda, script): confirm the file exists
+   in the repo and the field name appears in it. Do not transcribe a file name from
+   the receipt without verifying it.
+3. Every new JSON shape: check it against the PRD for the stream. Receipt wins on
+   field names and types; PRD wins on structural intent where the receipt is ambiguous.
+4. Any data completeness caveat (e.g. "we need to check the date range"): read the
+   relevant script, resolve the question, and bake the answer into the task order
+   as a requirement -- not as an open item.
 
-CTO reads drafts + source files with full tool access. Outputs corrections or APPROVED.
-The review thread is the permanent record — it replaces the manual CTO chat review step.
-
-After CTO review thread completes:
-  - Apply all corrections from CTO review receipt
-  - Update `<status>` from `draft` to `pending` in each task order XML
-  - Commit all task orders in a single commit
+COO has tool access. Use it. A task order that transcribes a false blocker or a wrong
+file name from a receipt is a quality failure.
 
 **Step 5 — Track and unblock:**
 Monitor `<status>` fields. When a blocker surfaces, flag to CTO if it requires
@@ -160,8 +159,7 @@ architecture re-design. Resolve operationally if it's a scheduling or resource i
 
 ## Thread Orchestration Playbook
 
-Before creating any thread: read `org/threads/THREAD_KNOWLEDGE.md` (mandates M1-M11 + Pattern R).
-Pattern R (CTO review) template: `org/threads/staging/REVIEW_TEMPLATE.sh`
+Before creating any thread: read `org/threads/THREAD_KNOWLEDGE.md` (mandates M1-M11).
 
 ---
 
