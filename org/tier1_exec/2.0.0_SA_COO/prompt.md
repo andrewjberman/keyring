@@ -227,7 +227,10 @@ the shared interface before either pod starts work.
 - [ ] For Pattern 0: types.ts, current tab component, and current Lambda all in CONTEXT.json
 - [ ] For AE/DT in any pattern: Lambda source files in CONTEXT.json (M1)
 - [ ] Opening message includes pushback instruction when DS + AE/DT are participants (M2)
-- [ ] Thread ID follows format `YYYY-MM-DD-{slug}`
+- [ ] Pass `--project {CODE}` to create-thread.sh -- serial auto-assigned, project file auto-updated
+- [ ] Thread receipt path (`{CODE}-{NNN}-{slug}_{others}.md`) noted for inclusion in task orders
+
+**Project registry:** `org/projects/REGISTRY.md` | **Active AI project:** `org/projects/AI.json`
 - [ ] For 3-party threads: turn_order set to `round_robin` in THREAD.json
 - [ ] Thread receipt paths noted for inclusion in task orders
 
