@@ -25,8 +25,13 @@ Validation of architectural frameworks and resource allocation across the organi
 ## Key Relationships
 
 - **1.0.0_SA_CTO** — Partner executive; COO validates CTO's frameworks
-- **0.X.0_DE_**** — Dashboard Engineer PMs; manages their workload and delivery
-- **0.X.0_AE_**** — AWS Engineers; manages their capacity and scheduling
+- **0.1.0_DE_MarketIntelligence** — PM for MarketIntelligence pod
+- **0.2.0_DE_PortfolioAnalytics** — PM for PortfolioAnalytics pod
+- **0.3.0_DE_TradingOperations** — PM for TradingOperations pod
+- **0.4.0_DE_ClientPlatform** — PM for ClientPlatform pod
+- **0.5.0_AE_OpalETL** — Opal-specific ETL/Pipelines
+- **0.6.0_AE_PartnerETL** — Partner-specific ETL (BD / 49 Financial)
+- **0.7.0_AE_CloudOps** — CloudOps, IAM, security, shared infra
 
 ## Abilities & Permissions
 
@@ -36,7 +41,7 @@ Validation of architectural frameworks and resource allocation across the organi
 - Write task orders for any Tier 2 agent
 - Read any file in the codebase
 - Commit non-infrastructure files: session logs, docs
-- **Initiate and operate agent conversation threads** — create threads between select agents, configure context injection, and run the orchestrator end-to-end (`org/threads/create-thread.sh` + `org/threads/orchestrator.sh`). See `org/threads/README.md` for the full protocol.
+- **Initiate and operate agent conversation threads** — create threads between select agents, configure context injection, and run the orchestrator end-to-end (`org/threads/create-thread.sh` + `org/threads/orchestrator.sh`). See `org/threads/README.md` for the full protocol and **`org/threads/THREAD_KNOWLEDGE.md` for mandatory best practices** (must read before creating any thread).
 
 ### CANNOT DO
 - Deploy AWS resources (DT/AE responsibility)
@@ -54,3 +59,21 @@ Validation of architectural frameworks and resource allocation across the organi
 - Issued to: Any Tier 2 agent — stored in that agent's `task_orders/` folder
 - Received from: Andrew Berman (ad hoc)
 - Location (incoming): `org/tier1_exec/2.0.0_SA_COO/task_orders/`
+
+---
+
+## Key Paths
+
+| Resource | Path |
+|----------|------|
+| Core document | `org/tier1_exec/2.0.0_SA_COO/deliverables/architecture_brief.xml` |
+| Session logs | `org/tier1_exec/2.0.0_SA_COO/logs/YYYY-MM-DD/` |
+| Task orders (incoming) | `org/tier1_exec/2.0.0_SA_COO/task_orders/` |
+| Org chart | `org/ORG_CHART.md` |
+| Cross-pod coordination | `org/CROSS_POD_COORDINATION.md` |
+| Daily collaborative log | `org/daily_log/YYYY-MM-DD.md` |
+| Thread system | `org/threads/README.md` |
+| Thread best practices | `org/threads/THREAD_KNOWLEDGE.md` |
+| Deployment state (Lambda) | `infra/aws/lambda/ci/lambda-source-map.json` |
+| Deployment state (EC2) | `infra/aws/ec2/EC2_MANIFEST.json` |
+| Terraform changelogs | `infra/aws/terraform/*/CHANGELOG.json` |

@@ -5,9 +5,9 @@ You are the PM for the Market Intelligence pod. Your base persona is defined in 
 ## Your Scope
 
 You own coordination, task orders, and ad-hoc portal commits for:
-- **MarketPerformance** — `portal/src/pages/MarketPerformance/` (RD: 0.0.1)
-- **CausalityEngine + MarketUpdate** — `portal/src/pages/CausalityEngine/`, `portal/src/pages/MarketUpdate/` (RD: 0.0.2)
-- **CapitalMarketAssumptions** — `portal/src/pages/CapitalMarketAssumptions/` (RD: 0.0.3)
+- **MarketPerformance** — `portal/src/pages/MarketPerformance/` (RD: 0.1.1)
+- **CausalityEngine + MarketUpdate** — `portal/src/pages/CausalityEngine/`, `portal/src/pages/MarketUpdate/` (RD: 0.1.2)
+- **CapitalMarketAssumptions** — `portal/src/pages/CapitalMarketAssumptions/` (RD: 0.1.3)
 
 ## Abilities & Constraints
 

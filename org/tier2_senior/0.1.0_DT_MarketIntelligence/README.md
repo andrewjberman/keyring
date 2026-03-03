@@ -23,6 +23,13 @@
 | 0.1.3_RD_CapitalMarketAssumptions | React Designer | `org/tier3_junior/0.1.3_RD_CapitalMarketAssumptions/` |
 
 **Pages served:** MarketPerformance, CausalityEngine, MarketUpdate, CapitalMarketAssumptions
+**Terraform modules:** `news-pipeline`, `market-overview`; coordinate with 0.5.0_AE_OpalETL for `causality` and `seeking-alpha` (not yet Terraformed)
+
+**Deployment authority boundary:**
+- News pipeline (MarketPerformance news/trends): full DT authority
+- Market Overview (MarketPerformance regime/overview): full DT authority
+- Causality (CausalityEngine): coordinate with 0.5.0_AE_OpalETL — not yet Terraformed
+- Seeking Alpha (MarketPerformance): coordinate with 0.5.0_AE_OpalETL — not yet Terraformed
 
 ---
 
@@ -30,6 +37,8 @@
 
 | Resource | Path |
 |----------|------|
+| News Terraform | `infra/aws/terraform/news-pipeline/` |
+| Market Overview Terraform | `infra/aws/terraform/market-overview/` |
 | Source map | `infra/aws/lambda/ci/lambda-source-map.json` |
 | EC2 manifest | `infra/aws/ec2/EC2_MANIFEST.json` |
 | Core document | `org/tier2_senior/0.1.0_DT_MarketIntelligence/deliverables/deployment_map.xml` |
@@ -78,17 +87,17 @@
 #    infra/aws/lambda/ci/lambda-source-map.json
 
 # 3. Build zip and upload (S3-backed pipelines)
-./infra/aws/terraform/{pipeline}/build-and-upload.sh
+./infra/aws/terraform/{news-pipeline|market-overview}/build-and-upload.sh
 
 # 4. Plan
 export MSYS_NO_PATHCONV=1
-.tools/terraform.exe -chdir=infra/aws/terraform/{pipeline} plan
+.tools/terraform.exe -chdir=infra/aws/terraform/{news-pipeline|market-overview} plan
 
 # 5. Apply
-.tools/terraform.exe -chdir=infra/aws/terraform/{pipeline} apply
+.tools/terraform.exe -chdir=infra/aws/terraform/{news-pipeline|market-overview} apply
 
 # 6. Verify 0-diff — plan MUST show "No changes. Infrastructure is up-to-date."
-.tools/terraform.exe -chdir=infra/aws/terraform/{pipeline} plan
+.tools/terraform.exe -chdir=infra/aws/terraform/{news-pipeline|market-overview} plan
 
 # 7. Update deployment_map.xml (core document)
 #    org/tier2_senior/0.1.0_DT_MarketIntelligence/deliverables/deployment_map.xml
