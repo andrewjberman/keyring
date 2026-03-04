@@ -2,7 +2,7 @@
 
 **Date:** 2026-03-04
 **Start Time:** session start
-**End Time:** session complete
+**End Time:** in progress
 
 ## Objective
 
@@ -172,6 +172,8 @@ Syntax verified. Committed at `c9b3ab76`.
 | `data/black_diamond/scripts/gold/10_generate_advisor_rolling_flows.py` | STACKED_BAR_PERIODS constant; compute_stacked_bar(); rolling_1y extraction; both added to return dict; dry-run preview extended | Yes — `c9b3ab76` |
 | `docs/briefs/devops-brief-advi-004-adv-drill-cla.md` | New — DT Stream B1 deploy instructions | Yes — `f2e3c675` |
 | `docs/briefs/devops-brief-advi-005-rolling-flows.md` | New — DT Stream B2 EC2 deploy instructions | Yes — `75b3b83f` |
+| `data/black_diamond/scripts/gold/09_generate_partner_analytics.py` | Fix 1a+1b: remove 'Unknown' exclusion from geo_end filter and distribution filter in `build_nna_geo_view` | Yes — `4ba82ffc` |
+| `infra/aws/lambda/bd-pipeline/bd-portal-publisher/lambda_function.py` | Fix 2: `_quarter_nna` start changed from q_start to prior_qe = q_start - 1 day | Yes — `4ba82ffc` |
 
 ---
 
@@ -347,7 +349,43 @@ This requires:
 
 ---
 
-### 15. Stream B2 DT Brief Written
+### 15. NNA Canonicalization Fixes (CEO-validated consultant brief)
+
+Read `docs/briefs/data-scientist-nna-geo-unknown-and-date-boundary-fix.md`.
+
+Background: cross-view NNA audit for Q4 '25 found three portal views reporting different
+totals for the same quarter: Snapshot-GEO ~$96.0M, Assets Overview ~$96.6M, Snapshot-ADV
+~$97.9M. Both gaps traced to code-level root causes confirmed in the brief.
+
+**Fix 1a — script 09 `build_nna_geo_view`, lines 826-829:**
+Removed `'Unknown'` from the `geo_end` filter. Previously, the filter excluded all rows
+where `state == 'Unknown'` before computing `total_net_nna`, silently dropping the NNA of
+all relationships with no resolvable state. Changed to keep `'Unknown'` as a named segment
+(key: `'unknown'`), mirroring exactly how `build_nna_adv_view` handles `'Unassigned'`.
+Only non-US/blank states (null, empty string) are now excluded.
+
+**Fix 1b — same file, distribution filter lines 903-908:**
+Removed the matching `state != 'Unknown'` exclusion from the per-relationship NNA
+distribution block. `'Unknown'` relationships now contribute to `total_dist` and get
+their own `by_segment_dist['unknown']` entry via the existing segment loop.
+
+**Fix 2 — Lambda `_quarter_nna`, line 1021:**
+Changed the period start baseline from `q_start` (Oct 1) to `prior_qe = q_start - 1 day`
+(Sep 30). Script 09 uses Sep 30 as the Q4 start baseline; the Lambda was using Oct 1,
+causing it to miss Oct 1 settlement flows (~$1.3M for Q4 '25). QTD (`quarters_back=0`)
+uses the `else 0` branch — unaffected by this change.
+
+Both files committed at `4ba82ffc`.
+
+**Pending verification** (requires deploy of both streams first):
+- Stream B (script 09 EC2 redeploy): `gold/partner_analytics/header_metrics.json` geo NNA
+- Stream B1 (bd-portal-publisher Lambda redeploy): `gold/summary/header_metrics.json` overview NNA
+- All three views (GEO, ADV, Overview) should be within $1.00 of each other for Q4 '25
+- Verification script in brief at `docs/briefs/data-scientist-nna-geo-unknown-and-date-boundary-fix.md`
+
+---
+
+### 16. Stream B2 DT Brief Written
 
 Wrote `docs/briefs/devops-brief-advi-005-rolling-flows.md` for `0.4.0_DT_ClientPlatform`.
 Covers: what changed (script 10 only, no infra changes), safe-ec2-deploy.sh command,
@@ -372,20 +410,21 @@ Committed at `75b3b83f`.
 
 ## Current State
 
-**Status:** ALL A-ROLL TASK ORDERS COMPLETE — Scenario (c) blocker flagged to COO + CTO
+**Status:** IN PROGRESS — NNA canonicalization fixes committed, awaiting DT deploy + verification
 **Active branch:** `CLOUD`
 
-All five task orders worked this session:
+All five A-roll task orders complete. Two additional CEO-validated fixes committed this session:
 - **ADVI-004** (A1+A2 adv_drill + cla) — complete, committed `5f60d30e`
 - **ADVI-005** (A3 stacked_bar + rolling_1y) — complete, committed `c9b3ab76`
 - **A4** (script 09 bell curve verification) — complete: code verified + S3 live data confirmed
 - **A5** (opal-users-v2 investigation) — complete: Scenario (c) BLOCKER documented
+- **NNA canonicalization** (consultant brief) — committed `4ba82ffc`; requires DT deploy + verification
 
-DT deploy briefs written and committed for both streams:
-- Stream B1 (bd-portal-publisher Lambda): `docs/briefs/devops-brief-advi-004-adv-drill-cla.md`
-- Stream B2 (script 10 EC2): `docs/briefs/devops-brief-advi-005-rolling-flows.md`
+DT deploy briefs written for both active streams. NNA fixes add to the deploy scope:
+- Stream B1 (bd-portal-publisher Lambda): `docs/briefs/devops-brief-advi-004-adv-drill-cla.md` — now ALSO includes Fix 2 (`_quarter_nna`)
+- Stream B2 (script 09/10 EC2): now ALSO includes Fix 1a+1b (`build_nna_geo_view`)
 
-Pending: DT to execute both deploys. COO/CTO to resolve Books tab identity mapping gap.
+Pending: DT redeploy of both streams (commit `4ba82ffc`); post-deploy 3-view NNA verification.
 
 ---
 
@@ -393,7 +432,15 @@ Pending: DT to execute both deploys. COO/CTO to resolve Books tab identity mappi
 
 > Ordered by priority.
 
-1. **[COO + CTO] BLOCKER — Books tab advisor identity mapping** (A5 Scenario c)
+1. **[0.4.0_DT_ClientPlatform] Redeploy both streams with NNA fixes** (commit `4ba82ffc`)
+   Fix 2 (Lambda `_quarter_nna`) lands in Stream B1 — bd-portal-publisher. Same deploy path as
+   before: build-and-upload.sh, terraform plan/apply, tag `bd-v2.15.2`.
+   Fix 1a+1b (script 09 `build_nna_geo_view`) lands in Stream B (EC2). safe-ec2-deploy.sh,
+   then start EC2 for incremental run. Tag `bd-v2.15.2` or increment as appropriate.
+   Verification script: `docs/briefs/data-scientist-nna-geo-unknown-and-date-boundary-fix.md`
+   (all three NNA views within $1.00 of each other for Q4 '25).
+
+2. **[COO + CTO] BLOCKER — Books tab advisor identity mapping** (A5 Scenario c)
    No JWT userId → gold layer advisor slug mapping exists in opal-users-v2.
    Required action: add `advisorKey` attribute to USER#PROFILE items for advisor-tier accounts.
    Recommend: admin onboarding flow sets `advisorKey` = gold layer slug (e.g., `travis_penfield`)
