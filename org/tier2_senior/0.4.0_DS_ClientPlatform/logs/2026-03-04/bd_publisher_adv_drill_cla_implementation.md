@@ -107,20 +107,30 @@ then A5 (opal-users-v2 DynamoDB investigation).
 
 ---
 
+### 6. A3: stacked_bar + rolling_1y in script 10 (ADVI-005)
+
+A3.0 pre-check: data history confirmed at 2020-06-30 via session logs (client_performance
+and nna_aua_by_advisor.parquet). 3Y and Max will have complete coverage.
+
+Added `compute_stacked_bar()` to `data/black_diamond/scripts/gold/10_generate_advisor_rolling_flows.py`.
+- stacked_bar: period-outer / role-inner per CTO task order correction.
+- rolling_1y: extracts existing 1Y window from compute_rolling_series(); full history emitted.
+- Backward compat: legacy keys unchanged. Both new keys are additive.
+Committed at `c9b3ab76`.
+
+---
+
 ## Next Steps
 
-1. **[0.4.0_DS] Implement A3** — ADVI-005 task order: stacked_bar + rolling_1y in
-   `data/black_diamond/scripts/gold/10_generate_advisor_rolling_flows.py`.
-   Start with A3.0 pre-check (actual min date of parquet data).
-2. **[0.4.0_DS] Verify A4** — script 09 bell curve abs() fix verification (commit 8247c6d0).
-   Read script, inspect S3 thresholds.
-3. **[0.4.0_DS] Investigate A5** — opal-users-v2 DynamoDB schema for JWT->advisor mapping.
-4. **[0.4.0_DT_ClientPlatform] Deploy Stream B1** — bd-portal-publisher Lambda via Terraform
-   after this session log is committed. Commit hash: `5f60d30e`.
-   Follow Lambda Deployment Protocol. Run build-and-upload.sh for bd-portal-publisher,
-   then terraform plan/apply in infra/aws/terraform/bd-pipeline/.
+1. **[0.4.0_DT_ClientPlatform] Deploy Stream B1 (bd-portal-publisher)** — commit `5f60d30e`.
+   Brief at `docs/briefs/devops-brief-advi-004-adv-drill-cla.md`.
+2. **[0.4.0_DT_ClientPlatform] Deploy Stream B2 (script 10 EC2)** — commit `c9b3ab76`.
+   Brief needed (see docs/briefs/devops-brief-advi-005-rolling-flows.md when written).
+   EC2 deploy via safe-ec2-deploy.sh to bd-gold-layer-runner. Run incremental (scripts 10 only).
+3. **[0.4.0_DS] Verify A4** — script 09 bell curve abs() fix verification (commit 8247c6d0).
+4. **[0.4.0_DS] Investigate A5** — opal-users-v2 DynamoDB schema for JWT->advisor mapping.
 
 **Do NOT:**
-- Re-enable the `build_partner_analytics()` call in lambda_handler (DISABLED comment is intentional).
-- Add colorMap to timeseries_chart.json (explicitly excluded from ADVI-004 contract).
-- Modify existing aua/nna/geo/adv/geo_drill keys.
+- Re-enable the `build_partner_analytics()` call in lambda_handler (DISABLED).
+- Modify existing aua/nna/geo/adv/geo_drill keys in timeseries_chart.json.
+- Change stacked_bar nesting to role-outer/period-inner (thread receipt shape) — CTO task order overrides.
