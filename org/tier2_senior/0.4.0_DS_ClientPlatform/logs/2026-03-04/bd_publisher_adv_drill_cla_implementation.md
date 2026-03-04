@@ -169,6 +169,7 @@ Syntax verified. Committed at `c9b3ab76`.
 | `org/tier2_senior/0.4.0_DS_ClientPlatform/task_orders/ADVI-005-rolling_flows_data.md` | Status: pending -> complete | Yes — `c9b3ab76` |
 | `data/black_diamond/scripts/gold/10_generate_advisor_rolling_flows.py` | STACKED_BAR_PERIODS constant; compute_stacked_bar(); rolling_1y extraction; both added to return dict; dry-run preview extended | Yes — `c9b3ab76` |
 | `docs/briefs/devops-brief-advi-004-adv-drill-cla.md` | New — DT Stream B1 deploy instructions | Yes — `f2e3c675` |
+| `docs/briefs/devops-brief-advi-005-rolling-flows.md` | New — DT Stream B2 EC2 deploy instructions | Yes — `75b3b83f` |
 
 ---
 
@@ -176,7 +177,8 @@ Syntax verified. Committed at `c9b3ab76`.
 
 | Brief | Path | Audience |
 |-------|------|----------|
-| DT deploy — bd-portal-publisher | `docs/briefs/devops-brief-advi-004-adv-drill-cla.md` | 0.4.0_DT_ClientPlatform |
+| DT deploy — bd-portal-publisher (Stream B1) | `docs/briefs/devops-brief-advi-004-adv-drill-cla.md` | 0.4.0_DT_ClientPlatform |
+| DT deploy — script 10 EC2 (Stream B2) | `docs/briefs/devops-brief-advi-005-rolling-flows.md` | 0.4.0_DT_ClientPlatform |
 
 ---
 
@@ -223,6 +225,17 @@ A4.2 remains open pending AWS CLI resolution.
 
 ---
 
+### 13. Stream B2 DT Brief Written
+
+Wrote `docs/briefs/devops-brief-advi-005-rolling-flows.md` for `0.4.0_DT_ClientPlatform`.
+Covers: what changed (script 10 only, no infra changes), safe-ec2-deploy.sh command,
+EC2 start command for incremental run, verification via S3 JSON key check, next tag `bd-v2.15.1`.
+Notes: run_gold_layer.sh incremental mode runs 02-10 sequentially — only script 10 output changes.
+Does NOT trigger pipeline-complete to re-run on its own; EC2 boot triggers the run automatically.
+Committed at `75b3b83f`.
+
+---
+
 ## Blockers
 
 - AWS CLI non-functional in Git Bash on Windows (hangs with "File association not found for
@@ -235,16 +248,16 @@ A4.2 remains open pending AWS CLI resolution.
 
 ## Current State
 
-**Status:** IN PROGRESS (A1+A2+A3 complete; A4 code-verified/S3-blocked; A5 blocked)
+**Status:** IN PROGRESS (A1+A2+A3 complete; A4 code-verified/S3-blocked; B2 brief complete; A5 blocked)
 **Active branch:** `CLOUD`
 
 Three task orders complete this session: ADVI-004 (A1+A2) at `5f60d30e` and ADVI-005 (A3)
-at `c9b3ab76`. Both commits are local on CLOUD. data_contract.xml updated and committed in
-each — DT deploy gates satisfied for both Stream B1 (bd-portal-publisher Lambda) and Stream B2
-(script 10 EC2). DT brief written for Stream B1 at `docs/briefs/devops-brief-advi-004-adv-drill-cla.md`.
-Stream B2 brief still needed (script 10 EC2 incremental deploy via safe-ec2-deploy.sh).
-A4 code-verified: abs() fix confirmed present in `calculate_nna_distribution_stats()`. S3
-live-data check (A4.2) blocked by AWS CLI. A5 blocked by AWS CLI.
+at `c9b3ab76`. Both commits local on CLOUD. data_contract.xml updated in both — DT deploy
+gates satisfied. DT briefs written for both streams:
+- Stream B1 (bd-portal-publisher Lambda): `docs/briefs/devops-brief-advi-004-adv-drill-cla.md` (commit `f2e3c675`)
+- Stream B2 (script 10 EC2): `docs/briefs/devops-brief-advi-005-rolling-flows.md` (commit `75b3b83f`)
+A4 code-verified: abs() fix confirmed present in `calculate_nna_distribution_stats()` at line 320.
+A4.2 (S3 live-data check) and A5 blocked by AWS CLI issue.
 
 ---
 
@@ -256,25 +269,22 @@ live-data check (A4.2) blocked by AWS CLI. A5 blocked by AWS CLI.
    Full instructions: `docs/briefs/devops-brief-advi-004-adv-drill-cla.md`.
    Next tag: `bd-v2.15.0`.
 
-2. **[0.4.0_DS] Write Stream B2 DT brief** — `docs/briefs/devops-brief-advi-005-rolling-flows.md`
-   EC2 incremental deploy of script 10 via `safe-ec2-deploy.sh` to `bd-gold-layer-runner`.
-   Run mode: incremental (script 10 only; no need to rebuild positions cube).
+2. **[0.4.0_DT_ClientPlatform] Deploy Stream B2 — script 10 EC2** (commit `c9b3ab76`)
+   Full instructions: `docs/briefs/devops-brief-advi-005-rolling-flows.md`.
+   Next tag: `bd-v2.15.1`.
 
-3. **[0.4.0_DT_ClientPlatform] Deploy Stream B2 — script 10 EC2** (commit `c9b3ab76`)
-   After brief is written. Next tag: (increment as appropriate per gold layer convention).
-
-4. **[0.4.0_DS] A4.2 — Script 09 S3 live data verification** (BLOCKED by AWS CLI)
+3. **[0.4.0_DS] A4.2 — Script 09 S3 live data verification** (BLOCKED by AWS CLI)
    Once AWS CLI functional: read `s3://opal-data-bd/gold/partner_analytics/header_metrics.json`.
    Inspect `views.nna.current.distribution.total.percentiles` and `views.nna.current.distribution.by_segment`.
    Confirm P10/P25/Median/P75/P90 are non-degenerate (non-zero, non-symmetric, reflect real data).
    No patch expected — code analysis confirms correct. This is a data sanity check only.
 
-5. **[0.4.0_DS] A5 — opal-users-v2 DynamoDB investigation** (BLOCKED by AWS CLI)
+4. **[0.4.0_DS] A5 — opal-users-v2 DynamoDB investigation** (BLOCKED by AWS CLI)
    Requires working AWS CLI. Fix AWS CLI in Git Bash first (try aws.cmd or Python invoke).
    Inspect table schema and sample records. Determine JWT->advisor mapping scenario (a/b/c).
 
 **Files to touch next:**
-- `docs/briefs/devops-brief-advi-005-rolling-flows.md` — Stream B2 DT brief (new file)
+- None on DS side pending AWS CLI resolution.
 
 **Do NOT:**
 - Re-enable `build_partner_analytics()` in bd-portal-publisher lambda_handler (DISABLED intentionally).
