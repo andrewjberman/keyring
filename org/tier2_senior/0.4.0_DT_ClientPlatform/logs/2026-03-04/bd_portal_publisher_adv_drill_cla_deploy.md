@@ -29,23 +29,20 @@ Deploy `bd-portal-publisher` Lambda code change from DS commit `5f60d30e` — ad
 
 ---
 
-## Incident: WMI Hang in Python/botocore
+## Incident: AWS CLI Hang — botocore IMDS Probe
 
-**Root cause:** `botocore.session.get_session()` hangs on startup in Python 3.12 because `platform.win32_ver()` calls `platform._wmi_query()`, which makes a WMI (Windows Management Instrumentation) query that hangs. This breaks ALL `aws` CLI invocations and `build-and-upload.sh`'s PowerShell S3 upload path.
+**Root cause (corrected):** `botocore` probes the EC2 Instance Metadata Service (IMDS) at `http://169.254.169.254/` on startup — even when static credentials are present in `~/.aws/credentials`. On a non-EC2 Windows machine this TCP connection attempt receives no response and hangs indefinitely. The WMI service is unrelated and fine; restarting it has no effect.
 
-**Workaround applied:**
-- Zip was built successfully by `build-and-upload.sh` before the hang (zip creation uses PowerShell directly, not botocore)
-- S3 upload performed manually via Python with `platform._wmi_query` monkey-patched before botocore import:
-  ```python
-  import platform
-  platform._wmi_query = lambda *a, **kw: ('10.0.26100', 0, 'Multiprocessor Free', 0, 0)
-  import boto3
-  ```
-- `build-and-upload.sh` source map update was blocked by the hang, but the source map had already been pre-updated (the working tree diff showed the correct new SHA before the commit)
+**Initial misdiagnosis:** This session attributed the hang to `platform._wmi_query` (WMI). The monkey-patch workaround happened to work because it changed botocore's startup code path timing enough to fall through to file-based credentials. It was a symptom bypass, not a fix.
 
-**Terraform itself was unaffected** — Terraform uses the Go AWS SDK, not Python, and connected to AWS without issue.
+**Workaround used this session:**
+- Zip built successfully by `build-and-upload.sh` before the hang (zip creation uses PowerShell directly, not botocore)
+- S3 upload performed manually via Python with `platform._wmi_query` monkey-patched before botocore import
+- SHA verified via `head-object` after upload — artifact is correct
 
-**Action needed:** WMI service on this machine is unresponsive. Either a Windows reboot clears it, or the WMI service needs to be restarted (`net stop winmgmt && net start winmgmt` as admin). This will affect ALL Python AWS CLI calls until resolved.
+**Terraform itself was unaffected** — Terraform uses the Go AWS SDK, not Python.
+
+**Fix applied (same session, post-B1):** `export AWS_EC2_METADATA_DISABLED=true` added to `~/.bashrc`. This instructs botocore to skip the IMDS probe entirely and go straight to `~/.aws/credentials`. All `aws` CLI calls now work instantly. **Status: RESOLVED.**
 
 ---
 
@@ -53,7 +50,7 @@ Deploy `bd-portal-publisher` Lambda code change from DS commit `5f60d30e` — ad
 
 | Decision | Rationale |
 |----------|-----------|
-| Use boto3 with WMI monkey-patch instead of aws CLI | WMI hang blocked all aws CLI paths; boto3 with the patch works fine |
+| Use boto3 with `platform._wmi_query` monkey-patch instead of aws CLI | IMDS hang blocked all botocore/aws CLI paths this session; monkey-patch changed startup timing enough to fall through to file credentials. Correct fix (`AWS_EC2_METADATA_DISABLED=true`) applied post-B1. |
 | Build zip manually via PowerShell script file | MSYS variable substitution mangles `$` signs when passing multi-line PS code inline via Git Bash |
 | Record CLOUD temp files (build-zip.ps1, bd-portal-publisher.zip) as transient | Created in workspace root for build workaround, deleted before push |
 
@@ -95,7 +92,7 @@ timeseries_chart: NNN days, N architects, N states, N arch client-drills, cla(N 
 
 ## Blockers
 
-**WMI hang (active):** Python botocore hangs on startup due to `platform._wmi_query` WMI query. The `aws` CLI (Python-based) is completely unusable. `build-and-upload.sh` S3 upload step will hang on every run until resolved. Workaround documented above works but is manual. A machine reboot or WMI service restart should fix this.
+None. The AWS CLI hang encountered during this deploy was caused by botocore probing the EC2 IMDS endpoint (`169.254.169.254`) on non-EC2 Windows hardware. Fixed by adding `export AWS_EC2_METADATA_DISABLED=true` to `~/.bashrc` — all new sessions inherit this. `build-and-upload.sh` works normally.
 
 ---
 
@@ -104,19 +101,17 @@ timeseries_chart: NNN days, N architects, N states, N arch client-drills, cla(N 
 **Status:** COMPLETE
 **Active branch:** `CLOUD`
 
-`bd-portal-publisher` deployed at `bd-v2.15.0` with `adv_drill` and `cla` keys in `build_timeseries_chart()` output. Lambda code is live. CloudWatch verification pending next pipeline run. The WMI issue is a machine-level problem unrelated to this deploy.
+`bd-portal-publisher` deployed at `bd-v2.15.0` with `adv_drill` and `cla` keys in `build_timeseries_chart()` output. Lambda code is live. CloudWatch verification pending next pipeline run. The AWS CLI hang (botocore IMDS probe) was resolved post-B1 by `AWS_EC2_METADATA_DISABLED=true` in `~/.bashrc`.
 
 ---
 
 ## Next Steps
 
 1. **Verify CloudWatch logs** after next BD pipeline run — confirm `adv_drill` and `cla` log lines appear
-2. **Fix WMI / restart machine** — `platform._wmi_query` hang blocks all future Python aws CLI use; reboot or `net stop winmgmt && net start winmgmt` (admin)
-3. **[RD 0.4.2_RD_AdvisorIntelligence] Implement CLA continuous view** — `cla` key is now live in `gold/timeseries_chart.json`; RD can begin portal rendering (per ADVI-004 task order)
+2. **[RD 0.4.2_RD_AdvisorIntelligence] Implement CLA continuous view** — `cla` key is now live in `gold/timeseries_chart.json`; RD can begin portal rendering (per ADVI-004 task order)
 
 **Files to touch next:**
 - None for DT — deploy complete
 
 **Do NOT:**
-- Use `aws` CLI directly until WMI is fixed — it will hang
 - Re-enable `build_partner_analytics()` call in `lambda_handler` (marked DISABLED — EC2 script 09 owns that output)

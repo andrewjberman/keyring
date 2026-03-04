@@ -61,7 +61,7 @@ Expected keys include: `stacked_bar`, `rolling_1y`.
 | File | Change | Committed |
 |------|--------|-----------|
 | `infra/aws/ec2/EC2_MANIFEST.json` | deployed_commit + deployed_at updated for bd-gold-layer-runner | Yes — `4a908760` (auto by safe-ec2-deploy.sh) |
-| `org/tier2_senior/0.4.0_DT_ClientPlatform/deliverables/deployment_map.xml` | bd-gold-layer-runner deployed_tag -> bd-v2.15.1 | Yes — pending commit |
+| `org/tier2_senior/0.4.0_DT_ClientPlatform/deliverables/deployment_map.xml` | bd-gold-layer-runner deployed_tag -> bd-v2.15.1 | Yes — `8d338013` |
 
 ---
 
