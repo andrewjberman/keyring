@@ -1,4 +1,4 @@
-# ADVI-004 A1+A2 + ADVI-005 A3 Implementation — 0.4.0_DS_ClientPlatform
+# A-Roll Task Orders — 0.4.0_DS_ClientPlatform
 
 **Date:** 2026-03-04
 **Start Time:** session start
@@ -6,9 +6,10 @@
 
 ## Objective
 
-Work through the A-roll task orders in sequence: ADVI-004 (adv_drill + cla in bd-portal-publisher
-Lambda) and ADVI-005 (stacked_bar + rolling_1y in gold script 10). Also assessed DC task order
-on startup. A4 (script 09 bell curve verification) and A5 (opal-users-v2 investigation) remain.
+Work through all A-roll task orders in sequence: ADVI-004 (adv_drill + cla in bd-portal-publisher
+Lambda), ADVI-005 (stacked_bar + rolling_1y in gold script 10), A4 (script 09 bell curve
+verification), A5 (opal-users-v2 advisor identity investigation). Also assessed DC task order
+on startup.
 
 ---
 
@@ -155,7 +156,8 @@ Syntax verified. Committed at `c9b3ab76`.
 | rolling_1y reuses series['1Y'] directly | No new rolling math needed; existing output matches contract exactly |
 | Data history via session log archaeology (not live S3 query) | AWS CLI hanging in Git Bash on Windows; session logs have confirmed the 2020-06-30 date |
 | A4: no patch needed — signed percentiles are intentional | `calculate_nna_distribution_stats()` docstring and bin design confirm signed distribution is correct; abs() is present where it matters (materiality filter, bin construction) |
-| A4.2 deferred — code verification sufficient | S3 live check is data sanity only; no patch warranted by code analysis; remain blocked by AWS CLI until that is resolved |
+| A4.2 confirmed from S3 | Live header_metrics.json shows non-degenerate signed distribution; p10=-$46K to p90=+$152K; OH net-outflow state correctly shows all-negative segment |
+| A5: Scenario (c) — no mapping exists | No advisorId/advisorName field in opal-users-v2; architects have no portal accounts; email matching not viable (gold layer has no email); recommend `advisorKey` attribute at user creation |
 
 ---
 
@@ -225,7 +227,127 @@ A4.2 remains open pending AWS CLI resolution.
 
 ---
 
-### 13. Stream B2 DT Brief Written
+### 13. A4.2: header_metrics.json NNA Distribution Verified from S3
+
+AWS CLI issue resolved. Read `s3://opal-data-bd/gold/partner_analytics/header_metrics.json`.
+
+**Total firm NNA distribution — current period:**
+
+| Percentile | Value |
+|-----------|-------|
+| p10 | -$46,787.40 |
+| p25 | -$9,066.01 |
+| p50 | -$1,061.62 |
+| p75 | +$19,760.20 |
+| p90 | +$151,675.42 |
+
+**Assessment:** Non-degenerate. ✓ Not all zero. ✓ Not symmetric. ✓ Signed distribution correctly
+reflects real per-relationship period NNA. Median is -$1K (slightly negative — fee noise boundary).
+p10 represents top-10% outflow clients; p90 represents top-10% inflow clients.
+
+**Per-segment samples (selected):**
+
+| Segment | Type | Count | p10 | p50 | p90 |
+|---------|------|-------|-----|-----|-----|
+| TX | state | 464 | -$45,336 | -$1,192 | +$134,753 |
+| OH | state | 5 | -$855,614 | -$15,234 | +$10,052 |
+| AL | state | 10 | -$3,798 | +$5,069 | +$109,539 |
+| travis_penfield | arch | 37 | -$472,924 | -$4,976 | +$201,494 |
+| chase_bertrand | arch | 38 | -$20,348 | +$2,766 | +$907,525 |
+| 49f_house | arch | 399 | -$49,721 | -$1,258 | +$75,978 |
+
+OH state (predominantly outflow): p10=-$855K, p50=-$15K, p90=+$10K — correctly shows a
+net-outflow segment. Signed design is correct for this use case.
+
+Materiality filter confirmed working: TX has 464 counts vs a larger total client base —
+accounts with |NNA| < $1K excluded.
+
+**Conclusion: A4.2 verified. No patch needed. Task order complete.**
+
+---
+
+### 14. A5.1+A5.2+A5.3: opal-users-v2 DynamoDB Investigation
+
+**Table schema:**
+
+| Key | Value |
+|-----|-------|
+| Table name | `opal-users-v2` |
+| Partition key | `PK` (String) |
+| Sort key | `SK` (String) |
+| Item count | 34 |
+| SSE | KMS enabled |
+
+PK patterns:
+- `USER#{userId}` — user profile records (SK=`PROFILE`)
+- `FIRM#{firmId}` — firm records (SK=`META`, `CONFIG#defaults`, `MEMBER#{userId}`)
+
+Fields present on USER#PROFILE items: `userId`, `email`, `name`, `role`, `tier`, `firmId`,
+`passwordHash`, `status`, `createdAt`, `updatedAt`, `mustChangePassword`.
+Optional legacy fields: `migratedFrom`, `migratedAt`.
+
+Fields NOT present (searched explicitly): `advisorId`, `advisorName`.
+
+GSIs:
+- `firmId-index` (PK=firmId, SK=PK) — projects: role, email, name, tier, status
+- `email-index` (PK=email, KEYS_ONLY)
+
+**Advisor-tier user records (tier="advisor", firmId="49financial"):**
+
+| userId | email | name |
+|--------|-------|------|
+| usr_6ad8541dd636 | dan.wohlgemuth@49financial.com | Dan Wohlgemuth |
+| usr_dbd5ca809ff8 | lizah.okoniewski@49financial.com | Lizah Okoniewski |
+
+Neither Dan Wohlgemuth nor Lizah Okoniewski appears in `gold/advisors/` prefix
+(the canonical list of 60+ advisor slugs). They are 49financial staff with portal access
+but are NOT financial architects/advisors in the BD gold data.
+
+**Gold layer architect identifiers (sample from `gold/advisors/` prefix and partner_analytics):**
+`travis_penfield`, `chase_bertrand`, `kyle_sims`, `david_farrell`, `ted_grant`,
+`dean_dillenberg`, `greg_rosner`, `hunter_lloyd`, `josh_henson`, `matt_foxhall`, and ~50 more.
+
+None of these architect names have any corresponding user account in opal-users-v2.
+
+**Mapping scenario determination:**
+
+```
+Scenario: (c) — No existing mapping
+```
+
+Evidence:
+1. No `advisorId` or `advisorName` field in any opal-users-v2 record.
+2. The two advisor-tier 49financial users (Wohlgemuth, Okoniewski) do not correspond to
+   any gold layer architect — they are ops/admin staff, not registered advisors.
+3. The actual financial architects (Travis Penfield, Kyle Sims, etc.) have NO user accounts
+   in opal-users-v2 at all. They cannot log in to the portal.
+4. Email-based matching is not viable: the gold layer stores no email addresses for advisors —
+   architect identity derives entirely from BD transaction data (first/last name, slugified).
+
+**BLOCKER — escalated to COO and CTO (see Next Steps).**
+
+The Books tab advisor identity resolution cannot be implemented until a mapping from
+JWT userId to gold layer advisor slug is established.
+
+**Recommended mapping approach:**
+
+Add an optional `advisorKey` attribute to USER#PROFILE items (e.g., `advisorKey: "travis_penfield"`).
+Populate this at advisor user account creation for `tier: "advisor"` accounts. Portal auth reads
+this field from the JWT-resolved profile and uses it as the gold data lookup key.
+
+This requires:
+- DynamoDB schema extension (additive — no existing records broken)
+- Admin onboarding flow: when creating a new advisor user, enter their `advisorKey` from the
+  gold layer slug list (available from `gold/advisors/` prefix or architect_leaderboard.json)
+- Portal auth middleware: when Books tab requested, verify `advisorKey` matches the requested
+  advisor's data segment
+- No EC2 or Lambda code changes until the mapping is confirmed populated for real users
+
+**Task order A5 complete — findings documented. Blocker flagged below.**
+
+---
+
+### 15. Stream B2 DT Brief Written
 
 Wrote `docs/briefs/devops-brief-advi-005-rolling-flows.md` for `0.4.0_DT_ClientPlatform`.
 Covers: what changed (script 10 only, no infra changes), safe-ec2-deploy.sh command,
@@ -238,26 +360,32 @@ Committed at `75b3b83f`.
 
 ## Blockers
 
-- AWS CLI non-functional in Git Bash on Windows (hangs with "File association not found for
-  extension .py"). Affects:
-  - A4.2: cannot read header_metrics.json from S3 to confirm live distribution threshold values
-  - A5: opal-users-v2 DynamoDB investigation requires live AWS CLI reads
-  Must resolve before either can be fully closed.
+- **A5 BLOCKER — Books Tab Advisor Identity Mapping does not exist (Scenario c).**
+  opal-users-v2 contains no `advisorId` or `advisorName` field on any record. The financial
+  architects in the gold layer (Travis Penfield, Kyle Sims, etc.) have no user accounts in
+  the portal auth system. JWT userId cannot be resolved to a gold layer advisor slug.
+  The Books tab scoped access cannot be implemented until an `advisorKey` attribute is added
+  to opal-users-v2 USER#PROFILE items and populated for advisor-tier accounts.
+  **Escalated to COO and CTO — see Next Steps.**
 
 ---
 
 ## Current State
 
-**Status:** IN PROGRESS (A1+A2+A3 complete; A4 code-verified/S3-blocked; B2 brief complete; A5 blocked)
+**Status:** ALL A-ROLL TASK ORDERS COMPLETE — Scenario (c) blocker flagged to COO + CTO
 **Active branch:** `CLOUD`
 
-Three task orders complete this session: ADVI-004 (A1+A2) at `5f60d30e` and ADVI-005 (A3)
-at `c9b3ab76`. Both commits local on CLOUD. data_contract.xml updated in both — DT deploy
-gates satisfied. DT briefs written for both streams:
-- Stream B1 (bd-portal-publisher Lambda): `docs/briefs/devops-brief-advi-004-adv-drill-cla.md` (commit `f2e3c675`)
-- Stream B2 (script 10 EC2): `docs/briefs/devops-brief-advi-005-rolling-flows.md` (commit `75b3b83f`)
-A4 code-verified: abs() fix confirmed present in `calculate_nna_distribution_stats()` at line 320.
-A4.2 (S3 live-data check) and A5 blocked by AWS CLI issue.
+All five task orders worked this session:
+- **ADVI-004** (A1+A2 adv_drill + cla) — complete, committed `5f60d30e`
+- **ADVI-005** (A3 stacked_bar + rolling_1y) — complete, committed `c9b3ab76`
+- **A4** (script 09 bell curve verification) — complete: code verified + S3 live data confirmed
+- **A5** (opal-users-v2 investigation) — complete: Scenario (c) BLOCKER documented
+
+DT deploy briefs written and committed for both streams:
+- Stream B1 (bd-portal-publisher Lambda): `docs/briefs/devops-brief-advi-004-adv-drill-cla.md`
+- Stream B2 (script 10 EC2): `docs/briefs/devops-brief-advi-005-rolling-flows.md`
+
+Pending: DT to execute both deploys. COO/CTO to resolve Books tab identity mapping gap.
 
 ---
 
@@ -265,26 +393,24 @@ A4.2 (S3 live-data check) and A5 blocked by AWS CLI issue.
 
 > Ordered by priority.
 
-1. **[0.4.0_DT_ClientPlatform] Deploy Stream B1 — bd-portal-publisher** (commit `5f60d30e`)
+1. **[COO + CTO] BLOCKER — Books tab advisor identity mapping** (A5 Scenario c)
+   No JWT userId → gold layer advisor slug mapping exists in opal-users-v2.
+   Required action: add `advisorKey` attribute to USER#PROFILE items for advisor-tier accounts.
+   Recommend: admin onboarding flow sets `advisorKey` = gold layer slug (e.g., `travis_penfield`)
+   at advisor user creation. Portal middleware reads this field for Books tab scoped access.
+   No auth implementation should proceed until this is confirmed populated for real users.
+   Downstream affected: 0.4.0_DE_ClientPlatform (portal auth middleware), 0.4.2_RD_AdvisorIntelligence (Books tab).
+
+2. **[0.4.0_DT_ClientPlatform] Deploy Stream B1 — bd-portal-publisher** (commit `5f60d30e`)
    Full instructions: `docs/briefs/devops-brief-advi-004-adv-drill-cla.md`.
    Next tag: `bd-v2.15.0`.
 
-2. **[0.4.0_DT_ClientPlatform] Deploy Stream B2 — script 10 EC2** (commit `c9b3ab76`)
+3. **[0.4.0_DT_ClientPlatform] Deploy Stream B2 — script 10 EC2** (commit `c9b3ab76`)
    Full instructions: `docs/briefs/devops-brief-advi-005-rolling-flows.md`.
    Next tag: `bd-v2.15.1`.
 
-3. **[0.4.0_DS] A4.2 — Script 09 S3 live data verification** (BLOCKED by AWS CLI)
-   Once AWS CLI functional: read `s3://opal-data-bd/gold/partner_analytics/header_metrics.json`.
-   Inspect `views.nna.current.distribution.total.percentiles` and `views.nna.current.distribution.by_segment`.
-   Confirm P10/P25/Median/P75/P90 are non-degenerate (non-zero, non-symmetric, reflect real data).
-   No patch expected — code analysis confirms correct. This is a data sanity check only.
-
-4. **[0.4.0_DS] A5 — opal-users-v2 DynamoDB investigation** (BLOCKED by AWS CLI)
-   Requires working AWS CLI. Fix AWS CLI in Git Bash first (try aws.cmd or Python invoke).
-   Inspect table schema and sample records. Determine JWT->advisor mapping scenario (a/b/c).
-
 **Files to touch next:**
-- None on DS side pending AWS CLI resolution.
+- None on DS side. Pending COO/CTO resolution of A5 blocker.
 
 **Do NOT:**
 - Re-enable `build_partner_analytics()` in bd-portal-publisher lambda_handler (DISABLED intentionally).
