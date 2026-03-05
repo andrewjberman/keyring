@@ -1,0 +1,23 @@
+{
+  "project_code": "ADVI_YANGV2",
+  "macro_code": "ADVI",
+  "name": "AdvisorIntelligence Yang Feedback V2",
+  "description": "21 work streams (Y1-Y17 + Y3-FE, Y5-FE, Y6b, Y6c, Y6d) from Yang's 4-part review of the AdvisorIntelligence page. Covers Assets Overview header, Distribution tab, Advisors tab, and Books tab. Includes AI RAG executive summary (Y17) as a separate mini-PRD track.",
+  "prds": [
+    {
+      "path": "docs/architecture/ADVISOR_INTELLIGENCE_YANG_FEEDBACK_V2.md",
+      "label": "V2: Yang feedback (21 work streams)",
+      "date": "2026-03-04"
+    }
+  ],
+  "status": "active",
+  "phase": "Phase 1 in motion: FE visual items + Phase 2 DS data batch deploying",
+  "blocking": "DE type wiring gate (ADVI-Y-phase3-de-type-wiring)",
+  "created": "2026-03-04",
+  "pods": [
+    "0.4"
+  ],
+  "pipeline": "bd-pipeline",
+  "thread_counter": 0,
+  "threads": []
+}

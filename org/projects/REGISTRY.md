@@ -1,26 +1,62 @@
 # Project Registry
 
-All active and completed projects. Each project has a code, a PRD, and a thread log.
-Thread serials are `{CODE}-{NNN}` — they join threads to projects across all agent folders.
+All active and completed projects. Each project has a project code, a macro code,
+a JSON file, and a PRD set.
 
-| Code | Project | Status | PRD | Threads |
-|------|---------|--------|-----|---------|
-| ADVI | AdvisorIntelligence | active | `docs/architecture/ADVISOR_INTELLIGENCE_COMPLETION.md` | ADVI-001, ADVI-002, ADVI-003 |
+**Project code format:** `{MACRO}_{6CHAR}` (e.g., `ADVI_V1VERS`)
+**Thread serials:** `{PROJECT_CODE}-{NNN}` (e.g., `ADVI_YANGV2-001`)
+**Project JSON:** `org/projects/{PROJECT_CODE}.json`
+
+Multiple projects can share the same macro code. The macro code identifies
+the surface area; the project code identifies the specific initiative.
+
+---
+
+## Active Projects
+
+| Project Code | Macro | Project Name | Phase | Pods | Blocking | PRDs |
+|---|---|---|---|---|---|---|
+| `ADVI_V1VERS` | `ADVI` | AdvisorIntelligence V1 Completion | Phase 3: FE drill-down + Books MVP | 0.4 | DE type wiring gate | V1 completion spec |
+| `ADVI_YANGV2` | `ADVI` | AdvisorIntelligence Yang Feedback V2 | Phase 1 in motion | 0.4 | DE type wiring gate | Yang Feedback V2 PRD |
+| `PFMG_VISPOL` | `PFMG` | Trade Engine Visual Polish | Phase 0: COO decomposition | 0.3 | COO task order issuance | Visual polish PRD |
+
+---
+
+## Completed / Archived Projects
+
+| Project Code | Macro | Project Name | Completed | Notes |
+|---|---|---|---|---|
+| (none yet) | | | | |
 
 ---
 
 ## Adding a new project
 
-1. Create `org/projects/{CODE}.json` (copy ADVI.json as template)
-2. Set `code`, `name`, `prd`, `status`, `pods`, `description`
-3. Set `thread_counter` to 0, `threads` to []
-4. Add a row to this table
+1. Pick the macro code from `org/projects/MACRO_CODES.md` (or add one if the surface area isn't listed)
+2. Choose a 6-char project suffix that abbreviates the initiative name
+3. Project code = `{MACRO}_{6CHAR}`
+4. Create `org/projects/{PROJECT_CODE}.json` (copy any existing project JSON as template)
+5. Required fields: `project_code`, `macro_code`, `name`, `description`, `prds` (array),
+   `status`, `phase`, `pods`, `blocking`, `created`, `thread_counter`, `threads`
+6. Add a row to the Active Projects table above
+7. Commit with: `org(1.0.0_SA_CTO): register project {PROJECT_CODE}`
+
+## Closing a project
+
+1. Set `status` to `"complete"` in the JSON
+2. Move the row from Active to Completed/Archived in this table
+3. PRDs stay in `docs/architecture/` -- do not archive active project PRDs
 
 ## Thread serial format
 
-`{CODE}-{NNN}` where NNN is zero-padded to 3 digits.
-Thread folder: `org/threads/{CODE}-{NNN}-{slug}/`
-Receipt in agent folder: `{CODE}-{NNN}-{slug}_{other_serials}.md`
+`{PROJECT_CODE}-{NNN}` where NNN is zero-padded to 3 digits.
+Thread folder: `org/threads/{PROJECT_CODE}-{NNN}-{slug}/`
+Receipt in agent folder: `{PROJECT_CODE}-{NNN}-{slug}_{other_serials}.md`
 
-When creating a thread for a project, pass `--project {CODE}` to `create-thread.sh`.
-The script auto-assigns the next serial and updates this project file.
+When creating a thread for a project, pass `--project {PROJECT_CODE}` to `create-thread.sh`.
+The script auto-assigns the next serial and updates the project JSON.
+
+## PRD location
+
+All active PRDs live in `docs/architecture/`. Pre-org-system (v1 era) architecture docs
+are archived to `docs/architecture/archive/` and are not referenced by any active project.

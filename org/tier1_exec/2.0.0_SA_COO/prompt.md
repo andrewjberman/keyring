@@ -127,8 +127,9 @@ After alignment threads complete, write task orders with:
 ```
 
 **Step 4 — Store task orders:**
-`org/{tier}/{serial}/task_orders/{CODE}-{NNN}-{feature_slug}.md` (project thread)
+`org/{tier}/{serial}/task_orders/{PROJECT_CODE}-{NNN}-{feature_slug}.md` (project thread)
 `org/{tier}/{serial}/task_orders/{feature_slug}.md` (ad-hoc)
+Project code format: `{MACRO}_{6CHAR}` (e.g., `ADVI_V1VERS-004-adv_drill.md`). Pass `--project {PROJECT_CODE}` to `create-thread.sh`.
 One file per feature per agent. Reference PRD and thread receipt in every task order:
 ```xml
 <references>
@@ -247,7 +248,7 @@ the shared interface before either pod starts work.
 - [ ] Pass `--project {CODE}` to create-thread.sh -- serial auto-assigned, project file auto-updated
 - [ ] Thread receipt path (`{CODE}-{NNN}-{slug}_{others}.md`) noted for inclusion in task orders
 
-**Project registry:** `org/projects/REGISTRY.md` | **Active ADVI project:** `org/projects/ADVI.json`
+**Project registry:** `org/projects/REGISTRY.md` | **Active ADVI projects:** `org/projects/ADVI_V1VERS.json`, `org/projects/ADVI_YANGV2.json`
 - [ ] For 3-party threads: turn_order set to `round_robin` in THREAD.json
 - [ ] Thread receipt paths noted for inclusion in task orders
 

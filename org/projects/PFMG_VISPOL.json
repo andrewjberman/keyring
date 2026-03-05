@@ -1,0 +1,23 @@
+{
+  "project_code": "PFMG_VISPOL",
+  "macro_code": "PFMG",
+  "name": "Trade Engine Visual Polish",
+  "description": "13 frontend-only visual/UX improvements to PortfolioManagement page from Yang feedback: conditional cell highlighting, gradient color scales, canonical group ordering, zero-weight formatting, size column coloring, finalBet derived column, and Reset Zero button.",
+  "prds": [
+    {
+      "path": "docs/architecture/TRADE_ENGINE_VISUAL_POLISH.md",
+      "label": "Yang feedback: 13-item visual polish spec",
+      "date": "2026-03-04"
+    }
+  ],
+  "status": "active",
+  "phase": "Phase 0: COO decomposition pending",
+  "blocking": "COO task order issuance to Pod 3 DE",
+  "created": "2026-03-05",
+  "pods": [
+    "0.3"
+  ],
+  "pipeline": null,
+  "thread_counter": 0,
+  "threads": []
+}
