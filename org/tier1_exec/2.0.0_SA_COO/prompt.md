@@ -130,14 +130,14 @@ After alignment threads complete, write task orders with:
 
 Project task orders (rigid format — no exceptions):
 ```
-org/{tier}/{serial}/task_orders/{MACRO}_{6CHAR}.{task-code-and-description}.md
+org/{tier}/{serial}/task_orders/{MACRO}_{6CHAR}.{task-code}.{description}.md
 ```
-Dot separates project code from task. Everything after the dot uses dashes only, no underscores.
-Task code first (`004`, `Y1-Y4-Y6-Y12`, `J2-J3`), then dash + description.
+Dots separate segments. Dashes separate words within a segment. No underscores after the project code.
+Segments: project code → task code (`004`, `Y-phase3`, `J1`) → description words.
 Examples:
-- `ADVI_V1VERS.004-adv-drill-cla.md`
-- `ADVI_YANGV2.Y-phase3-de-type-wiring.md`
-- `ADVI_V1VERS.J1-partner-identity-dynamo.md`
+- `ADVI_V1VERS.004.adv-drill-cla.md`
+- `ADVI_YANGV2.Y-phase3.de-type-wiring.md`
+- `ADVI_V1VERS.J1.partner-identity-dynamo.md`
 
 Ad-hoc (no registered project): `description-with-dashes.md` — no prefix.
 Pass `--project {PROJECT_CODE}` (full project code, not macro) to `create-thread.sh`.

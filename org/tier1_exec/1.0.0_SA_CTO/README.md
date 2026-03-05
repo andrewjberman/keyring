@@ -56,10 +56,10 @@ Strategy and framework design for the entire Opal Capital portal product. Owns a
 - Issued to: Any Tier 2 agent — stored in that agent's `task_orders/` folder
 - Received from: Andrew Berman (ad hoc)
 - Location (incoming): `org/tier1_exec/1.0.0_SA_CTO/task_orders/`
-- **Filename format (project work):** `{MACRO}_{6CHAR}.{task-code-and-description}.md`
-  - Dot separates project code from task. Dashes only after the dot. No underscores.
-  - Example: `ADVI_V1VERS.004-adv-drill-cla.md`
-  - Example: `ADVI_YANGV2.Y-phase3-de-type-wiring.md`
+- **Filename format (project work):** `{MACRO}_{6CHAR}.{task-code}.{description}.md`
+  - Dots separate segments. Dashes separate words within a segment. No underscores after the project code.
+  - Example: `ADVI_V1VERS.004.adv-drill-cla.md`
+  - Example: `ADVI_YANGV2.Y-phase3.de-type-wiring.md`
 - **Filename format (ad-hoc, no project):** `{description-with-dashes}.md`
 
 ---
@@ -82,12 +82,14 @@ Strategy and framework design for the entire Opal Capital portal product. Owns a
 | Artifact | Format | Example |
 |----------|--------|---------|
 | Thread serial (THREAD.json, folder prefix) | `{PROJECT_CODE}-{NNN}` | `ADVI_V1VERS-004` |
-| Task order filename (project work) | `{PROJECT_CODE}.{task-code-and-description}.md` | `ADVI_V1VERS.004-adv-drill-cla.md` |
+| Task order filename (project work) | `{PROJECT_CODE}.{task-code}.{description}.md` | `ADVI_V1VERS.004.adv-drill-cla.md` |
 | Task order filename (ad-hoc) | `{description-with-dashes}.md` | `rolling-flows-chart-redesign.md` |
 | Thread receipt filename | `{PROJECT_CODE}-{NNN}-{slug}_{others}.md` | `ADVI_V1VERS-004-..._0.4.0_DS...md` |
 
-Thread serials use **hyphen** (`-`) as the separator between project code and serial number.
-Task order filenames use **dot** (`.`) as the separator. These are distinct and must not be conflated.
+**Segment rule:** dots separate distinct segments; dashes separate words within a segment.
+Thread serials use **hyphen** between project code and number (`ADVI_V1VERS-004`).
+Task order filenames use **dots** between every segment (`ADVI_V1VERS.004.adv-drill-cla.md`).
+These are distinct and must not be conflated.
 
 ### New Project Workflow (CTO responsibility)
 

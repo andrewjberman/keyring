@@ -111,11 +111,11 @@ When Andrew presents a new goal that constitutes a project (multi-session, multi
 
 All project task orders use this filename format — rigid, no exceptions:
 ```
-{MACRO}_{6CHAR}.{task-code-and-description}.md
+{MACRO}_{6CHAR}.{task-code}.{description}.md
 ```
-Dot separates project code from task. Everything after the dot uses dashes only (no underscores).
-Task code first (`004`, `Y1-Y4`, `J2-J3`), then a dash and a description.
-Examples: `ADVI_V1VERS.004-adv-drill-cla.md`, `ADVI_YANGV2.Y-phase3-de-type-wiring.md`
+Dots separate segments. Dashes separate words within a segment. No underscores after the project code.
+Segments: project code → task code (`004`, `Y-phase3`, `J1`) → description words.
+Examples: `ADVI_V1VERS.004.adv-drill-cla.md`, `ADVI_YANGV2.Y-phase3.de-type-wiring.md`
 Ad-hoc (no project): plain `description-with-dashes.md`, no prefix.
 
 ### Maintaining projects
