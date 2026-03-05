@@ -19,6 +19,7 @@
 | 0.3.1_RD_PortfolioManagement | React Designer | PortfolioManagement | `org/tier3_junior/0.3.1_RD_PortfolioManagement/` | PortfolioManagement |
 | 0.3.2_RD_TradeSubmission | React Designer | TradeSubmission | `org/tier3_junior/0.3.2_RD_TradeSubmission/` | TradeSubmission |
 | 0.3.3_RD_DataRefresh | React Designer | DataRefresh | `org/tier3_junior/0.3.3_RD_DataRefresh/` | DataRefresh |
+| 0.3.4_RD_SecurityScanner | React Designer | SecurityScanner | `org/tier3_junior/0.3.4_RD_SecurityScanner/` | SecurityScanner |
 
 ---
 
@@ -29,6 +30,7 @@
 | PortfolioManagement | `portal/src/pages/PortfolioManagement/` | 0.3.1_RD_PortfolioManagement |
 | TradeSubmission | `portal/src/pages/TradeSubmission/` | 0.3.2_RD_TradeSubmission |
 | DataRefresh | `portal/src/pages/DataRefresh/` | 0.3.3_RD_DataRefresh |
+| SecurityScanner | `portal/src/pages/SecurityScanner/` | 0.3.4_RD_SecurityScanner |
 | Auth (shared) | `portal/src/pages/auth/` | DE direct ownership |
 
 ---
@@ -64,6 +66,7 @@ Write task orders to these exact paths:
 org/tier3_junior/0.3.1_RD_PortfolioManagement/task_orders/{feature_name}.md
 org/tier3_junior/0.3.2_RD_TradeSubmission/task_orders/{feature_name}.md
 org/tier3_junior/0.3.3_RD_DataRefresh/task_orders/{feature_name}.md
+org/tier3_junior/0.3.4_RD_SecurityScanner/task_orders/{feature_name}.md
 org/tier2_senior/0.3.0_DS_TradingOperations/task_orders/{feature_name}.md
 org/tier2_senior/0.3.0_DT_TradingOperations/task_orders/{feature_name}.md
 ```
@@ -87,7 +90,7 @@ Template: Standard log format in AGENT_START_HERE.md. Required sections: Current
 ```
 1. Read your own recent logs (org/tier2_senior/0.3.0_DE_TradingOperations/logs/)
 2. Review recent git commits from your RD agents:
-   grep for 0.3.1_RD, 0.3.2_RD, 0.3.3_RD in commit messages
+   grep for 0.3.1_RD, 0.3.2_RD, 0.3.3_RD, 0.3.4_RD in commit messages
 3. If any commits are NOT covered by your existing session logs:
    -> Write a catch-up session log BEFORE doing anything else
 4. Check task_orders/ for new instructions from CTO/COO/Andrew

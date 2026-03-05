@@ -72,6 +72,7 @@ Name = Responsibility scope
   |   0.3.1_RD_PortfolioMgmt   |  | 0.4.0_DS (Data)             |
   |   0.3.2_RD_TradeSubmission  |  |                              |
   |   0.3.3_RD_DataRefresh      |  | Leaf agents:                 |
+  |   0.3.4_RD_SecurityScanner  |  |                              |
   +------------------------------+  |   0.4.1_RD_ModelPortfolios  |
                                      |   0.4.2_RD_AdvisorIntel     |
                                      +------------------------------+
@@ -90,7 +91,7 @@ Name = Responsibility scope
 |-----|---------|-------------|-----------|----------------|
 | 1 - MarketIntelligence | 0.1.0_DE | 0.1.0_DT | 0.1.0_DS | 0.1.1, 0.1.2, 0.1.3 |
 | 2 - PortfolioAnalytics | 0.2.0_DE | 0.2.0_DT | 0.2.0_DS | 0.2.1, 0.2.2, 0.2.3, 0.2.4, 0.2.5, 0.2.6 |
-| 3 - TradingOperations | 0.3.0_DE | 0.3.0_DT | 0.3.0_DS | 0.3.1, 0.3.2, 0.3.3 |
+| 3 - TradingOperations | 0.3.0_DE | 0.3.0_DT | 0.3.0_DS | 0.3.1, 0.3.2, 0.3.3, 0.3.4 |
 | 4 - ClientPlatform | 0.4.0_DE | 0.4.0_DT | 0.4.0_DS | 0.4.1, 0.4.2 |
 
 ### Shared Services (report to CTO + COO directly)
@@ -194,5 +195,5 @@ Examples:
 |------|-------|-----------|
 | Tier 1 (Exec) | 2 | 2 SA |
 | Tier 2 (Senior) | 15 | 4 DE + 4 DT + 4 DS + 3 AE |
-| Tier 3 (Junior) | 14 | 14 RD |
-| **Total** | **31** | |
+| Tier 3 (Junior) | 15 | 15 RD |
+| **Total** | **32** | |

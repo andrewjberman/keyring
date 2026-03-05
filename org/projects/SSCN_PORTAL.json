@@ -1,0 +1,37 @@
+{
+  "project_code": "SSCN_PORTAL",
+  "macro_code": "SSCN",
+  "name": "Security Scanner Portal Page",
+  "description": "Port Yang's Factor_Scanning_Model.xlsm to the portal as a new Security Scanner page. Multi-factor security screening across 6 universes (S&P 500, Russell 1000, Russell 1000 Value, MSCI ACWI ex-US, MSCI EAFE, MSCI EAFE Value) and 255 factors across 11 categories. PMs select factors, assign weights, and see dynamically ranked securities.",
+  "prds": [
+    {
+      "path": "docs/architecture/SECURITY_SCANNER_PRD.md",
+      "label": "Security Scanner PRD -- Excel-to-portal port spec",
+      "date": "2026-03-05"
+    }
+  ],
+  "status": "active",
+  "phase": "Phase 0: PRD + data architecture",
+  "blocking": "Pattern 0 thread for data architecture (DS + DE + AE)",
+  "created": "2026-03-05",
+  "pods": [
+    "0.3"
+  ],
+  "pipeline": null,
+  "thread_counter": 1,
+  "threads": [
+    {
+      "serial": "SSCN_PORTAL-001",
+      "thread_id": "SSCN_PORTAL-001-pattern-0-security-scanner-data-architec",
+      "topic": "Pattern 0: Security Scanner data architecture -- pipeline storage API shape",
+      "participants": [
+        "0.3.0_DS_TradingOperations",
+        "0.5.0_AE_OpalETL",
+        "0.3.0_DE_TradingOperations"
+      ],
+      "pattern": "unset",
+      "status": "active",
+      "date": "2026-03-05"
+    }
+  ]
+}

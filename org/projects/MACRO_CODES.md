@@ -59,6 +59,7 @@ Responsible pod: `0.3.0_DE` / `0.3.0_DS` / `0.3.0_DT`
 | `PFMG` | PortfolioManagement | `portal/src/pages/PortfolioManagement/` | `0.3.1_RD_PortfolioManagement` | portfolio-management |
 | `TRSB` | TradeSubmission | `portal/src/pages/TradeSubmission/` | `0.3.2_RD_TradeSubmission` | smartx-pipeline |
 | `DRFR` | DataRefresh | `portal/src/pages/DataRefresh/` | `0.3.3_RD_DataRefresh` | (cross-pipeline) |
+| `SSCN` | SecurityScanner | `portal/src/pages/SecurityScanner/` | `0.3.4_RD_SecurityScanner` | TBD (Pattern 0) |
 
 ---
 
