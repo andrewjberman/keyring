@@ -58,6 +58,22 @@
 
 ---
 
+## New Page Checklist (DE Responsibility)
+
+When issuing task orders for a new portal page, DE MUST include App.tsx registration
+as an explicit requirement. RD agents cannot commit outside their page directory, so
+this always falls to DE. Every new page requires these changes to `portal/src/App.tsx`:
+
+1. **Lazy import** -- `const PageName = lazy(() => import('./pages/PageName/index').then(m => ({ default: m.PageName })))`
+2. **Icon import** -- add the page's icon to the lucide-react import block
+3. **Sidebar entry** -- add to the correct `NAV_SECTIONS` section with appropriate access flags (`requiresDev`, `requiresAdmin`)
+4. **Route** -- add `<Route>` with `<ProtectedRoute>` wrapping and correct access flags
+
+This was missed in SSCN_PORTAL and caught only in CTO review after the page was "complete"
+but invisible in the sidebar. Do not repeat this gap.
+
+---
+
 ## Task Order Paths
 
 Write task orders to these exact paths:
