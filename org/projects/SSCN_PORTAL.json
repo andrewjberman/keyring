@@ -18,7 +18,7 @@
     "0.3"
   ],
   "pipeline": null,
-  "thread_counter": 1,
+  "thread_counter": 2,
   "threads": [
     {
       "serial": "SSCN_PORTAL-001",
@@ -27,6 +27,19 @@
       "participants": [
         "0.3.0_DS_TradingOperations",
         "0.5.0_AE_OpalETL",
+        "0.3.0_DE_TradingOperations"
+      ],
+      "pattern": "unset",
+      "status": "active",
+      "date": "2026-03-05"
+    },
+    {
+      "serial": "SSCN_PORTAL-002",
+      "thread_id": "SSCN_PORTAL-002-pattern-0-design-securityscanner-ui----p",
+      "topic": "Pattern 0 (design): SecurityScanner UI -- PortfolioManagement pattern alignment and component reuse plan",
+      "participants": [
+        "0.3.1_RD_PortfolioManagement",
+        "0.3.4_RD_SecurityScanner",
         "0.3.0_DE_TradingOperations"
       ],
       "pattern": "unset",
