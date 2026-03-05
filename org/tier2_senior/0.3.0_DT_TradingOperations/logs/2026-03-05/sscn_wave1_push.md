@@ -1,38 +1,61 @@
-# SSCN Wave 1 Push — 0.3.0_DT_TradingOperations
+# SSCN Wave 1 + Wave 2 Push — 0.3.0_DT_TradingOperations
 
 **Date:** 2026-03-05
 **Start Time:** ~14:00
-**End Time:** ~14:15
+**End Time:** ~14:45
 
 ---
 
 ## Objective
 
-Execute Wave 1 push for SSCN_PORTAL-002: DE (0.3.0_DE_TradingOperations) signaled two commits ready
-on portal submodule DEV. QA, verify, and push to unblock RD (0.3.4_RD_SecurityScanner).
+Execute Wave 1 and Wave 2 pushes for SSCN_PORTAL-002. Wave 1: DE signaled two commits (extraction +
+endpoint file). Wave 2: RD full page implementation (11 files) + DE TSC fixes + DE categoryOrder
+correction — DE reviewed all files and signaled ready.
 
 ---
 
 ## Deployment Sequence
 
+### Wave 1 — DE Extraction + Endpoint File
+
 | Step | Action | Result |
 |------|--------|--------|
 | 1 | Verify commits present on DEV | `4b5aac8` + `a796555` confirmed on DEV |
 | 2 | Review commit stats | 4b5aac8: 6 files (colorUtils.ts + factorOrder.ts extracted, 4 PM consumers updated); a796555: 1 file (security-scanner.ts created, 98 lines) |
-| 3 | Grep stale imports | `git grep "PortfolioManagement/utils/colorUtils\|PortfolioManagement/utils/factorOrder"` — exit 1, no matches (clean) |
-| 4 | Confirm PM-local copies deleted | `src/pages/PortfolioManagement/utils/` contains only `exportToCSV.ts`, `factorDescriptions.ts`, `mockData.ts`, `riskFactorFilter.ts`, `typeConversions.ts` — colorUtils.ts and factorOrder.ts absent (correct) |
+| 3 | Grep stale imports (all source) | `git grep "PortfolioManagement/utils/colorUtils\|..."` — exit 1, no matches (clean) |
+| 4 | Confirm PM-local copies deleted | `src/pages/PortfolioManagement/utils/` — colorUtils.ts and factorOrder.ts absent; other PM-local utils intact |
 | 5 | Confirm shared copies present | `src/utils/colorUtils.ts` + `src/utils/factorOrder.ts` + `src/api/endpoints/security-scanner.ts` — all present |
-| 6 | tsc | DE confirmed bunx tsc -b passes (not re-run by DT — DE QA accepted) |
+| 6 | tsc | DE confirmed bunx tsc -b passes |
 | 7 | git push origin DEV | `4bf3aa1..9c2ff00 DEV -> DEV` |
+
+### Wave 2 — RD Page Implementation + DE Fixes
+
+| Step | Action | Result |
+|------|--------|--------|
+| 1 | Verify Wave 2 commits on DEV | `d473304` (DESIGN_SPEC.md + types.ts), `cf16ff4` (11 implementation files), `4460041` (DE TSC fixes), `bb3759b` (DE categoryOrder fix) — all present |
+| 2 | Section 10 gate | `d473304` (DESIGN_SPEC.md) committed before `cf16ff4` (.tsx files) — gate met |
+| 3 | Section 3B check (TS/TSX only) | `git grep "PortfolioManagement/utils"` scoped to SecurityScanner TS/TSX — exit 1, clean |
+| 4 | Section 3A — shared imports | quintileUtils.ts: `import { getGradientBackground } from '@/utils/colorUtils'` — correct |
+| 5 | Section 4 — table primitives | FactorBankTab + FactorDataTab: `<table>/<tbody>` (HTML). UniverseDataTab + UniverseScannerTab: `AgGridReact` + `AllCommunityModule` — correct |
+| 6 | Section 5 — gradient formula | `getGradientBackground(p - 50, -50, 50, false)` exact in quintileUtils.ts — correct |
+| 7 | Section 6 — raw columns | `return [...base, ...pctlCols, ...rawCols]` in UniverseScannerTab — raw at far right, correct |
+| 8 | Section 8 — shell composition | `ScanLine` import, `PageHeaderCleanBadge` → `ScannerHeaderPanel` → `TabNavigation` — correct |
+| 9 | tsc | DE confirmed bunx tsc -b passes (4460041 commit message) |
+| 10 | git push origin DEV | Already current — all commits through `1c61990` on remote DEV |
 
 ## Verification
 
 ```
+Wave 1:
 To https://github.com/Opal-Capital/portal.git
    4bf3aa1..9c2ff00  DEV -> DEV
+
+Wave 2:
+git push origin DEV -> Everything up-to-date
+Remote DEV confirmed at 1c61990 (includes bb3759b, 4460041, cf16ff4, d473304)
 ```
 
-Push includes Wave 1 commits plus one earlier unrelated commit (9c2ff00 Y6 filter fix from 0.4.2).
+Full SSCN commit chain on remote DEV: `4b5aac8 → a796555 → d473304 → cf16ff4 → 4460041 → bb3759b`
 
 ---
 
@@ -40,8 +63,9 @@ Push includes Wave 1 commits plus one earlier unrelated commit (9c2ff00 Y6 filte
 
 | Decision | Rationale |
 |----------|-----------|
-| Accepted DE's tsc result without re-running | tsc re-run requires full bun install environment; DE ran it immediately before signaling. Stale import grep + file existence checks are sufficient DT QA for an extraction-only commit. |
-| No re-run of tsc locally | DE committed: "bunx tsc -b passes" in commit message and log. DT's role is to validate structure, not duplicate DE's compile step. |
+| Accepted DE's tsc result without re-running | DE committed "bunx tsc -b passes" in both commit messages (4460041, bb3759b). DT structural checks (imports, table primitives, formula, column order, shell composition) are the correct QA layer; re-running tsc duplicates DE's work. |
+| Wave 2 "already up-to-date" accepted as confirmed push | Remote DEV confirmed at 1c61990 via `git log origin/DEV` — all SSCN commits including bb3759b are present. No gap. |
+| DESIGN_SPEC.md "PortfolioManagement/utils" match treated as documentation, not stale import | Match was in DESIGN_SPEC.md (a .md file), not a .ts/.tsx file. Rescoped grep to TS/TSX only — exit 1. |
 
 ---
 
@@ -49,7 +73,8 @@ Push includes Wave 1 commits plus one earlier unrelated commit (9c2ff00 Y6 filte
 
 | File | Change | Committed |
 |------|--------|-----------|
-| portal submodule DEV | Pushed `4bf3aa1..9c2ff00` | Yes — remote DEV updated |
+| portal submodule DEV (Wave 1) | Pushed `4bf3aa1..9c2ff00` | Yes — remote DEV updated |
+| portal submodule DEV (Wave 2) | Verified at `1c61990`; all SSCN commits live | Yes — already on remote DEV |
 
 ---
 
@@ -64,30 +89,30 @@ None.
 **Status:** IN PROGRESS
 **Active branch:** portal submodule DEV (pushed), parent repo CLOUD
 
-Wave 1 is live on portal DEV. `portal/src/utils/colorUtils.ts`, `portal/src/utils/factorOrder.ts`,
-and `portal/src/api/endpoints/security-scanner.ts` are now on remote DEV. RD (0.3.4_RD_SecurityScanner)
-is unblocked to begin DESIGN_SPEC.md and types.ts. Wave 2 (RD page implementation) is pending
-RD completing their work and signaling readiness. AE (0.5.0_AE_OpalETL) Terraform status is
-AMBIGUOUS — no logs exist in their folder.
-
-`deployment_map.xml` update for SSCN is deferred until after Wave 2 push + AE Lambda deploy
-(task order requirement 5: update after both waves complete and AE has deployed).
+Both Wave 1 and Wave 2 are live on remote portal DEV. Full SSCN commit chain confirmed:
+`4b5aac8 → a796555 → d473304 → cf16ff4 → 4460041 → bb3759b`. All 12 SecurityScanner
+implementation files are on DEV. DS Lambda source is on CLOUD (3879941c + 7811afcb).
+AE (0.5.0_AE_OpalETL) has no logs yet — AMBIGUOUS, not started. Remaining gate: AE
+deploys `opal-security-scanner-processor` Lambda + S3 trigger + presign route extension
+in `opal-data-refresh-api`. `deployment_map.xml` SSCN entry is deferred until AE confirms deploy.
 
 ---
 
 ## Next Steps
 
-1. **[0.3.4_RD_SecurityScanner] Begin DESIGN_SPEC.md** — gate: must be committed and DE-approved before any .tsx. No further DE dependency for DESIGN_SPEC.md or types.ts scaffolding.
+1. **[0.5.0_AE_OpalETL] Begin Terraform deploy** — AE is fully unblocked. DS Lambda source at `3879941c`. Task order: `SSCN_PORTAL.001-002.terraform-infra.md`. Two modules: new `security-scanner-pipeline/` + existing `portal-notifications/` for S3 trigger. Plus presign route in `opal-data-refresh-api`. Tag target: `security-scanner-v1.0.0`. AE has no logs yet — AMBIGUOUS, needs to be spun up.
 
-2. **[0.3.0_DT_TradingOperations] Monitor 0.3.4_RD_SecurityScanner logs** — when RD signals DESIGN_SPEC.md committed, notify DE for approval. When RD signals page implementation complete, run Wave 2 QA (SSCN_DESIGN_CONTRACT.md checklist) and push.
+2. **[0.3.0_DT_TradingOperations] Monitor 0.5.0_AE_OpalETL logs** — when AE signals Lambda + S3 trigger + presign route live, validate end-to-end: presign upload route responds, test Excel upload triggers Lambda, JSON artifacts appear in `opal-data-portal-v2/json/security_scanner/latest/`.
 
-3. **[0.3.0_DT_TradingOperations] Monitor 0.5.0_AE_OpalETL logs** — AE status is currently AMBIGUOUS (no logs). Confirm Lambda + S3 trigger + presign route deploy before end-to-end validation.
+3. **[0.3.0_DT_TradingOperations] Update deployment_map.xml** — after AE deploy confirmed. Add SecurityScanner page entry per task order requirement 5: portal path, shared utils, API endpoint file, backend Lambda (`opal-security-scanner-processor`, owned by AE).
 
-4. **[0.3.0_DT_TradingOperations] Wave 2 push** — after RD signals complete: QA against SSCN_DESIGN_CONTRACT.md sections 3A/3B/4/5/6/8/10, tsc, push portal DEV.
+4. **[0.3.0_DT_TradingOperations] Signal DE** — after end-to-end validation passes. DE then confirms data flow and authorizes DEV → PROD merge.
 
-5. **[0.3.0_DT_TradingOperations] Update deployment_map.xml** — after Wave 2 push + AE deploy confirmed. Add SecurityScanner page entry per task order requirement 5.
+**Files to touch next:**
+- `org/tier2_senior/0.3.0_DT_TradingOperations/deliverables/deployment_map.xml` — add SecurityScanner page entry after AE deploy
+- `org/tier2_senior/0.3.0_DT_TradingOperations/task_orders/SSCN_PORTAL.001-002.push-and-deploy.md` — mark complete after deployment_map.xml update
 
 **Do NOT:**
-- Push portal DEV to PROD — that requires explicit DE authorization after full end-to-end validation
-- Run terraform plan/apply — AE owns SSCN infra
-- Wave 2 push before RD signals complete and DESIGN_SPEC.md is DE-approved
+- Push portal DEV to PROD — requires DE authorization after full end-to-end validation with real data
+- Run terraform plan/apply — AE owns all SSCN infra
+- Mark SSCN task order complete before deployment_map.xml is updated
