@@ -2,7 +2,7 @@
 
 **Date:** 2026-03-05
 **Start Time:** ~14:00
-**End Time:** ~14:45
+**End Time:** ~15:30
 
 ---
 
@@ -86,15 +86,16 @@ None.
 
 ## Current State
 
-**Status:** IN PROGRESS
+**Status:** COMPLETE
 **Active branch:** portal submodule DEV (pushed), parent repo CLOUD
 
-Both Wave 1 and Wave 2 are live on remote portal DEV. Full SSCN commit chain confirmed:
-`4b5aac8 → a796555 → d473304 → cf16ff4 → 4460041 → bb3759b`. All 12 SecurityScanner
-implementation files are on DEV. DS Lambda source is on CLOUD (3879941c + 7811afcb).
-AE (0.5.0_AE_OpalETL) has no logs yet — AMBIGUOUS, not started. Remaining gate: AE
-deploys `opal-security-scanner-processor` Lambda + S3 trigger + presign route extension
-in `opal-data-refresh-api`. `deployment_map.xml` SSCN entry is deferred until AE confirms deploy.
+Full SSCN pipeline is live end-to-end. Portal DEV at `c44d5b2` (includes App.tsx
+SecurityScanner registration). DS Lambda fixes at `82463f79` (sentinel 42 + country.title()).
+AE deployed `security-scanner-v1.0.0`: Lambda `opal-security-scanner-processor` at
+2048MB/300s with `security-scanner-deps:1` layer, S3 trigger on `security_scanner/uploads/*.xlsx`
+registered in portal-notifications, presign route `POST /api/scoped/security-scanner/upload-url`
+in opal-data-refresh-api. `deployment_map.xml` updated with SecurityScanner page entry.
+SSCN task order `SSCN_PORTAL.001-002.push-and-deploy.md` marked complete.
 
 ---
 
@@ -106,13 +107,8 @@ in `opal-data-refresh-api`. `deployment_map.xml` SSCN entry is deferred until AE
 
 3. **[0.3.0_DT_TradingOperations] Update deployment_map.xml** — after AE deploy confirmed. Add SecurityScanner page entry per task order requirement 5: portal path, shared utils, API endpoint file, backend Lambda (`opal-security-scanner-processor`, owned by AE).
 
-4. **[0.3.0_DT_TradingOperations] Signal DE** — after end-to-end validation passes. DE then confirms data flow and authorizes DEV → PROD merge.
-
-**Files to touch next:**
-- `org/tier2_senior/0.3.0_DT_TradingOperations/deliverables/deployment_map.xml` — add SecurityScanner page entry after AE deploy
-- `org/tier2_senior/0.3.0_DT_TradingOperations/task_orders/SSCN_PORTAL.001-002.push-and-deploy.md` — mark complete after deployment_map.xml update
+**[COMPLETED THIS SESSION]** — deployment_map.xml updated, task order marked complete.
 
 **Do NOT:**
-- Push portal DEV to PROD — requires DE authorization after full end-to-end validation with real data
-- Run terraform plan/apply — AE owns all SSCN infra
-- Mark SSCN task order complete before deployment_map.xml is updated
+- Push portal DEV to PROD without DE authorization + confirmed data flow with real FactSet data
+- Add S3 notification config to security-scanner-pipeline/ — portal-notifications owns all triggers on opal-data-portal-v2
