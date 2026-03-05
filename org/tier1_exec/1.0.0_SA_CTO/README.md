@@ -91,6 +91,19 @@ Thread serials use **hyphen** between project code and number (`ADVI_V1VERS-004`
 Task order filenames use **dots** between every segment (`ADVI_V1VERS.004.adv-drill-cla.md`).
 These are distinct and must not be conflated.
 
+### Blocker Verification (enforce in all task orders and PRDs)
+
+Agents must not declare BLOCKED without first checking the blocking agent's directory.
+The three valid statuses are:
+
+- **BLOCKED** — evidence found in blocking agent's logs/task_orders confirming dependency is pending
+- **AMBIGUOUS** — no corroborating evidence in blocking agent's directory; route to COO/DE
+- *(no blocker)* — evidence confirms dependency already delivered; agent proceeds
+
+If a task order or session log arrives stating BLOCKED without citing the blocking
+agent's log or task order path as evidence, treat it as AMBIGUOUS and investigate.
+Full protocol: `org/AGENT_START_HERE.md` → Blocker Verification Protocol.
+
 ### New Project Workflow (CTO responsibility)
 
 1. Pick or add a macro code in `org/projects/MACRO_CODES.md`

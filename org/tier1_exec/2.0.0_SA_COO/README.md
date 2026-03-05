@@ -95,6 +95,20 @@ Thread serials use **hyphen** between project code and number (`ADVI_V1VERS-004`
 Task order filenames use **dots** between every segment (`ADVI_V1VERS.004.adv-drill-cla.md`).
 Never conflate the two patterns.
 
+### Blocker Verification (enforce across all pods)
+
+Agents must not declare BLOCKED without first checking the blocking agent's directory.
+The three valid statuses are:
+
+- **BLOCKED** — evidence found in blocking agent's logs/task_orders confirming dependency is pending
+- **AMBIGUOUS** — no corroborating evidence in blocking agent's directory; COO resolves
+- *(no blocker)* — evidence confirms dependency already delivered; agent proceeds
+
+When a pod agent reports BLOCKED, verify it: check the cited blocking agent's directory
+before issuing a new task order or escalating. If no evidence path is cited, reclassify
+as AMBIGUOUS and resolve the dependency chain visibility directly.
+Full protocol: `org/AGENT_START_HERE.md` → Blocker Verification Protocol.
+
 ### Task Order Issuance Protocol (COO responsibility)
 
 When issuing task orders from a project thread (`--project {PROJECT_CODE}`):
