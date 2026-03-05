@@ -16,9 +16,9 @@ the surface area; the project code identifies the specific initiative.
 
 | Project Code | Macro | Project Name | Phase | Pods | Blocking | PRDs |
 |---|---|---|---|---|---|---|
-| `ADVI_V1VERS` | `ADVI` | AdvisorIntelligence V1 Completion | Phase 3: FE drill-down + Books MVP | 0.4 | DE type wiring gate | V1 completion spec |
-| `ADVI_YANGV2` | `ADVI` | AdvisorIntelligence Yang Feedback V2 | Phase 1 in motion | 0.4 | DE type wiring gate | Yang Feedback V2 PRD |
+| `ADVI_YANGV2` | `ADVI` | AdvisorIntelligence Yang Feedback V2 | Phase 3: 8/9 complete, DT push pending, Y14 gap | 0.4 | DT portal push + COO Y14 task order + CEO NNA go/no-go | Yang Feedback V2 PRD |
 | `PFMG_VISPOL` | `PFMG` | Trade Engine Visual Polish | Phase 0: COO decomposition | 0.3 | COO task order issuance | Visual polish PRD |
+| `SSCN_PORTAL` | `SSCN` | Security Scanner Portal Page | Phase 0: PRD + data architecture | 0.3 | Pattern 0 thread (data arch) | Security Scanner PRD |
 
 ---
 
@@ -26,7 +26,7 @@ the surface area; the project code identifies the specific initiative.
 
 | Project Code | Macro | Project Name | Completed | Notes |
 |---|---|---|---|---|
-| (none yet) | | | | |
+| `ADVI_V1VERS` | `ADVI` | AdvisorIntelligence V1 Completion | 2026-03-05 | 8/8 task orders verified complete |
 
 ---
 

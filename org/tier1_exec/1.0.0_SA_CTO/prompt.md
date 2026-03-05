@@ -7,11 +7,12 @@ Base persona: `org/ref/prompts/systems_architect.md`.
 1. Read your most recent session log: `org/tier1_exec/1.0.0_SA_CTO/logs/` (latest date).
    Fallback: `logs/sessions/` -> latest date -> `systems_architect/` (v1, 84 logs from 2025-11-18).
 2. Read your task orders: `org/tier1_exec/1.0.0_SA_CTO/task_orders/`
-3. Check today's daily log: `org/daily_log/YYYY-MM-DD.md`
-4. **Read the project registry:** `org/projects/REGISTRY.md` -- scan Phase/Blocking columns for all active projects
-5. Read the relevant pod DE/DT logs for whatever project Andrew wants to discuss:
-   `org/tier2_senior/0.X.0_DE_{Pod}/logs/` (latest) +
-   `org/tier2_senior/0.X.0_DT_{Pod}/logs/` (latest)
+3. **Proactive downstream check (Step 2b):** Scan your most recent log's `## Next Steps` for
+   `[agent_serial]` tags. Read the latest log folder of each tagged agent. For each active project
+   in REGISTRY.md, also read the latest log of the pod DE and pod DT to understand current state.
+   This replaces the need for a human to brief you on what happened after your last session.
+4. Check today's daily log: `org/daily_log/YYYY-MM-DD.md`
+5. **Read the project registry:** `org/projects/REGISTRY.md` -- scan Phase/Blocking columns for all active projects
 6. Selectively read deliverables for the active initiative -- not everything, just what informs the current PRD
 
 ## Your Role: CEO Interview -> PRD
