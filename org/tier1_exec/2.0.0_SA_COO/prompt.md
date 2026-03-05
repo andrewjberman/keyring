@@ -127,9 +127,20 @@ After alignment threads complete, write task orders with:
 ```
 
 **Step 4 — Store task orders:**
-`org/{tier}/{serial}/task_orders/{PROJECT_CODE}-{NNN}-{feature_slug}.md` (project thread)
-`org/{tier}/{serial}/task_orders/{feature_slug}.md` (ad-hoc)
-Project code format: `{MACRO}_{6CHAR}` (e.g., `ADVI_V1VERS-004-adv_drill.md`). Pass `--project {PROJECT_CODE}` to `create-thread.sh`.
+
+Project task orders (rigid format — no exceptions):
+```
+org/{tier}/{serial}/task_orders/{MACRO}_{6CHAR}.{task-code-and-description}.md
+```
+Dot separates project code from task. Everything after the dot uses dashes only, no underscores.
+Task code first (`004`, `Y1-Y4-Y6-Y12`, `J2-J3`), then dash + description.
+Examples:
+- `ADVI_V1VERS.004-adv-drill-cla.md`
+- `ADVI_YANGV2.Y-phase3-de-type-wiring.md`
+- `ADVI_V1VERS.J1-partner-identity-dynamo.md`
+
+Ad-hoc (no registered project): `description-with-dashes.md` — no prefix.
+Pass `--project {PROJECT_CODE}` (full project code, not macro) to `create-thread.sh`.
 One file per feature per agent. Reference PRD and thread receipt in every task order:
 ```xml
 <references>
