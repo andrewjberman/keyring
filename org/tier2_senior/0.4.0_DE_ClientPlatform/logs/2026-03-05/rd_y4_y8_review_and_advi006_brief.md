@@ -58,13 +58,43 @@ Executed task order `ADVI-006-books_design_brief.md`. Synthesized thread turns 6
 
 ---
 
+## Phase 3 Type Wiring (ADVI-Y-phase3-de-type-wiring)
+
+Executed COO task order. Added all TypeScript types for DS Phase 2 deployed data + ADVI-006 Books types. This unblocks all Phase 3 RD task orders.
+
+Portal DEV commit `542197c`:
+
+**Extended existing types:**
+- `DistributionStats`: +`inflow_percentiles`, `outflow_percentiles`, `inflow_count`, `outflow_count` (Y6c)
+- `NnaView`: +`drill?: NNADistributionDrill` (Y6b/Y6d)
+- `CumulativeChartResponse`: +`growth_decomposition?`, `nna_geo?`, `nna_adv?`, `nna_geo_drill?`, `aua_mix?` (Y5/Y9/Y3)
+- `AdvisorRollingFlowsResponseV2`: +`monthly?` (Y13)
+
+**New types added:**
+- Y6b/Y6d: `NNADistributionDrillEntry`, `NNADistributionDrill`
+- Y5: `GrowthDecompositionPoint`, `GrowthDecompositionView`
+- Y9: `NNASeriesPoint`, `NNASeriesView`, `NNAGeoDrillView`
+- Y3: `AuaMixSegment`, `AuaMixPoint`, `AuaMixView`
+- Y15: `BooksClientDetailResponse`, `BooksClientAccount`, `BooksClientTaxDetail`, `CostBasisYear`, `GainPosition`, `OpenLot`
+
+**New endpoint:** `getBooksClientDetail(clientKey)` in `advisor-intelligence.ts`
+
+**Note on Y15 naming:** Design brief specified `ClientDetailResponse` but that name was already taken by the legacy `clients_tab.json` type (line 777). Named `BooksClientDetailResponse` to avoid collision per task order constraint "do not modify existing types." Existing `AdvisorBookResponse` (line 901) already covers L2 — no new L2 type needed. Existing `getAdvisorBook()` endpoint already wired.
+
+tsc clean (no errors).
+
+---
+
 ## Files Modified
 
 | File | Change | Committed |
 |------|--------|-----------|
-| `org/tier2_senior/0.4.0_DE_ClientPlatform/logs/2026-03-05/rd_y4_y8_review_and_advi006_brief.md` | This log | Yes -- CLOUD (this commit) |
-| `docs/architecture/advisor_intelligence/books_tab_design_brief.md` | ADVI-006 deliverable | Yes -- CLOUD (this commit) |
-| `org/tier2_senior/0.4.0_DE_ClientPlatform/task_orders/ADVI-006-books_design_brief.md` | Status: pending -> complete | Yes -- CLOUD (this commit) |
+| `org/tier2_senior/0.4.0_DE_ClientPlatform/logs/2026-03-05/rd_y4_y8_review_and_advi006_brief.md` | This log | Yes -- CLOUD `aaf97585` (initial), updated this commit |
+| `docs/architecture/advisor_intelligence/books_tab_design_brief.md` | ADVI-006 deliverable | Yes -- CLOUD `aaf97585` |
+| `org/tier2_senior/0.4.0_DE_ClientPlatform/task_orders/ADVI-006-books_design_brief.md` | Status: pending -> complete | Yes -- CLOUD `aaf97585` |
+| `portal/src/pages/AdvisorIntelligence/types.ts` | +184 lines: Y3/Y5/Y6b/Y6c/Y6d/Y9/Y13/Y15 types | Yes -- portal DEV `542197c` |
+| `portal/src/api/endpoints/advisor-intelligence.ts` | +BooksClientDetailResponse import, +getBooksClientDetail() | Yes -- portal DEV `542197c` |
+| `org/tier2_senior/0.4.0_DE_ClientPlatform/task_orders/ADVI-Y-phase3-de-type-wiring.md` | Status: pending -> complete | Yes -- CLOUD (this commit) |
 
 ---
 
@@ -73,13 +103,16 @@ Executed task order `ADVI-006-books_design_brief.md`. Synthesized thread turns 6
 **Status:** COMPLETE
 **Active branch:** `CLOUD` (workspace), `DEV` (portal)
 
-All 15 portal DEV commits (10 prior + 5 this session) approved. ADVI-006 design brief written and committed. Task order marked complete. DS Phase 2 commits exist (`0c9bb501` -> `6a3ff256`). DT J2/J3 done today (`67a400b3`). Phase 3 FE task order gate is lifting.
+All DE responsibilities cleared:
+- 16 portal DEV commits approved (10 prior + 5 RD review + 1 type wiring `542197c`)
+- ADVI-006 design brief written and committed
+- Phase 3 type wiring complete — RD is unblocked
+- Both task orders marked complete
 
 ---
 
 ## Next Steps
 
-1. **[DT] Push portal DEV** -- all 15 commits approved
-2. **[DT] Deploy DS Phase 2 batch** -- DS commits + deploy brief exist (`402bc222`)
-3. **[COO] Issue Phase 3 FE task orders** -- DS delivered, ADVI-006 brief done, gates cleared
-4. **[DE] Await Phase 3 task orders** -- reactive until COO issues
+1. **[DT] Push portal DEV** -- 16 commits approved (must include `542197c`)
+2. **[COO] Issue Phase 3 RD task orders** -- all gates cleared (DS delivered, types wired, brief done)
+3. **[DE] Await Phase 3 RD output** -- reactive until RD commits land
