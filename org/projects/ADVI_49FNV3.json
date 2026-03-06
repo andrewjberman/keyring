@@ -1,0 +1,50 @@
+{
+  "project_code": "ADVI_49FNV3",
+  "macro_code": "ADVI",
+  "name": "AdvisorIntelligence 49Financial V3",
+  "description": "49Financial data team feedback: 7 fixes (GRO data, projected bars, Segment Analytics drilldowns, stacked advisor bar, QTD/YTD timing, Unassigned sorting, zebra striping) plus Books tab three-layer drill hierarchy (firm admin dashboard, advisor book view, relationship detail). Phase 2: asset allocation and fee revenue pipelines.",
+  "prds": [
+    {
+      "path": "docs/architecture/ADVISOR_INTELLIGENCE_49FN_V3_PRD.md",
+      "label": "49Financial V3: fixes + Books tab",
+      "date": "2026-03-06"
+    }
+  ],
+  "status": "active",
+  "phase": "Phase 1a: Task orders issued. F1-F7 fixes + N1-N2 Books tab. Threads 001+002 complete.",
+  "blocking": "none",
+  "created": "2026-03-06",
+  "pods": [
+    "0.4"
+  ],
+  "pipeline": "bd-pipeline",
+  "thread_counter": 2,
+  "threads": [
+    {
+      "serial": "ADVI_49FNV3-001",
+      "thread_id": "ADVI_49FNV3-001-pattern-0-stacked-bar-advisor-inflow-out",
+      "topic": "Pattern 0: stacked bar advisor inflow outflow",
+      "participants": [
+        "0.4.0_DS_ClientPlatform",
+        "0.4.0_DE_ClientPlatform",
+        "0.4.2_RD_AdvisorIntelligence"
+      ],
+      "pattern": "unset",
+      "status": "active",
+      "date": "2026-03-06"
+    },
+    {
+      "serial": "ADVI_49FNV3-002",
+      "thread_id": "ADVI_49FNV3-002-pattern-0-books-tab-design-brief-n1-n2",
+      "topic": "Pattern 0: Books tab design brief N1 N2",
+      "participants": [
+        "0.4.0_DS_ClientPlatform",
+        "0.4.2_RD_AdvisorIntelligence",
+        "0.4.0_DE_ClientPlatform"
+      ],
+      "pattern": "unset",
+      "status": "active",
+      "date": "2026-03-06"
+    }
+  ]
+}
