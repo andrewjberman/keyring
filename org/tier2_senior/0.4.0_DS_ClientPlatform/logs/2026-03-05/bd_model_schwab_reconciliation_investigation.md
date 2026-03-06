@@ -1,5 +1,12 @@
 # BD Model vs Schwab Reconciliation Investigation — 0.4.0_DS
 
+> **CORRECTION (2026-03-06, 1.0.0_SA_CTO):** The $1.236B "our model" figure reported
+> below is **erroneous**. The prior agent conflated NNA and AUA metrics. Our actual
+> non-cash AUA as of 2026-03-02 is **~$1.545B**. All gap analysis figures derived from
+> the $1.236B baseline ($369M gap, 22.9% difference, etc.) are invalid. The real gap
+> between our model ($1.545B) and BD ($1.60B) is **~$55M (3.4%)**. Do not use the
+> $1.236B figure or any downstream calculations from it.
+
 **Date:** 2026-03-05
 **Start Time:** 14:30
 **End Time:** 16:45

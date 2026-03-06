@@ -19,6 +19,7 @@ the surface area; the project code identifies the specific initiative.
 | `ADVI_NNAVAR` | `ADVI` | NNA Variance Optimization | Phase 0: PRD complete, COO decomposition pending | 0.4 | COO task order issuance | NNA Variance Optimization PRD |
 | `ADVI_AUAVAR` | `ADVI` | AUA Variance Analysis | Phase 0: PRD complete, COO decomposition pending | 0.4 | COO task order issuance | AUA Variance Analysis PRD |
 | `PFMG_VISPOL` | `PFMG` | Trade Engine Visual Polish | Phase 0: COO decomposition | 0.3 | COO task order issuance | Visual polish PRD |
+| `ADVI_49FNV3` | `ADVI` | AdvisorIntelligence 49Financial V3 | Phase 0: PRD complete, COO decomposition pending | 0.4 | COO task order issuance | 49Financial V3 PRD |
 | `SSCN_PORTAL` | `SSCN` | Security Scanner Portal Page | Phase 1: deployed, awaiting first data upload | 0.3 | First real Excel upload (e2e validation) | Security Scanner PRD |
 
 ---

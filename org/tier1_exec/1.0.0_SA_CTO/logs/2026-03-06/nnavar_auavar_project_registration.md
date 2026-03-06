@@ -39,9 +39,9 @@ data source difference. This project refocuses: segment-level decomposition to i
 which account/asset/pricing segments explain the gap. Outcome is explanation + addressable
 vs explainable classification per segment.
 
-Note: DS prior investigation reported our model at $1.236B, but Andrew cites $1.545B.
-The PRD flags this discrepancy as a first-action item (likely different date or AUA
-definition).
+Note: DS prior investigation erroneously reported our model at $1.236B (prior agent
+conflated NNA and AUA metrics). Our actual non-cash AUA is ~$1.545B. Correction notes
+added to DS log, PRD, task orders, COO log, and thread receipts on 2026-03-06.
 
 ### 3. ADVI_YANGV2 Closure
 
