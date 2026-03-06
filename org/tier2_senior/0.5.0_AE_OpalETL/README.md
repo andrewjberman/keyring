@@ -21,8 +21,39 @@
 | Seeking Alpha | `infra/aws/terraform/seeking-alpha/` | None | ❌ no backend |
 | Causality | `infra/aws/terraform/causality/` | None | ❌ no backend |
 | Portfolio | Not yet Terraformed | None | ❌ |
+| Other (Data Refresh) | `infra/aws/terraform/other/` | other-v1.1.0 | ✅ |
 
 > Tags are authoritative from each pipeline's `CHANGELOG.json`. Cross-check before assuming MEMORY.md is current.
+
+---
+
+## Data Refresh Backend (opal-data-refresh-api)
+
+**Owner:** 0.5.0_AE_OpalETL — all backend routes, IAM, Terraform, and Lambda source.
+
+The `opal-data-refresh-api` Lambda is the single backend for two portal features:
+
+| Route Family | Paths | Portal Page |
+|---|---|---|
+| DataRefresh | `/data-refresh/*` (5 routes) | DataRefresh page (DE/RD scope) |
+| Security Scanner | `/security-scanner/*` (4 routes) | SecurityScanner page (DE/RD scope) |
+
+**AE owns the Lambda. DE/RD own the portal pages that consume it.**
+
+- Any route additions or modifications to `opal-data-refresh-api` require AE involvement.
+  DE/DS may propose route handlers (as with SSCN_PORTAL-001) but AE reviews, deploys,
+  and owns the runtime behavior.
+- Source path: `infra/aws/lambda/data_refresh/lambda_function.py`
+- Terraform module: `infra/aws/terraform/other/`
+- IAM role: `opal-data-refresh-lambda-role`
+- S3 artifact key: `other/opal-data-refresh-api.zip`
+- Related resources: DynamoDB table `opal-data-refresh-executions`,
+  Step Functions `YangDataPipeline` (DataRefresh path), CloudFront distribution
+  (DataRefresh invalidation)
+
+This declaration formalizes existing ownership. AE deployed the SSCN presign route
+(security-scanner-v1.0.0 / other-v1.1.0). DE commit 18fd997b added GET proxy handlers.
+Both are AE-deployed and AE-owned at the infrastructure layer.
 
 ---
 
