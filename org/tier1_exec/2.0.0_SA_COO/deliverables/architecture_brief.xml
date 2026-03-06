@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  COO Architecture Brief — 2.0.0_SA_COO
+  Living document: current delivery state across all pods and active projects.
+  Update after any structural change: project opens/closes, pod handoff, task order issuance.
+  Last updated: 2026-03-06
+-->
+<architecture_brief>
+  <agent>2.0.0_SA_COO</agent>
+  <last_updated>2026-03-06</last_updated>
+
+  <!-- ============================================================ -->
+  <!-- ORGANIZATIONAL HEALTH                                         -->
+  <!-- ============================================================ -->
+  <org_health>
+    <pods>
+      <pod id="0.1" name="MarketIntelligence" status="idle" />
+      <pod id="0.2" name="PortfolioAnalytics" status="idle" />
+      <pod id="0.3" name="TradingOperations" status="active" notes="SSCN Lambda deploy pending; portal DEV through 1c61990 live" />
+      <pod id="0.4" name="ClientPlatform" status="active" notes="YANGV2 portal push pending (DT); NNAVAR+AUAVAR projects starting" />
+    </pods>
+    <shared_services>
+      <ae id="0.5.0_AE_OpalETL" status="active" notes="SSCN deployed security-scanner-v1.0.0; next: no assigned work" />
+      <ae id="0.6.0_AE_PartnerETL" status="idle" notes="ADVI NNAVAR/AUAVAR may need consultation if BD data enrichment required" />
+      <ae id="0.7.0_AE_CloudOps" status="idle" notes="shared-infra-v1.3.0 deployed; SSCN IAM note pending first upload test" />
+    </shared_services>
+  </org_health>
+
+  <!-- ============================================================ -->
+  <!-- ACTIVE PROJECTS                                               -->
+  <!-- ============================================================ -->
+  <active_projects>
+
+    <project code="ADVI_NNAVAR" macro="ADVI" phase="1">
+      <name>NNA Variance Optimization</name>
+      <prd>docs/architecture/NNA_VARIANCE_OPTIMIZATION_PRD.md</prd>
+      <pods>0.4</pods>
+      <agents>0.4.0_DS_ClientPlatform, 0.4.0_DT_ClientPlatform</agents>
+      <status>Phase 1: Thread ADVI_NNAVAR-001 complete (converge). Task orders issued: ADVI_NNAVAR.001-DS (write diagnostic script) and ADVI_NNAVAR.002-DT (EC2 execution). DS is implementing diag_nnavar_gap_decomposition.py.</status>
+      <blocking>DS must commit diag_nnavar_gap_decomposition.py before DT can execute suites.</blocking>
+      <prior_art>
+        <item>ACAT v3 diagnostic: 30d/3-burst, $45.98M recovery, sign flip confirmed. Production design brief written.</item>
+        <item>Param grid v2: 24 combos executed. Pearson r = 0.175 for ALL combos including no-ACAT baseline. ACAT does not move correlation.</item>
+        <item>Correlation summary script: written at data/black_diamond/scripts/diagnostics/diag_acat_correlation_summary.py, NOT YET RUN.</item>
+        <item>Canonical NNA classification fix (JNL/sweep exclusion): committed to script 05 + 05b. Awaiting CEO rebuild approval.</item>
+        <item>Orphan theory: DISPROVEN. BD has 100% transaction coverage at full-month grain.</item>
+      </prior_art>
+      <key_numbers>Pearson r = 0.175 (baseline, no ACAT). TotalGap = -$119.8M. Target: r >= 0.50, sign agreement >= 10/13.</key_numbers>
+      <thread_serial>ADVI_NNAVAR-001</thread_serial>
+    </project>
+
+    <project code="ADVI_AUAVAR" macro="ADVI" phase="1">
+      <name>AUA Variance Analysis</name>
+      <prd>docs/architecture/AUA_VARIANCE_ANALYSIS_PRD.md</prd>
+      <pods>0.4</pods>
+      <agents>0.4.0_DS_ClientPlatform, 0.4.0_DT_ClientPlatform</agents>
+      <status>Phase 1: Thread ADVI_AUAVAR-001 complete (converge). Task orders issued: ADVI_AUAVAR.001-DS (write diagnostic script) and ADVI_AUAVAR.002-DT (EC2 execution). DS is implementing diag_aua_gap_decomposition.py for D=2026-03-02.</status>
+      <blocking>DS must commit diag_aua_gap_decomposition.py before DT can execute. COO decision gate: confirm non-cash AUA cash mask definition before Segment 3 goes into waterfall headline.</blocking>
+      <prior_art>
+        <item>Phase 1-5 investigation complete: root cause = fundamental data source difference (BD snapshot vs reconstructed timeseries).</item>
+        <item>Known gap: 43 accounts missing from accounts_dimension = $9.1M. Dedup/settlement: $0 impact.</item>
+        <item>Pricing variance: INCONCLUSIVE (BD allocations lack symbol-level data for direct comparison).</item>
+        <item>Diagnostic scripts committed: phase1-5 at data/black_diamond/scripts/diagnostics/.</item>
+        <item>CRITICAL: $1.236B figure (DS Phase 1) vs $1.545B (Andrew) — likely different date (2026-03-02 vs 2026-03-04) or AUA definition. Must reconcile before decomposition.</item>
+      </prior_art>
+      <key_numbers>BD allocations: $1.605B (2026-03-03). Our model: ~$1.545B. Gap: ~$55M (3.4%). Target: attribute 80% of gap to named segments.</key_numbers>
+      <thread_serial>ADVI_AUAVAR-001</thread_serial>
+    </project>
+
+    <project code="PFMG_VISPOL" macro="PFMG" phase="0">
+      <name>Trade Engine Visual Polish</name>
+      <prd>TBD</prd>
+      <pods>0.3</pods>
+      <status>Phase 0: COO decomposition pending. No threads or task orders issued.</status>
+      <blocking>COO task order issuance after NNAVAR/AUAVAR threads complete.</blocking>
+    </project>
+
+    <project code="SSCN_PORTAL" macro="SSCN" phase="3">
+      <name>Security Scanner Portal Page</name>
+      <prd>docs/architecture/SECURITY_SCANNER_PRD.md</prd>
+      <pods>0.3</pods>
+      <status>Phase 3: Portal DEV live (all 6 SSCN commits through 1c61990 pushed). Lambda opal-security-scanner-processor deployed (security-scanner-v1.0.0). 3 GET proxy routes committed to CLOUD (18fd997b) — awaiting DT Lambda deploy of opal-data-refresh-api.</status>
+      <blocking>
+        <item>DT (0.3.0_DT_TradingOperations): deploy opal-data-refresh-api Lambda (CLOUD 18fd997b). Task order: SSCN_PORTAL.001-002.push-and-deploy.md.</item>
+        <item>DevOps/Andrew: first real FactSet upload test after Lambda deploy confirmed.</item>
+        <item>DE (0.3.0_DE_TradingOperations): authorize DEV-to-PROD after confirmed data flow.</item>
+      </blocking>
+      <threads>SSCN_PORTAL-001 (data architecture), SSCN_PORTAL-002 (UI design) — both complete.</threads>
+    </project>
+
+  </active_projects>
+
+  <!-- ============================================================ -->
+  <!-- RECENTLY COMPLETED PROJECTS                                   -->
+  <!-- ============================================================ -->
+  <completed_projects>
+    <project code="ADVI_V1VERS" completed="2026-03-05" notes="8/8 task orders verified complete." />
+    <project code="ADVI_YANGV2" completed="2026-03-06" notes="8/9 task orders complete. DT portal push (9b902dc) pending as of 2026-03-05. Y14 deferred to 49FNV3." />
+  </completed_projects>
+
+  <!-- ============================================================ -->
+  <!-- OPEN CROSS-POD ITEMS (COO must track)                        -->
+  <!-- ============================================================ -->
+  <open_items>
+
+    <item priority="P0" pod="0.4" owner="0.4.0_DT_ClientPlatform">
+      <title>YANGV2 Phase 3 Portal Push</title>
+      <detail>Task order ADVI_YANGV2.portal-push.phase3.md pending. 5 commits (542197c to 9b902dc): Books tab L2/L3/L4, GRO mode, NNA geo/adv drills, rolling flows bar unreachable on remote. DT was working on ACAT EC2 runs — portal push not yet executed.</detail>
+      <unblocks>Y3/Y5/Y6b/Y6d/Y9/Y13/Y15 all reach server deploy pipeline.</unblocks>
+    </item>
+
+    <item priority="P1" pod="0.4" owner="0.4.0_DS_ClientPlatform">
+      <title>ACAT Param Grid Correlation Analysis</title>
+      <detail>diag_acat_correlation_summary.py written but not yet run. v2 grid output at s3://opal-data-bd/diagnostics/acat_param_grid_results.csv. DS must run analysis and write session log (4a-4f per task order). This feeds NNAVAR-001 thread.</detail>
+    </item>
+
+    <item priority="P1" pod="0.4" owner="Andrew/CEO">
+      <title>NNA Canonical Fix Go/No-Go</title>
+      <detail>JNL/sweep exclusion committed to scripts 05+05b (commits 9bfb289b+b4f2d7a7). Requires CEO decision before DT triggers gold layer rebuild. Fix improves per-advisor NNA accuracy; net dollar impact is modest (-$1.5M over 4 months) but reduces phantom events by 12K.</detail>
+    </item>
+
+    <item priority="P2" pod="0.4" owner="2.0.0_SA_COO">
+      <title>Y14 Books Access Gating Task Order</title>
+      <detail>Auth chain complete (J1+J2+J3 confirmed live 2026-03-05). No task order issued for Y14 portal implementation. RD+DE need task order to wire advisorKey from JWT context into ClientsTab.tsx scoping. Deferred to 49FNV3 project per CTO decision 2026-03-06.</detail>
+    </item>
+
+    <item priority="P2" pod="0.3" owner="0.3.0_DT_TradingOperations">
+      <title>SSCN opal-data-refresh-api Lambda Deploy</title>
+      <detail>CLOUD commit 18fd997b adds 3 GET proxy routes for security-scanner endpoints. DT must run build-and-upload.sh for opal-data-refresh-api and terraform apply. Task order: SSCN_PORTAL.001-002.push-and-deploy.md.</detail>
+    </item>
+
+    <item priority="P3" pod="0.4" owner="Andrew">
+      <title>Populate opal-partner-49financial DynamoDB</title>
+      <detail>Table exists (shared-infra-v1.3.0). Empty until advisor email-to-advisorKey mappings are manually inserted. Required for Y14 Books advisor-mode access to be usable by real advisors.</detail>
+    </item>
+
+  </open_items>
+
+  <!-- ============================================================ -->
+  <!-- DEPLOYMENT STATE SNAPSHOT (key pipelines)                    -->
+  <!-- ============================================================ -->
+  <deployment_state>
+    <pipeline name="bd-pipeline" tag="bd-v2.16.3" last_deploy="2026-03-05" notes="SSCN proxy routes committed (18fd997b) — opal-data-refresh-api Lambda not yet redeployed to include them." />
+    <pipeline name="yang-pipeline" tag="yang-v2.1.7" last_deploy="2026-03-05" />
+    <pipeline name="news-pipeline" tag="news-v2.3.0" last_deploy="2026-03-04" />
+    <pipeline name="market-overview" tag="market-overview-v1.5.0" last_deploy="2026-03-04" />
+    <pipeline name="security-scanner-pipeline" tag="security-scanner-v1.0.0" last_deploy="2026-03-05" notes="Processor Lambda live. S3 trigger live. Presign route live. GET routes in opal-data-refresh-api pending redeploy." />
+    <pipeline name="shared-infra" tag="shared-infra-v1.3.0" last_deploy="2026-03-04" notes="opal-partner-49financial DynamoDB table added." />
+    <portal branch="DEV" latest_commit="1c61990" notes="SSCN full commit chain live. ADVI YANGV2 Phase 3 commits (542197c to 9b902dc) on LOCAL DEV only — push pending." />
+  </deployment_state>
+
+</architecture_brief>
