@@ -36,8 +36,8 @@
       <prd>docs/architecture/NNA_VARIANCE_OPTIMIZATION_PRD.md</prd>
       <pods>0.4</pods>
       <agents>0.4.0_DS_ClientPlatform, 0.4.0_DT_ClientPlatform</agents>
-      <status>Phase 1: Thread ADVI_NNAVAR-001 complete (converge). Task orders issued: ADVI_NNAVAR.001-DS (write diagnostic script) and ADVI_NNAVAR.002-DT (EC2 execution). DS is implementing diag_nnavar_gap_decomposition.py.</status>
-      <blocking>DS must commit diag_nnavar_gap_decomposition.py before DT can execute suites.</blocking>
+      <status>Phase 2 complete. Gap decomposition (6 suites, 14 variants) + cap tuning (31 variants across AUA/vel/combo grids) executed on EC2 (2026-03-06). Best config: AUA 1.5x + vel 120d/2.0x = pearson 0.271. PRD target r>=0.50 NOT reachable by cap tuning alone. Structural investigation (Phase 3) scope TBD.</status>
+      <blocking>COO: review cap tuning results + issue Phase 3 task order for DS structural investigation (relationship mapping, transaction classification, or Schwab comparison methodology). Production parameter change (AUA 1.5x) awaits COO/CEO go-ahead.</blocking>
       <prior_art>
         <item>ACAT v3 diagnostic: 30d/3-burst, $45.98M recovery, sign flip confirmed. Production design brief written.</item>
         <item>Param grid v2: 24 combos executed. Pearson r = 0.175 for ALL combos including no-ACAT baseline. ACAT does not move correlation.</item>
@@ -54,8 +54,8 @@
       <prd>docs/architecture/AUA_VARIANCE_ANALYSIS_PRD.md</prd>
       <pods>0.4</pods>
       <agents>0.4.0_DS_ClientPlatform, 0.4.0_DT_ClientPlatform</agents>
-      <status>Phase 1: Thread ADVI_AUAVAR-001 complete (converge). Task orders issued: ADVI_AUAVAR.001-DS (write diagnostic script) and ADVI_AUAVAR.002-DT (EC2 execution). DS is implementing diag_aua_gap_decomposition.py for D=2026-03-02.</status>
-      <blocking>DS must commit diag_aua_gap_decomposition.py before DT can execute. COO decision gate: confirm non-cash AUA cash mask definition before Segment 3 goes into waterfall headline.</blocking>
+      <status>Phase 1-4 COMPLETE (2026-03-06). Full gap attribution done: $73.6M raw gap fully decomposed. Gold gross AUA ($1.554B) = 98.9% of BD investment-only ($1.572B). BKF forward-fill fix deployed to S3 code store (Script 02, commit 91b1918a). Next cube rebuild adds ~$6.6M, bringing gold to ~99.3% of BD inv-only.</status>
+      <blocking>COO: (1) Authorize cube rebuild to activate BKF fix (~$6.6M recovery). (2) Decide on cash-only/new accounts ($34.1M, 354 accts) — accept gap or add balance feed. (3) Correction matrix re-run needed (JSON failed on s3 variable collision; DS fixed at e7416c4d but DT re-run not yet executed).</blocking>
       <prior_art>
         <item>Phase 1-5 investigation complete: root cause = fundamental data source difference (BD snapshot vs reconstructed timeseries).</item>
         <item>Known gap: 43 accounts missing from accounts_dimension = $9.1M. Dedup/settlement: $0 impact.</item>
