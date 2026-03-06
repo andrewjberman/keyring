@@ -2,7 +2,7 @@
   "project_code": "SSCN_PORTAL",
   "macro_code": "SSCN",
   "name": "Security Scanner Portal Page",
-  "description": "Port Yang's Factor_Scanning_Model.xlsm to the portal as a new Security Scanner page. Multi-factor security screening across 6 universes (S&P 500, Russell 1000, Russell 1000 Value, MSCI ACWI ex-US, MSCI EAFE, MSCI EAFE Value) and 255 factors across 11 categories. PMs select factors, assign weights, and see dynamically ranked securities.",
+  "description": "Port Yang's Factor_Scanning_Model.xlsm to the portal as a new Security Scanner page. Multi-factor security screening across 6 universes (S&P 500, Russell 1000, Russell 1000 Value, MSCI ACWI ex-US, MSCI EAFE, MSCI EAFE Value) and 284 factors across 11 categories. PMs select factors, assign weights, and see dynamically ranked securities.",
   "prds": [
     {
       "path": "docs/architecture/SECURITY_SCANNER_PRD.md",
@@ -10,14 +10,26 @@
       "date": "2026-03-05"
     }
   ],
+  "contracts": [
+    {
+      "path": "docs/architecture/SSCN_DATA_CONTRACT.md",
+      "label": "Data contract -- S3 keys, API routes, JSON shapes, TypeScript interfaces",
+      "date": "2026-03-05"
+    },
+    {
+      "path": "docs/architecture/SSCN_DESIGN_CONTRACT.md",
+      "label": "Design contract -- component reuse, table primitives, gradient semantics, page shell",
+      "date": "2026-03-05"
+    }
+  ],
   "status": "active",
-  "phase": "Phase 0: PRD + data architecture",
-  "blocking": "Pattern 0 thread for data architecture (DS + DE + AE)",
+  "phase": "Phase 1: all task orders delivered, infra deployed (security-scanner-v1.0.0), portal DEV live. Awaiting first real data upload for end-to-end validation before PROD merge.",
+  "blocking": "First FactSet Excel upload (end-to-end validation). Portal DEV->PROD merge blocked until real data confirms pipeline.",
   "created": "2026-03-05",
   "pods": [
     "0.3"
   ],
-  "pipeline": null,
+  "pipeline": "security-scanner-pipeline",
   "thread_counter": 2,
   "threads": [
     {
@@ -30,7 +42,7 @@
         "0.3.0_DE_TradingOperations"
       ],
       "pattern": "unset",
-      "status": "active",
+      "status": "complete",
       "date": "2026-03-05"
     },
     {
@@ -43,7 +55,7 @@
         "0.3.0_DE_TradingOperations"
       ],
       "pattern": "unset",
-      "status": "active",
+      "status": "complete",
       "date": "2026-03-05"
     }
   ]

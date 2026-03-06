@@ -16,9 +16,10 @@ the surface area; the project code identifies the specific initiative.
 
 | Project Code | Macro | Project Name | Phase | Pods | Blocking | PRDs |
 |---|---|---|---|---|---|---|
-| `ADVI_YANGV2` | `ADVI` | AdvisorIntelligence Yang Feedback V2 | Phase 3: 8/9 complete, DT push pending, Y14 gap | 0.4 | DT portal push + COO Y14 task order + CEO NNA go/no-go | Yang Feedback V2 PRD |
+| `ADVI_NNAVAR` | `ADVI` | NNA Variance Optimization | Phase 0: PRD complete, COO decomposition pending | 0.4 | COO task order issuance | NNA Variance Optimization PRD |
+| `ADVI_AUAVAR` | `ADVI` | AUA Variance Analysis | Phase 0: PRD complete, COO decomposition pending | 0.4 | COO task order issuance | AUA Variance Analysis PRD |
 | `PFMG_VISPOL` | `PFMG` | Trade Engine Visual Polish | Phase 0: COO decomposition | 0.3 | COO task order issuance | Visual polish PRD |
-| `SSCN_PORTAL` | `SSCN` | Security Scanner Portal Page | Phase 0: PRD + data architecture | 0.3 | Pattern 0 thread (data arch) | Security Scanner PRD |
+| `SSCN_PORTAL` | `SSCN` | Security Scanner Portal Page | Phase 1: deployed, awaiting first data upload | 0.3 | First real Excel upload (e2e validation) | Security Scanner PRD |
 
 ---
 
@@ -27,6 +28,7 @@ the surface area; the project code identifies the specific initiative.
 | Project Code | Macro | Project Name | Completed | Notes |
 |---|---|---|---|---|
 | `ADVI_V1VERS` | `ADVI` | AdvisorIntelligence V1 Completion | 2026-03-05 | 8/8 task orders verified complete |
+| `ADVI_YANGV2` | `ADVI` | AdvisorIntelligence Yang Feedback V2 | 2026-03-06 | All task orders delivered. Y14 deferred to 49FNV3. |
 
 ---
 

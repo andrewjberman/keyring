@@ -1,0 +1,36 @@
+{
+  "project_code": "ADVI_NNAVAR",
+  "macro_code": "ADVI",
+  "name": "NNA Variance Optimization",
+  "description": "Optimize BD gold layer NNA correlation with Schwab ground truth. ACAT parameter grid search showed r=0.175 plateau -- remaining $120M gap driven by factors beyond ACAT (JNL exclusion, velocity caps, dedup, coverage). Decompose gap by filter category, tune parameters, implement winning set in script 05, rebuild gold layer.",
+  "prds": [
+    {
+      "path": "docs/architecture/NNA_VARIANCE_OPTIMIZATION_PRD.md",
+      "label": "NNA Variance Optimization PRD",
+      "date": "2026-03-06"
+    }
+  ],
+  "status": "active",
+  "phase": "Phase 0: PRD complete, COO decomposition pending. DS has prior art (ACAT grid results on S3, Phase 3 analysis complete, v2 grid executed but analysis pending).",
+  "blocking": "COO task order issuance",
+  "created": "2026-03-06",
+  "pods": [
+    "0.4"
+  ],
+  "pipeline": "bd-pipeline",
+  "thread_counter": 1,
+  "threads": [
+    {
+      "serial": "ADVI_NNAVAR-001",
+      "thread_id": "ADVI_NNAVAR-001-nna-gap-decomposition-param-grid-analysi",
+      "topic": "NNA gap decomposition: param grid analysis and diagnostic sequence planning",
+      "participants": [
+        "0.4.0_DS_ClientPlatform",
+        "0.4.0_DT_ClientPlatform"
+      ],
+      "pattern": "unset",
+      "status": "active",
+      "date": "2026-03-06"
+    }
+  ]
+}

@@ -1,0 +1,36 @@
+{
+  "project_code": "ADVI_AUAVAR",
+  "macro_code": "ADVI",
+  "name": "AUA Variance Analysis",
+  "description": "Segment-level decomposition of ~$55M gap between BD allocations (~$1.60B non-cash AUA) and our gold layer model (~$1.545B non-cash AUA) as of 2026-03-02. 49Financial leadership relies on BD numbers. Prior DS investigation found root cause is fundamental data source difference (snapshot vs reconstructed timeseries). Project goal: identify which segments explain the gap so we can explain or address them.",
+  "prds": [
+    {
+      "path": "docs/architecture/AUA_VARIANCE_ANALYSIS_PRD.md",
+      "label": "AUA Variance Analysis PRD",
+      "date": "2026-03-06"
+    }
+  ],
+  "status": "active",
+  "phase": "Phase 0: PRD complete, COO decomposition pending. DS has prior art (5-phase reconciliation investigation complete, diagnostic scripts committed).",
+  "blocking": "COO task order issuance",
+  "created": "2026-03-06",
+  "pods": [
+    "0.4"
+  ],
+  "pipeline": "bd-pipeline",
+  "thread_counter": 1,
+  "threads": [
+    {
+      "serial": "ADVI_AUAVAR-001",
+      "thread_id": "ADVI_AUAVAR-001-aua-gap-segment-decomposition-bd-allocat",
+      "topic": "AUA gap segment decomposition: BD allocations vs gold layer $55M variance",
+      "participants": [
+        "0.4.0_DS_ClientPlatform",
+        "0.4.0_DT_ClientPlatform"
+      ],
+      "pattern": "unset",
+      "status": "active",
+      "date": "2026-03-06"
+    }
+  ]
+}
