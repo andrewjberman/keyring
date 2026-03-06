@@ -61,7 +61,7 @@
         <item>Known gap: 43 accounts missing from accounts_dimension = $9.1M. Dedup/settlement: $0 impact.</item>
         <item>Pricing variance: INCONCLUSIVE (BD allocations lack symbol-level data for direct comparison).</item>
         <item>Diagnostic scripts committed: phase1-5 at data/black_diamond/scripts/diagnostics/.</item>
-        <item>CRITICAL: $1.236B figure (DS Phase 1) vs $1.545B (Andrew) — likely different date (2026-03-02 vs 2026-03-04) or AUA definition. Must reconcile before decomposition.</item>
+        <item>NOTE: $1.236B figure in DS Phase 1 log was erroneous (prior agent conflated NNA and AUA metrics). Corrected 2026-03-06 by 1.0.0_SA_CTO. Actual non-cash AUA is ~$1.545B. Real gap is BD ~$1.60B vs our model ~$1.545B = ~$55M. No gold-vs-gold discrepancy exists.</item>
       </prior_art>
       <key_numbers>BD allocations: $1.605B (2026-03-03). Our model: ~$1.545B. Gap: ~$55M (3.4%). Target: attribute 80% of gap to named segments.</key_numbers>
       <thread_serial>ADVI_AUAVAR-001</thread_serial>

@@ -126,11 +126,11 @@ Created architecture_brief.xml from scratch (did not exist).
 
 ### Receipt Summary
 
-**$1.236B vs $1.545B reconciliation (gold-vs-gold):**
-  - $1.236B = gold client_performance.parquet total_aua for 2026-03-02, from an older/incomplete
-    gold build (fewer positions_cube partitions at time of Phase 1 run).
-  - $1.552B = gold AUA from a newer build (script 09 dry-run log, more complete coverage).
-  - Discrepancy is gold-vs-gold, not BD-vs-gold. Proven by running diagnostic for same date.
+**$1.236B figure — ERRONEOUS (correction 2026-03-06, 1.0.0_SA_CTO):**
+  The $1.236B from the DS Phase 1 investigation was a prior agent error conflating
+  NNA and AUA metrics. Our actual non-cash AUA is ~$1.545B. There is no gold-vs-gold
+  discrepancy to resolve. The thread's "gold-vs-gold reconciliation" premise was based
+  on this incorrect number. The real scope is BD (~$1.60B) vs our model (~$1.545B) = ~$55M gap.
 
 **Anchor date:** D = 2026-03-02
 
