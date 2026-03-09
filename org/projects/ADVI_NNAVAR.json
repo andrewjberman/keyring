@@ -10,8 +10,8 @@
       "date": "2026-03-06"
     }
   ],
-  "status": "active",
-  "phase": "Investigation CLOSED (2026-03-09). Rebuild authorized. Bundle: JNL/sweep fix (9bfb289b+b4f2d7a7) + AUAVAR BKF fix (91b1918a). ACAT excluded. Cap settings unchanged. Correlation target withdrawn. DT task order pending.",
+  "status": "complete",
+  "phase": "COMPLETE (2026-03-09). Investigation closed. Gap explained (Holding MV withdrawn = correct behavior). Rebuild bundle finalized: JNL/sweep fix + AUAVAR BKF fix. Scripts 05/05b deployed to S3 via DT task order ADVI_NNAVAR.003-DT (pending). Rebuild deferred until after ADVI_49FNV3. No open questions.",
   "blocking": "none",
   "created": "2026-03-06",
   "pods": [
