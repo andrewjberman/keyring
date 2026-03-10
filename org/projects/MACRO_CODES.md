@@ -89,6 +89,17 @@ Assign the DE/DS/DT of the primary pod, or the AE for pipeline-only projects.
 
 ---
 
+## Ad-Hoc / Cross-Cutting
+
+For work that doesn't belong to an existing surface area. One-off investigations,
+cost audits, tooling improvements, and miscellaneous operational tasks.
+
+| Code | Surface Area | Primary Owner |
+|------|-------------|---------------|
+| `ADHC` | Ad-hoc (no permanent surface area) | Varies per project |
+
+---
+
 ## Rules
 
 1. All macro codes are exactly 4 characters — no exceptions.
