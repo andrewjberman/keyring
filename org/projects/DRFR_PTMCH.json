@@ -11,8 +11,9 @@
     }
   ],
   "status": "active",
-  "phase": "Phase 1: Implementation -- task orders issued to CloudOps (P1), OpalETL (P2), PartnerETL (P3). CLI audit complete 2026-03-10.",
+  "phase": "Phase 2: Code complete. P1 deployed (shared-infra-v1.4.0). P2 code committed (5ce67698), news-v2.7.0 deployed. P3 Phase A committed (b3207410). Gated on CloudOps P1 CF path confirmation before yang-pipeline + bd-pipeline apply. CF paths confirmed: yang=/api/general/*, BD=/api/scoped/advisor-intelligence/*.",
   "blocking": "none",
+  "phase_b_gate": "CloudOps P1 COMPLETE (shared-infra-v1.4.0, 2026-03-10). OpalETL + PartnerETL unblocked for terraform apply.",
   "cli_findings_2026_03_10": {
     "opal_data_portal_v2_versioning": "Enabled",
     "opal_data_bd_versioning": "Enabled",
