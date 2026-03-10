@@ -16,9 +16,7 @@ the surface area; the project code identifies the specific initiative.
 
 | Project Code | Macro | Project Name | Phase | Pods | Blocking | PRDs |
 |---|---|---|---|---|---|---|
-| `PFMG_VISPOL` | `PFMG` | Trade Engine Visual Polish | Phase 0: COO decomposition | 0.3 | COO task order issuance | Visual polish PRD |
 | `ADVI_49FNV3` | `ADVI` | AdvisorIntelligence 49Financial V3 | Phase 0: PRD complete, COO decomposition pending | 0.4 | COO task order issuance | 49Financial V3 PRD |
-| `SSCN_PORTAL` | `SSCN` | Security Scanner Portal Page | Phase 1: deployed, awaiting first data upload | 0.3 | First real Excel upload (e2e validation) | Security Scanner PRD |
 | `ADVI_APISCP` | `ADVI` | Scoped API Multi-Partner Routing Architecture | Phase 0: PRD written, COO decomposition pending | 0.4, 0.5, 0.6 | COO task order issuance | ADVI_APISCP PRD |
 | `DRFR_PTMCH` | `DRFR` | Portal Time Machine | Phase 0: Research — AE discovery audits dispatched | 0.3, 0.5, 0.6, 0.7 | AE discovery findings | Portal Time Machine PRD |
 
@@ -34,6 +32,8 @@ the surface area; the project code identifies the specific initiative.
 | `ADVI_AUAVAR` | `ADVI` | AUA Variance Analysis | 2026-03-09 | Full $73.6M gap attributed. BKF fix deployed. Post-rebuild accuracy 99.1%. Rebuild deferred pending ADVI_49FNV3. |
 | `ADHC_GPTCST` | `ADHC` | GPT Cost Audit and Optimization | 2026-03-10 | Caller inventory complete, Lambda optimizations deployed (news-v2.5.0), keyword cache fixed (news-v2.6.0 + market-overview-v1.6.0). |
 | `ADVI_SNPLBK` | `ADVI` | Snapshot Lookback Regression Fix | 2026-03-10 | Frontend granularity mismatch diagnosed and fixed. Backend data confirmed intact. |
+| `PFMG_VISPOL` | `PFMG` | Trade Engine Visual Polish | 2026-03-10 | All 13 visual polish items delivered and approved. |
+| `SSCN_PORTAL` | `SSCN` | Security Scanner Portal Page | 2026-03-10 | Infra deployed (security-scanner-v1.0.0), portal DEV live, end-to-end validated. |
 
 ---
 

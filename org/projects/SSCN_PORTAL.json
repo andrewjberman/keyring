@@ -22,9 +22,10 @@
       "date": "2026-03-05"
     }
   ],
-  "status": "active",
-  "phase": "Phase 1: all task orders delivered, infra deployed (security-scanner-v1.0.0), portal DEV live. Awaiting first real data upload for end-to-end validation before PROD merge.",
-  "blocking": "First FactSet Excel upload (end-to-end validation). Portal DEV->PROD merge blocked until real data confirms pipeline.",
+  "status": "closed",
+  "phase": "Complete: Infra deployed (security-scanner-v1.0.0), portal DEV live, end-to-end validated. Closed 2026-03-10.",
+  "blocking": "none",
+  "closed": "2026-03-10",
   "created": "2026-03-05",
   "pods": [
     "0.3"
