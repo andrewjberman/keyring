@@ -216,3 +216,38 @@ All four Phase 1 task orders validated as COMPLETE:
 ```
 
 All three are independent and can run in parallel. No cross-dependencies.
+
+---
+
+## Phase 3 (v5): OAI Migration
+
+### Context
+
+v4 failed in production: CloudFront drops OAC signing when Lambda@Edge mutates
+`request.origin`, causing unsigned S3 requests → 403 → masked as HTML by custom
+error responses. v3 rolled back. CTO decision (commit 4387ec08): Option B — OAI.
+
+OAI is a principal identity. CloudFront signs all origin-request outbound calls as
+the OAI canonical user regardless of Lambda@Edge domain mutation. Per-bucket
+`AllowCloudFrontOAI` bucket policy on each new partner bucket is the onboarding step.
+
+New requirement added by CTO: X-Firm-Id in cache key. Mandatory compliance — prevents
+cross-firm cache hits at shared edge PoPs.
+
+### Phase 3 Task Order Dispatch
+
+| Agent | Task Order Path | Summary |
+|-------|----------------|---------|
+| 0.7.0_AE_CloudOps | org/tier2_senior/0.7.0_AE_CloudOps/task_orders/ADVI_APISCP.003.oai-setup-bucket-policy.md | Create OAI opal-scoped-advisor-oai, apply bucket policy to opal-data-bd, deliver OAI ID + CanonicalUserId to DT via handoff note. |
+| 0.4.0_DT_ClientPlatform | org/tier2_senior/0.4.0_DT_ClientPlatform/task_orders/ADVI_APISCP.003.cloudfront-oai-wire-v5-deploy.md | (BLOCKED on CloudOps) Wire OAI into CloudFront, add X-Firm-Id to cache key, publish :5, invalidate, verify, tag shared-advisor-router-v5. |
+
+### Phase 3 Execution Dependencies
+
+```
+  [CloudOps: create OAI + apply opal-data-bd bucket policy]
+                         |
+         (handoff note delivered to DT task_orders/)
+                         |
+                         v
+  [DT: wire OAI into CloudFront + X-Firm-Id cache key + publish :5 + verify + tag]
+```
