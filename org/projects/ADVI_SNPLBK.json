@@ -4,9 +4,10 @@
   "name": "Snapshot Lookback Regression Fix",
   "description": "The Segment Analytics panel (Distribution tab, Snapshot view) previously displayed data from the current quarter plus the 3 prior quarters. This lookback is no longer rendering on the frontend. Root cause is unknown -- could be a backend regression in the bd-pipeline gold scripts (09/10 series) that were updated during recent data refreshes, or a frontend data-shape mismatch introduced during 49FNV3 work. Project scope: (1) diagnose whether the issue is backend (missing/malformed lookback data in gold JSON) or frontend (component not consuming the data correctly), (2) fix the root cause, (3) ensure the fix is logged and canonical so the lookback contract is documented and does not regress again.",
   "prds": [],
-  "status": "active",
-  "phase": "Phase 1: Thread complete, task orders issued to DE + RD. Backend cleared -- S3 data intact. Frontend fix pending.",
-  "blocking": "DE diagnosis of frontend root cause",
+  "status": "closed",
+  "phase": "Complete: Root cause diagnosed (frontend granularity mismatch), fix delivered, closed 2026-03-10.",
+  "blocking": "none",
+  "closed": "2026-03-10",
   "created": "2026-03-10",
   "pods": [
     "0.4"

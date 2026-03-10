@@ -19,9 +19,8 @@ the surface area; the project code identifies the specific initiative.
 | `PFMG_VISPOL` | `PFMG` | Trade Engine Visual Polish | Phase 0: COO decomposition | 0.3 | COO task order issuance | Visual polish PRD |
 | `ADVI_49FNV3` | `ADVI` | AdvisorIntelligence 49Financial V3 | Phase 0: PRD complete, COO decomposition pending | 0.4 | COO task order issuance | 49Financial V3 PRD |
 | `SSCN_PORTAL` | `SSCN` | Security Scanner Portal Page | Phase 1: deployed, awaiting first data upload | 0.3 | First real Excel upload (e2e validation) | Security Scanner PRD |
-| `ADHC_GPTCST` | `ADHC` | GPT Cost Audit and Optimization | Phase 0: registered, task orders pending | — | Audit discovery | — |
-| `ADVI_SNPLBK` | `ADVI` | Snapshot Lookback Regression Fix | Phase 0: COO thread orchestration pending | 0.4 | Diagnosis | — |
 | `ADVI_APISCP` | `ADVI` | Scoped API Multi-Partner Routing Architecture | Phase 0: PRD written, COO decomposition pending | 0.4, 0.5, 0.6 | COO task order issuance | ADVI_APISCP PRD |
+| `DRFR_PTMCH` | `DRFR` | Portal Time Machine | Phase 0: Research — AE discovery audits dispatched | 0.3, 0.5, 0.6, 0.7 | AE discovery findings | Portal Time Machine PRD |
 
 ---
 
@@ -33,6 +32,8 @@ the surface area; the project code identifies the specific initiative.
 | `ADVI_YANGV2` | `ADVI` | AdvisorIntelligence Yang Feedback V2 | 2026-03-06 | All task orders delivered. Y14 deferred to 49FNV3. |
 | `ADVI_NNAVAR` | `ADVI` | NNA Variance Optimization | 2026-03-09 | Investigation complete. Gap explained (Holding MV withdrawn = correct behavior). Scripts 05/05b deployed to S3. Rebuild deferred pending ADVI_49FNV3. |
 | `ADVI_AUAVAR` | `ADVI` | AUA Variance Analysis | 2026-03-09 | Full $73.6M gap attributed. BKF fix deployed. Post-rebuild accuracy 99.1%. Rebuild deferred pending ADVI_49FNV3. |
+| `ADHC_GPTCST` | `ADHC` | GPT Cost Audit and Optimization | 2026-03-10 | Caller inventory complete, Lambda optimizations deployed (news-v2.5.0), keyword cache fixed (news-v2.6.0 + market-overview-v1.6.0). |
+| `ADVI_SNPLBK` | `ADVI` | Snapshot Lookback Regression Fix | 2026-03-10 | Frontend granularity mismatch diagnosed and fixed. Backend data confirmed intact. |
 
 ---
 

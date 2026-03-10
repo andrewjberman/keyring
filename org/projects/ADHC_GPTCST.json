@@ -4,9 +4,10 @@
   "name": "GPT Cost Audit and Optimization",
   "description": "OpenAI API costs are accelerating unexpectedly. Three-phase investigation: (1) Audit all automated applications making OpenAI calls -- identify which functions, which models, call frequency, and token volume. Primary suspects: gpt-5_2-2025-12-11, gpt-4o-mini-2024-07-18, gpt-4o-2024-08-06. (2) Determine if spend is justified or wasted -- identify leaks, redundant calls, oversized model usage, missing caching. (3) Integrate GPT token spend tracking into the morning infrastructure report for ongoing visibility.",
   "prds": [],
-  "status": "active",
-  "phase": "Phase 0: Project registered, task orders pending",
+  "status": "closed",
+  "phase": "Complete: Caller inventory, Lambda optimizations (news-v2.5.0), keyword cache fix (news-v2.6.0 + market-overview-v1.6.0). Closed 2026-03-10.",
   "blocking": "none",
+  "closed": "2026-03-10",
   "created": "2026-03-10",
   "pods": [],
   "pipeline": null,
@@ -21,7 +22,7 @@
         "0.7.0_AE_CloudOps"
       ],
       "pattern": "unset",
-      "status": "active",
+      "status": "complete",
       "date": "2026-03-10"
     }
   ]
