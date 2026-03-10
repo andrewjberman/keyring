@@ -176,3 +176,43 @@ can proceed in parallel.
 |------|-------------|
 | `org/tier1_exec/2.0.0_SA_COO/README.md` | Added Task Order Dispatch Table mandate to COO protocol |
 | `org/projects/REGISTRY.md` | Updated project registry (SNPLBK, APISCP, ADHC_GPTCST registrations; NNAVAR, AUAVAR moved to completed) |
+
+---
+
+## Phase 1 Delivery Validation
+
+All four Phase 1 task orders validated as COMPLETE:
+
+| Agent | Task Order | Status | Key Delivery |
+|-------|-----------|--------|-------------|
+| 0.4.0_DT_ClientPlatform | .001.lambda-edge-v4-dynamic-routing | COMPLETE | Preflight done (OAC confirmed). Lambda v4 deployed as :4. In-place domainName mutation. |
+| 0.4.0_DE_ClientPlatform | .001.endpoint-mapping-docs-audit | COMPLETE | Reqs 1-3 done (portal commit 0a759de). Req 4 (post-deploy verify) deferred to Phase 2. |
+| 0.5.0_AE_OpalETL | .001.opal-pipeline-bucket-audit | COMPLETE | All 3 Opal pipelines write only to portal-v2. Zero overlap with partner buckets. |
+| 0.6.0_AE_PartnerETL | .001.bd-pipeline-output-audit-onboarding | COMPLETE | BD pipeline writes only to opal-data-bd/gold/. Onboarding checklist delivered. Stale IAM flagged. |
+
+**Follow-up items surfaced by Phase 1:**
+1. DE req 4 (post-deploy verification) was blocked on DT deploy -- now unblocked
+2. Stale IAM: iam.tf:375 grants BD pipeline s3:PutObject on opal-data-portal-v2/* -- no active code uses this
+3. DT did not tag the Lambda@Edge v4 deployment (commit 4eff8dee)
+
+---
+
+## Phase 2: Cleanup and Verification
+
+### Phase 2 Task Order Dispatch
+
+| Agent | Task Order Path | Summary |
+|-------|----------------|---------|
+| 0.4.0_DE_ClientPlatform | org/tier2_senior/0.4.0_DE_ClientPlatform/task_orders/ADVI_APISCP.002.post-deploy-verification.md | Post-deploy browser verification: confirm all scoped endpoints return 200 with current data, no portal-v2 hits. |
+| 0.7.0_AE_CloudOps | org/tier2_senior/0.7.0_AE_CloudOps/task_orders/ADVI_APISCP.002.stale-iam-portal-v2-cleanup.md | Remove stale PortalBucketWrite IAM statement from bd-pipeline/iam.tf:371-376. Terraform apply + tag. |
+| 0.4.0_DT_ClientPlatform | org/tier2_senior/0.4.0_DT_ClientPlatform/task_orders/ADVI_APISCP.002.lambda-edge-v4-tag.md | Tag Lambda@Edge v4 deployment: shared-advisor-router-v4 on commit 4eff8dee. |
+
+### Phase 2 Execution Dependencies
+
+```
+  [DE: Post-deploy browser verification]     (immediate, no blockers)
+  [DT: Tag Lambda@Edge v4 on 4eff8dee]       (immediate, no blockers)
+  [CloudOps: Remove stale IAM + terraform]   (immediate, no blockers)
+```
+
+All three are independent and can run in parallel. No cross-dependencies.

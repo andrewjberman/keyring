@@ -11,8 +11,8 @@
     }
   ],
   "status": "active",
-  "phase": "Phase 1b: Thread ADVI_APISCP-001 complete. DT task order revised with mandatory preflight (AWS discovery gate). PRD OAI assumption corrected -- may be OAC. Per-bucket access confirmed. AE audits can proceed in parallel.",
-  "blocking": "DT preflight AWS discovery (0a-0c), then Lambda@Edge v4 deploy",
+  "phase": "Phase 2: Phase 1 complete (Lambda@Edge v4 deployed, audits done, docs updated). Phase 2: post-deploy verification, stale IAM cleanup, deployment tag.",
+  "blocking": "DE post-deploy verification, CloudOps IAM cleanup (bd-pipeline terraform apply), DT tag",
   "created": "2026-03-10",
   "pods": [
     "0.4",
