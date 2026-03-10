@@ -2,7 +2,7 @@
 **Agent:** 2.0.0_SA_COO
 **Date:** 2026-03-10
 **Start Time:** 09:00
-**End Time:** 19:30
+**End Time:** 20:00
 
 ---
 
@@ -210,6 +210,9 @@ Bonus: portal_data_proxy migrated from legacy deploy.sh to S3-backed Terraform
 | SmartX EC2 supervisor fix cannot deploy — ec2_host null in EC2_MANIFEST.json | [0.7.0_AE_CloudOps] start instance + sync-ec2-manifest | Medium |
 | `market-update-generator` + `opal-trending-image-generator` pre-Terraform | [Andrew] decide Terraform home | Low |
 | 3 remaining stale files at `api/public/advisor-intelligence/` (Jan 16 batch) | [Andrew] authorize purge | Low |
+| `smartx-exporter/deploy-to-ec2.sh` uses SCP/SSH — non-functional (port 22 closed) | [0.7.0_AE_CloudOps] rewrite to S3+SSM when deploy actually needed. Do not touch proactively. | Low |
+| `seeking_alpha_scraper/deploy_hybrid.sh` uses SCP/SSH — non-functional (port 22 closed) | [0.7.0_AE_CloudOps] rewrite to S3+SSM; also populate instance_id in EC2_MANIFEST | Low |
+| `opal-infrastructure-monitor` no Terraform module — Phase 3 cost report cannot deploy | [0.7.0_AE_CloudOps] create TF module at infra/aws/terraform/infrastructure-monitor/ | Medium |
 
 ---
 
@@ -249,6 +252,16 @@ Phase 3 (infrastructure-monitor Terraform, SmartX EC2 host).
 
 5. **[0.6.0_AE_PartnerETL] BD pipeline staleness** — investigate and fix
    daily pipeline not running past 2026-03-02 (ADVI_49FNV3.004).
+
+6. **[0.7.0_AE_CloudOps] EC2 deploy script remediation** — `smartx-exporter/deploy-to-ec2.sh`
+   and `seeking_alpha_scraper/deploy_hybrid.sh` both use SCP/SSH which is non-functional
+   (port 22 closed on all VMs per Andrew). Do NOT touch proactively — SmartX is running
+   reliably and should not be disturbed. Rewrite to S3+SSM only when a deploy is actually
+   needed. Confirmed via 0.7.0 audit log 2026-03-10/ec2_deploy_transport_audit.md.
+
+7. **[0.7.0_AE_CloudOps] Create Terraform module for opal-infrastructure-monitor** — code
+   changes from commit 1f6bc00e are in repo (Phase 3 OPENAI COST morning report section)
+   but Lambda in AWS runs old version. TF module required to deploy.
 
 **Do NOT:**
 - Push portal DEV before DE reviews the 003b dashed-line commit
