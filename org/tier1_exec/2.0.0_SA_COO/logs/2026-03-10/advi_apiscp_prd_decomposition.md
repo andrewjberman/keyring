@@ -251,3 +251,33 @@ cross-firm cache hits at shared edge PoPs.
                          v
   [DT: wire OAI into CloudFront + X-Firm-Id cache key + publish :5 + verify + tag]
 ```
+
+---
+
+## Phase 4: CORS Fix
+
+### Root Cause
+
+Browser-visible failure: Advisor Intelligence page blank after v5 deploy.
+S3 opal-data-bd has no CORS configuration. opal-data-portal-v2 had CORS (AllowedOrigins: *)
+-- that config was never mirrored to opal-data-bd. Additionally, the CloudFront behavior
+has no OriginRequestPolicyId, so the Origin header is not forwarded to S3, preventing
+S3 from evaluating any CORS rules. Both gaps must be fixed together.
+
+Curl tests (no browser) passed because curl does not enforce CORS. Browser fetches fail
+because the response has no Access-Control-Allow-Origin header.
+
+### Phase 4 Task Order Dispatch
+
+| Agent | Task Order Path | Summary |
+|-------|----------------|---------|
+| 0.7.0_AE_CloudOps | org/tier2_senior/0.7.0_AE_CloudOps/task_orders/ADVI_APISCP.004.cors-opal-data-bd.md | Add S3 CORS config to opal-data-bd (mirror of portal-v2). Add CORS-S3Origin managed origin request policy to CF behavior. Invalidate. Verify Access-Control-Allow-Origin present in response. |
+
+### Phase 4 Execution Dependencies
+
+```
+  [CloudOps: S3 CORS + CF origin request policy + invalidate + verify]
+                         |
+                         v
+  [DE: re-run browser verification once CloudFront propagates]
+```
