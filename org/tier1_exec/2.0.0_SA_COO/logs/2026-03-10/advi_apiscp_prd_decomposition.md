@@ -1,0 +1,178 @@
+# ADVI_APISCP PRD Decomposition — 2.0.0_SA_COO
+
+**Date:** 2026-03-10
+
+## Objective
+
+Decompose the CTO's ADVI_APISCP PRD (Scoped API Multi-Partner Routing Architecture) into
+task orders. The PRD establishes the canonical multi-tenant serving architecture for
+/api/scoped/advisor-intelligence/* routes, replacing the hardcoded opal-data-bd origin in
+shared-advisor-router Lambda@Edge with dynamic per-firm routing using X-Firm-Id from JWT.
+
+---
+
+## Work Completed
+
+### 1. PRD Review and Pre-Flight Audit
+
+Verified all source files referenced in the PRD:
+- `infra/aws/lambda-edge/shared-advisor-router/index.mjs` — EXISTS, confirmed v3 (URI rewrite only, no origin mutation)
+- `infra/aws/lambda-edge/auth-validator-edge/index.mjs` — EXISTS
+- `portal/src/api/endpoint-mapping.ts` — EXISTS, confirmed stale SCOPED comment (line 13 says opal-data-portal-v2)
+- `portal/src/api/endpoints/advisor-intelligence.ts` — EXISTS
+
+**Critical finding:** CloudFront distribution EVTSA9VEHNZVH is NOT managed in Terraform.
+Lambda@Edge functions are NOT in lambda-source-map.json. The Lambda@Edge deployment
+mechanism is separate from the standard Terraform Lambda pipeline. Flagged in DT task order.
+
+### 2. Thread Orchestration Decision (REVISED)
+
+**Initial decision: No alignment thread needed.** Rationale:
+- No DS→DE→RD interface boundary (no data contract negotiation needed)
+- PRD includes pseudocode for v4 implementation
+- Work streams are independent
+
+**Correction: Pattern 2 thread was needed.** Andrew challenged the decision — the PRD
+contains pseudocode that was never verified against the actual infrastructure. Three
+critical assumptions were unverified:
+1. Lambda@Edge deployment mechanism (not in Terraform or source map)
+2. CloudFront origin-request event shape for dynamic origin mutation
+3. OAI policy scope (wildcarded or per-bucket?)
+
+**Thread ADVI_APISCP-001 ran** (Pattern 2, DT + CloudOps, 3 turns each). Findings below.
+
+### 2b. Thread ADVI_APISCP-001 Findings
+
+**Thread:** ADVI_APISCP-001-lambda-edge-cloudfront-investigation
+**Participants:** 0.7.0_AE_CloudOps (source), 0.4.0_DT_ClientPlatform (receiver)
+**Status:** COMPLETE (both agents converged)
+
+**Finding 1 — Lambda@Edge deployment is unmanaged:**
+- NOT in Terraform, NOT in lambda-source-map.json, no deploy script found in repo
+- Must be discovered via AWS CLI before implementation
+- Hard blocker: `aws cloudfront get-distribution-config --id EVTSA9VEHNZVH`
+
+**Finding 2 — PRD OAI assumption may be WRONG:**
+- Environment has evidence of OAC (Origin Access Control, ID E24L6358YRRKAE)
+- PRD pseudocode uses `authMethod: "origin-access-identity"` (OAI) — not safe to assume
+- DT must confirm OAC vs OAI from CloudFront config before implementing
+
+**Finding 3 — S3 access is per-bucket (no wildcard):**
+- S3 module grants CloudFront access per-bucket: `"${aws_s3_bucket.this.arn}/*"`
+- PRD claim "no IAM changes needed (wildcard opal-data-* already grants access)" is INCORRECT
+- Each new opal-data-{firmId} bucket needs explicit CloudFront access policy
+
+**Actions taken:**
+- DT task order REVISED with mandatory Preflight section (requirements 0a-0c)
+- PartnerETL onboarding checklist requirement updated to include CloudFront bucket policy step
+- Project phase updated to Phase 1b
+
+### 3. Task Order Dispatch (initial issuance + post-thread revision)
+
+| Agent | Task Order Path | Summary |
+|-------|----------------|---------|
+| 0.4.0_DT_ClientPlatform | org/tier2_senior/0.4.0_DT_ClientPlatform/task_orders/ADVI_APISCP.001.lambda-edge-v4-dynamic-routing.md | (REVISED per ADVI_APISCP-001) Lambda@Edge v4 dynamic origin routing. Mandatory preflight AWS discovery (0a-0c) before implementation. Must confirm OAC vs OAI, discover deploy mechanism. |
+| 0.4.0_DE_ClientPlatform | org/tier2_senior/0.4.0_DE_ClientPlatform/task_orders/ADVI_APISCP.001.endpoint-mapping-docs-audit.md | Fix SCOPED comment in endpoint-mapping.ts, audit frontend API calls, post-deploy network tab verification. |
+| 0.6.0_AE_PartnerETL | org/tier2_senior/0.6.0_AE_PartnerETL/task_orders/ADVI_APISCP.001.bd-pipeline-output-audit-onboarding.md | (REVISED) Audit bd-pipeline gold output paths, write partner onboarding checklist (now includes CloudFront bucket policy step). |
+| 0.5.0_AE_OpalETL | org/tier2_senior/0.5.0_AE_OpalETL/task_orders/ADVI_APISCP.001.opal-pipeline-bucket-audit.md | Audit yang/news/market publisher output paths, confirm opal-data-portal-v2 only, document bucket separation in pipeline_inventory.xml. |
+
+### Execution Dependencies
+
+```
+  [DT: Preflight AWS discovery (0a-0c)]
+                |
+                v
+  [DT: Lambda@Edge v4 implement + deploy]
+                |
+                v
+  [DE: Post-deploy network tab verification (req 4)]
+
+  [AE PartnerETL: bd-pipeline audit + onboarding checklist]  (parallel, no blocking)
+  [AE OpalETL: yang/news/market bucket audit]                 (parallel, no blocking)
+```
+
+DT preflight is the critical path. DE reqs 1-3 can start immediately; req 4 waits for DT deploy. Both AE audits run in parallel with no dependencies.
+
+---
+
+## Decisions Made
+
+| Decision | Rationale |
+|----------|-----------|
+| No Pattern 0 thread | No DS→DE→RD interface boundary; PRD is implementation-ready |
+| ~~No Pattern 2 thread~~ REVERSED | PRD pseudocode was unverified. Thread ADVI_APISCP-001 ran and found 3 corrections. |
+| Flag Lambda@Edge deployment model in DT task order | CloudFront/Lambda@Edge not in Terraform; DT must discover deployment mechanism |
+| AE audits run in parallel | No cross-dependency between PartnerETL and OpalETL work |
+
+---
+
+## Files Modified
+
+| File | Change | Committed |
+|------|--------|-----------|
+| org/tier2_senior/0.4.0_DT_ClientPlatform/task_orders/ADVI_APISCP.001.lambda-edge-v4-dynamic-routing.md | DT task order | No |
+| org/tier2_senior/0.4.0_DE_ClientPlatform/task_orders/ADVI_APISCP.001.endpoint-mapping-docs-audit.md | DE task order | No |
+| org/tier2_senior/0.6.0_AE_PartnerETL/task_orders/ADVI_APISCP.001.bd-pipeline-output-audit-onboarding.md | AE PartnerETL task order | No |
+| org/tier2_senior/0.5.0_AE_OpalETL/task_orders/ADVI_APISCP.001.opal-pipeline-bucket-audit.md | AE OpalETL task order | No |
+| org/projects/ADVI_APISCP.json | Phase updated to Phase 1b (post-thread) | No |
+| org/threads/staging/run-ADVI_APISCP-001-lambda-edge-cloudfront-investigation.sh | Thread staging script | No |
+| org/threads/ADVI_APISCP-001-lambda-edge-cloudfront-investigation/ | Thread folder (7 messages, complete) | No |
+| org/tier2_senior/0.4.0_DT_ClientPlatform/threads/ADVI_APISCP-001-...CloudOps.md | DT receipt | No |
+| org/tier2_senior/0.7.0_AE_CloudOps/threads/ADVI_APISCP-001-...DT.md | CloudOps receipt | No |
+| This file | Session log (updated with thread findings) | No |
+
+---
+
+## Blockers
+
+None.
+
+---
+
+## Current State
+
+**Status:** COMPLETE (COO orchestration done; agents ready to execute)
+**Active branch:** CLOUD
+
+Four task orders issued + one Pattern 2 thread completed. DT task order revised with
+mandatory AWS preflight discovery gate. Three PRD assumptions corrected. AE audits
+can proceed in parallel.
+
+---
+
+## Next Steps
+
+1. **[0.4.0_DT_ClientPlatform] Preflight AWS discovery** (BLOCKING) — run `aws cloudfront get-distribution-config`, determine OAC vs OAI, discover Lambda@Edge deployment mechanism. Then implement v4.
+2. **[0.6.0_AE_PartnerETL] Audit bd-pipeline** — confirm output paths, write onboarding checklist (now includes CloudFront bucket policy step)
+3. **[0.5.0_AE_OpalETL] Audit Opal pipelines** — confirm no overlap with partner bucket pattern
+4. **[0.4.0_DE_ClientPlatform] Fix endpoint-mapping.ts + post-deploy verify** — reqs 1-3 immediate, req 4 after DT
+
+**Do NOT:**
+- Write to opal-data-portal-v2 for any advisor-intelligence path — permanently forbidden
+- Assume OAI — may be OAC; thread ADVI_APISCP-001 found evidence of OAC in this environment
+- Assume wildcard S3 access — access is per-bucket, onboarding requires explicit policy
+
+---
+
+## Commits
+
+### Commit: `org(2.0.0_SA_COO): ADVI_APISCP -- PRD decomposition, Pattern 2 thread, revised task orders`
+
+| File | Description |
+|------|-------------|
+| `org/projects/ADVI_APISCP.json` | Project registration + phase update to 1b |
+| `org/threads/staging/run-ADVI_APISCP-001-lambda-edge-cloudfront-investigation.sh` | Pattern 2 thread staging script |
+| `org/threads/ADVI_APISCP-001-lambda-edge-cloudfront-investigation/` | Thread folder (7 messages, context, complete) |
+| `org/tier1_exec/2.0.0_SA_COO/logs/2026-03-10/advi_apiscp_prd_decomposition.md` | This session log |
+| `org/tier2_senior/0.4.0_DT_ClientPlatform/task_orders/ADVI_APISCP.001.lambda-edge-v4-dynamic-routing.md` | DT task order (REVISED): mandatory preflight AWS discovery, OAC/OAI conditional, per-bucket access |
+| `org/tier2_senior/0.4.0_DE_ClientPlatform/task_orders/ADVI_APISCP.001.endpoint-mapping-docs-audit.md` | DE task order: fix SCOPED comment, audit frontend, post-deploy verify |
+| `org/tier2_senior/0.6.0_AE_PartnerETL/task_orders/ADVI_APISCP.001.bd-pipeline-output-audit-onboarding.md` | AE PartnerETL task order (REVISED): onboarding checklist now includes CloudFront bucket policy step |
+| `org/tier2_senior/0.4.0_DT_ClientPlatform/threads/ADVI_APISCP-001-..._0.7.0_AE_CloudOps.md` | DT thread receipt |
+| `org/tier2_senior/0.7.0_AE_CloudOps/threads/ADVI_APISCP-001-..._0.4.0_DT_ClientPlatform.md` | CloudOps thread receipt |
+
+### Commit: `org(2.0.0_SA_COO): COO README update -- mandatory dispatch table in session logs`
+
+| File | Description |
+|------|-------------|
+| `org/tier1_exec/2.0.0_SA_COO/README.md` | Added Task Order Dispatch Table mandate to COO protocol |
+| `org/projects/REGISTRY.md` | Updated project registry (SNPLBK, APISCP, ADHC_GPTCST registrations; NNAVAR, AUAVAR moved to completed) |
