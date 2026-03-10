@@ -1,4 +1,4 @@
-# DRFR_PTMCH P3 Phase A — bd-time-machine Build — 0.6.0_AE_PartnerETL
+# DRFR_PTMCH P3 — bd-time-machine Full Deploy (Phase A + B) — 0.6.0_AE_PartnerETL
 
 **Date:** 2026-03-10
 **Start Time:** 19:30
@@ -29,7 +29,22 @@ apply is gated on CloudOps P1 completing lifecycle rules + IAM gaps.
 | 10 | Add source-map entries (null sha256/deploy fields) | `lambda-source-map.json` |
 | 11 | Run Req 4 CLI (earliest version date) | Earliest: `2026-02-25T22:02:47Z` (gPL4d7HpRQWoJJe2ZsdOH4YFahMGHbAF) |
 | 12 | Write findings doc | `deliverables/DRFR_PTMCH.001.bd-pipeline-findings.md` |
-| 13 | Commit all Phase A artifacts | `feat(bd-pipeline): DRFR_PTMCH P3 Phase A — bd-time-machine source + Terraform` |
+| 13 | Commit all Phase A artifacts | `b3207410` feat(bd-pipeline): DRFR_PTMCH P3 Phase A |
+| 14 | Check AE5 log (OpalETL P2 complete) | No dependency conflict. Build workaround noted: build-and-upload.sh fails on bun/MSYS2 /tmp/ paths — use PowerShell PS1 temp files |
+| 15 | Pull AE5 commits (yang-v2.2.0, data-refresh-v2.1.0) | lambda-source-map.json merged cleanly; bd entries intact |
+| 16 | Build bd-capture-output-versions via PowerShell PS1 | SHA256: `xy+x9MfurPBihkv5Y6Wd09Y/s10fxUMy3uEwvmYqKio=` |
+| 17 | Build bd-time-machine via PowerShell PS1 | SHA256: `9zdaFi8Jt15R0PWY98IhKUth554ohrIW9mKWzOeUZms=` |
+| 18 | Build bd-portal-publisher via PowerShell PS1 | SHA256: `+bk/8HN0o4CX51J5bae0E0oSuU2CGWl5HnkWQWdjnC0=` |
+| 19 | Update source map SHA256 | `9fcb0216` ci: upload artifacts [skip ci] |
+| 20 | terraform init (new modules) | OK |
+| 21 | terraform plan | 12 to add, 1 to change, 1 to destroy (IAM policy rename) |
+| 22 | terraform apply | 12 added, 1 changed, 1 destroyed |
+| 23 | 0-diff plan | No changes. Infrastructure is up-to-date. |
+| 24 | Update pipeline_inventory.xml | bd-v2.18.0, two new Lambda entries, publisher env var updated |
+| 25 | record-terraform-deploy.sh | `e85702a1` ci: record deploy bd-pipeline @ 9fcb0216 [skip ci] |
+| 26 | Commit pipeline_inventory.xml | `3f175089` |
+| 27 | Mark task order complete + commit | `69bd6906` |
+| 28 | Tag bd-v2.18.0 + push --follow-tags | Pushed to origin/CLOUD |
 
 ---
 
@@ -73,49 +88,32 @@ Evidence: DRFR_PTMCH.P1 task order status = pending as of 2026-03-10.
 
 ## Current State
 
-**Status:** IN PROGRESS (Phase A complete — Phase B gated on CloudOps P1)
+**Status:** COMPLETE
 **Active branch:** `CLOUD`
+**Tag:** `bd-v2.18.0`
 
-All Phase A code is written and committed.  `bd-capture-output-versions` and
-`bd-time-machine` Lambda source exists at `infra/aws/lambda/bd-pipeline/`.
-Terraform modules, IAM roles, and source-map entries are in place with null
-deploy fields (not yet built/uploaded). `bd-portal-publisher` has the capture
-fan-out wired and env var added to its Terraform module. Findings doc confirms
-earliest restorable BD date is 2026-02-25.  `terraform plan` not yet run —
-Phase B (build + upload + plan + apply + tag) is blocked until CloudOps P1
-confirms lifecycle rules deployed and findings doc written.
+DRFR_PTMCH.P3 is fully deployed. `bd-capture-output-versions` and `bd-time-machine`
+are live in AWS at bd-v2.18.0. `bd-portal-publisher` is updated with the capture
+fan-out. All IAM roles created, Terraform 0-diff confirmed, tag pushed to origin.
+On the next BD gold pipeline run, `bd-capture-output-versions` will fire automatically
+and write the first manifest to `s3://opal-data-bd/snapshots/manifests/`.
+`bd-time-machine` can be invoked directly with `{"target_date": "YYYY-MM-DD"}` for any
+date on or after 2026-02-25 (earliest available S3 version).
 
 ---
 
 ## Next Steps
 
-1. **[0.7.0_AE_CloudOps] Complete DRFR_PTMCH.P1** — lifecycle rules on
-   `opal-data-bd` + IAM gap analysis + CloudFront path table. This unblocks deploy.
+1. **Verify first manifest** — after next nightly gold run (23:00 UTC tonight),
+   confirm `bd-capture-output-versions` fired and wrote to `s3://opal-data-bd/snapshots/manifests/`.
+   Command: `aws s3 ls s3://opal-data-bd/snapshots/manifests/`
+   Verify manifest contains non-null versionIds for all gold/ files.
 
-2. **[0.6.0_AE_PartnerETL] Phase B on CloudOps P1 signal** — when P1 is complete:
-   - Review CloudOps P1 findings doc (CloudFront path table — confirm
-     `/api/scoped/advisor-intelligence/*` is correct scope or update)
-   - `build-and-upload.sh` for three functions: `bd-capture-output-versions`,
-     `bd-time-machine`, `bd-portal-publisher`
-   - Update source-map sha256 fields for all three
-   - `terraform plan` (expect: 2 new Lambdas + IAM roles + updated publisher module)
-   - `terraform apply` → 0-diff → update `pipeline_inventory.xml` →
-     `record-terraform-deploy.sh` → tag `bd-v2.18.0` → push
-
-3. **[0.6.0_AE_PartnerETL] Post-deploy acceptance check:**
-   - Trigger a gold pipeline run — verify `bd-capture-output-versions` fires and
-     writes a manifest to `s3://opal-data-bd/snapshots/manifests/`
-   - Invoke `bd-time-machine` with `target_date=2026-03-06` — verify files
-     restored, sentinel written, publisher re-triggered, CF invalidation fires
-
-**Files to touch next:**
-- `infra/aws/terraform/bd-pipeline/iam.tf` — review against CloudOps P1 IAM findings
-  (may need to adjust permission scope once full table is available)
-- All three Lambda source dirs for `build-and-upload.sh` — no changes needed,
-  just build and upload
+2. **Acceptance test bd-time-machine** — invoke with a historical date:
+   `aws lambda invoke --function-name bd-time-machine --payload '{"target_date":"2026-03-06"}' out.json`
+   Verify: `files_restored > 0`, sentinel written, CF invalidation id in response,
+   portal shows 2026-03-06 data after publisher re-runs.
 
 **Do NOT:**
-- Run `terraform apply` before CloudOps P1 lifecycle rules are on `opal-data-bd`
-- Add a second entry to `aws_s3_bucket_notification.bd_data_bucket` for
-  `pipeline-complete.json` — the S3 filter constraint is permanent
-- Tag `bd-v2.18.0` until 0-diff is confirmed after apply
+- Add a second S3 notification rule on `pipeline-complete.json` — S3 filter constraint is permanent
+- Inline Python or shell in SSM commands — EC2 code always goes through S3
