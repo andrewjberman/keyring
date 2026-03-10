@@ -11,9 +11,21 @@
     }
   ],
   "status": "active",
-  "phase": "Phase 2: Code complete. P1 deployed (shared-infra-v1.4.0). P2 code committed (5ce67698), news-v2.7.0 deployed. P3 Phase A committed (b3207410). Gated on CloudOps P1 CF path confirmation before yang-pipeline + bd-pipeline apply. CF paths confirmed: yang=/api/general/*, BD=/api/scoped/advisor-intelligence/*.",
-  "blocking": "none",
-  "phase_b_gate": "CloudOps P1 COMPLETE (shared-infra-v1.4.0, 2026-03-10). OpalETL + PartnerETL unblocked for terraform apply.",
+  "phase": "DEPLOYED -- awaiting acceptance testing. All layers live. Gated on first BD manifest (tonight's nightly run ~23:00 UTC) before Layer 2 acceptance test.",
+  "blocking": "nightly BD gold run (23:00 UTC) -- first bd-capture-output-versions manifest needed for Test 2a",
+  "deployed_versions": {
+    "shared_infra": "shared-infra-v1.4.0",
+    "news_publisher_target_date": "news-v2.7.0",
+    "yang_time_machine": "yang-v2.2.0",
+    "data_refresh_api": "data-refresh-v2.1.0",
+    "bd_capture_and_time_machine": "bd-v2.18.2"
+  },
+  "known_limitations": {
+    "fallback_path_timeout": "bd-time-machine fallback (pre-manifest dates) times out on gold/clients/ volume (~thousands of files, 300s limit). Manifest path unaffected. Pre-manifest dates not restorable via bd-time-machine until fallback is redesigned.",
+    "fred_cache": "cache/fred/ not captured or restored. Accepted exception for Phase 1.",
+    "bd_earliest_manifest_date": "First manifest written after 2026-03-10 nightly run. Pre-manifest BD restore unsupported.",
+    "dynamo_market_overview_coverage": "DAILY# items available from yang pipeline start date. Gaps logged as warnings, S3 restore still proceeds."
+  },
   "cli_findings_2026_03_10": {
     "opal_data_portal_v2_versioning": "Enabled",
     "opal_data_bd_versioning": "Enabled",
