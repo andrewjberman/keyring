@@ -44,7 +44,7 @@ The `opal-data-refresh-api` Lambda is the single backend for two portal features
   DE/DS may propose route handlers (as with SSCN_PORTAL-001) but AE reviews, deploys,
   and owns the runtime behavior.
 - Source path: `infra/aws/lambda/data_refresh/lambda_function.py`
-- Terraform module: `infra/aws/terraform/other/`
+- Terraform module: `infra/aws/terraform/data-refresh/`
 - IAM role: `opal-data-refresh-lambda-role`
 - S3 artifact key: `other/opal-data-refresh-api.zip`
 - Related resources: DynamoDB table `opal-data-refresh-executions`,
