@@ -16,11 +16,12 @@ the surface area; the project code identifies the specific initiative.
 
 | Project Code | Macro | Project Name | Phase | Pods | Blocking | PRDs |
 |---|---|---|---|---|---|---|
-| `ADVI_NNAVAR` | `ADVI` | NNA Variance Optimization | Phase 0: PRD complete, COO decomposition pending | 0.4 | COO task order issuance | NNA Variance Optimization PRD |
-| `ADVI_AUAVAR` | `ADVI` | AUA Variance Analysis | Phase 0: PRD complete, COO decomposition pending | 0.4 | COO task order issuance | AUA Variance Analysis PRD |
 | `PFMG_VISPOL` | `PFMG` | Trade Engine Visual Polish | Phase 0: COO decomposition | 0.3 | COO task order issuance | Visual polish PRD |
 | `ADVI_49FNV3` | `ADVI` | AdvisorIntelligence 49Financial V3 | Phase 0: PRD complete, COO decomposition pending | 0.4 | COO task order issuance | 49Financial V3 PRD |
 | `SSCN_PORTAL` | `SSCN` | Security Scanner Portal Page | Phase 1: deployed, awaiting first data upload | 0.3 | First real Excel upload (e2e validation) | Security Scanner PRD |
+| `ADHC_GPTCST` | `ADHC` | GPT Cost Audit and Optimization | Phase 0: registered, task orders pending | — | Audit discovery | — |
+| `ADVI_SNPLBK` | `ADVI` | Snapshot Lookback Regression Fix | Phase 0: COO thread orchestration pending | 0.4 | Diagnosis | — |
+| `ADVI_APISCP` | `ADVI` | Scoped API Multi-Partner Routing Architecture | Phase 0: PRD written, COO decomposition pending | 0.4, 0.5, 0.6 | COO task order issuance | ADVI_APISCP PRD |
 
 ---
 
@@ -30,6 +31,8 @@ the surface area; the project code identifies the specific initiative.
 |---|---|---|---|---|
 | `ADVI_V1VERS` | `ADVI` | AdvisorIntelligence V1 Completion | 2026-03-05 | 8/8 task orders verified complete |
 | `ADVI_YANGV2` | `ADVI` | AdvisorIntelligence Yang Feedback V2 | 2026-03-06 | All task orders delivered. Y14 deferred to 49FNV3. |
+| `ADVI_NNAVAR` | `ADVI` | NNA Variance Optimization | 2026-03-09 | Investigation complete. Gap explained (Holding MV withdrawn = correct behavior). Scripts 05/05b deployed to S3. Rebuild deferred pending ADVI_49FNV3. |
+| `ADVI_AUAVAR` | `ADVI` | AUA Variance Analysis | 2026-03-09 | Full $73.6M gap attributed. BKF fix deployed. Post-rebuild accuracy 99.1%. Rebuild deferred pending ADVI_49FNV3. |
 
 ---
 

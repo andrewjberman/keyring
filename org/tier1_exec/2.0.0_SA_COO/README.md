@@ -118,6 +118,33 @@ When issuing task orders from a project thread (`--project {PROJECT_CODE}`):
 
 When issuing ad-hoc task orders (no thread): plain `{description-with-dashes}.md`, no project prefix.
 
+### Task Order Dispatch Table (MANDATORY in session logs)
+
+Every time task orders are issued OR revised, the session log MUST include a dispatch
+table summarizing what was sent to whom. This is non-negotiable — it is the operational
+record that Andrew and future COO sessions use to verify coverage and trace accountability.
+
+Format:
+
+```
+### Task Order Dispatch
+
+| Agent | Task Order Path | Summary |
+|-------|----------------|---------|
+| {serial} | org/tier2_senior/{agent}/task_orders/{filename}.md | {1-line description of deliverable} |
+| ... | ... | ... |
+
+Execution dependencies:
+  {agent A} -> {agent B} (B waits for A)
+  {agent C}, {agent D} (parallel, no blocking)
+```
+
+Rules:
+- Include ALL agents that received a task order in this session, even if unchanged
+- If a task order was REVISED (not new), mark it with `(REVISED)` in the Summary column
+- Always include the execution dependency graph after the table (text or ASCII art)
+- When revising task orders based on thread findings, cite the thread serial in the Summary
+
 ---
 
 ## Key Paths
