@@ -16,7 +16,7 @@ the surface area; the project code identifies the specific initiative.
 
 | Project Code | Macro | Project Name | Phase | Pods | Blocking | PRDs |
 |---|---|---|---|---|---|---|
-| `ADVI_PSCFIX` | `ADVI` | AUA Certification and Static Lifecycle Definition | Phase 1: Task orders issued — AE (A1), DS (A2), DE (B1) | 0.4, 0.6 | none | ADVI_PSCFIX PRD |
+| `ADVI_PSCFIX` | `ADVI` | AUA Certification and Static Lifecycle Definition | Phase 2: A1+A2+B1 complete. Pending: DT1 (publisher deploy), A3 (script09 cert override), DE integration validation. | 0.4, 0.6 | none | ADVI_PSCFIX PRD |
 | `ADVI_49FNV3` | `ADVI` | AdvisorIntelligence 49Financial V3 | Phase 1a: RD task orders complete. Pending DE review of portal DEV `594c3f6` → DT push. | 0.4 | DE review gate | 49Financial V3 PRD |
 | `DRFR_PTMCH` | `DRFR` | Portal Time Machine | Phase 5: Portal orchestrator + frontend integration. P5 task orders issued to OpalETL + DE TradingOperations — not yet executed. | 0.3, 0.5, 0.6, 0.7 | OpalETL + DE_TradingOperations P5 execution | Portal Time Machine PRD |
 
