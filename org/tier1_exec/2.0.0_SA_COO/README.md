@@ -147,6 +147,35 @@ Rules:
 
 ---
 
+## Mandatory Startup: Registry Status Audit
+
+**This step is non-negotiable and must be performed at the start of every COO session.**
+
+Before doing any other work, audit the active projects in `org/projects/REGISTRY.md`
+against actual agent log and task order state. The registry is a living document —
+it drifts if agents complete work between COO sessions without the registry being updated.
+
+### Protocol
+
+1. Read `org/projects/REGISTRY.md` — note every row in the Active Projects table.
+2. For each active project, read the project's JSON (`org/projects/{PROJECT_CODE}.json`)
+   to get the last-recorded phase and blocking state.
+3. For each agent assigned to an active project, read their latest log folder to
+   determine actual current status — do not trust the registry phase description alone.
+4. For any project whose JSON `status` field is `"complete"` but still appears in
+   Active Projects: move it to Completed/Archived immediately.
+5. For any project where agent logs show work is further along than the registry
+   phase description: update the registry phase to reflect actual state.
+6. Commit registry and JSON corrections before proceeding to other work.
+
+### Why this matters
+
+Registry drift causes COO to re-decompose work that is already done, miss blockers
+that have been resolved, and issue redundant task orders. The five-minute audit at
+startup prevents hours of wasted work downstream.
+
+---
+
 ## Key Paths
 
 | Resource | Path |

@@ -1,0 +1,21 @@
+{
+  "project_code": "ADVI_PSCFIX",
+  "macro_code": "ADVI",
+  "name": "AUA Certification and Static Lifecycle Definition",
+  "description": "Two correctness fixes to the AUA view in Advisor Intelligence Assets Overview. (1) Replace the current rolling-12M NMNC/NMEC classification with a static period-level definition: NMNC = clients whose first_seen_date falls within the displayed period; NMEC = all others. Restructure timeseries_chart.json aua key from a single daily series to three pre-aggregated period series (quarterly/monthly/annually). (2) Certify the current-period total AUA against the silver allocation parquet (BD's official daily snapshot). For the most recent period in each series, scale NMNC and NMEC proportionally so NMNC + NMEC = silver allocation total_aua. The rolling gradient definition is preserved conceptually but not wired to any v1 portal view.",
+  "prds": [
+    {
+      "path": "docs/architecture/ADVI_PSCFIX_PRD.md",
+      "label": "AUA Certification and Static Lifecycle Definition PRD",
+      "date": "2026-03-11"
+    }
+  ],
+  "status": "active",
+  "phase": "Phase 1: Task orders issued. Track A: AE (A1 cert script) + DS (A2 publisher restructure) parallel. Track B: DE (B1 portal schema) can start on mock. DT deploys publisher when DS delivers.",
+  "blocking": "none",
+  "created": "2026-03-11",
+  "pods": ["0.4", "0.6"],
+  "pipeline": "bd-pipeline",
+  "thread_counter": 0,
+  "threads": []
+}

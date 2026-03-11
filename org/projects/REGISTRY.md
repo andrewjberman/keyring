@@ -16,10 +16,9 @@ the surface area; the project code identifies the specific initiative.
 
 | Project Code | Macro | Project Name | Phase | Pods | Blocking | PRDs |
 |---|---|---|---|---|---|---|
-| `ADVI_49FNV3` | `ADVI` | AdvisorIntelligence 49Financial V3 | Phase 0: PRD complete, COO decomposition pending | 0.4 | COO task order issuance | 49Financial V3 PRD |
-| `ADVI_APISCP` | `ADVI` | Scoped API Multi-Partner Routing Architecture | Phase 0: PRD written, COO decomposition pending | 0.4, 0.5, 0.6 | COO task order issuance | ADVI_APISCP PRD |
-| `DRFR_PTMCH` | `DRFR` | Portal Time Machine | Phase 0: Research — AE discovery audits dispatched | 0.3, 0.5, 0.6, 0.7 | AE discovery findings | Portal Time Machine PRD |
-| `MDLP_WYNCHT` | `MDLP` | Model Portfolio Benchmark Screenshot Facsimile | Phase 1: DE task order issued | 0.4 | none | MDLP_WYNCHT PRD |
+| `ADVI_PSCFIX` | `ADVI` | AUA Certification and Static Lifecycle Definition | Phase 1: Task orders issued — AE (A1), DS (A2), DE (B1) | 0.4, 0.6 | none | ADVI_PSCFIX PRD |
+| `ADVI_49FNV3` | `ADVI` | AdvisorIntelligence 49Financial V3 | Phase 1a: RD task orders complete. Pending DE review of portal DEV `594c3f6` → DT push. | 0.4 | DE review gate | 49Financial V3 PRD |
+| `DRFR_PTMCH` | `DRFR` | Portal Time Machine | Phase 5: Portal orchestrator + frontend integration. P5 task orders issued to OpalETL + DE TradingOperations — not yet executed. | 0.3, 0.5, 0.6, 0.7 | OpalETL + DE_TradingOperations P5 execution | Portal Time Machine PRD |
 
 ---
 
@@ -35,6 +34,8 @@ the surface area; the project code identifies the specific initiative.
 | `ADVI_SNPLBK` | `ADVI` | Snapshot Lookback Regression Fix | 2026-03-10 | Frontend granularity mismatch diagnosed and fixed. Backend data confirmed intact. |
 | `PFMG_VISPOL` | `PFMG` | Trade Engine Visual Polish | 2026-03-10 | All 13 visual polish items delivered and approved. |
 | `SSCN_PORTAL` | `SSCN` | Security Scanner Portal Page | 2026-03-10 | Infra deployed (security-scanner-v1.0.0), portal DEV live, end-to-end validated. |
+| `ADVI_APISCP` | `ADVI` | Scoped API Multi-Partner Routing Architecture | 2026-03-10 | Router v7 live. All Opal users patched. Firm picker gated. E2E verified. |
+| `MDLP_WYNCHT` | `MDLP` | Model Portfolio Benchmark Screenshot Facsimile | 2026-03-11 | 4 HTML pages live on S3 (opal-313476888478-wyncht). PPTX delivered. All commits on CLOUD. |
 
 ---
 
