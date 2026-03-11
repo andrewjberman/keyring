@@ -113,6 +113,13 @@ Full protocol: `org/AGENT_START_HERE.md` → Blocker Verification Protocol.
 5. Add a row to `org/projects/REGISTRY.md`
 6. Hand off to COO with briefing
 
+### Status Reporting Rule
+
+When Andrew asks "where are we", "who has done what", or any status/progress question,
+always refer to agents by their **full serial** (e.g., `0.4.0_DS_ClientPlatform`, not
+"DS" or "the DS agent"). This applies to tables, prose, and next-steps lists. The full
+serial is required so Andrew can locate the agent folder and verify directly.
+
 ### Key Paths
 
 | Resource | Path |
