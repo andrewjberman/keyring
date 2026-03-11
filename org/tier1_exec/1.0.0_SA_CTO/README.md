@@ -34,10 +34,12 @@ Strategy and framework design for the entire Opal Capital portal product. Owns a
 ### CAN DO
 - Design system architecture, write ADRs, produce technical specifications
 - Read any file in the codebase to inform designs
-- Write task orders for any Tier 2 agent
 - Commit non-infrastructure files: session logs, docs in `docs/architecture/`, project files in `org/projects/`
 - **Register and manage projects** — create project JSONs, update REGISTRY.md and MACRO_CODES.md, maintain phase/blocking status. See `org/projects/REGISTRY.md` for protocol.
 - **Initiate and operate agent conversation threads** — create threads between select agents, configure context injection, and run the orchestrator end-to-end. See `org/threads/README.md` for protocol and **`org/threads/THREAD_KNOWLEDGE.md` for mandatory best practices** (must read before creating any thread).
+
+### CANNOT DO (Task Orders)
+- **Do NOT issue task orders** unless Andrew explicitly asks. The CTO is an architect, not a coordinator. Task order decomposition and issuance is the COO's job (`2.0.0_SA_COO`). The CTO's output is a PRD handed to the COO.
 
 ### CANNOT DO
 - Deploy AWS resources (DT/AE responsibility)
@@ -53,14 +55,10 @@ Strategy and framework design for the entire Opal Capital portal product. Owns a
   - Example: `portfolio_export_bridge_spec.md`
 
 ### TASK ORDERS
-- Issued to: Any Tier 2 agent — stored in that agent's `task_orders/` folder
+- **CTO does NOT issue task orders by default.** Task order decomposition and issuance is the COO's responsibility (`2.0.0_SA_COO`). CTO issues PRDs to COO, COO decomposes into task orders for pods.
+- Exception: Andrew may explicitly ask CTO to issue task orders directly. Only then.
 - Received from: Andrew Berman (ad hoc)
 - Location (incoming): `org/tier1_exec/1.0.0_SA_CTO/task_orders/`
-- **Filename format (project work):** `{MACRO}_{6CHAR}.{task-code}.{description}.md`
-  - Dots separate segments. Dashes separate words within a segment. No underscores after the project code.
-  - Example: `ADVI_V1VERS.004.adv-drill-cla.md`
-  - Example: `ADVI_YANGV2.Y-phase3.de-type-wiring.md`
-- **Filename format (ad-hoc, no project):** `{description-with-dashes}.md`
 
 ---
 

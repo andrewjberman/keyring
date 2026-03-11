@@ -1,0 +1,23 @@
+{
+  "project_code": "MDLP_WYNCHT",
+  "macro_code": "MDLP",
+  "name": "Model Portfolio Benchmark Screenshot Facsimile",
+  "description": "Create a standalone, offline HTML facsimile of the Model Portfolios benchmark tab (ReturnVolatilityScatter + BenchmarkHeatmap) that renders from a local data file (pkl-derived CSV/JSON) with no cloud or portal dependencies. Purpose: generate controlled screenshots of the benchmark visualizations using specific historical pkl data (e.g., data_20260226_v1.pkl) for documentation, audit, and presentation use cases.",
+  "prds": [
+    {
+      "path": "docs/architecture/MDLP_WYNCHT_PRD.md",
+      "label": "Benchmark Screenshot Facsimile PRD",
+      "date": "2026-03-11"
+    }
+  ],
+  "status": "active",
+  "phase": "Phase 1: Task order issued to DE -- single deliverable, hardcoded data",
+  "blocking": "none",
+  "created": "2026-03-11",
+  "pods": [
+    "0.4"
+  ],
+  "pipeline": "yang-pipeline",
+  "thread_counter": 0,
+  "threads": []
+}

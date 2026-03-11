@@ -19,6 +19,7 @@ the surface area; the project code identifies the specific initiative.
 | `ADVI_49FNV3` | `ADVI` | AdvisorIntelligence 49Financial V3 | Phase 0: PRD complete, COO decomposition pending | 0.4 | COO task order issuance | 49Financial V3 PRD |
 | `ADVI_APISCP` | `ADVI` | Scoped API Multi-Partner Routing Architecture | Phase 0: PRD written, COO decomposition pending | 0.4, 0.5, 0.6 | COO task order issuance | ADVI_APISCP PRD |
 | `DRFR_PTMCH` | `DRFR` | Portal Time Machine | Phase 0: Research — AE discovery audits dispatched | 0.3, 0.5, 0.6, 0.7 | AE discovery findings | Portal Time Machine PRD |
+| `MDLP_WYNCHT` | `MDLP` | Model Portfolio Benchmark Screenshot Facsimile | Phase 1: DE task order issued | 0.4 | none | MDLP_WYNCHT PRD |
 
 ---
 
