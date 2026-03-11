@@ -11,8 +11,8 @@
     }
   ],
   "status": "active",
-  "phase": "DEPLOYED -- awaiting acceptance testing. All layers live. Gated on first BD manifest (tonight's nightly run ~23:00 UTC) before Layer 2 acceptance test.",
-  "blocking": "nightly BD gold run (23:00 UTC) -- first bd-capture-output-versions manifest needed for Test 2a",
+  "phase": "Phase 5: Portal orchestrator + frontend integration. P5 task orders issued to OpalETL (orchestrator + exclusion fix) and DE TradingOperations (TimeMachineContext + RD sub-task orders).",
+  "blocking": "none",
   "deployed_versions": {
     "shared_infra": "shared-infra-v1.4.0",
     "news_publisher_target_date": "news-v2.7.0",
