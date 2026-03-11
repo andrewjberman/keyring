@@ -10,9 +10,9 @@
       "date": "2026-03-10"
     }
   ],
-  "status": "active",
-  "phase": "Phase 3 (v5): v4 rolled back (OAC incompatibility confirmed). CTO decision: OAI migration. CloudOps creating OAI + bucket policy (.003). DT wiring CloudFront + cache key + :5 deploy (.003, blocked on CloudOps).",
-  "blocking": "CloudOps ADVI_APISCP.003 (OAI setup + opal-data-bd bucket policy). DT ADVI_APISCP.003 blocked on CloudOps OAI delivery.",
+  "status": "complete",
+  "phase": "Phase 5 (ADVI_APISCP.007) COMPLETE. All Opal users patched to firmId='opal-capital' in opal-users-v2. Router v7 (Lambda :6) live — opal-capital bypass reads ?firm= query param. Portal firm picker gated to isInternal, ?firm= added to static calls, selectedFirmId default fixed to 'bd'. E2E verified.",
+  "blocking": "None.",
   "created": "2026-03-10",
   "pods": [
     "0.4",

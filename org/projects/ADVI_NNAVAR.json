@@ -11,7 +11,7 @@
     }
   ],
   "status": "complete",
-  "phase": "COMPLETE (2026-03-09). Investigation closed. Gap explained (Holding MV withdrawn = correct behavior). Rebuild bundle finalized: JNL/sweep fix + AUAVAR BKF fix. Scripts 05/05b deployed to S3 via DT task order ADVI_NNAVAR.003-DT (pending). Rebuild deferred until after ADVI_49FNV3. No open questions.",
+  "phase": "COMPLETE (2026-03-09). Investigation closed. Gap explained (Holding MV withdrawn = correct behavior). Rebuild bundle finalized: JNL/sweep fix + AUAVAR BKF fix. Scripts 05/05b deployed to S3 via DT task order ADVI_NNAVAR.003-DT (complete, d3a51c58). Rebuild deferred until after ADVI_49FNV3. No open questions.",
   "blocking": "none",
   "created": "2026-03-06",
   "pods": [
@@ -29,7 +29,7 @@
         "0.4.0_DT_ClientPlatform"
       ],
       "pattern": "unset",
-      "status": "active",
+      "status": "complete",
       "date": "2026-03-06"
     }
   ]
