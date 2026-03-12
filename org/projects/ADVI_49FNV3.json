@@ -11,8 +11,8 @@
     }
   ],
   "status": "active",
-  "phase": "Phase 1a: Task orders issued. F1-F7 fixes + N1-N2 Books tab. Threads 001+002 complete.",
-  "blocking": "none",
+  "phase": "Phase 1a COMPLETE (all feature task orders done). F1-F7 fixes: all RD+DE+DS task orders complete. N1-N2 Books tab: RD+DE complete. Thread 003 (F2 redesign): complete, RD .003+.003b task orders complete. Pending: AE .007 (AUA total consistency) + .008 (gold-silver validation) -- pipeline validation, not feature-blocking. No pending DE review gate -- all portal commits on DEV.",
+  "blocking": "AE .007 and .008 pending (pipeline validation only, not feature-blocking)",
   "created": "2026-03-06",
   "pods": [
     "0.4"
@@ -30,7 +30,7 @@
         "0.4.2_RD_AdvisorIntelligence"
       ],
       "pattern": "unset",
-      "status": "active",
+      "status": "complete",
       "date": "2026-03-06"
     },
     {
@@ -43,7 +43,7 @@
         "0.4.0_DE_ClientPlatform"
       ],
       "pattern": "unset",
-      "status": "active",
+      "status": "complete",
       "date": "2026-03-06"
     },
     {
@@ -56,7 +56,7 @@
         "0.4.2_RD_AdvisorIntelligence"
       ],
       "pattern": "unset",
-      "status": "active",
+      "status": "complete",
       "date": "2026-03-09"
     }
   ]

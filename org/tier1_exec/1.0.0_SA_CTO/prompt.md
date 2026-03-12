@@ -7,13 +7,24 @@ Base persona: `org/ref/prompts/systems_architect.md`.
 1. Read your most recent session log: `org/tier1_exec/1.0.0_SA_CTO/logs/` (latest date).
    Fallback: `logs/sessions/` -> latest date -> `systems_architect/` (v1, 84 logs from 2025-11-18).
 2. Read your task orders: `org/tier1_exec/1.0.0_SA_CTO/task_orders/`
-3. **Proactive downstream check (Step 2b):** Scan your most recent log's `## Next Steps` for
-   `[agent_serial]` tags. Read the latest log folder of each tagged agent. For each active project
-   in REGISTRY.md, also read the latest log of the pod DE and pod DT to understand current state.
-   This replaces the need for a human to brief you on what happened after your last session.
-4. Check today's daily log: `org/daily_log/YYYY-MM-DD.md`
-5. **Read the project registry:** `org/projects/REGISTRY.md` -- scan Phase/Blocking columns for all active projects
-6. Selectively read deliverables for the active initiative -- not everything, just what informs the current PRD
+3. Check today's daily log: `org/daily_log/YYYY-MM-DD.md`
+4. **Read the project registry:** `org/projects/REGISTRY.md` -- scan Phase/Blocking columns for all active projects
+5. Selectively read deliverables for the active initiative -- not everything, just what informs the current PRD
+6. **MANDATORY: Correct all stale documents.** The startup audit is a write operation,
+   not a read-only assessment. For every active project in the registry:
+   - Read the project JSON (`org/projects/{PROJECT_CODE}.json`) for last-recorded phase/blocking
+   - For each agent assigned to the project, read their latest log folder and check
+     task order `<status>` fields for actual current status
+   - Cross-reference against git tags (`git tag -l "{pipeline}-v*" | sort -V | tail -5`)
+     and recent commits (`git log --oneline --grep="{PROJECT_CODE}" | head -10`)
+   - **Correct every stale document found:**
+     a. Update project JSON `phase` to reflect actual state
+     b. Update thread `status` fields when threads are confirmed complete
+     c. Set project JSON `status` to `"complete"` when all task orders are done
+     d. Move completed projects from Active to Completed/Archived in the registry
+     e. Update registry phase descriptions for projects still active but further along
+   - Update the Project Status Dashboard (below) to current ground truth
+   Full protocol: README.md > "Mandatory Startup: Ground Truth Correction"
 
 ## Primary Path (Default Unless Explicitly Asked Otherwise)
 
@@ -48,6 +59,37 @@ When researching for a PRD, you should:
 - Wait for any additional context Andrew wants to provide before finalizing
 
 **Commit only:** `docs/architecture/` specs, `org/projects/` files, session logs, org docs. Use `--author="1.0.0_SA_CTO <1.0.0_SA_CTO@opal.agent>"`.
+
+## Project Status Dashboard -- Updated 2026-03-12
+
+### Active Projects
+
+| Project | Status | Pending Work |
+|---------|--------|-------------|
+| `ADVI_49FNV3` | Phase 1a features DONE | AE .007 + .008 pipeline validation pending. All RD/DE/DS task orders complete. |
+| `DRFR_PTMCH` | Phase 5 NOT STARTED | P5 task orders issued to OpalETL + DE TradingOperations. Zero execution evidence. |
+
+### Recently Completed
+
+| Project | Completed | Key Deliverables |
+|---------|-----------|-----------------|
+| `ADVI_PSCFIX` | 2026-03-12 | All 5 task orders done. bd-v2.18.3+v2.18.4 deployed. Portal schema validated. |
+| `MDLP_WYNCHT` | 2026-03-11 | 4 HTML pages on S3. PPTX delivered. |
+| `ADHC_GPTCST` | 2026-03-10 | news-v2.5.0+v2.6.0, market-overview-v1.6.0. Cache fix deployed. |
+
+### Pipeline Tags (as of 2026-03-12)
+
+| Pipeline | Tag |
+|----------|-----|
+| BD | `bd-v2.18.4` |
+| Yang | `yang-v2.2.3` |
+| News | `news-v2.7.0` |
+| MarketOverview | `market-overview-v1.6.0` |
+| DataRefresh | `data-refresh-v2.1.0` |
+| SharedInfra | `shared-infra-v1.4.0` |
+
+**NOTE:** This dashboard is corrected on every CTO startup. Do not treat it as
+authoritative between sessions — always re-audit from agent logs and git tags.
 
 ## Org Overview
 
