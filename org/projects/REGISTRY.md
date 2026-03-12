@@ -16,6 +16,7 @@ the surface area; the project code identifies the specific initiative.
 
 | Project Code | Macro | Project Name | Phase | Pods | Blocking | PRDs |
 |---|---|---|---|---|---|---|
+| `ADHC_MKOVFX` | `ADHC` | Market Overview KI + Fear & Greed Fix | URGENT: Investigation + fix. Task order issued to 0.1.0_DT_MarketIntelligence. | 0.1 | Immediate | — |
 | `DRFR_PTMCH` | `DRFR` | Portal Time Machine | P5 backend COMPLETE. P6a COMPLETE. Remaining: 0.3.3 RD HistoryTab time machine control. Global banner dropped (time machine UI stays in DataRefresh). | 0.3, 0.5 | 0.3.3 RD HistoryTab control | Portal Time Machine PRD, Canon Interlock PRD |
 
 ---

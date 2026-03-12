@@ -1,0 +1,17 @@
+{
+  "project_code": "ADHC_MKOVFX",
+  "macro_code": "ADHC",
+  "name": "Market Overview Keyword Intelligence + Fear & Greed Fix",
+  "description": "Urgent: keyword intelligence showing no data, fear & greed index broken. Investigate root cause across market-overview and news-pipeline Lambdas, EventBridge schedules, S3 outputs, and portal-data-proxy routing. Fix and restore.",
+  "prds": [],
+  "status": "active",
+  "phase": "Investigation + fix. Task order issued to 0.1.0_DT_MarketIntelligence.",
+  "blocking": "none",
+  "created": "2026-03-12",
+  "pods": [
+    "0.1"
+  ],
+  "pipeline": "market-overview, news-pipeline",
+  "thread_counter": 0,
+  "threads": []
+}
