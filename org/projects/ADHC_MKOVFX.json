@@ -4,8 +4,8 @@
   "name": "Market Overview Keyword Intelligence + Fear & Greed Fix",
   "description": "Urgent: keyword intelligence showing no data, fear & greed index broken. Investigate root cause across market-overview and news-pipeline Lambdas, EventBridge schedules, S3 outputs, and portal-data-proxy routing. Fix and restore.",
   "prds": [],
-  "status": "active",
-  "phase": "Investigation + fix. Task order issued to 0.1.0_DT_MarketIntelligence.",
+  "status": "complete",
+  "phase": "KI fix deployed (news-v2.7.1, commit e2b19fdb). Fear & greed backend healthy (S3 fresh, Lambda on schedule). Root cause documented in DT session log.",
   "blocking": "none",
   "created": "2026-03-12",
   "pods": [

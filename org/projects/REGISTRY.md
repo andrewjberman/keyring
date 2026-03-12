@@ -16,7 +16,6 @@ the surface area; the project code identifies the specific initiative.
 
 | Project Code | Macro | Project Name | Phase | Pods | Blocking | PRDs |
 |---|---|---|---|---|---|---|
-| `ADHC_MKOVFX` | `ADHC` | Market Overview KI + Fear & Greed Fix | URGENT: Investigation + fix. Task order issued to 0.1.0_DT_MarketIntelligence. | 0.1 | Immediate | — |
 | `DRFR_PTMCH` | `DRFR` | Portal Time Machine | P5 backend COMPLETE. P6a COMPLETE. Remaining: 0.3.3 RD HistoryTab time machine control. Global banner dropped (time machine UI stays in DataRefresh). | 0.3, 0.5 | 0.3.3 RD HistoryTab control | Portal Time Machine PRD, Canon Interlock PRD |
 
 ---
@@ -36,6 +35,7 @@ the surface area; the project code identifies the specific initiative.
 | `ADVI_APISCP` | `ADVI` | Scoped API Multi-Partner Routing Architecture | 2026-03-10 | Router v7 live. All Opal users patched. Firm picker gated. E2E verified. |
 | `MDLP_WYNCHT` | `MDLP` | Model Portfolio Benchmark Screenshot Facsimile | 2026-03-11 | 4 HTML pages live on S3 (opal-313476888478-wyncht). PPTX delivered. All commits on CLOUD. |
 | `ADVI_PSCFIX` | `ADVI` | AUA Certification and Static Lifecycle Definition | 2026-03-12 | All 5 task orders complete: A1 (cert script), A2 (publisher ea832f51+c3c8d072), A3 (script09 cert), B1 (portal schema), DT1 (bd-v2.18.3+v2.18.4). DE integration validated. |
+| `ADHC_MKOVFX` | `ADHC` | Market Overview KI + Fear & Greed Fix | 2026-03-12 | KI bug fixed (news-v2.7.1). Fear & greed backend healthy. Root cause: GPT returning string instead of dict for signal_conflict. |
 | `ADVI_49FNV3` | `ADVI` | AdvisorIntelligence 49Financial V3 | 2026-03-12 | All task orders complete: F1-F7 fixes, N1-N2 Books tab, thread 003/003b redesign, .007 (resolved by PSCFIX), .008 (05c deployed, 33-date backfill, root cause documented). |
 
 ---
