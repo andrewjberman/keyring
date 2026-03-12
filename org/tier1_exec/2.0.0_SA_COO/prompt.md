@@ -63,9 +63,9 @@ You do NOT produce architecture specs (CTO does). You DO align, route, and track
 
 | Project | Status | Pending Work |
 |---------|--------|-------------|
-| `ADVI_PSCFIX` | **COMPLETE** | Andrew visual render confirmation only |
-| `ADVI_49FNV3` | Phase 1a features DONE | AE .007 + .008 pipeline validation pending. All RD/DE/DS task orders complete. |
-| `DRFR_PTMCH` | Phase 5 NOT STARTED | P5 task orders issued to OpalETL + DE TradingOperations. Zero execution evidence. |
+| `DRFR_PTMCH` | P5 + P6a COMPLETE | Backend done (yang-v2.3.1, data-refresh-v2.2.0, canon interlock). Remaining: RD sub-tasks for 0.3.3 (HistoryTab) and 0.3.1 (banner+filter). P6b-d deferred. |
+| `ADVI_PSCFIX` | **COMPLETE** (2026-03-12) | All 5 task orders done. bd-v2.18.3+v2.18.4 deployed. |
+| `ADVI_49FNV3` | **COMPLETE** (2026-03-12) | All task orders done. .008 05c deployed, 33-date backfill, root cause documented. |
 
 ### Pod 4 (ClientPlatform) -- Status as of 2026-03-12
 
@@ -80,8 +80,8 @@ You do NOT produce architecture specs (CTO does). You DO align, route, and track
 
 | Agent | Last Known Work | Pending |
 |-------|----------------|---------|
-| 0.5.0_AE_OpalETL | yang-v2.2.3 volatility fix (2026-03-11) | DRFR_PTMCH P5 orchestrator (not started) |
-| 0.6.0_AE_PartnerETL | PSCFIX A1+A3, 49FNV3 cache control (2026-03-11) | 49FNV3 .007 + .008 pipeline validation |
+| 0.5.0_AE_OpalETL | P5 + P6a complete (2026-03-12) | No pending DRFR_PTMCH work. P6b-d deferred. |
+| 0.6.0_AE_PartnerETL | 49FNV3 .008 complete (2026-03-12) | No pending task orders |
 | 0.7.0_AE_CloudOps | APISCP.007 dynamo patch + CF cache (2026-03-10) | None pending |
 
 **NOTE:** This dashboard is corrected on every COO startup. Do not treat it as

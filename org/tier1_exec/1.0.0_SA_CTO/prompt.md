@@ -66,13 +66,13 @@ When researching for a PRD, you should:
 
 | Project | Status | Pending Work |
 |---------|--------|-------------|
-| `ADVI_49FNV3` | Phase 1a features DONE | AE .007 + .008 pipeline validation pending. All RD/DE/DS task orders complete. |
-| `DRFR_PTMCH` | Phase 5 NOT STARTED | P5 task orders issued to OpalETL + DE TradingOperations. Zero execution evidence. |
+| `DRFR_PTMCH` | P6a COMPLETE, P5 pending | P1-P4 deployed. P6a canon interlock live (21 PKL backfill, 185K flags). P5 orchestrator + frontend not started. P6b-d pending. |
 
 ### Recently Completed
 
 | Project | Completed | Key Deliverables |
 |---------|-----------|-----------------|
+| `ADVI_49FNV3` | 2026-03-12 | All task orders complete. F1-F7, N1-N2, .007 (PSCFIX), .008 (05c + backfill). |
 | `ADVI_PSCFIX` | 2026-03-12 | All 5 task orders done. bd-v2.18.3+v2.18.4 deployed. Portal schema validated. |
 | `MDLP_WYNCHT` | 2026-03-11 | 4 HTML pages on S3. PPTX delivered. |
 | `ADHC_GPTCST` | 2026-03-10 | news-v2.5.0+v2.6.0, market-overview-v1.6.0. Cache fix deployed. |
