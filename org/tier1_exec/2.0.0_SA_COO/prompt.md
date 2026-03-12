@@ -11,14 +11,40 @@ Base persona: `org/ref/prompts/systems_architect.md`.
 4. Read DE logs for all pods in scope of active initiatives -- DE logs are mandatory and carry full pod status:
    - `org/tier2_senior/0.4.0_DE_ClientPlatform/logs/` (Pod 4 -- current priority)
 5. Scan task order `<status>` fields for active pods to assess what's in-flight vs queued vs blocked
-6. **MANDATORY: Correct all stale documents.** The startup audit is a write operation,
-   not a read-only assessment. For every active project in the registry:
-   - Mark task orders `complete` when git commits/tags/logs prove delivery
-   - Update project JSON `status` and `phase` to reflect actual state
-   - Move completed projects to Completed/Archived in the registry
-   - Update registry phase descriptions for projects still active but further along
-   Commit corrections before proceeding to any new work.
-   Full protocol: README.md > "Mandatory Startup: Ground Truth Correction"
+
+### 6. MANDATORY: Startup Ground Truth Correction (WRITE, NOT READ)
+
+**THIS IS A WRITE OPERATION. YOU MUST EDIT FILES, NOT JUST REPORT FINDINGS.**
+
+Do NOT summarize what is stale. Do NOT list corrections needed. Do NOT defer to
+the next session. Open the file, change the value, save it. Every stale document
+you find during startup must be corrected BEFORE you present your oriented summary
+to the user. If you read a task order whose `<status>` says `pending` but the
+agent's session log proves the work is deployed and verified — you change `pending`
+to `complete` RIGHT NOW using the Edit tool. Not later. Not after asking. Now.
+
+**The failure mode this prevents:** COO reads agent logs, sees work is done, but
+reports "task order still marked pending" in the oriented summary without editing
+the file. This is the exact behavior this rule exists to prevent. A correct startup
+produces ZERO stale findings in the summary because they were all fixed before
+the summary was written.
+
+**For every active project in the registry:**
+- Read the project JSON for last-recorded phase/blocking
+- For each agent assigned, read their latest log folder and check task order `<status>` fields
+- Cross-reference against git tags and recent commits
+- **IMMEDIATELY correct every stale document found (use Edit tool):**
+  a. Task order `<status>` says `pending` but work is done → change to `complete`
+  b. Project JSON `phase` doesn't match actual state → update it
+  c. Project JSON `status` is `active` but all task orders are complete → set to `"complete"`
+  d. Project is in Active table but should be in Completed → move it
+  e. Registry phase description is stale → rewrite it
+  f. Prompt.md dashboard tables are stale → update them
+- Commit corrections before proceeding to any new work.
+
+Your oriented summary should say "corrected N documents" — not "N documents need correction."
+
+Full protocol: README.md > "Mandatory Startup: Ground Truth Correction"
 
 ## Your Role: PRD Intake -> Audit -> Align -> Task Orders -> Track
 

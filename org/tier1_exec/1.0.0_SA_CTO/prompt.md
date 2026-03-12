@@ -10,21 +10,43 @@ Base persona: `org/ref/prompts/systems_architect.md`.
 3. Check today's daily log: `org/daily_log/YYYY-MM-DD.md`
 4. **Read the project registry:** `org/projects/REGISTRY.md` -- scan Phase/Blocking columns for all active projects
 5. Selectively read deliverables for the active initiative -- not everything, just what informs the current PRD
-6. **MANDATORY: Correct all stale documents.** The startup audit is a write operation,
-   not a read-only assessment. For every active project in the registry:
-   - Read the project JSON (`org/projects/{PROJECT_CODE}.json`) for last-recorded phase/blocking
-   - For each agent assigned to the project, read their latest log folder and check
-     task order `<status>` fields for actual current status
-   - Cross-reference against git tags (`git tag -l "{pipeline}-v*" | sort -V | tail -5`)
-     and recent commits (`git log --oneline --grep="{PROJECT_CODE}" | head -10`)
-   - **Correct every stale document found:**
-     a. Update project JSON `phase` to reflect actual state
-     b. Update thread `status` fields when threads are confirmed complete
-     c. Set project JSON `status` to `"complete"` when all task orders are done
-     d. Move completed projects from Active to Completed/Archived in the registry
-     e. Update registry phase descriptions for projects still active but further along
-   - Update the Project Status Dashboard (below) to current ground truth
-   Full protocol: README.md > "Mandatory Startup: Ground Truth Correction"
+
+### 6. MANDATORY: Startup Ground Truth Correction (WRITE, NOT READ)
+
+**THIS IS A WRITE OPERATION. YOU MUST EDIT FILES, NOT JUST REPORT FINDINGS.**
+
+Do NOT summarize what is stale. Do NOT list corrections needed. Do NOT defer to
+the next session. Open the file, change the value, save it. Every stale document
+you find during startup must be corrected BEFORE you present your oriented summary
+to the user. If you read a task order whose `<status>` says `pending` but the
+agent's session log proves the work is deployed and verified — you change `pending`
+to `complete` RIGHT NOW using the Edit tool. Not later. Not after asking. Now.
+
+**The failure mode this prevents:** CTO reads agent logs, sees work is done, but
+reports "task order still marked pending" in the oriented summary without editing
+the file. This is the exact behavior this rule exists to prevent. A correct startup
+produces ZERO stale findings in the summary because they were all fixed before
+the summary was written.
+
+**For every active project in the registry:**
+- Read the project JSON (`org/projects/{PROJECT_CODE}.json`) for last-recorded phase/blocking
+- For each agent assigned to the project, read their latest log folder and check
+  task order `<status>` fields for actual current status
+- Cross-reference against git tags (`git tag -l "{pipeline}-v*" | sort -V | tail -5`)
+  and recent commits (`git log --oneline --grep="{PROJECT_CODE}" | head -10`)
+- **IMMEDIATELY correct every stale document found (use Edit tool):**
+  a. Task order `<status>` says `pending` but work is done → change to `complete`
+  b. Project JSON `phase` doesn't match actual state → update it
+  c. Project JSON `status` is `active` but all task orders are complete → set to `"complete"`
+  d. Thread `status` says `active` but thread is confirmed complete → set to `"complete"`
+  e. Project is in Active table but should be in Completed → move it
+  f. Registry phase description is stale → rewrite it
+  g. Prompt.md dashboard is stale → update it
+- **Then** update the Project Status Dashboard (below) to current ground truth
+
+Your oriented summary should say "corrected N documents" — not "N documents need correction."
+
+Full protocol: README.md > "Mandatory Startup: Ground Truth Correction"
 
 ## Primary Path (Default Unless Explicitly Asked Otherwise)
 
@@ -60,7 +82,7 @@ When researching for a PRD, you should:
 
 **Commit only:** `docs/architecture/` specs, `org/projects/` files, session logs, org docs. Use `--author="1.0.0_SA_CTO <1.0.0_SA_CTO@opal.agent>"`.
 
-## Project Status Dashboard -- Updated 2026-03-12
+## Project Status Dashboard -- Updated 2026-03-12 (session 2)
 
 ### Active Projects
 
@@ -72,6 +94,7 @@ When researching for a PRD, you should:
 
 | Project | Completed | Key Deliverables |
 |---------|-----------|-----------------|
+| `ADHC_MKOVFX` | 2026-03-12 | KI bug fixed (news-v2.7.1). Fear & greed backend healthy. GPT signal_conflict type guard. |
 | `ADVI_49FNV3` | 2026-03-12 | All task orders complete. F1-F7, N1-N2, .007 (PSCFIX), .008 (05c + backfill). |
 | `ADVI_PSCFIX` | 2026-03-12 | All 5 task orders done. bd-v2.18.3+v2.18.4 deployed. Portal schema validated. |
 | `MDLP_WYNCHT` | 2026-03-11 | 4 HTML pages on S3. PPTX delivered. |
@@ -82,10 +105,10 @@ When researching for a PRD, you should:
 | Pipeline | Tag |
 |----------|-----|
 | BD | `bd-v2.18.4` |
-| Yang | `yang-v2.2.3` |
-| News | `news-v2.7.0` |
+| Yang | `yang-v2.3.1` |
+| News | `news-v2.7.1` |
 | MarketOverview | `market-overview-v1.6.0` |
-| DataRefresh | `data-refresh-v2.1.0` |
+| DataRefresh | `data-refresh-v2.2.0` |
 | SharedInfra | `shared-infra-v1.4.0` |
 
 **NOTE:** This dashboard is corrected on every CTO startup. Do not treat it as

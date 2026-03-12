@@ -147,26 +147,27 @@ Rules:
 
 ---
 
-## Mandatory Startup: Ground Truth Correction (Not Just Assessment)
+## Mandatory Startup: Ground Truth Correction (WRITE, NOT READ)
 
 **This step is non-negotiable and must be performed at the start of every COO session.**
 
 The COO startup audit is not a read-only status check. It is a **write operation**.
-Every stale document discovered during the audit must be corrected before the COO
-proceeds to new work. The purpose is to bring all project-tracking artifacts into
-alignment with what agents have actually done — as evidenced by git commits, deploy
-tags, session logs, and task order `<status>` fields.
+You MUST use the Edit tool to fix every stale document BEFORE presenting your
+oriented summary. Do not report staleness — eliminate it. If you find yourself
+writing "task order still marked pending" or "project JSON needs update" in your
+summary, you have failed this step. The correct behavior is: read evidence, open
+the file, change the value, then summarize what you corrected.
 
 ### What gets corrected
 
-| Document | Correction trigger |
-|----------|-------------------|
-| Task order `<status>` field | Agent log or git commit proves work is done but status still says `pending` |
-| Project JSON `status` field | All task orders complete → set to `"complete"` |
-| Project JSON `phase` field | Agent progress exceeds what the phase description says |
-| Registry Active Projects row | Phase description stale, or project should move to Completed |
-| Registry Completed table | Project JSON says `"complete"` but row is still in Active |
-| COO prompt.md dashboard | Pod status table is stale vs agent logs |
+| Document | Correction trigger | Action |
+|----------|-------------------|--------|
+| Task order `<status>` | Agent log/git proves work is done but status says `pending` | Edit `pending` → `complete` |
+| Project JSON `status` field | All task orders complete | Edit `active` → `complete` |
+| Project JSON `phase` field | Agent progress exceeds what the phase description says | Edit the phase string |
+| Registry Active Projects row | Phase description stale, or project should move to Completed | Edit the row / move it |
+| Registry Completed table | Project JSON says `"complete"` but row is still in Active | Move the row |
+| COO prompt.md dashboard | Pod status table is stale vs agent logs | Edit the dashboard |
 
 ### Protocol
 
@@ -177,13 +178,12 @@ tags, session logs, and task order `<status>` fields.
    check task order `<status>` fields to determine actual current status.
    Cross-reference against git tags (`git tag -l "{pipeline}-v*" | sort -V | tail -5`)
    and recent commits (`git log --oneline --grep="{PROJECT_CODE}" | head -10`).
-4. **Correct every stale document found:**
-   a. Mark task orders `complete` when git evidence confirms delivery.
-   b. Update project JSON `phase` to reflect actual state.
-   c. Set project JSON `status` to `"complete"` when all task orders are done.
-   d. Move completed projects from Active to Completed/Archived in the registry.
-   e. Update registry phase descriptions for projects still active but further along.
+4. **IMMEDIATELY correct every stale document found** — use the Edit tool on task
+   orders, project JSONs, registry rows, and the prompt.md dashboard. Do this
+   BEFORE writing your oriented summary.
 5. Commit all corrections before proceeding to new work.
+
+Your oriented summary should say "corrected N documents" — not "N documents need correction."
 
 ### Why this matters
 
@@ -192,6 +192,11 @@ that have been resolved, and issue redundant task orders. **Stale task orders ar
 worse than no task orders** — they cause agents to re-read completed work looking
 for what's left, and they cause COO to plan around phantom blockers. The correction
 step at startup prevents all of this.
+
+**The specific failure mode:** COO reads agent logs, confirms work is done, but
+reports "still marked pending" in the summary instead of opening the file and
+changing it. This wastes Andrew's time and leaves the next session with the same
+stale data. Fix it now or it compounds.
 
 ---
 

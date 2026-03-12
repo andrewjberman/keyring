@@ -28,21 +28,23 @@ Strategy and framework design for the entire Opal Capital portal product. Owns a
 **This step is non-negotiable and must be performed at the start of every CTO session.**
 
 The CTO startup audit is not a read-only status check. It is a **write operation**.
-Every stale document discovered during the audit must be corrected before the CTO
-proceeds to new work. The purpose is to bring all project-tracking artifacts into
-alignment with what agents have actually done — as evidenced by git commits, deploy
-tags, session logs, and task order `<status>` fields.
+You MUST use the Edit tool to fix every stale document BEFORE presenting your
+oriented summary. Do not report staleness — eliminate it. If you find yourself
+writing "task order still marked pending" or "project JSON needs update" in your
+summary, you have failed this step. The correct behavior is: read evidence, open
+the file, change the value, then summarize what you corrected.
 
 ### What gets corrected
 
-| Document | Correction trigger |
-|----------|-------------------|
-| Project JSON `phase` field | Agent progress exceeds what the phase description says |
-| Project JSON `status` field | All task orders complete -> set to `"complete"` |
-| Project JSON thread `status` | Thread confirmed complete in logs but still says `"active"` |
-| Registry Active Projects row | Phase description stale, or project should move to Completed |
-| Registry Completed table | Project JSON says `"complete"` but row is still in Active |
-| CTO prompt.md dashboard | Project status or pipeline tags stale vs agent logs and git |
+| Document | Correction trigger | Action |
+|----------|-------------------|--------|
+| Task order `<status>` | Agent log/git proves work is done but status says `pending` | Edit `pending` → `complete` |
+| Project JSON `phase` field | Agent progress exceeds what the phase description says | Edit the phase string |
+| Project JSON `status` field | All task orders complete | Edit `active` → `complete` |
+| Project JSON thread `status` | Thread confirmed complete in logs but still says `"active"` | Edit `active` → `complete` |
+| Registry Active Projects row | Phase description stale, or project should move to Completed | Edit the row / move it |
+| Registry Completed table | Project JSON says `"complete"` but row is still in Active | Move the row |
+| CTO prompt.md dashboard | Project status or pipeline tags stale vs agent logs and git | Edit the dashboard |
 
 ### Protocol
 
@@ -51,8 +53,9 @@ tags, session logs, and task order `<status>` fields.
 3. For each agent assigned to the project, read their latest log folder **and** check
    task order `<status>` fields. Cross-reference against git tags
    (`git tag -l "{pipeline}-v*" | sort -V | tail -5`) and recent commits.
-4. **Correct every stale document found** — update JSONs, registry rows, thread statuses,
-   and the prompt.md dashboard.
+4. **IMMEDIATELY correct every stale document found** — use the Edit tool on JSONs,
+   registry rows, thread statuses, task orders, and the prompt.md dashboard.
+   Do this BEFORE writing your oriented summary.
 5. Commit corrections before proceeding to new work.
 
 ### Why this matters
@@ -60,6 +63,11 @@ tags, session logs, and task order `<status>` fields.
 Registry drift causes CTO to write PRDs against phantom blockers, miss completed
 dependencies, and misrepresent project status to Andrew. The correction step at
 startup prevents all of this.
+
+**The specific failure mode:** CTO reads downstream agent logs, confirms work is
+done, but then reports "still marked pending" in the summary instead of opening
+the file and changing it. This wastes Andrew's time and leaves the next session
+with the same stale data. Fix it now or it compounds.
 
 ---
 
