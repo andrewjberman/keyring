@@ -16,8 +16,7 @@ the surface area; the project code identifies the specific initiative.
 
 | Project Code | Macro | Project Name | Phase | Pods | Blocking | PRDs |
 |---|---|---|---|---|---|---|
-| `ADVI_PSCFIX` | `ADVI` | AUA Certification and Static Lifecycle Definition | Phase 2: A1+A2+B1 complete. Pending: DT1 (publisher deploy), A3 (script09 cert override), DE integration validation. | 0.4, 0.6 | none | ADVI_PSCFIX PRD |
-| `ADVI_49FNV3` | `ADVI` | AdvisorIntelligence 49Financial V3 | Phase 1a: RD task orders complete. Pending DE review of portal DEV `594c3f6` → DT push. | 0.4 | DE review gate | 49Financial V3 PRD |
+| `ADVI_49FNV3` | `ADVI` | AdvisorIntelligence 49Financial V3 | Phase 1a feature work COMPLETE. All RD+DE+DS task orders done. Pending: AE .007 + .008 (pipeline validation, not feature-blocking). | 0.4, 0.6 | AE pipeline validation (.007, .008) | 49Financial V3 PRD |
 | `DRFR_PTMCH` | `DRFR` | Portal Time Machine | Phase 5: Portal orchestrator + frontend integration. P5 task orders issued to OpalETL + DE TradingOperations — not yet executed. | 0.3, 0.5, 0.6, 0.7 | OpalETL + DE_TradingOperations P5 execution | Portal Time Machine PRD |
 
 ---
@@ -36,6 +35,7 @@ the surface area; the project code identifies the specific initiative.
 | `SSCN_PORTAL` | `SSCN` | Security Scanner Portal Page | 2026-03-10 | Infra deployed (security-scanner-v1.0.0), portal DEV live, end-to-end validated. |
 | `ADVI_APISCP` | `ADVI` | Scoped API Multi-Partner Routing Architecture | 2026-03-10 | Router v7 live. All Opal users patched. Firm picker gated. E2E verified. |
 | `MDLP_WYNCHT` | `MDLP` | Model Portfolio Benchmark Screenshot Facsimile | 2026-03-11 | 4 HTML pages live on S3 (opal-313476888478-wyncht). PPTX delivered. All commits on CLOUD. |
+| `ADVI_PSCFIX` | `ADVI` | AUA Certification and Static Lifecycle Definition | 2026-03-12 | All 5 task orders complete: A1 (cert script), A2 (publisher ea832f51+c3c8d072), A3 (script09 cert), B1 (portal schema), DT1 (bd-v2.18.3+v2.18.4). DE integration validated. |
 
 ---
 

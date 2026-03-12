@@ -147,32 +147,51 @@ Rules:
 
 ---
 
-## Mandatory Startup: Registry Status Audit
+## Mandatory Startup: Ground Truth Correction (Not Just Assessment)
 
 **This step is non-negotiable and must be performed at the start of every COO session.**
 
-Before doing any other work, audit the active projects in `org/projects/REGISTRY.md`
-against actual agent log and task order state. The registry is a living document —
-it drifts if agents complete work between COO sessions without the registry being updated.
+The COO startup audit is not a read-only status check. It is a **write operation**.
+Every stale document discovered during the audit must be corrected before the COO
+proceeds to new work. The purpose is to bring all project-tracking artifacts into
+alignment with what agents have actually done — as evidenced by git commits, deploy
+tags, session logs, and task order `<status>` fields.
+
+### What gets corrected
+
+| Document | Correction trigger |
+|----------|-------------------|
+| Task order `<status>` field | Agent log or git commit proves work is done but status still says `pending` |
+| Project JSON `status` field | All task orders complete → set to `"complete"` |
+| Project JSON `phase` field | Agent progress exceeds what the phase description says |
+| Registry Active Projects row | Phase description stale, or project should move to Completed |
+| Registry Completed table | Project JSON says `"complete"` but row is still in Active |
+| COO prompt.md dashboard | Pod status table is stale vs agent logs |
 
 ### Protocol
 
 1. Read `org/projects/REGISTRY.md` — note every row in the Active Projects table.
 2. For each active project, read the project's JSON (`org/projects/{PROJECT_CODE}.json`)
    to get the last-recorded phase and blocking state.
-3. For each agent assigned to an active project, read their latest log folder to
-   determine actual current status — do not trust the registry phase description alone.
-4. For any project whose JSON `status` field is `"complete"` but still appears in
-   Active Projects: move it to Completed/Archived immediately.
-5. For any project where agent logs show work is further along than the registry
-   phase description: update the registry phase to reflect actual state.
-6. Commit registry and JSON corrections before proceeding to other work.
+3. For each agent assigned to an active project, read their latest log folder **and**
+   check task order `<status>` fields to determine actual current status.
+   Cross-reference against git tags (`git tag -l "{pipeline}-v*" | sort -V | tail -5`)
+   and recent commits (`git log --oneline --grep="{PROJECT_CODE}" | head -10`).
+4. **Correct every stale document found:**
+   a. Mark task orders `complete` when git evidence confirms delivery.
+   b. Update project JSON `phase` to reflect actual state.
+   c. Set project JSON `status` to `"complete"` when all task orders are done.
+   d. Move completed projects from Active to Completed/Archived in the registry.
+   e. Update registry phase descriptions for projects still active but further along.
+5. Commit all corrections before proceeding to new work.
 
 ### Why this matters
 
 Registry drift causes COO to re-decompose work that is already done, miss blockers
-that have been resolved, and issue redundant task orders. The five-minute audit at
-startup prevents hours of wasted work downstream.
+that have been resolved, and issue redundant task orders. **Stale task orders are
+worse than no task orders** — they cause agents to re-read completed work looking
+for what's left, and they cause COO to plan around phantom blockers. The correction
+step at startup prevents all of this.
 
 ---
 
