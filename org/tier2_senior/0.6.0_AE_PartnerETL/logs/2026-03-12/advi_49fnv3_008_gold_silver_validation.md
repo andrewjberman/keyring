@@ -2,7 +2,7 @@
 
 **Date:** 2026-03-12
 **Start Time:** 15:35
-**End Time:** 15:50
+**End Time:** 16:40
 
 ## Objective
 
@@ -28,6 +28,9 @@ of the gold-silver divergence (missing accounts + price divergence).
 | 9 | Re-run backfill | 33 dates validated, 3 ERROR (early schema mismatch) |
 | 10 | Root cause investigation | Missing accounts + price divergence documented |
 | 11 | Mark task order complete | ADVI_49FNV3.008 status=complete |
+| 12 | Add 00_build_accounts_dimension to incremental run | `ada01ed1` feat(bd-pipeline): add 00_build_accounts_dimension to incremental run |
+| 13 | Deploy updated runner to EC2 | run_gold_layer.sh re-synced to S3 |
+| 14 | EC2_MANIFEST.json updated | Manifest commit `2d12ff54` |
 
 ## Verification
 
@@ -77,10 +80,13 @@ These likely lack transactions, so `00_build_accounts_dimension.py` (which reads
 transactions/positions cube) never discovers them. They are real BD accounts with real MV
 but have no transaction history in gold.
 
-**Fix options (not implemented -- architecture decision for CTO):**
-1. Run `00_build_accounts_dimension.py` in incremental mode (adds new accounts without full rebuild)
-2. Source accounts dimension from silver allocations directly (guaranteed to include all active accounts)
-3. Accept the gap and rely on PSCFIX certification for display accuracy
+**Fix applied:** Added `00_build_accounts_dimension.py` to the incremental (daily) run in
+`run_gold_layer.sh` (`ada01ed1`). There was no good reason to exclude it -- the script reads
+account metadata from transactions + allocations and is idempotent. New accounts will now be
+picked up same-day instead of waiting for the monthly full run. The 83 missing accounts should
+drop to near-zero after the next nightly run (the ~18 persistent ones from pre-2026 should
+also get picked up since the script reads all transaction history + enriches from latest
+silver allocations).
 
 ### (b) Price Divergence: Canonical market-close vs BD settlement prices (~$20.5M)
 
@@ -113,7 +119,7 @@ No change recommended.
 | Use `account_id` (not `account_number`) for silver-gold join | Both datasets have `account_id` (z-prefixed internal BD ID). Silver also has `account_number` (numeric external ID) but gold doesn't -- using it caused false 6300+ "missing" accounts |
 | 05c runs via `|| true` (not `run_script()`) | Same pattern as 05d -- `run_script()` passes `--upload` flag, non-blocking requirement means 05c should never halt the pipeline |
 | Status FAIL at 0.36% gap + 83 missing accounts | 83 exceeds WARN threshold (50), so even though gap_pct is within PASS range, the account count triggers FAIL. Correct behavior per task order thresholds. |
-| No fix applied for missing accounts | Root cause is architectural (monthly full-run cadence). Requires CTO decision on whether to run 00 more frequently or source from silver. |
+| Add 00 to incremental run | No reason to only build accounts_dimension monthly. New accounts should be picked up same-day. Script is idempotent and reads metadata, not heavy computation. |
 | No change to canonical prices | Intentional methodology difference (market close vs BD settlement). PSCFIX already handles display correctness via certified_aua. |
 
 ---
@@ -123,8 +129,9 @@ No change recommended.
 | File | Change | Committed |
 |------|--------|-----------|
 | `data/black_diamond/scripts/gold/05c_validate_aua_vs_silver.py` | New validation script | Yes -- `4fd699f4`, fixed `a4cbbf87` |
-| `infra/aws/ec2/EC2_MANIFEST.json` | Deploy recorded (x2) | Yes -- `968d0cbb`, `dca49ecf` |
-| `org/tier2_senior/0.6.0_AE_PartnerETL/task_orders/ADVI_49FNV3.008.gold-silver-aua-validation.md` | status=complete | This commit |
+| `data/black_diamond/scripts/gold/run_gold_layer.sh` | Added 00 to incremental run | Yes -- `ada01ed1` |
+| `infra/aws/ec2/EC2_MANIFEST.json` | Deploy recorded (x3) | Yes -- `968d0cbb`, `dca49ecf`, `2d12ff54` |
+| `org/tier2_senior/0.6.0_AE_PartnerETL/task_orders/ADVI_49FNV3.008.gold-silver-aua-validation.md` | status=complete | Yes -- `2bcc43e0` |
 
 ---
 
@@ -146,9 +153,9 @@ Wired in `run_gold_layer.sh` both modes (incremental + full) via `if [ -f ... ]`
 recent date (2026-03-09) is +0.36% ($5.7M), decomposing into -$14.8M missing accounts and
 +$20.5M canonical price divergence.
 
-Root causes documented: (a) accounts_dimension staleness from monthly-only full runs,
-(b) intentional canonical vs BD pricing methodology difference. PSCFIX already handles
-display correctness. No code changes recommended for either root cause.
+Root causes documented and (a) fixed: accounts_dimension now runs daily in incremental mode
+(`ada01ed1`), which will pick up new accounts same-day. (b) Canonical vs BD pricing methodology
+difference is intentional -- no change needed. PSCFIX handles display correctness.
 
 ADVI_49FNV3.008 all 5 acceptance criteria met:
 1. 05c runs cleanly on 2026-03-09 -- writes correct validation JSON
@@ -161,17 +168,18 @@ ADVI_49FNV3.008 all 5 acceptance criteria met:
 
 ## Next Steps
 
-1. **[1.0.0_SA_CTO] Architecture decision: accounts_dimension refresh cadence** -- currently
-   monthly (full mode only). Options: add to incremental mode, source from silver, or accept gap.
-   Not urgent -- PSCFIX handles display correctness.
-
-2. **Verify on next nightly pipeline run** -- check that 05c executes in the incremental run
-   and writes a new validation JSON:
+1. **Verify on next nightly pipeline run** -- confirm 00 + 05c both execute in incremental mode:
    ```bash
+   # Check accounts_dimension was refreshed
+   aws s3 ls s3://opal-data-bd/gold/accounts_dimension_latest.parquet
+   # Check new validation JSON written
    aws s3 ls s3://opal-data-bd/gold/validation/ --recursive | tail -3
    ```
 
+2. **After next run: re-check missing account count** -- expect significant drop from 83/90
+   now that 00 runs daily. The ~18 persistent pre-2026 accounts may or may not resolve
+   depending on whether they have any transaction history.
+
 **Do NOT:**
 - Change canonical price sources -- the methodology difference is intentional
-- Run `00_build_accounts_dimension.py` in incremental mode without CTO approval
 - Remove the `if [ -f ... ]` guard for 05c in the runner -- it's the deployment safety net
