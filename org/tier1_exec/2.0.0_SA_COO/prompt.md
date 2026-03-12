@@ -63,7 +63,7 @@ You do NOT produce architecture specs (CTO does). You DO align, route, and track
 
 | Project | Status | Pending Work |
 |---------|--------|-------------|
-| `DRFR_PTMCH` | P5 + P6a COMPLETE | Backend done (yang-v2.3.1, data-refresh-v2.2.0, canon interlock). Remaining: RD sub-tasks for 0.3.3 (HistoryTab) and 0.3.1 (banner+filter). P6b-d deferred. |
+| `DRFR_PTMCH` | P5 + P6a COMPLETE | Backend done. Remaining: 0.3.3 RD HistoryTab control only. 0.3.1 banner task dropped. P6b-d deferred. |
 | `ADVI_PSCFIX` | **COMPLETE** (2026-03-12) | All 5 task orders done. bd-v2.18.3+v2.18.4 deployed. |
 | `ADVI_49FNV3` | **COMPLETE** (2026-03-12) | All task orders done. .008 05c deployed, 33-date backfill, root cause documented. |
 

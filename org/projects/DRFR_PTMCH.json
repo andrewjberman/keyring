@@ -16,8 +16,8 @@
     }
   ],
   "status": "active",
-  "phase": "P5 COMPLETE (backend: orchestrator + exclusion deployed; frontend: context + API + App wrapper done, RD task orders issued to 0.3.3 and 0.3.1). Phase 6a COMPLETE (yang-canon-interlock deployed, backfill done — 21 PKLs, 185K flags, canon frontier 2026-03-06). Live validation pending next Yang upload.",
-  "blocking": "P5 RD sub-tasks (HistoryTab control, banner + chart filter) pending execution by 0.3.3_RD_DataRefresh and 0.3.1_RD_PortfolioManagement",
+  "phase": "P5 COMPLETE (backend deployed; frontend context + API done). P5 RD: 0.3.3 HistoryTab control only (0.3.1 banner task dropped — time machine UI stays in DataRefresh). Phase 6a COMPLETE (canon interlock deployed, backfill done). Live validation pending next Yang upload.",
+  "blocking": "0.3.3_RD_DataRefresh HistoryTab time machine control",
   "deployed_versions": {
     "shared_infra": "shared-infra-v1.4.0",
     "news_publisher_target_date": "news-v2.7.0",

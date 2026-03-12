@@ -16,7 +16,7 @@ the surface area; the project code identifies the specific initiative.
 
 | Project Code | Macro | Project Name | Phase | Pods | Blocking | PRDs |
 |---|---|---|---|---|---|---|
-| `DRFR_PTMCH` | `DRFR` | Portal Time Machine | P1-P4 deployed. P5 backend COMPLETE (yang-v2.3.1, data-refresh-v2.2.0). P5 frontend: context + API + App done, RD sub-tasks issued (0.3.3 HistoryTab, 0.3.1 banner+filter). P6a COMPLETE (canon interlock, backfill). | 0.3, 0.5, 0.6, 0.7 | RD sub-tasks (0.3.3, 0.3.1) | Portal Time Machine PRD, Canon Interlock PRD |
+| `DRFR_PTMCH` | `DRFR` | Portal Time Machine | P5 backend COMPLETE. P6a COMPLETE. Remaining: 0.3.3 RD HistoryTab time machine control. Global banner dropped (time machine UI stays in DataRefresh). | 0.3, 0.5 | 0.3.3 RD HistoryTab control | Portal Time Machine PRD, Canon Interlock PRD |
 
 ---
 
