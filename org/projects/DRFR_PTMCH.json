@@ -8,16 +8,21 @@
       "path": "docs/architecture/DRFR_PTMCH_PRD.md",
       "label": "Portal Time Machine PRD",
       "date": "2026-03-10"
+    },
+    {
+      "path": "docs/architecture/DRFR_PTMCH_CANON_INTERLOCK_PRD.md",
+      "label": "Phase 6: Canon Interlock System",
+      "date": "2026-03-12"
     }
   ],
   "status": "active",
-  "phase": "Phase 5: Portal orchestrator + frontend integration. P5 task orders issued to OpalETL (orchestrator + exclusion fix) and DE TradingOperations (TimeMachineContext + RD sub-task orders).",
-  "blocking": "none",
+  "phase": "P5 COMPLETE (backend: orchestrator + exclusion deployed; frontend: context + API + App wrapper done, RD task orders issued to 0.3.3 and 0.3.1). Phase 6a COMPLETE (yang-canon-interlock deployed, backfill done — 21 PKLs, 185K flags, canon frontier 2026-03-06). Live validation pending next Yang upload.",
+  "blocking": "P5 RD sub-tasks (HistoryTab control, banner + chart filter) pending execution by 0.3.3_RD_DataRefresh and 0.3.1_RD_PortfolioManagement",
   "deployed_versions": {
     "shared_infra": "shared-infra-v1.4.0",
     "news_publisher_target_date": "news-v2.7.0",
-    "yang_time_machine": "yang-v2.2.0",
-    "data_refresh_api": "data-refresh-v2.1.0",
+    "yang_time_machine": "yang-v2.3.1",
+    "data_refresh_api": "data-refresh-v2.2.0",
     "bd_capture_and_time_machine": "bd-v2.18.2"
   },
   "known_limitations": {
