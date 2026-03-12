@@ -107,3 +107,45 @@ Lambda can now consume the certification JSON on any day silver allocations are 
 **Do NOT:**
 - Use `run_script()` for 05c/05d in the runner — those helpers pass `--upload` which these scripts don't accept
 - Write scripts directly on EC2 — all changes go repo -> S3 -> EC2 pull
+
+---
+
+## Amendment — 1.0.0_SA_CTO (2026-03-12)
+
+**Two bugs found in 05d_write_aua_certification.py during CTO AUA investigation.**
+
+### Bug 1: Date mismatch — 05d always SKIPs (CRITICAL)
+
+05d used `datetime.date.today()` to determine the silver allocation filename. The EC2
+gold pipeline runs on calendar date T, but silver allocations are named for the **data
+date** T-1 (e.g. `2026-03-11.parquet` is uploaded on 2026-03-12). So 05d looked for
+`silver/allocations/2026-03-12.parquet` which never exists at run time. Result:
+`gold/aua_certification/` was empty — 05d hit SKIP on every single nightly run since
+deployment. The publisher always fell back to uncertified gold totals.
+
+**Fix:** Load `gold/client_performance.parquet` first, derive `data_date = max(date)`,
+and use that for both the silver lookup and the gold filter. This is the actual data
+date the pipeline processed, which matches the silver filename convention.
+
+### Bug 2: LIABILITY_TYPES over-excluded Insurance/TermLife/Annuity
+
+Original exclusion list: `CreditCard, Mortgage, Loans, Insurance, TermLife, Annuity`.
+Silver's `account_market_value` **includes** insurance accounts ($61M). Gold's positions
+cube also includes insurance accounts (112 accounts with Shield annuity positions).
+Both systems agree on including them. Excluding them from `certified_aua` would have
+produced a $60M undercount vs what the portal actually displays.
+
+**Fix:** Narrowed LIABILITY_TYPES to `CreditCard, Mortgage, Loans` only. These are
+actual debt liabilities with negative market values that neither gold nor silver should
+count as AUA.
+
+### Files modified
+
+| File | Change |
+|------|--------|
+| `data/black_diamond/scripts/gold/05d_write_aua_certification.py` | data_date from client_performance max(date) instead of today(); LIABILITY_TYPES narrowed to 3 |
+
+### Requires redeployment
+
+05d must be re-uploaded to `s3://opal-data-bd/code/gold/` via `safe-ec2-deploy.sh`
+before the next nightly run for the fix to take effect.
