@@ -17,7 +17,7 @@ the surface area; the project code identifies the specific initiative.
 | Project Code | Macro | Project Name | Phase | Pods | Blocking | PRDs |
 |---|---|---|---|---|---|---|
 | `DRFR_PTMCH` | `DRFR` | Portal Time Machine | P1-P5 COMPLETE (all backend + frontend delivered). P6a COMPLETE. Portal DEV not yet pushed/merged to PROD. P6b-d pending. | 0.3, 0.5 | Portal DEV push + PROD merge. P6b-d implementation. | Portal Time Machine PRD, Canon Interlock PRD |
-| `ADVI_MVPLVL` | `ADVI` | Advisor Intelligence MVP Polish | P1 COMPLETE (Header). P2 underway (Distribution Tab). 4 threads converged. Deadline 2026-03-20. | 0.4 | P2 execution | ADVI MVP Polish PRD |
+| `ADVI_MVPLVL` | `ADVI` | Advisor Intelligence MVP Polish | P1-P3 COMPLETE. P4 task orders pending (Books Tab). Deadline 2026-03-20. | 0.4 | P4 task order issuance | ADVI MVP Polish PRD |
 
 ---
 
