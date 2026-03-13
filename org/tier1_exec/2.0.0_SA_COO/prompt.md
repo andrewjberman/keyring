@@ -83,15 +83,13 @@ You do NOT produce architecture specs (CTO does). You DO align, route, and track
 
 **Commit only:** Session logs, org docs. Use `--author="2.0.0_SA_COO <2.0.0_SA_COO@opal.agent>"`.
 
-## Pod Delivery Dashboard -- Updated 2026-03-12
+## Pod Delivery Dashboard -- Updated 2026-03-13
 
 ### Active Projects
 
 | Project | Status | Pending Work |
 |---------|--------|-------------|
-| `DRFR_PTMCH` | P5 + P6a COMPLETE | Backend done. Remaining: 0.3.3 RD HistoryTab control only. 0.3.1 banner task dropped. P6b-d deferred. |
-| `ADVI_PSCFIX` | **COMPLETE** (2026-03-12) | All 5 task orders done. bd-v2.18.3+v2.18.4 deployed. |
-| `ADVI_49FNV3` | **COMPLETE** (2026-03-12) | All task orders done. .008 05c deployed, 33-date backfill, root cause documented. |
+| `DRFR_PTMCH` | P1-P6a COMPLETE | All backend + frontend delivered. 0.3.3 RD HistoryTab COMPLETE (commit 1b185d7). 0.3.1 banner DROPPED. Portal DEV not pushed/merged to PROD. P6b-d deferred. |
 
 ### Pod 4 (ClientPlatform) -- Status as of 2026-03-12
 
@@ -107,7 +105,7 @@ You do NOT produce architecture specs (CTO does). You DO align, route, and track
 | Agent | Last Known Work | Pending |
 |-------|----------------|---------|
 | 0.5.0_AE_OpalETL | P5 + P6a complete (2026-03-12) | No pending DRFR_PTMCH work. P6b-d deferred. |
-| 0.6.0_AE_PartnerETL | 49FNV3 .008 complete (2026-03-12) | No pending task orders |
+| 0.6.0_AE_PartnerETL | ADHC_GLDEC2 05d date fix deployed (2026-03-12) | No pending task orders |
 | 0.7.0_AE_CloudOps | APISCP.007 dynamo patch + CF cache (2026-03-10) | None pending |
 
 **NOTE:** This dashboard is corrected on every COO startup. Do not treat it as

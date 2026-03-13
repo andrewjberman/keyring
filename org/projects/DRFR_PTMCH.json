@@ -16,8 +16,8 @@
     }
   ],
   "status": "active",
-  "phase": "P5 COMPLETE (backend deployed; frontend context + API done). P5 RD: 0.3.3 HistoryTab control only (0.3.1 banner task dropped — time machine UI stays in DataRefresh). Phase 6a COMPLETE (canon interlock deployed, backfill done). Live validation pending next Yang upload.",
-  "blocking": "0.3.3_RD_DataRefresh HistoryTab time machine control",
+  "phase": "P5 COMPLETE (all deliverables: backend, frontend context, API, HistoryTab control). 0.3.1 banner dropped — time machine UI stays in DataRefresh. Phase 6a COMPLETE (canon interlock deployed, backfill done). P6b-d pending. Portal DEV not yet pushed/merged to PROD.",
+  "blocking": "Portal DEV push + PROD merge for P5 frontend. P6b-d implementation.",
   "deployed_versions": {
     "shared_infra": "shared-infra-v1.4.0",
     "news_publisher_target_date": "news-v2.7.0",

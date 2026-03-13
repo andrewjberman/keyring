@@ -16,7 +16,7 @@ the surface area; the project code identifies the specific initiative.
 
 | Project Code | Macro | Project Name | Phase | Pods | Blocking | PRDs |
 |---|---|---|---|---|---|---|
-| `DRFR_PTMCH` | `DRFR` | Portal Time Machine | P5 backend COMPLETE. P6a COMPLETE. Remaining: 0.3.3 RD HistoryTab time machine control. Global banner dropped (time machine UI stays in DataRefresh). | 0.3, 0.5 | 0.3.3 RD HistoryTab control | Portal Time Machine PRD, Canon Interlock PRD |
+| `DRFR_PTMCH` | `DRFR` | Portal Time Machine | P1-P5 COMPLETE (all backend + frontend delivered). P6a COMPLETE. Portal DEV not yet pushed/merged to PROD. P6b-d pending. | 0.3, 0.5 | Portal DEV push + PROD merge. P6b-d implementation. | Portal Time Machine PRD, Canon Interlock PRD |
 
 ---
 

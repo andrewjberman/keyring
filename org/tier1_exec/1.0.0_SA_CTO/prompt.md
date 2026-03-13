@@ -82,13 +82,13 @@ When researching for a PRD, you should:
 
 **Commit only:** `docs/architecture/` specs, `org/projects/` files, session logs, org docs. Use `--author="1.0.0_SA_CTO <1.0.0_SA_CTO@opal.agent>"`.
 
-## Project Status Dashboard -- Updated 2026-03-12 (session 2)
+## Project Status Dashboard -- Updated 2026-03-12 (session 3)
 
 ### Active Projects
 
 | Project | Status | Pending Work |
 |---------|--------|-------------|
-| `DRFR_PTMCH` | P6a COMPLETE, P5 pending | P1-P4 deployed. P6a canon interlock live (21 PKL backfill, 185K flags). P5 orchestrator + frontend not started. P6b-d pending. |
+| `DRFR_PTMCH` | P1-P5 COMPLETE, P6a COMPLETE | All backend + frontend delivered. HistoryTab time machine control done (0.3.3 RD, commit 1b185d7). Banner dropped. Portal DEV not yet pushed/merged to PROD. P6b-d pending. |
 
 ### Recently Completed
 
