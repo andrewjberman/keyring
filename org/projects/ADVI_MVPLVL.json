@@ -1,0 +1,74 @@
+{
+  "project_code": "ADVI_MVPLVL",
+  "macro_code": "ADVI",
+  "name": "Advisor Intelligence MVP Polish",
+  "description": "5-day sprint to bring Advisor Intelligence to minimum viable product level across all four sections: Header (Assets Overview Panel), Distribution Tab, Leaderboard Tab, and Books Tab. Mix of investigation-heavy research tasks and direct action items.",
+  "prds": [
+    {
+      "path": "docs/architecture/ADVI_MVPLVL_PRD.md",
+      "label": "ADVI MVP Polish PRD",
+      "date": "2026-03-13"
+    }
+  ],
+  "status": "active",
+  "phase": "P1 COMPLETE (Header). P2 underway (Distribution Tab). Threads 001-004 all converged. Task orders being issued per phase.",
+  "blocking": "P2 execution in progress",
+  "created": "2026-03-13",
+  "pods": [
+    "0.4"
+  ],
+  "pipeline": "bd-pipeline",
+  "thread_counter": 4,
+  "threads": [
+    {
+      "serial": "ADVI_MVPLVL-001",
+      "thread_id": "ADVI_MVPLVL-001-p1-header-assets-overview-alignment",
+      "topic": "P1 Header Assets Overview alignment",
+      "participants": [
+        "0.4.0_DS_ClientPlatform",
+        "0.4.2_RD_AdvisorIntelligence"
+      ],
+      "pattern": "unset",
+      "status": "complete",
+      "date": "2026-03-13"
+    },
+    {
+      "serial": "ADVI_MVPLVL-002",
+      "thread_id": "ADVI_MVPLVL-002-p2-distribution-tab-alignment",
+      "topic": "P2 Distribution Tab alignment",
+      "participants": [
+        "0.4.0_DS_ClientPlatform",
+        "0.4.0_DE_ClientPlatform",
+        "0.4.2_RD_AdvisorIntelligence"
+      ],
+      "pattern": "unset",
+      "status": "active",
+      "date": "2026-03-13"
+    },
+    {
+      "serial": "ADVI_MVPLVL-003",
+      "thread_id": "ADVI_MVPLVL-003-p3-advisors-tab-alignment",
+      "topic": "P3 Advisors Tab alignment",
+      "participants": [
+        "0.4.0_DS_ClientPlatform",
+        "0.4.2_RD_AdvisorIntelligence"
+      ],
+      "pattern": "unset",
+      "status": "active",
+      "date": "2026-03-13"
+    },
+    {
+      "serial": "ADVI_MVPLVL-004",
+      "thread_id": "ADVI_MVPLVL-004-p4-books-tab-alignment",
+      "topic": "P4 Books Tab alignment",
+      "participants": [
+        "0.4.0_DS_ClientPlatform",
+        "0.4.0_DE_ClientPlatform",
+        "0.4.2_RD_AdvisorIntelligence"
+      ],
+      "pattern": "unset",
+      "status": "active",
+      "date": "2026-03-13"
+    }
+  ]
+}
