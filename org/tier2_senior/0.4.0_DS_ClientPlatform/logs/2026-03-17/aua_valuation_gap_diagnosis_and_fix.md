@@ -49,27 +49,26 @@ Identified 9 distinct root cause categories:
 
 ### 4. Fix Implementation (RC1/RC2 + RC6)
 
-**New file: `data/black_diamond/scripts/gold/aua_overrides.json`**
+Initial v1 used asset-level zeroing, but this creates a cliff in the AUA time series (fake market crash in GRO). Redesigned to v2: silver tape -- replace gold AUA with silver's `account_market_value` on each date across full history.
+
+**New file: `data/black_diamond/scripts/gold/aua_overrides.json` (v2.0.0)**
 
 JSON configuration with two sections:
-- `price_overrides`: 5 asset names to zero-price. Removes +$43.9M phantom overvaluation.
-  - BNP PARIBAS SA (structured deposit priced as BNPQF equity at $97)
-  - DESTINATIONS LARGE CAP EQUITY I (model sleeve at wrong NAV $546)
-  - DESTINATIONS INTERNATIONAL EQUITY I (model sleeve at wrong NAV $384)
-  - NATIONAL BANK OF CANADA (structured note priced as NTIOF equity at $138)
-  - BBVA GLOBAL SECS B V 0% 09/16/2030 (structured note)
-- `ghost_accounts`: 4 account IDs to exclude. Removes +$7.4M stale AUA.
+- `silver_tape_accounts`: 3 account IDs taped to silver daily MV. Position-level MV scaled pro-rata to match silver total while preserving tax_status breakdown.
+  - z0819189891 (BNP PARIBAS SA structured deposit, Gold $22.6M vs Silver $1.9M)
+  - z0821490351 (DESTINATIONS model sleeves, Gold $22.0M vs Silver $1.7M)
+  - z0821890141 (NATIONAL BANK OF CANADA structured note, Gold $2.9M vs Silver $884K)
+- `ghost_accounts`: 4 account IDs excluded entirely (stale cube positions, silver=$0).
   - z0812933851, z0818413191, z0819915221, z0815983871
 
 **Modified: `data/black_diamond/scripts/gold/05_build_client_performance.py`**
 
 - Added `import json`, `AUA_OVERRIDES_PATH` constant
-- Added `load_aua_overrides()` function
-- `process_date_partition()`: new params `price_override_actions`, `ghost_accounts`
-  - Ghost accounts: filtered before pricing
-  - Price overrides: force `price=0.0, source='override_zero'` for matched assets
-- `build_client_performance()`: passes overrides to partition processor
-- `main()`: new Step 1b loads overrides
+- Added `load_aua_overrides()`: returns tape set + ghost set
+- Added `load_silver_tape_index()`: pre-loads all silver allocations, builds `{date: {acct: mv}}` lookup for taped accounts only
+- Added `get_silver_tape_mv()`: lookup with forward-fill for weekends/holidays
+- `process_date_partition()`: ghost accounts filtered before pricing (RC6); taped accounts get position MV scaled pro-rata to match silver after gold MV computed (RC1/RC2)
+- `build_client_performance()` + `main()`: wire overrides through
 
 ### 5. DT Briefing
 
@@ -81,7 +80,7 @@ Wrote `org/tier2_senior/0.4.0_DS_ClientPlatform/deliverables/briefing-aua-valuat
 
 | Decision | Rationale |
 |----------|-----------|
-| Zero-price instead of silver fallback for RC1/RC2 | Silver MV is account-level only (no position breakdown). Cannot attribute silver's value to specific positions. Zeroing is conservative: understates AUA by the true value of these instruments, but eliminates the 10x-1200x overvaluation. |
+| Silver tape instead of zeroing for RC1/RC2 | Zeroing creates a cliff in the AUA time series that shows up as a fake market crash in GRO. Silver tape uses BD's own daily account_market_value, preserving time series continuity. Position MV scaled pro-rata to maintain tax_status proportions. |
 | Exclude ghost accounts entirely (RC6) | Silver says $0, gold has $2-3M of stale positions. No intermediate option: either include phantom AUA or exclude it. |
 | Defer RC8 (ETF pricing gap) to Phase 2 | Systematic 15-27% gap across standard ETFs suggests a price timing issue (T-1 vs T close). Needs investigation of canonical price timestamps before designing a fix. A silver-calibration fallback risks circular dependency. |
 | Config file instead of hardcoded overrides | `aua_overrides.json` is human-readable, version-tracked, and extensible. Adding new overrides doesn't require code changes. |
