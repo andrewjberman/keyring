@@ -49,30 +49,31 @@ Identified 9 distinct root cause categories:
 
 ### 4. Fix Implementation (RC1/RC2 + RC6)
 
-Initial v1 used asset-level zeroing, but this creates a cliff in the AUA time series (fake market crash in GRO). Redesigned to v2: silver tape -- replace gold AUA with silver's `account_market_value` on each date across full history.
+v1 zeroed assets (creates cliff). v2 used silver tape (only covers Jan+). v3 (final): reverse-engineer per-unit prices from silver and inject into canonical_prices.parquet as `source='scoped_override'`. Covers full history back to each asset's inception.
 
-**New file: `data/black_diamond/scripts/gold/aua_overrides.json` (v2.0.0)**
+**New file: `data/black_diamond/scripts/silver/inject_scoped_overrides.py`**
 
-JSON configuration with two sections:
-- `silver_tape_accounts`: 3 account IDs taped to silver daily MV. Position-level MV scaled pro-rata to match silver total while preserving tax_status breakdown.
-  - z0819189891 (BNP PARIBAS SA structured deposit, Gold $22.6M vs Silver $1.9M)
-  - z0821490351 (DESTINATIONS model sleeves, Gold $22.0M vs Silver $1.7M)
-  - z0821890141 (NATIONAL BANK OF CANADA structured note, Gold $2.9M vs Silver $884K)
-- `ghost_accounts`: 4 account IDs excluded entirely (stale cube positions, silver=$0).
-  - z0812933851, z0818413191, z0819915221, z0815983871
+Manages a scoped override registry of 5 assets. Removes wrong-source rows, injects daily scoped_override rows from inception to latest date. Idempotent. Dry run: 1,721 rows injected, 5,799 wrong rows removed, zero duplicates.
 
-**Modified: `data/black_diamond/scripts/gold/05_build_client_performance.py`**
+| Asset | Wrong Price | Correct Price | Inception | Method |
+|---|---|---|---|---|
+| Waldrop Donor Advised Fund | $1.00 | $1.95 | 2023-09-13 | Silver-implied NAV (std $0.03) |
+| BNP PARIBAS SA | $97.16 (BNPQF) | $0.75 | 2024-12-06 | 75c on dollar face value |
+| DESTINATIONS LARGE CAP EQUITY I | $546.00 | $13.30 | 2025-10-02 | Blended silver-implied |
+| DESTINATIONS INTERNATIONAL EQUITY I | $384.00 | $13.30 | 2025-10-02 | Blended silver-implied |
+| JPMORGAN CHASE FINL CO LLC 0% 2029 | $1.00 | $2.55 | 2024-04-10 | 255c on dollar structured note |
 
-- Added `import json`, `AUA_OVERRIDES_PATH` constant
-- Added `load_aua_overrides()`: returns tape set + ghost set
-- Added `load_silver_tape_index()`: pre-loads all silver allocations, builds `{date: {acct: mv}}` lookup for taped accounts only
-- Added `get_silver_tape_mv()`: lookup with forward-fill for weekends/holidays
-- `process_date_partition()`: ghost accounts filtered before pricing (RC6); taped accounts get position MV scaled pro-rata to match silver after gold MV computed (RC1/RC2)
-- `build_client_performance()` + `main()`: wire overrides through
+**Simplified: `data/black_diamond/scripts/gold/aua_overrides.json` (v3.0.0)**
 
-### 5. DT Briefing
+RC6-only. Silver tape section removed.
 
-Wrote `org/tier2_senior/0.4.0_DS_ClientPlatform/deliverables/briefing-aua-valuation-fixes-v1.md` with full deployment instructions, expected impact, and validation steps.
+**Simplified: `data/black_diamond/scripts/gold/05_build_client_performance.py`**
+
+Stripped silver tape infrastructure. Now only loads ghost account exclusions. RC1/RC2 fix is entirely in canonical_prices.
+
+### 5. AE Task Order
+
+Wrote `org/tier2_senior/0.6.0_AE_PartnerETL/task_orders/aua-scoped-price-overrides-deploy.md` with full deployment sequence for inject -> rebuild -> validate -> propagate.
 
 ---
 
@@ -80,7 +81,7 @@ Wrote `org/tier2_senior/0.4.0_DS_ClientPlatform/deliverables/briefing-aua-valuat
 
 | Decision | Rationale |
 |----------|-----------|
-| Silver tape instead of zeroing for RC1/RC2 | Zeroing creates a cliff in the AUA time series that shows up as a fake market crash in GRO. Silver tape uses BD's own daily account_market_value, preserving time series continuity. Position MV scaled pro-rata to maintain tax_status proportions. |
+| Scoped overrides in canonical_prices instead of silver tape or zeroing | Zeroing creates a cliff; silver tape only covers Jan+ (2 months of silver data). Reverse-engineering the per-unit price and injecting into canonical_prices covers the full history back to inception. The override is inline -- no separate runtime lookup needed. |
 | Exclude ghost accounts entirely (RC6) | Silver says $0, gold has $2-3M of stale positions. No intermediate option: either include phantom AUA or exclude it. |
 | Defer RC8 (ETF pricing gap) to Phase 2 | Systematic 15-27% gap across standard ETFs suggests a price timing issue (T-1 vs T close). Needs investigation of canonical price timestamps before designing a fix. A silver-calibration fallback risks circular dependency. |
 | Config file instead of hardcoded overrides | `aua_overrides.json` is human-readable, version-tracked, and extensible. Adding new overrides doesn't require code changes. |
