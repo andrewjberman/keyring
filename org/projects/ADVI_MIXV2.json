@@ -1,0 +1,38 @@
+{
+  "project_code": "ADVI_MIXV2",
+  "macro_code": "ADVI",
+  "name": "Asset Mix View V2",
+  "description": "Full rebuild of the mix and composition views across AdvisorIntelligence: pct scale bug fix (5000% display), AP gate investigation for insurance/annuity volatility, firm-level pre-computed absolute dollar mix chart, client detail page wiring, and advisor-level mix timeseries. Six workstreams spanning DS, DE, RD, DT, and AE.",
+  "prds": [
+    {
+      "path": "docs/architecture/ADVI_MIXV2_PRD.md",
+      "label": "Asset Mix View V2 PRD",
+      "date": "2026-03-17"
+    }
+  ],
+  "status": "active",
+  "phase": "DS 001+002 COMPLETE. DE 005 COMPLETE (portal DEV). DT 004 COMPLETE (partners-api-v1.3.0, 1fa08590). AE 003 pending (06b EC2 deploy + gold run). Portal DEV->PROD merge pending (ADVI_MVPLVL gate).",
+  "blocking": "AE 003: deploy 06b to EC2 + run gold layer (all DS gate commits cleared). DT portal DEV->PROD merge for ADVI_MVPLVL still pending.",
+  "created": "2026-03-17",
+  "pods": [
+    "0.4",
+    "0.6"
+  ],
+  "pipeline": "bd-pipeline",
+  "thread_counter": 1,
+  "threads": [
+    {
+      "serial": "ADVI_MIXV2-001",
+      "thread_id": "ADVI_MIXV2-001-ws4ws5-firm-mix-chart-and-client-detail",
+      "topic": "WS4+WS5 firm mix chart and client detail alignment",
+      "participants": [
+        "0.4.0_DS_ClientPlatform",
+        "0.4.0_DE_ClientPlatform",
+        "0.4.2_RD_AdvisorIntelligence"
+      ],
+      "pattern": "unset",
+      "status": "complete",
+      "date": "2026-03-17"
+    }
+  ]
+}

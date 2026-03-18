@@ -82,13 +82,16 @@ When researching for a PRD, you should:
 
 **Commit only:** `docs/architecture/` specs, `org/projects/` files, session logs, org docs. Use `--author="1.0.0_SA_CTO <1.0.0_SA_CTO@opal.agent>"`.
 
-## Project Status Dashboard -- Updated 2026-03-12 (session 3)
+## Project Status Dashboard -- Updated 2026-03-18 (session 5)
 
 ### Active Projects
 
 | Project | Status | Pending Work |
 |---------|--------|-------------|
-| `DRFR_PTMCH` | P1-P5 COMPLETE, P6a COMPLETE | All backend + frontend delivered. HistoryTab time machine control done (0.3.3 RD, commit 1b185d7). Banner dropped. Portal DEV not yet pushed/merged to PROD. P6b-d pending. |
+| `DRFR_PTMCH` | P1-P5 COMPLETE, P6a COMPLETE | Portal DEV not yet pushed/merged to PROD. P6b-d pending. |
+| `ADVI_MVPLVL` | All code + infra complete (partners-api-v1.1.0). DE firmId fix on DEV (db52d31). | DT: portal DEV->PROD merge + deploy. Also ADVI_MVPLVL.006 (MTD/QTD/YTD windows) DS complete — needs DT gold layer run + BD pipeline redeploy. |
+| `ADVI_ADVTV2` | DS 001 committed (8ef1da9b). EC2 scripts deployed (72c03d2a). | DT: confirm FULL gold layer run + verify rel_architect_lookup (19 architects). Task order 002 issued. |
+| `ADVI_MIXV2` | DS 001+002 done. DE 005 done (portal DEV). DT 004 done (partners-api-v1.3.0). | AE 003: 06b EC2 deploy + FULL gold run. DT: portal DEV->PROD merge (shared gate). |
 
 ### Recently Completed
 
@@ -100,11 +103,12 @@ When researching for a PRD, you should:
 | `MDLP_WYNCHT` | 2026-03-11 | 4 HTML pages on S3. PPTX delivered. |
 | `ADHC_GPTCST` | 2026-03-10 | news-v2.5.0+v2.6.0, market-overview-v1.6.0. Cache fix deployed. |
 
-### Pipeline Tags (as of 2026-03-12)
+### Pipeline Tags (as of 2026-03-18)
 
 | Pipeline | Tag |
 |----------|-----|
 | BD | `bd-v2.18.4` |
+| PartnersAPI | `partners-api-v1.3.0` |
 | Yang | `yang-v2.3.1` |
 | News | `news-v2.7.1` |
 | MarketOverview | `market-overview-v1.6.0` |

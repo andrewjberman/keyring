@@ -1,0 +1,24 @@
+{
+  "project_code": "ADVI_MVP318",
+  "macro_code": "ADVI",
+  "name": "Advisor Intelligence MVP Finalization",
+  "description": "Final sprint consolidating DS/RD investigative deliverables into production. Six workstreams: (WS1) segment analytics variance fix, (WS2) architect consolidation Lambda deploy, (WS3) new advisor-level timeseries endpoints, (WS4) ConsolidatedOverviewPanel frontend completion, (WS5) MTD/QTD/YTD leaderboard windows + gold layer run, (WS6) final portal DEV->PROD merge.",
+  "prds": [
+    {
+      "path": "docs/architecture/ADVI_MVP318_PRD.md",
+      "label": "ADVI MVP Finalization PRD",
+      "date": "2026-03-18"
+    }
+  ],
+  "status": "active",
+  "phase": "Phase 0: PRD complete. COO decomposition and task order issuance pending.",
+  "blocking": "COO task order issuance across DS, DT, AE, DE, RD. DS has uncommitted code (D4 + bd-portal-publisher changes) that must be committed before any DT deploy can begin.",
+  "created": "2026-03-18",
+  "pods": [
+    "0.4",
+    "0.6"
+  ],
+  "pipeline": "bd-pipeline",
+  "thread_counter": 0,
+  "threads": []
+}

@@ -16,8 +16,11 @@ the surface area; the project code identifies the specific initiative.
 
 | Project Code | Macro | Project Name | Phase | Pods | Blocking | PRDs |
 |---|---|---|---|---|---|---|
+| `ADVI_MVP318` | `ADVI` | Advisor Intelligence MVP Finalization | Phase 0: PRD complete, COO decomposition pending. | 0.4, 0.6 | COO task order issuance. DS uncommitted code (D4 + bd-portal-publisher) is WS2/WS1 gate. | ADVI MVP Finalization PRD |
 | `DRFR_PTMCH` | `DRFR` | Portal Time Machine | P1-P5 COMPLETE (all backend + frontend delivered). P6a COMPLETE. Portal DEV not yet pushed/merged to PROD. P6b-d pending. | 0.3, 0.5 | Portal DEV push + PROD merge. P6b-d implementation. | Portal Time Machine PRD, Canon Interlock PRD |
-| `ADVI_MVPLVL` | `ADVI` | Advisor Intelligence MVP Polish | P1-P3 COMPLETE. P4 task orders pending (Books Tab). Deadline 2026-03-20. | 0.4 | P4 task order issuance | ADVI MVP Polish PRD |
+| `ADVI_MVPLVL` | `ADVI` | Advisor Intelligence MVP Polish | All code + infra complete. DE firmId fixed (db52d31). DT partners-api-v1.1.0 deployed. Only remaining: DT portal DEV->PROD merge. | 0.4, 0.6 | DT portal DEV->PROD merge. | ADVI MVP Polish PRD |
+| `ADVI_ADVTV2` | `ADVI` | ADV v2 — Architect Attribution | DS committed (8ef1da9b). EC2 deploy done (72c03d2a). DT gold layer run + verification pending. | 0.4 | DT: confirm FULL gold run complete, rel_architect_lookup verified (task order 002). | — |
+| `ADVI_MIXV2` | `ADVI` | Asset Mix View V2 | DS 001+002 COMPLETE. DE 005 COMPLETE (portal DEV). DT 004 COMPLETE (partners-api-v1.3.0). AE 003 pending (06b EC2 + gold run). Portal DEV->PROD merge pending. | 0.4, 0.6 | AE 003: 06b EC2 deploy + gold run. DT portal DEV->PROD merge (shared gate with ADVI_MVPLVL). | Asset Mix View V2 PRD |
 
 ---
 
