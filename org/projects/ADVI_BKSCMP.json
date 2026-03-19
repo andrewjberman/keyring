@@ -14,39 +14,8 @@
   "phase": "Phase 1: All 4 task orders issued (2026-03-19). DS gates: WS1 (script 12 + run_gold_layer.sh) + WS2 (Lambda v2.8 commit). RD parallel track. DT gates on DS WS2 commit. AE gates on DS WS1 commit.",
   "blocking": "DS ADVI_BKSCMP.001 (script 12 + Lambda v2.8 commits). RD ADVI_BKSCMP.002 is parallel.",
   "created": "2026-03-19",
-  "pods": [
-    "0.4",
-    "0.6"
-  ],
+  "pods": ["0.4", "0.6"],
   "pipeline": "partners-api",
-  "thread_counter": 2,
-  "threads": [
-    {
-      "serial": "ADVI_BKSCMP-001",
-      "thread_id": "ADVI_BKSCMP-001-advibkscmp-task-order-cross-validation-",
-      "topic": "ADVI_BKSCMP task order cross-validation -- DS, RD, DT, AE verify alignment with current code",
-      "participants": [
-        "0.4.0_DS_ClientPlatform",
-        "0.4.2_RD_AdvisorIntelligence",
-        "0.4.0_DT_ClientPlatform",
-        "0.6.0_AE_PartnerETL"
-      ],
-      "pattern": "unset",
-      "status": "active",
-      "date": "2026-03-19"
-    },
-    {
-      "serial": "ADVI_BKSCMP-002",
-      "thread_id": "ADVI_BKSCMP-002-advibkscmp-task-order-validation----rd-d",
-      "topic": "ADVI_BKSCMP task order validation -- RD, DT, AE verify alignment (no-tools, facts pre-injected)",
-      "participants": [
-        "0.4.2_RD_AdvisorIntelligence",
-        "0.4.0_DT_ClientPlatform",
-        "0.6.0_AE_PartnerETL"
-      ],
-      "pattern": "unset",
-      "status": "active",
-      "date": "2026-03-19"
-    }
-  ]
+  "thread_counter": 0,
+  "threads": []
 }

@@ -39,7 +39,7 @@ the summary was written.
   c. Project JSON `status` is `active` but all task orders are complete → set to `"complete"`
   d. Project is in Active table but should be in Completed → move it
   e. Registry phase description is stale → rewrite it
-  f. `deliverables/delivery_status.md` dashboard tables are stale → update them
+  f. Prompt.md dashboard tables are stale → update them
 - Commit corrections before proceeding to any new work.
 
 Your oriented summary should say "corrected N documents" — not "N documents need correction."
@@ -83,10 +83,33 @@ You do NOT produce architecture specs (CTO does). You DO align, route, and track
 
 **Commit only:** Session logs, org docs. Use `--author="2.0.0_SA_COO <2.0.0_SA_COO@opal.agent>"`.
 
-## Delivery Status
+## Pod Delivery Dashboard -- Updated 2026-03-13
 
-Volatile dashboard lives at `deliverables/delivery_status.md`. Corrected at every
-COO startup from agent logs, git tags, and task order `<status>` fields.
+### Active Projects
+
+| Project | Status | Pending Work |
+|---------|--------|-------------|
+| `DRFR_PTMCH` | P1-P6a COMPLETE | All backend + frontend delivered. 0.3.3 RD HistoryTab COMPLETE (commit 1b185d7). 0.3.1 banner DROPPED. Portal DEV not pushed/merged to PROD. P6b-d deferred. |
+
+### Pod 4 (ClientPlatform) -- Status as of 2026-03-12
+
+| Agent | Last Known Work | Status |
+|-------|----------------|--------|
+| 0.4.0_DE | PSCFIX B1 integration validation (2026-03-12), MDLP_WYNCHT facsimile (2026-03-11) | ACTIVE |
+| 0.4.0_DT | ADVI_APISCP router v7 (2026-03-10). PSCFIX DT1 deploy in git but no DT session log. | Last log 2026-03-10 |
+| 0.4.0_DS | PSCFIX A2 publisher restructure + math audit (2026-03-11) | ACTIVE |
+| 0.4.2_RD | ADVI_SNPLBK granularity fix (2026-03-10). All 49FNV3 task orders complete. | Last log 2026-03-10 |
+
+### Shared Services -- Status as of 2026-03-12
+
+| Agent | Last Known Work | Pending |
+|-------|----------------|---------|
+| 0.5.0_AE_OpalETL | P5 + P6a complete (2026-03-12) | No pending DRFR_PTMCH work. P6b-d deferred. |
+| 0.6.0_AE_PartnerETL | ADHC_GLDEC2 05d date fix deployed (2026-03-12) | No pending task orders |
+| 0.7.0_AE_CloudOps | APISCP.007 dynamo patch + CF cache (2026-03-10) | None pending |
+
+**NOTE:** This dashboard is corrected on every COO startup. Do not treat it as
+authoritative between sessions — always re-audit from agent logs and git.
 
 ## Task Order Routing Protocol
 
