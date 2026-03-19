@@ -1,0 +1,21 @@
+{
+  "project_code": "ADVI_BKSCMP",
+  "macro_code": "ADVI",
+  "name": "Books Tab Per-Class Composition Artifacts",
+  "description": "Pre-compute per-class (top-9 + Other per asset class) composition artifacts for the Books tab ConsolidatedOverviewPanel at N1 (firm) and L2 (advisor) drill levels. Script 12 on EC2 reads holdings_lots + rel_architect_lookup, produces firm_composition.json and per-advisor composition.json. Two new Lambda routes (no-store cache) serve them. Frontend adapter makes ConsolidatedOverviewPanel schema-polymorphic across N1/L2 (new) and L3/L4 (existing).",
+  "prds": [
+    {
+      "path": "docs/architecture/ADVI_BKSCMP_PRD.md",
+      "label": "Books Composition PRD",
+      "date": "2026-03-19"
+    }
+  ],
+  "status": "active",
+  "phase": "Phase 1: All 4 task orders issued (2026-03-19). DS gates: WS1 (script 12 + run_gold_layer.sh) + WS2 (Lambda v2.8 commit). RD parallel track. DT gates on DS WS2 commit. AE gates on DS WS1 commit.",
+  "blocking": "DS ADVI_BKSCMP.001 (script 12 + Lambda v2.8 commits). RD ADVI_BKSCMP.002 is parallel.",
+  "created": "2026-03-19",
+  "pods": ["0.4", "0.6"],
+  "pipeline": "partners-api",
+  "thread_counter": 0,
+  "threads": []
+}

@@ -6,19 +6,19 @@
   "prds": [
     {
       "path": "docs/architecture/ADVI_MVPLVL_PRD.md",
-      "label": "ADVI MVP Polish PRD",
-      "date": "2026-03-13"
+      "label": "ADVI MVP Polish PRD (Addendum A added 2026-03-16: timeseries mix + concentration pipeline)",
+      "date": "2026-03-16"
     }
   ],
   "status": "active",
-  "phase": "P1 COMPLETE. P2 COMPLETE (2i DE state lift + all RD items + DS 2e backend). P3 COMPLETE (3a DS research + 3b/3c/3d RD). P4 task orders pending.",
-  "blocking": "P4 task order issuance",
+  "phase": "Portal DEV->PROD merge pending. Two new DS task orders issued (2026-03-18): MVPLVL.007 (DS advisor-level timeseries endpoints for L2 quarterly bar) and MVPLVL.008 (DS open_lots field canonicalization). L2 view in ConsolidatedOverviewPanel shows skeleton until DS .007 completes. ADVI_MVP318 WS5 (DE chart windows) must also commit to portal DEV before merge.",
+  "blocking": "DS MVPLVL.007 (advisor timeseries endpoints) + MVPLVL.008 (open_lots canonicalization) + ADVI_MVP318 WS5 (DE chart windows in portal DEV) + DT portal DEV->PROD merge.",
   "created": "2026-03-13",
   "pods": [
     "0.4"
   ],
   "pipeline": "bd-pipeline",
-  "thread_counter": 4,
+  "thread_counter": 5,
   "threads": [
     {
       "serial": "ADVI_MVPLVL-001",
@@ -42,7 +42,7 @@
         "0.4.2_RD_AdvisorIntelligence"
       ],
       "pattern": "unset",
-      "status": "active",
+      "status": "complete",
       "date": "2026-03-13"
     },
     {
@@ -54,7 +54,7 @@
         "0.4.2_RD_AdvisorIntelligence"
       ],
       "pattern": "unset",
-      "status": "active",
+      "status": "complete",
       "date": "2026-03-13"
     },
     {
@@ -67,8 +67,20 @@
         "0.4.2_RD_AdvisorIntelligence"
       ],
       "pattern": "unset",
-      "status": "active",
+      "status": "complete",
       "date": "2026-03-13"
+    },
+    {
+      "serial": "ADVI_MVPLVL-005",
+      "thread_id": "ADVI_MVPLVL-005-addendum-a-mix-timeseries-alignment",
+      "topic": "Addendum A mix timeseries alignment",
+      "participants": [
+        "0.6.0_AE_PartnerETL",
+        "0.4.2_RD_AdvisorIntelligence"
+      ],
+      "pattern": "unset",
+      "status": "complete",
+      "date": "2026-03-16"
     }
   ]
 }
