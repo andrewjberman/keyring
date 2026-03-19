@@ -1,0 +1,21 @@
+{
+  "project_code": "ADVI_CLSPT2",
+  "macro_code": "ADVI",
+  "name": "BD Classification Phase 2",
+  "description": "Remaining CLSUNI items: wire ETFClassifier into opal-partners-data _classify_holding() (currently imported but unused), write classify_bd_securities.py for OpenAI bulk enrichment of bd-securities beyond 116 Yang items, write detect_new_securities.py for ongoing gold layer detection, redeploy Lambda, run enrichment on EC2.",
+  "prds": [
+    {
+      "path": "docs/architecture/ADVI_CLSPT2_PRD.md",
+      "label": "BD Classification Phase 2 PRD",
+      "date": "2026-03-19"
+    }
+  ],
+  "status": "active",
+  "phase": "Phase 0: PRD complete. Runtime execution pending.",
+  "blocking": "DS WS1 (wire _clf into _classify_holding) + WS2 (classify script) + WS3 (detect script). DT gates on DS WS1. AE gates on DS WS2.",
+  "created": "2026-03-19",
+  "pods": ["0.4", "0.6"],
+  "pipeline": "partners-api",
+  "thread_counter": 0,
+  "threads": []
+}

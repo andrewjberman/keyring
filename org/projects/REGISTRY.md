@@ -16,6 +16,7 @@ the surface area; the project code identifies the specific initiative.
 
 | Project Code | Macro | Project Name | Phase | Pods | Blocking | PRDs |
 |---|---|---|---|---|---|---|
+| `ADVI_CLSPT2` | `ADVI` | BD Classification Phase 2 | Phase 0: PRD complete (2026-03-19). Runtime execution pending. | 0.4, 0.6 | DS: WS1 (Lambda wiring) + WS2 (classify script) + WS3 (detect script). | BD Classification Phase 2 PRD |
 | `ADVI_BKSCMP` | `ADVI` | Books Tab Per-Class Composition Artifacts | Phase 1: 4 task orders issued (2026-03-19). DS writing script 12 + Lambda v2.8. RD parallel (types + holdings adapter). DT gates on DS WS2. AE gates on DS WS1. | 0.4, 0.6 | DS BKSCMP.001 (script 12 + Lambda routes). | Books Composition PRD |
 | `ADVI_MVP318` | `ADVI` | Advisor Intelligence MVP Finalization | Phase 3: WS1-WS5 COMPLETE. bd-v2.19.2, partners-api-v1.4.0 deployed. WS6 (portal DEV->PROD merge) is the only remaining gate. | 0.4, 0.6 | DT: portal DEV->PROD merge + deploy-manual.sh. | ADVI MVP Finalization PRD |
 | `DRFR_PTMCH` | `DRFR` | Portal Time Machine | P1-P5 COMPLETE (all backend + frontend delivered). P6a COMPLETE. Portal DEV not yet pushed/merged to PROD. P6b-d pending. | 0.3, 0.5 | Portal DEV push + PROD merge. P6b-d implementation. | Portal Time Machine PRD, Canon Interlock PRD |
