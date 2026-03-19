@@ -82,14 +82,18 @@ When researching for a PRD, you should:
 
 **Commit only:** `docs/architecture/` specs, `org/projects/` files, session logs, org docs. Use `--author="1.0.0_SA_CTO <1.0.0_SA_CTO@opal.agent>"`.
 
-## Project Status Dashboard -- Updated 2026-03-18 (session 5)
+## Project Status Dashboard -- Updated 2026-03-19 (session 7)
 
 ### Active Projects
 
 | Project | Status | Pending Work |
 |---------|--------|-------------|
+| `ADVI_CLSUNI` | Phase 0: PRD complete (2026-03-19). | AE_CloudOps: Terraform bd-securities table. DS: ETFClassifier + seed/classify scripts + 06b update. RD: MixTimeseriesPoint taxonomy update. Combined gold run with GLDRST. |
+| `ADVI_GLDRST` | Phase 0: CTO approved (2026-03-19). Condition 2 resolved (Option B, correct copy target = opal-partners-data/etf_classifier.py not _shared/). | COO decomposition pending. Sequenced after CLSUNI DS commit. |
+| `ADVI_BKSCMP` | Phase 1: task orders active. BKSCMP PRD updated to GLDRST paths. | DS: script 12 + lambda (GLDRST paths). RD: frontend adapter (parallel). DT: partners-api-v1.5.0. AE: EC2 + gold run. |
+| `ADVI_MVP318` | WS1-WS5 COMPLETE. bd-v2.19.2, partners-api-v1.4.0 deployed. | WS6 only: DT portal DEV->PROD merge + deploy-manual.sh. |
 | `DRFR_PTMCH` | P1-P5 COMPLETE, P6a COMPLETE | Portal DEV not yet pushed/merged to PROD. P6b-d pending. |
-| `ADVI_MVPLVL` | All code + infra complete (partners-api-v1.1.0). DE firmId fix on DEV (db52d31). | DT: portal DEV->PROD merge + deploy. Also ADVI_MVPLVL.006 (MTD/QTD/YTD windows) DS complete — needs DT gold layer run + BD pipeline redeploy. |
+| `ADVI_MVPLVL` | All code + infra complete (partners-api-v1.1.0). DE firmId fix on DEV (db52d31). MVPLVL.006 bd-portal-publisher deployed at bd-v2.19.0. | DT: portal DEV->PROD merge (shared gate with MVP318 WS6). |
 | `ADVI_ADVTV2` | DS 001 committed (8ef1da9b). EC2 scripts deployed (72c03d2a). | DT: confirm FULL gold layer run + verify rel_architect_lookup (19 architects). Task order 002 issued. |
 | `ADVI_MIXV2` | DS 001+002 done. DE 005 done (portal DEV). DT 004 done (partners-api-v1.3.0). | AE 003: 06b EC2 deploy + FULL gold run. DT: portal DEV->PROD merge (shared gate). |
 
@@ -107,8 +111,8 @@ When researching for a PRD, you should:
 
 | Pipeline | Tag |
 |----------|-----|
-| BD | `bd-v2.18.4` |
-| PartnersAPI | `partners-api-v1.3.0` |
+| BD | `bd-v2.19.2` |
+| PartnersAPI | `partners-api-v1.4.0` |
 | Yang | `yang-v2.3.1` |
 | News | `news-v2.7.1` |
 | MarketOverview | `market-overview-v1.6.0` |

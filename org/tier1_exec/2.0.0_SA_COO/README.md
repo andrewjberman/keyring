@@ -167,7 +167,7 @@ the file, change the value, then summarize what you corrected.
 | Project JSON `phase` field | Agent progress exceeds what the phase description says | Edit the phase string |
 | Registry Active Projects row | Phase description stale, or project should move to Completed | Edit the row / move it |
 | Registry Completed table | Project JSON says `"complete"` but row is still in Active | Move the row |
-| COO prompt.md dashboard | Pod status table is stale vs agent logs | Edit the dashboard |
+| COO deliverables/delivery_status.md | Pod status table is stale vs agent logs | Edit the dashboard |
 
 ### Protocol
 
@@ -179,7 +179,7 @@ the file, change the value, then summarize what you corrected.
    Cross-reference against git tags (`git tag -l "{pipeline}-v*" | sort -V | tail -5`)
    and recent commits (`git log --oneline --grep="{PROJECT_CODE}" | head -10`).
 4. **IMMEDIATELY correct every stale document found** — use the Edit tool on task
-   orders, project JSONs, registry rows, and the prompt.md dashboard. Do this
+   orders, project JSONs, registry rows, and the deliverables/delivery_status.md. Do this
    BEFORE writing your oriented summary.
 5. Commit all corrections before proceeding to new work.
 

@@ -11,8 +11,8 @@
     }
   ],
   "status": "active",
-  "phase": "Phase 0: PRD complete. COO decomposition and task order issuance pending.",
-  "blocking": "COO task order issuance across DS, DT, AE, DE, RD. DS has uncommitted code (D4 + bd-portal-publisher changes) that must be committed before any DT deploy can begin.",
+  "phase": "Phase 3: WS1-WS5 ALL COMPLETE. bd-v2.19.2 deployed (bd-portal-publisher WS1 fix). WS6 (portal DEV->PROD merge) is the only remaining gate.",
+  "blocking": "WS6: DT portal DEV->PROD merge + deploy-manual.sh. Confirm all portal DEV commits are present before merging.",
   "created": "2026-03-18",
   "pods": [
     "0.4",
