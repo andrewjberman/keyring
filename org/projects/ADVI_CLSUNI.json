@@ -1,0 +1,21 @@
+{
+  "project_code": "ADVI_CLSUNI",
+  "macro_code": "ADVI",
+  "name": "BD Securities Classification Unification",
+  "description": "Replace three divergent static ETF classification codebases with a single DynamoDB-backed ETFClassifier. New bd-securities table (116 items seeded from Yang etf-classifications), lib/etf_classifier.py shared module, portal taxonomy updated (equity/fixed_income/alternatives). Phase 1 of a two-phase project; Phase 2 is ADVI_CLSPT2.",
+  "prds": [
+    {
+      "path": "docs/architecture/ADVI_CLSUNI_PRD.md",
+      "label": "BD Securities Classification Unification PRD",
+      "date": "2026-03-19"
+    }
+  ],
+  "status": "complete",
+  "phase": "COMPLETE (2026-03-19). All WS deployed. shared-infra-v1.5.0, partners-api-v1.6.0. [*runtime: AE_CloudOps WS1, DS WS2, RD WS7, DT WS8 — ~36% unedited, partial corrections by CTO]",
+  "blocking": "none",
+  "created": "2026-03-19",
+  "pods": ["0.4", "0.6", "0.7"],
+  "pipeline": "partners-api",
+  "thread_counter": 0,
+  "threads": []
+}

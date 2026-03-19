@@ -11,8 +11,8 @@
     }
   ],
   "status": "active",
-  "phase": "Phase 0: PRD complete. Runtime execution pending.",
-  "blocking": "DS WS1 (wire _clf into _classify_holding) + WS2 (classify script) + WS3 (detect script). DT gates on DS WS1. AE gates on DS WS2.",
+  "phase": "Phase 2: ALL CODE COMPLETE + DEPLOYED (2026-03-19). partners-api-v1.7.0. ETFClassifier live in _classify_holding(). classify_bd_securities.py + detect_new_securities.py on CLOUD. [*runtime: DS WS1-WS3 by runtime agent, ~67% unedited, manual syntax fixes + duplicate body cleanup by CTO; DT WS4 deploy sequence correct, source-map manual restore]",
+  "blocking": "AE: run classify_bd_securities.py on EC2 to enrich bd-securities beyond 116 Yang items.",
   "created": "2026-03-19",
   "pods": ["0.4", "0.6"],
   "pipeline": "partners-api",

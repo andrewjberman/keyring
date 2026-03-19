@@ -16,7 +16,7 @@ the surface area; the project code identifies the specific initiative.
 
 | Project Code | Macro | Project Name | Phase | Pods | Blocking | PRDs |
 |---|---|---|---|---|---|---|
-| `ADVI_CLSPT2` | `ADVI` | BD Classification Phase 2 | Phase 0: PRD complete (2026-03-19). Runtime execution pending. | 0.4, 0.6 | DS: WS1 (Lambda wiring) + WS2 (classify script) + WS3 (detect script). | BD Classification Phase 2 PRD |
+| `ADVI_CLSPT2` | `ADVI` | BD Classification Phase 2 | Phase 2: ALL CODE COMPLETE + DEPLOYED (2026-03-19). partners-api-v1.7.0 live. ETFClassifier active in _classify_holding(). classify_bd_securities.py + detect_new_securities.py committed. [*runtime: DS WS1-WS3 produced by runtime agent with manual syntax fixes; DT WS4 deploy sequence runtime-executed, source-map manual restore] | 0.4, 0.6 | AE: run classify_bd_securities.py on EC2 to enrich bd-securities beyond 116 items. | BD Classification Phase 2 PRD |
 | `ADVI_BKSCMP` | `ADVI` | Books Tab Per-Class Composition Artifacts | Phase 1: 4 task orders issued (2026-03-19). DS writing script 12 + Lambda v2.8. RD parallel (types + holdings adapter). DT gates on DS WS2. AE gates on DS WS1. | 0.4, 0.6 | DS BKSCMP.001 (script 12 + Lambda routes). | Books Composition PRD |
 | `ADVI_MVP318` | `ADVI` | Advisor Intelligence MVP Finalization | Phase 3: WS1-WS5 COMPLETE. bd-v2.19.2, partners-api-v1.4.0 deployed. WS6 (portal DEV->PROD merge) is the only remaining gate. | 0.4, 0.6 | DT: portal DEV->PROD merge + deploy-manual.sh. | ADVI MVP Finalization PRD |
 | `DRFR_PTMCH` | `DRFR` | Portal Time Machine | P1-P5 COMPLETE (all backend + frontend delivered). P6a COMPLETE. Portal DEV not yet pushed/merged to PROD. P6b-d pending. | 0.3, 0.5 | Portal DEV push + PROD merge. P6b-d implementation. | Portal Time Machine PRD, Canon Interlock PRD |
@@ -26,10 +26,23 @@ the surface area; the project code identifies the specific initiative.
 
 ---
 
+---
+
+## Runtime Attribution Legend
+
+`[*runtime]` in any Phase or Notes column means one or more workstreams were executed
+by the ka_testing Docker runtime (org/ka_testing). Code produced by runtime agents
+was verified and corrected by CTO before deployment but originated autonomously.
+Never treat `[*runtime]` deliverables as fully human-reviewed without reading the
+session log. Performance baseline: CLSUNI ~36% unedited, CLSPT2 ~67% unedited.
+
+---
+
 ## Completed / Archived Projects
 
 | Project Code | Macro | Project Name | Completed | Notes |
 |---|---|---|---|---|
+| `ADVI_CLSUNI` | `ADVI` | BD Securities Classification Unification | 2026-03-19 | All WS deployed: shared-infra-v1.5.0 (bd-securities table + IAM), partners-api-v1.6.0 (etf_classifier.py in Lambda). Portal taxonomy (types.ts, ClientsTab.tsx) on portal DEV f0d9d01. 116 items seeded. [*runtime: AE_CloudOps WS1, DS WS2, RD WS7, DT WS8 — partial corrections applied by CTO. ~36% unedited.] |
 | `ADVI_V1VERS` | `ADVI` | AdvisorIntelligence V1 Completion | 2026-03-05 | 8/8 task orders verified complete |
 | `ADVI_YANGV2` | `ADVI` | AdvisorIntelligence Yang Feedback V2 | 2026-03-06 | All task orders delivered. Y14 deferred to 49FNV3. |
 | `ADVI_NNAVAR` | `ADVI` | NNA Variance Optimization | 2026-03-09 | Investigation complete. Gap explained (Holding MV withdrawn = correct behavior). Scripts 05/05b deployed to S3. Rebuild deferred pending ADVI_49FNV3. |
