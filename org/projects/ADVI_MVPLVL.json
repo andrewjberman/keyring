@@ -10,9 +10,9 @@
       "date": "2026-03-16"
     }
   ],
-  "status": "active",
-  "phase": "Portal DEV->PROD merge pending. Two new DS task orders issued (2026-03-18): MVPLVL.007 (DS advisor-level timeseries endpoints for L2 quarterly bar) and MVPLVL.008 (DS open_lots field canonicalization). L2 view in ConsolidatedOverviewPanel shows skeleton until DS .007 completes. ADVI_MVP318 WS5 (DE chart windows) must also commit to portal DEV before merge.",
-  "blocking": "DS MVPLVL.007 (advisor timeseries endpoints) + MVPLVL.008 (open_lots canonicalization) + ADVI_MVP318 WS5 (DE chart windows in portal DEV) + DT portal DEV->PROD merge.",
+  "status": "complete",
+  "phase": "COMPLETE. All task orders done (.007 delivered under MVP318.001, .008 at 14b3be3d). All 5 threads complete.",
+  "blocking": "",
   "created": "2026-03-13",
   "pods": [
     "0.4"

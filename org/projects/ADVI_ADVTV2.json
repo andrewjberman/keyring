@@ -4,9 +4,9 @@
   "name": "Advisor Intelligence ADV v2 — Architect Attribution",
   "description": "Productionize the T0-T16 architect attribution decision tree into the gold layer. Replace raw architect field with resolved_architect so the leaderboard, Top 3, rolling flows, and all ADV views show only the 19 true architects with correctly attributed AUA. Retire 49F House, Unassigned, and stale architects from ADV output.",
   "prds": [],
-  "status": "active",
-  "phase": "DS 001 COMPLETE + committed (8ef1da9b, 2026-03-17). EC2 scripts deployed via safe-ec2-deploy (72c03d2a). DT FULL gold layer run + verification status unknown (no session log).",
-  "blocking": "DT: confirm FULL gold layer run completed and rel_architect_lookup has 19 architects. Task order ADVI_ADVTV2.002.gold-layer-deploy issued to DT.",
+  "status": "complete",
+  "phase": "COMPLETE. DS 001 committed (8ef1da9b). EC2 scripts deployed (72c03d2a). Gold rerun subsumed by ADVI_GLDPRE Phase 4.",
+  "blocking": "",
   "created": "2026-03-17",
   "pods": [
     "0.4"

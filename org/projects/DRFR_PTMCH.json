@@ -15,9 +15,9 @@
       "date": "2026-03-12"
     }
   ],
-  "status": "active",
-  "phase": "P5 COMPLETE (all deliverables: backend, frontend context, API, HistoryTab control). 0.3.1 banner dropped — time machine UI stays in DataRefresh. Phase 6a COMPLETE (canon interlock deployed, backfill done). P6b-d pending. Portal DEV not yet pushed/merged to PROD.",
-  "blocking": "Portal DEV push + PROD merge for P5 frontend. P6b-d implementation.",
+  "status": "complete",
+  "phase": "COMPLETE. P1-P5 delivered + deployed. P6a (canon interlock) deployed. P6b-d deprecated.",
+  "blocking": "",
   "deployed_versions": {
     "shared_infra": "shared-infra-v1.4.0",
     "news_publisher_target_date": "news-v2.7.0",

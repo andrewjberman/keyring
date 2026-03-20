@@ -1,0 +1,21 @@
+{
+  "project_code": "ADVI_GLDPRE",
+  "macro_code": "ADVI",
+  "name": "Gold Layer Pre-Run (4-Class Taxonomy + AUA Reconciliation)",
+  "description": "Fix the $42.9M AUA valuation gap between silver allocations and gold client_performance. Integrate scoped price overrides into bd_price_update.py. Deploy 4-class taxonomy (equity, fixed_income, alternatives, cash-as-residual) using ETFClassifier in 06b. Substitute client_performance total into firm_mix_views.json to eliminate Mix/Clients bar divergence. Requires full gold rerun.",
+  "prds": [
+    {
+      "path": "docs/architecture/ADVI_GLDPRE_PRD.md",
+      "label": "GLDPRE PRD (4-class taxonomy + AUA reconciliation)",
+      "date": "2026-03-19"
+    }
+  ],
+  "status": "active",
+  "phase": "Phase 3: WS1+WS2+WS3 code COMPLETE. Lambda deployed (partners-api-v1.8.0). Portal DEV fixes committed (types.ts restoration + 4-class + ClientsTab.tsx fix). Phase 4 (full gold rerun) executing. Portal DEV->PROD merge gated on gold rerun verification.",
+  "blocking": "AE GLDPRE.005 Phase 4 (full gold rerun). DT GLDPRE.006 (portal merge, gated on gold rerun).",
+  "created": "2026-03-19",
+  "pods": ["0.4", "0.6"],
+  "pipeline": "partners-api",
+  "thread_counter": 0,
+  "threads": []
+}

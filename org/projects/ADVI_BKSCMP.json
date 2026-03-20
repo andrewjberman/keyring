@@ -11,8 +11,8 @@
     }
   ],
   "status": "active",
-  "phase": "Phase 1: All 4 task orders issued (2026-03-19). DS gates: WS1 (script 12 + run_gold_layer.sh) + WS2 (Lambda v2.8 commit). RD parallel track. DT gates on DS WS2 commit. AE gates on DS WS1 commit.",
-  "blocking": "DS ADVI_BKSCMP.001 (script 12 + Lambda v2.8 commits). RD ADVI_BKSCMP.002 is parallel.",
+  "phase": "Phase 2: DS .001 COMPLETE (script 12 + Lambda v2.8). RD .002 COMPLETE (portal DEV 6266d17). DT .003 COMPLETE (partners-api-v1.5.0). AE .004 PENDING: upload script 12 to S3. Gold run subsumed by GLDPRE.005 Phase 4 (script 12 wired into run_gold_layer.sh lines 116+163).",
+  "blocking": "AE BKSCMP.004: upload 12_build_composition_artifacts.py to S3 (must happen before GLDPRE gold rerun). Then validate composition artifacts in S3 after gold run.",
   "created": "2026-03-19",
   "pods": ["0.4", "0.6"],
   "pipeline": "partners-api",

@@ -82,38 +82,42 @@ When researching for a PRD, you should:
 
 **Commit only:** `docs/architecture/` specs, `org/projects/` files, session logs, org docs. Use `--author="1.0.0_SA_CTO <1.0.0_SA_CTO@opal.agent>"`.
 
-## Project Status Dashboard -- Updated 2026-03-18 (session 5)
+## Project Status Dashboard -- Updated 2026-03-20 (session 7)
 
 ### Active Projects
 
 | Project | Status | Pending Work |
 |---------|--------|-------------|
-| `DRFR_PTMCH` | P1-P5 COMPLETE, P6a COMPLETE | Portal DEV not yet pushed/merged to PROD. P6b-d pending. |
-| `ADVI_MVPLVL` | All code + infra complete (partners-api-v1.1.0). DE firmId fix on DEV (db52d31). | DT: portal DEV->PROD merge + deploy. Also ADVI_MVPLVL.006 (MTD/QTD/YTD windows) DS complete — needs DT gold layer run + BD pipeline redeploy. |
-| `ADVI_ADVTV2` | DS 001 committed (8ef1da9b). EC2 scripts deployed (72c03d2a). | DT: confirm FULL gold layer run + verify rel_architect_lookup (19 architects). Task order 002 issued. |
-| `ADVI_MIXV2` | DS 001+002 done. DE 005 done (portal DEV). DT 004 done (partners-api-v1.3.0). | AE 003: 06b EC2 deploy + FULL gold run. DT: portal DEV->PROD merge (shared gate). |
+| `ADVI_GLDPRE` | WS1+WS2+WS3 code COMPLETE. Lambda deployed (partners-api-v1.8.0). Portal DEV fixes committed. | AE GLDPRE.005 Phase 4 (full gold rerun). DT GLDPRE.006 (portal merge, gated on gold rerun). |
+| `ADVI_BKSCMP` | DS+RD+DT all COMPLETE (partners-api-v1.5.0). AE .004 folded into GLDPRE.005. | Script 12 S3 upload + gold run validation (via GLDPRE.005). |
+| `ADVI_CLSPT2` | WS1+WS3+WS4 deployed (partners-api-v1.7.0). Classify script stub. Script 12 uses static dict. | DS .001 (finish classify) -> AE .002 (run) -> DS .003 (script 12 migration) -> gold rerun. |
+| `ADVI_GLDRST` | CTO approved (2026-03-19). DS Condition 2 resolved (Option B). | COO task order issuance. DS combined session: GLDRST + CLSUNI WS6. |
 
 ### Recently Completed
 
 | Project | Completed | Key Deliverables |
 |---------|-----------|-----------------|
-| `ADHC_MKOVFX` | 2026-03-12 | KI bug fixed (news-v2.7.1). Fear & greed backend healthy. GPT signal_conflict type guard. |
-| `ADVI_49FNV3` | 2026-03-12 | All task orders complete. F1-F7, N1-N2, .007 (PSCFIX), .008 (05c + backfill). |
-| `ADVI_PSCFIX` | 2026-03-12 | All 5 task orders done. bd-v2.18.3+v2.18.4 deployed. Portal schema validated. |
-| `MDLP_WYNCHT` | 2026-03-11 | 4 HTML pages on S3. PPTX delivered. |
-| `ADHC_GPTCST` | 2026-03-10 | news-v2.5.0+v2.6.0, market-overview-v1.6.0. Cache fix deployed. |
+| `ADVI_MVP318` | 2026-03-20 | WS1-WS5 done. bd-v2.19.0-v2.19.2, partners-api-v1.4.0. Gold rerun subsumed by GLDPRE. |
+| `ADVI_MVPLVL` | 2026-03-20 | All task orders done. .007 via MVP318.001, .008 at 14b3be3d. 5 threads complete. |
+| `ADVI_ADVTV2` | 2026-03-20 | DS committed (8ef1da9b). EC2 deployed (72c03d2a). Gold rerun subsumed by GLDPRE. |
+| `ADVI_MIXV2` | 2026-03-20 | All DS/DE/DT done. AE gold rerun subsumed by GLDPRE. partners-api-v1.3.0. |
+| `DRFR_PTMCH` | 2026-03-20 | P1-P5 deployed. P6a deployed. P6b-d deprecated. |
+| `ADVI_CLSUNI` | 2026-03-19 | shared-infra-v1.5.0 (bd-securities). partners-api-v1.6.0 (ETFClassifier). [*runtime ~36%] |
+| `ADHC_MKOVFX` | 2026-03-12 | KI bug fixed (news-v2.7.1). Fear & greed backend healthy. |
+| `ADVI_49FNV3` | 2026-03-12 | All task orders complete. F1-F7, N1-N2, .007, .008. |
+| `ADVI_PSCFIX` | 2026-03-12 | bd-v2.18.3+v2.18.4 deployed. Portal schema validated. |
 
-### Pipeline Tags (as of 2026-03-18)
+### Pipeline Tags (as of 2026-03-20)
 
 | Pipeline | Tag |
 |----------|-----|
-| BD | `bd-v2.18.4` |
-| PartnersAPI | `partners-api-v1.3.0` |
+| BD | `bd-v2.19.2` |
+| PartnersAPI | `partners-api-v1.8.0` |
 | Yang | `yang-v2.3.1` |
 | News | `news-v2.7.1` |
 | MarketOverview | `market-overview-v1.6.0` |
 | DataRefresh | `data-refresh-v2.2.0` |
-| SharedInfra | `shared-infra-v1.4.0` |
+| SharedInfra | `shared-infra-v1.5.0` |
 
 **NOTE:** This dashboard is corrected on every CTO startup. Do not treat it as
 authoritative between sessions — always re-audit from agent logs and git tags.

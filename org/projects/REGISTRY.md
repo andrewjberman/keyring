@@ -16,13 +16,10 @@ the surface area; the project code identifies the specific initiative.
 
 | Project Code | Macro | Project Name | Phase | Pods | Blocking | PRDs |
 |---|---|---|---|---|---|---|
-| `ADVI_CLSPT2` | `ADVI` | BD Classification Phase 2 | Phase 2: ALL CODE COMPLETE + DEPLOYED (2026-03-19). partners-api-v1.7.0 live. ETFClassifier active in _classify_holding(). classify_bd_securities.py + detect_new_securities.py committed. [*runtime: DS WS1-WS3 produced by runtime agent with manual syntax fixes; DT WS4 deploy sequence runtime-executed, source-map manual restore] | 0.4, 0.6 | AE: run classify_bd_securities.py on EC2 to enrich bd-securities beyond 116 items. | BD Classification Phase 2 PRD |
-| `ADVI_BKSCMP` | `ADVI` | Books Tab Per-Class Composition Artifacts | Phase 1: 4 task orders issued (2026-03-19). DS writing script 12 + Lambda v2.8. RD parallel (types + holdings adapter). DT gates on DS WS2. AE gates on DS WS1. | 0.4, 0.6 | DS BKSCMP.001 (script 12 + Lambda routes). | Books Composition PRD |
-| `ADVI_MVP318` | `ADVI` | Advisor Intelligence MVP Finalization | Phase 3: WS1-WS5 COMPLETE. bd-v2.19.2, partners-api-v1.4.0 deployed. WS6 (portal DEV->PROD merge) is the only remaining gate. | 0.4, 0.6 | DT: portal DEV->PROD merge + deploy-manual.sh. | ADVI MVP Finalization PRD |
-| `DRFR_PTMCH` | `DRFR` | Portal Time Machine | P1-P5 COMPLETE (all backend + frontend delivered). P6a COMPLETE. Portal DEV not yet pushed/merged to PROD. P6b-d pending. | 0.3, 0.5 | Portal DEV push + PROD merge. P6b-d implementation. | Portal Time Machine PRD, Canon Interlock PRD |
-| `ADVI_MVPLVL` | `ADVI` | Advisor Intelligence MVP Polish | ConsolidatedOverviewPanel live on portal DEV (62143e7). Two new DS task orders pending: MVPLVL.007 (advisor timeseries endpoints for L2 quarterly bar) + MVPLVL.008 (open_lots field names). DE ADVI_MVP318 WS5 (chart windows) also pending before portal merge. | 0.4, 0.6 | DS MVPLVL.007+.008 + MVP318 WS5 (DE chart windows) + DT portal DEV->PROD merge. | ADVI MVP Polish PRD |
-| `ADVI_ADVTV2` | `ADVI` | ADV v2 — Architect Attribution | DS committed (8ef1da9b). EC2 deploy done (72c03d2a). DT gold layer run + verification pending. | 0.4 | DT: confirm FULL gold run complete, rel_architect_lookup verified (task order 002). | — |
-| `ADVI_MIXV2` | `ADVI` | Asset Mix View V2 | DS 001+002 COMPLETE. DE 005 COMPLETE (portal DEV). DT 004 COMPLETE (partners-api-v1.3.0). AE 003 pending (06b EC2 + gold run). Portal DEV->PROD merge pending. | 0.4, 0.6 | AE 003: 06b EC2 deploy + gold run. DT portal DEV->PROD merge (shared gate with ADVI_MVPLVL). | Asset Mix View V2 PRD |
+| `ADVI_GLDPRE` | `ADVI` | Gold Layer Pre-Run (4-Class + AUA Reconciliation) | Phase 3: WS1+WS2+WS3 code COMPLETE. Lambda deployed (partners-api-v1.8.0). Portal DEV fixes committed (types.ts + 4-class + ClientsTab.tsx). Phase 4 (full gold rerun) pending AE execution. | 0.4, 0.6 | AE GLDPRE.005 Phase 4 (full gold rerun). DT GLDPRE.006 (portal merge, gated on gold rerun). | GLDPRE PRD |
+| `ADVI_BKSCMP` | `ADVI` | Books Tab Per-Class Composition Artifacts | DS .001 COMPLETE. RD .002 COMPLETE (6266d17). DT .003 COMPLETE (partners-api-v1.5.0). AE .004: script 12 S3 upload folded into GLDPRE.005 Phase 2. | 0.4, 0.6 | AE: script 12 upload + gold run validation (via GLDPRE.005). | Books Composition PRD |
+| `ADVI_CLSPT2` | `ADVI` | BD Classification Phase 2 | WS1+WS3+WS4 deployed (partners-api-v1.7.0). 3 task orders: DS .001 (finish classify script), AE .002 (run on EC2), DS .003 (script 12 ETFClassifier migration). [*runtime] | 0.4, 0.6 | DS .001 -> AE .002 -> DS .003 -> gold rerun. | BD Classification Phase 2 PRD |
+| `ADVI_GLDRST` | `ADVI` | BD Gold Layer S3 Restructure | Phase 0: CTO approved (2026-03-19). DS Condition 2 resolved (Option B). | 0.4, 0.6, 0.7 | COO task order issuance. | Gold Layer Restructure Proposal |
 
 ---
 
@@ -42,7 +39,12 @@ session log. Performance baseline: CLSUNI ~36% unedited, CLSPT2 ~67% unedited.
 
 | Project Code | Macro | Project Name | Completed | Notes |
 |---|---|---|---|---|
-| `ADVI_CLSUNI` | `ADVI` | BD Securities Classification Unification | 2026-03-19 | All WS deployed: shared-infra-v1.5.0 (bd-securities table + IAM), partners-api-v1.6.0 (etf_classifier.py in Lambda). Portal taxonomy (types.ts, ClientsTab.tsx) on portal DEV f0d9d01. 116 items seeded. [*runtime: AE_CloudOps WS1, DS WS2, RD WS7, DT WS8 — partial corrections applied by CTO. ~36% unedited.] |
+| `ADVI_MVP318` | `ADVI` | Advisor Intelligence MVP Finalization | 2026-03-20 | WS1-WS5 complete. bd-v2.19.0-v2.19.2, partners-api-v1.4.0 deployed. Gold rerun subsumed by GLDPRE. |
+| `ADVI_MVPLVL` | `ADVI` | Advisor Intelligence MVP Polish | 2026-03-20 | All task orders complete (.007 delivered under MVP318.001, .008 at 14b3be3d). 5 threads complete. |
+| `ADVI_ADVTV2` | `ADVI` | ADV v2 — Architect Attribution | 2026-03-20 | DS 001 committed (8ef1da9b). EC2 deployed (72c03d2a). Gold rerun subsumed by GLDPRE. |
+| `ADVI_MIXV2` | `ADVI` | Asset Mix View V2 | 2026-03-20 | All DS/DE/DT work done. AE 003 gold rerun subsumed by GLDPRE. partners-api-v1.3.0 deployed. |
+| `DRFR_PTMCH` | `DRFR` | Portal Time Machine | 2026-03-20 | P1-P5 deployed (yang-v2.3.1, bd-v2.18.2, news-v2.7.0, data-refresh-v2.2.0). P6a deployed. P6b-d deprecated. |
+| `ADVI_CLSUNI` | `ADVI` | BD Securities Classification Unification | 2026-03-19 | All WS deployed: shared-infra-v1.5.0 (bd-securities table + IAM), partners-api-v1.6.0 (etf_classifier.py in Lambda). Portal taxonomy (types.ts, ClientsTab.tsx) on portal DEV f0d9d01. 116 items seeded. [*runtime ~36% unedited.] |
 | `ADVI_V1VERS` | `ADVI` | AdvisorIntelligence V1 Completion | 2026-03-05 | 8/8 task orders verified complete |
 | `ADVI_YANGV2` | `ADVI` | AdvisorIntelligence Yang Feedback V2 | 2026-03-06 | All task orders delivered. Y14 deferred to 49FNV3. |
 | `ADVI_NNAVAR` | `ADVI` | NNA Variance Optimization | 2026-03-09 | Investigation complete. Gap explained (Holding MV withdrawn = correct behavior). Scripts 05/05b deployed to S3. Rebuild deferred pending ADVI_49FNV3. |

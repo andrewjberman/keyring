@@ -11,8 +11,8 @@
     }
   ],
   "status": "active",
-  "phase": "Phase 2: ALL CODE COMPLETE + DEPLOYED (2026-03-19). partners-api-v1.7.0. ETFClassifier live in _classify_holding(). classify_bd_securities.py + detect_new_securities.py on CLOUD. [*runtime: DS WS1-WS3 by runtime agent, ~67% unedited, manual syntax fixes + duplicate body cleanup by CTO; DT WS4 deploy sequence correct, source-map manual restore]",
-  "blocking": "AE: run classify_bd_securities.py on EC2 to enrich bd-securities beyond 116 Yang items.",
+  "phase": "Phase 2: WS1+WS3+WS4 COMPLETE + DEPLOYED (partners-api-v1.7.0). Three task orders issued: DS .001 (finish classify script OpenAI impl), AE .002 (run classifier on EC2), DS .003 (migrate script 12 from static dict to ETFClassifier). After .001+.002 enrich bd-securities and .003 migrates script 12, a gold rerun produces correct composition output. [*runtime: ~67% unedited]",
+  "blocking": "DS CLSPT2.001 (finish classify script) -> AE CLSPT2.002 (run on EC2) -> DS CLSPT2.003 (script 12 migration) -> gold rerun (incremental).",
   "created": "2026-03-19",
   "pods": ["0.4", "0.6"],
   "pipeline": "partners-api",
