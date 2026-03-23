@@ -30,7 +30,24 @@
 - Total findings: 19
 - By category: C1: 5, C2: 4, C3: 2, C4: 5, C5: 2, C6: 1
 - High severity: 4
-- Recommended priority fixes:
-  1. **#1 + #18: Remove orphaned EquitiesPerformance component** (C1+C5, 4 dead files) -- pure deletion, zero risk, reduces maintenance surface
-  2. **#6 + #17: Remove yield-curve vestiges** (C2+C5) -- delete from TAB_CONFIGS, narrow TabType union to only the 4 implemented tabs. Prevents impossible state.
-  3. **#19: Wire error state from useMarketData** (C6) -- destructure `error`, show distinct message for API failure vs empty data. Users currently get a misleading "no data" message on network errors.
+
+## Fixed in .001 (portal commits 1710e6f, 1ad1620)
+- #1, #18: Deleted orphaned EquitiesPerformance component (4 files)
+- #2: Removed commented-out PageHeader imports
+- #3: Removed unused MarketPerformancePageState and TabConfig interfaces
+- #4: Removed unused TAB_CONFIGS constant
+- #5: Removed unused useDrilldownEnabled hook
+- #6, #17: Removed yield-curve from TabType union and TAB_CONFIGS
+- #7: Removed stale variant testing comment block
+- #8: Removed stale "DATA LOADING RE-ENABLED" comment
+- #9: Removed deprecated renderDrilldownView placeholder (superseded by IndexPerformanceModal)
+- #10: Drift risk eliminated (TAB_CONFIGS deleted)
+- #14: Eliminated (drilldown view deleted)
+- #15: Removed dead DRILLDOWN_ENABLED_INDICES (no consumers after drilldown removal)
+- #19: Wired error state from useMarketData
+
+## Remaining for .002 task order (refactoring, not dead code)
+- #11: Inline toggle buttons in EquitiesTab/EquitiesTab.tsx:25-48 -- raw Tailwind active/inactive states, drift risk with future design system toggle
+- #12: `maxHeight="660px"` hardcoded in 6 PerformanceHeatMap calls across 4 tab files -- should be a shared constant or derived from container
+- #13: Inline color magic values in EquitiesTab toggle (shadow opacity, inactive state colors not tied to design tokens)
+- #16: `MULTI_ASSET_EQUITY_GROUPS` in MultiAssetTab.tsx:16-21 hardcodes index names that must match upstream data source exactly -- breaks silently if names change
