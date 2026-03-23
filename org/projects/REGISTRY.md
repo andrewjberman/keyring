@@ -18,7 +18,7 @@ the surface area; the project code identifies the specific initiative.
 |---|---|---|---|---|---|---|
 | `ADVI_GLDPRE` | `ADVI` | Gold Layer Pre-Run (4-Class + AUA Reconciliation) | Phase 3: WS1+WS2+WS3 code COMPLETE. Lambda deployed (partners-api-v1.8.0). Portal DEV fixes committed (types.ts + 4-class + ClientsTab.tsx). Phase 4 (full gold rerun) pending AE execution. | 0.4, 0.6 | AE GLDPRE.005 Phase 4 (full gold rerun). DT GLDPRE.006 (portal merge, gated on gold rerun). | GLDPRE PRD |
 | `ADVI_BKSCMP` | `ADVI` | Books Tab Per-Class Composition Artifacts | DS .001 COMPLETE. RD .002 COMPLETE (6266d17). DT .003 COMPLETE (partners-api-v1.5.0). AE .004: script 12 S3 upload folded into GLDPRE.005 Phase 2. | 0.4, 0.6 | AE: script 12 upload + gold run validation (via GLDPRE.005). | Books Composition PRD |
-| `ADVI_CLSPT2` | `ADVI` | BD Classification Phase 2 | WS1+WS3+WS4 deployed (partners-api-v1.7.0). 3 task orders: DS .001 (finish classify script), AE .002 (run on EC2), DS .003 (script 12 ETFClassifier migration). [*runtime] | 0.4, 0.6 | DS .001 -> AE .002 -> DS .003 -> gold rerun. | BD Classification Phase 2 PRD |
+| `ADVI_CLSPT2` | `ADVI` | BD Classification Phase 2 | DS .001 COMPLETE (OpenAI impl). AE .002 COMPLETE (3,855 securities classified, up from 116). DS .003 COMPLETE (script 12 ETFClassifier migration). [*runtime] | 0.4, 0.6 | AE: gold rerun to validate classification parity. | BD Classification Phase 2 PRD |
 | `ADVI_GLDRST` | `ADVI` | BD Gold Layer S3 Restructure | Phase 0: CTO approved (2026-03-19). DS Condition 2 resolved (Option B). | 0.4, 0.6, 0.7 | COO task order issuance. | Gold Layer Restructure Proposal |
 
 ---
