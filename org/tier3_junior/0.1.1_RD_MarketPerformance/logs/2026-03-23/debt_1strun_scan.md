@@ -31,7 +31,7 @@
 - By category: C1: 5, C2: 4, C3: 2, C4: 5, C5: 2, C6: 1
 - High severity: 4
 
-## Fixed in .001 (portal commits 1710e6f, 1ad1620)
+## Fixed in .001 (portal commits 1710e6f, 1ad1620, 45bb0bb)
 - #1, #18: Deleted orphaned EquitiesPerformance component (4 files)
 - #2: Removed commented-out PageHeader imports
 - #3: Removed unused MarketPerformancePageState and TabConfig interfaces
@@ -42,12 +42,13 @@
 - #8: Removed stale "DATA LOADING RE-ENABLED" comment
 - #9: Removed deprecated renderDrilldownView placeholder (superseded by IndexPerformanceModal)
 - #10: Drift risk eliminated (TAB_CONFIGS deleted)
+- #12: Extracted HEATMAP_MAX_HEIGHT constant, replacing 6 hardcoded "660px" strings across 4 tab files
 - #14: Eliminated (drilldown view deleted)
 - #15: Removed dead DRILLDOWN_ENABLED_INDICES (no consumers after drilldown removal)
+- #16: Moved MULTI_ASSET_EQUITY_GROUPS from inline definition in MultiAssetTab.tsx to constants.ts
 - #19: Wired error state from useMarketData
 
 ## Remaining for .002 task order (refactoring, not dead code)
 - #11: Inline toggle buttons in EquitiesTab/EquitiesTab.tsx:25-48 -- raw Tailwind active/inactive states, drift risk with future design system toggle
-- #12: `maxHeight="660px"` hardcoded in 6 PerformanceHeatMap calls across 4 tab files -- should be a shared constant or derived from container
 - #13: Inline color magic values in EquitiesTab toggle (shadow opacity, inactive state colors not tied to design tokens)
-- #16: `MULTI_ASSET_EQUITY_GROUPS` in MultiAssetTab.tsx:16-21 hardcodes index names that must match upstream data source exactly -- breaks silently if names change
+- Note: #11 and #13 are the same underlying issue -- the hand-rolled toggle should be replaced with a shared ToggleGroup component when one exists in the design system
