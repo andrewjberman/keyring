@@ -24,7 +24,67 @@
 - Total findings: 13
 - By category: C1: 2, C2: 1, C3: 2, C4: 4, C5: 1, C6: 2, (C1+C5 overlap on finding 1/11: 1)
 - High severity: 3
-- Recommended priority fixes:
-  1. **#12 (C6 High):** Add `assumptionsError` handling so the assumptions query failure surfaces an error instead of infinite loading.
-  2. **#4 (C3 High):** Extract `parseCustomLabels()` into a shared utility to eliminate the duplicated label-parsing logic between GradientSlider and ConvergingSlider.
-  3. **#6 (C4 High):** Replace `ASSET_CLASS_COLORS` string-keyed map with category-based color assignment using the `category` field from `AssetClassAssumption`, eliminating the fragile name-matching approach.
+- Fixed in this session: 9 of 13 (all high + all medium + all low actionable)
+- Remaining (low, cosmetic): 4
+
+## Fixes Applied
+
+Portal submodule commit: `DEV 5f2d5c7`
+Parent repo commit: `CLOUD 6c77c7bb`
+
+### High Severity (all fixed)
+
+**#12 (C6) -- Silent infinite loading on assumptions error**
+- Destructured `assumptionsError` from the assumptions `useQuery` call
+- Updated `error` derivation to check `assumptionsError` first, then `viewsError`, with query-specific messages
+- Updated `renderTabContent()`: shows `<LoadingContainer />` only while loading (not on error); returns null when cmaData is null due to error so the error panel in the main section handles display
+- Updated panel visibility guard from `cmaData` to `cmaData || error` so the error panel renders even when assumptions fail
+
+**#4 (C3) -- Duplicated parseCustomLabels across slider components**
+- Created `components/sliderUtils.ts` with shared exports:
+  - `parseCustomLabels(label)` -- single source of truth for label parsing (unified the GradientSlider and ConvergingSlider variants; ConvergingSlider's version was canonical)
+  - `getScaleLabels(label, useCustomLabels)` -- convenience wrapper
+  - `toPercent(pos)` -- position-to-percentage conversion
+  - `SLIDER_PADDING` -- shared padding constant
+- Refactored `GradientSlider.tsx`: removed 50+ lines of inline logic, imports from sliderUtils
+- Refactored `ConvergingSlider.tsx`: removed 50+ lines of inline logic, imports from sliderUtils
+- Net: -198 lines, +127 lines across 7 files
+
+**#6 (C4) -- Fragile ASSET_CLASS_COLORS string-keyed map**
+- Replaced 30-entry `ASSET_CLASS_COLORS` Record (keyed by exact asset class name strings) with 5-entry `CATEGORY_COLORS` Record keyed by the `category` field from `AssetClassAssumption`
+- Chart data mapping now uses `a.category` instead of `a.assetClass` for color lookup
+- Eliminates silent color fallthrough when backend renames asset classes
+
+### Medium Severity (all fixed)
+
+**#1/#11 (C1/C5) -- Orphaned PeerPerformance types**
+- Deleted `PeerPerformancePoint` and `PeerPerformanceDataset` interfaces from `types.ts` (lines 46-62)
+- Confirmed via grep: not imported anywhere in the codebase (the similar types in ModelPortfolios use their own definitions via the API layer)
+
+**#5 (C3) -- Duplicated toPercent and PADDING**
+- Resolved as part of the sliderUtils.ts extraction (see #4 above)
+
+**#13 (C6) -- Generic error message**
+- Error messages now distinguish between assumptions vs views query failure
+
+### Low Severity (actionable items fixed)
+
+**#2 (C1) -- Unused isLastGroup variable**
+- Deleted the unused `const isLastGroup = groupIndex === groupedAssumptions.length - 1` from AssumptionsTable.tsx
+
+**#3 (C2) -- Stale PHASE1_CM_REQ comments**
+- Deleted `PHASE1_CM_REQ_001` and `PHASE1_CM_REQ_002` phase-tracking comments from CapitalMarketAssumptions.tsx
+
+### Remaining (not fixed -- low severity, cosmetic)
+
+| # | Finding | Reason not fixed |
+|---|---------|------------------|
+| 7 | Chart height hardcoded 650px | Cosmetic; no bug. Fix during design pass. |
+| 8 | Chart margins hardcoded | Cosmetic; no bug. Fix during design pass. |
+| 9 | Inline bg-[#1e1e2d] in OpalViewsTab select options | Cosmetic; theme variable cleanup. |
+| 10 | Inline minHeight 100px in ConvergingSlider | Cosmetic; layout constant cleanup. |
+
+## Verification
+- `tsc --noEmit` passes with zero errors after all changes
+- No emoji or non-ASCII characters in any modified code files (README.md excluded, docs only)
+- All changes scoped to `portal/src/pages/CapitalMarketAssumptions/` per task order constraint
