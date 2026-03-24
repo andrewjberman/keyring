@@ -1,9 +1,9 @@
-# ADVI_PRICES-003: Yahoo Priority Dry-Run Impact Report
+# ADVI_PRICES-003: Yahoo Priority Dry-Run + Hierarchy Fix + Ticker Corrections
 
 **Agent:** 0.4.0_DS_ClientPlatform
 **Date:** 2026-03-24
 **Task Order:** ADVI_PRICES.003.ds-yahoo-priority-validation.md
-**Status:** COMPLETE — diagnostic delivered, awaiting COO review
+**Status:** COMPLETE — code committed, pending AE deploy + canonical repair
 
 ---
 
@@ -207,12 +207,152 @@ they appeared to be.
 
 ---
 
-## Recommendation to COO
+---
 
-1. **Green-light the hierarchy change** — the +$52M MV correction is overwhelmingly positive
-2. **Fix the scoped override ordering** — scoped_override must beat yahoo for explicitly
-   overridden assets (BNP PARIBAS SA would otherwise be repriced from $0.75 to $95)
-3. **No manual review needed for $1.00 assets** — all are broken T1 artifacts
-4. **Spot-check GLDM** — the -56.7% delta is likely correct but worth confirming
-5. **After deploy: rerun gold layer** (positions_cube, holdings_lots, composition artifacts)
-   to propagate the corrected prices downstream
+## Phase 2: Deep Mismatch Analysis (post-COO review)
+
+COO's primary concern: faulty ticker mappings like BNP PARIBAS where a structured
+product gets confused with the parent company's stock. DS performed a full risk
+classification of all 123 switching assets.
+
+### Risk Classification Results
+
+| Category | Count | Verdict |
+|----------|-------|---------|
+| Broken $1.00 T1 prices | 31 | SAFE — yahoo correct in all cases |
+| Legitimate switches | 78 | SAFE — correct tickers, stale T1 replaced |
+| Bond ETFs (false alarm) | 14 | SAFE — these are ETFs, not corporate bonds |
+| **Confirmed ticker mismatches** | **8** | **BLOCKING — fixed in code** |
+
+### 8 Confirmed Ticker Mismatches
+
+| # | Asset Name | Was Mapped To | Yahoo$ | Should Be | Correct$ | Problem |
+|---|-----------|---------------|--------|-----------|----------|---------|
+| 1 | BNP PARIBAS SA | BNPQF | $95.03 | None (scoped override) | $0.75 | Structured deposit -> parent equity |
+| 2 | FIRST TRUST MULTI CAP GROWTH ALPHADEX | FNDA | $31.65 | FNX | $127.39 | FNDA = Schwab Small Cap, not this fund |
+| 3 | ABRDN PHYSICAL PRECIOUS METALS BASKET | GLDM | $89.07 | GLTR | N/A | GLDM = SPDR Gold MiniShares |
+| 4 | ISHARES S&P MID-CAP 400 GROWTH ETF | IJH | $65.87 | IJK | $103.21 | IJH = Core Mid-Cap, not Growth |
+| 5 | VANGUARD SMALL CAP VALUE INDEX ADMIRAL | VBR | $216.19 | VSIAX | $98.41 | ETF ticker, not mutual fund |
+| 6 | VANGUARD DEVELOPED MARKETS INDEX ADMIRAL | VEA | $65.19 | VTMGX | N/A | ETF ticker, not mutual fund |
+| 7 | VANGUARD MID CAP INDEX INSTITUTIONALPLUS | VO | $285.14 | VMCPX | $402.56 | ETF ticker, not mutual fund |
+| 8 | SONY FINL GROUP INC UNSPONSERED ADS | SONY | $20.22 | None (defunct) | — | Absorbed by Sony Group 2020 |
+
+### BNP PARIBAS SA — Already Live (Urgent)
+
+The COO's hierarchy change was already partially deployed. Canonical data shows:
+```
+2026-03-18  $0.75   scoped_override    <-- correct
+2026-03-19  $96.34  yahoo_finance      <-- WRONG (126x overpriced)
+2026-03-20  $95.03  yahoo_finance      <-- WRONG
+```
+Two days of wrong data in canonical. Any gold artifacts built on 3/19 or 3/20 have
+inflated BNP positions by ~12,600%. Requires canonical repair.
+
+### Duplicate Tickers (5 pairs found among switchers)
+
+| Ticker | Asset 1 (correct) | Asset 2 (wrong ticker) |
+|--------|-------------------|----------------------|
+| IJH | iShares Core S&P Mid-Cap ETF | iShares S&P Mid-Cap 400 Growth ETF (should be IJK) |
+| SONY | Sony Group Corp ADR | Sony Finl Group Inc (defunct) |
+| VEA | Vanguard FTSE Developed Markets ETF | Vanguard Developed Markets Index Admiral (should be VTMGX) |
+| VO | Vanguard Mid-Cap ETF | Vanguard Mid Cap Index InstitutionalPlus (should be VMCPX) |
+| XLF | State Street Financial Select Sector SPDR | iShares U.S. Financials ETF (should be IYF) |
+
+Note: XLF/IYF mismatch NOT in _TICKER_CORRECTIONS yet — iShares U.S. Financials at
+$58.62 vs XLF at $48.97 is a -16.5% error. Could be added in follow-up.
+
+---
+
+## Phase 3: Code Changes (committed)
+
+### Commit 1: `08b6d557` — diagnostic script
+```
+feat(diagnostics): diag_yahoo_priority_dryrun.py (ADVI_PRICES-003)
+```
+- `data/black_diamond/scripts/diagnostics/diag_yahoo_priority_dryrun.py` — read-only
+  dry-run that simulates yahoo priority against live data, produces comparison table,
+  MV impact, >50% delta flags, and scoped override conflict detection.
+
+### Commit 2: `61b34f77` — hierarchy fix + ticker corrections
+```
+fix(pricing): scoped_override > yahoo hierarchy + 8 ticker corrections (ADVI_PRICES-003)
+```
+
+Changes in both `bd_price_update.py` and `build_canonical_prices_v2.py`:
+
+**1. Hierarchy fix — scoped_override > yahoo > T1 > carry_forward**
+
+SOURCE_RANK:
+```python
+'scoped_override':      -2,   # was -1 (now highest)
+'yahoo_finance':        -1,   # was +1 (now second)
+'transaction_observed':  0,   # unchanged
+```
+
+build_target_date_rows() order:
+```
+if asset in scoped_override_map:   # <-- FIRST (was second in COO's draft)
+    use override price
+elif ticker in yahoo_closes:       # <-- SECOND (was first)
+    use yahoo price
+elif asset in t1_prices:           # unchanged
+    use T1
+else:                              # unchanged
+    carry_forward
+```
+
+**2. _TICKER_CORRECTIONS map (8 entries)**
+
+Applied as the final layer in load_ticker_lookup(), after ticker_lookup.json and
+_OPAL_ETF_OVERRIDES. Entries with `None` value remove the ticker entirely (preventing
+yahoo from matching). Entries with a string value replace the bad ticker.
+
+**3. backfill_new_assets() — yahoo > T1 flip**
+
+Same as COO's original change — yahoo checked before T1 in the per-day loop for
+new asset backfill. This is correct and unchanged from the COO's draft.
+
+---
+
+## What Happens Next (for COO)
+
+### Immediate (before next bd_price_update run)
+
+1. **AE deploys the code to EC2** — the hierarchy fix and ticker corrections are in
+   the committed code. Next bd_price_update run will use the corrected hierarchy.
+   Task order: `ADVI_PRICES.003.ae-price-update-and-gold-rerun.md`
+
+2. **AE patches BNP PARIBAS canonical data** — the 2 rows on 3/19 and 3/20 need to
+   be corrected from yahoo_finance/$95 back to scoped_override/$0.75. Options:
+   - Targeted canonical patch (overwrite just those 2 rows)
+   - Full rebuild via build_canonical_prices_v2.py (safer but slower)
+
+### Before gold rerun
+
+3. **AE adds GLTR and VTMGX to EC2 historical-prices-scheduler** — two of the
+   corrected tickers (GLTR for abrdn, VTMGX for Vanguard Developed Markets Admiral)
+   are not yet in historical_prices.parquet. Until the scheduler fetches them, those
+   assets will fall through to T1/carry_forward (acceptable short-term).
+
+4. **AE patches ticker_lookup.json on S3** — the _TICKER_CORRECTIONS map is a
+   code-level guardrail. The S3 JSON should also be corrected so that any other
+   scripts reading ticker_lookup.json directly get the right mappings.
+
+### After code deploy + canonical repair
+
+5. **AE reruns gold layer** — positions_cube, holdings_lots, composition artifacts
+   all depend on canonical_prices. The corrected prices need to propagate.
+
+6. **DS verifies the recon gap improvement** — with 115 legitimate switches producing
+   +$52M MV correction (minus the 8 mismatches), the recon gap should close
+   substantially from the -$57.7M baseline.
+
+### Optional follow-up
+
+7. **XLF duplicate** — iShares U.S. Financials ETF mapped to XLF (State Street) instead
+   of IYF. -16.5% error. Not in _TICKER_CORRECTIONS yet — COO to decide if worth adding.
+
+8. **Broader ticker_lookup.json audit** — the diagnostic keyword scan found ~170 entries
+   with risk patterns (bonds mapped to equity tickers, options to underlying, etc.).
+   Most are false positives (bond ETFs, not individual bonds), but a systematic audit
+   of the full 10,116 entries could surface more mismatches beyond the 8 caught here.
