@@ -1,0 +1,15 @@
+{
+  "project_code": "DEBT_1STRUN",
+  "macro_code": "DEBT",
+  "name": "First Technical Debt Sweep",
+  "description": "Full-org technical debt scan across all 4 pods and 3 shared services. Every RD, DS, DE, and AE agent scans their domain for 6 categories of debt: dead code, deprecated/superseded code, duplication/drift risk, hardcoded configuration, orphaned infrastructure, and stale error handling. DS and RD report to their pod's DE. AEs 0.5.0 and 0.6.0 report to 0.7.0_AE_CloudOps. 5 aggregate reports (4 DE + 1 AE) go to COO, who synthesizes for CTO + Andrew. Targeted cleanup task orders (.002+) issued from findings.",
+  "prds": [],
+  "status": "active",
+  "phase": "Phase 1: .001 scan task orders issued to all 27 agents (15 RD + 4 DS + 4 DE + 3 AE + 1 COO). Awaiting scan deliverables.",
+  "blocking": ".001 scan phase completion across all agents.",
+  "created": "2026-03-23",
+  "pods": ["0.1", "0.2", "0.3", "0.4"],
+  "pipeline": "all",
+  "thread_counter": 0,
+  "threads": []
+}
