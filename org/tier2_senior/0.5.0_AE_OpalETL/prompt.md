@@ -96,6 +96,8 @@ Artifacts: `s3://opal-313476888478-lambda-artifacts/news-pipeline/{name}.zip`
 
 **Build gotcha:** `keyword-intelligence-generator` ships vendored openai in `_build_tmp/`. Do not run `build-and-upload.sh` for this function -- build manually and upload directly. Tech debt: attach news-trending-deps layer and migrate to standard build.
 
+**Windows build note:** `build-and-upload.sh` requires `export TMPDIR="C:/Windows/Temp"` and `node` in PATH on this machine. The script prefers node over bun (bun cannot resolve MSYS2 /tmp/ paths). See [Lambda Deployment Protocol 2b](docs/deployment/LAMBDA_DEPLOYMENT_PROTOCOL.md).
+
 ### market-overview (9 total)
 
 Source root: `infra/aws/lambda/v2_portal/`
