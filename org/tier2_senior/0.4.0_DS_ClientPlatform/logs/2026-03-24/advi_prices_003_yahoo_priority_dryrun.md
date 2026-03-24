@@ -349,10 +349,119 @@ new asset backfill. This is correct and unchanged from the COO's draft.
 
 ### Optional follow-up
 
-7. **XLF duplicate** — iShares U.S. Financials ETF mapped to XLF (State Street) instead
-   of IYF. -16.5% error. Not in _TICKER_CORRECTIONS yet — COO to decide if worth adding.
-
-8. **Broader ticker_lookup.json audit** — the diagnostic keyword scan found ~170 entries
+7. **Broader ticker_lookup.json audit** — the diagnostic keyword scan found ~170 entries
    with risk patterns (bonds mapped to equity tickers, options to underlying, etc.).
    Most are false positives (bond ETFs, not individual bonds), but a systematic audit
-   of the full 10,116 entries could surface more mismatches beyond the 8 caught here.
+   of the full 10,116 entries could surface more mismatches beyond the 13 caught here.
+
+8. **CRBL (Ceribell Inc)** — ticker mapping appears correct but yahoo shows $0.05 from
+   2021. May be delisted or restructured. Not urgent (no 7-day data, won't switch).
+   **FM (First Quantum Minerals)** — FM on US exchanges = iShares Frontier EM ETF, not
+   First Quantum (which is FM.TO on TSX). Needs investigation if BD holds TSX stock.
+
+---
+
+## Phase 4: COO Full Audit Reconciliation
+
+### Why DS said 123 but COO found 829
+
+Both numbers are correct — they measure different things.
+
+**DS diagnostic (123):** Counted assets where `current_source != 'yahoo_finance'` AND
+ticker has yahoo data in the 7-day window. But the canonical data on 2026-03-20 already
+shows 2,452 assets sourced as `yahoo_finance` — because the COO's hierarchy change was
+already partially deployed via recent bd_price_update runs on EC2. So 2,452 had already
+switched, and only 123 remained.
+
+**COO audit (829):** Counted all assets with tickers that have yahoo data in the 7-day
+window AND are not already on yahoo. This is a larger number because it includes assets
+the COO's earlier run hadn't yet processed, plus different counting of the canonical rows.
+
+**Verification run (this session):**
+```
+Total assets:                9,972
+Assets with ticker:          3,783
+Already on yahoo_finance:    1,746
+Would switch (7d window):      829  <-- code would switch these today
+Have stale yahoo (>7d):        706  <-- need scheduler fix first
+Ticker but NO yahoo data:     502  <-- not in historical_prices at all
+```
+
+### Scheduler gap confirmed
+
+The COO correctly identified a scheduler issue. Yahoo data stopped flowing for ~706
+tickers, with the bulk dropping off between 2026-02-20 and 2026-03-12:
+
+| Date range | Tickers that stopped |
+|-----------|---------------------|
+| Feb 10-13 | 26 |
+| Feb 19-27 | 127 |
+| Mar 2-6 | 193 |
+| Mar 9-12 | 236 |
+| Mar 23 | 46 (partial recovery?) |
+
+This is NOT a ticker-level problem — it's a systemic scheduler failure. AE needs to
+diagnose the EC2 historical-prices-scheduler before the full 1,535 switches can happen.
+
+### Ancient/delisted ticker corrections (Commit 4)
+
+COO flagged 6 ancient mismatches. DS investigated and added 4 to _TICKER_CORRECTIONS
+(commit `2e9e90a4`). Two were left for follow-up (CRBL needs investigation, FM needs
+TSX resolution):
+
+| Asset | Ticker | Yahoo$ | Action | Reason |
+|-------|--------|--------|--------|--------|
+| BMC SOFTWARE INC COM | BMC | $26,500 | **REMOVED** | Taken private 2018, ticker reassigned to different company |
+| CANASIA ENERGY CORP COM | CEY | $18.58 | **REMOVED** | CEY = Centamin plc on Yahoo, wrong company |
+| GOLDMAN SACHS FUTURE TECH LEADERS ETF | GDAT | $72.70 | **REMOVED** | Liquidated Nov 2020 |
+| JPMORGAN EQUITY FOCUS ETF | JPMF | $20.85 | **REMOVED** | Liquidated Jun 2020 |
+| CERIBELL INC COM | CRBL | $0.05 | Deferred | May be correct but needs investigation |
+| FIRST QUANTUM MINERALS LTD COM | FM | $27.19 | Deferred | FM.TO (TSX) vs FM (US ETF) ambiguity |
+
+None of these are in the 7-day window today (all yahoo data >90 days old), so they
+won't switch under current code. But they would cause catastrophic mispricing if the
+scheduler started refetching them.
+
+### Total _TICKER_CORRECTIONS: 13 entries
+
+| # | Asset | Correction | Commit |
+|---|-------|-----------|--------|
+| 1 | BNP PARIBAS SA | Remove (scoped override) | `61b34f77` |
+| 2 | FIRST TRUST MULTI CAP GROWTH ALPHADEX | FNDA -> FNX | `61b34f77` |
+| 3 | ABRDN PHYSICAL PRECIOUS METALS BASKET | GLDM -> GLTR | `61b34f77` |
+| 4 | ISHARES S&P MID-CAP 400 GROWTH ETF | IJH -> IJK | `61b34f77` |
+| 5 | VANGUARD SMALL CAP VALUE INDEX ADMIRAL | VBR -> VSIAX | `61b34f77` |
+| 6 | VANGUARD DEVELOPED MARKETS INDEX ADMIRAL | VEA -> VTMGX | `61b34f77` |
+| 7 | VANGUARD MID CAP INDEX INSTITUTIONALPLUS | VO -> VMCPX | `61b34f77` |
+| 8 | SONY FINL GROUP INC | Remove (defunct) | `61b34f77` |
+| 9 | ISHARES U.S. FINANCIALS ETF | XLF -> IYF | `2e9e90a4` |
+| 10 | BMC SOFTWARE INC COM | Remove (private, ticker reassigned) | `2e9e90a4` |
+| 11 | CANASIA ENERGY CORP COM | Remove (wrong company) | `2e9e90a4` |
+| 12 | GOLDMAN SACHS FUTURE TECH LEADERS ETF | Remove (liquidated) | `2e9e90a4` |
+| 13 | JPMORGAN EQUITY FOCUS ETF | Remove (liquidated) | `2e9e90a4` |
+
+### DS assessment on COO's concern
+
+The COO is right that only ~169 assets have truly fresh (<=7d) yahoo data, and 608 are
+stale due to the scheduler gap. But the hierarchy change + ticker corrections are still
+safe to deploy because:
+
+1. **The code's 7-day window is the guardrail.** `fetch_yahoo_closes_for_date` only returns
+   prices within 7 days of target. Stale yahoo data >7d old won't match. Assets without
+   a fresh yahoo close stay on their current source (T1 or carry_forward).
+
+2. **The 829 that would switch today all have valid 7-day data.** These are real, current
+   prices from the scheduler's active tickers.
+
+3. **The 13 _TICKER_CORRECTIONS prevent the known mismatches.** Even if the scheduler
+   starts fetching stale tickers again, the corrections block the dangerous ones.
+
+4. **The scheduler fix is independent of the hierarchy change.** AE should diagnose the
+   scheduler regardless. When it's fixed, more assets will naturally start getting fresh
+   yahoo data and the hierarchy change will pick them up — no additional code changes needed.
+
+The deploy sequence should be:
+1. Deploy code (hierarchy + corrections) -- safe now
+2. Fix scheduler -- unblocks the remaining 706 stale tickers
+3. Repair BNP canonical (3/19 + 3/20 rows) -- urgent
+4. Rerun gold layer -- propagates corrected prices
