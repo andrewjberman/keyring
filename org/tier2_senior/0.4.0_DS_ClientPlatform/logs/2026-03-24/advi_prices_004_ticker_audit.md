@@ -122,3 +122,20 @@ removed (None) -- asset will stay on T1/carry_forward.
 The 505 NO_DATA assets (tickers not in historical_prices at all) are a separate
 concern -- these are tickers the scheduler has never fetched. AE should review
 whether they should be added to the scheduler's ticker universe.
+
+---
+
+## Yahoo-Safe Ticker List (2,880 tickers)
+
+This is the **definitive list** of tickers verified safe for the yahoo priority
+hierarchy. Includes:
+- Tickers already proven working (currently sourced as yahoo_finance in canonical)
+- Tickers that would switch and passed the yfinance .info audit (VERIFIED)
+- Corrected tickers from _TICKER_CORRECTIONS (the correction target, not the original)
+
+AE should use this list for historical_prices backfill and scheduler configuration.
+Any ticker NOT on this list should be treated as unverified and excluded from yahoo
+pricing until audited.
+
+**File:** `data/black_diamond/config/yahoo_safe_tickers.txt`
+(committed alongside this log for AE to reference directly)
