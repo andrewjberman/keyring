@@ -96,7 +96,8 @@ Bare `except:` catches `KeyboardInterrupt`, `SystemExit`, and `GeneratorExit` --
 | `market-regime-classifier/lambda_function.py` | 458 | Yield spread score calculation | `except (ValueError, TypeError, KeyError):` |
 | `market-regime-classifier/lambda_function.py` | 885 | Date interpolation | `except (ValueError, TypeError, KeyError):` |
 | `fear-greed-fetcher/lambda_function.py` | 119 | HTTP error body read | `except Exception:` |
-| `news_ingestion_scheduler/lambda_function.py` | 209, 297 | Date parsing (2 occurrences) | `except (ValueError, TypeError):` |
+| `news_ingestion_scheduler/lambda_function.py` | 209 | Date parsing (RSS block) | `except (ValueError, TypeError):` |
+| `news_ingestion_scheduler/lambda_function.py` | 297 | Date parsing (NewsAPI block) | **MISSED** -- deeper indentation, `replace_all` did not match. Fixed by 0.1.0_DT in `4030b211`. |
 | `semantic-news-layer3-curation/lambda_function.py` | 31 | numpy optional import | `except ImportError:` |
 
 ### 6. Unused Imports and Dead Code (DEBT_1STRUN-007)
