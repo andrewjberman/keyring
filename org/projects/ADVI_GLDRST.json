@@ -28,11 +28,16 @@
       "path": "docs/architecture/GLDRST_ROLLBACK_PLAN.md",
       "label": "Rollback Plan — per-phase procedures, scripts, decision framework (2026-03-26)",
       "date": "2026-03-26"
+    },
+    {
+      "path": "docs/architecture/GLDRST_COO_BRIEFING_INTEGRATION_TESTING.md",
+      "label": "COO Briefing — Phase 5 integration testing (4 TOs: .011-.014) (2026-03-26)",
+      "date": "2026-03-26"
     }
   ],
   "status": "active",
-  "phase": "Phase 1 DONE (canonical exclusions). 10 TOs issued across 4 phases: P2 pre-compute (.001-.003), P3 S3 migration (.004-.010), P3a TX date fix (.005), P3b manifest (.006). Execution: .001+.002 parallel now, .004 after .002, .007-.008 after .009, .010 last.",
-  "blocking": "AE .002 gold rerun (immediate). DS .001 pre-compute + .004 S3 migration (parallel).",
+  "phase": "Phase 1 DONE (canonical exclusions). 14 TOs issued across 6 phases: P2 pre-compute (.001-.002), P3 S3 migration (.004-.006), P3b Lambda+CF cutover (.007-.008), P4 validation rerun (.009), P5 integration testing (.011-.014), P6 cleanup (.010). Execution: .001+.002 parallel now.",
+  "blocking": "AE .002 gold rerun (immediate). DS .001 pre-compute (parallel).",
   "created": "2026-03-19",
   "pods": ["0.4", "0.6", "0.7"],
   "pipeline": "bd-pipeline",
