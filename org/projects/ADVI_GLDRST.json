@@ -18,6 +18,16 @@
       "path": "org/tier2_senior/0.4.0_DE_ClientPlatform/logs/2026-03-26/advi_mvplvl_010_l2_composition_mix_session.md",
       "label": "DE Pre-Compute Recommendation — quarterly views at all levels (2026-03-26)",
       "date": "2026-03-26"
+    },
+    {
+      "path": "docs/architecture/GLDRST_BLAST_RADIUS_ASSESSMENT.md",
+      "label": "Blast Radius Assessment — component inventory, failure modes, risk matrix (2026-03-26)",
+      "date": "2026-03-26"
+    },
+    {
+      "path": "docs/architecture/GLDRST_ROLLBACK_PLAN.md",
+      "label": "Rollback Plan — per-phase procedures, scripts, decision framework (2026-03-26)",
+      "date": "2026-03-26"
     }
   ],
   "status": "active",
