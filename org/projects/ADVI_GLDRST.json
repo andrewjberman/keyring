@@ -2,17 +2,27 @@
   "project_code": "ADVI_GLDRST",
   "macro_code": "ADVI",
   "name": "BD Gold Layer S3 Restructure",
-  "description": "Restructure the BD pipeline S3 layout to enforce medallion boundaries (silver/intermediate/gold) and organizational conventions (dimensions/timeseries/artifacts/per-entity). 45+ S3 keys move. 13 gold scripts + 3 Lambdas + 1 CloudFront behavior updated. Bundled: TX snapshot date anchor fix, shared lib/classification.py module (Option B selected), post-run manifest. Copy-then-switch migration with rollback at every phase.",
+  "description": "Restructure the BD pipeline S3 layout to enforce medallion boundaries (silver/intermediate/gold) and organizational conventions (dimensions/timeseries/artifacts/per-entity). 45+ S3 keys move. 13 gold scripts + 3 Lambdas + 1 CloudFront behavior updated. Bundled: TX snapshot date anchor fix, shared lib/classification.py module (Option B selected), post-run manifest. Copy-then-switch migration with rollback at every phase. EXPANDED 2026-03-26: canonical exclusion unification (lib/exclusions.py), pre-computed quarterly views at all drill levels (N1/L2/L3), methodology consistency (single AUA source of truth).",
   "prds": [
     {
       "path": "docs/architecture/GOLD_LAYER_RESTRUCTURE_PROPOSAL.md",
       "label": "Gold Layer Restructure Proposal (DS submitted, CTO approved 2026-03-19)",
       "date": "2026-03-19"
+    },
+    {
+      "path": "org/tier2_senior/0.4.0_DS_ClientPlatform/logs/2026-03-26/advi_gldrst_canonical_methodology_and_precompute.md",
+      "label": "Canonical Methodology + Pre-Compute Views (DS session log, 2026-03-26)",
+      "date": "2026-03-26"
+    },
+    {
+      "path": "org/tier2_senior/0.4.0_DE_ClientPlatform/logs/2026-03-26/advi_mvplvl_010_l2_composition_mix_session.md",
+      "label": "DE Pre-Compute Recommendation — quarterly views at all levels (2026-03-26)",
+      "date": "2026-03-26"
     }
   ],
   "status": "active",
-  "phase": "Phase 0: CTO approved (2026-03-19). All 4 conditions resolved by DS. COO decomposition pending. DS Condition 2 resolved (Option B: lib/classification.py canonical source, cp to opal-partners-data/etf_classifier.py at DT build time -- NOT to _shared/ which is Yang-only). BKSCMP paths already use GLDRST layout.",
-  "blocking": "COO task order issuance. DS combined session: GLDRST path changes + CLSUNI WS6 (06b classification calls) must land together for one combined AE gold run.",
+  "phase": "Phase 1: Canonical exclusion unification COMPLETE (lib/exclusions.py, ghost exclusion in 05b/06b/12). COO task orders issued for Phase 2 (pre-compute expansion) and Phase 3 (gold rerun).",
+  "blocking": "AE gold rerun (Phase 2 prerequisite). DS pre-compute expansion (Phase 2).",
   "created": "2026-03-19",
   "pods": ["0.4", "0.6", "0.7"],
   "pipeline": "bd-pipeline",

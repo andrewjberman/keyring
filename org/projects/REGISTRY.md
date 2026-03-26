@@ -16,10 +16,9 @@ the surface area; the project code identifies the specific initiative.
 
 | Project Code | Macro | Project Name | Phase | Pods | Blocking | PRDs |
 |---|---|---|---|---|---|---|
-| `ADVI_GLDPRE` | `ADVI` | Gold Layer Pre-Run (4-Class + AUA Reconciliation) | Phase 3: WS1+WS2+WS3 code COMPLETE. Lambda deployed (partners-api-v1.8.0). Portal DEV fixes committed (types.ts + 4-class + ClientsTab.tsx). Phase 4 (full gold rerun) pending AE execution. | 0.4, 0.6 | AE GLDPRE.005 Phase 4 (full gold rerun). DT GLDPRE.006 (portal merge, gated on gold rerun). | GLDPRE PRD |
-| `ADVI_BKSCMP` | `ADVI` | Books Tab Per-Class Composition Artifacts | DS .001 COMPLETE. RD .002 COMPLETE (6266d17). DT .003 COMPLETE (partners-api-v1.5.0). AE .004: script 12 S3 upload folded into GLDPRE.005 Phase 2. | 0.4, 0.6 | AE: script 12 upload + gold run validation (via GLDPRE.005). | Books Composition PRD |
-| `ADVI_CLSPT2` | `ADVI` | BD Classification Phase 2 | DS .001 COMPLETE (OpenAI impl). AE .002 COMPLETE (3,855 securities classified, up from 116). DS .003 COMPLETE (script 12 ETFClassifier migration). [*runtime] | 0.4, 0.6 | AE: gold rerun to validate classification parity. | BD Classification Phase 2 PRD |
-| `ADVI_GLDRST` | `ADVI` | BD Gold Layer S3 Restructure | Phase 0: CTO approved (2026-03-19). DS Condition 2 resolved (Option B). | 0.4, 0.6, 0.7 | COO task order issuance. | Gold Layer Restructure Proposal |
+| `ADVI_MVPLVL` | `ADVI` | Advisor Intelligence MVP Polish | .010 DS+DE complete. L2 composition routed via CloudFront. Mix toggle rich. Tax ghost exclusion applied. Findings fed into GLDRST. | 0.4, 0.6 | AE gold rerun (subsumed by GLDRST.002). | MVPLVL PRD |
+| `ADVI_GLDRST` | `ADVI` | BD Gold Layer S3 Restructure | Phase 1 DONE: canonical exclusions (lib/exclusions.py). Phase 2: pre-compute L3 views + gold rerun. 3 TOs issued (.001 DS, .002 AE, .003 DE). | 0.4, 0.6, 0.7 | AE gold rerun (.002), DS pre-compute (.001). | Gold Layer Restructure Proposal, DS+DE session logs 2026-03-26 |
+| `DEBT_1STRUN` | `DEBT` | First Technical Debt Sweep | Phase 1: 20/27 scans COMPLETE. Remaining 7: COO aggregate, DE 0.2.0/0.3.0/0.4.0, AE 0.7.0, RD 0.1.2/0.4.2. | 0.1-0.4, 0.5-0.7 | 7 remaining scan TOs. | — |
 
 ---
 
@@ -39,8 +38,12 @@ session log. Performance baseline: CLSUNI ~36% unedited, CLSPT2 ~67% unedited.
 
 | Project Code | Macro | Project Name | Completed | Notes |
 |---|---|---|---|---|
+| `ADVI_PRICES` | `ADVI` | BD Canonical Pricing and Valuation Reconciliation | 2026-03-25 | All 8 task orders complete. Phantom fix ($296M->-$57.7M). 32 ticker corrections. Backfill +143K rows. Canonical 16.6% yahoo. Scheduler fix deployed (randomized, 50/batch, retry). Structural gap -3.6% (by-design). |
+| `ADVI_GLDPRE` | `ADVI` | Gold Layer Pre-Run (4-Class + AUA Reconciliation) | 2026-03-25 | All task orders complete. Gold reruns verified. Portal-v2.1.17 live (52-commit merge 03-23). AUA recon: -3.6% structural. 4-class taxonomy end-to-end. |
+| `ADVI_CLSPT2` | `ADVI` | BD Classification Phase 2 | 2026-03-25 | All 3 task orders complete. 3,855 securities classified. ETFClassifier in scripts 06b+12. Portal PROD deployed with taxonomy types. [*runtime ~67% unedited] |
+| `ADVI_BKSCMP` | `ADVI` | Books Tab Per-Class Composition Artifacts | 2026-03-25 | All 4 task orders complete. Script 12 deployed to S3, gold run verified (03-25 incremental). partners-api-v1.5.0 deployed. Portal DEV->PROD merge tracked under GLDPRE.006. |
 | `ADVI_MVP318` | `ADVI` | Advisor Intelligence MVP Finalization | 2026-03-20 | WS1-WS5 complete. bd-v2.19.0-v2.19.2, partners-api-v1.4.0 deployed. Gold rerun subsumed by GLDPRE. |
-| `ADVI_MVPLVL` | `ADVI` | Advisor Intelligence MVP Polish | 2026-03-20 | All task orders complete (.007 delivered under MVP318.001, .008 at 14b3be3d). 5 threads complete. |
+| `ADVI_MVPLVL` | `ADVI` | Advisor Intelligence MVP Polish | 2026-03-20 | Phase 1 complete (.001-.009). Reopened 2026-03-26 for L2 composition, Mix toggle, tax liability alignment. |
 | `ADVI_ADVTV2` | `ADVI` | ADV v2 — Architect Attribution | 2026-03-20 | DS 001 committed (8ef1da9b). EC2 deployed (72c03d2a). Gold rerun subsumed by GLDPRE. |
 | `ADVI_MIXV2` | `ADVI` | Asset Mix View V2 | 2026-03-20 | All DS/DE/DT work done. AE 003 gold rerun subsumed by GLDPRE. partners-api-v1.3.0 deployed. |
 | `DRFR_PTMCH` | `DRFR` | Portal Time Machine | 2026-03-20 | P1-P5 deployed (yang-v2.3.1, bd-v2.18.2, news-v2.7.0, data-refresh-v2.2.0). P6a deployed. P6b-d deprecated. |
