@@ -16,7 +16,6 @@ the surface area; the project code identifies the specific initiative.
 
 | Project Code | Macro | Project Name | Phase | Pods | Blocking | PRDs |
 |---|---|---|---|---|---|---|
-| `ADVI_MVPLVL` | `ADVI` | Advisor Intelligence MVP Polish | .010 DS+DE complete. L2 composition routed via CloudFront. Mix toggle rich. Tax ghost exclusion applied. Findings fed into GLDRST. | 0.4, 0.6 | AE gold rerun (subsumed by GLDRST.002). | MVPLVL PRD |
 | `ADVI_GLDRST` | `ADVI` | BD Gold Layer S3 Restructure | P1 DONE (canonical exclusions). 10 TOs issued: .001-.003 (pre-compute), .004-.006 (DS S3 migration + TX fix + manifest), .007-.008 (DT Lambda + CloudFront), .009-.010 (AE rerun + cleanup). | 0.4, 0.6, 0.7 | AE .002 (gold rerun). DS .001+.004 (pre-compute + S3 migration). | Restructure Proposal, DS+DE session logs 2026-03-26 |
 | `DEBT_1STRUN` | `DEBT` | First Technical Debt Sweep | Phase 1: 20/27 scans COMPLETE. Remaining 7: COO aggregate, DE 0.2.0/0.3.0/0.4.0, AE 0.7.0, RD 0.1.2/0.4.2. | 0.1-0.4, 0.5-0.7 | 7 remaining scan TOs. | — |
 
@@ -43,7 +42,7 @@ session log. Performance baseline: CLSUNI ~36% unedited, CLSPT2 ~67% unedited.
 | `ADVI_CLSPT2` | `ADVI` | BD Classification Phase 2 | 2026-03-25 | All 3 task orders complete. 3,855 securities classified. ETFClassifier in scripts 06b+12. Portal PROD deployed with taxonomy types. [*runtime ~67% unedited] |
 | `ADVI_BKSCMP` | `ADVI` | Books Tab Per-Class Composition Artifacts | 2026-03-25 | All 4 task orders complete. Script 12 deployed to S3, gold run verified (03-25 incremental). partners-api-v1.5.0 deployed. Portal DEV->PROD merge tracked under GLDPRE.006. |
 | `ADVI_MVP318` | `ADVI` | Advisor Intelligence MVP Finalization | 2026-03-20 | WS1-WS5 complete. bd-v2.19.0-v2.19.2, partners-api-v1.4.0 deployed. Gold rerun subsumed by GLDPRE. |
-| `ADVI_MVPLVL` | `ADVI` | Advisor Intelligence MVP Polish | 2026-03-20 | Phase 1 complete (.001-.009). Reopened 2026-03-26 for L2 composition, Mix toggle, tax liability alignment. |
+| `ADVI_MVPLVL` | `ADVI` | Advisor Intelligence MVP Polish | 2026-03-26 | Phase 1 (.001-.009) complete 03-20. Reopened 03-26 for .010 (L2 composition, Mix toggle, tax ghost exclusion). DS+DE .010 delivered. AE .010 gold rerun subsumed by GLDRST.002. Closed. |
 | `ADVI_ADVTV2` | `ADVI` | ADV v2 — Architect Attribution | 2026-03-20 | DS 001 committed (8ef1da9b). EC2 deployed (72c03d2a). Gold rerun subsumed by GLDPRE. |
 | `ADVI_MIXV2` | `ADVI` | Asset Mix View V2 | 2026-03-20 | All DS/DE/DT work done. AE 003 gold rerun subsumed by GLDPRE. partners-api-v1.3.0 deployed. |
 | `DRFR_PTMCH` | `DRFR` | Portal Time Machine | 2026-03-20 | P1-P5 deployed (yang-v2.3.1, bd-v2.18.2, news-v2.7.0, data-refresh-v2.2.0). P6a deployed. P6b-d deprecated. |

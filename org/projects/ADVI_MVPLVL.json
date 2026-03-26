@@ -11,11 +11,13 @@
     }
   ],
   "status": "complete",
-  "phase": "COMPLETE. All task orders done (.007 delivered under MVP318.001, .008 at 14b3be3d). All 5 threads complete.",
-  "blocking": "",
+  "phase": "Complete. DS .010 + DE .010 delivered. AE .010 gold rerun subsumed by ADVI_GLDRST.002 (same scope, broader). Closed 2026-03-26.",
+  "blocking": "none",
+  "closed": "2026-03-26",
   "created": "2026-03-13",
   "pods": [
-    "0.4"
+    "0.4",
+    "0.6"
   ],
   "pipeline": "bd-pipeline",
   "thread_counter": 5,
