@@ -17,7 +17,7 @@ the surface area; the project code identifies the specific initiative.
 | Project Code | Macro | Project Name | Phase | Pods | Blocking | PRDs |
 |---|---|---|---|---|---|---|
 | `ADVI_MVPLVL` | `ADVI` | Advisor Intelligence MVP Polish | .010 DS+DE complete. L2 composition routed via CloudFront. Mix toggle rich. Tax ghost exclusion applied. Findings fed into GLDRST. | 0.4, 0.6 | AE gold rerun (subsumed by GLDRST.002). | MVPLVL PRD |
-| `ADVI_GLDRST` | `ADVI` | BD Gold Layer S3 Restructure | Phase 1 DONE: canonical exclusions (lib/exclusions.py). Phase 2: pre-compute L3 views + gold rerun. 3 TOs issued (.001 DS, .002 AE, .003 DE). | 0.4, 0.6, 0.7 | AE gold rerun (.002), DS pre-compute (.001). | Gold Layer Restructure Proposal, DS+DE session logs 2026-03-26 |
+| `ADVI_GLDRST` | `ADVI` | BD Gold Layer S3 Restructure | P1 DONE (canonical exclusions). 10 TOs issued: .001-.003 (pre-compute), .004-.006 (DS S3 migration + TX fix + manifest), .007-.008 (DT Lambda + CloudFront), .009-.010 (AE rerun + cleanup). | 0.4, 0.6, 0.7 | AE .002 (gold rerun). DS .001+.004 (pre-compute + S3 migration). | Restructure Proposal, DS+DE session logs 2026-03-26 |
 | `DEBT_1STRUN` | `DEBT` | First Technical Debt Sweep | Phase 1: 20/27 scans COMPLETE. Remaining 7: COO aggregate, DE 0.2.0/0.3.0/0.4.0, AE 0.7.0, RD 0.1.2/0.4.2. | 0.1-0.4, 0.5-0.7 | 7 remaining scan TOs. | — |
 
 ---
