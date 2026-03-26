@@ -1,0 +1,21 @@
+{
+  "project_code": "ADVI_TICKID",
+  "macro_code": "ADVI",
+  "name": "Ticker Resolution and Holdings Enrichment Pipeline",
+  "description": "BD feed provides ticker=None for ~80% of non-Opal securities. Build a ticker resolution table (asset_name -> ticker), enrich holdings_lots at build time (script 03 join), backfill bd-securities name_aliases, and extend detect_new_securities for ongoing coverage. Fixes the systemic 'Other' misclassification caused by ETFClassifier Layer 1 failure on tickerless holdings.",
+  "prds": [
+    {
+      "path": "docs/architecture/ADVI_TICKID_PRD.md",
+      "label": "Ticker Resolution PRD (CTO approved 2026-03-26)",
+      "date": "2026-03-26"
+    }
+  ],
+  "status": "active",
+  "phase": "Phase 0: CTO approved. Immediate partial fix deployed (ETFClassifier asset_name_raw indexing, commit 0c0fdb28). COO task order decomposition pending.",
+  "blocking": "COO task order issuance.",
+  "created": "2026-03-26",
+  "pods": ["0.4"],
+  "pipeline": "bd-pipeline",
+  "thread_counter": 0,
+  "threads": []
+}
