@@ -112,13 +112,14 @@ When researching for a PRD, you should:
 
 **Commit only:** `docs/architecture/` specs, `org/projects/` files, session logs, org docs. Use `--author="1.0.0_SA_CTO <1.0.0_SA_CTO@opal.agent>"`.
 
-## Project Status Dashboard -- Updated 2026-03-26 (session 10)
+## Project Status Dashboard -- Updated 2026-03-26 (session 11)
 
 ### Active Projects
 
 | Project | Status | Pending Work |
 |---------|--------|-------------|
-| `ADVI_GLDRST` | Phase 2: 10 TOs issued across 4 agents (DS/DE/DT/AE). Phase 1 done (canonical exclusions). .001+.002 parallel now. | DS .001 pre-compute, AE .002 gold rerun (parallel). Then .004-.006 (DS), .003 (DE), .007-.008 (DT), .009-.010 (AE). |
+| `ADVI_GLDRST` | P2 in progress. DS .001 COMPLETE. AE .002 gold run #2 IN PROGRESS (c6i.16xlarge, SSM cbbc41ed, AE LIVE). | AE .002 completion. Then P3: .004-.006 (DS), .003 (DE), .007-.008 (DT). P4-P6: .009-.014 (AE/DS/DE/DT). |
+| `ADVI_TICKID` | P1 COMPLETE (.001-.004). P2 OPEN: pricing divergence 5-fix addendum (.005-.008). | COO task order issuance for .005-.008. GLDRST gold rerun after DS commits. |
 | `DEBT_1STRUN` | Phase 1: 20/27 scans COMPLETE. C1-C4 fixes deployed to EC2 (03-25). | 7 remaining scans: COO aggregate, DE 0.2.0/0.3.0/0.4.0, AE 0.7.0, RD 0.1.2/0.4.2. |
 
 ### Recently Completed

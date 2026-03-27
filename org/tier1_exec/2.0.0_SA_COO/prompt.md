@@ -108,13 +108,14 @@ You do NOT produce architecture specs (CTO does). You DO align, route, and track
 
 **Commit only:** Session logs, org docs. Use `--author="2.0.0_SA_COO <2.0.0_SA_COO@opal.agent>"`.
 
-## Pod Delivery Dashboard -- Updated 2026-03-26 (COO startup reconciliation)
+## Pod Delivery Dashboard -- Updated 2026-03-26 (COO session 3 startup reconciliation)
 
 ### Active Projects
 
 | Project | Status | Pending Work |
 |---------|--------|-------------|
-| `ADVI_GLDRST` | Phase 2: 10 TOs issued (DS .001/.004/.005/.006, DE .003, DT .007/.008, AE .002/.009/.010). Phase 1 done. | .001+.002 parallel now. .004 after .002. .007-.008 after .009. .010 last. |
+| `ADVI_GLDRST` | P2 in progress. DS .001 COMPLETE (pre-computed views 03-26). AE .002 PENDING (gold run #2 cancelled, needs re-dispatch). 12 TOs STAGED (P3-P6). | AE .002 gold rerun re-dispatch. Then P3: .004-.006 (DS), .003 (DE), .007-.008 (DT). P4-P6: .009-.014 (AE/DS/DE/DT). |
+| `ADVI_TICKID` | P2: .005-.007 COMPLETE (feedback bridge 76c26f33, sweep-unlisted da272777, silver override 0253186a). .008 PENDING (gated on gold run, conditional). | DT push (3 commits on CLOUD). AE execution sequence (resolve_tickers --upload -> sweep -> backfill -> canonical rebuild -> gold rerun). DS .008 gate after gold. |
 | `DEBT_1STRUN` | Phase 1: 20/27 scans COMPLETE. Code deployed 03-25. | 7 remaining scans: COO aggregate, DE 0.2.0/0.3.0/0.4.0, AE 0.7.0, RD 0.1.2/0.4.2. |
 
 ### Completed since last COO session
@@ -131,17 +132,17 @@ You do NOT produce architecture specs (CTO does). You DO align, route, and track
 
 | Agent | Last Known Work | Status |
 |-------|----------------|--------|
-| 0.4.0_DE | MVPLVL.010 L2 composition + Mix toggle (2026-03-26). 1 pending TO (DEBT_1STRUN.001.scan). GLDRST.003 blocked on DS .001. | Last log 2026-03-26 |
-| 0.4.0_DT | Portal PROD deploy CI pipeline + auth session timeout (2026-03-23). 1 pending TO (deployment_map). GLDRST.007+.008 blocked on DS .004. | Last log 2026-03-23 |
-| 0.4.0_DS | GLDRST canonical methodology + pre-compute analysis (2026-03-26). 4 pending TOs (GLDRST .001/.004/.005/.006). | Last log 2026-03-26 |
-| 0.4.2_RD | MVPLVL.009 mix rendering verified (2026-03-23). 2 pending TOs (DEBT_1STRUN.001.scan, page_inventory). | Last log 2026-03-23 |
+| 0.4.0_DE | MVPLVL.010 L2 composition + Mix toggle delivered (2026-03-26). 1 pending TO (DEBT_1STRUN.001.scan). 2 GLDRST TOs STAGED (.003, .012). | Last log 2026-03-26 |
+| 0.4.0_DT | Portal PROD deploy CI pipeline + auth session timeout (2026-03-23). 1 pending TO (deployment_map). 3 GLDRST TOs STAGED (.007, .008, .013). | Last log 2026-03-23 |
+| 0.4.0_DS | GLDRST .001 COMPLETE. TICKID P2 .005-.007 COMPLETE (3 commits). .008 PENDING (gated). LIVE, standing by. | Last log 2026-03-26, LIVE |
+| 0.4.2_RD | MVPLVL.009 mix rendering verified (2026-03-23). 2 pending TOs (DEBT_1STRUN.001.scan, page_inventory). No GLDRST TOs. | Last log 2026-03-23 |
 
 ### Shared Services -- Status as of 2026-03-26
 
 | Agent | Last Known Work | Pending |
 |-------|----------------|---------|
 | 0.5.0_AE_OpalETL | DEBT_1STRUN scan + fix + deploy (2026-03-24) | infrastructure_inventory |
-| 0.6.0_AE_PartnerETL | MVPLVL.010 S3 deploy complete, gold run paused (2026-03-26) | GLDRST.002 gold rerun, GLDRST.009+.010 (blocked), infrastructure_inventory |
+| 0.6.0_AE_PartnerETL | GLDRST.002 gold run #2 cancelled, needs re-dispatch. AE LIVE, awaiting instructions. | GLDRST.002 PENDING (needs re-dispatch). 3 GLDRST TOs STAGED (.009, .010, .014). infrastructure_inventory pending. |
 | 0.7.0_AE_CloudOps | APISCP.007 dynamo patch + CF cache (2026-03-10) | DEBT_1STRUN.001.scan, infrastructure_inventory |
 
 **NOTE:** This dashboard is corrected on every COO startup. Do not treat it as
