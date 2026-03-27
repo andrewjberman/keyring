@@ -34,27 +34,11 @@ from datetime import datetime, timezone
 from pathlib import Path
 from contextlib import contextmanager
 
-# Portable file locking (Unix: fcntl, Windows: msvcrt)
-if sys.platform == "win32":
-    import msvcrt
-
-    def _lock_file(f, exclusive=False):
-        msvcrt.locking(f.fileno(), msvcrt.LK_LOCK if exclusive else msvcrt.LK_LOCK, 1)
-
-    def _unlock_file(f):
-        try:
-            f.seek(0)
-            msvcrt.locking(f.fileno(), msvcrt.LK_UNLCK, 1)
-        except OSError:
-            pass
-else:
-    import fcntl
-
-    def _lock_file(f, exclusive=False):
-        fcntl.flock(f, fcntl.LOCK_EX if exclusive else fcntl.LOCK_SH)
-
-    def _unlock_file(f):
-        fcntl.flock(f, fcntl.LOCK_UN)
+# File locking — use a separate .lock file so the lock covers the entire
+# read-modify-write cycle. msvcrt.locking on the data file itself only
+# locks 1 byte, which is insufficient when 5+ pollers write concurrently.
+import time as _time
+LOCK_FILE = Path(__file__).resolve().parent / "liveness.lock"
 
 from mcp.server.fastmcp import FastMCP, Context
 
@@ -91,27 +75,44 @@ log = logging.getLogger("opal-agent-comms")
 @contextmanager
 def _locked_liveness(write=False):
     """Read (and optionally write) liveness.json with file locking.
-    Yields the parsed dict. If write=True, the dict is written back on exit."""
+    Yields the parsed dict. If write=True, the dict is written back on exit.
+    Uses a separate .lock file for mutual exclusion (msvcrt 1-byte lock
+    on the data file itself is insufficient with 5+ concurrent pollers)."""
     LIVENESS_FILE.touch(exist_ok=True)
-    mode = "r+" if write else "r"
+    LOCK_FILE.touch(exist_ok=True)
+    lock_fh = open(LOCK_FILE, "r+", encoding="utf-8")
     try:
-        f = open(LIVENESS_FILE, mode, encoding="utf-8")
-    except FileNotFoundError:
-        LIVENESS_FILE.write_text("{}", encoding="utf-8")
-        f = open(LIVENESS_FILE, mode, encoding="utf-8")
+        if sys.platform == "win32":
+            import msvcrt
+            for _ in range(50):
+                try:
+                    msvcrt.locking(lock_fh.fileno(), msvcrt.LK_NBLCK, 1)
+                    break
+                except OSError:
+                    _time.sleep(0.05)
+            else:
+                msvcrt.locking(lock_fh.fileno(), msvcrt.LK_LOCK, 1)
+        else:
+            import fcntl
+            fcntl.flock(lock_fh.fileno(), fcntl.LOCK_EX)
 
-    try:
-        _lock_file(f, exclusive=write)
-        raw = f.read().strip()
+        raw = LIVENESS_FILE.read_text(encoding="utf-8").strip()
         data = json.loads(raw) if raw else {}
         yield data
         if write:
-            f.seek(0)
-            f.truncate()
-            json.dump(data, f, indent=2)
+            LIVENESS_FILE.write_text(json.dumps(data, indent=2), encoding="utf-8")
     finally:
-        _unlock_file(f)
-        f.close()
+        try:
+            if sys.platform == "win32":
+                import msvcrt
+                lock_fh.seek(0)
+                msvcrt.locking(lock_fh.fileno(), msvcrt.LK_UNLCK, 1)
+            else:
+                import fcntl
+                fcntl.flock(lock_fh.fileno(), fcntl.LOCK_UN)
+        except Exception:
+            pass
+        lock_fh.close()
 
 
 def _clean_stale(data: dict) -> None:

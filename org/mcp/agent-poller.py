@@ -34,46 +34,51 @@ POLL_INTERVAL = 2  # seconds
 BROKER_PORT = int(os.environ.get("OPAL_BROKER_PORT", "7800"))
 BROKER_URL = f"http://127.0.0.1:{BROKER_PORT}"
 
-# File locking (Windows-compatible)
-if sys.platform == "win32":
-    import msvcrt
-    def _lock_file(f, exclusive=False):
-        msvcrt.locking(f.fileno(), msvcrt.LK_LOCK if exclusive else msvcrt.LK_LOCK, 1)
-    def _unlock_file(f):
-        try:
-            f.seek(0)
-            msvcrt.locking(f.fileno(), msvcrt.LK_UNLCK, 1)
-        except Exception:
-            pass
-else:
-    import fcntl
-    def _lock_file(f, exclusive=False):
-        fcntl.flock(f.fileno(), fcntl.LOCK_EX if exclusive else fcntl.LOCK_SH)
-    def _unlock_file(f):
-        fcntl.flock(f.fileno(), fcntl.LOCK_UN)
+# File locking — use a separate .lock file so the lock covers the entire
+# read-modify-write cycle. msvcrt.locking on the data file itself only
+# locks 1 byte, which is insufficient when 5+ pollers write concurrently.
+LOCK_FILE = LIVENESS_FILE.with_suffix(".lock")
 
 
 @contextmanager
 def _locked_liveness(write=False):
     LIVENESS_FILE.touch(exist_ok=True)
-    mode = "r+" if write else "r"
+    LOCK_FILE.touch(exist_ok=True)
+    lock_fh = open(LOCK_FILE, "r+", encoding="utf-8")
     try:
-        f = open(LIVENESS_FILE, mode, encoding="utf-8")
-    except FileNotFoundError:
-        LIVENESS_FILE.write_text("{}", encoding="utf-8")
-        f = open(LIVENESS_FILE, mode, encoding="utf-8")
-    try:
-        _lock_file(f, exclusive=write)
-        raw = f.read().strip()
+        if sys.platform == "win32":
+            import msvcrt
+            # Retry loop — another poller may hold the lock briefly
+            for _ in range(50):
+                try:
+                    msvcrt.locking(lock_fh.fileno(), msvcrt.LK_NBLCK, 1)
+                    break
+                except OSError:
+                    time.sleep(0.05)
+            else:
+                msvcrt.locking(lock_fh.fileno(), msvcrt.LK_LOCK, 1)
+        else:
+            import fcntl
+            fcntl.flock(lock_fh.fileno(), fcntl.LOCK_EX)
+
+        # Lock acquired — safe to read/modify/write liveness.json
+        raw = LIVENESS_FILE.read_text(encoding="utf-8").strip()
         data = json.loads(raw) if raw else {}
         yield data
         if write:
-            f.seek(0)
-            f.truncate()
-            json.dump(data, f, indent=2)
+            LIVENESS_FILE.write_text(json.dumps(data, indent=2), encoding="utf-8")
     finally:
-        _unlock_file(f)
-        f.close()
+        try:
+            if sys.platform == "win32":
+                import msvcrt
+                lock_fh.seek(0)
+                msvcrt.locking(lock_fh.fileno(), msvcrt.LK_UNLCK, 1)
+            else:
+                import fcntl
+                fcntl.flock(lock_fh.fileno(), fcntl.LOCK_UN)
+        except Exception:
+            pass
+        lock_fh.close()
 
 
 def _find_agent_folder(serial: str) -> Path | None:
