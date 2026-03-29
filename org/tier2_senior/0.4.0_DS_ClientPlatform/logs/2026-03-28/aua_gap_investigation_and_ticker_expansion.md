@@ -94,10 +94,14 @@ audit, pricing source analysis, asset matching, and lot-level reconciliation.
 **Status:** COMPLETE (investigation + fixes deployed)
 **Active branch:** `CLOUD`
 
-Net gap reduced from $37.3M to $8.5M. Root causes identified:
-- 39,155 phantom lots ($104M) confirmed by lot-level BD reconciliation
-- Remaining undershoot from missing BD transaction history (lots BD has that our pipeline doesn't)
-- These are BD data feed completeness issues, not pipeline logic bugs
+Net gap reduced from $37.3M to $8.5M.
+
+ROOT CAUSE CONFIRMED: Opal onboarding rotation ~4/30/2024. 32,632 trades on
+that single date rotated pre-Opal model holdings (VTV, IQLT, QUAL, BIL, COWZ,
+JEPI) into Opal model (PFDE, PFOE, DIVZ, IDVZ, IEFA, CLIP). The sell side
+of these rotations was never delivered to our transaction feed, creating
+~41K phantom positions. 24-month realized data confirms 37,024 (88.9%)
+of phantoms as sold. 4,614 (11.1%) closed through non-sale mechanisms.
 
 ---
 
