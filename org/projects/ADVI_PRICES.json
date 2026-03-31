@@ -4,9 +4,9 @@
   "name": "BD Canonical Pricing and Valuation Reconciliation",
   "description": "Reconcile our lot-level position valuations against Black Diamond silver allocations (the day-over-day source of truth for account-level AUA). Net gap is $68.2M (+4.3%) — $1.661B lot MV vs $1.593B BD AUA — but the gross picture is worse: $211M overcounting across 2,574 accounts offset by $143M undercounting across 3,778 accounts. Root causes span stale lots (BNP Paribas $20.8M in an account BD values at $1.9M), ghost accounts (transferred out, BD zeroed AUA but lots still open), cash double-counting, and pricing divergence across the board. Goal: identify every systematic driver of the gap and build a programmatic reconciliation that aligns our model to BD silver allocations. Not a classification problem — the class mix is similar across over/undershooting accounts (~68-70% equity both sides).",
   "prds": [],
-  "status": "active",
-  "phase": "Phase 2: DS .001 COMPLETE (10 commits — taxonomy expansion, temporal guard fix, allocation-authority reconciliation, 8 diagnostic scripts). Phantom root cause: BD transaction feed missing exit events for ~1,600 accounts (+$352M gross). DS built Rule 1+2 force-close + temporal guard spillover fix. AE gold rerun in progress (gated on MVPLVL.009). DS .002 issued (pricing divergence deep-dive + structural gap exclusion audit). Structural gaps (-$35M) accepted as known limitation.",
-  "blocking": "AE .001 gold rerun (shared gate with MVPLVL.009). DS .002 (pricing divergence + structural exclusions). DT .001 (push 10 commits).",
+  "status": "complete",
+  "phase": "COMPLETE: All 8+1 task orders done. DS .001 (phantom fix, $296M->-$57.7M). AE .001 (full rebuild + recon). DS .003 (yahoo priority + 13 corrections). DS .004 (32 total corrections). AE .003 (deploy). AE .004 (backfill +143K, canonical 16.6% yahoo, gold rerun, scheduler fix deployed). DS .002 (divergence deep-dive + structural exclusions, superseded by .003 findings). AE .005 (MBS fix silver rebuild + 05e validation, gap 3.72%->0.169%, 2026-03-27). Post-completion follow-on (03-28-29): DS built 754 YF_OVERRIDES from BD Unrealized, 26 scoped overrides (Shield/AQR), realized sell injection (51K phantoms from 892K realized lots), fixed --upload flag. Dedup hypothesis tested and REJECTED (BD IDs globally unique). Net gap reduced to +$8.5M (+0.53%). Awaiting gold rebuild.",
+  "blocking": "None.",
   "created": "2026-03-23",
   "pods": [
     "0.4",

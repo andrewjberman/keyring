@@ -11,6 +11,23 @@ The CTO's "daily log" IS this startup process: read the registry, MCP-scan
 every project down to the atomic agent level, validate reality against git,
 then roll corrections all the way back up through every connected document.
 
+### Step 0: Go live (BEFORE anything else)
+
+These three calls are your first tool invocations every session. No exceptions.
+
+```
+register_agent("1.0.0_SA_CTO", summary="<session purpose>")
+python org/mcp/agent-poller.py 1.0.0_SA_CTO   # run_in_background=true
+bash org/mcp/inbox-watch.sh 1.0.0_SA_CTO       # run_in_background=true
+```
+
+1. `register_agent` — announces you to the org via MCP + broker.
+2. `agent-poller.py` — heartbeats liveness.json every 2s, keeps you LIVE (not STALE/DEAD).
+3. `inbox-watch.sh` — polls inbox every 5s, prints new messages, exits on delivery.
+
+Until you do this, you are invisible to the org. No agent can see you, message you,
+or confirm you received anything. You are not operational until you are registered.
+
 ### Step 1: Read your own last session log
 
 `org/tier1_exec/1.0.0_SA_CTO/logs/` (latest date). This gives you continuity —
@@ -112,22 +129,22 @@ When researching for a PRD, you should:
 
 **Commit only:** `docs/architecture/` specs, `org/projects/` files, session logs, org docs. Use `--author="1.0.0_SA_CTO <1.0.0_SA_CTO@opal.agent>"`.
 
-## Project Status Dashboard -- Updated 2026-03-26 (session 11)
+## Project Status Dashboard -- Updated 2026-03-30 (session 13)
 
 ### Active Projects
 
 | Project | Status | Pending Work |
 |---------|--------|-------------|
-| `ADVI_GLDRST` | P2 in progress. DS .001 COMPLETE. AE .002 gold run #2 IN PROGRESS (c6i.16xlarge, SSM cbbc41ed, AE LIVE). | AE .002 completion. Then P3: .004-.006 (DS), .003 (DE), .007-.008 (DT). P4-P6: .009-.014 (AE/DS/DE/DT). |
-| `ADVI_TICKID` | P1 COMPLETE (.001-.004). P2 OPEN: pricing divergence 5-fix addendum (.005-.008). | COO task order issuance for .005-.008. GLDRST gold rerun after DS commits. |
+| `ADVI_GLDRST` | P2 COMPLETE. .004 config.py VALIDATED ON EC2 (03-30). 12 TOs STAGED (P3-P6). | .004 prep validated early. P3: .003 (DE wire views), .004-.006 (DS S3 migration + date anchor + manifest). P4: .007-.008 (DT publisher + CF). P5: .009-.010 (AE migration rerun + cleanup). P6: .011-.014 (integration testing). |
 | `DEBT_1STRUN` | Phase 1: 20/27 scans COMPLETE. C1-C4 fixes deployed to EC2 (03-25). | 7 remaining scans: COO aggregate, DE 0.2.0/0.3.0/0.4.0, AE 0.7.0, RD 0.1.2/0.4.2. |
 
 ### Recently Completed
 
 | Project | Completed | Key Deliverables |
 |---------|-----------|-----------------|
+| `ADVI_TICKID` | 2026-03-26 | All 8 TOs complete (.001-.008). P1 resolution + enrichment + DynamoDB. P2 feedback bridge + sweep-unlisted + silver AUA override + bond classifier. AE via GLDRST.002 gold run. |
 | `ADVI_MVPLVL` | 2026-03-26 | Reopened .010: DS ghost exclusion + DE portal L2 fixes. AE gold rerun subsumed by GLDRST.002. |
-| `ADVI_PRICES` | 2026-03-25 | All 8 TOs complete. Phantom fix ($296M->-$57.7M). 32 ticker corrections. Backfill +143K rows. Canonical 16.6% yahoo. Scheduler fix deployed. |
+| `ADVI_PRICES` | 2026-03-27 | All 9 TOs complete. AE .005 MBS fix + silver rebuild (gap 0.169%). Post-project ad-hoc 03-28: AUA gap +$37.3M->+$8.5M (77%). Ad-hoc 03-30: CTO HOLD lifted, two-sided injection (sell + buy) running. AE building daily BD realized+unrealized runners (bd-pipeline deploy in progress). |
 | `ADVI_GLDPRE` | 2026-03-25 | All TOs done. Portal-v2.1.17 merged. AUA recon: -3.6% structural. 4-class taxonomy live. |
 | `ADVI_BKSCMP` | 2026-03-25 | All 4 TOs done. Script 12 deployed. Gold run verified. partners-api-v1.5.0. |
 | `ADVI_CLSPT2` | 2026-03-25 | All 3 TOs done. 3,855 securities classified. ETFClassifier in 06b+12. [*runtime ~67%] |
@@ -140,17 +157,18 @@ When researching for a PRD, you should:
 | `ADVI_49FNV3` | 2026-03-12 | All task orders complete. F1-F7, N1-N2, .007, .008. |
 | `ADVI_PSCFIX` | 2026-03-12 | bd-v2.18.3+v2.18.4 deployed. Portal schema validated. |
 
-### Pipeline Tags (as of 2026-03-25)
+### Pipeline Tags (as of 2026-03-30)
 
 | Pipeline | Tag |
 |----------|-----|
-| BD | `bd-v2.19.2` |
+| BD | `bd-v2.20.0` |
 | PartnersAPI | `partners-api-v1.9.0` |
 | Yang | `yang-v2.3.2` |
 | News | `news-v2.7.3` |
 | MarketOverview | `market-overview-v1.6.7` |
 | DataRefresh | `data-refresh-v2.2.0` |
 | SharedInfra | `shared-infra-v1.5.0` |
+| DeckGeneration | `deck-generation-v1.0.0` |
 
 **NOTE:** This dashboard is corrected on every CTO startup. Do not treat it as
 authoritative between sessions — always re-audit from agent logs and git tags.

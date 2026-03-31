@@ -72,12 +72,35 @@ log = logging.getLogger("opal-agent-comms")
 # Liveness registry (JSON file, atomic read/write)
 # ---------------------------------------------------------------------------
 
+def _safe_json_loads(raw: str) -> dict:
+    """Parse JSON with fallback for trailing-garbage corruption.
+    When concurrent writers race on liveness.json, the file can end up with
+    extra trailing characters (e.g., '}}' instead of '}'). This tries the
+    fast path first, then progressively strips trailing bytes."""
+    raw = raw.strip()
+    if not raw:
+        return {}
+    try:
+        return json.loads(raw)
+    except json.JSONDecodeError:
+        # Try stripping trailing characters one at a time (up to 8)
+        for i in range(1, 9):
+            try:
+                return json.loads(raw[:-i])
+            except (json.JSONDecodeError, ValueError):
+                continue
+        log.warning("liveness.json is corrupted beyond repair, resetting to {}")
+        return {}
+
+
 @contextmanager
 def _locked_liveness(write=False):
     """Read (and optionally write) liveness.json with file locking.
     Yields the parsed dict. If write=True, the dict is written back on exit.
     Uses a separate .lock file for mutual exclusion (msvcrt 1-byte lock
-    on the data file itself is insufficient with 5+ concurrent pollers)."""
+    on the data file itself is insufficient with 5+ concurrent pollers).
+    Writes use atomic rename (write to .tmp, then os.replace) to prevent
+    partial-write corruption when the new content is shorter than the old."""
     LIVENESS_FILE.touch(exist_ok=True)
     LOCK_FILE.touch(exist_ok=True)
     lock_fh = open(LOCK_FILE, "r+", encoding="utf-8")
@@ -97,10 +120,12 @@ def _locked_liveness(write=False):
             fcntl.flock(lock_fh.fileno(), fcntl.LOCK_EX)
 
         raw = LIVENESS_FILE.read_text(encoding="utf-8").strip()
-        data = json.loads(raw) if raw else {}
+        data = _safe_json_loads(raw)
         yield data
         if write:
-            LIVENESS_FILE.write_text(json.dumps(data, indent=2), encoding="utf-8")
+            tmp = LIVENESS_FILE.with_suffix(".json.tmp")
+            tmp.write_text(json.dumps(data, indent=2), encoding="utf-8")
+            os.replace(str(tmp), str(LIVENESS_FILE))
     finally:
         try:
             if sys.platform == "win32":

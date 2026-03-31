@@ -36,8 +36,8 @@
     }
   ],
   "status": "active",
-  "phase": "Phase 1 DONE (canonical exclusions). 14 TOs issued across 6 phases: P2 pre-compute (.001-.002), P3 S3 migration (.004-.006), P3b Lambda+CF cutover (.007-.008), P4 validation rerun (.009), P5 integration testing (.011-.014), P6 cleanup (.010). Execution: .001+.002 parallel now.",
-  "blocking": "AE .002 gold rerun (immediate). DS .001 pre-compute (parallel).",
+  "phase": "P2 COMPLETE. DS .001 + AE .002 done (03-26). GLDRST .004 config.py centralization VALIDATED ON EC2 (03-30, accidental early deploy during gold run -- all 20 production scripts import correctly, run_gold_layer.sh 00-10 passed). 12 TOs STAGED across P3-P6, ready for activation.",
+  "blocking": "None for P2. .004 prep validated early. P3+ TOs STAGED awaiting COO GO: .003 (DE wire views), .004-.006 (DS S3 migration + date anchor + manifest), .007-.008 (DT publisher + CF), .009-.010 (AE migration rerun + cleanup), .011-.014 (integration testing).",
   "created": "2026-03-19",
   "pods": ["0.4", "0.6", "0.7"],
   "pipeline": "bd-pipeline",

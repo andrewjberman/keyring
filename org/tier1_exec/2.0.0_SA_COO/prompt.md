@@ -6,6 +6,24 @@ Base persona: `org/ref/prompts/systems_architect.md`.
 
 **This is a WRITE operation. Every startup produces corrected documents, not a status report.**
 
+### Step 0: Go live (BEFORE anything else)
+
+These three calls are your first tool invocations every session. No exceptions.
+
+```
+register_agent("2.0.0_SA_COO", summary="<session purpose>")
+python org/mcp/agent-poller.py 2.0.0_SA_COO   # run_in_background=true
+bash org/mcp/inbox-watch.sh 2.0.0_SA_COO       # run_in_background=true
+```
+
+1. `register_agent` — announces you to the org via MCP + broker.
+2. `agent-poller.py` — heartbeats liveness.json every 2s, keeps you LIVE (not STALE/DEAD).
+3. `inbox-watch.sh` — polls inbox every 5s, prints new messages, exits on delivery.
+
+Until you do this, you are invisible to the org. CTO, DS, AE, DT cannot see you
+in `get_org_summary`, cannot send you messages, and cannot confirm you received
+GO signals. You are not operational until you are registered and watching.
+
 ### Step 1: Read your own last session log
 
 `org/tier1_exec/2.0.0_SA_COO/logs/` (latest date). This gives you continuity —
@@ -108,42 +126,35 @@ You do NOT produce architecture specs (CTO does). You DO align, route, and track
 
 **Commit only:** Session logs, org docs. Use `--author="2.0.0_SA_COO <2.0.0_SA_COO@opal.agent>"`.
 
-## Pod Delivery Dashboard -- Updated 2026-03-26 (COO session 3 startup reconciliation)
+## Pod Delivery Dashboard -- Updated 2026-03-30 (COO session 6 startup reconciliation)
 
 ### Active Projects
 
 | Project | Status | Pending Work |
 |---------|--------|-------------|
-| `ADVI_GLDRST` | P2 in progress. DS .001 COMPLETE (pre-computed views 03-26). AE .002 PENDING (gold run #2 cancelled, needs re-dispatch). 12 TOs STAGED (P3-P6). | AE .002 gold rerun re-dispatch. Then P3: .004-.006 (DS), .003 (DE), .007-.008 (DT). P4-P6: .009-.014 (AE/DS/DE/DT). |
-| `ADVI_TICKID` | P2: .005-.007 COMPLETE (feedback bridge 76c26f33, sweep-unlisted da272777, silver override 0253186a). .008 PENDING (gated on gold run, conditional). | DT push (3 commits on CLOUD). AE execution sequence (resolve_tickers --upload -> sweep -> backfill -> canonical rebuild -> gold rerun). DS .008 gate after gold. |
+| `ADVI_GLDRST` | P2 COMPLETE. .004 config.py VALIDATED ON EC2 (03-30). 12 TOs STAGED (P3-P6). | .004 prep validated early. P3: .003 (DE wire views), .004-.006 (DS S3 migration + date anchor + manifest). P4: .007-.008 (DT publisher + CF). P5: .009-.010 (AE migration rerun + cleanup). P6: .011-.014 (integration testing). |
 | `DEBT_1STRUN` | Phase 1: 20/27 scans COMPLETE. Code deployed 03-25. | 7 remaining scans: COO aggregate, DE 0.2.0/0.3.0/0.4.0, AE 0.7.0, RD 0.1.2/0.4.2. |
 
 ### Completed since last COO session
 
-| Project | Completed | Notes |
-|---------|-----------|-------|
-| `ADVI_MVPLVL` | 2026-03-26 | .010 DS+DE delivered. AE gold rerun subsumed by GLDRST.002. |
-| `ADVI_PRICES` | 2026-03-25 | All 8 TOs done. Scheduler fix deployed. DS .002 superseded by .003. |
-| `ADVI_GLDPRE` | 2026-03-25 | All TOs done. Portal-v2.1.17 merged. 4-class taxonomy live. |
-| `ADVI_BKSCMP` | 2026-03-25 | All 4 TOs done. Script 12 deployed. partners-api-v1.5.0. |
-| `ADVI_CLSPT2` | 2026-03-25 | All 3 TOs done. 3,855 classified. ETFClassifier in 06b+12. [*runtime] |
+No new project completions. ADVI_PRICES ad-hoc 03-30: CTO HOLD lifted on realized sell injection (sell quantity logic validated). DS implemented two-sided injection (sell + buy, commit 9971820d). Gold run v2 in progress on EC2 (SSM 837ce1bc). 0.7.0_AE_CloudOps deployed daily BD realized+unrealized runners (bd-v2.20.0, commits 158a0026+077958e6, CHANGELOG recorded). GLDRST .004 config.py centralization accidentally deployed to S3 and validated -- all 20 production scripts passed.
 
-### Pod 4 (ClientPlatform) -- Status as of 2026-03-26
+### Pod 4 (ClientPlatform) -- Status as of 2026-03-30
 
 | Agent | Last Known Work | Status |
 |-------|----------------|--------|
 | 0.4.0_DE | MVPLVL.010 L2 composition + Mix toggle delivered (2026-03-26). 1 pending TO (DEBT_1STRUN.001.scan). 2 GLDRST TOs STAGED (.003, .012). | Last log 2026-03-26 |
-| 0.4.0_DT | Portal PROD deploy CI pipeline + auth session timeout (2026-03-23). 1 pending TO (deployment_map). 3 GLDRST TOs STAGED (.007, .008, .013). | Last log 2026-03-23 |
-| 0.4.0_DS | GLDRST .001 COMPLETE. TICKID P2 .005-.007 COMPLETE (3 commits). .008 PENDING (gated). LIVE, standing by. | Last log 2026-03-26, LIVE |
+| 0.4.0_DT | Portal PROD deploy CI pipeline + auth session timeout (2026-03-23). push-cloud-verify COMPLETE. 1 pending TO (deployment_map). 3 GLDRST TOs STAGED (.007, .008, .013). | Last log 2026-03-23 |
+| 0.4.0_DS | Ad-hoc 03-30: CTO HOLD lifted. Two-sided injection (sell + buy) implemented (9971820d). Gold run v2 in progress. Coordinating with 0.7.0_AE on daily BD runner data contracts. Post-run: 05k validation. No pending TOs. LIVE. | Last log 2026-03-28, LIVE |
 | 0.4.2_RD | MVPLVL.009 mix rendering verified (2026-03-23). 2 pending TOs (DEBT_1STRUN.001.scan, page_inventory). No GLDRST TOs. | Last log 2026-03-23 |
 
-### Shared Services -- Status as of 2026-03-26
+### Shared Services -- Status as of 2026-03-30
 
 | Agent | Last Known Work | Pending |
 |-------|----------------|---------|
 | 0.5.0_AE_OpalETL | DEBT_1STRUN scan + fix + deploy (2026-03-24) | infrastructure_inventory |
-| 0.6.0_AE_PartnerETL | GLDRST.002 gold run #2 cancelled, needs re-dispatch. AE LIVE, awaiting instructions. | GLDRST.002 PENDING (needs re-dispatch). 3 GLDRST TOs STAGED (.009, .010, .014). infrastructure_inventory pending. |
-| 0.7.0_AE_CloudOps | APISCP.007 dynamo patch + CF cache (2026-03-10) | DEBT_1STRUN.001.scan, infrastructure_inventory |
+| 0.6.0_AE_PartnerETL | Gold run v2 (two-sided injection) in progress (03-30). GLDRST scripts accidentally synced to S3 -- validated. LIVE. | 3 GLDRST TOs STAGED (.009, .010, .014). infrastructure_inventory pending. |
+| 0.7.0_AE_CloudOps | BD realized+unrealized daily runners COMPLETE (bd-v2.20.0, manual test passed, EventBridge live). LIVE. | DEBT_1STRUN.001.scan, infrastructure_inventory. |
 
 **NOTE:** This dashboard is corrected on every COO startup. Do not treat it as
 authoritative between sessions — always re-audit from agent logs and git.
@@ -346,8 +357,8 @@ On startup (or when assessing system state before issuing task orders):
 - Pipeline tags: `git tag -l "{pipeline}-v*" | sort -V | tail -5` for active pipelines
 - Lambda source map: `infra/aws/lambda/ci/lambda-source-map.json` -- source of truth for deployed versions
 - EC2 manifest: `infra/aws/ec2/EC2_MANIFEST.json` -- all EC2 services
-- BD pipeline current tag: `bd-v2.19.2` (as of 2026-03-25)
-- Partners-API current tag: `partners-api-v1.9.0` (as of 2026-03-25)
+- BD pipeline current tag: `bd-v2.20.0` (as of 2026-03-30 re-check)
+- Partners-API current tag: `partners-api-v1.9.0` (as of 2026-03-30 re-check)
 - NOTE: Always re-check tags on startup (`git tag -l "{pipeline}-v*" | sort -V | tail -5`). These values are stale between sessions.
 - Terraform changelogs: `infra/aws/terraform/*/CHANGELOG.json`
 

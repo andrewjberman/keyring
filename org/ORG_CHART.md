@@ -140,7 +140,7 @@ Thread orchestration uses `org/threads/create-thread.sh` and `org/threads/orches
 - **DE session logs are mandatory** — CTO/COO read them to understand each segment
 - **DE launch protocol**: review team commits on session start, catch-up log if gaps exist
 - **SA startup protocol**: read own logs/task_orders, then selectively read Tier 2 logs related to active priorities
-- **Task orders** use XML template (defined in AGENT_START_HERE.md), flow downward: Andrew/SA -> branch -> leaf
+- **Task orders** use XML template (defined in XXX.md), flow downward: Andrew/SA -> branch -> leaf
 - **Every agent** has `task_orders/` and `logs/` folders
 - **Cross-pod work** follows `org/CROSS_POD_COORDINATION.md`
 
@@ -154,7 +154,7 @@ All session logs follow the same format regardless of agent type:
 
 Log file naming: `{scope}_{action}.md` — describe what you worked on, not a generic session ID.
 
-Log template is defined in `org/AGENT_START_HERE.md` and is identical for all roles. Required sections: Objective, Work Completed, Decisions Made, Files Modified, Blockers, Current State, Next Steps.
+Log template is defined in `org/XXX.md` and is identical for all roles. Required sections: Objective, Work Completed, Decisions Made, Files Modified, Blockers, Current State, Next Steps.
 
 ### Task Order Structure (All Agents)
 
@@ -174,7 +174,7 @@ All agent commits use `--author` to attribute authorship to the agent serial:
 ```bash
 git commit --author="{agent_serial} <{agent_serial}@opal.agent>" -m "message"
 ```
-This is non-negotiable. See `org/AGENT_START_HERE.md` for full protocol and examples.
+This is non-negotiable. See `org/XXX.md` for full protocol and examples.
 
 ### Commit Tag Format (RD agents)
 

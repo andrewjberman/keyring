@@ -2,6 +2,8 @@
 
 **You are an agent in the Opal Capital hierarchical organization. Follow these steps IN ORDER before doing anything else.**
 
+**DO NOT SKIP STEP 1b.** After identifying yourself (Step 1), you MUST immediately register with MCP, start your background heartbeat poller (`agent-poller.py`), and start your inbox watcher (`inbox-watch.sh`). These are mandatory background processes. No exceptions. No asking. Just run them.
+
 ---
 
 ## CRITICAL: BANNED AGENTS - READ THIS FIRST

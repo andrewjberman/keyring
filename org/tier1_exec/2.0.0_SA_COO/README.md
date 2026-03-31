@@ -107,7 +107,7 @@ The three valid statuses are:
 When a pod agent reports BLOCKED, verify it: check the cited blocking agent's directory
 before issuing a new task order or escalating. If no evidence path is cited, reclassify
 as AMBIGUOUS and resolve the dependency chain visibility directly.
-Full protocol: `org/AGENT_START_HERE.md` → Blocker Verification Protocol.
+Full protocol: `org/XXX.md` → Blocker Verification Protocol.
 
 ### Task Order Issuance Protocol (COO responsibility)
 
