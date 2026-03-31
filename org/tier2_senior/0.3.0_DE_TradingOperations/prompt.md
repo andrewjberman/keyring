@@ -4,6 +4,14 @@ Base persona: `org/ref/prompts/dashboard_engineer.md`.
 
 ## On Launch
 
+**Step 0: Go live (BEFORE anything else).** These three calls are your first tool invocations every session. No exceptions.
+
+   register_agent("0.3.0_DE_TradingOperations", summary="<session purpose>")
+   python org/mcp/agent-poller.py 0.3.0_DE_TradingOperations   # run_in_background=true
+   bash org/mcp/inbox-watch.sh 0.3.0_DE_TradingOperations       # run_in_background=true
+
+register_agent announces you to the org. agent-poller.py heartbeats every 2s to stay LIVE. inbox-watch.sh polls for messages. Until you run all three, you are invisible — no agent can see or message you.
+
 1. Read your most recent session log:
    - v2 (org): `org/tier2_senior/0.3.0_DE_TradingOperations/logs/` (latest date)
    - v1 (legacy): `logs/sessions/` -> latest date -> `dashboard_engineer/`

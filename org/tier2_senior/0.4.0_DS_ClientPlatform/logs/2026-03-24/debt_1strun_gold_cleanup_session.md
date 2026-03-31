@@ -11,6 +11,7 @@
 |------|-------------|
 | `81220cd2` | cleanup(gold): delete archive/ (48 files), rewrite docs, add --delete to deploy sync |
 | `c1bb4903` | fix(gold): extract shared lib, fix silent exits, remove emoji |
+| (pending) | refactor(debt): C2 stale comments, C3 ticker override dedup, C4 S3_BUCKET centralization + DE review fixes |
 
 ---
 
@@ -133,26 +134,134 @@ deploy-to-ec2.sh uses `--delete` with `--exclude '*.parquet'` safety guard.
 
 ---
 
+## Session 2: C2/C3/C4 Fixes
+
+### 5. C2 Deprecated -- Stale Comments Cleaned (4 of 7 findings fixed)
+
+**Fixed:**
+- 01 `load_transactions()`: removed stale `bd_transactions.parquet` warning from docstring (#11)
+- 04 `load_transactions_summary()`: same removal (#12)
+- 06b `load_insurance_config()`: updated `.tmp_insurance_ap_gate.py` comment with correct path (repo root) (#14)
+- 05 AUA overrides comment: removed transitional phrasing, clarified current purpose (#13)
+
+**Not fixed (need separate assessment):**
+- `security_ticker_mapping_final.py` -- scan said superseded, but file is actively imported. Needs usage audit.
+- OpenAI discovery path in `fetch_historical_prices_yfinance.py` -- code change, not comment cleanup
+- `gpt-4o-mini` in `classify_bd_securities.py` -- model pinning decision, not a DS code fix
+
+### 6. C3 Duplication -- Ticker Overrides Deduplicated (finding #22 fixed)
+
+**Created `silver/lib/ticker_overrides.py`:**
+- `OPAL_ETF_OVERRIDES` (7 entries) -- proprietary ETF name-to-ticker mappings
+- `TICKER_CORRECTIONS` (32 entries) -- bad ticker fixes from ADVI_PRICES-003/004 audits
+- Detailed per-entry comments preserved from bd_price_update.py
+
+**Updated consumers:**
+- `build_canonical_prices_v2.py` -- removed inline dicts, imports from `lib.ticker_overrides`
+- `bd_price_update.py` -- removed inline dicts, imports from `lib.ticker_overrides`
+- Eliminated "Keep this dict in sync" comment -- no longer needed
+
+**Also created:** `silver/lib/__init__.py`, `silver/lib/config.py`
+
+### 7. C4 Hardcoded Config -- S3_BUCKET Centralized (finding #24 fixed)
+
+**Created `gold/lib/config.py`:**
+```python
+S3_BUCKET = os.environ.get('BD_S3_BUCKET', 'opal-data-bd')
+```
+- Default preserves current behavior; env var allows override for testing/staging
+
+**Updated 14 gold scripts** to import `S3_BUCKET` from `lib.config`:
+- 00, 01, 02, 03, 04, 05, 05b, 05c, 05d, 06, 06b, 07, 08, 08b, 09, 10, 12, detect_new_securities
+- `lib/nna_flows.py` also updated to import from `lib.config`
+- Scripts with different variable names (BUCKET, INPUT_BUCKET/OUTPUT_BUCKET, DATA_BUCKET) use aliased imports
+
+**Created `silver/lib/config.py`** (same pattern):
+- Updated `build_canonical_prices_v2.py` and `bd_price_update.py` to import from it
+
+**DE review fixes (3 findings):**
+- `run_gold_layer.sh:48` -- changed to `S3_BUCKET="${BD_S3_BUCKET:-opal-data-bd}"` (env var with fallback)
+- `infra/aws/ec2/bd-gold-layer-runner/run-gold-layer.sh:13` -- same fix
+- `12_build_composition_artifacts.py:331` -- error message now uses `f'...s3://{BUCKET}/...'`
+- 4 remaining silver scripts migrated: `fetch_historical_prices_yfinance.py`, `merge-daily-incremental.py`, `inject_scoped_overrides.py`, `merge-daily-allocation-incremental.py`
+
+**Not fixed (lower priority, outside scope):**
+- Business rule constants (FLOW_CAP, VELOCITY_WINDOW_DAYS) -- already in `lib/nna_flows.py`, CLI flags exist
+- Color palettes in 09 -- presentation constants, intentionally inline
+- `CORRECT_COL_COUNT = 71` in merge-daily-incremental.py -- schema validation constant
+- `MAX_WORKERS = 64` -- instance-specific, low risk
+- Region/table names in classification scripts -- separate scope (classification/)
+
+### Deployment Note (from DE review)
+
+These changes introduce new `lib/` modules that EC2 scripts import. Scripts will fail with
+`ModuleNotFoundError` if deployed without the lib directories. Deployment sequence:
+
+1. Wait for current gold run to complete
+2. Deploy gold + silver code via `deploy-to-ec2.sh` (includes `--delete` + `--exclude '*.parquet'`)
+3. Verify `lib/` directories are present on S3: `code/gold/lib/`, `code/silver/lib/`
+4. Next scheduled run will pick up the changes
+
+Do NOT deploy mid-run.
+
+---
+
+## Updated Architecture -- Gold Layer
+
+### Local Repo Structure
+
+```
+data/black_diamond/scripts/gold/
+  00_build_accounts_dimension.py       <-- imports lib/config
+  01_build_advisor_assignments_history.py  <-- imports lib/config
+  02_build_positions_cube.py           <-- imports lib/config
+  03_build_holdings_lots.py            <-- imports lib/config
+  04_build_client_dimension.py         <-- imports lib/config
+  05_build_client_performance.py       <-- imports lib/config, lib/nna_flows
+  05b_build_account_performance.py     <-- imports lib/config, lib/nna_flows
+  05c_validate_aua_vs_silver.py        <-- imports lib/config, lib/helpers
+  05d_write_aua_certification.py       <-- imports lib/config, lib/helpers
+  06_build_client_tax_liability.py     <-- imports lib/config
+  06b_build_client_mix_timeseries.py   <-- imports lib/config, lib/etf_classifier
+  07_build_nna_aua_by_geography.py     <-- imports lib/config, lib/helpers
+  08_build_nna_aua_by_advisor.py       <-- imports lib/config, lib/helpers
+  08b_build_architect_attribution.py   <-- imports lib/config
+  09_generate_partner_analytics.py     <-- imports lib/config
+  10_generate_advisor_rolling_flows.py <-- imports lib/config
+  12_build_composition_artifacts.py    <-- imports lib/config, lib/etf_classifier
+  detect_new_securities.py             <-- imports lib/config
+  lib/
+    __init__.py
+    config.py                          <-- NEW: S3_BUCKET (env var with default)
+    etf_classifier.py                  <-- pre-existing
+    nna_flows.py                       <-- imports lib/config
+    helpers.py                         <-- pre-existing
+```
+
+### Silver Lib Structure
+
+```
+data/black_diamond/scripts/silver/lib/
+  __init__.py
+  config.py                            <-- NEW: S3_BUCKET
+  ticker_overrides.py                  <-- NEW: OPAL_ETF_OVERRIDES, TICKER_CORRECTIONS
+```
+
+---
+
 ## Remaining Debt (for next session)
 
-### C2 Deprecated (7 findings)
-- Stale comments referencing `silver/bd_transactions.parquet` in 01, 04
-- AUA overrides section in 05 may be fully removable (RC6 ghost accounts)
-- Comment referencing nonexistent `.tmp_insurance_ap_gate.py` in 06b
-- `security_ticker_mapping_final.py` superseded by S3 config
-- OpenAI discovery path in `fetch_historical_prices_yfinance.py` never runs
-- `gpt-4o-mini` hardcoded in `classify_bd_securities.py`
+### C2 Deprecated (3 remaining)
+- `security_ticker_mapping_final.py` -- needs import/usage audit before removal
+- OpenAI discovery path in `fetch_historical_prices_yfinance.py` -- never runs in production
+- `gpt-4o-mini` hardcoded in `classify_bd_securities.py` -- model pinning decision
 
-### C4 Hardcoded Config (9 findings)
-- `'opal-data-bd'` bucket name in every gold script -- env var candidate
-- Business rule constants in 05 (FLOW_CAP, VELOCITY_WINDOW_DAYS) -- now in lib but still hardcoded
-- Color palettes in 09 -- presentation constants in backend code
-- Magic number `CORRECT_COL_COUNT = 71` in merge-daily-incremental.py
-- `MAX_WORKERS = 64` in build_canonical_prices_v2.py
-- Region, table names, secret IDs hardcoded in classification scripts
-
-### C3 Medium (1 remaining)
-- `_OPAL_ETF_OVERRIDES` duplicated in `build_canonical_prices_v2.py` and `bd_price_update.py` (silver scope)
+### C4 Hardcoded Config (5 remaining, low priority)
+- Business rule constants (FLOW_CAP etc.) -- already centralized in nna_flows.py, CLI flags exist
+- Color palettes in 09 -- presentation constants
+- `CORRECT_COL_COUNT = 71` -- silver scope
+- `MAX_WORKERS = 64` -- instance-specific
+- Region/table names in classification/ -- separate scope
 
 ### C5 Orphaned (3 findings)
 - `build_interpolated_prices.py` output never consumed

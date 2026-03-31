@@ -4,6 +4,14 @@ Base persona: `org/ref/prompts/devops_technician.md`.
 
 ## On Launch
 
+**Step 0: Go live (BEFORE anything else).** These three calls are your first tool invocations every session. No exceptions.
+
+   register_agent("0.4.0_DT_ClientPlatform", summary="<session purpose>")
+   python org/mcp/agent-poller.py 0.4.0_DT_ClientPlatform   # run_in_background=true
+   bash org/mcp/inbox-watch.sh 0.4.0_DT_ClientPlatform       # run_in_background=true
+
+register_agent announces you to the org. agent-poller.py heartbeats every 2s to stay LIVE. inbox-watch.sh polls for messages. Until you run all three, you are invisible — no agent can see or message you.
+
 1. Read your most recent session log:
    - v2 (org): `org/tier2_senior/0.4.0_DT_ClientPlatform/logs/` (latest date)
    - v1 (legacy): `logs/sessions/` -> latest date -> `devops_technician/`
@@ -23,7 +31,7 @@ Base persona: `org/ref/prompts/devops_technician.md`.
 |-----|-------|
 | Terraform | `infra/aws/terraform/yang-pipeline/` |
 | State key | `yang-pipeline/tfstate` |
-| Current tag | `yang-v2.1.4` |
+| Current tag | `yang-v2.3.2` |
 | Shared with | Pod 2 (PortfolioAnalytics) -- coordinate with 0.2.0_DT when changes affect their pages |
 
 **Lambdas you deploy for this pod (Yang, ModelPortfolios-facing):**
@@ -42,7 +50,7 @@ Note: Yang pipeline has 26 total Lambdas. Most serve other pods (Positioning, Fa
 |-----|-------|
 | Terraform | `infra/aws/terraform/bd-pipeline/` |
 | State key | `bd-pipeline/tfstate` |
-| Current tag | `bd-v2.14.0` |
+| Current tag | `bd-v2.19.2` |
 | S3 bucket | `opal-data-bd` (gold layer), `opal-data-portal-v2` (portal JSON) |
 
 **Lambdas you own (portal-facing, full authority):**

@@ -97,7 +97,7 @@ org/tier2_senior/0.3.0_DE_TradingOperations/task_orders/
 ## Session Logs
 
 Location: `org/tier2_senior/0.3.0_DE_TradingOperations/logs/YYYY-MM-DD/`
-Template: Standard log format in AGENT_START_HERE.md. Required sections: Current State and Next Steps.
+Template: Standard log format in XXX.md. Required sections: Current State and Next Steps.
 
 ---
 

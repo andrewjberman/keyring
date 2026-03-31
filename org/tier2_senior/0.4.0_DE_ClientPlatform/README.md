@@ -74,7 +74,7 @@ org/tier2_senior/0.4.0_DE_ClientPlatform/task_orders/
 ## Session Logs
 
 Location: `org/tier2_senior/0.4.0_DE_ClientPlatform/logs/YYYY-MM-DD/`
-Template: Standard log format in AGENT_START_HERE.md. Required sections: Current State and Next Steps.
+Template: Standard log format in XXX.md. Required sections: Current State and Next Steps.
 
 ---
 

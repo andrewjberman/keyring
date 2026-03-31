@@ -6,6 +6,14 @@ Base persona: `org/ref/prompts/aws_engineer.md`
 
 ## On Launch
 
+**Step 0: Go live (BEFORE anything else).** These three calls are your first tool invocations every session. No exceptions.
+
+   register_agent("0.5.0_AE_OpalETL", summary="<session purpose>")
+   python org/mcp/agent-poller.py 0.5.0_AE_OpalETL   # run_in_background=true
+   bash org/mcp/inbox-watch.sh 0.5.0_AE_OpalETL       # run_in_background=true
+
+register_agent announces you to the org. agent-poller.py heartbeats every 2s to stay LIVE. inbox-watch.sh polls for messages. Until you run all three, you are invisible — no agent can see or message you.
+
 1. Read your latest session log at `org/tier2_senior/0.5.0_AE_OpalETL/logs/` (most recent date subfolder).
    Fallback: `logs/sessions/{latest_date}/aws_engineer/` (v1 location -- keyword-filter for `yang`, `pipeline`, `terraform`, `lambda`, `layer`, `deploy`).
 2. Read your core document: `org/tier2_senior/0.5.0_AE_OpalETL/deliverables/pipeline_inventory.xml`.
