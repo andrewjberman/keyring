@@ -129,14 +129,17 @@ When researching for a PRD, you should:
 
 **Commit only:** `docs/architecture/` specs, `org/projects/` files, session logs, org docs. Use `--author="1.0.0_SA_CTO <1.0.0_SA_CTO@opal.agent>"`.
 
-## Project Status Dashboard -- Updated 2026-03-30 (session 13)
+## Project Status Dashboard -- Updated 2026-03-31 (session 14)
 
 ### Active Projects
 
 | Project | Status | Pending Work |
 |---------|--------|-------------|
 | `ADVI_GLDRST` | P2 COMPLETE. .004 config.py VALIDATED ON EC2 (03-30). 12 TOs STAGED (P3-P6). | .004 prep validated early. P3: .003 (DE wire views), .004-.006 (DS S3 migration + date anchor + manifest). P4: .007-.008 (DT publisher + CF). P5: .009-.010 (AE migration rerun + cleanup). P6: .011-.014 (integration testing). |
+| `ADVI_ANONYM` | P0 COMPLETE. P1-P2 PRD CONFIRMED (03-31). P3 DEFERRED. | COO task order issuance for P1. |
 | `DEBT_1STRUN` | Phase 1: 20/27 scans COMPLETE. C1-C4 fixes deployed to EC2 (03-25). | 7 remaining scans: COO aggregate, DE 0.2.0/0.3.0/0.4.0, AE 0.7.0, RD 0.1.2/0.4.2. |
+| `ADHC_HISTRY` | P0 COMPLETE (03-31). $690M overshoot attributed: $513M missing sells, $177M vanished. Schwab crossref 6,510 mappings. Schwab-authority injection approach confirmed. | COO task order issuance for P1 (Schwab-authority injection in scripts 02/03). |
+| `ADHC_TMSTEL` | P0: PRD complete. Awaiting Azure AD app registration. | Azure AD app registration (Andrew/IT). COO TOs for 0.7.0_AE. |
 
 ### Recently Completed
 
@@ -144,7 +147,7 @@ When researching for a PRD, you should:
 |---------|-----------|-----------------|
 | `ADVI_TICKID` | 2026-03-26 | All 8 TOs complete (.001-.008). P1 resolution + enrichment + DynamoDB. P2 feedback bridge + sweep-unlisted + silver AUA override + bond classifier. AE via GLDRST.002 gold run. |
 | `ADVI_MVPLVL` | 2026-03-26 | Reopened .010: DS ghost exclusion + DE portal L2 fixes. AE gold rerun subsumed by GLDRST.002. |
-| `ADVI_PRICES` | 2026-03-27 | All 9 TOs complete. AE .005 MBS fix + silver rebuild (gap 0.169%). Post-project ad-hoc 03-28: AUA gap +$37.3M->+$8.5M (77%). Ad-hoc 03-30: CTO HOLD lifted, two-sided injection (sell + buy) running. AE building daily BD realized+unrealized runners (bd-pipeline deploy in progress). |
+| `ADVI_PRICES` | 2026-03-27 | All 9 TOs complete. AE .005 MBS fix + silver rebuild (gap 0.169%). Post-project ad-hoc 03-28: AUA gap +$37.3M->+$8.5M (77%). Ad-hoc 03-30: 8 gold rebuild iterations, two-sided injection (sell + buy) live, gap +$4.9M (+0.31%). 74% accounts trusted (quality tiers A+B+C). bd-v2.20.0 deployed: daily BD realized+unrealized runners automated. |
 | `ADVI_GLDPRE` | 2026-03-25 | All TOs done. Portal-v2.1.17 merged. AUA recon: -3.6% structural. 4-class taxonomy live. |
 | `ADVI_BKSCMP` | 2026-03-25 | All 4 TOs done. Script 12 deployed. Gold run verified. partners-api-v1.5.0. |
 | `ADVI_CLSPT2` | 2026-03-25 | All 3 TOs done. 3,855 securities classified. ETFClassifier in 06b+12. [*runtime ~67%] |
@@ -157,13 +160,13 @@ When researching for a PRD, you should:
 | `ADVI_49FNV3` | 2026-03-12 | All task orders complete. F1-F7, N1-N2, .007, .008. |
 | `ADVI_PSCFIX` | 2026-03-12 | bd-v2.18.3+v2.18.4 deployed. Portal schema validated. |
 
-### Pipeline Tags (as of 2026-03-30)
+### Pipeline Tags (as of 2026-03-31)
 
 | Pipeline | Tag |
 |----------|-----|
 | BD | `bd-v2.20.0` |
 | PartnersAPI | `partners-api-v1.9.0` |
-| Yang | `yang-v2.3.2` |
+| Yang | `yang-v2.3.4` |
 | News | `news-v2.7.3` |
 | MarketOverview | `market-overview-v1.6.7` |
 | DataRefresh | `data-refresh-v2.2.0` |
