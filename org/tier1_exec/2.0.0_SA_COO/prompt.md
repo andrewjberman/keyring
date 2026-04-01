@@ -126,26 +126,28 @@ You do NOT produce architecture specs (CTO does). You DO align, route, and track
 
 **Commit only:** Session logs, org docs. Use `--author="2.0.0_SA_COO <2.0.0_SA_COO@opal.agent>"`.
 
-## Pod Delivery Dashboard -- Updated 2026-03-30 (COO session 6 startup reconciliation)
+## Pod Delivery Dashboard -- Updated 2026-04-01 (COO session 8 startup reconciliation)
 
 ### Active Projects
 
 | Project | Status | Pending Work |
 |---------|--------|-------------|
 | `ADVI_GLDRST` | P2 COMPLETE. .004 config.py VALIDATED ON EC2 (03-30). 12 TOs STAGED (P3-P6). | .004 prep validated early. P3: .003 (DE wire views), .004-.006 (DS S3 migration + date anchor + manifest). P4: .007-.008 (DT publisher + CF). P5: .009-.010 (AE migration rerun + cleanup). P6: .011-.014 (integration testing). |
+| `ADVI_ANONYM` | P1 TOs ISSUED (04-01): .002 DS pseudonymizer, .003 AE secrets, .004 DT deploy+CF+gate. All STAGED. KEY: portal_authorizer already returns role (deployed 03-04), no DE prereq. P2 not yet decomposed. P3 DEFERRED. | None. STAGED awaiting GO. |
 | `DEBT_1STRUN` | Phase 1: 20/27 scans COMPLETE. Code deployed 03-25. | 7 remaining scans: COO aggregate, DE 0.2.0/0.3.0/0.4.0, AE 0.7.0, RD 0.1.2/0.4.2. |
+| `ADHC_HISTRY` | P0 COMPLETE. P1 TO ISSUED (04-01): .002 DS Schwab-authority injection (Phase 1=diagnostic, Phase 2=impl after GO). STAGED. | None. STAGED awaiting GO. |
 
 ### Completed since last COO session
 
-No new project completions. ADVI_PRICES ad-hoc 03-30: CTO HOLD lifted on realized sell injection (sell quantity logic validated). DS implemented two-sided injection (sell + buy, commit 9971820d). Gold run v2 in progress on EC2 (SSM 837ce1bc). 0.7.0_AE_CloudOps deployed daily BD realized+unrealized runners (bd-v2.20.0, commits 158a0026+077958e6, CHANGELOG recorded). GLDRST .004 config.py centralization accidentally deployed to S3 and validated -- all 20 production scripts passed.
+No new project completions since 03-30. ADVI_ANONYM P0 completed 03-31 (auth-validator-edge:8 deployed by DT). ADVI_PRICES ad-hoc gold rebuild marathon complete: net AUA gap reduced from -$319M to +$4.9M (+0.31%) over 8 iterations. Pipeline runtime cut 57 min to 20 min. Quality tier system deployed (74% accounts trusted). bd-v2.20.0 daily runners live (realized+unrealized, EventBridge, first automated run scheduled 03-31 5:25 PM ET).
 
 ### Pod 4 (ClientPlatform) -- Status as of 2026-03-30
 
 | Agent | Last Known Work | Status |
 |-------|----------------|--------|
 | 0.4.0_DE | MVPLVL.010 L2 composition + Mix toggle delivered (2026-03-26). 1 pending TO (DEBT_1STRUN.001.scan). 2 GLDRST TOs STAGED (.003, .012). | Last log 2026-03-26 |
-| 0.4.0_DT | Portal PROD deploy CI pipeline + auth session timeout (2026-03-23). push-cloud-verify COMPLETE. 1 pending TO (deployment_map). 3 GLDRST TOs STAGED (.007, .008, .013). | Last log 2026-03-23 |
-| 0.4.0_DS | Ad-hoc 03-30: CTO HOLD lifted. Two-sided injection (sell + buy) implemented (9971820d). Gold run v2 in progress. Coordinating with 0.7.0_AE on daily BD runner data contracts. Post-run: 05k validation. No pending TOs. LIVE. | Last log 2026-03-28, LIVE |
+| 0.4.0_DT | Portal-v2.1.18 deployed (03-31). CloudFront fix: added /api/scoped/partners/* + /api/partners behaviors (Books tab was broken on prod). DEBT_1STRUN lint/TS cleanup (6 files). 1 pending TO (deployment_map). 3 GLDRST TOs STAGED (.007, .008, .013). | Last log 2026-03-31 |
+| 0.4.0_DS | Perf optimization + quality tiers COMPLETE. Net AUA gap +$4.9M (+0.31%). 74% accounts trusted (tiers A+B+C). No pending TOs. LIVE. | Last log 2026-03-31, LIVE |
 | 0.4.2_RD | MVPLVL.009 mix rendering verified (2026-03-23). 2 pending TOs (DEBT_1STRUN.001.scan, page_inventory). No GLDRST TOs. | Last log 2026-03-23 |
 
 ### Shared Services -- Status as of 2026-03-30
@@ -153,8 +155,8 @@ No new project completions. ADVI_PRICES ad-hoc 03-30: CTO HOLD lifted on realize
 | Agent | Last Known Work | Pending |
 |-------|----------------|---------|
 | 0.5.0_AE_OpalETL | DEBT_1STRUN scan + fix + deploy (2026-03-24) | infrastructure_inventory |
-| 0.6.0_AE_PartnerETL | Gold run v2 (two-sided injection) in progress (03-30). GLDRST scripts accidentally synced to S3 -- validated. LIVE. | 3 GLDRST TOs STAGED (.009, .010, .014). infrastructure_inventory pending. |
-| 0.7.0_AE_CloudOps | BD realized+unrealized daily runners COMPLETE (bd-v2.20.0, manual test passed, EventBridge live). LIVE. | DEBT_1STRUN.001.scan, infrastructure_inventory. |
+| 0.6.0_AE_PartnerETL | Gold rebuild marathon COMPLETE (03-30). 8 iterations, gap -$319M to +$4.9M. Runtime 57->20 min. EC2 stopped. | 3 GLDRST TOs STAGED (.009, .010, .014). infrastructure_inventory pending. |
+| 0.7.0_AE_CloudOps | BD realized+unrealized daily runners COMPLETE (bd-v2.20.0). Monitoring first automated run (03-31 5:25 PM ET). LIVE. | DEBT_1STRUN.001.scan, infrastructure_inventory. |
 
 **NOTE:** This dashboard is corrected on every COO startup. Do not treat it as
 authoritative between sessions — always re-audit from agent logs and git.

@@ -1,0 +1,15 @@
+{
+  "project_code": "ADHC_HISTRY",
+  "macro_code": "ADHC",
+  "name": "BD Transaction History Forensic Investigation",
+  "description": "Fundamental investigation of the BD transaction data pipeline from raw bronze SFTP files through deduplication, classification, FIFO reconstruction, and final positions cube / holdings lots. The FIFO reconstruction produces $1.98B in holdings lots vs BD's $1.59B silver AUA -- a $390M overshoot BEFORE any injection runs. Root cause suspected in deduplication logic (34% dedup rate on 2.79M rows), transaction type misclassification (corporate actions, transfers, passthroughs), or ghost positions from same-day multi-lot transactions being collapsed.",
+  "prds": [],
+  "status": "active",
+  "phase": "P0 COMPLETE (03-31): .001 investigation done (6e9715ca). $690M overshoot attributed: $513M missing sells, $177M vanished. Schwab crossref breakthrough (6,510 mappings). P1 TO ISSUED (04-01): .002 DS Schwab-authority injection. STAGED awaiting GO.",
+  "blocking": "None. P1 TO staged. COO must send GO to activate.",
+  "created": "2026-03-31",
+  "pods": ["0.4", "0.6"],
+  "pipeline": "bd-pipeline",
+  "thread_counter": 0,
+  "threads": []
+}
