@@ -136,9 +136,9 @@ When researching for a PRD, you should:
 | Project | Status | Pending Work |
 |---------|--------|-------------|
 | `ADVI_GLDRST` | P2 COMPLETE. .004 config.py VALIDATED ON EC2 (03-30). 12 TOs STAGED (P3-P6). | .004 prep validated early. P3: .003 (DE wire views), .004-.006 (DS S3 migration + date anchor + manifest). P4: .007-.008 (DT publisher + CF). P5: .009-.010 (AE migration rerun + cleanup). P6: .011-.014 (integration testing). |
-| `ADVI_ANONYM` | P0 COMPLETE. P1 TOs ISSUED (04-01): .002 DS pseudonymizer, .003 AE secrets, .004 DT deploy+CF+gate-removal. All STAGED awaiting GO. P2 (frontend graduated UI) not yet decomposed. P3 DEFERRED. | P1 TOs staged, COO GO activates. P2 decomposition pending. |
+| `ADVI_ANONYM` | P1 COMPLETE (04-01). pseudonymizer.py live, P0 gate removed, auth-validator-edge v9 on all 10 CF behaviors. advisor/user -> 200 + hashed names. partners-api-v1.11.0. P2 (frontend: AuthContext, DistributionTab, ClientsTab, ClientDetailPage) not yet decomposed. P3 DEFERRED. | P2 frontend decomposition pending Andrew GO. |
 | `DEBT_1STRUN` | Phase 1: 20/27 scans COMPLETE. C1-C4 fixes deployed to EC2 (03-25). | 7 remaining scans: COO aggregate, DE 0.2.0/0.3.0/0.4.0, AE 0.7.0, RD 0.1.2/0.4.2. |
-| `ADHC_HISTRY` | P1 ACTIVE (04-01). DS .002 (Schwab-authority calc) COMMITTED (c8db9f09). AE .003 (silver/RPS/ build) IN PROGRESS -- 0.6.0_AE_PartnerETL has 2 TOs (.003 rps-silver-build + .003 schwab-rps-silver-build), both pending on DS .002. DS messaged AE 13:11 ET. | AE.003 (0.6.0_AE_PartnerETL) silver/RPS/ build + DS EC2 diagnostic run. |
+| `ADHC_HISTRY` | P1 DIAGNOSTIC COMPLETE (04-01). AE.003 done: RPS silver 534 partitions. DS diagnostic ran: injection needed $402M / 36,788 positions. DIVZ post-injection $163.7M (target $150-160M, slightly above). Residual gap +$772.9M. DS in Phase 2 analysis. | DS Phase 2: interpret residual gap, determine next injection adjustments. |
 | `ADHC_TMSTEL` | P0: PRD complete. Awaiting Azure AD app registration. | Azure AD app registration (Andrew/IT). COO TOs for 0.7.0_AE. |
 
 ### Recently Completed
