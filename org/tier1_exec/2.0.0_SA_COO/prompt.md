@@ -133,7 +133,7 @@ You do NOT produce architecture specs (CTO does). You DO align, route, and track
 | Project | Status | Pending Work |
 |---------|--------|-------------|
 | `ADVI_GLDRST` | P2 COMPLETE. .004 config.py VALIDATED ON EC2 (03-30). 12 TOs STAGED (P3-P6). | .004 prep validated early. P3: .003 (DE wire views), .004-.006 (DS S3 migration + date anchor + manifest). P4: .007-.008 (DT publisher + CF). P5: .009-.010 (AE migration rerun + cleanup). P6: .011-.014 (integration testing). |
-| `ADVI_ANONYM` | P1 COMPLETE (04-01). pseudonymizer.py live, P0 gate removed, auth-validator-edge v9 on all 10 CF behaviors. advisor/user -> 200 + hashed names. partners-api-v1.11.0. P2 (frontend AuthContext + tabs) not yet decomposed. P3 DEFERRED. | None. P2 pending CTO direction or Andrew GO. |
+| `ADVI_ANONYM` | P1+P2 COMPLETE (04-01). pseudonymizer live (partners-api-v1.11.0), auth-validator-edge v9, UI indicators on 4 surfaces (portal-v2.1.20). advisor/user gets hashed names + indicators. P3 DEFERRED. | None. P3 requires GO. |
 | `DEBT_1STRUN` | Phase 1: 20/27 scans COMPLETE. Code deployed 03-25. | 7 remaining scans: COO aggregate, DE 0.2.0/0.3.0/0.4.0, AE 0.7.0, RD 0.1.2/0.4.2. |
 | `ADHC_HISTRY` | P1 DIAGNOSTIC COMPLETE (04-01). AE.003 done: RPS silver 534 partitions. DS diagnostic ran: injection needed $402M / 36,788 positions. DIVZ post-injection $163.7M (target $150-160M, slightly above). Residual gap +$772.9M. DS in Phase 2. | DS Phase 2: interpret residual gap, determine next injection adjustments. |
 
