@@ -133,7 +133,7 @@ You do NOT produce architecture specs (CTO does). You DO align, route, and track
 | Project | Status | Pending Work |
 |---------|--------|-------------|
 | `ADVI_GLDRST` | P2 COMPLETE. .004 config.py VALIDATED ON EC2 (03-30). 12 TOs STAGED (P3-P6). | .004 prep validated early. P3: .003 (DE wire views), .004-.006 (DS S3 migration + date anchor + manifest). P4: .007-.008 (DT publisher + CF). P5: .009-.010 (AE migration rerun + cleanup). P6: .011-.014 (integration testing). |
-| `ADVI_ANONYM` | P1 TOs ISSUED (04-01): .002 DS pseudonymizer, .003 AE secrets, .004 DT deploy+CF+gate. All STAGED. KEY: portal_authorizer already returns role (deployed 03-04), no DE prereq. P2 not yet decomposed. P3 DEFERRED. | None. STAGED awaiting GO. |
+| `ADVI_ANONYM` | P1 ACTIVE (04-01): .002 DS pseudonymizer IN PROGRESS, .003 AE secrets IN PROGRESS, .004 DT Track B IN PROGRESS. DS+AE parallel. DT Track A after DS commit. Track C (P0 gate removal) LAST. P2 not decomposed. P3 DEFERRED. | DT Track A waiting on DS commit. Track C waiting on A+B verified. |
 | `DEBT_1STRUN` | Phase 1: 20/27 scans COMPLETE. Code deployed 03-25. | 7 remaining scans: COO aggregate, DE 0.2.0/0.3.0/0.4.0, AE 0.7.0, RD 0.1.2/0.4.2. |
 | `ADHC_HISTRY` | P1 ACTIVE (04-01). DS .002 (Schwab-authority calc) COMMITTED (c8db9f09). AE .003 (silver/RPS/ build) IN PROGRESS -- 2 TOs pending (0.6.0_AE_PartnerETL). DS blocked on AE.003. | AE.003 completion + DS EC2 diagnostic run. |
 
