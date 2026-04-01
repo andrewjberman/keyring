@@ -114,7 +114,13 @@ Expected outputs:
 
 | File | Change | Committed |
 |---|---|---|
-| `data/black_diamond/scripts/diagnostics/adhc_histry_005_schwab_authority_calc.py` | New diagnostic script | Yes -- `c8db9f09` |
+| `data/black_diamond/scripts/diagnostics/adhc_histry_005_schwab_authority_calc.py` | General RPS injection calc (CSV outputs, current FIFO) | Yes -- `c8db9f09` |
+| `data/black_diamond/scripts/diagnostics/adhc_histry_006_rps_matching.py` | RPS matching per CTO spec (JSON/parquet, FIFO-as-of-date) | Yes -- `76ed2b1f` |
+| `data/black_diamond/scripts/diagnostics/schwab_authority_injection_test.py` | Prior TRN-based approach (superseded) | Yes -- `76ed2b1f` |
+| `data/black_diamond/scripts/diagnostics/schwab_authority_injection_v2.py` | Prior TRN-based v2 (superseded) | Yes -- `76ed2b1f` |
+| `data/black_diamond/scripts/diagnostics/_schwab_*.py` (6 files) | Schwab exploration + account mapping development | Yes -- `76ed2b1f` |
+| `data/black_diamond/scripts/diagnostics/rc_*.py` (2 files) | Rotation capital test approaches | Yes -- `76ed2b1f` |
+| `data/black_diamond/scripts/diagnostics/check_excess_capital.py` | Excess capital investigation | Yes -- `76ed2b1f` |
 
 ---
 
