@@ -17,7 +17,7 @@ the surface area; the project code identifies the specific initiative.
 | Project Code | Macro | Project Name | Phase | Pods | Blocking | PRDs |
 |---|---|---|---|---|---|---|
 | `ADVI_GLDRST` | `ADVI` | BD Gold Layer S3 Restructure | P2 COMPLETE. .004 config.py VALIDATED ON EC2 (03-30). 12 TOs STAGED (P3-P6), ready for COO activation. | 0.4, 0.6, 0.7 | None for P2. .004 prep validated early. P3+ STAGED awaiting GO. | Restructure Proposal, Blast Radius, Rollback Plan, COO Briefing |
-| `ADVI_ANONYM` | `ADVI` | Advisor Intelligence PII Pseudonymization + RBAC | P1 TOs ISSUED (04-01): .002 DS pseudonymizer, .003 AE secrets, .004 DT deploy. All STAGED. P2 frontend UI not yet decomposed. P3 DEFERRED. | 0.4, 0.7 | None. P1 staged awaiting GO. | ADVI_ANONYM_PRD.md |
+| `ADVI_ANONYM` | `ADVI` | Advisor Intelligence PII Pseudonymization + RBAC | P1 COMPLETE (04-01). pseudonymizer.py live, P0 gate removed, auth-validator-edge v9. advisor/user -> 200 + hashed names. partners-api-v1.11.0. P2 frontend UI not decomposed. P3 DEFERRED. | 0.4, 0.7 | None. P2 pending CTO/Andrew GO. | ADVI_ANONYM_PRD.md |
 | `DEBT_1STRUN` | `DEBT` | First Technical Debt Sweep | Phase 1: 20/27 scans COMPLETE. Remaining 7: COO aggregate, DE 0.2.0/0.3.0/0.4.0, AE 0.7.0, RD 0.1.2/0.4.2. | 0.1-0.4, 0.5-0.7 | 7 remaining scan TOs. | — |
 | `ADHC_HISTRY` | `ADHC` | BD Transaction History Forensic Investigation | P0 COMPLETE (03-31). P1 TO ISSUED (04-01): .002 DS Schwab-authority injection (diagnostic-first, then impl). STAGED awaiting GO. | 0.4, 0.6 | None. P1 staged awaiting GO. | — |
 | `ADHC_TMSTEL` | `ADHC` | Teams Telemetry MCP Server | P0: PRD complete. Awaiting Azure AD app registration + COO decomposition. | 0.7 | Azure AD app registration (Andrew/IT). COO TOs. | ADHC_TMSTEL_PRD.md |

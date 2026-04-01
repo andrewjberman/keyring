@@ -40,40 +40,40 @@ DT Track B (CF behaviors 13+14) ── starts NOW ──────────
 
 ---
 
+## P1 Completion Timeline
+
+| Time (ET) | Event |
+|-----------|-------|
+| ~10:48 | CTO GO received in inbox |
+| ~10:58 | GO sent to DS, AE, DT. All TOs marked pending. |
+| ~11:02 | DT Track B COMPLETE -- CF behaviors 13+14 verified |
+| ~11:04 | AE .003 COMPLETE -- partners-api-v1.10.0, IAM deployed |
+| ~11:06 | DS .002 COMPLETE -- commit 3fdb9a51, 9 PII call sites wired |
+| ~11:07 | COO relayed DS commit + AE IAM clearance to DT for Track A |
+| ~11:15 | DT Track A COMPLETE -- partners-api-v1.11.0, pseudonymizer verified |
+| ~11:21 | DT Track C COMPLETE -- auth-validator-edge v9, P0 gate removed, E2E verified |
+
 ## Current State
 
-**Status:** IN PROGRESS (waiting on DS + AE + DT Track B completions)
+**Status:** COMPLETE
 **Active branch:** `CLOUD`
 
-ADVI_ANONYM P1 fully activated as of 10:58 AM ET. Three agents have received GO messages
-and all three TOs are marked pending. DS is building pseudonymizer.py + lambda wiring.
-AE is provisioning Secrets Manager keys and updating partners-api iam.tf via Terraform.
-DT Track B (CF behaviors 13+14) has no dependencies and can run immediately. DT Track A
-(Lambda deploy) and Track C (P0 gate removal) must wait per the sequencing above.
-
-COO is watching for completion messages from each agent.
-
----
+ADVI_ANONYM P1 fully deployed and verified as of ~11:21 AM ET. pseudonymizer.py is live
+in opal-partners-data Lambda. auth-validator-edge v9 is on all 10 CloudFront behaviors.
+P0 role gate removed. advisor/user tier now receives 200 with hashed client names
+(Client aa304c3b format). internal/admin receives 200 with cleartext. handle_adv_drill
+PII wiring deferred -- that handler does not yet exist in lambda_function.py.
 
 ## Next Steps
 
-1. **Wait for DS commit message** -- DS will message COO with commit hash when .002 is done.
-   Relay commit hash to DT so Track A can proceed.
+1. **ADVI_ANONYM P2 decomposition** -- frontend graduated UI: AuthContext, DistributionTab,
+   ClientsTab, ClientDetailPage. Awaiting Andrew GO or CTO direction.
 
-2. **Wait for AE Terraform 0-diff message** -- AE will confirm partners-api tag after IAM update.
-   Relay to DT: Track A requires AE IAM complete before Lambda deploy (else cold start failure).
+2. **ADHC_HISTRY P1 GO** -- DS .002 diagnostic is staged (Schwab-authority injection).
+   Andrew must direct COO to send GO to DS.
 
-3. **Wait for DT Track B verification** -- DT will confirm behaviors 13+14 have auth-validator-edge.
-
-4. **Signal DT Track A when both DS + AE are complete** -- send explicit message with DS commit hash.
-
-5. **Signal DT Track C when A + B verified** -- explicit GO only after end-to-end pseudonymizer confirmed.
-
-6. **Mark ADVI_ANONYM P1 COMPLETE** after Track C verified. Update project JSON and REGISTRY.md.
-
-7. **ADVI_ANONYM P2 decomposition** -- frontend graduated UI (AuthContext, DistributionTab, etc.)
-   Awaiting P1 deploy + verification first.
+3. **ADVI_GLDRST P3 activation** -- 12 TOs staged. Awaiting Andrew explicit GO.
 
 **Do NOT:**
-- Signal DT Track C before pseudonymizer is confirmed working for advisor/user requests
-- Issue P2 TOs before P1 is verified end-to-end
+- Issue P2 frontend TOs without explicit GO from Andrew or CTO
+- Remove handle_adv_drill deferred note -- it's a known gap, not a bug
