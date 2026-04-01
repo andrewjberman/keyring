@@ -6,7 +6,7 @@
   "prds": [],
   "status": "active",
   "phase": "P1 ACTIVE (04-01): .002 DS script COMMITTED (c8db9f09, adhc_histry_005_schwab_authority_calc.py) -- blocked on AE.003 (silver/RPS/ build). DS messaged AE at 13:11 ET. EC2 run pending AE confirmation. .003 AE (silver/RPS/ build, IN PROGRESS).",
-  "blocking": "AE.003 (silver/RPS/ population) must complete before DS.002 EC2 run. DS script is ready and committed.",
+  "blocking": "AE must complete ADHC_HISTRY.003 (silver/RPS/ build + run DS diagnostic) before DS Phase 2 analysis.",
   "created": "2026-03-31",
   "pods": ["0.4", "0.6"],
   "pipeline": "bd-pipeline",
