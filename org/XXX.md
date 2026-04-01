@@ -1,5 +1,50 @@
 # AGENT START HERE — Opal Capital Hierarchical Agent System
 
+---
+
+# ================================================================
+# MANDATORY MCP STARTUP PROTOCOL — DO THIS BEFORE ANYTHING ELSE
+# ================================================================
+#
+#  Skipping ANY of these four steps makes you invisible to the org.
+#  Other agents cannot see you, message you, or send you GO signals.
+#  Andrew cannot confirm you received work. You will miss activations.
+#
+#  Execute in this exact order, every session, no exceptions:
+#
+#  STEP A — Register (MCP tool call):
+#    register_agent("{your_serial}", summary="Starting session")
+#
+#  STEP B — Check inbox for messages you missed while offline (synchronous):
+#    bash org/mcp/check-inbox.sh {your_serial}
+#    --> Prints all pending messages, marks them read, exits.
+#    --> This catches GO signals sent between sessions.
+#    --> inbox-watch.sh CANNOT catch these -- it only sees new arrivals.
+#
+#  STEP C — Start heartbeat poller (run_in_background: true, NO &):
+#    python org/mcp/agent-poller.py {your_serial}
+#    --> Writes last_seen_epoch every 2s. Without this you go STALE/DEAD.
+#
+#  STEP D — Start inbox watcher (run_in_background: true, NO &):
+#    bash org/mcp/inbox-watch.sh {your_serial}
+#    --> Polls every 5s. Exits on message delivery.
+#    --> Exit fires a <task-notification> that interrupts you.
+#    --> Re-launch it after EVERY notification.
+#
+#  DO NOT USE & WITH run_in_background. The & forks and the shell exits,
+#  which may kill the child process. run_in_background handles backgrounding.
+#
+#  WHY FOUR TOOLS INSTEAD OF ONE:
+#    register_agent  -- announces you, enables push; misses offline messages
+#    check-inbox.sh  -- catches offline messages; misses future arrivals
+#    agent-poller.py -- keeps you LIVE; does not touch inbox
+#    inbox-watch.sh  -- real-time interrupt; misses pre-start arrivals
+#    Each covers the failure mode of the others. All four are required.
+#
+# ================================================================
+
+---
+
 **You are an agent in the Opal Capital hierarchical organization. Follow these steps IN ORDER before doing anything else.**
 
 **DO NOT SKIP STEP 1b.** After identifying yourself (Step 1), you MUST immediately register with MCP, start your background heartbeat poller (`agent-poller.py`), and start your inbox watcher (`inbox-watch.sh`). These are mandatory background processes. No exceptions. No asking. Just run them.
@@ -104,29 +149,39 @@ Tier folders:
 
 **Do this NOW. Do not ask. Do not confirm. Just execute all three:**
 
-**A. Register and check inbox:**
+**A. Register:**
 ```
 register_agent({your_serial}, summary="Starting session")
-check_inbox({your_serial}, mark_read=true)
 ```
+Announces you to the org via MCP + broker. Until you call this, `get_org_summary`
+shows you as DEAD and `send_message` cannot push notifications to you.
 
-**B. Start the background heartbeat poller:**
+**B. Check inbox for offline messages (synchronous, not backgrounded):**
+```bash
+bash org/mcp/check-inbox.sh {your_serial}
+```
+Run this synchronously (no `run_in_background`). It makes one pass over your inbox
+directory, prints all pending `.md` files, marks them read, and exits.
+
+**This step is not optional.** `inbox-watch.sh` only catches messages that arrive
+*after* it starts. Any GO signal, status update, or blocker sent while you were
+offline is invisible to the watcher. `check-inbox.sh` is the only way to catch it.
+
+**C. Start the background heartbeat poller:**
 ```bash
 python org/mcp/agent-poller.py {your_serial}
 ```
-Run this via the Bash tool with `run_in_background: true`. This script:
-- Updates your heartbeat every 2 seconds (you NEVER go STALE)
-- Heartbeats the broker every 10 seconds for cross-session visibility
+Run via the Bash tool with `run_in_background: true` and **no `&`**. Updates
+`last_seen_epoch` in `org/mcp/liveness.json` every 2 seconds. Without this you go
+STALE after 2 minutes and DEAD after 10 -- other agents stop routing work to you.
 
-**C. Start the background inbox watcher:**
+**D. Start the background inbox watcher:**
 ```bash
 bash org/mcp/inbox-watch.sh {your_serial}
 ```
-Run this via the Bash tool with `run_in_background: true`. This script:
-- Polls your inbox directory every 5 seconds
-- When a message arrives, prints ALL pending messages and **EXITS**
-- The exit triggers a `<task-notification>` in your conversation
-- You MUST read the output, act on the messages, then **re-launch the watcher**
+Run via the Bash tool with `run_in_background: true` and **no `&`**. Polls your inbox
+every 5 seconds. When a message arrives, prints ALL pending messages and **EXITS**.
+The exit fires a `<task-notification>` in your conversation that interrupts you.
 
 **Critical: re-launch after every notification.** When you receive a
 `<task-notification>` from inbox-watch.sh:
@@ -134,25 +189,28 @@ Run this via the Bash tool with `run_in_background: true`. This script:
 2. Act on them (execute task orders, respond, etc.)
 3. Re-launch: `bash org/mcp/inbox-watch.sh {your_serial}` with `run_in_background: true`
 
-The watcher exits on message delivery because that is the ONLY way to
-interrupt an idle agent. A long-running background script produces output
-that nobody reads. An exiting background task fires a notification that
-forces the agent into a new conversation turn.
+The watcher exits on delivery because that is the ONLY way to interrupt an idle agent.
+A persistent background script produces output nobody reads. An exiting task fires a
+notification that forces a new conversation turn.
 
-**How message delivery works:**
+**Why `run_in_background: true` but NO `&`:**
+The `&` operator forks the process into the shell's background and then the shell exits,
+which may kill or orphan the child. `run_in_background: true` is Claude Code's native
+backgrounding -- it manages the process lifecycle correctly.
 
-| Concern | Mechanism | Latency |
-|---------|-----------|---------|
-| Stay LIVE (heartbeat) | Background poller (2s) | 2s — never go STALE |
-| Message delivery | inbox-watch.sh (5s poll, exits on message) | ~5s — task-notification interrupts agent |
+**How the full system fits together:**
 
-Messages arrive as `.md` files in `org/mcp/inbox/{your_agent_folder}/`.
-The inbox watcher picks them up within 5 seconds, prints the content,
-and exits. The exit triggers a background task completion notification
-which appears in your conversation as a `<task-notification>`. This
-interrupts whatever you are doing and forces you to process the message.
+| Tool | Purpose | What it CANNOT do |
+|------|---------|-------------------|
+| `register_agent` | Announces you, enables push delivery | Does not retrieve offline messages |
+| `check-inbox.sh` | Sweeps inbox for messages you missed offline | Does not catch future arrivals |
+| `agent-poller.py` | Keeps `last_seen_epoch` current (stay LIVE) | Does not touch inbox at all |
+| `inbox-watch.sh` | Real-time interrupt on new message arrival | Does not see pre-start messages |
+| `mcp check_inbox` | Broker-side view; works without filesystem | Requires broker to be running |
 
-**D. Act on what you find:**
+Each tool covers the failure mode of the others. All four are required every session.
+
+**E. Act on what you find:**
 
 - **GO message in inbox** → Read the referenced task order, flip `<status>` from `staged` to `pending`, and begin execution immediately. The GO message IS your authorization. Do NOT ask Andrew for permission. Skip Steps 2-2b if the GO message gives you clear scope.
 - **Inbox empty** → Proceed to Step 2.
