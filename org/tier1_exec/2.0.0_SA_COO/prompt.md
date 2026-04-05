@@ -10,15 +10,17 @@ Base persona: `org/ref/prompts/systems_architect.md`.
 
 These three calls are your first tool invocations every session. No exceptions.
 
-```
-register_agent("2.0.0_SA_COO", summary="<session purpose>")
-python org/mcp/agent-poller.py 2.0.0_SA_COO   # run_in_background=true
-bash org/mcp/inbox-watch.sh 2.0.0_SA_COO       # run_in_background=true
-```
+1. **MCP tool call:** `register_agent("2.0.0_SA_COO", summary="<session purpose>")`
+2. **Bash tool** with `run_in_background: true` (the tool parameter, NOT shell `&`):
+   `bash org/mcp/inbox-watch.sh 2.0.0_SA_COO`
 
-1. `register_agent` — announces you to the org via MCP + broker.
-2. `agent-poller.py` — heartbeats liveness.json every 2s, keeps you LIVE (not STALE/DEAD).
-3. `inbox-watch.sh` — polls inbox every 5s, prints new messages, exits on delivery.
+**CRITICAL:** inbox-watch.sh MUST use the Bash tool's `run_in_background` parameter set to `true`.
+Do NOT append `&` to the command — that kills the process when the shell exits.
+The `run_in_background` parameter is a property of the Bash tool invocation, not part of the command string.
+
+What each does:
+1. `register_agent` — announces you to the org via MCP + broker. A PostToolUse hook auto-launches agent-poller.py.
+2. `inbox-watch.sh` — polls inbox every 5s, prints new messages, exits on delivery.
 
 Until you do this, you are invisible to the org. CTO, DS, AE, DT cannot see you
 in `get_org_summary`, cannot send you messages, and cannot confirm you received
@@ -126,37 +128,48 @@ You do NOT produce architecture specs (CTO does). You DO align, route, and track
 
 **Commit only:** Session logs, org docs. Use `--author="2.0.0_SA_COO <2.0.0_SA_COO@opal.agent>"`.
 
-## Pod Delivery Dashboard -- Updated 2026-04-01 (COO session 8 startup reconciliation)
+## Pod Delivery Dashboard -- Updated 2026-04-05 (COO session 14 reconciliation)
 
 ### Active Projects
 
 | Project | Status | Pending Work |
 |---------|--------|-------------|
-| `ADVI_GLDRST` | P2 COMPLETE. .004 config.py VALIDATED ON EC2 (03-30). 12 TOs STAGED (P3-P6). | .004 prep validated early. P3: .003 (DE wire views), .004-.006 (DS S3 migration + date anchor + manifest). P4: .007-.008 (DT publisher + CF). P5: .009-.010 (AE migration rerun + cleanup). P6: .011-.014 (integration testing). |
-| `ADVI_ANONYM` | P1+P2+P3 COMPLETE (04-01). Tier removed (firmId model). Role-only PII gate. Book scoping. portal-v2.1.22, partners-api-v1.12.0, portal-auth-v1.5.0. 4 test accounts live. Login incident 18:29-18:34 resolved. | DT: remove tier from JWT. AE: partner table migration. |
+| `ADVI_GLDRST` | P2 COMPLETE. .015 COMPLETE (watchdog). .016 COMPLETE (imports). .017 COMPLETE (DS 7fa6947d, AUA decomposition). Fixes on S3 (91d2342f + 3a322b25). 12 original TOs STAGED (P3-P6). Gold rebuild status UNKNOWN (PID 39671, watchdog active, instance may have self-stopped). | P3: .003-.006. P4: .007-.008. P5: .009-.010. P6: .011-.014. Ops: .018 (DE NNA wiring, dep .017 met, STAGED), .019 (AE Schwab RPS, BLOCKED Andrew). |
+| `ADVI_ANONYM` | P3 COMPLETE (04-01). P4 STAGED (04-02): S3-direct PII bypass fix. 3 TOs issued (.012 DS, .013 DT, .014 DE). .012+.013 parallel; .014 depends on both. | .012+.013 awaiting GO. .014 blocked on .012+.013. JWT tier removal (low pri). Partner migration (deferred). |
 | `DEBT_1STRUN` | Phase 1: 20/27 scans COMPLETE. Code deployed 03-25. | 7 remaining scans: COO aggregate, DE 0.2.0/0.3.0/0.4.0, AE 0.7.0, RD 0.1.2/0.4.2. |
-| `ADHC_HISTRY` | P2 COMPLETE (04-01). AUA $1,582M (0.3% from silver). Open: BD Q4 2025 buy gap $259M (vendor), NNA rearchitecture (DS TO needed), Pathfinder weights validation (Andrew), positions_cube cleanup (AE). | Issue DS NNA rearchitecture TO. Andrew: BD vendor + Pathfinder validation. |
+| `ADHC_HISTRY` | P2 COMPLETE (04-01). All 8 TOs complete. Gold rebuild status unknown (watchdog should have shut down instance on completion). NNA rearch code complete (GLDRST.017, deploy pending). Open: BD vendor ($259M), Pathfinder weights. | Andrew: BD vendor + Pathfinder. Verify rebuild output. GLDRST.017 deploy pending. |
+| `ADVI_GLDOPS` | P1: 3 TOs GO'd (04-03). .001 AE diagnosis (P0). .002 DS pending marker fix (P0). .003 DS market growth diagnostic (P1). NO PROGRESS -- all agents offline since GO. | .001/.002/.003 all PENDING. .002 deploy depends on .001. .003 fix depends on findings. 3 unpushed commits still block deploy chain. |
+| `ADHC_TMSTEL` | P0: PRD complete. Awaiting Azure AD app registration + COO decomposition. | Azure AD app registration (Andrew/IT). COO TOs. |
 
-### Completed since last COO session
+### Operational Notes (04-05)
 
-No new project completions since 03-30. ADVI_ANONYM P0 completed 03-31 (auth-validator-edge:8 deployed by DT). ADVI_PRICES ad-hoc gold rebuild marathon complete: net AUA gap reduced from -$319M to +$4.9M (+0.31%) over 8 iterations. Pipeline runtime cut 57 min to 20 min. Quality tier system deployed (74% accounts trusted). bd-v2.20.0 daily runners live (realized+unrealized, EventBridge, first automated run scheduled 03-31 5:25 PM ET).
+- 3 unpushed commits STILL on CLOUD: 91d2342f, 7fa6947d, 3a322b25. DT last online 04-01. Push required before AE can upload scripts/deploy Lambda.
+- GLDOPS .001/.002/.003 GO'd 04-03 but all 3 assigned agents (AE 0.6.0, DS 0.4.0) offline since. Zero progress.
+- GLDRST deploy chain still blocked: DT push -> AE S3 upload (scripts 05, 12) -> AE Lambda deploy (publisher) -> .018 DE wiring.
+- Gold rebuild (PID 39671) started 04-01, watchdog installed 04-02. Instance likely self-stopped by now. Need AE to verify output.
+- ANONYM P4 TOs (.012/.013/.014) STAGED, awaiting GO.
+- GLDRST .011 SUPERSEDED (validation covered by HISTRY diagnostics + phantom fix).
 
-### Pod 4 (ClientPlatform) -- Status as of 2026-03-30
+### Completed since last COO session (session 13, 04-03)
+
+- No new completions. All implementing agents have been offline since 04-01 to 04-03.
+
+### Pod 4 (ClientPlatform) -- Status as of 2026-04-05
 
 | Agent | Last Known Work | Status |
 |-------|----------------|--------|
-| 0.4.0_DE | MVPLVL.010 L2 composition + Mix toggle delivered (2026-03-26). 1 pending TO (DEBT_1STRUN.001.scan). 2 GLDRST TOs STAGED (.003, .012). | Last log 2026-03-26 |
-| 0.4.0_DT | Portal-v2.1.18 deployed (03-31). CloudFront fix: added /api/scoped/partners/* + /api/partners behaviors (Books tab was broken on prod). DEBT_1STRUN lint/TS cleanup (6 files). 1 pending TO (deployment_map). 3 GLDRST TOs STAGED (.007, .008, .013). | Last log 2026-03-31 |
-| 0.4.0_DS | Perf optimization + quality tiers COMPLETE. Net AUA gap +$4.9M (+0.31%). 74% accounts trusted (tiers A+B+C). No pending TOs. LIVE. | Last log 2026-03-31, LIVE |
-| 0.4.2_RD | MVPLVL.009 mix rendering verified (2026-03-23). 2 pending TOs (DEBT_1STRUN.001.scan, page_inventory). No GLDRST TOs. | Last log 2026-03-23 |
+| 0.4.0_DE | Gold rebuild pipeline audit (04-02). DEBT_1STRUN.001.scan pending. GLDRST STAGED (.003, .012, .018). ANONYM.014 STAGED (blocked on .012+.013). | OFFLINE since 04-02 |
+| 0.4.0_DT | Portal-v2.1.24 deployed (04-01). deployment_map pending. GLDRST STAGED (.007, .008, .013). ANONYM.013 STAGED. 3 commits need push. | OFFLINE since 04-01 |
+| 0.4.0_DS | GLDRST.017 COMPLETE (7fa6947d + 3a322b25). .016 COMPLETE. Phantom fix (91d2342f) on S3. ANONYM.012 STAGED. GLDOPS.002 PENDING (P0). GLDOPS.003 PENDING (P1). | OFFLINE since 04-02 |
+| 0.4.2_RD | ANONYM .006 complete. 2 pending TOs (DEBT_1STRUN.001.scan, page_inventory). | OFFLINE since 04-01 |
 
-### Shared Services -- Status as of 2026-03-30
+### Shared Services -- Status as of 2026-04-05
 
 | Agent | Last Known Work | Pending |
 |-------|----------------|---------|
 | 0.5.0_AE_OpalETL | DEBT_1STRUN scan + fix + deploy (2026-03-24) | infrastructure_inventory |
-| 0.6.0_AE_PartnerETL | Gold rebuild marathon COMPLETE (03-30). 8 iterations, gap -$319M to +$4.9M. Runtime 57->20 min. EC2 stopped. | 3 GLDRST TOs STAGED (.009, .010, .014). infrastructure_inventory pending. |
-| 0.7.0_AE_CloudOps | BD realized+unrealized daily runners COMPLETE (bd-v2.20.0). Monitoring first automated run (03-31 5:25 PM ET). LIVE. | DEBT_1STRUN.001.scan, infrastructure_inventory. |
+| 0.6.0_AE_PartnerETL | Uploaded 91d2342f scripts to S3 (04-02). GLDOPS.001 GO'd (P0 diagnosis). Gold rebuild status unknown. | GLDOPS.001 (P0). 3 GLDRST TOs STAGED (.009, .010, .014). infrastructure_inventory pending. |
+| 0.7.0_AE_CloudOps | GLDRST.015 COMPLETE (watchdog deployed, systemd active). BD daily runners live (bd-v2.20.0). | DEBT_1STRUN.001.scan, infrastructure_inventory, GLDRST.019 (staged, BLOCKED Andrew), ec2-auto-shutdown-audit STAGED. |
 
 **NOTE:** This dashboard is corrected on every COO startup. Do not treat it as
 authoritative between sessions — always re-audit from agent logs and git.
