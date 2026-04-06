@@ -63,6 +63,41 @@ Note: `af47c84e` (fix ADVI_GLDOPS.002 pending marker check) landed between e55a0
 ## Current State
 
 **Status:** COMPLETE
-**Active branch:** CLOUD (pushed, clean)
-**Tag:** yang-v2.3.6
-**Unpushed:** deployment_map.xml update (yang tag v2.1.4 -> v2.3.6), this session log
+**Active branch:** CLOUD (pushed)
+
+## Full Session Deploy Log
+
+| Tag | Pipeline | What |
+|-----|----------|------|
+| yang-v2.3.6 | yang-pipeline | Filename regex fixes + CacheControl no-cache |
+| bd-v2.21.0 | bd-pipeline | GLDRST.007: publisher + advisor-publisher S3 path migration + dual-write |
+| bd-v2.21.1 | bd-pipeline | GLDOPS.003: churn component in AUA decomposition |
+| bd-v2.21.2 | bd-pipeline | Publisher GRO total uses actual AUA delta |
+| partners-api-v1.13.0 | partners-api | GLDRST.007: opal-partners-data S3 path migration (19 reads) |
+| partners-api-v1.13.1 | partners-api | GLDRST.018: serve market_growth + synthetic_correction |
+
+## GLDRST.008: CloudFront Router v8
+
+- shared-advisor-router Lambda@Edge published as version 8
+- CloudFront distribution EVTSA9VEHNZVH updated, status: Deployed
+- All 7 routing patterns verified via Lambda invoke:
+  - artifacts (flat JSON) -- PASS
+  - entities/advisors (per-advisor) -- PASS
+  - entities/clients (client_timeseries rename) -- PASS
+  - views/ passthrough -- PASS
+  - timeseries/ passthrough -- PASS
+  - summary/ -> artifacts -- PASS
+  - snapshots/ -> artifacts -- PASS
+
+## Portal Merges
+
+- GLDRST.003 + ANONYM.014: DEV pushed + PROD merged (32d2655)
+- GLDRST.018: DEV pushed + PROD merged (0ca650b)
+
+## Task Order Status
+
+| TO | Status |
+|----|--------|
+| ADVI_GLDRST.007 | COMPLETE |
+| ADVI_GLDRST.008 | COMPLETE |
+| ADVI_GLDRST.013 | staged (terminal gate) |
