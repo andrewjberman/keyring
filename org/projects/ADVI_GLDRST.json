@@ -41,8 +41,8 @@
     }
   ],
   "status": "active",
-  "phase": "P2 COMPLETE. .015/.016/.017 COMPLETE. All code pushed (04-05). Deploy chain INCOMPLETE: scripts 05+12 stale on S3 (03-31 versions, need 7fa6947d+3a322b25). Publisher Lambda stale (03-18, needs 3a322b25). Instance running since 04-02 (needs AE diagnosis). 12 original TOs STAGED (P3-P6).",
-  "blocking": "DEPLOY CHAIN: AE upload scripts 05+12 to S3, DT deploy publisher Lambda. .018 staged (dep .017 code met, deploy pending). .019 BLOCKED Andrew (Schwab vendor). P3-P6 (.003-.014) awaiting Andrew GO.",
+  "phase": "P5 migration: .009 AE COMPLETE (Run 5 finished 16:29 UTC, 2,319 keys in new layout, manifest confirmed). 16 TOs COMPLETE. 3 TOs STAGED (.010, .013, .014). Next: GO .013 DT (infra validation).",
+  "blocking": "DT .013 (infra validation) -> AE .010 (old key cleanup) -> AE .014 (final gate). .019 BLOCKED Andrew (Schwab vendor).",
   "created": "2026-03-19",
   "pods": ["0.4", "0.6", "0.7"],
   "pipeline": "bd-pipeline",

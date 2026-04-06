@@ -47,6 +47,7 @@ Responsible pod: `0.2.0_DE` / `0.2.0_DS` / `0.2.0_DT`
 | `VALU` | Valuation | `portal/src/pages/Valuation/` | `0.2.4_RD_Valuation` | yang-pipeline |
 | `MACR` | Macroeconomics | `portal/src/pages/Macroeconomics/` | `0.2.5_RD_Macroeconomics` | yang-pipeline |
 | `CORR` | Correlation | `portal/src/pages/Correlation/` | `0.2.6_RD_Correlation` | yang-pipeline |
+| `ETFS` | ETF Operations (DIVZ, IDVZ, PFOE, PFDE) | TBD | TBD | TBD |
 
 ---
 
@@ -60,6 +61,7 @@ Responsible pod: `0.3.0_DE` / `0.3.0_DS` / `0.3.0_DT`
 | `TRSB` | TradeSubmission | `portal/src/pages/TradeSubmission/` | `0.3.2_RD_TradeSubmission` | smartx-pipeline |
 | `DRFR` | DataRefresh | `portal/src/pages/DataRefresh/` | `0.3.3_RD_DataRefresh` | (cross-pipeline) |
 | `SSCN` | SecurityScanner | `portal/src/pages/SecurityScanner/` | `0.3.4_RD_SecurityScanner` | TBD (Pattern 0) |
+| `TAXX` | Tax Strategy (Tax SMA Trade Allocation) | TBD | TBD | TBD |
 
 ---
 
@@ -86,6 +88,7 @@ Assign the DE/DS/DT of the primary pod, or the AE for pipeline-only projects.
 | `NPPL` | News pipeline | `0.5.0_AE_OpalETL` |
 | `SXPL` | SmartX pipeline | `0.6.0_AE_PartnerETL` |
 | `SHIF` | Shared infrastructure | `0.7.0_AE_CloudOps` |
+| `AUTH` | Portal Authentication, Authorization, and Identity | `0.7.0_AE_CloudOps` (infra) + `0.4.0_DT_ClientPlatform` (app layer) |
 
 ---
 

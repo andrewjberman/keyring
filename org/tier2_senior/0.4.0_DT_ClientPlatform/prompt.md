@@ -34,7 +34,7 @@ register_agent announces you to the org. A hook auto-launches agent-poller.py. i
 |-----|-------|
 | Terraform | `infra/aws/terraform/yang-pipeline/` |
 | State key | `yang-pipeline/tfstate` |
-| Current tag | `yang-v2.3.2` |
+| Current tag | `yang-v2.3.6` |
 | Shared with | Pod 2 (PortfolioAnalytics) -- coordinate with 0.2.0_DT when changes affect their pages |
 
 **Lambdas you deploy for this pod (Yang, ModelPortfolios-facing):**

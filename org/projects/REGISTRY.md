@@ -16,11 +16,14 @@ the surface area; the project code identifies the specific initiative.
 
 | Project Code | Macro | Project Name | Phase | Pods | Blocking | PRDs |
 |---|---|---|---|---|---|---|
-| `ADVI_GLDRST` | `ADVI` | BD Gold Layer S3 Restructure + Operational Readiness | P2 COMPLETE. .015/.016/.017 COMPLETE. Code pushed 04-05. Deploy chain incomplete: scripts 05+12 stale on S3, publisher Lambda stale. Instance running since 04-02. 12 TOs STAGED (P3-P6). | 0.4, 0.6, 0.7 | DEPLOY: AE upload scripts 05+12, DT deploy publisher. .018 staged (dep .017 code met). .019 BLOCKED (Schwab vendor). P3-P6 awaiting Andrew GO. | Restructure Proposal, Blast Radius, Rollback, COO Briefing, Operational Readiness |
-| `ADVI_ANONYM` | `ADVI` | Advisor Intelligence PII Pseudonymization + RBAC | P3 COMPLETE (04-01). P4 STAGED (04-02): S3-direct PII bypass fix. 3 TOs (.012 DS, .013 DT, .014 DE). | 0.4, 0.7 | .012+.013 awaiting GO. .014 blocked on .012+.013. JWT tier removal (low pri). | ADVI_ANONYM_PRD.md |
-| `DEBT_1STRUN` | `DEBT` | First Technical Debt Sweep | Phase 1: 20/27 scans COMPLETE. Remaining 7: COO aggregate, DE 0.2.0/0.3.0/0.4.0, AE 0.7.0, RD 0.1.2/0.4.2. | 0.1-0.4, 0.5-0.7 | 7 remaining scan TOs. | — |
-| `ADVI_GLDOPS` | `ADVI` | Gold Layer Operations: Data Freshness + Market Growth | P1: 3 TOs GO'd (04-03). Zero progress -- all agents offline since. GLDRST commits now pushed (04-05). | 0.4, 0.6, 0.7 | .001/.002/.003 all PENDING. AE must upload scripts + diagnose instance. DT must deploy publisher. | ADVI_GLDOPS_PRD.md |
+| `ADVI_GLDRST` | `ADVI` | BD Gold Layer S3 Restructure + Operational Readiness | P3 build COMPLETE (15 TOs). P5 migration active: AE .009 IN PROGRESS (gold rerun on EC2). 3 TOs STAGED (.010, .013, .014). | 0.4, 0.6, 0.7 | AE .009 completion -> DT .013 infra validation -> AE .010 cleanup -> AE .014 final gate. .019 BLOCKED (Schwab vendor). | Restructure Proposal, Blast Radius, Rollback, COO Briefing, Operational Readiness |
+| `ADVI_ANONYM` | `ADVI` | Advisor Intelligence PII Pseudonymization + RBAC | P4 COMPLETE. .012/.013/.014 all COMPLETE. .014 re-executed with crossref (d552234). Awaiting DT push + PROD merge. | 0.4, 0.7 | DT push portal DEV + PROD merge. JWT tier removal (low pri). | ADVI_ANONYM_PRD.md |
+| `DEBT_1STRUN` | `DEBT` | First Technical Debt Sweep | P1: 21/27 scans done (AE 0.7.0 infra audit delivered). P2: 4 remediation TOs STAGED for 0.5.0 (.002-.005: source map, trade TF, S3, IAM/cleanup). | 0.1-0.4, 0.5-0.7 | P1: 6 remaining scans. P2: GO for 0.5.0 remediation. | — |
+| `ADVI_GLDOPS` | `ADVI` | Gold Layer Operations: Data Freshness + Market Growth | All 3 TOs COMPLETE. Garbage filter + churn decomp (bd-v2.21.1). GRO total fix (bd-v2.21.2). Pending GRO verification after rerun. | 0.4, 0.6, 0.7 | GRO verification after gold rerun. Then close. | ADVI_GLDOPS_PRD.md |
 | `ADHC_TMSTEL` | `ADHC` | Teams Telemetry MCP Server | P0: PRD complete. Awaiting Azure AD app registration + COO decomposition. | 0.7 | Azure AD app registration (Andrew/IT). COO TOs. | ADHC_TMSTEL_PRD.md |
+| `ETFS_SECIDX` | `ETFS` | ETF Securities & Index Inventory Assessment | P0 COMPLETE. 3/3 TOs done. 102 securities, 138 portal tickers audited, D4 recommendations delivered. | 0.2 | PFDE holdings (Andrew). CTO Phase 1 PRD. | ETFS_SECIDX_PRD.md |
+| `TAXX_TXSTRT` | `TAXX` | Tax SMA Trade Allocation Strategy | P0: DS orientation. Source data in models/tax_strategy/. | 0.3 | DS gap analysis. | — |
+| `AUTH_TFIMPT` | `AUTH` | Auth Infrastructure Terraform Import | 2/3 TOs COMPLETE. .002 AE done (portal-auth-v1.9.0). .003 DT done (shared-infra owns role). .001 AE STAGED (CloudFront, next session). | 0.4, 0.7 | .001 CloudFront distribution import (next AE session). | — |
 
 ---
 

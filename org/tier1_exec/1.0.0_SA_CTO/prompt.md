@@ -131,23 +131,25 @@ When researching for a PRD, you should:
 
 **Commit only:** `docs/architecture/` specs, `org/projects/` files, session logs, org docs. Use `--author="1.0.0_SA_CTO <1.0.0_SA_CTO@opal.agent>"`.
 
-## Project Status Dashboard -- Updated 2026-04-05 (session 18)
+## Project Status Dashboard -- Updated 2026-04-06 (session 19)
 
 ### Active Projects
 
 | Project | Status | Pending Work |
 |---------|--------|-------------|
-| `ADVI_GLDRST` | P2 COMPLETE. .015 COMPLETE (watchdog). .016 COMPLETE (imports). .017 COMPLETE (DS 7fa6947d, AUA decomposition). 12 original TOs STAGED (P3-P6). Gold rebuild in progress (PID 39671). Fixes on S3 (91d2342f + 3a322b25). | Original .003-.014 awaiting Andrew GO. .018 staged (DE NNA wiring, dep .017 met). .019 Schwab RPS (AE, BLOCKED Andrew). |
-| `ADVI_ANONYM` | P3 COMPLETE (04-01). P4 STAGED (04-02): S3-direct PII bypass fix. 3 TOs issued (.012 DS Lambda handlers, .013 DT authorizer passthrough, .014 DE endpoint migration). .012+.013 parallel; .014 depends on both. | .014 blocked on .012+.013. JWT tier removal (low pri). Partner table migration (deferred). |
+| `ADVI_GLDRST` | P3 COMPLETE (15 TOs). P5 migration active: AE .009 IN PROGRESS (Run 5, EC2 gold incremental). S3 layout migrated. 3 TOs STAGED (.010, .013, .014). | .009 completion -> .013 infra validation -> .010 cleanup -> .014 final gate. .019 BLOCKED Andrew (Schwab). |
+| `ADVI_ANONYM` | P4 COMPLETE. .012/.013/.014 all deployed. Portal PROD de62fde. partners-api-v1.14.0. | Close project. JWT tier removal (low pri). Partner migration (deferred). |
 | `DEBT_1STRUN` | Phase 1: 20/27 scans COMPLETE. C1-C4 fixes deployed to EC2 (03-25). | 7 remaining scans: COO aggregate, DE 0.2.0/0.3.0/0.4.0, AE 0.7.0, RD 0.1.2/0.4.2. |
-| `ADVI_GLDOPS` | P1: 3 TOs GO'd (04-03). .001 AE data freshness diagnosis. .002 DS pending marker fix. .003 DS market growth diagnostic. All PENDING. | .002 deploy depends on .001. .003 fix depends on findings. 3 unpushed GLDRST commits block deploy chain. |
+| `ADVI_GLDOPS` | All 3 TOs COMPLETE. Garbage filter + churn decomp (bd-v2.21.1). GRO total fix (bd-v2.21.2). | GRO verification after gold rerun. Then close. |
 | `ADHC_TMSTEL` | P0: PRD complete. Awaiting Azure AD app registration. | Azure AD app registration (Andrew/IT). COO TOs for 0.7.0_AE. |
+| `ETFS_SECIDX` | P0: PRD complete. COO decomposition pending. | COO task order issuance. PFDE holdings needed (Andrew). |
+| `TAXX_TXSTRT` | P0: DS orientation. .001 issued to 0.3.0_DS. | DS gap analysis. |
 
 ### Recently Completed
 
 | Project | Completed | Key Deliverables |
 |---------|-----------|-----------------|
-| `ADHC_HISTRY` | 2026-04-06 | All 8 TOs complete. AUA $1,582M (0.3% from silver). Phantom fix deployed. NNA rearch under GLDRST.017. BD vendor ($259M) + Pathfinder weights = Andrew external. |
+| `ADHC_HISTRY` | 2026-04-06 | All 8 TOs complete. AUA $1,582M (0.3% from silver). Phantom fix deployed. NNA rearch under GLDRST.017. No open items. |
 | `ADVI_TICKID` | 2026-03-26 | All 8 TOs complete (.001-.008). P1 resolution + enrichment + DynamoDB. P2 feedback bridge + sweep-unlisted + silver AUA override + bond classifier. AE via GLDRST.002 gold run. |
 | `ADVI_MVPLVL` | 2026-03-26 | Reopened .010: DS ghost exclusion + DE portal L2 fixes. AE gold rerun subsumed by GLDRST.002. |
 | `ADVI_PRICES` | 2026-03-27 | All 9 TOs complete. AE .005 MBS fix + silver rebuild (gap 0.169%). Post-project ad-hoc 03-28: AUA gap +$37.3M->+$8.5M (77%). Ad-hoc 03-30: 8 gold rebuild iterations, two-sided injection (sell + buy) live, gap +$4.9M (+0.31%). 74% accounts trusted (quality tiers A+B+C). bd-v2.20.0 deployed: daily BD realized+unrealized runners automated. |
@@ -167,10 +169,10 @@ When researching for a PRD, you should:
 
 | Pipeline | Tag |
 |----------|-----|
-| BD | `bd-v2.20.0` |
-| PartnersAPI | `partners-api-v1.12.0` |
-| PortalAuth | `portal-auth-v1.5.0` |
-| Yang | `yang-v2.3.5` |
+| BD | `bd-v2.21.2` |
+| PartnersAPI | `partners-api-v1.13.1` |
+| PortalAuth | `portal-auth-v1.6.0` |
+| Yang | `yang-v2.3.6` |
 | News | `news-v2.7.3` |
 | MarketOverview | `market-overview-v1.6.8` |
 | DataRefresh | `data-refresh-v2.2.0` |

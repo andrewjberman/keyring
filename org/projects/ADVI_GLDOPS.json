@@ -11,8 +11,8 @@
     }
   ],
   "status": "active",
-  "phase": "Phase 1: WS1 diagnosis (.001 AE GO) + pending marker fix (.002 DS GO) in parallel. WS2 diagnostic (.003 DS GO, starts after .002). All 3 TOs issued and GO'd 04-03. Zero agent progress since GO -- all agents offline.",
-  "blocking": ".001/.002/.003 all PENDING (agents offline since 04-03). GLDRST commits now pushed (04-05). Remaining: AE must upload scripts 05+12 to S3, DT must deploy publisher Lambda (3a322b25). Instance i-01003b035d2988dfb running since 04-02 -- AE to diagnose.",
+  "phase": "All 3 TOs COMPLETE. Operational fixes deployed (bd-v2.20.1). GRO total fix deployed (bd-v2.21.2, 2c45ae29). Pending: verify GRO lands 10-12% after churn fix rerun, then close.",
+  "blocking": "GRO verification after gold rerun. Then close.",
   "created": "2026-04-03",
   "pods": ["0.4", "0.6", "0.7"],
   "pipeline": "bd-pipeline",
