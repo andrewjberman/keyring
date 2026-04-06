@@ -1,0 +1,21 @@
+{
+  "project_code": "ETFS_SECIDX",
+  "macro_code": "ETFS",
+  "name": "ETF Securities & Index Inventory Assessment",
+  "description": "Phase 0 of ETF Operations surface area. Comprehensive inventory of all securities, indices, and benchmarks across DIVZ, IDVZ, PFOE, PFDE holdings + portal positioning data + Bloomberg dashboards. Identifies data source gaps and maps existing coverage.",
+  "prds": [
+    {
+      "path": "docs/architecture/ETFS_SECIDX_PRD.md",
+      "label": "ETF Securities & Index Inventory Assessment PRD",
+      "date": "2026-04-06"
+    }
+  ],
+  "status": "active",
+  "phase": "Phase 0 COMPLETE. All 3 TOs done: .001 DS (102 securities), .002 DE (138 portal tickers audited, 6 DQ issues), .003 DS (D4 recommendations report). Ready for CTO Phase 1 PRD.",
+  "blocking": "PFDE holdings needed from Andrew. CTO to issue Phase 1 PRD based on D4 recommendations.",
+  "created": "2026-04-06",
+  "pods": ["0.2"],
+  "pipeline": "TBD",
+  "thread_counter": 0,
+  "threads": []
+}
