@@ -55,8 +55,14 @@ while true; do
             mv "$msg" "$INBOX/read/"
         done
         echo "===================================================================="
-        echo "[INBOX] Act on the above, then re-launch: bash org/mcp/inbox-watch.sh $SERIAL"
-        echo "===================================================================="
+        echo ""
+        echo "<mandatory>"
+        echo "RELAUNCH inbox-watch.sh IMMEDIATELY after acting on the above messages."
+        echo "Run: bash org/mcp/inbox-watch.sh $SERIAL"
+        echo "Use Bash tool with run_in_background: true. Do NOT use &."
+        echo "Without inbox-watch running you will receive NO further messages."
+        echo "</mandatory>"
+        echo ""
         exit 0
     done
     sleep 5

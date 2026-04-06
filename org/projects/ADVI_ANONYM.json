@@ -8,8 +8,8 @@
     {"path": "docs/architecture/ADVI_ANONYM_P3_PRD.md", "label": "P3 Tier Refactor + Book Scoping + Test Harness", "date": "2026-04-01"}
   ],
   "status": "active",
-  "phase": "P3 COMPLETE (04-01). tier fully removed (firmId model). role-only PII gate live. book scoping deployed. portal-v2.1.22. partners-api-v1.12.0. portal-auth-v1.5.0. Test accounts: 4 users in DynamoDB. Login incident (18:29-18:34 ET) resolved. Follow-on: DT remove tier from JWT (not yet issued). AE partner table migration (deferred).",
-  "blocking": "None for core P3. JWT tier removal pending DT TO. Partner table migration pending AE TO.",
+  "phase": "P3 COMPLETE (04-01). P4 STAGED (04-02): S3-direct PII bypass fix. 3 TOs issued (.012 DS Lambda handlers, .013 DT authorizer advisorId passthrough, .014 DE frontend endpoint migration). .012+.013 can run in parallel; .014 depends on both.",
+  "blocking": ".014 blocked on .012 + .013. JWT tier removal pending DT TO (low priority). Partner table migration pending AE TO (deferred).",
   "created": "2026-03-30",
   "pods": ["0.4", "0.7"],
   "pipeline": "shared-infra",

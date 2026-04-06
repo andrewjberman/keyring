@@ -16,10 +16,10 @@ the surface area; the project code identifies the specific initiative.
 
 | Project Code | Macro | Project Name | Phase | Pods | Blocking | PRDs |
 |---|---|---|---|---|---|---|
-| `ADVI_GLDRST` | `ADVI` | BD Gold Layer S3 Restructure | P2 COMPLETE. .004 config.py VALIDATED ON EC2 (03-30). 12 TOs STAGED (P3-P6), ready for COO activation. | 0.4, 0.6, 0.7 | None for P2. .004 prep validated early. P3+ STAGED awaiting GO. | Restructure Proposal, Blast Radius, Rollback Plan, COO Briefing |
-| `ADVI_ANONYM` | `ADVI` | Advisor Intelligence PII Pseudonymization + RBAC | P1+P2+P3 COMPLETE (04-01). pseudonymizer, auth-validator-edge v9, UI indicators, tier removed (firmId model), book scoping, test accounts. portal-v2.1.22, partners-api-v1.12.0, portal-auth-v1.5.0. | 0.4, 0.7 | DT: remove tier from JWT. AE: partner table migration. | ADVI_ANONYM_PRD.md |
+| `ADVI_GLDRST` | `ADVI` | BD Gold Layer S3 Restructure + Operational Readiness | P2 COMPLETE. .015/.016/.017 COMPLETE. Code pushed 04-05. Deploy chain incomplete: scripts 05+12 stale on S3, publisher Lambda stale. Instance running since 04-02. 12 TOs STAGED (P3-P6). | 0.4, 0.6, 0.7 | DEPLOY: AE upload scripts 05+12, DT deploy publisher. .018 staged (dep .017 code met). .019 BLOCKED (Schwab vendor). P3-P6 awaiting Andrew GO. | Restructure Proposal, Blast Radius, Rollback, COO Briefing, Operational Readiness |
+| `ADVI_ANONYM` | `ADVI` | Advisor Intelligence PII Pseudonymization + RBAC | P3 COMPLETE (04-01). P4 STAGED (04-02): S3-direct PII bypass fix. 3 TOs (.012 DS, .013 DT, .014 DE). | 0.4, 0.7 | .012+.013 awaiting GO. .014 blocked on .012+.013. JWT tier removal (low pri). | ADVI_ANONYM_PRD.md |
 | `DEBT_1STRUN` | `DEBT` | First Technical Debt Sweep | Phase 1: 20/27 scans COMPLETE. Remaining 7: COO aggregate, DE 0.2.0/0.3.0/0.4.0, AE 0.7.0, RD 0.1.2/0.4.2. | 0.1-0.4, 0.5-0.7 | 7 remaining scan TOs. | — |
-| `ADHC_HISTRY` | `ADHC` | BD Transaction History Forensic Investigation | P0 COMPLETE (03-31). P1 TO ISSUED (04-01): .002 DS Schwab-authority injection (diagnostic-first, then impl). STAGED awaiting GO. | 0.4, 0.6 | None. P1 staged awaiting GO. | — |
+| `ADVI_GLDOPS` | `ADVI` | Gold Layer Operations: Data Freshness + Market Growth | P1: 3 TOs GO'd (04-03). Zero progress -- all agents offline since. GLDRST commits now pushed (04-05). | 0.4, 0.6, 0.7 | .001/.002/.003 all PENDING. AE must upload scripts + diagnose instance. DT must deploy publisher. | ADVI_GLDOPS_PRD.md |
 | `ADHC_TMSTEL` | `ADHC` | Teams Telemetry MCP Server | P0: PRD complete. Awaiting Azure AD app registration + COO decomposition. | 0.7 | Azure AD app registration (Andrew/IT). COO TOs. | ADHC_TMSTEL_PRD.md |
 
 ---
@@ -40,6 +40,7 @@ session log. Performance baseline: CLSUNI ~36% unedited, CLSPT2 ~67% unedited.
 
 | Project Code | Macro | Project Name | Completed | Notes |
 |---|---|---|---|---|
+| `ADHC_HISTRY` | `ADHC` | BD Transaction History Forensic Investigation | 2026-04-06 | All 8 TOs complete. AUA $1,582M (0.3% from silver). Phantom fix deployed. NNA rearch under GLDRST.017. Remaining: BD vendor ($259M) + Pathfinder weights (Andrew external). |
 | `ADVI_TICKID` | `ADVI` | Ticker Resolution + Holdings Enrichment | 2026-03-26 | All 8 TOs complete (.001-.008). P1 resolution table + enrichment + DynamoDB backfill + detect enhancement. P2 feedback bridge + sweep-unlisted + silver AUA override + bond classifier. AE execution via combined GLDRST.002 gold run. |
 | `ADVI_PRICES` | `ADVI` | BD Canonical Pricing and Valuation Reconciliation | 2026-03-27 | All 9 task orders complete. Phantom fix ($296M->-$57.7M). 32 ticker corrections. Backfill +143K rows. Canonical 16.6% yahoo. Scheduler fix deployed. AE .005 MBS fix + silver rebuild (gap 3.72%->0.169%). Post-completion (03-28): 754 YF_OVERRIDES, realized sell injection (51K phantoms), net gap +$8.5M (+0.53%). Awaiting gold rebuild. |
 | `ADVI_GLDPRE` | `ADVI` | Gold Layer Pre-Run (4-Class + AUA Reconciliation) | 2026-03-25 | All task orders complete. Gold reruns verified. Portal-v2.1.17 live (52-commit merge 03-23). AUA recon: -3.6% structural. 4-class taxonomy end-to-end. |

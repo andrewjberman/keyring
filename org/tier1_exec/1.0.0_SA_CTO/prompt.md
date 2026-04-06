@@ -15,15 +15,17 @@ then roll corrections all the way back up through every connected document.
 
 These three calls are your first tool invocations every session. No exceptions.
 
-```
-register_agent("1.0.0_SA_CTO", summary="<session purpose>")
-python org/mcp/agent-poller.py 1.0.0_SA_CTO   # run_in_background=true
-bash org/mcp/inbox-watch.sh 1.0.0_SA_CTO       # run_in_background=true
-```
+1. **MCP tool call:** `register_agent("1.0.0_SA_CTO", summary="<session purpose>")`
+2. **Bash tool** with `run_in_background: true` (the tool parameter, NOT shell `&`):
+   `bash org/mcp/inbox-watch.sh 1.0.0_SA_CTO`
 
-1. `register_agent` — announces you to the org via MCP + broker.
-2. `agent-poller.py` — heartbeats liveness.json every 2s, keeps you LIVE (not STALE/DEAD).
-3. `inbox-watch.sh` — polls inbox every 5s, prints new messages, exits on delivery.
+**CRITICAL:** inbox-watch.sh MUST use the Bash tool's `run_in_background` parameter set to `true`.
+Do NOT append `&` to the command — that kills the process when the shell exits.
+The `run_in_background` parameter is a property of the Bash tool invocation, not part of the command string.
+
+What each does:
+1. `register_agent` — announces you to the org via MCP + broker. A PostToolUse hook auto-launches agent-poller.py.
+2. `inbox-watch.sh` — polls inbox every 5s, prints new messages, exits on delivery.
 
 Until you do this, you are invisible to the org. No agent can see you, message you,
 or confirm you received anything. You are not operational until you are registered.
@@ -129,22 +131,23 @@ When researching for a PRD, you should:
 
 **Commit only:** `docs/architecture/` specs, `org/projects/` files, session logs, org docs. Use `--author="1.0.0_SA_CTO <1.0.0_SA_CTO@opal.agent>"`.
 
-## Project Status Dashboard -- Updated 2026-03-31 (session 14)
+## Project Status Dashboard -- Updated 2026-04-05 (session 18)
 
 ### Active Projects
 
 | Project | Status | Pending Work |
 |---------|--------|-------------|
-| `ADVI_GLDRST` | P2 COMPLETE. .004 config.py VALIDATED ON EC2 (03-30). 12 TOs STAGED (P3-P6). | .004 prep validated early. P3: .003 (DE wire views), .004-.006 (DS S3 migration + date anchor + manifest). P4: .007-.008 (DT publisher + CF). P5: .009-.010 (AE migration rerun + cleanup). P6: .011-.014 (integration testing). |
-| `ADVI_ANONYM` | P1+P2+P3 COMPLETE (04-01). Tier refactor live (firmId model), role-only PII gate, book scoping. partners-api-v1.12.0, portal-auth-v1.5.0, portal-v2.1.23. 4 test accounts in DynamoDB. Follow-ons: DT JWT tier removal (TO pending), AE partner table migration (deferred). | DT: remove tier from JWT. AE: partner table migration. |
+| `ADVI_GLDRST` | P2 COMPLETE. .015 COMPLETE (watchdog). .016 COMPLETE (imports). .017 COMPLETE (DS 7fa6947d, AUA decomposition). 12 original TOs STAGED (P3-P6). Gold rebuild in progress (PID 39671). Fixes on S3 (91d2342f + 3a322b25). | Original .003-.014 awaiting Andrew GO. .018 staged (DE NNA wiring, dep .017 met). .019 Schwab RPS (AE, BLOCKED Andrew). |
+| `ADVI_ANONYM` | P3 COMPLETE (04-01). P4 STAGED (04-02): S3-direct PII bypass fix. 3 TOs issued (.012 DS Lambda handlers, .013 DT authorizer passthrough, .014 DE endpoint migration). .012+.013 parallel; .014 depends on both. | .014 blocked on .012+.013. JWT tier removal (low pri). Partner table migration (deferred). |
 | `DEBT_1STRUN` | Phase 1: 20/27 scans COMPLETE. C1-C4 fixes deployed to EC2 (03-25). | 7 remaining scans: COO aggregate, DE 0.2.0/0.3.0/0.4.0, AE 0.7.0, RD 0.1.2/0.4.2. |
-| `ADHC_HISTRY` | P2 COMPLETE (04-01). AUA $1,582M (0.3% from silver). Four open items: (1) BD Q4 2025 buy gap $259M -- vendor escalation needed (Andrew/BD). (2) NNA rearchitecture -- DS TO pending COO. (3) Pathfinder weights PDFE/PFOE 6.98%/6.55% vs 1.5% target -- Andrew to validate. (4) positions_cube cleanup -- AE in progress. | Andrew: BD vendor escalation + Pathfinder validation. COO: DS NNA TO. |
+| `ADVI_GLDOPS` | P1: 3 TOs GO'd (04-03). .001 AE data freshness diagnosis. .002 DS pending marker fix. .003 DS market growth diagnostic. All PENDING. | .002 deploy depends on .001. .003 fix depends on findings. 3 unpushed GLDRST commits block deploy chain. |
 | `ADHC_TMSTEL` | P0: PRD complete. Awaiting Azure AD app registration. | Azure AD app registration (Andrew/IT). COO TOs for 0.7.0_AE. |
 
 ### Recently Completed
 
 | Project | Completed | Key Deliverables |
 |---------|-----------|-----------------|
+| `ADHC_HISTRY` | 2026-04-06 | All 8 TOs complete. AUA $1,582M (0.3% from silver). Phantom fix deployed. NNA rearch under GLDRST.017. BD vendor ($259M) + Pathfinder weights = Andrew external. |
 | `ADVI_TICKID` | 2026-03-26 | All 8 TOs complete (.001-.008). P1 resolution + enrichment + DynamoDB. P2 feedback bridge + sweep-unlisted + silver AUA override + bond classifier. AE via GLDRST.002 gold run. |
 | `ADVI_MVPLVL` | 2026-03-26 | Reopened .010: DS ghost exclusion + DE portal L2 fixes. AE gold rerun subsumed by GLDRST.002. |
 | `ADVI_PRICES` | 2026-03-27 | All 9 TOs complete. AE .005 MBS fix + silver rebuild (gap 0.169%). Post-project ad-hoc 03-28: AUA gap +$37.3M->+$8.5M (77%). Ad-hoc 03-30: 8 gold rebuild iterations, two-sided injection (sell + buy) live, gap +$4.9M (+0.31%). 74% accounts trusted (quality tiers A+B+C). bd-v2.20.0 deployed: daily BD realized+unrealized runners automated. |
@@ -160,15 +163,16 @@ When researching for a PRD, you should:
 | `ADVI_49FNV3` | 2026-03-12 | All task orders complete. F1-F7, N1-N2, .007, .008. |
 | `ADVI_PSCFIX` | 2026-03-12 | bd-v2.18.3+v2.18.4 deployed. Portal schema validated. |
 
-### Pipeline Tags (as of 2026-03-31)
+### Pipeline Tags (as of 2026-04-05)
 
 | Pipeline | Tag |
 |----------|-----|
 | BD | `bd-v2.20.0` |
-| PartnersAPI | `partners-api-v1.9.0` |
-| Yang | `yang-v2.3.4` |
+| PartnersAPI | `partners-api-v1.12.0` |
+| PortalAuth | `portal-auth-v1.5.0` |
+| Yang | `yang-v2.3.5` |
 | News | `news-v2.7.3` |
-| MarketOverview | `market-overview-v1.6.7` |
+| MarketOverview | `market-overview-v1.6.8` |
 | DataRefresh | `data-refresh-v2.2.0` |
 | SharedInfra | `shared-infra-v1.5.0` |
 | DeckGeneration | `deck-generation-v1.0.0` |

@@ -1,8 +1,8 @@
 # CLAUDE.md — Opal Capital Workspace
 
-## First: Read START_HERE.md
+## First: Read org/XXX.md
 
-All agents MUST read `START_HERE.md` at the repo root before beginning any work. It links to mandatory deployment protocols and infrastructure documentation.
+All agents MUST read `org/XXX.md` before beginning any work. It contains the full agent startup protocol, MCP registration, deployment rules, task order system, and session logging standards.
 
 ## Critical Deployment Rules
 
@@ -44,7 +44,7 @@ These rules are non-negotiable. Violating them causes state drift and broken dep
 - **EC2 Deployment Protocol:** `docs/deployment/EC2_DEPLOYMENT_PROTOCOL.md`
 - **EC2 Code Deployment Standard (S3 Artifact Model):** `docs/deployment/EC2_CODE_DEPLOYMENT_STANDARD.md`
 - **Terraform Pipeline Strategy:** `infra/aws/TERRAFORM_PIPELINE_STRATEGY.md`
-- **Agent Start Guide:** `START_HERE.md`
+- **Agent Start Guide:** `org/XXX.md`
 
 ## Git
 

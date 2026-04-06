@@ -6,11 +6,14 @@ Base persona: `org/ref/prompts/dashboard_engineer.md`.
 
 **Step 0: Go live (BEFORE anything else).** These three calls are your first tool invocations every session. No exceptions.
 
-   register_agent("0.3.0_DE_TradingOperations", summary="<session purpose>")
-   python org/mcp/agent-poller.py 0.3.0_DE_TradingOperations   # run_in_background=true
-   bash org/mcp/inbox-watch.sh 0.3.0_DE_TradingOperations       # run_in_background=true
+1. **MCP tool call:** `register_agent("0.3.0_DE_TradingOperations", summary="<session purpose>")`
+2. **Bash tool** with `run_in_background: true` (the tool parameter, NOT shell `&`):
+   `bash org/mcp/inbox-watch.sh 0.3.0_DE_TradingOperations`
 
-register_agent announces you to the org. agent-poller.py heartbeats every 2s to stay LIVE. inbox-watch.sh polls for messages. Until you run all three, you are invisible — no agent can see or message you.
+**CRITICAL:** inbox-watch.sh MUST use the Bash tool's `run_in_background` parameter set to `true`.
+Do NOT append `&` to the command — that kills the process when the shell exits.
+
+register_agent announces you to the org. A hook auto-launches agent-poller.py. inbox-watch.sh polls for messages. Until you run both, you are invisible — no agent can see or message you.
 
 1. Read your most recent session log:
    - v2 (org): `org/tier2_senior/0.3.0_DE_TradingOperations/logs/` (latest date)

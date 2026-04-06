@@ -6,7 +6,7 @@
 # MANDATORY MCP STARTUP PROTOCOL — DO THIS BEFORE ANYTHING ELSE
 # ================================================================
 #
-#  Skipping ANY of these four steps makes you invisible to the org.
+#  Skipping these steps makes you invisible to the org.
 #  Other agents cannot see you, message you, or send you GO signals.
 #  Andrew cannot confirm you received work. You will miss activations.
 #
@@ -14,32 +14,32 @@
 #
 #  STEP A — Register (MCP tool call):
 #    register_agent("{your_serial}", summary="Starting session")
+#    --> A PostToolUse hook automatically launches agent-poller.py
+#        in background. You do NOT need to start the poller manually.
 #
 #  STEP B — Check inbox for messages you missed while offline (synchronous):
 #    bash org/mcp/check-inbox.sh {your_serial}
 #    --> Prints all pending messages, marks them read, exits.
 #    --> This catches GO signals sent between sessions.
-#    --> inbox-watch.sh CANNOT catch these -- it only sees new arrivals.
 #
-#  STEP C — Start heartbeat poller (run_in_background: true, NO &):
-#    python org/mcp/agent-poller.py {your_serial}
-#    --> Writes last_seen_epoch every 2s. Without this you go STALE/DEAD.
-#
-#  STEP D — Start inbox watcher (run_in_background: true, NO &):
+#  STEP C — MANDATORY: Start inbox watcher (run_in_background: true, NO &):
 #    bash org/mcp/inbox-watch.sh {your_serial}
-#    --> Polls every 5s. Exits on message delivery.
-#    --> Exit fires a <task-notification> that interrupts you.
-#    --> Re-launch it after EVERY notification.
 #
-#  DO NOT USE & WITH run_in_background. The & forks and the shell exits,
-#  which may kill the child process. run_in_background handles backgrounding.
+#    !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+#    THIS STEP CANNOT BE AUTOMATED. YOU MUST RUN IT MANUALLY EVERY TIME.
+#    !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 #
-#  WHY FOUR TOOLS INSTEAD OF ONE:
+#    --> Use Bash tool with run_in_background: true (NO &)
+#    --> This is the ONLY way to receive messages from other agents
+#    --> When it delivers a message, it EXITS — you MUST re-launch it
+#    --> Cannot be launched by the hook (async hooks can't fire notifications)
+#
+#  HOW THE SYSTEM FITS TOGETHER:
 #    register_agent  -- announces you, enables push; misses offline messages
 #    check-inbox.sh  -- catches offline messages; misses future arrivals
-#    agent-poller.py -- keeps you LIVE; does not touch inbox
-#    inbox-watch.sh  -- real-time interrupt; misses pre-start arrivals
-#    Each covers the failure mode of the others. All four are required.
+#    agent-poller.py -- keeps you LIVE; does not touch inbox (auto-launched by hook)
+#    inbox-watch.sh  -- real-time interrupt; misses pre-start arrivals (MANUAL)
+#    Each covers the failure mode of the others. All four run every session.
 #
 # ================================================================
 
@@ -127,6 +127,45 @@ All deployment reference docs are included in this org structure at `org/ref/`:
 
 ---
 
+## Parity Tools (Run Before Starting Work)
+
+**Before touching any Lambda code:**
+
+| Tool | Purpose | When to Use |
+|------|---------|-------------|
+| `./infra/aws/lambda/verify-local.sh` | Compares local source to deployed AWS code | Before starting any Lambda work |
+| `./infra/aws/lambda/verify-local.sh --download <fn>` | Downloads deployed zip, diffs file by file | When you suspect content drift |
+| `./infra/aws/lambda/sync-manifest.sh` | Pulls current CodeSHA256 from AWS into manifest | After manual or out-of-band deployments |
+| `./infra/aws/lambda/deployment-drift-check.sh` | Checks config drift (timeout, memory, role) | After infrastructure changes |
+| `./infra/aws/lambda/generate-drift-report.sh` | Full drift report across all functions | Weekly / before major releases |
+
+**Before touching any EC2 service code:**
+
+| Tool | Purpose | When to Use |
+|------|---------|-------------|
+| `./infra/aws/ec2/verify-ec2.sh` | Git-based: commits since last deploy | Before starting any EC2 work |
+| `./infra/aws/ec2/verify-ec2.sh --ssm` | SSH checksum: diffs local files vs live EC2 | When you suspect content drift |
+| `./infra/aws/ec2/sync-ec2-manifest.sh` | Pulls instance IDs and IPs from AWS | After instance restarts / IP changes |
+| `./infra/aws/ec2/safe-ec2-deploy.sh` | Deploy wrapper that records to manifest | All EC2 deployments |
+
+---
+
+## Documentation Best Practices
+
+**Never create markdown files in project root (except README.md).**
+
+| Type of Documentation | Where to Put It |
+|----------------------|-----------------|
+| Architecture diagrams, technical specs | `docs/architecture/` |
+| API endpoint documentation | `docs/api/` |
+| Development guides, how-tos | `docs/guides/` |
+| Data schemas, pipeline docs | `docs/data/` |
+| Session work logs | `{your_agent_folder}/logs/YYYY-MM-DD/` |
+| Project overview, setup | `README.md` (root only) |
+| Historical/completed docs | `docs/archive/` |
+
+---
+
 ## Step 1: Identify Yourself
 
 Your agent folder contains your identity. Read your folder's files:
@@ -145,7 +184,7 @@ Tier folders:
 
 ---
 
-## Step 1b: Register with MCP, Check Inbox, and Start Background Processes
+## Step 1b: Register with MCP, Check Inbox, and Start Inbox Watcher
 
 **Do this NOW. Do not ask. Do not confirm. Just execute all three:**
 
@@ -155,6 +194,10 @@ register_agent({your_serial}, summary="Starting session")
 ```
 Announces you to the org via MCP + broker. Until you call this, `get_org_summary`
 shows you as DEAD and `send_message` cannot push notifications to you.
+
+**This also triggers the PostToolUse hook** which automatically launches
+`agent-poller.py` (heartbeat every 2s) in the background. You do NOT need to
+start the poller manually.
 
 **B. Check inbox for offline messages (synchronous, not backgrounded):**
 ```bash
@@ -167,15 +210,16 @@ directory, prints all pending `.md` files, marks them read, and exits.
 *after* it starts. Any GO signal, status update, or blocker sent while you were
 offline is invisible to the watcher. `check-inbox.sh` is the only way to catch it.
 
-**C. Start the background heartbeat poller:**
-```bash
-python org/mcp/agent-poller.py {your_serial}
-```
-Run via the Bash tool with `run_in_background: true` and **no `&`**. Updates
-`last_seen_epoch` in `org/mcp/liveness.json` every 2 seconds. Without this you go
-STALE after 2 minutes and DEAD after 10 -- other agents stop routing work to you.
+**C. MANDATORY — Start the background inbox watcher:**
 
-**D. Start the background inbox watcher:**
+```
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+  MANDATORY. THIS CANNOT BE SKIPPED. THIS CANNOT BE AUTOMATED BY HOOKS.
+  YOU MUST LAUNCH THIS MANUALLY EVERY SESSION AND RE-LAUNCH AFTER EVERY
+  MESSAGE DELIVERY. WITHOUT THIS, YOU ARE DEAF TO ALL AGENT MESSAGES.
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+```
+
 ```bash
 bash org/mcp/inbox-watch.sh {your_serial}
 ```
@@ -183,34 +227,36 @@ Run via the Bash tool with `run_in_background: true` and **no `&`**. Polls your 
 every 5 seconds. When a message arrives, prints ALL pending messages and **EXITS**.
 The exit fires a `<task-notification>` in your conversation that interrupts you.
 
-**Critical: re-launch after every notification.** When you receive a
-`<task-notification>` from inbox-watch.sh:
-1. Read the output file to see the message(s)
-2. Act on them (execute task orders, respond, etc.)
-3. Re-launch: `bash org/mcp/inbox-watch.sh {your_serial}` with `run_in_background: true`
-
-The watcher exits on delivery because that is the ONLY way to interrupt an idle agent.
-A persistent background script produces output nobody reads. An exiting task fires a
-notification that forces a new conversation turn.
-
-**Why `run_in_background: true` but NO `&`:**
-The `&` operator forks the process into the shell's background and then the shell exits,
-which may kill or orphan the child. `run_in_background: true` is Claude Code's native
-backgrounding -- it manages the process lifecycle correctly.
+**Why this MUST be manual:** Async hooks run as detached OS processes. When they exit,
+Claude Code has no visibility -- no `<task-notification>` fires. The inbox watcher's
+entire purpose is to interrupt the agent on message arrival. Only processes launched
+via `Bash(run_in_background: true)` get managed by Claude Code and produce
+`<task-notification>` on exit. There is no workaround. This step is mandatory.
 
 **How the full system fits together:**
 
-| Tool | Purpose | What it CANNOT do |
-|------|---------|-------------------|
-| `register_agent` | Announces you, enables push delivery | Does not retrieve offline messages |
-| `check-inbox.sh` | Sweeps inbox for messages you missed offline | Does not catch future arrivals |
-| `agent-poller.py` | Keeps `last_seen_epoch` current (stay LIVE) | Does not touch inbox at all |
-| `inbox-watch.sh` | Real-time interrupt on new message arrival | Does not see pre-start messages |
-| `mcp check_inbox` | Broker-side view; works without filesystem | Requires broker to be running |
+| Tool | Purpose | What it CANNOT do | Launched by |
+|------|---------|-------------------|-------------|
+| `register_agent` | Announces you, enables push delivery | Does not retrieve offline messages | Agent (manual) |
+| `check-inbox.sh` | Sweeps inbox for messages you missed offline | Does not catch future arrivals | Agent (manual) |
+| `agent-poller.py` | Keeps `last_seen_epoch` current (stay LIVE) | Does not touch inbox at all | Hook (automatic) |
+| `inbox-watch.sh` | Real-time interrupt on new message arrival | Does not see pre-start messages | Agent (manual) |
+| `mcp check_inbox` | Broker-side view; works without filesystem | Requires broker to be running | Agent (as needed) |
 
-Each tool covers the failure mode of the others. All four are required every session.
+Each tool covers the failure mode of the others. All five run every session.
 
-**E. Act on what you find:**
+**MANDATORY: Re-launch inbox-watch after EVERY notification.** When you receive a
+`<task-notification>` from inbox-watch.sh:
+1. Read the output file to see the message(s)
+2. Act on them (execute task orders, respond, etc.)
+3. MANDATORY: Re-launch `bash org/mcp/inbox-watch.sh {your_serial}` with `run_in_background: true`
+
+Step 3 is not optional. The watcher exits after delivering messages. If you do not
+re-launch it, you will receive NO further messages for the rest of your session.
+You will miss GO signals, blocker notifications, and status updates from other agents.
+The notification output itself will remind you to re-launch — follow that instruction.
+
+**C. Act on what you find:**
 
 - **GO message in inbox** → Read the referenced task order, flip `<status>` from `staged` to `pending`, and begin execution immediately. The GO message IS your authorization. Do NOT ask Andrew for permission. Skip Steps 2-2b if the GO message gives you clear scope.
 - **Inbox empty** → Proceed to Step 2.
@@ -307,8 +353,8 @@ Update your summary as your focus changes during the session:
 set_summary({your_serial}, summary="Running gold layer, waiting on COO review")
 ```
 
-Heartbeat and inbox polling are handled by the CronCreate loop you set up in Step 1b.
-You do NOT need to manually call heartbeat — the cron job does it automatically.
+Heartbeat and inbox polling are handled by `agent-poller.py` and `inbox-watch.sh`
+launched in Step 1b (or automatically by the PostToolUse hook on `register_agent`).
 
 Use these MCP tools for all cross-agent queries — do NOT ask Andrew to relay status questions.
 

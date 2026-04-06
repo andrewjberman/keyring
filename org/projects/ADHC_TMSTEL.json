@@ -1,0 +1,15 @@
+{
+  "project_code": "ADHC_TMSTEL",
+  "macro_code": "ADHC",
+  "name": "Teams Telemetry MCP Server",
+  "description": "MCP server wrapping the Microsoft Graph API to expose Teams channel messages as tools for Claude Code agents. Enables agents to read Teams messages, search conversations, and receive real-time team communications without leaving the terminal. Requires Azure AD app registration for Graph API access.",
+  "prds": [{"path": "docs/architecture/ADHC_TMSTEL_PRD.md", "label": "Teams MCP Server Architecture", "date": "2026-03-31"}],
+  "status": "active",
+  "phase": "P0: PRD complete, awaiting COO decomposition.",
+  "blocking": "Azure AD app registration (Andrew or IT). COO task order issuance.",
+  "created": "2026-03-31",
+  "pods": ["0.7"],
+  "pipeline": "shared-infra",
+  "thread_counter": 0,
+  "threads": []
+}

@@ -1,0 +1,21 @@
+{
+  "project_code": "ADVI_GLDOPS",
+  "macro_code": "ADVI",
+  "name": "Gold Layer Operations: Data Freshness + Market Growth Accuracy",
+  "description": "Two critical defects block advisor-intelligence production readiness: (1) daily gold incremental is blocked when a full rebuild occupies the EC2 (pending marker disabled), causing stale data; (2) market growth (GRO) shows ~1% for 2025 when actual portfolio returns were 10-12%, likely due to silver AUA override clipping gains and/or NNA misclassification inflating flow totals.",
+  "prds": [
+    {
+      "path": "docs/architecture/ADVI_GLDOPS_PRD.md",
+      "label": "Data Freshness + Market Growth Accuracy PRD",
+      "date": "2026-04-03"
+    }
+  ],
+  "status": "active",
+  "phase": "Phase 1: WS1 diagnosis (.001 AE GO) + pending marker fix (.002 DS GO) in parallel. WS2 diagnostic (.003 DS GO, starts after .002). All 3 TOs issued and GO'd 04-03. Zero agent progress since GO -- all agents offline.",
+  "blocking": ".001/.002/.003 all PENDING (agents offline since 04-03). GLDRST commits now pushed (04-05). Remaining: AE must upload scripts 05+12 to S3, DT must deploy publisher Lambda (3a322b25). Instance i-01003b035d2988dfb running since 04-02 -- AE to diagnose.",
+  "created": "2026-04-03",
+  "pods": ["0.4", "0.6", "0.7"],
+  "pipeline": "bd-pipeline",
+  "thread_counter": 0,
+  "threads": []
+}

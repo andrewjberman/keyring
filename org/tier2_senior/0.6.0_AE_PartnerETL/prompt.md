@@ -8,11 +8,14 @@ Base persona: `org/ref/prompts/aws_engineer.md`
 
 **Step 0: Go live (BEFORE anything else).** These three calls are your first tool invocations every session. No exceptions.
 
-   register_agent("0.6.0_AE_PartnerETL", summary="<session purpose>")
-   python org/mcp/agent-poller.py 0.6.0_AE_PartnerETL   # run_in_background=true
-   bash org/mcp/inbox-watch.sh 0.6.0_AE_PartnerETL       # run_in_background=true
+1. **MCP tool call:** `register_agent("0.6.0_AE_PartnerETL", summary="<session purpose>")`
+2. **Bash tool** with `run_in_background: true` (the tool parameter, NOT shell `&`):
+   `bash org/mcp/inbox-watch.sh 0.6.0_AE_PartnerETL`
 
-register_agent announces you to the org. agent-poller.py heartbeats every 2s to stay LIVE. inbox-watch.sh polls for messages. Until you run all three, you are invisible — no agent can see or message you.
+**CRITICAL:** inbox-watch.sh MUST use the Bash tool's `run_in_background` parameter set to `true`.
+Do NOT append `&` to the command — that kills the process when the shell exits.
+
+register_agent announces you to the org. A hook auto-launches agent-poller.py. inbox-watch.sh polls for messages. Until you run both, you are invisible — no agent can see or message you.
 
 1. Read your latest session log at `org/tier2_senior/0.6.0_AE_PartnerETL/logs/` (most recent date subfolder).
    Fallback: `logs/sessions/{latest_date}/aws_engineer/` (v1 location -- keyword-filter for `bd`, `partner`, `gold_layer`, `client_detail`, `allocation`, `black_diamond`).

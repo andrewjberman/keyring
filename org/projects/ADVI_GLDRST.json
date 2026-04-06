@@ -2,7 +2,7 @@
   "project_code": "ADVI_GLDRST",
   "macro_code": "ADVI",
   "name": "BD Gold Layer S3 Restructure",
-  "description": "Restructure the BD pipeline S3 layout to enforce medallion boundaries (silver/intermediate/gold) and organizational conventions (dimensions/timeseries/artifacts/per-entity). 45+ S3 keys move. 13 gold scripts + 3 Lambdas + 1 CloudFront behavior updated. Bundled: TX snapshot date anchor fix, shared lib/classification.py module (Option B selected), post-run manifest. Copy-then-switch migration with rollback at every phase. EXPANDED 2026-03-26: canonical exclusion unification (lib/exclusions.py), pre-computed quarterly views at all drill levels (N1/L2/L3), methodology consistency (single AUA source of truth).",
+  "description": "Restructure the BD pipeline S3 layout to enforce medallion boundaries (silver/intermediate/gold) and organizational conventions (dimensions/timeseries/artifacts/per-entity). 45+ S3 keys move. 13 gold scripts + 3 Lambdas + 1 CloudFront behavior updated. Bundled: TX snapshot date anchor fix, shared lib/classification.py module (Option B selected), post-run manifest. Copy-then-switch migration with rollback at every phase. EXPANDED 2026-03-26: canonical exclusion unification (lib/exclusions.py), pre-computed quarterly views at all drill levels (N1/L2/L3), methodology consistency (single AUA source of truth). EXPANDED 2026-04-02: operational readiness -- autoshutdown reliability (SSM/watchdog), cross-instance import safety (7 scripts), NNA/market growth rearchitecture, Schwab RPS automated daily ingestion.",
   "prds": [
     {
       "path": "docs/architecture/GOLD_LAYER_RESTRUCTURE_PROPOSAL.md",
@@ -33,11 +33,16 @@
       "path": "docs/architecture/GLDRST_COO_BRIEFING_INTEGRATION_TESTING.md",
       "label": "COO Briefing — Phase 5 integration testing (4 TOs: .011-.014) (2026-03-26)",
       "date": "2026-03-26"
+    },
+    {
+      "path": "docs/architecture/GLDRST_P3_OPERATIONAL_READINESS.md",
+      "label": "Operational Readiness Addendum — autoshutdown, cross-instance imports, NNA rearchitecture, Schwab RPS pipeline (2026-04-02)",
+      "date": "2026-04-02"
     }
   ],
   "status": "active",
-  "phase": "P2 COMPLETE. DS .001 + AE .002 done (03-26). GLDRST .004 config.py centralization VALIDATED ON EC2 (03-30, accidental early deploy during gold run -- all 20 production scripts import correctly, run_gold_layer.sh 00-10 passed). 12 TOs STAGED across P3-P6, ready for activation.",
-  "blocking": "None for P2. .004 prep validated early. P3+ TOs STAGED awaiting COO GO: .003 (DE wire views), .004-.006 (DS S3 migration + date anchor + manifest), .007-.008 (DT publisher + CF), .009-.010 (AE migration rerun + cleanup), .011-.014 (integration testing).",
+  "phase": "P2 COMPLETE. .015/.016/.017 COMPLETE. All code pushed (04-05). Deploy chain INCOMPLETE: scripts 05+12 stale on S3 (03-31 versions, need 7fa6947d+3a322b25). Publisher Lambda stale (03-18, needs 3a322b25). Instance running since 04-02 (needs AE diagnosis). 12 original TOs STAGED (P3-P6).",
+  "blocking": "DEPLOY CHAIN: AE upload scripts 05+12 to S3, DT deploy publisher Lambda. .018 staged (dep .017 code met, deploy pending). .019 BLOCKED Andrew (Schwab vendor). P3-P6 (.003-.014) awaiting Andrew GO.",
   "created": "2026-03-19",
   "pods": ["0.4", "0.6", "0.7"],
   "pipeline": "bd-pipeline",
