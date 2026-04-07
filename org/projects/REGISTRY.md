@@ -17,7 +17,7 @@ the surface area; the project code identifies the specific initiative.
 | Project Code | Macro | Project Name | Phase | Pods | Blocking | PRDs |
 |---|---|---|---|---|---|---|
 | `DEBT_1STRUN` | `DEBT` | First Technical Debt Sweep | ON HOLD. P1: 21/27 scans. P2: .002-.004 done, .005 staged. | 0.1-0.4, 0.5-0.7 | On hold per Andrew. | — |
-| `ADVI_NNAFEE` | `ADVI` | Advisor NNA & Fee Efficiency Dashboard | Decomposed: 6 TOs staged. P1 (.001-.003) fee efficiency views in Books. P2 (.004-.006) employee leaderboard replaces architect. Gold scripts exist. | 0.4 | COO GO signals. P1: DE->RD->DT. P2: DE->RD->DT. | — |
+| `ADVI_REBORN` | `ADVI` | Advisor Intelligence Full Integration | WS1: E2E pipeline audit (DS+AE+DT+DE). WS2: Fee efficiency views — Option A (DS->DE->RD->DT). WS3: Books tab data freshness. WS4: Employee leaderboard. Absorbs NNAFEE. | 0.4, 0.6 | Pattern 0 thread -> DS .001 inventory -> parallel audit + fee work. | ADVI_REBORN_PRD.md, ADVI_NNAFEE_FEE_EFFICIENCY_VIEWS.md |
 | `ADHC_DESIGN` | `ADHC` | Portal Design Normalization | Decomposed: 12 RD TOs STAGED. .001 Attribution critical path (holdings-shared.tsx). .002-.012 parallel. Phase 3 CTO. | 0.1-0.4 | .001 before .002. All others parallel. | PORTAL_DESIGN_NORMALIZATION_AND_COMPILER_TOOLS.md |
 | `ADHC_TMSTEL` | `ADHC` | Teams Telemetry MCP Server | P0: PRD complete. Awaiting Azure AD app registration + COO decomposition. | 0.7 | Azure AD app registration (Andrew/IT). COO TOs. | ADHC_TMSTEL_PRD.md |
 ---
@@ -38,6 +38,7 @@ session log. Performance baseline: CLSUNI ~36% unedited, CLSPT2 ~67% unedited.
 
 | Project Code | Macro | Project Name | Completed | Notes |
 |---|---|---|---|---|
+| `ADVI_NNAFEE` | `ADVI` | Advisor NNA & Fee Efficiency Dashboard | 2026-04-07 | Absorbed into ADVI_REBORN as WS2. Original 6 TOs superseded by REBORN .005-.008 + .011-.013. |
 | `ADVI_GLDRST` | `ADVI` | BD Gold Layer S3 Restructure + Operational Readiness | 2026-04-07 | 19/22 TOs complete. Restructure fully landed (new S3 paths, A_00-E_19 taxonomy, gold_dispatch.sh). .014 validated by production. .010 old key cleanup deferred to AE ad-hoc. .019 Schwab RPS moved to backlog. |
 | `ADVI_GLDOPS` | `ADVI` | Gold Layer Operations: Data Freshness + Market Growth | 2026-04-07 | All TOs complete. Superseded by operational state. Canonical stack (05 swap, 01b fees, 08c, 11a) shipped. Scripts renamed A_00-C_04. silver/fees delivered. |
 | `ETFS_SECIDX` | `ETFS` | ETF Securities & Index Inventory Assessment | 2026-04-07 | P0 complete. 102 securities, 138 portal tickers audited, D4 recommendations delivered. 97.1% Massive API coverage. |
