@@ -1,0 +1,21 @@
+{
+  "project_code": "ADVI_NNAFEE",
+  "macro_code": "ADVI",
+  "name": "Advisor NNA & Fee Efficiency Dashboard",
+  "description": "New advisor fee efficiency view in the Books tab. Gold script produces daily advisor_fee_detail parquet (per-advisor, per-account, per-date with split-weighted fees and NNA) and a rollup advisor_fee_efficiency.json scorecard (~155 advisors). Scorecard includes firm-wide NNA~Revenue regression with per-advisor residuals. Portal displays scatter plot (NNA vs Revenue, dot=AUA, color=efficiency), ranked sortable table, and drill-down with time series + account breakdown. Global view in Books tab, derived views at advisor and client level.",
+  "prds": [
+    {
+      "path": "docs/architecture/ADVI_NNAFEE_FEE_EFFICIENCY_VIEWS.md",
+      "label": "Fee Efficiency Views — Books Tab Integration (Option A, CTO session 20)",
+      "date": "2026-04-07"
+    }
+  ],
+  "status": "active",
+  "phase": "P0: DS .000 (fee_summary in book.json + client_detail.json). P1: DE .001 -> RD .002 -> DT .003 (scatter at N1, role pie at L2, fee table at L3). P2: .004-.006 employee leaderboard (independent). PRD updated with Option A layout.",
+  "blocking": "DS .000 data extension -> DE .001 types -> RD .002 views -> DT .003 deploy.",
+  "created": "2026-04-06",
+  "pods": ["0.4"],
+  "pipeline": "bd-pipeline",
+  "thread_counter": 0,
+  "threads": []
+}

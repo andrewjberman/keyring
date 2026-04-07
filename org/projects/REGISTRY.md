@@ -16,15 +16,10 @@ the surface area; the project code identifies the specific initiative.
 
 | Project Code | Macro | Project Name | Phase | Pods | Blocking | PRDs |
 |---|---|---|---|---|---|---|
-| `ADVI_GLDRST` | `ADVI` | BD Gold Layer S3 Restructure + Operational Readiness | P3 build COMPLETE (15 TOs). P5 migration active: AE .009 IN PROGRESS (gold rerun on EC2). 3 TOs STAGED (.010, .013, .014). | 0.4, 0.6, 0.7 | AE .009 completion -> DT .013 infra validation -> AE .010 cleanup -> AE .014 final gate. .019 BLOCKED (Schwab vendor). | Restructure Proposal, Blast Radius, Rollback, COO Briefing, Operational Readiness |
-| `ADVI_ANONYM` | `ADVI` | Advisor Intelligence PII Pseudonymization + RBAC | P4 COMPLETE. .012/.013/.014 all COMPLETE. .014 re-executed with crossref (d552234). Awaiting DT push + PROD merge. | 0.4, 0.7 | DT push portal DEV + PROD merge. JWT tier removal (low pri). | ADVI_ANONYM_PRD.md |
-| `DEBT_1STRUN` | `DEBT` | First Technical Debt Sweep | P1: 21/27 scans done (AE 0.7.0 infra audit delivered). P2: 4 remediation TOs STAGED for 0.5.0 (.002-.005: source map, trade TF, S3, IAM/cleanup). | 0.1-0.4, 0.5-0.7 | P1: 6 remaining scans. P2: GO for 0.5.0 remediation. | — |
-| `ADVI_GLDOPS` | `ADVI` | Gold Layer Operations: Data Freshness + Market Growth | All 3 TOs COMPLETE. Garbage filter + churn decomp (bd-v2.21.1). GRO total fix (bd-v2.21.2). Pending GRO verification after rerun. | 0.4, 0.6, 0.7 | GRO verification after gold rerun. Then close. | ADVI_GLDOPS_PRD.md |
+| `DEBT_1STRUN` | `DEBT` | First Technical Debt Sweep | ON HOLD. P1: 21/27 scans. P2: .002-.004 done, .005 staged. | 0.1-0.4, 0.5-0.7 | On hold per Andrew. | — |
+| `ADVI_NNAFEE` | `ADVI` | Advisor NNA & Fee Efficiency Dashboard | Decomposed: 6 TOs staged. P1 (.001-.003) fee efficiency views in Books. P2 (.004-.006) employee leaderboard replaces architect. Gold scripts exist. | 0.4 | COO GO signals. P1: DE->RD->DT. P2: DE->RD->DT. | — |
+| `ADHC_DESIGN` | `ADHC` | Portal Design Normalization | Decomposed: 12 RD TOs STAGED. .001 Attribution critical path (holdings-shared.tsx). .002-.012 parallel. Phase 3 CTO. | 0.1-0.4 | .001 before .002. All others parallel. | PORTAL_DESIGN_NORMALIZATION_AND_COMPILER_TOOLS.md |
 | `ADHC_TMSTEL` | `ADHC` | Teams Telemetry MCP Server | P0: PRD complete. Awaiting Azure AD app registration + COO decomposition. | 0.7 | Azure AD app registration (Andrew/IT). COO TOs. | ADHC_TMSTEL_PRD.md |
-| `ETFS_SECIDX` | `ETFS` | ETF Securities & Index Inventory Assessment | P0 COMPLETE. 3/3 TOs done. 102 securities, 138 portal tickers audited, D4 recommendations delivered. | 0.2 | PFDE holdings (Andrew). CTO Phase 1 PRD. | ETFS_SECIDX_PRD.md |
-| `TAXX_TXSTRT` | `TAXX` | Tax SMA Trade Allocation Strategy | P0: DS orientation. Source data in models/tax_strategy/. | 0.3 | DS gap analysis. | — |
-| `AUTH_TFIMPT` | `AUTH` | Auth Infrastructure Terraform Import | 2/3 TOs COMPLETE. .002 AE done (portal-auth-v1.9.0). .003 DT done (shared-infra owns role). .001 AE STAGED (CloudFront, next session). | 0.4, 0.7 | .001 CloudFront distribution import (next AE session). | — |
-
 ---
 
 ---
@@ -43,6 +38,12 @@ session log. Performance baseline: CLSUNI ~36% unedited, CLSPT2 ~67% unedited.
 
 | Project Code | Macro | Project Name | Completed | Notes |
 |---|---|---|---|---|
+| `ADVI_GLDRST` | `ADVI` | BD Gold Layer S3 Restructure + Operational Readiness | 2026-04-07 | 19/22 TOs complete. Restructure fully landed (new S3 paths, A_00-E_19 taxonomy, gold_dispatch.sh). .014 validated by production. .010 old key cleanup deferred to AE ad-hoc. .019 Schwab RPS moved to backlog. |
+| `ADVI_GLDOPS` | `ADVI` | Gold Layer Operations: Data Freshness + Market Growth | 2026-04-07 | All TOs complete. Superseded by operational state. Canonical stack (05 swap, 01b fees, 08c, 11a) shipped. Scripts renamed A_00-C_04. silver/fees delivered. |
+| `ETFS_SECIDX` | `ETFS` | ETF Securities & Index Inventory Assessment | 2026-04-07 | P0 complete. 102 securities, 138 portal tickers audited, D4 recommendations delivered. 97.1% Massive API coverage. |
+| `TAXX_TXSTRT` | `TAXX` | Tax SMA Trade Allocation Strategy | 2026-04-07 | P0 complete. DS gap analysis delivered (v1+v2 trade allocator review). |
+| `AUTH_TFIMPT` | `AUTH` | Auth Infrastructure Terraform Import | 2026-04-06 | 3/3 TOs complete. CloudFront distribution imported, DynamoDB/SES/secrets imported (portal-auth-v1.11.0), shared-infra role ownership resolved (shared-infra-v1.6.0). |
+| `ADVI_ANONYM` | `ADVI` | Advisor Intelligence PII Pseudonymization + RBAC | 2026-04-06 | P1-P5 complete. Pseudonymization, RBAC, Lambda PII handlers, authorizer passthrough, api/shared->scoped migration. 16 TOs total. PROD de62fde. JWT tier + partner migration deferred. |
 | `ADHC_HISTRY` | `ADHC` | BD Transaction History Forensic Investigation | 2026-04-06 | All 8 TOs complete. AUA $1,582M (0.3% from silver). Phantom fix deployed. NNA rearch under GLDRST.017. Remaining: BD vendor ($259M) + Pathfinder weights (Andrew external). |
 | `ADVI_TICKID` | `ADVI` | Ticker Resolution + Holdings Enrichment | 2026-03-26 | All 8 TOs complete (.001-.008). P1 resolution table + enrichment + DynamoDB backfill + detect enhancement. P2 feedback bridge + sweep-unlisted + silver AUA override + bond classifier. AE execution via combined GLDRST.002 gold run. |
 | `ADVI_PRICES` | `ADVI` | BD Canonical Pricing and Valuation Reconciliation | 2026-03-27 | All 9 task orders complete. Phantom fix ($296M->-$57.7M). 32 ticker corrections. Backfill +143K rows. Canonical 16.6% yahoo. Scheduler fix deployed. AE .005 MBS fix + silver rebuild (gap 3.72%->0.169%). Post-completion (03-28): 754 YF_OVERRIDES, realized sell injection (51K phantoms), net gap +$8.5M (+0.53%). Awaiting gold rebuild. |

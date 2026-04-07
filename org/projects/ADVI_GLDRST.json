@@ -40,9 +40,9 @@
       "date": "2026-04-02"
     }
   ],
-  "status": "active",
-  "phase": "P5 migration: .009 AE COMPLETE (Run 5 finished 16:29 UTC, 2,319 keys in new layout, manifest confirmed). 16 TOs COMPLETE. 3 TOs STAGED (.010, .013, .014). Next: GO .013 DT (infra validation).",
-  "blocking": "DT .013 (infra validation) -> AE .010 (old key cleanup) -> AE .014 (final gate). .019 BLOCKED Andrew (Schwab vendor).",
+  "status": "complete",
+  "phase": "CLOSED 2026-04-07. 19/22 TOs complete. Restructure fully landed (new S3 paths, A_00-E_19 taxonomy, gold_dispatch.sh, dual-write safety net). .014 validated by 3 weeks production. .010 (old key delete) deferred to AE ad-hoc cleanup. .019 (Schwab RPS) moved to backlog — new data source onboarding, not restructure.",
+  "blocking": "",
   "created": "2026-03-19",
   "pods": ["0.4", "0.6", "0.7"],
   "pipeline": "bd-pipeline",
