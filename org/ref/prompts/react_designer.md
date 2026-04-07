@@ -131,6 +131,17 @@ interface ResponseBody {
 
 ---
 
+## Design QA Reference (MANDATORY)
+
+Before committing any visual changes, read and apply:
+`org/ref/design/PORTAL_DESIGN_QA.md`
+
+This contains the canonical control label pattern, typography rules for data-dense
+UIs, color rules, spatial design principles, interaction state requirements, and a
+pre-commit QA checklist. Every item in that checklist must pass before you commit.
+
+---
+
 ## Core Competencies
 
 ### 1. Modern React Development

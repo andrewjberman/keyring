@@ -128,55 +128,48 @@ You do NOT produce architecture specs (CTO does). You DO align, route, and track
 
 **Commit only:** Session logs, org docs. Use `--author="2.0.0_SA_COO <2.0.0_SA_COO@opal.agent>"`.
 
-## Pod Delivery Dashboard -- Updated 2026-04-06 (COO session 16 reconciliation)
+## Pod Delivery Dashboard -- Updated 2026-04-07 (COO session 18 reconciliation)
 
 ### Active Projects
 
 | Project | Status | Pending Work |
 |---------|--------|-------------|
-| `ADVI_GLDRST` | P3 COMPLETE (15 TOs). P5 migration active: AE .009 IN PROGRESS (Run 5, EC2 gold incremental running). S3 layout fully migrated. 3 TOs STAGED (.010, .013, .014). | .009 completion -> .013 infra validation -> .010 cleanup -> .014 final gate. .019 BLOCKED Andrew (Schwab). |
-| `ADVI_ANONYM` | P4 COMPLETE. .012/.013/.014 all done. .014 re-executed with crossref (d552234). Awaiting DT push + PROD merge. | DT push portal DEV + PROD merge. JWT tier removal (low pri). |
-| `DEBT_1STRUN` | Phase 1: 20/27 scans COMPLETE. Code deployed 03-25. | 7 remaining scans: COO aggregate, DE 0.2.0/0.3.0/0.4.0, AE 0.7.0, RD 0.1.2/0.4.2. |
-| `ADVI_GLDOPS` | All 3 TOs COMPLETE. Garbage filter + churn decomp (bd-v2.21.1). GRO total fix (bd-v2.21.2). | GRO verification after gold rerun. Then close. |
+| `ADVI_GLDRST` | 19 TOs COMPLETE. .020 DS/.021 DE/.013 DT all done. AE 0.6.0 full rerun in progress (scripts 05-11b). | AE rerun completion -> .010 AE cleanup -> .014 AE final gate. .019 BLOCKED Andrew (Schwab). |
+| `DEBT_1STRUN` | ON HOLD per Andrew. P1: 21/27 scans. P2: .002-.004 done, .005 staged. | 6 remaining P1 scans. .005 IAM/DynamoDB staged. |
+| `ADVI_GLDOPS` | .001-.003 COMPLETE. .004 DS Phases 1-3 COMPLETE. Phase 4 IN PROGRESS (05 swap executing, AE running rebuilt 01->08c->11a). silver/fees delivered. | .004 Phase 4 (AE 05 swap + 08c + 11a) -> Phase 5 (watermarks). |
+| `ADVI_NNAFEE` | Decomposed: 6 TOs STAGED. P1 (.001-.003) fee efficiency views in Books. P2 (.004-.006) employee leaderboard replaces architect. Gold scripts 08c+11a produce data. | COO GO signals. P1: DE->RD->DT. P2: DE->RD->DT. |
 | `ADHC_TMSTEL` | P0: PRD complete. Awaiting Azure AD app registration + COO decomposition. | Azure AD app registration (Andrew/IT). COO TOs. |
-| `ETFS_SECIDX` | P0 COMPLETE. 3/3 TOs done (102 securities, 138 portal tickers, D4 recommendations). | PFDE holdings (Andrew). CTO Phase 1 PRD. |
-| `TAXX_TXSTRT` | P0: DS orientation. .001 issued to 0.3.0_DS. | DS gap analysis. |
 
-### Operational Notes (04-06, COO session 16)
+### Operational Notes (04-07, COO session 18)
 
-- AE .009 migration gold rerun IN PROGRESS on EC2 i-01003b035d2988dfb (Run 5 started 16:00 UTC 04-06). S3 layout fully copied (old -> new paths). Includes churn fix for GLDOPS.003.
-- ANONYM .012+.013 COMPLETE and deployed (portal-auth-v1.6.0). .014 DE PENDING — must re-implement after PROD revert (e24dab6).
-- GLDOPS all 3 TOs complete. GRO verification pending on same gold rerun as .009.
-- 7 agents LIVE: CTO 1.0.0, COO 2.0.0, DE 0.4.0, DS 0.4.0, DT 0.4.0, AE 0.6.0, AE 0.7.0.
-- Pipeline tags: bd-v2.21.2, partners-api-v1.13.1, portal-auth-v1.6.0, yang-v2.3.6, market-overview-v1.6.8, shared-infra-v1.5.0.
+- GLDOPS .004 DS Phases 1-3 COMPLETE (canonical holdings 70 dates, lots, account gains, performance, NNA validation). Phase 4 IN PROGRESS (05 swap authorized, AE executing). silver/fees/ delivered (1,813 partitions, 6 years). 08c/11a built on S3.
+- GLDRST AE 0.6.0 rerun status: also running GLDOPS backfill chain (02b->04b) + 05 swap.
+- ANONYM CLOSED. AUTH_TFIMPT CLOSED (portal-auth-v1.11.3). ETFS_SECIDX CLOSED. TAXX_TXSTRT CLOSED.
+- 11 agents LIVE: CTO, COO, DE 0.2.0/0.4.0, DS 0.2.0/0.3.0/0.4.0, DT 0.4.0, AE 0.5.0/0.6.0/0.7.0.
+- Pipeline tags: bd-v2.21.4, news-v2.7.5, partners-api-v1.15.2, portal-auth-v1.11.3, yang-v2.3.6, market-overview-v1.6.9, shared-infra-v1.6.0.
 
-### Completed since last COO session (session 15)
+### Completed since last COO session (session 17)
 
-- GLDRST .007 DT (publisher Lambda path migration, bd-v2.21.0)
-- GLDRST .008 DT (CloudFront/router v8, partners-api-v1.13.0+v1.13.1)
-- GLDRST .003 DE (portal pre-computed view wiring, PROD)
-- GLDRST .018 DE (portal NNA growth wiring, PROD)
-- ANONYM .012 DS (Lambda PII handlers, 4a1e289c)
-- ANONYM .013 DT (authorizer advisorId passthrough, 9e294683+a5d9876b)
-- GLDOPS .002 DS + .003 DS (pending marker fix, market growth diagnostic)
-- GRO total fix (bd-v2.21.2, 2c45ae29)
+- GLDOPS .004 DS Phases 1-3 (canonical holdings 70 dates, lots, account gains, performance, NNA validation backfill 72 dates)
+- GLDOPS silver/fees/ pipeline (AE 0.6.0, 1,813 partitions, 6 years)
+- GLDOPS 05 swap authorized (AE executing)
 
-### Pod 4 (ClientPlatform) -- Status as of 2026-04-06
+### Pod 4 (ClientPlatform) -- Status as of 2026-04-07 (session 18)
 
 | Agent | Last Known Work | Status |
 |-------|----------------|--------|
-| 0.4.0_DE | GLDRST .003/.018 COMPLETE (PROD). ANONYM .014 PENDING (deps met). DEBT_1STRUN.001.scan pending. | LIVE |
-| 0.4.0_DT | GLDRST .007/.008 COMPLETE (bd-v2.21.0, router v8). ANONYM .013 COMPLETE. deployment_map pending. GLDRST .013 STAGED. | LIVE |
-| 0.4.0_DS | GLDRST .004/.005/.006 COMPLETE. GLDOPS .002/.003 COMPLETE. ANONYM .012 COMPLETE. | LIVE |
-| 0.4.2_RD | ANONYM .006 complete. 2 pending TOs (DEBT_1STRUN.001.scan, page_inventory). | OFFLINE since 04-01 |
+| 0.4.0_DE | GLDRST .021 COMPLETE (9 portal reads migrated). ANONYM .014 COMPLETE (PROD). DEBT_1STRUN.001.scan pending. | LIVE |
+| 0.4.0_DT | GLDRST .013 COMPLETE (infra validation). ANONYM .015 COMPLETE (CF migration). deployment_map pending. | LIVE |
+| 0.4.0_DS | GLDRST .020 COMPLETE. GLDOPS .004 Phases 1-3 COMPLETE, Phase 4 IN PROGRESS (05 swap). | LIVE |
+| 0.4.2_RD | ANONYM .006 complete. 2 pending TOs (DEBT_1STRUN.001.scan, page_inventory). | OFFLINE |
 
-### Shared Services -- Status as of 2026-04-06
+### Shared Services -- Status as of 2026-04-07 (session 18)
 
 | Agent | Last Known Work | Pending |
 |-------|----------------|---------|
-| 0.5.0_AE_OpalETL | DEBT_1STRUN scan + fix + deploy (2026-03-24) | infrastructure_inventory |
-| 0.6.0_AE_PartnerETL | GLDRST .009 IN PROGRESS (Run 5, EC2 gold incremental). GLDOPS catch-up complete. | .009 (active). GLDRST .010/.014 STAGED. infrastructure_inventory. |
-| 0.7.0_AE_CloudOps | GLDRST.015 COMPLETE (watchdog). bd-v2.20.1 (EventBridge). bd-v2.21.2 (GRO fix). | DEBT_1STRUN.001.scan, infrastructure_inventory, GLDRST.019 (staged, BLOCKED Andrew). |
+| 0.5.0_AE_OpalETL | DEBT_1STRUN .002-.004 COMPLETE. | .005 STAGED (IAM/DynamoDB). infrastructure_inventory. |
+| 0.6.0_AE_PartnerETL | Full rerun in progress (scripts 05-11b with new publisher). GLDOPS catch-up complete. | Rerun completion. GLDRST .010/.014 STAGED. infrastructure_inventory. |
+| 0.7.0_AE_CloudOps | AUTH_TFIMPT .001 COMPLETE (CF import). ANONYM .016 COMPLETE (Lambda migration). GLDRST .015 COMPLETE. | GLDRST.019 (BLOCKED Andrew). infrastructure_inventory. |
 
 **NOTE:** This dashboard is corrected on every COO startup. Do not treat it as
 authoritative between sessions — always re-audit from agent logs and git.

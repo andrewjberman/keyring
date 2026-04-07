@@ -131,24 +131,25 @@ When researching for a PRD, you should:
 
 **Commit only:** `docs/architecture/` specs, `org/projects/` files, session logs, org docs. Use `--author="1.0.0_SA_CTO <1.0.0_SA_CTO@opal.agent>"`.
 
-## Project Status Dashboard -- Updated 2026-04-06 (session 19)
+## Project Status Dashboard -- Updated 2026-04-07 (session 20)
 
 ### Active Projects
 
 | Project | Status | Pending Work |
 |---------|--------|-------------|
-| `ADVI_GLDRST` | P3 COMPLETE (15 TOs). P5 migration active: AE .009 IN PROGRESS (Run 5, EC2 gold incremental). S3 layout migrated. 3 TOs STAGED (.010, .013, .014). | .009 completion -> .013 infra validation -> .010 cleanup -> .014 final gate. .019 BLOCKED Andrew (Schwab). |
-| `ADVI_ANONYM` | P4 COMPLETE. .012/.013/.014 all deployed. Portal PROD de62fde. partners-api-v1.14.0. | Close project. JWT tier removal (low pri). Partner migration (deferred). |
-| `DEBT_1STRUN` | Phase 1: 20/27 scans COMPLETE. C1-C4 fixes deployed to EC2 (03-25). | 7 remaining scans: COO aggregate, DE 0.2.0/0.3.0/0.4.0, AE 0.7.0, RD 0.1.2/0.4.2. |
-| `ADVI_GLDOPS` | All 3 TOs COMPLETE. Garbage filter + churn decomp (bd-v2.21.1). GRO total fix (bd-v2.21.2). | GRO verification after gold rerun. Then close. |
-| `ADHC_TMSTEL` | P0: PRD complete. Awaiting Azure AD app registration. | Azure AD app registration (Andrew/IT). COO TOs for 0.7.0_AE. |
-| `ETFS_SECIDX` | P0: PRD complete. COO decomposition pending. | COO task order issuance. PFDE holdings needed (Andrew). |
-| `TAXX_TXSTRT` | P0: DS orientation. .001 issued to 0.3.0_DS. | DS gap analysis. |
+| `ADVI_GLDRST` | 19 TOs done. .020 DS/.021 DE/.013 DT COMPLETE. AE 0.6.0 full rerun in progress. .010/.014 STAGED. .019 BLOCKED (Schwab). | AE rerun -> .010 AE (old key cleanup) -> .014 AE (final gate). .019 BLOCKED Andrew (Schwab). |
+| `DEBT_1STRUN` | ON HOLD per Andrew. P1: 21/27 scans. P2: .002-.004 done, .005 staged. | On hold. 6 remaining scans when resumed. |
+| `ADVI_GLDOPS` | .001-.003 COMPLETE. .004 DS Phases 1-3 COMPLETE. Phase 4 IN PROGRESS (05 swap executing, AE running rebuilt 01->08c->11a). silver/fees delivered. Phase 5 pending. | .004 Phase 4 (AE 05 swap + 08c + 11a) -> Phase 5 (sealed-day watermarks). |
+| `ADVI_NNAFEE` | Decomposed: 6 TOs STAGED. P1 (.001-.003) fee efficiency views in Books. P2 (.004-.006) employee leaderboard replaces architect. Gold scripts 08c+11a produce data. | COO GO signals. P1: DE->RD->DT. P2: DE->RD->DT. |
+| `ADHC_TMSTEL` | P0: PRD complete. Awaiting Azure AD app registration + COO decomposition. | Azure AD app registration (Andrew/IT). COO TOs for 0.7.0_AE. |
 
 ### Recently Completed
 
 | Project | Completed | Key Deliverables |
 |---------|-----------|-----------------|
+| `ETFS_SECIDX` | 2026-04-07 | P0 complete. 102 securities, 138 portal tickers audited, D4 recommendations delivered. 97.1% Massive API coverage. |
+| `TAXX_TXSTRT` | 2026-04-07 | P0 complete. DS gap analysis delivered (v1+v2 trade allocator review). |
+| `ADVI_ANONYM` | 2026-04-06 | P1-P5 complete. 16 TOs. Pseudonymization, RBAC, Lambda PII, authorizer passthrough, api/shared->scoped. PROD de62fde. partners-api-v1.14.0. JWT tier + partner migration deferred. |
 | `ADHC_HISTRY` | 2026-04-06 | All 8 TOs complete. AUA $1,582M (0.3% from silver). Phantom fix deployed. NNA rearch under GLDRST.017. No open items. |
 | `ADVI_TICKID` | 2026-03-26 | All 8 TOs complete (.001-.008). P1 resolution + enrichment + DynamoDB. P2 feedback bridge + sweep-unlisted + silver AUA override + bond classifier. AE via GLDRST.002 gold run. |
 | `ADVI_MVPLVL` | 2026-03-26 | Reopened .010: DS ghost exclusion + DE portal L2 fixes. AE gold rerun subsumed by GLDRST.002. |
@@ -165,18 +166,18 @@ When researching for a PRD, you should:
 | `ADVI_49FNV3` | 2026-03-12 | All task orders complete. F1-F7, N1-N2, .007, .008. |
 | `ADVI_PSCFIX` | 2026-03-12 | bd-v2.18.3+v2.18.4 deployed. Portal schema validated. |
 
-### Pipeline Tags (as of 2026-04-05)
+### Pipeline Tags (as of 2026-04-07)
 
 | Pipeline | Tag |
 |----------|-----|
-| BD | `bd-v2.21.2` |
-| PartnersAPI | `partners-api-v1.13.1` |
-| PortalAuth | `portal-auth-v1.6.0` |
+| BD | `bd-v2.21.4` |
+| PartnersAPI | `partners-api-v1.15.2` |
+| PortalAuth | `portal-auth-v1.11.3` |
 | Yang | `yang-v2.3.6` |
-| News | `news-v2.7.3` |
-| MarketOverview | `market-overview-v1.6.8` |
+| News | `news-v2.7.5` |
+| MarketOverview | `market-overview-v1.6.9` |
 | DataRefresh | `data-refresh-v2.2.0` |
-| SharedInfra | `shared-infra-v1.5.0` |
+| SharedInfra | `shared-infra-v1.6.0` |
 | DeckGeneration | `deck-generation-v1.0.0` |
 
 **NOTE:** This dashboard is corrected on every CTO startup. Do not treat it as
