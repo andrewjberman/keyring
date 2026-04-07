@@ -49,20 +49,7 @@ _MD_LINK = re.compile(r"\[([^\]]*)\]\(([^)]+)\)")
 _SPEC_ID_REF = re.compile(r"\b(ONT|SYS|APP)\.(CORE|DERIVED|META)\.\w+\b")
 _PY_IMPORT = re.compile(r"^(?:from\s+([\w.]+)\s+)?import\s+(.+)$", re.MULTILINE)
 _YAML_REF = re.compile(r'(?:extends|ref|\$ref):\s*["\']?([^\s"\']+)')
-_PATH_LITERAL = re.compile(r'["\']([a-zA-Z_][\w/.-]*\.(?:md|json|yaml|yml|py|tf|mjs|js|sh))["\']')
-
-# HCL cross-resource references: aws_iam_role.lambda_edge.arn, data.aws_s3_object.foo.version_id
-_HCL_RESOURCE_REF = re.compile(
-    r'\b((?:data\.)?aws_\w+\.\w+)\.\w+'
-)
-# HCL source/path literals pointing to other files: "portal-auth/auth-validator-edge.zip"
-_HCL_SOURCE_COMMENT = re.compile(r'#\s*[Ss]ource:\s*(\S+)')
-
-# ESM imports: import { Foo } from "@aws-sdk/client-secrets-manager"
-_ESM_IMPORT = re.compile(
-    r'^import\s+.+?\s+from\s+["\']([^"\']+)["\']',
-    re.MULTILINE,
-)
+_PATH_LITERAL = re.compile(r'["\']([a-zA-Z_][\w/.-]*\.(?:md|json|yaml|yml|py))["\']')
 
 
 def _extract_references(file_path: Path, content: str, all_paths: set[str]) -> list[str]:
@@ -110,57 +97,6 @@ def _extract_references(file_path: Path, content: str, all_paths: set[str]) -> l
         resolved = _resolve_ref(target, parent, all_paths)
         if resolved:
             refs.add(resolved)
-
-    # HCL cross-resource references (Terraform .tf files)
-    # When file A references resource_type.name defined in file B, A -> B
-    if file_path.suffix.lower() == ".tf":
-        # Build a map: "aws_type.name" -> file that defines it
-        resource_defs: dict[str, str] = {}
-        for p in all_paths:
-            if p.endswith(".tf"):
-                try:
-                    tf_content = Path(p).read_text(encoding="utf-8", errors="replace")
-                except Exception:
-                    continue
-                for rm in re.finditer(
-                    r'^(resource|data)\s+"(\w+)"\s+"(\w+)"',
-                    tf_content, re.MULTILINE
-                ):
-                    block_type = rm.group(1)
-                    rtype = rm.group(2)
-                    rname = rm.group(3)
-                    if block_type == "data":
-                        key = f"data.{rtype}.{rname}"
-                    else:
-                        key = f"{rtype}.{rname}"
-                    norm_p = p.replace("\\", "/")
-                    resource_defs[key] = norm_p
-
-        # Find references in THIS file to resources defined in OTHER files
-        for rm in _HCL_RESOURCE_REF.finditer(content):
-            ref_key = rm.group(1)
-            target_file = resource_defs.get(ref_key)
-            if target_file and target_file != str(file_path).replace("\\", "/"):
-                refs.add(target_file)
-
-        # Source comments (e.g., # Source: infra/aws/lambda-edge/auth-validator-edge/index.mjs)
-        for rm in _HCL_SOURCE_COMMENT.finditer(content):
-            resolved = _resolve_ref(rm.group(1), parent, all_paths)
-            if resolved:
-                refs.add(resolved)
-
-    # ESM imports — resolve relative imports to files in the corpus
-    if file_path.suffix.lower() in (".mjs", ".js"):
-        for m in _ESM_IMPORT.finditer(content):
-            source = m.group(1)
-            if source.startswith("."):
-                # Relative import: try .mjs, .js, /index.mjs, /index.js
-                for ext in ("", ".mjs", ".js", "/index.mjs", "/index.js"):
-                    candidate = source + ext
-                    resolved = _resolve_ref(candidate, parent, all_paths)
-                    if resolved:
-                        refs.add(resolved)
-                        break
 
     # Don't self-reference
     refs.discard(str(file_path))
