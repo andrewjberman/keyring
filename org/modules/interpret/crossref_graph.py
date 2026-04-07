@@ -49,7 +49,22 @@ _MD_LINK = re.compile(r"\[([^\]]*)\]\(([^)]+)\)")
 _SPEC_ID_REF = re.compile(r"\b(ONT|SYS|APP)\.(CORE|DERIVED|META)\.\w+\b")
 _PY_IMPORT = re.compile(r"^(?:from\s+([\w.]+)\s+)?import\s+(.+)$", re.MULTILINE)
 _YAML_REF = re.compile(r'(?:extends|ref|\$ref):\s*["\']?([^\s"\']+)')
-_PATH_LITERAL = re.compile(r'["\']([a-zA-Z_][\w/.-]*\.(?:md|json|yaml|yml|py))["\']')
+_PATH_LITERAL = re.compile(r'["\']([a-zA-Z_][\w/.-]*\.(?:md|json|yaml|yml|py|ts|tsx|js|mjs|tf|sh))["\']')
+
+# TypeScript / JavaScript import patterns
+_TS_IMPORT = re.compile(r"""^import\s+(?:(?:type\s+)?(?:\{[^}]*\}|\*\s+as\s+\w+|\w+)(?:\s*,\s*(?:\{[^}]*\}|\*\s+as\s+\w+|\w+))*\s+from\s+)?['"]([^'"]+)['"]""", re.MULTILINE)
+_TS_REQUIRE = re.compile(r"""require\s*\(\s*['"]([^'"]+)['"]\s*\)""")
+_TS_DYNAMIC_IMPORT = re.compile(r"""import\s*\(\s*['"]([^'"]+)['"]\s*\)""")
+
+# Terraform resource patterns
+_TF_RESOURCE_DEF = re.compile(r'^resource\s+"(\w+)"\s+"(\w+)"', re.MULTILINE)
+_TF_DATA_DEF = re.compile(r'^data\s+"(\w+)"\s+"(\w+)"', re.MULTILINE)
+_TF_MODULE_DEF = re.compile(r'^module\s+"(\w+)"', re.MULTILINE)
+_TF_RESOURCE_REF = re.compile(r'\b(aws_\w+)\.(\w+)\b')
+_TF_DATA_REF = re.compile(r'\bdata\.(\w+)\.(\w+)\b')
+_TF_MODULE_REF = re.compile(r'\bmodule\.(\w+)\b')
+_TF_VAR_REF = re.compile(r'\bvar\.(\w+)\b')
+_TF_LOCAL_REF = re.compile(r'\blocal\.(\w+)\b')
 
 
 def _extract_references(file_path: Path, content: str, all_paths: set[str]) -> list[str]:
@@ -91,6 +106,58 @@ def _extract_references(file_path: Path, content: str, all_paths: set[str]) -> l
         if resolved:
             refs.add(resolved)
 
+    # TypeScript / JavaScript imports
+    for pattern in (_TS_IMPORT, _TS_REQUIRE, _TS_DYNAMIC_IMPORT):
+        for m in pattern.finditer(content):
+            target = m.group(1)
+            if target.startswith("."):
+                # Relative import — try with common extensions
+                for ext in ("", ".ts", ".tsx", ".js", ".mjs", ".jsx", "/index.ts", "/index.tsx", "/index.js"):
+                    resolved = _resolve_ref(target + ext, parent, all_paths)
+                    if resolved:
+                        refs.add(resolved)
+                        break
+            elif target.startswith("@/"):
+                # Aliased import (e.g., @/lib/chartColors) — resolve from src/
+                bare = target[2:]  # strip @/
+                for ext in ("", ".ts", ".tsx", ".js", "/index.ts", "/index.tsx"):
+                    for p in all_paths:
+                        if p.endswith("src/" + bare + ext) or p.endswith("src\\" + bare + ext):
+                            refs.add(p)
+                            break
+
+    # Terraform cross-file references
+    suffix = file_path.suffix.lower()
+    if suffix == ".tf":
+        # Build local resource registry: type.name -> this file
+        # Then find references to resources defined in OTHER files
+        local_resources: set[str] = set()
+        for m in _TF_RESOURCE_DEF.finditer(content):
+            local_resources.add(f"{m.group(1)}.{m.group(2)}")
+        for m in _TF_DATA_DEF.finditer(content):
+            local_resources.add(f"data.{m.group(1)}.{m.group(2)}")
+        for m in _TF_MODULE_DEF.finditer(content):
+            local_resources.add(f"module.{m.group(1)}")
+
+        # Build a map of all resources across all .tf files in the corpus
+        if not hasattr(_extract_references, "_tf_registry"):
+            _extract_references._tf_registry = _build_tf_registry(all_paths)
+        tf_reg = _extract_references._tf_registry
+
+        # Find references to resources NOT defined in this file
+        for m in _TF_RESOURCE_REF.finditer(content):
+            ref_key = f"{m.group(1)}.{m.group(2)}"
+            if ref_key not in local_resources and ref_key in tf_reg:
+                refs.add(tf_reg[ref_key])
+        for m in _TF_DATA_REF.finditer(content):
+            ref_key = f"data.{m.group(1)}.{m.group(2)}"
+            if ref_key not in local_resources and ref_key in tf_reg:
+                refs.add(tf_reg[ref_key])
+        for m in _TF_MODULE_REF.finditer(content):
+            ref_key = f"module.{m.group(1)}"
+            if ref_key not in local_resources and ref_key in tf_reg:
+                refs.add(tf_reg[ref_key])
+
     # Path literals in strings
     for m in _PATH_LITERAL.finditer(content):
         target = m.group(1)
@@ -101,6 +168,26 @@ def _extract_references(file_path: Path, content: str, all_paths: set[str]) -> l
     # Don't self-reference
     refs.discard(str(file_path))
     return sorted(refs)
+
+
+def _build_tf_registry(all_paths: set[str]) -> dict[str, str]:
+    """Scan all .tf files and build resource_key -> file_path map."""
+    registry: dict[str, str] = {}
+    for p in all_paths:
+        if not p.endswith(".tf"):
+            continue
+        try:
+            content = Path(p).read_text(encoding="utf-8", errors="replace")
+        except Exception:
+            continue
+        norm = p.replace("\\", "/")
+        for m in _TF_RESOURCE_DEF.finditer(content):
+            registry[f"{m.group(1)}.{m.group(2)}"] = norm
+        for m in _TF_DATA_DEF.finditer(content):
+            registry[f"data.{m.group(1)}.{m.group(2)}"] = norm
+        for m in _TF_MODULE_DEF.finditer(content):
+            registry[f"module.{m.group(1)}"] = norm
+    return registry
 
 
 def _resolve_ref(target: str, parent_dir: Path, all_paths: set[str]) -> str | None:
@@ -126,6 +213,9 @@ def _resolve_ref(target: str, parent_dir: Path, all_paths: set[str]) -> str | No
 
 def build_graph(file_metadata: list[FileMetadata]) -> CrossRefGraph:
     """Build a cross-reference graph from file metadata."""
+    # Clear cached Terraform registry from prior runs
+    if hasattr(_extract_references, "_tf_registry"):
+        del _extract_references._tf_registry
     all_paths = {m.path.replace("\\", "/") for m in file_metadata}
     graph = CrossRefGraph()
 

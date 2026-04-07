@@ -200,12 +200,126 @@ def _extract_markdown(path: Path, content: str) -> ASTStructure:
 # Module entry point
 # ---------------------------------------------------------------------------
 
+# ---------------------------------------------------------------------------
+# TypeScript / JavaScript structure extraction (regex-based, no parser)
+# ---------------------------------------------------------------------------
+
+_TS_FUNC = re.compile(
+    r"^(?:export\s+)?(?:async\s+)?function\s+(\w+)\s*(?:<[^>]*>)?\s*\(([^)]*)\)",
+    re.MULTILINE,
+)
+_TS_ARROW_EXPORT = re.compile(
+    r"^export\s+(?:const|let)\s+(\w+)\s*(?::\s*\w+(?:<[^>]*>)?)?\s*=\s*(?:async\s+)?\(",
+    re.MULTILINE,
+)
+_TS_INTERFACE = re.compile(r"^(?:export\s+)?interface\s+(\w+)", re.MULTILINE)
+_TS_TYPE_ALIAS = re.compile(r"^(?:export\s+)?type\s+(\w+)\s*=", re.MULTILINE)
+_TS_CLASS = re.compile(r"^(?:export\s+)?class\s+(\w+)(?:\s+extends\s+(\w+))?", re.MULTILINE)
+_TS_IMPORT = re.compile(r"^import\s+.*?from\s+['\"]([^'\"]+)['\"]", re.MULTILINE)
+_TS_EXPORT_DEFAULT = re.compile(r"^export\s+default\s+(?:function\s+)?(\w+)", re.MULTILINE)
+
+
+def _extract_typescript(path: Path, content: str) -> ASTStructure:
+    """Extract structure from TypeScript/JavaScript using regex."""
+    result = ASTStructure(path=str(path), language="typescript", loc=content.count("\n") + 1)
+
+    # Functions (named + arrow exports)
+    for m in _TS_FUNC.finditer(content):
+        args = [a.strip().split(":")[0].strip() for a in m.group(2).split(",") if a.strip()]
+        result.functions.append({
+            "name": m.group(1), "args": args, "returns": "",
+            "line": content[:m.start()].count("\n") + 1, "decorators": [],
+        })
+    for m in _TS_ARROW_EXPORT.finditer(content):
+        result.functions.append({
+            "name": m.group(1), "args": [], "returns": "",
+            "line": content[:m.start()].count("\n") + 1, "decorators": ["export"],
+        })
+
+    # Interfaces and type aliases -> classes list (structural types)
+    for m in _TS_INTERFACE.finditer(content):
+        result.classes.append({
+            "name": m.group(1), "bases": ["interface"], "methods": [],
+            "line": content[:m.start()].count("\n") + 1,
+        })
+    for m in _TS_TYPE_ALIAS.finditer(content):
+        result.classes.append({
+            "name": m.group(1), "bases": ["type"], "methods": [],
+            "line": content[:m.start()].count("\n") + 1,
+        })
+    for m in _TS_CLASS.finditer(content):
+        result.classes.append({
+            "name": m.group(1), "bases": [m.group(2)] if m.group(2) else [], "methods": [],
+            "line": content[:m.start()].count("\n") + 1,
+        })
+
+    # Imports
+    for m in _TS_IMPORT.finditer(content):
+        result.imports.append({"from": m.group(1), "names": []})
+
+    # Exports
+    for m in _TS_EXPORT_DEFAULT.finditer(content):
+        result.exports.append(m.group(1))
+
+    return result
+
+
+# ---------------------------------------------------------------------------
+# Terraform structure extraction
+# ---------------------------------------------------------------------------
+
+_TF_RESOURCE = re.compile(r'^resource\s+"(\w+)"\s+"(\w+)"', re.MULTILINE)
+_TF_DATA = re.compile(r'^data\s+"(\w+)"\s+"(\w+)"', re.MULTILINE)
+_TF_VARIABLE = re.compile(r'^variable\s+"(\w+)"', re.MULTILINE)
+_TF_OUTPUT = re.compile(r'^output\s+"(\w+)"', re.MULTILINE)
+_TF_LOCAL = re.compile(r'^locals\s*\{', re.MULTILINE)
+_TF_MODULE = re.compile(r'^module\s+"(\w+)"', re.MULTILINE)
+
+
+def _extract_terraform(path: Path, content: str) -> ASTStructure:
+    """Extract structure from Terraform HCL files."""
+    result = ASTStructure(path=str(path), language="terraform", loc=content.count("\n") + 1)
+
+    # Resources -> functions (type.name as the "function")
+    for m in _TF_RESOURCE.finditer(content):
+        result.functions.append({
+            "name": f"{m.group(1)}.{m.group(2)}", "args": [], "returns": "resource",
+            "line": content[:m.start()].count("\n") + 1, "decorators": [],
+        })
+    for m in _TF_DATA.finditer(content):
+        result.functions.append({
+            "name": f"data.{m.group(1)}.{m.group(2)}", "args": [], "returns": "data",
+            "line": content[:m.start()].count("\n") + 1, "decorators": [],
+        })
+    for m in _TF_MODULE.finditer(content):
+        result.functions.append({
+            "name": f"module.{m.group(1)}", "args": [], "returns": "module",
+            "line": content[:m.start()].count("\n") + 1, "decorators": [],
+        })
+
+    # Variables -> imports (inputs to the module)
+    for m in _TF_VARIABLE.finditer(content):
+        result.imports.append({"from": "variable", "names": [m.group(1)]})
+
+    # Outputs -> exports
+    for m in _TF_OUTPUT.finditer(content):
+        result.exports.append(m.group(1))
+
+    return result
+
+
 _EXTRACTORS = {
     ".py": _extract_python,
     ".json": _extract_json,
     ".yaml": _extract_yaml,
     ".yml": _extract_yaml,
     ".md": _extract_markdown,
+    ".ts": _extract_typescript,
+    ".tsx": _extract_typescript,
+    ".js": _extract_typescript,
+    ".mjs": _extract_typescript,
+    ".jsx": _extract_typescript,
+    ".tf": _extract_terraform,
 }
 
 
