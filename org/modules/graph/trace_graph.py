@@ -220,6 +220,125 @@ def format_trace(node_id: str, results: list[tuple[Node, Edge, int]], direction:
     return "\n".join(lines)
 
 
+@dataclass
+class DeltaResult:
+    """Result of diffing two graph snapshots."""
+    added_nodes: list[Node] = field(default_factory=list)
+    removed_nodes: list[Node] = field(default_factory=list)
+    added_edges: list[Edge] = field(default_factory=list)
+    removed_edges: list[Edge] = field(default_factory=list)
+
+    @property
+    def has_changes(self) -> bool:
+        return bool(self.added_nodes or self.removed_nodes
+                    or self.added_edges or self.removed_edges)
+
+    def summary(self) -> str:
+        """One-line summary of changes."""
+        parts = []
+        if self.added_nodes:
+            parts.append(f"+{len(self.added_nodes)} nodes")
+        if self.removed_nodes:
+            parts.append(f"-{len(self.removed_nodes)} nodes")
+        if self.added_edges:
+            parts.append(f"+{len(self.added_edges)} edges")
+        if self.removed_edges:
+            parts.append(f"-{len(self.removed_edges)} edges")
+        return ", ".join(parts) if parts else "no changes"
+
+
+def diff_graphs(baseline: TraceGraph, current: TraceGraph) -> DeltaResult:
+    """Compare two graph snapshots and return the delta."""
+    result = DeltaResult()
+
+    # Node diff by id
+    baseline_ids = set(baseline.nodes.keys())
+    current_ids = set(current.nodes.keys())
+
+    for nid in current_ids - baseline_ids:
+        result.added_nodes.append(current.nodes[nid])
+    for nid in baseline_ids - current_ids:
+        result.removed_nodes.append(baseline.nodes[nid])
+
+    # Edge diff by (source, target, edge_type) tuple
+    def _edge_key(e: Edge) -> tuple[str, str, str]:
+        return (e.source, e.target, e.edge_type)
+
+    baseline_edge_keys = {}
+    for e in baseline.edges:
+        baseline_edge_keys[_edge_key(e)] = e
+
+    current_edge_keys = {}
+    for e in current.edges:
+        current_edge_keys[_edge_key(e)] = e
+
+    for key in set(current_edge_keys) - set(baseline_edge_keys):
+        result.added_edges.append(current_edge_keys[key])
+    for key in set(baseline_edge_keys) - set(current_edge_keys):
+        result.removed_edges.append(baseline_edge_keys[key])
+
+    # Sort for stable output
+    result.added_nodes.sort(key=lambda n: n.id)
+    result.removed_nodes.sort(key=lambda n: n.id)
+    result.added_edges.sort(key=lambda e: (e.source, e.target))
+    result.removed_edges.sort(key=lambda e: (e.source, e.target))
+
+    return result
+
+
+def save_baseline(graph: TraceGraph, cache_dir: Path):
+    """Save the current graph as the baseline for future xref comparisons."""
+    baseline_path = cache_dir / "baseline.json"
+    graph.save(baseline_path)
+    return baseline_path
+
+
+def format_delta(delta: DeltaResult) -> str:
+    """Format a DeltaResult as human-readable text."""
+    if not delta.has_changes:
+        return "XREF: No changes since baseline."
+
+    lines = [f"XREF DELTA: {delta.summary()}", ""]
+
+    if delta.added_nodes:
+        # Group by type
+        by_type: dict[str, list[Node]] = {}
+        for n in delta.added_nodes:
+            by_type.setdefault(n.node_type, []).append(n)
+        lines.append(f"ADDED NODES ({len(delta.added_nodes)}):")
+        for ntype, nodes in sorted(by_type.items()):
+            lines.append(f"  {ntype} ({len(nodes)}):")
+            for n in nodes:
+                detail = f" [{n.file_path}]" if n.file_path else ""
+                lines.append(f"    + {n.label}{detail}")
+        lines.append("")
+
+    if delta.removed_nodes:
+        by_type = {}
+        for n in delta.removed_nodes:
+            by_type.setdefault(n.node_type, []).append(n)
+        lines.append(f"REMOVED NODES ({len(delta.removed_nodes)}):")
+        for ntype, nodes in sorted(by_type.items()):
+            lines.append(f"  {ntype} ({len(nodes)}):")
+            for n in nodes:
+                lines.append(f"    - {n.label}")
+        lines.append("")
+
+    if delta.added_edges:
+        lines.append(f"ADDED EDGES ({len(delta.added_edges)}):")
+        for e in delta.added_edges:
+            lines.append(f"    + {e.source} -[{e.edge_type}]-> {e.target}")
+        lines.append("")
+
+    if delta.removed_edges:
+        lines.append(f"REMOVED EDGES ({len(delta.removed_edges)}):")
+        for e in delta.removed_edges:
+            lines.append(f"    - {e.source} -[{e.edge_type}]-> {e.target}")
+        lines.append("")
+
+    return "\n".join(lines)
+
+
 def format_blast(node_id: str, results: list[tuple[Node, Edge, int]]) -> str:
     """Format blast radius as advisory warnings."""
     if not results:
