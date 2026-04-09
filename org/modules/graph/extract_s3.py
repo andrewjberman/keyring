@@ -1,0 +1,396 @@
+"""
+Pass 2: S3 Artifact Mapper — extract WRITES_S3 and READS_S3 edges.
+
+Scans gold scripts for S3 write patterns (put_object, upload_file, save to S3).
+Scans Lambda source for S3 read patterns (get_object, download_file, read from S3).
+Builds GOLD_SCRIPT -> S3_ARTIFACT -> LAMBDA edges.
+
+Also extracts the gold script run_order from filename prefix (A_00=0, A_01=1, etc.).
+
+Zero API calls. Pure regex extraction.
+"""
+
+from __future__ import annotations
+
+import re
+from pathlib import Path
+
+from .trace_graph import TraceGraph, Node, Edge
+
+# ---------------------------------------------------------------------------
+# S3 write patterns (gold scripts / Lambdas)
+# ---------------------------------------------------------------------------
+
+# s3.put_object(Bucket=..., Key="gold/artifacts/foo.json", ...)
+_S3_PUT_OBJECT = re.compile(
+    r"""(?:s3|s3_client|client)\.put_object\s*\([^)]*Key\s*=\s*(?:f?['"]([^'"]+)['"]|(\w+))""",
+    re.DOTALL
+)
+
+# s3.upload_file(..., Key="gold/artifacts/foo.json")
+_S3_UPLOAD = re.compile(
+    r"""(?:s3|s3_client|client)\.upload_file(?:obj)?\s*\([^)]*Key\s*=\s*(?:f?['"]([^'"]+)['"]|(\w+))""",
+    re.DOTALL
+)
+
+# Generic S3 key string patterns in gold scripts
+# Matches: f"gold/artifacts/{name}.json", "gold/views/foo.parquet", etc.
+_S3_KEY_LITERAL = re.compile(
+    r"""['"](?:gold|silver|bronze|portal)/[\w/{}.-]+\.(?:json|parquet|csv|gz)['"]"""
+)
+
+# upload_json / _save_json / save_to_s3 style helpers
+_S3_HELPER_WRITE = re.compile(
+    r"""(?:upload_json|_save_json|save_to_s3|_upload_artifact)\s*\([^)]*['"]([^'"]+)['"]""",
+)
+
+# S3 key constructed with f-strings or variables
+_S3_FSTRING_KEY = re.compile(
+    r"""Key\s*=\s*f['"]([^'"]+)['"]"""
+)
+
+# ---------------------------------------------------------------------------
+# S3 read patterns (Lambdas / gold scripts)
+# ---------------------------------------------------------------------------
+
+_S3_GET_OBJECT = re.compile(
+    r"""(?:s3|s3_client|client)\.get_object\s*\([^)]*Key\s*=\s*(?:f?['"]([^'"]+)['"]|(\w+))""",
+    re.DOTALL
+)
+
+_S3_READ_PARQUET = re.compile(
+    r"""(?:pd\.read_parquet|read_parquet)\s*\([^)]*['"]([^'"]+)['"]"""
+)
+
+_S3_HELPER_READ = re.compile(
+    r"""(?:load_json|_load_json|read_from_s3|_download_artifact|get_json)\s*\([^)]*['"]([^'"]+)['"]""",
+)
+
+# ---------------------------------------------------------------------------
+# Gold script run_order extraction
+# ---------------------------------------------------------------------------
+
+_GOLD_PREFIX = re.compile(r'^([A-Z])_(\d{2})')
+
+def _run_order(filename: str) -> int:
+    """Extract run order from gold script filename. A_00=0, A_01=1, B_01=100, C_00=200, D_00=300."""
+    m = _GOLD_PREFIX.match(filename)
+    if not m:
+        return -1
+    letter_val = (ord(m.group(1)) - ord('A')) * 100
+    num_val = int(m.group(2))
+    return letter_val + num_val
+
+
+# ---------------------------------------------------------------------------
+# Function-level extraction for gold scripts
+# ---------------------------------------------------------------------------
+
+_PYTHON_DEF = re.compile(r'^def\s+(\w+)\s*\(', re.MULTILINE)
+
+# ---------------------------------------------------------------------------
+# Constant resolution (e.g., TIMESERIES_CHART -> 'gold/artifacts/timeseries_chart.json')
+# ---------------------------------------------------------------------------
+
+_CONST_ASSIGNMENT = re.compile(
+    r"""^(\w+)\s*=\s*['"]([^'"]+)['"]""", re.MULTILINE
+)
+
+def _resolve_constants(gold_dir: Path) -> dict[str, str]:
+    """Build a map of constant names to their S3 key values from lib/s3_layout.py and similar."""
+    constants = {}
+    for lib_file in [
+        gold_dir / "lib" / "s3_layout.py",
+        gold_dir / "lib" / "config.py",
+    ]:
+        if lib_file.exists():
+            try:
+                content = lib_file.read_text(encoding="utf-8", errors="replace")
+                for m in _CONST_ASSIGNMENT.finditer(content):
+                    name, value = m.group(1), m.group(2)
+                    if '/' in value and name.isupper():
+                        constants[name] = value
+            except Exception:
+                pass
+    return constants
+
+
+# Pattern: _save_json(data, CONSTANT_NAME, ...) or s3.put_object(..., Key=CONSTANT, ...)
+_S3_HELPER_CONST = re.compile(
+    r"""(?:_save_json|upload_json|save_to_s3)\s*\([^,]+,\s*(\w+)"""
+)
+
+_S3_PUT_CONST = re.compile(
+    r"""put_object\s*\([^)]*Key\s*=\s*(\w+)"""
+)
+
+_S3_GET_CONST = re.compile(
+    r"""get_object\s*\([^)]*Key\s*=\s*(\w+)"""
+)
+
+
+def _extract_builder_to_save_mapping(content: str, constants: dict[str, str] = None) -> dict[str, list[str]]:
+    """Extract builder_function -> S3 key mappings from the pattern:
+        var = build_X(...)
+        _save_json(var, CONSTANT)
+    Returns: {build_X: [s3_key, ...]}
+    """
+    if constants is None:
+        constants = {}
+    result = {}
+
+    # Find all: var = build_X(...) patterns
+    build_calls = re.finditer(
+        r'(\w+)\s*=\s*(build_\w+)\s*\(', content
+    )
+    var_to_builder = {}
+    for m in build_calls:
+        var_name, builder_name = m.group(1), m.group(2)
+        var_to_builder[var_name] = builder_name
+
+    # Find all: _save_json(var, CONSTANT, ...) patterns
+    save_calls = re.finditer(
+        r'_save_json\s*\(\s*(\w+)\s*,\s*(\w+)', content
+    )
+    for m in save_calls:
+        var_name, const_or_key = m.group(1), m.group(2)
+        s3_key = constants.get(const_or_key)
+        if not s3_key:
+            continue
+        builder = var_to_builder.get(var_name)
+        if builder:
+            result.setdefault(builder, []).append(s3_key)
+
+    # Also handle: build_X(..., upload=True) pattern (no _save_json, writes internally)
+    direct_builders = re.finditer(
+        r'(build_\w+)\s*\([^)]*upload\s*=\s*(?:True|not\s+dry_run)', content
+    )
+    for m in direct_builders:
+        builder = m.group(1)
+        # Try to find the S3 key from the function definition
+        if builder not in result:
+            result.setdefault(builder, [])
+
+    return result
+
+
+def _extract_functions_with_s3(content: str, constants: dict[str, str] = None) -> dict[str, list[str]]:
+    """Map function names to S3 keys they write. Best-effort: assigns S3 keys
+    to the nearest preceding function def."""
+    functions = list(_PYTHON_DEF.finditer(content))
+    if not functions:
+        return {}
+
+    if constants is None:
+        constants = {}
+
+    result = {}
+    for i, func_match in enumerate(functions):
+        func_name = func_match.group(1)
+        start = func_match.start()
+        end = functions[i + 1].start() if i + 1 < len(functions) else len(content)
+        chunk = content[start:end]
+
+        keys = set()
+        # String literal patterns
+        for pattern in (_S3_PUT_OBJECT, _S3_UPLOAD, _S3_HELPER_WRITE, _S3_FSTRING_KEY):
+            for m in pattern.finditer(chunk):
+                key = m.group(1) or (m.group(2) if m.lastindex >= 2 else None)
+                if key and '/' in key and not key.startswith('{'):
+                    keys.add(_clean_s3_key(key))
+
+        for m in _S3_KEY_LITERAL.finditer(chunk):
+            raw = m.group(0).strip("'\"")
+            if '/' in raw:
+                keys.add(_clean_s3_key(raw))
+
+        # Constant-based patterns: _save_json(data, TIMESERIES_CHART, ...)
+        for pattern in (_S3_HELPER_CONST, _S3_PUT_CONST):
+            for m in pattern.finditer(chunk):
+                const_name = m.group(1)
+                if const_name in constants:
+                    keys.add(constants[const_name])
+
+        if keys:
+            result[func_name] = sorted(keys)
+
+    return result
+
+
+def _clean_s3_key(key: str) -> str:
+    """Clean up f-string artifacts from S3 keys."""
+    # Remove f-string braces: gold/artifacts/{name}.json -> gold/artifacts/*.json
+    key = re.sub(r'\{[^}]+\}', '*', key)
+    # Remove surrounding quotes
+    key = key.strip("'\"")
+    return key
+
+
+def _extract_s3_reads(content: str, constants: dict[str, str] = None) -> set[str]:
+    """Extract all S3 keys read by a file."""
+    if constants is None:
+        constants = {}
+    keys = set()
+    for pattern in (_S3_GET_OBJECT, _S3_HELPER_READ):
+        for m in pattern.finditer(content):
+            key = m.group(1) or (m.group(2) if m.lastindex >= 2 else None)
+            if key and '/' in key and not key.startswith('{'):
+                keys.add(_clean_s3_key(key))
+
+    for m in _S3_READ_PARQUET.finditer(content):
+        key = m.group(1)
+        if '/' in key:
+            keys.add(_clean_s3_key(key))
+
+    # Constant-based reads: s3.get_object(Key=CONSTANT)
+    for m in _S3_GET_CONST.finditer(content):
+        const_name = m.group(1)
+        if const_name in constants:
+            keys.add(constants[const_name])
+
+    return keys
+
+
+# ---------------------------------------------------------------------------
+# Main extraction
+# ---------------------------------------------------------------------------
+
+def extract_s3_edges(graph: TraceGraph, workspace_root: Path):
+    """Extract S3 read/write edges from gold scripts and Lambda source."""
+
+    # --- Gold scripts (writers) ---
+    gold_dir = workspace_root / "data" / "black_diamond" / "scripts" / "gold"
+    if gold_dir.exists():
+        # Resolve constants from lib/s3_layout.py
+        constants = _resolve_constants(gold_dir)
+
+        for py_file in sorted(gold_dir.glob("*.py")):
+            if py_file.name.startswith("__"):
+                continue
+            try:
+                content = py_file.read_text(encoding="utf-8", errors="replace")
+            except Exception:
+                continue
+
+            order = _run_order(py_file.stem)
+            rel_path = str(py_file.relative_to(workspace_root)).replace("\\", "/")
+
+            # File-level node
+            script_node_id = f"gold:{py_file.stem}"
+            graph.add_node(Node(
+                id=script_node_id,
+                node_type="GOLD_SCRIPT",
+                label=py_file.stem,
+                file_path=rel_path,
+                run_order=order,
+            ))
+
+            # Builder-to-save mapping: build_X() -> _save_json(var, CONSTANT)
+            builder_writes = _extract_builder_to_save_mapping(content, constants)
+            for builder_name, s3_keys in builder_writes.items():
+                builder_node_id = f"gold:{py_file.stem}:{builder_name}"
+                graph.add_node(Node(
+                    id=builder_node_id,
+                    node_type="GOLD_SCRIPT",
+                    label=f"{py_file.stem}:{builder_name}",
+                    file_path=rel_path,
+                    function_name=builder_name,
+                    run_order=order,
+                ))
+                for s3_key in s3_keys:
+                    s3_node_id = f"s3:{s3_key}"
+                    graph.add_node(Node(
+                        id=s3_node_id, node_type="S3_ARTIFACT",
+                        label=s3_key,
+                    ))
+                    graph.add_edge(Edge(
+                        source=builder_node_id, target=s3_node_id,
+                        edge_type="WRITES_S3",
+                    ))
+
+            # Function-level S3 writes (direct put_object patterns, not builder->save)
+            func_writes = _extract_functions_with_s3(content, constants)
+            for func_name, s3_keys in func_writes.items():
+                # Skip if already covered by builder mapping
+                if func_name in builder_writes:
+                    continue
+                func_node_id = f"gold:{py_file.stem}:{func_name}"
+                graph.add_node(Node(
+                    id=func_node_id,
+                    node_type="GOLD_SCRIPT",
+                    label=f"{py_file.stem}:{func_name}",
+                    file_path=rel_path,
+                    function_name=func_name,
+                    run_order=order,
+                ))
+                for s3_key in s3_keys:
+                    s3_node_id = f"s3:{s3_key}"
+                    graph.add_node(Node(
+                        id=s3_node_id, node_type="S3_ARTIFACT",
+                        label=s3_key,
+                    ))
+                    graph.add_edge(Edge(
+                        source=func_node_id, target=s3_node_id,
+                        edge_type="WRITES_S3",
+                    ))
+
+            # File-level S3 reads (gold scripts reading from other scripts' output)
+            for s3_key in _extract_s3_reads(content, constants):
+                s3_node_id = f"s3:{s3_key}"
+                graph.add_node(Node(
+                    id=s3_node_id, node_type="S3_ARTIFACT", label=s3_key,
+                ))
+                graph.add_edge(Edge(
+                    source=s3_node_id, target=script_node_id,
+                    edge_type="READS_S3",
+                ))
+
+    # --- Lambda source (readers) ---
+    lambda_dir = workspace_root / "infra" / "aws" / "lambda"
+    if lambda_dir.exists():
+        for py_file in lambda_dir.rglob("*.py"):
+            if py_file.name.startswith("__") or "layer" in str(py_file).lower():
+                continue
+            try:
+                content = py_file.read_text(encoding="utf-8", errors="replace")
+            except Exception:
+                continue
+
+            rel_path = str(py_file.relative_to(workspace_root)).replace("\\", "/")
+
+            # Determine Lambda name from directory structure
+            # e.g., infra/aws/lambda/bd-pipeline/opal-partners-data/handler.py
+            parts = py_file.relative_to(lambda_dir).parts
+            lambda_name = parts[-2] if len(parts) >= 2 else py_file.stem
+
+            lambda_node_id = f"lambda:{lambda_name}"
+            graph.add_node(Node(
+                id=lambda_node_id, node_type="LAMBDA",
+                label=lambda_name, file_path=rel_path,
+            ))
+
+            # S3 reads
+            for s3_key in _extract_s3_reads(content):
+                s3_node_id = f"s3:{s3_key}"
+                graph.add_node(Node(
+                    id=s3_node_id, node_type="S3_ARTIFACT", label=s3_key,
+                ))
+                graph.add_edge(Edge(
+                    source=s3_node_id, target=lambda_node_id,
+                    edge_type="READS_S3",
+                ))
+
+            # S3 writes (some Lambdas also write)
+            for pattern in (_S3_PUT_OBJECT, _S3_UPLOAD, _S3_HELPER_WRITE, _S3_FSTRING_KEY):
+                for m in pattern.finditer(content):
+                    key = m.group(1) or (m.group(2) if m.lastindex >= 2 else None)
+                    if key and '/' in key and not key.startswith('{'):
+                        s3_key = _clean_s3_key(key)
+                        s3_node_id = f"s3:{s3_key}"
+                        graph.add_node(Node(
+                            id=s3_node_id, node_type="S3_ARTIFACT", label=s3_key,
+                        ))
+                        graph.add_edge(Edge(
+                            source=lambda_node_id, target=s3_node_id,
+                            edge_type="WRITES_S3",
+                        ))

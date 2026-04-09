@@ -1,0 +1,283 @@
+# comp-tools.yaml — Agent directive for compiler tools
+#
+# These tools replace Explore agents and manual file-by-file tracing
+# for any task that involves understanding how systems connect.
+# They are deterministic, fast (<2s), and cover the full stack:
+#
+#   React components -> API endpoints -> Lambda handlers -> S3 artifacts
+#   -> gold scripts -> EventBridge schedules -> CloudFront routing
+#
+# The graph covers ALL layers of the system — not just gold scripts.
+# Use them for frontend, middleware, infrastructure, and data questions.
+#
+# RULE: Before spawning an Explore agent or manually grepping for
+# data paths, imports, or dependencies — run the appropriate comp-*
+# tool first. If the tool answers your question, do not explore further.
+
+tools:
+  comp-build:
+    command: comp-build
+    when: "Graph cache is stale (>5 min) or you suspect new files were added"
+    cost: "~2s"
+    output: "Node/edge counts by type, cached to .comp-graph/graph.json"
+
+  comp-trace:
+    command: "comp-trace <query> [--direction up|down|both] [--depth N] [--json]"
+    when: |
+      - "Where does this data come from?" (--direction up)
+      - "What consumes this data?" (--direction down)
+      - "Show me the full data path end to end" (--direction both, default)
+      - Investigating a bug that spans ANY layers (frontend, API, Lambda, S3, gold, EventBridge, CloudFront)
+      - Understanding what a component, endpoint, Lambda, or artifact depends on before modifying it
+      - "Which EventBridge rules trigger this Lambda?"
+      - "Which Lambdas serve this API endpoint?"
+      - "Which portal pages call this API function?"
+    examples:
+      - "comp-trace AdvisorsTab --direction up"
+      - "comp-trace employee_leaderboard --direction both"
+      - "comp-trace getCumulativeChart --direction both"
+      - "comp-trace trending --direction both --all"
+      - "comp-trace opal-partners-data --direction up"
+      - "comp-trace news-trending-analysis --direction both"
+    cost: "<1s (cached graph)"
+    replaces: "Explore agent, manual grep for imports/fetch calls/S3 keys/Lambda routes/EventBridge rules"
+
+  comp-blast:
+    command: "comp-blast <query> [--function name] [--json]"
+    when: |
+      - Before modifying ANYTHING: "what downstream systems will this affect?"
+      - Gold script change: "what S3 artifacts, Lambdas, and portal pages does this feed?"
+      - Lambda change: "what portal components consume this Lambda's output?"
+      - API endpoint change: "which components call this function?"
+      - S3 artifact change: "which Lambdas and endpoints read this?"
+      - EventBridge rule change: "which Lambdas does this trigger?"
+      - COO decomposing a PRD: "which agents need task orders for this change?"
+    examples:
+      - "comp-blast build_employee_leaderboard"
+      - "comp-blast D_00 --function build_timeseries_chart"
+      - "comp-blast opal-partners-data"
+      - "comp-blast timeseries_chart"
+      - "comp-blast news-trending-analysis"
+    cost: "<1s"
+    replaces: "Manual audit of S3 readers, Lambda consumers, portal imports, EventBridge targets"
+
+  comp-diff:
+    command: "comp-diff [--ref HEAD~3] [--staged] [--json]"
+    when: |
+      - Before committing: "what is the blast radius of my uncommitted changes?"
+      - After pulling changes: "what graph paths were affected by recent commits?"
+      - Pre-deploy check: "what portal components are affected by this deploy?"
+    examples:
+      - "comp-diff"
+      - "comp-diff --ref HEAD~5"
+      - "comp-diff --staged"
+    cost: "~2s (rebuilds graph + runs git diff)"
+    replaces: "Manual file-by-file change review"
+
+  comp-xref:
+    command: "comp-xref [--save] [--json]"
+    when: |
+      - After a gold re-run or deploy: "did the dependency graph change?"
+      - Periodic audit: "what nodes/edges were added or removed since last check?"
+      - Save baseline before major work: "comp-xref --save"
+    examples:
+      - "comp-xref --save"
+      - "comp-xref"
+      - "comp-xref --json"
+    cost: "~2s"
+    replaces: "Manual before/after comparison of file trees"
+
+  comp-pipescript:
+    command: "comp-pipescript <subcommand> [args]"
+    when: |
+      - "What does gold script X read and write?" -> comp-pipescript io X
+      - "What feeds script X?" -> comp-pipescript feeds X
+      - "What consumes script X output?" -> comp-pipescript consumers X
+      - "What's the execution order of a chain?" -> comp-pipescript chain downstream
+      - "Do scripts A and B share any S3 artifacts?" -> comp-pipescript overlap A B
+      - Designing a new gold script: understand inputs available from upstream
+      - Modifying a gold script: check who consumes your output before changing schema
+    subcommands:
+      dag: "Full pipeline DAG with I/O per script (--json for machine output)"
+      io: "comp-pipescript io D_00 -- input/output manifest with upstream writers and downstream consumers"
+      chain: "comp-pipescript chain downstream -- chain membership + order + I/O counts"
+      feeds: "comp-pipescript feeds D_00 -- upstream scripts that write artifacts D_00 reads"
+      consumers: "comp-pipescript consumers C_07 -- downstream scripts that read C_07 output"
+      overlap: "comp-pipescript overlap D_00 D_03 -- shared S3 artifacts between two scripts"
+      inject: "Inject pipeline edges into comp-trace graph cache (run after comp-build)"
+      stats: "Graph stats + warnings for scripts with missing reads/writes"
+    cost: "<1s"
+    data_sources: "lib/s3_layout.py (AST-parsed), gold_dispatch.sh (chain/catalog), each script's imports"
+    replaces: "Manual import tracing, grepping s3_layout constants, reading gold_pipeline_script_file_flow.md"
+    note: "Use this instead of comp-trace for gold script dependency questions. comp-trace covers cross-layer (frontend->Lambda->S3); comp-pipescript covers intra-pipeline (script->S3->script)."
+
+  comp-routes:
+    command: "comp-routes <subcommand> [args]"
+    when: |
+      - "How does this data get from S3 to the browser?" -> comp-routes trace <endpoint_fn>
+      - "What auth layers does this path go through?" -> comp-routes auth-map
+      - "Which CloudFront behavior handles this URL?" -> comp-routes trace /api/scoped/...
+      - "What does this React component fetch and how?" -> comp-routes trace ComponentName
+      - "What rewrites does shared-advisor-router apply?" -> comp-routes rewrites
+      - "Which paths go through API Gateway vs direct S3?" -> comp-routes stats
+      - Platinum migration: verify new paths route correctly through CF + auth
+      - Auth audit: verify every path has appropriate auth layers
+    subcommands:
+      trace: "comp-routes trace getEmployeeLeaderboard -- full chain: URL -> CF behavior -> origin -> auth -> router -> S3 key -> components"
+      behaviors: "All 23 CloudFront behaviors with origins, auth, edge functions"
+      origins: "All 5 CloudFront origins (S3 buckets + API Gateways)"
+      rewrites: "URL->S3 rewrite rules from shared-advisor-router + public-data-router"
+      api-routes: "All API Gateway route_keys grouped by pipeline"
+      endpoints: "All frontend endpoint functions with resolved URLs"
+      components: "Component -> endpoint call bindings"
+      auth-map: "Which paths have no auth, edge-only, or double auth (edge + API GW)"
+      stats: "Routing table summary: origin types, auth coverage, resolved routes"
+    cost: "<1s"
+    data_sources: "cloudfront-distribution.tf, shared-advisor-router/index.mjs, api-gateway.tf files, portal/src/api/endpoints/*.ts, portal/src/pages/**/*.tsx"
+    replaces: "Reading Terraform + Lambda@Edge source + frontend code to trace serving paths manually"
+    note: "Use this for any frontend-to-backend question. comp-pipescript covers data production (gold scripts); comp-routes covers data serving (S3 -> CloudFront -> auth -> browser)."
+
+  comp-transform:
+    command: "comp-transform <subcommand> [args]"
+    when: |
+      - "What fields does this component actually render from the API response?" -> comp-transform fields X
+      - "What useMemo chains transform the data after fetch?" -> comp-transform chains X
+      - "Which response fields are fetched but never used?" -> comp-transform unused X
+      - "Full data flow: fetch -> transforms -> JSX?" -> comp-transform trace X
+      - Before changing a response shape: know which transforms and JSX refs will break
+      - Platinum migration: identify client-side aggregation that pre-aggregated data replaces
+    subcommands:
+      trace: "comp-transform trace PartnerAnalytics -- full flow: fetches, transform chains, JSX refs, response types"
+      fields: "comp-transform fields PartnerAnalytics -- all response fields actually accessed, grouped by root variable"
+      chains: "comp-transform chains PartnerAnalytics -- useMemo/useCallback chains with inputs, field accesses, and operations"
+      unused: "comp-transform unused PartnerAnalytics -- waste analysis: response fields fetched but never rendered"
+      schema-check: "comp-transform schema-check ClientsTab -- cross-reference rendered JSX fields against TypeScript response types. Flags MISSING (rendered but not in type = runtime undefined) and UNUSED (in type but not rendered = waste). Adapter-aware: detects useState<StateType> vs fetch response type and checks against the correct one."
+      all: "Summary of all components with data flow"
+      stats: "Statistics: fetch count, chain count, common operations"
+    cost: "<1s"
+    data_sources: "portal/src/pages/**/*.tsx (hooks, JSX), portal/src/pages/**/types.ts (response interfaces)"
+    replaces: "Reading component source to understand what fields are used, spawning Explore agents to trace useMemo chains"
+    note: "Use BEFORE reading component source. If comp-transform shows the fields and chains you need, skip the Explore agent. Only read source when you need line-level precision for Edit operations."
+
+  comp-platinum:
+    command: "comp-platinum <subcommand> [args]"
+    when: |
+      - "For this page, trace the full path from fetch to gold script" -> comp-platinum page X
+      - "What S3 key does this endpoint resolve to, and what gold script writes it?" -> comp-platinum page X
+      - "For this S3 key, what routes serve it and what components render it?" -> comp-platinum reverse S3key
+      - "Audit every ADVI tab in one shot" -> comp-platinum tab-audit
+      - Phase 2 tab audits: tab-audit gives you fetches, origins, auth, S3 keys, gold sources, transforms per tab
+    subcommands:
+      page: "comp-platinum page PartnerAnalytics -- full stack: fetch -> CF -> auth -> S3 key -> gold script, with transforms and JSX refs"
+      reverse: "comp-platinum reverse gold/artifacts/employee_leaderboard.json -- S3 key -> route -> components"
+      tab-audit: "Audit every ADVI tab: fetches, origin type, auth layers, S3 keys, gold sources, transform count"
+      summary: "One-line per component: fetch count, chain count, S3 direct vs API GW, auth coverage"
+    cost: "<2s (chains comp-transform + comp-routes + comp-pipescript)"
+    replaces: "Spawning 2+ Explore agents to manually trace page -> API -> infra -> gold scripts (~200k tokens)"
+    note: "This is the composition tool. Use it for full end-to-end page audits. For targeted questions (just pipeline, just serving, just transforms), use the individual tools."
+
+  comp-cache:
+    command: "comp-cache <subcommand> [args]"
+    when: |
+      - "Do any components share a React Query cache key?" -> comp-cache collisions
+      - "What cache keys exist and which components own them?" -> comp-cache map
+      - "Find all cache keys related to advisor-intelligence" -> comp-cache key advisor-intelligence
+      - Before changing a queryKey or response type: check for shared keys that would break
+    subcommands:
+      map: "All cache keys -> components + response types + fetch functions"
+      collisions: "Keys shared by multiple components, flags TYPE MISMATCH when same key has different response types"
+      key: "comp-cache key <query> -- find all cache keys matching a substring"
+    cost: "<1s"
+    replaces: "Grepping for useQuery across all .tsx files to find shared keys"
+
+  comp-pii:
+    command: "comp-pii <subcommand> [args]"
+    when: |
+      - "Does this component expose PII to external users?" -> comp-pii scan ComponentName
+      - "Full PII audit across all ADVI tabs" -> comp-pii audit
+      - "What fields does the pseudonymizer hash?" -> comp-pii fields
+      - "Which serving paths carry PII and are they protected?" -> comp-pii routes
+      - Phase 4 auth validation: verify pseudonymization coverage after platinum migration
+      - Before adding a new field to a response: check if it's PII
+    subcommands:
+      scan: "comp-pii scan ClientsTab -- flags every PII field reference as [HASHED] or [CLEARTEXT]"
+      audit: "Full audit across all ADVI tabs: PII ref counts, pseudonymization coverage, S3-direct warnings"
+      sweep: "comp-pii sweep -- scan ALL portal .ts/.tsx files for hardcoded PII values (z-numbers, account IDs). Catches real account numbers in code and comments. Synthetic IDs (z00000001) are allowlisted."
+      fields: "PII field registry: 10 pseudonymized + 3 potential, with HMAC prefix and role matrix"
+      routes: "Which serving paths carry PII and whether pseudonymizer runs (Lambda vs S3-direct)"
+    cost: "<2s"
+    data_sources: "pseudonymizer.py (target field list), auth-validator-edge (role matrix), comp-transform (rendered fields)"
+    replaces: "Manual cross-referencing of pseudonymizer.py against component source to find PII exposure"
+
+# ============================================================================
+# AGENT DECISION TREE
+# ============================================================================
+#
+# Pick the right tool for the question:
+#
+#   PIPELINE (gold scripts, S3 artifacts, execution order):
+#     Q: "What does script D_00 read/write?"    -> comp-pipescript io D_00
+#     Q: "What feeds script D_00?"              -> comp-pipescript feeds D_00
+#     Q: "What consumes C_07 output?"           -> comp-pipescript consumers C_07
+#     Q: "What's the chain execution order?"    -> comp-pipescript chain downstream
+#     Q: "Do D_00 and D_03 share inputs?"       -> comp-pipescript overlap D_00 D_03
+#
+#   SERVING (CloudFront, auth, Lambda, frontend):
+#     Q: "How does this data reach the browser?" -> comp-routes trace getEmployeeLeaderboard
+#     Q: "What auth does this path go through?"  -> comp-routes auth-map
+#     Q: "What does this component fetch?"       -> comp-routes trace PartnerAnalytics
+#     Q: "Which paths are S3 vs API Gateway?"    -> comp-routes stats
+#     Q: "What rewrite rules exist?"             -> comp-routes rewrites
+#
+#   CLIENT-SIDE DATA FLOW (inside React components):
+#     Q: "What fields does this component use?"  -> comp-transform fields PartnerAnalytics
+#     Q: "What transforms happen after fetch?"   -> comp-transform chains PartnerAnalytics
+#     Q: "What response fields are wasted?"      -> comp-transform unused PartnerAnalytics
+#     Q: "Full fetch-to-render data flow?"       -> comp-transform trace PartnerAnalytics
+#
+#   CROSS-LAYER (generic graph: components, endpoints, Lambdas, S3, EventBridge):
+#     Q: "What depends on this component?"       -> comp-trace X --direction up
+#     Q: "What breaks if I change this?"         -> comp-blast Y
+#     Q: "Full data path end to end?"            -> comp-trace X --direction both
+#     Q: "What did my changes affect?"           -> comp-diff
+#     Q: "Did the graph change since baseline?"  -> comp-xref
+#
+#   FULL-STACK (page-level end-to-end audit):
+#     Q: "Full audit of this page's data flow?"  -> comp-platinum page PartnerAnalytics
+#     Q: "What S3 key backs this and who writes it?" -> comp-platinum page X
+#     Q: "Reverse: who consumes this S3 key?"     -> comp-platinum reverse gold/artifacts/X.json
+#     Q: "Audit every ADVI tab at once?"          -> comp-platinum tab-audit
+#
+#   CACHE (React Query key management):
+#     Q: "Do components share cache keys?"         -> comp-cache collisions
+#     Q: "All cache keys and their owners?"        -> comp-cache map
+#
+#   RULE: comp-platinum for full page audits, comp-pipescript for pipeline,
+#   comp-routes for serving, comp-transform for component internals,
+#   comp-cache for query key issues, comp-trace/comp-blast for everything
+#   else. Never use Explore agents for dependency/data-path questions.
+#
+# ============================================================================
+# MANDATORY USAGE
+# ============================================================================
+#
+# DS agents: comp-pipescript io/feeds/consumers before modifying gold scripts.
+#            comp-pipescript overlap when consolidating scripts.
+#            comp-platinum tab-audit for Phase 2 audits (replaces manual tracing).
+# DE agents: comp-transform trace before reading component source (may save the read).
+#            comp-platinum page before any component wiring changes.
+#            comp-cache collisions before changing queryKeys or response types.
+#            comp-routes auth-map when touching auth-sensitive paths.
+# RD agents: comp-platinum page on your component to see the full stack.
+# DT agents: comp-diff --staged before committing. comp-routes behaviors
+#            before touching CloudFront or Lambda@Edge.
+# AE agents: comp-pipescript chain before modifying dispatch.
+#            comp-blast on infrastructure resources before changes.
+# COO: comp-platinum tab-audit + comp-blast when decomposing PRDs.
+# CTO: comp-platinum + comp-routes + comp-pipescript for architecture design.
+#
+# After comp-build, run "comp-pipescript inject" to enrich the trace graph
+# with pipeline edges. Without this, comp-trace cannot walk upstream
+# through gold script dependencies.
+#
+# PATH: .tools/ is in PATH. All comp-* commands work from any directory.
