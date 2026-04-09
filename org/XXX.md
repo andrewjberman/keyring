@@ -723,6 +723,33 @@ Logs go in YOUR agent folder:
 
 ---
 
+## Compiler Tools
+
+> **MANDATORY for all sessions. Do not skip. Do not leave blank. "N/A" is not acceptable.**
+> If you could not run a tool, explain why. If a tool gave wrong output, say so here.
+> This section is the primary signal used to improve the tools over time.
+
+| Tool | Command Run | Result |
+|------|------------|--------|
+| `comp-pipescript io` | `comp-pipescript io D_XX` | PASS / WARN / FAIL + one-line description |
+| `comp-trace` | `comp-trace artifact_name --direction both` | PASS / no-match / wrong output |
+| `comp-blast` | `comp-blast script.py` | PASS / FAIL |
+| `comp-platinum` | `comp-platinum reverse platinum/...` | PASS / PARTIAL / FAIL |
+| `comp-transform` | `comp-transform fields ComponentName` | PASS / FAIL |
+| `comp-routes` | `comp-routes trace endpointFn` | PASS / FAIL |
+
+*(Only list tools you actually ran. Delete rows for tools not applicable to this task order.)*
+
+**What worked:** [one sentence — which tools saved you time, replaced manual grepping]
+
+**What failed or disappointed:** [one sentence — wrong output, silent failure, missing coverage]
+
+**Gap (new pattern not covered):** [if you hit something the tools couldn't answer, describe it here]
+
+*(Append a one-line summary to `org/compiler-tools-log.md` after writing this section.)*
+
+---
+
 ## Decisions Made
 
 | Decision | Rationale |
@@ -833,6 +860,24 @@ DS briefs are the formal cross-agent handoff artifact. Write them first; list th
 ```markdown
 **Portal DEV commit:** `abc1234`
 ```
+
+---
+
+### Compiler Tools Section — Role Minimum Requirements
+
+The `## Compiler Tools` section is mandatory for all roles. Minimum tools by role:
+
+| Role | Minimum tools | Skip only if |
+|------|--------------|--------------|
+| DS | `comp-pipescript io` for every gold script touched | Script has no s3_layout imports (run it anyway, report WARN) |
+| DE | `comp-transform schema-check` for every TSX component touched | Pure layout/style change with no data props |
+| DE | `comp-blast` before deleting any function or endpoint | |
+| DT | `comp-pipescript io` for every script deployed | |
+| AE | `comp-pipescript io` for every script deployed; `comp-routes` for any Lambda change | |
+| RD | `comp-transform fields` for every component that renders data | Pure style/layout change |
+
+**If no tools were run:** write "No comp-* tools run this session — [reason]." One sentence.
+Do not leave the section blank. Even "grep was faster for this targeted question" is a valid reason.
 
 ---
 
@@ -1055,9 +1100,35 @@ All task orders use this XML structure. Wrap the XML in a markdown file.
     <dependency agent="{agent_id}" task="{task_order_id}" status="pending | complete"/>
   </dependencies>
 
+  <compiler_tools_mandate>
+    <!--
+    MANDATORY in every task order. If you don't know exactly which tools to prescribe,
+    use the minimum below. The agent will expand it based on what they find.
+    Remove the comment block and fill in the actual commands before issuing.
+
+    MINIMUM for DS task orders:
+      comp-pipescript io {script_id}          -- for every gold script this TO touches
+      comp-blast {script_id}                  -- before any schema change to a write target
+      comp-pipescript consumers {script_id}   -- before removing or renaming any output
+
+    MINIMUM for DE task orders:
+      comp-transform schema-check {Component} -- before touching any component with data props
+      comp-blast {endpoint_fn}                -- before deleting any endpoint function
+      comp-cache collisions                   -- before adding any new React Query key
+
+    MINIMUM for DT/AE task orders:
+      comp-pipescript io {script_id}          -- for every script being deployed
+      comp-routes trace {endpoint_fn}         -- for any Lambda or CloudFront change
+
+    Report results in session log ## Compiler Tools section.
+    Also append one line to org/compiler-tools-log.md after completing the session.
+    -->
+  </compiler_tools_mandate>
+
   <deliverables>
     <!-- what the agent produces when done -->
     <deliverable type="commit | document | spec"><!-- description --></deliverable>
+    <deliverable type="document">Session log with ## Compiler Tools section completed</deliverable>
   </deliverables>
 </task_order>
 ```
