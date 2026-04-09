@@ -123,16 +123,21 @@ def _pid_alive(pid: int) -> bool:
 
 
 def _clean_stale():
-    """Remove agents whose PIDs no longer exist. Prune old events."""
+    """Remove agents whose PIDs no longer exist. Prune old events.
+
+    Note: we deliberately do NOT delete undelivered messages for stale agents.
+    A recipient's session can end and restart within seconds — dropping pending
+    messages on a 30s timer created a race where the recipient's new MCP server
+    process would register, call _poll_broker_loop, and find nothing because the
+    broker had already evicted the message. Messages persist until explicitly
+    marked delivered via _handle_poll_messages, so a re-registered agent picks
+    them up on the next poll cycle.
+    """
     rows = db.execute("SELECT serial, pid FROM agents").fetchall()
     for row in rows:
         if not _pid_alive(row["pid"]):
             _log_event("agent_stale", row["serial"], f"PID {row['pid']} no longer alive")
             db.execute("DELETE FROM agents WHERE serial = ?", (row["serial"],))
-            db.execute(
-                "DELETE FROM messages WHERE to_serial = ? AND delivered = 0",
-                (row["serial"],),
-            )
 
     # Prune old events
     db.execute(
@@ -338,12 +343,16 @@ class BrokerHandler(BaseHTTPRequestHandler):
         text = body["text"]
         now = datetime.now(timezone.utc).isoformat()
 
+        # Always accept the insert. A recipient does not need to be currently
+        # registered for us to queue a message — they may be mid-restart or the
+        # sender may be racing ahead of the new session's register_agent call.
+        # _poll_broker_loop in the recipient's MCP server will pick it up on
+        # their next 2s poll tick once they register. messages has no FK to
+        # agents, so this is safe.
         target = db.execute(
             "SELECT serial FROM agents WHERE serial = ?", (to_serial,)
         ).fetchone()
-        if not target:
-            self._json_response({"ok": False, "error": f"Agent {to_serial} not registered"})
-            return
+        recipient_state = "registered" if target else "pre-register"
 
         db.execute(
             "INSERT INTO messages (from_serial, to_serial, subject, body, sent_at, delivered) "
@@ -351,9 +360,13 @@ class BrokerHandler(BaseHTTPRequestHandler):
             (from_serial, to_serial, subject, text, now),
         )
         preview = text[:80] + "..." if len(text) > 80 else text
-        _log_event("message", from_serial, f"-> {to_serial} [{subject}] {preview}")
+        _log_event(
+            "message",
+            from_serial,
+            f"-> {to_serial} [{recipient_state}] [{subject}] {preview}",
+        )
         db.commit()
-        self._json_response({"ok": True})
+        self._json_response({"ok": True, "recipient_state": recipient_state})
 
     def _handle_poll_messages(self, body: dict):
         serial = body["serial"]
