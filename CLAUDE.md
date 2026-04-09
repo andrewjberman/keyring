@@ -34,6 +34,35 @@ These rules are non-negotiable. Violating them causes state drift and broken dep
 
 12. **S3 is the artifact store for all EC2 code.** Never write code directly on a VM. Never inline Python in SSM commands. The flow is: write locally → upload to S3 → EC2 pulls from S3 → execute. Even ad-hoc diagnostic scripts follow this path. See `docs/deployment/EC2_CODE_DEPLOYMENT_STANDARD.md`.
 
+## Agent Autonomy Rules
+
+14. **Agents operate autonomously.** Do NOT ask for permission to read files, write code, run builds, run tests, commit, or execute any non-destructive operation. Just do it. The only operations that require human confirmation are:
+    - `rm -rf` or any recursive deletion
+    - `git reset --hard`, `git push --force`, or other destructive git operations
+    - Dropping database tables or deleting S3 objects
+    - Stopping/terminating EC2 instances
+    - Any operation that destroys data that cannot be recovered
+
+    Everything else — reading, writing, editing, building, committing, pushing to CLOUD/DEV, running scripts, calling APIs — is pre-authorized. Move fast. Do not ask "should I proceed?" or "shall I continue?" — just execute.
+
+## Compiler Tools (comp-*)
+
+Before tracing data paths, dependencies, or system connections manually, use the compiler tools. They build a full-stack graph covering ALL layers (React components, API endpoints, Lambdas, S3 artifacts, gold scripts, EventBridge, CloudFront) in <2s.
+
+- `comp-trace <query>` — trace connections up/down/both from any node in the system
+- `comp-blast <query>` — blast radius: everything downstream of a change
+- `comp-diff` — map git changes to system-wide impact
+- `comp-xref` — diff the dependency graph against a baseline snapshot
+- `comp-build` — force rebuild
+- `comp-pipescript` — gold script I/O, pipeline DAG, feeds/consumers, chain order (authoritative: parses s3_layout.py + gold_dispatch.sh)
+- `comp-routes` — full serving path: S3 artifact -> CloudFront -> auth -> Lambda/S3 -> frontend component (authoritative: parses cloudfront-distribution.tf + Lambda@Edge + API GW)
+- `comp-transform` — client-side data flow: fetch -> response type -> useMemo/useCallback chains -> rendered JSX fields. Key: `schema-check` cross-references rendered fields against TypeScript types (adapter-aware, catches missing fields)
+- `comp-platinum` — full-stack trace: page -> component -> fetch -> CloudFront -> auth -> S3 key -> gold script -> upstream deps. Also: `reverse` (S3 key -> route -> component), `tab-audit` (all ADVI tabs at once)
+- `comp-cache` — React Query cache key map, collision detection, type mismatch flags across components
+- `comp-pii` — PII field detection + `sweep` for hardcoded account numbers. Cross-references pseudonymizer target list with rendered fields, flags [HASHED] vs [CLEARTEXT], warns on S3-direct PII exposure
+
+Use these BEFORE Explore agents or manual grepping for any cross-layer question. `comp-pipescript` for pipeline/gold questions, `comp-routes` for serving/auth questions, `comp-transform` for "what fields does this component render?", `comp-platinum` for full end-to-end page audits, `comp-cache` for query key issues, `comp-trace`/`comp-blast` for everything else. Full reference: `org/modules/graph/comp-tools.yaml`. All tools in `.tools/` (in PATH).
+
 ## Code Quality Rules
 
 13. **No emojis in code.** Never use emoji characters (Unicode above U+007F) in production code, debug logs, diagnostic queries, print statements, or any code that runs on AWS. Emojis break CloudWatch log queries on Windows (charmap codec truncates at first non-ASCII), break log parsing tools (grep, sed, awk), and corrupt CI/CD pipelines that capture stdout. Use plain ASCII prefixes instead (e.g., `OK:`, `WARN:`, `ERROR:`, `SKIP:`, `BLOCKED:`).

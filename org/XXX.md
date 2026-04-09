@@ -57,11 +57,39 @@
 
 ### BANNED: Explore Agent
 - **Status:** COMPLETELY UNRELIABLE - Produces false information
-- **What to do instead:** Use Glob, Grep, and Read tools directly to examine files
+- **What to do instead:** Use `comp-trace`, `comp-blast`, `comp-diff` for dependency/data-path questions. Use Glob, Grep, and Read for everything else.
 
 ### BANNED: Task Agent
 - **Status:** UNRELIABLE - Produces inconsistent and poor results
 - **What to do instead:** Do the work directly yourself using standard tools
+
+---
+
+## MANDATORY: Compiler Tools (comp-*)
+
+**Before manually tracing data paths, imports, or dependencies — run the appropriate comp-* tool first.**
+
+9 tools covering the full stack in <2 seconds each: pipeline scripts, serving paths, CloudFront behaviors, auth layers, client-side transforms, React Query cache keys, and end-to-end page audits. All deterministic, all parse authoritative sources (Terraform, s3_layout.py, gold_dispatch.sh, Lambda@Edge, tsx components).
+
+| Tool | Command | Use When |
+|------|---------|----------|
+| `comp-trace` | `comp-trace <query> [--direction up\|down\|both]` | Understanding how any system component connects to others |
+| `comp-blast` | `comp-blast <query> [--function name]` | Before modifying anything — shows all downstream consumers |
+| `comp-diff` | `comp-diff [--ref HEAD~3] [--staged]` | Before committing — maps git changes to system impact |
+| `comp-xref` | `comp-xref [--save]` | After deploys — shows what changed in the dependency graph |
+| `comp-build` | `comp-build` | Force rebuild the graph cache |
+| `comp-pipescript` | `comp-pipescript io D_00` / `feeds` / `consumers` / `chain` / `overlap` | Gold script I/O, pipeline DAG, what feeds/consumes a script |
+| `comp-routes` | `comp-routes trace getEmployeeLeaderboard` / `behaviors` / `auth-map` | Full serving path: S3 -> CloudFront -> auth -> Lambda/S3 -> frontend |
+| `comp-transform` | `comp-transform trace PartnerAnalytics` / `fields` / `chains` / `unused` / `schema-check` | Client-side data flow + schema cross-reference (adapter-aware) |
+| `comp-platinum` | `comp-platinum page PartnerAnalytics` / `reverse S3key` / `tab-audit` | Full-stack: page -> fetch -> CF -> auth -> S3 -> gold script -> upstream |
+| `comp-cache` | `comp-cache map` / `collisions` / `key <query>` | React Query cache key map + collision/type-mismatch detection |
+| `comp-pii` | `comp-pii audit` / `scan ClientsTab` / `sweep` / `fields` / `routes` | PII field detection + hardcoded account number sweep |
+
+**Pick the right tool:** `comp-pipescript` for pipeline/gold script questions. `comp-routes` for serving/auth/frontend questions. `comp-transform` for "what fields does this component use?". `comp-platinum` for full end-to-end page audits (chains all tools together). `comp-cache` for query key collisions. `comp-trace`/`comp-blast` for cross-layer questions. After `comp-build`, run `comp-pipescript inject` to enrich the trace graph with pipeline edges. Never use Explore agents for dependency questions.
+
+Full reference: `org/modules/graph/comp-tools.yaml`
+
+All tools are in `.tools/` which is in PATH. They work from any directory.
 
 ---
 
@@ -922,6 +950,43 @@ git commit --author="1.0.0_SA_CTO <1.0.0_SA_CTO@opal.agent>" \
 - DE launch protocol (`git log --grep`) and thread commit injection both depend on agent attribution
 
 **Never** commit without `--author`. If you see a commit attributed to the machine user, it was made outside the agent system.
+
+---
+
+## Agent Instances (Parallel Workers)
+
+When Andrew needs multiple parallel workers for the same role, he launches
+additional terminals with the same agent but a different **instance suffix**:
+
+```
+register_agent("0.4.0_DS_ClientPlatform")      # base instance
+register_agent("0.4.0_DS_ClientPlatform~B")    # instance B
+register_agent("0.4.0_DS_ClientPlatform~C")    # instance C
+```
+
+All instances share the same org folder, README, prompt.md, logs, and task_orders.
+No separate agent directories are created.
+
+### Rules for instances
+
+1. **Commits use the BASE serial** as `--author` (no `~` suffix in git):
+   `git commit --author="0.4.0_DS_ClientPlatform <0.4.0_DS_ClientPlatform@opal.agent>"`
+
+2. **Log filenames include the instance suffix** so concurrent sessions don't overwrite:
+   `logs/2026-04-08/nna_cumsum_fix~B.md` (instance B's log)
+   If you are the base instance (no suffix), log normally without `~`.
+
+3. **Task orders include the instance suffix** when issued TO a specific instance:
+   `ADVI_REBORN.W5-007.ds-fee-validation~B.md` (assigned to instance B)
+   Task orders without `~` are available for any instance to pick up.
+
+4. **MCP messages**: sending to the base serial delivers to ALL live instances.
+   Sending to `0.4.0_DS_ClientPlatform~B` delivers to only that instance.
+
+5. **CTO and COO**: when issuing task orders for parallel execution, append `~{X}`
+   to the filename and reference the instance in the TO metadata so the correct
+   terminal picks it up. When reading `list_agents` or `get_org_summary`, instances
+   show as `[LIVE x3: base, B, C]`.
 
 ---
 
