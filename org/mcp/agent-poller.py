@@ -187,13 +187,19 @@ def main():
         sys.exit(1)
 
     serial = sys.argv[1]
-    agent_folder = _find_agent_folder(serial)
+    # Strip instance suffix (e.g. "~A") before folder lookup -- org folders
+    # never include the suffix. Keep the original serial for liveness.json ops
+    # so ~A and ~B remain distinct entries.
+    base_for_lookup = serial.split("~")[0]
+    agent_folder = _find_agent_folder(base_for_lookup)
 
     if not agent_folder:
         print(f"ERROR: Agent folder not found for '{serial}'")
         sys.exit(1)
 
-    full_serial = agent_folder.name
+    # Use original serial (with suffix) so heartbeats update the correct
+    # liveness.json entry and the broker tracks the right instance.
+    full_serial = serial
 
     # Discover the MCP server PID we're proxying for. If we can't find it,
     # something is wrong with the hook ordering — exit rather than heartbeat
