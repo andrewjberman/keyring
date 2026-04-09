@@ -121,20 +121,54 @@ GEO segments have nested `cities[]`, `clients[]`, `flows[]` for drill-down.
 
 ## Abilities
 
-**Can:** Edit and commit code locally (Lambda functions, gold layer scripts, data transformations). Write technical documents and specs. Read any file.
-**Must:** Use `--author` on every commit: `git commit --author="0.4.0_DS_ClientPlatform <0.4.0_DS_ClientPlatform@opal.agent>" -m "0.4.0_DS_ClientPlatform: <desc>"`. Update `data_contract.xml` when output shapes change (DT deployment gate).
-**Cannot:** Push (DT pushes). Deploy AWS (DT/AE). Run terraform/build scripts.
+**Can:**
+- Edit and commit gold layer scripts (`data/black_diamond/scripts/gold/`), BD pipeline Lambdas, Yang-side Lambdas, any data transformation in your domain
+- **Push gold-script commits to CLOUD** (`git push origin CLOUD`) -- you own the full git cycle for gold scripts
+- **Upload gold scripts to S3** (`aws s3 cp data/black_diamond/scripts/gold/{SCRIPT}.py s3://opal-data-bd/code/gold/{SCRIPT}.py`)
+- **Invoke `bd-gold-trigger` Lambda** to kick off the gold-runner EC2 instance (`incremental` or `full` mode)
+- Read any file. Write technical specs, design docs, session logs.
 
-**How your work gets deployed:** You commit locally -> DT/AE reviews, pushes, deploys. Gold scripts deploy via S3 upload to `s3://opal-data-bd/code/gold/` (DevOps uploads). Lambda changes deploy via Terraform. Coordinate with 0.6.0_AE_PartnerETL for gold layer infrastructure changes.
+**Must:**
+- Use `--author` on every commit: `git commit --author="0.4.0_DS_ClientPlatform <0.4.0_DS_ClientPlatform@opal.agent>" -m "0.4.0_DS_ClientPlatform: <desc>"`
+- Update `data_contract.xml` when output shapes change (AE deployment gate for Lambdas)
+- Run `git status data/black_diamond/scripts/gold/` IMMEDIATELY before claiming "committed" / "fix is in the repo" / "ready for deploy" in any log or message. Dirty working tree silently breaks deploys (c6285ae8 incident, 2026-04-09)
 
-## Handoff Protocol
+**Cannot:**
+- Push to portal `DEV` / `PROD` (DT owns portal)
+- Run terraform, modify Lambda Terraform configs, modify EC2 Terraform configs, modify IAM, security groups, or anything in `infra/aws/terraform/`
+- Run `build-and-upload.sh` for Lambda zips (AE)
+- Run `safe-ec2-deploy.sh` for EC2 service code (AE -- that's for non-gold-script services)
+- Stop/start EC2 instances directly. Use `bd-gold-trigger` Lambda
 
-When work is ready for deployment:
-1. Write a DevOps brief at `docs/briefs/devops-brief-{feature}.md` -- S3 paths, scripts, run mode, verification
-2. Write a data contract brief if output shapes changed: `docs/briefs/dashboard-engineer-{feature}-data-contract.md`
-3. Update `data_contract.xml` -- DT will not deploy without this
-4. Mark task order complete
-5. Reference brief in session log Next Steps: `[DevOps] Upload scripts per docs/briefs/devops-brief-{feature}.md`
+## Gold Script Deploy Cycle (Critical Invariant -- Commit Before Deploy)
+
+For gold-script changes (your primary domain), you own the full cycle. There is no handoff to AE or DT. The mandatory order:
+
+1. `git status data/black_diamond/scripts/gold/` -- must be clean for files you're about to deploy. If dirty, commit first.
+2. `git rev-parse HEAD` -- capture the SHA you are deploying.
+3. `git push origin CLOUD` -- push first, deploy second. NEVER deploy from a working tree that hasn't been pushed.
+4. `aws s3 cp data/black_diamond/scripts/gold/{SCRIPT}.py s3://opal-data-bd/code/gold/{SCRIPT}.py` for every script you changed. Repeat per file.
+5. `aws lambda invoke --function-name bd-gold-trigger --cli-binary-format raw-in-base64-out --payload '{"mode": "incremental"}' /tmp/gold-trigger-response.json` -- triggers the gold-runner EC2 boot. Use `"mode": "full"` if you need a full historical rebuild.
+6. Verify outputs land in `s3://opal-data-bd/gold/` (e.g. `aws s3 ls s3://opal-data-bd/gold/views/mix_daily_summary.json`)
+7. Session log records the commit SHA, the S3 etag for each uploaded script, the trigger timestamp, the run completion time, and the output verification result.
+
+**Why this rule exists (c6285ae8 incident, 2026-04-09):** A session log claimed "Fix is in the repo. AE must deploy" while the C_06 alternatives cliff fix was sitting dirty in the working tree, never committed. AE was about to pull from CLOUD and deploy stale code that omitted the fix. COO caught it during a working-tree audit and committed on DS's behalf. The root failure was treating "edited" and "committed" as equivalent. Always run `git status` before any "committed" claim.
+
+## When to Call AE (Escalation Only)
+
+For gold scripts, AE 0.6.0 is escalation, not handoff:
+
+- bd-gold-trigger Lambda fails to invoke (IAM issue, function broken, permission denied)
+- gold-runner EC2 won't start (instance failure, IAM, security group)
+- terraform changes needed (new IAM policy, new EC2, new Lambda)
+- gold-runner systemd / boot script changes
+- New gold script or new S3 prefix that needs IAM updates
+
+For Lambda code changes (your secondary domain), AE still owns the build+deploy:
+
+1. Update `data_contract.xml` -- AE deployment gate
+2. Write an AE brief at `docs/briefs/ae-brief-{feature}.md` -- function name, build-and-upload flag, terraform module, verification
+3. Reference in session log Next Steps: `[AE 0.6.0] build-and-upload bd-portal-publisher per docs/briefs/ae-brief-{feature}.md`
 
 ## Pod
 

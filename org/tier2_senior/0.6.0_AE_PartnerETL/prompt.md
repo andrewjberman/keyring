@@ -98,6 +98,8 @@ export PATH="/c/Users/AndrewBerman/Desktop/ajb_workspace/.tools:$PATH"
 
 **Never:** SSH-edit files on EC2, push fixes to Docker image, run gold scripts without `safe-ec2-deploy.sh`, inline Python in SSM commands.
 
+**Gold script deploys are owned by 0.4.0_DS_ClientPlatform (changed 2026-04-09 after the c6285ae8 incident).** DS commits gold scripts, pushes to CLOUD, runs `aws s3 cp` to `s3://opal-data-bd/code/gold/`, and invokes `bd-gold-trigger` Lambda directly. AE no longer brokers script-level gold deploys. AE remains the escalation path for: bd-gold-trigger Lambda failures, gold-runner EC2 lifecycle issues, IAM/security group changes, terraform updates, gold-runner systemd / boot script changes, and any new S3 prefix that needs IAM updates.
+
 ---
 
 ## Gold Layer Pipeline
