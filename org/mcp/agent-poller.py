@@ -4,16 +4,27 @@ Usage (run in background at session startup):
     python org/mcp/agent-poller.py <agent_serial>
 
 What it does:
-    1. Updates last_seen_epoch in liveness.json every 2 seconds (keeps agent LIVE)
-    2. Heartbeats the broker (if running) for cross-session visibility
+    1. At startup, reads the MCP server PID from liveness.json[serial]["pid"]
+       (written by the preceding register_agent call). This is the pid of the
+       `python org/mcp/server.py` child process that the Claude Code session
+       spawned for this agent. If the MCP server dies (terminal closed, session
+       ended, crash), we treat the agent as gone and exit.
+    2. Every 2 seconds, verifies the MCP server PID is still alive. If dead,
+       exits cleanly so last_seen_epoch stops advancing and _clean_stale in
+       server.py + broker.py naturally prunes the agent within their thresholds
+       (no manual deregister_agent call needed).
+    3. While the MCP server is alive, updates last_seen_epoch in liveness.json
+       every 2 seconds and heartbeats the broker every 10 seconds.
 
 What it does NOT do:
-    - It does NOT touch the inbox. Inbox watching is handled by a separate
-      script: inbox-watch.sh (runs in background, checks every 5s, prints
-      new messages to stdout, moves them to read/).
+    - Does NOT touch the inbox. Inbox watching is handled by a separate script:
+      inbox-watch.sh (runs in background, checks every 5s, prints new messages
+      to stdout, moves them to read/).
+    - Does NOT delete liveness.json entries on exit. server.py's _clean_stale
+      handles that on the next MCP write (within DEAD_THRESHOLD = 10 min).
 
-Exit: Ctrl+C or kill the process. The agent will go STALE after 2 minutes,
-DEAD after 10 minutes, then get cleaned from liveness.json automatically.
+Exit: Ctrl+C, kill -9, or MCP server PID dies. All three paths are clean —
+the frozen last_seen_epoch is enough signal for the rest of the system.
 """
 
 import json
@@ -93,6 +104,46 @@ def _find_agent_folder(serial: str) -> Path | None:
     return None
 
 
+def _pid_alive(pid: int) -> bool:
+    """Cross-platform check: does a running process exist with this PID?"""
+    if pid <= 0:
+        return False
+    if sys.platform == "win32":
+        import ctypes
+        kernel32 = ctypes.windll.kernel32
+        PROCESS_QUERY_LIMITED_INFORMATION = 0x1000
+        handle = kernel32.OpenProcess(PROCESS_QUERY_LIMITED_INFORMATION, False, pid)
+        if handle:
+            kernel32.CloseHandle(handle)
+            return True
+        return False
+    try:
+        os.kill(pid, 0)
+        return True
+    except OSError:
+        return False
+
+
+def _read_mcp_pid(serial: str) -> int | None:
+    """Read the MCP server PID that register_agent recorded for this serial.
+
+    register_agent writes {"pid": os.getpid()} at the time of the call, where
+    os.getpid() is the `python org/mcp/server.py` child process. The PostToolUse
+    hook spawns this poller AFTER register_agent returns, so the entry should
+    already be present. Retry a few times to tolerate any filesystem lag.
+    """
+    for _ in range(5):
+        try:
+            with _locked_liveness(write=False) as data:
+                entry = data.get(serial)
+                if entry and isinstance(entry.get("pid"), int):
+                    return entry["pid"]
+        except Exception:
+            pass
+        time.sleep(0.2)
+    return None
+
+
 def _update_heartbeat(serial: str) -> bool:
     """Update last_seen_epoch in liveness.json. Returns True if successful."""
     now = time.time()
@@ -143,7 +194,21 @@ def main():
         sys.exit(1)
 
     full_serial = agent_folder.name
-    print(f"Poller started for {full_serial} (PID {os.getpid()})")
+
+    # Discover the MCP server PID we're proxying for. If we can't find it,
+    # something is wrong with the hook ordering — exit rather than heartbeat
+    # indefinitely for a phantom agent.
+    mcp_pid = _read_mcp_pid(full_serial)
+    if mcp_pid is None:
+        print(
+            f"ERROR: no MCP server PID for {full_serial} in {LIVENESS_FILE}; "
+            f"poller exiting",
+            file=sys.stderr,
+        )
+        sys.exit(0)
+
+    print(f"Poller started for {full_serial} (my PID {os.getpid()})")
+    print(f"  Tracking MCP server PID: {mcp_pid}")
     print(f"  Heartbeat interval: {POLL_INTERVAL}s")
     print(f"  Liveness: {LIVENESS_FILE}")
     print(f"  Mode: HEARTBEAT ONLY (inbox handled by conversation-side MCP)")
@@ -152,6 +217,20 @@ def main():
     broker_cycle = 0
     try:
         while True:
+            # Watchdog: if the MCP server process we're proxying for has died,
+            # the terminal was closed / session ended / process crashed. Exit
+            # so last_seen_epoch stops advancing — server.py's _clean_stale
+            # then prunes this agent within DEAD_THRESHOLD (10 min), and the
+            # broker's _clean_stale prunes it within ~30s via its own PID
+            # liveness check. No manual deregister_agent call required.
+            if not _pid_alive(mcp_pid):
+                print(
+                    f"MCP server PID {mcp_pid} is no longer alive -- "
+                    f"poller exiting for {full_serial}",
+                    file=sys.stderr,
+                )
+                sys.exit(0)
+
             # Heartbeat to liveness.json (every cycle = 2s)
             _update_heartbeat(full_serial)
 
