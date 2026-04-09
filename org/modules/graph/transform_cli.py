@@ -417,7 +417,7 @@ def cmd_schema_check(args):
                         locations.append(f"L{tc.line_number} ({tc.output_variable})")
                 loc_str = f" at {', '.join(locations[:3])}" if locations else ""
                 print(f"       {m}{loc_str}")
-                print(f"         Component renders this but {resp_type} does not define it.")
+                print(f"         Component renders this but {check_type} does not define it.")
                 print(f"         This will be undefined at runtime unless aliased or injected.")
 
         if unused_non_meta:

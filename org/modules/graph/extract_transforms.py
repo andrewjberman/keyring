@@ -564,6 +564,78 @@ def _parse_inline_object(type_str: str) -> dict[str, str]:
 
 
 # ---------------------------------------------------------------------------
+# Accessor helper pattern detector
+# ---------------------------------------------------------------------------
+
+def _extract_accessor_refs(content: str, fetch_vars: set[str]) -> list[tuple[str, str]]:
+    """Detect accessor helper functions of the form:
+        const r = (a: any) => ({ field1: a.field1, field2: a.field2 })
+        const fmt = (row: RowType): DisplayRow => ({ ... })
+    and trace which data variables they're called with in JSX/transforms,
+    expanding r(dataVar).field -> dataVar.field for downstream analysis.
+
+    Returns list of (data_var, field_path) pairs.
+    """
+    refs: list[tuple[str, str]] = []
+
+    # Find all single-param arrow functions that return an object literal
+    # Pattern: const NAME = (PARAM: any) => ({ ... }) or (PARAM) => ({
+    accessor_pattern = re.compile(
+        r'const\s+(\w+)\s*=\s*\(\s*(\w+)(?:\s*:\s*[^)]+)?\s*\)\s*(?::\s*\w+\s*)?=>\s*\(\s*\{'
+    )
+
+    accessor_map: dict[str, dict[str, str]] = {}  # accessor_name -> {field: param_field}
+    for am in accessor_pattern.finditer(content):
+        accessor_name = am.group(1)
+        param_name = am.group(2)
+
+        # Extract the object body: find the matching } after ({
+        brace_start = content.find('{', am.end() - 1)
+        if brace_start == -1:
+            continue
+        depth = 1
+        i = brace_start + 1
+        while i < len(content) and depth > 0:
+            if content[i] == '{':
+                depth += 1
+            elif content[i] == '}':
+                depth -= 1
+            i += 1
+        body = content[brace_start:i]
+
+        # Extract field mappings: fieldName: param.sourceField
+        fields: dict[str, str] = {}
+        for fm in re.finditer(
+            rf'(\w+)\s*:\s*{re.escape(param_name)}\??\.(\w+)',
+            body
+        ):
+            fields[fm.group(1)] = fm.group(2)  # output_field -> source_field
+
+        if fields:
+            accessor_map[accessor_name] = fields
+
+    if not accessor_map:
+        return refs
+
+    # Now scan JSX/component body for calls: accessor(dataVar).field
+    for accessor_name, field_map in accessor_map.items():
+        call_pattern = re.compile(
+            rf'{re.escape(accessor_name)}\s*\(\s*(\w+)(?:\?[^)]+)?\s*\)'
+            rf'\??\.(\w+)'
+        )
+        for cm in call_pattern.finditer(content):
+            called_var = cm.group(1)
+            accessed_field = cm.group(2)
+            # Only track if called_var is a known fetch data variable
+            if called_var in fetch_vars:
+                # Map back through the accessor: output field -> source field on data
+                source_field = field_map.get(accessed_field, accessed_field)
+                refs.append((called_var, source_field))
+
+    return refs
+
+
+# ---------------------------------------------------------------------------
 # Main: build data flow for a component
 # ---------------------------------------------------------------------------
 
@@ -599,8 +671,23 @@ def build_component_dataflow(component_path: Path, workspace_root: Path) -> Comp
     for tc in flow.transforms:
         all_data_vars.add(tc.output_variable)
 
+    # Step 2b: Detect accessor helpers (e.g. const r = (a: any) => ({ field: a.field }))
+    # These proxy field access through a helper call r(dataVar).field instead of dataVar.field
+    # We expand them so the rest of the analysis treats the fields as direct data var accesses.
+    accessor_refs = _extract_accessor_refs(content, fetch_vars)
+    all_data_vars.update(v for v, _ in accessor_refs)
+
     # Step 3: Find JSX references
     flow.jsx_refs = _extract_jsx_refs(content, lines, all_data_vars)
+
+    # Merge accessor refs into jsx_refs so schema-check and fields commands see them
+    for data_var, field_path in accessor_refs:
+        flow.jsx_refs.append(JsxReference(
+            variable=data_var,
+            field_path=f"{data_var}.{field_path}",
+            line_number=0,
+            context="accessor helper",
+        ))
 
     # Step 4: Extract useState type annotations: useState<Type>() -> state_var -> Type
     # Pattern: const [varName, setVarName] = useState<TypeName | null>(...)

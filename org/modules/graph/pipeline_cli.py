@@ -119,14 +119,21 @@ def cmd_io(args):
         print(f"  READS ({len(sio.reads)}):")
         for const in sio.reads:
             sk = dag.s3_keys.get(const)
-            key = sk.s3_path if sk else '?'
+            if sk:
+                key = sk.s3_path
+            elif const.startswith('[hardcoded] '):
+                key = const[len('[hardcoded] '):]
+            else:
+                key = '?'
             prefix_tag = " [PREFIX]" if sk and sk.is_prefix else ""
             func_tag = " [FUNC]" if sk and sk.is_function else ""
+            hc_tag = " [HARDCODED]" if const.startswith('[hardcoded] ') else ""
             # Show who writes this key
             writers = dag._writers.get(key, [])
             writers = [w for w in writers if w != script_id]
             writer_str = f" <- {', '.join(writers)}" if writers else " <- (external/silver)"
-            print(f"    {const}: {key}{prefix_tag}{func_tag}{writer_str}")
+            display_const = key if const.startswith('[hardcoded] ') else const
+            print(f"    {display_const}: {key}{prefix_tag}{func_tag}{hc_tag}{writer_str}")
     else:
         print("  READS: (none detected)")
 
@@ -136,15 +143,28 @@ def cmd_io(args):
         print(f"  WRITES ({len(sio.writes)}):")
         for const in sio.writes:
             sk = dag.s3_keys.get(const)
-            key = sk.s3_path if sk else '?'
+            if sk:
+                key = sk.s3_path
+            elif const.startswith('[hardcoded] '):
+                key = const[len('[hardcoded] '):]
+            else:
+                key = '?'
             func_tag = " [FUNC]" if sk and sk.is_function else ""
+            hc_tag = " [HARDCODED]" if const.startswith('[hardcoded] ') else ""
             # Show who reads this key
             readers = dag._readers.get(key, [])
             readers = [r for r in readers if r != script_id]
             reader_str = f" -> {', '.join(readers)}" if readers else " -> (terminal)"
-            print(f"    {const}: {key}{func_tag}{reader_str}")
+            display_const = key if const.startswith('[hardcoded] ') else const
+            print(f"    {display_const}: {key}{func_tag}{hc_tag}{reader_str}")
     else:
         print("  WRITES: (none detected)")
+
+    if not sio.reads and not sio.writes:
+        print()
+        print("  WARN: no s3_layout constants or hardcoded S3 paths detected.")
+        print("  Script may use dynamic key construction, DynamoDB, SQS, or non-standard S3 patterns.")
+        print("  Manual review of the script body is required for accurate I/O mapping.")
 
 
 def cmd_chain(args):

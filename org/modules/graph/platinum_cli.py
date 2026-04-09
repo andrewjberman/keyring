@@ -169,38 +169,73 @@ def cmd_page(args):
 
 def _print_gold_source(dag, s3_key: str, indent: int = 4):
     """Print which gold script writes this S3 key and what feeds it."""
+    import re
     pad = " " * indent
 
     # Normalize s3_key: remove {param} wildcards for matching
-    import re
     normalized = re.sub(r'\{[^}]+\}', '*', s3_key)
 
-    # Find writers
-    writers = []
+    # Find writers and the specific write-constant that matched
+    writer_info: list[tuple[str, str]] = []  # [(script_id, write_key)]
     for sid, sio in dag.scripts.items():
         for wk in sio.write_keys:
-            # Match exact or wildcard
             if wk == s3_key or wk == normalized or s3_key.startswith(wk.rstrip('*')):
-                writers.append(sid)
+                writer_info.append((sid, wk))
                 break
 
-    if writers:
-        for w in writers:
-            print(f"{pad}gold script: {w}")
+    if writer_info:
+        for w, wk in writer_info:
+            # Find the function name from the script that produces this key
+            sio = dag.scripts[w]
+            fn_name = _find_producer_function(sio, wk)
+            fn_str = f" :: {fn_name}()" if fn_name else ""
+            print(f"{pad}gold script: {w}{fn_str}")
             upstream = dag.feeds(w)
             if upstream:
                 scripts = sorted(set(u for u, _, _ in upstream))
                 print(f"{pad}  fed by: {', '.join(scripts)}")
     else:
         # Try prefix match for entity/partitioned keys
+        prefix_writers: list[tuple[str, str]] = []
         for sid, sio in dag.scripts.items():
             for wk in sio.write_keys:
                 if '*' in wk and s3_key.startswith(wk.split('*')[0]):
-                    writers.append(sid)
+                    prefix_writers.append((sid, wk))
                     break
-        if writers:
-            for w in sorted(set(writers)):
-                print(f"{pad}gold script: {w} (prefix match)")
+        if prefix_writers:
+            for w, wk in sorted(set(prefix_writers)):
+                sio = dag.scripts[w]
+                fn_name = _find_producer_function(sio, wk)
+                fn_str = f" :: {fn_name}()" if fn_name else ""
+                print(f"{pad}gold script: {w}{fn_str} (prefix match)")
+
+
+def _find_producer_function(sio, write_key: str) -> str:
+    """Heuristically find the function name in a gold script that writes a given key.
+    Scans the script file for function defs that co-occur with the key string."""
+    import re
+    try:
+        from pathlib import Path
+        content = Path(sio.file_path).read_text(encoding="utf-8", errors="replace")
+    except Exception:
+        return ""
+
+    # Extract just the filename stem from write_key for matching
+    # e.g., platinum/firm/mix_summary.json -> mix_summary
+    key_stem = re.sub(r'[{*}]', '', write_key.split('/')[-1].replace('.json', '').replace('.parquet', ''))
+
+    # Find function defs near usage of this key
+    fn_pattern = re.compile(r'def\s+(\w+)\s*\(')
+    lines = content.splitlines()
+    last_fn = ""
+    for i, line in enumerate(lines):
+        m = fn_pattern.match(line.strip())
+        if m:
+            last_fn = m.group(1)
+        if key_stem and key_stem.replace('-', '_') in line.replace('-', '_'):
+            if last_fn and not last_fn.startswith('_') and last_fn != 'main':
+                return last_fn
+    return ""
 
 
 def cmd_reverse(args):
@@ -226,6 +261,7 @@ def cmd_reverse(args):
             s3_key.startswith(route.s3_key.split('{')[0].split('*')[0])):
             matching_routes.append(route)
 
+    reconstructed_url = ""
     if matching_routes:
         for r in matching_routes:
             auth_tag = ""
@@ -239,15 +275,16 @@ def cmd_reverse(args):
             if r.components:
                 print(f"      components: {', '.join(r.components)}")
     else:
-        # Try matching via rewrite rules
+        # Try matching via rewrite rules (reverse: S3 key -> URL)
         for rule in rt.rewrite_rules:
             if s3_key.startswith(rule.s3_prefix):
                 suffix = s3_key[len(rule.s3_prefix):]
-                url = rule.url_prefix + suffix
-                print(f"    URL (reconstructed): {url}")
-                behavior = rt.match_behavior(url)
+                reconstructed_url = rule.url_prefix + suffix
+                print(f"    URL (reconstructed): {reconstructed_url}")
+                behavior = rt.match_behavior(reconstructed_url)
                 if behavior:
-                    print(f"      CF: {behavior.path_pattern} -> {behavior.origin_id}")
+                    auth_tag = " [AUTH]" if behavior.has_auth else ""
+                    print(f"      CF: {behavior.path_pattern} -> {behavior.origin_id}{auth_tag}")
                 break
         else:
             print("    (no matching routes found)")
@@ -258,11 +295,27 @@ def cmd_reverse(args):
     component_names = set()
     for r in matching_routes:
         component_names.update(r.components)
+
+    # Fallback: search by endpoint function URLs matching the reconstructed URL
+    # Handles platinum paths that route via API GW (s3_key not set on route objects)
+    if not component_names and reconstructed_url:
+        url_prefix = reconstructed_url.split('{')[0]
+        for fn_name, ep in rt.endpoints.items():
+            if not ep.url_template:
+                continue
+            ep_prefix = ep.url_template.split('{')[0]
+            if ep_prefix and (ep_prefix == url_prefix or
+                              url_prefix.startswith(ep_prefix) or
+                              ep_prefix.startswith(url_prefix)):
+                for comp in rt.components:
+                    if fn_name in comp.endpoint_calls:
+                        component_names.add(comp.name)
+
     if component_names:
         for cn in sorted(component_names):
             print(f"    {cn}")
     else:
-        print("    (no components found)")
+        print("    (no components found -- check Lambda@Edge handlers for this key)")
 
 
 def cmd_tab_audit(args):

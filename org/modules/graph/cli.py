@@ -82,7 +82,7 @@ def cmd_trace(args):
     matches = g.find_node(query)
     if not matches:
         print(f"No nodes matching: {query}")
-        sys.exit(1)
+        sys.exit(0)
 
     if len(matches) > 1 and not args.all:
         print(f"Multiple matches for '{query}':")
@@ -130,7 +130,7 @@ def cmd_blast(args):
     matches = g.find_node(query)
     if not matches:
         print(f"No nodes matching: {query}")
-        sys.exit(1)
+        sys.exit(0)
 
     node = matches[0]
     results = g.downstream(node.id, max_depth=args.depth)
