@@ -569,27 +569,29 @@ def _parse_inline_object(type_str: str) -> dict[str, str]:
 
 def _extract_accessor_refs(content: str, fetch_vars: set[str]) -> list[tuple[str, str]]:
     """Detect accessor helper functions of the form:
-        const r = (a: any) => ({ field1: a.field1, field2: a.field2 })
-        const fmt = (row: RowType): DisplayRow => ({ ... })
-    and trace which data variables they're called with in JSX/transforms,
-    expanding r(dataVar).field -> dataVar.field for downstream analysis.
+        const r = (a: any) => ({ field1: a.field1, field2: a.field2 ?? a.alt ?? 0 })
+    and trace which data variables they're called with, expanding
+    r(dataVar).field -> dataVar.sourceField for downstream analysis.
 
-    Returns list of (data_var, field_path) pairs.
+    Handles two call patterns:
+      1. Direct:   r(feeData).name   -- called_var is a fetch var
+      2. Callback: feeData.map((a) => r(a).name)  -- called_var is a map param
+
+    Returns list of (data_var, source_field) pairs (deduplicated).
     """
     refs: list[tuple[str, str]] = []
 
-    # Find all single-param arrow functions that return an object literal
-    # Pattern: const NAME = (PARAM: any) => ({ ... }) or (PARAM) => ({
+    # Pattern: const NAME = (PARAM: any) => ({
     accessor_pattern = re.compile(
         r'const\s+(\w+)\s*=\s*\(\s*(\w+)(?:\s*:\s*[^)]+)?\s*\)\s*(?::\s*\w+\s*)?=>\s*\(\s*\{'
     )
 
-    accessor_map: dict[str, dict[str, str]] = {}  # accessor_name -> {field: param_field}
+    accessor_map: dict[str, dict[str, str]] = {}  # accessor_name -> {output_field: source_field}
     for am in accessor_pattern.finditer(content):
         accessor_name = am.group(1)
         param_name = am.group(2)
 
-        # Extract the object body: find the matching } after ({
+        # Extract the object body: find matching } after ({
         brace_start = content.find('{', am.end() - 1)
         if brace_start == -1:
             continue
@@ -603,13 +605,14 @@ def _extract_accessor_refs(content: str, fetch_vars: set[str]) -> list[tuple[str
             i += 1
         body = content[brace_start:i]
 
-        # Extract field mappings: fieldName: param.sourceField
+        # Extract field mappings: output_field: param.source_field (first hit in ?? chains)
         fields: dict[str, str] = {}
         for fm in re.finditer(
             rf'(\w+)\s*:\s*{re.escape(param_name)}\??\.(\w+)',
             body
         ):
-            fields[fm.group(1)] = fm.group(2)  # output_field -> source_field
+            if fm.group(1) not in fields:  # first mapping wins (??-chain: prefer first)
+                fields[fm.group(1)] = fm.group(2)
 
         if fields:
             accessor_map[accessor_name] = fields
@@ -617,20 +620,75 @@ def _extract_accessor_refs(content: str, fetch_vars: set[str]) -> list[tuple[str
     if not accessor_map:
         return refs
 
-    # Now scan JSX/component body for calls: accessor(dataVar).field
+    seen: set[tuple[str, str]] = set()
+
     for accessor_name, field_map in accessor_map.items():
-        call_pattern = re.compile(
-            rf'{re.escape(accessor_name)}\s*\(\s*(\w+)(?:\?[^)]+)?\s*\)'
-            rf'\??\.(\w+)'
+
+        # --- Pattern 1: Direct call r(fetchVar).field ---
+        direct_pattern = re.compile(
+            rf'{re.escape(accessor_name)}\s*\(\s*(\w+)\s*\)\??\.(\w+)'
         )
-        for cm in call_pattern.finditer(content):
+        for cm in direct_pattern.finditer(content):
             called_var = cm.group(1)
-            accessed_field = cm.group(2)
-            # Only track if called_var is a known fetch data variable
+            output_field = cm.group(2)
             if called_var in fetch_vars:
-                # Map back through the accessor: output field -> source field on data
-                source_field = field_map.get(accessed_field, accessed_field)
-                refs.append((called_var, source_field))
+                source_field = field_map.get(output_field, output_field)
+                key = (called_var, source_field)
+                if key not in seen:
+                    seen.add(key)
+                    refs.append(key)
+
+        # --- Pattern 2: Map callback - fetchVar.map((param) => r(param).field) ---
+        for fetch_var in fetch_vars:
+            map_pattern = re.compile(
+                rf'{re.escape(fetch_var)}\??\.(?:map|forEach|filter|find|flatMap|reduce)\s*\(\s*'
+                rf'(?:\(\s*(\w+)(?:\s*,\s*\w+)?\s*\)|(\w+))\s*=>'
+            )
+            for mm in map_pattern.finditer(content):
+                callback_param = mm.group(1) or mm.group(2)
+                if not callback_param:
+                    continue
+                # Scan callback body (~2000 chars) for r(callback_param).field
+                cb_region = content[mm.end():mm.end() + 2000]
+                cb_pattern = re.compile(
+                    rf'{re.escape(accessor_name)}\s*\(\s*{re.escape(callback_param)}\s*\)\??\.(\w+)'
+                )
+                for cm in cb_pattern.finditer(cb_region):
+                    output_field = cm.group(1)
+                    source_field = field_map.get(output_field, output_field)
+                    key = (fetch_var, source_field)
+                    if key not in seen:
+                        seen.add(key)
+                        refs.append(key)
+
+        # --- Pattern 3: Assigned result - const row = r(param); row.field ---
+        for fetch_var in fetch_vars:
+            map_pattern = re.compile(
+                rf'{re.escape(fetch_var)}\??\.(?:map|forEach|filter|find|flatMap|reduce)\s*\(\s*'
+                rf'(?:\(\s*(\w+)(?:\s*,\s*\w+)?\s*\)|(\w+))\s*=>'
+            )
+            for mm in map_pattern.finditer(content):
+                callback_param = mm.group(1) or mm.group(2)
+                if not callback_param:
+                    continue
+                cb_region = content[mm.end():mm.end() + 2000]
+                # Find: const assigned = r(callback_param)
+                assign_pattern = re.compile(
+                    rf'(?:const|let)\s+(\w+)\s*=\s*{re.escape(accessor_name)}\s*\(\s*'
+                    rf'{re.escape(callback_param)}\s*\)'
+                )
+                for asn in assign_pattern.finditer(cb_region):
+                    assigned_var = asn.group(1)
+                    # Find assigned_var.field accesses after the assignment
+                    after = cb_region[asn.end():asn.end() + 1500]
+                    field_access = re.compile(rf'{re.escape(assigned_var)}\??\.(\w+)')
+                    for fa in field_access.finditer(after):
+                        output_field = fa.group(1)
+                        source_field = field_map.get(output_field, output_field)
+                        key = (fetch_var, source_field)
+                        if key not in seen:
+                            seen.add(key)
+                            refs.append(key)
 
     return refs
 
