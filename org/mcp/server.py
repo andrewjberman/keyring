@@ -349,20 +349,34 @@ async def _poll_broker_loop():
 # Helpers (original)
 # ---------------------------------------------------------------------------
 
+def _base_serial(agent_serial: str) -> str:
+    """Strip instance suffix from a serial.  '0.4.0_DS_ClientPlatform~B' -> '0.4.0_DS_ClientPlatform'."""
+    return agent_serial.split("~")[0]
+
+
+def _instance_suffix(agent_serial: str) -> str | None:
+    """Return the instance suffix if present.  '...~B' -> 'B', '...' -> None."""
+    parts = agent_serial.split("~", 1)
+    return parts[1] if len(parts) > 1 else None
+
+
 def _resolve_agent_folder(agent_serial: str) -> Path | None:
-    """Find an agent's folder across all tier directories."""
+    """Find an agent's folder across all tier directories.
+    Instance suffixes (e.g., ~B) are stripped before lookup so all instances
+    of the same agent resolve to the same canonical folder."""
+    base = _base_serial(agent_serial)
     for tier_dir in TIER_DIRS.values():
         if not tier_dir.exists():
             continue
         for d in tier_dir.iterdir():
-            if d.is_dir() and d.name == agent_serial:
+            if d.is_dir() and d.name == base:
                 return d
     # Fuzzy match -- serial might be a prefix
     for tier_dir in TIER_DIRS.values():
         if not tier_dir.exists():
             continue
         for d in tier_dir.iterdir():
-            if d.is_dir() and d.name.startswith(agent_serial):
+            if d.is_dir() and d.name.startswith(base):
                 return d
     return None
 
@@ -451,15 +465,20 @@ async def register_agent(
     if not folder:
         return f"Agent '{agent_serial}' not found in org hierarchy."
 
-    _my_serial = folder.name
+    # Instance support: register under full serial (with ~suffix) for liveness,
+    # but resolve folder/inbox from base serial.  Multiple instances of the
+    # same agent share the same org folder, logs, and task_orders.
+    live_serial = agent_serial  # e.g. "0.4.0_DS_ClientPlatform~B"
+    _my_serial = live_serial
 
     # Update liveness.json (local file, always works)
     now = time.time()
     with _locked_liveness(write=True) as data:
         _clean_stale(data)
-        data[folder.name] = {
+        data[live_serial] = {
             "pid": os.getpid(),
             "summary": summary,
+            "base_serial": folder.name,
             "registered_at": datetime.now(timezone.utc).isoformat(),
             "last_seen": datetime.now(timezone.utc).isoformat(),
             "last_seen_epoch": now,
@@ -469,7 +488,7 @@ async def register_agent(
     broker_status = "unavailable"
     if _ensure_broker():
         result = _broker_fetch("/register", {
-            "serial": folder.name,
+            "serial": live_serial,
             "pid": os.getpid(),
             "summary": summary,
         })
@@ -483,11 +502,16 @@ async def register_agent(
         else:
             broker_status = "registration failed"
 
+    instance_note = ""
+    if _instance_suffix(agent_serial):
+        instance_note = f"\nInstance: ~{_instance_suffix(agent_serial)} (folder: {folder.name})"
+
     return (
-        f"Registered {folder.name} as live (PID {os.getpid()}).\n"
+        f"Registered {live_serial} as live (PID {os.getpid()}).\n"
         f"Summary: {summary or '(none)'}\n"
         f"Broker: {broker_status}\n"
         f"Channel push: enabled. Call heartbeat() periodically to stay live."
+        f"{instance_note}"
     )
 
 
@@ -507,12 +531,18 @@ async def heartbeat(
     if not folder:
         return f"Agent '{agent_serial}' not found."
 
+    # Use full serial (with instance suffix) for liveness tracking
+    live_serial = agent_serial
     now = time.time()
     with _locked_liveness(write=True) as data:
         _clean_stale(data)
-        if folder.name not in data:
-            return f"{folder.name} is not registered. Call register_agent first."
-        entry = data[folder.name]
+        if live_serial not in data:
+            # Try base serial for backward compat
+            if folder.name in data:
+                live_serial = folder.name
+            else:
+                return f"{live_serial} is not registered. Call register_agent first."
+        entry = data[live_serial]
         entry["last_seen"] = datetime.now(timezone.utc).isoformat()
         entry["last_seen_epoch"] = now
         if summary:
@@ -520,7 +550,7 @@ async def heartbeat(
 
     # Also heartbeat the broker (best-effort)
     if _broker_available:
-        payload = {"serial": folder.name}
+        payload = {"serial": live_serial}
         if summary:
             payload["summary"] = summary
         _broker_fetch("/heartbeat", payload)
@@ -553,6 +583,142 @@ async def set_summary(
         data[folder.name]["summary"] = summary
 
     return f"Summary updated for {folder.name}: \"{summary}\""
+
+
+@mcp.tool()
+async def deregister_agent(
+    agent_serial: str,
+    kill_pollers: bool = True,
+    ctx: Context = None,
+) -> str:
+    """Remove an agent from liveness tracking and the broker. Use this to
+    clean up stale agents from prior sessions. Also kills any orphaned
+    agent-poller processes for that serial (unless kill_pollers=False).
+    Restricted to CTO (1.0.0) and COO (2.0.0)."""
+    global _active_ctx
+    _active_ctx = ctx
+
+    # Auth check: only CTO and COO can deregister agents
+    caller = _my_serial or ""
+    if not (caller.startswith("1.0.0") or caller.startswith("2.0.0")):
+        return f"Denied: only CTO/COO can deregister agents. Caller: {caller or '(not registered)'}"
+
+    folder = _resolve_agent_folder(agent_serial)
+    resolved = folder.name if folder else agent_serial
+
+    removed_liveness = False
+    removed_broker = False
+    pollers_killed = 0
+
+    # 1. Remove from liveness.json
+    with _locked_liveness(write=True) as data:
+        if resolved in data:
+            del data[resolved]
+            removed_liveness = True
+
+    # 2. Remove from broker
+    if _broker_available:
+        result = _broker_fetch("/unregister", {"serial": resolved})
+        if result and result.get("ok"):
+            removed_broker = True
+
+    # 3. Kill orphaned poller processes
+    if kill_pollers:
+        try:
+            if sys.platform == "win32":
+                import subprocess as _sp
+                out = _sp.check_output(
+                    ["powershell", "-Command",
+                     f"Get-CimInstance Win32_Process -Filter \"Name='python.exe'\" | "
+                     f"Where-Object {{ $_.CommandLine -match 'agent-poller.*{re.escape(resolved)}' }} | "
+                     f"ForEach-Object {{ Stop-Process -Id $_.ProcessId -Force; $_.ProcessId }}"],
+                    text=True, timeout=10,
+                )
+                pollers_killed = len([l for l in out.strip().splitlines() if l.strip()])
+            else:
+                import subprocess as _sp
+                out = _sp.check_output(
+                    ["pkill", "-f", f"agent-poller.py {resolved}"],
+                    text=True, timeout=5,
+                )
+                pollers_killed = 1
+        except Exception:
+            pass
+
+    parts = [f"Deregistered {resolved}:"]
+    parts.append(f"  liveness.json: {'removed' if removed_liveness else 'not found'}")
+    parts.append(f"  broker: {'removed' if removed_broker else 'not found or unavailable'}")
+    if kill_pollers:
+        parts.append(f"  pollers killed: {pollers_killed}")
+    return "\n".join(parts)
+
+
+@mcp.tool()
+async def deregister_all_stale(
+    keep_serials: list[str] | None = None,
+    ctx: Context = None,
+) -> str:
+    """Remove ALL agents from liveness/broker EXCEPT those in keep_serials.
+    Kills all orphaned poller processes for removed agents.
+    Restricted to CTO (1.0.0) and COO (2.0.0).
+
+    Example: deregister_all_stale(keep_serials=["2.0.0_SA_COO", "0.4.0_DS_ClientPlatform"])"""
+    global _active_ctx
+    _active_ctx = ctx
+
+    caller = _my_serial or ""
+    if not (caller.startswith("1.0.0") or caller.startswith("2.0.0")):
+        return f"Denied: only CTO/COO can deregister agents. Caller: {caller or '(not registered)'}"
+
+    keep = set(keep_serials or [])
+    removed = []
+
+    # 1. Clean liveness.json
+    with _locked_liveness(write=True) as data:
+        to_remove = [s for s in data if s not in keep]
+        for serial in to_remove:
+            del data[serial]
+            removed.append(serial)
+
+    # 2. Clean broker
+    if _broker_available:
+        for serial in removed:
+            _broker_fetch("/unregister", {"serial": serial})
+
+    # 3. Kill orphaned pollers for removed agents
+    total_killed = 0
+    if removed:
+        try:
+            if sys.platform == "win32":
+                import subprocess as _sp
+                # Build regex that matches any removed serial
+                pattern = "|".join(re.escape(s) for s in removed)
+                out = _sp.check_output(
+                    ["powershell", "-Command",
+                     f"Get-CimInstance Win32_Process -Filter \"Name='python.exe'\" | "
+                     f"Where-Object {{ $_.CommandLine -match 'agent-poller' -and $_.CommandLine -match '{pattern}' }} | "
+                     f"ForEach-Object {{ Stop-Process -Id $_.ProcessId -Force; $_.ProcessId }}"],
+                    text=True, timeout=15,
+                )
+                total_killed = len([l for l in out.strip().splitlines() if l.strip()])
+            else:
+                import subprocess as _sp
+                for serial in removed:
+                    try:
+                        _sp.check_call(["pkill", "-f", f"agent-poller.py {serial}"], timeout=5)
+                        total_killed += 1
+                    except Exception:
+                        pass
+        except Exception:
+            pass
+
+    lines = [f"Deregistered {len(removed)} agent(s), kept {len(keep)}:"]
+    for s in removed:
+        lines.append(f"  - {s}")
+    lines.append(f"Pollers killed: {total_killed}")
+    if keep:
+        lines.append(f"Kept: {', '.join(sorted(keep))}")
+    return "\n".join(lines)
 
 
 @mcp.tool()
@@ -837,6 +1003,7 @@ async def send_message(
     if not to_folder:
         return f"Recipient '{to_agent}' not found in org."
 
+    # Inbox always uses base serial folder (shared across instances)
     inbox = INBOX_DIR / to_folder.name
     inbox.mkdir(parents=True, exist_ok=True)
 
@@ -855,37 +1022,48 @@ async def send_message(
     )
     msg_path.write_text(msg_content, encoding="utf-8")
 
-    # Route through broker for cross-session delivery (recipient's MCP
-    # server polls the broker and pushes via channel into their session)
+    # Route through broker for cross-session delivery.
+    # If to_agent has an instance suffix (~B), route to that specific instance.
+    # If no suffix, route to the base serial — all instances poll the same inbox.
     delivery_methods = ["filesystem"]
+    broker_target = to_agent if _instance_suffix(to_agent) else to_folder.name
 
     if _broker_available:
         result = _broker_fetch("/send-message", {
             "from_serial": from_agent,
-            "to_serial": to_folder.name,
+            "to_serial": broker_target,
             "subject": subject,
             "text": body,
         })
         if result and result.get("ok"):
             delivery_methods.append("broker")
 
-    # Also attempt direct channel push if recipient is in THIS session
-    # (same-session push is instant, no broker round-trip needed)
+    # Attempt direct channel push to all live instances of this agent
     with _locked_liveness() as data:
-        recipient_info = data.get(to_folder.name)
+        # Find all live entries matching the base serial (includes instances)
+        base = _base_serial(to_agent)
+        target_suffix = _instance_suffix(to_agent)
+        live_targets = []
+        for serial, info in data.items():
+            if _base_serial(serial) == base and _liveness_status(info) == "live":
+                # If caller specified an instance, only push to that one
+                if target_suffix and _instance_suffix(serial) != target_suffix:
+                    continue
+                live_targets.append(serial)
 
-    if recipient_info and _liveness_status(recipient_info) == "live":
+    for target_serial in live_targets:
         pushed = await _push_channel_message(
             content=f"Message from {from_agent}: [{subject}] {body}",
             meta={
                 "from_agent": from_agent,
-                "to_agent": to_folder.name,
+                "to_agent": target_serial,
                 "subject": subject,
                 "inbox_file": filename,
             },
         )
         if pushed:
-            delivery_methods.append("channel push")
+            if "channel push" not in delivery_methods:
+                delivery_methods.append("channel push")
 
     return f"Message delivered to {to_folder.name} inbox: {filename} ({' + '.join(delivery_methods)})"
 
@@ -956,13 +1134,27 @@ async def list_agents(tier: str = "", ctx: Context = None) -> str:
             latest_date = log_folder.name if log_folder else "no logs"
             pending_count = len(_list_task_orders(agent_dir, status_filter="pending"))
 
-            # Liveness badge
-            info = live_data.get(agent_dir.name)
-            if info:
-                status = _liveness_status(info)
-                badge = {"live": "[LIVE]", "stale": "[STALE]", "dead": "[OFFLINE]"}[status]
+            # Liveness badge — check for instances (~suffix) too
+            base = agent_dir.name
+            live_instances = []
+            for serial, info in live_data.items():
+                if _base_serial(serial) == base and _liveness_status(info) == "live":
+                    live_instances.append(serial)
+
+            if live_instances:
+                if len(live_instances) == 1 and live_instances[0] == base:
+                    badge = "[LIVE]"
+                else:
+                    suffixes = [_instance_suffix(s) or "base" for s in live_instances]
+                    badge = f"[LIVE x{len(live_instances)}: {', '.join(suffixes)}]"
             else:
-                badge = ""
+                # Check for stale/dead single entry
+                info = live_data.get(base)
+                if info:
+                    status = _liveness_status(info)
+                    badge = {"live": "[LIVE]", "stale": "[STALE]", "dead": "[OFFLINE]"}[status]
+                else:
+                    badge = ""
 
             results.append(
                 f"- **{agent_dir.name}** {badge} ({tier_name}) "

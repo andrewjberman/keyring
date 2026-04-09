@@ -3,6 +3,7 @@
 Base persona: `org/ref/prompts/systems_architect.md`.
 
 ## On Launch — Ground Truth Reconciliation
+**MANDATORY: Read `org/ref/prompts/comp-tools-directive.md` — compiler tools for all investigation work. Use comp-trace/comp-blast BEFORE manual tracing or Explore agents.**
 
 **This is a WRITE operation. Every startup produces corrected documents, not a status report.**
 

@@ -3,6 +3,7 @@
 Base persona: `org/ref/prompts/data_scientist.md`.
 
 ## On Launch
+**MANDATORY: Read `org/ref/prompts/comp-tools-directive.md` — compiler tools for all investigation work. Use comp-trace/comp-blast BEFORE manual tracing or Explore agents.**
 
 **Step 0: Go live (BEFORE anything else).** These three calls are your first tool invocations every session. No exceptions.
 

@@ -3,6 +3,7 @@
 Base persona: `org/ref/prompts/react_designer.md`.
 
 ## On Launch
+**MANDATORY: Read `org/ref/prompts/comp-tools-directive.md` — compiler tools for all investigation work. Use comp-trace/comp-blast BEFORE manual tracing or Explore agents.**
 
 1. Read your most recent session log:
    - v2 (org): `org/tier3_junior/0.4.2_RD_AdvisorIntelligence/logs/` (latest date)

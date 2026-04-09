@@ -1,0 +1,71 @@
+{
+  "_doc": "Module registry. Maps work types to knowledge function stage pipelines. D-mode modules run inline (no LLM). I-mode stages dispatch to LLM workers.",
+
+  "classification": {
+    "description": "Catalog and classify objects against a taxonomy.",
+    "pipeline": {
+      "Pe": [
+        {"mode": "D", "module": "perceive.filesystem_scanner"},
+        {"mode": "D", "module": "perceive.corpus_aggregator", "note": "Corpus profile before interpretation -- informs pipeline config"},
+        {"mode": "D", "module": "perceive.corpus_indexer", "note": "Build once, query instant for all downstream stages"}
+      ],
+      "In": {"mode": "D", "module": "interpret.content_fingerprinter"},
+      "Ev": {"mode": "I", "module": "worker_node", "max_iterations": 3, "note": "Taxonomy classification requires LLM. Fingerprinter provides file type signal as input."},
+      "Ac": [
+        {"mode": "D", "module": "act.key_generator"},
+        {"mode": "D", "module": "act.registry_writer"}
+      ],
+      "Ad": [
+        {"mode": "D", "module": "adapt.structural_validator"},
+        {"mode": "D", "module": "adapt.coverage_auditor"},
+        {"mode": "D", "module": "adapt.differential_regression"}
+      ]
+    }
+  },
+
+  "code_change": {
+    "description": "Modify source code files.",
+    "pipeline": {
+      "Pe": {"mode": "D", "module": "perceive.filesystem_scanner"},
+      "In": [
+        {"mode": "D", "module": "interpret.ast_extractor"},
+        {"mode": "D", "module": "interpret.crossref_graph"}
+      ],
+      "Ev": {"mode": "I", "module": "worker_node", "max_iterations": 10},
+      "Ac": {"mode": "I", "module": "worker_node", "max_iterations": 10},
+      "Ad": [
+        {"mode": "D", "module": "adapt.structural_validator"},
+        {"mode": "D", "module": "adapt.differential_regression"}
+      ]
+    }
+  },
+
+  "semantic_search": {
+    "description": "Find conceptually similar content across a corpus.",
+    "pipeline": {
+      "Pe": [
+        {"mode": "D", "module": "perceive.filesystem_scanner"},
+        {"mode": "D", "module": "perceive.vector_index", "config": {"action": "build"}, "note": "Build dense vector index; queries <10ms after"}
+      ]
+    }
+  },
+
+  "audit": {
+    "description": "Analyze a codebase or document set without modifying it.",
+    "pipeline": {
+      "Pe": [
+        {"mode": "D", "module": "perceive.filesystem_scanner"},
+        {"mode": "D", "module": "perceive.corpus_aggregator", "note": "Corpus shape before detailed analysis"}
+      ],
+      "In": [
+        {"mode": "D", "module": "interpret.content_fingerprinter"},
+        {"mode": "D", "module": "interpret.ast_extractor"},
+        {"mode": "D", "module": "interpret.crossref_graph"}
+      ],
+      "Ad": [
+        {"mode": "D", "module": "adapt.coverage_auditor"},
+        {"mode": "D", "module": "adapt.structural_validator"}
+      ]
+    }
+  }
+}
