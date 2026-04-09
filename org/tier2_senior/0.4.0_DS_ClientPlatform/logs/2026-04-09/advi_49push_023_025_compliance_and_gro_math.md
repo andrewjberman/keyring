@@ -63,7 +63,18 @@ Code analysis:
 - Hypothesis C (stale cache) eliminated if AE re-ran D_04 after e3bdf513 push.
 - As of e3bdf513, aua_residual_sum is now included in the D_00 aggregation AND in
   growth_data entries (as aua_residual_delta). The one-line fix_3b change is ready.
-- Sent CTO inbox message at 20260409T182902Z. Awaiting GO.
+- Sent CTO inbox message at 20260409T182902Z.
+- CTO replied with conditional GO and parquet check script.
+- Ran parquet check against s3://opal-data-bd/gold/timeseries/account_performance.parquet:
+    sum(growth) Q1 2026:       $75,369,624  (far above ~$280K true market return)
+    sum(aua_residual) Q1 2026: $49,468,212
+    growth - aua_residual:     $25,901,412
+  Hypothesis A CONFIRMED. sum(growth) >> $280K expected; growth column is contaminated.
+- Implemented fix_3b (commit 023079d7): market = sum(growth) - sum(aua_residual) per month.
+  Added economic_total = market + nna_net. Identity preserved:
+    total_chg (raw) == economic_total + aua_residual_delta (within rounding).
+- D_04 _aggregate_growth_to_periods updated to sum and propagate economic_total.
+- .025 COMPLETE. All 3 fixes shipped.
 
 ---
 
@@ -81,6 +92,7 @@ Code analysis:
 | SHA | Description |
 |---|---|
 | `e3bdf513` | 0.4.0_DS_ClientPlatform: ADVI_49PUSH.023 + .025 partial (D_04 + D_00) |
+| `023079d7` | 0.4.0_DS_ClientPlatform: ADVI_49PUSH.025 fix_3b -- strip aua_residual from market |
 
 Pushed to origin/CLOUD.
 
