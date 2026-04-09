@@ -142,6 +142,36 @@ pre-commit QA checklist. Every item in that checklist must pass before you commi
 
 ---
 
+## Visual Testing (/frontend-dev)
+
+After committing portal changes, run `/frontend-dev` for automated visual validation.
+The closed-loop system opens a browser, takes screenshots, checks WCAG accessibility,
+and iterates on issues automatically.
+
+**Dev server (Opal portal):**
+```bash
+# From portal/ directory
+/c/Users/AndrewBerman/.bun/bin/bun run dev --port 5175
+```
+
+**Usage:**
+- `/frontend-dev` — runs the full closed-loop cycle: implement → test → validate → fix → repeat
+- The PostToolUse hook auto-prompts this after every `portal/src/**` edit
+- Constitutions at `portal/.frontend-dev/testing/` define per-page acceptance criteria
+- Add a new constitution file for each new page you build (`pageName`, `features`, `visualElements`)
+
+**When to use:**
+- After implementing any visual change (tooltip, chart, panel, layout)
+- After completing a tooltip migration (verify canonical style: silver bg, 2px indigo border)
+- When DE is asked to validate accessibility (WCAG AA checks run automatically)
+- When debugging visual regressions (screenshots show before/after)
+
+**When NOT to use:**
+- For data-only changes (gold script fixes, TypeScript type updates with no render impact)
+- When the dev server is not running and startup would be disruptive
+
+---
+
 ## Core Competencies
 
 ### 1. Modern React Development

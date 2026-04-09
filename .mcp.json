@@ -9,6 +9,13 @@
       "command": "python",
       "args": ["deck_generation/mcp_server/server.py"],
       "cwd": "C:\\Users\\AndrewBerman\\Desktop\\ajb_workspace"
+    },
+    "playwright": {
+      "command": "npx",
+      "args": ["-y", "@executeautomation/playwright-mcp-server"],
+      "env": {
+        "PLAYWRIGHT_HEADLESS": "false"
+      }
     }
   }
 }

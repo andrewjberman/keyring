@@ -91,6 +91,24 @@ Any deliverable produced by the ka_testing Docker runtime must be marked `[*runt
 
 ---
 
+## Visual Testing — Portal Frontend
+
+Run `/frontend-dev` after any `portal/src/**` change to get a closed-loop screenshot + WCAG check cycle.
+
+| Step | Action |
+|------|--------|
+| Start dev server | `cd portal && /c/Users/AndrewBerman/.bun/bin/bun run dev --port 5175` |
+| Run | `/frontend-dev` — Playwright opens browser, screenshots, validates, auto-fixes |
+| Constitutions | `portal/.frontend-dev/testing/` — per-page acceptance criteria (add one per new page) |
+| Hook | PostToolUse auto-prompts after every `portal/src/**` edit |
+
+**Mandatory for:** Any task order with a visual acceptance criterion. Any tooltip migration. Any new component with a chart or panel.
+**Not needed for:** Gold script changes, TypeScript type-only changes, non-portal work.
+
+Agents: applies to all DE and RD agents. Plugin installed at `~/.claude/plugins/frontend-dev/`.
+
+---
+
 ## Compiler Tools — Run Before Tracing Anything Manually
 
 | Tool | Command | Use when |

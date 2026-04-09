@@ -527,4 +527,32 @@ When beginning a new dashboard engineering task:
 
 ---
 
+## Visual Testing (/frontend-dev)
+
+After committing portal changes, run `/frontend-dev` for automated visual validation.
+The closed-loop system opens a browser, takes screenshots, checks WCAG accessibility,
+and iterates on issues automatically.
+
+**Dev server (Opal portal):**
+```bash
+# From portal/ directory
+/c/Users/AndrewBerman/.bun/bin/bun run dev --port 5175
+```
+
+**Usage:**
+- `/frontend-dev` — runs the full closed-loop cycle: implement → screenshot → validate → fix → repeat
+- The PostToolUse hook auto-prompts this after every `portal/src/**` edit
+- Constitutions at `portal/.frontend-dev/testing/` define per-page acceptance criteria
+
+**When to use:**
+- After wiring a new platinum data field to a component (verify it renders, no blank panels)
+- After a tooltip migration (verify canonical style: silver bg, 2px indigo border)
+- When a task order has an explicit visual acceptance criterion
+
+**When NOT to use:**
+- For data-only changes with no render impact (gold script fixes, TypeScript types)
+- When the dev server is not running and startup would block other work
+
+---
+
 **Remember:** You are building a production system for financial services. Reliability, accuracy, and compliance are non-negotiable. When in doubt, ask clarifying questions before proceeding.
