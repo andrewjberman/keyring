@@ -296,7 +296,7 @@ def cmd_reverse(args):
     for r in matching_routes:
         component_names.update(r.components)
 
-    # Fallback: search by endpoint function URLs matching the reconstructed URL
+    # Fallback 1: search by endpoint function URLs matching the reconstructed URL
     # Handles platinum paths that route via API GW (s3_key not set on route objects)
     if not component_names and reconstructed_url:
         url_prefix = reconstructed_url.split('{')[0]
@@ -311,10 +311,45 @@ def cmd_reverse(args):
                     if fn_name in comp.endpoint_calls:
                         component_names.add(comp.name)
 
+    # Fallback 2: directory-prefix match
+    # Some keys (e.g. platinum/firm/fee_efficiency.json) are sub-fields of a larger
+    # aggregate response (e.g. platinum/firm/dashboard.json fetched by getPlatinumFirmDashboard).
+    # Search for endpoints whose URL shares the same directory prefix.
+    if not component_names and s3_key:
+        import os
+        key_dir = s3_key.rsplit('/', 1)[0]  # e.g. platinum/firm
+        sibling_fns: list[str] = []
+        for fn_name, ep in rt.endpoints.items():
+            if not ep.url_template:
+                continue
+            # Resolve URL to S3 key via rewrite rules
+            resolved = rt.resolve_s3_key(ep.url_template.split('{')[0])
+            if not resolved:
+                # Try stripping query params
+                resolved = rt.resolve_s3_key(ep.url_template.split('?')[0])
+            if resolved:
+                ep_dir = resolved.rsplit('/', 1)[0]
+                if ep_dir == key_dir:
+                    sibling_fns.append(fn_name)
+        if sibling_fns:
+            print(f"    (no direct match -- key may be sub-field of a sibling endpoint)")
+            for fn_name in sorted(sibling_fns):
+                ep = rt.endpoints[fn_name]
+                for comp in rt.components:
+                    if fn_name in comp.endpoint_calls:
+                        component_names.add(comp.name)
+                        print(f"    via {fn_name} ({ep.url_template}) -> {comp.name}")
+
     if component_names:
         for cn in sorted(component_names):
-            print(f"    {cn}")
-    else:
+            if cn not in s3_key:  # avoid double-printing from fallback 2
+                print(f"    {cn}")
+    elif not (s3_key and any(
+        rt.resolve_s3_key(ep.url_template.split('{')[0]).rsplit('/', 1)[0] ==
+        s3_key.rsplit('/', 1)[0]
+        for ep in rt.endpoints.values()
+        if ep.url_template and rt.resolve_s3_key(ep.url_template.split('{')[0])
+    )):
         print("    (no components found -- check Lambda@Edge handlers for this key)")
 
 

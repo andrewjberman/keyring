@@ -620,35 +620,51 @@ def _extract_accessor_refs(content: str, fetch_vars: set[str]) -> list[tuple[str
     if not accessor_map:
         return refs
 
+    # Build the set of candidate data variables to search against.
+    # Primary: known fetch vars. Fallback: any component-level var used in .map()/.filter() etc.
+    # This handles prop-based components (no useQuery) where data arrives as a prop.
+    candidate_vars: set[str] = set(fetch_vars)
+    if not candidate_vars:
+        # Scan for any var.map/filter/find/forEach call in the component body
+        for mm in re.finditer(
+            r'(\w+)\??\.(?:map|filter|find|forEach|flatMap|reduce)\s*\(',
+            content
+        ):
+            var = mm.group(1)
+            # Skip obvious non-data identifiers
+            if var not in ('Object', 'Array', 'Math', 'JSON', 'console', 'window',
+                           'document', 'Promise', 'undefined', 'null'):
+                candidate_vars.add(var)
+
     seen: set[tuple[str, str]] = set()
 
     for accessor_name, field_map in accessor_map.items():
 
-        # --- Pattern 1: Direct call r(fetchVar).field ---
+        # --- Pattern 1: Direct call r(dataVar).field ---
         direct_pattern = re.compile(
             rf'{re.escape(accessor_name)}\s*\(\s*(\w+)\s*\)\??\.(\w+)'
         )
         for cm in direct_pattern.finditer(content):
             called_var = cm.group(1)
             output_field = cm.group(2)
-            if called_var in fetch_vars:
+            if called_var in candidate_vars:
                 source_field = field_map.get(output_field, output_field)
                 key = (called_var, source_field)
                 if key not in seen:
                     seen.add(key)
                     refs.append(key)
 
-        # --- Pattern 2: Map callback - fetchVar.map((param) => r(param).field) ---
-        for fetch_var in fetch_vars:
+        # --- Pattern 2: Map callback - dataVar.map((param) => r(param).field) ---
+        for data_var in candidate_vars:
             map_pattern = re.compile(
-                rf'{re.escape(fetch_var)}\??\.(?:map|forEach|filter|find|flatMap|reduce)\s*\(\s*'
+                rf'{re.escape(data_var)}\??\.(?:map|forEach|filter|find|flatMap|reduce)\s*\(\s*'
                 rf'(?:\(\s*(\w+)(?:\s*,\s*\w+)?\s*\)|(\w+))\s*=>'
             )
             for mm in map_pattern.finditer(content):
                 callback_param = mm.group(1) or mm.group(2)
                 if not callback_param:
                     continue
-                # Scan callback body (~2000 chars) for r(callback_param).field
+                # Scan callback body (~2000 chars) for accessor(callback_param).field
                 cb_region = content[mm.end():mm.end() + 2000]
                 cb_pattern = re.compile(
                     rf'{re.escape(accessor_name)}\s*\(\s*{re.escape(callback_param)}\s*\)\??\.(\w+)'
@@ -656,15 +672,15 @@ def _extract_accessor_refs(content: str, fetch_vars: set[str]) -> list[tuple[str
                 for cm in cb_pattern.finditer(cb_region):
                     output_field = cm.group(1)
                     source_field = field_map.get(output_field, output_field)
-                    key = (fetch_var, source_field)
+                    key = (data_var, source_field)
                     if key not in seen:
                         seen.add(key)
                         refs.append(key)
 
         # --- Pattern 3: Assigned result - const row = r(param); row.field ---
-        for fetch_var in fetch_vars:
+        for data_var in candidate_vars:
             map_pattern = re.compile(
-                rf'{re.escape(fetch_var)}\??\.(?:map|forEach|filter|find|flatMap|reduce)\s*\(\s*'
+                rf'{re.escape(data_var)}\??\.(?:map|forEach|filter|find|flatMap|reduce)\s*\(\s*'
                 rf'(?:\(\s*(\w+)(?:\s*,\s*\w+)?\s*\)|(\w+))\s*=>'
             )
             for mm in map_pattern.finditer(content):
@@ -672,23 +688,37 @@ def _extract_accessor_refs(content: str, fetch_vars: set[str]) -> list[tuple[str
                 if not callback_param:
                     continue
                 cb_region = content[mm.end():mm.end() + 2000]
-                # Find: const assigned = r(callback_param)
                 assign_pattern = re.compile(
                     rf'(?:const|let)\s+(\w+)\s*=\s*{re.escape(accessor_name)}\s*\(\s*'
                     rf'{re.escape(callback_param)}\s*\)'
                 )
                 for asn in assign_pattern.finditer(cb_region):
                     assigned_var = asn.group(1)
-                    # Find assigned_var.field accesses after the assignment
                     after = cb_region[asn.end():asn.end() + 1500]
                     field_access = re.compile(rf'{re.escape(assigned_var)}\??\.(\w+)')
                     for fa in field_access.finditer(after):
                         output_field = fa.group(1)
                         source_field = field_map.get(output_field, output_field)
-                        key = (fetch_var, source_field)
+                        key = (data_var, source_field)
                         if key not in seen:
                             seen.add(key)
                             refs.append(key)
+
+        # --- Pattern 4: Prop-based access - accessor called on a prop var (no map) ---
+        # Handles: const rows = useMemo(() => { return r(data).advisors.map(...) }, [data])
+        # or: r(data).advisors used directly in JSX
+        prop_direct = re.compile(
+            rf'{re.escape(accessor_name)}\s*\(\s*(\w+)\??(?:\.\w+)?\s*\)\??\.(\w+)'
+        )
+        for cm in prop_direct.finditer(content):
+            called_var = cm.group(1)
+            output_field = cm.group(2)
+            if called_var in candidate_vars and (called_var, output_field) not in seen:
+                source_field = field_map.get(output_field, output_field)
+                key = (called_var, source_field)
+                if key not in seen:
+                    seen.add(key)
+                    refs.append(key)
 
     return refs
 
