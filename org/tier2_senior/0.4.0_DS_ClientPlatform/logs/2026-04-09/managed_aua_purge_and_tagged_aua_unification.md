@@ -44,6 +44,7 @@ Full DDL written to: `docs/data/gold_runner_term_definitions.md`
 Prior session cleanup (already in CLOUD):
 | `c6285ae8` | C_08: managed_aua removed from aggregation, total_aua used throughout internally |
 | `d79ad9e7` | C_08: efficiency pctile ranking fix (separate but same session) |
+| `c0d8f244` | Full purge across all gold scripts (Andrew directive): C_08 remaining refs, D_00 latest_aua/start_aua/aua_growth_pct/role_breakdown, D_02 _build_fee_summary_by_role, E_20 validation checks |
 
 ---
 
@@ -51,8 +52,11 @@ Prior session cleanup (already in CLOUD):
 
 | File | Change |
 |------|--------|
-| `data/black_diamond/scripts/gold/D_02.advisor_client_detail.py` | Removed `total_aua` alias from book.json summary. Only `tagged_aua` written at advisor grain. |
-| `data/black_diamond/scripts/gold/D_04.client_portal_summary.py` | build_advisor_summaries: reads `tagged_aua` from book.json. build_leaderboard: reads `tagged_aua` from book.json. period_start_aua now uses D_02 timeseries tagged_aua at window start date (not D_00 managed_aua). _LEADERBOARD_ROLE_FIELDS: managed_aua removed. |
+| `data/black_diamond/scripts/gold/D_02.advisor_client_detail.py` | Removed `total_aua` alias from book.json summary (52a14fc7). _build_fee_summary_by_role: managed_aua → total_aua (c0d8f244). |
+| `data/black_diamond/scripts/gold/D_04.client_portal_summary.py` | build_advisor_summaries: reads `tagged_aua` from book.json. build_leaderboard: reads `tagged_aua`. period_start_aua uses D_02 timeseries tagged_aua. _LEADERBOARD_ROLE_FIELDS: managed_aua removed (6391b96c, 52a14fc7). |
+| `data/black_diamond/scripts/gold/D_00.portal_aggregates.py` | latest_aua, start_aua, aua_growth_pct, role_detail, role_breakdown output: all managed_aua removed (c0d8f244). D_00 is fully clean. |
+| `data/black_diamond/scripts/gold/C_08.advisor_fee_efficiency.py` | aua_current*weight computation removed. Aggregation: total_aua only. fee_bps_weighted denominator: total_aua. effective_split_pct removed (c6285ae8, c0d8f244). |
+| `data/black_diamond/scripts/gold/E_20.cross_script_validation.py` | C_08 check: managed_aua → total_aua. Result key C_08.total_managed_aua → C_08.total_aua (c0d8f244). |
 | `docs/data/gold_runner_term_definitions.md` | New DDL document. Authoritative definitions for all gold runner terms. |
 
 ---
@@ -65,17 +69,21 @@ Every location managed_aua appeared:
 |----------|--------|
 | C_08 aggregation (`detail['managed_aua'] = aua * weight`) | REMOVED in c6285ae8 |
 | C_08 _build_window (`aua=('managed_aua', 'sum')`) | REMOVED in c6285ae8; now `aua=('total_aua', 'sum')` |
-| D_00 leaderboard (`start_aua = groupby managed_aua`) | Still in D_00 internally BUT D_04 overrides period_start_aua using D_02 timeseries (clean source) |
+| D_00 leaderboard (`start_aua = groupby managed_aua`) | REMOVED in c0d8f244. D_00 is fully clean. |
 | D_04 _LEADERBOARD_ROLE_FIELDS | REMOVED in 6391b96c |
 | D_04 build_leaderboard read | FIXED in 52a14fc7 to read tagged_aua |
 | D_04 build_advisor_summaries read | FIXED in 52a14fc7 to read tagged_aua |
+| D_02 _build_fee_summary_by_role | FIXED in c0d8f244: managed_aua → total_aua |
+| E_20 C_08.total_managed_aua validation check | FIXED in c0d8f244: → C_08.total_aua |
 | Portal types.ts / AdvisorsTab / FeeEfficiencyPanel | REMOVED by DE~B (concurrent session) |
 
-Remaining: D_00's internal leaderboard builder still uses managed_aua for its own
-`aua_growth_pct` computation. This is tolerable because D_04 overrides the advisor AUA
-fields before they reach platinum. D_00's internal `aua_growth_pct` is a derived metric
-that will have minor inaccuracy for multi-role advisors -- flagged for a future D_00 cleanup
-to use account_performance directly for advisor AUA at all dates.
+Remaining: none. All five gold scripts (C_08, D_00, D_02, D_04, E_20) confirmed clean
+by grep on 2026-04-09. D_04 has three comment-only references ("# Replaces D_00's managed_aua")
+that are explanatory annotations, not functional code.
+
+*(Note: This log originally stated D_00 still had managed_aua in aua_growth_pct. This was
+stale — c0d8f244, committed 9 minutes prior, had already cleaned D_00. Corrected on
+2026-04-09 by 1.0.0_SA_CTO commit validation.)*
 
 ---
 
@@ -107,7 +115,6 @@ Gold run: pending marker written (instance was already running; will pick up on 
 
 1. **[DS post-run]** Verify platinum leaderboard period_start_aua for Travis:
    should be ~$408M+ (tagged AUA at April 1), not ~$148M.
-2. **[DS future]** Clean up D_00's internal advisor AUA computation to use
-   account_performance directly (remove dependence on C_08 fee_detail for AUA).
+2. ~~**[DS future]** Clean up D_00's internal advisor AUA computation~~ — DONE in c0d8f244.
 3. **[All agents]** Reference `docs/data/gold_runner_term_definitions.md` before
    introducing any new AUA/NNA/fee field. No new field without a DDL entry.
