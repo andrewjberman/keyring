@@ -11,8 +11,8 @@
     {"path": "docs/architecture/ADVI_49PUSH_P5_PRD.md", "label": "P5: CI Enforcement + Lockdown", "date": "2026-04-08"}
   ],
   "status": "active",
-  "phase": "Wave 1 + Wave 2 executed 2026-04-08. P1 D_04 Books publisher script built + iterated (fee_efficiency transform, D_02 column cleanup through 21:57 ET). P3 platinum serving deployed (partners-api-v1.15.2 + portal-auth-v1.11.3). P4 auth hit 401 regression during .019 CF apply; iterative hotfixes 21:05-21:49 ET (CF ARN qualified_arn fix, M1 PII block re-enabled with 401). .021/.022 emergency TOs open as of 04-09 -- awaiting production 401 verification. Multiple pipeline tag bumps: partners-api-v1.15.3, portal-auth-v1.11.6, bd-v2.21.6.",
-  "blocking": "URGENT: .021 DT + .022 DE -- verify auth refresh 401 is resolved in opalinvest.dev production after last night's hotfix chain.",
+  "phase": "DS~D wave complete 2026-04-09. Commits e3bdf513/023079d7/75d303ca/dbb1d105/bac3dc44. .023: D_04 6 platinum compliance publishers (eliminates all 8 gold/ violations). .025: GRO panel market strip (Hyp A confirmed sum(growth)=$75.4M vs $280K), NNA alignment, pct fields. .027: Distribution P1 audit -- geo_aua_grain=accounts (99.97%), account_count per segment, ADV multi-role 163 advisors, NNA city Top9+Other, nna_clients.json per advisor. .033: P2 continuous -- new_clients_by_period, nna_adv_drill Level1, geo_aua_grain field. Other instances running .008/.010/.017/.018/.040/.042. ALL blocked on AE re-run: D_00+D_01+D_04 need S3 upload. D_01 before D_04.",
+  "blocking": "AE re-run required: D_00 (growth pct + aua_residual strip), D_01 (multi-role ADV, geo account_count, NNA city Top9+Other), D_04 (all .023/.025/.027/.033 changes). D_01 must run before D_04. nna_geo_drill (city-level NNA continuous) requires D_00 enhancement (flagged in .033 log). A_01 multi-role split normalization still in local repo. EC2_MANIFEST.json not updated for QA runner. B_01b classify_new_securities hangs on OpenAI API.",
   "created": "2026-04-08",
   "pods": ["0.4", "0.6", "0.7"],
   "pipeline": "bd-pipeline",
