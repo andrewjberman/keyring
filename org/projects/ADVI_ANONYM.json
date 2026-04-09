@@ -7,9 +7,9 @@
     {"path": "docs/architecture/ADVI_ANONYM_PRD.md", "label": "P1-P3 Pseudonymization + Graduated RBAC", "date": "2026-03-31"},
     {"path": "docs/architecture/ADVI_ANONYM_P3_PRD.md", "label": "P3 Tier Refactor + Book Scoping + Test Harness", "date": "2026-04-01"}
   ],
-  "status": "active",
-  "phase": "P4 COMPLETE. .012 DS COMPLETE (4a1e289c). .013 DT COMPLETE (9e294683+a5d9876b, portal-auth-v1.6.0). .014 DE COMPLETE (d552234, crossref validated). Awaiting DT push + PROD merge for .014 portal commit.",
-  "blocking": "DT push portal DEV + PROD merge for .014. JWT tier removal pending DT TO (low priority). Partner table migration pending AE TO (deferred).",
+  "status": "complete",
+  "phase": "P4 COMPLETE (PROD de62fde). P5 COMPLETE: .015 DT COMPLETE (api/shared->scoped CF). .016 AE COMPLETE (api/shared->scoped Lambda). All TOs done.",
+  "blocking": "None. JWT tier removal (low pri, no TO). Partner table migration (deferred, no TO).",
   "created": "2026-03-30",
   "pods": ["0.4", "0.7"],
   "pipeline": "shared-infra",

@@ -11,8 +11,8 @@
     {"path": "docs/architecture/ADVI_49PUSH_P5_PRD.md", "label": "P5: CI Enforcement + Lockdown", "date": "2026-04-08"}
   ],
   "status": "active",
-  "phase": "Wave 1: P1-TO1+TO2 (D_04 script) + P2 audits (4 parallel DS instances). Pre-Andrew-approval.",
-  "blocking": "Nothing. Wave 1 is all read+write, no deploy dependencies.",
+  "phase": "Wave 1 + Wave 2 executed 2026-04-08. P1 D_04 Books publisher script built + iterated (fee_efficiency transform, D_02 column cleanup through 21:57 ET). P3 platinum serving deployed (partners-api-v1.15.2 + portal-auth-v1.11.3). P4 auth hit 401 regression during .019 CF apply; iterative hotfixes 21:05-21:49 ET (CF ARN qualified_arn fix, M1 PII block re-enabled with 401). .021/.022 emergency TOs open as of 04-09 -- awaiting production 401 verification. Multiple pipeline tag bumps: partners-api-v1.15.3, portal-auth-v1.11.6, bd-v2.21.6.",
+  "blocking": "URGENT: .021 DT + .022 DE -- verify auth refresh 401 is resolved in opalinvest.dev production after last night's hotfix chain.",
   "created": "2026-04-08",
   "pods": ["0.4", "0.6", "0.7"],
   "pipeline": "bd-pipeline",

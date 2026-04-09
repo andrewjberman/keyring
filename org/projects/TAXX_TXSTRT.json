@@ -1,0 +1,15 @@
+{
+  "project_code": "TAXX_TXSTRT",
+  "macro_code": "TAXX",
+  "name": "Tax SMA Trade Allocation Strategy",
+  "description": "Onboard and formalize the Tax SMA trade allocation system into the workspace. Existing prototype: trade_allocator.py (1,632 lines) processes Axioma optimizer output through a constraint cascade (excluded securities, HTB validation, weight caps, sector bands, round lots, EMH balance) to produce Schwab upload CSVs for long/short SMA accounts. Three accounts active: Chiles (SMA 200, $1M), Nixon (SMA 200, $750K), Bump (SMA 145, $1.95M). Source data, outputs, and account manifest aggregated at models/tax_strategy/.",
+  "prds": [],
+  "status": "complete",
+  "phase": "COMPLETE. P0: .001 DS gap analysis delivered (v1+v2 trade allocator review).",
+  "blocking": "",
+  "created": "2026-04-06",
+  "pods": ["0.3"],
+  "pipeline": "TBD",
+  "thread_counter": 0,
+  "threads": []
+}

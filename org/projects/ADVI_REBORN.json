@@ -1,0 +1,26 @@
+{
+  "project_code": "ADVI_REBORN",
+  "macro_code": "ADVI",
+  "name": "Advisor Intelligence Full Integration",
+  "description": "Comprehensive advisor intelligence integration: WS1 pipeline audit, WS2 fee efficiency views (absorbed from NNAFEE), WS3 data freshness verification, WS4 employee leaderboard with role filtering. Replaces ADVI_NNAFEE.",
+  "prds": [
+    {
+      "path": "docs/architecture/ADVI_REBORN_PRD.md",
+      "label": "Full Integration PRD",
+      "date": "2026-04-07"
+    },
+    {
+      "path": "docs/architecture/ADVI_NNAFEE_FEE_EFFICIENCY_VIEWS.md",
+      "label": "WS2 Fee Efficiency Detail Spec (Option A)",
+      "date": "2026-04-07"
+    }
+  ],
+  "status": "active",
+  "phase": "WS2 COMPLETE. WS4: DS+RD complete, DE STAGED. WS5: ALL 4 TOs COMPLETE (NNA cumsum, Advisors case fix, Books perf, fee display). Portal DEV has fixes, needs PROD deploy.",
+  "blocking": "W5-001 NNA fix needs AE gold re-run to regenerate timeseries_chart.json. Portal DEV->PROD deploy needed.",
+  "created": "2026-04-07",
+  "pods": ["0.4", "0.6"],
+  "pipeline": "bd-pipeline",
+  "thread_counter": 0,
+  "threads": []
+}

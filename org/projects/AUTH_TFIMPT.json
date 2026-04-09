@@ -1,0 +1,15 @@
+{
+  "project_code": "AUTH_TFIMPT",
+  "macro_code": "AUTH",
+  "name": "Auth Infrastructure Terraform Import",
+  "description": "Complete Terraform import of all portal auth infrastructure. Lambda@Edge functions and edge IAM role already imported (portal-auth-v1.7.0+v1.8.0). Remaining: CloudFront distribution EVTSA9VEHNZVH (highest risk), opal-users/opal-users-v2 DynamoDB, portal-auth-lambda-role ownership, SES identity, Secrets Manager JWT keys.",
+  "prds": [],
+  "status": "complete",
+  "phase": "3/3 TOs COMPLETE. .001 AE COMPLETE (CloudFront distribution imported). .002 AE COMPLETE (portal-auth-v1.9.0). .003 DT COMPLETE (shared-infra role ownership). Portal-auth at v1.11.0, shared-infra at v1.6.0.",
+  "blocking": "None.",
+  "created": "2026-04-06",
+  "pods": ["0.4", "0.7"],
+  "pipeline": "portal-auth",
+  "thread_counter": 0,
+  "threads": []
+}

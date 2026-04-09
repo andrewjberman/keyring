@@ -1,0 +1,21 @@
+{
+  "project_code": "MKOV_TRENDS",
+  "macro_code": "MKOV",
+  "name": "Trending Topics Quality Overhaul",
+  "description": "3-bullet summaries replacing prose essays, article lead images replacing SVG arrows, recency-weighted ranking favoring today's news, portal rendering fixes.",
+  "prds": [
+    {
+      "path": "docs/architecture/MKOV_TRENDS_PRD.md",
+      "label": "Trending Topics Quality Overhaul PRD",
+      "date": "2026-04-08"
+    }
+  ],
+  "status": "complete",
+  "phase": "ALL 6 TOs COMPLETE. DS scoring/images, DT Lambda deploy (news-v2.7.5), RD portal rendering, DT PROD deploy. Ready to close.",
+  "blocking": "None.",
+  "created": "2026-04-08",
+  "pods": ["0.1"],
+  "pipeline": "news-pipeline",
+  "thread_counter": 0,
+  "threads": []
+}
