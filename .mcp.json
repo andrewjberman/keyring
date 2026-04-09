@@ -1,0 +1,14 @@
+{
+  "mcpServers": {
+    "opal-agent-comms": {
+      "command": "python",
+      "args": ["org/mcp/server.py"],
+      "cwd": "C:\\Users\\AndrewBerman\\Desktop\\ajb_workspace"
+    },
+    "deck-generation": {
+      "command": "python",
+      "args": ["deck_generation/mcp_server/server.py"],
+      "cwd": "C:\\Users\\AndrewBerman\\Desktop\\ajb_workspace"
+    }
+  }
+}
