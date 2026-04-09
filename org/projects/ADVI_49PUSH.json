@@ -1,0 +1,21 @@
+{
+  "project_code": "ADVI_49PUSH",
+  "macro_code": "ADVI",
+  "name": "Platinum Serving Layer -- 49F Push",
+  "description": "Full platinum layer migration for Advisor Intelligence: pre-sliced JSON serving via platinum/ S3 prefix, eliminating all direct gold/ reads from portal. 5 phases: P1 Books tab publisher, P2 all-surface design audit, P3 full execution, P4 auth validation, P5 CI enforcement.",
+  "prds": [
+    {"path": "docs/architecture/ADVI_49PUSH_P1_PRD.md", "label": "P1: Books Tab Platinum Publisher", "date": "2026-04-08"},
+    {"path": "docs/architecture/ADVI_49PUSH_P2_PRD.md", "label": "P2: Design Audit All Surfaces", "date": "2026-04-08"},
+    {"path": "docs/architecture/ADVI_49PUSH_P3_PRD.md", "label": "P3: Full Platinum Build", "date": "2026-04-08"},
+    {"path": "docs/architecture/ADVI_49PUSH_P4_PRD.md", "label": "P4: Auth Validation", "date": "2026-04-08"},
+    {"path": "docs/architecture/ADVI_49PUSH_P5_PRD.md", "label": "P5: CI Enforcement + Lockdown", "date": "2026-04-08"}
+  ],
+  "status": "active",
+  "phase": "Wave 1: P1-TO1+TO2 (D_04 script) + P2 audits (4 parallel DS instances). Pre-Andrew-approval.",
+  "blocking": "Nothing. Wave 1 is all read+write, no deploy dependencies.",
+  "created": "2026-04-08",
+  "pods": ["0.4", "0.6", "0.7"],
+  "pipeline": "bd-pipeline",
+  "thread_counter": 0,
+  "threads": []
+}

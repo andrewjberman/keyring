@@ -16,10 +16,11 @@ the surface area; the project code identifies the specific initiative.
 
 | Project Code | Macro | Project Name | Phase | Pods | Blocking | PRDs |
 |---|---|---|---|---|---|---|
-| `DEBT_1STRUN` | `DEBT` | First Technical Debt Sweep | ON HOLD. P1: 21/27 scans. P2: .002-.004 done, .005 staged. | 0.1-0.4, 0.5-0.7 | On hold per Andrew. | — |
-| `ADVI_REBORN` | `ADVI` | Advisor Intelligence Full Integration | WS1: E2E pipeline audit (DS+AE+DT+DE). WS2: Fee efficiency views — Option A (DS->DE->RD->DT). WS3: Books tab data freshness. WS4: Employee leaderboard. Absorbs NNAFEE. | 0.4, 0.6 | Pattern 0 thread -> DS .001 inventory -> parallel audit + fee work. | ADVI_REBORN_PRD.md, ADVI_NNAFEE_FEE_EFFICIENCY_VIEWS.md |
-| `ADHC_DESIGN` | `ADHC` | Portal Design Normalization | Decomposed: 12 RD TOs STAGED. .001 Attribution critical path (holdings-shared.tsx). .002-.012 parallel. Phase 3 CTO. | 0.1-0.4 | .001 before .002. All others parallel. | PORTAL_DESIGN_NORMALIZATION_AND_COMPILER_TOOLS.md |
+| `DEBT_1STRUN` | `DEBT` | First Technical Debt Sweep | P1: 27/27 scans COMPLETE. P2: .002-.004 done, .005 staged (IAM/DynamoDB). | 0.1-0.4, 0.5-0.7 | .005 needs AE 0.5.0 session. | — |
+| `ADVI_REBORN` | `ADVI` | Advisor Intelligence Full Integration | WS2 COMPLETE. WS4: DS+RD done, DE STAGED. WS5: 4 DS TOs COMPLETE. 3 follow-up TOs pending (W5-002 RD, W5-005 DE, W5-006 RD). Portal DEV->PROD deploy done (2613b7e). | 0.4, 0.6 | W5-001 NNA fix needs AE gold re-run for timeseries_chart.json. | ADVI_REBORN_PRD.md, ADVI_NNAFEE_FEE_EFFICIENCY_VIEWS.md |
+| `ADHC_DESIGN` | `ADHC` | Portal Design Normalization | 20/24 TOs COMPLETE. Phases 1-3 PROD deployed. Attribution (.001/.015/.024) + Valuation (.007) remaining. | 0.1-0.4 | Attribution .001 in progress (RD 0.2.2 LIVE). Valuation .007 awaiting RD. | PORTAL_DESIGN_NORMALIZATION_AND_COMPILER_TOOLS.md |
 | `ADHC_TMSTEL` | `ADHC` | Teams Telemetry MCP Server | P0: PRD complete. Awaiting Azure AD app registration + COO decomposition. | 0.7 | Azure AD app registration (Andrew/IT). COO TOs. | ADHC_TMSTEL_PRD.md |
+| `ADVI_49PUSH` | `ADVI` | Platinum Serving Layer -- 49F Push | Wave 1: 4 parallel DS instances (.001-.004). P1 D_04 script + P2 design audits running simultaneously. | 0.4, 0.6, 0.7 | Nothing. Wave 1 is read+write only. | ADVI_49PUSH_P1-P5_PRD.md |
 ---
 
 ---
@@ -43,6 +44,7 @@ session log. Performance baseline: CLSUNI ~36% unedited, CLSPT2 ~67% unedited.
 | `ADVI_GLDOPS` | `ADVI` | Gold Layer Operations: Data Freshness + Market Growth | 2026-04-07 | All TOs complete. Superseded by operational state. Canonical stack (05 swap, 01b fees, 08c, 11a) shipped. Scripts renamed A_00-C_04. silver/fees delivered. |
 | `ETFS_SECIDX` | `ETFS` | ETF Securities & Index Inventory Assessment | 2026-04-07 | P0 complete. 102 securities, 138 portal tickers audited, D4 recommendations delivered. 97.1% Massive API coverage. |
 | `TAXX_TXSTRT` | `TAXX` | Tax SMA Trade Allocation Strategy | 2026-04-07 | P0 complete. DS gap analysis delivered (v1+v2 trade allocator review). |
+| `MKOV_TRENDS` | `MKOV` | Trending Topics Quality Overhaul | 2026-04-08 | All 6 TOs complete. DS scoring/images, DT Lambda deploy (news-v2.7.5), RD portal rendering, DT PROD deploy. |
 | `AUTH_TFIMPT` | `AUTH` | Auth Infrastructure Terraform Import | 2026-04-06 | 3/3 TOs complete. CloudFront distribution imported, DynamoDB/SES/secrets imported (portal-auth-v1.11.0), shared-infra role ownership resolved (shared-infra-v1.6.0). |
 | `ADVI_ANONYM` | `ADVI` | Advisor Intelligence PII Pseudonymization + RBAC | 2026-04-06 | P1-P5 complete. Pseudonymization, RBAC, Lambda PII handlers, authorizer passthrough, api/shared->scoped migration. 16 TOs total. PROD de62fde. JWT tier + partner migration deferred. |
 | `ADHC_HISTRY` | `ADHC` | BD Transaction History Forensic Investigation | 2026-04-06 | All 8 TOs complete. AUA $1,582M (0.3% from silver). Phantom fix deployed. NNA rearch under GLDRST.017. Remaining: BD vendor ($259M) + Pathfinder weights (Andrew external). |
