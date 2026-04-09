@@ -146,6 +146,17 @@ def cmd_trace(args):
         _print_flow(flow)
 
 
+_JS_BUILTINS = {
+    'map', 'filter', 'find', 'some', 'every', 'reduce', 'forEach',
+    'flatMap', 'sort', 'slice', 'length', 'includes', 'indexOf',
+    'keys', 'values', 'entries', 'push', 'pop', 'concat', 'join',
+    'toString', 'toFixed', 'toLocaleString', 'trim', 'toLowerCase',
+    'toUpperCase', 'startsWith', 'endsWith', 'replace', 'split',
+    'match', 'search', 'charAt', 'substring', 'then', 'catch',
+    'flat', 'reverse', 'fill', 'findIndex', 'at',
+}
+
+
 def cmd_fields(args):
     path = _find_component(args.component)
     if not path:
@@ -158,6 +169,15 @@ def cmd_fields(args):
         sys.exit(1)
 
     fields = flow.fields_used()
+
+    # Filter out JS built-in method names that leak from array/string method calls
+    # e.g. advisors.map(...) produces 'advisors.map' as a "field" -- not a real data field
+    def _is_data_field(field_path: str) -> bool:
+        parts = field_path.replace('?.', '.').split('.')
+        return all(p not in _JS_BUILTINS for p in parts if p)
+
+    fields = {f for f in fields if _is_data_field(f)}
+
     print(f"FIELDS USED by {flow.component_name} ({len(fields)}):")
     print()
 
