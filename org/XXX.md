@@ -153,8 +153,14 @@ Full template and filename convention: `org/ref/TASK_ORDER_PROTOCOL.md`
 
 - Stored in the receiving agent's `task_orders/` folder
 - `staged` = assigned, wait for GO | `pending` = active | `complete` = done (self-marked)
-- Every task order must include `<compiler_tools_mandate>` — see ref doc for minimums
+- Every task order must include `<compiler_tools_mandate>` — three-phase (before write, before commit, after commit)
+- Every task order must include `<cross_domain_coordination>` — populated by COO/CTO at PRD decomposition using `comp-blast`; `<none/>` only if confirmed no shared files/S3 keys with other active TOs
+- Every task order must include `<acceptance_criteria>` — machine-checkable output validation, not "code runs"
 - Session log with Compiler Tools section is an explicit deliverable on every task order
+- A TO with no compiler check logged is NOT accepted as complete — see `org/standards/TO_COMPILER_GATE.md`
+
+**COO/CTO parallel wave protocol:**
+Before writing any TOs for a parallelized wave: run `comp-blast` on every affected component/script. Any node appearing in 2+ TOs' blast radii is a CROSS-DOMAIN resource — flag it in the PRD and in each relevant TO's `<cross_domain_coordination>` block. Agents must MCP-message each other before committing to cross-domain files.
 
 ---
 
@@ -164,6 +170,20 @@ Full template and filename convention: `org/ref/TASK_ORDER_PROTOCOL.md`
 git commit --author="{serial} <{serial}@opal.agent>" -m "message"
 ```
 Author = the agent. Committer = Andrew. Only alphanumeric, `.`, `_`, `@` in author fields.
+
+## Commit Scope Discipline (Non-Negotiable)
+
+**Commit ONLY the files your task order told you to touch. Never sweep the working tree.**
+
+- **BANNED:** `git add -A`, `git add .`, `git add --all`, `git commit -a`, `git commit --all`, any pattern that stages files you did not deliberately choose.
+- **REQUIRED:** `git add <exact/path/to/file1> <exact/path/to/file2>` — list every path by name.
+- **Before every commit:** run `git status` and visually confirm each staged file belongs to your task order. If a file you didn't touch is staged, unstage it (`git restore --staged <file>`).
+- **If you see dirty files outside your scope:** leave them alone. Do not stash, do not commit "to clean up", do not include them "while you're at it". Another agent is probably working on them right now.
+- **One task order = one logical commit scope.** If your work spans multiple task orders, make multiple commits, each scoped to its own TO.
+
+**Why this rule exists:** During hectic multi-agent MCP sessions, several agents have dirty working trees at the same time. An agent that runs `git add -A` sweeps up other agents' in-flight work into their own commit — the author line lies, the TO attribution is wrong, and downstream reviewers cannot tell who changed what. This has corrupted the audit trail more than once. Selective staging is mandatory, not a preference.
+
+The only exception is a commit whose explicit purpose is a bulk cleanup (rare, and must be called out in the commit message).
 
 ---
 
