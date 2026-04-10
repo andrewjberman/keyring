@@ -129,54 +129,57 @@ You do NOT produce architecture specs (CTO does). You DO align, route, and track
 
 **Commit only:** Session logs, org docs. Use `--author="2.0.0_SA_COO <2.0.0_SA_COO@opal.agent>"`.
 
-## Pod Delivery Dashboard -- Updated 2026-04-09 (COO session 20 startup)
+## Pod Delivery Dashboard -- Updated 2026-04-10 (COO session 23 startup)
 
 ### Active Projects
 
 | Project | Status | Pending Work |
 |---------|--------|-------------|
-| `ADVI_49PUSH` | Wave 1+2 executed 04-08. P1 D_04 script iterated through 21:57. P3 deployed (partners-api-v1.15.2, portal-auth-v1.11.3). P4 auth 401 hotfix chain 21:05-21:49. .021/.022 URGENT open. | Verify 401 resolved in prod. D_04 fee_efficiency iterations. AE .005 gold runner deploy. DS .001-.010 still individually pending. |
-| `ADVI_REBORN` | WS2 COMPLETE. WS4: DS+RD done, DE W4-002 STAGED. WS5: ALL 4 DS TOs COMPLETE (W5-001 NNA cumsum, W5-003 Lambda hot-path kill, W5-004 effective_bps). Portal PROD 2613b7e. | W5-002 RD (case fix), W5-005 DE (data path), W5-006 RD (rendering). W5-001 NNA needs gold re-run to regen timeseries_chart.json. |
-| `ADHC_DESIGN` | 20/24 TOs COMPLETE. Phases 1-3 PROD deployed (0df2466). Attribution (.001/.015/.024) + Valuation (.007) remaining. | Attribution .001 in progress (RD 0.2.2). Valuation .007 awaiting RD. |
+| `ADVI_49PUSH` | 43/48 TOs done. D_00 refactored D_00/D_00b/D_00c. D_00 client_city fix + D_00c tagged NNA/role_split fix shipped. Freshness gate in gold_dispatch. bd-v2.21.8 + partners-api-v1.15.6. | AE gold re-run (D_00/D_01/D_04) to land client_city + role_split. .020 JWT+browser QA (Andrew). .024 Phase 2. .026 GRO validation. .038 DE QTD default. |
+| `ADVI_GLDRST` (REOPENED) | Canonical_prices v2 remediation (Easter Apr 3-5 dropout RCA). .021 SHIPPED 04-10 (source-tag `transaction_observed_capped` + diff-before-ship PASS, 9b4f7a77 + 5d4756e2, s3 etag d51a8260513a46d8ab94bde4e49bea69). .022 STAGED (v2 silver-prep chain in gold_dispatch + AE brief). | .022 awaiting COO GO. Then AE: EventBridge daily cron (incl weekends/holidays), IAM verify, bd-price-update Job 1 phase-out after week-1 diff parity. |
+| `ADVI_REBORN` | WS2 COMPLETE. WS4: DS+RD done, DE W4-002 STAGED. WS5: ALL 4 DS TOs COMPLETE. Portal PROD 2613b7e. | W5-002 RD (case fix), W5-005 DE (data path), W5-006 RD (rendering). W5-001 NNA needs gold re-run to regen timeseries_chart.json. |
+| `ADHC_DESIGN` | 20/24 original COMPLETE. Phase 2 tooltip+lint: pods 0.1/0.2/0.3 COMPLETE (.026/.027/.029/.030/.031). Pod 0.4 PENDING (.025/.028/.032). | Pod 0.4 DE spawn needed (DE 0.4.0 NOT REGISTERED). Attribution .001 RD 0.2.2 pending. Valuation .007 RD 0.2.4 pending. |
 | `DEBT_1STRUN` | P1: 27/27 scans COMPLETE. P2: .002-.004 COMPLETE. .005 STAGED (IAM/DynamoDB). | .005 needs AE 0.5.0 session. |
 | `ADHC_TMSTEL` | P0: PRD complete. Awaiting Azure AD app registration + COO decomposition. | Azure AD app registration (Andrew/IT). COO TOs. |
+| `ADVI_INCMTL` | P0: Briefing complete (AE 0.6.0). Low priority. | Production per-script timing profile. DS watermark design. AE dispatch changes. |
+| `ADVI_PROFIL` (NEW 04-10) | P0: CTO PRD complete 2026-04-10. RD has staged 5 file mods + 1 new file on portal DEV (tsc+eslint clean, not committed). 8 TOs across 4 waves. | Wave 1: DT ship + DT/AE JWT advisorId claim + DS book tax_exposure. Wave 2: AE Lambda@Edge advisor scoping (blocks on JWT claim). COO decomposition into 8 TOs pending. |
 
-### Pipeline Tags (current, verified 2026-04-09 startup)
+### Pipeline Tags (verified 2026-04-10 startup)
 
 | Pipeline | Tag |
 |----------|-----|
-| BD | bd-v2.21.6 |
-| Partners API | partners-api-v1.15.3 |
+| BD | bd-v2.21.8 |
+| Partners API | partners-api-v1.15.6 |
 | Portal Auth | portal-auth-v1.11.6 |
 | Yang | yang-v2.3.6 |
 | Market Overview | market-overview-v1.7.0 |
+| News | news-v2.9.5 |
 | Shared Infra | shared-infra-v1.6.0 |
 
-### Operational Notes (04-09 startup)
+### Operational Notes (04-10 startup)
 
-- ADVI_49PUSH: project JSON phase corrected from stale "Wave 1 pre-approval" to current executed state.
-- URGENT: .021 DT + .022 DE (2026-04-09) -- auth refresh 401 on opalinvest.dev. Hotfix chain shipped last night 21:05-21:49 ET (ab1282a6 -> 683d5dff). Needs production verification before marking complete.
-- MKOV_TRENDS ARCHIVED 04-08. ADVI_GLDRST/GLDOPS/NNAFEE ARCHIVED 04-07. AUTH_TFIMPT ARCHIVED 04-06.
-- ADVI_REBORN W5 DS work COMPLETE (commits 2c17b18d, 72201784, 65f24ae7).
-- bd-v2.21.5/v2.21.6: gold-layer-runner systemd fix + QA runner + B_01b deploy (AE 0.6.0).
-- news-pipeline: multiple commits 04-08 (mentioned_tickers filter, stock-pick reject, headline limit) but MKOV_TRENDS remains archived -- these are post-closure polish.
-- 2 agents LIVE at startup: CTO 1.0.0, COO 2.0.0. All pod agents OFFLINE.
+- ADVI_GLDRST REOPENED for v2 canonical_prices nightly pre-step. Easter Apr 3-5 dropout RCA: bd-price-update Lambda has no weekend/holiday gap-fill. Fix path: v2 full-rebuild as silver-prep step in gold_dispatch, daily EventBridge cron (incl weekends).
+- bd-v2.21.8 contents: 21e3b3f2 (DT API GW routes for advisor/client drilldowns), 5779ec46 (gold_dispatch freshness gate), 257d588f (D_00b/D_01 No-City exclusion), 7ee3db59 (D_00c tagged NNA/inflows/outflows/GRO + per-bucket fee breakdown), 6396f385 (D_04 fee_breakdown pass-through), ef526221 (D_00b/D_01 crash fix on missing churn cols), f43fb30d (AE bd-v2.21.7 IAM+watchdog RCA log).
+- D_00 client_city omission fixed from session 22 post-mortem; geo_drill data should land on next gold run.
+- ADHC_DESIGN Phase 2: 5/8 pod TOs complete (0.1/0.2/0.3 all done); pod 0.4 three TOs (.025/.028/.032) blocked on DE 0.4.0 spawn.
+- Agents LIVE at session 23 start: CTO, COO, DS (+DS~A), RD 0.4.2. Not registered: DE 0.4.0, DT 0.4.0, all AE, all other pod DE/DS/DT.
+- DS .022 AE handoff brief will land at `docs/briefs/ae-brief-v2-prestep-integration.md` — pick up with AE 0.6.0 after .022 ships.
 
-### Pod 4 (ClientPlatform) -- Status as of 2026-04-09 startup
+### Pod 4 (ClientPlatform) -- Status as of 2026-04-10 startup
 
 | Agent | Last Known Work | Status |
 |-------|----------------|--------|
-| 0.4.0_DE | REBORN W5-005 PENDING. 49PUSH .012-.015 + .020 + URGENT .022 pending. | OFFLINE |
-| 0.4.0_DT | 49PUSH .011/.015/.016/.017/.018 committed. 401 hotfix chain 21:05-21:49. .019/.021 URGENT open. deployment_map pending. | OFFLINE |
-| 0.4.0_DS | REBORN W5 DS TOs COMPLETE. 49PUSH .001 D_04 iterated late 21:57 (fee_eff/D_02 cleanup). .002-.010, .017, .018 individually pending. | OFFLINE |
-| 0.4.2_RD | REBORN W5-002 + W5-006 PENDING. page_inventory pending. | OFFLINE |
+| 0.4.0_DE | 49PUSH: .012-.015/.022/.028-.036/.039/.041/.043/.044/.046 COMPLETE. .020 e2e blocked on JWT. .024/.026 blocked on gold run. .038 pending. REBORN W5-005 pending. ADHC_DESIGN .025/.028/.032 pending. | NOT REGISTERED |
+| 0.4.0_DT | 49PUSH .011/.016/.019/.021/.048 COMPLETE. bd-v2.21.8 API GW route registration (21e3b3f2). deployment_map pending. | NOT REGISTERED |
+| 0.4.0_DS | ALL 49PUSH DS TOs COMPLETE. ADVI_GLDRST.021 SHIPPED 04-10 (v2 source-tag + diff-before-ship). Session log new: b00_hybrid_price_fill_easter_dropout_root_cause.md + gold_trigger_chain_trace_and_d00c_role_split_fix.md + pricing_bug_investigation_and_aua_cohort_framework.md. | LIVE (base + ~A) |
+| 0.4.2_RD | REBORN W5-002 + W5-006 PENDING. page_inventory pending. | LIVE |
 
-### Shared Services -- Status as of 2026-04-09 startup
+### Shared Services -- Status as of 2026-04-10 startup
 
 | Agent | Last Known Work | Pending |
 |-------|----------------|---------|
 | 0.5.0_AE_OpalETL | DEBT_1STRUN .002-.004 COMPLETE. | .005 STAGED (IAM/DynamoDB). infrastructure_inventory. |
-| 0.6.0_AE_PartnerETL | bd-v2.21.5+v2.21.6 deployed (systemd fix, QA runner, B_01b). GLDRST/GLDOPS archived. | 49PUSH .005 AE gold runner deploy PENDING. infrastructure_inventory. |
+| 0.6.0_AE_PartnerETL | bd-v2.21.7 + v2.21.8 (IAM fix + watchdog RCA + D_00/D_04 fixes + freshness gate). 49PUSH .005 COMPLETE. B_01b upgraded gpt-5.4-mini. | ADVI_GLDRST.022 AE handoff (EventBridge cron, IAM verify, Job 1 deprecation). infrastructure_inventory. |
 | 0.7.0_AE_CloudOps | AUTH_TFIMPT 3/3 COMPLETE (shared-infra-v1.6.0). | infrastructure_inventory. |
 
 **NOTE:** This dashboard is corrected on every COO startup. Do not treat it as
