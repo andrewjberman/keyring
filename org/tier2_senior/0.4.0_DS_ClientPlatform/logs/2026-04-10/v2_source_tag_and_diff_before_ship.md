@@ -129,8 +129,8 @@ Saved output: `/tmp/phase1_blast.txt` (36 lines).
 | Diff harness | `data/analysis/v2_cap_tag_diff.py` |
 | Session log | this file |
 | S3 upload | `s3://opal-data-bd/code/silver/build_canonical_prices_v2.py` |
-| Commit SHA | *(filled below after commit)* |
-| S3 etag | *(filled below after upload)* |
+| Commit SHA | `9b4f7a77` on CLOUD |
+| S3 etag | `d51a8260513a46d8ab94bde4e49bea69` (matches local md5) |
 
 ## Do-not verification
 
