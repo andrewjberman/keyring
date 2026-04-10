@@ -148,8 +148,8 @@ Saved: `/tmp/phase3_021b_blast.txt` / `/tmp/phase3_021b_blast_clean.txt`.
 | New diff harness | `data/analysis/v2_cap_021b_diff.py` |
 | Session log | this file |
 | S3 upload | `s3://opal-data-bd/code/silver/build_canonical_prices_v2.py` |
-| Commit SHA | `{{COMMIT_SHA}}` |
-| S3 etag | `{{S3_ETAG}}` |
+| Commit SHA | `97cf703c` on CLOUD |
+| S3 etag | `4bfbda655857625817de7e418f1eb0f7` (matches local md5) |
 
 ## Do-not verification
 
