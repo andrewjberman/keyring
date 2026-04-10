@@ -1,0 +1,18 @@
+{
+  "project_code": "ADVI_PROFIL",
+  "macro_code": "ADVI",
+  "name": "Advisor Profile + Book Architecture",
+  "description": "Restructure the /advisor-intelligence page so Tab 3 is role-conditional (admin: Books firm landing; non-admin: direct render of own AdvisorPublicProfile from JWT advisorId). Profile/Book becomes a local in-component toggle inside AdvisorPublicProfile (not a cross-tab nav) that swaps between the existing profile view and a new AdvisorBookView (single advisor book fetch, independent cache key). Fee/role breakdown removed from BooksTab L2 admin drill and becomes Profile-only (window-aware, per-fee-bucket from D_00c Option 1 already shipped in d3abb883). AdvisorsTab leaderboard made inert for non-admins by passing undefined drill handler. Single choke-point defense in depth: non-admin can only reach their own profile, enforced cosmetically on frontend and authoritatively via Lambda@Edge scoping on /api/scoped/partners/books/advisor/{advisorId}/* endpoints.",
+  "prds": [
+    {"path": "org/tier3_junior/0.4.2_RD_AdvisorIntelligence/deliverables/briefing_profile_book_architecture.md", "label": "RD Architecture Briefing -- Profile/Book, wave sequencing, blocker inventory, task order candidates", "date": "2026-04-10"},
+    {"path": "docs/architecture/ADVI_PROFIL_PRD.md", "label": "CTO PRD -- normalized task order decomposition + cross-domain map", "date": "2026-04-10"}
+  ],
+  "status": "active",
+  "phase": "Phase 0: CTO PRD complete (compiler-audited 2026-04-10), RD implementation staged on portal DEV (5 files modified, 1 new file, tsc+eslint clean). COO decomposed into 10 staged task orders across 4 waves. CTO comp-routes audit caught .004 single-TO error (mix of advisor-id/account-id/relationship-id path keys + two CloudFront behaviors); split into .004a/.004b/.004c per PRD §4-5. Wave 1: .001 DT ship + .002 DT/AE JWT claim + .003 DS book tax_exposure (all parallelizable). Wave 2a: .004a AE advisor-id scoping (blocks on .002; unblocks Profile+Timeseries independently). Wave 2b: .004b DS ownership map publisher (parallel with .004a). Wave 2c: .004c AE account+client scoping (blocks on .004a + .004b). Wave 3: .005 RD L3/L4 lift + .006 RD cache policy (both block on .001). Wave 4: .007 RD admin My Profile toggle (blocks on .002) + .008 DE frontend-dev visual test (blocks on .001).",
+  "blocking": "All 10 TOs are staged. Awaiting COO GO messages per wave. Wave 1 (3 TOs) + Wave 2b (.004b) can GO immediately in parallel. Wave 2a (.004a) blocks on .002. Wave 2c (.004c) blocks on .004a + .004b + populated ownership map. Wave 3 blocks on .001. Wave 4 blocks on .001/.002. Andrew decisions required: .006 cache policy (a/b/c), .007 cut-or-ship, .001 commit bundling, non-admin L3/L4 drill scope.",
+  "created": "2026-04-10",
+  "pods": ["0.4", "0.7"],
+  "pipeline": "portal + portal-auth",
+  "thread_counter": 0,
+  "threads": []
+}

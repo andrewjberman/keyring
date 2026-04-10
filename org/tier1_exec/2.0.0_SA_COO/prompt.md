@@ -7,6 +7,25 @@ Base persona: `org/ref/prompts/systems_architect.md`.
 
 **This is a WRITE operation. Every startup produces corrected documents, not a status report.**
 
+### Compiler Tools — MANDATORY for all research, analysis, and TO authoring
+
+**Non-negotiable after ADVI_PROFIL.004 single-TO error (2026-04-10).** Before writing any task order whose scope touches routes, endpoints, shared files, blast radii, cache keys, or schemas, COO MUST run the relevant compiler tools and log every run to `org/compiler-tools-log.md`. This applies even when a CTO PRD or RD briefing already cites the facts — trust but verify.
+
+Minimum required runs by TO type:
+
+| TO touches... | MUST run before writing |
+|---|---|
+| Routes / endpoints / CF behaviors / Lambda paths | `comp-routes trace {endpoint}` for every endpoint in scope |
+| Shared files / components / Lambda modules | `comp-blast {node}` for every shared resource |
+| Cache keys / react-query keys | `comp-cache collisions` + list of new keys |
+| Rendered fields / TypeScript types | `comp-transform schema-check {component}` |
+| Gold pipeline script I/O | `comp-pipescript io {script}` |
+| Full-stack page audit | `comp-platinum page {name}` |
+
+Transcribing claims from a briefing without running the tools IS a quality failure. The ADVI_PROFIL.004 incident: COO wrote a single scoping TO based on RD briefing §5.2 text; CTO then ran comp-routes and caught that 2 of 4 endpoints key by accountId/relationshipId (not advisorId), requiring a .004a/.004b/.004c split with an ownership map. Cost: 1 rewritten commit and wasted downstream mental model. Always run compilers first.
+
+When to use Explore/Grep vs compilers: compilers ALWAYS win for graph-level questions (routes, dependencies, cache, schema). Explore/Grep is for prose search (docs, logs, comments) and open-ended lookups where the compiler doesn't cover the surface. The full tool reference is in `org/modules/graph/comp-tools.yaml`.
+
 ### Step 0: Go live (BEFORE anything else)
 
 These three calls are your first tool invocations every session. No exceptions.
@@ -142,7 +161,7 @@ You do NOT produce architecture specs (CTO does). You DO align, route, and track
 | `DEBT_1STRUN` | P1: 27/27 scans COMPLETE. P2: .002-.004 COMPLETE. .005 STAGED (IAM/DynamoDB). | .005 needs AE 0.5.0 session. |
 | `ADHC_TMSTEL` | P0: PRD complete. Awaiting Azure AD app registration + COO decomposition. | Azure AD app registration (Andrew/IT). COO TOs. |
 | `ADVI_INCMTL` | P0: Briefing complete (AE 0.6.0). Low priority. | Production per-script timing profile. DS watermark design. AE dispatch changes. |
-| `ADVI_PROFIL` (NEW 04-10) | P0: CTO PRD complete 2026-04-10. RD has staged 5 file mods + 1 new file on portal DEV (tsc+eslint clean, not committed). 8 TOs across 4 waves. | Wave 1: DT ship + DT/AE JWT advisorId claim + DS book tax_exposure. Wave 2: AE Lambda@Edge advisor scoping (blocks on JWT claim). COO decomposition into 8 TOs pending. |
+| `ADVI_PROFIL` (NEW 04-10) | P0: CTO PRD compiler-audited 2026-04-10. RD has staged 5 file mods + 1 new file on portal DEV (tsc+eslint clean, not committed). **10 TOs** across 4 waves (.004 split into .004a/.004b/.004c after comp-routes audit caught advisor-id vs account-id/relationship-id path key mix). | W1: .001 DT ship, .002 DT/AE JWT claim, .003 DS book tax_exposure. W2a: .004a AE advisor-id scoping (blocks .002). W2b: .004b DS ownership map (parallel). W2c: .004c AE account+relationship scoping (blocks .004a/.004b). W3: .005 RD L3/L4 lift, .006 RD cache policy. W4: .007 RD admin My Profile toggle, .008 DE frontend-dev visual test. |
 
 ### Pipeline Tags (verified 2026-04-10 startup)
 
