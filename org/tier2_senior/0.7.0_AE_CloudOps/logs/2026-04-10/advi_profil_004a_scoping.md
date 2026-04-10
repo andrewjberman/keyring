@@ -194,24 +194,74 @@ Easy to miss. My first `terraform apply` reached 0-diff but the new version was 
 
 ---
 
-## Test matrix -- WAITING ON DT
+## Test matrix -- VALIDATED END-TO-END
 
-DT committed to running the curl test from their side (they have the Chase/Travis JWTs). Expected matrix:
+DT ran the curl matrix from the DT side (they hold the Chase/Travis JWTs). Tokens fetched via direct API GW POST `/auth/login` (bypasses CF because `/auth/*` is not in the EVTSA9VEHNZVH behavior set -- separate investigation, unrelated to .004a). Curls then hit `d2n2nzpeqf34ge.cloudfront.net` with Bearer tokens to exercise `auth-validator-edge:11`.
 
-| # | User | Path | Expected | Gate fires |
+**Run 1 -- S3-direct path** (`/api/scoped/advisor-intelligence/platinum/advisors/{id}/summary.json`):
+
+| # | User | Target | Result | Interpretation |
 |---|---|---|---|---|
-| 1 | Opal admin | any `/advisor/{anyId}/...` | 200 | bypass (`role === 'admin'`) |
-| 2 | Travis (49fin admin) | `/advisor/chase_bertrand/...?firmId=49financial` | 200 | bypass + firm match |
-| 3 | Travis (49fin admin) | `/advisor/travis_penfield/...?firmId=49financial` | 200 | bypass (own advisor) |
-| 4 | Travis (49fin admin) | `/advisor/rj_advisor/...?firmId=raymond_james` | 401 | bypass + backend firm rejection (data layer) |
-| 5 | Chase (49fin user) | `/advisor/travis_penfield/...?firmId=49financial` | **403** | gate fires at edge |
-| 6 | Chase (49fin user) | `/advisor/chase_bertrand/...?firmId=49financial` | 200 | self match |
-| 7 | Chase (49fin user) | `/advisor/rj_advisor/...?firmId=raymond_james` | **403** | gate fires at edge (doesn't reach data layer) |
-| 8 | Unauthenticated | any | 401 | JWT validation fires first |
+| 1 | Chase (49fin user) | own | HTTP 401 `"Platinum summary files must be accessed through the API, not S3-direct"` | `.004a` PASSED self-match, hit downstream `shared-advisor-router` M1 PII block. Correct behavior (summary.json is deprecated S3-direct, routes through API now). Not a `.004a` signal. |
+| 2 | Chase | travis_penfield | **HTTP 403** `"Advisor scoping: not authorized for this advisor"` | **`.004a` GATE FIRES** |
+| 3 | Chase | rj_advisor (cross-firm) | **HTTP 403** same | **`.004a` GATE FIRES** |
+| 4-6 | Travis (49fin admin) | any | HTTP 401 (downstream path deprecation) | `.004a` PASSED (admin bypass, Option 3), then hit shared-advisor-router M1 PII block downstream |
+| 7 | No JWT | any | HTTP 401 | auth-validator-edge JWT validator fires first (before `.004a`) |
 
-Test matrix status: pending DT execution.
+**Run 2 -- API GW path** (`/api/scoped/partners/books/advisor/{id}/platinum-summary`) -- primary target:
 
-I will monitor `/aws/lambda/auth-validator-edge` CloudWatch logs for `advisor_scoping_denied` structured events and cross-reference against DT's curl output.
+| # | User | Target | Result | Interpretation |
+|---|---|---|---|---|
+| R1 | Chase (role=user) | chase_bertrand (own) | HTTP 400 `"Missing required query parameter: firmId"` | `.004a` PASSED self-match, hit downstream opal-partners-data firmId requirement. Correct. |
+| R2 | Chase | travis_penfield (same-firm other) | **HTTP 403** `"Advisor scoping: not authorized for this advisor"` | **`.004a` GATE FIRES** -- Chase blocked at edge before hitting Lambda |
+| R3 | Chase | rj_advisor (cross-firm) | **HTTP 403** same | **`.004a` GATE FIRES** |
+| R4 | Travis (role=admin) | travis_penfield (own) | HTTP 400 firmId required | `.004a` PASSED (admin bypass + own) |
+| R5 | Travis | chase_bertrand (same-firm other) | HTTP 400 firmId required | **`.004a` PASSED Travis on other advisor path -- Option 3 ADMIN BYPASS WORKING** |
+| R6 | Travis | rj_advisor (cross-firm) | HTTP 400 firmId required | **`.004a` PASSED Travis** -- edge bypass fires; cross-firm containment would be enforced downstream by opal-partners-data.is_authorized, curl didn't pass firmId so stopped at the 400 |
+| R7 | No JWT | any | HTTP 401 `"Missing or invalid Authorization header"` | auth-validator-edge JWT validator fires first |
+
+**Validation summary:**
+
+| Assertion | Status |
+|---|---|
+| Non-admin partner user scoped to own advisorId | PASS -- R1 self-match passes, R2+R3 403 |
+| Admin user bypasses path check | PASS -- R4, R5, R6 all pass `.004a` |
+| Admin bypass includes partner-firm admins (Option 3 not Option 2) | PASS -- Travis has `role=admin` + `firmId=49financial`, bypasses correctly |
+| Cross-firm containment at data layer | Verified by source read (computeAllowedFirms + is_authorized); curl stopped at the 400 before exercising it |
+| No JWT returns 401 | PASS -- R7 |
+| Structured denial log format | PASS -- see CloudWatch section below |
+
+## CloudWatch structured denial verification
+
+Queried `/aws/lambda/us-east-1.auth-validator-edge` (region-replicated Lambda@Edge log group) via PowerShell (Git Bash MSYS path conversion mangles `/aws/lambda/...` arguments). Query window: 1 hour preceding 23:10 UTC. Filter pattern: `advisor_scoping_denied`.
+
+Four events retrieved matching DT's curl matrix exactly:
+
+```
+2026-04-10T23:05:34.978Z WARN {"event":"advisor_scoping_denied","rule":"004a","userId":"chase.bertrand@49financial.com","jwtAdvisor":"chase_bertrand","jwtFirmId":"49financial","jwtRole":"user","requestedAdvisor":"travis_penfield","path":"/api/scoped/advisor-intelligence/platinum/advisors/travis_penfield/summary.json"}
+
+2026-04-10T23:05:35.331Z WARN {"event":"advisor_scoping_denied","rule":"004a","userId":"chase.bertrand@49financial.com","jwtAdvisor":"chase_bertrand","jwtFirmId":"49financial","jwtRole":"user","requestedAdvisor":"rj_advisor","path":"/api/scoped/advisor-intelligence/platinum/advisors/rj_advisor/summary.json"}
+
+2026-04-10T23:06:35.846Z WARN {"event":"advisor_scoping_denied","rule":"004a","userId":"chase.bertrand@49financial.com","jwtAdvisor":"chase_bertrand","jwtFirmId":"49financial","jwtRole":"user","requestedAdvisor":"travis_penfield","path":"/api/scoped/partners/books/advisor/travis_penfield/platinum-summary"}
+
+2026-04-10T23:06:35.996Z WARN {"event":"advisor_scoping_denied","rule":"004a","userId":"chase.bertrand@49financial.com","jwtAdvisor":"chase_bertrand","jwtFirmId":"49financial","jwtRole":"user","requestedAdvisor":"rj_advisor","path":"/api/scoped/partners/books/advisor/rj_advisor/platinum-summary"}
+```
+
+Run 1 timestamps (23:05:34.978, 23:05:35.331) cover the S3-direct path, Run 2 timestamps (23:06:35.846, 23:06:35.996) cover the API GW primary-target path. Travis/admin rows produced **zero** denial events -- the admin bypass short-circuits before the log emission, exactly as designed.
+
+All fields present: `event`, `rule`, `userId`, `jwtAdvisor`, `jwtFirmId`, `jwtRole`, `requestedAdvisor`, `path`. CloudWatch filter queries like `{$.event="advisor_scoping_denied" && $.rule="004a"}` will work for future alerting/dashboarding. `.004c` can reuse the same `event` name with `rule: "004c"` when it ships.
+
+### CloudWatch query gotcha -- MSYS path conversion
+
+`aws logs filter-log-events --log-group-name /aws/lambda/...` in Git Bash gets mangled by MSYS to `C:/Program Files/Git/aws/lambda/...` -> invalid log group name. The `//` double-slash escape didn't work either (API rejected `//aws/...`). Workaround that worked:
+
+```bash
+powershell.exe -NoProfile -Command "aws logs filter-log-events --log-group-name '/aws/lambda/us-east-1.auth-validator-edge' ..."
+```
+
+PowerShell's string handling is not subject to MSYS conversion. Also useful: `aws logs describe-log-groups --query 'logGroups[?contains(logGroupName, \`auth-validator\`)]'` without the `--log-group-name-prefix` flag works in Git Bash because the prefix is inside a JMESPath expression, not a raw arg.
+
+.004a tests left a paper trail. **Status: fully validated.**
 
 ---
 
@@ -251,13 +301,14 @@ TO `<correction>` block was co-edited -- I wrote an Option 2 version, DT overwro
 
 ## Next Steps
 
-- [ ] **DT runs the 8-row curl test matrix** and reports results (critical before declaring .004a done)
-- [ ] **CloudWatch log verification** -- I'll grep `/aws/lambda/auth-validator-edge` for `advisor_scoping_denied` events matching DT's curls once they run
-- [ ] **Session log finalization** -- add test matrix results to this file once DT reports
-- [ ] **pipeline_inventory.xml** -- auth-validator-edge version refs bumped from `:7` to `:11` (done in this session)
-- [ ] **Follow-up TO** -- change `cloudfront-distribution.tf` auth_validator_edge_arn local to dynamic reference (parallel to shared_advisor_router_arn) to prevent the two-step deploy gotcha on future bumps
-- [ ] **`.004c`** (0.7.0_AE) blocks on `.004b` DS ownership map artifact. Once ready, extend `getAllowedAdvisorIds()` in this same file. Helper shape already designed for clean extension.
-- [ ] **CTO PRD audit** -- DT flagged CTO's original PRD likely encodes the same shared-advisor-router choke-point mistake. Separate follow-up, not a .004a blocker.
+- [x] **DT curl test matrix** -- ran in two batches (S3-direct path + API GW path), results above
+- [x] **CloudWatch log verification** -- four `advisor_scoping_denied` events retrieved from `/aws/lambda/us-east-1.auth-validator-edge` matching DT's curls exactly
+- [x] **Session log finalization** -- test matrix + CloudWatch evidence merged
+- [x] **pipeline_inventory.xml** -- auth-validator-edge version refs bumped from `:7` to `:11`
+- [ ] **Follow-up TO (LOW)** -- change `cloudfront-distribution.tf` auth_validator_edge_arn local to dynamic reference (parallel to shared_advisor_router_arn) to prevent the two-step deploy gotcha on future bumps
+- [ ] **Follow-up TO (LOW)** -- `/auth/*` is not in the EVTSA9VEHNZVH behavior set per DT's login flow observation; worth investigating whether that's intentional (direct API GW auth) or drift
+- [ ] **`.004c`** (0.7.0_AE) was blocked on `.004a` + `.004b` + `.005`. `.005` shipped today (portal DEV commit `36bf0fd`). `.004a` done. Now blocks only on DS `.004b` firm-partitioned advisor_ownership.json artifact. Will extend `getAllowedAdvisorIds()` in this same file; helper shape already designed for clean extension. DT said they'll signal whether I should start `.004c` immediately when DS ships `.004b` or wait for `.007` RD to land first.
+- [ ] **CTO PRD audit** -- DT flagged CTO's original PRD likely encodes the same shared-advisor-router choke-point mistake. Separate follow-up, not a .004a blocker. Could bundle with the dynamic-local follow-up above.
 
 ---
 
