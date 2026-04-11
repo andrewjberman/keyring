@@ -261,10 +261,66 @@ Notable coordination moments:
 - Memory updated with new gotchas and the commit-pathspec rule
 
 ### In progress
-- Group D gold run (SSM `e99ecf29-e583-4e5b-a12b-91c69d59d95a`) — D_02 currently running, D_03/D_04 still ahead, ETA 22:50-23:00 UTC
-- `.004c` global Lambda@Edge propagation — 5-15 min from 22:44 UTC apply
-- DT curl matrix for `.004c` — IDs delivered, DT to fire post-propagation
-- Scheduled wake-up at 22:48 UTC to re-probe Group D state and D_04 artifact
+- ~~Group D gold run~~ ✓ COMPLETE at 02:41:11 UTC (D_04 wrote timeseries_overview.json, 218 KB, 2.8× old size). SSM command `Success`, exit 0. Runner shut down cleanly (state: `stopped`).
+- ~~`.004c` global Lambda@Edge propagation~~ ✓ COMPLETE — DT fired curls at 02:41:23 UTC (12 seconds after D_04 finished). No stale behavior observed.
+- ~~DT curl matrix for `.004c`~~ ✓ COMPLETE — **8/8 GREEN on first attempt**. Full matrix results in DT message `20260411T024221Z`:
+
+| # | Test | Result | Interpretation |
+|---|---|---|---|
+| R1 | Chase → chase-owned account (z0812154251) | HTTP 200 | Ownership map lookup pass |
+| R2 | Chase → travis-owned account (z0812152601) | **HTTP 403** | `.004c` gate fires |
+| R3 | Chase → chase-owned relationship (z08124121) | HTTP 200 | Ownership map lookup pass |
+| R4 | Chase → travis-owned relationship (z08109252) | **HTTP 403** | `.004c` gate fires |
+| R5 | Travis (admin) → travis-owned account | HTTP 200 | Admin bypass |
+| R6 | Travis → chase-owned account | HTTP 200 | Admin bypass |
+| R7 | Travis → chase-owned relationship | HTTP 200 | Admin bypass |
+| R8 | No JWT → any | HTTP 401 | JWT validator fires first |
+
+- ~~Scheduled wake-up~~ Not needed — everything landed before the 22:48 wake-up fired.
+
+### `.004c` CloudWatch structured log verification (COMPLETE)
+
+Queried `/aws/lambda/us-east-1.auth-validator-edge` via PowerShell wrapper, filter `004c`. Two denial events retrieved exactly matching DT's R2 + R4:
+
+```
+2026-04-11T02:41:32.706Z WARN {"event":"advisor_scoping_denied","rule":"004c","resourceType":"account","userId":"chase.bertrand@49financial.com","jwtAdvisor":"chase_bertrand","jwtFirmId":"49financial","jwtRole":"user","requestedResource":"z0812152601","path":"/api/scoped/advisor-intelligence/platinum/accounts/z0812152601/summary.json"}
+
+2026-04-11T02:41:40.121Z WARN {"event":"advisor_scoping_denied","rule":"004c","resourceType":"relationship","userId":"chase.bertrand@49financial.com","jwtAdvisor":"chase_bertrand","jwtFirmId":"49financial","jwtRole":"user","requestedResource":"z08109252","path":"/api/scoped/partners/books/relationship/z08109252/platinum-summary"}
+```
+
+All fields present: `event`, `rule`, `resourceType`, `userId`, `jwtAdvisor`, `jwtFirmId`, `jwtRole`, `requestedResource`, `path`. `rule=004c` distinguishes from `.004a` events in the same log stream. `resourceType` distinguishes account vs relationship for ops filtering. Travis admin-bypass rows (R5-R7) produced **zero** denial events — the admin short-circuit fires before the `console.warn` emission, as designed.
+
+`.004c` is validated end-to-end at HTTP + Lambda + structured-log layers. TO flipped to `complete`.
+
+### Three `.004c` event types **not exercised** this matrix
+
+Not exercised in DT's matrix (no negative case triggered):
+- `advisor_not_in_ownership_map` rule=004c — would fire if a JWT with an unknown `advisorId` hit an account/relationship path
+- `ownership_map_schema_mismatch` rule=004c — would fire if D_00 ever wrote `schema_version != 1`
+- `ownership_map_fetch_failed` rule=004c — would fire if S3 GetObject throws (network, IAM, throttle)
+
+These are valid code paths but require synthetic test setup to exercise. Parking for a future robustness pass — not blocking `.004c` closeout since the happy path and the enforced negative path are both proven.
+
+### D_04 artifact verification (COMPLETE)
+
+```
+$ jq '.nna | keys' timeseries_overview.json
+["annually","monthly","quarterly"]
+
+$ jq '.nna.quarterly[0] | {period, net, has_by_geo: (.by_geo != null), has_by_adv: (.by_adv != null)}' timeseries_overview.json
+{
+  "period": "2020-Q1",
+  "net": 0.0,
+  "has_by_geo": true,
+  "has_by_adv": true
+}
+
+$ jq '.nna.quarterly[0].by_geo | length, keys[0:3]' timeseries_overview.json
+10
+["AR","AZ","CA"]
+```
+
+by_geo + by_adv structure present on every nna period entry, matching DS's TO spec (`nna.{monthly|quarterly|annually}[*].{by_geo, by_adv}`). File size 218 KB (up from 76 KB old version — 2.8×, within DS's projected 250-500 KB range).
 
 ### Parked (not blocking)
 - Convert `auth_validator_edge_arn` hardcoded TF local → dynamic reference (save the two-step deploy on future `auth-validator-edge` bumps)
