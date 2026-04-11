@@ -2,8 +2,19 @@
 
 **Agent:** 0.7.0_AE_CloudOps
 **Date:** 2026-04-10
-**Status:** Prep only — no code committed, no deploys. Blocks on 0.4.0_DS_ClientPlatform `.004b` landing firm-partitioned `advisor_ownership.json` in S3.
-**Purpose:** Pre-scope the edge-side changes for `.004c` so I can move fast once unblocked.
+**Status:** **Code drafted in working tree, NOT committed.** Blocking on two conditions:
+  1. Andrew's ruling on the `7ae0ef6b` attribution incident (rewrite history vs annotate)
+  2. `.004b` first artifact landing at `s3://opal-data-bd/platinum/49financial/ownership_map.json` from the in-flight `bd-gold-layer-runner` job (DT polling)
+
+**Drafted (working-tree, uncommitted):**
+- `infra/aws/lambda-edge/auth-validator-edge/index.mjs` — +205 lines, v11 comment block, `@aws-sdk/client-s3` import, `matchResourceScopingPath`, `FIRM_BUCKET_MAP` (mirrored from shared-advisor-router), `ownershipMapCache` (60s TTL), `getOwnershipMap(firmId)` fetcher with schema-version check, `.004c` enforcement block after the `.004a` block, new `serverError` and `serviceUnavailable` response helpers
+- `infra/aws/lambda-edge/auth-validator-edge/package.json` — adds `@aws-sdk/client-s3` dep (will be marked `--external` by `build-nodejs-lambda.sh`, Lambda Node.js 20.x runtime provides it)
+- `infra/aws/terraform/portal-auth/iam.tf` — new `aws_iam_role_policy.lambda_edge_ownership_map` grants `s3:GetObject` on `arn:aws:s3:::opal-data-bd/platinum/*/ownership_map.json` (specific key pattern, not wildcard)
+- This file — updated with drafted-status + implementation details
+
+**Bundle size sanity check (bun build --minify):** 63.22 KB (vs 60.32 KB for `.004a` v10). Delta +2.9 KB, well under Lambda@Edge viewer-request 1 MB limit. 76 modules bundled, `@aws-sdk/*` packages marked external.
+
+**Syntax validation:** `bun build --target=node --format=esm --external @aws-sdk/client-secrets-manager --external @aws-sdk/client-s3 infra/aws/lambda-edge/auth-validator-edge/index.mjs` succeeds cleanly. No errors.
 
 ---
 
@@ -30,7 +41,7 @@ Rule: non-admin callers are allowed only if `{id}` is in the ownership map entry
 - D_00 is daily. Ownership changes propagate within D_00 cadence. Baking the map into the Lambda bundle means every ownership update requires a full .11.x deploy. Unacceptable ops overhead.
 
 **Why AWS SDK v3:**
-- Already know the exact S3 key (`opal-data-{firmId-aliased}/platinum/{firmId}/advisor_ownership.json`). Direct GetObject is the simplest viable read path.
+- Already know the exact S3 key (`opal-data-{firmId-aliased}/platinum/{firmId}/ownership_map.json`). Direct GetObject is the simplest viable read path.
 - Lambda@Edge Node.js 20.x provides `@aws-sdk/*` at runtime — marking it `external` in the bun build keeps bundle size identical to today's 60KB.
 - Existing Secrets Manager fetch (JWT public key) uses the same SDK-v3 pattern, so no new build-toolchain surface.
 
@@ -50,7 +61,7 @@ async function getOwnershipMap(firmId) {
   // shared-advisor-router's v4 bucket mapping so alias resolution is identical
   const bucket = FIRM_BUCKET_MAP[firmId] || firmId;
   const fullBucket = `opal-data-${bucket}`;
-  const key = `platinum/${firmId}/advisor_ownership.json`;
+  const key = `platinum/${firmId}/ownership_map.json`;
 
   const resp = await s3Client.send(new GetObjectCommand({ Bucket: fullBucket, Key: key }));
   const body = await resp.Body.transformToString();
@@ -157,7 +168,7 @@ resource "aws_iam_role_policy" "lambda_edge_ownership_map" {
       Effect   = "Allow"
       Action   = "s3:GetObject"
       Resource = [
-        "arn:aws:s3:::opal-data-bd/platinum/*/advisor_ownership.json",
+        "arn:aws:s3:::opal-data-bd/platinum/*/ownership_map.json",
         # Future firm buckets added here as onboarded
       ]
     }]
@@ -165,7 +176,7 @@ resource "aws_iam_role_policy" "lambda_edge_ownership_map" {
 }
 ```
 
-Only the specific key pattern. Not `opal-data-*` wildcard (violates least privilege per my role guidance). Not `platinum/**` (too broad — we only want the ownership map, not other platinum artifacts). The `platinum/*/advisor_ownership.json` shape covers all firm-partitioned ownership maps in that bucket.
+Only the specific key pattern. Not `opal-data-*` wildcard (violates least privilege per my role guidance). Not `platinum/**` (too broad — we only want the ownership map, not other platinum artifacts). The `platinum/*/ownership_map.json` shape covers all firm-partitioned ownership maps in that bucket.
 
 When new firm buckets are added (e.g., `opal-data-raymond-james`), this policy gets a new resource line. That's a one-line TF edit per firm onboarded.
 
@@ -252,10 +263,10 @@ Verified by inspection of `build-nodejs-lambda.sh` logic lines 166-181: any `@aw
 
 ## Order of operations once .004b lands
 
-1. Verify prerequisite: `aws s3 ls s3://opal-data-bd/platinum/49financial/advisor_ownership.json` returns non-empty, `aws s3 cp s3://.../advisor_ownership.json -` shows `schema_version: 1` and Chase + Travis entries populated
+1. Verify prerequisite: `aws s3 ls s3://opal-data-bd/platinum/49financial/ownership_map.json` returns non-empty, `aws s3 cp s3://.../ownership_map.json -` shows `schema_version: 1` and Chase + Travis entries populated
 2. Phase 1 compilers: `comp-routes trace getPlatinumAccountSummary`, `comp-routes trace getPlatinumClientSummary`, `comp-blast auth-validator-edge` (the new dep), `comp-transform` if I touch any portal field contracts (I shouldn't)
 3. Add `@aws-sdk/client-s3` to `auth-validator-edge/package.json`, run `bun install` in that dir
-4. Add IAM grant to `portal-auth/iam.tf` for `s3:GetObject` on `platinum/*/advisor_ownership.json`
+4. Add IAM grant to `portal-auth/iam.tf` for `s3:GetObject` on `platinum/*/ownership_map.json`
 5. Write the code per Decision 4 pseudocode + Decision 1 cache shape
 6. Commit source + TF change (one commit, both files)
 7. `unset MSYS_NO_PATHCONV && bash build-nodejs-lambda.sh portal-auth auth-validator-edge` (per the gotcha memory)
