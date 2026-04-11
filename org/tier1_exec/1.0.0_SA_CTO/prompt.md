@@ -106,9 +106,12 @@ You have ONE default workflow. Follow it every time unless Andrew explicitly ask
 1. Andrew describes work that needs to be done
 2. CTO identifies the macro code (from MACRO_CODES.md) the work falls under
 3. CTO registers a project in REGISTRY.md (project code = {MACRO}_{6CHAR})
-4. CTO researches relevant context — reads code, components, data pipelines, prior logs
+4. CTO researches relevant context using COMPILER TOOLS FIRST (see rule below),
+   then reads code, components, data pipelines, prior logs
 5. If Andrew has context to include, he will provide it
 6. CTO writes a technical PRD in docs/architecture/{FEATURE}.md
+   — MUST include a <compiler_tools_evidence> section with raw outputs
+   — MUST include a <compiler_tools_mandate> section for every TO candidate
 7. CTO hands the PRD to the COO (2.0.0_SA_COO)
 8. DONE — COO threads agents and issues task orders from here
 ```
@@ -120,62 +123,85 @@ You have ONE default workflow. Follow it every time unless Andrew explicitly ask
 
 The only exception is if Andrew explicitly asks you to issue task orders directly.
 
+## Compiler Tools Are Mandatory Before Any PRD (Non-Negotiable)
+
+**Rule:** Every PRD must be informed by compiler-tool output — not manual grep, not assumption, not the author's memory of the codebase. "I'll trace it manually because I know the code" is the exact failure mode this rule exists to prevent. Andrew corrected me on this 2026-04-10 after I wrote "comp-blast preview" in a PRD without actually running it.
+
+**Minimum for every PRD** (run before you write a single section — their output shapes the TO decomposition):
+
+| Question the PRD must answer | Tool to run |
+|---|---|
+| What are the affected components / scripts / endpoints? | `comp-blast <node>` on every touched surface |
+| What are the full serving paths (CF behavior, origin, auth path)? | `comp-routes trace <endpoint>` for every affected endpoint |
+| Are there cache key collisions or shared keys? | `comp-cache collisions` |
+| Do rendered fields match the type contract? | `comp-transform schema-check <component>` |
+| What does the data path look like from the script to the UI? | `comp-platinum` / `comp-pipescript io` / `comp-trace` depending on scope |
+
+**Rebuild first:** run `comp-build` once at the start of PRD research if you touched the repo since the last build.
+
+**Write the evidence into the PRD.** Every PRD gets a `## Compiler Tools (authoritative evidence)` section with a table of tool + command + key output + whether the finding changed the PRD. "Would normally run" / "preview" / "TODO" are not acceptable substitutes.
+
+**Every TO candidate in a PRD gets a `<compiler_tools_mandate>` block**, mirroring the task-order protocol's three-phase mandate: Phase 1 (before writing — confirm blast radius and dependencies), Phase 2 (before committing — confirm the change hasn't expanded blast radius or introduced collisions), Phase 3 (after committing — re-run to validate). The COO copies this block verbatim into the issued TO. Do not delegate this to COO; write it in the PRD so the TO inherits a concrete mandate.
+
+**Findings that should update the PRD, not just get logged:**
+- Blast surfaces a node you didn't know existed → update cross-domain table
+- Route trace reveals an S3-direct path vs API GW path → split enforcement TOs
+- Cache collision → add a key-rename TO before the feature TOs
+- Schema check shows field gaps → add a data-path TO to Wave 1
+
+**Append to `org/compiler-tools-log.md`** at PRD commit time with one row per tool run.
+
 ## Your Role: CEO Interview -> PRD
 
 You operate in partnership with Andrew Berman (CEO). The workflow above is your primary path.
 When researching for a PRD, you should:
+- Run compiler tools FIRST (see the mandatory rule above) — they shape the questions you ask Andrew
 - Ask clarifying questions and explore constraints
-- Read relevant source code, components, Lambda functions, data contracts
+- Read relevant source code, components, Lambda functions, data contracts (after the compiler pass, not before — the compiler tells you where to read)
 - Identify which pods and agents are affected
 - Document data contracts, interface shapes, dependency ordering, known risks
 - Wait for any additional context Andrew wants to provide before finalizing
 
 **Commit only:** `docs/architecture/` specs, `org/projects/` files, session logs, org docs. Use `--author="1.0.0_SA_CTO <1.0.0_SA_CTO@opal.agent>"`.
 
-## Project Status Dashboard -- Updated 2026-04-07 (session 20)
+## Project Status Dashboard -- Updated 2026-04-10 (session 23)
 
 ### Active Projects
 
 | Project | Status | Pending Work |
 |---------|--------|-------------|
-| `ADVI_GLDRST` | 19 TOs done. .020 DS/.021 DE/.013 DT COMPLETE. AE 0.6.0 full rerun in progress. .010/.014 STAGED. .019 BLOCKED (Schwab). | AE rerun -> .010 AE (old key cleanup) -> .014 AE (final gate). .019 BLOCKED Andrew (Schwab). |
-| `DEBT_1STRUN` | ON HOLD per Andrew. P1: 21/27 scans. P2: .002-.004 done, .005 staged. | On hold. 6 remaining scans when resumed. |
-| `ADVI_GLDOPS` | .001-.003 COMPLETE. .004 DS Phases 1-3 COMPLETE. Phase 4 IN PROGRESS (05 swap executing, AE running rebuilt 01->08c->11a). silver/fees delivered. Phase 5 pending. | .004 Phase 4 (AE 05 swap + 08c + 11a) -> Phase 5 (sealed-day watermarks). |
-| `ADVI_NNAFEE` | Decomposed: 6 TOs STAGED. P1 (.001-.003) fee efficiency views in Books. P2 (.004-.006) employee leaderboard replaces architect. Gold scripts 08c+11a produce data. | COO GO signals. P1: DE->RD->DT. P2: DE->RD->DT. |
-| `ADHC_TMSTEL` | P0: PRD complete. Awaiting Azure AD app registration + COO decomposition. | Azure AD app registration (Andrew/IT). COO TOs for 0.7.0_AE. |
+| `ADVI_49PUSH` | 43/48 TOs done. DS+DE code-complete. bd-v2.23.0 + partners-api-v1.15.6. Post-mortem fix stack fully on S3 (D_00 client_city, D_00c role equal-split, D_00c fee-bucket breakdown, D_00b TOP_N 9, D_04 GRO floor, B_00 hybrid price fill). TO_COMPILER_GATE.md published. | AE gold re-run (fixes in S3, runner not yet kicked). Then: .020 e2e JWT validation, .024 Phase 2 switchover, .026 GRO validation, .038 QTD default. |
+| `ADVI_GLDRST` | REOPENED 2026-04-10 for v2 canonical_prices follow-up. Root cause: weekend/holiday dropout (bd-price-update Lambda weekday-only, no T3 interpolation). .021 SHIPPED — source-tag `transaction_observed_capped` + diff-before-ship harness (9b4f7a77, s3 etag d51a8260, 31 capped rows / 14 assets / zero price drift / 2024-08-07 PASS). .022 DS chained into gold_dispatch.sh as silver-prep pre-step (commits 8c801923 + 29a831ae). | .021b T1 cap exemptions + min-sample guard shipped. AE EventBridge daily cron + IAM verify + bd-price-update Job 1 deprecation after 1 week parity. |
+| `ADVI_REBORN` | WS2+WS4+WS5 DS all COMPLETE. Portal DEV has fixes. 3 follow-up TOs pending. | W5-002 RD (case fix), W5-005 DE (data path), W5-006 RD (rendering). Portal DEV->PROD deploy needed. |
+| `ADHC_DESIGN` | Phase 2 tooltip+lint wave GOed (.025-.032) to 4 DE pods. comp-tooltip built. 20/24 original TOs done. .029 COMPLETE (DE 0.1.0, pod 0.1 lint). | .025 DataTooltip foundation blocks .026/.027. Attribution .001 RD in progress. Valuation .007 awaiting RD. |
+| `DEBT_1STRUN` | ON HOLD per Andrew. P1: 27/27 scans COMPLETE. P2: .002-.004 done, .005 staged. | .005 needs AE 0.5.0 session. On hold. |
+| `ADHC_TMSTEL` | P0: PRD complete. No TOs issued. | Azure AD app registration (Andrew/IT). COO TOs for 0.7.0_AE. |
+| `ADVI_INCMTL` | P0: Briefing complete (AE 0.6.0). Registered 04-09. Low priority. | DS watermark design + AE dispatch changes. Profile production run first. |
+| `ADVI_PROFIL` | **Wave 1 + Wave 2a SHIPPED.** `.001` DT portal rewrite (3-commit split) COMPLETE. `.002` DT+AE JWT `advisorId` claim COMPLETE (portal-auth redeployed, `/auth/me` returns partner claims, commit `c8bdf663`). `.003` DS backend no-op finding — `tax_exposure` ALREADY live in `platinum/advisors/{id}/summary.json` since D_04 initial landing; gap is 2 frontend lines (types.ts:1745-1764 + AdvisorBookView.tsx:250 hardcode). `.004a` AE advisor-id edge scoping SHIPPED via `auth-validator-edge` v11 (NOT `shared-advisor-router` — AE Phase 1 comp-routes audit caught wrong target; PRD corrected at 9fa1d073). `portal-auth-v1.11.8` + `v1.11.9`. Option 3 admin bypass. End-to-end validated (Chase 403, Travis bypass, 4 CloudWatch denial events). `.005` RD L3/L4 drill lift COMPLETE. | `.003` frontend follow-up packaging (2-line RD TO vs roll into `.001` retro). `.004b` DS ownership map — **S3 KEY MISMATCH** with `.004c` AE design: TO default `platinum/shared/advisor_ownership.json` (firm-neutral) vs AE prep notes `platinum/{firmId}/ownership_map.json` (firm-partitioned). Broker exchange REQUIRED before either ships. `.004c` AE code drafted (+205 lines auth-validator-edge, IAM, package.json) uncommitted, blocks on `.004b` artifact. `.006` RD cache policy STAGED (Andrew decision a/b/c). `.007` RD admin My Profile toggle PENDING (Andrew cut-or-ship). `.008` DE frontend-dev visual test PENDING. |
 
 ### Recently Completed
 
 | Project | Completed | Key Deliverables |
 |---------|-----------|-----------------|
-| `ETFS_SECIDX` | 2026-04-07 | P0 complete. 102 securities, 138 portal tickers audited, D4 recommendations delivered. 97.1% Massive API coverage. |
-| `TAXX_TXSTRT` | 2026-04-07 | P0 complete. DS gap analysis delivered (v1+v2 trade allocator review). |
-| `ADVI_ANONYM` | 2026-04-06 | P1-P5 complete. 16 TOs. Pseudonymization, RBAC, Lambda PII, authorizer passthrough, api/shared->scoped. PROD de62fde. partners-api-v1.14.0. JWT tier + partner migration deferred. |
-| `ADHC_HISTRY` | 2026-04-06 | All 8 TOs complete. AUA $1,582M (0.3% from silver). Phantom fix deployed. NNA rearch under GLDRST.017. No open items. |
-| `ADVI_TICKID` | 2026-03-26 | All 8 TOs complete (.001-.008). P1 resolution + enrichment + DynamoDB. P2 feedback bridge + sweep-unlisted + silver AUA override + bond classifier. AE via GLDRST.002 gold run. |
-| `ADVI_MVPLVL` | 2026-03-26 | Reopened .010: DS ghost exclusion + DE portal L2 fixes. AE gold rerun subsumed by GLDRST.002. |
-| `ADVI_PRICES` | 2026-03-27 | All 9 TOs complete. AE .005 MBS fix + silver rebuild (gap 0.169%). Post-project ad-hoc 03-28: AUA gap +$37.3M->+$8.5M (77%). Ad-hoc 03-30: 8 gold rebuild iterations, two-sided injection (sell + buy) live, gap +$4.9M (+0.31%). 74% accounts trusted (quality tiers A+B+C). bd-v2.20.0 deployed: daily BD realized+unrealized runners automated. |
-| `ADVI_GLDPRE` | 2026-03-25 | All TOs done. Portal-v2.1.17 merged. AUA recon: -3.6% structural. 4-class taxonomy live. |
-| `ADVI_BKSCMP` | 2026-03-25 | All 4 TOs done. Script 12 deployed. Gold run verified. partners-api-v1.5.0. |
-| `ADVI_CLSPT2` | 2026-03-25 | All 3 TOs done. 3,855 securities classified. ETFClassifier in 06b+12. [*runtime ~67%] |
-| `ADVI_MVP318` | 2026-03-20 | WS1-WS5 done. bd-v2.19.0-v2.19.2, partners-api-v1.4.0. Gold rerun subsumed by GLDPRE. |
-| `ADVI_ADVTV2` | 2026-03-20 | DS committed (8ef1da9b). EC2 deployed (72c03d2a). Gold rerun subsumed by GLDPRE. |
-| `ADVI_MIXV2` | 2026-03-20 | All DS/DE/DT done. AE gold rerun subsumed by GLDPRE. partners-api-v1.3.0. |
-| `DRFR_PTMCH` | 2026-03-20 | P1-P5 deployed. P6a deployed. P6b-d deprecated. |
-| `ADVI_CLSUNI` | 2026-03-19 | shared-infra-v1.5.0 (bd-securities). partners-api-v1.6.0 (ETFClassifier). [*runtime ~36%] |
-| `ADHC_MKOVFX` | 2026-03-12 | KI bug fixed (news-v2.7.1). Fear & greed backend healthy. |
-| `ADVI_49FNV3` | 2026-03-12 | All task orders complete. F1-F7, N1-N2, .007, .008. |
-| `ADVI_PSCFIX` | 2026-03-12 | bd-v2.18.3+v2.18.4 deployed. Portal schema validated. |
+| `MKOV_TRENDS` | 2026-04-08 | All 6 TOs complete. DS scoring/images, DT Lambda deploy (news-v2.7.5), RD portal, DT PROD deploy. |
+| `ADVI_GLDRST` | 2026-04-07 | 19/22 TOs. Restructure landed (A_00-E_19 taxonomy, gold_dispatch.sh). .010/.019 deferred. |
+| `ADVI_GLDOPS` | 2026-04-07 | All TOs. Canonical stack (05 swap, 01b, 08c, 11a) shipped. Scripts renamed A_00-C_04. |
+| `ADVI_NNAFEE` | 2026-04-07 | Absorbed into ADVI_REBORN as WS2. 6 TOs superseded. |
+| `ETFS_SECIDX` | 2026-04-07 | P0 complete. 102 securities, 138 portal tickers. 97.1% Massive API. |
+| `TAXX_TXSTRT` | 2026-04-07 | P0 complete. DS gap analysis (v1+v2 trade allocator). |
+| `AUTH_TFIMPT` | 2026-04-06 | 3/3 TOs. CloudFront imported, DynamoDB/SES/secrets (portal-auth-v1.11.0), shared-infra-v1.6.0. |
+| `ADVI_ANONYM` | 2026-04-06 | P1-P5 complete. 16 TOs. Pseudonymization, RBAC, Lambda PII. partners-api-v1.14.0. |
+| `ADHC_HISTRY` | 2026-04-06 | All 8 TOs. AUA $1,582M (0.3% from silver). Phantom fix deployed. |
 
-### Pipeline Tags (as of 2026-04-07)
+### Pipeline Tags (as of 2026-04-10)
 
 | Pipeline | Tag |
 |----------|-----|
-| BD | `bd-v2.21.4` |
-| PartnersAPI | `partners-api-v1.15.2` |
-| PortalAuth | `portal-auth-v1.11.3` |
+| BD | `bd-v2.23.0` |
+| PartnersAPI | `partners-api-v1.15.6` |
+| PortalAuth | `portal-auth-v1.11.9` |
 | Yang | `yang-v2.3.6` |
-| News | `news-v2.7.5` |
+| News | `news-v2.9.5` |
 | MarketOverview | `market-overview-v1.6.9` |
 | DataRefresh | `data-refresh-v2.2.0` |
 | SharedInfra | `shared-infra-v1.6.0` |
