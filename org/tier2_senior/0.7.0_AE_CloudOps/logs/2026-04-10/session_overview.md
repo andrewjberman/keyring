@@ -327,17 +327,83 @@ by_geo + by_adv structure present on every nna period entry, matching DS's TO sp
 - Investigate whether `/auth/*` CloudFront behavior absence is intentional or drift (DT flagged during .004a login flow)
 - `.004c` TO file still dirty in working tree (DT-authored architectural-principle block edits I never made) — DT to commit under DT author
 
-### Blockers (none for me)
-- `.004c` TO status flip to `complete` blocks only on DT curl matrix results + CloudWatch structured event verification. Both can happen tomorrow morning if DT is offline tonight.
+### Blockers
+None. Both `.004a` and `.004c` fully validated and closed.
 
 ---
 
-## Next steps
+## Session closed — 22:52 UTC / 6:52 PM EDT
 
-1. **When SSM command completes:** Verify `platinum/firm/timeseries_overview.json` LastModified >= 22:14 UTC, spot-check D_04's new `by_geo`/`by_adv` structure via `jq '.nna.quarterly[0].by_geo'`. Confirm runner shut down cleanly. Message DT + DS that both artifacts are live.
-2. **When .004c propagation settles (~23:00 UTC):** DT fires 8-row curl matrix. I query CloudWatch for `advisor_scoping_denied rule=004c`, `advisor_not_in_ownership_map rule=004c`, and any `ownership_map_fetch_failed` or `ownership_map_schema_mismatch` events.
-3. **Post-validation:** Flip `.004c` TO to `complete`. Bump `pipeline_inventory.xml` auth-validator-edge version from `:11` to `:12`. Append compiler-tools-log entry for `.004c` verification.
-4. **Future cleanup (separate TO):** Convert `auth_validator_edge_arn` TF local to dynamic. Small infra cleanup pass, not blocking anything.
+All items that were "in progress" at the first session-log write (22:48 UTC) landed within the following few minutes:
+
+| Item | Landed at | Verified via |
+|---|---|---|
+| Group D SSM command completion | 02:41:11 UTC | SSM `Success` exit 0, `timeseries_overview.json` LastModified `2026-04-11T02:41:11Z` 218 KB |
+| D_04 `by_geo`/`by_adv` structure | same | `jq '.nna.quarterly[0]'` showed both keys present, 10 state-level entries (`AR, AZ, CA, ...`) |
+| `.004c` CloudFront propagation | ~02:41:23 UTC | DT's first curl landed on `auth-validator-edge:12` without stale-behavior window (12 seconds after D_04 finished, no retry needed) |
+| DT `.004c` curl matrix | 02:41:23-02:41:40 UTC | 8/8 GREEN on first attempt, full matrix in commit `05b14874` session log section |
+| CloudWatch `.004c` denial events | 02:41:32 + 02:41:40 UTC | 2 `advisor_scoping_denied rule=004c` events retrieved via PowerShell wrapper, all fields present |
+| `.004c` TO flip to `complete` | commit `05b14874` | `<status>complete</status>` |
+| `pipeline_inventory.xml` version bump | commit `05b14874` | auth-validator-edge references all `:11` → `:12` |
+| `compiler-tools-log.md` append | commit `05b14874` | `.004c` entry |
+| Runner shutdown | ~02:46 UTC | `aws ec2 describe-instances` → state `stopped`, transition reason `User initiated` (from my `sudo shutdown -h +2` in the SSM command) |
+| DT notification of closeout | 02:46:52 UTC | MCP message `20260411T024652Z_0.7.0_AE_CloudOps_.004c_CLOSED` |
+
+### Final deployment tag set (4 tags pushed today)
+
+| Tag | Commit | Module state after apply |
+|---|---|---|
+| `portal-auth-v1.11.8` | `9208c784` + `be25dc9b` + `58a62b94` | `auth-validator-edge` v11 published (but not yet bound to CF) |
+| `portal-auth-v1.11.9` | `95692b66` + `dfd4f7ca` | CF EVTSA9VEHNZVH bound to `auth-validator-edge:11` — `.004a` live |
+| `portal-auth-v1.11.10` | `5a202107` + `a32027e7` + `0a20c3bc` | `auth-validator-edge` v12 published with `.004c` code + new IAM policy `lambda-edge-ownership-map-read` |
+| `portal-auth-v1.11.11` | `00be0440` + `2ba67e44` | CF EVTSA9VEHNZVH bound to `auth-validator-edge:12` — `.004c` live |
+
+### ADVI_PROFIL project state at session close
+
+9 of 10 TOs complete or validated. Only `.008` (DE visual baseline pass) still in-flight and not gating anything.
+
+| TO | Status | Notes |
+|---|---|---|
+| `.001` | complete | RD portal rewrite |
+| `.002` | complete | DT JWT advisor claim (portal-auth-v1.11.7) |
+| `.003` | complete | DS tax exposure frontend wiring |
+| `.004a` | complete | AE 0.7.0 advisor-id scoping (portal-auth-v1.11.8 + v1.11.9) |
+| `.004b` | complete | DS ownership map (code commit + SSM manual Group D run to materialize artifact) |
+| `.004c` | complete | AE 0.7.0 account/relationship scoping (portal-auth-v1.11.10 + v1.11.11) |
+| `.005` | complete | RD client drilldown lift |
+| `.006` | complete | RD client cache policy |
+| `.007` | complete | RD admin My Profile toggle (single-gate per Andrew's Option 3 simplification) |
+| `.008` | in-flight | DE frontend-dev visual test pass — not blocking anything |
+
+### Final instance state verification
+
+```
+$ aws ec2 describe-instances --instance-ids i-01003b035d2988dfb \
+    --query 'Reservations[].Instances[].[State.Name,StateTransitionReason]'
+stopped    User initiated
+```
+
+Runner is `stopped`, no compute burn beyond the EBS volume. Clean exit.
+
+### Andrew correction mid-session
+
+Flagged my use of "idle" in the instance-state summary — correct EC2 terminology is `stopped` or `running` (no "idle" state; an idle EC2 instance is still `running`). Corrected in real time. Noting here for future drafts: when reporting EC2 state back, use the exact AWS state name (`stopped`, `running`, `pending`, `stopping`, `terminated`, etc.) — don't paraphrase with words like "idle" that imply a different meaning.
+
+### Open follow-ups (parked, not blocking)
+
+1. **Convert `auth_validator_edge_arn` TF local to dynamic reference** — `cloudfront-distribution.tf:59` hardcodes the version, forces two-step deploy on every `auth-validator-edge` bump. Parallel to how `shared_advisor_router_arn` already uses `qualified_arn`. Would eliminate the two-step deploy gotcha for future `.004d`, `.005a`, etc. waves. Low priority, small infra cleanup TO.
+2. **Investigate whether `/auth/*` CloudFront behavior absence is intentional** — DT flagged during `.004a` that login traffic bypasses CF and hits API GW directly. Could be intentional (avoid credential cache pollution) or drift. Worth confirming.
+3. **Three `.004c` event types not exercised** — `advisor_not_in_ownership_map`, `ownership_map_schema_mismatch`, `ownership_map_fetch_failed`. Require synthetic test setup. Future robustness pass, not blocking.
+4. **CTO PRD §5.1 route-map rows** — `getPlatinumAdvisorTimeseries` and `getPlatinumAccountSummary` rows left with "Edge Auth: YES (shared-advisor-router)" as topology accuracy. CTO acknowledged the framing is right; I suggested a future column rename to "Edge Topology" for semantic clarity. Zero priority.
+
+### Next session entry points
+
+If I start a new session and `.008` is still in-flight or something new has fired, the inbox watcher will deliver any pending messages. The main things to check at startup (per AE start protocol):
+- `git tag -l "portal-auth-v*" | sort -V | tail -5` — confirm `v1.11.11` is still the latest
+- `aws s3 ls s3://opal-data-bd/platinum/49financial/ownership_map.json` — confirm the ownership map still refreshes (D_00 runs daily via `bd-gold-trigger`)
+- CloudWatch `/aws/lambda/us-east-1.auth-validator-edge` for any new `rule=004c` events — ops signal if real users start hitting the gate
+
+Nothing outstanding at session close.
 
 ---
 
