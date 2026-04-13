@@ -1,0 +1,21 @@
+{
+  "project_code": "ADVI_OFFICE",
+  "macro_code": "ADVI",
+  "name": "Office Analytics for Segment Analytics",
+  "description": "Add OFC (Office) as a third cohort dimension in the Distribution tab alongside GEO and ADV. Slices AUA and NNA by 49 Financial office using an architect-led dim derived from the Lusha/manual-override office mapping cache. L0: office donut (10 offices + Unassigned). L1: top-9 advisors within an office. NNA: per-office period NNA. OFC is intended to ultimately replace ADV after stakeholder validation.",
+  "prds": [
+    {
+      "path": "docs/architecture/ADVI_OFFICE_PRD.md",
+      "label": "CTO PRD -- Office dim, D_01 OFC view, frontend wave decomposition",
+      "date": "2026-04-13"
+    }
+  ],
+  "status": "active",
+  "phase": "PRD complete. Awaiting COO decomposition into Wave 1 (DS) + Wave 2 (DE) + Wave 3 (AE) + Wave 4 (DT) task orders.",
+  "blocking": "COO task order issuance. AE must upload dim_advisor_office.csv to S3 before DS runs D_01.",
+  "created": "2026-04-13",
+  "pods": ["0.4", "0.6"],
+  "pipeline": "bd-pipeline + portal",
+  "thread_counter": 0,
+  "threads": []
+}
