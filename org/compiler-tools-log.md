@@ -141,3 +141,10 @@ Results: PASS | PARTIAL | FAIL | SKIPPED | WARN
 - `eslint src/pages/AdvisorIntelligence/tabs/AdvisorsTab.tsx` — 0 errors.
 - Grep `?? data` post-edit — PASS. Zero silent fallbacks remain.
 - Four-cell audit (Travis Penfield) — 3/4 cells match; 4th deviates from TO ceiling (actual 365.55M vs TO <=341M). Structural fix correct; data expectation disagreement raised with DS.
+
+## 2026-04-13 — 0.4.0_DE_ClientPlatform — Advisor profile/book input mapping audit
+- comp-platinum page AdvisorPublicProfile / AdvisorBookView / ClientDetailPage — full-stack traces captured.
+- comp-platinum tab-audit — confirmed origin/auth/transforms per tab fetch.
+- comp-transform schema-check on 7 surfaces — flagged 12/13 unused fields on AdvisorDrilldownSummary, 13/19 on PlatinumAdvisorSummary (with TYPE-DRIFT noted), 6/13 on PlatinumClientSummary, 1/6 on PlatinumAccountSummary.
+- comp-transform fields on AdvisorBookView/TaxCostBasisPanel/CanonicalBookView — confirmed which props feed which UI slots.
+- Output: docs/audits/advisor-profile-book-input-mapping-2026-04-13.md (DE column complete; awaiting RD source-of-truth column).
