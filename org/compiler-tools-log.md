@@ -107,3 +107,17 @@ Results: PASS | PARTIAL | FAIL | SKIPPED | WARN
 - `comp-blast AdvisorIntelligence.tsx` — PASS. 3 downstream (getPlatinumPartnerAnalytics + getFirmLeaderboard / opal-partners-data). Page-root state moves are scoped.
 - `comp-transform schema-check PartnerAnalytics` — PASS. 4/7 rendered, no waste. Prop-shape change safe.
 - Frontend-only scope confirmed across all three waves. No Lambda/gold/auth crossing.
+
+## 2026-04-13 — 0.4.0_DE_ClientPlatform — ADVI_HDRSPL.001 implementation
+- Grep `portal/src/components/` primitives — PASS. Existing pattern: cva + tailwind + cn(clsx+twMerge). Created `portal/src/components/ui/` subdir to host the primitive.
+- In-panel control metric recon: `px-3 py-1.5 text-xs rounded-md` with selected-state `bg-[hsl(var(--primary))] text-white`. Matched exactly in PageSurfaceControl.
+- `tsc --noEmit` — clean.
+- `eslint` on `PageSurfaceControl.tsx` + demo — 0 errors, 0 warnings.
+- `/frontend-dev` WCAG numeric — OUTSTANDING (requires dev-server + demo route).
+
+## 2026-04-13 — 0.4.0_DE_ClientPlatform — ADVI_HDRSPL.002 + .003 implementation (bundled)
+- Grep `timeWindow`/`granularity`/`selectedFirmId` across `portal/src/pages/AdvisorIntelligence/` — confirmed page-root ownership (AdvisorIntelligence.tsx:144,156 per CTO PRD).
+- Read `PartnerAnalytics.tsx` + `DistributionTab.tsx` prop usage — verified scoped internalization is safe.
+- `tsc --noEmit` — clean.
+- `eslint` on 3 changed files (AdvisorIntelligence.tsx, PartnerAnalytics.tsx, DistributionTab.tsx) — 0 errors, 10 pre-existing warnings (react-hooks/set-state-in-effect; same count as pre-change).
+- `/frontend-dev` closed-loop pass — OUTSTANDING (requires submodule bump to 4cb34a2).
