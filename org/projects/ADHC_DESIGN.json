@@ -11,8 +11,8 @@
     }
   ],
   "status": "active",
-  "phase": "20/24 original TOs COMPLETE. Phase 2 tooltip+lint wave activated: .025-.032 (8 TOs) GOed to 4 DE pods. comp-tooltip compiler tool built for migration audit. .025 foundation in progress (0.4.0_DE). Lint TOs (.029-.032) running in parallel. Attribution (.001/.015/.024) + Valuation (.007) still staged.",
-  "blocking": ".025 DataTooltip component blocks .026/.027 tooltip migration. .026/.027 block .028 final audit. Attribution .001 in progress (RD). Valuation .007 awaiting RD.",
+  "phase": "20/24 original TOs COMPLETE. Phase 2 pod 0.4 update (2026-04-13 reconciliation): .025 tooltip foundation COMPLETE-IN-FACT (pilot migrated, DataTooltip canonical). .028 DistributionTab Variant E cleanup + lint-guard KEEP (DE picks up after W6-002/HDRSPL). .032 AdvisorIntelligence lint cleanup KEEP (~200 ESLint warnings, parallelizable). Attribution (.001/.015/.024) + Valuation (.007) still staged — agents not LIVE at reconciliation, carried forward.",
+  "blocking": "Pod 0.4: .028 + .032 queued after W6-002 validation. Attribution .001/.015/.024 (0.2.2_RD) + Valuation .007 (0.2.4_RD) awaiting those RD sessions. Pods 0.1/0.2/0.3 Phase 2 TOs COMPLETE (from prior sessions).",
   "created": "2026-04-07",
   "pods": ["0.1", "0.2", "0.3", "0.4"],
   "pipeline": "portal",
