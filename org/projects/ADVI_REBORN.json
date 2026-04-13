@@ -21,8 +21,8 @@
     }
   ],
   "status": "active",
-  "phase": "Near-closure post 2026-04-13 cross-org reconciliation (Andrew-directed, CTO memo synthesis). 9 open TOs retired: W1-005/W2-003/W3-003/W3-005/W4-002 DEPRECATED (superseded by ADVI_PROFIL rewrite + comp-* tool suite); W5-005 DE + W6-001 DS COMPLETE-IN-FACT (d2e78631 / 87557c33); W1-003 AE SUPERSEDED by GLDRST.014; W5-002/W5-006 RD DEPRECATED provisional (RD not LIVE at reconciliation, may re-open). W6-002 DE is the only genuine KEEP — code landed portal DEV bf475f8, 3/4 Travis audit cells match, the 4th (Fee-Paying + Implementor off) shows 365.55M vs expected <=341M and has been flagged back to DS for revalidation.",
-  "blocking": "ADVI_REBORN.W6-002 final validation (Travis Penfield 4th audit cell: 365.55M vs <=341M expected) — DS revalidation pending (possible D_04 emit mismatch between artifact invariant and DE math). Project can close after W6-002 validation lands + portal DEV->PROD deploy. No other open items."
+  "phase": "ALL TOs COMPLETE post 2026-04-13 cross-org reconciliation + W6-002 validation. 10 TOs retired in reconciliation close-out (DEPRECATED/SUPERSEDED/COMPLETE-IN-FACT). W6-002 DE VALIDATED: code bf475f8 fixed the (data[feeView] ?? data) silent fallback; DS confirmed 365.55M is correct role-attributed Travis value (firm-level fee_breakdown is dedup, role sums double-count multi-role accounts — same semantics as total_aua). Ordering invariants hold. No W6-003 needed. Only remaining item is portal DEV->PROD deploy.",
+  "blocking": "Portal DEV->PROD deploy (DT) of the bf475f8 Advisors tab fix. Project can close on deploy. Provisional RD W5-002/W5-006 flips may re-open if 0.4.2_RD disagrees on next session."
   "created": "2026-04-07",
   "pods": ["0.4", "0.6"],
   "pipeline": "bd-pipeline",
