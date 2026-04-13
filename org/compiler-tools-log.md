@@ -93,3 +93,11 @@ Results: PASS | PARTIAL | FAIL | SKIPPED | WARN
 - `comp-blast DistributionTab.tsx` — PASS. 6 downstream nodes; endpoints getPlatinumCumulativeChart / getPlatinumAdvisorNnaClients / getTimeseriesOverview via opal-partners-data Lambda. Frontend-only fix confirmed — no Lambda/gold-script crossing.
 - `comp-transform schema-check DistributionTab` — PASS. All rendered fields match response types. 12/17 cumulative-chart fields unused (unrelated to fix; segments path is from getTimeseriesOverview -> partner_analytics_monthly.json).
 - Re-verified CTO PRD evidence block before TO issuance; no skipped compiler runs.
+
+## 2026-04-13 — 0.4.0_DE_ClientPlatform — ADVI_OTHDED.001 implementation
+- `comp-transform schema-check DistributionTab` — PASS. Rendered field set unchanged by the sentinel-regex + multi-Other merge edit.
+- Raw S3 inspect `s3://opal-data-bd/platinum/firm/partner_analytics_monthly.json` — PASS. 28 states emit `other_{state}` (al ar az ca co fl ga ia il ks la md mi mn mo ms nc nj ny oh ok or pa sc tn tx va wa). TX: 10 cities, `other_tx` AUA $416,516,783.03 / 1,795 acct (matches TO).
+- ADV `other_{architect}` probe — NOT EMITTED. D_01 currently does not produce that pattern on the architect path; sentinel regex is forward-compatible if it ever does. Acceptance criterion #3 → N/A (documented in session log).
+- `comp-blast DistributionTab.tsx` — PASS. No new downstream impact.
+- `tsc --noEmit` — clean.
+- `eslint DistributionTab.tsx` — 0 errors, 10 warnings (all pre-existing `react-hooks/set-state-in-effect`, unrelated).
