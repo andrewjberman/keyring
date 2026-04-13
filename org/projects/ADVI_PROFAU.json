@@ -1,0 +1,17 @@
+{
+  "project_code": "ADVI_PROFAU",
+  "macro_code": "ADVI",
+  "name": "Advisor Profile + Book Data Gap Audit",
+  "description": "Number-tie audit on 2026-04-13 surfaced 6 backend data gaps on AdvisorPublicProfile + AdvisorBookView: (1) L2 book-level capital gains / cost basis aggregates; (2) per-client is_fee_paying flag on AdvisorClient; (3) fee_earning_aua vs sum(role_breakdown[role].fee_paying.aua) canonical reconciliation (arose from W6-002 allChecked fix); (4) PlatinumClientSummary.fee_summary declared but never rendered (live or stale?); (5) PlatinumAccountSummary.total_market_value declared but never rendered; (6) type drift on PlatinumAdvisorSummary (19 flat fields declared vs {book, tax_exposure, mix_periods} wrappers actually returned). Single DS audit TO produces a structured response document; implementation TOs spawn from that response per-gap.",
+  "prds": [
+    {"path": "docs/audits/advisor-profile-book-input-mapping-2026-04-13.md", "label": "DE+RD joint audit doc — input/source mapping across Profile + Book L2/L3/L4", "date": "2026-04-13"}
+  ],
+  "status": "active",
+  "phase": "P0: audit doc complete (DE column c2efa4a7). RD column in flight, parallel. DS audit TO pending COO authoring.",
+  "blocking": "COO authors and issues `ADVI_PROFAU.001.ds-profile-book-data-gap-audit.md` to 0.4.0_DS.",
+  "created": "2026-04-13",
+  "pods": ["0.4"],
+  "pipeline": "bd-pipeline",
+  "thread_counter": 0,
+  "threads": []
+}

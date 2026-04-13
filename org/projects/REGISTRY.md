@@ -16,15 +16,17 @@ the surface area; the project code identifies the specific initiative.
 
 | Project Code | Macro | Project Name | Phase | Pods | Blocking | PRDs |
 |---|---|---|---|---|---|---|
-| `DEBT_1STRUN` | `DEBT` | First Technical Debt Sweep | P1: 27/27 scans COMPLETE. P2: .002-.004 done, .005 staged (IAM/DynamoDB). | 0.1-0.4, 0.5-0.7 | .005 needs AE 0.5.0 session. | — |
-| `ADVI_REBORN` | `ADVI` | Advisor Intelligence Full Integration | WS2 COMPLETE. WS4: DS+RD done, DE STAGED. WS5: 4 DS TOs COMPLETE. 3 follow-up TOs pending (W5-002 RD, W5-005 DE, W5-006 RD). Portal DEV->PROD deploy done (2613b7e). | 0.4, 0.6 | W5-001 NNA fix needs AE gold re-run for timeseries_chart.json. | ADVI_REBORN_PRD.md, ADVI_NNAFEE_FEE_EFFICIENCY_VIEWS.md |
-| `ADHC_DESIGN` | `ADHC` | Portal Design Normalization | 20/24 original TOs done. Phase 2 (.025-.032): pods 0.1/0.2/0.3 COMPLETE (.026/.027/.029/.030/.031). Pod 0.4 PENDING (.025/.028/.032) -- DE 0.4.0 not registered. Attribution .001/.015/.024 staged. Valuation .007 staged. | 0.1-0.4 | Pod 0.4 DE spawn needed for .025/.028/.032. Attribution RD pending. Valuation RD pending. | PORTAL_DESIGN_NORMALIZATION_AND_COMPILER_TOOLS.md |
-| `ADHC_TMSTEL` | `ADHC` | Teams Telemetry MCP Server | P0: PRD complete. Awaiting Azure AD app registration + COO decomposition. | 0.7 | Azure AD app registration (Andrew/IT). COO TOs. | ADHC_TMSTEL_PRD.md |
-| `ADVI_49PUSH` | `ADVI` | Platinum Serving Layer -- 49F Push | 43/48 TOs done. DS+DE code-complete. bd-v2.23.0 + partners-api-v1.15.6. Post-mortem fix stack on S3 (D_00 client_city, D_00c role equal-split, D_00c fee-bucket breakdown, D_00b TOP_N 9, D_04 GRO floor, B_00 hybrid price fill). TO_COMPILER_GATE.md published. | 0.4, 0.6, 0.7 | AE gold re-run (fixes on S3, runner not yet kicked). Then: .020 e2e JWT validation, .024 Phase 2 switchover, .026 GRO validation, .038 QTD default. | ADVI_49PUSH_P1-P5_PRD.md |
-| `ADVI_INCMTL` | `ADVI` | Gold Pipeline True Incremental Processing | P0: Briefing complete (AE 0.6.0). Registered 04-09. Low priority. | 0.4, 0.6 | Production per-script timing profile. DS watermark design. AE dispatch changes. | GOLD_PIPELINE_INCREMENTAL_BRIEFING.md |
-| `ADVI_GLDRST` | `ADVI` | BD Gold Layer S3 Restructure (REOPENED for v2 canonical_prices follow-up) | REOPENED 2026-04-10. Original restructure 19/22 done. .021 SHIPPED (v2 source-tag + diff-before-ship, 9b4f7a77). .022 STAGED (v2 silver-prep in gold_dispatch + AE brief). | 0.4, 0.6 | DS .022 silver-prep chain. Then AE EventBridge daily cron + IAM verify + bd-price-update Job 1 deprecation. | GOLD_LAYER_RESTRUCTURE_PROPOSAL.md + ... |
-| `ADVI_PROFIL` | `ADVI` | Advisor Profile + Book Architecture | 9/10 COMPLETE. All waves shipped, `.004c` E2E validated 8/8 green (2026-04-11 02:41 UTC). Portal DEV chain 3e8cc3f→65e411c→36bf0fd→40e6208→ba90c30. Edge: portal-auth-v1.11.8→v1.11.11. Live artifact at `platinum/49financial/ownership_map.json` (162 advisors). | 0.4, 0.7 | `.008` DE `/frontend-dev` visual test only. Portal DEV→PROD merged + deployed (portal-v2.1.39, commit d2e78631). Nothing gates on Andrew. | ADVI_PROFIL_PRD.md + RD briefing |
+| `ADHC_DESIGN` | `ADHC` | Portal Design Normalization | Pods 0.1/0.2/0.3/0.4 Phase 2 COMPLETE. .028 (3096108) + .032 (f3274f3) shipped 2026-04-13; .025 COMPLETE-IN-FACT. Attribution .001/.015/.024 + Valuation .007 still staged for their RD agents. Backlog: .033 react-hooks/set-state-in-effect refactor (16 warnings, low priority). | 0.2, 0.4 | Attribution RD (0.2.2) + Valuation RD (0.2.4) pickup on next registration. | PORTAL_DESIGN_NORMALIZATION_AND_COMPILER_TOOLS.md |
+| `ADVI_PROFAU` | `ADVI` | Advisor Profile + Book Data Gap Audit | P0: audit doc complete (DE column c2efa4a7). 6 backend data gaps surfaced by today's number-tie audit. Single DS audit TO pending COO authoring; implementation TOs spawn from DS response. | 0.4 | COO authors `ADVI_PROFAU.001.ds-profile-book-data-gap-audit.md` → 0.4.0_DS. | advisor-profile-book-input-mapping-2026-04-13.md |
+
 ---
+
+## Inactive / On Hold
+
+| Project Code | Macro | Project Name | Held Since | Reason |
+|---|---|---|---|---|
+| `ADHC_TMSTEL` | `ADHC` | Teams Telemetry MCP Server | 2026-04-13 | Awaiting Azure AD app registration (Andrew/IT). Reactivate when credentials are available. |
+| `ADVI_INCMTL` | `ADVI` | Gold Pipeline True Incremental Processing | 2026-04-13 | Awaiting production per-script timing profile (AE 0.6.0). Low priority. |
 
 ---
 
@@ -46,6 +48,13 @@ session log. Performance baseline: CLSUNI ~36% unedited, CLSPT2 ~67% unedited.
 | `ADVI_GLDOPS` | `ADVI` | Gold Layer Operations: Data Freshness + Market Growth | 2026-04-07 | All TOs complete. Superseded by operational state. Canonical stack (05 swap, 01b fees, 08c, 11a) shipped. Scripts renamed A_00-C_04. silver/fees delivered. |
 | `ETFS_SECIDX` | `ETFS` | ETF Securities & Index Inventory Assessment | 2026-04-07 | P0 complete. 102 securities, 138 portal tickers audited, D4 recommendations delivered. 97.1% Massive API coverage. |
 | `TAXX_TXSTRT` | `TAXX` | Tax SMA Trade Allocation Strategy | 2026-04-07 | P0 complete. DS gap analysis delivered (v1+v2 trade allocator review). |
+| `ADVI_REBORN` | `ADVI` | Advisor Intelligence Full Integration | 2026-04-13 | All waves complete. W6-002 allChecked early-return fix shipped `9f6faf9`, PROD via `4575a1c`. Reconciliation retired 10 TOs (5 DEPRECATED, 2 COMPLETE-IN-FACT, 1 SUPERSEDED by GLDRST, 2 provisional RD DEPRECATED). |
+| `ADVI_OTHDED` | `ADVI` | Distribution Tab Dual-Other Dedupe | 2026-04-13 | Frontend enforceTop9Other regex fix shipped `801349d`, PROD via `4575a1c`. Eliminates dual-Other in city/client drills. |
+| `ADVI_HDRSPL` | `ADVI` | ADVI Header Split + PageSurfaceControl Primitive | 2026-04-13 | All 3 waves complete. Primitive `2b5b0ec`, header restructure + Segment Analytics local toggles `4cb34a2`, PROD via `4575a1c`. Reusable high-contrast control primitive established for silver-bg pages. |
+| `DEBT_1STRUN` | `DEBT` | First Technical Debt Sweep | 2026-04-13 | P1 27/27 scans + P2 .002-.005 complete (HEAD 66af3ad5). 4 Dynamo + 7 IAM imported, 3 TF modules on S3 backend, EC2 manifest synced. Dynamo coverage 47→60%, IAM 49→58%. Residuals (non-blocking): 4 IAM roles flagged for ownership, ec2-auto-shutdown-enforcer drift, 9 EC2 manifest schema gaps, test-Lambda deletion runbook awaiting Andrew. |
+| `ADVI_PROFIL` | `ADVI` | Advisor Profile + Book Architecture | 2026-04-11 | 10/10 TOs complete. All waves shipped, `.004c` E2E validated 8/8, `.008` DE visual test passed. Portal-v2.1.39 PROD deployed (d2e78631). Edge portal-auth-v1.11.8→v1.11.11. |
+| `ADVI_49PUSH` | `ADVI` | Platinum Serving Layer -- 49F Push | 2026-04-11 | All TOs closed out. bd-v2.23.0 + partners-api-v1.15.6. Post-mortem fix stack shipped (D_00 client_city, D_00c role split, D_00c fee-bucket, D_00b TOP_N 9, D_04 GRO floor, B_00 hybrid price fill). TO_COMPILER_GATE.md published. |
+| `ADVI_GLDRST` | `ADVI` | BD Gold Layer S3 Restructure (+ v2 canonical_prices) | 2026-04-11 | Original restructure 19/22. Reopened for v2: .021 shipped (source-tag + diff-before-ship, 9b4f7a77), .022 silver-prep chain in gold_dispatch (8c801923 + 29a831ae). AE cron/IAM/Job 1 deprecation carried forward as ops follow-ups. |
 | `MKOV_TRENDS` | `MKOV` | Trending Topics Quality Overhaul | 2026-04-08 | All 6 TOs complete. DS scoring/images, DT Lambda deploy (news-v2.7.5), RD portal rendering, DT PROD deploy. |
 | `AUTH_TFIMPT` | `AUTH` | Auth Infrastructure Terraform Import | 2026-04-06 | 3/3 TOs complete. CloudFront distribution imported, DynamoDB/SES/secrets imported (portal-auth-v1.11.0), shared-infra role ownership resolved (shared-infra-v1.6.0). |
 | `ADVI_ANONYM` | `ADVI` | Advisor Intelligence PII Pseudonymization + RBAC | 2026-04-06 | P1-P5 complete. Pseudonymization, RBAC, Lambda PII handlers, authorizer passthrough, api/shared->scoped migration. 16 TOs total. PROD de62fde. JWT tier + partner migration deferred. |

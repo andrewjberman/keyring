@@ -1,0 +1,17 @@
+{
+  "project_code": "ADVI_HDRSPL",
+  "macro_code": "ADVI",
+  "name": "ADVI Header Split + Page-Surface Control Primitive",
+  "description": "Promote firm picker from inside the Assets Overview panel header to the ADVI page top-right. Internalize Window + Interval state inside both Assets Overview AND Segment Analytics (currently Assets Overview is the shared source of truth). Introduce a reusable high-contrast <PageSurfaceControl> primitive for controls rendered directly on silver page background; first use is the firm picker.",
+  "prds": [
+    {"path": "docs/architecture/ADVI_HEADER_SPLIT_PRIMITIVES.md", "label": "CTO PRD -- header split + PageSurfaceControl primitive", "date": "2026-04-13"}
+  ],
+  "status": "complete",
+  "phase": "P0: PRD complete 2026-04-13. COO decomposition pending (3 waves: primitive, header restructure, segment analytics toggles).",
+  "blocking": "COO task order issuance to 0.4.0_DE_ClientPlatform.",
+  "created": "2026-04-13",
+  "pods": ["0.4"],
+  "pipeline": "portal",
+  "thread_counter": 0,
+  "threads": []
+}

@@ -1,0 +1,17 @@
+{
+  "project_code": "ADVI_OTHDED",
+  "macro_code": "ADVI",
+  "name": "Distribution Tab Dual-Other Dedupe",
+  "description": "Segment Analytics panel shows two 'Other' entries when drilling into any state with >=10 cities (and likely architects with >=10 clients). Root cause: D_01.partner_analytics.py pre-rolls tail into key='other_{state}' which frontend enforceTop9Other does not recognize as an Other sentinel. Surgical single-file frontend fix in DistributionTab.tsx.",
+  "prds": [
+    {"path": "docs/architecture/DISTRIBUTION_TAB_OTHER_DEDUPE.md", "label": "CTO PRD -- dual-Other dedupe, frontend-only fix", "date": "2026-04-13"}
+  ],
+  "status": "complete",
+  "phase": "P0: PRD complete 2026-04-13. COO decomposition pending.",
+  "blocking": "COO task order issuance to 0.4.0_DE_ClientPlatform.",
+  "created": "2026-04-13",
+  "pods": ["0.4"],
+  "pipeline": "portal",
+  "thread_counter": 0,
+  "threads": []
+}

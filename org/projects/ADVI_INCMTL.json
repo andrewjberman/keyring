@@ -6,9 +6,9 @@
   "prds": [
     {"path": "org/ref/GOLD_PIPELINE_INCREMENTAL_BRIEFING.md", "label": "AE 0.6.0 investigation briefing -- current state, target arch, recommended path", "date": "2026-04-09"}
   ],
-  "status": "active",
-  "phase": "Phase 0: Briefing complete. Needs production run profiling before design.",
-  "blocking": "Low priority -- not scheduled. Needs production per-script timing profile first.",
+  "status": "inactive",
+  "phase": "INACTIVE 2026-04-13. Briefing complete. On hold until AE produces a production per-script timing profile.",
+  "blocking": "Production per-script timing profile (AE 0.6.0). Reactivate when profile is available.",
   "created": "2026-04-09",
   "pods": ["0.4", "0.6"],
   "pipeline": "bd-pipeline",

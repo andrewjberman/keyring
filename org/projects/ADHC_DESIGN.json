@@ -11,8 +11,8 @@
     }
   ],
   "status": "active",
-  "phase": "20/24 original TOs COMPLETE. Phase 2 pod 0.4 update (2026-04-13 reconciliation): .025 tooltip foundation COMPLETE-IN-FACT (pilot migrated, DataTooltip canonical). .028 DistributionTab Variant E cleanup + lint-guard KEEP (DE picks up after W6-002/HDRSPL). .032 AdvisorIntelligence lint cleanup KEEP (~200 ESLint warnings, parallelizable). Attribution (.001/.015/.024) + Valuation (.007) still staged — agents not LIVE at reconciliation, carried forward.",
-  "blocking": "Pod 0.4: .028 + .032 queued after W6-002 validation. Attribution .001/.015/.024 (0.2.2_RD) + Valuation .007 (0.2.4_RD) awaiting those RD sessions. Pods 0.1/0.2/0.3 Phase 2 TOs COMPLETE (from prior sessions).",
+  "phase": "Pod 0.4 Phase 2 COMPLETE 2026-04-13. .025 COMPLETE-IN-FACT. .028 shipped 3096108 (4 RechartsTooltip sites → DataTooltip + no-restricted-syntax lint guard). .032 shipped f3274f3 (pod-0.4 lint 23 → 16 warnings; 5 real react-hooks/rules-of-hooks bugs fixed + 1 unused import). 16 residual warnings (15 react-hooks/set-state-in-effect + 1 react-hooks/refs) deferred as backlog .033. Pods 0.1/0.2/0.3 Phase 2 COMPLETE from prior sessions.",
+  "blocking": "Attribution .001/.015/.024 (0.2.2_RD) + Valuation .007 (0.2.4_RD) awaiting those RD sessions. Backlog: .033 react-hooks/set-state-in-effect refactor (low priority; not on critical path).",
   "created": "2026-04-07",
   "pods": ["0.1", "0.2", "0.3", "0.4"],
   "pipeline": "portal",

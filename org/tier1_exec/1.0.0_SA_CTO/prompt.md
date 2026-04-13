@@ -164,20 +164,20 @@ When researching for a PRD, you should:
 
 **Commit only:** `docs/architecture/` specs, `org/projects/` files, session logs, org docs. Use `--author="1.0.0_SA_CTO <1.0.0_SA_CTO@opal.agent>"`.
 
-## Project Status Dashboard -- Updated 2026-04-10 (session 23)
+## Project Status Dashboard -- Updated 2026-04-13 (session 24)
 
 ### Active Projects
 
 | Project | Status | Pending Work |
 |---------|--------|-------------|
-| `ADVI_49PUSH` | 43/48 TOs done. DS+DE code-complete. bd-v2.23.0 + partners-api-v1.15.6. Post-mortem fix stack fully on S3 (D_00 client_city, D_00c role equal-split, D_00c fee-bucket breakdown, D_00b TOP_N 9, D_04 GRO floor, B_00 hybrid price fill). TO_COMPILER_GATE.md published. | AE gold re-run (fixes in S3, runner not yet kicked). Then: .020 e2e JWT validation, .024 Phase 2 switchover, .026 GRO validation, .038 QTD default. |
-| `ADVI_GLDRST` | REOPENED 2026-04-10 for v2 canonical_prices follow-up. Root cause: weekend/holiday dropout (bd-price-update Lambda weekday-only, no T3 interpolation). .021 SHIPPED — source-tag `transaction_observed_capped` + diff-before-ship harness (9b4f7a77, s3 etag d51a8260, 31 capped rows / 14 assets / zero price drift / 2024-08-07 PASS). .022 DS chained into gold_dispatch.sh as silver-prep pre-step (commits 8c801923 + 29a831ae). | .021b T1 cap exemptions + min-sample guard shipped. AE EventBridge daily cron + IAM verify + bd-price-update Job 1 deprecation after 1 week parity. |
-| `ADVI_REBORN` | WS2+WS4+WS5 DS all COMPLETE. Portal DEV has fixes. 3 follow-up TOs pending. | W5-002 RD (case fix), W5-005 DE (data path), W5-006 RD (rendering). Portal DEV->PROD deploy needed. |
-| `ADHC_DESIGN` | Phase 2 tooltip+lint wave GOed (.025-.032) to 4 DE pods. comp-tooltip built. 20/24 original TOs done. .029 COMPLETE (DE 0.1.0, pod 0.1 lint). | .025 DataTooltip foundation blocks .026/.027. Attribution .001 RD in progress. Valuation .007 awaiting RD. |
-| `DEBT_1STRUN` | ON HOLD per Andrew. P1: 27/27 scans COMPLETE. P2: .002-.004 done, .005 staged. | .005 needs AE 0.5.0 session. On hold. |
-| `ADHC_TMSTEL` | P0: PRD complete. No TOs issued. | Azure AD app registration (Andrew/IT). COO TOs for 0.7.0_AE. |
-| `ADVI_INCMTL` | P0: Briefing complete (AE 0.6.0). Registered 04-09. Low priority. | DS watermark design + AE dispatch changes. Profile production run first. |
-| `ADVI_PROFIL` | **9/10 COMPLETE. All waves shipped, `.004c` validated 8/8 green.** Portal DEV commit chain: `3e8cc3f`→`65e411c`→`36bf0fd`→`40e6208`→`ba90c30` (all 5 RD/DT ship passes for .001/.002/.005/.003/.006+.007). Edge stack: `.004a` v1.11.8+v1.11.9 (4 CloudWatch denials), `.004b` LIVE at `platinum/49financial/ownership_map.json` (162 advisors), `.004c` v1.11.10+v1.11.11 source + CF rewire. **`.004c` E2E VALIDATED 8/8 at 02:41:23 UTC (2026-04-11)**: Chase→own 200, Chase→Travis-owned 403 ("not authorized for this resource"), Travis admin→either 200 (Option 3), no-JWT 401. Both path patterns (S3-direct `platinum/accounts/{id}/summary.json` + API GW `/partners/books/relationship/{id}/platinum-summary`) covered positive + negative. Zero CloudFront propagation delay — first-attempt clean, 75s after v1.11.11 tag. `.004a` error shape: "not authorized for this advisor"; `.004c` error shape: "not authorized for this resource" — useful CloudWatch filter distinction. | `.008` DE `/frontend-dev` visual test (independent, blocks on portal DEV settle — RD post-ba90c30 dirty state on 4 files). Portal submodule pointer bump to `ba90c30` awaits RD commit/stash. `.003` + `.004c` TO file status flips (COO + AE follow-up; substantively shipped). Nothing gates on Andrew. |
+| `ADHC_DESIGN` | All 4 pod Phase 2 branches complete. Pod 0.4 shipped today (.028 `3096108`, .032 `f3274f3`). .025 COMPLETE-IN-FACT. Backlog: `.033` react-hooks/set-state-in-effect refactor (16 warnings, low priority). | Attribution .001/.015/.024 (0.2.2_RD) + Valuation .007 (0.2.4_RD) — blocked on those RDs registering. |
+
+### Inactive / On Hold
+
+| Project | Reason |
+|---------|--------|
+| `ADHC_TMSTEL` | Awaiting Azure AD app registration (Andrew/IT). |
+| `ADVI_INCMTL` | Awaiting production per-script timing profile (AE 0.6.0). Low priority. |
 
 ### Recently Completed
 
