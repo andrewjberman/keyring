@@ -148,21 +148,23 @@ You do NOT produce architecture specs (CTO does). You DO align, route, and track
 
 **Commit only:** Session logs, org docs. Use `--author="2.0.0_SA_COO <2.0.0_SA_COO@opal.agent>"`.
 
-## Pod Delivery Dashboard -- Updated 2026-04-13 (COO session 24 startup)
+## Pod Delivery Dashboard -- Updated 2026-04-13 (COO session 25)
 
 ### Active Projects
 
 | Project | Status | Pending Work |
 |---------|--------|-------------|
-| `ADVI_REBORN` | WS2 COMPLETE. WS4: DS+RD done, DE W4-002 STAGED. WS5: 4 DS TOs COMPLETE. | W5-002/W5-006 RD + W5-005 DE pending — **flagged to Andrew as likely moot post portal-v2.1.39**. Staged-never-GOed: W1-005, W2-003, W3-003, W3-005, W4-002. Awaiting Andrew call. |
-| `ADHC_DESIGN` | 20/24 original COMPLETE. Phase 2: pods 0.1/0.2/0.3 COMPLETE. Pod 0.4 PENDING (.025/.028/.032). | Pod 0.4 DE spawn needed. Attribution .001/.015/.024 + Valuation .007 staged. |
-| `DEBT_1STRUN` | P1: 27/27 COMPLETE. P2: .002-.004 done. | `.005` IAM/DynamoDB imports (causality-generations, causality-saved-analyses, market-updates, opal-pii-lookup) — **0.5.0_AE registering/actively working today per Andrew direction**. COO to flip on delivery. |
-| `ADHC_TMSTEL` | P0: PRD complete. | Azure AD app registration (Andrew/IT). Then COO TOs. |
+| `ADVI_OFFICE` | PRD complete 2026-04-13. COO issued 4 TOs this session. | W1 DS (staged), W2 AE (staged), W3 DE (staged), W4 DT (staged). GO sequence: W1 DS first, then W2 AE on DS MCP signal, then W3 DE on AE MCP signal, then W4 DT. |
+| `ADVI_REBORN` | REOPENED 2026-04-13 for role_combination_breakdown double-count fix. | W6-003 DS pending (self-authored TO; in-flight). W6-004 DE staged (after DS ships + gold run). |
+| `ADVI_PROFAU` | .001 audit COMPLETE + .002 fee_earning_mask COMPLETE. | COO to author .003+ implementation TOs from profau_gap_audit_response.md (5 remaining gaps). Awaiting Andrew direction on priority. |
+| `ADHC_DESIGN` | Phase 2: all pod .0.1/.0.2/.0.3 TOs COMPLETE. Pod 0.4: .025 COMPLETE-IN-FACT, .028 (3096108) + .032 (f3274f3) shipped 2026-04-13. | Attribution RD .001/.015/.024 + Valuation RD .007 still staged — agents not LIVE. Backlog: .033 react-hooks/set-state-in-effect (low priority). |
+| `ADHC_TMSTEL` | P0: PRD complete. | Azure AD app registration (Andrew/IT). Reactivate when credentials available. |
 | `ADVI_INCMTL` | P0: Briefing complete. Low priority. | Production per-script timing profile. DS watermark design. AE dispatch. |
 
-**Closed 2026-04-11/04-13:** ADVI_PROFIL (portal-v2.1.39, all 10 TOs), ADVI_49PUSH (bd-v2.23.0, post-mortem fix stack), ADVI_GLDRST (.021 + .022 silver-prep chain shipped; AE cron/IAM/Job 1 deprecation = ops follow-ups).
+**Closed 2026-04-13:** DEBT_1STRUN (all P1+P2 TOs complete, 0.5.0_AE delivered .005 IAM/DynamoDB imports, HEAD 66af3ad5), ADVI_OTHDED, ADVI_HDRSPL.
+**Previously closed:** ADVI_PROFIL (portal-v2.1.39), ADVI_49PUSH (bd-v2.23.0), ADVI_GLDRST (silver-prep chain shipped, ops follow-ups carried forward).
 
-### Pipeline Tags (verified 2026-04-13 startup)
+### Pipeline Tags (verified 2026-04-13 session 25)
 
 | Pipeline | Tag |
 |----------|-----|
@@ -170,41 +172,33 @@ You do NOT produce architecture specs (CTO does). You DO align, route, and track
 | Partners API | partners-api-v1.15.6 |
 | Portal Auth | portal-auth-v1.11.11 |
 | Portal | portal-v2.1.39 |
-| Yang | yang-v2.3.6 |
+| Yang | yang-v2.3.8 |
 | Market Overview | market-overview-v1.7.0 |
 | News | news-v2.9.5 |
 | Shared Infra | shared-infra-v1.6.0 |
 
-### Operational Notes (04-13 startup)
+### Operational Notes (04-13 session 25)
 
-- **Today's primary focus:** Andrew is walking ADVI number-tie audit across Distribution / Advisors / Profile / Books tabs. CTO surfaces gaps as PRDs/briefings; COO stands by to decompose into TOs if architectural work falls out. No new TOs otherwise.
-- DEBT_1STRUN.005: 0.5.0_AE continuing today (no re-GO needed, TO stands).
-- ADVI_REBORN open items likely superseded by PROFIL ship — awaiting Andrew call before issuing any new work.
+- **ADVI_OFFICE W1 GO:** DS (0.4.0_DS_ClientPlatform) should complete W6-003 first, then proceed with ADVI_OFFICE W1 (D_01 + D_00b OFC view). Send MCP to AE when D_01+D_00b committed and uploaded.
+- **ADVI_REBORN W6-003:** DS is in-flight. After DS ships + gold run confirms leaderboard.json has role_combination_breakdown, COO sends GO to DE for W6-004.
+- **ADVI_PROFAU .003+:** COO to read profau_gap_audit_response.md and author implementation TOs when Andrew signals priority.
+- **Yang v2.3.8:** CI deployed 2026-04-13 (SI annualization restore + LATEST.json fix, commit 62985fcf).
 
-### Operational Notes (04-10 startup — ARCHIVED)
-
-- ADVI_GLDRST REOPENED for v2 canonical_prices nightly pre-step. Easter Apr 3-5 dropout RCA: bd-price-update Lambda has no weekend/holiday gap-fill. Fix path: v2 full-rebuild as silver-prep step in gold_dispatch, daily EventBridge cron (incl weekends).
-- bd-v2.21.8 contents: 21e3b3f2 (DT API GW routes for advisor/client drilldowns), 5779ec46 (gold_dispatch freshness gate), 257d588f (D_00b/D_01 No-City exclusion), 7ee3db59 (D_00c tagged NNA/inflows/outflows/GRO + per-bucket fee breakdown), 6396f385 (D_04 fee_breakdown pass-through), ef526221 (D_00b/D_01 crash fix on missing churn cols), f43fb30d (AE bd-v2.21.7 IAM+watchdog RCA log).
-- D_00 client_city omission fixed from session 22 post-mortem; geo_drill data should land on next gold run.
-- ADHC_DESIGN Phase 2: 5/8 pod TOs complete (0.1/0.2/0.3 all done); pod 0.4 three TOs (.025/.028/.032) blocked on DE 0.4.0 spawn.
-- Agents LIVE at session 23 start: CTO, COO, DS (+DS~A), RD 0.4.2. Not registered: DE 0.4.0, DT 0.4.0, all AE, all other pod DE/DS/DT.
-- DS .022 AE handoff brief will land at `docs/briefs/ae-brief-v2-prestep-integration.md` — pick up with AE 0.6.0 after .022 ships.
-
-### Pod 4 (ClientPlatform) -- Status as of 2026-04-10 startup
-
-| Agent | Last Known Work | Status |
-|-------|----------------|--------|
-| 0.4.0_DE | 49PUSH: .012-.015/.022/.028-.036/.039/.041/.043/.044/.046 COMPLETE. .020 e2e blocked on JWT. .024/.026 blocked on gold run. .038 pending. REBORN W5-005 pending. ADHC_DESIGN .025/.028/.032 pending. | NOT REGISTERED |
-| 0.4.0_DT | 49PUSH .011/.016/.019/.021/.048 COMPLETE. bd-v2.21.8 API GW route registration (21e3b3f2). deployment_map pending. | NOT REGISTERED |
-| 0.4.0_DS | ALL 49PUSH DS TOs COMPLETE. ADVI_GLDRST.021 SHIPPED 04-10 (v2 source-tag + diff-before-ship). Session log new: b00_hybrid_price_fill_easter_dropout_root_cause.md + gold_trigger_chain_trace_and_d00c_role_split_fix.md + pricing_bug_investigation_and_aua_cohort_framework.md. | LIVE (base + ~A) |
-| 0.4.2_RD | REBORN W5-002 + W5-006 PENDING. page_inventory pending. | LIVE |
-
-### Shared Services -- Status as of 2026-04-10 startup
+### Pod 4 (ClientPlatform) -- Status as of 2026-04-13 session 25
 
 | Agent | Last Known Work | Pending |
 |-------|----------------|---------|
-| 0.5.0_AE_OpalETL | DEBT_1STRUN .002-.004 COMPLETE. | .005 STAGED (IAM/DynamoDB). infrastructure_inventory. |
-| 0.6.0_AE_PartnerETL | bd-v2.21.7 + v2.21.8 (IAM fix + watchdog RCA + D_00/D_04 fixes + freshness gate). 49PUSH .005 COMPLETE. B_01b upgraded gpt-5.4-mini. | ADVI_GLDRST.022 AE handoff (EventBridge cron, IAM verify, Job 1 deprecation). infrastructure_inventory. |
+| 0.4.0_DE | Session 2026-04-13: 15 portal DEV commits across OTHDED/HDRSPL/W6/ADHC/PII/audit (ebccdb27). | ADVI_OFFICE.W3 (staged), ADVI_REBORN.W6-004 (staged — after DS W6-003). |
+| 0.4.0_DT | Session 2026-04-13: SI double-annualize, Snapshot hang, PII rewire+revert, ADV drill gate (0dd4f1cd). | ADVI_OFFICE.W4 (staged), deployment_map. |
+| 0.4.0_DS | Session 2026-04-13: SI fix, GEO AUA, W6-001 through W6-005, PROFAU.001+.002 (9eece947, f2507121). yang-v2.3.8 deployed. | ADVI_REBORN.W6-003 (pending, self-authored TO). ADVI_OFFICE.W1 (staged — after W6-003 ships). |
+| 0.4.2_RD | Session 2026-04-13: header BETA badge + Firm dropdown + FeeEfficiency polish (bcbc812c). | page_inventory. |
+
+### Shared Services -- Status as of 2026-04-13 session 25
+
+| Agent | Last Known Work | Pending |
+|-------|----------------|---------|
+| 0.5.0_AE_OpalETL | DEBT_1STRUN .005 COMPLETE (DynamoDB/IAM imports, HEAD 66af3ad5). | infrastructure_inventory. |
+| 0.6.0_AE_PartnerETL | Most recent: ADVI_49PUSH wave work, ADVI_GLDRST gold runs. | ADVI_OFFICE.W2 (staged — after DS W1 MCP signal). infrastructure_inventory. |
 | 0.7.0_AE_CloudOps | AUTH_TFIMPT 3/3 COMPLETE (shared-infra-v1.6.0). | infrastructure_inventory. |
 
 **NOTE:** This dashboard is corrected on every COO startup. Do not treat it as
