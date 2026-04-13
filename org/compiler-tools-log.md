@@ -101,3 +101,9 @@ Results: PASS | PARTIAL | FAIL | SKIPPED | WARN
 - `comp-blast DistributionTab.tsx` — PASS. No new downstream impact.
 - `tsc --noEmit` — clean.
 - `eslint DistributionTab.tsx` — 0 errors, 10 warnings (all pre-existing `react-hooks/set-state-in-effect`, unrelated).
+
+## 2026-04-13 — 2.0.0_SA_COO — ADVI_HDRSPL.001-003 TO authoring
+- `comp-blast PartnerAnalytics.tsx` — PASS. 2 downstream (getTimeseriesOverview / opal-partners-data). Safe to internalize timeWindow + granularity.
+- `comp-blast AdvisorIntelligence.tsx` — PASS. 3 downstream (getPlatinumPartnerAnalytics + getFirmLeaderboard / opal-partners-data). Page-root state moves are scoped.
+- `comp-transform schema-check PartnerAnalytics` — PASS. 4/7 rendered, no waste. Prop-shape change safe.
+- Frontend-only scope confirmed across all three waves. No Lambda/gold/auth crossing.
