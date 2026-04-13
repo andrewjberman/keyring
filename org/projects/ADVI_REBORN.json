@@ -21,8 +21,8 @@
     }
   ],
   "status": "active",
-  "phase": "ALL TOs COMPLETE post 2026-04-13 cross-org reconciliation + W6-002 validation. 10 TOs retired in reconciliation close-out (DEPRECATED/SUPERSEDED/COMPLETE-IN-FACT). W6-002 DE VALIDATED: code bf475f8 fixed the (data[feeView] ?? data) silent fallback; DS confirmed 365.55M is correct role-attributed Travis value (firm-level fee_breakdown is dedup, role sums double-count multi-role accounts — same semantics as total_aua). Ordering invariants hold. No W6-003 needed. Only remaining item is portal DEV->PROD deploy.",
-  "blocking": "Portal DEV->PROD deploy (DT) of the bf475f8 Advisors tab fix. Project can close on deploy. Provisional RD W5-002/W5-006 flips may re-open if 0.4.2_RD disagrees on next session."
+  "phase": "W6-002 RE-OPENED 2026-04-13 after DS deeper RCA. Initial fix bf475f8 closed silent-fallback but uncovered a second DE bug: `allChecked` early return (AdvisorsTab.tsx ~L264) uses top-level fee_breakdown.fee_paying.aua (dedup 341M) while role-subset loop uses role_breakdown[role].fee_paying.aua (role-attributed 366M). Two incompatible sources => adding implementor drops total (non-monotonic). Fix: remove early return so all cases go through role loop; all-roles+fee-paying then 398M role-attributed (monotonic with 366 + 32.57 implementor = 398). DS messaged DE with line ref + exact fix. No DS-side work required. One more portal commit pending.",
+  "blocking": "W6-002 follow-up portal commit (DE) — remove allChecked early return in AdvisorsTab.tsx. Then portal DEV->PROD deploy (DT). Project can close on deploy. Provisional RD W5-002/W5-006 flips may re-open if 0.4.2_RD disagrees on next session."
   "created": "2026-04-07",
   "pods": ["0.4", "0.6"],
   "pipeline": "bd-pipeline",
