@@ -164,13 +164,15 @@ When researching for a PRD, you should:
 
 **Commit only:** `docs/architecture/` specs, `org/projects/` files, session logs, org docs. Use `--author="1.0.0_SA_CTO <1.0.0_SA_CTO@opal.agent>"`.
 
-## Project Status Dashboard -- Updated 2026-04-13 (session 24)
+## Project Status Dashboard -- Updated 2026-04-13 (session 25)
 
 ### Active Projects
 
 | Project | Status | Pending Work |
 |---------|--------|-------------|
-| `ADHC_DESIGN` | All 4 pod Phase 2 branches complete. Pod 0.4 shipped today (.028 `3096108`, .032 `f3274f3`). .025 COMPLETE-IN-FACT. Backlog: `.033` react-hooks/set-state-in-effect refactor (16 warnings, low priority). | Attribution .001/.015/.024 (0.2.2_RD) + Valuation .007 (0.2.4_RD) — blocked on those RDs registering. |
+| `ADHC_DESIGN` | All 4 pod Phase 2 branches complete. Pod 0.4 shipped (.028 `3096108`, .032 `f3274f3`). .025 COMPLETE-IN-FACT. Backlog: `.033` react-hooks/set-state-in-effect refactor (16 warnings, low priority). | Attribution .001/.015/.024 (0.2.2_RD) + Valuation .007 (0.2.4_RD) — blocked on those RDs registering. |
+| `ADVI_PROFAU` | .001 DS audit complete (profau_gap_audit_response.md). .002 fee_earning_mask + is_fee_paying SHIPPED (ADVI_PROFAU.002 complete). | COO authors .003+ implementation TOs from gap audit findings. |
+| `ADVI_REBORN` | REOPENED 2026-04-13. Core waves complete. Follow-up: role_combination_breakdown double-count fix. Per-role fee_paying.aua double-counts split-weighted accounts; fix requires non-overlapping role-set partition in D_00c. | DS W6-003 pending (D_00c + D_04). DE W6-004 staged after DS ships + gold run confirms. |
 
 ### Inactive / On Hold
 
@@ -183,14 +185,19 @@ When researching for a PRD, you should:
 
 | Project | Completed | Key Deliverables |
 |---------|-----------|-----------------|
+| `ADVI_PROFIL` | 2026-04-11 | 10/10 TOs complete. Advisor Profile + Book architecture. Portal-v2.1.39 PROD (d2e78631). portal-auth-v1.11.11. |
+| `ADVI_49PUSH` | 2026-04-11 | All TOs closed. bd-v2.23.0 + partners-api-v1.15.6. Post-mortem 4 failures all fixed. TO_COMPILER_GATE.md published. |
+| `ADVI_OTHDED` | 2026-04-13 | Distribution tab dual-Other regex fix `801349d`, PROD `4575a1c`. |
+| `ADVI_HDRSPL` | 2026-04-13 | ADVI Header Split + PageSurfaceControl primitive. 3 waves complete. PROD `4575a1c`. |
+| `DEBT_1STRUN` | 2026-04-13 | 27/27 P1 scans + P2 .002-.005. Dynamo 47->60%, IAM 49->58%. |
 | `MKOV_TRENDS` | 2026-04-08 | All 6 TOs complete. DS scoring/images, DT Lambda deploy (news-v2.7.5), RD portal, DT PROD deploy. |
-| `ADVI_GLDRST` | 2026-04-07 | 19/22 TOs. Restructure landed (A_00-E_19 taxonomy, gold_dispatch.sh). .010/.019 deferred. |
-| `ADVI_GLDOPS` | 2026-04-07 | All TOs. Canonical stack (05 swap, 01b, 08c, 11a) shipped. Scripts renamed A_00-C_04. |
+| `ADVI_GLDRST` | 2026-04-11 | 19/22 TOs + v2 canonical_prices .021/.022. Restructure landed. |
+| `ADVI_GLDOPS` | 2026-04-07 | All TOs. Canonical stack shipped. Scripts renamed A_00-C_04. |
 | `ADVI_NNAFEE` | 2026-04-07 | Absorbed into ADVI_REBORN as WS2. 6 TOs superseded. |
 | `ETFS_SECIDX` | 2026-04-07 | P0 complete. 102 securities, 138 portal tickers. 97.1% Massive API. |
 | `TAXX_TXSTRT` | 2026-04-07 | P0 complete. DS gap analysis (v1+v2 trade allocator). |
-| `AUTH_TFIMPT` | 2026-04-06 | 3/3 TOs. CloudFront imported, DynamoDB/SES/secrets (portal-auth-v1.11.0), shared-infra-v1.6.0. |
-| `ADVI_ANONYM` | 2026-04-06 | P1-P5 complete. 16 TOs. Pseudonymization, RBAC, Lambda PII. partners-api-v1.14.0. |
+| `AUTH_TFIMPT` | 2026-04-06 | 3/3 TOs. CloudFront imported, DynamoDB/SES/secrets (portal-auth-v1.11.0). |
+| `ADVI_ANONYM` | 2026-04-06 | P1-P5 complete. 16 TOs. Pseudonymization, RBAC, Lambda PII. |
 | `ADHC_HISTRY` | 2026-04-06 | All 8 TOs. AUA $1,582M (0.3% from silver). Phantom fix deployed. |
 
 ### Pipeline Tags (as of 2026-04-10)

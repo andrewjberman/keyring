@@ -20,9 +20,9 @@
       "date": "2026-04-13"
     }
   ],
-  "status": "complete",
-  "phase": "COMPLETE 2026-04-13. W6-002 follow-up allChecked early-return fix shipped portal DEV 9f6faf9, merged to PROD via 4575a1c. All waves closed. Reconciliation retired 10 other TOs (5 DEPRECATED, 2 COMPLETE-IN-FACT, 1 SUPERSEDED by GLDRST, 2 provisional RD DEPRECATED).",
-  "blocking": "Closed.",
+  "status": "active",
+  "phase": "REOPENED 2026-04-13 for W6-003/W6-004 follow-up. Core waves COMPLETE (W6-002 allChecked fix 9f6faf9, PROD 4575a1c). Root cause: per-role fee_paying.aua double-counts split-weighted accounts across roles. Fix: add role_combination_breakdown to D_00c (non-overlapping partition by role-set) so fee-filtered role-subset sums are exact. DS W6-003 pending. DE W6-004 staged (after DS ships).",
+  "blocking": "DS W6-003: D_00c.portal_leaderboard.py role_combination_breakdown + D_04 passthrough. After DS ships + gold run confirms artifact: COO issues DE W6-004 (AdvisorsTab frontend consumption of role_combination_breakdown).",
   "created": "2026-04-07",
   "pods": ["0.4", "0.6"],
   "pipeline": "bd-pipeline",

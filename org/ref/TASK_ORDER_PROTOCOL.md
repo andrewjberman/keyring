@@ -40,9 +40,43 @@ One file per feature. Never overwrite into a monolith.
     DS:  comp-pipescript io {script}  |  comp-blast {script}  |  comp-pipescript consumers {script}
     DE:  comp-transform schema-check {Component}  |  comp-blast {fn}  |  comp-cache collisions
     DT/AE: comp-pipescript io {script}  |  comp-routes trace {fn}
-    Specify the exact commands. Agent reports results in session log Compiler Tools section.
+
+    THREE-PHASE requirement (all TOs, no exceptions):
+    1. BEFORE writing: comp-blast {target} — understand downstream blast radius
+    2. BEFORE committing: role-appropriate check above — verify data contract intact
+    3. AFTER committing: comp-blast {changed function} — confirm no unintended blast expansion
+
+    Results (pass/fail + output summary) must appear in session log Compiler Tools section.
+    A TO with no compiler check logged is NOT accepted as complete.
+    See: org/standards/TO_COMPILER_GATE.md
     -->
   </compiler_tools_mandate>
+
+  <cross_domain_coordination>
+    <!-- Fill this section ONLY when this TO touches a file, S3 key, or data contract
+    that is also touched by another active TO in the same wave.
+    COO/CTO must identify cross-domain resources during PRD decomposition using comp-blast.
+
+    If applicable:
+    - shared_resource: {file or S3 key}
+    - also_in_to: {other TO IDs}
+    - last_write_owner: {serial that commits last}
+    - required_action: "Message {serial} via MCP before committing to {file}. Pull latest before writing."
+
+    If not applicable: <none/>
+    -->
+  </cross_domain_coordination>
+
+  <acceptance_criteria>
+    <!-- MANDATORY. Specific, machine-checkable. Not "code runs" or "build clean."
+    Examples:
+    - DS: fee_earning_aua > 0 for at least one advisor with accounts in spot-check
+    - DS: geo_drill present in cumulative_chart.json with keys matching geo.categories
+    - DE: comp-transform fields shows all rendered fields present in TypeScript type
+    - DE: state legend items are <button> elements (clickable), not <div> (static)
+    Agent confirms each criterion explicitly in session log before marking complete.
+    -->
+  </acceptance_criteria>
 
   <scope>
     <files>
