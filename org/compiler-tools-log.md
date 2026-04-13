@@ -132,3 +132,12 @@ Results: PASS | PARTIAL | FAIL | SKIPPED | WARN
 - `comp-pipescript io D_04` — PASS. Confirmed `platinum/firm/leaderboard.json` is a terminal write of D_04. DS scope contained to D_04.
 - `comp-blast AdvisorsTab.tsx` — PASS. 1 downstream (`getFirmLeaderboard`). Frontend-only.
 - CTO PRD evidence block re-verified: comp-trace employee_leaderboard + comp-routes getEmployeeLeaderboard confirm the serving path is CloudFront `/api/scoped/advisor-intelligence/artifacts/*` -> shared-advisor-router -> S3.
+
+## 2026-04-13 — 0.4.0_DE_ClientPlatform — ADVI_REBORN.W6-002 implementation
+- Grep `?? data` / `feeView` / `role_breakdown` in AdvisorsTab — PASS. Single site identified at line 287.
+- S3 inspect `s3://opal-data-bd/platinum/firm/leaderboard.json` — PASS. Travis role entries carry fee_paying + no_fee sub-objects.
+- `comp-transform schema-check AdvisorsTab` (via tsc) — PASS. No prop-shape regression.
+- `tsc --noEmit` — clean.
+- `eslint src/pages/AdvisorIntelligence/tabs/AdvisorsTab.tsx` — 0 errors.
+- Grep `?? data` post-edit — PASS. Zero silent fallbacks remain.
+- Four-cell audit (Travis Penfield) — 3/4 cells match; 4th deviates from TO ceiling (actual 365.55M vs TO <=341M). Structural fix correct; data expectation disagreement raised with DS.
