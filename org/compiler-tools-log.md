@@ -121,3 +121,14 @@ Results: PASS | PARTIAL | FAIL | SKIPPED | WARN
 - `tsc --noEmit` — clean.
 - `eslint` on 3 changed files (AdvisorIntelligence.tsx, PartnerAnalytics.tsx, DistributionTab.tsx) — 0 errors, 10 pre-existing warnings (react-hooks/set-state-in-effect; same count as pre-change).
 - `/frontend-dev` closed-loop pass — OUTSTANDING (requires submodule bump to 4cb34a2).
+## 2026-04-13 â€” 1.0.0_SA_CTO â€” ADVI_REBORN leaderboard fees x roles fix
+- `python -m org.modules.graph.cli build` â€” PASS. Graph rebuilt: 655 nodes, 293 edges.
+- `python -m org.modules.graph.cli trace employee_leaderboard --direction both --all` â€” PASS. Producer is `D_00c.portal_leaderboard:build_employee_leaderboard`; artifact is `gold/artifacts/employee_leaderboard.json`.
+- `python -m org.modules.graph.cli blast build_employee_leaderboard` â€” PASS. Blast radius is the leaderboard artifact.
+- `python -m org.modules.graph.routes_cli trace getEmployeeLeaderboard` â€” PASS. Serving route resolves to `/api/scoped/advisor-intelligence/artifacts/employee_leaderboard.json` via `shared-advisor-router` to S3 key `gold/artifacts/employee_leaderboard.json`.
+- Manual code confirmation after compiler pass â€” `D_00c` already emits nested `role_breakdown.fee_paying/no_fee`; `D_04` trims them via `_LEADERBOARD_ROLE_FIELDS`; `AdvisorsTab.tsx` falls back with `(data[feeView] ?? data)`. Result: backend-serving contract gap plus frontend unsafe fallback. DS then DE sequence written into PRD addendum.
+
+## 2026-04-13 — 2.0.0_SA_COO — ADVI_REBORN.W6-001 + W6-002 TO authoring
+- `comp-pipescript io D_04` — PASS. Confirmed `platinum/firm/leaderboard.json` is a terminal write of D_04. DS scope contained to D_04.
+- `comp-blast AdvisorsTab.tsx` — PASS. 1 downstream (`getFirmLeaderboard`). Frontend-only.
+- CTO PRD evidence block re-verified: comp-trace employee_leaderboard + comp-routes getEmployeeLeaderboard confirm the serving path is CloudFront `/api/scoped/advisor-intelligence/artifacts/*` -> shared-advisor-router -> S3.
