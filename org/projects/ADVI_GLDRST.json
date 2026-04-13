@@ -40,9 +40,9 @@
       "date": "2026-04-02"
     }
   ],
-  "status": "complete",
-  "phase": "CLOSED 2026-04-07. 19/22 TOs complete. Restructure fully landed (new S3 paths, A_00-E_19 taxonomy, gold_dispatch.sh, dual-write safety net). .014 validated by 3 weeks production. .010 (old key delete) deferred to AE ad-hoc cleanup. .019 (Schwab RPS) moved to backlog — new data source onboarding, not restructure.",
-  "blocking": "",
+  "status": "active",
+  "phase": "REOPENED 2026-04-10 for v2 canonical_prices follow-up. Original restructure (19/22 TOs) remains complete. .021 SHIPPED (source-tag transaction_observed_capped + diff-before-ship; commit 9b4f7a77; s3 etag d51a8260513a46d8ab94bde4e49bea69; 31 capped rows / 14 assets / zero price drift; 2024-08-07 regression PASS). .022 STAGED (v2 as silver-prep pre-step in gold_dispatch.sh; freshness gate decision; AE brief for EventBridge daily cron + bd-price-update Job 1 deprecation).",
+  "blocking": "DS .022 (v2 silver-prep chain integration + AE brief). Then AE: EventBridge cron(0 22 * * ? *) daily (every day incl weekends/holidays), IAM verify on gold runner, bd-price-update Job 1 phase-out after 1 week diff parity.",
   "created": "2026-03-19",
   "pods": ["0.4", "0.6", "0.7"],
   "pipeline": "bd-pipeline",

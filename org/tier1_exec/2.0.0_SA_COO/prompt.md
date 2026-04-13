@@ -148,7 +148,7 @@ You do NOT produce architecture specs (CTO does). You DO align, route, and track
 
 **Commit only:** Session logs, org docs. Use `--author="2.0.0_SA_COO <2.0.0_SA_COO@opal.agent>"`.
 
-## Pod Delivery Dashboard -- Updated 2026-04-10 (COO session 23 startup)
+## Pod Delivery Dashboard -- Updated 2026-04-13 (COO session 24 startup)
 
 ### Active Projects
 
@@ -161,15 +161,16 @@ You do NOT produce architecture specs (CTO does). You DO align, route, and track
 | `DEBT_1STRUN` | P1: 27/27 scans COMPLETE. P2: .002-.004 COMPLETE. .005 STAGED (IAM/DynamoDB). | .005 needs AE 0.5.0 session. |
 | `ADHC_TMSTEL` | P0: PRD complete. Awaiting Azure AD app registration + COO decomposition. | Azure AD app registration (Andrew/IT). COO TOs. |
 | `ADVI_INCMTL` | P0: Briefing complete (AE 0.6.0). Low priority. | Production per-script timing profile. DS watermark design. AE dispatch changes. |
-| `ADVI_PROFIL` (NEW 04-10) | P0: CTO PRD compiler-audited 2026-04-10. RD has staged 5 file mods + 1 new file on portal DEV (tsc+eslint clean, not committed). **10 TOs** across 4 waves (.004 split into .004a/.004b/.004c after comp-routes audit caught advisor-id vs account-id/relationship-id path key mix). | W1: .001 DT ship, .002 DT/AE JWT claim, .003 DS book tax_exposure. W2a: .004a AE advisor-id scoping (blocks .002). W2b: .004b DS ownership map (parallel). W2c: .004c AE account+relationship scoping (blocks .004a/.004b). W3: .005 RD L3/L4 lift, .006 RD cache policy. W4: .007 RD admin My Profile toggle, .008 DE frontend-dev visual test. |
+| `ADVI_PROFIL` | **9/10 COMPLETE.** All waves shipped 04-10/04-11. Portal DEV chain 3e8cc3f->65e411c->36bf0fd->40e6208->ba90c30 merged to PROD as portal-v2.1.39 (d2e78631). Edge: portal-auth-v1.11.8->v1.11.11 (.004a + .004c). .004b ownership_map LIVE (s3://opal-data-bd/platinum/49financial/ownership_map.json, 162 advisors). .004c E2E validated 8/8 green 2026-04-11 02:41 UTC. | Only **.008 DE frontend-dev visual test** remains. No Andrew decisions outstanding. |
 
-### Pipeline Tags (verified 2026-04-10 startup)
+### Pipeline Tags (verified 2026-04-13 startup)
 
 | Pipeline | Tag |
 |----------|-----|
-| BD | bd-v2.21.8 |
+| BD | bd-v2.23.0 |
 | Partners API | partners-api-v1.15.6 |
-| Portal Auth | portal-auth-v1.11.6 |
+| Portal Auth | portal-auth-v1.11.11 |
+| Portal | portal-v2.1.39 |
 | Yang | yang-v2.3.6 |
 | Market Overview | market-overview-v1.7.0 |
 | News | news-v2.9.5 |

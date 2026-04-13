@@ -11,8 +11,8 @@
     }
   ],
   "status": "active",
-  "phase": "20/24 TOs COMPLETE. Phases 1-3 PROD deployed (0df2466). 4 STAGED: Attribution (.001/.015/.024) + Valuation (.007). Attribution RD actively working .001.",
-  "blocking": "Attribution .001 in progress. Valuation .007 awaiting RD session.",
+  "phase": "20/24 original TOs COMPLETE. Phase 2 tooltip+lint wave activated: .025-.032 (8 TOs) GOed to 4 DE pods. comp-tooltip compiler tool built for migration audit. .025 foundation in progress (0.4.0_DE). Lint TOs (.029-.032) running in parallel. Attribution (.001/.015/.024) + Valuation (.007) still staged.",
+  "blocking": ".025 DataTooltip component blocks .026/.027 tooltip migration. .026/.027 block .028 final audit. Attribution .001 in progress (RD). Valuation .007 awaiting RD.",
   "created": "2026-04-07",
   "pods": ["0.1", "0.2", "0.3", "0.4"],
   "pipeline": "portal",
