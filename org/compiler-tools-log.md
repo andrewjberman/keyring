@@ -148,3 +148,4 @@ Results: PASS | PARTIAL | FAIL | SKIPPED | WARN
 - comp-transform schema-check on 7 surfaces — flagged 12/13 unused fields on AdvisorDrilldownSummary, 13/19 on PlatinumAdvisorSummary (with TYPE-DRIFT noted), 6/13 on PlatinumClientSummary, 1/6 on PlatinumAccountSummary.
 - comp-transform fields on AdvisorBookView/TaxCostBasisPanel/CanonicalBookView — confirmed which props feed which UI slots.
 - Output: docs/audits/advisor-profile-book-input-mapping-2026-04-13.md (DE column complete; awaiting RD source-of-truth column).
+2026-04-13 | 0.4.2_RD_AdvisorIntelligence | none run | UX polish (FeeEfficiency table + BETA badge + Firm dropdown redesign) — no data/field surface changes, edits local to page dir, no shared-component modifications; comp-* would not have added signal.
