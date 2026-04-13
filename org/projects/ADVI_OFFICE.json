@@ -11,8 +11,8 @@
     }
   ],
   "status": "active",
-  "phase": "PRD complete. Awaiting COO decomposition into Wave 1 (DS) + Wave 2 (DE) + Wave 3 (AE) + Wave 4 (DT) task orders.",
-  "blocking": "COO task order issuance. AE must upload dim_advisor_office.csv to S3 before DS runs D_01.",
+  "phase": "PRD complete 2026-04-13 (v2: decisions resolved -- Other bucket, Continuous AUA in V1 scope, ADV stays). 4 waves: W1 DS (D_01 OFC snapshot/NNA + D_00b OFC timeseries), W2 DE (frontend toggle/drill/Continuous), W3 AE (S3 dim upload + gold run), W4 DT (portal deploy).",
+  "blocking": "COO task order issuance. AE must upload gold/dimensions/dim_advisor_office.csv before DS D_00b + D_01 runs.",
   "created": "2026-04-13",
   "pods": ["0.4", "0.6"],
   "pipeline": "bd-pipeline + portal",
