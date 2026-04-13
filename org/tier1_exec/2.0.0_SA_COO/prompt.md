@@ -154,14 +154,13 @@ You do NOT produce architecture specs (CTO does). You DO align, route, and track
 
 | Project | Status | Pending Work |
 |---------|--------|-------------|
-| `ADVI_49PUSH` | 43/48 TOs done. D_00 refactored D_00/D_00b/D_00c. D_00 client_city fix + D_00c tagged NNA/role_split fix shipped. Freshness gate in gold_dispatch. bd-v2.21.8 + partners-api-v1.15.6. | AE gold re-run (D_00/D_01/D_04) to land client_city + role_split. .020 JWT+browser QA (Andrew). .024 Phase 2. .026 GRO validation. .038 DE QTD default. |
-| `ADVI_GLDRST` (REOPENED) | Canonical_prices v2 remediation (Easter Apr 3-5 dropout RCA). .021 SHIPPED 04-10 (source-tag `transaction_observed_capped` + diff-before-ship PASS, 9b4f7a77 + 5d4756e2, s3 etag d51a8260513a46d8ab94bde4e49bea69). .022 STAGED (v2 silver-prep chain in gold_dispatch + AE brief). | .022 awaiting COO GO. Then AE: EventBridge daily cron (incl weekends/holidays), IAM verify, bd-price-update Job 1 phase-out after week-1 diff parity. |
-| `ADVI_REBORN` | WS2 COMPLETE. WS4: DS+RD done, DE W4-002 STAGED. WS5: ALL 4 DS TOs COMPLETE. Portal PROD 2613b7e. | W5-002 RD (case fix), W5-005 DE (data path), W5-006 RD (rendering). W5-001 NNA needs gold re-run to regen timeseries_chart.json. |
-| `ADHC_DESIGN` | 20/24 original COMPLETE. Phase 2 tooltip+lint: pods 0.1/0.2/0.3 COMPLETE (.026/.027/.029/.030/.031). Pod 0.4 PENDING (.025/.028/.032). | Pod 0.4 DE spawn needed (DE 0.4.0 NOT REGISTERED). Attribution .001 RD 0.2.2 pending. Valuation .007 RD 0.2.4 pending. |
-| `DEBT_1STRUN` | P1: 27/27 scans COMPLETE. P2: .002-.004 COMPLETE. .005 STAGED (IAM/DynamoDB). | .005 needs AE 0.5.0 session. |
-| `ADHC_TMSTEL` | P0: PRD complete. Awaiting Azure AD app registration + COO decomposition. | Azure AD app registration (Andrew/IT). COO TOs. |
-| `ADVI_INCMTL` | P0: Briefing complete (AE 0.6.0). Low priority. | Production per-script timing profile. DS watermark design. AE dispatch changes. |
-| `ADVI_PROFIL` | **9/10 COMPLETE.** All waves shipped 04-10/04-11. Portal DEV chain 3e8cc3f->65e411c->36bf0fd->40e6208->ba90c30 merged to PROD as portal-v2.1.39 (d2e78631). Edge: portal-auth-v1.11.8->v1.11.11 (.004a + .004c). .004b ownership_map LIVE (s3://opal-data-bd/platinum/49financial/ownership_map.json, 162 advisors). .004c E2E validated 8/8 green 2026-04-11 02:41 UTC. | Only **.008 DE frontend-dev visual test** remains. No Andrew decisions outstanding. |
+| `ADVI_REBORN` | WS2 COMPLETE. WS4: DS+RD done, DE W4-002 STAGED. WS5: 4 DS TOs COMPLETE. | W5-002/W5-006 RD + W5-005 DE pending — **flagged to Andrew as likely moot post portal-v2.1.39**. Staged-never-GOed: W1-005, W2-003, W3-003, W3-005, W4-002. Awaiting Andrew call. |
+| `ADHC_DESIGN` | 20/24 original COMPLETE. Phase 2: pods 0.1/0.2/0.3 COMPLETE. Pod 0.4 PENDING (.025/.028/.032). | Pod 0.4 DE spawn needed. Attribution .001/.015/.024 + Valuation .007 staged. |
+| `DEBT_1STRUN` | P1: 27/27 COMPLETE. P2: .002-.004 done. | `.005` IAM/DynamoDB imports (causality-generations, causality-saved-analyses, market-updates, opal-pii-lookup) — **0.5.0_AE registering/actively working today per Andrew direction**. COO to flip on delivery. |
+| `ADHC_TMSTEL` | P0: PRD complete. | Azure AD app registration (Andrew/IT). Then COO TOs. |
+| `ADVI_INCMTL` | P0: Briefing complete. Low priority. | Production per-script timing profile. DS watermark design. AE dispatch. |
+
+**Closed 2026-04-11/04-13:** ADVI_PROFIL (portal-v2.1.39, all 10 TOs), ADVI_49PUSH (bd-v2.23.0, post-mortem fix stack), ADVI_GLDRST (.021 + .022 silver-prep chain shipped; AE cron/IAM/Job 1 deprecation = ops follow-ups).
 
 ### Pipeline Tags (verified 2026-04-13 startup)
 
@@ -176,7 +175,13 @@ You do NOT produce architecture specs (CTO does). You DO align, route, and track
 | News | news-v2.9.5 |
 | Shared Infra | shared-infra-v1.6.0 |
 
-### Operational Notes (04-10 startup)
+### Operational Notes (04-13 startup)
+
+- **Today's primary focus:** Andrew is walking ADVI number-tie audit across Distribution / Advisors / Profile / Books tabs. CTO surfaces gaps as PRDs/briefings; COO stands by to decompose into TOs if architectural work falls out. No new TOs otherwise.
+- DEBT_1STRUN.005: 0.5.0_AE continuing today (no re-GO needed, TO stands).
+- ADVI_REBORN open items likely superseded by PROFIL ship — awaiting Andrew call before issuing any new work.
+
+### Operational Notes (04-10 startup — ARCHIVED)
 
 - ADVI_GLDRST REOPENED for v2 canonical_prices nightly pre-step. Easter Apr 3-5 dropout RCA: bd-price-update Lambda has no weekend/holiday gap-fill. Fix path: v2 full-rebuild as silver-prep step in gold_dispatch, daily EventBridge cron (incl weekends).
 - bd-v2.21.8 contents: 21e3b3f2 (DT API GW routes for advisor/client drilldowns), 5779ec46 (gold_dispatch freshness gate), 257d588f (D_00b/D_01 No-City exclusion), 7ee3db59 (D_00c tagged NNA/inflows/outflows/GRO + per-bucket fee breakdown), 6396f385 (D_04 fee_breakdown pass-through), ef526221 (D_00b/D_01 crash fix on missing churn cols), f43fb30d (AE bd-v2.21.7 IAM+watchdog RCA log).
