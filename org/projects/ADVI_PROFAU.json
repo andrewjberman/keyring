@@ -8,7 +8,7 @@
   ],
   "status": "active",
   "phase": ".001 (cbd98266) + .002 (f2507121) + .003 (b2e4e668, QA confirmed 2026-04-14) + .004 (0050c05) + .005 (d1f9747) + .006 (5233b91 portal DEV, f3aad71f CLOUD) ALL COMPLETE 2026-04-14. D_02 NNA per-role canonical (d51e44ef) ships tonight nightly. .007 (Q2 is_fee_paying per AdvisorClient) not yet authored. Q3/Q7 DS TOs not yet authored.",
-  "blocking": ".006 portal DEV — awaiting DT push after W4 PROD confirms. .007 + Q3/Q7 DS TOs pending COO authoring.",
+  "blocking": ".006 portal DEV — awaiting DT push after W4 PROD confirms. .007 DE TO authored (staged) — DE starts after .006 push. Q3/Q7 DS TOs pending COO authoring.",
   "created": "2026-04-13",
   "pods": ["0.4"],
   "pipeline": "bd-pipeline",
