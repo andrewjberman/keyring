@@ -7,8 +7,8 @@
     {"path": "docs/audits/advisor-profile-book-input-mapping-2026-04-13.md", "label": "DE+RD joint audit doc — input/source mapping across Profile + Book L2/L3/L4", "date": "2026-04-13"}
   ],
   "status": "active",
-  "phase": ".001 DS audit COMPLETE (profau_gap_audit_response.md — 7 gaps labeled EXISTS-UPSTREAM/COLUMN-ADD/NEW-ARTIFACT/DEPRECATED). .002 fee_earning_mask billability gate + is_fee_paying SHIPPED (2026-04-13). Remaining implementation TOs (.003+) for remaining gaps pending COO authoring.",
-  "blocking": "COO authors .003+ implementation TOs from profau_gap_audit_response.md findings.",
+  "phase": ".001 DS audit COMPLETE (cbd98266). .002 D_02 fee_earning_mask is_billable gate + is_fee_paying on AdvisorClient COMPLETE (f2507121, QA verified). .003 D_02 book-level capital_gains_ttm + cost_basis_by_year COMMITTED (b2e4e668) — QA run pending (c6i capacity issue; not yet gold-verified). DE unblocked for .004/.005 wiring once QA clears. .004 (PlatinumAdvisorSummary type fix, Q6) + .005 (L2/L3/L4 frontend wire, Q2+Q4+Q5) TOs pending COO authoring. DS Q2 (is_fee_paying per client in D_02) + Q3/Q7 (fee_earning_mask alignment) still need separate DS TOs.",
+  "blocking": "COO authors DE TOs .004 (PlatinumAdvisorSummary type-only fix) + .005 (L2/L3/L4 frontend wire) once .003 QA run confirms platinum output. Also: DS Q2 (is_fee_paying per AdvisorClient in D_02) + Q3/Q7 (D_02 line 960 billability gate) need DS TOs not yet authored.",
   "created": "2026-04-13",
   "pods": ["0.4"],
   "pipeline": "bd-pipeline",

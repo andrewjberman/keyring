@@ -148,20 +148,20 @@ You do NOT produce architecture specs (CTO does). You DO align, route, and track
 
 **Commit only:** Session logs, org docs. Use `--author="2.0.0_SA_COO <2.0.0_SA_COO@opal.agent>"`.
 
-## Pod Delivery Dashboard -- Updated 2026-04-13 (COO session 25)
+## Pod Delivery Dashboard -- Updated 2026-04-14 (COO session 26)
 
 ### Active Projects
 
 | Project | Status | Pending Work |
 |---------|--------|-------------|
-| `ADVI_OFFICE` | PRD complete 2026-04-13. COO issued 4 TOs this session. | W1 DS (staged), W2 AE (staged), W3 DE (staged), W4 DT (staged). GO sequence: W1 DS first, then W2 AE on DS MCP signal, then W3 DE on AE MCP signal, then W4 DT. |
-| `ADVI_REBORN` | REOPENED 2026-04-13 for role_combination_breakdown double-count fix. | W6-003 DS pending (self-authored TO; in-flight). W6-004 DE staged (after DS ships + gold run). |
-| `ADVI_PROFAU` | .001 audit COMPLETE + .002 fee_earning_mask COMPLETE. | COO to author .003+ implementation TOs from profau_gap_audit_response.md (5 remaining gaps). Awaiting Andrew direction on priority. |
-| `ADHC_DESIGN` | Phase 2: all pod .0.1/.0.2/.0.3 TOs COMPLETE. Pod 0.4: .025 COMPLETE-IN-FACT, .028 (3096108) + .032 (f3274f3) shipped 2026-04-13. | Attribution RD .001/.015/.024 + Valuation RD .007 still staged — agents not LIVE. Backlog: .033 react-hooks/set-state-in-effect (low priority). |
+| `ADVI_OFFICE` | In execution. D_01 on S3 (27471bed). dim_advisor_office.csv uploaded (AE). D_00b crash #1+#2 fixed. | **BLOCKED: DS D_00b fix #3** (1-office aggregation anomaly). DS fix + re-upload → AE W2 QA run → DE W3 frontend → DT W4 deploy. W3 DE + W4 DT staged. |
+| `ADVI_REBORN` | W6-003 COMPLETE (1d70ecaf). W6-004 GO sent to DE (inbox delivered 20260413T200813Z). | DE W6-004 staged → pending on DE reading inbox. DE STALE — may need nudge. |
+| `ADVI_PROFAU` | .001+.002+.003 COMPLETE (committed). .003 QA pending (c6i capacity, DS retrying). | COO to author DE .004 (PlatinumAdvisorSummary type fix) + .005 (L2/L3/L4 wire) after .003 QA clears. DS Q2+Q3/Q7 TOs also not yet authored. |
+| `ADHC_DESIGN` | Phase 2: all pod .0.1/.0.2/.0.3/0.4 TOs COMPLETE. | Attribution RD .001/.015/.024 + Valuation RD .007 still staged — agents not LIVE. Backlog: .033 react-hooks/set-state-in-effect (low priority). |
 | `ADHC_TMSTEL` | P0: PRD complete. | Azure AD app registration (Andrew/IT). Reactivate when credentials available. |
 | `ADVI_INCMTL` | P0: Briefing complete. Low priority. | Production per-script timing profile. DS watermark design. AE dispatch. |
 
-**Closed 2026-04-13:** DEBT_1STRUN (all P1+P2 TOs complete, 0.5.0_AE delivered .005 IAM/DynamoDB imports, HEAD 66af3ad5), ADVI_OTHDED, ADVI_HDRSPL.
+**Closed 2026-04-13:** DEBT_1STRUN, ADVI_OTHDED, ADVI_HDRSPL.
 **Previously closed:** ADVI_PROFIL (portal-v2.1.39), ADVI_49PUSH (bd-v2.23.0), ADVI_GLDRST (silver-prep chain shipped, ops follow-ups carried forward).
 
 ### Pipeline Tags (verified 2026-04-13 session 25)
@@ -177,28 +177,28 @@ You do NOT produce architecture specs (CTO does). You DO align, route, and track
 | News | news-v2.9.5 |
 | Shared Infra | shared-infra-v1.6.0 |
 
-### Operational Notes (04-13 session 25)
+### Operational Notes (04-14 session 26)
 
-- **ADVI_OFFICE W1 GO:** DS (0.4.0_DS_ClientPlatform) should complete W6-003 first, then proceed with ADVI_OFFICE W1 (D_01 + D_00b OFC view). Send MCP to AE when D_01+D_00b committed and uploaded.
-- **ADVI_REBORN W6-003:** DS is in-flight. After DS ships + gold run confirms leaderboard.json has role_combination_breakdown, COO sends GO to DE for W6-004.
-- **ADVI_PROFAU .003+:** COO to read profau_gap_audit_response.md and author implementation TOs when Andrew signals priority.
-- **Yang v2.3.8:** CI deployed 2026-04-13 (SI annualization restore + LATEST.json fix, commit 62985fcf).
+- **ADVI_OFFICE BLOCKER:** DS must fix D_00b fix #3 (1-office aggregation anomaly in _build_rel_office_dim_d00b). Crash #1+#2 resolved. Re-upload D_00b to S3, MCP-signal AE when done.
+- **ADVI_REBORN W6-004:** DE has inbox message from DS (GO signal, 20260413T200813Z). DE is STALE — may need Andrew nudge if DE doesn't pick it up on startup.
+- **ADVI_PROFAU .003 QA:** DS to retry QA runner on c6i.16xlarge once available. Signal DE when platinum/advisors/{id}/summary.json confirmed to have capital_gains_ttm + cost_basis_by_year. COO then authors .004+.005 DE TOs.
+- **ADVI_PROFAU .003 TO:** Created retroactively this session (ADVI_PROFAU.003.ds-d02-book-level-tax-aggregates.md) — complete-committed, QA pending.
 
-### Pod 4 (ClientPlatform) -- Status as of 2026-04-13 session 25
-
-| Agent | Last Known Work | Pending |
-|-------|----------------|---------|
-| 0.4.0_DE | Session 2026-04-13: 15 portal DEV commits across OTHDED/HDRSPL/W6/ADHC/PII/audit (ebccdb27). | ADVI_OFFICE.W3 (staged), ADVI_REBORN.W6-004 (staged — after DS W6-003). |
-| 0.4.0_DT | Session 2026-04-13: SI double-annualize, Snapshot hang, PII rewire+revert, ADV drill gate (0dd4f1cd). | ADVI_OFFICE.W4 (staged), deployment_map. |
-| 0.4.0_DS | Session 2026-04-13: SI fix, GEO AUA, W6-001 through W6-005, PROFAU.001+.002 (9eece947, f2507121). yang-v2.3.8 deployed. | ADVI_REBORN.W6-003 (pending, self-authored TO). ADVI_OFFICE.W1 (staged — after W6-003 ships). |
-| 0.4.2_RD | Session 2026-04-13: header BETA badge + Firm dropdown + FeeEfficiency polish (bcbc812c). | page_inventory. |
-
-### Shared Services -- Status as of 2026-04-13 session 25
+### Pod 4 (ClientPlatform) -- Status as of 2026-04-14 session 26
 
 | Agent | Last Known Work | Pending |
 |-------|----------------|---------|
-| 0.5.0_AE_OpalETL | DEBT_1STRUN .005 COMPLETE (DynamoDB/IAM imports, HEAD 66af3ad5). | infrastructure_inventory. |
-| 0.6.0_AE_PartnerETL | Most recent: ADVI_49PUSH wave work, ADVI_GLDRST gold runs. | ADVI_OFFICE.W2 (staged — after DS W1 MCP signal). infrastructure_inventory. |
+| 0.4.0_DE | Session 2026-04-13: 15 portal DEV commits (ebccdb27). STALE at startup. | ADVI_REBORN.W6-004 (inbox GO received — needs to flip to pending). ADVI_OFFICE.W3 (staged). |
+| 0.4.0_DT | Session 2026-04-13: SI double-annualize + ADV drill gate (0dd4f1cd). | ADVI_OFFICE.W4 (staged), deployment_map. |
+| 0.4.0_DS | Session 2026-04-14: starting up. Last session: W6-001+003+005, PROFAU.001+.002+.003, ADVI_OFFICE.W1 D_00b crashes #1+#2 (15512bed). | ADVI_OFFICE.W1 D_00b fix #3 (1-office anomaly). PROFAU.003 QA retry. |
+| 0.4.2_RD | Session 2026-04-13: header BETA badge + FeeEfficiency polish (bcbc812c). | page_inventory. |
+
+### Shared Services -- Status as of 2026-04-14 session 26
+
+| Agent | Last Known Work | Pending |
+|-------|----------------|---------|
+| 0.5.0_AE_OpalETL | DEBT_1STRUN .005 COMPLETE (66af3ad5). | infrastructure_inventory. |
+| 0.6.0_AE_PartnerETL | ADVI_OFFICE W2: dim uploaded, D_01 S3-ready, D_00b blocked fix #3 (103eaad9). | ADVI_OFFICE.W2 (pending — staged on DS D_00b fix). infrastructure_inventory. |
 | 0.7.0_AE_CloudOps | AUTH_TFIMPT 3/3 COMPLETE (shared-infra-v1.6.0). | infrastructure_inventory. |
 
 **NOTE:** This dashboard is corrected on every COO startup. Do not treat it as
