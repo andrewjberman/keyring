@@ -2,7 +2,7 @@
   "project_code": "BDPL_CNPRCS",
   "macro_code": "BDPL",
   "name": "BD Canonical Prices + Classification Refactor",
-  "description": "Durable fix for the $23M BNP phantom and 49F Alternatives instability. Covers WP-3 through WP-8 from the 2026-04-14 DS brief: CUSIP backfill into silver/transactions, gold CUSIP enrichment, CUSIP-primary/SuperClass-aware canonical prices refactor with append-only daily ledger, BD-primary append-only classification ledger, permanent phantom diagnostic, and 49F alternatives regression test. Depends on BDPL_ASTDIM for silver/bd_assets. Tactical 3-bond scoped-exceptions fix authorized as parallel ad-hoc TO.",
+  "description": "Durable fix for the $23M BNP phantom, 49F Alternatives instability, AND the 10,832 phantom-position / $177M FIFO mismatch caused by (account_id, asset_name) keying. Covers WP-3 through WP-9 from the 2026-04-14 DS brief (addendum added WP-9 + Q8): CUSIP backfill into silver/transactions, gold CUSIP enrichment, CUSIP-primary/SuperClass-aware canonical prices refactor with append-only daily ledger, BD-primary append-only classification ledger, permanent phantom diagnostic, 49F alternatives regression test, and CUSIP-keyed FIFO replay + phantom reclassification. Depends on BDPL_ASTDIM for silver/bd_assets. Tactical 3-bond scoped-exceptions fix authorized as parallel ad-hoc TO.",
   "prds": [
     {
       "path": "docs/architecture/BD_CANONICAL_PRICES_CLASSIFICATION_REFACTOR.md",
