@@ -150,15 +150,15 @@ You do NOT produce architecture specs (CTO does). You DO align, route, and track
 
 **Commit only:** Session logs, org docs. Use `--author="2.0.0_SA_COO <2.0.0_SA_COO@opal.agent>"`.
 
-## Pod Delivery Dashboard -- Updated 2026-04-14 (COO session 26)
+## Pod Delivery Dashboard -- Updated 2026-04-14 (COO session 27)
 
 ### Active Projects
 
 | Project | Status | Pending Work |
 |---------|--------|-------------|
-| `ADVI_OFFICE` | AE W2 QA run in progress (GO 2026-04-14). D_01+dim on S3. D_00b fix #3 live. | AE W2 PROD signal → DE W3 (OFC frontend) → .004 type fix → .005 L3/L4 wire → DT W4 single deploy. |
+| `ADVI_OFFICE` | AE W2 COMPLETE (D_03+D_04 local, platinum OFC live, 10 offices). W3 DE COMPLETE (7dd0a7e portal DEV). W4 DT in progress (GO 2026-04-14). | DT W4 smoke-test + portal PROD tag. |
 | `ADVI_REBORN` | **CLOSED 2026-04-14.** W6-003 (1d70ecaf) + W6-004 (0225d359) both complete. 4-cell matrix validated. | — |
-| `ADVI_PROFAU` | .001+.002+.003 committed. .004+.005 DE TOs staged (authored 2026-04-14). .003 QA still pending (DS retry). | .004+.005 GO to DE after W3 complete. .003 QA signal from DS triggers .006 authoring. |
+| `ADVI_PROFAU` | .001-.005 ALL COMPLETE. .003 QA confirmed 2026-04-14 (capital_gains_ttm + cost_basis_by_year live). .006 DE staged (gate clear, GO issued). D_02 NNA per-role canonical fix (d51e44ef) — ships tonight via nightly PROD run. | .006 DE in progress. .007 (is_fee_paying per AdvisorClient) + Q3/Q7 DS TOs pending authoring. |
 | `ADHC_DESIGN` | Phase 2: all pod .0.1/.0.2/.0.3/0.4 TOs COMPLETE. | Attribution RD .001/.015/.024 + Valuation RD .007 still staged — agents not LIVE. Backlog: .033 react-hooks/set-state-in-effect (low priority). |
 | `ADHC_TMSTEL` | P0: PRD complete. | Azure AD app registration (Andrew/IT). Reactivate when credentials available. |
 | `ADVI_INCMTL` | P0: Briefing complete. Low priority. | Production per-script timing profile. DS watermark design. AE dispatch. |
@@ -179,28 +179,28 @@ You do NOT produce architecture specs (CTO does). You DO align, route, and track
 | News | news-v2.9.5 |
 | Shared Infra | shared-infra-v1.6.0 |
 
-### Operational Notes (04-14 session 26)
+### Operational Notes (04-14 session 27)
 
-- **ADVI_OFFICE BLOCKER:** DS must fix D_00b fix #3 (1-office aggregation anomaly in _build_rel_office_dim_d00b). Crash #1+#2 resolved. Re-upload D_00b to S3, MCP-signal AE when done.
-- **ADVI_REBORN W6-004:** DE has inbox message from DS (GO signal, 20260413T200813Z). DE is STALE — may need Andrew nudge if DE doesn't pick it up on startup.
-- **ADVI_PROFAU .003 QA:** DS to retry QA runner on c6i.16xlarge once available. Signal DE when platinum/advisors/{id}/summary.json confirmed to have capital_gains_ttm + cost_basis_by_year. COO then authors .004+.005 DE TOs.
-- **ADVI_PROFAU .003 TO:** Created retroactively this session (ADVI_PROFAU.003.ds-d02-book-level-tax-aggregates.md) — complete-committed, QA pending.
+- **ADVI_OFFICE W4:** DT in progress. Batch includes W6-004 + W3 + PROFAU.004 + .005. Smoke-test (5-step OFC checklist) required before MCP to COO.
+- **ADVI_PROFAU .006:** GO sent to DE (20260414T151610Z). cost_basis_by_year is a list — DE must iterate by index/purchase_year. .006 push is a separate DT deploy after W4 completes.
+- **D_02 NNA per-role canonical fix (d51e44ef):** DS committed + uploaded. No manual AE trigger needed — nightly PROD run at 22:00 UTC tonight will push D_02 to platinum. Travis Penfield Lifetime Activity NNA will then show $253M (matching leaderboard). Per-role fields available for future DE wiring.
+- **ec2-auto-shutdown-enforcer:** security-scanner-v1.0.2 correct fix live. QA runner (i-0090b823a4a0997e3) has AutoShutdown=disabled tag set.
 
-### Pod 4 (ClientPlatform) -- Status as of 2026-04-14 session 26
+### Pod 4 (ClientPlatform) -- Status as of 2026-04-14 session 27
 
 | Agent | Last Known Work | Pending |
 |-------|----------------|---------|
-| 0.4.0_DE | Session 2026-04-14: W6-004 COMPLETE (0225d359 — 4-cell matrix, no new code). | ADVI_OFFICE.W3 (staged — GO on AE W2 PROD signal). PROFAU.004 + .005 (staged — GO after W3). |
-| 0.4.0_DT | Session 2026-04-13: SI double-annualize + ADV drill gate (0dd4f1cd). | ADVI_OFFICE.W4 (staged), deployment_map. |
-| 0.4.0_DS | Session 2026-04-14: starting up. Last session: W6-001+003+005, PROFAU.001+.002+.003, ADVI_OFFICE.W1 D_00b crashes #1+#2 (15512bed). | ADVI_OFFICE.W1 D_00b fix #3 (1-office anomaly). PROFAU.003 QA retry. |
-| 0.4.2_RD | Session 2026-04-13: header BETA badge + FeeEfficiency polish (bcbc812c). | page_inventory. |
+| 0.4.0_DE | Session 2026-04-14: W6-004 + PROFAU.004 + .005 + OFFICE.W3 ALL COMPLETE (batch handed to DT). | PROFAU.006 (staged → pending, GO issued). Separate DT push after W4. |
+| 0.4.0_DT | Session 2026-04-13: SI double-annualize + ADV drill gate. | ADVI_OFFICE.W4 (pending — in progress). deployment_map. |
+| 0.4.0_DS | Session 2026-04-14: D_00b fix #3 (5b4439e1). PROFAU.003 QA confirmed. D_02 NNA per-role canonical fix (d51e44ef, uploaded). | — (D_02 deploys tonight nightly). |
+| 0.4.2_RD | Session 2026-04-13: header BETA badge + FeeEfficiency polish. 2026-04-14: starting up. | page_inventory. |
 
-### Shared Services -- Status as of 2026-04-14 session 26
+### Shared Services -- Status as of 2026-04-14 session 27
 
 | Agent | Last Known Work | Pending |
 |-------|----------------|---------|
 | 0.5.0_AE_OpalETL | DEBT_1STRUN .005 COMPLETE (66af3ad5). | infrastructure_inventory. |
-| 0.6.0_AE_PartnerETL | ADVI_OFFICE W2: dim uploaded, D_01 S3-ready, D_00b blocked fix #3 (103eaad9). | ADVI_OFFICE.W2 (pending — staged on DS D_00b fix). infrastructure_inventory. |
+| 0.6.0_AE_PartnerETL | ADVI_OFFICE W2 COMPLETE (D_03+D_04 local). security-scanner-v1.0.2 enforcer fix live. Phase 3 Day 1 diff done (0 violations). | Phase 3 Day 2-5 diffs (nightly, Apr 15-17). infrastructure_inventory. |
 | 0.7.0_AE_CloudOps | AUTH_TFIMPT 3/3 COMPLETE (shared-infra-v1.6.0). | infrastructure_inventory. |
 
 **NOTE:** This dashboard is corrected on every COO startup. Do not treat it as
