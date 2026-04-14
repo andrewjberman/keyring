@@ -7,8 +7,8 @@
     {"path": "docs/audits/advisor-profile-book-input-mapping-2026-04-13.md", "label": "DE+RD joint audit doc — input/source mapping across Profile + Book L2/L3/L4", "date": "2026-04-13"}
   ],
   "status": "active",
-  "phase": ".001 DS audit COMPLETE (cbd98266). .002 D_02 fee_earning_mask is_billable gate + is_fee_paying on AdvisorClient COMPLETE (f2507121, QA verified). .003 D_02 book-level capital_gains_ttm + cost_basis_by_year COMMITTED (b2e4e668) — QA run pending (c6i capacity issue; not yet gold-verified). DE unblocked for .004/.005 wiring once QA clears. .004 (PlatinumAdvisorSummary type fix, Q6) + .005 (L2/L3/L4 frontend wire, Q2+Q4+Q5) TOs pending COO authoring. DS Q2 (is_fee_paying per client in D_02) + Q3/Q7 (fee_earning_mask alignment) still need separate DS TOs.",
-  "blocking": "COO authors DE TOs .004 (PlatinumAdvisorSummary type-only fix) + .005 (L2/L3/L4 frontend wire) once .003 QA run confirms platinum output. Also: DS Q2 (is_fee_paying per AdvisorClient in D_02) + Q3/Q7 (D_02 line 960 billability gate) need DS TOs not yet authored.",
+  "phase": ".001-.005 ALL COMPLETE 2026-04-14. .003 QA folded into OFFICE W2 group-D run (AE in progress). .004 (0050c05 PlatinumAdvisorSummary 7 book fields + role_breakdown type fix). .005 (d1f9747 L3 fee_summary FeeSummaryPanel + L4 total_market_value). .006 (Q1 TaxCostBasisPanel L2) staged pending .003 QA confirmation from AE W2 run. .007 (Q2 is_fee_paying per AdvisorClient) staged pending DS Q2 TO.",
+  "blocking": ".006: AE W2 gold run must confirm platinum/advisors/{id}/summary.json has capital_gains_ttm + cost_basis_by_year. .007: DS Q2 TO not yet authored. DS Q3/Q7 D_02 fee_earning_mask billability alignment TOs also not yet authored.",
   "created": "2026-04-13",
   "pods": ["0.4"],
   "pipeline": "bd-pipeline",
