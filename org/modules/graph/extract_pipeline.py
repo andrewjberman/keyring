@@ -492,7 +492,7 @@ def _extract_hardcoded_paths(content: str) -> tuple[list[str], list[str]]:
             continue
 
         # Find string literals: 'platinum/...' or "platinum/..."
-        for m in re.finditer(r"""['"]((platinum|gold|silver|bronze)/[^'"]+\.(?:json|parquet))['"]""", line):
+        for m in re.finditer(r"""['"]((platinum|gold|silver|bronze)/[^'"]+\.(?:json|parquet|csv))['"]""", line):
             path = m.group(1)
             if _HARDCODED_WRITE_CONTEXT.search(line):
                 writes.add(path)
@@ -500,7 +500,7 @@ def _extract_hardcoded_paths(content: str) -> tuple[list[str], list[str]]:
                 reads.add(path)
 
         # Find f-string literals: f'platinum/clients/{rid}/summary.json'
-        for m in re.finditer(r"""f['"]((platinum|gold|silver|bronze)/[^'"]+\.(?:json|parquet))['"]""", line):
+        for m in re.finditer(r"""f['"]((platinum|gold|silver|bronze)/[^'"]+\.(?:json|parquet|csv))['"]""", line):
             raw_path = m.group(1)
             # Replace {variable} with {*} for parameterized paths
             normalized = re.sub(r'\{[^}]+\}', '{*}', raw_path)
@@ -533,6 +533,52 @@ def _extract_hardcoded_paths(content: str) -> tuple[list[str], list[str]]:
     writes = _dedup_paths(writes)
 
     return sorted(reads), sorted(writes)
+
+
+def _extract_dynamic_refs(content: str) -> list[str]:
+    """Scan for non-constant S3 read patterns that aren't tracked via s3_layout.py.
+
+    Detects:
+    - pandas read_parquet/read_csv with s3:// URIs
+    - s3.get_object / s3_client.get_object with f-string keys containing variables
+    - Direct s3:// URI strings in any context
+
+    Returns list of path templates (variables replaced with {*}).
+    These are emitted as S3-DYNAMIC annotations in comp-pipescript io output.
+    """
+    dynamic: set[str] = set()
+
+    content_collapsed = _collapse_multiline_calls(content)
+
+    for line in content_collapsed.splitlines():
+        stripped = line.strip()
+        if stripped.startswith(('#', 'from ', 'import ')):
+            continue
+
+        # pandas: pd.read_parquet('s3://bucket/path') or pd.read_csv(f's3://...')
+        for m in re.finditer(r"""(?:read_parquet|read_csv|read_json)\s*\(\s*f?['"]s3://[^/'"]+/([^'"]+)['"]""", line):
+            path = m.group(1)
+            normalized = re.sub(r'\{[^}]+\}', '{*}', path)
+            dynamic.add(normalized)
+
+        # s3.get_object with f-string Key containing variables
+        # e.g.: s3.get_object(Bucket='opal-data-bd', Key=f'gold/dimensions/{name}.csv')
+        for m in re.finditer(r"""get_object\s*\([^)]*Key\s*=\s*f['"]((platinum|gold|silver|bronze)/[^'"]+)['"]""", line):
+            path = m.group(1)
+            normalized = re.sub(r'\{[^}]+\}', '{*}', path)
+            # Only include if it has a variable (otherwise extract_hardcoded_paths handles it)
+            if '{*}' in normalized:
+                dynamic.add(normalized)
+
+        # Any s3:// URI with gold/silver/bronze/platinum prefix in any context
+        for m in re.finditer(r"""s3://[^/'"]+/((platinum|gold|silver|bronze)/[^/'"*\s]+(?:/[^/'"*\s]+)*)""", line):
+            path = m.group(1)
+            if not path.endswith(('.json', '.parquet', '.csv', '/')):
+                continue
+            normalized = re.sub(r'\{[^}]+\}', '{*}', path)
+            dynamic.add(normalized)
+
+    return sorted(dynamic)
 
 
 def _extract_script_io(

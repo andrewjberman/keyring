@@ -181,7 +181,7 @@ def build_graph(workspace_root: Path) -> TraceGraph:
     """Build the full trace graph from all extraction passes."""
     from .extract_s3 import extract_s3_edges
     from .extract_api import extract_api_edges
-    from .extract_eventbridge import extract_eventbridge_edges
+    from .extract_eventbridge import extract_eventbridge_edges, extract_lambda_ec2_edges
     from .extract_lambda_routes import extract_lambda_routes
 
     g = TraceGraph(built_at=time.time())
@@ -194,6 +194,9 @@ def build_graph(workspace_root: Path) -> TraceGraph:
 
     # Pass 4: EventBridge trigger mapper
     extract_eventbridge_edges(g, workspace_root)
+
+    # Pass 4b: Lambda -> EC2 SSM invocation edges
+    extract_lambda_ec2_edges(g, workspace_root)
 
     # Pass 5: Lambda handler router (must run after Pass 1 + Pass 2)
     extract_lambda_routes(g, workspace_root)

@@ -277,3 +277,136 @@ def extract_eventbridge_edges(graph: TraceGraph, workspace_root: Path):
                     "state": rule_info["state"],
                 },
             ))
+
+
+# ---------------------------------------------------------------------------
+# Lambda -> EC2 SSM invocation edges
+# ---------------------------------------------------------------------------
+
+# SSM send_command patterns in Lambda source
+_SSM_SEND_CMD = re.compile(
+    r'send_command\s*\(',
+    re.IGNORECASE,
+)
+
+# InstanceIds: ['i-...'] or os.environ.get('INSTANCE_ID')
+_INSTANCE_IDS_LITERAL = re.compile(
+    r'InstanceIds\s*=\s*\[\s*[\'"]([^\'"]+)[\'"]\s*\]'
+)
+
+_INSTANCE_IDS_ENVVAR = re.compile(
+    r'InstanceIds\s*=\s*\[?\s*(?:os\.environ(?:\.get)?\s*\(\s*[\'"](\w+)[\'"]|'
+    r'environ\.get\s*\(\s*[\'"](\w+)[\'"])',
+    re.IGNORECASE,
+)
+
+# Target EC2 instance tag filter: Targets=[{'Key': 'tag:Name', 'Values': ['bd-gold-runner']}]
+_SSM_TARGET_TAG = re.compile(
+    r"Targets\s*=\s*\[.*?'Values'\s*:\s*\[\s*['\"]([^'\"]+)['\"]",
+    re.DOTALL,
+)
+
+
+def extract_lambda_ec2_edges(graph: TraceGraph, workspace_root: Path):
+    """Detect Lambda -> EC2 edges via SSM send_command calls in Lambda source.
+
+    Scans each Lambda source file (via lambda-source-map.json) for
+    ssm.send_command / ssm_client.send_command calls. Creates INVOKES_EC2
+    edges in the graph: lambda:{name} -> ec2:{instance_id_or_name}.
+    """
+    source_map_file = (
+        workspace_root / "infra" / "aws" / "lambda" / "ci" / "lambda-source-map.json"
+    )
+    if not source_map_file.exists():
+        return
+
+    try:
+        import json as _json
+        source_map = _json.loads(source_map_file.read_text(encoding="utf-8"))
+    except Exception:
+        return
+
+    for fn_name, entry in source_map.items():
+        # Source map entries can be dicts with 'source' key or plain strings
+        if isinstance(entry, dict):
+            source_path = entry.get("source") or entry.get("path") or ""
+        else:
+            source_path = str(entry)
+
+        if not source_path:
+            continue
+
+        abs_path = workspace_root / source_path
+        # Accept both directory (look for lambda_function.py) and direct file path
+        if abs_path.is_dir():
+            candidates = list(abs_path.glob("lambda_function.py")) + list(abs_path.glob("index.py"))
+            if not candidates:
+                continue
+            abs_path = candidates[0]
+
+        if not abs_path.exists():
+            continue
+
+        try:
+            content = abs_path.read_text(encoding="utf-8", errors="replace")
+        except Exception:
+            continue
+
+        if not _SSM_SEND_CMD.search(content):
+            continue
+
+        # Found SSM send_command -- extract instance targets
+        lambda_node_id = f"lambda:{fn_name}"
+        if lambda_node_id not in graph.nodes:
+            graph.add_node(Node(
+                id=lambda_node_id,
+                node_type="LAMBDA",
+                label=fn_name,
+                metadata={"source": str(abs_path.relative_to(workspace_root))},
+            ))
+
+        targets: list[str] = []
+
+        # Literal instance ID
+        for m in _INSTANCE_IDS_LITERAL.finditer(content):
+            targets.append(f"i-{m.group(1)}" if not m.group(1).startswith('i-') else m.group(1))
+
+        # Env var reference
+        for m in _INSTANCE_IDS_ENVVAR.finditer(content):
+            env_var = m.group(1) or m.group(2) or ""
+            if env_var:
+                targets.append(f"${{{env_var}}}")
+
+        # SSM tag target
+        for m in _SSM_TARGET_TAG.finditer(content):
+            targets.append(f"tag:{m.group(1)}")
+
+        # If we found send_command but no target patterns, add a generic edge
+        if not targets:
+            targets.append("ec2-runner (target via SSM)")
+
+        for target in targets:
+            ec2_node_id = f"ec2:{target}"
+            if ec2_node_id not in graph.nodes:
+                graph.add_node(Node(
+                    id=ec2_node_id,
+                    node_type="EC2_SERVICE",
+                    label=target,
+                    metadata={"detection": "ssm_send_command"},
+                ))
+
+            edge_exists = any(
+                e.source == lambda_node_id and e.target == ec2_node_id
+                and e.edge_type == "INVOKES_EC2"
+                for e in graph.edges
+            )
+            if not edge_exists:
+                graph.add_edge(Edge(
+                    source=lambda_node_id,
+                    target=ec2_node_id,
+                    edge_type="INVOKES_EC2",
+                    metadata={
+                        "mechanism": "SSM send_command",
+                        "source_file": str(abs_path.relative_to(workspace_root)),
+                    },
+                ))

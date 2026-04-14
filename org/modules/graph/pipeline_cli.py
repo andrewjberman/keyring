@@ -21,6 +21,7 @@ Data sources (authoritative, not heuristic):
 
 import argparse
 import json
+import re
 import sys
 from pathlib import Path
 
@@ -160,11 +161,82 @@ def cmd_io(args):
     else:
         print("  WRITES: (none detected)")
 
+    # Dynamic refs: non-constant S3 reads (dim files, s3:// URIs, pandas reads)
+    from org.modules.graph.extract_pipeline import _extract_dynamic_refs
+    try:
+        script_path = _WORKSPACE / sio.file_path
+        script_content = script_path.read_text(encoding="utf-8", errors="replace")
+        dynamic_refs = _extract_dynamic_refs(script_content)
+        # Filter out paths already covered by hardcoded extraction
+        covered = set(sio.read_keys) | set(sio.write_keys)
+        new_dynamic = [d for d in dynamic_refs if not any(
+            c.endswith(d.replace('{*}', '').rstrip('/')) or
+            d.replace('{*}', '').rstrip('/') in c
+            for c in covered
+        )]
+        if new_dynamic:
+            print()
+            print(f"  S3-DYNAMIC READS ({len(new_dynamic)}) [runtime-resolved, not in s3_layout]:")
+            for path in new_dynamic:
+                print(f"    {path}  [read-at-runtime]")
+    except Exception:
+        pass
+
     if not sio.reads and not sio.writes:
         print()
         print("  WARN: no s3_layout constants or hardcoded S3 paths detected.")
         print("  Script may use dynamic key construction, DynamoDB, SQS, or non-standard S3 patterns.")
         print("  Manual review of the script body is required for accurate I/O mapping.")
+
+    # Platinum downstream: resolve platinum/* write targets to portal components
+    platinum_writes = []
+    for const in sio.writes:
+        if const.startswith('[hardcoded] '):
+            key = const[len('[hardcoded] '):]
+        else:
+            sk = dag.s3_keys.get(const)
+            key = sk.s3_path if sk else None
+        if key and 'platinum/' in key:
+            platinum_writes.append(key)
+
+    if platinum_writes and not args.no_portal:
+        print()
+        print("  PORTAL CONSUMERS (platinum keys -> routes -> components):")
+        try:
+            from org.modules.graph.extract_routes import build_routing_table
+            rt = build_routing_table(_WORKSPACE)
+            found_any = False
+            for key in sorted(set(platinum_writes)):
+                # Match routes: exact match or parameterized match ({*} in key)
+                key_pattern = re.escape(key).replace(r'\{\*\}', '[^/]+') if '{*}' in key else None
+                matching = []
+                for r in rt.routes:
+                    if not r.s3_key:
+                        continue
+                    if key_pattern:
+                        if re.fullmatch(key_pattern, r.s3_key):
+                            matching.append(r)
+                    else:
+                        # Exact or suffix match
+                        if r.s3_key == key or r.s3_key.endswith(key) or key.endswith(r.s3_key):
+                            matching.append(r)
+                if matching:
+                    found_any = True
+                    print(f"    {key}")
+                    for r in matching:
+                        comps = ', '.join(r.components) if r.components else '(unknown component)'
+                        auth_str = 'edge' if r.auth_edge else ('api-gw' if r.auth_api_gw else 'none')
+                        print(f"      endpoint: {r.endpoint_function or '(unnamed)'} -> {r.url_pattern}")
+                        print(f"      auth: {auth_str} | origin: {r.cf_origin_type}")
+                        print(f"      components: {comps}")
+            if not found_any:
+                print("    (no route matches -- these platinum keys may be served via catch-all behavior)")
+                print("    TIP: comp-platinum reverse <key> for a targeted reverse lookup")
+        except Exception as e:
+            print(f"    (routing table load failed: {e})")
+    elif platinum_writes and args.no_portal:
+        print()
+        print(f"  PORTAL CONSUMERS: {len(platinum_writes)} platinum write(s) -- skipped (--no-portal)")
 
 
 def cmd_chain(args):
@@ -326,6 +398,83 @@ def cmd_stats(args):
             print(f"    {sid}")
 
 
+def cmd_deployed(args):
+    """Compare local gold script files against their S3-uploaded code versions.
+    Uses S3 ETag (MD5) comparison. Requires aws CLI in PATH."""
+    import hashlib
+    import subprocess
+
+    dag = _build_dag()
+    S3_BUCKET = "opal-data-bd"
+    S3_CODE_PREFIX = "code/gold/"
+
+    script_filter = args.script_id.upper() if args.script_id else None
+
+    print("DEPLOYED STATUS: local repo vs s3://opal-data-bd/code/gold/")
+    print()
+
+    stale = []
+    missing_s3 = []
+    matched = []
+
+    for sid, sio in sorted(dag.scripts.items(), key=lambda x: x[1].run_order):
+        if script_filter and script_filter.upper() not in sid.upper():
+            continue
+
+        local_path = _WORKSPACE / sio.file_path
+        if not local_path.exists():
+            print(f"  {sid:<8} LOCAL_MISSING  {sio.filename}")
+            continue
+
+        # Compute local MD5 (S3 ETags for non-multipart uploads are MD5 hex)
+        local_md5 = hashlib.md5(local_path.read_bytes()).hexdigest()
+        s3_key = f"{S3_CODE_PREFIX}{sio.filename}"
+
+        try:
+            result = subprocess.run(
+                ["aws", "s3api", "head-object",
+                 "--bucket", S3_BUCKET,
+                 "--key", s3_key,
+                 "--query", "ETag",
+                 "--output", "text"],
+                capture_output=True, text=True, timeout=15,
+            )
+        except subprocess.TimeoutExpired:
+            print(f"  {sid:<8} TIMEOUT        {sio.filename}  (aws CLI hung)")
+            continue
+        except FileNotFoundError:
+            print(f"  {sid:<8} ERROR          aws CLI not found in PATH")
+            break
+
+        if result.returncode != 0:
+            print(f"  {sid:<8} MISSING_ON_S3  {sio.filename}")
+            missing_s3.append(sid)
+            continue
+
+        # ETag is returned quoted: '"abcdef..."' -- strip quotes
+        s3_etag = result.stdout.strip().strip('"')
+
+        if local_md5 == s3_etag:
+            status = "MATCH"
+            matched.append(sid)
+        else:
+            status = "STALE"
+            stale.append(sid)
+
+        print(f"  {sid:<8} {status:<14} {sio.filename}")
+        if status == "STALE":
+            print(f"           local:  {local_md5}")
+            print(f"           s3:     {s3_etag}")
+
+    print()
+    print(f"  Summary: {len(matched)} MATCH, {len(stale)} STALE, {len(missing_s3)} MISSING_ON_S3")
+    if stale:
+        print(f"  STALE scripts: {', '.join(stale)}")
+        print("  Run build-and-upload.sh to sync stale scripts to S3.")
+    elif not stale and not missing_s3:
+        print("  All checked scripts are up-to-date on S3.")
+
+
 # ---------------------------------------------------------------------------
 # Main
 # ---------------------------------------------------------------------------
@@ -345,6 +494,8 @@ def main():
     p_io = sub.add_parser('io', help='Input/output manifest for one script')
     p_io.add_argument('script_id', help='Script ID (e.g., D_00)')
     p_io.add_argument('--json', action='store_true', help='JSON output')
+    p_io.add_argument('--no-portal', action='store_true', dest='no_portal',
+                      help='Skip routing table lookup for portal consumer resolution')
 
     # chain
     p_chain = sub.add_parser('chain', help='Show chain membership and order')
@@ -371,6 +522,11 @@ def main():
     # stats
     sub.add_parser('stats', help='Pipeline graph statistics')
 
+    # deployed
+    p_deployed = sub.add_parser('deployed', help='Compare local scripts against S3-uploaded versions')
+    p_deployed.add_argument('script_id', nargs='?', default='',
+                            help='Optional: check only this script (e.g. D_00). Omit for all.')
+
     args = parser.parse_args()
     if not args.command:
         parser.print_help()
@@ -385,6 +541,7 @@ def main():
         'overlap': cmd_overlap,
         'inject': cmd_inject,
         'stats': cmd_stats,
+        'deployed': cmd_deployed,
     }
     commands[args.command](args)
 

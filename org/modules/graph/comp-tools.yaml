@@ -99,17 +99,18 @@ tools:
       - Modifying a gold script: check who consumes your output before changing schema
     subcommands:
       dag: "Full pipeline DAG with I/O per script (--json for machine output)"
-      io: "comp-pipescript io D_00 -- input/output manifest with upstream writers and downstream consumers"
+      io: "comp-pipescript io D_00 -- input/output manifest with upstream writers and downstream consumers. Now includes: S3-DYNAMIC annotations for runtime-resolved reads (dim CSVs, pandas s3:// URIs), and PORTAL CONSUMERS section resolving platinum/* write targets to portal endpoints + components. Use --no-portal to skip routing table lookup."
       chain: "comp-pipescript chain downstream -- chain membership + order + I/O counts"
       feeds: "comp-pipescript feeds D_00 -- upstream scripts that write artifacts D_00 reads"
       consumers: "comp-pipescript consumers C_07 -- downstream scripts that read C_07 output"
-      overlap: "comp-pipescript overlap D_00 D_03 -- shared S3 artifacts between two scripts"
+      overlap: "comp-pipescript overlap D_00 D_03 -- shared S3 artifacts between two scripts. COO MANDATE: run this on every pair of scripts before authoring cross-domain coordination blocks."
       inject: "Inject pipeline edges into comp-trace graph cache (run after comp-build)"
       stats: "Graph stats + warnings for scripts with missing reads/writes"
-    cost: "<1s"
+      deployed: "comp-pipescript deployed [D_00] -- compare local gold scripts against s3://opal-data-bd/code/gold/ ETags. MATCH/STALE/MISSING_ON_S3 per script. Run before any gold run to confirm runner has latest code. Requires aws CLI."
+    cost: "<1s (io/feeds/consumers/overlap); ~2-5s (deployed, makes AWS API calls)"
     data_sources: "lib/s3_layout.py (AST-parsed), gold_dispatch.sh (chain/catalog), each script's imports"
-    replaces: "Manual import tracing, grepping s3_layout constants, reading gold_pipeline_script_file_flow.md"
-    note: "Use this instead of comp-trace for gold script dependency questions. comp-trace covers cross-layer (frontend->Lambda->S3); comp-pipescript covers intra-pipeline (script->S3->script)."
+    replaces: "Manual import tracing, grepping s3_layout constants, reading gold_pipeline_script_file_flow.md; manual aws s3 ls + sha256sum for deployment verification"
+    note: "Use this instead of comp-trace for gold script dependency questions. comp-trace covers cross-layer (frontend->Lambda->S3); comp-pipescript covers intra-pipeline (script->S3->script). comp-pipescript io now shows portal consumers for platinum/* keys -- eliminates the 'terminal in graph' coverage gap for platinum publishers."
 
   comp-routes:
     command: "comp-routes <subcommand> [args]"
@@ -209,6 +210,23 @@ tools:
     data_sources: "pseudonymizer.py (target field list), auth-validator-edge (role matrix), comp-transform (rendered fields)"
     replaces: "Manual cross-referencing of pseudonymizer.py against component source to find PII exposure"
 
+  comp-tooltip:
+    command: "comp-tooltip <subcommand>"
+    when: |
+      - Tooltip migration audit: which sites use inline navy/silver/hardcoded tooltips vs <DataTooltip>
+      - Before a tooltip cleanup sprint: get full inventory of drift sites
+      - After a tooltip migration: verify all sites are canonical (DATATOOLTIP)
+      - One-off audit tool -- not needed for routine gold/portal work
+    subcommands:
+      scan: "Full scan, all variants -- shows every tooltip site grouped by type"
+      drift: "Only non-conforming sites (migration targets)"
+      canonical: "Only sites using <DataTooltip> (post-migration)"
+      migrated: "Alias for canonical"
+      summary: "Counts by variant + migration progress percentage"
+    cost: "<1s"
+    data_sources: "portal/src/**/*.tsx"
+    note: "One-off audit tool. Scans for inline navy/silver/hardcoded tooltip patterns vs <DataTooltip> canonical component. Use for tooltip migration sprints only."
+
 # ============================================================================
 # AGENT DECISION TREE
 # ============================================================================
@@ -216,11 +234,14 @@ tools:
 # Pick the right tool for the question:
 #
 #   PIPELINE (gold scripts, S3 artifacts, execution order):
-#     Q: "What does script D_00 read/write?"    -> comp-pipescript io D_00
-#     Q: "What feeds script D_00?"              -> comp-pipescript feeds D_00
-#     Q: "What consumes C_07 output?"           -> comp-pipescript consumers C_07
-#     Q: "What's the chain execution order?"    -> comp-pipescript chain downstream
-#     Q: "Do D_00 and D_03 share inputs?"       -> comp-pipescript overlap D_00 D_03
+#     Q: "What does script D_00 read/write?"          -> comp-pipescript io D_00
+#     Q: "What feeds script D_00?"                    -> comp-pipescript feeds D_00
+#     Q: "What consumes C_07 output?"                 -> comp-pipescript consumers C_07
+#     Q: "What's the chain execution order?"          -> comp-pipescript chain downstream
+#     Q: "Do D_00 and D_03 share inputs?"             -> comp-pipescript overlap D_00 D_03
+#     Q: "Is this script deployed to S3?"             -> comp-pipescript deployed D_00
+#     Q: "Are all gold scripts up-to-date on S3?"     -> comp-pipescript deployed
+#     Q: "What portal components consume D_04 output?" -> comp-pipescript io D_04  (see PORTAL CONSUMERS section)
 #
 #   SERVING (CloudFront, auth, Lambda, frontend):
 #     Q: "How does this data reach the browser?" -> comp-routes trace getEmployeeLeaderboard
@@ -262,7 +283,8 @@ tools:
 # ============================================================================
 #
 # DS agents: comp-pipescript io/feeds/consumers before modifying gold scripts.
-#            comp-pipescript overlap when consolidating scripts.
+#            comp-pipescript deployed before every gold run (confirm runner has latest code).
+#            comp-pipescript overlap when consolidating scripts OR before authoring cross-domain TOs.
 #            comp-platinum tab-audit for Phase 2 audits (replaces manual tracing).
 # DE agents: comp-transform trace before reading component source (may save the read).
 #            comp-platinum page before any component wiring changes.
@@ -272,8 +294,10 @@ tools:
 # DT agents: comp-diff --staged before committing. comp-routes behaviors
 #            before touching CloudFront or Lambda@Edge.
 # AE agents: comp-pipescript chain before modifying dispatch.
+#            comp-pipescript deployed before triggering any gold run (verify code is on S3).
 #            comp-blast on infrastructure resources before changes.
 # COO: comp-platinum tab-audit + comp-blast when decomposing PRDs.
+#      comp-pipescript overlap A B before creating cross-domain coordination blocks in TOs.
 # CTO: comp-platinum + comp-routes + comp-pipescript for architecture design.
 #
 # After comp-build, run "comp-pipescript inject" to enrich the trace graph

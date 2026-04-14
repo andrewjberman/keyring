@@ -423,10 +423,33 @@ def cmd_schema_check(args):
         print(f"    type fields:     {len(type_roots)}")
         print(f"    rendered fields: {len(rendered_roots)}")
 
-        if missing:
+        # Detect runtime destructure aliases: const { X } = parentVar
+        # These appear as "missing" fields but are actually flattened from the parent type.
+        component_source = path.read_text(encoding="utf-8", errors="replace")
+        alias_map: dict[str, str] = {}  # alias_name -> parent_var
+        for dm in re.finditer(
+            r'const\s*\{([^}]+)\}\s*=\s*(\w+)',
+            component_source
+        ):
+            parent = dm.group(2)
+            for name in re.split(r'[,\s]+', dm.group(1)):
+                clean = name.strip().split(':')[0].strip()  # handle renaming: { x: y }
+                if clean and clean.isidentifier():
+                    alias_map[clean] = parent
+
+        # Partition missing into true-missing vs alias
+        true_missing = set()
+        aliases_found: dict[str, str] = {}
+        for m in missing:
+            if m in alias_map:
+                aliases_found[m] = alias_map[m]
+            else:
+                true_missing.add(m)
+
+        if true_missing:
             has_issues = True
-            print(f"    !! MISSING FROM TYPE ({len(missing)}):")
-            for m in sorted(missing):
+            print(f"    !! MISSING FROM TYPE ({len(true_missing)}):")
+            for m in sorted(true_missing):
                 # Find where it's rendered
                 locations = []
                 for ref in flow.jsx_refs:
@@ -439,6 +462,12 @@ def cmd_schema_check(args):
                 print(f"       {m}{loc_str}")
                 print(f"         Component renders this but {check_type} does not define it.")
                 print(f"         This will be undefined at runtime unless aliased or injected.")
+
+        if aliases_found:
+            print(f"    NOTE (runtime aliases, {len(aliases_found)} -- not type violations):")
+            for name, parent in sorted(aliases_found.items()):
+                print(f"       {name}  <- destructured from '{parent}' (const {{ {name} }} = {parent})")
+                print(f"         Check that '{parent}.{name}' exists in the type. Not flagged as MISSING.")
 
         if unused_non_meta:
             print(f"    UNUSED ({len(unused_non_meta)}):")
