@@ -1,0 +1,21 @@
+{
+  "project_code": "BDPL_ASTDIM",
+  "macro_code": "BDPL",
+  "name": "BD Asset Dimension Pipeline",
+  "description": "New daily BD pipeline for AssetDimTXNs_OpalCapital_Daily template. Bronze + silver layers producing silver/assets/{date}.parquet transaction partitions and silver/bd_assets.parquet asset dimension table. Mirrors silver/fees pattern. Future gold integration (D_03 + C_06 join on bd_assets) deferred to separate project.",
+  "prds": [
+    {
+      "path": "docs/architecture/BD_ASSET_DIM_PIPELINE.md",
+      "label": "BD Asset Dimension Pipeline PRD",
+      "date": "2026-04-14"
+    }
+  ],
+  "status": "active",
+  "phase": "Phase 1: W1/W3/W5 COMPLETE via AE absorption 2026-04-14 (backfill_v2/assets 17 xlsx, forwardfill_v2/assets SSM-tested, silver/assets 1823 partitions, silver/bd_assets.parquet 3.19M rows). W6 FIRED to AE (SSM + Lambda + EventBridge + bd-v2.24.0 tag). W2 (super_class recon) + W4 (blend rule dim builder) remain DS-pending — Andrew-held.",
+  "blocking": "W6 AE in flight. W2 + W4 DS held per Andrew. W7 verification after W6 deploys.",
+  "created": "2026-04-14",
+  "pods": ["0.4", "0.6"],
+  "pipeline": "bd-pipeline",
+  "thread_counter": 0,
+  "threads": []
+}
