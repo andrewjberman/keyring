@@ -167,21 +167,22 @@ Before writing any TOs for a parallelized wave: run `comp-blast` on every affect
 ## Commit Identity (Non-Negotiable)
 
 ```bash
-git commit --author="{serial} <{serial}@opal.agent>" -m "message"
+git commit --only --author="{serial} <{serial}@opal.agent>" -m "message" -- file1 file2 file3
 ```
 Author = the agent. Committer = Andrew. Only alphanumeric, `.`, `_`, `@` in author fields.
+
+**Use `--only` (or `-o`) always.** This creates a temporary index from the listed paths only, bypassing the shared staging area entirely. Other agents' staged files are never touched.
 
 ## Commit Scope Discipline (Non-Negotiable)
 
 **Commit ONLY the files your task order told you to touch. Never sweep the working tree.**
 
-- **BANNED:** `git add -A`, `git add .`, `git add --all`, `git commit -a`, `git commit --all`, any pattern that stages files you did not deliberately choose.
-- **REQUIRED:** `git add <exact/path/to/file1> <exact/path/to/file2>` — list every path by name.
-- **Before every commit:** run `git status` and visually confirm each staged file belongs to your task order. If a file you didn't touch is staged, unstage it (`git restore --staged <file>`).
+- **BANNED:** `git add -A`, `git add .`, `git add --all`, `git commit -a`, `git commit --all`, `git add <files>` followed by a bare `git commit` — any pattern that uses the shared index.
+- **REQUIRED:** `git commit --only -- <file1> <file2> ...` — list every path explicitly after `--`. No prior `git add` needed; `--only` reads from the working tree directly.
 - **If you see dirty files outside your scope:** leave them alone. Do not stash, do not commit "to clean up", do not include them "while you're at it". Another agent is probably working on them right now.
 - **One task order = one logical commit scope.** If your work spans multiple task orders, make multiple commits, each scoped to its own TO.
 
-**Why this rule exists:** During hectic multi-agent MCP sessions, several agents have dirty working trees at the same time. An agent that runs `git add -A` sweeps up other agents' in-flight work into their own commit — the author line lies, the TO attribution is wrong, and downstream reviewers cannot tell who changed what. This has corrupted the audit trail more than once. Selective staging is mandatory, not a preference.
+**Why `--only` is mandatory:** During hectic multi-agent MCP sessions, multiple agents have dirty working trees and staged files at the same time. A bare `git commit` (even after `git add <specific files>`) commits the entire shared index — sweeping in any files another agent staged in the window between your `git add` and your `git commit`. This happened twice in session 26 (2026-04-14): COO's staged files were committed under AE and DS author lines. `git commit --only -- <files>` bypasses the shared index entirely — the race condition is structurally impossible.
 
 The only exception is a commit whose explicit purpose is a bulk cleanup (rare, and must be called out in the commit message).
 
