@@ -147,6 +147,38 @@ This layer is defined in the BD pipeline Terraform module, not in shared-infra. 
 
 ---
 
+## Schwab Ingest (AE-owned recurring task)
+
+When DS reports stale `silver/{ACC,RPS,TRN}` partitions or new Schwab files have landed locally, run the full ingest yourself. DS is blocked at the bucket policy (resource-based deny on PutObject for `Andrew_Berman` IAM user without SSE; she cannot upload directly).
+
+**Source (local):** `C:\Users\AndrewBerman\OneDrive - Opal Capital\Documents\Schwab Data Delivery\{account}\` (49F is `08242234`). Schwab SI2 Desktop client writes per-account `CRS{YYYYMMDD}.{ACC,RPS,TRN,SEC,UPN,UPT,RLW,TCF,TCFX,TNN,...}` files there.
+
+**Destination:** `s3://opal-data-schwab/01_raw/` (all extensions) and mirror of `*.RPS` to `s3://opal-data-schwab/bronze/rps/`.
+
+**Bucket gotcha:** `opal-data-schwab` policy DENIES `PutObject` without `x-amz-server-side-encryption: AES256`. The sync script already includes `ExtraArgs={'ServerSideEncryption': 'AES256'}` -- if you ever rewrite or fork it, keep that line or you'll silently fail with AccessDenied.
+
+**Run sequence (one-liner per phase, all idempotent — re-run safe):**
+
+```bash
+# 1. Sync OneDrive -> S3 (01_raw + bronze/rps mirror)
+python data/black_diamond/scripts/bronze/sync_schwab_onedrive_to_s3.py --upload
+
+# 2. Roll silver forward
+python data/black_diamond/scripts/bronze/convert_schwab_rps_to_parquet.py
+python data/black_diamond/scripts/bronze/convert_schwab_acc_to_parquet.py
+python data/black_diamond/scripts/bronze/convert_schwab_trn_to_parquet.py
+```
+
+Each converter reads `01_raw/CRS*.{ACC,RPS,TRN}` and writes `silver/{ACC,RPS,TRN}/date={YYYYMMDD}/data.parquet` (Hive-partitioned). Idempotent: skips dates already converted.
+
+**Known edge cases (already patched):**
+- ACC raw files repeat the `state` column 3x in the H2 header. `convert_schwab_acc_to_parquet.py` suffixes duplicates with `__2`/`__3` before DataFrame construction (commit `f41b37f5`).
+- bucket SSE deny — see above.
+
+After the run, message Andrew with: number of new files synced, list of new silver date partitions per table, latest silver date for each table. DS picks up from there for the BD <-> Schwab reconciliation.
+
+---
+
 ## Abilities
 
 **You can:**
