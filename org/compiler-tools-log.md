@@ -211,3 +211,5 @@ Results: PASS | PARTIAL | FAIL | SKIPPED | WARN
 | 2026-04-14 | 0.4.2_RD_AdvisorIntelligence | ADVI_FNTEND.B0.rd-fe-trivial-sweep | comp-transform | comp-transform schema-check CanonicalBookView | PASS |
 | 2026-04-14 | 0.4.2_RD_AdvisorIntelligence | ADVI_FNTEND.B0.rd-fe-trivial-sweep | comp-transform | comp-transform schema-check ConsolidatedOverviewPanel | PASS |
 | 2026-04-14 | 0.4.2_RD_AdvisorIntelligence | ADVI_FNTEND.B0.rd-fe-trivial-sweep | comp-transform | comp-transform schema-check DistributionTab | PASS |
+| 2026-04-14 | 0.4.0_DS_ClientPlatform | 3-bond-phantom-scoped-exceptions | comp-pipescript | comp-pipescript io inject_scoped_overrides.py | FAIL |
+| 2026-04-14 | 0.4.0_DS_ClientPlatform | 3-bond-phantom-scoped-exceptions | comp-pipescript | comp-pipescript consumers canonical_prices | FAIL |
