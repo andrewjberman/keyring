@@ -16,8 +16,8 @@
     }
   ],
   "status": "active",
-  "phase": "W1-W4 COMPLETE (portal-v2.1.42). W5 DS COMPLETE (5b4439e1, 10-office timeseries verified in platinum). W6 DE: fixes 2-8 COMPLETE (f6fe035); Fix 1 drillParentKey L663 IN PROGRESS. PROFAU.007 also queued for portal DEV. W7 AE NO-OP (today's QA run already covers it). W8 DT (deploy, gates on DE Fix 1 + PROFAU.007).",
-  "blocking": "DE W6 Fix 1 (drillParentKey L663) + PROFAU.007 commits. W8 DT deploy after those land.",
+  "phase": "W1-W7 COMPLETE. W6 DE: all fixes 2-8 done (f6fe035) + Fix 1 drillParentKey DONE (f67dd91). PROFAU.007 verification-only (already implemented). Fixes 9-10 (bell curve + advisor list) verifying against live platinum now. W8 DT deploy pending DE 9-10 verdict.",
+  "blocking": "DE fixes 9-10 verification (minutes). W8 DT deploy.",
   "created": "2026-04-13",
   "pods": ["0.4", "0.6"],
   "pipeline": "bd-pipeline + portal",
