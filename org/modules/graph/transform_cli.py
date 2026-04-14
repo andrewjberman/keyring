@@ -470,9 +470,24 @@ def cmd_schema_check(args):
                 print(f"         Check that '{parent}.{name}' exists in the type. Not flagged as MISSING.")
 
         if unused_non_meta:
-            print(f"    UNUSED ({len(unused_non_meta)}):")
-            for u in sorted(unused_non_meta):
-                print(f"       {u}: {type_fields.get(u, '?')}")
+            feature_token = (args.feature or "").lower().strip()
+            feature_hits = {u for u in unused_non_meta if feature_token and feature_token in u.lower()}
+            plain_unused = unused_non_meta - feature_hits
+
+            if feature_hits:
+                print(f"    !! WARN — feature-relevant UNUSED ({len(feature_hits)}, token: '{feature_token}'):")
+                for u in sorted(feature_hits):
+                    print(f"       {u}: {type_fields.get(u, '?')}")
+                    print(f"         This field is typed but NEVER rendered.")
+                    print(f"         You're building '{feature_token}' support — most likely cause: a routing")
+                    print(f"         ternary (e.g. cohort === 'geo' ? ... : ...) is missing the '{feature_token}'")
+                    print(f"         branch. Run: comp-transform ternary-audit {flow.component_name}")
+                has_issues = True
+
+            if plain_unused:
+                print(f"    UNUSED ({len(plain_unused)}):")
+                for u in sorted(plain_unused):
+                    print(f"       {u}: {type_fields.get(u, '?')}")
 
         if not missing and not unused_non_meta:
             print(f"    OK: all rendered fields exist in type, no waste")
@@ -484,6 +499,261 @@ def cmd_schema_check(args):
         print("  This causes undefined values at runtime. Fix the type or the component.")
     else:
         print("  All rendered fields match their response types.")
+
+
+def cmd_ternary_audit(args):
+    """Scan a component for ternary chains on union-typed variables that don't
+    handle all union members.
+
+    Finds:
+    1. String-literal union type aliases: type CohortOption = 'geo' | 'adv' | 'ofc'
+    2. Variables using those types: const [cohort, setCohort] = useState<CohortOption>(...)
+    3. Ternary chains on those variables: cohort === 'geo' ? X : Y
+    4. Reports which union members are not handled on each line
+
+    Example output:
+      L1956: cohort ternary — handles ['geo', 'adv'] — MISSING: ['ofc']
+             ofc falls through to adv path (last else branch)
+    """
+    path = _find_component(args.component)
+    if not path:
+        print(f"Component not found: {args.component}")
+        sys.exit(1)
+
+    try:
+        source = path.read_text(encoding="utf-8", errors="replace")
+    except Exception as e:
+        print(f"Could not read {path}: {e}")
+        sys.exit(1)
+
+    lines = source.splitlines()
+
+    print(f"TERNARY AUDIT: {path.name}")
+    print(f"  File: {path.relative_to(_WORKSPACE)}")
+    print()
+
+    # -----------------------------------------------------------------------
+    # Step 1: Extract union type aliases from the file and types.ts
+    # -----------------------------------------------------------------------
+    union_types: dict[str, list[str]] = {}  # TypeName -> ['lit1', 'lit2', ...]
+
+    def _extract_unions(text: str) -> None:
+        for m in re.finditer(
+            r'type\s+(\w+)\s*=\s*((?:\'[^\']+\'|"[^"]+")(?:\s*\|\s*(?:\'[^\']+\'|"[^"]+"))+)',
+            text,
+        ):
+            type_name = m.group(1)
+            members = re.findall(r'[\'"]([^\'"]+)[\'"]', m.group(2))
+            if len(members) >= 2:
+                union_types[type_name] = members
+
+    _extract_unions(source)
+    types_file = path.parent / "types.ts"
+    if not types_file.exists():
+        types_file = path.parent.parent / "types.ts"
+    if types_file.exists():
+        _extract_unions(types_file.read_text(encoding="utf-8", errors="replace"))
+
+    if not union_types:
+        print("  No string-literal union types found in file or types.ts.")
+        print("  Nothing to audit.")
+        return
+
+    # -----------------------------------------------------------------------
+    # Step 2: Find variables bound to those union types
+    # -----------------------------------------------------------------------
+    # Patterns: useState<Type>, param: Type, : Type =, function arg: Type
+    var_to_union: dict[str, str] = {}  # varName -> TypeName
+
+    for type_name in union_types:
+        esc = re.escape(type_name)
+        # useState<CohortOption>
+        for m in re.finditer(rf'const\s*\[(\w+)[,\s].*?\]\s*=\s*useState\s*<{esc}>', source):
+            var_to_union[m.group(1)] = type_name
+        # param: CohortOption or variable: CohortOption
+        for m in re.finditer(rf'(\w+)\s*:\s*{esc}\b', source):
+            var_to_union[m.group(1)] = type_name
+        # function arg without destructuring
+        for m in re.finditer(rf'function\s+\w+[^{{]*?(\w+)\s*:\s*{esc}', source):
+            var_to_union[m.group(1)] = type_name
+
+    if not var_to_union and not args.var:
+        print("  No variables found with union types.")
+        print(f"  Union types found: {', '.join(union_types.keys())}")
+        print("  Use --var <name> to audit a specific variable manually.")
+        return
+
+    # Override: explicit --var flag
+    if args.var:
+        for v in args.var:
+            # Try to match to a known union type, else use --members if provided
+            if v not in var_to_union:
+                var_to_union[v] = "(manual)"
+
+    # -----------------------------------------------------------------------
+    # Step 3: Scan every line for ternary chains on each tracked variable
+    # -----------------------------------------------------------------------
+    # For each line containing `varname ===`, collect all checked string literals
+    # in that logical expression (handles chained ternaries on one line).
+    # We also look ahead up to 4 lines for continuation patterns.
+
+    gaps_found = 0
+    exhaustive_count = 0
+
+    # Generic variable names that are commonly used as loop iterators/keys — skip by default
+    _GENERIC_VARS = {'key', 'val', 'value', 'item', 'entry', 'elem', 'node',
+                     'i', 'j', 'k', 'idx', 'index', 'seg', 'segment'}
+
+    for var_name, type_name in sorted(var_to_union.items()):
+        members = union_types.get(type_name, [])
+        if not members and not args.var:
+            continue
+
+        # Skip generic variable names unless explicitly requested via --var
+        if var_name in _GENERIC_VARS and not (args.var and var_name in args.var):
+            continue
+
+        # Skip large unions by default (TimePeriodKey has 10+ members — these
+        # are almost always handled via dynamic accessor `view[period]` not ternaries).
+        # Use --all-unions to include them.
+        if len(members) > 6 and not getattr(args, 'all_unions', False):
+            continue
+
+        var_esc = re.escape(var_name)
+        checked_pattern = re.compile(
+            rf'\b{var_esc}\s*(?:===|==|!==|!=)\s*[\'"]([^\'"]+)[\'"]'
+            rf'|[\'"]([^\'"]+)[\'"]\s*(?:===|==|!==|!=)\s*\b{var_esc}\b'
+        )
+
+        # Scan lines
+        visited_regions: set[int] = set()  # avoid double-reporting nearby lines
+
+        for lineno, line in enumerate(lines, 1):
+            if var_name not in line:
+                continue
+            if '?' not in line and '===' not in line:
+                continue
+
+            # Skip pure comment lines
+            stripped = line.strip()
+            if stripped.startswith('//') or stripped.startswith('*'):
+                continue
+
+            # Collect the full logical region (this line + continuations)
+            region_start = lineno
+            if region_start in visited_regions:
+                continue
+
+            region_lines = [line]
+            # Look ahead for continuation: lines that are part of same ternary
+            for offset in range(1, 5):
+                if lineno + offset - 1 >= len(lines):
+                    break
+                next_line = lines[lineno + offset - 1]
+                # Continue if next line has more comparisons on same var or ? :
+                if var_name in next_line or (next_line.strip().startswith(':') and offset <= 2):
+                    region_lines.append(next_line)
+                else:
+                    break
+
+            region_text = ' '.join(region_lines)
+
+            # Skip if no ternary operator in the region
+            if '?' not in region_text:
+                continue
+
+            # Collect all values compared against var_name in this region
+            checked_values = set()
+            for m in checked_pattern.finditer(region_text):
+                val = m.group(1) or m.group(2)
+                if val:
+                    checked_values.add(val)
+
+            if not checked_values:
+                continue
+
+            # Mark this region as visited
+            for offset in range(len(region_lines)):
+                visited_regions.add(region_start + offset)
+
+            if not members:
+                # Manual var with no known type — just report what was checked
+                print(f"  L{lineno}: {var_name} ternary — checks: {sorted(checked_values)}")
+                print(f"           (no union type found — use --members to specify expected values)")
+                continue
+
+            missing_members = [m for m in members if m not in checked_values]
+
+            if not missing_members:
+                exhaustive_count += 1
+                if args.verbose:
+                    print(f"  L{lineno}: {var_name} ({type_name}) — OK: all members handled {sorted(checked_values)}")
+                continue
+
+            # Signal quality filter:
+            # A 2-branch ternary on a 3-member union (N checked = total-1) is
+            # usually intentional: the last else is the catch-all for the one
+            # remaining member (e.g. geo=A adv=B else=C is fine for 'ofc' as
+            # the fallthrough if the else value is correct for ofc).
+            #
+            # The REAL bug pattern is N checked < total-1: TWO OR MORE members
+            # share the same unintended fallthrough value (e.g. the W3 bug where
+            # cohort==='geo' ? nna_geo : nna_adv meant both adv AND ofc fell to
+            # nna_adv, silently routing ofc to wrong data).
+            #
+            # Only flag when at least 2 members are unhandled, UNLESS --strict.
+            implicit_count = len(missing_members)
+            is_suspicious = implicit_count >= 2 or getattr(args, 'strict', False)
+
+            if not is_suspicious:
+                # Single implicit fallthrough — acceptable pattern, skip unless verbose
+                if args.verbose:
+                    print(f"  L{lineno}: {var_name} ({type_name}) — NOTE (1 implicit fallthrough, likely intentional):")
+                    print(f"    handles:  {sorted(checked_values)}")
+                    print(f"    implicit: {missing_members}  (routes to else branch)")
+                    display = stripped[:100] + ('...' if len(stripped) > 100 else '')
+                    print(f"    code: {display}")
+                    print()
+                continue
+
+            # Additional filter: skip dynamic-accessor patterns where the else
+            # branch clearly uses the variable as a dynamic key.
+            # e.g. period === 'current' ? view.current : view[period]
+            # The `[period]` in the else branch means all values are handled.
+            region_lower = region_text.lower()
+            dynamic_accessor = f'[{var_name.lower()}]'
+            if dynamic_accessor in region_lower:
+                if args.verbose:
+                    print(f"  L{lineno}: {var_name} ({type_name}) — SKIP (dynamic accessor [{var_name}] in else branch)")
+                continue
+
+            # True gap: 2+ members unhandled → likely wrong data routing
+            gaps_found += 1
+            print(f"  L{lineno}: {var_name} ({type_name})")
+            print(f"    handles:  {sorted(checked_values)}")
+            print(f"    MISSING:  {missing_members}  ({implicit_count} members fall to else branch)")
+            print(f"    These {implicit_count} values silently share the else branch value —")
+            print(f"    if that value is correct for one but not the others, this is a routing bug.")
+
+            # Show the line for context
+            display = stripped[:120] + ('...' if len(stripped) > 120 else '')
+            print(f"    code: {display}")
+            print()
+
+    # -----------------------------------------------------------------------
+    # Step 4: Summary
+    # -----------------------------------------------------------------------
+    print()
+    if gaps_found == 0:
+        print(f"  All ternaries on union-typed variables are exhaustive.")
+        if exhaustive_count > 0:
+            print(f"  {exhaustive_count} ternary sites checked, 0 gaps found.")
+    else:
+        print(f"  {gaps_found} ternary gap(s) found across {len(var_to_union)} variable(s).")
+        print(f"  Each gap means unhandled union members silently route to the else branch.")
+        print()
+        print(f"  Run: comp-transform schema-check {args.component} --feature <token>")
+        print(f"  to see which typed fields are UNUSED for each missing branch.")
 
 
 def cmd_all(args):
@@ -562,6 +832,33 @@ def main():
 
     p_schema = sub.add_parser('schema-check', help='Cross-reference rendered fields against response type schema')
     p_schema.add_argument('component')
+    p_schema.add_argument(
+        '--feature', default='', metavar='TOKEN',
+        help='Escalate UNUSED fields containing TOKEN to WARN with routing ternary hint. '
+             'Use when building a new cohort/mode. Example: --feature ofc'
+    )
+
+    p_ternary = sub.add_parser(
+        'ternary-audit',
+        help='Find ternary chains on union-typed variables missing branches (e.g. cohort === "geo" but no "ofc" branch)'
+    )
+    p_ternary.add_argument('component', help='Component name (fuzzy match)')
+    p_ternary.add_argument(
+        '--var', nargs='+', metavar='VAR',
+        help='Manually specify variable names to audit (in addition to auto-detected ones)'
+    )
+    p_ternary.add_argument(
+        '--verbose', action='store_true',
+        help='Also print exhaustive ternaries (ones that handle all union members correctly)'
+    )
+    p_ternary.add_argument(
+        '--all-unions', action='store_true', dest='all_unions',
+        help='Include large unions (>6 members, e.g. TimePeriodKey) — may be noisy'
+    )
+    p_ternary.add_argument(
+        '--strict', action='store_true',
+        help='Flag single-implicit-fallthrough ternaries too (catches intentional patterns)'
+    )
 
     sub.add_parser('all', help='Summary of all components with data flow')
     sub.add_parser('stats', help='Statistics')
@@ -577,6 +874,7 @@ def main():
         'chains': cmd_chains,
         'unused': cmd_unused,
         'schema-check': cmd_schema_check,
+        'ternary-audit': cmd_ternary_audit,
         'all': cmd_all,
         'stats': cmd_stats,
     }
