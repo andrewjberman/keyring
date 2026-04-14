@@ -11,8 +11,8 @@
     }
   ],
   "status": "active",
-  "phase": "W1 DS COMPLETE (D_01 27471bed, D_00b fix #3 5b4439e1). W2 AE COMPLETE (D_03+D_04 ran locally 2026-04-14, platinum OFC live 10 office segments — QA runner writes directly to production S3, no separate PROD trigger). W3 DE in progress (AE-signaled). W4 DT staged.",
-  "blocking": "DE W3 complete on portal DEV -> DT W4 deploy.",
+  "phase": "W1 DS COMPLETE (27471bed, 5b4439e1). W2 AE COMPLETE (platinum OFC live, 10 offices). W3 DE COMPLETE (7dd0a7e portal DEV, log 30f5c579 CLOUD). W4 DT PENDING — GO issued 2026-04-14, deploy in progress.",
+  "blocking": "DT W4 deploy + smoke-test. PROFAU.006 coordinates with DT on whether it rides in this push.",
   "created": "2026-04-13",
   "pods": ["0.4", "0.6"],
   "pipeline": "bd-pipeline + portal",
