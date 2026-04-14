@@ -11,8 +11,8 @@
     }
   ],
   "status": "active",
-  "phase": "PRD complete 2026-04-13 (v2: decisions resolved -- Other bucket, Continuous AUA in V1 scope, ADV stays). 4 waves: W1 DS (D_01 OFC snapshot/NNA + D_00b OFC timeseries), W2 AE (S3 dim upload + gold run), W3 DE (frontend toggle/drill/Continuous), W4 DT (portal deploy). All TOs issued 2026-04-13.",
-  "blocking": "DS D_00b fix #3 (1-office aggregation anomaly: 178 advisors collapsing to 1 bucket — _build_rel_office_dim_d00b modal office logic). DS fix, re-upload D_00b, MCP-signal AE. dim_advisor_office.csv already on S3 (AE done). D_01 on S3 and verified (27471bed). D_00b crashes #1+#2 fixed; fix #3 outstanding. W6-003 COMPLETE (1d70ecaf). W1 DS + W2 AE pending; W3 DE + W4 DT staged.",
+  "phase": "W1 DS COMPLETE (D_01 27471bed, D_00b fix #3 5b4439e1). W2 AE COMPLETE (D_03+D_04 ran locally 2026-04-14, platinum OFC live 10 office segments, PROD triggered 14:09 UTC). W3 DE in progress (AE-signaled). W4 DT staged.",
+  "blocking": "DE W3 complete on portal DEV -> DT W4 deploy.",
   "created": "2026-04-13",
   "pods": ["0.4", "0.6"],
   "pipeline": "bd-pipeline + portal",
