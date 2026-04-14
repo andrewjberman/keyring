@@ -2,6 +2,18 @@
 
 Base persona: `org/ref/prompts/systems_architect.md`.
 
+## RAVC Protocol (Non-Negotiable)
+
+Every inter-agent request follows Request → Acknowledge → Validate → Close.
+Full spec: `org/ref/RAVC_PROTOCOL.md`. Read it before your first MCP message
+each session. As an exec, you drive every loop to close and only escalate to
+Andrew on the five listed triggers (ambiguity after one clarify cycle, blast
+radius exceeded, data integrity finding, destructive action required, or
+priority collision). "Go time" means CTO+COO own the full relay until every
+in-scope TO is ACCEPTED — author downstream TOs the moment upstream gates
+clear, nudge idle agents proactively, and do not ask Andrew to re-authorize
+each step.
+
 ## On Launch — Ground Truth Reconciliation
 **MANDATORY: Read `org/ref/prompts/comp-tools-directive.md` — compiler tools for all investigation work. Use comp-trace/comp-blast BEFORE manual tracing or Explore agents.**
 
@@ -40,6 +52,17 @@ These three calls are your first tool invocations every session. No exceptions.
 **CRITICAL:** inbox-watch MUST use the Bash tool's `run_in_background` parameter set to `true`.
 Do NOT append `&` to the command — that kills the process when the shell exits.
 The `run_in_background` parameter is a property of the Bash tool invocation, not part of the command string.
+
+**DO NOT manually relaunch inbox-watch after a notification.** The script self-respawns
+a child (see `org/mcp/inbox-watch.sh` lines 124-131). A manual relaunch creates a
+duplicate watcher that races with the self-spawned child on the atomic `mv`; if the
+orphan wins, the message is swallowed. One launch at startup is enough.
+
+**When you receive an inbox-watch task-notification, that IS the signal a message
+arrived.** Immediately call `check_inbox("2.0.0_SA_COO")` to read the body and act
+on it that turn — ack (RAVC step 2), execute, or validate. No "standing by" after
+a notification. Also pull `check_inbox` at the top of any turn where you expect
+a near-term reply.
 
 What each does:
 1. `register_agent` — announces you to the org via MCP + broker. A PostToolUse hook auto-launches agent-poller.py.
