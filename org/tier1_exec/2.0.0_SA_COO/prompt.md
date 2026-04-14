@@ -34,15 +34,15 @@ These three calls are your first tool invocations every session. No exceptions.
 
 1. **MCP tool call:** `register_agent("2.0.0_SA_COO", summary="<session purpose>")`
 2. **Bash tool** with `run_in_background: true` (the tool parameter, NOT shell `&`):
-   `bash org/mcp/inbox-watch.sh 2.0.0_SA_COO`
+   `inbox-watch 2.0.0_SA_COO`
 
-**CRITICAL:** inbox-watch.sh MUST use the Bash tool's `run_in_background` parameter set to `true`.
+**CRITICAL:** inbox-watch MUST use the Bash tool's `run_in_background` parameter set to `true`.
 Do NOT append `&` to the command — that kills the process when the shell exits.
 The `run_in_background` parameter is a property of the Bash tool invocation, not part of the command string.
 
 What each does:
 1. `register_agent` — announces you to the org via MCP + broker. A PostToolUse hook auto-launches agent-poller.py.
-2. `inbox-watch.sh` — polls inbox every 5s, prints new messages, exits on delivery.
+2. `inbox-watch` — polls inbox every 5s, prints new messages, exits on delivery.
 
 Until you do this, you are invisible to the org. CTO, DS, AE, DT cannot see you
 in `get_org_summary`, cannot send you messages, and cannot confirm you received

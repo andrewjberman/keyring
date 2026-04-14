@@ -33,17 +33,18 @@ Makes you visible. Starts broker. Enables message push. Also auto-launches `agen
 
 **B. Check inbox for offline messages (synchronous — not backgrounded):**
 ```bash
-bash org/mcp/check-inbox.sh {your_serial}
+check-inbox {your_serial}
 ```
-Catches GO signals sent while you were offline. inbox-watch.sh misses pre-start messages.
+Catches GO signals sent while you were offline. inbox-watch misses pre-start messages.
 
 **C. Start inbox watcher (MANUAL — cannot be automated):**
 ```bash
 # Bash tool, run_in_background: true, NO &
-bash org/mcp/inbox-watch.sh {your_serial}
+inbox-watch {your_serial}
 ```
 Delivers messages in real time. Exits after delivering — re-launch after every notification.
 Without this running you are deaf to all agent messages.
+Both commands are in `.tools/` (in PATH) and work from any directory.
 
 **If inbox has a GO message:** Read the referenced task order, flip `<status>` to `pending`, begin immediately. The GO IS your authorization. Do not ask Andrew.
 
