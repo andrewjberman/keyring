@@ -156,7 +156,7 @@ You do NOT produce architecture specs (CTO does). You DO align, route, and track
 
 | Project | Status | Pending Work |
 |---------|--------|-------------|
-| `ADVI_OFFICE` | AE W2 COMPLETE (D_03+D_04 local, platinum OFC live, 10 offices). W3 DE COMPLETE (7dd0a7e portal DEV). W4 DT in progress (GO 2026-04-14). | DT W4 smoke-test + portal PROD tag. |
+| `ADVI_OFFICE` | W3 + W6 DE COMPLETE (7dd0a7e + f6fe035 — NNA branch/time machine/title/5-8 fixes). W4 DT push in flight (batch clear, GO 2026-04-14). | DT W4 smoke-test + PROD tag. PROFAU.006 follow-on push after. |
 | `ADVI_REBORN` | **CLOSED 2026-04-14.** W6-003 (1d70ecaf) + W6-004 (0225d359) both complete. 4-cell matrix validated. | — |
 | `ADVI_PROFAU` | .001-.006 ALL COMPLETE 2026-04-14 (.006: capitalGainsTtm + costBasisByYear wired, 5233b91 portal DEV). D_02 NNA per-role canonical (d51e44ef) ships tonight nightly. | .006 portal DEV awaiting DT push (after OFFICE W4). .007 + Q3/Q7 DS TOs pending authoring. |
 | `ADHC_DESIGN` | Phase 2: all pod .0.1/.0.2/.0.3/0.4 TOs COMPLETE. | Attribution RD .001/.015/.024 + Valuation RD .007 still staged — agents not LIVE. Backlog: .033 react-hooks/set-state-in-effect (low priority). |

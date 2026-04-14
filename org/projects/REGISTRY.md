@@ -18,7 +18,7 @@ the surface area; the project code identifies the specific initiative.
 |---|---|---|---|---|---|---|
 | `ADHC_DESIGN` | `ADHC` | Portal Design Normalization | Pods 0.1/0.2/0.3/0.4 Phase 2 COMPLETE. .028 (3096108) + .032 (f3274f3) shipped 2026-04-13; .025 COMPLETE-IN-FACT. Attribution .001/.015/.024 + Valuation .007 still staged for their RD agents. Backlog: .033 react-hooks/set-state-in-effect refactor (16 warnings, low priority). | 0.2, 0.4 | Attribution RD (0.2.2) + Valuation RD (0.2.4) pickup on next registration. | PORTAL_DESIGN_NORMALIZATION_AND_COMPILER_TOOLS.md |
 | `ADVI_PROFAU` | `ADVI` | Advisor Profile + Book Data Gap Audit | .001-.006 ALL COMPLETE 2026-04-14 (.006 portal DEV 5233b91, f3aad71f CLOUD). D_02 NNA per-role canonical (d51e44ef) ships tonight nightly. .007 + Q3/Q7 DS TOs not yet authored. | 0.4 | .006 portal DEV awaiting DT push (after OFFICE W4 PROD). .007 + Q3/Q7 DS TOs pending COO authoring. | advisor-profile-book-input-mapping-2026-04-13.md |
-| `ADVI_OFFICE` | `ADVI` | Office Analytics for Segment Analytics | W1 DS COMPLETE (27471bed, 5b4439e1). W2 AE COMPLETE (platinum OFC live, 10 offices). W3 DE COMPLETE (7dd0a7e, portal DEV). W4 DT PENDING — deploy in progress (GO 2026-04-14). | 0.4, 0.6 | DT W4 deploy + smoke-test. | ADVI_OFFICE_PRD.md |
+| `ADVI_OFFICE` | `ADVI` | Office Analytics for Segment Analytics | W1 DS COMPLETE (27471bed, 5b4439e1). W2 AE COMPLETE (platinum OFC live, 10 offices). W3 DE COMPLETE (7dd0a7e). W6 DE COMPLETE (f6fe035 — NNA branch + time machine + chart title, fixes 2-8). W4 DT IN PROGRESS — full batch clear (GO 2026-04-14). | 0.4, 0.6 | DT W4 smoke-test + PROD tag. PROFAU.006 follow-on push after W4. | ADVI_OFFICE_PRD.md |
 
 ---
 
