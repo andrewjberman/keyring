@@ -1,0 +1,23 @@
+{
+  "project_code": "BDPL_CNPRCS",
+  "macro_code": "BDPL",
+  "name": "BD Canonical Prices + Classification Refactor",
+  "description": "Durable fix for the $23M BNP phantom and 49F Alternatives instability. Covers WP-3 through WP-8 from the 2026-04-14 DS brief: CUSIP backfill into silver/transactions, gold CUSIP enrichment, CUSIP-primary/SuperClass-aware canonical prices refactor with append-only daily ledger, BD-primary append-only classification ledger, permanent phantom diagnostic, and 49F alternatives regression test. Depends on BDPL_ASTDIM for silver/bd_assets. Tactical 3-bond scoped-exceptions fix authorized as parallel ad-hoc TO.",
+  "prds": [
+    {
+      "path": "docs/architecture/BD_CANONICAL_PRICES_CLASSIFICATION_REFACTOR.md",
+      "label": "BD Canonical Prices + Classification Refactor PRD (with 7 open-question decisions)",
+      "date": "2026-04-14"
+    }
+  ],
+  "source_brief": "org/tier2_senior/0.4.0_DS_ClientPlatform/briefs/2026-04-14_asset_dim_and_canonical_prices_refactor.md",
+  "status": "active",
+  "phase": "Phase 0: PRD complete, COO decomposition pending. Tactical 3-bond scoped-exceptions TO must fire immediately (parallel).",
+  "blocking": "COO task-order issuance for WP-3..WP-8 + tactical scoped-exceptions TO. WP-4/5/6 blocked on BDPL_ASTDIM W4 completing.",
+  "depends_on": ["BDPL_ASTDIM"],
+  "created": "2026-04-14",
+  "pods": ["0.4", "0.6"],
+  "pipeline": "bd-pipeline",
+  "thread_counter": 0,
+  "threads": []
+}
