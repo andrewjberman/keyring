@@ -193,7 +193,7 @@ You do NOT produce architecture specs (CTO does). You DO align, route, and track
 | 0.4.0_DE | Session 2026-04-14: W6-004 + PROFAU.004-.006 + OFFICE.W3 ALL COMPLETE (5233b91 portal DEV). | .006 portal DEV awaiting DT push after W4 PROD confirms. |
 | 0.4.0_DT | Session 2026-04-13: SI double-annualize + ADV drill gate. | ADVI_OFFICE.W4 (pending — in progress). deployment_map. |
 | 0.4.0_DS | Session 2026-04-14: D_00b fix #3 (5b4439e1). PROFAU.003 QA confirmed. D_02 NNA per-role canonical fix (d51e44ef, uploaded). | — (D_02 deploys tonight nightly). |
-| 0.4.2_RD | Session 2026-04-13: header BETA badge + FeeEfficiency polish. 2026-04-14: starting up. | page_inventory. |
+| 0.4.2_RD | Session 2026-04-14: page_inventory complete (2aef2949). Primary type badge fix — role AUA dominance (a30c403 portal DEV). | Riding in W4 batch. Standby for post-PROD TOs. |
 
 ### Shared Services -- Status as of 2026-04-14 session 27
 
