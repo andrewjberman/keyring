@@ -19,6 +19,7 @@ Minimum required runs by TO type:
 | Shared files / components / Lambda modules | `comp-blast {node}` for every shared resource |
 | Cache keys / react-query keys | `comp-cache collisions` + list of new keys |
 | Rendered fields / TypeScript types | `comp-transform schema-check {component}` |
+| TO adds new cohort / metric / mode to a union type | `comp-transform schema-check {Component} --feature {token}` + `comp-transform ternary-audit {Component}` BEFORE issuing. The ternary-audit output IS the fix list for DE. Encode it verbatim in the mandate `<run>/<expect>/<if_mismatch>` blocks. |
 | Gold pipeline script I/O | `comp-pipescript io {script}` (also shows COLUMN GAPS + PORTAL CONSUMERS) |
 | Two gold scripts share S3 artifacts | `comp-pipescript overlap A B` BEFORE writing cross-domain coordination blocks |
 | Full-stack page audit | `comp-platinum page {name}` |

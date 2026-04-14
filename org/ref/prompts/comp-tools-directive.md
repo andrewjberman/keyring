@@ -175,4 +175,46 @@ per-Lambda gap detection. Gold EC2 scripts are fully covered.
 
 ---
 
+## comp-transform (portal component data flow + routing completeness)
+
+`comp-transform` traces client-side data flow inside React components, and audits
+routing ternaries for union-type completeness.
+
+| Command | What it does | Example |
+|---------|-------------|---------|
+| `comp-transform schema-check <C>` | Cross-reference rendered JSX fields against TypeScript types. MISSING = rendered but untyped (runtime undefined). UNUSED = typed but never rendered (potential routing gap). NOTE = runtime alias (not a bug). | `comp-transform schema-check DistributionTab` |
+| `comp-transform schema-check <C> --feature <token>` | Same as above but escalates UNUSED fields containing `token` to **WARN** with routing ternary hint. **Use when building any new cohort, metric, or mode.** | `comp-transform schema-check DistributionTab --feature ofc` |
+| `comp-transform ternary-audit <C>` | Scans every ternary chain on union-typed variables (`CohortOption = 'geo'\|'adv'\|'ofc'`) for unhandled members. Reports lines where 2+ union values fall to the same unintended else branch. | `comp-transform ternary-audit DistributionTab` |
+| `comp-transform fields <C>` | All response fields actually accessed, grouped by root variable | `comp-transform fields PartnerAnalytics` |
+| `comp-transform trace <C>` | Full data flow: fetches, transform chains, JSX refs, response types | `comp-transform trace DistributionTab` |
+| `comp-transform chains <C>` | useMemo/useCallback chains with field accesses and operations | `comp-transform chains PartnerAnalytics` |
+| `comp-transform unused <C>` | Waste analysis: response fields fetched but never rendered | `comp-transform unused ClientsTab` |
+
+**DE mandate for new cohort / metric / mode (NON-NEGOTIABLE after W3 OFC incident):**
+
+Run BOTH at Phase 1 before writing any code:
+```
+comp-transform schema-check <Component> --feature <token>
+comp-transform ternary-audit <Component>
+```
+
+The W3 OFC bug: DE added `nna_ofc` to `PlatinumCumulativeChartResponse`, ran
+schema-check, saw it as UNUSED, filed it as "alias gap," and moved on. The UNUSED
+was actually a symptom of a routing ternary at L1956 that had no `ofc` branch.
+`--feature ofc` would have escalated it to WARN. `ternary-audit` would have listed
+all 16 ternary sites missing the `ofc` branch — the complete W6 fix list, at Phase 1.
+
+`<expect>` block for new cohort/mode TOs:
+```xml
+<run>comp-transform schema-check [Component] --feature [token]</run>
+<expect>0 feature-relevant WARN entries — all [token]-prefixed fields in RENDERED set</expect>
+<if_mismatch>A [token] field is UNUSED — routing ternary missing the [token] branch. Run ternary-audit.</if_mismatch>
+
+<run>comp-transform ternary-audit [Component]</run>
+<expect>0 gaps — or explicitly note which gaps are intentional (e.g. OFC has no continuous drill)</expect>
+<if_mismatch>Ternary gaps = places where the new [token] value falls to the wrong else branch. Fix each one.</if_mismatch>
+```
+
+---
+
 All tools are bash commands. Run them via the Bash tool. They are at `.tools/` which is in your PATH.

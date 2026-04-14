@@ -172,7 +172,7 @@ Full catalog and deep docs: `org/modules/graph/comp-tools.yaml`. Cache stale? Ru
 | Role | Before starting work | Before signaling done |
 |------|---------------------|----------------------|
 | DS | `comp-pipescript io [script]` (includes COLUMN GAPS) + `comp-pipescript deployed` + `comp-pipescript postdeps` | `comp-validate [script] --artifact [file]` exits 0 |
-| DE | `comp-transform schema-check [Component]` + `comp-blast [fn]` | `comp-blast [changed fn]` — no new downstream nodes |
+| DE | `comp-transform schema-check [Component]` + `comp-blast [fn]` | `comp-blast [changed fn]` — no new downstream nodes. **When adding a new cohort/metric/mode:** also run `schema-check --feature [token]` + `ternary-audit [Component]` at Phase 1. |
 | DT | `comp-pipescript io [script]` + `comp-routes behaviors` if CF involved | `comp-iam service [lambda]` if new boto3 call added |
 | AE | `comp-pipescript deployed` + `comp-pipescript postdeps` | `comp-iam gaps` if iam.tf changed |
 | COO (TO authoring) | `comp-blast [every affected node]` + `comp-pipescript overlap A B` for cross-domain pairs | All mandate `<expect>` values confirmed before issuing |
@@ -190,7 +190,7 @@ Minimum compiler tools by role:
 | Role | Minimum |
 |------|---------|
 | DS | `comp-pipescript io` for every gold script touched (includes COLUMN GAPS — zero extra work). `comp-pipescript deployed` before every gold run. `comp-pipescript postdeps` before any ad-hoc script run. `comp-validate <script> --artifact <file>` before signaling AE (if script has validate config). |
-| DE | `comp-transform schema-check` before touching data props; `comp-blast` before deleting. `comp-routes behaviors` when debugging 4xx / auth failures (check custom_error_response). |
+| DE | `comp-transform schema-check` before touching data props; `comp-blast` before deleting. `comp-routes behaviors` when debugging 4xx / auth failures. **Adding a new cohort/metric/mode:** `schema-check --feature [token]` + `ternary-audit [Component]` at Phase 1 — mandatory after W3 OFC incident. |
 | DT | `comp-pipescript io` for every script deployed. `comp-iam service <lambda>` after adding any new boto3 call. `comp-routes behaviors` before CloudFront / Lambda@Edge changes. |
 | AE | `comp-pipescript deployed` before every gold run trigger. `comp-pipescript postdeps` before any gold run (check required post-steps). `comp-iam gaps` after any iam.tf change. `comp-blast` on infra before changes. |
 | RD | `comp-transform fields` for every component rendering data. |

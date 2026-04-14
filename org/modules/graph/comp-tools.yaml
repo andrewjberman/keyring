@@ -147,6 +147,9 @@ tools:
       - "Full data flow: fetch -> transforms -> JSX?" -> comp-transform trace X
       - Before changing a response shape: know which transforms and JSX refs will break
       - Platinum migration: identify client-side aggregation that pre-aggregated data replaces
+      - "Building a new cohort/metric/mode" -> comp-transform schema-check X --feature token THEN comp-transform ternary-audit X (MANDATORY — catches routing ternary gaps before they ship)
+      - "I added a new field to a TypeScript union type" -> comp-transform ternary-audit X -- find all ternary chains missing the new value
+      - "schema-check shows a feature-named field as UNUSED" -> comp-transform ternary-audit X -- find the routing ternary that's missing the branch
     subcommands:
       trace: "comp-transform trace PartnerAnalytics -- full flow: fetches, transform chains, JSX refs, response types"
       fields: "comp-transform fields PartnerAnalytics -- all response fields actually accessed, grouped by root variable"

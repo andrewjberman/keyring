@@ -42,6 +42,19 @@ One file per feature. Never overwrite into a monolith.
     <expect> encodes what "normal" looks like — agents verify output against it.
     <if_mismatch> tells the agent what to DO if output is unexpected (not just that something is wrong).
 
+    SPECIAL CASE — TO adds a new value to a TypeScript union type (new cohort, metric, mode, role):
+    Phase 1 MUST include both before writing any code:
+      <run>comp-transform schema-check {Component} --feature {token}</run>
+      <expect>0 feature-relevant WARN entries -- all {token}-prefixed fields in RENDERED set, not UNUSED</expect>
+      <if_mismatch>UNUSED field with {token} in name = routing ternary missing the branch. Run ternary-audit to get the complete fix list.</if_mismatch>
+
+      <run>comp-transform ternary-audit {Component}</run>
+      <expect>0 gaps, or note which gaps are intentional with reason</expect>
+      <if_mismatch>Each gap = routing ternary where {token} silently falls to wrong else. Fix all gaps before Phase 2.</if_mismatch>
+
+    Why: W3 OFC (2026-04-14) — nna_ofc typed but never rendered because L1956 routing ternary
+    had no ofc branch. ternary-audit at Phase 1 generates the complete fix list automatically.
+
     Example (filled):
     Phase 1 — before writing:
       <run>comp-blast DistributionTab</run>
