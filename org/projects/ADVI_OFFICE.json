@@ -15,9 +15,9 @@
       "date": "2026-04-14"
     }
   ],
-  "status": "active",
-  "phase": "W1-W8 COMPLETE. portal-v2.1.44 (0f00c99, 2026-04-14). W6 all 10 fixes resolved. RD polish (ac9e9e5, 13e3015, 0f00c99) rode in W8 batch. W9a DS COMPLETE (416806a5). W9b AE in progress — D_04 QA run, cumulative_chart.json ofc keys pending.",
-  "blocking": "W9b AE D_04 run only. Portal OFC Continuous AUA live after W9b — no further deploy needed.",
+  "status": "complete",
+  "phase": "ALL WAVES COMPLETE 2026-04-14. portal-v2.1.44 (0f00c99). W9a DS (416806a5) + W9b AE D_04 local run — cumulative_chart.json ofc/nna_ofc live. OFC Continuous AUA fully functional.",
+  "blocking": "none",
   "created": "2026-04-13",
   "pods": ["0.4", "0.6"],
   "pipeline": "bd-pipeline + portal",

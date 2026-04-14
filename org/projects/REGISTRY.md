@@ -17,8 +17,7 @@ the surface area; the project code identifies the specific initiative.
 | Project Code | Macro | Project Name | Phase | Pods | Blocking | PRDs |
 |---|---|---|---|---|---|---|
 | `ADHC_DESIGN` | `ADHC` | Portal Design Normalization | Pods 0.1/0.2/0.3/0.4 Phase 2 COMPLETE. .028 (3096108) + .032 (f3274f3) shipped 2026-04-13; .025 COMPLETE-IN-FACT. Attribution .001/.015/.024 + Valuation .007 still staged for their RD agents. Backlog: .033 react-hooks/set-state-in-effect refactor (16 warnings, low priority). | 0.2, 0.4 | Attribution RD (0.2.2) + Valuation RD (0.2.4) pickup on next registration. | PORTAL_DESIGN_NORMALIZATION_AND_COMPILER_TOOLS.md |
-| `ADVI_PROFAU` | `ADVI` | Advisor Profile + Book Data Gap Audit | .001-.006 ALL COMPLETE 2026-04-14 (.006 portal DEV 5233b91, f3aad71f CLOUD). D_02 NNA per-role canonical (d51e44ef) ships tonight nightly. .007 + Q3/Q7 DS TOs not yet authored. | 0.4 | .006 portal DEV awaiting DT push (after OFFICE W4 PROD). .007 + Q3/Q7 DS TOs pending COO authoring. | advisor-profile-book-input-mapping-2026-04-13.md |
-| `ADVI_OFFICE` | `ADVI` | Office Analytics for Segment Analytics | W1 DS COMPLETE (27471bed, 5b4439e1). W2 AE COMPLETE (platinum OFC live, 10 offices). W1-W8 COMPLETE (portal-v2.1.44, 0f00c99). W9a DS COMPLETE (416806a5). W9b AE D_04 run in progress — OFC Continuous AUA live after W9b, no portal deploy needed. | 0.4, 0.6 | W9b AE only. | ADVI_OFFICE_PRD.md, ADVI_OFFICE_ADDENDUM.md |
+| `ADVI_PROFAU` | `ADVI` | Advisor Profile + Book Data Gap Audit | .001-.007 ALL COMPLETE 2026-04-14 (portal-v2.1.44). D_02 NNA per-role canonical (d51e44ef) ships tonight nightly. Sydney Cobb spot-check (.007) pending post-deploy /frontend-dev. Q3/Q7 DS TOs not yet authored. | 0.4 | Q3/Q7 DS TOs pending Andrew direction. | advisor-profile-book-input-mapping-2026-04-13.md |
 
 ---
 
@@ -49,6 +48,7 @@ session log. Performance baseline: CLSUNI ~36% unedited, CLSPT2 ~67% unedited.
 | `ADVI_GLDOPS` | `ADVI` | Gold Layer Operations: Data Freshness + Market Growth | 2026-04-07 | All TOs complete. Superseded by operational state. Canonical stack (05 swap, 01b fees, 08c, 11a) shipped. Scripts renamed A_00-C_04. silver/fees delivered. |
 | `ETFS_SECIDX` | `ETFS` | ETF Securities & Index Inventory Assessment | 2026-04-07 | P0 complete. 102 securities, 138 portal tickers audited, D4 recommendations delivered. 97.1% Massive API coverage. |
 | `TAXX_TXSTRT` | `TAXX` | Tax SMA Trade Allocation Strategy | 2026-04-07 | P0 complete. DS gap analysis delivered (v1+v2 trade allocator review). |
+| `ADVI_OFFICE` | `ADVI` | Office Analytics for Segment Analytics | 2026-04-14 | portal-v2.1.44. OFC cohort toggle (donut, NNA, continuous AUA, bell curve, advisor list). All 9 addendum fixes shipped W6-W9. |
 | `ADVI_REBORN` | `ADVI` | Advisor Intelligence Full Integration | 2026-04-14 | All waves complete. W6-003 (1d70ecaf D_00c role_combination_breakdown), W6-004 (0225d359 — existing W6-005 split-allocated approach satisfies 4-cell matrix; no new code). Four-cell matrix validated on live platinum artifact. |
 | `ADVI_OTHDED` | `ADVI` | Distribution Tab Dual-Other Dedupe | 2026-04-13 | Frontend enforceTop9Other regex fix shipped `801349d`, PROD via `4575a1c`. Eliminates dual-Other in city/client drills. |
 | `ADVI_HDRSPL` | `ADVI` | ADVI Header Split + PageSurfaceControl Primitive | 2026-04-13 | All 3 waves complete. Primitive `2b5b0ec`, header restructure + Segment Analytics local toggles `4cb34a2`, PROD via `4575a1c`. Reusable high-contrast control primitive established for silver-bg pages. |
