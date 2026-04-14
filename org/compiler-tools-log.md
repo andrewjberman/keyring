@@ -165,3 +165,9 @@ Results: PASS | PARTIAL | FAIL | SKIPPED | WARN
 | 2026-04-14 | 0.4.0_DS_ClientPlatform | ADVI_OFFICE.W1 | comp-blast | comp-blast DistributionTab | PASS |
 | 2026-04-14 | 0.4.0_DS_ClientPlatform | ADVI_OFFICE.W1 | comp-pipescript | comp-pipescript io D_01 | PASS |
 | 2026-04-14 | 0.4.0_DS_ClientPlatform | ADVI_OFFICE.W1 | comp-transform | comp-transform schema-check DistributionTab | PASS |
+| 2026-04-14 | 0.4.0_DT_ClientPlatform | ADVI_OFFICE.W4 | comp-transform | comp-transform schema-check DistributionTab | PASS |
+| 2026-04-14 | 0.4.0_DT_ClientPlatform | ADVI_OFFICE.W4 | comp-blast | comp-blast DistributionTab | PASS |
+| 2026-04-14 | 1.0.0_SA_CTO | ADVI_OFFICE_gap_analysis | comp-transform | comp-transform schema-check DistributionTab | PASS |
+| 2026-04-14 | 1.0.0_SA_CTO | ADVI_OFFICE_gap_analysis | comp-routes | comp-routes trace getPlatinumPartnerAnalytics | PASS |
+| 2026-04-14 | 1.0.0_SA_CTO | ADVI_OFFICE_gap_analysis | comp-routes | comp-routes trace getPlatinumCumulativeChart | PASS |
+| 2026-04-14 | 1.0.0_SA_CTO | ADVI_OFFICE_gap_analysis | comp-transform | comp-transform fields DistributionTab | PASS |
