@@ -15,12 +15,14 @@ Minimum required runs by TO type:
 
 | TO touches... | MUST run before writing |
 |---|---|
-| Routes / endpoints / CF behaviors / Lambda paths | `comp-routes trace {endpoint}` for every endpoint in scope |
+| Routes / endpoints / CF behaviors / Lambda paths | `comp-routes trace {endpoint}` for every endpoint in scope. `comp-routes behaviors` if auth or 4xx behavior is in scope (shows custom_error_response intercept rules). |
 | Shared files / components / Lambda modules | `comp-blast {node}` for every shared resource |
 | Cache keys / react-query keys | `comp-cache collisions` + list of new keys |
 | Rendered fields / TypeScript types | `comp-transform schema-check {component}` |
-| Gold pipeline script I/O | `comp-pipescript io {script}` |
+| Gold pipeline script I/O | `comp-pipescript io {script}` (also shows COLUMN GAPS + PORTAL CONSUMERS) |
+| Two gold scripts share S3 artifacts | `comp-pipescript overlap A B` BEFORE writing cross-domain coordination blocks |
 | Full-stack page audit | `comp-platinum page {name}` |
+| IAM or infrastructure changes | `comp-iam gaps` to verify no new permission gaps introduced |
 
 Transcribing claims from a briefing without running the tools IS a quality failure. The ADVI_PROFIL.004 incident: COO wrote a single scoping TO based on RD briefing §5.2 text; CTO then ran comp-routes and caught that 2 of 4 endpoints key by accountId/relationshipId (not advisorId), requiring a .004a/.004b/.004c split with an ownership map. Cost: 1 rewritten commit and wasted downstream mental model. Always run compilers first.
 

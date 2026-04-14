@@ -49,19 +49,26 @@ These rules are non-negotiable. Violating them causes state drift and broken dep
 
 Before tracing data paths, dependencies, or system connections manually, use the compiler tools. They build a full-stack graph covering ALL layers (React components, API endpoints, Lambdas, S3 artifacts, gold scripts, EventBridge, CloudFront) in <2s.
 
+**Investigation tools — use before grepping or reading source:**
 - `comp-trace <query>` — trace connections up/down/both from any node in the system
 - `comp-blast <query>` — blast radius: everything downstream of a change
 - `comp-diff` — map git changes to system-wide impact
 - `comp-xref` — diff the dependency graph against a baseline snapshot
 - `comp-build` — force rebuild
-- `comp-pipescript` — gold script I/O, pipeline DAG, feeds/consumers, chain order (authoritative: parses s3_layout.py + gold_dispatch.sh)
-- `comp-routes` — full serving path: S3 artifact -> CloudFront -> auth -> Lambda/S3 -> frontend component (authoritative: parses cloudfront-distribution.tf + Lambda@Edge + API GW)
-- `comp-transform` — client-side data flow: fetch -> response type -> useMemo/useCallback chains -> rendered JSX fields. Key: `schema-check` cross-references rendered fields against TypeScript types (adapter-aware, catches missing fields)
+- `comp-pipescript` — gold script I/O, pipeline DAG, feeds/consumers, chain order, overlap. Key subcommands: `io` (also shows COLUMN GAPS + S3-DYNAMIC reads + PORTAL CONSUMERS for platinum keys), `deployed` (S3 ETag vs local), `postdeps` (declared post-step/precondition deps), `overlap` (shared artifacts between two scripts)
+- `comp-routes` — full serving path: S3 artifact -> CloudFront -> auth -> Lambda/S3 -> frontend component. `behaviors` now shows CloudFront `custom_error_response` intercept rules — critical for debugging 4xx auth failures
+- `comp-transform` — client-side data flow: fetch -> response type -> useMemo/useCallback chains -> rendered JSX fields. `schema-check` cross-references rendered fields against TypeScript types (adapter-aware; destructure aliases shown as NOTE not MISSING)
 - `comp-platinum` — full-stack trace: page -> component -> fetch -> CloudFront -> auth -> S3 key -> gold script -> upstream deps. Also: `reverse` (S3 key -> route -> component), `tab-audit` (all ADVI tabs at once)
 - `comp-cache` — React Query cache key map, collision detection, type mismatch flags across components
-- `comp-pii` — PII field detection + `sweep` for hardcoded account numbers. Cross-references pseudonymizer target list with rendered fields, flags [HASHED] vs [CLEARTEXT], warns on S3-direct PII exposure
+- `comp-pii` — PII field detection + `sweep` for hardcoded account numbers
 
-Use these BEFORE Explore agents or manual grepping for any cross-layer question. `comp-pipescript` for pipeline/gold questions, `comp-routes` for serving/auth questions, `comp-transform` for "what fields does this component render?", `comp-platinum` for full end-to-end page audits, `comp-cache` for query key issues, `comp-trace`/`comp-blast` for everything else. Full reference: `org/modules/graph/comp-tools.yaml`. All tools in `.tools/` (in PATH).
+**Pre-deploy / correctness gates — run before uploading or signaling downstream:**
+- `comp-pipescript deployed` — compare local gold scripts against s3://opal-data-bd/code/gold/ ETags. DS/AE: run before every gold run. MATCH/STALE/MISSING_ON_S3 per script.
+- `comp-validate <script> --artifact <file>` — check declared invariants on gold artifact before S3 upload. Exit 1 if ERROR checks fail. Config: `data/black_diamond/scripts/gold/gold_validate_config.yaml`. DS: MANDATORY before signaling AE if script has a validate config.
+- `comp-iam gaps` — cross-reference Lambda/EC2 boto3 operations against Terraform IAM policies. DT/AE: run after any iam.tf change or new boto3 call. `comp-iam service <name>` for one service.
+- `comp-pipescript postdeps [script]` — show declared post-step and precondition dependencies from `gold_pipeline_deps.yaml`. DS/AE: check before any ad-hoc script run.
+
+Use these BEFORE Explore agents or manual grepping for any cross-layer question. `comp-pipescript` for pipeline/gold questions, `comp-routes` for serving/auth questions, `comp-transform` for "what fields does this component render?", `comp-platinum` for full end-to-end page audits, `comp-cache` for query key issues, `comp-validate` before any artifact upload, `comp-iam` after infrastructure changes, `comp-trace`/`comp-blast` for everything else. Full reference: `org/modules/graph/comp-tools.yaml`. All tools in `.tools/` (in PATH).
 
 ## Code Quality Rules
 

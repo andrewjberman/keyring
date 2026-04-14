@@ -111,17 +111,31 @@ Agents: applies to all DE and RD agents. Plugin installed at `~/.claude/plugins/
 
 ## Compiler Tools — Run Before Tracing Anything Manually
 
+### Investigation tools (use before grepping or reading source)
+
 | Tool | Command | Use when |
 |------|---------|----------|
-| `comp-pipescript io` | `comp-pipescript io D_00` | What a gold script reads/writes |
-| `comp-pipescript consumers` | `comp-pipescript consumers D_00` | What consumes a script's output |
+| `comp-pipescript io` | `comp-pipescript io D_00` | What a gold script reads/writes. Also shows: COLUMN GAPS (columns accessed but not in load list — silent failure class), S3-DYNAMIC reads (runtime CSV/parquet paths), PORTAL CONSUMERS (platinum keys → endpoints → components) |
+| `comp-pipescript consumers` | `comp-pipescript consumers D_00` | What downstream scripts consume this output |
+| `comp-pipescript feeds` | `comp-pipescript feeds D_01` | What upstream scripts write what this reads |
+| `comp-pipescript overlap` | `comp-pipescript overlap D_00 D_01` | Shared S3 artifacts between two scripts (COO: run before cross-domain TOs) |
+| `comp-pipescript postdeps` | `comp-pipescript postdeps [script]` | Post-step and precondition deps declared in gold_pipeline_deps.yaml |
 | `comp-blast` | `comp-blast D_00.portal_aggregates.py` | Blast radius before any change |
 | `comp-trace` | `comp-trace artifact_name --direction both` | Cross-layer dependency path |
 | `comp-platinum` | `comp-platinum reverse platinum/firm/dashboard.json` | S3 key → routes → components |
-| `comp-transform` | `comp-transform schema-check ClientsTab` | Component field/type audit |
-| `comp-routes` | `comp-routes trace getEmployeeLeaderboard` | Full serving path (use fn name, not URL path in Git Bash) |
+| `comp-transform` | `comp-transform schema-check ClientsTab` | Component field/type audit. Destructure aliases shown as NOTE (not MISSING) |
+| `comp-routes` | `comp-routes trace getEmployeeLeaderboard` | Full serving path. `comp-routes behaviors` also shows CloudFront custom_error_response intercept rules (use fn name, not URL path in Git Bash) |
 | `comp-cache` | `comp-cache collisions` | React Query key collisions |
 | `comp-pii` | `comp-pii audit` | PII field detection |
+
+### Pre-deploy / correctness gates (run before uploading or signaling downstream)
+
+| Tool | Command | Use when |
+|------|---------|----------|
+| `comp-pipescript deployed` | `comp-pipescript deployed [D_00]` | Verify local gold scripts match s3://opal-data-bd/code/gold/ ETags before any gold run. MATCH / STALE / MISSING_ON_S3 per script. |
+| `comp-validate` | `comp-validate D_04 --artifact /tmp/leaderboard.json` | Check declared invariants on gold output before S3 upload. Exit 1 if ERROR checks fail. Config: `data/black_diamond/scripts/gold/gold_validate_config.yaml`. `comp-validate --list` shows all configured checks. |
+| `comp-iam` | `comp-iam gaps` | IAM permission cross-reference: Lambda/EC2 boto3 ops vs Terraform policies. Run after any iam.tf change or new boto3 call. `comp-iam service <name>` for one service. |
+| `comp-tooltip` | `comp-tooltip drift` | Tooltip migration audit (one-off: inline vs DataTooltip). Use for tooltip cleanup sprints only. |
 
 Full reference: `org/modules/graph/comp-tools.yaml`
 Cache stale? Run `comp-build` first.
@@ -138,10 +152,12 @@ Minimum compiler tools by role:
 
 | Role | Minimum |
 |------|---------|
-| DS | `comp-pipescript io` for every gold script touched |
-| DE | `comp-transform schema-check` before touching data props; `comp-blast` before deleting |
-| DT/AE | `comp-pipescript io` for every script deployed |
-| RD | `comp-transform fields` for every component rendering data |
+| DS | `comp-pipescript io` for every gold script touched (includes COLUMN GAPS — zero extra work). `comp-pipescript deployed` before every gold run. `comp-pipescript postdeps` before any ad-hoc script run. `comp-validate <script> --artifact <file>` before signaling AE (if script has validate config). |
+| DE | `comp-transform schema-check` before touching data props; `comp-blast` before deleting. `comp-routes behaviors` when debugging 4xx / auth failures (check custom_error_response). |
+| DT | `comp-pipescript io` for every script deployed. `comp-iam service <lambda>` after adding any new boto3 call. `comp-routes behaviors` before CloudFront / Lambda@Edge changes. |
+| AE | `comp-pipescript deployed` before every gold run trigger. `comp-pipescript postdeps` before any gold run (check required post-steps). `comp-iam gaps` after any iam.tf change. `comp-blast` on infra before changes. |
+| RD | `comp-transform fields` for every component rendering data. |
+| COO | `comp-pipescript overlap A B` before authoring cross-domain coordination blocks. `comp-blast` + `comp-routes` + `comp-cache` before decomposing PRDs into TOs. |
 
 "Blank" and "N/A" are not acceptable. One sentence explaining why you didn't run is fine.
 

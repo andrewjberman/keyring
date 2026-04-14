@@ -2,7 +2,7 @@
 
 **Read this ONCE, internalize it, never forget it.**
 
-You have 5 compiler tools that map the entire system — frontend, API, Lambda, S3, gold scripts, EventBridge, CloudFront — as a single directed graph. They are deterministic, fast (<2s), and always correct.
+You have compiler tools that map the entire system — frontend, API, Lambda, S3, gold scripts, EventBridge, CloudFront — as a single directed graph. They are deterministic, fast (<2s), and always correct. There are also pre-deploy gates that verify correctness before artifacts reach S3.
 
 ## Your investigation protocol (in this order):
 
@@ -111,10 +111,12 @@ Coverage: 23 scripts, 87 S3 keys, 113 read edges, 45 write edges.
 
 | Command | What it does | Example |
 |---------|-------------|---------|
-| `comp-pipescript io <SCRIPT>` | Full I/O manifest — every S3 key read/written | `comp-pipescript io D_00` |
+| `comp-pipescript io <SCRIPT>` | Full I/O manifest. Also shows: COLUMN GAPS (columns accessed but missing from load list — silent failure root cause), S3-DYNAMIC reads (runtime CSV/parquet paths), PORTAL CONSUMERS (platinum keys → endpoints → portal components). Add `--no-portal` to skip routing table. | `comp-pipescript io D_00` |
 | `comp-pipescript feeds <SCRIPT>` | Upstream dependencies — what scripts feed this one | `comp-pipescript feeds D_01` |
 | `comp-pipescript consumers <SCRIPT>` | Downstream dependents — what scripts consume output | `comp-pipescript consumers C_07` |
-| `comp-pipescript overlap <A> <B>` | Shared S3 artifacts between two scripts | `comp-pipescript overlap D_00 D_03` |
+| `comp-pipescript overlap <A> <B>` | Shared S3 artifacts between two scripts. **COO: run before writing cross-domain coordination blocks in TOs.** | `comp-pipescript overlap D_00 D_03` |
+| `comp-pipescript deployed [SCRIPT]` | Compare local gold scripts against s3://opal-data-bd/code/gold/ ETags. **DS/AE: run before every gold run.** MATCH/STALE/MISSING_ON_S3. | `comp-pipescript deployed D_01` |
+| `comp-pipescript postdeps [SCRIPT]` | Show declared post-step and precondition deps from gold_pipeline_deps.yaml. **DS/AE: run before any ad-hoc script run.** | `comp-pipescript postdeps build_canonical_prices_v2.py` |
 | `comp-pipescript chain <NAME>` | Chain membership + execution order | `comp-pipescript chain downstream` |
 | `comp-pipescript dag` | Full execution DAG with I/O | `comp-pipescript dag` |
 | `comp-pipescript inject` | Inject pipeline edges into comp-trace graph cache | `comp-pipescript inject` |
@@ -123,9 +125,53 @@ Coverage: 23 scripts, 87 S3 keys, 113 read edges, 45 write edges.
 **When to use which:**
 - Cross-layer questions (portal -> API -> Lambda -> S3 -> gold): use `comp-trace` / `comp-blast`
 - Gold script I/O questions (what does D_00 read/write? what feeds C_08?): use `comp-pipescript`
-- If comp-trace shows gaps for gold script edges, `comp-pipescript` is the authority
+- Before a gold run: use `comp-pipescript deployed` (code on S3?) + `comp-pipescript postdeps` (post-steps required?)
+- Cross-domain TO decomposition: use `comp-pipescript overlap A B`
 
 All commands support `--json` for machine-readable output.
+
+---
+
+## comp-validate (artifact correctness gate — MANDATORY before S3 upload)
+
+`comp-validate` checks declared invariants against a local gold artifact before upload to S3.
+This is the only tool that catches "no crash but wrong output" failures — zeros, missing keys,
+incorrect sums — the class that caused 4 critical incidents in ADVI_49PUSH.
+
+```
+comp-validate D_04 --artifact /tmp/leaderboard.json   # run all checks, exit 1 on ERROR
+comp-validate --list                                   # show all configured scripts/checks
+comp-validate D_00 --list                              # show checks for one script
+```
+
+Config: `data/black_diamond/scripts/gold/gold_validate_config.yaml`
+
+**DS mandate:** Run `comp-validate <script> --artifact <file>` before signaling AE on any
+script that has a validate config. Do not upload or signal until all ERROR checks pass.
+
+Exit codes: 0 = all ERROR checks pass | 1 = any ERROR fails (blocks upload)
+WARN severity: advisory, does not block.
+
+---
+
+## comp-iam (IAM permission cross-reference)
+
+`comp-iam` cross-references boto3/AWS CLI operations in Lambda/EC2 source against
+Terraform IAM policies. Flags permission gaps before they cause silent failures.
+
+```
+comp-iam gaps                       # show all permission gaps (default)
+comp-iam service bd-gold-trigger    # ops + grant status for one service
+comp-iam role bd-exporter-ec2-role  # all granted actions for one role
+comp-iam stats                      # summary counts
+```
+
+**DT/AE mandate:** Run `comp-iam gaps` after any iam.tf change. Run `comp-iam service <name>`
+after adding any new boto3 call to a Lambda. The 2026-04-09 watchdog loop incident
+(s3:DeleteObject missing from bd-exporter-ec2-role) is exactly what this tool detects.
+
+Known v1 limitation: Lambda services need a `role` field in lambda-source-map.json for
+per-Lambda gap detection. Gold EC2 scripts are fully covered.
 
 ---
 
