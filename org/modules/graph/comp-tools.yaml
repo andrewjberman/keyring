@@ -210,6 +210,50 @@ tools:
     data_sources: "pseudonymizer.py (target field list), auth-validator-edge (role matrix), comp-transform (rendered fields)"
     replaces: "Manual cross-referencing of pseudonymizer.py against component source to find PII exposure"
 
+  comp-validate:
+    command: "comp-validate <script_id> --artifact <local/path/to/artifact.json>"
+    when: |
+      - Before uploading any gold artifact to S3: verify output invariants hold
+      - After a gold run, before signaling downstream agents: confirm correctness
+      - Debugging "no crash but wrong output" failures (zeros, missing keys, wrong sums)
+      - DS mandates: run before MCP-signaling AE on any script that has validate config
+    subcommands:
+      validate: "comp-validate D_04 --artifact /tmp/leaderboard.json -- run all configured checks"
+      list: "comp-validate --list -- show all configured checks and invariants"
+      list-one: "comp-validate D_00 --list -- show checks for one script"
+    check_types: |
+      key_present    -- JSON key must exist and be non-null/non-empty
+      count_min      -- array at path must have >= N elements
+      field_nonzero  -- numeric field > 0 (with optional filter on another field)
+      sum_approx     -- two values within tolerance_pct of each other
+      no_null_numeric -- no null/NaN in numeric fields at path
+      threshold_pct  -- >= min_pct% of entries satisfy a condition
+    exit_codes: "0 = all ERROR checks pass; 1 = any ERROR check fails (WARN does not block)"
+    cost: "<1s (JSON); ~2s (parquet, uses pyarrow)"
+    config: "data/black_diamond/scripts/gold/gold_validate_config.yaml"
+    data_sources: "gold artifact JSON/parquet (local file, use aws s3 cp first)"
+    replaces: "Manual spot-checks (Travis Penfield fee_earning_aua sanity check), S3 key presence inspection"
+    note: "MANDATORY gate: run before any S3 upload of a gold artifact that has a validate config. Catches 'no crash but wrong output' class of bugs. DS writes invariants once; tool enforces them forever."
+
+  comp-iam:
+    command: "comp-iam <subcommand>"
+    when: |
+      - Before deploying a Lambda or EC2 script change: verify IAM permissions are sufficient
+      - Debugging silent AWS permission failures (no exception caught, operation silently fails)
+      - After adding a new boto3 S3/SSM/DynamoDB call: verify role grants the action
+      - Infra audit: confirm all Lambda/EC2 roles have correct permissions
+    subcommands:
+      gaps: "comp-iam gaps -- show all detected permission gaps (default command)"
+      roles: "comp-iam roles -- list all IAM roles parsed from Terraform"
+      services: "comp-iam services -- list all Lambda/EC2 services with detected operations"
+      service: "comp-iam service bd-gold-trigger -- show operations + grant status for one service"
+      role: "comp-iam role bd-exporter-ec2-role -- show all granted actions for one role"
+      stats: "comp-iam stats -- summary counts (roles, services, gaps)"
+    cost: "~2s (scans Lambda sources + Terraform; no AWS API calls)"
+    data_sources: "infra/aws/lambda/ci/lambda-source-map.json, infra/aws/terraform/*/iam.tf, Lambda/gold script sources"
+    replaces: "Manual cross-reference of boto3 calls against iam.tf; AWS IAM console audit"
+    note: "Catches permission gaps before they cause silent failures. The IAM watchdog loop incident (2026-04-09) was caused by s3:DeleteObject missing from bd-exporter-ec2-role -- comp-iam would have flagged this during the Terraform review."
+
   comp-tooltip:
     command: "comp-tooltip <subcommand>"
     when: |
@@ -234,14 +278,19 @@ tools:
 # Pick the right tool for the question:
 #
 #   PIPELINE (gold scripts, S3 artifacts, execution order):
-#     Q: "What does script D_00 read/write?"          -> comp-pipescript io D_00
-#     Q: "What feeds script D_00?"                    -> comp-pipescript feeds D_00
-#     Q: "What consumes C_07 output?"                 -> comp-pipescript consumers C_07
-#     Q: "What's the chain execution order?"          -> comp-pipescript chain downstream
-#     Q: "Do D_00 and D_03 share inputs?"             -> comp-pipescript overlap D_00 D_03
-#     Q: "Is this script deployed to S3?"             -> comp-pipescript deployed D_00
-#     Q: "Are all gold scripts up-to-date on S3?"     -> comp-pipescript deployed
-#     Q: "What portal components consume D_04 output?" -> comp-pipescript io D_04  (see PORTAL CONSUMERS section)
+#     Q: "What does script D_00 read/write?"              -> comp-pipescript io D_00
+#     Q: "What feeds script D_00?"                        -> comp-pipescript feeds D_00
+#     Q: "What consumes C_07 output?"                     -> comp-pipescript consumers C_07
+#     Q: "What's the chain execution order?"              -> comp-pipescript chain downstream
+#     Q: "Do D_00 and D_03 share inputs?"                 -> comp-pipescript overlap D_00 D_03
+#     Q: "Is this script deployed to S3?"                 -> comp-pipescript deployed D_00
+#     Q: "Are all gold scripts up-to-date on S3?"         -> comp-pipescript deployed
+#     Q: "What portal components consume D_04 output?"    -> comp-pipescript io D_04  (see PORTAL CONSUMERS)
+#     Q: "Does D_00 access a column it forgot to load?"   -> comp-pipescript io D_00  (see COLUMN GAPS)
+#     Q: "What post-steps must run after this script?"    -> comp-pipescript postdeps D_00
+#     Q: "Is this gold artifact output correct?"          -> comp-validate D_04 --artifact /tmp/leaderboard.json
+#     Q: "Does this Lambda role have required permissions?"-> comp-iam service bd-gold-trigger
+#     Q: "Are there any IAM permission gaps across all services?" -> comp-iam gaps
 #
 #   SERVING (CloudFront, auth, Lambda, frontend):
 #     Q: "How does this data reach the browser?" -> comp-routes trace getEmployeeLeaderboard
@@ -283,18 +332,25 @@ tools:
 # ============================================================================
 #
 # DS agents: comp-pipescript io/feeds/consumers before modifying gold scripts.
+#            comp-pipescript io ALSO checks COLUMN GAPS (accessed but not loaded columns) -- zero extra work.
 #            comp-pipescript deployed before every gold run (confirm runner has latest code).
 #            comp-pipescript overlap when consolidating scripts OR before authoring cross-domain TOs.
+#            comp-pipescript postdeps before any ad-hoc script run (check required post-steps).
+#            comp-validate <script> --artifact <file> before signaling AE -- MANDATORY if script has validate config.
 #            comp-platinum tab-audit for Phase 2 audits (replaces manual tracing).
 # DE agents: comp-transform trace before reading component source (may save the read).
 #            comp-platinum page before any component wiring changes.
 #            comp-cache collisions before changing queryKeys or response types.
 #            comp-routes auth-map when touching auth-sensitive paths.
+#            comp-routes behaviors when debugging 4xx responses (check custom_error_response intercepts).
 # RD agents: comp-platinum page on your component to see the full stack.
 # DT agents: comp-diff --staged before committing. comp-routes behaviors
 #            before touching CloudFront or Lambda@Edge.
+#            comp-iam service <lambda-name> after adding any new boto3 call to a Lambda.
 # AE agents: comp-pipescript chain before modifying dispatch.
 #            comp-pipescript deployed before triggering any gold run (verify code is on S3).
+#            comp-pipescript postdeps before every manual gold run (check required post-steps).
+#            comp-iam gaps after any iam.tf change (verify no new permission gaps).
 #            comp-blast on infrastructure resources before changes.
 # COO: comp-platinum tab-audit + comp-blast when decomposing PRDs.
 #      comp-pipescript overlap A B before creating cross-domain coordination blocks in TOs.

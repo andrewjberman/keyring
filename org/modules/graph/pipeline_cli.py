@@ -138,6 +138,23 @@ def cmd_io(args):
     else:
         print("  READS: (none detected)")
 
+    # Column gap analysis: find parquet columns accessed but not in _load_parquet columns= list
+    try:
+        script_path = _WORKSPACE / sio.file_path
+        if script_path.exists():
+            from org.modules.graph.extract_pipeline import _extract_column_gaps
+            col_gaps = _extract_column_gaps(script_path)
+            if col_gaps:
+                print()
+                print(f"  COLUMN GAPS ({len(col_gaps)}) -- columns accessed but not in _load_parquet columns= list:")
+                for gap in col_gaps:
+                    print(f"    !! {gap['var']}.{gap['col']}")
+                    print(f"       accessed at line {gap['access_line']}, not in _load_parquet({gap['key_const']}, columns=[...]) at line {gap['load_line']}")
+                    print(f"       loaded cols ({len(gap['loaded_cols'])}): {', '.join(gap['loaded_cols'][:6])}{'...' if len(gap['loaded_cols']) > 6 else ''}")
+                    print(f"       FIX: add '{gap['col']}' to the columns= list at line {gap['load_line']}")
+    except Exception as e:
+        pass  # Don't break io output if column gap analysis fails
+
     print()
 
     if sio.writes:
@@ -475,6 +492,180 @@ def cmd_deployed(args):
         print("  All checked scripts are up-to-date on S3.")
 
 
+def cmd_postdeps(args):
+    """Show and validate post-step dependencies and preconditions for gold scripts."""
+    # Try PyYAML first; fall back to a minimal inline parser for our specific YAML shape
+    deps_file = _WORKSPACE / "data" / "black_diamond" / "scripts" / "gold" / "gold_pipeline_deps.yaml"
+    if not deps_file.exists():
+        print("No gold_pipeline_deps.yaml found.")
+        print(f"  Expected at: {deps_file}")
+        sys.exit(1)
+
+    raw = deps_file.read_text(encoding="utf-8")
+
+    try:
+        import yaml as _yaml
+        deps = _yaml.safe_load(raw)
+    except ImportError:
+        # Minimal fallback parser: handles the specific structure in gold_pipeline_deps.yaml.
+        # Supports top-level keys, script-name sub-keys, and flat key:value leaf pairs.
+        # Not a general YAML parser -- only covers two-level dicts + lists of dicts.
+        deps = _parse_deps_yaml_fallback(raw)
+
+    if not isinstance(deps, dict):
+        print("Failed to parse gold_pipeline_deps.yaml: unexpected structure.")
+        sys.exit(1)
+
+    post_steps = deps.get('post_steps') or {}
+    preconditions = deps.get('preconditions') or {}
+
+    script_filter = args.script_name if args.script_name else None
+
+    print("PIPELINE DEPENDENCIES")
+    print(f"  Config: data/black_diamond/scripts/gold/gold_pipeline_deps.yaml")
+    print()
+
+    has_output = False
+
+    # Post-steps
+    for script_name, steps in sorted(post_steps.items()):
+        if script_filter and script_filter not in script_name:
+            continue
+        if not isinstance(steps, list):
+            continue
+        print(f"  POST-STEPS for {script_name}:")
+        for step in steps:
+            blocking = "BLOCKING" if step.get('blocking', True) else "ADVISORY"
+            print(f"    [{blocking}] Must run: {step['script']}")
+            print(f"             Reason: {step['reason']}")
+            if 'incident' in step:
+                print(f"             Incident: {step['incident']}")
+        print()
+        has_output = True
+
+    # Preconditions
+    for script_name, conditions in sorted(preconditions.items()):
+        if script_filter and script_filter not in script_name:
+            continue
+        if not isinstance(conditions, list):
+            continue
+        print(f"  PRECONDITIONS for {script_name}:")
+        for cond in conditions:
+            blocking = "BLOCKING" if cond.get('blocking', True) else "WARN-ONLY"
+            if 'artifact_s3' in cond:
+                print(f"    [{blocking}] S3 artifact must exist: {cond['artifact_s3']}")
+            elif 'condition' in cond:
+                print(f"    [{blocking}] Condition: {cond['condition']}")
+            print(f"             Reason: {cond['reason']}")
+            if 'incident' in cond:
+                print(f"             Incident: {cond['incident']}")
+        print()
+        has_output = True
+
+    if not has_output:
+        if script_filter:
+            print(f"  No dependencies declared for: {script_filter}")
+        else:
+            print("  No dependencies declared.")
+
+
+def _parse_deps_yaml_fallback(text: str) -> dict:
+    """Minimal YAML parser for gold_pipeline_deps.yaml structure.
+    Handles: top-level keys, script-name sub-keys, and lists of flat key:value dicts.
+    Does NOT support anchors, multiline strings, or complex nesting beyond 3 levels.
+    """
+    result: dict = {}
+    lines = text.splitlines()
+
+    current_top: str | None = None        # e.g. 'post_steps'
+    current_script: str | None = None     # e.g. 'build_canonical_prices_v2.py'
+    current_list: list | None = None      # list being built under current_script
+    current_item: dict | None = None      # dict being built for current list item
+
+    def _flush_item():
+        if current_list is not None and current_item:
+            current_list.append(dict(current_item))
+
+    def _unquote(s: str) -> str:
+        s = s.strip()
+        if (s.startswith('"') and s.endswith('"')) or (s.startswith("'") and s.endswith("'")):
+            return s[1:-1]
+        return s
+
+    for raw_line in lines:
+        stripped = raw_line.rstrip()
+        if not stripped or stripped.lstrip().startswith('#'):
+            continue
+
+        indent = len(stripped) - len(stripped.lstrip())
+        content = stripped.lstrip()
+
+        # Remove inline comment (simple: find ' #' not inside quotes)
+        if ' #' in content:
+            # Only strip if the # is not inside a quoted string
+            in_q = False
+            q_char = None
+            for ci, ch in enumerate(content):
+                if ch in ('"', "'") and not in_q:
+                    in_q = True
+                    q_char = ch
+                elif in_q and ch == q_char:
+                    in_q = False
+                elif ch == '#' and not in_q and ci > 0 and content[ci - 1] == ' ':
+                    content = content[:ci].rstrip()
+                    break
+
+        # Top-level key (indent 0): post_steps: or preconditions:
+        if indent == 0 and content.endswith(':') and ' ' not in content:
+            _flush_item()
+            current_item = None
+            current_list = None
+            current_script = None
+            current_top = content[:-1]
+            result[current_top] = {}
+            continue
+
+        # Script-name sub-key (indent 2): build_canonical_prices_v2.py:
+        if indent == 2 and content.endswith(':') and current_top is not None:
+            _flush_item()
+            current_item = None
+            current_script = content[:-1]
+            current_list = []
+            result[current_top][current_script] = current_list
+            continue
+
+        # List item marker (indent 4): - script: ...  or  - artifact_s3: ...
+        if indent == 4 and content.startswith('- ') and current_list is not None:
+            _flush_item()
+            current_item = {}
+            kv_part = content[2:].strip()
+            if ':' in kv_part:
+                k, _, v = kv_part.partition(':')
+                v = v.strip()
+                val: object = _unquote(v) if v else True
+                if val == 'true':
+                    val = True
+                elif val == 'false':
+                    val = False
+                current_item[k.strip()] = val
+            continue
+
+        # Continuation key under list item (indent 6):   key: value
+        if indent == 6 and ':' in content and current_item is not None:
+            k, _, v = content.partition(':')
+            v = v.strip()
+            val = _unquote(v) if v else True
+            if val == 'true':
+                val = True
+            elif val == 'false':
+                val = False
+            current_item[k.strip()] = val
+            continue
+
+    _flush_item()
+    return result
+
+
 # ---------------------------------------------------------------------------
 # Main
 # ---------------------------------------------------------------------------
@@ -527,6 +718,11 @@ def main():
     p_deployed.add_argument('script_id', nargs='?', default='',
                             help='Optional: check only this script (e.g. D_00). Omit for all.')
 
+    # postdeps
+    p_postdeps = sub.add_parser('postdeps', help='Show post-step and precondition dependencies for gold scripts')
+    p_postdeps.add_argument('script_name', nargs='?', default='',
+                            help='Optional: filter to this script name (e.g. D_01 or build_canonical_prices_v2.py)')
+
     args = parser.parse_args()
     if not args.command:
         parser.print_help()
@@ -542,6 +738,7 @@ def main():
         'inject': cmd_inject,
         'stats': cmd_stats,
         'deployed': cmd_deployed,
+        'postdeps': cmd_postdeps,
     }
     commands[args.command](args)
 

@@ -680,6 +680,144 @@ def _extract_script_io(
 
 
 # ---------------------------------------------------------------------------
+# Column gap detection: _load_parquet columns= allowlist vs actual access
+# ---------------------------------------------------------------------------
+
+def _extract_column_gaps(py_file: Path) -> list[dict]:
+    """Detect cases where a script accesses a DataFrame column that was not
+    included in the _load_parquet(..., columns=[...]) call that produced it.
+
+    Returns list of dicts:
+      {var, key_const, loaded_cols, accessed_col, load_line, access_line}
+
+    Only fires for _load_parquet calls with an explicit columns=[...] list
+    (not variables like columns=SOME_LIST). Dynamic column lists are skipped.
+    """
+    import ast as _ast
+
+    try:
+        content = py_file.read_text(encoding="utf-8", errors="replace")
+    except Exception:
+        return []
+
+    # DataFrame method/attribute names to exclude from column access detection
+    _DF_METHODS = {
+        'columns', 'index', 'shape', 'dtypes', 'empty', 'values', 'T',
+        'iterrows', 'itertuples', 'to_dict', 'to_json', 'to_parquet', 'to_csv',
+        'groupby', 'sort_values', 'sort_index', 'reset_index', 'set_index',
+        'rename', 'merge', 'join', 'concat', 'drop', 'fillna', 'dropna',
+        'copy', 'head', 'tail', 'loc', 'iloc', 'at', 'iat', 'apply', 'map',
+        'astype', 'describe', 'info', 'count', 'sum', 'mean', 'max', 'min',
+        'nunique', 'unique', 'value_counts', 'isnull', 'notnull', 'notna',
+        'isna', 'any', 'all', 'pipe', 'assign', 'query', 'filter', 'sample',
+        'nlargest', 'nsmallest', 'pivot', 'melt', 'explode', 'str', 'dt',
+        'cat', 'plot', 'hist', 'items', 'keys', 'get', 'pop', 'update',
+    }
+
+    gaps = []
+
+    # Match: varname = ..._load_parquet(..., columns=['col1', 'col2', ...])
+    # Also: varname = pool_result (where pool_result came from _load_parquet via submit)
+    # Focus on the simplest and most common pattern first.
+    load_re = re.compile(
+        r'^(\s*)(\w+)\s*(?:[:,]\s*\w[\w\[\],\s]*?)?\s*=\s*'
+        r'(?:\w+\.)?_load_parquet\s*\(\s*(\w+)\s*,\s*columns\s*=\s*\[([^\]]*)\]',
+        re.MULTILINE,
+    )
+
+    # Also handle: fut_X = pool.submit(_load_parquet, KEY, ..., columns=[...])
+    # then: varname = fut_X.result()
+    submit_re = re.compile(
+        r'(\w+)\s*=\s*\w+\.submit\s*\(\s*_load_parquet\s*,\s*(\w+)\s*,[^)]*columns\s*=\s*\[([^\]]*)\]',
+        re.MULTILINE,
+    )
+    result_re = re.compile(r'(\w+)\s*=\s*(\w+)\.result\(\)')
+
+    loads = []  # list of (var_name, key_const, loaded_cols_set, load_line)
+
+    for m in load_re.finditer(content):
+        var_name = m.group(2)
+        key_const = m.group(3)
+        cols_raw = m.group(4)
+        load_line = content[:m.start()].count('\n') + 1
+        try:
+            loaded_cols = set(_ast.literal_eval(f'[{cols_raw}]'))
+        except Exception:
+            continue
+        if loaded_cols:
+            loads.append((var_name, key_const, loaded_cols, load_line))
+
+    # Handle pool.submit pattern: fut = pool.submit(_load_parquet, KEY, columns=[...])
+    # then later: var = fut.result()
+    fut_to_load: dict[str, tuple] = {}
+    for m in submit_re.finditer(content):
+        fut_name = m.group(1)
+        key_const = m.group(2)
+        cols_raw = m.group(3)
+        load_line = content[:m.start()].count('\n') + 1
+        try:
+            loaded_cols = set(_ast.literal_eval(f'[{cols_raw}]'))
+        except Exception:
+            continue
+        if loaded_cols:
+            fut_to_load[fut_name] = (key_const, loaded_cols, load_line)
+
+    for m in result_re.finditer(content):
+        var_name = m.group(1)
+        fut_name = m.group(2)
+        if fut_name in fut_to_load:
+            key_const, loaded_cols, load_line = fut_to_load[fut_name]
+            loads.append((var_name, key_const, loaded_cols, load_line))
+
+    if not loads:
+        return []
+
+    # For each loaded variable, find column accesses
+    for var_name, key_const, loaded_cols, load_line in loads:
+        # Patterns for column access:
+        # 1. var['col']  or  var["col"]
+        bracket_re = re.compile(
+            rf'\b{re.escape(var_name)}\s*\[\s*[\'"](\w+)[\'"]\s*\]'
+        )
+        # 2. var.col  (attribute access -- common with adim.col_name)
+        attr_re = re.compile(
+            rf'\b{re.escape(var_name)}\s*\.\s*([a-z]\w*)\b'
+        )
+        # 3. var.get('col')
+        get_re = re.compile(
+            rf'\b{re.escape(var_name)}\s*\.get\s*\(\s*[\'"](\w+)[\'"]'
+        )
+
+        accessed: dict[str, int] = {}  # col_name -> first access line
+
+        for pat in (bracket_re, attr_re, get_re):
+            for m in pat.finditer(content):
+                col = m.group(1)
+                if col in _DF_METHODS:
+                    continue
+                if col.startswith('_') or col[0].isupper():
+                    continue  # skip private/constant names
+                line = content[:m.start()].count('\n') + 1
+                if line == load_line:
+                    continue  # skip the load line itself
+                if col not in accessed:
+                    accessed[col] = line
+
+        for col, access_line in accessed.items():
+            if col not in loaded_cols:
+                gaps.append({
+                    'var': var_name,
+                    'key_const': key_const,
+                    'col': col,
+                    'loaded_cols': sorted(loaded_cols),
+                    'load_line': load_line,
+                    'access_line': access_line,
+                })
+
+    return gaps
+
+
+# ---------------------------------------------------------------------------
 # Main: build the full pipeline DAG
 # ---------------------------------------------------------------------------
 

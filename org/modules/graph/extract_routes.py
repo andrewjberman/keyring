@@ -68,6 +68,15 @@ class EdgeVersionBinding:
 
 
 @dataclass
+class CustomErrorResponse:
+    """A CloudFront custom error response rule."""
+    error_code: int              # e.g., 403, 404, 500
+    response_code: int           # e.g., 200 (CF substitutes this)
+    response_page_path: str      # e.g., /index.html
+    ttl_seconds: int = 0         # error_caching_min_ttl
+
+
+@dataclass
 class RewriteRule:
     """A URL->S3 key rewrite rule from Lambda@Edge router."""
     url_prefix: str          # matched URL prefix
@@ -132,6 +141,7 @@ class RoutingTable:
     """Complete routing table for the portal."""
     origins: dict[str, CloudFrontOrigin] = field(default_factory=dict)
     behaviors: list[CloudFrontBehavior] = field(default_factory=list)
+    custom_error_responses: list[CustomErrorResponse] = field(default_factory=list)
     rewrite_rules: list[RewriteRule] = field(default_factory=list)
     api_gw_routes: list[ApiGatewayRoute] = field(default_factory=list)
     endpoints: dict[str, EndpointFunction] = field(default_factory=dict)
@@ -192,11 +202,11 @@ def _api_route_matches(route_path: str, url: str) -> bool:
 # Step 1: Parse CloudFront distribution Terraform
 # ---------------------------------------------------------------------------
 
-def _parse_cloudfront(workspace_root: Path) -> tuple[dict[str, CloudFrontOrigin], list[CloudFrontBehavior]]:
+def _parse_cloudfront(workspace_root: Path) -> tuple[dict[str, CloudFrontOrigin], list[CloudFrontBehavior], list[CustomErrorResponse]]:
     """Parse cloudfront-distribution.tf for origins and behaviors."""
     cf_file = workspace_root / "infra" / "aws" / "terraform" / "portal-auth" / "cloudfront-distribution.tf"
     if not cf_file.exists():
-        return {}, []
+        return {}, [], []
 
     content = cf_file.read_text(encoding="utf-8", errors="replace")
 
@@ -301,7 +311,25 @@ def _parse_cloudfront(workspace_root: Path) -> tuple[dict[str, CloudFrontOrigin]
         ))
         order += 1
 
-    return origins, behaviors
+    # Parse custom_error_response blocks
+    custom_error_responses: list[CustomErrorResponse] = []
+    for m in re.finditer(r'custom_error_response\s*\{', content):
+        block = _extract_tf_block(content, m.start())
+
+        error_code_m = re.search(r'error_code\s*=\s*(\d+)', block)
+        response_code_m = re.search(r'response_code\s*=\s*(\d+)', block)
+        response_page_m = re.search(r'response_page_path\s*=\s*"([^"]+)"', block)
+        ttl_m = re.search(r'error_caching_min_ttl\s*=\s*(\d+)', block)
+
+        if error_code_m and response_code_m and response_page_m:
+            custom_error_responses.append(CustomErrorResponse(
+                error_code=int(error_code_m.group(1)),
+                response_code=int(response_code_m.group(1)),
+                response_page_path=response_page_m.group(1),
+                ttl_seconds=int(ttl_m.group(1)) if ttl_m else 0,
+            ))
+
+    return origins, behaviors, custom_error_responses
 
 
 def parse_edge_versions(workspace_root: Path) -> list[EdgeVersionBinding]:
@@ -681,7 +709,10 @@ def build_routing_table(workspace_root: Path) -> RoutingTable:
     rt = RoutingTable()
 
     # Step 1: CloudFront
-    rt.origins, rt.behaviors = _parse_cloudfront(workspace_root)
+    origins, behaviors, custom_error_responses = _parse_cloudfront(workspace_root)
+    rt.origins = origins
+    rt.behaviors = behaviors
+    rt.custom_error_responses = custom_error_responses
 
     # Step 2: Rewrite rules
     rt.rewrite_rules = _parse_rewrite_rules(workspace_root)

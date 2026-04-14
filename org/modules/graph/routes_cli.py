@@ -160,6 +160,24 @@ def cmd_behaviors(args):
             print(f"         {ef.event_type}: {ef.function_name}")
         print()
 
+    # Custom error responses -- these intercept status codes before they reach the browser
+    if rt.custom_error_responses:
+        print()
+        print(f"CUSTOM ERROR RESPONSES ({len(rt.custom_error_responses)}):")
+        print("  !! These intercept HTTP status codes -- Lambda/S3 errors may be hidden from browser")
+        print()
+        for cer in sorted(rt.custom_error_responses, key=lambda c: c.error_code):
+            warn = ""
+            if cer.error_code == 403:
+                warn = "  !! WARN: Lambda 403 auth-denials will be swallowed -- browser gets {} {} not the Lambda error".format(
+                    cer.response_code, cer.response_page_path)
+            elif cer.error_code == 404:
+                warn = "  !! WARN: S3 missing-key 404s will be swallowed -- SPA routing assumed"
+            print(f"  HTTP {cer.error_code} -> {cer.response_code} {cer.response_page_path}  (ttl: {cer.ttl_seconds}s)")
+            if warn:
+                print(warn)
+        print()
+
 
 def cmd_origins(args):
     rt = _build_rt()
@@ -267,12 +285,23 @@ def cmd_auth_map(args):
             print(f"    {b.path_pattern} -> {b.origin_id}")
     print()
 
+    # Warn about custom error responses that affect auth debugging
+    auth_codes_intercepted = [c for c in rt.custom_error_responses if c.error_code in (401, 403)]
+    if auth_codes_intercepted:
+        print()
+        print("WARN -- custom_error_response intercepts:")
+        for cer in auth_codes_intercepted:
+            print(f"  HTTP {cer.error_code} -> {cer.response_code} {cer.response_page_path}")
+            print(f"  Lambda auth denials ({cer.error_code}) will reach browser as {cer.response_code} HTML, not JSON.")
+            print(f"  To pass auth errors through: return HTTP 401 instead of 403 from Lambda.")
+
 
 def cmd_stats(args):
     rt = _build_rt()
     print("ROUTING TABLE STATISTICS")
     print(f"  CloudFront origins:   {len(rt.origins)}")
     print(f"  CloudFront behaviors: {len(rt.behaviors)}")
+    print(f"  Custom error responses: {len(rt.custom_error_responses)}")
     print(f"  Rewrite rules:        {len(rt.rewrite_rules)}")
     print(f"  API Gateway routes:   {len(rt.api_gw_routes)}")
     print(f"  Frontend endpoints:   {len(rt.endpoints)} ({sum(1 for e in rt.endpoints.values() if e.url_template)} with URLs)")
