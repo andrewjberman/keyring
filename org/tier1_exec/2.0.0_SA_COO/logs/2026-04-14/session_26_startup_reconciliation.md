@@ -105,3 +105,34 @@ W6-003 COMPLETE. DS sent GO to DE inbox (20260413T200813Z). DE is STALE at COO s
 | Andrew direction on PROFAU DS Q2/Q3/Q7 TOs | Andrew | COO authors DS TOs for remaining PROFAU gaps |
 | DE W6-004 GO pickup | DE | ADVI_REBORN closes once W6-004 ships |
 | Andrew direction for new work | Andrew | COO decompose and issue |
+
+---
+
+## Addendum: CTO Message + PROFAU .004/.005 TO Issuance
+
+After reconciliation, CTO sent sequencing plan for REBORN/OFFICE/PROFAU one-session flow.
+
+### Compiler Tools (pre-TO mandate for .004/.005)
+
+| Tool | Command | Result |
+|------|---------|--------|
+| comp-transform schema-check | AdvisorBookView | PlatinumAdvisorSummary: 21 UNUSED (7 fee/tagged book fields + role_breakdown missing); PlatinumClientSummary: fee_summary UNUSED; PlatinumAccountSummary: 4/6 rendered, OK. Confirmed .004 scope and .005 scope. |
+| comp-blast | AdvisorBookView | 4 downstream nodes: 3 endpoints + opal-partners-data Lambda. Isolated — no cross-component impact from .004/.005 changes. |
+| comp-routes trace | getPlatinumAdvisorSummary | /api/scoped/partners/books/advisor/{id}/platinum-summary. CloudFront /api/scoped/partners/*. Components: AdvisorBookView + ClientsTab. |
+
+### TOs Authored This Leg
+
+| TO | Scope | Status |
+|----|-------|--------|
+| ADVI_PROFAU.004 | PlatinumAdvisorSummary type fix (Q6) — 7 book fields + role_breakdown missing from declared type | staged |
+| ADVI_PROFAU.005 | fee_summary L3 (Q4) + total_market_value L4 (Q5) — EXISTS-UPSTREAM, no .003 QA gate | staged |
+
+Deferred: Q1 TaxCostBasisPanel L2 → ADVI_PROFAU.006 (gates on .003 QA). Q2 is_fee_paying per client → ADVI_PROFAU.007 (gates on DS Q2 TO).
+
+DT W4 TO updated: cross_domain_coordination checklist now lists all 4 DE items expected in the deploy (W6-004 + W3 + .004 + .005).
+
+CTO and DS notified via MCP.
+
+### Attribution Incident
+
+PROFAU.004, PROFAU.005, W4 TO update, compiler-tools-log.md were staged by COO and then swept into AE's commit ecbdee3b (author: 0.6.0_AE_PartnerETL). Files correctly committed but wrong author attribution. Root cause: COO had staged files in the index; AE's git commit (without --only) swept them. Decision: leave as-is — no corrective re-commit. Content is correct; audit note here is sufficient. Lesson: coordinate staging windows during concurrent multi-agent sessions.
