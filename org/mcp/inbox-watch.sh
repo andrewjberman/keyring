@@ -25,6 +25,19 @@ SERIAL="${1:?Usage: inbox-watch.sh <agent_serial>}"
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 INBOX_BASE="$SCRIPT_DIR/inbox"
 
+# Single-watcher guard: if another inbox-watch.sh is already running for this
+# exact serial, exit immediately. Prevents accidental double-launch races on
+# the atomic mv (one winner's task-notification fires, the other's is lost).
+# Uses pgrep -f pattern match on the script path + serial. $$ is excluded.
+# pgrep may be absent on some minimal shells; failure falls through silently.
+if command -v pgrep >/dev/null 2>&1; then
+    existing=$(pgrep -f "inbox-watch\.sh $SERIAL$" 2>/dev/null | grep -v "^$$\$" || true)
+    if [ -n "$existing" ]; then
+        echo "inbox-watch already running for $SERIAL (pid $existing). Exiting." >&2
+        exit 0
+    fi
+fi
+
 # Strip ~suffix for folder lookup (0.4.0_DS_ClientPlatform~A -> 0.4.0_DS_ClientPlatform)
 BASE_SERIAL="${SERIAL%%~*}"
 
