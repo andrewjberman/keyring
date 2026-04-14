@@ -121,13 +121,12 @@ while true; do
         done
         echo "===================================================================="
         echo ""
-        # Self-respawn: start the next watcher before this process exits so
-        # the inbox is never unmonitored. The child starts immediately; this
-        # parent exits 0 a moment later, triggering the Claude Code task
-        # notification so the agent drains the full queue via check_inbox.
-        # disown prevents SIGHUP from killing the child when the parent exits.
-        bash "$0" "$SERIAL" &
-        disown $! 2>/dev/null || true
+        # NO self-respawn. An orphan child's stdout is disconnected from the
+        # Claude Code Bash-tool tracker, so if the orphan wins the atomic mv
+        # race on a subsequent message, the task-notification never fires
+        # and the message is silently swallowed. Agents MUST relaunch this
+        # script via the Bash tool (run_in_background=true) after each
+        # notification so every delivery has a tracked owner.
         exit 0
     fi
     sleep 5

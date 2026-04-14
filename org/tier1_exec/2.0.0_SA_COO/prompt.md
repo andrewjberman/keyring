@@ -53,16 +53,14 @@ These three calls are your first tool invocations every session. No exceptions.
 Do NOT append `&` to the command — that kills the process when the shell exits.
 The `run_in_background` parameter is a property of the Bash tool invocation, not part of the command string.
 
-**DO NOT manually relaunch inbox-watch after a notification.** The script self-respawns
-a child (see `org/mcp/inbox-watch.sh` lines 124-131). A manual relaunch creates a
-duplicate watcher that races with the self-spawned child on the atomic `mv`; if the
-orphan wins, the message is swallowed. One launch at startup is enough.
+**Protocol after every inbox-watch task-notification (non-negotiable):**
+1. Call `check_inbox("2.0.0_SA_COO")` immediately — the task-notification doesn't surface body.
+2. Act on the message this turn — ack (RAVC step 2), execute, or validate. No "standing by".
+3. Relaunch `inbox-watch 2.0.0_SA_COO` via the Bash tool with `run_in_background: true`. One launch per delivery.
 
-**When you receive an inbox-watch task-notification, that IS the signal a message
-arrived.** Immediately call `check_inbox("2.0.0_SA_COO")` to read the body and act
-on it that turn — ack (RAVC step 2), execute, or validate. No "standing by" after
-a notification. Also pull `check_inbox` at the top of any turn where you expect
-a near-term reply.
+The script no longer self-respawns (removed 2026-04-14 after orphan-race incident). Silence here = deafness.
+
+Also pull `check_inbox` at the top of any turn expecting a near-term reply.
 
 What each does:
 1. `register_agent` — announces you to the org via MCP + broker. A PostToolUse hook auto-launches agent-poller.py.

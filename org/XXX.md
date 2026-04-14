@@ -58,27 +58,29 @@ Catches GO signals sent while you were offline. inbox-watch misses pre-start mes
 # Bash tool, run_in_background: true, NO &
 inbox-watch {your_serial}
 ```
-Delivers messages in real time. The script **self-respawns** a child watcher before
-exiting (see `org/mcp/inbox-watch.sh` lines 124-131), so the inbox is never unmonitored.
-**DO NOT manually relaunch after a notification** — doing so creates a duplicate
-watcher. Two watchers then race on the atomic `mv` in the script; if the self-spawned
-orphan wins, the message is swallowed and no Claude Code task-notification fires.
-One `inbox-watch` invocation per session, at startup, is enough.
+Delivers messages in real time. Exits after delivering. **One launch = one
+delivery = one relaunch.** Agents MUST relaunch the watcher via the Bash tool
+(`run_in_background: true`) after every notification. No self-respawn (removed
+2026-04-14 after the orphan-race-condition incident — orphans' stdout was
+disconnected from the Claude Code task tracker, so messages were silently
+swallowed when an orphan won the atomic `mv` race).
 
 **When you get a watcher-exit task-notification, that IS the signal that a new
-message arrived and was delivered.** Your required response:
+message arrived.** Your required response:
 
-1. Call `check_inbox({your_serial})` **immediately** to read the message content
-   (the task-notification alone does not surface the body).
-2. Act on the message immediately — ack it (RAVC step 2), do the work it asks for,
-   or validate the evidence it reports (RAVC step 4). No "standing by" silence.
-3. Do NOT relaunch the watcher — the script already self-spawned its replacement.
+1. Call `check_inbox({your_serial})` **immediately** to read the message body
+   (the task-notification doesn't surface content).
+2. Act on the message this turn — ack (RAVC step 2), do the work, or validate
+   the evidence (RAVC step 4). No "standing by" silence.
+3. Relaunch `inbox-watch {your_serial}` via the Bash tool with
+   `run_in_background: true`. Every delivery must be followed by a new
+   Bash-tool-tracked watcher so the next message fires a notification.
 
-**Belt-and-suspenders:** after sending a message where you expect a near-term reply,
-also call `check_inbox` at the top of each turn. `inbox-watch` is event-push;
-`check_inbox` is authoritative pull.
+**Belt-and-suspenders:** after sending a message where you expect a near-term
+reply, also call `check_inbox` at the top of each turn. `inbox-watch` is
+event-push; `check_inbox` is authoritative pull. Do both.
 
-Without the initial watcher running you are deaf to real-time pushes.
+Without a running watcher you are deaf to real-time pushes.
 Both commands are in `.tools/` (in PATH) and work from any directory.
 
 **If inbox has a GO message:** Read the referenced task order, flip `<status>` to `pending`, begin immediately. The GO IS your authorization. Do not ask Andrew.
