@@ -1,0 +1,24 @@
+{
+  "project_code": "ADVI_FNTEND",
+  "macro_code": "ADVI",
+  "name": "ADVI Full-Surface Frontend Correctness",
+  "description": "Close 17 correctness/parity gaps across AdvisorIntelligence portal surface (Distribution/Segment D1-D4, AdvisorPublicProfile A1-A3, AdvisorBookView B1-B10, Global G1). Three categories: FE-trivial sweep (1 RD TO), FE+DS data contracts (7 bundles covering fee-toggle scoping, window-scoped flows, team attribution, top gains at L2/L3, account timeseries, OFC snapshot parity, Q4 continuous-vs-snapshot investigation), and one AE gold re-run (B1 post ADVI_PROFAU.006). Sourced from 0.4.2_RD_AdvisorIntelligence investigation 2026-04-14.",
+  "prds": [
+    {
+      "path": "docs/architecture/ADVI_FRONTEND_CORRECTNESS.md",
+      "label": "ADVI Full-Surface Frontend Correctness PRD",
+      "date": "2026-04-14"
+    }
+  ],
+  "source_brief": "org/tier2_senior/0.4.2_RD_AdvisorIntelligence/briefs/2026-04-14_advi_frontend_status.md",
+  "status": "active",
+  "phase": "Phase 0: PRD complete, COO decomposition pending. ~14 TOs (1 RD + 7 DS + 6 FE + 0 AE). Bundle 2 is keystone — DS windows vocabulary reused by Bundles 3/4/5.",
+  "blocking": "COO task-order issuance.",
+  "depends_on": ["ADVI_PROFAU"],
+  "depends_on_note": "B1 re-run gates on ADVI_PROFAU.006 landing on PROD runner (already flagged).",
+  "created": "2026-04-14",
+  "pods": ["0.4"],
+  "pipeline": "bd-pipeline + portal",
+  "thread_counter": 0,
+  "threads": []
+}
