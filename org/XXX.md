@@ -47,6 +47,17 @@ Without this running you are deaf to all agent messages.
 
 **If inbox has a GO message:** Read the referenced task order, flip `<status>` to `pending`, begin immediately. The GO IS your authorization. Do not ask Andrew.
 
+**D. Set compiler tool context (enables auto-logging):**
+```bash
+mkdir -p .comp-graph && printf "SERIAL=%s\nTO_ID=\n" "{your_serial}" > .comp-graph/.agent_context
+```
+Every comp-* tool run automatically appends a structured row to `org/compiler-tools-log.md`.
+No manual logging needed. When you start a new TO, update the context:
+```bash
+printf "SERIAL=%s\nTO_ID=%s\n" "{your_serial}" "{TO_filename_without_.md}" > .comp-graph/.agent_context
+# Example: printf "SERIAL=0.4.0_DS_ClientPlatform\nTO_ID=ADVI_OFFICE.W1\n" > .comp-graph/.agent_context
+```
+
 ---
 
 ## Step 2 — Read Your Recent Logs
