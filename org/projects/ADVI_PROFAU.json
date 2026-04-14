@@ -7,8 +7,8 @@
     {"path": "docs/audits/advisor-profile-book-input-mapping-2026-04-13.md", "label": "DE+RD joint audit doc — input/source mapping across Profile + Book L2/L3/L4", "date": "2026-04-13"}
   ],
   "status": "active",
-  "phase": "P0: audit doc complete (DE column c2efa4a7). RD column in flight, parallel. DS audit TO pending COO authoring.",
-  "blocking": "COO authors and issues `ADVI_PROFAU.001.ds-profile-book-data-gap-audit.md` to 0.4.0_DS.",
+  "phase": ".001 DS audit COMPLETE (profau_gap_audit_response.md — 7 gaps labeled EXISTS-UPSTREAM/COLUMN-ADD/NEW-ARTIFACT/DEPRECATED). .002 fee_earning_mask billability gate + is_fee_paying SHIPPED (2026-04-13). Remaining implementation TOs (.003+) for remaining gaps pending COO authoring.",
+  "blocking": "COO authors .003+ implementation TOs from profau_gap_audit_response.md findings.",
   "created": "2026-04-13",
   "pods": ["0.4"],
   "pipeline": "bd-pipeline",

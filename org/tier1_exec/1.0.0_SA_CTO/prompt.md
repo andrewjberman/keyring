@@ -173,7 +173,7 @@ When researching for a PRD, you should:
 | `ADHC_DESIGN` | All 4 pod Phase 2 branches complete. Pod 0.4 shipped (.028 `3096108`, .032 `f3274f3`). .025 COMPLETE-IN-FACT. Backlog: `.033` react-hooks/set-state-in-effect refactor (16 warnings, low priority). | Attribution .001/.015/.024 (0.2.2_RD) + Valuation .007 (0.2.4_RD) — blocked on those RDs registering. |
 | `ADVI_PROFAU` | .001 DS audit complete (profau_gap_audit_response.md). .002 fee_earning_mask + is_fee_paying SHIPPED (ADVI_PROFAU.002 complete). | COO authors .003+ implementation TOs from gap audit findings. |
 | `ADVI_REBORN` | REOPENED 2026-04-13. Core waves complete. Follow-up: role_combination_breakdown double-count fix. Per-role fee_paying.aua double-counts split-weighted accounts; fix requires non-overlapping role-set partition in D_00c. | DS W6-003 pending (D_00c + D_04). DE W6-004 staged after DS ships + gold run confirms. |
-| `ADVI_OFFICE` | PRD complete 2026-04-13. OFC cohort for Distribution tab — 10 offices, L0 donut + L1 advisor drill. Architect-led dim from Lusha bridge CSV. 4 waves. | COO task order issuance. AE uploads dim_advisor_office.csv to S3 as prerequisite. |
+| `ADVI_OFFICE` | PRD complete 2026-04-13. All 4 TOs issued. W1 DS (D_01+D_00b), W2 AE (dim upload + gold run), W3 DE (frontend), W4 DT (deploy). | Blocked on ADVI_REBORN W6-003 (DS) ship first. Then DS W1 -> AE W2 -> DE W3 -> DT W4. |
 
 ### Inactive / On Hold
 

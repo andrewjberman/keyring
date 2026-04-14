@@ -11,7 +11,7 @@
     }
   ],
   "status": "active",
-  "phase": "PRD complete 2026-04-13 (v2: decisions resolved -- Other bucket, Continuous AUA in V1 scope, ADV stays). 4 waves: W1 DS (D_01 OFC snapshot/NNA + D_00b OFC timeseries), W2 DE (frontend toggle/drill/Continuous), W3 AE (S3 dim upload + gold run), W4 DT (portal deploy).",
+  "phase": "PRD complete 2026-04-13 (v2: decisions resolved -- Other bucket, Continuous AUA in V1 scope, ADV stays). 4 waves: W1 DS (D_01 OFC snapshot/NNA + D_00b OFC timeseries), W2 AE (S3 dim upload + gold run), W3 DE (frontend toggle/drill/Continuous), W4 DT (portal deploy). All TOs issued 2026-04-13.",
   "blocking": "DS W6-003 (ADVI_REBORN) must ship first. Then DS ADVI_OFFICE W1 (D_01+D_00b). Then AE W2 (dim upload + gold run). Then DE W3 (frontend). Then DT W4 (deploy). All 4 TOs issued 2026-04-13 (all staged).",
   "created": "2026-04-13",
   "pods": ["0.4", "0.6"],
