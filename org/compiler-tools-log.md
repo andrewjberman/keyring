@@ -201,3 +201,13 @@ Results: PASS | PARTIAL | FAIL | SKIPPED | WARN
 | 2026-04-14 | 2.0.0_SA_COO | adv-donut-account-count | comp-pipescript | comp-pipescript io D_01.partner_analytics_artifacts.py | FAIL |
 | 2026-04-14 | 0.4.0_DS_ClientPlatform | adv-donut-account-count | comp-pipescript | comp-pipescript io D_01 | PASS |
 | 2026-04-14 | 0.4.0_DS_ClientPlatform | adv-donut-account-count | comp-pipescript | comp-pipescript deployed D_02 | PASS |
+| 2026-04-14 | 1.0.0_SA_CTO | (no-TO) | comp-blast | comp-blast convert_fees_to_silver | PASS |
+| 2026-04-14 | 1.0.0_SA_CTO | (no-TO) | comp-blast | comp-blast ETFClassifier | PASS |
+| 2026-04-14 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-validate | comp-validate --help | PASS |
+| 2026-04-14 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-validate | comp-validate --list | PASS |
+| 2026-04-14 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript deployed D_04.client_portal_summary.py | PASS |
+| 2026-04-14 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript deployed D_04 | PASS |
+| 2026-04-14 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript --help | PASS |
+| 2026-04-14 | 0.4.2_RD_AdvisorIntelligence | ADVI_FNTEND.B0.rd-fe-trivial-sweep | comp-transform | comp-transform schema-check CanonicalBookView | PASS |
+| 2026-04-14 | 0.4.2_RD_AdvisorIntelligence | ADVI_FNTEND.B0.rd-fe-trivial-sweep | comp-transform | comp-transform schema-check ConsolidatedOverviewPanel | PASS |
+| 2026-04-14 | 0.4.2_RD_AdvisorIntelligence | ADVI_FNTEND.B0.rd-fe-trivial-sweep | comp-transform | comp-transform schema-check DistributionTab | PASS |
