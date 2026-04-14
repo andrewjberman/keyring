@@ -8,7 +8,7 @@
   ],
   "status": "active",
   "phase": ".001-.005 ALL COMPLETE 2026-04-14. .003 QA folded into OFFICE W2 group-D run (AE in progress). .004 (0050c05 PlatinumAdvisorSummary 7 book fields + role_breakdown type fix). .005 (d1f9747 L3 fee_summary FeeSummaryPanel + L4 total_market_value). .006 (Q1 TaxCostBasisPanel L2) staged pending .003 QA confirmation from AE W2 run. .007 (Q2 is_fee_paying per AdvisorClient) staged pending DS Q2 TO.",
-  "blocking": ".006: AE W2 gold run must confirm platinum/advisors/{id}/summary.json has capital_gains_ttm + cost_basis_by_year. .007: DS Q2 TO not yet authored. DS Q3/Q7 D_02 fee_earning_mask billability alignment TOs also not yet authored.",
+  "blocking": ".006 (TaxCostBasisPanel L2): staged for DE after W3. .007 (is_fee_paying per AdvisorClient): DS Q2 TO not yet authored. DS Q3/Q7 D_02 fee_earning_mask billability alignment TOs also not yet authored.",
   "created": "2026-04-13",
   "pods": ["0.4"],
   "pipeline": "bd-pipeline",
