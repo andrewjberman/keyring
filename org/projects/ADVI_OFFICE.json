@@ -16,8 +16,8 @@
     }
   ],
   "status": "active",
-  "phase": "W1-W7 COMPLETE. W6 DE all 10 fixes resolved: fixes 2-8 (f6fe035), Fix 1 cascade (f67dd91), Fix 9 bell curve (e692f60). Fix 10 advisor list verified no-op. W8 DT IN PROGRESS (GO 2026-04-14, batch f67dd91+e692f60). OFC continuous AUA gap (cumulative_chart.json missing ofc key) — DS investigating W9 scope.",
-  "blocking": "W8 DT smoke-test. DS W9 scope for cumulative_chart.json ofc key (investigating).",
+  "phase": "W1-W8 in flight. W6 fully resolved (f6fe035+f67dd91+e692f60). W8 DT deploying (f67dd91+e692f60 batch). W9a DS COMPLETE (416806a5, D_04 ofc/nna_ofc added, ETag a82c4bc0). W9b AE in progress (D_04 QA run, GO received from DS).",
+  "blocking": "W8 DT smoke-test. W9b AE D_04 run (10-15 min). Portal continuous AUA live after W9b completes.",
   "created": "2026-04-13",
   "pods": ["0.4", "0.6"],
   "pipeline": "bd-pipeline + portal",
