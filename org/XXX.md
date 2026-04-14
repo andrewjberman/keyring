@@ -109,36 +109,60 @@ Agents: applies to all DE and RD agents. Plugin installed at `~/.claude/plugins/
 
 ---
 
-## Compiler Tools — Run Before Tracing Anything Manually
+## Compiler Tools — Trigger Table
 
-### Investigation tools (use before grepping or reading source)
+**Model: you don't need to memorize the tools. Recognize your situation, find the row, run the command.**
+Full catalog and deep docs: `org/modules/graph/comp-tools.yaml`. Cache stale? Run `comp-build` first.
 
-| Tool | Command | Use when |
-|------|---------|----------|
-| `comp-pipescript io` | `comp-pipescript io D_00` | What a gold script reads/writes. Also shows: COLUMN GAPS (columns accessed but not in load list — silent failure class), S3-DYNAMIC reads (runtime CSV/parquet paths), PORTAL CONSUMERS (platinum keys → endpoints → components) |
-| `comp-pipescript consumers` | `comp-pipescript consumers D_00` | What downstream scripts consume this output |
-| `comp-pipescript feeds` | `comp-pipescript feeds D_01` | What upstream scripts write what this reads |
-| `comp-pipescript overlap` | `comp-pipescript overlap D_00 D_01` | Shared S3 artifacts between two scripts (COO: run before cross-domain TOs) |
-| `comp-pipescript postdeps` | `comp-pipescript postdeps [script]` | Post-step and precondition deps declared in gold_pipeline_deps.yaml |
-| `comp-blast` | `comp-blast D_00.portal_aggregates.py` | Blast radius before any change |
-| `comp-trace` | `comp-trace artifact_name --direction both` | Cross-layer dependency path |
-| `comp-platinum` | `comp-platinum reverse platinum/firm/dashboard.json` | S3 key → routes → components |
-| `comp-transform` | `comp-transform schema-check ClientsTab` | Component field/type audit. Destructure aliases shown as NOTE (not MISSING) |
-| `comp-routes` | `comp-routes trace getEmployeeLeaderboard` | Full serving path. `comp-routes behaviors` also shows CloudFront custom_error_response intercept rules (use fn name, not URL path in Git Bash) |
-| `comp-cache` | `comp-cache collisions` | React Query key collisions |
-| `comp-pii` | `comp-pii audit` | PII field detection |
+### When you're ABOUT TO DO something
 
-### Pre-deploy / correctness gates (run before uploading or signaling downstream)
+| Situation | Run | What to look for |
+|-----------|-----|-----------------|
+| Edit a gold script | `comp-pipescript io [script]` | **COLUMN GAPS** section — columns accessed but missing from load list (caught geo_drill + fee_earning_aua incidents). PORTAL CONSUMERS — platinum keys resolved to portal components. |
+| Run a gold script | `comp-pipescript deployed [script]` | MATCH = runner has your code. STALE = upload needed first. |
+| Run a gold script (ad-hoc) | `comp-pipescript postdeps [script]` | BLOCKING post-steps must run after. E.g. build_canonical_prices → inject_scoped_overrides (Apr-06 $22M phantom incident). |
+| Write a task order | `comp-blast [node]` for every affected component/script | Downstream impact — who else is affected? Anything in another active TO? |
+| Write a cross-domain TO | `comp-pipescript overlap A B` | Shared S3 artifacts between the two scripts — those go in `<cross_domain_coordination>`. |
+| Modify portal component | `comp-transform schema-check [Component]` | MISSING fields = runtime undefined. NOTE fields = expected runtime aliases (not bugs). |
+| Change a fetch/endpoint | `comp-routes trace [fn]` | Full CF → auth → S3 path. Use function name, not URL, in Git Bash. |
+| Debug a 4xx / auth failure | `comp-routes behaviors` | **CUSTOM ERROR RESPONSES** section — CF may be intercepting 403 and returning HTML (caught Lambda auth-denial incident). |
+| Add a boto3 call to Lambda | `comp-iam service [lambda-name]` | Any MISSING permissions flagged. Fix iam.tf before deploying. |
+| Change iam.tf | `comp-iam gaps` | Full cross-reference of all Lambda/EC2 boto3 ops vs Terraform policies. |
+| Query React Query keys | `comp-cache collisions` | Same key, multiple components = cache corruption risk. |
 
-| Tool | Command | Use when |
-|------|---------|----------|
-| `comp-pipescript deployed` | `comp-pipescript deployed [D_00]` | Verify local gold scripts match s3://opal-data-bd/code/gold/ ETags before any gold run. MATCH / STALE / MISSING_ON_S3 per script. |
-| `comp-validate` | `comp-validate D_04 --artifact /tmp/leaderboard.json` | Check declared invariants on gold output before S3 upload. Exit 1 if ERROR checks fail. Config: `data/black_diamond/scripts/gold/gold_validate_config.yaml`. `comp-validate --list` shows all configured checks. |
-| `comp-iam` | `comp-iam gaps` | IAM permission cross-reference: Lambda/EC2 boto3 ops vs Terraform policies. Run after any iam.tf change or new boto3 call. `comp-iam service <name>` for one service. |
-| `comp-tooltip` | `comp-tooltip drift` | Tooltip migration audit (one-off: inline vs DataTooltip). Use for tooltip cleanup sprints only. |
+### When you're DONE with something
 
-Full reference: `org/modules/graph/comp-tools.yaml`
-Cache stale? Run `comp-build` first.
+| Situation | Run | What to look for |
+|-----------|-----|-----------------|
+| Finished a gold run, about to signal AE | `comp-validate [script] --artifact /tmp/[artifact].json` | **All ERROR checks must pass (exit 0) before signaling.** WARN count: document in session log but does not block. Config: `data/black_diamond/scripts/gold/gold_validate_config.yaml`. |
+| Committed a change | `comp-blast [changed fn]` | Blast radius unchanged — if new downstream nodes appeared, flag to COO. |
+| Uploaded scripts to S3 | `comp-pipescript deployed [script]` | Confirm MATCH before triggering gold run. |
+| Wiring a new portal component | `comp-transform fields [Component]` | All rendered fields have a TypeScript type — no silent undefineds. |
+
+### Investigation tools (when you need to trace something)
+
+| Question | Run |
+|----------|-----|
+| How does X connect to everything? | `comp-trace [X] --direction both` |
+| What breaks if I change X? | `comp-blast [fn or artifact]` (use fn name, not script name) |
+| What does this gold script read/write? | `comp-pipescript io [script]` |
+| What feeds this script? | `comp-pipescript feeds [script]` |
+| Who consumes this script's output? | `comp-pipescript consumers [script]` |
+| Full page-to-gold-script trace | `comp-platinum page [ComponentName]` |
+| S3 key → which portal component renders it? | `comp-platinum reverse [s3/key.json]` |
+| Does this portal path have auth? | `comp-routes auth-map` |
+| What fields does this component render? | `comp-transform fields [Component]` |
+| PII exposure audit | `comp-pii audit` |
+
+### Minimum required runs by role
+
+| Role | Before starting work | Before signaling done |
+|------|---------------------|----------------------|
+| DS | `comp-pipescript io [script]` (includes COLUMN GAPS) + `comp-pipescript deployed` + `comp-pipescript postdeps` | `comp-validate [script] --artifact [file]` exits 0 |
+| DE | `comp-transform schema-check [Component]` + `comp-blast [fn]` | `comp-blast [changed fn]` — no new downstream nodes |
+| DT | `comp-pipescript io [script]` + `comp-routes behaviors` if CF involved | `comp-iam service [lambda]` if new boto3 call added |
+| AE | `comp-pipescript deployed` + `comp-pipescript postdeps` | `comp-iam gaps` if iam.tf changed |
+| COO (TO authoring) | `comp-blast [every affected node]` + `comp-pipescript overlap A B` for cross-domain pairs | All mandate `<expect>` values confirmed before issuing |
 
 ---
 
