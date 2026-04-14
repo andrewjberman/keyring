@@ -158,7 +158,7 @@ You do NOT produce architecture specs (CTO does). You DO align, route, and track
 |---------|--------|-------------|
 | `ADVI_OFFICE` | AE W2 COMPLETE (D_03+D_04 local, platinum OFC live, 10 offices). W3 DE COMPLETE (7dd0a7e portal DEV). W4 DT in progress (GO 2026-04-14). | DT W4 smoke-test + portal PROD tag. |
 | `ADVI_REBORN` | **CLOSED 2026-04-14.** W6-003 (1d70ecaf) + W6-004 (0225d359) both complete. 4-cell matrix validated. | — |
-| `ADVI_PROFAU` | .001-.005 ALL COMPLETE. .003 QA confirmed 2026-04-14 (capital_gains_ttm + cost_basis_by_year live). .006 DE staged (gate clear, GO issued). D_02 NNA per-role canonical fix (d51e44ef) — ships tonight via nightly PROD run. | .006 DE in progress. .007 (is_fee_paying per AdvisorClient) + Q3/Q7 DS TOs pending authoring. |
+| `ADVI_PROFAU` | .001-.006 ALL COMPLETE 2026-04-14 (.006: capitalGainsTtm + costBasisByYear wired, 5233b91 portal DEV). D_02 NNA per-role canonical (d51e44ef) ships tonight nightly. | .006 portal DEV awaiting DT push (after OFFICE W4). .007 + Q3/Q7 DS TOs pending authoring. |
 | `ADHC_DESIGN` | Phase 2: all pod .0.1/.0.2/.0.3/0.4 TOs COMPLETE. | Attribution RD .001/.015/.024 + Valuation RD .007 still staged — agents not LIVE. Backlog: .033 react-hooks/set-state-in-effect (low priority). |
 | `ADHC_TMSTEL` | P0: PRD complete. | Azure AD app registration (Andrew/IT). Reactivate when credentials available. |
 | `ADVI_INCMTL` | P0: Briefing complete. Low priority. | Production per-script timing profile. DS watermark design. AE dispatch. |
@@ -190,7 +190,7 @@ You do NOT produce architecture specs (CTO does). You DO align, route, and track
 
 | Agent | Last Known Work | Pending |
 |-------|----------------|---------|
-| 0.4.0_DE | Session 2026-04-14: W6-004 + PROFAU.004 + .005 + OFFICE.W3 ALL COMPLETE (batch handed to DT). | PROFAU.006 (staged → pending, GO issued). Separate DT push after W4. |
+| 0.4.0_DE | Session 2026-04-14: W6-004 + PROFAU.004-.006 + OFFICE.W3 ALL COMPLETE (5233b91 portal DEV). | .006 portal DEV awaiting DT push after W4 PROD confirms. |
 | 0.4.0_DT | Session 2026-04-13: SI double-annualize + ADV drill gate. | ADVI_OFFICE.W4 (pending — in progress). deployment_map. |
 | 0.4.0_DS | Session 2026-04-14: D_00b fix #3 (5b4439e1). PROFAU.003 QA confirmed. D_02 NNA per-role canonical fix (d51e44ef, uploaded). | — (D_02 deploys tonight nightly). |
 | 0.4.2_RD | Session 2026-04-13: header BETA badge + FeeEfficiency polish. 2026-04-14: starting up. | page_inventory. |
