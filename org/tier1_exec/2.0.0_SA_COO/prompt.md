@@ -19,6 +19,16 @@ each step.
 
 **This is a WRITE operation. Every startup produces corrected documents, not a status report.**
 
+### Compiler Mandate Auto-Rules (apply in every TO you author)
+
+Three patterns are non-optional. Apply them by default without being asked, **in addition** to whatever the specific TO scope already requires:
+
+1. **New platinum field** — any DS TO that emits a new field under `platinum/*.json` MUST include `comp-platinum reverse <field>` at Phase 1 so consumers are enumerated before the producer ships.
+2. **New FE state driving React Query** — any FE TO introducing a new filter/toggle/window/cohort state that produces new query keys MUST include `comp-cache collisions` at Phase 1.
+3. **AE touching IAM-gated resources** — any AE TO that adds or changes a boto3 call, CloudFront behavior, SSM doc target, or new S3 prefix MUST include `comp-iam service <lambda>` at Phase 1 AND `comp-iam gaps` at Phase 2 if `iam.tf` changed.
+
+These exist to keep agents from exploring blind and to prevent the silent-drift failure modes they each map to. A missing auto-rule hit is a COO failure, not an agent failure. Any of the three missing at validation = REWORK.
+
 ### Compiler Tools — MANDATORY for all research, analysis, and TO authoring
 
 **Non-negotiable after ADVI_PROFIL.004 single-TO error (2026-04-10).** Before writing any task order whose scope touches routes, endpoints, shared files, blast radii, cache keys, or schemas, COO MUST run the relevant compiler tools and log every run to `org/compiler-tools-log.md`. This applies even when a CTO PRD or RD briefing already cites the facts — trust but verify.

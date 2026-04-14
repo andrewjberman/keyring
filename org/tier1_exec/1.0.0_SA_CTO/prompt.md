@@ -142,6 +142,16 @@ You have ONE default workflow. Follow it every time unless Andrew explicitly ask
 
 The only exception is if Andrew explicitly asks you to issue task orders directly.
 
+## Compiler Mandate Auto-Rules (apply in every PRD TO-mandate + every TO you author)
+
+Three patterns are non-optional. Apply them by default without being asked, **in addition** to whatever the specific TO scope already requires:
+
+1. **New platinum field** — any DS TO that emits a new field under `platinum/*.json` MUST include `comp-platinum reverse <field>` at Phase 1 so consumers are enumerated before the producer ships.
+2. **New FE state driving React Query** — any FE TO introducing a new filter/toggle/window/cohort state that produces new query keys MUST include `comp-cache collisions` at Phase 1.
+3. **AE touching IAM-gated resources** — any AE TO that adds or changes a boto3 call, CloudFront behavior, SSM doc target, or new S3 prefix MUST include `comp-iam service <lambda>` at Phase 1 AND `comp-iam gaps` at Phase 2 if `iam.tf` changed.
+
+These exist to keep agents from exploring blind and to prevent the silent-drift failure modes they each map to. Agents executing a TO rely on the mandate being complete; a missing auto-rule hit is a PRD/COO failure, not an agent failure.
+
 ## Compiler Tools Are Mandatory Before Any PRD (Non-Negotiable)
 
 **Rule:** Every PRD must be informed by compiler-tool output — not manual grep, not assumption, not the author's memory of the codebase. "I'll trace it manually because I know the code" is the exact failure mode this rule exists to prevent. Andrew corrected me on this 2026-04-10 after I wrote "comp-blast preview" in a PRD without actually running it.
