@@ -151,15 +151,15 @@ You do NOT produce architecture specs (CTO does). You DO align, route, and track
 
 **Commit only:** Session logs, org docs. Use `--author="2.0.0_SA_COO <2.0.0_SA_COO@opal.agent>"`.
 
-## Pod Delivery Dashboard -- Updated 2026-04-14 (COO session 27)
+## Pod Delivery Dashboard -- Updated 2026-04-14 (COO session 28)
 
 ### Active Projects
 
 | Project | Status | Pending Work |
 |---------|--------|-------------|
-| `ADVI_OFFICE` | **CLOSED 2026-04-14.** portal-v2.1.44. All 9 addendum fixes shipped (W6-W9). OFC Continuous AUA live (W9b AE D_04). | — |
+| `ADVI_OFFICE` | **CLOSED 2026-04-14.** portal-v2.1.44. All 9 addendum fixes shipped (W6-W9). W5 + W9b flipped complete session 28 (W5 absorbed into W2, W9b D_04 local run per AE log). | — |
 | `ADVI_REBORN` | **CLOSED 2026-04-14.** W6-003 (1d70ecaf) + W6-004 (0225d359) both complete. 4-cell matrix validated. | — |
-| `ADVI_PROFAU` | .001-.006 ALL COMPLETE 2026-04-14 (.006: capitalGainsTtm + costBasisByYear wired, 5233b91 portal DEV). D_02 NNA per-role canonical (d51e44ef) ships tonight nightly. | .006 portal DEV awaiting DT push (after OFFICE W4). .007 + Q3/Q7 DS TOs pending authoring. |
+| `ADVI_PROFAU` | .001-.007 ALL COMPLETE 2026-04-14 (portal-v2.1.44). D_02 NNA per-role canonical (d51e44ef) ships tonight nightly — Travis Penfield Lifetime Activity → $253M matching leaderboard. | Q3/Q7 DS TOs pending Andrew direction. |
 | `ADHC_DESIGN` | Phase 2: all pod .0.1/.0.2/.0.3/0.4 TOs COMPLETE. | Attribution RD .001/.015/.024 + Valuation RD .007 still staged — agents not LIVE. Backlog: .033 react-hooks/set-state-in-effect (low priority). |
 | `ADHC_TMSTEL` | P0: PRD complete. | Azure AD app registration (Andrew/IT). Reactivate when credentials available. |
 | `ADVI_INCMTL` | P0: Briefing complete. Low priority. | Production per-script timing profile. DS watermark design. AE dispatch. |
@@ -180,21 +180,21 @@ You do NOT produce architecture specs (CTO does). You DO align, route, and track
 | News | news-v2.9.5 |
 | Shared Infra | shared-infra-v1.6.0 |
 
-### Operational Notes (04-14 session 27)
+### Operational Notes (04-14 session 28)
 
-- **ADVI_OFFICE W4:** DT in progress. Batch includes W6-004 + W3 + PROFAU.004 + .005. Smoke-test (5-step OFC checklist) required before MCP to COO.
-- **ADVI_PROFAU .006:** GO sent to DE (20260414T151610Z). cost_basis_by_year is a list — DE must iterate by index/purchase_year. .006 push is a separate DT deploy after W4 completes.
-- **D_02 NNA per-role canonical fix (d51e44ef):** DS committed + uploaded. No manual AE trigger needed — nightly PROD run at 22:00 UTC tonight will push D_02 to platinum. Travis Penfield Lifetime Activity NNA will then show $253M (matching leaderboard). Per-role fields available for future DE wiring.
-- **ec2-auto-shutdown-enforcer:** security-scanner-v1.0.2 correct fix live. QA runner (i-0090b823a4a0997e3) has AutoShutdown=disabled tag set.
+- **ADVI_OFFICE CLOSED** (session 27). W5 + W9b staged→complete flipped session 28.
+- **New ADV donut work (post session 27):** adv-donut-account-count (DS+AE) complete, architect filter (DS) complete, commits 0ce31899 / b7ee381b. `ofc-l2-advisor-distribution` DS TO pending.
+- **D_02 NNA per-role canonical (d51e44ef):** nightly 22:00 UTC will push to platinum tonight.
+- **ec2-auto-shutdown-enforcer:** security-scanner-v1.0.2 live, QA runner AutoShutdown=disabled.
 
 ### Pod 4 (ClientPlatform) -- Status as of 2026-04-14 session 27
 
 | Agent | Last Known Work | Pending |
 |-------|----------------|---------|
-| 0.4.0_DE | Session 2026-04-14: W6-004 + PROFAU.004-.006 + OFFICE.W3 ALL COMPLETE (5233b91 portal DEV). | .006 portal DEV awaiting DT push after W4 PROD confirms. |
-| 0.4.0_DT | Session 2026-04-13: SI double-annualize + ADV drill gate. | ADVI_OFFICE.W4 (pending — in progress). deployment_map. |
-| 0.4.0_DS | Session 2026-04-14: D_00b fix #3 (5b4439e1). PROFAU.003 QA confirmed. D_02 NNA per-role canonical fix (d51e44ef, uploaded). | — (D_02 deploys tonight nightly). |
-| 0.4.2_RD | Session 2026-04-14: page_inventory complete (2aef2949). Primary type badge fix — role AUA dominance (a30c403 portal DEV). | Riding in W4 batch. Standby for post-PROD TOs. |
+| 0.4.0_DE | Session 2026-04-14: all PROFAU + OFFICE W3/W6 + ADV donut wires shipped. | Standby. |
+| 0.4.0_DT | Session 2026-04-14: OFFICE W4 + W8 both deployed (portal-v2.1.42, portal-v2.1.44). | deployment_map. |
+| 0.4.0_DS | Session 2026-04-14: D_00b fix #3, PROFAU.003 QA, D_02 per-role NNA (d51e44ef), ADV donut account_count + architect filter shipped. | `ofc-l2-advisor-distribution` pending. |
+| 0.4.2_RD | Session 2026-04-14: page_inventory (2aef2949), primary type badge fix. | Standby. |
 
 ### Shared Services -- Status as of 2026-04-14 session 27
 
