@@ -11,8 +11,8 @@
     }
   ],
   "status": "active",
-  "phase": "Phase 1: W1/W3/W5 COMPLETE via AE absorption 2026-04-14 (backfill_v2/assets 17 xlsx, forwardfill_v2/assets SSM-tested, silver/assets 1823 partitions, silver/bd_assets.parquet 3.19M rows). W6 FIRED to AE (SSM + Lambda + EventBridge + bd-v2.24.0 tag). W2 (super_class recon) + W4 (blend rule dim builder) remain DS-pending — Andrew-held.",
-  "blocking": "W6 AE in flight. W2 + W4 DS held per Andrew. W7 verification after W6 deploys.",
+  "phase": "Phase 2: W1/W3/W5/W6 COMPLETE (W6 commit d7140701, tag bd-v2.24.0 live; EC2 bd_assets + Lambda bd-asset-dim-trigger + EventBridge cron(10 22 ? * MON-FRI) + SSM opal-bd-asset-dim-download). W7 awaiting natural 22:10 UTC EventBridge fire 2026-04-14; AE verifies tomorrow morning. W2 (super_class recon) + W4 (blend rule) remain DS-pending — Andrew-held.",
+  "blocking": "W7 verification scheduler-driven (22:10 UTC Mon-Fri). W2 + W4 DS held per Andrew.",
   "created": "2026-04-14",
   "pods": ["0.4", "0.6"],
   "pipeline": "bd-pipeline",
