@@ -57,7 +57,8 @@ All tools are in `.tools/` (in PATH). Full reference: `org/modules/graph/comp-to
 | About to run ad-hoc (not dispatch) | `comp-pipescript postdeps [script]` | Shows required post-steps — e.g. build_canonical_prices → inject_scoped_overrides (caught $22M phantom override wipe) |
 | About to write a task order | `comp-blast [node]` per affected component | Blast radius — are you overlapping another active TO? |
 | Writing a cross-domain TO | `comp-pipescript overlap A B` | Shared S3 artifacts that need coordination blocks |
-| About to modify portal component | `comp-transform schema-check [Component]` | MISSING = runtime undefined. NOTE = expected alias, not a bug. |
+| About to modify portal component | `comp-transform schema-check [Component]` | MISSING = runtime undefined. NOTE = expected alias, not a bug. UNUSED = investigate if name matches the feature you're building. |
+| Building new cohort / metric / mode | `comp-transform schema-check [Component] --feature [token]` then `comp-transform ternary-audit [Component]` | --feature escalates feature-named UNUSED fields to WARN. ternary-audit finds every routing ternary missing the new branch. Both together would have produced the complete W6 fix list at Phase 1. |
 | Debugging 4xx / HTML response | `comp-routes behaviors` | Shows CloudFront custom_error_response rules — 403 from Lambda may return HTML not JSON (caught auth debug incident) |
 | Added a boto3 S3/SSM call | `comp-iam service [lambda]` | Flags missing IAM permissions before deploy (caught s3:DeleteObject watchdog loop) |
 | Changed iam.tf | `comp-iam gaps` | Full cross-reference all Lambda/EC2 ops vs policies |

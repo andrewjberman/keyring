@@ -152,13 +152,14 @@ tools:
       fields: "comp-transform fields PartnerAnalytics -- all response fields actually accessed, grouped by root variable"
       chains: "comp-transform chains PartnerAnalytics -- useMemo/useCallback chains with inputs, field accesses, and operations"
       unused: "comp-transform unused PartnerAnalytics -- waste analysis: response fields fetched but never rendered"
-      schema-check: "comp-transform schema-check ClientsTab -- cross-reference rendered JSX fields against TypeScript response types. Flags MISSING (rendered but not in type = runtime undefined) and UNUSED (in type but not rendered = waste). Adapter-aware: detects useState<StateType> vs fetch response type and checks against the correct one."
+      schema-check: "comp-transform schema-check ClientsTab [--feature <token>] -- cross-reference rendered JSX fields against TypeScript response types. Flags MISSING (rendered but not in type = runtime undefined) and UNUSED (in type but not rendered = waste). --feature ofc: escalates UNUSED fields containing 'ofc' to WARN with routing ternary hint. Use --feature when building a new cohort/metric/mode."
+      ternary-audit: "comp-transform ternary-audit DistributionTab -- scan ternary chains on union-typed variables for unhandled members. Finds cohort ternaries missing the 'ofc' branch, metric ternaries missing 'nna', etc. Only flags when 2+ members share an unintended fallthrough. Use --verbose to see single-implicit-fallthrough sites too."
       all: "Summary of all components with data flow"
       stats: "Statistics: fetch count, chain count, common operations"
     cost: "<1s"
     data_sources: "portal/src/pages/**/*.tsx (hooks, JSX), portal/src/pages/**/types.ts (response interfaces)"
     replaces: "Reading component source to understand what fields are used, spawning Explore agents to trace useMemo chains"
-    note: "Use BEFORE reading component source. If comp-transform shows the fields and chains you need, skip the Explore agent. Only read source when you need line-level precision for Edit operations."
+    note: "Use BEFORE reading component source. schema-check --feature <token> + ternary-audit together catch the 'new cohort added to type but routing ternary not updated' class of bug (the W3 OFC regression). Run both when building any new cohort, metric, or mode."
 
   comp-platinum:
     command: "comp-platinum <subcommand> [args]"

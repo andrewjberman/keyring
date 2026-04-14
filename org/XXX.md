@@ -135,7 +135,8 @@ Full catalog and deep docs: `org/modules/graph/comp-tools.yaml`. Cache stale? Ru
 | Run a gold script (ad-hoc) | `comp-pipescript postdeps [script]` | BLOCKING post-steps must run after. E.g. build_canonical_prices → inject_scoped_overrides (Apr-06 $22M phantom incident). |
 | Write a task order | `comp-blast [node]` for every affected component/script | Downstream impact — who else is affected? Anything in another active TO? |
 | Write a cross-domain TO | `comp-pipescript overlap A B` | Shared S3 artifacts between the two scripts — those go in `<cross_domain_coordination>`. |
-| Modify portal component | `comp-transform schema-check [Component]` | MISSING fields = runtime undefined. NOTE fields = expected runtime aliases (not bugs). |
+| Modify portal component | `comp-transform schema-check [Component]` | MISSING = runtime undefined. NOTE = expected runtime alias. UNUSED = typed but not rendered — if name matches your feature, investigate. |
+| Adding new cohort / metric / mode | `comp-transform schema-check [Component] --feature [token]` then `comp-transform ternary-audit [Component]` | --feature escalates feature-named UNUSED to WARN with routing ternary hint. ternary-audit finds every `cohort ===` chain missing the new branch. Would have produced the complete W6 fix list at Phase 1 of W3. |
 | Change a fetch/endpoint | `comp-routes trace [fn]` | Full CF → auth → S3 path. Use function name, not URL, in Git Bash. |
 | Debug a 4xx / auth failure | `comp-routes behaviors` | **CUSTOM ERROR RESPONSES** section — CF may be intercepting 403 and returning HTML (caught Lambda auth-denial incident). |
 | Add a boto3 call to Lambda | `comp-iam service [lambda-name]` | Any MISSING permissions flagged. Fix iam.tf before deploying. |
