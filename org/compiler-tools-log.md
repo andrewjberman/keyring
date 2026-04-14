@@ -171,3 +171,33 @@ Results: PASS | PARTIAL | FAIL | SKIPPED | WARN
 | 2026-04-14 | 1.0.0_SA_CTO | ADVI_OFFICE_gap_analysis | comp-routes | comp-routes trace getPlatinumPartnerAnalytics | PASS |
 | 2026-04-14 | 1.0.0_SA_CTO | ADVI_OFFICE_gap_analysis | comp-routes | comp-routes trace getPlatinumCumulativeChart | PASS |
 | 2026-04-14 | 1.0.0_SA_CTO | ADVI_OFFICE_gap_analysis | comp-transform | comp-transform fields DistributionTab | PASS |
+| 2026-04-14 | 1.0.0_SA_CTO | ADVI_OFFICE_gap_analysis | comp-platinum | comp-platinum page DistributionTab | PASS |
+| 2026-04-14 | 1.0.0_SA_CTO | ADVI_OFFICE_gap_analysis | comp-pipescript | comp-pipescript io D_00b --no-portal | PASS |
+| 2026-04-14 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript io D_01 --no-portal | PASS |
+| 2026-04-14 | 0.4.0_DE_ClientPlatform | ADVI_PROFAU.006 | comp-transform | comp-transform schema-check AdvisorBookView | PASS |
+| 2026-04-14 | 0.4.0_DE_ClientPlatform | ADVI_PROFAU.006 | comp-blast | comp-blast AdvisorBookView | PASS |
+| 2026-04-14 | 0.4.0_DE_ClientPlatform | ADVI_PROFAU.006 | comp-transform | comp-transform schema-check AdvisorBookView | PASS |
+| 2026-04-14 | 0.4.0_DE_ClientPlatform | ADVI_PROFAU.006 | comp-blast | comp-blast AdvisorBookView | PASS |
+| 2026-04-14 | 0.4.0_DE_ClientPlatform | ADVI_PROFAU.006 | comp-transform | comp-transform schema-check AdvisorBookView | PASS |
+| 2026-04-14 | 0.4.0_DT_ClientPlatform | (no-TO) | comp-transform | comp-transform schema-check DistributionTab | PASS |
+| 2026-04-14 | 0.4.0_DT_ClientPlatform | (no-TO) | comp-blast | comp-blast DistributionTab | PASS |
+| 2026-04-14 | 0.4.0_DE_ClientPlatform | ADVI_OFFICE.W6 | comp-transform | comp-transform schema-check DistributionTab | PASS |
+| 2026-04-14 | 0.4.0_DE_ClientPlatform | ADVI_OFFICE.W6 | comp-blast | comp-blast DistributionTab | PASS |
+| 2026-04-14 | 0.4.0_DE_ClientPlatform | ADVI_OFFICE.W6 | comp-transform | comp-transform schema-check DistributionTab | PASS |
+| 2026-04-14 | 0.4.0_DE_ClientPlatform | ADVI_OFFICE.W6 | comp-blast | comp-blast DistributionTab | PASS |
+| 2026-04-14 | 0.4.0_DE_ClientPlatform | ADVI_OFFICE.W6 | comp-pipescript | comp-pipescript io D_02.advisor_client_detail.py | FAIL |
+| 2026-04-14 | 0.4.0_DE_ClientPlatform | ADVI_OFFICE.W6 | comp-pipescript | comp-pipescript io D_02 | PASS |
+| 2026-04-14 | 0.4.0_DE_ClientPlatform | ADVI_OFFICE.W6 | comp-pipescript | comp-pipescript io D_00b | PASS |
+| 2026-04-14 | 0.4.0_DE_ClientPlatform | ADVI_OFFICE.W6 | comp-pipescript | comp-pipescript io D_00c | PASS |
+| 2026-04-14 | 0.4.0_DE_ClientPlatform | ADVI_OFFICE.W6 | comp-pipescript | comp-pipescript io D_04 | PASS |
+| 2026-04-14 | 2.0.0_SA_COO | ADVI_PROFAU.007 | comp-transform | comp-transform schema-check AdvisorBookView | PASS |
+| 2026-04-14 | 2.0.0_SA_COO | ADVI_PROFAU.007 | comp-blast | comp-blast AdvisorBookView | PASS |
+| 2026-04-14 | 0.4.0_DE_ClientPlatform | ADVI_PROFAU.007 | comp-transform | comp-transform schema-check AdvisorBookView | PASS |
+| 2026-04-14 | 0.4.0_DE_ClientPlatform | ADVI_PROFAU.007 | comp-blast | comp-blast AdvisorBookView | PASS |
+| 2026-04-14 | 2.0.0_SA_COO | ADVI_OFFICE.W9 | comp-pipescript | comp-pipescript io D_00b.portal_timeseries.py | FAIL |
+| 2026-04-14 | 0.4.0_DS_ClientPlatform | ADVI_OFFICE.W9a | comp-pipescript | comp-pipescript io D_04 | PASS |
+| 2026-04-14 | 0.4.0_DT_ClientPlatform | ADVI_OFFICE.W8 | comp-transform | comp-transform schema-check DistributionTab | PASS |
+| 2026-04-14 | 0.4.0_DT_ClientPlatform | ADVI_OFFICE.W8 | comp-blast | comp-blast DistributionTab | PASS |
+| 2026-04-14 | 2.0.0_SA_COO | adv-donut-account-count | comp-pipescript | comp-pipescript io D_01.partner_analytics_artifacts.py | FAIL |
+| 2026-04-14 | 0.4.0_DS_ClientPlatform | adv-donut-account-count | comp-pipescript | comp-pipescript io D_01 | PASS |
+| 2026-04-14 | 0.4.0_DS_ClientPlatform | adv-donut-account-count | comp-pipescript | comp-pipescript deployed D_02 | PASS |
