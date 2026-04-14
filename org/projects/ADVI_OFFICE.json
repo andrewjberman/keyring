@@ -16,8 +16,8 @@
     }
   ],
   "status": "active",
-  "phase": "W1-W4 COMPLETE (portal-v2.1.42, 2026-04-14). Addendum W5-W8: W5 DS (D_00b ofc timeseries — may already be done via 5b4439e1, confirming). W6 DE: fixes 2-8 COMPLETE (f6fe035); Fix 1 drillParentKey line 663 OUTSTANDING. PROFAU.007 also on portal DEV queue. W7 AE (gold re-run, gates on W5). W8 DT (deploy, gates on W6+W7).",
-  "blocking": "DS W5 confirmation (may be done). DE W6 Fix 1 (drillParentKey, line 663 — in progress). AE W7 gates on W5. W8 DT gates on W6+W7.",
+  "phase": "W1-W4 COMPLETE (portal-v2.1.42). W5 DS COMPLETE (5b4439e1, 10-office timeseries verified in platinum). W6 DE: fixes 2-8 COMPLETE (f6fe035); Fix 1 drillParentKey L663 IN PROGRESS. PROFAU.007 also queued for portal DEV. W7 AE NO-OP (today's QA run already covers it). W8 DT (deploy, gates on DE Fix 1 + PROFAU.007).",
+  "blocking": "DE W6 Fix 1 (drillParentKey L663) + PROFAU.007 commits. W8 DT deploy after those land.",
   "created": "2026-04-13",
   "pods": ["0.4", "0.6"],
   "pipeline": "bd-pipeline + portal",
