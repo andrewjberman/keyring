@@ -283,18 +283,77 @@ def _extract_tf_block(content: str, start: int) -> str:
 
 
 def _parse_iam_statements(policy_text: str, source_file: str) -> list[IamStatement]:
-    """Parse IAM statements from a jsonencode() block or inline JSON string."""
+    """Parse IAM statements from a jsonencode() block.
+
+    Handles both HCL style (Terraform jsonencode):
+        Statement = [{ Effect = "Allow" Action = ["s3:GetObject"] }]
+    and JSON style:
+        "Statement": [{ "Effect": "Allow", "Action": ["s3:GetObject"] }]
+    """
     statements = []
 
-    # Find Statement blocks: "Statement": [{ "Effect": "Allow", "Action": [...], ... }]
-    stmt_re = re.compile(
-        r'["\']Statement["\']\s*:\s*\[(.+?)\]',
-        re.DOTALL | re.IGNORECASE,
+    # Find Statement = [...] or "Statement": [...] arrays using depth-balanced
+    # bracket matching. Regex alone fails because Terraform nests Action = [...]
+    # and Resource = [...] arrays inside each Statement — non-greedy .+? matches
+    # the inner ] first, and a lookahead for } fails on HCL's jsonencode ")"
+    # closing char.
+    anchor_re = re.compile(
+        r'(?:["\']Statement["\']\s*:|Statement\s*=)\s*\[',
+        re.IGNORECASE,
     )
+
+    def _find_statement_arrays(text: str) -> list[str]:
+        results = []
+        for am in anchor_re.finditer(text):
+            array_start = am.end() - 1  # position of opening [
+            depth = 1
+            i = array_start + 1
+            while i < len(text) and depth > 0:
+                ch = text[i]
+                if ch == '[':
+                    depth += 1
+                elif ch == ']':
+                    depth -= 1
+                i += 1
+            if depth == 0:
+                results.append(text[array_start + 1:i - 1])
+        return results
+
+    # Shim the old stmt_re interface so the rest of the function works unchanged
+    class _Match:
+        def __init__(self, content): self._content = content
+        def group(self, n): return self._content
+
+    stmt_re = type('_StmtRE', (), {
+        'finditer': lambda self, text: (_Match(c) for c in _find_statement_arrays(text))
+    })()
+
+    # Unified field patterns — match either HCL (Key = "val") or JSON ("Key": "val")
+    def _field_value(name: str, text: str) -> str | None:
+        """Extract a single string value for field `name` from HCL or JSON."""
+        m = re.search(
+            rf'(?:["\']?{name}["\']?\s*[=:]\s*)["\']([^"\']+)["\']',
+            text, re.IGNORECASE
+        )
+        return m.group(1) if m else None
+
+    def _field_array(name: str, text: str) -> list[str]:
+        """Extract string array values for field `name` from HCL or JSON."""
+        m = re.search(
+            rf'(?:["\']?{name}["\']?\s*[=:]\s*)\[([^\]]+)\]',
+            text, re.DOTALL | re.IGNORECASE
+        )
+        if m:
+            # Extract only quoted strings (skip TF references like aws_instance.foo.arn)
+            return re.findall(r'["\']([^"\']+)["\']', m.group(1))
+        # Fallback: single unquoted or quoted value
+        single = _field_value(name, text)
+        return [single] if single else []
+
     for sm in stmt_re.finditer(policy_text):
         stmt_block = sm.group(1)
 
-        # Each statement is wrapped in braces
+        # Walk the array content, extracting each { ... } statement block
         depth = 0
         start = -1
         for i, c in enumerate(stmt_block):
@@ -306,42 +365,10 @@ def _parse_iam_statements(policy_text: str, source_file: str) -> list[IamStateme
                 depth -= 1
                 if depth == 0 and start >= 0:
                     single_stmt = stmt_block[start:i+1]
-                    effect_m = re.search(r'["\'](?:E|e)ffect["\']\s*:\s*["\'](\w+)["\']', single_stmt)
-                    effect = effect_m.group(1) if effect_m else 'Allow'
 
-                    actions = []
-                    # Try array form: "Action": ["s3:GetObject", ...]
-                    arr_m = re.search(
-                        r'["\'](?:A|a)ctions?["\']\s*:\s*\[([^\]]+)\]',
-                        single_stmt, re.DOTALL
-                    )
-                    if arr_m:
-                        for a in re.findall(r'["\']([^"\']+)["\']', arr_m.group(1)):
-                            actions.append(a)
-                    else:
-                        # Single string form: "Action": "s3:GetObject"
-                        single_m = re.search(
-                            r'["\'](?:A|a)ctions?["\']\s*:\s*["\']([^"\']+)["\']',
-                            single_stmt
-                        )
-                        if single_m:
-                            actions.append(single_m.group(1))
-
-                    resources = []
-                    res_arr_m = re.search(
-                        r'["\'](?:R|r)esource["\']\s*:\s*\[([^\]]+)\]',
-                        single_stmt, re.DOTALL
-                    )
-                    if res_arr_m:
-                        for r in re.findall(r'["\']([^"\']+)["\']', res_arr_m.group(1)):
-                            resources.append(r)
-                    else:
-                        res_m = re.search(
-                            r'["\'](?:R|r)esource["\']\s*:\s*["\']([^"\']+)["\']',
-                            single_stmt
-                        )
-                        if res_m:
-                            resources.append(res_m.group(1))
+                    effect = _field_value('Effect', single_stmt) or 'Allow'
+                    actions = _field_array('Action', single_stmt)
+                    resources = _field_array('Resource', single_stmt)
 
                     if actions:
                         statements.append(IamStatement(

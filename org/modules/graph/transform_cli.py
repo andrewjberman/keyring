@@ -485,9 +485,15 @@ def cmd_schema_check(args):
                 has_issues = True
 
             if plain_unused:
+                _UNUSED_SHOW = 5
+                sorted_unused = sorted(plain_unused)
+                show_all = getattr(args, 'all_unused', False)
                 print(f"    UNUSED ({len(plain_unused)}):")
-                for u in sorted(plain_unused):
+                display_unused = sorted_unused if show_all else sorted_unused[:_UNUSED_SHOW]
+                for u in display_unused:
                     print(f"       {u}: {type_fields.get(u, '?')}")
+                if not show_all and len(sorted_unused) > _UNUSED_SHOW:
+                    print(f"       ... +{len(sorted_unused) - _UNUSED_SHOW} more (--all-unused to show all)")
 
         if not missing and not unused_non_meta:
             print(f"    OK: all rendered fields exist in type, no waste")
@@ -729,16 +735,24 @@ def cmd_ternary_audit(args):
 
             # True gap: 2+ members unhandled → likely wrong data routing
             gaps_found += 1
-            print(f"  L{lineno}: {var_name} ({type_name})")
-            print(f"    handles:  {sorted(checked_values)}")
-            print(f"    MISSING:  {missing_members}  ({implicit_count} members fall to else branch)")
-            print(f"    These {implicit_count} values silently share the else branch value —")
-            print(f"    if that value is correct for one but not the others, this is a routing bug.")
+            missing_str = ', '.join(f"'{m}'" for m in missing_members)
+            handles_str = ', '.join(f"'{v}'" for v in sorted(checked_values))
+            display = stripped[:100] + ('...' if len(stripped) > 100 else '')
 
-            # Show the line for context
-            display = stripped[:120] + ('...' if len(stripped) > 120 else '')
-            print(f"    code: {display}")
-            print()
+            if args.verbose:
+                # Verbose: 5-line format with explanation
+                print(f"  L{lineno}: {var_name} ({type_name})")
+                print(f"    handles:  {sorted(checked_values)}")
+                print(f"    MISSING:  {missing_members}  ({implicit_count} members fall to else branch)")
+                print(f"    These {implicit_count} values silently share the else branch value —")
+                print(f"    if that value is correct for one but not the others, this is a routing bug.")
+                print(f"    code: {display}")
+                print()
+            else:
+                # Brief: 2-line default
+                print(f"  L{lineno}: {var_name} ({type_name}) — handles [{handles_str}] — MISSING: [{missing_str}]")
+                print(f"           {display}")
+                print()
 
     # -----------------------------------------------------------------------
     # Step 4: Summary
@@ -836,6 +850,10 @@ def main():
         '--feature', default='', metavar='TOKEN',
         help='Escalate UNUSED fields containing TOKEN to WARN with routing ternary hint. '
              'Use when building a new cohort/mode. Example: --feature ofc'
+    )
+    p_schema.add_argument(
+        '--all-unused', action='store_true', dest='all_unused',
+        help='Show all UNUSED fields (default: show first 5 + count)'
     )
 
     p_ternary = sub.add_parser(
