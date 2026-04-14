@@ -8,11 +8,16 @@
       "path": "docs/architecture/ADVI_OFFICE_PRD.md",
       "label": "CTO PRD -- Office dim, D_01 OFC view, frontend wave decomposition",
       "date": "2026-04-13"
+    },
+    {
+      "path": "docs/architecture/ADVI_OFFICE_ADDENDUM.md",
+      "label": "CTO gap audit addendum -- 10 OFC parity fixes (W5 DS + W6 DE)",
+      "date": "2026-04-14"
     }
   ],
   "status": "active",
-  "phase": "W1 DS COMPLETE (27471bed, 5b4439e1). W2 AE COMPLETE (platinum OFC live, 10 offices). W3 DE COMPLETE (7dd0a7e portal DEV, log 30f5c579 CLOUD). W4 DT PENDING — GO issued 2026-04-14, deploy in progress.",
-  "blocking": "DT W4 deploy + smoke-test. PROFAU.006 coordinates with DT on whether it rides in this push.",
+  "phase": "W1-W4 complete (W4 DT portal deploy in progress 2026-04-14). Addendum round 2: W5 DS (D_00b fix #3 ofc timeseries), W6 DE (10 frontend parity fixes), W7 AE (gold re-run), W8 DT (deploy). W5+W6 staged.",
+  "blocking": "DT W4 smoke-test completes. Then W5 DS (D_00b fix #3) and W6 DE (frontend parity) can start in parallel. W7 AE after W5. W8 DT after W6+W7.",
   "created": "2026-04-13",
   "pods": ["0.4", "0.6"],
   "pipeline": "bd-pipeline + portal",
