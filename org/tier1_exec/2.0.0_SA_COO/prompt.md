@@ -154,9 +154,9 @@ You do NOT produce architecture specs (CTO does). You DO align, route, and track
 
 | Project | Status | Pending Work |
 |---------|--------|-------------|
-| `ADVI_OFFICE` | In execution. D_01 on S3 (27471bed). dim_advisor_office.csv uploaded (AE). D_00b crash #1+#2 fixed. | **BLOCKED: DS D_00b fix #3** (1-office aggregation anomaly). DS fix + re-upload → AE W2 QA run → DE W3 frontend → DT W4 deploy. W3 DE + W4 DT staged. |
-| `ADVI_REBORN` | W6-003 COMPLETE (1d70ecaf). W6-004 GO sent to DE (inbox delivered 20260413T200813Z). | DE W6-004 staged → pending on DE reading inbox. DE STALE — may need nudge. |
-| `ADVI_PROFAU` | .001+.002+.003 COMPLETE (committed). .003 QA pending (c6i capacity, DS retrying). | COO to author DE .004 (PlatinumAdvisorSummary type fix) + .005 (L2/L3/L4 wire) after .003 QA clears. DS Q2+Q3/Q7 TOs also not yet authored. |
+| `ADVI_OFFICE` | AE W2 QA run in progress (GO 2026-04-14). D_01+dim on S3. D_00b fix #3 live. | AE W2 PROD signal → DE W3 (OFC frontend) → .004 type fix → .005 L3/L4 wire → DT W4 single deploy. |
+| `ADVI_REBORN` | **CLOSED 2026-04-14.** W6-003 (1d70ecaf) + W6-004 (0225d359) both complete. 4-cell matrix validated. | — |
+| `ADVI_PROFAU` | .001+.002+.003 committed. .004+.005 DE TOs staged (authored 2026-04-14). .003 QA still pending (DS retry). | .004+.005 GO to DE after W3 complete. .003 QA signal from DS triggers .006 authoring. |
 | `ADHC_DESIGN` | Phase 2: all pod .0.1/.0.2/.0.3/0.4 TOs COMPLETE. | Attribution RD .001/.015/.024 + Valuation RD .007 still staged — agents not LIVE. Backlog: .033 react-hooks/set-state-in-effect (low priority). |
 | `ADHC_TMSTEL` | P0: PRD complete. | Azure AD app registration (Andrew/IT). Reactivate when credentials available. |
 | `ADVI_INCMTL` | P0: Briefing complete. Low priority. | Production per-script timing profile. DS watermark design. AE dispatch. |
@@ -188,7 +188,7 @@ You do NOT produce architecture specs (CTO does). You DO align, route, and track
 
 | Agent | Last Known Work | Pending |
 |-------|----------------|---------|
-| 0.4.0_DE | Session 2026-04-13: 15 portal DEV commits (ebccdb27). STALE at startup. | ADVI_REBORN.W6-004 (inbox GO received — needs to flip to pending). ADVI_OFFICE.W3 (staged). |
+| 0.4.0_DE | Session 2026-04-14: W6-004 COMPLETE (0225d359 — 4-cell matrix, no new code). | ADVI_OFFICE.W3 (staged — GO on AE W2 PROD signal). PROFAU.004 + .005 (staged — GO after W3). |
 | 0.4.0_DT | Session 2026-04-13: SI double-annualize + ADV drill gate (0dd4f1cd). | ADVI_OFFICE.W4 (staged), deployment_map. |
 | 0.4.0_DS | Session 2026-04-14: starting up. Last session: W6-001+003+005, PROFAU.001+.002+.003, ADVI_OFFICE.W1 D_00b crashes #1+#2 (15512bed). | ADVI_OFFICE.W1 D_00b fix #3 (1-office anomaly). PROFAU.003 QA retry. |
 | 0.4.2_RD | Session 2026-04-13: header BETA badge + FeeEfficiency polish (bcbc812c). | page_inventory. |
