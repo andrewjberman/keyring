@@ -16,8 +16,8 @@
     }
   ],
   "status": "active",
-  "phase": "W1-W7 COMPLETE. W6 DE: all fixes 2-8 done (f6fe035) + Fix 1 drillParentKey DONE (f67dd91). PROFAU.007 verification-only (already implemented). Fixes 9-10 (bell curve + advisor list) verifying against live platinum now. W8 DT deploy pending DE 9-10 verdict.",
-  "blocking": "DE fixes 9-10 verification (minutes). W8 DT deploy.",
+  "phase": "W1-W7 COMPLETE. W6 DE all 10 fixes resolved: fixes 2-8 (f6fe035), Fix 1 cascade (f67dd91), Fix 9 bell curve (e692f60). Fix 10 advisor list verified no-op. W8 DT IN PROGRESS (GO 2026-04-14, batch f67dd91+e692f60). OFC continuous AUA gap (cumulative_chart.json missing ofc key) — DS investigating W9 scope.",
+  "blocking": "W8 DT smoke-test. DS W9 scope for cumulative_chart.json ofc key (investigating).",
   "created": "2026-04-13",
   "pods": ["0.4", "0.6"],
   "pipeline": "bd-pipeline + portal",
