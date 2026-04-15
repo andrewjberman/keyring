@@ -106,7 +106,7 @@ tools:
       overlap: "comp-pipescript overlap D_00 D_03 -- shared S3 artifacts between two scripts. COO MANDATE: run this on every pair of scripts before authoring cross-domain coordination blocks."
       inject: "Inject pipeline edges into comp-trace graph cache (run after comp-build)"
       stats: "Graph stats + warnings for scripts with missing reads/writes"
-      deployed: "comp-pipescript deployed [D_00] -- compare local gold scripts against s3://opal-data-bd/code/gold/ ETags. MATCH/STALE/MISSING_ON_S3 per script. Run before any gold run to confirm runner has latest code. Requires aws CLI."
+      deployed: "comp-pipescript deployed [filter] -- compare local gold + silver scripts against s3://opal-data-bd/code/{gold,silver}/ ETags. Output prefixed [GOLD] / [SILVER]. MATCH/STALE/MISSING_ON_S3/LOCAL_MISSING per script. Filter is substring/filename: gold IDs (D_04, C_08) match gold only; silver filenames (bd_price_update.py, inject_scoped_overrides) match silver only; omit filter for full sweep. Gold scripts come from the DAG; silver scripts are discovered by walking data/black_diamond/scripts/silver/*.py. Resolves aws via shutil.which to avoid PATH-loss in subprocess. Run before any gold or silver run to confirm runner has latest code."
     cost: "<1s (io/feeds/consumers/overlap); ~2-5s (deployed, makes AWS API calls)"
     data_sources: "lib/s3_layout.py (AST-parsed), gold_dispatch.sh (chain/catalog), each script's imports"
     replaces: "Manual import tracing, grepping s3_layout constants, reading gold_pipeline_script_file_flow.md; manual aws s3 ls + sha256sum for deployment verification"

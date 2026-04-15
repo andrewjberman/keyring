@@ -213,3 +213,215 @@ Results: PASS | PARTIAL | FAIL | SKIPPED | WARN
 | 2026-04-14 | 0.4.2_RD_AdvisorIntelligence | ADVI_FNTEND.B0.rd-fe-trivial-sweep | comp-transform | comp-transform schema-check DistributionTab | PASS |
 | 2026-04-14 | 0.4.0_DS_ClientPlatform | 3-bond-phantom-scoped-exceptions | comp-pipescript | comp-pipescript io inject_scoped_overrides.py | FAIL |
 | 2026-04-14 | 0.4.0_DS_ClientPlatform | 3-bond-phantom-scoped-exceptions | comp-pipescript | comp-pipescript consumers canonical_prices | FAIL |
+| 2026-04-14 | 0.4.0_DS_ClientPlatform | 3-bond-phantom-scoped-exceptions | comp-transform | comp-transform ternary-audit DistributionTab | PASS |
+| 2026-04-14 | 0.4.0_DS_ClientPlatform | ADVI_FNTEND.B2 | comp-platinum | comp-platinum page AdvisorBookView | PASS |
+| 2026-04-14 | 0.4.0_DS_ClientPlatform | ADVI_FNTEND.B2 | comp-transform | comp-transform schema-check DistributionTab --feature snapshot | PASS |
+| 2026-04-14 | 0.4.0_DS_ClientPlatform | ADVI_FNTEND.B2 | comp-pipescript | comp-pipescript io D_00 | PASS |
+| 2026-04-14 | 0.4.0_DS_ClientPlatform | ADVI_FNTEND.B2 | comp-pipescript | comp-pipescript io D_02 | PASS |
+| 2026-04-14 | 0.4.0_DS_ClientPlatform | ADVI_FNTEND.B2 | comp-pipescript | comp-pipescript io D_03 | PASS |
+| 2026-04-14 | 0.4.0_DS_ClientPlatform | ADVI_FNTEND.B2 | comp-pipescript | comp-pipescript io D_04 | PASS |
+| 2026-04-14 | 0.4.0_DS_ClientPlatform | ADVI_FNTEND.B2 | comp-pipescript | comp-pipescript io D_01 | PASS |
+| 2026-04-14 | 0.4.0_DS_ClientPlatform | ADVI_FNTEND.B2 | comp-pipescript | comp-pipescript io D_00c | PASS |
+| 2026-04-14 | 0.4.0_DS_ClientPlatform | ADVI_FNTEND.B2 | comp-pipescript | comp-pipescript io C_08 | PASS |
+| 2026-04-14 | 0.4.0_DS_ClientPlatform | ADVI_FNTEND.B2 | comp-blast | comp-blast DistributionTab | PASS |
+| 2026-04-14 | 0.4.0_DS_ClientPlatform | ADVI_FNTEND.B2 | comp-transform | comp-transform schema-check RelationshipFlowsSummary | FAIL |
+| 2026-04-14 | 0.4.0_DS_ClientPlatform | ADVI_FNTEND.B2 | comp-transform | comp-transform schema-check AccountsTable | FAIL |
+| 2026-04-14 | 0.4.0_DS_ClientPlatform | ADVI_FNTEND.B2 | comp-transform | comp-transform schema-check ClientsTable | PASS |
+| 2026-04-14 | 0.4.0_DS_ClientPlatform | ADVI_FNTEND.B2 | comp-transform | comp-transform schema-check AuaDecompositionPanel | FAIL |
+| 2026-04-14 | 0.4.0_DS_ClientPlatform | ADVI_FNTEND.B2 | comp-transform | comp-transform schema-check ClientsTable --feature windowTrio | PASS |
+| 2026-04-14 | 0.4.0_DS_ClientPlatform | ADVI_FNTEND.B2 | comp-pipescript | comp-pipescript deployed D_02 | PASS |
+| 2026-04-14 | 0.4.0_DS_ClientPlatform | ADVI_FNTEND.B2 | comp-pipescript | comp-pipescript deployed D_04 | PASS |
+| 2026-04-14 | 0.4.0_DE_ClientPlatform | ADVI_FNTEND.D7 | comp-transform | comp-transform schema-check DistributionTab | PASS |
+| 2026-04-14 | 0.4.0_DE_ClientPlatform | ADVI_FNTEND.D7 | comp-platinum | comp-platinum page PartnerAnalytics | PASS |
+| 2026-04-14 | 0.4.0_DE_ClientPlatform | ADVI_FNTEND.B2 | comp-transform | comp-transform schema-check ClientsTable | PASS |
+| 2026-04-14 | 0.4.0_DE_ClientPlatform | ADVI_FNTEND.B2 | comp-cache | comp-cache collisions | PASS |
+| 2026-04-14 | 0.4.0_DE_ClientPlatform | ADVI_FNTEND.B1 | comp-blast | comp-blast D_02 | PASS |
+| 2026-04-14 | 0.4.0_DE_ClientPlatform | ADVI_FNTEND.B1 | comp-blast | comp-blast D_00c | PASS |
+| 2026-04-14 | 0.4.0_DE_ClientPlatform | ADVI_FNTEND.B1 | comp-blast | comp-blast role_breakdown | PASS |
+| 2026-04-14 | 0.4.0_DE_ClientPlatform | ADVI_FNTEND.B1 | comp-blast | comp-blast leaderboard | PASS |
+| 2026-04-14 | 0.4.0_DE_ClientPlatform | ADVI_FNTEND.B1 | comp-blast | comp-blast architect_aua | PASS |
+| 2026-04-14 | 0.4.0_DE_ClientPlatform | ADVI_FNTEND.B1 | comp-blast | comp-blast tagged_aua | PASS |
+| 2026-04-14 | 0.4.0_DE_ClientPlatform | ADVI_FNTEND.B1 | comp-blast | comp-blast EMPLOYEE_LEADERBOARD | PASS |
+| 2026-04-14 | 0.4.0_DE_ClientPlatform | ADVI_FNTEND.B1 | comp-pipescript | comp-pipescript consumers EMPLOYEE_LEADERBOARD | FAIL |
+| 2026-04-14 | 0.4.0_DE_ClientPlatform | ADVI_FNTEND.B1 | comp-blast | comp-blast ADVISOR_FEE_EFFICIENCY | PASS |
+| 2026-04-14 | 0.4.0_DE_ClientPlatform | ADVI_FNTEND.B1 | comp-platinum | comp-platinum reverse platinum/firm/leaderboard.json | PASS |
+| 2026-04-14 | 0.4.0_DE_ClientPlatform | ADVI_FNTEND.B1 | comp-platinum | comp-platinum reverse platinum/advisors/{id}/timeseries.json | PASS |
+| 2026-04-14 | 0.4.0_DE_ClientPlatform | ADVI_FNTEND.B1 | comp-platinum | comp-platinum reverse platinum/advisors/{id}/summary.json | PASS |
+| 2026-04-14 | 0.4.0_DE_ClientPlatform | ADVI_FNTEND.B1 | comp-pipescript | comp-pipescript io D_01 | PASS |
+| 2026-04-15 | 1.0.0_SA_CTO | (no-TO) | comp-blast | comp-blast D_02 | PASS |
+| 2026-04-15 | 1.0.0_SA_CTO | (no-TO) | comp-cache | comp-cache collisions | PASS |
+| 2026-04-15 | 1.0.0_SA_CTO | (no-TO) | comp-blast | comp-blast C_01 | PASS |
+| 2026-04-15 | 1.0.0_SA_CTO | (no-TO) | comp-blast | comp-blast D_00c | PASS |
+| 2026-04-15 | 1.0.0_SA_CTO | (no-TO) | comp-blast | comp-blast D_01 | PASS |
+| 2026-04-15 | 1.0.0_SA_CTO | (no-TO) | comp-pipescript | comp-pipescript io D_04 | PASS |
+| 2026-04-15 | 1.0.0_SA_CTO | ADVI_ROLLUP.small-account-count-addendum | comp-transform | comp-transform schema-check FeeEfficiency | PASS |
+| 2026-04-15 | 1.0.0_SA_CTO | ADVI_ROLLUP.small-account-count-addendum | comp-pipescript | comp-pipescript io data/black_diamond/scripts/gold/C_08.advisor_fee_efficiency.py | FAIL |
+| 2026-04-15 | 1.0.0_SA_CTO | ADVI_ROLLUP.small-account-count-addendum | comp-pipescript | comp-pipescript io C_08 | PASS |
+| 2026-04-15 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript io D_04.client_portal_summary.py | FAIL |
+| 2026-04-15 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript io D_04 | PASS |
+| 2026-04-15 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-blast | comp-blast _compute_window_decomposition | PASS |
+| 2026-04-15 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-blast | comp-blast _compute_window_flows | PASS |
+| 2026-04-15 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-platinum | comp-platinum reverse rfs.decomposition_max.nna | PASS |
+| 2026-04-15 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-platinum | comp-platinum reverse rfs.decomposition_ytd.nna | PASS |
+| 2026-04-15 | 2.0.0_SA_COO | ADVI_ROLLUP.RF01 | comp-pipescript | comp-pipescript io D_04 | PASS | 21 reads/21 writes; portal consumers AdvisorBookView + AdvisorPublicProfile confirmed |
+| 2026-04-15 | 2.0.0_SA_COO | ADVI_ROLLUP.RF01 | comp-blast | comp-blast _compute_window_decomposition | EMPTY | internal helper not a graph node — expected; fallback to grep -n in TO Phase 1 |
+| 2026-04-15 | 2.0.0_SA_COO | ADVI_ROLLUP.RF01 | comp-blast | comp-blast _compute_window_flows | EMPTY | same |
+| 2026-04-15 | 2.0.0_SA_COO | ADVI_ROLLUP.RF01 | comp-platinum | comp-platinum reverse rfs.decomposition_max.nna | EMPTY | nested key not indexed — TO falls back to portal grep for consumer enumeration |
+| 2026-04-15 | 2.0.0_SA_COO | ADVI_ROLLUP.RF01 | comp-platinum | comp-platinum reverse rfs.decomposition_ytd.nna | EMPTY | same |
+| 2026-04-15 | 0.4.0_DS_ClientPlatform~C | (no-TO) | comp-pipescript | comp-pipescript io bd_price_update | FAIL |
+| 2026-04-15 | 0.4.0_DS_ClientPlatform~C | (no-TO) | comp-pipescript | comp-pipescript io inject_scoped_overrides | FAIL |
+| 2026-04-15 | 0.4.0_DS_ClientPlatform~C | (no-TO) | comp-pipescript | comp-pipescript postdeps build_canonical_prices | PASS |
+| 2026-04-15 | 0.4.0_DS_ClientPlatform~C | (no-TO) | comp-blast | comp-blast silver/transactions | PASS |
+| 2026-04-15 | 0.4.0_DS_ClientPlatform~A | ADVI_ROLLUP.RF01.ds-d04-window-nna-delta-fix | comp-pipescript | comp-pipescript io D_04 | PASS |
+| 2026-04-15 | 0.4.0_DS_ClientPlatform~D | BDPL_CNPRCS.WP-11+3-bond-phantom | comp-pipescript | comp-pipescript deployed D_04 | PASS |
+| 2026-04-15 | 0.4.0_DS_ClientPlatform~D | BDPL_CNPRCS.WP-11+3-bond-phantom | comp-platinum | comp-platinum reverse role_aua | PASS |
+| 2026-04-15 | 0.4.0_DS_ClientPlatform~B | BDPL_CNPRCS.WP-10b | comp-platinum | comp-platinum reverse nna_atomic | PASS |
+| 2026-04-15 | 0.4.0_DS_ClientPlatform~B | BDPL_CNPRCS.WP-10b | comp-pipescript | comp-pipescript postdeps build_canonical_prices | PASS |
+| 2026-04-15 | 0.4.0_DS_ClientPlatform~B | BDPL_CNPRCS.WP-10b | comp-blast | comp-blast silver/unrealized | PASS |
+| 2026-04-15 | 0.4.0_DS_ClientPlatform~B | BDPL_CNPRCS.WP-10b | comp-pipescript | comp-pipescript io A_00.accounts_dimension | FAIL |
+| 2026-04-15 | 0.4.0_DS_ClientPlatform~B | BDPL_CNPRCS.WP-10b | comp-pipescript | comp-pipescript io inject_scoped_overrides.py | FAIL |
+| 2026-04-15 | 0.4.0_DS_ClientPlatform~B | BDPL_CNPRCS.WP-10b | comp-pipescript | comp-pipescript io A_01.advisor_assignments | FAIL |
+| 2026-04-15 | 0.4.0_DS_ClientPlatform~B | BDPL_CNPRCS.WP-10b | comp-transform | comp-transform schema-check TaxCostBasisPanel | PASS |
+| 2026-04-15 | 0.4.0_DS_ClientPlatform~B | BDPL_CNPRCS.WP-10b | comp-pipescript | comp-pipescript io A_02.fee_rate_history | FAIL |
+| 2026-04-15 | 0.4.0_DS_ClientPlatform~B | BDPL_CNPRCS.WP-10b | comp-pipescript | comp-pipescript io A_03.positions_cube | FAIL |
+| 2026-04-15 | 0.4.0_DS_ClientPlatform~B | BDPL_CNPRCS.WP-10b | comp-pipescript | comp-pipescript io A_04.client_dimension | FAIL |
+| 2026-04-15 | 0.4.0_DS_ClientPlatform~B | BDPL_CNPRCS.WP-10b | comp-pipescript | comp-pipescript io B_00.canonical_holdings | FAIL |
+| 2026-04-15 | 0.4.0_DS_ClientPlatform~B | BDPL_CNPRCS.WP-10b | comp-pipescript | comp-pipescript io B_01.holdings_lots | FAIL |
+| 2026-04-15 | 0.4.0_DS_ClientPlatform~B | BDPL_CNPRCS.WP-10b | comp-pipescript | comp-pipescript io B_01b.classify_new_securities | FAIL |
+| 2026-04-15 | 0.4.0_DS_ClientPlatform~B | BDPL_CNPRCS.WP-10b | comp-pipescript | comp-pipescript io B_02.canonical_lots | FAIL |
+| 2026-04-15 | 0.4.0_DS_ClientPlatform~B | BDPL_CNPRCS.WP-10b | comp-pipescript | comp-pipescript io B_03.account_gains | FAIL |
+| 2026-04-15 | 0.4.0_DS_ClientPlatform~B | BDPL_CNPRCS.WP-10b | comp-pipescript | comp-pipescript io C_00.canonical_performance | FAIL |
+| 2026-04-15 | 0.4.0_DS_ClientPlatform~B | BDPL_CNPRCS.WP-10b | comp-pipescript | comp-pipescript io C_01.canonical_nna | FAIL |
+| 2026-04-15 | 0.4.0_DS_ClientPlatform~B | BDPL_CNPRCS.WP-10b | comp-pipescript | comp-pipescript io C_02.client_performance | FAIL |
+| 2026-04-15 | 0.6.0_AE_PartnerETL | BDPL_CNPRCS.WP-3 | comp-pipescript | comp-pipescript io silver/transactions | FAIL |
+| 2026-04-15 | 0.6.0_AE_PartnerETL | BDPL_CNPRCS.WP-3 | comp-pipescript | comp-pipescript io C_03.account_performance | FAIL |
+| 2026-04-15 | 0.6.0_AE_PartnerETL | BDPL_CNPRCS.WP-3 | comp-pipescript | comp-pipescript io C_04.validate_aua | FAIL |
+| 2026-04-15 | 0.6.0_AE_PartnerETL | BDPL_CNPRCS.WP-3 | comp-pipescript | comp-pipescript io C_05.client_tax_liability | FAIL |
+| 2026-04-15 | 0.6.0_AE_PartnerETL | BDPL_CNPRCS.WP-3 | comp-pipescript | comp-pipescript io C_06.client_mix_timeseries | FAIL |
+| 2026-04-15 | 0.6.0_AE_PartnerETL | BDPL_CNPRCS.WP-3 | comp-pipescript | comp-pipescript io C_07.advisor_attribution | FAIL |
+| 2026-04-15 | 0.6.0_AE_PartnerETL | BDPL_CNPRCS.WP-3 | comp-pipescript | comp-pipescript io C_08.advisor_fee_efficiency | FAIL |
+| 2026-04-15 | 0.6.0_AE_PartnerETL | BDPL_CNPRCS.WP-3 | comp-pipescript | comp-pipescript io D_00.portal_aggregates | FAIL |
+| 2026-04-15 | 0.6.0_AE_PartnerETL | BDPL_CNPRCS.WP-3 | comp-pipescript | comp-pipescript io D_00b.portal_timeseries | FAIL |
+| 2026-04-15 | 0.6.0_AE_PartnerETL | BDPL_CNPRCS.WP-3 | comp-pipescript | comp-pipescript io D_00c.portal_leaderboard | FAIL |
+| 2026-04-15 | 0.6.0_AE_PartnerETL | BDPL_CNPRCS.WP-3 | comp-pipescript | comp-pipescript deployed bd_price_update.py | PASS |
+| 2026-04-15 | 0.6.0_AE_PartnerETL | BDPL_CNPRCS.WP-3 | comp-pipescript | comp-pipescript io D_01.partner_analytics | FAIL |
+| 2026-04-15 | 0.6.0_AE_PartnerETL | BDPL_CNPRCS.WP-3 | comp-pipescript | comp-pipescript deployed inject_scoped_overrides.py | PASS |
+| 2026-04-15 | 0.6.0_AE_PartnerETL | BDPL_CNPRCS.WP-3 | comp-pipescript | comp-pipescript io D_02.advisor_client_detail | FAIL |
+| 2026-04-15 | 0.6.0_AE_PartnerETL | BDPL_CNPRCS.WP-3 | comp-pipescript | comp-pipescript --help | PASS |
+| 2026-04-15 | 0.6.0_AE_PartnerETL | BDPL_CNPRCS.WP-3 | comp-pipescript | comp-pipescript io D_03.composition_artifacts | FAIL |
+| 2026-04-15 | 0.6.0_AE_PartnerETL | BDPL_CNPRCS.WP-3 | comp-pipescript | comp-pipescript io D_04.client_portal_summary | FAIL |
+| 2026-04-15 | 0.6.0_AE_PartnerETL | BDPL_CNPRCS.WP-3 | comp-pipescript | comp-pipescript io A_00 | PASS |
+| 2026-04-15 | 0.6.0_AE_PartnerETL | BDPL_CNPRCS.WP-3 | comp-pipescript | comp-pipescript io A_01 | PASS |
+| 2026-04-15 | 0.6.0_AE_PartnerETL | BDPL_CNPRCS.WP-3 | comp-pipescript | comp-pipescript io A_02 | PASS |
+| 2026-04-15 | 0.6.0_AE_PartnerETL | BDPL_CNPRCS.WP-3 | comp-pipescript | comp-pipescript io A_03 | PASS |
+| 2026-04-15 | 0.6.0_AE_PartnerETL | BDPL_CNPRCS.WP-3 | comp-pipescript | comp-pipescript io A_04 | PASS |
+| 2026-04-15 | 0.6.0_AE_PartnerETL | BDPL_CNPRCS.WP-3 | comp-pipescript | comp-pipescript io B_00 | PASS |
+| 2026-04-15 | 0.6.0_AE_PartnerETL | BDPL_CNPRCS.WP-3 | comp-pipescript | comp-pipescript io B_01 | PASS |
+| 2026-04-15 | 0.6.0_AE_PartnerETL | BDPL_CNPRCS.WP-3 | comp-pipescript | comp-pipescript io B_01b | PASS |
+| 2026-04-15 | 0.6.0_AE_PartnerETL | BDPL_CNPRCS.WP-3 | comp-pipescript | comp-pipescript io B_02 | PASS |
+| 2026-04-15 | 0.6.0_AE_PartnerETL | BDPL_CNPRCS.WP-3 | comp-pipescript | comp-pipescript io B_03 | PASS |
+| 2026-04-15 | 0.6.0_AE_PartnerETL | BDPL_CNPRCS.WP-3 | comp-pipescript | comp-pipescript io C_00 | PASS |
+| 2026-04-15 | 0.6.0_AE_PartnerETL | BDPL_CNPRCS.WP-3 | comp-pipescript | comp-pipescript io C_01 | PASS |
+| 2026-04-15 | 0.6.0_AE_PartnerETL | BDPL_CNPRCS.WP-3 | comp-pipescript | comp-pipescript io C_02 | PASS |
+| 2026-04-15 | 0.6.0_AE_PartnerETL | BDPL_CNPRCS.WP-3 | comp-pipescript | comp-pipescript io C_03 | PASS |
+| 2026-04-15 | 0.6.0_AE_PartnerETL | BDPL_CNPRCS.WP-3 | comp-pipescript | comp-pipescript io C_04 | PASS |
+| 2026-04-15 | 0.6.0_AE_PartnerETL | BDPL_CNPRCS.WP-3 | comp-pipescript | comp-pipescript io C_05 | PASS |
+| 2026-04-15 | 0.6.0_AE_PartnerETL | BDPL_CNPRCS.WP-3 | comp-pipescript | comp-pipescript io C_06 | PASS |
+| 2026-04-15 | 0.6.0_AE_PartnerETL | BDPL_CNPRCS.WP-3 | comp-blast | comp-blast platinum/accounts/{*}/summary.json | PASS |
+| 2026-04-15 | 0.6.0_AE_PartnerETL | BDPL_CNPRCS.WP-3 | comp-pipescript | comp-pipescript io C_07 | PASS |
+| 2026-04-15 | 0.6.0_AE_PartnerETL | BDPL_CNPRCS.WP-3 | comp-pipescript | comp-pipescript io C_08 | PASS |
+| 2026-04-15 | 0.6.0_AE_PartnerETL | BDPL_CNPRCS.WP-3 | comp-pipescript | comp-pipescript io D_00 | PASS |
+| 2026-04-15 | 0.6.0_AE_PartnerETL | BDPL_CNPRCS.WP-3 | comp-pipescript | comp-pipescript io D_00b | PASS |
+| 2026-04-15 | 0.6.0_AE_PartnerETL | BDPL_CNPRCS.WP-3 | comp-pipescript | comp-pipescript io D_00c | PASS |
+| 2026-04-15 | 0.6.0_AE_PartnerETL | BDPL_CNPRCS.WP-3 | comp-pipescript | comp-pipescript io D_01 | PASS |
+| 2026-04-15 | 0.6.0_AE_PartnerETL | BDPL_CNPRCS.WP-3 | comp-pipescript | comp-pipescript io D_02 | PASS |
+| 2026-04-15 | 0.6.0_AE_PartnerETL | BDPL_CNPRCS.WP-3 | comp-pipescript | comp-pipescript io D_03 | PASS |
+| 2026-04-15 | 0.6.0_AE_PartnerETL | BDPL_CNPRCS.WP-3 | comp-pipescript | comp-pipescript io D_04 | PASS |
+| 2026-04-15 | 0.6.0_AE_PartnerETL | BDPL_CNPRCS.WP-3 | comp-pipescript | comp-pipescript io A_03 | PASS |
+| 2026-04-15 | 0.6.0_AE_PartnerETL | BDPL_CNPRCS.WP-3 | comp-pipescript | comp-pipescript io A_00 | PASS |
+| 2026-04-15 | 0.6.0_AE_PartnerETL | BDPL_CNPRCS.WP-3 | comp-pipescript | comp-pipescript io A_01 | PASS |
+| 2026-04-15 | 0.6.0_AE_PartnerETL | BDPL_CNPRCS.WP-3 | comp-pipescript | comp-pipescript io A_02 | PASS |
+| 2026-04-15 | 0.6.0_AE_PartnerETL | BDPL_CNPRCS.WP-3 | comp-pipescript | comp-pipescript io A_03 | PASS |
+| 2026-04-15 | 0.6.0_AE_PartnerETL | BDPL_CNPRCS.WP-3 | comp-pipescript | comp-pipescript io A_04 | PASS |
+| 2026-04-15 | 0.6.0_AE_PartnerETL | BDPL_CNPRCS.WP-3 | comp-pipescript | comp-pipescript io B_00 | PASS |
+| 2026-04-15 | 0.6.0_AE_PartnerETL | BDPL_CNPRCS.WP-3 | comp-pipescript | comp-pipescript io B_01 | PASS |
+20260415T162721Z | 0.4.0_DS_ClientPlatform~A | ADVI_ROLLUP.RF01 | comp-pipescript io D_04 | PASS | WRITES + PORTAL CONSUMERS confirmed
+20260415T162722Z | 0.4.0_DS_ClientPlatform~A | ADVI_ROLLUP.RF01 | comp-pipescript deployed D_04 | TOOL_ERROR (aws PATH); manual etag parity PASS
+20260415T162723Z | 0.4.0_DS_ClientPlatform~A | ADVI_ROLLUP.RF01 | comp-blast platinum/accounts/*/summary.json | NO_NODES; manual blast unchanged
+| 2026-04-15 | 0.6.0_AE_PartnerETL | BDPL_CNPRCS.WP-3 | comp-pipescript | comp-pipescript io B_01b | PASS |
+| 2026-04-15 | 0.6.0_AE_PartnerETL | BDPL_CNPRCS.WP-3 | comp-pipescript | comp-pipescript io B_02 | PASS |
+| 2026-04-15 | 0.6.0_AE_PartnerETL | BDPL_CNPRCS.WP-3 | comp-pipescript | comp-pipescript io B_03 | PASS |
+| 2026-04-15 | 0.6.0_AE_PartnerETL | BDPL_CNPRCS.WP-3 | comp-pipescript | comp-pipescript io C_00 | PASS |
+| 2026-04-15 | 0.6.0_AE_PartnerETL | BDPL_CNPRCS.WP-3 | comp-pipescript | comp-pipescript io C_01 | PASS |
+| 2026-04-15 | 0.6.0_AE_PartnerETL | BDPL_CNPRCS.WP-3 | comp-pipescript | comp-pipescript io C_02 | PASS |
+| 2026-04-15 | 0.6.0_AE_PartnerETL | BDPL_CNPRCS.WP-3 | comp-pipescript | comp-pipescript io C_03 | PASS |
+| 2026-04-15 | 0.6.0_AE_PartnerETL | BDPL_CNPRCS.WP-3 | comp-pipescript | comp-pipescript io C_04 | PASS |
+| 2026-04-15 | 0.6.0_AE_PartnerETL | BDPL_CNPRCS.WP-3 | comp-pipescript | comp-pipescript io C_05 | PASS |
+| 2026-04-15 | 0.6.0_AE_PartnerETL | BDPL_CNPRCS.WP-3 | comp-pipescript | comp-pipescript io C_06 | PASS |
+| 2026-04-15 | 0.6.0_AE_PartnerETL | BDPL_CNPRCS.WP-3 | comp-pipescript | comp-pipescript io C_07 | PASS |
+| 2026-04-15 | 0.6.0_AE_PartnerETL | BDPL_CNPRCS.WP-3 | comp-pipescript | comp-pipescript io C_08 | PASS |
+| 2026-04-15 | 0.6.0_AE_PartnerETL | BDPL_CNPRCS.WP-3 | comp-pipescript | comp-pipescript io D_00 | PASS |
+| 2026-04-15 | 0.6.0_AE_PartnerETL | BDPL_CNPRCS.WP-3 | comp-pipescript | comp-pipescript io D_00b | PASS |
+| 2026-04-15 | 0.6.0_AE_PartnerETL | BDPL_CNPRCS.WP-3 | comp-pipescript | comp-pipescript io D_00c | PASS |
+| 2026-04-15 | 0.6.0_AE_PartnerETL | BDPL_CNPRCS.WP-3 | comp-pipescript | comp-pipescript io D_01 | PASS |
+| 2026-04-15 | 0.6.0_AE_PartnerETL | BDPL_CNPRCS.WP-3 | comp-pipescript | comp-pipescript io D_02 | PASS |
+| 2026-04-15 | 0.4.0_DS_ClientPlatform~D | ADVI_ROLLUP.CN-P0 | comp-pipescript | comp-pipescript io D_03 | PASS |
+| 2026-04-15 | 0.4.0_DS_ClientPlatform~D | ADVI_ROLLUP.CN-P0 | comp-blast | comp-blast _compute_window_decomposition | PASS |
+| 2026-04-15 | 0.4.0_DS_ClientPlatform~D | ADVI_ROLLUP.CN-P0 | comp-pipescript | comp-pipescript io D_04 | PASS |
+| 2026-04-15 | 0.4.0_DS_ClientPlatform~D | ADVI_ROLLUP.CN-P0 | comp-platinum | comp-platinum reverse nna_atomic | PASS |
+| 2026-04-15 | 0.4.0_DS_ClientPlatform~D | ADVI_ROLLUP.CN-P0 | comp-blast | comp-blast _compute_window_flows | PASS |
+| 2026-04-15 | 0.4.0_DS_ClientPlatform~C | ADVI_ROLLUP.RA-P0 | comp-blast | comp-blast diag_phantom_valuations | PASS |
+| 2026-04-15 | 0.4.0_DS_ClientPlatform~C | ADVI_ROLLUP.RA-P0 | comp-blast | comp-blast C_01 | PASS |
+| 2026-04-15 | 0.4.0_DS_ClientPlatform~C | ADVI_ROLLUP.RA-P0 | comp-blast | comp-blast D_00 | PASS |
+| 2026-04-15 | 0.4.0_DS_ClientPlatform~C | ADVI_ROLLUP.RA-P0 | comp-platinum | comp-platinum reverse rfs.decomposition_max.nna | PASS |
+| 2026-04-15 | 0.4.0_DS_ClientPlatform~C | ADVI_ROLLUP.RA-P0 | comp-blast | comp-blast D_00b | PASS |
+| 2026-04-15 | 0.4.0_DS_ClientPlatform~C | ADVI_ROLLUP.RA-P0 | comp-platinum | comp-platinum reverse rfs.decomposition_ytd.nna | PASS |
+| 2026-04-15 | 0.4.0_DS_ClientPlatform~C | ADVI_ROLLUP.RA-P0 | comp-blast | comp-blast D_00c | PASS |
+| 2026-04-15 | 0.4.0_DS_ClientPlatform~C | ADVI_ROLLUP.RA-P0 | comp-blast | comp-blast D_01 | PASS |
+| 2026-04-15 | 0.4.0_DS_ClientPlatform~C | ADVI_ROLLUP.RA-P0 | comp-blast | comp-blast D_02 | PASS |
+| 2026-04-15 | 0.4.0_DS_ClientPlatform~C | ADVI_ROLLUP.RA-P0 | comp-blast | comp-blast _window_nna_delta | PASS |
+| 2026-04-15 | 0.4.0_DS_ClientPlatform~C | ADVI_ROLLUP.RA-P0 | comp-blast | comp-blast D_00c | PASS |
+| 2026-04-15 | 0.4.0_DS_ClientPlatform~C | ADVI_ROLLUP.RA-P0 | comp-blast | comp-blast D_04 | PASS |
+| 2026-04-15 | 0.4.0_DS_ClientPlatform~C | ADVI_ROLLUP.RA-P0 | comp-blast | comp-blast D_01 | PASS |
+| 2026-04-15 | 0.4.0_DS_ClientPlatform~C | ADVI_ROLLUP.RA-P0 | comp-blast | comp-blast D_00b | PASS |
+| 2026-04-15 | 0.4.0_DS_ClientPlatform~C | ADVI_ROLLUP.RA-P0 | comp-blast | comp-blast C_08 | PASS |
+| 2026-04-15 | 0.4.0_DS_ClientPlatform~C | ADVI_ROLLUP.RA-P0 | comp-platinum | comp-platinum reverse rfs | PASS |
+| 2026-04-15 | 0.4.0_DS_ClientPlatform~C | ADVI_ROLLUP.RA-P0 | comp-iam | comp-iam gaps | PASS |
+| 2026-04-15 | 0.4.0_DS_ClientPlatform~C | ADVI_ROLLUP.RA-P0 | comp-platinum | comp-platinum reverse role_aua | PASS |
+| 2026-04-15 | 0.4.0_DS_ClientPlatform~C | ADVI_ROLLUP.RA-P0 | comp-platinum | comp-platinum page AdvisorPublicProfile | PASS |
+| 2026-04-15 | 0.4.0_DS_ClientPlatform~C | ADVI_ROLLUP.RA-P0 | comp-iam | comp-iam --help | PASS |
+| 2026-04-15 | 0.4.0_DS_ClientPlatform~C | ADVI_ROLLUP.RA-P0 | comp-iam | comp-iam stats | PASS |
+| 2026-04-15 | 0.4.0_DS_ClientPlatform~C | ADVI_ROLLUP.RA-P0 | comp-iam | comp-iam services | PASS |
+20260415T163423Z | 0.4.0_DS_ClientPlatform~A | ADVI_ROLLUP.RF01 | comp-blast _compute_window_decomposition | NO_MATCH (tool limit: no function-level nodes)
+20260415T163423Z | 0.4.0_DS_ClientPlatform~A | ADVI_ROLLUP.RF01 | comp-blast _compute_window_flows | NO_MATCH (tool limit)
+20260415T163423Z | 0.4.0_DS_ClientPlatform~A | ADVI_ROLLUP.RF01 | comp-platinum reverse rfs.decomposition_max.nna | EMPTY (tool limit: no nested-key index)
+20260415T163423Z | 0.4.0_DS_ClientPlatform~A | ADVI_ROLLUP.RF01 | comp-platinum reverse rfs.decomposition_ytd.nna | EMPTY (tool limit)
+20260415T163423Z | 0.4.0_DS_ClientPlatform~A | ADVI_ROLLUP.RF01 | comp-blast _window_nna_delta | NO_MATCH (tool limit)
+20260415T163423Z | 0.4.0_DS_ClientPlatform~A | ADVI_ROLLUP.RF01 | comp-blast D_04 | PASS (terminal, no downstream)
+20260415T163424Z | 0.4.0_DS_ClientPlatform~A | ADVI_ROLLUP.RF01 | comp-platinum page AdvisorPublicProfile | PASS — rfs.decomposition_* not in rendered fields (Wave C staged)
+20260415T163500Z | 2.0.0_SA_COO | corpus-signal | comp-pipescript deployed silver-layer | FAIL — tool scans code/gold/ only; misses silver enforcer scripts (bd_price_update.py, inject_scoped_overrides.py). CTO-directed extension TO authored and routed to 1.0.0_SA_CTO (blame owner). WP-11 Phase 2 retroactively auditable post-fix.
+| 2026-04-15 | 0.4.0_DS_ClientPlatform~C | ADVI_ROLLUP.RA-P0 | comp-validate | comp-validate --help | PASS |
+| 2026-04-15 | 0.4.0_DS_ClientPlatform~C | ADVI_ROLLUP.RA-P0 | comp-validate | comp-validate nna_atomic --schema | FAIL |
+| 2026-04-15 | 0.4.0_DS_ClientPlatform~C | ADVI_ROLLUP.RA-P0 | comp-validate | comp-validate role_aua --schema | FAIL |
+| 2026-04-15 | 0.4.0_DS_ClientPlatform~C | ADVI_ROLLUP.RA-P0 | comp-validate | comp-validate --list | PASS |
+| 2026-04-15 | 0.4.0_DS_ClientPlatform~C | ADVI_ROLLUP.RA-P0 | comp-validate | comp-validate --help | PASS |
+| 2026-04-15 | 0.4.0_DS_ClientPlatform~C | ADVI_ROLLUP.RA-P0 | comp-validate | comp-validate --list | PASS |
+| 2026-04-15 | 0.4.0_DS_ClientPlatform~C | ADVI_ROLLUP.RA-P0 | comp-validate | comp-validate nna_atomic | PASS |
+| 2026-04-15 | 0.4.0_DS_ClientPlatform~C | ADVI_ROLLUP.RA-P0 | comp-validate | comp-validate role_aua | PASS |
+| 2026-04-15 | 0.4.0_DS_ClientPlatform~C | ADVI_ROLLUP.RA-P0 | comp-validate | comp-validate --list | PASS |
+| 2026-04-15 | 0.4.0_DS_ClientPlatform~C | ADVI_ROLLUP.RA-P0 | comp-pipescript | comp-pipescript deployed bd_price_update.py | PASS |
+| 2026-04-15 | 0.4.0_DS_ClientPlatform~C | ADVI_ROLLUP.RA-P0 | comp-pipescript | comp-pipescript deployed D_04 | PASS |
+| 2026-04-15 | 0.4.0_DS_ClientPlatform~C | ADVI_ROLLUP.RA-P0 | comp-pipescript | comp-pipescript deployed inject_scoped_overrides.py | PASS |
+| 2026-04-15 | 0.4.0_DS_ClientPlatform~C | ADVI_ROLLUP.RA-P0 | comp-blast | comp-blast role_aua_schema_doc | PASS |
+| 2026-04-15 | 0.4.0_DS_ClientPlatform~C | ADVI_ROLLUP.RA-P0 | comp-blast | comp-blast diag_gold_silver_recon | PASS |
+| 2026-04-15 | 0.4.0_DS_ClientPlatform~C | ADVI_ROLLUP.RA-P0 | comp-blast | comp-blast gold_silver_recon_manifest | PASS |
+| 2026-04-15 | 0.4.0_DS_ClientPlatform~C | ADVI_ROLLUP.RA-P0 | comp-pipescript | comp-pipescript deployed | PASS |
+| 2026-04-15 | 0.4.0_DS_ClientPlatform~C | ADVI_ROLLUP.RA-P0 | comp-pipescript | comp-pipescript io C_08 | PASS |
+| 2026-04-15 | 0.4.0_DS_ClientPlatform~C | ADVI_ROLLUP.RA-P0 | comp-pipescript | comp-pipescript deployed C_08 | PASS |
+| 2026-04-15 | 0.4.0_DS_ClientPlatform~C | ADVI_ROLLUP.RA-P0 | comp-pipescript | comp-pipescript deployed | PASS |
+| 2026-04-15 | 0.4.0_DS_ClientPlatform~C | ADVI_ROLLUP.RA-P0 | comp-blast | comp-blast advisor_fee_efficiency | PASS |
+| 2026-04-15 | 0.4.0_DS_ClientPlatform~C | ADVI_ROLLUP.RA-P0 | comp-blast | comp-blast C_08.build_scorecard | PASS |
+| 2026-04-15 | 0.7.0_AE_CloudOps | comp-pipescript-silver-ext | comp-pipescript | comp-pipescript deployed bd_price_update.py (post-fix) | PASS -- [SILVER] MATCH (was: empty/Unknown script) |
+| 2026-04-15 | 0.7.0_AE_CloudOps | comp-pipescript-silver-ext | comp-pipescript | comp-pipescript deployed D_04 (regression check) | PASS -- [GOLD] MATCH preserved |
+| 2026-04-15 | 0.7.0_AE_CloudOps | comp-pipescript-silver-ext | comp-pipescript | comp-pipescript deployed inject_scoped_overrides.py | PASS -- [SILVER] MATCH |
+| 2026-04-15 | 0.7.0_AE_CloudOps | comp-pipescript-silver-ext | comp-pipescript | comp-pipescript deployed (full sweep) | PASS -- 38 MATCH (gold+silver), surfaced [GOLD] C_08 STALE (DS) and [SILVER] upload_bd_assets_backfill.py MISSING_ON_S3 |

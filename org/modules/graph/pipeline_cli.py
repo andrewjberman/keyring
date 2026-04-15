@@ -416,40 +416,42 @@ def cmd_stats(args):
 
 
 def cmd_deployed(args):
-    """Compare local gold script files against their S3-uploaded code versions.
-    Uses S3 ETag (MD5) comparison. Requires aws CLI in PATH."""
+    """Compare local gold + silver script files against their S3-uploaded code versions.
+    Gold scripts come from the DAG; silver scripts are discovered by walking
+    data/black_diamond/scripts/silver/*.py (top-level only, excludes lib/ and __pycache__).
+    Output is prefixed [GOLD] / [SILVER]. Uses S3 ETag (MD5) comparison."""
     import hashlib
+    import shutil
     import subprocess
 
-    dag = _build_dag()
     S3_BUCKET = "opal-data-bd"
-    S3_CODE_PREFIX = "code/gold/"
+    S3_GOLD_PREFIX = "code/gold/"
+    S3_SILVER_PREFIX = "code/silver/"
+    SILVER_LOCAL_DIR = _WORKSPACE / "data" / "black_diamond" / "scripts" / "silver"
 
-    script_filter = args.script_id.upper() if args.script_id else None
+    # Resolve aws CLI once, full path -- avoids subprocess PATH-loss on some shells.
+    aws_bin = shutil.which("aws") or shutil.which("aws.cmd") or shutil.which("aws.exe")
+    if not aws_bin:
+        print("  ERROR: aws CLI not found in PATH (checked aws, aws.cmd, aws.exe)")
+        sys.exit(2)
 
-    print("DEPLOYED STATUS: local repo vs s3://opal-data-bd/code/gold/")
-    print()
+    raw_filter = args.script_id.strip() if args.script_id else ""
+    script_filter_upper = raw_filter.upper() if raw_filter else None
+    script_filter_lower = raw_filter.lower() if raw_filter else None
+    # Normalize a filename-style filter: strip .py so "bd_price_update.py" and "bd_price_update" both match.
+    silver_filter_stem = (
+        script_filter_lower[:-3] if script_filter_lower and script_filter_lower.endswith(".py")
+        else script_filter_lower
+    )
 
-    stale = []
-    missing_s3 = []
-    matched = []
-
-    for sid, sio in sorted(dag.scripts.items(), key=lambda x: x[1].run_order):
-        if script_filter and script_filter.upper() not in sid.upper():
-            continue
-
-        local_path = _WORKSPACE / sio.file_path
+    def _check_one(layer_tag, label, local_path, s3_key):
+        """Returns (status, info_lines). Prints nothing -- caller does."""
         if not local_path.exists():
-            print(f"  {sid:<8} LOCAL_MISSING  {sio.filename}")
-            continue
-
-        # Compute local MD5 (S3 ETags for non-multipart uploads are MD5 hex)
+            return "LOCAL_MISSING", []
         local_md5 = hashlib.md5(local_path.read_bytes()).hexdigest()
-        s3_key = f"{S3_CODE_PREFIX}{sio.filename}"
-
         try:
             result = subprocess.run(
-                ["aws", "s3api", "head-object",
+                [aws_bin, "s3api", "head-object",
                  "--bucket", S3_BUCKET,
                  "--key", s3_key,
                  "--query", "ETag",
@@ -457,39 +459,94 @@ def cmd_deployed(args):
                 capture_output=True, text=True, timeout=15,
             )
         except subprocess.TimeoutExpired:
-            print(f"  {sid:<8} TIMEOUT        {sio.filename}  (aws CLI hung)")
-            continue
-        except FileNotFoundError:
-            print(f"  {sid:<8} ERROR          aws CLI not found in PATH")
-            break
-
+            return "TIMEOUT", ["(aws CLI hung)"]
         if result.returncode != 0:
-            print(f"  {sid:<8} MISSING_ON_S3  {sio.filename}")
-            missing_s3.append(sid)
-            continue
-
-        # ETag is returned quoted: '"abcdef..."' -- strip quotes
+            return "MISSING_ON_S3", []
         s3_etag = result.stdout.strip().strip('"')
-
         if local_md5 == s3_etag:
-            status = "MATCH"
-            matched.append(sid)
-        else:
-            status = "STALE"
-            stale.append(sid)
+            return "MATCH", []
+        return "STALE", [f"local:  {local_md5}", f"s3:     {s3_etag}"]
 
-        print(f"  {sid:<8} {status:<14} {sio.filename}")
-        if status == "STALE":
-            print(f"           local:  {local_md5}")
-            print(f"           s3:     {s3_etag}")
+    print("DEPLOYED STATUS: local repo vs s3://opal-data-bd/code/{gold,silver}/")
+    print()
+
+    matched, stale, missing_s3, local_missing = [], [], [], []
+
+    # ---- GOLD layer (DAG-driven) ----
+    dag = _build_dag()
+    gold_candidates = sorted(dag.scripts.items(), key=lambda x: x[1].run_order)
+    # Gold filter: only include if no filter, OR filter substring matches script id (e.g. D_04).
+    # If filter looks like a silver filename (.py extension, lowercase, no DAG match), skip gold entirely.
+    skip_gold = False
+    if script_filter_upper:
+        any_gold_match = any(script_filter_upper in sid.upper() for sid, _ in gold_candidates)
+        if not any_gold_match:
+            skip_gold = True
+
+    if not skip_gold:
+        for sid, sio in gold_candidates:
+            if script_filter_upper and script_filter_upper not in sid.upper():
+                continue
+            local_path = _WORKSPACE / sio.file_path
+            label = f"[GOLD] {sid}"
+            status, extras = _check_one("GOLD", label, local_path, f"{S3_GOLD_PREFIX}{sio.filename}")
+            print(f"  [GOLD]   {sid:<8} {status:<14} {sio.filename}")
+            for line in extras:
+                print(f"           {line}")
+            if status == "MATCH":
+                matched.append(label)
+            elif status == "STALE":
+                stale.append(label)
+            elif status == "MISSING_ON_S3":
+                missing_s3.append(label)
+            elif status == "LOCAL_MISSING":
+                local_missing.append(label)
+
+    # ---- SILVER layer (directory-walk-driven) ----
+    silver_files = []
+    if SILVER_LOCAL_DIR.is_dir():
+        for p in sorted(SILVER_LOCAL_DIR.glob("*.py")):
+            if p.name.startswith("__"):
+                continue
+            silver_files.append(p)
+
+    skip_silver = False
+    if silver_filter_stem:
+        any_silver_match = any(silver_filter_stem in p.stem.lower() for p in silver_files)
+        # Silver filter only: if no silver match AND the filter clearly isn't a silver-shaped name,
+        # leave skip_silver False so user sees "no matches" cleanly. But if gold matched and
+        # silver has no match, suppress silver section entirely to avoid noise.
+        if not any_silver_match and not skip_gold:
+            skip_silver = True
+
+    if not skip_silver and silver_files:
+        for p in silver_files:
+            if silver_filter_stem and silver_filter_stem not in p.stem.lower():
+                continue
+            label = f"[SILVER] {p.name}"
+            status, extras = _check_one("SILVER", label, p, f"{S3_SILVER_PREFIX}{p.name}")
+            print(f"  [SILVER] {p.name:<48} {status:<14}")
+            for line in extras:
+                print(f"           {line}")
+            if status == "MATCH":
+                matched.append(label)
+            elif status == "STALE":
+                stale.append(label)
+            elif status == "MISSING_ON_S3":
+                missing_s3.append(label)
+            elif status == "LOCAL_MISSING":
+                local_missing.append(label)
 
     print()
-    print(f"  Summary: {len(matched)} MATCH, {len(stale)} STALE, {len(missing_s3)} MISSING_ON_S3")
+    print(f"  Summary: {len(matched)} MATCH, {len(stale)} STALE, "
+          f"{len(missing_s3)} MISSING_ON_S3, {len(local_missing)} LOCAL_MISSING")
     if stale:
-        print(f"  STALE scripts: {', '.join(stale)}")
-        print("  Run build-and-upload.sh to sync stale scripts to S3.")
-    elif not stale and not missing_s3:
+        print(f"  STALE: {', '.join(stale)}")
+        print("  Run build-and-upload.sh (gold) or the silver upload pathway to sync.")
+    elif not stale and not missing_s3 and (matched or local_missing):
         print("  All checked scripts are up-to-date on S3.")
+    elif not matched and not stale and not missing_s3 and not local_missing:
+        print(f"  No scripts matched filter: {raw_filter!r}")
 
 
 def cmd_postdeps(args):
