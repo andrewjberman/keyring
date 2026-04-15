@@ -558,3 +558,50 @@ RESOLUTION: fixed in `614d4c28` (`comp-platinum reverse empty-vs-broken disambig
 | 2026-04-15 | 0.4.0_DS_ClientPlatform~C | ADVI_ROLLUP.RA-P2 | aws s3 ls | aws s3 ls s3://opal-data-bd/gold/canonical/role_aua/ | WARN | Single 2026-04-13.parquet only -> triggered Rule 7 ACCEPTANCE FLEX preflag, L1632 deferred to RA-P2b |
 | 2026-04-15 | 0.4.0_DS_ClientPlatform~C | ADVI_ROLLUP.RA-P2 | py_compile | python -m py_compile D_02 | PASS | Pre-commit gate, exit 0 |
 | 2026-04-15 | 0.4.0_DS_ClientPlatform~C | ADVI_ROLLUP.RA-P2 | comp-blast | comp-blast D_02 | WARN | Script-node lookup empty (per memory: use fn name); no new reader introduced confirmed by code review |
+| 2026-04-15 | 0.4.2_RD_AdvisorIntelligence | ADVI_FNTEND.B0 | comp-validate | comp-validate sleeve_cohort --artifact /tmp/sleeve_cohort_2026-04-13.parquet | PASS |
+| 2026-04-15 | 0.4.2_RD_AdvisorIntelligence | ADVI_FNTEND.B0 | comp-blast | comp-blast D_00c | PASS |
+| 2026-04-15 | 0.4.2_RD_AdvisorIntelligence | ADVI_FNTEND.B0 | comp-blast | comp-blast build_employee_leaderboard | PASS |
+| 2026-04-15 | 0.4.2_RD_AdvisorIntelligence | ADVI_FNTEND.B0 | comp-pipescript | comp-pipescript deployed D_00c | PASS |
+| 2026-04-15 | 0.4.2_RD_AdvisorIntelligence | ADVI_FNTEND.B0 | comp-pipescript | comp-pipescript io D_01 | PASS |
+| 2026-04-15 | 0.4.0_DS_ClientPlatform | ADVI_ROLLUP.IN-1.ds-incremental-feasibility-survey | comp-pipescript | comp-pipescript deployed D_02 | PASS |
+| 2026-04-15 | 0.4.0_DS_ClientPlatform | ADVI_ROLLUP.IN-1.ds-incremental-feasibility-survey | comp-pipescript | comp-pipescript io D_02 | PASS |
+| 2026-04-15 | 0.4.0_DS_ClientPlatform | ADVI_ROLLUP.IN-1.ds-incremental-feasibility-survey | comp-pipescript | comp-pipescript io B_01 | PASS |
+| 2026-04-15 | 0.4.0_DS_ClientPlatform | ADVI_ROLLUP.IN-1.ds-incremental-feasibility-survey | comp-platinum | comp-platinum reverse views.geo | PASS |
+| 2026-04-15 | 0.4.0_DS_ClientPlatform | ADVI_ROLLUP.IN-1.ds-incremental-feasibility-survey | comp-pipescript | comp-pipescript io C_06 | PASS |
+| 2026-04-15 | 0.4.0_DS_ClientPlatform | ADVI_ROLLUP.IN-1.ds-incremental-feasibility-survey | comp-platinum | comp-platinum reverse views.aua | PASS |
+| 2026-04-15 | 0.4.0_DS_ClientPlatform | ADVI_ROLLUP.IN-1.ds-incremental-feasibility-survey | comp-pipescript | comp-pipescript feeds D_02 | PASS |
+| 2026-04-15 | 0.4.0_DS_ClientPlatform | ADVI_ROLLUP.IN-1.ds-incremental-feasibility-survey | comp-pipescript | comp-pipescript io S_00 | FAIL |
+| 2026-04-15 | 0.4.0_DS_ClientPlatform | ADVI_ROLLUP.IN-1.ds-incremental-feasibility-survey | comp-pipescript | comp-pipescript io A_00 | PASS |
+| 2026-04-15 | 0.4.0_DS_ClientPlatform | ADVI_ROLLUP.IN-1.ds-incremental-feasibility-survey | comp-pipescript | comp-pipescript io A_01 | PASS |
+| 2026-04-15 | 0.4.0_DS_ClientPlatform | ADVI_ROLLUP.IN-1.ds-incremental-feasibility-survey | comp-pipescript | comp-pipescript io A_02 | PASS |
+| 2026-04-15 | 0.4.0_DS_ClientPlatform | ADVI_ROLLUP.IN-1.ds-incremental-feasibility-survey | comp-pipescript | comp-pipescript io A_03 | PASS |
+| 2026-04-15 | 0.4.0_DS_ClientPlatform | ADVI_ROLLUP.IN-1.ds-incremental-feasibility-survey | comp-pipescript | comp-pipescript io A_04 | PASS |
+| 2026-04-15 | 0.4.0_DS_ClientPlatform | ADVI_ROLLUP.IN-1.ds-incremental-feasibility-survey | comp-pipescript | comp-pipescript io B_00 | PASS |
+| 2026-04-15 | 0.4.0_DS_ClientPlatform | ADVI_ROLLUP.IN-1.ds-incremental-feasibility-survey | comp-pipescript | comp-pipescript io B_01b | PASS |
+| 2026-04-15 | 0.4.0_DS_ClientPlatform | ADVI_ROLLUP.IN-1.ds-incremental-feasibility-survey | comp-pipescript | comp-pipescript io B_02 | PASS |
+| 2026-04-15 | 0.4.0_DS_ClientPlatform | ADVI_ROLLUP.IN-1.ds-incremental-feasibility-survey | comp-pipescript | comp-pipescript io B_03 | PASS |
+| 2026-04-15 | 0.4.0_DS_ClientPlatform | ADVI_ROLLUP.IN-1.ds-incremental-feasibility-survey | comp-pipescript | comp-pipescript io C_00 | PASS |
+| 2026-04-15 | 0.4.0_DS_ClientPlatform | ADVI_ROLLUP.IN-1.ds-incremental-feasibility-survey | comp-pipescript | comp-pipescript io C_01 | PASS |
+| 2026-04-15 | 0.4.0_DS_ClientPlatform | ADVI_ROLLUP.IN-1.ds-incremental-feasibility-survey | comp-pipescript | comp-pipescript io C_02 | PASS |
+| 2026-04-15 | 0.4.0_DS_ClientPlatform | ADVI_ROLLUP.IN-1.ds-incremental-feasibility-survey | comp-pipescript | comp-pipescript io C_03 | PASS |
+| 2026-04-15 | 0.4.0_DS_ClientPlatform | ADVI_ROLLUP.IN-1.ds-incremental-feasibility-survey | comp-pipescript | comp-pipescript io C_04 | PASS |
+| 2026-04-15 | 0.4.0_DS_ClientPlatform | ADVI_ROLLUP.IN-1.ds-incremental-feasibility-survey | comp-pipescript | comp-pipescript io C_05 | PASS |
+| 2026-04-15 | 0.4.0_DS_ClientPlatform | ADVI_ROLLUP.IN-1.ds-incremental-feasibility-survey | comp-pipescript | comp-pipescript io C_07 | PASS |
+| 2026-04-15 | 0.4.0_DS_ClientPlatform | ADVI_ROLLUP.IN-1.ds-incremental-feasibility-survey | comp-pipescript | comp-pipescript io C_08 | PASS |
+| 2026-04-15 | 0.4.0_DS_ClientPlatform | ADVI_ROLLUP.IN-1.ds-incremental-feasibility-survey | comp-pipescript | comp-pipescript io D_00 | PASS |
+| 2026-04-15 | 0.4.0_DS_ClientPlatform | ADVI_ROLLUP.IN-1.ds-incremental-feasibility-survey | comp-pipescript | comp-pipescript io D_00b | PASS |
+| 2026-04-15 | 0.4.0_DS_ClientPlatform | ADVI_ROLLUP.IN-1.ds-incremental-feasibility-survey | comp-pipescript | comp-pipescript io D_00c | PASS |
+| 2026-04-15 | 0.4.0_DS_ClientPlatform | ADVI_ROLLUP.IN-1.ds-incremental-feasibility-survey | comp-pipescript | comp-pipescript io D_01 | PASS |
+| 2026-04-15 | 0.4.0_DS_ClientPlatform | ADVI_ROLLUP.IN-1.ds-incremental-feasibility-survey | comp-pipescript | comp-pipescript io D_03 | PASS |
+| 2026-04-15 | 0.4.0_DS_ClientPlatform | ADVI_ROLLUP.IN-1.ds-incremental-feasibility-survey | comp-pipescript | comp-pipescript io D_04 | PASS |
+| 2026-04-15 | 0.4.0_DS_ClientPlatform | ADVI_ROLLUP.IN-1.ds-incremental-feasibility-survey | comp-validate | comp-validate D_01 --artifact /tmp/btab/header_metrics_quarterly.json | PASS |
+| 2026-04-15 | 0.4.0_DS_ClientPlatform | ADVI_ROLLUP.IN-1.ds-incremental-feasibility-survey | comp-transform | comp-transform schema-check AdvisorPublicProfile | PASS |
+| 2026-04-15 | 0.4.0_DS_ClientPlatform | ADVI_ROLLUP.IN-1.ds-incremental-feasibility-survey | comp-platinum | comp-platinum page AdvisorPublicProfile | PASS |
+| 2026-04-15 | 0.4.0_DS_ClientPlatform | ADVI_ROLLUP.IN-1.ds-incremental-feasibility-survey | comp-cache | comp-cache collisions | PASS |
+| 2026-04-15 | 0.4.0_DS_ClientPlatform | ADVI_ROLLUP.IN-1.ds-incremental-feasibility-survey | comp-blast | comp-blast SummaryCard | PASS |
+| 2026-04-15 | 0.4.0_DS_ClientPlatform | ADVI_ROLLUP.IN-1.ds-incremental-feasibility-survey | comp-routes | comp-routes auth-map | PASS |
+| 2026-04-15 | 0.4.0_DS_ClientPlatform~C | ADVI_ROLLUP.D01-T1 | comp-pipescript | comp-pipescript io D_01 | PASS | nna_aua_by_geography in READS, partner_analytics in WRITES; producer confirmed |
+| 2026-04-15 | 0.4.0_DS_ClientPlatform~C | ADVI_ROLLUP.D01-T1 | comp-platinum | comp-platinum reverse views.geo | PASS | D_04 (passthrough D_01) producer + portal route confirmed |
+| 2026-04-15 | 0.4.0_DS_ClientPlatform~C | ADVI_ROLLUP.D01-T1 | comp-platinum | comp-platinum reverse views.aua | PARTIAL | sub-key not indexed individually; expected |
+| 2026-04-15 | 0.4.0_DS_ClientPlatform~C | ADVI_ROLLUP.D01-T1 | grep | grep -nE 'state\|geo' D_01 | PASS | state filter at L758-763 located + quoted (notna + != '' + != 'Unknown') |
+| 2026-04-15 | 0.4.0_DS_ClientPlatform~C | ADVI_ROLLUP.D01-T1 | py_compile | python -m py_compile D_01.partner_analytics.py | PASS | exit 0, pre-commit gate |
