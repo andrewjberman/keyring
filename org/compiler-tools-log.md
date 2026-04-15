@@ -471,3 +471,69 @@ RESOLUTION: fixed in `0324142a` (`compiler-tools: add function blast, dotted rev
 |-----|------|----------|--------|---------------|
 | Deployed-check runtime failures were ambiguous after AWS subprocess launch | `comp-pipescript deployed` | Prior code fixed PATH lookup, but runtime hangs still surfaced as unhelpful failures and misleading summary text; matched scripts could still end with `No scripts matched filter` | Operators could not distinguish tooling defects from AWS/session defects, and manual diagnosis cost was too high | Forward a controlled AWS env into the subprocess, default `AWS_EC2_METADATA_DISABLED=true`, and emit explicit `TIMEOUT` plus AWS guidance instead of silent or misleading output |
 RESOLUTION: fixed in `0324142a` (`compiler-tools: add function blast, dotted reverse, and honest deployed timeouts`)
+| 2026-04-15 | 0.7.0_AE_CloudOps | CFIMPT_REST.001 | comp-validate | comp-validate | PASS |
+| 2026-04-15 | 0.7.0_AE_CloudOps | CFIMPT_REST.001 | comp-pipescript | comp-pipescript io D_04.client_portal_summary.py | FAIL |
+| 2026-04-15 | 0.7.0_AE_CloudOps | CFIMPT_REST.001 | comp-transform | comp-transform schema-check AdvisorPublicProfile | PASS |
+| 2026-04-15 | 0.7.0_AE_CloudOps | CFIMPT_REST.001 | comp-iam | comp-iam services | PASS |
+| 2026-04-15 | 0.7.0_AE_CloudOps | CFIMPT_REST.001 | comp-cache | comp-cache collisions | PASS |
+| 2026-04-15 | 0.7.0_AE_CloudOps | CFIMPT_REST.001 | comp-iam | comp-iam stats | PASS |
+| 2026-04-15 | 0.4.0_DS_ClientPlatform~A | ADHC_ROUTER.T1.ds-a-test-comp-blast-function-level-vs-rf01 | comp-pipescript | comp-pipescript deployed D_04 | PASS |
+| 2026-04-15 | 0.4.0_DS_ClientPlatform~A | ADHC_ROUTER.T1.ds-a-test-comp-blast-function-level-vs-rf01 | comp-blast | comp-blast _compute_window_decomposition | PASS |
+| 2026-04-15 | 0.4.0_DS_ClientPlatform~A | ADHC_ROUTER.T1.ds-a-test-comp-blast-function-level-vs-rf01 | comp-pipescript | comp-pipescript deployed bd_price_update.py | PASS |
+| 2026-04-15 | 0.4.0_DS_ClientPlatform~D | ADHC_ROUTER.T4 | comp-blast | comp-blast _compute_window_flows | PASS |
+| 2026-04-15 | 0.4.0_DS_ClientPlatform~D | ADHC_ROUTER.T4 | comp-pipescript | comp-pipescript deployed inject_scoped_overrides.py | PASS |
+| 2026-04-15 | 0.7.0_AE_CloudOps | CDRS_TFIMPT.002 | comp-pipescript | comp-pipescript deployed bd_price_update.py | PASS |
+| 2026-04-15 | 0.7.0_AE_CloudOps | CDRS_TFIMPT.002 | comp-blast | comp-blast _window_nna_delta | PASS |
+| 2026-04-15 | 0.7.0_AE_CloudOps | CDRS_TFIMPT.002 | comp-pipescript | comp-pipescript deployed inject_scoped_overrides.py | PASS |
+| 2026-04-15 | 0.7.0_AE_CloudOps | CDRS_TFIMPT.002 | comp-pipescript | comp-pipescript io bd_price_update.py | FAIL |
+| 2026-04-15 | 0.7.0_AE_CloudOps | CDRS_TFIMPT.002 | comp-platinum | comp-platinum reverse rfs.decomposition_max.nna | PASS |
+| 2026-04-15 | 0.7.0_AE_CloudOps | CDRS_TFIMPT.002 | comp-platinum | comp-platinum reverse nna_atomic | PASS |
+| 2026-04-15 | 0.7.0_AE_CloudOps | CDRS_TFIMPT.002 | comp-validate | comp-validate nna_atomic --schema | FAIL |
+| 2026-04-15 | 0.7.0_AE_CloudOps | CDRS_TFIMPT.002 | comp-platinum | comp-platinum reverse rfs.decomposition_ytd.nna | PASS |
+| 2026-04-15 | 0.7.0_AE_CloudOps | CDRS_TFIMPT.002 | comp-platinum | comp-platinum reverse role_aua | PASS |
+| 2026-04-15 | 0.7.0_AE_CloudOps | CDRS_TFIMPT.002 | comp-platinum | comp-platinum reverse advisor_fee_efficiency | PASS |
+| 2026-04-15 | 0.7.0_AE_CloudOps | CDRS_TFIMPT.002 | comp-platinum | comp-platinum reverse small_account_count | PASS |
+| 2026-04-15 | 0.7.0_AE_CloudOps | CDRS_TFIMPT.002 | comp-blast | comp-blast C_08 | PASS |
+| 2026-04-15 | 0.7.0_AE_CloudOps | CDRS_TFIMPT.002 | comp-blast | comp-blast C_08.build_scorecard | PASS |
+| 2026-04-15 | 0.7.0_AE_CloudOps | CDRS_TFIMPT.002 | comp-validate | comp-validate nna_atomic --schema | PASS |
+| 2026-04-15 | 0.7.0_AE_CloudOps | CDRS_TFIMPT.002 | comp-validate | comp-validate role_aua --schema | PASS |
+| 2026-04-15 | 0.7.0_AE_CloudOps | CDRS_TFIMPT.002 | comp-validate | comp-validate D_04 --list | PASS |
+| 2026-04-15 | 0.7.0_AE_CloudOps | CDRS_TFIMPT.002 | comp-validate | comp-validate --list | PASS |
+| 2026-04-15 | 0.7.0_AE_CloudOps | CDRS_TFIMPT.002 | comp-validate | comp-validate bogus --whatever | FAIL |
+| 2026-04-15 | 0.7.0_AE_CloudOps | CDRS_TFIMPT.002 | comp-platinum | comp-platinum reverse gold/artifacts/advisor_fee_efficiency.json | PASS |
+| 2026-04-15 | 0.7.0_AE_CloudOps | CDRS_TFIMPT.002 | comp-pipescript | comp-pipescript deployed | PASS |
+| 2026-04-15 | 0.7.0_AE_CloudOps | CDRS_TFIMPT.002 | comp-pipescript | comp-pipescript deployed D_04 | PASS |
+| 2026-04-15 | 0.7.0_AE_CloudOps | CDRS_TFIMPT.002 | comp-platinum | comp-platinum reverse role_aua | PASS |
+| 2026-04-15 | 0.7.0_AE_CloudOps | CDRS_TFIMPT.002 | comp-pipescript | comp-pipescript deployed D_04 | PASS |
+| 2026-04-15 | 0.7.0_AE_CloudOps | CDRS_TFIMPT.002 | comp-platinum | comp-platinum reverse advisor_fee_efficiency | PASS |
+| 2026-04-15 | 0.7.0_AE_CloudOps | CDRS_TFIMPT.002 | comp-platinum | comp-platinum reverse small_account_count | PASS |
+| 2026-04-15 | 0.7.0_AE_CloudOps | CDRS_TFIMPT.002 | comp-build | comp-build | PASS |
+| 2026-04-15 | 0.7.0_AE_CloudOps | CDRS_TFIMPT.002 | comp-blast | comp-blast _window_nna_delta | PASS |
+| 2026-04-15 | 0.7.0_AE_CloudOps | CDRS_TFIMPT.002 | comp-blast | comp-blast _compute_window_decomposition | PASS |
+
+## 2026-04-15 - ADHC_ROUTER.T4 Resolution (0.4.0_DS_ClientPlatform~D)
+
+| Gap | Tool | Observed | Impact | Candidate Fix |
+|-----|------|----------|--------|---------------|
+| Standalone validators unreachable from `comp-validate` CLI | `comp-validate` | `comp-validate role_aua --schema` and `nna_atomic --schema` failed in argparse with `unrecognized arguments` despite standalone validators existing on disk | Agents running locked-discipline Phase-1/2 mandates had to fall back to direct `python validate_*.py` invocation, blurring "bad output" vs "tool could not route" in corpus rows | `parse_known_args()` + subprocess dispatch to `data/black_diamond/scripts/validators/validate_{id}.py` with all trailing flags forwarded; config-backed targets unchanged |
+RESOLUTION: pass-through half fixed in `3c921e08` (`ADHC_ROUTER.T4 + comp-validate pass-through dispatch (proposal E partial)`) -- proposal E ACs #1-#4 closed; coverage-audit half (ACs #5-#8) remains open. Corpus-to-patch loop validated: DS ~D hit the gap during CN-P0 (commit 93b70620), flagged it explicitly, then closed it during ADHC_ROUTER.T4.
+| 2026-04-15 | 0.7.0_AE_CloudOps | CDRS_TFIMPT.002 | comp-platinum | comp-platinum reverse rfs.decomposition_max.nna | PASS |
+| 2026-04-15 | 0.7.0_AE_CloudOps | CDRS_TFIMPT.002 | comp-platinum | comp-platinum reverse rfs.decomposition_ytd.nna | PASS |
+| 2026-04-15 | 0.7.0_AE_CloudOps | CDRS_TFIMPT.002 | comp-pipescript | comp-pipescript deployed D_04 | PASS |
+
+## 2026-04-15 - ADHC_ROUTER.T1/T2/T3 Resolutions
+
+| Gap | Tool | Observed | Impact | Candidate Fix |
+|-----|------|----------|--------|---------------|
+| 0324142a function-blast reverse-edge contamination | `comp-blast` | `comp-blast _window_nna_delta` returned 85-node blast (effectively all of D_04) instead of 1-node reachability — CALLS + CALLED_BY both indexed on source in the forward index, causing walks to explode through callers→co-callees | Stress test revealed a regression in the shipped function-blast feature; real audit use would produce runaway false-positive blast radii and masked real impact | Separate reverse-edge traversal direction so downstream walk doesn't follow CALLED_BY edges as forward edges |
+RESOLUTION: fixed in `d1d6920b` (`compiler patches ADHC_ROUTER.T1 (function blast + dotted reverse)`) -- ADHC_ROUTER stress test caught a subtle regression in the shipped 0324142a feature; exactly the corpus-to-patch loop outcome the test pass was designed to produce.
+
+| Gap | Tool | Observed | Impact | Candidate Fix |
+|-----|------|----------|--------|---------------|
+| AWS credential/network errors misclassified as MISSING_ON_S3 | `comp-pipescript deployed` | Broken AWS_PROFILE or expired token produced `MISSING_ON_S3` with no signal parity was unverifiable; agent would chase a phantom upload path | Correctness defect: tool claims S3 404 when it actually couldn't reach S3; an agent running against bad creds would ship a bogus upload to fix a non-existent gap | Add AWS_UNREACHABLE status gated by stderr allowlist (`Unable to locate credentials`, `ExpiredToken`, etc.); separate bucket in summary + remediation footer pointing at `aws sts get-caller-identity` |
+RESOLUTION: fixed in `70c8399d` (`ADHC_ROUTER.T2 -- comp-pipescript deployed AWS_UNREACHABLE status`) -- distinguishes credential/network errors from real 404s; structural follow-up to switch to `--output json` + parse error code is backlogged.
+
+| Gap | Tool | Observed | Impact | Candidate Fix |
+|-----|------|----------|--------|---------------|
+| Empty-vs-broken indistinguishability on reverse lookup | `comp-platinum reverse` | `role_aua` (genuine empty), `advisor_fee_efficiency` (mis-routed), and `small_account_count` (indexer gap) all produced byte-identical empty output | UX-severity correctness defect: agents like RA-P0 passed on "empty as expected" via side-knowledge, not tool signal. Equivalent to the Rule 7 acceptance-flex risk category but at the tool layer | Diagnostic footer on empty output with 4-case disambiguation [genuine / mis-routed / stale / extractor gap]; artifact-stem auto-probe to route bare names; SPECULATIVE MATCH label on directory-prefix fallback |
+RESOLUTION: fixed in `614d4c28` (`comp-platinum reverse empty-vs-broken disambiguation + artifact-stem auto-probe`) -- reveals 3 additional out-of-scope findings: FIELD index suspiciously small (40 paths), function-level blast nodes missing, route.s3_key unset on CF-rewrite routes. Backlogged.

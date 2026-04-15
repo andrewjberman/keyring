@@ -18,8 +18,8 @@
     "0324142a: comp-pipescript deployed env-forwarding + explicit TIMEOUT"
   ],
   "status": "active",
-  "phase": "Phase 1 -- 4 TOs dispatched directly to DS ~A/~B/~C/~D (CTO-authored, COO informed). Each TO is self-contained; lanes work in parallel.",
-  "blocking": "Agent availability while ADVI_ROLLUP P3+ waves stage on A->D rerun.",
+  "phase": "Phase 1 COMPLETE 2026-04-15. All 4 TOs closed with compiler patches: T1 d1d6920b (0324142a reverse-edge regression caught), T2 70c8399d (AWS_UNREACHABLE), T3 614d4c28 (empty-vs-broken footer), T4 3c921e08 (proposal E pass-through). Backlog: FIELD index undersized (~40 paths), function-level blast node gap, route.s3_key unset on CF-rewrite routes.",
+  "blocking": "None (Phase 2 backlog pickup when DS lanes idle again).",
   "created": "2026-04-15",
   "pods": ["0.4"],
   "pipeline": "none (comp-tools work)",
