@@ -605,3 +605,10 @@ RESOLUTION: fixed in `614d4c28` (`comp-platinum reverse empty-vs-broken disambig
 | 2026-04-15 | 0.4.0_DS_ClientPlatform~C | ADVI_ROLLUP.D01-T1 | comp-platinum | comp-platinum reverse views.aua | PARTIAL | sub-key not indexed individually; expected |
 | 2026-04-15 | 0.4.0_DS_ClientPlatform~C | ADVI_ROLLUP.D01-T1 | grep | grep -nE 'state\|geo' D_01 | PASS | state filter at L758-763 located + quoted (notna + != '' + != 'Unknown') |
 | 2026-04-15 | 0.4.0_DS_ClientPlatform~C | ADVI_ROLLUP.D01-T1 | py_compile | python -m py_compile D_01.partner_analytics.py | PASS | exit 0, pre-commit gate |
+| 2026-04-15 | 0.4.0_DS_ClientPlatform | ADVI_ROLLUP.IN-1.ds-incremental-feasibility-survey | comp-pipescript | comp-pipescript io D_00c | PASS |
+| 2026-04-15 | 0.4.0_DS_ClientPlatform | ADVI_ROLLUP.IN-1.ds-incremental-feasibility-survey | comp-blast | comp-blast D_00c | PASS |
+| 2026-04-15 22:08 | 1.0.0_SA_CTO | ADVI_49EXEC PRD | comp-transform schema-check | `comp-transform schema-check AdvisorPublicProfile` | 13 type fields on AdvisorDrilldownSummary, 12 UNUSED on this surface | OK to add new AdvisorExecSummary type |
+| 2026-04-15 22:08 | 1.0.0_SA_CTO | ADVI_49EXEC PRD | comp-platinum page | `comp-platinum page AdvisorPublicProfile` | Existing fetches via APIGW (drilldown) + S3 (timeseries via shared-advisor-router); pattern for new fetch confirmed | Picked S3-direct endpoint for new artifact |
+| 2026-04-15 22:08 | 1.0.0_SA_CTO | ADVI_49EXEC PRD | comp-cache collisions | `comp-cache collisions` | 3 existing collisions on page (timeseries-overview, firm-leaderboard, partner-analytics) all deliberate | New key 'advisor-exec-summary' chosen unique; per-TO mandate added |
+| 2026-04-15 22:08 | 1.0.0_SA_CTO | ADVI_49EXEC PRD | comp-blast | `comp-blast SummaryCard` | No nodes (inline component) | Blast on parent AdvisorPublicProfile instead; documented PRD limitation |
+| 2026-04-15 22:08 | 1.0.0_SA_CTO | ADVI_49EXEC PRD | comp-routes auth-map | `comp-routes auth-map | grep advisor` | /api/scoped/advisor-intelligence/*.json -> S3-opal-data-bd (existing) | No new CloudFront behavior needed |
