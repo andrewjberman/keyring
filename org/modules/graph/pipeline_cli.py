@@ -468,6 +468,24 @@ def cmd_deployed(args):
             return "TIMEOUT", [f"(aws CLI hung; AWS_EC2_METADATA_DISABLED={aws_env.get('AWS_EC2_METADATA_DISABLED', '')})"]
         if result.returncode != 0:
             stderr = (result.stderr or "").strip()
+            # Disambiguate "S3 says no such key" from "we couldn't reach S3 at all".
+            # MISSING_ON_S3 should only fire on a genuine 404 from HeadObject; any credential/network
+            # failure is AWS_UNREACHABLE -- MATCH vs MISSING was never verifiable.
+            _unreach_sig = (
+                'Unable to locate credentials',
+                'could not be found',         # bad/missing profile
+                'ExpiredToken',
+                'InvalidAccessKeyId',
+                'SignatureDoesNotMatch',
+                'InvalidClientTokenId',
+                'Could not connect to the endpoint',
+                'EndpointConnectionError',
+                'ConnectTimeoutError',
+                'ReadTimeoutError',
+                'AccessDenied',
+            )
+            if any(sig in stderr for sig in _unreach_sig):
+                return "AWS_UNREACHABLE", [stderr]
             if stderr:
                 return "MISSING_ON_S3", [stderr]
             return "MISSING_ON_S3", []
@@ -479,7 +497,7 @@ def cmd_deployed(args):
     print("DEPLOYED STATUS: local repo vs s3://opal-data-bd/code/{gold,silver}/")
     print()
 
-    matched, stale, missing_s3, local_missing, timed_out = [], [], [], [], []
+    matched, stale, missing_s3, local_missing, timed_out, aws_unreach = [], [], [], [], [], []
     checked_any = False
 
     # ---- GOLD layer (DAG-driven) ----
@@ -514,6 +532,8 @@ def cmd_deployed(args):
                 local_missing.append(label)
             elif status == "TIMEOUT":
                 timed_out.append(label)
+            elif status == "AWS_UNREACHABLE":
+                aws_unreach.append(label)
 
     # ---- SILVER layer (directory-walk-driven) ----
     silver_files = []
@@ -552,11 +572,17 @@ def cmd_deployed(args):
                 local_missing.append(label)
             elif status == "TIMEOUT":
                 timed_out.append(label)
+            elif status == "AWS_UNREACHABLE":
+                aws_unreach.append(label)
 
     print()
     print(f"  Summary: {len(matched)} MATCH, {len(stale)} STALE, "
           f"{len(missing_s3)} MISSING_ON_S3, {len(local_missing)} LOCAL_MISSING, "
-          f"{len(timed_out)} TIMEOUT")
+          f"{len(timed_out)} TIMEOUT, {len(aws_unreach)} AWS_UNREACHABLE")
+    if aws_unreach:
+        print(f"  AWS_UNREACHABLE: {', '.join(aws_unreach)}")
+        print("  AWS credentials/network could not reach S3; MATCH/MISSING is NOT verified.")
+        print("  Fix: check AWS_PROFILE / credentials / VPN, then re-run. See `aws sts get-caller-identity` to confirm.")
     if stale:
         print(f"  STALE: {', '.join(stale)}")
         print("  Run build-and-upload.sh (gold) or the silver upload pathway to sync.")
