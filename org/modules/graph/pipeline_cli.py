@@ -21,6 +21,7 @@ Data sources (authoritative, not heuristic):
 
 import argparse
 import json
+import os
 import re
 import sys
 from pathlib import Path
@@ -444,6 +445,11 @@ def cmd_deployed(args):
         else script_filter_lower
     )
 
+    aws_env = os.environ.copy()
+    aws_env.setdefault("AWS_EC2_METADATA_DISABLED", "true")
+    aws_env.setdefault("AWS_METADATA_SERVICE_NUM_ATTEMPTS", "1")
+    aws_env.setdefault("AWS_PAGER", "")
+
     def _check_one(layer_tag, label, local_path, s3_key):
         """Returns (status, info_lines). Prints nothing -- caller does."""
         if not local_path.exists():
@@ -456,11 +462,14 @@ def cmd_deployed(args):
                  "--key", s3_key,
                  "--query", "ETag",
                  "--output", "text"],
-                capture_output=True, text=True, timeout=15,
+                capture_output=True, text=True, timeout=15, env=aws_env,
             )
         except subprocess.TimeoutExpired:
-            return "TIMEOUT", ["(aws CLI hung)"]
+            return "TIMEOUT", [f"(aws CLI hung; AWS_EC2_METADATA_DISABLED={aws_env.get('AWS_EC2_METADATA_DISABLED', '')})"]
         if result.returncode != 0:
+            stderr = (result.stderr or "").strip()
+            if stderr:
+                return "MISSING_ON_S3", [stderr]
             return "MISSING_ON_S3", []
         s3_etag = result.stdout.strip().strip('"')
         if local_md5 == s3_etag:
@@ -470,7 +479,8 @@ def cmd_deployed(args):
     print("DEPLOYED STATUS: local repo vs s3://opal-data-bd/code/{gold,silver}/")
     print()
 
-    matched, stale, missing_s3, local_missing = [], [], [], []
+    matched, stale, missing_s3, local_missing, timed_out = [], [], [], [], []
+    checked_any = False
 
     # ---- GOLD layer (DAG-driven) ----
     dag = _build_dag()
@@ -489,6 +499,7 @@ def cmd_deployed(args):
                 continue
             local_path = _WORKSPACE / sio.file_path
             label = f"[GOLD] {sid}"
+            checked_any = True
             status, extras = _check_one("GOLD", label, local_path, f"{S3_GOLD_PREFIX}{sio.filename}")
             print(f"  [GOLD]   {sid:<8} {status:<14} {sio.filename}")
             for line in extras:
@@ -501,6 +512,8 @@ def cmd_deployed(args):
                 missing_s3.append(label)
             elif status == "LOCAL_MISSING":
                 local_missing.append(label)
+            elif status == "TIMEOUT":
+                timed_out.append(label)
 
     # ---- SILVER layer (directory-walk-driven) ----
     silver_files = []
@@ -524,6 +537,7 @@ def cmd_deployed(args):
             if silver_filter_stem and silver_filter_stem not in p.stem.lower():
                 continue
             label = f"[SILVER] {p.name}"
+            checked_any = True
             status, extras = _check_one("SILVER", label, p, f"{S3_SILVER_PREFIX}{p.name}")
             print(f"  [SILVER] {p.name:<48} {status:<14}")
             for line in extras:
@@ -536,16 +550,23 @@ def cmd_deployed(args):
                 missing_s3.append(label)
             elif status == "LOCAL_MISSING":
                 local_missing.append(label)
+            elif status == "TIMEOUT":
+                timed_out.append(label)
 
     print()
     print(f"  Summary: {len(matched)} MATCH, {len(stale)} STALE, "
-          f"{len(missing_s3)} MISSING_ON_S3, {len(local_missing)} LOCAL_MISSING")
+          f"{len(missing_s3)} MISSING_ON_S3, {len(local_missing)} LOCAL_MISSING, "
+          f"{len(timed_out)} TIMEOUT")
     if stale:
         print(f"  STALE: {', '.join(stale)}")
         print("  Run build-and-upload.sh (gold) or the silver upload pathway to sync.")
+    elif timed_out:
+        print(f"  TIMEOUT: {', '.join(timed_out)}")
+        print("  AWS CLI resolution works, but head-object did not return before timeout.")
+        print("  Check caller credentials/network, or rerun with AWS_EC2_METADATA_DISABLED=true in the invoking shell.")
     elif not stale and not missing_s3 and (matched or local_missing):
         print("  All checked scripts are up-to-date on S3.")
-    elif not matched and not stale and not missing_s3 and not local_missing:
+    elif not checked_any:
         print(f"  No scripts matched filter: {raw_filter!r}")
 
 

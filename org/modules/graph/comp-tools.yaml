@@ -47,6 +47,7 @@ tools:
     when: |
       - Before modifying ANYTHING: "what downstream systems will this affect?"
       - Gold script change: "what S3 artifacts, Lambdas, and portal pages does this feed?"
+      - Gold helper fix: "which callers and downstream artifacts depend on this internal function?"
       - Lambda change: "what portal components consume this Lambda's output?"
       - API endpoint change: "which components call this function?"
       - S3 artifact change: "which Lambdas and endpoints read this?"
@@ -55,11 +56,14 @@ tools:
     examples:
       - "comp-blast build_employee_leaderboard"
       - "comp-blast D_00 --function build_timeseries_chart"
+      - "comp-blast _compute_window_decomposition"
+      - "comp-blast _compute_window_flows"
       - "comp-blast opal-partners-data"
       - "comp-blast timeseries_chart"
       - "comp-blast news-trending-analysis"
     cost: "<1s"
     replaces: "Manual audit of S3 readers, Lambda consumers, portal imports, EventBridge targets"
+    note: "Graph now includes top-level Python function nodes plus local caller/callee edges. This means comp-blast can start from internal helpers (for example _compute_window_decomposition) and walk outward to callers, writers, and downstream artifacts instead of requiring grep fallback."
 
   comp-diff:
     command: "comp-diff [--ref HEAD~3] [--staged] [--json]"
@@ -106,11 +110,11 @@ tools:
       overlap: "comp-pipescript overlap D_00 D_03 -- shared S3 artifacts between two scripts. COO MANDATE: run this on every pair of scripts before authoring cross-domain coordination blocks."
       inject: "Inject pipeline edges into comp-trace graph cache (run after comp-build)"
       stats: "Graph stats + warnings for scripts with missing reads/writes"
-      deployed: "comp-pipescript deployed [filter] -- compare local gold + silver scripts against s3://opal-data-bd/code/{gold,silver}/ ETags. Output prefixed [GOLD] / [SILVER]. MATCH/STALE/MISSING_ON_S3/LOCAL_MISSING per script. Filter is substring/filename: gold IDs (D_04, C_08) match gold only; silver filenames (bd_price_update.py, inject_scoped_overrides) match silver only; omit filter for full sweep. Gold scripts come from the DAG; silver scripts are discovered by walking data/black_diamond/scripts/silver/*.py. Resolves aws via shutil.which to avoid PATH-loss in subprocess. Run before any gold or silver run to confirm runner has latest code."
+      deployed: "comp-pipescript deployed [filter] -- compare local gold + silver scripts against s3://opal-data-bd/code/{gold,silver}/ ETags. Output prefixed [GOLD] / [SILVER]. MATCH/STALE/MISSING_ON_S3/LOCAL_MISSING/TIMEOUT per script. Filter is substring/filename: gold IDs (D_04, C_08) match gold only; silver filenames (bd_price_update.py, inject_scoped_overrides) match silver only; omit filter for full sweep. Gold scripts come from the DAG; silver scripts are discovered by walking data/black_diamond/scripts/silver/*.py. Resolves aws via shutil.which, forwards environment into the subprocess, defaults AWS_EC2_METADATA_DISABLED=true, and emits explicit AWS guidance on TIMEOUT. Run before any gold or silver run to confirm runner has latest code."
     cost: "<1s (io/feeds/consumers/overlap); ~2-5s (deployed, makes AWS API calls)"
     data_sources: "lib/s3_layout.py (AST-parsed), gold_dispatch.sh (chain/catalog), each script's imports"
     replaces: "Manual import tracing, grepping s3_layout constants, reading gold_pipeline_script_file_flow.md; manual aws s3 ls + sha256sum for deployment verification"
-    note: "Use this instead of comp-trace for gold script dependency questions. comp-trace covers cross-layer (frontend->Lambda->S3); comp-pipescript covers intra-pipeline (script->S3->script). comp-pipescript io now shows portal consumers for platinum/* keys -- eliminates the 'terminal in graph' coverage gap for platinum publishers."
+    note: "Use this instead of comp-trace for gold script dependency questions. comp-trace covers cross-layer (frontend->Lambda->S3); comp-pipescript covers intra-pipeline (script->S3->script). comp-pipescript io now shows portal consumers for platinum/* keys -- eliminates the 'terminal in graph' coverage gap for platinum publishers. comp-pipescript deployed now fails honestly on AWS runtime hangs instead of collapsing into silent or misleading output."
 
   comp-routes:
     command: "comp-routes <subcommand> [args]"
@@ -170,16 +174,17 @@ tools:
       - "For this page, trace the full path from fetch to gold script" -> comp-platinum page X
       - "What S3 key does this endpoint resolve to, and what gold script writes it?" -> comp-platinum page X
       - "For this S3 key, what routes serve it and what components render it?" -> comp-platinum reverse S3key
+      - "For this payload field path, what artifact/producer/component chain owns it?" -> comp-platinum reverse dotted.path
       - "Audit every ADVI tab in one shot" -> comp-platinum tab-audit
       - Phase 2 tab audits: tab-audit gives you fetches, origins, auth, S3 keys, gold sources, transforms per tab
     subcommands:
       page: "comp-platinum page PartnerAnalytics -- full stack: fetch -> CF -> auth -> S3 key -> gold script, with transforms and JSX refs"
-      reverse: "comp-platinum reverse gold/artifacts/employee_leaderboard.json -- S3 key -> route -> components"
+      reverse: "comp-platinum reverse gold/artifacts/employee_leaderboard.json -- S3 key -> route -> components; also accepts dotted payload paths like rfs.decomposition_max.nna and resolves them back to artifact + producer + component"
       tab-audit: "Audit every ADVI tab: fetches, origin type, auth layers, S3 keys, gold sources, transform count"
       summary: "One-line per component: fetch count, chain count, S3 direct vs API GW, auth coverage"
     cost: "<2s (chains comp-transform + comp-routes + comp-pipescript)"
     replaces: "Spawning 2+ Explore agents to manually trace page -> API -> infra -> gold scripts (~200k tokens)"
-    note: "This is the composition tool. Use it for full end-to-end page audits. For targeted questions (just pipeline, just serving, just transforms), use the individual tools."
+    note: "This is the composition tool. Use it for full end-to-end page audits. For targeted questions (just pipeline, just serving, just transforms), use the individual tools. reverse now supports both artifact keys and rendered payload field paths, which closes the nested-key consumer-enumeration gap that previously forced portal grep fallback."
 
   comp-cache:
     command: "comp-cache <subcommand> [args]"

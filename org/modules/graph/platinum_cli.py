@@ -16,6 +16,7 @@ Usage:
 
 import argparse
 import json
+import re
 import sys
 from pathlib import Path
 
@@ -27,6 +28,15 @@ sys.path.insert(0, str(_WORKSPACE))
 from org.modules.graph.extract_transforms import build_component_dataflow, build_all_dataflows
 from org.modules.graph.extract_routes import build_routing_table
 from org.modules.graph.extract_pipeline import build_pipeline_dag
+
+_FIELD_QUERY_ARTIFACT_SUFFIXES = ('.json', '.parquet', '.csv')
+_FIELD_QUERY_SKIP_PARTS = {
+    'map', 'filter', 'find', 'some', 'every', 'reduce', 'forEach', 'flatMap',
+    'sort', 'slice', 'length', 'includes', 'indexOf', 'keys', 'values',
+    'entries', 'push', 'pop', 'concat', 'join', 'toString', 'toFixed',
+    'toLocaleString', 'trim', 'toLowerCase', 'toUpperCase', 'startsWith',
+    'endsWith', 'replace', 'split', 'match', 'search', 'charAt', 'substring',
+}
 
 
 def _find_component(query: str) -> Path | None:
@@ -238,13 +248,145 @@ def _find_producer_function(sio, write_key: str) -> str:
     return ""
 
 
-def cmd_reverse(args):
-    """Reverse lookup: S3 key -> routes -> components."""
-    s3_key = args.s3_key
-    rt = build_routing_table(_WORKSPACE)
-    dag = build_pipeline_dag(_WORKSPACE)
-    dag.build_index()
+def _normalize_field_path(path: str) -> str:
+    normalized = re.sub(r'\?\.|[\[\]?]', '.', path)
+    parts = [p for p in normalized.split('.') if p and p.isidentifier() and p not in _FIELD_QUERY_SKIP_PARTS]
+    return '.'.join(parts)
 
+
+def _looks_like_artifact_query(query: str) -> bool:
+    if '/' in query:
+        return True
+    return query.endswith(_FIELD_QUERY_ARTIFACT_SUFFIXES)
+
+
+def _build_field_reverse_index(rt) -> dict[str, list[dict]]:
+    route_by_endpoint = {r.endpoint_function: r for r in rt.routes}
+    index: dict[str, list[dict]] = {}
+
+    for flow in build_all_dataflows(_WORKSPACE):
+        all_fields = {_normalize_field_path(f) for f in flow.fields_used()}
+        all_fields.discard("")
+
+        for fb in flow.fetches:
+            if not fb.data_variable:
+                continue
+
+            route = route_by_endpoint.get(fb.fetch_function)
+            if not route:
+                continue
+
+            data_var = fb.data_variable
+            prefix = f"{data_var}."
+            matched_fields = []
+            for field in all_fields:
+                if field == data_var:
+                    continue
+                if field.startswith(prefix):
+                    matched_fields.append(field[len(prefix):])
+                    continue
+                parts = field.split('.')
+                if data_var in parts:
+                    suffix = '.'.join(parts[parts.index(data_var) + 1:])
+                    if suffix:
+                        matched_fields.append(suffix)
+
+            for field_path in sorted(set(f for f in matched_fields if f)):
+                entry = {
+                    "component": flow.component_name,
+                    "endpoint_function": fb.fetch_function,
+                    "url_pattern": route.url_pattern,
+                    "cf_behavior": route.cf_behavior,
+                    "cf_origin": route.cf_origin,
+                    "cf_origin_type": route.cf_origin_type,
+                    "auth_edge": route.auth_edge,
+                    "auth_api_gw": route.auth_api_gw,
+                    "s3_key": route.s3_key,
+                    "lambda_handler": route.lambda_handler,
+                }
+                index.setdefault(field_path, []).append(entry)
+
+    return index
+
+
+def _print_field_reverse(query: str, rt, dag):
+    index = _build_field_reverse_index(rt)
+    query_normalized = _normalize_field_path(query)
+    matches = sorted({
+        field_path for field_path in index
+        if field_path == query_normalized
+        or field_path.endswith(f".{query_normalized}")
+        or query_normalized.endswith(f".{field_path}")
+        or query_normalized in field_path
+    })
+
+    print(f"REVERSE LOOKUP: {query}")
+    print()
+
+    if not matches:
+        print("  PRODUCER:")
+        print("    (no payload-path matches found)")
+        print()
+        print("  SERVED VIA:")
+        print("    (no matching routes found)")
+        print()
+        print("  CONSUMED BY:")
+        print("    (no components found)")
+        return
+
+    entries = []
+    for field_path in matches:
+        for entry in index[field_path]:
+            entries.append((field_path, entry))
+
+    print("  PRODUCER:")
+    seen_s3 = set()
+    printed_producer = False
+    for _, entry in entries:
+        s3_key = entry.get("s3_key", "")
+        if not s3_key or s3_key in seen_s3:
+            continue
+        seen_s3.add(s3_key)
+        print(f"    field path: {query_normalized} -> {s3_key}")
+        _print_gold_source(dag, s3_key, indent=6)
+        printed_producer = True
+    if not printed_producer:
+        print("    (no S3-backed producer resolved)")
+
+    print()
+    print("  SERVED VIA:")
+    seen_routes = set()
+    for field_path, entry in entries:
+        route_key = (entry["endpoint_function"], entry["url_pattern"], field_path)
+        if route_key in seen_routes:
+            continue
+        seen_routes.add(route_key)
+        auth_tag = []
+        if entry.get("auth_edge"):
+            auth_tag.append("edge")
+        if entry.get("auth_api_gw"):
+            auth_tag.append("apigw")
+        auth_str = "+".join(auth_tag) if auth_tag else "none"
+        print(f"    {entry['endpoint_function']}: {entry['url_pattern']}")
+        print(f"      field: {field_path}")
+        print(f"      CF: {entry['cf_behavior']} -> {entry['cf_origin']} ({entry['cf_origin_type']}, auth={auth_str})")
+        if entry.get("lambda_handler"):
+            print(f"      lambda: {entry['lambda_handler']}")
+        if entry.get("s3_key"):
+            print(f"      s3 key: {entry['s3_key']}")
+
+    print()
+    print("  CONSUMED BY:")
+    seen_components = set()
+    for field_path, entry in entries:
+        comp_key = (entry["component"], field_path, entry["endpoint_function"])
+        if comp_key in seen_components:
+            continue
+        seen_components.add(comp_key)
+        print(f"    {entry['component']} via {entry['endpoint_function']} ({field_path})")
+
+
+def _print_artifact_reverse(s3_key: str, rt, dag):
     print(f"REVERSE LOOKUP: {s3_key}")
     print()
 
@@ -316,7 +458,6 @@ def cmd_reverse(args):
     # aggregate response (e.g. platinum/firm/dashboard.json fetched by getPlatinumFirmDashboard).
     # Search for endpoints whose URL shares the same directory prefix.
     if not component_names and s3_key:
-        import os
         key_dir = s3_key.rsplit('/', 1)[0]  # e.g. platinum/firm
         sibling_fns: list[str] = []
         for fn_name, ep in rt.endpoints.items():
@@ -351,6 +492,18 @@ def cmd_reverse(args):
         if ep.url_template and rt.resolve_s3_key(ep.url_template.split('{')[0])
     )):
         print("    (no components found -- check Lambda@Edge handlers for this key)")
+
+
+def cmd_reverse(args):
+    """Reverse lookup: S3 key OR payload field path -> routes -> components."""
+    query = args.s3_key
+    rt = build_routing_table(_WORKSPACE)
+    dag = build_pipeline_dag(_WORKSPACE)
+    dag.build_index()
+    if _looks_like_artifact_query(query):
+        _print_artifact_reverse(query, rt, dag)
+    else:
+        _print_field_reverse(query, rt, dag)
 
 
 def cmd_tab_audit(args):

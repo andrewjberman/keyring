@@ -12,6 +12,7 @@ Zero API calls. Pure regex extraction.
 
 from __future__ import annotations
 
+import ast
 import re
 from pathlib import Path
 
@@ -87,6 +88,41 @@ def _run_order(filename: str) -> int:
 # ---------------------------------------------------------------------------
 
 _PYTHON_DEF = re.compile(r'^def\s+(\w+)\s*\(', re.MULTILINE)
+
+
+def _extract_function_graph(content: str) -> tuple[list[str], dict[str, set[str]]]:
+    """Extract top-level function names and local call edges within one file."""
+    try:
+        tree = ast.parse(content)
+    except SyntaxError:
+        return [], {}
+
+    function_nodes: list[str] = []
+    top_level_defs: list[ast.FunctionDef | ast.AsyncFunctionDef] = []
+    for node in tree.body:
+        if isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef)):
+            function_nodes.append(node.name)
+            top_level_defs.append(node)
+
+    local_names = set(function_nodes)
+    call_map: dict[str, set[str]] = {name: set() for name in function_nodes}
+
+    class _CallCollector(ast.NodeVisitor):
+        def __init__(self):
+            self.calls: set[str] = set()
+
+        def visit_Call(self, node: ast.Call):
+            if isinstance(node.func, ast.Name) and node.func.id in local_names:
+                self.calls.add(node.func.id)
+            self.generic_visit(node)
+
+    for fn_node in top_level_defs:
+        collector = _CallCollector()
+        collector.visit(fn_node)
+        collector.calls.discard(fn_node.name)
+        call_map[fn_node.name] = collector.calls
+
+    return function_nodes, call_map
 
 # ---------------------------------------------------------------------------
 # Constant resolution (e.g., TIMESERIES_CHART -> 'gold/artifacts/timeseries_chart.json')
@@ -284,6 +320,35 @@ def extract_s3_edges(graph: TraceGraph, workspace_root: Path):
                 file_path=rel_path,
                 run_order=order,
             ))
+
+            # Function-level nodes + local call graph.
+            function_names, call_map = _extract_function_graph(content)
+            for func_name in function_names:
+                func_node_id = f"gold:{py_file.stem}:{func_name}"
+                graph.add_node(Node(
+                    id=func_node_id,
+                    node_type="GOLD_SCRIPT",
+                    label=f"{py_file.stem}:{func_name}",
+                    file_path=rel_path,
+                    function_name=func_name,
+                    run_order=order,
+                ))
+
+            for caller, callees in call_map.items():
+                caller_node_id = f"gold:{py_file.stem}:{caller}"
+                for callee in sorted(callees):
+                    callee_node_id = f"gold:{py_file.stem}:{callee}"
+                    graph.add_edge(Edge(
+                        source=caller_node_id,
+                        target=callee_node_id,
+                        edge_type="CALLS",
+                    ))
+                    # Reverse edge lets comp-blast on a helper walk toward its callers.
+                    graph.add_edge(Edge(
+                        source=callee_node_id,
+                        target=caller_node_id,
+                        edge_type="CALLED_BY",
+                    ))
 
             # Builder-to-save mapping: build_X() -> _save_json(var, CONSTANT)
             builder_writes = _extract_builder_to_save_mapping(content, constants)

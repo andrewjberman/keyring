@@ -42,6 +42,8 @@ EDGE_TYPES = {
     "FETCHES",        # component -> endpoint URL
     "READS_S3",       # Lambda/script reads from S3 path
     "WRITES_S3",      # script writes to S3 path
+    "CALLS",          # caller function -> callee function
+    "CALLED_BY",      # callee function -> caller function (blast-radius walk)
     "TRIGGERS",       # EventBridge -> Lambda
     "ROUTES",         # CloudFront -> origin
 }
