@@ -612,3 +612,10 @@ RESOLUTION: fixed in `614d4c28` (`comp-platinum reverse empty-vs-broken disambig
 | 2026-04-15 22:08 | 1.0.0_SA_CTO | ADVI_49EXEC PRD | comp-cache collisions | `comp-cache collisions` | 3 existing collisions on page (timeseries-overview, firm-leaderboard, partner-analytics) all deliberate | New key 'advisor-exec-summary' chosen unique; per-TO mandate added |
 | 2026-04-15 22:08 | 1.0.0_SA_CTO | ADVI_49EXEC PRD | comp-blast | `comp-blast SummaryCard` | No nodes (inline component) | Blast on parent AdvisorPublicProfile instead; documented PRD limitation |
 | 2026-04-15 22:08 | 1.0.0_SA_CTO | ADVI_49EXEC PRD | comp-routes auth-map | `comp-routes auth-map | grep advisor` | /api/scoped/advisor-intelligence/*.json -> S3-opal-data-bd (existing) | No new CloudFront behavior needed |
+| 2026-04-15 | 0.4.0_DS_ClientPlatform | ADVI_ROLLUP.IN-1.ds-incremental-feasibility-survey | comp-pipescript | comp-pipescript io B_00.canonical_holdings.py | FAIL |
+| 2026-04-15 | 0.4.0_DS_ClientPlatform | ADVI_ROLLUP.IN-1.ds-incremental-feasibility-survey | comp-pipescript | comp-pipescript io B_00 | PASS |
+| 2026-04-15 | 0.4.0_DS_ClientPlatform | ADVI_ROLLUP.IN-1.ds-incremental-feasibility-survey | comp-pipescript | comp-pipescript io B_01 | PASS |
+| 2026-04-15 | 0.4.0_DS_ClientPlatform | ADVI_ROLLUP.IN-1.ds-incremental-feasibility-survey | comp-pipescript | comp-pipescript io B_01b | PASS |
+| 2026-04-15 | 0.4.0_DS_ClientPlatform~C | ADVI_ROLLUP.D00c-T1 | comp-pipescript | comp-pipescript io D_00c | PASS | account_team + advisor_fee_detail + role_aua reads; employee_leaderboard.json write |
+| 2026-04-15 | 0.4.0_DS_ClientPlatform~C | ADVI_ROLLUP.D00c-T1 | comp-blast | comp-blast D_00c | WARN | Script-node lookup empty; no new reader (path b doc-only) |
+| 2026-04-15 | 0.4.0_DS_ClientPlatform~C | ADVI_ROLLUP.D00c-T1 | aws s3 ls/cp | folder list + missing advisor summary spot-check | PASS | 11 missing classified (4 sentinels + 7 zero-current); confirmed tagged_aua=0 |
