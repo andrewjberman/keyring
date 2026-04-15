@@ -1,0 +1,28 @@
+{
+  "project_code": "COMP_LEARNS",
+  "macro_code": "COMP",
+  "name": "Autoresearch-Style Compiler Bootstrap Pipeline",
+  "description": "Multi-session research project: build a self-iterating AI pipeline that reads an unfamiliar system, segments it structurally, emits candidate compilers (extractors + graph builders + query CLIs), measures them against a fixed ground-truth harness, and iterates until query-pass-rate plateaus. Modeled on Karpathy's autoresearch three-file separation (fixed harness / mutable target / slow-evolving protocol). Implementation root: `comp/`. Transferable artifact: `comp/program.md` accrues into the generalized 'how to build a compiler for an arbitrary system' skill across target runs.",
+  "prds": [
+    {"path": "docs/architecture/COMP_LEARNS_PILOT.md", "label": "COMP_LEARNS pilot PRD",                                                "date": "2026-04-15"},
+    {"path": "docs/briefs/compiler-tools-engineer-onboarding-2026-04-15.md", "label": "Context brief — existing comp-* philosophy",       "date": "2026-04-15"}
+  ],
+  "upstream_influence": [
+    "docs/architecture/COMPILER_INPUT_CANONICALIZATION.md",
+    "docs/architecture/COMPILER_SILVER_SCOPE_FULL.md",
+    "docs/architecture/COMPILER_BLAST_SCRIPT_ARTIFACT_EDGES.md",
+    "docs/architecture/COMPILER_IAM_LAMBDA_PARSER.md",
+    "docs/architecture/COMPILER_VALIDATE_COVERAGE_AND_PASSTHROUGH.md",
+    "docs/architecture/COMPILER_LINT_COVERAGE_PASS.md"
+  ],
+  "inspiration": "C:/Users/AndrewBerman/Downloads/autoresearch-master.zip (Karpathy). Three-file pattern: prepare.py (fixed harness), train.py (agent mutates), program.md (human-tuned protocol).",
+  "root_folder": "comp/",
+  "status": "active",
+  "phase": "Phase 0 — registration + scaffolding. Next: pick first benchmark target (candidates: httpx, a small internal service, this repo), author ground-truth harness (~50 queries) by hand, run first iteration.",
+  "blocking": "First benchmark target selection + ~4-6 hrs of human harness authoring before any agent loop can run honestly.",
+  "created": "2026-04-15",
+  "pods": ["0.4", "0.7"],
+  "pipeline": "none (research project)",
+  "thread_counter": 0,
+  "threads": []
+}

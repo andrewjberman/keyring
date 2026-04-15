@@ -89,6 +89,8 @@ Assign the DE/DS/DT of the primary pod, or the AE for pipeline-only projects.
 | `SXPL` | SmartX pipeline | `0.6.0_AE_PartnerETL` |
 | `SHIF` | Shared infrastructure | `0.7.0_AE_CloudOps` |
 | `AUTH` | Portal Authentication, Authorization, and Identity | `0.7.0_AE_CloudOps` (infra) + `0.4.0_DT_ClientPlatform` (app layer) |
+| `CDRS` | Cloud Resources (account-wide AWS inventory + Terraform-import catch-up; CF/Lambda/DynamoDB/S3 gaps) | `0.7.0_AE_CloudOps` (infra) + `0.4.0_DT_ClientPlatform` (lane partner) |
+| `COMP` | Compiler tools — generation, iteration, testing, generalization. Covers the `comp-*` stack plus the autoresearch-style bootstrap pipeline for generating compilers over arbitrary target systems. Root implementation lives under `comp/`. | `1.0.0_SA_CTO` (protocol) + `0.7.0_AE_CloudOps` (tools infra) |
 
 ---
 
