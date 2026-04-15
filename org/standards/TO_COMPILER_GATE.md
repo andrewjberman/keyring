@@ -110,8 +110,35 @@ The pre-write check is the most important. Agents that skip it are building blin
 
 ---
 
+## Rule 7: Acceptance Criteria Flex Requires CTO Pre-Flag (Non-Negotiable)
+
+**Effective:** 2026-04-15 (RF01 incident — COO unilaterally reinterpreted two `<expect>` clauses during acceptance without surfacing the call).
+
+Any time a validator (COO, CTO, or peer agent) is about to accept a TO with ANY of the following deviations from the authored `<acceptance_criteria>` or `<compiler_tools_mandate>`, they MUST send a one-line MCP heads-up to the CTO BEFORE flipping `<status>complete</status>`:
+
+- A `<run>` was skipped (and not re-run retroactively).
+- The observed output does not match the `<expect>` clause exactly, but is being accepted on a reinterpretation.
+- An acceptance criterion is being waived, downgraded ("document, not pass/fail"), or substituted with a different observation.
+- A criterion is being deferred to a follow-up TO instead of resolved in place.
+
+**Format of the heads-up MCP:**
+```
+Subject: ACCEPTANCE FLEX — {TO_ID} — {one-line summary}
+Body: Original <expect>: "..."
+      Substituted observation: "..."
+      Reasoning: ...
+      Proceeding to accept unless you redline within 5 min.
+```
+
+**Closeout requirement:** when the TO is finally marked complete, the completion comment MUST cite (a) what was reinterpreted, (b) why it was acceptable, (c) the original `<expect>` text and the substituted observation. One paragraph minimum. The audit corpus depends on visibility into where criteria flex.
+
+**Why this rule exists:** Loose-prose acceptance is the failure mode that compiler-tool corpus discipline is designed to prevent. If validators silently bend `<expect>` clauses, the auto-appended log rows in `org/compiler-tools-log.md` become noise. Andrew called this out 2026-04-15 after the RF01 acceptance reinterpretation. "If the rule is that important make sure it is written in stone."
+
+---
+
 ## Enforcement
 
 - COO reviews every TO completion report. If no compiler check is logged, the TO is not accepted as complete.
 - CTO flags cross-domain resources during PRD decomposition. If a PRD has no `comp-blast` run before TO generation, the PRD is not accepted.
 - Agents that repeatedly skip these checks will have their TOs decomposed into smaller, more constrained units in future waves.
+- **Rule 7 (acceptance flex pre-flag):** missing pre-flag MCP = the TO acceptance is rejected and reverted to `<status>pending</status>` until the heads-up is filed and CTO has had the 5-minute redline window.

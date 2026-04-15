@@ -27,6 +27,8 @@ Hard rules:
 
 A TO failing any of the above is structurally invalid — DO NOT dispatch to the agent. Reformat first.
 
+**Acceptance flex pre-flag (TO_COMPILER_GATE Rule 7, locked 2026-04-15):** before flipping ANY TO to `<status>complete</status>` where you skipped a `<run>`, accepted output that doesn't match `<expect>` exactly, waived/downgraded a criterion, or deferred a criterion to a follow-up TO — send the CTO a one-line MCP heads-up FIRST. Format: `ACCEPTANCE FLEX — {TO_ID}` subject; body cites original `<expect>`, substituted observation, reasoning, "proceeding to accept unless you redline within 5 min." Closeout comment on the TO must cite the same triple (original / substituted / reasoning). No silent acceptance flex on locked-discipline TOs.
+
 ---
 
 ## On Launch — Ground Truth Reconciliation
