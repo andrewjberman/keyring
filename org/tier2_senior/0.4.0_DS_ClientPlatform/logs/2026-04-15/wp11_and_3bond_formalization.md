@@ -58,3 +58,12 @@ Path correction vs TO wording: both target scripts live under `data/black_diamon
 
 - Commit SHA + S3 etags recorded below after push+upload.
 - Signal COO on commit + 49F delta confirmation after tonight's daily run.
+
+## Deployment record
+
+- Commit: `864b6d7a` (author `0.4.0_DS_ClientPlatform~D`)
+- Pushed: origin/CLOUD `21c0637f..864b6d7a` at 2026-04-15 12:26 ET
+- S3 uploads (2026-04-15 16:27 UTC / 12:27 ET):
+  - `s3://opal-data-bd/code/silver/bd_price_update.py` — etag `72521f9a1dfefd8e0ea4708e561a27b2`
+  - `s3://opal-data-bd/code/silver/inject_scoped_overrides.py` — etag `13915b2cee5fa7e809fbeb6751c10f28`
+- Next natural trigger: `bd-price-update` daily run at 4:51 PM ET 2026-04-15. Will read the new `_SCOPED_PRICE_OVERRIDES` and emit `bd_txn_price`-sourced canonical rows for BNP / WFC / NEWMONT on the target date. 49F AUA delta measured post-run.
