@@ -4,8 +4,15 @@
   "name": "Autoresearch-Style Compiler Bootstrap Pipeline",
   "description": "Multi-session research project: build a self-iterating AI pipeline that reads an unfamiliar system, segments it structurally, emits candidate compilers (extractors + graph builders + query CLIs), measures them against a fixed ground-truth harness, and iterates until query-pass-rate plateaus. Modeled on Karpathy's autoresearch three-file separation (fixed harness / mutable target / slow-evolving protocol). Implementation root: `comp/`. Transferable artifact: `comp/program.md` accrues into the generalized 'how to build a compiler for an arbitrary system' skill across target runs.",
   "prds": [
-    {"path": "docs/architecture/COMP_LEARNS_PILOT.md", "label": "COMP_LEARNS pilot PRD",                                                "date": "2026-04-15"},
-    {"path": "docs/briefs/compiler-tools-engineer-onboarding-2026-04-15.md", "label": "Context brief — existing comp-* philosophy",       "date": "2026-04-15"}
+    {"path": "docs/architecture/COMP_LEARNS_PILOT.md",                    "label": "COMP_LEARNS pilot PRD (meta-project)",                       "date": "2026-04-15"},
+    {"path": "docs/architecture/COMP_LEARNS_OPERATIONAL_MANDATE.md",      "label": "Operational mandate (COO) — robust loop mechanics",          "date": "2026-04-15"},
+    {"path": "docs/architecture/COMP_LEARNS_QUALITATIVE_FRAMEWORK.md",    "label": "Qualitative framework (CTO) — benchmark epistemics",         "date": "2026-04-15"},
+    {"path": "docs/architecture/COMP_LEARNS_HARNESS_FRAMEWORK.md",        "label": "PRD #1 — shared harness framework",                          "date": "2026-04-15"},
+    {"path": "docs/architecture/COMP_LEARNS_HTTPX_TARGET.md",             "label": "PRD #2 — httpx benchmark target",                            "date": "2026-04-15"},
+    {"path": "docs/architecture/COMP_LEARNS_COMPILER_BASELINE.md",        "label": "PRD #3 — v0 compiler baseline",                              "date": "2026-04-15"},
+    {"path": "docs/architecture/COMP_LEARNS_LOOP_ORCHESTRATOR.md",        "label": "PRD #4 — iteration runner (subsumed by op-mandate)",          "date": "2026-04-15"},
+    {"path": "docs/architecture/COMP_LEARNS_ADVERSARIAL_QUERIES.md",      "label": "PRD #5 — Phase 4 adversarial compound queries",              "date": "2026-04-15"},
+    {"path": "docs/briefs/compiler-tools-engineer-onboarding-2026-04-15.md", "label": "Context brief — existing comp-* philosophy",              "date": "2026-04-15"}
   ],
   "upstream_influence": [
     "docs/architecture/COMPILER_INPUT_CANONICALIZATION.md",
