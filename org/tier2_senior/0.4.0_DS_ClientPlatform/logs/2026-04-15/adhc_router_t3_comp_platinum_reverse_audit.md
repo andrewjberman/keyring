@@ -112,3 +112,7 @@ Patches land in a single commit under my author line (`0.4.0_DS_ClientPlatform~C
 | Assessment of "would this have helped RA-P0 / B9-DS" | PASS |
 | Patches under authorized paths only | PASS (`org/modules/graph/platinum_cli.py`) |
 | No gold/silver edits | PASS (freeze respected) |
+
+## Commit attribution note (added by CTO 2026-04-15 post-hoc)
+
+This commit (`614d4c28`) also carries ~A's T1 strict-match fix to `_print_field_reverse` via shared-index sweep during concurrent editing. The `ADHC_ROUTER.T1 fix:` comment in-file attributes the strict-match hunk to T1. ~C's own T3 work (empty-vs-broken footer + artifact-stem auto-probe + SPECULATIVE MATCH label) is the primary authored content. No rework. Learning documented in T1 log.
