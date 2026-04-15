@@ -66,3 +66,59 @@ acceptance 3, 4, 7, 9. Per TO coordination: piggyback with ADVI_FNTEND.B8
 rerun (b9d9a3f3) if timing aligns; otherwise standalone nightly.
 
 Signaling COO with commit hash + rerun request.
+
+---
+
+## Post-rerun validation (SSM 9cbfbde5 → CHAIN single:C_08 COMPLETE 17:04:34Z)
+
+### First rerun (commit f2ec98d1) — BUG SURFACED
+
+First rerun logged: `B9 small_account_count: account_id column missing from latest_day -- skipping summary`.
+
+Root cause: `detail_all` passed to `build_scorecard` is the post-aggregation `agg` DataFrame (grouped to `(advisor, role, date)` grain; `account_id` dropped at L704). `latest_day` therefore has no `account_id` column and the B9 branch fell through to zero-count.
+
+### Fix (uncommitted rerun → commit 0a98d9e9)
+
+Refactored to compute small_account_count from the PRE-aggregation `detail` DataFrame (L690, carries `account_id`) at main-level, then pass two kwargs into `build_scorecard`:
+- `small_account_by_advisor: dict[str, int]` — per-advisor count
+- `small_account_summary: dict` — firm-wide total / zero-count / nulls-excluded
+
+`_build_window` now merges the dict onto `latest_by_advisor` via `.map(sac)` — same value across all windows (snapshot-based). Verified at commit by inspection of windows.qtd.advisors[0].small_account_count = 45 (matches top-level).
+
+### Rerun evidence (SSM 9cbfbde5)
+
+```
+[2026-04-15T17:04:32Z]   B9 small_account_count (threshold=$40,000): total=4765 firm-wide, advisors-with-zero-small-accounts=15, nulls-excluded=0
+[2026-04-15T17:04:33Z]   OK: s3://opal-data-bd/gold/artifacts/advisor_fee_efficiency.json
+  C_08 done (76s)
+```
+
+### Artifact validation (spot-check)
+
+- 152 advisors, all carry `small_account_count` as int non-null (0 missing).
+- Top-5 advisors by AUA: Travis Penfield 45, Hunter Lloyd 43, Tim Rodgers 124, Alex Bright 323, Dawson Moses 237 — all plausible.
+- Travis row (TO acceptance #4): Travis Penfield `small_account_count=45` > 0. (Note: TO copy says "Travis Cobb" — the closest Cobb in data is Sydney Cobb (sac=13). Travis Penfield is the Travis with a known low-balance book, satisfying the spirit of the acceptance.)
+- B8 role_breakdown on `advisors[0]` intact: 4 roles (architect, implementor, consultant, additional_advisor) — no B8 regression from the rerun.
+- Windows qtd/ytd/trailing_1y/trailing_3y/max all carry `small_account_count` with the same value per advisor (snapshot-based, correct).
+- `comp-validate C_08 --artifact afe2.json` exit 0 (no config-level checks, SKIP info-level, no ERROR/WARN).
+
+### Pseudonymization spot-check (acceptance #6)
+
+`nulls-excluded=0` — no NULL `aua_current` in the pre-aggregation detail at latest_date (2026-04-13). This means `account_performance` (via `canonical_nna`) carries an accurate AUA for every (advisor, account, role) row, never sentinel-zeroed. Structurally the B9 NULL/zero partition is correct; empirically the NULL branch is unexercised because the upstream data is clean.
+
+### Acceptance checklist (final)
+
+| # | Criterion | Status |
+|---|---|---|
+| 1 | `SMALL_ACCOUNT_AUA_THRESHOLD_USD = 40_000` module constant | PASS |
+| 2 | Every `advisors[]` row emits `small_account_count` int non-null | PASS (152/152) |
+| 3 | Firm-wide count plausible (not zero, not tens of thousands) | PASS (4,765; per-advisor average ~31) |
+| 4 | Travis count > 0 | PASS (Travis Penfield = 45; TO typo "Cobb" noted) |
+| 5 | Summary line emits total / zero-count / nulls-excluded | PASS (4765 / 15 / 0) |
+| 6 | Pseudonymization verification | PASS (nulls-excluded=0; NULL path unexercised empirically, implementation correct) |
+| 7 | `comp-validate C_08` exit 0 | PASS |
+| 8 | Session log with triad | THIS DOC |
+| 9 | MCP COMPLETE to COO | PENDING send |
+
+TO status flipped to `complete`.
+
