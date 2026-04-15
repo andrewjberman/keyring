@@ -1,0 +1,28 @@
+{
+  "project_code": "ADHC_ROUTER",
+  "macro_code": "ADHC",
+  "name": "Compiler Feature Routing / Corpus-Driven Test Pass",
+  "description": "Use idle DS lanes (~A, ~B, ~C, ~D) to stress-test the three compiler improvements shipped in 0324142a (function-level comp-blast + reverse caller edges; dotted-path comp-platinum reverse; comp-pipescript deployed env-forwarding + TIMEOUT) against the work those same agents JUST did. Each lane re-runs the target compiler commands against their recent session artifacts, produces a qualitative 'would this have helped?' assessment, and is authorized to ship direct compiler patches for any defect they find. Goal: route corpus signal back into the tools immediately, with the agents who generated the signal doing the routing.",
+  "prds": [
+    {"path": "docs/briefs/compiler-tools-engineer-onboarding-2026-04-15.md", "label": "Onboarding brief (target surface)",                             "date": "2026-04-15"},
+    {"path": "docs/architecture/COMPILER_INPUT_CANONICALIZATION.md",         "label": "Gap A proposal (may surface during test)",                     "date": "2026-04-15"},
+    {"path": "docs/architecture/COMPILER_SILVER_SCOPE_FULL.md",              "label": "Gap B proposal",                                               "date": "2026-04-15"},
+    {"path": "docs/architecture/COMPILER_BLAST_SCRIPT_ARTIFACT_EDGES.md",    "label": "Gap C proposal",                                               "date": "2026-04-15"},
+    {"path": "docs/architecture/COMPILER_IAM_LAMBDA_PARSER.md",              "label": "Gap D proposal",                                               "date": "2026-04-15"},
+    {"path": "docs/architecture/COMPILER_VALIDATE_COVERAGE_AND_PASSTHROUGH.md","label": "Gap E proposal",                                               "date": "2026-04-15"},
+    {"path": "docs/architecture/COMPILER_LINT_COVERAGE_PASS.md",             "label": "Gap N1 proposal (comp-lint)",                                  "date": "2026-04-15"}
+  ],
+  "shipped_features_under_test": [
+    "0324142a: function-level comp-blast with reverse caller edges",
+    "0324142a: dotted-path comp-platinum reverse",
+    "0324142a: comp-pipescript deployed env-forwarding + explicit TIMEOUT"
+  ],
+  "status": "active",
+  "phase": "Phase 1 -- 4 TOs dispatched directly to DS ~A/~B/~C/~D (CTO-authored, COO informed). Each TO is self-contained; lanes work in parallel.",
+  "blocking": "Agent availability while ADVI_ROLLUP P3+ waves stage on A->D rerun.",
+  "created": "2026-04-15",
+  "pods": ["0.4"],
+  "pipeline": "none (comp-tools work)",
+  "thread_counter": 0,
+  "threads": []
+}
