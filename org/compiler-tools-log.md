@@ -425,3 +425,49 @@ Results: PASS | PARTIAL | FAIL | SKIPPED | WARN
 | 2026-04-15 | 0.7.0_AE_CloudOps | comp-pipescript-silver-ext | comp-pipescript | comp-pipescript deployed D_04 (regression check) | PASS -- [GOLD] MATCH preserved |
 | 2026-04-15 | 0.7.0_AE_CloudOps | comp-pipescript-silver-ext | comp-pipescript | comp-pipescript deployed inject_scoped_overrides.py | PASS -- [SILVER] MATCH |
 | 2026-04-15 | 0.7.0_AE_CloudOps | comp-pipescript-silver-ext | comp-pipescript | comp-pipescript deployed (full sweep) | PASS -- 38 MATCH (gold+silver), surfaced [GOLD] C_08 STALE (DS) and [SILVER] upload_bd_assets_backfill.py MISSING_ON_S3 |
+| 2026-04-15 | 0.4.0_DS_ClientPlatform~C | ADVI_ROLLUP.RA-P0 | comp-pipescript | comp-pipescript deployed C_08 | PASS |
+| 2026-04-15 | 0.4.0_DS_ClientPlatform~C | ADVI_ROLLUP.RA-P0 | comp-validate | comp-validate D_04 --artifact /tmp/z0820265531_summary.json | FAIL |
+| 2026-04-15 | 0.4.0_DS_ClientPlatform~C | ADVI_ROLLUP.RA-P0 | comp-validate | comp-validate D_04 --artifact /tmp/travis_summary.json | FAIL |
+| 2026-04-15 | 0.4.0_DS_ClientPlatform~C | ADVI_ROLLUP.RA-P0 | comp-iam | comp-iam service bd-transactions-trigger | PASS |
+| 2026-04-15 | 0.4.0_DS_ClientPlatform~C | ADVI_ROLLUP.RA-P0 | comp-blast | comp-blast silver/transactions | PASS |
+| 2026-04-15 | 0.4.0_DS_ClientPlatform~C | ADVI_ROLLUP.RA-P0 | comp-validate | comp-validate D_04 --artifact /tmp/firm_leaderboard.json | FAIL |
+| 2026-04-15 | 0.4.0_DS_ClientPlatform~C | ADVI_ROLLUP.RA-P0 | comp-iam | comp-iam --help | PASS |
+| 2026-04-15 | 0.4.0_DS_ClientPlatform~C | ADVI_ROLLUP.RA-P0 | comp-pipescript | comp-pipescript io B_00 | PASS |
+| 2026-04-15 | 0.4.0_DS_ClientPlatform~C | ADVI_ROLLUP.RA-P0 | comp-iam | comp-iam services | PASS |
+| 2026-04-15 | 0.4.0_DS_ClientPlatform~C | ADVI_ROLLUP.RA-P0 | comp-pipescript | comp-pipescript io B_01 | PASS |
+| 2026-04-15 | 0.4.0_DS_ClientPlatform~C | ADVI_ROLLUP.RA-P0 | comp-validate | comp-validate C_08 --artifact /tmp/afe2.json | PASS |
+| 2026-04-15 | 0.4.0_DS_ClientPlatform~C | ADVI_ROLLUP.RA-P0 | comp-pipescript | comp-pipescript io D_02 | PASS |
+| 2026-04-15 | 0.4.0_DS_ClientPlatform~C | ADVI_ROLLUP.RA-P0 | comp-blast | comp-blast account_id | PASS |
+| 2026-04-15 | 0.4.0_DS_ClientPlatform~C | ADVI_ROLLUP.RA-P0 | comp-pipescript | comp-pipescript io D_00 | PASS |
+| 2026-04-15 | 0.4.0_DS_ClientPlatform~C | ADVI_ROLLUP.RA-P0 | comp-pipescript | comp-pipescript io D_00b | PASS |
+| 2026-04-15 | 0.4.0_DS_ClientPlatform~C | ADVI_ROLLUP.RA-P0 | comp-pipescript | comp-pipescript io D_00c | PASS |
+| 2026-04-15 | 0.4.0_DS_ClientPlatform~C | ADVI_ROLLUP.RA-P0 | comp-pipescript | comp-pipescript io D_01 | PASS |
+| 2026-04-15 | 0.4.0_DS_ClientPlatform~C | ADVI_ROLLUP.RA-P0 | comp-pipescript | comp-pipescript io D_02 | PASS |
+| 2026-04-15 | 0.4.0_DS_ClientPlatform~C | ADVI_ROLLUP.RA-P0 | comp-pipescript | comp-pipescript io D_04 | PASS |
+| 2026-04-15 | 0.4.0_DS_ClientPlatform~C | ADVI_ROLLUP.RA-P0 | comp-pipescript | comp-pipescript io C_01 | PASS |
+| 2026-04-15 | 0.4.0_DS_ClientPlatform~C | ADVI_ROLLUP.RA-P0 | comp-pipescript | comp-pipescript io C_05 | PASS |
+| 2026-04-15 | 0.4.0_DS_ClientPlatform~C | ADVI_ROLLUP.RA-P0 | comp-pipescript | comp-pipescript io C_08 | PASS |
+| 2026-04-15 | 0.4.0_DE_ClientPlatform | ADVI_ROLLUP.B9 | comp-transform | comp-transform schema-check FeeEfficiencyPanel | PASS |
+| 2026-04-15 | 0.4.0_DE_ClientPlatform | ADVI_ROLLUP.B9 | comp-pipescript | comp-pipescript io D_03 | PASS |
+| 2026-04-15 | 0.4.0_DE_ClientPlatform | ADVI_ROLLUP.B9 | comp-transform | comp-transform schema-check FeeEfficiencyPanel | PASS |
+20260415T172228Z | 0.4.0_DS_ClientPlatform~A | ofc-l2-advisor-distribution | comp-pipescript io D_03 | PIVOT (D_03 does not write summary.json; chose D_04)
+20260415T172228Z | 0.4.0_DS_ClientPlatform~A | ofc-l2-advisor-distribution | comp-pipescript io D_04 | PASS (summary.json in WRITES)
+20260415T172229Z | 0.4.0_DS_ClientPlatform~A | ofc-l2-advisor-distribution | py_compile D_04 | PASS
+20260415T172231Z | 0.4.0_DS_ClientPlatform~A | ofc-l2-advisor-distribution | comp-blast D_04 | PASS (terminal)
+
+## 2026-04-15 - Gap Resolutions (1.0.0_SA_CTO)
+
+| Gap | Tool | Observed | Impact | Candidate Fix |
+|-----|------|----------|--------|---------------|
+| Function-level Python helpers were invisible to graph blast queries | `comp-blast` | `comp-blast _compute_window_decomposition` and `_compute_window_flows` returned `NO_MATCH` despite live callsites in `D_04.client_portal_summary.py` | RF01 and similar TO audits had to fall back to grep, losing caller/downstream artifact visibility | Add top-level Python function nodes plus local caller/callee edges, including reverse caller edges so helper blast walks outward to callers and downstream outputs |
+RESOLUTION: fixed in `0324142a` (`compiler-tools: add function blast, dotted reverse, and honest deployed timeouts`)
+
+| Gap | Tool | Observed | Impact | Candidate Fix |
+|-----|------|----------|--------|---------------|
+| Nested payload field paths had no reverse index | `comp-platinum reverse` | `comp-platinum reverse rfs.decomposition_max.nna` and `.ytd.nna` returned `EMPTY` with no producer, route, or consumer | TO mandate runs could not enumerate ownership of specific platinum subfields and had to fall back to portal grep | Extend reverse lookup to accept dotted payload paths and resolve them through transform field usage back to artifact, producer, route, and consuming component |
+RESOLUTION: fixed in `0324142a` (`compiler-tools: add function blast, dotted reverse, and honest deployed timeouts`)
+
+| Gap | Tool | Observed | Impact | Candidate Fix |
+|-----|------|----------|--------|---------------|
+| Deployed-check runtime failures were ambiguous after AWS subprocess launch | `comp-pipescript deployed` | Prior code fixed PATH lookup, but runtime hangs still surfaced as unhelpful failures and misleading summary text; matched scripts could still end with `No scripts matched filter` | Operators could not distinguish tooling defects from AWS/session defects, and manual diagnosis cost was too high | Forward a controlled AWS env into the subprocess, default `AWS_EC2_METADATA_DISABLED=true`, and emit explicit `TIMEOUT` plus AWS guidance instead of silent or misleading output |
+RESOLUTION: fixed in `0324142a` (`compiler-tools: add function blast, dotted reverse, and honest deployed timeouts`)
