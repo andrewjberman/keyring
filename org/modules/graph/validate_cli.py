@@ -7,15 +7,24 @@ Usage:
     comp-validate D_00 --artifact /tmp/timeseries_chart.json
     comp-validate --list                          # show all configured scripts and checks
     comp-validate D_04 --list                     # show checks for one script
+    comp-validate nna_atomic --schema             # pass-through to standalone validator
+    comp-validate role_aua --artifact /tmp/...    # standalone validator with args
 
 Exits 0 if all ERROR-severity checks PASS.
 Exits 1 if any ERROR-severity check FAILS.
 Exits 0 if only WARN checks fail (prints warnings but does not block).
 
 Config: data/black_diamond/scripts/gold/gold_validate_config.yaml
+
+Standalone validators: data/black_diamond/scripts/validators/validate_{script_id}.py
+When extra flags (e.g. --schema, --certified, --cross-check) are present OR the
+script_id has no config entry, the CLI dispatches to the standalone validator
+via sys.executable with all trailing flags preserved (ADVI_ROLLUP ADHC_ROUTER.T4,
+closes proposal E pass-through gap from COMPILER_VALIDATE_COVERAGE_AND_PASSTHROUGH.md).
 """
 
 import argparse
+import subprocess
 import sys
 from pathlib import Path
 
@@ -25,6 +34,31 @@ _WORKSPACE = _THIS_DIR.parent.parent.parent
 sys.path.insert(0, str(_WORKSPACE))
 
 from org.modules.graph.extract_validate import load_validate_config, run_validate
+
+STANDALONE_VALIDATORS_DIR = _WORKSPACE / "data" / "black_diamond" / "scripts" / "validators"
+
+
+def _find_standalone_validator(script_id: str) -> Path | None:
+    """Return path to data/.../validators/validate_{script_id}.py if it exists."""
+    if not script_id:
+        return None
+    candidate = STANDALONE_VALIDATORS_DIR / f"validate_{script_id}.py"
+    return candidate if candidate.is_file() else None
+
+
+def _dispatch_standalone(validator_path: Path, passthrough_args: list[str]) -> int:
+    """Invoke a standalone validator via sys.executable, forwarding all args verbatim.
+
+    Preserves the validator's exit code and stderr so pass-through is transparent.
+    """
+    print(f"COMP-VALIDATE: dispatching to standalone validator {validator_path.name}")
+    print(f"  args: {passthrough_args}")
+    print()
+    completed = subprocess.run(
+        [sys.executable, str(validator_path), *passthrough_args],
+        cwd=str(_WORKSPACE),
+    )
+    return completed.returncode
 
 
 def cmd_list(args):
@@ -126,11 +160,46 @@ def main():
     parser.add_argument('--list', action='store_true', dest='list_only',
                         help='List all configured checks and exit')
 
-    args = parser.parse_args()
+    # Use parse_known_args() so unknown flags (e.g. --schema, --certified,
+    # --cross-check) become pass-through args for the standalone validator
+    # instead of hard-erroring in argparse (proposal E).
+    args, extras = parser.parse_known_args()
 
-    if args.list_only or not args.artifact:
+    # List path is unchanged.
+    if args.list_only:
         cmd_list(args)
         return
+
+    # Pass-through dispatch: if extras are present OR no --artifact is given
+    # (which the config engine requires), try routing to the standalone
+    # validator at data/black_diamond/scripts/validators/validate_{id}.py.
+    if extras or not args.artifact:
+        standalone = _find_standalone_validator(args.script_id)
+        if standalone is not None:
+            # Reconstruct full arg list for the standalone script: if --artifact
+            # was parsed by us, forward it back; ditto any leftover extras.
+            forward: list[str] = []
+            if args.artifact:
+                forward.extend(['--artifact', args.artifact])
+            forward.extend(extras)
+            sys.exit(_dispatch_standalone(standalone, forward))
+
+        # No standalone validator + no artifact = show config list (existing
+        # behavior for bare `comp-validate` or `comp-validate <id>`).
+        if not args.artifact and not extras:
+            cmd_list(args)
+            return
+
+        # Extras supplied but no route for them: surface clearly rather than
+        # silently dropping flags.
+        print(
+            f"comp-validate: unrecognized arguments {extras} and no standalone "
+            f"validator found for '{args.script_id}' at "
+            f"{STANDALONE_VALIDATORS_DIR.relative_to(_WORKSPACE)}/"
+            f"validate_{args.script_id}.py",
+            file=sys.stderr,
+        )
+        sys.exit(2)
 
     if not args.script_id:
         parser.print_help()
