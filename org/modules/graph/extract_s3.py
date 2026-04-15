@@ -343,12 +343,15 @@ def extract_s3_edges(graph: TraceGraph, workspace_root: Path):
                         target=callee_node_id,
                         edge_type="CALLS",
                     ))
-                    # Reverse edge lets comp-blast on a helper walk toward its callers.
-                    graph.add_edge(Edge(
-                        source=callee_node_id,
-                        target=caller_node_id,
-                        edge_type="CALLED_BY",
-                    ))
+                    # ADHC_ROUTER.T1 fix: previously also added a reverse
+                    # CALLED_BY edge here so `comp-blast helper` could walk
+                    # toward callers. That polluted `downstream()` (which
+                    # indexes by source regardless of edge_type), making the
+                    # blast radius of any function explode to every function
+                    # in the same script via alternating forward+reverse
+                    # traversal. Caller chain now surfaces via `upstream()`
+                    # invoked from cmd_blast when the query resolves to a
+                    # function-grain node (see cli.cmd_blast).
 
             # Builder-to-save mapping: build_X() -> _save_json(var, CONSTANT)
             builder_writes = _extract_builder_to_save_mapping(content, constants)

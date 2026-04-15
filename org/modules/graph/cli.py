@@ -133,17 +133,44 @@ def cmd_blast(args):
         sys.exit(0)
 
     node = matches[0]
-    results = g.downstream(node.id, max_depth=args.depth)
+    downstream = g.downstream(node.id, max_depth=args.depth)
+
+    # ADHC_ROUTER.T1 fix: for function-grain nodes (gold:<script>:<function>),
+    # the "change-impact radius" semantic includes callers — changing a leaf
+    # helper breaks its callers, not the other way around. Surface both
+    # sections so blast on any function (entry point or helper) answers
+    # "what breaks if I change this" correctly.
+    is_function_grain = (
+        node.node_type == "GOLD_SCRIPT"
+        and getattr(node, "function_name", None)
+        and node.id.count(":") >= 2
+    )
+    upstream = g.upstream(node.id, max_depth=args.depth) if is_function_grain else []
 
     if args.json:
         by_type = {}
-        for n, e, d in results:
+        for n, e, d in downstream:
             by_type.setdefault(n.node_type, []).append({
                 "id": n.id, "label": n.label, "depth": d,
+                "direction": "downstream",
+            })
+        for n, e, d in upstream:
+            by_type.setdefault(n.node_type, []).append({
+                "id": n.id, "label": n.label, "depth": d,
+                "direction": "upstream",
             })
         print(json.dumps({"source": node.id, "consumers": by_type}, indent=2))
     else:
-        print(format_blast(node.id, results))
+        print(format_blast(node.id, downstream))
+        if is_function_grain and upstream:
+            print()
+            print(f"CALLER CHAIN (upstream from {node.id}):")
+            seen = set()
+            for n, _, d in upstream:
+                if n.id in seen:
+                    continue
+                seen.add(n.id)
+                print(f"  [{d}] {n.label}")
 
 
 def cmd_diff(args):
