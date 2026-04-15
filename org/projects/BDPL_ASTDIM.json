@@ -10,9 +10,12 @@
       "date": "2026-04-14"
     }
   ],
-  "status": "active",
-  "phase": "Phase 2: W1/W3/W5/W6 COMPLETE (W6 commit d7140701, tag bd-v2.24.0 live; EC2 bd_assets + Lambda bd-asset-dim-trigger + EventBridge cron(10 22 ? * MON-FRI) + SSM opal-bd-asset-dim-download). W7 awaiting natural 22:10 UTC EventBridge fire 2026-04-14; AE verifies tomorrow morning. W2 (super_class recon) + W4 (blend rule) remain DS-pending — Andrew-held.",
-  "blocking": "W7 verification scheduler-driven (22:10 UTC Mon-Fri). W2 + W4 DS held per Andrew.",
+  "status": "merged",
+  "merged_into": "ADVI_ROLLUP",
+  "merged_at": "2026-04-15",
+  "merged_as": "Wave 1 of ADVI_ROLLUP",
+  "phase": "MERGED into ADVI_ROLLUP (Wave 1) on 2026-04-15. Execution state at merge: W1/W3 absorbed by AE and complete; DS W2 super-class recon + W4 dim builder complete-in-fact via commit 39692589; AE W5/W6 complete with bd-v2.24.0 live (d7140701). W7 scheduled-run verification is the only open work. Gold integration W8 remains deferred. Existing BDPL_ASTDIM.W*.md task orders keep their filenames.",
+  "blocking": "W7 verification only.",
   "created": "2026-04-14",
   "pods": ["0.4", "0.6"],
   "pipeline": "bd-pipeline",

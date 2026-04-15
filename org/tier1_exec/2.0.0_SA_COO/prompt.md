@@ -182,18 +182,20 @@ You do NOT produce architecture specs (CTO does). You DO align, route, and track
 
 **Commit only:** Session logs, org docs. Use `--author="2.0.0_SA_COO <2.0.0_SA_COO@opal.agent>"`.
 
-## Pod Delivery Dashboard -- Updated 2026-04-14 (COO session 28)
+## Pod Delivery Dashboard -- Updated 2026-04-15 (COO session 29 startup)
 
 ### Active Projects
 
 | Project | Status | Pending Work |
 |---------|--------|-------------|
-| `ADVI_OFFICE` | **CLOSED 2026-04-14.** portal-v2.1.44. All 9 addendum fixes shipped (W6-W9). W5 + W9b flipped complete session 28 (W5 absorbed into W2, W9b D_04 local run per AE log). | — |
-| `ADVI_REBORN` | **CLOSED 2026-04-14.** W6-003 (1d70ecaf) + W6-004 (0225d359) both complete. 4-cell matrix validated. | — |
-| `ADVI_PROFAU` | .001-.007 ALL COMPLETE 2026-04-14 (portal-v2.1.44). D_02 NNA per-role canonical (d51e44ef) ships tonight nightly — Travis Penfield Lifetime Activity → $253M matching leaderboard. | Q3/Q7 DS TOs pending Andrew direction. |
-| `ADHC_DESIGN` | Phase 2: all pod .0.1/.0.2/.0.3/0.4 TOs COMPLETE. | Attribution RD .001/.015/.024 + Valuation RD .007 still staged — agents not LIVE. Backlog: .033 react-hooks/set-state-in-effect (low priority). |
-| `ADHC_TMSTEL` | P0: PRD complete. | Azure AD app registration (Andrew/IT). Reactivate when credentials available. |
-| `ADVI_INCMTL` | P0: Briefing complete. Low priority. | Production per-script timing profile. DS watermark design. AE dispatch. |
+| `ADVI_ROLLUP` | **Registered 2026-04-15 (post-presentation rollup).** Absorbs `ADVI_FNTEND` (→ Wave 3), `BDPL_ASTDIM` (→ Wave 1), `BDPL_CNPRCS` (→ Waves 0+2); adds Wave 4 (ROLEAUA / CANNNA / SLEEVE structural convergence DS plans), Wave 5 (D_04 RFS window NNA point fix), FE01 (cost-basis year-bucket). 6 waves / 11 items. PRD: `docs/architecture/ADVI_ROLLUP.md`. **Existing staged TOs keep filenames unchanged.** 17 new TOs to author (WP-3, WP-10, WP-11, RF01, RA-P0..P5, CN-P0..P5, SL-P0..P3, FE01). Execution state at registration: Wave 0 tactical held by AUA freeze; Wave 1 W1-W6 complete (`bd-v2.24.0`), W7 remaining; Wave 2 WP-4..WP-9 staged; Wave 3 FE B1-B6/B8 DEV, D7 complete, DS B1-B8 awaiting nightly gold; Wave 4 plans authored; Wave 5 root cause confirmed. | Andrew thaw (Wave 0); COO decomposition of 17 new TOs against the mandatory compiler-run matrix in the PRD §Compiler Tools; nightly gold artifact for Wave 3 comp-validate; ADVI_PROFAU.006 PROD D_04 for Wave 3 B1 rerun. |
+| `ADVI_PROFAU` | .001-.007 ALL COMPLETE 2026-04-14 (portal-v2.1.44). D_02 per-role canonical NNA shipped in commit `d51e44ef` and was queued for the 2026-04-14 nightly cycle; no 2026-04-15 AE verification log is present yet. Sydney Cobb spot-check still waits on post-deploy `/frontend-dev`. | Q3/Q7 DS TOs pending Andrew direction; post-nightly verification of `d51e44ef` not yet logged. |
+| `ADHC_DESIGN` | Phase 2: all pod .0.1/.0.2/.0.3/0.4 TOs COMPLETE. | Attribution RD .001/.015/.024 + Valuation RD .007 still staged — agents not LIVE. Backlog: .033 (low priority). |
+| `ADHC_TMSTEL` | On hold. P0 PRD complete. | Azure AD app registration (Andrew/IT). |
+| `ADVI_INCMTL` | On hold. P0 briefing complete. | Production per-script timing profile. DS watermark design. AE dispatch. |
+
+**Recently merged into `ADVI_ROLLUP` (2026-04-15):** ADVI_FNTEND (→ Wave 3), BDPL_ASTDIM (→ Wave 1), BDPL_CNPRCS (→ Waves 0+2). Task order filenames preserved; only registry ownership moved.
+**Recently closed:** ADVI_OFFICE (portal-v2.1.44, W5+W9b flipped session 28), ADVI_REBORN (W6-003/004, 4-cell matrix validated).
 
 **Closed 2026-04-13:** DEBT_1STRUN, ADVI_OTHDED, ADVI_HDRSPL.
 **Previously closed:** ADVI_PROFIL (portal-v2.1.39), ADVI_49PUSH (bd-v2.23.0), ADVI_GLDRST (silver-prep chain shipped, ops follow-ups carried forward).
@@ -202,37 +204,37 @@ You do NOT produce architecture specs (CTO does). You DO align, route, and track
 
 | Pipeline | Tag |
 |----------|-----|
-| BD | bd-v2.23.0 |
-| Partners API | partners-api-v1.15.6 |
-| Portal Auth | portal-auth-v1.11.11 |
-| Portal | portal-v2.1.39 |
+| BD | bd-v2.24.0 |
+| Partners API | partners-api-v1.15.8 |
+| Portal Auth | portal-auth-v1.12.2 |
+| Portal | portal-v2.1.49 |
 | Yang | yang-v2.3.8 |
 | Market Overview | market-overview-v1.7.0 |
 | News | news-v2.9.5 |
 | Shared Infra | shared-infra-v1.6.0 |
 
-### Operational Notes (04-14 session 28)
+### Operational Notes (04-15 startup reconciliation)
 
-- **ADVI_OFFICE CLOSED** (session 27). W5 + W9b staged→complete flipped session 28.
-- **New ADV donut work (post session 27):** adv-donut-account-count (DS+AE) complete, architect filter (DS) complete, commits 0ce31899 / b7ee381b. `ofc-l2-advisor-distribution` DS TO pending.
-- **D_02 NNA per-role canonical (d51e44ef):** nightly 22:00 UTC will push to platinum tonight.
+- **ADVI_OFFICE CLOSED** (session 27). `ofc-l2-advisor-distribution` remains the single follow-on DS TO.
+- **Startup corrections applied:** ADVI_FNTEND.D7 flipped to complete-in-fact; BDPL_ASTDIM W2/W4 flipped to complete-in-fact; active-project wording corrected from "issuance pending" to execution/staged reality.
+- **D_02 per-role canonical NNA (`d51e44ef`)** is queued on the 2026-04-14 nightly cycle, but no 2026-04-15 AE verification log exists yet.
 - **ec2-auto-shutdown-enforcer:** security-scanner-v1.0.2 live, QA runner AutoShutdown=disabled.
 
-### Pod 4 (ClientPlatform) -- Status as of 2026-04-14 session 27
+### Pod 4 (ClientPlatform) -- Status as of 2026-04-15 startup
 
 | Agent | Last Known Work | Pending |
 |-------|----------------|---------|
-| 0.4.0_DE | Session 2026-04-14: all PROFAU + OFFICE W3/W6 + ADV donut wires shipped. | Standby. |
+| 0.4.0_DE | Session 2026-04-15: ADVI_FNTEND FE B1/B2/B3/B4/B5/B6/B8 shipped to portal DEV; D7 warm-import validated PASS by DT harness and corrected to complete-in-fact. Prior PROFAU + OFFICE W3/W6 + ADV donut wires already shipped. | DT push + `/frontend-dev` acceptance for completed FE wave. |
 | 0.4.0_DT | Session 2026-04-14: OFFICE W4 + W8 both deployed (portal-v2.1.42, portal-v2.1.44). | deployment_map. |
-| 0.4.0_DS | Session 2026-04-14: D_00b fix #3, PROFAU.003 QA, D_02 per-role NNA (d51e44ef), ADV donut account_count + architect filter shipped. | `ofc-l2-advisor-distribution` pending. |
-| 0.4.2_RD | Session 2026-04-14: page_inventory (2aef2949), primary type badge fix. | Standby. |
+| 0.4.0_DS | Session 2026-04-14: D_00b fix #3, PROFAU.003 QA, D_02 per-role NNA (d51e44ef), ADV donut work, BDPL_ASTDIM W2/W4 (`39692589`), and ALL 8 ADVI_FNTEND Wave A B-TOs code-shipped (B1 a56eca56+454ea3c7, B2 3a2f0998, B3 63c23a0f, B4 3ec473e0, B5 f17e8366, B6 2e995266, B7 7708f0c8, B8 b9d9a3f3; plus B2/B5 nest 1aa1c6e8). | All 8 B-TOs awaiting nightly artifact validation; `ofc-l2-advisor-distribution` pending; tactical 3-bond on hold (AUA freeze). |
+| 0.4.2_RD | Session 2026-04-14: ADVI_FNTEND B0 + D6 landed on DEV (`5ea017c`, `814ba34`). | `/frontend-dev` closeout on B0 + D6. |
 
-### Shared Services -- Status as of 2026-04-14 session 27
+### Shared Services -- Status as of 2026-04-15 startup
 
 | Agent | Last Known Work | Pending |
 |-------|----------------|---------|
 | 0.5.0_AE_OpalETL | DEBT_1STRUN .005 COMPLETE (66af3ad5). | infrastructure_inventory. |
-| 0.6.0_AE_PartnerETL | ADVI_OFFICE W2 COMPLETE (D_03+D_04 local). security-scanner-v1.0.2 enforcer fix live. Phase 3 Day 1 diff done (0 violations). | Phase 3 Day 2-5 diffs (nightly, Apr 15-17). infrastructure_inventory. |
+| 0.6.0_AE_PartnerETL | 2026-04-14: BDPL_ASTDIM W5/W6 COMPLETE (`d7140701`, `bd-v2.24.0`) and ADVI_OFFICE W2 COMPLETE; security-scanner-v1.0.2 enforcer fix live. | BDPL_ASTDIM W7 first-fire verification; ADVI_FNTEND B1 rerun staged; Phase 3 Day 2-5 diffs (nightly, Apr 15-17). infrastructure_inventory. |
 | 0.7.0_AE_CloudOps | AUTH_TFIMPT 3/3 COMPLETE (shared-infra-v1.6.0). | infrastructure_inventory. |
 
 **NOTE:** This dashboard is corrected on every COO startup. Do not treat it as

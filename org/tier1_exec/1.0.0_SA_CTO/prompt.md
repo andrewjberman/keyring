@@ -193,19 +193,23 @@ When researching for a PRD, you should:
 
 **Commit only:** `docs/architecture/` specs, `org/projects/` files, session logs, org docs. Use `--author="1.0.0_SA_CTO <1.0.0_SA_CTO@opal.agent>"`.
 
-## Project Status Dashboard -- Updated 2026-04-14 (session 27)
+## Project Status Dashboard -- Updated 2026-04-15 (session 28, post-rollup)
 
 ### Active Projects
 
 | Project | Status | Pending Work |
 |---------|--------|-------------|
 | `ADHC_DESIGN` | All 4 pod Phase 2 branches complete. Pod 0.4 shipped (.028 `3096108`, .032 `f3274f3`). .025 COMPLETE-IN-FACT. Backlog: `.033` react-hooks/set-state-in-effect refactor (16 warnings, low priority). | Attribution .001/.015/.024 (0.2.2_RD) + Valuation .007 (0.2.4_RD) — blocked on those RDs registering. |
-| `ADVI_PROFAU` | .001-.007 ALL COMPLETE 2026-04-14 (portal-v2.1.44). D_02 NNA per-role canonical (d51e44ef) ships tonight nightly. | Q3/Q7 DS TOs pending COO authoring / Andrew direction. |
+| `ADVI_PROFAU` | .001-.007 ALL COMPLETE 2026-04-14 (portal-v2.1.44). D_02 per-role canonical NNA shipped in commit `d51e44ef` and was queued for the 2026-04-14 nightly gold cycle; no 2026-04-15 AE verification log is present yet. Sydney Cobb .007 post-deploy `/frontend-dev` still outstanding. | Q3/Q7 DS TOs pending Andrew direction; post-nightly verification of `d51e44ef` not yet logged. |
+| `ADVI_ROLLUP` | **Registered 2026-04-15.** Absorbs `ADVI_FNTEND` (Wave 3), `BDPL_ASTDIM` (Wave 1), `BDPL_CNPRCS` (Waves 0+2), plus new Wave 4 (ROLEAUA / CANNNA / SLEEVE structural convergence), Wave 5 (D_04 RFS NNA window point fix), and FE01 (cost-basis year-bucket parameterize). 6 waves / 11 items from DS master brief. PRD: `docs/architecture/ADVI_ROLLUP.md`. Existing staged TOs keep filenames; 17 new TOs pending COO decomposition against the mandatory compiler-run matrix in the PRD. | Andrew thaw for Wave 0 tactical; COO decomposition of WP-3/10/11, RF01, RA-P0..P5, CN-P0..P5, SL-P0..P3, FE01; nightly gold artifact for Wave 3 comp-validate; ADVI_PROFAU.006 PROD D_04 for Wave 3 B1 rerun. |
 
-### Recently Completed (this session window)
+### Recently Completed / Merged (this session window)
 
 | Project | Completed | Key Deliverables |
 |---------|-----------|-----------------|
+| `ADVI_FNTEND` | **Merged 2026-04-15** | Absorbed into `ADVI_ROLLUP` as Wave 3. At merge: FE B1-B6/B8 DEV, D7 complete, DS B1-B8 code-shipped awaiting nightly gold artifact. |
+| `BDPL_CNPRCS` | **Merged 2026-04-15** | Absorbed into `ADVI_ROLLUP` as Waves 0 + 2. At merge: tactical 3-bond held by AUA freeze, WP-4..WP-9 TOs staged on DS queue. |
+| `BDPL_ASTDIM` | **Merged 2026-04-15** | Absorbed into `ADVI_ROLLUP` as Wave 1. At merge: W1-W6 complete (`bd-v2.24.0`), only W7 scheduled-run verification remaining. |
 | `ADVI_REBORN` | 2026-04-14 | All waves complete. W6-003 (1d70ecaf) + W6-004 (0225d359). Four-cell matrix validated. |
 | `ADVI_OFFICE` | 2026-04-14 | All waves complete. portal-v2.1.44. W9a DS (416806a5) + W9b AE D_04. OFC Continuous AUA live. |
 
@@ -214,6 +218,7 @@ When researching for a PRD, you should:
 | Agent | TO | Project |
 |-------|-----|---------|
 | `0.4.0_DS_ClientPlatform` | `ofc-l2-advisor-distribution.md` | ADVI_OFFICE follow-on (per-advisor distribution for bell curve) |
+| `0.4.0_DS_ClientPlatform` | `3-bond-phantom-scoped-exceptions.md` | Ad-hoc tactical fix for BDPL_CNPRCS (coded, execution held by 2026-04-14 AUA freeze) |
 
 ### Inactive / On Hold
 
@@ -245,12 +250,12 @@ When researching for a PRD, you should:
 
 | Pipeline | Tag |
 |----------|-----|
-| BD | `bd-v2.23.0` |
-| PartnersAPI | `partners-api-v1.15.6` |
-| PortalAuth | `portal-auth-v1.11.9` |
-| Yang | `yang-v2.3.6` |
+| BD | `bd-v2.24.0` |
+| PartnersAPI | `partners-api-v1.15.8` |
+| PortalAuth | `portal-auth-v1.12.2` |
+| Yang | `yang-v2.3.8` |
 | News | `news-v2.9.5` |
-| MarketOverview | `market-overview-v1.6.9` |
+| MarketOverview | `market-overview-v1.7.0` |
 | DataRefresh | `data-refresh-v2.2.0` |
 | SharedInfra | `shared-infra-v1.6.0` |
 | DeckGeneration | `deck-generation-v1.0.0` |

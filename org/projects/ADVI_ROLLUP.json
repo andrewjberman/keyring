@@ -1,0 +1,35 @@
+{
+  "project_code": "ADVI_ROLLUP",
+  "macro_code": "ADVI",
+  "name": "ADVI Master Rollup — Post-Presentation Edit Queue",
+  "description": "Master project consolidating every outstanding ADVI-surface work item from the 2026-04-15 DS post-presentation master brief. Absorbs ADVI_FNTEND (Wave 3), BDPL_ASTDIM (Wave 1), and BDPL_CNPRCS (Waves 0+2) and adds three structural convergence waves (ROLEAUA role-AUA canonical, CANNNA NNA canonical, SLEEVE sub-custody reconstruction) plus a standalone D_04 RFS window NNA point fix and a trivial FE cost-basis year-bucket parameterization. Eleven work items from the DS brief, organized into six waves. Child PRDs remain authoritative for scope; this project is the coordination layer.",
+  "prds": [
+    {"path": "docs/architecture/ADVI_ROLLUP.md",                                  "label": "ADVI Master Rollup PRD",                                  "date": "2026-04-15"},
+    {"path": "docs/architecture/ADVI_FRONTEND_CORRECTNESS.md",                    "label": "Wave 3 — ADVI FE correctness (ex ADVI_FNTEND)",           "date": "2026-04-14"},
+    {"path": "docs/architecture/BD_ASSET_DIM_PIPELINE.md",                        "label": "Wave 1 — BD asset dim pipeline (ex BDPL_ASTDIM)",         "date": "2026-04-14"},
+    {"path": "docs/architecture/BD_CANONICAL_PRICES_CLASSIFICATION_REFACTOR.md",  "label": "Waves 0+2 — BD canonical prices (ex BDPL_CNPRCS)",        "date": "2026-04-14"},
+    {"path": "docs/architecture/ROLE_AUA_CANONICAL_CONVERGENCE_PLAN.md",          "label": "Wave 4A — ROLEAUA DS plan",                               "date": "2026-04-14"},
+    {"path": "docs/architecture/ADVI_CANNNA_PLAN.md",                             "label": "Wave 4B — CANNNA DS plan",                                "date": "2026-04-15"},
+    {"path": "docs/architecture/ADVI_SLEEVE_PLAN.md",                             "label": "Wave 4C — SLEEVE DS plan",                                "date": "2026-04-15"}
+  ],
+  "source_brief": "org/tier2_senior/0.4.0_DS_ClientPlatform/briefs/2026-04-15_post_presentation_master_summary.md",
+  "absorbs": ["ADVI_FNTEND", "BDPL_ASTDIM", "BDPL_CNPRCS"],
+  "status": "active",
+  "phase": "Phase 0 — rollup registered 2026-04-15. Wave 0 (tactical 3-bond) coded, held by AUA freeze. Wave 1 (ASTDIM) ~90% complete — W7 verification only. Wave 2 (CNPRCS) staged, WP-4..WP-9 TOs on DS queue, WP-3/10/11 still to author. Wave 3 (FNTEND) Phase 1 execution — FE B1-B6/B8 shipped DEV, DS B1-B8 code-shipped, awaiting nightly gold artifact for comp-validate. Wave 4 (ROLEAUA/CANNNA/SLEEVE) plan docs complete, TOs not yet authored. Wave 5 (RFS NNA window) root cause confirmed, TO not yet authored.",
+  "blocking": "Andrew thaw for Wave 0 tactical thaw; COO decomposition of new TOs (WP-3, WP-10, WP-11, RF01, RA-P0..P5, CN-P0..P5, SL-P0..P3, FE01) against the mandatory compiler-run matrix in the PRD; nightly gold artifact refresh for Wave 3 comp-validate; ADVI_PROFAU.006 PROD D_04 for Wave 3 B1 rerun.",
+  "depends_on": ["ADVI_PROFAU"],
+  "depends_on_note": "Only Wave 3 AE B1 rerun depends on ADVI_PROFAU.006 landing on PROD. Other waves are independent.",
+  "created": "2026-04-15",
+  "pods": ["0.4", "0.6"],
+  "pipeline": "bd-pipeline + portal",
+  "waves": [
+    {"id": "W0", "label": "Tactical thaw",                                  "items": ["3-bond scoped-exceptions blocklist", "WP-11 tactical formalization"],      "owners": ["DS"]},
+    {"id": "W1", "label": "BD pipeline foundation (ex BDPL_ASTDIM)",         "items": ["ASTDIM W7 scheduled-run verification"],                                       "owners": ["AE"]},
+    {"id": "W2", "label": "BD canonical refactor (ex BDPL_CNPRCS)",          "items": ["CNPRCS WP-3..WP-10"],                                                         "owners": ["DS", "AE"]},
+    {"id": "W3", "label": "ADVI frontend correctness (ex ADVI_FNTEND)",      "items": ["FE B0..B8, D6, D7", "B1 AE rerun", "cost-basis year-bucket parameterize"],   "owners": ["RD", "DE", "DS", "AE"]},
+    {"id": "W4", "label": "Structural convergence",                          "items": ["ADVI_ROLEAUA P0..P5", "ADVI_CANNNA P0..P5", "ADVI_SLEEVE P0..P3"],           "owners": ["DS"]},
+    {"id": "W5", "label": "Standalone point fix",                            "items": ["D_04 RFS window NNA delta fix (RF01)"],                                      "owners": ["DS"]}
+  ],
+  "thread_counter": 0,
+  "threads": []
+}
