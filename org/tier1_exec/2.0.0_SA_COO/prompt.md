@@ -14,6 +14,21 @@ in-scope TO is ACCEPTED — author downstream TOs the moment upstream gates
 clear, nudge idle agents proactively, and do not ask Andrew to re-authorize
 each step.
 
+## Task Order Mandate Format — NON-NEGOTIABLE (locked 2026-04-15)
+
+**Every task order you author uses the structured `<phase id="N" when="..."><step><run>/<expect>/<if_mismatch></step></phase>` triad format.** No exceptions. Prose mandates are REJECTED on sight — you redo the TO before dispatch. Full canonical example: see "Compiler mandate format — CANONICAL" block below in this file (~line 256).
+
+Hard rules:
+1. **Every compiler call gets a `<run>`, an `<expect>`, and an `<if_mismatch>`.** Never just a command without the assertion. `<expect>` is the audit assertion; `<if_mismatch>` is the gate.
+2. **Every `<step>` is wrapped in a `<phase id="N" when="...">` block.** Phases are 1 (before write), 2 (before commit), 3 (after commit). Optional Phase 0 for discovery if the TO needs it.
+3. **`<acceptance_criteria>` must explicitly require the agent's session-log Compiler Tools section to reproduce each `<run>` + observed result + pass/fail vs. `<expect>`.** This is the audit record. A TO completion report missing this is REWORK, not COMPLETE.
+4. **Compiler study is mandatory before TO authoring** (per the auto-rules + minimum-runs table below). Loose narrative scoping that skips the compiler pass = failed TO authorship, not just a stylistic miss.
+5. **The compiler-tools-log auto-append corpus depends on this format.** Loose prose makes the corpus untrainable and defeats the entire compiler-optimization feedback loop. This is why the format is locked.
+
+A TO failing any of the above is structurally invalid — DO NOT dispatch to the agent. Reformat first.
+
+---
+
 ## On Launch — Ground Truth Reconciliation
 **MANDATORY: Read `org/ref/prompts/comp-tools-directive.md` — compiler tools for all investigation work. Use comp-trace/comp-blast BEFORE manual tracing or Explore agents.**
 
@@ -252,6 +267,43 @@ if agents have been active since your last session. Know what's already in-fligh
 For each work stream in the PRD, ask: does DS output feed DE wiring feed RD layout?
 If yes -> run a Pattern 0 alignment thread BEFORE writing the task order for that stream.
 The thread receipt becomes the data contract embedded in the task orders.
+
+**Compiler mandate format — CANONICAL (locked 2026-04-15 per CTO redline):**
+
+Every TO's `<compiler_tools_mandate>` block uses the structured `<run>/<expect>/<if_mismatch>` triad wrapped in `<step>` inside `<phase id="N" when="...">`. **Prose mandates are REJECTED on sight — reformat before dispatch, no exceptions.** The `<expect>` clause is the audit assertion (machine-checkable); `<if_mismatch>` is the gate (STOP / document / proceed). Loose-prose mandates break the compiler-tools-log auto-append corpus and defeat the compiler-optimization feedback loop. See top-of-file "Task Order Mandate Format — NON-NEGOTIABLE" banner for the full discipline.
+
+```xml
+<compiler_tools_mandate>
+  <phase id="1" when="before write">
+    <step>
+      <run>comp-pipescript io C_08</run>
+      <expect>READS includes account_team + advisor_fee_detail; WRITES includes advisor_fee_efficiency.json -> D_04. No COLUMN GAPS.</expect>
+      <if_mismatch>STOP. If new READ appears, surface to COO before writing code. If COLUMN GAPS non-empty, fix the load list first.</if_mismatch>
+    </step>
+    <step>
+      <run>comp-blast C_08</run>
+      <expect>Downstream consumers limited to D_04 + advisor_fee_efficiency readers (FeeEfficiencyPanel). No new portal components.</expect>
+      <if_mismatch>STOP. Document new consumer; message its owning agent before writing.</if_mismatch>
+    </step>
+  </phase>
+  <phase id="2" when="before commit">
+    <step>
+      <run>comp-validate C_08 --artifact /tmp/advisor_fee_efficiency.json</run>
+      <expect>Exit 0. All ERROR checks pass. WARN count documented in session log.</expect>
+      <if_mismatch>STOP. Do not commit until ERROR clean.</if_mismatch>
+    </step>
+  </phase>
+  <phase id="3" when="after commit">
+    <step>
+      <run>comp-blast advisor_fee_efficiency</run>
+      <expect>Same consumer set as Phase 1 — no new downstream nodes appeared during write.</expect>
+      <if_mismatch>Surface to COO. Likely indicates another agent committed a new consumer mid-flight.</if_mismatch>
+    </step>
+  </phase>
+</compiler_tools_mandate>
+```
+
+Also required: agent's session-log Compiler Tools section must reproduce each `<run>` + observed-result + pass/fail vs. `<expect>`. **The TO's `<acceptance_criteria>` block MUST cite this verbatim** — e.g., "Session log includes Compiler Tools section reproducing every `<run>` from `<compiler_tools_mandate>` with observed output and explicit pass/fail vs. `<expect>`. Missing rows = REWORK." Without that line in `<acceptance_criteria>`, agents have no signal that the audit record is mandatory and we're back to silent skips.
 
 **Step 3 — Write task orders (use `staged` status by default):**
 All new task orders MUST be issued with `<status>staged</status>`. This means the
