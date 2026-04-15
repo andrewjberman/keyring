@@ -59,6 +59,29 @@ Path correction vs TO wording: both target scripts live under `data/black_diamon
 - Commit SHA + S3 etags recorded below after push+upload.
 - Signal COO on commit + 49F delta confirmation after tonight's daily run.
 
+## 15:22 ET addendum — canonical_prices gap remediation
+
+Spot-check at 15:18 ET of `silver/prices/canonical_prices.parquet` (mtime 09:29 ET) found:
+- BNP PARIBAS SA: price 1.0188 but `source=linear_interpolation`, ticker=None
+- WELLS FARGO & CO 4.15% 01/24/2029: price **86.64** (Yahoo equity), `source=linear_interpolation`
+- NEWMONT CORP 2.8% 10/01/2029: price **116.50** (Yahoo equity), `source=linear_interpolation`
+
+Root cause: morning rebuild of canonical_prices (09:29 ET, downstream of someone's partial pipeline run — likely CN-P1/RA-P1 shadow-write testing) regenerated from scratch and did NOT fire `inject_scoped_overrides.py` as the required post-step. This is the Apr-06 $22M phantom incident pattern.
+
+Remediation:
+- `python inject_scoped_overrides.py --dry-run` — preview clean: +5,064 net rows, 9 assets get override-class rows, no duplicates.
+- `python inject_scoped_overrides.py --upload` at 15:22 ET — uploaded 85.8 MB parquet to `s3://opal-data-bd/silver/prices/canonical_prices.parquet`.
+- Post-upload spot-check: BNP 392 rows @ $1.0188 `src=bd_txn_price`; WFC 581 rows @ $0.9804 `src=bd_txn_price`; NEWMONT 533 rows @ $0.9037 `src=bd_txn_price`. All correct.
+- `aws s3 cp ... /tmp/canonical_prices.parquet` then `comp-validate canonical_prices --artifact /tmp/canonical_prices.parquet` — exit 0; 1 SKIP for missing `canonical_prices` entry in `gold_validate_config.yaml` (flag to COO as tool coverage gap).
+
+Deferred:
+- 49F cohort AUA delta (~$24.3M expected drop) — requires downstream 49F re-run; nightly `bd-price-update` + downstream processing will surface it.
+- `comp-blast canonical_prices` (Phase 3 post-commit step) — consumer set unchanged verification pending cohort run.
+
+Escalation: COO should be aware the gold-runner orchestration needs to enforce `inject_scoped_overrides` as post-step of any `build_canonical_prices_v2` rebuild, including ad-hoc shadow-write test runs. Today a second phantom-price exposure window opened between 09:29 ET and 15:22 ET.
+
+## Deployment record
+
 ## Deployment record
 
 - Commit: `864b6d7a` (author `0.4.0_DS_ClientPlatform~D`)
