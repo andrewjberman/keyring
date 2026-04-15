@@ -537,3 +537,24 @@ RESOLUTION: fixed in `70c8399d` (`ADHC_ROUTER.T2 -- comp-pipescript deployed AWS
 |-----|------|----------|--------|---------------|
 | Empty-vs-broken indistinguishability on reverse lookup | `comp-platinum reverse` | `role_aua` (genuine empty), `advisor_fee_efficiency` (mis-routed), and `small_account_count` (indexer gap) all produced byte-identical empty output | UX-severity correctness defect: agents like RA-P0 passed on "empty as expected" via side-knowledge, not tool signal. Equivalent to the Rule 7 acceptance-flex risk category but at the tool layer | Diagnostic footer on empty output with 4-case disambiguation [genuine / mis-routed / stale / extractor gap]; artifact-stem auto-probe to route bare names; SPECULATIVE MATCH label on directory-prefix fallback |
 RESOLUTION: fixed in `614d4c28` (`comp-platinum reverse empty-vs-broken disambiguation + artifact-stem auto-probe`) -- reveals 3 additional out-of-scope findings: FIELD index suspiciously small (40 paths), function-level blast nodes missing, route.s3_key unset on CF-rewrite routes. Backlogged.
+| 2026-04-15 | 0.4.0_DS_ClientPlatform~D | ADVI_ROLLUP.CN-P2.ds-nna-atomic-d02-consumer-cutover | comp-pipescript | comp-pipescript io D_02 | PASS |
+| 2026-04-15 | 0.4.0_DS_ClientPlatform~D | ADVI_ROLLUP.CN-P2.ds-nna-atomic-d02-consumer-cutover | comp-pipescript | comp-pipescript io D_02 | PASS |
+| 2026-04-15 | 0.4.0_DS_ClientPlatform~D | ADVI_ROLLUP.CN-P2.ds-nna-atomic-d02-consumer-cutover | comp-pipescript | comp-pipescript io C_01 | PASS |
+| 2026-04-15 | 0.4.0_DS_ClientPlatform | ADVI_ROLLUP.SL-P0 | comp-pipescript | comp-pipescript io B_01 | PASS |
+| 2026-04-15 | 0.4.0_DS_ClientPlatform | ADVI_ROLLUP.SL-P0 | comp-blast | comp-blast silver/unrealized | PASS |
+| 2026-04-15 | 0.4.0_DS_ClientPlatform | ADVI_ROLLUP.SL-P0 | comp-pipescript | comp-pipescript io silver/unrealized | FAIL |
+| 2026-04-15 | 0.4.0_DS_ClientPlatform | ADVI_ROLLUP.SL-P0 | comp-pipescript | comp-pipescript io holdings_lots | FAIL |
+| 2026-04-15 | 0.4.0_DS_ClientPlatform | ADVI_ROLLUP.SL-P0 | comp-pipescript | comp-pipescript io B_01 | PASS |
+| 2026-04-15 | 0.4.0_DS_ClientPlatform | ADVI_ROLLUP.SL-P0 | comp-trace | comp-trace silver/unrealized --direction both | PASS |
+| 2026-04-15 | 0.4.0_DS_ClientPlatform~C | ADVI_ROLLUP.RA-P2 | comp-routes | comp-routes trace getPlatinumPartnerAnalytics | PASS |
+| 2026-04-15 | 0.4.2_RD_AdvisorIntelligence | (no-TO) | comp-pipescript | comp-pipescript io D_02 | PASS |
+| 2026-04-15 | 0.4.0_DS_ClientPlatform | ADVI_ROLLUP.SL-P0.ds-sleeve-discovery | comp-pipescript | comp-pipescript io B_01 | PASS |
+| 2026-04-15 | 0.4.0_DS_ClientPlatform | ADVI_ROLLUP.SL-P0.ds-sleeve-discovery | comp-blast | comp-blast silver/unrealized | PASS |
+| 2026-04-15 | 0.4.0_DS_ClientPlatform | ADVI_ROLLUP.SL-P0.ds-sleeve-discovery | comp-pipescript | comp-pipescript io holdings_lots | FAIL |
+| 2026-04-15 | 0.4.0_DS_ClientPlatform | ADVI_ROLLUP.SL-P0.ds-sleeve-discovery | comp-pipescript | comp-pipescript io D_02.advisor_client_detail | FAIL |
+| 2026-04-15 | 0.4.0_DS_ClientPlatform~B | ADVI_ROLLUP.RA-P3+CN-P3 | comp-pipescript | comp-pipescript io D_00c | PASS |
+| 2026-04-15 | 0.4.0_DS_ClientPlatform~B | ADVI_ROLLUP.RA-P3+CN-P3 | comp-blast | comp-blast D_02 | PASS |
+| 2026-04-15 | 0.4.0_DS_ClientPlatform~C | ADVI_ROLLUP.RA-P2 | comp-pipescript | comp-pipescript io D_02 | PASS | role_aua in READS (RA-P1 shadow live); confirmed both callsites L1277/L1632 |
+| 2026-04-15 | 0.4.0_DS_ClientPlatform~C | ADVI_ROLLUP.RA-P2 | aws s3 ls | aws s3 ls s3://opal-data-bd/gold/canonical/role_aua/ | WARN | Single 2026-04-13.parquet only -> triggered Rule 7 ACCEPTANCE FLEX preflag, L1632 deferred to RA-P2b |
+| 2026-04-15 | 0.4.0_DS_ClientPlatform~C | ADVI_ROLLUP.RA-P2 | py_compile | python -m py_compile D_02 | PASS | Pre-commit gate, exit 0 |
+| 2026-04-15 | 0.4.0_DS_ClientPlatform~C | ADVI_ROLLUP.RA-P2 | comp-blast | comp-blast D_02 | WARN | Script-node lookup empty (per memory: use fn name); no new reader introduced confirmed by code review |
