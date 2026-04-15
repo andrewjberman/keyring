@@ -10,7 +10,8 @@
     {"path": "docs/architecture/BD_CANONICAL_PRICES_CLASSIFICATION_REFACTOR.md",  "label": "Waves 0+2 — BD canonical prices (ex BDPL_CNPRCS)",        "date": "2026-04-14"},
     {"path": "docs/architecture/ROLE_AUA_CANONICAL_CONVERGENCE_PLAN.md",          "label": "Wave 4A — ROLEAUA DS plan",                               "date": "2026-04-14"},
     {"path": "docs/architecture/ADVI_CANNNA_PLAN.md",                             "label": "Wave 4B — CANNNA DS plan",                                "date": "2026-04-15"},
-    {"path": "docs/architecture/ADVI_SLEEVE_PLAN.md",                             "label": "Wave 4C — SLEEVE DS plan",                                "date": "2026-04-15"}
+    {"path": "docs/architecture/ADVI_SLEEVE_PLAN.md",                             "label": "Wave 4C — SLEEVE DS plan",                                "date": "2026-04-15"},
+    {"path": "docs/architecture/ADVI_ROLLUP_ADDENDUM_small_account_count.md",     "label": "Wave 3 addendum — Small Account Count on Fee Efficiency",  "date": "2026-04-15"}
   ],
   "source_brief": "org/tier2_senior/0.4.0_DS_ClientPlatform/briefs/2026-04-15_post_presentation_master_summary.md",
   "absorbs": ["ADVI_FNTEND", "BDPL_ASTDIM", "BDPL_CNPRCS"],
