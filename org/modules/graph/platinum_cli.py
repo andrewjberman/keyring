@@ -309,29 +309,102 @@ def _build_field_reverse_index(rt) -> dict[str, list[dict]]:
     return index
 
 
+def _artifact_stems_matching(dag, query: str) -> list[str]:
+    """Return DAG write-keys whose basename stem contains `query`.
+    Used for empty-vs-broken disambiguation on reverse lookups."""
+    if not query:
+        return []
+    hits = []
+    seen = set()
+    for sio in dag.scripts.values():
+        for wk in sio.write_keys:
+            stem = wk.rsplit('/', 1)[-1]
+            stem = stem.replace('.json', '').replace('.parquet', '').replace('.csv', '')
+            stem = re.sub(r'[{*}]', '', stem).strip('_-')
+            if query in stem and wk not in seen:
+                hits.append(wk)
+                seen.add(wk)
+    return hits
+
+
+def _portal_grep_hits(query: str, limit: int = 3) -> list[str]:
+    """Best-effort raw-text search of portal/src for the query string.
+    Returns up to `limit` 'file:line:snippet' hits. Used to detect extractor gaps:
+    if the field appears in portal source but the dataflow index missed it."""
+    if not query or len(query) < 3:
+        return []
+    portal_src = _WORKSPACE / "portal" / "src"
+    if not portal_src.exists():
+        return []
+    hits = []
+    for p in portal_src.rglob("*.ts*"):
+        try:
+            for i, line in enumerate(p.read_text(encoding="utf-8", errors="replace").splitlines(), 1):
+                if query in line:
+                    rel = p.relative_to(_WORKSPACE)
+                    snippet = line.strip()[:80]
+                    hits.append(f"{rel}:{i}: {snippet}")
+                    if len(hits) >= limit:
+                        return hits
+                    break
+        except Exception:
+            continue
+    return hits
+
+
 def _print_field_reverse(query: str, rt, dag):
     index = _build_field_reverse_index(rt)
     query_normalized = _normalize_field_path(query)
+    # ADHC_ROUTER.T1 fix: original matcher included
+    # `query_normalized.endswith(f".{field_path}")` and
+    # `query_normalized in field_path`, producing false positives by
+    # matching on trailing segments. For query `rfs.decomposition_max.nna`,
+    # this falsely surfaced artifacts carrying a plain `nna` field (e.g.
+    # timeseries_overview.json) because `"rfs.decomposition_max.nna"
+    # .endswith(".nna")` is True. Strict matching: exact hit OR query is a
+    # suffix of an indexed path (`field_path.endswith(f".{query}")`). An
+    # honest empty result is strictly better than a confident wrong one.
     matches = sorted({
         field_path for field_path in index
         if field_path == query_normalized
         or field_path.endswith(f".{query_normalized}")
-        or query_normalized.endswith(f".{field_path}")
-        or query_normalized in field_path
     })
 
     print(f"REVERSE LOOKUP: {query}")
+    print(f"  [routed as: FIELD query; normalized='{query_normalized}'; index size: {len(index)} field paths]")
     print()
 
     if not matches:
+        # Empty-vs-broken disambiguation (ADHC_ROUTER.T3 2026-04-15):
+        # print a diagnostic footer so agents can tell "tool searched and found
+        # nothing" apart from "tool didn't route the query correctly".
+        artifact_stem_hits = _artifact_stems_matching(dag, query_normalized)
+        portal_text_hits = _portal_grep_hits(query_normalized, limit=3)
         print("  PRODUCER:")
-        print("    (no payload-path matches found)")
+        print("    (no payload-path matches found in portal dataflow index)")
         print()
         print("  SERVED VIA:")
         print("    (no matching routes found)")
         print()
         print("  CONSUMED BY:")
-        print("    (no components found)")
+        print("    (no components found in dataflow index)")
+        print()
+        print("  ---- DIAGNOSTIC (empty result, 0/{} fields matched) ----".format(len(index)))
+        print("  Distinguish empty-vs-broken:")
+        print("    [a] genuine empty: no portal component reads this field (new canonical, not-yet-wired field, or consumer-less artifact).")
+        print("    [b] query mis-routed: query may name an artifact, not a field.")
+        print("    [c] index stale: dataflow extractor may not have picked up recent portal changes (re-run comp-build).")
+        print("    [d] extractor gap: field is in portal source but indexer does not capture this access pattern (m.foo in iteration scopes, destructuring after cast, etc.).")
+        if artifact_stem_hits:
+            print(f"  HINT: {len(artifact_stem_hits)} DAG artifact(s) have basename stem containing '{query_normalized}':")
+            for key in artifact_stem_hits[:5]:
+                print(f"    comp-platinum reverse {key}")
+        if portal_text_hits:
+            print(f"  HINT: {len(portal_text_hits)} raw portal source hit(s) on '{query_normalized}' (may indicate indexer gap):")
+            for hit in portal_text_hits:
+                print(f"    {hit}")
+        if not artifact_stem_hits and not portal_text_hits:
+            print(f"  Query '{query_normalized}' not found anywhere in DAG artifacts or portal source -- likely genuinely absent (case [a]).")
         return
 
     entries = []
@@ -473,7 +546,11 @@ def _print_artifact_reverse(s3_key: str, rt, dag):
                 if ep_dir == key_dir:
                     sibling_fns.append(fn_name)
         if sibling_fns:
-            print(f"    (no direct match -- key may be sub-field of a sibling endpoint)")
+            # ADHC_ROUTER.T3: this fallback is speculative (directory-prefix
+            # match, not actual key match). Flag explicitly so agents do not
+            # treat it as ground-truth consumer attribution.
+            print(f"    WARN: SPECULATIVE MATCH (directory-prefix fallback, not a verified consumer).")
+            print(f"    WARN: These endpoints live in the same S3 directory but may not read this specific key.")
             for fn_name in sorted(sibling_fns):
                 ep = rt.endpoints[fn_name]
                 for comp in rt.components:
@@ -495,15 +572,42 @@ def _print_artifact_reverse(s3_key: str, rt, dag):
 
 
 def cmd_reverse(args):
-    """Reverse lookup: S3 key OR payload field path -> routes -> components."""
+    """Reverse lookup: S3 key OR payload field path -> routes -> components.
+
+    Routing:
+      - If query contains '/' or ends with .json/.parquet/.csv -> artifact reverse.
+      - Else: check if query matches a DAG artifact filename stem; if so,
+        try artifact reverse against the matched key(s) first, then fall through
+        to field reverse. This disambiguates queries like 'advisor_fee_efficiency'
+        which previously routed as FIELD and returned empty because the index
+        only holds sub-fields of fetch data variables.
+    """
     query = args.s3_key
     rt = build_routing_table(_WORKSPACE)
     dag = build_pipeline_dag(_WORKSPACE)
     dag.build_index()
+
     if _looks_like_artifact_query(query):
         _print_artifact_reverse(query, rt, dag)
-    else:
-        _print_field_reverse(query, rt, dag)
+        return
+
+    # ADHC_ROUTER.T3: auto-probe artifact-stem match before field reverse.
+    stem_hits = _artifact_stems_matching(dag, _normalize_field_path(query))
+    if stem_hits:
+        # Exact basename match(es) -- run artifact reverse, not field.
+        exact = [k for k in stem_hits
+                 if re.sub(r'[{*}]', '', k.rsplit('/', 1)[-1].split('.')[0]).strip('_-')
+                    == _normalize_field_path(query)]
+        target_keys = exact or stem_hits[:1]
+        print(f"  [routed as: ARTIFACT (stem match); query='{query}' -> {target_keys[0]}]")
+        print()
+        _print_artifact_reverse(target_keys[0], rt, dag)
+        if len(target_keys) > 1 or (len(stem_hits) > len(target_keys)):
+            print()
+            print(f"  (additional {len(stem_hits) - 1} stem matches; re-run with full S3 key to disambiguate)")
+        return
+
+    _print_field_reverse(query, rt, dag)
 
 
 def cmd_tab_audit(args):
