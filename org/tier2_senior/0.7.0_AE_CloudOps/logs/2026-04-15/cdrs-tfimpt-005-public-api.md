@@ -115,10 +115,35 @@ For CF origins that reference an API GW by domain only, the distinction doesn't 
 
 ---
 
+## Sprint Retro (added post-close per COO 18:52Z)
+
+**CDRS_TFIMPT Phase 1 shape:**
+- Elapsed: ~2h wall clock, 5 task orders
+- Commits: 5 (51482dd9, bd3c3501, 6c98242f, 04cdfbec, 1afb5843) + 1 reformat (3f918332) = 6 total
+- Tags: 5 new (analytics-dashboard-v1.0.0, trade-pipeline-v1.1.0, trade-pipeline-v1.2.0, market-overview-v1.8.0, public-api-cdn-v1.0.0)
+- First-try 0-diff: 1 (.005, 6 behaviors, all managed policy IDs)
+- Rule 7 scope-flex events: 3 (.001 pre-flag, .002 pre-flag, .003 closeout-only per established pattern; .004 closeout-only; .005 clean)
+- Corpus captures: 2 (`feedback_cloudfront_oac_no_s3_origin_config` re-validated; API GW v1-vs-v2 namespace note added to .005 closeout)
+- Destructive ops: 0
+- Rework: 0
+- Acceptance rollup passes: 5/5 (1 acceptance criterion substituted with COO ACK on .001 — bucket-scope flex)
+
+**What worked:**
+1. `grep -rn "bucket-name" infra/aws/terraform/` added to Phase 1 recon after .001 caught 4 more pre-existing bucket TF coverage cases immediately -- no wasted TF writing.
+2. AUTH_TFIMPT.001 (portal) as reference implementation -- every tags_all metadata apply matched precedent; no surprises.
+3. Pre-flag → 60s don't-object → closeout-cite was the right Rule 7 shape for scope flex. COO ACK'd pattern after .001 and .002; .003/.004 went closeout-only.
+4. `-target` apply on modules with pre-existing drift (trade-pipeline JWT) kept imports surgical without fixing unrelated state.
+
+**What was surprising:**
+1. The original audit's bucket-tracked count was off by ~5 due to grep scope error (corrected in audit doc).
+2. `opal-market-data-v2` has no bucket_policy live -- CDN default origin serves 403 at origin today. OAC exists but isn't granted.
+3. `.005` was expected to be the hardest (2-3 plan/edit cycles); it was actually the cleanest (0 iterations). Managed-policy-ID discipline upstream paid off.
+4. API GW v1 vs v2 namespace trap on .005 Phase 1.
+
+**Open AE follow-ups carried to post-sprint:**
+- trade-pipeline JWT_SECRET drift (3 Lambdas) [parked on hold per COO 18:52Z pending Phase 2]
+- opal-market-data-v2 missing bucket_policy [parked on hold per COO 18:52Z pending Phase 2]
+
 ## Next
 
-- Commit + tag `public-api-cdn-v1.0.0`
-- Push --follow-tags
-- MCP COMPLETE to COO -- sprint close
-- Update audit doc section 6: 6/6 CF distributions now TF-managed
-- Per COO 18:33Z: pivot to JWT drift reconcile OR hand off to DT 0.4 for .006/.007 (Phase 2 partner-firm infra)
+- Standing by on CDRS_TFIMPT.006 (opal-users-v2 DynamoDB import) + .007 (shared partner-firm TF + DT co-ship) per COO pivot directive.
