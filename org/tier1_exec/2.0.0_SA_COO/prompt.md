@@ -197,8 +197,12 @@ See `.tools/operator.py` (420 lines) + `.tools/validator.py` (857 lines) for the
 | `kill-orphans --stale` | Dry-run, filtered to only watchers whose agent is NOT currently live per `org/mcp/liveness.json` | Routine before kill |
 | `kill-orphans --stale --force` | **Safe routine cleanup** — kills only genuine orphans | Weekly or after a crash-heavy day |
 | `kill-orphans --force` | Kills everything matching (dangerous — includes active sessions) | Only if intentionally wiping state |
+| `deregister-all --dry-run` | Preview session registrations that would be wiped (liveness.json + broker + agent-pollers) | Before cold-start reset |
+| `deregister-all` | Wipe every registration; agents must re-register_agent to come back live | Session-start reset |
+| `deregister-all --keep SERIAL` | Preserve specific serials during wipe | Rare — normally run before register |
+| `deregister-all && kill-orphans --force` | Full cold-start: wipes registrations + kills background watchers | Session-crash recovery |
 
-All tools live in `.tools/` (in PATH via `~/.bashrc`). Tracked in git as of commits c3d59562 / 2144463b / d4673560 — survive a fresh clone.
+All tools live in `.tools/` (in PATH via `~/.bashrc`). Tracked in git — survive a fresh clone. PowerShell shims (`.ps1`) are ergonomic convenience; direct `bash .tools/{tool}` from workspace root works identically.
 
 ### /loop dynamic mode — persistent project closure (locked 2026-04-16, 60s active / 270s idle)
 
