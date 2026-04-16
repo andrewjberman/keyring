@@ -18,8 +18,8 @@
     "0324142a: comp-pipescript deployed env-forwarding + explicit TIMEOUT"
   ],
   "status": "active",
-  "phase": "Phase 1 COMPLETE 2026-04-15. All 4 TOs closed with compiler patches: T1 d1d6920b (0324142a reverse-edge regression caught), T2 70c8399d (AWS_UNREACHABLE), T3 614d4c28 (empty-vs-broken footer), T4 3c921e08 (proposal E pass-through). Backlog: FIELD index undersized (~40 paths), function-level blast node gap, route.s3_key unset on CF-rewrite routes.",
-  "blocking": "None (Phase 2 backlog pickup when DS lanes idle again).",
+  "phase": "Phase 1 COMPLETE 2026-04-15. All 4 TOs closed with compiler patches: T1 d1d6920b (0324142a reverse-edge regression caught), T2 70c8399d (AWS_UNREACHABLE), T3 614d4c28 (empty-vs-broken footer), T4 3c921e08 (proposal E pass-through). Phase 2 backlog (surfaced by live work 2026-04-15/16): (a) FIELD index undersized (~40 paths, T3 finding); (b) function-level blast node gap (T3 finding); (c) route.s3_key unset on CF-rewrite routes (T3 finding); (d) comp-pipescript deployed silently excludes .sh from corpus — run_gold_layer.sh drift was invisible during 2026-04-16 PROD incident; AE 0.6 feedback 2026-04-16; (e) comp-pipescript deployed should fail-loud on type exclusion (currently 'No scripts matched filter' is ambiguous); (f) comp-pipescript deployed should accept repo paths via --path; (g) comp-pipescript SyntaxWarning line 91 invalid escape '\\$' — fix to raw-string or double-escape; (h) comp-pipescript deployed default-to-short output when zero results.",
+  "blocking": "None (Phase 2 backlog pickup when DS lanes idle again). Priority within Phase 2: (d) .sh indexing is highest (directly caused PROD-incident tool-call escalation); (g) syntax warning is free.",
   "created": "2026-04-15",
   "pods": ["0.4"],
   "pipeline": "none (comp-tools work)",
