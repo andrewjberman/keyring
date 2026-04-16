@@ -12,6 +12,7 @@
     {"path": "docs/architecture/COMP_LEARNS_COMPILER_BASELINE.md",        "label": "PRD #3 — v0 compiler baseline",                              "date": "2026-04-15"},
     {"path": "docs/architecture/COMP_LEARNS_LOOP_ORCHESTRATOR.md",        "label": "PRD #4 — iteration runner (subsumed by op-mandate)",          "date": "2026-04-15"},
     {"path": "docs/architecture/COMP_LEARNS_ADVERSARIAL_QUERIES.md",      "label": "PRD #5 — Phase 4 adversarial compound queries",              "date": "2026-04-15"},
+    {"path": "docs/architecture/COMP_LEARNS_ARCHITECTURE.md",             "label": "Structural Inference System architecture (six concerns, v0 TOs .011-.019)", "date": "2026-04-16"},
     {"path": "docs/briefs/compiler-tools-engineer-onboarding-2026-04-15.md", "label": "Context brief — existing comp-* philosophy",              "date": "2026-04-15"}
   ],
   "upstream_influence": [
@@ -25,8 +26,8 @@
   "inspiration": "C:/Users/AndrewBerman/Downloads/autoresearch-master.zip (Karpathy). Three-file pattern: prepare.py (fixed harness), train.py (agent mutates), program.md (human-tuned protocol).",
   "root_folder": "comp/",
   "status": "active",
-  "phase": "Phase 0 — registration + scaffolding. Next: pick first benchmark target (candidates: httpx, a small internal service, this repo), author ground-truth harness (~50 queries) by hand, run first iteration.",
-  "blocking": "First benchmark target selection + ~4-6 hrs of human harness authoring before any agent loop can run honestly.",
+  "phase": "Phase 2 — architectural expansion. Track A + Track B live: .001 HARNESS_FRAMEWORK complete (~A, 43e3225e+714d43a9); .003 COMPILER_BASELINE complete (~B, 7740277d); .004 LOOP_ORCHESTRATOR complete (~C, e657c232); .002 HTTPX_TARGET CTO Phase 0 shipped (fd2d0515, Steps 2-7 absorbed into .016 gold-authoring under new PRD); .005 ADVERSARIAL scaffolded (deferred to v0.3+ per new PRD). Track B engine operational. PRD `COMP_LEARNS_ARCHITECTURE.md` shipped 2026-04-16 formalizing 6-concern structural-inference system (parsers / ir / compiler_subtypes / graph_builder / bench / loop) + bootstrap-vs-target table + A/B primary metric. New TO wave .011-.019 pending COO decomposition: module skeleton + Python parser + imports subtype + graph builder + scorecard + httpx gold + end-to-end ratchet + program.md v1.0.",
+  "blocking": "COO decomposition of .011-.019 TOs from COMP_LEARNS_ARCHITECTURE.md; LibCST dependency policy (layer vs venv) — AE 0.7 decides at .012 Phase 1; ADVI_49EXEC.003 anthropic-sdk-deps layer (AE 0.6, in flight) gates .015 Phase 2 A/B bench. Wave 1 punchlist .006-.010 staged. Do not dispatch agent proposer loop until .017 human-verified honest + primary metric demonstrated.",
   "created": "2026-04-15",
   "pods": ["0.4", "0.7"],
   "pipeline": "none (research project)",
