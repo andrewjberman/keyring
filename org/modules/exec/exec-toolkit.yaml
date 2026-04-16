@@ -1,4 +1,5 @@
-# exec_toolkit.yaml — operational tooling catalog for CTO (1.0.0_SA_CTO) + COO (2.0.0_SA_COO)
+# exec-toolkit.yaml — operational tooling catalog for CTO (1.0.0_SA_CTO) + COO (2.0.0_SA_COO)
+# Location: org/modules/exec/exec-toolkit.yaml (parallels org/modules/graph/comp-tools.yaml)
 #
 # Structured reference for the five load-bearing tools that drive project closure,
 # session hygiene, and persistence. Read by both execs on startup; referenced from
