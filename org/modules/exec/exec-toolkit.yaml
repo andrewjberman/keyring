@@ -62,6 +62,8 @@ tools:
         description: Compose CTO MCP elevation body (use when fork detected)
       - command: operator {CODE} --render
         description: Generate per-project shim .tools/operator-{CODE}
+      - command: operator {CODE} --dispatch
+        description: Auto-write GO inbox messages + flip staged→pending for all actionable TOs (shipped 39d5659a 2026-04-16; eliminates manual COO relay)
     exit_codes:
       0: continue — pending/actionable TOs remain; directive emitted
       1: done — every TO complete for this phase; /loop should transition to validator
