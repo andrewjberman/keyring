@@ -1,0 +1,138 @@
+#!/usr/bin/env bash
+# deregister-all -- clear all agent registrations from liveness.json + broker.
+#
+# Intended for session-start reset: wipes stale registrations from prior
+# Claude Code sessions so the new session can register cleanly without
+# colliding with dead PIDs or stale summaries.
+#
+# Complementary to kill-orphans:
+#   - deregister-all wipes liveness.json, broker agents table, kills
+#     agent-poller.py processes
+#   - kill-orphans wipes inbox-watch.sh + check-inbox.sh + other
+#     background bash watchers
+#   Running both = full cold-start: deregister-all && kill-orphans --force
+#
+# Usage:
+#   deregister-all                              wipe every registration
+#   deregister-all --keep SERIAL [--keep ...]   preserve specific serials
+#   deregister-all --dry-run                    list what would be wiped
+#
+# Exit codes:
+#   0  success
+#   2  invalid flag
+#   3  liveness.json unreadable / not present
+
+set -euo pipefail
+
+WORKSPACE="$(cd "$(dirname "$0")/.." && pwd)"
+LIVENESS_FILE="$WORKSPACE/org/mcp/liveness.json"
+BROKER_URL="http://127.0.0.1:7800"
+
+DRY_RUN=0
+KEEP=()
+while [ $# -gt 0 ]; do
+    case "$1" in
+        --keep)
+            [ -z "${2:-}" ] && { echo "--keep requires a serial" >&2; exit 2; }
+            KEEP+=("$2"); shift 2 ;;
+        --dry-run) DRY_RUN=1; shift ;;
+        -h|--help) sed -n '2,22p' "$0"; exit 0 ;;
+        *) echo "unknown flag: $1" >&2; exit 2 ;;
+    esac
+done
+
+if [ ! -f "$LIVENESS_FILE" ]; then
+    echo "[deregister-all] No liveness.json at $LIVENESS_FILE -- nothing to do."
+    exit 0
+fi
+
+# Read liveness.json, compute dropped serials, emit new JSON to stdout.
+# Piped via stdin to bypass MSYS /c/... path resolution in Python on Windows.
+# KEEP list passed as trailing positional args.
+DROPPED=$(cat "$LIVENESS_FILE" | python -c "
+import json, sys
+try:
+    data = json.load(sys.stdin)
+except Exception as e:
+    print(f'PARSE_ERROR: {e}', file=sys.stderr)
+    sys.exit(3)
+keep = set(sys.argv[1:])
+dropped = sorted(s for s in data if s not in keep)
+for s in dropped:
+    print(s)
+" "${KEEP[@]}" 2>/dev/null | tr -d '\r')
+
+if [ -z "$DROPPED" ]; then
+    echo "[deregister-all] No serials to drop (liveness.json contains only --keep set or is empty)."
+    exit 0
+fi
+
+count=$(echo "$DROPPED" | wc -l | tr -d '[:space:]')
+echo "[deregister-all] Would deregister $count serial(s):"
+while IFS= read -r s; do
+    [ -z "$s" ] && continue
+    echo "  - $s"
+done <<< "$DROPPED"
+
+if [ "${#KEEP[@]}" -gt 0 ]; then
+    echo "[deregister-all] Keeping: ${KEEP[*]}"
+fi
+
+if [ "$DRY_RUN" -eq 1 ]; then
+    echo ""
+    echo "[deregister-all] DRY RUN. Re-run without --dry-run to execute."
+    exit 0
+fi
+
+echo ""
+echo "[deregister-all] Executing..."
+
+# 1. Rewrite liveness.json with only the keep set.
+cat "$LIVENESS_FILE" | python -c "
+import json, sys
+data = json.load(sys.stdin)
+keep = set(sys.argv[1:])
+out = {s: info for s, info in data.items() if s in keep}
+json.dump(out, sys.stdout, indent=2)
+" "${KEEP[@]}" > "$LIVENESS_FILE.tmp"
+mv "$LIVENESS_FILE.tmp" "$LIVENESS_FILE"
+echo "  liveness.json rewritten ($(wc -c < "$LIVENESS_FILE") bytes)"
+
+# 2. Best-effort POST /unregister to the broker for each dropped serial.
+# Broker may not be running -- that's OK, liveness.json is authoritative.
+broker_ok=0
+while IFS= read -r s; do
+    [ -z "$s" ] && continue
+    if curl -s -o /dev/null -X POST "$BROKER_URL/unregister" \
+        -H "Content-Type: application/json" \
+        -d "{\"serial\":\"$s\"}" --max-time 2; then
+        broker_ok=$((broker_ok + 1))
+    fi
+done <<< "$DROPPED"
+echo "  broker: $broker_ok/$count unregister calls succeeded (0 OK if broker offline)"
+
+# 3. Kill orphaned agent-poller.py processes matching dropped serials.
+# Uses ps -ef (portable to Git Bash); matches `agent-poller.py SERIAL`.
+killed=0
+ps_snapshot=$(ps -ef 2>/dev/null || true)
+while IFS= read -r s; do
+    [ -z "$s" ] && continue
+    while IFS= read -r line; do
+        case "$line" in UID*) continue ;; esac
+        pid=$(echo "$line" | awk '{print $2}')
+        cmd=$(echo "$line" | awk '{for (i=6; i<=NF; i++) printf "%s ", $i; print ""}')
+        [ -z "$pid" ] && continue
+        [ "$pid" = "$$" ] && continue
+        case "$cmd" in
+            *"agent-poller.py"*"$s"*)
+                if kill "$pid" 2>/dev/null; then
+                    killed=$((killed + 1))
+                    echo "  killed agent-poller PID $pid ($s)"
+                fi ;;
+        esac
+    done <<< "$ps_snapshot"
+done <<< "$DROPPED"
+echo "  agent-pollers killed: $killed"
+
+echo ""
+echo "[deregister-all] Done. Dropped $count serial(s). Run \`kill-orphans --force\` next if you also want to wipe inbox-watch.sh watchers."
