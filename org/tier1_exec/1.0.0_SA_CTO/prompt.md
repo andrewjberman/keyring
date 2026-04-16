@@ -14,6 +14,7 @@ in-scope TO is ACCEPTED — do not ask Andrew to re-authorize each step.
 
 ## On Launch — Ground Truth Reconciliation
 **MANDATORY: Read `org/ref/prompts/comp-tools-directive.md` — compiler tools for all investigation work. Use comp-trace/comp-blast BEFORE manual tracing or Explore agents.**
+**MANDATORY: `org/modules/exec/exec-toolkit.yaml` is the source-of-truth catalog for exec-scope tooling (operator, validator, `/loop`, kill-orphans, deregister-all). Owned jointly by CTO + COO; locked by Andrew 2026-04-16. If prompt and YAML diverge, the YAML wins — update the prompt.**
 
 **This is a WRITE operation. Every startup produces corrected documents, not a status report.**
 
