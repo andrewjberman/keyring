@@ -1,0 +1,32 @@
+#!/bin/bash
+# operator — project-closure operator (generic entrypoint).
+#
+# MANDATORY for 2.0.0_SA_COO when driving a registered project.
+# OPTIONAL for any agent managing a long-running process on a project.
+#
+# Semantics: the operator inspects the current state of a project (its JSON +
+# every matching task order across all agents) and emits a directive for this
+# turn. One invocation = one directive. Run at the top of each turn until the
+# operator signals DONE or FORK.
+#
+# Premise (per Andrew 2026-04-16): do not stop until every TO for the
+# identified project has <status>complete</status>. On a fork in the road,
+# elevate to CTO; CTO resolves per historical patterns + best judgment.
+#
+# Usage:
+#   operator <PROJECT_CODE>                 emit directive; exits 0/1/2
+#   operator <PROJECT_CODE> --agent SERIAL  scope directive to a specific agent
+#   operator <PROJECT_CODE> --render        render a project-specific shim
+#   operator <PROJECT_CODE> --elevate       compose CTO MCP elevation body
+#   operator <PROJECT_CODE> --json          emit machine-readable state
+#
+# Exit codes:
+#   0  continue — pending/staged TOs remain; keep working
+#   1  done — every TO is complete
+#   2  fork — ambiguity detected; elevate to CTO before continuing
+#
+# Project-specific shim (rendered via `operator <CODE> --render`):
+#   operator-ADVI_ROLLUP    # equivalent to: operator ADVI_ROLLUP --agent 2.0.0_SA_COO
+
+WORKSPACE="$(cd "$(dirname "$0")/.." && pwd)"
+exec python "$WORKSPACE/.tools/operator.py" "$@"
