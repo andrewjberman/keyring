@@ -31,6 +31,8 @@
   "created": "2026-04-15",
   "pods": ["0.4", "0.7"],
   "pipeline": "none (research project)",
+  "coo_lane": "2.0.0_SA_COO~B",
+  "coo_lane_note": "Andrew directive 2026-04-16 session 30 PM: 2.0.0_SA_COO~B owns COMP_LEARNS for remainder of session. ADVI_ROLLUP routes to base 2.0.0_SA_COO. Do not cross-contaminate project scope between the two COO lanes. Handoff package delivered to ~B at 2026-04-16T13:44Z with PRD v2 (c963ced5) + 11-TO decomposition + smoke-test expectations. See COMP_LEARNS authoring + operator/validator smoke in 2.0.0_SA_COO~B logs.",
   "thread_counter": 0,
   "threads": []
 }

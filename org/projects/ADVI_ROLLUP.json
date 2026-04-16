@@ -23,6 +23,8 @@
   "created": "2026-04-15",
   "pods": ["0.4", "0.6"],
   "pipeline": "bd-pipeline + portal",
+  "coo_lane": "2.0.0_SA_COO",
+  "coo_lane_note": "Andrew directive 2026-04-16 session 30 PM: base COO owns ADVI_ROLLUP for remainder of session. COMP_LEARNS routes to 2.0.0_SA_COO~B. Do not cross-contaminate project scope between the two COO lanes. See ADVI_ROLLUP driver-loop updates in 2.0.0_SA_COO logs; COMP_LEARNS authoring + operator/validator smoke in 2.0.0_SA_COO~B logs.",
   "waves": [
     {"id": "W0", "label": "Tactical thaw",                                  "items": ["3-bond scoped-exceptions blocklist", "WP-11 tactical formalization"],      "owners": ["DS"]},
     {"id": "W1", "label": "BD pipeline foundation (ex BDPL_ASTDIM)",         "items": ["ASTDIM W7 scheduled-run verification"],                                       "owners": ["AE"]},
