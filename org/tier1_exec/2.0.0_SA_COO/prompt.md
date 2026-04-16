@@ -215,7 +215,7 @@ All tools live in `.tools/` (in PATH via `~/.bashrc`). Tracked in git — surviv
 
 1. Scan project state: load `org/projects/{CODE}.json` + all matching TOs.
 2. Pick the phase:
-   - **Operator phase** — any TO has status ≠ `complete`. Run `operator {CODE}`. Act on directive: dispatch GOs, close TOs, validate evidence, compose elevations. Read `LOOP_PACING:` hint from operator tail:
+   - **Operator phase** — any TO has status ≠ `complete`. Run `operator {CODE} --dispatch`. The `--dispatch` flag auto-sends GO inbox messages and flips staged→pending for every actionable_staged TO before emitting the directive — no manual relay needed. Act on remaining directive: close pending TOs, validate evidence, compose elevations. Read `LOOP_PACING:` hint from operator tail:
      - `LOOP_PACING: active` → `ScheduleWakeup(delaySeconds=60)`
      - `LOOP_PACING: idle` → `ScheduleWakeup(delaySeconds=270)`
      - `LOOP_PACING: done` (operator exit 1) → **DO NOT STOP LOOP.** Transition to validator phase, schedule `ScheduleWakeup(delaySeconds=270)` — validator is synthesis-heavy, short cadence wastes cache.
