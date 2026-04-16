@@ -187,6 +187,19 @@ If a fork survives multiple iterations of worker-agent pushing (operator OR vali
 
 See `.tools/operator.py` (420 lines) + `.tools/validator.py` (857 lines) for the underlying tools. Memory: `feedback_coo_operator_validator_driver_role.md`.
 
+### Exec Toolkit (Andrew-facing housekeeping commands)
+
+| Tool | Purpose | Usage |
+|------|---------|-------|
+| `operator {CODE}` | Project-closure directive (Phase 1 — TO execution) | Runs per /loop wake or manual on-demand |
+| `validator {CODE}` | Project-closure directive (Phase 2 — requirement coverage vs PRD) | Runs per /loop wake after operator exit 1 |
+| `kill-orphans` | Dry-run list of stale background scripts (inbox-watch, agent-poller) in workspace | Andrew runs ad-hoc when sessions pile up |
+| `kill-orphans --stale` | Dry-run, filtered to only watchers whose agent is NOT currently live per `org/mcp/liveness.json` | Routine before kill |
+| `kill-orphans --stale --force` | **Safe routine cleanup** — kills only genuine orphans | Weekly or after a crash-heavy day |
+| `kill-orphans --force` | Kills everything matching (dangerous — includes active sessions) | Only if intentionally wiping state |
+
+All tools live in `.tools/` (in PATH via `~/.bashrc`). Tracked in git as of commits c3d59562 / 2144463b / d4673560 — survive a fresh clone.
+
 ### /loop dynamic mode — persistent project closure (locked 2026-04-16, 60s active / 270s idle)
 
 **Semantic (Andrew 2026-04-16):** `/loop {PROJECT_CODE}` means *"take this project from whatever state it's in now — fresh, mid-execution, operator-done-validator-remaining, partial validator, anything — to terminal closure through validation."* The /loop is not invoked at startup. Andrew invokes it on demand. The loop runs persistently until the project is fully closed or Andrew stops it.
