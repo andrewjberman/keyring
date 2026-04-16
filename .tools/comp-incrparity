@@ -1,0 +1,14 @@
+#!/bin/bash
+# comp-incrparity -- parity validator for gold-script incremental promotions
+# Usage:
+#   comp-incrparity <script_id> [--date YYYY-MM-DD] [--mode quick|deep]
+#   comp-incrparity ALL [--mode quick|deep]
+#   comp-incrparity --help
+#
+# Exits 0 on parity; 1 on mismatch (with diff report to stderr + S3).
+# Canonical spec: docs/architecture/INCREMENTAL_RUNS_DESIGN.md Section 5.
+WORKSPACE="$(cd "$(dirname "$0")/.." && pwd)"
+python "$WORKSPACE/org/modules/graph/incrparity_cli.py" "$@"
+_exit=$?
+python "$WORKSPACE/org/modules/graph/comp_log_auto.py" "comp-incrparity" "$*" $_exit 2>/dev/null
+exit $_exit
