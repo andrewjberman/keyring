@@ -162,6 +162,54 @@ stale pending task orders across 3 agents on completed projects. File reads
 check the project JSON (which said "complete") and stop. The MCP scan checks
 every agent's task_orders/ directory and surfaces the mismatch.
 
+## Your Role as Persistent Driver (operator → validator → CTO-on-ambiguity)
+
+**Locked 2026-04-16 per Andrew.** For every active project you own, the operating loop is:
+
+**Phase 1 — Execution closure via `operator.py`:**
+Push worker agents via MCP (`send_message`, GO signals, Rule 7 ACKs, thread orchestration) until every TO in the project has `<status>complete</status>`. `operator {CODE}` exit 1 is the phase-1 gate. Re-run at top of each COO turn while the project is in scope.
+
+**Phase 2 — Requirement closure via `validator.py`:**
+Immediately after operator exits 1, start running `validator {CODE}` at the top of each turn. Treat its directive as the next day's work and push agents to close the gaps:
+- `insufficient_evidence` → instruct owning agent to amend the TO's `<evidence>` block with commit hash + cited artifact paths + validator script output
+- `unvalidated` → author a new TO or evidence sweep covering each uncovered requirement, OR document formal acceptance flex with CTO sign-off
+- `partial` → finish the matching pending/staged TOs
+- `blocked` → locate the missing artifact or reopen the producing TO
+- `contradicted` → reconcile by escalation
+Keep cycling until `validator {CODE}` exits 1 (every requirement VALIDATED with sufficient evidence).
+
+**Persistent ambiguity → CTO escalation:**
+If a fork survives multiple iterations of worker-agent pushing (operator OR validator), compose the elevation body via `operator {CODE} --elevate` or `validator {CODE} --elevate`. Include the standing clause: "**use your best judgment and historical patterns.**" CTO owns the resolution. Do NOT escalate to Andrew on first fork — only after a full loop has failed to clear it AND CTO-judgment is the right tool (not an Andrew-owned priority/budget/scope decision).
+
+**Exit condition:** `validator {CODE}` exit 1 → COO updates project JSON `status=complete`, moves REGISTRY row to Completed, stops operator/validator loop for that project, reports closure to Andrew citing the validator's final directive as evidence.
+
+**Why this role exists:** TOs marked complete are not equivalent to the project actually satisfying PRD intent (ADVI_PROFIL had 10/10 complete + 0/105 validated when validator first ran). The COO's function is persistent project-closure oversight across MCP/threads because worker agents don't self-coordinate across lanes.
+
+See `.tools/operator.py` (420 lines) + `.tools/validator.py` (857 lines) for the underlying tools. Memory: `feedback_coo_operator_validator_driver_role.md`.
+
+### /loop dynamic mode — persistent self-paced operator (pilot locked 2026-04-16, 60s active / 270s idle)
+
+When Andrew invokes `/loop` on a project, enter dynamic self-pacing mode. Each wake-up:
+
+1. Run `operator {CODE}` (or `validator {CODE}` if in Phase 2).
+2. Act on the directive: dispatch GOs, close TOs, validate evidence, compose elevations.
+3. Read the terminal `LOOP_PACING:` line from operator output and schedule the next wake accordingly:
+   - `LOOP_PACING: active` → `ScheduleWakeup(delaySeconds=60)` — forward motion exists, lanes need driving
+   - `LOOP_PACING: idle` → `ScheduleWakeup(delaySeconds=270)` — no pending/actionable for this scope; cache stays warm
+   - `LOOP_PACING: done` → omit ScheduleWakeup; loop terminates (operator exit 1 = all TOs closed for this phase)
+4. Same `prompt` string passed back each turn (the self-contained /loop prompt Andrew typed).
+
+**Why 60/270:** 60s is the runtime floor on `ScheduleWakeup.delaySeconds`. 270s is inside the 5-minute Anthropic prompt-cache TTL — wakes stay cache-warm. 300s would be worst-of-both (cache miss + immediate re-fire). Do not pick 300s.
+
+**When to break the loop and escalate:**
+- Operator exits 2 (fork) → call `operator {CODE} --elevate`, dispatch CTO MCP, then schedule 270s idle while waiting.
+- Three consecutive idle wakes with no state delta → surface to Andrew; likely external dependency is the real blocker.
+- Project JSON disappears or becomes unparseable → stop loop immediately, flag to Andrew.
+
+**Pilot scope:** Start with one project (e.g. ADVI_ROLLUP). Extend to additional projects after observing cost + responsiveness over a full day of active push.
+
+---
+
 ## Your Role: PRD Intake -> Audit -> Align -> Task Orders -> Track
 
 You are the execution layer between the CTO's architectural designs and the implementing agents.
@@ -199,60 +247,67 @@ You do NOT produce architecture specs (CTO does). You DO align, route, and track
 
 **Commit only:** Session logs, org docs. Use `--author="2.0.0_SA_COO <2.0.0_SA_COO@opal.agent>"`.
 
-## Pod Delivery Dashboard -- Updated 2026-04-15 (COO session 29 startup)
+## Pod Delivery Dashboard -- Updated 2026-04-16 (COO session 30 startup)
 
 ### Active Projects
 
 | Project | Status | Pending Work |
 |---------|--------|-------------|
-| `ADVI_ROLLUP` | **Registered 2026-04-15 (post-presentation rollup).** Absorbs `ADVI_FNTEND` (→ Wave 3), `BDPL_ASTDIM` (→ Wave 1), `BDPL_CNPRCS` (→ Waves 0+2); adds Wave 4 (ROLEAUA / CANNNA / SLEEVE structural convergence DS plans), Wave 5 (D_04 RFS window NNA point fix), FE01 (cost-basis year-bucket). 6 waves / 11 items. PRD: `docs/architecture/ADVI_ROLLUP.md`. **Existing staged TOs keep filenames unchanged.** 17 new TOs to author (WP-3, WP-10, WP-11, RF01, RA-P0..P5, CN-P0..P5, SL-P0..P3, FE01). Execution state at registration: Wave 0 tactical held by AUA freeze; Wave 1 W1-W6 complete (`bd-v2.24.0`), W7 remaining; Wave 2 WP-4..WP-9 staged; Wave 3 FE B1-B6/B8 DEV, D7 complete, DS B1-B8 awaiting nightly gold; Wave 4 plans authored; Wave 5 root cause confirmed. | Andrew thaw (Wave 0); COO decomposition of 17 new TOs against the mandatory compiler-run matrix in the PRD §Compiler Tools; nightly gold artifact for Wave 3 comp-validate; ADVI_PROFAU.006 PROD D_04 for Wave 3 B1 rerun. |
-| `ADVI_PROFAU` | .001-.007 ALL COMPLETE 2026-04-14 (portal-v2.1.44). D_02 per-role canonical NNA shipped in commit `d51e44ef` and was queued for the 2026-04-14 nightly cycle; no 2026-04-15 AE verification log is present yet. Sydney Cobb spot-check still waits on post-deploy `/frontend-dev`. | Q3/Q7 DS TOs pending Andrew direction; post-nightly verification of `d51e44ef` not yet logged. |
+| `ADVI_ROLLUP` | Rollup project absorbing `ADVI_FNTEND` (W3), `BDPL_ASTDIM` (W1), `BDPL_CNPRCS` (W0+W2) + Wave 4 (ROLEAUA / CANNNA / SLEEVE) + W5 (D_04 RFS NNA fix) + FE01 (cost-basis year-bucket) + IN-2 incremental-runs infra. Session 29 authored 25 TOs + IN-2 set; overnight ship extended coverage: **W0 WP-11 COMPLETE** (864b6d7a); **W1 W7 COMPLETE** (AE natural fire 2026-04-15 22:10 UTC, TO flipped in working tree pending AE sweep-commit); **W3** FE B-wave on portal DEV + DS B1/B3/B6/B8 fix commits (5114984b / 544877cc / 6a9a047d / d2dcae39) + B7 closeout (d08d4bb7) + FE01 COMPLETE (DE 7b56698) + B9 DS/DE COMPLETE (f2ec98d1 / a2d8f83) + D7 COMPLETE; **W4** RA-P0/P1/P2/P3 COMPLETE (51788dbb / afd553d4 / 0c06d423 / e53f0afa), CN-P0/P1 COMPLETE (93b70620 / bf9651b8), post-rerun validators PASS (6c0da968), SL-P0 discovery COMPLETE (2db02ebc); **W5** RF01 COMPLETE (21c0637f) + post-rerun re-confirm PASS (244be30c); **IN-2** W0.002 watermark helper lib COMPLETE (bc1af093) + W0.003 comp-incrparity tool COMPLETE (e05d2567) + DS IN-1 feasibility survey COMPLETE (196e8e53); **DH-1/2/4** COMPLETE (516e39da / aaccd4e8 / a1a31507). | **Active:** DH-3 + DH-7 in flight at AE 0.6 (ride tonight 04:00 UTC nightly, bd-v2.24.2 tag post DH-7); RA-P4/P5 + CN-P2/P3/P4/P5 cutover cascade (mix of pending + staged on DS lanes); WP-3 CUSIP backfill AE (W7 now unblocked); WP-4..WP-9 staged on DS (gate WP-3); WP-10b code-shipped awaiting AE wire-up + 3 clean nightlies; SL-P1..P3 staged (hard-gated on SL-P0 memo); B4 DS lone remaining in FE wave A. |
+| `ADVI_49EXEC` | Phase 0 — PRD `docs/architecture/ADVI_49EXEC.md` shipped session 29 (2523e149). 7 TOs scoped: DS .001 template-library, DS .002 LLM-prose-generator, DS .005 leaderboard prior-week rotation, AE .003 anthropic-sdk-deps layer, DT .004 generator-Lambda terraform + EventBridge wiring, DE .006 SummaryCard → Executive Summary rebrand + bullets stub (**COMPLETE e8651920** — shipped portal DEV 00fbcc4 under stub-first approval). | DS .001/.002/.005 staged on DS queue. AE .003 queued post-DH. DT .004 pending AE .003 completion. comp-pii audit on platinum/advisors/* + platinum/leaderboards/* (gates TO 1 LLM prompt). AE 0.6 confirmation of gold-chain-complete EventBridge signal format (gates TO 7). |
+| `CDRS_TFIMPT` | Phase 0 COMPLETE (DT-owned): firmRole framework shipped — **portal-v2.1.51 PROD** with firm-access matrix + claims.firmRole consumption; auth Lambda e7b78cf9 with firmRole in JWT + /auth/me; canonical docs at `infra/aws/users/` (0326068e). Phase 1 ACTIVE: 5 CloudFront-import TOs (.001-.005) staged on AE 0.7. Phase 2 PARTIAL: .006 opal-users-v2 DynamoDB import (20acf679), .007 partner-firm terraform + shared-lib + auth-handler generalization TERMINAL (7e673244). Orphan cleanups: market-metrics CDN decommissioned (d6594901), JWT drift closed (42b4152b). **Lane-fenced to DT 0.4.0 + AE 0.7.0 — NOT on ADVI_ROLLUP.** | Phase 1: canonical triad `<if_mismatch>` on every `<step>` (AE owns reformat). |
+| `COMP_LEARNS` | Phase 0 — registration 2026-04-15. Implementation root `comp/` + `program.md` protocol skeleton. COO P0 worktree migration (23de5edf) + Track B engine v0 (c353b18b) + driver schema-strip / pass-rate via state.json (2cb83eb6). Wave 1 punchlist batch .006-.010 authored (71fa5813). TOs shipped: **.001 harness framework COMPLETE** (43e3225e + 714d43a9); **.003 compiler_baseline** (~B 7740277d); **.004 loop orchestrator + branch_guard.py + shim** (~C e657c232, 22/22 pytest). CTO PRD #2 httpx target shipped (fd2d0515). | .005 adversarial-queries legitimately pending on DS. First benchmark target selection + ~50-query ground-truth harness authoring (4-6 hrs human work) before the agent loop can run honestly. |
+| `ADHC_ROUTER` | Phase 1 COMPLETE 2026-04-15 — all 4 TOs closed. 4 compiler patches shipped: **T1 comp-blast function-level + dotted reverse-edge regression** (d1d6920b + 0324142a); **T2 AWS_UNREACHABLE status** (70c8399d); **T3 empty-vs-broken footer** (614d4c28); **T4 proposal E pass-through half** (3c921e08). | Phase 2 backlog pickup when lanes idle again (FIELD index ~40 paths suspiciously small, function-level blast nodes missing, route.s3_key unset on CF-rewrite routes). |
+| `ADVI_PROFAU` | .001-.007 ALL COMPLETE 2026-04-14 (portal-v2.1.44). D_02 per-role canonical NNA (`d51e44ef`) queued on 2026-04-14 nightly cycle; post-rerun validators PASS session 29 (6c0da968). | Q3/Q7 DS TOs pending Andrew direction; Sydney Cobb spot-check still waits on post-deploy `/frontend-dev`. |
 | `ADHC_DESIGN` | Phase 2: all pod .0.1/.0.2/.0.3/0.4 TOs COMPLETE. | Attribution RD .001/.015/.024 + Valuation RD .007 still staged — agents not LIVE. Backlog: .033 (low priority). |
 | `ADHC_TMSTEL` | On hold. P0 PRD complete. | Azure AD app registration (Andrew/IT). |
-| `ADVI_INCMTL` | On hold. P0 briefing complete. | Production per-script timing profile. DS watermark design. AE dispatch. |
+| `ADVI_INCMTL` | On hold. P0 briefing complete. Reopened conceptually via ADVI_ROLLUP.IN-2; formal reactivation deferred. | Production per-script timing profile. DS watermark design. AE dispatch. |
 
 **Recently merged into `ADVI_ROLLUP` (2026-04-15):** ADVI_FNTEND (→ Wave 3), BDPL_ASTDIM (→ Wave 1), BDPL_CNPRCS (→ Waves 0+2). Task order filenames preserved; only registry ownership moved.
-**Recently closed:** ADVI_OFFICE (portal-v2.1.44, W5+W9b flipped session 28), ADVI_REBORN (W6-003/004, 4-cell matrix validated).
+**Recently closed:** ADVI_OFFICE (portal-v2.1.44), ADVI_REBORN (4-cell matrix validated).
 
 **Closed 2026-04-13:** DEBT_1STRUN, ADVI_OTHDED, ADVI_HDRSPL.
 **Previously closed:** ADVI_PROFIL (portal-v2.1.39), ADVI_49PUSH (bd-v2.23.0), ADVI_GLDRST (silver-prep chain shipped, ops follow-ups carried forward).
 
-### Pipeline Tags (verified 2026-04-13 session 25)
+### Pipeline Tags (refreshed 2026-04-16 session 30 startup via `git tag -l`)
 
 | Pipeline | Tag |
 |----------|-----|
-| BD | bd-v2.24.0 |
-| Partners API | partners-api-v1.15.8 |
-| Portal Auth | portal-auth-v1.12.2 |
-| Portal | portal-v2.1.49 |
+| BD | bd-v2.24.2 (shipped 2026-04-16 session 30; DH-3 + DH-7 + W7-flip) |
+| Partners API | partners-api-v1.15.9 |
+| Portal Auth | portal-auth-v1.12.3 |
+| Portal (submodule) | portal-v2.1.51 |
 | Yang | yang-v2.3.8 |
-| Market Overview | market-overview-v1.7.0 |
+| Market Overview | market-overview-v1.9.0 |
 | News | news-v2.9.5 |
-| Shared Infra | shared-infra-v1.6.0 |
+| Shared Infra | shared-infra-v1.7.0 |
+| Security Scanner | security-scanner-v1.0.2 |
+| Trade Pipeline | trade-pipeline-v1.2.0 |
 
-### Operational Notes (04-15 startup reconciliation)
+### Operational Notes (04-16 startup reconciliation)
 
-- **ADVI_OFFICE CLOSED** (session 27). `ofc-l2-advisor-distribution` remains the single follow-on DS TO.
-- **Startup corrections applied:** ADVI_FNTEND.D7 flipped to complete-in-fact; BDPL_ASTDIM W2/W4 flipped to complete-in-fact; active-project wording corrected from "issuance pending" to execution/staged reality.
-- **D_02 per-role canonical NNA (`d51e44ef`)** is queued on the 2026-04-14 nightly cycle, but no 2026-04-15 AE verification log exists yet.
+- **Overnight ship cadence** (session 29 → session 30): 25 TOs authored session 29, ≥12 flipped to COMPLETE overnight. COO lane this startup: 6 DS-base TOs flipped pending→complete (ADHC_ROUTER T1/T2/T4, COMP_LEARNS.001, ADVI_FNTEND.B3, ADVI_ROLLUP.RA-P3), 1 pending with code-shipped note (BDPL_CNPRCS.WP-10b), 1 left pending (B4), 1 left pending (COMP_LEARNS.005). B-fix TOs (B1/B3/B6/B8) shipped overnight close their parent B-TOs by construction.
+- **CTO lane this startup** (per CTO 12:43:55Z MCP): CTO prompt dashboard + REGISTRY cross-check + ADVI_ROLLUP / ADVI_49EXEC / CDRS_TFIMPT JSONs if stale. COO does not dual-update those.
+- **AE 0.6 in flight tonight:** DH-3 (docs 7/8 + audit 11/12) then DH-7 (IAM events:PutEvents + emit_chain_complete + bd-v2.24.2 tag). Rule 7 pre-flag MCP expected before S3 upload. Target: both shipped before 03:30 UTC buffer for 04:00 UTC nightly fire. AE will ping on DH-3 commit + DH-7 commit.
+- **W7 first-fire verification COMPLETE** 2026-04-15 22:10 UTC (TO metadata flipped in working tree, AE sweep-commit riding DH-3/DH-7). WP-3 CUSIP backfill unblocked.
 - **ec2-auto-shutdown-enforcer:** security-scanner-v1.0.2 live, QA runner AutoShutdown=disabled.
 
-### Pod 4 (ClientPlatform) -- Status as of 2026-04-15 startup
+### Pod 4 (ClientPlatform) -- Status as of 2026-04-16 startup
 
 | Agent | Last Known Work | Pending |
 |-------|----------------|---------|
-| 0.4.0_DE | Session 2026-04-15: ADVI_FNTEND FE B1/B2/B3/B4/B5/B6/B8 shipped to portal DEV; D7 warm-import validated PASS by DT harness and corrected to complete-in-fact. Prior PROFAU + OFFICE W3/W6 + ADV donut wires already shipped. | DT push + `/frontend-dev` acceptance for completed FE wave. |
-| 0.4.0_DT | Session 2026-04-14: OFFICE W4 + W8 both deployed (portal-v2.1.42, portal-v2.1.44). | deployment_map. |
-| 0.4.0_DS | Session 2026-04-14: D_00b fix #3, PROFAU.003 QA, D_02 per-role NNA (d51e44ef), ADV donut work, BDPL_ASTDIM W2/W4 (`39692589`), and ALL 8 ADVI_FNTEND Wave A B-TOs code-shipped (B1 a56eca56+454ea3c7, B2 3a2f0998, B3 63c23a0f, B4 3ec473e0, B5 f17e8366, B6 2e995266, B7 7708f0c8, B8 b9d9a3f3; plus B2/B5 nest 1aa1c6e8). | All 8 B-TOs awaiting nightly artifact validation; `ofc-l2-advisor-distribution` pending; tactical 3-bond on hold (AUA freeze). |
-| 0.4.2_RD | Session 2026-04-14: ADVI_FNTEND B0 + D6 landed on DEV (`5ea017c`, `814ba34`). | `/frontend-dev` closeout on B0 + D6. |
+| 0.4.0_DE | Session 2026-04-15 (interim + evening): Wave A PROD push prep + regression sweep CLEAN (a2e013ca), RA-P2 FE impact audit (ba11a2ec), CN-P2 FE impact audit + constitution hygiene (59cfbfef), ADVI_ROLLUP.B9 DE column (a2d8f83), FE01 cost-basis parameterize (7b56698), **ADVI_49EXEC.006 COMPLETE** (e8651920 SummaryCard → Executive Summary rebrand + bullets stub). | `/frontend-dev` acceptance on 49EXEC.006 + post-DT-push Wave A closeout. |
+| 0.4.0_DT | Session 2026-04-15: DEV→PROD merge portal-v2.1.50/51 + auth-validator-edge firmRole admin bypass (432d995f), opal-partners-data pseudonymization retirement (c934a26b), ADVI_ROLLUP.IN-2 W0.002 watermark helper lib (bc1af093) + W0.003 comp-incrparity tool (e05d2567), ADVI caching log (portal submodule ca6baee), CDRS_TFIMPT.007 co-ship. | deployment_map. |
+| 0.4.0_DS (all lanes) | Session 2026-04-15 high-throughput: ~A ofc-l2 TO complete + Travis AUA reconciliation memo + RF01 re-confirm + COMP_LEARNS.001 harness skeleton; ~B RA-P3 + CN-P3 HOLD + B1/B3/B6/B8 fix commits + WP-10b code-shipped + COMP_LEARNS.003; ~C D_00c T1 + D_01 T1 + RA-P2 + B7 closeout + COMP_LEARNS.004 full scope; ~D WP-11 + CN-P0/P1 + post-rerun validators PASS + CN-P2 status flip + T4 patch. base DS: SL-P0 sleeve discovery + IN-1 incremental feasibility survey. | B4 remains pending in FE wave A; RA-P4/P5 + CN-P2/P3/P4/P5 cutover cascade (DS mix staged + pending); COMP_LEARNS.005 legitimately pending; SL-P1..P3 staged. |
+| 0.4.2_RD | Session 2026-04-14: ADVI_FNTEND B0 + D6 landed on DEV (`5ea017c`, `814ba34`). No 2026-04-15 log. | `/frontend-dev` closeout on B0 + D6. RD agents not LIVE for ADHC_DESIGN Attribution/Valuation backlog. |
 
-### Shared Services -- Status as of 2026-04-15 startup
+### Shared Services -- Status as of 2026-04-16 startup
 
 | Agent | Last Known Work | Pending |
 |-------|----------------|---------|
-| 0.5.0_AE_OpalETL | DEBT_1STRUN .005 COMPLETE (66af3ad5). | infrastructure_inventory. |
-| 0.6.0_AE_PartnerETL | 2026-04-14: BDPL_ASTDIM W5/W6 COMPLETE (`d7140701`, `bd-v2.24.0`) and ADVI_OFFICE W2 COMPLETE; security-scanner-v1.0.2 enforcer fix live. | BDPL_ASTDIM W7 first-fire verification; ADVI_FNTEND B1 rerun staged; Phase 3 Day 2-5 diffs (nightly, Apr 15-17). infrastructure_inventory. |
-| 0.7.0_AE_CloudOps | AUTH_TFIMPT 3/3 COMPLETE (shared-infra-v1.6.0). | infrastructure_inventory. |
+| 0.5.0_AE_OpalETL | DEBT_1STRUN .005 COMPLETE (66af3ad5). No 2026-04-15 log. | infrastructure_inventory. |
+| 0.6.0_AE_PartnerETL | 2026-04-15 PM high-throughput: DH-1 chain definitions (516e39da) + DH-2 arg validation (aaccd4e8) + DH-4 logging hygiene (a1a31507) all COMPLETE; B1-rerun flipped (82fedf82); canonical-prices-daily schedule 22:00→04:00 UTC (53909f06 → bd-v2.24.1); W7 first-fire natural verification PASSED 2026-04-15 22:10 UTC (full_chain_recovery_b01_namerror_fix.md). | **DH-3 + DH-7 in flight tonight → bd-v2.24.2** with Rule 7 pre-flag to CTO+COO before S3 upload. WP-3 CUSIP backfill + ADVI_49EXEC.003 anthropic-sdk-deps + SL-AE1 BD Units escalation queued post-DH. infrastructure_inventory. |
+| 0.7.0_AE_CloudOps | Session 2026-04-15 full-day CDRS_TFIMPT sprint: Phase 1 TOs .001-.005 staged; Phase 2 partial — .006 opal-users-v2 DDB import (20acf679), .007 partner-firm module TERMINAL (7e673244, AE+DT co-ship). Post-sprint cleanups: market-metrics CDN decommissioned (d6594901), JWT drift closed (42b4152b). comp-pipescript-silver-extension COMPLETE (41cfeeb1, session 29). | CDRS_TFIMPT Phase 1 triad `<if_mismatch>` reformat. infrastructure_inventory. |
 
 **NOTE:** This dashboard is corrected on every COO startup. Do not treat it as
 authoritative between sessions — always re-audit from agent logs and git.
