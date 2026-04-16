@@ -21,15 +21,28 @@ $ErrorActionPreference = 'Stop'
 $ScriptRoot = Split-Path -Parent $MyInvocation.MyCommand.Path
 $Workspace  = Split-Path -Parent $ScriptRoot
 
-# Find bash.exe -- prefer PATH, then the standard Git for Windows location.
+# Find bash.exe -- PREFER Git for Windows explicitly. Windows ships a WSL
+# launcher at C:\Windows\System32\bash.exe that `Get-Command` returns first;
+# on systems without a WSL distro installed, invoking it fails with
+# "execvpe(/bin/bash) failed: No such file or directory".
 $bash = $null
-$fromPath = Get-Command bash.exe -ErrorAction SilentlyContinue
-if ($fromPath) {
-    $bash = $fromPath.Source
-} elseif (Test-Path "C:\Program Files\Git\bin\bash.exe") {
-    $bash = "C:\Program Files\Git\bin\bash.exe"
-} else {
-    Write-Error "bash.exe not found. Install Git for Windows, or add bash to your PATH."
+$candidates = @(
+    "C:\Program Files\Git\bin\bash.exe",
+    "C:\Program Files (x86)\Git\bin\bash.exe",
+    "$env:LOCALAPPDATA\Programs\Git\bin\bash.exe"
+)
+foreach ($path in $candidates) {
+    if (Test-Path $path) { $bash = $path; break }
+}
+if (-not $bash) {
+    # Last-ditch PATH scan, but skip the System32 WSL launcher.
+    $found = Get-Command bash.exe -All -ErrorAction SilentlyContinue |
+             Where-Object { $_.Source -notlike "*\System32\*" } |
+             Select-Object -First 1
+    if ($found) { $bash = $found.Source }
+}
+if (-not $bash) {
+    Write-Error "Git Bash (bash.exe from Git for Windows) not found in standard install locations. Install Git for Windows or edit this script to point at your bash.exe."
     exit 127
 }
 
