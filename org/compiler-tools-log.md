@@ -619,3 +619,40 @@ RESOLUTION: fixed in `614d4c28` (`comp-platinum reverse empty-vs-broken disambig
 | 2026-04-15 | 0.4.0_DS_ClientPlatform~C | ADVI_ROLLUP.D00c-T1 | comp-pipescript | comp-pipescript io D_00c | PASS | account_team + advisor_fee_detail + role_aua reads; employee_leaderboard.json write |
 | 2026-04-15 | 0.4.0_DS_ClientPlatform~C | ADVI_ROLLUP.D00c-T1 | comp-blast | comp-blast D_00c | WARN | Script-node lookup empty; no new reader (path b doc-only) |
 | 2026-04-15 | 0.4.0_DS_ClientPlatform~C | ADVI_ROLLUP.D00c-T1 | aws s3 ls/cp | folder list + missing advisor summary spot-check | PASS | 11 missing classified (4 sentinels + 7 zero-current); confirmed tagged_aua=0 |
+| 2026-04-15 | 0.4.0_DS_ClientPlatform | ADVI_ROLLUP.IN-1.ds-incremental-feasibility-survey | comp-pipescript | comp-pipescript io D_02 | PASS |
+| 2026-04-15 | 0.4.0_DS_ClientPlatform | ADVI_ROLLUP.IN-1.ds-incremental-feasibility-survey | comp-pipescript | comp-pipescript io C_07 | PASS |
+| 2026-04-15 | 0.4.0_DE_ClientPlatform | ADVI_49EXEC.006 | comp-cache | comp-cache collisions | PASS |
+| 2026-04-15 | 0.4.0_DE_ClientPlatform | ADVI_49EXEC.006 | comp-transform | comp-transform schema-check AdvisorPublicProfile --feature exec | PASS |
+| 2026-04-15 | 0.4.0_DE_ClientPlatform | ADVI_49EXEC.006 | comp-pipescript | comp-pipescript deployed D_01 | PASS |
+| 2026-04-15 | 0.4.0_DE_ClientPlatform | ADVI_49EXEC.006 | comp-pipescript | comp-pipescript io C_08 | PASS |
+| 2026-04-15 | 0.4.0_DE_ClientPlatform | ADVI_49EXEC.006 | comp-pipescript | comp-pipescript io D_04 | PASS |
+| 2026-04-15 | 0.4.0_DT_ClientPlatform | ADVI_ROLLUP.IN-2.W0.002 | comp-pipescript | comp-pipescript io C_06 | PASS |
+| 2026-04-15 | 0.4.0_DT_ClientPlatform | ADVI_ROLLUP.IN-2.W0.002 | comp-transform | comp-transform fields AdvisorPublicProfile | PASS |
+| 2026-04-15 | 0.4.0_DT_ClientPlatform | ADVI_ROLLUP.IN-2.W0.002 | comp-transform | comp-transform schema-check AdvisorPublicProfile --feature exec | PASS |
+| 2026-04-15 | 0.4.0_DT_ClientPlatform | ADVI_ROLLUP.IN-2.W0.002 | comp-pipescript | comp-pipescript deployed C_08 | PASS |
+| 2026-04-15 | 0.4.0_DT_ClientPlatform | ADVI_ROLLUP.IN-2.W0.002 | comp-cache | comp-cache collisions | PASS |
+| 2026-04-15 | 0.4.0_DS_ClientPlatform~B | ADVI_FNTEND.B1.fix | comp-incrparity | comp-incrparity --help | PASS |
+| 2026-04-15 | 0.4.0_DS_ClientPlatform~B | ADVI_FNTEND.B1.fix | comp-incrparity | comp-incrparity ALL --mode quick | PASS |
+| 2026-04-15 | 0.4.0_DS_ClientPlatform~B | ADVI_FNTEND.B1.fix | comp-incrparity | comp-incrparity C_06 --mode quick | PASS |
+| 2026-04-15 | 0.4.0_DS_ClientPlatform~B | ADVI_FNTEND.B1.fix | comp-incrparity | comp-incrparity C_06 --mode deep | PASS |
+| 2026-04-15 | 0.4.0_DS_ClientPlatform~B | ADVI_FNTEND.B1.fix | comp-incrparity | comp-incrparity ALL --mode quick | PASS |
+| 2026-04-15 | 0.4.0_DS_ClientPlatform~B | ADVI_FNTEND.B1.fix | comp-pipescript | comp-pipescript deployed D_00c | PASS |
+| 2026-04-15 | 0.4.0_DS_ClientPlatform~B | ADVI_FNTEND.B1.fix | comp-pipescript | comp-pipescript deployed D_02 | PASS |
+| 2026-04-16 | 0.4.0_DT_ClientPlatform | deployment_map | comp-platinum | comp-platinum reverse top_gain_positions | PASS |
+| 2026-04-16 | 0.6.0_AE_PartnerETL | ADVI_ROLLUP.DH-3 | comp-pipescript | comp-pipescript io B_01 | PASS |
+| 2026-04-16 | 0.6.0_AE_PartnerETL | ADVI_ROLLUP.DH-3 | comp-pipescript | comp-pipescript io A_00 | PASS |
+| 2026-04-16 | 0.6.0_AE_PartnerETL | ADVI_ROLLUP.DH-3 | comp-pipescript | comp-pipescript io B_01b | PASS |
+| 2026-04-16 | 0.4.0_DS_ClientPlatform~B | ADVI_ROLLUP.D02-T2 | comp-pipescript | comp-pipescript io D_02 | PASS |
+| 2026-04-16 | 0.4.0_DS_ClientPlatform~B | ADVI_ROLLUP.D02-T2 | comp-pipescript | comp-pipescript io D_04 | PASS |
+| 2026-04-16 | 0.4.0_DS_ClientPlatform~B | ADVI_ROLLUP.D02-T2 | comp-platinum | comp-platinum reverse top_gain_positions | PASS |
+| 2026-04-16 | 0.4.0_DS_ClientPlatform~B | ADVI_ROLLUP.D02-T2 | comp-pipescript | comp-pipescript io D_02 | PASS |
+| 2026-04-16 | 0.4.0_DS_ClientPlatform~B | ADVI_ROLLUP.D02-T2 | comp-build | comp-build | PASS |
+| 2026-04-16 | 0.4.0_DS_ClientPlatform~B | ADVI_ROLLUP.D02-T2 | comp-pipescript | comp-pipescript io B_01 | PASS |
+| 2026-04-16 | 0.4.0_DS_ClientPlatform~B | ADVI_ROLLUP.D02-T2 | comp-pipescript | comp-pipescript io B_01b | PASS |
+| 2026-04-16 | 0.4.0_DS_ClientPlatform~B | ADVI_ROLLUP.D02-T2 | comp-platinum | comp-platinum reverse gold/entities/advisors | PASS |
+| 2026-04-16 | 0.4.0_DS_ClientPlatform~B | ADVI_ROLLUP.D02-T2 | comp-pipescript | comp-pipescript consumers D_02 | PASS |
+| 2026-04-16 | 0.6.0_AE_PartnerETL | ADVI_ROLLUP.DH-7 | comp-iam | comp-iam service bd-gold-layer-runner | PASS |
+| 2026-04-16 | 0.6.0_AE_PartnerETL | ADVI_ROLLUP.DH-7 | comp-iam | comp-iam | PASS |
+| 2026-04-16 | 0.6.0_AE_PartnerETL | ADVI_ROLLUP.DH-7 | comp-pipescript | comp-pipescript io D_02 | PASS |
+| 2026-04-16 | 0.4.0_DS_ClientPlatform~D | ADVI_ROLLUP.CN-P1b.ds-nna-atomic-historical-backfill | comp-pipescript | comp-pipescript io C_01 | PASS |
+| 2026-04-16 | 0.4.0_DS_ClientPlatform~D | ADVI_ROLLUP.CN-P1b.ds-nna-atomic-historical-backfill | comp-pipescript | comp-pipescript io D_00c | PASS |
