@@ -193,17 +193,21 @@ When researching for a PRD, you should:
 
 **Commit only:** `docs/architecture/` specs, `org/projects/` files, session logs, org docs. Use `--author="1.0.0_SA_CTO <1.0.0_SA_CTO@opal.agent>"`.
 
-## Project Status Dashboard -- Updated 2026-04-15 (session 28, post-rollup)
+## Project Status Dashboard -- Updated 2026-04-16 (session 30, post-session-29 sweep)
 
 ### Active Projects
 
 | Project | Status | Pending Work |
 |---------|--------|-------------|
 | `ADHC_DESIGN` | All 4 pod Phase 2 branches complete. Pod 0.4 shipped (.028 `3096108`, .032 `f3274f3`). .025 COMPLETE-IN-FACT. Backlog: `.033` react-hooks/set-state-in-effect refactor (16 warnings, low priority). | Attribution .001/.015/.024 (0.2.2_RD) + Valuation .007 (0.2.4_RD) — blocked on those RDs registering. |
-| `ADVI_PROFAU` | .001-.007 ALL COMPLETE 2026-04-14 (portal-v2.1.44). D_02 per-role canonical NNA shipped in commit `d51e44ef` and was queued for the 2026-04-14 nightly gold cycle; no 2026-04-15 AE verification log is present yet. Sydney Cobb .007 post-deploy `/frontend-dev` still outstanding. | Q3/Q7 DS TOs pending Andrew direction; post-nightly verification of `d51e44ef` not yet logged. |
-| `ADVI_ROLLUP` | **Registered 2026-04-15.** Absorbs `ADVI_FNTEND` (Wave 3), `BDPL_ASTDIM` (Wave 1), `BDPL_CNPRCS` (Waves 0+2), plus new Wave 4 (ROLEAUA / CANNNA / SLEEVE structural convergence), Wave 5 (D_04 RFS NNA window point fix), and FE01 (cost-basis year-bucket parameterize). 6 waves / 11 items from DS master brief. PRD: `docs/architecture/ADVI_ROLLUP.md`. Existing staged TOs keep filenames; 17 new TOs pending COO decomposition against the mandatory compiler-run matrix in the PRD. | Andrew thaw for Wave 0 tactical; COO decomposition of WP-3/10/11, RF01, RA-P0..P5, CN-P0..P5, SL-P0..P3, FE01; nightly gold artifact for Wave 3 comp-validate; ADVI_PROFAU.006 PROD D_04 for Wave 3 B1 rerun. |
+| `ADVI_PROFAU` | .001-.007 ALL COMPLETE 2026-04-14 (portal-v2.1.44). D_02 per-role canonical NNA shipped in commit `d51e44ef` and rode the 2026-04-15 full A→D rerun. Sydney Cobb .007 post-deploy `/frontend-dev` still outstanding. | Q3/Q7 DS TOs pending Andrew direction; post-rerun verification of `d51e44ef` not yet logged by AE 0.6. |
+| `ADVI_ROLLUP` | **Phase 1 — multi-wave execution in flight.** W0 WP-11 + 3-bond tactical COMPLETE (`864b6d7a`, `1f1dc197`); IN-1 feasibility COMPLETE (`196e8e53`), IN-2 W0.002 + W0.003 DT COMPLETE (`bc1af093`, `e05d2567`). W1 ASTDIM W7 scheduled-run verification remaining. W2 WP-3 AE staged, WP-10 DS staged, WP-10b code shipped (`cff234b5`, awaits AE wire-up + 3 nightlies), WP-4..9 staged on DS queue. W3 FE full sweep on DEV (B1.fix `5114984b`, B3.fix `544877cc`, B6b `6a9a047d`, B8b `d2dcae39`, B7 closeout `d08d4bb7`, D01-T1 `5c217dda`, D00c-T1 `7ea091cb`, FE01 `7b56698`, B9 complete `f2ec98d1` + `a2d8f83`); DT PROD bumps `75ce4cb8` (CostBasisByYear + Continuous-OFC-NNA), `b654d515` (DEV→PROD merge). W4: RA-P0/P1/P2/P3 COMPLETE (`51788dbb` / `afd553d4` / `4f459d45` / `e53f0afa`), RA-P4/P5 staged. CN-P0/P1 COMPLETE (`93b70620` / `6c0da968`), CN-P2 pending ~D, CN-P3 HOLD (nna_atomic 1 partition vs 2294 — CN-P1b backfill assigned ~D), CN-P4/P5 staged. SL-P0 COMPLETE (`2db02ebc`, Path 3 + Path 1 escalation, 598 cohort), SL-P1/P2/P3 staged, SL-AE1 staged AE. W5 RF01 COMPLETE (`21c0637f`). DH-series: DH-1/2/4 COMPLETE; DH-3/5/6/7 staged. | AE 0.6.0 post-rerun validator evidence for W3; COO decomposition of remaining Wave 4 cutover P3-P5 and SL-P1-P3; ADVI_PROFAU.006 PROD D_04 for Wave 3 B1 rerun; DH-7 gold-dispatch `chain_complete` EventBridge emission gates ADVI_49EXEC TO 7. |
+| `ADVI_49EXEC` | **Phase 1 — partial ship.** PRD `2523e149`. COO TO authoring batch `86f1b998` (7 TOs). DE TO 006 COMPLETE `e8651920` (SummaryCard → "Executive Summary" + AI bullets stub, portal `00fbcc4`). DS template-library/LLM-prose/leaderboard-rotation TOs staged. AE anthropic-sdk layer + DT generator-lambda pending. | DS execution on TOs 001/002/005; AE 0.6 confirmation of DH-7 gold-chain-complete EventBridge emission (gates TO 7); comp-pii audit on platinum/advisors/* + platinum/leaderboards/* (gates TO 1 LLM prompt). |
+| `CDRS_TFIMPT` | **Phase 1 ACTIVE.** Phase 0 complete (DT-owned) — firmRole framework shipped, portal-v2.1.51 PROD with firm-access matrix, auth Lambda `e7b78cf9`, canonical docs `infra/aws/users/` (`0326068e`), Hunter/Chase/Travis validated end-to-end. Phase 1: 5 CloudFront-import TOs (.001-.005) staged on AE 0.7. Phase 2: DynamoDB table imports + auth-handler generalization held on AE↔DT design MCP 20260415T161839Z. | AE 0.7 Phase 1 import execution (needs triad `<if_mismatch>` on each `<step>`); AE 0.7 reply on shared partner-firm infra pattern for Phase 2. |
+| `ADHC_ROUTER` | **Phase 1 COMPLETE** 2026-04-15 — all 4 TOs closed. 4 compiler patches shipped: T1 `d1d6920b` (reverse-edge), T2 `70c8399d` (AWS_UNREACHABLE), T3 `614d4c28` (empty-vs-broken footer), T4 `3c921e08` (proposal E half). Phase 2 backlog documented: FIELD index ~40 paths undersized, function-level blast nodes missing, route.s3_key unset on CF-rewrite routes. | Phase 2 decomposition — only pick up when DS lanes idle again (currently all engaged). |
+| `COMP_LEARNS` | **Phase 0 — Track A + Track B shipped; blocked on honest harness authoring.** Track A TOs: .001 ~A COMPLETE (`43e3225e` + diagnostic `714d43a9`), .003 ~B COMPLETE (`7740277d`, 9/9 pytest), .004 ~C COMPLETE (`e657c232`, 22/22 pytest + branch_guard). .002 CTO Phase 0 shipped (`fd2d0515`, httpx 0.28.1 surface inventory); Steps 2-7 remain CTO-owned (query matrix + verifiability + emission — 4-6 hrs solo). .005 ~D staged (scaffolding only, gated on plateau×3). .006-.010 Wave 1 punchlist (`71fa5813`). Track B: engine v0 live — driver + worktree fix + schema-strip + pass-rate (`c353b18b` / `23de5edf` / `2cb83eb6`). Dry-run Tests 1 + 5 PASS; Tests 2/3/4 (crash/concurrent/kill) not yet run. | CTO PRD #2 Steps 2-7 (query matrix, operational seeding, verifiability, discrimination, falsifiability, cross-target review); ~B status CLI (.007) dispatch; ~A benchmark authoring SOP (.008); remaining crash/concurrent/kill dry-run tests on Linux (flock absent on Git Bash); first target selection memo (.009). |
 
-### Recently Completed / Merged (this session window)
+### Recently Completed / Merged (session 28-29 window)
 
 | Project | Completed | Key Deliverables |
 |---------|-----------|-----------------|
@@ -213,19 +217,12 @@ When researching for a PRD, you should:
 | `ADVI_REBORN` | 2026-04-14 | All waves complete. W6-003 (1d70ecaf) + W6-004 (0225d359). Four-cell matrix validated. |
 | `ADVI_OFFICE` | 2026-04-14 | All waves complete. portal-v2.1.44. W9a DS (416806a5) + W9b AE D_04. OFC Continuous AUA live. |
 
-### Ad-hoc Active TOs
-
-| Agent | TO | Project |
-|-------|-----|---------|
-| `0.4.0_DS_ClientPlatform` | `ofc-l2-advisor-distribution.md` | ADVI_OFFICE follow-on (per-advisor distribution for bell curve) |
-| `0.4.0_DS_ClientPlatform` | `3-bond-phantom-scoped-exceptions.md` | Ad-hoc tactical fix for BDPL_CNPRCS (coded, execution held by 2026-04-14 AUA freeze) |
-
 ### Inactive / On Hold
 
 | Project | Reason |
 |---------|--------|
 | `ADHC_TMSTEL` | Awaiting Azure AD app registration (Andrew/IT). |
-| `ADVI_INCMTL` | Awaiting production per-script timing profile (AE 0.6.0). Low priority. |
+| `ADVI_INCMTL` | Superseded in practice by `ADVI_ROLLUP.IN-1/IN-2` (feasibility complete `196e8e53`, design PRD in flight). Keep on hold until IN-2 closes. |
 
 ### Recently Completed
 
@@ -246,16 +243,16 @@ When researching for a PRD, you should:
 | `ADVI_ANONYM` | 2026-04-06 | P1-P5 complete. 16 TOs. Pseudonymization, RBAC, Lambda PII. |
 | `ADHC_HISTRY` | 2026-04-06 | All 8 TOs. AUA $1,582M (0.3% from silver). Phantom fix deployed. |
 
-### Pipeline Tags (as of 2026-04-10)
+### Pipeline Tags (as of 2026-04-16)
 
 | Pipeline | Tag |
 |----------|-----|
-| BD | `bd-v2.24.0` |
-| PartnersAPI | `partners-api-v1.15.8` |
-| PortalAuth | `portal-auth-v1.12.2` |
+| BD | `bd-v2.24.1` |
+| PartnersAPI | `partners-api-v1.15.9` |
+| PortalAuth | `portal-auth-v1.12.3` |
 | Yang | `yang-v2.3.8` |
 | News | `news-v2.9.5` |
-| MarketOverview | `market-overview-v1.7.0` |
+| MarketOverview | `market-overview-v1.9.0` |
 | DataRefresh | `data-refresh-v2.2.0` |
 | SharedInfra | `shared-infra-v1.6.0` |
 | DeckGeneration | `deck-generation-v1.0.0` |
