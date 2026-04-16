@@ -56,17 +56,26 @@ Skipping startup because the summary says "no pending work" is the failure mode.
 
 ## Step 1b — MCP Startup (MANDATORY, every session, no exceptions)
 
-**A. Register:**
+**A. Register — use your FULL serial, including ~suffix:**
 ```python
 register_agent("{your_serial}", summary="Starting session")
 ```
 Makes you visible. Starts broker. Enables message push. Also auto-launches `agent-poller.py`.
 
-**B. Check inbox for offline messages (synchronous — not backgrounded):**
+**Lane agents (~B/~C/~D): register as `0.4.0_DS_ClientPlatform~C`, NOT as `0.4.0_DS_ClientPlatform`.**
+Registering under the base serial means your `~C` inbox directory is never checked — you will
+silently miss all GOs and MCP messages addressed to your lane serial.
+
+**B. Check inbox for offline messages — two paths, both required:**
 ```bash
-check-inbox {your_serial}
+check-inbox {your_serial}   # filesystem path: reads inbox/{serial}/ + inbox/{base}/
 ```
-Catches GO signals sent while you were offline. inbox-watch misses pre-start messages.
+```python
+get_agent_status("{your_serial}")  # broker path: surfaces messages delivered via broker channel
+```
+These cover different delivery paths. `send_message` writes to filesystem AND broker — but
+`check-inbox` only reads filesystem, and broker-channel messages only surface via `get_agent_status`.
+Run BOTH to avoid missing messages. `check-inbox` alone is insufficient.
 
 **C. Start inbox watcher (MANUAL — cannot be automated):**
 ```bash
@@ -83,8 +92,9 @@ swallowed when an orphan won the atomic `mv` race).
 **When you get a watcher-exit task-notification, that IS the signal that a new
 message arrived.** Your required response:
 
-1. Call `check_inbox({your_serial})` **immediately** to read the message body
-   (the task-notification doesn't surface content).
+1. Call `check_inbox({your_serial})` AND `get_agent_status("{your_serial}")` **immediately**.
+   `check_inbox` reads the filesystem path; `get_agent_status` reads the broker channel.
+   Both are required — either can have messages the other misses.
 2. Act on the message this turn — ack (RAVC step 2), do the work, or validate
    the evidence (RAVC step 4). No "standing by" silence.
 3. Relaunch `inbox-watch {your_serial}` via the Bash tool with
@@ -92,7 +102,7 @@ message arrived.** Your required response:
    Bash-tool-tracked watcher so the next message fires a notification.
 
 **Belt-and-suspenders:** after sending a message where you expect a near-term
-reply, also call `check_inbox` at the top of each turn. `inbox-watch` is
+reply, call BOTH `check_inbox` AND `get_agent_status` at the top of each turn. `inbox-watch` is
 event-push; `check_inbox` is authoritative pull. Do both.
 
 Without a running watcher you are deaf to real-time pushes.
