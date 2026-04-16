@@ -1,0 +1,249 @@
+# exec_toolkit.yaml — operational tooling catalog for CTO (1.0.0_SA_CTO) + COO (2.0.0_SA_COO)
+#
+# Structured reference for the five load-bearing tools that drive project closure,
+# session hygiene, and persistence. Read by both execs on startup; referenced from
+# each exec's prompt.md Exec Toolkit section.
+#
+# Source of truth: this file. If you find divergence between prompt.md tables
+# and this YAML, this YAML wins -- update the prompts.
+
+metadata:
+  owners: [1.0.0_SA_CTO, 2.0.0_SA_COO]
+  locked_by: andrew@fideles.capital
+  last_updated: "2026-04-16"
+  note: |
+    All tools live under .tools/ (tracked in git via per-file force-add
+    carve-outs; .tools/ itself is gitignored for binaries like terraform.exe).
+    Git Bash: .tools/ is in PATH via ~/.bashrc — invoke bare command names.
+    PowerShell: use the .ps1 shims (they probe Git for Windows explicitly
+    to avoid the System32 WSL launcher shadowing bash.exe).
+
+invocation_paths:
+  git_bash:
+    pattern: "{command} {args}"
+    example: "kill-orphans --stale --force"
+    note: ".tools/ in PATH via ~/.bashrc"
+  powershell_ps1:
+    pattern: ".\\.tools\\{command}.ps1 {args}"
+    example: ".\\.tools\\kill-orphans.ps1 --stale --force"
+    note: ".ps1 shims exist for kill-orphans and deregister-all only"
+  powershell_bash_passthrough:
+    pattern: 'bash .tools/{command} {args}'
+    caveat: |
+      Windows ships C:\Windows\System32\bash.exe as a WSL launcher. If no
+      WSL distro is installed (Andrew's machine), plain `bash .tools/...`
+      errors with "execvpe(/bin/bash) failed". Use the .ps1 shim or the
+      full path: & "C:\Program Files\Git\bin\bash.exe" .tools/{command}
+
+# =========================================================================
+# Tool 1 -- operator: project closure directive (Phase 1, TO execution)
+# =========================================================================
+tools:
+
+  - name: operator
+    purpose: >
+      Stateless project-closure directive. Scans project JSON + matching TOs,
+      classifies by status + deps, detects forks (cycles, unknown status,
+      all-blocked), emits next-action directive with LOOP_PACING hint.
+    location: .tools/operator.py
+    bash_wrapper: .tools/operator
+    ps1_wrapper: null
+    runtime: ~500ms per scan on 42-TO project
+    phase: 1  # TO execution
+    commands:
+      - command: operator {CODE}
+        description: Emit directive for project CODE (all agents)
+      - command: operator {CODE} --agent {SERIAL}
+        description: Scope directive to one agent's lane
+      - command: operator {CODE} --json
+        description: Machine-readable state dump (for programmatic consumption)
+      - command: operator {CODE} --elevate
+        description: Compose CTO MCP elevation body (use when fork detected)
+      - command: operator {CODE} --render
+        description: Generate per-project shim .tools/operator-{CODE}
+    exit_codes:
+      0: continue — pending/actionable TOs remain; directive emitted
+      1: done — every TO complete for this phase; /loop should transition to validator
+      2: fork — ambiguity detected; elevate to CTO before continuing
+    loop_pacing_contract:
+      description: >
+        operator emits a terminal `LOOP_PACING: {active|idle|done}` line.
+        /loop dynamic mode reads this to pick next wake cadence.
+      hints:
+        active: "ScheduleWakeup(delaySeconds=60) — forward motion exists"
+        idle:   "ScheduleWakeup(delaySeconds=270) — no actionable work for scope"
+        done:   "Transition to validator phase OR terminate loop (exit 1)"
+
+  # =======================================================================
+  # Tool 2 -- validator: requirement-coverage directive (Phase 2, PRD intent)
+  # =======================================================================
+  - name: validator
+    purpose: >
+      Stateless requirement-coverage checker. Scans project PRDs + TO
+      evidence blocks, fuzzy-matches acceptance criteria against artifact
+      citations, buckets requirements as validated/partial/insufficient/
+      unvalidated/blocked/contradicted.
+    location: .tools/validator.py
+    bash_wrapper: .tools/validator
+    ps1_wrapper: null
+    runtime: ~1-2s per scan on full project
+    phase: 2  # PRD intent coverage
+    premise: >
+      TO marked complete != work actually satisfies PRD intent. Validator
+      reasons at REQUIREMENT COVERAGE, not artifact presence.
+      Reference incident: ADVI_PROFIL had 10/10 TOs complete and 0/105
+      validated on first validator run.
+    commands:
+      - command: validator {CODE}
+        description: Emit coverage directive for project CODE
+      - command: validator {CODE} --agent {SERIAL}
+        description: Scope coverage to one agent's contributions
+      - command: validator {CODE} --json
+        description: Machine-readable coverage report
+      - command: validator {CODE} --elevate
+        description: Compose CTO MCP elevation body for validation fork
+      - command: validator {CODE} --render
+        description: Generate per-project shim .tools/validator-{CODE}
+    exit_codes:
+      0: continue — validation work remains
+      1: done — every requirement VALIDATED with sufficient evidence
+      2: fork — elevate to CTO before continuing
+      3: error — malformed project code OR missing core records
+
+  # =======================================================================
+  # Tool 3 -- /loop: persistent self-paced project closure (chat command)
+  # =======================================================================
+  - name: /loop
+    purpose: >
+      Persistent state-aware closure driver. Takes a project from whatever
+      current state (fresh, mid-op, op-done-val-remaining, partial) to
+      terminal closure through validation, self-pacing via ScheduleWakeup.
+    location: COO prompt.md "/loop dynamic mode" section
+    bash_wrapper: null  # chat-invoked, not CLI
+    ps1_wrapper: null
+    invocation: "/loop {PROJECT_CODE}"
+    invoker: andrew@fideles.capital
+    cadence:
+      active: 60   # ScheduleWakeup delaySeconds; runtime floor
+      idle: 270    # inside 5-min Anthropic prompt-cache TTL
+      banned: [300]  # worst-of-both: cache miss + immediate re-fire
+    phase_routing:
+      entry_rule: "scan project state on every wake, pick phase"
+      operator_phase:
+        condition: "any TO status != complete"
+        tool: operator
+        cadence_source: "LOOP_PACING hint from operator output"
+      validator_phase:
+        condition: "all TOs complete, validator not yet exit 1"
+        tool: validator
+        cadence: 270
+      closeout_phase:
+        condition: "validator exit 1"
+        actions:
+          - "update org/projects/{CODE}.json status=complete"
+          - "move REGISTRY row to Completed table"
+          - "report closure to Andrew (evidence = validator's final directive)"
+          - "STOP loop (omit ScheduleWakeup)"
+    escalation_triggers:
+      - "operator OR validator exit 2 (fork) — compose --elevate body, MCP CTO, 270s wake"
+      - "3 consecutive idle wakes with no state delta — surface to Andrew"
+      - "project JSON unparseable / status flipped to paused|cancelled — stop immediately"
+    non_rules:
+      - "NOT invoked at COO startup — only on Andrew's command"
+      - "Does NOT relax compiler mandates, RAVC, or TO status discipline"
+      - "Does NOT silently modify TO status — evidence + acceptance-flex pre-flags still required"
+
+  # =======================================================================
+  # Tool 4 -- kill-orphans: stale background-script cleanup
+  # =======================================================================
+  - name: kill-orphans
+    purpose: >
+      Terminate bash background processes that orphan when Claude Code
+      sessions die uncleanly: inbox-watch.sh, check-inbox.sh, agent-poller.py.
+      Excludes the MCP broker daemon.
+    location: .tools/kill-orphans
+    bash_wrapper: .tools/kill-orphans
+    ps1_wrapper: .tools/kill-orphans.ps1
+    commands:
+      - command: kill-orphans
+        description: Dry-run — list ALL matching background processes in workspace
+      - command: kill-orphans --stale
+        description: Dry-run — filter to only watchers whose agent is NOT live per liveness.json
+      - command: kill-orphans --stale --force
+        description: "SAFE: kill only genuine orphans (routine cleanup)"
+      - command: kill-orphans --force
+        description: "DANGEROUS: kills all matches including active session watchers"
+      - command: kill-orphans --global
+        description: Widen scope past this workspace (rarely needed)
+    implementation_notes:
+      - "Uses ps -ef (always available in Git Bash); no pgrep dependency"
+      - "Liveness check pipes liveness.json via stdin to Python (MSYS /c/... paths don't resolve via Python open() on Windows)"
+      - "Strips \\r from Python output (Windows CRLF equality bugfix)"
+      - "Excludes $$ and $PPID so the script can't kill its own shell"
+
+  # =======================================================================
+  # Tool 5 -- deregister-all: session-start MCP registration reset
+  # =======================================================================
+  - name: deregister-all
+    purpose: >
+      Clear stale agent registrations from liveness.json + broker agents
+      table + kill orphaned agent-poller.py processes. Complementary to
+      kill-orphans (which handles bash watchers).
+    location: .tools/deregister-all
+    bash_wrapper: .tools/deregister-all
+    ps1_wrapper: .tools/deregister-all.ps1
+    commands:
+      - command: deregister-all --dry-run
+        description: Preview which serials would be wiped
+      - command: deregister-all
+        description: Wipe every registration; agents must re-register_agent to come back live
+      - command: deregister-all --keep {SERIAL}
+        description: Preserve specific serials during wipe (repeatable flag)
+    when_to_use:
+      - "New Claude Code session start, clearing prior-session stale entries"
+      - "After a crash that left liveness.json with dead PIDs"
+      - "Before re-testing MCP registration flow"
+
+# =========================================================================
+# Common combos
+# =========================================================================
+combos:
+  - intent: Cold-start reset (session crash recovery)
+    commands:
+      - deregister-all
+      - kill-orphans --force
+    powershell:
+      - .\.tools\deregister-all.ps1
+      - .\.tools\kill-orphans.ps1 --force
+    effect: Wipes MCP registrations + kills every background bash watcher
+
+  - intent: Routine weekly cleanup
+    commands:
+      - kill-orphans --stale --force
+    powershell:
+      - .\.tools\kill-orphans.ps1 --stale --force
+    effect: Removes only genuine orphans (dead-session watchers); active sessions untouched
+
+  - intent: Start persistent driver on one project
+    commands:
+      - "/loop {CODE}"   # typed in chat to COO
+    effect: COO enters self-paced mode, drives project operator→validator→closeout
+
+  - intent: Quick project state check (one-off, not in /loop)
+    commands:
+      - operator {CODE}
+    effect: Print current TO state + next-action directive, exit
+
+# =========================================================================
+# Commits that established this toolkit
+# =========================================================================
+commit_history:
+  - "7186b183 — MCP ~suffix serialization (filesystem inbox routing)"
+  - "9a9c2d1a — /loop dynamic mode spec (initial)"
+  - "1012de57 — /loop state-aware closure semantic (Andrew lock)"
+  - "c3d59562 — force-add .tools/operator + operator.py"
+  - "2144463b — force-add .tools/validator + validator.py"
+  - "d4673560 — .tools/kill-orphans"
+  - "5118f919 — .tools/kill-orphans.ps1"
+  - "efacc91b — .tools/deregister-all + .ps1"
+  - "4e1a55b5 — .ps1 shims prefer Git Bash over WSL launcher"
