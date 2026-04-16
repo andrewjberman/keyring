@@ -16,31 +16,49 @@ SERIAL="${1:?Usage: check-inbox.sh <agent_serial>}"
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 INBOX_BASE="$SCRIPT_DIR/inbox"
 
-# Resolve agent folder name (serial may be partial)
+# Strip ~suffix for folder lookup (0.4.0_DS_ClientPlatform~A -> 0.4.0_DS_ClientPlatform)
+BASE_SERIAL="${SERIAL%%~*}"
+SUFFIX=""
+if [ "$SERIAL" != "$BASE_SERIAL" ]; then
+    SUFFIX="${SERIAL#*~}"
+fi
+
+# Resolve agent folder name (match on base serial)
 AGENT_DIR=""
 for tier in tier1_exec tier2_senior tier3_junior; do
     for d in "$SCRIPT_DIR/../$tier"/*/; do
         [ -d "$d" ] || continue
         case "$(basename "$d")" in
-            *"$SERIAL"*) AGENT_DIR="$(basename "$d")"; break 2 ;;
+            *"$BASE_SERIAL"*) AGENT_DIR="$(basename "$d")"; break 2 ;;
         esac
     done
 done
 
 if [ -z "$AGENT_DIR" ]; then
-    echo "ERROR: No agent folder found matching '$SERIAL'" >&2
+    echo "ERROR: No agent folder found matching '$BASE_SERIAL'" >&2
     exit 1
 fi
 
-INBOX="$INBOX_BASE/$AGENT_DIR"
-mkdir -p "$INBOX/read"
+# Serialization-aware inbox set (locked 2026-04-16):
+# - caller with ~suffix reads per-instance dir AND base dir (broadcasts)
+# - caller without suffix reads only base dir
+INBOX_BASE_DIR="$INBOX_BASE/$AGENT_DIR"
+mkdir -p "$INBOX_BASE_DIR/read"
+INBOX_DIRS=("$INBOX_BASE_DIR")
+if [ -n "$SUFFIX" ]; then
+    INBOX_INSTANCE_DIR="$INBOX_BASE/${AGENT_DIR}~${SUFFIX}"
+    mkdir -p "$INBOX_INSTANCE_DIR/read"
+    INBOX_DIRS=("$INBOX_INSTANCE_DIR" "$INBOX_BASE_DIR")
+fi
 
-# Collect pending messages
+# Collect pending messages across all applicable dirs
 FOUND=0
-for f in "$INBOX"/*.md; do
-    [ -f "$f" ] || continue
-    FOUND=1
-    break
+for d in "${INBOX_DIRS[@]}"; do
+    for f in "$d"/*.md; do
+        [ -f "$f" ] || continue
+        FOUND=1
+        break 2
+    done
 done
 
 if [ "$FOUND" -eq 0 ]; then
@@ -51,14 +69,19 @@ fi
 echo ""
 echo "[check-inbox] Messages for $SERIAL:"
 echo ""
-for msg in "$INBOX"/*.md; do
-    [ -f "$msg" ] || continue
-    echo "===================================================================="
-    echo "FROM: $(basename "$msg")"
-    echo "===================================================================="
-    cat "$msg"
-    echo ""
-    mv "$msg" "$INBOX/read/"
+for d in "${INBOX_DIRS[@]}"; do
+    for msg in "$d"/*.md; do
+        [ -f "$msg" ] || continue
+        # Atomic claim via mv before reading. If a concurrent inbox-watch or
+        # another check-inbox run wins the race, mv fails and we skip silently.
+        dest="$d/read/$(basename "$msg")"
+        mv "$msg" "$dest" 2>/dev/null || continue
+        echo "===================================================================="
+        echo "FROM: $(basename "$dest")"
+        echo "===================================================================="
+        cat "$dest"
+        echo ""
+    done
 done
 echo "===================================================================="
 echo "[check-inbox] All messages read. Re-launch inbox-watch.sh to monitor for new ones."

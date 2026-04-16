@@ -1003,8 +1003,15 @@ async def send_message(
     if not to_folder:
         return f"Recipient '{to_agent}' not found in org."
 
-    # Inbox always uses base serial folder (shared across instances)
-    inbox = INBOX_DIR / to_folder.name
+    # Inbox routing (serialization-aware, locked 2026-04-16):
+    # - to_agent has ~suffix -> per-instance dir (private, only that lane reads it)
+    # - to_agent has no suffix -> base dir (broadcast; any polling lane may claim)
+    # See MCP serialization design discussion in COO session 30 log.
+    to_suffix = _instance_suffix(to_agent)
+    if to_suffix:
+        inbox = INBOX_DIR / f"{to_folder.name}~{to_suffix}"
+    else:
+        inbox = INBOX_DIR / to_folder.name
     inbox.mkdir(parents=True, exist_ok=True)
 
     ts = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
@@ -1079,32 +1086,51 @@ async def check_inbox(agent_serial: str, mark_read: bool = False, ctx: Context =
     if not folder:
         return f"Agent '{agent_serial}' not found."
 
-    inbox = INBOX_DIR / folder.name
-    if not inbox.exists():
-        return f"No inbox for {folder.name} (no messages received)."
+    # Serialization-aware inbox read (locked 2026-04-16):
+    # - caller with ~suffix reads per-instance dir AND base dir (broadcasts)
+    # - caller without suffix reads only base dir
+    # Each message is sorted by filename (leading ISO-8601 ts keeps order global).
+    caller_suffix = _instance_suffix(agent_serial)
+    base_inbox = INBOX_DIR / folder.name
+    inboxes = []
+    if caller_suffix:
+        instance_inbox = INBOX_DIR / f"{folder.name}~{caller_suffix}"
+        inboxes.append(instance_inbox)
+    inboxes.append(base_inbox)
 
     urgent = _drain_piggyback()
 
-    messages = sorted([f for f in inbox.iterdir() if f.suffix == ".md"])
-    if not messages:
+    # Gather messages from all applicable inboxes with their source dir
+    pairs = []  # list of (msg_path, source_inbox)
+    for src in inboxes:
+        if not src.exists():
+            continue
+        for f in src.iterdir():
+            if f.suffix == ".md" and f.is_file():
+                pairs.append((f, src))
+    pairs.sort(key=lambda p: p[0].name)
+
+    if not pairs:
+        display_name = agent_serial if caller_suffix else folder.name
         if urgent:
-            return urgent + f"Inbox empty for {folder.name} (broker messages shown above)."
-        return f"Inbox empty for {folder.name}."
+            return urgent + f"Inbox empty for {display_name} (broker messages shown above)."
+        return f"Inbox empty for {display_name}."
 
     parts = []
     if urgent:
         parts.append(urgent)
-    parts.append(f"# Inbox for {folder.name} ({len(messages)} messages)\n")
-    for msg in messages:
+    display_name = agent_serial if caller_suffix else folder.name
+    parts.append(f"# Inbox for {display_name} ({len(pairs)} messages)\n")
+    for msg, _src in pairs:
         parts.append(f"---\n## {msg.name}\n")
         parts.append(msg.read_text(encoding="utf-8", errors="replace"))
 
-    if mark_read and messages:
-        read_dir = inbox / "read"
-        read_dir.mkdir(exist_ok=True)
-        for msg in messages:
+    if mark_read and pairs:
+        for msg, src in pairs:
+            read_dir = src / "read"
+            read_dir.mkdir(exist_ok=True)
             msg.rename(read_dir / msg.name)
-        parts.append(f"\n--- Archived {len(messages)} messages to read/")
+        parts.append(f"\n--- Archived {len(pairs)} messages to read/")
 
     return "\n".join(parts)
 

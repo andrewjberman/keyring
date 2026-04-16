@@ -40,6 +40,10 @@ fi
 
 # Strip ~suffix for folder lookup (0.4.0_DS_ClientPlatform~A -> 0.4.0_DS_ClientPlatform)
 BASE_SERIAL="${SERIAL%%~*}"
+SUFFIX=""
+if [ "$SERIAL" != "$BASE_SERIAL" ]; then
+    SUFFIX="${SERIAL#*~}"
+fi
 
 # Resolve agent folder name (match on base serial)
 AGENT_DIR=""
@@ -57,39 +61,48 @@ if [ -z "$AGENT_DIR" ]; then
     exit 1
 fi
 
-INBOX="$INBOX_BASE/$AGENT_DIR"
-mkdir -p "$INBOX/read"
+# Serialization-aware inbox set (locked 2026-04-16):
+# - caller with ~suffix polls per-instance dir FIRST (private, all msgs are mine)
+#   then base dir (broadcasts; may collide with ~sibling lanes -- first-mv wins)
+# - caller without suffix polls only base dir
+# is_for_me body-filter is retained as belt-and-suspenders for pre-migration
+# messages or mistargeted sends that land in the base dir.
+INBOX_BASE_DIR="$INBOX_BASE/$AGENT_DIR"
+mkdir -p "$INBOX_BASE_DIR/read"
+INBOX_INSTANCE_DIR=""
+if [ -n "$SUFFIX" ]; then
+    INBOX_INSTANCE_DIR="$INBOX_BASE/${AGENT_DIR}~${SUFFIX}"
+    mkdir -p "$INBOX_INSTANCE_DIR/read"
+fi
 
-# Determine if a message file is addressed to this instance.
+# Determine if a message file from the BASE dir is addressed to this instance.
+# Per-instance dir messages are always for me -- no filter needed.
 # Returns 0 (match) when any of:
 #   1. No ~suffix on SERIAL (base serial watches all messages)
-#   2. Message **To:** field matches SERIAL exactly (e.g. ~A gets ~A messages)
+#   2. Message **To:** field matches SERIAL exactly (legacy pre-migration)
 #   3. Message **To:** field matches BASE_SERIAL (broadcast to all instances)
-#   4. Message has no **To:** field (legacy/malformed -- only base serial picks these up)
-is_for_me() {
+#   4. Message has no **To:** field (legacy/malformed -- only base serial picks up)
+is_for_me_in_base() {
     local f="$1"
 
-    # No suffix -- base serial agent takes everything
-    if [ "$SERIAL" = "$BASE_SERIAL" ]; then
+    # No suffix -- base serial agent takes everything in base dir
+    if [ -z "$SUFFIX" ]; then
         return 0
     fi
 
-    # Read To: line from file content
     local to_line
     to_line=$(grep -m1 "^\*\*To:\*\*" "$f" 2>/dev/null || true)
 
     if [ -z "$to_line" ]; then
-        # No To: field -- skip (base serial would have caught it above)
         return 1
     fi
 
-    # Exact match on full serial (e.g. **To:** 0.4.0_DS_ClientPlatform~A)
+    # Exact match on full serial (pre-migration sends may still use body-only routing)
     if echo "$to_line" | grep -qF "$SERIAL"; then
         return 0
     fi
 
     # Match on base serial with no suffix (broadcast message)
-    # Only match if the To: value IS the base serial exactly (not another ~sibling)
     if echo "$to_line" | grep -qE "\*\*To:\*\* ${BASE_SERIAL}$"; then
         return 0
     fi
@@ -98,31 +111,56 @@ is_for_me() {
 }
 
 # Poll until message(s) addressed to this instance arrive, then print and exit.
-# Self-respawning: before exiting, a child watcher is spawned so the inbox
-# is never unmonitored. The parent exits to trigger the Claude Code task
-# notification (queue drain); the child catches anything that arrives during
-# the parent's processing window.
+# NO self-respawn (removed 2026-04-14): agents MUST relaunch via Bash tool
+# run_in_background=true after each notification so every delivery has a
+# tracked owner (orphan stdout disconnects from Claude Code task tracker).
 while true; do
     FOUND_FOR_ME=0
-    for f in "$INBOX"/*.md; do
-        [ -f "$f" ] || continue
-        if is_for_me "$f"; then
+
+    # Check per-instance dir first (all contents are for me, no filter)
+    if [ -n "$INBOX_INSTANCE_DIR" ]; then
+        for f in "$INBOX_INSTANCE_DIR"/*.md; do
+            [ -f "$f" ] || continue
             FOUND_FOR_ME=1
             break
-        fi
-    done
+        done
+    fi
+
+    # Check base dir (apply body filter for ~suffix instances)
+    if [ "$FOUND_FOR_ME" -eq 0 ]; then
+        for f in "$INBOX_BASE_DIR"/*.md; do
+            [ -f "$f" ] || continue
+            if is_for_me_in_base "$f"; then
+                FOUND_FOR_ME=1
+                break
+            fi
+        done
+    fi
 
     if [ "$FOUND_FOR_ME" -eq 1 ]; then
         echo ""
         echo "[INBOX] New messages for $SERIAL:"
         echo ""
-        for msg in "$INBOX"/*.md; do
+
+        # Per-instance dir: everything is mine, claim all
+        if [ -n "$INBOX_INSTANCE_DIR" ]; then
+            for msg in "$INBOX_INSTANCE_DIR"/*.md; do
+                [ -f "$msg" ] || continue
+                dest="$INBOX_INSTANCE_DIR/read/$(basename "$msg")"
+                mv "$msg" "$dest" 2>/dev/null || continue
+                echo "===================================================================="
+                echo "FROM: $(basename "$dest")"
+                echo "===================================================================="
+                cat "$dest"
+                echo ""
+            done
+        fi
+
+        # Base dir: claim only those matching is_for_me_in_base
+        for msg in "$INBOX_BASE_DIR"/*.md; do
             [ -f "$msg" ] || continue
-            if is_for_me "$msg"; then
-                # Claim atomically via mv before printing. If two watchers
-                # race (self-spawn + manual relaunch overlap), only the one
-                # that wins the mv delivers the message; the other sees no file.
-                dest="$INBOX/read/$(basename "$msg")"
+            if is_for_me_in_base "$msg"; then
+                dest="$INBOX_BASE_DIR/read/$(basename "$msg")"
                 mv "$msg" "$dest" 2>/dev/null || continue
                 echo "===================================================================="
                 echo "FROM: $(basename "$dest")"
@@ -130,16 +168,10 @@ while true; do
                 cat "$dest"
                 echo ""
             fi
-            # Messages for other ~siblings are left in place -- not archived
         done
+
         echo "===================================================================="
         echo ""
-        # NO self-respawn. An orphan child's stdout is disconnected from the
-        # Claude Code Bash-tool tracker, so if the orphan wins the atomic mv
-        # race on a subsequent message, the task-notification never fires
-        # and the message is silently swallowed. Agents MUST relaunch this
-        # script via the Bash tool (run_in_background=true) after each
-        # notification so every delivery has a tracked owner.
         exit 0
     fi
     sleep 5
