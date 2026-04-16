@@ -1,0 +1,37 @@
+#!/bin/bash
+# validator -- project-closure requirement validator (generic entrypoint).
+#
+# Runs AFTER operator.py has closed every TO for a project. Asks whether the
+# completed work actually satisfies the PRD intent, TO acceptance criteria,
+# and deliverable expectations -- not merely whether TOs are marked complete.
+#
+# MANDATORY for 2.0.0_SA_COO at the conclusion of operator-driven execution.
+# OPTIONAL for any agent managing long-running implementation, review,
+# synthesis, or delivery work on a project.
+#
+# Premise (per Andrew 2026-04-16): validator does not stop until the project
+# is validated as complete against the governing intent defined by:
+#   1. the project JSON / project record,
+#   2. the original PRD,
+#   3. all task orders associated with that project,
+#   4. all explicitly referenced deliverables, outputs, or artifacts,
+#   5. any formal amendments, overrides, or CTO directives issued during execution.
+#
+# Validator reasons at REQUIREMENT COVERAGE, not artifact presence. A TO being
+# marked complete is not equivalent to the work actually meeting spec.
+#
+# Usage:
+#   validator <PROJECT_CODE>                 emit directive
+#   validator <PROJECT_CODE> --agent SERIAL  scope to a specific agent
+#   validator <PROJECT_CODE> --render        write .tools/validator-<CODE> shim
+#   validator <PROJECT_CODE> --elevate       MCP-ready CTO elevation body
+#   validator <PROJECT_CODE> --json          machine-readable coverage report
+#
+# Exit codes:
+#   0  continue -- validation work remains
+#   1  done -- every validation target validated with sufficient evidence
+#   2  fork -- elevate to CTO before continuing
+#   3  error -- bad project code or missing core records
+
+WORKSPACE="$(cd "$(dirname "$0")/.." && pwd)"
+exec python "$WORKSPACE/.tools/validator.py" "$@"
