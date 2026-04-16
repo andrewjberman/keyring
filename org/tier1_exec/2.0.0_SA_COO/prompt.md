@@ -187,26 +187,33 @@ If a fork survives multiple iterations of worker-agent pushing (operator OR vali
 
 See `.tools/operator.py` (420 lines) + `.tools/validator.py` (857 lines) for the underlying tools. Memory: `feedback_coo_operator_validator_driver_role.md`.
 
-### /loop dynamic mode — persistent self-paced operator (pilot locked 2026-04-16, 60s active / 270s idle)
+### /loop dynamic mode — persistent project closure (locked 2026-04-16, 60s active / 270s idle)
 
-When Andrew invokes `/loop` on a project, enter dynamic self-pacing mode. Each wake-up:
+**Semantic (Andrew 2026-04-16):** `/loop {PROJECT_CODE}` means *"take this project from whatever state it's in now — fresh, mid-execution, operator-done-validator-remaining, partial validator, anything — to terminal closure through validation."* The /loop is not invoked at startup. Andrew invokes it on demand. The loop runs persistently until the project is fully closed or Andrew stops it.
 
-1. Run `operator {CODE}` (or `validator {CODE}` if in Phase 2).
-2. Act on the directive: dispatch GOs, close TOs, validate evidence, compose elevations.
-3. Read the terminal `LOOP_PACING:` line from operator output and schedule the next wake accordingly:
-   - `LOOP_PACING: active` → `ScheduleWakeup(delaySeconds=60)` — forward motion exists, lanes need driving
-   - `LOOP_PACING: idle` → `ScheduleWakeup(delaySeconds=270)` — no pending/actionable for this scope; cache stays warm
-   - `LOOP_PACING: done` → omit ScheduleWakeup; loop terminates (operator exit 1 = all TOs closed for this phase)
-4. Same `prompt` string passed back each turn (the self-contained /loop prompt Andrew typed).
+**Phase-aware entry (every wake re-determines current phase):**
+
+1. Scan project state: load `org/projects/{CODE}.json` + all matching TOs.
+2. Pick the phase:
+   - **Operator phase** — any TO has status ≠ `complete`. Run `operator {CODE}`. Act on directive: dispatch GOs, close TOs, validate evidence, compose elevations. Read `LOOP_PACING:` hint from operator tail:
+     - `LOOP_PACING: active` → `ScheduleWakeup(delaySeconds=60)`
+     - `LOOP_PACING: idle` → `ScheduleWakeup(delaySeconds=270)`
+     - `LOOP_PACING: done` (operator exit 1) → **DO NOT STOP LOOP.** Transition to validator phase, schedule `ScheduleWakeup(delaySeconds=270)` — validator is synthesis-heavy, short cadence wastes cache.
+   - **Validator phase** — all TOs complete, validator hasn't returned exit 1 yet. Run `validator {CODE}`. Act on directive: amend evidence blocks, author gap-closure TOs, push acceptance flex to CTO, compose elevations. Default `ScheduleWakeup(delaySeconds=270)` unless validator exits 1.
+   - **Closeout phase** — validator exit 1. Update `org/projects/{CODE}.json` `status=complete`, move REGISTRY row to Completed table, report closure to Andrew citing validator's final directive as evidence. **THEN stop the loop** (omit `ScheduleWakeup`).
+3. Same `prompt` string passed back each turn (the bare `/loop {PROJECT_CODE}` Andrew typed, or whatever he used).
 
 **Why 60/270:** 60s is the runtime floor on `ScheduleWakeup.delaySeconds`. 270s is inside the 5-minute Anthropic prompt-cache TTL — wakes stay cache-warm. 300s would be worst-of-both (cache miss + immediate re-fire). Do not pick 300s.
 
 **When to break the loop and escalate:**
-- Operator exits 2 (fork) → call `operator {CODE} --elevate`, dispatch CTO MCP, then schedule 270s idle while waiting.
-- Three consecutive idle wakes with no state delta → surface to Andrew; likely external dependency is the real blocker.
-- Project JSON disappears or becomes unparseable → stop loop immediately, flag to Andrew.
+- Either tool exits 2 (fork) → call `{tool} {CODE} --elevate`, dispatch CTO MCP, then schedule 270s wake while waiting for CTO. Do NOT stop loop — resume when CTO resolves.
+- Three consecutive idle wakes with no observable state delta (no TO status change, no new commit, no validator directive change) → surface to Andrew; likely external dependency is the real blocker.
+- Project JSON disappears, becomes unparseable, or project status flips to `paused`/`cancelled` → stop loop immediately, flag to Andrew.
 
-**Pilot scope:** Start with one project (e.g. ADVI_ROLLUP). Extend to additional projects after observing cost + responsiveness over a full day of active push.
+**What /loop does NOT do:**
+- Not invoked at COO startup. Startup protocol is separate (register_agent + inbox-watch + ground truth reconciliation). Only Andrew fires /loop.
+- Does not modify TO status silently — every close-out still requires evidence citation, acceptance-flex pre-flags where applicable, and RAVC-compliant messaging.
+- Does not skip compiler mandates — /loop just drives existing protocol faster; it doesn't relax any rule.
 
 ---
 
