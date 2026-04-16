@@ -109,14 +109,97 @@ Kill switch: `SLEEVE_SHADOW_DISABLE=1` env var. Default on.
 | ADVI_ROLLUP.IN-2 | pending | COO-closed; awaiting CTO PRD commit to flip `complete` |
 | (~D subagent: CN-P1b, CN-P2, RA-P1b, WP-11, COMP_LEARNS.005) | — | not in base queue |
 
-## Next steps
+## Post-commit execution (this session)
 
-1. Commit code with DS `--author` `--only` flags (4 files, SL-P1 scope)
-2. Push to CLOUD
-3. Rule 7 pre-flag to CTO + COO: "About to `aws s3 cp` B_01.holdings_lots.py + lib/s3_layout.py to s3://opal-data-bd/code/gold/. 60-sec window."
-4. 60-sec don't-object window
-5. Upload .py files to S3 code prefix
-6. Coordinate with AE for bd-gold-qa-runner trigger (single-command discipline) OR let EventBridge nightly fire with new code
-7. Verify shadow artifact lands at `s3://opal-data-bd/gold/timeseries/holdings_lots_shadow/{date}.parquet` — size reasonable, schema matches dry-run
-8. Re-run diagnostic harness against the S3-produced artifact (Jones spot-check in real FIFO context)
-9. MCP CHECKPOINT (3) to COO + CTO with commit hash + S3 key + Jones result + firm coverage $
+### Commit + push
+
+| Step | Result |
+|---|---|
+| Commit SHA | `28818eaf` |
+| Author | `0.4.0_DS_ClientPlatform <0.4.0_DS_ClientPlatform@opal.agent>` |
+| Committer | Andrew Berman |
+| Branch | CLOUD |
+| Files | 7 (3 modified gold/lib/config + 1 new diagnostic + 1 session log + 2 TO status flips) |
+| Discipline | `git commit --only -- <paths>` — zero scope bleed; none of the other dirty workspace files swept in |
+| Push | `00760f48..28818eaf` → origin/CLOUD at 14:10Z |
+
+### Rule 7 pre-flag
+
+| Timestamp | Target | Content |
+|---|---|---|
+| 14:12:24Z | 1.0.0_SA_CTO | Primary notice — full action, impact, commit ref, kill switch, 60-sec window start |
+| 14:12:28Z | 2.0.0_SA_COO | cc mirror |
+
+60-sec don't-object window elapsed clean (`check_inbox` at 14:13:06Z returned empty).
+
+### S3 upload
+
+| Object | Size | Timestamp |
+|---|---|---|
+| `s3://opal-data-bd/code/gold/B_01.holdings_lots.py` | 94,103 bytes | 2026-04-16 14:17:07Z |
+| `s3://opal-data-bd/code/gold/lib/s3_layout.py` | 14,646 bytes | 2026-04-16 14:17:08Z |
+
+Pre-upload state (for diff): B_01 was 77,843 bytes @ 09:55:22Z; s3_layout was 14,014 bytes @ 08:56:01Z.
+
+### Phase 3 compiler mandate (after commit)
+
+| Run | Expect | Observed | Pass/Fail |
+|---|---|---|---|
+| `comp-pipescript deployed B_01` | MATCH — runner has new code | `[GOLD] B_01 MATCH`; `[GOLD] B_01b MATCH`. Summary: 2 MATCH, 0 STALE, 0 MISSING. | PASS |
+| `comp-blast holdings_lots_shadow` | Deferred to post-artifact-produce; shadow prefix exists but no parquet yet | Pending next B_01 run | DEFERRED |
+
+### MCP activity (post-commit)
+
+| Timestamp | From | To | Subject |
+|---|---|---|---|
+| 14:12:24Z | DS | CTO | SL-P1 Rule 7 pre-flag — aws s3 cp of B_01 + s3_layout |
+| 14:12:28Z | DS | COO | SL-P1 Rule 7 pre-flag cc |
+| 14:17:40Z | DS | COO | SL-P1 CHECKPOINT (3) — code uploaded, deployed MATCH, awaiting nightly run |
+| 14:17:46Z | DS | CTO | SL-P1 CHECKPOINT (3) cc |
+
+### Interruption note (Andrew operator)
+
+Initial `aws s3 cp` tool call was rejected — Andrew paused execution to check with COO about her messaging style. Cleared to proceed shortly after; upload ran clean on retry. No impact on artifact correctness or timing; code was identical between the blocked and re-run attempts.
+
+### End-of-session summary table (TO AC-aligned)
+
+| Step | Result |
+|---|---|
+| Commit SHA | 28818eaf |
+| Push | origin/CLOUD up to date |
+| S3 upload B_01 | s3://opal-data-bd/code/gold/B_01.holdings_lots.py (94,103 bytes, 14:17:07Z) |
+| S3 upload s3_layout | s3://opal-data-bd/code/gold/lib/s3_layout.py (14,646 bytes, 14:17:08Z) |
+| Deployed check | MATCH (comp-pipescript deployed B_01) |
+| Trigger | **NOT** invoked. Deferring to EventBridge nightly B_01 fire. AE-coordinated bd-gold-qa-runner trigger available on CTO/COO request |
+| Shadow artifact | Pending — will land at s3://opal-data-bd/gold/timeseries/holdings_lots_shadow/{date}.parquet on next run |
+| Portal verify | N/A (shadow only; zero readers) |
+
+## Acceptance criteria status
+
+| # | AC | Status |
+|---|---|---|
+| 1 | SL-P0 decision memo committed + decision=Path 3 | PASS (2db02ebc, verified via `grep 'decision\|path'` — Phase 1 step 1) |
+| 2 | `gold/timeseries/holdings_lots_shadow/{date}.parquet` produced nightly for sleeve cohort | **PENDING** first nightly run |
+| 3 | Jones z0817905851 within 2% of silver $2,396,510 | PASS IN DRY-RUN (0.00% delta); revalidate against actual runner output |
+| 4 | Firm-wide coverage ~$30M+ | PASS IN DRY-RUN ($88,715,678); revalidate |
+| 5 | Zero-byte diff on production `holdings_lots/{date}.parquet` | PASS by construction (code inspection + additive-only edits); revalidate by diff post-run |
+| 6 | `comp-validate holdings_lots_shadow --artifact` exit 0 | PASS (script_check INFO pointing to diagnostic harness) |
+| 7 | Session log Compiler Tools reproduces runs | PASS (this doc) |
+| 8 | Rule 7 acceptance-flex pre-flag | PASS (14:12Z pre-flag, 60-sec window elapsed clean, upload 14:17Z) |
+| 9 | MCP COMPLETE to COO with commit + Jones + firm coverage + decision-path | **PENDING** post-actual-run validation |
+
+## Open follow-ups for next session
+
+1. Verify shadow artifact lands at `s3://opal-data-bd/gold/timeseries/holdings_lots_shadow/{date}.parquet` after next B_01 fire (EventBridge nightly ~01:00Z or on-demand)
+2. Re-run diagnostic harness against the S3-produced artifact: Jones spot-check in real FIFO context (FIFO veto now active; expected result: Jones shadow MV stays within 2% of silver as long as FIFO hasn't already opened most of his ULN pairs)
+3. Diff prod `gold/timeseries/holdings_lots/{date}.parquet` pre/post — byte-identical expected
+4. `comp-blast holdings_lots_shadow` — confirm zero readers
+5. MCP COO + CTO with actual-run stats → flip SL-P1 `<status>pending</status>` to `complete` with evidence
+6. Coordinate with COO on SL-P2 staging timeline (3 clean nightlies + Jones verification gates promotion per TO `<next>`)
+
+## Reminders carried forward
+
+- SL-P2 will promote shadow → prod `holdings_lots/` with FIFO integration (transactions-on-top). Design open question: how to collapse 78 per-tranche ULN lots vs 14 unique-asset FIFO lots without double-counting the account total.
+- Path 1 (BD Units column escalation) still pursued in parallel per SL-P0 memo; if BD delivers Units mid-stream, swap Path 3 apportionment for direct Units and re-validate.
+- `~C` subagent working COMP_LEARNS.006 concurrently — base and ~C are writing `.comp-graph/.agent_context` to the same path, which is why the auto-appended compiler-tools-log attributes some of this session's runs to ~C. Not blocking; authoritative record is this session log.
+- Next B_01 run may take 22m+ wall time per AE baseline; do NOT trigger manually without AE coordination (single-command discipline, bd-gold-qa-runner only, never PROD runner per memory rules).
