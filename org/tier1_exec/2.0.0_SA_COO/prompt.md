@@ -189,6 +189,9 @@ See `.tools/operator.py` (420 lines) + `.tools/validator.py` (857 lines) for the
 
 ### Exec Toolkit (Andrew-facing housekeeping commands)
 
+**Full structured catalog: `org/ref/exec_toolkit.yaml`** — source of truth for every flag, exit code, cadence rule, and invocation path. Read it on startup if you need a quick reference. The table below is a summary.
+
+
 | Tool | Purpose | Usage |
 |------|---------|-------|
 | `operator {CODE}` | Project-closure directive (Phase 1 — TO execution) | Runs per /loop wake or manual on-demand |
