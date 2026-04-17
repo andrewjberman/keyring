@@ -89,6 +89,8 @@ No `comp-*` tools run — target was S3 data-state inspection, not code graph tr
 | 1.0.0_SA_CTO | CORRECTED — canonical bucket verified, feed alive + stable (commit 7da58e60) | T043426Z |
 | 0.4.0_DS_ClientPlatform~D | CORRECTED — canonical bucket data for synthesis | T043439Z |
 | 2.0.0_SA_COO | CORRECTED — canonical bucket verified (commit 7da58e60) | T043443Z |
+| 2.0.0_SA_COO | COMPLETE — silver/transactions + silver/rps schema baselines | T044911Z |
+| 2.0.0_SA_COO | SUPPLEMENT — bd_assets_dim has cusip at 90.5% (CP-AE1 enrichment source) | T044954Z |
 
 ---
 
@@ -110,6 +112,18 @@ Deliverable amended with §0 (retraction), §9 (canonical-bucket re-run), §10 (
 - [AE] TO dispatch for `ADVI_GLDOPS.SCHWAB-MIRROR-CLEANUP` (low priority, not prod-blocking) to investigate why `opal-data-bd/schwab/*` legacy mirror stopped syncing 04-08. No gold script reads from there.
 - [~D] Synthesis with canonical-bucket numbers — let-halt tonight, option (d) tomorrow, WP-9 medium-term, threshold stays at 200.
 - [~C] Standing by. If helpful: cross-bucket diff between canonical and secondary to identify when the mirror-copy job stopped.
+
+---
+
+## COO Follow-Up — Silver Schema Baselines (T044800Z)
+
+COO dispatched research TO before CP-AE1 runs. Two schema baselines returned:
+
+**silver/transactions/2026-04-15.parquet (BD side):** 5,191 rows. `cusip` column ABSENT. Id-related columns = `asset_id`, `asset_name`, `asset_display_name`. No stable security identifier. Current join key = `asset_name` (fuzzy).
+
+**silver/RPS/date=20260415/data.parquet (canonical opal-data-schwab):** 83,284 rows. `cusip` PRESENT at 100% coverage (2,085 unique), `ticker` at 100% (1,872 unique, whitespace-padded — needs `.str.strip()`). No `isin`/`sedol`.
+
+**bd_assets_dim.parquet supplement:** 10,937 rows, `cusip` 90.5% (9,901/10,937), `asset_id` 100% PK. Direct join `silver/transactions.asset_id -> bd_assets_dim.asset_id -> cusip` is CP-AE1's enrichment path. Expected post-enrichment coverage ~90.5%; ~9.5% residual (~1,036 asset_ids) will need a separate policy (likely cash/MMKT/synthetics).
 
 ---
 
