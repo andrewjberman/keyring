@@ -167,9 +167,10 @@ python data/black_diamond/scripts/bronze/sync_schwab_onedrive_to_s3.py --upload
 python data/black_diamond/scripts/bronze/convert_schwab_rps_to_parquet.py
 python data/black_diamond/scripts/bronze/convert_schwab_acc_to_parquet.py
 python data/black_diamond/scripts/bronze/convert_schwab_trn_to_parquet.py
+python data/black_diamond/scripts/bronze/convert_schwab_uln_to_silver.py
 ```
 
-Each converter reads `01_raw/CRS*.{ACC,RPS,TRN}` and writes `silver/{ACC,RPS,TRN}/date={YYYYMMDD}/data.parquet` (Hive-partitioned). Idempotent: skips dates already converted.
+Each converter reads `01_raw/CRS*.{ACC,RPS,TRN,ULN}` and writes `silver/{ACC,RPS,TRN,ULN}/date={YYYYMMDD}/data.parquet` (Hive-partitioned). Idempotent: skips dates already converted. ULN supplies lot-level open-position authority from the Schwab custodian side (parallel to BD's silver/unrealized); B_01 uses it as a Rule 3 cross-reference.
 
 **Known edge cases (already patched):**
 - ACC raw files repeat the `state` column 3x in the H2 header. `convert_schwab_acc_to_parquet.py` suffixes duplicates with `__2`/`__3` before DataFrame construction (commit `f41b37f5`).
