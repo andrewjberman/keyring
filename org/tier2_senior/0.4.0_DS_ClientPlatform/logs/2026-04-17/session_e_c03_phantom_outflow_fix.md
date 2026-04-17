@@ -3,7 +3,7 @@
 **Agent:** 0.4.0_DS_ClientPlatform~E
 **Date:** 2026-04-17
 **Started:** ~13:32 UTC
-**Status:** Fix committed + pushed + S3-uploaded. QA run deferred (Andrew: "not yet we're busy").
+**Status:** Fix committed + pushed + S3-uploaded. Standalone QA run deferred. Bundled with B_01 Run 9 combined PROD trigger per COO Option A GO (2026-04-17 ~13:50 UTC); ~E re-verified C_03 S3 MATCH and issued GO. Awaiting PROD run completion to re-verify z0820277481 post-fix.
 
 ## Origin
 
@@ -106,8 +106,8 @@ Side-effects resolved automatically by this single-site fix:
 | Push          | origin/CLOUD up to date                                        |
 | S3 upload     | s3://opal-data-bd/code/gold/C_03.account_performance.py (10.2 KiB, 2026-04-17 09:42:43 local) |
 | Deployed MATCH| comp-pipescript deployed C_03: 1 MATCH / 0 STALE               |
-| QA run        | DEFERRED per Andrew — CP-DS1 is active on ops lane             |
-| PROD trigger  | NOT INVOKED — lane separation with CP-DS1, fix will pick up on next scheduled PROD run |
+| QA run        | Standalone QA NOT run (deferred by Andrew; COO Option A skipped standalone C_03 QA since defect is parquet-verified + schema-unchanged + single-site cumsum). Runtime validation happens inline with Run 9 PROD. |
+| PROD trigger  | Bundled with B_01 Run 9 combined trigger. ~E re-verified S3 MATCH at 2026-04-17 ~13:50 UTC (comp-pipescript deployed MATCH, S3 object 10.2 KiB at 09:42:43 unchanged, git HEAD for C_03 = 85bb2daa). GO issued to COO. AE fires combined trigger. |
 
 ## Compiler Tools
 
@@ -133,25 +133,43 @@ Side-effects resolved automatically by this single-site fix:
 | 13:43:20 | 0.6.0_AE_PartnerETL | QA request — --single C_03 + D_02 + D_04 on bd-gold-qa-runner |
 | 13:43:27 | 2.0.0_SA_COO | PROGRESS — committed + pushed + S3-uploaded |
 | 13:44:04 | 0.6.0_AE_PartnerETL | HOLD — stand down on C_03 QA request per Andrew |
+| 13:49:24 | 2.0.0_SA_COO | Honest status: code-ready, QA NOT run, Option A vs B decision to Andrew/COO |
+| 13:50:00 | 2.0.0_SA_COO | ACK — Option A confirmed. Standing by for PROD GO S3 re-verify. |
+| 13:50:54 | 2.0.0_SA_COO | GO — C_03 S3 MATCH re-verified, 85bb2daa ready for combined Run 9 PROD. |
 
-RAVC loop with RD is closed — RD ACK'd root cause, stood down on portal work-arounds.
+RAVC loop with RD is closed. Pending RAVC loop with COO: close when PROD run completes and ~E re-verifies z0820277481 sentinel.
 
-## Current State
+## Current State (leaving-off snapshot 2026-04-17 ~13:51 UTC)
 
-- Fix is shipped to S3 as the canonical script; next scheduled PROD run (post-CP-DS1 unhalt) will auto-apply the fix across the full pipeline.
-- QA on bd-gold-qa-runner is DEFERRED per Andrew. AE acknowledged stand-down.
+- C_03 fix (commit 85bb2daa) is on S3 MATCH and has been re-verified GO by ~E.
+- COO went with Option A: bundle C_03 with B_01 Run 9 combined PROD trigger; skip standalone C_03 QA. Rationale: parquet-verified defect + single-site cumsum + schema unchanged + stdlib-mature pandas groupby — worst-case is different wrong values, not chain halt.
+- AE is the executor for the combined PROD trigger; COO dispatches. ~E has NO further action until PROD run completes.
+- Pending RAVC close: verify post-PROD `platinum/accounts/z0820277481/summary.json` has zero negative `outflows_canonical` and parquet `cum_outflows` is monotonic per account — report back to COO to close the loop.
 - Zero downstream portal code changes required — D_04 first-diff is structurally correct; it was emitting garbage because its input was garbage.
-- `cum_*` consumers elsewhere (D_02 TTM / QTD / YTD) will also self-correct on the next rebuild.
+- `cum_*` consumers elsewhere (D_02 TTM / QTD / YTD) will self-correct on the next D-series rebuild.
+- Stale liveness entries remain: base serial `0.4.0_DS_ClientPlatform` and `~C` both still show PID 11700 (my PID). Flagged to COO; not urgent; clean-up deferred post-PROD ship.
+
+## Resume Checklist for Next ~E Session
+
+1. `register_agent("0.4.0_DS_ClientPlatform~E", ...)` + inbox-watch.
+2. Check broker + filesystem inbox for PROD run completion MCP from COO/AE.
+3. If PROD completed:
+   - `aws s3 cp s3://opal-data-bd/gold/timeseries/account_performance.parquet /tmp/` and re-run the z0820277481 monotonicity check from this log's Investigation section.
+   - `aws s3 cp s3://opal-data-bd/platinum/accounts/z0820277481/summary.json /tmp/` and confirm no negative `outflows_canonical`.
+   - Spot-check 3-5 of RD's 19-account sample list (in session log `20260417T133530Z` inbox message): z0820169491, z0812891221, z0822092251, z0817007881, z0812893211 — all showed ~50% negative-flow signatures pre-fix.
+   - MCP COO with CLOSE-LOOP evidence. Copy RD so they can unblock overlay chart regen.
+4. If PROD still running / halted again: read the run output from AE + COO MCPs, triage per whatever new defect surfaced (separate from C_03 — this fix is pipeline-wide on cum_* only).
+5. Update this log's Current State with the verification outcome.
 
 ## Next Steps
 
-- [0.6.0_AE_PartnerETL] No action — stood down.
-- [2.0.0_SA_COO] Once CP-DS1 ships and PROD is unhalted, C_03 fix will be picked up on the next regular PROD run. Optionally invoke bd-gold-trigger manually once CP-DS1 completes.
-- [0.4.2_RD_AdvisorIntelligence] Await next fresh platinum regen. Post-fix, the daily AUA+NNA overlay on the main chart will stop cliffing on the most-recent unreverted pulse date.
-- [~E] Standing by for next ~E-targeted task order. Will re-verify z0820277481 + sample accounts once post-fix platinum is available.
+- [2.0.0_SA_COO + 0.6.0_AE_PartnerETL] Fire combined B_01 Run 9 + C_03 PROD trigger. MCP completion back to ~E.
+- [~E] On PROD completion MCP: re-verify sentinel z0820277481 + spot-check sample set + close RAVC loop with COO.
+- [0.4.2_RD_AdvisorIntelligence] Await fresh platinum regen. Post-fix, daily AUA+NNA overlay on main chart stops cliffing on most-recent unreverted pulse date.
 
 ## Do NOT
 
 - Do NOT touch base-serial CP-DS1 work (~B's lane).
-- Do NOT invoke bd-gold-trigger for this fix ahead of CP-DS1 — coordinate via COO.
-- Do NOT re-request AE QA run without Andrew re-authorizing.
+- Do NOT re-fire bd-gold-trigger independently — COO owns the combined dispatch.
+- Do NOT re-request AE QA run for C_03 — Option A skipped standalone QA intentionally; runtime evidence comes from the bundled PROD run.
+- Do NOT close the RAVC loop with COO until z0820277481 sentinel is re-verified post-PROD.
