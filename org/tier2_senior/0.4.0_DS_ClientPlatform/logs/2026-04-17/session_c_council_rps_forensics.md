@@ -83,15 +83,33 @@ No `comp-*` tools run — target was S3 data-state inspection, not code graph tr
 | 1.0.0_SA_CTO | COMPLETE — Council ~C — RPS feed dead since 04-07 (commit 67a0d0fb) | T042403Z |
 | 0.4.0_DS_ClientPlatform~D | Council ~C input for your ~D synthesis | T042417Z |
 | 2.0.0_SA_COO | COMPLETE — Council ~C — RPS feed dead since 04-07 (commit 67a0d0fb) | T042422Z |
+| 1.0.0_SA_CTO | RETRACTION — ~C queried wrong bucket. Feed is alive. | T043038Z |
+| 2.0.0_SA_COO | RETRACTION — feed-dead finding was wrong bucket | T043112Z |
+| 0.4.0_DS_ClientPlatform~D | RETRACTION — hold ~C input in synthesis | T043123Z |
+| 1.0.0_SA_CTO | CORRECTED — canonical bucket verified, feed alive + stable (commit 7da58e60) | T043426Z |
+| 0.4.0_DS_ClientPlatform~D | CORRECTED — canonical bucket data for synthesis | T043439Z |
+| 2.0.0_SA_COO | CORRECTED — canonical bucket verified (commit 7da58e60) | T043443Z |
 
 ---
 
-## Next Steps
+## Correction (00:37 ET)
 
-- [CTO] Synthesize council A/B/C/D for Andrew's call. RPS-feed-dead is the structural frame ~D should build on.
-- [AE] Urgent TO forthcoming (from ~D synthesis) — diagnose why `CRS2026041x.RPS` stopped landing in `s3://opal-data-bd/schwab/bronze/` on 2026-04-08. Likely upstream Schwab SFTP/CRS mover failure. Backfill 04-08 through 04-17.
-- [Observability owner - TBD] Alarm on Schwab RPS bronze staleness (last file > 2 business days old).
-- [~C] Standing by. Available to sample more partitions, pull mapping table, or replay specific account if ~D needs cross-checks.
+AE caught a critical error in my original headline (MCP 20260417T042746Z, forwarded by CTO at T042855Z). I queried `s3://opal-data-bd/schwab/*` — that is the **secondary/legacy mirror** that stopped syncing 2026-04-08. B_01.holdings_lots.py:150 reads from `S3_SCHWAB_BUCKET='opal-data-schwab'` with prefix `silver/RPS/` (uppercase) — the **canonical** bucket, which has data through 2026-04-15 (CRS20260415.RPS uploaded 2026-04-16 10:55:57 UTC, silver partition date=20260415 at 83,284 rows).
+
+**Corrected finding:** RPS feed is ALIVE on T+1 Schwab cadence. 2-day `rps_date`/`snapshot_date` lag is normal UTC-overnight behavior. RPS is trustworthy (99.5% cohort stability, 98.3% byte-identical position sets over a 5-day window on the canonical bucket). The 1,169 halt cohort is ~A's 261 keying-defect baseline inflated ~4.5x by the 2-day T+1 lag that option (d) `ec2c1efc` already addresses; residual 261 still exceeds the 200 halt threshold; WP-9 CUSIP-keyed FIFO is the real fix (blocked on `BDPL_ASTDIM W4`).
+
+Deliverable amended with §0 (retraction), §9 (canonical-bucket re-run), §10 (revised recommendation), §11 (self-critique). Commit 7da58e60.
+
+**Process lesson:** resolve the source constant (`S3_SCHWAB_BUCKET = ...`) before querying storage. A grep hit on `silver/rps` is not evidence of where the script actually reads from. Saved as `feedback_resolve_bucket_constant_before_querying.md`.
+
+---
+
+## Next Steps (revised)
+
+- [CTO] Synthesize council A/B/C/D with corrected ~C input. Revised decision tree — Andrew's call.
+- [AE] TO dispatch for `ADVI_GLDOPS.SCHWAB-MIRROR-CLEANUP` (low priority, not prod-blocking) to investigate why `opal-data-bd/schwab/*` legacy mirror stopped syncing 04-08. No gold script reads from there.
+- [~D] Synthesis with canonical-bucket numbers — let-halt tonight, option (d) tomorrow, WP-9 medium-term, threshold stays at 200.
+- [~C] Standing by. If helpful: cross-bucket diff between canonical and secondary to identify when the mirror-copy job stopped.
 
 ---
 
@@ -101,4 +119,4 @@ None.
 
 ---
 
-*Delivered by 0.4.0_DS_ClientPlatform~C | 2026-04-17 00:24 ET*
+*Delivered by 0.4.0_DS_ClientPlatform~C | 2026-04-17 00:24 ET | corrected 00:37 ET*
