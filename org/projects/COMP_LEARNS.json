@@ -31,8 +31,8 @@
   "created": "2026-04-15",
   "pods": ["0.4", "0.7"],
   "pipeline": "none (research project)",
-  "coo_lane": "2.0.0_SA_COO~Z",
-  "coo_lane_note": "Andrew directive 2026-04-20 AM: COMP_LEARNS re-routed from ~B to ~Z. ~B session-30 handoff checklist (2026-04-16) preserved — v3 PRD delta sweep on .015/.016/.017/.021 was unfinished at handoff; COO~Z picked up and completed the 4 remaining sweeps 2026-04-20 (.015 commit 9270837f, .016/.017/.021 commit ecac2684) + resolved operator forks (normalize `active`/`deferred` + flip .005 → deferred, commit 5091974e). CTO~Z confirmed first-dispatch candidate = .011 (module skeleton, only zero-in-edge node); dispatch held pending CTO dep-graph signoff. ADVI_ROLLUP routes to base 2.0.0_SA_COO. Do not cross-contaminate project scope between COO lanes. Prior ~B directive (2026-04-16 session 30 PM): see log org/tier1_exec/2.0.0_SA_COO/logs/2026-04-16/COO_B_comp_learns_v3_sweep_handoff.md.",
+  "coo_lane": "2.0.0_SA_COO~B",
+  "coo_lane_note": "Ownership: base-lane ~B remains the operational COO owner of COMP_LEARNS. ~Z audit trail (2026-04-20): Andrew spun up a parallel ~Z session for authoring-only work on this project; ~Z completed the v3 PRD delta sweep unfinished at ~B session-30 handoff (.015 commit 9270837f, .016+.017+.021 commit ecac2684), normalized operator.py schema + flipped .005→deferred (5091974e), backfilled <evidence> blocks on .001/.003/.004/.006 (ffa43e25), updated this JSON (8d10456f). ~Z session is authoring/sweep/plan only — no cross-lane dispatch. CTO~Z signed off on dep-graph (.011 is sole zero-in-edge root of new wave, dispatch-ready). When ~B resumes, see `org/projects/COMP_LEARNS_DISPATCH_BUNDLE.md` for the hand-off package. ~B session-30 handoff still valid: `org/tier1_exec/2.0.0_SA_COO/logs/2026-04-16/COO_B_comp_learns_v3_sweep_handoff.md`. ADVI_ROLLUP stays on base 2.0.0_SA_COO.",
   "thread_counter": 0,
   "threads": []
 }
