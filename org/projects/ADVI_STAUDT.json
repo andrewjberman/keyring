@@ -7,7 +7,7 @@
     {"path": "docs/architecture/ADVI_STAUDT.md", "label": "State Audit PRD v1", "date": "2026-04-20"}
   ],
   "status": "active",
-  "phase": "Phase 0: PRD complete, COO decomposition pending. 4 parallel lanes (0.4.0_DS_ClientPlatform ~A/~B/~C/~D) scoped — ~A=T0 Wed baseline, ~B=T1 Thu PM post-polars+perf, ~C=T2 Fri 00:00-07:00 ET, ~D=synthesis.",
+  "phase": "Phase 0: PRD complete, COO decomposition pending. 4 LAYER-SCOPED lanes (0.4.0_DS_ClientPlatform ~A/~B/~C/~D) — ~A=Silver+GroupA, ~B=GroupB, ~C=GroupC, ~D=GroupD+synthesis. Each lane audits its layer across all 4 checkpoints (T0 Wed / T1 Thu PM / T2 Fri AM / T3 Mon). Upstream-first sequencing: ~A findings MCP gates ~B findings-write, ~B gates ~C, ~C gates ~D. Rule-out-at-source discipline — no downstream lane writes findings before upstream clean-bill received.",
   "blocking": "COO authoring of 4 parallel TOs from PRD. No upstream gates.",
   "created": "2026-04-20",
   "pods": ["0.4"],
