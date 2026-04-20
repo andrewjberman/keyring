@@ -7,8 +7,8 @@
     {"path": "docs/architecture/ADVI_STAUDT.md", "label": "State Audit PRD v1", "date": "2026-04-20"}
   ],
   "status": "active",
-  "phase": "Phase 0: PRD complete, COO decomposition pending. 4 LAYER-SCOPED lanes (0.4.0_DS_ClientPlatform ~A/~B/~C/~D) — ~A=Silver+GroupA, ~B=GroupB, ~C=GroupC, ~D=GroupD+synthesis. Each lane audits its layer across all 4 checkpoints (T0 Wed / T1 Thu PM / T2 Fri AM / T3 Mon). Upstream-first sequencing: ~A findings MCP gates ~B findings-write, ~B gates ~C, ~C gates ~D. Rule-out-at-source discipline — no downstream lane writes findings before upstream clean-bill received.",
-  "blocking": "COO authoring of 4 parallel TOs from PRD. No upstream gates.",
+  "phase": "Phase 2: FIX wave PROD-shipped + BD-anchor pivot. Layers A/B/C findings COMPLETE (0d34f025/fd857154/b687ff47). FIX wave PROD-deployed via SSM 3e06059f 2026-04-20 19:49Z clean — FIX2/FIX3A/FIX5/FIX6/FIX7 all complete; FIX3B cancelled (Phase 0 parquet verify disproved hypothesis); INV4 deferred (caller-side, not D_00b). FIX7 user-visible: firm NNA chart $330M→$1.649B. Post-FIX wave firm AUA -284bps vs BD silver. BFIX1+BFIX2 code shipped (`081223b5`) awaiting DT upload + combined PROD deploy. BFIX3/BFIX4 CANCELLED per Andrew 'we don't track that' decision (654 accts / $52M untracked cohort is BD-excluded-by-account-type). CTO brief `docs/briefs/aua_active_account_filter_redesign.md` proposes multi-signal active-account detector to close $41M of the $46M gap; 6,554 BD active accounts as ground truth per session 34 reframe.",
+  "blocking": "Andrew review of CTO AUA active-filter redesign brief before COO decomposition. DT upload of `081223b5` BFIX1+BFIX2 + combined qa-runner --group ABCD + PROD deploy. KPI/CONS pending COO GO on Phase 1. B_00 architectural mini-PRD (documents ~654 acct / $52M untracked cohort as known limitation) — CTO to author post-brief-decision.",
   "created": "2026-04-20",
   "pods": ["0.4"],
   "pipeline": "bd-pipeline",
