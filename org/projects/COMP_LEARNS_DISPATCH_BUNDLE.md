@@ -11,7 +11,7 @@
 
 - v3 PRD delta sweep on the 11-TO wave (`.011`-`.021`) is **complete**. Four TOs that ~B session-30 had flagged as unswept (`.015`, `.016`, `.017`, `.021`) are now swept.
 - Operator + validator both exit with **0 forks** on COMP_LEARNS. Operator reports `5/22 complete, 1 pending, 3 actionable, 13 blocked`. Validator reports `0/272 VALIDATED` — Phase 2 start state as expected.
-- **`.011` is the sole zero-in-edge node of the new wave.** CTO~Z eyeballed the dep-graph and signed off (message 2026-04-20T17:55Z). It is dispatch-ready. Flip `<status>staged</status>` → `pending` and send the GO to `0.4.0_DS_ClientPlatform~A` when you're ready.
+- **`.011` is the sole zero-in-edge node of the new wave.** CTO~Z eyeballed the dep-graph and signed off (message 2026-04-20T17:55Z). It is dispatch-ready. Flip `<status>staged</status>` → `pending` and send the GO to `0.1.0_DS_CompLearns` when you're ready.
 - Two known cross-lane questions are OPEN (see §4). Neither blocks `.011`; both should be resolved before `.012` Phase 1 runs.
 
 ---
@@ -66,25 +66,25 @@ Validator-side `deferred` schema gap is known and parked as a minor follow-up (C
 
 | TO | Owner | Status | Notes |
 |---|---|---|---|
-| `.001` | DS~A | complete | Commits 43e3225e + 714d43a9. Evidence block added this session. |
-| `.003` | DS~B | complete | Commit 7740277d. Evidence block added this session. |
-| `.004` | DS~C | complete | Commits 4d17f47d + 1380d44c + e657c232 + 8df2ba97. Evidence block added. |
-| `.005` | DS~D | **deferred** | Flipped this session. V0.3+ per PRD §2 row 6; mutation-based validation (`.021`) supersedes. |
-| `.006` | DS~C | complete | Commit d8ab1372. Evidence block added. |
+| `.001` | 0.1.0_DS_CompLearns | complete | Commits 43e3225e + 714d43a9. Evidence block added this session. |
+| `.003` | 0.2.0_DS_CompLearns | complete | Commit 7740277d. Evidence block added this session. |
+| `.004` | 0.3.0_DS_CompLearns | complete | Commits 4d17f47d + 1380d44c + e657c232 + 8df2ba97. Evidence block added. |
+| `.005` | 0.4.0_DS_CompLearns | **deferred** | Flipped this session. V0.3+ per PRD §2 row 6; mutation-based validation (`.021`) supersedes. |
+| `.006` | 0.3.0_DS_CompLearns | complete | Commit d8ab1372. Evidence block added. |
 | `.022` | DS base | active | Base-lane `ds-comp-pipescript-func-write-detection`. Out of ~Z scope. |
-| `.007` | DS~B | staged | Pre-v3 Wave 1. **HELD by CTO~Z redline** — do not co-dispatch with `.011`. Revisit post-`.017` first-green; likely needs its own sweep if still wanted. |
-| `.008` | DS~A | staged | Pre-v3 Wave 1. Same hold rationale as `.007`. |
-| `.011` | DS~A | **staged (dispatch-ready)** | **First-dispatch root, zero in-edges. CTO~Z dep-graph signoff on record. Fire GO when resuming.** |
-| `.012` | DS~A | staged | Blocked on `.011`. Note: open AE 0.7 LibCST question — see §4. |
-| `.013` | DS~B | staged | Blocked on `.011` + `.012`. |
-| `.014` | DS~C | staged | Blocked on `.011` + `.013`. |
-| `.015` | DS~D | staged | Blocked on `.011` + `.014`. 49EXEC.003 SDK layer cleared (c0a00bcc). |
+| `.007` | 0.2.0_DS_CompLearns | staged | Pre-v3 Wave 1. **HELD by CTO~Z redline** — do not co-dispatch with `.011`. Revisit post-`.017` first-green; likely needs its own sweep if still wanted. |
+| `.008` | 0.1.0_DS_CompLearns | staged | Pre-v3 Wave 1. Same hold rationale as `.007`. |
+| `.011` | 0.1.0_DS_CompLearns | **staged (dispatch-ready)** | **First-dispatch root, zero in-edges. CTO~Z dep-graph signoff on record. Fire GO when resuming.** |
+| `.012` | 0.1.0_DS_CompLearns | staged | Blocked on `.011`. Note: open AE 0.7 LibCST question — see §4. |
+| `.013` | 0.2.0_DS_CompLearns | staged | Blocked on `.011` + `.012`. |
+| `.014` | 0.3.0_DS_CompLearns | staged | Blocked on `.011` + `.013`. |
+| `.015` | 0.4.0_DS_CompLearns | staged | Blocked on `.011` + `.014`. 49EXEC.003 SDK layer cleared (c0a00bcc). |
 | `.016` | CTO | **complete** | **SHIPPED 2026-04-20 ~Z session.** 85 gold records, 24 questions (19 ratchet + 5 exploratory, 4 adversarial), `target_version = sha256=909ea79f…`. GOLD_SURVEY.md documents `resolution=dynamic` as target-absent with reproducible grep. Inline bench stubs at `comp/bench/ab_answer_key_validator.py` + `comp/bench/cache.py` (swap on `.015` ship). Commit `58a52153`; status-flip `d0df35a9`. |
-| `.017` | DS~C | staged | Blocked on 7 parents: `.011/.013/.014/.015/.016/.020/.021` (`.012` transitive). This is the v0 integration gate; KEEP + DISCARD + determinism re-run demonstrated here. |
+| `.017` | 0.3.0_DS_CompLearns | staged | Blocked on 7 parents: `.011/.013/.014/.015/.016/.020/.021` (`.012` transitive). This is the v0 integration gate; KEEP + DISCARD + determinism re-run demonstrated here. |
 | `.018` | CTO | staged | Blocked on `.017`. |
 | `.019` | any | staged | Optional viz CLI. Blocked on `.017`. |
 | `.020` | CTO | staged | Blocked on `.011`. Selectors harness. |
-| `.021` | DS~D | staged | Blocked on `.011` + `.012`. Mutation engine — byte-identical determinism mandatory. |
+| `.021` | 0.4.0_DS_CompLearns | staged | Blocked on `.011` + `.012`. Mutation engine — byte-identical determinism mandatory. |
 | `.002` | CTO | staged | Pre-wave; Phase 0 shipped (fd2d0515). Steps 2-7 absorbed into `.016`. |
 | `.009` | CTO | staged | Target-2 selection (v0.1+). Not critical path. |
 | `.010` | any | staged | `comp-lint` PRD decomposition; not part of v3 wave. |
@@ -101,10 +101,10 @@ Validator-side `deferred` schema gap is known and parked as a minor follow-up (C
 - **Gates:** `.012` Phase 1 (not `.011`). So you have runway — the question can go out in the same MCP wave as the `.011` GO.
 - **Non-blocking:** if AE doesn't reply by the time DS reaches `.012` Phase 1, DS holds there per PRD §11.2.
 
-### 4.2 GO on `.011` — DS~A
+### 4.2 GO on `.011` — 0.1.0_DS_CompLearns
 
 - **Ready to fire.** Scope callouts for the GO message body (use as template):
-  - TO path: `org/tier2_senior/0.4.0_DS_ClientPlatform/task_orders/COMP_LEARNS.011.ds-a-module-skeleton-core-contracts.md`
+  - TO path: `org/tier2_senior/0.1.0_DS_CompLearns/task_orders/COMP_LEARNS.011.module-skeleton-core-contracts.md`
   - PRD: `docs/architecture/COMP_LEARNS_ARCHITECTURE.md` @ `8df31d86` — §4 IR schema, §5 SubtypeRecord + graph_builder contracts, §6.2 v3 Scorecard schema, §7.4 ExperimentLog, §4.5 dimensional-attribute node kinds.
   - Emphasis: "This is the zero-in-edge root of the `.011-.021` wave. Everything downstream consumes these contracts. Get it right; do not ship surface that forces a v2→v3 re-sweep on the downstream TOs."
   - SubtypeRecord invariant: **no `.extracted_at` field** (R13 byte-identical determinism).
