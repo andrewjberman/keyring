@@ -1,0 +1,17 @@
+{
+  "project_code": "ADVI_STAUDT",
+  "macro_code": "ADVI",
+  "name": "ADVI Portal State Audit — Wed→Mon Reconstruction",
+  "description": "Deterministic reconstruction of ADVI gold + portal state at four checkpoints (Wed 2026-04-15 PM, Thu 2026-04-16 PM, Fri 2026-04-17 00:00-07:00 ET, Mon 2026-04-20 current) to attribute four live portal bugs surfaced 2026-04-17 plus a live NNA-path split discovered in PRD research. Read-only audit across W4 canonical cutover (CN/RA waves), Thursday-evening polars + perf war-room rewrites, Friday overnight B_01 cusip rework + GOLD-DATE-FIX cycle, and Friday recovery-wave partial revert (cd177553). Output: canonical 4-checkpoint delta table + bug attribution + restore/keep/rewrite recommendations for COO fix-TO authoring.",
+  "prds": [
+    {"path": "docs/architecture/ADVI_STAUDT.md", "label": "State Audit PRD v1", "date": "2026-04-20"}
+  ],
+  "status": "active",
+  "phase": "Phase 0: PRD complete, COO decomposition pending. 4 parallel lanes (0.4.0_DS_ClientPlatform ~A/~B/~C/~D) scoped — ~A=T0 Wed baseline, ~B=T1 Thu PM post-polars+perf, ~C=T2 Fri 00:00-07:00 ET, ~D=synthesis.",
+  "blocking": "COO authoring of 4 parallel TOs from PRD. No upstream gates.",
+  "created": "2026-04-20",
+  "pods": ["0.4"],
+  "pipeline": "bd-pipeline",
+  "thread_counter": 0,
+  "threads": []
+}
