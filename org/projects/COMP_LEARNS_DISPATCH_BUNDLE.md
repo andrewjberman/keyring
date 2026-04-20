@@ -16,7 +16,7 @@
 
 ---
 
-## 1. Session commit trail (2026-04-20 ~Z, author = `2.0.0_SA_COO~Z`)
+## 1. Session commit trail (2026-04-20 ~Z, authors = `2.0.0_SA_COO~Z` + `1.0.0_SA_CTO~Z`)
 
 | Commit | Scope |
 |---|---|
@@ -27,7 +27,17 @@
 | `8d10456f` | `COMP_LEARNS.json` — initial ~Z lane update (superseded by subsequent coo_lane revert). |
 | `2f7d06d7` | `.011` status flip staged→pending. **Out-of-lane dispatch; reverted.** |
 | `5da6ed1a` | `.011` reverted pending→staged. Out-of-lane correction per Andrew 2026-04-20T18:05Z. TO stays dispatch-ready; base lane fires the GO. |
-| (pending this session) | `COMP_LEARNS.json` coo_lane reverted `~Z` → `~B`; this hand-off doc committed. |
+| `931ee1e4` | `COMP_LEARNS.json` coo_lane reverted `~Z` → `~B`; this hand-off doc committed. |
+| `778d9085` | `COMP_LEARNS_DISPATCH_BUNDLE.md` — initial §6a PRD v4 amendment heads-up. |
+| `28999f01` | **CTO~Z:** PRD v4 — §4.5 + §6.3 R1/R3 layer separation (architectural call). |
+| `087ac4ba` | **CTO~Z:** TO `.016` AC amendment to align with v4 (AC #3/#4 softened; Phase 1 `<if_mismatch>` updated). |
+| `885c8dc3` | **CTO~Z:** PRD v4.1 — 4/6 → 5/6 fact correction after star-import re-grep (unescaped pattern bug). |
+| `3ba83810` | **CTO~Z:** TO `.016` AC v4.1 correction matching. |
+| `8d15ff74` | Dispatch bundle §6a — 4/6 → 5/6 figure corrected post CTO~Z self-correction. |
+| `58a52153` | **CTO~Z:** `.016` gold artifacts (85 records, 24 questions 19/5 split, target_version `909ea79f…`, GOLD_SURVEY.md with observed/absent attestation + inline bench stubs). |
+| `d0df35a9` | **CTO~Z:** TO `.016` status `pending` → `complete` with full evidence chain. |
+| `dc839e77` | **CTO~Z:** PRD v4.2 — ship-blocker `should halt` → **MUST halt** + enforcement-owner paragraph (`.015`'s `ab_answer_key_validator.py`; `.015a` micro-TO escape hatch). |
+| (final) | This dispatch-bundle update + COO~Z session log. |
 
 ---
 
@@ -69,7 +79,7 @@ Validator-side `deferred` schema gap is known and parked as a minor follow-up (C
 | `.013` | DS~B | staged | Blocked on `.011` + `.012`. |
 | `.014` | DS~C | staged | Blocked on `.011` + `.013`. |
 | `.015` | DS~D | staged | Blocked on `.011` + `.014`. 49EXEC.003 SDK layer cleared (c0a00bcc). |
-| `.016` | CTO | staged | Preferred-parallel with `.011`. CTO~Z plans to start `.016` gold authoring in parallel this ~Z session (in-lane CTO work against PRD §4 directly — schema is frozen in PRD). |
+| `.016` | CTO | **complete** | **SHIPPED 2026-04-20 ~Z session.** 85 gold records, 24 questions (19 ratchet + 5 exploratory, 4 adversarial), `target_version = sha256=909ea79f…`. GOLD_SURVEY.md documents `resolution=dynamic` as target-absent with reproducible grep. Inline bench stubs at `comp/bench/ab_answer_key_validator.py` + `comp/bench/cache.py` (swap on `.015` ship). Commit `58a52153`; status-flip `d0df35a9`. |
 | `.017` | DS~C | staged | Blocked on 7 parents: `.011/.013/.014/.015/.016/.020/.021` (`.012` transitive). This is the v0 integration gate; KEEP + DISCARD + determinism re-run demonstrated here. |
 | `.018` | CTO | staged | Blocked on `.017`. |
 | `.019` | any | staged | Optional viz CLI. Blocked on `.017`. |
@@ -143,13 +153,17 @@ All four swept TOs preserved: original scope, original compiler mandates (with a
 - R14 added (judge drift).
 - `ADVI_49EXEC.003` Phase 1 block status CLEARED (c0a00bcc already shipped).
 
-### `.016` httpx-gold-authoring
-- References → PRD v3 `8df31d86`.
-- ab_questions.yaml + ab_answer_key.yaml split into `ratchet_critical` (12-22 entries, deterministic answer types) + `exploratory` (3-8 entries, open-ended OK) pools.
-- New file: `comp/targets/httpx/gold/target_version.txt` — SHA-256 of gold inputs + httpx source; bumps orphan prior cache entries per §6.4.1.
-- ab_answer_key entries typed: `enumerable` / `set_membership` / `numeric` / `open_ended`. Ratchet pool forbidden from open-ended.
-- Phase 2 + Phase 3 validator integration steps added.
+### `.016` httpx-gold-authoring (COMPLETE — first new-wave ship)
+- References → PRD **v4.2** `dc839e77` (evolved from v3 8df31d86 during this session).
+- ab_questions.yaml + ab_answer_key.yaml split into `ratchet_critical` (19 authored) + `exploratory` (5 authored) pools.
+- `comp/targets/httpx/gold/target_version.txt` — SHA-256 of gold inputs + httpx source; bumps orphan prior cache entries per §6.4.1.
+- ab_answer_key entries typed per §6.4 judge-split.
+- Phase 2 + Phase 3 validator integration steps.
 - R14 added.
+- **v4 amendment mid-authoring:** R1/R3 layer separation clarified — gold reflects observed target coverage (5/6 for httpx), R3 coverage lives in `.013`'s synthetic fixtures + `.011`'s attribute validator.
+- **v4.2 normative ship-blocker:** `MUST halt` on missing "Dimension Values Not Observed" section when gold has <100% vocabulary coverage; enforcement = `.015`'s `ab_answer_key_validator.py::validate_gold_survey_attestation`.
+- Gold artifacts: 85 imports edges (static=85, guard 79 uncond + 6 cond, binding 69 resolved + 16 unresolved); 24 questions; reproducible grep evidence for absent `resolution=dynamic`.
+- Inline bench stubs shipped at `comp/bench/` — swap on `.015` landing (docstrings flag the swap).
 
 ### `.017` E2E-v0-ratchet-httpx
 - References → PRD v3 `8df31d86`.
@@ -170,31 +184,38 @@ All four swept TOs preserved: original scope, original compiler mandates (with a
 
 ---
 
-## 6a. PRD v4 amendment (in-flight this ~Z session — supersedes earlier "no v4" decision)
+## 6a. PRD v4 → v4.2 amendment (shipped this ~Z session — supersedes earlier "no v4" decision)
 
 **Trigger:** CTO~Z running `.016` Phase 1 grep mandate surfaced that httpx 0.28.1 naturally exercises 5 of 6 dimension values — `resolution=dynamic` (0 `importlib`/`__import__`) is absent. (Initial CTO~Z report said 4/6 with `binding=unresolved` also absent; self-corrected 2026-04-20T18:23Z after catching a shell-escape bug in the original star-import grep — httpx actually has 16 star imports in `__init__.py` files, which map to `binding=unresolved` per PRD §4.5. COO~Z independently verified both counts before ACK. PRD v4 `28999f01` + `.016` AC `087ac4ba` patched in follow-up commits; R1/R3 separation framing unchanged.)
 
 **Decision (CTO~Z authored, COO~Z approved via Rule 7 acceptance-flex protocol):** amend the PRD to distinguish R1 (gold = real-world ground truth) from R3 (closed-vocabulary enforcement). R3 is mechanically defended by `.011`'s attribute validator and `.013`'s synthetic fixture `test_synthetic_3_file` (both independent of per-target gold). R1 is defended by gold matching what the target actually exhibits. Forcing 6/6 coverage on every real target either corrupts the pinned-SHA property (synthetic-extend) or over-restricts target selection — neither serves R1.
 
-**Amendment scope (being rolled as PRD v4 + `.016` AC amendment this ~Z session):**
-- PRD §4.5: add explicit R1/R3 separation; one sentence stating closed-vocabulary is defended by validator + per-subtype synthetic fixtures, not per-target gold.
-- PRD §6.3: "Required attribute coverage in gold" → "Observed attribute coverage in gold" (≥2 records per dimension value present in target; absent values documented with evidence).
-- TO `.016` AC #3 + #4 + Phase 1 step 3 `<if_mismatch>`: softened from "all six present / STOP + pivot/synthetic-extend" to "every observed dimension value present ≥2x; absent values documented in `GOLD_SURVEY.md` §'Dimension Values Not Observed' with grep/jq evidence."
-- GOLD_SURVEY.md attestation format: exact grep/jq commands + outputs for each absent value; machine-checkable, not prose.
+**Amendment shipped (commit chain):**
+- `28999f01` — PRD v4 (§4.5 R1/R3 separation normative paragraph + §6.3 observed-coverage subsection + machine-checkable attestation example).
+- `087ac4ba` — TO `.016` AC amendment to align with v4 (AC #3/#4 softened; Phase 1 step 3 `<if_mismatch>` updated).
+- `885c8dc3` — PRD v4.1 fact correction (httpx observed 5/6, not 4/6; `binding=unresolved` actually present via 16 star imports; `.013 test_synthetic_3_file` example generalized to per-subtype).
+- `3ba83810` — TO `.016` AC v4.1 correction matching.
+- `58a52153` — Gold authored against v4.1 AC: 85 records, 19 ratchet + 5 exploratory (4 adversarial), `target_version = sha256=909ea79f…`, GOLD_SURVEY.md "Dimension Values Not Observed" section documents `resolution=dynamic` with reproducible grep.
+- `d0df35a9` — TO `.016` status flipped `pending` → `complete`.
+- `dc839e77` — **PRD v4.2** normativity polish: §6.3 ship-blocker `should halt` → **MUST halt**; new enforcement-owner paragraph naming `.015`'s `ab_answer_key_validator.py` as the attachment point for `validate_gold_survey_attestation(target_root)` raising `GoldSurveyAttestationMissing`; micro-TO escape hatch `.015a` for standalone `gold_survey_checker.py` flagged.
 
-**Audit trail:** CTO~Z Rule-7 pre-flag 2026-04-20T18:14Z; COO~Z acceptance 2026-04-20T18:15Z. Triple-cite (original `<expect>` / substituted observation / reasoning) will appear in `.016` closeout comment. No Andrew escalation — within CTO+COO architectural authority per RAVC "drive every loop to close" (none of the five escalation triggers apply).
+**Audit trail:** CTO~Z Rule-7 pre-flag 2026-04-20T18:14Z; COO~Z acceptance 2026-04-20T18:15Z (RAVC triple recorded in v4 commit body); 4/6 → 5/6 self-correction 2026-04-20T18:23Z (COO~Z independent verification prior to ACK); v4.2 polish 2026-04-20T18:40Z. No Andrew escalation — within CTO+COO architectural authority per RAVC "drive every loop to close" (none of the five escalation triggers apply).
 
-**Supersedes §7 item 5 below** — "PRD v4 pass not needed" was the initial read; amendment now in-flight.
+**Supersedes §7 item 5 below** — "PRD v4 pass not needed" was the initial read; v4.2 now authoritative.
+
+**`.016` complete** — first new-wave TO shipped end-to-end this ~Z session (authored by CTO~Z, validated by COO~Z). Inline bench stubs landed at `comp/bench/ab_answer_key_validator.py` + `comp/bench/cache.py::compute_target_version` — swap-on-`.015`-ship.
 
 ---
 
 ## 7. Known follow-ups (not in scope for ~Z to dispatch)
 
-1. **GO on `.011`** — base lane fires when resuming.
+1. **GO on `.011`** — base lane fires when resuming. TO is `<status>staged</status>` with dep-graph signoff on record (§4.2 has GO-message template).
 2. **AE 0.7 MCP on LibCST** — base lane sends (§4.1).
 3. **`.007`/`.008` disposition** — pre-v3 Wave 1 TOs. Held per CTO~Z. Revisit post-`.017` first-green: sweep-to-v3, re-scope, or retire.
 4. **Validator `deferred` schema gap** — cosmetic only. Backfill when `.tools/validator.py` is next edited for a real reason.
-5. **PRD v4 pass** — ~~CTO~Z and COO~Z agreed not needed. All sweep deltas stayed at TO level; PRD v3 `8df31d86` is authoritative.~~ **Superseded 2026-04-20T18:15Z — amendment in flight this session per §6a above.** If base lane reads this BEFORE the v4 commit lands, check `git log --oneline | grep "COMP_LEARNS_ARCHITECTURE v4"` — v4 commit will be present if the ~Z session finished the amendment; if not, `.016` gold authoring is either in flight or paused with the unswept 6/6 gate still active.
+5. **PRD v4 pass — SHIPPED** (v4/v4.1/v4.2 complete this ~Z session, see §6a for commit chain). Enforcement-owner question also resolved in v4.2: `validate_gold_survey_attestation(target_root)` belongs in `.015`'s `ab_answer_key_validator.py`; `.015a` micro-TO is the escape hatch if scope is too tight. Whoever authors `.015` should update its TO to include the new function in Phase 2 `<run>/<expect>/<if_mismatch>` steps.
+6. **`.015` TO update (not yet rolled)** — per v4.2's enforcement-owner clause, `.015`'s Phase 2 mandate should gain a step testing `validate_gold_survey_attestation` raises `GoldSurveyAttestationMissing` on a fixture missing the attestation section. This is a light amendment to `.015`; parked for either (a) whoever picks up `.015` dispatch, or (b) a future ~Z polish session. Not blocking the base lane's `.011` GO.
+7. **Meta-observations for ADHC_ROUTER Phase 2** (CTO~Z session log §7) — three candidates parked: (a) shell-quoted `<run>` blocks in TOs to prevent transcription drift (motivated by the `from .*\*` unescaped-grep miss), (b) PRD worked-examples as target-pointers not inline text (prevents v4-style fact drift), (c) inline-stub pattern for ship-when-dep-pending TOs formalized (proven clean by `.016`'s `comp/bench/` stubs). None ~Z-session scope; all for the compiler-tools compiler roadmap.
 
 ---
 
