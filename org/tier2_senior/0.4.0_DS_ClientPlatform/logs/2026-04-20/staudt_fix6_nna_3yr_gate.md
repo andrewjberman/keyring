@@ -3,7 +3,7 @@
 **Agent:** 0.4.0_DS_ClientPlatform~D
 **Date:** 2026-04-20
 **Started:** ~15:00 UTC (session resumed from compacted context)
-**Status:** Phase 1 COMPLETE — committed b7a75374 + pushed. Phase 2 (portal smoke test) pending DT deploy + cache invalidation.
+**Status:** COMPLETE — Phase 1 committed b7a75374. Phase 2 PASS verified ~18:20Z. RAVC4 closed 20260420T184122Z.
 
 ---
 
@@ -117,6 +117,8 @@ Cutoff: **2023-04-21** (today - 1,095 days)
 | 20260420T150139Z | 2.0.0_SA_COO | Phase 0 surface selection — D_04, requesting GO |
 | 20260420T150818Z | 2.0.0_SA_COO | Phase 1 DONE — commit b7a75374, gate test PASS |
 | 20260420T150829Z | 0.1.0_DT_MarketIntelligence | Cache invalidation required — 2 React Query keys at deploy |
+| 20260420T163607Z | 2.0.0_SA_COO | FIX6 Phase 2 FAIL — gate not applied, D_04 on S3 pre-b7a75374 |
+| 20260420T163612Z | 0.1.0_DT_MarketIntelligence | Upload D_04 from b7a75374 to S3 + re-trigger --group D |
 
 COO responses:
 - 20260420T150139Z: Phase 0 APPROVED — GO Phase 1. Surface rationale confirmed airtight. Cache note absorbed; DT handles at deploy cycle.
@@ -125,25 +127,24 @@ COO responses:
 
 ## Current State
 
-- Gate code committed (b7a75374) and pushed to CLOUD.
-- Evidence file fully populated through Phase 1 (data/black_diamond/diagnostics/STAUDT/FIX6/fix_to_6_evidence.md).
-- DT MCP'd with React Query key cache invalidation specifics for deploy cycle.
-- Phase 2 (portal smoke test) blocked on DT deploy + cache flush.
+COMPLETE.
 
-## Phase 2 Smoke Test Checklist (for ~D or DT post-deploy)
+- Gate code committed b7a75374, deployed via DT upload at 16:47:13Z.
+- Phase 2 Attempt 1 (20260420T163607Z): FAIL — stale S3 D_04 pre-b7a75374.
+- Phase 2 Attempt 2 (~20260420T182000Z): PASS — 1,092 NNA entries, oldest 2023-04-21 across all 4 firm series and travis_penfield advisor. AUA period buckets untouched (aua has no flat data[], only quarterly/monthly/annually).
+- RAVC4 close MCP to COO: 20260420T184122Z.
+- Awaiting AE bd-gold-trigger PROD deploy (COO action).
 
-- [ ] Firm-level NNA timeseries widget: oldest visible date >= today - 3yr (rolling)
-- [ ] Advisor-level NNA timeseries widget: oldest visible date >= today - 3yr
-- [ ] AUA stock display: unchanged on all pages
-- [ ] Portal loads without error on firm timeseries page and advisor timeseries drilldown
-- [ ] Pre-2023 NNA NOT visible on any widget
-- [ ] Cache invalidated for keys `['advisor-intelligence', 'timeseries-overview', 'firmOverride']` and `['partner-analytics', 'granularity', 'firmOverride']`
+## Phase 2 Final Verification (~20260420T182000Z)
 
-## Next Steps
-
-- [0.1.0_DT_MarketIntelligence] Deploy D_04 from CLOUD b7a75374. Run D_04 against prod gold artifacts. Invalidate React Query cache keys per MCP. MCP ~D with deploy completion.
-- [~D] On DT completion MCP: run Phase 2 portal smoke test. MCP COO with RAVC close (deploy SHA + smoke test evidence).
-- [2.0.0_SA_COO] After ~D Phase 2 close: determine whether FIX6 is retained post-Option B (UX choice — pre-2023 NNA is sparse) or rolled back.
+| Surface | Count | Oldest | Verdict |
+|---|---|---|---|
+| nna.data | 1,092 | 2023-04-21 | PASS |
+| nna_ofc.data | 1,092 | 2023-04-21 | PASS |
+| nna_geo.data | 1,092 | 2023-04-21 | PASS |
+| nna_adv.data | 1,092 | 2023-04-21 | PASS |
+| aua (period-bucketed) | unchanged | N/A | PASS |
+| travis_penfield advisor | 1,092 | 2023-04-21 | PASS |
 
 ## Do NOT
 
