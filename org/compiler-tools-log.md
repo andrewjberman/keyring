@@ -956,3 +956,106 @@ RESOLUTION: fixed in `614d4c28` (`comp-platinum reverse empty-vs-broken disambig
 | 2026-04-20 | 1.0.0_SA_CTO | (no-TO) | comp-pipescript | comp-pipescript io D_00c | PASS |
 | 2026-04-20 | 1.0.0_SA_CTO | (no-TO) | comp-pipescript | comp-pipescript io D_02 | PASS |
 | 2026-04-20 | 1.0.0_SA_CTO | (no-TO) | comp-pipescript | comp-pipescript io D_04 | PASS |
+| 2026-04-20 | 0.4.0_DS_ClientPlatform~B | ADVI_STAUDT.B | comp-build | comp-build | PASS |
+| 2026-04-20 | 0.4.0_DS_ClientPlatform~B | ADVI_STAUDT.B | comp-build | comp-build | PASS |
+| 2026-04-20 | 0.4.0_DS_ClientPlatform~B | ADVI_STAUDT.B | comp-build | comp-build | PASS |
+| 2026-04-20 | 0.4.0_DS_ClientPlatform~B | ADVI_STAUDT.B | comp-build | comp-build | PASS |
+| 2026-04-20 | 0.4.0_DS_ClientPlatform~B | ADVI_STAUDT.B | comp-pipescript | comp-pipescript io B_00 | PASS |
+| 2026-04-20 | 0.4.0_DS_ClientPlatform~B | ADVI_STAUDT.B | comp-pipescript | comp-pipescript io B_01 | PASS |
+| 2026-04-20 | 0.4.0_DS_ClientPlatform~B | ADVI_STAUDT.B | comp-build | comp-build | PASS |
+| 2026-04-20 | 0.4.0_DS_ClientPlatform~B | ADVI_STAUDT.B | comp-pipescript | comp-pipescript io A_00 | PASS |
+| 2026-04-20 | 0.4.0_DS_ClientPlatform~B | ADVI_STAUDT.B | comp-pipescript | comp-pipescript io A_01 | PASS |
+| 2026-04-20 | 0.4.0_DS_ClientPlatform~B | ADVI_STAUDT.B | comp-pipescript | comp-pipescript io A_02 | PASS |
+| 2026-04-20 | 0.4.0_DS_ClientPlatform~B | ADVI_STAUDT.B | comp-pipescript | comp-pipescript io A_03 | PASS |
+| 2026-04-20 | 0.4.0_DS_ClientPlatform~B | ADVI_STAUDT.B | comp-pipescript | comp-pipescript io A_04 | PASS |
+| 2026-04-20 | 0.4.0_DS_ClientPlatform~B | ADVI_STAUDT.B | comp-pipescript | comp-pipescript io D_00 | PASS |
+| 2026-04-20 | 0.4.0_DS_ClientPlatform~B | ADVI_STAUDT.B | comp-pipescript | comp-pipescript io C_01 | PASS |
+| 2026-04-20 | 0.4.0_DS_ClientPlatform~B | ADVI_STAUDT.B | comp-pipescript | comp-pipescript io A_00 | PASS |
+| 2026-04-20 | 0.4.0_DS_ClientPlatform~B | ADVI_STAUDT.B | comp-pipescript | comp-pipescript io D_00b | PASS |
+| 2026-04-20 | 0.4.0_DS_ClientPlatform~B | ADVI_STAUDT.B | comp-pipescript | comp-pipescript io C_00 | PASS |
+| 2026-04-20 | 0.4.0_DS_ClientPlatform~B | ADVI_STAUDT.B | comp-pipescript | comp-pipescript io A_01 | PASS |
+| 2026-04-20 | 0.4.0_DS_ClientPlatform~B | ADVI_STAUDT.B | comp-pipescript | comp-pipescript io C_03 | PASS |
+| 2026-04-20 | 0.4.0_DS_ClientPlatform~B | ADVI_STAUDT.B | comp-pipescript | comp-pipescript io C_08 | PASS |
+| 2026-04-20 | 0.4.0_DS_ClientPlatform~B | ADVI_STAUDT.B | comp-pipescript | comp-pipescript io D_00c | PASS |
+| 2026-04-20 | 0.4.0_DS_ClientPlatform~B | ADVI_STAUDT.B | comp-pipescript | comp-pipescript io A_02 | PASS |
+| 2026-04-20 | 0.4.0_DS_ClientPlatform~B | ADVI_STAUDT.B | comp-pipescript | comp-pipescript io D_01 | PASS |
+| 2026-04-20 | 0.4.0_DS_ClientPlatform~B | ADVI_STAUDT.B | comp-pipescript | comp-pipescript io B_01b | PASS |
+| 2026-04-20 | 0.4.0_DS_ClientPlatform~B | ADVI_STAUDT.B | comp-pipescript | comp-pipescript io A_03 | PASS |
+| 2026-04-20 | 0.4.0_DS_ClientPlatform~B | ADVI_STAUDT.B | comp-pipescript | comp-pipescript io B_02 | PASS |
+| 2026-04-20 | 0.4.0_DS_ClientPlatform~B | ADVI_STAUDT.B | comp-pipescript | comp-pipescript io D_02 | PASS |
+| 2026-04-20 | 0.4.0_DS_ClientPlatform~B | ADVI_STAUDT.B | comp-pipescript | comp-pipescript io A_04 | PASS |
+| 2026-04-20 | 0.4.0_DS_ClientPlatform~B | ADVI_STAUDT.B | comp-pipescript | comp-pipescript io D_03 | PASS |
+| 2026-04-20 | 0.4.0_DS_ClientPlatform~B | ADVI_STAUDT.B | comp-pipescript | comp-pipescript io B_03 | PASS |
+| 2026-04-20 | 0.4.0_DS_ClientPlatform~B | ADVI_STAUDT.B | comp-blast | comp-blast B_01 | PASS |
+| 2026-04-20 | 0.4.0_DS_ClientPlatform~B | ADVI_STAUDT.B | comp-pipescript | comp-pipescript io D_04 | PASS |
+| 2026-04-20 | 0.4.0_DS_ClientPlatform~B | ADVI_STAUDT.B | comp-pipescript | comp-pipescript io D_00 | PASS |
+| 2026-04-20 | 0.4.0_DS_ClientPlatform~B | ADVI_STAUDT.B | comp-pipescript | comp-pipescript io merge-daily-incremental | FAIL |
+| 2026-04-20 | 0.4.0_DS_ClientPlatform~B | ADVI_STAUDT.B | comp-pipescript | comp-pipescript io D_00b | PASS |
+| 2026-04-20 | 0.4.0_DS_ClientPlatform~B | ADVI_STAUDT.B | comp-pipescript | comp-pipescript io D_00c | PASS |
+| 2026-04-20 | 0.4.0_DS_ClientPlatform~B | ADVI_STAUDT.B | comp-pipescript | comp-pipescript io D_01 | PASS |
+| 2026-04-20 | 0.4.0_DS_ClientPlatform~B | ADVI_STAUDT.B | comp-pipescript | comp-pipescript io D_02 | PASS |
+| 2026-04-20 | 0.4.0_DS_ClientPlatform~B | ADVI_STAUDT.B | comp-pipescript | comp-pipescript io D_03 | PASS |
+| 2026-04-20 | 0.4.0_DS_ClientPlatform~B | ADVI_STAUDT.B | comp-pipescript | comp-pipescript io D_04 | PASS |
+| 2026-04-20 | 0.4.0_DS_ClientPlatform~B | ADVI_STAUDT.B | comp-build | comp-build | PASS |
+| 2026-04-20 | 0.4.0_DS_ClientPlatform~B | ADVI_STAUDT.B | comp-pipescript | comp-pipescript io B_00 | PASS |
+| 2026-04-20 | 0.4.0_DS_ClientPlatform~B | ADVI_STAUDT.B | comp-pipescript | comp-pipescript io B_01 | PASS |
+| 2026-04-20 | 0.4.0_DS_ClientPlatform~B | ADVI_STAUDT.B | comp-pipescript | comp-pipescript io D_00 | PASS |
+| 2026-04-20 | 0.4.0_DS_ClientPlatform~B | ADVI_STAUDT.B | comp-pipescript | comp-pipescript io D_00b | PASS |
+| 2026-04-20 | 0.4.0_DS_ClientPlatform~B | ADVI_STAUDT.B | comp-pipescript | comp-pipescript io D_00c | PASS |
+| 2026-04-20 | 0.4.0_DS_ClientPlatform~B | ADVI_STAUDT.B | comp-pipescript | comp-pipescript io D_01 | PASS |
+| 2026-04-20 | 0.4.0_DS_ClientPlatform~B | ADVI_STAUDT.B | comp-pipescript | comp-pipescript io D_02 | PASS |
+| 2026-04-20 | 0.4.0_DS_ClientPlatform~B | ADVI_STAUDT.B | comp-pipescript | comp-pipescript io D_03 | PASS |
+| 2026-04-20 | 0.4.0_DS_ClientPlatform~B | ADVI_STAUDT.B | comp-pipescript | comp-pipescript io D_04 | PASS |
+| 2026-04-20 | 0.4.0_DS_ClientPlatform~B | ADVI_STAUDT.B | comp-pipescript | comp-pipescript io B_01b | PASS |
+| 2026-04-20 | 0.4.0_DS_ClientPlatform~B | ADVI_STAUDT.B | comp-pipescript | comp-pipescript io B_02 | PASS |
+| 2026-04-20 | 0.4.0_DS_ClientPlatform~B | ADVI_STAUDT.B | comp-pipescript | comp-pipescript io B_03 | PASS |
+| 2026-04-20 | 0.4.0_DS_ClientPlatform~B | ADVI_STAUDT.B | comp-blast | comp-blast B_01 | PASS |
+| 2026-04-20 | 0.4.0_DS_ClientPlatform~B | ADVI_STAUDT.B | comp-blast | comp-blast C_01 | PASS |
+| 2026-04-20 | 0.4.0_DS_ClientPlatform~B | ADVI_STAUDT.B | comp-build | comp-build | PASS |
+| 2026-04-20 | 0.4.0_DS_ClientPlatform~B | ADVI_STAUDT.B | comp-pipescript | comp-pipescript io B_00 | PASS |
+| 2026-04-20 | 0.4.0_DS_ClientPlatform~B | ADVI_STAUDT.B | comp-pipescript | comp-pipescript io B_01 | PASS |
+| 2026-04-20 | 0.4.0_DS_ClientPlatform~B | ADVI_STAUDT.B | comp-pipescript | comp-pipescript io B_01b | PASS |
+| 2026-04-20 | 0.4.0_DS_ClientPlatform~B | ADVI_STAUDT.B | comp-pipescript | comp-pipescript io B_02 | PASS |
+| 2026-04-20 | 0.4.0_DS_ClientPlatform~B | ADVI_STAUDT.B | comp-pipescript | comp-pipescript io B_03 | PASS |
+| 2026-04-20 | 0.4.0_DS_ClientPlatform~B | ADVI_STAUDT.B | comp-blast | comp-blast B_01 | PASS |
+| 2026-04-20 | 0.4.0_DS_ClientPlatform~B | ADVI_STAUDT.B | comp-build | comp-build | PASS |
+| 2026-04-20 | 0.4.0_DS_ClientPlatform~B | ADVI_STAUDT.B | comp-pipescript | comp-pipescript io B_00 | PASS |
+| 2026-04-20 | 0.4.0_DS_ClientPlatform~B | ADVI_STAUDT.B | comp-pipescript | comp-pipescript io B_01 | PASS |
+| 2026-04-20 | 0.4.0_DS_ClientPlatform~B | ADVI_STAUDT.B | comp-pipescript | comp-pipescript io B_01b | PASS |
+| 2026-04-20 | 0.4.0_DS_ClientPlatform~B | ADVI_STAUDT.B | comp-pipescript | comp-pipescript io B_02 | PASS |
+| 2026-04-20 | 0.4.0_DS_ClientPlatform~B | ADVI_STAUDT.B | comp-pipescript | comp-pipescript io B_03 | PASS |
+| 2026-04-20 | 0.4.0_DS_ClientPlatform~B | ADVI_STAUDT.B | comp-blast | comp-blast B_01 | PASS |
+| 2026-04-20 | 0.4.0_DS_ClientPlatform~B | ADVI_STAUDT.B | comp-blast | comp-blast D_00c | PASS |
+| 2026-04-20 | 0.4.0_DS_ClientPlatform~B | ADVI_STAUDT.B | comp-blast | comp-blast D_04 | PASS |
+| 2026-04-20 | 0.4.0_DS_ClientPlatform~B | ADVI_STAUDT.B | comp-blast | comp-blast C_08 | PASS |
+| 2026-04-20 | 0.4.0_DS_ClientPlatform~B | ADVI_STAUDT.B | comp-blast | comp-blast employee_leaderboard | PASS |
+| 2026-04-20 | 0.4.0_DS_ClientPlatform~B | ADVI_STAUDT.B | comp-blast | comp-blast platinum/firm/leaderboard.json | PASS |
+| 2026-04-20 | 0.4.0_DS_ClientPlatform~B | ADVI_STAUDT.B | comp-blast | comp-blast _weighted_aua | PASS |
+| 2026-04-20 | 0.4.0_DS_ClientPlatform~B | ADVI_STAUDT.B | comp-trace | comp-trace tagged_aua --direction both | PASS |
+| 2026-04-20 | 0.4.0_DS_ClientPlatform~B | ADVI_STAUDT.B | comp-blast | comp-blast A_00 | PASS |
+| 2026-04-20 | 0.4.0_DS_ClientPlatform~B | ADVI_STAUDT.B | comp-blast | comp-blast A_01 | PASS |
+| 2026-04-20 | 0.4.0_DS_ClientPlatform~B | ADVI_STAUDT.B | comp-blast | comp-blast A_03 | PASS |
+| 2026-04-20 | 0.4.0_DS_ClientPlatform~B | ADVI_STAUDT.B | comp-platinum | comp-platinum reverse tagged_aua | PASS |
+| 2026-04-20 | 0.4.0_DS_ClientPlatform~B | ADVI_STAUDT.B | comp-platinum | comp-platinum reverse fee_breakdown.no_fee.aua | PASS |
+| 2026-04-20 | 0.4.0_DS_ClientPlatform~B | ADVI_STAUDT.B | comp-platinum | comp-platinum reverse aua_growth_pct | PASS |
+| 2026-04-20 | 0.4.0_DS_ClientPlatform~B | ADVI_STAUDT.B | comp-blast | comp-blast accounts_dimension_latest | PASS |
+| 2026-04-20 | 0.4.0_DS_ClientPlatform~B | ADVI_STAUDT.B | comp-blast | comp-blast advisor_assignments_history | PASS |
+| 2026-04-20 | 0.4.0_DS_ClientPlatform~B | ADVI_STAUDT.B | comp-blast | comp-blast client_dimension | PASS |
+| 2026-04-20 | 0.4.0_DS_ClientPlatform~B | ADVI_STAUDT.B | comp-cache | comp-cache collisions | PASS |
+| 2026-04-20 | 0.4.0_DS_ClientPlatform~B | ADVI_STAUDT.B | comp-transform | comp-transform schema-check AdvisorsTab | PASS |
+| 2026-04-20 | 0.4.0_DS_ClientPlatform~B | ADVI_STAUDT.B | comp-transform | comp-transform schema-check ClientsTab | PASS |
+| 2026-04-20 | 0.4.0_DS_ClientPlatform~B | ADVI_STAUDT.B | comp-transform | comp-transform schema-check AdvisorIntelligence | PASS |
+| 2026-04-20 | 0.4.0_DS_ClientPlatform~B | ADVI_STAUDT.B | comp-blast | comp-blast C_00 | PASS |
+| 2026-04-20 | 0.4.0_DS_ClientPlatform~B | ADVI_STAUDT.B | comp-blast | comp-blast C_03 | PASS |
+| 2026-04-20 | 0.4.0_DS_ClientPlatform~B | ADVI_STAUDT.B | comp-blast | comp-blast C_08 | PASS |
+| 2026-04-20 | 0.4.0_DS_ClientPlatform~A | ADVI_STAUDT.A | comp-build | T0 544877cc | 1162 nodes/940 edges | PASS |
+| 2026-04-20 | 0.4.0_DS_ClientPlatform~A | ADVI_STAUDT.A | comp-build | T1 f177240b | 1162 nodes/940 edges | PASS |
+| 2026-04-20 | 0.4.0_DS_ClientPlatform~A | ADVI_STAUDT.A | comp-build | T2 ae759bbb | 1162 nodes/940 edges | PASS |
+| 2026-04-20 | 0.4.0_DS_ClientPlatform~A | ADVI_STAUDT.A | comp-build | T3 cd177553 | 1162 nodes/940 edges | PASS |
+| 2026-04-20 | 0.4.0_DS_ClientPlatform~A | ADVI_STAUDT.A | comp-pipescript io | T0 A_00 | no COLUMN GAPS; READS(1) WRITES(1) | PASS |
+| 2026-04-20 | 0.4.0_DS_ClientPlatform~A | ADVI_STAUDT.A | comp-pipescript io | T0 A_01 | no COLUMN GAPS; READS(1) WRITES(1) | PASS |
+| 2026-04-20 | 0.4.0_DS_ClientPlatform~A | ADVI_STAUDT.A | comp-pipescript io | T0 A_02 | no COLUMN GAPS; READS(0) WRITES(1) | PASS |
+| 2026-04-20 | 0.4.0_DS_ClientPlatform~A | ADVI_STAUDT.A | comp-pipescript io | T0 A_03 | no COLUMN GAPS; READS(0) WRITES(2) | PASS |
+| 2026-04-20 | 0.4.0_DS_ClientPlatform~A | ADVI_STAUDT.A | comp-pipescript io | T0 A_04 | no COLUMN GAPS; READS(1) WRITES(1) | PASS |
+| 2026-04-20 | 0.4.0_DS_ClientPlatform~A | ADVI_STAUDT.A | comp-pipescript io | T3 A_00-A_04 | IDENTICAL to T0 — confirmed no change | PASS |
+| 2026-04-20 | 0.4.0_DS_ClientPlatform~A | ADVI_STAUDT.A | comp-blast | T0 accounts_dimension_latest | 4 downstream nodes | orientation |
