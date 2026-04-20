@@ -1,0 +1,24 @@
+{
+  "project_code": "ADVI_ROLGAT",
+  "macro_code": "ADVI",
+  "name": "Advisor Role Gating + Data Tier Transmission",
+  "description": "Layer a second-dimension `advisorRole` gate on top of the existing admin/user firmRole gate so a partner-firm user's Book view depth is driven by their RCU role. Frontend gating is cosmetic; backend tiered data transmission is the trust boundary (ARCHITECTURE.md Principle 2). Four-role enum (architect / consultant / local_ops / implementor) with payload strip in opal-partners-data Lambda for L1 implementor (no `clients[]` + no cost-basis/tax/income), L2 client/account drill restricted to architect, cross-advisor drill admin-exclusive. Initial target firm: 49 Financial.",
+  "prds": [
+    {"path": "docs/architecture/ADVI_ROLGAT_PRD.md",                "label": "ADVI_ROLGAT PRD r2 (4-role enum, L0/L1/L2 tiers, payload strip)", "date": "2026-04-17"},
+    {"path": "docs/architecture/ADVI_ROLGAT_PERMISSION_GROUPS.md",  "label": "Permission groups rubric + DS brief for Alex Bright fix",         "date": "2026-04-17"}
+  ],
+  "authored_by": "0.4.0_DE_ClientPlatform",
+  "authored_by_note": "DE ran point per Andrew direction 2026-04-17. CTO/COO not in authoring loop; pod-driven scoping.",
+  "status": "complete",
+  "phase": "All 3 TOs complete 2026-04-17. DT1 deployed portal-auth-v1.13.0 (8ce0bbca) + partners-api-v1.16.1 (3a186703): advisorRole JWT claim + tier enforcement at all three backend gates (auth-validator-edge v12, shared-advisor-router v13, opal-partners-data v2.11) + 4-row 49financial backfill (Luke -> implementor) + 21/21 smoke PASS including implementor strip verification. DE1 portal DEV c0b1dae (8ea21b7e log): Claims advisorRole extension + 5 helper methods (canSeeClientList / canDrillToClient / canDrillToAccount / canDrillIntoOtherAdvisor) + AdvisorIntelligence tab restructure (admin: Advisors|Distribution|Books, non-admin: Advisors|Profile) + devBypass role picker. RD1 drill gates + role constitutions complete (per MCP query). L1 advisor-scope check fixup landed 295c617b. Permission groups rubric (Alex Bright fix) + DS brief shipped 0de257e0; click matrix + RD validation brief + Greg Rosner seed shipped 53c43049.",
+  "blocking": "None. All 3 pod TOs complete; portal DEV live at c0b1dae (await DT PROD push window for portal-v2.x.x bump including ADVI_ROLGAT.DE1). Backfill data quality cleanup (unmatched partner-table users default to implementor floor with WARN per row) tracked as separate ad-hoc TO if Andrew chooses.",
+  "created": "2026-04-17",
+  "pods": ["0.4"],
+  "pipeline": "portal + portal-auth + partners-api",
+  "tags_shipped": [
+    "portal-auth-v1.13.0 (8ce0bbca — DT1 auth-validator-edge v12 + shared-advisor-router v13)",
+    "partners-api-v1.16.1 (3a186703 — DT1 opal-partners-data v2.11 with tier gate + L1 advisor scope + implementor payload strip)"
+  ],
+  "thread_counter": 0,
+  "threads": []
+}

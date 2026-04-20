@@ -7,8 +7,8 @@
     {"path": "docs/architecture/ADVI_49EXEC.md", "label": "ADVI_49EXEC v1 PRD", "date": "2026-04-15"}
   ],
   "status": "active",
-  "phase": "Phase 0 — PRD complete, COO decomposition pending. 7 TOs scoped in PRD §7: TO 1 ds-template-library-and-trigger-eval, TO 2 ds-llm-prose-generator, TO 3 ae-anthropic-sdk-layer, TO 4 dt-generator-lambda-terraform, TO 5 ds-leaderboard-prior-week-rotation, TO 6 de-summary-card-rebrand-and-bullets, TO 7 dt-eventbridge-wiring-and-deploy. Cross-domain coordination matrix in PRD §7. New micro-pipeline `exec-summary` with own Terraform module + tag series.",
-  "blocking": "COO TO authoring against PRD compiler-mandate matrix. AE 0.6 must confirm gold-chain-complete EventBridge signal format before TO 7 dispatches. comp-pii audit on platinum/advisors/* + platinum/leaderboards/* must run at TO 1 Phase 1 (hard gate before LLM prompt construction).",
+  "phase": "Phase 1 partial. COMPLETE: TO 3 anthropic-sdk-deps layer (AE 0.6 c0a00bcc opportunistic ship 2026-04-16 while AE 0.7 was on CDRS sprint — owner reassignment not re-filed; evidence commit authoritative); TO 6 SummaryCard -> Executive Summary rebrand + bullets stub (DE 0.4 e8651920 portal DEV 00fbcc4 stub-first 2026-04-15). PENDING: TO 4 dt-generator-lambda-terraform (DT 0.4 PID, skeleton landed e53c4923; apply+tag gated on TO 2 close). STAGED: TO 1 ds-template-library, TO 2 ds-llm-prose-generator, TO 5 ds-leaderboard-prior-week-rotation, TO 7 dt-eventbridge-wiring-and-deploy. New micro-pipeline `exec-summary` with own Terraform module + tag series.",
+  "blocking": "DS lane queue: TO 1/TO 2/TO 5 staged pending DS bandwidth (currently absorbed by ADVI_ROLLUP CP-DS1 + Wave 4 cleanup). DT 004 pending TO 2 close. AE 0.6 must confirm gold-chain-complete EventBridge signal format before TO 7 dispatches (gates wiring step). comp-pii audit on platinum/advisors/* + platinum/leaderboards/* must run at TO 1 Phase 1 (hard gate before LLM prompt construction).",
   "created": "2026-04-15",
   "pods": ["0.4", "0.7"],
   "pipeline": "exec-summary (new micro-pipeline)",

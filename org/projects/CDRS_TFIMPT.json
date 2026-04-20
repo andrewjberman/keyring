@@ -1,0 +1,46 @@
+{
+  "project_code": "CDRS_TFIMPT",
+  "macro_code": "CDRS",
+  "name": "Cloud Resources Terraform Import — CloudFront + Identity Tables",
+  "description": "Bring console-created AWS resources under Terraform management. Scope spans two workstreams under one project: (A) the 5 remaining console-only CloudFront distributions (.001-.005 — Analytics Dashboard, Trade Form UI, Trade Recon, Market Metrics, Public API); (B) hand-created DynamoDB identity tables + auth-handler generalization (.006-.007 pending post-design, informed by DT 0.4.0's 2026-04-15 identity/permissions overhaul — opal-users-v2 + opal-partner-49financial live but CLI-created). Phase 0 context from DT includes the firmRole framework, two-table permission model, canonical docs at infra/aws/users/, portal-v2.1.51 live with firm-access matrix, and auth Lambda e7b78cf9 shipping firmRole in JWT + /auth/me. Precedent for import pattern: AUTH_TFIMPT.001 (portal CF, 2026-04-06 commit pattern known-good).",
+  "prds": [],
+  "source_brief": "docs/analysis/2026-04-15_cloud_inventory_audit.md (AE 0.7 account-wide gap audit) + org/tier2_senior/0.4.0_DT_ClientPlatform/logs/2026-04-15/identity_permissions_overhaul.md (DT framework overhaul)",
+  "status": "complete",
+  "phase": "All 7 TOs COMPLETE 2026-04-15. Phase 0 COMPLETE (DT-owned): firmRole framework shipped — portal-v2.1.49/50/51 PROD, auth Lambda fab26dd4 + e7b78cf9, canonical docs at infra/aws/users/ (0326068e). Phase 1 COMPLETE 2026-04-15: 5 CloudFront imports — analytics-dashboard-v1.0.0 (51482dd9), trade-pipeline-v1.1.0 (bd3c3501), trade-pipeline-v1.2.0 (6c98242f), market-overview-v1.8.0 (04cdfbec), public-api-cdn-v1.0.0 (1afb5843); first-try 0-diff on .005, CloudFront TF coverage 6/6 (100%). Phase 2 COMPLETE 2026-04-15: .006 opal-users-v2 DynamoDB import 0-diff (20acf679, shared-infra-v1.7.0); .007 partner-firm TF module + shared partner-perm lib + auth-handler generalization (7e673244, partner-firms-v1.0.0). AE 0.7 + DT 0.4 paired co-ship on .007 with 4-Q resolution.",
+  "blocking": "None. Post-sprint AE 0.7 follow-ups (JWT drift trade-pipeline 3 trade-recon Lambda env values; market-data-v2 missing bucket_policy / OAC E27K6SGX8Y6CE2 default origin 403) carried as standing AE backlog — neither blocks any other project. Phase 1 `<if_mismatch>` triad reformat on .001-.005 task orders is org-doc hygiene only; closeout already accepted by CTO.",
+  "completed": "2026-04-15",
+  "depends_on": [],
+  "depends_on_note": "Phase 2 work is structurally downstream of Phase 0 identity framework (already COMPLETE).",
+  "lanes": ["0.4.0_DT_ClientPlatform", "0.7.0_AE_CloudOps"],
+  "lane_note": "Work fenced to DT 0.4.0 + AE 0.7.0 per Andrew 2026-04-15. DT owns identity/app-layer + portal; AE owns Terraform + IAM + Lambda infra. Both stay OFF ADVI_ROLLUP while CDRS_TFIMPT is active.",
+  "created": "2026-04-15",
+  "pods": ["0.7", "0.4"],
+  "pipeline": "cross-cutting (terraform-only, no data pipeline; touches portal-auth pipeline)",
+  "task_orders": [
+    {"id": "001", "file": "org/tier2_senior/0.7.0_AE_CloudOps/task_orders/CDRS_TFIMPT.001.ae-cloudfront-analytics-dashboard.md", "target": "EF3ZZO0F4UDHH", "phase": 1, "status": "complete", "commit": "51482dd9", "tag": "analytics-dashboard-v1.0.0", "completed": "2026-04-15", "note": "Scope flex per Rule 7: bucket stayed in shared-infra (s3.tf:89-126), 3-file module (main/variables/cloudfront) instead of 4; aws_s3_bucket_policy cross-module ref by bucket name string.", "est": "45-60m"},
+    {"id": "002", "file": "org/tier2_senior/0.7.0_AE_CloudOps/task_orders/CDRS_TFIMPT.002.ae-cloudfront-trade-form-ui.md", "target": "E2RNVVND8GSGG3", "phase": 1, "status": "complete", "commit": "bd3c3501", "tag": "trade-pipeline-v1.1.0", "completed": "2026-04-15", "note": "Scope flex per Rule 7: bucket stayed in trade-pipeline/s3.tf, 1-file module addition (cloudfront-trade-form-ui.tf). Forward-note grep pattern adopted into Phase 1 standard. Out-of-scope drift flagged: trade-pipeline/tfstate JWT_SECRET on 3 trade-recon Lambda envs — AE 0.7 carries as follow-up.", "est": "30-45m"},
+    {"id": "003", "file": "org/tier2_senior/0.7.0_AE_CloudOps/task_orders/CDRS_TFIMPT.003.ae-cloudfront-trade-recon-tool.md", "target": "E2JC2OGK8LM1N7", "phase": 1, "status": "complete", "commit": "6c98242f", "tag": "trade-pipeline-v1.2.0", "completed": "2026-04-15", "note": "Same bucket-already-managed pattern as .002. API GW 77005oklok referenced by domain_name only (not TF-managed, per TO contingency path). Rule 7 flex via closeout-citation only (pattern established).", "est": "60-75m"},
+    {"id": "004", "file": "org/tier2_senior/0.7.0_AE_CloudOps/task_orders/CDRS_TFIMPT.004.ae-cloudfront-market-metrics.md", "target": "E2LPCXXBLDGWXY", "phase": 1, "status": "complete", "commit": "04cdfbec", "tag": "market-overview-v1.8.0", "completed": "2026-04-15", "note": "IAM refactor hardcoded ARN → aws_cloudfront_distribution.market_metrics.arn. Origin mix: portal-v2 OAI-backed (shared EU39UXW7CMSI5 with portal-auth) declared inline; market-data-v2 OAC-backed. OUT-OF-SCOPE FINDING: opal-market-data-v2 has NO bucket_policy live — OAC E27K6SGX8Y6CE2 cannot read from it; default origin serves 403. Carried as AE post-sprint follow-up.", "est": "60-90m"},
+    {"id": "005", "file": "org/tier2_senior/0.7.0_AE_CloudOps/task_orders/CDRS_TFIMPT.005.ae-cloudfront-public-api.md", "target": "E398SP0DG1ME0Y", "phase": 1, "status": "complete", "commit": "1afb5843", "tag": "public-api-cdn-v1.0.0", "completed": "2026-04-15", "note": "FIRST-TRY 0-DIFF. All 6 behaviors used AWS-managed policy IDs — zero cache-policy drift. Corpus captured: API GW 7k3ed8px20 is v2 HTTP API not v1 REST (aws apigatewayv2 get-api namespace), for future CF-over-APIGW imports. New top-level module infra/aws/terraform/public-api-cdn/.", "est": "2-3h"},
+    {"id": "006", "file": "org/tier2_senior/0.7.0_AE_CloudOps/task_orders/CDRS_TFIMPT.006.ae-dynamodb-opal-users-v2-import.md", "target": "opal-users-v2 DynamoDB → TF import", "phase": 2, "status": "complete", "commit": "20acf679", "tag": "shared-infra-v1.7.0", "completed": "2026-04-15", "note": "First-try 0-diff, no apply needed. Phase 1 delta: 2 GSIs (firmId-index + email-index) captured — TO premise was 1. PK format `USER#usr_<id>` not `USER#<email>` — spot-check substituted scan COUNT=39.", "est": "45-60m"},
+    {"id": "007", "file": "org/tier2_senior/0.7.0_AE_CloudOps/task_orders/CDRS_TFIMPT.007.ae-dt-partner-firm-tf-module-plus-shared-lib.md", "target": "opal-partner-{firmId} TF module + import + shared-lib + auth-handler generalization (PAIRED AE+DT)", "phase": 2, "status": "complete", "commit": "7e673244", "tag": "partner-firms-v1.0.0", "completed": "2026-04-15", "note": "4-Q resolution delivered 18:56Z; DT ACK'd 18:59Z; AE+DT paired co-ship per partner-perm shared-lib spec.", "est": "2-3h"}
+  ],
+  "phase_0_completed_evidence": {
+    "portal_tags": ["portal-v2.1.49 (37a6cc2 DE wave)", "portal-v2.1.50 (b6e3a54 firm-access matrix)", "portal-v2.1.51 (e3190f8 claims.firmRole consumption)"],
+    "lambda_deploys": ["opalinvest-auth-handler fab26dd4 (firmRole in JWT)", "opalinvest-auth-handler e7b78cf9 (firmRole in /auth/me)"],
+    "canonical_docs": "infra/aws/users/{README,ARCHITECTURE,RULES,ONBOARDING}.md committed 0326068e; stale Jan-2026 content moved to _archive_pre_2026-04-15/",
+    "end_to_end_validation": "Hunter Lloyd (firmRole=admin, 49financial) + Chase Bertrand (firmRole=user) + Travis Penfield (firmRole=admin) validated via frontend-dev harness constitution firm_user_gating_inspection.json",
+    "irreversible_dynamo_writes": "opal-users-v2 put/update on Hunter/Chase/Travis; opal-partner-49financial put Hunter + firmRole updates on Travis+Chase; throwaway opal-partners-49financial (plural typo) deleted"
+  },
+  "phase_2_open_coordination": {
+    "mcp_reference": "0.4.0_DT → 0.7.0_AE_CloudOps msg 20260415T161839Z: shared partner-perm lib (TS/Py), TF module for partner tables, IAM strategy (wildcard vs explicit), naming convention enforcement. AE replied 2026-04-15T16:20Z with 4-step plan (TF module/import → apply+tag → lib/partner → runbook).",
+    "blocker": "AE Phase 1 CF-import sprint closes before Phase 2 TOs flip pending. DT pre-flight (handoff memo + comp-transform schema-check) runs in parallel.",
+    "auth_handler_hardcode": "db.ts:PARTNER_TABLE_49FIN constant blocks generalization to opal-partner-{firmId}; .007 scope."
+  },
+  "post_sprint_followups": {
+    "jwt_drift_trade_pipeline": "trade-pipeline/tfstate drift on 3 trade-recon Lambda env JWT_SECRET values — NOT caused by .002; AE 0.7 carries as post-.005 reconcile",
+    "opal_market_data_v2_bucket_policy": "opal-market-data-v2 missing bucket_policy; OAC E27K6SGX8Y6CE2 cannot read → default origin 403. Surfaced during .004; AE 0.7 carries as post-sprint investigation. Either path unused OR policy dropped."
+  },
+  "thread_counter": 0,
+  "threads": []
+}
