@@ -172,7 +172,7 @@ All four swept TOs preserved: original scope, original compiler mandates (with a
 
 ## 6a. PRD v4 amendment (in-flight this ~Z session — supersedes earlier "no v4" decision)
 
-**Trigger:** CTO~Z running `.016` Phase 1 grep mandate surfaced that httpx 0.28.1 naturally exercises 4 of 6 dimension values — `resolution=dynamic` (0 `importlib`/`__import__`) and `binding=unresolved` (0 star imports) are absent.
+**Trigger:** CTO~Z running `.016` Phase 1 grep mandate surfaced that httpx 0.28.1 naturally exercises 5 of 6 dimension values — `resolution=dynamic` (0 `importlib`/`__import__`) is absent. (Initial CTO~Z report said 4/6 with `binding=unresolved` also absent; self-corrected 2026-04-20T18:23Z after catching a shell-escape bug in the original star-import grep — httpx actually has 16 star imports in `__init__.py` files, which map to `binding=unresolved` per PRD §4.5. COO~Z independently verified both counts before ACK. PRD v4 `28999f01` + `.016` AC `087ac4ba` patched in follow-up commits; R1/R3 separation framing unchanged.)
 
 **Decision (CTO~Z authored, COO~Z approved via Rule 7 acceptance-flex protocol):** amend the PRD to distinguish R1 (gold = real-world ground truth) from R3 (closed-vocabulary enforcement). R3 is mechanically defended by `.011`'s attribute validator and `.013`'s synthetic fixture `test_synthetic_3_file` (both independent of per-target gold). R1 is defended by gold matching what the target actually exhibits. Forcing 6/6 coverage on every real target either corrupts the pinned-SHA property (synthetic-extend) or over-restricts target selection — neither serves R1.
 
