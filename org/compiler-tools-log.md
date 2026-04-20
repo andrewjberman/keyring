@@ -1074,3 +1074,15 @@ RESOLUTION: fixed in `614d4c28` (`comp-platinum reverse empty-vs-broken disambig
 | 2026-04-20 | 0.4.0_DS_ClientPlatform~C | ADVI_STAUDT.C | comp-blast | C_00/C_01/C_03/C_08 | FAIL | All returned "No downstream consumers" — blast requires function node name, not script name; script nodes have no edges in graph |
 | 2026-04-20 | 0.4.0_DS_ClientPlatform~C | ADVI_STAUDT.C | aws s3 ls | nna/ nna_atomic/ role_aua/ partition counts | PASS | 2297 / 2296 / 2295 partitions; Apr 14 gap confirmed in nna_atomic/ and role_aua/ |
 | 2026-04-20 | 0.4.0_DS_ClientPlatform~C | ADVI_STAUDT.C | aws s3api list-object-versions | account_performance.parquet | PASS | Pre-fix (vKXe5n7FVfVR, Apr 15 14:48 ET) and post-fix (BUUH_GmTJcuc, Apr 17 15:43 ET) retrieved; confirmed S3 versioning enabled on opal-data-bd |
+| 2026-04-20 | 0.6.0_AE_PartnerETL | (no-TO) | comp-pipescript | comp-pipescript io D_00c.portal_leaderboard | FAIL |
+| 2026-04-20 | 0.6.0_AE_PartnerETL | (no-TO) | comp-pipescript | comp-pipescript io D_00c | PASS |
+| 2026-04-20 | 0.6.0_AE_PartnerETL | (no-TO) | comp-pipescript | comp-pipescript io D_02 | PASS |
+| 2026-04-20 | 0.6.0_AE_PartnerETL | ADVI_STAUDT.INV1 | comp-pipescript | comp-pipescript io C_01.canonical_nna | FAIL |
+| 2026-04-20 | 0.6.0_AE_PartnerETL | ADVI_STAUDT.INV1 | comp-pipescript | comp-pipescript io C_01 | PASS |
+| 2026-04-20 | 0.6.0_AE_PartnerETL | ADVI_STAUDT.INV1 | comp-pipescript | comp-pipescript io D_00c.portal_leaderboard | FAIL |
+| 2026-04-20 | 0.6.0_AE_PartnerETL | ADVI_STAUDT.INV1 | comp-blast | comp-blast _compute_split_weight | PASS |
+| 2026-04-20 | 0.6.0_AE_PartnerETL | ADVI_STAUDT.INV1 | comp-blast | comp-blast _weighted_aua | PASS |
+| 2026-04-20 | 0.6.0_AE_PartnerETL | ADVI_STAUDT.INV1 | comp-pipescript | comp-pipescript deployed C_01.canonical_nna | PASS |
+| 2026-04-20 | 0.6.0_AE_PartnerETL | ADVI_STAUDT.INV1 | comp-pipescript | comp-pipescript deployed C_01 | PASS |
+| 2026-04-20 | 0.4.0_DT_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript io D_00c | PASS |
+| 2026-04-20 | 0.4.0_DT_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript deployed D_00c | PASS |
