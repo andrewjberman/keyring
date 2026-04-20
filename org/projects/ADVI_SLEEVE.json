@@ -1,0 +1,40 @@
+{
+  "project_code": "ADVI_SLEEVE",
+  "macro_code": "ADVI",
+  "name": "Sub-Custody Sleeve Reconstruction",
+  "description": "Close the structural gap where BD sub-custody sleeve accounts (PCRA Trust, SWTC TTEE, retirement sleeves) carry $35-50M of real silver positions that never appear at gold grain because FIFO replay never receives a Transfer In. Fix: sleeve-scoped ULN (silver/unrealized) opening-lot override before FIFO, scoped by deterministic sleeve detection. Identical pattern to B_01 RPS synthetic lot injection. Phase 0 must pick quantity source from three candidates. DS plan doc: docs/architecture/ADVI_SLEEVE_PLAN.md.",
+  "prds": [
+    {
+      "path": "docs/architecture/ADVI_ROLLUP_MASTER_WAVE.md",
+      "label": "ADVI_ROLLUP Master PRD (contains SLEEVE sub-program spec)",
+      "date": "2026-04-15"
+    },
+    {
+      "path": "docs/architecture/ADVI_SLEEVE_PLAN.md",
+      "label": "DS Sub-Custody Sleeve Reconstruction Plan",
+      "date": "2026-04-15"
+    }
+  ],
+  "status": "active",
+  "phase": "Phase 0: PRD complete, COO TO issuance pending. Phase 0 discovery (quantity source selection) must fire first.",
+  "blocking": "COO TO issuance for Phase 0. Quantity source selection (Andrew/DS decision at Phase 0) gates Phase 1+.",
+  "parent_project": "ADVI_ROLLUP",
+  "open_decisions": [
+    {
+      "id": "sleeve-quantity-source",
+      "question": "Which quantity source for ULN-seeded lots?",
+      "options": [
+        "1. Add Units column to BD unrealized export (preferred -- BD UGL source has it)",
+        "2. Pull from adjacent BD feed (ULT Taxable Unrealized or positions API)",
+        "3. Apportion account_market_value by cost-basis weight (fallback, breaks on rebalanced sleeves)"
+      ],
+      "owner": "Andrew + 0.4.0_DS_ClientPlatform",
+      "gate": "Phase 1"
+    }
+  ],
+  "created": "2026-04-15",
+  "pods": ["0.4"],
+  "pipeline": "bd-pipeline",
+  "thread_counter": 0,
+  "threads": []
+}

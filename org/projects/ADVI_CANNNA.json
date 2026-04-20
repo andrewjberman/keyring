@@ -1,0 +1,28 @@
+{
+  "project_code": "ADVI_CANNNA",
+  "macro_code": "ADVI",
+  "name": "NNA Canonical Convergence",
+  "description": "Converge 10 scripts / ~25 NNA aggregation sites to one canonical atomic table gold/canonical/nna_atomic/{date}.parquet. Closes the Travis three-way NNA schism, the Snapshot-GEO-NNA TX state-vs-city-vs-distribution gap ($5.39M), and all latent analogues by construction. Five invariants enforced via comp-validate nna_atomic. Every NNA consumer becomes a groupby on this table. Supersedes the GEO three-way point fix (DS brief item #4). DS plan doc: docs/architecture/ADVI_CANNNA_PLAN.md.",
+  "prds": [
+    {
+      "path": "docs/architecture/ADVI_ROLLUP_MASTER_WAVE.md",
+      "label": "ADVI_ROLLUP Master PRD (contains CANNNA sub-program spec)",
+      "date": "2026-04-15"
+    },
+    {
+      "path": "docs/architecture/ADVI_CANNNA_PLAN.md",
+      "label": "DS NNA Canonical Convergence Plan",
+      "date": "2026-04-15"
+    }
+  ],
+  "status": "active",
+  "phase": "Phase 0: PRD complete, COO TO issuance pending.",
+  "blocking": "COO task order issuance. Part of ADVI_ROLLUP wave. Pairs with ADVI_ROLEAUA (Phase 1 shadow writes land together).",
+  "parent_project": "ADVI_ROLLUP",
+  "pairs_with": "ADVI_ROLEAUA",
+  "created": "2026-04-15",
+  "pods": ["0.4"],
+  "pipeline": "bd-pipeline",
+  "thread_counter": 0,
+  "threads": []
+}

@@ -1,0 +1,27 @@
+{
+  "project_code": "ADVI_ROLEAUA",
+  "macro_code": "ADVI",
+  "name": "Role-AUA Canonical Convergence",
+  "description": "Converge six independent per-advisor/per-role AUA aggregation sites to one canonical table gold/canonical/role_aua/{date}.parquet. Eliminates the architect_aua three-way schism and all analogous consumer-level AUA divergences by construction. Six invariants enforced via comp-validate post-run. Each consumer becomes a groupby on the canonical table. DS plan doc: docs/architecture/ROLE_AUA_CANONICAL_CONVERGENCE_PLAN.md.",
+  "prds": [
+    {
+      "path": "docs/architecture/ADVI_ROLLUP_MASTER_WAVE.md",
+      "label": "ADVI_ROLLUP Master PRD (contains ROLEAUA sub-program spec)",
+      "date": "2026-04-15"
+    },
+    {
+      "path": "docs/architecture/ROLE_AUA_CANONICAL_CONVERGENCE_PLAN.md",
+      "label": "DS Role-AUA Canonical Convergence Plan",
+      "date": "2026-04-14"
+    }
+  ],
+  "status": "active",
+  "phase": "Phase 0: PRD complete, COO TO issuance pending.",
+  "blocking": "COO task order issuance. Part of ADVI_ROLLUP wave.",
+  "parent_project": "ADVI_ROLLUP",
+  "created": "2026-04-15",
+  "pods": ["0.4"],
+  "pipeline": "bd-pipeline",
+  "thread_counter": 0,
+  "threads": []
+}
