@@ -89,6 +89,12 @@ delivery = one relaunch.** Agents MUST relaunch the watcher via the Bash tool
 disconnected from the Claude Code task tracker, so messages were silently
 swallowed when an orphan won the atomic `mv` race).
 
+**BANNED: `bash org/mcp/inbox-watch.sh {serial} &`** — bare shell `&` looks
+identical but is completely broken. The task-notification that interrupts the
+agent ONLY fires for processes launched via the Bash tool with
+`run_in_background: true`. A `&` process runs invisibly, exits invisibly, and
+the agent is deaf for the rest of the session. Incident: 0.6.0_AE 2026-04-20.
+
 **When you get a watcher-exit task-notification, that IS the signal that a new
 message arrived.** Your required response:
 
