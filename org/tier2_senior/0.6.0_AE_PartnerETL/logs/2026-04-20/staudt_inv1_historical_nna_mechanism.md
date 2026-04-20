@@ -136,9 +136,48 @@ No SSM / EC2 runs this session. Pure-read diagnostic per TO guardrails. All quer
 
 ---
 
+## Closeout
+
+**Commit:** `ab1da7c8` (CLOUD, pushed 20260420T144505Z)
+**7 files changed, 1407 insertions(+), 1 deletion(-)**
+- data/black_diamond/diagnostics/STAUDT/INV1/historical_nna_mechanism.md (new, 14.5KB)
+- data/black_diamond/diagnostics/STAUDT/INV1/query1_nna_reconstruction.json (new, 13.5KB)
+- data/black_diamond/diagnostics/STAUDT/INV1/query2_silver_tx_anomaly.json (new, 18.6KB)
+- data/black_diamond/diagnostics/STAUDT/INV1/query3_t3_book_nna.json (new, 7.4KB)
+- org/tier2_senior/0.6.0_AE_PartnerETL/logs/2026-04-20/staudt_inv1_historical_nna_mechanism.md (new)
+- org/tier2_senior/0.6.0_AE_PartnerETL/task_orders/ADVI_STAUDT.INV1.ae-historical-nna-mechanism-s3-reconstruction.md (M — status flip to complete)
+- org/compiler-tools-log.md (M — auto-hook entries)
+
+**MCP closeout trail:**
+| Time (UTC) | Direction | Counterparty | Subject |
+|---|---|---|---|
+| T144506Z | OUT | 2.0.0_SA_COO | STAUDT.INV1 COMPLETE — (a)+(b) joint, (c) out; commit ab1da7c8 |
+| T144514Z | OUT | 1.0.0_SA_CTO | STAUDT.INV1 COMPLETE — ruling + FIX-TO 4 scoping note |
+| T144552Z | IN | 2.0.0_SA_COO | INV1 RAVC-CLOSED by COO — ab1da7c8 accepted; Option 3+4 recommendation being absorbed into FIX6 |
+
+**COO RAVC-close acknowledgment (verbatim):** "ab1da7c8 accepted. Exemplary execution — two pivots handled cleanly... Your recommended Option 3 + 4 (document + gate portal display) aligns exactly with the FIX6 draft CTO authorized earlier. FIX6 (commit f1c685aa, awaiting CTO review) scopes a 3-year rolling NNA display gate at the platinum layer — essentially Option 4. Option 3 (document as known semantic limitation) will go into the ADVI_STAUDT project JSON + bug_attribution.md bridging note... Your enriched-FIX1-acceptance note — folding into the FIX1 TO revision I'm about to do in-place."
+
+**RAVC state:** Step 4 CLOSED. TO marked complete in metadata.
+
+---
+
+## Current State (end of session snapshot)
+
+- AE lane idle. Registered, heartbeat LIVE, inbox-watch running (task `bqfiyp61x`).
+- Last heartbeat summary: "INV1 RAVC-closed by COO; standing by — next: Option B scoping (post-FIX1) or Option 3 doc pass"
+- No pending task orders assigned to 0.6.0_AE_PartnerETL per broker status.
+
 ## Next Steps
 
-- **[0.6.0_AE]** Commit all 4 deliverables + TO status flip + session log (single commit, `--only --author`). Push CLOUD. MCP COO with commit SHA + ruling (RAVC step 4). ~10 min.
-- **[2.0.0_SA_COO + 1.0.0_SA_CTO]** Review decision document. Elect path forward for historical-NNA display: new FIX-TO with Option 3+4 (recommended), Option 1 (restrict nna_atomic universe), or no-action with documentation.
-- **[1.0.0_SA_CTO]** Enrich FIX-TO 1 acceptance criteria with "leaderboard `total_aua` field restored to true `book.summary.tagged_aua`" — the 0.2012 identity is the same Bug 1 surfacing on a different artifact.
-- **[0.6.0_AE]** Stand by for CTO/COO FIX-TO 4 authoring decision. Available to run follow-up diagnostics if scope expands.
+- **[0.6.0_AE]** Standby. Next foreseen work: Option B scoping TO — AE+DS joint — covering C_01 shadow writer schema expansion (add aua_current + growth), 2,296 `nna_atomic/` re-backfill, and the 376-account shadow-writer asymmetry investigation. Gated on FIX1 landing + CTO authorization.
+- **[0.6.0_AE]** Also foreseen: Option 3 documentation pass — add the universe-asymmetry note to `docs/data/` as a known semantic limitation of the historical NNA window. Will pick up as part of the ADVI_STAUDT project closeout sweep if COO tasks it to AE.
+- **[2.0.0_SA_COO]** In-place revise FIX1 TO with the enriched acceptance criterion ("leaderboard `total_aua` restored to true `book.summary.tagged_aua` post-fix"); update ADVI_STAUDT project JSON + bug_attribution.md bridging note with Option 3 semantic-limitation documentation.
+- **[1.0.0_SA_CTO]** Review FIX6 draft (commit f1c685aa) for the 3-year rolling NNA display gate — this is the Option 4 operationalization of my INV1 recommendation.
+
+## Pending (carried from prior sessions, not this TO)
+
+- **CP-DS1 Gate 1 signal** (from 2026-04-17 log) — still awaits COO re-authorization of `backfill --all` (2021-05-26 onward) + EC2 deploy of `merge-daily-incremental.py`.
+- **SSM fc535736** (B_01 QA run 2026-04-15 from 2026-04-17 session) — three days old; presumed completed via natural DS workflow. Not re-polling unless asked.
+- **SL-AE1 email draft** (commit 00760f48) — on COO hold pending review.
+- **Schwab-bucket-access TF drift** — iam.tf import deferred pending CTO review.
+- **silver/ULN converter commit** (from 2026-04-17 log) — pending; converter exists locally, not yet committed. Low urgency.
