@@ -170,13 +170,31 @@ All four swept TOs preserved: original scope, original compiler mandates (with a
 
 ---
 
+## 6a. PRD v4 amendment (in-flight this ~Z session — supersedes earlier "no v4" decision)
+
+**Trigger:** CTO~Z running `.016` Phase 1 grep mandate surfaced that httpx 0.28.1 naturally exercises 4 of 6 dimension values — `resolution=dynamic` (0 `importlib`/`__import__`) and `binding=unresolved` (0 star imports) are absent.
+
+**Decision (CTO~Z authored, COO~Z approved via Rule 7 acceptance-flex protocol):** amend the PRD to distinguish R1 (gold = real-world ground truth) from R3 (closed-vocabulary enforcement). R3 is mechanically defended by `.011`'s attribute validator and `.013`'s synthetic fixture `test_synthetic_3_file` (both independent of per-target gold). R1 is defended by gold matching what the target actually exhibits. Forcing 6/6 coverage on every real target either corrupts the pinned-SHA property (synthetic-extend) or over-restricts target selection — neither serves R1.
+
+**Amendment scope (being rolled as PRD v4 + `.016` AC amendment this ~Z session):**
+- PRD §4.5: add explicit R1/R3 separation; one sentence stating closed-vocabulary is defended by validator + per-subtype synthetic fixtures, not per-target gold.
+- PRD §6.3: "Required attribute coverage in gold" → "Observed attribute coverage in gold" (≥2 records per dimension value present in target; absent values documented with evidence).
+- TO `.016` AC #3 + #4 + Phase 1 step 3 `<if_mismatch>`: softened from "all six present / STOP + pivot/synthetic-extend" to "every observed dimension value present ≥2x; absent values documented in `GOLD_SURVEY.md` §'Dimension Values Not Observed' with grep/jq evidence."
+- GOLD_SURVEY.md attestation format: exact grep/jq commands + outputs for each absent value; machine-checkable, not prose.
+
+**Audit trail:** CTO~Z Rule-7 pre-flag 2026-04-20T18:14Z; COO~Z acceptance 2026-04-20T18:15Z. Triple-cite (original `<expect>` / substituted observation / reasoning) will appear in `.016` closeout comment. No Andrew escalation — within CTO+COO architectural authority per RAVC "drive every loop to close" (none of the five escalation triggers apply).
+
+**Supersedes §7 item 5 below** — "PRD v4 pass not needed" was the initial read; amendment now in-flight.
+
+---
+
 ## 7. Known follow-ups (not in scope for ~Z to dispatch)
 
 1. **GO on `.011`** — base lane fires when resuming.
 2. **AE 0.7 MCP on LibCST** — base lane sends (§4.1).
 3. **`.007`/`.008` disposition** — pre-v3 Wave 1 TOs. Held per CTO~Z. Revisit post-`.017` first-green: sweep-to-v3, re-scope, or retire.
 4. **Validator `deferred` schema gap** — cosmetic only. Backfill when `.tools/validator.py` is next edited for a real reason.
-5. **PRD v4 pass** — CTO~Z and COO~Z agreed not needed. All sweep deltas stayed at TO level; PRD v3 `8df31d86` is authoritative.
+5. **PRD v4 pass** — ~~CTO~Z and COO~Z agreed not needed. All sweep deltas stayed at TO level; PRD v3 `8df31d86` is authoritative.~~ **Superseded 2026-04-20T18:15Z — amendment in flight this session per §6a above.** If base lane reads this BEFORE the v4 commit lands, check `git log --oneline | grep "COMP_LEARNS_ARCHITECTURE v4"` — v4 commit will be present if the ~Z session finished the amendment; if not, `.016` gold authoring is either in flight or paused with the unswept 6/6 gate still active.
 
 ---
 
