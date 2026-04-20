@@ -1003,13 +1003,14 @@ async def send_message(
     if not to_folder:
         return f"Recipient '{to_agent}' not found in org."
 
-    # Inbox routing (serialization-aware, locked 2026-04-16):
-    # - to_agent has ~suffix -> per-instance dir (private, only that lane reads it)
-    # - to_agent has no suffix -> base dir (broadcast; any polling lane may claim)
-    # See MCP serialization design discussion in COO session 30 log.
+    # Inbox routing (per-tilde filesystem isolation, 2026-04-20):
+    # - to_agent has ~suffix -> nested inbox/{base}/~{suffix}/ (strictly private)
+    # - to_agent has no suffix -> base inbox/{base}/ (base-serial traffic only)
+    # Tilded and base lanes are fully isolated: a tilded send does NOT reach
+    # a base-serial check_inbox, and vice versa. No cross-contamination.
     to_suffix = _instance_suffix(to_agent)
     if to_suffix:
-        inbox = INBOX_DIR / f"{to_folder.name}~{to_suffix}"
+        inbox = INBOX_DIR / to_folder.name / f"~{to_suffix}"
     else:
         inbox = INBOX_DIR / to_folder.name
     inbox.mkdir(parents=True, exist_ok=True)
@@ -1086,28 +1087,28 @@ async def check_inbox(agent_serial: str, mark_read: bool = False, ctx: Context =
     if not folder:
         return f"Agent '{agent_serial}' not found."
 
-    # Serialization-aware inbox read (locked 2026-04-16):
-    # - caller with ~suffix reads per-instance dir AND base dir (broadcasts)
-    # - caller without suffix reads only base dir
-    # Each message is sorted by filename (leading ISO-8601 ts keeps order global).
+    # Per-tilde isolation read (2026-04-20):
+    # - caller with ~suffix reads ONLY the per-instance dir
+    # - caller without suffix reads ONLY the base dir
+    # No cross-reads: base-serial check_inbox never surfaces tilded traffic,
+    # and a tilded check_inbox never surfaces base-serial traffic. This is a
+    # deliberate reversal of the pre-2026-04-20 behavior which leaked base
+    # messages into tilded readers and vice versa.
     caller_suffix = _instance_suffix(agent_serial)
-    base_inbox = INBOX_DIR / folder.name
-    inboxes = []
     if caller_suffix:
-        instance_inbox = INBOX_DIR / f"{folder.name}~{caller_suffix}"
-        inboxes.append(instance_inbox)
-    inboxes.append(base_inbox)
+        src_inbox = INBOX_DIR / folder.name / f"~{caller_suffix}"
+    else:
+        src_inbox = INBOX_DIR / folder.name
 
     urgent = _drain_piggyback()
 
-    # Gather messages from all applicable inboxes with their source dir
+    # Gather messages from the single applicable inbox. Skip nested ~* subdirs
+    # when reading the base dir (they belong to tilded instances, not base).
     pairs = []  # list of (msg_path, source_inbox)
-    for src in inboxes:
-        if not src.exists():
-            continue
-        for f in src.iterdir():
+    if src_inbox.exists():
+        for f in src_inbox.iterdir():
             if f.suffix == ".md" and f.is_file():
-                pairs.append((f, src))
+                pairs.append((f, src_inbox))
     pairs.sort(key=lambda p: p[0].name)
 
     if not pairs:
