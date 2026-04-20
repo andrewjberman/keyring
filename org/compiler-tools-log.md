@@ -1086,3 +1086,57 @@ RESOLUTION: fixed in `614d4c28` (`comp-platinum reverse empty-vs-broken disambig
 | 2026-04-20 | 0.6.0_AE_PartnerETL | ADVI_STAUDT.INV1 | comp-pipescript | comp-pipescript deployed C_01 | PASS |
 | 2026-04-20 | 0.4.0_DT_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript io D_00c | PASS |
 | 2026-04-20 | 0.4.0_DT_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript deployed D_00c | PASS |
+| 2026-04-20 | 0.4.0_DT_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript io D_00b | PASS |
+| 2026-04-20 | 0.4.0_DT_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript io D_02 | PASS |
+| 2026-04-20 | 0.4.0_DT_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript io D_04 | PASS |
+| 2026-04-20 | 0.4.0_DT_ClientPlatform | (no-TO) | comp-cache | comp-cache collisions | PASS |
+| 2026-04-20 | 0.4.0_DT_ClientPlatform | (no-TO) | comp-blast | comp-blast D_04 | PASS |
+| 2026-04-20 | 0.4.0_DT_ClientPlatform | (no-TO) | comp-blast | comp-blast timeseries_chart | PASS |
+| 2026-04-20 | 0.4.0_DT_ClientPlatform | (no-TO) | comp-iam | comp-iam --help | PASS |
+| 2026-04-20 | 0.4.0_DT_ClientPlatform | (no-TO) | comp-iam | comp-iam service exec-summary-generator | PASS |
+| 2026-04-20 | 0.4.0_DT_ClientPlatform | (no-TO) | comp-iam | comp-iam gaps | PASS |
+| 2026-04-20 | 0.4.0_DT_ClientPlatform | (no-TO) | comp-iam | comp-iam roles | PASS |
+| 2026-04-20 | 0.4.0_DT_ClientPlatform | (no-TO) | comp-validate | comp-validate D_00c --artifact /tmp/leaderboard.json | FAIL |
+| 2026-04-20 | 0.4.0_DT_ClientPlatform | (no-TO) | comp-validate | comp-validate D_00c --artifact /tmp/leaderboard.json | PASS |
+| 2026-04-20 | 0.4.0_DT_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript io data/black_diamond/scripts/gold/D_00c.portal_leaderboard.py | FAIL |
+| 2026-04-20 | 0.4.0_DT_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript io D_00c | PASS |
+| 2026-04-20 | 0.4.0_DT_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript io D_00b | PASS |
+| 2026-04-20 | 0.4.0_DT_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript io D_01 | PASS |
+| 2026-04-20 | 0.4.0_DT_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript io C_08 | PASS |
+| 2026-04-20 | 0.4.0_DT_ClientPlatform | (no-TO) | comp-validate | comp-validate D_00c --artifact C:/Users/ANDREW~1/AppData/Local/Temp/elb.json | PASS |
+| 2026-04-20 | 0.4.0_DT_ClientPlatform | (no-TO) | comp-validate | comp-validate D_00c --artifact C:/Users/ANDREW~1/AppData/Local/Temp/elb_fresh.json | PASS |
+| 2026-04-20 | 0.4.0_DT_ClientPlatform | (no-TO) | comp-validate | comp-validate D_04 --artifact C:/Users/ANDREW~1/AppData/Local/Temp/pl_lb.json | FAIL |
+| 2026-04-20 | 0.4.0_DT_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript io D_00b | PASS |
+| 2026-04-20 | 0.4.0_DT_ClientPlatform | (no-TO) | comp-transform | comp-transform schema-check AdvisorPublicProfile | PASS |
+| 2026-04-20 | 0.4.0_DT_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript io D_04 | PASS |
+| 2026-04-20 | 0.4.0_DT_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript io D_00b | PASS |
+| 2026-04-20 | 0.4.0_DT_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript io D_01 | PASS |
+| 2026-04-20 | 0.4.0_DT_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript io D_04 | PASS |
+| 2026-04-20 | 0.4.0_DT_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript io C_08 | PASS |
+| 2026-04-20 | 0.4.0_DS_ClientPlatform~B | ADVI_STAUDT.FIX2 | comp-pipescript | comp-pipescript io D_00c | PASS |
+| 2026-04-20 | 0.4.0_DS_ClientPlatform~B | ADVI_STAUDT.FIX2 | comp-validate | comp-validate D_00c --artifact /tmp/lb_post_fix1_2026-04-20.json | FAIL |
+| 2026-04-20 | 0.4.0_DS_ClientPlatform~B | ADVI_STAUDT.FIX2 | comp-validate | comp-validate D_00c --artifact data/black_diamond/diagnostics/STAUDT/FIX2/lb_post_fix2_... | PASS |
+| 2026-04-20 | 0.4.0_DS_ClientPlatform~B | ADVI_STAUDT.FIX2 | comp-validate | comp-validate D_00c --artifact data/black_diamond/diagnostics/STAUDT/FIX2/lb_post_fix2_... | PASS |
+| 2026-04-20 | 1.0.0_SA_CTO~Z | COMP_LEARNS.016 | comp-pipescript | comp-pipescript io B_00 | PASS |
+| 2026-04-20 | 1.0.0_SA_CTO~Z | COMP_LEARNS.016 | comp-blast | comp-blast B_00 | PASS |
+| 2026-04-20 | 1.0.0_SA_CTO~Z | COMP_LEARNS.016 | comp-pipescript | comp-pipescript io build_canonical_prices_v2 | FAIL |
+| 2026-04-20 | 0.4.0_DS_ClientPlatform~C | (no-TO) | comp-pipescript | comp-pipescript io C_00 | PASS |
+| 2026-04-20 | 0.4.0_DS_ClientPlatform~C | (no-TO) | comp-pipescript | comp-pipescript io C_01 | PASS |
+| 2026-04-20 | 0.4.0_DS_ClientPlatform~C | (no-TO) | comp-pipescript | comp-pipescript io B_01 | PASS |
+| 2026-04-20 | 0.4.0_DS_ClientPlatform~C | (no-TO) | comp-pipescript | comp-pipescript io C_03 | PASS |
+| 2026-04-20 | 0.4.0_DS_ClientPlatform~C | (no-TO) | comp-pipescript | comp-pipescript io B_02 | PASS |
+| 2026-04-20 | 0.4.0_DS_ClientPlatform~C | (no-TO) | comp-pipescript | comp-pipescript io B_03 | PASS |
+| 2026-04-20 | 0.4.0_DS_ClientPlatform~C | (no-TO) | comp-pipescript | comp-pipescript io C_02 | PASS |
+| 2026-04-20 | 0.4.0_DS_ClientPlatform~C | ADVI_STAUDT.KPI | comp-platinum | comp-platinum reverse aua.monthly | PASS |
+| 2026-04-20 | 0.4.0_DS_ClientPlatform~C | ADVI_STAUDT.KPI | comp-platinum | comp-platinum reverse aua_current | PASS |
+| 2026-04-20 | 0.4.0_DS_ClientPlatform~C | ADVI_STAUDT.KPI | comp-platinum | comp-platinum reverse timeseries_chart | PASS |
+| 2026-04-20 | 0.4.0_DS_ClientPlatform~C | ADVI_STAUDT.KPI | comp-platinum | comp-platinum reverse canonical_nna | PASS |
+| 2026-04-20 | 0.4.0_DS_ClientPlatform~C | ADVI_STAUDT.KPI | comp-pipescript | comp-pipescript io D_00b | PASS |
+| 2026-04-20 | 0.4.0_DS_ClientPlatform~C | ADVI_STAUDT.KPI | comp-pipescript | comp-pipescript io C_03 | PASS |
+| 2026-04-20 | 0.4.0_DS_ClientPlatform~C | ADVI_STAUDT.KPI | comp-pipescript | comp-pipescript io C_01 | PASS |
+| 2026-04-20 | 0.4.0_DS_ClientPlatform~D | (no-TO) | comp-pipescript | comp-pipescript io A_00 | PASS |
+| 2026-04-20 | 0.4.0_DS_ClientPlatform~D | (no-TO) | comp-pipescript | comp-pipescript deployed D_02.advisor_client_detail.py | PASS |
+| 2026-04-20 | 0.4.0_DS_ClientPlatform~D | (no-TO) | comp-pipescript | comp-pipescript io D_02.advisor_client_detail.py | FAIL |
+| 2026-04-20 | 0.4.0_DS_ClientPlatform~D | (no-TO) | comp-pipescript | comp-pipescript deployed D_02 | PASS |
+| 2026-04-20 | 0.4.0_DS_ClientPlatform~D | (no-TO) | comp-pipescript | comp-pipescript io D_02 | PASS |
+| 2026-04-20 | 0.4.0_DS_ClientPlatform~D | (no-TO) | comp-pipescript | comp-pipescript deployed D_02 | PASS |
