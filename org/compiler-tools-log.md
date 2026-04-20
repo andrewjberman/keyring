@@ -1059,3 +1059,18 @@ RESOLUTION: fixed in `614d4c28` (`comp-platinum reverse empty-vs-broken disambig
 | 2026-04-20 | 0.4.0_DS_ClientPlatform~A | ADVI_STAUDT.A | comp-pipescript io | T0 A_04 | no COLUMN GAPS; READS(1) WRITES(1) | PASS |
 | 2026-04-20 | 0.4.0_DS_ClientPlatform~A | ADVI_STAUDT.A | comp-pipescript io | T3 A_00-A_04 | IDENTICAL to T0 — confirmed no change | PASS |
 | 2026-04-20 | 0.4.0_DS_ClientPlatform~A | ADVI_STAUDT.A | comp-blast | T0 accounts_dimension_latest | 4 downstream nodes | orientation |
+
+## 2026-04-20 — ADVI_STAUDT.C Layer C Audit (0.4.0_DS_ClientPlatform~C)
+
+| Date | Agent | TO | Tool | Command | Result | Note |
+|------|-------|----|------|---------|--------|------|
+| 2026-04-20 | 0.4.0_DS_ClientPlatform~C | ADVI_STAUDT.C | git worktree add | T0-T3 (544877cc/f177240b/ae759bbb/cd177553) | PASS | 4 worktrees at C:/tmp/staudt_layerC_T{0-3} |
+| 2026-04-20 | 0.4.0_DS_ClientPlatform~C | ADVI_STAUDT.C | comp-build | T0 worktree | PARTIAL | 1162 nodes / 940 edges — caches to main repo root regardless of worktree CWD; graph identical at all 4 checkpoints |
+| 2026-04-20 | 0.4.0_DS_ClientPlatform~C | ADVI_STAUDT.C | comp-build | T1/T2/T3 worktrees | PARTIAL | Same limitation — T3 graph cache used for all; node/edge count correct (1162/940 uniform) |
+| 2026-04-20 | 0.4.0_DS_ClientPlatform~C | ADVI_STAUDT.C | comp-pipescript io | C_01 T0/T1/T2/T3 | PARTIAL | Returns cached T3 graph regardless of checkpoint; supplemented with direct source grep per worktree |
+| 2026-04-20 | 0.4.0_DS_ClientPlatform~C | ADVI_STAUDT.C | comp-pipescript io | C_00 T0/T1 | PARTIAL | Same T3 cache limitation; IO confirmed identical via source diff (no IO change in polars port) |
+| 2026-04-20 | 0.4.0_DS_ClientPlatform~C | ADVI_STAUDT.C | comp-pipescript io | C_03 T2/T3 | PARTIAL | T3 cache; per-checkpoint IO confirmed identical via source diff (computation change only) |
+| 2026-04-20 | 0.4.0_DS_ClientPlatform~C | ADVI_STAUDT.C | comp-pipescript io | C_08 T0/T1/T3 | PARTIAL | T3 cache; NNA path diff (nna/ vs nna_atomic/) captured via direct source grep on each worktree |
+| 2026-04-20 | 0.4.0_DS_ClientPlatform~C | ADVI_STAUDT.C | comp-blast | C_00/C_01/C_03/C_08 | FAIL | All returned "No downstream consumers" — blast requires function node name, not script name; script nodes have no edges in graph |
+| 2026-04-20 | 0.4.0_DS_ClientPlatform~C | ADVI_STAUDT.C | aws s3 ls | nna/ nna_atomic/ role_aua/ partition counts | PASS | 2297 / 2296 / 2295 partitions; Apr 14 gap confirmed in nna_atomic/ and role_aua/ |
+| 2026-04-20 | 0.4.0_DS_ClientPlatform~C | ADVI_STAUDT.C | aws s3api list-object-versions | account_performance.parquet | PASS | Pre-fix (vKXe5n7FVfVR, Apr 15 14:48 ET) and post-fix (BUUH_GmTJcuc, Apr 17 15:43 ET) retrieved; confirmed S3 versioning enabled on opal-data-bd |

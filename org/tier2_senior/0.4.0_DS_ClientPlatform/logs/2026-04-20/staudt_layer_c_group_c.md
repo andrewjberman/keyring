@@ -73,6 +73,13 @@ Phase 2 MCP handoff fired to CTO + COO + ~D.
 
 ---
 
+## Additional Deliverables (Post-Commit)
+
+- ~D plain-text briefing written in chat by Andrew's request (not committed — operational handoff)
+- inbox-watch.sh persistent monitor launched (auto-restart loop, session-length)
+
+---
+
 ## Pending (Phase 2 cleanup)
 - Worktree removal: git worktree remove C:/tmp/staudt_layerC_T{0,1,2,3} (on COO/~D RAVC close)
-- Append to org/compiler-tools-log.md
+- compiler-tools-log.md appended (this session)
