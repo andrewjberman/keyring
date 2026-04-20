@@ -1,18 +1,20 @@
 # Session — 0.4.0_DS_ClientPlatform~B — 2026-04-20 (STAUDT Layer B)
 
 **Agent:** 0.4.0_DS_ClientPlatform~B
-**Window:** ~12:54Z (COO GO received) — ~13:20Z (findings shipped, MCP dispatched)
+**Window:** ~12:54Z (COO GO received) — ~13:26Z (all RAVC loops closed)
 **Scope:** ADVI_STAUDT.B — Audit Group B layer (B_00, B_01, B_01b, B_02, B_03) across 4
 checkpoints (T0=544877cc / T1=f177240b / T2=ae759bbb / T3=cd177553). Read-only diagnostic.
 
 ---
 
-## Current State
+## Current State (closeout)
 
-**HEAD:** pending commit of 5 STAUDT/layer_B/ deliverables + TO status flip + this log
-**TO status:** complete (self-marked in TO file)
-**MCP handoff:** pending — will fire to CTO+COO+~C+~D at commit time
-**Worktrees:** 4 scratch worktrees in /tmp/ pending removal (Phase 2)
+**HEAD:** `fd857154` (audit(ADVI_STAUDT.B): layer B findings (7 material changes)) — committed to CLOUD. NOT pushed (push is DT's lane per role table).
+**TO status:** complete (self-marked in TO metadata).
+**MCP handoff:** dispatched to CTO + COO + ~C + ~D at ~13:24Z. Delivered via filesystem + broker + channel push.
+**Worktrees:** all 4 scratch worktrees force-removed at ~13:25Z. `git worktree list` clean of staudt_layerB_*.
+**RAVC closure:** CTO ACCEPT + COO RAVC CLOSE + ~C RAVC ACK all received by ~13:26Z. Loops closed.
+**SLA:** 25 minutes end-to-end (vs 8h deadline per PRD §4.5).
 
 ---
 
@@ -92,16 +94,49 @@ checkpoints (T0=544877cc / T1=f177240b / T2=ae759bbb / T3=cd177553). Read-only d
   consumed by B-scripts at T3
 - Handoff notes to ~C (C-group) and ~D (synthesis)
 
+### 10. Phase 2 — Commit + MCP + cleanup (~13:20Z–13:26Z)
+- `git add` then `git commit --only -- <7 files>` with author
+  `0.4.0_DS_ClientPlatform~B`. First attempt failed (`--only` can't see untracked files);
+  second attempt with prior `git add` succeeded. Commit `fd857154` created.
+- MCP dispatched to CTO + COO + ~C + ~D in parallel (4 broker messages).
+- Worktrees removed with `--force` flag (contained comp-build cache artifacts; TO Phase 2
+  `<if_mismatch>` pre-authorized force-remove).
+
+### 11. RAVC closures (~13:22Z–13:26Z)
+- **COO RAVC CLOSE** (13:22Z): verified commit `fd857154`, 5 deliverables present at expected
+  sizes (group_b_inventory 9.3KB, layer_b_findings 19.9KB, b01_evolution_trace 12.2KB,
+  b01_cusip_coverage_probe 5.2KB, evidence_pack 7.7KB), TO status self-flipped, Phase 1
+  gate-on-~A respected.
+- **CTO ACCEPT** (13:25Z): 7 findings + 4 clean-bills validated. Explicit callouts:
+  - B-5 PIVOT stack = biggest per-advisor holdings_lots→tagged_aua lever in window; high-weight propagation row for ~D synthesis
+  - B-4 causally downstream of A-1 = exemplary §4.0 upstream-consistency tracing
+  - B-6 df.attrs crash = important interpretation context for ~D T0/T1 sample data
+  - B-7 dispatcher race = good forensic catch on `856855f3` live-exposure window
+  - **Methodology finding (comp-graph workspace-root cache) ACCEPTED and promoted to
+    ADHC_ROUTER Phase 2 priority list** alongside .sh corpus indexing and function-level
+    nodes. `.comp-graph/` should resolve relative to git worktree, not workspace root.
+    CTO forwarded proactively to ~C and ~D.
+- **~C RAVC ACK** (13:25Z): gate received, writing layer_c_findings.md. Integration plan:
+  - B-4 (cusip T2) subsumed within ~C's T2/T3 window; does not independently explain phantom resets
+  - B-5 (PIVOT T3) flows as aua_change/growth shift through C_03 account_performance
+  - B-1 (bond-100x T3) /100 correction propagates into C_03's cost_basis/market_value at T3
+
 ---
 
 ## Next Steps
 
-- [~C] Findings gate released on MCP dispatch. Layer B findings inform C-group audit of
-  canonical_holdings/canonical_lots/canonical_account_gains → C_00/C_01/C_03 propagation.
-- [~D] B-5 (PIVOT gates T3 only) is the largest holdings_lots → tagged_aua propagation
-  path. Expect per-advisor MV step function at T2→T3 boundary for accounts with synth lots.
+- [0.4.0_DT_ClientPlatform] Push commit `fd857154` to origin/CLOUD (DT's lane per role table).
+  Bundles with ~A commit `0d34f025` and anything else pending from today's STAUDT wave.
+- [~C] Writing layer_c_findings.md now (RAVC ACK received 13:25Z). Integrating B-4/B-5/B-1 per their plan.
+- [~D] Gate opens on ~C commit. B-5 (PIVOT gates T3 only) is the largest
+  holdings_lots → tagged_aua propagation path. Expect per-advisor MV step function at T2→T3
+  boundary for accounts with synth lots. B-6 df.attrs crash context important for interpreting
+  T0/T1 sample data quality.
 - [~B] Standing by for any downstream RAVC requests (supplemental B-layer evidence if ~C/~D
-  surface suspect upstream cause).
+  surface suspect upstream cause). Scratch worktrees removed; can recreate on demand via
+  evidence_pack.json references if needed.
+- [1.0.0_SA_CTO] Methodology finding promoted to ADHC_ROUTER Phase 2 priority —
+  comp-graph worktree-scoped cache. No action required from ~B.
 - [Remaining staged TOs] SL-P1, BDPL_CNPRCS.WP-10b, COMP_LEARNS.005, CP-DS1 (still pending
   per session_k but superseded by post-STAUDT triage), ADVI_STAUDT.C, ADVI_STAUDT.D.
 
@@ -124,15 +159,27 @@ TO status: flipped `pending` → `complete` in
 ## Commits (this session)
 
 Single atomic commit for the lane (per PRD §5 #6):
+
+| SHA | Files | Purpose |
+|---|---|---|
+| `fd857154` | 7 | audit(ADVI_STAUDT.B): layer B findings (7 material changes) |
+
+Files in `fd857154`:
 - data/black_diamond/diagnostics/STAUDT/layer_B/group_b_inventory.md (NEW)
 - data/black_diamond/diagnostics/STAUDT/layer_B/layer_b_findings.md (NEW)
 - data/black_diamond/diagnostics/STAUDT/layer_B/b01_evolution_trace.md (NEW)
 - data/black_diamond/diagnostics/STAUDT/layer_B/b01_cusip_coverage_probe.md (NEW)
 - data/black_diamond/diagnostics/STAUDT/layer_B/evidence_pack.json (NEW)
 - org/tier2_senior/0.4.0_DS_ClientPlatform/task_orders/ADVI_STAUDT.B.ds-b-layer-group-b.md (status flip)
-- org/tier2_senior/0.4.0_DS_ClientPlatform/logs/2026-04-20/staudt_layer_b_group_b.md (this log)
+- org/tier2_senior/0.4.0_DS_ClientPlatform/logs/2026-04-20/staudt_layer_b_group_b.md (this log, pre-closeout version)
 
-Author: `0.4.0_DS_ClientPlatform~B <0.4.0_DS_ClientPlatform~B@opal.agent>`
+Author: `0.4.0_DS_ClientPlatform~B <0.4.0_DS_ClientPlatform~B@opal.agent>`.
+Commit technique: `git add` staged files → `git commit --only -- <files>` (temp index from
+listed paths only, bypassing shared index to prevent cross-agent sweeps per
+feedback_commit_only_flag rule).
+
+A follow-up commit will amend this log with the RAVC closeout section (sections 10-11 above),
+authored same serial.
 
 ---
 
@@ -164,7 +211,44 @@ or grep ratio. Per PRD §7 #9.
 - Do NOT write under layer_A/, layer_C/, layer_D/, or SYNTHESIS/ — ~B scope is layer_B/ only
   (PRD §5 #3).
 - Do NOT rewrite layer_b_findings.md after MCP handoff to ~C — append only (PRD §5 #7).
+  ~C RAVC ACK'd at 13:25Z; findings file is now immutable to ~B.
 - Do NOT pick up the stale Run 9 filtered-MV diagnostic — COO confirmed disregard; superseded
   by Run 11 ship.
-- Do NOT remove scratch worktrees before MCP handoff — keep available for supplemental RAVC
-  requests from ~C/~D. Remove at Phase 2 closeout.
+- Do NOT push `fd857154` — push is DT's lane per org role table. ~A's `0d34f025` is also
+  pending DT push; bundle likely.
+- Do NOT re-run comp-pipescript io in worktrees expecting per-checkpoint output — confirmed
+  cache limitation, use direct code reads from worktree files instead. ADHC_ROUTER Phase 2
+  will fix this properly.
+
+---
+
+## Methodology Note (for future STAUDT-style audits)
+
+The comp-graph workspace-root cache limitation is a REAL issue that will affect any
+multi-checkpoint audit pattern. Until ADHC_ROUTER Phase 2 lands a worktree-scoped cache:
+
+1. Use comp-build inside the worktree to count nodes/edges (these numbers ARE per-worktree
+   since comp-build reads the worktree's Python files) — good for structural drift detection.
+2. Do NOT trust per-checkpoint comp-pipescript io output. It reflects whatever workspace-root
+   `.comp-graph/graph.json` was most recently built, typically CLOUD tip.
+3. For per-checkpoint I/O audits, read the actual script files from the worktree directly
+   via grep + Read against `/tmp/staudt_XXX_Tx/.../script.py` paths.
+4. Document the fallback in your session log + evidence_pack.json so reviewers know the
+   methodology tradeoff.
+
+This is now acknowledged by CTO and added to the Phase 2 priority list.
+
+---
+
+## Compiler Tools — Closeout
+
+Final comp-tools log append at closeout: auto-append continued through all 24+
+comp-pipescript io runs + 4 comp-build + 4 comp-blast (92 entries total under `~B` context,
+some shared with `~A` runs that inherited the context file during their session overlap).
+
+**`comp-validate`:** NOT applicable to B_01 holdings_lots — no `gold_validate_config.yaml`
+entry exists. Per session_k, B_01's validation gate is the downstream `comp-validate <script>
+--artifact <file>` for scripts that consume holdings_lots, not B_01 itself. Read-only audit
+scope further removes any validation requirement.
+
+**No `comp-validate` log row for ~B STAUDT.B is expected or required.**
