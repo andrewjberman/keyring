@@ -6,9 +6,10 @@
   "prds": [
     {"path": "org/ref/GOLD_PIPELINE_INCREMENTAL_BRIEFING.md", "label": "AE 0.6.0 investigation briefing -- current state, target arch, recommended path", "date": "2026-04-09"}
   ],
-  "status": "inactive",
-  "phase": "INACTIVE 2026-04-13. Briefing complete. On hold until AE produces a production per-script timing profile.",
-  "blocking": "Production per-script timing profile (AE 0.6.0). Reactivate when profile is available.",
+  "status": "complete",
+  "completed": "2026-04-21",
+  "phase": "COMPLETE-AS-SUPERSEDED 2026-04-21. Original P0 briefing `GOLD_PIPELINE_INCREMENTAL_BRIEFING.md` complete 2026-04-09. Project scope absorbed into ADVI_ROLLUP via: **IN-1** ds-incremental-feasibility-survey COMPLETE + **IN-2** ds-incremental-design-prd COMPLETE + 3 IN-2.W0 sub-TOs all COMPLETE (W0.002 dt-watermark-helper-lib, W0.003 dt-comp-incrparity-tool, W0.004 ae-weekly-parity-eventbridge). Watermark infra + parity tool + EventBridge weekly monitor all shipped. The original blocker (AE per-script timing profile) is no longer gating — the incremental architecture design (IN-2 PRD) now lives in ADVI_ROLLUP and is the authoritative plan forward. Reclosed per Andrew done-or-superseded sweep 2026-04-21.",
+  "blocking": "None — scope owned by ADVI_ROLLUP IN wave going forward. Any future incremental-pipeline work will be new TOs on ADVI_ROLLUP or a successor project.",
   "created": "2026-04-09",
   "pods": ["0.4", "0.6"],
   "pipeline": "bd-pipeline",
