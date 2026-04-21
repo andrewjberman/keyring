@@ -213,7 +213,18 @@ All tools live in `.tools/` (in PATH via `~/.bashrc`). Tracked in git — surviv
 
 **Phase-aware entry (every wake re-determines current phase):**
 
-1. Scan project state: load `org/projects/{CODE}.json` + all matching TOs.
+**Step 0 — Universal watchdog plumbing (MANDATORY every wake, BEFORE operator/validator).** Per XXX.md `/loop` worker watchdog checklist — exec /loop inherits this, does not skip it:
+
+1. `check_inbox("{your_serial}")` — authoritative pull. **Act on every message THIS TURN** (RAVC ack, adjudicate fork, relay CC, validate evidence). Never let inbox messages accumulate to the next wake — DS/AE/CTO are blocked on you.
+2. `get_agent_status("{your_serial}")` — broker channel check (catches messages the filesystem path missed).
+3. `heartbeat("{your_serial}", summary=...)` — keeps you visible to the org.
+4. `get_live_agents()` — scan summaries for external deltas you may not have received as MCPs (agent status changes, arbitration-class language, agents going offline).
+5. Watcher health per XXX.md — only relaunch `inbox-watch` if a task-notification confirmed exit since last launch; default don't-relaunch to avoid orphan-race.
+
+Do the project-driver work only AFTER Step 0 completes. If Step 0 surfaces an urgent MCP (fork, GO request, adjudication ask), **handle it first — the operator/validator run can wait one turn**.
+
+Scan project state: load `org/projects/{CODE}.json` + all matching TOs.
+
 2. Pick the phase:
    - **Operator phase** — any TO has status ≠ `complete`. Run `operator {CODE} --dispatch`. The `--dispatch` flag auto-sends GO inbox messages and flips staged→pending for every actionable_staged TO before emitting the directive — no manual relay needed. Act on remaining directive: close pending TOs, validate evidence, compose elevations. Read `LOOP_PACING:` hint from operator tail:
      - `LOOP_PACING: active` → `ScheduleWakeup(delaySeconds=60)`
@@ -234,6 +245,7 @@ All tools live in `.tools/` (in PATH via `~/.bashrc`). Tracked in git — surviv
 - Not invoked at COO startup. Startup protocol is separate (register_agent + inbox-watch + ground truth reconciliation). Only Andrew fires /loop.
 - Does not modify TO status silently — every close-out still requires evidence citation, acceptance-flex pre-flags where applicable, and RAVC-compliant messaging.
 - Does not skip compiler mandates — /loop just drives existing protocol faster; it doesn't relax any rule.
+- **Does not skip Step 0 inbox plumbing even on "idle" iterations.** Anti-pattern: running operator, seeing LOOP_PACING: idle, scheduling 270s wake WITHOUT checking inbox. Worker agents write to me during the loop; silent iterations = I'm deaf to adjudication asks. Step 0 is universal, not conditional. Andrew flagged this 2026-04-21 after iter 10/11 missed DS's URGENT FORK MCP on HLOT2 Patch B ticker→cusip bug.
 
 ---
 
