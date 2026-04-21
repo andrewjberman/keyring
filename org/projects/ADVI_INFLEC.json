@@ -14,8 +14,8 @@
   "created": "2026-04-21",
   "pods": ["0.4", "0.6", "0.7"],
   "pipeline": "inf-pipeline (new)",
-  "lanes": ["0.7.0_AE_CloudOps", "0.6.0_AE_PartnerETL", "0.4.0_DS_ClientPlatform", "0.4.0_DE_ClientPlatform", "0.4.0_DT_ClientPlatform"],
-  "lane_note": "AE 0.7 primary on W1 infrastructure + W2 compute provisioning + W7 white-label (if triggered). AE 0.6 review on W2 + primary on W6 automated delivery (if triggered). DS 0.4 primary on W3 silver + W4 gold. DE 0.4 validates W5 portal rendering (expected no-op). DT 0.4 W5 user provisioning + smoke tests. CTO sets silver-layer schema scope in W3.1 jointly with DS.",
+  "lanes": ["0.7.0_AE_CloudOps", "0.6.1_AE_PartnerETL", "0.4.0_DS_ClientPlatform", "0.4.0_DE_ClientPlatform", "0.4.0_DT_ClientPlatform"],
+  "lane_note": "AE 0.7 primary on W1 infrastructure + W2 compute provisioning. AE 0.6.1 (PartnerETL, scaffolded 2026-04-21 per Andrew/DS 9f89f3fa) inflection-pipeline-only lane — W6 automated delivery + W3 ETL support. DS 0.4 primary on W3 silver + W4 gold. DE 0.4 primary on W5.0 housecleaning + W5 portal overrides. DT 0.4 W5 user provisioning + smoke tests. CTO sets silver-layer schema scope in W3.1 jointly with DS.",
   "waves": [
     {"id": "W0", "label": "Prep (Q2 2024 re-download + Andrew-AE Orion walkthrough + remaining §10 answers)", "owners": ["Andrew"], "target_tag": "—"},
     {"id": "W1", "label": "Infrastructure foundation (opal-data-inf bucket + Terraform workspace + DynamoDB firm row)", "owners": ["0.7.0_AE_CloudOps"], "target_tag": "inf-pipeline-v1.0.0"},
