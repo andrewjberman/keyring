@@ -91,13 +91,25 @@ Partition logic lives in `.runtmp/partition_v3.py` (gitignored). Partition outpu
 |------|--------|
 | `infra/aws/lambda/news_trending_analysis/lambda_function.py` | Added 30% GPT filter guardrail; removed auto-learn of dynamic stopwords. |
 | `org/tier2_senior/0.1.0_DS_MarketIntelligence/deliverables/dynamic_stopwords_archive_2026-04-21.json` | New — archive of the pre-reset 1,207-entry list. |
+| `org/tier2_senior/0.1.0_DS_MarketIntelligence/deliverables/dynamic_stopwords_curated_2026-04-21.json` | New — the 427-entry curated replacement. |
 | `docs/briefs/devops-brief-daily-cloud-gpt-filter-guardrail.md` | New — deploy brief for DT. |
+
+S3 writes (not git-tracked, but owned by this session):
+
+| Key | Change |
+|-----|--------|
+| `s3://opal-data-portal-v2/config/dynamic_stopwords.json` | 1,207 entries → 0 (reset) → 15 (re-pollution) → **427** (curated). |
+| `s3://opal-data-portal-v2/json/sentiment/keyword-sentiments.json` | Regenerated via Lambda re-invoke. 5 keywords → **39**. |
+| CloudFront invalidation `ICAK7QECU4S8YD9P0YP1CDSYRC` on `/api/general/sentiment/keyword-sentiments.json` (distribution `EVTSA9VEHNZVH`). |
 
 ---
 
 ## Commits
 
-Pending — commit after this log is written.
+| Hash | Author | Description |
+|------|--------|-------------|
+| `676aabe2` | 0.1.0_DS_MarketIntelligence | fix Daily Cloud GPT filter runaway (Lambda guardrail + kill auto-learn + brief + archive + initial log) |
+| `b54c31fc` | 0.1.0_DS_MarketIntelligence | curate Daily Cloud banned-phrases list (427 curated entries replacing 1,207; 781 legitimate market topics unbanned) |
 
 ---
 
@@ -111,11 +123,44 @@ Pending — commit after this log is written.
 
 ---
 
-## Current State
+## Evidence Pack
 
-- **Daily Cloud data:** healthy. 39 keywords published at 2026-04-21 08:43 ET. CloudFront cache invalidated; portal should pick up within ~5 minutes.
-- **Stopwords file:** 15 entries after my re-invoke (deployed code still auto-learns; will be frozen after DT deploys the fix).
-- **Code fix:** committed locally, awaiting DT push + deploy.
+**CloudWatch log (today's broken run, request `58522ef9-fcd2-4e28-9d02-0f60c820cc55`):**
+
+```
+[+] BULLISH: smartfinancial earnings (+0.959)    [candidate, filtered out]
+[+] BULLISH: bank of america earnings (+0.898)   [candidate, filtered out]
+[+] BULLISH: anthropic amazon deal (+0.072)      [candidate, filtered out]
+... 37 more legitimate topics flagged as "junk" by GPT ...
+GPT: identified 37 junk keywords: {'netflix earnings downgrade', 'kevin warsh fed', ...}
+   Reason: The keywords contain either meaningless fragments, boilerplate phrases, or are not relevant to financial topics.
+OK: Saved 1207 dynamic stopwords to S3
+Filtered: 42 -> 5 keywords
+```
+
+**14-day filter trajectory (CloudWatch `filter-log-events "Filtered"`):**
+
+| Date (ET) | Filter in→out | Signal |
+|-----------|---------------|--------|
+| 4/07 – 4/16 | 30-46 → 28-46 | Normal |
+| 4/17 07:16 | 46 → 21 | First degradation |
+| **4/17 17:16** | **35 → 0** | **Empty word cloud** |
+| 4/18 – 4/20 | 30-40 → 23-38 | Intermittent degradation |
+| **4/21 07:16** | **42 → 5** | **Andrew's screenshot** |
+| 4/21 08:43 (my re-invoke) | 41 → 39 | Normal after reset |
+
+**Pre-reset contamination sample** (dynamic_stopwords.json, random 30 of 1,207):
+
+`anthropic amazon deal`, `earnings call transcript`, `chair jerome powell`, `fed chair`, `federal reserve announcements`, `bitcoin etf filings`, `bank of america earnings`, `cftc crypto staffing`, `delta earnings report`, `ira contribution limits`, `trump crypto venture`, `reed hastings departure`, `tim cook transition`, `smartfinancial earnings`, `crypto regulation clarity`, `farage bitcoin probe`, `circle internet earnings`, `bitcoin price predictions`, `bitcoin rally iran ceasefire`, `saudi arabia liv golf` (legit junk — sports), `scottish football` (legit junk), `gavin newsom`, `masters week`, `timestamp updates`, `story here`, `interview with`, `secretary of`, `control`, `a fire`, `in venezuela`.
+
+---
+
+## Current State (end of session)
+
+- **Daily Cloud data:** healthy. 39 keywords at `s3://opal-data-portal-v2/json/sentiment/keyword-sentiments.json`, generated 2026-04-21 08:43 ET. CloudFront invalidation submitted; portal picks up on next client refresh.
+- **Dynamic stopwords file:** **427 curated entries** (sports + entertainment + lifestyle + fragments + boilerplate only). 781 legitimate market topics that had accumulated over 3 months were unbanned.
+- **Code fix:** committed to CLOUD branch at `676aabe2`, awaiting DT push + deploy. Until then, the deployed Lambda's auto-learn loop is still live — the 427 count can drift up until DT lands the fix.
+- **Diagnostic artifacts retained** in `.runtmp/` (gitignored): raw CloudWatch exports, partition scripts, before/after keyword JSONs. Safe to delete after DT deploy confirmed.
 
 ## Next Steps
 
