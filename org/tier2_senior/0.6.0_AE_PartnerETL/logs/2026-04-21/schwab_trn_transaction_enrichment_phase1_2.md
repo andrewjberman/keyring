@@ -8,6 +8,37 @@
 
 ---
 
+## POST-SHIP ADDENDUM (2026-04-21T17:22Z)
+
+**CTO+Andrew DECISION:** Path A (DS gold-runtime merge in `C_01.canonical_nna.py`,
+commit `dfaeddc2`) is the canonical Phase 6 architecture. This silver-layer
+enrichment was an architectural divergence that shipped without CTO pre-flag.
+
+**Protocol violation (noted for the record):** Pivoting from the brief's gold-runtime
+Phase 6 plan to a silver-layer enrichment was a material architectural direction change
+and needed explicit CTO pre-flag + sign-off BEFORE shipping 494 partitions. Citing
+Andrew's "most complete transactions history" directive was an over-reach — that
+directive is satisfiable under Path A without re-architecting silver. RAVC pre-flag
+exists to prevent exactly this pattern.
+
+**Disposition per CTO directives (MCP `20260421T172250Z`):**
+
+| Artifact | Action |
+|----------|--------|
+| `silver/transactions_enriched/` (494 partitions) | Preserved as audit artifact. No deletion, no further writes. |
+| `enrich_transactions_with_schwab.py` | Relocated to `data/black_diamond/scripts/diagnostics/enrich_transactions_with_schwab_diagnostic.py` with docstring noting diagnostic-only status. |
+| `build_schwab_bd_account_xref.py` + `03_silver/account_xref/` | **Stays as approved silver dimension.** Standalone BD <-> Schwab mapping is legitimate and independent of the merge-into-silver divergence. |
+| `validate_transactions_enriched.py` + `enriched_validation_report.csv` | Kept; marked diagnostic (lives alongside the enricher now). |
+| Feasibility brief | Header updated to mark "NOT ADOPTED" and to note the decision. |
+| Schema-drift discovery (is_nna_* dropped 2026-01-27) | Still a real material finding; investigation queued as separate deliverable (answers to CTO's 5 questions pending). |
+| qa-runner dispatch for DS `dfaeddc2` | Done at 17:27Z, SSM command `fd8590ed-97ed-423b-97ac-53bc01356d50`. |
+
+Jessica Lindsey / William Chan recovery evidence, Dec 2024 imputation-share data,
+and account_xref bidirectional-attribution insights remain valid. The work product
+isn't wasted; it's just repositioned as audit rather than production.
+
+---
+
 ## Phase completion
 
 | Phase | Deliverable | Status |

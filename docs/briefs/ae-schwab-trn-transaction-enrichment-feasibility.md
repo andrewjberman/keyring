@@ -2,12 +2,25 @@
 
 **Author:** 0.6.0_AE_PartnerETL
 **Date:** 2026-04-21
+**STATUS (2026-04-21T17:22:50Z):** **NOT ADOPTED.** CTO+Andrew DECISION: Path A (DS
+gold-runtime merge in `C_01.canonical_nna.py`, commit `dfaeddc2`) is canonical. This
+silver-layer enrichment is preserved as a diagnostic / audit artifact only. The
+`silver/transactions_enriched/` 494 partitions are retained but no further production
+writes. The enricher script was relocated from `scripts/silver/` to
+`scripts/diagnostics/enrich_transactions_with_schwab_diagnostic.py`. The `account_xref`
+layer remains approved as a standalone silver dimension. See session log
+`org/tier2_senior/0.6.0_AE_PartnerETL/logs/2026-04-21/schwab_trn_transaction_enrichment_phase1_2.md`.
+
 **Driver:** Andrew, 2026-04-21: "priority is the most complete transactions history as possible,
 so if we can enrich 1st and 2nd order transactions tables, thereby enriching gold, that is
 what we want to assess feasibility and implementation" — focus is 49 Financial NNA, not
-Schwab PDF parity.
-**Supersedes:** `docs/briefs/ae-brief-schwab-trn-nna-enrichment.md` Phase 6 scope
-(expands from gold-only merge into upstream silver enrichment).
+Schwab PDF parity. *(Note: this directive was satisfiable under Path A; AE's
+re-architecture to silver was an over-reach that shipped without CTO pre-flag. See
+CTO DECISION MCP `20260421T172250Z`.)*
+**Supersedes:** ~~`docs/briefs/ae-brief-schwab-trn-nna-enrichment.md` Phase 6 scope~~ —
+DOES NOT supersede. Phase 6 remains the DS gold-runtime merge. This feasibility doc is
+preserved for the architecture analysis + account_xref design; the silver-enrich
+implementation is not production.
 
 ---
 
