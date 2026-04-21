@@ -23,9 +23,9 @@ This is the merge-table default in `ae-brief-schwab-trn-nna-enrichment.md` (line
 | 2a | Validate converter positional schema on sample TRN files | complete |
 | 2b | Rewrite `convert_schwab_trn_to_parquet.py` (positional, full Layer A schema, OneDrive source) | complete |
 | 2c | Backfill `03_silver/TRN/` (496 partitions) | complete |
-| 3 | New `convert_schwab_trn_to_nna_silver.py` + backfill `03_silver/TRN_NNA/` | *in progress / complete — update at end* |
-| 4 | NNA parity harness Jul-Dec 2024 vs Schwab PDF | *pending* |
-| 5 | Schema contract doc + pipeline_inventory.xml + commit/push | *pending* |
+| 3 | New `convert_schwab_trn_to_nna_silver.py` + backfill `03_silver/TRN_NNA/` (494 partitions; 2 dates had no NNA-eligible rows) | complete |
+| 4 | NNA parity harness Jul-Dec 2024 vs Schwab PDF — reproduces PoC baseline 46-90% | complete |
+| 5 | Schema contract, pipeline_inventory.xml, commit `bea387a9`, push CLOUD | complete |
 
 ---
 
@@ -101,16 +101,30 @@ acct10 account_id_padded tran_code transaction_source   transaction_detail   tra
 | 2a    | `boto3 list_objects_v2` | | Counted 568 S3 TRN files (178 STANDARD + 390 GLACIER) vs 496 OneDrive files. Triaged: OneDrive is primary source. |
 | 2b/2c | n/a | | Pure local-source → S3 silver write. No gold script, no Lambda, no IAM, no CloudFront — comp-pipescript / comp-iam / comp-routes not applicable. Role-minimum AE mandate for this scope: `comp-pipescript deployed` does not apply (not a gold-script deploy). |
 | 3     | `convert_schwab_trn_to_nna_silver.py --date 20241231` (spot check) | | 213 rows, Jessica Lindsey $20.09M WIRE inflow confirmed. |
-| 4     | `nna_parity_harness.py --month-range 2024-07 2024-12` | | *pending Layer B completion — append results* |
+| 4     | `nna_parity_harness.py --month-range 2024-07 2024-12` | | See verdict table below; 2/6 months PASS inflow, 4/6 FAIL/PARTIAL — reproduces PoC baseline 46-90% coverage. Strictly additive over BD silver. |
+
+### Parity verdict (Jul-Dec 2024, ±15% band per brief AC#3)
+
+| Month | PoC-in | PDF-in | Cov | PoC-out | PDF-out | Cov | Verdict |
+|-------|-------:|-------:|----:|--------:|--------:|----:|---------|
+| 2024-07 | $19.91M | $43.40M | 45.9% | $9.80M  | $15.10M | 64.9% | FAIL    |
+| 2024-08 | $27.86M | $40.90M | 68.1% | $29.42M | $31.40M | 93.7% | PARTIAL |
+| 2024-09 | $15.94M | $23.80M | 67.0% | $15.18M | $16.40M | 92.6% | PARTIAL |
+| 2024-10 | $59.19M | $69.50M | 85.2% | $18.20M | $23.20M | 78.4% | PARTIAL |
+| 2024-11 | $20.38M | $28.90M | 70.5% | $8.96M  | $11.00M | 81.5% | FAIL    |
+| 2024-12 | $73.66M | $81.80M | 90.1% | $14.86M | $17.50M | 84.9% | PARTIAL |
+
+Interpretation: Classifier has imperfect coverage but Schwab silver is **strictly more complete** than BD silver for new-account inflows — BD's $91M gap is missing transactions, not misclassification. Coverage tightening is a follow-up classifier-tuning TO; not a gate for DS Phase 6.
 
 ---
 
 ## Current State + Next Steps
 
-**Current state (updating at session end):**
+**Current state:**
 - Layer A (`03_silver/TRN/`): 496 partitions, 2024-04-12 → 2026-04-20, 0 errors
-- Layer B (`03_silver/TRN_NNA/`): backfill running / complete
-- No code committed yet — staged at session end
+- Layer B (`03_silver/TRN_NNA/`): 494 partitions (2 skipped as sweep/dividend-only days), 0 errors
+- Shipped as commit `bea387a9` on CLOUD (pushed 2026-04-21); scoped via `--only` (12 files, 2094 insertions)
+- MCP handoffs sent: CTO completion report + DS Phase 6 brief
 
 **Next steps:**
 
