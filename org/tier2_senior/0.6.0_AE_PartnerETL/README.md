@@ -14,9 +14,9 @@
 
 | Pipeline | Terraform Module | Current Tag | S3 Backend |
 |----------|-----------------|-------------|------------|
-| BD (49 Financial) | `infra/aws/terraform/bd-pipeline/` | bd-v2.14.0 | ✅ |
+| BD (49 Financial) | `infra/aws/terraform/bd-pipeline/` | bd-v2.24.4 | ✅ |
 
-> Tag is authoritative from `infra/aws/terraform/bd-pipeline/CHANGELOG.json`. Cross-check before assuming MEMORY.md is current.
+> Git tags are authoritative: `git tag -l "bd-v*" | sort -V | tail -5`. CHANGELOG.json lags behind current tags; cross-check before assuming it or MEMORY.md is current.
 
 ---
 
