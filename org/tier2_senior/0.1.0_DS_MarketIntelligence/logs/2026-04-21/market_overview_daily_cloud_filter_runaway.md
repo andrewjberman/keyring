@@ -55,6 +55,26 @@ File: `infra/aws/lambda/news_trending_analysis/lambda_function.py`
 - Distribution `EVTSA9VEHNZVH` (domain `d2n2nzpeqf34ge.cloudfront.net`, origin `opal-data-portal-v2`), path `/api/general/sentiment/keyword-sentiments.json`.
 - Invalidation ID: `ICAK7QECU4S8YD9P0YP1CDSYRC`, status `InProgress` at submission.
 
+### 5. Curation of the pre-existing banned list (Andrew ad hoc)
+
+After the initial reset to empty, Andrew asked to review the 1,207 archived banned phrases and unban the obvious market topics that should never have been filtered.
+
+Three-way partition applied to the archived list:
+
+- **UNBAN (781 legitimate market topics):** `anthropic amazon deal`, `chair jerome powell`, `fed chair powell`, `earnings preview`, `bank of america earnings`, `bitcoin etf filings`, `canva ai pivot`, `tim cook transition`, `starmer mandelson scandal`, `spirit airlines liquidation`, `super micro stock`, `baird lowers`, `blue owl`, `cef downgrades`, `davos switzerland`, `artemis ii mission`, `trump iran oil`, `drug cartel leader`, `stock analyst estimates`, `retail earnings forum`, `prediction market bill`, ~760 more.
+
+- **KEEP BANNED (427 confirmed junk):** sports (NFL/NBA/MLB/NHL teams, recruits, tournaments, playoffs, ~250 entries), entertainment (oscars, grammys, bafta, kardashian, pokemon), lifestyle (affordable travel, aging in place, gift guides), fragments (`the end`, `as part`, `a bull`), news boilerplate (`bbc world service`, `further reading`, `news bulletin`).
+
+Uploaded the curated 427-entry list to `s3://opal-data-portal-v2/config/dynamic_stopwords.json` replacing the prior contaminated 15-entry version. Curated file archived at `org/tier2_senior/0.1.0_DS_MarketIntelligence/deliverables/dynamic_stopwords_curated_2026-04-21.json` for audit.
+
+Summary:
+- 2026-04-21 07:16 ET: 1,207 entries (auto-accumulated contamination)
+- 2026-04-21 08:40 ET: 0 entries (reset)
+- 2026-04-21 08:43 ET: 15 entries (re-polluted by scheduled run + my re-invoke; deployed code still has auto-learn)
+- 2026-04-21 09:00 ET: **427 entries** (manually curated — confirmed sports/entertainment/lifestyle/fragments/boilerplate kept; 781 legitimate market topics + 8 of the 15 recent accumulation unbanned)
+
+Partition logic lives in `.runtmp/partition_v3.py` (gitignored). Partition outputs in `.runtmp/partition_v3.json`.
+
 ---
 
 ## Briefs Written
@@ -99,6 +119,6 @@ Pending — commit after this log is written.
 
 ## Next Steps
 
-1. [DevOps 0.1.0_DT_MarketIntelligence] Deploy per `docs/briefs/devops-brief-daily-cloud-gpt-filter-guardrail.md`. Target tag `news-v2.9.6`.
-2. [DS 0.1.0_DS_MarketIntelligence] After DT confirms 0-diff, re-reset `s3://opal-data-portal-v2/config/dynamic_stopwords.json` to empty one more time to wipe the 15 entries that accumulated during the deploy window.
+1. [DevOps 0.1.0_DT_MarketIntelligence] Deploy per `docs/briefs/devops-brief-daily-cloud-gpt-filter-guardrail.md`. Target tag `news-v2.9.6`. After deploy, the dynamic stopwords file stops auto-growing; manual curation via direct S3 edit or a DS commit to the deliverables file.
+2. [DS 0.1.0_DS_MarketIntelligence] Monitor the next 2-3 EventBridge runs (17:16 ET tonight, 07:16 ET tomorrow). Without the auto-learn loop, stopwords count should stay flat at 427. If it grows, deploy didn't land.
 3. [RD 0.1.1_RD_MarketPerformance] Secondary fragility: `portal/src/components/market-performance/TopicCloud.tsx` visx Wordcloud drops long multi-word phrases when canvas is small. Even with 39 keywords today, some of the longest phrases may not render. Not urgent but worth a hardening pass.
