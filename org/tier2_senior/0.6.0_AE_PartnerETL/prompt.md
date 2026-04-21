@@ -102,6 +102,50 @@ export PATH="/c/Users/AndrewBerman/Desktop/ajb_workspace/.tools:$PATH"
 
 ---
 
+## Gold Runner Logs — ALWAYS PULL FROM S3, NOT /tmp
+
+**Non-negotiable rule:** when a gold run has stopped (chain complete, watchdog kill, instance stop — any reason) the log on the VM at `/tmp/gold_logs/*.log` is GONE. `/tmp` is tmpfs; it wipes on every stop. Do NOT waste time SSM-reading `/tmp` after a stop.
+
+**Canonical log location:** `s3://opal-data-bd/gold/logs/` — `gold_dispatch.sh` uploads its log at end-of-chain AND on freshness-gate short-circuit. Persists across instance stop/start. This is the authoritative source.
+
+**Filename convention (set by `gold_dispatch.sh --bg` re-invoke, NOT by your SSM wrapper):**
+- `chain_{target}_{YYYYMMDD}_{HHMMSS}.log` — e.g. `chain_full_20260421_185735.log`
+- `from_{ID}_{YYYYMMDD}_{HHMMSS}.log` — e.g. `from_B_00_20260421_174702.log`, `from_C_01_20260421_180919.log`
+- `group_{letter}_{YYYYMMDD}_{HHMMSS}.log`
+- `single_{ID}_{YYYYMMDD}_{HHMMSS}.log`
+
+The timestamp in the filename is when `--bg` forked, not when you dispatched via SSM. Your SSM wrapper's `$LOG=/tmp/gold_logs/whatever_qa_*.log` only captures the ~3-line bootstrap. Ignore it. The real chain log is gold_dispatch's internal name.
+
+**Workflow for any gold-run post-mortem / progress check:**
+
+```bash
+# 1. List today's uploaded logs (UTC day boundary)
+aws s3 ls s3://opal-data-bd/gold/logs/ | grep $(date -u +%Y-%m-%d)
+
+# 2. Pull the one matching your dispatch
+aws s3 cp s3://opal-data-bd/gold/logs/from_B_00_20260421_174702.log /tmp/gl.log
+
+# 3. Key sections
+grep -E "=== |^\[PERF\]|CHAIN .* COMPLETE|script\(s\) merged|Traceback|ERROR|ImportError|ModuleNotFoundError" /tmp/gl.log
+
+# 4. Per-script wall + mem
+grep "^\[PERF\]" /tmp/gl.log   # shows each script's wall / cpu / mem_peak
+
+# 5. Chain completion timestamp
+grep -E "CHAIN .* COMPLETE|Finished:" /tmp/gl.log | tail -3
+```
+
+**When the instance stops unexpectedly mid-flight:**
+1. DO NOT restart first. Check S3 `gold/logs/` — if the log was uploaded, the chain either completed normally OR hit the freshness short-circuit.
+2. If no log was uploaded, the chain was killed before reaching `upload_log "$log_file"` at the end. Restart the instance, then check journalctl for the kill trigger.
+3. The `code=killed, status=15/TERM` signature on `watchdog-shutdown.service` is NOT the watchdog being externally killed — it's the watchdog's own `shutdown -h now` sweeping its own service. Look at the log timestamps around the shutdown to distinguish "chain completed then watchdog fired legitimately" from "chain was in flight when watchdog fired".
+
+**Related:** `/var/log/watchdog-shutdown.log` on the VM (persists across stop — it's on EBS, not tmpfs). Contains every watchdog check's decision (SKIP vs SHUTDOWN) with reasons.
+
+**Retention:** gold/logs/ has no lifecycle rule; logs are there indefinitely. Don't re-dispatch to "get a fresh log" — always check S3 first.
+
+---
+
 ## Gold Layer Pipeline
 
 Scripts run sequentially in `data/black_diamond/scripts/gold/`:
