@@ -189,11 +189,43 @@ Examples:
 
 ---
 
-## Total Agent Count: 31
+## Project-Scoped Agents (off-hierarchy)
+
+Some agents are scoped to a single project rather than a pod. They sit outside the pod/leaf
+reporting lines — they report direct to the project-scoped exec dyad (or, where no dyad exists,
+to base CTO + base COO). Numeric prefix on these agents is an **instance index**, not a pod or
+tier tweak.
+
+### COMP_LEARNS dyad
+
+Reframe 2026-04-20 (base ClientPlatform DS lanes were saturated on ADVI_ROLLUP; COMP_LEARNS
+work migrated to dedicated project-scoped agents). Expanded 2026-04-21 with a project-scoped
+exec dyad so base execs can stay on the broader Opal portfolio.
+
+| Agent | Role | Scope |
+|-------|------|-------|
+| `1.1.0_SA_CTO_CompLearns` | Systems Architect — CTO | COMP_LEARNS PRDs + harness design + ratchet calibration + mutation-engine framework |
+| `2.1.0_SA_COO_CompLearns` | Systems Architect — COO | COMP_LEARNS TO decomposition + dispatch + operator/validator loop + closure discipline |
+| `0.1.0_DS_CompLearns` | Data Scientist — COMP_LEARNS Research Instance 1 | `comp/` tree only |
+| `0.2.0_DS_CompLearns` | Data Scientist — COMP_LEARNS Research Instance 2 | `comp/` tree only |
+| `0.3.0_DS_CompLearns` | Data Scientist — COMP_LEARNS Research Instance 3 | `comp/` tree only |
+| `0.4.0_DS_CompLearns` | Data Scientist — COMP_LEARNS Research Instance 4 | `comp/` tree only |
+
+**Authority boundary:** base execs (`1.0.0_SA_CTO` / `2.0.0_SA_COO`) retain workspace-wide
+authority over shared infra, registry rows (`org/projects/REGISTRY.md`), and cross-project
+arbitration. Project-scoped execs own their project's PRDs, JSON, and TOs — nothing else.
+
+**Siblings-by-name:** `0.N.0_DS_CompLearns` is a sibling agent to `0.N.0_DS_{Pod}` at the same
+numeric prefix. Distinct broker serial, distinct folder. The Y-digit pod encoding documented
+above does NOT apply to project-scoped instances.
+
+---
+
+## Total Agent Count: 38
 
 | Tier | Count | Breakdown |
 |------|-------|-----------|
-| Tier 1 (Exec) | 2 | 2 SA |
-| Tier 2 (Senior) | 15 | 4 DE + 4 DT + 4 DS + 3 AE |
+| Tier 1 (Exec) | 4 | 2 SA (workspace) + 2 SA (COMP_LEARNS dyad) |
+| Tier 2 (Senior) | 19 | 4 DE + 4 DT + 4 DS + 3 AE + 4 DS_CompLearns |
 | Tier 3 (Junior) | 15 | 15 RD |
-| **Total** | **32** | |
+| **Total** | **38** | |
