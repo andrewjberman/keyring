@@ -3,11 +3,36 @@
 **Author:** 0.6.0_AE_PartnerETL
 **Date:** 2026-04-21
 **For handoff to:** 0.7.0_AE_CloudOps (per Andrew direct 2026-04-21)
-**Status:** Open investigation — I'm continuing Schwab/Phase 6a work; handing watchdog RCA over so it gets dedicated attention.
+**Status:** **FULLY RESOLVED** — commit `11478af7` is the final fix, deployed 2026-04-21.
+
+Resolution history:
+- `425c0fa2` (0.7.0_AE): initial fix — GOLD_KEEP_ALIVE marker + 1h TTL
+- `11478af7` (0.6.0_AE, per Andrew 2026-04-21T19:26Z): supersedes 425c0fa2 — removes marker
+  concept entirely, replaces with 5-min grace window from last pgrep sighting
+  (/var/lib/watchdog-last-gold on EBS). Andrew: "there should not be keep-alive, we should
+  have the watchdog working effectively enough that we never need to do that."
+- Deployed by 0.7.0_AE 2026-04-21: S3 upload + QA runner hot-patch (SSM b471e92c).
+  GRACE_SECONDS=300 confirmed live on i-0090b823a4a0997e3.
+- PROD (i-01003b035d2988dfb): stopped at time of deploy; watchdog patch staged at
+  s3://opal-data-bd/code/runner/watchdog-shutdown.sh — apply on next start via SSM.
+- gold_dispatch.sh: KEEP_ALIVE code removed in 11478af7; DS to upload to
+  s3://opal-data-bd/code/gold/gold_dispatch.sh (per ADHC_DSFLOW lane, MCP sent 20260421T203808Z).
+
+RCA: `org/tier2_senior/0.7.0_AE_CloudOps/logs/2026-04-21/RCA_20260421_watchdog_chain_complete_shutdown.md`
+Session log: `org/tier2_senior/0.7.0_AE_CloudOps/logs/2026-04-21/session_watchdog_grace_window_deploy.md`
+
+My original "killed mid-C_06" framing below was wrong — 0.7.0_AE correctly identified that
+the C chain COMPLETED cleanly at 18:25:17Z and the watchdog fired 37s later (legitimate idle).
+I've validated their finding: `gold/perf_report.json` LastModified 18:25:20Z and
+`gold/canonical/advisor_fee_detail/2026-04-17.parquet` 18:25:12Z both confirm C_08 ran to
+completion. My 18:23Z live probe caught C_06 in-flight but it continued through 18:25Z.
+The `code=killed, status=15/TERM` in the journal is the watchdog's own `shutdown -h now`
+sweeping its own service as part of the shutdown. Original brief preserved below for the
+historical trail.
 
 ---
 
-## TL;DR
+## TL;DR (original, superseded)
 
 `bd-gold-qa-runner` (i-0090b823a4a0997e3) was killed mid-C_06 at **2026-04-21T18:25:54Z** during an active `--from C_01 --bg --no-shutdown` run. The gold_dispatch process tree was legitimately running (C_06 python workers active), but the instance shut down anyway. This matches the pattern of yesterday's 2026-04-20T17:36Z mid-D_02 kill — which we thought we'd fixed via the widened watchdog regex in commit `9139086d`.
 
