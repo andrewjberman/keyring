@@ -1184,3 +1184,12 @@ RESOLUTION: fixed in `614d4c28` (`comp-platinum reverse empty-vs-broken disambig
 | 2026-04-21 | 1.0.0_SA_CTO | TRDP_CLEANUP_PRD | comp-routes | comp-routes trace trade-submission-handler | PASS |
 | 2026-04-21 | 1.0.0_SA_CTO | TRDP_CLEANUP_PRD | comp-blast | comp-blast trade-submission-handler | PASS |
 | 2026-04-21 | 0.1.0_DS_MarketIntelligence | MKOV_CLOUD.001.daily-cloud-fix | comp-blast | comp-blast news-trending-analysis | PASS |
+| 2026-04-21 | 0.4.0_DT_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript io B_01 | PASS |
+| 2026-04-21 | 0.4.0_DT_ClientPlatform | (no-TO) | comp-routes | comp-routes trace opal-portal-data-proxy | PASS |
+| 2026-04-21 | 0.4.0_DT_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript deployed B_01 | PASS |
+| 2026-04-21 | 0.4.0_DT_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript deployed B_00 | PASS |
+| 2026-04-21 | 0.7.0_AE_CloudOps | TRSB_TFIMPT.W1 | comp-iam | comp-iam service trade-submission-handler | PASS |
+| 2026-04-21 | 0.7.0_AE_CloudOps | TRSB_TFIMPT.W1 | comp-routes | comp-routes trace /api/general/trades/submit | PASS |
+| 2026-04-21 | 0.7.0_AE_CloudOps | TRSB_TFIMPT.W1 | comp-routes | comp-routes behaviors | PASS |
+| 2026-04-21 | 0.7.0_AE_CloudOps | TRSB_TFIMPT.W1 | comp-routes | comp-routes trace trade-submission-handler | PASS |
+| 2026-04-21 | 0.7.0_AE_CloudOps | TRSB_TFIMPT.W1 | comp-blast | comp-blast lambda:trade-submission-handler | PASS |
