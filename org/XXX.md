@@ -287,6 +287,26 @@ Before writing any TOs for a parallelized wave: run `comp-blast` on every affect
 
 ---
 
+## Closure Discipline (Non-Negotiable — SA/COO/CTO only)
+
+Closing a project is a **3-step atomic operation**, not a single JSON edit. All three steps happen in the same commit:
+
+1. **JSON status flip.** `org/projects/{CODE}.json` → `"status": "complete"` + add `"completed": "YYYY-MM-DD"` + rewrite `phase` narrative as closure summary + set `blocking` to "None" (or "None — {reason}" if superseded/absorbed).
+2. **REGISTRY row move.** `org/projects/REGISTRY.md` → delete the row from "Active Projects" (or "Inactive / On Hold") table. Insert a new row at the TOP of "Completed / Archived Projects" table (newest-first convention) with `Completed` date column + closure notes citing ship evidence (commits, tags, supersession path).
+3. **PRD status note.** PRDs stay in `docs/architecture/` — do NOT archive active PRDs. But if the PRD has a top-of-file `Status:` line, update it to `Status: COMPLETE — {date}` or `Status: SUPERSEDED BY {project_code}`.
+
+**Why all three:** we've observed JSON-flipped projects whose REGISTRY row stayed in Active for days (ADVI_ROLGAT 2026-04-17→2026-04-21; discovered in joint audit `f959fbcb`). Any one step alone is silent-drift to the other two. Authors of closure commits MUST edit all three in one `git commit --only` so the atomicity is structural.
+
+**Closure triggers:**
+- **Complete** — all authored TOs status=complete; no authored-but-unshipped work; final-deploy mechanical only. Use when the project achieved its stated goal.
+- **Complete-as-superseded** — scope fully absorbed into another active project or PRD. JSON `phase` cites the successor explicitly. Use when the work is done but not under this project's banner.
+- **Cancelled** — explicit Andrew or CTO directive cancelled the work. JSON `phase` cites the directive. Different from superseded (no successor work).
+- **Inactive / On Hold** — blocked by external dependency (Andrew/IT, vendor, regulatory). Stays in On Hold table; do NOT move to Completed until the external blocker clears or cancellation call is made.
+
+**Anti-pattern — single-step closure:** flipping JSON status alone while REGISTRY + PRD lag. Always 3-step, always one commit.
+
+---
+
 ## Commit Identity (Non-Negotiable)
 
 ```bash
