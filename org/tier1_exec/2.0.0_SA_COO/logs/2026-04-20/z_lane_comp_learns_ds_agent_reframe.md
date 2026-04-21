@@ -10,7 +10,7 @@
 
 Two back-to-back objectives:
 
-1. **COMP_LEARNS DS reframe.** Previous ~Z session closed with the dispatch bundle handed to base-lane ~B for `.011` GO. Over the weekend `~B` never picked it up because ABCD was saturated on ADVI_ROLLUP. Rather than wait, stand up four dedicated COMP_LEARNS DS agents (`0.1.0 / 0.2.0 / 0.3.0 / 0.4.0 _DS_CompLearns`) that own the project end-to-end — sibling agents to the existing pod DS by numeric prefix, distinct broker serial via the `_CompLearns` suffix. Migrate all 17 COMP_LEARNS task orders + clean-case session logs onto the new agents per lane-to-agent mapping `~A→0.1.0`, `~B→0.2.0`, `~C→0.3.0`, `~D→0.4.0`.
+1. **COMP_LEARNS DS reframe.** Previous ~Z session closed with the dispatch bundle handed to base-lane ~B for `.011` GO. Over the weekend `~B` never picked it up because ABCD was saturated on ADVI_ROLLUP. Rather than wait, stand up four dedicated COMP_LEARNS DS agents (`1.1.0 / 1.2.0 / 1.3.0 / 1.4.0 _DS_CompLearns`) that own the project end-to-end — sibling agents to the existing pod DS by numeric prefix, distinct broker serial via the `_CompLearns` suffix. Migrate all 17 COMP_LEARNS task orders + clean-case session logs onto the new agents per lane-to-agent mapping `~A→0.1.0`, `~B→0.2.0`, `~C→0.3.0`, `~D→0.4.0`.
 
 2. **"Commit it all."** 3+ weeks of accumulated modified/untracked files across DS/DE/DT/RD/AE/CTO/COO folders from prior hectic sessions. Sweep them into logically-scoped commits with role-appropriate authorship, skipping junk and gold/portal/CTO-scope items that violate lane rules.
 
@@ -37,28 +37,28 @@ Recording explicitly so this isn't a silent compiler-minimum skip.
 
 ### Phase 1 — Four new DS agents (`788ef8bb`)
 
-Created `org/tier2_senior/0.{1,2,3,4}.0_DS_CompLearns/` each with `README.md` + `prompt.md` + standard subdirs (`task_orders/`, `logs/`, `threads/`, `deliverables/`, `briefs/`).
+Created `org/tier2_senior/1.{1,2,3,4}.0_DS_CompLearns/` each with `README.md` + `prompt.md` + standard subdirs (`task_orders/`, `logs/`, `threads/`, `deliverables/`, `briefs/`).
 
-**README + prompt scope:** COMP_LEARNS only (project root `comp/`). No portal, no gold scripts, no Lambda, no AWS deployment. Commit identity locked to `0.N.0_DS_CompLearns` with `--only` + explicit pathspec. Escalation straight to COO / CTO (no pod PM). README flags that the numeric prefix is an **instance index, not a pod** — `0.1.0_DS_CompLearns` is sibling-by-name to `0.1.0_DS_MarketIntelligence`; the ORG_CHART.md Y-digit pod encoding does not apply to this agent family.
+**README + prompt scope:** COMP_LEARNS only (project root `comp/`). No portal, no gold scripts, no Lambda, no AWS deployment. Commit identity locked to `0.N.0_DS_CompLearns` with `--only` + explicit pathspec. Escalation straight to COO / CTO (no pod PM). README flags that the numeric prefix is an **instance index, not a pod** — `1.1.0_DS_CompLearns` is sibling-by-name to `0.1.0_DS_MarketIntelligence`; the ORG_CHART.md Y-digit pod encoding does not apply to this agent family.
 
 ### Phase 2 — Migration of 17 TOs + 5 clean session logs (`788ef8bb`, same commit)
 
 **Content rewrites via sed (then git mv):**
-- `0.4.0_DS_ClientPlatform~A` → `0.1.0_DS_CompLearns` (and ~B/~C/~D → 0.2/0.3/0.4)
+- `0.4.0_DS_ClientPlatform~A` → `1.1.0_DS_CompLearns` (and ~B/~C/~D → 0.2/0.3/0.4)
 - `<issued_to>`, `<id>`, `<dependency agent=...>` fields
 - MCP COMPLETE target refs (`2.0.0_SA_COO~B` → `~Z`; `COO~B` → `COO~Z`)
-- `.010` any-lane TO resolved to `0.1.0_DS_CompLearns` (arbitrary instance)
-- `.022` base-lane ClientPlatform (no tilde) resolved to `0.2.0_DS_CompLearns`
+- `.010` any-lane TO resolved to `1.1.0_DS_CompLearns` (arbitrary instance)
+- `.022` base-lane ClientPlatform (no tilde) resolved to `1.2.0_DS_CompLearns`
 - Cross-reference paths (`.004`'s pointer at `.001`'s TO path updated to new filename + folder)
 - Session-log path refs in .001/.003/.004/.006 retargeted to new agent folders
 
 **Filename conventions:** stripped `ds-{a/b/c/d}-` and `any-lane-` prefixes. Example: `COMP_LEARNS.011.ds-a-module-skeleton-core-contracts.md` → `COMP_LEARNS.011.module-skeleton-core-contracts.md`. The agent folder now carries the ownership semantic.
 
 **TO destinations:**
-- `0.1.0_DS_CompLearns`: .001, .008, .010, .011, .012, .019 (6)
-- `0.2.0_DS_CompLearns`: .003, .007, .013, .022 (4)
-- `0.3.0_DS_CompLearns`: .004, .006, .014, .017 (4)
-- `0.4.0_DS_CompLearns`: .005, .015, .021 (3)
+- `1.1.0_DS_CompLearns`: .001, .008, .010, .011, .012, .019 (6)
+- `1.2.0_DS_CompLearns`: .003, .007, .013, .022 (4)
+- `1.3.0_DS_CompLearns`: .004, .006, .014, .017 (4)
+- `1.4.0_DS_CompLearns`: .005, .015, .021 (3)
 
 **Session-log moves (5):** `comp_learns_001_harness_framework.md` → 0.1.0; `comp_learns_003_compiler_baseline.md` + `session_B_comp_learns_003.md` → 0.2.0; `comp_learns_004_loop_orchestrator_ship.md` + `session_c_comp_learns_006_iter_prompt.md` → 0.3.0. Mixed-work logs (`session_a_comp_learns_001_and_peer_unblocks.md`, `session_c_comp_learns_004_ra_p2.md`) left in old `0.4.0_DS_ClientPlatform/logs/` as historical — couldn't cleanly extract COMP_LEARNS portions.
 
@@ -127,7 +127,7 @@ Andrew directive "commit it all" → 13 additional commits splitting 3+ weeks of
 
 **Migration (commit 788ef8bb — 32 files):**
 - `org/projects/COMP_LEARNS.json` + `COMP_LEARNS_DISPATCH_BUNDLE.md`
-- 4 × `{README, prompt}.md` under `org/tier2_senior/0.{1,2,3,4}.0_DS_CompLearns/`
+- 4 × `{README, prompt}.md` under `org/tier2_senior/1.{1,2,3,4}.0_DS_CompLearns/`
 - 17 TO files migrated (12 via git mv, 5 via plain mv for untracked)
 - 5 session logs migrated (3 via git mv, 2 via plain mv)
 
@@ -154,9 +154,9 @@ None. Both objectives complete.
 
 All require the new DS agents to come online (Andrew spins up terminals):
 
-1. **First dispatch candidate unchanged: `.011` module-skeleton-core-contracts.** TO now at `org/tier2_senior/0.1.0_DS_CompLearns/task_orders/COMP_LEARNS.011.module-skeleton-core-contracts.md`. GO target: `0.1.0_DS_CompLearns` (previously was `0.4.0_DS_ClientPlatform~A`). Dep-graph signoff from CTO~Z from prior session still valid.
-2. **AE 0.7 LibCST dep-policy question** — when `0.1.0_DS_CompLearns` reaches `.012` Phase 1, AE 0.7 decides layer-vs-venv per PRD §11.2.
-3. **`.015` enforcement-owner addendum** (v4.2 follow-up) — whoever picks up `.015` (0.4.0_DS_CompLearns) amends Phase 2 mandate to test `validate_gold_survey_attestation` on a missing-attestation fixture.
+1. **First dispatch candidate unchanged: `.011` module-skeleton-core-contracts.** TO now at `org/tier2_senior/1.1.0_DS_CompLearns/task_orders/COMP_LEARNS.011.module-skeleton-core-contracts.md`. GO target: `1.1.0_DS_CompLearns` (previously was `0.4.0_DS_ClientPlatform~A`). Dep-graph signoff from CTO~Z from prior session still valid.
+2. **AE 0.7 LibCST dep-policy question** — when `1.1.0_DS_CompLearns` reaches `.012` Phase 1, AE 0.7 decides layer-vs-venv per PRD §11.2.
+3. **`.015` enforcement-owner addendum** (v4.2 follow-up) — whoever picks up `.015` (1.4.0_DS_CompLearns) amends Phase 2 mandate to test `validate_gold_survey_attestation` on a missing-attestation fixture.
 4. **ORG_CHART.md update** (optional) — reflect 4 new agents + note the pod-encoding-is-overloaded caveat. Not blocking.
 5. **Push** — DT's call. CLOUD is ahead by 14 commits locally.
 

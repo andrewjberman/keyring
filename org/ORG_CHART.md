@@ -206,10 +206,10 @@ exec dyad so base execs can stay on the broader Opal portfolio.
 |-------|------|-------|
 | `1.1.0_SA_CTO` | Systems Architect — CTO | COMP_LEARNS PRDs + harness design + ratchet calibration + mutation-engine framework |
 | `2.1.0_SA_COO` | Systems Architect — COO | COMP_LEARNS TO decomposition + dispatch + operator/validator loop + closure discipline |
-| `0.1.0_DS_CompLearns` | Data Scientist — COMP_LEARNS Research Instance 1 | `comp/` tree only |
-| `0.2.0_DS_CompLearns` | Data Scientist — COMP_LEARNS Research Instance 2 | `comp/` tree only |
-| `0.3.0_DS_CompLearns` | Data Scientist — COMP_LEARNS Research Instance 3 | `comp/` tree only |
-| `0.4.0_DS_CompLearns` | Data Scientist — COMP_LEARNS Research Instance 4 | `comp/` tree only |
+| `1.1.0_DS_CompLearns` | Data Scientist — COMP_LEARNS Research Instance 1 | `comp/` tree only |
+| `1.2.0_DS_CompLearns` | Data Scientist — COMP_LEARNS Research Instance 2 | `comp/` tree only |
+| `1.3.0_DS_CompLearns` | Data Scientist — COMP_LEARNS Research Instance 3 | `comp/` tree only |
+| `1.4.0_DS_CompLearns` | Data Scientist — COMP_LEARNS Research Instance 4 | `comp/` tree only |
 
 **Authority boundary:** base execs (`1.0.0_SA_CTO` / `2.0.0_SA_COO`) retain workspace-wide
 authority over shared infra, registry rows (`org/projects/REGISTRY.md`), and cross-project

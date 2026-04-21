@@ -15,7 +15,7 @@
 | `org/tier1_exec/1.1.0_SA_CTO/` | README.md (8.2 KB), prompt.md (9.6 KB), empty `deliverables/`, `logs/`, `task_orders/`, `threads/`, `briefs/` seeded with `.gitkeep` |
 | `org/tier1_exec/2.1.0_SA_COO/` | README.md (12.4 KB), prompt.md (12.8 KB), empty `deliverables/`, `logs/`, `task_orders/`, `threads/`, `briefs/` seeded with `.gitkeep` |
 
-Mirrored pattern from the 2026-04-20 tier2 reframe commit `788ef8bb` (which spawned `0.{1,2,3,4}.0_DS_CompLearns`). Numeric prefix `1.1.0` / `2.1.0` is an instance index, not a tier tweak. Both agents are siblings-by-name to `1.0.0_SA_CTO` / `2.0.0_SA_COO` with distinct broker serials.
+Mirrored pattern from the 2026-04-20 tier2 reframe commit `788ef8bb` (which spawned `1.{1,2,3,4}.0_DS_CompLearns`). Numeric prefix `1.1.0` / `2.1.0` is an instance index, not a tier tweak. Both agents are siblings-by-name to `1.0.0_SA_CTO` / `2.0.0_SA_COO` with distinct broker serials.
 
 ### Scope boundaries encoded in both agent READMEs + prompts
 
@@ -110,7 +110,7 @@ Existing project lane reference updated: any new COMP_LEARNS TO authoring / oper
 
 | Tool | Command | Result | Purpose |
 |------|---------|--------|---------|
-| Read | `org/tier2_senior/0.{1,2,4}.0_DS_CompLearns/{README,prompt}.md` | Pattern captured | Mirror the tier2 reframe structure into tier1 |
+| Read | `org/tier2_senior/1.{1,2,4}.0_DS_CompLearns/{README,prompt}.md` | Pattern captured | Mirror the tier2 reframe structure into tier1 |
 | Read | `org/tier1_exec/1.0.0_SA_CTO/README.md` + prompt.md | Exec template captured | Base for CTO-scoped README |
 | Read | `org/tier1_exec/2.0.0_SA_COO/README.md` + prompt.md | Exec template captured | Base for COO-scoped README |
 | Read | `org/projects/COMP_LEARNS.json` | Current state captured (phase v4.2, 22 TOs, coo_lane ~Z) | Update lane fields |
