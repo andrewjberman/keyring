@@ -1,0 +1,27 @@
+{
+  "project_code": "TRSB_TFIMPT",
+  "macro_code": "TRSB",
+  "name": "Trade Pipeline Terraform Import + Code Reclamation",
+  "description": "Close three P1 integrity gaps in the trade-pipeline subsystem surfaced during CTO assessment 2026-04-21: (G1) opal-trade-submissions DynamoDB table is console-only with a wrong IAM ARN pointing at a non-existent 'trade-submissions' resource; (G2) all 11 trade Lambdas have filename=placeholder.zip + ignore_changes on code attributes — code is managed outside TF per main.tf:7, violating CLAUDE.md Rule 1; (G3) no API Gateway in the TF module despite a trade-authorizer Lambda existing, leaving the /api/general/trades/* routing unmanaged. Pattern inheritance: AUTH_TFIMPT (2026-04-06) + CDRS_TFIMPT (2026-04-15).",
+  "prds": [
+    {"path": "docs/architecture/TRSB_TFIMPT.md", "label": "Trade Pipeline TF Import + Code Reclamation PRD v1", "date": "2026-04-21"}
+  ],
+  "source_brief": "docs/analysis/2026-04-15_cloud_inventory_audit.md (L129, L251 — opal-trade-submissions P1 import) + Andrew CTO assessment directive 2026-04-21 session 36",
+  "status": "active",
+  "phase": "Phase 0 — PRD v1 shipped 2026-04-21. COO decomposition pending.",
+  "blocking": "COO authors 3 TOs (W1 DDB import + IAM ARN fix, W2 Lambda code reclamation, W3 API GW import) against the compiler_tools_mandate triads in the PRD. Andrew answers to the 4 open questions in §8 (sequencing pressure, W2 scope depth for recon quartet, partner expansion outlook, smoke-test trade fixture).",
+  "created": "2026-04-21",
+  "pods": ["0.3", "0.7"],
+  "pipeline": "trade-pipeline",
+  "lanes": ["0.7.0_AE_CloudOps", "0.3.0_DT_TradingOperations"],
+  "lane_note": "AE 0.7 owns Terraform + IAM + API GW + Lambda infra. DT 0.3 provides app-layer review on W2 (authorizer triplet security-critical). Pod 3 DS/DE not in loop unless W2 surfaces app-logic changes requiring Lambda code edits (out of scope by design).",
+  "waves": [
+    {"id": "W1", "label": "DDB import + IAM ARN fix (G1)", "owners": ["AE"], "target_tag": "trade-pipeline-v1.3.0"},
+    {"id": "W2", "label": "Lambda code reclamation 11 functions (G2)", "owners": ["AE", "DT"], "target_tag": "trade-pipeline-v1.4.0"},
+    {"id": "W3", "label": "API Gateway import + route trace wiring (G3)", "owners": ["AE"], "target_tag": "trade-pipeline-v1.5.0"}
+  ],
+  "depends_on": [],
+  "depends_on_note": "No upstream blockers. Each wave ships independently; W1/W2/W3 are strictly ordered by convention but not by technical dependency.",
+  "thread_counter": 0,
+  "threads": []
+}
