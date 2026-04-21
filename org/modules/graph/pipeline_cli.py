@@ -130,14 +130,44 @@ def cmd_io(args):
             prefix_tag = " [PREFIX]" if sk and sk.is_prefix else ""
             func_tag = " [FUNC]" if sk and sk.is_function else ""
             hc_tag = " [HARDCODED]" if const.startswith('[hardcoded] ') else ""
-            # Show who writes this key
+            # Show who writes this key (direct edges)
             writers = dag._writers.get(key, [])
             writers = [w for w in writers if w != script_id]
-            writer_str = f" <- {', '.join(writers)}" if writers else " <- (external/silver)"
+            # GAP 2: for PREFIX reads, also check implicit FUNC-write providers
+            implicit = []
+            if sk and sk.is_prefix:
+                implicit = [w for w in dag._implicit_writers.get(key, [])
+                            if w != script_id and w not in writers]
+            if writers and implicit:
+                writer_str = f" <- {', '.join(writers)}, IMPLICIT: {', '.join(implicit)} (via FUNC-key)"
+            elif implicit:
+                writer_str = f" <- IMPLICIT: {', '.join(implicit)} (via FUNC-key)"
+            elif writers:
+                writer_str = f" <- {', '.join(writers)}"
+            else:
+                writer_str = " <- (external/silver)"
             display_const = key if const.startswith('[hardcoded] ') else const
             print(f"    {display_const}: {key}{prefix_tag}{func_tag}{hc_tag}{writer_str}")
     else:
         print("  READS: (none detected)")
+
+    # GAP 3: surface rolling-window candidates with a warning
+    if sio.rolling_window_candidates:
+        print()
+        rw_set = set(sio.rolling_window_candidates)
+        print(f"  ROLLING-WINDOW WARNING ({len(sio.rolling_window_candidates)} key(s)):")
+        print("  The following FUNC keys appear in BOTH READS and WRITES for this script.")
+        print("  This is commonly a prior-run (rolling-window) self-read pattern, OR")
+        print("  a false positive from alias collision (`key = func(arg)` matches")
+        print("  unrelated `get_object(Key=key)` calls elsewhere in the file).")
+        print("  ACTION: verify manually -- is this read from a PRIOR run or current run?")
+        for const in sorted(rw_set):
+            sk = dag.s3_keys.get(const)
+            key = sk.s3_path if sk else '?'
+            writers = dag._writers.get(key, [])
+            other_writers = [w for w in writers if w != script_id]
+            src_str = f" <- {', '.join(other_writers)}" if other_writers else " <- (self-write only)"
+            print(f"    {const}: {key} [ROLLING-WINDOW?]{src_str}")
 
     # Column gap analysis: find parquet columns accessed but not in _load_parquet columns= list
     try:

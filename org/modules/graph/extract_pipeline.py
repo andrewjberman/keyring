@@ -48,6 +48,9 @@ class ScriptIO:
     writes: list[str] = field(default_factory=list)  # constant names this script writes
     read_keys: list[str] = field(default_factory=list)   # resolved S3 keys read
     write_keys: list[str] = field(default_factory=list)  # resolved S3 keys written
+    # FUNC keys that appear in both reads and writes: likely rolling-window prior-run reads.
+    # Removed from read_keys/reads to avoid false circular-dep edges; surfaced as warnings.
+    rolling_window_candidates: list[str] = field(default_factory=list)
 
 
 @dataclass
@@ -62,16 +65,43 @@ class PipelineDAG:
     # Derived: which script writes each S3 key
     _writers: dict[str, list[str]] = field(default_factory=dict)  # s3_key -> [script_ids]
     _readers: dict[str, list[str]] = field(default_factory=dict)  # s3_key -> [script_ids]
+    # Implicit edges: FUNC-write resolved prefix -> [script_ids that write to it via FUNC key]
+    # These cross-reference PREFIX reads against FUNC writes (GAP 2 fix).
+    _implicit_writers: dict[str, list[str]] = field(default_factory=dict)
 
     def build_index(self):
         """Build writer/reader indexes from script manifests."""
         self._writers.clear()
         self._readers.clear()
+        self._implicit_writers.clear()
         for sid, sio in self.scripts.items():
             for key in sio.write_keys:
                 self._writers.setdefault(key, []).append(sid)
             for key in sio.read_keys:
                 self._readers.setdefault(key, []).append(sid)
+
+        # GAP 2: cross-reference FUNC-write resolved prefixes against PREFIX reads.
+        # When script A writes positions_cube_key -> 'gold/.../positions_cube/{*}.parquet'
+        # and script B reads POSITIONS_CUBE_PREFIX -> 'gold/.../positions_cube/',
+        # the literal prefix of the FUNC template matches the PREFIX constant.
+        # Emit an implicit edge: A -> B.
+        for writer_sid, writer_sio in self.scripts.items():
+            for const in writer_sio.writes:
+                sk = self.s3_keys.get(const)
+                if not (sk and sk.is_function and '{*}' in sk.s3_path):
+                    continue
+                literal_prefix = sk.s3_path.split('{*}')[0]
+                if not literal_prefix.endswith('/'):
+                    continue
+                for reader_sid, reader_sio in self.scripts.items():
+                    if reader_sid == writer_sid:
+                        continue
+                    for r_const in reader_sio.reads:
+                        r_sk = self.s3_keys.get(r_const)
+                        if r_sk and r_sk.is_prefix and r_sk.s3_path == literal_prefix:
+                            writers_list = self._implicit_writers.setdefault(literal_prefix, [])
+                            if writer_sid not in writers_list:
+                                writers_list.append(writer_sid)
 
     def feeds(self, script_id: str) -> list[tuple[str, str, str]]:
         """What scripts feed this one? Returns [(upstream_script, s3_key, constant)]."""
@@ -282,37 +312,44 @@ def _find_aliases(const_name: str, content: str) -> set[str]:
     return aliases
 
 
+_COLLAPSE_FUNC_RE = re.compile(
+    r'(?:put_object|get_object|upload_file|_write|_save_json|items\.append|batch\.append|writes\.append)\s*\('
+)
+
+
 def _collapse_multiline_calls(content: str) -> str:
     """Collapse multi-line function calls into single lines for pattern matching.
-    Handles:
-        s3.put_object(
-            Bucket=S3_BUCKET,
-            Key=CONSTANT,
-            Body=data,
+
+    Handles both forms:
+        s3.put_object(                              # open paren at end of line
+            Bucket=S3_BUCKET, Key=CONSTANT, ...
         )
-    -> s3.put_object(Bucket=S3_BUCKET, Key=CONSTANT, Body=data, )
+        s3.put_object(Bucket=S3_BUCKET,            # args start on same line (GAP 1 fix)
+                      Key=func_call(date_str), ...
+        )
+
+    Uses paren-depth tracking so the call is collapsed regardless of where args start.
     """
     lines = content.splitlines()
     collapsed = []
     i = 0
     while i < len(lines):
         line = lines[i]
-        stripped = line.rstrip()
-        # If line opens a call and doesn't close it, collect continuation
-        if re.search(r'(?:put_object|get_object|upload_file|_write|_save_json|items\.append|batch\.append|writes\.append)\s*\(\s*(?:\(\s*)?(?:\{\s*)?$', stripped):
-            merged = stripped
-            depth = 1
-            j = i + 1
-            while j < len(lines) and depth > 0:
-                cont = lines[j].strip()
-                depth += cont.count('(') - cont.count(')')
-                merged += ' ' + cont
-                j += 1
-            collapsed.append(merged)
-            i = j
-        else:
-            collapsed.append(line)
-            i += 1
+        if _COLLAPSE_FUNC_RE.search(line):
+            depth = line.count('(') - line.count(')')
+            if depth > 0:
+                merged = line.rstrip()
+                j = i + 1
+                while j < len(lines) and depth > 0:
+                    cont = lines[j].strip()
+                    depth += cont.count('(') - cont.count(')')
+                    merged += ' ' + cont
+                    j += 1
+                collapsed.append(merged)
+                i = j
+                continue
+        collapsed.append(line)
+        i += 1
     return '\n'.join(collapsed)
 
 
@@ -675,6 +712,20 @@ def _extract_script_io(
     sio.writes = sorted(set(sio.writes))
     sio.read_keys = sorted(set(sio.read_keys))
     sio.write_keys = sorted(set(sio.write_keys))
+
+    # GAP 3: Rolling-window candidate detection.
+    # If a FUNC key appears in BOTH reads and writes for the same script, surface it
+    # as a rolling_window_candidate so cmd_io can emit a WARNING.
+    # The key is NOT removed from reads here — that would break the _readers index
+    # (e.g., D_04 genuinely reads partner_analytics_key but also has a false-write due
+    # to alias collision; removing from reads would drop D_04 from D_01's consumer list).
+    # Rolling-window detection is display-only: the graph edges remain intact so that
+    # comp-pipescript consumers/feeds commands still show the correct downstream scripts.
+    writes_set = set(sio.writes)
+    sio.rolling_window_candidates = [
+        c for c in sio.reads
+        if c in writes_set and s3_keys.get(c) and s3_keys[c].is_function
+    ]
 
     return sio
 
