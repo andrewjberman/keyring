@@ -193,12 +193,21 @@ Every wake, run this checklist in order. Keep it tight — the loop is supposed 
    ```
    Both paths. Act on any message this turn (RAVC ack / execute / validate). No "standing by" silence.
 
-2. **Watcher health:**
-   Is `inbox-watch {your_serial}` still running via a Bash-tool-tracked `run_in_background: true` task? If no evidence in this session (no recent task-notification, no live task ID), relaunch it:
-   ```
-   inbox-watch {your_serial}     # Bash tool, run_in_background: true
-   ```
-   A dead watcher = deaf to real-time pushes. The loop is your belt-and-suspenders.
+2. **Watcher health — DO NOT launch a new watcher on every wake.**
+   Only relaunch if the prior watcher has CERTAINLY exited. The only reliable exit signal is a `<task-notification>` with status `completed` for your most recent `inbox-watch` Bash task ID. If you've seen that notification this session since your last launch → it exited → relaunch exactly once. Otherwise → leave it alone.
+
+   Decision table:
+
+   | Observation | Action |
+   |-------------|--------|
+   | Received task-notification for your last `inbox-watch` task ID since last relaunch | Relaunch **once** via Bash tool `run_in_background: true` |
+   | No task-notification since last relaunch | Watcher is still alive — **DO NOT relaunch** |
+   | Can't remember your last task ID / uncertain | **DO NOT relaunch**; rely on Step 1 `check_inbox` for this wake |
+   | Fresh session (no prior launch) | Launch exactly one |
+
+   `check_inbox` in Step 1 is the authoritative pull — it catches messages whether the watcher is alive or not. The watcher is a real-time-push optimization, not a correctness requirement. If you're unsure, skip. Duplicate watchers = orphan race (see 2026-04-14 incident banned in Step 1b).
+
+   `kill-orphans --stale --force` is the cleanup escape hatch if duplicates accumulate — but that's exec-level, not something workers self-invoke.
 
 3. **Broker registration:**
    If `get_agent_status` said NOT REGISTERED, re-register:
