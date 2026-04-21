@@ -173,6 +173,78 @@ Any deliverable produced by the ka_testing Docker runtime must be marked `[*runt
 
 ---
 
+## /loop — Universal Watchdog Mode (ALL agents)
+
+Andrew can fire `/loop` at any agent, not just CTO/COO. Two forms:
+
+| Form | Recipients | Semantic |
+|------|-----------|----------|
+| `/loop` (bare) | Any agent | **Watchdog mode** — self-nudge for inbox / watcher health / TO queue / heartbeat. Never auto-exits. |
+| `/loop {PROJECT_CODE}` | CTO + COO only | **Project-driver mode** — operator→validator→closure. See CTO/COO prompt.md "/loop dynamic mode" section. |
+
+### Watchdog mode — what to do on each wake (workers)
+
+Every wake, run this checklist in order. Keep it tight — the loop is supposed to be cheap.
+
+1. **Inbox pull (authoritative):**
+   ```python
+   check_inbox("{your_serial}")
+   get_agent_status("{your_serial}")
+   ```
+   Both paths. Act on any message this turn (RAVC ack / execute / validate). No "standing by" silence.
+
+2. **Watcher health:**
+   Is `inbox-watch {your_serial}` still running via a Bash-tool-tracked `run_in_background: true` task? If no evidence in this session (no recent task-notification, no live task ID), relaunch it:
+   ```
+   inbox-watch {your_serial}     # Bash tool, run_in_background: true
+   ```
+   A dead watcher = deaf to real-time pushes. The loop is your belt-and-suspenders.
+
+3. **Broker registration:**
+   If `get_agent_status` said NOT REGISTERED, re-register:
+   ```python
+   register_agent("{your_serial}", summary="<current work>")
+   ```
+
+4. **Heartbeat + summary refresh:**
+   ```python
+   heartbeat("{your_serial}", summary="<one-line current state>")
+   ```
+   Keeps your status visible to the org (prevents "stale" state).
+
+5. **TO queue scan:**
+   Read `{your_agent_folder}/task_orders/`. For each TO:
+   - `<status>pending</status>` + dependencies met → if not already mid-work, start it.
+   - `<status>staged</status>` → do NOT start; waiting for GO signal (exec dispatch).
+   - `<status>complete</status>` → skip.
+   If you're mid-TO, continue it.
+
+6. **Schedule next wake:**
+   - **Active** (mid-TO, expecting near-term reply from another agent, or recent message requires follow-up): `ScheduleWakeup(delaySeconds=60)`.
+   - **Idle** (no active TO, no expected reply, queue quiet): `ScheduleWakeup(delaySeconds=270)`. Inside 5-min cache TTL.
+   - **Never 300s.** Worst-of-both — cache-miss + immediate refire.
+
+**Never auto-exit.** The loop runs until Andrew stops it (he manages lifecycle). If the queue is empty and there's nothing to do, still `ScheduleWakeup(delaySeconds=270)` and surface a one-line status to Andrew so he can decide whether to stop or redirect.
+
+### Escalation signals while looped
+
+- **3 consecutive idle wakes with no observable state delta** (no message, no TO status change, no commit in your lane) → surface to Andrew with "looks like I'm waiting on something external — is there a blocker?" Do NOT stop the loop.
+- **Got a real blocker** (ambiguity, destructive op required, cross-agent wait) → MCP the blocking agent first; if no response in 1 wake cycle, surface to Andrew.
+- **Context compacted mid-loop** → first wake after compaction: re-run full Step 1b startup (register + inbox-watch + check_inbox + both paths). Don't trust the compacted summary's "inbox empty" claim.
+
+### What watchdog mode does NOT do
+
+- Does NOT execute TOs autonomously without the normal GO dispatch / RAVC protocol — it's a health-check loop, not an autonomous driver.
+- Does NOT edit files on behalf of absent agents.
+- Does NOT substitute for the operator/validator project-driver (that's CTO/COO only via `/loop {PROJECT}`).
+- Does NOT skip compiler mandates or acceptance-flex rules.
+
+### For CTO/COO specifically
+
+Bare `/loop` still works as the watchdog. `/loop {PROJECT}` is the project-driver. See your prompt.md "/loop dynamic mode" for the operator→validator→closure phase logic. Both co-exist; Andrew picks which he fires.
+
+---
+
 ## Visual Testing — Portal Frontend
 
 Run `/frontend-dev` after any `portal/src/**` change to get a closed-loop screenshot + WCAG check cycle.
