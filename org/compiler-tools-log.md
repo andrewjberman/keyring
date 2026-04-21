@@ -1140,3 +1140,47 @@ RESOLUTION: fixed in `614d4c28` (`comp-platinum reverse empty-vs-broken disambig
 | 2026-04-20 | 0.4.0_DS_ClientPlatform~D | (no-TO) | comp-pipescript | comp-pipescript deployed D_02 | PASS |
 | 2026-04-20 | 0.4.0_DS_ClientPlatform~D | (no-TO) | comp-pipescript | comp-pipescript io D_02 | PASS |
 | 2026-04-20 | 0.4.0_DS_ClientPlatform~D | (no-TO) | comp-pipescript | comp-pipescript deployed D_02 | PASS |
+| 2026-04-20 | 0.4.0_DS_ClientPlatform~D | (no-TO) | comp-pipescript | comp-pipescript deployed D_00 | PASS |
+| 2026-04-20 | 0.4.0_DS_ClientPlatform~D | (no-TO) | comp-pipescript | comp-pipescript deployed D_04 | PASS |
+| 2026-04-20 | 0.4.0_DS_ClientPlatform~D | (no-TO) | comp-pipescript | comp-pipescript io D_04 | PASS |
+| 2026-04-20 | 0.4.0_DS_ClientPlatform~D | (no-TO) | comp-pipescript | comp-pipescript deployed | PASS |
+| 2026-04-20 | 0.4.0_DS_ClientPlatform~D | (no-TO) | comp-pipescript | comp-pipescript deployed | PASS |
+| 2026-04-20 | 0.4.0_DS_ClientPlatform~D | (no-TO) | comp-pipescript | comp-pipescript deployed | PASS |
+| 2026-04-20 | 0.4.0_DS_ClientPlatform~D | (no-TO) | comp-pipescript | comp-pipescript deployed D_01 | PASS |
+| 2026-04-20 | 0.4.0_DS_ClientPlatform~D | (no-TO) | comp-pipescript | comp-pipescript deployed D_02 | PASS |
+
+| 2026-04-20 | 0.4.2_RD_AdvisorIntelligence | multi-loop | comp-pipescript | deployed D_01 | MATCH | disproved deploy-gap hypothesis for partner_analytics donut.total cohort inconsistency |
+| 2026-04-20 | 0.4.0_DS_ClientPlatform~A | adhoc_iefa_idvz_top_holdings_pct | comp-pipescript | comp-pipescript deployed D_00 | PASS |
+| 2026-04-20 | 0.4.0_DS_ClientPlatform~A | STAUDT.HLOT1_phase0_frontrun | comp-blast | comp-blast holdings_lots | PASS |
+| 2026-04-20 | 0.4.0_DS_ClientPlatform~A | STAUDT.HLOT1_phase0_frontrun | comp-pipescript | comp-pipescript io B_01 | PASS |
+| 2026-04-20 | 0.4.0_DS_ClientPlatform~A | STAUDT.HLOT1_phase0_frontrun | comp-blast | comp-blast gold/holdings_lots/*.parquet | PASS |
+| 2026-04-20 | 0.4.0_DS_ClientPlatform~A | STAUDT.HLOT1_phase0_frontrun | comp-blast | comp-blast holdings_lots_key | PASS |
+| 2026-04-20 | 0.4.0_DS_ClientPlatform~A | STAUDT.HLOT1_phase0_frontrun | comp-blast | comp-blast gold:holdings_lots | PASS |
+| 2026-04-20 | 0.4.0_DS_ClientPlatform~A | STAUDT.HLOT1_phase0_frontrun | comp-blast | comp-blast --help | PASS |
+| 2026-04-20 | 0.4.0_DS_ClientPlatform~A | STAUDT.HLOT1_phase0_frontrun | comp-pipescript | comp-pipescript deployed D_00 | PASS |
+| 2026-04-20 | 0.4.0_DS_ClientPlatform~A | STAUDT.HLOT1_phase0_frontrun | comp-pipescript | comp-pipescript deployed D_02 | PASS |
+| 2026-04-20 | 0.4.0_DS_ClientPlatform~A | STAUDT.HLOT1_phase0_frontrun | comp-pipescript | comp-pipescript deployed D_04 | PASS |
+| 2026-04-21 | 2.0.0_SA_COO | ADVI_STAUDT.HLOT2 | comp-pipescript | comp-pipescript io B_01 | PASS |
+| 2026-04-21 | 2.0.0_SA_COO | ADVI_STAUDT.HLOT2 | comp-blast | comp-blast holdings_lots | PASS |
+| 2026-04-21 | 2.0.0_SA_COO | ADVI_STAUDT.HLOT2 | comp-blast | comp-blast gold:holdings_lots | PASS |
+| 2026-04-21 | 2.0.0_SA_COO | ADVI_STAUDT.HLOT2 | comp-blast | comp-blast B_01 | PASS |
+| 2026-04-21 | 2.0.0_SA_COO | ADVI_STAUDT.HLOT2 | comp-transform | comp-transform schema-check FirmOverviewTab | FAIL |
+| 2026-04-21 | 2.0.0_SA_COO | ADVI_STAUDT.HLOT2 | comp-platinum | comp-platinum reverse platinum/firm/firm_composition.json | PASS |
+| 2026-04-21 | 2.0.0_SA_COO | ADVI_STAUDT.HLOT2 | comp-transform | comp-transform schema-check BooksTab | FAIL |
+| 2026-04-21 | 2.0.0_SA_COO | ADVI_STAUDT.HLOT2 | comp-transform | comp-transform schema-check FirmOverview | FAIL |
+| 2026-04-21 | 2.0.0_SA_COO | ADVI_STAUDT.HLOT2 | comp-platinum | comp-platinum reverse firm_composition | PASS |
+| 2026-04-21 | 2.0.0_SA_COO | ADVI_STAUDT.HLOT2 | comp-cache | comp-cache collisions | PASS |
+| 2026-04-21 | 2.0.0_SA_COO | ADVI_STAUDT.HLOT2 | comp-pipescript | comp-pipescript deployed B_00 | PASS |
+| 2026-04-21 | 0.4.0_DS_ClientPlatform~A | ADVI_STAUDT.HLOT2 | comp-pipescript | comp-pipescript io B_01 | PASS |
+| 2026-04-21 | 0.4.0_DS_ClientPlatform~A | ADVI_STAUDT.HLOT2 | comp-platinum | comp-platinum reverse platinum/firm/firm_composition.json | PASS |
+| 2026-04-21 | 0.4.0_DS_ClientPlatform~A | ADVI_STAUDT.HLOT2 | comp-cache | comp-cache collisions | PASS |
+| 2026-04-21 | 0.1.0_DS_MarketIntelligence | (no-TO) | comp-platinum | comp-platinum page MarketPerformance | PASS |
+| 2026-04-21 | 0.1.0_DS_MarketIntelligence | (no-TO) | comp-pipescript | comp-pipescript deployed B_01 | PASS |
+| 2026-04-21 | 0.1.0_DS_MarketIntelligence | (no-TO) | comp-blast | comp-blast holdings_lots | PASS |
+| 2026-04-21 | 0.1.0_DS_MarketIntelligence | (no-TO) | comp-transform | comp-transform schema-check AdvisorBookView | PASS |
+| 2026-04-21 | 1.0.0_SA_CTO | TRDP_CLEANUP_PRD | comp-iam | comp-iam service trade-submission-handler | PASS |
+| 2026-04-21 | 1.0.0_SA_CTO | TRDP_CLEANUP_PRD | comp-iam | comp-iam service trade-workflow-handler | PASS |
+| 2026-04-21 | 1.0.0_SA_CTO | TRDP_CLEANUP_PRD | comp-iam | comp-iam gaps | PASS |
+| 2026-04-21 | 1.0.0_SA_CTO | TRDP_CLEANUP_PRD | comp-routes | comp-routes trace trade-submission-handler | PASS |
+| 2026-04-21 | 1.0.0_SA_CTO | TRDP_CLEANUP_PRD | comp-blast | comp-blast trade-submission-handler | PASS |
+| 2026-04-21 | 0.1.0_DS_MarketIntelligence | MKOV_CLOUD.001.daily-cloud-fix | comp-blast | comp-blast news-trending-analysis | PASS |
