@@ -47,26 +47,38 @@
 - Write technical documents, design specs, and session logs. Read any file.
 - Use `--author` on every commit: `git commit --author="0.4.0_DS_ClientPlatform <0.4.0_DS_ClientPlatform@opal.agent>" -m "0.4.0_DS_ClientPlatform: <description>"`.
 
+**Must:**
+- Run `.tools/ds-commit-gate.sh <files>` before every `git commit` on any `.py` edit. Both `py_compile` and the AST undefined-name scanner must exit 0. Catches Class A latent bugs (missing imports, typos, rename-propagation misses) per CLAUDE.md Rule 14. Universal — not just gold scripts.
+- Upload gold scripts to S3 directly after push, BEFORE messaging DT/AE about runner. **NEVER defer the `aws s3 cp` step to DT — that coordination gap is what produced the 2026-04-20 stale-runner incident** (Andrew directive 2026-04-21: "cant wait on DT for that, we keep having stale runners because of things falling through the cracks"). DT retains push + timing-coordination authority when online; `aws s3 cp` stays with DS regardless. See `memory/feedback_ds_commits_ae_deploys.md` + CLAUDE.md Rule 13.
+- Dispatch `bd-gold-qa-runner` SSM for single-script and single-group scope QA runs directly (no DT/AE handoff).
+- Update `data_contract.xml` when output shapes change (AE deployment gate for Lambdas).
+- Run `git status data/black_diamond/scripts/gold/` IMMEDIATELY before claiming "committed" / "fix is in the repo" / "ready for deploy" in any log or message (c6285ae8 incident, 2026-04-09).
+
 **Cannot:**
+- Trigger `bd-gold-trigger` (PROD) — AE exclusive.
 - Push to portal `DEV` / `PROD` (DT pushes portal).
 - Run terraform, modify Lambda Terraform configs, modify EC2 Terraform configs, modify IAM, security groups, or anything in `infra/aws/terraform/`.
 - Run `build-and-upload.sh` for Lambda zips (AE's job).
 - Run `safe-ec2-deploy.sh` for EC2 service code (AE's job — that's for non-gold-script services).
-- Stop/start EC2 instances via `aws ec2` directly. Use the trigger Lambda.
+- Stop/start EC2 instances via `aws ec2` directly. PROD instance lifecycle = AE exclusive; QA runner lifecycle via `aws ssm send-command` is DS-authorized for test runs.
 
 **Critical invariant — commit-before-deploy:**
 Never `aws s3 cp` a gold script that hasn't been committed and pushed first. The c6285ae8 incident (2026-04-09) was caused by a session log that claimed "fix is in the repo" while the cliff fix was sitting dirty in the working tree — AE was about to deploy from a stale clone. The mandatory order is:
 
+0. `.tools/ds-commit-gate.sh <every .py file edited>` — exit 0 per file (CLAUDE.md Rule 14)
 1. `git status data/black_diamond/scripts/gold/` — must be clean for files you're about to deploy
 2. `git rev-parse HEAD` — capture the SHA you're deploying
 3. `git push origin CLOUD` — push first, deploy second
-4. `aws s3 cp ... s3://opal-data-bd/code/gold/...` — upload to canonical location
-5. `aws lambda invoke --function-name bd-gold-trigger ...` — trigger the run
-6. Verify outputs land in `s3://opal-data-bd/gold/`
-7. Session log records the SHA, the S3 SHA, the run timestamp, and the verification result
+4. `aws s3 cp ... s3://opal-data-bd/code/gold/...` — **YOU upload, not DT, not AE** (CLAUDE.md Rule 13)
+5. `comp-pipescript deployed <SCRIPT>` — verify MATCH; if STALE, re-run `aws s3 cp`
+6. **QA test run:** `aws ssm send-command` to `bd-gold-qa-runner` (i-0090b823a4a0997e3) with `--from <SCRIPT>` or `--group <GROUP>` scope — DS-authorized.
+7. **PROD trigger (full chain / multi-pipeline):** Hand RAVC2 ACK to AE 0.6.0 with commit SHA + S3 ETag + expected impact. AE fires `aws lambda invoke --function-name bd-gold-trigger`. `bd-gold-trigger` is AE-exclusive.
+8. Verify outputs land in `s3://opal-data-bd/gold/`
+9. Session log records the pre-commit gate output, the commit SHA, the S3 ETag, the comp-pipescript deployed MATCH confirmation, the trigger timestamp (QA or PROD), the run completion time, and the output verification result.
 
 **How your work gets deployed:**
-- **Gold scripts:** YOU do the full cycle — commit → push → S3 upload → trigger → verify. AE 0.6.0 is escalation only (instance failures, IAM issues, terraform changes).
+- **Gold scripts (QA):** YOU do the full cycle — gate → commit → push → S3 upload → QA runner SSM → verify. AE 0.6.0 is escalation only (instance failures, IAM issues, terraform changes).
+- **Gold scripts (PROD):** Same cycle through Step 6; Step 7 hands to AE 0.6.0 for `bd-gold-trigger` invocation.
 - **Lambda code:** Commit locally → AE 0.6.0 runs `build-and-upload.sh` and applies terraform.
 - **Portal frontend:** Not your domain — DE owns code, DT owns push.
 

@@ -337,7 +337,7 @@ The only exception is a commit whose explicit purpose is a bulk cleanup (rare, a
 |------|--------|------|------------|--------------|
 | RD | Own page only | No | No | Encouraged |
 | DE | Any portal path | No | No | **MANDATORY** |
-| DS | Edit + commit locally | No | No | Encouraged |
+| DS | Commit + push + gold-script S3 upload (committed-ref) + qa-runner SSM dispatch | No (PROD) | QA-runner only | Encouraged |
 | DT | Infra | **Yes** (CLOUD + DEV) | **Yes** | Encouraged |
 | AE | Infra + pipeline | **Yes** (CLOUD) | **Yes** | Encouraged |
 | SA | Docs only | No | No | Encouraged |
