@@ -1,0 +1,33 @@
+{
+  "project_code": "ADVI_INFLEC",
+  "macro_code": "ADVI",
+  "name": "Inflection Wealth Management Partner Onboarding",
+  "description": "Second partner onboarding after 49 Financial. Inflection Wealth Management = $667M AUM RIA on Orion Portfolio Solutions with 99.4% Fidelity custodian concentration. DS investigation confirmed clean data, ~60-70% BD pipeline code reuse, schema-identical platinum output (zero portal code changes). Architectural principle: Opal serving layer is already multi-tenant by firmId (opal-partners-data Lambda reads firmId from JWT, looks up s3Bucket in opal-users-v2 DynamoDB). Adding Inflection = NEW opal-data-inf S3 bucket + inf-pipeline Terraform workspace + small set of inf-* Lambdas + DynamoDB firm/user row inserts + optional new gold runner EC2. ZERO changes required to CloudFront, API Gateway, opal-partners-data Lambda, auth-validator-edge, portal frontend. Gap: Q2 2024 (April-June 2024, 65 business days) missing from current exports — Andrew must re-download from Orion before silver layer build.",
+  "prds": [
+    {"path": "docs/architecture/ADVI_INFLEC.md", "label": "Inflection Partner Onboarding PRD v1", "date": "2026-04-21"},
+    {"path": "docs/briefs/cto-brief-inflection-partner-data-investigation.md", "label": "DS investigation brief (source)", "date": "2026-04-21"}
+  ],
+  "source_brief": "docs/briefs/cto-brief-inflection-partner-data-investigation.md (0.4.0_DS_ClientPlatform~D 2026-04-21)",
+  "status": "active",
+  "phase": "Phase 0 — PRD v1 shipped 2026-04-21. Awaiting Andrew answers on §10 open questions (white-label domain, gold runner Option A/B, Orion automated delivery, firm-rep bucketing, historical AUM reconstruction approach) before COO decomposition. W0 Q2 2024 re-download from Orion is the primary external blocker. W1 infrastructure provisioning parallelizable with W3 silver-scoping once open questions answered.",
+  "blocking": "Andrew answers on §10 Open Questions (especially #1 white-label, #2 gold runner Option A vs B, #3 Orion automated delivery, #4 firm-rep bucketing) — gate W1 TO authoring. W0.1 Andrew re-downloads Q2 2024 from Orion — gates W3 silver build. W0.2 Inflection data services agreement confirmation — gates W6 (automated delivery). COO TO decomposition lands after PRD handoff + Andrew §10 answers.",
+  "created": "2026-04-21",
+  "pods": ["0.4", "0.6", "0.7"],
+  "pipeline": "inf-pipeline (new)",
+  "lanes": ["0.7.0_AE_CloudOps", "0.6.0_AE_PartnerETL", "0.4.0_DS_ClientPlatform", "0.4.0_DE_ClientPlatform", "0.4.0_DT_ClientPlatform"],
+  "lane_note": "AE 0.7 primary on W1 infrastructure + W2 compute provisioning + W7 white-label (if triggered). AE 0.6 review on W2 + primary on W6 automated delivery (if triggered). DS 0.4 primary on W3 silver + W4 gold. DE 0.4 validates W5 portal rendering (expected no-op). DT 0.4 W5 user provisioning + smoke tests. CTO sets silver-layer schema scope in W3.1 jointly with DS.",
+  "waves": [
+    {"id": "W0", "label": "Prep (Q2 2024 re-download + §10 answers)", "owners": ["Andrew"], "target_tag": "—"},
+    {"id": "W1", "label": "Infrastructure foundation (opal-data-inf bucket + Terraform workspace + DynamoDB firm row)", "owners": ["0.7.0_AE_CloudOps"], "target_tag": "inf-pipeline-v1.0.0"},
+    {"id": "W2", "label": "Compute provisioning (gold runner EC2 + Lambda shells)", "owners": ["0.7.0_AE_CloudOps"], "target_tag": "inf-pipeline-v1.1.0 / v1.2.0"},
+    {"id": "W3", "label": "Silver ingestion (convert_orion_to_silver.py)", "owners": ["0.4.0_DS_ClientPlatform", "0.6.0_AE_PartnerETL"], "target_tag": "—"},
+    {"id": "W4", "label": "Gold layer (I_00 through I_09)", "owners": ["0.4.0_DS_ClientPlatform"], "target_tag": "—"},
+    {"id": "W5", "label": "Portal integration + user provisioning + validation", "owners": ["0.4.0_DE_ClientPlatform", "0.4.0_DT_ClientPlatform"], "target_tag": "—"},
+    {"id": "W6", "label": "Automated delivery (conditional on §10 #3)", "owners": ["0.6.0_AE_PartnerETL", "0.7.0_AE_CloudOps"], "target_tag": "inf-pipeline-v1.3.0"},
+    {"id": "W7", "label": "White-label domain (conditional on §10 #1)", "owners": ["0.7.0_AE_CloudOps"], "target_tag": "—"}
+  ],
+  "depends_on": [],
+  "depends_on_note": "Architectural dependency on existing multi-tenant primitives (opal-partners-data Lambda, opal-users-v2 DynamoDB, edge JWT) all already shipped under ADVI_ROLGAT (2026-04-17). No net-new prerequisites.",
+  "thread_counter": 0,
+  "threads": []
+}
