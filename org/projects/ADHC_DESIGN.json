@@ -11,8 +11,8 @@
     }
   ],
   "status": "active",
-  "phase": "Pod 0.4 Phase 2 COMPLETE 2026-04-13. .025 COMPLETE-IN-FACT. .028 shipped 3096108 (4 RechartsTooltip sites → DataTooltip + no-restricted-syntax lint guard). .032 shipped f3274f3 (pod-0.4 lint 23 → 16 warnings; 5 real react-hooks/rules-of-hooks bugs fixed + 1 unused import). 16 residual warnings (15 react-hooks/set-state-in-effect + 1 react-hooks/refs) deferred as backlog .033. Pods 0.1/0.2/0.3 Phase 2 COMPLETE from prior sessions.",
-  "blocking": "Attribution .001/.015/.024 (0.2.2_RD) + Valuation .007 (0.2.4_RD) awaiting those RD sessions. Backlog: .033 react-hooks/set-state-in-effect refactor (low priority; not on critical path).",
+  "phase": "**28 of 32 TOs complete (87.5%).** All 4 pods (0.1/0.2/0.3/0.4) Phase 2 COMPLETE. 8 DE TOs all complete (.025-.032). 20 of 24 RD TOs complete. Pod 0.4 wrap shipped 3096108 (.028 — 4 RechartsTooltip sites → DataTooltip + no-restricted-syntax lint guard) + f3274f3 (.032 — pod-0.4 lint 23 → 16 warnings, 5 react-hooks/rules-of-hooks bugs fixed + 1 unused import). 16 residual warnings (15 react-hooks/set-state-in-effect + 1 react-hooks/refs) deferred as backlog .033.",
+  "blocking": "**4 orphan TOs awaiting agent spawn — none have moved in 14+ days:** Attribution .001/.015/.024 (0.2.2_RD_Attribution has never registered in MCP); Valuation .007 (0.2.4_RD_Valuation has never registered in MCP). **Recommendation 2026-04-21 CTO audit:** if these RD agents have not spawned by 2026-04-28 (21 days post-PRD), either cancel the 4 TOs (accept 28/32 as effectively done) or re-assign to an adjacent DE who can execute the color-migration + overflow + mobile-readiness work without the dedicated RD. Not a blocker for any other active project. Backlog: .033 react-hooks/set-state-in-effect refactor (low priority; not on critical path).",
   "created": "2026-04-07",
   "pods": ["0.1", "0.2", "0.3", "0.4"],
   "pipeline": "portal",
