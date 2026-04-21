@@ -124,12 +124,13 @@ GEO segments have nested `cities[]`, `clients[]`, `flows[]` for drill-down.
 **Can:**
 - Edit and commit gold layer scripts (`data/black_diamond/scripts/gold/`), BD pipeline Lambdas, Yang-side Lambdas, any data transformation in your domain
 - **Push gold-script commits to CLOUD** (`git push origin CLOUD`) -- you own the full git cycle for gold scripts
-- **Upload gold scripts to S3** (`aws s3 cp data/black_diamond/scripts/gold/{SCRIPT}.py s3://opal-data-bd/code/gold/{SCRIPT}.py`)
+- **Upload gold scripts to S3** (`aws s3 cp data/black_diamond/scripts/gold/{SCRIPT}.py s3://opal-data-bd/code/gold/{SCRIPT}.py`) — **THIS IS YOURS. Never defer the `aws s3 cp` step to DT, even when DT is online.** DT's role is PUSH + timing coordination with AE; the S3 upload itself is DS-direct. Andrew directive 2026-04-21: "you need to deploy the scripts to S3 when it comes to these pipeline, can't wait on DT for that, we keep having stale runners because of things falling through the cracks." Evidence of prior drift: STAUDT wave 2026-04-20 had DT carry ALL 4 uploads (D_02 035352c3, D_00 4299e1c0, D_04 8593ea51, B_00 081223b5) while DS queued — exactly the pattern this rule forbids.
 - **Invoke `bd-gold-trigger` Lambda** to kick off the gold-runner EC2 instance (`incremental` or `full` mode)
 - Read any file. Write technical specs, design docs, session logs.
 
 **Must:**
-- Use `--author` on every commit: `git commit --author="0.4.0_DS_ClientPlatform <0.4.0_DS_ClientPlatform@opal.agent>" -m "0.4.0_DS_ClientPlatform: <desc>"`
+- **Run `.tools/ds-commit-gate.sh {file}` after every Python script edit, before `git add` / `git commit`.** Gate invokes `python -m py_compile` + `.tools/ds-precommit-check.py` (stdlib AST undefined-name scanner). Both must exit 0. Catches Class A latent bugs — missing imports (`081223b5` B_00 defaultdict miss → 14h PROD freeze), typos, renamed-name-missed-callers — that bypass `py_compile` alone. Stdlib-only, ~300 ms per file, zero pip deps. Andrew directive 2026-04-21: "run py compile post every script edit pre commit to make sure they work." Shipped in ADHC_DSFLOW.001 commit `b6e0c154`.
+- Use `--author` on every commit: `git commit --only --author="0.4.0_DS_ClientPlatform <0.4.0_DS_ClientPlatform@opal.agent>" -m "0.4.0_DS_ClientPlatform: <desc>" -- <explicit paths>`
 - Update `data_contract.xml` when output shapes change (AE deployment gate for Lambdas)
 - Run `git status data/black_diamond/scripts/gold/` IMMEDIATELY before claiming "committed" / "fix is in the repo" / "ready for deploy" in any log or message. Dirty working tree silently breaks deploys (c6285ae8 incident, 2026-04-09)
 
@@ -142,15 +143,18 @@ GEO segments have nested `cities[]`, `clients[]`, `flows[]` for drill-down.
 
 ## Gold Script Deploy Cycle (Critical Invariant -- Commit Before Deploy)
 
-For gold-script changes (your primary domain), you own the full cycle. There is no handoff to AE or DT. The mandatory order:
+For gold-script changes (your primary domain), you own the full cycle. There is no handoff to AE for S3 upload — and DT's online-state does not change this. The mandatory order:
 
+0. **`.tools/ds-commit-gate.sh <every .py you edited>`** — py_compile + AST undefined-name scan. Must exit 0 per file before `git add`.
 1. `git status data/black_diamond/scripts/gold/` -- must be clean for files you're about to deploy. If dirty, commit first.
 2. `git rev-parse HEAD` -- capture the SHA you are deploying.
-3. `git push origin CLOUD` -- push first, deploy second. NEVER deploy from a working tree that hasn't been pushed.
-4. `aws s3 cp data/black_diamond/scripts/gold/{SCRIPT}.py s3://opal-data-bd/code/gold/{SCRIPT}.py` for every script you changed. Repeat per file.
+3. `git push origin CLOUD` -- push first, deploy second. NEVER deploy from a working tree that hasn't been pushed. (When DT is online, DT can carry the push per CTO 2026-04-20T14:21Z override — still OK. S3 upload below is NOT deferred.)
+4. **`aws s3 cp data/black_diamond/scripts/gold/{SCRIPT}.py s3://opal-data-bd/code/gold/{SCRIPT}.py` for every script you changed — YOU do this, not DT, not AE.** Use `git show {sha}:path` pattern for A→D-rerun-sensitive uploads (pre-flag CTO+COO before `cp`). Repeat per file.
 5. `aws lambda invoke --function-name bd-gold-trigger --cli-binary-format raw-in-base64-out --payload '{"mode": "incremental"}' /tmp/gold-trigger-response.json` -- triggers the gold-runner EC2 boot. Use `"mode": "full"` if you need a full historical rebuild.
 6. Verify outputs land in `s3://opal-data-bd/gold/` (e.g. `aws s3 ls s3://opal-data-bd/gold/views/mix_daily_summary.json`)
 7. Session log records the commit SHA, the S3 etag for each uploaded script, the trigger timestamp, the run completion time, and the output verification result.
+
+**Why the S3 upload stays DS-direct even when DT is online (Andrew directive 2026-04-21):** Queueing the S3 upload through DT creates a coordination gap. DT is busy with validation packs / push sequencing / AE coordination; an upload queue behind that work = stale S3. Stale S3 = runner executes old code = silent bad artifacts. The 2026-04-20 STAUDT wave had all 4 uploads go through DT in sequence while DS waited; this is the anti-pattern. DS does the `aws s3 cp` immediately after push, full stop.
 
 **Why this rule exists (c6285ae8 incident, 2026-04-09):** A session log claimed "Fix is in the repo. AE must deploy" while the C_06 alternatives cliff fix was sitting dirty in the working tree, never committed. AE was about to pull from CLOUD and deploy stale code that omitted the fix. COO caught it during a working-tree audit and committed on DS's behalf. The root failure was treating "edited" and "committed" as equivalent. Always run `git status` before any "committed" claim.
 
