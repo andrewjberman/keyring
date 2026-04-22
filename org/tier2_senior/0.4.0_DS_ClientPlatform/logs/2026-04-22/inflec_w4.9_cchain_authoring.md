@@ -228,9 +228,17 @@ Inbox message from 0.4.0_DT_ClientPlatform: build_canonical_prices_inf.py STALE 
 
 Uploaded data/orion/scripts/gold/build_canonical_prices_inf.py to s3://opal-data-inf/code/gold/build_canonical_prices_inf.py. MD5 MATCH confirmed (15fb56f32f4325bdc1c6ad57e1f4bf1c). No re-run needed.
 
+### Post-Incident Improvement (CTO 20260422T141136Z)
+
+When splitting gold_dispatch.sh into script-level reruns: run comp-pipescript postdeps on each script first to enumerate required upstream chain. Would have caught C_00 as a required intermediate before C_02 dispatch (C_02 reads canonical/performance/, which is C_00 output -- not B_03 directly).
+
+### ADVI_INFLEC W0.1 Closed
+
+COO action item: stale WARN "open gap in data: 2024-04-01..2024-06-30" baked into I_D00c.portal_leaderboard.py. Root cause: WARN is driven dynamically by s3://opal-data-inf/silver/meta/gap_manifest.json. The gap entry had status="open" from before Q2 2024 data was uploaded. Fix: updated manifest to status="closed", closed_at=2026-04-22. No script change needed. W0.1 blocker closed.
+
 ## Pending at Session End (crash #2 resume)
 
-- AUAGAP.002 Step 5: portal chart validation — 49F /advisor-intelligence quarterly AUA Q1-Q3 2025 should show ~$1.4B after D-chain. AE driving D-chain.
+- AUAGAP.002 Step 5: portal chart validation — 49F /advisor-intelligence quarterly AUA Q1-Q3 2025 should show ~$1.4B after D-chain. Awaiting AE D-chain confirmation.
 - INF 5a5d779a: FAILED (I_A03 crash) — C-chain outputs all MISSING. Re-dispatch needed after AUAGAP.002 D-chain settles.
 - W4.10 (D-chain remaining INF publishers): gates on W4.9 C-chain re-dispatch + complete signal to COO
 - W4.12: gates on W4.9 + W4.10
