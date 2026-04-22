@@ -176,3 +176,69 @@ Decision: let 5a5d779a continue. After I_A03 finishes, C-chain will run automati
 - W4.10 (D-chain remaining publishers): gates on W4.9 C-chain complete
 - W4.12: gates on W4.9 + W4.10
 - AUAGAP.003 B_00 full rerun AC5: same run as AUAGAP.002 step 3 — covered
+
+---
+
+## Session Resume (Context Crash #2) — AUAGAP.002 Cascade Completion
+
+Resumed after second context crash. B_00 had already completed (SSM d2b2a10e SUCCESS). run_c00_auagap002.py existed locally but was not yet committed.
+
+### AUAGAP.002 Cascade Results (all verified)
+
+B_00 windowed 2025-01-02..2025-11-11 (SSM d2b2a10e): SUCCESS
+- 314 dates, 21.5M rows uploaded to canonical/holdings/
+- AUAGAP.003 date-relative persistent set confirmed: 4,686 accounts at 2025-11-11 (was 5,435 global)
+
+B_03 windowed 2025-01-02..2025-11-11 (SSM 4376bae2): SUCCESS
+- 314 dates, 27s, cumulative growth +$172.6M, NNA +$347.3M, drift 0.0
+
+C_00 windowed 2025-01-02..2025-11-11 (SSM 8673816a): SUCCESS
+- 314 dates, 22s, 1,780,724 rows → 850,777 relationship rows
+- AUA at 2025-11-11 = $1,389,916,193 (~$1.39B) — AUAGAP.002 fix confirmed
+
+C_02 full rebuild (SSM f559d279): SUCCESS
+- 2,301 dates, 2,855,979 rows uploaded to gold/timeseries/client_performance.parquet
+- AUA at 2026-04-20 = $1,660,263,546
+
+C_03 full rebuild (SSM 96374fa8): SUCCESS
+- 2,301 dates, 5,517,844 rows, 7,382 accounts
+- AUA at 2026-04-20 = $1,661,871,021
+- Cross-val vs client_performance: OK diff=0.097%
+
+### Cascade Order Correction
+
+Initial cascade ran C_02+C_03 before C_00 (cascade order error). C_02 reads canonical/performance/ (C_00 output), not B_03 directly. Fix: ran C_00 windowed first (SSM 8673816a), then re-ran C_02 (SSM f559d279) and C_03 (SSM 96374fa8) afterward. Stale C_02/C_03 outputs (03422237 and earlier c55b2be2) overwritten.
+
+### Commits
+- bc7209bd: run_b00_auagap002.py (prior session)
+- 3fefba81: run_b03_auagap002.py + run_c02_auagap002.py (prior session)
+- 1fbcfff4: run_c03_auagap002.py (prior session)
+- 2460d34d: run_c00_auagap002.py (this session)
+
+### D-Chain Signal
+
+MCP sent to AE CloudOps: "C_03 done, cascade clean, ready for D-chain."
+MCP sent to COO: cascade summary, 49F portal validation pending D-chain completion.
+
+AE to trigger D_00b → D_00c → D_02 → D_04 windowed 2025-01-02..2025-11-11 on i-0090b823a4a0997e3.
+
+### Sidetrack: INF build_canonical_prices_inf.py S3 Sync
+
+Inbox message from 0.4.0_DT_ClientPlatform: build_canonical_prices_inf.py STALE on s3://opal-data-inf/code/gold/ due to DT's data/inf → data/orion path rename (commit 06b1006d). Cosmetic WARN log message only. No runtime impact. DT identified, DS synced per Rule 13.
+
+Uploaded data/orion/scripts/gold/build_canonical_prices_inf.py to s3://opal-data-inf/code/gold/build_canonical_prices_inf.py. MD5 MATCH confirmed (15fb56f32f4325bdc1c6ad57e1f4bf1c). No re-run needed.
+
+### Post-Incident Improvement (CTO 20260422T141136Z)
+
+When splitting gold_dispatch.sh into script-level reruns: run comp-pipescript postdeps on each script first to enumerate required upstream chain. Would have caught C_00 as a required intermediate before C_02 dispatch (C_02 reads canonical/performance/, which is C_00 output -- not B_03 directly).
+
+### ADVI_INFLEC W0.1 Closed
+
+COO action item: stale WARN "open gap in data: 2024-04-01..2024-06-30" baked into I_D00c.portal_leaderboard.py. Root cause: WARN is driven dynamically by s3://opal-data-inf/silver/meta/gap_manifest.json. The gap entry had status="open" from before Q2 2024 data was uploaded. Fix: updated manifest to status="closed", closed_at=2026-04-22. No script change needed. W0.1 blocker closed.
+
+## Pending at Session End (crash #2 resume)
+
+- AUAGAP.002 Step 5: portal chart validation — 49F /advisor-intelligence quarterly AUA Q1-Q3 2025 should show ~$1.4B after D-chain. Awaiting AE D-chain confirmation.
+- INF 5a5d779a: FAILED (I_A03 crash) — C-chain outputs all MISSING. Re-dispatch needed after AUAGAP.002 D-chain settles.
+- W4.10 (D-chain remaining INF publishers): gates on W4.9 C-chain re-dispatch + complete signal to COO
+- W4.12: gates on W4.9 + W4.10
