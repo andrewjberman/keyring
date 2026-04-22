@@ -74,7 +74,7 @@ Resource-level tags override default_tags. Plan sees tags_all = {Project, Manage
 | # | `<run>` | `<expect>` | observed | pass/fail |
 |---|---------|------------|----------|-----------|
 | 6 | `terraform plan` post-apply | 0-diff | **No apply needed** (plan was already 0-diff). Re-ran plan, still No changes. | PASS |
-| 7 | Spot-check reader access | Record returns | TO's GetItem query `PK=USER#andrew@fideles.capital` → ValidationException (composite needs PK+SK; actual PK format is `USER#usr_<id>`, not email). Substituted with scan COUNT=39 (preserved) + sample PK probe via scan --limit 2. Same evidence shape. | PASS (substituted) |
+| 7 | Spot-check reader access | Record returns | TO's GetItem query `PK=USER#andrew@opalinvest.com` → ValidationException (composite needs PK+SK; actual PK format is `USER#usr_<id>`, not email). Substituted with scan COUNT=39 (preserved) + sample PK probe via scan --limit 2. Same evidence shape. | PASS (substituted) |
 
 ---
 

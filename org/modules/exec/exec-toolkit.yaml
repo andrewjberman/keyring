@@ -10,7 +10,7 @@
 
 metadata:
   owners: [1.0.0_SA_CTO, 2.0.0_SA_COO]
-  locked_by: andrew@fideles.capital
+  locked_by: andrew@opalinvest.com
   last_updated: "2026-04-16"
   note: |
     All tools live under .tools/ (tracked in git via per-file force-add
@@ -125,7 +125,7 @@ tools:
     bash_wrapper: null  # chat-invoked, not CLI
     ps1_wrapper: null
     invocation: "/loop {PROJECT_CODE}"
-    invoker: andrew@fideles.capital
+    invoker: andrew@opalinvest.com
     cadence:
       active: 60   # ScheduleWakeup delaySeconds; runtime floor
       idle: 270    # inside 5-min Anthropic prompt-cache TTL
