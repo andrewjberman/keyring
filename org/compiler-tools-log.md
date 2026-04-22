@@ -1431,3 +1431,25 @@ RESOLUTION: fixed in `614d4c28` (`comp-platinum reverse empty-vs-broken disambig
 | 2026-04-22 | 2.0.0_SA_COO | (no-TO) | comp-pipescript | comp-pipescript deployed D_04 | PASS |
 | 2026-04-22 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-build | comp-build | PASS |
 | 2026-04-22 | 1.0.0_SA_CTO | startup-reconciliation | N/A (startup scan, no PRD authored) | N/A | N/A — reconciliation session, comp-* mandated at PRD authoring |
+| 2026-04-22 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript deployed B_01 | PASS |
+| 2026-04-22 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript deployed D_04 | PASS |
+| 2026-04-22 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-build | comp-build | PASS |
+| 2026-04-22 | 0.4.0_DT_ClientPlatform | ADVI_INFLEC.W8.2.dt-frontend-dev-cross-firm-pages | comp-routes | comp-routes behaviors | PASS |
+| 2026-04-22 | 0.4.0_DT_ClientPlatform | ADVI_INFLEC.W8.2.dt-frontend-dev-cross-firm-pages | comp-blast | comp-blast B_01.holdings_lots.py | PASS |
+| 2026-04-22 | 0.4.0_DT_ClientPlatform | ADVI_INFLEC.W8.2.dt-frontend-dev-cross-firm-pages | comp-routes | comp-routes behaviors | PASS |
+| 2026-04-22 | 0.6.1_AE_PartnerETL | (no-TO) | comp-blast | comp-blast B_01 | PASS |
+| 2026-04-22 | 0.6.1_AE_PartnerETL | (no-TO) | comp-blast | comp-blast holdings_lots | PASS |
+| 2026-04-22 | 2.1.0_SC_CompLearns | (no-TO) | comp-build | comp-build | PASS |
+| 2026-04-22 | 2.1.0_SC_CompLearns | (no-TO) | comp-blast | comp-blast build_holdings_lots | PASS |
+| 2026-04-22 | 2.1.0_SC_CompLearns | (no-TO) | comp-platinum | comp-platinum reverse price_quality | PASS |
+| 2026-04-22 | 0.4.0_DE_ClientPlatform~A | (no-TO) | comp-validate | comp-validate D_04 --artifact C:/Users/AndrewBerman/AppData/Local/Temp/cohort_a_summary... | FAIL |
+| 2026-04-22 | 0.4.0_DE_ClientPlatform~A | (no-TO) | comp-pipescript | comp-pipescript consumers B_01 | PASS |
+| 2026-04-22 | 0.4.0_DE_ClientPlatform~A | (no-TO) | comp-validate | comp-validate cohort_a_summary --artifact C:/Users/AndrewBerman/AppData/Local/Temp/coho... | PASS |
+| 2026-04-22 | 0.4.0_DS_ClientPlatform~A | ADVI_INFLEC.W3.1.ds-silver-schema-scoping | comp-platinum | comp-platinum reverse gold/timeseries_chart.json | PASS |
+| 2026-04-22 | 0.7.0_AE_CloudOps | (no-TO) | comp-pipescript | comp-pipescript io I_00 | FAIL |
+| 2026-04-22 | 0.7.0_AE_CloudOps | (no-TO) | comp-pipescript | comp-pipescript io C_01b | PASS |
+| 2026-04-22 | 0.7.0_AE_CloudOps | (no-TO) | comp-pipescript | comp-pipescript deployed C_01c | PASS |
+| 2026-04-22 | 0.7.0_AE_CloudOps | (no-TO) | comp-pipescript | comp-pipescript deployed C_01c | PASS |
+| 2026-04-22 | 0.7.0_AE_CloudOps | (no-TO) | comp-cache | comp-cache collisions | PASS |
+| 2026-04-22 | 0.4.0_DT_ClientPlatform | ADVI_INFLEC.W8.2 | comp-routes | comp-routes behaviors | PASS — 2 custom error responses: 403→200/index.html + 404→200/index.html; documented in all constitutions |
+| 2026-04-22 | 0.4.0_DT_ClientPlatform | ADVI_INFLEC.W8.2 | comp-cache | comp-cache collisions | PASS — 4 pre-existing collisions in AdvisorIntelligence (firmOverride-scoped, intentional); zero new collisions on /cma /positioning /macro |
