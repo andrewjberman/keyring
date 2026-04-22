@@ -237,17 +237,9 @@ Every wake, run this checklist in order. Keep it tight — the loop is supposed 
 
 ### Escalation signals while looped
 
-**Escalation ladder for worker agents (DS / DE / DT / AE / any ~Z tilde lane):**
-`blocking peer agent` → `2.0.0_SA_COO` → Andrew. COO is the unblock arbiter. Do NOT jump to Andrew unless COO is unavailable or explicitly defers to him. COO's job is to reassign deps, rewrite TO scope, arbitrate cross-agent waits, or escalate upward — don't pre-empt that.
-
-- **Got a real blocker** (ambiguity in TO, destructive op required, cross-agent wait, missing dep, compiler mandate can't pass, flex interpretation needed) → step 1: MCP the blocking peer agent. Step 2: if no response in 1 wake cycle, **MCP COO with blocker summary** — COO unblocks or escalates. Step 3: only MCP Andrew directly if COO is unreachable OR COO replies "needs Andrew's call." Never sit silent on a blocker for >2 wake cycles without an MCP out.
-- **3 consecutive idle wakes with no observable state delta** (no message, no TO status change, no commit in your lane) → MCP COO: "3 idle cycles, appear to be waiting on external input — is there a blocker or reassignment?" COO either unblocks or flips you to idle/closed. Do NOT stop the loop autonomously; do NOT surface to Andrew directly on idle cycles.
-- **Ambiguous TO language / expected value mismatch / acceptance-flex needed** → MCP COO FIRST (they own TO scope). CTO gets the flex-MCP separately per acceptance-flex rules, but COO remains the routing hub.
+- **3 consecutive idle wakes with no observable state delta** (no message, no TO status change, no commit in your lane) → surface to Andrew with "looks like I'm waiting on something external — is there a blocker?" Do NOT stop the loop.
+- **Got a real blocker** (ambiguity, destructive op required, cross-agent wait) → MCP the blocking agent first; if no response in 1 wake cycle, surface to Andrew.
 - **Context compacted mid-loop** → first wake after compaction: re-run full Step 1b startup (register + inbox-watch + check_inbox + both paths). Don't trust the compacted summary's "inbox empty" claim.
-
-**Why COO-first:** workers surfacing every blocker directly to Andrew floods his context; COO has org-wide visibility (who's blocked, who's free, what's next) and can reassign without Andrew-in-the-loop. Andrew only gets the blockers COO has triaged as requiring his judgment.
-
-**CTO / COO exception:** the exec agents escalate directly to Andrew when blocked on a judgment call — they ARE the routing layer, they don't have one above them other than Andrew.
 
 ### What watchdog mode does NOT do
 
