@@ -16,8 +16,8 @@
     }
   ],
   "status": "active",
-  "phase": "Phase 0: PRD complete, COO TO issuance pending. Phase 0 discovery (quantity source selection) must fire first.",
-  "blocking": "COO TO issuance for Phase 0. Quantity source selection (Andrew/DS decision at Phase 0) gates Phase 1+.",
+  "phase": "Phase 0 PENDING — TO 1 dispatched to 0.4.0_DS_ClientPlatform (ADVI_SLEEVE.001 2026-04-24). DS picks up after DSFLOW.004 + STAUDT.COHORT-A. Deliverable: quantity source recommendation (Path 1/2/3) + lib/sleeve_detect.py + cohort sizing ($30-60M delta gate).",
+  "blocking": "DS Phase 0 investigation + Andrew quantity source path decision. Phase 1 gated on COO GO after Andrew confirmation.",
   "parent_project": "ADVI_ROLLUP",
   "open_decisions": [
     {
