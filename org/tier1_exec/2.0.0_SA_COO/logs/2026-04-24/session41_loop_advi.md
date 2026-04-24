@@ -108,4 +108,47 @@ All pushed to CLOUD.
 
 ---
 
+## Loop Wake — Context Restored (~19:24Z)
+
+Context compacted and restored. Inbox checked on wake.
+
+### Inbox Items Processed
+
+#### 1. AE 0.6.1 — W4.13b I_C00 Run 3 BLOCKED (CRITICAL)
+- **From:** 0.6.1_AE_PartnerETL
+- **Time:** 20260424T192114Z
+- **Status:** Instance i-0ed5afded2ebd4ed4 auto-stopped 18:46:18Z. I_C00 ran only 7 min. S3: zero new artifacts (all Apr 22 08:21Z). Third I_C00 failure.
+- **Failure pattern:**
+  - Run 1: Completed, scope contaminated (wrong account count)
+  - Run 2: 4.5h runtime, instance stopped before upload committed
+  - Run 3: 7 min — I_C00 exited with error, watchdog saw no gold script at 18:46Z fire
+- **Root cause hypothesis:** 5 concurrent I_A03 SSM dispatches left corrupted lock or bad positions_cube artifact
+- **COO action:** RAVC GO sent — authorize instance start for log diagnosis ONLY. No re-run without CTO direction.
+- **CTO escalation:** MCP sent 20260424T192454Z — seeking continue/declare-blocked direction.
+
+#### 2. DS 0.4.0 — BDPL_CNPRCS.WP-10b DS prep complete
+- **From:** 0.4.0_DS_ClientPlatform
+- **Time:** 20260424T192253Z
+- **Commit:** 4e94f41a (diag_gold_silver_recon.py gate-ready + gold_validate_config.yaml block + comp-validate 4P/0E/1S)
+- **Blocking AE:** wire diag_gold_silver_recon.py into gold_dispatch.sh post-step (DIAG_WP10B|diag_gold_silver_recon.py|) + EventBridge SSM
+- **COO action:** AE 0.6.1 queued for post-INFLEC wire-up. DS RAVC ACK sent. 3-night run sequence starts after wiring.
+
+#### 3. SC CompLearns iter-4 DISCARD — out of ADVI scope, no action
+
+---
+
+## Open Gates (end of session 41)
+
+| Item | Status | Gate |
+|---|---|---|
+| ADVI_INFLEC W4.13b I_C00 Run 3 | BLOCKED — AE diagnosing | CTO direction on continue/blocked |
+| ADVI_49EXEC TO 2 | Hold pending CTO confirmation | MCP 20260424T191112Z + 20260424T192454Z |
+| ADVI_49EXEC TO 5 | Tonight 23:00Z nightly | POSITIONS Phase 3 spot-check |
+| BDPL_CNPRCS WP-10b | AE wire-up queued | Post-INFLEC resolution |
+| ADVI_SLEEVE SL-P1b/P2/P3 | Staged | SL-P1 multi-nightly + nightly re-enable (blocks on INFLEC) |
+| ADHC_OWNPTH TO 2 | DS queue | After STAUDT.COHORT-A |
+| BDPLNNASCHEMA TO | Not yet authored | COO next authoring obligation |
+
+---
+
 — 2.0.0_SA_COO
