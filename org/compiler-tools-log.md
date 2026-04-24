@@ -1514,3 +1514,48 @@ RESOLUTION: fixed in `614d4c28` (`comp-platinum reverse empty-vs-broken disambig
 | 2026-04-24 | 2.1.0_SC_CompLearns | COMP_LEARNS.060 | comp-blast | comp-blast C_01 | PASS |
 | 2026-04-24 | 2.0.0_SA_COO | /loop ADVI wake 1 | comp-pipescript io C_01 | READS: ACCOUNTS_DIMENSION/CANONICAL_NNA_PREFIX/etc; WRITES: canonical_nna_atomic_key (already in production CN-P1) | PASS — nna_atomic key exists, no collision | CANNNA Phase 0/1 confirmed complete; project JSON corrected |
 | 2026-04-24 | 2.0.0_SA_COO | /loop ADVI wake 1 | comp-blast C_01 | No downstream consumers for C_01.canonical_nna | PASS — shadow artifact, terminal | Phase 2 TOs safe to issue without blast-radius conflict |
+| 2026-04-24 | 2.0.0_SA_COO | (no-TO) | comp-pipescript | comp-pipescript deployed B_01 | PASS |
+| 2026-04-24 | 2.0.0_SA_COO | (no-TO) | comp-blast | comp-blast B_01 | PASS |
+| 2026-04-24 | 2.0.0_SA_COO | (no-TO) | comp-pipescript | comp-pipescript io D_02 | PASS |
+| 2026-04-24 | 2.0.0_SA_COO | (no-TO) | comp-transform | comp-transform schema-check AdvisorsTab | PASS |
+| 2026-04-24 | 2.0.0_SA_COO | (no-TO) | comp-transform | comp-transform schema-check AdvisorIntelligence | FAIL |
+| 2026-04-24 | 2.0.0_SA_COO | (no-TO) | comp-pipescript | comp-pipescript io C_01 | PASS |
+| 2026-04-24 | 2.0.0_SA_COO | (no-TO) | comp-pipescript | comp-pipescript io D_02 | PASS |
+| 2026-04-24 | 0.4.0_DS_ClientPlatform | ADHC_DSFLOW.004 | comp-pipescript | comp-pipescript io D_04 | PASS |
+| 2026-04-24 | 0.4.0_DS_ClientPlatform | ADHC_DSFLOW.004 | comp-pipescript | comp-pipescript io B_01 | PASS |
+| 2026-04-24 | 0.4.0_DS_ClientPlatform | ADHC_DSFLOW.004 | comp-blast | comp-blast B_01 | PASS |
+| 2026-04-24 | 0.4.0_DS_ClientPlatform | ADHC_DSFLOW.004 | comp-pipescript | comp-pipescript deployed D_04 | PASS |
+| 2026-04-24 | 0.4.0_DS_ClientPlatform | ADHC_DSFLOW.004 | comp-pipescript | comp-pipescript deployed | PASS |
+| 2026-04-24 | 0.4.0_DS_ClientPlatform | ADHC_DSFLOW.004 | comp-pipescript | comp-pipescript io D_04 | PASS |
+| 2026-04-24 | 0.4.0_DS_ClientPlatform | ADHC_DSFLOW.004 | comp-pipescript | comp-pipescript deployed D_04 | PASS |
+| 2026-04-24 | 0.4.0_DS_ClientPlatform | ADHC_DSFLOW.004 | comp-pipescript | comp-pipescript postdeps D_04 | PASS |
+| 2026-04-24 | 0.4.0_DS_ClientPlatform | ADHC_DSFLOW.004 | comp-pipescript | comp-pipescript io D_04 | PASS |
+| 2026-04-24 | 0.4.0_DS_ClientPlatform | ADHC_DSFLOW.004 | comp-blast | comp-blast holdings_lots | PASS |
+| 2026-04-24 | 0.4.0_DS_ClientPlatform | ADHC_DSFLOW.004 | comp-validate | comp-validate D_04 --artifact C:/Users/ANDREW~1/AppData/Local/Temp/cohort_a_summary.json | FAIL |
+| 2026-04-24 | 0.4.0_DS_ClientPlatform | ADHC_DSFLOW.004 | comp-validate | comp-validate --help | PASS |
+| 2026-04-24 | 0.4.0_DS_ClientPlatform | ADHC_DSFLOW.004 | comp-validate | comp-validate cohort_a_summary --artifact C:/Users/ANDREW~1/AppData/Local/Temp/cohort_a... | PASS |
+| 2026-04-24 | 0.4.0_DS_ClientPlatform | ADHC_DSFLOW.004 | comp-blast | comp-blast D_04 | PASS |
+| 2026-04-24 | 0.4.0_DS_ClientPlatform | ADHC_DSFLOW.004 | comp-validate | comp-validate gold_silver_recon --artifact C:/Users/ANDREW~1/AppData/Local/Temp/cohort_... | PASS |
+| 2026-04-24 | 0.4.0_DS_ClientPlatform | ADHC_DSFLOW.004 | comp-validate | comp-validate gold_silver_recon --artifact C:/Users/ANDREW~1/AppData/Local/Temp/gold_si... | PASS |
+| 2026-04-24 | 0.4.0_DS_ClientPlatform | ADHC_DSFLOW.004 | comp-pipescript | comp-pipescript deployed I_C00 | PASS |
+| 2026-04-24 | 0.4.0_DE_ClientPlatform | ADVI_STAUDT.COHORT-A | comp-platinum | comp-platinum reverse cohort_a_summary | PASS |
+| 2026-04-24 | 0.4.0_DE_ClientPlatform | ADVI_STAUDT.COHORT-A | comp-transform | comp-transform schema-check FirmOverview | FAIL |
+| 2026-04-24 | 0.4.0_DE_ClientPlatform | ADVI_STAUDT.COHORT-A | comp-transform | comp-transform schema-check DistributionTab | PASS |
+| 2026-04-24 | 0.4.0_DE_ClientPlatform | ADVI_STAUDT.COHORT-A | comp-cache | comp-cache collisions | PASS |
+| 2026-04-24 | 0.4.0_DE_ClientPlatform | ADVI_STAUDT.COHORT-A | comp-blast | comp-blast AdvisorIntelligence | PASS |
+| 2026-04-24 | 0.4.0_DE_ClientPlatform | ADVI_RDVSDS.002 | comp-pipescript | comp-pipescript deployed data/orion/scripts/gold/I_D00c.portal_leaderboard.py | PASS |
+| 2026-04-24 | 0.4.0_DE_ClientPlatform | ADVI_RDVSDS.002 | comp-pipescript | comp-pipescript deployed data/orion/scripts/gold/I_D04.client_portal_summary.py | PASS |
+| 2026-04-24 | 0.4.0_DE_ClientPlatform | ADVI_RDVSDS.002 | comp-platinum | comp-platinum page AdvisorPublicProfile | PASS |
+| 2026-04-24 | 0.4.0_DE_ClientPlatform | ADVI_RDVSDS.004 | comp-cache | comp-cache collisions | PASS |
+| 2026-04-24 | 0.4.0_DE_ClientPlatform | ADVI_RDVSDS.004 | comp-iam | comp-iam service exec-summary-generator | PASS |
+| 2026-04-24 | 0.4.0_DE_ClientPlatform | ADVI_RDVSDS.004 | comp-pii | comp-pii audit | PASS |
+| 2026-04-24 | 0.4.0_DE_ClientPlatform | ADVI_RDVSDS.004 | comp-cache | comp-cache collisions | PASS |
+| 2026-04-24 | 0.4.0_DS_ClientPlatform | ADVI_49EXEC.002 | ds-commit-gate | ds-commit-gate config.py | PASS | py_compile + AST + ruff all exit 0 |
+| 2026-04-24 | 0.4.0_DS_ClientPlatform | ADVI_49EXEC.002 | ds-commit-gate | ds-commit-gate platinum_reader.py | PASS | exit 0 |
+| 2026-04-24 | 0.4.0_DS_ClientPlatform | ADVI_49EXEC.002 | ds-commit-gate | ds-commit-gate validator.py | PASS | exit 0 |
+| 2026-04-24 | 0.4.0_DS_ClientPlatform | ADVI_49EXEC.002 | ds-commit-gate | ds-commit-gate metrics.py | PASS | exit 0 |
+| 2026-04-24 | 0.4.0_DS_ClientPlatform | ADVI_49EXEC.002 | ds-commit-gate | ds-commit-gate lambda_function.py | PASS | exit 0 |
+| 2026-04-24 | 0.4.0_DS_ClientPlatform | ADVI_49EXEC.002 | pytest | pytest tests/exec_summary/test_llm_generator.py -v | PASS | 62/62 -- all 8 test classes |
+| 2026-04-24 | 0.4.0_DS_ClientPlatform | ADVI_49EXEC.002 | comp-iam | comp-iam service exec-summary-generator | SKIPPED | No graph entry expected -- TO 4 DT provisions IAM |
+| 2026-04-24 | 0.4.0_DS_ClientPlatform | ADVI_49EXEC.002 | comp-pii | comp-pii audit | PASS | 0 cleartext fields in new Lambda |
+| 2026-04-24 | 0.4.0_DS_ClientPlatform | ADVI_49EXEC.002 | comp-cache | comp-cache collisions | PASS | 0 new cache key collisions |
