@@ -207,11 +207,30 @@ See `.tools/operator.py` (420 lines) + `.tools/validator.py` (857 lines) for the
 
 All tools live in `.tools/` (in PATH via `~/.bashrc`). Tracked in git — survive a fresh clone. PowerShell shims (`.ps1`) are ergonomic convenience; direct `bash .tools/{tool}` from workspace root works identically.
 
-### /loop dynamic mode — persistent project closure (locked 2026-04-16, 60s active / 270s idle)
+### /loop dynamic mode — persistent project closure (locked 2026-04-16, multi-project upgrade 2026-04-24)
 
-**Semantic (Andrew 2026-04-16):** `/loop {PROJECT_CODE}` means *"take this project from whatever state it's in now — fresh, mid-execution, operator-done-validator-remaining, partial validator, anything — to terminal closure through validation."* The /loop is not invoked at startup. Andrew invokes it on demand. The loop runs persistently until the project is fully closed or Andrew stops it.
+**Semantic (Andrew 2026-04-16):** `/loop {INPUT_SPEC}` means *"take this SET of projects from whatever state they're in now — fresh, mid-execution, operator-done-validator-remaining, partial validator, anything — to terminal closure through validation."* The /loop is not invoked at startup. Andrew invokes it on demand. The loop runs persistently until every in-scope project is closed or Andrew stops it.
 
-**Phase-aware entry (every wake re-determines current phase):**
+**Input spec (2026-04-24 multi-project upgrade):** the arg accepts any combination of three forms, space- or comma-separated. Step 1 of every wake resolves via `.tools/loop-resolve`:
+
+| Form | Shape | Resolves to |
+|------|-------|-------------|
+| macro_project code | `ADVI_ROLLUP` | the named active project |
+| macro code | `ADVI` | every active `{MACRO}_*` project |
+| project suffix | `ROLLUP` | the single active project with that suffix (ambiguous = fork) |
+
+Examples:
+- `/loop ADVI_ROLLUP` → 1 project
+- `/loop ROLLUP` → 1 project (via suffix resolution)
+- `/loop ADVI` → N active ADVI projects
+- `/loop ADVI TRSB` → N+M active projects across two macros
+- `/loop ADVI_ROLLUP,ADVI_INFLEC` → 2 specific projects
+
+Single-project semantics preserved — `/loop ADVI_ROLLUP` behaves exactly as before.
+
+---
+
+**Phase-aware entry (every wake re-resolves input and picks one project to drive):**
 
 **Step 0 — Universal watchdog plumbing (MANDATORY every wake, BEFORE operator/validator).** Per XXX.md `/loop` worker watchdog checklist — exec /loop inherits this, does not skip it:
 
@@ -223,29 +242,64 @@ All tools live in `.tools/` (in PATH via `~/.bashrc`). Tracked in git — surviv
 
 Do the project-driver work only AFTER Step 0 completes. If Step 0 surfaces an urgent MCP (fork, GO request, adjudication ask), **handle it first — the operator/validator run can wait one turn**.
 
-Scan project state: load `org/projects/{CODE}.json` + all matching TOs.
+**Step 1 — Resolve input to active project list.** Run `.tools/loop-resolve {ARG}` (pass the same token string Andrew typed). Handle exit codes:
+- `0` → list on stdout, continue to Step 2
+- `1` → no active projects resolved; surface to Andrew, stop loop
+- `2` → fork (unparseable or ambiguous token); surface to Andrew, stop loop
 
-2. Pick the phase:
-   - **Operator phase** — any TO has status ≠ `complete`. Run `operator {CODE} --dispatch`. The `--dispatch` flag auto-sends GO inbox messages and flips staged→pending for every actionable_staged TO before emitting the directive — no manual relay needed. Act on remaining directive: close pending TOs, validate evidence, compose elevations. Read `LOOP_PACING:` hint from operator tail:
-     - `LOOP_PACING: active` → `ScheduleWakeup(delaySeconds=60)`
-     - `LOOP_PACING: idle` → `ScheduleWakeup(delaySeconds=270)`
-     - `LOOP_PACING: done` (operator exit 1) → **DO NOT STOP LOOP.** Transition to validator phase, schedule `ScheduleWakeup(delaySeconds=270)` — validator is synthesis-heavy, short cadence wastes cache.
-   - **Validator phase** — all TOs complete, validator hasn't returned exit 1 yet. Run `validator {CODE}`. Act on directive: amend evidence blocks, author gap-closure TOs, push acceptance flex to CTO, compose elevations. Default `ScheduleWakeup(delaySeconds=270)` unless validator exits 1.
-   - **Closeout phase** — validator exit 1. Update `org/projects/{CODE}.json` `status=complete`, move REGISTRY row to Completed table, report closure to Andrew citing validator's final directive as evidence. **THEN stop the loop** (omit `ScheduleWakeup`).
-3. Same `prompt` string passed back each turn (the bare `/loop {PROJECT_CODE}` Andrew typed, or whatever he used).
+**Step 2 — Pick ONE project to drive this wake (active-first selection).** For each resolved code, run `operator {CODE} --json` and read `LOOP_PACING`. Sort by phase-score:
 
-**Why 60/270:** 60s is the runtime floor on `ScheduleWakeup.delaySeconds`. 270s is inside the 5-minute Anthropic prompt-cache TTL — wakes stay cache-warm. 300s would be worst-of-both (cache miss + immediate re-fire). Do not pick 300s.
+| Rank | Condition |
+|------|-----------|
+| 1 | operator phase, `LOOP_PACING: active` (forward motion available) |
+| 2 | operator phase, `LOOP_PACING: idle` (waiting on external signal) |
+| 3 | validator phase (operator exit 1 on this code) |
+| — | parked (previous wake's fork unresolved) — skip until CTO response MCPed back |
+| — | closed (validator exit 1 achieved earlier this loop) — drop from subsequent wakes |
 
-**When to break the loop and escalate:**
-- Either tool exits 2 (fork) → call `{tool} {CODE} --elevate`, dispatch CTO MCP, then schedule 270s wake while waiting for CTO. Do NOT stop loop — resume when CTO resolves.
-- Three consecutive idle wakes with no observable state delta (no TO status change, no new commit, no validator directive change) → surface to Andrew; likely external dependency is the real blocker.
-- Project JSON disappears, becomes unparseable, or project status flips to `paused`/`cancelled` → stop loop immediately, flag to Andrew.
+Tie-break by resolved-list order from loop-resolve. Pick rank-1 head.
+
+**Step 3 — Run the phase tool on the picked project:**
+- **Operator phase** → `operator {CODE} --dispatch` (auto-sends GO inbox messages + flips staged→pending for actionable_staged TOs). Act on remaining directive: close pending TOs, validate evidence, compose elevations. Read `LOOP_PACING:` tail:
+  - `active` → set wake cadence 60s for Step 4
+  - `idle` → set wake cadence 270s for Step 4
+  - `done` (operator exit 1) → this code transitions to validator phase next wake
+- **Validator phase** → `validator {CODE}`. Amend evidence blocks, author gap-closure TOs, push acceptance flex to CTO, compose elevations. Set cadence 270s.
+- **Closeout phase** (validator exit 1 this wake) → 3-step atomic close per `org/XXX.md` "Closure Discipline":
+  1. Project JSON `status: "complete"` + `completed` date + rewrite `phase` as closure summary + `blocking: "None"`.
+  2. REGISTRY row move to Completed / Archived Projects table (top, newest-first), citing validator's final directive as evidence.
+  3. PRD `Status:` line update if present.
+  All in one commit. **Announce closure to Andrew** citing validator's final directive. DROP project from list for subsequent wakes. Do NOT stop the loop — continue driving remaining projects.
+
+**Step 4 — Schedule next wake:**
+- If list is now empty (all projects closed this loop) → STOP loop (omit `ScheduleWakeup`), one-line "all closed" announcement to Andrew with project-code list + closure tags.
+- If the project driven this wake emitted `LOOP_PACING: active` → `ScheduleWakeup(delaySeconds=60)`.
+- Otherwise → `ScheduleWakeup(delaySeconds=270)`. 300s is BANNED (worst-of-both: cache miss + immediate re-fire).
+- Pass the same `prompt` string back each turn (the bare `/loop {INPUT_SPEC}` Andrew typed).
+
+**Why 60/270:** 60s is the runtime floor on `ScheduleWakeup.delaySeconds`. 270s is inside the 5-minute Anthropic prompt-cache TTL — wakes stay cache-warm. 300s would be worst-of-both (cache miss + immediate re-fire).
+
+---
+
+**Fork handling (2026-04-24: park-and-continue, not stop-the-world).** When operator or validator exits 2 on project A:
+1. Compose `{tool} {CODE} --elevate` → dispatch CTO MCP.
+2. **PARK project A** — on subsequent wakes, skip it in Step 2 selection until the CTO response MCPs back and you've acted on the directive.
+3. Continue driving the remaining projects in Step 2 as usual.
+4. When CTO responds, unpark and resume on project A.
+
+This replaces the old single-project "wait for CTO before resuming" behavior. Cross-project parallelism was the point of the multi-project upgrade — a fork on one project must not stall the others. For single-project `/loop ADVI_ROLLUP`, "park" effectively means the loop idles at 270s waiting for CTO (same net behavior as pre-2026-04-24).
+
+**When to break the loop and escalate to Andrew:**
+- Three consecutive idle wakes with NO observable state delta across ANY project (no TO status change, no new commit, no validator directive change anywhere) → surface to Andrew; likely external dependency is the real blocker.
+- `loop-resolve` exit 2 (unparseable or ambiguous) → surface to Andrew, stop immediately.
+- Every in-scope project JSON disappears or flips to `paused`/`cancelled` → stop, flag to Andrew.
 
 **What /loop does NOT do:**
 - Not invoked at COO startup. Startup protocol is separate (register_agent + inbox-watch + ground truth reconciliation). Only Andrew fires /loop.
 - Does not modify TO status silently — every close-out still requires evidence citation, acceptance-flex pre-flags where applicable, and RAVC-compliant messaging.
 - Does not skip compiler mandates — /loop just drives existing protocol faster; it doesn't relax any rule.
 - **Does not skip Step 0 inbox plumbing even on "idle" iterations.** Anti-pattern: running operator, seeing LOOP_PACING: idle, scheduling 270s wake WITHOUT checking inbox. Worker agents write to me during the loop; silent iterations = I'm deaf to adjudication asks. Step 0 is universal, not conditional. Andrew flagged this 2026-04-21 after iter 10/11 missed DS's URGENT FORK MCP on HLOT2 Patch B ticker→cusip bug.
+- **Does not run operator/validator on multiple projects in the same wake.** One project per wake keeps the tool contract clean and the directive focused. Multi-project cycling happens across wakes, not within a wake.
 
 ---
 

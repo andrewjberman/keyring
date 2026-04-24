@@ -118,20 +118,48 @@ tools:
   # =======================================================================
   - name: /loop
     purpose: >
-      Persistent state-aware closure driver. Takes a project from whatever
-      current state (fresh, mid-op, op-done-val-remaining, partial) to
-      terminal closure through validation, self-pacing via ScheduleWakeup.
-    location: COO prompt.md "/loop dynamic mode" section
+      Persistent state-aware closure driver. Takes a SET of projects from
+      whatever current state (fresh, mid-op, op-done-val-remaining, partial)
+      to terminal closure through validation, self-pacing via ScheduleWakeup.
+      Supports single-project and multi-project invocations; resolves input
+      to an active-project list via .tools/loop-resolve.
+    location: COO prompt.md "/loop dynamic mode" section (CTO prompt.md mirrors it)
     bash_wrapper: null  # chat-invoked, not CLI
     ps1_wrapper: null
-    invocation: "/loop {PROJECT_CODE}"
+    invocation: "/loop {INPUT_SPEC}"
+    input_spec:
+      description: >
+        Any combination of macro codes, 6-char project suffixes, and
+        macro_project codes, space- or comma-separated. Resolved by
+        .tools/loop-resolve into an ordered list of active project codes.
+      forms:
+        macro: "4-char macro code (ADVI) -- expands to every active {MACRO}_* project"
+        suffix: "6-char project suffix (ROLLUP) -- must resolve to exactly one active project"
+        macro_project: "{MACRO}_{6CHAR} canonical project code (ADVI_ROLLUP)"
+      examples:
+        - "/loop ADVI_ROLLUP              -> single project"
+        - "/loop ROLLUP                   -> single project via suffix"
+        - "/loop ADVI                     -> all active ADVI_* projects"
+        - "/loop ADVI TRSB                -> all active under two macros"
+        - "/loop ADVI_ROLLUP,ADVI_INFLEC  -> specific two projects"
     invoker: andrew@opalinvest.com
     cadence:
       active: 60   # ScheduleWakeup delaySeconds; runtime floor
       idle: 270    # inside 5-min Anthropic prompt-cache TTL
       banned: [300]  # worst-of-both: cache miss + immediate re-fire
+    selection_rule:
+      description: >
+        Per wake, pick ONE project from the resolved list to drive this turn.
+        Active-first: sort by current phase-score (operator LOOP_PACING=active >
+        operator LOOP_PACING=idle > validator phase). Ties broken by registry
+        order. One project per wake keeps the operator/validator contract clean.
+      implementation: >
+        Run `operator {CODE} --json` for each active code, read LOOP_PACING,
+        sort, pick head. Run the phase tool (operator or validator) for that
+        code. Act on the directive. Schedule next wake using that project's
+        LOOP_PACING hint.
     phase_routing:
-      entry_rule: "scan project state on every wake, pick phase"
+      entry_rule: "scan project state on every wake, pick phase per project"
       operator_phase:
         condition: "any TO status != complete"
         tool: operator
@@ -145,16 +173,46 @@ tools:
         actions:
           - "update org/projects/{CODE}.json status=complete"
           - "move REGISTRY row to Completed table"
-          - "report closure to Andrew (evidence = validator's final directive)"
-          - "STOP loop (omit ScheduleWakeup)"
+          - "announce closure to Andrew (evidence = validator's final directive)"
+          - "DROP project from loop list, continue on remaining"
+          - "if list empty after drop, STOP loop (omit ScheduleWakeup)"
     escalation_triggers:
-      - "operator OR validator exit 2 (fork) — compose --elevate body, MCP CTO, 270s wake"
-      - "3 consecutive idle wakes with no state delta — surface to Andrew"
-      - "project JSON unparseable / status flipped to paused|cancelled — stop immediately"
+      - "operator OR validator exit 2 (fork) on project A -- compose --elevate body, MCP CTO, PARK project A (skip on subsequent wakes until CTO resolves), continue driving remaining projects"
+      - "3 consecutive idle wakes across ALL projects with no state delta -- surface to Andrew"
+      - "project JSON unparseable / status flipped to paused|cancelled -- drop that project from list, continue"
+      - "loop-resolve exit 2 (unparseable|ambiguous) -- surface error to Andrew, stop loop"
     non_rules:
-      - "NOT invoked at COO startup — only on Andrew's command"
+      - "NOT invoked at CTO/COO startup -- only on Andrew's command"
       - "Does NOT relax compiler mandates, RAVC, or TO status discipline"
-      - "Does NOT silently modify TO status — evidence + acceptance-flex pre-flags still required"
+      - "Does NOT silently modify TO status -- evidence + acceptance-flex pre-flags still required"
+      - "Does NOT run operator/validator on multiple projects in the same turn -- one project per wake"
+      - "Does NOT stall the whole loop on a single-project fork -- park-and-continue"
+
+  # =======================================================================
+  # Tool 3a -- loop-resolve: /loop input resolver
+  # =======================================================================
+  - name: loop-resolve
+    purpose: >
+      Resolve /loop input spec (any mix of macro codes, 6-char project
+      suffixes, and macro_project codes) to an ordered list of active
+      project codes. Enables /loop to accept any of the three input forms.
+    location: .tools/loop-resolve.py
+    bash_wrapper: .tools/loop-resolve
+    ps1_wrapper: null
+    runtime: ~100ms (reads project JSONs, regex-matches, dedupes)
+    commands:
+      - command: loop-resolve {TOKEN}...
+        description: Resolve one or more tokens (space or comma separated)
+      - command: loop-resolve {TOKEN}... --json
+        description: Emit JSON array instead of newline-separated list
+    exit_codes:
+      0: "all tokens resolved to >=1 active project"
+      1: "empty-match -- token valid shape but no active project (typo or macro with no active projects)"
+      2: "fork -- unparseable token OR ambiguous 6-char suffix (multiple active matches)"
+    patterns:
+      - "^[A-Z]{4}_[A-Z0-9]{6}$  -> macro_project code (exact match against active projects)"
+      - "^[A-Z]{4}$              -> macro code (expand to all active {MACRO}_*)"
+      - "^[A-Z0-9]{6}$           -> project suffix (must resolve to exactly one active)"
 
   # =======================================================================
   # Tool 4 -- kill-orphans: stale background-script cleanup

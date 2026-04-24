@@ -1,0 +1,23 @@
+#!/bin/bash
+# loop-resolve -- resolve /loop input to active project codes.
+#
+# Accepts any combination of: macro code (ADVI), project suffix (ROLLUP),
+# or macro_project code (ADVI_ROLLUP). Space- or comma-separated.
+#
+# Usage:
+#   loop-resolve ADVI                    # expand macro to all active ADVI_*
+#   loop-resolve ROLLUP                  # resolve 6-char suffix to project code
+#   loop-resolve ADVI_ROLLUP             # pass through exact project code
+#   loop-resolve ADVI TRSB_TFIMPT        # mix forms, dedupe
+#   loop-resolve "ADVI,TRSB"             # comma-separated
+#   loop-resolve ADVI --json             # JSON array output
+#
+# Output: one active project code per line on stdout (ordered by input).
+#
+# Exit codes:
+#   0  all tokens resolved to >=1 active project
+#   1  empty-match (token valid shape but no active project found)
+#   2  fork -- unparseable token or ambiguous 6-char suffix
+
+WORKSPACE="$(cd "$(dirname "$0")/.." && pwd)"
+exec python "$WORKSPACE/.tools/loop-resolve.py" "$@"

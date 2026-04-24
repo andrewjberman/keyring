@@ -85,4 +85,29 @@ None flagged. Org is executing cleanly. Key active gates:
 3. COHORT-A validator pass on next D-run (STAUDT closure)
 4. COO to adjust TRSB_TFIMPT W2 TO (binary gate → joint-AE Phase 0 discovery)
 
+---
+
+## Mid-Session Work — /loop multi-project upgrade (Andrew directive)
+
+Shipped per Andrew directive 2026-04-24: `/loop` now accepts any combination of macro codes, 6-char project suffixes, and macro_project codes.
+
+**Files shipped:**
+- `.tools/loop-resolve.py` — stateless input resolver (~130 lines; regex-matches tokens, dedupes, exits 0/1/2)
+- `.tools/loop-resolve` — bash wrapper
+- `org/modules/exec/exec-toolkit.yaml` — updated `/loop` tool entry + new `loop-resolve` tool entry
+- `org/tier1_exec/2.0.0_SA_COO/prompt.md` — rewrote `/loop dynamic mode` section for multi-project (Step 1 resolve + Step 2 active-first selection + park-and-continue fork)
+- `org/tier1_exec/1.0.0_SA_CTO/prompt.md` — added `/loop dynamic mode` section mirroring COO
+- `org/XXX.md` — updated universal `/loop` table
+
+**Semantics decided with Andrew (all 4 recommendations accepted):**
+- D1: active-first selection (sort by `LOOP_PACING`, rank 1 = active, rank 2 = idle, rank 3 = validator)
+- D2: fork on project A → park A, continue driving other projects
+- D3: closeout announces + drops project, loop continues on remaining
+- D4: ambiguous 6-char suffix → fork (exit 2), require full macro_project
+
+**Verification (11 cases, all passed):**
+- Single project code, macro expansion, project suffix, comma-sep, space-sep macros, dedupe, typo (exit 1), unparseable (exit 2), wrong length (exit 2), closed project (exit 1), JSON output.
+
+**Side finding — surfaces to CTO backlog (not a /loop concern):** `loop-resolve ADVI` returned 6 active projects, but REGISTRY.md shows 5 active ADVI. Two project JSONs — `ADVI_CANNNA` and `ADVI_SLEEVE` — have `status: active` but no REGISTRY row. These are likely drift from recent COO work (e.g., ADVI_ROLLUP.SL-P0 sleeve discovery may have spawned an ADVI_SLEEVE project JSON prematurely). Recommend COO audit in next ground-truth pass; not blocking /loop functionality (loop-resolve behaves correctly — REGISTRY is the stale surface).
+
 1.0.0_SA_CTO

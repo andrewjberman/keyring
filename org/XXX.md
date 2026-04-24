@@ -180,7 +180,7 @@ Andrew can fire `/loop` at any agent, not just CTO/COO. Two forms:
 | Form | Recipients | Semantic |
 |------|-----------|----------|
 | `/loop` (bare) | Any agent | **Watchdog mode** — self-nudge for inbox / watcher health / TO queue / heartbeat. Never auto-exits. |
-| `/loop {PROJECT_CODE}` | CTO + COO only | **Project-driver mode** — operator→validator→closure. See CTO/COO prompt.md "/loop dynamic mode" section. |
+| `/loop {INPUT_SPEC}` | CTO + COO only | **Project-driver mode** — operator→validator→closure. Input spec accepts any combination of macro codes (`ADVI`), 6-char project suffixes (`ROLLUP`), and macro_project codes (`ADVI_ROLLUP`), space- or comma-separated. Resolved via `.tools/loop-resolve` to active-project list; driven one project per wake (active-first selection). See CTO/COO prompt.md "/loop dynamic mode" section for full spec. |
 
 ### Watchdog mode — what to do on each wake (workers)
 
