@@ -259,93 +259,71 @@ def main() -> None:
             build_spec(stages, out)
             return
 
-        # Stage 2: Fill username
+        # Stage 2: Fill username + click Continue (step 1 of 2-step login)
         log("Filling username ...")
-        # Try common username selectors in order
-        username_selectors = [
-            'input[type="email"]', 'input[type="text"]',
-            '#username', '#email', '[name="username"]', '[name="email"]',
-            '[placeholder*="email" i]', '[placeholder*="user" i]',
-            'input:first-of-type',
-        ]
-        filled_user = False
-        for sel in username_selectors:
-            try:
-                if page.locator(sel).count() > 0:
-                    page.locator(sel).first.fill(username)
-                    filled_user = True
-                    log(f"  Username filled via: {sel}")
-                    break
-            except Exception:
-                continue
-        page.wait_for_timeout(800)
+        page.fill('#Username', username)
+        page.wait_for_timeout(600)
         stages.append(capture(page, out, 2, "username-filled", console_log))
 
-        # Stage 3: Fill password
-        log("Filling password ...")
-        password_selectors = [
-            'input[type="password"]', '#password', '[name="password"]',
-            '[placeholder*="password" i]',
-        ]
-        filled_pass = False
-        for sel in password_selectors:
-            try:
-                if page.locator(sel).count() > 0:
-                    page.locator(sel).first.fill(password)
-                    filled_pass = True
-                    log(f"  Password filled via: {sel}")
-                    break
-            except Exception:
-                continue
+        log("Clicking Continue (step 1 submit) ...")
+        page.click('#btn_userName')
+        # Wait for password field to appear (page swaps in-place)
+        try:
+            page.wait_for_selector('#password', timeout=10_000)
+        except PWTimeoutError:
+            log("  WARN: #password not found after Continue — capturing current state")
         page.wait_for_timeout(800)
-        stages.append(capture(page, out, 3, "password-filled", console_log))
+        stages.append(capture(page, out, 3, "password-page", console_log))
 
-        # Stage 4: Submit
-        log("Submitting login form ...")
-        submit_selectors = [
-            'button[type="submit"]', 'input[type="submit"]',
-            'button:has-text("Sign in")', 'button:has-text("Log in")',
-            'button:has-text("Login")', 'button:has-text("Continue")',
-            '[role="button"]:has-text("Sign in")',
-        ]
-        submitted = False
-        for sel in submit_selectors:
-            try:
-                if page.locator(sel).count() > 0:
-                    page.locator(sel).first.click()
-                    submitted = True
-                    log(f"  Submit clicked via: {sel}")
-                    break
-            except Exception:
-                continue
-        if not submitted:
-            log("  WARN: no submit button matched — trying Enter key")
+        # Stage 3: Fill password + click Log In (step 2 of 2-step login)
+        log("Filling password ...")
+        if page.locator('#password').count() > 0:
+            page.fill('#password', password)
+            log("  Password filled via: #password")
+        else:
+            log("  WARN: #password not found — login may have failed at step 1")
+        page.wait_for_timeout(600)
+        stages.append(capture(page, out, 4, "password-filled", console_log))
+
+        log("Clicking Log In (#submit) ...")
+        pre_url = page.url
+        try:
+            page.click('#submit')
+        except Exception:
+            log("  WARN: #submit not found — trying Enter")
             page.keyboard.press("Enter")
 
+        # Wait for URL to change (navigation away from login page) or OTP on same URL
+        # Give 15s for server round-trip + any redirect chain
         try:
-            page.wait_for_load_state("networkidle", timeout=15_000)
+            page.wait_for_function(
+                f"() => document.title !== 'Login' || location.href !== '{pre_url}'",
+                timeout=15_000,
+            )
+            log(f"  Navigation detected: {page.url}")
         except PWTimeoutError:
-            pass
-        page.wait_for_timeout(SETTLE_MS)
-        stages.append(capture(page, out, 4, "post-submit", console_log))
+            log("  WARN: No navigation detected after 15s — possible CAPTCHA or auth error")
+        page.wait_for_timeout(2_000)
+        stages.append(capture(page, out, 5, "post-login", console_log))
 
-        # Stage 5: OTP challenge (capture if present, don't submit)
+        # Stage 6: OTP challenge detection
         log("Checking for OTP challenge ...")
         otp_selectors = [
             'input[type="tel"]', 'input[autocomplete="one-time-code"]',
-            '[name="otp"]', '[name="code"]', '[name="token"]',
-            '[placeholder*="code" i]', '[placeholder*="otp" i]',
-            '[placeholder*="verif" i]',
+            '#AuthCode', '#Code', '#otp', '#verificationCode',
+            '[name="otp"]', '[name="code"]', '[name="token"]', '[name="AuthCode"]',
+            '[placeholder*="code" i]', '[placeholder*="otp" i]', '[placeholder*="verif" i]',
         ]
-        otp_found = any(
-            page.locator(sel).count() > 0
-            for sel in otp_selectors
-        )
-        if otp_found:
+        otp_found = any(page.locator(sel).count() > 0 for sel in otp_selectors)
+        # Also check if #passwordError is visible (login failure)
+        login_failed = page.locator('#passwordError').is_visible()
+        if login_failed:
+            log("  LOGIN FAILED: #passwordError is visible -- wrong credentials or reCAPTCHA blocked")
+        elif otp_found:
             log("  OTP challenge detected -- capturing page structure (not submitting).")
         else:
-            log("  No OTP challenge detected -- may be logged in or different MFA method.")
-        stages.append(capture(page, out, 5, "otp-or-post-auth", console_log))
+            log("  No OTP challenge detected -- likely logged in. Capturing post-auth page.")
+        stages.append(capture(page, out, 6, "otp-or-post-auth", console_log))
 
         browser.close()
 
