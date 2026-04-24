@@ -118,7 +118,14 @@ Both commands are in `.tools/` (in PATH) and work from any directory.
 
 **If the GO lists a SEQUENCE of TOs:** You are authorized to execute ALL of them in order without waiting for a new GO between steps. If a TO in the sequence is already complete when you reach it, move immediately to the next one. Keep going until you hit a blocked TO (deps unmet) or the list is exhausted. Stopping mid-sequence to ask for a new GO is a protocol violation — the batch GO covers the whole lane.
 
-**D. Set compiler tool context (enables auto-logging):**
+**D. Owned-paths hook (install if absent):**
+```bash
+# owned-paths hook — installs if absent (ADHC_OWNPTH)
+test -L .git/hooks/pre-commit || bash .tools/git-hooks/install-owned-paths.sh
+```
+Wires the lane-enforcement pre-commit hook on first use. Idempotent — safe to re-run. On Windows Git Bash the `-L` test always fails (no true symlinks), so the install script runs each session but exits 0 immediately once the hook is present.
+
+**E. Set compiler tool context (enables auto-logging):**
 ```bash
 mkdir -p .comp-graph && printf "SERIAL=%s\nTO_ID=\n" "{your_serial}" > .comp-graph/.agent_context
 ```
