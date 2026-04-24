@@ -1473,3 +1473,20 @@ RESOLUTION: fixed in `614d4c28` (`comp-platinum reverse empty-vs-broken disambig
 | 2026-04-24 | 0.6.1_AE_PartnerETL | ADVI_INFLEC.W4.13 | comp-validate | comp-validate C_01c --artifact /tmp/role_aua_sample.parquet | FAIL |
 | 2026-04-24 | 0.6.1_AE_PartnerETL | ADVI_INFLEC.W4.13 | comp-validate | comp-validate C_01c --artifact C:/tmp/role_aua_sample.parquet | FAIL |
 | 2026-04-24 | 1.0.0_SA_CTO | (startup) | N/A — CTO ground-truth reconciliation; compiler tools mandated at PRD authoring, not startup | PASS |
+| 2026-04-24 | 0.5.0_AE_OpalETL | TRSB_TFIMPT.W2 | comp-build | comp-build | PASS |
+| 2026-04-24 | 0.7.0_AE_CloudOps | TRSB_TFIMPT.W2 | comp-iam | comp-iam service trade-parquet-batch-export | PASS |
+| 2026-04-24 | 0.7.0_AE_CloudOps | TRSB_TFIMPT.W2 | comp-iam | comp-iam service trade-parquet-batch-export | PASS |
+| 2026-04-24 | 0.7.0_AE_CloudOps | TRSB_TFIMPT.W2 | comp-iam | comp-iam service trade-dashboard-api | PASS |
+| 2026-04-24 | 0.7.0_AE_CloudOps | TRSB_TFIMPT.W2 | comp-build | comp-build | PASS |
+| 2026-04-24 | 0.7.0_AE_CloudOps | TRSB_TFIMPT.W2 | comp-iam | comp-iam service trade-parquet-batch-export | PASS |
+| 2026-04-24 | 0.7.0_AE_CloudOps | TRSB_TFIMPT.W2 | comp-iam | comp-iam gaps | PASS |
+| 2026-04-24 | 0.7.0_AE_CloudOps | TRSB_TFIMPT.W2 | comp-pipescript | comp-pipescript deployed convert_orion_to_silver | PASS |
+| 2026-04-24 | 0.7.0_AE_CloudOps | TRSB_TFIMPT.W2 | comp-platinum | comp-platinum reverse platinum/advisors/*/positions.json | PASS |
+| 2026-04-24 | 0.7.0_AE_CloudOps | TRSB_TFIMPT.W2 | comp-pipescript | comp-pipescript consumers D_04 | PASS |
+| 2026-04-24 | 0.7.0_AE_CloudOps | TRSB_TFIMPT.W2 | comp-platinum | comp-platinum page AdvisorPublicProfile | PASS |
+| 2026-04-24 | 0.7.0_AE_CloudOps | TRSB_TFIMPT.W2 | comp-platinum | comp-platinum reverse platinum/advisors/*/summary.json | PASS |
+| 2026-04-24 | 0.7.0_AE_CloudOps | TRSB_TFIMPT.W2 | comp-pipescript | comp-pipescript io D_01 | PASS |
+| 2026-04-24 | 0.7.0_AE_CloudOps | TRSB_TFIMPT.W2 | comp-platinum | comp-platinum reverse platinum/advisors/*/positions.json | PASS |
+| 2026-04-24 | 0.7.0_AE_CloudOps | TRSB_TFIMPT.W2 | comp-pipescript | comp-pipescript io D_04 | PASS |
+| 2026-04-24 | 1.0.0_SA_CTO | ADVI_49EXEC.PRD-amend | comp-platinum reverse | comp-platinum reverse 'platinum/advisors/*/positions.json' | PASS (surfaced empty producer, confirming COO's pre-TO study; drove PRD §4.5 amendment) |
+| 2026-04-24 | 1.0.0_SA_CTO | ADVI_49EXEC.PRD-amend | comp-pipescript io | comp-pipescript io D_04 | PASS (confirmed D_04 reads holdings_lots + account_team + accounts_dimension; producer recommendation for new positions.json artifact) |
