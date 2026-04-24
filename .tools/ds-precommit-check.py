@@ -22,8 +22,49 @@ from __future__ import annotations
 import argparse
 import ast
 import builtins
+import fnmatch
 import sys
 from pathlib import Path
+
+# Paths that must carry `from __future__ import annotations` (ADHC_DSFLOW.004).
+_FUTURE_ANNOT_PATTERNS = [
+    'data/*/scripts/gold/*.py',
+    'data/*/scripts/silver/*.py',
+    'data/*/scripts/bronze/*.py',
+]
+
+
+def _path_requires_future_annotations(filepath: str) -> bool:
+    p = str(filepath).replace('\\', '/')
+    return any(fnmatch.fnmatch(p, pat) for pat in _FUTURE_ANNOT_PATTERNS)
+
+
+def _has_future_annotations_at_module_level(tree: ast.Module) -> bool:
+    for node in tree.body:
+        if isinstance(node, ast.ImportFrom) and node.module == '__future__':
+            for alias in node.names:
+                if alias.name == 'annotations':
+                    return True
+    return False
+
+
+def check_future_annotations_source(source: str, filepath_hint: str) -> str | None:
+    """Return an error string if filepath_hint requires the __future__ import but source lacks it.
+
+    filepath_hint is used only for pattern-matching and error reporting;
+    the caller supplies the already-read source text.
+    """
+    if not _path_requires_future_annotations(filepath_hint):
+        return None
+    tree = ast.parse(source)
+    if not _has_future_annotations_at_module_level(tree):
+        return (
+            f"{filepath_hint}:1: BLOCKED: missing `from __future__ import annotations` "
+            f"-- required for PEP-604 union-type syntax on Python 3.9 runners "
+            f"(ADHC_DSFLOW.004). Add as first import statement after any docstring/shebang."
+        )
+    return None
+
 
 MODULE_DUNDERS = {
     "__name__", "__file__", "__doc__", "__spec__", "__loader__",
@@ -74,9 +115,12 @@ def _collect_module_defined(tree):
             elif isinstance(n, (ast.FunctionDef, ast.AsyncFunctionDef, ast.ClassDef)):
                 defined.add(n.name)
             elif isinstance(n, ast.If):
-                walk(n.body); walk(n.orelse)
+                walk(n.body)
+                walk(n.orelse)
             elif isinstance(n, ast.Try):
-                walk(n.body); walk(n.orelse); walk(n.finalbody)
+                walk(n.body)
+                walk(n.orelse)
+                walk(n.finalbody)
                 for h in n.handlers:
                     if h.name:
                         defined.add(h.name)
@@ -88,7 +132,8 @@ def _collect_module_defined(tree):
                 walk(n.body)
             elif isinstance(n, (ast.For, ast.AsyncFor)):
                 _add_targets(n.target, defined)
-                walk(n.body); walk(n.orelse)
+                walk(n.body)
+                walk(n.orelse)
     walk(tree.body)
     return defined
 
@@ -269,6 +314,14 @@ def scan_file(filepath, verbose=False, strict=False):
     source = path.read_text(encoding="utf-8")
     tree = ast.parse(source, filename=str(path))
 
+    rc = 0
+
+    # PEP-604 / future-annotations gate (ADHC_DSFLOW.004)
+    err = check_future_annotations_source(source, str(filepath))
+    if err:
+        print(err, file=sys.stderr)
+        rc = 1
+
     has_star = any(
         isinstance(n, ast.ImportFrom) and any(a.name == "*" for a in n.names)
         for n in ast.walk(tree)
@@ -276,7 +329,7 @@ def scan_file(filepath, verbose=False, strict=False):
     if has_star and not strict:
         if verbose:
             print(f"{filepath}: skipped (star import; use --strict to scan)", file=sys.stderr)
-        return 0
+        return rc
 
     module_defined = _collect_module_defined(tree)
     if verbose:
@@ -286,7 +339,7 @@ def scan_file(filepath, verbose=False, strict=False):
     scanner.visit(tree)
     for fp, lineno, name in scanner.misses:
         print(f"{fp}:{lineno}: undefined name '{name}'", file=sys.stderr)
-    return 1 if scanner.misses else 0
+    return max(rc, 1 if scanner.misses else 0)
 
 
 def main():
