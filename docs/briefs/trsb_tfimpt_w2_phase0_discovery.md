@@ -19,7 +19,7 @@ All configs pulled via `aws lambda get-function-configuration`. LastModified on 
 | 2 | trade-authorizer | python3.11 | authorizer.lambda_handler | 128 MB | 10s | trade-submission-lambda-role | None | 1.2 KB | None |
 | 3 | trade-dashboard-api | python3.11 | dashboard_api.lambda_handler | 512 MB | 60s | trade-submission-lambda-role | None | 843 KB | None |
 | 4 | trade-identifier-cache | python3.11 | identifier_cache.lambda_handler | 256 MB | 30s | trade-submission-lambda-role | None | 2.3 KB | None |
-| 5 | trade-parquet-batch-export | python3.11 | parquet_exporter.lambda_handler | 1024 MB | 300s | trade-submission-lambda-role | **pandas-pyarrow-layer:1** | 4.1 KB | **DRIFT: Layer present in live, absent from lambdas.tf** |
+| 5 | trade-parquet-batch-export | python3.11 | parquet_exporter.lambda_handler | 1024 MB | 300s | trade-submission-lambda-role | **pandas-pyarrow-layer:1** | 4.1 KB | Layer present in both live AND lambdas.tf (lines 136-138). No drift. ✓ |
 | 6 | trade-submission-handler | python3.11 | submission_handler.lambda_handler | 256 MB | 30s | trade-submission-lambda-role | None | 7.1 KB | None |
 | 7 | trade-workflow-handler | python3.11 | workflow_handler.lambda_handler | 1024 MB | 120s | trade-submission-lambda-role | None | 47.9 MB | None |
 | 8 | trade-recon-api | python3.11 | recon_api.lambda_handler | 256 MB | 60s | trade-recon-lambda-role | None | 3.6 KB | None |
@@ -30,7 +30,7 @@ All configs pulled via `aws lambda get-function-configuration`. LastModified on 
 **TF field-level findings:**
 - Runtime, Handler, Memory, Timeout, Role: all match lambdas.tf for all 11. ✓
 - Architectures: x86_64 (all 11). lambdas.tf omits arch block — defaults to x86_64. Consistent. ✓
-- Layers: **trade-parquet-batch-export** has `pandas-pyarrow-layer:1` in live but lambdas.tf has no `layers` block. This is inside `ignore_changes` scope so TF hasn't flagged it — but it IS a real config drift that will matter during reclaim. Phase 1 must add the `layers` block to lambdas.tf for this function.
+- Layers: **trade-parquet-batch-export** has `pandas-pyarrow-layer:1` in both live AND lambdas.tf (lines 136-138 of lambdas.tf). No config drift. The `ignore_changes` mask prevented TF from tracking code changes, but the layers block was always present in TF state. Phase 1 can remove `ignore_changes` directly without any layers block addition.
 - EnvVars: `trade-parquet-batch-export` shows `null` (no env vars set). Falls back to hardcoded config.py defaults (SUBMISSIONS_TABLE=`trade-submissions`, S3_BUCKET=`opal-data-trade-submissions`). Functional but unmanaged.
 - Two IAM roles: `trade-submission-lambda-role` (7 functions) + `trade-recon-lambda-role` (4 functions). Consistent with lambdas.tf.
 
@@ -112,7 +112,7 @@ All three authorizers (trade-auth-handler, trade-authorizer, trade-recon-authori
 
 **Phase 1 scope (if approved as-is):**
 - Reclaim: trade-parquet-batch-export + trade-dashboard-api
-- trade-parquet-batch-export Phase 1 note: must add `layers` block to lambdas.tf (`pandas-pyarrow-layer:1`). First `terraform plan` should be 0-diff post-reclaim because ignore_changes has masked the layer; after removing ignore_changes, TF will need `layers` to avoid destroying/recreating the layer association.
+- trade-parquet-batch-export Phase 1 note: `layers` block already present in lambdas.tf (lines 136-138, `pandas-pyarrow-layer:1`). Phase 1 removes `ignore_changes` and swaps `filename` → `s3_bucket`/`s3_key`/`source_code_hash` only. No layers block addition required.
 - Exception doc: 9 functions with Known Issues rows in trade-pipeline README.md
 
 ---
@@ -240,7 +240,7 @@ Contains: use-case description, daily volume estimate, compliance attestation (b
 ### F.1 — Reclamation Plan
 
 **Option-(a) reclaim (2 functions):**
-1. `trade-parquet-batch-export` — ACTIVE (90 inv/30d). Source: 2 files (parquet_exporter.py + config.py). Layer: pandas-pyarrow-layer:1 (must be added to lambdas.tf). S3-backed deploy via build-and-upload.sh.
+1. `trade-parquet-batch-export` — ACTIVE (90 inv/30d). Source: 2 files (parquet_exporter.py + config.py). Layer: pandas-pyarrow-layer:1 already in lambdas.tf. Phase 1 removes ignore_changes + swaps to S3-backed deploy via build-and-upload.sh.
 2. `trade-dashboard-api` — DORMANT (506 inv/90d, 0/30d). Source: 843KB (larger, likely has multi-file structure). S3-backed deploy. No layer.
 
 **Option-(b) formal exception (9 functions):**
