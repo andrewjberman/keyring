@@ -1490,3 +1490,17 @@ RESOLUTION: fixed in `614d4c28` (`comp-platinum reverse empty-vs-broken disambig
 | 2026-04-24 | 0.7.0_AE_CloudOps | TRSB_TFIMPT.W2 | comp-pipescript | comp-pipescript io D_04 | PASS |
 | 2026-04-24 | 1.0.0_SA_CTO | ADVI_49EXEC.PRD-amend | comp-platinum reverse | comp-platinum reverse 'platinum/advisors/*/positions.json' | PASS (surfaced empty producer, confirming COO's pre-TO study; drove PRD §4.5 amendment) |
 | 2026-04-24 | 1.0.0_SA_CTO | ADVI_49EXEC.PRD-amend | comp-pipescript io | comp-pipescript io D_04 | PASS (confirmed D_04 reads holdings_lots + account_team + accounts_dimension; producer recommendation for new positions.json artifact) |
+| 2026-04-24 | 0.7.0_AE_CloudOps | TRSB_TFIMPT.W2 | comp-pipescript | comp-pipescript io D_04 | PASS |
+| 2026-04-24 | 0.7.0_AE_CloudOps | TRSB_TFIMPT.W2 | comp-platinum | comp-platinum reverse platinum/advisors/*/positions.json | PASS |
+| 2026-04-24 | 0.7.0_AE_CloudOps | TRSB_TFIMPT.W2 | comp-blast | comp-blast D_04.client_portal_summary | PASS |
+| 2026-04-24 | 0.7.0_AE_CloudOps | TRSB_TFIMPT.W2 | comp-validate | comp-validate D_04 --artifact C:/tmp/positions_sample_travis.json | FAIL |
+| 2026-04-24 | 0.7.0_AE_CloudOps | TRSB_TFIMPT.W2 | comp-validate | comp-validate D_04_positions_output --artifact C:/tmp/positions_sample_travis.json | PASS |
+| 2026-04-24 | 0.7.0_AE_CloudOps | TRSB_TFIMPT.W2 | comp-pipescript | comp-pipescript deployed D_04 | PASS |
+| 2026-04-24 | 0.7.0_AE_CloudOps | TRSB_TFIMPT.W2 | comp-platinum | comp-platinum reverse cost_basis | PASS |
+| 2026-04-24 | 0.7.0_AE_CloudOps | TRSB_TFIMPT.W2 | comp-platinum | comp-platinum reverse is_opal_model | PASS |
+| 2026-04-24 | 0.7.0_AE_CloudOps | TRSB_TFIMPT.W2 | comp-platinum | comp-platinum reverse top_positions | PASS |
+| 2026-04-24 | 0.7.0_AE_CloudOps | TRSB_TFIMPT.W2 | comp-pipescript | comp-pipescript io D_04 | PASS |
+| 2026-04-24 | 0.7.0_AE_CloudOps | TRSB_TFIMPT.W2 | comp-routes | comp-routes behaviors | PASS |
+| 2026-04-24 | 0.7.0_AE_CloudOps | TRSB_TFIMPT.W2 | comp-routes | comp-routes auth-map | PASS |
+| 2026-04-24 | 0.4.0_DT_ClientPlatform | ADVI_INFLEC.W8.3 | comp-routes | comp-routes behaviors | PASS — 2 custom error responses (403+404 -> 200/index.html); informed curl pass criterion (JSON CT required, HTML body = FAIL regardless of HTTP 200) |
+| 2026-04-24 | 0.4.0_DT_ClientPlatform | ADVI_INFLEC.W8.3 | comp-routes | comp-routes auth-map | PASS — /api/general/* confirmed EDGE JWT + API GW AUTHORIZER; no-auth baseline 401 verified |
