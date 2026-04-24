@@ -286,56 +286,56 @@ You do NOT produce architecture specs (CTO does). You DO align, route, and track
 
 **Commit only:** Session logs, org docs. Use `--author="2.0.0_SA_COO <2.0.0_SA_COO@opal.agent>"`.
 
-## Pod Delivery Dashboard -- Updated 2026-04-20 (COO session 33 startup)
+## Pod Delivery Dashboard -- Updated 2026-04-24 (CTO startup reconciliation — prior COO refresh was 2026-04-20, 4 days stale; Pod 4 / Shared Services sections below still reflect 2026-04-20 state, COO to refresh on next startup)
 
 ### Active Projects
 
 | Project | Status | Pending Work |
 |---------|--------|-------------|
-| `ADVI_ROLLUP` | 33/41 TOs complete. W0/W1/W4/W5 structurally COMPLETE. W4: RA TERMINAL (d9ab1719), CN TERMINAL (49eac17d), W4-CG PASS 26/0 (f886a7d3). W5 RF01 COMPLETE (21c0637f). DH-1..DH-7 shipped. **2026-04-17 B_01 CAP SAGA SHIPPED:** bond-100x convention `d45fc0dc` + share-class ticker `178d0cce` + tiered cap `cb6d78e2` (Run 11 $3.587B -> $1.758B; firm post-cap $1,646.4M vs silver $1,694.6M = -2.9% residual; 916 bond lots repriced). **C_08 silent-wrongness recovery (Andrew flag):** quick-patch `9e537f9f` then real fix `cd177553` (CANONICAL_NNA_ATOMIC_PREFIX -> CANONICAL_NNA_PREFIX swap on C_08+D_00b+D_01+D_04; D_04 'Unknown' state silent-fill caught — BDPL_NNA.S1 schema-alignment TO drafted). **Schwab ULN ingestion** to silver/ULN/ landed (`6c80c5ed`). **CP-AE1 backfill** 1,520 partitions (`0830bae7`+`80917a1e`). DH-2 wrapper fix `8e3176a1` verified Run 11. AE SSM d83a1d11 (C_08->D_04 re-run on bd-gold-qa-runner) fired 2026-04-17. RPS feed dead since 2026-04-08 — tactical compensation via tiered cap. | **Active:** CP-DS1 stabilization (multi-PIVOT/Gate stack 7e57576f / c693d5a3 / d39c4dff / cd00ff2c / c4ebde9a / f5f19e77 / 1db831aa / ec2c1efc) — final cap target $1.66B, cohort <50 per `965d81ad`; awaiting Andrew sign-off on cap-timing-rule disposition (CTO MCP 20260417T174410Z). SL-P1 sleeve shadow (code shipped 28818eaf, awaiting first-fire). **Staged:** CP-VETO-AUTH, CP-WP5, RA-P1c, SL-P2, SL-P3, CP-MAP, WP-3 (AE), WP-4..9 (DS, gate WP-3). AE SSM d83a1d11 completion report. Weekend nightly verification (Fri 04-17 -> Mon 04-20). DS BDPL_NNA.S1 schema-alignment TO. Asset_class join hardening TO (Option c). Top Positions 'Opal models only' filter TO. ADVI_PROFAU.006 PROD D_04 for W3 B1 rerun. |
-| `ADVI_ROLGAT` | **All 3 TOs COMPLETE 2026-04-17.** Pod-driven (DE 0.4.0 ran point per Andrew; CTO/COO not in authoring loop). DT1 portal-auth-v1.13.0 (`8ce0bbca`) + partners-api-v1.16.1 (`3a186703`): advisorRole JWT claim + tier enforcement at auth-validator-edge v12 + shared-advisor-router v13 + opal-partners-data v2.11 with implementor payload strip + 4-row 49financial backfill + 21/21 smoke PASS. DE1 portal DEV `c0b1dae`: Claims.advisorRole + 5 helpers + tab restructure (admin: Advisors\|Distribution\|Books, non-admin: Advisors\|Profile) + devBypass role picker. RD1 drill gates + role constitutions. L1 scope fixup `295c617b`. PRD r2 + permission groups rubric + click matrix shipped (`0de257e0`+`53c43049`). | None — portal DEV live awaiting DT PROD push window for portal-v2.x.x bump including DE1. Backfill data-quality cleanup tracked separately if Andrew chooses. |
-| `ADVI_49EXEC` | Phase 1 partial. **COMPLETE:** TO 3 anthropic-sdk-deps layer (AE 0.6 `c0a00bcc` opportunistic ship 2026-04-16); TO 6 SummaryCard -> Executive Summary rebrand + bullets stub (DE 0.4 `e8651920` portal DEV `00fbcc4`). **PENDING:** TO 4 dt-generator-lambda-terraform (skeleton `e53c4923`). **STAGED:** TO 1 ds-template-library, TO 2 ds-llm-prose-generator, TO 5 ds-leaderboard-prior-week-rotation, TO 7 dt-eventbridge-wiring-and-deploy. | DS lane absorbed by ADVI_ROLLUP CP-DS1; TO 1/2/5 await DS bandwidth. DT 004 pending TO 2 close. AE 0.6 EventBridge signal format confirmation (gates TO 7). comp-pii audit on platinum/advisors/* + platinum/leaderboards/* (hard gate before TO 1 LLM prompt). |
-| `COMP_LEARNS` | Phase 2 — architectural expansion. PRD `COMP_LEARNS_ARCHITECTURE.md` v1/v2/v3 shipped 2026-04-16 (six-concern structural-inference system). **COMPLETE:** .001 harness framework (43e3225e+714d43a9), .003 compiler_baseline (7740277d), .004 loop orchestrator (e657c232), .006 iteration prompt design. **STAGED:** .002/.009/.016/.018/.020 (CTO), .007/.008/.010 (DS support), .011-.015/.017/.019/.021 (DS architectural wave). **PENDING:** .005 adversarial-queries (DS). **ACTIVE:** .022 comp-pipescript func-write detection (DS ~B). COO~B v3 sweep at 7/11 swept on 2026-04-16 midday handoff (.015/.016/.017/.021 still pending sweep). | COO~B finish v3 sweep + operator+validator smoke + MCP report-back with dep-graph + first-dispatch candidate (`.011`). LibCST dependency policy (layer vs venv) — AE 0.7 decides at .012 Phase 1. |
-| `ADHC_ROUTER` | Phase 1 COMPLETE 2026-04-15 — all 4 TOs closed. 4 compiler patches shipped: T1 (`d1d6920b`+`0324142a`), T2 (`70c8399d`), T3 (`614d4c28`), T4 (`3c921e08`). | Phase 2 backlog (8 items) pickup when lanes idle. Priority: .sh indexing highest (PROD-incident root cause); syntax warning is free. |
-| `ADVI_PROFAU` | .001-.007 ALL COMPLETE 2026-04-14 (portal-v2.1.44). D_02 per-role canonical NNA (`d51e44ef`) rode 2026-04-15 full A->D rerun. | Q3/Q7 DS TOs pending Andrew direction; Sydney Cobb spot-check still waits on post-deploy `/frontend-dev`. AE 0.6 verification of `d51e44ef` not yet logged. |
-| `ADHC_DESIGN` | Phase 2: all pod .0.1/.0.2/.0.3/0.4 TOs COMPLETE. | Attribution RD .001/.015/.024 + Valuation RD .007 still staged — agents not LIVE. Backlog: .033 (low priority). |
+| `ADVI_ROLLUP` | **53 COMPLETE / 0 PENDING / 6 STAGED / 1 DEFERRED** (2026-04-24). W0/W1/W4/W5 structurally COMPLETE. CP-DS1 + CP-VETO-AUTH + CP-WP5 + CP-RES20 + RA-P1c all COMPLETE. **SL-P1 COMPLETE 2026-04-24** first-fire 2026-04-23 00:26:17Z (1,169 rows / 458 accts / $15.87M MV; Jones spot-check PASS). **ORPHRELID COMPLETE 2026-04-24** `e28e0f5d` — H1-A 4 structural accts → CP-FEEDEXP Cohort B; H1-B 2,095 BD "0" sentinel passthrough; H4 self-resolving; role_aua 5-invariant validator shipped. **DEFERRED:** CP-MAP (Schwab many-to-many; unblock = per-account breakout). **STAGED:** SL-P1b/P2/P3 (multi-nightly stability); ASSETCLASSc (bd_assets_dim lookup replaces cost_per_unit heuristic); TOPPOSOPAL (is_opal_model D-tier emit); BDPLNNASCHEMA (state vs client_state + 'Unknown' silent-fill). CP-FEEDEXP expanded to Cohort B (~$6.68M combined residual). B_01 cap saga resolved 2026-04-17 (bond-100x `d45fc0dc` + share-class `178d0cce` + tiered cap `cb6d78e2`; Run 11 $3.587B→$1.758B). C_08 silent-wrongness `cd177553`. Cap-timing-rule RESOLVED 2026-04-21 (KEEP market_value_uncapped + per-account cap log; DROP ramp + persistence). W2 WP-10b gold-silver recon harness shipped `cff234b5`. | (1) SL-P1b/P2/P3 gated on multi-nightly stability. (2) ASSETCLASSc/TOPPOSOPAL/BDPLNNASCHEMA on DS bandwidth. (3) CP-FEEDEXP Cohort B vendor coord (AE 0.6). (4) AE 0.6 Wave 3 B-series post-rerun validator evidence. |
+| `ADVI_49EXEC` | **4 COMPLETE / 1 PENDING / 2 STAGED (+ POSITIONS queued).** TO 3 AE layer `c0a00bcc`, TO 6 DE stub `e8651920`, **TO 1 + TO 5 COMPLETE 2026-04-24** `8cc69bab` (6 slot evaluators + 27/27 pytest + comp-pii PASS; D_00c→D_04 rotation re-baselined). **PENDING:** TO 4 dt-generator-lambda-terraform (apply+tag gated on TO 2). **STAGED:** TO 2 ds-llm-prose-generator (HOLD per CTO MCP 20260424 — requires platinum/advisors/{id}/positions.json; needs `ADVI_49EXEC.POSITIONS` DS TO authored first); TO 7 dt-eventbridge-wiring-and-deploy. | (1) **Author ADVI_49EXEC.POSITIONS DS TO** (per CTO ruling) — gates TO 2. (2) DT TO 4 pending TO 2 close. (3) AE 0.6 gold-chain-complete EventBridge signal format — gates TO 7. (4) Post-nightly Phase 3 verification of TO 5 rotation tomorrow AM. |
+| `ADVI_INFLEC` | **Phase 2 — PLATINUM LIVE + W4.12 COMPLETE 2026-04-24.** v1 gold chain: $429M AUA, 2,755 accts, YTD NNA $34.7M. ~20 scripts under `data/orion/scripts/gold/`. **W4.12 COMPLETE** `4eb0c0a2` (CTO no-redline 20260424T212000Z). W5.1 platinum-LIVE `31cb8041`; W5.9 49F regression PASS `c9e531d7`; W6.2 inf-otp-alert SNS + IAM `55478508`. W8 cross-firm: W8.1/W8.2/W8.4 COMPLETE, W8.3 PENDING. ORNREN rename TOs authored `16212596` (.001 DS ACTIVE + .002 AE 0.7 ACTIVE). **SCOPEFIX TO authored 2026-04-24** `d0b28db7`. **dim_inf_advisor_office.csv W4.13 Scope A rewrite** `7f14b718` (11→1 row). Q8/Q9/Q10 DS TOs staged under ~A `3724785c`. W7 CANCELLED. | (1) W4.13 PROD gold trigger (AE 0.6.1 post ~A SCOPEFIX + joint chain-start decision). (2) SCOPEFIX PENDING (DS-base). (3) ORNREN execution. (4) W8.3 DT backend curl. (5) Andrew 49F login-smoke pre-first-INF-user. (6) §10 Q5-Q13 answers shape subsequent waves. |
+| `ADVI_STAUDT` | **Phase 2 — HLOT2 + HLOT2b + EOP2025 shipped; AUAGAP resolved 2026-04-22 AM; only COHORT-A remains PENDING.** Layers A/B/C COMPLETE. FIX wave PROD clean 2026-04-20. BFIX1+BFIX2 on S3 MATCH. HLOT2 `5f5d0319`. **HLOT2b COMPLETE** `74dbad2b`. **EOP2025 COMPLETE** (~B post chain-full). D_00c cutover + DE caveat-removal + KPI COMPLETE. AUAGAP 2026-04-22 AM — Q1-Q3 2025 AUA ~70% collapse RCA-closed; 217 parquets re-uploaded (570 cross-bucket); DS rebuild cascade complete; AUA 2025-11-11 restored to $1,389,916,193. B_00 Option A `b3aabe10` per-date persistent-set structural fix. gold_dispatch hotfix `f201c75d` (PHASE gate silently broken 6 days). | (1) **COHORT-A PENDING** — D_04 summary-footnote 599 accts/$44.7M; code+S3 shipped `3cf43c26`; awaits validator exit 0 on next D-run. (2) BD nightly chain validation post hotfix. (3) RAVC4 close on HLOT2 + HLOT2b + BFIX1+2. (4) AE Q4 watchdog + Q6 process-tagging. |
+| `ADHC_DSFLOW` | **Phase 1 — 2 of 3 COMPLETE.** `.001` `b6e0c154`+`7b7381ac` (AST scanner + 8/8 tests + 71 gold scripts clean). `.002` `1e9d9dc3` (CLAUDE.md Rules 13+14; DS README+prompt). `.003 STAGED` — fires on next DS gold-script commit. §11 Q1-Q5 RESOLVED 2026-04-21. | `.003` passive training run — non-blocking. |
+| `TRSB_TFIMPT` | **Phase 1 — W1 COMPLETE 2026-04-21T13:11:04Z** (tag `trade-pipeline-v1.3.0`, `d1e27dfb`+`62847274`; 47 min from GO, all 10 AC PASS). PRD v1.1 at `b1425fe1`. W2 RESCOPED per Andrew — binary gate → joint 0.5.0_AE + 0.7.0_AE Phase 0 discovery (11-Lambda surface walk + SES sandbox→prod packet). W3 STAGED — Option B LOCKED `087080b0` (dual-module ship). | (1) **COO adjust W2 TO** — swap binary gate → joint-AE Phase 0 discovery + SES packet. (2) DT 0.4 courtesy heads-up post-shared-infra subordinate — gates W3. |
+| `ADHC_ROUTER` | Phase 1 COMPLETE 2026-04-15 — all 4 TOs closed. Phase 2 backlog 10 items (2026-04-21 joint audit). | Phase 2 pickup when lanes idle. Priority: .sh indexing. |
 | `ADHC_TMSTEL` | On hold. P0 PRD complete. | Azure AD app registration (Andrew/IT). |
-| `ADVI_INCMTL` | On hold. P0 briefing complete. Reopened conceptually via ADVI_ROLLUP.IN-2; formal reactivation deferred. | Production per-script timing profile. DS watermark design. AE dispatch. |
 
-**Recently merged into `ADVI_ROLLUP` (2026-04-15):** ADVI_FNTEND (→ Wave 3), BDPL_ASTDIM (→ Wave 1), BDPL_CNPRCS (→ Waves 0+2). Task order filenames preserved; only registry ownership moved.
-**Recently closed:** ADVI_ROLGAT (2026-04-17, all 3 TOs), CDRS_TFIMPT (2026-04-15, all 7 TOs), ADVI_OFFICE (portal-v2.1.44), ADVI_REBORN (4-cell matrix validated).
+**Recently completed (moved to REGISTRY.md Completed — remove from active TO routing):**
+- `ADVI_ROLGAT` 2026-04-17 (portal-auth-v1.13.0 + partners-api-v1.16.1; DE1 shipped to PROD in portal-v2.1.58 `c7a7d11e` 2026-04-20)
+- `ADHC_DESIGN` 2026-04-21 (28/32 effective; 4 orphan TOs CANCELLED per Andrew)
+- `ADVI_PROFAU` 2026-04-21 (6/6 authored; portal-v2.1.58; PROFAU.006 PROD D_04 rode chain-full recovery)
+- `ADVI_INCMTL` 2026-04-21 (COMPLETE-AS-SUPERSEDED — absorbed into ADVI_ROLLUP via IN-1/IN-2 + 3 IN-2.W0 sub-TOs)
+- `COMP_LEARNS` 2026-04-21 (v0 COMPLETE per Andrew; 20 COMPLETE + 1 DEFERRED + 1 STAGED-EXT; dyad 1.1.0_SA_CTO + 2.1.0_SA_COO handled closeout)
+- `CDRS_TFIMPT` 2026-04-15 (all 7 TOs; partner-firms-v1.0.0 + shared-infra-v1.7.0)
 
-**Closed 2026-04-13:** DEBT_1STRUN, ADVI_OTHDED, ADVI_HDRSPL.
-**Previously closed:** ADVI_PROFIL (portal-v2.1.39), ADVI_49PUSH (bd-v2.23.0), ADVI_GLDRST (silver-prep chain shipped, ops follow-ups carried forward).
-
-### Pipeline Tags (refreshed 2026-04-20 session 33 startup via `git tag -l`)
+### Pipeline Tags (refreshed 2026-04-24 CTO startup via `git tag -l`)
 
 | Pipeline | Tag |
 |----------|-----|
-| BD | bd-v2.24.4 (DH-7 + bd-incrparity-trigger 2026-04-16) |
-| Partners API | partners-api-v1.16.1 (ADVI_ROLGAT.DT1 opal-partners-data v2.11 tier gate + L1 scope + implementor strip 2026-04-17) |
-| Portal Auth | portal-auth-v1.13.0 (ADVI_ROLGAT.DT1 auth-validator-edge v12 + shared-advisor-router v13 2026-04-17) |
-| Portal (submodule) | portal-v2.1.51 (DEV at `c0b1dae` includes ADVI_ROLGAT.DE1 awaiting next PROD push) |
-| Yang | yang-v2.3.8 |
-| Market Overview | market-overview-v1.9.0 |
-| News | news-v2.9.5 |
-| Shared Infra | shared-infra-v1.7.0 |
-| Security Scanner | security-scanner-v1.0.2 |
-| Trade Pipeline | trade-pipeline-v1.2.0 |
-| Partner Firms | partner-firms-v1.0.0 (CDRS_TFIMPT.007 partner-firm TF module + auth-handler generalization 2026-04-15) |
-| Public API CDN | public-api-cdn-v1.0.0 |
-| Analytics Dashboard | analytics-dashboard-v1.0.0 |
+| BD | `bd-v2.24.4` (DH-7 + bd-incrparity-trigger 2026-04-16) |
+| Partners API | `partners-api-v1.16.1` (ADVI_ROLGAT.DT1 2026-04-17) |
+| Portal Auth | `portal-auth-v1.14.0` (ADVI_INFLEC W1.5+W1.6+W1.7 auth-handler partner generalization 2026-04-21) |
+| Portal (submodule) | `portal-v2.1.58` PROD (`c7a7d11e` 2026-04-20 — includes ADVI_ROLGAT.DE1 + PROFAU W4 batch + W8 cross-firm + AdvisorsTab role-filter + SmallAccounts modal + book-account modal chart + NNA window guards) |
+| Yang | `yang-v2.3.8` |
+| Market Overview | `market-overview-v1.9.0` |
+| News | `news-v2.9.5` |
+| Shared Infra | `shared-infra-v1.7.0` |
+| Data Refresh | `data-refresh-v2.2.0` |
+| Trade Pipeline | `trade-pipeline-v1.3.0` (TRSB_TFIMPT.W1 2026-04-21) |
+| Security Scanner | `security-scanner-v1.0.2` |
+| Partner Firms | `partner-firms-v1.0.0` |
+| Public API CDN | `public-api-cdn-v1.0.0` |
+| Analytics Dashboard | `analytics-dashboard-v1.0.0` |
+| Deck Generation | `deck-generation-v1.0.0` |
 
-### Operational Notes (04-20 session 33 startup — Friday->Monday gap reconciliation)
+### Operational Notes (2026-04-24 CTO startup reconciliation)
 
-- **Coverage gap:** Last COO log 2026-04-16 PM; last CTO log 2026-04-17 (session 32); no commits 2026-04-18/19 (weekend). Picking up Monday morning with 2026-04-17 worker activity to reconcile.
-- **Headline 2026-04-17 ship:** B_01 cap saga RESOLVED — bond-100x convention `d45fc0dc` + tiered cap `cb6d78e2` + share-class ticker `178d0cce` (Run 11 $3.587B -> $1.758B). C_08 silent-wrongness recovered with `cd177553` (CANONICAL_NNA_ATOMIC_PREFIX -> CANONICAL_NNA_PREFIX swap on C_08+D_00b+D_01+D_04). Andrew flagged the silent-wrongness class — defensive defaults over missing fields mask real data issues. CTO drafted BDPL_NNA.S1 schema-alignment TO.
-- **CP-DS1 still in flight:** multi-lane (~A/~B/~C/~D) on B_01 cusip/RPS cutover. Final cap target $1.66B, cohort <50 acceptance per `965d81ad`. Andrew owes call on cap-timing-rule disposition (CTO MCP 20260417T174410Z): KEEP market_value_uncapped col + per-account cap log; DROP ramp + DROP persistence gate.
-- **AE SSM d83a1d11:** C_08->D_04 re-run on bd-gold-qa-runner fired 2026-04-17 evening per CTO. Completion report (PERF + D_04 advisor spot-check + advisor_fee_efficiency totals + validator exits + log path) NOT YET logged — verify weekend status.
-- **Weekend nightly verification:** Fri 04-17 / Sat 04-18 / Sun 04-19 / Mon 04-20 04:00 UTC fires need confirmation against cd177553 + cb6d78e2 stack (cap-saga regression).
-- **ADVI_ROLGAT shipped pod-driven** 2026-04-17: DT1 + DE1 + RD1 all complete. Two new pipeline tags: portal-auth-v1.13.0 + partners-api-v1.16.1. Portal DEV at `c0b1dae` awaits PROD push window.
-- **CDRS_TFIMPT moved to Completed** — all 7 TOs complete. .007 partner-firm TF module + shared-lib + auth-handler generalization shipped 7e673244 / partner-firms-v1.0.0.
-- **ec2-auto-shutdown-enforcer:** security-scanner-v1.0.2 live, QA runner AutoShutdown=disabled.
+- **Coverage gap:** Prior COO dashboard refresh was 2026-04-20; COO was active through 2026-04-24 via MCP + commits but without a ground-truth audit. CTO refreshed Active Projects table + Pipeline Tags this pass. Pod 4 / Shared Services sections below still reflect 2026-04-20 — COO to refresh on next startup.
+- **Overnight activity 2026-04-22 PM → 2026-04-24 AM:** ADVI_ROLLUP cleared all PENDING (SL-P1 first-fire `de660016` + ORPHRELID close `a8cf3c83`); 3 follow-on TOs authored STAGED (`cb03625d`: ASSETCLASSc + TOPPOSOPAL + BDPLNNASCHEMA). ADVI_49EXEC TO 1+5 shipped `8cc69bab`; COO dispatched + POSITIONS TO queued (`3fcbbca6`+`b015f619`). ADVI_INFLEC W4.12 flipped complete `4eb0c0a2`; SCOPEFIX TO authored `d0b28db7`; dim_inf_advisor_office.csv Scope A rewrite `7f14b718`; Q8/Q9/Q10 TOs staged under ~A `3724785c`.
+- **AUAGAP fully resolved** 2026-04-22 AM — Q1-Q3 2025 AUA ~70% collapse RCA-closed (composite: ANONYMIZED Schwab RPS + B_00 global-latest amplifier). 217 parquets re-uploaded (570 cross-bucket SSE=AES256); DS rebuild cascade complete. B_00 Option A `b3aabe10` per-date persistent-set shipped as structural fix. gold_dispatch hotfix `f201c75d` (latent `--max-items 1` bug from e1e3b7c2 2026-04-16; PHASE gate silently broken 6 days).
+- **Portal-v2.1.58 PROD 2026-04-20** includes ADVI_ROLGAT.DE1 (was DEV-only in 2026-04-20 dashboard), W8 cross-firm pages, AdvisorsTab role-filter fix, SmallAccounts modal, book-account modal chart, NNA window guards, 6 frontend-dev constitutions.
+- **Cap-timing-rule RESOLVED 2026-04-21** — Andrew accepted CTO MCP 20260417T174410Z (KEEP market_value_uncapped + per-account cap log; DROP ramp + DROP persistence).
 
 ### Pod 4 (ClientPlatform) -- Status as of 2026-04-20 startup
 
