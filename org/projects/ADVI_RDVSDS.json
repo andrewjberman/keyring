@@ -7,8 +7,8 @@
     {"path": "docs/architecture/ADVI_RDVSDS.md", "label": "ADVI_RDVSDS v1.0 PRD", "date": "2026-04-24"}
   ],
   "status": "active",
-  "phase": "Phase 0 — TOs authored, pending dispatch. TO 001 (DS artifact audit), TO 002 (DE connection audit), TO 003 (RD visual baseline) — all parallel, no dependencies.",
-  "blocking": "Phase 0 TOs dispatched to agents. Fix TOs (TO 004+) authored after Phase 0 reports in. Phase 1 PASS gates Phase 2 bonus views.",
+  "phase": "Phase 0 — 2/3 reports confirmed. TO 002 DE connection audit COMPLETE. TO 003 RD visual baseline COMPLETE (MCP'd to CTO 16:06 ET 2026-04-24). TO 001 DS artifact audit — status unclear (DS occupied with W4.13b I_C00). CTO synthesizing Phase 0 reports for Phase 1 fix TO dispatch.",
+  "blocking": "CTO Phase 1 fix TO dispatch (TO 004+) — gated on CTO synthesizing DE+RD Phase 0 reports + DS TO 001 status. RD idle 3 watchdog cycles. CTO pinged 20260424T202905Z.",
   "created": "2026-04-24",
   "pods": ["0.4", "0.4.2"],
   "pipeline": "inf-pipeline (opal-data-inf)",
