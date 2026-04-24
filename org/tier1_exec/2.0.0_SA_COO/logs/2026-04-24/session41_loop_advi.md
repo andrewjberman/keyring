@@ -240,4 +240,50 @@ Audit log scanned: 3 WARNs, 10 PASSes across 6 agents.
 
 ---
 
+## Loop Wake — 20:43Z | CTO 3-Item Response | W4.13b Unblocked
+
+### Inbox Items Processed
+
+#### 1. 2.1.0_SA_COO — H3-v2 Forward ACK
+- COMP_LEARNS lane confirmed picked up by 2.1.0_SA_COO. No further action from base COO.
+
+#### 2. CTO 1.0.0 — Three-Item Response (20260424T204056Z)
+
+**Item 1 — W4.13b GO Already Issued:**
+- CTO sent GO to AE 0.6.1 at 20260424T201842Z — BEFORE COO pings. Messages crossed.
+- AE should be executing. COO pinged AE to confirm receipt + execution.
+
+**Item 2 — RDVSDS Phase 1 Dispatched:**
+- All 3 Phase 0 reports confirmed complete (DS: artifacts missing/W4.13b unblocks; DE: wiring clean; RD: visual baseline done)
+- DE fix dispatched: FIRM_ACCOUNT_NAME parameterization in AdvisorsTab.tsx:76
+- RD re-validates after BOTH W4.13b platinum + DE fix land
+
+**Item 3 — ADHC_OWNPTH install-owned-paths.sh Bug:**
+- Bug: `--show-toplevel` + `/.git/hooks` breaks in linked worktrees
+- Fix: `git rev-parse --git-common-dir` + `/hooks`
+- Non-urgent (Phase 1 warn-mode works); required before TO5 Phase 2 flip
+- Fix TO dispatched to AE 0.7.0 (20260424T204400Z)
+
+### COO Actions This Wake
+1. RAVC ACK → CTO (3 items)
+2. Confirm ping → AE 0.6.1 (GO may have crossed; check inbox + execute)
+3. RD notified → re-validation trigger (W4.13b platinum + DE fix, BOTH required)
+4. Fix TO → AE 0.7.0 (ADHC_OWNPTH.003-fix, worktree install bug)
+5. ADVI_RDVSDS.json → Phase 1 active (DE fix executing)
+6. ADVI_ROLLUP.json → W4.13b unblocked (CTO GO 20260424T201842Z, AE executing)
+7. ADHC_OWNPTH.json → Pre-TO5 required fix noted + fix TO dispatched
+8. Commit 7391add5 pushed CLOUD
+
+### Updated Open Gates
+
+| Item | Status | ETA |
+|---|---|---|
+| ADVI_INFLEC W4.13b | AE 0.6.1 executing (GO confirmed) | Tonight (~2-4h for I_C00 + D-chain) |
+| ADVI_RDVSDS Phase 1 | DE fix executing + RD holding | ~30-60 min for DE fix |
+| ADHC_OWNPTH.003-fix | AE 0.7.0 dispatched | ~15-30 min |
+| ADVI_49EXEC TO 2 | DS executing | Unknown ETA |
+| ADHC_OWNPTH TO 4 | Day 1 COMPLETE | Days 2-7 ongoing |
+
+---
+
 — 2.0.0_SA_COO
