@@ -1,0 +1,17 @@
+{
+  "project_code": "ADHC_OWNPTH",
+  "macro_code": "ADHC",
+  "name": "Owned-Paths Pre-Commit Hook (Git-Sweep Prevention)",
+  "description": "Structural prevention of cross-lane git-sweep incidents via a pre-commit hook that reads a workspace-wide path->permitted-agent YAML and blocks commits whose --author falls outside the permitted set for any touched path. Addresses 4 observed sweep incidents (7ae0ef6b / c6285ae8 / 2b3bfcd4 / 2026-04-24 AE 0.7 triplet abfed84d/71be8a7e/e11151d5) where existing cultural guardrails (--only pathspec, selective staging, worktree separation, memory feedback) were all in force and still failed. Andrew directive 2026-04-22: 'this keeps happening — propose owned-paths pre-commit hook, not more rules.' Andrew decision 2026-04-24: Option B (PRD + phased ship): register as project, Phase 1 YAML+hook fail-open warn with 1-week observation window, Phase 2 flip fail-closed. Draft base exists at org/tier1_exec/1.1.0_SA_CTO/drafts/owned_paths_comp_learns_half.yaml (232 lines covering COMP_LEARNS lane).",
+  "prds": [
+    {"path": "docs/architecture/ADHC_OWNPTH.md", "label": "Owned-Paths Hook PRD v1", "date": "2026-04-24"}
+  ],
+  "status": "active",
+  "phase": "Phase 0 — PRD authored 2026-04-24, awaiting COO decomposition into TO set. Draft workspace-wide YAML half is CTO authoring scope per memory feedback_structural_commit_hygiene.md; hook script + wiring + audit log are DS/AE lane. Rollout: Phase 1 fail-open warn-mode 1 week + observability → Phase 2 flip to fail-closed + --author-override escape hatch.",
+  "blocking": "COO decomposition of PRD into TO set per §7 TO Candidates. Expected ~5 TOs: CTO-YAML-workspace-wide, DS-hook-impl, AE-wire-to-git-hooks, COO-rollout-observe-week, COO-flip-to-closed.",
+  "created": "2026-04-24",
+  "pods": ["0.4", "0.7"],
+  "pipeline": "repo-tooling",
+  "thread_counter": 0,
+  "threads": []
+}
