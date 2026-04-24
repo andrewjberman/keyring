@@ -117,3 +117,39 @@ Files written to disk:
   - Build `tests/trade_pipeline/smoke_parquet_export.sh` direct-invoke smoke
   - Run comp-iam service + comp-iam gaps after Phase 1 reclaim
 - [Andrew] Create SES configuration set (console) + submit production access request using the packet.
+
+---
+
+## Closure — TRSB_TFIMPT.W2 COMPLETE (20260424T153000Z)
+
+**RAVC4 ACK received from COO (20260424T152749Z). W2 closed.**
+
+### Commits (0.5.0_AE slice)
+| Commit | Description |
+|---|---|
+| `54efb540` | feat(trsb-tfimpt-w2): Phase 0 discovery — SES packet + fixture probe + joint report |
+| `15a048e6` | feat(trade-pipeline): SES configuration set + bounce/complaint SNS topics (Terraform) |
+| `521b8c26` | chore(trsb-tfimpt-w2): SES packet checklist update (config set DONE) + pipeline_inventory cross-pipeline entry |
+
+### 0.7.0_AE Lambda Reclaim Commits (confirmed)
+| Commit | Description |
+|---|---|
+| `abfed84d` | trade-parquet-batch-export option-(a) reclaim |
+| `71be8a7e` | trade-dashboard-api option-(a) reclaim |
+| `e11151d5` | 9-function option-(b) Known Issues README |
+| `14b3b501` | 0.7.0_AE session log |
+
+**Tag:** `trade-pipeline-v1.4.0` — pushed to remote by 0.7.0_AE.
+
+### SES Infrastructure (live, 0-diff)
+- Configuration set: `trade-pipeline-notifications`
+- Bounce SNS: `arn:aws:sns:us-east-1:313476888478:trade-pipeline-ses-bounces`
+- Complaint SNS: `arn:aws:sns:us-east-1:313476888478:trade-pipeline-ses-complaints`
+
+### Open Follow-ons (Andrew-owned, non-blocking)
+1. SES prod-access Console submission — packet ready at `infra/aws/ses/trade-pipeline-prod-access-request.md`
+2. Custom MAIL FROM `mail.opalinvest.dev` — recommended post-prod-approval for full DMARC alignment
+3. 4 failed SES identities (adam/jim/wayne/jeanette) — operational cleanup TO if Andrew wants
+
+### CTO Standing Backlog
+- TRSB Lambda surface deprecation assessment for 9 COLD functions (registered by CTO per Option X decision)
