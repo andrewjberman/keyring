@@ -286,4 +286,57 @@ Audit log scanned: 3 WARNs, 10 PASSes across 6 agents.
 
 ---
 
+## Loop Wake — 21:13Z | 49EXEC.002 COMPLETE + I_C00 advisor_key bug
+
+### Inbox Items Processed (5 messages)
+
+#### 1. CTO — RDVSDS TO 004 COMPLETE (20260424T205439Z)
+- DE TO 004 COMPLETE: firmAccountName parameterized (2c19352 / c07e341d, 20260424T205102Z). 49F regression PASS.
+- RDVSDS Phase 1 single-threaded on W4.13b RAVC4.
+- On AE RAVC4: (a) relay acceptance, (b) dispatch RD re-validation TO, (c) fire GO on ORNREN.001+Q8+Q9 to DS base.
+- **COO action:** RAVC ACK → CTO. RD notified (DE fix COMPLETE, W4.13b remaining). ORNREN.001/Q8/Q9 holding.
+
+#### 2. RD 0.4.2 — 2× protocol check-ins
+- Both holding, gate understood. No action except ACK.
+- **COO action:** RAVC ACK → RD (DE fix now COMPLETE, only W4.13b remaining).
+
+#### 3. AE 0.6.1 — I_C00 run3 NEW BLOCKER (20260424T205941Z)
+- Purge: 1,881 canonical_performance files deleted. I_C00 correctly read gold/holdings/ (HOLDINGS_PREFIX fix confirmed working).
+- NEW BUG: process_date() aggregates advisor_key from holdings DataFrame. gold/holdings/*.parquet (I_B02 output) has NO advisor_key column. All 2,408 dates threw "Column(s) ['advisor_key'] do not exist" → caught by WARN handler silently → 0/2,408 dates written.
+- Fix: remove advisor_key from .agg(); join from acct_dim instead (has it, 0 nulls).
+- Fix dispatched to DS 0.4.0 at 20260424T205929Z.
+- **COO action:** RAVC ACK → AE (status received, DS has fix, re-dispatch on ACK).
+
+#### 4. DS 0.4.0 — ADVI_49EXEC.002 RAVC4 COMPLETE (20260424T210507Z)
+- **Commits:** a3fdf4bf (Lambda code) + 97ae7a16 (session log + TO flip)
+- **Tests:** 62/62 PASS. Compiler gates: py_compile + AST + ruff PASS. comp-pii PASS. comp-cache PASS.
+- **Claude API:** claude-sonnet-4-6 explicit, prompt caching wired, S3 write platinum/advisors/{id}/exec_summary.json
+- **COO action:** RAVC4 ACK → DS. GO dispatched → DT for TO4 (a3fdf4bf source ready).
+
+### COO Dispatches This Wake
+| Dispatch | To | Subject |
+|---|---|---|
+| RAVC4 ACK | DS 0.4.0 | 49EXEC.002 COMPLETE confirmed |
+| **GO** | DT 0.4.0 | ADVI_49EXEC.004 — TF module + 0-diff plan (source a3fdf4bf) |
+| RAVC ACK | AE 0.6.1 | advisor_key bug received, DS patching |
+| RAVC ACK | RD 0.4.2 | DE fix COMPLETE, W4.13b remaining |
+| RAVC ACK | CTO 1.0.0 | TO004 confirmed + advisor_key bug + TO4 GO |
+
+### Updated Open Gates
+
+| Item | Status | ETA |
+|---|---|---|
+| ADVI_INFLEC W4.13b | DS patching advisor_key bug (~15-30min) → AE re-run I_C00 → D-chain | Tonight |
+| ADVI_RDVSDS | Single-gated on W4.13b RAVC4 (DE fix done, RD holding) | Tonight |
+| ADVI_49EXEC TO4 | DT executing TF module (GO dispatched 20260424T211336Z) | ~1h |
+| ADVI_49EXEC TO7 | STAGED — gates TO4 + AE EventBridge format | Post TO4 |
+| ORNREN.001/Q8/Q9 | HOLD — gated on W4.13b RAVC4 | Tonight |
+| ADHC_OWNPTH.003-fix | AE 0.7.0 executing | ~15-30 min |
+
+### JSON updates this wake (commit 5b599b4d)
+- ADVI_49EXEC.json: 6 COMPLETE / 1 PENDING (TO4) / 1 STAGED (TO7)
+- ADVI_ROLLUP.json blocking(3): advisor_key bug + DS patch in progress
+
+---
+
 — 2.0.0_SA_COO
