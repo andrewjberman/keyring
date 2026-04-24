@@ -16,8 +16,8 @@
     }
   ],
   "status": "active",
-  "phase": "Phase 0: PRD complete, COO TO issuance pending.",
-  "blocking": "COO task order issuance. Part of ADVI_ROLLUP wave.",
+  "phase": "Phase 1 COMPLETE — D_02 role_aua shadow writer in production (6f724293 — n_roles_per_pair denominator fix); RA-P1c nna_atomic flow join complete (b10af481 + 0c6b33f8). Phase 2 reader migration (consumer-side groupby switchover per ROLEAUA PRD) pending COO TO authoring.",
+  "blocking": "COO Phase 2 TO authoring (role_aua reader migration across consumer scripts). Pairs with ADVI_CANNNA Phase 2.",
   "parent_project": "ADVI_ROLLUP",
   "created": "2026-04-15",
   "pods": ["0.4"],

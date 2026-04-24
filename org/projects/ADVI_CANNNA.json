@@ -16,8 +16,8 @@
     }
   ],
   "status": "active",
-  "phase": "Phase 0: PRD complete, COO TO issuance pending.",
-  "blocking": "COO task order issuance. Part of ADVI_ROLLUP wave. Pairs with ADVI_ROLEAUA (Phase 1 shadow writes land together).",
+  "phase": "Phase 1 COMPLETE (2026-04-15) — C_01 nna_atomic shadow writer shipped (CN-P1 shadow + CN-P1b bulk backfill; canonical_nna_atomic_key in lib/s3_layout.py; comp-validate nna_atomic rule in gold_validate_config.yaml). Phase 0 schema work done inline in C_01 (no separate lib/nna_atomic.py; functionally equivalent). Phase 2 (D_02 book/role/timeseries reader migration) pending COO TO authoring.",
+  "blocking": "COO Phase 2 TO authoring for D_02 reader migration (L576 book, L1517 timeseries, L1764 role → nna_atomic groupby). Pairs with ADVI_ROLEAUA Phase 2.",
   "parent_project": "ADVI_ROLLUP",
   "pairs_with": "ADVI_ROLEAUA",
   "created": "2026-04-15",

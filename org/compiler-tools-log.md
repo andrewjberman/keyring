@@ -1504,3 +1504,13 @@ RESOLUTION: fixed in `614d4c28` (`comp-platinum reverse empty-vs-broken disambig
 | 2026-04-24 | 0.7.0_AE_CloudOps | TRSB_TFIMPT.W2 | comp-routes | comp-routes auth-map | PASS |
 | 2026-04-24 | 0.4.0_DT_ClientPlatform | ADVI_INFLEC.W8.3 | comp-routes | comp-routes behaviors | PASS — 2 custom error responses (403+404 -> 200/index.html); informed curl pass criterion (JSON CT required, HTML body = FAIL regardless of HTTP 200) |
 | 2026-04-24 | 0.4.0_DT_ClientPlatform | ADVI_INFLEC.W8.3 | comp-routes | comp-routes auth-map | PASS — /api/general/* confirmed EDGE JWT + API GW AUTHORIZER; no-auth baseline 401 verified |
+| 2026-04-24 | 2.0.0_SA_COO | (no-TO) | comp-blast | comp-blast orion-bronze-runner | PASS |
+| 2026-04-24 | 2.0.0_SA_COO | (no-TO) | comp-pipescript | comp-pipescript io convert_orion_to_silver | FAIL |
+| 2026-04-24 | 1.0.0_SA_CTO | (no-TO) | comp-pipescript | comp-pipescript io B_01 | PASS |
+| 2026-04-24 | 1.0.0_SA_CTO | (no-TO) | comp-blast | comp-blast B_01 | PASS |
+| 2026-04-24 | 0.4.0_DS_ClientPlatform | ADVI_ROLLUP.ASSETCLASSc | comp-pipescript | comp-pipescript io B_01 | PASS |
+| 2026-04-24 | 0.4.0_DS_ClientPlatform | ADVI_ROLLUP.ASSETCLASSc | comp-blast | comp-blast B_01 | PASS |
+| 2026-04-24 | 2.1.0_SC_CompLearns | COMP_LEARNS.060 | comp-pipescript | comp-pipescript io C_01 | PASS |
+| 2026-04-24 | 2.1.0_SC_CompLearns | COMP_LEARNS.060 | comp-blast | comp-blast C_01 | PASS |
+| 2026-04-24 | 2.0.0_SA_COO | /loop ADVI wake 1 | comp-pipescript io C_01 | READS: ACCOUNTS_DIMENSION/CANONICAL_NNA_PREFIX/etc; WRITES: canonical_nna_atomic_key (already in production CN-P1) | PASS — nna_atomic key exists, no collision | CANNNA Phase 0/1 confirmed complete; project JSON corrected |
+| 2026-04-24 | 2.0.0_SA_COO | /loop ADVI wake 1 | comp-blast C_01 | No downstream consumers for C_01.canonical_nna | PASS — shadow artifact, terminal | Phase 2 TOs safe to issue without blast-radius conflict |
