@@ -1,0 +1,17 @@
+{
+  "project_code": "ADVI_RDVSDS",
+  "macro_code": "ADVI",
+  "name": "Inflection Portal Data Surfacing Investigation",
+  "description": "Three-way diagnostic + fix loop to get IWM portal views showing data. DS validates platinum artifacts are correctly populated in S3. DE validates portal API wiring (firmId propagation, CloudFront routing, hardcoded 49financial defaults). RD visually validates data renders in /frontend-dev. Primary test anchor: Assets Overview AUA + NNA + GRO at firm level non-zero. Bonus: NMNC/NMEC radial chart + Asset Mix bars.",
+  "prds": [
+    {"path": "docs/architecture/ADVI_RDVSDS.md", "label": "ADVI_RDVSDS v1.0 PRD", "date": "2026-04-24"}
+  ],
+  "status": "active",
+  "phase": "Phase 0 — TOs authored, pending dispatch. TO 001 (DS artifact audit), TO 002 (DE connection audit), TO 003 (RD visual baseline) — all parallel, no dependencies.",
+  "blocking": "Phase 0 TOs dispatched to agents. Fix TOs (TO 004+) authored after Phase 0 reports in. Phase 1 PASS gates Phase 2 bonus views.",
+  "created": "2026-04-24",
+  "pods": ["0.4", "0.4.2"],
+  "pipeline": "inf-pipeline (opal-data-inf)",
+  "thread_counter": 0,
+  "threads": []
+}
