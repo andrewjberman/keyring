@@ -7,8 +7,8 @@
     {"path": "docs/architecture/ADVI_RDVSDS.md", "label": "ADVI_RDVSDS v1.0 PRD", "date": "2026-04-24"}
   ],
   "status": "active",
-  "phase": "Phase 0 — 2/3 reports confirmed. TO 002 DE connection audit COMPLETE. TO 003 RD visual baseline COMPLETE (MCP'd to CTO 16:06 ET 2026-04-24). TO 001 DS artifact audit — status unclear (DS occupied with W4.13b I_C00). CTO synthesizing Phase 0 reports for Phase 1 fix TO dispatch.",
-  "blocking": "CTO Phase 1 fix TO dispatch (TO 004+) — gated on CTO synthesizing DE+RD Phase 0 reports + DS TO 001 status. RD idle 3 watchdog cycles. CTO pinged 20260424T202905Z.",
+  "phase": "Phase 1 ACTIVE 2026-04-24. Phase 0 complete: TO 001 DS artifact audit COMPLETE (artifacts missing — W4.13b unblocks), TO 002 DE connection audit COMPLETE (wiring clean; FIRM_ACCOUNT_NAME fix dispatched AdvisorsTab.tsx:76), TO 003 RD visual baseline COMPLETE. Phase 1: DE fix executing (FIRM_ACCOUNT_NAME parameterization). RD re-validates after BOTH W4.13b platinum lands AND DE fix ships.",
+  "blocking": "RD re-validation gate: W4.13b platinum completion (AE 0.6.1 executing sequence now) + DE FIRM_ACCOUNT_NAME fix ship (dispatched 20260424T204056Z). Both required before RD TO 003 re-run.",
   "created": "2026-04-24",
   "pods": ["0.4", "0.4.2"],
   "pipeline": "inf-pipeline (opal-data-inf)",
