@@ -5,6 +5,7 @@
   "description": "Second partner onboarding after 49 Financial. Inflection Wealth Management = $667M AUM RIA on Orion Portfolio Solutions with 99.4% Fidelity custodian concentration. DS investigation confirmed clean data, ~60-70% BD pipeline code reuse, schema-identical platinum output (zero portal code changes). Architectural principle: Opal serving layer is already multi-tenant by firmId (opal-partners-data Lambda reads firmId from JWT, looks up s3Bucket in opal-users-v2 DynamoDB). Adding Inflection = NEW opal-data-inf S3 bucket + inf-pipeline Terraform workspace + small set of inf-* Lambdas + DynamoDB firm/user row inserts + optional new gold runner EC2. ZERO changes required to CloudFront, API Gateway, opal-partners-data Lambda, auth-validator-edge, portal frontend. Gap: Q2 2024 (April-June 2024, 65 business days) missing from current exports — Andrew must re-download from Orion before silver layer build.",
   "prds": [
     {"path": "docs/architecture/ADVI_INFLEC.md", "label": "Inflection Partner Onboarding PRD v1.3 (W8 cross-firm page expansion added 2026-04-22)", "date": "2026-04-22"},
+    {"path": "docs/architecture/ADVI_INFLEC_BRONZERUN.md", "label": "Bronze Runner PRD — Playwright login automation, OTP relay (Slack/S3), 3-stage test harness, W3.B TOs", "date": "2026-04-24"},
     {"path": "docs/briefs/cto-brief-inflection-partner-data-investigation.md", "label": "DS investigation brief (source)", "date": "2026-04-21"}
   ],
   "source_brief": "docs/briefs/cto-brief-inflection-partner-data-investigation.md (0.4.0_DS_ClientPlatform~D 2026-04-21)",
