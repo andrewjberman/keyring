@@ -247,6 +247,38 @@ Single-project semantics preserved — `/loop ADVI_ROLLUP` behaves exactly as be
 
 Do the project-driver work only AFTER Step 0 completes. If Step 0 surfaces an urgent MCP (fork, GO request, adjudication ask), **handle it first — the operator/validator run can wait one turn**.
 
+**Step 0.5 — Active-push scans (MANDATORY every wake, BEFORE operator/validator).** Tier 1 loop = active push, not passive watch. Agents idle when ready work exists = COO failure, same class as missing auto-rules 1-4. Andrew 2026-04-24: "you are a tier 1 agent, a COO, you cannot just wait while nothing is happening, the purpose of the loop is to be checking and pushing." Two sub-scans:
+
+**A. Dead-lane scan** — for each in-scope agent:
+1. Broker summary via `get_live_agents()` — is "Working on" stale (>1h pre-session) or pre-wake-cycle?
+2. `git log --author={serial} --since="2h ago" --oneline` — commit activity in last 2h?
+3. `aws ssm list-commands --max-items 20` — any in-flight SSM ops under this agent?
+
+Classify:
+- **Active:** commit / SSM / inbox MCP in last 2h → leave alone.
+- **Idle with ready TO:** broker stale + no recent commits + pending or staged TO with gates met → **NUDGE immediately** — MCP the specific TO ID + unblock path + SLA. For `status=active` TOs with zero commit activity, make the implicit gate explicit (e.g., "W4.13b chain-gate; pre-work OK now").
+- **Blocked-on-peer:** trace upstream blocker → nudge the blocker → loop back next wake. Chain-of-idle (A waits on B waits on C) is the same class as single-idle.
+
+**B. Staged TO dispatch scan** — for each in-scope project:
+```
+list_task_orders({agent_serial}, status="staged", project={code})
+```
+For every staged TO whose gates claim met-or-close:
+- Verify the gate empirically (dep TOs `<status>complete</status>`; upstream ship artifacts present on S3 / tagged; Andrew rulings landed as commits). Per `feedback_verify_committed_before_logging`: trust but verify.
+- If gates genuinely met + agent lane has capacity + no merge-conflict with in-flight work → flip `staged` → `pending` + fire GO MCP in same wake.
+- If gates look unmet but verification shows landed → flip + fire GO (common pattern: TO was staged with pre-ship language that the actual ship commit bypassed).
+
+**VM-in-flight discipline (confirmed 2026-04-24):** when a remote process owns the critical path (SSM / gold chain / builder / deploy), ALWAYS probe VM/SSM status first (`aws ssm get-command-invocation` + side-channel SSM for process inspection) BEFORE nudging the monitoring agent. Do not disturb an agent correctly monitoring a healthy in-flight VM. Only nudge when VM is stuck, failed, or completed-without-MCP.
+
+**Every wake must produce ≥ 1 of:**
+1. Push forward on an idle agent (nudge, escalation, unblock trace)
+2. Flip + dispatch a gates-met staged TO
+3. Author a queued TO (CTO direction banked, lane capacity exists — e.g., OWNPTH decomposition during downtime)
+4. Surface a new blocker to Andrew/CTO with specific ask
+5. Legitimately close-the-loop (project complete OR every in-scope agent genuinely heads-down OR VM-in-flight on critical path with no side-surface)
+
+Idle-no-push wake with ready work on the board = regression; catch next wake, don't compound. Passive "scan + schedule + end" sequences without at least one of the 5 above are the exact pattern Andrew flagged 2026-04-24 as Tier 1 loop failure.
+
 **Step 1 — Resolve input to active project list.** Run `.tools/loop-resolve {ARG}` (pass the same token string Andrew typed). Handle exit codes:
 - `0` → list on stdout, continue to Step 2
 - `1` → no active projects resolved; surface to Andrew, stop loop
@@ -304,6 +336,7 @@ This replaces the old single-project "wait for CTO before resuming" behavior. Cr
 - Does not modify TO status silently — every close-out still requires evidence citation, acceptance-flex pre-flags where applicable, and RAVC-compliant messaging.
 - Does not skip compiler mandates — /loop just drives existing protocol faster; it doesn't relax any rule.
 - **Does not skip Step 0 inbox plumbing even on "idle" iterations.** Anti-pattern: running operator, seeing LOOP_PACING: idle, scheduling 270s wake WITHOUT checking inbox. Worker agents write to me during the loop; silent iterations = I'm deaf to adjudication asks. Step 0 is universal, not conditional. Andrew flagged this 2026-04-21 after iter 10/11 missed DS's URGENT FORK MCP on HLOT2 Patch B ticker→cusip bug.
+- **Does not skip Step 0.5 active-push scans.** Passive "scan + schedule + end" wake sequences with no nudge / no flip+GO / no authoring / no escalation = Tier 1 loop failure. Andrew flagged 2026-04-24: "you cannot just wait while nothing is happening, the purpose of the loop is to be checking and pushing." Every wake must produce ≥1 of the 5 push actions enumerated in Step 0.5. If genuinely no action available: that's the "legitimately close-the-loop" path (item 5), not a silent scan-and-wake.
 - **Does not run operator/validator on multiple projects in the same wake.** One project per wake keeps the tool contract clean and the directive focused. Multi-project cycling happens across wakes, not within a wake.
 
 ---
