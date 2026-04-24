@@ -15,9 +15,10 @@
       "date": "2026-04-14"
     }
   ],
-  "status": "active",
-  "phase": "Phase 1 COMPLETE — D_02 role_aua shadow writer in production (6f724293 — n_roles_per_pair denominator fix); RA-P1c nna_atomic flow join complete (b10af481 + 0c6b33f8). Phase 2 reader migration (consumer-side groupby switchover per ROLEAUA PRD) pending COO TO authoring.",
-  "blocking": "COO Phase 2 TO authoring (role_aua reader migration across consumer scripts). Pairs with ADVI_CANNNA Phase 2.",
+  "status": "complete",
+  "completed": "2026-04-24",
+  "phase": "ALL PHASES COMPLETE (2026-04-16 terminal). RA-P1/P1b/P1c shadow writer + nna_atomic flow join. RA-P2 D_02 L1289 snapshot (0c06d423). RA-P2b D_02 timeseries (94600ff6). RA-P3 D_00c (e53f0afa). RA-P4 D_01 (4e63038e). RA-P5 D_00b/C_08 closeout (d9ab1719). RA WAVE TERMINAL. S3: gold/canonical/role_aua/ 5 partitions landing nightly. Architect_aua three-way schism closed.",
+  "blocking": "None",
   "parent_project": "ADVI_ROLLUP",
   "created": "2026-04-15",
   "pods": ["0.4"],
