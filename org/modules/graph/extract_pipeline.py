@@ -51,8 +51,6 @@ class ScriptIO:
     # FUNC keys that appear in both reads and writes: likely rolling-window prior-run reads.
     # Removed from read_keys/reads to avoid false circular-dep edges; surfaced as warnings.
     rolling_window_candidates: list[str] = field(default_factory=list)
-    # Pipeline label: [bd-gold], [inf-gold], [bd-silver], [inf-silver], [bronze]
-    pipeline: str = "bd-gold"
 
 
 @dataclass
@@ -360,6 +358,7 @@ def _classify_constant(const_name: str, content: str) -> str:
     co-occurrence with known read/write function calls."""
     is_read = False
     is_write = False
+    esc = re.escape(const_name)
 
     # Pre-process: collapse multi-line s3 calls into single lines
     content_collapsed = _collapse_multiline_calls(content)
@@ -393,11 +392,11 @@ def _classify_constant(const_name: str, content: str) -> str:
             a_esc = re.escape(alias)
             if re.search(rf'submit\s*\(\s*_load_parquet\b.*{a_esc}', line):
                 is_read = True
-            if re.search(r'submit\s*\(\s*_read', line) and alias in line:
+            if re.search(rf'submit\s*\(\s*_read', line) and alias in line:
                 is_read = True
 
             # pool.submit(_save_json, ..., CONSTANT) or submit(_upload, ..., CONSTANT)
-            if re.search(r'submit\s*\(\s*(?:_save_json|_upload|upload_json|_write)', line) and alias in line:
+            if re.search(rf'submit\s*\(\s*(?:_save_json|_upload|upload_json|_write)', line) and alias in line:
                 is_write = True
 
             # Key= in put_object context on same line
@@ -500,114 +499,17 @@ def _classify_function_usage(func_name: str, content: str) -> str:
 # Known S3 path prefixes that indicate a hardcoded S3 key
 _S3_PATH_PREFIXES = ('platinum/', 'gold/', 'silver/', 'bronze/')
 
-# Write context: functions/patterns that indicate a string is being written to S3.
-# Covers both BD-style (put_object, _write_batch) and INF-style (_write_json_s3, _write_s3).
+# Write context: functions/patterns that indicate a string is being written to S3
 _HARDCODED_WRITE_CONTEXT = re.compile(
     r'_write_batch|put_object|upload_file|_save_json|upload_json|'
-    r'items\.append|batch\.append|writes\.append|'
-    r'_write_json_s3|_write_s3|_write_parquet_s3|_put_object'
+    r'items\.append|batch\.append|writes\.append'
 )
 
-# Read context: functions/patterns that indicate a string is being read from S3.
-# Covers both BD-style and INF-style (_read_s3, _read_s3_parquet).
+# Read context: functions/patterns that indicate a string is being read from S3
 _HARDCODED_READ_CONTEXT = re.compile(
     r'get_object|_load_parquet|_read_parquet|load_json|_load_json|'
     r'read_parquet|_download|_read_s3|Prefix\s*='
 )
-
-
-def _extract_module_s3_constants(content: str) -> dict[str, str]:
-    """Scan module-level uppercase constant assignments for S3 path strings.
-
-    Detects patterns like:
-        CLIENT_PERF_KEY = 'gold/timeseries/client_performance.parquet'
-        TIMESERIES_CHART_KEY = 'gold/artifacts/timeseries_chart.json'
-
-    Returns {CONSTANT_NAME: s3_path} for all module-level uppercase S3 constants.
-    Used to resolve INF-style scripts where keys are assigned once then passed
-    as variables to _write_json_s3(obj, KEY_CONST) or _read_s3(KEY_CONST) calls.
-    """
-    constants: dict[str, str] = {}
-    # Match: UPPERCASE_NAME = 'gold/...' or "gold/..."  (only top-level, indented=0)
-    const_re = re.compile(
-        r'^([A-Z][A-Z0-9_]+)\s*=\s*[\'"]((platinum|gold|silver|bronze)/[^\'"]+\.(?:json|parquet|csv))[\'"]',
-        re.MULTILINE,
-    )
-    for m in const_re.finditer(content):
-        constants[m.group(1)] = m.group(2)
-    return constants
-
-
-def _extract_s3_calls_with_constants(
-    content: str,
-    module_constants: dict[str, str],
-) -> tuple[list[str], list[str]]:
-    """Detect S3 reads/writes where the key is a module-level constant variable
-    (not a string literal on the call line).
-
-    Handles:
-        _write_json_s3(obj, TIMESERIES_CHART_KEY)
-        _read_s3(CLIENT_PERF_KEY)
-        s3.put_object(Bucket=S3_BUCKET, Key=CANONICAL_NNA_PREFIX, ...)
-        resp = s3.get_object(Bucket=S3_BUCKET, Key=SOME_KEY)
-
-    Returns (read_paths, write_paths).
-    """
-    reads: list[str] = []
-    writes: list[str] = []
-
-    # Pattern: _write_json_s3(anything, CONST) or _write_s3(anything, CONST)
-    write_var_re = re.compile(
-        r'(?:_write_json_s3|_write_s3|_write_parquet_s3|_put_object)\s*\([^)]*?([A-Z][A-Z0-9_]+)\s*[,)]'
-    )
-    # Pattern: _read_s3(CONST) or _read_s3_parquet(CONST) or _read_s3_json(CONST)
-    read_var_re = re.compile(
-        r'(?:_read_s3|_read_s3_parquet|_read_s3_json|_load_s3)\s*\(\s*([A-Z][A-Z0-9_]+)\s*[,)]'
-    )
-    # Pattern: Key=CONST in put_object / get_object
-    put_key_re = re.compile(r'put_object\s*\([^)]*Key\s*=\s*([A-Z][A-Z0-9_]+)')
-    get_key_re = re.compile(r'get_object\s*\([^)]*Key\s*=\s*([A-Z][A-Z0-9_]+)')
-    # Pattern: Prefix=CONST in list_objects
-    prefix_re = re.compile(r'Prefix\s*=\s*([A-Z][A-Z0-9_]+)')
-
-    content_collapsed = _collapse_multiline_calls(content)
-
-    for line in content_collapsed.splitlines():
-        stripped = line.strip()
-        if stripped.startswith(('#', 'def ', 'class ', '"""', "'''")):
-            continue
-        for m in write_var_re.finditer(line):
-            const = m.group(1)
-            if const in module_constants:
-                path = module_constants[const]
-                if path not in writes:
-                    writes.append(path)
-        for m in put_key_re.finditer(line):
-            const = m.group(1)
-            if const in module_constants:
-                path = module_constants[const]
-                if path not in writes:
-                    writes.append(path)
-        for m in read_var_re.finditer(line):
-            const = m.group(1)
-            if const in module_constants:
-                path = module_constants[const]
-                if path not in reads:
-                    reads.append(path)
-        for m in get_key_re.finditer(line):
-            const = m.group(1)
-            if const in module_constants:
-                path = module_constants[const]
-                if path not in reads:
-                    reads.append(path)
-        for m in prefix_re.finditer(line):
-            const = m.group(1)
-            if const in module_constants:
-                path = module_constants[const]
-                if path not in reads:
-                    reads.append(path)
-
-    return sorted(reads), sorted(writes)
 
 
 def _extract_hardcoded_paths(content: str) -> tuple[list[str], list[str]]:
@@ -720,41 +622,25 @@ def _extract_script_io(
     py_file: Path,
     workspace_root: Path,
     s3_keys: dict[str, S3Key],
-    script_id_override: str | None = None,
-    pipeline: str = "bd-gold",
-    run_order_override: int = -1,
 ) -> ScriptIO | None:
-    """Parse a gold script's s3_layout imports and classify each as read/write.
-
-    script_id_override: use this ID instead of deriving from filename (for INF/silver scripts
-    whose naming doesn't match the BD [A-Z]_NN pattern).
-    pipeline: label for this script's pipeline ([bd-gold], [inf-gold], [bd-silver], etc.).
-    run_order_override: explicit run order when chain position is known (e.g. INF dispatch order).
-    """
+    """Parse a gold script's s3_layout imports and classify each as read/write."""
     try:
         content = py_file.read_text(encoding="utf-8", errors="replace")
     except Exception:
         return None
 
-    rel_path = str(py_file.relative_to(workspace_root)).replace("\\", "/")
+    # Extract script ID from filename: D_00.portal_aggregates.py -> D_00
+    stem = py_file.stem
+    match = re.match(r'^([A-Z]_\d{2}[a-z]?)', stem)
+    if not match:
+        return None
+    script_id = match.group(1)
 
-    if script_id_override is not None:
-        script_id = script_id_override
-        # Derive group from first letter if it looks like [A-Z]_NN, else use pipeline prefix
-        g_match = re.match(r'^([A-Z])_', script_id)
-        group = g_match.group(1) if g_match else script_id[0].upper() if script_id else ""
-        run_order = run_order_override
-    else:
-        # Extract script ID from filename: D_00.portal_aggregates.py -> D_00
-        stem = py_file.stem
-        match = re.match(r'^([A-Z]_\d{2}[a-z]?)', stem)
-        if not match:
-            return None
-        script_id = match.group(1)
-        group = script_id[0]
-        order_letter = (ord(group) - ord('A')) * 100
-        order_num = int(re.search(r'_(\d{2})', script_id).group(1))
-        run_order = order_letter + order_num
+    rel_path = str(py_file.relative_to(workspace_root)).replace("\\", "/")
+    group = script_id[0]
+    order_letter = (ord(group) - ord('A')) * 100
+    order_num = int(re.search(r'_(\d{2})', script_id).group(1))
+    run_order = order_letter + order_num
 
     sio = ScriptIO(
         script_id=script_id,
@@ -762,7 +648,6 @@ def _extract_script_io(
         file_path=rel_path,
         group=group,
         run_order=run_order,
-        pipeline=pipeline,
     )
 
     # AST-parse imports from lib.s3_layout
@@ -821,26 +706,6 @@ def _extract_script_io(
             sio.reads.append(hc_name)
         if path not in sio.read_keys:
             sio.read_keys.append(path)
-
-    # Step 3: For non-s3_layout scripts (e.g. INF gold, silver), resolve module-level
-    # S3 constant variables passed to read/write functions.
-    # Catches: _write_json_s3(obj, TIMESERIES_CHART_KEY) where key is a module constant.
-    if not imported_names:
-        module_consts = _extract_module_s3_constants(content)
-        if module_consts:
-            const_reads, const_writes = _extract_s3_calls_with_constants(content, module_consts)
-            for path in const_writes:
-                hc_name = f"[hardcoded] {path}"
-                if hc_name not in sio.writes:
-                    sio.writes.append(hc_name)
-                if path not in sio.write_keys:
-                    sio.write_keys.append(path)
-            for path in const_reads:
-                hc_name = f"[hardcoded] {path}"
-                if hc_name not in sio.reads:
-                    sio.reads.append(hc_name)
-                if path not in sio.read_keys:
-                    sio.read_keys.append(path)
 
     # Deduplicate
     sio.reads = sorted(set(sio.reads))
@@ -1008,7 +873,7 @@ def _extract_column_gaps(py_file: Path) -> list[dict]:
 # ---------------------------------------------------------------------------
 
 def build_pipeline_dag(workspace_root: Path) -> PipelineDAG:
-    """Build the BD-gold pipeline DAG from authoritative sources (backward-compatible)."""
+    """Build the complete pipeline DAG from authoritative sources."""
     gold_dir = workspace_root / "data" / "black_diamond" / "scripts" / "gold"
     if not gold_dir.exists():
         return PipelineDAG()
@@ -1033,191 +898,6 @@ def build_pipeline_dag(workspace_root: Path) -> PipelineDAG:
     dag.build_index()
 
     return dag
-
-
-# ---------------------------------------------------------------------------
-# Multi-pipeline support: INF gold, BD silver, INF silver, bronze
-# ---------------------------------------------------------------------------
-
-def _parse_orion_dispatch(gold_dir: Path) -> tuple[dict[str, list[str]], dict[str, list[str]], dict[str, str]]:
-    """Parse orion-gold-dispatch.sh for chains, groups, and catalog.
-    Uses the same CATALOG heredoc + CHAIN_ variable format as BD's gold_dispatch.sh.
-    Returns (chains, groups, catalog)."""
-    dispatch_file = gold_dir / "orion-gold-dispatch.sh"
-    if not dispatch_file.exists():
-        return {}, {}, {}
-
-    content = dispatch_file.read_text(encoding="utf-8", errors="replace")
-
-    chains: dict[str, list[str]] = {}
-    groups: dict[str, list[str]] = {}
-    catalog: dict[str, str] = {}
-
-    # CHAIN_ definitions (same regex as BD)
-    for m in re.finditer(r'CHAIN_(\w+)="([^"]*)"', content):
-        chain_name = m.group(1).lower()
-        script_ids = m.group(2).strip().split()
-        resolved = []
-        for sid in script_ids:
-            if sid.startswith('$CHAIN_'):
-                ref_name = sid.replace('$', '').replace('CHAIN_', '').lower()
-                resolved.extend(chains.get(ref_name, []))
-            else:
-                resolved.append(sid)
-        chains[chain_name] = resolved
-
-    # CATALOG heredoc (same format: ID|filename|flags)
-    catalog_match = re.search(
-        r"read -r -d '' CATALOG << 'CATALOG_END'(.*?)CATALOG_END",
-        content, re.DOTALL
-    )
-    if catalog_match:
-        for line in catalog_match.group(1).strip().splitlines():
-            line = line.strip()
-            if not line or line.startswith('#'):
-                continue
-            parts = line.split('|')
-            if len(parts) >= 2:
-                catalog[parts[0]] = parts[1]
-
-    return chains, groups, catalog
-
-
-def build_inf_gold_dag(workspace_root: Path) -> PipelineDAG:
-    """Build the Inflection gold pipeline DAG.
-
-    INF scripts use hardcoded S3_BUCKET = 'opal-data-inf' instead of lib.s3_layout imports.
-    The dispatch catalog (orion-gold-dispatch.sh) is the authoritative source for script IDs.
-    Hardcoded path detection (_extract_hardcoded_paths) covers all S3 I/O.
-    """
-    gold_dir = workspace_root / "data" / "orion" / "scripts" / "gold"
-    if not gold_dir.exists():
-        return PipelineDAG()
-
-    dag = PipelineDAG()
-    # No s3_layout.py for INF -- hardcoded paths only
-    dag.s3_keys = {}
-
-    chains, groups, catalog = _parse_orion_dispatch(gold_dir)
-    dag.chains = chains
-    dag.groups = groups
-    dag.catalog = catalog
-
-    # Determine run_order from chain_full position
-    full_chain = chains.get('full', [])
-    order_map = {sid: idx * 10 for idx, sid in enumerate(full_chain)}
-
-    for script_id, filename in catalog.items():
-        py_file = gold_dir / filename
-        if not py_file.exists():
-            continue
-        run_order = order_map.get(script_id, -1)
-        sio = _extract_script_io(
-            py_file, workspace_root, dag.s3_keys,
-            script_id_override=script_id,
-            pipeline="inf-gold",
-            run_order_override=run_order,
-        )
-        if sio:
-            dag.scripts[script_id] = sio
-
-    dag.build_index()
-    return dag
-
-
-def build_silver_dag(
-    workspace_root: Path,
-    pipeline_label: str,
-    script_dir_rel: str,
-) -> PipelineDAG:
-    """Build a silver-layer pipeline DAG by walking a script directory.
-
-    No dispatch catalog and no s3_layout.py -- script IDs are filename stems,
-    and S3 I/O is detected entirely via _extract_hardcoded_paths.
-
-    pipeline_label: "bd-silver" or "inf-silver"
-    script_dir_rel: relative path from workspace root (e.g. "data/black_diamond/scripts/silver")
-    """
-    script_dir = workspace_root / Path(script_dir_rel)
-    if not script_dir.exists():
-        return PipelineDAG()
-
-    dag = PipelineDAG()
-    dag.s3_keys = {}
-
-    for idx, py_file in enumerate(sorted(script_dir.glob("*.py"))):
-        if py_file.name.startswith("__"):
-            continue
-        script_id = py_file.stem
-        sio = _extract_script_io(
-            py_file, workspace_root, dag.s3_keys,
-            script_id_override=script_id,
-            pipeline=pipeline_label,
-            run_order_override=idx * 10,
-        )
-        if sio:
-            dag.scripts[script_id] = sio
-            dag.catalog[script_id] = py_file.name
-
-    dag.build_index()
-    return dag
-
-
-def build_multi_pipeline_dag(workspace_root: Path) -> PipelineDAG:
-    """Build a combined multi-pipeline DAG covering all indexed layers:
-      - bd-gold  (BD gold scripts, s3_layout-authoritative)
-      - inf-gold (INF gold scripts, hardcoded-path detection)
-      - bd-silver (BD silver scripts, hardcoded-path detection)
-      - inf-silver (INF silver scripts, hardcoded-path detection)
-
-    Script IDs in the combined DAG are namespaced:
-      bd-gold:D_04, inf-gold:D_04, bd-silver:convert_assets_to_silver, etc.
-
-    Cross-pipeline edges are built: a silver script's write_keys that overlap with
-    a gold script's read_keys produce an implicit cross-layer dependency.
-    """
-    bd_gold = build_pipeline_dag(workspace_root)
-    inf_gold = build_inf_gold_dag(workspace_root)
-    bd_silver = build_silver_dag(workspace_root, "bd-silver", "data/black_diamond/scripts/silver")
-    inf_silver = build_silver_dag(workspace_root, "inf-silver", "data/orion/scripts/silver")
-
-    merged = PipelineDAG()
-
-    # Merge all s3_keys (BD gold has the authoritative named keys)
-    merged.s3_keys.update(bd_gold.s3_keys)
-
-    def _ns(pipeline: str, script_id: str) -> str:
-        return f"{pipeline}:{script_id}"
-
-    # Merge scripts with namespaced IDs
-    for sub_dag in (bd_gold, inf_gold, bd_silver, inf_silver):
-        for sid, sio in sub_dag.scripts.items():
-            ns_id = _ns(sio.pipeline, sid)
-            # Clone sio with namespaced script_id
-            ns_sio = ScriptIO(
-                script_id=ns_id,
-                filename=sio.filename,
-                file_path=sio.file_path,
-                group=sio.group,
-                run_order=sio.run_order,
-                reads=list(sio.reads),
-                writes=list(sio.writes),
-                read_keys=list(sio.read_keys),
-                write_keys=list(sio.write_keys),
-                rolling_window_candidates=list(sio.rolling_window_candidates),
-                pipeline=sio.pipeline,
-            )
-            merged.scripts[ns_id] = ns_sio
-
-        # Merge chains with pipeline prefix
-        for chain_name, members in sub_dag.chains.items():
-            merged.chains[f"{sub_dag.scripts[members[0]].pipeline if members and members[0] in sub_dag.scripts else sub_dag.catalog.get(members[0], '')}:{chain_name}" if members else chain_name] = [
-                _ns(sub_dag.scripts[m].pipeline if m in sub_dag.scripts else sio.pipeline, m)
-                for m in members
-            ]
-
-    merged.build_index()
-    return merged
 
 
 # ---------------------------------------------------------------------------

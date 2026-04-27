@@ -5,6 +5,11 @@
   "description": "Measurement and intervention substrate for future frontier-model systems-programming evaluations (Claude vs GPT, aided vs unaided, real systems tasks). The compiler runtime + scorer + benchmark regime are the apparatus; the downstream product is the ability to answer whether structured compiler assistance changes what frontier models can do on hard engineering work, and at what cost. Program purpose canon: docs/architecture/COMP_LEARNS_PROGRAM_PURPOSE.md. Phase structure: Phase 1 runtime hardening (active); Phase 2 target diversification (queued); Phase 3 task suite design (unscaffolded); Phase 4 experimental protocol (unscaffolded); Phase 5 comparative evals (unscaffolded). Local implementation root: `comp/`. Modeled on Karpathy's autoresearch three-file separation (fixed harness / mutable target / slow-evolving protocol). Transferable artifact: `comp/program.md` accrues into the generalized 'how to build a compiler for an arbitrary system' skill across target runs.",
   "prds": [
     {
+      "path": "docs/architecture/COMP_LEARNS_STAGE3.md",
+      "label": "Stage 3 PRD V1 (1.1.0_SA_CTO 2026-04-27) — first wave testing central proposition under measurement-room conditions. Codifies CVO Stage 3 design review rulings: triage-not-ceiling pre-screen, R-SC-2 semantic integration, two-lane question partition with preregistration, all 4 conditions (C1+C2+C3+C4) mandatory from primary case dispatch, per-question per-condition delivered-context sidecar audit, sphinx Path A default with Path B off-ramp, null-result survivability protocol.",
+      "date": "2026-04-27"
+    },
+    {
       "path": "docs/architecture/COMP_LEARNS_PROGRAM_PURPOSE.md",
       "label": "Program purpose canon (1.1.0_SA_CTO 2026-04-21) \u00e2\u20ac\u201d COMP_LEARNS is measurement + intervention substrate for future frontier-model systems-programming evaluations. End-state: Claude vs GPT, aided vs unaided, real systems tasks, five measurable axes. Every agent prompt links here. Phase map + role framing for CTO / COO / SC / DS in light of the downstream comparative-eval consumer.",
       "date": "2026-04-21"
