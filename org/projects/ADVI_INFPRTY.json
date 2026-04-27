@@ -1,0 +1,23 @@
+{
+  "project_code": "ADVI_INFPRTY",
+  "macro_code": "ADVI",
+  "name": "Inflection Portal Parity — BD/49F Field Set Reconciliation",
+  "description": "Research and planning track to determine which BD/49F-pattern portal panels are portable to Inflection given Orion's narrower field set (~29 transaction fields vs BD's many + joined tables). Produces 3 architecture docs that gate future Inflection panel feature TOs. Initiated by Andrew directive 2026-04-27.",
+  "prds": [],
+  "status": "active",
+  "phase": "Phase 1 complete. Phase 2 — schema alignment. All 3 docs delivered. DS~A executing publisher fixes (F1-F3 leaderboard/partner_analytics/header_metrics). AE 0.6.1 re-chain pending. RD re-validation queued.",
+  "blocking": "DS~A schema fixes (F1-F5 publishers) → AE 0.6.1 chain → RD re-validation → Andrew sign-off.",
+  "created": "2026-04-27",
+  "pods": ["0.4"],
+  "lanes": ["0.4.0_DS_ClientPlatform~A", "0.4.0_DE_ClientPlatform"],
+  "lane_note": "DS~A owns INFLEC_DATA_INVENTORY.md (silver/gold/platinum field lists + per-script Orion field deps). DE owns INFLEC_PORTAL_FIELD_USAGE.md (portal-panel-to-platinum-field map). Joint output: INFLEC_BD_PARITY_MATRIX.md with per-panel verdicts: PORT_AS_IS / PORT_DEGRADED / DROP / DEFER.",
+  "deliverables": [
+    {"path": "docs/architecture/INFLEC_DATA_INVENTORY.md", "owner": "DS~A", "status": "delivered", "commit": "7d28f000"},
+    {"path": "docs/architecture/INFLEC_PORTAL_FIELD_USAGE.md", "owner": "DE", "status": "delivered", "commit": "0c241ee0"},
+    {"path": "docs/architecture/INFLEC_BD_PARITY_MATRIX.md", "owner": "joint DS~A+DE", "status": "delivered", "commit": "5dfa6a12"}
+  ],
+  "depends_on": ["ADVI_INFLEC"],
+  "depends_on_note": "Builds on Inflection platinum data being stable. Gates on I_D03 redispatch + INF_ rename completing first.",
+  "thread_counter": 0,
+  "threads": []
+}
