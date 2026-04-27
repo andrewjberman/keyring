@@ -148,6 +148,49 @@ RAVC4 sent to DE 0.4.0_DE_ClientPlatform at 20260427T172209Z.
 
 ---
 
+## Phase 3 — SCOPEFIX Smoke (AE GO 20260427T181302Z)
+
+### Run 5 — advi_inflec_scopefix_smoke (Option C: real login + Select Partner switch)
+| Iteration | Status | Blocking | Cosmetic | Notes |
+|-----------|--------|----------|----------|-------|
+| 1 | FAIL | 1 | 0 | ErrorBoundary crash: `Object.entries(role_breakdown)` → "Unable to Load Advisors". All other screenshots captured. |
+
+**Constitution:** `portal/.frontend-dev/testing/advi_inflec_scopefix_smoke.json` (new, authored this session)
+**Run dir:** `.frontend-dev-results/20260427T181719Z/`
+**Auth:** Option C confirmed working — real login (michael@opalinvest.com) + js_eval Select Partner switch → all 4 scenarios returned `switched`
+
+### Panel State Table — Post-SCOPEFIX (Real Auth, Inflection Firm Context)
+
+| Panel | Expected | Actual | Notes |
+|-------|----------|--------|-------|
+| Page brand "Inflection Wealth Management" | Renders | **RENDERS** | Subtitle + Select Partner button both show firm name |
+| Select Partner dropdown | Visible (isInternal=true) | **RENDERS** | "Inflection Wealth Management" selected, Option C confirmed |
+| Assets Overview chart | Quarterly bars | **BLANK** | x-axis renders (Q2'25–Q2'26), no data bars |
+| Stat tiles: NEW CLIENTS | $ value | **$0** | Returns 0 — header_metrics.json fetched but wrong shape (flat vs nested `total`) |
+| Stat tiles: EXISTING CLIENTS | $ value | **$0** | Same |
+| Stat tiles: TOTAL AUA | ~$429M | **$0** | Same — artifact present but schema mismatch |
+| Advisors tab leaderboard | Advisor rows | **"Unable to Load Advisors"** | ErrorBoundary: `Object.entries(undefined)` at AdvisorsTab.tsx:164 — `role_breakdown` missing from leaderboard.json |
+| Distribution tab SEGMENT ANALYTICS | Donut + cohort data | Controls render, **charts blank** | partner_analytics_quarterly.json wrong shape (flat rows[] vs views.{aua,nna,geo,adv}) |
+| Books tab advisor list | Advisor cards | **"No advisor data available"** | Books tab sources advisor list from leaderboard — leaderboard crash cascades here |
+| FidelityCustodianBar | Renders | **RENDERS** | Fidelity 99.4% / Other 0.6% |
+| unknown/ advisor key | Should NOT show | **Not visible** | Books tab never renders list — moot |
+
+### SCOPEFIX Findings for AE
+
+**Per-advisor S3 data confirmed live** (18 keys: 9×book.json + 9×composition.json, 995 clients) but portal cannot surface it because:
+
+1. `leaderboard.json` entries missing `role_breakdown` field → `Object.entries(undefined)` crash at `AdvisorsTab.tsx:164` → ErrorBoundary → "Unable to Load Advisors"
+2. Books tab advisor list is sourced from the same leaderboard data — crash cascades, "No advisor data available"
+3. **`leaderboard.json role_breakdown` fix is the single blocker for per-advisor drill**
+
+New datum vs devBypass runs: with real auth, `header_metrics.json` IS fetched and returns data (renders $0 not blank) — artifact present, shape mismatch. Same for `partner_analytics_quarterly.json` (controls render, charts blank). This confirms artifacts exist in S3 but have wrong schema.
+
+COO HOLD priority confirmed correct: DS schema alignment for `leaderboard.json` (add `role_breakdown`) unblocks both Advisors tab AND Books tab per-advisor drill in one fix.
+
+RAVC4 sent to AE (0.6.1_AE_PartnerETL) + COO (2.1.0_SA_COO) + CTO (1.1.0_SA_CTO) at 20260427T182500Z.
+
+---
+
 ## Files Created
 
-None (no code changes — re-validation only).
+- `portal/.frontend-dev/testing/advi_inflec_scopefix_smoke.json` — Option C SCOPEFIX smoke constitution (new this session)
