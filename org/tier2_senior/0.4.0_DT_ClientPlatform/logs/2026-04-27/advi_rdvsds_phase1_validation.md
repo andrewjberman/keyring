@@ -67,8 +67,16 @@ Gap origin: W1.1 (bucket creation) did not add CF OAI policy. W1.7 (FIRM_BUCKET_
 
 ---
 
-## Pending (CTO decision)
+## CTO Ruling (20260427T162725Z)
 
-Phase 1 pass/fail determination: does leaderboard 9-entry criterion block Phase 1, or does infrastructure+AUA signal constitute a pass? If leaderboard required, Inflection A/B/C/D full chain re-run is prerequisite.
+**Phase 1: PASS**
+
+header_metrics + timeseries_overview production smoke was the deciding factor. Leaderboard 0 rows confirmed as Phase 2 data gap (A/B/C chain not yet run), not a regression. ADVI_RDVSDS closed.
+
+COO release message: 20260427T163439Z — DT released from RDVSDS. No further action.
+
+**Pending (Phase 2):** Inflection A/B/C/D full chain run to populate per-advisor entity gold files and leaderboard.
+
+**Pending (DT):** exec_summary terraform apply when DS delivers RAVC4 on exec_summary vendor commit.
 
 _Written 2026-04-27 by 0.4.0_DT_ClientPlatform_
