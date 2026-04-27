@@ -187,19 +187,63 @@ period — full forensic audit is DS~A scope, not blocking RD smoke.
 
 ---
 
+## DS~A RAVC2 (20260427T223846Z) — Root Cause Identified
+
+Root cause (all flags): stale silver partition sweep gap in `build_trn_silver()`.
+
+For dates where ALL transactions were Keil-rep (e.g., 2024-06-15: rep_ids [5,15] only),
+post-filter combined has ZERO rows → `groupby('trade_date')` skips that date → no new file
+written → old pre-filter parquet (rep_ids [5,15], 33 cols, no advisor_firm) remains on S3.
+
+A_00 reads ALL silver/transactions/ partitions → sees Keil rep_ids → accounts_dim 8 advisor_keys
+→ C_07 → account_team inherits Keil → D_00c + D_02 emit Keil books.
+
+Evidence: `silver/transactions/2024-06-15.parquet` — 4 rows, rep_id [5,15], 33 cols (PRE-rebuild).
+
+Fix options:
+- Option A: `_clear_silver_partitions_in_range()` sweep in `build_trn_silver()` before writes
+  (destructive S3 delete — requires COO auth)
+- Option B: per-gold-script `advisor_firm` filter on read in A_00, C_07, B_00
+  (non-destructive, multiple edits)
+
+DS~A recommendation: Option A. Pending COO authorization.
+DO NOT redispatch chain until silver fix committed + COO auth confirmed.
+
+---
+
+## RAVC Delivered (complete)
+
+| Agent | Timestamp | Subject |
+|---|---|---|
+| 2.0.0_SA_COO | 20260427T224201Z | INFGRD.003 COMPLETE + DS~A RAVC2 triage + HOLD INFGRD.004 |
+| 0.4.0_DS_ClientPlatform~A | 20260427T224214Z | ACK RAVC2 — triage confirmed, AE holding |
+| 0.4.2_RD_AdvisorIntelligence | 20260427T224224Z | HOLD Option C smoke — 4 flags open |
+
+---
+
+## CloudFront Invalidations
+
+| ID | Paths | Status | Timestamp |
+|---|---|---|---|
+| IEGF5BTDPQE0IC1KLJSJ4KUXNK | /api/scoped/advisor-intelligence/* | Completed | 22:29:55Z |
+| I5YEY69YS16FMJNB8LI3GEXPXQ | /platinum/firm/*, /platinum/advisors/* | InProgress | 22:41:03Z |
+
+---
+
 ## Current State
 
 - INFGRD.003 full chain: COMPLETE (22:24:46Z)
 - Instance i-0ed5afded2ebd4ed4: stopped
-- CloudFront: invalidated (IEGF5BTDPQE0IC1KLJSJ4KUXNK)
-- 3 open flags: sent to DS~A + COO
-- AE: idle-complete, standing by for DS~A RAVC2 (INFGRD.004 re-dispatch GO)
+- CloudFront: 2 invalidations filed (see above)
+- Root cause: DS~A identified + triage sent to COO + AE + RD
+- AE: idle-complete, HOLDING redispatch until COO auth + DS~A INFGRD.004 fix commit
 
-## Outstanding Items (not AE scope)
+## Outstanding Items
 
-1. DS~A FLAG 1: AUA $133.7M — audit B_00 holdings aggregation and C_07 attribution
-2. DS~A FLAG 2: Keil advisor books still emitting — audit C_07 advisor_key derivation vs rep_id filter propagation
-3. DS~A FLAG 3: advisor_name=None — audit D_00c name resolution after accounts_dim schema change
+1. COO: authorize Option A silver sweep (destructive S3 delete) or select Option B
+2. DS~A: implement authorized fix, commit, send INFGRD.004 RAVC2 to AE
+3. AE (on DS~A RAVC2): silver sweep + full chain rerun (INFGRD.004)
 4. DS~A: unknown/ PLACEHOLDER exclusion in D_02 `_PLACEHOLDER_KEYS`
-5. AE (post-W5): Terraform aws CLI -s shebang fix (AMI update)
-6. DS/future TO: orion-gold-dispatch.sh catalog I_ prefix normalization
+5. DS~A (separate TO): leaderboard field rename advisor_name vs name (post-Keil-cleanup)
+6. AE (post-W5): Terraform aws CLI -s shebang fix (AMI update)
+7. DS/future TO: orion-gold-dispatch.sh catalog I_ prefix normalization
