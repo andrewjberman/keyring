@@ -1,0 +1,26 @@
+{
+  "project_code": "ADHC_COMPIL",
+  "macro_code": "ADHC",
+  "name": "Compiler Tools Hardening v1 (Multi-Pipeline + Cascade Gate + PRD Mandate)",
+  "description": "Round 2 of compiler tooling improvements after COMP_LEARNS.022 (28ca6bd6, 2026-04-21) shipped the comp-pipescript io blind-spot fixes (FUNC-key writes, prefix cross-ref, rolling-window warn). v1 closes three gaps that surfaced 2026-04-21 to 2026-04-27: (A) comp-pipescript indexes BD gold scripts only — extend to INF gold, BD silver, INF silver, bronze; (B) comp-pipescript postdeps not enforced before split-cascade reruns — AUAGAP.002 missed C_00 because no automatic gate; (C) PRD-authoring compiler mandate inconsistent — ADVI_49EXEC PRD claimed positions.json existed with no producer, caught by manual comp-platinum reverse. v2 addendum (Themes D + E — comp-platinum nested-key indexing + comp-validate failure-mode docs) deferred to ADHC_COMPIL_V2 PRD post-v1.",
+  "prds": [
+    {"path": "docs/architecture/ADHC_COMPIL.md", "label": "Compiler Tools Hardening v1 PRD (Themes A+B+C)", "date": "2026-04-27"},
+    {"path": "docs/architecture/ADHC_COMPIL_V2.md", "label": "Compiler Tools Hardening v2 Addendum (Themes D+E, deferred)", "date": "2026-04-27"}
+  ],
+  "status": "active",
+  "phase": "Phase 0 — PRD authored 2026-04-27 (cc170c00 sibling commit). 3 TOs to issue: ADHC_COMPIL.001 (Theme A multi-pipeline indexing, owner 1.2.0_DS_CompLearns or alt DS, 3-4w), ADHC_COMPIL.002 (Theme B cascade gate, owner 0.7.0_AE_CloudOps, 1-2w), ADHC_COMPIL.003 (Theme C PRD template + protocol, owner 1.0.0_SA_CTO, 1-2w). Optional ADHC_COMPIL.004 (prd-evidence-check.sh lint, gates on .003). All 3 v1 TOs parallelizable.",
+  "blocking": "Owner assignment for Theme A — 1.2.0_DS_CompLearns is natural choice (COMP_LEARNS.022 expertise) but their primary scope is COMP_LEARNS LLM benchmarking; Andrew to confirm. v1 ships when .001 + .002 + .003 all COMPLETE. v2 (Themes D + E) gates on v1 close per PRD §9.",
+  "created": "2026-04-27",
+  "pods": ["1.0", "0.4", "0.7", "1.2"],
+  "pipeline": "compiler-tooling",
+  "lanes": ["1.0.0_SA_CTO", "0.7.0_AE_CloudOps", "1.2.0_DS_CompLearns"],
+  "lane_note": "CTO authors Theme C protocol/template/prompt updates. AE 0.7 owns Theme B (.tools/ + gold-dispatch wrappers) and optional Theme C lint. DS 1.2 (CompLearns) is natural Theme A owner given COMP_LEARNS.022 expertise — Andrew to confirm or reassign to 0.4.0_DS_ClientPlatform.",
+  "waves": [
+    {"id": "v1", "label": "Multi-pipeline indexing + cascade gate + PRD mandate codification", "owners": ["1.2.0_DS_CompLearns", "0.7.0_AE_CloudOps", "1.0.0_SA_CTO"], "target_tag": "—"},
+    {"id": "v2", "label": "comp-platinum nested keys + comp-validate failure docs (deferred addendum)", "owners": ["TBD"], "target_tag": "—"}
+  ],
+  "depends_on": [],
+  "depends_on_note": "No upstream dependencies. COMP_LEARNS.022 (compiler v1) shipped 2026-04-21; this is v2 hardening built on that foundation.",
+  "thread_counter": 0,
+  "threads": []
+}
