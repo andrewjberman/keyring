@@ -31,10 +31,33 @@ _WORKSPACE = _THIS_DIR.parent.parent.parent
 
 sys.path.insert(0, str(_WORKSPACE))
 
-from org.modules.graph.extract_pipeline import build_pipeline_dag, inject_pipeline_edges
+from org.modules.graph.extract_pipeline import (  # noqa: E402
+    build_pipeline_dag, inject_pipeline_edges,
+    build_inf_gold_dag, build_silver_dag, build_multi_pipeline_dag,
+)
+
+_PIPELINE_CHOICES = ("bd-gold", "inf-gold", "bd-silver", "inf-silver", "all")
 
 
-def _build_dag():
+def _build_dag(pipeline: str = "bd-gold"):
+    """Return the appropriate DAG for the given pipeline scope.
+
+    pipeline="bd-gold"  → existing BD-gold DAG (backward-compatible default)
+    pipeline="inf-gold" → INF gold DAG only
+    pipeline="bd-silver"→ BD silver DAG only
+    pipeline="inf-silver"→ INF silver DAG only
+    pipeline="all"      → combined multi-pipeline DAG (namespaced IDs)
+    """
+    if pipeline == "bd-gold":
+        return build_pipeline_dag(_WORKSPACE)
+    if pipeline == "inf-gold":
+        return build_inf_gold_dag(_WORKSPACE)
+    if pipeline == "bd-silver":
+        return build_silver_dag(_WORKSPACE, "bd-silver", "data/black_diamond/scripts/silver")
+    if pipeline == "inf-silver":
+        return build_silver_dag(_WORKSPACE, "inf-silver", "data/orion/scripts/silver")
+    if pipeline == "all":
+        return build_multi_pipeline_dag(_WORKSPACE)
     return build_pipeline_dag(_WORKSPACE)
 
 
@@ -43,13 +66,15 @@ def _build_dag():
 # ---------------------------------------------------------------------------
 
 def cmd_dag(args):
-    dag = _build_dag()
+    pipeline = getattr(args, 'pipeline', 'bd-gold') or 'bd-gold'
+    dag = _build_dag(pipeline)
 
     if args.json:
         result = {}
         for sid, sio in sorted(dag.scripts.items(), key=lambda x: x[1].run_order):
             result[sid] = {
                 "filename": sio.filename,
+                "pipeline": sio.pipeline,
                 "group": sio.group,
                 "run_order": sio.run_order,
                 "reads": sio.read_keys,
@@ -61,6 +86,7 @@ def cmd_dag(args):
         return
 
     print("PIPELINE DAG")
+    print(f"  Pipeline: [{pipeline}]")
     print(f"  Scripts: {len(dag.scripts)}")
     print(f"  S3 keys: {len(dag.s3_keys)}")
     print()
@@ -68,7 +94,8 @@ def cmd_dag(args):
     for sid, sio in sorted(dag.scripts.items(), key=lambda x: x[1].run_order):
         upstream = dag.feeds(sid)
         downstream = dag.consumers(sid)
-        print(f"  {sid} ({sio.filename})")
+        label = f"[{sio.pipeline}]" if sio.pipeline != "bd-gold" else ""
+        print(f"  {sid} ({sio.filename}){' ' + label if label else ''}")
         print(f"    Group: {sio.group} | Order: {sio.run_order}")
         print(f"    Reads:  {len(sio.read_keys)} keys | Writes: {len(sio.write_keys)} keys")
         if upstream:
@@ -81,14 +108,15 @@ def cmd_dag(args):
 
 
 def cmd_io(args):
-    dag = _build_dag()
+    pipeline = getattr(args, 'pipeline', 'bd-gold') or 'bd-gold'
+    dag = _build_dag(pipeline)
     script_id = args.script_id.upper()
 
     # Allow partial match: "D_00" or "d_00" or "D_00.portal_aggregates"
+    # Also allow unprefixed ID when pipeline is specified (e.g. "D_04" matches "inf-gold:D_04")
     sio = dag.scripts.get(script_id)
     if not sio:
-        # Try substring match
-        matches = [s for s in dag.scripts if script_id.upper() in s.upper()]
+        matches = [s for s in dag.scripts if script_id in s.upper()]
         if len(matches) == 1:
             sio = dag.scripts[matches[0]]
             script_id = matches[0]
@@ -104,6 +132,7 @@ def cmd_io(args):
         print(json.dumps({
             "script_id": script_id,
             "filename": sio.filename,
+            "pipeline": sio.pipeline,
             "group": sio.group,
             "run_order": sio.run_order,
             "reads": [{"constant": c, "s3_key": dag.s3_keys[c].s3_path}
@@ -113,7 +142,7 @@ def cmd_io(args):
         }, indent=2))
         return
 
-    print(f"I/O MANIFEST: {script_id} ({sio.filename})")
+    print(f"I/O MANIFEST: {script_id} ({sio.filename}) [{sio.pipeline}]")
     print(f"  Group: {sio.group} | Order: {sio.run_order}")
     print()
 
@@ -183,7 +212,7 @@ def cmd_io(args):
                     print(f"       accessed at line {gap['access_line']}, not in _load_parquet({gap['key_const']}, columns=[...]) at line {gap['load_line']}")
                     print(f"       loaded cols ({len(gap['loaded_cols'])}): {', '.join(gap['loaded_cols'][:6])}{'...' if len(gap['loaded_cols']) > 6 else ''}")
                     print(f"       FIX: add '{gap['col']}' to the columns= list at line {gap['load_line']}")
-    except Exception as e:
+    except Exception:
         pass  # Don't break io output if column gap analysis fails
 
     print()
@@ -446,19 +475,42 @@ def cmd_stats(args):
             print(f"    {sid}")
 
 
+def _get_ec2_manifest_service(service_key: str) -> dict:
+    """Read a service entry from EC2_MANIFEST.json. Returns {} if not found."""
+    manifest_path = _WORKSPACE / "infra" / "aws" / "ec2" / "EC2_MANIFEST.json"
+    try:
+        import json as _json
+        data = _json.loads(manifest_path.read_text(encoding="utf-8"))
+        return data.get("services", {}).get(service_key, {})
+    except Exception:
+        return {}
+
+
 def cmd_deployed(args):
     """Compare local gold + silver script files against their S3-uploaded code versions.
-    Gold scripts come from the DAG; silver scripts are discovered by walking
-    data/black_diamond/scripts/silver/*.py (top-level only, excludes lib/ and __pycache__).
-    Output is prefixed [GOLD] / [SILVER]. Uses S3 ETag (MD5) comparison."""
+
+    Default (--pipeline bd-gold): BD gold + BD silver vs opal-data-bd.
+    --pipeline inf-gold: INF gold scripts vs opal-data-inf/code/gold/
+      (runner key read from EC2_MANIFEST.json: inf-gold-layer-runner).
+    --pipeline bd-silver: BD silver scripts only.
+    --pipeline inf-silver: INF silver scripts vs opal-data-inf/code/silver/.
+
+    Output is prefixed [bd-gold] / [inf-gold] / [bd-silver] / [inf-silver].
+    Uses S3 ETag (MD5) comparison."""
     import hashlib
     import shutil
     import subprocess
+
+    pipeline = getattr(args, 'pipeline', 'bd-gold') or 'bd-gold'
 
     S3_BUCKET = "opal-data-bd"
     S3_GOLD_PREFIX = "code/gold/"
     S3_SILVER_PREFIX = "code/silver/"
     SILVER_LOCAL_DIR = _WORKSPACE / "data" / "black_diamond" / "scripts" / "silver"
+
+    # INF pipeline overrides
+    if pipeline in ("inf-gold", "inf-silver"):
+        S3_BUCKET = "opal-data-inf"
 
     # Resolve aws CLI once, full path -- avoids subprocess PATH-loss on some shells.
     aws_bin = shutil.which("aws") or shutil.which("aws.cmd") or shutil.which("aws.exe")
@@ -524,34 +576,37 @@ def cmd_deployed(args):
             return "MATCH", []
         return "STALE", [f"local:  {local_md5}", f"s3:     {s3_etag}"]
 
-    print("DEPLOYED STATUS: local repo vs s3://opal-data-bd/code/{gold,silver}/")
+    # Header varies by pipeline
+    if pipeline == "inf-gold":
+        inf_svc = _get_ec2_manifest_service("inf-gold-layer-runner")
+        inf_instance = inf_svc.get("instance_id", "unknown")
+        print("DEPLOYED STATUS [inf-gold]: local repo vs s3://opal-data-inf/code/gold/")
+        print(f"  Runner: inf-gold-layer-runner ({inf_instance})")
+    elif pipeline in ("bd-silver", "inf-silver"):
+        print(f"DEPLOYED STATUS [{pipeline}]: local repo vs s3://{S3_BUCKET}/code/silver/")
+    else:
+        print("DEPLOYED STATUS: local repo vs s3://opal-data-bd/code/{gold,silver}/")
     print()
 
     matched, stale, missing_s3, local_missing, timed_out, aws_unreach = [], [], [], [], [], []
     checked_any = False
 
     # ---- GOLD layer (DAG-driven) ----
-    dag = _build_dag()
-    gold_candidates = sorted(dag.scripts.items(), key=lambda x: x[1].run_order)
-    # Gold filter: only include if no filter, OR filter substring matches script id (e.g. D_04).
-    # If filter looks like a silver filename (.py extension, lowercase, no DAG match), skip gold entirely.
-    skip_gold = False
-    if script_filter_upper:
-        any_gold_match = any(script_filter_upper in sid.upper() for sid, _ in gold_candidates)
-        if not any_gold_match:
-            skip_gold = True
-
-    if not skip_gold:
-        for sid, sio in gold_candidates:
+    # For non-BD pipelines, skip BD gold entirely unless pipeline == "bd-gold" (default)
+    if pipeline in ("inf-gold",):
+        # INF gold: check against opal-data-inf/code/gold/
+        inf_dag = _build_dag("inf-gold")
+        inf_candidates = sorted(inf_dag.scripts.items(), key=lambda x: x[1].run_order)
+        for sid, sio in inf_candidates:
             if script_filter_upper and script_filter_upper not in sid.upper():
                 continue
             local_path = _WORKSPACE / sio.file_path
-            label = f"[GOLD] {sid}"
+            label = f"[inf-gold] {sid}"
             checked_any = True
-            status, extras = _check_one("GOLD", label, local_path, f"{S3_GOLD_PREFIX}{sio.filename}")
-            print(f"  [GOLD]   {sid:<8} {status:<14} {sio.filename}")
+            status, extras = _check_one("inf-gold", label, local_path, f"{S3_GOLD_PREFIX}{sio.filename}")
+            print(f"  [inf-gold] {sid:<10} {status:<14} {sio.filename}")
             for line in extras:
-                print(f"           {line}")
+                print(f"             {line}")
             if status == "MATCH":
                 matched.append(label)
             elif status == "STALE":
@@ -564,6 +619,38 @@ def cmd_deployed(args):
                 timed_out.append(label)
             elif status == "AWS_UNREACHABLE":
                 aws_unreach.append(label)
+    elif pipeline not in ("bd-silver", "inf-silver"):
+        dag = _build_dag("bd-gold")
+        gold_candidates = sorted(dag.scripts.items(), key=lambda x: x[1].run_order)
+        skip_gold = False
+        if script_filter_upper:
+            any_gold_match = any(script_filter_upper in sid.upper() for sid, _ in gold_candidates)
+            if not any_gold_match:
+                skip_gold = True
+
+        if not skip_gold:
+            for sid, sio in gold_candidates:
+                if script_filter_upper and script_filter_upper not in sid.upper():
+                    continue
+                local_path = _WORKSPACE / sio.file_path
+                label = f"[bd-gold] {sid}"
+                checked_any = True
+                status, extras = _check_one("bd-gold", label, local_path, f"{S3_GOLD_PREFIX}{sio.filename}")
+                print(f"  [bd-gold] {sid:<8} {status:<14} {sio.filename}")
+                for line in extras:
+                    print(f"           {line}")
+                if status == "MATCH":
+                    matched.append(label)
+                elif status == "STALE":
+                    stale.append(label)
+                elif status == "MISSING_ON_S3":
+                    missing_s3.append(label)
+                elif status == "LOCAL_MISSING":
+                    local_missing.append(label)
+                elif status == "TIMEOUT":
+                    timed_out.append(label)
+                elif status == "AWS_UNREACHABLE":
+                    aws_unreach.append(label)
 
     # ---- SILVER layer (directory-walk-driven) ----
     silver_files = []
@@ -656,7 +743,7 @@ def cmd_postdeps(args):
     script_filter = args.script_name if args.script_name else None
 
     print("PIPELINE DEPENDENCIES")
-    print(f"  Config: data/black_diamond/scripts/gold/gold_pipeline_deps.yaml")
+    print("  Config: data/black_diamond/scripts/gold/gold_pipeline_deps.yaml")
     print()
 
     has_output = False
@@ -811,35 +898,48 @@ def main():
     )
     sub = parser.add_subparsers(dest='command')
 
+    _pipeline_help = (
+        'Pipeline scope: bd-gold (default), inf-gold, bd-silver, inf-silver, all. '
+        'bd-gold is the BD gold layer (backward-compatible default). '
+        'inf-gold checks INF gold scripts against opal-data-inf. '
+        'all builds a combined cross-pipeline DAG with namespaced IDs.'
+    )
+
     # dag
     p_dag = sub.add_parser('dag', help='Full execution DAG with I/O edges')
     p_dag.add_argument('--json', action='store_true', help='JSON output')
+    p_dag.add_argument('--pipeline', '-p', default='bd-gold', choices=_PIPELINE_CHOICES, help=_pipeline_help)
 
     # io
     p_io = sub.add_parser('io', help='Input/output manifest for one script')
-    p_io.add_argument('script_id', help='Script ID (e.g., D_00)')
+    p_io.add_argument('script_id', help='Script ID (e.g., D_00, I_D00, convert_assets_to_silver)')
     p_io.add_argument('--json', action='store_true', help='JSON output')
     p_io.add_argument('--no-portal', action='store_true', dest='no_portal',
                       help='Skip routing table lookup for portal consumer resolution')
+    p_io.add_argument('--pipeline', '-p', default='bd-gold', choices=_PIPELINE_CHOICES, help=_pipeline_help)
 
     # chain
     p_chain = sub.add_parser('chain', help='Show chain membership and order')
     p_chain.add_argument('chain_name', help='Chain name (full, canonical, downstream, foundation, rebuild)')
+    p_chain.add_argument('--pipeline', '-p', default='bd-gold', choices=_PIPELINE_CHOICES, help=_pipeline_help)
 
     # feeds
     p_feeds = sub.add_parser('feeds', help='What scripts feed this one (upstream)')
     p_feeds.add_argument('script_id', help='Script ID')
     p_feeds.add_argument('--json', action='store_true', help='JSON output')
+    p_feeds.add_argument('--pipeline', '-p', default='bd-gold', choices=_PIPELINE_CHOICES, help=_pipeline_help)
 
     # consumers
     p_consumers = sub.add_parser('consumers', help='What scripts consume this one (downstream)')
     p_consumers.add_argument('script_id', help='Script ID')
     p_consumers.add_argument('--json', action='store_true', help='JSON output')
+    p_consumers.add_argument('--pipeline', '-p', default='bd-gold', choices=_PIPELINE_CHOICES, help=_pipeline_help)
 
     # overlap
     p_overlap = sub.add_parser('overlap', help='Shared S3 artifacts between two scripts')
     p_overlap.add_argument('script_a', help='First script ID')
     p_overlap.add_argument('script_b', help='Second script ID')
+    p_overlap.add_argument('--pipeline', '-p', default='bd-gold', choices=_PIPELINE_CHOICES, help=_pipeline_help)
 
     # inject
     sub.add_parser('inject', help='Inject pipeline edges into comp-trace graph cache')
@@ -851,6 +951,7 @@ def main():
     p_deployed = sub.add_parser('deployed', help='Compare local scripts against S3-uploaded versions')
     p_deployed.add_argument('script_id', nargs='?', default='',
                             help='Optional: check only this script (e.g. D_00). Omit for all.')
+    p_deployed.add_argument('--pipeline', '-p', default='bd-gold', choices=_PIPELINE_CHOICES, help=_pipeline_help)
 
     # postdeps
     p_postdeps = sub.add_parser('postdeps', help='Show post-step and precondition dependencies for gold scripts')
