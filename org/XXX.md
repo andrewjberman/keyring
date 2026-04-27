@@ -118,7 +118,17 @@ Both commands are in `.tools/` (in PATH) and work from any directory.
 
 **If the GO lists a SEQUENCE of TOs:** You are authorized to execute ALL of them in order without waiting for a new GO between steps. If a TO in the sequence is already complete when you reach it, move immediately to the next one. Keep going until you hit a blocked TO (deps unmet) or the list is exhausted. Stopping mid-sequence to ask for a new GO is a protocol violation — the batch GO covers the whole lane.
 
-**D. Set compiler tool context (enables auto-logging):**
+**D. Owned-paths hook (install if absent):**
+```bash
+# owned-paths hook — installs if absent (ADHC_OWNPTH)
+test -L .git/hooks/pre-commit || bash .tools/git-hooks/install-owned-paths.sh
+```
+Wires the lane-enforcement pre-commit hook on first use. Idempotent — safe to re-run. On Windows Git Bash the `-L` test always fails (no true symlinks), so the install script runs each session but exits 0 immediately once the hook is present.
+
+**D2. Commit hygiene (use safe-commit.sh — ADHC_OWNPTH.007):**
+Use `.tools/safe-commit.sh --author "..." -m "..." -- <paths>` for every commit. The wrapper aborts if the staged index contains any file outside your declared pathspec — the exact failure mode that produced three CLASS-C sweep incidents on 2026-04-27. With `--force`, the wrapper still runs but logs a `FORCE-BYPASS` audit entry to `org/git-author-override-audit.log` (use only when you cannot clean the shared index — e.g. multi-agent worktree contention). Bare `git commit` is allowed only when explicitly justified in the commit message.
+
+**E. Set compiler tool context (enables auto-logging):**
 ```bash
 mkdir -p .comp-graph && printf "SERIAL=%s\nTO_ID=\n" "{your_serial}" > .comp-graph/.agent_context
 ```
@@ -399,24 +409,27 @@ Closing a project is a **3-step atomic operation**, not a single JSON edit. All 
 ## Commit Identity (Non-Negotiable)
 
 ```bash
-git commit --only --author="{serial} <{serial}@opal.agent>" -m "message" -- file1 file2 file3
+.tools/safe-commit.sh --author="{serial} <{serial}@opal.agent>" -m "message" -- file1 file2 file3
 ```
 Author = the agent. Committer = Andrew. Only alphanumeric, `.`, `_`, `@` in author fields.
 
-**Use `--only` (or `-o`) always.** This creates a temporary index from the listed paths only, bypassing the shared staging area entirely. Other agents' staged files are never touched.
+**Use `.tools/safe-commit.sh` (ADHC_OWNPTH.007) for every commit.** The wrapper checks the staged index against your declared pathspec, aborts on contamination (or logs `--force` bypasses to `org/git-author-override-audit.log`), then runs `git commit --only -- <paths>`. Documented fallback when the wrapper is unavailable in your worktree: bare `git commit --only --author="..." -m "..." -- <paths>` — but you lose the index-contamination guard. Verify the wrapper exists in your tree before relying on the fallback.
 
 ## Commit Scope Discipline (Non-Negotiable)
 
 **Commit ONLY the files your task order told you to touch. Never sweep the working tree.**
 
 - **BANNED:** `git add -A`, `git add .`, `git add --all`, `git commit -a`, `git commit --all`, `git add <files>` followed by a bare `git commit` — any pattern that uses the shared index.
-- **REQUIRED:** `git commit --only -- <file1> <file2> ...` — list every path explicitly after `--`. No prior `git add` needed; `--only` reads from the working tree directly.
+- **REQUIRED:** `.tools/safe-commit.sh --author "..." -m "..." -- <file1> <file2> ...` — list every path explicitly after `--`. The wrapper aborts if the staged index contains anything outside the pathspec, then runs `git commit --only -- <paths>` so the commit is scoped regardless of what else is staged.
+- **Documented fallback** (only when wrapper unavailable): `git commit --only -- <file1> <file2> ...`. List every path explicitly after `--`; no prior `git add` needed (`--only` reads the working tree directly). You forfeit the contamination guard — be certain about your pathspec.
 - **If you see dirty files outside your scope:** leave them alone. Do not stash, do not commit "to clean up", do not include them "while you're at it". Another agent is probably working on them right now.
 - **One task order = one logical commit scope.** If your work spans multiple task orders, make multiple commits, each scoped to its own TO.
 
-**Why `--only` is mandatory:** During hectic multi-agent MCP sessions, multiple agents have dirty working trees and staged files at the same time. A bare `git commit` (even after `git add <specific files>`) commits the entire shared index — sweeping in any files another agent staged in the window between your `git add` and your `git commit`. This happened twice in session 26 (2026-04-14): COO's staged files were committed under AE and DS author lines. `git commit --only -- <files>` bypasses the shared index entirely — the race condition is structurally impossible.
+**Why the wrapper is mandatory:** During hectic multi-agent MCP sessions, multiple agents have dirty working trees and staged files at the same time. Bare `git commit` (even after `git add <specific files>`) commits the entire shared index — sweeping in any files another agent staged in the window between your `git add` and your `git commit`. Even disciplined `git commit --only -- <paths>` fails silently if you typo a path or miss one — the wrapper's pre-commit diff catches that. Three CLASS-C incidents on 2026-04-27 (DT `record-terraform-deploy.sh` 13:04Z; AE 0.7 partial restore; COO `f84c2df4` 17:49Z) had `--only` discipline at the *intent* level but missed at the *mechanical* level. The wrapper makes the mechanical check structural.
 
-The only exception is a commit whose explicit purpose is a bulk cleanup (rare, and must be called out in the commit message).
+**Gotcha — gitignored prefixes need `git add -f`:** `safe-commit.sh --only` only commits files git already tracks. New files under gitignored directories (e.g. `.tools/`) need an explicit `git add -f <path>` first so the wrapper's pre-commit diff sees them. Caught AE during the wrapper bootstrap commit `1998340f`.
+
+The only exception to the wrapper requirement is a commit whose explicit purpose is a bulk cleanup (rare, and must be called out in the commit message).
 
 ---
 
