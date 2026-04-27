@@ -1,0 +1,30 @@
+{
+  "project_code": "TRSB_PATHFIX",
+  "macro_code": "TRSB",
+  "name": "Trade Submission Path Mismatch + SES Group Reconciliation",
+  "description": "Hot-fix on top of TRSB_TFIMPT (2026-04-21) to resolve Andrew's `Unexpected token '<'` error on trade submission. Two backend gaps: (1) portal/src/pages/TradeSubmission/ POSTs to /api/general/trades/* but no API GW route exists at that path — CF returns custom_error_response 403/404→/index.html which the browser tries to JSON.parse as HTML; (2) trade-users DDB schema drift — current authorizers field should be approvers per spec, AJ in authorizers but spec says executor only. PRD scope: 3 TOs — W1 AE adds 12 API GW routes (CUSTOM+naqxlm auth), W2 DT renames DDB authorizers→approvers + adds 2 missing rows (7→9) with 1-week dual-write window, W3 AE+Andrew SES alyssa@opalinvest.com verify + prod-access submission.",
+  "prds": [
+    {"path": "docs/architecture/TRSB_PATHFIX_PRD.md", "label": "TRSB Path Mismatch + SES Reconciliation PRD v1", "date": "2026-04-27"}
+  ],
+  "status": "active",
+  "phase": "Phase 1 — W1 infra PASS 2026-04-27 (AE 0.7.0 RAVC4: 12 routes live with CUSTOM+naqxlm auth, Lambda perms on 4 Lambdas, comp-routes 23 behaviors stable, tag trade-pipeline-v1.6.0). Browser smoke AC2/AC3 awaiting Andrew or RD. TO-2 + TO-3 STAGED gating on browser smoke confirm. 0 COMPLETE / 1 INFRA-PASS / 2 STAGED.",
+  "blocking": "AC2/AC3 browser smoke confirm (Submit tab 200+JSON + all 4 tabs load) — Andrew testing directly OR CTO dispatches RD 0.4.2 (just stood down from RDVSDS, available). On smoke PASS: COO chains W2 + W3 GOs.",
+  "created": "2026-04-27",
+  "pods": ["0.3", "0.7"],
+  "pipeline": "trade-pipeline",
+  "lanes": ["0.7.0_AE_CloudOps", "0.3.0_DT_Trading"],
+  "lane_note": "AE 0.7 owns API GW routes (W1) + SES verify (W3). DT 0.3 owns DDB rename + row additions (W2). Andrew owns SES prod-access submission (W3 outbound).",
+  "waves": [
+    {"id": "W1", "label": "API GW routes /api/general/trades/* (CUSTOM+naqxlm auth)", "owners": ["0.7.0_AE_CloudOps"], "target_tag": "trade-pipeline-v1.6.0"},
+    {"id": "W2", "label": "trade-users DDB schema reconciliation (authorizers→approvers + 7→9 rows + 1-week dual-write)", "owners": ["0.3.0_DT_Trading"], "target_tag": "trade-pipeline-v1.7.0"},
+    {"id": "W3", "label": "SES verify alyssa@opalinvest.com + Andrew prod-access submission", "owners": ["0.7.0_AE_CloudOps", "Andrew"], "target_tag": "—"}
+  ],
+  "follow_up_backlog": [
+    "TRSB_CLEANUP — orphan API w8jnzvs21g: 30-day CW zero-traffic gate then delete TO",
+    "TRSB_CLEANUP — /api/public/trades/* NONE auth: upgrade to CUSTOM or delete after W1 parallel set proven"
+  ],
+  "depends_on": ["TRSB_TFIMPT"],
+  "depends_on_note": "Built on top of TRSB_TFIMPT W1+W2 (Terraform import + reclamation). Same trade-pipeline Terraform module, same DDB. Hot-fix scope only — TRSB_TFIMPT remains the canonical baseline.",
+  "thread_counter": 0,
+  "threads": []
+}
