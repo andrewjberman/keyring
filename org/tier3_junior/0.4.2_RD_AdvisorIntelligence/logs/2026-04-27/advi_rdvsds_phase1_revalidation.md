@@ -107,6 +107,17 @@ Cannot distinguish from frontend — requires DS S3 artifact check or DE Lambda@
 
 `comp-transform`, `comp-blast`, `comp-routes`, `comp-iam` — not run. No code changes this session (re-validation only per GO instructions).
 
+## Root Cause — Confirmed by Andrew 2026-04-27
+
+`devBypass` (AuthContext.tsx:489-525) is a vestigial function from an early portal version. Andrew: "I do not use it and nobody else should be able to use it." It sets `accessToken: 'dev-bypass-token'` (a literal string, not a JWT). Lambda@Edge has no bypass path for this — it rejects the request silently. React Query catches the 4xx, returns null, panels render empty state. 0 console errors. This is the root cause of ALL 4 FAILs.
+
+Consequence: every `/frontend-dev` constitution that calls `window.__devBypass()` is only valid for UI-structure assertions (page load, headings, no console errors). NOT valid for data-presence gates on authenticated endpoints.
+
+CTO ruling (20260427T162412Z):
+- ADVI_RDVSDS Phase 1 verdict = DT production smoke with real Inflection test user ONLY
+- devBypass cleanup = CTO backlog TO (not dispatched today) — delete from AuthContext + constitutions + rethink /frontend-dev auth architecture
+- All existing constitutions with devBypass treated as UI-structure smoke only until auth redesign
+
 ## RAVC Log
 
 | Message | To | Subject | Timestamp |
