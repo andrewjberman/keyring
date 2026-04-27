@@ -1559,3 +1559,9 @@ RESOLUTION: fixed in `614d4c28` (`comp-platinum reverse empty-vs-broken disambig
 | 2026-04-24 | 0.4.0_DS_ClientPlatform | ADVI_49EXEC.002 | comp-iam | comp-iam service exec-summary-generator | SKIPPED | No graph entry expected -- TO 4 DT provisions IAM |
 | 2026-04-24 | 0.4.0_DS_ClientPlatform | ADVI_49EXEC.002 | comp-pii | comp-pii audit | PASS | 0 cleartext fields in new Lambda |
 | 2026-04-24 | 0.4.0_DS_ClientPlatform | ADVI_49EXEC.002 | comp-cache | comp-cache collisions | PASS | 0 new cache key collisions |
+| 2026-04-24 | 0.4.0_DE_ClientPlatform | ADVI_RDVSDS.004 | comp-pipescript | comp-pipescript deployed data/orion/scripts/gold/I_C00.canonical_performance.py | PASS |
+| 2026-04-24 | 0.4.0_DE_ClientPlatform | ADVI_RDVSDS.004 | comp-iam | comp-iam service exec-summary-generator | PASS |
+| 2026-04-24 | 0.4.0_DE_ClientPlatform | ADVI_RDVSDS.004 | comp-iam | comp-iam service exec-summary-generator | PASS |
+| 2026-04-24 | 0.4.0_DE_ClientPlatform | ADVI_RDVSDS.004 | comp-iam | comp-iam gaps | PASS |
+| CTO-STARTUP-2026-04-27 | git log + MCP org scan + query_project (6 projects) | 1.0.0_SA_CTO | 2026-04-27 | 7 doc corrections committed a3a26d79 |
+| 2026-04-27 | 0.6.0_AE_PartnerETL | (no-TO) | comp-build | comp-build | PASS |
