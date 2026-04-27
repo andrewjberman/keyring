@@ -16,8 +16,8 @@
     }
   ],
   "status": "active",
-  "phase": "Phase 1 STAGED — SL-P0 COMPLETE (Path 3 cost-basis apportionment selected per decision memo, 598-acct cohort confirmed, Jones dry-run $2.4M match). SL-P1 code shipped 28818eaf (2026-04-16, DS 0.4.0): ULN sleeve shadow emit, shadow writes gold/timeseries/holdings_lots_shadow/, Jones z0817905851 shadow=$2,396,510=silver (0.00% delta). Firm cohort $88.7M/553 accts. Awaiting first natural nightly fire — blocked on bd-gold-nightly-fallback re-enable post ADVI_INFLEC W4.13b chain completion. SL-P2 (promote) + SL-P3 (monitor) staged.",
-  "blocking": "bd-gold-nightly-fallback re-enable post ADVI_INFLEC W4.13b chain full completion. SL-P1 first fire unblocks automatically when nightly resumes.",
+  "phase": "Phase 0: PRD complete, COO TO issuance pending. Phase 0 discovery (quantity source selection) must fire first.",
+  "blocking": "COO TO issuance for Phase 0. Quantity source selection (Andrew/DS decision at Phase 0) gates Phase 1+.",
   "parent_project": "ADVI_ROLLUP",
   "open_decisions": [
     {

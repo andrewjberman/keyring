@@ -6,10 +6,9 @@
   "prds": [
     {"path": "docs/architecture/ADHC_DSFLOW.md", "label": "DS Flow Hardening PRD v1", "date": "2026-04-21"}
   ],
-  "status": "complete",
-  "completed": "2026-04-24",
-  "phase": "ALL PHASES COMPLETE (2026-04-24). .001 COMPLETE (b6e0c154 + 7b7381ac: AST scanner + wrapper + 8/8 unit tests). .002 COMPLETE (1e9d9dc3: CLAUDE.md Rules 13+14 + org/XXX.md + DS README). .003 PASSIVE FIRED — DS committed 93 scripts under gate tool in .004 sweep (gate tool operational, first live run confirmed). .004 COMPLETE (6156d428 + a5ac27a2 + 9bffa7e6): ruff 0.15.11 integrated into ds-commit-gate.sh, FA102 check added, from __future__ import annotations backfill 93 scripts (62 gold BD + 15 silver BD + 14 bronze BD + 2 silver Orion), CLAUDE.md Rule 15 added, canary 2d3de276 → gate exits 1. All checks passed on all paths.",
-  "blocking": "None. All TOs complete. Gate infrastructure operational.",
+  "status": "active",
+  "phase": "Phase 1 — 2 of 3 TOs COMPLETE + Phase 2 scope .004 added 2026-04-24. **.001 COMPLETE** (`b6e0c154` + `7b7381ac`; stdlib-only AST scanner + wrapper + 8/8 unit tests PASS; 71 gold scripts clean; canary exit 1 on 081223b5 reproducer). **.002 COMPLETE** (`1e9d9dc3`; CLAUDE.md Rules 13+14 added, org/XXX.md DS Abilities row updated, DS README Must+Cannot+Deploy-cycle aligned). **.003 STAGED** — passive training-run on next DS gold-script commit. **.004 STAGED 2026-04-24 per Andrew** — ds-commit-gate version-hardening (ruff target-version=py39 + `from __future__ import annotations` mandate for gold/silver/bronze scripts; closes PEP-604 / 3.10+ syntax drift class caught on SCOPEFIX INFLEC `2d3de276` by AE 0.6.1 pre-dispatch 2026-04-24). PRD §7 TO 4 scope authored 2026-04-24. COO authors .004 TO file. HLOT2 `5f5d0319` + BFIX1+2 `1a54d46a` exempt per PRD §13 non-retroactive.",
+  "blocking": "**.003 passive training run** — fires on next natural DS gold-script commit post-.001+.002. Non-blocking. **.004 STAGED** — COO to author TO file against PRD §7 TO 4 scope; gates are .001+.002 (met); DS bandwidth-dependent. Estimate ~1-2h DS work including 71-file backfill sweep.",
   "created": "2026-04-21",
   "pods": ["0.4"],
   "pipeline": "bd-pipeline",

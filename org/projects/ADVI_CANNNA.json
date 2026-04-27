@@ -15,10 +15,9 @@
       "date": "2026-04-15"
     }
   ],
-  "status": "complete",
-  "completed": "2026-04-24",
-  "phase": "ALL PHASES COMPLETE (2026-04-16 terminal). CN-P1 C_01 shadow writer + CN-P1b backfill. CN-P2 D_02 reader migration (ebd737e3/b3f6b1ee — all 3 NNA sites). CN-P3 D_00c leaderboard (d96da39d). CN-P4 D_01 partner analytics (4e63038e). CN-P5 D_00b/D_00/D_04/C_08 closeout (49eac17d). CN WAVE TERMINAL. W4-CG cross-consumer gate 26/0 PASS. S3: gold/canonical/nna_atomic/ 5 partitions landing nightly. Travis three-panel NNA schism closed. GEO-NNA TX schism closed.",
-  "blocking": "None",
+  "status": "active",
+  "phase": "Phase 0: PRD complete, COO TO issuance pending.",
+  "blocking": "COO task order issuance. Part of ADVI_ROLLUP wave. Pairs with ADVI_ROLEAUA (Phase 1 shadow writes land together).",
   "parent_project": "ADVI_ROLLUP",
   "pairs_with": "ADVI_ROLEAUA",
   "created": "2026-04-15",
