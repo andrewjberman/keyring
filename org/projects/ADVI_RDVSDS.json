@@ -8,7 +8,7 @@
   ],
   "status": "active",
   "phase": "Phase 1 ACTIVE 2026-04-24. Phase 0 complete. TO 004 DE FIRM_ACCOUNT_NAME fix COMPLETE (portal DEV 2c19352, CLOUD c07e341d). W4.13b gate CLEARED 2026-04-27 (AE 0.6.0 RAVC4: I_C00 run 4 + D-chain SUCCESS, 2,408 canonical_performance files, firm platinum live). RD 0.4.2 re-validation TO dispatched 2026-04-27. Awaiting RD PASS/FAIL on Assets Overview AUA/NNA/GRO non-zero at firm level.",
-  "blocking": "RD 0.4.2 re-validation in progress (TO dispatched 2026-04-27). On RD PASS: CTO closes Phase 1, dispatches DS GO for ORNREN.001/Q8/Q9 (per COO relay).",
+  "blocking": "DE Lambda@Edge path fix in progress (2026-04-27). Root cause: Lambda@Edge routes firm=inflection to opal-data-inf (correct bucket) but uses gold/artifacts/summary/ S3 key prefix — does not exist in opal-data-inf. Inflection platinum is at platinum/firm/. Fix: add per-firm path_prefix to Lambda@Edge routing. On DE RAVC: CTO re-dispatches RD 0.4.2 re-validation → Phase 1 PASS gate.",
   "created": "2026-04-24",
   "pods": ["0.4", "0.4.2"],
   "pipeline": "inf-pipeline (opal-data-inf)",
