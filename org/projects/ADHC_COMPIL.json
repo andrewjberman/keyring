@@ -8,8 +8,8 @@
     {"path": "docs/architecture/ADHC_COMPIL_V2.md", "label": "Compiler Tools Hardening v2 Addendum (Themes D+E, deferred)", "date": "2026-04-27"}
   ],
   "status": "active",
-  "phase": "Phase 0 — PRD authored 2026-04-27 (cc170c00 sibling commit). 3 TOs to issue: ADHC_COMPIL.001 (Theme A multi-pipeline indexing, owner 1.2.0_DS_CompLearns or alt DS, 3-4w), ADHC_COMPIL.002 (Theme B cascade gate, owner 0.7.0_AE_CloudOps, 1-2w), ADHC_COMPIL.003 (Theme C PRD template + protocol, owner 1.0.0_SA_CTO, 1-2w). Optional ADHC_COMPIL.004 (prd-evidence-check.sh lint, gates on .003). All 3 v1 TOs parallelizable.",
-  "blocking": "Owner assignment for Theme A — 1.2.0_DS_CompLearns is natural choice (COMP_LEARNS.022 expertise) but their primary scope is COMP_LEARNS LLM benchmarking; Andrew to confirm. v1 ships when .001 + .002 + .003 all COMPLETE. v2 (Themes D + E) gates on v1 close per PRD §9.",
+  "phase": "Phase 1 — 1 COMPLETE / 1 ACTIVE / 4 STAGED (2026-04-27). **.001 COMPLETE** (DS 0.4.0 commit 39fafc6a — multi-pipeline indexing for comp-pipescript: INF gold + BD/INF silver DAGs, --pipeline flag, [bd-gold]/[inf-gold]/[bd-silver]/[inf-silver] labels, _extract_module_s3_constants() resolution for INF-style module-level S3 keys, 20 fixtures + 5 classes, no BD regression on COMP_LEARNS.022 FUNC-key resolution). **.002 ACTIVE** (AE 0.7.0 — cascade gate, queued behind ORNREN.002 + INFLEC TO-B). **.003 STAGED** (CTO — PRD mandate codification). **.004 STAGED** gates on .003 (AE 0.7.0 — prd-evidence-check.sh). **.005 STAGED → ACTIONABLE 2026-04-27** (DS 0.4.0 — Theme D nested key indexing, gate cleared by .001). **.006 STAGED** gates on .003 (CTO+DS, validate failure-mode). **.007 STAGED** gates on .006 (AE 0.7.0 — CLI hint).",
+  "blocking": "v1 ships when .002 + .003 also COMPLETE. v2 (.005 + .006 + .007) gates relaxed: .005 is now actionable post-.001 COMPLETE — COO discretion on dispatch timing.",
   "created": "2026-04-27",
   "pods": ["1.0", "0.4", "0.7", "1.2"],
   "pipeline": "compiler-tooling",
