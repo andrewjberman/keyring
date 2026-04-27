@@ -14,8 +14,9 @@ Usage:
     comp-platinum summary                   # one-line summary per component
 """
 
+from __future__ import annotations
+
 import argparse
-import json
 import re
 import sys
 from pathlib import Path
@@ -25,9 +26,9 @@ _WORKSPACE = _THIS_DIR.parent.parent.parent
 
 sys.path.insert(0, str(_WORKSPACE))
 
-from org.modules.graph.extract_transforms import build_component_dataflow, build_all_dataflows
-from org.modules.graph.extract_routes import build_routing_table
-from org.modules.graph.extract_pipeline import build_pipeline_dag
+from org.modules.graph.extract_transforms import build_component_dataflow, build_all_dataflows  # noqa: E402
+from org.modules.graph.extract_routes import build_routing_table  # noqa: E402
+from org.modules.graph.extract_pipeline import build_pipeline_dag  # noqa: E402
 
 _FIELD_QUERY_ARTIFACT_SUFFIXES = ('.json', '.parquet', '.csv')
 _FIELD_QUERY_SKIP_PARTS = {
@@ -122,9 +123,9 @@ def cmd_page(args):
                 if behavior:
                     print(f"    cloudfront: {behavior.path_pattern} -> {behavior.origin_id}")
                 else:
-                    print(f"    cloudfront: (no behavior match)")
+                    print("    cloudfront: (no behavior match)")
             else:
-                print(f"    url: (not resolved)")
+                print("    url: (not resolved)")
 
         # Show transform chains that use this fetch's data
         related_chains = [tc for tc in flow.transforms
@@ -254,6 +255,45 @@ def _normalize_field_path(path: str) -> str:
     return '.'.join(parts)
 
 
+def _has_wildcard_segments(path: str) -> bool:
+    """Return True if path contains * or {name} wildcard segments."""
+    return '*' in path or bool(re.search(r'\{[^}]+\}', path))
+
+
+def _normalize_field_path_wildcard(path: str) -> str:
+    """Like _normalize_field_path but preserves segments containing * or {name}."""
+    normalized = re.sub(r'\?\.|[\[\]?]', '.', path)
+    parts = []
+    for p in normalized.split('.'):
+        if not p:
+            continue
+        if '*' in p or re.search(r'\{[^}]+\}', p):
+            parts.append(p)  # wildcard/dynamic segments preserved as-is
+        elif p.isidentifier() and p not in _FIELD_QUERY_SKIP_PARTS:
+            parts.append(p)
+    return '.'.join(parts)
+
+
+def _wildcard_to_regex(pattern: str) -> re.Pattern:
+    """Convert a normalized wildcard path pattern to a compiled regex.
+
+    A bare * segment matches any single non-dot segment.
+    A glob segment like decomposition_* matches strings starting with that prefix.
+    A {name} segment matches any single non-dot segment (dynamic key).
+    Pattern matches the full index key OR as a trailing suffix (.pattern).
+    """
+    regex_parts = []
+    for seg in pattern.split('.'):
+        if re.fullmatch(r'\{[^}]+\}', seg):
+            regex_parts.append(r'[^.]+')
+        elif '*' in seg:
+            regex_parts.append(re.escape(seg).replace(r'\*', r'[^.]*'))
+        else:
+            regex_parts.append(re.escape(seg))
+    inner = r'\.'.join(regex_parts)
+    return re.compile(r'(?:(?:^|\.)' + inner + r')$')
+
+
 def _looks_like_artifact_query(query: str) -> bool:
     if '/' in query:
         return True
@@ -354,24 +394,40 @@ def _portal_grep_hits(query: str, limit: int = 3) -> list[str]:
 
 def _print_field_reverse(query: str, rt, dag):
     index = _build_field_reverse_index(rt)
-    query_normalized = _normalize_field_path(query)
-    # ADHC_ROUTER.T1 fix: original matcher included
-    # `query_normalized.endswith(f".{field_path}")` and
-    # `query_normalized in field_path`, producing false positives by
-    # matching on trailing segments. For query `rfs.decomposition_max.nna`,
-    # this falsely surfaced artifacts carrying a plain `nna` field (e.g.
-    # timeseries_overview.json) because `"rfs.decomposition_max.nna"
-    # .endswith(".nna")` is True. Strict matching: exact hit OR query is a
-    # suffix of an indexed path (`field_path.endswith(f".{query}")`). An
-    # honest empty result is strictly better than a confident wrong one.
-    matches = sorted({
-        field_path for field_path in index
-        if field_path == query_normalized
-        or field_path.endswith(f".{query_normalized}")
-    })
+    is_wildcard = _has_wildcard_segments(query)
+    has_dynamic = bool(re.search(r'\{[^}]+\}', query))
+
+    if is_wildcard:
+        query_normalized = _normalize_field_path_wildcard(query)
+        _pat = _wildcard_to_regex(query_normalized)
+        matches = sorted({fp for fp in index if _pat.search(fp)})
+    else:
+        query_normalized = _normalize_field_path(query)
+        # ADHC_ROUTER.T1 fix: original matcher included
+        # `query_normalized.endswith(f".{field_path}")` and
+        # `query_normalized in field_path`, producing false positives by
+        # matching on trailing segments. For query `rfs.decomposition_max.nna`,
+        # this falsely surfaced artifacts carrying a plain `nna` field (e.g.
+        # timeseries_overview.json) because `"rfs.decomposition_max.nna"
+        # .endswith(".nna")` is True. Strict matching: exact hit OR query is a
+        # suffix of an indexed path (`field_path.endswith(f".{query}")`). An
+        # honest empty result is strictly better than a confident wrong one.
+        matches = sorted({
+            field_path for field_path in index
+            if field_path == query_normalized
+            or field_path.endswith(f".{query_normalized}")
+        })
 
     print(f"REVERSE LOOKUP: {query}")
-    print(f"  [routed as: FIELD query; normalized='{query_normalized}'; index size: {len(index)} field paths]")
+    if is_wildcard:
+        wc_type = "WILDCARD/DYNAMIC" if has_dynamic else "WILDCARD"
+        print(f"  [routed as: FIELD query ({wc_type}); pattern='{query_normalized}'; index size: {len(index)} field paths]")
+    else:
+        print(f"  [routed as: FIELD query; normalized='{query_normalized}'; index size: {len(index)} field paths]")
+    if has_dynamic:
+        dyn_keys = re.findall(r'\{([^}]+)\}', query)
+        print(f"  NOTE: dynamic segment(s) {', '.join('{' + k + '}' for k in dyn_keys)} treated as wildcards "
+              f"-- matches any value at that key position in the JSON path.")
     print()
 
     if not matches:
@@ -549,8 +605,8 @@ def _print_artifact_reverse(s3_key: str, rt, dag):
             # ADHC_ROUTER.T3: this fallback is speculative (directory-prefix
             # match, not actual key match). Flag explicitly so agents do not
             # treat it as ground-truth consumer attribution.
-            print(f"    WARN: SPECULATIVE MATCH (directory-prefix fallback, not a verified consumer).")
-            print(f"    WARN: These endpoints live in the same S3 directory but may not read this specific key.")
+            print("    WARN: SPECULATIVE MATCH (directory-prefix fallback, not a verified consumer).")
+            print("    WARN: These endpoints live in the same S3 directory but may not read this specific key.")
             for fn_name in sorted(sibling_fns):
                 ep = rt.endpoints[fn_name]
                 for comp in rt.components:
