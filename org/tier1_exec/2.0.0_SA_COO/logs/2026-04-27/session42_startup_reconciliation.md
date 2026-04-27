@@ -95,4 +95,40 @@ Day 4 verdict: CLEAN. Hook running. Zero violations Days 2-4.
 
 ---
 
+## Session 42 — Continued (post-context-compaction)
+
+### ADVI_49EXEC P0 Hotfix Dispatch
+
+- **CTO inbox message processed:** TO7 partial CLOSE — DT infra PASS, Lambda runtime FAIL (ImportModuleError: No module named 'exec_summary'). CTO flagged record-terraform-deploy.sh sweep + recommended DT-scoped fix TO.
+- **DS hotfix TO authored + committed:** c5b832e8 (ADVI_49EXEC.hotfix-001.ds-exec-summary-package-vendoring.md). COO WARN CLASS-A (TO authoring into POD4 — same pattern as prior AE entry).
+- **DS already executing:** DS 0.4.0 committed 0bc16956 (vendoring fix) simultaneously with TO commit. Verification: lambda_function.py imports only exec_summary.trigger_eval + exec_summary.template_library — both now present. Fix structurally complete.
+- **GO dispatched to DS** (build-and-upload.sh + RAVC4). Waiting DS RAVC4 with S3 version ID.
+- **RAVC ACK to DT** sent — TO7 CLOSE accepted, hotfix in flight, sweep noted, AE 0.7 flagged.
+- **RAVC ACK to CTO** sent — confirming DS hotfix state + AE 0.7 routing decision.
+- **AE 0.7.0_AE_CloudOps** flagged for record-terraform-deploy.sh --only pathspec fix. RAVC ACK received — executing now (root cause confirmed: bare git commit after explicit git adds).
+
+### ADHC_OWNPTH Day 4 — Additional Classifications (f1943bf9)
+
+| Timestamp | Agent | Class | Detail |
+|-----------|-------|-------|--------|
+| 13:01:40Z | 0.4.0_DT_ClientPlatform | CLASS-A | DT exec-summary TF deploy (TO7 authorized). YAML gap: DT not in CLOUD_OPS_OR_ETL. |
+| 13:01:59Z | Andrew Berman | CLASS-A YAML gap | Workspace admin not in any permitted_agents. Andrew should be admin-exempt. |
+| 13:04:00Z + 13:05:58Z | 0.4.0_DT_ClientPlatform | CLASS-C | record-terraform-deploy.sh sweep (2889f564). Restored in 07b0aa30. AE 0.7 patching. |
+| 13:09:48Z | 2.0.0_SA_COO | CLASS-A | COO TO authoring into POD4 (same pattern as 12:56:39Z). YAML: add COO to task_orders/**. |
+| 13:09:52Z | 0.4.0_DS_ClientPlatform | CLASS-A | DS vendoring Lambda source per hotfix-001 TO. One-time exception; non-repeating. |
+
+Day 4 WARN count: 7 entries, all classified. Zero unresolved. Zero true violations.
+
+### Open Gates (updated)
+
+| Item | Gate | Owner | Status |
+|------|------|-------|--------|
+| ADVI_49EXEC hotfix-001 | DS build-and-upload.sh + RAVC4 → DT apply + tag v0.1.1 | DS → DT | DS executing |
+| ADVI_INFLEC W4.13b | AE 0.6.0 I_C00 run + D-chain (dispatched 2026-04-27) | AE 0.6.0 | Executing (~6-7h) |
+| ADVI_RDVSDS Phase 1 | W4.13b RAVC4 → COO relay → RD GO | COO | Waiting AE |
+| ORNREN.001 + Q8 + Q9 | W4.13b RAVC4 | COO → DS | Waiting AE |
+| record-terraform-deploy.sh fix | AE 0.7.0 patch + commit | AE 0.7.0 | In progress |
+| ADHC_OWNPTH Day 7 report | 2026-05-01 | COO | Pending |
+| ADHC_OWNPTH TO5 YAML diffs | DT + DS + Andrew + COO in permitted_agents | CTO | Flag at Day 7 |
+
 — 2.0.0_SA_COO
