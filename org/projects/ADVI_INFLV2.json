@@ -1,0 +1,21 @@
+{
+  "project_code": "ADVI_INFLV2",
+  "macro_code": "ADVI",
+  "name": "Inflection Portal Layout v2 (Firm-Centric Tenant Template)",
+  "description": "Andrew direction 2026-04-27 16:50: reshape Inflection portal as firm-centric tenant after DS~A's granularity briefing (7ecd04ff) confirmed only 2 of 4 employees carry Orion rep_ids and 96.8% of AUA flows through firm-bucket rep_id=3. Three top-level surfaces: PartnerAnalytics (firm landing) + Distribution (stubbed for Fidelity enrichment) + Books (Firm Overview -> ClientsList, no advisor drill). Advisors tab dropped entirely. Advisor list collapses to 3 entries everywhere (IWM, Peter Lee, Patrick Scanlan). 'Revenue Operations and Analysis' panel (FeeEfficiencyPanel) recreated as InflectionInsightsPanel from txn-only data; DS~A authors 3-candidate insight brief (activity-scan + 2 others); Andrew picks; DS implements. NMEC/NMNC/NNA derivable from Orion txns (Andrew confirmed); GRO market growth is DS~A creative challenge under txn-only constraint. Introduces per-firm layout config pattern (_partners/{firmId}/layout.ts + useTenantLayout hook) so this and future small-partner tenants are declared once, not gated by scattered firmId === 'inflection' checks (currently 2 such checks shipped, 4 imminent).",
+  "prds": [
+    {"path": "docs/architecture/ADVI_INFLV2.md", "label": "Inflection Portal Layout v2 PRD v0.1", "date": "2026-04-27"}
+  ],
+  "status": "active",
+  "phase": "Phase 0 -- PRD authored 2026-04-27. 11 TOs to issue (HIGH priority): .001 DE+DS~A Phase 0 BooksTab panel inventory + txn-only feasibility per panel (parallel to INFGRD.003); .002 DS NMEC/NMNC/NNA from txns at firm grain (gates INFGRD.003); .003 DS~A GRO market-growth challenge brief (txn-only, ship-if-feasible-else-DEFER); .004 DS~A Revenue Ops 3-candidate design brief (activity-scan + 2 others); .005 DS implement Andrew-selected insight (gates .004 + Andrew pick); .006 DE layout-config pattern + useTenantLayout hook + migrate scattered checks (parallel to INFGRD.003); .007 DE BooksTab Inflection mode (Firm Overview -> ClientsList, 3-entry advisor list, InflectionInsightsPanel slot) (gates .005 + .006); .008 DE AdvisorsTab + AdvisorPublicProfile non-admin suppression (gates .006); .009 AE 0.6.1 chain re-run + S3 publish (gates .005); .010 RD Option C smoke validation (gates .007 + .008 + .009); .011 CTO document tenant template pattern (LOW, post-MVP). Suggested parallelism: .001+.006 immediate; .002+.004 after INFGRD.003 chain; .003+.005 after .002; .010 final RAVC.",
+  "blocking": "PRD ready for COO TO authoring + dispatch. INFGRD.003 chain rerun in flight (ETA 2-4h post AE 20:42Z dispatch); INFLV2 .001 + .006 can start immediately (no INFGRD chain dependency). Open questions for Andrew (5) in PRD section 11 -- can answer in parallel to TO authoring. Coordinates with ADVI_INFLEC F1b dashboard.json employee_leaderboard fix (DS~A follow-on, pending) so we don't double-write conflicting shapes.",
+  "created": "2026-04-27",
+  "pods": ["0.4"],
+  "pipeline": "inf-pipeline",
+  "lanes": ["0.4.0_DS_ClientPlatform", "0.4.0_DE_ClientPlatform", "0.4.2_RD_AdvisorIntelligence", "0.6.1_AE_PartnerETL"],
+  "lane_note": "DE 0.4.0 owns layout config + BooksTab Inflection mode + AdvisorsTab suppression (.001 DE-side, .006, .007, .008). DS 0.4.0 owns NMEC/NMNC/NNA + Revenue Ops impl + chain re-run support (.002, .005). DS~A owns granularity-driven data design + GRO challenge + Revenue Ops 3-candidate brief (.001 DS-side, .003, .004). AE 0.6.1 owns chain re-run (.009). RD 0.4.2 owns Option C smoke validation (.010). CTO owns tenant template doc (.011 LOW priority).",
+  "depends_on": ["ADVI_INFGRD", "ADVI_INFLEC"],
+  "depends_on_note": "INFGRD .003 chain rerun is hard gate for .002 (data freshness for NMEC/NMNC). INFLEC F1b dashboard.json employee_leaderboard fix coordinates with .007 (don't double-write). Long-term coordination: ADVI_INFLEC_BRONZERUN_V2 (Option C path) -- when Orion delivers per-employee rep_ids, INFLV2 layout still works (3-entry advisor list grows naturally to 4-5 entries; layout config flag flips to advisorDrill enabled).",
+  "thread_counter": 0,
+  "threads": []
+}
