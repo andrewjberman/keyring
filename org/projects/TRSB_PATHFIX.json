@@ -7,8 +7,8 @@
     {"path": "docs/architecture/TRSB_PATHFIX_PRD.md", "label": "TRSB Path Mismatch + SES Reconciliation PRD v1", "date": "2026-04-27"}
   ],
   "status": "active",
-  "phase": "Phase 1 — 0 COMPLETE / 1 ACTIVE / 2 STAGED. TO-1 (W1) ACTIVE 2026-04-27 (AE 0.7.0, same-session GO per Andrew, 12 API GW routes /api/general/trades/* on 7k3ed8px20 with CUSTOM+naqxlm auth, target tag trade-pipeline-v1.6.0). TO-2 (W2) STAGED gates W1 RAVC4 (DT 0.3.0, trade-users DDB 7→9 rows + authorizers→approvers rename + 1-week dual-write window ~2026-05-04 drop, target tag v1.7.0). TO-3 (W3) STAGED gates W1 (AE 0.7.0, SES alyssa@opalinvest.com verify + Andrew prod-access submission). All 3 TOs authored + dispatched/staged at 3252ce10.",
-  "blocking": "AE 0.7.0 W1 execution in progress (same-session). On W1 RAVC4: COO chains W2 + W3 GOs. Andrew submitting SES prod-access packet today (W3 day-zero unblock = Alyssa verify while waiting).",
+  "phase": "Phase 1 — W1 infra PASS 2026-04-27 (AE 0.7.0 RAVC4: 12 routes live with CUSTOM+naqxlm auth, Lambda perms on 4 Lambdas, comp-routes 23 behaviors stable, tag trade-pipeline-v1.6.0). Browser smoke AC2/AC3 awaiting Andrew or RD. TO-2 + TO-3 STAGED gating on browser smoke confirm. 0 COMPLETE / 1 INFRA-PASS / 2 STAGED.",
+  "blocking": "AC2/AC3 browser smoke confirm (Submit tab 200+JSON + all 4 tabs load) — Andrew testing directly OR CTO dispatches RD 0.4.2 (just stood down from RDVSDS, available). On smoke PASS: COO chains W2 + W3 GOs.",
   "created": "2026-04-27",
   "pods": ["0.3", "0.7"],
   "pipeline": "trade-pipeline",
