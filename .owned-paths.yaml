@@ -570,6 +570,10 @@ paths:
   ".gitattributes":
     lane: BASE_EXEC
 
+  ".owned-paths.yaml":
+    lane: BASE_EXEC
+    note: "Owned-paths YAML itself — base exec only (the rule file describes lane permissions; only execs may modify)"
+
   ".mcp.json":
     lane: BASE_EXEC
     note: "MCP server config — base exec controls"
