@@ -1,0 +1,21 @@
+{
+  "project_code": "ADVI_ORIAPI",
+  "macro_code": "ADVI",
+  "name": "Orion Connect API Programmatic-Pull Feasibility",
+  "description": "Andrew direction 2026-04-27 22:46Z: investigate whether Orion Connect's post-signin REST API at api.cloud.orionadvisor.com can be called programmatically (curl / Python requests) using credentials Andrew has access to today, without violating Orion ToS or triggering vendor lockout. If feasible: replaces manual dim-table pull workflow with automated puller; resurrects ADVI_INFLEC_BRONZERUN_V2 Phase B with simpler scope (scheduled curl jobs vs custom EC2 scaffolding). Investigation scope: reverse-engineer auth flow (sign-in -> token -> refresh -> request), map data-queries endpoint surface, spike one programmatic pull of a previously-manually-pulled dim (Billing, since active example), document risk (TOS, rate limits, brittleness, vendor support, MFA/2FA), produce GO/NO-GO recommendation. Andrew specified owner: 0.6.1_AE_PartnerETL~B. Coordinates with ADVI_INFLV2 (manual pulls -- this could replace) and deferred ADVI_INFLEC_BRONZERUN_V2 Phase B (would simplify drastically).",
+  "prds": [
+    {"path": "docs/architecture/ADVI_ORIAPI.md", "label": "Orion Connect API Feasibility PRD v0.1", "date": "2026-04-27"}
+  ],
+  "status": "active",
+  "phase": "Phase 0 -- PRD authored 2026-04-27. Single TO sufficient (phases internally sequenced by AE~B): Phase 0 DevTools observation (~2-4h, Andrew HAR capture preferred for speed) + Phase 1 auth lifecycle reverse-engineering (~half day) + Phase 2 endpoint surface mapping (~half day) + Phase 3 programmatic pull spike on Billing (~half day) + Phase 4 GO/NO-GO recommendation + risk assessment (~2h). Total ~2 working days. Key risk vectors: ToS posture, rate limits, MFA/2FA on Andrew's account, vendor support stance, credential security. Phase 4 lands one of: GO + production puller (resurrect ADVI_INFLEC_BRONZERUN_V2 Phase B) / GO + manual-supplement / NO-GO + vendor escalation / NO-GO + stay manual.",
+  "blocking": "PRD ready for COO TO authoring + dispatch. 4 open questions for Andrew (PRD section 8): (1) HAR capture executor (Andrew vs AE~B); (2) MFA on Andrew's account + API-only service account availability; (3) ToS contact at Orion; (4) production puller appetite if Phase 4 GO. Independent investigation -- no upstream dependencies; coordinates downstream with ADVI_INFLV2 manual-pull workflow + deferred ADVI_INFLEC_BRONZERUN_V2 Phase B EC2 scaffolding.",
+  "created": "2026-04-27",
+  "pods": ["0.6"],
+  "pipeline": "inf-pipeline",
+  "lanes": ["0.6.1_AE_PartnerETL~B"],
+  "lane_note": "0.6.1_AE_PartnerETL~B owns full investigation per Andrew direction. AE~B works in tilde-lane (sister to base AE 0.6.1 which is currently focused on INFGRD chain ops). Full investigation independent of base AE 0.6.1 chain work; no resource contention. Credentials NEVER committed -- env vars or AWS Secrets Manager only.",
+  "depends_on": [],
+  "depends_on_note": "No upstream dependencies. Coordinates with ADVI_INFLV2 (could replace manual dim-table pulls) + deferred ADVI_INFLEC_BRONZERUN_V2 Phase B (would simplify Phase B scope from custom EC2 puller to scheduled curl jobs). If Phase 4 lands GO: file new TO under whichever successor project for production puller scaffolding.",
+  "thread_counter": 0,
+  "threads": []
+}
