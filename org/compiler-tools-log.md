@@ -1565,3 +1565,8 @@ RESOLUTION: fixed in `614d4c28` (`comp-platinum reverse empty-vs-broken disambig
 | 2026-04-24 | 0.4.0_DE_ClientPlatform | ADVI_RDVSDS.004 | comp-iam | comp-iam gaps | PASS |
 | CTO-STARTUP-2026-04-27 | git log + MCP org scan + query_project (6 projects) | 1.0.0_SA_CTO | 2026-04-27 | 7 doc corrections committed a3a26d79 |
 | 2026-04-27 | 0.6.0_AE_PartnerETL | (no-TO) | comp-build | comp-build | PASS |
+| 2026-04-27 | 0.4.0_DT_ClientPlatform | ADVI_49EXEC.007.dt-eventbridge-wiring-and-deploy | comp-routes | comp-routes trace exec-summary-generator | PASS |
+| 2026-04-27 | 0.4.0_DT_ClientPlatform | ADVI_49EXEC.007.dt-eventbridge-wiring-and-deploy | comp-trace | comp-trace exec-summary-generator --direction both | PASS |
+| 2026-04-27 | 0.4.0_DT_ClientPlatform | ADVI_49EXEC.007.dt-eventbridge-wiring-and-deploy | comp-iam | comp-iam gaps | PASS |
+| 2026-04-27 | 0.6.0_AE_PartnerETL | ADVI_INFLEC.W4.13b.ae-inflec-ic00-run4-dchain | comp-pipescript | comp-pipescript deployed I_C00 | PASS |
+| 2026-04-27 | 0.7.0_AE_CloudOps | ADHC_OWNPTH.sweep-fix.record-terraform-deploy | bash -n | bash -n infra/aws/lambda/ci/record-terraform-deploy.sh | PASS — syntax clean; no gold/lambda/iam work this session |
