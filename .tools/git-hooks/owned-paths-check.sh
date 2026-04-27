@@ -108,12 +108,14 @@ DETAIL="${N_VIOLATIONS} violation(s): ${FIRST3}"
 if [ "$MODE" = "block" ]; then
     echo "ERROR: owned-paths lane violation(s) detected (block mode):" >&2
     printf '%s\n' "$VIOLATIONS" | grep -a '^VIOLATION:' >&2
+    echo "  hint: use .tools/safe-commit.sh -- <paths> to scope commit to declared pathspec" >&2
     echo "${ISO_TS} BLOCK  ${AGENT}  ${N_FILES}  (${DETAIL})" \
         >> "$AUDIT_LOG" 2>/dev/null || true
     exit 1
 else
     echo "WARN: owned-paths lane violation(s) detected (warn mode -- commit proceeds):" >&2
     printf '%s\n' "$VIOLATIONS" | grep -a '^VIOLATION:' >&2
+    echo "  hint: use .tools/safe-commit.sh -- <paths> to scope commit to declared pathspec" >&2
     echo "${ISO_TS} WARN  ${AGENT}  ${N_FILES}  (${DETAIL})" \
         >> "$AUDIT_LOG" 2>/dev/null || true
     exit 0
