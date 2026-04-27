@@ -1,0 +1,17 @@
+{
+  "project_code": "ADVI_RDVSDS",
+  "macro_code": "ADVI",
+  "name": "Inflection Portal Data Surfacing Investigation",
+  "description": "Three-way diagnostic + fix loop to get IWM portal views showing data. DS validates platinum artifacts are correctly populated in S3. DE validates portal API wiring (firmId propagation, CloudFront routing, hardcoded 49financial defaults). RD visually validates data renders in /frontend-dev. Primary test anchor: Assets Overview AUA + NNA + GRO at firm level non-zero. Bonus: NMNC/NMEC radial chart + Asset Mix bars.",
+  "prds": [
+    {"path": "docs/architecture/ADVI_RDVSDS.md", "label": "ADVI_RDVSDS v1.0 PRD", "date": "2026-04-24"}
+  ],
+  "status": "active",
+  "phase": "Phase 1 ACTIVE 2026-04-24. Phase 0 complete. TO 004 DE FIRM_ACCOUNT_NAME fix COMPLETE (portal DEV 2c19352, CLOUD c07e341d). W4.13b gate CLEARED 2026-04-27 (AE 0.6.0 RAVC4: I_C00 run 4 + D-chain SUCCESS, 2,408 canonical_performance files, firm platinum live). RD 0.4.2 re-validation TO dispatched 2026-04-27. Awaiting RD PASS/FAIL on Assets Overview AUA/NNA/GRO non-zero at firm level.",
+  "blocking": "DS Inflection D-chain output path realignment in progress (2026-04-27). Architectural ruling per Andrew: Inflection bucket structure must EXACTLY match 49F (opal-data-bd). gold/artifacts/ = precursors (D_00/D_00b/D_00c/D_01/D_03/C_08), platinum/firm/ = portal-ready (D_04 derived). Lambda@Edge bucket routing CONFIRMED working (shared-advisor-router/index.mjs:175-263, FIRM_BUCKET_MAP['inflection']='inf'). Root cause #1: Inflection scripts skip writing gold/artifacts/ precursors (header_metrics et al). Secondary (TBD): existing platinum/firm/ leaderboard.json + timeseries_overview.json render blank — schema delta vs 49F suspected. DS dispatched to align scripts to 49F structure exactly + re-run chain. On DS RAVC: CTO re-dispatches RD re-validation. If still blank: joint DS+DE schema investigation.",
+  "created": "2026-04-24",
+  "pods": ["0.4", "0.4.2"],
+  "pipeline": "inf-pipeline (opal-data-inf)",
+  "thread_counter": 0,
+  "threads": []
+}
