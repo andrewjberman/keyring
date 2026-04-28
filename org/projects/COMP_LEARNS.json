@@ -126,6 +126,11 @@
       "timestamp": "20260428T124501Z",
       "agent": "2.1.0_SA_COO",
       "event": "COMP_LEARNS.094 COMPLETE -- griffe_packet_runner.py + tests; 4fadcbae; 1.1.0_DS_CompLearns lane free; SC .091/.092 re-pinged (unactioned 5h)"
+    },
+    {
+      "timestamp": "20260428T125924Z",
+      "agent": "2.1.0_SA_COO",
+      "event": "COMP_LEARNS.091 COMPLETE -- q013=INCLUDE (C4 8/8, C1 0/8) q015=INCLUDE (C4 8/8, C1 0/8); final pool INCLUDE=10; cd8ea261; K=5 PASS"
     }
   ]
 }
