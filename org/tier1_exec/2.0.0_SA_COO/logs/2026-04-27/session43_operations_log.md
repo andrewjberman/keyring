@@ -161,4 +161,70 @@ TypeScript clean (tsc --noEmit, zero errors) after all changes.
 - No gold script edits this session; ds-commit-gate not required
 - Trade submission portal changes: TypeScript clean, no Bun build errors
 
+---
+
+## Session43 Continuation (post-compaction)
+
+### ADVI_ORIAPI Task Orders — Authored + Committed
+
+COO authored 3 task order files (commit c5da0b58):
+
+| TO | File | Assigned | Status |
+|----|------|----------|--------|
+| ADVI_ORIAPI.001 | org/tier2_senior/0.6.1_AE_PartnerETL/task_orders/ADVI_ORIAPI.001.jwt-extract-spike-go-nogo.md | 0.6.1_AE_PartnerETL~B | STAGED |
+| ADVI_ORIAPI.002 | org/tier2_senior/0.7.0_AE_CloudOps/task_orders/ADVI_ORIAPI.002.eventbridge-jwt-renewal-cron-tf.md | 0.7.0_AE_CloudOps~B | STAGED |
+| ADVI_INFLV2.014 | org/tier2_senior/0.4.0_DS_ClientPlatform/task_orders/ADVI_INFLV2.014.dim-pull-requests-spec.md | 0.4.0_DS_ClientPlatform~B | COMPLETE (retroactive) |
+
+Commit mechanics: 113 contaminating staged files from COMP_LEARNS agents in shared git index. safe-commit.sh --force bypass used per ADHC_OWNPTH.007 protocol. FORCE-BYPASS logged to org/git-author-override-audit.log (CLASS-C sweep prevention, correct protocol). ADHC_OWNPTH day-4 violation count: +3 CLASS-A WARNs (COO writing into POD4/PARTNER_ETL/CLOUD_OPS task_orders paths).
+
+AE~B RAVC ACK received (20260427T235850Z): ORIAPI.001 scope confirmed end-to-end, standing by for credential gate + GO.
+AE 0.7.0 base notified: ORIAPI.002 staged, gates on .001 Phase 0 RAVC.
+
+### ADVI_RDVSDS — REGISTRY Closure
+
+ADVI_RDVSDS.json already status=complete (set by CTO session43). REGISTRY.md corrected:
+- Removed ADVI_RDVSDS row from Active Projects table
+- Added ADVI_RDVSDS to top of Completed/Archived Projects table with full closure summary
+
+### INFGRD.004 — Hold Directive
+
+Andrew (via DS~A, 23:43Z): "we're waiting because we may have a better solution on how to get the data for faster iterative cycle, dont worry about ae just yet."
+- COO HOLD message sent to AE 0.6.1 base immediately
+- AE~B confirmed stand-down (no chain rerun dispatched)
+- INFGRD.004 remains on HOLD pending Andrew decision (likely ADVI_ORIAPI programmatic path)
+- DS~A fix (195d87e7) is committed and uploaded to S3 — ready when HOLD lifts
+
+### DE INFLV2.007 Completion + Dispatch
+
+DE delivered INFLV2.007 skeleton (portal DEV 58fdf1f, parent CLOUD b2750b3d):
+- NEW: _partners/inflection/InflectionInsightsPanel.tsx (placeholder)
+- MOD: _shared/panels/CanonicalBookView.tsx (revenueOpsSlot prop)
+- MOD: _shared/tabs/ClientsTab.tsx::BooksTab (slot + advisor filter + click-suppression)
+- MOD: _partners/inflection/index.tsx (slot pass-through)
+- firmId regression scan: ZERO scattered ternaries (INFLV2.006 migration clean)
+- tsc: 0 errors
+
+COO actions:
+- RAVC ACK sent to DE (20260427T235859Z) — skeleton ACCEPTED, firmId scan ACCEPTED
+- GO sent to DT (20260427T235905Z) — push portal-v2.1.64 from DEV 58fdf1f
+
+### Open Items at Session Close (continuation)
+
+| Item | Gate | Owner | Status |
+|------|------|-------|--------|
+| ORIAPI.001 GO | Andrew credential confirm + OTP standby | Andrew | PENDING ANDREW |
+| ORIAPI.002 gate flip staged→pending | ORIAPI.001 Phase 0 RAVC | COO | Waiting |
+| INFGRD.004 chain rerun | Andrew "better solution" decision | AE 0.6.1 | HOLD |
+| ADVI_ORIAPI.json v0.5 update | CTO PRD v0.5 amendment incoming | CTO | Pending |
+| portal-v2.1.64 push | DT | 0.4.0_DT_ClientPlatform | DISPATCHED |
+| INFLV2.004 (Revenue Ops brief) | .013 RAVC + .014 RAVC + Cluster E probe | DS~A | HOLD |
+| INFLV2.007 content fill | INFLV2.005 decision | DE | HOLD |
+| ADHC_OWNPTH Day 7 report | 2026-05-01 | COO | Pending |
+
+## Commit Discipline Notes (continuation)
+
+- safe-commit.sh --force bypasses this continuation: 1 (ORIAPI TOs + INFLV2.014 TO + RDVSDS REGISTRY — 113 contaminating files from COMP_LEARNS agents, multi-agent index contention, correct protocol per ADHC_OWNPTH.007)
+- ADHC_OWNPTH day-4 total CLASS-A WARNs: 3 (COO task_order authoring into non-COO pod paths)
+- ADHC_OWNPTH.009 needed: add COO to permitted_agents for task_orders/** in POD4 + PARTNER_ETL + CLOUD_OPS lanes
+
 — 2.0.0_SA_COO
