@@ -97,7 +97,7 @@ Distribution ID not in Terraform source (console-managed historically). No TF st
 | opal-portal-authorizer | Python | `infra/aws/lambda/portal_authorizer/lambda_function.py` | viewer-request | Registered in lambda-source-map.json; no TF resource found -- deployment path unknown |
 | opalinvest-auth-handler | Node.js | `infra/aws/opalinvest_dev/lambda/auth-handler/dist/index.js` | unknown | Non-standard path; active status uncertain |
 
-**Auth flow:** Portal frontend stores Cognito access token in localStorage (key: `accessToken`). All API calls send `Authorization: Bearer {accessToken}`. Optional `X-Api-Key` from `VITE_PORTAL_API_KEY` env var. `opal-portal-authorizer` validates at CloudFront viewer-request layer.
+**Auth flow:** Opal does NOT use Cognito. Custom RS256-signed JWTs are issued at login, stored client-side as `accessToken` in localStorage, and sent on every API call as `Authorization: Bearer {accessToken}`. Validation happens at the CloudFront viewer-request layer via Lambda@Edge `auth-validator-edge` (Node.js, `infra/aws/lambda-edge/auth-validator-edge/index.mjs`), which calls `jwt.verify(token, publicKey, { algorithms: ["RS256"] })`. The public key lives in AWS Secrets Manager: `SecretId: "opal/auth/jwt-public-key"`. JWT payload carries `advisorId`, `firmId`, `role` (e.g., `'admin'`). Optional `X-Api-Key` from `VITE_PORTAL_API_KEY` env var is a separate gate on a few endpoints. `opal-portal-authorizer` is an older Python authorizer at `infra/aws/lambda/portal_authorizer/`; check its actual binding before assuming any flow uses it. **Never write "Cognito" in trade/portal auth context — it is empirically not used.**
 
 ---
 
@@ -152,7 +152,7 @@ Source of truth: `infra/aws/ec2/EC2_MANIFEST.json`
 | 5 | LOW | CHANGELOG.json missing for shared-infra and portal-notifications modules | Run record-terraform-deploy.sh after next apply to initialize |
 | 6 | LOW | portal-notifications has no git tag | After 0-diff plan, create `portal-notifications-v{X.Y.Z}` tag and push --follow-tags |
 | 7 | LOW | opalinvest-auth-handler -- non-standard path, active status uncertain | Determine if actively used; migrate or decommission |
-| 8 | INFO | Cognito user pool not in any Terraform module | Locate in AWS console; consider importing into shared-infra or dedicated auth module |
+| 8 | INFO | JWT public key in Secrets Manager (`opal/auth/jwt-public-key`) is not in any Terraform module | Consider importing the secret + secret-version + IAM read policy into shared-infra or a dedicated auth module |
 | 9 | INFO | opal-data-portal-v2 bucket not in any Terraform source | Verify bucket ownership; consider importing into shared-infra |
 
 ---
