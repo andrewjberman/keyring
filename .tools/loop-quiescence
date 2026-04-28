@@ -1,0 +1,284 @@
+#!/usr/bin/env python3
+"""
+loop-quiescence — validate macro quiescence before /loop expansion mode
+
+Usage:
+  loop-quiescence MACRO_CODE [--summary]
+
+Scans:
+  - org/tier1_exec/<serial>/task_orders/<MACRO>.*.md
+  - org/tier2_senior/<serial>/task_orders/<MACRO>.*.md
+  - git log (--all branches) for commits referencing each TO
+
+Cross-checks each TO's declared status against commit evidence.
+
+Exit codes:
+  0 = scan completed (read JSON to interpret)
+  2 = bad invocation (missing macro, etc.)
+  3 = repo not found
+
+Output (JSON, default):
+  {
+    "macro": "COMP_LEARNS",
+    "verdict": "ACTIVE" | "QUIESCENT_WITH_DISCREPANCIES" | "QUIESCENT_CLEAN",
+    "validated_complete": [{"id", "owner", "file", "declared_status", "closing_commits"}, ...],
+    "validated_active":   [{"id", "owner", "file", "declared_status", "closing_commits"}, ...],
+    "discrepancies":      [{"id", "owner", "file", "declared_status", "closing_commits", "issue", "detail"}, ...],
+    "summary": {"total_tos_scanned", "complete_count", "active_count", "discrepancy_count"},
+    "project_file_present": bool
+  }
+
+Verdict semantics (from feedback_loop_macro_expansion.md):
+  ACTIVE                      -> standard babysit mode (active TOs in flight)
+  QUIESCENT_WITH_DISCREPANCIES -> fix discrepancies, re-run, then decide
+  QUIESCENT_CLEAN             -> proceed to expansion mechanism
+
+The script is read-only; it does not modify any TO files or commits.
+"""
+import argparse
+import json
+import re
+import subprocess
+import sys
+from pathlib import Path
+
+ACTIVE_KEYWORDS = ("pending", "in_progress", "in progress", "active", "open", "queued", "draft", "in-flight", "staged")
+COMPLETE_KEYWORDS = ("complete", "closed", "done", "shipped", "delivered", "landed", "merged")
+COMMIT_CLOSE_KEYWORDS = ("complete", "close", "done", "ship", "deliver", "ravc", "landed", "merged", "flip to status complete")
+
+
+def find_repo_root() -> Path:
+    try:
+        result = subprocess.run(
+            ["git", "rev-parse", "--show-toplevel"],
+            capture_output=True, text=True, check=True
+        )
+    except (subprocess.CalledProcessError, FileNotFoundError):
+        print(json.dumps({"error": "not a git repo or git not available"}), file=sys.stderr)
+        sys.exit(3)
+    return Path(result.stdout.strip())
+
+
+def parse_to_status(path: Path) -> str:
+    """Extract declared status from a TO markdown file. Returns lowercased string or 'unknown'.
+
+    Tries XML-tag form first (<status>X</status>) -- the canonical TO_PROTOCOL format.
+    Falls back to markdown-bold forms for legacy TOs. Strips inline HTML comments
+    that often follow the status tag (e.g. <!-- complete YYYY-MM-DD -->).
+    """
+    try:
+        content = path.read_text(encoding="utf-8", errors="replace")
+    except OSError:
+        return "unknown"
+
+    # Strip HTML comments before matching so trailing notes don't pollute the value
+    cleaned = re.sub(r"<!--.*?-->", "", content, flags=re.S)
+
+    # XML-tag form (canonical per org/ref/TASK_ORDER_PROTOCOL.md)
+    m = re.search(r"<status>\s*([^<]+?)\s*</status>", cleaned, re.I)
+    if m:
+        return m.group(1).strip().lower()
+
+    # Markdown-bold fallbacks for legacy TOs
+    patterns = [
+        r"^\*\*Status:\*\*\s*(.+?)$",
+        r"^\*\*\*\*Status:\*\*\*\*\s*(.+?)$",
+        r"^Status:\s*(.+?)$",
+        r"^status:\s*(.+?)$",
+        r"^- \*\*Status:\*\*\s*(.+?)$",
+    ]
+    for pat in patterns:
+        m = re.search(pat, cleaned, re.M | re.I)
+        if m:
+            return m.group(1).strip().lower()
+    return "unknown"
+
+
+def is_active_status(status: str) -> bool:
+    s = status.lower()
+    return any(kw in s for kw in ACTIVE_KEYWORDS)
+
+
+def is_complete_status(status: str) -> bool:
+    s = status.lower()
+    return any(kw in s for kw in COMPLETE_KEYWORDS)
+
+
+def find_closing_commits(to_id: str) -> list[str]:
+    """Search git log (--all) for commits whose subject references this TO_id AND a closure keyword."""
+    try:
+        result = subprocess.run(
+            ["git", "log", "--all", "-F", "--grep", to_id, "--format=%H%x09%s"],
+            capture_output=True, text=True, check=False
+        )
+    except FileNotFoundError:
+        return []
+    closing = []
+    for line in result.stdout.splitlines():
+        if "\t" not in line:
+            continue
+        sha, subject = line.split("\t", 1)
+        subj_lower = subject.lower()
+        if any(kw in subj_lower for kw in COMMIT_CLOSE_KEYWORDS):
+            closing.append(sha[:8])
+    return closing
+
+
+def find_any_commits(to_id: str) -> list[str]:
+    """All commits mentioning the TO id (any keyword). Used to distinguish unstarted from in-flight."""
+    try:
+        result = subprocess.run(
+            ["git", "log", "--all", "-F", "--grep", to_id, "--format=%H"],
+            capture_output=True, text=True, check=False
+        )
+    except FileNotFoundError:
+        return []
+    return [sha[:8] for sha in result.stdout.splitlines() if sha.strip()]
+
+
+def extract_to_id(filename: str, macro: str) -> str:
+    """Pull MACRO.NNN out of a TO filename like COMP_LEARNS.094.ds-griffe-packet-runner-script.md"""
+    m = re.match(rf"({re.escape(macro)}\.[A-Za-z0-9_]+?)(?:\.[a-z0-9-]+)*\.md$", filename)
+    if m:
+        return m.group(1)
+    return filename.replace(".md", "")
+
+
+def scan_macro(macro: str, repo_root: Path) -> dict:
+    project_path = repo_root / "org" / "projects" / f"{macro}.json"
+    project_file_present = project_path.exists()
+
+    candidate_dirs = [
+        repo_root / "org" / "tier1_exec",
+        repo_root / "org" / "tier2_senior",
+    ]
+    all_tos: list[tuple[Path, str]] = []
+    for base in candidate_dirs:
+        if not base.exists():
+            continue
+        for to_file in base.glob(f"*/task_orders/{macro}.*.md"):
+            agent_serial = to_file.parent.parent.name
+            all_tos.append((to_file, agent_serial))
+
+    validated_complete = []
+    validated_active = []
+    discrepancies = []
+
+    for to_file, agent_serial in all_tos:
+        filename = to_file.name
+        to_id = extract_to_id(filename, macro)
+        status = parse_to_status(to_file)
+        closing_commits = find_closing_commits(to_id)
+        any_commits = find_any_commits(to_id)
+
+        record = {
+            "id": to_id,
+            "owner": agent_serial,
+            "file": str(to_file.relative_to(repo_root)).replace("\\", "/"),
+            "declared_status": status,
+            "closing_commits": closing_commits,
+            "any_commits_count": len(any_commits),
+        }
+
+        decl_active = is_active_status(status)
+        decl_complete = is_complete_status(status)
+        has_close = len(closing_commits) > 0
+
+        if decl_complete and not has_close:
+            if any_commits:
+                record["issue"] = "status_complete_no_closure_keyword"
+                record["detail"] = (
+                    f"TO declares complete and is referenced by {len(any_commits)} commit(s) "
+                    "but none use closure keyword in subject -- soft signal, may indicate "
+                    "convention drift rather than missing work"
+                )
+                record["severity"] = "soft"
+            else:
+                record["issue"] = "status_complete_no_evidence"
+                record["detail"] = "TO declares complete and no commit subject mentions the TO id at all -- hard signal"
+                record["severity"] = "hard"
+            discrepancies.append(record)
+        elif decl_active and has_close:
+            record["issue"] = "status_active_with_close_evidence"
+            record["detail"] = f"TO declared {status!r} but found {len(closing_commits)} closing commit(s): {','.join(closing_commits)}"
+            discrepancies.append(record)
+        elif decl_complete:
+            validated_complete.append(record)
+        elif decl_active:
+            validated_active.append(record)
+        else:
+            record["issue"] = "status_unparseable"
+            record["detail"] = f"Could not classify declared status: {status!r}"
+            discrepancies.append(record)
+
+    if validated_active:
+        verdict = "ACTIVE"
+    elif discrepancies:
+        verdict = "QUIESCENT_WITH_DISCREPANCIES"
+    else:
+        verdict = "QUIESCENT_CLEAN"
+
+    return {
+        "macro": macro,
+        "verdict": verdict,
+        "project_file_present": project_file_present,
+        "validated_complete": validated_complete,
+        "validated_active": validated_active,
+        "discrepancies": discrepancies,
+        "summary": {
+            "total_tos_scanned": len(all_tos),
+            "complete_count": len(validated_complete),
+            "active_count": len(validated_active),
+            "discrepancy_count": len(discrepancies),
+        },
+    }
+
+
+def render_summary(report: dict) -> str:
+    lines = [
+        f"Macro:   {report['macro']}",
+        f"Verdict: {report['verdict']}",
+        f"Project file present: {report['project_file_present']}",
+        f"Counts:  total={report['summary']['total_tos_scanned']} "
+        f"complete={report['summary']['complete_count']} "
+        f"active={report['summary']['active_count']} "
+        f"discrepancies={report['summary']['discrepancy_count']}",
+    ]
+    if report["validated_active"]:
+        lines.append("")
+        lines.append("Active TOs (still in flight):")
+        for r in report["validated_active"]:
+            lines.append(f"  {r['id']:30s} {r['owner']:35s} status={r['declared_status']!r}")
+    if report["discrepancies"]:
+        lines.append("")
+        lines.append("Discrepancies (must reconcile before expansion):")
+        for r in report["discrepancies"]:
+            lines.append(f"  {r['id']:30s} {r['owner']:35s} ({r['issue']})")
+            lines.append(f"    {r['detail']}")
+    if report["verdict"] == "QUIESCENT_CLEAN":
+        lines.append("")
+        lines.append("All TOs accounted for. Macro is quiescent and clean -- expansion permitted.")
+    return "\n".join(lines)
+
+
+def main():
+    parser = argparse.ArgumentParser(description="Validate macro quiescence for /loop expansion")
+    parser.add_argument("macro", help="Macro code (e.g., COMP_LEARNS)")
+    parser.add_argument("--summary", action="store_true", help="Human-readable summary instead of JSON")
+    args = parser.parse_args()
+
+    if not re.match(r"^[A-Z][A-Z0-9_]+$", args.macro):
+        print(json.dumps({"error": f"invalid macro code {args.macro!r}; expected uppercase identifier"}), file=sys.stderr)
+        sys.exit(2)
+
+    repo_root = find_repo_root()
+    report = scan_macro(args.macro, repo_root)
+
+    if args.summary:
+        print(render_summary(report))
+    else:
+        print(json.dumps(report, indent=2))
+
+
+if __name__ == "__main__":
+    main()
