@@ -1600,3 +1600,4 @@ RESOLUTION: fixed in `614d4c28` (`comp-platinum reverse empty-vs-broken disambig
 | 2026-04-27 | 0.7.0_AE_CloudOps | TRSB_PATHFIX.TO-1 | comp-routes | comp-routes behaviors (pre-change baseline) | PASS — 23 behaviors, /api/general/trades/* -> APIGateway-portal confirmed |
 | 2026-04-27 | 0.7.0_AE_CloudOps | TRSB_PATHFIX.TO-1 | comp-routes | comp-routes behaviors (post-route-add) | PASS — 23 behaviors unchanged |
 | 2026-04-27 | 0.7.0_AE_CloudOps | ADVI_INFLEC.TO-A.ae-orion-infra-audit | comp-routes | comp-routes behaviors | PASS |
+| 2026-04-28 | 2.0.0_SA_COO | ADVI_INFSHIP | comp-iam | comp-iam gaps | PASS |
