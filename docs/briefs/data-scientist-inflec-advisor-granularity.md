@@ -194,3 +194,69 @@ The portal-layout question is downstream of the filter. The filter ships as plan
 - `org/tier2_senior/0.4.0_DS_ClientPlatform/task_orders/ADVI_INFGRD.001.ds-phase0-orion-csv-firm-tag-audit.md` — Phase 0 TO
 - `data/orion/scripts/silver/convert_orion_to_silver.py:105-144` — `_apply_scopefix` filter site
 - Source CSVs: `s3://opal-data-inf/bronze/orion/2026-04-21/{trn,aum}/*.csv` + `SlickGridExport_AlongsideL.csv`
+
+---
+
+## Addendum — 2026-04-28 — ORIAPI integration does not resolve the granularity gap
+
+**Author:** 0.4.0_DS_ClientPlatform~A
+**Trigger:** ADVI_ORIAPI breakthrough cascade (DS~B `e824e0fd` Orion API path discovery + AE 0.6.1~B v1.5.7/v1.5.8 autonomous JWT/Twilio/boot dispatch). CTO `a78362ac` ADVI_INFLV2 v0.2 amendment; CTO `34d2b757` new ADVI_INFSHIP synthesis PRD.
+**Authority:** COO ACK 20260428T0344Z — addendum (not rewrite); brief's structural finding stands.
+
+### A1. What ORIAPI changed
+
+The Orion Connect API is now driveable end-to-end programmatically:
+- `POST /api/v1/Reporting/Envision/ExcelReports/Verbose` creates queries from arbitrary schema
+- `POST /{id}/Generate` runs them; CSV downloaded directly
+- Autonomous JWT acquisition via `inf-jwt-trigger` Lambda + Twilio webhook + EC2 boot dispatch (no human in the loop except Orion 2FA recipient swap)
+- Per-account dim pulls live for: Performance (TWR/Sharpe/Sortino/Drawdown/RSquared/StdDev), Tax (CostBasis/GainLoss 3-level paths), Geography (Household.StateCode/City), Activity (with `activityOptionId` per metric), Billing (fee subset for ~22% Inflection coverage)
+
+Capability shifts catalogued in `docs/architecture/ADVI_INFSHIP.md` §1.1 + §1.2 (8 portal-ship verdict shifts for L4 + L3 + N1 panels).
+
+### A2. What ORIAPI did NOT change
+
+**The advisor-granularity gap is structural, not delivery-channel.**
+
+The Orion *data model* still represents Inflection's 4 employees as:
+- rep_id 3 — "Inflection Wealth Management" (firm-level placeholder; 821 accts / $191.9M / 96.1% of firm AUA)
+- rep_id 11 — Patrick Scanlan (2 accts / $594K / 0.3% of firm AUA)
+- rep_id 12 — Peter Lee (29 accts / $6.95M / 3.5% of firm AUA)
+- (no rep_id for the other 2 Inflection employees — they exist in HR but not in Orion's Representative table)
+
+The API surface confirms this empirically. Pulled via the new programmatic path on 2026-04-28:
+- `silver/api_dims/household` (commit `ee1ddbbb`): 852 accts × 308 HH × `rep_id IN {3, 11, 12}`. Same rep_id distribution as the manual-CSV bronze scope. The API does not surface additional rep_ids; it just delivers the same data faster.
+- `silver/api_dims/performance`: same 852 / 308. TWR + risk metrics now per-account, but advisor attribution still firm-bucket-only for 96% of AUA.
+- `silver/api_dims/activity`: same 852 / 308. Cashflows fully decomposed (contributions, distributions, dividends, advisory fees), still under `rep_id=3` for the firm bucket majority.
+
+### A3. What this means for portal layout
+
+**Option A (firm-centric layout, 3-entry advisor list) still applies post-ORIAPI.** The brief's recommendation in §5 stands without modification:
+
+| Panel/Module | Status post-ORIAPI |
+|---|---|
+| AdvisorsTab (drop entirely for Inflection) | UNCHANGED — drop |
+| AdvisorPublicProfile non-admin | UNCHANGED — suppress |
+| BooksTab L2 advisor list | UNCHANGED — 3 entries (IWM firm + Peter Lee + Patrick Scanlan); ADVI_INFLV2.008 freeze stands |
+| Per-advisor mix/composition publishers (D_02, I_D03) | UNCHANGED — only meaningful for Peter and Patrick (4% of AUA combined); the other 96% is firm-bucket |
+| Per-HH and per-account publishers (D_04, L4 summary, L3 timeseries) | **ENHANCED by ORIAPI** — these benefit from API enrichment (Geo, Performance, Tax, Billing) regardless of advisor structure |
+
+### A4. What ORIAPI did improve
+
+Even though advisor-granularity stays gapped, ORIAPI delivers real wins for the firm-centric layout:
+- **Daily refresh** vs ~weekly manual CSV cadence
+- **No Andrew-in-the-loop** for routine pulls (Twilio + Remember Device handles 2FA on most refreshes)
+- **Per-account dims** now available for Performance + Tax + Geo that were previously absent or partial — this is what unlocks BooksTab L4 (account modal) and L3 (per-HH detail) panels
+- **Reconciliation testable** — the API independently confirms the firm AUA ($199M API ~= $200M silver, +0.3%) which the previous manual-CSV path could only triangulate via Andrew's $191M target
+
+### A5. Long-term path (unchanged)
+
+Option C (Orion vendor config to add per-employee rep_ids for the other 2 Inflection employees) remains the only structural fix for the granularity gap. ORIAPI does not bypass the need; the API surface inherits whatever rep_id schema Orion is configured for. `ADVI_INFLEC_BRONZERUN_V2` parking lot still owns this when/if Andrew prioritizes the vendor request.
+
+### A6. References (added since v1)
+
+- `docs/architecture/ADVI_INFSHIP.md` (CTO 34d2b757) — synthesis PRD that incorporates this finding
+- `docs/architecture/ADVI_INFLV2.md` v0.2 (CTO a78362ac) — layout v2 amendment with ORIAPI integration
+- `docs/architecture/ADVI_ORIAPI.md` v0.5 + Appendix B — API contract + autonomous JWT
+- `data/orion/manual_api/PATH_DISCOVERY.md` — Orion API path catalog
+- `data/orion/scripts/silver/convert_orion_api_to_silver.py` (commit ee1ddbbb) — silver/api_dims/* converter (this addendum's empirical evidence)
+- `s3://opal-data-inf/silver/api_dims/{household,performance,activity}/snapshot_date=2026-04-28/data.parquet` — empirical confirmation of the rep_id distribution post-ORIAPI
