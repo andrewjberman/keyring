@@ -160,3 +160,85 @@ ADHC_OWNPTH day-4 violation count: unchanged (no commits this session yet).
 - 0 /loop wakes (watchdog mode only; CTO holds /loop ADVI driver)
 
 — 2.0.0_SA_COO
+
+---
+
+## Session44 Continuation (post-commit `9ef94c39`)
+
+### JWT RESOLVED 15:20:24Z — Root Cause + Routing Override
+
+AE 0.6.1~B CC RAVC reports JWT triage CLOSED:
+
+- **Resolved at 15:20:24Z** via manual SSM dispatch
+- **Root cause:** transient AWS `Server.InternalError` on inf-exporter EC2 launch at 12:00:07Z. EventBridge fired correctly + Lambda mode marker + Lambda StartInstances correctly — AWS infrastructure failed launch + returned instance to stopped. **No retry logic in `inf-jwt-trigger` Lambda.** JWT stayed stale 3+h until manual recovery.
+- **Lane delegation:** Andrew delegated ORIAPI lifecycle to AE 0.6.1~B at 15:09Z, overriding COO routing to 0.6.1 base. ~B is the same agent who built ORIAPI .002 + .003 — natural lifecycle owner.
+- **CTO lean (a) "operational nudge / transient" CONFIRMED.** Not structural bug class.
+- **Andrew CC: STAND-DOWN.** AE engaged 6 min after dispatch; full resolution within 17 min. Standard escalation ladder worked.
+
+### ADVI_ORIAPI.004 Prevention TO Ruling
+
+AE 0.6.1~B asked ship-now-vs-queue on tomorrow-cron-exposure.
+
+**COO ruling 15:37Z: ship Option A tonight.** CW EventBridge rule on inf-exporter state-change {failed, stopping} → SNS `inf-otp-alert` (5-min detection window). ~30min author + 30min apply.
+
+Reasoning:
+- Detection-only keeps blast radius surgical (matches transient-AWS failure profile, low recurrence rate, manual recovery 3 min once detected)
+- Tomorrow's Phase 3 V2 demo path needs autonomous flow live; broken-but-detected is recoverable, broken-and-silent is not
+- AE 0.6.1~B authority confirmed (Andrew 15:09Z lane delegation) — author + apply in lane; COO formalize as `ADVI_ORIAPI.004` in registry post-ship
+
+Acceptance criteria + tag bump path + RAVC obligation specified in dispatch MCP. Option B (Lambda retry-with-backoff) held as `ADVI_ORIAPI.005` backlog — decoupled scope.
+
+### DS~D Triple-Ship (per CTO FYI)
+
+Per CTO ratification — DS~D shipped three deliverables in 2 commits:
+- `28018d36` — B3-DEP-1 INF_I_D03 OUTPUT_PREFIX (5th of 5 publishers, chain CLOSED) + self-discovered B3-DEP-2 gold/artifacts/firm_mix_views.json fix per AE option-b pattern
+- `dcd10448` — B1 pull_inflection_assets.py POSIX-portability fix (parallel to DS~B `cf11f13b` for pull_unified_account_dim.py)
+
+CTO flagged this as "exemplary forensic discipline" — single cycle ship of dep + self-discovered second-order fix + critical B1 path fix. ACK'd directly.
+
+### DT Auth-Login CORS = NOT a CORS Issue
+
+Per DT 0.4 RAVC4 cc: auth-login `Unexpected token '<'` is NOT a CORS issue. CloudWatch shows `POST /auth/login` never reaches `opalinvest-auth-handler` — different routing target. DT investigating root cause + MCPing DE before any `portal-auth-v1.14.2` deploy. Tracking as Phase 3 visual-validation gate dependency.
+
+### Updated INFSHIP Scoreboard at Continuation Close
+
+- Phase 1: SHIPPED ✓
+- Phase 1.5: B1 + B2 + B3 + B3-DEP-1 (5/5) + B3-DEP-2 (2/2) + B4 SHIPPED + JWT triage CLOSED — **ESSENTIALLY FULLY CLOSED**
+- Phase 2: 6/6 SHIPPED ✓ (DT push wave done; visual validation gated on auth-login fix)
+- Phase 3: pending JWT prevention TO ship + auth-login fix + portal-auth-v1.14.2 deploy
+- Tonight close trajectory: realistic if Option A ships + auth-login resolves
+
+### Registry + JSON Re-Sync (Post-Commit `9ef94c39`)
+
+Second pass of edits absorbing the resolution + ruling:
+
+**REGISTRY.md edits (2nd pass):**
+- `ADVI_ORIAPI` row: flipped Phase to "complete-with-fix"; Blocking now reflects ADVI_ORIAPI.004 ruling, AE 0.6.1~B lane authority, Option B as .005 backlog, Phase 1 closure path
+- `ADVI_INFSHIP` row Blocking: flipped JWT from "IN FLIGHT" to "RESOLVED 15:20:24Z" with root cause + ruling; added DS~D triple-ship + DT auth-login non-CORS finding + AE QA boot test note
+
+**JSON edits (2nd pass):**
+- `ADVI_ORIAPI.json` phase + blocking — same updates as REGISTRY row
+- `ADVI_INFSHIP.json` blocking — same updates as REGISTRY row
+
+### Open Items Updated at Continuation Close
+
+| Item | Gate | Owner | Status |
+|------|------|-------|--------|
+| ADVI_ORIAPI.004 (Option A prevention TO) | AE 0.6.1~B author + apply ~1h | AE 0.6.1~B | RULED ship tonight |
+| inf-pipeline-v1.5.9 tag | Option A apply | AE 0.6.1~B | PENDING |
+| ADVI_ORIAPI.005 (Option B retry-with-backoff) | v2 puller scoping pickup | TBD | BACKLOG |
+| Phase 1.5 final smoke evidence | First clean 12:30 UTC cron OR forced fire | cron / AE | PENDING |
+| Phase 3 V1 RD smoke | Phase 1.5 ratified + portal-auth-v1.14.2 deployed | RD 0.4.2 + DT | GATED on DT auth-login fix |
+| Auth-login routing fix | DT root-cause + DE coordination | DT 0.4 + DE 0.4 | INVESTIGATION |
+| AE 0.6.1~B QA boot test | byte-equivalence per AC #6 | AE 0.6.1~B | UNBLOCKED |
+| Andrew CC on JWT | RESOLVED 15:20Z; STAND-DOWN | — | CLOSED |
+| ADHC_OWNPTH.009-or-.010 (auth-handler lane mapping) | CTO direction (a) vs (b); fold or new TO | COO author | BACKLOG |
+| ADHC_OWNPTH Day 7 report | 2026-05-01 | COO | PENDING (Day 4 of 7) |
+
+### Continuation Numbers
+
+- 2 ACK MCPs (CTO ×1, post-resolution; AE 0.6.1~B routing dispatch counted in main session)
+- 1 RULING dispatch (ADVI_ORIAPI.004 Option A ship tonight)
+- 4 REGISTRY/JSON edits (2nd pass: ORIAPI row + INFSHIP row + ORIAPI.json + INFSHIP.json)
+
+— 2.0.0_SA_COO
