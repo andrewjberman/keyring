@@ -7,8 +7,8 @@
     {"path": "docs/architecture/ADHC_PUSHFIX.md", "label": "Inbox-Watch Orphan Cleanup PRD v1.0", "date": "2026-04-29"}
   ],
   "status": "active",
-  "phase": "Phase 0 — PRD authored 2026-04-29. 2 TOs to issue (both AE 0.7.0): .001 PostToolUse hook auto-runs `kill-orphans --stale --force` after register_agent (~30-60 min); .002 inbox-watch.sh single-watcher guard adds PPID-liveness check to distinguish orphan from live-parent (~30-60 min). Both parallelizable, low-risk, single-day ship. Tool dependency (`kill-orphans`) already exists at `.tools/kill-orphans` with `--stale --force` mode; this project automates its invocation.",
-  "blocking": "COO TO decomposition + dispatch to AE 0.7.0. Both TOs parallelizable.",
+  "phase": "Phase 1 LIVE 2026-04-29 — .001 + .002 TOs authored by COO + GO dispatched to AE 0.7.0 (20260429T181248Z). .001: PostToolUse hook auto-runs kill-orphans --stale --force after register_agent (settings.local.json). .002: inbox-watch.sh PPID liveness check L27-42. Both STAGED, parallelizable. 0 COMPLETE / 2 STAGED.",
+  "blocking": "AE 0.7.0 executing .001 (PostToolUse hook) + .002 (inbox-watch.sh PPID check). ADHC_OWNPTH.009 also in AE 0.7 queue but lower priority.",
   "created": "2026-04-29",
   "pods": ["0.7"],
   "pipeline": "workspace-mcp",

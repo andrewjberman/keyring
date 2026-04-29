@@ -8,7 +8,7 @@
   ],
   "status": "active",
   "phase": "Phase 1 — 4 COMPLETE / 1 ON HOLD (updated 2026-04-29). .001 DS~B Phase 0 audit COMPLETE (f603e915). .002 DS silver allowlist COMPLETE (7ecc140a; INFLECTION_REP_IDS={3,11,12} + 3 guards + D_04 NMEC fix). .003 AE chain rerun COMPLETE-WITH-FLAGS (eb52a9f8; AUA $133.7M, FLAG 2 C_07 rep_name->rep_id, FLAG 3 D_00c lookup); AE 0.6.1 re-running 2026-04-29 13:43Z under COO Inflection/Orion activation. .004 ON HOLD per Andrew 2026-04-27 23:48Z (DS~A silver-sweep fix 195d87e7 + COO Option A authorized but deferred — Twilio SMS + ORIAPI integration is the better path; chain rerun re-evaluation pending). .005 COMPLETE 2026-04-29 (DS~C 10e5ce74b + dadeeb6d1; generalize partner firm predicate via PARTNER_REP_IDS + PARTNER_AUA_BOUNDS + --partner flag + schema spec onboarding guide).",
-  "blocking": "INFGRD.003 chain re-run validation pending settle (AE 0.6.1, ETA 2-4h from 13:43Z). INFGRD.004 chain rerun on HOLD pending Andrew direction post-Twilio + ORIAPI deploy. FLAGs 2+3 architectural fixes (C_07 + D_00c) pending DS~A.",
+  "blocking": ".006 DS~A INF_D_04 column fix + aum_snapshot fresh pull (GO'd 20260429T181506Z). AE 0.6.1 re-run of D_04+D_09 gated on DS~A RAVC. D_03 IAM (dynamodb:Scan on bd-securities) separate AE 0.7 item. INFGRD.004 chain rerun ON HOLD per Andrew direction.",
   "created": "2026-04-27",
   "pods": ["0.4", "0.6"],
   "pipeline": "inf-pipeline",
