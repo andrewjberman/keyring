@@ -271,3 +271,77 @@ Both shipped during a hot Andrew-watching context with explicit Andrew override 
      org/projects/ADVI_INFLEC.json \
      org/tier1_exec/2.0.0_SA_COO/logs/2026-04-29/session48_diagfix010_close_geo_donut_ack.md
 ```
+
+Committed `5a290e3d7`.
+
+---
+
+## Wave D — TRSB_TFIMPT Project Close (3-Step Atomic)
+
+AE 0.7.0 RAVC4 arrived: TRSB_TFIMPT.W3 fully shipped. Andrew GO'd in-session ("if there is a clean and clear TO let's just knock it out").
+
+**Verified commits:**
+- `47939b6a7` — feat(TRSB_TFIMPT.W3): 950-line `shared-infra/apigateway-portal/` subordinate module imports HTTP API `7k3ed8px20` (opal-portal-data-proxy-api) + portal-jwt-authorizer (`naqxlm`) + 8/9 Lambda integrations + 73/74 routes; trade-pipeline/apigateway.tf data-source ref + 8 aws_lambda_permission resources on 4 trade Lambdas
+- `e25f3c41d` — TO closure + session log
+
+**Tags pushed:** `shared-infra-v1.8.0` + `trade-pipeline-v1.7.0` (bumped from target v1.5.0 — "follow the work" past TRSB_PATHFIX W1 v1.6.x patches)
+
+**Quick-create exclusions** (4 resources documented as console-only — AWS provider rejects import on quick-create resources):
+- `aws_apigatewayv2_stage.default` ($default stage, auto-deploy)
+- `aws_apigatewayv2_integration s7ntfz4` (opal-portal-data-proxy)
+- `aws_apigatewayv2_route khcd4f1` ($default catch-all)
+
+The 10 routes that target `s7ntfz4` use literal-ID form (`target = "integrations/s7ntfz4"`) instead of TF reference.
+
+**Wire contract:** zero runtime delta. One metadata-only change (provider default_tags added to API GW tags_all). Both modules 0-diff post-apply. **Closes G3** — shared portal API GW now compiler-visible end-to-end via comp-routes.
+
+### 3-Step Atomic Closure (TRSB_TFIMPT)
+
+| Step | File | Change |
+|------|------|--------|
+| 1 — JSON status | `org/projects/TRSB_TFIMPT.json` | status: active → complete; completed: 2026-04-29; phase: rewritten as 3-wave closure summary; blocking: → "None" with carry-forward backlog itemized |
+| 2 — REGISTRY row | `org/projects/REGISTRY.md` | row deleted from Active Projects table, inserted at TOP of Completed / Archived table (newest-first convention) with full 3-wave closure citation |
+| 3 — PRD Status | `docs/architecture/TRSB_TFIMPT.md` | N/A — PRD has no top-of-file `Status:` line |
+
+### Carry-Forward Cleanup Backlog (separate TOs at appropriate priority, not blocking closure)
+
+1. Orphan API GW `w8jnzvs21g` cleanup — 3/4 trade Lambdas have invoke permissions for it; zero CW traffic 30+ days
+2. comp-build refresh on next compile — graph populates CF→GW→Lambda chain
+3. TRSB Lambda surface deprecation assessment (9/11 COLD, CTO-flagged, Andrew strategic call)
+4. Operational follow-ons: EMAIL_FROM source/env mismatch on trade-submission-handler; 4 failed SES identities (adam/jim/wayne/jeanette @opalinvest.com); custom MAIL FROM `mail.opalinvest.dev` post-prod-approval
+5. TRSB_PATHFIX child project — separate scope, already shipped W1 at tag `trade-pipeline-v1.6.0`
+
+## Wave D Commit Scope
+
+```bash
+.tools/safe-commit.sh --author "2.0.0_SA_COO <2.0.0_SA_COO@opal.agent>" \
+  -m "dispatch(2.0.0_SA_COO): session48d — TRSB_TFIMPT 3-step close (W3 shipped 47939b6a7+e25f3c41d, shared-infra-v1.8.0 + trade-pipeline-v1.7.0)" \
+  -- org/projects/TRSB_TFIMPT.json \
+     org/projects/REGISTRY.md \
+     org/tier1_exec/2.0.0_SA_COO/logs/2026-04-29/session48_diagfix010_close_geo_donut_ack.md
+```
+
+---
+
+## Session 48 Final Summary
+
+| Wave | Commit | Scope |
+|------|--------|-------|
+| A (DIAGFIX/INFGRD) | `ab8c87983` | DIAGFIX.010 + DIAGFIX.009-old TO closures + ADVI_INFLEC + ADVI_INFGRD JSON updates |
+| B (ADHC_COMPIL.006) | `563ebf461` | ADHC_COMPIL.006 close (CTO AC1+AC3 + DS~B AC2) + .007 GO to AE 0.7.0 |
+| C (DIAGFIX.011) | `5a290e3d7` | DIAGFIX.011 close (Brandenburg attribution) + KMS/SSM manual fixes flagged for Terraform lift |
+| D (TRSB_TFIMPT close) | (this commit) | TRSB_TFIMPT 3-step atomic closure (JSON + REGISTRY + log) |
+
+**Project state at session close:**
+- ADVI_INFLEC: Wave 4 closed (DIAGFIX.011 Brandenburg LIVE; 4 advisors on S3); Wave 5 active (DIAGFIX.009-NEW pricing strategy → DS pivots there next)
+- ADVI_INFGRD: scope structurally complete (geo donut fix shipped + .006 closed)
+- ADHC_COMPIL: 5 COMPLETE / 1 ACTIVE (.002 cascade gate AE 0.7.0) / 1 STAGED (.007 GO'd)
+- ADVI_ORIAPI: Cycle 1 gate 2026-04-30 12:13Z AE 0.6.1 RAVC4 — but **JWT pipeline structurally compromised tonight** (KMS + missing systemd unit); Terraform fixes needed before tomorrow's auto-cron is reliable
+- TRSB_TFIMPT: COMPLETE 2026-04-29 (3 waves shipped, 3-step atomic close)
+- AUTH_COTTON, ADHC_PUSHFIX, ADHC_BASHFIX, ADVI_STAUDT, ADVI_INFPRTY, ADHC_ROUTER: all closed earlier today
+
+**Outstanding follow-on TOs to author** (next session):
+- AE 0.7.0: lift `inf-jwt-trigger-kms` IAM into Terraform + SSM doc Mode parameter (Option A) for jwt-extract path
+- DS: Brandenburg-discovered Reporting/Scope endpoint Books-tab follow-on (logged for Andrew priority signal)
+- AE: orphan API GW `w8jnzvs21g` cleanup
+- TRSB Lambda surface deprecation strategic call (Andrew)
