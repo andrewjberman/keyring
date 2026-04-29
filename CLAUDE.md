@@ -44,6 +44,12 @@ These rules are non-negotiable. Violating them causes state drift and broken dep
 
 15. **Every `data/*/scripts/gold/*.py`, `data/*/scripts/silver/*.py`, and `data/*/scripts/bronze/*.py` MUST begin with `from __future__ import annotations` as its first import statement.** Enables PEP-604 union-type syntax (`str | None`) on Python 3.9 runners without runtime parse failure. Gate-enforced via `.tools/ds-precommit-check.py` (ADHC_DSFLOW.004). Ships with backfill sweep of all 71 gold scripts + silver/bronze.
 
+16. **Local-runtime bash scripts must rely only on utilities present in Git Bash 3.6.7 default install.** Git Bash for Windows updated to 3.6.7-fb42d713 on 2026-03-29 dropped `pgrep`, `pkill`, `flock`, `pidof`, `setsid`, and `wget` from the default install. Any new local-runtime `.sh` script under `.tools/`, `org/mcp/`, `org/threads/`, `infra/aws/lambda/ci/`, or `infra/aws/terraform/` MUST work with the utilities that DO ship; if a missing utility is genuinely needed, include a `command -v <util>` guarded fallback (e.g., `pgrep` → `ps -ef | awk` fallback per the canonical pattern in `org/mcp/inbox-watch.sh` post-ADHC_BASHFIX.002). EC2-side scripts under `infra/aws/ec2/` and `data/*/scripts/` are exempt — they run on Amazon Linux where the utilities are present. Empirical incident 2026-04-29: `org/mcp/inbox-watch.sh` single-watcher guard silently fell through with 3 concurrent watchers running for `1.1.0_SA_CTO`. PRD: `docs/architecture/ADHC_BASHFIX.md`. Utility availability table:
+
+    | MISSING (do not use without guarded fallback) | PRESENT (safe to use) |
+    |---|---|
+    | `pgrep`, `pkill`, `flock`, `pidof`, `setsid`, `wget` | `bash 5.3.9`, `ps`, `awk`, `sed`, `grep`, `find`, `timeout`, `curl`, `xargs`, `mktemp`, `realpath`, `stdbuf`, `tee`, `jq` (workspace-local), `git`, `python`/`python3`, `aws` (Python-installed), `envsubst` |
+
 ## Agent Autonomy
 
 **Agents operate autonomously.** Do NOT ask for permission to read files, write code, run builds, run tests, commit, or execute any non-destructive operation. Just do it. The only operations that require human confirmation are:
