@@ -208,8 +208,72 @@ NOTE: COO had HOLD on D_04 pending fresh Orion bronze ($182.71M exact match).
 Andrew authorized chain run in session. Result will be ~$200M (INFGRD.003 acceptance range),
 not exact $182.71M. Fresh bronze upload → silver convert → D_04 re-run required for exact match.
 
-### Current State
-- EC2: running
-- Chain: InProgress (SSM 1eb43257)
-- RAVC: PENDING chain completion + artifact verification
-- Option D (orion-gold-dispatch.sh dispatch tag): PENDING — ships after INFGRD.003 RAVC
+### Chain Result (1eb43257)
+
+D_00c + D_02 + D_04: SUCCESS
+D_08: FAILED (exit 127 — CRLF line endings from Windows git checkout; orion-gold-dispatch.sh on S3
+had CRLF → bash parse error on Amazon Linux)
+
+**Root cause of D_08 failure:** two layered issues:
+1. INF_D_08 was not registered in CATALOG or CHAIN_FULL of orion-gold-dispatch.sh (INFLV2.009 only
+   shipped the script file, not the dispatch registration)
+2. Windows CRLF in dispatch script upload → bash exit 127 on EC2
+
+**Fix (Session 3):**
+- `aa244c3bb` — added INF_D_08 to CATALOG + CHAIN_FULL in orion-gold-dispatch.sh
+- Uploaded S3 with LF conversion (python3 CRLF→LF before aws s3 cp)
+- Re-dispatched --single INF_D_08 (SSM b05bbd0d → 127 CRLF, then 809b22b6 → SUCCESS)
+
+---
+
+## Session 3 Continuation (2026-04-29 PM — context resumed)
+
+### D_08 Dispatch Fix
+
+Prior SSM 1eb43257 failed at D_08:
+- First failure: exit 1 — INF_D_08 not in CATALOG (dispatch returned "unknown script ID")
+- Second failure: exit 127 — CRLF line endings from Windows git checkout → bash parse error on EC2
+- Third dispatch (809b22b6): SUCCESS after LF conversion
+
+### Artifact Verification (2026-04-29)
+
+| Artifact | Timestamp | Key Metric | Status |
+|---|---|---|---|
+| header_metrics.json | 14:37 UTC | total_aua = $200,070,081.81 | PASS ($140M-$250M range) |
+| leaderboard.json | 14:36 UTC | 3 entries (inflection_wealth_management, patrick_scanlan, peter_lee) | PASS |
+| nmec_nmnc_nna.json | 14:45 UTC | total_aua $198.87M, nmnc=201, nmec=0, existing=106 | PASS (INFLV2.009) |
+| timeseries_overview.json | 14:37 UTC | present | PASS |
+
+Platinum/advisors/ dirs: inflection_wealth_management/, patrick_scanlan/, peter_lee/, daria_zalewska/
+- daria_zalewska/ is STALE (2026-04-27 vintage) — not an Inflection rep_id {3,11,12}; needs cleanup
+
+### CF Invalidation
+
+IDZ989XSF6MX809PNW1QOI1YQD — /platinum/firm/* + /platinum/advisors/* — submitted 18:50Z
+
+### RAVC Sent
+
+RAVC to 2.0.0_SA_COO: INFGRD.003 COMPLETE | $200.07M AUA | 3 advisors | INFLV2.009 shipped
+RAVC to 0.4.0_DS_ClientPlatform: INFLV2.009 INF_D_08 LIVE | dispatch registration fixed
+
+---
+
+## Stand-down State (FINAL — 18:50Z)
+
+- Gold chain: COMPLETE (D_03 IAM still skipped; all other D-chain scripts ran)
+- Platinum: total_aua = $200.07M (aum_snapshot 2026-04-21; in acceptance range)
+- nmec_nmnc_nna.json: LIVE (INFLV2.009)
+- EC2 i-0ed5afded2ebd4ed4: stopped
+- CF: invalidated (IDZ989XSF6MX809PNW1QOI1YQD, 18:50Z)
+- RAVC: SENT (COO + DS)
+- Option D: PENDING — ships next
+
+## Remaining Outstanding
+
+| Issue | Fix needed |
+|---|---|
+| daria_zalewska/ stale dir in platinum/advisors/ | Andrew authorization to delete |
+| timeseries_chart.json stale (2026-04-27) | identify + re-run |
+| D_03 IAM | Terraform iam.tf — inf-gold-layer-ec2-role dynamodb:Scan on bd-securities |
+| Fresh aum_snapshot for exact $182.71M | Andrew: download Quick AUM Report → s3://opal-data-inf/bronze/orion/2026-04-29/aum/ → convert → D_04 re-run |
+| Option D dispatch-tag+trap+MAX_RUNTIME | orion-gold-dispatch.sh (AE 0.6.1 lane) + enforcer Lambda (AE 0.7 lane) |
