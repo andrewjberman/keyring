@@ -173,6 +173,8 @@ These exist to keep agents from exploring blind and to prevent the silent-drift 
 
 ## Compiler Tools Are Mandatory Before Any PRD (Non-Negotiable)
 
+**Every new PRD must include §5 Compiler Evidence — required runs per `docs/architecture/PRD_AUTHORING_PROTOCOL.md`. Use the skeleton at `org/templates/prd_template.md`.** (ADHC_COMPIL.003 ship 2026-04-29; forward-only mandate, WARN-mode enforcement.)
+
 **Rule:** Every PRD must be informed by compiler-tool output — not manual grep, not assumption, not the author's memory of the codebase. "I'll trace it manually because I know the code" is the exact failure mode this rule exists to prevent. Andrew corrected me on this 2026-04-10 after I wrote "comp-blast preview" in a PRD without actually running it.
 
 **Minimum for every PRD** (run before you write a single section — their output shapes the TO decomposition):

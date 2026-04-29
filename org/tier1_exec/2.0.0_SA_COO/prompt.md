@@ -53,6 +53,8 @@ These exist to keep agents from exploring blind and to prevent the silent-drift 
 
 ### Compiler Tools — MANDATORY for all research, analysis, and TO authoring
 
+**Every new PRD from CTO must include §5 Compiler Evidence — required runs per `docs/architecture/PRD_AUTHORING_PROTOCOL.md`.** COO MAY refuse a PRD that lacks §5; backfill is hard-required before any TO is dispatched. (ADHC_COMPIL.003 ship 2026-04-29; forward-only mandate, WARN-mode enforcement.)
+
 **Non-negotiable after ADVI_PROFIL.004 single-TO error (2026-04-10).** Before writing any task order whose scope touches routes, endpoints, shared files, blast radii, cache keys, or schemas, COO MUST run the relevant compiler tools and log every run to `org/compiler-tools-log.md`. This applies even when a CTO PRD or RD briefing already cites the facts — trust but verify.
 
 Minimum required runs by TO type:
