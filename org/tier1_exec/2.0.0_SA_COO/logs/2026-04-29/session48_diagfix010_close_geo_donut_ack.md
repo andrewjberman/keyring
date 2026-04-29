@@ -101,7 +101,7 @@ Not authored this session; tracked for future dispatch:
 |-------|---------|--------|
 | N/A | No comp-* applicable | TO status edits + JSON edits + session log only — no Python or script changes by COO |
 
-## COO Commit Scope
+## COO Commit Scope (Wave A — DIAGFIX/INFGRD)
 
 ```bash
 .tools/safe-commit.sh --author "2.0.0_SA_COO <2.0.0_SA_COO@opal.agent>" \
@@ -110,5 +110,70 @@ Not authored this session; tracked for future dispatch:
      org/tier2_senior/0.4.0_DS_ClientPlatform/task_orders/ADVI_INFLEC.DIAGFIX.009.ds-orion-morningstar-category-hunt.md \
      org/projects/ADVI_INFLEC.json \
      org/projects/ADVI_INFGRD.json \
+     org/tier1_exec/2.0.0_SA_COO/logs/2026-04-29/session48_diagfix010_close_geo_donut_ack.md
+```
+
+Committed `ab8c87983`. Two owned-paths warn-mode violations (POD4 lane — COO editing DS task order files for status flip closure-discipline; expected per ADHC_OWNPTH.004 observe week protocol).
+
+---
+
+## Wave B — Mid-Session Addendum: DIAGFIX.011 Promoted + ADHC_COMPIL.006 Closed
+
+### DIAGFIX.011 — Brandenburg Attribution Promoted (Andrew Direct)
+
+DS responded to RAVC-CLOSE with Andrew direct authorization arriving same-window:
+> "Are you sure about that because when i add joe brandenberg we are back up to 198.87m"
+> "I think he has his own advisor number and we need to figure it out"
+> "yes scope it and start build"
+
+DS self-scoped as **DIAGFIX.011** to avoid the AE-filed pricing-strategy collision (resolves my Wave 4 numbering hygiene concern at the file level — DS made the call cleanly, registry stays with two .009 files for closure history).
+
+**Math reconciliation locked:** DS bronze pull $197.86M ≈ Andrew's UI-with-Brandenburg $198.87M (~$1M intra-day delta). The original $182.55M target was scope-incomplete UI (missing Brandenburg's 21 households / 67 accounts / $16.22M).
+
+Root cause located: `data/orion/scripts/silver/convert_orion_api_to_silver.py:410` — `build_accounts_v2()` explicitly sets `out['rep_id'] = None`. NewPortfolio API only carries `representativeName` (3 firm-level rep names — primary rep, not servicing rep).
+
+**6-phase plan accepted:**
+1. New bronze: `pull_inflection_representatives.py` — `/Portfolio/Representatives` (18 reps) + per-rep `/Portfolio/Clients?representativeId={N}` for [3, 6, 7, 8, 10, 11, 12]
+2. New silver dims: `representatives` (18 rows) + `household_rep_mapping` (~270 rows)
+3. Augment `build_accounts_v2()` — JOIN household_rep_mapping → populate `rep_id` + override `representative_name`
+4. Silver re-run
+5. Gold re-run — INF_I_D03 publishes `platinum/advisors/joe_brandenburg/composition.json` automatically (slugify routing)
+6. RAVC + verification
+
+**Sequencing locked:** DIAGFIX.011 NOW (Andrew direct supersedes); DS pivots to DIAGFIX.009-NEW (pricing strategy) after .011 ships.
+
+**Cross-domain coordination flagged in ACK:** AE 0.6.1 chain registration for new bronze + silver scripts (same pattern as DIAGFIX.010 Phase 1+2 → AE registration in `orion-gold-dispatch.sh`).
+
+### ADHC_COMPIL.006 — Fully Complete (CTO + DS~B Joint Ship)
+
+DS~B RAVC4 arrived with AC2 ship. CTO had previously RAVC4'd AC1+AC3 same-day. TO has 3 ACs total (+ optional stretch AC4 = ADHC_COMPIL.007).
+
+| AC | Owner | Commit | Result |
+|----|-------|--------|--------|
+| AC1 — `docs/architecture/COMP_VALIDATE_PROTOCOL.md` (~280 lines, S1-S7 + 4 worked examples) | CTO | `74bd4121e` | SHIPPED |
+| AC2 — `gold_validate_config.yaml` inline headers (BD + INF, +36/-20) | DS~B | `81e2a009f` | SHIPPED |
+| AC3 — CLAUDE.md compiler tools table comp-validate row update | CTO | `74bd4121e` | SHIPPED (bundled with AC1) |
+| AC4 — comp-validate CLI hint on non-zero exit | AE 0.7.0 | (separate TO ADHC_COMPIL.007) | NOW UNBLOCKED |
+
+Header content covers: run command + protocol pointer / config shape one-liner / severity (ERROR/WARN/INFO with sentinel asymmetry note — regression sentinels stay WARN-class but operator treats fire as ERROR per §5/§7.3) / all 7 check types (`key_present`, `field_nonzero`, `count_min`, `sum_approx`, `no_null_numeric`, `threshold_pct`, `script_check`) / filter targeting via `filter_field` + `filter_threshold` with fee_paying.aua > $1M example / adding-a-rule guidance + `why:` field structure / DS ownership cross-ref to §6 / worked-incident catalogue (D_00 geo_drill, D_04 fee_paying.aua=0, D_00c no_fee.aua=0 sentinel, Justin Lopez $32.1M).
+
+Identical content in BD + INF (only pipeline label differs). YAML parse-validated.
+
+**.007 GO dispatched to AE 0.7.0** — gate cleared. Effort 0.5w, stretch/optional, sequence behind .002 cascade gate (still ACTIVE).
+
+### TO Status + JSON Updates (Wave B)
+
+| File | Change |
+|------|--------|
+| `org/tier1_exec/1.0.0_SA_CTO/task_orders/ADHC_COMPIL.006.cto-ds-validate-failure-mode.md` | status in_progress → complete; ravc4_cto + ravc4_ds + closure_evidence appended |
+| `org/projects/ADHC_COMPIL.json` | phase updated to 5 COMPLETE / 1 ACTIVE / 1 STAGED-now-UNBLOCKED; blocking field updated for .002 + .007 |
+
+## Wave B Commit Scope
+
+```bash
+.tools/safe-commit.sh --author "2.0.0_SA_COO <2.0.0_SA_COO@opal.agent>" \
+  -m "dispatch(2.0.0_SA_COO): session48b — ADHC_COMPIL.006 close (CTO AC1+AC3 + DS~B AC2) + .007 GO" \
+  -- org/tier1_exec/1.0.0_SA_CTO/task_orders/ADHC_COMPIL.006.cto-ds-validate-failure-mode.md \
+     org/projects/ADHC_COMPIL.json \
      org/tier1_exec/2.0.0_SA_COO/logs/2026-04-29/session48_diagfix010_close_geo_donut_ack.md
 ```
