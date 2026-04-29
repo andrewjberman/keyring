@@ -250,12 +250,75 @@ Heartbeat current. Inbox watcher running. No active execution; standby for eithe
 
 ## Next Steps
 
-- [Andrew] GO-vs-stage timing call on DIAGFIX.012 (Path A implementation: positions_mv silver layer + INF_B_00 refactor)
-- [COO] Author DIAGFIX.012 scaffold (per their 23:26Z message; will land regardless of timing)
-- [AE 0.6.1] Chain-register all DIAGFIX.010 + .011 scripts in `orion-gold-dispatch.sh` CATALOG / CHAIN_FULL / CHAIN_INCREMENTAL (FYI sent twice)
-- [AE 0.7.0] (1) Terraform-ize the inline KMS IAM policy on `inf-jwt-trigger-lambda-role`. (2) Extend SSM doc `opal-inf-export-run` with `Mode` param + wire `_handle_jwt_extract()` Lambda branch. (COO-filed follow-on)
-- [DE 0.4.0] Verify Brandenburg's drilldown page renders correctly (slug: joe_brandenburg)
-- [Future] DIAGFIX.012 Phase 2-5 once GO lands. INF_B_00 becomes a thin pass-through over `silver/positions_mv`. TRN-as-price-feed deleted. Holdings/aum_snapshot/UI deltas resolve at the source.
+### Andrew (timing decisions)
+
+- [Andrew] **GO-vs-stage timing call on DIAGFIX.012** (Path A implementation: `silver/positions_mv` daily layer + INF_B_00 refactor). Option A: ship tonight, ~150 min backfill window. Option B (COO lean): stage TO + GO tomorrow morning fresh context.
+- [Andrew] Confirm Bucket-percentage interpretation locked: Orion-native 4-bucket (53.93/30.93/8.08/6.53) is the answer; UI top-9-residual "Other 28.5%" was a display artifact, not a true alternatives bucket.
+- [Andrew] Optional: provide HAR file capturing the asset-class breakdown screenshot timestamp Inflection UI showed $182.55M (so we can confirm what scope filter excluded Brandenburg in that screenshot, for documentation purposes).
+
+### COO 2.0.0_SA_COO
+
+- [COO] **Author DIAGFIX.012 TO scaffold** (per their 23:26Z message; will land regardless of timing). Should include Phase 2-5 from the Phase 1 RAVC: bronze pull script + silver positions_mv builder + INF_B_00 refactor + re-run + validation.
+- [COO] Issue formal GO when Andrew picks timing (or stage TO with clear "DS waiting on GO" note).
+- [COO] Decide on DIAGFIX.008 Step 2 sequencing — INF_D_04 `timeseries_overview.mix.quarterly/monthly` integration. May want to defer behind DIAGFIX.012 since the new positions_mv silver dim will give us per-day per-asset MV for true multi-period backfill (vs the V1-current-period-only that DIAGFIX.008 Step 1 ships).
+- [COO] Audit AE 0.6.1's chain-registration completion of DIAGFIX.010 + .011 scripts (two FYI messages sent; if AE silent, prompt).
+
+### AE 0.6.1_AE_PartnerETL
+
+- [AE 0.6.1] **Chain-register DIAGFIX.010 scripts** in `data/orion/scripts/gold/orion-gold-dispatch.sh`:
+  - `pull_inflection_assets_v2.py` (bronze, FIRST in chain — no upstream deps; reads silver/api_dims/accounts_v2 for clientId list)
+  - `convert_assets_v2_to_silver.py` (silver, depends on bronze pull above)
+  - Suggested CATALOG entries given in earlier FYI message (20260429T221940Z)
+- [AE 0.6.1] **Chain-register DIAGFIX.011 scripts** in same dispatch:
+  - `pull_inflection_representatives.py` (bronze, FIRST in chain — no upstream deps)
+  - `convert_orion_api_to_silver.py --dim representatives` (new dim name; same script as before)
+  - `convert_orion_api_to_silver.py --dim household_rep_mapping` (new dim name; same script)
+  - Sequencing: `representatives` + `household_rep_mapping` must run BEFORE `accounts_v2` (which now JOINs the mapping)
+  - Suggested CATALOG entries in FYI message (20260429T224424Z)
+- [AE 0.6.1] **DIAGFIX.012 follow-on (when authored):** chain-register the new positions_mv bronze pull + silver builder.
+- [AE 0.6.1] **Awaiting:** the JWT pipeline diagnostic feedback to `0.7.0_AE_CloudOps` — KMS grant + SSM `Mode` extension. Cross-reference COO's filing.
+
+### AE 0.7.0_AE_CloudOps
+
+- [AE 0.7.0] **Terraform-ize the inline KMS IAM policy** that COO shipped manually 2026-04-29. Add to `infra/aws/terraform/inf-pipeline/iam.tf` for `inf-jwt-trigger-lambda-role`:
+  - Inline policy `inf-jwt-trigger-kms` with `kms:CreateGrant` (guarded by `kms:GrantIsForAWSResource:true`) + key-use ops (`kms:Decrypt`, `kms:Encrypt`, `kms:ReEncrypt*`, `kms:GenerateDataKey*`, `kms:DescribeKey`) on `arn:aws:kms:us-east-1:313476888478:key/4ba4753c-98f4-47c0-9a47-6dacaa1b6370` (alias `alias/inf-ebs-key`)
+  - Without Terraform: future `terraform apply --replace` on the role will wipe it. Recurrence of "Server.InternalError" on next `inf-jwt-trigger` invoke.
+- [AE 0.7.0] **Extend SSM doc `opal-inf-export-run`** with a `Mode` parameter (Option A from COO's diagnosis):
+  - Current: only handles bronze export, no Mode param
+  - Lambda `_handle_jwt_extract()` should call `_send_export_command(Mode='jwt-extract')` for the JWT path
+  - Without this fix: `inf-jwt-trigger --mode jwt-extract` is a stub — only writes a mode marker, doesn't actually fire the Playwright login. Manual SSM dispatch (as COO did tonight) remains required.
+- [AE 0.7.0] **Diagnostic note for AE runbook:** AWS top-level `Reservations[0].Instances[0].StateTransitionReason` lies with `Server.InternalError`. The real cause lives in `Reservations[0].Instances[0].StateReason.Message`. Bookmark for future EC2 start failures.
+- [AE 0.7.0] **Tag inf-pipeline-v1.6.6 or v1.7.0** after KMS Terraform lift + SSM extension land.
+
+### DE 0.4.0_DE_ClientPlatform
+
+- [DE 0.4.0] **Verify Brandenburg's drilldown page renders correctly** at the advisor route for `slug=joe_brandenburg`. Check:
+  - composition.json fetch returns 200 (artifact already live on S3)
+  - Mix donut renders with new 4-class breakdown (56.91 / 29.03 / 7.76 / 6.30)
+  - Top holdings table shows VOO / HTRB / BAGIX / FDRXX / CIVIX
+  - Advisor select dropdown / list includes Joe Brandenburg as 4th option (was 3)
+- [DE 0.4.0] Optional: add Brandenburg to any hardcoded advisor lists (constants, mock data, test fixtures) if any exist outside the dynamic advisor-list logic.
+- [DE 0.4.0] Verify mix_summary.json `classification_method` propagation visible in any UI debug output (if exposed). Should now read `orion_native_v1`.
+
+### DS / 0.4.0_DS_ClientPlatform (self-queued)
+
+- [DS / WHEN GO LANDS] **DIAGFIX.012 Phase 2:** build `pull_inflection_positions_daily.py` extending DIAGFIX.011 pattern with `(clientId, date)` iterator. ~150 min for 30-day backfill / ~5 min/day forward maintenance.
+- [DS / WHEN GO LANDS] **DIAGFIX.012 Phase 3:** new silver `silver/positions_mv/snapshot_date={date}/data.parquet` builder. One row per `(account_id, ticker, date)` with `current_value` (= EndingMV), `current_shares`, `current_price`, plus optional `cost_basis` when `includeCostBasis=true`.
+- [DS / WHEN GO LANDS] **DIAGFIX.012 Phase 4:** INF_B_00 refactor — replace `units × nav_price` reconstruction with direct `current_value` lookup from new silver dim. Eliminate TRN-as-price-source entirely. Likely net code reduction (similar diff shape to DIAGFIX.010 Phase 3).
+- [DS / WHEN GO LANDS] **DIAGFIX.012 Phase 5:** re-run cascade + validation. Confirm position-level daily MV correct (no drift between consecutive days unless trades happened). Confirm firm-level rollup matches Orion UI total. timeseries / concentration_risk / composition all auto-correct via INF_B_00 → INF_I_D03 → INF_I_D02d cascade.
+- [DS] **DIAGFIX.008 Step 2 follow-on:** INF_D_04 `timeseries_overview.mix.quarterly/monthly` integration once positions_mv silver dim lands. Multi-period mix backfill becomes trivial (per-day per-asset MV available).
+- [DS] **W4.14 (queued):** B-chain holdings-lots scripts (I_A01, I_A02 fee data, I_A03 with memory mitigation, I_B01) on Orion data — separate from DIAGFIX wave; consider sequencing once positions_mv lands.
+- [DS] **BDPL_CNPRCS.WP-10b (queued):** Nightly gold↔silver reconciliation harness (BD pipeline). Independent diagnostic. Lower urgency than INF chain.
+- [DS] **Optional follow-on TOs surfaced this wave:**
+  - `Probe E`: longer Orion historical depth test if 30d ever proves insufficient (currently no need)
+  - Books-tab investigation using `/Reporting/Scope` endpoint surfaced in HAR (7) — flexible calc engine for Activity series + Performance vs benchmark + grouping by Asset Category
+  - Re-run INF_B_00 to bake corrected `advisor_key` into canonical holdings (currently mitigated by Phase 5 override; INF_B_00 re-bake is optimization, not correctness fix)
+  - V2 classifier upgrade — if any Orion-native classification ever proves insufficient at long-tail buckets (alternatives discrimination is keyword-based; could sharpen with explicit `productSubType` + Orion `riskCategory` / `managementStyle` joins from the assets_v2 schema)
+
+### Watching / standby
+
+- DS heartbeat current. Inbox watcher running. No active execution loop.
+- Will fire on any new GO from COO or direct directive from Andrew.
 
 ---
 
