@@ -177,3 +177,97 @@ Identical content in BD + INF (only pipeline label differs). YAML parse-validate
      org/projects/ADHC_COMPIL.json \
      org/tier1_exec/2.0.0_SA_COO/logs/2026-04-29/session48_diagfix010_close_geo_donut_ack.md
 ```
+
+Committed `563ebf461`.
+
+---
+
+## Wave C — DIAGFIX.011 Brandenburg Attribution Closed + JWT Pipeline Diagnostic
+
+DS shipped DIAGFIX.011 fully end-to-end during the same window. Two commits:
+
+| Commit | Phase | Scope |
+|--------|-------|-------|
+| `72628a1df` | Phase 1+2+3 | bronze pull (`pull_inflection_representatives.py`) + silver dims (`representatives` 18 rows + `household_rep_mapping` 313 rows) + `build_accounts_v2()` augmented with JOIN populating rep_id + servicing rep_name |
+| `f21ab4b44` | Phase 5 surgical fix | INF_I_D03 advisor_key override JOIN against accounts_v2 — bypasses 30-60min INF_B_00 EC2 re-run by overriding baked-in `advisor_key` from `gold/canonical/holdings_2026-04-28.parquet` at gold-layer resolution time |
+
+**Sharp engineering call on Phase 5.** Without the override, Brandenburg's 67 accounts would still roll under `inflection_wealth_management` until INF_B_00 re-ran. The JOIN-at-resolution approach makes accounts_v2 the authoritative source for advisor attribution at the gold layer; future INF_B_00 re-runs will bake the corrected advisor_key from the start; the override keeps gold artifacts current in the meantime.
+
+**4 advisors LIVE on S3 (was 3):**
+
+| Advisor | accounts | rep_id | composition.json |
+|---------|----------|--------|------------------|
+| Peter Lee | 617 | 12 | live (refreshed) |
+| Patrick Scanlan | 152 | 11 | live (refreshed) |
+| **Joe Brandenburg** | **67** | **6** | **NEW** — $14.62M holdings; mix 56.91/29.03/7.76/6.30 (orion_native_v1) |
+| Inflection Wealth Management | 13 | 3 | live (refreshed) |
+
+**Math reconciliation across DIAGFIX.010 + DIAGFIX.011:**
+- accounts_v2 firm AUA: $197,686,462.71 ≈ Andrew $198.87M Brandenburg-included UI target (~$1.2M intra-day delta — consistent across both verifications)
+- Brandenburg: 21/21 households (100%), $16.15M in accounts_v2, $14.62M in composition.json (holdings-vs-accounts_v2 sourcing delta — same pattern as firm-level $190.5M holdings vs $197.86M Orion bronze)
+- mix_summary.json firm-level unchanged from DIAGFIX.010 (53.93/30.93/8.08/6.53; classification_method orion_native_v1)
+
+7/7 ACs PASS.
+
+### JWT Trigger Pipeline Diagnostic — Two Infrastructure Gaps Surfaced
+
+While diagnosing why Andrew never got an OTP after the EC2 came up, surfaced two structural infrastructure gaps. **Both shipped manually for tonight's unblock; both flagged to AE 0.7.0 for Terraform lift.**
+
+#### Gap 1: KMS grant missing on EBS encryption key
+
+**Symptom:** every `inf-jwt-trigger` Lambda fire today returned StatusCode 200 with `previous_state: stopped` body, but instance went `pending` → `Server.InternalError` → `stopped`. Top-level `StateTransitionReason` lies; the real cause sits in `StateReason.Code`: `Client.InvalidKMSKey: Invalid KMS key provided`.
+
+**Root cause:**
+- EBS volume `vol-09bece78f6a047f02` encrypted with customer-managed CMK `arn:aws:kms:us-east-1:313476888478:key/4ba4753c-98f4-47c0-9a47-6dacaa1b6370` (alias `alias/inf-ebs-key`)
+- CMK had ZERO grants (`aws kms list-grants` returned `[]`) and key policy was only `kms:* by root`
+- `inf-jwt-trigger-lambda-role` had NO KMS perms in any policy
+- → EC2 hypervisor couldn't get `kms:Decrypt` on volume attach → instance start failed silently
+
+The launch-time grant disappeared at some point in the past (CloudTrail's 90-day window doesn't cover when). Originally the grant would have persisted across Stop→Start, but something retired it.
+
+**Manual fix shipped 23:02Z via `aws iam put-role-policy`:** inline policy `inf-jwt-trigger-kms` adding `kms:CreateGrant` (with `kms:GrantIsForAWSResource: true` condition) + key-use actions on the CMK ARN.
+
+**Verified working:** AWS auto-created persistent grant on next StartInstances (`Decrypt` for `aws:ec2-infrastructure/i-081ae6aafb394fb1a` at 23:02:45Z); instance reached `running` cleanly.
+
+#### Gap 2: `inf-jwt-fetch.service` systemd unit doesn't exist
+
+**Discovered after KMS fix unblocked the boot.** Lambda `_handle_jwt_extract()` writes `s3://opal-data-inf/orion/jwt/trigger-mode.json` with `mode=jwt-extract` then calls StartInstances. Lambda docstring claims:
+> "systemd inf-jwt-fetch.service reads marker on boot and runs jwt-extract."
+
+Reality (verified via SSM diagnostic): `Unit inf-jwt-fetch.service could not be found.` `/etc/systemd/system/` has zero inf-related units. Mode marker is correctly written but nothing reads it.
+
+The SSM document `opal-inf-export-run` only handles `bronze-export` mode (no `Mode` / `EXPORT_MODE` parameter). There's no production wiring for jwt-extract today — Lambda's jwt-extract path is structurally dead.
+
+**Manual unblock 23:08Z via SSM AWS-RunShellScript** (CMD `d302baf8-6621-4f35-892c-d80587f42083`) with explicit `EXPORT_MODE=jwt-extract` env var. Browser-state cookie carried Andrew through without OTP (per script docstring: "Remember this device" cookie, 30-90 day TTL — explains "i never got an otp/sms"). New JWT landed at 23:08:26Z; DS verified end-to-end Phase 4-6.
+
+#### Recommended Terraform Lift (AE 0.7.0)
+
+**MCP'd in full** (`org/mcp/inbox/0.7.0_AE_CloudOps/.../URGENT___inf-jwt-trigger_pipeline_broken.md`):
+1. Lift `inf-jwt-trigger-kms` IAM policy into inf-pipeline Terraform module
+2. **Option A** (recommended): add `Mode` parameter to `opal-inf-export-run` SSM document; update `_handle_jwt_extract()` Lambda to call `_send_export_command()` with `Mode=jwt-extract`. Symmetric with `_handle_export()`. Tag `inf-pipeline-v1.6.6` or v1.7.0.
+
+### TO Status + JSON Updates (Wave C)
+
+| File | Change |
+|------|--------|
+| `org/tier2_senior/0.4.0_DS_ClientPlatform/task_orders/ADVI_INFLEC.DIAGFIX.011.ds-advisor-attribution-fix.md` | status pending → complete; closure_evidence + closure_note + terraform_followups appended |
+| `org/projects/ADVI_INFLEC.json` | blocking field rewritten — Wave 4 closed (DIAGFIX.011 + KMS/SSM manual fixes flagged), Wave 5 active (DIAGFIX.009-NEW pricing) |
+
+### Manual Infrastructure Changes Shipped This Session (Outside COO Lane)
+
+| What | Where | Why | Terraform Lift Owner |
+|------|-------|-----|---------------------|
+| `aws iam put-role-policy --role-name inf-jwt-trigger-lambda-role --policy-name inf-jwt-trigger-kms ...` | IAM | Unblock EC2 start (KMS create-grant + use-key on alias/inf-ebs-key) | AE 0.7.0 |
+| `aws ssm send-command` AWS-RunShellScript with EXPORT_MODE=jwt-extract | SSM (one-shot) | Bypass missing systemd unit; landed fresh JWT at 23:08:26Z | AE 0.7.0 (option A: SSM doc Mode param + Lambda dispatch) |
+
+Both shipped during a hot Andrew-watching context with explicit Andrew override ("just run it" → "go get the jwt" → "figure out why its actually not working" → "0.7.0_AE is online too, so maybe let them kno when its done or if you need help + they should probably update TF accordingly"). Per `feedback_andrew_overrides_exec_directives` this is documented authorization. Both flagged to AE 0.7.0 in same MCP for Terraform lift.
+
+## Wave C Commit Scope
+
+```bash
+.tools/safe-commit.sh --author "2.0.0_SA_COO <2.0.0_SA_COO@opal.agent>" \
+  -m "dispatch(2.0.0_SA_COO): session48c — DIAGFIX.011 close (Brandenburg attribution) + KMS/SSM manual fixes flagged to AE 0.7.0" \
+  -- org/tier2_senior/0.4.0_DS_ClientPlatform/task_orders/ADVI_INFLEC.DIAGFIX.011.ds-advisor-attribution-fix.md \
+     org/projects/ADVI_INFLEC.json \
+     org/tier1_exec/2.0.0_SA_COO/logs/2026-04-29/session48_diagfix010_close_geo_donut_ack.md
+```
