@@ -1601,3 +1601,20 @@ RESOLUTION: fixed in `614d4c28` (`comp-platinum reverse empty-vs-broken disambig
 | 2026-04-27 | 0.7.0_AE_CloudOps | TRSB_PATHFIX.TO-1 | comp-routes | comp-routes behaviors (post-route-add) | PASS — 23 behaviors unchanged |
 | 2026-04-27 | 0.7.0_AE_CloudOps | ADVI_INFLEC.TO-A.ae-orion-infra-audit | comp-routes | comp-routes behaviors | PASS |
 | 2026-04-28 | 2.0.0_SA_COO | ADVI_INFSHIP | comp-iam | comp-iam gaps | PASS |
+| 2026-04-28 | 2.0.0_SA_COO | (no-TO) | comp-pipescript | comp-pipescript deployed INF_D_00c.portal_leaderboard.py | PASS |
+| 2026-04-28 | 0.4.0_DS_ClientPlatform~D | INFSHIP.B3-DEP-1+B1 | comp-pipescript | comp-pipescript io | FAIL |
+| 2026-04-29 | 1.0.0_SA_CTO | (no-TO) | comp-iam | comp-iam gaps | PASS |
+| 2026-04-29 | 1.0.0_SA_CTO | (no-TO) | comp-iam | comp-iam service inf-jwt-trigger | PASS |
+| 2026-04-29 | 1.0.0_SA_CTO | (no-TO) | comp-iam | comp-iam gaps | PASS |
+| 2026-04-29 | 1.0.0_SA_CTO | (no-TO) | comp-pipescript | comp-pipescript io griffe_wave1_aggregator.py | FAIL |
+| 2026-04-29 | 1.0.0_SA_CTO | (no-TO) | comp-pipescript | comp-pipescript deployed griffe_wave1_aggregator.py | PASS |
+| 2026-04-29 | 1.0.0_SA_CTO | (no-TO) | comp-pipescript | comp-pipescript io B_01 | PASS |
+| 2026-04-29 | 1.0.0_SA_CTO | (no-TO) | comp-pipescript | comp-pipescript io A_03 | PASS |
+| 2026-04-29 | 1.0.0_SA_CTO | (no-TO) | comp-pipescript | comp-pipescript io inf-gold-dispatch | FAIL |
+| 2026-04-29 | 1.0.0_SA_CTO | (no-TO) | comp-blast | comp-blast B_01 | PASS |
+| 2026-04-29 | 1.0.0_SA_CTO | (no-TO) | comp-validate | comp-validate --help | PASS |
+| 2026-04-29 | 1.0.0_SA_CTO | (no-TO) | comp-validate | comp-validate --list | PASS |
+| 2026-04-29 | 1.0.0_SA_CTO | (no-TO) | comp-pipescript | comp-pipescript deployed INF_D_05 | PASS |
+| 2026-04-29 | 1.0.0_SA_CTO | (no-TO) | comp-pipescript | comp-pipescript deployed INF_D_06 | PASS |
+| 2026-04-29 | 1.0.0_SA_CTO | (no-TO) | comp-pipescript | comp-pipescript deployed INF_D_07 | PASS |
+| 2026-04-29 | 1.0.0_SA_CTO | ADHC_BASHFIX.001 | (none) | bash -n on 43 local-runtime .sh + which/grep utility audit | PASS-AUDIT-ONLY | Orchestration + ruling + project authoring session; bash-audit metadata-not-graph; no comp-* covers shell-script utility surface (candidate for future tooling, out of scope ADHC_BASHFIX). Session log: oriapi_day2_ruling_bashfix_registration_loopq_catalog.md |
