@@ -1,0 +1,19 @@
+{
+  "project_code": "ADHC_BASHFIX",
+  "macro_code": "ADHC",
+  "name": "Bash Scripts Post-Git-Bash-3.6.7 Compatibility",
+  "description": "Triggered by 1.1.0_SA_CTO 20260429T125328Z empirical observation that org/mcp/inbox-watch.sh single-watcher guard silently fell through (3 concurrent watchers running for 1.1.0_SA_CTO). Root cause: Git Bash for Windows updated to 3.6.7-fb42d713 on 2026-03-29 dropped pgrep/pkill/flock/pidof/setsid/wget from the default install. CTO Phase 1 audit (2026-04-29) found that of 43 local-runtime bash scripts under .tools/, org/mcp/, org/threads/, infra/aws/lambda/ci/, infra/aws/terraform/, all 43 pass bash -n syntax check under bash 5.3.9 and exactly ONE uses a now-missing utility: org/mcp/inbox-watch.sh (pgrep). EC2-side scripts that use pgrep/pkill run on Amazon Linux where the utilities are present and are out of scope. Project scope: ship the 1.1.0_SA_CTO drafted ps+awk fallback patch + add a CLAUDE.md authoring rule for local-runtime bash scripts + document the utility availability table in workspace memory. Original concern that 'many bash scripts may not be functional' was empirically rejected by the audit.",
+  "prds": [
+    {"path": "docs/architecture/ADHC_BASHFIX.md", "label": "Bash Compatibility PRD v1.0", "date": "2026-04-29"}
+  ],
+  "status": "active",
+  "phase": "Phase 0 — PRD authored 2026-04-29 by CTO post Phase 1 audit. 3 TOs defined: .001 docs/policy (CTO), .002 inbox-watch.sh patch ship (AE 0.7 or CTO), .003 staged-LOW pre-commit hook (deferred). Awaiting COO decomposition + dispatch.",
+  "blocking": "COO decomposition into TOs + dispatch. .002 is the substantive ship; .001 is parallel docs work; .003 is staged-LOW.",
+  "created": "2026-04-29",
+  "pods": ["0.7"],
+  "pipeline": "n/a (org/dev infrastructure)",
+  "thread_counter": 0,
+  "threads": [],
+  "depends_on": [],
+  "depends_on_note": "No upstream dependencies. Independent of ADHC_OWNPTH (different lane: bash-utility-portability vs git-pre-commit-attribution). Independent of inbox-relocation Option 3 (PARKED 2026-04-29 per Andrew — manual cross-worktree brokering acceptable; the worktree-isolation gain outweighs the manual-broker cost)."
+}
