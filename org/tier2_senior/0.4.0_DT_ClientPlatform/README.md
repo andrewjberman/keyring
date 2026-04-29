@@ -65,10 +65,37 @@
 1. Review all pending commits from RD and DE agents
 2. Verify no accidental file inclusions (portal code mixed with infra, .env files, binaries)
 3. Confirm DS data_contract.xml was updated if Lambda output shape changed
-4. Push only after review passes
+4. For portal changes: run bun run typecheck (tsc -b --noEmit) — NOT tsc --noEmit (no-op on this repo)
+5. Push only after review passes
 ```
 
 **Never push portal to PROD** — that is a separate deploy step requiring explicit authorization.
+
+## Portal Deployment Sequence
+
+**Never call a portal deploy "complete" until CI shows green.**
+
+```bash
+# 1. Run typecheck — uses tsc -b --noEmit (matches CI exactly)
+cd portal && bun run typecheck
+
+# 2. Commit to portal DEV, fast-forward PROD
+git commit --only --author "..." -m "..." -- src/...
+git checkout PROD && git merge DEV --ff-only
+
+# 3. Push PROD (triggers CI deploy.yml)
+git push origin PROD
+git checkout DEV && git push origin DEV
+
+# 4. MANDATORY: verify CI completes successfully
+gh run watch $(gh run list --branch PROD --limit 1 --json databaseId -q '.[0].databaseId')
+# Must show: Build ✓  Deploy to S3 + CloudFront ✓  Tag ✓
+# A push is NOT a deploy. CI failure = live site unchanged.
+
+# 5. Bump workspace pointer
+cd .. && .tools/safe-commit.sh --author "..." -m "bump portal pointer..." -- portal
+git push origin CLOUD
+```
 
 ---
 
@@ -117,6 +144,21 @@ export PATH="/c/Users/AndrewBerman/Desktop/ajb_workspace/.tools:$PATH"
 
 **BD EC2 services** (bd-gold-layer-runner, bd-gold-detail-generator) are owned by 0.6.0_AE_PartnerETL. Do not deploy them directly — coordinate with PartnerETL AE.
 **Never** inline Python in SSM, edit on VM directly, or bypass `safe-ec2-deploy.sh`.
+
+---
+
+## Session Startup — Portal Hooks
+
+Run this at every DT session start (idempotent):
+
+```bash
+bash .tools/portal-hooks/install.sh
+```
+
+Installs the `pre-push` hook into `portal/.git/hooks/`. The hook blocks PROD pushes
+if `bun run typecheck` (tsc -b --noEmit) fails. The tracked source lives in
+`.tools/portal-hooks/pre-push`; the `.git/hooks/` copy is gitignored and must be
+reinstalled each session.
 
 ---
 

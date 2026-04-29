@@ -1,0 +1,22 @@
+#!/bin/bash
+# Portal pre-push hook: gate PROD pushes on tsc -b --noEmit
+# Installed by: DT session startup / .tools/portal-hooks/install.sh
+
+while read local_ref local_sha remote_ref remote_sha; do
+  if echo "$remote_ref" | grep -q "refs/heads/PROD"; then
+    echo "INFO: PROD push detected -- running typecheck (tsc -b --noEmit)"
+    if command -v bun >/dev/null 2>&1; then
+      bun run typecheck
+    else
+      npx tsc -b --noEmit
+    fi
+    if [ $? -ne 0 ]; then
+      echo "ERROR: typecheck failed -- push to PROD blocked"
+      echo "ERROR: Fix TypeScript errors before pushing to PROD"
+      exit 1
+    fi
+    echo "OK: typecheck passed -- proceeding with PROD push"
+  fi
+done
+
+exit 0
