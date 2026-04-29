@@ -1,0 +1,21 @@
+{
+  "project_code": "ADHC_PUSHFIX",
+  "macro_code": "ADHC",
+  "name": "Inbox-Watch Orphan Cleanup Automation",
+  "description": "Workspace-global inbox-watch orphan accumulation: prior-session watchers detach (PPID becomes 1) when Claude Code Bash-tool wrappers die uncleanly. New sessions trip the single-watcher guard against these orphans and exit, leaving the orphan watcher in place — but its stdout is disconnected from any current task tracker, so push notifications fire to dev-null. Net: agents are deaf to real-time inbox pushes for the entire session despite a watcher being objectively alive on the host. Surfaced 2026-04-29 by 1.3.0_DS_CompLearns brief; empirically reproduced in 1.0.0_SA_CTO same day. Affects every agent serial, every session.",
+  "prds": [
+    {"path": "docs/architecture/ADHC_PUSHFIX.md", "label": "Inbox-Watch Orphan Cleanup PRD v1.0", "date": "2026-04-29"}
+  ],
+  "status": "active",
+  "phase": "Phase 0 — PRD authored 2026-04-29. 2 TOs to issue (both AE 0.7.0): .001 PostToolUse hook auto-runs `kill-orphans --stale --force` after register_agent (~30-60 min); .002 inbox-watch.sh single-watcher guard adds PPID-liveness check to distinguish orphan from live-parent (~30-60 min). Both parallelizable, low-risk, single-day ship. Tool dependency (`kill-orphans`) already exists at `.tools/kill-orphans` with `--stale --force` mode; this project automates its invocation.",
+  "blocking": "COO TO decomposition + dispatch to AE 0.7.0. Both TOs parallelizable.",
+  "created": "2026-04-29",
+  "pods": ["0.7"],
+  "pipeline": "workspace-mcp",
+  "lanes": ["0.7.0_AE_CloudOps"],
+  "lane_note": "AE 0.7.0 owns Claude Code hook configuration (settings.local.json), MCP server.py, inbox-watch.sh. Single-receiver project. CTO authoring scope (PRD only).",
+  "depends_on": ["ADHC_BASHFIX"],
+  "depends_on_note": "Phase 2 (inbox-watch.sh PPID check) extends the single-watcher guard hardened by ADHC_BASHFIX.002 (045296b18 2026-04-29). No conflict; sequential improvement on same code path.",
+  "thread_counter": 0,
+  "threads": []
+}
