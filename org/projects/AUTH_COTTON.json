@@ -1,0 +1,21 @@
+{
+  "project_code": "AUTH_COTTON",
+  "macro_code": "AUTH",
+  "name": "Cottonwood Partner Onboarding",
+  "description": "Onboard Cottonwood as the third partner firm. Identity-and-allowlist only — no data pipeline. One initial user (user@cottonwood.com, role=user) gets access to a tailored subset of the portal: market overview, model portfolios, capital markets, positioning, attribution, factor tilts, valuations, correlations, macroeconomics, security scanner, trade submission. Excludes advisor intelligence, portfolio management, data refresh.",
+  "prds": [
+    {
+      "path": "docs/architecture/AUTH_COTTON.md",
+      "label": "Cottonwood Partner Onboarding PRD v1.0",
+      "date": "2026-04-29"
+    }
+  ],
+  "status": "active",
+  "phase": "Phase 0 — PRD authored 2026-04-29 by 1.0.0_SA_CTO under ADHC_COMPIL.003 §5 mandate. 4 TOs (+ 1 sub-TO for ONBOARDING.md drift backfill) ready for COO decomposition. Pods 0.7 (AE CloudOps — Terraform) + 0.4 (DT ClientPlatform — DDB seed + portal map). Single-day ship estimate; TO-1 + TO-2 parallelizable, TO-3 gates on TO-1, TO-4 gates on all three.",
+  "blocking": "COO decomposition + dispatch.",
+  "created": "2026-04-29",
+  "pods": ["0.4", "0.7"],
+  "pipeline": "partner-firms (Terraform tag) + portal (submodule)",
+  "thread_counter": 0,
+  "threads": []
+}
