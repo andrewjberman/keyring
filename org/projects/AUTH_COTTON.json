@@ -12,7 +12,7 @@
   ],
   "status": "active",
   "phase": "Phase 0 — PRD authored 2026-04-29 by 1.0.0_SA_CTO under ADHC_COMPIL.003 §5 mandate. 4 TOs (+ 1 sub-TO for ONBOARDING.md drift backfill) ready for COO decomposition. Pods 0.7 (AE CloudOps — Terraform) + 0.4 (DT ClientPlatform — DDB seed + portal map). Single-day ship estimate; TO-1 + TO-2 parallelizable, TO-3 gates on TO-1, TO-4 gates on all three.",
-  "blocking": "COO decomposition + dispatch.",
+  "blocking": "TO-1 + TO-1b GO'd AE 0.7.0 (20260429T190325Z). TO-2 GO'd DT 0.4.0 (20260429T190333Z). TO-3 gates on TO-1 RAVC + Andrew password handoff. TO-4 gates on TO-1+TO-2+TO-3 all PROD. Andrew Q1-Q5 defaults applied (domain=cottonwood.com, mustChangePassword=false, name=Cottonwood, page-vis only for Trade Submission, META row = firm permissions).",
   "created": "2026-04-29",
   "pods": ["0.4", "0.7"],
   "pipeline": "partner-firms (Terraform tag) + portal (submodule)",
