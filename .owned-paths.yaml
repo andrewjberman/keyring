@@ -301,6 +301,10 @@ paths:
   "org/ref/**":
     lane: ANY_EXEC
 
+  "org/templates/**":
+    lane: BASE_EXEC
+    note: "PRD + session-log templates — CTO/COO authorship (ADHC_COMPIL.003; ADHC_OWNPTH.009)"
+
   "org/threads/**":
     lane: ANY
     note: "Thread participation is open to all agents (write own message file only)"

@@ -1618,3 +1618,148 @@ RESOLUTION: fixed in `614d4c28` (`comp-platinum reverse empty-vs-broken disambig
 | 2026-04-29 | 1.0.0_SA_CTO | (no-TO) | comp-pipescript | comp-pipescript deployed INF_D_06 | PASS |
 | 2026-04-29 | 1.0.0_SA_CTO | (no-TO) | comp-pipescript | comp-pipescript deployed INF_D_07 | PASS |
 | 2026-04-29 | 1.0.0_SA_CTO | ADHC_BASHFIX.001 | (none) | bash -n on 43 local-runtime .sh + which/grep utility audit | PASS-AUDIT-ONLY | Orchestration + ruling + project authoring session; bash-audit metadata-not-graph; no comp-* covers shell-script utility surface (candidate for future tooling, out of scope ADHC_BASHFIX). Session log: oriapi_day2_ruling_bashfix_registration_loopq_catalog.md |
+| 2026-04-29 | 1.0.0_SA_CTO | (no-TO) | comp-pipescript | comp-pipescript deployed D_04 | PASS |
+| 2026-04-29 | 1.0.0_SA_CTO | (no-TO) | comp-pipescript | comp-pipescript deployed D_04 | PASS |
+| 2026-04-29 | 0.4.0_DT_ClientPlatform | (no-TO) | comp-validate | comp-validate D_04 --artifact C:/Windows/Temp/cohort_a_summary.json | FAIL |
+| 2026-04-29 | 0.4.0_DT_ClientPlatform | (no-TO) | comp-validate | comp-validate cohort_a_summary --artifact C:/Windows/Temp/cohort_a_summary.json | PASS |
+
+## prd-evidence-check --baseline | 2026-04-29T15:15:10Z
+
+| Status | File | Notes |
+|--------|------|-------|
+| WARN | ADHC_BASHFIX.md | missing-s5-header,no-comp-tool-citation |
+| WARN | ADHC_COMPIL.md | missing-s5-header |
+| WARN | ADHC_COMPIL_V2.md | missing-s5-header |
+| WARN | ADHC_DSFLOW.md | missing-s5-header |
+| WARN | ADHC_HISTRY_schwab_bucket_design.md | missing-s5-header,no-comp-tool-citation |
+| WARN | ADHC_OWNPTH.md | missing-s5-header,no-comp-tool-citation |
+| WARN | ADHC_TMSTEL_PRD.md | missing-s5-header,no-comp-tool-citation |
+| WARN | ADVISOR_INTELLIGENCE_49FN_V3_PRD.md | missing-s5-header,no-comp-tool-citation |
+| WARN | ADVISOR_INTELLIGENCE_COMPLETION.md | missing-s5-header,no-comp-tool-citation |
+| WARN | ADVISOR_INTELLIGENCE_YANG_FEEDBACK_V2.md | missing-s5-header,no-comp-tool-citation |
+| WARN | ADVI_49EXEC.md | missing-s5-header |
+| WARN | ADVI_49PUSH_AUTH_ARCHITECTURE.md | missing-s5-header |
+| WARN | ADVI_49PUSH_P1_PRD.md | missing-s5-header,no-comp-tool-citation |
+| WARN | ADVI_49PUSH_P2_PRD.md | missing-s5-header,no-comp-tool-citation |
+| WARN | ADVI_49PUSH_P3_PRD.md | missing-s5-header,no-comp-tool-citation |
+| WARN | ADVI_49PUSH_P4_PRD.md | missing-s5-header,no-comp-tool-citation |
+| WARN | ADVI_49PUSH_P5_PRD.md | missing-s5-header,no-comp-tool-citation |
+| WARN | ADVI_ANONYM_P3_PRD.md | missing-s5-header,no-comp-tool-citation |
+| WARN | ADVI_ANONYM_PRD.md | missing-s5-header,no-comp-tool-citation |
+| WARN | ADVI_APISCP_PRD.md | missing-s5-header,no-comp-tool-citation |
+| WARN | ADVI_CANNNA_PLAN.md | missing-s5-header |
+| WARN | ADVI_CLSPT2_PRD.md | missing-s5-header,no-comp-tool-citation |
+| WARN | ADVI_FEE_WINDOW_REVENUE.md | missing-s5-header |
+| WARN | ADVI_FRONTEND_CORRECTNESS.md | missing-s5-header |
+| WARN | ADVI_GLDOPS_PRD.md | missing-s5-header,no-comp-tool-citation |
+| WARN | ADVI_HEADER_SPLIT_PRIMITIVES.md | missing-s5-header |
+| WARN | ADVI_INFCAPX.md | missing-s5-header,no-comp-tool-citation |
+| WARN | ADVI_INFGRD.md | missing-s5-header |
+| WARN | ADVI_INFLEC.md | missing-s5-header |
+| WARN | ADVI_INFLEC_BRONZERUN.md | missing-s5-header |
+| WARN | ADVI_INFLEC_BRONZERUN_V2.md | missing-s5-header |
+| WARN | ADVI_INFLV2.md | missing-s5-header,no-comp-tool-citation |
+| WARN | ADVI_INFSHIP.md | missing-s5-header,no-comp-tool-citation |
+| WARN | ADVI_INFSHIP_PHASE2_BRIEF.md | missing-s5-header,no-comp-tool-citation |
+| WARN | ADVI_MVP318_PRD.md | missing-s5-header,no-comp-tool-citation |
+| WARN | ADVI_NNAFEE_FEE_EFFICIENCY_VIEWS.md | missing-s5-header,no-comp-tool-citation |
+| WARN | ADVI_OFFICE_ADDENDUM.md | missing-s5-header |
+| WARN | ADVI_OFFICE_PRD.md | missing-s5-header |
+| WARN | ADVI_ORIAPI.md | missing-s5-header,no-comp-tool-citation |
+| WARN | ADVI_PROFIL_PRD.md | missing-s5-header |
+| WARN | ADVI_PSCFIX_PRD.md | missing-s5-header,no-comp-tool-citation |
+| WARN | ADVI_RDVSDS.md | no-comp-tool-citation |
+| WARN | ADVI_REBORN_LEADERBOARD_FEES_ROLES_FIX.md | missing-s5-header |
+| WARN | ADVI_REBORN_PRD.md | missing-s5-header,no-comp-tool-citation |
+| WARN | ADVI_REBORN_WS1_WS3_VALIDATION.md | missing-s5-header,no-comp-tool-citation |
+| WARN | ADVI_ROLGAT_PERMISSION_GROUPS.md | missing-s5-header,no-comp-tool-citation |
+| WARN | ADVI_ROLGAT_PRD.md | missing-s5-header,no-comp-tool-citation |
+| WARN | ADVI_ROLLUP.md | missing-s5-header |
+| WARN | ADVI_ROLLUP_ADDENDUM_small_account_count.md | missing-s5-header |
+| WARN | ADVI_SLEEVE_P0_DECISION.md | missing-s5-header |
+| WARN | ADVI_SLEEVE_PLAN.md | missing-s5-header |
+| WARN | ADVI_STAUDT.md | missing-s5-header |
+| WARN | ADVI_TICKID_PRD.md | missing-s5-header,no-comp-tool-citation |
+| WARN | ADVI_TICKID_PRICING_DIVERGENCE_ADDENDUM.md | missing-s5-header,no-comp-tool-citation |
+| WARN | ADVI_architect_methodology_bifurcation.md | missing-s5-header,no-comp-tool-citation |
+| WARN | ADVI_data_lineage.md | missing-s5-header,no-comp-tool-citation |
+| WARN | ADVI_segment_analytics_variance.md | missing-s5-header,no-comp-tool-citation |
+| WARN | AUA_VARIANCE_ANALYSIS_PRD.md | missing-s5-header,no-comp-tool-citation |
+| WARN | BD_ASSET_DIM_PIPELINE.md | missing-s5-header |
+| WARN | BD_CANONICAL_PRICES_CLASSIFICATION_REFACTOR.md | missing-s5-header |
+| WARN | BD_NNA_FRAMEWORK.md | missing-s5-header,no-comp-tool-citation |
+| WARN | CDRS_TFIMPT_PHASE2_HANDOFF.md | missing-s5-header |
+| WARN | COMPILER_BLAST_SCRIPT_ARTIFACT_EDGES.md | missing-s5-header |
+| WARN | COMPILER_IAM_LAMBDA_PARSER.md | missing-s5-header |
+| WARN | COMPILER_INPUT_CANONICALIZATION.md | missing-s5-header |
+| WARN | COMPILER_LINT_COVERAGE_PASS.md | missing-s5-header |
+| WARN | COMPILER_SILVER_SCOPE_FULL.md | missing-s5-header |
+| WARN | COMPILER_VALIDATE_COVERAGE_AND_PASSTHROUGH.md | missing-s5-header |
+| WARN | COMP_LEARNS_ADVERSARIAL_QUERIES.md | missing-s5-header,no-comp-tool-citation |
+| WARN | COMP_LEARNS_ARCHITECTURE.md | missing-s5-header |
+| WARN | COMP_LEARNS_AUTOMATION_V1.md | no-comp-tool-citation |
+| WARN | COMP_LEARNS_BACKLOG_V1.md | no-comp-tool-citation |
+| WARN | COMP_LEARNS_BENCHMARK_AUTHORING_SOP.md | missing-s5-header,no-comp-tool-citation |
+| WARN | COMP_LEARNS_COMPILER_BASELINE.md | missing-s5-header,no-comp-tool-citation |
+| WARN | COMP_LEARNS_DS_ROLE_ADDENDUM.md | missing-s5-header,no-comp-tool-citation |
+| WARN | COMP_LEARNS_HARNESS_FRAMEWORK.md | missing-s5-header,no-comp-tool-citation |
+| WARN | COMP_LEARNS_HTTPX_TARGET.md | missing-s5-header,no-comp-tool-citation |
+| WARN | COMP_LEARNS_INTAKE_WAVE.md | no-comp-tool-citation |
+| WARN | COMP_LEARNS_LOOP_ORCHESTRATOR.md | missing-s5-header,no-comp-tool-citation |
+| WARN | COMP_LEARNS_OPERATIONAL_MANDATE.md | missing-s5-header,no-comp-tool-citation |
+| WARN | COMP_LEARNS_PARALLELIZATION_V1.md | missing-s5-header,no-comp-tool-citation |
+| WARN | COMP_LEARNS_PHASE2_PROTOCOL_AMENDMENT.md | missing-s5-header,no-comp-tool-citation |
+| WARN | COMP_LEARNS_PILOT.md | missing-s5-header,no-comp-tool-citation |
+| WARN | COMP_LEARNS_PROGRAM_PURPOSE.md | missing-s5-header,no-comp-tool-citation |
+| WARN | COMP_LEARNS_QUALITATIVE_FRAMEWORK.md | missing-s5-header |
+| WARN | COMP_LEARNS_RUNTIME_V1.md | missing-s5-header,no-comp-tool-citation |
+| WARN | COMP_LEARNS_STAGE3.md | no-comp-tool-citation |
+| WARN | COMP_LEARNS_STAGE3_PATH_B.md | no-comp-tool-citation |
+| WARN | COMP_LEARNS_TARGET_2_SELECTION.md | missing-s5-header,no-comp-tool-citation |
+| WARN | COMP_LEARNS_TARGET_CLOSEOUT.md | missing-s5-header,no-comp-tool-citation |
+| WARN | COMP_LEARNS_UNDOCUMENTED_SURFACES.md | missing-s5-header,no-comp-tool-citation |
+| PASS | COMP_LEARNS_WAVE3_V1.md |  |
+| WARN | COMP_LEARNS_WAVE_PRD_TEMPLATE.md | no-comp-tool-citation |
+| WARN | DISTRIBUTION_TAB_OTHER_DEDUPE.md | missing-s5-header |
+| WARN | DRFR_PTMCH_CANON_INTERLOCK_PRD.md | missing-s5-header,no-comp-tool-citation |
+| WARN | DRFR_PTMCH_PRD.md | missing-s5-header,no-comp-tool-citation |
+| WARN | EC2_TELEMETRY_DESIGN.md | missing-s5-header,no-comp-tool-citation |
+| WARN | ETFS_SECIDX_PRD.md | missing-s5-header,no-comp-tool-citation |
+| WARN | GLDRST_BLAST_RADIUS_ASSESSMENT.md | missing-s5-header,no-comp-tool-citation |
+| WARN | GLDRST_COO_BRIEFING_INTEGRATION_TESTING.md | missing-s5-header,no-comp-tool-citation |
+| WARN | GLDRST_P3_OPERATIONAL_READINESS.md | missing-s5-header,no-comp-tool-citation |
+| WARN | GLDRST_ROLLBACK_PLAN.md | missing-s5-header,no-comp-tool-citation |
+| WARN | GOLD_B01_TIERED_UNIT_CONFIDENCE_CAP.md | missing-s5-header,no-comp-tool-citation |
+| WARN | GOLD_PERF_PRD.md | missing-s5-header |
+| WARN | IDTY_RENAME_PRD.md | missing-s5-header,no-comp-tool-citation |
+| WARN | INCREMENTAL_RUNS_DESIGN.md | missing-s5-header |
+| WARN | INFLEC_API_ENDPOINTS_CATALOG.md | missing-s5-header,no-comp-tool-citation |
+| WARN | INFLEC_BD_PARITY_MATRIX.md | missing-s5-header,no-comp-tool-citation |
+| WARN | INFLEC_BOOKSTAB_TAX_FIELD_MAP.md | missing-s5-header,no-comp-tool-citation |
+| WARN | INFLEC_DATA_INVENTORY.md | missing-s5-header,no-comp-tool-citation |
+| WARN | INFLEC_DIMS_AND_TRANSACTIONS.md | no-comp-tool-citation |
+| WARN | INFLEC_DIM_PULL_REQUESTS.md | no-comp-tool-citation |
+| WARN | INFLEC_ENRICH_SCOPE.md | missing-s5-header,no-comp-tool-citation |
+| WARN | INFLEC_PARITY_FILL_CANDIDATES.md | no-comp-tool-citation |
+| WARN | INFLEC_PORTAL_FIELD_USAGE.md | missing-s5-header,no-comp-tool-citation |
+| WARN | INFLEC_TRANSACTIONS_API_PROBE.md | missing-s5-header,no-comp-tool-citation |
+| WARN | INFLV2_BOOKS_SCOPE_FREEZE.md | missing-s5-header,no-comp-tool-citation |
+| WARN | MDLP_WYNCHT_PRD.md | missing-s5-header,no-comp-tool-citation |
+| WARN | MKOV_TRENDS_PRD.md | missing-s5-header,no-comp-tool-citation |
+| WARN | NNA_VARIANCE_OPTIMIZATION_PRD.md | missing-s5-header,no-comp-tool-citation |
+| WARN | PORTAL_DESIGN_NORMALIZATION_AND_COMPILER_TOOLS.md | missing-s5-header,no-comp-tool-citation |
+| WARN | PORTFOLIO_EXPORT_TRADE_SUBMISSION_BRIDGE.md | missing-s5-header,no-comp-tool-citation |
+| PASS | PRD_AUTHORING_PROTOCOL.md |  |
+| WARN | ROLE_AUA_CANONICAL_CONVERGENCE_PLAN.md | missing-s5-header |
+| WARN | SECURITY_SCANNER_PRD.md | missing-s5-header,no-comp-tool-citation |
+| WARN | SECURITY_SCANNER_XLSM_AUDIT.md | missing-s5-header,no-comp-tool-citation |
+| WARN | SECURITY_SCANNER_XLSM_AUDIT_COMPACT.md | missing-s5-header,no-comp-tool-citation |
+| WARN | SSCN_DATA_CONTRACT.md | missing-s5-header,no-comp-tool-citation |
+| WARN | SSCN_DESIGN_CONTRACT.md | missing-s5-header,no-comp-tool-citation |
+| WARN | TRADE_ENGINE_VISUAL_POLISH.md | missing-s5-header,no-comp-tool-citation |
+| WARN | TRSB_PATHFIX_PRD.md | missing-s5-header |
+| WARN | TRSB_TFIMPT.md | missing-s5-header |
+| WARN | gold-artifact-mapping.md | missing-s5-header,no-comp-tool-citation |
+
+Total: 2 PASS, 131 WARN, 133 PRDs scanned.
+
