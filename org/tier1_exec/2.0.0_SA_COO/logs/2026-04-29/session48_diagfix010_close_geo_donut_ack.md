@@ -345,3 +345,134 @@ The 10 routes that target `s7ntfz4` use literal-ID form (`target = "integrations
 - DS: Brandenburg-discovered Reporting/Scope endpoint Books-tab follow-on (logged for Andrew priority signal)
 - AE: orphan API GW `w8jnzvs21g` cleanup
 - TRSB Lambda surface deprecation strategic call (Andrew)
+
+---
+
+## Wave E — DIAGFIX.009-NEW Phase 1 VERDICT + DIAGFIX.012 Authoring
+
+DS finished DIAGFIX.009-NEW Phase 1 (Orion endpoint probe) within session window. **VERDICT: PATH A.**
+
+### Empirical Finding
+
+The same endpoint already used to populate `silver/api_dims/assets_v2` accepts arbitrary historical dates and returns real per-day position MV at the queried date:
+
+```
+GET /api/v1/Portfolio/Clients/{clientId}/Assets/{MM-DD-YYYY}?$top=50000&includeCostBasis=false
+```
+
+Probe matrix (4 API surfaces tested, 1 clean winner):
+
+| Probe | Surface | Result |
+|-------|---------|--------|
+| A | Verbose API @ Asset grouping with DateRange.* cols | PERIOD-END only (single asOfDate per row; window param shifts period-end but doesn't yield daily granularity) |
+| B | /Reporting/Scope @ Asset grouping with activity-series | 404 'Object does not exist' (body shape mismatch with HAR 7 sample; not pursued) |
+| **C** | **/Portfolio/Clients/{cid}/Assets/{date}** | **HISTORICAL_DATES_SUPPORTED** ✓ |
+| D | /Reporting/Scope HAR-replay (entry 60 exact body) | 200 OK with 119-element activity-series, but cumulative-with-fixed-startDate semantics (not daily MV snapshots) |
+
+Probe C verification — sample clientId=389 across 5 dates (today + 1d + 3d + 7d + 30d back); all 5 returned 200 with `asOfDate` echoing the queried date and different `currentValue` totals confirming real per-day MV (not carry-forward, not smoothed).
+
+**Andrew direction matched verbatim** — "if they have time series that accounts for nav value on a daily basis then awesome lets grab it right from the source. if they do not have that, then the simple mechanism is what we do for 49financial whereby there are type A B and C assets" → They have it. **Path B (BD-style A/B/C with Yahoo Finance) is no longer needed.**
+
+DS commit `91da4d6a1` ships the probe scripts + findings doc. Probe artifacts on S3 at `bronze/orion-api/probe/probe_diagfix009_findings.json` + `bronze/orion-api/probe/positions_mv_30d.csv`.
+
+### Architectural Implication
+
+The TRN-as-price-source flow in INF_B_00 (`market_value = units × nav_price` reconstruction with "last seen wins" lookup) goes away entirely. The fundamental bug — TRN is a transaction log, not a price source; non-trade events (advisory fee debits, journal entries, income distributions) corrupt the price for the affected (account, ticker) pair forever after — gets fixed at the architectural level rather than patched.
+
+INF_B_00 becomes a thin pass-through JOIN over a new `silver/positions_mv` dim populated by daily Orion API pulls. Downstream consumers (timeseries, concentration_risk, composition, advisor-level views) all auto-correct via the existing INF_B_00 → INF_I_D03 → INF_I_D02d cascade.
+
+The remaining sourcing deltas observed throughout this session collapse:
+- DIAGFIX.010 firm-level: $190.5M holdings vs $182.55M aum_snapshot vs $197.86M Orion bronze (~$7-15M)
+- DIAGFIX.011 advisor-level: Brandenburg $16.15M accounts_v2 vs $14.62M composition.json (~$1.5M)
+- Both resolve at the source — not workarounds, not carry-forward fixes, but architectural correction.
+
+### DIAGFIX.012 TO Authored (status=staged)
+
+Path: `org/tier2_senior/0.4.0_DS_ClientPlatform/task_orders/ADVI_INFLEC.DIAGFIX.012.ds-orion-daily-positions-mv-refactor.md`
+
+**Status: STAGED** — awaits Andrew's GO-vs-stage call (tonight is 7:25 PM ET; 30-day backfill = 150 min one-shot).
+
+**Phase plan:**
+1. Phase 2 — bronze pull `pull_inflection_positions_daily.py` with `--backfill-days N` / `--start --end` CLI flags; iterates (clientId, date); 100ms inter-call sleep; 296 clientIds × N days; full 58-col schema per row
+2. Phase 3 — silver dim builder extending `convert_orion_api_to_silver.py` with `build_positions_mv()`; output `silver/positions_mv/snapshot_date={date}/data.parquet` partitioned by date
+3. Phase 4 — INF_B_00 refactor: DELETE TRN-as-price helpers (`_apply_nav_price`, "last seen wins" lookup, nav_price guard); REPLACE with `_load_positions_mv()` + JOIN on (account_id, ticker, snapshot_date); KEEP TRN feed for trades/FIFO/lifecycle (TRN's actual purpose)
+4. Phase 5 — re-run + validate (firm-level, Brandenburg-level, per-row reconciliation against Orion totals)
+5. Phase 6 — RAVC4 close
+
+**Effort:** 4-6h code + 150min one-shot 30-day backfill. **Cost:** $0 (Orion API is free for us). **Risk:** low — same retry/backoff/rate-limit pattern proven in DIAGFIX.010 + .011.
+
+7 ACs covering bronze artifact existence + silver schema + code-deletion diff (no `nav_price` references in INF_B_00 post-refactor) + post-refactor per-row reconciliation + firm/advisor reconciliation tolerances + commit-gate clean + S3 MATCH + RAVC.
+
+**Cross-domain coordination flagged:**
+- AE 0.6.1: chain registration in `orion-gold-dispatch.sh` — batches with the still-pending DIAGFIX.011 registrations (representatives + household_rep_mapping); new ordering pull_inflection_positions_daily → convert_orion_api_to_silver --dim positions_mv → INF_B_00 → INF_I_D03 → INF_I_D02d
+- DE: position-level views (concentration_risk, top_holdings, mix) auto-update on next portal cache; visual smoke-check welcome — numbers will move (correctly)
+- AE 0.7.0: JWT pipeline structural fix continues in parallel (independent track)
+
+### Decision Point Surfaced to Andrew
+
+Two paths on the table:
+- **Option A (GO tonight):** ship Phase 2+3 code tonight; kick off 30-day backfill; Phase 4-5 lands tomorrow morning
+- **Option B (stage til morning, COO lean):** TO sits staged; DS picks up fresh tomorrow with full design space; minimal context-fragmentation across day boundary
+
+DS standing by. They offered to draft a brief INF_B_00 refactor design doc tonight as a preparatory artifact regardless of timing — Phase 4 design space is small and well-bounded, but the offer is open.
+
+### Wave E Commit Scope
+
+```bash
+.tools/safe-commit.sh --author "2.0.0_SA_COO <2.0.0_SA_COO@opal.agent>" \
+  -m "dispatch(2.0.0_SA_COO): session48e — DIAGFIX.009-NEW Phase 1 VERDICT PATH A + DIAGFIX.012 TO scaffold (staged)" \
+  -- org/tier2_senior/0.4.0_DS_ClientPlatform/task_orders/ADVI_INFLEC.DIAGFIX.012.ds-orion-daily-positions-mv-refactor.md \
+     org/tier1_exec/2.0.0_SA_COO/logs/2026-04-29/session48_diagfix010_close_geo_donut_ack.md
+```
+
+---
+
+## Session 48 Compiler Tools
+
+| Phase | Command | Result |
+|-------|---------|--------|
+| N/A | No comp-* tools applicable to COO scope this session | TO status flips + JSON edits + REGISTRY edit + session log + MCPs only — no Python or script changes by COO |
+
+Five commits this session, all administrative/closure work. No code paths touched by COO commits. Comp-tools-log.md not appended (no comp-* invocations).
+
+## Session 48 MCPs Sent (COO origin)
+
+| To | Subject | Outcome |
+|----|---------|---------|
+| 0.4.0_DS_ClientPlatform | RAVC CLOSE — DIAGFIX.010 ACCEPTED | DS ACK'd |
+| 0.6.1_AE_PartnerETL | ACK — Geo donut fix verified + DIAGFIX.009-NEW pricing-strategy TO accepted | (no reply needed) |
+| 0.4.0_DS_ClientPlatform | ACK — DIAGFIX.011 (Brandenburg) authorized + self-scoped clean | DS executed full ship |
+| 0.4.0_DS_ClientPlatform~B | RAVC CLOSE — ADHC_COMPIL.006 AC2 ACCEPTED | (delivered to base inbox) |
+| 0.7.0_AE_CloudOps | GO — ADHC_COMPIL.007 (CLI hint) unblocked | (queued behind .002) |
+| 0.6.1_AE_PartnerETL | GO — Andrew authorized manual JWT trigger | superseded — duplicate fire from DS |
+| 0.4.0_DS_ClientPlatform | FYI — JWT trigger fired | (DS already had it) |
+| 0.4.0_DS_ClientPlatform | ACK — JWT trigger duplicate noted | DS ACK'd lesson |
+| 0.6.1_AE_PartnerETL | PRE-AUTHORIZED TRIGGER — ADVI_ORIAPI.005 author NOW (3 consecutive Server.InternalError) | Was misdiagnosis — actual root cause was KMS, not AZ outage. AE 0.7.0 informed in URGENT MCP. .005 trigger may not be needed if KMS fix holds; deferred to Andrew/CTO call. |
+| 0.6.1_AE_PartnerETL | FYI — JWT trigger fired by COO per Andrew direct override | (no action needed) |
+| 0.4.0_DS_ClientPlatform | JWT trigger FIRED — EC2 starting | (superseded by KMS diagnosis) |
+| 0.4.0_DS_ClientPlatform | JWT trigger fixed — KMS grant root cause + fix shipped + how it works now | DS RAVC'd understanding + executed Phase 4-6 |
+| 0.7.0_AE_CloudOps | URGENT — inf-jwt-trigger pipeline broken in 2 places (KMS perms + missing systemd unit) — fix shipped manually, needs Terraform lift | Pending AE 0.7.0 ACK on Option A vs other paths |
+| 0.4.0_DS_ClientPlatform | RAVC CLOSE — DIAGFIX.011 ACCEPTED — Brandenburg LIVE on S3 as 4th advisor | DS RAVC'd; pivoted to DIAGFIX.009-NEW Phase 1 |
+| 0.7.0_AE_CloudOps | RAVC CLOSE — TRSB_TFIMPT.W3 ACCEPTED + project closed (3-step done) + reminder on URGENT KMS/SSM MCP | Pending AE ACK |
+| 0.4.0_DS_ClientPlatform | RAVC ACK — DIAGFIX.009-NEW Phase 1 VERDICT PATH A accepted; DIAGFIX.012 authoring queued (Andrew decides timing) | DS standing by, no work started |
+
+15 outbound MCPs over the session window.
+
+## Session 48 Andrew Direct Decisions
+
+| Time | Andrew Direct | Action Taken |
+|------|---------------|--------------|
+| ~22:48Z | "just run it" → "go get the jwt" | COO fired `inf-jwt-trigger` Lambda (DS fired same Lambda 1 second prior — duplicate, no harm) |
+| ~22:54Z | "i never got an otp/sms" | Diagnosed Server.InternalError → 3 retries → escalated as ORIAPI.005 trigger (later proven misdiagnosis) |
+| ~22:58Z | "i dont really buy that explanation. all of a sudden amazon is just inaccessible for a little ec2 at the top of the hour? bullshit, figure out why its actually not workin" | Re-diagnosed: `Client.InvalidKMSKey` masked under `Server.InternalError`; root cause = missing KMS grant + Lambda role missing KMS perms |
+| ~23:01Z | "when you figure it out, write an mcp to 0.4.0_DS (BASE no serial) explainign what you did and how it works now because theyre trying to et into it and its not working" | Shipped `inf-jwt-trigger-kms` IAM policy + RAVC writeup MCP to DS base |
+| ~23:05Z | "im not getting any texts and not really expecting to get any i think the ec2 is logged in just fine, furthermore, 0.7.0_AE is online too, so maybe let them kno when its done or if you need help + they should probably update TF accordingly" | Sent URGENT MCP to AE 0.7.0 with full diagnosis + Option A recommendation; "Remember this device" cookie path matched DS's actual experience (no OTP needed) |
+| ~23:07Z | "DS seemed to have no problem getting the JWT" + DS Phase 4-6 evidence | Confirmed manual SSM EXPORT_MODE=jwt-extract dispatch worked; JWT timestamp 23:08:26Z aligned with my dispatch |
+| pending | DIAGFIX.012 GO-vs-stage call | Awaiting Andrew |
+
+Three Andrew course-corrections this session, all justified:
+1. Pushed back on AZ-outage theory → KMS root cause uncovered
+2. Identified browser-cookie path so OTP-less success was expected
+3. Proper handoff to AE 0.7.0 for Terraform lift
+
+Per `feedback_andrew_overrides_exec_directives` — explicit Andrew authorizations documented for all infrastructure work performed outside SA/COO standard scope (IAM put-role-policy + SSM RunShellScript dispatch).
