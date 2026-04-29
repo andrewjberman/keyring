@@ -272,6 +272,17 @@ For every staged TO whose gates claim met-or-close:
 
 **VM-in-flight discipline (confirmed 2026-04-24):** when a remote process owns the critical path (SSM / gold chain / builder / deploy), ALWAYS probe VM/SSM status first (`aws ssm get-command-invocation` + side-channel SSM for process inspection) BEFORE nudging the monitoring agent. Do not disturb an agent correctly monitoring a healthy in-flight VM. Only nudge when VM is stuck, failed, or completed-without-MCP.
 
+**C. Git-commits ground truth check (MANDATORY every wake).** Heartbeat-summary-drift makes agent self-reports unreliable for execution status. **Heartbeat = aspirational; git = ground truth.** In addition to the inbox + broker + dead-lane checklist:
+```bash
+git log --all --oneline --since="<last-wake>" --pretty=format:"%h %ai %an %s" | head -20
+```
+Cross-check against your active TO map:
+- Commit landed for active TO → expect RAVC; if missing, ping the worker.
+- No commit but TO `<status>active</status>` for >2 wakes → run `git status --short` for that worker's lane (or MCP them to do it). **Staged-not-committed = worker stuck mid-closeout** (executed work, ran `git add`, never ran `git commit` before the next watchdog tick fired). Surface in your nudge MCP with the exact files staged so the worker can finish in their next turn.
+- No commit + nothing staged → genuinely idle; subsection A classification applies.
+
+Andrew 2026-04-29 directive (post-Wave-2 Lane 1 stuck-post-git-add incident, surfaced via 1.1.0_SA_CTO MCP 15:21Z): "we need to make sure part of the tier 1 loop function is checking commits." This subsection encodes that as a permanent Step 0.5 obligation. Heartbeat reports "alive" while `git add` lingers without commit; only git-log + git-status reveal the stuck state.
+
 **Every wake must produce ≥ 1 of:**
 1. Push forward on an idle agent (nudge, escalation, unblock trace)
 2. Flip + dispatch a gates-met staged TO

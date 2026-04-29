@@ -231,6 +231,18 @@ Every wake, run this checklist in order. Keep it tight — the loop is supposed 
    ```
    Keeps your status visible to the org (prevents "stale" state).
 
+4.5. **Git-commits ground truth check (MANDATORY each wake):**
+   Heartbeat-summary-drift makes self-reports unreliable. **Heartbeat = aspirational; git = ground truth.** Run:
+   ```bash
+   git log --all --oneline --since="<last-wake>" --pretty=format:"%h %ai %an %s" | head -20
+   git status --short
+   ```
+   Cross-reference against your work:
+   - Commit landed under your serial since last wake → continuing forward; nothing additional needed.
+   - **No commit but you're "mid-TO" → run `git status --short` for your own staged-not-committed state.** Stuck post-`git add` is a real failure mode (workers finishing execution but not running `git commit` before the watchdog tick fires). Self-catch and finish the commit, OR surface to COO if the commit is blocked.
+   - Upstream commits affecting your work landed → review them before continuing; reset assumptions if needed.
+   Andrew 2026-04-29 directive (post-Wave-2 Lane 1 stuck-post-git-add incident): "we need to make sure part of the tier 1 loop function is checking commits." Same check applies to workers — your own ground-truth check catches stuck-mid-closeout before it compounds.
+
 5. **TO queue scan:**
    Read `{your_agent_folder}/task_orders/`. For each TO:
    - `<status>pending</status>` + dependencies met → if not already mid-work, start it.
