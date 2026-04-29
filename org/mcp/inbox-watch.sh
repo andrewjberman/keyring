@@ -36,10 +36,16 @@ elif command -v ps >/dev/null 2>&1; then
 else
     existing=""
 fi
-if [ -n "$existing" ]; then
-    echo "inbox-watch already running for $SERIAL (pid $existing). Exiting." >&2
-    exit 0
-fi
+for pid in $existing; do
+    ppid=$(ps -p "$pid" -o ppid= 2>/dev/null | tr -d ' ') || true
+    if [ -z "$ppid" ] || [ "$ppid" -eq 1 ] || ! kill -0 "$ppid" 2>/dev/null; then
+        echo "inbox-watch: reaping orphan watcher pid $pid (parent dead)" >&2
+        kill "$pid" 2>/dev/null || true
+    else
+        echo "inbox-watch already running for $SERIAL (pid $pid, parent $ppid alive). Exiting." >&2
+        exit 0
+    fi
+done
 
 # Split serial into base + tilde suffix.
 # 0.4.0_DS_ClientPlatform~D -> BASE=0.4.0_DS_ClientPlatform, SUFFIX=D
