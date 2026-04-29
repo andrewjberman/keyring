@@ -11,8 +11,8 @@
     }
   ],
   "status": "active",
-  "phase": "Phase 0 — PRD authored 2026-04-29 by 1.0.0_SA_CTO under ADHC_COMPIL.003 §5 mandate. 4 TOs (+ 1 sub-TO for ONBOARDING.md drift backfill) ready for COO decomposition. Pods 0.7 (AE CloudOps — Terraform) + 0.4 (DT ClientPlatform — DDB seed + portal map). Single-day ship estimate; TO-1 + TO-2 parallelizable, TO-3 gates on TO-1, TO-4 gates on all three.",
-  "blocking": "TO-1 + TO-1b GO'd AE 0.7.0 (20260429T190325Z). TO-2 GO'd DT 0.4.0 (20260429T190333Z). TO-3 gates on TO-1 RAVC + Andrew password handoff. TO-4 gates on TO-1+TO-2+TO-3 all PROD. Andrew Q1-Q5 defaults applied (domain=cottonwood.com, mustChangePassword=false, name=Cottonwood, page-vis only for Trade Submission, META row = firm permissions).",
+  "phase": "Phase 1 — 4 COMPLETE / 1 PENDING (updated 2026-04-29). TO-1 COMPLETE (AE 0.7.0 `8104f66ca` opal-partner-cottonwood DDB table provision + `9934c487f` CHANGELOG sync). TO-1b COMPLETE (AE 0.7.0 `e42f85a0e` ONBOARDING.md §5 Step 3 doc-drift refresh). TO-2 COMPLETE (DT 0.4.0 `0d94c953a` firmAccess.ts Cottonwood allowlist + portal-v2.1.65 + `bbf881c6f` log). TO-3 COMPLETE (DT 0.4.0 `0d4772889` DDB seed verified, TO-4 unblocked). Follow-up: `da7366dec` portal-v2.1.66 security-scanner removal from Cottonwood allowlist; `7540ef0a7` session closeout + CI/CD postmortem (pre-push hook + typecheck fix). TO-4 smoke PENDING — DT 0.4.0 (Andrew handoff for password + smoke run).",
+  "blocking": "TO-4 browser smoke pending — DT 0.4.0 to dispatch once Andrew password handoff lands. All upstream TOs PROD-shipped (`portal-v2.1.66` live with Cottonwood allowlist sans security-scanner; opal-partner-cottonwood DDB table seeded; CI/CD pipeline clean post `0b57043fc` TS fix).",
   "created": "2026-04-29",
   "pods": ["0.4", "0.7"],
   "pipeline": "partner-firms (Terraform tag) + portal (submodule)",
