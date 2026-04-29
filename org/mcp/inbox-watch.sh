@@ -31,10 +31,14 @@ INBOX_BASE="$SCRIPT_DIR/inbox"
 # pgrep may be absent on some minimal shells; failure falls through silently.
 if command -v pgrep >/dev/null 2>&1; then
     existing=$(pgrep -f "inbox-watch\.sh $SERIAL$" 2>/dev/null | grep -v "^$$\$" || true)
-    if [ -n "$existing" ]; then
-        echo "inbox-watch already running for $SERIAL (pid $existing). Exiting." >&2
-        exit 0
-    fi
+elif command -v ps >/dev/null 2>&1; then
+    existing=$(ps -ef | awk -v ser="$SERIAL" -v me="$$" '$2 != me && $NF == ser && $0 ~ "inbox-watch[.]sh" {print $2}')
+else
+    existing=""
+fi
+if [ -n "$existing" ]; then
+    echo "inbox-watch already running for $SERIAL (pid $existing). Exiting." >&2
+    exit 0
 fi
 
 # Split serial into base + tilde suffix.
