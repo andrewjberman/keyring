@@ -280,6 +280,24 @@ tools:
     data_sources: "portal/src/**/*.tsx"
     note: "One-off audit tool. Scans for inline navy/silver/hardcoded tooltip patterns vs <DataTooltip> canonical component. Use for tooltip migration sprints only."
 
+  loop-quiescence:
+    command: "loop-quiescence <MACRO> [--summary]"
+    when: |
+      - Tier-1 SA agent (CTO/COO/CVO) about to fire /loop {MACRO} expansion mode and needs to validate quiescence first
+      - "Is this macro lane truly quiescent or are there active TOs I'm about to ignore?"
+      - Before triggering a CTO+CVO bespoke planning thread on apparent macro quiescence (per feedback_loop_macro_expansion.md)
+      - Reconciling task_order <status> claims against git log closure-keyword commits for a macro
+    output: |
+      JSON by default; --summary for human-readable.
+      Verdicts:
+        ACTIVE                       -- one or more task orders open; do NOT fire expansion; babysit instead
+        QUIESCENT_WITH_DISCREPANCIES -- TOs marked closed but git log lacks closure-keyword commits (or vice versa); reconcile docs before expansion
+        QUIESCENT_CLEAN              -- all TOs closed, git log corroborates; safe to fire planning-thread expansion
+    cost: "<1s (stdlib only, read-only)"
+    data_sources: "org/tier1_exec/<serial>/task_orders/<MACRO>.*.md, org/tier2_senior/<serial>/task_orders/<MACRO>.*.md, git log --all"
+    replaces: "Manual scan of every tier-1/tier-2 agent's task_orders/ + git log --grep across the whole macro lane"
+    note: "Tier-1 SA only (CTO/COO/CVO). The /loop {MACRO} expansion validate-decide-expand protocol relies on this — see auto-memory feedback_loop_macro_expansion.md (Andrew design 2026-04-28). Workflow tool, not a comp-* graph tool; lives in this catalog because it shares the situation-recognition + structured-output pattern. Status parser handles XML <status>X</status> + markdown-bold legacy forms; ACTIVE_KEYWORDS includes 'staged'. Discrepancy classification distinguishes hard signals (zero commit references) from soft signals (commits exist but no closure keyword in subject -- usually convention drift, not missing work). Drafted by 1.1.0_SA_CTO; cataloged by 1.0.0_SA_CTO under cross-CTO assist (1.1.0 is COMP-scoped, can't author general-workspace docs)."
+
 # ============================================================================
 # AGENT DECISION TREE
 # ============================================================================
@@ -331,6 +349,10 @@ tools:
 #     Q: "Do components share cache keys?"         -> comp-cache collisions
 #     Q: "All cache keys and their owners?"        -> comp-cache map
 #
+#   LOOP EXPANSION (tier-1 SA only -- CTO/COO/CVO /loop {MACRO} mode):
+#     Q: "Is this macro lane truly quiescent before I fire expansion?" -> loop-quiescence MACRO --summary
+#     Q: "Are TO claims reconciled with git log for this macro?"       -> loop-quiescence MACRO
+#
 #   RULE: comp-platinum for full page audits, comp-pipescript for pipeline,
 #   comp-routes for serving, comp-transform for component internals,
 #   comp-cache for query key issues, comp-trace/comp-blast for everything
@@ -363,7 +385,9 @@ tools:
 #            comp-blast on infrastructure resources before changes.
 # COO: comp-platinum tab-audit + comp-blast when decomposing PRDs.
 #      comp-pipescript overlap A B before creating cross-domain coordination blocks in TOs.
+#      loop-quiescence <MACRO> --summary BEFORE firing /loop {MACRO} expansion (validate-decide-expand).
 # CTO: comp-platinum + comp-routes + comp-pipescript for architecture design.
+#      loop-quiescence <MACRO> --summary BEFORE firing /loop {MACRO} expansion (validate-decide-expand).
 #
 # After comp-build, run "comp-pipescript inject" to enrich the trace graph
 # with pipeline edges. Without this, comp-trace cannot walk upstream
