@@ -10,9 +10,10 @@
       "date": "2026-04-29"
     }
   ],
-  "status": "active",
-  "phase": "Phase 1 — 4 COMPLETE / 1 PENDING (updated 2026-04-29). TO-1 COMPLETE (AE 0.7.0 `8104f66ca` opal-partner-cottonwood DDB table provision + `9934c487f` CHANGELOG sync). TO-1b COMPLETE (AE 0.7.0 `e42f85a0e` ONBOARDING.md §5 Step 3 doc-drift refresh). TO-2 COMPLETE (DT 0.4.0 `0d94c953a` firmAccess.ts Cottonwood allowlist + portal-v2.1.65 + `bbf881c6f` log). TO-3 COMPLETE (DT 0.4.0 `0d4772889` DDB seed verified, TO-4 unblocked). Follow-up: `da7366dec` portal-v2.1.66 security-scanner removal from Cottonwood allowlist; `7540ef0a7` session closeout + CI/CD postmortem (pre-push hook + typecheck fix). TO-4 smoke PENDING — DT 0.4.0 (Andrew handoff for password + smoke run).",
-  "blocking": "TO-4 browser smoke pending — DT 0.4.0 to dispatch once Andrew password handoff lands. All upstream TOs PROD-shipped (`portal-v2.1.66` live with Cottonwood allowlist sans security-scanner; opal-partner-cottonwood DDB table seeded; CI/CD pipeline clean post `0b57043fc` TS fix).",
+  "status": "complete",
+  "phase": "COMPLETE 2026-04-29 — single-day ship as estimated. TO-1 COMPLETE (AE 0.7.0 `8104f66ca` opal-partner-cottonwood DDB table provision + `9934c487f` CHANGELOG sync). TO-1b COMPLETE (AE 0.7.0 `e42f85a0e` ONBOARDING.md §5 Step 3 doc-drift refresh). TO-2 COMPLETE (DT 0.4.0 `0d94c953a` firmAccess.ts Cottonwood allowlist + portal-v2.1.65 + `bbf881c6f` log). TO-3 COMPLETE (DT 0.4.0 `0d4772889` DDB seed verified). Follow-up: `da7366dec` portal-v2.1.66 security-scanner removal; `7540ef0a7` session closeout + CI/CD postmortem (pre-push hook + typecheck fix `0b57043fc`). **TO-4 COMPLETE 2026-04-29 — Andrew established password directly + manually smoke-tested production**; no agent dispatch needed. Third partner firm (after 49F + Inflection) live on portal with 11/14 page allowlist (security-scanner removed in v2.1.66 follow-up). **First PRD authored under ADHC_COMPIL.003 §5 mandate** alongside ADHC_PUSHFIX.",
+  "blocking": "None — all TOs complete, smoke validated by Andrew.",
+  "completed": "2026-04-29",
   "created": "2026-04-29",
   "pods": ["0.4", "0.7"],
   "pipeline": "partner-firms (Terraform tag) + portal (submodule)",
