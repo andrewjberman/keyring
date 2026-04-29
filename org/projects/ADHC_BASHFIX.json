@@ -6,9 +6,9 @@
   "prds": [
     {"path": "docs/architecture/ADHC_BASHFIX.md", "label": "Bash Compatibility PRD v1.0", "date": "2026-04-29"}
   ],
-  "status": "active",
-  "phase": "Phase 0 — PRD authored 2026-04-29 by CTO post Phase 1 audit. 3 TOs defined: .001 docs/policy (CTO), .002 inbox-watch.sh patch ship (AE 0.7 or CTO), .003 staged-LOW pre-commit hook (deferred). Awaiting COO decomposition + dispatch.",
-  "blocking": "COO decomposition into TOs + dispatch. .002 is the substantive ship; .001 is parallel docs work; .003 is staged-LOW.",
+  "status": "complete",
+  "phase": "COMPLETE 2026-04-29 — .001 ca6946e5f (1.0.0_SA_CTO: CLAUDE.md Rule 16 + memory companion + PRD Phase 1 flip); .002 045296b18 (0.7.0_AE_CloudOps: inbox-watch.sh pgrep+ps awk fallback, functional test PASS, orphan broadcast sent to all 8 live agents). .003 STAGED-LOW indefinitely (pre-commit hook, deferred unless 2nd incident surfaces).",
+  "blocking": "None. Project complete. .003 STAGED-LOW — activate only if a second local-runtime missing-utility incident surfaces.",
   "created": "2026-04-29",
   "pods": ["0.7"],
   "pipeline": "n/a (org/dev infrastructure)",
