@@ -6,9 +6,10 @@
   "prds": [
     {"path": "docs/architecture/ADHC_PUSHFIX.md", "label": "Inbox-Watch Orphan Cleanup PRD v1.0", "date": "2026-04-29"}
   ],
-  "status": "active",
-  "phase": "Phase 1 COMPLETE 2026-04-29 — .001 (a27fdf831) + .002 (d1762a594) + OWNPTH.009 (b7ba51865, pre-existing) all closed. Cross-worktree gap flagged by AE 0.7.0: kill-orphans reads ajb_workspace liveness only; feature_clb agents must use feature_clb-rooted inbox-watch wrapper to avoid false-stale classification. Routed to CTO for PRD amendment + COMP_LEARNS protocol note.",
-  "blocking": "None — Phase 1 complete. Cross-worktree gap doc update pending CTO (documentation only, not operational blocker).",
+  "status": "complete",
+  "phase": "COMPLETE 2026-04-29. Phase 1 shipped same-day as PRD authoring: .001 PostToolUse hook auto-runs kill-orphans --stale --force post register_agent (`a27fdf831` AE 0.7); .002 inbox-watch.sh PPID-liveness check reaps orphan watchers (`d1762a594` AE 0.7). Cross-worktree gap surfaced by AE 0.7.0 during canary planning (kill-orphans reads ajb_workspace liveness only; feature_clb agents would be classified false-stale if cmdline matches workspace) — operator mitigation rule (Option 1, AE+COO endorsed): feature_clb agents invoke inbox-watch via feature_clb-rooted absolute path. Documented in PRD §4.3 + org/XXX.md Step 1b BANNED block (`a4858b17a` CTO). Cross-worktree liveness federation deferred to v2 unless 3rd worktree introduced or observation surfaces false-positive kills.",
+  "blocking": "None — Phase 1 complete + cross-worktree gap documented. Observation window (zero false-positive kills against feature_clb agents over 7 days post-canary-lift) tracked as standing-backlog; if false-positive surfaces, escalate to base CTO for liveness federation under new ADHC project.",
+  "completed": "2026-04-29",
   "created": "2026-04-29",
   "pods": ["0.7"],
   "pipeline": "workspace-mcp",
