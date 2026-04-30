@@ -2034,3 +2034,20 @@ Total: 2 PASS, 131 WARN, 133 PRDs scanned.
 | 2026-04-30 | 0.4.0_DS_ClientPlatform~D | ADHC_COMPIL.012.ds-comp-freshness-tool | comp-blast | comp-blast gold:D_04 --direction up | PASS |
 | 2026-04-30 | 0.4.0_DS_ClientPlatform~D | ADHC_COMPIL.012.ds-comp-freshness-tool | comp-blast | comp-blast component:portal/src/pages/AdvisorIntelligence/AdvisorIntelligence.tsx --dir... | PASS |
 | 2026-04-30 | 0.4.0_DS_ClientPlatform~D | ADHC_COMPIL.012.ds-comp-freshness-tool | comp-blast | comp-blast lambda:opal-partners-data | PASS |
+| 2026-04-30 | 0.7.0_AE_CloudOps | ADHC_COMPIL.008.ae-pipescript-io-filename-canon | comp-pipescript | AC1: io B_01.holdings_lots.py == io B_01 (byte-identical) | PASS | filename-form resolver via exact filename match |
+| 2026-04-30 | 0.7.0_AE_CloudOps | ADHC_COMPIL.008.ae-pipescript-io-filename-canon | comp-pipescript | AC2: io data/black_diamond/scripts/gold/B_01.holdings_lots.py == io B_01 | PASS | full path form |
+| 2026-04-30 | 0.7.0_AE_CloudOps | ADHC_COMPIL.008.ae-pipescript-io-filename-canon | comp-pipescript | AC3: io B_01.bogus.py -> exit 1, "Script not found: B_01.bogus.py. Did you mean: B_01?" | PASS | bogus filename exits 1 with suggestion |
+| 2026-04-30 | 0.7.0_AE_CloudOps | ADHC_COMPIL.008.ae-pipescript-io-filename-canon | comp-pipescript | AC4: 5-script fixture (B_01/D_04/A_00/D_00+--pipeline bd) x filename/fullpath forms | PASS | all 5 scripts PASS across all input forms |
+| 2026-04-30 | 0.7.0_AE_CloudOps | ADHC_COMPIL.008.ae-pipescript-io-filename-canon | comp-pipescript | AC5: feeds/deployed spot-checks with filename forms | PASS | feeds+deployed both byte-identical |
+| 2026-04-30 | 0.7.0_AE_CloudOps | ADHC_COMPIL.008.ae-pipescript-io-filename-canon | comp-pipescript | AC6/AC7: bare IDs still resolve correctly (regression guard) | PASS | D_04 io + feeds unchanged |
+| 2026-04-30 | 0.7.0_AE_CloudOps | ADHC_COMPIL.009.ae-validate-windows-path-translator | comp-validate | AC1: /tmp/ path translates to C:/tmp/ on Windows (PowerShell direct Python call) | PASS | POSIX /tmp/ -> C:\tmp\ transparent |
+| 2026-04-30 | 0.7.0_AE_CloudOps | ADHC_COMPIL.009.ae-validate-windows-path-translator | comp-validate | AC4: non-existent /tmp/ path shows dual-path error (Input path + Translated path) | PASS | error shows both paths on separate lines |
+| 2026-04-30 | 0.7.0_AE_CloudOps | ADHC_COMPIL.010.ae-trace-blast-direction-fixes | comp-trace | AC1: --direction upstream byte-identical to --direction up | PASS | F.3 alias normalization |
+| 2026-04-30 | 0.7.0_AE_CloudOps | ADHC_COMPIL.010.ae-trace-blast-direction-fixes | comp-trace | AC2: --direction downstream byte-identical to --direction down | PASS | F.3 alias normalization |
+| 2026-04-30 | 0.7.0_AE_CloudOps | ADHC_COMPIL.010.ae-trace-blast-direction-fixes | comp-trace | AC3: --direction both unchanged | PASS | F.3 no regression |
+| 2026-04-30 | 0.7.0_AE_CloudOps | ADHC_COMPIL.010.ae-trace-blast-direction-fixes | comp-trace | AC4: --direction sideways -> exit 2, invalid choice listing all 5 valid values | PASS | argparse choices updated |
+| 2026-04-30 | 0.7.0_AE_CloudOps | ADHC_COMPIL.010.ae-trace-blast-direction-fixes | comp-blast | AC5: lambda:opal-partners-data --direction both == bare opal-partners-data --direction both | PASS | F.4 prefix-qualified direction wiring |
+| 2026-04-30 | 0.7.0_AE_CloudOps | ADHC_COMPIL.010.ae-trace-blast-direction-fixes | comp-blast | AC6: gold:D_04 --direction up (returns upstream) | PASS | F.4 |
+| 2026-04-30 | 0.7.0_AE_CloudOps | ADHC_COMPIL.010.ae-trace-blast-direction-fixes | comp-blast | AC7: component:...AdvisorIntelligence.tsx --direction down | PASS | F.4 |
+| 2026-04-30 | 0.7.0_AE_CloudOps | ADHC_COMPIL.010.ae-trace-blast-direction-fixes | comp-blast | AC8: lambda:opal-partners-data (no --direction) behavior unchanged | PASS | F.4 regression guard |
+| 2026-04-30 | 0.7.0_AE_CloudOps | ADHC_COMPIL.010.ae-trace-blast-direction-fixes | comp-pipescript | AC9: compiler-tools-log rows appended (this entry) | PASS | |
