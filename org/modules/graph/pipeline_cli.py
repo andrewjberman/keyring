@@ -34,23 +34,26 @@ sys.path.insert(0, str(_WORKSPACE))
 from org.modules.graph.extract_pipeline import (  # noqa: E402
     build_pipeline_dag, inject_pipeline_edges,
     build_inf_gold_dag, build_silver_dag, build_multi_pipeline_dag,
+    _parse_dispatch, _parse_orion_dispatch,
 )
 
-_PIPELINE_CHOICES = ("bd-gold", "inf-gold", "bd-silver", "inf-silver", "all")
+_PIPELINE_CHOICES = ("bd-gold", "inf-gold", "bd-silver", "inf-silver", "all", "bd", "inf")
 
 
 def _build_dag(pipeline: str = "bd-gold"):
     """Return the appropriate DAG for the given pipeline scope.
 
     pipeline="bd-gold"  → existing BD-gold DAG (backward-compatible default)
+    pipeline="bd"       → shorthand alias for bd-gold (disambiguation flag)
     pipeline="inf-gold" → INF gold DAG only
+    pipeline="inf"      → shorthand alias for inf-gold (disambiguation flag)
     pipeline="bd-silver"→ BD silver DAG only
     pipeline="inf-silver"→ INF silver DAG only
     pipeline="all"      → combined multi-pipeline DAG (namespaced IDs)
     """
-    if pipeline == "bd-gold":
+    if pipeline in ("bd-gold", "bd"):
         return build_pipeline_dag(_WORKSPACE)
-    if pipeline == "inf-gold":
+    if pipeline in ("inf-gold", "inf"):
         return build_inf_gold_dag(_WORKSPACE)
     if pipeline == "bd-silver":
         return build_silver_dag(_WORKSPACE, "bd-silver", "data/black_diamond/scripts/silver")
@@ -59,6 +62,275 @@ def _build_dag(pipeline: str = "bd-gold"):
     if pipeline == "all":
         return build_multi_pipeline_dag(_WORKSPACE)
     return build_pipeline_dag(_WORKSPACE)
+
+
+# ---------------------------------------------------------------------------
+# ID-form resolver (ADHC_COMPIL.011) — auto-detects pipeline from script ID
+# ---------------------------------------------------------------------------
+
+# Dispatcher names: maps CLI name -> (pipeline_label, dispatch_filename, gold_dir_rel)
+_DISPATCHER_NODES = {
+    "inf-gold-dispatch": ("inf-gold", "orion-gold-dispatch.sh",
+                          "data/orion/scripts/gold"),
+    "orion-gold-dispatch": ("inf-gold", "orion-gold-dispatch.sh",
+                             "data/orion/scripts/gold"),
+    "bd-gold-dispatch": ("bd-gold", "gold_dispatch.sh",
+                          "data/black_diamond/scripts/gold"),
+}
+
+
+def _format_dispatcher_io(dispatcher_name):
+    """Print chain declaration for a dispatcher script and exit."""
+    lower = dispatcher_name.lower()
+    if lower not in _DISPATCHER_NODES:
+        print(f"Unknown dispatcher: {dispatcher_name}")
+        sys.exit(1)
+    pipeline_label, dispatch_filename, gold_dir_rel = _DISPATCHER_NODES[lower]
+    gold_dir = _WORKSPACE / gold_dir_rel
+    dispatch_file = gold_dir / dispatch_filename
+
+    if pipeline_label == "bd-gold":
+        chains, _groups, catalog = _parse_dispatch(gold_dir)
+    else:
+        chains, _groups, catalog = _parse_orion_dispatch(gold_dir)
+
+    print(f"DISPATCHER: {lower} ({dispatch_filename}) [{pipeline_label}]")
+    print(f"  Source: {dispatch_file.relative_to(_WORKSPACE)}")
+    print()
+
+    if chains:
+        print(f"  CHAINS ({len(chains)}):")
+        for chain_name, members in sorted(chains.items()):
+            print(f"    {chain_name} ({len(members)} scripts):")
+            for i in range(0, len(members), 8):
+                chunk = members[i:i + 8]
+                print(f"      {' '.join(chunk)}")
+        print()
+
+    if catalog:
+        print(f"  CATALOG ({len(catalog)} entries):")
+        for script_id, filename in sorted(catalog.items()):
+            print(f"    {script_id:<22} -> {filename}")
+        print()
+
+    sys.exit(0)
+
+
+def _canonicalize_script_id(raw: str) -> str:
+    """Strip path prefix and filename suffix to get the bare script ID string.
+
+    Handles all three input forms agents use:
+      data/black_diamond/scripts/gold/B_01.holdings_lots.py  -> B_01
+      B_01.holdings_lots.py                                  -> B_01
+      B_01.holdings_lots                                     -> B_01
+      B_01.py / INF_D_04.py                                  -> B_01 / INF_D_04
+      B_01 / INF_D_04                                        -> pass-through
+
+    Does NOT uppercase -- callers uppercase as needed.
+    """
+    s = raw.strip().replace('\\', '/')
+    # Rule 2: extract filename from full data/ path
+    m = re.search(
+        r'data/(?:black_diamond|orion|schwab)/scripts/(?:gold|silver|bronze)/(.+)', s
+    )
+    if m:
+        s = m.group(1)
+    # Strip .py suffix
+    if s.lower().endswith('.py'):
+        s = s[:-3]
+    # Rule 1: strip .<name> suffix for <ID>.<name> filename form (e.g. B_01.holdings_lots -> B_01)
+    m2 = re.match(r'^([A-Za-z0-9_]+)\..+$', s)
+    if m2:
+        s = m2.group(1)
+    return s
+
+
+def _auto_resolve_script_id(raw_id, pipeline_hint=None):
+    """Resolve a script ID to (dag, canonical_id) across all indexed pipelines.
+
+    Handles:
+      - INF_* prefix  -> inf-gold DAG
+      - *-dispatch    -> dispatcher handler (prints and exits)
+      - bare snake_case -> bd-silver + inf-silver
+      - BD/INF gold IDs -> bd-gold, then inf-gold (collision = disambiguation error)
+      - Filename forms (B_01.holdings_lots.py) -> exact filename match, then bare ID
+
+    pipeline_hint: 'bd' restricts to BD pipelines; 'inf' restricts to INF pipelines.
+    On failure: prints closest-match suggestion and calls sys.exit(1).
+    """
+    from difflib import get_close_matches
+
+    # Step 1: strip data/ path prefix and .py suffix only — no .<name> stripping yet.
+    _norm = raw_id.strip().replace('\\', '/')
+    _pm = re.search(
+        r'data/(?:black_diamond|orion|schwab)/scripts/(?:gold|silver|bronze)/(.+)', _norm
+    )
+    if _pm:
+        _norm = _pm.group(1)
+    if _norm.lower().endswith('.py'):
+        _norm = _norm[:-3]
+
+    # Step 2: filename-form detection — if stem still has a dot (e.g. B_01.holdings_lots),
+    # resolve by exact filename match before bare-ID canonicalization (AC1/AC3).
+    if '.' in _norm:
+        _ftarget = _norm + '.py'
+        _bd_only_pre = pipeline_hint in ("bd",)
+        _inf_only_pre = pipeline_hint in ("inf",)
+        _found_dag = None
+        _found_id = None
+
+        def _search_dag_for_filename(dag):
+            nonlocal _found_dag, _found_id
+            for sid, sio in dag.scripts.items():
+                if sio.filename and sio.filename.lower() == _ftarget.lower():
+                    if _found_dag is None:
+                        _found_dag = dag
+                        _found_id = sid
+                    else:
+                        print(f"Ambiguous filename: {_ftarget!r} found in multiple pipelines.")
+                        sys.exit(1)
+
+        try:
+            if not _inf_only_pre:
+                _search_dag_for_filename(_build_dag("bd-gold"))
+            if not _bd_only_pre:
+                _search_dag_for_filename(_build_dag("inf-gold"))
+            if not _inf_only_pre:
+                _search_dag_for_filename(_build_dag("bd-silver"))
+            if not _bd_only_pre:
+                _search_dag_for_filename(_build_dag("inf-silver"))
+        except SystemExit:
+            raise
+        except Exception:
+            pass
+
+        if _found_dag is not None:
+            raw = _found_id
+        else:
+            _bare = re.match(r'^([A-Za-z0-9_]+)', _norm)
+            _bare_id = _bare.group(1) if _bare else _norm
+            print(f"Script not found: {raw_id}. Did you mean: {_bare_id}?")
+            sys.exit(1)
+    else:
+        # Bare ID form — path already stripped, .py already stripped, no dot remaining
+        raw = _norm
+
+    lower = raw.lower()
+    upper = raw.upper()
+
+    bd_only = pipeline_hint in ("bd",)
+    inf_only = pipeline_hint in ("inf",)
+
+    # --- Dispatcher names ---
+    if lower in _DISPATCHER_NODES:
+        _format_dispatcher_io(lower)  # prints + sys.exit(0) — does not return
+
+    # --- INF-prefixed gold scripts ---
+    if upper.startswith("INF_") and not bd_only:
+        dag = _build_dag("inf-gold")
+        if upper in dag.scripts:
+            return dag, upper
+        matches = [s for s in dag.scripts if upper in s]
+        if len(matches) == 1:
+            return dag, matches[0]
+        if len(matches) > 1:
+            print(f"Multiple INF matches for {raw!r}: {', '.join(sorted(matches))}")
+            sys.exit(1)
+        close = get_close_matches(upper, list(dag.scripts.keys()), n=3, cutoff=0.45)
+        hint = f"Did you mean: {', '.join(close)}?" if close else \
+               f"Available INF scripts: {', '.join(sorted(dag.scripts.keys()))}"
+        print(f"Script not found: {raw}. {hint}")
+        sys.exit(1)
+
+    # --- Bare silver script names (snake_case, no LETTER_NN pattern) ---
+    is_silver_like = (
+        not re.match(r"^[A-Z]_\d", raw) and
+        not upper.startswith("INF_") and
+        "_" in raw and
+        lower not in _DISPATCHER_NODES
+    )
+    if is_silver_like:
+        candidates = []
+        if not inf_only:
+            bd_s = _build_dag("bd-silver")
+            if lower in bd_s.scripts:
+                candidates.append(("bd-silver", bd_s, lower))
+        if not bd_only:
+            inf_s = _build_dag("inf-silver")
+            if lower in inf_s.scripts:
+                candidates.append(("inf-silver", inf_s, lower))
+
+        if len(candidates) == 1:
+            _, dag, cid = candidates[0]
+            return dag, cid
+        if len(candidates) > 1:
+            print(f"Ambiguous script ID: {raw!r} found in multiple pipelines:")
+            for pl, _, cid in candidates:
+                print(f"  [{pl}] {cid}")
+            print("  Use --pipeline bd or --pipeline inf to disambiguate.")
+            sys.exit(1)
+        # Not found in silver — fall through to gold check
+
+    # --- BD gold + INF gold ---
+    bd_dag = None
+    inf_dag = None
+    bd_cid = None
+    inf_cid = None
+
+    if not inf_only:
+        bd_dag = _build_dag("bd-gold")
+        if upper in bd_dag.scripts:
+            bd_cid = upper
+        else:
+            bd_matches = [s for s in bd_dag.scripts if upper in s]
+            if len(bd_matches) == 1:
+                bd_cid = bd_matches[0]
+
+    if not bd_only:
+        inf_dag = _build_dag("inf-gold")
+        # Exact match only for cross-pipeline disambiguation.
+        # INF-unique scripts have INF_ prefixes and are handled above; shared-logic scripts
+        # use the same bare IDs as BD. Substring match creates false collisions (e.g. D_04
+        # would spuriously match INF_D_04). Only fire disambiguation when the exact same ID
+        # exists in both pipeline DAGs.
+        if upper in inf_dag.scripts:
+            inf_cid = upper
+
+    if bd_cid and inf_cid:
+        print(f"Ambiguous script ID: {raw!r} found in multiple pipelines:")
+        print(f"  [bd-gold]  {bd_cid}")
+        print(f"  [inf-gold] {inf_cid}")
+        print("  Use --pipeline bd or --pipeline inf to disambiguate.")
+        sys.exit(1)
+
+    if bd_cid:
+        return bd_dag, bd_cid
+    if inf_cid:
+        return inf_dag, inf_cid
+
+    # Not found anywhere — aggregate close matches across all pipelines
+    all_ids = []
+    if bd_dag:
+        all_ids.extend(bd_dag.scripts.keys())
+    if inf_dag:
+        all_ids.extend(inf_dag.scripts.keys())
+    try:
+        if not inf_only:
+            all_ids.extend(_build_dag("bd-silver").scripts.keys())
+        if not bd_only:
+            all_ids.extend(_build_dag("inf-silver").scripts.keys())
+    except Exception:
+        pass
+
+    close = get_close_matches(upper, all_ids, n=3, cutoff=0.45)
+    if close:
+        print(f"Script not found: {raw}. Did you mean: {', '.join(close)}?")
+    else:
+        print(f"Unknown script: {raw}")
+        bd_valid = sorted(bd_dag.scripts.keys()) if bd_dag else []
+        if bd_valid:
+            print(f"BD-gold IDs: {', '.join(bd_valid)}")
+    sys.exit(1)
 
 
 # ---------------------------------------------------------------------------
@@ -109,24 +381,29 @@ def cmd_dag(args):
 
 def cmd_io(args):
     pipeline = getattr(args, 'pipeline', 'bd-gold') or 'bd-gold'
-    dag = _build_dag(pipeline)
-    script_id = args.script_id.upper()
 
-    # Allow partial match: "D_00" or "d_00" or "D_00.portal_aggregates"
-    # Also allow unprefixed ID when pipeline is specified (e.g. "D_04" matches "inf-gold:D_04")
-    sio = dag.scripts.get(script_id)
-    if not sio:
-        matches = [s for s in dag.scripts if script_id in s.upper()]
-        if len(matches) == 1:
-            sio = dag.scripts[matches[0]]
-            script_id = matches[0]
-        elif matches:
-            print(f"Multiple matches: {', '.join(matches)}")
-            sys.exit(1)
-        else:
-            print(f"Unknown script: {script_id}")
-            print(f"Valid IDs: {', '.join(sorted(dag.scripts.keys()))}")
-            sys.exit(1)
+    if pipeline not in ('bd-gold', 'bd', 'inf'):
+        # Explicit specific pipeline: direct DAG lookup (no cross-pipeline disambiguation needed)
+        dag = _build_dag(pipeline)
+        script_id = args.script_id.upper()
+        sio = dag.scripts.get(script_id)
+        if not sio:
+            matches = [s for s in dag.scripts if script_id in s.upper()]
+            if len(matches) == 1:
+                sio = dag.scripts[matches[0]]
+                script_id = matches[0]
+            elif matches:
+                print(f"Multiple matches: {', '.join(matches)}")
+                sys.exit(1)
+            else:
+                print(f"Unknown script: {script_id}")
+                print(f"Valid IDs: {', '.join(sorted(dag.scripts.keys()))}")
+                sys.exit(1)
+    else:
+        # Default/shorthand: always route through resolver so disambiguation fires before any result
+        hint = pipeline if pipeline in ('bd', 'inf') else None
+        dag, script_id = _auto_resolve_script_id(args.script_id, hint)
+        sio = dag.scripts[script_id]
 
     if args.json:
         print(json.dumps({
@@ -339,12 +616,26 @@ def cmd_chain(args):
 
 
 def cmd_feeds(args):
-    dag = _build_dag()
+    pipeline = getattr(args, 'pipeline', 'bd-gold') or 'bd-gold'
+    dag = _build_dag(pipeline)
     script_id = args.script_id.upper()
     sio = dag.scripts.get(script_id)
     if not sio:
-        print(f"Unknown script: {script_id}")
-        sys.exit(1)
+        matches = [s for s in dag.scripts if script_id in s.upper()]
+        if len(matches) == 1:
+            sio = dag.scripts[matches[0]]
+            script_id = matches[0]
+        elif matches:
+            print(f"Multiple matches: {', '.join(matches)}")
+            sys.exit(1)
+        else:
+            explicit = pipeline
+            if explicit not in ('bd-gold', 'bd', 'inf'):
+                print(f"Unknown script: {script_id}")
+                sys.exit(1)
+            hint = explicit if explicit in ('bd', 'inf') else None
+            dag, script_id = _auto_resolve_script_id(args.script_id, hint)
+            sio = dag.scripts[script_id]
 
     upstream = dag.feeds(script_id)
     if not upstream:
@@ -374,12 +665,26 @@ def cmd_feeds(args):
 
 
 def cmd_consumers(args):
-    dag = _build_dag()
+    pipeline = getattr(args, 'pipeline', 'bd-gold') or 'bd-gold'
+    dag = _build_dag(pipeline)
     script_id = args.script_id.upper()
     sio = dag.scripts.get(script_id)
     if not sio:
-        print(f"Unknown script: {script_id}")
-        sys.exit(1)
+        matches = [s for s in dag.scripts if script_id in s.upper()]
+        if len(matches) == 1:
+            sio = dag.scripts[matches[0]]
+            script_id = matches[0]
+        elif matches:
+            print(f"Multiple matches: {', '.join(matches)}")
+            sys.exit(1)
+        else:
+            explicit = pipeline
+            if explicit not in ('bd-gold', 'bd', 'inf'):
+                print(f"Unknown script: {script_id}")
+                sys.exit(1)
+            hint = explicit if explicit in ('bd', 'inf') else None
+            dag, script_id = _auto_resolve_script_id(args.script_id, hint)
+            sio = dag.scripts[script_id]
 
     downstream = dag.consumers(script_id)
     if not downstream:
@@ -408,15 +713,13 @@ def cmd_consumers(args):
 
 
 def cmd_overlap(args):
-    dag = _build_dag()
-    a = args.script_a.upper()
-    b = args.script_b.upper()
-
-    if a not in dag.scripts:
-        print(f"Unknown script: {a}")
-        sys.exit(1)
+    dag_a, a = _auto_resolve_script_id(args.script_a)
+    dag_b, b = _auto_resolve_script_id(args.script_b)
+    # Overlap is meaningful within one pipeline; use the first script's dag
+    dag = dag_a
     if b not in dag.scripts:
-        print(f"Unknown script: {b}")
+        print(f"Scripts {a!r} and {b!r} are in different pipelines; cross-pipeline overlap not supported.")
+        print("  Use --pipeline bd or --pipeline inf to scope both scripts to one pipeline.")
         sys.exit(1)
 
     result = dag.overlap(a, b)
@@ -519,13 +822,16 @@ def cmd_deployed(args):
         sys.exit(2)
 
     raw_filter = args.script_id.strip() if args.script_id else ""
-    script_filter_upper = raw_filter.upper() if raw_filter else None
-    script_filter_lower = raw_filter.lower() if raw_filter else None
-    # Normalize a filename-style filter: strip .py so "bd_price_update.py" and "bd_price_update" both match.
-    silver_filter_stem = (
-        script_filter_lower[:-3] if script_filter_lower and script_filter_lower.endswith(".py")
-        else script_filter_lower
-    )
+    if raw_filter:
+        # Canonicalize: strip path prefix + .<name>.py suffix (ADHC_COMPIL.008)
+        _cf = _canonicalize_script_id(raw_filter)
+        script_filter_upper = _cf.upper()
+        script_filter_lower = _cf.lower()
+        silver_filter_stem = script_filter_lower  # .py and .<name> already stripped
+    else:
+        script_filter_upper = None
+        script_filter_lower = None
+        silver_filter_stem = None
 
     aws_env = os.environ.copy()
     aws_env.setdefault("AWS_EC2_METADATA_DISABLED", "true")
@@ -740,7 +1046,11 @@ def cmd_postdeps(args):
     post_steps = deps.get('post_steps') or {}
     preconditions = deps.get('preconditions') or {}
 
-    script_filter = args.script_name if args.script_name else None
+    # Canonicalize filter: strip path + .<name>.py suffix so filename forms match YAML keys
+    if args.script_name:
+        script_filter = _canonicalize_script_id(args.script_name).lower()
+    else:
+        script_filter = None
 
     print("PIPELINE DEPENDENCIES")
     print("  Config: data/black_diamond/scripts/gold/gold_pipeline_deps.yaml")
@@ -750,7 +1060,7 @@ def cmd_postdeps(args):
 
     # Post-steps
     for script_name, steps in sorted(post_steps.items()):
-        if script_filter and script_filter not in script_name:
+        if script_filter and script_filter not in script_name.lower():
             continue
         if not isinstance(steps, list):
             continue
@@ -766,7 +1076,7 @@ def cmd_postdeps(args):
 
     # Preconditions
     for script_name, conditions in sorted(preconditions.items()):
-        if script_filter and script_filter not in script_name:
+        if script_filter and script_filter not in script_name.lower():
             continue
         if not isinstance(conditions, list):
             continue

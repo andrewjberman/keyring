@@ -1763,3 +1763,274 @@ RESOLUTION: fixed in `614d4c28` (`comp-platinum reverse empty-vs-broken disambig
 
 Total: 2 PASS, 131 WARN, 133 PRDs scanned.
 
+| 2026-04-29 | 0.4.0_DS_ClientPlatform | ADVI_INFLEC.DIAGFIX.007 | comp-blast | comp-blast opal-precompute-market-metrics | PASS |
+| 2026-04-29 | 0.4.0_DS_ClientPlatform | ADVI_INFLEC.DIAGFIX.007 | comp-blast | comp-blast opal-cloudfront-market-generator | PASS |
+| 2026-04-29 | 0.4.0_DS_ClientPlatform | ADVI_INFLEC.DIAGFIX.007 | comp-trace | comp-trace opal-precompute-market-metrics --direction downstream | FAIL |
+| 2026-04-29 | 0.4.0_DS_ClientPlatform | ADVI_INFLEC.DIAGFIX.007 | comp-trace | comp-trace opal-precompute-market-metrics --direction both | PASS |
+| 2026-04-29 | 0.4.0_DS_ClientPlatform | ADVI_INFLEC.DIAGFIX.007 | comp-trace | comp-trace opal-cloudfront-market-generator --direction both | PASS |
+| 2026-04-29 | 0.4.0_DS_ClientPlatform | ADVI_INFLEC.DIAGFIX.007 | comp-routes | comp-routes behaviors | PASS |
+| 2026-04-29 | 0.4.0_DS_ClientPlatform | ADVI_INFLEC.DIAGFIX.007 | comp-platinum | comp-platinum reverse json/market-metrics.json.gz | PASS |
+| 2026-04-29 | 0.4.0_DS_ClientPlatform | ADVI_INFLEC.DIAGFIX.007 | comp-platinum | comp-platinum reverse json/market-metrics.json | PASS |
+| 2026-04-29 | 0.4.0_DS_ClientPlatform | ADVI_INFLEC.DIAGFIX.011 | comp-build | comp-build | PASS |
+| 2026-04-30 | 0.7.0_AE_CloudOps | (no-TO) | comp-validate | comp-validate --list | PASS |
+| 2026-04-30 | 0.7.0_AE_CloudOps | (no-TO) | comp-validate | comp-validate nonexistent_script --artifact /tmp/nonexistent.json | PASS |
+| 2026-04-30 | 0.7.0_AE_CloudOps | (no-TO) | comp-validate | comp-validate fee_earning_aua --artifact /tmp/missing_file_xyz.json | PASS |
+| 2026-04-30 | 0.7.0_AE_CloudOps | (no-TO) | comp-validate | comp-validate --list | PASS |
+| 2026-04-30 | 0.7.0_AE_CloudOps | (no-TO) | comp-validate | comp-validate cash_coverage_summary --artifact /tmp/empty_test_artifact.json | FAIL |
+| 2026-04-30 | 0.7.0_AE_CloudOps | (no-TO) | comp-build | comp-build | PASS |
+| 2026-04-30 | 0.7.0_AE_CloudOps | (no-TO) | comp-validate | comp-validate INF_D_00c --artifact C:/Users/AndrewBerman/AppData/Local/Temp/inflv2_vali... | PASS |
+| 2026-04-30 | 0.7.0_AE_CloudOps | (no-TO) | comp-validate | comp-validate INF_09 --artifact C:/Users/AndrewBerman/AppData/Local/Temp/inflv2_validat... | PASS |
+| 2026-04-30 | 0.7.0_AE_CloudOps | (no-TO) | comp-validate | comp-validate --help | PASS |
+| 2026-04-30 | 0.7.0_AE_CloudOps | (no-TO) | comp-validate | comp-validate --list | PASS |
+| 2026-04-30 | 0.4.0_DE_ClientPlatform | ADVI_INFLEC.V1-SMOKE | comp-transform | comp-transform schema-check InflectionInsightsPanel | FAIL |
+| 2026-04-30 | 0.4.0_DE_ClientPlatform | ADVI_INFLEC.V1-SMOKE | comp-transform | comp-transform schema-check DistributionTab | PASS |
+| 2026-04-30 | 0.4.0_DE_ClientPlatform | ADVI_INFLEC.V1-SMOKE | comp-transform | comp-transform schema-check ClientsTab | PASS |
+| 2026-04-30 | 0.4.0_DE_ClientPlatform | ADVI_INFLEC.V1-SMOKE | comp-transform | comp-transform schema-check PartnerAnalytics | PASS |
+| 2026-04-30 | 0.4.0_DE_ClientPlatform | ADVI_INFLEC.V1-SMOKE | comp-pipescript | comp-pipescript io C_07 | PASS |
+| 2026-04-30 | 0.5.0_AE_OpalETL | ADHC_CLCOMM.001.ae-build-cl-mcp-scripts | comp-blast | comp-blast org/mcp/server.py | PASS |
+| 2026-04-30 | 0.5.0_AE_OpalETL | ADHC_CLCOMM.001.ae-build-cl-mcp-scripts | comp-blast | comp-blast org/mcp/broker.py | PASS |
+| 2026-04-30 | 0.6.1_AE_PartnerETL | (no-TO) | comp-iam | comp-iam service inf-bronze-runner | PASS |
+| 2026-04-30 | 0.6.1_AE_PartnerETL | (no-TO) | comp-blast | comp-blast inf-ec2-launch-monitor | PASS |
+| 2026-04-30 | 0.6.1_AE_PartnerETL | ADVI_HISTBF.002+ADVI_JWTRES.001 | comp-iam | comp-iam gaps | PASS |
+| 2026-04-30 | 0.6.1_AE_PartnerETL | ADVI_HISTBF.002+ADVI_JWTRES.001 | comp-pipescript | comp-pipescript io INF_B_00 | FAIL |
+| 2026-04-30 | 0.6.1_AE_PartnerETL | ADVI_HISTBF.002+ADVI_JWTRES.001 | comp-pipescript | comp-pipescript io B_00 | PASS |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform_B | ADVI_HISTBF.001 | comp-validate | comp-validate INF_B_00 --artifact /tmp/holdings_2026-04-30.parquet | PASS |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform_B | ADVI_HISTBF.001 | comp-validate | comp-validate INF_B_00 --artifact C:/Users/AndrewBerman/Desktop/ajb_workspace/holdings_... | FAIL |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~D | ADHC_COMPIL.012.ds-comp-freshness-tool | comp-build | comp-build | PASS |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~D | ADHC_COMPIL.012.ds-comp-freshness-tool | comp-pipescript | comp-pipescript io A_00 | PASS |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~D | ADHC_COMPIL.012.ds-comp-freshness-tool | comp-pipescript | comp-pipescript io A_01 | PASS |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~D | ADHC_COMPIL.012.ds-comp-freshness-tool | comp-pipescript | comp-pipescript io A_02 | PASS |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~D | ADHC_COMPIL.012.ds-comp-freshness-tool | comp-pipescript | comp-pipescript io A_03 | PASS |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~D | ADHC_COMPIL.012.ds-comp-freshness-tool | comp-pipescript | comp-pipescript io A_04 | PASS |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~D | ADHC_COMPIL.012.ds-comp-freshness-tool | comp-pipescript | comp-pipescript io B_00 | PASS |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~D | ADHC_COMPIL.012.ds-comp-freshness-tool | comp-pipescript | comp-pipescript io B_01 | PASS |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~D | ADHC_COMPIL.012.ds-comp-freshness-tool | comp-pipescript | comp-pipescript io B_02 | PASS |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~D | ADHC_COMPIL.012.ds-comp-freshness-tool | comp-validate | comp-validate INF_I_D03.composition_artifacts --artifact C:/Windows/Temp/comp_brand.json | PASS |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~D | ADHC_COMPIL.012.ds-comp-freshness-tool | comp-pipescript | comp-pipescript io B_03 | PASS |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~D | ADHC_COMPIL.012.ds-comp-freshness-tool | comp-pipescript | comp-pipescript io build_canonical_prices_v2 | FAIL |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~D | ADHC_COMPIL.012.ds-comp-freshness-tool | comp-pipescript | comp-pipescript io INF_D_04 | FAIL |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~D | ADHC_COMPIL.012.ds-comp-freshness-tool | comp-validate | comp-validate INF_I_D00.portal_aggregates --artifact C:/Windows/Temp/hm.json | PASS |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~D | ADHC_COMPIL.012.ds-comp-freshness-tool | comp-validate | comp-validate INF_D_00c.portal_leaderboard --artifact C:/Windows/Temp/lb.json | PASS |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~D | ADHC_COMPIL.012.ds-comp-freshness-tool | comp-pipescript | comp-pipescript io C_00 | PASS |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~D | ADHC_COMPIL.012.ds-comp-freshness-tool | comp-pipescript | comp-pipescript io convert_orion_to_silver | FAIL |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~D | ADHC_COMPIL.012.ds-comp-freshness-tool | comp-pipescript | comp-pipescript io C_01 | PASS |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~D | ADHC_COMPIL.012.ds-comp-freshness-tool | comp-pipescript | comp-pipescript io C_01c | PASS |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~D | ADHC_COMPIL.012.ds-comp-freshness-tool | comp-pipescript | comp-pipescript io C_02 | PASS |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~D | ADHC_COMPIL.012.ds-comp-freshness-tool | comp-pipescript | comp-pipescript io C_03 | PASS |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~D | ADHC_COMPIL.012.ds-comp-freshness-tool | comp-pipescript | comp-pipescript io C_05 | PASS |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~D | ADHC_COMPIL.012.ds-comp-freshness-tool | comp-pipescript | comp-pipescript io C_06 | PASS |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~D | ADHC_COMPIL.012.ds-comp-freshness-tool | comp-pipescript | comp-pipescript io C_07 | PASS |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~D | ADHC_COMPIL.012.ds-comp-freshness-tool | comp-pipescript | comp-pipescript io C_08 | PASS |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~D | ADHC_COMPIL.012.ds-comp-freshness-tool | comp-pipescript | comp-pipescript io D_00 | PASS |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~D | ADHC_COMPIL.012.ds-comp-freshness-tool | comp-pipescript | comp-pipescript io D_00b | PASS |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~D | ADHC_COMPIL.012.ds-comp-freshness-tool | comp-pipescript | comp-pipescript io D_00c | PASS |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~D | ADHC_COMPIL.012.ds-comp-freshness-tool | comp-pipescript | comp-pipescript io D_01 | PASS |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~D | ADHC_COMPIL.012.ds-comp-freshness-tool | comp-pipescript | comp-pipescript io D_02 | PASS |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~D | ADHC_COMPIL.012.ds-comp-freshness-tool | comp-pipescript | comp-pipescript io D_03 | PASS |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~D | ADHC_COMPIL.012.ds-comp-freshness-tool | comp-pipescript | comp-pipescript io D_04 | PASS |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~D | ADHC_COMPIL.012.ds-comp-freshness-tool | comp-pipescript | comp-pipescript io A_00 | PASS |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~D | ADHC_COMPIL.012.ds-comp-freshness-tool | comp-pipescript | comp-pipescript io A_01 | PASS |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~D | ADHC_COMPIL.012.ds-comp-freshness-tool | comp-pipescript | comp-pipescript io A_04 | PASS |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~D | ADHC_COMPIL.012.ds-comp-freshness-tool | comp-pipescript | comp-pipescript io B_00 | PASS |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~D | ADHC_COMPIL.012.ds-comp-freshness-tool | comp-pipescript | comp-pipescript io B_01 | PASS |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~D | ADHC_COMPIL.012.ds-comp-freshness-tool | comp-pipescript | comp-pipescript io B_02 | PASS |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~D | ADHC_COMPIL.012.ds-comp-freshness-tool | comp-pipescript | comp-pipescript io B_03 | PASS |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~D | ADHC_COMPIL.012.ds-comp-freshness-tool | comp-pipescript | comp-pipescript io A_00 | PASS |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~D | ADHC_COMPIL.012.ds-comp-freshness-tool | comp-pipescript | comp-pipescript io A_01 | PASS |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~D | ADHC_COMPIL.012.ds-comp-freshness-tool | comp-pipescript | comp-pipescript io A_02 | PASS |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~D | ADHC_COMPIL.012.ds-comp-freshness-tool | comp-pipescript | comp-pipescript io A_03 | PASS |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~D | ADHC_COMPIL.012.ds-comp-freshness-tool | comp-pipescript | comp-pipescript io A_04 | PASS |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~D | ADHC_COMPIL.012.ds-comp-freshness-tool | comp-pipescript | comp-pipescript io B_00 | PASS |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~D | ADHC_COMPIL.012.ds-comp-freshness-tool | comp-pipescript | comp-pipescript io B_01 | PASS |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~D | ADHC_COMPIL.012.ds-comp-freshness-tool | comp-pipescript | comp-pipescript io B_01b | PASS |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~D | ADHC_COMPIL.012.ds-comp-freshness-tool | comp-pipescript | comp-pipescript io B_02 | PASS |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~D | ADHC_COMPIL.012.ds-comp-freshness-tool | comp-pipescript | comp-pipescript io B_03 | PASS |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~D | ADHC_COMPIL.012.ds-comp-freshness-tool | comp-pipescript | comp-pipescript io build_canonical_prices_v2 | FAIL |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~D | ADHC_COMPIL.012.ds-comp-freshness-tool | comp-pipescript | comp-pipescript io C_00 | PASS |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~D | ADHC_COMPIL.012.ds-comp-freshness-tool | comp-pipescript | comp-pipescript io C_01 | PASS |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~D | ADHC_COMPIL.012.ds-comp-freshness-tool | comp-pipescript | comp-pipescript io C_01c | PASS |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~D | ADHC_COMPIL.012.ds-comp-freshness-tool | comp-pipescript | comp-pipescript io C_02 | PASS |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~D | ADHC_COMPIL.012.ds-comp-freshness-tool | comp-pipescript | comp-pipescript io C_03 | PASS |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~D | ADHC_COMPIL.012.ds-comp-freshness-tool | comp-pipescript | comp-pipescript io C_04 | PASS |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~D | ADHC_COMPIL.012.ds-comp-freshness-tool | comp-pipescript | comp-pipescript io C_05 | PASS |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~D | ADHC_COMPIL.012.ds-comp-freshness-tool | comp-pipescript | comp-pipescript io C_06 | PASS |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~D | ADHC_COMPIL.012.ds-comp-freshness-tool | comp-pipescript | comp-pipescript io C_07 | PASS |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~D | ADHC_COMPIL.012.ds-comp-freshness-tool | comp-pipescript | comp-pipescript io C_08 | PASS |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~D | ADHC_COMPIL.012.ds-comp-freshness-tool | comp-pipescript | comp-pipescript io D_00 | PASS |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~D | ADHC_COMPIL.012.ds-comp-freshness-tool | comp-pipescript | comp-pipescript io D_00b | PASS |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~D | ADHC_COMPIL.012.ds-comp-freshness-tool | comp-pipescript | comp-pipescript io D_00c | PASS |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~D | ADHC_COMPIL.012.ds-comp-freshness-tool | comp-pipescript | comp-pipescript io D_01 | PASS |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~D | ADHC_COMPIL.012.ds-comp-freshness-tool | comp-pipescript | comp-pipescript io D_02 | PASS |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~D | ADHC_COMPIL.012.ds-comp-freshness-tool | comp-pipescript | comp-pipescript io D_03 | PASS |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~D | ADHC_COMPIL.012.ds-comp-freshness-tool | comp-pipescript | comp-pipescript io D_04 | PASS |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~D | ADHC_COMPIL.012.ds-comp-freshness-tool | comp-pipescript | comp-pipescript io INF_A_00 | FAIL |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~D | ADHC_COMPIL.012.ds-comp-freshness-tool | comp-pipescript | comp-pipescript io INF_A_01 | FAIL |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~D | ADHC_COMPIL.012.ds-comp-freshness-tool | comp-pipescript | comp-pipescript io INF_A_03 | FAIL |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~D | ADHC_COMPIL.012.ds-comp-freshness-tool | comp-pipescript | comp-pipescript io INF_A_04 | FAIL |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~D | ADHC_COMPIL.012.ds-comp-freshness-tool | comp-pipescript | comp-pipescript io INF_B_00 | FAIL |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~D | ADHC_COMPIL.012.ds-comp-freshness-tool | comp-pipescript | comp-pipescript io INF_B_01 | FAIL |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~D | ADHC_COMPIL.012.ds-comp-freshness-tool | comp-pipescript | comp-pipescript io INF_B_02 | FAIL |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~D | ADHC_COMPIL.012.ds-comp-freshness-tool | comp-pipescript | comp-pipescript io INF_B_03 | FAIL |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~D | ADHC_COMPIL.012.ds-comp-freshness-tool | comp-pipescript | comp-pipescript io INF_C_00 | FAIL |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~D | ADHC_COMPIL.012.ds-comp-freshness-tool | comp-pipescript | comp-pipescript io INF_C_01 | FAIL |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~D | ADHC_COMPIL.012.ds-comp-freshness-tool | comp-pipescript | comp-pipescript io INF_C_02 | FAIL |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~D | ADHC_COMPIL.012.ds-comp-freshness-tool | comp-pipescript | comp-pipescript io INF_C_03 | FAIL |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~D | ADHC_COMPIL.012.ds-comp-freshness-tool | comp-pipescript | comp-pipescript io INF_C_05 | PASS |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~D | ADHC_COMPIL.012.ds-comp-freshness-tool | comp-pipescript | comp-pipescript io INF_C_06 | PASS |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~D | ADHC_COMPIL.012.ds-comp-freshness-tool | comp-pipescript | comp-pipescript io INF_C_07 | PASS |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~D | ADHC_COMPIL.012.ds-comp-freshness-tool | comp-pipescript | comp-pipescript io INF_C_08 | PASS |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~D | ADHC_COMPIL.012.ds-comp-freshness-tool | comp-pipescript | comp-pipescript io INF_D_00c | FAIL |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~D | ADHC_COMPIL.012.ds-comp-freshness-tool | comp-pipescript | comp-pipescript io INF_D_02 | PASS |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~D | ADHC_COMPIL.012.ds-comp-freshness-tool | comp-pipescript | comp-pipescript io INF_D_04 | PASS |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~D | ADHC_COMPIL.012.ds-comp-freshness-tool | comp-pipescript | comp-pipescript io INF_D_05 | PASS |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~D | ADHC_COMPIL.012.ds-comp-freshness-tool | comp-pipescript | comp-pipescript io convert_orion_to_silver | PASS |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~D | ADHC_COMPIL.012.ds-comp-freshness-tool | comp-pipescript | comp-pipescript io INF_D_06 | PASS |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~D | ADHC_COMPIL.012.ds-comp-freshness-tool | comp-pipescript | comp-pipescript io INF_D_07 | PASS |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~D | ADHC_COMPIL.012.ds-comp-freshness-tool | comp-pipescript | comp-pipescript io INF_D_08 | PASS |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~D | ADHC_COMPIL.012.ds-comp-freshness-tool | comp-pipescript | comp-pipescript io INF_I_D00 | PASS |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~D | ADHC_COMPIL.012.ds-comp-freshness-tool | comp-pipescript | comp-pipescript io INF_B_00 | PASS |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~D | ADHC_COMPIL.012.ds-comp-freshness-tool | comp-pipescript | comp-pipescript io INF_I_D00b | FAIL |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~D | ADHC_COMPIL.012.ds-comp-freshness-tool | comp-pipescript | comp-pipescript io INF_I_D03 | PASS |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~D | ADHC_COMPIL.012.ds-comp-freshness-tool | comp-pipescript | comp-pipescript io inf-gold-dispatch | PASS |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~D | ADHC_COMPIL.012.ds-comp-freshness-tool | comp-pipescript | comp-pipescript io bd_price_update | PASS |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~D | ADHC_COMPIL.012.ds-comp-freshness-tool | comp-pipescript | comp-pipescript io B_01 | PASS |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~D | ADHC_COMPIL.012.ds-comp-freshness-tool | comp-pipescript | comp-pipescript io D_04 | PASS |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~D | ADHC_COMPIL.012.ds-comp-freshness-tool | comp-pipescript | comp-pipescript io C_08 | PASS |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~D | ADHC_COMPIL.012.ds-comp-freshness-tool | comp-pipescript | comp-pipescript feeds INF_D_04 | PASS |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~D | ADHC_COMPIL.012.ds-comp-freshness-tool | comp-pipescript | comp-pipescript consumers INF_D_04 | PASS |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~D | ADHC_COMPIL.012.ds-comp-freshness-tool | comp-pipescript | comp-pipescript io build_canonical_prices_v2 | FAIL |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~D | ADHC_COMPIL.012.ds-comp-freshness-tool | comp-pipescript | comp-pipescript io A_03 | PASS |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~D | ADHC_COMPIL.012.ds-comp-freshness-tool | comp-pipescript | comp-pipescript io A_00 | PASS |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~D | ADHC_COMPIL.012.ds-comp-freshness-tool | comp-pipescript | comp-pipescript io A_01 | PASS |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~D | ADHC_COMPIL.012.ds-comp-freshness-tool | comp-pipescript | comp-pipescript io B_01 | PASS |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~D | ADHC_COMPIL.012.ds-comp-freshness-tool | comp-pipescript | comp-pipescript io B_01.holdings_lots.py | FAIL |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~D | ADHC_COMPIL.012.ds-comp-freshness-tool | comp-trace | comp-trace opal-portal-authorizer --direction upstream | FAIL |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~D | ADHC_COMPIL.012.ds-comp-freshness-tool | comp-blast | comp-blast lambda:opal-partners-data --direction both | FAIL |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~D | ADHC_COMPIL.012.ds-comp-freshness-tool | comp-pipescript | comp-pipescript io bd-gold-dispatch | PASS |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~D | ADHC_COMPIL.012.ds-comp-freshness-tool | comp-pipescript | comp-pipescript io orion-gold-dispatch | PASS |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~D | ADHC_COMPIL.012.ds-comp-freshness-tool | comp-pipescript | comp-pipescript io INF_X_99 | FAIL |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~D | ADHC_COMPIL.012.ds-comp-freshness-tool | comp-pipescript | comp-pipescript io B_00 | PASS |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~D | ADHC_COMPIL.012.ds-comp-freshness-tool | comp-pipescript | comp-pipescript io --pipeline inf B_00 | PASS |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~D | ADHC_COMPIL.012.ds-comp-freshness-tool | comp-pipescript | comp-pipescript io --pipeline bd B_00 | PASS |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~D | ADHC_COMPIL.012.ds-comp-freshness-tool | comp-pipescript | comp-pipescript deployed data/orion/manual_api/pull_inflection_transactions_rest.py | PASS |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~D | ADHC_COMPIL.012.ds-comp-freshness-tool | comp-pipescript | comp-pipescript deployed data/orion/manual_api/pull_inflection_performance_rest.py | PASS |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~D | ADHC_COMPIL.012.ds-comp-freshness-tool | comp-pipescript | comp-pipescript deployed data/orion/scripts/silver/convert_transactions_to_silver.py | PASS |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~D | ADHC_COMPIL.012.ds-comp-freshness-tool | comp-pipescript | comp-pipescript deployed data/orion/scripts/silver/convert_performance_to_silver.py | PASS |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~D | ADHC_COMPIL.012.ds-comp-freshness-tool | comp-pipescript | comp-pipescript io B_01 | PASS |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~D | ADHC_COMPIL.012.ds-comp-freshness-tool | comp-pipescript | comp-pipescript io B_01.holdings_lots.py | PASS |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~D | ADHC_COMPIL.012.ds-comp-freshness-tool | comp-build | comp-build | PASS |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~D | ADHC_COMPIL.012.ds-comp-freshness-tool | comp-pipescript | comp-pipescript io B_01.bogus.py | PASS |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~D | ADHC_COMPIL.012.ds-comp-freshness-tool | comp-pipescript | comp-pipescript io INF_D_04 | PASS |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~D | ADHC_COMPIL.012.ds-comp-freshness-tool | comp-pipescript | comp-pipescript io INF_B_00 | PASS |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~D | ADHC_COMPIL.012.ds-comp-freshness-tool | comp-pipescript | comp-pipescript io INF_B_99 | FAIL |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~D | ADHC_COMPIL.012.ds-comp-freshness-tool | comp-pipescript | comp-pipescript io inf-gold-dispatch | PASS |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~D | ADHC_COMPIL.012.ds-comp-freshness-tool | comp-pipescript | comp-pipescript io bd-gold-dispatch | PASS |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~D | ADHC_COMPIL.012.ds-comp-freshness-tool | comp-pipescript | comp-pipescript io orion-gold-dispatch | PASS |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~D | ADHC_COMPIL.012.ds-comp-freshness-tool | comp-pipescript | comp-pipescript io convert_orion_to_silver | PASS |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~D | ADHC_COMPIL.012.ds-comp-freshness-tool | comp-pipescript | comp-pipescript io bd_price_update | PASS |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~D | ADHC_COMPIL.012.ds-comp-freshness-tool | comp-build | comp-build | PASS |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~D | ADHC_COMPIL.012.ds-comp-freshness-tool | comp-pipescript | comp-pipescript io B_00 | FAIL |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~D | ADHC_COMPIL.012.ds-comp-freshness-tool | comp-pipescript | comp-pipescript --pipeline inf io B_00 | FAIL |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~D | ADHC_COMPIL.012.ds-comp-freshness-tool | comp-pipescript | comp-pipescript --pipeline bd io B_00 | FAIL |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~D | ADHC_COMPIL.012.ds-comp-freshness-tool | comp-pipescript | comp-pipescript io --pipeline inf B_00 | PASS |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~D | ADHC_COMPIL.012.ds-comp-freshness-tool | comp-pipescript | comp-pipescript io --pipeline bd B_00 | PASS |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~D | ADHC_COMPIL.012.ds-comp-freshness-tool | comp-build | comp-build | PASS |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~D | ADHC_COMPIL.012.ds-comp-freshness-tool | comp-pipescript | comp-pipescript io B_01 | PASS |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~D | ADHC_COMPIL.012.ds-comp-freshness-tool | comp-pipescript | comp-pipescript io D_04 | FAIL |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~D | ADHC_COMPIL.012.ds-comp-freshness-tool | comp-pipescript | comp-pipescript io C_08 | FAIL |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~D | ADHC_COMPIL.012.ds-comp-freshness-tool | comp-pipescript | comp-pipescript io data/black_diamond/scripts/gold/B_01.holdings_lots.py | PASS |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~D | ADHC_COMPIL.012.ds-comp-freshness-tool | comp-pipescript | comp-pipescript feeds B_01.holdings_lots.py | PASS |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~D | ADHC_COMPIL.012.ds-comp-freshness-tool | comp-pipescript | comp-pipescript consumers D_00.portal_aggregates.py | FAIL |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~D | ADHC_COMPIL.012.ds-comp-freshness-tool | comp-pipescript | comp-pipescript deployed B_01.holdings_lots.py | PASS |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~D | ADHC_COMPIL.012.ds-comp-freshness-tool | comp-pipescript | comp-pipescript io B_01 | PASS |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~D | ADHC_COMPIL.012.ds-comp-freshness-tool | comp-pipescript | comp-pipescript io D_04 | PASS |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~D | ADHC_COMPIL.012.ds-comp-freshness-tool | comp-pipescript | comp-pipescript io C_08 | PASS |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~D | ADHC_COMPIL.012.ds-comp-freshness-tool | comp-build | comp-build | PASS |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~D | ADHC_COMPIL.012.ds-comp-freshness-tool | comp-pipescript | comp-pipescript io B_00 | FAIL |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~D | ADHC_COMPIL.012.ds-comp-freshness-tool | comp-pipescript | comp-pipescript io --pipeline inf B_00 | PASS |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~D | ADHC_COMPIL.012.ds-comp-freshness-tool | comp-pipescript | comp-pipescript io --pipeline bd B_00 | PASS |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~D | ADHC_COMPIL.012.ds-comp-freshness-tool | comp-blast | comp-blast INF_D_04 | PASS |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~D | ADHC_COMPIL.012.ds-comp-freshness-tool | comp-trace | comp-trace INF_D_04 --direction both | PASS |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~D | ADHC_COMPIL.012.ds-comp-freshness-tool | comp-blast | comp-blast D_04 | PASS |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~D | ADHC_COMPIL.012.ds-comp-freshness-tool | comp-pipescript | comp-pipescript io B_01 | PASS |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~D | ADHC_COMPIL.012.ds-comp-freshness-tool | comp-pipescript | comp-pipescript io INF_B_00 | PASS |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~D | ADHC_COMPIL.012.ds-comp-freshness-tool | comp-pipescript | comp-pipescript io INF_B_99 | FAIL |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~D | ADHC_COMPIL.012.ds-comp-freshness-tool | comp-pipescript | comp-pipescript io INF_D_04 | PASS |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~D | ADHC_COMPIL.012.ds-comp-freshness-tool | comp-pipescript | comp-pipescript io inf-gold-dispatch | PASS |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~D | ADHC_COMPIL.012.ds-comp-freshness-tool | comp-pipescript | comp-pipescript io bd-gold-dispatch | PASS |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~D | ADHC_COMPIL.012.ds-comp-freshness-tool | comp-pipescript | comp-pipescript io B_01.holdings_lots.py | PASS |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~D | ADHC_COMPIL.012.ds-comp-freshness-tool | comp-pipescript | comp-pipescript io convert_orion_to_silver | PASS |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~D | ADHC_COMPIL.012.ds-comp-freshness-tool | comp-pipescript | comp-pipescript io bd_price_update | PASS |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~D | ADHC_COMPIL.012.ds-comp-freshness-tool | comp-pipescript | comp-pipescript io D_04 | PASS |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~D | ADHC_COMPIL.012.ds-comp-freshness-tool | comp-pipescript | comp-pipescript io C_08 | PASS |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~D | ADHC_COMPIL.012.ds-comp-freshness-tool | comp-pipescript | comp-pipescript io INF_X_99 | FAIL |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~D | ADHC_COMPIL.012.ds-comp-freshness-tool | comp-pipescript | comp-pipescript io data/black_diamond/scripts/gold/B_01.holdings_lots.py | PASS |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~D | ADHC_COMPIL.012.ds-comp-freshness-tool | comp-pipescript | comp-pipescript io B_01.bogus.py | FAIL |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~D | ADHC_COMPIL.012.ds-comp-freshness-tool | comp-pipescript | comp-pipescript io B_01 | PASS |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~D | ADHC_COMPIL.012.ds-comp-freshness-tool | comp-pipescript | comp-pipescript io B_01.holdings_lots.py | PASS |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~D | ADHC_COMPIL.012.ds-comp-freshness-tool | comp-pipescript | comp-pipescript io data/black_diamond/scripts/gold/B_01.holdings_lots.py | PASS |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~D | ADHC_COMPIL.012.ds-comp-freshness-tool | comp-pipescript | comp-pipescript io D_04 | PASS |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~D | ADHC_COMPIL.012.ds-comp-freshness-tool | comp-pipescript | comp-pipescript io D_04.employee_leaderboard.py | FAIL |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~D | ADHC_COMPIL.012.ds-comp-freshness-tool | comp-pipescript | comp-pipescript io A_00 | PASS |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~D | ADHC_COMPIL.012.ds-comp-freshness-tool | comp-pipescript | comp-pipescript io A_00.build_canonical_prices_v2.py | FAIL |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~D | ADHC_COMPIL.012.ds-comp-freshness-tool | comp-pipescript | comp-pipescript io D_00 --pipeline bd | PASS |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~D | ADHC_COMPIL.012.ds-comp-freshness-tool | comp-pipescript | comp-pipescript io INF_B_00 | PASS |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~D | ADHC_COMPIL.012.ds-comp-freshness-tool | comp-pipescript | comp-pipescript io INF_D_04 | PASS |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~D | ADHC_COMPIL.012.ds-comp-freshness-tool | comp-pipescript | comp-pipescript io INF_B_99 | FAIL |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~D | ADHC_COMPIL.012.ds-comp-freshness-tool | comp-pipescript | comp-pipescript io inf-gold-dispatch | PASS |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~D | ADHC_COMPIL.012.ds-comp-freshness-tool | comp-pipescript | comp-pipescript io D_00.portal_aggregates.py --pipeline bd | PASS |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~D | ADHC_COMPIL.012.ds-comp-freshness-tool | comp-pipescript | comp-pipescript io bd-gold-dispatch | PASS |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~D | ADHC_COMPIL.012.ds-comp-freshness-tool | comp-pipescript | comp-pipescript io orion-gold-dispatch | PASS |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~D | ADHC_COMPIL.012.ds-comp-freshness-tool | comp-pipescript | comp-pipescript io convert_orion_to_silver | PASS |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~D | ADHC_COMPIL.012.ds-comp-freshness-tool | comp-pipescript | comp-pipescript io bd_price_update | PASS |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~D | ADHC_COMPIL.012.ds-comp-freshness-tool | comp-pipescript | comp-pipescript io B_01 | PASS |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~D | ADHC_COMPIL.012.ds-comp-freshness-tool | comp-pipescript | comp-pipescript io C_08 | PASS |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~D | ADHC_COMPIL.012.ds-comp-freshness-tool | comp-build | comp-build | PASS |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~D | ADHC_COMPIL.012.ds-comp-freshness-tool | comp-pipescript | comp-pipescript io B_00 | FAIL |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~D | ADHC_COMPIL.012.ds-comp-freshness-tool | comp-pipescript | comp-pipescript io --pipeline inf B_00 | PASS |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~D | ADHC_COMPIL.012.ds-comp-freshness-tool | comp-pipescript | comp-pipescript io --pipeline bd B_00 | PASS |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~D | ADHC_COMPIL.012.ds-comp-freshness-tool | comp-pipescript | comp-pipescript io INF_X_99 | FAIL |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~D | ADHC_COMPIL.012.ds-comp-freshness-tool | comp-pipescript | comp-pipescript io B_01 | PASS |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~D | ADHC_COMPIL.012.ds-comp-freshness-tool | comp-pipescript | comp-pipescript io B_01.holdings_lots.py | PASS |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~D | ADHC_COMPIL.012.ds-comp-freshness-tool | comp-pipescript | comp-pipescript io data/black_diamond/scripts/gold/B_01.holdings_lots.py | PASS |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~D | ADHC_COMPIL.012.ds-comp-freshness-tool | comp-pipescript | comp-pipescript io D_04 | PASS |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~D | ADHC_COMPIL.012.ds-comp-freshness-tool | comp-pipescript | comp-pipescript io D_04.client_portal_summary.py | PASS |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~D | ADHC_COMPIL.012.ds-comp-freshness-tool | comp-pipescript | comp-pipescript io A_00 | PASS |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~D | ADHC_COMPIL.012.ds-comp-freshness-tool | comp-pipescript | comp-pipescript io A_00.accounts_dimension.py | PASS |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~D | ADHC_COMPIL.012.ds-comp-freshness-tool | comp-pipescript | comp-pipescript io D_00 --pipeline bd | PASS |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~D | ADHC_COMPIL.012.ds-comp-freshness-tool | comp-pipescript | comp-pipescript io D_00.portal_aggregates.py --pipeline bd | PASS |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~D | ADHC_COMPIL.012.ds-comp-freshness-tool | comp-pipescript | comp-pipescript feeds B_01 | PASS |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~D | ADHC_COMPIL.012.ds-comp-freshness-tool | comp-pipescript | comp-pipescript feeds B_01.holdings_lots.py | PASS |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~D | ADHC_COMPIL.012.ds-comp-freshness-tool | comp-pipescript | comp-pipescript deployed D_04 | PASS |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~D | ADHC_COMPIL.012.ds-comp-freshness-tool | comp-pipescript | comp-pipescript deployed D_04.client_portal_summary.py | PASS |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~D | ADHC_COMPIL.012.ds-comp-freshness-tool | comp-pipescript | comp-pipescript io B_01.bogus | FAIL |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~C | ADHC_COMPIL.011.ds-inf-script-id-resolver | comp-pipescript | AC1: INF_B_00 exists -> exit 0 + I/O MANIFEST [inf-gold] | PASS |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~C | ADHC_COMPIL.011.ds-inf-script-id-resolver | comp-pipescript | AC1b: INF_B_99 not found -> exit 1 + Did you mean | PASS |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~C | ADHC_COMPIL.011.ds-inf-script-id-resolver | comp-pipescript | AC2: INF_D_04 exists -> exit 0 + I/O MANIFEST [inf-gold] | PASS |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~C | ADHC_COMPIL.011.ds-inf-script-id-resolver | comp-pipescript | AC3: inf-gold-dispatch -> DISPATCHER output [inf-gold] exit 0 | PASS |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~C | ADHC_COMPIL.011.ds-inf-script-id-resolver | comp-pipescript | AC3: bd-gold-dispatch -> DISPATCHER output [bd-gold] exit 0 | PASS |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~C | ADHC_COMPIL.011.ds-inf-script-id-resolver | comp-pipescript | AC3: orion-gold-dispatch -> DISPATCHER output [inf-gold] exit 0 | PASS |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~C | ADHC_COMPIL.011.ds-inf-script-id-resolver | comp-pipescript | AC4: convert_orion_to_silver -> I/O MANIFEST [inf-silver] exit 0 | PASS |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~C | ADHC_COMPIL.011.ds-inf-script-id-resolver | comp-pipescript | AC5: bd_price_update -> I/O MANIFEST [bd-silver] exit 0 | PASS |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~C | ADHC_COMPIL.011.ds-inf-script-id-resolver | comp-pipescript | AC6: B_00 synthetic collision -> exit 1 Ambiguous script ID (CATALOG+placeholder) | PASS |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~C | ADHC_COMPIL.011.ds-inf-script-id-resolver | comp-pipescript | AC7: --pipeline inf B_00 -> [inf-gold] unambiguous; --pipeline bd B_00 -> [bd-gold] | PASS |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~C | ADHC_COMPIL.011.ds-inf-script-id-resolver | comp-pipescript | AC8: B_01/D_04/C_08 unchanged -> bd-gold, no regression (exact-match-only fix) | PASS |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~C | ADHC_COMPIL.011.ds-inf-script-id-resolver | comp-pipescript | AC9: comp-blast/comp-trace INF_D_04 -> no crash (resolver extension transparent to callers) | PASS |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~C | ADHC_COMPIL.011.ds-inf-script-id-resolver | comp-pipescript | AC10: test_inf_id_resolver.sh 15/15 cases pass | PASS |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~C | ADHC_COMPIL.011.ds-inf-script-id-resolver | comp-pipescript | AC11: compiler-tools-log rows appended (this entry) | PASS |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~D | ADHC_COMPIL.012.ds-comp-freshness-tool | comp-pipescript | comp-pipescript io D_04 | PASS |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~D | ADHC_COMPIL.012.ds-comp-freshness-tool | comp-pipescript | comp-pipescript feeds D_04 | PASS |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~D | ADHC_COMPIL.012.ds-comp-freshness-tool | comp-validate | comp-validate B_00 --artifact /tmp/test_validate_artifact.json | FAIL |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~D | ADHC_COMPIL.012.ds-comp-freshness-tool | comp-validate | comp-validate B_00 --artifact C:/tmp/test_validate_artifact.json | PASS |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~D | ADHC_COMPIL.012.ds-comp-freshness-tool | comp-validate | comp-validate B_00 --artifact /tmp/does_not_exist_xyz.json | FAIL |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~D | ADHC_COMPIL.012.ds-comp-freshness-tool | comp-trace | comp-trace D_04 --direction up | PASS |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~D | ADHC_COMPIL.012.ds-comp-freshness-tool | comp-trace | comp-trace D_04 --direction upstream | PASS |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~D | ADHC_COMPIL.012.ds-comp-freshness-tool | comp-trace | comp-trace D_04 --direction down | PASS |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~D | ADHC_COMPIL.012.ds-comp-freshness-tool | comp-trace | comp-trace D_04 --direction downstream | PASS |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~D | ADHC_COMPIL.012.ds-comp-freshness-tool | comp-trace | comp-trace D_04 --direction both | PASS |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~D | ADHC_COMPIL.012.ds-comp-freshness-tool | comp-trace | comp-trace D_04 --direction sideways | FAIL |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~D | ADHC_COMPIL.012.ds-comp-freshness-tool | comp-blast | comp-blast opal-partners-data --direction both | PASS |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~D | ADHC_COMPIL.012.ds-comp-freshness-tool | comp-blast | comp-blast lambda:opal-partners-data --direction both | PASS |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~D | ADHC_COMPIL.012.ds-comp-freshness-tool | comp-blast | comp-blast gold:D_04 --direction up | PASS |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~D | ADHC_COMPIL.012.ds-comp-freshness-tool | comp-blast | comp-blast component:portal/src/pages/AdvisorIntelligence/AdvisorIntelligence.tsx --dir... | PASS |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~D | ADHC_COMPIL.012.ds-comp-freshness-tool | comp-blast | comp-blast lambda:opal-partners-data | PASS |
