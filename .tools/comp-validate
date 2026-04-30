@@ -1,0 +1,12 @@
+#!/bin/bash
+# comp-validate -- validate gold artifact output invariants before S3 upload
+# Usage: comp-validate D_04 --artifact /tmp/leaderboard.json
+#        comp-validate --list
+WORKSPACE="$(cd "$(dirname "$0")/.." && pwd)"
+python "$WORKSPACE/org/modules/graph/validate_cli.py" "$@"
+_exit=$?
+if [ $_exit -ne 0 ]; then
+    echo "Hint: see COMP_VALIDATE_PROTOCOL.md §4 for retry policy"
+fi
+python "$WORKSPACE/org/modules/graph/comp_log_auto.py" "comp-validate" "$*" $_exit 2>/dev/null
+exit $_exit
