@@ -135,6 +135,23 @@ event-push; `check_inbox` is authoritative pull. Do both.
 Without a running watcher you are deaf to real-time pushes.
 Both commands are in `.tools/` (in PATH) and work from any directory.
 
+**Autonomous /loop agents — CronCreate backstop (Option 2):**
+If you will be running in `/loop` mode for an extended session, add a periodic re-registration
+cron immediately after your initial inbox-watch launch. This replaces untracked auto-respawn
+copies with tracked instances every 15 minutes, restoring full interrupt coverage without
+requiring perfect relaunch discipline after every notification:
+
+```python
+# Run once at session startup, after initial inbox-watch launch
+CronCreate(
+    interval=900,
+    prompt="Relaunch inbox-watch for interrupt coverage: use the Bash tool with run_in_background=true to run bash org/mcp/inbox-watch.sh {your_serial}"
+)
+```
+
+The cron is a backstop, not a replacement for Option 1 (relaunch after every notification).
+Use both. Full design rationale: `org/mcp/INBOX_WATCH_DESIGN.md`.
+
 **If inbox has a GO message:** Read the referenced task order, flip `<status>` to `pending`, begin immediately. The GO IS your authorization. Do not ask Andrew.
 
 **If the GO lists a SEQUENCE of TOs:** You are authorized to execute ALL of them in order without waiting for a new GO between steps. If a TO in the sequence is already complete when you reach it, move immediately to the next one. Keep going until you hit a blocked TO (deps unmet) or the list is exhausted. Stopping mid-sequence to ask for a new GO is a protocol violation — the batch GO covers the whole lane.

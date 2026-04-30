@@ -32,14 +32,14 @@ INBOX_BASE="$SCRIPT_DIR/cl_inbox"
 if command -v pgrep >/dev/null 2>&1; then
     existing=$(pgrep -f "inbox-watch\.sh $SERIAL$" 2>/dev/null | grep -v "^$$\$" || true)
 elif command -v ps >/dev/null 2>&1; then
-    existing=$(ps -ef | awk -v ser="$SERIAL" -v me="$$" '$2 != me && $NF == ser && $0 ~ "inbox-watch[.]sh" {print $2}')
+    existing=$(ps -ef | grep -v eval | awk -v ser="$SERIAL" -v me="$$" '$2 != me && $NF == ser && $0 ~ "inbox-watch[.]sh" {print $2}')
 else
     existing=""
 fi
 for pid in $existing; do
     ppid=$(ps -p "$pid" -o ppid= 2>/dev/null | tr -d ' ') || true
-    if [ -z "$ppid" ] || [ "$ppid" -eq 1 ] || ! kill -0 "$ppid" 2>/dev/null; then
-        echo "inbox-watch: reaping orphan watcher pid $pid (parent dead)" >&2
+    if [ -z "$ppid" ] || ! kill -0 "$pid" 2>/dev/null; then
+        echo "inbox-watch: reaping dead watcher pid $pid (process gone)" >&2
         kill "$pid" 2>/dev/null || true
     else
         echo "inbox-watch already running for $SERIAL (pid $pid, parent $ppid alive). Exiting." >&2
