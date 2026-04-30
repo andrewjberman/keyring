@@ -14,7 +14,7 @@
 #   1 = warn-mode (fail-open): violations logged to org/git-author-override-audit.log, commit proceeds
 #   2 = block-mode (fail-closed): violations EXIT 1 and block commit
 #
-rollout_phase: 1
+rollout_phase: 2  # 2026-04-30: flipped to fail-closed per Andrew directive (TO 4 truncated by 24h, TO 5 shipping with this commit)
 #
 # UNMAPPED PATH HANDLING:
 #   Any staged file that matches no glob below has lane: UNDEFINED.
@@ -159,12 +159,143 @@ lanes:
     permitted_agents: "*"
     description: "Intentionally multi-agent-writable (shared logs, timeseries, misc)"
 
+  # -----------------------------------------------------------------------
+  # Pod-or-exec combination lanes (for task_orders/*.md authoring exceptions)
+  # CTO/COO author task orders into lane folders; lane owner edits status post-receipt.
+  # ADHC_OWNPTH.005 false-positive fix 2026-04-30: COO authoring TOs into pod folders
+  # was the dominant warn-mode WARN class (~12 entries on 2026-04-29). These lanes open
+  # task_orders/ files only — parent agent home folder remains lane-strict.
+  # -----------------------------------------------------------------------
+
+  POD1_OR_EXEC:
+    permitted_agents:
+      - 0.1.0_DE_MarketIntelligence
+      - 0.1.0_DS_MarketIntelligence
+      - 0.1.0_DT_MarketIntelligence
+      - 1.0.0_SA_CTO
+      - 2.0.0_SA_COO
+      - 1.1.0_SA_CTO
+      - 2.1.0_SA_COO
+    description: "Pod 1 + any exec (task_orders/ authoring)"
+
+  POD2_OR_EXEC:
+    permitted_agents:
+      - 0.2.0_DE_PortfolioAnalytics
+      - 0.2.0_DS_PortfolioAnalytics
+      - 0.2.0_DT_PortfolioAnalytics
+      - 1.0.0_SA_CTO
+      - 2.0.0_SA_COO
+      - 1.1.0_SA_CTO
+      - 2.1.0_SA_COO
+    description: "Pod 2 + any exec (task_orders/ authoring)"
+
+  POD3_OR_EXEC:
+    permitted_agents:
+      - 0.3.0_DE_TradingOperations
+      - 0.3.0_DS_TradingOperations
+      - 0.3.0_DT_TradingOperations
+      - 1.0.0_SA_CTO
+      - 2.0.0_SA_COO
+      - 1.1.0_SA_CTO
+      - 2.1.0_SA_COO
+    description: "Pod 3 + any exec (task_orders/ authoring)"
+
+  POD4_OR_EXEC:
+    permitted_agents:
+      - 0.4.0_DE_ClientPlatform
+      - 0.4.0_DS_ClientPlatform
+      - 0.4.0_DS_ClientPlatform~A
+      - 0.4.0_DS_ClientPlatform~B
+      - 0.4.0_DS_ClientPlatform~C
+      - 0.4.0_DS_ClientPlatform~D
+      - 0.4.0_DS_ClientPlatform_A
+      - 0.4.0_DS_ClientPlatform_B
+      - 0.4.0_DS_ClientPlatform_C
+      - 0.4.0_DS_ClientPlatform_D
+      - 0.4.0_DT_ClientPlatform
+      - 0.4.2_RD_AdvisorIntelligence
+      - 1.0.0_SA_CTO
+      - 2.0.0_SA_COO
+      - 1.1.0_SA_CTO
+      - 2.1.0_SA_COO
+    description: "Pod 4 + any exec (task_orders/ authoring; underscore + tilde tilde-lane variants both included)"
+
+  SHARED_OPAL_ETL_OR_EXEC:
+    permitted_agents:
+      - 0.5.0_AE_OpalETL
+      - 1.0.0_SA_CTO
+      - 2.0.0_SA_COO
+      - 1.1.0_SA_CTO
+      - 2.1.0_SA_COO
+    description: "OpalETL AE + any exec (task_orders/ authoring)"
+
+  SHARED_PARTNER_ETL_OR_EXEC:
+    permitted_agents:
+      - 0.5.0_AE_OpalETL
+      - 0.6.0_AE_PartnerETL
+      - 0.6.1_AE_PartnerETL
+      - 1.0.0_SA_CTO
+      - 2.0.0_SA_COO
+      - 1.1.0_SA_CTO
+      - 2.1.0_SA_COO
+    description: "PartnerETL AEs + any exec (task_orders/ authoring)"
+
+  SHARED_CLOUD_OPS_OR_EXEC:
+    permitted_agents:
+      - 0.7.0_AE_CloudOps
+      - 1.0.0_SA_CTO
+      - 2.0.0_SA_COO
+      - 1.1.0_SA_CTO
+      - 2.1.0_SA_COO
+    description: "CloudOps AE + any exec (task_orders/ authoring)"
+
+  ANY_EXEC_OR_AE:
+    permitted_agents:
+      - 1.0.0_SA_CTO
+      - 2.0.0_SA_COO
+      - 1.1.0_SA_CTO
+      - 2.1.0_SA_COO
+      - 0.5.0_AE_OpalETL
+      - 0.6.0_AE_PartnerETL
+      - 0.6.1_AE_PartnerETL
+      - 0.7.0_AE_CloudOps
+    description: "Execs + AEs — used for project JSONs (AE updates own project state) and hook-config files (AE 0.7 implements hook ecosystem)"
+
 # =========================================================================
 # PATHS
 # Listed roughly from most-specific to most-general within each top-level group.
 # Longest match wins — more specific globs override broader ones at hook eval time.
 # =========================================================================
 paths:
+
+  # -----------------------------------------------------------------------
+  # Task-order authoring overrides (more-specific than parent home-folder rules)
+  # CTO/COO author task orders into target agents' folders for dispatch.
+  # Lane owners edit <status>/<evidence> after receipt. Both must be permitted.
+  # ADHC_OWNPTH.005 false-positive fix 2026-04-30 — opens task_orders/*.md only.
+  # -----------------------------------------------------------------------
+  "org/tier1_exec/*/task_orders/*.md":
+    lane: ANY_EXEC
+    note: "Task orders into exec home folders — any exec may author (cross-exec dispatch)"
+
+  "org/tier2_senior/0.1.0_*/task_orders/*.md":
+    lane: POD1_OR_EXEC
+  "org/tier2_senior/0.2.0_*/task_orders/*.md":
+    lane: POD2_OR_EXEC
+  "org/tier2_senior/0.3.0_*/task_orders/*.md":
+    lane: POD3_OR_EXEC
+  "org/tier2_senior/0.4.0_*/task_orders/*.md":
+    lane: POD4_OR_EXEC
+  "org/tier2_senior/0.4.2_*/task_orders/*.md":
+    lane: POD4_OR_EXEC
+  "org/tier2_senior/0.5.0_*/task_orders/*.md":
+    lane: SHARED_OPAL_ETL_OR_EXEC
+  "org/tier2_senior/0.6.0_*/task_orders/*.md":
+    lane: SHARED_PARTNER_ETL_OR_EXEC
+  "org/tier2_senior/0.6.1_*/task_orders/*.md":
+    lane: SHARED_PARTNER_ETL_OR_EXEC
+  "org/tier2_senior/0.7.0_*/task_orders/*.md":
+    lane: SHARED_CLOUD_OPS_OR_EXEC
 
   # -----------------------------------------------------------------------
   # org/tier1_exec — exec agent home folders
@@ -260,12 +391,12 @@ paths:
   # org/ shared surfaces — specific overrides before org/** catch-all
   # -----------------------------------------------------------------------
   "org/projects/REGISTRY.md":
-    lane: ANY_EXEC
-    note: "Project registry — all 4 execs can move rows (closure discipline)"
+    lane: ANY_EXEC_OR_AE
+    note: "Project registry — execs + AEs (AE may update own-project rows + closure)"
 
   "org/projects/*.json":
-    lane: ANY_EXEC
-    note: "Per-project JSON files — all 4 execs can update phase/blocking/status"
+    lane: ANY_EXEC_OR_AE
+    note: "Per-project JSON — execs + AEs (AE may update own-project phase/blocking/status; ADHC_OWNPTH.005 fix 2026-04-30 widened from ANY_EXEC after multiple AE 0.6.1 WARN entries on ADVI_ORIAPI.json)"
 
   "org/projects/**":
     lane: ANY_EXEC
@@ -405,6 +536,10 @@ paths:
   # -----------------------------------------------------------------------
   # portal/ — React frontend (submodule)
   # -----------------------------------------------------------------------
+  "portal":
+    lane: ANY
+    note: "portal submodule pointer file (parent-repo SHA) — DT bumps on portal push; CTO/AE may bump for portal-pointer hotfixes. Added 2026-04-30 ADHC_OWNPTH.005 phase-2 flip (DT 0.4 hit UNDEFINED multiple times in audit log)."
+
   "portal/**":
     lane: POD_DE_ANY
     note: "Any pod DE can author portal; DT pushes (DEV/PROD submodule branches)"
@@ -452,8 +587,8 @@ paths:
   # .tools/ — shared tooling (any agent may extend; AE wires hooks)
   # -----------------------------------------------------------------------
   ".tools/git-hooks/**":
-    lane: CLOUD_OPS_OR_ETL
-    note: "Hook scripts — AE TO 3 authors these (ADHC_OWNPTH.003)"
+    lane: ANY_EXEC_OR_AE
+    note: "Hook scripts — AE 0.7 implements (ADHC_OWNPTH.003); execs may revise (mode flips, exception adds). Widened 2026-04-30 from CLOUD_OPS_OR_ETL during TO 5 phase-2 flip."
 
   ".tools/**":
     lane: ANY
@@ -575,8 +710,8 @@ paths:
     lane: BASE_EXEC
 
   ".owned-paths.yaml":
-    lane: BASE_EXEC
-    note: "Owned-paths YAML itself — base exec only (the rule file describes lane permissions; only execs may modify)"
+    lane: ANY_EXEC_OR_AE
+    note: "Owned-paths YAML itself — execs (lane definitions) + AEs (hook integration). Widened 2026-04-30 during TO 5 phase-2 flip after AE 0.7 WARN on bootstrap commit."
 
   ".mcp.json":
     lane: BASE_EXEC

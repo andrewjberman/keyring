@@ -24,7 +24,7 @@ YAML="$REPO_ROOT/.owned-paths.yaml"
 VALIDATE="$REPO_ROOT/.tools/owned-paths-validate.py"
 # Test seam: OWNED_PATHS_AUDIT_LOG lets unit tests redirect the audit log.
 AUDIT_LOG="${OWNED_PATHS_AUDIT_LOG:-$REPO_ROOT/org/git-author-override-audit.log}"
-MODE="${OWNED_PATHS_MODE:-warn}"
+MODE="${OWNED_PATHS_MODE:-block}"  # ADHC_OWNPTH.005 phase-2 flip 2026-04-30: was warn, flipped to block per Andrew directive
 OVERRIDE="${GIT_COMMIT_AUTHOR_OVERRIDE:-}"
 
 ISO_TS="$(date -u +%Y-%m-%dT%H:%M:%SZ)"
