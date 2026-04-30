@@ -414,25 +414,29 @@ You do NOT produce architecture specs (CTO does). You DO align, route, and track
 - `COMP_LEARNS` 2026-04-21 (v0 COMPLETE per Andrew; 20 COMPLETE + 1 DEFERRED + 1 STAGED-EXT; dyad 1.1.0_SA_CTO + 2.1.0_SA_COO handled closeout)
 - `CDRS_TFIMPT` 2026-04-15 (all 7 TOs; partner-firms-v1.0.0 + shared-infra-v1.7.0)
 
-### Pipeline Tags (refreshed 2026-04-24 CTO startup via `git tag -l`)
+### Pipeline Tags (refreshed 2026-04-30 PM CTO startup via `git tag -l`)
 
 | Pipeline | Tag |
 |----------|-----|
-| BD | `bd-v2.24.4` (DH-7 + bd-incrparity-trigger 2026-04-16) |
-| Partners API | `partners-api-v1.16.1` (ADVI_ROLGAT.DT1 2026-04-17) |
-| Portal Auth | `portal-auth-v1.14.0` (ADVI_INFLEC W1.5+W1.6+W1.7 auth-handler partner generalization 2026-04-21) |
-| Portal (submodule) | `portal-v2.1.58` PROD (`c7a7d11e` 2026-04-20 — includes ADVI_ROLGAT.DE1 + PROFAU W4 batch + W8 cross-firm + AdvisorsTab role-filter + SmallAccounts modal + book-account modal chart + NNA window guards) |
+| BD | `bd-v2.24.4` |
+| Partners API | `partners-api-v1.16.1` |
+| Portal Auth | `portal-auth-v1.15.0` |
+| Portal (submodule) | `portal-v2.1.61` PROD (FIRM_ID fix DT) |
 | Yang | `yang-v2.3.8` |
-| Market Overview | `market-overview-v1.9.0` |
-| News | `news-v2.9.5` |
-| Shared Infra | `shared-infra-v1.7.0` |
+| Market Overview | `market-overview-v1.10.0` |
+| News | `news-v2.9.7` |
+| Shared Infra | `shared-infra-v1.8.0` (TRSB_TFIMPT W3 API GW import) |
 | Data Refresh | `data-refresh-v2.2.0` |
-| Trade Pipeline | `trade-pipeline-v1.3.0` (TRSB_TFIMPT.W1 2026-04-21) |
+| Trade Pipeline | `trade-pipeline-v1.7.0` (TRSB_TFIMPT W3; TRSB_PATHFIX TO-2 target v1.8.0) |
+| Inf Pipeline | `inf-pipeline-v1.7.9` (ADVI_ORIAPI KMS+SSM lift + .005 retry + bronze KMS fix 2026-04-30) |
+| Exec Summary | `exec-summary-v0.1.1` |
 | Security Scanner | `security-scanner-v1.0.2` |
-| Partner Firms | `partner-firms-v1.0.0` |
+| Partner Firms | `partner-firms-v1.2.0` |
 | Public API CDN | `public-api-cdn-v1.0.0` |
 | Analytics Dashboard | `analytics-dashboard-v1.0.0` |
 | Deck Generation | `deck-generation-v1.0.0` |
+
+**COO pipeline tag note (2026-04-30 PM):** Tags refreshed by CTO startup reconciliation. COO active projects dashboard below is from 2026-04-24 and is significantly stale — COO to fully reconcile on next startup against REGISTRY.md ground truth. Key changes since 2026-04-24: ADVI_STAUDT/ADHC_ROUTER/TRSB_TFIMPT/ADVI_INFGRD/ADVI_INFPRTY all completed; ADVI_JWTRES/ADVI_HISTBF/ADHC_CLCOMM added active; ADHC_COMPIL v3 reopened; ADHC_OWNPTH Phase 2 fail-closed live; TRSB_PATHFIX TO-2 DT pending.
 
 ### Operational Notes (2026-04-24 CTO startup reconciliation)
 
