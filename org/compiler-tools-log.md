@@ -2162,3 +2162,9 @@ Total: 2 PASS, 131 WARN, 133 PRDs scanned.
 | AC7 | orion-gold-dispatch.sh | --no-freshness-check (no reason) | PASS | Mirror of AC3 for INF dispatcher; same bypass function |
 | AC8 | orion-gold-dispatch.sh | --no-freshness-check --bypass-reason "<text>" | PASS | Mirror of AC4; reason text stored in log |
 | AC9 | bypass log | tail org/compiler-tools-log.md after each bypass run | PASS | All bypass entries single-line; pipe-delimited; [ADHC_COMPIL.013] prefix present |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~A | (no-TO) | comp-pipescript | comp-pipescript deployed gold_dispatch.sh | PASS |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~A | (no-TO) | comp-pipescript | comp-pipescript deployed orion-gold-dispatch.sh | PASS |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~A | (no-TO) | comp-pipescript | comp-pipescript io B_01.holdings_lots.py | PASS |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~A | (no-TO) | comp-trace | comp-trace D_04 --direction downstream | PASS |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~A | (no-TO) | comp-pipescript | comp-pipescript io INF_D_04 | PASS |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~A | (no-TO) | comp-validate | comp-validate D_04 --artifact /tmp/cohort_a_summary.json | PASS |

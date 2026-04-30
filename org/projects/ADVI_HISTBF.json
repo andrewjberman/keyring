@@ -4,20 +4,62 @@
   "name": "Inflection Historical Dimension Backfill (~6yr Orion API)",
   "description": "Backfill Inflection/Orion API dimension tables (accounts_v2, household, household_rep_mapping, billing, activity, performance, positions_mv, assets_v2) to match `silver/transactions/` origin (2020-05-26; 1,502 files, ~6 years). Today every dim has at most 2 snapshots (last week of 2026-04). Lookback analysis joining transactions to dims uses today's snapshot for historical dates — this misattributes any transaction prior to a rep/account change. Phase 0 capability probe is the central unknown: Orion API accepts `--start/--end/--snapshot-date` parameters for some endpoints (e.g. `transactions` accepts `createdDateStart`) but others may be current-state-only. Probe outputs a per-dim eligibility matrix with provable earliest date. Phase 1+ scope (bronze backfill, silver convert, gold rerun) sized post-probe.",
   "prds": [
-    {"path": "docs/architecture/ADVI_HISTBF.md", "label": "Historical Dim Backfill PRD v0.1 (thin; cites AE brief)", "date": "2026-04-30"},
-    {"path": "org/tier2_senior/0.6.1_AE_PartnerETL/deliverables/CTO_BRIEFING_INFLEC_HISTBACKFILL_AND_JWT_RESILIENCE_20260430.md", "label": "Source brief (AE 0.6.1 silver-coverage audit + AE 0.7 JWT consult)", "date": "2026-04-30"}
+    {
+      "path": "docs/architecture/ADVI_HISTBF.md",
+      "label": "Historical Dim Backfill PRD v0.1 (thin; cites AE brief)",
+      "date": "2026-04-30"
+    },
+    {
+      "path": "org/tier2_senior/0.6.1_AE_PartnerETL/deliverables/CTO_BRIEFING_INFLEC_HISTBACKFILL_AND_JWT_RESILIENCE_20260430.md",
+      "label": "Source brief (AE 0.6.1 silver-coverage audit + AE 0.7 JWT consult)",
+      "date": "2026-04-30"
+    }
   ],
   "source_brief": "org/tier2_senior/0.6.1_AE_PartnerETL/deliverables/CTO_BRIEFING_INFLEC_HISTBACKFILL_AND_JWT_RESILIENCE_20260430.md (AE 0.6.1 silver-coverage audit 2026-04-30; transactions back to 2020-05-26 vs dim snapshots only at 2026-04-28+).",
   "status": "active",
   "phase": "Phase 0 — registered 2026-04-30; Andrew rulings 2026-04-30 PM resolve all 4 open questions; no TOs authored yet (Andrew + COO will handle sequencing). **Andrew rulings:** (1) Backfill date target = match `silver/transactions/` origin 2020-05-26 for every vector; if a dim's earliest available history is later than 2020-05-26, NOTE explicitly per dim (no obligation to invent data). (2) Priority order doesn't matter — all 8 dims will be backfilled regardless; sequence by ops convenience. (3) **Off-the-books operation** — no Orion support contact available; Option C in JWTRES (and any vendor-confirmed answers in HISTBF Phase 0) deferred indefinitely. Rate limiting via empirical adaptive strategy: **linear acceleration with linear fallback** — start at very polite low rate, scale up iteratively per success; on any 401/429/5xx, drop linearly (fallback faster than acceleration to dampen oscillation); persist observed-stable rate across runs. Goal: be polite to Orion's system. (4) JWTRES Phase 1 ships first; Phase 0 probe runs in parallel with JWTRES Phase 1 (read-only probe doesn't burn JWT capacity). 4-phase scope from AE brief §2 unchanged: Phase 0 API capability probe (DS, 1-2d) → Phase 1 bronze backfill (DS+AE, sized post-probe + rate-limit observation) → Phase 2 silver backfill (DS, parallelizable) → Phase 3 gold rerun (DS+AE, scope TBD).",
   "blocking": "Andrew + COO sequencing call (Andrew handling directly per 2026-04-30 PM ruling — `I'll handle that with COO ... we will try to thread these simultaneously parallelizing what we can`). Phase 0 probe authorization is the immediate gate. Off-the-books framing means probe is purely empirical: observe response patterns across date ranges per dim, infer as-of support from response shape; no vendor-confirmed answers.",
   "created": "2026-04-30",
-  "pods": ["0.6", "0.4"],
+  "pods": [
+    "0.6",
+    "0.4"
+  ],
   "pipeline": "inf-pipeline + bronze + silver + gold",
-  "lanes": ["0.4.0_DS_ClientPlatform", "0.6.1_AE_PartnerETL", "0.7.0_AE_CloudOps"],
+  "lanes": [
+    "0.4.0_DS_ClientPlatform",
+    "0.6.1_AE_PartnerETL",
+    "0.7.0_AE_CloudOps"
+  ],
   "lane_note": "DS primary owner — script extension (--backfill-start/--backfill-end flags), per-dim probe execution, silver convert orchestration. AE 0.6.1 + AE 0.7 secondary — EC2 sizing for multi-day backfill, rate-limit observation, S3 storage cost monitoring. CTO architectural sponsor.",
-  "depends_on": ["ADVI_JWTRES"],
+  "depends_on": [
+    "ADVI_JWTRES"
+  ],
   "depends_on_note": "Phase 0 probe can run in parallel with JWTRES Phase 1. Phase 1+ (bronze backfill execution) gates on JWTRES Phase 1 ship — per AE brief §2.constraints: 'multi-day backfill will cycle through many JWT refresh windows'.",
-  "thread_counter": 0,
-  "threads": []
+  "thread_counter": 2,
+  "threads": [
+    {
+      "serial": "ADVI_HISTBF-001",
+      "thread_id": "ADVI_HISTBF-001-canonical-s3-paths-and-iam-alignment-pos",
+      "topic": "Canonical S3 paths and IAM alignment post-DS~B refactor",
+      "participants": [
+        "0.4.0_DS_ClientPlatform",
+        "0.6.0_AE_PartnerETL"
+      ],
+      "pattern": "unset",
+      "status": "active",
+      "date": "2026-04-30"
+    },
+    {
+      "serial": "ADVI_HISTBF-002",
+      "thread_id": "ADVI_HISTBF-002-canonical-s3-paths-and-iam-alignment-pos",
+      "topic": "Canonical S3 paths and IAM alignment post-DS~B refactor",
+      "participants": [
+        "0.4.0_DS_ClientPlatform",
+        "0.6.0_AE_PartnerETL"
+      ],
+      "pattern": "unset",
+      "status": "active",
+      "date": "2026-04-30"
+    }
+  ]
 }
