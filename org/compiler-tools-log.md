@@ -2060,7 +2060,7 @@ Total: 2 PASS, 131 WARN, 133 PRDs scanned.
 | 2026-04-30 | 0.4.0_DS_ClientPlatform_D | ADHC_COMPIL.012 | comp-freshness | AC7: aum_snapshot 2026-04-29 retrospective -- mocked last_mod=2026-04-21T09:00Z, incident_date=2026-04-29T09:00Z -> FAIL age=192h | PASS | unit test in tests/comp_freshness/ |
 | 2026-04-30 | 0.4.0_DS_ClientPlatform_D | ADHC_COMPIL.012 | comp-freshness | AC8: BD config has 32 entries (>= 30 required) | PASS | 4 vendor + 7 silver + 21 gold intermediates |
 | 2026-04-30 | 0.4.0_DS_ClientPlatform_D | ADHC_COMPIL.012 | comp-freshness | AC9: INF config has 31 entries (>= 10 required) | PASS | 7 vendor + 9 silver + 15 gold intermediates |
-| 2026-04-30 | 0.4.0_DS_ClientPlatform_D | ADHC_COMPIL.012 | comp-freshness | AC10: Andrew partner-feed ACK | PENDING | Schwab + Orion entries marked [PENDING ANDREW ACK]; MCP queued |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform_A | ADHC_COMPIL.012 | comp-freshness | AC10: Andrew partner-feed ACK | PASS | Andrew ACK 2026-04-30: all vendor entries severity=WARN; staleness never blocks dispatch; schwab_rps + schwab_rld downgraded from ERROR |
 | 2026-04-30 | 0.4.0_DS_ClientPlatform_D | ADHC_COMPIL.012 | comp-freshness | AC11: chain bd timing <30s | PASS | 27.8s (same as AC1) |
 | 2026-04-30 | 0.4.0_DS_ClientPlatform_D | ADHC_COMPIL.012 | comp-freshness | AC12: AWS_UNREACHABLE prefix distinguishes connectivity failures from stale-data FAIL | PASS | exit 2 path uses AWS_UNREACHABLE: prefix; stale data uses FAIL in output |
 | 2026-04-30 | 0.4.0_DS_ClientPlatform_D | ADHC_COMPIL.012 | comp-freshness | AC13: compiler-tools-log rows appended (this entry) | PASS | |
