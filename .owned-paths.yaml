@@ -468,7 +468,14 @@ paths:
   "data/black_diamond/**":
     lane: POD4
 
-  # Orion (Inflection) scripts — Pod 4 DS owns
+  # Orion (Inflection) scripts — Pod 4 DS owns, except dispatch orchestrator (AE-infra)
+  # Specific override (longest-match-wins): dispatch orchestrator is AE-maintained ops
+  # infra, not a DS data script. Reclassified 2026-04-30 per COO lane-violation flag
+  # from AE 0.7.0 during --run-date flag work (COO 2026-04-30 redirect authorized).
+  "data/orion/scripts/gold/orion-gold-dispatch.sh":
+    lane: CLOUD_OPS_OR_ETL
+    note: "Orion gold dispatch orchestrator — AE-maintained, not a DS data script"
+
   "data/orion/scripts/gold/**":
     lane: POD4
     note: "Orion/Inflection gold scripts — DS 0.4.0 primary author"
