@@ -244,6 +244,31 @@ tools:
     replaces: "Manual spot-checks (Travis Penfield fee_earning_aua sanity check), S3 key presence inspection"
     note: "MANDATORY gate: run before any S3 upload of a gold artifact that has a validate config. Catches 'no crash but wrong output' class of bugs. DS writes invariants once; tool enforces them forever."
 
+  comp-shell:
+    command: "comp-shell scan [path ...] [--all] [--guard-lookback N]"
+    when: |
+      - About to commit a .sh file in .tools/, org/mcp/, org/threads/, infra/aws/lambda/ci/, infra/aws/terraform/
+      - Adding a new shell script to any local-runtime path (Rule 16 check)
+      - After Git Bash version update or ADHC_BASHFIX incident: verify no new bare utility calls crept in
+      - Auditing all local-runtime scripts: comp-shell scan --all (then read WARN/ERROR summary)
+    subcommands:
+      scan: "comp-shell scan .tools/ -- scan all .sh files in .tools/"
+      scan-all: "comp-shell scan --all -- scan full workspace (excluding EC2/data paths)"
+      scan-file: "comp-shell scan org/mcp/inbox-watch.sh -- scan a single file"
+      list-forbidden: "comp-shell list-forbidden -- print 6 forbidden utilities + canonical fallbacks"
+    exit_codes: "0 = no ERROR findings (WARN is advisory); 1 = at least one ERROR; 2 = usage error"
+    cost: "<1s per file"
+    data_sources: "shell script files in workspace (reads source, no external calls)"
+    replaces: "Manual grep for pgrep/pkill/flock/pidof/setsid/wget in local shell scripts"
+    note: |
+      Detects bare references to the 6 utilities absent from Git Bash 3.6.7
+      (pgrep pkill flock pidof setsid wget). UNGUARDED (no command -v guard
+      in 30-line lookback) = ERROR. GUARDED = WARN. EC2-side paths
+      (infra/aws/ec2/, data/) are exempt. Pre-commit hook (ds-commit-gate.sh)
+      runs this automatically on staged .sh files in in-scope paths.
+      Canonical guard pattern: if command -v pgrep >/dev/null 2>&1; then ...
+      Reference: org/mcp/inbox-watch.sh (commit 045296b18, ADHC_BASHFIX.002)
+
   comp-freshness:
     command: "comp-freshness {chain {bd|inf} | script <id> | artifact <s3-prefix>} [--list]"
     when: |
@@ -409,6 +434,7 @@ tools:
 #            comp-pipescript postdeps before every manual gold run (check required post-steps).
 #            comp-iam gaps after any iam.tf change (verify no new permission gaps).
 #            comp-blast on infrastructure resources before changes.
+#            comp-shell scan <file> before committing any .sh to .tools/ or org/mcp/.
 # COO: comp-platinum tab-audit + comp-blast when decomposing PRDs.
 #      comp-pipescript overlap A B before creating cross-domain coordination blocks in TOs.
 #      loop-quiescence <MACRO> --summary BEFORE firing /loop {MACRO} expansion (validate-decide-expand).
