@@ -2122,3 +2122,26 @@ Total: 2 PASS, 131 WARN, 133 PRDs scanned.
 | 2026-04-30 | 0.7.0_AE_CloudOps | ADHC_COMPIL.015 | n/a | check COMP_VALIDATE_PROTOCOL.md has §10 | PASS | AC13: §10 + --strict documented |
 | 2026-04-30 | 0.7.0_AE_CloudOps | ADHC_COMPIL.015 | n/a | check validate_cli.py has --strict | PASS | AC14: --strict argument present |
 | 2026-04-30 | 0.7.0_AE_CloudOps | ADHC_COMPIL.015 | n/a | check gold_validate_config.yaml has producer_script: fields | PASS | AC15: both BD + INF configs updated |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~A | (no-TO) | comp-pipescript | comp-pipescript deployed data/orion/scripts/silver/convert_performance_to_silver.py | PASS |
+
+## 2026-04-30 — ADHC_COMPIL.014 (0.7.0_AE_CloudOps) — comp-shell tool
+
+| Date | Agent | TO | Tool | Command | Result | Note |
+|------|-------|----|------|---------|--------|------|
+| 2026-04-30 | 0.7.0_AE_CloudOps | ADHC_COMPIL.014 | comp-shell | comp-shell scan tests/comp_shell/fixtures/01_bare_pgrep.sh | PASS | AC1 (pre-fix synthetic): ERROR pgrep:unguarded, exit 1 |
+| 2026-04-30 | 0.7.0_AE_CloudOps | ADHC_COMPIL.014 | comp-shell | comp-shell scan org/mcp/inbox-watch.sh | PASS | AC2 (post-BASHFIX.002): WARN pgrep:guarded, exit 0 |
+| 2026-04-30 | 0.7.0_AE_CloudOps | ADHC_COMPIL.014 | comp-shell | comp-shell scan .tools/ | PASS | AC3: scans all .sh under .tools/, exit 0 (0 ERROR) |
+| 2026-04-30 | 0.7.0_AE_CloudOps | ADHC_COMPIL.014 | comp-shell | comp-shell scan --all | PASS | AC4: workspace scan; in-scope paths clean |
+| 2026-04-30 | 0.7.0_AE_CloudOps | ADHC_COMPIL.014 | comp-shell | comp-shell list-forbidden | PASS | AC5: 6 utilities + fallbacks printed |
+| 2026-04-30 | 0.7.0_AE_CloudOps | ADHC_COMPIL.014 | comp-shell | fixture 01 (bare pgrep) | PASS | AC6a: ERROR:pgrep:unguarded emitted |
+| 2026-04-30 | 0.7.0_AE_CloudOps | ADHC_COMPIL.014 | comp-shell | fixture 02 (guarded pgrep) | PASS | AC6b: WARN:pgrep:guarded emitted |
+| 2026-04-30 | 0.7.0_AE_CloudOps | ADHC_COMPIL.014 | comp-shell | fixture 03 (comment only) | PASS | AC6c: 0 findings (comments filtered) |
+| 2026-04-30 | 0.7.0_AE_CloudOps | ADHC_COMPIL.014 | comp-shell | fixture 04 (string literal) | PASS | AC6d: 0 findings (single-quoted string filtered) |
+| 2026-04-30 | 0.7.0_AE_CloudOps | ADHC_COMPIL.014 | comp-shell | fixture 05 (heredoc) | PASS | AC6e: 0 findings (heredoc body excluded) |
+| 2026-04-30 | 0.7.0_AE_CloudOps | ADHC_COMPIL.014 | ds-commit-gate.sh | gate with bare pgrep .sh in .tools/ | PASS | AC7: hook BLOCKED exit 1 |
+| 2026-04-30 | 0.7.0_AE_CloudOps | ADHC_COMPIL.014 | ds-commit-gate.sh | gate with guarded pgrep .sh in .tools/ | PASS | AC8: hook ALLOWED exit 0 |
+| 2026-04-30 | 0.7.0_AE_CloudOps | ADHC_COMPIL.014 | ds-commit-gate.sh | gate with bare pgrep in infra/aws/ec2/ | PASS | AC9: hook skipped EC2-side, exit 0 |
+| 2026-04-30 | 0.7.0_AE_CloudOps | ADHC_COMPIL.014 | comp-shell | comp-shell scan Rule-16 in-scope paths | PASS | AC10: 0 ERROR, 4 WARN (guarded) in in-scope paths |
+| 2026-04-30 | 0.7.0_AE_CloudOps | ADHC_COMPIL.014 | n/a | escalation check | PASS | AC11: no unexpected ERRORs in in-scope paths; known (deprecated + fixture) |
+| 2026-04-30 | 0.7.0_AE_CloudOps | ADHC_COMPIL.014 | n/a | comp-tools.yaml comp-shell entry | PASS | AC12: entry added with subcommands + note |
+| 2026-04-30 | 0.7.0_AE_CloudOps | ADHC_COMPIL.014 | n/a | log rows | PASS | AC13: this entry |
