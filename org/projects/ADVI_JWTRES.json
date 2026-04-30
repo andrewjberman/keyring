@@ -1,0 +1,22 @@
+{
+  "project_code": "ADVI_JWTRES",
+  "macro_code": "ADVI",
+  "name": "Orion JWT Resilience (Inflection bronze layer)",
+  "description": "Resolve silent-401 data outage class for Inflection/Orion bronze pulls. Today (2026-04-30) all 5 bronze dim pulls failed (`{ok:0,fail:5}`) because the daily-refresh cron misfired by 14 min relative to a Lambda deploy and the existing JWT had expired. Architecture: single ~10h session JWT (no long-lived API key); the only long-duration credential is the Playwright browser device cookie (~30-90d, skip-OTP only, not API-usable). Three-option design space: (A) freshness-check + fail-fast in bronze orchestrator [low complexity, ships first]; (B) async auto-recovery via inf-jwt-trigger Lambda invocation + poll [medium complexity, follow-on]; (C) direct REST auth probe (Orion login endpoint, ~2-3s recovery vs 13-min Playwright path) [requires capability probe].",
+  "prds": [
+    {"path": "docs/architecture/ADVI_JWTRES.md", "label": "JWT Resilience PRD v0.1 (thin; cites AE brief)", "date": "2026-04-30"},
+    {"path": "org/tier2_senior/0.6.1_AE_PartnerETL/deliverables/CTO_BRIEFING_INFLEC_HISTBACKFILL_AND_JWT_RESILIENCE_20260430.md", "label": "Source brief (AE 0.6.1 + AE 0.7 consult)", "date": "2026-04-30"}
+  ],
+  "status": "active",
+  "phase": "Phase 0 — registered 2026-04-30; no TOs yet (awaiting Andrew dispatch decision). 3-option scope from AE brief §3: Option A freshness-check (1-2d, DS+AE), Option B async auto-recovery (3-5d, AE 0.7), Option C direct REST auth (gated on capability probe, AE+DS). Sequencing per AE §4: Option A immediate; Option B follow-on; Option C longer-term gated on Orion endpoint confirmation.",
+  "blocking": "Andrew dispatch decision: (1) Owner choice for Phase 1 — fold into ADVI_ORIAPI as a sub-phase OR keep as standalone JWTRES project (per AE §5 Q3). (2) Sequence call — Option A only first (low-risk + fast) vs Option A + Option B in parallel. (3) Option C capability probe authorization — needs Orion contact (overlaps with HISTBF Phase 0 Q4).",
+  "created": "2026-04-30",
+  "pods": ["0.6", "0.7"],
+  "pipeline": "inf-pipeline + bronze-layer",
+  "lanes": ["0.6.1_AE_PartnerETL", "0.7.0_AE_CloudOps", "0.4.0_DS_ClientPlatform"],
+  "lane_note": "AE 0.6.1 originated brief; AE 0.7 provides JWT architecture consult. DS owns bronze orchestrator + per-script freshness gate (Option A). AE 0.7 owns Lambda + polling logic (Option B). DS+AE jointly probe Option C if authorized.",
+  "depends_on": [],
+  "depends_on_note": "Independent of HISTBF for Phase 1 (Option A); HISTBF Phase 1+ gates on JWTRES Phase 1 ship per AE brief §4 (multi-day backfill cycles through many JWT refresh windows; freshness gate must be live before backfill starts).",
+  "thread_counter": 0,
+  "threads": []
+}
