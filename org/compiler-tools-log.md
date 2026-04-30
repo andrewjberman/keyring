@@ -2064,3 +2064,61 @@ Total: 2 PASS, 131 WARN, 133 PRDs scanned.
 | 2026-04-30 | 0.4.0_DS_ClientPlatform_D | ADHC_COMPIL.012 | comp-freshness | AC11: chain bd timing <30s | PASS | 27.8s (same as AC1) |
 | 2026-04-30 | 0.4.0_DS_ClientPlatform_D | ADHC_COMPIL.012 | comp-freshness | AC12: AWS_UNREACHABLE prefix distinguishes connectivity failures from stale-data FAIL | PASS | exit 2 path uses AWS_UNREACHABLE: prefix; stale data uses FAIL in output |
 | 2026-04-30 | 0.4.0_DS_ClientPlatform_D | ADHC_COMPIL.012 | comp-freshness | AC13: compiler-tools-log rows appended (this entry) | PASS | |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~A | (no-TO) | comp-pipescript | comp-pipescript deployed INF_D_00c | PASS |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~A | (no-TO) | comp-trace | comp-trace schwab_rld --direction both | PASS |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~A | (no-TO) | comp-trace | comp-trace schwab_rps --direction both | PASS |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~A | (no-TO) | comp-pipescript | comp-pipescript deployed INF_B_00 | PASS |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~A | (no-TO) | comp-validate | comp-validate D_04 --artifact C:/tmp/cohort_a_summary_test_fixture.json | FAIL |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~A | (no-TO) | comp-validate | comp-validate D_04 --artifact C:/tmp/cash_coverage_summary_test_fixture.json | FAIL |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~A | (no-TO) | comp-validate | comp-validate D_04 --artifact C:/tmp/ambiguous_name_test_fixture.json | FAIL |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~A | (no-TO) | comp-validate | comp-validate D_04 | PASS |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~A | (no-TO) | comp-validate | comp-validate cohort_a_summary --artifact C:/tmp/cohort_a_summary_test_fixture.json | PASS |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~A | (no-TO) | comp-validate | comp-validate definitely_not_a_thing --artifact C:/tmp/cohort_a_summary_test_fixture.json | FAIL |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~A | (no-TO) | comp-validate | comp-validate cohort_a_summary --artifact /tmp/does_not_exist_xyz_comp_validate_test.json | FAIL |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~A | (no-TO) | comp-validate | comp-validate nonexistent_script_xyz --artifact C:/tmp/cohort_a_summary_test_fixture.json | FAIL |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~A | (no-TO) | comp-validate | comp-validate B_00 --artifact C:/tmp/comp_validate_fixture_real.json | PASS |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~A | (no-TO) | comp-validate | comp-validate B_00 --strict --artifact C:/tmp/comp_validate_fixture_real.json | PASS |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~A | (no-TO) | comp-validate | comp-validate cohort_a_summary --artifact C:/tmp/cohort_a_summary_bad_fixture.json | FAIL |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~A | (no-TO) | comp-validate | comp-validate D_04 --artifact C:/tmp/cohort_a_summary_test_fixture.json | PASS |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~A | (no-TO) | comp-validate | comp-validate D_04 --artifact C:/tmp/cash_coverage_summary_test_fixture.json | PASS |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~A | (no-TO) | comp-validate | comp-validate D_04 --artifact C:/tmp/ambiguous_name_test_fixture.json | FAIL |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~A | (no-TO) | comp-validate | comp-validate D_04 | FAIL |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~A | (no-TO) | comp-validate | comp-validate cohort_a_summary --artifact C:/tmp/cohort_a_summary_test_fixture.json | PASS |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~A | (no-TO) | comp-validate | comp-validate definitely_not_a_thing --artifact C:/tmp/cohort_a_summary_test_fixture.json | FAIL |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~A | (no-TO) | comp-validate | comp-validate cohort_a_summary --artifact /tmp/does_not_exist_xyz_comp_validate_test.json | FAIL |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~A | (no-TO) | comp-validate | comp-validate nonexistent_script_xyz --artifact C:/tmp/cohort_a_summary_test_fixture.json | FAIL |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~A | (no-TO) | comp-validate | comp-validate INF_D_04 --artifact C:/tmp/clients_tab_test_fixture.json | FAIL |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~A | (no-TO) | comp-validate | comp-validate INF_D_04 --strict --artifact C:/tmp/clients_tab_test_fixture.json | FAIL |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~A | (no-TO) | comp-validate | comp-validate cohort_a_summary --artifact C:/tmp/cohort_a_summary_bad_fixture.json | FAIL |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~A | (no-TO) | comp-validate | comp-validate D_04 --artifact C:/tmp/cohort_a_summary_test_fixture.json | PASS |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~A | (no-TO) | comp-validate | comp-validate D_04 --artifact C:/tmp/cash_coverage_summary_test_fixture.json | PASS |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~A | (no-TO) | comp-validate | comp-validate D_04 --artifact C:/tmp/ambiguous_name_test_fixture.json | FAIL |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~A | (no-TO) | comp-validate | comp-validate D_04 | FAIL |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~A | (no-TO) | comp-validate | comp-validate cohort_a_summary --artifact C:/tmp/cohort_a_summary_test_fixture.json | PASS |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~A | (no-TO) | comp-validate | comp-validate definitely_not_a_thing --artifact C:/tmp/cohort_a_summary_test_fixture.json | FAIL |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~A | (no-TO) | comp-validate | comp-validate cohort_a_summary --artifact /tmp/does_not_exist_xyz_comp_validate_test.json | FAIL |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~A | (no-TO) | comp-validate | comp-validate nonexistent_script_xyz --artifact C:/tmp/cohort_a_summary_test_fixture.json | FAIL |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~A | (no-TO) | comp-validate | comp-validate INF_09 --artifact C:/tmp/partner_analytics_test_fixture.json | PASS |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~A | (no-TO) | comp-validate | comp-validate INF_09 --strict --artifact C:/tmp/partner_analytics_test_fixture.json | FAIL |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~A | (no-TO) | comp-validate | comp-validate cohort_a_summary --artifact C:/tmp/cohort_a_summary_bad_fixture.json | FAIL |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~A | (no-TO) | comp-pipescript | comp-pipescript deployed INF_C_07.advisor_attribution.py | PASS |
+
+## 2026-04-30 — ADHC_COMPIL.015 (0.7.0_AE_CloudOps) — Alias resolver + exit semantics
+
+| Date | Agent | TO | Tool | Command | Result | Note |
+|------|-------|----|------|---------|--------|------|
+| 2026-04-30 | 0.7.0_AE_CloudOps | ADHC_COMPIL.015 | comp-validate | comp-validate D_04 --artifact C:/tmp/cohort_a_summary_test_fixture.json | PASS | AC1: resolved D_04 -> cohort_a_summary, exit 0, Resolved info line |
+| 2026-04-30 | 0.7.0_AE_CloudOps | ADHC_COMPIL.015 | comp-validate | comp-validate D_04 --artifact C:/tmp/cash_coverage_summary_test_fixture.json | PASS | AC2: resolved D_04 -> cash_coverage_summary, exit 0 |
+| 2026-04-30 | 0.7.0_AE_CloudOps | ADHC_COMPIL.015 | comp-validate | comp-validate D_04 --artifact C:/tmp/ambiguous_name_test_fixture.json | PASS | AC3: exit 1, candidate list in stderr |
+| 2026-04-30 | 0.7.0_AE_CloudOps | ADHC_COMPIL.015 | comp-validate | comp-validate D_04 (no --artifact) | PASS | AC4: exit 1, multi-artifact error |
+| 2026-04-30 | 0.7.0_AE_CloudOps | ADHC_COMPIL.015 | comp-validate | comp-validate cohort_a_summary --artifact C:/tmp/cohort_a_summary_test_fixture.json | PASS | AC5: direct id, exit 0, no Resolved info line |
+| 2026-04-30 | 0.7.0_AE_CloudOps | ADHC_COMPIL.015 | comp-validate | comp-validate definitely_not_a_thing --artifact C:/tmp/... | PASS | AC6: exit 1, error message in stderr |
+| 2026-04-30 | 0.7.0_AE_CloudOps | ADHC_COMPIL.015 | comp-validate | comp-validate cohort_a_summary --artifact /tmp/does_not_exist.json | PASS | AC7: exit 1, MISSING_ARTIFACT in stderr |
+| 2026-04-30 | 0.7.0_AE_CloudOps | ADHC_COMPIL.015 | comp-validate | comp-validate nonexistent_script_xyz --artifact C:/tmp/cohort_a_summary_test_fixture.json | PASS | AC8: exit 1, resolver catches unknown id |
+| 2026-04-30 | 0.7.0_AE_CloudOps | ADHC_COMPIL.015 | comp-validate | comp-validate INF_09 --artifact C:/tmp/partner_analytics_test_fixture.json | PASS | AC9: exit 0, NO_CONFIG status line |
+| 2026-04-30 | 0.7.0_AE_CloudOps | ADHC_COMPIL.015 | comp-validate | comp-validate INF_09 --strict --artifact C:/tmp/partner_analytics_test_fixture.json | PASS | AC10: exit 2, NO_CONFIG status line |
+| 2026-04-30 | 0.7.0_AE_CloudOps | ADHC_COMPIL.015 | comp-validate | comp-validate cohort_a_summary --artifact C:/tmp/cohort_a_summary_test_fixture.json | PASS | AC11: exit 0, PASS: status line |
+| 2026-04-30 | 0.7.0_AE_CloudOps | ADHC_COMPIL.015 | comp-validate | comp-validate cohort_a_summary --artifact C:/tmp/cohort_a_summary_bad_fixture.json | PASS | AC12: exit 1, FAIL: status line |
+| 2026-04-30 | 0.7.0_AE_CloudOps | ADHC_COMPIL.015 | n/a | check COMP_VALIDATE_PROTOCOL.md has §10 | PASS | AC13: §10 + --strict documented |
+| 2026-04-30 | 0.7.0_AE_CloudOps | ADHC_COMPIL.015 | n/a | check validate_cli.py has --strict | PASS | AC14: --strict argument present |
+| 2026-04-30 | 0.7.0_AE_CloudOps | ADHC_COMPIL.015 | n/a | check gold_validate_config.yaml has producer_script: fields | PASS | AC15: both BD + INF configs updated |
