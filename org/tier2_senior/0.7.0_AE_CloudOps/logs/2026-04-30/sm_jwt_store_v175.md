@@ -69,10 +69,11 @@ can access it without file passing, S3 flat files, or environment variables.
 import boto3
 sm = boto3.client('secretsmanager', region_name='us-east-1')
 jwt = sm.get_secret_value(SecretId='orion/jwt/current')['SecretString']
-headers = {'Authorization': f'Bearer {jwt}'}
+headers = {'Authorization': f'Session {jwt}'}    # NOT Bearer -- Orion-specific header
 ```
 
-Secret value: raw JWT string (no "Bearer " prefix, no JSON wrapper).
+Secret value: raw JWT string (no "Session " or "Bearer " prefix, no JSON wrapper).
+Consumer prepends "Session " — Orion uses `Authorization: Session {jwt}`, not Bearer.
 Rotated daily at 08:13 ET by inf-jwt-trigger → opal-inf-jwt-fetch SSM.
 
 ---
