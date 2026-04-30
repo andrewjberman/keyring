@@ -80,11 +80,14 @@ fi
 mkdir -p "$WATCH_DIR/read"
 
 # Poll until message(s) arrive in the watched dir, then print and exit.
-# NO self-respawn (removed 2026-04-14): agents MUST relaunch via Bash tool
-# run_in_background=true after each notification so every delivery has a
-# tracked owner (orphan stdout disconnects from Claude Code task tracker).
-# Exit-on-message is load-bearing -- Claude Code's background task completion
-# notification is what interrupts the agent. Do NOT convert to a loop.
+# Exit-on-message is load-bearing: Claude Code background task completion fires
+# the interrupt that wakes the agent.
+#
+# Auto-respawn: on delivery, a new untracked copy is spawned (nohup, 1s delay)
+# so the inbox is always watched. The untracked copy writes to
+# /tmp/inbox-watch-<serial>.log but will NOT fire a Claude Code interrupt.
+# To restore full interrupt coverage after the untracked copy has been running
+# a while, re-register a tracked instance via run_in_background=true.
 while true; do
     FOUND_FOR_ME=0
 
@@ -112,6 +115,12 @@ while true; do
 
         echo "===================================================================="
         echo ""
+        # Respawn next watcher (untracked). Sleep 1s first so this instance
+        # exits before the new copy starts -- otherwise the single-watcher guard
+        # in the new copy sees this PID as a live duplicate and kills itself.
+        SAFE_SERIAL=$(printf '%s' "$SERIAL" | tr '/~' '__')
+        ( sleep 1; exec bash "$0" "$SERIAL" >> "/tmp/inbox-watch-${SAFE_SERIAL}.log" 2>&1 ) &
+        disown $! 2>/dev/null || true
         exit 0
     fi
     sleep 5
