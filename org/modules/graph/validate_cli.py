@@ -23,7 +23,10 @@ via sys.executable with all trailing flags preserved (ADVI_ROLLUP ADHC_ROUTER.T4
 closes proposal E pass-through gap from COMPILER_VALIDATE_COVERAGE_AND_PASSTHROUGH.md).
 """
 
+from __future__ import annotations
+
 import argparse
+import platform
 import subprocess
 import sys
 from pathlib import Path
@@ -33,9 +36,31 @@ _WORKSPACE = _THIS_DIR.parent.parent.parent
 
 sys.path.insert(0, str(_WORKSPACE))
 
-from org.modules.graph.extract_validate import load_validate_config, run_validate
+from org.modules.graph.extract_validate import load_validate_config, run_validate  # noqa: E402
 
 STANDALONE_VALIDATORS_DIR = _WORKSPACE / "data" / "black_diamond" / "scripts" / "validators"
+
+
+def _translate_artifact_path(raw: str) -> Path:
+    """On Windows, translate POSIX /tmp/ and /c/ paths to native Windows paths.
+
+    Linux/macOS: paths pass through unchanged.
+    Windows (platform.system() == 'Windows', mocked via sitecustomize.py per
+    MEMORY.md "AWS CLI Hang Fixes Fix 2"):
+      /tmp/foo.json              -> C:/tmp/foo.json
+      /c/Users/AndrewBerman/...  -> C:/Users/AndrewBerman/...
+    Any other path is returned as-is.
+
+    Caller is responsible for checking existence and emitting the dual-path
+    error message when neither original nor translated path exists.
+    """
+    if platform.system() != 'Windows':
+        return Path(raw)
+    if raw.startswith('/tmp/'):
+        return Path('C:/tmp/' + raw[5:])
+    if raw.startswith('/c/'):
+        return Path('C:/' + raw[3:])
+    return Path(raw)
 
 
 def _find_standalone_validator(script_id: str) -> Path | None:
@@ -65,13 +90,13 @@ def cmd_list(args):
     configs = load_validate_config(_WORKSPACE)
     if not configs:
         print("No validate config found.")
-        print(f"  Expected: data/black_diamond/scripts/gold/gold_validate_config.yaml")
+        print("  Expected: data/black_diamond/scripts/gold/gold_validate_config.yaml")
         return
 
     script_filter = args.script_id or ""
 
     print(f"VALIDATE CONFIG ({len(configs)} scripts)")
-    print(f"  Config: data/black_diamond/scripts/gold/gold_validate_config.yaml")
+    print("  Config: data/black_diamond/scripts/gold/gold_validate_config.yaml")
     print()
 
     for sid, config in sorted(configs.items()):
@@ -98,7 +123,18 @@ def cmd_validate(args):
     configs = load_validate_config(_WORKSPACE)
 
     script_id = args.script_id
-    artifact_path = Path(args.artifact)
+    artifact_path = _translate_artifact_path(args.artifact)
+
+    # On Windows, when neither the original nor translated path exists, show both
+    if not artifact_path.exists():
+        translated_str = str(artifact_path)
+        if platform.system() == 'Windows' and args.artifact != translated_str:
+            print("Artifact not found:", file=sys.stderr)
+            print(f"  Input path:      {args.artifact}", file=sys.stderr)
+            print(f"  Translated path: {translated_str}", file=sys.stderr)
+        else:
+            print(f"Artifact not found: {artifact_path}", file=sys.stderr)
+        sys.exit(1)
 
     print(f"VALIDATE: {script_id}")
     print(f"  Artifact: {artifact_path}")
@@ -177,10 +213,10 @@ def main():
         standalone = _find_standalone_validator(args.script_id)
         if standalone is not None:
             # Reconstruct full arg list for the standalone script: if --artifact
-            # was parsed by us, forward it back; ditto any leftover extras.
+            # was parsed by us, translate path and forward it back; ditto extras.
             forward: list[str] = []
             if args.artifact:
-                forward.extend(['--artifact', args.artifact])
+                forward.extend(['--artifact', str(_translate_artifact_path(args.artifact))])
             forward.extend(extras)
             sys.exit(_dispatch_standalone(standalone, forward))
 

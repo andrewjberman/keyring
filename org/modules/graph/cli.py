@@ -27,7 +27,7 @@ _CACHE_FILE = _CACHE_DIR / "graph.json"
 # Add workspace to path so imports work
 sys.path.insert(0, str(_WORKSPACE))
 
-from org.modules.graph.trace_graph import (
+from org.modules.graph.trace_graph import (  # noqa: E402
     TraceGraph, build_graph, format_trace, format_blast,
     diff_graphs, save_baseline, format_delta,
 )
@@ -95,8 +95,11 @@ def cmd_trace(args):
 
     targets = matches if args.all else [matches[0]]
 
+    # F.3: normalize upstream/downstream aliases to canonical up/down
+    direction = {"upstream": "up", "downstream": "down"}.get(args.direction, args.direction)
+
     for node in targets:
-        if args.direction in ("up", "both"):
+        if direction in ("up", "both"):
             results = g.upstream(node.id, max_depth=args.depth)
             output = format_trace(node.id, results, "up")
             if args.json:
@@ -107,7 +110,7 @@ def cmd_trace(args):
             else:
                 print(output)
 
-        if args.direction in ("down", "both"):
+        if direction in ("down", "both"):
             results = g.downstream(node.id, max_depth=args.depth)
             output = format_trace(node.id, results, "down")
             if args.json:
@@ -133,19 +136,30 @@ def cmd_blast(args):
         sys.exit(0)
 
     node = matches[0]
-    downstream = g.downstream(node.id, max_depth=args.depth)
 
-    # ADHC_ROUTER.T1 fix: for function-grain nodes (gold:<script>:<function>),
-    # the "change-impact radius" semantic includes callers — changing a leaf
-    # helper breaks its callers, not the other way around. Surface both
-    # sections so blast on any function (entry point or helper) answers
-    # "what breaks if I change this" correctly.
+    # F.4: --direction flag wires through uniformly for all resolver paths
+    # (bare name, prefix-qualified lambda:/gold:/component:, full file path).
+    # Default (None) preserves existing blast-radius semantic: downstream-only
+    # unless the node is function-grain (ADHC_ROUTER.T1).
+    direction = getattr(args, 'direction', None)
+
     is_function_grain = (
         node.node_type == "GOLD_SCRIPT"
         and getattr(node, "function_name", None)
         and node.id.count(":") >= 2
     )
-    upstream = g.upstream(node.id, max_depth=args.depth) if is_function_grain else []
+
+    # Downstream: always, except when direction is explicitly 'up'
+    downstream = g.downstream(node.id, max_depth=args.depth) if direction != 'up' else []
+
+    # Upstream: when direction is 'up'/'both', or for function-grain with no explicit direction
+    # (preserves ADHC_ROUTER.T1 semantic — "what breaks if I change this function?")
+    if direction in ('up', 'both'):
+        upstream = g.upstream(node.id, max_depth=args.depth)
+    elif direction is None and is_function_grain:
+        upstream = g.upstream(node.id, max_depth=args.depth)
+    else:
+        upstream = []
 
     if args.json:
         by_type = {}
@@ -162,7 +176,7 @@ def cmd_blast(args):
         print(json.dumps({"source": node.id, "consumers": by_type}, indent=2))
     else:
         print(format_blast(node.id, downstream))
-        if is_function_grain and upstream:
+        if upstream:
             print()
             print(f"CALLER CHAIN (upstream from {node.id}):")
             seen = set()
@@ -262,7 +276,7 @@ def cmd_diff(args):
                     if components:
                         print(f"    Affected pages: {', '.join(c.label for c in components)}")
                 else:
-                    print(f"    Blast radius: none (leaf node)")
+                    print("    Blast radius: none (leaf node)")
                 print()
 
     if args.json:
@@ -296,7 +310,6 @@ def cmd_xref(args):
     delta = diff_graphs(baseline, g)
 
     if args.json:
-        from dataclasses import asdict
         output = {
             "baseline": {
                 "nodes": len(baseline.nodes),
@@ -336,17 +349,26 @@ def main():
     # trace
     p_trace = sub.add_parser("trace", help="Trace data path from a node")
     p_trace.add_argument("query", help="File, component, or node to trace")
-    p_trace.add_argument("--direction", choices=["up", "down", "both"], default="both")
+    p_trace.add_argument("--direction",
+                         choices=["up", "upstream", "down", "downstream", "both"],
+                         default="both",
+                         help="Traversal direction: up/upstream, down/downstream, or both (default).")
     p_trace.add_argument("--depth", type=int, default=10)
     p_trace.add_argument("--json", action="store_true")
     p_trace.add_argument("--all", action="store_true", help="Trace all matches")
 
     # blast
     p_blast = sub.add_parser("blast", help="Show blast radius of a change")
-    p_blast.add_argument("query", help="File or node to check")
+    p_blast.add_argument("query",
+                         help="File, node, or prefix-qualified node "
+                              "(e.g. lambda:fn-name, gold:D_04, component:AdvisorsTab.tsx)")
     p_blast.add_argument("--function", help="Specific function within the file")
     p_blast.add_argument("--depth", type=int, default=10)
     p_blast.add_argument("--json", action="store_true")
+    p_blast.add_argument("--direction", choices=["up", "down", "both"], default=None,
+                         help="Traversal direction: up (upstream callers), down (downstream consumers, "
+                              "default), both. Works with prefix-qualified queries "
+                              "(lambda:, gold:, silver:, component:).")
 
     # diff
     p_diff = sub.add_parser("diff", help="Map git changes to graph impact")
