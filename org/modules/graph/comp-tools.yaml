@@ -244,6 +244,32 @@ tools:
     replaces: "Manual spot-checks (Travis Penfield fee_earning_aua sanity check), S3 key presence inspection"
     note: "MANDATORY gate: run before any S3 upload of a gold artifact that has a validate config. Catches 'no crash but wrong output' class of bugs. DS writes invariants once; tool enforces them forever."
 
+  comp-freshness:
+    command: "comp-freshness {chain {bd|inf} | script <id> | artifact <s3-prefix>} [--list]"
+    when: |
+      - Before dispatching a gold chain: "is the upstream S3 data fresh enough to run?" -> comp-freshness chain bd|inf
+      - About to run a specific script: "are the inputs for this script fresh?" -> comp-freshness script A_03
+      - Investigating a stale-data incident: "how old is this S3 prefix right now?" -> comp-freshness artifact s3://...
+      - Reviewing all cadence config: "what are the freshness thresholds?" -> comp-freshness --list
+      - Debugging a wrong-output run: "was upstream data stale when this ran?"
+      - Pre-dispatch gate in bd-gold-dispatch.sh or orion-gold-dispatch.sh (integration wired by ADHC_COMPIL.013)
+    subcommands:
+      chain: "comp-freshness chain bd  -- check all silver/bronze inputs to the BD gold chain; exit 0=PASS/WARN, 1=FAIL, 2=config error"
+      chain_inf: "comp-freshness chain inf  -- same for INF gold chain"
+      script: "comp-freshness script A_03  -- check just the inputs tagged for this script in cadence config"
+      artifact: "comp-freshness artifact s3://opal-data-schwab/silver/RPS/  -- check one prefix; exit 1 if FAIL"
+      list: "comp-freshness --list  -- print all entries grouped by pipeline (BD then INF) sorted by artifact_id"
+    output_format: "artifact_id | s3_key | last_modified_iso8601 | age_h | fail_at_h | STATUS (PASS/WARN/FAIL/SKIP)"
+    exit_codes: "0=PASS/WARN (WARN does not block), 1=any FAIL (ERROR-severity beyond fail_age_hours), 2=config error or AWS unreachable"
+    cost: "<30s for full chain (32 BD or 31 INF artifacts; parallel 8-thread AWS calls)"
+    config: "data/black_diamond/scripts/gold/gold_freshness_config.yaml (32 BD entries) | data/orion/scripts/gold/gold_freshness_config.yaml (31 INF entries)"
+    incidents_caught: |
+      2026-04-17: Schwab RPS (opal-data-schwab/silver/RPS/) 10-day stale -> $130M linear_interpolation overshoot
+      2026-04-29: silver/aum_snapshot/ 8-day stale -> $89.6M AUA (vs $182.71M correct)
+      Both would have been caught at dispatch time with this tool.
+    replaces: "Manual aws s3 ls + timestamp inspection before gold dispatch; post-hoc stale-data forensics"
+    note: "ADHC_COMPIL.012 (Theme G). WARN entries (partner-feed severities, weekly dims) do not block dispatch. ERROR entries beyond fail_age_hours exit 1 and block. Vendor-feed thresholds (Schwab + Orion) require Andrew ACK before removing [PENDING ANDREW ACK] flag from config. Dispatch integration is .013 scope."
+
   comp-iam:
     command: "comp-iam <subcommand>"
     when: |
