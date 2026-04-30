@@ -7,9 +7,10 @@
     {"path": "docs/architecture/ADHC_COMPIL.md", "label": "Compiler Tools Hardening v1 PRD (Themes A+B+C)", "date": "2026-04-27"},
     {"path": "docs/architecture/ADHC_COMPIL_V2.md", "label": "Compiler Tools Hardening v2 Addendum (Themes D+E, deferred)", "date": "2026-04-27"}
   ],
-  "status": "active",
-  "phase": "Phase 1 — 5 COMPLETE / 1 ACTIVE / 1 STAGED (updated 2026-04-29 PM). **.001 COMPLETE** (DS 0.4.0 39fafc6a — multi-pipeline indexing). **.003 COMPLETE 2026-04-29** (CTO dd38a71ad — PRD template + protocol + prompt mandate). **.004 COMPLETE 2026-04-29** (AE 0.7.0 6a5449a16 — prd-evidence-check.sh + baseline + lane fix). **.005 COMPLETE 2026-04-27** (DS 0.4.0 6e1c079b — Theme D nested-key indexing). **.006 COMPLETE 2026-04-29 PM** (CTO 74bd4121e AC1+AC3 — COMP_VALIDATE_PROTOCOL.md ~280 lines + CLAUDE.md update; DS~B 81e2a009f AC2 — gold_validate_config.yaml inline headers BD+INF; AC1+AC2+AC3 all shipped). **.002 ACTIVE** (AE 0.7.0 — cascade gate). **.007 NOW UNBLOCKED** (gate was .006; AE 0.7.0 CLI hint).",
-  "blocking": "v1 ships when .002 COMPLETE (cascade gate, AE 0.7.0). .007 now unblocked post .006 ship — AE 0.7.0 CLI hint; GO sent 2026-04-29 PM.",
+  "status": "complete",
+  "completed": "2026-04-30",
+  "phase": "**Phase 1 v1 COMPLETE 2026-04-30** — all 7 TOs shipped across themes A+B+C. .001 (DS 39fafc6a — multi-pipeline indexing); .002 (AE 0.7.0 e32e1013 2026-04-27 — partial chain dep gate, 8/8 assertion test PASS); .003 (CTO dd38a71ad 2026-04-29 — PRD template + protocol + prompt mandate); .004 (AE 0.7.0 6a5449a16 2026-04-29 — prd-evidence-check.sh + baseline + lane fix); .005 (DS 0.4.0 6e1c079b 2026-04-27 — Theme D nested-key indexing); .006 (CTO 74bd4121e + DS~B 81e2a009f 2026-04-29 PM — COMP_VALIDATE_PROTOCOL.md + gold_validate_config.yaml inline headers BD+INF); .007 (AE 0.7.0 939fcb1fb 2026-04-30 AM — comp-validate CLI hint on non-zero exit; force-add gitignored .tools/comp-validate; AC1+AC2 PASS, §4 retry policy ref). v2 themes (D+E) preserved as separate ADHC_COMPIL_V2 PRD; not in this project's scope.",
+  "blocking": "None — v1 Phase 1 fully shipped across all 3 themes. v2 deferred to ADHC_COMPIL_V2 separate project.",
   "created": "2026-04-27",
   "pods": ["1.0", "0.4", "0.7", "1.2"],
   "pipeline": "compiler-tooling",
