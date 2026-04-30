@@ -2145,3 +2145,20 @@ Total: 2 PASS, 131 WARN, 133 PRDs scanned.
 | 2026-04-30 | 0.7.0_AE_CloudOps | ADHC_COMPIL.014 | n/a | escalation check | PASS | AC11: no unexpected ERRORs in in-scope paths; known (deprecated + fixture) |
 | 2026-04-30 | 0.7.0_AE_CloudOps | ADHC_COMPIL.014 | n/a | comp-tools.yaml comp-shell entry | PASS | AC12: entry added with subcommands + note |
 | 2026-04-30 | 0.7.0_AE_CloudOps | ADHC_COMPIL.014 | n/a | log rows | PASS | AC13: this entry |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform~A | (no-TO) | comp-blast | comp-blast gold_dispatch.sh | PASS |
+[ADHC_COMPIL.013] FRESHNESS-BYPASS: 2026-04-30T21:00:00Z | gold_dispatch.sh | chain:full | test | (no reason given)
+[ADHC_COMPIL.013] FRESHNESS-BYPASS: 2026-04-30T21:00:00Z | gold_dispatch.sh | chain:full | test | vendor RPS feed scheduled outage 2026-04-30
+
+## ADHC_COMPIL.013 — comp-freshness dispatch integration (2026-04-30, 0.7.0_AE_CloudOps)
+
+| AC | Tool | Command | Result | Note |
+|----|------|---------|--------|------|
+| AC1 | comp-freshness | comp-freshness chain bd (real config) | PASS (exit 0) | BD chain all PASS; vendor WARNs (schwab_uln/ult/rld/bd_assets_dim/ticker_resolution) non-blocking |
+| AC2 | comp-freshness | synthetic fail_age_hours=1 fixture | PASS (exit 1) | bd_silver_canonical_prices 17.1h vs 1h threshold; gate fires, dispatcher exits 1 |
+| AC3 | gold_dispatch.sh | --no-freshness-check (no reason) | PASS | Bypass logged: [ADHC_COMPIL.013] FRESHNESS-BYPASS: ... | (no reason given) |
+| AC4 | gold_dispatch.sh | --no-freshness-check --bypass-reason "vendor RPS feed scheduled outage 2026-04-30" | PASS | Reason text present in log entry |
+| AC5 | comp-freshness | comp-freshness chain inf (real config) | FAIL (exit 1, expected) | inf_silver_canonical_prices 199.6h stale -- remediation: silver-prep chain wired in same commit |
+| AC6 | comp-freshness | config renamed (missing YAML) | PASS (exit 2) | BD and INF both exit 2 on missing config; dispatcher emits distinct tooling-failure message |
+| AC7 | orion-gold-dispatch.sh | --no-freshness-check (no reason) | PASS | Mirror of AC3 for INF dispatcher; same bypass function |
+| AC8 | orion-gold-dispatch.sh | --no-freshness-check --bypass-reason "<text>" | PASS | Mirror of AC4; reason text stored in log |
+| AC9 | bypass log | tail org/compiler-tools-log.md after each bypass run | PASS | All bypass entries single-line; pipe-delimited; [ADHC_COMPIL.013] prefix present |
