@@ -1,0 +1,10 @@
+#!/bin/bash
+# comp-shell -- detect bare forbidden Git Bash 3.6.7 utilities in shell scripts
+# Usage:
+#   comp-shell scan org/mcp/inbox-watch.sh
+#   comp-shell scan .tools/
+#   comp-shell scan --all
+#   comp-shell list-forbidden
+# Forbidden: pgrep pkill flock pidof setsid wget (CLAUDE.md Rule 16)
+WORKSPACE="$(cd "$(dirname "$0")/.." && pwd)"
+python "$WORKSPACE/org/modules/graph/shell_cli.py" "$@"
