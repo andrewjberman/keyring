@@ -1,0 +1,21 @@
+{
+  "project_code": "ADHC_CLCOMM",
+  "macro_code": "ADHC",
+  "name": "COMP_LEARNS Agent Comms Channel Isolation",
+  "description": "Stand up a dedicated `complearns-agent-comms` MCP channel for the `feature_clb` worktree, physically separate from `opal-agent-comms`, to eliminate cross-project inbox pollution. Origin: 2.1.0_SA_COO setup brief at `feature_clb/org/ref/COMPLEARNS_AGENT_COMMS_SETUP.md` (`5eac1f09f` on COMP branch). Andrew directive 2026-04-30: delegate ADHC TOs to AE 0.5.0 to resolve the MCP issue.",
+  "prds": [
+    {"path": "docs/architecture/ADHC_CLCOMM.md", "label": "CL Comms Channel Isolation Setup Brief (canonicalized 2026-04-30)", "date": "2026-04-30"}
+  ],
+  "status": "active",
+  "phase": "Phase 1 — 0 COMPLETE / 3 STAGED 2026-04-30 (TO-1 ae-build-cl-mcp-scripts, TO-2 ae-feature-clb-integration, TO-3 ae-verification-and-close). All TOs assigned to 0.5.0_AE_OpalETL. Pre-confirmed empirically: agent-poller.py line 45 hardcodes OPAL_BROKER_PORT default 7800 — TO-1 includes explicit poller modification or CL-poller-variant decision.",
+  "blocking": "TO-1 GO dispatch (CTO this session). TO-2 + TO-3 chain on TO-1 RAVC4. TO-2 may need lane-handling discussion: feature_clb/.mcp.json + settings.local.json are on COMP branch; AE 0.5 lane is SHARED_OPAL_ETL — flag if owned-paths blocks the edits, route alternate path (1.1.0_SA_CTO COMP-side commit OR --force escape hatch with audit entry).",
+  "created": "2026-04-30",
+  "pods": ["0.5"],
+  "pipeline": "agent-infrastructure",
+  "lanes": ["0.5.0_AE_OpalETL"],
+  "lane_note": "AE 0.5.0 primary; CTO architectural sponsor; COO-CompLearns originator (2.1.0_SA_COO authored brief). XXX.md update post-TO-3 closure is CTO scope (separate, not delegated).",
+  "depends_on": [],
+  "depends_on_note": "No upstream dependencies. Independent of all live INFLEC/ORIAPI/DIAGFIX work.",
+  "thread_counter": 0,
+  "threads": []
+}
