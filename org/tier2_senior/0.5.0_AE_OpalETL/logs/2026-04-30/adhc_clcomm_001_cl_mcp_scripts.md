@@ -183,9 +183,35 @@ N/A — no AWS mutations. CL channel infrastructure lives entirely in `org/mcp/`
 - All 4 new files + 1 modification + 2 PATH aliases on disk and verified.
 - About to safe-commit + push + RAVC4.
 
+## Cross-Channel Architecture Observations (TO-1 AC #8 — input to TO-4)
+
+CTO added AC #8 to TO-1 in-flight asking for a session-log section that captures patterns / gotchas / improvement opportunities surfaced during this work that should generalize to `opal-agent-comms` or future channels. Mined into TO-4 (architecture doc + cross-channel refactor) per Andrew directive 2026-04-30. Observations below are deliberately surface-level — substantive refactor moves to TO-4 with the empirical grounding TO-3 verification provides.
+
+### Architectural patterns / gotchas observed
+
+1. **Channel identity = three coupled identifiers.** Each channel needs (a) a server-name string used in `FastMCP("…")` + `getLogger("…")`, (b) a broker port + db file, (c) an inbox/liveness/lock path triplet. Today these are scattered as constants across `server.py`, `broker.py`, `inbox-watch.sh`, `check-inbox.sh`, and `agent-poller.py`. Cloning + line-editing works for 1 fork; for N channels it becomes O(N) drift surface. **TO-4 candidate:** a single `channels.json` (or equivalent) keyed by channel name, with each channel declaring its identity triplet, that all five files load instead of hardcoding. Mentioned in CTO's amend-then-revert note as the eventual target — moving forward with empirical TO-3 evidence first.
+
+2. **Auth check coupling to specific serial prefixes is the real fragility.** The deregister auth check today checks `caller.startswith("1.0.0") or "2.0.0"`. CL channel needed widening to `1.1.0/2.1.0`. A future 3rd channel would need yet another widening. **TO-4 candidate:** role-based auth — derive the role tag (CTO/COO/CVO/SC/...) from the serial structure or registry lookup, then permission by role rather than by literal serial prefix. Refactor would also clean up the agent-poller's `_is_cl_serial` prefix list (which has the same fragility).
+
+3. **`hook_launch_poller.py` is the channel-agnostic linchpin and should stay that way.** PRD §6 explicitly mandates "no changes needed there" because it's the universal entry point for ALL channels. As long as it spawns `agent-poller.py <serial>` (no env, no channel hint), the poller has the freedom to route however channels evolve. A parallel `cl-hook_launch_poller.py` would have been a regression. **Generalization:** PostToolUse-hook → poller is the cleanest channel-agnostic boundary. Any future channel-aware decision should live in the poller, not in the hook launcher.
+
+4. **`.tools/` is gitignored — PATH aliases are local-only.** Both `.tools/inbox-watch` + `.tools/check-inbox` (existing) and my new `.tools/cl-inbox-watch` + `.tools/cl-check-inbox` are gitignored copies. A clean clone of the repo wouldn't have them. **Open question for TO-4:** is there a workspace-bootstrap script that creates `.tools/*` aliases? If so, document it in the README and parameterize for new channels. If not, the bootstrap is implicit and risks breaking when a new agent (or worktree) is set up. Current state: each worktree/machine creates its own; OK for the 2-channel state, becomes onboarding friction at N≥3.
+
+5. **Owned-paths Phase 2 (fail-closed since 2026-04-30) doesn't anticipate cross-lane delegation.** TO-1 was authored without lane-caveat language because `org/mcp/*` was implicitly assumed to be AE-writable. It isn't (BASE_EXEC = CTO + COO). The fix today was `GIT_COMMIT_AUTHOR_OVERRIDE=BASE_EXEC` (audit-logged). **TO-4 candidate:** when delegating BASE_EXEC work to a non-BASE_EXEC agent, the issuing executive should either (a) include an explicit override-authorization in the TO with the lane name pre-declared, or (b) update `.owned-paths.yaml` to add a temporary AE entry for that scope. Today's path-of-least-resistance (`OVERRIDE` env var) works but leaves the YAML lane definition stale relative to actual practice.
+
+6. **Multi-agent in-flight TO amendments need a coordination protocol.** While I was in Phase 1-2 of TO-1, CTO amended the TO file twice (once heavy, once revert + light additions). My `git add` for the status-flip commit silently picked up CTO's parallel edits (16 insertions / 7 deletions for what should have been a 1-line flip). **Generalization:** when an executive amends a TO that an agent is actively executing, the executive should MCP the agent so the agent re-reads before any further commit. Today the agent has no "TO file changed under me" notification — discovery is by accident.
+
+7. **Comp-graph doesn't index org-internal tooling.** `comp-blast org/mcp/server.py` returned "No nodes matching." MCP infrastructure is correctly out of scope for the data-pipeline graph, but it means there's no automated dependency check for "what breaks if I edit server.py." For internal tools at the maturity of `org/mcp/`, a parallel light-graph (file-imports + bash-callouts) would add the safety net the data graph already provides for gold scripts. **TO-4 candidate (low priority):** wire `org/mcp/` + `.tools/` into a sub-graph for blast-radius checks at edit time.
+
+These are observations for TO-4 to convert into formal architectural decisions; nothing here changes TO-1 or TO-2 scope.
+
+---
+
 ## Next Steps
 
-- [0.5.0_AE] safe-commit.sh scoped to TO-1 paths; tag/push to origin/CLOUD.
-- [0.5.0_AE] RAVC4 to 2.0.0_SA_COO + 1.0.0_SA_CTO with commit hash + AC evidence + routing rationale.
-- [TO-2 (gates_for: ADHC_CLCOMM.002)] Wait for TO-1 RAVC4 close; then pull TO-1 commit into feature_clb (merge or cherry-pick) and edit feature_clb's `.mcp.json` + `.claude/settings.local.json`. Lane caveat: feature_clb files are on COMP branch; owned-paths Phase 2 may BLOCK my underscore serial; resolution-option call at TO-2 start.
+- [0.5.0_AE] (DONE) safe-commit.sh scoped to TO-1 paths; pushed to origin/CLOUD: commit `abd95426e`.
+- [0.5.0_AE] (DONE) Status flip pending → complete: commit `822a63876` (silently swept up CTO's in-flight TO amend additions; flagged in RAVC4).
+- [0.5.0_AE] RAVC4 to 2.0.0_SA_COO + 1.0.0_SA_CTO with commit hash + AC evidence + routing rationale + TO-internal-inconsistency flag.
+- [1.0.0_SA_CTO] Reconcile TO-1 file: NOTE at top says heavier refactor REVERTED, but `<do_not>` rules + `<deliverables>` list still reference `channels.json` / role-based auth / "REFACTORED — channels.json-driven" — those are leftover artifacts from the amend that wasn't cleanly reverted. AC #9 references "AC1-AC11" but only 9 ACs exist. CTO to either clean up the leftover do_not/deliverables OR escalate the heavier scope back into the TO (in which case TO-1 would re-open).
+- [TO-2 (gates_for: ADHC_CLCOMM.002)] Wait for TO-1 RAVC4 close; pull TO-1 commits into feature_clb (merge or cherry-pick) + edit feature_clb's `.mcp.json` + `.claude/settings.local.json`. Lane caveat: feature_clb files are on COMP branch; owned-paths Phase 2 will BLOCK my underscore serial; resolution at TO-2 start (TO-2 documents 3 options: route through 1.1.0_SA_CTO, GIT_COMMIT_AUTHOR_OVERRIDE, YAML widening).
 - [TO-3 (gates_for: ADHC_CLCOMM.003)] §7 9-test verification + 3-step atomic closure on PASS. Smoke requires fresh feature_clb session — coordinate with Andrew or hand off the verification protocol.
