@@ -260,6 +260,62 @@ DIAGFIX.012 Phases 1-3 RAVC4-CLOSED by COO at `14:45:29Z`. Phase 4 (chain re-run
 
 ---
 
+## Post-RAVC4 follow-ups (before device reboot)
+
+### Bearer → Session correction loop with AE 0.7
+
+AE 0.7's initial Secrets Manager FYI at `14:49:18Z` provided a consumer pattern with `headers = {'Authorization': f'Bearer {jwt}'}`. **That would 401** — Orion's REST surface uses `Authorization: Session {jwt}` (web-app-mirroring header from the HAR-derived headers). I sent a correction at `14:49:57Z`. AE 0.7 ACK'd at `15:04:10Z`, propagated the fix to CTO, and updated their session log. Raw token in SM is stripped of the `Session ` prefix; consumer prepends.
+
+Code evidence (`infra/aws/ec2/inf-exporter/src/stepwise/orion_export.ts`):
+- Line 177: `if (auth && auth.startsWith('Session '))`
+- Line 179: `slot.value = auth.substring('Session '.length)`
+
+### Lambda v1.7.5 deploy verification (Andrew prompt)
+
+Andrew asked whether AE 0.7's fix was committed + deployed properly. Verified all four checkpoints:
+
+1. **Code in repo (CLOUD)** — commit `45af4950c` "fix(inf-jwt-trigger): retry SSM dispatch on InvalidInstanceId (SSM agent race)" at `10:28Z`. Repo grep confirms 5 occurrences of `_send_ssm_with_retry` / `InvalidInstanceId`.
+2. **Tag chain (sequential)** — `inf-pipeline-v1.7.0 → ... → v1.7.4 (SSM-retry fix) → v1.7.5 (SM JWT store on top)`.
+3. **Terraform applied** — two `ci: record deploy inf-pipeline` commits today (`9441dc379` for v1.7.4, `31d538010` for v1.7.5) — protocol's signal of `terraform apply` reaching 0-diff.
+4. **Lambda actually deployed** — live function `inf-jwt-trigger` LastModified `14:29:03Z`, deployed `CodeSha256: btARpIIjvEoDuneUmgWHXe/IV7kqOwgKd6P5fXjNbz4=`, byte-matches `lambda-source-map.json:1580` `artifact_sha256` + `last_deployed_commit: 9764c07e9`.
+
+Conclusion: clean. Tomorrow's 12:13Z cron will run on v1.7.5 code (SSM retry fix + SM JWT store). No stale-Lambda risk.
+
+### DE 0.4.0 Brandenburg roster Q&A
+
+DE asked at `15:12:30Z` for three things to update `portal/src/pages/AdvisorIntelligence/_partners/inflection/layout.ts`:
+1. Brandenburg's advisor_id key
+2. Whether he's in the current employee_leaderboard
+3. Whether `maxEntries` should bump to 4 or drop the firm catchall
+
+My response at `15:14:19Z`:
+1. **Key: `joe_brandenburg`** — slug derivation per `silver/convert_orion_to_silver.py:126` + `gold/INF_B_00.canonical_holdings.py:108` (post-DIAGFIX.012). "Joe Brandenburg" → `joe_brandenburg` (note: spelled "Brandenburg" in Orion, not "Brandenberg" as Andrew typed). Confirmed empirically in today's INF_B_00 dry-run: $16.11M / 67 accounts / 55 tickers / 743 rows.
+2. **NOT currently in leaderboard** — `s3://opal-data-inf/platinum/firm/leaderboard.json` is `data_as_of: 2026-04-28` (yesterday, before DIAGFIX.011 + .012 landed). Current entries: `inflection_wealth_management`, `patrick_scanlan`, `peter_lee`. Tomorrow's Phase 4 chain re-run regenerates the leaderboard with Brandenburg as the 4th entry.
+3. **Bump `maxEntries: 4`** — Brandenburg is a real 4th individual advisor with material book size; firm catchall `inflection_wealth_management` represents joint-placeholder + unmapped tail ($0.36M / 8 accounts) and is a separate category. Suggested layout snippet:
+```ts
+allowedAdvisorKeys: [
+  'inflection_wealth_management',  // firm catchall (joint-rep placeholder accounts)
+  'peter_lee',                      // 571 accounts / $160.60M
+  'patrick_scanlan',                // 147 accounts / $20.28M
+  'joe_brandenburg',                // 67 accounts / $16.11M  <-- NEW
+],
+maxEntries: 4,
+```
+
+Flagged the V1 smoke "No advisors in current filter" issue as separate from the layout fix — that's the FLAG 2 architectural issue (employee_leaderboard.advisor_id mismatch with portal's allowedAdvisorKeys, rep_name vs rep_id derivation) being shipped by DS~B Item C. DE should coordinate with DS~B before deploying the layout change.
+
+### Stale leaderboard.json finding
+
+Spot-check during DE Q&A revealed `s3://opal-data-inf/platinum/firm/leaderboard.json` `data_as_of: 2026-04-28` — predates DIAGFIX.011 chain integration. peter_lee's `total_aua` shows $14.6M for QTD slice (account_count 336, client_count 158), but I just measured $160.60M total in INF_B_00 dry-run. Discrepancy is window-specific (QTD slice vs full firm-level), not a bug — but a fresh chain re-run will clean both the windowing slices and the missing-Brandenburg gap.
+
+### Watcher relaunch protocol after reboot
+
+Device reboot will kill all current bash background processes (PIDs 245558 etc.). On next session start, first action MUST be `bash org/mcp/inbox-watch.sh 0.4.0_DS_ClientPlatform` per CLAUDE.md inbox-watch mandatory rule. The post-compaction watcher gap that opened at session start today (Andrew flagged at 13:36Z) was the same class — relaunch protocol is critical.
+
+---
+
+---
+
 ## Acceptance criteria
 
 | Criterion | Status |
