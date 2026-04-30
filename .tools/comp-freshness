@@ -1,0 +1,527 @@
+#!/usr/bin/env python3
+"""
+comp-freshness -- S3 artifact freshness gate for BD and INF gold chains.
+
+Detects stale upstream S3 data before a script runs against it and produces
+wrong output silently. Implements the ADHC_COMPIL v3 Theme G specification.
+
+Incidents this tool would have caught:
+  2026-04-17 Schwab RPS 10-day staleness -> $130M linear_interpolation overshoot
+  2026-04-29 silver/aum_snapshot 8-day staleness -> $89.6M vs $182.71M correct
+
+Usage:
+  comp-freshness chain {bd|inf}       check all chain input artifacts
+  comp-freshness script <id>          check inputs for a specific script
+  comp-freshness artifact <s3-prefix> check a single artifact
+  comp-freshness --list               print cadence config in human-readable form
+  comp-freshness --help               show help
+
+Output (one line per artifact):
+  artifact_id | s3_key | last_modified | age_h | fail_at_h | STATUS
+  STATUS in {PASS, WARN, FAIL, SKIP}
+
+Exit codes:
+  0 -- all PASS or WARN (WARN alone does not block dispatch)
+  1 -- any FAIL (one or more artifacts beyond fail_at_h with ERROR severity)
+  2 -- config error (missing yaml, malformed entry, AWS unreachable)
+"""
+from __future__ import annotations
+
+import argparse
+import concurrent.futures
+import datetime
+import os
+import shutil
+import subprocess
+import sys
+from pathlib import Path
+from typing import Optional
+
+try:
+    import yaml
+except ImportError:
+    print("ERROR: PyYAML not installed. Run: pip install pyyaml", file=sys.stderr)
+    sys.exit(2)
+
+# ---------------------------------------------------------------------------
+# Constants
+# ---------------------------------------------------------------------------
+WORKSPACE = Path(__file__).resolve().parent.parent
+BD_CONFIG = WORKSPACE / "data" / "black_diamond" / "scripts" / "gold" / "gold_freshness_config.yaml"
+INF_CONFIG = WORKSPACE / "data" / "orion" / "scripts" / "gold" / "gold_freshness_config.yaml"
+
+CADENCE_LABELS = {
+    "daily":          "daily",
+    "business-daily": "business-daily (Mon-Fri)",
+    "vendor-daily":   "vendor-daily (partner SLA)",
+    "weekly":         "weekly",
+    "on-demand":      "on-demand (no threshold)",
+}
+
+# Column widths for tabular output
+_COL_ID   = 38
+_COL_KEY  = 55
+_COL_TS   = 26
+_COL_AGE  = 8
+_COL_FAIL = 8
+_COL_ST   = 6
+
+# ---------------------------------------------------------------------------
+# AWS helpers
+# ---------------------------------------------------------------------------
+
+def _resolve_aws_cmd() -> list[str]:
+    """Return the command prefix to invoke the aws CLI.
+
+    On Windows the aws CLI ships as aws.CMD which subprocess cannot exec
+    directly -- wrap with ['cmd', '/c', path]. On Linux/Mac aws is a binary.
+    """
+    exe = shutil.which("aws")
+    if exe is None:
+        raise AwsUnreachable("aws CLI not found in PATH")
+    if exe.lower().endswith(".cmd"):
+        return ["cmd", "/c", exe]
+    return [exe]
+
+
+def _aws(*args: str, check_aws: bool = True) -> Optional[str]:
+    """Run an aws CLI command and return stdout stripped, or None on failure."""
+    env = os.environ.copy()
+    env["AWS_EC2_METADATA_DISABLED"] = "true"
+    try:
+        cmd = _resolve_aws_cmd() + list(args)
+        result = subprocess.run(cmd, capture_output=True, text=True, env=env, timeout=30)
+        if result.returncode != 0:
+            if check_aws:
+                stderr = result.stderr.strip()
+                if "Unable to locate credentials" in stderr or "NoCredentialsError" in stderr:
+                    raise AwsUnreachable("AWS credentials not found")
+                if "EndpointResolutionError" in stderr or "ConnectTimeoutError" in stderr or "Could not connect" in stderr:
+                    raise AwsUnreachable("AWS endpoint unreachable")
+            return None
+        out = result.stdout.strip()
+        return out if out and out != "None" else None
+    except subprocess.TimeoutExpired:
+        raise AwsUnreachable("AWS CLI timed out (30s)")
+    except FileNotFoundError:
+        raise AwsUnreachable("aws CLI not found in PATH")
+
+
+class AwsUnreachable(Exception):
+    pass
+
+
+def _parse_s3_uri(s3_uri: str) -> tuple[str, str]:
+    """Parse s3://bucket/prefix into (bucket, prefix)."""
+    if not s3_uri.startswith("s3://"):
+        raise ValueError(f"Expected s3:// URI, got: {s3_uri!r}")
+    without_scheme = s3_uri[len("s3://"):]
+    bucket, _, prefix = without_scheme.partition("/")
+    return bucket, prefix
+
+
+def _parse_timestamps_from_raw(raw: str) -> list[datetime.datetime]:
+    """Parse all non-null timestamps from potentially multi-line --output text result.
+
+    AWS CLI v2 auto-paginates list-objects-v2 and may apply JMESPath per page,
+    producing one line per page. We parse all lines and return valid datetimes.
+    """
+    results = []
+    for line in raw.strip().splitlines():
+        line = line.strip()
+        if not line or line == "None":
+            continue
+        try:
+            results.append(_parse_timestamp(line))
+        except (ValueError, AttributeError):
+            pass
+    return results
+
+
+def get_latest_modified(s3_key_prefix: str) -> Optional[datetime.datetime]:
+    """
+    Return the LastModified timestamp of the most-recent object under s3_key_prefix.
+
+    Strategy (ADHC_COMPIL.012 compiler_tools_mandate):
+    1. List with --delimiter / to find partition sub-prefixes (O(1) for Hive-partitioned
+       daily data with years of files; preferred over aws s3 ls --recursive which scans
+       all objects and is O(n)).
+       Parse sub-prefixes in Python (aws CLI v2 text output: one prefix per line).
+       Take the lexicographically last sub-prefix as the latest date partition.
+    2. If partitions found: list objects in that partition and take max LastModified.
+    3. If no partitions (flat or single-file prefix): list directly and take max.
+    Note: AWS CLI v2 auto-paginates and may return one result per page for aggregate
+    JMESPath queries; _parse_timestamps_from_raw handles multi-line output by taking max.
+    """
+    try:
+        bucket, prefix = _parse_s3_uri(s3_key_prefix)
+    except ValueError as e:
+        raise ConfigError(str(e))
+
+    # Step 1: partition-aware listing (safe query: CommonPrefixes[*].Prefix returns []
+    # when no sub-prefixes; does not fail on null unlike sort_by on null array)
+    raw_prefixes = _aws("s3api", "list-objects-v2",
+                        "--bucket", bucket,
+                        "--prefix", prefix,
+                        "--delimiter", "/",
+                        "--no-paginate",
+                        "--query", "CommonPrefixes[*].Prefix",
+                        "--output", "text")
+
+    target_prefix = prefix
+    if raw_prefixes and raw_prefixes.strip():
+        sub_prefixes = [p.strip() for p in raw_prefixes.strip().split() if "/" in p]
+        if sub_prefixes:
+            target_prefix = sorted(sub_prefixes)[-1]
+
+    # Step 2: get max LastModified under target_prefix
+    # max_by(Contents, &LastModified) returns null (not error) when Contents is empty;
+    # multi-line output from auto-pagination is handled by _parse_timestamps_from_raw.
+    ts_raw = _aws("s3api", "list-objects-v2",
+                  "--bucket", bucket,
+                  "--prefix", target_prefix,
+                  "--query", "max_by(Contents, &LastModified).LastModified",
+                  "--output", "text")
+    if ts_raw and ts_raw.strip():
+        timestamps = _parse_timestamps_from_raw(ts_raw)
+        if timestamps:
+            return max(timestamps)
+
+    # Step 3: if target_prefix was a partition and found nothing, fall back to root
+    if target_prefix != prefix:
+        ts_raw = _aws("s3api", "list-objects-v2",
+                      "--bucket", bucket,
+                      "--prefix", prefix,
+                      "--query", "max_by(Contents, &LastModified).LastModified",
+                      "--output", "text")
+        if ts_raw and ts_raw.strip():
+            timestamps = _parse_timestamps_from_raw(ts_raw)
+            if timestamps:
+                return max(timestamps)
+
+    return None  # prefix not found or empty
+
+
+def _parse_timestamp(raw: str) -> datetime.datetime:
+    """Parse AWS-style ISO-8601 timestamp (may include microseconds and +00:00 or Z)."""
+    raw = raw.strip()
+    # Normalize: replace 'Z' with '+00:00', strip microseconds if present
+    raw = raw.replace("Z", "+00:00")
+    # Handle fractional seconds (up to 6 digits)
+    try:
+        return datetime.datetime.fromisoformat(raw)
+    except ValueError:
+        # Fallback: strip fractional seconds
+        raw_no_frac = raw.split(".")[0] + "+00:00"
+        return datetime.datetime.fromisoformat(raw_no_frac)
+
+
+# ---------------------------------------------------------------------------
+# Config loading
+# ---------------------------------------------------------------------------
+class ConfigError(Exception):
+    pass
+
+
+def _load_config(path: Path) -> list[dict]:
+    if not path.exists():
+        raise ConfigError(f"Config not found: {path}")
+    try:
+        with open(path, encoding="utf-8") as f:
+            data = yaml.safe_load(f)
+    except yaml.YAMLError as e:
+        raise ConfigError(f"YAML parse error in {path}: {e}")
+    if not isinstance(data, list):
+        raise ConfigError(f"Config must be a YAML list of artifact entries, got {type(data).__name__}")
+    required_fields = {"artifact_id", "s3_key_prefix", "cadence"}
+    for i, entry in enumerate(data):
+        missing = required_fields - set(entry.keys())
+        if missing:
+            raise ConfigError(f"Entry {i} missing required fields: {missing}")
+    return data
+
+
+def _load_configs(pipeline: Optional[str] = None) -> tuple[list[dict], list[dict]]:
+    """Return (bd_entries, inf_entries) based on pipeline filter."""
+    bd_entries: list[dict] = []
+    inf_entries: list[dict] = []
+    if pipeline in (None, "bd"):
+        bd_entries = _load_config(BD_CONFIG)
+    if pipeline in (None, "inf"):
+        inf_entries = _load_config(INF_CONFIG)
+    return bd_entries, inf_entries
+
+
+# ---------------------------------------------------------------------------
+# Freshness check logic
+# ---------------------------------------------------------------------------
+def _check_artifact(entry: dict, now: datetime.datetime) -> dict:
+    """
+    Check one artifact entry against its cadence thresholds.
+    Returns a result dict with: artifact_id, s3_key, last_modified, age_h,
+    fail_at_h, warn_at_h, status, severity, cadence, notes.
+    """
+    artifact_id = entry["artifact_id"]
+    s3_key = entry["s3_key_prefix"]
+    cadence = entry.get("cadence", "daily")
+    severity = entry.get("severity", "ERROR").upper()
+    warn_h = entry.get("warn_age_hours")
+    fail_h = entry.get("fail_age_hours")
+    on_demand = (cadence == "on-demand")
+
+    result = {
+        "artifact_id": artifact_id,
+        "s3_key":      s3_key,
+        "last_modified": None,
+        "age_h":       None,
+        "fail_at_h":   fail_h,
+        "warn_at_h":   warn_h,
+        "status":      "SKIP",
+        "severity":    severity,
+        "cadence":     cadence,
+        "notes":       entry.get("notes", ""),
+    }
+
+    if on_demand:
+        result["status"] = "SKIP"
+        return result
+
+    last_modified = get_latest_modified(s3_key)
+    if last_modified is None:
+        # Prefix not found: WARN (could be a new artifact not yet populated)
+        result["status"] = "WARN"
+        result["notes"] = f"Prefix not found in S3: {s3_key}"
+        return result
+
+    # Ensure timezone-aware comparison
+    if last_modified.tzinfo is None:
+        last_modified = last_modified.replace(tzinfo=datetime.timezone.utc)
+    if now.tzinfo is None:
+        now = now.replace(tzinfo=datetime.timezone.utc)
+
+    result["last_modified"] = last_modified.isoformat()
+    age_h = (now - last_modified).total_seconds() / 3600.0
+    result["age_h"] = round(age_h, 1)
+
+    if fail_h is not None and age_h >= fail_h:
+        result["status"] = "FAIL" if severity == "ERROR" else "WARN"
+    elif warn_h is not None and age_h >= warn_h:
+        result["status"] = "WARN"
+    else:
+        result["status"] = "PASS"
+
+    return result
+
+
+def check_entries(entries: list[dict]) -> list[dict]:
+    """Check all entries in parallel and return results in original order."""
+    now = datetime.datetime.now(tz=datetime.timezone.utc)
+    with concurrent.futures.ThreadPoolExecutor(max_workers=8) as pool:
+        futures = {pool.submit(_check_artifact, e, now): i for i, e in enumerate(entries)}
+        results = [None] * len(entries)
+        for fut in concurrent.futures.as_completed(futures):
+            idx = futures[fut]
+            results[idx] = fut.result()
+    return results
+
+
+# ---------------------------------------------------------------------------
+# Output formatting
+# ---------------------------------------------------------------------------
+def _fmt_row(r: dict) -> str:
+    aid  = r["artifact_id"][:_COL_ID].ljust(_COL_ID)
+    key  = r["s3_key"][:_COL_KEY].ljust(_COL_KEY)
+    ts   = (r["last_modified"] or "N/A")[:_COL_TS].ljust(_COL_TS)
+    age  = (f"{r['age_h']:.1f}h" if r["age_h"] is not None else "N/A").ljust(_COL_AGE)
+    fail = (f"{r['fail_at_h']}h" if r["fail_at_h"] is not None else "N/A").ljust(_COL_FAIL)
+    st   = r["status"].ljust(_COL_ST)
+    return f"{aid} | {key} | {ts} | {age} | {fail} | {st}"
+
+
+def _fmt_header() -> str:
+    aid  = "artifact_id".ljust(_COL_ID)
+    key  = "s3_key".ljust(_COL_KEY)
+    ts   = "last_modified".ljust(_COL_TS)
+    age  = "age_h".ljust(_COL_AGE)
+    fail = "fail_at_h".ljust(_COL_FAIL)
+    st   = "STATUS".ljust(_COL_ST)
+    return f"{aid} | {key} | {ts} | {age} | {fail} | {st}"
+
+
+def print_results(results: list[dict], label: str = "") -> int:
+    """Print results table and return exit code (0 PASS, 1 FAIL)."""
+    if label:
+        print(f"\n-- {label} --")
+    print(_fmt_header())
+    print("-" * (_COL_ID + _COL_KEY + _COL_TS + _COL_AGE + _COL_FAIL + _COL_ST + 15))
+    any_fail = False
+    for r in results:
+        print(_fmt_row(r))
+        if r["status"] == "FAIL":
+            any_fail = True
+            if r.get("notes"):
+                print(f"  NOTE: {r['notes']}")
+    return 1 if any_fail else 0
+
+
+# ---------------------------------------------------------------------------
+# Subcommand handlers
+# ---------------------------------------------------------------------------
+def cmd_chain(pipeline: str) -> int:
+    if pipeline not in ("bd", "inf"):
+        print(f"ERROR: unknown pipeline {pipeline!r}. Use 'bd' or 'inf'.", file=sys.stderr)
+        return 2
+    config_path = BD_CONFIG if pipeline == "bd" else INF_CONFIG
+    entries = _load_config(config_path)
+    # Filter out on-demand entries for chain check (show them as SKIP)
+    results = check_entries(entries)
+    return print_results(results, label=f"chain {pipeline}")
+
+
+def cmd_script(script_id: str) -> int:
+    """Check freshness for inputs of a specific script (BD or INF)."""
+    # Determine pipeline from script ID prefix
+    pipeline = "inf" if script_id.upper().startswith("INF_") else "bd"
+    config_path = BD_CONFIG if pipeline == "bd" else INF_CONFIG
+    entries = _load_config(config_path)
+
+    # Filter entries tagged to this script (scripts[] field in config)
+    script_entries = [
+        e for e in entries
+        if script_id in e.get("scripts", []) or script_id.upper() in [s.upper() for s in e.get("scripts", [])]
+    ]
+    if not script_entries:
+        print(f"WARN: no cadence config entries tagged for script {script_id!r}.", file=sys.stderr)
+        print(f"Run 'comp-freshness chain {pipeline}' to check all {pipeline.upper()} artifacts.", file=sys.stderr)
+        return 0
+
+    results = check_entries(script_entries)
+    return print_results(results, label=f"script {script_id}")
+
+
+def cmd_artifact(s3_prefix: str) -> int:
+    """Check freshness for a single S3 prefix."""
+    # Find matching entry in either config for thresholds
+    entry = None
+    for path in (BD_CONFIG, INF_CONFIG):
+        if not path.exists():
+            continue
+        entries = _load_config(path)
+        for e in entries:
+            if e["s3_key_prefix"].rstrip("/") == s3_prefix.rstrip("/"):
+                entry = e
+                break
+        if entry:
+            break
+
+    if entry is None:
+        # No config entry: use permissive defaults (daily, 48h fail)
+        entry = {
+            "artifact_id": s3_prefix,
+            "s3_key_prefix": s3_prefix,
+            "cadence": "daily",
+            "warn_age_hours": 30,
+            "fail_age_hours": 48,
+            "severity": "ERROR",
+            "notes": "No cadence config entry — using default daily thresholds",
+        }
+
+    now = datetime.datetime.now(tz=datetime.timezone.utc)
+    result = _check_artifact(entry, now)
+    print(_fmt_header())
+    print("-" * 120)
+    print(_fmt_row(result))
+    if result.get("notes"):
+        print(f"  NOTE: {result['notes']}")
+    return 1 if result["status"] == "FAIL" else 0
+
+
+def cmd_list() -> int:
+    """Print cadence config in human-readable form grouped by pipeline."""
+    for label, path in (("BD", BD_CONFIG), ("INF", INF_CONFIG)):
+        if not path.exists():
+            print(f"\n-- {label} config not found: {path} --")
+            continue
+        entries = _load_config(path)
+        print(f"\n== {label} pipeline ({len(entries)} entries) ==")
+        print(f"  Config: {path}")
+        print()
+        on_demand = [e for e in entries if e.get("cadence") == "on-demand"]
+        checked   = [e for e in entries if e.get("cadence") != "on-demand"]
+        for e in sorted(checked, key=lambda x: x["artifact_id"]):
+            cad  = CADENCE_LABELS.get(e.get("cadence", "daily"), e.get("cadence", "daily"))
+            warn = e.get("warn_age_hours")
+            fail = e.get("fail_age_hours")
+            sev  = e.get("severity", "ERROR")
+            w_str = f"warn={warn}h" if warn else "warn=none"
+            f_str = f"fail={fail}h" if fail else "fail=none"
+            print(f"  {e['artifact_id']:<40} [{cad:<30}] {w_str} {f_str} ({sev})")
+            print(f"    {e['s3_key_prefix']}")
+            if e.get("notes"):
+                print(f"    NOTE: {e['notes']}")
+        if on_demand:
+            print("\n  -- on-demand (not checked in chain) --")
+            for e in sorted(on_demand, key=lambda x: x["artifact_id"]):
+                print(f"  {e['artifact_id']:<40} {e['s3_key_prefix']}")
+    return 0
+
+
+# ---------------------------------------------------------------------------
+# Entry point
+# ---------------------------------------------------------------------------
+def main() -> int:
+    parser = argparse.ArgumentParser(
+        prog="comp-freshness",
+        description="S3 artifact freshness gate for BD and INF gold chains.",
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+        epilog="""
+Exit codes:
+  0  All PASS (WARN entries do not block)
+  1  Any FAIL (artifact beyond fail_age_hours with ERROR severity)
+  2  Config error or AWS unreachable
+
+Examples:
+  comp-freshness chain bd
+  comp-freshness chain inf
+  comp-freshness artifact s3://opal-data-bd/silver/prices/canonical_prices.parquet
+  comp-freshness artifact s3://opal-data-schwab/silver/RPS/
+  comp-freshness --list
+""",
+    )
+    sub = parser.add_subparsers(dest="command")
+
+    p_chain = sub.add_parser("chain", help="Check all chain input artifacts")
+    p_chain.add_argument("pipeline", choices=["bd", "inf"])
+
+    p_script = sub.add_parser("script", help="Check inputs for a specific script ID")
+    p_script.add_argument("script_id")
+
+    p_artifact = sub.add_parser("artifact", help="Check a single S3 prefix")
+    p_artifact.add_argument("s3_prefix")
+
+    parser.add_argument("--list", action="store_true", help="Print cadence config")
+
+    args = parser.parse_args()
+
+    try:
+        if args.list:
+            return cmd_list()
+        if args.command == "chain":
+            return cmd_chain(args.pipeline)
+        if args.command == "script":
+            return cmd_script(args.script_id)
+        if args.command == "artifact":
+            return cmd_artifact(args.s3_prefix)
+        parser.print_help()
+        return 2
+    except ConfigError as e:
+        print(f"ERROR: {e}", file=sys.stderr)
+        return 2
+    except AwsUnreachable as e:
+        print(f"AWS_UNREACHABLE: {e}", file=sys.stderr)
+        print("Check AWS credentials and network connectivity.", file=sys.stderr)
+        return 2
+
+
+if __name__ == "__main__":
+    sys.exit(main())

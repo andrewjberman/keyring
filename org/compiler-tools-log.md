@@ -2051,3 +2051,16 @@ Total: 2 PASS, 131 WARN, 133 PRDs scanned.
 | 2026-04-30 | 0.7.0_AE_CloudOps | ADHC_COMPIL.010.ae-trace-blast-direction-fixes | comp-blast | AC7: component:...AdvisorIntelligence.tsx --direction down | PASS | F.4 |
 | 2026-04-30 | 0.7.0_AE_CloudOps | ADHC_COMPIL.010.ae-trace-blast-direction-fixes | comp-blast | AC8: lambda:opal-partners-data (no --direction) behavior unchanged | PASS | F.4 regression guard |
 | 2026-04-30 | 0.7.0_AE_CloudOps | ADHC_COMPIL.010.ae-trace-blast-direction-fixes | comp-pipescript | AC9: compiler-tools-log rows appended (this entry) | PASS | |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform_D | ADHC_COMPIL.012 | comp-freshness | AC1: chain bd -- 32 artifacts checked in 27.8s | PASS | <30s target met; 8-thread parallel AWS calls |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform_D | ADHC_COMPIL.012 | comp-freshness | AC2: chain inf -- 31 artifacts checked in 24.0s | PASS | <30s target met |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform_D | ADHC_COMPIL.012 | comp-freshness | AC3: artifact s3://opal-data-schwab/silver/RPS/ returns FAIL age=221h, exit 1 | PASS | live schwab_rps stale (ongoing) |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform_D | ADHC_COMPIL.012 | comp-freshness | AC4: --list prints BD 32 entries + INF 31 entries | PASS | grouped by pipeline, sorted by artifact_id |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform_D | ADHC_COMPIL.012 | comp-freshness | AC5: malformed YAML -> exit 2 with specific error (line+column) | PASS | ConfigError path distinguishable from FAIL |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform_D | ADHC_COMPIL.012 | comp-freshness | AC6: RPS 2026-04-17 retrospective -- mocked last_mod=2026-04-07T10:00Z, incident_date=2026-04-17T12:00Z -> FAIL age=240h | PASS | unit test in tests/comp_freshness/ |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform_D | ADHC_COMPIL.012 | comp-freshness | AC7: aum_snapshot 2026-04-29 retrospective -- mocked last_mod=2026-04-21T09:00Z, incident_date=2026-04-29T09:00Z -> FAIL age=192h | PASS | unit test in tests/comp_freshness/ |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform_D | ADHC_COMPIL.012 | comp-freshness | AC8: BD config has 32 entries (>= 30 required) | PASS | 4 vendor + 7 silver + 21 gold intermediates |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform_D | ADHC_COMPIL.012 | comp-freshness | AC9: INF config has 31 entries (>= 10 required) | PASS | 7 vendor + 9 silver + 15 gold intermediates |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform_D | ADHC_COMPIL.012 | comp-freshness | AC10: Andrew partner-feed ACK | PENDING | Schwab + Orion entries marked [PENDING ANDREW ACK]; MCP queued |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform_D | ADHC_COMPIL.012 | comp-freshness | AC11: chain bd timing <30s | PASS | 27.8s (same as AC1) |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform_D | ADHC_COMPIL.012 | comp-freshness | AC12: AWS_UNREACHABLE prefix distinguishes connectivity failures from stale-data FAIL | PASS | exit 2 path uses AWS_UNREACHABLE: prefix; stale data uses FAIL in output |
+| 2026-04-30 | 0.4.0_DS_ClientPlatform_D | ADHC_COMPIL.012 | comp-freshness | AC13: compiler-tools-log rows appended (this entry) | PASS | |
