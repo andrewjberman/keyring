@@ -8,8 +8,8 @@
     {"path": "org/tier2_senior/0.6.1_AE_PartnerETL/deliverables/CTO_BRIEFING_INFLEC_HISTBACKFILL_AND_JWT_RESILIENCE_20260430.md", "label": "Source brief (AE 0.6.1 + AE 0.7 consult)", "date": "2026-04-30"}
   ],
   "status": "active",
-  "phase": "Phase 0 — registered 2026-04-30; Andrew rulings 2026-04-30 PM resolve all 3 open questions; no TOs authored yet (Andrew + COO will handle sequencing). **Andrew rulings:** (1) Standalone project (NOT folded into ADVI_ORIAPI). (2) Option A first, validate in production, THEN Option B. (3) Option C deferred to future with more info (no Orion support contact available — `off the books` operation, see HISTBF for parallel framing). Scope sequencing therefore: Option A freshness-check (1-2d, DS + AE 0.6.1/0.7) → production validation window → Option B async auto-recovery (3-5d, AE 0.7) → indefinite hold on Option C.",
-  "blocking": "Andrew + COO sequencing call (Andrew handling directly per 2026-04-30 PM ruling — `I'll handle that with COO`). TO authoring will likely thread parallel work across A and HISTBF Phase 0 where possible.",
+  "phase": "**Phase 1 Option A LIVE 2026-04-30.** JWTRES.001 (DS `81a7a5684` — jwt_freshness.py assert_fresh_or_exit() in bronze orchestrator) COMPLETE. JWTRES.001b (AE 0.6.1 — orchestrator wiring + CW alarm + IAM) COMPLETE (RAVC4 `20260430T164744Z`). Pre-flight freshness check live in bronze orchestrator; HISTBF Phase 1 bronze backfill running with JWT gate active. Option B (async auto-recovery via Lambda invoke + poll, 3-5d AE 0.7) sequencing TBD post Option A production validation window. Option C deferred indefinitely (off-the-books, no Orion support contact). Andrew rulings locked 2026-04-30 PM: standalone project; Option A → validate → Option B; Option C deferred.",
+  "blocking": "Option B sequencing: wait for Option A production validation window (HISTBF Phase 1 bronze backfill run provides real-world exercise of jwt_freshness gate). COO to author JWTRES.002 Option B TO when Andrew signals validation window sufficient.",
   "created": "2026-04-30",
   "pods": ["0.6", "0.7"],
   "pipeline": "inf-pipeline + bronze-layer",
