@@ -8,8 +8,8 @@
     {"path": "org/tier2_senior/0.6.1_AE_PartnerETL/deliverables/CTO_BRIEFING_INFLEC_HISTBACKFILL_AND_JWT_RESILIENCE_20260430.md", "label": "Source brief (AE 0.6.1 + AE 0.7 consult)", "date": "2026-04-30"}
   ],
   "status": "active",
-  "phase": "Phase 0 — registered 2026-04-30; no TOs yet (awaiting Andrew dispatch decision). 3-option scope from AE brief §3: Option A freshness-check (1-2d, DS+AE), Option B async auto-recovery (3-5d, AE 0.7), Option C direct REST auth (gated on capability probe, AE+DS). Sequencing per AE §4: Option A immediate; Option B follow-on; Option C longer-term gated on Orion endpoint confirmation.",
-  "blocking": "Andrew dispatch decision: (1) Owner choice for Phase 1 — fold into ADVI_ORIAPI as a sub-phase OR keep as standalone JWTRES project (per AE §5 Q3). (2) Sequence call — Option A only first (low-risk + fast) vs Option A + Option B in parallel. (3) Option C capability probe authorization — needs Orion contact (overlaps with HISTBF Phase 0 Q4).",
+  "phase": "Phase 0 — registered 2026-04-30; Andrew rulings 2026-04-30 PM resolve all 3 open questions; no TOs authored yet (Andrew + COO will handle sequencing). **Andrew rulings:** (1) Standalone project (NOT folded into ADVI_ORIAPI). (2) Option A first, validate in production, THEN Option B. (3) Option C deferred to future with more info (no Orion support contact available — `off the books` operation, see HISTBF for parallel framing). Scope sequencing therefore: Option A freshness-check (1-2d, DS + AE 0.6.1/0.7) → production validation window → Option B async auto-recovery (3-5d, AE 0.7) → indefinite hold on Option C.",
+  "blocking": "Andrew + COO sequencing call (Andrew handling directly per 2026-04-30 PM ruling — `I'll handle that with COO`). TO authoring will likely thread parallel work across A and HISTBF Phase 0 where possible.",
   "created": "2026-04-30",
   "pods": ["0.6", "0.7"],
   "pipeline": "inf-pipeline + bronze-layer",
