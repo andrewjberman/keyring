@@ -40,6 +40,9 @@ from org.modules.graph.extract_validate import load_validate_config, run_validat
 
 STANDALONE_VALIDATORS_DIR = _WORKSPACE / "data" / "black_diamond" / "scripts" / "validators"
 
+_BD_VALIDATE_CONFIG = _WORKSPACE / "data" / "black_diamond" / "scripts" / "gold" / "gold_validate_config.yaml"
+_INF_VALIDATE_CONFIG = _WORKSPACE / "data" / "orion" / "scripts" / "gold" / "gold_validate_config.yaml"
+
 
 def _translate_artifact_path(raw: str) -> Path:
     """On Windows, translate POSIX /tmp/ and /c/ paths to native Windows paths.
@@ -61,6 +64,131 @@ def _translate_artifact_path(raw: str) -> Path:
     if raw.startswith('/c/'):
         return Path('C:/' + raw[3:])
     return Path(raw)
+
+
+def _load_raw_validate_configs() -> dict:
+    """Load both BD and INF gold_validate_config.yaml as raw dicts (for alias map).
+
+    Returns merged {artifact_id: raw_data_dict} from both pipelines.
+    """
+    result: dict = {}
+    for config_file in (_BD_VALIDATE_CONFIG, _INF_VALIDATE_CONFIG):
+        if not config_file.exists():
+            continue
+        try:
+            import yaml
+            raw = yaml.safe_load(config_file.read_text(encoding="utf-8"))
+            result.update((raw.get("scripts") or {}))
+        except Exception:
+            pass
+    return result
+
+
+def _build_script_alias_map(raw_configs: dict) -> dict[str, list[str]]:
+    """Build {producer_script.upper(): [artifact_id, ...]} from raw config entries.
+
+    Populated when config entries carry a producer_script field (ADHC_COMPIL.015).
+    """
+    alias_map: dict[str, list[str]] = {}
+    for artifact_id, data in raw_configs.items():
+        if not data:
+            continue
+        ps = data.get("producer_script")
+        if ps:
+            alias_map.setdefault(str(ps).upper(), []).append(artifact_id)
+    return alias_map
+
+
+def _resolve_artifact_id(
+    script_id: str,
+    artifact_filename: str,
+    configs: dict,
+    alias_map: dict[str, list[str]],
+) -> tuple[str, str | None]:
+    """Resolve script_id to a canonical artifact-id present in configs.
+
+    Resolution order:
+    1. Alias-map lookup when artifact_filename is provided. Checked first so that
+       a script_id like D_04 (which is both an artifact-id AND a producer of multiple
+       artifacts) is disambiguated by filename rather than silently matched to the
+       wrong artifact (the leaderboard entry).
+    2. Direct artifact-id lookup (exact, then case-insensitive).
+    3. Alias-map lookup when no artifact_filename (emits candidate list + exit 1).
+    4. Not found → "Did you mean" suggestion + exit 1.
+
+    Returns (artifact_id, info_line). info_line is non-None when an alias
+    resolution was performed; caller should emit it as an info message.
+    Exits 1 on failure.
+    """
+    from difflib import get_close_matches
+
+    upper = script_id.upper()
+    stem = Path(artifact_filename).stem.lower() if artifact_filename else ""
+    alias_candidates = alias_map.get(upper, [])
+
+    # 1. Alias-map path (only when artifact_filename is present)
+    if alias_candidates and artifact_filename:
+        if len(alias_candidates) == 1:
+            return alias_candidates[0], f"Resolved {script_id} -> {alias_candidates[0]}"
+
+        # Multiple artifacts — disambiguate by artifact filename stem
+        if stem:
+            fname_matches = [c for c in alias_candidates
+                             if stem == c.lower() or c.lower() in stem or stem in c.lower()]
+            if len(fname_matches) == 1:
+                return fname_matches[0], f"Resolved {script_id} -> {fname_matches[0]}"
+
+        # Ambiguous — list all candidates
+        _emit_ambiguous_error(script_id, alias_candidates, artifact_filename, stem)
+        sys.exit(1)
+
+    # 2. Direct artifact-id (exact match)
+    if script_id in configs:
+        return script_id, None
+    if upper in configs:
+        return upper, None
+    ci_matches = [k for k in configs if k.upper() == upper]
+    if len(ci_matches) == 1:
+        return ci_matches[0], None
+
+    # 3. Alias-map path without artifact_filename — emit candidate list
+    if alias_candidates:
+        _emit_ambiguous_error(script_id, alias_candidates, artifact_filename, stem)
+        sys.exit(1)
+
+    # 4. Not found — Did-you-mean across artifact-ids + alias keys
+    all_candidates = list(configs.keys()) + list(alias_map.keys())
+    close = get_close_matches(upper, [c.upper() for c in all_candidates], n=3, cutoff=0.4)
+    # Map back to original case
+    upper_to_orig = {c.upper(): c for c in all_candidates}
+    close_orig = [upper_to_orig.get(c, c) for c in close]
+    if close_orig:
+        print(f"Error: '{script_id}' not found. Did you mean: {', '.join(close_orig)}?",
+              file=sys.stderr)
+    else:
+        print(f"Error: '{script_id}' is not a known artifact-id or producer script.",
+              file=sys.stderr)
+        print("  Run `comp-validate --list` to see all configured artifact-ids.",
+              file=sys.stderr)
+    sys.exit(1)
+
+
+def _emit_ambiguous_error(
+    script_id: str,
+    candidates: list[str],
+    artifact_filename: str,
+    stem: str,
+) -> None:
+    """Print the multi-artifact disambiguation error to stderr."""
+    print(f"Error: '{script_id}' is a producer script, not an artifact-id.", file=sys.stderr)
+    print(f"  {script_id} produces {len(candidates)} artifact(s):", file=sys.stderr)
+    for c in sorted(candidates):
+        print(f"    {c}", file=sys.stderr)
+    if not artifact_filename or not stem:
+        print("  Pass --artifact <path> with a filename matching one of them.", file=sys.stderr)
+    else:
+        print(f"  Filename '{artifact_filename}' did not match any of the above.", file=sys.stderr)
+        print("  Use the exact artifact-id as the first argument instead.", file=sys.stderr)
 
 
 def _find_standalone_validator(script_id: str) -> Path | None:
@@ -121,26 +249,40 @@ def cmd_list(args):
 
 def cmd_validate(args):
     configs = load_validate_config(_WORKSPACE)
+    strict = getattr(args, 'strict', False)
 
-    script_id = args.script_id
+    # Build alias map for script-id -> artifact-id resolution (ADHC_COMPIL.015)
+    raw_configs = _load_raw_validate_configs()
+    alias_map = _build_script_alias_map(raw_configs)
+
+    # Translate artifact path (Windows POSIX path fix, ADHC_COMPIL.009)
     artifact_path = _translate_artifact_path(args.artifact)
 
-    # On Windows, when neither the original nor translated path exists, show both
+    # Resolve script_id -> canonical artifact-id (catches unknown IDs early)
+    artifact_filename = Path(args.artifact).name if args.artifact else ""
+    resolved_id, info_line = _resolve_artifact_id(
+        args.script_id, artifact_filename, configs, alias_map
+    )
+
+    # Artifact must exist (hard FAIL — unsafe to gate on missing file)
     if not artifact_path.exists():
         translated_str = str(artifact_path)
+        print("MISSING_ARTIFACT:", file=sys.stderr)
         if platform.system() == 'Windows' and args.artifact != translated_str:
-            print("Artifact not found:", file=sys.stderr)
             print(f"  Input path:      {args.artifact}", file=sys.stderr)
             print(f"  Translated path: {translated_str}", file=sys.stderr)
         else:
-            print(f"Artifact not found: {artifact_path}", file=sys.stderr)
+            print(f"  {artifact_path} not found", file=sys.stderr)
+        print("Hint: see COMP_VALIDATE_PROTOCOL.md §4 for retry policy", file=sys.stderr)
         sys.exit(1)
 
-    print(f"VALIDATE: {script_id}")
+    print(f"VALIDATE: {resolved_id}")
+    if info_line:
+        print(f"  Info: {info_line}")
     print(f"  Artifact: {artifact_path}")
     print()
 
-    results = run_validate(script_id, artifact_path, configs)
+    results = run_validate(resolved_id, artifact_path, configs)
 
     error_count = 0
     warn_count = 0
@@ -172,15 +314,31 @@ def cmd_validate(args):
 
     print(f"  Summary: {pass_count} PASS, {error_count} ERROR, {warn_count} WARN, {skip_count} SKIP")
 
+    # Detect NO_CONFIG: all results are SKIP from config_lookup or no_checks
+    no_config = all(r.status == "SKIP" for r in results) and any(
+        r.name in ("config_lookup", "no_checks") for r in results
+    )
+
+    if no_config:
+        print()
+        print(f"NO_CONFIG: no validation rules defined for {resolved_id}")
+        if strict:
+            print("  (--strict: escalating NO_CONFIG to exit 2)")
+            sys.exit(2)
+        return
+
     if error_count > 0:
         print()
+        print(f"FAIL: {error_count}/{pass_count + warn_count + error_count} check(s) failed for {resolved_id}")
         print(f"  BLOCKED: {error_count} ERROR check(s) failed. Do not upload artifact to S3.")
         sys.exit(1)
     elif warn_count > 0:
         print()
         print(f"  ADVISORY: {warn_count} WARN check(s) failed. Review before uploading.")
+        print(f"PASS: all checks passed for {resolved_id} ({warn_count} WARN advisory)")
     else:
         print()
+        print(f"PASS: all {pass_count} checks passed for {resolved_id}")
         print("  All checks passed. Artifact is ready for S3 upload.")
 
 
@@ -195,6 +353,8 @@ def main():
                         help='Path to local artifact file (.json or .parquet)')
     parser.add_argument('--list', action='store_true', dest='list_only',
                         help='List all configured checks and exit')
+    parser.add_argument('--strict', action='store_true',
+                        help='Escalate NO_CONFIG to exit 2 (for CI/dispatcher use)')
 
     # Use parse_known_args() so unknown flags (e.g. --schema, --certified,
     # --cross-check) become pass-through args for the standalone validator
@@ -223,6 +383,15 @@ def main():
         # No standalone validator + no artifact = show config list (existing
         # behavior for bare `comp-validate` or `comp-validate <id>`).
         if not args.artifact and not extras:
+            # If script_id is a multi-artifact producer, emit candidate list
+            # rather than silently falling through to cmd_list (AC4).
+            if args.script_id:
+                _raw = _load_raw_validate_configs()
+                _amap = _build_script_alias_map(_raw)
+                _cands = _amap.get(args.script_id.upper(), [])
+                if len(_cands) > 1:
+                    _emit_ambiguous_error(args.script_id, _cands, "", "")
+                    sys.exit(1)
             cmd_list(args)
             return
 
