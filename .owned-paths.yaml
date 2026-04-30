@@ -454,6 +454,13 @@ paths:
   # data/ — pipeline scripts and data artifacts
   # -----------------------------------------------------------------------
   # Black Diamond (BD) scripts — Pod 4 DS owns; incident history: DS~A + DS~B tilde lanes
+  # Specific override (longest-match-wins): dispatch orchestrator is AE-maintained ops
+  # infra, not a DS data script. Mirrors orion-gold-dispatch.sh reclassification
+  # (2026-04-30). Authorized by same COO lane-violation flag precedent.
+  "data/black_diamond/scripts/gold/gold_dispatch.sh":
+    lane: CLOUD_OPS_OR_ETL
+    note: "BD gold dispatch orchestrator — AE-maintained, not a DS data script"
+
   "data/black_diamond/scripts/gold/**":
     lane: POD4
     note: "BD gold scripts — DS 0.4.0 primary author (Rule 13/14 in CLAUDE.md)"
