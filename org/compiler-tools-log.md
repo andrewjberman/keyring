@@ -2169,3 +2169,38 @@ Total: 2 PASS, 131 WARN, 133 PRDs scanned.
 | 2026-04-30 | 0.4.0_DS_ClientPlatform~A | (no-TO) | comp-pipescript | comp-pipescript io INF_D_04 | PASS |
 | 2026-04-30 | 0.4.0_DS_ClientPlatform~A | (no-TO) | comp-validate | comp-validate D_04 --artifact /tmp/cohort_a_summary.json | PASS |
 | 2026-05-01 | 0.3.0_DT_TradingOperations | TRSB_PATHFIX.TO-2 | py_compile+AST+ruff on 4 .py files: PASS. Fixed F401 unused Role. No comp-iam (no new boto3). Migration verified via DDB scan. CW smoke test: 4 approvers + 9 executors PASS. |
+| 2026-05-01 | 0.5.0_AE_OpalETL | ADHC_CLCOMM.003.ae-verification-and-close | comp-iam | comp-iam service inf-bronze-runner | PASS |
+| 2026-05-01 | 0.4.0_DS_ClientPlatform~B | ADVI_ROLLUP.SL-P1b | comp-blast | comp-blast gold/timeseries/holdings_lots | PASS |
+| 2026-05-01 | 0.4.0_DS_ClientPlatform~B | ADVI_ROLLUP.SL-P1b | comp-blast | comp-blast holdings_lots | PASS |
+| 2026-05-01 | 0.4.0_DS_ClientPlatform~B | ADVI_ROLLUP.SL-P1b | comp-validate | comp-validate B_01 --artifact s3://opal-data-bd/gold/timeseries/holdings_lots_shadow/20... | FAIL |
+| 2026-05-01 | 0.4.0_DS_ClientPlatform~B | ADVI_ROLLUP.SL-P1b | comp-pipescript | comp-pipescript feeds B_01 | PASS |
+| 2026-05-01 | 0.7.0_AE_CloudOps | ADVI_INFGRD.004 | comp-pipescript | comp-pipescript deployed INF_D_00c | PASS |
+| 2026-05-01 | 0.7.0_AE_CloudOps | ADVI_INFGRD.004 | comp-pipescript | comp-pipescript deployed orion-gold-dispatch.sh | PASS |
+| 2026-05-01 | 0.7.0_AE_CloudOps | ADVI_INFGRD.004 | comp-blast | comp-blast holdings_lots_shadow | PASS |
+| 2026-05-01 | 0.7.0_AE_CloudOps | ADVI_INFGRD.004 | comp-pipescript | comp-pipescript io INF_B_00.canonical_holdings | PASS |
+| 2026-05-01 | 0.7.0_AE_CloudOps | ADVI_INFGRD.004 | comp-blast | comp-blast silver/api_dims/positions_mv | PASS |
+| 2026-05-01 | 0.7.0_AE_CloudOps | ADVI_INFGRD.004 | comp-blast | comp-blast silver/assets_v2 | PASS |
+| 2026-05-01 | 0.7.0_AE_CloudOps | ADVI_INFGRD.004 | comp-blast | comp-blast INF_B_00 | PASS |
+| 2026-05-01 | 0.7.0_AE_CloudOps | ADVI_INFGRD.004 | comp-blast | comp-blast canonical_holdings | PASS |
+| 2026-05-01 | 0.7.0_AE_CloudOps | ADVI_INFGRD.004 | comp-pipescript | comp-pipescript io B_01 | PASS |
+| 2026-05-01 | 0.7.0_AE_CloudOps | ADVI_INFGRD.004 | comp-pipescript | comp-pipescript deployed B_01 | PASS |
+| 2026-05-01 | 0.7.0_AE_CloudOps | ADVI_INFGRD.004 | comp-pipescript | comp-pipescript io B_01 | PASS |
+| 2026-05-01 | 0.7.0_AE_CloudOps | ADVI_INFGRD.004 | comp-pipescript | comp-pipescript deployed B_01 | PASS |
+| 2026-05-01 | 0.7.0_AE_CloudOps | ADVI_INFGRD.004 | comp-blast | comp-blast B_01 | PASS |
+| 2026-05-01 | 0.7.0_AE_CloudOps | ADVI_INFGRD.004 | comp-pipescript | comp-pipescript deployed B_01 | PASS |
+| 2026-05-01 | 0.4.2_RD_AdvisorIntelligence | ADVI_INFSHIP.PHASE3-FE-BUGS | comp-transform | comp-transform schema-check DistributionTab | PASS |
+| 2026-05-01 | 0.4.2_RD_AdvisorIntelligence | ADVI_INFSHIP.PHASE3-FE-BUGS | comp-transform | comp-transform schema-check ClientsTab | PASS |
+| 2026-05-01 | 0.4.2_RD_AdvisorIntelligence | ADVI_INFSHIP.PHASE3-FE-BUGS | comp-pipescript | comp-pipescript deployed B_01 | PASS |
+| 2026-05-01 | 0.4.2_RD_AdvisorIntelligence | ADVI_INFSHIP.PHASE3-FE-BUGS | comp-blast | comp-blast DistributionTab | PASS |
+| 2026-05-01 | 0.4.2_RD_AdvisorIntelligence | ADVI_INFSHIP.PHASE3-FE-BUGS | comp-blast | comp-blast ClientsTab | PASS |
+| 2026-05-01 | 0.4.0_DS_ClientPlatform_B | ADVI_49FRECN.001B | comp-pipescript | comp-pipescript io D_00.portal_aggregates.py | PASS |
+| 2026-05-01 | 0.4.0_DS_ClientPlatform~C | ADVI_49FRECN.001C | comp-pipescript | comp-pipescript io D_02.advisor_client_detail.py | PASS |
+| 2026-05-01 | 0.4.0_DS_ClientPlatform~C | ADVI_49FRECN.001C | comp-pipescript | comp-pipescript io 00_build_accounts_dimension.py | FAIL |
+| 2026-05-01 | 0.4.0_DS_ClientPlatform~C | ADVI_49FRECN.001C | comp-pipescript | comp-pipescript io A_00.accounts_dimension.py | PASS |
+| 2026-05-01 | 0.4.0_DS_ClientPlatform~C | ADVI_49FRECN.001C | comp-pipescript | comp-pipescript io 06b | FAIL |
+| 2026-05-01 | 0.4.0_DS_ClientPlatform~C | ADVI_49FRECN.001C | comp-pipescript | comp-pipescript io A_00 | PASS |
+| 2026-05-01 | 0.4.0_DS_ClientPlatform~C | ADVI_49FRECN.001C | comp-pipescript | comp-pipescript io B_01b | FAIL |
+| 2026-05-01 | 0.4.0_DS_ClientPlatform~C | ADVI_49FRECN.001C | comp-pipescript | comp-pipescript io B_01b | FAIL |
+| 2026-05-01 | 0.4.0_DS_ClientPlatform~C | ADVI_49FRECN.001C | comp-pipescript | comp-pipescript io C_06 | PASS |
+| 2026-05-01 | 0.4.0_DS_ClientPlatform~C | ADVI_49FRECN.001C | comp-pipescript | comp-pipescript io D_00 | PASS |
+| 2026-05-01 | 0.4.0_DS_ClientPlatform~C | ADVI_49FRECN.001C | comp-trace | comp-trace NNA_AUA_BY_ADVISOR --direction both | PASS |
