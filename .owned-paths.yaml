@@ -494,6 +494,17 @@ paths:
     lane: CLOUD_OPS_OR_ETL
     note: "Orion gold dispatch orchestrator — AE-maintained, not a DS data script"
 
+  # Specific overrides: manual_api ops infrastructure — AE-maintained, not DS data scripts.
+  # jwt_freshness.py + run_backfill_orchestrator.py reclassified 2026-05-01 (CTO ruling,
+  # ADVI_JWTRES.002 — AE 0.7.0 adds recover_or_exit() + backfill startup wiring).
+  "data/orion/manual_api/jwt_freshness.py":
+    lane: CLOUD_OPS_OR_ETL
+    note: "JWT token freshness utility — AE-maintained ops infra; originally DS Phase 1, AE owns Phase 2 recovery logic"
+
+  "data/orion/manual_api/run_backfill_orchestrator.py":
+    lane: CLOUD_OPS_OR_ETL
+    note: "Bronze backfill orchestrator — AE-maintained ops infra"
+
   "data/orion/scripts/gold/**":
     lane: POD4
     note: "Orion/Inflection gold scripts — DS 0.4.0 primary author"
