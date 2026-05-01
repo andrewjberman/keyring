@@ -109,22 +109,66 @@ Andrew GO received 2026-05-01. COO dispatched TO to AE 0.7.0.
 
 ---
 
-## Pending / Next Actions
+---
 
-- **INF_D_08 re-run:** After HISTBF.005 silver completes — single dispatch `--single INF_D_08`
-- **ADVI_JWTRES.002 deploy:** On Wave B RAVC4 + Wave C GO — `terraform apply` + `aws s3 cp` jwt_freshness.py + run_backfill_orchestrator.py to S3 bronze code path
-- **HISTBF Phase 2 silver support:** Ready to support if SSM dispatch or EC2 infra needed
+## 4. JWTRES.002 Full S3 Deploy + Wave B v5 Dispatch Support (session continuation)
+
+**COO broke deploy gate** (Wave B v3 stopped 18:44Z — EC2 idle). Ordered immediate S3 upload.
+
+**Deployed to S3 code/bronze/:**
+- jwt_freshness.py (20243B) — recover_or_exit() active
+- run_backfill_orchestrator.py (21797B) — recover_or_exit() at startup + per-dim
+- Both sizes MATCH. Tag: inf-pipeline-v1.7.12.
+
+**AccessDenied investigation (Wave B v5):**
+Read pull scripts + queried live IAM policy via AWS API. Confirmed ReadSilverInputDims SID live (GetObject on silver/api_dims/household_rep_mapping/* and silver/api_dims/household/*). SSM log tail confirmed v5 (CYCLE 2f0abf97) past AccessDenied point — both dims (positions_mv, assets_v2) started chunk 2020-05-26..2020-08-23. No action needed.
+
+**RCA — Wave B v4 (cycle ea9e59a8, killed 18:21Z):** ec2-auto-shutdown-enforcer Lambda (not watchdog) — CPU genuinely below 3% (rate limiter at 0.67 RPS, mostly sleeping). Enforcer fired before watchdog's SKIP window. Root cause: inf-bronze-runner not excluded from enforcer.
+
+**Fix applied: enforcer-v1.0.1** (by AE 0.6.1, commit 55c162b08) — excluded i-083ad9ae297f88e9f.
 
 ---
 
-## Session Stats
+## 5. enforcer-v1.0.2 — inf-exporter excluded (session continuation)
+
+**COO GO 2026-05-01:** inf-exporter i-081ae6aafb394fb1a stopped by enforcer (same pattern). Needed before JWTRES.002 ~04:48Z recovery run.
+
+**Change:** EXCLUDED_INSTANCES `"i-083ad9ae297f88e9f"` → `"i-083ad9ae297f88e9f,i-081ae6aafb394fb1a"`
+
+**Commits:**
+- `114b6e6ce` — feat(enforcer-v1.0.2): add inf-exporter i-081ae6aafb394fb1a to EXCLUDED_INSTANCES
+
+**Terraform:**
+- Plan: 0 to add, 1 to change, 0 to destroy (EXCLUDED_INSTANCES env var only)
+- Apply: complete (0 added, 1 changed, 0 destroyed)
+- Post-apply 0-diff: "No changes. Your infrastructure matches the configuration."
+- Tag: enforcer-v1.0.2 — pushed to CLOUD
+
+**RAVC4:** sent to COO + AE 0.6.1.
+
+**Double dispatch clarification:**
+COO + AE 0.6.1 queried whether CYCLE 2a0c2a94 (19:06Z) was my dispatch. Confirmed: NOT my dispatch — my work in that window was read-only (S3 ls, SSM ps, log tail). Ownership boundary locked: AE 0.7.0 = infra only; AE 0.6.1 = HISTBF dispatch authority.
+
+---
+
+## Pending / Next Actions
+
+- **Wave B v5 RAVC4:** Waiting for AE 0.6.1 RAVC4 when CYCLE 2f0abf97 completes — unblocks Wave C GO
+- **Wave C GO → silver dispatch:** DS .004/.005/.006 after Wave C GO from COO
+- **INF_D_08 re-run:** After HISTBF.005 transactions silver — `--single INF_D_08`
+- **ADVI_JWTRES project close:** CTO noted closeable (Phase 1 + Phase 2 both shipped). COO may drive 3-step atomic close.
+
+---
+
+## Session Stats (cumulative)
 
 | Item | Value |
 |------|-------|
 | TOs completed | 2 (ADHC_ORNDSP.001, INFGRD.004 primary) |
-| TOs implementation-complete-staged | 1 (ADVI_JWTRES.002) |
-| Commits | 46ee0ca51 (ORNDSP) + fa5cfed3d (org close) + e3325b6d4 (JWTRES IAM tf) + a63d76d51 (JWTRES Python) + 757bdd209 (JWTRES TO note) |
-| S3 uploads | 1 (orion-gold-dispatch.sh) |
+| TOs implementation-complete-then-deployed | 1 (ADVI_JWTRES.002) |
+| Enforcer fixes | enforcer-v1.0.1 (AE 0.6.1) + enforcer-v1.0.2 (AE 0.7.0) |
+| Commits | 46ee0ca51 (ORNDSP) + fa5cfed3d (org close) + e3325b6d4 (JWTRES IAM tf) + a63d76d51 (JWTRES Python) + 757bdd209 (JWTRES TO note) + 114b6e6ce (enforcer-v1.0.2) |
+| S3 uploads | 2 (orion-gold-dispatch.sh + jwt_freshness.py + run_backfill_orchestrator.py) |
 | CF invalidations | 1 (EVTSA9VEHNZVH, 2 paths) |
-| SSM commands | chain dispatch + watchdog disable/enable + log polls |
-| Terraform plans | 1 (inf-pipeline JWTRES.002 IAM, 1 to add, 0 change, 0 destroy) |
+| Terraform plans/applies | inf-pipeline v1.7.11 (2 resources) + v1.7.12 (0-diff verify) + enforcer-v1.0.2 (1 change) |
+| Compiler tools | comp-iam gaps: N/A (enforcer env-var only, no new boto3 calls) |
