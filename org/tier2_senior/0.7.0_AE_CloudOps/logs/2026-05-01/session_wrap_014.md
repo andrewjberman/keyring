@@ -82,11 +82,37 @@ INF_D_08 should be re-run as a `--single` dispatch after HISTBF silver wave comp
 
 ---
 
+## 3. ADVI_JWTRES.002 — JWT Auto-Recovery (implementation complete, deploy staged)
+
+Andrew GO received 2026-05-01. COO dispatched TO to AE 0.7.0.
+
+**Design:** `recover_or_exit()` in `jwt_freshness.py` — checks JWT freshness, if stale invokes `inf-jwt-trigger` Lambda async, polls S3 `issued_at_iso` every 30s until advancement detected (max 15 min). On advance: reload JWT, emit `JwtAutoRecoverySucceeded`, return fresh report. On timeout/invoke fail: emit `JwtAutoRecoveryFailed`, sys.exit(2). Called from `run_backfill_orchestrator.py` at startup and before each dim iteration.
+
+**Commits:**
+- `e3325b6d4` — IAM: `lambda:InvokeFunction` on `inf-jwt-trigger` for `inf-bronze-runner-ec2-role` (Terraform)
+- `a63d76d51` — `jwt_freshness.py` `recover_or_exit()` + `run_backfill_orchestrator.py` integration
+- `757bdd209` — TO progress note
+
+**Lane escalation:** `data/orion/manual_api/jwt_freshness.py` + `run_backfill_orchestrator.py` classified POD4. CTO reclassified to `CLOUD_OPS_OR_ETL` (commit `d21922259`).
+
+**CW namespace:** `Inflection/JwtResilience` (CTO confirmed; TO text "Inflection-HistBackfill-RateLimiter" was a naming error).
+
+**Pre-commit gate:** PASS (py_compile + AST scanner + ruff).
+
+**Terraform plan:** 1 to add (`aws_iam_role_policy.inf_bronze_runner_jwt_trigger_invoke`), 0 to change, 0 to destroy.
+
+**Deploy gate:** terraform apply + S3 upload staged, awaiting:
+1. HISTBF Wave B RAVC4 (from AE 0.6.1)
+2. COO Wave C GO
+
+**RAVC4:** sent to COO + CTO at 18:19:53Z. Both ACK'd.
+
+---
+
 ## Pending / Next Actions
 
-- **INFLV2.010 DATA-GATE:** Awaiting COO clearance after RAVC4 receipt
 - **INF_D_08 re-run:** After HISTBF.005 silver completes — single dispatch `--single INF_D_08`
-- **ADVI_JWTRES.002:** Standby — gated on HISTBF.003 RAVC4 + jwt_freshness empirical pass + Andrew signal
+- **ADVI_JWTRES.002 deploy:** On Wave B RAVC4 + Wave C GO — `terraform apply` + `aws s3 cp` jwt_freshness.py + run_backfill_orchestrator.py to S3 bronze code path
 - **HISTBF Phase 2 silver support:** Ready to support if SSM dispatch or EC2 infra needed
 
 ---
@@ -96,7 +122,9 @@ INF_D_08 should be re-run as a `--single` dispatch after HISTBF silver wave comp
 | Item | Value |
 |------|-------|
 | TOs completed | 2 (ADHC_ORNDSP.001, INFGRD.004 primary) |
-| Commits | 1 (46ee0ca51 ORNDSP) + 1 (session/TO close) |
+| TOs implementation-complete-staged | 1 (ADVI_JWTRES.002) |
+| Commits | 46ee0ca51 (ORNDSP) + fa5cfed3d (org close) + e3325b6d4 (JWTRES IAM tf) + a63d76d51 (JWTRES Python) + 757bdd209 (JWTRES TO note) |
 | S3 uploads | 1 (orion-gold-dispatch.sh) |
 | CF invalidations | 1 (EVTSA9VEHNZVH, 2 paths) |
 | SSM commands | chain dispatch + watchdog disable/enable + log polls |
+| Terraform plans | 1 (inf-pipeline JWTRES.002 IAM, 1 to add, 0 change, 0 destroy) |
