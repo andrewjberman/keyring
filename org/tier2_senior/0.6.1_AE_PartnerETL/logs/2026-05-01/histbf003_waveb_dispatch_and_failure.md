@@ -200,11 +200,53 @@ Note: Daily orchestrator (PID 2653) + daily assets pull (PID 2705) also running 
 
 ---
 
+## Wave B v4 Root Cause + Wave B v5 Dispatch (session continuation post-context-compaction)
+
+**Timestamp:** 2026-05-01T19:00Z onwards
+
+### Wave B v4 Root Cause — CONFIRMED
+
+All v1-v4 kills (and specifically v4, CYCLE ea9e59a8, killed 18:21Z) sourced from **ec2-auto-shutdown-enforcer Lambda**, NOT the watchdog. Confirmed via CloudTrail StopInstances event. CPU was genuinely below 3% — intentional rate-limiting behavior (0.67 RPS = 1 call/1.5s, mostly sleeping). Watchdog was innocent: SKIP logged at 18:15Z and 18:20Z immediately before enforcer fired at 18:21Z.
+
+COO's watchdog/IAM hypothesis applied to v3 (killed at 18:44Z, 2 min after v1.7.11 BronzeModemarkerAccess applied — IAM propagation race) but not to v4.
+
+chunks_done=0 was expected behavior: orchestrator only writes S3 progress after a full dim completes; first chunk alone (90d × 305 clients at 0.67 RPS) takes ~11h.
+
+### Fixes Applied
+
+1. **enforcer-v1.0.1**: `EXCLUDED_INSTANCES = "i-083ad9ae297f88e9f"` — Terraform updated (`infra/aws/lambda/ec2-auto-shutdown-enforcer/main.tf`), 0-diff apply confirmed, commit `55c162b08`, tag `enforcer-v1.0.1`, pushed.
+2. **JWT refresh**: inf-jwt-trigger invoked 18:57Z, new JWT issued 18:57Z, expires 04:58Z tomorrow.
+3. **RCA delivered to COO + v5 GO received**: MCP at 18:59Z, COO authorized v5 at 19:00Z.
+
+### Wave B v5 Dispatch — 20260501T190639Z
+
+- EC2 i-083ad9ae297f88e9f started 19:00Z
+- SSM CommandId: 45a448bb-4de0-4459-b9eb-affc7672ea63 — Status: SUCCESS
+- CYCLE_ID: 2f0abf97-249e-40d8-894a-c464578adbf4
+- PID (orchestrator): 2372
+- PID (positions_daily): 2375 — RAM 16.5% (~330MB)
+- PID (assets_v2): 2376 — RAM 16.2% (~324MB)
+- LOGFILE: /var/log/histbf_backfill_20260501T190639Z.log
+
+All 7 MATCH gates passed. Mode marker written by dispatch script (BronzeModemarkerAccess v1.7.11 confirmed working — EC2 role successfully wrote to S3 during dispatch).
+
+### Post-Dispatch Confirms (19:12Z)
+
+- Watchdog SKIP at 19:11:32Z: "SKIP: bronze process running (stamped last-sighting)"
+- Enforcer: 0 StopInstances events since 19:00Z — exclusion working
+- Progress JSON: s3://opal-data-inf/orion/backfill_progress_2f0abf97-249e-40d8-894a-c464578adbf4.json
+
+**Incident — Double dispatch**: Found 2 concurrent orchestrators (2a0c2a94 + 2f0abf97) at 19:12Z. Killed 2a0c2a94 (PIDs 2316/2325/2326) to prevent API rate doubling. Origin of 2a0c2a94 unknown — notified AE 0.7.0.
+
+RAVC4 sent to COO at 19:13Z. Wave C authorization requested.
+
+---
+
 ## Open Items (carried forward)
 
 | Item | Owner | Status |
 |---|---|---|
-| HISTBF.003 Wave B v3 monitoring | AE 0.6.1 | IN FLIGHT — CYCLE_ID 56b947d9; check CW + S3 progress; ~125h projected |
-| ORIAPI Phase 1 close | COO | Requested via RAVC4 (prior session) |
-| INFGRD.003 silver rebuild + gold chain | AE 0.6.1 | Open (DIAGFIX wave still in progress) |
+| HISTBF.003 Wave B v5 | AE 0.6.1 | IN FLIGHT — CYCLE_ID 2f0abf97; projected completion ~2026-05-07T00:00Z (~125h) |
+| HISTBF.003 Wave C (silver .004/.005/.006) | COO | Pending Wave B RAVC4 |
+| INFSHIP.A2 Track 1 | Andrew | Requires Andrew to initiate 24h+ Orion UI asset export for HAR capture |
 | INFSHIP.A2 Phase 0a | AE 0.6.1 | IN PROGRESS — Track 2 patch sent to DS~D via MCP; Track 1 needs Andrew HAR capture |
