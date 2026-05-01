@@ -6,9 +6,10 @@
   "prds": [
     {"path": "docs/architecture/TRSB_PATHFIX_PRD.md", "label": "TRSB Path Mismatch + SES Reconciliation PRD v1", "date": "2026-04-27"}
   ],
-  "status": "active",
-  "phase": "Phase 1 — **TO-1 COMPLETE 2026-04-27** (AE 0.7.0: 12 routes live with CUSTOM+naqxlm auth, Lambda perms on 4 Lambdas, comp-routes 23 behaviors stable, tag `trade-pipeline-v1.6.0`; status flip 2026-04-29 during AE TO sweep). **TO-3 COMPLETE-AS-SANDBOX-FINAL 2026-04-30** (Andrew ruling: 'sandbox mode is fine, we don't really need to involve external parties at this stage') — all 9 spec emails verified in SES, BROKERAGE_EMAILS override routes externals to andrew@; W3 closed without prod-access submission. **TO-2 AMENDED + GO 2026-04-30** (CTO per Andrew directive 'full send, no disruption since trade ops not started'): dual-write window dropped, categorical clean cutover — single commit removes 'authorizers' from DDB + Lambda code, ships at `trade-pipeline-v1.8.0` (v1.7.0 consumed by TFIMPT.W3 on 2026-04-29). 2 COMPLETE / 1 PENDING (DT 0.3 dispatch in flight). TO-4 firm-scoping-backend remains DRAFT (separate scope, not in current sweep).",
-  "blocking": "TO-2 DT 0.3.0 ship + RAVC4 — last open AC for project closure. On RAVC4: project closeable via 3-step atomic close (JSON status → complete + REGISTRY row move + PRD note). TO-4 carries forward as separate Phase 2 (firm-scoping) if/when Andrew prioritizes.",
+  "status": "complete",
+  "completed": "2026-05-01",
+  "phase": "**Phase 1 COMPLETE 2026-05-01. All 3 TOs shipped.** TO-1 COMPLETE 2026-04-27 (AE 0.7.0: 12 API GW routes live, tag `trade-pipeline-v1.6.0`). TO-3 COMPLETE-AS-SANDBOX-FINAL 2026-04-30 (Andrew ruling: sandbox mode final; all 9 SES emails verified). **TO-2 COMPLETE 2026-05-01** (DT 0.3.0: commit `f88dd6edb` categorical clean cutover — 'authorizers' removed from DDB + Lambda; 7→9 rows; no dual-write; tag `trade-pipeline-v1.8.0`; session log `2f3b961d1`). COO 3-step atomic close 2026-05-01 per ADHC_WAVPLN Wave 1. TO-4 firm-scoping-backend deferred as standalone Phase 2 if/when Andrew prioritizes.",
+  "blocking": "None — all Phase 1 TOs complete. TO-4 firm-scoping-backend DRAFT deferred.",
   "created": "2026-04-27",
   "pods": ["0.3", "0.7"],
   "pipeline": "trade-pipeline",
