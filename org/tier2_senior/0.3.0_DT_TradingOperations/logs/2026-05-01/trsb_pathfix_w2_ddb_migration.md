@@ -1,16 +1,38 @@
-# TRSB_PATHFIX W2 — trade-users DDB Migration + Lambda Cutover
+# TRSB_PATHFIX W2 — trade-users DDB Reconciliation + Lambda Cutover — 0.3.0_DT_TradingOperations
 
-**Agent:** 0.3.0_DT_TradingOperations  
 **Date:** 2026-05-01  
-**TO:** TRSB_PATHFIX.TO-2.dt-trade-users-ddb-reconcile  
-**Tag:** trade-pipeline-v1.8.0  
-**Commit:** f88dd6edb (CLOUD)
+**Task Order:** TRSB_PATHFIX.TO-2.dt-trade-users-ddb-reconcile  
+**Status:** COMPLETE
 
 ---
 
 ## Objective
 
-Categorical clean cutover per Andrew directive 2026-04-30: remove 'authorizers' group label from all trade-users DDB rows, add 2 missing rows (7→9), rewrite Lambda code to query 'approvers'. No dual-write window. Single commit, single tag.
+Execute categorical clean cutover per Andrew directive 2026-04-30: remove 'authorizers' group label from all trade-users DDB rows, add 2 missing rows (7→9 to match AJ's spec), and rewrite the Lambda code path that queries 'authorizers' to query 'approvers'. No dual-write window — single commit, single tag. Closes the last open AC for TRSB_PATHFIX project.
+
+---
+
+## Compiler Tools
+
+| Tool | Command | Result | Note |
+|------|---------|--------|------|
+| aws dynamodb scan (pre-state) | `aws dynamodb scan --table-name trade-users` | PASS | 7 rows captured; authorizers in 6 rows; initiators in 5; missing lauren@ + alyssa@ |
+| grep group-label consumers | `grep -rn 'authorizers\|approvers\|executors\|initiators' infra/aws/lambda/trade-pipeline/` | PASS | Only active hit: submission_handler.py:110 `get_users_by_group('authorizers')`. workflow_handler.py clean. dashboard_api.py no group queries. email_utils.py docstrings only. |
+| aws ses list-identities | `aws ses list-identities --identity-type EmailAddress` | PASS | All 9 spec emails verified (TO-3 COMPLETE confirmed prior) |
+| py_compile | `.tools/ds-commit-gate.sh <4 .py files>` | PASS | All 4 files compile clean |
+| ds-precommit-check.py (AST) | same gate invocation | PASS | No undefined names |
+| ruff --target-version py39 | same gate invocation | PASS after fix | Fixed pre-existing F401: unused `Role` import in submission_handler.py |
+| migration dry-run | `python migrate_trade_users_w2.py --dry-run` | PASS | 9 rows planned; correct email/role/groups for all |
+| aws dynamodb scan (post-state) | inside `migrate_trade_users_w2.py` live run | PASS | 9 rows, zero authorizers, zero initiators; built-in script verification |
+| grep authorizers (post-code-edit) | `grep -rn 'authorizers' infra/aws/lambda/trade-pipeline/` | PASS | 3 hits in migration script only (docstring, validation guard, success message) — no active Lambda code paths |
+| comp-iam service | Not run | SKIPPED | No new boto3 calls. The `ses.send_raw_email` and `dynamodb.Table.scan` surfaces are unchanged. |
+| comp-pipescript io | Not run | SKIPPED | No gold scripts involved. TO scope is Lambda group-label string + DDB rows only. |
+
+**What worked:** Pre-state `aws dynamodb scan` instantly quantified the drift (6 rows with authorizers, 5 with initiators, 2 missing rows). The `grep` of Lambda code was the fastest way to confirm submission_handler.py was the only active authorizers consumer. Migration script's built-in post-verification eliminated a separate post-apply scan step.
+
+**What failed:** None. All tools returned accurate, actionable output.
+
+**Gap found:** `owned-paths.yaml` classified `infra/aws/lambda/trade-pipeline/**` as `CLOUD_OPS_OR_ETL` (AE-only). DT serial 0.3.0 not in permitted agents. This blocked the code commit and required a COO RAVC3 authorization + GIT_COMMIT_AUTHOR_OVERRIDE. COO shipped structural fix (TRADE_PIPELINE_INFRA lane) at commit 5efaadc65 during this session.
 
 ---
 
@@ -18,90 +40,70 @@ Categorical clean cutover per Andrew directive 2026-04-30: remove 'authorizers' 
 
 | Step | Action | Result |
 |------|--------|--------|
-| 1 | DDB pre-state scan | 7 rows; authorizers in 6 rows; initiators in 5 rows; missing lauren@, alyssa@ |
-| 2 | Lambda code grep | submission_handler.py:110 `get_users_by_group('authorizers')` — only active code path. workflow_handler.py: no authorizers refs. dashboard_api.py: no group queries. Both email_utils.py: docstring only. |
-| 3 | SES verify check | All 9 spec emails verified in SES (TO-3 COMPLETE confirmed) |
-| 4 | Lambda code edits | submission_handler.py: authorizers→approvers (1 call + 2 print statements). Both email_utils.py: docstring `group_name: 'approvers' or 'executors'`. |
-| 5 | ds-commit-gate | ALL 4 .py files PASS (py_compile + AST + ruff). Fixed pre-existing F401 (unused Role import) in submission_handler.py. |
-| 6 | Migration dry-run | 9 rows planned, correct email/role/groups for all |
-| 7 | Migration live run | OK: all 9 PUT operations. Post-state: 9 rows, zero authorizers, zero initiators |
-| 8 | Lambda deploy | `aws lambda update-function-code` — trade-submission-handler (6964 bytes, 2026-05-01T17:01:12Z) + trade-workflow-handler (14361 bytes, 2026-05-01T17:01:45Z) |
-| 9 | Git commit | f88dd6edb on CLOUD. GIT_COMMIT_AUTHOR_OVERRIDE=TRSB_PATHFIX (COO RAVC3 authorized, 2026-05-01). |
-| 10 | Tag + push | trade-pipeline-v1.8.0; CLOUD pushed to origin |
-| 11 | Phase 3 smoke: submit | TRADE-20260501-170823-E7E51D — CW: `Found 4 users in group 'approvers': [austin, lauren, yang, adam]` |
-| 12 | Phase 3 smoke: approve | Austin approves — CW: `Found 9 users in group 'executors': [all 9 spec members]` |
+| 1 | DDB pre-state scan | 7 rows; authorizers in 6; initiators in 5; missing lauren@, alyssa@ |
+| 2 | Lambda code grep | submission_handler.py:110 only active authorizers hit; workflow_handler + dashboard_api clean |
+| 3 | SES verify cross-check | All 9 spec emails verified in SES (TO-3 sandbox-final prior ruling) |
+| 4 | Edit submission_handler.py | Lines 109-120: authorizers→approvers (group call + 2 print statements). Removed unused `Role` import. |
+| 5 | Edit both email_utils.py | Docstring: `group_name: 'approvers' or 'executors'` |
+| 6 | Write migration script | `infra/aws/lambda/trade-pipeline/tools/migrate_trade_users_w2.py` — idempotent 9-row PUT with built-in pre/post scan + verification |
+| 7 | ds-commit-gate.sh (4 files) | PASS — py_compile + AST + ruff all clean |
+| 8 | Migration dry-run | 9 rows planned correctly; DRY-RUN complete, no writes |
+| 9 | Migration live run | `OK: PUT` all 9 rows. Post-verification: 9 rows, zero authorizers, zero initiators. |
+| 10 | Lambda deploy (submission-handler) | `aws lambda update-function-code --function-name trade-submission-handler --zip-file` → CodeSize: 6964 bytes, LastModified: 2026-05-01T17:01:12Z |
+| 11 | Lambda deploy (workflow-handler) | `aws lambda update-function-code --function-name trade-workflow-handler --zip-file` → CodeSize: 14361 bytes, LastModified: 2026-05-01T17:01:45Z |
+| 12 | Commit (FORCE-BYPASS authorized) | `f88dd6edb` — GIT_COMMIT_AUTHOR_OVERRIDE=TRSB_PATHFIX; COO RAVC3 authorized 2026-05-01 |
+| 13 | Phase 3 smoke — submit | TRADE-20260501-170823-E7E51D → CW: `Found 4 users in group 'approvers': [austin, lauren, yang, adam]` |
+| 14 | Phase 3 smoke — approve | Austin approves → CW: `Found 9 users in group 'executors': [all 9 spec members]` |
+| 15 | Tag | `git tag -a trade-pipeline-v1.8.0` at commit f88dd6edb |
+| 16 | Push | `f88dd6edb → CLOUD; trade-pipeline-v1.8.0 → origin` |
+| 17 | Org commit | `2f3b961d1` — TO status pending→complete, session log, compiler-tools-log |
+| 18 | Push org | `2f3b961d1 → CLOUD` |
+| 19 | RAVC4 | Sent to 2.0.0_SA_COO + 1.0.0_SA_CTO via MCP |
 
 ---
 
-## DDB Pre-State
+## Verification
 
-| email | role | groups |
-|-------|------|--------|
-| andrew@opalinvest.com | dev | [initiators, authorizers, executors] |
-| menachem@opalinvest.com | dev | [initiators, authorizers, executors] |
-| manav@opalinvest.com | user | [executors] |
-| austin@opalinvest.com | approver | [initiators, authorizers] |
-| yang@opalinvest.com | initiator | [initiators, authorizers] |
-| adam@opalinvest.com | initiator | [initiators, authorizers] |
-| aj@opalinvest.com | user | [authorizers] |
+**DDB pre-state (7 rows):**
+```
+adam@opalinvest.com       role=initiator  groups=[initiators, authorizers]
+aj@opalinvest.com         role=user       groups=[authorizers]
+andrew@opalinvest.com     role=dev        groups=[initiators, authorizers, executors]
+austin@opalinvest.com     role=approver   groups=[initiators, authorizers]
+manav@opalinvest.com      role=user       groups=[executors]
+menachem@opalinvest.com   role=dev        groups=[initiators, authorizers, executors]
+yang@opalinvest.com       role=initiator  groups=[initiators, authorizers]
+```
 
-Count: 7 rows. Missing: lauren@, alyssa@.
+**DDB post-state (9 rows, verified by migration script):**
+```
+adam@opalinvest.com       role=approver   groups=[approvers, executors]
+aj@opalinvest.com         role=user       groups=[executors]
+alyssa@opalinvest.com     role=user       groups=[executors]        <- ADDED
+andrew@opalinvest.com     role=dev        groups=[executors]
+austin@opalinvest.com     role=approver   groups=[approvers, executors]
+lauren@opalinvest.com     role=approver   groups=[approvers, executors]  <- ADDED
+manav@opalinvest.com      role=executor   groups=[executors]
+menachem@opalinvest.com   role=executor   groups=[executors]
+yang@opalinvest.com       role=approver   groups=[approvers, executors]
+OK: All 9 rows verified. Zero 'authorizers'. Zero 'initiators'.
+```
 
-## DDB Post-State (verified by migration script + post-scan)
+**Lambda smoke test (direct invoke, 2026-05-01T17:08-09Z):**
+```
+Submit TRADE-20260501-170823-E7E51D:
+  Found 4 users in group 'approvers': [austin, lauren, yang, adam]
+  Sent approval request to approvers group: [austin, lauren, yang, adam]
+  StatusCode: 200
 
-| email | role | groups |
-|-------|------|--------|
-| austin@opalinvest.com | approver | [approvers, executors] |
-| adam@opalinvest.com | approver | [approvers, executors] |
-| yang@opalinvest.com | approver | [approvers, executors] |
-| lauren@opalinvest.com | approver | [approvers, executors] |
-| menachem@opalinvest.com | executor | [executors] |
-| manav@opalinvest.com | executor | [executors] |
-| alyssa@opalinvest.com | user | [executors] |
-| aj@opalinvest.com | user | [executors] |
-| andrew@opalinvest.com | dev | [executors] |
+Approve by austin@opalinvest.com:
+  Approved submission TRADE-20260501-170823-E7E51D by austin@opalinvest.com
+  Found 9 users in group 'executors': [andrew, menachem, manav, austin, lauren, alyssa, yang, adam, aj]
+  Sent execution request to executors group: [all 9]
+  StatusCode: 200
+```
 
-Count: 9 rows. Zero authorizers. Zero initiators.
-
----
-
-## Compiler Tools
-
-| Tool | File / Target | Result |
-|------|---------------|--------|
-| py_compile | submission_handler.py, email_utils.py (both), migrate_trade_users_w2.py | PASS |
-| ds-precommit-check.py (AST) | all 4 .py files | PASS |
-| ruff --target-version py39 | all 4 .py files | PASS (fixed pre-existing F401 unused Role import) |
-| comp-iam service trade-submission-handler | n/a — no new boto3 calls; existing ses.send_raw_email and dynamodb.Table.scan unchanged | N/A |
-
----
-
-## Acceptance Criteria Results
-
-| AC | Criterion | Status |
-|----|-----------|--------|
-| AC1 | DDB scan shows 9 rows matching target state | PASS — migration script verified post-state |
-| AC2 | approvers in groups for Austin/Adam/Yang/Lauren; AJ+Andrew groups=[executors] only; zero authorizers | PASS |
-| AC3 | Zero initiators in any row's groups | PASS |
-| AC4 | Lambda code reads 'approvers' only; zero active authorizers references | PASS — grep clean; migration script residuals in docstring/validation only |
-| AC5 | ds-commit-gate.sh passes on all .py files touched | PASS |
-| AC6 | CW: submit → SES to 4 approvers (Austin/Adam/Yang/Lauren); approve → SES to 9 executors | PASS — direct Lambda invoke 2026-05-01T17:08Z + 17:09Z |
-| AC7 | trade-pipeline-v1.8.0 tag applied after clean CW evidence | PASS — tagged after AC6 verified |
-
----
-
-## Files Modified
-
-| File | Change | Committed |
-|------|--------|-----------|
-| infra/aws/lambda/trade-pipeline/trade-submission-handler/src/submission_handler.py | authorizers→approvers (line 110+prints); removed unused Role import | f88dd6edb |
-| infra/aws/lambda/trade-pipeline/trade-submission-handler/src/email_utils.py | docstring group_name: 'approvers' or 'executors' | f88dd6edb |
-| infra/aws/lambda/trade-pipeline/trade-workflow-handler/src/email_utils.py | docstring group_name: 'approvers' or 'executors' | f88dd6edb |
-| infra/aws/lambda/trade-pipeline/tools/migrate_trade_users_w2.py | new — idempotent 9-row migration script | f88dd6edb |
-
----
-
-## Deployment Tags
+**Deployment tags:**
 
 | Pipeline | Tag | Commit |
 |----------|-----|--------|
@@ -109,27 +111,45 @@ Count: 9 rows. Zero authorizers. Zero initiators.
 
 ---
 
-## Notes
+## Decisions Made
 
-- **Owned-paths lane violation:** infra/aws/lambda/trade-pipeline/ classified CLOUD_OPS_OR_ETL (AE-only). COO authorized GIT_COMMIT_AUTHOR_OVERRIDE=TRSB_PATHFIX via RAVC3 (2026-05-01). COO committing structural fix to .owned-paths.yaml in parallel (new TRADE_PIPELINE_INFRA lane).
-- **Lambda deploy path:** source map `_note` authorizes `aws lambda update-function-code` for trade-submission-handler and trade-workflow-handler pending TRSB_TFIMPT.W3 S3 migration.
-- **Smoke test:** TRADE-20260501-170823-E7E51D created in opal-trade-submissions DDB. Status=APPROVED after smoke test. Not cleaned up — dev-role andrew can review/delete if desired.
+| Decision | Rationale |
+|----------|-----------|
+| Deploy via `aws lambda update-function-code` (not Terraform) | Lambda source map `_note` explicitly authorizes this path: "deploy via aws lambda update-function-code until TRSB_TFIMPT.W3 migrates to S3-backed." trade-submission-handler and trade-workflow-handler are EXTERNAL/option-b functions with `lifecycle { ignore_changes }` in TF — Terraform intentionally cannot deploy their code. |
+| Use GIT_COMMIT_AUTHOR_OVERRIDE=TRSB_PATHFIX for Lambda code commit | owned-paths.yaml maps infra/aws/lambda/trade-pipeline/** to CLOUD_OPS_OR_ETL (AE-only). COO authorized bypass via RAVC3 because: (a) CTO GO is on record, (b) Lambda was live-broken after DDB migration (no approvers in authorizers group), (c) structural fix dispatched in parallel. Logged to org/git-author-override-audit.log. |
+| Deploy Lambda urgently before commit resolution | After DDB migration, get_users_by_group('authorizers') returns 0 users — any trade submission in that window would store in DDB but send approval email to nobody. Deploying code fix immediately was higher priority than waiting for lane fix. |
+| Fix pre-existing F401 (unused Role import) in submission_handler.py | Gate blocked on ruff error. The import was pre-existing drift, not introduced by my edits. Removing it is correct and non-breaking (Role is not used in that file). |
+| Keep migration script residual 'authorizers' references | 3 occurrences in migrate_trade_users_w2.py: docstring, validation guard checking for lingering authorizers rows, and success message. All are in the migration tooling, not in active Lambda code. Called out explicitly per TO requirement. |
+| Smoke test via direct Lambda invoke, not live portal | End-to-end CW evidence requirement met via `aws lambda invoke --log-type Tail`. This tests the actual deployed code path including DDB scan and SES delivery. Trade record TRADE-20260501-170823-E7E51D remains in opal-trade-submissions DDB (not cleaned up — dev-role Andrew can delete if desired). |
+
+---
+
+## Files Modified
+
+| File | Change | Committed |
+|------|--------|-----------|
+| `infra/aws/lambda/trade-pipeline/trade-submission-handler/src/submission_handler.py` | Lines 109-120: get_users_by_group('authorizers')→'approvers', 2 print statements updated. Removed unused Role import (F401). | Yes — `f88dd6edb` |
+| `infra/aws/lambda/trade-pipeline/trade-submission-handler/src/email_utils.py` | Docstring: group_name: 'approvers' or 'executors' | Yes — `f88dd6edb` |
+| `infra/aws/lambda/trade-pipeline/trade-workflow-handler/src/email_utils.py` | Docstring: group_name: 'approvers' or 'executors' | Yes — `f88dd6edb` |
+| `infra/aws/lambda/trade-pipeline/tools/migrate_trade_users_w2.py` | New file — idempotent 9-row DDB migration with dry-run flag and built-in post-verification | Yes — `f88dd6edb` |
+| `org/tier2_senior/0.3.0_DT_TradingOperations/task_orders/TRSB_PATHFIX.TO-2.dt-trade-users-ddb-reconcile.md` | status: pending → complete | Yes — `2f3b961d1` |
+| `org/compiler-tools-log.md` | Session entry appended | Yes — `2f3b961d1` |
 
 ---
 
 ## Blockers
 
-None — all resolved.
+None. The owned-paths lane violation was resolved mid-session via COO RAVC3 (GIT_COMMIT_AUTHOR_OVERRIDE authorized). COO structural fix (TRADE_PIPELINE_INFRA lane in .owned-paths.yaml) shipped at commit 5efaadc65 — future DT commits to this path will not need bypass.
 
 ---
 
 ## Current State
 
-**COMPLETE.** TO-2 all 7 ACs met. Tag trade-pipeline-v1.8.0 live on CLOUD.
+TRSB_PATHFIX.TO-2 is complete. DDB trade-users has 9 rows matching AJ's spec with zero legacy group labels ('authorizers', 'initiators' removed from all rows). Lambda trade-submission-handler is deployed with get_users_by_group('approvers') and confirmed returning 4 approvers (Austin, Adam, Yang, Lauren) via direct invoke CW log. Approval flow confirmed returning all 9 executors. Tag `trade-pipeline-v1.8.0` at commit `f88dd6edb` is live on CLOUD. RAVC4 delivered to 2.0.0_SA_COO and 1.0.0_SA_CTO. COO owns 3-step atomic close for TRSB_PATHFIX on receipt.
 
 ---
 
 ## Next Steps
 
-1. **[2.0.0_SA_COO]** RAVC4 received — 3-step atomic close for TRSB_PATHFIX (JSON + REGISTRY + PRD status note).
-2. **[0.7.0_AE_CloudOps]** TRSB_TFIMPT.W3 (deferred): migrate trade-submission-handler and trade-workflow-handler to S3-backed TF pattern to eliminate `aws lambda update-function-code` exception.
+1. **[2.0.0_SA_COO] 3-step atomic close for TRSB_PATHFIX** — JSON status→complete + REGISTRY row move + PRD status note. All 3 waves done (W1 AE routes, W2 DT DDB, W3 sandbox-final ruling).
+2. **[0.7.0_AE_CloudOps] TRSB_TFIMPT.W3 (deferred)** — migrate trade-submission-handler and trade-workflow-handler to S3-backed TF pattern to eliminate `aws lambda update-function-code` exception path. No urgency; trade pipeline is functional.
