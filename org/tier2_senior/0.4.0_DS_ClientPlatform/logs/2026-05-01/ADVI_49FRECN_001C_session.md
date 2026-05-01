@@ -89,12 +89,48 @@ Silent equity fallback mechanism documented:
 Root cause per DS~B: C_03 only includes accounts with investment positions. Non-investment
 types + dormant accounts = 590 exclusions = the entire gap.
 
+## E_25 Live Results (AE 0.7.0 dispatch 2026-05-01 22:04:59Z)
+
+S3 output: `s3://opal-data-bd/gold/manifests/aua_decomposition_audit_2026-05-01.json`
+
+### AC#1 (live)
+- Opal non-cash MV: $1,619.4M / 5,909 accounts = $274.1K avg
+- Implied 49F AUA: $1,679.7M | Gap: $60.3M (3.59%)
+- Missing contribution upper bound: $160.6M (2.66x gap)
+- **CASE_A confirmed** — consistent with DS~B set-diff ($62.4M actual)
+
+### AC#2 (live) — PARTIAL
+- **Error: `firm_daily` key missing from `mix_daily_summary.json`**
+- C_06 schema may write a different top-level key. Live asset-class breakdown not obtained.
+- Framework finding stands: 3-class taxonomy (equity/fixed_income/alternatives), cash = FI, unknown = equity fallback.
+- Flag for follow-up: verify `mix_daily_summary.json` schema vs E_25 expected key `firm_daily`.
+
+### AC#3 (live)
+| Metric | Value |
+|--------|-------|
+| Total unique pairs | 3,366 |
+| Unknown pairs (ticker='') | 65 |
+| Unknown market value | $9.47M |
+| Unknown % of total MV | **0.57%** |
+| B_01b watermark | 2026-04-29 (6 new securities classified, 0 errors) |
+
+- 0.57% < 2% threshold: **no B_01b escalation needed**
+- Top unknowns are institutional share classes with empty tickers (QQQ, SPDR, Vanguard institutional lots, Blackstone REIT)
+- These inflate equity AUA by ~$9.5M but do not explain the 3.59% total gap (CASE_A does)
+
+### AC#4 (live)
+- `has_load_open_account_ids`: true | `has_compute_account_end_dates`: true | `has_open_account_ids_param`: true
+- **FIX_PRESENT in deployed S3 code** (stronger than static analysis of local source)
+
+### Post-dispatch fix
+- AE flagged: E_25 raised ImportError when run from `/tmp/gold_layer_scripts/` (lib/ not adjacent)
+- Fix: added `sys.path` fallback to `/home/ubuntu/gold-layer/scripts` when `lib/` not found at `__file__` parent
+- Committed: `02c8de3c6` | Re-uploaded to S3
+
 ## Open Items
 
-1. **AC#2 live values** — awaiting E_25 EC2 dispatch (reads mix_daily_summary.json)
-2. **AC#3 unknown count** — awaiting E_25 EC2 dispatch
-3. **AC#5** — COMPLETE per CASE_A confirmation (no residual gap on matched accounts)
-4. **E_25 dispatch** — DT/AE to run: `python3 E_25.aua_decomposition_audit.py --upload`
+1. **AC#2 schema gap** — `mix_daily_summary.json` `firm_daily` key missing; verify C_06 output schema (informational, does not block 001C closeout)
+2. **All other ACs**: COMPLETE
 
 ---
 
