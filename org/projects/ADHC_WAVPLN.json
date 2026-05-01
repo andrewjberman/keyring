@@ -4,9 +4,10 @@
   "name": "Consolidated Wave Execution Plan — All Active Projects",
   "description": "CTO thread orchestration to enumerate all active projects with unaddressed TOs, map inter-project dependencies, and produce a consolidated wave execution plan. COO receives thread deliverable and decomposes into parallelized agent waves (DS~A/~B/~C/~D tilde-lane serialization where applicable). Scope: HISTBF, JWTRES, ORIAPI, INFLEC, ROLLUP, CLCOMM, OWNPTH, PATHFIX, and any additional projects surfaced by CTO analysis. Goal: close all active projects in one coordinated sequence.",
   "prds": [],
-  "status": "active",
-  "phase": "Phase 0 — CTO thread orchestration in flight 2026-05-01. Holding for thread deliverable. COO to receive, review, and decompose into wave TOs.",
-  "blocking": "CTO thread result. Andrew to alert COO on completion.",
+  "status": "complete",
+  "completed": "2026-05-01",
+  "phase": "**COMPLETE 2026-05-01.** Thread ADHC_WAVPLN-001 converged (COO turn 3 `converge` signal). Dispatch plan committed + accepted. Wave 1 dispatched same-day (3 live agents: AE 0.6.1, DT 0.3.0, AE 0.5.0). Wave 1 closures: ADVI_ORIAPI ✓, ADHC_CLCOMM ✓, ADHC_OWNPTH ✓, TRSB_PATHFIX ✓. In-flight: ADVI_HISTBF.003 Wave B bronze, ADVI_INFLV2 Andrew sign-off pending, ADVI_INFSHIP.A2 Phase 0a, JWTRES.002 gated. Ongoing work tracked in individual project JSONs. COO 3-step atomic close per thread exec-only action.",
+  "blocking": "None — planning phase complete. Execution tracked in individual project JSONs.",
   "created": "2026-05-01",
   "pods": [
     "0.4",
