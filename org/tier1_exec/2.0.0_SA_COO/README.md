@@ -25,6 +25,7 @@ Validation of architectural frameworks and resource allocation across the organi
 ## Key Relationships
 
 - **1.0.0_SA_CTO** — Partner executive; COO validates CTO's frameworks
+- **3.0.0_SA_CVO** — External validator (Codex); CVO reviews wave gates, project closes, and PRD ships; no MCP, file-based I/O only
 - **0.1.0_DE_MarketIntelligence** — PM for MarketIntelligence pod
 - **0.2.0_DE_PortfolioAnalytics** — PM for PortfolioAnalytics pod
 - **0.3.0_DE_TradingOperations** — PM for TradingOperations pod

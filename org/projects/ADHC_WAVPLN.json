@@ -8,12 +8,31 @@
   "phase": "Phase 0 — CTO thread orchestration in flight 2026-05-01. Holding for thread deliverable. COO to receive, review, and decompose into wave TOs.",
   "blocking": "CTO thread result. Andrew to alert COO on completion.",
   "created": "2026-05-01",
-  "pods": ["0.4", "0.6", "0.7", "0.3", "both_execs"],
+  "pods": [
+    "0.4",
+    "0.6",
+    "0.7",
+    "0.3",
+    "both_execs"
+  ],
   "pipeline": "cross-pipeline",
   "lanes": [],
   "lane_note": "Wave assignments TBD from CTO thread deliverable. Likely includes DS~A/~B/~C/~D tilde lanes for parallel DS work, AE 0.6.1 base + tilde lanes, DT 0.3.0 or 0.4.0 for PATHFIX.",
   "depends_on": [],
   "depends_on_note": "This project IS the dependency-mapping exercise. All other active projects are inputs.",
-  "thread_counter": 0,
-  "threads": []
+  "thread_counter": 1,
+  "threads": [
+    {
+      "serial": "ADHC_WAVPLN-001",
+      "thread_id": "ADHC_WAVPLN-001-wave-sequencing-and-agent-dispatch-plan",
+      "topic": "Wave sequencing and agent dispatch plan across all active projects",
+      "participants": [
+        "1.0.0_SA_CTO",
+        "2.0.0_SA_COO"
+      ],
+      "pattern": "unset",
+      "status": "active",
+      "date": "2026-05-01"
+    }
+  ]
 }

@@ -72,6 +72,7 @@ task_orders/ directory and surfaces the mismatch.
 ## Key Relationships
 
 - **2.0.0_SA_COO** — Partner executive; COO validates CTO's frameworks and allocates resources
+- **3.0.0_SA_CVO** — External validator (Codex); CVO reviews wave gates, project closes, and PRD ships; no MCP, file-based I/O only
 - **0.X.0_DE_**** — Dashboard Engineer PMs; receive architectural direction
 - **0.X.0_AE_**** — AWS Engineers; receive infrastructure architecture direction
 

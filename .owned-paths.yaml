@@ -316,6 +316,10 @@ paths:
     lane: COMP_LEARNS
     note: "COMP_LEARNS COO home — TOs, session logs"
 
+  "org/tier1_exec/3.0.0_SA_CVO/**":
+    lane: BASE_EXEC
+    note: "Workspace-wide CVO home — inbox, responses, templates; spawned by COO 2026-05-01 (ADHC_WAVPLN prep)"
+
   "org/tier1_exec/3.1.0_SA_CVO/**":
     lane: COMP_LEARNS
     note: "COMP_LEARNS CVO home — responses, reviews"

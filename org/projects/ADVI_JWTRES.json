@@ -9,7 +9,7 @@
   ],
   "status": "active",
   "phase": "**Phase 1 Option A LIVE 2026-04-30.** JWTRES.001 (DS `81a7a5684` — jwt_freshness.py assert_fresh_or_exit() in bronze orchestrator) COMPLETE. JWTRES.001b (AE 0.6.1 — orchestrator wiring + CW alarm + IAM) COMPLETE (RAVC4 `20260430T164744Z`). Pre-flight freshness check live in bronze orchestrator; HISTBF Phase 1 bronze backfill running with JWT gate active. Option B (async auto-recovery via Lambda invoke + poll, 3-5d AE 0.7) sequencing TBD post Option A production validation window. Option C deferred indefinitely (off-the-books, no Orion support contact). Andrew rulings locked 2026-04-30 PM: standalone project; Option A → validate → Option B; Option C deferred.",
-  "blocking": "Option B sequencing: wait for Option A production validation window (HISTBF Phase 1 bronze backfill run provides real-world exercise of jwt_freshness gate). COO to author JWTRES.002 Option B TO when Andrew signals validation window sufficient.",
+  "blocking": "Option A live and under real-world validation via HISTBF backfill. JWTRES.002 Option B TO to be authored when: (1) HISTBF.003 RAVC4 clean, (2) jwt_freshness.py empirical pass confirmed, (3) Andrew GO.",
   "created": "2026-04-30",
   "pods": ["0.6", "0.7"],
   "pipeline": "inf-pipeline + bronze-layer",
