@@ -2168,3 +2168,4 @@ Total: 2 PASS, 131 WARN, 133 PRDs scanned.
 | 2026-04-30 | 0.4.0_DS_ClientPlatform~A | (no-TO) | comp-trace | comp-trace D_04 --direction downstream | PASS |
 | 2026-04-30 | 0.4.0_DS_ClientPlatform~A | (no-TO) | comp-pipescript | comp-pipescript io INF_D_04 | PASS |
 | 2026-04-30 | 0.4.0_DS_ClientPlatform~A | (no-TO) | comp-validate | comp-validate D_04 --artifact /tmp/cohort_a_summary.json | PASS |
+| 2026-05-01 | 0.3.0_DT_TradingOperations | TRSB_PATHFIX.TO-2 | py_compile+AST+ruff on 4 .py files: PASS. Fixed F401 unused Role. No comp-iam (no new boto3). Migration verified via DDB scan. CW smoke test: 4 approvers + 9 executors PASS. |
