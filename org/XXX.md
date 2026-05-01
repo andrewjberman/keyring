@@ -99,22 +99,21 @@ the agent is deaf for the rest of the session. Incident: 0.6.0_AE 2026-04-20.
 `1.1.0_SA_CTO`, `1.1.0`/`1.2.0`/`1.3.0`/`1.4.0_DS_CompLearns`,
 `2.1.0_SA_COO`, `2.1.0_SC_CompLearns`): launching `inbox-watch` via the
 `ajb_workspace`-rooted wrapper or any path whose cmdline contains
-`ajb_workspace`.** Use the feature_clb-rooted absolute path:
+`ajb_workspace`.** CL-channel agents use `cl-inbox-watch.sh` (isolated CL channel),
+not the generic `inbox-watch.sh`. Use the feature_clb-rooted absolute path:
 ```bash
 # Bash tool, run_in_background: true, NO &
-bash /c/Users/AndrewBerman/Desktop/feature_clb/org/mcp/inbox-watch.sh {your_serial}
+bash /c/Users/AndrewBerman/Desktop/feature_clb/org/mcp/cl-inbox-watch.sh {your_serial}
 ```
-**Why:** `kill-orphans` (run by the workspace-global PostToolUse hook on the
-`ajb_workspace` side post ADHC_PUSHFIX.001 ship `a27fdf831`) reads only
-`ajb_workspace/org/mcp/liveness.json` and applies a `cmdline contains
-$WORKSPACE` filter. A feature_clb-registered serial is stale-by-default to
-that scan because its liveness lives in feature_clb's file. If the watcher
-cmdline matches `ajb_workspace`, the scan classifies the watcher stale and
-kills it mid-session. Using the feature_clb-rooted path keeps the cmdline
-outside the `ajb_workspace` filter — `kill-orphans` skips it cleanly.
-Surfaced 2026-04-29 by AE 0.7.0 during PUSHFIX.001+.002 canary planning
-(would have killed `1.4.0_DS_CompLearns` PID 92240). Full architectural
-detail: `docs/architecture/ADHC_PUSHFIX.md` §4.3.
+**Why:** (1) `cl-inbox-watch.sh` watches `feature_clb/org/mcp/cl_inbox/` — the CL
+channel inbox. The generic `inbox-watch.sh` watches `ajb_workspace/org/mcp/inbox/`
+and will never fire for CL-channel messages. (2) `kill-orphans` (run by the
+workspace-global PostToolUse hook on the `ajb_workspace` side post ADHC_PUSHFIX.001
+`a27fdf831`) reads only `ajb_workspace/org/mcp/liveness.json` and applies a
+`cmdline contains $WORKSPACE` filter. If the watcher cmdline matches `ajb_workspace`,
+the scan classifies the watcher stale and kills it mid-session. The feature_clb-rooted
+path keeps the cmdline outside that filter. Surfaced 2026-04-29 by AE 0.7.0.
+Full cross-channel architecture: `docs/architecture/AGENT_COMMS_ARCHITECTURE.md`.
 
 **When you get a watcher-exit task-notification, that IS the signal that a new
 message arrived.** Your required response:
