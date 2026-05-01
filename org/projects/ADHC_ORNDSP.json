@@ -1,0 +1,15 @@
+{
+  "project_code": "ADHC_ORNDSP",
+  "macro_code": "ADHC",
+  "name": "Orion Dispatch Ergonomics",
+  "description": "Operational flag improvements to data/orion/scripts/gold/orion-gold-dispatch.sh — idempotent re-runs, date override, backfill safety. Ergonomic gaps surfaced by AE 0.7.0 during HISTBF + INFLEC gold operations. No PRD (operator-flagged quality-of-life tooling).",
+  "prds": [],
+  "status": "active",
+  "phase": "**Phase 1 — TO-001 COMPLETE 2026-05-01.** --run-date flag (prior session 2026-04-30, commit e44ce27ce). --skip-existing flag (`46ee0ca51` AE 0.7.0 2026-05-01): per-script S3 marker at gold/artifacts/{SCRIPT_ID}/{RUN_DATE}; SKIP on marker present, run normally + write marker on absence; BG re-invoke forwards flag; AC1-AC5 PASS. S3 MATCH (ETag e50b303a). Potential future TOs for additional dispatch-layer flags as operational needs surface.",
+  "blocking": "None.",
+  "created": "2026-05-01",
+  "pods": ["0.7"],
+  "pipeline": "orion-gold",
+  "thread_counter": 0,
+  "threads": []
+}
