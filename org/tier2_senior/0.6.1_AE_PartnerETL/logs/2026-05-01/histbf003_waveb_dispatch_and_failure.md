@@ -144,11 +144,67 @@ RAVC4 sent to DS (20260501T171145Z) + COO (20260501T171156Z).
 
 ---
 
+---
+
+## Wave B v2 Failure + IAM Fix + Wave B v3 Dispatch (session continuation post-context-compaction)
+
+**Timestamp:** 2026-05-01T17:30:00Z onwards
+
+### Wave B v2 Root Cause (CYCLE_ID 4558ff63-5cd2-4eec-a3e4-7b575e74d319)
+
+ALL chunks for ALL 4 dims failed immediately with:
+```
+AccessDenied: GetObject on silver/api_dims/household_rep_mapping/snapshot_date=2026-04-29/data.parquet
+```
+
+Log evidence:
+```
+[pull_inflection_positions_daily.py] jwt loaded: issued=2026-05-01T12:13:30.000Z expires=...
+[pull_inflection_positions_daily.py] Loading clientIds from household_rep_mapping: s3://opal-data-inf/silver/api_dims/household_rep_mapping/snapshot_date=2026-04-29/data.parquet
+[orchestrator] [positions_mv] chunk 2020-05-26..2020-08-23 FAIL exit=1 elapsed=2.6s err=AccessDenied
+```
+
+JWT load SUCCEEDED. Failure was at clientId filter load — `silver/api_dims/household_rep_mapping/*` was not in any IAM SID on `inf-bronze-runner-ec2-role`.
+
+### IAM Fix Applied — inf-pipeline-v1.7.10
+
+Added two IAM changes to `infra/aws/terraform/inf-pipeline/inf-bronze-runner.tf`:
+
+1. New `ReadSilverInputDims` SID:
+   - `s3:GetObject`, `s3:HeadObject` on `arn:aws:s3:::opal-data-inf/silver/api_dims/household_rep_mapping/*`
+   - `s3:GetObject`, `s3:HeadObject` on `arn:aws:s3:::opal-data-inf/silver/api_dims/household/*`
+
+2. Added `arn:aws:s3:::opal-data-inf/orion/rate_limit_state_*` to `WriteBronze` SID (secondary preemptive gap — rate limiter state files also missing)
+
+Terraform apply: 0 added, 1 changed, 0 destroyed.
+Git commit: 25b6e7f3a
+Tag: inf-pipeline-v1.7.10
+CHANGELOG.json: 215f69284
+Pushed: `--follow-tags` confirmed (new tag pushed to origin).
+
+### Wave B v3 Dispatch (CYCLE_ID 56b947d9-c82a-43ea-8f85-7db8f0e5354d)
+
+- EC2 i-083ad9ae297f88e9f started: 2026-05-01T17:42Z
+- SSM CommandId: 4d9e2cd0-9e8a-4938-95f2-2f73a4cc5998 (Status: Success)
+- PID: 2744
+- LOGFILE: /var/log/histbf_backfill_20260501T174251Z.log
+- All 7 files synced from S3
+
+IAM fix confirmed working:
+- PIDs 2748/2749 (pull_inflection_assets_v2.py + pull_inflection_positions_daily.py) running with 179-180MB RAM each
+- Large RAM = household_rep_mapping parquet loaded successfully (AccessDenied would crash at 2-3s, not reach this state)
+- No FAIL lines in log after 3+ minutes (vs immediate failure in v2)
+- Progress JSON: `s3://opal-data-inf/orion/backfill_progress_56b947d9-c82a-43ea-8f85-7db8f0e5354d.json`
+
+Note: Daily orchestrator (PID 2653) + daily assets pull (PID 2705) also running on EC2 — normal boot behavior, different scripts/S3 paths, no conflict with backfill.
+
+---
+
 ## Open Items (carried forward)
 
 | Item | Owner | Status |
 |---|---|---|
-| HISTBF.003 Wave B monitoring | AE 0.6.1 | IN FLIGHT — CYCLE_ID 4558ff63; check CW + S3 progress |
-| ORIAPI Phase 1 close | COO | Requested via RAVC4 |
+| HISTBF.003 Wave B v3 monitoring | AE 0.6.1 | IN FLIGHT — CYCLE_ID 56b947d9; check CW + S3 progress; ~125h projected |
+| ORIAPI Phase 1 close | COO | Requested via RAVC4 (prior session) |
 | INFGRD.003 silver rebuild + gold chain | AE 0.6.1 | Open (DIAGFIX wave still in progress) |
-| INFSHIP.A2 Phase 0a | AE 0.6.1 | IN PROGRESS — Track 2 batch probe scripting; Track 1 needs Andrew HAR capture |
+| INFSHIP.A2 Phase 0a | AE 0.6.1 | IN PROGRESS — Track 2 patch sent to DS~D via MCP; Track 1 needs Andrew HAR capture |
