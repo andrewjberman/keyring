@@ -3,7 +3,7 @@
 **Agent:** 0.4.0_DS_ClientPlatform~B
 **Date:** 2026-05-04
 **Task Order:** ADVI_49FRECN.003
-**Status:** HANDED OFF TO DS~C — Andrew directive 2026-05-04. DS~B fix commits (e66898a64 + 386456223 + 76a3a9418 + 76a3a9418) remain attributed to DS~B. DS~C owns RAVC4 + TO close. Chain QA re-dispatch to AE redirected to DS~C.
+**Status:** COMPLETE — ADVI_49FRECN CLOSED `814353eee` 2026-05-04T17:35Z. DS~B fix commits ratified; DS~C Option A detection fix (`99664e778`) + QA pass + RAVC3 + project close executed.
 
 ---
 
@@ -187,14 +187,131 @@ CTO will add C1c as Bandaid 3 if/when C1c trigger fires.
 
 ---
 
-## Next Steps
+---
 
-[AE 0.7] Chain re-dispatch — bd-gold-qa-runner --chain downstream from B_00 (rebuilds canonical_holdings + positions_cube with BFIX3/Option B, then D_04)
-  - Chain re-dispatch request sent 20260504T123241Z
-  - Expected: total_recovered_count ~58-73, excluded_c1_count ~2-4
-[DS~B] On QA PASS: RAVC4 to CTO + COO with:
-  - D_04 commit refs (e66898a64 + 386456223) + B_00 (9fde23538) + A_03 (e09cb806b) + standing backlog (33e1ccaa0)
-  - c1_recovered_accounts.json S3 ETag + total_recovered_count + total_recovered_aua
-  - QA run-id
-  - AUA recon (~$1,720M firm AUA expected)
-[DS~B] Mark TO complete on RAVC4 sent
+## DS~C Close-Out (2026-05-04, inherited from DS~B)
+
+**Agent:** 0.4.0_DS_ClientPlatform~C
+**Handoff received:** 20260504T~170000Z (COO GO via inbox)
+**Project close:** ADVI_49FRECN CLOSED `814353eee` 20260504T173506Z
+
+---
+
+### Chain QA Investigation (inherited state from DS~B)
+
+Chain run cc09f9a8 completed 20260504T16:43Z. Results inherited:
+
+| Metric | Value |
+|--------|-------|
+| c1_recovered_accounts.json total_recovered_count | 0 |
+| out_of_scope_accounts.json excluded_c1_count | 58 |
+| excluded_c1_aua | $56,801,374 |
+| firm_composition.json total_market_value | $1,683,701,127.96 |
+| gold_total_accounts | 6,106 |
+
+**Root cause confirmed (DS~B empirical brief 20260504T172601Z):** BFIX3 re-injection events fired in B_00 but the 58 C1 RECONCILE_DROP accounts hit `bd_df units>0` pre-filter BEFORE BFIX3 injection path — never entered canonical_holdings parquet. canonical_holdings = 6,106 accounts (same as account_performance). The prior `first_seen_gold >= _C1_FIX_DATE` heuristic in D_04 was masking this via false logic.
+
+---
+
+### Option A: Sidecar Detection Fix
+
+**Problem:** D_04 `build_c1_recovered_accounts()` used `first_seen_in_gold >= _C1_FIX_DATE` heuristic. BFIX3-rescued RETURNING accounts have prior gold history (first_seen_gold < fix date) → sidecar returns 0 even if canonical_holdings had rescues. Additionally, the filter gated on `account_performance` membership, missing the canonical_holdings-only case.
+
+**Fix (commit `99664e778`):** Replaced 3-block detection logic:
+- Remove `first_seen_df`/`recently_added_ids` heuristic
+- Load canonical_holdings early: `ch_account_ids = set(ch_df['account_id'].unique())`
+- New detection: `C1 ∩ canonical_holdings − account_performance at snapshot_date`
+- Fallback to old heuristic if canonical_holdings unavailable
+- ch_df reused for mechanism detection (eliminates duplicate S3 read)
+
+**Pre-commit gate:** py_compile PASS | AST PASS | ruff PASS
+
+**Deploy cycle:**
+
+| Step | Result |
+|------|--------|
+| ds-commit-gate | PASS |
+| Commit | `99664e778` — author `0.4.0_DS_ClientPlatform_C` |
+| Push | CLOUD `2963bb3be..99664e778` |
+| S3 upload | s3://opal-data-bd/code/gold/D_04.client_portal_summary.py (153.4 KiB) ETag `9c3b3b8198997bdbd120cb776624365e` |
+| comp-pipescript deployed | MATCH |
+| RAVC2 to AE 0.7 | 20260504T172001Z — D_04-only re-run requested |
+| AE dispatch ACK | SSM `6f75bf31`, bd-gold-qa-runner i-0090b823a4a0997e3, dispatched ~17:24Z |
+| SSM result | Success, ResponseCode 0, completed ~17:29Z |
+
+---
+
+### QA Result: Honest Zero
+
+| Metric | Value | Assessment |
+|--------|-------|------------|
+| total_recovered_count | 0 | CORRECT — no C1-class accounts in canonical_holdings |
+| total_recovered_aua | $0.0 | CORRECT |
+| Sidecar ETag | `c4533f9ea665fb7b85ecc5ae0f899891` | freshly written 17:29:42Z |
+| Sidecar size | 289 bytes | expected for empty accounts[] |
+
+**Spec interpretation confirmed (COO lock 20260504T173139Z):**
+`c1_recovered_accounts.json` tracks **C1-class accounts only** — investment-type, in accounts_dimension, allocation_aua >= $100K (`OUT_OF_SCOPE_C1_AUA_THRESHOLD = 100_000.0` at line 3179). z0819627441 (epsilon-BD, sub-$100K, rescued by BFIX3) is correctly excluded by `c1_mask`. count=0 is the honest truth-telling result. CTO 1-2 estimate did not apply the threshold filter — code-evidence read overrides.
+
+**Gate 2 status:** HELD per CTO ruling — full C1 count (58-73) lands only after B2 (A_03 epsilon guard / B_00 pre-filter fix) ships + chain re-runs from B_00. Deferred to ADVI_BFIX4.
+
+---
+
+### Compiler Tools (DS~C)
+
+| Tool | Target | Result | Notes |
+|------|--------|--------|-------|
+| ds-commit-gate | D_04.client_portal_summary.py | PASS | py_compile + AST + ruff |
+| comp-pipescript deployed | D_04 | MATCH | post-upload verification |
+| aws s3api head-object | c1_recovered_accounts.json | ETag c4533f9ea665fb7b85ecc5ae0f899891, 289 bytes | QA run output |
+| aws s3api head-object | D_04.client_portal_summary.py | ETag 9c3b3b8198997bdbd120cb776624365e | S3 artifact |
+
+---
+
+### Platinum Spot-Check (optional — COO request)
+
+Read-only audit of BD platinum artifacts post-21,079-file chain cc09f9a8 refresh.
+
+| Check | Result |
+|-------|--------|
+| platinum/firm/dashboard.json | total_aua=$1,683,701,127.96, data_as_of=2026-04-30 — consistent |
+| platinum/firm/header_metrics.json | total_aua match — consistent |
+| platinum/firm/mix_summary.json | 3 asset classes, data_as_of=2026-04-30 — consistent |
+| platinum/advisors/*/summary.json (20 sampled) | All data_as_of=2026-04-30, all non-zero AUA |
+| Advisor count | 330 summary.json files all timestamped 2026-05-04 — no stale advisors |
+| out_of_scope_accounts.json | excluded_c1_count=58 (unchanged, expected) |
+| c1_recovered_accounts.json | count=0, AUA=$0, timestamp 17:29:42Z — correct |
+| timeseries_overview.json NMEC delta | ~$17.4M vs firm AUA — by-design normalization, not regression |
+
+Verdict: no side effects detected.
+
+---
+
+### Commit Reference (full TO scope)
+
+| Commit | Author | Description | AC |
+|--------|--------|-------------|---|
+| 9fde23538 | DS~B | B_00 BFIX3 — rescue all-stale alive accounts | AC#3 ratified |
+| e09cb806b | DS~B | A_03 Option B — rps_covered narrowed to covered_with_events | AC#4 ratified |
+| e66898a64 | DS~B | D_04 sidecar initial implementation | AC#2 initial |
+| 386456223 | DS~B | D_04 sidecar schema revision to TO AC#2 spec | AC#2 final |
+| 76a3a9418 | DS~B | fix(D_04): scope c1_recovered to first-seen-in-gold >= fix_date | QA logic fix |
+| 33e1ccaa0 | CTO | docs/architecture/49FRECN_STANDING_BACKLOG.md | AC#6 complete |
+| 99664e778 | DS~C | fix(D_04): swap c1_recovered detection — canonical_holdings − account_performance delta (Option A) | Detection truth-telling |
+| 814353eee | COO | ADVI_49FRECN project close — JSON + REGISTRY 2-step atomic | TO close |
+
+---
+
+### RAVC Chain
+
+| Message | From | To | Time | Subject |
+|---------|------|----|------|---------|
+| RAVC2 | DS~B | AE 0.7 | 20260504T121244Z | QA dispatch (prior chain) |
+| RAVC2 (re-dispatch) | DS~B | AE 0.7 | 20260504T123241Z | Chain from B_00 request |
+| RAVC1 | DS~C | COO | 20260504T171558Z | Option A draft complete |
+| RAVC1 ACK | COO | DS~C | 20260504T171629Z | Draft locked; forwarding CTO |
+| GO | COO | DS~C | 20260504T171820Z | CTO ratified; ship sequence |
+| RAVC2 | DS~C | AE 0.7 | 20260504T172001Z | D_04-only re-run |
+| RAVC3 | AE 0.7 | DS~C | 20260504T173150Z | D_04 QA complete, count=0 |
+| RAVC3 | DS~C | COO | 20260504T173227Z | Gate 1 evidence + spec analysis |
+| RAVC3 ACK / CLOSE | COO | DS~C | 20260504T173506Z | ADVI_49FRECN CLOSED 814353eee |
