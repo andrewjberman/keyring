@@ -93,12 +93,23 @@ SSM dispatch result: pending as of log write (polling in background).
 
 ---
 
+## Transactions Retry Final Outcome
+
+Second dispatch (PID 128035, disown fix) ran successfully through data collection phase (rate limiter: 5.2 RPS, 8 batches, updated 12:09:18Z) but parquet was NOT uploaded — `bronze/transactions/` prefix never created in S3. Suspected OOM at in-memory parquet assembly stage (~780MB baseline + full transaction DataFrame pushed past t3.small 2GB). SSM agent degraded (multiple Failed/Pending commands) — could not recover EC2 log to confirm exact error.
+
+**COO Rulings (12:40Z):**
+- EC2 stop: AUTHORIZED (stop was non-blocking; "done" = either success or failure-exit)
+- Bronze transactions retry: strategy (B) stream-to-file script fix — DEFERRED to backlog (COO authoring HISTBF_TXNFIX_STREAM TO)
+- Wave C silver: GO — COO authoring positions_mv + assets_v2 silver convert TOs
+
+**EC2 i-083ad9ae297f88e9f:** stopped (running → stopping confirmed 12:40Z)
+
 ## Open Items (carried forward)
 
 | Item | Owner | Status |
 |------|-------|--------|
-| HISTBF.003 transactions re-run | AE 0.6.1 | IN FLIGHT — SSM c2722e05, EC2 i-083ad9ae297f88e9f |
-| HISTBF.003 Wave C authorization | COO | Pending COO ruling (3/4 complete — positions_mv + assets_v2 + performance done) |
-| EC2 i-083ad9ae297f88e9f stop | COO ruling | Pending |
+| HISTBF.003 transactions bronze | Backlog TO (COO) | DEFERRED — OOM at parquet assembly; silver/transactions/ already exists from 2026-04-29 |
+| HISTBF.003 Wave C silver TOs | COO | GO authorized — authoring positions_mv + assets_v2 convert TOs now |
+| HISTBF.003 formal close | COO | Holding open until backlog bronze transactions TO ships |
 | INFSHIP.A2 Track 2 | AE 0.6.1 (base) | Pending Andrew HAR capture for Track 1 |
 | ADVI_INFGRD.003 silver rebuild + gold chain | AE 0.6.1 | Staged — depends on ADVI_INFGRD.002 DS commit |
