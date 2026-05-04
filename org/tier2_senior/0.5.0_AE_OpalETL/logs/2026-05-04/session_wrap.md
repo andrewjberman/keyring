@@ -9,7 +9,7 @@
 
 ## Headline
 
-Three deliverables shipped: ADHC_OWNPTH 48h scan closed, MDLP_RVVALT.001 (RFR spec) complete, MDLP_RVVALT.003 (Lambda timeseries emit) deployed as `yang-v2.3.9`. All RAVC4s accepted by COO. DE TO-4 unblocked. Pipeline wiring confirmed (GenerateModelPortfolioBenchmarks already in Step Functions `ProcessBothPKLs` parallel branch). Open item: Andrew asked about FRED DGS10 daily RFR upgrade — awaiting direction.
+Four deliverables shipped: ADHC_OWNPTH 48h scan closed, MDLP_RVVALT.001 (RFR spec) complete, MDLP_RVVALT.003 (Lambda timeseries emit) deployed as `yang-v2.3.9`, MDLP_RVVALT.004 (duration-matched RFR per model) deployed as `yang-v2.4.0`. All RAVC4s accepted by COO. DE TO-4 unblocked. Pipeline wiring confirmed. rfr field rename broke chart briefly — DE patched same session (`71b5532d`).
 
 ---
 
@@ -39,11 +39,26 @@ Three deliverables shipped: ADHC_OWNPTH 48h scan closed, MDLP_RVVALT.001 (RFR sp
 - **Lambda commit:** `e2f0a8077`
 - **Tag:** `yang-v2.3.9`
 - **S3 ETag:** `68277012ae6c4e45ec0492140a313d4d` (2026-05-04T15:14:28Z)
-- **Verification:** 3660 rows × 5 models (UST, ST, INT, LTC, LTA); rfr_10y 100% populated; 6.6s duration; 0-diff plan PASS; existing outputs untouched
-- **Schema (decimal fractions):** `{date, model_code, model_return, benchmark_return, rfr_10y}`
+- **Verification:** 3660 rows × 5 models (UST, ST, INT, LTC, LTA); rfr 100% populated; 6.6s duration; 0-diff plan PASS; existing outputs untouched
+- **Schema (decimal fractions):** `{date, model_code, model_return, benchmark_return, rfr}` + `rfr_tenors` metadata
 - **DE sync:** Schema MCP sent to DE 0.4 pre-ship; types confirmed; benchmark_return is per-model INDEX benchmark (LTC/LTA share series)
 - **Session log:** `logs/2026-05-04/mdlp_rvvalt_003_lambda_timeseries.md`
 - **COO + DE 0.4:** RAVC4 accepted by COO; DE TO-4 unblocked.
+
+### 4. MDLP_RVVALT.004 — Duration-Matched RFR Per Model
+- **Deliverable:** Updated `model_portfolio_timeseries.json` — per-model RFR tenors from `price_monthly`
+- **Lambda commit:** `2c18f0c06`
+- **Tag:** `yang-v2.4.0`
+- **Rationale:** Using 10Y for all models penalized UST/ST Sharpe in steep yield curve environments. RFR should reflect investor opportunity cost for each portfolio's duration profile.
+- **Tenor mapping:**
+  - UST → 1Y (benchmark is 100% Bloomberg 0-1Y Treasury; short-horizon investor opportunity cost)
+  - ST → 1Y (same investor-intent framing as UST)
+  - INT → 5Y (Andrew direction; midpoint of Agg-equity blend effective duration)
+  - LTC → 10Y (unchanged — standard for equity-heavy)
+  - LTA → 10Y (unchanged)
+- **Schema change:** `rfr_10y` renamed to `rfr`; `rfr_tenors` dict added to JSON root
+- **Incident:** Field rename broke rolling Sharpe chart immediately post-deploy. DE patched frontend same session (commit `71b5532d` — updated `portal-proxy.ts` interface + both `RollingSharpeChart.tsx` reads). Chart restored.
+- **Verification:** 3660 rows; yield curve correctly upward-sloping (UST/ST 4.15% < INT 4.33% < LTC/LTA 4.54% on 2025-01-31)
 
 ---
 
@@ -59,10 +74,10 @@ Andrew asked: is `yang-model-portfolio-benchmarks` wired into the yang-pipeline 
 
 | Item | Owner | Status |
 |---|---|---|
-| DGS10 daily RFR upgrade — add to FRED ingestion Lambda + wire yang Lambda | AE 0.5 | **PENDING Andrew GO** — Andrew asked if FRED DGS10 is available consistently; advised yes (daily since 1962, negligible gaps); offered to scope as follow-on TO. Monthly 10Y approximation is sufficient for now (negligible Sharpe bias). |
+| DGS10 daily RFR upgrade — add to FRED ingestion Lambda + wire yang Lambda | AE 0.5 | Deferred — monthly 10Y approximation sufficient; duration-matched per model now in place (MDLP_RVVALT.004). Revisit if sub-monthly precision required. |
 | ADHC_OWNPTH FP-3: `pull_inflection_assets.py` → CLOUD_OPS_OR_ETL | CTO/COO | Open YAML gap |
 | ADHC_OWNPTH FP-4: `org/tier3_junior/*/task_orders/` exec dispatch override | CTO/COO | Open YAML gap |
-| HISTBF.004 cumulative-batch trigger | AE 0.5 | Awaiting ~17:00Z DS~D backfill completion signal from COO |
+| HISTBF.004 cumulative-batch trigger | AE 0.5 | Awaiting COO signal |
 
 ---
 
@@ -75,11 +90,12 @@ Andrew asked: is `yang-model-portfolio-benchmarks` wired into the yang-pipeline 
 | `697e29e7e` | MDLP_RVVALT_RFR_SPEC.md — initial spec |
 | `80250df90` | MDLP_RVVALT_RFR_SPEC.md — forward-fill strategy |
 | `bac293c5b` | Session log — MDLP_RVVALT.001 |
-| `e2f0a8077` | Lambda extension + source map SHA |
+| `e2f0a8077` | Lambda extension + source map SHA (yang-v2.3.9) |
 | `704a3bedf` | record-terraform-deploy source map update |
 | `8e31e50bc` | Session log — MDLP_RVVALT.003 |
+| `2c18f0c06` | Duration-matched RFR per model; rfr_10y→rfr; rfr_tenors metadata (yang-v2.4.0) |
 
-**Tag shipped:** `yang-v2.3.9`
+**Tags shipped:** `yang-v2.3.9`, `yang-v2.4.0`
 **All commits pushed to CLOUD.**
 
 ---
@@ -88,7 +104,7 @@ Andrew asked: is `yang-model-portfolio-benchmarks` wired into the yang-pipeline 
 
 | Pipeline | Tag | Notes |
 |---|---|---|
-| yang | `yang-v2.3.9` | Bumped this session — timeseries emit added |
+| yang | `yang-v2.4.0` | Bumped twice this session — timeseries emit + duration-matched RFR |
 | news | `news-v2.9.6` | No change |
 | market-overview | `market-overview-v1.9.0` | No change |
 | smartx | `smartx-v2.0.0` | No change |
