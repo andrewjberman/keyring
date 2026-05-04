@@ -1,0 +1,17 @@
+{
+  "project_code": "MDLP_RVVALT",
+  "macro_code": "MDLP",
+  "name": "Return-vs-Volatility Alternative Views (Rolling Sharpe + Max Drawdown)",
+  "description": "Extend the Model Portfolios Return vs Volatility panel with two alternative time-series views switchable via the canonical Segment Analytics-style toggle: (1) Rolling Sharpe Ratio (90D/180D/365D apertures, 10Y Treasury RFR from data.pkl); (2) Maximum Drawdown (90D/180D/365D/SI apertures). Models render in canonical colors, benchmarks in gray. Daily granularity throughout. Sharpe + drawdown computed frontend; backend extends yang-model-portfolio-benchmarks Lambda to emit a daily timeseries JSON including 10Y Treasury yield.",
+  "prds": [
+    {"path": "docs/architecture/MDLP_RVVALT.md", "label": "RVV alternative views PRD", "date": "2026-05-04"}
+  ],
+  "status": "active",
+  "phase": "Phase 0: PRD complete, COO decomposition pending",
+  "blocking": "COO task order issuance (4 TOs suggested in PRD §6 — DS TO-1 / DE TO-2 / AE TO-3 / DE TO-4)",
+  "created": "2026-05-04",
+  "pods": ["0.4", "0.5"],
+  "pipeline": "yang-pipeline (model_portfolio_benchmarks Lambda extension) + portal frontend (ReturnVolatilityScatter refactor + 2 new chart components)",
+  "thread_counter": 0,
+  "threads": []
+}
