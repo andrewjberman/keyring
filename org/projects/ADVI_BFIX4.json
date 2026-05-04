@@ -6,8 +6,8 @@
   "prds": [],
   "source_brief": "org/tier2_senior/0.4.0_DS_ClientPlatform/briefs/2026-05-04_49frecn_c1_recovery_propagation_gap_analysis.md (DS~B 2026-05-04 RAVC1; two-root-cause framing; Hybrid C recommendation accepted by CTO).",
   "status": "active",
-  "phase": "**Phase 0 STUB 2026-05-04 — registry seed only.** TO-1 (B2 A_03 epsilon guard) dispatched to DS~B 2026-05-04; effort 0.5-1 day; low risk; no Andrew gate (CTO ratified ungated). TO-2 (B1 BFIX4 architectural) GATES on Andrew decision shape (3 options framed by CTO inbound: accept-limitation / ship-now / defer-next-sprint). Phase 1 PRD authoring deferred until Andrew B1 ruling lands — keeps PRD effort coherent with the architectural scope CTO+Andrew jointly approve.",
-  "blocking": "TO-1 dispatched, in DS~B flight. TO-2 gated on Andrew B1 ruling (CTO authoring framing).",
+  "phase": "**Phase 0 STUB 2026-05-04 + TO-1 SHIPPED.** TO-1 (B2 A_03 epsilon guard) COMPLETE same-day (DS~B `be11d25fe` + S3 upload ETag `478c1897faca6c2012fe9d9d41272dc2` MATCH; SSM chain `668632a5-108a-4b82-8335-da3d3a25c6ca` PASS — A_03 exit 0 wall=511.2s 2,312 partitions 553MB; A_04 exit 0 wall=29.8s 3,644 households; pre-commit gate PASS py_compile+AST+ruff; from __future__ annotations confirmed line 33). AC#5-7 sidecar/AUA delta = ZERO as expected (B2 scope: A_03 feeds positions_cube only; B_03 reads canonical_holdings from B_00, not positions_cube — zero delta is correct, not a failure). z0822229381 epsilon edge case is in B_00 BD bronze path (UNREALIZED_DAILY units=3.637979e-11 DELPHI), NOT A_03 injection path — B_00 fix is B1 territory. TO-2 (B1 BFIX4 architectural) GATES on Andrew decision shape (3 options framed by CTO inbound: accept-limitation / ship-now / defer-next-sprint). Phase 1 PRD authoring deferred until Andrew B1 ruling lands.",
+  "blocking": "TO-2 gated on Andrew B1 ruling (CTO authoring framing). Separate AE investigation: Layer 1 auto-shutdown fired 20:03:44Z despite Tier=qa tag (AE cancelled, filing as separate ec2-auto-shutdown-enforcer issue).",
   "created": "2026-05-04",
   "pods": [
     "0.4"
