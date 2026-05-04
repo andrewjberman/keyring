@@ -94,6 +94,18 @@ Assign the DE/DS/DT of the primary pod, or the AE for pipeline-only projects.
 
 ---
 
+## Portal-Wide Primitives
+
+For cross-page UI primitives, design-system normalization, shared component
+extraction, and any portal frontend work whose scope is "the portal as a whole"
+rather than a single page (which would use the page's own macro).
+
+| Code | Surface Area | Primary Owner |
+|------|-------------|---------------|
+| `DASH` | Portal-wide dashboard primitives — shared frontend components, cross-page visual consistency, design-system normalization, density/spacing standards | `0.4.0_DE_ClientPlatform` (default; reassign per project if another DE owns more of the affected pages) |
+
+---
+
 ## Ad-Hoc / Cross-Cutting
 
 For work that doesn't belong to an existing surface area. One-off investigations,

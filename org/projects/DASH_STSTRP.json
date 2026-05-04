@@ -1,0 +1,17 @@
+{
+  "project_code": "DASH_STSTRP",
+  "macro_code": "DASH",
+  "name": "Portal Stat-Strip Density Harmonization (Option A)",
+  "description": "Tighten existing single-row stat-strip containers (small-pill bell-curve / radial sibling pattern) across 4 portal sites to stop the 6-element variant wrapping on Surface Laptop viewports and align density across all 4 sites in lockstep. Andrew chose Option A (least-invasive density tightening) over alternatives B-G on 2026-05-04. Extraction of a shared <MetricStrip> primitive (DASH_STSTRP_V2) is deferred until Option A bakes for one nightly cycle.",
+  "prds": [
+    {"path": "docs/architecture/PORTAL_STAT_STRIP_DENSITY.md", "label": "Stat-strip density harmonization PRD (Option A)", "date": "2026-05-04"}
+  ],
+  "status": "active",
+  "phase": "Phase 0: PRD complete, COO decomposition pending",
+  "blocking": "COO task order issuance (single TO suggested in PRD §6 — DASH_STSTRP.001 to 0.4.0_DE_ClientPlatform)",
+  "created": "2026-05-04",
+  "pods": ["0.4"],
+  "pipeline": "portal (frontend only — no Lambda/EC2/Terraform impact)",
+  "thread_counter": 0,
+  "threads": []
+}
