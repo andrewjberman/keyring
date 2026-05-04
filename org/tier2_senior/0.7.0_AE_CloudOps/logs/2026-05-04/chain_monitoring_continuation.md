@@ -121,15 +121,39 @@ Step 17 — C1 Recovered Accounts Sidecar:
 
 ---
 
-## P2 Audit — Pending (Post-RAVC5)
+## P2 Audit — COMPLETE (RAVC4 sent 16:59Z)
 
-COO directive: after 49FRECN RAVC5, audit:
-1. All dispatch scripts for Layer 1 self-shutdown (gold_dispatch.sh confirmed, orion-gold-dispatch.sh TBD)
-2. AutoShutdown=disabled tag source on bd-gold-qa-runner (tag was present pre-dispatch, source unknown)
-3. Document L1+L2 architecture in docs/deployment/EC2_DEPLOYMENT_PROTOCOL.md
-4. Add tag-aware shutdown branch (check `Tier=qa` tag; if QA, skip Layer 1 shutdown)
-5. Verify QA runner tags: bd-gold-qa-runner (i-0090b823a4a0997e3), inf-gold-qa-runner (i-04373615f03fbf9a9)
-6. RAVC4 to COO with audit findings + tag-source root cause + protocol doc commit
+COO directive completed:
+
+### Item 1 — Layer 1 self-shutdown audit
+- `gold_dispatch.sh`: CONFIRMED — line 1175, `sudo shutdown -h +2`, all modes
+- `orion-gold-dispatch.sh`: CONFIRMED — line 774, `sudo shutdown -h +2`, all modes
+- Both scripts updated with tag-aware branch (Item 4) and re-uploaded to S3
+
+### Item 2 — AutoShutdown=disabled tag source
+- **Root cause: MANUAL OVERRIDE.** No script in the codebase sets `AutoShutdown=disabled`.
+- `bd-gold-qa-runner/launch-instance.sh` correctly sets `AutoShutdown=false` at creation.
+- Source unknown — likely a prior manual session or console action.
+- Current state: `AutoShutdown=false` (corrected prior session). Documented in protocol.
+
+### Item 3 — EC2_DEPLOYMENT_PROTOCOL.md L1+L2 documentation
+- New Section 12 written: L1 vs L2 architecture, tag interaction table, QA runner tag table, AutoShutdown source rule.
+- **STAGED, not committed** — BASE_EXEC lane requires COO/CTO author. Flagged to COO in RAVC4.
+
+### Item 4 — Tag-aware shutdown branch (Tier=qa)
+- **SHIPPED — commit 7be2726db**
+- Both dispatch scripts query own `Tier` tag via IMDSv2 + `describe-tags`; if `Tier=qa`, skip Layer 1
+- S3-uploaded: `s3://opal-data-bd/code/gold/gold_dispatch.sh` + `s3://opal-data-inf/code/gold/orion-gold-dispatch.sh`
+- Layer 2 (enforcer) still active for both QA runners — no runaway gap
+
+### Item 5 — QA runner tags verified (and updated)
+| Instance | Tier | AutoShutdown | Change |
+|----------|------|-------------|--------|
+| bd-gold-qa-runner (i-0090b823a4a0997e3) | qa (ADDED) | false | Tier added |
+| inf-gold-qa-runner (i-04373615f03fbf9a9) | qa (ADDED) | false (ADDED) | Both added |
+
+### Item 6 — RAVC4
+**Sent to COO at 16:59Z.** Full audit findings + doc commit request.
 
 ---
 
