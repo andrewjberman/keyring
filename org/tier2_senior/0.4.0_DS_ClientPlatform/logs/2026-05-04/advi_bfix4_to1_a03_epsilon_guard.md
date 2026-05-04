@@ -3,7 +3,7 @@
 **Agent:** 0.4.0_DS_ClientPlatform~B
 **Date:** 2026-05-04
 **Task Order:** ADVI_BFIX4.TO-1
-**Status:** SHIPPED — awaiting AE 0.7 QA chain re-run
+**Status:** COMPLETE — AE RAVC3 received 20260504T200341Z; chain clean; TO-1 closed
 
 ---
 
@@ -152,8 +152,15 @@ This is documented here per TO-1 scope requirement; RAVC3 to COO will include th
 
 ---
 
-## Next Steps
+## Close-Out
 
-- [AE 0.7] QA chain re-run: `--from A_03 --force` on bd-gold-qa-runner
-- [DS~B] On QA result: RAVC3 to COO with SSM ID + outcome + caveat on B2 scope
-- [DS~B/CTO] B1 (BFIX4 in B_00) gated on Andrew ruling — do NOT proceed until authorized
+| Step | Result |
+|------|--------|
+| AE RAVC3 received | 20260504T200341Z — SSM 668632a5, A_03 exit 0, A_04 exit 0 |
+| A_03 output | 2,312 partitions, 553MB → s3://opal-data-bd/gold/positions_cube/ |
+| Epsilon guard | No errors, no anomalies in log |
+| AC#5-7 delta | Zero as expected — B2 scope confirmed |
+| RAVC3 to COO | Sent 20260504T200826Z |
+| TO-1 status | COMPLETE |
+
+**Next:** BFIX4 TO-2 (B1 — B_00 BFIX4) gated on Andrew ruling — do NOT proceed until authorized.
