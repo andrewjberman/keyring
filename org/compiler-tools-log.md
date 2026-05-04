@@ -2242,3 +2242,28 @@ Total: 2 PASS, 131 WARN, 133 PRDs scanned.
 | 2026-05-04 | 0.4.0_DE_ClientPlatform | DASH_STSTRP.001.de-stat-strip-density-tightening | typecheck | bun run typecheck (Phase 2, pre-commit) | PASS | Exit 0 — CSS-only diff, no type changes |
 | 2026-05-04 | 0.4.0_DE_ClientPlatform | DASH_STSTRP.001.de-stat-strip-density-tightening | frontend-dev | /frontend-dev Playwright 1366x912 (Phase 3, post-commit) | PASS | 4/4 scenarios — all strips single-row zero wrapping at Surface Laptop viewport |
 | 2026-05-04 | 0.4.0_DE_ClientPlatform | INFLEC-WaveD-revalidation | frontend-dev | Playwright Inflection Books S6+S7 re-validation | PARTIAL | S6 PASS (advisor list 16 rows); S7 DATA-GATE (summary.json missing in opal-data-inf) |
+| 2026-05-04 | 0.4.0_DS_ClientPlatform~A | ADVI_INFLEC.S7SUMFIX | comp-pipescript | comp-pipescript io INF_D_04 | PASS |
+| 2026-05-04 | 0.4.0_DS_ClientPlatform~A | ADVI_INFLEC.S7SUMFIX | comp-pipescript | comp-pipescript io D_04 | PASS |
+| 2026-05-04 | 0.4.0_DS_ClientPlatform~A | ADVI_INFLEC.S7SUMFIX | comp-platinum | comp-platinum reverse platinum/advisors/peter_lee/summary.json | PASS |
+| 2026-05-04 | 0.4.0_DS_ClientPlatform~A | ADVI_INFLEC.S7SUMFIX | comp-pipescript | comp-pipescript deployed INF_D_04 | PASS |
+| 2026-05-04 | 0.4.0_DT_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript deployed D_04 | PASS |
+| 2026-05-04 | 0.4.0_DT_ClientPlatform | (no-TO) | comp-iam | comp-iam service inf-gold-qa-runner | PASS |
+| 2026-05-04 | 0.4.0_DT_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript deployed B_00 | PASS |
+| 2026-05-04 | 0.4.0_DT_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript deployed A_03 | PASS |
+| 2026-05-04 | 0.4.0_DT_ClientPlatform | (no-TO) | comp-iam | comp-iam service inf-gold-layer-runner | PASS |
+| 2026-05-04 | 0.4.0_DT_ClientPlatform | (no-TO) | comp-iam | comp-iam service inf-gold-layer | PASS |
+| 2026-05-04 | 0.4.0_DT_ClientPlatform | (no-TO) | comp-blast | comp-blast ReturnVolatilityScatter | PASS |
+| 2026-05-04 | 0.4.0_DT_ClientPlatform | (no-TO) | comp-cache | comp-cache collisions | PASS |
+| 2026-05-04 | 0.4.0_DT_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript io yang-model-portfolio-benchmarks | FAIL |
+| 2026-05-04 | 0.4.0_DT_ClientPlatform | (no-TO) | comp-routes | comp-routes trace getModelPortfolioBenchmarks | PASS |
+| 2026-05-04 | 0.4.0_DT_ClientPlatform | (no-TO) | comp-iam | comp-iam service yang-model-portfolio-benchmarks | PASS |
+| 2026-05-04 | 0.4.0_DS_ClientPlatform~C | (no-TO) | comp-iam | comp-iam gaps | PASS |
+| 2026-05-04 | 0.4.0_DS_ClientPlatform~C | (no-TO) | comp-pipescript | comp-pipescript io B_01 | PASS |
+| 2026-05-04 | 0.4.0_DS_ClientPlatform~C | (no-TO) | comp-pipescript | comp-pipescript deployed B_01 | PASS |
+| 2026-05-04 | 0.4.0_DS_ClientPlatform~C | (no-TO) | comp-pipescript | comp-pipescript deployed gold_dispatch.sh | PASS |
+| 2026-05-04 | 0.4.0_DS_ClientPlatform~C | ADVI_49FRECN.003.ds-b-track-2-fix-d04-sidecar-aqr-bfix3-option-b | comp-blast | comp-blast account_performance | PASS |
+| 2026-05-04 | 0.4.0_DS_ClientPlatform~C | ADVI_49FRECN.003.ds-b-track-2-fix-d04-sidecar-aqr-bfix3-option-b | comp-pipescript | comp-pipescript deployed D_04 | PASS |
+| 2026-05-04 | 0.4.0_DS_ClientPlatform~C | ADVI_49FRECN.003.ds-b-track-2-fix-d04-sidecar-aqr-bfix3-option-b | comp-pipescript | comp-pipescript deployed D_04 | PASS |
+| 2026-05-04 | 0.4.0_DS_ClientPlatform~C | ADVI_49FRECN.003.ds-b-track-2-fix-d04-sidecar-aqr-bfix3-option-b | comp-pipescript | comp-pipescript io A_03 | PASS |
+| 2026-05-04 | 0.4.0_DS_ClientPlatform~C | ADVI_49FRECN.003.ds-b-track-2-fix-d04-sidecar-aqr-bfix3-option-b | comp-blast | comp-blast A_03 | PASS |
+| 2026-05-04 | 0.4.0_DS_ClientPlatform~C | ADVI_49FRECN.003.ds-b-track-2-fix-d04-sidecar-aqr-bfix3-option-b | comp-pipescript | comp-pipescript deployed A_03 | PASS |
