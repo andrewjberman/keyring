@@ -2204,3 +2204,41 @@ Total: 2 PASS, 131 WARN, 133 PRDs scanned.
 | 2026-05-01 | 0.4.0_DS_ClientPlatform~C | ADVI_49FRECN.001C | comp-pipescript | comp-pipescript io C_06 | PASS |
 | 2026-05-01 | 0.4.0_DS_ClientPlatform~C | ADVI_49FRECN.001C | comp-pipescript | comp-pipescript io D_00 | PASS |
 | 2026-05-01 | 0.4.0_DS_ClientPlatform~C | ADVI_49FRECN.001C | comp-trace | comp-trace NNA_AUA_BY_ADVISOR --direction both | PASS |
+| 2026-05-01 | 0.4.0_DS_ClientPlatform~C | ADVI_49FRECN.001C | comp-pipescript | comp-pipescript deployed E_25 | PASS |
+| 2026-05-01 | 0.4.0_DS_ClientPlatform~C | ADVI_49FRECN.001C | comp-pipescript | comp-pipescript deployed E_25 | PASS |
+| 2026-05-01 | 0.4.0_DS_ClientPlatform~C | ADVI_49FRECN.001C | comp-pipescript | comp-pipescript deployed E_25.aua_decomposition_audit | PASS |
+| 2026-05-01 | 0.4.0_DS_ClientPlatform~A | ADVI_49FRECN.002.ds-a-d04-out-of-scope-json | comp-pipescript | comp-pipescript io D_04.client_portal_summary.py | PASS |
+| 2026-05-01 | 0.4.0_DS_ClientPlatform~A | ADVI_49FRECN.002.ds-a-d04-out-of-scope-json | comp-pipescript | comp-pipescript io D_04.client_portal_summary.py | PASS |
+| 2026-05-01 | 0.4.0_DS_ClientPlatform~A | ADVI_49FRECN.002.ds-a-d04-out-of-scope-json | comp-pipescript | comp-pipescript deployed D_04.client_portal_summary.py | PASS |
+| 2026-05-01 | 0.4.0_DS_ClientPlatform~A | ADVI_49FRECN.002.ds-a-d04-out-of-scope-json | comp-build | comp-build | PASS |
+| 2026-05-01 | 0.4.0_DS_ClientPlatform~A | ADVI_49FRECN.002.ds-a-d04-out-of-scope-json | comp-pipescript | comp-pipescript deployed B_00.canonical_holdings.py | PASS |
+| 2026-05-01 | 0.4.0_DS_ClientPlatform~A | ADVI_49FRECN.002.ds-a-d04-out-of-scope-json | comp-pipescript | comp-pipescript deployed A_03.positions_cube.py | PASS |
+| 2026-05-04 | 0.4.0_DS_ClientPlatform~B | ADVI_49FRECN.002 | comp-pipescript | comp-pipescript io pull_inflection_transactions_rest.py | FAIL |
+| 2026-05-04 | 0.4.0_DS_ClientPlatform~B | ADVI_49FRECN.002 | comp-blast | comp-blast safe-commit.sh | PASS |
+| 2026-05-04 | 0.4.0_DS_ClientPlatform~B | ADVI_49FRECN.002 | comp-pipescript | comp-pipescript io D_04 | PASS |
+| 2026-05-04 | 0.4.0_DS_ClientPlatform~B | ADVI_49FRECN.002 | comp-blast | comp-blast D_04 | PASS |
+| 2026-05-04 | 0.4.0_DS_ClientPlatform~B | ADVI_49FRECN.002 | comp-pipescript | comp-pipescript deployed D_04 | PASS |
+| 2026-05-04 | 0.4.0_DS_ClientPlatform~B | ADVI_49FRECN.002 | comp-pipescript | comp-pipescript io D_04 | PASS |
+| 2026-05-04 | 0.4.0_DS_ClientPlatform~B | ADVI_49FRECN.002 | comp-iam | comp-iam service inf-jwt-trigger | PASS |
+| 2026-05-04 | 0.4.0_DS_ClientPlatform~B | ADVI_49FRECN.002 | comp-platinum | comp-platinum reverse out_of_scope_accounts.json | PASS |
+| 2026-05-04 | 0.4.0_DS_ClientPlatform~B | ADVI_49FRECN.002 | comp-iam | comp-iam gaps | PASS |
+| 2026-05-04 | 0.4.0_DS_ClientPlatform~B | ADVI_49FRECN.002 | comp-platinum | comp-platinum reverse c1_recovered_accounts.json | PASS |
+| 2026-05-04 | 0.4.0_DS_ClientPlatform~B | ADVI_49FRECN.002 | comp-pipescript | comp-pipescript deployed D_04 | PASS |
+| 2026-05-04 | 0.4.0_DS_ClientPlatform~B | ADVI_49FRECN.002 | comp-pipescript | comp-pipescript deployed D_04 | PASS |
+| 2026-05-04 | 0.4.0_DS_ClientPlatform~B | ADVI_49FRECN.002 | comp-pipescript | comp-pipescript postdeps D_04 | PASS |
+| 2026-05-04 | 0.4.0_DS_ClientPlatform~B | ADVI_49FRECN.002 | comp-iam | comp-iam gaps | PASS |
+| 2026-05-04 | 0.4.0_DS_ClientPlatform~B | ADVI_49FRECN.002 | comp-iam | comp-iam service bd-gold-runner | PASS |
+| 2026-05-04 | 0.4.0_DS_ClientPlatform~B | ADVI_49FRECN.002 | comp-iam | comp-iam gaps | PASS |
+| 2026-05-04 | 0.4.0_DS_ClientPlatform~B | ADVI_49FRECN.002 | comp-pipescript | comp-pipescript deployed D_04 | PASS |
+| 2026-05-04 | 0.4.0_DS_ClientPlatform~B | ADVI_49FRECN.002 | comp-transform | comp-transform schema-check AccountDistributionMetrics | FAIL |
+| 2026-05-04 | 0.4.0_DS_ClientPlatform~B | ADVI_49FRECN.002 | comp-transform | comp-transform schema-check AUMGrowthMetrics | FAIL |
+| 2026-05-04 | 0.4.0_DS_ClientPlatform~B | ADVI_49FRECN.002 | comp-transform | comp-transform schema-check ConsolidatedOverviewPanel | PASS |
+| 2026-05-04 | 0.4.0_DS_ClientPlatform~B | ADVI_49FRECN.002 | comp-blast | comp-blast AccountDistributionMetrics | PASS |
+| 2026-05-04 | 0.4.0_DS_ClientPlatform~B | ADVI_49FRECN.002 | comp-blast | comp-blast AUMGrowthMetrics | PASS |
+| 2026-05-04 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-transform | comp-transform schema-check ConsolidatedOverviewPanel | PASS |
+| 2026-05-04 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-blast | comp-blast AccountDistributionMetrics | PASS |
+| 2026-05-04 | 0.4.0_DE_ClientPlatform | DASH_STSTRP.001.de-stat-strip-density-tightening | comp-transform | comp-transform schema-check ConsolidatedOverviewPanel | PASS |
+| 2026-05-04 | 0.4.0_DE_ClientPlatform | DASH_STSTRP.001.de-stat-strip-density-tightening | comp-pipescript | comp-pipescript io INF_B_00 | PASS |
+| 2026-05-04 | 0.4.0_DE_ClientPlatform | DASH_STSTRP.001.de-stat-strip-density-tightening | typecheck | bun run typecheck (Phase 2, pre-commit) | PASS | Exit 0 — CSS-only diff, no type changes |
+| 2026-05-04 | 0.4.0_DE_ClientPlatform | DASH_STSTRP.001.de-stat-strip-density-tightening | frontend-dev | /frontend-dev Playwright 1366x912 (Phase 3, post-commit) | PASS | 4/4 scenarios — all strips single-row zero wrapping at Surface Laptop viewport |
+| 2026-05-04 | 0.4.0_DE_ClientPlatform | INFLEC-WaveD-revalidation | frontend-dev | Playwright Inflection Books S6+S7 re-validation | PARTIAL | S6 PASS (advisor list 16 rows); S7 DATA-GATE (summary.json missing in opal-data-inf) |
