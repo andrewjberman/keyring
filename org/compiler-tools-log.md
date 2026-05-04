@@ -2267,3 +2267,30 @@ Total: 2 PASS, 131 WARN, 133 PRDs scanned.
 | 2026-05-04 | 0.4.0_DS_ClientPlatform~C | ADVI_49FRECN.003.ds-b-track-2-fix-d04-sidecar-aqr-bfix3-option-b | comp-pipescript | comp-pipescript io A_03 | PASS |
 | 2026-05-04 | 0.4.0_DS_ClientPlatform~C | ADVI_49FRECN.003.ds-b-track-2-fix-d04-sidecar-aqr-bfix3-option-b | comp-blast | comp-blast A_03 | PASS |
 | 2026-05-04 | 0.4.0_DS_ClientPlatform~C | ADVI_49FRECN.003.ds-b-track-2-fix-d04-sidecar-aqr-bfix3-option-b | comp-pipescript | comp-pipescript deployed A_03 | PASS |
+| 2026-05-04 | 2.0.0_SA_COO | (no-TO) | comp-transform | comp-transform schema-check ReturnVolatilityScatter | FAIL |
+| 2026-05-04 | 2.0.0_SA_COO | (no-TO) | comp-build | comp-build | PASS |
+| 2026-05-04 | 2.0.0_SA_COO | (no-TO) | comp-transform | comp-transform schema-check ReturnVolatilityScatter | FAIL |
+| 2026-05-04 | 0.4.0_DS_ClientPlatform~C | ADVI_ROLLUP.SL-P1c | comp-pipescript | comp-pipescript io B_01 | PASS |
+| 2026-05-04 | 0.4.0_DS_ClientPlatform~C | ADVI_ROLLUP.SL-P1c | comp-pipescript | comp-pipescript deployed B_01 | PASS |
+| 2026-05-04 | 0.6.1_AE_PartnerETL | (no-TO) | comp-pipescript | comp-pipescript deployed A_03.positions_cube.py | PASS |
+| 2026-05-04 | 0.6.1_AE_PartnerETL | (no-TO) | comp-pipescript | comp-pipescript postdeps A_03.positions_cube.py | PASS |
+| 2026-05-04 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-transform | comp-transform schema-check PartnerAnalytics | PASS |
+| 2026-05-04 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-transform | comp-transform schema-check DistributionTab | PASS |
+| 2026-05-04 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-transform | comp-transform schema-check ClientsTab | PASS |
+| 2026-05-04 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-transform | comp-transform schema-check InflectionInsightsPanel | FAIL |
+| 2026-05-04 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-iam | comp-iam service opal-partners-data | PASS |
+| 2026-05-04 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-transform | comp-transform schema-check FidelityCustodianBar | FAIL |
+| 2026-05-04 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-iam | comp-iam gaps | PASS |
+| 2026-05-04 | 0.4.0_DS_ClientPlatform~A | ADVI_INFLEC.AUDIT-001 | comp-cache | comp-cache collisions | PASS |
+| 2026-05-04 | 0.6.1_AE_PartnerETL | INFLEC_AUDIT_001_AE_ORION_VENDOR | comp-platinum | comp-platinum page AdvisorIntelligence | FAIL |
+| 2026-05-04 | 0.6.1_AE_PartnerETL | INFLEC_AUDIT_001_AE_ORION_VENDOR | comp-routes | comp-routes auth-map | PASS |
+| 2026-05-04 | 0.6.1_AE_PartnerETL | INFLEC_AUDIT_001_AE_ORION_VENDOR | comp-platinum | comp-platinum page Books | FAIL |
+| 2026-05-04 | 0.6.1_AE_PartnerETL | INFLEC_AUDIT_001_AE_ORION_VENDOR | comp-platinum | comp-platinum | PASS |
+| 2026-05-04 | 0.6.1_AE_PartnerETL | INFLEC_AUDIT_001_AE_ORION_VENDOR | comp-platinum | comp-platinum tab-audit | PASS |
+| 2026-05-04 | 0.4.0_DS_ClientPlatform~D | INFLEC_AUDIT-001_HISTBF_STATE_DUMP | comp-routes | comp-routes auth-map | PASS |
+| 2026-05-04 | 0.4.0_DS_ClientPlatform~D | INFLEC_AUDIT-001_HISTBF_STATE_DUMP | comp-platinum | comp-platinum summary | PASS |
+| 2026-05-04 | 0.4.0_DS_ClientPlatform~D | INFLEC_AUDIT-001_HISTBF_STATE_DUMP | comp-platinum | comp-platinum page PartnerAnalytics | PASS |
+| 2026-05-04 | 0.4.0_DS_ClientPlatform~D | INFLEC_AUDIT-001_HISTBF_STATE_DUMP | comp-platinum | comp-platinum page DistributionTab | PASS |
+| 2026-05-04 | 0.4.0_DS_ClientPlatform~D | INFLEC_AUDIT-001_HISTBF_STATE_DUMP | comp-platinum | comp-platinum page InflectionInsightsPanel | PASS |
+| 2026-05-04 | 0.4.0_DE_ClientPlatform | INFLEC_AUDIT_001_DE_MAPPING | comp-platinum | comp-platinum page AdvisorBookView | PASS |
+| 2026-05-04 | 0.4.0_DE_ClientPlatform | INFLEC_AUDIT_001_DE_MAPPING | comp-routes | comp-routes behaviors | PASS |
