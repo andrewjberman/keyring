@@ -66,13 +66,13 @@ Duplicate ACK sent to COO, no re-action taken.
 
 ---
 
-## BD 49FRECN.003 Chain — In Progress
+## BD 49FRECN.003 Chain — COMPLETE (RAVC5 BLOCKED)
 
 **Instance:** bd-gold-qa-runner (i-0090b823a4a0997e3)  
 **SSM:** cc09f9a8, `gold_dispatch.sh --chain full --force`, launched ~15:32Z  
-**Status as of 16:30Z:** D chain writing `gold/entities/clients/{id}/detail.json` batches
+**Completion:** 2026-05-04T16:43:22Z
 
-### Chain Timeline
+### Chain Timeline (Final)
 
 | Group | Key Signal | Timestamp (UTC) |
 |-------|-----------|-----------------|
@@ -90,16 +90,34 @@ Duplicate ACK sent to COO, no re-action taken.
 | D: entities/clients (flat) | z08*.json batch | 16:15-16:17Z |
 | D: entities/advisors | advisor mix files | 16:20Z |
 | D: entities/clients (nested) | {id}/detail.json batch | 16:30Z |
+| D_04 COMPLETE | 21,079 platinum files | 16:43:20Z |
 
-### Pending Close Gate (RAVC5)
+**D_04 output:** 165 advisors, 2,848 clients, 6,117 account summaries, 382 advisor books. Chain COMPLETE. Enforcer did not fire.
+
+### RAVC5 — BLOCKED
 
 **File:** `s3://opal-data-bd/gold/artifacts/49f/c1_recovered_accounts.json`  
-**Baseline:** Mon, 04 May 2026 14:08:10 GMT (289 bytes — placeholder/empty)  
-**Expected:** 58-73 accounts (DS~B scope-fix 76a3a9418)  
-**Signal:** LastModified > 14:08:10Z → run comp-validate → RAVC5 to DS~C + COO
+**Written:** 2026-05-04T16:43:21Z  
+**Content:** `total_recovered_count: 0, accounts: []`  
+**Expected:** 58-73 accounts (DS~B scope-fix 76a3a9418)
 
-**ETA:** ~16:35-16:40Z based on current D chain progress  
-**Route:** RAVC5 to DS~C (not DS~B per 2026-05-04 COO re-routing), copy COO
+**Root cause (from chain_full_20260504_153249.log, lines 17704-17735):**
+
+Step 16 — Out-of-Scope Accounts:
+- `account_performance @ 2026-04-30: 6,106 accounts` (unchanged after BFIX3)
+- `excluded C1 (Track 2): 58 accounts, $56,801,374.05 AUA` — 58 C1 accounts still absent from account_performance
+
+Step 17 — C1 Recovered Accounts Sidecar:
+- `accounts first seen in gold >= 2026-05-01: 0`
+- Detection logic is wrong for BFIX3-style recovery (returning accounts have prior gold history before 2026-05-01, so first_seen query returns 0)
+- `C1 recovered (in gold post-fix): 0 accounts, $0.00 AUA`
+
+**BFIX3 confirmed firing** (B_00, chain log lines ~390-447, 15:47Z). Two compounding issues:
+
+1. **Propagation gap**: BFIX3 injected into canonical_holdings but C_03 still shows 6,106 accounts. All-stale accounts have no prior performance history → account_performance cannot be calculated → they remain absent from account_performance despite canonical_holdings re-injection.
+2. **Detection bug**: Sidecar `first_seen_in_gold >= 2026-05-01` is wrong for BFIX3. Correct heuristic: C1 accounts in canonical_holdings NOT in account_performance (Step 16 already computes this as 58).
+
+**RAVC5 sent to COO (16:51Z) and DS~B (16:51Z).** DS~C not registered in org. Investigation + fix + re-run (D_04 only if detection fix, full chain B→D if propagation fix) required before RAVC5 can be issued.
 
 ---
 
