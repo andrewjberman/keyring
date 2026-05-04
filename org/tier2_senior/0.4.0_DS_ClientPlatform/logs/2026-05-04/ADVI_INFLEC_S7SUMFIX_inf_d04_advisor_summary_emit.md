@@ -3,7 +3,7 @@
 **Agent:** 0.4.0_DS_ClientPlatform~A
 **Date:** 2026-05-04
 **Task Order:** ADVI_INFLEC.S7SUMFIX
-**Status:** COMPLETE — PROD run done; platinum/advisors/*/summary.json live (4 advisors); SSM b4322569 Success confirmed; RAVC4 to COO sent; DE S7 smoke re-requested 20260504T144500Z; awaiting DE RAVC3
+**Status:** COMPLETE — PROD run done; platinum/advisors/*/summary.json live (4 advisors); SSM b4322569 Success confirmed; RAVC4 to COO sent; DE RAVC3 received 20260504T153600Z; DATA-GATE CLEARED; portal fix 6ba6d2ee shipped; RAVC to COO sent for 3-step atomic close
 
 ---
 
@@ -143,19 +143,29 @@ Re-verified 20260504T144500Z — all 4 files stable, same timestamps + byte coun
 
 ## AC#5 — DE S7 Smoke
 
-MCP sent to 0.4.0_DE_ClientPlatform at 20260504T142535Z (initial) + re-sent 20260504T144500Z with SSM Success confirmation + S3 re-verification evidence.
+MCP sent to 0.4.0_DE_ClientPlatform at 20260504T142535Z (initial) + re-sent 20260504T144500Z.
 
-**Status:** AWAITING DE RAVC3 — smoke re-requested; on DE confirm, AC#5 closes and final RAVC to COO for 3-step atomic TO close.
+**DE RAVC3 received 20260504T153357Z — DATA-GATE CLEARED.**
+
+DE findings:
+- peter_lee/summary.json 404: RESOLVED ✓
+- All 4 advisor summary.json confirmed live ✓
+- Portal fix shipped (commit `6ba6d2ee`):
+  - L3→L4 click: Inflection `household_id → client_key` normalization in `normalizedClients` memo
+  - TaxCostBasisPanel: `realized`/`unrealized` added to tax prop spread; `AdvisorTaxExposure` type extended
+- Schema obs: `active_since: None`, `role_breakdown: {}` — both documented INF gaps per AC#2 delta table
+- Full browser re-smoke not run in DE session — RD 0.4.2 follow-up recommended
+
+**Status:** COMPLETE ✓
 
 ---
 
 ## AC#6 — Session Log + RAVC4
 
 Session log: this file.
-RAVC4 sent to 2.0.0_SA_COO at 20260504T142535Z (initial, COO ACK'd AC#1-#4 PASS).
-RAVC4 update sent to 2.0.0_SA_COO at 20260504T144500Z with SSM Success re-verify + S3 byte-exact re-confirm.
+RAVC4 to 2.0.0_SA_COO: sent 20260504T142535Z (AC#1-#4) + 20260504T144500Z (re-verify) + 20260504T153600Z (DE RAVC3 relay, AC#5 close, 3-step atomic close requested).
 
-**Status:** COMPLETE — session log current; RAVC chain active; TO marked complete; pending DE RAVC3 for COO atomic close.
+**Status:** COMPLETE ✓
 
 ---
 
