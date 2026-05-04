@@ -75,7 +75,7 @@ NOTE: DS~D attempted commit but owned-paths hook correctly blocked (CLOUD_OPS_OR
 
 ## Silver Backfill Execution
 
-### Command
+### Command — Phase 2a (Sequential, killed at 61.8%)
 
 ```bash
 python3 data/orion/scripts/silver/run_silver_backfill.py \
@@ -85,11 +85,50 @@ python3 data/orion/scripts/silver/run_silver_backfill.py \
     --resume
 ```
 
+Killed at 2678/4332 (61.8%) — ~0.5 tasks/s throughput (subprocess spawn overhead ~2s/date). Estimated 2.4h remaining.
+
+### Command — Phase 2b (Parallel, COMPLETE)
+
+```bash
+python3 data/orion/scripts/silver/run_silver_backfill_parallel.py \
+    --dims positions_mv assets_v2 \
+    --start 2020-05-26 \
+    --end 2026-04-30 \
+    --resume --workers 32
+```
+
 No `--weekdays-only`: bronze has all 2166 calendar days (AE wrote calendar-day not business-day). Matching coverage.
 
 ### Execution Results
 
-(To be populated during run.)
+| Metric | Value |
+|--------|-------|
+| Total tasks | 4332 (2166 dates × 2 dims) |
+| OK (new writes) | 1618 |
+| SKIP (already existed + 1 pre-existing) | 2714 |
+| ERR | 0 |
+| Elapsed | 537.1s (parallel phase) |
+| Avg throughput | 8.1 tasks/s (real-work phase); 97.3 tasks/s (SKIP phase) |
+| Exit code | 0 |
+
+DONE line: `[2026-05-04T16:04:18Z] DONE: ok=1618 skip=2714 err=0 total=4332 elapsed=537.1s`
+
+### S3 Validation (§7)
+
+| Dim | Expected partitions | Actual S3 count | Match |
+|-----|---------------------|-----------------|-------|
+| positions_mv | 2166 | 2166 | YES |
+| assets_v2 | 2166 | 2166 | YES |
+
+Spot check (3 dates — 2020-05-26, 2023-01-15, 2026-04-15):
+
+| Date | positions_mv rows | assets_v2 rows | snapshot_date | source_system |
+|------|-------------------|----------------|---------------|---------------|
+| 2020-05-26 | 24,148 | 24,148 | correct | orion-api |
+| 2023-01-15 | 24,148 | 24,148 | correct | orion-api |
+| 2026-04-15 | 24,148 | 24,148 | correct | orion-api |
+
+All checks passed. Phase 2 silver backfill COMPLETE.
 
 ---
 
