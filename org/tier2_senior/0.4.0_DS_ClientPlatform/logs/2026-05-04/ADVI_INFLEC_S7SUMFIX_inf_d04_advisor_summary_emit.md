@@ -173,3 +173,35 @@ RAVC4 to 2.0.0_SA_COO: sent 20260504T142535Z (AC#1-#4) + 20260504T144500Z (re-ve
 
 1. **SSM non-login shells don't source /etc/environment** — `OUTPUT_PREFIX=qa/` is in /etc/environment on the QA runner but SSM commands don't inherit it. Fix: always export OUTPUT_PREFIX=qa/ explicitly in SSM dispatch command.
 2. **build_advisor_summaries() input path bug** — initial implementation read book.json/composition.json from `{OUTPUT_PREFIX}advisors/` (= qa/advisors/ in QA mode). Correct: inputs always from `platinum/advisors/` (INF_D_02/INF_I_D03 always write to platinum). Fixed in a40365a75.
+
+---
+
+## Post-Close Coordination (20260504T153525Z–20260504T154505Z)
+
+After TO close and DE RAVC3 relay, AE 0.7.0_AE_CloudOps sent a coordination message flagging a potential double-dispatch conflict.
+
+### AE 0.7.0 Coordination Message (20260504T153525Z)
+
+AE indicated they were about to dispatch DS~B's INF chain (`INF_C_01 → INF_I_D00b → INF_D_02 → INF_D_04`) to inf-gold-layer-runner (i-0ed5afded2ebd4ed4) and asked DS~A to stand down if S7SUMFIX dispatch was still pending. AE's message stated "no SSM from you yet in history."
+
+**DS~A response (20260504T153736Z):** Clarified that PROD dispatch b4322569 already completed at 14:23Z — not pending. Flagged regression risk: if DS~B's INF_D_04 artifact (commit 09e58156d, fee_efficiency fix) does NOT include a40365a75 as ancestor, the chain dispatch would overwrite `platinum/advisors/*/summary.json` with a version missing `build_advisor_summaries()`, re-opening S7 DATA-GATE. Provided verification command (grep build_advisor_summaries on S3 artifact, expect 3+ matches).
+
+### AE 0.7.0 S3 Artifact Verification (20260504T154221Z + 20260504T154505Z)
+
+AE confirmed DS~B's chain was already dispatching. DS~A re-sent regression risk flag. AE ran the S3 artifact grep verification:
+
+```
+S3 INF_D_04 grep results:
+- build_advisor_summaries: 5 matches (exceeds 3+ threshold)
+- fee_efficiency: present
+- timeseries_overview: present
+- firm_mix_views: present
+```
+
+**Conclusion:** S3 artifact is from commit 44f073cf1 ("pin current-period AUA + fix mix views schema") — newer than both a40365a75 (S7SUMFIX) and 09e58156d (DS~B fee_efficiency). No regression risk. S7SUMFIX DATA-GATE remains CLEARED.
+
+DS~A ACK sent 20260504T154518Z. No further action required on this thread.
+
+### COO Atomic Close
+
+RAVC4 chain to COO complete (20260504T153600Z). COO 3-step atomic close of ADVI_INFLEC.S7SUMFIX TO pending COO ACK. All DS~A obligations fulfilled.
