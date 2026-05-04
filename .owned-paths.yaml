@@ -236,6 +236,31 @@ lanes:
       - 2.1.0_SA_COO
     description: "OpalETL AE + any exec (task_orders/ authoring)"
 
+  ANY_POD_OR_EXEC:
+    permitted_agents:
+      - 0.1.0_DE_MarketIntelligence
+      - 0.1.0_DS_MarketIntelligence
+      - 0.1.0_DT_MarketIntelligence
+      - 0.2.0_DE_PortfolioAnalytics
+      - 0.2.0_DS_PortfolioAnalytics
+      - 0.2.0_DT_PortfolioAnalytics
+      - 0.3.0_DE_TradingOperations
+      - 0.3.0_DS_TradingOperations
+      - 0.3.0_DT_TradingOperations
+      - 0.4.0_DE_ClientPlatform
+      - 0.4.0_DS_ClientPlatform
+      - 0.4.0_DS_ClientPlatform~A
+      - 0.4.0_DS_ClientPlatform~B
+      - 0.4.0_DS_ClientPlatform~C
+      - 0.4.0_DS_ClientPlatform~D
+      - 0.4.0_DT_ClientPlatform
+      - 0.4.2_RD_AdvisorIntelligence
+      - 1.0.0_SA_CTO
+      - 2.0.0_SA_COO
+      - 1.1.0_SA_CTO
+      - 2.1.0_SA_COO
+    description: "Any pod agent + any exec (tier3 task_orders authoring — exec dispatch + RD self-edit; ADHC_OWNPTH 48h scan FP-4 fix 2026-05-04)"
+
   SHARED_PARTNER_ETL_OR_EXEC:
     permitted_agents:
       - 0.5.0_AE_OpalETL
@@ -392,6 +417,13 @@ paths:
   # -----------------------------------------------------------------------
   # org/tier3 — tier3 junior + RD folders (any pod agent)
   # -----------------------------------------------------------------------
+  # Specific override (longest-match-wins): tier3 task_orders/*.md authoring
+  # mirrors tier2_senior pattern — exec dispatch + RD self-edit.
+  # Added 2026-05-04 per ADHC_OWNPTH 48h scan FP-4.
+  "org/tier3_junior/*/task_orders/*.md":
+    lane: ANY_POD_OR_EXEC
+    note: "Tier3 task orders — any pod or any exec (CTO/COO dispatch + RD self-edit on receipt)"
+
   "org/tier3_junior/**":
     lane: ANY_POD
 
@@ -504,6 +536,10 @@ paths:
   "data/orion/manual_api/run_backfill_orchestrator.py":
     lane: CLOUD_OPS_OR_ETL
     note: "Bronze backfill orchestrator — AE-maintained ops infra"
+
+  "data/orion/manual_api/pull_inflection_assets.py":
+    lane: CLOUD_OPS_OR_ETL
+    note: "Inflection assets puller — AE-maintained ops infra (HISTBF Wave B IAM gap fix flagged 2026-05-04 in ADHC_OWNPTH 48h scan FP-3)"
 
   "data/orion/scripts/gold/**":
     lane: POD4
