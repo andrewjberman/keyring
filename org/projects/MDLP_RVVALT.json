@@ -6,9 +6,10 @@
   "prds": [
     {"path": "docs/architecture/MDLP_RVVALT.md", "label": "RVV alternative views PRD", "date": "2026-05-04"}
   ],
-  "status": "active",
-  "phase": "Phase 1 IN FLIGHT 2026-05-04 — 5 TOs dispatched. **TO-1 (RFR spec) COMPLETE** (AE 0.5 `697e29e7e`+`80250df90`). **TO-3 (Lambda emit) COMPLETE** (AE 0.5 `e2f0a8077` `yang-v2.3.9`; rev `2c18f0c06` `yang-v2.4.0` duration-matched per-model RFR). **TO-2 (DE toggle + Sharpe + Drawdown stub-driven) COMPLETE** (DE 0.4 portal-v2.1.71 + polish v2.1.72/73/74). **TO-4 (DE wire-up + spot-check) COMPLETE** (DE wired to live model_portfolio_timeseries.json; chart entry-counts 22/65/131/261 to match weekday-only timeseries; month-end x-tick formatting). **TO-5 (DE Up/Down Capture rolling view) DISPATCHED 2026-05-04** — Andrew→Yang→AE 0.5→DE 0.4 peer-relay surfaced 19:31Z; COO formal TO authored from AE 0.5 MCP spec `20260504T193053Z`; frontend-only clone-and-extend of RollingSharpeChart pattern, no backend coord; ~0.5d.",
-  "blocking": "TO-5 in flight on DE 0.4.0 (frontend-only Up/Down Capture rolling view); ~0.5d ETA. On TO-5 close, all 5 TOs done → 3-step atomic project close.",
+  "status": "complete",
+  "completed": "2026-05-04",
+  "phase": "Phase 1 COMPLETE 2026-05-04 — 5/5 TOs shipped same-day (PRD-to-PROD ~9h burst). **TO-1 RFR spec** (AE 0.5 `697e29e7e`+`80250df90`). **TO-3 Lambda emit** (AE 0.5 `e2f0a8077` `yang-v2.3.9`; rev `2c18f0c06` `yang-v2.4.0` duration-matched per-model RFR). **TO-2 DE toggle + Sharpe + Drawdown stub-driven** (DE 0.4 portal-v2.1.71 + polish v2.1.72/73/74; status flip `225bc1982` 5 acceptance-flexes documented). **TO-4 DE wire-up + spot-check** (chart entry-counts 22/65/131/261 to match weekday-only timeseries; month-end x-tick formatting; manual Sharpe spot-check arithmetic embedded). **TO-5 Up/Down Capture rolling view** (DE 0.4 `034b29d9e` + portal `d1e66357` RollingCaptureChart; y-axis frame-active-data improvement `5a28f128`; deploy via DT 0.4 portal-v2.1.75 bump `2f4370f89`). yang-pipeline term_returns weekend+holiday-row dropouts `1c80f15e7`+`cdc2271c4` aligned rolling Sharpe to clean 252 trading days/year. **4-view toggle live in PROD** (Scatter / Rolling Sharpe / Up-Down Capture / Max Drawdown).",
+  "blocking": "None — Phase 1 COMPLETE.",
   "created": "2026-05-04",
   "pods": ["0.4", "0.5"],
   "pipeline": "yang-pipeline (model_portfolio_benchmarks Lambda extension) + portal frontend (ReturnVolatilityScatter refactor + 2 new chart components)",
