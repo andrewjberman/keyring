@@ -6,9 +6,10 @@
   "prds": [
     {"path": "docs/architecture/PORTAL_STAT_STRIP_DENSITY.md", "label": "Stat-strip density harmonization PRD (Option A)", "date": "2026-05-04"}
   ],
-  "status": "active",
-  "phase": "Phase 0: PRD complete, COO decomposition pending",
-  "blocking": "COO task order issuance (single TO suggested in PRD §6 — DASH_STSTRP.001 to 0.4.0_DE_ClientPlatform)",
+  "status": "complete",
+  "completed": "2026-05-04",
+  "phase": "**COMPLETE 2026-05-04** — single-day ship from PRD authoring to PROD push (~3.5h elapsed). DASH_STSTRP.001 (DE 0.4.0): 4-file CSS class diff applied verbatim per PRD §3 across AccountDistributionMetrics + AUMGrowthMetrics + DistributionTab.SnapshotDistributionMetrics + ConsolidatedOverviewPanel; portal commit `c9b0f649` / CLOUD `8c9255e46`; AC1-AC5 PASS via DE self-validation (4-file diff verbatim, Surface Laptop 1366x912 emulation single-row render, cross-strip consistency, behavior unchanged, typecheck + comp-transform schema-check ConsolidatedOverviewPanel clean). **AC6 confirmed by Andrew direct hardware sign-off** (skipped RD 0.4.2 fork). **PROD deployed via portal-v2.1.70** (DT 0.4 commit `48fa15709` session log; CI run 25327372442 success; DEV == PROD). DASH_STSTRP_V2 shared <MetricStrip> primitive extraction remains deferred standing-backlog until Option A bakes for one nightly cycle.",
+  "blocking": "None — project closed 2026-05-04 via 3-step atomic closure.",
   "created": "2026-05-04",
   "pods": ["0.4"],
   "pipeline": "portal (frontend only — no Lambda/EC2/Terraform impact)",
