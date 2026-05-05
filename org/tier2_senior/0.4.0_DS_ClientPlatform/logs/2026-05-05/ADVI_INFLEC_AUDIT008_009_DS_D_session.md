@@ -102,9 +102,36 @@ Audit accepted by COO as ADVI_INFINGE PRD v0.2 §5 Compiler Evidence input.
 
 ---
 
+## AUDIT-003a — Hardcoded INFLECTION_REP_IDS missing rep_id=6 (sibling fix)
+
+**Discovery:** hardcoded-mapping audit (COO parallel prework assignment ~20:00Z) surfaced 5 BUG(b) instances where `INFLECTION_REP_IDS` excluded joe_brunswick rep_id=6. Highest-priority: `INF_D_00c.portal_leaderboard.py:446` default arg — firm perf aggregate actively excluded joe from D2c chain already running.
+
+**Files fixed (4 code edits):**
+
+| File | Line | Before | After |
+|------|------|--------|-------|
+| `silver/_orion_api_silver_lib.py` | 36 | `{3, 11, 12}` | `{3, 6, 11, 12}` — ROOT |
+| `silver/convert_orion_to_silver.py` | 105 | `'inflection': {3, 11, 12}` | `{3, 6, 11, 12}` |
+| `gold/INF_D_08.nmec_nmnc_nna.py` | 17 | `frozenset({3, 11, 12})` | `frozenset({3, 6, 11, 12})` |
+| `gold/INF_D_00c.portal_leaderboard.py` | 446 | default `('3','11','12')` | `('3','6','11','12')` |
+
+`build_billing_dim.py` + `build_tax_dim.py` auto-fix via lib import — no independent patches.
+
+**Gate:** pre-commit gate PASS x4 (py_compile + AST + ruff)
+**Commit:** `202fddb3b` — pushed to CLOUD
+**S3:** all 4 files MATCH (silver/code/ + gold/code/)
+**COO RAVC4:** accepted (~20:07Z); 7-min sprint acknowledged
+
+**D2d re-fire:** AE 0.7 routing `--from INF_D_00c` post D2c completion to produce joe-inclusive leaderboard.json + INF_D_08 nmec/nmnc artifacts.
+
+---
+
 ## Commits This Session
 
-None (DS~D investigation-only session; RPBKTPI.001 fix committed by DS~C as `7f584ef7c`).
+| Commit | Message | Status |
+|--------|---------|--------|
+| `14cb47db3` | log(AUDIT-008/009): DS~D session log | PUSHED |
+| `202fddb3b` | fix(ADVI_INFLEC): AUDIT-003a rep_id=6 — 4 files | PUSHED |
 
 ---
 
@@ -112,7 +139,8 @@ None (DS~D investigation-only session; RPBKTPI.001 fix committed by DS~C as `7f5
 
 | Item | State | Owner |
 |------|-------|-------|
-| dashboard.json total_aua ~$199M | PENDING D2 chain-full | AE 0.7 / tonight |
-| RPBKTPI.001 AC4 (period_start_aua non-null per advisor) | PENDING chain-full | DS~D tomorrow |
-| ADVI_INFINGE Phase 1 TO authoring | PENDING AE 0.7 D1d root cause verdict | COO |
-| matrix v9/v10 cross-validation | PENDING chain-full + DS~A v9 patch | DS~D tomorrow |
+| dashboard.json total_aua ~$199M | PENDING D2c→D2d chain | AE 0.7 / tonight |
+| leaderboard.json joe-inclusive (AUDIT-003a) | PENDING D2d --from INF_D_00c | AE 0.7 / tonight |
+| RPBKTPI.001 AC4 (period_start_aua non-null per advisor) | PENDING D2d complete | DS~D tomorrow |
+| matrix v9/v10 cross-validation | PENDING D2d + DS~A patch | DS~D tomorrow |
+| ADVI_INFINGE Phase 1 TO authoring | PENDING | COO |
