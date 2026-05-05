@@ -15,7 +15,7 @@ PROD runner `i-0ed5afded2ebd4ed4`. Andrew sprint directive (~19:50Z):
 
 ---
 
-## 6 Ops Findings (Structural, Carry-Forward to TO 1a-2 + 1a-3)
+## 7 Ops Findings (Structural, Carry-Forward to TO 1a-2 + 1a-3)
 
 ### Finding 1 — gold-runner has no checked-out repo
 
@@ -77,6 +77,22 @@ the instance alive indefinitely through inter-step gaps.
 chain D2c (started INF_C_00 at 20:04Z).
 
 **TO capture:** TO 1a-2 (deployment pattern doc — canonical heartbeat pattern)
+
+### Finding 7 — chain end-of-run shutdown fires independent of heartbeat
+
+The heartbeat only guards against the WATCHDOG shutdown trigger. It does NOT protect
+against the dispatch script's own end-of-run `sudo shutdown` call at CHAIN COMPLETE.
+Runner stopped after D2d completion (20:23Z) despite heartbeat PID 3046 being alive.
+
+**Workaround (tonight):** issue `sudo shutdown -c` via SSM immediately after `--bg` launch
+before the 2-minute end-of-run countdown elapses.
+
+**Three structural fix candidates** (TO 1a-3 scope):
+- (a) Heartbeat issues `shutdown -c` continuously (defensive cancel loop)
+- (b) Patch dispatch script to skip auto-shutdown when guard file (`.no_auto_shutdown`) exists
+- (c) `--no-shutdown` flag on dispatch script for chained `--from X` invocations
+
+**TO capture:** TO 1a-2 (deployment pattern doc) + TO 1a-3 (watchdog/shutdown guard pattern)
 
 ---
 
