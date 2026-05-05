@@ -214,7 +214,7 @@ When researching for a PRD, you should:
 
 **Commit only:** `docs/architecture/` specs, `org/projects/` files, session logs, org docs. Use `--author="1.0.0_SA_CTO <1.0.0_SA_CTO@opal.agent>"`.
 
-## Project Status Dashboard -- Updated 2026-05-05 (session 9 startup reconciliation: ADVI_INFLEC matrix v8 shipped `db9b70ecf` — AUDIT-007 GRAY-by-design close; AUDIT-008 Option 1 conditional ratify routed to COO + AE 0.6.1; BD scraper modal-dismiss halt CLEARED on `d5522276c`. Matrix v7 from session 8 was AUDIT-006 close `15322b926`. Authoritative source: `org/projects/REGISTRY.md`; this dashboard is CTO working memory only.)
+## Project Status Dashboard -- Updated 2026-05-05 (session 9 EOD reconciliation: ADVI_INFLEC matrix v8 (`db9b70ecf`) + v9 partial (`407cb2928`) shipped — AUDIT-007 + INFLFE.005 closed; AUDIT-008 Option-1→C→C-gold→Lambda-native progression + ABSORBED into ADVI_INFINGE Phase 1; ADVI_INFINGE registered + PRD v0.1 (`eca091adc`) + v0.1.1 patch shipped; Andrew strategic redirect 19:32Z pivots from surgical $199M-tonight to comprehensive catch-up + Phase 1 buildout; slip-to-tomorrow accepted. AE 0.6.1 broker-stuck-on-old-context twice today → `feedback_deep_work_cron_backstop.md` authored. BD scraper modal-dismiss halt CLEARED on `d5522276c`. Authoritative source: `org/projects/REGISTRY.md`; this dashboard is CTO working memory only.)
 
 ### Active Projects
 
