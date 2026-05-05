@@ -135,6 +135,12 @@ correctly 18:12Z) serves as Phase 1+2 verification. AC4 deferred to tomorrow.
 Tomorrow trigger: AE 0.7 RAVC4 (silver paths corrected) → AE re-fires chain-full from INF_B_00
 → DS~C verifies `platinum/firm/leaderboard.json` MAX window → RAVC5 close → DS~B takes RPBKTPI.002.
 
+**CORRECTION (COO 20260505T193500Z):** D2 chain-full was HALTED by AE 0.7 at ~19:30Z (PIDs 2944+3152
+killed). Root cause: `_orion_api_silver_lib.py` at S3 was stale (flat path schema vs. Hive path);
+D1d wrote flat-schema silver → INF_B_00 reads Hive path → chain fired against mismatched silver.
+Fix `7f584ef7c` unaffected — point-in-time accounts_v2 logic is correct. AE 0.7 firing Dispatch 1e
+(silver re-convert with fresh lib) then D2 re-fire. Tomorrow's verify lands on corrected state.
+
 ---
 
 ## Carry-forwards
