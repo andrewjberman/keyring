@@ -135,12 +135,48 @@ Audit accepted by COO as ADVI_INFINGE PRD v0.2 §5 Compiler Evidence input.
 
 ---
 
+## D2c Empirical Results (20:19Z)
+
+from_INF_C_00 completed 20:19Z. Key findings:
+
+| Artifact | AUA | generated_at | Status |
+|----------|-----|-------------|--------|
+| leaderboard.json | $199,649,186 | 20:18:41Z | PASS — 4 advisors incl. joe |
+| dashboard.json | $182,552,380 | 20:18:26Z | FAIL — still stale |
+| header_metrics.json | $182,552,380 | 20:19:10Z | FAIL — gold/holdings source |
+| nmec_nmnc_nna.json | $198,867,318 (bronze) | 20:19:44Z | OK — bronze-direct |
+
+**Root cause of dashboard.json stale AUA:** Chain ran `from_INF_C_00` — skipped INF_B_00/INF_B_01. `gold/holdings/` max = 2026-04-28. `silver/api_dims/positions_mv/` HAS May 1-5 Hive partitions but INF_B_00 has not processed them.
+
+**AUDIT-003a leaderboard PASS:** 4 entries in all windows (QTD/YTD/MAX). joe_brunswick/joe_brandenburg present.
+
+### RPBKTPI.001 AC4 Cross-Validation
+
+| Advisor | QTD period_start_aua | YTD | MAX |
+|---------|---------------------|-----|-----|
+| Peter Lee | $3,732,424 PASS | None FAIL | None FAIL |
+| Patrick Scanlan | $266,118 PASS | None FAIL | None FAIL |
+| Joe Brandenburg | None FAIL | None FAIL | None FAIL |
+| Firm (aggregate) | None | None | None |
+| lifecycle_aua | 0.0 all advisors all windows — suspect |
+
+**Joe QTD None root cause:** `silver/api_dims/performance/` max = 2026-04-28; pre-AUDIT-003a partitions excluded rep_id=6. Need silver performance regeneration with rep_id=6.
+
+**YTD/MAX all-None root cause:** performance dim likely has no 2026-01-01 anchor. DS~C to assess.
+
+Dispatched: COO + DS~C + AE 0.7 20260505T202248Z. AE 0.7 chain-full `from_INF_B_00` requested.
+
+---
+
 ## Open Items / Next Session
 
 | Item | State | Owner |
 |------|-------|-------|
-| dashboard.json total_aua ~$199M | PENDING D2c→D2d chain | AE 0.7 / tonight |
-| leaderboard.json joe-inclusive (AUDIT-003a) | PENDING D2d --from INF_D_00c | AE 0.7 / tonight |
-| RPBKTPI.001 AC4 (period_start_aua non-null per advisor) | PENDING D2d complete | DS~D tomorrow |
-| matrix v9/v10 cross-validation | PENDING D2d + DS~A patch | DS~D tomorrow |
+| dashboard.json total_aua ~$199M | PENDING chain-full from INF_B_00 | AE 0.7 |
+| gold/holdings/2026-05-05.parquet | PENDING INF_B_00 run | AE 0.7 |
+| leaderboard.json joe-inclusive (AUDIT-003a) | COMPLETE — $199.6M, 4 advisors | CLOSED |
+| RPBKTPI.001 AC4 joe QTD period_start_aua | PENDING silver/performance regen w/ rep_id=6 | AE 0.7 + DS~C |
+| RPBKTPI.001 AC4 YTD/MAX all-None | PENDING DS~C assessment | DS~C |
+| lifecycle_aua all-zeros | PENDING investigation | DS~C |
+| matrix v9/v10 cross-validation | PENDING DS~A patch | DS~D |
 | ADVI_INFINGE Phase 1 TO authoring | PENDING | COO |
