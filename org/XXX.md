@@ -95,6 +95,31 @@ agent ONLY fires for processes launched via the Bash tool with
 `run_in_background: true`. A `&` process runs invisibly, exits invisibly, and
 the agent is deaf for the rest of the session. Incident: 0.6.0_AE 2026-04-20.
 
+**BANNED: untracked auto-respawns.** If an `inbox-watch.sh` process is running
+that you did NOT launch via the Bash tool with `run_in_background: true` this
+session (respawn from a stale CronCreate, a prior session's orphan, or any
+other auto-spawn mechanism), it is **deaf** — its stdout is disconnected from
+the Claude Code task tracker, so its exit will NOT fire a task-notification
+and inbox files it wins via the atomic `mv` race are silently swallowed. An
+untracked watcher appears to be working but is silently masking missed
+deliveries.
+
+**Required response when you observe an untracked watcher:** kill the untracked
+PID, then immediately launch a tracked watcher in the same turn so it shows up
+in the session task tracker. Steps:
+
+1. Identify the orphan PID via `ps -ef | grep '[i]nbox-watch'`.
+2. `kill <pid>` (or `kill <pid1> <pid2>` for multiple PIDs).
+3. Relaunch via the Bash tool with `run_in_background: true` (NOT shell `&`).
+
+Two simultaneous watchers = orphan race (one wins the atomic `mv`; the others'
+deliveries are lost). Correct state is exactly one tracked watcher, OR zero
+watchers + `check_inbox` pulled at the top of every turn. Untracked watchers
+are ALWAYS WRONG, even when they look like they are running fine.
+Andrew empirical 2026-05-05: "the respawn auto-launched at 334721. I need to
+kill that too, then immediately launch a tracked watcher via run_in_background
+so it shows in the session." This rule formalizes that pattern.
+
 **BANNED for `feature_clb`-scope agents (the COMP_LEARNS team —
 `1.1.0_SA_CTO`, `1.1.0`/`1.2.0`/`1.3.0`/`1.4.0_DS_CompLearns`,
 `2.1.0_SA_COO`, `2.1.0_SC_CompLearns`): launching `inbox-watch` via the
