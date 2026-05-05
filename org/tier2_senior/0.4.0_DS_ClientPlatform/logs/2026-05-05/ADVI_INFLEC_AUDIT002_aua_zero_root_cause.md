@@ -154,6 +154,23 @@ This is a pipeline re-run, not a code bug.
 | Item | Status |
 |------|--------|
 | AUA=0 root cause | CONFIRMED (Type B — stale canonical_prices.parquet) |
-| RAVC3 to COO | PENDING (this session) |
+| RAVC5 to COO | SENT (20260505T140749Z) |
 | Code fix required | NO — pipeline re-run only |
-| Inbox watcher | LIVE (task bwoyimvoh) |
+| All 4 fix steps | COMPLETE |
+
+---
+
+## Fix Execution Results (Step 1-4)
+
+| Step | Action | Result |
+|------|--------|--------|
+| 1 | backfill_yahoo_prices.py | 4,927,223 rows, 3,096 tickers through 2026-05-05 |
+| 2 | INF_build_canonical_prices.py | 1,241,770 rows, 2020-05-26 → 2026-05-05 |
+| 3 | INF_B_01 --start-date 2026-04-23 --upload | 6 partitions, 56,167 rows; 2026-04-28 spot-check: 9,291/9,295 non-NaN market_value, AUA $189.2M |
+| 4a | INF_D_05 --upload | activity_scan.json: 307 rows, 295/307 non-zero AUA ($161–$4.47M) GREEN |
+| 4b | INF_D_06 --upload | cash_drag.json: 295 rows, 295/295 non-zero AUA, 288/295 non-zero cash_pct GREEN |
+| 4c | INF_D_07 --upload | concentration_risk.json: 295 rows (non-empty), all non-zero AUA, risk_tier classification present GREEN |
+
+**concentration_risk secondary finding resolved:** compiler graph listed `silver/accounts_dim/latest.parquet` as INF_D_07 read, but runtime path is `gold/dimensions/accounts_dimension_latest.parquet` (same as D_05/D_06). Account_id mismatch was a graph-index artifact, not a runtime issue. Artifact emitted correctly.
+
+**AC3 PASS:** activity_scan 295/307 non-zero AUA; cash_drag 295/295 non-zero AUA + 288/295 non-zero cash_pct; concentration_risk array length 295.
