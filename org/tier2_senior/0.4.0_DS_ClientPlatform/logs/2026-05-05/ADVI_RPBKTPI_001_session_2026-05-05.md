@@ -125,6 +125,40 @@ back to oldest available = same attribution as @latest.
 
 Escalated to COO at 20260505T202342Z for scope ruling.
 
+### AC4 Re-verification — D3g leaderboard (20260505T214727Z)
+
+Leaderboard flipped at 21:45:55Z (D3g, attempt #6). Full re-read executed.
+
+**MAX window — all 4 advisors (FAIL — same as D2d):**
+| Advisor | period_start_aua | aua_growth_pct | lifecycle_aua | Verdict |
+|---------|-----------------|----------------|---------------|---------|
+| peter_lee | None | None | {nmnc:0,nmec:0,existing:0} | FAIL |
+| patrick_scanlan | None | None | {nmnc:0,nmec:0,existing:0} | FAIL |
+| joe_brunswick | None | None | {nmnc:0,nmec:0,existing:0} | FAIL |
+| inflection_wealth_management | None | None | {nmnc:0,nmec:0,existing:0} | FAIL |
+
+**YTD window:** all None (same as D2d)
+
+**QTD window:**
+| Advisor | period_start_aua | aua_growth_pct |
+|---------|-----------------|----------------|
+| peter_lee | $3,732,424.29 | +4213.98% |
+| patrick_scanlan | $266,118.11 | +7638.08% |
+| joe_brunswick | None | None |
+| inflection_wealth_management | None | None |
+
+**CRITICAL REGRESSION vs D2d:**
+| Field | D2d (20:18:41Z) | D3g (21:45:55Z) |
+|-------|-----------------|-----------------|
+| total_aua | $182,552,380.96 | None |
+| advisor_count | non-null | None |
+| QTD window_start | 2026-04-01 | None |
+| QTD window_end | 2026-05-05 | None |
+
+Root cause hypothesis: 202fddb3b (rep_id=6 added to INFLECTION_REP_IDS) introduced NaN propagation when joe_brunswick data is included in total_aua computation. D2d ran without 202fddb3b; D3g ran with it.
+
+RAVC5'' sent to COO + DS~D at 20260505T214727Z. DS~D hold on Bug A+C ship requested pending regression investigation.
+
 ---
 
 ## Compiler Tools
@@ -168,6 +202,10 @@ to close tonight. Chain attempts summary:
 | D2b (chain-full from INF_B_00) | `6ed5053d` | 19:38Z | 20:02:56Z | KILLED — auto-shutdown (24 min; instance restart LaunchTime 20:02:56Z); gold/canonical/holdings_2026-05-01..05-05 + lots + account_gains to 2026-04-28 WRITTEN |
 | D2c (from INF_C_00) | `fd4434c3` | 20:04:40Z | ~20:09Z | Heartbeat watchdog deployed by AE 0.7 (PID 3046); wrote canonical_performance 2019-09-17→2023-10-02; CRASHED at 2023-10 — root cause unknown |
 | D2d (from INF_D_00c) | NOT DISPATCHED | — | — | AE 0.7 received D2d FIRE GO at 20:10Z and went dark; no SSM issued |
+| D3 (B-chain from INF_B_00) | `b11a34e2` | 20:45Z | 20:45Z | B-chain CONFIRMED; C/D stalled — SSM SIGHUP killed heartbeat+guard; watchdog fired shutdown |
+| D3 C-chain re-fire (attempt 1) | — | 21:11Z | 21:16Z | INF_C_00 wrote 2019-09→2024-08-04; SIGHUP kill at 21:16Z (nohup not yet applied) |
+| D3f (C-chain nohup fix) | — | ~21:30Z | ~21:37Z | Another stall; killed at 2024-08 again — root cause SIGHUP per AE 0.7 investigation |
+| D3g (attempt #6, nohup+guard) | — | ~21:37Z | 21:45:56Z | SUCCESS — canonical_perf 2019→2026-04-28 written; leaderboard.json 21:45:55Z |
 
 **DS~D companion fix (commit 202fddb3b, 20260505T~200600Z):** rep_id=6 (joe_brunswick) was absent
 from hardcoded `INFLECTION_REP_IDS` frozenset in 4 files. Fix shipped: `_orion_api_silver_lib.py`,
@@ -183,9 +221,9 @@ from hardcoded `INFLECTION_REP_IDS` frozenset in 4 files. Fix shipped: `_orion_a
 
 ## Carry-forwards
 
-1. **ADVI_LDRBRD.001 TO** — DS~D Phase 0 audit 20260505T203035Z identified 3 INF_D_00c bugs with fix paths: Bug A (MAX _aua_at_start fallback), Bug C (accounts_v2_dim wiring for lifecycle_aua). Bug B (YTD semantics: fallback vs accept None) needs spec. DS~D ready to author.
-2. **D3 chain-full** — AE 0.7 targeted ~20:35Z but went dark at 20:32Z; no D3 output. Tomorrow: AE re-fire with auto-shutdown suppression fix (7th ops finding).
-3. **RPBKTPI.001 close ruling** — COO to confirm RPBKTPI.001 mechanically closed; Bugs A/B/C in INF_D_00c are separate scope.
-4. **RPBKTPI.002** — DS~B cleanup (INF_I_D03 L560-565 workaround no-op); gates on RPBKTPI.001 close ruling.
-5. **SL-P1c night 1 reschedule** — BD nightly 21:53Z did not run; BD runner health check needed.
-6. **DS~A matrix v10** — holding for D3 empirical + RPBKTPI.001 close ruling.
+1. **202fddb3b total_aua regression** — D3g leaderboard shows total_aua=None (D2d had $182M). Hypothesis: rep_id=6 NaN propagation. DS~D investigating. BLOCKS Bug A+C ship.
+2. **ADVI_LDRBRD.001 TO** — DS~D pre-authored Bug A+C; on HOLD pending regression investigation + COO scope ruling. Bug B YTD semantics spec still needed.
+3. **RPBKTPI.001 close ruling** — COO to confirm RPBKTPI.001 mechanically closed; INF_D_00c bugs are separate scope.
+4. **RPBKTPI.002** — DS~B (INF_I_D03 L560-565 workaround cleanup); gates on RPBKTPI.001 close ruling.
+5. **SL-P1c Night 1** — COMPLETE (BD chain 04:00Z, shadow 593 rows, 74 non-cash accounts, AC#2 Jones PASS $21,542.23). Nights 2-3 pending.
+6. **DS~A matrix v10** — holding for RPBKTPI.001 close ruling + ADVI_LDRBRD.001 ship + D4 RAVC.
