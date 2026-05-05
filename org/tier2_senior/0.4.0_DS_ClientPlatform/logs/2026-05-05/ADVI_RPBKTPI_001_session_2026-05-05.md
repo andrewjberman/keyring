@@ -4,7 +4,7 @@
 **Agent:** 0.4.0_DS_ClientPlatform~C
 **Date:** 2026-05-05
 **Task Order:** ADVI_RPBKTPI.001 — INF_B_00 accounts_v2 point-in-time fix
-**Status:** AC4 PENDING TOMORROW — D2d not dispatched (AE 0.7 dark); leaderboard.json still 2026-05-04; BD nightly did not run
+**Status:** AC4 FAIL — chain completed (leaderboard 20:18:41Z) but period_start_aua null in MAX/YTD; separate INF_D_00c fix needed; BD nightly missed
 
 ---
 
@@ -99,12 +99,31 @@ AC4 requires reading `platinum/firm/leaderboard.json` post-chain and confirming:
 - MAX-window `period_start_aua` non-null for all 4 advisors
 - `aua_growth_pct` in plausible range (pre-fix showed +4213%/+7522% anomalies)
 
-| Advisor | pre-fix period_start_aua | post-fix period_start_aua | aua_growth_pct | Verdict |
-|---------|--------------------------|---------------------------|----------------|---------|
-| inflection_wealth_management | PENDING | PENDING | PENDING | PENDING |
-| peter_lee | PENDING | PENDING | PENDING | PENDING |
-| patrick_scanlan | PENDING | PENDING | PENDING | PENDING |
-| joe_brandenburg | PENDING | PENDING | PENDING | PENDING |
+Empirical read: leaderboard.json generated_at 2026-05-05T20:18:41Z (D2d chain with 202fddb3b fix).
+Dashboard: total_aua=$182,552,380.96 (generated_at 2026-05-05T20:22:50Z).
+2171 canonical holdings files refreshed (2020-05-26 → 2026-05-05).
+
+**QTD window:**
+
+| Advisor | period_start_aua | aua_growth_pct | Verdict |
+|---------|-----------------|----------------|---------|
+| peter_lee | $3,732,424.29 | +4213.98% | ANOMALOUS — accounts_v2 only to 2026-04-28; QTD start still uses oldest available = no attribution change |
+| patrick_scanlan | $266,118.11 | +7638.08% | ANOMALOUS — same root |
+| joe_brandenburg | None | None | MISSING — check accounts_v2 coverage |
+| inflection_wealth_management | None | None | MISSING |
+
+**YTD window:** all period_start_aua = None, aua_growth_pct = None  
+**MAX window:** all period_start_aua = None, aua_growth_pct = None, lifecycle_aua = {nmnc:0, nmec:0, existing:0}
+
+**AC4 Verdict: FAIL**
+
+RPBKTPI.001 fix (7f584ef7c) is mechanically correct — point-in-time accounts_v2 join
+confirmed working. Persisting nulls in YTD/MAX are a **separate INF_D_00c.portal_leaderboard.py
+bug** (COO cascade scope item, DS~A matrix v10 PENDING marker line 122). QTD anomalous growth
+unchanged because accounts_v2 only available from 2026-04-28; QTD start (2026-04-01) falls
+back to oldest available = same attribution as @latest.
+
+Escalated to COO at 20260505T202342Z for scope ruling.
 
 ---
 
@@ -164,8 +183,7 @@ from hardcoded `INFLECTION_REP_IDS` frozenset in 4 files. Fix shipped: `_orion_a
 
 ## Carry-forwards
 
-1. **AC4 verification** — D2d --from INF_D_00c on inf-gold-layer-runner (with heartbeat watchdog + 202fddb3b fix already in S3); DS~C verifies leaderboard.json MAX-window period_start_aua non-null for all 4 advisors including joe_brunswick
-2. **RAVC5 to COO** — CC DS~B + DS~A + DS~D with full evidence package post-AC4
-3. **RPBKTPI.002 cleanup** — INF_I_D03 L560-565 workaround is now no-op; routes to DS~B per COO
-4. **SL-P1c night 1 reschedule** — BD nightly 21:53Z did not run; investigate BD runner status; night 1 observation pending next successful BD nightly
-5. **D2c crash investigation** — canonical_performance stopped at 2023-10-02; root cause unknown (OOM? missing data? watchdog second fire?); AE to diagnose on D2d re-fire attempt
+1. **INF_D_00c follow-on fix** — period_start_aua null in YTD/MAX requires separate INF_D_00c.portal_leaderboard.py fix; COO to scope TO (DS~B or DS~D per COO ruling 20260505T202342Z RAVC5-PARTIAL)
+2. **RPBKTPI.002 scope ruling** — awaiting COO confirmation that DS~B can ship RPBKTPI.002 independently of AC4 INF_D_00c fix
+3. **SL-P1c night 1 reschedule** — BD nightly 21:53Z did not run; investigate BD runner health; night 1 observation pending next successful BD nightly
+4. **DS~A matrix v10** — holding for COO scope ruling; period_start_aua PENDING marker in working tree
