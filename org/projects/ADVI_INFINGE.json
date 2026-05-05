@@ -1,0 +1,25 @@
+{
+  "project_code": "ADVI_INFINGE",
+  "macro_code": "ADVI",
+  "name": "Inflection Ingestion Daily Automation",
+  "description": "All Inflection bronze prefix pulls automated daily without manual intervention. DS~D bronze state audit (2026-05-05) confirms ZERO of 6+ Inflection bronze prefixes are scheduled — every pull script lives in data/orion/manual_api/, none on cron / EventBridge / Lambda schedule. Phase B silver chain Lambda runs daily but consumes whatever bronze partitions happen to exist, producing silent staleness. Same systemic failure class produced AUDIT-002 (canonical_prices 2 weeks stale), AUDIT-008 (silver/assets_v2 5 days stale), and the AUDIT-008 INF_B_00 blocker (silver/api_dims/positions_mv 5 days stale) — three same-class incidents in two weeks. Andrew P1 directive 2026-05-05T~17:52Z: 'daily pulls on ALL INGESTION PIPELINES is priority #1.'",
+  "prds": [],
+  "source_brief": "COO escalation 20260505T~17:52Z (forwarding Andrew P1 directive); DS~D bronze state audit RAVC during AUDIT-008 cycle.",
+  "status": "active",
+  "phase": "Phase 0 — AE 0.6.1 audit GOed by COO 2026-05-05 (~1-2h horizon). Tactical PATH A 5-day positions backfill in flight by AE 0.6.1 (operational bridge, not permanent fix; mirrors AUDIT-008 backfill pattern). PATH B (INF_B_00 silver/assets_v2 fallback) DEFERRED per CTO ruling — fix upstream automation gap, do not wrap downstream with stale-input fallbacks. PRD authoring queued post-Phase 0 audit (CTO authors with audit findings as §5 Compiler Evidence baseline; COO decomposes Phase 1 TOs).",
+  "blocking": "Phase 0 audit RAVC inbound from AE 0.6.1. Phase 1 per-prefix automation TOs follow audit (3-5 expected). PATH B revisit gates on Phase 0 surfacing positions_mv automation as fundamentally fragile (vendor API limits / rate limits / complex auth) — default ruling stays 'fix upstream'.",
+  "created": "2026-05-05",
+  "pods": ["0.6.1", "0.7"],
+  "pipeline": "inf-pipeline",
+  "lanes": ["0.6.1_AE_PartnerETL", "0.7.0_AE_CloudOps"],
+  "lane_note": "AE 0.6.1 LEAD — owns Inflection bronze pull script set + per-prefix scheduling decisions. AE 0.7 SECONDARY — EventBridge rule authoring + IAM role updates + cross-resource Terraform if needed. CTO directive: prefer EventBridge cron rules over CronCreate scaffolding (one ingestion → one trigger, observable via CW Metrics + CW Alarms; CronCreate is the operator scaffolding pattern, not the production pattern). Each prefix gets its own observability surface.",
+  "waves": [
+    {"id": "P0", "label": "Audit — enumerate every Inflection bronze prefix + current schedule state + automation gaps + per-prefix runtime characteristics + IAM/resource gaps. RAVC = audit deliverable + Phase 1 TO scope sketch.", "owners": ["0.6.1_AE_PartnerETL"], "target_tag": "—"},
+    {"id": "P1", "label": "Per-prefix automation — 3-5 TOs (estimated). EventBridge cron rules + Lambda dispatchers OR direct EC2 scheduled SSM. Bundled IAM grants. Per-prefix CW alarms on freshness.", "owners": ["0.6.1_AE_PartnerETL", "0.7.0_AE_CloudOps"], "target_tag": "inf-pipeline-v1.7.X"},
+    {"id": "P2", "label": "Cross-prefix freshness dashboard + alarming consolidation (optional; depends on P1 emergent observability needs).", "owners": ["0.7.0_AE_CloudOps"], "target_tag": "—"}
+  ],
+  "depends_on": ["ADVI_INFLEC.AUDIT-008"],
+  "depends_on_note": "AUDIT-008 PERM TO (C-gold sentinel + bundled IAM, COO authoring) is structurally adjacent — that ships assets_v2 daily automation as a single-prefix instance of the broader pattern this project generalizes. AUDIT-008.PERM may absorb into ADVI_INFINGE Phase 1 if COO judges scope-merge cleaner; default keep separate so AUDIT-008 closes independently.",
+  "thread_counter": 0,
+  "threads": []
+}
