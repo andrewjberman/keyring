@@ -12,8 +12,8 @@
   ],
   "source_brief": "ADVI_INFLEC.AUDIT-001 matrix v3 (73e6d100d) + Andrew directive 2026-05-04 'mapping is the risk surface for breakage; PRD for pod 4 team to connect to proper back end'.",
   "status": "active",
-  "phase": "Phase 0 — PRD authored 2026-05-04 by 1.0.0_SA_CTO; 5 TO candidates defined (TO-1 DE L3 probe, TO-2 DE envelope sentinels, TO-3 DE pre-wire RED cells, TO-4 RD Playwright sweep, TO-5 DT Lambda contracts). Pending COO decomposition + dispatch.",
-  "blocking": "COO TO authoring + dispatch. TO-1 starts immediately; TO-2 gates on TO-1 (envelope shape known); TO-3 starts in parallel (defensive rendering does not gate on data lanes); TO-4 gates on TO-1+TO-2+TO-3 ship; TO-5 fully parallel.",
+  "phase": "Phase 1 — 5 of 5 TOs SHIPPED 2026-05-05 (single-day from PRD). PRD authored 2026-05-04 by 1.0.0_SA_CTO; COO decomp + dispatch 9aacf4b4f 2026-05-05; status flips committed by COO 53a5884b2. TO-1 DE COMPLETE (fc88893a + 947b78bf8 + 5799c7f79 + portal cffacb3e3; absorbed AUDIT-004; comp-iam extract_iam.py source_dir mismatch fix). TO-2 DE COMPLETE (43dbfeac9 + portal 72a6c1f4 via ed3e4279b — envelope-contract sentinels on ClientsTab + AdvisorBookView + InflectionInsightsPanel). TO-3 DE COMPLETE (d52d04a0 + 6fd66973 + f9636030d + portal 5af3a8b7f — allAuaZero guards + 404-tolerant 4-cell stub). TO-4 RD 0.4.2 COMPLETE (61479f24e + portal cffacb3e3 at a0c5d0d6 — Playwright sweep + matrix v6 Render column + constitution doc at portal/.frontend-dev/testing/inflection_advisor_intelligence.md). TO-5 DT COMPLETE (8133e44b4 + 94f8d45f9 + 7b9faf038 — opal-partners-data envelope sentinels + comp-iam graph fix; CW Opal/InflectionSentinels observability mode live).",
+  "blocking": "None — sibling ADVI_INFLEC AUDIT-002/004/005/006 lanes have all flipped GREEN where in-scope; defensive guards lift automatically. AUDIT-003 silver gap remains in ADVI_INFLEC scope (does not block INFLFE — defensive paths absorb empty top_holdings cleanly).",
   "created": "2026-05-04",
   "pods": [
     "0.4"
