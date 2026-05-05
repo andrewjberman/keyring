@@ -1,0 +1,34 @@
+{
+  "project_code": "ADVI_INFLFE",
+  "macro_code": "ADVI",
+  "name": "Inflection FE Backend Wiring Hardening (Pod 4)",
+  "description": "Pod 4 frontend lane comprehensive backend-mapping audit + fix wave for firmId=inflection portal surface. Spawned from ADVI_INFLEC.AUDIT-001 matrix v3 (73e6d100d) — vendor + infra both ruled out as risk surfaces; mapping is now the only risk surface for breakage. Five TOs across DE 0.4 / RD 0.4.2 / DT 0.4 covering: L3 client_summary Lambda probe + adapter decision (TO-1 absorbs AUDIT-004); envelope contract sentinels on 3 highest-risk components ClientsTab/AdvisorBookView/InflectionInsightsPanel (TO-2); pre-wire defensive rendering for 8 RED cells before AUDIT-002..006/RPBKTPI data lanes flip them live (TO-3); INFLEC AdvisorIntelligence Playwright render-column verification + RD constitution (TO-4); opal-partners-data Lambda response-shape sentinels + compiler-graph indexer remediation (TO-5). 2-3 day parallel arc.",
+  "prds": [
+    {
+      "path": "docs/architecture/INFLEC_FE_BACKEND_WIRING.md",
+      "label": "INFLEC FE Backend Wiring Hardening (Pod 4)",
+      "date": "2026-05-04"
+    }
+  ],
+  "source_brief": "ADVI_INFLEC.AUDIT-001 matrix v3 (73e6d100d) + Andrew directive 2026-05-04 'mapping is the risk surface for breakage; PRD for pod 4 team to connect to proper back end'.",
+  "status": "active",
+  "phase": "Phase 0 — PRD authored 2026-05-04 by 1.0.0_SA_CTO; 5 TO candidates defined (TO-1 DE L3 probe, TO-2 DE envelope sentinels, TO-3 DE pre-wire RED cells, TO-4 RD Playwright sweep, TO-5 DT Lambda contracts). Pending COO decomposition + dispatch.",
+  "blocking": "COO TO authoring + dispatch. TO-1 starts immediately; TO-2 gates on TO-1 (envelope shape known); TO-3 starts in parallel (defensive rendering does not gate on data lanes); TO-4 gates on TO-1+TO-2+TO-3 ship; TO-5 fully parallel.",
+  "created": "2026-05-04",
+  "pods": [
+    "0.4"
+  ],
+  "pipeline": "portal (frontend) + opal-partners-data Lambda (DT app-layer scope only)",
+  "lanes": [
+    "0.4.0_DE_ClientPlatform",
+    "0.4.2_RD_AdvisorIntelligence",
+    "0.4.0_DT_ClientPlatform"
+  ],
+  "lane_note": "DE 0.4 owns TO-1 + TO-2 + TO-3 (frontend mapping + sentinels + defensive rendering). RD 0.4.2 owns TO-4 (Playwright sweep + AdvisorIntelligence-page constitution under portal/.frontend-dev/testing/). DT 0.4 owns TO-5 (opal-partners-data Lambda response-shape assertions + comp-graph indexer fix). No DS or AE lane involvement (data + infra are sibling lanes under ADVI_INFLEC).",
+  "depends_on": [
+    "ADVI_INFLEC"
+  ],
+  "depends_on_note": "Sibling — pod 4 FE work proceeds parallel to ADVI_INFLEC AUDIT-002..006 data-lane follow-ons. TO-3 defensive rendering becomes flip-live for affected cells when each data lane lands. ADVI_RPBKTPI (rep_bucket point-in-time fix) requires zero FE change once it lands — TO-3 defensive paths absorb it cleanly.",
+  "thread_counter": 0,
+  "threads": []
+}
