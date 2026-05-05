@@ -163,9 +163,40 @@ AE notified via MCP.
 
 ---
 
+## AUDIT-006 Phase 2 — COMPLETE (addendum, 2026-05-05 session resume)
+
+AE SSM 0bbbd1f8 dispatched INF_I_D00c on inf-gold-qa-runner @ 15:22:41Z.
+S3 artifact: `platinum/firm/cumulative_chart.json` generated_at 2026-05-05T15:22:58Z (47,783 bytes).
+
+**S3 verify:**
+```
+geo_drill present: True
+geo_drill len: 1
+geo_drill state keys: ['Other']
+categories: ['Unknown']
+data len: 106
+date range: 2024-04-28 -> 2026-04-28
+```
+
+**AC1 status:** PASS — geo_drill key present and non-empty (len=1). 'Other' state emitted (firm-level
+  aggregation — Inflection 4-advisor geography produces a single 'Other' bucket). City column shows
+  'Unknown' (accounts_v2 city data gap — non-blocking data quality note, not a FE crash).
+
+**AC2:** PASS (manual) — S3 ls confirmed 20.0 KiB re-upload post-IAM fix; comp-pipescript targets
+  opal-data-bd not opal-data-inf (tool limitation; manual substitution applied).
+
+**AC3:** PASS — session log compiler-tools table above.
+
+**Matrix v7 edit prepared in working tree:**
+  `docs/architecture/ADVI_INFLEC_AUDIT.md` — geo_drill row: YELLOW → GREEN; GREEN 26→27; YELLOW 11→10;
+  Follow-on TO row struck through.
+  Lane enforcement blocks DS~A commit on `docs/architecture/**` (ANY_CTO lane only).
+  **CTO 1.0.0_SA_CTO must commit the matrix change.**
+
+**AC4:** PENDING — matrix committed only after CTO commit. RAVC3 sent to COO with this status.
+
 ## Open Items / Next Actions
 
-1. **AUDIT-006 Phase 2** — Await AE re-dispatch ACK + post-chain S3 verify (`geo_drill present: True, len > 0`)
-2. **AUDIT-006 matrix flip** — Update `docs/architecture/ADVI_INFLEC_AUDIT.md` geo_drill cell YELLOW → GREEN after Phase 2 confirms
-3. **RAVC3 to COO** — commit hash + AC1-4 status + YELLOW→GREEN confirmation
-4. **ADVI_ROLLUP.SLP1c** (lower priority, awaiting CTO ratify) — DS~C proposed revert `non_cash_target_mv = max(account_mv - cash_mv, 0.0)` while keeping denominator fix. Not a DS~A blocker.
+1. **AUDIT-006 matrix commit** — `docs/architecture/ADVI_INFLEC_AUDIT.md` changes in working tree; need CTO to commit (ANY_CTO lane block on DS~A)
+2. **RAVC3 to COO** — SENT (see MCP below)
+3. **ADVI_ROLLUP.SLP1c** (lower priority, awaiting CTO ratify) — DS~C proposed revert `non_cash_target_mv = max(account_mv - cash_mv, 0.0)` while keeping denominator fix. Not a DS~A blocker.
