@@ -168,15 +168,79 @@ Dispatched: COO + DS~C + AE 0.7 20260505T202248Z. AE 0.7 chain-full `from_INF_B_
 
 ---
 
+## D2d Empirical Results (20:24Z)
+
+from_INF_D_00c completed 20:24Z (AE 0.7 re-fire after AUDIT-003a commit). New platinum outputs:
+- `nmec_nmnc_nna.json` — 16:24 local (joe-inclusive per INFLECTION_REP_IDS={3,6,11,12})
+- `cash_drag.json`, `concentration_risk.json` — 16:24 local
+
+dashboard.json NOT updated by from_INF_D_00c (INF_D_00 is upstream of INF_D_00c, not downstream).
+Dashboard AUA still $182,552,380 @ generated_at 2026-05-05T20:23:35Z.
+
+---
+
+## D3 B-chain Confirmation (20:45Z)
+
+AE 0.7 dispatched INF_B_00. B-chain completed 20:45 local:
+
+| File | Timestamp |
+|------|-----------|
+| gold/canonical/holdings_2026-05-01.parquet | 16:45 local |
+| gold/canonical/holdings_2026-05-02.parquet | 16:45 local |
+| gold/canonical/holdings_2026-05-03.parquet | 16:45 local |
+| gold/canonical/holdings_2026-05-04.parquet | 16:45 local |
+| gold/canonical/holdings_2026-05-05.parquet | 16:45 local |
+
+No downstream C+D chain log appeared after 16:45 — from_INF_C_00 NOT yet dispatched as of 21:06Z.
+
+**D3 escalation (21:06Z):** DS~D pinged COO + AE 0.7 requesting --from INF_C_00 dispatch.
+Status: awaiting response.
+
+---
+
+## ADVI_LDRBRD.001 — INF_D_00c Bug A + Bug C Pre-Authoring
+
+**Scope:** Two bugs identified via INF_D_00c code trace (Phase 0 audit, D2c empirical):
+
+| Bug | Root cause | Fix |
+|-----|-----------|-----|
+| A — MAX window period_start_aua=None | `_aua_at_start` returns empty df when no holdings snapshot <= window_start (holdings oldest = 2026-04-26; MAX window_start = ~2023) | Fallback: use `keys[0]` (earliest available snapshot) |
+| C — lifecycle_aua=0 all advisors | `accounts_v2_dim` never loaded/passed to `_compute_hh_lifecycle` | Load `silver/api_dims/accounts_v2/`, pass through `compute_leaderboard_entries` → per-advisor and firm calls |
+
+**7 edits pre-authored (all gate-passing — py_compile + AST + ruff PASS):**
+
+1. New constant `SILVER_API_ACCOUNTS_V2_PREFIX`
+2. New loader `load_accounts_v2_dim()` (graceful fallback on missing partition)
+3. `_aua_at_start` fallback: `keys[0]` when no snapshot <= window_start (Bug A)
+4. `compute_leaderboard_entries` signature: add `accounts_v2_dim=None`
+5. Per-advisor `_compute_hh_lifecycle` call: pass `accounts_v2_dim=accounts_v2_dim`
+6. Firm `_compute_hh_lifecycle` call: pass `accounts_v2_dim=accounts_v2_dim`
+7. `main()`: load `accounts_v2_dim`, pass to `compute_leaderboard_entries`
+
+**Status: HOLD** — COO message 20260505T: "hold Bug A+C until D-chain finish. Ship trigger: dashboard.json headline.total_aua ~$199M."
+Edits are in working tree, NOT yet committed.
+
+**Ship sequence (on D3 RAVC5''):**
+1. `.tools/safe-commit.sh --author "0.4.0_DS_ClientPlatform_D <0.4.0_DS_ClientPlatform_D@opal.agent>" -m "feat(ADVI_LDRBRD.001): INF_D_00c MAX window fallback (Bug A) + accounts_v2_dim lifecycle wiring (Bug C)" -- data/orion/scripts/gold/INF_D_00c.portal_leaderboard.py`
+2. `git push origin CLOUD`
+3. `aws s3 cp data/orion/scripts/gold/INF_D_00c.portal_leaderboard.py s3://opal-data-inf/code/gold/`
+4. `comp-pipescript deployed INF_D_00c` → verify MATCH
+5. RAVC3 to COO + AE 0.7 → D4 `--from INF_D_00c`
+
+**Bug B (YTD all-None):** performance dim has no pre-2026 anchor — separate fix, DS~C to assess scope.
+
+---
+
 ## Open Items / Next Session
 
 | Item | State | Owner |
 |------|-------|-------|
-| dashboard.json total_aua ~$199M | PENDING chain-full from INF_B_00 | AE 0.7 |
-| gold/holdings/2026-05-05.parquet | PENDING INF_B_00 run | AE 0.7 |
+| dashboard.json total_aua ~$199M | PENDING D3 --from INF_C_00 dispatch | AE 0.7 |
+| D3 --from INF_C_00 dispatch | ESCALATED to COO+AE 21:06Z | COO/AE 0.7 |
 | leaderboard.json joe-inclusive (AUDIT-003a) | COMPLETE — $199.6M, 4 advisors | CLOSED |
-| RPBKTPI.001 AC4 joe QTD period_start_aua | PENDING silver/performance regen w/ rep_id=6 | AE 0.7 + DS~C |
+| ADVI_LDRBRD.001 Bug A+C INF_D_00c edits | HOLD pending dashboard ~$199M | DS~D |
+| RPBKTPI.001 AC4 joe QTD period_start_aua | PENDING silver/performance regen w/ rep_id=6 + D4 | AE 0.7 + DS~C |
 | RPBKTPI.001 AC4 YTD/MAX all-None | PENDING DS~C assessment | DS~C |
-| lifecycle_aua all-zeros | PENDING investigation | DS~C |
+| lifecycle_aua all-zeros | PENDING LDRBRD.001 Bug C ship + D4 | DS~D → AE 0.7 |
 | matrix v9/v10 cross-validation | PENDING DS~A patch | DS~D |
 | ADVI_INFINGE Phase 1 TO authoring | PENDING | COO |
