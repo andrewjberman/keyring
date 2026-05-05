@@ -4,7 +4,7 @@
 **Agent:** 0.4.0_DS_ClientPlatform~C
 **Date:** 2026-05-05
 **Task Order:** ADVI_RPBKTPI.001 — INF_B_00 accounts_v2 point-in-time fix
-**Status:** RELEASED FROM STANDBY — AC4 verification slips to tomorrow per COO (20260505T193000Z); fix in S3, chain running on PROD via AE 0.7
+**Status:** AC4 PENDING TOMORROW — D2d not dispatched (AE 0.7 dark); leaderboard.json still 2026-05-04; BD nightly did not run
 
 ---
 
@@ -141,11 +141,31 @@ D1d wrote flat-schema silver → INF_B_00 reads Hive path → chain fired agains
 Fix `7f584ef7c` unaffected — point-in-time accounts_v2 logic is correct. AE 0.7 firing Dispatch 1e
 (silver re-convert with fresh lib) then D2 re-fire. Tomorrow's verify lands on corrected state.
 
+**SPRINT MODE UPDATE (COO 20260505T~200000Z):** Andrew rescinded slip-acceptance. Sprint campaign
+to close tonight. Chain attempts summary:
+
+| Dispatch | SSM | Start (UTC) | End (UTC) | Notes |
+|----------|-----|-------------|-----------|-------|
+| D2b (chain-full from INF_B_00) | `6ed5053d` | 19:38Z | 20:02:56Z | KILLED — auto-shutdown (24 min; instance restart LaunchTime 20:02:56Z); gold/canonical/holdings_2026-05-01..05-05 + lots + account_gains to 2026-04-28 WRITTEN |
+| D2c (from INF_C_00) | `fd4434c3` | 20:04:40Z | ~20:09Z | Heartbeat watchdog deployed by AE 0.7 (PID 3046); wrote canonical_performance 2019-09-17→2023-10-02; CRASHED at 2023-10 — root cause unknown |
+| D2d (from INF_D_00c) | NOT DISPATCHED | — | — | AE 0.7 received D2d FIRE GO at 20:10Z and went dark; no SSM issued |
+
+**DS~D companion fix (commit 202fddb3b, 20260505T~200600Z):** rep_id=6 (joe_brunswick) was absent
+from hardcoded `INFLECTION_REP_IDS` frozenset in 4 files. Fix shipped: `_orion_api_silver_lib.py`,
+`convert_orion_to_silver.py`, `INF_D_08.nmec_nmnc_nna.py`, `INF_D_00c.portal_leaderboard.py`.
+**D2d re-fire must include 202fddb3b code** (already in S3 per DS~D RAVC3 MATCH).
+
+**Final state (DS~C verify 20260505T~235700Z):**
+- `platinum/firm/leaderboard.json` LastModified: 2026-05-04T16:52:50Z (stale — unchanged)
+- All platinum/firm/ artifacts: 2026-05-04 (stale)
+- BD nightly 21:53Z: DID NOT RUN — no chain_full log for tonight in s3://opal-data-bd/gold/logs/
+
 ---
 
 ## Carry-forwards
 
-1. **AC4 verification** — post-RAVC5, read leaderboard.json and populate advisor table above
-2. **RAVC5 to COO** — CC DS~B + DS~A + DS~D with full evidence package
+1. **AC4 verification** — D2d --from INF_D_00c on inf-gold-layer-runner (with heartbeat watchdog + 202fddb3b fix already in S3); DS~C verifies leaderboard.json MAX-window period_start_aua non-null for all 4 advisors including joe_brunswick
+2. **RAVC5 to COO** — CC DS~B + DS~A + DS~D with full evidence package post-AC4
 3. **RPBKTPI.002 cleanup** — INF_I_D03 L560-565 workaround is now no-op; routes to DS~B per COO
-4. **SL-P1c night 1 check** — check BD gold chain logs after nightly BD run; ~78 accounts / ~163 lots expected
+4. **SL-P1c night 1 reschedule** — BD nightly 21:53Z did not run; investigate BD runner status; night 1 observation pending next successful BD nightly
+5. **D2c crash investigation** — canonical_performance stopped at 2023-10-02; root cause unknown (OOM? missing data? watchdog second fire?); AE to diagnose on D2d re-fire attempt
