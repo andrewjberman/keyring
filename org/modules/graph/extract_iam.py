@@ -481,10 +481,18 @@ def _load_lambda_profiles(workspace_root: Path, roles: dict[str, IamRole]) -> li
     except Exception:
         return []
 
+    # Support nested structure: merge 'functions' sub-dict into top-level iteration
+    if isinstance(source_map.get("functions"), dict):
+        merged = dict(source_map["functions"])
+        for k, v in source_map.items():
+            if k != "functions" and isinstance(v, dict):
+                merged[k] = v
+        source_map = merged
+
     profiles = []
     for fn_name, entry in source_map.items():
         if isinstance(entry, dict):
-            source_path = entry.get("source") or entry.get("path") or ""
+            source_path = entry.get("source") or entry.get("path") or entry.get("source_dir") or ""
             iam_role = entry.get("role") or entry.get("iam_role") or ""
         else:
             source_path = str(entry)
