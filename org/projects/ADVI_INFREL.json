@@ -1,0 +1,29 @@
+{
+  "project_code": "ADVI_INFREL",
+  "macro_code": "ADVI",
+  "name": "Inflection Pipeline Reliability + Residuals",
+  "description": "Residual investigation + remediation work surfaced by DS~A pipeline audit (2026-05-05) + AE 0.6.1 Phase 0 RAVC3 dep-graph: silver-chain automation gap (sentinel/Lambda not propagating despite enabled rule); May 4 Inflection bronze gap (weekday cron miss); clients_tab.json 6-day stale; Phase 2 orchestrator-dim migration (path-1: billing/tax/unified_account_dim/transactions_v2 — INFINGE PRD v0.2 §6 framed as future PRD scope). Plus TO 1a-3 watchdog regex broaden folded in for completeness. Phase 4 = inf-bronze-runner EC2 decom (gates on INFINGE Phase 1b complete + INFREL Phase 2 complete + 48h soak).",
+  "prds": [
+    {"path": "docs/architecture/ADVI_INFREL.md", "label": "Inflection Pipeline Reliability + Residuals PRD v0.1 (silver-chain RCA + May 4 RCA + clients_tab regen + Phase 2 orchestrator-dim Lambda migration + watchdog regex broaden + Phase 4 decom)", "date": "2026-05-05"}
+  ],
+  "source_brief": "DS~A pipeline audit `org/tier2_senior/0.4.0_DS_ClientPlatform/logs/2026-05-05/ADVI_INFLEC_pipeline_audit_session.md` + Andrew directive 'PRD on what needs to happen to finish the remaining items' 2026-05-05T~21:05Z",
+  "status": "active",
+  "phase": "Phase 0 — PRD v0.1 SHIPPED 2026-05-05T~21:05Z. 9 TOs locked: TO-1 silver-chain sentinel/Lambda RCA + fix (AE 0.6.1 lead, AE 0.7 secondary; foundational, gates Phase 2); TO-2 May 4 bronze gap RCA (AE 0.7); TO-3 clients_tab.json regen wiring (DS or AE; gates on TO-1); TO-4..7 Phase 2 path-1 dim Lambda migration (AE 0.6.1; unified_account_dim → transactions_v2 → billing → tax order; mirrors INFINGE Phase 1b template); TO-8 watchdog regex broaden (AE 0.7; folds INFINGE TO 1a-3); TO-9 inf-bronze-runner decom (AE 0.7; gates on INFINGE Phase 1b + INFREL Phase 2 + 48h soak). v0.2 ratchet awaits TO-1 + TO-2 RCAs (~24-48h post-author).",
+  "blocking": "Phase 0: PRD authored + project registered, awaiting COO TO decomposition + dispatch. Phase 1 critical path: TO-1 silver-chain RCA (foundational; gates Phase 2 ship since per-Lambda bronze writes still need silver-chain to convert). Phase 2 ship gates on INFINGE Phase 1b + TO-1; Phase 4 (decom) gates on Phase 2 + INFINGE Phase 1b + 48h soak.",
+  "created": "2026-05-05",
+  "pods": ["0.6.1", "0.7", "0.4"],
+  "pipeline": "inf-pipeline",
+  "lanes": ["0.6.1_AE_PartnerETL", "0.7.0_AE_CloudOps", "0.4.0_DS_ClientPlatform"],
+  "lane_note": "AE 0.6.1 LEAD on TO-1 (Inflection-specific surface knowledge) + Phase 2 Lambda migrations (matches INFINGE Phase 1b authorship pattern). AE 0.7 LEAD on TO-2 (CloudOps owns runner + cron debugging) + TO-8 (watchdog regex; INFINGE TO 1a-2 deployment doc author) + TO-9 (decom). DS 0.4 SECONDARY on TO-3 (clients_tab.json — gold script authoring lane if producer needs adding). Same per-script Lambda template as INFINGE Phase 1b: shared `pandas-pyarrow-requests-layer:1` + sys.path co-location for rate_limiter + jwt_freshness + LOCAL_PULLS_DIR /var/task → /tmp/pulls patch.",
+  "waves": [
+    {"id": "P0", "label": "PRD authoring + project registration (COMPLETE 2026-05-05T~21:05Z; CTO).", "owners": ["1.0.0_SA_CTO"], "target_tag": "—"},
+    {"id": "P1-INV", "label": "Investigation TOs — TO-1 silver-chain RCA + TO-2 May 4 bronze RCA. Outputs feed v0.2 §5 Compiler Evidence + Phase 2 design lock.", "owners": ["0.6.1_AE_PartnerETL", "0.7.0_AE_CloudOps"], "target_tag": "—"},
+    {"id": "P2", "label": "Path-1 orchestrator-dim Lambda migration — TO-4 unified_account_dim / TO-5 transactions_v2 / TO-6 billing / TO-7 tax. Mirrors INFINGE Phase 1b template; shared layer.", "owners": ["0.6.1_AE_PartnerETL"], "target_tag": "inf-pipeline-v1.7.X"},
+    {"id": "P3", "label": "Cleanup + hardening — TO-3 clients_tab.json regen + TO-8 watchdog regex broaden.", "owners": ["0.4.0_DS_ClientPlatform", "0.7.0_AE_CloudOps"], "target_tag": "—"},
+    {"id": "P4", "label": "inf-bronze-runner EC2 decom — TO-9. Gates on INFINGE Phase 1b + INFREL Phase 2 + 48h soak.", "owners": ["0.7.0_AE_CloudOps"], "target_tag": "—"}
+  ],
+  "depends_on": ["ADVI_INFINGE"],
+  "depends_on_note": "INFINGE Phase 1b TOs ship in parallel with INFREL Phase 1+2; INFINGE shared layer (pandas-pyarrow-requests-layer:1) is reused by INFREL Phase 2 Lambdas. INFREL Phase 4 decom gates on BOTH INFINGE Phase 1b AND INFREL Phase 2 complete (zero-responsibilities check on inf-bronze-runner).",
+  "thread_counter": 0,
+  "threads": []
+}
