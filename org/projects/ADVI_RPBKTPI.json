@@ -1,0 +1,27 @@
+{
+  "project_code": "ADVI_RPBKTPI",
+  "macro_code": "ADVI",
+  "name": "Rep-Bucket Point-in-Time Fix (INF_B_00 historical-attribution drift)",
+  "description": "INF_B_00.canonical_holdings.py joins positions_mv@snap_date_str against accounts_v2@LATEST (latest_accounts_v2_key returns keys[-1] regardless of snap_date_str). Result: every historical holdings_{date}.parquet row carries CURRENT advisor-attribution via rep_bucket, not point-in-time attribution as it existed on snap_date. Downstream impact: leaderboard period_start_aua MAX window all-null + lifecycle_aua per-advisor decomposition all-zero. HISTBF.004 *enabled* the fix (per-date accounts_v2 silver now exists 2020-05-26 forward) but did not perform it. Surfaced empirically in DS~B holdings_2026-04-01.parquet inspection 2026-05-04 + DS~D §3 verdict (`docs/architecture/_drafts/INFLEC_AUDIT_DSD_HISTBF_STATE.md`). Scope: switch latest_accounts_v2_key() → accounts_v2_key_for_date(snap_date_str) and pin representatives lookup analogously if rep-name evolution matters. Spawned from ADVI_INFLEC.AUDIT-001 cell ruling — period_start_aua + lifecycle_aua RED cells route here, not HISTBF.",
+  "prds": [],
+  "source_brief": "AUDIT-001 cell evidence + DS~D HISTBF state dump §3 (INFLEC_AUDIT_DSD_HISTBF_STATE.md lines 52-71): full code-trace through INF_B_00.build_snapshot + latest_accounts_v2_key + _rep_bucket derivation; verdict NOT in HISTBF.004 scope.",
+  "status": "active",
+  "phase": "Phase 0 — registered 2026-05-04 from AUDIT-001 follow-on. Phase 1 PRD pending CTO authoring window post AUDIT-001 close. Two-TO shape expected: TO-1 INF_B_00 join-target switch (DS, 0.5d) + TO-2 historical chain re-run on full 1998-date holdings rewrite scope (DS+AE, follows TO-1 ratify).",
+  "blocking": "AUDIT-001 close (CTO authoring window). Once AUDIT-001 RAVC4 lands, CTO authors RPBKTPI PRD with DS~D code-trace verbatim + AE 0.6.1 chain-cost estimate.",
+  "created": "2026-05-04",
+  "pods": [
+    "0.4"
+  ],
+  "pipeline": "inf-pipeline (gold INF_B_00 + downstream INF_D_00c leaderboard + INF_D_05/06/07 if rep_bucket join shared)",
+  "lanes": [
+    "0.4.0_DS_ClientPlatform",
+    "0.6.1_AE_PartnerETL"
+  ],
+  "lane_note": "DS owns INF_B_00 edit + downstream verification of period_start_aua + lifecycle_aua values. AE owns chain re-run dispatch (full 1998-date holdings rewrite scope; cumulative-batch --from INF_B_00 --force pattern from HISTBF.004).",
+  "depends_on": [
+    "ADVI_HISTBF"
+  ],
+  "depends_on_note": "Depends on HISTBF.004 silver per-date accounts_v2 partitions (delivered 2026-05-04). RPBKTPI consumes that silver; HISTBF was the prerequisite that made the fix mechanically possible. Project sequencing intentional: HISTBF first (silver coverage), RPBKTPI second (gold join switch).",
+  "thread_counter": 0,
+  "threads": []
+}
