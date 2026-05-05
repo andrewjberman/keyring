@@ -3,7 +3,9 @@
   "macro_code": "ADVI",
   "name": "Inflection Ingestion Daily Automation",
   "description": "All Inflection bronze prefix pulls automated daily without manual intervention. DS~D bronze state audit (2026-05-05) confirms ZERO of 6+ Inflection bronze prefixes are scheduled — every pull script lives in data/orion/manual_api/, none on cron / EventBridge / Lambda schedule. Phase B silver chain Lambda runs daily but consumes whatever bronze partitions happen to exist, producing silent staleness. Same systemic failure class produced AUDIT-002 (canonical_prices 2 weeks stale), AUDIT-008 (silver/assets_v2 5 days stale), and the AUDIT-008 INF_B_00 blocker (silver/api_dims/positions_mv 5 days stale) — three same-class incidents in two weeks. Andrew P1 directive 2026-05-05T~17:52Z: 'daily pulls on ALL INGESTION PIPELINES is priority #1.'",
-  "prds": [],
+  "prds": [
+    {"path": "docs/architecture/ADVI_INFINGE.md", "label": "Inflection Ingestion Daily Automation PRD v0.1 (§5 skeleton; v0.2 ratchet post Phase 0 RAVC3)", "date": "2026-05-05"}
+  ],
   "source_brief": "COO escalation 20260505T~17:52Z (forwarding Andrew P1 directive); DS~D bronze state audit RAVC during AUDIT-008 cycle.",
   "status": "active",
   "phase": "Phase 0 — AE 0.6.1 audit GOed by COO 2026-05-05 (~1-2h horizon). Andrew architectural directive 2026-05-05T~18:10Z: Lambda-native default for bronze pulls + silver conversions; EC2 outlier for compute-heavy gold only. Per-script Lambda + EventBridge cron (not mega-Lambda). inf-bronze-runner EC2 deprecation candidate gates on Phase 0 dependency-graph audit. AUDIT-008.PERM standalone dispatch CANCELLED — absorbed as Phase 1 TO-1 (assets_v2 migration to Lambda-native; sets the Phase 1 pattern). Tactical PATH A 5-day positions backfill in flight by AE 0.6.1 (operational bridge, not permanent fix). PATH B (INF_B_00 silver/assets_v2 fallback) DEFERRED per CTO ruling — fix upstream automation gap, do not wrap downstream. PRD authoring queued post-Phase 0 audit (CTO authors with audit findings + per-script Lambda-fit disposition table as §5 Compiler Evidence; COO decomposes Phase 1 TOs starting TO-1 = assets_v2).",
