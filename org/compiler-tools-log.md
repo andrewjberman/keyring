@@ -2294,3 +2294,54 @@ Total: 2 PASS, 131 WARN, 133 PRDs scanned.
 | 2026-05-04 | 0.4.0_DS_ClientPlatform~D | INFLEC_AUDIT-001_HISTBF_STATE_DUMP | comp-platinum | comp-platinum page InflectionInsightsPanel | PASS |
 | 2026-05-04 | 0.4.0_DE_ClientPlatform | INFLEC_AUDIT_001_DE_MAPPING | comp-platinum | comp-platinum page AdvisorBookView | PASS |
 | 2026-05-04 | 0.4.0_DE_ClientPlatform | INFLEC_AUDIT_001_DE_MAPPING | comp-routes | comp-routes behaviors | PASS |
+| 2026-05-04 | 0.4.0_DE_ClientPlatform | INFLEC_AUDIT_001_DE_MAPPING | comp-iam | comp-iam gaps | PASS |
+| 2026-05-05 | 0.4.0_DS_ClientPlatform~D | ADVI_INFLEC.AUDIT-002.aua-join-investigation | comp-pipescript | comp-pipescript io INF_D_05 | PASS |
+| 2026-05-05 | 0.7.0_AE_CloudOps | (no-TO) | comp-pipescript | comp-pipescript io INF_D_06 | PASS |
+| 2026-05-05 | 0.7.0_AE_CloudOps | (no-TO) | comp-pipescript | comp-pipescript io INF_D_05 | PASS |
+| 2026-05-05 | 0.7.0_AE_CloudOps | (no-TO) | comp-pipescript | comp-pipescript io INF_D_07 | PASS |
+| 2026-05-05 | 0.7.0_AE_CloudOps | (no-TO) | comp-pipescript | comp-pipescript io INF_I_D02b | FAIL |
+| 2026-05-05 | 0.7.0_AE_CloudOps | (no-TO) | comp-pipescript | comp-pipescript io INF_I_D00c | FAIL |
+| 2026-05-05 | 0.7.0_AE_CloudOps | (no-TO) | comp-routes | comp-routes trace getPlatinumClientSummary | PASS |
+| 2026-05-05 | 0.7.0_AE_CloudOps | (no-TO) | comp-pipescript | comp-pipescript io INF_I_D00c | FAIL |
+| 2026-05-05 | 0.7.0_AE_CloudOps | (no-TO) | comp-pipescript | comp-pipescript io INF_I_D02b | FAIL |
+| 2026-05-05 | 0.7.0_AE_CloudOps | (no-TO) | comp-pipescript | comp-pipescript io INF_I_D02b.top_holdings | FAIL |
+| 2026-05-05 | 0.7.0_AE_CloudOps | (no-TO) | comp-iam | comp-iam gaps | PASS |
+| 2026-05-05 | 0.7.0_AE_CloudOps | (no-TO) | comp-platinum | comp-platinum reverse platinum/firm/activity_scan.json | PASS |
+| 2026-05-05 | 0.7.0_AE_CloudOps | (no-TO) | comp-platinum | comp-platinum reverse platinum/firm/leaderboard.json | PASS |
+| 2026-05-05 | 0.7.0_AE_CloudOps | (no-TO) | comp-pipescript | comp-pipescript deployed INF_I_D02b | PASS |
+| 2026-05-05 | 0.7.0_AE_CloudOps | (no-TO) | comp-blast | comp-blast InflectionInsightsPanel | PASS |
+| 2026-05-05 | 0.7.0_AE_CloudOps | (no-TO) | comp-blast | comp-blast AdvisorBookView | PASS |
+| 2026-05-05 | 0.4.2_RD_AdvisorIntelligence | (no-TO) | comp-routes | comp-routes trace getPlatinumPartnerAnalytics | PASS |
+| 2026-05-05 | 0.4.0_DT_ClientPlatform | (no-TO) | comp-routes | comp-routes trace getPlatinumClientSummary | PASS |
+| 2026-05-05 | 0.4.0_DT_ClientPlatform | (no-TO) | comp-transform | comp-transform schema-check ClientsTab | PASS |
+| 2026-05-05 | 0.4.0_DT_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript deployed B_01 | PASS |
+| 2026-05-05 | 0.4.0_DE_ClientPlatform | ADVI_INFLEC.AUDIT-004.l3-client-summary-lambda-probe | comp-transform | comp-transform schema-check ClientsTab | PASS |
+| 2026-05-05 | 0.4.0_DE_ClientPlatform | ADVI_INFLEC.AUDIT-004.l3-client-summary-lambda-probe | comp-cache | comp-cache collisions | PASS |
+| 2026-05-05 | 0.4.0_DE_ClientPlatform | ADVI_INFLEC.AUDIT-004.l3-client-summary-lambda-probe | comp-pipescript | comp-pipescript deployed orion-gold-dispatch.sh | PASS |
+| 2026-05-05 | 0.4.0_DE_ClientPlatform | ADVI_INFLEC.AUDIT-004.l3-client-summary-lambda-probe | comp-pipescript | comp-pipescript deployed orion-gold-dispatch.sh | PASS |
+| 2026-05-05 | 0.4.0_DE_ClientPlatform | ADVI_INFLFE.003.defensive-rendering-pre-wire | comp-transform | comp-transform schema-check BooksTab | FAIL |
+| 2026-05-05 | 0.4.0_DE_ClientPlatform | ADVI_INFLFE.003.defensive-rendering-pre-wire | comp-transform | comp-transform schema-check ClientsTab | PASS |
+| 2026-05-05 | 0.4.0_DE_ClientPlatform | ADVI_INFLFE.003.defensive-rendering-pre-wire | comp-transform | comp-transform schema-check ClientsTab | PASS |
+| 2026-05-05 | 0.4.0_DE_ClientPlatform | ADVI_INFLFE.003.defensive-rendering-pre-wire | comp-transform | comp-transform schema-check ClientsTab | PASS |
+| 2026-05-05 | 0.4.0_DE_ClientPlatform | ADVI_INFLFE.003.defensive-rendering-pre-wire | comp-iam | comp-iam service opal-partners-data | PASS |
+| 2026-05-05 | 0.4.0_DE_ClientPlatform | ADVI_INFLFE.003.defensive-rendering-pre-wire | comp-routes | comp-routes behaviors | PASS |
+| 2026-05-05 | 0.4.0_DE_ClientPlatform | ADVI_INFLFE.003.defensive-rendering-pre-wire | comp-iam | comp-iam gaps | PASS |
+| 2026-05-05 | 0.4.0_DE_ClientPlatform | ADVI_INFLFE.003.defensive-rendering-pre-wire | comp-iam | comp-iam service opal-partners-data | PASS |
+| 2026-05-05 | 0.4.0_DE_ClientPlatform | ADVI_INFLFE.003.defensive-rendering-pre-wire | comp-iam | comp-iam service opal-partners-data | PASS |
+| 2026-05-05 | 0.4.0_DE_ClientPlatform | ADVI_INFLFE.003.defensive-rendering-pre-wire | comp-iam | comp-iam service opal-partners-data | PASS |
+| 2026-05-05 | 0.4.0_DE_ClientPlatform | ADVI_INFLFE.003.defensive-rendering-pre-wire | comp-transform | comp-transform schema-check AdvisorBookView | PASS |
+| 2026-05-05 | 0.4.0_DE_ClientPlatform | ADVI_INFLFE.003.defensive-rendering-pre-wire | comp-transform | comp-transform schema-check InflectionInsightsPanel | FAIL |
+| 2026-05-05 | 0.4.0_DE_ClientPlatform | ADVI_INFLFE.003.defensive-rendering-pre-wire | comp-blast | comp-blast InflectionInsightsPanel | PASS |
+| 2026-05-05 | 0.4.0_DE_ClientPlatform | ADVI_INFLFE.003.defensive-rendering-pre-wire | comp-transform | comp-transform schema-check InflectionInsightsPanel --verbose | FAIL |
+| 2026-05-05 | 0.4.0_DE_ClientPlatform | ADVI_INFLFE.003.defensive-rendering-pre-wire | comp-transform | comp-transform schema-check InflectionInsightsPanel --loose | FAIL |
+| 2026-05-05 | 0.4.0_DE_ClientPlatform | ADVI_INFLFE.003.defensive-rendering-pre-wire | comp-iam | comp-iam service opal-partners-data | PASS |
+| 2026-05-05 | 0.4.0_DE_ClientPlatform | ADVI_INFLFE.003.defensive-rendering-pre-wire | comp-transform | comp-transform schema-check ClientsTab | PASS |
+| 2026-05-05 | 0.4.0_DE_ClientPlatform | ADVI_INFLFE.003.defensive-rendering-pre-wire | comp-transform | comp-transform schema-check AdvisorBookView | PASS |
+| 2026-05-05 | 0.4.0_DE_ClientPlatform | ADVI_INFLFE.003.defensive-rendering-pre-wire | comp-cache | comp-cache collisions | PASS |
+| 2026-05-05 | 0.4.2_RD_AdvisorIntelligence | ADVI_INFLFE.004.playwright-render-sweep-and-constitution | comp-pipescript | comp-pipescript io INF_I_D00b | FAIL |
+| 2026-05-05 | 0.4.2_RD_AdvisorIntelligence | ADVI_INFLFE.004.playwright-render-sweep-and-constitution | comp-pipescript | comp-pipescript io INF_I_D00b.portal_timeseries | FAIL |
+| 2026-05-05 | 0.4.2_RD_AdvisorIntelligence | ADVI_INFLFE.004.playwright-render-sweep-and-constitution | comp-pipescript | comp-pipescript io INF_I_D00b | FAIL |
+| 2026-05-05 | 0.4.2_RD_AdvisorIntelligence | ADVI_INFLFE.004.playwright-render-sweep-and-constitution | comp-pipescript | comp-pipescript deployed INF_I_D00c | PASS |
+| 2026-05-05 | 0.4.0_DS_ClientPlatform~A | ADVI_INFLEC.AUDIT-006 | ds-commit-gate | .tools/ds-commit-gate.sh INF_I_D00c.cumulative_chart.py | PASS | py_compile+AST+ruff all exit 0 |
+| 2026-05-05 | 0.4.0_DS_ClientPlatform~A | ADVI_INFLEC.AUDIT-006 | comp-pipescript | comp-pipescript deployed INF_I_D00c | PARTIAL | Tool targets opal-data-bd; Inflection scripts in opal-data-inf; manual S3 ls confirmed upload (20375 bytes 10:57:01Z) |
+| 2026-05-05 | 0.4.0_DS_ClientPlatform~A | ADVI_INFLEC.AUDIT-006 | comp-pipescript | comp-pipescript io INF_I_D00c | SKIPPED | Phase 0 confirmed via direct script read; script already deferred geo_drill in docstring; top_states available from build_geo_view() |
