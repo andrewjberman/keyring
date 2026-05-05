@@ -107,8 +107,10 @@ before the 2-minute end-of-run countdown elapses.
 | D1e (post-lib-fix) | ~19:35Z | Same as D1d, new lib | OK — wrote correct Hive paths at `silver/api_dims/positions_mv/` |
 | D2a (chain-full `--from INF_B_00`) | ~19:42Z | Full chain | FAIL — watchdog shutdown during C-chain gap |
 | D2b (re-fire `--from INF_B_00`) | ~19:50Z | Full chain | FAIL — watchdog shutdown again |
-| D2c (heartbeat-guarded `--from INF_C_00`) | 20:04Z | C_00..INF_09 | IN PROGRESS — C_03 running at 20:16Z |
-| D2d (pending) | ~20:40Z | `--from INF_D_00c` (post DS~D AUDIT-003a rep_id=6 fix) | PLANNED |
+| D2c (heartbeat-guarded `--from INF_C_00`) | 20:04Z | C_00..INF_09 | COMPLETE 20:19:44Z — heartbeat held; leaderboard advisors=0 (pre-fix) |
+| D2d (`--from INF_D_00c`, AUDIT-003a fix) | 20:21:53Z | INF_D_00c..INF_09 | COMPLETE 20:23Z — 4 advisors, QTD $199.65M; lifecycle_aua zeros; YTD/MAX null |
+| D3 (`--from INF_B_00`, chain-full) | 20:34Z | B_00..INF_09 | IN PROGRESS — INF_B_00.canonical_holdings running at 20:43Z |
+| D4 (pending, `--from INF_D_00c`, DS~D ADVI_LDRBRD.001 Bug A+C fix) | ~21:50Z | INF_D_00c..INF_09 | PLANNED — pending D3 complete + DS~D fix ship |
 
 ---
 
