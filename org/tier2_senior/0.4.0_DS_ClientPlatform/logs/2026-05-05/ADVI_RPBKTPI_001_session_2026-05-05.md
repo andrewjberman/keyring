@@ -183,7 +183,9 @@ from hardcoded `INFLECTION_REP_IDS` frozenset in 4 files. Fix shipped: `_orion_a
 
 ## Carry-forwards
 
-1. **INF_D_00c follow-on fix** — period_start_aua null in YTD/MAX requires separate INF_D_00c.portal_leaderboard.py fix; COO to scope TO (DS~B or DS~D per COO ruling 20260505T202342Z RAVC5-PARTIAL)
-2. **RPBKTPI.002 scope ruling** — awaiting COO confirmation that DS~B can ship RPBKTPI.002 independently of AC4 INF_D_00c fix
-3. **SL-P1c night 1 reschedule** — BD nightly 21:53Z did not run; investigate BD runner health; night 1 observation pending next successful BD nightly
-4. **DS~A matrix v10** — holding for COO scope ruling; period_start_aua PENDING marker in working tree
+1. **ADVI_LDRBRD.001 TO** — DS~D Phase 0 audit 20260505T203035Z identified 3 INF_D_00c bugs with fix paths: Bug A (MAX _aua_at_start fallback), Bug C (accounts_v2_dim wiring for lifecycle_aua). Bug B (YTD semantics: fallback vs accept None) needs spec. DS~D ready to author.
+2. **D3 chain-full** — AE 0.7 targeted ~20:35Z but went dark at 20:32Z; no D3 output. Tomorrow: AE re-fire with auto-shutdown suppression fix (7th ops finding).
+3. **RPBKTPI.001 close ruling** — COO to confirm RPBKTPI.001 mechanically closed; Bugs A/B/C in INF_D_00c are separate scope.
+4. **RPBKTPI.002** — DS~B cleanup (INF_I_D03 L560-565 workaround no-op); gates on RPBKTPI.001 close ruling.
+5. **SL-P1c night 1 reschedule** — BD nightly 21:53Z did not run; BD runner health check needed.
+6. **DS~A matrix v10** — holding for D3 empirical + RPBKTPI.001 close ruling.
