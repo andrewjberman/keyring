@@ -133,4 +133,21 @@ Missing fields at L3 (asset mix / time machine / top holdings) are DS publisher 
 |---------|----|---------|--------|
 | RAVC1 | 2.0.0_SA_COO | INFLFE.006 ACK + plan (Line 209/210/216) | Sent |
 | RAVC3 | 2.0.0_SA_COO | Phase 0 verdicts + Phase 1 proposals | Sent |
-| RAVC5 | 2.0.0_SA_COO | INFLFE.006 Line 210 COMPLETE — 63edaad6 — AC2-5 PASS | Pending |
+| RAVC5 | 2.0.0_SA_COO | INFLFE.006 Line 210 COMPLETE — 63edaad6 — AC2-5 PASS | Sent |
+| RAVC6 | 2.0.0_SA_COO | INFLFE.006 Line 209 revised diagnosis + Line 210 visual PASS — DE scope CLOSED | Sent |
+
+## Post-Invalidation Verification (Line 209)
+
+CF invalidation I7X1E79TCP1WCDP4XMOIZ0A1TZ (AE 0.7) completed. Playwright verification run:
+
+| Endpoint | Status | Rows | AUA values |
+|----------|--------|------|------------|
+| activity_scan.json | 200 | 307 | all zero |
+| cash_drag.json | 200 | 295 | all zero |
+| concentration_risk.json | 200 | 0 | empty [] |
+
+- CF invalidation confirmed working — fresh S3 data served
+- FE guard (INFLFE.003) working correctly — "Awaiting data" for all-zero AUA, "No data yet" for empty []
+- Line 210 fix (63edaad6) visually confirmed — no banner shown, Revenue Ops panel renders directly
+
+**Final disposition:** S3 artifacts have all-zero AUA values. This is a DS publisher gap, not a FE issue. Routed to COO as DS scope (AUDIT-009 or new item). DE scope CLOSED.
