@@ -122,4 +122,5 @@ bun run tsc --noEmit
 | Portal DEV push | DONE — COO pushed `3f043ccb..dcc24b9f` (20260506T193644Z) |
 | TS check | PASS |
 | RAVC | CLOSED |
-| DE queue | Empty — standing by for B2d full wiring smoke test (after DS~A B2a + DS~C B2b/B2c publish) |
+| top_holdings schema fix | COMPLETE + LIVE — `5b40f2e8` portal DEV (pushed 20260506T194046Z) |
+| DE queue | Empty — standby until (a) RD L3 smoke test issue or (b) DS~A B2a / DS~C B2b/B2c publish |
