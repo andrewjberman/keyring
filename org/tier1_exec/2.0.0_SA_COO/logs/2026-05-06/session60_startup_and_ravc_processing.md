@@ -288,4 +288,46 @@ Option A ratified. Root cause: `holdings_2025-12-31.parquet` EXISTS and IS selec
 **Parked (Andrew directive — 49F work):**
 9. ADVI_BFIX4 TO-2 (B1 Schwab-only rescue)
 10. ADVI_ROLLUP BDPLNNASCHEMA Phase 1 (BD/49F work)
-11. ADVI_RPBKTPI TO-2 (gated on CTO PRD)
+
+---
+
+## CTO Wave Brief + /loop 5m Tick (20260506T~1912Z)
+
+CTO issued full Wave Brief dispatching all remaining Inflection work. Andrew directive: singular priority is Inflection end-to-end done today.
+
+### LDRBRD.002 D6 Blocker — DS~D Ruling
+
+Issue 1 (COO ruling): Option (b) — walk forward to earliest post-CHART-ALIGN snapshot when exclusion filter returns empty. Rationale: YTD psa=0.0 is misleading (implies $0 AUA at Jan 1); proxy from earliest individual-attribution partition is more honest. WARN log citing actual partition date used.
+Issue 2: OUTPUT_PREFIX fix (gold/artifacts hardcode → {OUTPUT_PREFIX}artifacts/). Bundle with Issue 1 in D7.
+
+### DS~A RAVC5 — DG-1/2/3 Already Complete
+
+DS~A RAVC5 confirmed DG-1/DG-2/DG-3 were completed in commit 9de58963d (prior session context). Git verification confirmed: commit exists. DS~A dispatch for DG-1/2/3 was redundant. DS~A pivoted to B2a-c per-client publishers.
+
+### Wave Dispatch Table (20260506T~1912Z)
+
+| Agent | Wave | Action | Delivered |
+|---|---|---|---|
+| DS~D | A3 | Option (b) ruling + D7 GO | 20260506T191240Z |
+| DS~B | B1 | Redirect DG-3 (done) → RPBKTPI TO-2 (INF_B_00 historical re-run) | 20260506T191253Z |
+| DE | B3 | L3 client detail render investigation + static-path adapter fix (AUDIT YELLOW) | 20260506T191304Z |
+| DS~A | B2a-c | Per-client L3 platinum publishers (composition + top_holdings + timeseries) | 20260506T191315Z |
+| AE 0.6.1 | A2+C1 | Scope correction: billing+accounts_v2 backfill; INFREL.001b performance DimSpec wire+deploy | 20260506T191327Z |
+| AE 0.7 | C1+B | tax+performance backfill (2020–present); LDRBRD.002 D7 QA after DS~D ships | 20260506T191335Z |
+
+### Updated Active Carry-forwards
+
+**Active (all agents now dispatched):**
+1. DS~D: LDRBRD.002 D7 — Option (b) walk-forward proxy + OUTPUT_PREFIX fix → RAVC3
+2. DS~B: RPBKTPI TO-2 — INF_B_00 historical re-run plan → RAVC1
+3. DS~A: B2a per-client composition publisher → B2b top_holdings → B2c timeseries → RAVC(s)
+4. DE: B3 L3 client detail render investigation → RAVC; B2d FE wiring (after DS~A B2a-c)
+5. AE 0.6.1: billing+accounts_v2 backfill + INFREL.001b A2 EC2 wire + INFINGE.005b cron arm
+6. AE 0.7: tax+performance backfill + LDRBRD.002 D7 QA
+7. DS~C: SL-P1c Night 3 (May 7 04:00 UTC)
+8. CTO: AUDIT matrix update for DS~D D7 pass (leaderboard period_start_aua YELLOW→GREEN)
+
+**YELLOW items remaining in ADVI_INFLEC_AUDIT.md (3 → target 0):**
+- composition.json ADV asset mix not at L3 → addressed by B2a + B2d
+- top_holdings ADV not at L3 + joe_brandenbrug stale → addressed by B2b + INF_I_D02b
+- L3 client detail mix/timemachine/topholdings missing → addressed by B3 (FE probe) + B2a-c (publishers)
