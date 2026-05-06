@@ -82,12 +82,40 @@ Finding 1 RAVC CLOSED. Finding 2 pending DS~A.
 
 ---
 
+## Fix — Finding C (3 changes in 1 commit)
+
+**Commit:** `99842500` (portal DEV, `960c289a..99842500`)
+
+### Item 3 — Clients/AUA panel (PartnerAnalytics.tsx)
+- Added `isInflectionFirm` const (firmOverride === 'inf' || 'inflection')
+- Added `auaDonutSegments` useMemo: reads `data.views.aua.donut.segments` from existing `getPlatinumPartnerAnalytics` fetch
+- Stats tiles now branch: Inflection uses donut segment AUA, 49F keeps barCategories reduce
+- `auaTotal` → ~$198.97M, `auaNewClient` (nmnc) → $19.7M, `auaExistingClient` (nmec) → $179.3M
+
+### Item 1 — B5 non-admin path (AdvisorBookView.tsx)
+- Added `getPlatinumAccountTimeseriesStatic` + `AccountTimeseriesPoint` imports
+- Added `inflecAccountTimeseries` useQuery (enabled: isInflectionFirm && selectedAccountId && selectedClientKey)
+- `timeseriesData` prop on AdvisorBookAccountModal branches: Inflection → inflecAccountTimeseries, 49F → accountRfsById fallback
+
+### Item 2 — Mix legend Cash (PartnerAnalytics.tsx)
+- Extended legend array from 3 classes to 4, adding `cash: 'Cash'` with FIRM_MIX_COLORS.cash (amber500)
+
+---
+
+## RAVC Log (continued)
+
+| # | To | Subject | Status |
+|---|----|---------|--------|
+| RAVC4 | 2.0.0_SA_COO | Finding C + B5 non-admin + Mix legend 99842500 LIVE | Sent 20260506T213516Z |
+
+---
+
 ## Current State
 
 | Item | Status |
 |------|--------|
 | Finding 1 (Mix cash) | FIXED + LIVE — `960c289a` portal DEV |
-| Finding 2 (NMNC/NMEC) | DS~A lane — standby |
-| RD Mix verification | RUNNING |
+| Finding C (NMNC/NMEC + B5 non-admin + legend) | FIXED + LIVE — `99842500` portal DEV |
+| RD full re-smoke | PENDING — dispatched by COO |
 | TS check | PASS |
-| DE queue | Empty — standby for F2 DS~A result |
+| DE queue | Standby for RD verification result |
