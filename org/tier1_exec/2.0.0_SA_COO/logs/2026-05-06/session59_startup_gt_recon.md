@@ -227,3 +227,43 @@ Bug C2 fix in progress (DS~D RAVC4b 20260506T133107Z). AC2 (lifecycle_aua non-ze
 11. **ADVI_BFIX4 TO-2** — gated on Andrew B1 ruling.
 12. **INFLFE.004 RD sweep** — carry-forward; RD not registered.
 13. **DT AUDIT-001 / submodule bump** — carry-forward; DT not registered.
+
+---
+
+## LDRBRD.001 Close + Final Carry-forwards (session 59 end-state, startup GT)
+
+### LDRBRD.001 Close Summary
+- **D5 artifact** generated_at 2026-05-06T13:37:08Z (SSM f9dacdd0); commits 0755a2330 + 46d55bc51 + 6e49f2694 (Bug A2 + Bug C2b, both in D5)
+- **AC1**: PASS — individual advisors peter_lee/patrick_scanlan/joe_brunswick all 0.0 in YTD+MAX; firm aggregate None is separate code path (out of AC1 scope; COO confirmed)
+- **AC2**: PASS — lifecycle_aua non-zero for all 4 entries across QTD/YTD/MAX
+- **Closed** `f1f9ec8b5` 20260506T~1340Z
+- **Bug A2 follow-on** (firm aggregate psa 0.0): low-priority future scope; NOT authored yet
+- **LDRBRD.002 TO** (Bug B YTD semantic): not yet authored; pending DS~D bandwidth
+
+### CTO Fix B Routing
+- CTO ruled Option 2 (remove build_performance from SILVER_BUILDERS; keep code; add comment)
+- Gated on AE 0.6.1 consumer trace (comp-pipescript consumers silver/api_dims/performance/)
+- If zero consumers → Option 2 proceeds; included in INFREL.001 Phase 1 RAVC5
+- If consumers found → COO routes back to CTO; Fix A/C/D proceed independently
+- Fix B addition message sent AE 0.6.1 20260506T134116Z
+
+### DS~A Status
+- DS~A BACK ONLINE — "Standing by for CTO special task assignment"
+- CTO special TO: ADVI_INFLEC.AUDIT-003B.workspace-name-correction-sweep.md (authored by CTO, in DS pod pending)
+- DS~A should pick this up; no COO action needed unless DS~A requests routing
+- Dashboard v10 patch remains DS~D scope (redistribution stands per session 59)
+
+### Final Carry-forwards (startup-corrected)
+
+1. **AE 0.6.1 INFREL.001 Phase 1 RAVC5** — Fix A (orchestrator.py DimSpecs + EC2 deploy) + Fix C (Lambda CW metrics terraform) + Fix D (tax exit=2 investigation) + Fix B (consumer trace + Option 2). In flight.
+2. **AE 0.7 INFREL.002 Phase 0** — May 4 bronze gap RCA. In flight.
+3. **AE 0.7 INFREL.008 Phase 0** — Watchdog regex broaden. In flight.
+4. **DS~D dashboard v10 patch** — advisor_count=4 + $182.5M vs $199.6M discrepancy investigation. Queued post-LDRBRD.001 close (now closed, so active).
+5. **INFINGE.005b Phase 0 empirical** — AE 0.6.1 queue; after INFREL.001 Phase 1 ships.
+6. **DS~A AUDIT-003B** — CTO special TO in DS pod pending. DS~A to execute.
+7. **SL-P1c AC#6** — Night 3 (May 7 04:00 UTC) = 2/3 if clean; DS~C reports.
+8. **RPBKTPI TO-2 authoring** — pending CTO PRD + AE 0.6.1 chain-cost estimate; not blocking.
+9. **Bug B LDRBRD.002 TO** — COO to author; pending DS~D bandwidth.
+10. **ADVI_BFIX4 TO-2** — gated on Andrew B1 ruling; no movement.
+11. **INFLFE.004 RD sweep** — carry-forward; RD not registered.
+12. **DT AUDIT-001 / submodule bump** — carry-forward; DT not registered.
