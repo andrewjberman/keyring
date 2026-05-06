@@ -117,3 +117,54 @@ ETA: ~1-2h from DS~D receipt of GO (sent 20260506T125120Z).
 7. **DT AUDIT-001 / submodule bump** — carry-forward; DT not registered.
 8. **ADVI_BFIX4 TO-2** — gated on Andrew B1 ruling.
 9. **COO prompt.md Pod 4 dashboard refresh** — deferred.
+
+---
+
+## Post-GT-Recon Actions (same session, RAVC processing)
+
+### RAVC/Message Processing
+
+| Timestamp | From | Subject | Action Taken |
+|---|---|---|---|
+| ~20260506T1350Z | 1.0.0_SA_CTO | RULING: TO-5b targets _v2.py (Custom Reports) | Authored INFINGE.005b TO same-turn per CTO mandate |
+| ~20260506T1300Z | 0.4.0_DS~A | RAVC2: dashboard.json advisor_count ruling ACK + D4 hold | ACKed; confirmed D4 hold pending AE 0.7 |
+| ~20260506T1257Z | 0.4.0_DS~D | RAVC3: LDRBRD.001 shipped (0755a2330, S3 42489B MATCH) | Accepted evidence; authorized D4 to AE 0.7 |
+| ~20260506T~1415Z | 0.6.1_AE | RAVC2: INFREL.001 GO acked; Phase 0 starting | Noted; INFREL.001 flipped staged→pending |
+| ~20260506T1304Z | 0.4.0_DS~A | ESCALATION: DS~D not registered; D4 blocked | Option (a): COO authorized D4 directly to AE 0.7 |
+| ~20260506T~1421Z | 0.4.0_DS~C | RAVC5: SL-P1c Night 2, RPBKTPI.001 close, Bug B ruling | Issued all rulings; RPBKTPI.001 COMPLETE confirmed |
+
+### New TOs Authored This Session
+
+| TO | File | Status |
+|---|---|---|
+| ADVI_INFINGE.005b | AE_PartnerETL/task_orders/ADVI_INFINGE.005b.txn-v2-lambda-migration.md | staged |
+
+### GT Corrections Made Post-Startup
+
+| Document | Change | Evidence |
+|---|---|---|
+| ADVI_INFREL.001 TO | staged → pending | COO GO issued 20260506T~1415Z; AE 0.6.1 RAVC2 ack received |
+| ADVI_RPBKTPI.json | phase updated to Phase 1 COMPLETE | DS~C RAVC5 + AC4 WAIVED per COO scope ruling 20260505T202607Z |
+
+### COO Rulings Issued This Session
+
+| Ruling | Recipients | Content |
+|---|---|---|
+| SL-P1c AC#6 Night 2 suppression | DS~C | --full mode nightly = MODE-NORMAL SKIP; counter pauses (not reset); 1/3 remains. Night 3 (May 7) incremental = 2/3. |
+| RPBKTPI.001 AC4 waiver | DS~C | Nulls on MAX/YTD = INF_D_00c Bug A scope (LDRBRD.001), not INF_B_00 behavior. TO-1 close stands. |
+| D4 GO direct authorization | AE 0.7 | DS~D not registered; COO authorized D4 directly on basis of 0755a2330 + S3 42489B MATCH evidence. |
+| dashboard.json v10 hold | DS~A | Hold until D4 RAVC5 from AE 0.7; route to CTO + DT same-turn. |
+
+### Updated Carry-forwards (post-RAVC processing)
+
+1. **AE 0.7 D4** — GOed this session (20260506T~1422Z). Awaiting RAVC3 + leaderboard refresh ($182M → ~$199.6M).
+2. **LDRBRD.001 CLOSE** — gates on D4 RAVC3 + leaderboard ETag verify + dashboard.json update by DS~A.
+3. **INFREL.001 Phase 0 RAVC3** — AE 0.6.1 investigating; classification (a/b/c) pending.
+4. **INFINGE.005b Phase 0 empirical** — queued behind INFREL.001; AE 0.6.1 LEAD. Custom Reports rate + parity check required before Phase 1 GO.
+5. **Bug B LDRBRD TO authoring** — DS~C ruled: `keys[0]` fallback for YTD period_start_aua. COO to author TO when DS~D bandwidth opens post-D4.
+6. **SL-P1c AC#6** — Night 1 (May 5) EMITTED 1/3. Night 2 (May 6) SUPPRESSED (skip). Night 3 (May 7) = 2/3 if clean.
+7. **INFREL TO-2/8 dispatch** — staged; AE 0.6.1 queue clear after INFREL.001 Phase 0.
+8. **RPBKTPI TO-2 authoring** — pending CTO PRD + AE 0.6.1 chain-cost estimate; not blocking sprint.
+9. **ADVI_BFIX4 TO-2** — gated on Andrew B1 ruling; no movement.
+10. **INFLFE.004 RD sweep** — carry-forward; RD not registered.
+11. **DT AUDIT-001 / submodule bump** — carry-forward; DT not registered.

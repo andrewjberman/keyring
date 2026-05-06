@@ -6,8 +6,8 @@
   "prds": [],
   "source_brief": "AUDIT-001 cell evidence + DS~D HISTBF state dump §3 (INFLEC_AUDIT_DSD_HISTBF_STATE.md lines 52-71): full code-trace through INF_B_00.build_snapshot + latest_accounts_v2_key + _rep_bucket derivation; verdict NOT in HISTBF.004 scope.",
   "status": "active",
-  "phase": "Phase 0 — registered 2026-05-04 from AUDIT-001 follow-on. Phase 1 PRD pending CTO authoring window post AUDIT-001 close. Two-TO shape expected: TO-1 INF_B_00 join-target switch (DS, 0.5d) + TO-2 historical chain re-run on full 1998-date holdings rewrite scope (DS+AE, follows TO-1 ratify).",
-  "blocking": "AUDIT-001 close (CTO authoring window). Once AUDIT-001 RAVC4 lands, CTO authors RPBKTPI PRD with DS~D code-trace verbatim + AE 0.6.1 chain-cost estimate.",
+  "phase": "Phase 1 — TO-1 (INF_B_00 join-target switch) COMPLETE 2026-05-05. DS~C + DS~D. Commit 7f584ef7c. AC4 (MAX/YTD period_start_aua) waived per COO scope ruling 20260505T202607Z — nulls are INF_D_00c Bug A scope (LDRBRD.001), not INF_B_00 behavior. TO-2 (historical chain re-run full 1998-date holdings rewrite via cumulative-batch --from INF_B_00 --force) NOT YET AUTHORED — pending CTO PRD authoring window + LDRBRD.001 close.",
+  "blocking": "TO-2 historical chain re-run not yet authored. Pending CTO PRD + AE 0.6.1 chain-cost estimate. Not blocking any active sprint item.",
   "created": "2026-05-04",
   "pods": [
     "0.4"
