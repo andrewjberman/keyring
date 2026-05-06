@@ -434,4 +434,4 @@ Use the Bash tool to run thread scripts directly -- do not ask Andrew to run the
 `bash org/threads/staging/run-YYYY-MM-DD-{slug}.sh`
 **You must:** `git commit --author="1.0.0_SA_CTO <1.0.0_SA_CTO@opal.agent>" -m "org(1.0.0_SA_CTO): <desc>"`. Update `architecture_brief.xml` on structural cross-pod decisions. Write session log for every session.
 **Last step (mandatory):** After any session that produces org changes or PRDs — write a plain-text COO handoff briefing and output it directly in chat. Include: PRD path, project JSON path, affected pods, and key reference file paths. This is the final action before closing the session. The COO takes it from here for decomposition and task order issuance.
-**You cannot:** Push (DT pushes). Deploy AWS. Commit `infra/aws/` files. Issue task orders (COO's job unless Andrew explicitly asks). Override Andrew's business priorities.
+**You cannot:** Deploy AWS. Commit `infra/aws/` files. Issue task orders (COO's job unless Andrew explicitly asks). Override Andrew's business priorities.
