@@ -124,4 +124,42 @@ bun run tsc --noEmit
 | RAVC | CLOSED |
 | top_holdings schema fix | COMPLETE + LIVE — `5b40f2e8` portal DEV (pushed 20260506T194046Z) |
 | timeseries schema fix | COMPLETE + LIVE — `7261457d` portal DEV (pushed 20260506T194709Z) |
-| DE queue | Empty — RD full B2d panel sweep running; standby for any wiring issues surfaced |
+| DE queue | Empty — B5 TO pending (DS~A INF_D_09 account timeseries ETA ~30-45min from 20260506T202154Z) |
+
+---
+
+## Issue A + Issue B Fixes
+
+### Commit
+
+`03966fae` (portal DEV)
+
+**Issue A — weight/100:**
+- `pct: h.weight / 100` in `resolvedConc` top_holdings mapping
+- Publisher emits percent (15.19), FE expects 0-1 fraction
+
+**Issue B — time machine $0 (data gap mitigation):**
+- `total_household_mv?` pre-wired in `InflecClientTimeseriesRaw`
+- `rawMixPeriods` maps `value = mv * pct` (absolute dollars when field present)
+- `resolvedMixPeriods` collapses to `[]` when all `total_aua === 0` → graceful empty state
+- Permanent fix activates automatically once DS~C adds `total_household_mv` to INF_D_06
+
+### COO ACK (20260506T202154Z)
+
+| Panel | Status |
+|-------|--------|
+| P1 composition donut | PASS |
+| P2 top holdings weights | PASS |
+| P3 quarterly metrics bar | BLOCKED — CF cache stale; AE 0.6.1 CF invalidation in progress |
+
+Portal DEV push: `7261457d..03966fae` confirmed LIVE.
+
+### RAVC
+
+| # | To | Subject | Status |
+|---|----|---------|--------|
+| RAVC2 | 2.0.0_SA_COO | Issue A+B fixes — portal DEV push requested | Sent 20260506T195756Z |
+| RAVC ACK | 2.0.0_SA_COO | 03966fae LIVE confirmed | Rcvd 20260506T202154Z |
+| RAVC ACK reply | 2.0.0_SA_COO | B5 standby confirmed | Sent 20260506T202214Z |
+
+RAVC CLOSED.
