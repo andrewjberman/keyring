@@ -176,23 +176,44 @@ CTO routed 5 TO body edits + orchestrator decom step + supersession note:
 | 0.6.1_AE_PartnerETL | RAVC4 INFREL.010 Phase 1.1 ACCEPTED + empirical gate before Phase 1.2 GO | 20260506T152709Z |
 | 0.4.0_DS_ClientPlatform~A | FLAG: gold_freshness_config.yaml path mismatch | 20260506T152719Z |
 | 0.6.1_AE_PartnerETL | RAVC4 INFINGE.005b silver wiring ACCEPTED + Phase 0 GO (run now) | 20260506T152751Z |
+| 0.4.0_DS_ClientPlatform~A | INFLFE.006 DG-1/DG-2/DG-3 data gaps dispatch | 20260506T162953Z |
+| 0.4.0_DS_ClientPlatform~A | STOP — CTO ruling INFINGE.005b: silver path = silver/transactions/ (correction) | 20260506T163059Z |
+| 0.6.1_AE_PartnerETL | INFINGE.005b CTO ruling relay: silver path = silver/transactions/ + gold consumer verify | 20260506T163107Z |
+| 0.4.2_RD_AdvisorIntelligence | GO INFLFE.006-rd Playwright sweep (TO authored; portal commit 43411a79 live) | 20260506T163232Z |
 
 ---
 
-## Carry-forwards
+## Post-INFLFE.006 Inbox Batch (20260506T~1730Z)
+
+### Messages received:
+1. **RD RAVC2** — Line 211 GO ACK; constitution doc at `portal/.frontend-dev/testing/inflection_advisor_intelligence.md` confirmed.
+2. **CTO RULING** — INFINGE.005b silver path = `silver/transactions/` (Option B). Consumer contract (5 gold readers at legacy path) beats api_dims/ convention. DS~A was fixing in wrong direction (api_dims); CTO MCPing DS~A to stop+redirect. COO relayed ruling to DS~A + AE 0.6.1.
+3. **RD RAVC3** — Line 211 sweep PASS: AUA strip $183M→$189M (Q2 period AUA), timestamp ≥ May 5. Constitution doc updated (uncommitted). Standing by for INFLFE.006-rd TO.
+4. **DS~A RAVC2 ACK** — DG-1/DG-2/DG-3 executing. Flagged gold_freshness_config.yaml: new `inf_silver_api_dims_transactions` entry exists alongside legacy `inf_silver_transactions`. COO clarified: per CTO ruling, remove api_dims entry; legacy silver/transactions/ entry is correct.
+
+### COO actions:
+- INFINGE.005b CTO ruling absorbed: silver/transactions/ is authoritative; DS~A instructed to correct build_transactions output path + remove api_dims freshness entry.
+- AE 0.6.1 notified: no code changes needed; verify gold consumer wiring on RAVC3.
+- INFLFE.006-rd TO authored (`2674b0819`) and GO issued to RD.
+- RD RAVC3 Line 211 noted: $189M is Q2 period AUA (correct metric for that chart); $199.6M canonical_holdings is separate (already GREEN per AUDIT-003).
+
+---
+
+## Carry-forwards (updated)
 
 1. **AE 0.6.1 INFREL.001 RAVC6** — 24-48h empirical silver self-healing; ~May 7 14:00Z. RAVC6 to COO.
 2. **AE 0.6.1 INFREL.010 empirical test** — single-date 2026-04-01 billing/tax pull; outcome determines backfill scope. RAVC4b to COO.
-3. **AE 0.6.1 INFINGE.005b Phase 0** — Custom Reports rate-empirical + parity + orchestrator decom plan; RAVC3 to COO.
+3. **AE 0.6.1 INFINGE.005b Phase 0** — Custom Reports rate-empirical + parity + orchestrator decom plan; RAVC3 to COO. Also verify gold consumer wiring at silver/transactions/ on this RAVC.
 4. **AE 0.7 INFREL.002 Phase 2 empirical** — May 7 12:43Z cron fire; stopping-state fix live test.
 5. **DS~C SL-P1c Night 3** — May 7 04:00 UTC; DS~C reports; no COO action unless fail.
 6. **DS~B INFREL.001b** — Fix D tax exit=2 first, then 001b bronze producer; RAVC5 to COO.
 7. **INFREL.010 Phase 1.3 backfill execution** — HOLD; requires Andrew approval on dispatch plan; AE 0.6.1 proposes plan after empirical confirms capable dims.
 8. **1.0.0_SA_CTO** — ADVI_INFLEC_AUDIT.md v13 commit pending (staged, message sent 20260506T152117Z).
-9. **DS~A** — gold_freshness_config.yaml path fix; RAVC to COO. ALSO: INFLFE.006 DG-1 (clients-tab-slim AUA $182.5M, _build_clients_tab_slim needs rep-coverage gate), DG-2 (slim schema: aua→total_aua + tax section), DG-3 (city key field).
+9. **DS~A** — EXECUTING: DG-1 (_build_clients_tab_slim rep-coverage gate), DG-2 (slim schema aua→total_aua + tax), DG-3 (city key field). ALSO: build_transactions silver path correction (api_dims→silver/transactions/) + remove api_dims freshness entry. RAVC3 to COO.
 10. **RPBKTPI TO-2** — pending CTO PRD + AE 0.6.1 chain-cost estimate; not blocking.
 11. **Bug B LDRBRD.002 TO** — COO to author; pending DS~D bandwidth post-SL-P1c.
 12. **ADVI_BFIX4 TO-2** — gated on Andrew B1 ruling; no movement.
 13. **INFLFE.004 RD sweep** — carry-forward; RD not registered.
-14. **INFLFE.006-rd RD sweep** — coordinate after DT commit landed. COO to author TO.
+14. **INFLFE.006-rd RD sweep** — ACTIVE; RD executing (GO issued 20260506T163232Z). RAVC4 to COO.
 15. **INFLFE.006 DT AUDIT-001 / submodule bump** — CLOSED this session (submodule `f4dfe7149`).
+16. **RD constitution doc commit** — uncommitted Line 211 + INFLFE.006 sweep changes; RD to bundle into one portal DEV commit + CLOUD submodule bump (scoped to INFLFE.006-rd TO).
