@@ -112,7 +112,35 @@ First SSM attempt (e6892232) failed — heredoc delimiter escaping issue caused 
 
 ## Open Items
 
-1. **Bug C2 fix** — DS~D: `.astype(str)` coercion on `account_id` in `_compute_hh_lifecycle()`. D5 re-run required for lifecycle_aua to populate.
+1. ~~**Bug C2 fix**~~ — RESOLVED by D5 (see below).
 2. **Dashboard vs leaderboard total_aua discrepancy** — $182.5M vs $199.6M. DS review item.
 3. **Lambda INITIAL_RATE bump** — AE 0.6.1 coordination to bump TO-1/2/3 Lambdas from 1.0 → 30-50 RPS per CTO rate-empirical finding. Lower priority; post-INFREL.001 Phase 1 fix.
 4. **OUTPUT_PREFIX double-slash paths** — Platinum artifacts land at `/firm/` and `/advisors/` (leading-slash S3 keys) instead of `platinum/firm/inflection/`. Functional but non-canonical path. Requires gold runner OUTPUT_PREFIX investigation.
+
+---
+
+## D5 Chain — Bug C2 Fix Verification
+
+**Trigger:** DS~D RAVC2 at 13:35:31Z — Bug C2 fix shipped (commit 46d55bc51, S3 ETag eafd00520c5bcee7d0fdd4c7fc7800d7, 42,687 bytes, 13:33:56Z).
+**Fix:** 3 `.astype(str)` coercions on `account_id` in `_compute_hh_lifecycle()` before all pd.merge calls.
+
+**SSM:** f9dacdd0-080d-4352-83af-442b8cd5624f
+**Chain log:** gold/logs/from_INF_D_00c_20260506_133647.log (240,255 bytes)
+**Duration:** 13:36:47Z → 13:39:04Z (~2.3min)
+
+**Bug C2 — CONFIRMED FIXED**
+
+| Advisor | nmnc | nmec | existing |
+|---|---|---|---|
+| Peter Lee | $16,589,270 | $6,630,370 | $138,647,490 |
+| Patrick Scanlan | $939,657 | $472,714 | $19,173,247 |
+| Joe Brandenburg | $1,897,010 | $272,681 | $13,988,493 |
+| Firm aggregate | $19,682,951 | $7,486,368 | $171,801,491 |
+
+Identical lifecycle_aua values across QTD/YTD/MAX (snapshot-based computation).
+
+**AC1 (MAX period_start_aua):** waived by COO — data-bounded, not a code defect.
+**AC2 (lifecycle_aua non-zero):** PASS — all advisors, all windows.
+
+Fresh artifact: gold/artifacts/employee_leaderboard.json generated_at 2026-05-06T13:38:01Z.
+RAVC3 to COO + DS~D sent at 13:39:47Z / 13:39:52Z.
