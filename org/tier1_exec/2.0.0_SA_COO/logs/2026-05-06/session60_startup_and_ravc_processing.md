@@ -223,3 +223,69 @@ Andrew explicit GO: "Yes they should run the backfill." Backfill execution (Phas
 14. **DE INFLFE.006 PROD bump** — GATED on INFLFE.006-rd RD RAVC4 PASS. DE standing by (notified 20260506T173924Z).
 15. **INFLFE.006 DT AUDIT-001 / submodule bump** — CLOSED this session (submodule `f4dfe7149`).
 16. **RD constitution doc commit** — uncommitted Line 211 + INFLFE.006 sweep changes; RD to bundle into one portal DEV commit + CLOUD submodule bump (scoped to INFLFE.006-rd TO).
+
+---
+
+## Context Compaction Continuation (20260506T~1848Z)
+
+Session re-entered after context compaction. Inbox processed — 10 messages pending.
+
+### Andrew Directives (pre-compaction)
+- ADVI_BFIX4 TO-2 (B1 Schwab-only rescue): PARKED. "That is an issue for 49 — our concern right now is inflection. We will return to that work later."
+- ADVI_ROLLUP BDPLNNASCHEMA: PARKED pending Andrew resumes 49F work. DS~C Phase 0 audit doc preserved at `data/black_diamond/diagnostics/ROLLUP/state_schema_audit.md` (commit 013ad62a1).
+
+### Inbox Batch Processed (10 messages)
+
+| # | From | Subject | COO Action |
+|---|------|---------|-----------|
+| 1 | DE | PROD bump GO ACK — forwarding to DT | DT not live; handled as acting DT |
+| 2 | DS~A | RAVC2 ACK — DG-dist-1 + silver path executing | Awaited RAVC4 |
+| 3 | DS~B | RAVC2 ACK — Fix D executing | Awaited RAVC3 |
+| 4 | DS~D | RAVC2 ACK — code review in progress, awaiting DS~C ratify | GO relayed per DS~C RAVC2 |
+| 5 | DS~C | RAVC1 ACK — LDRBRD.002 Phase 0 + BDPLNNASCHEMA | Both executing |
+| 6 | DS~C | **RAVC2 LDRBRD.002 Phase 0** — Option A ratified; rep_bucket→exclusion filter; 30d WARN | Phase 1 GO relayed to DS~D |
+| 7 | DS~C | RAVC2 BDPLNNASCHEMA Phase 0 — Path B recommended | HOLD per Andrew directive; ACK sent |
+| 8 | DS~B | **RAVC3 Fix D COMPLETE** — transient Orion outage root cause; retry commit d74e0d37c; S3 deployed | Ack + new TO dispatched |
+| 9 | DS~A | **RAVC4 ALL COMPLETE** — DG-dist-1 (already fixed); silver/transactions/ corrected (eef80ee93); api_dims entry removed | Ack + new TO dispatched |
+| 10 | DS~C | BDPLNNASCHEMA HOLD ACK — TO reverted to staged | Confirmed |
+
+### LDRBRD.002 DS~C RAVC2 — Key Finding
+Option A ratified. Root cause: `holdings_2025-12-31.parquet` EXISTS and IS selected as best_key for YTD. Zero result from `rep_bucket == 'individual'` filter empty on pre-CHART-ALIGN backfill files (historical entries carry `rep_bucket='firm'`). Fix: exclusion-based filter `~advisor_key.isin({'new_accounts_rep', 'inflection_wealth_management'})` + 30d staleness WARN. DS~D received Phase 1 GO with full implementation note.
+
+**DS~D pre-empted:** DS~D implemented and pushed before COO relay arrived. CLOUD commit `388f02546` — "INF_D_00c _aua_at_start() rep_bucket filter -> exclusion-based + 30d staleness WARN". S3 upload + chain run + RAVC3 pending.
+
+### PROD Bump (acting DT)
+- Portal PROD fast-forward: `e68f54e7` → `6ee68a19` (includes INFLFE.006 DT fix `43411a79` + RD sweep `6ee68a19`).
+- TypeScript check (PROD push hook): PASS — 0 errors.
+- Portal PROD pushed to origin. CLOUD submodule pointer already at `6ee68a19` (pre-updated by RD). No additional CLOUD commit needed.
+- DE notified: RAVC PROD bump COMPLETE delivered 20260506T185145Z.
+
+### New Dispatches (20260506T~1848Z)
+
+| Agent | Action | Delivered |
+|---|---|---|
+| DS~D | Phase 1 GO — LDRBRD.002 Option A implementation + DS~C rationale | 20260506T184825Z |
+| DS~A | New TO — DG-1 (clients-tab-slim rep-coverage gate) + DG-2 (total_aua + tax schema) | 20260506T184837Z |
+| DS~B | New TO — DG-3 (city key field _build_geo_view) + transactions retry hardening | 20260506T184847Z |
+| AE 0.6.1 | Phase 1 GO — INFINGE.005b (cron arm + decom) + INFREL.010 Phase 1.3 (backfill execution) | 20260506T184856Z |
+| DS~C | Ack RAVC2 — stand by for next Inflection TO | 20260506T184900Z |
+| DE | RAVC PROD bump COMPLETE | 20260506T185145Z |
+
+### Updated Carry-forwards (20260506T~1850Z)
+
+**Active (in flight):**
+1. DS~D: LDRBRD.002 Phase 1 — commit `388f02546` live; S3 upload + chain run + RAVC3 to COO pending.
+2. DS~A: DG-1+DG-2 — INF_D_04 `_build_clients_tab_slim` rep-coverage gate + schema fix. RAVC5 to COO.
+3. DS~B: DG-3 (city key `_build_geo_view`) + transactions retry hardening. RAVC4 to COO.
+4. AE 0.6.1: INFINGE.005b Phase 1 (cron arm + decom) → RAVC4; INFREL.010 Phase 1.3 (backfill execution) → RAVC5.
+5. DS~C: SL-P1c Night 3 (May 7 04:00 UTC); standing by.
+
+**Pending confirmations:**
+6. AE 0.6.1 INFREL.001 RAVC6 — ~May 7 14:00Z (24-48h empirical window).
+7. AE 0.7 INFREL.002 Phase 2 — May 7 12:43Z cron fire.
+8. CTO ADVI_INFLEC_AUDIT.md v13 commit — message sent 20260506T152117Z; not yet RAVC'd. DS~D commit `388f02546` adds another AUDIT update needed: leaderboard period_start_aua YELLOW→GREEN once chain run verifies.
+
+**Parked (Andrew directive — 49F work):**
+9. ADVI_BFIX4 TO-2 (B1 Schwab-only rescue)
+10. ADVI_ROLLUP BDPLNNASCHEMA Phase 1 (BD/49F work)
+11. ADVI_RPBKTPI TO-2 (gated on CTO PRD)
