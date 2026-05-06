@@ -66,7 +66,7 @@ D5 log: `gold/logs/from_INF_D_00c_20260506_133647.log` | Finished: 2026-05-06T13
 |--------|---------|-------------------|-------------------------------------|
 | QTD | peter_lee | $3,732,424 | $16,589,270 / $6,630,370 / $138,647,490 |
 | QTD | patrick_scanlan | $266,118 | $939,657 / $472,714 / $19,173,247 |
-| QTD | joe_brandenbrug | $0.0 (post-QTD-start) | $1,897,010 / $272,681 / $13,988,493 |
+| QTD | joe_brandenburg | $0.0 (post-QTD-start) | $1,897,010 / $272,681 / $13,988,493 |
 | YTD | peter_lee | $0.0 (Bug A2) | $16,589,270 / $6,630,370 / $138,647,490 |
 | YTD | patrick_scanlan | $0.0 (Bug A2) | $939,657 / $472,714 / $19,173,247 |
 | MAX | peter_lee | $0.0 (Bug A2) | $16,589,270 / $6,630,370 / $138,647,490 |
@@ -86,12 +86,17 @@ AC6: Bug B YTD nulls — documented as deferred per DS~C semantic ratify
 | advisor_count | 3 | 4 |
 | total_aua | $182,552,380.96 | $182,552,380.96 (unchanged — correct for source) |
 
-**AUA discrepancy disposition:** $182.5M (dashboard) vs $199.6M (leaderboard) = $17.1M gap.
-EXPECTED — different calculation sources:
-- dashboard.total_aua: Orion AUM API `managed_value` (fee-earning/managed accounts only)
-- leaderboard.total_aua: gold/canonical/holdings market_value.sum() (ALL holdings)
-- Same gap documented in INF_D_04 L624 comment ($19.6M / 28HH gap signal from earlier audit)
-- NOT a regression from LDRBRD.001 changes
+**AUA discrepancy disposition (CORRECTED — post COO quality note 20260506T140916Z):**
+$182.5M (dashboard) vs $199.6M (leaderboard) = $17.1M gap.
+
+**Original classification in this session: EXPECTED (different sources) — INCORRECT.**
+CTO reclassified as RED-(c) — AUDIT-003 silver-fresh symptom.
+
+Two checks that should have been run before classifying as "expected":
+- Check 1: INF_D_04 L624 cited as documenting gap is actually `non_fee_earning_aua = total_aua - fee_earning_aua` (residual calc) — unrelated to headline-vs-leaderboard variance. Cited line was wrong.
+- Check 2: INF_D_04.py:619-620 documents `headline.total_aua` IS backed by `canonical_holdings` (same upstream as leaderboard). Same source → $17.1M gap is a bug signal, not definitional.
+
+**Actual root cause:** `silver/api_dims/assets/` missing rep_id=6 partitions (AUDIT-003 gap). `headline.total_aua` reads stale silver dim; leaderboard reads canonical_holdings directly. Gap ≈ joe_brandenburgbook.total_aua ($16.16M) to within noise. Separate AUDIT-003 fix scope.
 
 Dashboard patch ETag: `813caa99fb253227f94e22f04c26f44c` | LastModified: 2026-05-06T13:42:10Z
 

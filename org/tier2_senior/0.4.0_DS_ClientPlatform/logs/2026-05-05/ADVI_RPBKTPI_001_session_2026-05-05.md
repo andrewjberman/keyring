@@ -134,7 +134,7 @@ Leaderboard flipped at 21:45:55Z (D3g, attempt #6). Full re-read executed.
 |---------|-----------------|----------------|---------------|---------|
 | peter_lee | None | None | {nmnc:0,nmec:0,existing:0} | FAIL |
 | patrick_scanlan | None | None | {nmnc:0,nmec:0,existing:0} | FAIL |
-| joe_brandenbrug | None | None | {nmnc:0,nmec:0,existing:0} | FAIL |
+| joe_brandenburg | None | None | {nmnc:0,nmec:0,existing:0} | FAIL |
 | inflection_wealth_management | None | None | {nmnc:0,nmec:0,existing:0} | FAIL |
 
 **YTD window:** all None (same as D2d)
@@ -144,7 +144,7 @@ Leaderboard flipped at 21:45:55Z (D3g, attempt #6). Full re-read executed.
 |---------|-----------------|----------------|
 | peter_lee | $3,732,424.29 | +4213.98% |
 | patrick_scanlan | $266,118.11 | +7638.08% |
-| joe_brandenbrug | None | None |
+| joe_brandenburg | None | None |
 | inflection_wealth_management | None | None |
 
 **CRITICAL REGRESSION vs D2d:**
@@ -155,7 +155,7 @@ Leaderboard flipped at 21:45:55Z (D3g, attempt #6). Full re-read executed.
 | QTD window_start | 2026-04-01 | None |
 | QTD window_end | 2026-05-05 | None |
 
-Root cause hypothesis: 202fddb3b (rep_id=6 added to INFLECTION_REP_IDS) introduced NaN propagation when joe_brandenbrug data is included in total_aua computation. D2d ran without 202fddb3b; D3g ran with it.
+Root cause hypothesis: 202fddb3b (rep_id=6 added to INFLECTION_REP_IDS) introduced NaN propagation when joe_brandenburg data is included in total_aua computation. D2d ran without 202fddb3b; D3g ran with it.
 
 RAVC5'' sent to COO + DS~D at 20260505T214727Z. DS~D hold on Bug A+C ship requested pending regression investigation.
 
@@ -207,7 +207,7 @@ to close tonight. Chain attempts summary:
 | D3f (C-chain nohup fix) | — | ~21:30Z | ~21:37Z | Another stall; killed at 2024-08 again — root cause SIGHUP per AE 0.7 investigation |
 | D3g (attempt #6, nohup+guard) | — | ~21:37Z | 21:45:56Z | SUCCESS — canonical_perf 2019→2026-04-28 written; leaderboard.json 21:45:55Z |
 
-**DS~D companion fix (commit 202fddb3b, 20260505T~200600Z):** rep_id=6 (joe_brandenbrug) was absent
+**DS~D companion fix (commit 202fddb3b, 20260505T~200600Z):** rep_id=6 (joe_brandenburg) was absent
 from hardcoded `INFLECTION_REP_IDS` frozenset in 4 files. Fix shipped: `_orion_api_silver_lib.py`,
 `convert_orion_to_silver.py`, `INF_D_08.nmec_nmnc_nna.py`, `INF_D_00c.portal_leaderboard.py`.
 **D2d re-fire must include 202fddb3b code** (already in S3 per DS~D RAVC3 MATCH).

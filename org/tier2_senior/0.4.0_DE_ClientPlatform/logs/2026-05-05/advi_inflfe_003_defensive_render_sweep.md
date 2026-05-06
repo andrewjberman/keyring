@@ -48,17 +48,17 @@
 
 ---
 
-### Cell 6 — `platinum/advisors/joe_brandenbrug/top_holdings.json` absent
+### Cell 6 — `platinum/advisors/joe_brandenburg/top_holdings.json` absent
 
 **Code path:** `AdvisorBookView.tsx` L2 drill → `ConsolidatedOverviewPanel`
 
 **Finding:** ALREADY DEFENSIVE.
-- No direct CloudFront fetch of `top_holdings.json` exists in the FE (no `getPlatinumAdvisorTopHoldings` function). Holdings data comes from Lambda-served `getPlatinumAdvisorSummary` → `platinum/advisors/{id}/summary.json` (exists for all 4 Inflection advisors including joe_brandenbrug).
+- No direct CloudFront fetch of `top_holdings.json` exists in the FE (no `getPlatinumAdvisorTopHoldings` function). Holdings data comes from Lambda-served `getPlatinumAdvisorSummary` → `platinum/advisors/{id}/summary.json` (exists for all 4 Inflection advisors including joe_brandenburg).
 - If Lambda returns 404 for any advisor: `bookError = true` → AdvisorBookView.tsx:319-332 renders "Could not load book data." + Retry button. No crash.
-- If Lambda returns 200 with empty composition (joe_brandenbrug has no assets): `ConsolidatedOverviewPanel` at line 189: `hasMix = composition.mix.length > 0 = false` → donut renders "No allocation data" (line 384). Top holdings panel: `cappedItems = []` → renders "No holdings data at this level" (line 503-504). No crash.
+- If Lambda returns 200 with empty composition (joe_brandenburg has no assets): `ConsolidatedOverviewPanel` at line 189: `hasMix = composition.mix.length > 0 = false` → donut renders "No allocation data" (line 384). Top holdings panel: `cappedItems = []` → renders "No holdings data at this level" (line 503-504). No crash.
 - `platinumToComposition` and `normalizeMixTo4Class` handle empty mix arrays cleanly.
 
-**AC3 status:** PASS — ADV drill renders empty-cohort placeholders for joe_brandenbrug, does not crash. Other 3 advisors unaffected (Lambda returns populated summary). No code change needed.
+**AC3 status:** PASS — ADV drill renders empty-cohort placeholders for joe_brandenburg, does not crash. Other 3 advisors unaffected (Lambda returns populated summary). No code change needed.
 
 ---
 

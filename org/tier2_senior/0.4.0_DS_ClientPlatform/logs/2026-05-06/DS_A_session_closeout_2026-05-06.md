@@ -55,7 +55,7 @@ COO simultaneously routed the same TO to DS~D (believing DS~A was unavailable); 
 | `org/tier2_senior/0.4.0_DS_ClientPlatform/logs/2026-05-04/ADVI_INFLEC_portal_gap_triage.md` | 2 wrong-name references corrected |
 | `org/tier2_senior/0.4.0_DS_ClientPlatform/logs/2026-05-04/advi_bfix4_session_summary_postcompaction.md` | 1 wrong-name reference corrected |
 | `org/tier2_senior/0.4.0_DS_ClientPlatform/logs/2026-05-05/ADVI_INFLEC_AUDIT003_joe_brunswick_top_holdings.md` | DELETED (git mv — filename contained wrong name) |
-| `org/tier2_senior/0.4.0_DS_ClientPlatform/logs/2026-05-05/ADVI_INFLEC_AUDIT003_joe_brandenbrug_top_holdings.md` | CREATED (git mv rename + 29 content replacements) |
+| `org/tier2_senior/0.4.0_DS_ClientPlatform/logs/2026-05-05/ADVI_INFLEC_AUDIT003_joe_brandenburg_top_holdings.md` | CREATED (git mv rename + 29 content replacements) |
 | `org/tier2_senior/0.4.0_DS_ClientPlatform/logs/2026-05-05/ADVI_INFLEC_AUDIT008_009_DS_D_session.md` | 2 wrong-name references corrected |
 | `org/tier2_senior/0.4.0_DS_ClientPlatform/logs/2026-05-05/ADVI_INFLEC_chain_verify_joe_rep_id.md` | 15 wrong-name references corrected |
 | `org/tier2_senior/0.4.0_DS_ClientPlatform/logs/2026-05-05/ADVI_INFLEC_context_cont_closeout.md` | 5 wrong-name references corrected |

@@ -13,7 +13,7 @@
 COO GO received for HIGH-priority bug: `_build_aua_view` and `_build_geo_view` in
 `INF_D_04.client_portal_summary.py` lacked the AUDIT-003 full-rep coverage gate,
 causing partner_analytics_quarterly/monthly/annual.json to show $182.5M (partial-rep
-aum_snapshot) instead of canonical $199.6M (holdings). Root cause: rep 6 (joe_brandenbrug)
+aum_snapshot) instead of canonical $199.6M (holdings). Root cause: rep 6 (joe_brandenburg)
 absent from aum_snapshot (rep_ids=['3','11','12']). AUDIT-003 (commit 28dcb8b56) fixed
 `build_dashboard()` but not the two partner_analytics view builders.
 

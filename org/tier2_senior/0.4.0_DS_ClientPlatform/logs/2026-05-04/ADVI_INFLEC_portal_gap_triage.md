@@ -69,12 +69,12 @@ INF_I_D02b.top_holdings.py ADVISOR_KEY_BY_REP_ID currently maps:
 
 silver/api_dims/assets/snapshot_date=2026-04-20/ has only these rep_ids (3, 11, 12).
 joe_brandenburg is in gold/views/account_team.parquet and relationship_team.parquet but
-not in the assets snapshot. joe_brandenbrug's platinum/advisors/joe_brandenburg/book.json
+not in the assets snapshot. joe_brandenburg's platinum/advisors/joe_brandenburg/book.json
 has advisor_id: None (pre-fix state — INF_D_02 client_key fix hasn't run yet).
 
 Resolution path:
 1. Await INF_D_02 re-run (this chain) — will populate joe_brandenburg's book.json properly
-2. Check joe_brandenbrug's Orion rep_id from book.json or silver/api_dims/assets post-chain
+2. Check joe_brandenburg's Orion rep_id from book.json or silver/api_dims/assets post-chain
 3. Add mapping to ADVISOR_KEY_BY_REP_ID in INF_I_D02b
 4. Add INF_I_D02b to orion-gold-dispatch.sh catalog + chains
 5. Re-run INF_I_D02b

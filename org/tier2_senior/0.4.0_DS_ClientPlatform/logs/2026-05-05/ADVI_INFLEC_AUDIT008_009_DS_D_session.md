@@ -104,7 +104,7 @@ Audit accepted by COO as ADVI_INFINGE PRD v0.2 §5 Compiler Evidence input.
 
 ## AUDIT-003a — Hardcoded INFLECTION_REP_IDS missing rep_id=6 (sibling fix)
 
-**Discovery:** hardcoded-mapping audit (COO parallel prework assignment ~20:00Z) surfaced 5 BUG(b) instances where `INFLECTION_REP_IDS` excluded joe_brandenbrug rep_id=6. Highest-priority: `INF_D_00c.portal_leaderboard.py:446` default arg — firm perf aggregate actively excluded joe from D2c chain already running.
+**Discovery:** hardcoded-mapping audit (COO parallel prework assignment ~20:00Z) surfaced 5 BUG(b) instances where `INFLECTION_REP_IDS` excluded joe_brandenburg rep_id=6. Highest-priority: `INF_D_00c.portal_leaderboard.py:446` default arg — firm perf aggregate actively excluded joe from D2c chain already running.
 
 **Files fixed (4 code edits):**
 
@@ -148,7 +148,7 @@ from_INF_C_00 completed 20:19Z. Key findings:
 
 **Root cause of dashboard.json stale AUA:** Chain ran `from_INF_C_00` — skipped INF_B_00/INF_B_01. `gold/holdings/` max = 2026-04-28. `silver/api_dims/positions_mv/` HAS May 1-5 Hive partitions but INF_B_00 has not processed them.
 
-**AUDIT-003a leaderboard PASS:** 4 entries in all windows (QTD/YTD/MAX). joe_brandenbrug/joe_brandenburg present.
+**AUDIT-003a leaderboard PASS:** 4 entries in all windows (QTD/YTD/MAX). joe_brandenburg/joe_brandenburg present.
 
 ### RPBKTPI.001 AC4 Cross-Validation
 

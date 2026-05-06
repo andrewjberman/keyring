@@ -132,5 +132,5 @@ COO verified both commits and routed ADVI_SLEEVE_P1B_ANALYSIS.md to CTO.
 | AE 0.7 RAVC3 (A_03 QA SSM result) | AWAITING |
 | ADVI_BFIX4 TO-1 close | Pending AE RAVC3 (SSM exit confirmation) |
 | ADVI_BFIX4 TO-2 (B1 — B_00 BFIX4) | GATED on Andrew ruling — do NOT proceed |
-| INFLEC gap 6 (joe_brandenbrug rep_id) | PENDING — needs Orion rep_id investigation + INF_I_D02b catalog add |
+| INFLEC gap 6 (joe_brandenburg rep_id) | PENDING — needs Orion rep_id investigation + INF_I_D02b catalog add |
 | INFLEC gap 4 (leaderboard period_start_aua) | BLOCKED on DS~D HISTBF.004 backfill |

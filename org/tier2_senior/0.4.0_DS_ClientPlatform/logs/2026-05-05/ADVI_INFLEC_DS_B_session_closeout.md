@@ -10,11 +10,11 @@
 
 | Task | Commit | Status |
 |------|--------|--------|
-| AUDIT-003: build_assets_dim.py — add joe_brandenbrug (Brandenburg) to allowlist | `8d2bf27e1` | COMPLETE |
+| AUDIT-003: build_assets_dim.py — add joe_brandenburg (Brandenburg) to allowlist | `8d2bf27e1` | COMPLETE |
 | AUDIT-003: INF_D_04 — add '6' to INFLECTION_REP_IDS | `e257875ec` | COMPLETE |
 | AUDIT-003: INF_I_D02b — correct output key Brandenbrug→Brandenburg | `dffb2bf22` | COMPLETE |
 | AUDIT-003: silver/api_dims/assets/snapshot_date=2026-05-05/ built (23,660 rows, 4 reps) | local | COMPLETE |
-| AUDIT-003: QA run — joe_brandenbrug top_holdings.json (Brandenburg, $16.2M, 182 holdings) | SSM e44054cf | COMPLETE |
+| AUDIT-003: QA run — joe_brandenburg top_holdings.json (Brandenburg, $16.2M, 182 holdings) | SSM e44054cf | COMPLETE |
 | AUDIT-007: empirical S3 reads verified (DS~A had already completed; cross-confirmed) | — | VERIFIED |
 | RPBKTPI.001: QA chain AccessDenied blocker surfaced + escalated to COO | — | ESCALATED |
 | RPBKTPI.001: AE PROD chain re-fire confirmed in flight (PID 2944, 19:22Z) | SSM 1b43e24c | MONITORING |

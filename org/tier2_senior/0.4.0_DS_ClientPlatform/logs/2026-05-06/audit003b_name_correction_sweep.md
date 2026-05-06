@@ -64,10 +64,10 @@ Per TO spirit (complete eradication), all 3 additional files were cleaned. Repor
 
 ```
 git mv "org/.../ADVI_INFLEC_AUDIT003_joe_brunswick_top_holdings.md" \
-       "org/.../ADVI_INFLEC_AUDIT003_joe_brandenbrug_top_holdings.md"
+       "org/.../ADVI_INFLEC_AUDIT003_joe_brandenburg_top_holdings.md"
 ```
 
-Output: `R  ...ADVI_INFLEC_AUDIT003_joe_brunswick_top_holdings.md -> ADVI_INFLEC_AUDIT003_joe_brandenbrug_top_holdings.md`
+Output: `R  ...ADVI_INFLEC_AUDIT003_joe_brunswick_top_holdings.md -> ADVI_INFLEC_AUDIT003_joe_brandenburg_top_holdings.md`
 
 git mv confirmed. Old file deleted from repo, new file added (untracked at staging time due to Python write order; staged with git add -f in commit assembly).
 
@@ -83,7 +83,7 @@ git mv confirmed. Old file deleted from repo, new file added (untracked at stagi
 - `org/tier2_senior/0.4.0_DS_ClientPlatform/logs/2026-05-05/ADVI_INFLEC_context_cont_closeout.md` — 5 replacements
 - `org/tier2_senior/0.4.0_DS_ClientPlatform/logs/2026-05-05/ADVI_INFLEC_chain_verify_joe_rep_id.md` — 15 replacements
 - `org/tier2_senior/0.4.0_DS_ClientPlatform/logs/2026-05-05/ADVI_INFLEC_AUDIT008_009_DS_D_session.md` — 2 replacements
-- `org/tier2_senior/0.4.0_DS_ClientPlatform/logs/2026-05-05/ADVI_INFLEC_AUDIT003_joe_brandenbrug_top_holdings.md` — 29 replacements (renamed + content cleaned via Python)
+- `org/tier2_senior/0.4.0_DS_ClientPlatform/logs/2026-05-05/ADVI_INFLEC_AUDIT003_joe_brandenburg_top_holdings.md` — 29 replacements (renamed + content cleaned via Python)
 - `org/tier2_senior/0.4.0_DS_ClientPlatform/logs/2026-05-04/ADVI_INFLEC_portal_gap_triage.md` — 2 replacements
 - `org/tier2_senior/0.4.0_DS_ClientPlatform/logs/2026-05-04/advi_bfix4_session_summary_postcompaction.md` — 1 replacement
 - `org/tier2_senior/0.4.0_DS_ClientPlatform/logs/2026-05-06/DS_C_startup_2026-05-06.md` — 1 replacement
@@ -113,12 +113,13 @@ git mv confirmed. Old file deleted from repo, new file added (untracked at stagi
 
 ## Phase 3 — Commit + Push
 
-*(Filled in after commit completes)*
-
 | Step | Result |
 |------|--------|
-| Commit hash | TBD |
-| Push | TBD |
+| Commit 1 (main sweep, 23 files) | `a4e505460` — fix(ADVI_INFLEC.AUDIT-003B): workspace categorical name correction sweep |
+| Commit 2 (rename log + TO body, 2 files) | `23925b518` — fix(ADVI_INFLEC.AUDIT-003B): part 2 |
+| Push | `873951a32..23925b518 CLOUD -> CLOUD` — origin/CLOUD up to date |
+| Author | `0.4.0_DS_ClientPlatform_A <0.4.0_DS_ClientPlatform_A@opal.agent>` |
+| Override | `GIT_COMMIT_AUTHOR_OVERRIDE=MULTI_LANE` + safe-commit.sh `--force` (FORCE-BYPASS logged to org/git-author-override-audit.log) |
 
 ---
 

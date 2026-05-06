@@ -39,7 +39,7 @@ DS~D commit `0755a2330` shipped Bug A+C wiring. D4 surfaced two new bugs:
 DS~D commits `46d55bc51` (Bug C2 dtype coercion) + `6e49f2694` (Bug A2 psa 0.0 default + Bug C2b nna_clean str cast) both landed before D5 fired.
 
 **AC Status:**
-- AC1: PASS — peter_lee, patrick_scanlan, joe_brandenbrug all 0.0 in YTD+MAX. firm aggregate (inflection_wealth_management) out of AC1 scope per COO confirm (separate code path at L867).
+- AC1: PASS — peter_lee, patrick_scanlan, joe_brandenburg all 0.0 in YTD+MAX. firm aggregate (inflection_wealth_management) out of AC1 scope per COO confirm (separate code path at L867).
 - AC2: PASS — all 4 entries lifecycle_aua non-zero across all windows.
 - AC3: PASS, AC4: PASS, AC5: delivered 20260506T133901Z, AC6: PASS.
 

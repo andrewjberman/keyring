@@ -19,7 +19,7 @@
 | INFLFE.006 Lines 209+210 Playwright sweep | RD 0.4.2 | `ADVI_INFLFE_006_sweep_lines209_210_pass.md` | PASS |
 | AUDIT-003 close — INF_D_04 aum_snapshot override removed | AE 0.6.1 | `28dcb8b56` | CLOUD |
 | dashboard.json headline.total_aua = $199.6M | AE 0.6.1 | `28dcb8b56` | S3 live |
-| joe_brandenbrug/top_holdings.json (INF_I_D02b, 744 rows) | AE 0.6.1 | `28dcb8b56` | S3 live |
+| joe_brandenburg/top_holdings.json (INF_I_D02b, 744 rows) | AE 0.6.1 | `28dcb8b56` | S3 live |
 | LDRBRD.001 close — lifecycle_aua Bug C2 + period_start_aua Bug A2 | DS~D | `6e49f2694` | CLOUD |
 | leaderboard.json — lifecycle non-zero, psa non-null (QTD/YTD) | DS~D | D5 run f9dacdd0 | S3 live |
 | dashboard.json advisor_count 3→4 | DS~D | S3 direct | S3 live |
