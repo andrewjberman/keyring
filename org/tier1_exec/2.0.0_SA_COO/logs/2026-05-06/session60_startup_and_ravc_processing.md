@@ -138,6 +138,47 @@ CTO routed 5 TO body edits + orchestrator decom step + supersession note:
 
 ---
 
+## INFLFE.006 DT Phase 1 CLOSED (acting COO session ~20260506T~1700Z)
+
+**DS~A INFLFE.006-data fix confirmed landed** at 16:01Z: `partner_analytics_quarterly.json views.aua.donut.total = $199,649,186.31` ✓
+
+**Root causes identified and fixed:**
+- B1: Distribution drilldown crash — geo city segments emit `name` (not `key`) → `formatSegLabel` crashed on `seg.key.split('_')`. Fix: DT fallback `city.key ?? city.name` in city mapping. Portal commit `43411a79`.
+- B2: Books tab crash — `clients-tab-slim.json` missing `tax` field → `clientsTabData.tax.taxable` TypeError. Fix: `tax ? {...} : null` guard + `total_aua ?? aua` fallback. Same commit.
+
+**5 AUA vectors post-fix:**
+| Vector | Value | Status |
+|--------|-------|--------|
+| Assets Overview main | $199,649,186.31 | ✓ |
+| AUA toggle (NMNC+NMEC+Existing) | $19.68M+$7.49M+$172.48M = $199.65M | ✓ |
+| Mix view | $199.65M | ✓ |
+| Distribution geo | $199.13M | ⚠ $515K geo-exclusion (expected) |
+| Books advisors | $199.65M | ✓ |
+
+**Data gaps flagged (NOT frontend bugs):**
+- DG-1: `clients-tab-slim.json` headline.aua still $182.5M (INF_D_04 `_build_clients_tab_slim` not fixed by DS~A — needs same rep-coverage gate). **HIGH PRIORITY** → DS~A follow-up.
+- DG-2: `clients-tab-slim.json` uses `aua` not `total_aua`; no `tax` field. Schema mismatch with BD. DS must align.
+- DG-3: Geo city segments missing `key` field (use `name`). INF_D_04 city emission schema mismatch. DS must align.
+- DG-4: No `histogram` in `distribution.total` → bell curve cannot render. DS future enhancement.
+- DG-5: Distribution geo total $199.1M vs $199.6M canonical — geographic exclusion, expected.
+
+**Portal DEV commit:** `43411a79`. Submodule bump CLOUD: `f4dfe7149`.
+
+---
+
+## RAVC Dispatch Table (updated)
+
+| Agent | Message | Delivered |
+|---|---|---|
+| 0.6.1_AE_PartnerETL | RAVC6 AUDIT-003 CLOSE ACCEPTED + RAVC4 INFREL.010 Phase 0 ACCEPTED + Phase 1 GOs | 20260506T150801Z |
+| 0.6.1_AE_PartnerETL | GO INFINGE.005b Phase 0 (DS~A silver builder shipped; TO body updated) | 20260506T151329Z |
+| 1.0.0_SA_CTO | ACTION: ADVI_INFLEC_AUDIT.md v13 commit (lane=ANY_CTO; 3 GT corrections) | 20260506T152117Z |
+| 0.6.1_AE_PartnerETL | RAVC4 INFREL.010 Phase 1.1 ACCEPTED + empirical gate before Phase 1.2 GO | 20260506T152709Z |
+| 0.4.0_DS_ClientPlatform~A | FLAG: gold_freshness_config.yaml path mismatch | 20260506T152719Z |
+| 0.6.1_AE_PartnerETL | RAVC4 INFINGE.005b silver wiring ACCEPTED + Phase 0 GO (run now) | 20260506T152751Z |
+
+---
+
 ## Carry-forwards
 
 1. **AE 0.6.1 INFREL.001 RAVC6** — 24-48h empirical silver self-healing; ~May 7 14:00Z. RAVC6 to COO.
@@ -148,9 +189,10 @@ CTO routed 5 TO body edits + orchestrator decom step + supersession note:
 6. **DS~B INFREL.001b** — Fix D tax exit=2 first, then 001b bronze producer; RAVC5 to COO.
 7. **INFREL.010 Phase 1.3 backfill execution** — HOLD; requires Andrew approval on dispatch plan; AE 0.6.1 proposes plan after empirical confirms capable dims.
 8. **1.0.0_SA_CTO** — ADVI_INFLEC_AUDIT.md v13 commit pending (staged, message sent 20260506T152117Z).
-9. **DS~A** — gold_freshness_config.yaml path fix; RAVC to COO.
+9. **DS~A** — gold_freshness_config.yaml path fix; RAVC to COO. ALSO: INFLFE.006 DG-1 (clients-tab-slim AUA $182.5M, _build_clients_tab_slim needs rep-coverage gate), DG-2 (slim schema: aua→total_aua + tax section), DG-3 (city key field).
 10. **RPBKTPI TO-2** — pending CTO PRD + AE 0.6.1 chain-cost estimate; not blocking.
 11. **Bug B LDRBRD.002 TO** — COO to author; pending DS~D bandwidth post-SL-P1c.
 12. **ADVI_BFIX4 TO-2** — gated on Andrew B1 ruling; no movement.
 13. **INFLFE.004 RD sweep** — carry-forward; RD not registered.
-14. **DT AUDIT-001 / submodule bump** — carry-forward; DT not registered.
+14. **INFLFE.006-rd RD sweep** — coordinate after DT commit landed. COO to author TO.
+15. **INFLFE.006 DT AUDIT-001 / submodule bump** — CLOSED this session (submodule `f4dfe7149`).
