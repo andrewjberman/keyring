@@ -109,6 +109,7 @@ bun run tsc --noEmit
 |---|----|---------|--------|
 | RAVC1 | 2.0.0_SA_COO | GO ACK — executing Phase 0 | Sent 20260506T192535Z |
 | RAVC2 | 2.0.0_SA_COO | B2d + cleanup complete; DEV push needed (DT offline) | Sent 20260506T193247Z |
+| RAVC ACK | 2.0.0_SA_COO | Portal DEV pushed 3f043ccb..dcc24b9f; RAVC CLOSED | Rcvd 20260506T193644Z |
 
 ---
 
@@ -116,8 +117,9 @@ bun run tsc --noEmit
 
 | Item | Status |
 |------|--------|
-| B2d wiring | COMPLETE — `dfdfae9e` portal DEV |
-| DT stopgap cleanup | COMPLETE — `dcc24b9f` portal DEV |
-| Portal DEV push | PENDING — DT offline; COO notified |
+| B2d wiring | COMPLETE + LIVE — `dfdfae9e` portal DEV |
+| DT stopgap cleanup | COMPLETE + LIVE — `dcc24b9f` portal DEV |
+| Portal DEV push | DONE — COO pushed `3f043ccb..dcc24b9f` (20260506T193644Z) |
 | TS check | PASS |
-| DE queue | Empty — standing by |
+| RAVC | CLOSED |
+| DE queue | Empty — standing by for B2d full wiring smoke test (after DS~A B2a + DS~C B2b/B2c publish) |
