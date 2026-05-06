@@ -104,17 +104,51 @@ CTO routed 5 TO body edits + orchestrator decom step + supersession note:
 
 ---
 
+## Post-Commit RAVC Processing (20260506T~1528Z)
+
+### AE 0.6.1 RAVC3 — INFREL.010 Phase 1.1 COMPLETE (20260506T152800Z)
+
+**Fixes shipped:**
+- billing/tax ORION_PULL_DATE: `_pull_date()` helper added, both call sites fixed each script. Commit e6c2932db. S3 uploaded.
+- accounts_v2 deploy gap: stale EC2 copy replaced with current local version. S3 sync confirmed.
+- performance DimSpec (DS~B fb69d03ba): DimSpec("performance", extra_args=("--upload-bronze",)) added. assets expected_fail removed. Commit 5954bbc6b.
+
+**Flag:** gold_freshness_config.yaml `silver/transactions/` vs actual `silver/api_dims/transactions/` — routed to DS~A.
+
+**COO action:** RAVC4 ACCEPTED. Empirical test (2026-04-01 billing/tax pull) required before Phase 1.2 GO. RAVC4 dispatched.
+
+### AE 0.6.1 RAVC3 — INFINGE.005b silver wiring COMPLETE (20260506T152800Z)
+
+**Shipped:** build_transactions wired in inf-silver-chain SILVER_BUILDERS. Lambda inf-pipeline-v1.7.23 deployed. 0-diff verify PASS. Commit chain 91230ce6d→70acaf1de→8c0a8076d.
+
+**COO action:** RAVC4 ACCEPTED. Phase 0 GO issued: run now (not after Phase 1.2). Decom plan + rate-empirical + parity check + RAVC3 to COO.
+
+---
+
+## RAVC Dispatch Table (updated)
+
+| Agent | Message | Delivered |
+|---|---|---|
+| 0.6.1_AE_PartnerETL | RAVC6 AUDIT-003 CLOSE ACCEPTED + RAVC4 INFREL.010 Phase 0 ACCEPTED + Phase 1 GOs | 20260506T150801Z |
+| 0.6.1_AE_PartnerETL | GO INFINGE.005b Phase 0 (DS~A silver builder shipped; TO body updated) | 20260506T151329Z |
+| 1.0.0_SA_CTO | ACTION: ADVI_INFLEC_AUDIT.md v13 commit (lane=ANY_CTO; 3 GT corrections) | 20260506T152117Z |
+| 0.6.1_AE_PartnerETL | RAVC4 INFREL.010 Phase 1.1 ACCEPTED + empirical gate before Phase 1.2 GO | 20260506T152709Z |
+| 0.4.0_DS_ClientPlatform~A | FLAG: gold_freshness_config.yaml path mismatch | 20260506T152719Z |
+| 0.6.1_AE_PartnerETL | RAVC4 INFINGE.005b silver wiring ACCEPTED + Phase 0 GO (run now) | 20260506T152751Z |
+
+---
+
 ## Carry-forwards
 
 1. **AE 0.6.1 INFREL.001 RAVC6** — 24-48h empirical silver self-healing; ~May 7 14:00Z. RAVC6 to COO.
-2. **AE 0.6.1 INFREL.010 Phase 1.1** — billing/tax ORION_PULL_DATE fix in flight; RAVC3 to COO post ship.
-3. **AE 0.6.1 INFREL.010 accounts_v2 --upload-bronze EC2 deploy** — Fix A regression; RAVC to COO when confirmed.
-4. **AE 0.6.1 INFREL.010 empirical test** — single-date 2026-04-01 billing/tax pull; outcome determines backfill scope.
-5. **AE 0.6.1 INFINGE.005b Phase 0** — Custom Reports rate-empirical + parity + orchestrator decom plan; RAVC3 to COO.
-6. **AE 0.7 INFREL.002 Phase 2 empirical** — May 7 12:43Z cron fire; stopping-state fix live test.
-7. **DS~C SL-P1c Night 3** — May 7 04:00 UTC; DS~C reports; no COO action unless fail.
-8. **DS~B INFREL.001b** — Fix D tax exit=2 first, then 001b bronze producer; RAVC5 to COO.
-9. **INFREL.010 Phase 1.3 backfill execution** — HOLD; requires Andrew approval on dispatch plan; AE 0.6.1 proposes plan after empirical confirms capable dims.
+2. **AE 0.6.1 INFREL.010 empirical test** — single-date 2026-04-01 billing/tax pull; outcome determines backfill scope. RAVC4b to COO.
+3. **AE 0.6.1 INFINGE.005b Phase 0** — Custom Reports rate-empirical + parity + orchestrator decom plan; RAVC3 to COO.
+4. **AE 0.7 INFREL.002 Phase 2 empirical** — May 7 12:43Z cron fire; stopping-state fix live test.
+5. **DS~C SL-P1c Night 3** — May 7 04:00 UTC; DS~C reports; no COO action unless fail.
+6. **DS~B INFREL.001b** — Fix D tax exit=2 first, then 001b bronze producer; RAVC5 to COO.
+7. **INFREL.010 Phase 1.3 backfill execution** — HOLD; requires Andrew approval on dispatch plan; AE 0.6.1 proposes plan after empirical confirms capable dims.
+8. **1.0.0_SA_CTO** — ADVI_INFLEC_AUDIT.md v13 commit pending (staged, message sent 20260506T152117Z).
+9. **DS~A** — gold_freshness_config.yaml path fix; RAVC to COO.
 10. **RPBKTPI TO-2** — pending CTO PRD + AE 0.6.1 chain-cost estimate; not blocking.
 11. **Bug B LDRBRD.002 TO** — COO to author; pending DS~D bandwidth post-SL-P1c.
 12. **ADVI_BFIX4 TO-2** — gated on Andrew B1 ruling; no movement.
