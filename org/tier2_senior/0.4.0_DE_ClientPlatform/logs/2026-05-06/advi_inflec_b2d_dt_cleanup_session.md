@@ -123,4 +123,5 @@ bun run tsc --noEmit
 | TS check | PASS |
 | RAVC | CLOSED |
 | top_holdings schema fix | COMPLETE + LIVE — `5b40f2e8` portal DEV (pushed 20260506T194046Z) |
-| DE queue | Empty — standby until (a) RD L3 smoke test issue or (b) DS~A B2a / DS~C B2b/B2c publish |
+| timeseries schema fix | COMPLETE + LIVE — `7261457d` portal DEV (pushed 20260506T194709Z) |
+| DE queue | Empty — RD full B2d panel sweep running; standby for any wiring issues surfaced |
