@@ -199,21 +199,27 @@ CTO routed 5 TO body edits + orchestrator decom step + supersession note:
 
 ---
 
-## Carry-forwards (updated)
+## Andrew Authorization — INFREL.010 Phase 1.3 (20260506T~1745Z)
+
+Andrew explicit GO: "Yes they should run the backfill." Backfill execution (Phase 1.3) authorized for billing, tax, transactions dims back to 2020. No further approval needed from Andrew before AE 0.6.1 fires.
+
+---
+
+## Carry-forwards (updated 20260506T~1746Z)
 
 1. **AE 0.6.1 INFREL.001 RAVC6** — 24-48h empirical silver self-healing; ~May 7 14:00Z. RAVC6 to COO.
-2. **AE 0.6.1 INFREL.010 empirical test** — single-date 2026-04-01 billing/tax pull; outcome determines backfill scope. RAVC4b to COO.
-3. **AE 0.6.1 INFINGE.005b Phase 0** — Custom Reports rate-empirical + parity + orchestrator decom plan; RAVC3 to COO. Also verify gold consumer wiring at silver/transactions/ on this RAVC.
+2. **AE 0.6.1 INFREL.010 Phase 1.2 + 1.3** — ACTIVE. GO issued 20260506T173845Z. AE designing backfill dispatch plan (billing/tax/transactions, 2020-present); Andrew Phase 1.3 authorized. RAVC3 (plan) + RAVC4 (execution complete) to COO.
+3. **AE 0.6.1 INFINGE.005b Phase 1** — ACTIVE. GO issued 20260506T173936Z. Lambda cron arm + orchestrator decom. RAVC3 to COO.
 4. **AE 0.7 INFREL.002 Phase 2 empirical** — May 7 12:43Z cron fire; stopping-state fix live test.
 5. **DS~C SL-P1c Night 3** — May 7 04:00 UTC; DS~C reports; no COO action unless fail.
 6. **DS~B INFREL.001b** — Fix D tax exit=2 first, then 001b bronze producer; RAVC5 to COO.
-7. **INFREL.010 Phase 1.3 backfill execution** — HOLD; requires Andrew approval on dispatch plan; AE 0.6.1 proposes plan after empirical confirms capable dims.
-8. **1.0.0_SA_CTO** — ADVI_INFLEC_AUDIT.md v13 commit pending (staged, message sent 20260506T152117Z).
-9. **DS~A** — EXECUTING: DG-1 (_build_clients_tab_slim rep-coverage gate), DG-2 (slim schema aua→total_aua + tax), DG-3 (city key field). ALSO: build_transactions silver path correction (api_dims→silver/transactions/) + remove api_dims freshness entry. RAVC3 to COO.
-10. **RPBKTPI TO-2** — pending CTO PRD + AE 0.6.1 chain-cost estimate; not blocking.
-11. **Bug B LDRBRD.002 TO** — COO to author; pending DS~D bandwidth post-SL-P1c.
-12. **ADVI_BFIX4 TO-2** — gated on Andrew B1 ruling; no movement.
-13. **INFLFE.004 RD sweep** — carry-forward; RD not registered.
-14. **INFLFE.006-rd RD sweep** — ACTIVE; RD executing (GO issued 20260506T163232Z). RAVC4 to COO.
+7. **1.0.0_SA_CTO** — ADVI_INFLEC_AUDIT.md v13 commit pending (staged, message sent 20260506T152117Z).
+8. **DS~A** — EXECUTING: DG-1 (_build_clients_tab_slim rep-coverage gate), DG-2 (slim schema aua→total_aua + tax), DG-3 (city key field) + build_transactions silver path correction (api_dims→silver/transactions/) + remove api_dims freshness entry. RAVC3 to COO.
+9. **RPBKTPI TO-2** — pending CTO PRD + AE 0.6.1 chain-cost estimate; not blocking.
+10. **Bug B LDRBRD.002 TO** — COO to author; pending DS~D bandwidth post-SL-P1c.
+11. **ADVI_BFIX4 TO-2** — gated on Andrew B1 ruling; no movement.
+12. **INFLFE.004 RD sweep** — carry-forward; RD not registered.
+13. **INFLFE.006-rd RD sweep** — ACTIVE; RD executing (GO issued 20260506T163232Z). RAVC4 to COO → PROD bump GO to DE on PASS.
+14. **DE INFLFE.006 PROD bump** — GATED on INFLFE.006-rd RD RAVC4 PASS. DE standing by (notified 20260506T173924Z).
 15. **INFLFE.006 DT AUDIT-001 / submodule bump** — CLOSED this session (submodule `f4dfe7149`).
 16. **RD constitution doc commit** — uncommitted Line 211 + INFLFE.006 sweep changes; RD to bundle into one portal DEV commit + CLOUD submodule bump (scoped to INFLFE.006-rd TO).
