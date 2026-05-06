@@ -301,3 +301,145 @@ Bug C2 fix in progress (DS~D RAVC4b 20260506T133107Z). AC2 (lifecycle_aua non-ze
 12. **Bug B LDRBRD.002 TO** — pending DS~D bandwidth
 13. **ADVI_BFIX4 TO-2** — gated on Andrew B1 ruling
 14. **INFLFE.004 / DT AUDIT-001** — stale carry-forwards; agents not registered
+
+---
+
+## Missed Inbox Recovery + Final Processing (20260506T~1409Z+)
+
+### Watcher Remediation (20260506T~1405Z)
+- inbox-watch PID 41127 found untracked (PPID=1, no parent bash shell — deaf/stdout disconnected)
+- Killed + relaunched via Bash run_in_background; PID 41302 confirmed tracked (parent 41291)
+- All 8 agent watchers confirmed running with tracked parents
+
+### Read Folder Sweep — 8 Unprocessed Messages Found
+
+Inbox audit found 8 messages that landed in the read/ folder during context compaction and were not processed:
+
+| Timestamp | From | Subject | Action |
+|---|---|---|---|
+| 20260506T134615Z | AE 0.6.1 | INFREL.001 Phase 1 RAVC5 (partial) | ACK sent; Fix A+C+D accepted |
+| 20260506T134952Z | AE 0.7 | INFREL.008 RAVC3 Phase 0+1 | RAVC5 RATIFIED; TO complete |
+| 20260506T135036Z | CTO | RE-CLASSIFY dashboard.headline.total_aua | Audit v12 RED-(c); DS~D quality note sent |
+| 20260506T135129Z | AE 0.6.1 | INFINGE.005b Phase 0 RAVC3 (Class A) | Questions A/B/C routed to CTO |
+| 20260506T135254Z | AE 0.6.1 | INFREL.002 date-param consult YES | Relayed to AE 0.7 + backfill GO |
+| 20260506T140222Z | DS~A | AUDIT-003B already complete | DS~D STOP sent; commits verified |
+| 20260506T140423Z | CTO | INFREL.001 Fix B Option 1 FLIP CONFIRMED | INFREL.001b TO authored; DS~B + AE 0.6.1 dispatched |
+| 20260506T140528Z | AE 0.7 | INFREL.002 Phase 1 RAVC3 (5a7c55f51, v1.7.22) | ACK + backfill GO |
+
+### Key Rulings Received and Acted On
+
+**CTO INFREL.001 Fix B Option 1 (20260506T140423Z):**
+- 3 active consumers (INF_D_00c + INF_D_02 + INF_D_04) confirmed → Option 2 BLOCKED
+- Option 1: author `pull_inflection_performance_dim.py` bronze producer
+- INFREL.001b TO authored (`org/tier2_senior/0.4.0_DS_ClientPlatform/task_orders/ADVI_INFREL.001b.performance-dim-bronze-producer.md`)
+- DS~B leads (INITIAL_RATE=30 per rate-ceiling finding); AE 0.6.1 secondary (DimSpec wiring + validation)
+- Priority NORMAL; DS~B Fix D first, 001b next-up
+
+**CTO INFINGE.005b A/B/C (20260506T~1410Z):**
+- Q-A: REPLACE pattern (same S3 key `bronze/orion-api/{date}/transactions.csv`); Orchestrator `transactions` DimSpec decommissioned at Lambda cutover
+- Q-B: `silver/api_dims/transactions` — no v2 suffix (no v1 predecessor)
+- Q-C: ADD `transactions` DIM_BUILDER to `convert_orion_api_to_silver.py` (9th dim; existing pattern); `build_transactions_dim.py` does not exist; SILVER_BUILDERS stale comment to be removed
+- DS~A dispatched for silver builder (~1-2h); AE 0.6.1 Lambda ship gates on DS~A RAVC3
+- CTO caveat: no downstream gold consumer reads `silver/api_dims/transactions/` yet; foundational only
+
+**CTO AUDIT matrix reclassification (20260506T135036Z):**
+- dashboard.headline.total_aua $17.1M gap is NOT "expected" — joe_brandon rep_id=6 missing from `silver/api_dims/assets/`
+- AUDIT matrix v12: row reclassified GREEN → RED-(c); commit d55fe5954 (authored as CTO cross-lane)
+- Fix: AE 0.6.1 silver-fresh dispatch for rep_id=6 assets dim
+- Validation gate: abs(headline.total_aua - leaderboard.total_aua) < $100K post-fix
+
+### Commits This Block
+| Hash | Author | Purpose |
+|---|---|---|
+| 1a3d93ee0 | 2.0.0_SA_COO | INFREL.001b TO authored + INFREL.008 close + INFREL.001 partial-close note + ADVI_INFREL.json update |
+| d55fe5954 | 1.0.0_SA_CTO | ADVI_INFLEC_AUDIT v12 — dashboard.headline.total_aua RED-(c) |
+| (other agents) | — | AE 0.7: 5a7c55f51 (INFREL.002 Phase 1) + 843aaade5 (log); DS~A: a4e505460 + 23925b518 + 065da7886 (AUDIT-003B); CTO: 9521410cb (session 10 log); DS~B: d09661158 (startup log) |
+
+### INFREL.002 Backfill Result (20260506T~1426Z) — Permanent Gap
+AE 0.7 attempted backfill via SSM `python orchestrator.py --mode daily --date 2026-05-04`:
+- transactions: Orion custom report 500 on historical dates — **permanent gap**
+- accounts_v2: `pull_inflection_new_portfolio.py` does not accept `--upload-bronze` (Fix A regression candidate — investigate against daily cron behavior)
+- billing/tax/assets: wrote to today's partition (2026-05-06), not 2026-05-04 (--date flag doesn't propagate to individual dim scripts' partition writes)
+- unified_account_dim: first instance ran OK (exit=0, 2912 rows); second concurrent instance failed
+- AC4: closed N/A. `bronze/orion-api/2026-05-04/`: `_BRONZE_COMPLETE.json` + markers only; no CSV data
+- Positive side effect: today's 12:43Z daily run fired normally; `bronze/orion-api/2026-05-06/` complete
+- AE 0.7 recommendations: expected_fail for historical TXN; accounts_v2 --upload-bronze support; Orion REST v2 TXN investigation
+
+### AE 0.6.1 AUDIT-003 Silver-Fresh Complication (20260506T142730Z)
+AE 0.6.1 found `aum_snapshot` override in INF_D_04 that blocks `dashboard.headline.total_aua` fix:
+- Stale `aum_snapshot=$182.5M` overrides canonical `$199.6M`
+- AE 0.6.1 dispatching `build_assets_dim.py` first; RAVC4 to CTO with Option A/B/C
+- CTO routing; no COO action needed; note for context
+
+---
+
+## Session 59 — Full State Snapshot (20260506T~1430Z)
+
+### Projects
+
+#### ADVI_INFREL — Active
+| TO | Status | Owner | Notes |
+|---|---|---|---|
+| TO-1 INFREL.001 | in_progress → partial close | AE 0.6.1 | Fix A+C+D shipped; 24h empirical window; RAVC6 pending; Fix B → INFREL.001b |
+| TO-1b INFREL.001b | pending | DS~B (lead) / AE 0.6.1 (secondary) | Bronze producer pull_inflection_performance_dim.py; INITIAL_RATE=30; normal priority |
+| TO-2 INFREL.002 | in_progress Phase 2 | AE 0.7 | Fix 1-3 shipped (5a7c55f51, v1.7.22); AC4 N/A (permanent gap); empirical gate May 7 12:43Z |
+| TO-3 INFREL.003 | complete | — | clients_tab.json regen committed 7a71e68f2 |
+| TO-4..7 | staged | — | Gate: TO-1 final close + INFINGE Phase 1b |
+| TO-8 INFREL.008 | complete | AE 0.7 | INF_GOLD_RUNNER_DEPLOYMENT.md (0dd9d4791); COO RAVC5 ratified |
+| TO-9 | staged | AE 0.7 | Gate: Phase 2 + INFINGE Phase 1b + 48h soak |
+
+#### ADVI_INFINGE — Active
+| TO | Status | Owner | Notes |
+|---|---|---|---|
+| TO-4 INFINGE.004 | deferred | — | PERFORMANCE Lambda migration deferred; INFREL.001b covers it |
+| TO-5a INFINGE.005 | complete | AE 0.6.1 | REST class empirical (5.2 RPS, 0 failures) |
+| TO-5b INFINGE.005b | staged → pending (DS~A silver builder in flight) | AE 0.6.1 (Lambda) / DS~A (silver builder) | CTO rulings A/B/C received; DS~A dispatched for transactions DIM_BUILDER; Lambda GO gates on DS~A RAVC3; no gold consumers yet |
+
+#### ADVI_INFLEC — Active
+| Item | Status | Notes |
+|---|---|---|
+| AUDIT-003B name correction | COMPLETE | DS~A a4e505460 + 23925b518; CTO RAVC4 accepted 065da7886 |
+| AUDIT-003 silver-fresh (rep_id=6 assets) | In progress | AE 0.6.1 pre-dispatch build_assets_dim.py; RAVC4 to CTO; aum_snapshot override complication |
+| AUDIT matrix | v12 | dashboard.headline RED-(c); 3 RED cells total |
+| LDRBRD.001 | CLOSED | D5 chain AC1+AC2 pass (f1f9ec8b5); Bug A/A2/C/C2/C2b all fixed |
+
+#### ADVI_ROLLUP — Active
+| Item | Status | Notes |
+|---|---|---|
+| SL-P1c | in progress | DS~D GO issued; B_01 denominator fix; 3-nightly gate async |
+
+#### ADVI_RPBKTPI — Active
+| Item | Status | Notes |
+|---|---|---|
+| TO-1 | complete | commit 7f584ef7c |
+| TO-2 | not yet authored | pending CTO PRD + AE 0.6.1 chain-cost estimate |
+
+### Infrastructure Tags
+- `inf-pipeline-v1.7.21` — INFREL.001 Fix C (inf-silver-chain CW observability)
+- `inf-pipeline-v1.7.22` — INFREL.002 (inf-bronze-trigger stopping-state fix + TriggerMissedStart alarm)
+
+### Active Agent Status
+| Agent | Status | Current Work |
+|---|---|---|
+| 1.0.0_SA_CTO | Active (session 10 logged) | INFINGE.005b aum_snapshot ruling pending; INFREL.001b ack done |
+| 0.6.1_AE_PartnerETL | Active | 24h empirical window (INFREL.001); INFINGE.005b on hold awaiting DS~A silver-builder RAVC3; AUDIT-003 assets silver-fresh pre-dispatch |
+| 0.7.0_AE_CloudOps | Active | INFREL.002 Phase 2 empirical (May 7 12:43Z); INFREL.008 complete |
+| 0.4.0_DS~A | Standby | INFINGE.005b silver-builder dispatched; GO received |
+| 0.4.0_DS~B | Active (startup logged) | INFREL.001b (Fix D first, then 001b) |
+| 0.4.0_DS~C | Active | RPBKTPI-02 per prior dispatch; SL-P1c Night 3 observation |
+| 0.4.0_DS~D | Active | SL-P1c 3-nightly gate in progress |
+
+### Pending Carry-Forwards (Session 59 Close)
+1. **INFREL.001 RAVC6** — AE 0.6.1; 24h empirical silver self-healing (accounts_v2/household/activity/billing); ~May 7 14:00Z
+2. **INFREL.002 empirical gate** — May 7 12:43Z automated cron fire; stopping-state fix live test
+3. **INFREL.001b** — DS~B (Fix D first); then AE 0.6.1 DimSpec; RAVC5 to COO
+4. **INFINGE.005b** — DS~A silver builder (~1-2h) → AE 0.6.1 Lambda ship; no gold consumers
+5. **AUDIT-003 silver-fresh** — AE 0.6.1 pre-dispatch; aum_snapshot override ruling from CTO; fix will resolve dashboard.headline $17.1M gap
+6. **Fix D tax exit=2** — DS~B; DS~B TO to be authored; surfaces via Fix C alarm
+7. **SL-P1c** — DS~D; 3-nightly gate; RAVC4 to COO after Night 3
+8. **INFREL.002 accounts_v2 --upload-bronze** — investigate: Fix A added extra_args but script may not support; cross-ref against daily cron behavior; AE 0.7 owns
+9. **INFREL TO-5 vs INFINGE TO-5b de-conflict** — CTO flagged potential overlap; 30-second check pending
+10. **RPBKTPI TO-2** — pending CTO PRD
+11. **Bug B LDRBRD.002 TO** — pending DS~D bandwidth post-SL-P1c
+12. **ADVI_BFIX4 TO-2** — gated on Andrew B1 ruling
+13. **INFLFE.004 / DT AUDIT-001** — stale; agents not registered
