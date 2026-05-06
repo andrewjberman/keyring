@@ -108,7 +108,57 @@ DS needs to route INF_I_D03 gold/artifacts/ writes through OUTPUT_PREFIX (same f
 
 ---
 
+---
+
+## Part 3 — LDRBRD.002 D8 Chain
+
+### Trigger
+DS~D: INF_I_D03 already has GOLD_ARTIFACTS_PREFIX env var support — D7 just didn't set it. Add GOLD_ARTIFACTS_PREFIX=qa/gold-artifacts/ to D8 dispatch.
+
+### Dispatch
+| Step | Detail |
+|------|--------|
+| SSM CommandId | 8400f063-f794-40fd-bdc8-9f4c0b545239 |
+| Env vars | OUTPUT_PREFIX=qa/ GOLD_ARTIFACTS_PREFIX=qa/gold-artifacts/ |
+| Duration | 61s |
+
+### Chain Results (D8)
+| Script | Status |
+|--------|--------|
+| INF_D_00c | PASS |
+| INF_D_02 | PASS |
+| INF_I_02b | PASS |
+| INF_I_03 | PASS — GOLD_ARTIFACTS_PREFIX fix confirmed |
+| INF_I_02d | PASS |
+| INF_I_04 | FAIL — KeyError 'household_id' (PER-CLIENT PLATINUM PUBLISHERS) |
+| INF_D_04+ | NOT RUN |
+
+period_start_aua: confirmed same as D7 (peter_lee YTD $1.2M). LDRBRD.002 core fix CONFIRMED.
+
+### RAVC Trail (D8)
+| RAVC | Direction | Time |
+|------|-----------|------|
+| RAVC3 sent | AE 0.7 → DS~D | 20260506T193704Z |
+| RAVC4 sent | AE 0.7 → DS~D | 20260506T193923Z |
+
+---
+
+## Part 4 — Performance Dim Blocker (COO Ruling)
+
+Performance dim BLOCKED at Orion admin level. COO ruling: Wave C1 = tax-only.
+
+| Blocker | Detail |
+|---------|--------|
+| BLOCKED-1 | Orion saved query "Performance Dim" not found in ExcelReports catalog. Blocks BOTH backfill AND daily forward collection. |
+| BLOCKED-2 | pull_inflection_performance_dim.py uses window-based ExcelReports API (ytd/1y/3y/5y), not date-parameterized REST. Cannot pull historical point-in-time. |
+
+CTO escalated for Orion admin follow-up.
+
+---
+
 ## Open Items
-1. **INFREL.010 Wave C1**: backfill running (SSM 461caa3a). Monitor progress.json. RAVC3 to COO on completion.
-2. **LDRBRD.002**: DS~D to fix INF_I_D03 OUTPUT_PREFIX routing + patrick_scanlan YTD 0.0 diagnosis. COO RAVC pending DS~D.
-3. **INFREL.002 Phase 3**: 7-day observation continues; first live test 2026-05-07T12:43Z.
+1. **INFREL.010 Wave C1 (tax-only)**: running (SSM 461caa3a). RAVC3 to COO on completion (~15h).
+2. **INFREL.010 performance dim**: BLOCKED (Orion admin + architecture). Awaiting CTO resolution.
+3. **LDRBRD.002**: DS~D to fix INF_I_04 household_id KeyError + further chain debugging. Period_start_aua CONFIRMED — leaderboard AC1 SATISFIED.
+4. **INFREL.002 Phase 3**: 7-day observation continues; first live test 2026-05-07T12:43Z.
+5. **INFREL TO-4..7 gate**: waiting for TO-1 RAVC6 (~May 7 12:43 UTC). Gate 2 (AE 0.6.1 cron arm) already cleared.
