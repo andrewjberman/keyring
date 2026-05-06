@@ -106,8 +106,22 @@ N/A — startup session; no code changes. Compiler tools not applicable.
 | nna_clients.json | Followon-TO pending DS/AE; no DE action until dispatched |
 | LDRBRD.001 FE impact | None — data-only fix; FE leaderboard renders correctly with populated values |
 
+## INFLFE.006 PROD Bump — COMPLETE (20260506T~1852Z)
+
+| Step | Result |
+|------|--------|
+| RD RAVC4 PASS | AC1 (Distribution no error boundary) + AC2 (city drilldown) + AC3 (Books no error boundary) + AC5 (no regressions) |
+| Portal PROD | `6ee68a19` live — fast-forward from `e68f54e7`; TS check passed |
+| CLOUD submodule | Already at `6ee68a19` (bumped by RD session); no additional commit needed |
+| CLOUD HEAD | `388f02546` |
+| Acting DT | COO 2.0.0_SA_COO (DT not live) |
+
+Data gaps noted as non-blocking (auto-correct with DS data propagation):
+- Distribution geo donut center: $183M (DG-dist-1) — DS~A investigating
+- Books firm overview AUA: DS~A fix `9de58963d` clients-tab-slim.json $199.6M landed
+
 ## Next Steps
 
-- [DE] RAVC to COO: Line 211 data condition met (AUDIT-003 closed, $199.6M live) — request GO status for RD Line 211 sweep
-- [RD 0.4.2] Line 211 Playwright sweep — AUA strip should show $199.59M post AUDIT-003
 - [DE standby] Await next TO dispatch from COO
+- [DS~A] DG-dist-1 data fix propagation (auto, no DE action)
+- [RD 0.4.2] Any follow-on sweeps if COO dispatches
