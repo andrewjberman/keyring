@@ -16,7 +16,7 @@ On-demand full audit of the Inflection pipeline executed in response to Andrew d
 - **Silver chain not propagating**: bronze has 2026-05-01 and 2026-05-05 data but silver stale at 2026-04-28/29 — automation gap
 - **Bronze missing days**: May 2–4 absent (May 2–3 may be weekends; May 4 Monday gap warrants investigation)
 - **D3 in-flight**: gold/holdings stale at 2026-04-28 expected — D3 chain-full `--from INF_B_00` fired ~20:35Z (ETA complete ~21:20-21:35Z)
-- **joe_brunswick top_holdings.json now present** (2026-05-05 16:22:38Z) — v10 PENDING marker on this cell may flip
+- **joe_brandenbrug top_holdings.json now present** (2026-05-05 16:22:38Z) — v10 PENDING marker on this cell may flip
 - All platinum artifacts timestamped 2026-05-05 from today's chain run
 
 ---
@@ -129,9 +129,9 @@ All platinum artifacts are from today (2026-05-05). Key values:
 | `concentration_risk.json` | 16:24:09Z | 295 rows | OK |
 
 **Per-advisor artifacts — all 4 advisors × 4 artifacts = 16/16 present:**
-`inflection_wealth_management`, `joe_brunswick`, `patrick_scanlan`, `peter_lee` — all have `top_holdings.json`, `composition.json`, `book.json`, `summary.json` (all timestamped 16:22-16:23Z today).
+`inflection_wealth_management`, `joe_brandenbrug`, `patrick_scanlan`, `peter_lee` — all have `top_holdings.json`, `composition.json`, `book.json`, `summary.json` (all timestamped 16:22-16:23Z today).
 
-`joe_brunswick/top_holdings.json` is new today (16:22:38Z) — previously identified as RED-MISSING in v9 matrix. This cell may flip in v10.
+`joe_brandenbrug/top_holdings.json` is new today (16:22:38Z) — previously identified as RED-MISSING in v9 matrix. This cell may flip in v10.
 
 ---
 
@@ -182,7 +182,7 @@ Baseline mass-deploy: 2026-04-27 to 2026-04-29 (full A/B/C/D/I chain).
 | Date | Agent | Tool | Command | Result |
 |---|---|---|---|---|
 | 2026-05-05 | DS~A | aws s3 ls | `s3://opal-data-inf/platinum/firm/` | All 16 firm artifacts present; timestamps 2026-05-05 |
-| 2026-05-05 | DS~A | aws s3 ls | `s3://opal-data-inf/platinum/advisors/` | 4×4 advisor artifacts present; joe_brunswick/top_holdings.json NOW PRESENT |
+| 2026-05-05 | DS~A | aws s3 ls | `s3://opal-data-inf/platinum/advisors/` | 4×4 advisor artifacts present; joe_brandenbrug/top_holdings.json NOW PRESENT |
 | 2026-05-05 | DS~A | aws s3 cp | `dashboard.json` | total_aua=$182.55M, advisor_count=3, generated_at 20:23:35Z (D3 pending) |
 | 2026-05-05 | DS~A | aws s3 cp | `leaderboard.json` | QTD total_aua=$199.65M, lifecycle_aua=0, period_start_aua MAX null |
 | 2026-05-05 | DS~A | aws s3 ls | `gold/holdings/` | Max date 2026-04-28; D3 in-flight |

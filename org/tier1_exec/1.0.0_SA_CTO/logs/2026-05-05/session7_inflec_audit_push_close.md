@@ -245,7 +245,7 @@ The BD scraper outage detection mid-session and same-window resolution validates
 ## Carry-forwards
 
 1. **ADVI_RPBKTPI PRD** — CTO authoring window opens next session. Cite per-account `Portfolio/Accounts/{accountId}/Assets/{MM-DD-YYYY}` endpoint at 322ms × 2755 × 4-way ~3.7min as alternative path consideration. INF_B_00.latest_accounts_v2_key → accounts_v2_key_for_date join switch. Two-TO shape (DS, 0.5d + DS+AE chain re-run).
-2. **AUDIT-003 close** — DS~B silver gap for joe_brunswick top_holdings. Independent of INFLEC critical path; ride next nightly.
+2. **AUDIT-003 close** — DS~B silver gap for joe_brandenbrug top_holdings. Independent of INFLEC critical path; ride next nightly.
 3. **INFLFE.004 RD Playwright sweep** — now unblocked (.001+.002+.003 shipped; .005 shipped). RD 0.4.2 dispatch when COO has window.
 4. **SL-P1c AC#6 observation** — 3 consecutive clean nightly emissions starting tonight (env-var confirmed unset; Fix B correction live).
 5. **49F AdvisorIntelligence** — should refresh on tonight's 17:53 EDT BD nightly via patched scraper. Andrew RAVC1 close pending nightly outcome.

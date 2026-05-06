@@ -2,8 +2,8 @@
 
 **Agent:** 0.4.0_DS_ClientPlatform~C
 **Date:** 2026-05-06
-**Session type:** Startup orientation + status checks
-**Status:** Monitoring — D4 chain pending, standing by for LDRBRD.001 verify
+**Session type:** Startup orientation + status checks + D4/D5 empirical verify + LDRBRD.001 close
+**Status:** COMPLETE — LDRBRD.001 CLOSED per COO 20260506T~1340Z. Standing by for Night 3 SL-P1c check (May 7 04:00 UTC).
 
 ---
 
@@ -23,15 +23,31 @@ Fix `7f584ef7c` (INF_B_00 point-in-time accounts_v2 join) confirmed MATCH on S3.
 
 COO ruling (20260506T~1420Z): suppressed nights are neutral skips. AC#6 counter PAUSES on --full nights. Counter stays at 1/3 until Night 3 emits.
 
-### ADVI_LDRBRD.001 — Awaiting D4
+### ADVI_LDRBRD.001 — CLOSED
 
-DS~D commit `0755a2330` (08:54 EDT 2026-05-06) shipped Bug A+C for INF_D_00c. S3 confirmed uploaded (LastModified 2026-05-06T12:56:15 UTC). COO dispatched AE 0.7 to fire D4 --from INF_D_00c. leaderboard.json still at D3g timestamp (2026-05-05T21:45:56Z). Dashboard still $182M stale. D4 NOT fired as of session start.
+**Close commit:** COO TO flipped to complete post-RAVC5 CLOSE.
+**Closed artifacts:** D5 generated_at 2026-05-06T13:37:08Z, commits 0755a2330 + 46d55bc51 + 6e49f2694.
 
-DS~C role post-D4: verify leaderboard.json MAX/YTD period_start_aua non-null (Bug A) + lifecycle_aua non-zero (Bug C) + joe_brunswick in all windows. RAVC to COO on verify.
+#### D4 Empirical (generated_at 2026-05-06T13:16:13Z)
+
+DS~D commit `0755a2330` shipped Bug A+C wiring. D4 surfaced two new bugs:
+- **Bug A2:** Earliest holdings snapshot (2019-09-17) predates Inflection onboarding → period_start_aua=None. Fix: 0.0 default in psa_map for individual advisors.
+- **Bug C2:** `_compute_hh_lifecycle` nna_clean int64/str account_id dtype mismatch on merge → lifecycle_aua {0,0,0}.
+
+#### D5 Empirical (generated_at 2026-05-06T13:37:08Z) — CLOSE BASIS
+
+DS~D commits `46d55bc51` (Bug C2 dtype coercion) + `6e49f2694` (Bug A2 psa 0.0 default + Bug C2b nna_clean str cast) both landed before D5 fired.
+
+**AC Status:**
+- AC1: PASS — peter_lee, patrick_scanlan, joe_brandenbrug all 0.0 in YTD+MAX. firm aggregate (inflection_wealth_management) out of AC1 scope per COO confirm (separate code path at L867).
+- AC2: PASS — all 4 entries lifecycle_aua non-zero across all windows.
+- AC3: PASS, AC4: PASS, AC5: delivered 20260506T133901Z, AC6: PASS.
+
+**RAVC5 CLOSE sent:** 20260506T133901Z. **COO close ACK:** 20260506T~1340Z.
 
 ### Bug B YTD Semantic Ruling — Delivered
 
-Ruling sent to COO 20260506T130557Z: use `keys[0]` (earliest-available) fallback for YTD period_start_aua — same as Bug A. Inflection had no accounts_v2 before 2026-04-28; YTD start (2026-01-01) falls back to oldest available. COO noted; follow-on TO (LDRBRD.002) to be authored when DS~D bandwidth opens.
+Ruling sent to COO 20260506T130557Z: use `keys[0]` (earliest-available) fallback for YTD period_start_aua. COO noted; follow-on TO (LDRBRD.002) pending authoring.
 
 ---
 
@@ -39,8 +55,9 @@ Ruling sent to COO 20260506T130557Z: use `keys[0]` (earliest-available) fallback
 
 | Tool | Target | Result | Notes |
 |------|--------|--------|-------|
-| comp-pipescript deployed | B_01 | MATCH | Night 2 shadow suppression confirmed code-side (full mode), not S3 staleness |
-| comp-pipescript deployed | INF_D_00c | N/A — Inflection scripts not in BD index | Verified via aws s3api head-object; LastModified 2026-05-06T12:56:15Z confirms upload |
+| comp-pipescript deployed | B_01 | MATCH | Night 2 shadow suppression confirmed code-side |
+| aws s3api head-object | gold/artifacts/employee_leaderboard.json (D4) | LastModified 2026-05-06T13:16:15Z | D4 baseline |
+| aws s3api head-object | gold/artifacts/employee_leaderboard.json (D5) | LastModified 2026-05-06T13:37:09Z | D5 close basis |
 
 ---
 
@@ -50,21 +67,27 @@ Ruling sent to COO 20260506T130557Z: use `keys[0]` (earliest-available) fallback
 |------|--------|---------|
 | `8b9aa8633` | 0.4.0_DS_ClientPlatform_C | chore(ADVI_RPBKTPI.001): flip TO to complete |
 
+DS~D commits (verified on CLOUD, part of LDRBRD.001 close):
+| Hash | Author | Subject |
+|------|--------|---------|
+| `46d55bc51` | 0.4.0_DS_ClientPlatform_D | fix(ADVI_LDRBRD.001): INF_D_00c Bug C2 — account_id dtype coercion |
+| `6e49f2694` | 0.4.0_DS_ClientPlatform_D | fix(ADVI_LDRBRD.001): INF_D_00c Bug A2 (psa default 0.0 all windows) + Bug C2b |
+
 ---
 
 ## Current State
 
 | Item | State |
 |------|-------|
-| ADVI_RPBKTPI.001 | COMPLETE — TO flipped, pushed |
-| ADVI_ROLLUP.SL-P1c | Observation 1/3. Night 3 = May 7 nightly |
-| ADVI_LDRBRD.001 | Waiting D4 (AE 0.7 dispatched by COO). Bug A+C on S3. |
+| ADVI_RPBKTPI.001 | COMPLETE |
+| ADVI_LDRBRD.001 | COMPLETE — COO close ACK 20260506T~1340Z |
+| ADVI_ROLLUP.SL-P1c | Observation 1/3. Night 3 = May 7 04:00 UTC |
 | ADVI_BFIX4 TO-2 | GATED — do not proceed until Andrew B1 ruling |
-| Bug B (YTD semantic) | Ruling delivered. Follow-on TO pending COO authoring |
-| Inbox watcher | LIVE (besttss7h) |
+| Bug B (YTD semantic) | Ruling delivered. LDRBRD.002 TO pending COO authoring |
+| Inbox watcher | LIVE (btvilqbrl) |
 
 ## Next Steps
 
-1. [D4 Complete] Verify leaderboard.json MAX/YTD Bug A+C. RAVC to COO.
-2. [Night 3] Check BD shadow S3 after 04:00 UTC May 7. Report to COO (2/3 or suppressed).
-3. [COO] Await next assignment post-LDRBRD.001 close.
+1. [Night 3 — May 7 04:00 UTC] Check `s3://opal-data-bd/gold/timeseries/holdings_lots_shadow/` for new file after nightly run. If emitted = 2/3 clean; report to COO.
+2. [COO] Await next assignment.
+3. [ADVI_BFIX4 TO-2] Gated — do not proceed until Andrew B1 ruling.

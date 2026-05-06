@@ -9,7 +9,7 @@
 
 ## Summary
 
-Prior session (`f37642d7`) completed both GO tasks (chain verify + joe_brunswick rep_id=6 fix)
+Prior session (`f37642d7`) completed both GO tasks (chain verify + joe_brandenbrug rep_id=6 fix)
 and sent RAVC3 to COO, but ran out of context while attempting to commit the session log.
 The `.git/index.lock` was held by another agent at the time. This continuation session
 resolved the lock contention, committed the session log, processed the AE 0.6.1 catalog ACK,
@@ -30,7 +30,7 @@ and incorporated Andrew feedback on safe-commit discipline.
 | `git add` | STAGED |
 | `safe-commit.sh` | ABORT — 5 contaminating staged files from concurrent agents |
 | `safe-commit.sh --force` | PASS — FORCE-BYPASS logged to `org/git-author-override-audit.log`; commit scoped to declared pathspec only |
-| Commit | `dc4e314e9` — `log(DS~B 2026-05-05): INFLEC chain verify + joe_brunswick rep_id=6 fix` |
+| Commit | `dc4e314e9` — `log(DS~B 2026-05-05): INFLEC chain verify + joe_brandenbrug rep_id=6 fix` |
 | Push | `origin/CLOUD` — `2b7a76268..dc4e314e9` |
 
 **--force justification:** Index contamination was from concurrent agent staging, not DS~B files.
@@ -84,12 +84,12 @@ None run this session — no code edits; log-file commit only.
 | Item | Status |
 |------|--------|
 | Chain a545b9ae verify (7/9 gaps) | COMPLETE |
-| joe_brunswick rep_id=6 INF_I_D02b fix | COMMITTED `caffc361e` + S3 uploaded |
+| joe_brandenbrug rep_id=6 INF_I_D02b fix | COMMITTED `caffc361e` + S3 uploaded |
 | INF_I_D02b in orion-gold-dispatch.sh | CONFIRMED (AE commit `2b7a76268`) |
 | RAVC3 → COO | SENT + RAVC4 received |
 | Session log (`chain_verify_joe_rep_id`) | COMMITTED `dc4e314e9` + pushed |
 | Gap 4 (period_start_aua null) | RPBKTPI scope — not DS~B |
-| Gap 6 (joe_brunswick top_holdings) | Code done; blocked on silver refresh (INFSHIP.A2) |
+| Gap 6 (joe_brandenbrug top_holdings) | Code done; blocked on silver refresh (INFSHIP.A2) |
 | ADVI_ROLLUP.SL-P1c Fix B correction | DS~C found fix; awaiting COO routing to DS~B |
 | AUDIT-002 or AUDIT-005 dispatch | PENDING — COO RAVC4 said "stand by" |
 | Inbox watcher | RUNNING (task `bvjfwledu`) |
@@ -99,5 +99,5 @@ None run this session — no code edits; log-file commit only.
 ## Next Steps
 
 1. [COO] Dispatch AUDIT-002 (aua=0 root cause) or AUDIT-005 to DS~B
-2. [DS~D or INFSHIP.A2] Silver assets refresh to include rep_id=6 (unblocks joe_brunswick top_holdings)
+2. [DS~D or INFSHIP.A2] Silver assets refresh to include rep_id=6 (unblocks joe_brandenbrug top_holdings)
 3. [AE 0.6.1] AUDIT-003 staged — no DS~B action until silver refreshed + catalog re-run
