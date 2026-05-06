@@ -234,7 +234,7 @@ Bug C2 fix in progress (DS~D RAVC4b 20260506T133107Z). AC2 (lifecycle_aua non-ze
 
 ### LDRBRD.001 Close Summary
 - **D5 artifact** generated_at 2026-05-06T13:37:08Z (SSM f9dacdd0); commits 0755a2330 + 46d55bc51 + 6e49f2694 (Bug A2 + Bug C2b, both in D5)
-- **AC1**: PASS — individual advisors peter_lee/patrick_scanlan/joe_brunswick all 0.0 in YTD+MAX; firm aggregate None is separate code path (out of AC1 scope; COO confirmed)
+- **AC1**: PASS — individual advisors peter_lee/patrick_scanlan/joe_brandenbrug all 0.0 in YTD+MAX; firm aggregate None is separate code path (out of AC1 scope; COO confirmed)
 - **AC2**: PASS — lifecycle_aua non-zero for all 4 entries across QTD/YTD/MAX
 - **Closed** `f1f9ec8b5` 20260506T~1340Z
 - **Bug A2 follow-on** (firm aggregate psa 0.0): low-priority future scope; NOT authored yet
@@ -267,3 +267,37 @@ Bug C2 fix in progress (DS~D RAVC4b 20260506T133107Z). AC2 (lifecycle_aua non-ze
 10. **ADVI_BFIX4 TO-2** — gated on Andrew B1 ruling; no movement.
 11. **INFLFE.004 RD sweep** — carry-forward; RD not registered.
 12. **DT AUDIT-001 / submodule bump** — carry-forward; DT not registered.
+
+---
+
+## Post-Compaction Actions (20260506T~1349Z+)
+
+### INFREL.002 Phase 1 GO — AE 0.7 (20260506T134930Z)
+- AE 0.7 RAVC3 processed: class (b)-variant confirmed (CloudTrail: Andrew stop 12:41:14Z + cron 12:43:46Z; Lambda inf-bronze-trigger lines 72-85 silently returns 200 on IncorrectInstanceState)
+- Phase 1 GO dispatched to AE 0.7 (20260506T134930Z) — scope: stopping-state poll-until-stopped handler + raise on timeout + CW `Opal/InflectionBronze/TriggerMissedStart` metric/alarm + cron doc correction (12:30→12:43) + backfill gated
+- AE 0.6.1 date-param consult dispatched (20260506T134936Z) — does orchestrator.py support `--date` for historical pulls? Unblocks backfill decision
+
+### DS~D Inbox Response (20260506T~1350Z)
+- DS~D standing by with two items: (a) SL-P1c GO request; (b) AUDIT-003B substitution offer for offline DS~A
+- Andrew directive confirmed: DS~A on CTO special order; AUDIT-003B must be redistributed
+- **GO issued: SL-P1c** — B_01 sleeve denominator fix + dry-run + 3-nightly gate + S3 upload; RAVC4 after 3 clean nights
+- **GO issued: AUDIT-003B DS~D substitution** — authorized; RAVC4 to CTO (not COO) per TO ravc_protocol; anti-poisoning rules apply; single atomic commit + push
+
+### Commits This Block
+- `cdc2269f6` — INFREL.002 go_signal update + INFREL.json phase update (2.0.0_SA_COO)
+
+### Updated Carry-forwards
+1. **AE 0.6.1 INFREL.001 Phase 1 RAVC5** — in flight (unchanged)
+2. **AE 0.7 INFREL.002 Phase 1** — GO issued; stopping-state fix + CW alarm; backfill gated on AE 0.6.1 date-param reply
+3. **AE 0.6.1 INFREL.002 date-param consult** — awaiting reply; unblocks backfill decision
+4. **AE 0.7 INFREL.008** — in flight (unchanged)
+5. **DS~D SL-P1c** — GO active; 3-nightly gate async
+6. **DS~D AUDIT-003B** — GO active (substitution for DS~A); RAVC4 to CTO
+7. **INFREL.001b Fix B** — awaiting CTO Option 1 ruling on performance_dim script authorship
+8. **Fix D tax exit=2** — DS~B TO needed; AE 0.6.1 documented; Fix C alarm will surface
+9. **INFINGE.005b Phase 0** — AE 0.6.1 queue after INFREL.001 RAVC5
+10. **SL-P1c AC#6 Night 3** — May 7 04:00 UTC; DS~C reports (no action needed from COO)
+11. **RPBKTPI TO-2** — pending CTO PRD; not blocking
+12. **Bug B LDRBRD.002 TO** — pending DS~D bandwidth
+13. **ADVI_BFIX4 TO-2** — gated on Andrew B1 ruling
+14. **INFLFE.004 / DT AUDIT-001** — stale carry-forwards; agents not registered
