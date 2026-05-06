@@ -29,7 +29,7 @@ InsufficientInstanceCapacity. INFINGE.005b staged pending CTO ruling on output p
 
 Ran `repr()` on canonical parquet:
 ```
-['peter_lee', 'patrick_scanlan', 'joe_brandenbrug', 'inflection_wealth_management']
+['peter_lee', 'patrick_scanlan', 'joe_brandenburg', 'inflection_wealth_management']
 ```
 Sent byte-level result to CTO. CTO independently verified same result + provided 8-source cross-reference
 table confirming alignment. No re-poisoning risk.

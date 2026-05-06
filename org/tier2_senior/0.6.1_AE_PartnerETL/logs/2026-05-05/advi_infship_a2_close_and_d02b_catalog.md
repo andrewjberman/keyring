@@ -69,7 +69,7 @@
 | 8 | S3 upload | s3://opal-data-inf/code/gold/orion-gold-dispatch.sh ETag ef667104 at 2026-05-05T13:16:43Z |
 | 9 | ACK DS~B | 20260505T131917Z inbox delivery confirmed |
 
-**Dependency note to DS~B:** `silver/api_dims/assets/` snapshot is 2026-04-20 with rep_ids 3/11/12 only. joe_brandenbrug (rep_id=6) top_holdings will emit empty until silver assets refresh includes rep_id=6. Catalog add in place — fires correctly when data is ready.
+**Dependency note to DS~B:** `silver/api_dims/assets/` snapshot is 2026-04-20 with rep_ids 3/11/12 only. joe_brandenburg (rep_id=6) top_holdings will emit empty until silver assets refresh includes rep_id=6. Catalog add in place — fires correctly when data is ready.
 
 ---
 
@@ -92,4 +92,4 @@
 | ADVI_INFGRD.003 | Staged; dependency: ADVI_INFGRD.002 DS commit on CLOUD |
 | ADVI_INFLV2.009 | Staged; dependency: DS INFLV2.005 script ship |
 | SLEEVE_SHADOW_DISABLE env var unset | AE 0.6.0/0.7.0 backlog (SL-P1c AC#6 3-nightly gate) — NOT 0.6.1 scope |
-| silver/api_dims/assets/ rep_id=6 refresh | Needed for INF_I_D02b joe_brandenbrug output; this is DS scope (silver builder) |
+| silver/api_dims/assets/ rep_id=6 refresh | Needed for INF_I_D02b joe_brandenburg output; this is DS scope (silver builder) |

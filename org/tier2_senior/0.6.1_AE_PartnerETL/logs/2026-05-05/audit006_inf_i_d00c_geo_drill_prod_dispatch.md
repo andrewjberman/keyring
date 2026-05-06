@@ -142,7 +142,7 @@ RAVC3 sent to COO 20260505T152420Z.
 | ADVI_INFGRD.003 | Staged; dependency: ADVI_INFGRD.002 DS commit on CLOUD |
 | ADVI_INFLV2.009 | Staged; dependency: DS INFLV2.005 script ship |
 | SLEEVE_SHADOW_DISABLE env var unset | AE 0.6.0/0.7.0 backlog — NOT 0.6.1 scope |
-| INF_I_D02b joe_brandenbrug output | Empty until silver/api_dims/assets/ refresh includes rep_id=6; DS~B scope (AUDIT-003/AUDIT-008) |
+| INF_I_D02b joe_brandenburg output | Empty until silver/api_dims/assets/ refresh includes rep_id=6; DS~B scope (AUDIT-003/AUDIT-008) |
 | AUDIT-006 matrix update | DS~A to update YELLOW→GREEN for geo_drill cell |
 
 ---
