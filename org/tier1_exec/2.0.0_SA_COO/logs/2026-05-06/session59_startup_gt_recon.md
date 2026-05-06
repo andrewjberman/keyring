@@ -168,3 +168,62 @@ ETA: ~1-2h from DS~D receipt of GO (sent 20260506T125120Z).
 9. **ADVI_BFIX4 TO-2** — gated on Andrew B1 ruling; no movement.
 10. **INFLFE.004 RD sweep** — carry-forward; RD not registered.
 11. **DT AUDIT-001 / submodule bump** — carry-forward; DT not registered.
+
+---
+
+## Context Resume + Post-D4 Processing (session 59 continued — post-compaction)
+
+### Andrew Directive
+| Timestamp | Directive |
+|---|---|
+| 20260506T~1328Z | DS~A offline — reset for CTO special order. No tasks/messages until further notice. All DS~A tasks redistributed. |
+
+### DS~A Task Redistribution
+| Task | Prior Owner | New Owner | Action |
+|---|---|---|---|
+| dashboard.json v10 patch (post-D4; advisor_count=4; route CTO+DT) | DS~A | DS~D | RAVC redistribution message sent 20260506T132825Z; DS~D ACKed 20260506T132852Z |
+| INFREL TO-3 (clients_tab.json) | DS~A (SECONDARY) | — | Already committed (7a71e68f2); no further action |
+
+### Context-Resume Dispatches
+| Timestamp | To | Subject | Reason |
+|---|---|---|---|
+| 20260506T132730Z | AE 0.6.1 | RAVC4 RESUME — INFREL.001 Phase 1 GO (Fix A+C+D) | Context compacted; re-issued full Phase 1 GO with fix scope |
+| 20260506T132742Z | CTO | RULING REQUEST — INFREL.001 Fix B performance_dim | Context compacted; re-sent Option 1 vs Option 2 ruling request |
+
+### D4 RAVC3 Receipt + Processing (20260506T132905Z from AE 0.7)
+
+**Chain:** SSM dbf14149-e0e2-4ec1-ba6a-2d68918d5bc9 | 13:14:56Z–13:17:20Z (~2.5min) | Scripts: INF_D_00c INF_D_02 INF_I_D02b INF_I_D03 INF_I_D02d INF_D_04 INF_09 INF_D_05 INF_D_06 INF_D_07 INF_D_08
+
+| Finding | Status | COO Ruling |
+|---|---|---|
+| Bug A: fallback ran (WARN: using holdings_2019-09-17) | period_start_aua=None for MAX | WAIVED — data-bounded; no Inflection holdings pre-2019-09-17; NNA computable; AC1 waived |
+| Bug C: accounts_v2_dim loading (849 rows) | lifecycle split fails: `account_id` int64/object dtype mismatch → all lifecycle_aua zeros | Bug C2 NEW — DS~D fix required: `.astype(str)` coercion in `_compute_hh_lifecycle()` before merge |
+| Leaderboard total_aua | $199,649,186.31 | — |
+| Dashboard headline.total_aua | $182,552,380.96 | ~$17M discrepancy vs leaderboard — DS~D investigate as part of v10 prep |
+| Dashboard advisor_count | 3 | Still needs patch to 4 per COO ruling; DS~D v10 scope |
+| RPBKTPI.001 AC4 | AE 0.7 flagged "window open" | CLOSED — AC4 waived 20260505T202607Z; clarification sent DS~C 20260506T133127Z |
+
+### LDRBRD.001 Status: HELD
+Bug C2 fix in progress (DS~D RAVC4b 20260506T133107Z). AC2 (lifecycle_aua non-zero) not yet satisfied. D5 re-run + empirical verify required before close.
+
+### TOs Flipped Pending
+| TO | Change | Evidence |
+|---|---|---|
+| ADVI_INFREL.002 | staged → pending | AE 0.7 GOed 20260506T133122Z |
+| ADVI_INFREL.008 | staged → pending | AE 0.7 GOed 20260506T133122Z |
+
+### Updated Carry-forwards (post-D4 processing)
+
+1. **DS~D Bug C2 fix** — CRITICAL; `.astype(str)` in `_compute_hh_lifecycle()` + S3 redeploy + D5 re-run. LDRBRD.001 AC2 gates on this.
+2. **LDRBRD.001 CLOSE** — HELD; gates on Bug C2 fix + D5 + AC2 verify + dashboard.json v10 patch (advisor_count=4, $182.5M discrepancy disposition).
+3. **AE 0.7 INFREL.002** — Phase 0 May 4 bronze gap RCA in flight.
+4. **AE 0.7 INFREL.008** — Phase 0 watchdog regex broaden in flight.
+5. **AE 0.6.1 INFREL.001 Phase 1** — Fix A+C+D in flight (RAVC4 re-confirmed 20260506T132730Z).
+6. **CTO Fix B ruling** — INFREL.001 performance_dim Option 1 vs 2 (re-sent 20260506T132742Z).
+7. **INFINGE.005b Phase 0 empirical** — AE 0.6.1 queue; after INFREL.001 Phase 1.
+8. **Bug B LDRBRD TO authoring** — COO; pending DS~D bandwidth post-LDRBRD.001 close.
+9. **SL-P1c AC#6** — Night 3 (May 7) = 2/3 if clean; DS~C reports post-04:00 UTC.
+10. **RPBKTPI TO-2 authoring** — pending CTO PRD + AE 0.6.1 estimate; not blocking.
+11. **ADVI_BFIX4 TO-2** — gated on Andrew B1 ruling.
+12. **INFLFE.004 RD sweep** — carry-forward; RD not registered.
+13. **DT AUDIT-001 / submodule bump** — carry-forward; DT not registered.
