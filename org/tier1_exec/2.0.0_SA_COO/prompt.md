@@ -391,58 +391,71 @@ You do NOT produce architecture specs (CTO does). You DO align, route, and track
 
 **Commit only:** Session logs, org docs. Use `--author="2.0.0_SA_COO <2.0.0_SA_COO@opal.agent>"`.
 
-## Pod Delivery Dashboard -- Updated 2026-04-30 PM (COO full reconciliation against REGISTRY.md ground truth — Active Projects table refreshed; Pod 4 / Shared Services sections still reflect 2026-04-24 — COO to refresh on next session)
+## Pod Delivery Dashboard -- Updated 2026-05-06 PM (CTO session 11 ground-truth pass: Active Projects table refreshed; Pipeline Tags refreshed; Pod 4 / Shared Services sections below still reflect 2026-04-24 — COO to refresh on next session)
 
 ### Active Projects
 
 | Project | Status | Pending Work |
 |---------|--------|-------------|
-| `ADVI_ROLLUP` | **54 COMPLETE / 0 PENDING / 4 STAGED / 1 DEFERRED** (2026-04-30 PM). W0/W1/W4/W5 structurally COMPLETE. ASSETCLASSc COMPLETE `090d11f6`. SL-P1 COMPLETE (first-fire 2026-04-23; 1,169 rows / 458 accts / $15.87M MV). ORPHRELID COMPLETE `e28e0f5d`. CP-DS1+CP-VETO-AUTH+CP-WP5+CP-RES20+RA-P1c COMPLETE. TOPPOSOPAL CANCELLED. CP-MAP DEFERRED. **WP-10b 3-nightly observation active** — AE wire-up shipped `5700854e6` 2026-04-29; 1 of 3 runs complete. | (1) SL-P1b/P2/P3 gated on multi-nightly stability. (2) WP-10b 3-nightly-run observation (2 of 3 remaining). (3) BDPLNNASCHEMA staged for DS bandwidth. (4) CP-FEEDEXP Cohort B vendor coord (AE 0.6). |
-| `ADVI_INFLEC` | **Phase 2 — HISTBF Phase 1 bronze backfill in flight 2026-04-30 PM; W4.13b COMPLETE 2026-04-27; DIAGFIX.012 Phase 5 DONE.** v1 gold chain: $429M AUA, 2,755 accts, YTD NNA $34.7M. ORNREN script-rename TOs authored `16212596` but STAGED. W8 cross-firm 3/4 complete. Known gap: §10 Q5-Q13 answers pending. | (1) HISTBF bronze backfill execution (AE 0.6.1 Wave B dispatch in flight). (2) ORNREN.001+.002 STAGED (DS~A + AE 0.7). (3) ADVI_INFSHIP A2 Phase 0a gated on DIAGFIX.012 Phase 5 RAVC4 (DS BASE expected tomorrow AM). |
-| `ADVI_JWTRES` | **Phase 1 Option A LIVE 2026-04-30.** JWTRES.001 (DS `81a7a5684` — jwt_freshness.py assert_fresh_or_exit() in bronze orchestrator) COMPLETE. JWTRES.001b (AE 0.6.1 — orchestrator wiring + CW alarm + IAM; RAVC4 `20260430T164744Z`) COMPLETE. Pre-flight freshness check live in bronze orchestrator; HISTBF Phase 1 bronze backfill running with JWT gate active. | Option B TO authoring (JWTRES.002) TBD after Andrew signals Option A production validation window sufficient. Option C deferred indefinitely. |
-| `ADVI_HISTBF` | **Phase 1b EXECUTION — Wave B EC2 dispatch sent 2026-04-30 PM (`20260430T223214Z`).** Bronze backfill running on inf-bronze-runner i-083ad9ae297f88e9f. Run order: positions_mv → assets_v2 → transactions → performance. JWT freshness gate active. DS .004/.005/.006 silver phases in flight. | (1) Monitor AE 0.6.1 RAVC2 for EC2 start + SSM dispatch confirmation. (2) DIAGFIX.012 Phase 5 RAVC4 (DS BASE expected tomorrow AM). (3) ORIAPI Cycle 2 RAVC4 2026-05-01 12:13Z. (4) DS silver phases .004/.005/.006 pending bronze output. |
-| `ADHC_CLCOMM` | **Phase 1+2 — TO-1 + TO-2 COMPLETE 2026-04-30 PM.** TO-1 (AE 0.5 `abd95426e` — prefix-routing); TO-2 (joint CTO+AE 0.5 cross-channel: `6f2eb07e1`+`baf84d70c`). 12 cross-channel observations seeded into TO-4 corpus. Empirical finding: inbox-watch.sh COMP→CLOUD cherry-pick opportunity (`c471b2fd9` + `d26a36492`). | (1) TO-3 smoke-test: requires Andrew-coordinated fresh feature_clb session. (2) TO-4 (cross-channel architecture doc) gates on TO-3 empirical PASS. |
-| `ADHC_OWNPTH` | **Phase 2 fail-closed LIVE 2026-04-30. TOs 1-8 COMPLETE.** TO 9 STAGED-LOW (AE — tilde-form alias fix; non-blocking). 48h follow-up scan due 2026-05-02. | (1) 48h scan due 2026-05-02 — scan `org/git-author-override-audit.log` for BLOCK events. (2) TO 9 standing-low. |
-| `TRSB_PATHFIX` | **Phase 1 — TO-1 COMPLETE (trade-pipeline-v1.6.0) + TO-3 COMPLETE-AS-SANDBOX-FINAL + TO-2 GO sent 2026-04-30 (DT 0.3.0).** TO-2 amended: categorical clean cutover, removes 'authorizers' DDB+Lambda, target `trade-pipeline-v1.8.0`. TO-4 firm-scoping-backend DRAFT (Phase 2). | TO-2 DT 0.3 ship + RAVC4. On RAVC4: project closeable. |
-| `ADVI_ORIAPI` | **Phase 1 LIVE v1.7.9 — Cycle 1 (2026-04-30 12:13Z) CLEAN; Cycle 2 (2026-05-01 12:13Z) in flight.** KMS+SSM lift v1.7.1 complete. Bronze-runner KMS fix v1.7.3. Retry-launch .005 live. Cron shift v1.6.5. | (1) Cycle 2 CLEAN → AE 0.6.1 RAVC4. (2) COO 3-step atomic close after Cycle 2 confirms. 14-day re-open trigger preserved for capacity-class events. |
-| `ADVI_INFSHIP` | **Phase 1+1.5+2 SHIPPED 2026-04-28** (single-day). All 6 DE panels live. B1/B2/B3 infra active (inf-bronze-runner 12:30 UTC cron). **A2 Phase 0a SHIPPED `6572bb285`** — DS BASE consult gated on DIAGFIX.012 Phase 5 RAVC4. Phase 1 vendor outreach gated on Andrew explicit GO post-0a. | (1) Phase 3 V1 RD smoke + V2 Andrew sign-off. (2) A2 Phase 0a DS BASE consult gated on DIAGFIX.012 Phase 5 RAVC4. (3) B3-DEP-3 IAM deferred per option-b AE 0.6.1~B pick. |
-| `ADVI_INFLV2` | **Phase 1 — 7 COMPLETE / 2 CANCELLED / 1 IN-FLIGHT / 3 STAGED (2026-04-29).** .001/.005/.006/.007/.008/.012/.013 COMPLETE. .003/.004 CANCELLED. .009 AE chain re-run (INFGRD.003) in flight. .002 NMEC/NMNC/NNA STAGED. .010 RD Option C smoke STAGED (gates .007+.008+.009). | (1) .009 INFGRD.003 chain re-run RAVC4. (2) .010 RD Option C smoke gates on .009. (3) .002 NMEC/NMNC staged (ORIAPI Activity pull path). |
+| `ADVI_ROLLUP` | **55 COMPLETE / 0 PENDING / 3 STAGED / 1 DEFERRED / 1 OBSERVING** (2026-05-06). W0/W1/W4/W5 structurally COMPLETE. SL-P1c env-var "blocker" RESOLVED 2026-05-05 (AE 0.7 probe `8ca92eccb` — false alarm); DS~C Fix B correction `e3463bffa` shipped 2026-05-05; AC#6 3-nightly observation window OPEN 2026-05-05 → 2026-05-07. WP-10b 3-nightly observation: 4 consecutive clean nightly runs verified `1d13a5449`. STAGED: SL-P1b/P2/P3 (multi-nightly stability), BDPLNNASCHEMA. DEFERRED: CP-MAP. CP-FEEDEXP AE 0.6 staged. | (1) SL-P1c AC#6 3-nightly observation (passive). (2) SL-P1b/P2/P3 multi-nightly stability gate. (3) BDPLNNASCHEMA DS bandwidth. (4) CP-FEEDEXP Cohort B vendor coord (AE 0.6). |
+| `ADVI_INFLEC` | **Phase 2 — AUDIT-003 chain CLOSED 2026-05-06 (matrix v13: dashboard.json $199.6M GREEN + leaderboard period_start_aua YELLOW + lifecycle_aua GREEN — LDRBRD.001 `f1f9ec8b5`). INF_I→INF_D rename SHIPPED `09b82b520`; D9 chain unblock SHIPPED; AUDIT-008 ABSORBED into ADVI_INFINGE Phase 1 TO-1 SHIPPED.** AUDIT-001/002/003/003B/003C/004/005/006/007 all CLOSED. INFLFE.006-data follow-on TO authored 2026-05-06 (DS~A pending HIGH — _build_aua_view + _build_geo_view rep-coverage gate; closes $182.5M residual). v1 gold chain stable ($429M AUA, 2,755 accounts, YTD NNA $34.7M). portal-v2.1.70 PROD 2026-05-04. | (1) INFLFE.006-data DS~A pending. (2) AUDIT-008 closes when first ASSETS_V2 cron fire 2026-05-07 12:30Z. (3) §10 Q5-Q13 Andrew answers pending. |
+| `ADVI_INFLFE` | **Phase 1 — 5 of 5 TOs SHIPPED 2026-05-05; TO-006-data follow-on AUTHORED 2026-05-06 (DS~A pending HIGH).** PRD authored 2026-05-04 by CTO; COO decomp + dispatch `9aacf4b4f`. | TO-006-data DS~A pending — blocks correct partner_analytics AUA display. |
+| `ADVI_INFREL` | **Phase 1 EXECUTION — 7 of 10 P1 TOs in flight or shipped 2026-05-05/06.** TO-2 SHIPPED (`5a7c55f51` `inf-pipeline-v1.7.22`). TO-3 + TO-8 COMPLETE. TO-INFREL.001b mid-flight (DS~B `pull_inflection_performance_dim.py` + Orion catalog `b22505ec`; first cron 2026-05-07 12:30Z). TO-10 Phase 0 RAVC4 ACCEPTED + Wave C billing backfill SSM `84647370` dispatched. LDRBRD.001 CLOSED `f1f9ec8b5`. INFREL.005 SUPERSEDED by INFINGE.005b. TO-4..7 + TO-9 STAGED. | (1) TO-1 final RAVC6 24-48h silver self-heal. (2) INFREL.001b cron 2026-05-07 12:30Z. (3) TO-2 cron 2026-05-07 12:43Z. (4) TO-10 Phase 1.3 backfill — Andrew approval. (5) Phase 2 TO-4..7 gate on TO-1 close + INFINGE Phase 1b 48h soak. |
+| `ADVI_INFINGE` | **Phase 1 — 4 of 5 P1 Lambda TOs SHIPPED 2026-05-05/06; ops 1 of 3 SHIPPED.** TO-1 ASSETS_V2 (absorbs AUDIT-008.PERM) + TO-2 REPS + TO-3 POSITIONS + TO-5a rate-empirical SHIPPED. TO-5b TXN_V2 COMPLETE 2026-05-06 (orchestrator decom `1d73c2e5c` + silver-chain cleanup `22a119af9` + DS~A silver builder `33180d972` + tag `inf-pipeline-v1.7.24`). TO-4 PERF DEFERRED — performance silver fed via INFREL.001b bronze producer instead. TO 1a-1 COMPLETE (`inf-pipeline-v1.7.20`). | (1) INFREL.001b cron 2026-05-07 12:30Z closes performance-silver gap. (2) TO 1a-2/1a-3 status TBD (1a-3 folded into INFREL TO-8). (3) Phase 2 = future PRD; Phase 3 decom gates on INFREL Phase 2 + 48h soak. |
+| `ADVI_RPBKTPI` | **Phase 1 — TO-1 (INF_B_00 join-target switch) COMPLETE 2026-05-05** (DS~C + DS~D `7f584ef7c`; AC4 waived per COO scope ruling — null was INF_D_00c Bug A scope, since CLOSED under LDRBRD.001 `f1f9ec8b5`). TO-2 historical chain re-run NOT YET AUTHORED — pending CTO PRD authoring window. | TO-2 not yet authored; not blocking active sprint. |
+| `ADVI_BFIX4` | **Phase 0 STUB + TO-1 SHIPPED 2026-05-04.** TO-1 (B2 A_03 epsilon guard) COMPLETE same-day (DS~B `be11d25fe` MATCH; SSM chain PASS). TO-2 (B1 BFIX4 architectural mechanism in B_00) GATES on Andrew B1 ruling (CTO 3-option framing relayed: accept-limitation / ship-now-week-arc / defer-next-sprint). | (1) Andrew B1 ruling → TO-2 scope decision. |
+| `ADVI_INFSHIP` | **Phase 1 + Phase 1.5 + Phase 2 SHIPPED 2026-04-28** (single-day burst). A2 CLOSED 2026-05-05 (AE 0.6.1 `2b7a76268`). INFSHIP STAYS ACTIVE — Phase 3 V1 RD smoke + V2 Andrew sign-off pending. | (1) Phase 3 V1 RD smoke + V2 Andrew sign-off. (2) AE 0.6.1~B QA boot test byte-equivalence AC #6. (3) auth-login routing investigation. |
 | `ADHC_TMSTEL` | On hold. P0 PRD complete. | Azure AD app registration (Andrew/IT). |
 
 **Recently completed (moved to REGISTRY.md Completed — remove from active TO routing):**
-- `ADHC_COMPIL` v3 2026-04-30 (8/8 TOs themes F/G/H + F-amend all same-day; v1+v3 both complete; AE 0.7 `.008`-`.010`+`.013`-`.015`, DS ~C `.011`, DS ~D/~A `.012`)
-- `ADVI_INFGRD` 2026-04-30 (Phase 1 closed; .001-.006 across 5 TOs shipped; rep_id scope guard $200M/295HH live; .004 ON HOLD)
-- `ADHC_BASHFIX` 2026-04-29 (.001+.002 complete; CLAUDE.md Rule 16 + pgrep→awk fallback in inbox-watch.sh)
-- `AUTH_COTTON` 2026-04-29 (single-day ship; Cottonwood partner onboarding; TO-1 through TO-4 shipped; portal-v2.1.65)
-- `ADHC_PUSHFIX` 2026-04-29 (.001+.002; PostToolUse hook auto-cleanup + PPID-liveness check in inbox-watch.sh)
-- `ADVI_STAUDT` 2026-04-29 (zombie close; HLOT2b+COHORT-A+EOP2025 shipped; AUAGAP RCA-closed; D_00c cutover complete)
-- `ADVI_INFPRTY` 2026-04-29 (absorbed by ADVI_INFSHIP synthesis per CTO ruling; 5 architecture docs delivered)
-- `TRSB_TFIMPT` 2026-04-29 (W1+W2+W3 complete; trade-pipeline-v1.7.0 + shared-infra-v1.8.0; portal API GW subordinate module)
-- `ADHC_ROUTER` 2026-04-29 (Phase 1 complete 2026-04-15; Phase 2 backlog parked under ADHC_COMPIL umbrella)
-- `ADVI_49EXEC` 2026-04-27 (v1 LIVE; 164/164 artifacts; EventBridge wiring; exec-summary-v0.1.1; INF wiring deferred)
-- `ADHC_DSFLOW` 2026-04-24 (all 4 TOs; ruff 0.15.11 + `from __future__ import annotations` backfill 93 scripts)
-- `ADVI_ROLGAT` 2026-04-17 (portal-auth-v1.13.0 + partners-api-v1.16.1; DE1 shipped to PROD in portal-v2.1.58 `c7a7d11e` 2026-04-20)
-- `ADHC_DESIGN` 2026-04-21 (28/32 effective; 4 orphan TOs CANCELLED per Andrew)
-- `ADVI_PROFAU` 2026-04-21 (6/6 authored; portal-v2.1.58; PROFAU.006 PROD D_04 rode chain-full recovery)
-- `ADVI_INCMTL` 2026-04-21 (COMPLETE-AS-SUPERSEDED — absorbed into ADVI_ROLLUP via IN-1/IN-2 + 3 IN-2.W0 sub-TOs)
-- `COMP_LEARNS` 2026-04-21 (v0 COMPLETE per Andrew; 20 COMPLETE + 1 DEFERRED + 1 STAGED-EXT; dyad 1.1.0_SA_CTO + 2.1.0_SA_COO handled closeout)
+- `MDLP_RVVALT` 2026-05-04 (Phase 1 COMPLETE; PRD-to-PROD ~9h; 5/5 TOs shipped; 4-view toggle live in PROD via portal-v2.1.74/75; yang-v2.4.0)
+- `ADVI_49FRECN` 2026-05-04 (Track 2 sidecar detection Fix A SHIPPED; recovery completeness deferred to ADVI_BFIX4; AE 0.7 BD chain `cc09f9a8`)
+- `ADVI_HISTBF` 2026-05-04 (all SUPPORTED-dim phases shipped; Phase 1b BRONZE Wave B v5; Phase 2 SILVER `5fef9a910` 16x speedup; Phase 3 GOLD AE 0.6.1 cumulative-batch; JWTRES.002 VALIDATED CLEAN)
+- `DASH_STSTRP` 2026-05-04 (Phase 0+1 single-day; portal-v2.1.70; AC6 Andrew direct hardware sign-off)
+- `ADVI_JWTRES` 2026-05-04 (Phase 1 Option A LIVE 2026-04-30 + Phase 2 Option B LIVE 2026-05-01; empirical validation 2026-05-04 first-fire JWTRES.002)
+- `ADHC_ORNDSP` 2026-05-01 (TO-001: --run-date + --skip-existing flags; per-script S3 markers)
+- `ADVI_INFLV2` 2026-05-01 (9 TOs done + 2 CANCELLED; firm-centric layout live)
+- `ADHC_WAVPLN` 2026-05-01 (Wave 1 dispatched same-day; 4 projects closed same-day)
+- `TRSB_PATHFIX` 2026-05-01 (3 TOs shipped; trade-pipeline-v1.6.0 + v1.8.0)
+- `ADHC_CLCOMM` 2026-05-01 (3/3 TOs COMPLETE; CL channel isolation; 14-observation cross-channel corpus)
+- `ADVI_ORIAPI` 2026-05-01 (Phase 1 COMPLETE; .001-.005 shipped tags `inf-pipeline-v1.5.6`→`v1.7.2`; Cycle 2 CLEAN)
+- `ADVI_INFGRD` 2026-04-30 (Phase 1 closed; .001-.006 across 5 TOs; .004 ON HOLD)
+- `ADHC_COMPIL` 2026-04-30 (v1+v3 COMPLETE; 8/8 v3 TOs themes F/G/H)
+- `ADHC_BASHFIX` 2026-04-29 (.001+.002 complete; CLAUDE.md Rule 16 + pgrep→awk fallback)
+- `AUTH_COTTON` 2026-04-29 (single-day ship; Cottonwood partner onboarding; portal-v2.1.65)
+- `ADHC_PUSHFIX` 2026-04-29 (.001+.002; PostToolUse hook auto-cleanup + PPID-liveness check)
+- `ADVI_STAUDT` 2026-04-29 (zombie close; HLOT2b+COHORT-A+EOP2025 shipped; AUAGAP RCA-closed)
+- `ADVI_INFPRTY` 2026-04-29 (absorbed by ADVI_INFSHIP synthesis; 5 architecture docs delivered)
+- `TRSB_TFIMPT` 2026-04-29 (W1+W2+W3 complete; trade-pipeline-v1.7.0 + shared-infra-v1.8.0)
+- `ADHC_ROUTER` 2026-04-29 (Phase 1 complete 2026-04-15; Phase 2 parked under ADHC_COMPIL)
+- `ADHC_OWNPTH` 2026-05-01 (9/9 TOs shipped; safe-commit.sh wrapper + tilde-form alias)
+- `ADVI_49EXEC` 2026-04-27 (v1 LIVE; exec-summary-v0.1.1)
+- `ADVI_RDVSDS` 2026-04-27 (Phase 1 PASS; root cause devBypass vestigial)
+- `ADHC_DSFLOW` 2026-04-24 (all 4 TOs; ruff 0.15.11 + `__future__` annotations backfill)
+- `ADVI_CANNNA` 2026-04-24 (all 6 phases COMPLETE — child of ADVI_ROLLUP)
+- `ADVI_ROLEAUA` 2026-04-24 (all 5 phases COMPLETE — child of ADVI_ROLLUP)
+- `COMP_LEARNS` 2026-04-21 (v0+v1 COMPLETE; 33/33 TOs)
+- `ADHC_DESIGN` 2026-04-21 (28/32 effective; 4 orphan TOs CANCELLED)
+- `ADVI_PROFAU` 2026-04-21 (6/6 authored; portal-v2.1.58)
+- `ADVI_INCMTL` 2026-04-21 (COMPLETE-AS-SUPERSEDED — absorbed into ADVI_ROLLUP)
+- `ADVI_ROLGAT` 2026-04-17 (portal-auth-v1.13.0 + partners-api-v1.16.1)
 - `CDRS_TFIMPT` 2026-04-15 (all 7 TOs; partner-firms-v1.0.0 + shared-infra-v1.7.0)
 
-### Pipeline Tags (refreshed 2026-04-30 PM CTO startup via `git tag -l`)
+### Pipeline Tags (refreshed 2026-05-06 PM CTO startup via `git tag -l`)
 
 | Pipeline | Tag |
 |----------|-----|
-| BD | `bd-v2.24.4` |
+| BD | `bd-v2.24.6` |
 | Partners API | `partners-api-v1.16.1` |
 | Portal Auth | `portal-auth-v1.15.0` |
-| Portal (submodule) | `portal-v2.1.61` PROD (FIRM_ID fix DT) |
-| Yang | `yang-v2.3.8` |
+| Portal (submodule) | `portal-v2.1.75` (latest tag; PROD `portal-v2.1.70`+ via DT 0.4 sweep) |
+| Yang | `yang-v2.4.2` (MDLP_RVVALT term_returns weekday-only 2026-05-04) |
 | Market Overview | `market-overview-v1.10.0` |
 | News | `news-v2.9.7` |
-| Shared Infra | `shared-infra-v1.8.0` (TRSB_TFIMPT W3 API GW import) |
+| Shared Infra | `shared-infra-v1.9.0` |
 | Data Refresh | `data-refresh-v2.2.0` |
-| Trade Pipeline | `trade-pipeline-v1.7.0` (TRSB_TFIMPT W3; TRSB_PATHFIX TO-2 target v1.8.0) |
-| Inf Pipeline | `inf-pipeline-v1.7.9` (ADVI_ORIAPI KMS+SSM lift + .005 retry + bronze KMS fix 2026-04-30) |
+| Trade Pipeline | `trade-pipeline-v1.8.0` (TRSB_PATHFIX TO-2 categorical clean cutover) |
+| Inf Pipeline | `inf-pipeline-v1.7.27` (INFINGE TO-1/2/3/5b + INFREL TO-2 + INFREL.001b + Wave C empty-partition guard) |
 | Exec Summary | `exec-summary-v0.1.1` |
 | Security Scanner | `security-scanner-v1.0.2` |
 | Partner Firms | `partner-firms-v1.2.0` |
@@ -450,7 +463,7 @@ You do NOT produce architecture specs (CTO does). You DO align, route, and track
 | Analytics Dashboard | `analytics-dashboard-v1.0.0` |
 | Deck Generation | `deck-generation-v1.0.0` |
 
-**COO pipeline tag note (2026-04-30 PM):** Tags refreshed by CTO startup reconciliation. COO active projects dashboard below is from 2026-04-24 and is significantly stale — COO to fully reconcile on next startup against REGISTRY.md ground truth. Key changes since 2026-04-24: ADVI_STAUDT/ADHC_ROUTER/TRSB_TFIMPT/ADVI_INFGRD/ADVI_INFPRTY all completed; ADVI_JWTRES/ADVI_HISTBF/ADHC_CLCOMM added active; ADHC_COMPIL v3 reopened; ADHC_OWNPTH Phase 2 fail-closed live; TRSB_PATHFIX TO-2 DT pending.
+**COO pipeline tag note (2026-05-06 PM):** Tags refreshed by CTO session 11 ground-truth pass. Active projects table reflects current state. Pod 4 / Shared Services sections below STILL reflect 2026-04-24 — COO to refresh on next session. Key changes since 2026-04-30 PM: ADVI_HISTBF/ADHC_COMPIL/ADVI_INFGRD/ADVI_ORIAPI/TRSB_PATHFIX/ADHC_CLCOMM/ADHC_OWNPTH/ADVI_INFLV2/MDLP_RVVALT/ADVI_49FRECN/DASH_STSTRP/ADVI_JWTRES/ADHC_ORNDSP/ADHC_WAVPLN/ADVI_RDVSDS all completed (15 closes); ADVI_INFREL + ADVI_INFINGE + ADVI_INFLFE + ADVI_RPBKTPI + ADVI_BFIX4 added active; AUDIT-003 chain CLOSED 2026-05-06 (matrix v13); INF_I→INF_D rename refactor SHIPPED; INFINGE Phase 1 4/5 Lambda TOs SHIPPED (TO-1/2/3/5b); INFREL Phase 1 in execution.
 
 ### Operational Notes (2026-04-24 CTO startup reconciliation)
 
