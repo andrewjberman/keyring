@@ -610,9 +610,9 @@ paths:
     lane: SHARED_CLOUD_OPS
     note: "EC2 manifest — AE 0.7.0 is sole owner (CLAUDE.md Rule 8)"
 
-  "infra/aws/lambda/inf-pipeline/**":
+  "infra/aws/lambda/inf-*/**":
     lane: POD4_OR_AE
-    note: "inf-pipeline Lambda source — DS/DE author data-shaping Lambda code (INFETL.003/004/LAMBDA-DIMS); AE 0.7 deploys. Longest-match overrides infra/aws/** AE-only rule (COO MICRO-TO 2026-05-07)."
+    note: "All inf-* Lambda source dirs (inf-portal-publisher, inf-portal-advisor-publisher, inf-client-detail, inf-gold-trigger, future LAMBDA-DIMS per-dim Lambdas) — DS/DE author code, AE 0.7 deploys. Widened from inf-pipeline/** to inf-*/** (COO URGENT 2026-05-07). Longest-match overrides infra/aws/** AE-only rule."
 
   "infra/aws/lambda/trade-pipeline/**":
     lane: TRADE_PIPELINE_INFRA
