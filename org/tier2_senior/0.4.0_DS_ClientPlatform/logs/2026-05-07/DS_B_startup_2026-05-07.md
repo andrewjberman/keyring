@@ -134,10 +134,48 @@ delete_orion_catalog_orphans.py gate updated: ~2026-05-08T23:00Z (was 05:30Z).
 
 ---
 
+---
+
+## Emergency Fix 2 — orion_tax_dim.py additionalOptions (20260507T~1410Z)
+
+**Trigger:** COO technical prescription (inbox, this session startup).
+
+**Root Cause (second layer):** `build_generate_body()` in `orion_tax_dim.py` did not include `additionalOptions` in the POST body sent to `/Generate`. Even with good-schema catalog queries, Orion needs `additionalOptions` in the generate request body to resolve activities. SAME pattern as `4d99a1fb2` — the fix to the creator ensured the catalog queries have the field; this fix ensures the consumer passes it through.
+
+**Fix Applied:**
+
+| Step | Detail |
+|------|--------|
+| Edit | `orion_tax_dim.py` `build_generate_body()` — added `"additionalOptions": verbose.get("additionalOptions") or []` |
+| Gate | `.tools/ds-commit-gate.sh` — PASS |
+| Commit | `13a9a406c` — "fix(ADVI_INFSHIP.L1): orion_tax_dim pass additionalOptions from verbose in generate body" |
+| Push | CLOUD `6851468ee..13a9a406c` |
+| S3 | `orion_tax_dim.py` ETag=`f51a431c457381d52a5ae9f770d24a03` (20260507T14:10:19Z) |
+| Smoke test | SSM `ac46c0c9` — Status: Success; Tax Unrealized 859,607 bytes; Tax Realized 851,524 bytes; both exit=0 |
+| RAVC | sent to COO 20260507T141405Z |
+
+**COO RAVC2 ACK (catalog fix, this session):** d66fc498a + be305052d confirmed. inf-bronze-runner LEAVE RUNNING (AE 0.7 Wave C1 GO dispatched). DS~B queue EMPTY.
+
+---
+
+## Current State (end of session)
+
+| Item | Status |
+|------|--------|
+| orion_tax_dim.py emergency fix (catalog) | COMPLETE — d66fc498a, catalog clean |
+| orion_tax_dim.py emergency fix (additionalOptions) | COMPLETE — 13a9a406c, smoke test PASS |
+| INFREL.001b DS~B scope | COMPLETE |
+| INFREL.001b AE 0.6.1 scope | IN PROGRESS — DimSpec wiring |
+| Wave C1 orphan cleanup | PASSIVE HOLD — ~2026-05-08T23:00Z |
+| inf-bronze-runner | RUNNING (AE 0.7 using for Wave C1 re-run) |
+| DS~B | IDLE — awaiting next COO assignment |
+| Inbox watcher | LIVE (b2jx4tktt) |
+
+---
+
 ## Next Steps
 
-1. **[COO]** Confirm RAVC receipt + route orion_tax_dim.py re-run for today's date.
-2. **[AE 0.7]** Re-run Wave C1 backfill against new good-schema Tax Dim queries.
-3. **[AE 0.6.1]** DimSpec wiring orchestrator.py + EC2 deploy + RAVC to COO.
-4. **[COO]** Route AE 0.6.1 RAVC to DS~B for INFREL.001b validation phase.
-5. **[AE 0.7]** Signal Wave C1 SSM 461caa3a complete (~2026-05-08T23:00Z) → DS~B runs `delete_orion_catalog_orphans.py` against `_193627Z` pair.
+1. **[AE 0.7]** Re-run Wave C1 backfill with fixed orion_tax_dim.py + clean catalog.
+2. **[AE 0.6.1]** DimSpec wiring orchestrator.py + EC2 deploy + RAVC to COO.
+3. **[COO]** Route AE 0.6.1 RAVC to DS~B for INFREL.001b validation phase.
+4. **[AE 0.7]** Signal Wave C1 SSM 461caa3a complete (~2026-05-08T23:00Z) → DS~B runs `delete_orion_catalog_orphans.py` against `_193627Z` pair.
