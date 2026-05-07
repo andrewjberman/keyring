@@ -145,3 +145,26 @@ DS~B asked about failure modes for 2020-10-31 and 2022-12-31. Replied:
 
 **Tags:** `inf-pipeline-v1.7.30`, `inf-pipeline-v1.7.31`
 **Push:** CLOUD + --follow-tags (all commits live)
+
+---
+
+## Addendum: v1.7.32 — 2020-05-31 $0 AUA Guard (INFREL.010 Final)
+
+**Root cause:** `2020-05-31` has BOTH `billing.csv` (87,508b) AND `tax_unrealized.csv` in bronze. The rep_id lookup via tax_unrealized succeeded and matched Inflection accounts, but those accounts had `ending_mv = $0` (pre-onboarding noise). Guard B fired: `$0 outside [$50M, $400M]`.
+
+**Fix (build_billing_dim.py):**
+```python
+if df["ending_mv"].sum() == 0:
+    print("DIM billing: $0 AUA after INFGRD filter -- pre-onboarding noise, SKIP partition")
+    return df.iloc[0:0]
+```
+
+**Deploy:** inf-pipeline-v1.7.32 (commit b2e634a12, 0-diff). Directly invoked Lambda (EventBridge delivery gap during Wave C1 high-concurrency period — 3 sentinel retries all dropped).
+
+**Result:** 2020-05-31 billing OK, 0 rows, 5,027b @ 16:49Z. **83/83 billing silver COMPLETE.**
+
+**RAVC10 sent to COO at 20260507T164922Z.**
+
+| Tag | Change | Commit |
+|---|---|---|
+| v1.7.32 | build_billing_dim $0 AUA guard | b2e634a12 |
