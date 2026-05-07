@@ -131,11 +131,13 @@ def read_layer_requirements(layer_name: str) -> set[str]:
 
 
 def parse_layers_from_tf(tf_path: Path) -> list[str]:
-    """Extract layer ARN local-var names from a Lambda's .tf file.
+    """Extract layer reference names from a Lambda's .tf file.
 
-    Looks for `layers = [local.NAME]` or `layers = [local.A, local.B]`.
-    Returns the local var names (e.g. ['pandas_pyarrow_requests_layer']).
-    Does not resolve to ARNs; caller maps name -> requirements.txt.
+    Looks for `layers = [...]` blocks and matches:
+      - `local.NAME` (commonly used to alias layer ARNs)
+      - `aws_lambda_layer_version.NAME.arn` (direct resource reference)
+      - `module.NAME.layer_arn` (module-wrapped layer)
+    Returns the names; caller maps to layer dir via LOCAL_VAR_TO_LAYER_DIR.
     """
     if not tf_path.exists() or not tf_path.is_file():
         return []
@@ -144,15 +146,21 @@ def parse_layers_from_tf(tf_path: Path) -> list[str]:
     except (PermissionError, IsADirectoryError):
         return []
     layers: list[str] = []
-    # Match `layers = [...]` blocks (single or multi-line)
-    for m in re.finditer(r"layers\s*=\s*\[([^\]]*)\]", text, re.MULTILINE):
+    # Match `layers = [...]` blocks (single or multi-line). Use multiline +
+    # dotall to span newlines inside the bracket body.
+    for m in re.finditer(r"layers\s*=\s*\[([^\]]*)\]", text, re.MULTILINE | re.DOTALL):
         body = m.group(1)
         for v in re.finditer(r"local\.(\w+)", body):
+            layers.append(v.group(1))
+        for v in re.finditer(r"aws_lambda_layer_version\.(\w+)\.arn", body):
+            layers.append(v.group(1))
+        for v in re.finditer(r"module\.(\w+)\.layer_arn", body):
             layers.append(v.group(1))
     return layers
 
 
-# Map common local var names to layer dir names.
+# Map common local var / aws_lambda_layer_version / module names to layer dir names.
+# Underscore-to-hyphen normalization is applied as a fallback.
 LOCAL_VAR_TO_LAYER_DIR = {
     "pandas_layer": "pandas-pyarrow-layer",
     "pandas_pyarrow_layer": "pandas-pyarrow-layer",
@@ -163,6 +171,26 @@ LOCAL_VAR_TO_LAYER_DIR = {
     "openpyxl_layer": "openpyxl-layer",
     "security_scanner_deps": "security-scanner-deps",
 }
+
+
+def resolve_layer_dir(name: str) -> str | None:
+    """Resolve a layer reference name (local var / resource / module) to a layer dir.
+
+    Tries the explicit map first, then falls back to underscore-to-hyphen if
+    that dir exists.
+    """
+    if name in LOCAL_VAR_TO_LAYER_DIR:
+        return LOCAL_VAR_TO_LAYER_DIR[name]
+    cand = name.replace("_", "-")
+    if (LAYERS_DIR / cand).is_dir():
+        return cand
+    if name in OPAQUE_KNOWN:
+        return name
+    return None
+
+
+# Opaque layers known to exist in S3 but without a local layer dir.
+OPAQUE_KNOWN = {"pandas-pyarrow-layer"}
 
 
 def extract_imports(py_path: Path) -> set[str]:
@@ -209,7 +237,7 @@ def audit_function(fn_name: str, cfg: dict) -> dict:
     layer_modules: set[str] = set()
     layer_dirs: list[str] = []
     for v in layer_vars:
-        ldir = LOCAL_VAR_TO_LAYER_DIR.get(v)
+        ldir = resolve_layer_dir(v)
         if not ldir:
             continue
         layer_dirs.append(ldir)
