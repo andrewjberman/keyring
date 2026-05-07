@@ -101,6 +101,22 @@ lanes:
       - 0.4.2_RD_AdvisorIntelligence
     description: "Pod 4 — ClientPlatform (DE + DS + DS~A-~D + DT + RD)"
 
+  POD4_OR_AE:
+    permitted_agents:
+      - 0.4.0_DE_ClientPlatform
+      - 0.4.0_DS_ClientPlatform
+      - 0.4.0_DS_ClientPlatform~A
+      - 0.4.0_DS_ClientPlatform~B
+      - 0.4.0_DS_ClientPlatform~C
+      - 0.4.0_DS_ClientPlatform~D
+      - 0.4.0_DT_ClientPlatform
+      - 0.4.2_RD_AdvisorIntelligence
+      - 0.5.0_AE_OpalETL
+      - 0.6.0_AE_PartnerETL
+      - 0.6.1_AE_PartnerETL
+      - 0.7.0_AE_CloudOps
+    description: "inf-pipeline Lambda source — POD4 (DE/DS/DT/RD) authors Lambda code, AE owns deployment infra; both permitted"
+
   POD_DE_ANY:
     permitted_agents:
       - 0.1.0_DE_MarketIntelligence
@@ -593,6 +609,10 @@ paths:
   "infra/aws/ec2/EC2_MANIFEST.json":
     lane: SHARED_CLOUD_OPS
     note: "EC2 manifest — AE 0.7.0 is sole owner (CLAUDE.md Rule 8)"
+
+  "infra/aws/lambda/inf-pipeline/**":
+    lane: POD4_OR_AE
+    note: "inf-pipeline Lambda source — DS/DE author data-shaping Lambda code (INFETL.003/004/LAMBDA-DIMS); AE 0.7 deploys. Longest-match overrides infra/aws/** AE-only rule (COO MICRO-TO 2026-05-07)."
 
   "infra/aws/lambda/trade-pipeline/**":
     lane: TRADE_PIPELINE_INFRA
