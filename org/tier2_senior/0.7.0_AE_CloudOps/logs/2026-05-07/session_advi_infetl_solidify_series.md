@@ -48,3 +48,53 @@
 ## Tags shipped this session
 
 `inf-pipeline-v1.7.33` → `1.7.34` → `1.7.35` → `1.7.36` → `1.7.37` and `portal-auth-v1.15.1`.
+
+## Continuation — LAMBDA-DIMS Phase A + B + ADHC TOs (post-compact, 20:09Z–21:30Z)
+
+### Phase A (4-of-4 sentinel-add to existing inf-api-* Lambdas)
+
+| # | Tag | TO | Outcome |
+|---|-----|----|---------|
+| 9 | `inf-pipeline-v1.7.38` | LAMBDA-DIMS Phase A | 4 inf-api-* (reps, assets-v2, positions, txn): silver-complete sentinel writes + IAM s3:PutObject grants on `silver/_silver_complete/*/{dim}.json`. **REGRESSION** — 3 of 4 had nested-path source_map files leading to ModuleNotFoundError; caught + fixed in v1.7.39 hotfix same session. Commit `6198182a7`. |
+| 10 | `inf-pipeline-v1.7.39` | LAMBDA-DIMS Phase A HOTFIX | (a) Flatten source_map files for reps/positions/assets-v2; restage flat. (b) Switch inf-api-assets-v2 layer from `pandas_layer` (no requests) to `pandas_pyarrow_requests_layer` — old zip masked the layer mismatch via inline-vendoring. Smoke PASS all 4. Commit `3f0bb6fd8`. |
+
+### Phase B P1 + P2 (5 new inf-{dim}-daily Lambdas covering missing aggregator quorum dims)
+
+| # | Tag | TO | Outcome |
+|---|-----|----|---------|
+| 11 | `inf-pipeline-v1.7.40` | LAMBDA-DIMS Phase B P1 | inf-accounts-v2-daily (NewPortfolio sync; ~1.2s; 852 rows post-INFNNA filter). Initial cron 12:55. Commit `b88d7c497`. |
+| 12 | `inf-pipeline-v1.7.41` | Phase B P1 cron correction | inf-accounts-v2-daily 12:55 → 12:35 UTC per COO 20:38Z. Commit `21264bf2e`. |
+| 13 | `inf-pipeline-v1.7.42` | Phase B P2 (1/2) | inf-unified-account-dim-daily — ExcelReports async bronze-only pull. Commit `330982d92`. |
+| 14 | `inf-pipeline-v1.7.43` | Phase B P2 (2/2) + UAD cron correction | inf-tax-daily (two-pass ExcelReports unrealized 3y + realized YTD) + UAD cron 12:35 → 12:40 (collision resolution). Commit `0a6a842dc`. |
+
+### Final cron sequence (post-Phase-B P1+P2)
+
+```
+12:30 inf-api-reps                  -> hh_rep_mapping bronze (existing)
+12:35 inf-accounts-v2-daily         -> NewPortfolio sync; INFNNA-filtered silver
+12:40 inf-unified-account-dim-daily -> ExcelReports bronze CSV (silver downstream)
+12:45 inf-api-assets-v2             -> existing
+12:50 inf-api-positions             -> existing
+12:55 inf-tax-daily                 -> ExcelReports two-pass bronze CSVs
+13:00 inf-api-txn                   -> existing (T-1 default)
+```
+
+### inf-silver-aggregator quorum status (2026-05-07 EOD)
+
+6/9 sentinels landed: representatives, accounts_v2, unified_account_dim, assets_v2, positions_daily, tax. Missing 3: transactions (will land via cron 13:00 tomorrow → 7/9), billing + performance (P3 — gates on bronze backfill ~22:55Z + ~23:35Z tonight).
+
+### Hotfix and structural defenses
+
+- `memory/feedback_lambda_zip_layout_and_layer_attribution.md` dropped + indexed (Rule 1: source_map files lists are FLAT logical names; Rule 2: layer ARN docstrings drift from layer requirements.txt; corrected Windows build-and-upload.sh quirks for bun-only mode)
+- ADHC TO #1 doc additions: handed off to CTO (lane gate); CTO committed as `c9059ebaf` with my Co-Authored-By attribution. New sections in `LAMBDA_DEPLOYMENT_PROTOCOL.md`: §2.4a FLAT files convention + when-nested-is-legitimate exemptions (Node.js bundles, Python `__init__.py` packages, read-as-data files); §2.4b layer verification; §2c Lambda@Edge TWO-STAGE APPLY (incorporates ~B's plan-time locals subtlety from FIRMSEP.03); §2b refresh Mode A vs Mode B Windows build. New PRD: `docs/architecture/ADHC_LAMBDADOC.md`.
+- ADHC TO #2 MVP shipped: `.tools/check-lambda-layer-deps` (commit `fc4d1f18f` + parser refinement `59350fdc2`). AST-extracts top-level imports per Lambda, parses layers from .tf (now handles `local.X`, `aws_lambda_layer_version.X.arn`, `module.X.layer_arn`), checks against layer requirements.txt + opaque-layer registry. **Verified replay** of v1.7.38 inf-api-assets-v2 incident: with the buggy `pandas_layer` it correctly reports `FAIL ... MISSING imports: ['requests']`; with the corrected layer 0 FAIL. Coverage: 147 functions, 115 OK, 32 still FAIL (mostly source_map entries with null tf_file or inline-vendored deps; iterative TO-003 follow-on scope).
+
+### Cross-pod coordination
+
+- AE 0.7.0~B (FIRMSEP work): three-way exchange on Lambda@Edge two-stage pattern. ~B's empirical FIRMSEP.03 evidence was absorbed into LAMBDA_DEPLOYMENT_PROTOCOL.md §2c (timing table verbatim + plan-time locals subtlety), CTO committed.
+- 1.0.0_SA_CTO: handoff for cross-lane doc commits (docs/architecture + docs/deployment are CTO-owned per .owned-paths.yaml). Pattern: AE drafts + sends commit message + git commands; CTO commits with `Co-Authored-By` to preserve author attribution. Worked cleanly first attempt.
+- 2.0.0_SA_COO: 6 RAVCs sent, 6 ACKs received. COO course-corrected cron slots twice (12:55 → 12:35 for accounts_v2; 12:35 → 12:40 for UAD); both corrections accepted + shipped same session.
+
+### Tags shipped this continuation
+
+`inf-pipeline-v1.7.38` → `1.7.39` (HOTFIX) → `1.7.40` → `1.7.41` (cron correction) → `1.7.42` → `1.7.43`. Plus `c9059ebaf` (CTO; ADHC_LAMBDADOC.001) and `fc4d1f18f` + `59350fdc2` (.tools/check-lambda-layer-deps MVP + refinement).
