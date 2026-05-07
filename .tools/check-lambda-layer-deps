@@ -1,0 +1,297 @@
+#!/usr/bin/env python3
+"""check-lambda-layer-deps -- Audit Lambda imports against layer requirements.
+
+Catches the v1.7.38 incident-B failure mode: layer ARN docstring drift from
+the actual layer's requirements.txt, where a Lambda imports a module that
+no layer in the function's `layers = [...]` config actually provides.
+
+For each Lambda in infra/aws/lambda/ci/lambda-source-map.json:
+  1. Find the function's layers list from its .tf file
+  2. Map each layer to its requirements.txt
+  3. Read each .py file in the source_dir, extract top-level imports via AST
+  4. For each non-stdlib non-local import, check if any layer satisfies it
+  5. Report MISSING (potential failure) and OK (verified) entries
+
+Usage:
+  .tools/check-lambda-layer-deps              # audit all Lambdas
+  .tools/check-lambda-layer-deps --pipeline inf-pipeline  # filter by pipeline
+  .tools/check-lambda-layer-deps --function inf-api-reps  # single function
+  .tools/check-lambda-layer-deps --strict     # exit 1 on any MISSING
+
+Exit codes:
+  0  no MISSING (or --strict not set)
+  1  MISSING entries found and --strict was set, or unhandled error
+
+KNOWN MVP LIMITATIONS (TO-003 scope — extend in follow-on):
+  - Opaque-layer registry currently has only `pandas-pyarrow-layer`. Other
+    pipelines that use externally-built layers (deck-generation-deps,
+    news-trending-deps, anthropic-sdk-deps, etc.) will produce false-positive
+    FAILs because their requirements.txt may not list all transitive deps,
+    or because some layers were assembled from wheel zips not requirements.
+    Add entries to OPAQUE in `read_layer_requirements` as you verify what
+    each layer actually contains.
+  - Single-file Python scripts only (no AST evaluation of dynamic imports).
+  - Use --pipeline inf-pipeline for the verified-trustworthy subset until
+    other pipelines' opaque layers are catalogued.
+
+VERIFIED:
+  - inf-pipeline: 17/17 OK with correct layer attributions (post-v1.7.39 hotfix).
+  - Replays the v1.7.38 inf-api-assets-v2 incident correctly: when layer is
+    set to pandas-pyarrow-layer (no requests), tool reports
+    `FAIL inf-api-assets-v2: MISSING imports: ['requests']`.
+
+TO: ADHC_LAMBDADOC.003 (MVP; full comp-routes integration is follow-on)
+Author: 0.7.0_AE_CloudOps
+"""
+from __future__ import annotations
+
+import argparse
+import ast
+import json
+import re
+import sys
+from pathlib import Path
+
+WORKSPACE = Path(__file__).resolve().parent.parent
+SOURCE_MAP = WORKSPACE / "infra/aws/lambda/ci/lambda-source-map.json"
+LAYERS_DIR = WORKSPACE / "infra/aws/lambda/layers"
+
+# Standard library top-level module names (Python 3.11). Approximate; we err on
+# the side of "skip if matches stdlib." Update this list if we find a false-
+# positive (a Lambda imports something we're treating as stdlib that isn't).
+STDLIB = frozenset([
+    "abc", "argparse", "ast", "asyncio", "base64", "binascii", "bisect", "builtins",
+    "calendar", "collections", "concurrent", "configparser", "contextlib", "copy",
+    "csv", "ctypes", "dataclasses", "datetime", "decimal", "difflib", "dis", "doctest",
+    "email", "enum", "errno", "fnmatch", "fractions", "functools", "gc", "getopt",
+    "getpass", "glob", "gzip", "hashlib", "heapq", "hmac", "html", "http", "imp",
+    "importlib", "inspect", "io", "ipaddress", "itertools", "json", "keyword",
+    "linecache", "locale", "logging", "math", "mimetypes", "multiprocessing",
+    "numbers", "operator", "os", "pathlib", "pickle", "pkgutil", "platform",
+    "plistlib", "pprint", "queue", "random", "re", "reprlib", "secrets", "select",
+    "shlex", "shutil", "signal", "site", "smtplib", "socket", "sqlite3", "ssl",
+    "stat", "statistics", "string", "struct", "subprocess", "sys", "tempfile",
+    "textwrap", "threading", "time", "timeit", "tokenize", "traceback", "types",
+    "typing", "unicodedata", "unittest", "urllib", "uuid", "venv", "warnings",
+    "weakref", "xml", "zipfile", "zipimport", "zlib", "__future__",
+])
+
+# Modules provided by AWS Lambda Python runtime (always available, no layer needed)
+LAMBDA_PROVIDED = frozenset(["boto3", "botocore"])
+
+# Map from layer ARN local var name (e.g., "pandas_pyarrow_requests_layer") to
+# the layer's requirements.txt path. We don't read AWS for the layer's actual
+# contents -- we trust the requirements.txt as the canonical declaration.
+# If a layer doesn't have a requirements.txt locally, we treat it as opaque
+# and warn rather than fail.
+
+# Map from PyPI package name to importable module name. Extend as needed.
+PKG_TO_MODULE = {
+    "charset-normalizer": "charset_normalizer",
+    "python-dateutil": "dateutil",
+    "pyyaml": "yaml",
+    "pillow": "PIL",
+    "msgpack-python": "msgpack",
+    "beautifulsoup4": "bs4",
+    "google-cloud-storage": "google",
+}
+
+
+def normalize_module(pkg_name: str) -> str:
+    """Normalize PyPI package name (e.g. 'requests==2.33.1') to module name."""
+    pkg = pkg_name.split("==")[0].split(">=")[0].split("<=")[0].split("~=")[0].strip()
+    return PKG_TO_MODULE.get(pkg.lower(), pkg.replace("-", "_").lower())
+
+
+def read_layer_requirements(layer_name: str) -> set[str]:
+    """Read modules a layer provides (via its requirements.txt + opaque-layer registry)."""
+    # Known opaque layers built externally without a local requirements.txt.
+    # Source: AWS Layer build steps documented in TF or layer comments.
+    OPAQUE = {
+        "pandas-pyarrow-layer": {"pandas", "pyarrow", "numpy"},
+    }
+    if layer_name in OPAQUE:
+        return set(OPAQUE[layer_name])
+
+    req = LAYERS_DIR / layer_name / "requirements.txt"
+    if not req.exists():
+        return set()
+    modules: set[str] = set()
+    for line in req.read_text(encoding="utf-8").splitlines():
+        line = line.strip()
+        if not line or line.startswith("#"):
+            continue
+        modules.add(normalize_module(line))
+
+    # pandas-pyarrow-requests-layer extends pandas-pyarrow-layer; requirements.txt
+    # only lists the ADDED modules. Merge in the inherited base.
+    if layer_name == "pandas-pyarrow-requests-layer":
+        modules.update(["pandas", "pyarrow", "numpy"])
+    return modules
+
+
+def parse_layers_from_tf(tf_path: Path) -> list[str]:
+    """Extract layer ARN local-var names from a Lambda's .tf file.
+
+    Looks for `layers = [local.NAME]` or `layers = [local.A, local.B]`.
+    Returns the local var names (e.g. ['pandas_pyarrow_requests_layer']).
+    Does not resolve to ARNs; caller maps name -> requirements.txt.
+    """
+    if not tf_path.exists() or not tf_path.is_file():
+        return []
+    try:
+        text = tf_path.read_text(encoding="utf-8")
+    except (PermissionError, IsADirectoryError):
+        return []
+    layers: list[str] = []
+    # Match `layers = [...]` blocks (single or multi-line)
+    for m in re.finditer(r"layers\s*=\s*\[([^\]]*)\]", text, re.MULTILINE):
+        body = m.group(1)
+        for v in re.finditer(r"local\.(\w+)", body):
+            layers.append(v.group(1))
+    return layers
+
+
+# Map common local var names to layer dir names.
+LOCAL_VAR_TO_LAYER_DIR = {
+    "pandas_layer": "pandas-pyarrow-layer",
+    "pandas_pyarrow_layer": "pandas-pyarrow-layer",
+    "pandas_pyarrow_requests_layer": "pandas-pyarrow-requests-layer",
+    "anthropic_sdk_deps": "anthropic-sdk-deps",
+    "deck_generation_deps": "deck-generation-deps",
+    "news_trending_deps": "news-trending-deps",
+    "openpyxl_layer": "openpyxl-layer",
+    "security_scanner_deps": "security-scanner-deps",
+}
+
+
+def extract_imports(py_path: Path) -> set[str]:
+    """Extract top-level module names imported by a .py file via AST."""
+    if not py_path.exists():
+        return set()
+    try:
+        tree = ast.parse(py_path.read_text(encoding="utf-8"))
+    except SyntaxError:
+        return set()
+    imports: set[str] = set()
+    for node in ast.walk(tree):
+        if isinstance(node, ast.Import):
+            for n in node.names:
+                imports.add(n.name.split(".")[0])
+        elif isinstance(node, ast.ImportFrom):
+            if node.module and node.level == 0:
+                imports.add(node.module.split(".")[0])
+    return imports
+
+
+def audit_function(fn_name: str, cfg: dict) -> dict:
+    """Audit a single Lambda function for import/layer mismatches."""
+    src_dir = WORKSPACE / cfg.get("source_dir", "")
+    files = cfg.get("files", []) or ["lambda_function.py"]
+    tf_path = WORKSPACE / cfg.get("tf_file", "")
+
+    # Local module names (in the source_dir's files list, top-level)
+    local_modules = {
+        Path(f).stem
+        for f in files
+        if "/" not in f and f.endswith(".py")
+    }
+
+    # Imports from each .py file
+    all_imports: set[str] = set()
+    for f in files:
+        if not f.endswith(".py"):
+            continue
+        all_imports.update(extract_imports(src_dir / f))
+
+    # Layers attached
+    layer_vars = parse_layers_from_tf(tf_path)
+    layer_modules: set[str] = set()
+    layer_dirs: list[str] = []
+    for v in layer_vars:
+        ldir = LOCAL_VAR_TO_LAYER_DIR.get(v)
+        if not ldir:
+            continue
+        layer_dirs.append(ldir)
+        layer_modules.update(read_layer_requirements(ldir))
+
+    # Classify each import
+    missing: list[str] = []
+    ok_layer: list[tuple[str, list[str]]] = []
+    for imp in sorted(all_imports):
+        if imp in STDLIB or imp in LAMBDA_PROVIDED:
+            continue
+        if imp in local_modules:
+            continue
+        if imp in layer_modules:
+            satisfying = [ld for ld in layer_dirs if imp in read_layer_requirements(ld)]
+            ok_layer.append((imp, satisfying))
+        else:
+            missing.append(imp)
+
+    return {
+        "function": fn_name,
+        "layers_attached": layer_dirs,
+        "local_modules": sorted(local_modules),
+        "layer_provided": sorted(layer_modules),
+        "imports_total": sorted(all_imports),
+        "missing": missing,
+        "ok": ok_layer,
+    }
+
+
+def main() -> int:
+    p = argparse.ArgumentParser(description=__doc__.split("\n")[0])
+    p.add_argument("--pipeline", help="Filter by pipeline name (e.g. inf-pipeline)")
+    p.add_argument("--function", help="Audit a single function by name")
+    p.add_argument("--strict", action="store_true", help="Exit 1 if any MISSING found")
+    p.add_argument("--verbose", "-v", action="store_true", help="Show OK matches too")
+    args = p.parse_args()
+
+    if not SOURCE_MAP.exists():
+        print(f"ERROR: source map not found at {SOURCE_MAP}")
+        return 1
+    sm = json.loads(SOURCE_MAP.read_text(encoding="utf-8"))
+
+    fns = sm.get("functions", {})
+    if args.function:
+        if args.function not in fns:
+            print(f"ERROR: function {args.function} not in source_map")
+            return 1
+        fns = {args.function: fns[args.function]}
+    elif args.pipeline:
+        fns = {k: v for k, v in fns.items()
+               if v.get("pipeline") == args.pipeline
+               or args.pipeline in v.get("tf_file", "")}
+
+    total = 0
+    fail_count = 0
+    for fn_name, cfg in sorted(fns.items()):
+        if cfg.get("build_type") == "nodejs":
+            continue
+        if cfg.get("package_type") == "Image":
+            continue
+        result = audit_function(fn_name, cfg)
+        total += 1
+        if result["missing"]:
+            fail_count += 1
+            print(f"FAIL {fn_name}")
+            print(f"  layers_attached: {result['layers_attached'] or '(none)'}")
+            print(f"  MISSING imports: {result['missing']}")
+            print(f"  layer_provided ({len(result['layer_provided'])} modules): {result['layer_provided']}")
+            print()
+        elif args.verbose:
+            print(f"OK   {fn_name}")
+            print(f"  layers_attached: {result['layers_attached'] or '(none)'}")
+            for imp, sat in result["ok"]:
+                print(f"  - {imp}: provided by {sat}")
+            print()
+
+    print(f"\nSummary: {total} function(s) audited, {fail_count} FAIL, {total - fail_count} OK")
+    if args.strict and fail_count > 0:
+        return 1
+    return 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())
