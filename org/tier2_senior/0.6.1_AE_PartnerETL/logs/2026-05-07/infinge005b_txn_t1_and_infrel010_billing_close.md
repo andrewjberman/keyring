@@ -124,10 +124,10 @@ DS~B asked about failure modes for 2020-10-31 and 2022-12-31. Replied:
 
 ## 5. Open Items
 
-1. **71 historical billing bronze dates → silver sweep**: 71 billing.csv files exist but never triggered silver conversion (billing builder was broken). Need COO GO to write sentinels for all 71 dates. Estimate ~5 min (sentinel-only).
-2. **inf-api-txn first cron fire**: 2026-05-08T13:00Z. Monitor CW logs. RAVC9 after first successful pull.
-3. **Wave C2 (performance skip-400)**: DS~B session down; passive item. DS~B must restart before 2026-05-08T23:00Z.
-4. **RPBKTPI TO-2**: DS~B to RAVC1 plan + chain cost estimate for INF_B_00 historical re-run.
+1. **inf-api-txn first cron fire**: 2026-05-08T13:00Z. Monitor CW logs. RAVC11 after first successful pull.
+2. **Wave C2 (performance skip-400)**: DS~B session down; passive item. DS~B must restart before 2026-05-08T23:00Z.
+3. **RPBKTPI TO-2**: DS~B to RAVC1 plan + chain cost estimate for INF_B_00 historical re-run.
+4. **INFREL.010 Phase 1 GO**: Pending COO + Andrew approval for billing+tax+performance historical backfill (2020-01-01 to present). RAVC3 sent 20260507T181910Z.
 
 ---
 
@@ -168,3 +168,34 @@ if df["ending_mv"].sum() == 0:
 | Tag | Change | Commit |
 |---|---|---|
 | v1.7.32 | build_billing_dim $0 AUA guard | b2e634a12 |
+
+---
+
+## Addendum 2: INFREL.010 Phase 0 Audit (20260507T~18:30Z)
+
+Context-compacted restart. Completed INFREL.010 Phase 0 (per-dim lookback audit).
+
+### Phase 0 Audit Matrix
+
+| Dim | Endpoint | Date-Range Capable | Date Mechanism | Backfill Viable |
+|---|---|---|---|---|
+| billing | Envision ExcelReport | YES | ORION_PULL_DATE env (`_pull_date()`) | YES |
+| tax | Envision ExcelReport | YES | ORION_PULL_DATE env (`_pull_date()`) | YES |
+| performance | ExcelReport | PARTIAL | `--snapshot-date` argparse (orchestrator NOT passing it) | YES with fix |
+| unified_account_dim | ExcelReport | NO (snapshot) | Hardcodes `today` | NO |
+| accounts_v2 | Portfolio snapshot | NO (snapshot) | `--date` argparse; env mismatch | NO |
+| assets | Orion REST | NO (snapshot) | Hardcodes `today` | NO |
+| transactions | Custom Reports | DECOMMISSIONED | Lambda (inf-api-txn) | INFNNA.001 |
+| geo | N/A | SKIP | N/A | N/A |
+
+### Key Findings
+
+1. **expected_fail on assets**: Already removed (orchestrator.py line 22 docstring + DimSpec confirmed). No action needed.
+2. **Orchestrator date propagation**: Correct via ORION_PULL_DATE env var. billing + tax honor it. Snapshot-only dims (unified_account_dim, accounts_v2, assets) hardcode today — not a bug for daily cron (snapshot is correct); just not backfillable.
+3. **Performance gap**: `pull_inflection_performance_dim.py` has `--snapshot-date` argparse arg (added by INFREL.001b) but orchestrator DimSpec doesn't include it in extra_args. Daily cron writes to today's partition. Phase 1.1 fix needed.
+4. **INFREL.002 Fix4 "wrong partition" root cause**: NOT a structural orchestrator bug. billing/tax scripts correctly use ORION_PULL_DATE. Fix4 likely had pre-DS~B leap-day bug or wrong dispatch date.
+5. **Backfill scope**: billing + tax viable (2020-01-01 to present). performance viable after fix. Others not viable.
+
+### RAVC3 Sent
+
+RAVC3 sent to COO at 20260507T181910Z with Phase 0 matrix + Phase 1 GO request. Awaiting COO + Andrew approval for large-scale S3 backfill operations.
