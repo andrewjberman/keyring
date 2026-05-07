@@ -295,6 +295,36 @@ tools:
     replaces: "Manual aws s3 ls + timestamp inspection before gold dispatch; post-hoc stale-data forensics"
     note: "ADHC_COMPIL.012 (Theme G). WARN entries (partner-feed severities, weekly dims) do not block dispatch. ERROR entries beyond fail_age_hours exit 1 and block. Vendor-feed thresholds (Schwab + Orion) require Andrew ACK before removing [PENDING ANDREW ACK] flag from config. Dispatch integration is .013 scope."
 
+# ============================================================================
+# INF PIPELINE DATA REGISTRY
+# Source-of-truth for all Inflection pipeline artifact paths, producers,
+# consumers, and data_semantic_class. Replaces manual path assumptions.
+# Andrew direct 2026-05-07: "we need master data registry very badly... cannot
+# be having issues of not knowing where buckets are and what is in use vs not."
+# ============================================================================
+
+inf_pipeline:
+  master_data_registry:
+    machine_readable: "docs/architecture/inf_data_graph.yaml"
+    human_readable: "docs/architecture/INFETL_MASTER_DATA_REGISTRY.md"
+    bucket: "opal-data-inf"
+    authored: "2026-05-07 (ADVI_INFETL.MDR)"
+    usage: |
+      Before hardcoding ANY S3 path in an Inflection script:
+        1. Look up the canonical s3_path_pattern in inf_data_graph.yaml
+        2. Verify data_semantic_class before designing backfill logic
+        3. Check status field (LIVE/DEPRECATED/NOT-IN-USE) before adding a dependency
+        4. Update the registry entry when adding a new artifact or changing a path
+    critical_path_corrections:
+      performance_dim: "bronze/performance/{date}.parquet (NOT bronze/orion-api/{date}/performance_dim.csv)"
+      representatives: "bronze/orion-api-v2/{date}/representatives.json (NOT bronze/orion-api/)"
+      billing: "OFF_CHAIN — manual bronze runner; not in CHAIN_FULL"
+      tax_unrealized: "OFF_CHAIN — manual bronze runner; not in CHAIN_FULL"
+    inflection_rep_ids: "{3, 6, 11, 12} — post-INFNNA.001 (rep_id=6 Joe Brandenburg re-included 2026-05-07)"
+    gold_violations: "16 gold-read violations in portal; full list in INFETL_PORTAL_ROUTE_MATRIX.md; TO-8 migration target"
+    guard_b_aua_bounds: "[$150M, $300M] — recalibrated 2026-05-07 (was [$50M, $400M]); baseline $203.2M"
+
+tools_continued:
   comp-iam:
     command: "comp-iam <subcommand>"
     when: |
