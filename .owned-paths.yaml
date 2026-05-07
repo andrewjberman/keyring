@@ -657,6 +657,10 @@ paths:
     lane: POD4
     note: "Inflection partner detail docs (DATA_INVENTORY, PORTAL_FIELD_USAGE, BD_PARITY_MATRIX) — POD4 owned per ADVI_INFPRTY scope (CTO ruling 2026-04-27, response to DE 0c241ee0 sweep WARN). Top-level ADVI_INFLEC.md PRD remains under docs/architecture/** ANY_CTO catch-all."
 
+  "docs/architecture/INFETL_*":
+    lane: CLOUD_OPS_OR_ETL
+    note: "INFETL detail/matrix docs (DAILY_PULLS_MATRIX, etc.) — AE-owned per ADVI_INFETL.DAILY-AUDIT TO (COO 2026-05-07). Top-level ADVI_INFETL.md PRD remains under docs/architecture/** ANY_CTO catch-all. Mirrors INFLEC_* precedent."
+
   "docs/architecture/**":
     lane: ANY_CTO
     note: "Architecture PRDs — either CTO (base or project-scoped)"
