@@ -204,3 +204,90 @@ Silver builds launch per-stream as each completes (billing first). Monitor via `
 2. **INFNNA.GOLD** — INF_C_01 canonical_nna rebuild + INF_D_08 + INF_D_00c. Gate: INFNNA.SILVER complete + DS~D INF_D_00d fix ETag landed.
 3. **ADVI_INFETL.002 RAVC2** — Confirm tonight's natural chain run writes `gold/meta/pipeline-complete.json` sentinel. S3 head-object check post-run.
 4. **Session commit** — Commit this session log under 0.4.0_DS_ClientPlatform~A author.
+
+---
+
+# Session Log — DS~A 2026-05-07 (Session 3 — INFETL.CHAININC Phase 1.2 + ADVI_INFETL.LAMBDA-SYNC)
+
+**Session type:** INFETL.CHAININC Phase 1.2 bronze-producer fixes + urgent ADVI_INFETL.LAMBDA-SYNC
+**Status:** COMPLETE — both commits pushed; AE 0.6.1 GO sent for terraform-apply
+
+---
+
+## Summary
+
+Two workstreams completed post-compaction:
+
+1. **INFETL.CHAININC Phase 1.2** (bronze-producer side): Diagnosed and fixed 4 scoped items per COO TO. `convert_orion_api_to_silver.py` was STALE on EC2 (17:07 UTC) vs canonical (21:07 UTC) — deployed MATCH. `pull_inflection_performance_dim.py` silent-SKIP on 400 now writes observable S3 marker. `pull_unified_account_dim.py` boto3 noise suppressed so exit=3 actual HTTP error is exposed on next run. `geo_verify` confirmed orphaned (1 file 2026-04-28) — recommend retire, accounts_v2 has state/city/zip.
+
+2. **ADVI_INFETL.LAMBDA-SYNC** (urgent, Andrew-direct via COO): AE 0.6.1 detected Lambda-bundled scripts were 7+ days stale vs canonical. Synced 4 files; backported billing fixes.
+
+---
+
+## INFETL.CHAININC Phase 1.2 Work
+
+| Step | Description | Result |
+|------|-------------|--------|
+| convert_orion_api_to_silver.py deploy | S3 ETag stale (05-06 17:07 UTC); uploaded canonical (05-06 21:07 UTC) | MATCH: `a661928bc91a6608731469edac526537` |
+| pull_inflection_performance_dim.py skip-marker | Added `snap_iso`/`upload_s3` params; writes `bronze/orion-api/{date}/performance_dim_SKIP.json` before sys.exit(0) on 400 | Done |
+| pull_unified_account_dim.py boto3 noise | Added `warnings.filterwarnings("ignore", message="datetime.datetime.utcnow")` | Done |
+| geo_verify orphan audit | S3 ls: 1 file only (`2026-04-28.parquet`); state/city/zip available in accounts_v2 new_portfolio_accounts.json | Confirmed orphaned; recommend retire |
+| Pre-commit gate | Both scripts: py_compile + AST + ruff PASS | Clean |
+| Commit | `a84c4ace1` | Pushed to CLOUD |
+
+---
+
+## ADVI_INFETL.LAMBDA-SYNC Work
+
+| Step | Description | Result |
+|------|-------------|--------|
+| Drift detection | AE 0.6.1 diffed Lambda dir vs canonical; found 4 files out of sync | Confirmed via `diff` |
+| canonical -> Lambda (3 files) | `_orion_api_silver_lib.py`: REP_IDS + Guard B; `convert_orion_api_to_silver.py`: INFNNA filter; `build_tax_dim.py`: Guard B docstring | `cp` executed; all MATCH |
+| Backport Lambda -> canonical (1 file) | `build_billing_dim.py`: ClientError on tax_unrealized + $0 AUA guard (AE v1.7.31+v1.7.32) | Backported to canonical; Lambda copy updated |
+| Pre-commit gate | All 5 files: py_compile + AST + ruff PASS | Clean |
+| Final diff check | All 4 Lambda/canonical pairs byte-identical | MATCH x4 |
+| Commit | `e2d958fba` — pushed to CLOUD | Done |
+| RAVC to COO | Full 4-item status + Phase 1.2 items | 20260507T195117Z |
+| GO to AE 0.6.1 | terraform-apply GO (v1.7.33) | 20260507T195121Z |
+
+---
+
+## Root Cause Confirmed: accounts_v2 Lambda Guard B
+
+The Lambda's `_orion_api_silver_lib.py` had stale `INFLECTION_REP_IDS = {3, 11, 12}` (missing rep_id=6) and old bounds `[$50M, $400M]`. Additionally, `convert_orion_api_to_silver.py` lacked the INFNNA.001 post-filter that drops accounts not assigned to any Inflection rep. Combined effect: Lambda included all custodian-scoped accounts → $476.9M → failed [$50M, $400M] bounds. Post-sync: filter will reduce to ~$203M → passes [$150M, $300M] Guard B.
+
+---
+
+## Commits
+
+| Hash | Author | Subject |
+|------|--------|---------|
+| `a84c4ace1` | 0.4.0_DS_ClientPlatform~A | fix(INFETL.CHAININC Phase1.2): perf-dim skip-marker on 400 + boto3 warning suppression for unified_account_dim |
+| `e2d958fba` | 0.4.0_DS_ClientPlatform~A | fix(ADVI_INFETL.LAMBDA-SYNC): sync canonical silver scripts to inf-silver-chain Lambda dir + backport billing fixes |
+
+**Push:** `5be235f67..e2d958fba CLOUD -> CLOUD`
+
+---
+
+## Bronze Backfill Monitor (updated)
+
+| Stream | Progress | ETA | Note |
+|--------|---------|------|------|
+| billing | [970/2241] 2022-11 | ~153 min | Silver gate: `build_billing_dim.py --snapshot-date {date} --upload` |
+| tax_perf | [832/2247] 2022-06 | ~199 min | Silver gate: `build_tax_dim.py` + `convert_performance_to_silver.py` |
+| assets_v2 | ~2183/2247 2020-05 | ETA earlier session | silver backfill parallel |
+| positions | ~2184/2247 2020-05 | ETA earlier session | silver backfill parallel |
+
+---
+
+## Current State
+
+| Item | State |
+|------|-------|
+| ADVI_INFETL.LAMBDA-SYNC | COMPLETE — `e2d958fba` pushed; AE 0.6.1 GO sent |
+| INFETL.CHAININC Phase 1.2 | COMPLETE — `a84c4ace1` pushed |
+| INFNNA.SILVER | Pending bronze completion (~153min billing first) |
+| INFNNA.GOLD | Pending INFNNA.SILVER + DS~D INF_D_00d ETag |
+| geo_verify | Confirmed orphaned; recommendation: retire (accounts_v2 has state/city/zip) |
+| Inbox | Clean |
+| inbox-watch | Running PID 159001, PPID 158909 (tracked) |
