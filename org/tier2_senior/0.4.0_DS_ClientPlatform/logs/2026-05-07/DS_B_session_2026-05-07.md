@@ -248,3 +248,139 @@ IN-FLIGHT (preserved per AE 0.7 Wave C1):
 - Re-create any of the 7 stable {Function} Dim queries (idempotent, but unnecessary)
 - Touch the `_193627Z` tax pair until AE 0.7 confirms Wave C1 done (~2026-05-08T23:00Z)
 - Stop inf-bronze-runner (AE 0.7 owns that after Wave C1)
+
+---
+
+# Session Continuation — DS~B INFETL.003 2026-05-07
+
+**Session window:** ~1825Z context restore → ~1910Z fully closed
+**Session type:** INFETL.003 inf-portal-publisher Lambda full implementation + UAD-CREATOR closure
+
+---
+
+## Continuation Context
+
+Resumed from a compacted session. Prior session had completed:
+- **ADVI_INFNNA.UAD-CREATOR** — `create_unified_account_dim_query.py` clones Billing Dim verbose template, INFLECTION_REP_IDS updated to `[3, 6, 11, 12]`. All 5 ACs satisfied. RAVC ACK'd by COO before this continuation.
+
+Primary work item: **ADVI_INFETL.003** — `inf-portal-publisher` Lambda full implementation.
+
+---
+
+## Phase 6 — ADVI_INFETL.003: inf-portal-publisher Lambda Implementation
+
+**Trigger:** COO TO dispatched to DS~B. Andrew direct override: "barrel through all of this."
+
+**Scope:** Replace 25-line STUB in `infra/aws/lambda/inf-portal-publisher/lambda_function.py` with
+full production implementation mirroring `bd-portal-publisher` with INF-specific data shapes.
+
+### Implementation
+
+Ported logic from 4 INF gold scripts:
+
+| Source Script | Lambda Output |
+|---|---|
+| `INF_D_00b.portal_timeseries.py` | `build_timeseries_chart()` → `platinum/firm/timeseries_chart.json` |
+| `INF_D_00c.portal_leaderboard.py` | `build_leaderboard()` → `platinum/firm/leaderboard.json` |
+| `INF_D_04.client_portal_summary.py` | `build_header_metrics()` → `platinum/firm/header_metrics.json` |
+| `INF_D_00.portal_aggregates.py` | `build_clients_tab()` → `platinum/firm/clients_tab.json` |
+| `INF_D_00.portal_aggregates.py` | `build_filters()` → `platinum/firm/filters/dimensions.json` |
+| BD build_snapshots pattern | `build_snapshots()` → 4 × `platinum/firm/snapshots/*.json` |
+
+Key INF-specific adaptations:
+- `household_id` grain (not BD's `relationship_id`)
+- `advisor_key` dimension (not `architect`)
+- `canonical_nna` date-partitioned — ThreadPoolExecutor concat of all `gold/canonical/canonical_nna_*.parquet`
+- `_INFLECTION_REP_IDS = frozenset({'3', '6', '11', '12'})` for aum_snapshot coverage gate
+- Binary 365-day trailing NMNC/NMEC lifecycle window
+- Fan-out: `InvocationType='Event'` async invoke of `inf-portal-advisor-publisher` at handler START
+- CloudFront invalidation path `/api/scoped/advisor-intelligence/platinum/firm/*`, dist `EVTSA9VEHNZVH`
+
+**Ruff fix required:** `== False` → `~(...isin(...))` on line 811 before gate passed.
+
+**Lane-policy override:** `infra/aws/lambda/` is `CLOUD_OPS_OR_ETL` lane. Used
+`GIT_COMMIT_AUTHOR_OVERRIDE=CLOUD_OPS_OR_ETL` (logged to `org/git-author-override-audit.log`).
+AE 0.7 shipped `79dbf6138` adding `POD4_OR_AE` lane for `infra/aws/lambda/inf-pipeline/**` in same
+session — no override needed for future DS~B commits to this path.
+
+### Commits
+
+| Commit | Description |
+|---|---|
+| `9b66c9c43` | feat(ADVI_INFETL.003): Lambda full implementation (1140 insertions replacing 17-line STUB) |
+| `9ba99cff6` | ci: source-map SHA256 update (ETag 31185ee0) |
+| `940108659` | infra: add CF_DISTRIBUTION_ID="EVTSA9VEHNZVH" env var to inf_portal_publisher Terraform module |
+
+### S3 Artifact
+
+```
+s3://opal-313476888478-lambda-artifacts/inf-pipeline/inf-portal-publisher.zip
+SHA256: TMmtzQ/fGFatTaw/JlH91HrHjbm1uJx7dnVf4l9yjLk=
+ETag:   31185ee0a88004691c96b3762bf791be
+Size:   10.4 KiB
+```
+
+### Terraform Deploy (AE 0.7)
+
+AE 0.7 applied `inf-pipeline-v1.7.35`:
+- Lambda code + CF_DISTRIBUTION_ID env var deployed
+- **IAM fix included:** `aws_iam_role_policy.inf_gold_layer_lambda_cloudfront` —
+  `cloudfront:CreateInvalidation` granted to `inf-gold-layer-lambda-role` for dist `EVTSA9VEHNZVH`
+- `terraform plan` 0-diff confirmed
+
+### Empirical Invoke (AC7)
+
+```
+aws lambda invoke --function-name inf-portal-publisher \
+  --payload '{"Records":[{"s3":{"bucket":{"name":"opal-data-inf"},"object":{"key":"gold/meta/pipeline-complete.json"}}}]}' ...
+```
+
+Result: `StatusCode: 200`
+```json
+{"status": "success", "generated_at": "2026-05-07T19:08:41.680262Z",
+ "data_as_of": "2026-04-28", "total_aua": 199649186.31,
+ "outputs": {"timeseries_chart": "ok", "leaderboard": "ok", "header_metrics": "ok",
+             "clients_tab": "ok", "filters": "ok", "snapshots": "4 files"}}
+```
+
+**9 outputs verified written (15:08:41-42Z):**
+
+| Output | Bytes |
+|---|---|
+| `platinum/firm/timeseries_chart.json` | 433,119 |
+| `platinum/firm/clients_tab.json` | 55,599 |
+| `platinum/firm/snapshots/aua_by_state.json` | 1,514 |
+| `platinum/firm/leaderboard.json` | 3,095 |
+| `platinum/firm/filters/dimensions.json` | 848 |
+| `platinum/firm/snapshots/aua_by_architect.json` | 525 |
+| `platinum/firm/snapshots/aua_by_tax_status.json` | 155 |
+| `platinum/firm/snapshots/aua_by_region.json` | 142 |
+| `platinum/firm/header_metrics.json` | 731 |
+
+**CF invalidation:** `CF invalidation issued: dist=EVTSA9VEHNZVH ref=publisher-2026-05-07-1778180921`
+(confirmed live in CW logs — IAM fix landed, no longer catch-wrapped)
+
+### Acceptance Criteria
+
+| AC | Status |
+|---|---|
+| AC1: Lambda replaces STUB | PASS — 1140 insertions |
+| AC2: fan-out advisor-publisher at START | PASS — Event-mode async invoke |
+| AC3: 9 platinum/firm/ outputs | PASS — all 9 verified |
+| AC4: memory 4096 / timeout 900 | PASS — already in TF |
+| AC5: S3 artifact uploaded | PASS — ETag 31185ee0 |
+| AC6: CF invalidation wired | PASS — confirmed live |
+| AC7: empirical invoke 200 | PASS — 19:08:41Z |
+
+**RAVC sent to COO:** 20260507T191011Z. All 7 ACs confirmed.
+
+---
+
+## Updated Current State (end of continuation)
+
+| Item | Status |
+|---|---|
+| ADVI_INFNNA.UAD-CREATOR | COMPLETE — pre-session, RAVC ACK'd |
+| ADVI_INFETL.003 inf-portal-publisher | COMPLETE — all 7 ACs, empirical verified |
+| IAM cloudfront:CreateInvalidation | LIVE — inf-pipeline-v1.7.35 |
+| DS~B | IDLE — no open items, awaiting next COO dispatch |
