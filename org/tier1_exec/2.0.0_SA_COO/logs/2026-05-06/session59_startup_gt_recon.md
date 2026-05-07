@@ -234,7 +234,7 @@ Bug C2 fix in progress (DS~D RAVC4b 20260506T133107Z). AC2 (lifecycle_aua non-ze
 
 ### LDRBRD.001 Close Summary
 - **D5 artifact** generated_at 2026-05-06T13:37:08Z (SSM f9dacdd0); commits 0755a2330 + 46d55bc51 + 6e49f2694 (Bug A2 + Bug C2b, both in D5)
-- **AC1**: PASS — individual advisors peter_lee/patrick_scanlan/joe_brandenbrug all 0.0 in YTD+MAX; firm aggregate None is separate code path (out of AC1 scope; COO confirmed)
+- **AC1**: PASS — individual advisors peter_lee/patrick_scanlan/joe_brandenburg all 0.0 in YTD+MAX; firm aggregate None is separate code path (out of AC1 scope; COO confirmed)
 - **AC2**: PASS — lifecycle_aua non-zero for all 4 entries across QTD/YTD/MAX
 - **Closed** `f1f9ec8b5` 20260506T~1340Z
 - **Bug A2 follow-on** (firm aggregate psa 0.0): low-priority future scope; NOT authored yet

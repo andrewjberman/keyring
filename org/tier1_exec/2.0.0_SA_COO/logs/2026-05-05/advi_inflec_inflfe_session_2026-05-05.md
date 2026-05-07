@@ -127,7 +127,7 @@ cloudwatch IAM RAVC3-final pending after Andrew's issue resolved.
 
 ---
 
-## AUDIT-003 — joe_brandenbrug rep_id=6 (Active)
+## AUDIT-003 — joe_brandenburg rep_id=6 (Active)
 
 DS~B work done: `caffc361e` (INF_I_D02b fix + S3 upload). Silver assets snapshot gap for rep_id=6 outstanding — needs fresh bronze→silver conversion. RAVC3 pending from DS~B.
 

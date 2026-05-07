@@ -23,7 +23,7 @@
 ### 1. AE 0.6.1 — ACK: INFINGE.005b CTO rulings + AUDIT-003 close
 
 **Evidence:**
-- AUDIT-003 silver-fresh CLOSED: commit `28dcb8b56` (INF_D_04 aum_snapshot override removed), dashboard.headline.total_aua = $199,649,186.31 (delta=0.0 PASS), platinum/firm/dashboard.json + platinum/advisors/joe_brandenbrug/top_holdings.json (INF_I_D02b, 744 rows, $16.2M) written. RAVC5 CLOSE to CTO 20260506T144354Z.
+- AUDIT-003 silver-fresh CLOSED: commit `28dcb8b56` (INF_D_04 aum_snapshot override removed), dashboard.headline.total_aua = $199,649,186.31 (delta=0.0 PASS), platinum/firm/dashboard.json + platinum/advisors/joe_brandenburg/top_holdings.json (INF_I_D02b, 744 rows, $16.2M) written. RAVC5 CLOSE to CTO 20260506T144354Z.
 - INFINGE.005b CTO rulings Q-A/Q-B/Q-C absorbed.
 - INFREL.001 Fix A+C: 24-48h empirical window running.
 - INFREL.002 AC4: N/A (gap permanent).
@@ -329,5 +329,64 @@ DS~A RAVC5 confirmed DG-1/DG-2/DG-3 were completed in commit 9de58963d (prior se
 
 **YELLOW items remaining in ADVI_INFLEC_AUDIT.md (3 → target 0):**
 - composition.json ADV asset mix not at L3 → addressed by B2a + B2d
-- top_holdings ADV not at L3 + joe_brandenbrug stale → addressed by B2b + INF_I_D02b
+- top_holdings ADV not at L3 + joe_brandenburg stale → addressed by B2b + INF_I_D02b
 - L3 client detail mix/timemachine/topholdings missing → addressed by B3 (FE probe) + B2a-c (publishers)
+
+---
+
+## Loop Tick ~19:31Z — Post-Compaction Continuation
+
+### Inbox Processed (~19:30Z)
+
+| From | Subject | Action |
+|---|---|---|
+| DE | RAVC1 — B2d + DT stopgap executing | ACK'd; Phase 0 underway |
+| RD | RAVC2 — regression sweep executing | ACK'd |
+| CTO | ACK gates + FE dispatch confirmed | ACK'd |
+
+### GO Signals Dispatched
+
+| To | Signal | Details |
+|---|---|---|
+| AE 0.6.1 | GO x3 | INFINGE.005b Phase 1 cron arm + RPBKTPI TO-2 SSM + billing+accounts_v2 backfill |
+| AE 0.7 | ACK Wave C1 | tax+performance backfill 2020–2026-05-05 confirmed |
+| DS~C | GO B2b+B2c | per-client top_holdings (INF_D_05) + timeseries (INF_D_06) publishers; BDPLNNASCHEMA Phase 1 PARKED |
+| DS~B | ACK RAVC1 | GO dispatched to AE 0.6.1 for RPBKTPI TO-2 |
+
+### Second Inbox Batch (~19:32Z)
+
+| From | Subject | Key Result |
+|---|---|---|
+| AE 0.6.1 | RAVC3 INFINGE.005b Phase 1 COMPLETE | inf-api-txn armed 13:00 UTC; inf-pipeline-v1.7.24; Gate 2 CLEARED |
+| AE 0.7 | RAVC Wave C1 + D7 chain results | D7 YTD peter_lee $1.2M PASS; Wave C1 SSM 461caa3a running; INF_I_D03 IAM gap flagged to DS~D |
+| RD | RAVC3 regression sweep complete | CHECK-1 PASS (donut $199M, DG-dist-1 resolved), CHECK-2 PASS ($200M, DG-1 resolved), REG-4 PASS; CHECK-3 (tax) INCONCLUSIVE |
+
+### ACKs / Follow-up Dispatched (~19:32Z)
+
+| To | Subject |
+|---|---|
+| AE 0.6.1 | ACK Phase 1 closure + Gate 2 CLEARED + INFREL.001b A2 GO |
+| AE 0.7 | ACK D7 PASS + Wave C1 GO + INF_I_D03 rename note |
+| CTO | D7 chain PASS + Gate 2 CLEARED → AUDIT v14 flip ready; CHECK-3 deferred |
+| RD | ACK RAVC3 + stand by for B2d L3 smoke test gate; INF_I_D03 naming check |
+
+### Gates Status (as of ~19:32Z)
+
+| Gate | Status | Notes |
+|---|---|---|
+| Gate 1: TO-1 RAVC6 | PENDING | ~May 7 12:43 UTC |
+| Gate 2: AE 0.6.1 cron arm ACK | CLEARED | inf-api-txn armed 13:00 UTC |
+| D7 YTD non-zero (AUDIT v14) | CLEARED | peter_lee $1.2M confirmed |
+| RPBKTPI TO-2 SSM | DISPATCHED (pending) | AE 0.6.1 executing |
+| billing+accounts_v2 backfill | DISPATCHED (pending) | AE 0.6.1 executing |
+| Wave C1 tax+performance | RUNNING | AE 0.7 SSM 461caa3a, 48h wall |
+| B2b+B2c publishers | IN FLIGHT | DS~C executing |
+| B2d FE wiring | IN FLIGHT | DE Phase 0 executing |
+| INF_I_D03 IAM gap | IN FLIGHT | DS~D actioning via AE 0.7 RAVC4 |
+
+### Open / Monitoring
+
+- DS~D: awaiting RAVC3 to COO on D7 results (should land after receiving AE 0.7 RAVC4)
+- DS~A: _build_aua_view rep-coverage fix in progress (HIGH PRIORITY) + B2a composition publisher
+- CHECK-3 (tax section): deferred — DS~A DG-2 pub status unclear; no error boundary observed
+- INFREL TO-4..7: hold until Gate 1 (TO-1 RAVC6 ~May 7 12:43 UTC)
