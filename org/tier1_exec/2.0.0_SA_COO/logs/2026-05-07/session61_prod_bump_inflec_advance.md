@@ -88,6 +88,49 @@ Portal PROD is LIVE at f2458e0e as of ~13:38Z 2026-05-07.
 
 ---
 
+## Second PROD Bump + PROD Verify Results (~13:43Z)
+
+### Fix A (39cbbd29)
+- DE committed Fix A: AUA bar/tooltip Q2 '26 patched with donut canonical total ($199.6M, was stale $189M)
+- Second PROD bump: f2458e0e → 39cbbd29 (TypeCheck PASS, ff-only)
+- CLOUD submodule: f2458e0e → 39cbbd29 (commit 04ee02aa0)
+- Portal PROD LIVE at 39cbbd29
+
+### INFLFE.006 PROD Verify (RD RAVC)
+| Check | Result | Notes |
+|-------|--------|-------|
+| CHECK1 | PASS | Existing Clients = $179M (nmec+existing). New Clients $19.7M. Total AUA $199M. |
+| CHECK4 | PASS | hh226 CDN fresh, has_mv=True, 12 periods visible. AE 0.6.1 CF invalidation effective. Script regex false-negative noted (not actionable). |
+| No regressions | PASS | Asset Mix, Top Holdings, Advisors all rendering normally. |
+
+### LDRBRD.002 CLOSED
+- D9 chain final: SSM 287c996a, SUCCESS, 2026-05-06T21:28-21:30Z
+- Full chain PASS (INF_D_00 through INF_D_08)
+- INF_D_04b: 295/308 households (13 data-bounded), household_id KeyError FIXED
+- INF_D_00c leaderboard: QTD/YTD/MAX all 4 advisors, peter_lee YTD $1.2M CONFIRMED
+- AC1 PASS, AC2 PASS (data-bounded), AC3 PASS
+- Task order ADVI_LDRBRD.002 status → CLOSED (commit 217b45314)
+- Bug B (patrick_scanlan YTD 0.0) → data-bounded, no follow-on TO
+
+### Wave C1 Re-Dispatch
+- First attempt (7fd3e56b) failed immediately — wrong arg names (--start-date/--end-date)
+- Corrected dispatch: SSM 9dd42165, InProgress, --from 2020-03-11 --to 2026-05-05 --dims tax,performance
+- executionTimeout=172800s (48h explicit), dispatched 2026-05-07T13:44Z
+- Estimated completion: ~2026-05-08T23:00Z
+
+### Assets Overview Stacked Bars (Issues B + C)
+- Root cause: timeseries_chart.json has categories=['total_aua'] only — no per-quarter nmnc/nmec
+- DS~A dispatched for timeseries rebuild with nmnc/nmec per quarter data
+- FE code: zero additional changes needed (49F stacked bar code activates automatically)
+- RD: standby for timeseries confirm sweep + bundled constitution doc TO
+
+### AE 0.6.1 Dispatch Wiring
+- orion-gold-dispatch.sh lines 102-103 still map to old placeholder scripts
+- AE 0.6.1 dispatched to update: INF_D_05→client_top_holdings, INF_D_06→client_timeseries
+- Awaiting AE 0.6.1 RAVC
+
+---
+
 ## Decisions / Rulings
 
 - **LDRBRD.002 waiver**: patrick_scanlan YTD 0.0 = data-bounded, accepted (same class as MAX waiver from LDRBRD.001). CLOSE-ELIGIBLE pending D9 chain pass.
