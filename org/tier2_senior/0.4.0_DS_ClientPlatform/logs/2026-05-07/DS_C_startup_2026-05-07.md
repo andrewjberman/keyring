@@ -2,7 +2,7 @@
 
 **Agent:** 0.4.0_DS_ClientPlatform~C
 **Date:** 2026-05-07
-**Session type:** Startup + B2b/B2c RAVC3 delivery
+**Session type:** Startup + B2b/B2c RAVC3 delivery + timeseries_chart.json nmnc/nmec quarters rebuild
 
 ---
 
@@ -79,20 +79,61 @@ Sent to COO at 20260507T133158Z. Evidence: both commits, ETags, output key shape
 
 ---
 
+## timeseries_chart.json nmnc/nmec Quarters Rebuild (Session 2)
+
+**TO source:** COO session61 (~13:45Z) — Assets Overview stacked bar fix (Issue B+C)
+
+### Root Cause
+`timeseries_chart.json` had only `windows` (daily series) — no per-quarter nmnc/nmec data. 49F stacked bar code requires `quarters[]` + `categories=['nmnc','nmec']` to render.
+
+### Work Done
+
+1. Investigated data sources: `client_performance.parquet`, `accounts_dimension_latest.parquet`, `nmec_nmnc_nna.json`, D_04 `_compute_hh_lifecycle` logic
+2. Confirmed D_04 binary lifecycle (Andrew 2026-05-06): nmnc = inception within 365 days; nmec = pre-existing. No "existing" residual.
+3. Modified `INF_D_00b.portal_timeseries.py`:
+   - Added `load_accounts_dim()` — loads per-HH min(first_trade_date) from accounts_dimension_latest.parquet
+   - Added `_quarter_label()` + `_standard_quarter_ends()` helpers
+   - Added `build_quarterly_lifecycle()` — per-quarter nmnc/nmec split with fallback to cp first-appearance
+   - Updated `main()` to include quarters/categories in output
+4. Pre-commit gate: PASS
+5. Committed `01c52fef2` (155 insertions)
+6. S3 code upload: `s3://opal-data-inf/code/gold/INF_D_00b.portal_timeseries.py` (ETag: e8f0015e...)
+7. Ran `--upload` → wrote `gold/artifacts/timeseries_chart.json` (433,208 bytes)
+8. S3 copy → `platinum/firm/timeseries_chart.json` (ETag: c2d10fb6...)
+
+### Verification
+
+| Check | Result |
+|-------|--------|
+| quarters count | 25 (Q2 2020 through Q2 2026) |
+| categories | ["nmnc", "nmec"] |
+| Q2 '26 latest | total_aua=$189.2M, nmnc=$18.7M (9.9%), nmec=$170.6M |
+| Q2 '20 first | total_aua=$39.7M, nmnc=$39.7M (100%), nmec=$0 (correct — firm launched 2020) |
+| nmnc pct Q2 '26 | 9.9% vs radial_12m 9.86% — consistent |
+
+Note: total_aua=$189.2M (timeseries, data_as_of=2026-04-28) vs $199.6M (portal header, more recent chain run). Expected difference — both are data-correct for their respective snapshots.
+
+### RAVC4
+
+Sent to COO at 20260507T140843Z.
+
+---
+
 ## Current State
 
 | Item | State |
 |------|-------|
 | B2b INF_D_05 | COMPLETE — RAVC3 delivered; AE dispatch wiring pending |
 | B2c INF_D_06 | COMPLETE — RAVC3 delivered; AE dispatch wiring pending |
+| timeseries_chart.json nmnc/nmec | COMPLETE — commit 01c52fef2; platinum live (ETag c2d10fb6...); RAVC4 sent |
 | ADVI_ROLLUP.SL-P1c | Monitoring — 1/3 clean nights; Night 2/3 partition not yet in S3 |
-| Inbox watcher | LIVE (b6pmu4qnq) |
+| Inbox watcher | LIVE |
 
 ---
 
 ## Next Steps
 
-1. [COO] ACK RAVC3 + route dispatch wiring to AE 0.6.1 or 0.7.
-2. [AE] Update orion-gold-dispatch.sh catalog entries INF_D_05/06 + S3 upload dispatch.
+1. [COO] ACK RAVC4 + route RD verify sweep for stacked bar chart.
+2. [AE] Update orion-gold-dispatch.sh catalog entries INF_D_05/06 (pending from RAVC3).
 3. [Self] Monitor SL-P1c — check S3 whenever inbox fires; report to COO when Night 2/3 partition appears.
 4. [COO] Await next assignment.
