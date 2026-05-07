@@ -1,0 +1,20 @@
+{
+  "project_code": "ADVI_INFNNA",
+  "macro_code": "ADVI",
+  "name": "Inflection NMNC/NNA Reconciliation — Joe Brandenburg Attribution Fix + Historical Backfill",
+  "description": "Series 1 RECTIFY companion to ADVI_INFETL Series 2 SOLIDIFY. Joe Brandenburg accounts retroactively re-attributed in Orion rep_id=3 (IWM) -> rep_id=6 within last few days; bronze pull script `pull_inflection_transactions_v2.py` line 71 hardcoded @RepIDs='3,11,12' (excludes 6); silver/transactions + canonical_nna carried stale IWM-aggregated data. Portal NMNC/NNA inconsistency ($19.7M NMNC vs -$1.36M NNA; flow direction sign mismatch) was the surface symptom — root cause was bronze-attribution-stale + daily-cycle-not-fully-running together. INFNNA RECTIFY scope: re-pull bronze transactions + accounts_v2 with INFLECTION_REP_IDS={3,6,11,12}; rebuild silver historical (tax/perf/billing/assets/positions); rebuild canonical_nna + INF_D_08 + INF_D_00c; recalibrate INFGRD Guard B threshold to $203M canonical; visual confirmation post-rebuild.",
+  "prds": [],
+  "source_brief": "DS~A NMNC/NNA discovery 2026-05-07 + Andrew direct 2026-05-07 'barrel through all of this' + COO Series 1 RECTIFY 5-TO dispatch 2026-05-07T~17:30Z",
+  "status": "active",
+  "phase": "Phase 1 — RECTIFY 5-TO dispatched 2026-05-07T~17:30Z by COO. **UAD-CREATOR COMPLETE 2026-05-07** (DS~B `ec6f19c00` — create_unified_account_dim_query clones Billing Dim verbose template mirroring 4d99a1fb2 tax fix; adds rep_id=6 to INFLECTION_REP_IDS). **GUARDS-AUDIT COMPLETE 2026-05-07** (DS~A `7782c716f` — INFGRD Guard B thresholds recalibrated to $203M canonical post-Joe-attribution-fix [150M, 300M]). **SILVER + GOLD in flight DS~A** — billing 590/2241 ETA ~142min, tax 499/2247 ETA ~177min; SILVER fires on bronze completion, GOLD fires on SILVER completion. **PORTAL-VERIFY (RD)** GATED — visual confirm post INFNNA.GOLD ship. **DS~A INFNNA.001 hold status** per c4a060c91 log — investigating SL-P1c HLOT2 pd.concat attrs-wipe + INFNNA.001 hold (DS~A balancing across SL-P1c and INFNNA.001 work). Critical bronze done before TO dispatch: txn full-history 1.15M rows incl Joe Brandenburg rep_id=6 -> silver done; accounts_v2 silver done with INFLECTION_REP_IDS={3,6,11,12} filter (848 rows / $203.2M canonical). Tonight cascade ETA ~21:00-22:00Z. Once INFNNA.GOLD RAVC ACK lands -> CTO authors ADVI_INFETL.011 cron-flip-ack TO -> COO dispatches to AE 0.7 to flip INFETL fallback cron DISABLED -> ENABLED.",
+  "blocking": "(1) DS~A bandwidth split between SL-P1c HLOT2 fix + INFNNA.001 hold + SILVER/GOLD in flight. (2) tax + perf bronze ETA ~3h, billing bronze ETA ~2.4h. (3) PORTAL-VERIFY (RD) gates on INFNNA.GOLD ship. (4) ADVI_INFETL.011 cron-flip-ack TO authoring (CTO) gates on INFNNA.GOLD RAVC ACK.",
+  "depends_on": [],
+  "depends_on_note": "Sibling project to ADVI_INFETL — INFETL.011 cron-flip-ack gates on INFNNA.GOLD RAVC ACK + 3 other empirical gates.",
+  "absorbs": [],
+  "created": "2026-05-07",
+  "pods": ["0.4", "0.4.2"],
+  "pipeline": "inf-pipeline + portal",
+  "coo_lane": "2.0.0_SA_COO",
+  "thread_counter": 0,
+  "threads": []
+}
