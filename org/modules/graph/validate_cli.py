@@ -14,7 +14,9 @@ Exits 0 if all ERROR-severity checks PASS.
 Exits 1 if any ERROR-severity check FAILS.
 Exits 0 if only WARN checks fail (prints warnings but does not block).
 
-Config: data/black_diamond/scripts/gold/gold_validate_config.yaml
+Config (BD):  data/black_diamond/scripts/gold/gold_validate_config.yaml
+Config (INF): data/orion/scripts/gold/gold_validate_config.yaml
+Pipeline is auto-detected from script_id prefix: INF_* -> INF config; others -> BD config.
 
 Standalone validators: data/black_diamond/scripts/validators/validate_{script_id}.py
 When extra flags (e.g. --schema, --certified, --cross-check) are present OR the
@@ -215,16 +217,20 @@ def _dispatch_standalone(validator_path: Path, passthrough_args: list[str]) -> i
 
 
 def cmd_list(args):
-    configs = load_validate_config(_WORKSPACE)
+    bd_configs = load_validate_config(_WORKSPACE)
+    inf_configs = load_validate_config(_WORKSPACE, _INF_VALIDATE_CONFIG)
+    configs = {**bd_configs, **inf_configs}
     if not configs:
         print("No validate config found.")
         print("  Expected: data/black_diamond/scripts/gold/gold_validate_config.yaml")
+        print("         or data/orion/scripts/gold/gold_validate_config.yaml")
         return
 
     script_filter = args.script_id or ""
 
     print(f"VALIDATE CONFIG ({len(configs)} scripts)")
-    print("  Config: data/black_diamond/scripts/gold/gold_validate_config.yaml")
+    print("  Config (BD):  data/black_diamond/scripts/gold/gold_validate_config.yaml")
+    print("  Config (INF): data/orion/scripts/gold/gold_validate_config.yaml")
     print()
 
     for sid, config in sorted(configs.items()):
@@ -248,7 +254,10 @@ def cmd_list(args):
 
 
 def cmd_validate(args):
-    configs = load_validate_config(_WORKSPACE)
+    # Auto-detect pipeline from script_id prefix: INF_* -> INF config; others -> BD.
+    _sid_upper = (args.script_id or "").upper()
+    _config_file = _INF_VALIDATE_CONFIG if _sid_upper.startswith("INF_") else None
+    configs = load_validate_config(_WORKSPACE, _config_file)
     strict = getattr(args, 'strict', False)
 
     # Build alias map for script-id -> artifact-id resolution (ADHC_COMPIL.015)

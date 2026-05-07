@@ -110,7 +110,7 @@ tools:
       overlap: "comp-pipescript overlap D_00 D_03 -- shared S3 artifacts between two scripts. COO MANDATE: run this on every pair of scripts before authoring cross-domain coordination blocks."
       inject: "Inject pipeline edges into comp-trace graph cache (run after comp-build)"
       stats: "Graph stats + warnings for scripts with missing reads/writes"
-      deployed: "comp-pipescript deployed [filter] -- compare local gold + silver scripts against s3://opal-data-bd/code/{gold,silver}/ ETags. Output prefixed [GOLD] / [SILVER]. MATCH/STALE/MISSING_ON_S3/LOCAL_MISSING/TIMEOUT per script. Filter is substring/filename: gold IDs (D_04, C_08) match gold only; silver filenames (bd_price_update.py, inject_scoped_overrides) match silver only; omit filter for full sweep. Gold scripts come from the DAG; silver scripts are discovered by walking data/black_diamond/scripts/silver/*.py. Resolves aws via shutil.which, forwards environment into the subprocess, defaults AWS_EC2_METADATA_DISABLED=true, and emits explicit AWS guidance on TIMEOUT. Run before any gold or silver run to confirm runner has latest code."
+      deployed: "comp-pipescript deployed [filter] -- compare local gold + silver scripts against s3://opal-data-bd/code/{gold,silver}/ ETags (BD default). For INF scripts: comp-pipescript deployed --pipeline inf-gold [filter] checks INF gold vs s3://opal-data-inf/code/gold/; --pipeline inf-silver checks INF silver vs s3://opal-data-inf/code/silver/. Output prefixed [GOLD] / [SILVER]. MATCH/STALE/MISSING_ON_S3/LOCAL_MISSING/TIMEOUT per script. Filter is substring/filename: gold IDs (D_04, C_08 for BD; INF_D_08, INF_C_01 for INF) match gold only; silver filenames match silver only; omit for full sweep. Run before any gold or silver run to confirm runner has latest code."
     cost: "<1s (io/feeds/consumers/overlap); ~2-5s (deployed, makes AWS API calls)"
     data_sources: "lib/s3_layout.py (AST-parsed), gold_dispatch.sh (chain/catalog), each script's imports"
     replaces: "Manual import tracing, grepping s3_layout constants, reading gold_pipeline_script_file_flow.md; manual aws s3 ls + sha256sum for deployment verification"
@@ -239,10 +239,10 @@ tools:
       threshold_pct  -- >= min_pct% of entries satisfy a condition
     exit_codes: "0 = all ERROR checks pass; 1 = any ERROR check fails (WARN does not block)"
     cost: "<1s (JSON); ~2s (parquet, uses pyarrow)"
-    config: "data/black_diamond/scripts/gold/gold_validate_config.yaml"
+    config: "BD: data/black_diamond/scripts/gold/gold_validate_config.yaml | INF: data/orion/scripts/gold/gold_validate_config.yaml. Pipeline auto-detected from script_id prefix (INF_* -> INF; others -> BD)."
     data_sources: "gold artifact JSON/parquet (local file, use aws s3 cp first)"
     replaces: "Manual spot-checks (Travis Penfield fee_earning_aua sanity check), S3 key presence inspection"
-    note: "MANDATORY gate: run before any S3 upload of a gold artifact that has a validate config. Catches 'no crash but wrong output' class of bugs. DS writes invariants once; tool enforces them forever."
+    note: "MANDATORY gate: run before any S3 upload of a gold artifact that has a validate config. Catches 'no crash but wrong output' class of bugs. DS writes invariants once; tool enforces them forever. INF example: comp-validate INF_D_08 --artifact /tmp/nmec_nmnc_nna.json"
 
   comp-shell:
     command: "comp-shell scan [path ...] [--all] [--guard-lookback N]"

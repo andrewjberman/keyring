@@ -22,7 +22,6 @@ from __future__ import annotations
 
 import json
 import re
-import sys
 from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Any
@@ -53,9 +52,18 @@ class ValidateConfig:
 # Config loader
 # ---------------------------------------------------------------------------
 
-def load_validate_config(workspace_root: Path) -> dict[str, ValidateConfig]:
-    """Load gold_validate_config.yaml from the gold scripts directory."""
-    config_file = workspace_root / "data" / "black_diamond" / "scripts" / "gold" / "gold_validate_config.yaml"
+def load_validate_config(
+    workspace_root: Path,
+    config_file: Path | None = None,
+) -> dict[str, ValidateConfig]:
+    """Load gold_validate_config.yaml for BD (default) or INF pipeline.
+
+    Pass config_file explicitly to load the INF config:
+        load_validate_config(ws, ws / "data/orion/scripts/gold/gold_validate_config.yaml")
+    Omit or pass None to load the BD config (backward-compatible default).
+    """
+    if config_file is None:
+        config_file = workspace_root / "data" / "black_diamond" / "scripts" / "gold" / "gold_validate_config.yaml"
     if not config_file.exists():
         return {}
 
@@ -165,7 +173,6 @@ def _run_check(check: dict, artifact: Any, artifact_path: str) -> CheckResult:
     name = check.get("name", "unnamed")
     severity = check.get("severity", "WARN").upper()
     check_type = check.get("type", "")
-    why = check.get("why", "")
 
     try:
         if check_type == "key_present":
