@@ -124,8 +124,83 @@ Root cause (from prior session, RAVC1+RAVC2 accepted by COO):
 | inbox-watch | Running pid 81259 |
 | CronCreate loop | Job `a6cc7319`, `*/5 * * * *` |
 
-## Next Steps
+## Next Steps (Session 1 — SL-P1c / INFNNA.001)
 
 1. **SL-P1c Night 1/3**: Check S3 ~06:00 UTC 2026-05-08. Confirm `2026-05-07.parquet` present, size > 50KB. Send RAVC4.
 2. **INFNNA.001**: Await Andrew GO via COO. On GO: Phase 1 edit + commit + S3 upload immediately.
 3. **INFETL TO-2**: COO may route sentinel-write TO for `orion-gold-dispatch.sh` EventBridge gap — hold until issued.
+
+---
+
+# Session Log — DS~A 2026-05-07 (Session 2 — ADVI_INFETL.MDR)
+
+**Session type:** Single TO — ADVI_INFETL.MDR (Andrew-direct HIGH priority, master data registry)
+**Status:** COMPLETE — all 6 ACs green; COO RAVC1 ACK received
+
+---
+
+## Summary
+
+Post-compaction session continuation. COO had dispatched ADVI_INFETL.MDR with Andrew-direct priority ("we need master data registry very badly"). Completed in ~30 min per COO RAVC1 ACK. Two canonical output files landed plus comp-tools.yaml update.
+
+Bronze historical backfill streams remain in progress (monitoring). INFNNA.SILVER and INFNNA.GOLD remain queued pending stream completion.
+
+---
+
+## ADVI_INFETL.MDR Work
+
+| Step | Description | Result |
+|------|-------------|--------|
+| Compiler enumeration | `comp-pipescript io INF_*` + grep-based I/O harvest for inline S3 constants | INF gold scripts use inline constants (no shared layout module); compiler returned "no S3 paths"; switched to `grep -h "PREFIX\|KEY = '"` for bronze/silver scripts |
+| Bronze tier | Enumerated all bronze prefixes: `orion-api/`, `orion-api-v2/`, `performance/`, `assets/`, `positions/`, `billing/`, `tax/` | 13 bronze artifacts documented |
+| Silver tier | Enumerated `silver/api_dims/`, `silver/transactions/`, `silver/accounts_dim/`, `silver/aum_snapshot/`, `silver/performance/`, `silver/prices/` | 17 silver artifacts documented |
+| Gold tier | Enumerated all 40 CHAIN_FULL steps (INF_A/B/C/D series) + off-chain scripts | ~20 gold artifact entries |
+| Platinum tier | Enumerated `platinum/firm/`, `platinum/advisors/`, `platinum/clients/` + 7 STUBs identified | ~25 platinum entries |
+| data_semantic_class | Applied taxonomy to every artifact: SINGLE_SHOT (25) / SNAPSHOT_PER_DATE (20) / LOOKBACK_WINDOW (3) / EVENT_LOG (2) | First-class field on all 75 entries |
+| Gold violation cross-ref | Cross-referenced INFETL.007 portal-route audit (16 gold reads); G1-G16 all mapped to platinum targets or STUBs | Section 7 in MDR |
+| 7 gaps surfaced | GAP-1 (activity_silver unpopulated), GAP-2 (entities/ BD-era remnants), GAP-3 (7 platinum STUBs), GAP-4 (INF_D_00d state bug → DS~D), GAP-5 (bronze/performance 1 file only), GAP-6 (sentinel write → AE 0.7), GAP-7 (billing/tax OFF_CHAIN) | 5 new findings surfaced to COO for Andrew prioritization |
+| RAVC1 to COO | Report: 75 artifacts, all ACs green, 7 gaps, performance path correction canonical | 20260507T~19:00Z |
+| COO RAVC1 ACK | All 6 ACs confirmed green. GAP-4 routed DS~D (confirmed). GAP-6 routed AE 0.7. 5 new gaps escalating to Andrew. "Excellent pace." | Received + marked read |
+
+---
+
+## Outputs
+
+| File | Description | Commits |
+|------|-------------|---------|
+| `docs/architecture/INFETL_MASTER_DATA_REGISTRY.md` | Human-readable MDR: 10 sections, per-tier inventory tables, narrative, portal violation cross-ref | `85977d68a` (GIT_COMMIT_AUTHOR_OVERRIDE=ANY_CTO) |
+| `docs/architecture/inf_data_graph.yaml` | Machine-readable canonical graph: 75 artifact entries, all fields | `85977d68a` |
+| `org/modules/graph/comp-tools.yaml` | Added `inf_pipeline:` block: registry pointers, path corrections, violation counts, guard_b bounds | `31bf7e99a` (GIT_COMMIT_AUTHOR_OVERRIDE=ANY_EXEC) |
+
+---
+
+## Critical Path Corrections (canonical in registry)
+
+| Artifact | Incorrect Assumption | Canonical Path |
+|----------|---------------------|----------------|
+| performance_dim | `bronze/orion-api/{date}/performance_dim.csv` | `bronze/performance/{date}.parquet` |
+| representatives | `bronze/orion-api/{date}/representatives.json` | `bronze/orion-api-v2/{date}/representatives.json` |
+| billing | In CHAIN_FULL | OFF_CHAIN — manual EC2 bronze runner |
+| tax_unrealized / tax_realized | In CHAIN_FULL | OFF_CHAIN — manual EC2 bronze runner |
+
+---
+
+## Bronze Backfill Monitor (INFNNA.SILVER prerequisite)
+
+| Stream | Progress | ETA | Silver gate |
+|--------|---------|------|-------------|
+| billing | [800/2241] at 2022-05 | ~2.5h | `build_billing_dim.py --all-dates` |
+| tax_perf | [672/2247] at 2022-01 | ~3.3h | `build_tax_dim.py` + `convert_performance_to_silver.py` |
+| assets_v2 | date 2178/2247, iso=2020-05-20 | ~8.6h | `run_silver_backfill_parallel.py --dims assets_v2` |
+| positions | date 2182/2247, iso=2020-05-15 | ~8.1h | silver positions builder |
+
+Silver builds launch per-stream as each completes (billing first). Monitor via `/loop` at 270s cadence.
+
+---
+
+## Pending (Gated on Bronze)
+
+1. **INFNNA.SILVER** — Historical silver builds across billing, tax/perf, assets_v2, positions_daily (2020-03-11 → 2026-05-05). Launch per-stream on completion.
+2. **INFNNA.GOLD** — INF_C_01 canonical_nna rebuild + INF_D_08 + INF_D_00c. Gate: INFNNA.SILVER complete + DS~D INF_D_00d fix ETag landed.
+3. **ADVI_INFETL.002 RAVC2** — Confirm tonight's natural chain run writes `gold/meta/pipeline-complete.json` sentinel. S3 head-object check post-run.
+4. **Session commit** — Commit this session log under 0.4.0_DS_ClientPlatform~A author.
