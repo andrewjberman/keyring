@@ -161,7 +161,8 @@ lanes:
   SHARED_CLOUD_OPS:
     permitted_agents:
       - 0.7.0_AE_CloudOps
-    description: "CloudOps shared service (AE 0.7.0) — infra, EC2_MANIFEST, Terraform"
+      - 0.7.0_AE_CloudOps~B
+    description: "CloudOps shared service (AE 0.7.0 + ~B sub-lane) — infra, EC2_MANIFEST, Terraform"
 
   CLOUD_OPS_OR_ETL:
     permitted_agents:
@@ -169,6 +170,7 @@ lanes:
       - 0.6.0_AE_PartnerETL
       - 0.6.1_AE_PartnerETL
       - 0.7.0_AE_CloudOps
+      - 0.7.0_AE_CloudOps~B
     description: "Any AE agent — infra/aws, pipeline Terraform, hook wiring"
 
   TRADE_PIPELINE_INFRA:
@@ -291,6 +293,7 @@ lanes:
   SHARED_CLOUD_OPS_OR_EXEC:
     permitted_agents:
       - 0.7.0_AE_CloudOps
+      - 0.7.0_AE_CloudOps~B
       - 1.0.0_SA_CTO
       - 2.0.0_SA_COO
       - 1.1.0_SA_CTO
@@ -307,6 +310,7 @@ lanes:
       - 0.6.0_AE_PartnerETL
       - 0.6.1_AE_PartnerETL
       - 0.7.0_AE_CloudOps
+      - 0.7.0_AE_CloudOps~B
     description: "Execs + AEs — used for project JSONs (AE updates own project state) and hook-config files (AE 0.7 implements hook ecosystem)"
 
 # =========================================================================
@@ -660,6 +664,10 @@ paths:
   "docs/architecture/INFETL_*":
     lane: CLOUD_OPS_OR_ETL
     note: "INFETL detail/matrix docs (DAILY_PULLS_MATRIX, etc.) — AE-owned per ADVI_INFETL.DAILY-AUDIT TO (COO 2026-05-07). Top-level ADVI_INFETL.md PRD remains under docs/architecture/** ANY_CTO catch-all. Mirrors INFLEC_* precedent."
+
+  "docs/architecture/ADVI_FIRMSEP_*":
+    lane: CLOUD_OPS_OR_ETL
+    note: "FIRMSEP detail/audit docs (PHASE0_AUDIT, ONBOARDING_PLAYBOOK, etc.) — AE-owned per ADVI_FIRMSEP TO authorization (COO 2026-05-07). Top-level ADVI_FIRMSEP.md PRD remains under docs/architecture/** ANY_CTO catch-all. Mirrors INFETL_*/INFLEC_* precedent."
 
   "docs/architecture/**":
     lane: ANY_CTO
