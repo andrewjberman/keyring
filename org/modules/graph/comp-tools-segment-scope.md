@@ -1,6 +1,6 @@
 # comp-tools segment-scope reference card
 
-**Last updated:** 2026-05-08 (ADHC_COMPIL_V4.020 — comp-trace/blast moved A; INF gold + platinum nodes baked into comp-build)
+**Last updated:** 2026-05-08 (ADHC_COMPIL_V4.022 — backfill BD Lambda IAM (95+); comp-platinum #field intersection; loop-quiescence NO_PROJECT_FILE verdict)
 **Companion:** `org/modules/graph/comp-tools.yaml` (full catalog) + `docs/architecture/ADHC_COMPIL_V4_017_TEST_MATRIX.md` (empirical evidence)
 
 This is the 1-page "which tool, when?" reference for agents working across BD, INF, and multi-firm surfaces. Use it before reaching for the full `comp-tools.yaml` catalog.
@@ -47,15 +47,16 @@ Beyond pipeline (BD/INF), tools may also vary by:
 - **Surface type** — Lambda / EC2 / CF / API GW / S3 prefix / DDB table. comp-iam, comp-routes, comp-events (post-V4.005) split here.
 - **Mode** — default / `--strict` / `--verbose` / `--json`. Varies per tool; not all tools support all modes (see test matrix Triage #13 — `--json` not implemented on comp-trace despite catalog claim).
 
-## Common gotchas (from V4.OPS empirical run, post-V4.019/.020 fixes)
+## Common gotchas (from V4.OPS empirical run, post-V4.019/.020/.021/.022 fixes)
 
 1. **`comp-trace D_04`** returns "Multiple matches" — the canonical script-level node ID is `gold:D_04.client_portal_summary` or use `comp-trace D_04 --all`. Catalog example does not work as written.
 2. **`comp-trace platinum/firm/leaderboard.json`** still needs `s3:` prefix; post-V4.020 the `s3:platinum/*` nodes DO exist in the graph (BD D_04 platinum writes baked in). Use `comp-trace s3:platinum/firm/leaderboard.json --direction up`.
 3. ~~`comp-pipescript chain --pipeline inf-gold` silently returns BD chain~~ — **FIXED V4.019**: now explicit "Unknown chain X for pipeline Y" + lists valid chains. INF chains exist (`full`/`incremental`/`label`/`silver_prep`).
 4. ~~`comp-pipescript deployed --pipeline inf-gold INF_D_04` crashes with UnboundLocalError~~ — **FIXED V4.019**: returns clean MATCH/STALE per script.
-5. **`check-lambda-layer-deps`** uses `--function <name>` / `--pipeline <name>` flags, NOT positional args (catalog says positional). Run `--help` if confused. (Doc-fix candidate in V4.021.)
-6. **`comp-constants --lane bd`** doesn't work — lane is auto-detected from config metadata, not flag-controlled.
-7. **`loop-quiescence <MACRO_PREFIX>`** (e.g., `ADHC` vs `ADHC_COMPIL_V4`) returns `QUIESCENT_CLEAN total=0` — false-positive when no project file exists. Pass full project code. (V4.022 candidate.)
-8. **`comp-iam service bd-gold-trigger`** shows role `(not mapped)` — Lambda-source-map IAM mapping incomplete for ~100 BD Lambdas. INF Lambdas mapped via V4.013 fallback (works). (V4.022 backfill candidate.)
+5. **`check-lambda-layer-deps`** uses `--function <name>` / `--pipeline <name>` / `--strict` / `--verbose` / `--json` flags, NOT positional args. Run `--help` if confused. **V4.021 ship: `--json` for CI/programmatic.**
+6. ~~`comp-constants --lane bd` doesn't work~~ — **FIXED V4.021**: `--lane bd|inf|multifirm` filter added.
+7. ~~`loop-quiescence <MACRO_PREFIX>` returns `QUIESCENT_CLEAN total=0`~~ — **FIXED V4.022**: now returns `NO_PROJECT_FILE` verdict + helpful hint pointing to `org/projects/{MACRO}*.json`.
+8. ~~`comp-iam service bd-gold-trigger` shows role `(not mapped)`~~ — **FIXED V4.022**: 95+ Lambdas backfilled in lambda-source-map.json. `comp-iam gaps` now surfaces real permission gaps (9 found post-backfill, queued for separate remediation).
+9. **`comp-platinum reverse '<key>#field'`** (post-V4.022): now intersects field-reverse with artifact-reverse instead of unioning — returns 0 results when field isn't found instead of 18 directory-prefix SPECULATIVE matches. `--strict` exits 2 on suppressed-speculatives (regression-clean).
 
 For full empirical evidence + all test cases + recommended fixes, see `docs/architecture/ADHC_COMPIL_V4_017_TEST_MATRIX.md`.

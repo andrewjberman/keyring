@@ -2573,3 +2573,17 @@ Total: 2 PASS, 131 WARN, 133 PRDs scanned.
 | 2026-05-08 | 0.7.0_AE_CloudOps | ADHC_COMPIL_V4.021 | comp-cache | comp-cache collisions (regression sample 3) | PASS | V4.017 PASS retained |
 | 2026-05-08 | 0.7.0_AE_CloudOps | ADHC_COMPIL_V4.021 | comp-platinum | comp-platinum page PartnerAnalytics (regression sample 4) | PASS | V4.017 PASS retained |
 | 2026-05-08 | 0.7.0_AE_CloudOps | ADHC_COMPIL_V4.021 | comp-pipescript | comp-pipescript io D_04 (regression sample 5) | PASS | V4.017 PASS retained |
+| 2026-05-08 | 0.4.0_DT_ClientPlatform | (no-TO) | comp-iam | comp-iam service bd-gold-trigger | PASS |
+| 2026-05-08 | 0.4.0_DT_ClientPlatform | (no-TO) | comp-iam | comp-iam gaps | PASS |
+| 2026-05-08 | 0.4.0_DT_ClientPlatform | (no-TO) | comp-iam | comp-iam stats | PASS |
+| 2026-05-08 | 0.4.0_DT_ClientPlatform | (no-TO) | comp-platinum | comp-platinum reverse platinum/firm/header_metrics.json#radial_12m | PASS |
+| 2026-05-08 | 0.4.0_DT_ClientPlatform | (no-TO) | comp-platinum | comp-platinum reverse platinum/firm/header_metrics.json#radial_12m --strict | FAIL |
+| 2026-05-08 | 0.4.0_DT_ClientPlatform | (no-TO) | comp-platinum | comp-platinum reverse gold/artifacts/employee_leaderboard.json | PASS |
+| 2026-05-08 | 0.7.0_AE_CloudOps | ADHC_COMPIL_V4.022 | comp-iam | comp-iam service bd-gold-trigger (post-backfill) | PASS | Cat 6.1 ship: role mapped to bd-daily-trigger-lambda-role; ops [GRANTED] (was [UNKNOWN]); 95+ Lambdas backfilled |
+| 2026-05-08 | 0.7.0_AE_CloudOps | ADHC_COMPIL_V4.022 | comp-iam | comp-iam gaps (post-backfill) | PASS | 9 real permission gaps surfaced (was 0 due to missing role mappings); queued for separate remediation per TO out-of-scope |
+| 2026-05-08 | 0.7.0_AE_CloudOps | ADHC_COMPIL_V4.022 | comp-platinum | comp-platinum reverse 'platinum/firm/header_metrics.json#radial_12m' (post-fix) | PASS | Cat 6.2 ship: CONSUMED BY now empty (was 18 SPECULATIVE); #field intersection, not union |
+| 2026-05-08 | 0.7.0_AE_CloudOps | ADHC_COMPIL_V4.022 | comp-platinum | comp-platinum reverse '<key>#field' --strict | PASS | AC4 regression: --strict exits 2 with "18 speculative suppressed" message; behavior preserved |
+| 2026-05-08 | 0.7.0_AE_CloudOps | ADHC_COMPIL_V4.022 | comp-platinum | comp-platinum reverse 'gold/artifacts/employee_leaderboard.json' (no #field, regression) | PASS | AC4 regression: 1 SPECULATIVE returned as before (no-#field path unchanged) |
+| 2026-05-08 | 0.7.0_AE_CloudOps | ADHC_COMPIL_V4.022 | loop-quiescence | loop-quiescence ADHC --summary (post-fix) | PASS | Cat 7.1 ship: NO_PROJECT_FILE verdict + hint to use full project code; was QUIESCENT_CLEAN total=0 false-positive |
+| 2026-05-08 | 0.7.0_AE_CloudOps | ADHC_COMPIL_V4.022 | loop-quiescence | loop-quiescence INFETL --summary (post-fix) | PASS | Cat 7.2 ship: same NO_PROJECT_FILE verdict |
+| 2026-05-08 | 0.7.0_AE_CloudOps | ADHC_COMPIL_V4.022 | loop-quiescence | loop-quiescence ADHC_COMPIL_V4 --summary (regression) | PASS | AC6 regression: full project code returns ACTIVE verdict with TOs listed (unchanged) |

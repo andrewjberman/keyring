@@ -653,7 +653,12 @@ def _print_artifact_reverse(s3_key: str, rt, dag, strict: bool = False) -> dict:
                 for comp in rt.components:
                     if fn_name in comp.endpoint_calls:
                         fallback2_speculatives.append((fn_name, ep.url_template, comp.name))
-        if fallback2_speculatives and not strict:
+        # ADHC_COMPIL_V4.022 Cat 6.2: when query has #field, suppress fallback2
+        # directory-prefix speculatives (user wants narrow field-level resolution;
+        # 18 sibling endpoints are noise without field verification). Hybrid resolution
+        # below still surfaces field-reverse authoritative hits.
+        suppress_field_fallback2 = ('#' in s3_key)
+        if fallback2_speculatives and not strict and not suppress_field_fallback2:
             # ADHC_ROUTER.T3 + ADHC_COMPIL_V4.010: this fallback is speculative
             # (directory-prefix match, not actual key match). Per-line [SPECULATIVE]
             # prefix replaces the global WARN block.
@@ -661,8 +666,8 @@ def _print_artifact_reverse(s3_key: str, rt, dag, strict: bool = False) -> dict:
                 component_names.add(comp_name)
                 speculative_count += 1
                 print(f"    [SPECULATIVE] via {fn_name} ({url}) -> {comp_name}")
-        elif fallback2_speculatives and strict:
-            # In strict mode count speculatives but don't print them
+        elif fallback2_speculatives and (strict or suppress_field_fallback2):
+            # Strict mode OR #field query: count speculatives but don't print them
             for fn_name, url, comp_name in fallback2_speculatives:
                 speculative_count += 1
 
@@ -670,8 +675,20 @@ def _print_artifact_reverse(s3_key: str, rt, dag, strict: bool = False) -> dict:
     # When artifact-reverse query has #field, ALSO consult the field-reverse
     # index for authoritative consumers (covers AUDIT-007 case b: TSX field
     # reads that don't surface via route prefix matching).
+    #
+    # ADHC_COMPIL_V4.022 Cat 6.2 fix: when #field is provided, the user wants
+    # field-level narrowing. If we have no field-reverse hits OR the field
+    # isn't in the index, suppress directory-prefix speculative results that
+    # the user can't filter through the field hint. Previously the merge was
+    # unioning (artifact-prefix matches + field hits) regardless of whether
+    # the field was actually findable — produced 18 SPECULATIVE results when
+    # the user asked for a single field. Now intersection-style: with #field,
+    # the speculative-result list is filtered to only entries that share the
+    # field-resolution context (or suppressed entirely if field-reverse is
+    # empty for that field).
     field_authoritative_consumers: set = set()
-    if '#' in s3_key:
+    field_query_attempted = '#' in s3_key
+    if field_query_attempted:
         field_part = s3_key.split('#', 1)[1]
         try:
             field_index = _build_field_reverse_index(rt)
@@ -696,11 +713,20 @@ def _print_artifact_reverse(s3_key: str, rt, dag, strict: bool = False) -> dict:
             print(f"    {cn} (field-reverse: authoritative)")
 
     if component_names:
+        # Cat 6.2: when query includes #field, filter component_names to only
+        # those that reference the field (i.e. in field_authoritative_consumers).
+        # Without this, #field would return all artifact-prefix matches as
+        # SPECULATIVE — the same as the no-field query, defeating the purpose.
         for cn in sorted(component_names):
             if cn not in s3_key and cn not in field_authoritative_consumers:
                 is_spec = (cn in spec_components and cn not in auth_components)
                 # In strict mode, only print authoritative (already filtered by component_names = auth_components)
                 if strict and is_spec:
+                    continue
+                # Cat 6.2: with #field query, suppress speculative-only consumers
+                # (user requested narrow field-level resolution; broad prefix
+                # matches are noise without field verification).
+                if field_query_attempted and is_spec:
                     continue
                 prefix = "[SPECULATIVE] " if is_spec else ""
                 print(f"    {prefix}{cn}")

@@ -211,7 +211,13 @@ def scan_macro(macro: str, repo_root: Path) -> dict:
             record["detail"] = f"Could not classify declared status: {status!r}"
             discrepancies.append(record)
 
-    if validated_active:
+    # ADHC_COMPIL_V4.022 Cat 7 fix: distinguish "no project file found" from
+    # "all TOs closed". Previously bare macro prefix (e.g. ADHC vs ADHC_COMPIL_V4)
+    # returned QUIESCENT_CLEAN total=0 — false-positive that could cause Tier-1 SA
+    # to fire /loop expansion against a non-existent macro.
+    if not project_file_present and len(all_tos) == 0:
+        verdict = "NO_PROJECT_FILE"
+    elif validated_active:
         verdict = "ACTIVE"
     elif discrepancies:
         verdict = "QUIESCENT_WITH_DISCREPANCIES"
@@ -258,6 +264,11 @@ def render_summary(report: dict) -> str:
     if report["verdict"] == "QUIESCENT_CLEAN":
         lines.append("")
         lines.append("All TOs accounted for. Macro is quiescent and clean -- expansion permitted.")
+    elif report["verdict"] == "NO_PROJECT_FILE":
+        lines.append("")
+        lines.append(f"No org/projects/{report['macro']}.json found AND no task orders matched this macro.")
+        lines.append(f"  Hint: did you mean a full project code like ADHC_COMPIL_V4 instead of a prefix like ADHC?")
+        lines.append(f"  Run `ls org/projects/{report['macro']}*.json` to find related projects.")
     return "\n".join(lines)
 
 
