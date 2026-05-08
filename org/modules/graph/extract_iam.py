@@ -23,6 +23,119 @@ from typing import Optional
 
 
 # ---------------------------------------------------------------------------
+# AWS-managed-policy action lookup (V4.024 FP Class B)
+# ---------------------------------------------------------------------------
+# Static table of common AWS-managed policies and the IAM action wildcards they
+# grant. When a Lambda role has `aws_iam_role_policy_attachment` referencing one
+# of these ARNs, comp-iam treats those wildcards as Allow statements during
+# gap-compare — eliminating false positives where coverage came from a managed
+# policy rather than an inline statement.
+#
+# Coverage scope: minimum-required per ADHC_COMPIL_V4.024 AC3 + ARNs observed in
+# the workspace (news-pipeline, others). Unknown ARNs fall through to the cache
+# + API resolver below.
+_AWS_MANAGED_POLICY_ACTIONS: dict[str, list[str]] = {
+    'AmazonS3ReadOnlyAccess': ['s3:Get*', 's3:List*', 's3:Describe*'],
+    'AmazonS3FullAccess': ['s3:*'],
+    'AmazonS3ObjectLambdaExecutionRolePolicy': ['s3-object-lambda:WriteGetObjectResponse', 'logs:CreateLogGroup', 'logs:CreateLogStream', 'logs:PutLogEvents'],
+    'AWSLambdaBasicExecutionRole': ['logs:CreateLogGroup', 'logs:CreateLogStream', 'logs:PutLogEvents'],
+    'service-role/AWSLambdaBasicExecutionRole': ['logs:CreateLogGroup', 'logs:CreateLogStream', 'logs:PutLogEvents'],
+    'AWSLambdaVPCAccessExecutionRole': ['ec2:CreateNetworkInterface', 'ec2:DescribeNetworkInterfaces', 'ec2:DeleteNetworkInterface', 'ec2:AssignPrivateIpAddresses', 'ec2:UnassignPrivateIpAddresses', 'logs:CreateLogGroup', 'logs:CreateLogStream', 'logs:PutLogEvents'],
+    'service-role/AWSLambdaVPCAccessExecutionRole': ['ec2:CreateNetworkInterface', 'ec2:DescribeNetworkInterfaces', 'ec2:DeleteNetworkInterface', 'logs:*'],
+    'AmazonSSMReadOnlyAccess': ['ssm:Describe*', 'ssm:Get*', 'ssm:List*'],
+    'AmazonSSMFullAccess': ['ssm:*'],
+    'AmazonSSMManagedInstanceCore': ['ssm:UpdateInstanceInformation', 'ssm:ListAssociations', 'ssm:ListInstanceAssociations', 'ssm:DescribeAssociation', 'ssm:GetDocument', 'ssm:GetManifest', 'ssm:GetParameters', 'ssm:DescribeDocument', 'ssm:ListCommandInvocations', 'ssm:GetCommandInvocation', 'ssmmessages:*', 'ec2messages:*'],
+    'AmazonDynamoDBFullAccess': ['dynamodb:*', 'dax:*'],
+    'AmazonDynamoDBReadOnlyAccess': ['dynamodb:Get*', 'dynamodb:Query', 'dynamodb:Scan', 'dynamodb:BatchGet*', 'dynamodb:Describe*', 'dynamodb:List*'],
+    'SecretsManagerReadWrite': ['secretsmanager:*', 'kms:DescribeKey', 'kms:ListAliases', 'kms:ListKeys'],
+    'CloudWatchFullAccess': ['cloudwatch:*', 'logs:*', 'sns:*'],
+    'CloudWatchReadOnlyAccess': ['cloudwatch:Describe*', 'cloudwatch:Get*', 'cloudwatch:List*', 'logs:Describe*', 'logs:Get*'],
+    'CloudWatchLogsFullAccess': ['logs:*'],
+    'CloudWatchLogsReadOnlyAccess': ['logs:Describe*', 'logs:Get*', 'logs:List*', 'logs:StartQuery', 'logs:StopQuery', 'logs:TestMetricFilter', 'logs:FilterLogEvents'],
+    'AWSLambda_FullAccess': ['lambda:*', 'cloudwatch:*', 'iam:ListRoles', 'logs:*'],
+    'AWSLambda_ReadOnlyAccess': ['lambda:Get*', 'lambda:List*', 'logs:Describe*', 'logs:Get*'],
+    'AmazonEC2ReadOnlyAccess': ['ec2:Describe*', 'ec2:Get*', 'ec2:List*'],
+    'AmazonEC2FullAccess': ['ec2:*', 'elasticloadbalancing:*', 'cloudwatch:*', 'autoscaling:*'],
+}
+
+
+def _managed_policy_cache_path(workspace_root: Path) -> Path:
+    return workspace_root / ".comp-graph" / "managed_policy_actions_cache.json"
+
+
+def _load_managed_policy_cache(workspace_root: Path) -> dict[str, list[str]]:
+    p = _managed_policy_cache_path(workspace_root)
+    if not p.exists():
+        return {}
+    try:
+        return json.loads(p.read_text(encoding="utf-8"))
+    except Exception:
+        return {}
+
+
+def _save_managed_policy_cache(workspace_root: Path, cache: dict[str, list[str]]) -> None:
+    p = _managed_policy_cache_path(workspace_root)
+    try:
+        p.parent.mkdir(parents=True, exist_ok=True)
+        p.write_text(json.dumps(cache, indent=2, sort_keys=True), encoding="utf-8")
+    except Exception:
+        pass
+
+
+def _resolve_managed_policy_actions(
+    policy_arn: str,
+    cache: dict[str, list[str]],
+    workspace_root: Path,
+) -> tuple[list[str], str]:
+    """Resolve the list of IAM actions covered by an AWS-managed policy ARN.
+
+    Returns (actions, source) where source is 'static' | 'cache' | 'api' | 'unknown'.
+    Unknown returns []; caller should emit a MANAGED_POLICY_UNKNOWN advisory and
+    NOT claim coverage (per V4.024 AC4 — prefer surfacing potential FP over
+    silent miss).
+    """
+    if not policy_arn.startswith("arn:aws:iam::aws:policy/"):
+        return [], 'unknown'
+
+    suffix = policy_arn.split("arn:aws:iam::aws:policy/", 1)[1]
+
+    if suffix in _AWS_MANAGED_POLICY_ACTIONS:
+        return list(_AWS_MANAGED_POLICY_ACTIONS[suffix]), 'static'
+
+    if policy_arn in cache:
+        return list(cache[policy_arn]), 'cache'
+
+    try:
+        import boto3  # type: ignore[import-not-found]
+        iam = boto3.client('iam')
+        policy = iam.get_policy(PolicyArn=policy_arn)
+        version_id = policy['Policy']['DefaultVersionId']
+        version = iam.get_policy_version(PolicyArn=policy_arn, VersionId=version_id)
+        doc = version['PolicyVersion']['Document']
+        if isinstance(doc, str):
+            doc = json.loads(doc)
+        actions: list[str] = []
+        statements = doc.get('Statement', [])
+        if not isinstance(statements, list):
+            statements = [statements]
+        for stmt in statements:
+            if stmt.get('Effect', 'Allow') != 'Allow':
+                continue
+            stmt_actions = stmt.get('Action', [])
+            if isinstance(stmt_actions, str):
+                stmt_actions = [stmt_actions]
+            actions.extend(stmt_actions)
+        if actions:
+            cache[policy_arn] = actions
+            _save_managed_policy_cache(workspace_root, cache)
+            return actions, 'api'
+    except Exception:
+        pass
+
+    return [], 'unknown'
+
+
+# ---------------------------------------------------------------------------
 # Operation maps: source-code pattern -> IAM action
 # ---------------------------------------------------------------------------
 
@@ -112,17 +225,24 @@ class IamRole:
     source_file: str = ""
 
     def grants(self, action: str) -> bool:
-        """Check if this role grants the given IAM action."""
+        """Check if this role grants the given IAM action.
+
+        Supports `*` (any), exact match, prefix wildcard `s3:*`, and partial
+        wildcards `s3:Get*` / `s3:*Object`. AWS-managed policies expanded via
+        _AWS_MANAGED_POLICY_ACTIONS (V4.024) commonly use `s3:Get*` form.
+        """
         action_lower = action.lower()
         for stmt in self.statements:
             if stmt.effect.lower() != 'allow':
                 continue
             for a in stmt.actions:
-                if a == '*' or a.lower() == action_lower:
+                a_lower = a.lower()
+                if a == '*' or a_lower == action_lower:
                     return True
-                # Wildcard: s3:* matches s3:DeleteObject
-                if a.endswith(':*') and action_lower.startswith(a[:-1].lower()):
-                    return True
+                if '*' in a_lower:
+                    pattern = re.escape(a_lower).replace(r'\*', '.*')
+                    if re.fullmatch(pattern, action_lower):
+                        return True
         return False
 
 
@@ -152,10 +272,82 @@ class PermissionGap:
 # Step 1: Extract operations from Python source
 # ---------------------------------------------------------------------------
 
+# Variable-name pattern for triple-quoted strings shipped to EC2 — used as
+# fallback when the variable isn't directly referenced in run_instances /
+# send_command (e.g., variable interpolated into a larger formatted string).
+_EC2_SHIP_VAR_NAMES = re.compile(
+    r'^(USER_DATA(_SCRIPT)?|user_data|.*_CMD|.*_SCRIPT|.*_COMMANDS?|.*_CHAIN_CMD)$'
+)
+
+
+def _compute_ec2_shipped_line_ranges(content: str) -> set[int]:
+    """Return line numbers (1-indexed) inside triple-quoted string assignments
+    that are shipped to EC2 via ec2.run_instances UserData= or ssm.send_command
+    commands=[] / Parameters={'commands': [...]}.
+
+    AWS-CLI patterns inside such strings run on the destination EC2's instance
+    profile, NOT on the Lambda's role — flagging them against the Lambda role
+    is a false positive. V4.024 FP Class A elimination.
+
+    Detection strategy: collect (var_name, line-range) for every triple-quoted
+    assignment, then mark lines as shipped if (a) the var is referenced by an
+    EC2-ship function arg, or (b) the var name matches a recognized ship-context
+    convention (USER_DATA*, *_CMD, *_SCRIPT, *_COMMANDS).
+    """
+    shipped_lines: set[int] = set()
+
+    # Step 1: find triple-quoted multi-line string assignments (var = '''...''' / """...""")
+    string_ranges: dict[str, list[tuple[int, int]]] = {}
+    pos = 0
+    while pos < len(content):
+        m = re.search(r'(\w+)\s*=\s*("""|\'\'\')', content[pos:])
+        if not m:
+            break
+        var_name = m.group(1)
+        delim = m.group(2)
+        open_pos = pos + m.end()
+        close_pos = content.find(delim, open_pos)
+        if close_pos == -1:
+            break
+        start_line = content[:pos + m.start()].count('\n') + 1
+        end_line = content[:close_pos].count('\n') + 1
+        string_ranges.setdefault(var_name, []).append((start_line, end_line))
+        pos = close_pos + len(delim)
+
+    if not string_ranges:
+        return shipped_lines
+
+    # Step 2: which of these vars are referenced as EC2-ship args?
+    shipped_vars: set[str] = set()
+
+    for m in re.finditer(r'(?:UserData|user_data)\s*=\s*(\w+)\b', content):
+        shipped_vars.add(m.group(1))
+
+    for m in re.finditer(r"['\"]commands['\"]\s*:\s*\[\s*(\w+)\s*\]", content):
+        shipped_vars.add(m.group(1))
+    for m in re.finditer(r"\bcommands\s*=\s*\[\s*(\w+)\s*\]", content):
+        shipped_vars.add(m.group(1))
+
+    # Step 3: name-convention fallback — variables matching ship-context naming
+    # are shipped even if direct-reference detection misses them (e.g., variable
+    # interpolated into a larger formatted string passed to send_command).
+    for var_name in string_ranges:
+        if _EC2_SHIP_VAR_NAMES.match(var_name):
+            shipped_vars.add(var_name)
+
+    # Step 4: collect line ranges for all shipped vars
+    for var_name in shipped_vars:
+        for (start, end) in string_ranges.get(var_name, []):
+            shipped_lines.update(range(start, end + 1))
+
+    return shipped_lines
+
+
 def _scan_python_for_operations(content: str, file_path: str) -> list[Operation]:
     """Scan a Python file for boto3 client method calls and AWS CLI subprocess invocations."""
     ops = []
     lines = content.splitlines()
+    ec2_shipped_lines = _compute_ec2_shipped_line_ranges(content)
 
     # Map client variable names to service: s3_client = boto3.client('s3') -> {'s3_client': 's3'}
     client_map: dict[str, str] = {}
@@ -228,6 +420,10 @@ def _scan_python_for_operations(content: str, file_path: str) -> list[Operation]
                 ))
 
         # AWS CLI via subprocess: subprocess.run(['aws', 's3', 'rm', ...]) or os.system('aws s3 rm ...')
+        # Skip when the line is inside an EC2-shipped triple-quoted string (V4.024 FP Class A) —
+        # the call runs on the destination EC2's instance profile, not the Lambda role.
+        if lineno in ec2_shipped_lines:
+            continue
         for pat, actions in _AWS_CLI_S3:
             if pat.search(line):
                 ops.append(Operation(
@@ -382,6 +578,11 @@ def _parse_iam_statements(policy_text: str, source_file: str) -> list[IamStateme
     return statements
 
 
+_TF_MANAGED_POLICY_ARN = re.compile(
+    r'policy_arn\s*=\s*["\'](arn:aws:iam::aws:policy/[^"\']+)["\']'
+)
+
+
 def _parse_terraform_iam(workspace_root: Path) -> dict[str, IamRole]:
     """Parse all IAM roles and their policies from Terraform files.
     Returns dict: role_name -> IamRole."""
@@ -462,6 +663,53 @@ def _parse_terraform_iam(workspace_root: Path) -> dict[str, IamRole]:
                     role_name = role_tf_to_name.get(tf_role)
                     if role_name and role_name in roles:
                         roles[role_name].statements.extend(stmts)
+
+    # Third pass: parse aws_iam_role_policy_attachment with AWS-managed-policy
+    # ARNs (V4.024 FP Class B) — synthesize Allow statements from static lookup
+    # or cache+API fallback so gap-compare credits the role with managed coverage.
+    managed_cache = _load_managed_policy_cache(workspace_root)
+    for tf_file in all_tf_files:
+        try:
+            content = tf_file.read_text(encoding="utf-8", errors="replace")
+        except Exception:
+            continue
+        rel = str(tf_file.relative_to(workspace_root)).replace("\\", "/")
+
+        for m in _TF_POLICY_ATTACHMENT.finditer(content):
+            block = _extract_tf_block(content, m.start())
+            arn_m = _TF_MANAGED_POLICY_ARN.search(block)
+            if not arn_m:
+                continue
+            policy_arn = arn_m.group(1)
+
+            role_ref = _TF_ROLE_REF.search(block)
+            if not role_ref:
+                continue
+            tf_role = role_ref.group(1)
+            role_name = role_tf_to_name.get(tf_role)
+            if not role_name or role_name not in roles:
+                continue
+
+            actions, source = _resolve_managed_policy_actions(
+                policy_arn, managed_cache, workspace_root
+            )
+            if actions:
+                roles[role_name].statements.append(IamStatement(
+                    effect='Allow',
+                    actions=actions,
+                    resources=['*'],
+                    source_file=f"{rel} (managed-policy: {policy_arn} via {source})",
+                ))
+            else:
+                # Unknown managed policy — record advisory statement with empty
+                # actions so future reporting can surface it without claiming
+                # coverage.
+                roles[role_name].statements.append(IamStatement(
+                    effect='Allow',
+                    actions=[],
+                    resources=[],
+                    source_file=f"{rel} (MANAGED_POLICY_UNKNOWN: {policy_arn})",
+                ))
 
     return roles
 

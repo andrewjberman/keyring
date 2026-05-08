@@ -514,6 +514,10 @@ paths:
     lane: ANY_EXEC_OR_AE
     note: "Top-level comp-build/trace/blast/diff CLI entry. AE extends per ADHC_COMPIL_V4.012 (--check mode + freshness wiring 2026-05-08)."
 
+  "org/modules/graph/test_*.py":
+    lane: ANY_EXEC_OR_AE
+    note: "Compiler tool regression fixtures paired with comp_*.py / extract_*.py implementations. AE authors per ADHC_COMPIL_V4 family (024 comp-iam FP-elimination test 2026-05-08)."
+
   "org/modules/**":
     lane: ANY_EXEC
 

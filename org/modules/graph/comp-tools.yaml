@@ -375,7 +375,7 @@ tools_continued:
   comp-iam:
     command: "comp-iam <subcommand>"
     segment_scope: segment-aware
-    segment_scope_note: "service subcommand: Lambda-name first, IAM-role-name fallback (V4.013). gaps/roles/services/role/stats: multi-pipeline scan. NOTE: ~100 BD Lambdas show '(role not mapped)' due to incomplete mapping in lambda-source-map.json (NUISANCE; see V4.OPS triage). cross-firm subcommand pending V4.006."
+    segment_scope_note: "service subcommand: Lambda-name first, IAM-role-name fallback (V4.013). gaps/roles/services/role/stats: multi-pipeline scan. NOTE: ~100 BD Lambdas show '(role not mapped)' due to incomplete mapping in lambda-source-map.json (NUISANCE; see V4.OPS triage). cross-firm subcommand pending V4.006. V4.024 ship: false-positive elimination — EC2-shipped-shell `aws s3 cp` patterns inside USER_DATA_SCRIPT/SSM commands excluded from Lambda-role gap analysis; AWS-managed-policy attachments (aws_iam_role_policy_attachment) credit the role with managed actions (s3:Get*, dynamodb:*, etc.). FP rate 78% -> 0% on V4.023 anchor cases."
     when: |
       - Before deploying a Lambda or EC2 script change: verify IAM permissions are sufficient
       - Debugging silent AWS permission failures (no exception caught, operation silently fails)
@@ -388,10 +388,10 @@ tools_continued:
       service: "comp-iam service bd-gold-trigger -- show operations + grant status for one service"
       role: "comp-iam role bd-exporter-ec2-role -- show all granted actions for one role (real role names: bd-exporter-ec2-role, bd-gold-layer-lambda-role, inf-gold-trigger-lambda-role; NOT bd-gold-runner-role which doesn't exist)"
       stats: "comp-iam stats -- summary counts (roles, services, gaps)"
-    cost: "~2s (scans Lambda sources + Terraform; no AWS API calls)"
-    data_sources: "infra/aws/lambda/ci/lambda-source-map.json, infra/aws/terraform/*/iam.tf, Lambda/gold script sources"
+    cost: "~2s (scans Lambda sources + Terraform; no AWS API calls in default path; managed-policy unknown ARNs trigger one-time aws iam get-policy-version + cache to .comp-graph/managed_policy_actions_cache.json)"
+    data_sources: "infra/aws/lambda/ci/lambda-source-map.json, infra/aws/terraform/*/iam.tf, Lambda/gold script sources, .comp-graph/managed_policy_actions_cache.json (managed-policy action cache)"
     replaces: "Manual cross-reference of boto3 calls against iam.tf; AWS IAM console audit"
-    note: "Catches permission gaps before they cause silent failures. The IAM watchdog loop incident (2026-04-09) was caused by s3:DeleteObject missing from bd-exporter-ec2-role -- comp-iam would have flagged this during the Terraform review."
+    note: "Catches permission gaps before they cause silent failures. The IAM watchdog loop incident (2026-04-09) was caused by s3:DeleteObject missing from bd-exporter-ec2-role -- comp-iam would have flagged this during the Terraform review. V4.024 (2026-05-08) eliminated the two FP classes that surfaced post-V4.022 backfill: (A) EC2-shipped-shell distinction — aws-cli patterns inside triple-quoted strings shipped via run_instances UserData= or send_command commands=[] no longer flag against the Lambda role; (B) AWS-managed-policy attachment parsing — aws_iam_role_policy_attachment with policy_arn = arn:aws:iam::aws:policy/X contributes X's actions to the role's grant set via static lookup table (S3/Lambda/SSM/DynamoDB/SecretsManager/CloudWatch + 21 ARNs) plus aws iam get-policy-version cache+API fallback for unknown ARNs (emits MANAGED_POLICY_UNKNOWN advisory + does NOT claim coverage when offline)."
 
   check-lambda-layer-deps:
     command: "check-lambda-layer-deps [--function <name>] [--pipeline <name>] [--strict] [--verbose] [--json]"
