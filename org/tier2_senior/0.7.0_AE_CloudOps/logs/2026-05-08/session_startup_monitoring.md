@@ -407,7 +407,8 @@ First-fire empirical witness scheduled: 2026-05-09 ~06:00 UTC.
 | INFETL.CHAININC Class 1 | SHIPPED; validation gate 2026-05-09 ~12:30Z |
 | FIRMSEP.07+.08 | LIVE & FULLY CLOSED (AC1-5 PASS); auto-recovery clean |
 | FIRMSEP.09 | BLOCKED on Andrew CT $ ack |
-| INFETL.011 cron-flip-ack | RAVC1 sent; awaiting CTO+COO GO; ready to apply |
+| INFETL.011 cron-flip-ack | SHIPPED v1.7.45 (e28e24585); AC1-AC4 PASS per CTO RAVC2 ACK; AC5 = first-fire 2026-05-09 ~06:00Z |
+| cloud-ops skill | LIVE (.claude/skills/cloud-ops/SKILL.md + .claude/settings.json; commit a0b273cfc); team-wide AE permissions profile |
 | LDRBRD.002 PROD | Awaiting PROD GO |
 | Git reset incident | CTO owns structural mitigation |
 | 2026-05-07 gold pipeline | RUNNING on inf-gold-layer-runner |
@@ -426,6 +427,9 @@ First-fire empirical witness scheduled: 2026-05-09 ~06:00 UTC.
 | FIRMSEP AC4 empirical VERIFIED | AE 0.7 → COO | 20260508T150151Z |
 | Gold chain live + INFREL Day 2 obs | AE 0.7 → COO | 20260508T150613Z |
 | INFETL.011 RAVC1 (plan diff GO request) | AE 0.7 → CTO+COO | 20260508T150900Z |
+| INFETL.011 RAVC2 (apply complete + tag pushed) | AE 0.7 → CTO+COO | 20260508T151746Z |
+| INFETL.011 RAVC2 ACK + observations | CTO → AE 0.7 | 20260508T~PM |
+| cloud-ops skill shipped (Andrew request) | AE 0.7 commit | a0b273cfc |
 
 ---
 
@@ -433,7 +437,9 @@ First-fire empirical witness scheduled: 2026-05-09 ~06:00 UTC.
 
 | Item | Owner | When |
 |---|---|---|
-| INFETL.011 apply GO | CTO+COO → AE | Soon |
+| INFETL.011 AC5 first-fire witness | AE 0.7 | 2026-05-09 ~06:00Z |
+| record-terraform-deploy.sh tooling bug | standing ADHC backlog | recurs → spin ADHC_RTDFIX |
+| comp-iam catalog miss inf-gold-trigger | ADHC_COMPIL_V4.VAL queue | empirical anchor TBD |
 | FIRMSEP.09 CT data events $ ack | Andrew → COO → AE | Andrew session ongoing |
 | INFETL.011 first-fire witness | AE 0.7 | 2026-05-09 ~06:00Z |
 | INFETL.CHAININC validation | AE 0.7 | 2026-05-09 ~12:30Z |
