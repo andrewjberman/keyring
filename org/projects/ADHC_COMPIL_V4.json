@@ -4,7 +4,8 @@
   "name": "Compiler Tooling Inflection-Architecture Coverage",
   "description": "Bundle 6 substantive coverage gaps + 1 close-out for compiler tooling specifically designed around Inflection-architecture patterns (Lambda-bundled silver scripts, multi-firm shared infrastructure, marker-constant contracts spread across 30+ files, EventBridge S3-event chains, 9-dim quorum). Goal: get compiler tooling ahead of the architecture rather than chasing each gap reactively. Anchored on 6 same-week incidents + Andrew 2026-05-08 exchange 'are our compilers adequately designed for the inflection pipeline'.",
   "prds": [
-    {"path": "docs/architecture/ADHC_COMPIL_V4.md", "label": "ADHC_COMPIL_V4 PRD v0.1 + v0.2 addendum", "date": "2026-05-08"}
+    {"path": "docs/architecture/ADHC_COMPIL_V4.md", "label": "ADHC_COMPIL_V4 PRD v0.1 + v0.2 + v0.3 addenda", "date": "2026-05-08"},
+    {"path": "docs/architecture/ADHC_COMPIL_FULL_CORPUS_RETROSPECTIVE.md", "label": "Full-corpus retrospective + deterministic methodology", "date": "2026-05-08"}
   ],
   "source_brief": "1.0.0_SA_CTO architectural assessment 2026-05-08 + 6 anchor incidents from same-week Inflection sprint (INFETL.CHAININC, AUDIT-003 partial-coverage, INFNNA rep_id=6 sync, ROUTER-DRIFT false-drift, FIRMSEP.02 layer-mismatch, DAILY-AUDIT hand-authoring) + Andrew direct: 'are our compilers adequately designed for the inflection pipeline'",
   "status": "active",
