@@ -15,13 +15,10 @@ Zero API calls. Pure static analysis.
 from __future__ import annotations
 
 import json
-import os
-import re
 import sys
 import time
 from dataclasses import dataclass, field, asdict
 from pathlib import Path
-from typing import Optional
 
 
 # ---------------------------------------------------------------------------
@@ -283,7 +280,35 @@ def build_graph(workspace_root: Path) -> TraceGraph:
     # Pass 5: Lambda handler router (must run after Pass 1 + Pass 2)
     extract_lambda_routes(g, workspace_root)
 
+    # Pass 6 (ADHC_COMPIL_V4.020): pipeline-DAG injection for both BD and INF gold.
+    # Brings comp-trace + comp-blast back to Tier A (cross-segment): INF gold script
+    # nodes (`gold:INF_*`) + s3:platinum/* nodes appear in the cross-layer graph
+    # alongside BD gold. Previously `comp-pipescript inject` was a separate step that
+    # got wiped on every comp-build rebuild (see V4.017 OPS Cat 2 finding).
+    _inject_full_pipeline_into_graph(g, workspace_root)
+
     return g
+
+
+def _inject_full_pipeline_into_graph(g: "TraceGraph", workspace_root: Path) -> None:
+    """ADHC_COMPIL_V4.020: bake pipeline-DAG edges into comp-build output for BD + INF gold.
+
+    This runs the same logic as `extract_pipeline.inject_pipeline_edges` but for both
+    BD and INF gold pipelines, in-process during graph build. Side effects:
+      - INF gold scripts registered as `gold:INF_*` nodes
+      - s3:platinum/* nodes promoted (D_04 + INF_D_04 hardcoded platinum writes)
+      - s3:gold/canonical/holdings, etc., named-prefix nodes baked-in for both pipelines
+    """
+    from .extract_pipeline import build_pipeline_dag, build_inf_gold_dag, inject_pipeline_edges
+
+    # BD gold (idempotent if already populated by extract_s3_edges; injects platinum
+    # write nodes that extract_s3_edges' regex misses).
+    bd_dag = build_pipeline_dag(workspace_root)
+    inject_pipeline_edges(bd_dag, workspace_root, _graph=g)
+
+    # INF gold (new; previously absent from cross-layer graph).
+    inf_dag = build_inf_gold_dag(workspace_root)
+    inject_pipeline_edges(inf_dag, workspace_root, _graph=g)
 
 
 # ---------------------------------------------------------------------------

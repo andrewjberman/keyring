@@ -2527,3 +2527,28 @@ Total: 2 PASS, 131 WARN, 133 PRDs scanned.
 | 2026-05-08 | 0.7.0_AE_CloudOps | ADHC_COMPIL_V4.019 | comp-pipescript | comp-pipescript chain full --pipeline inf-gold (post-fix bonus) | PASS | INF chains confirmed wired post-fix — returns 47 scripts |
 | 2026-05-08 | 0.7.0_AE_CloudOps | ADHC_COMPIL_V4.019 | comp-pipescript | comp-pipescript deployed D_00c (regression check) | PASS | BD default unchanged |
 | 2026-05-08 | 0.7.0_AE_CloudOps | ADHC_COMPIL_V4.019 | comp-pipescript | comp-pipescript chain downstream (default, regression check) | PASS | BD default unchanged; new label [bd-gold] prefix added |
+| 2026-05-08 | 0.4.0_DT_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript io D_04 | PASS |
+| 2026-05-08 | 0.4.0_DT_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript inject | PASS |
+| 2026-05-08 | 0.4.0_DT_ClientPlatform | (no-TO) | comp-trace | comp-trace platinum/firm/leaderboard.json --direction both | PASS |
+| 2026-05-08 | 0.4.0_DT_ClientPlatform | (no-TO) | comp-trace | comp-trace s3:platinum/firm/leaderboard.json --direction up | PASS |
+| 2026-05-08 | 0.4.0_DT_ClientPlatform | (no-TO) | comp-build | comp-build | PASS |
+| 2026-05-08 | 0.4.0_DT_ClientPlatform | (no-TO) | comp-trace | comp-trace INF_D_04 --direction down | PASS |
+| 2026-05-08 | 0.4.0_DT_ClientPlatform | (no-TO) | comp-trace | comp-trace s3:platinum/firm/leaderboard.json --direction up | PASS |
+| 2026-05-08 | 0.4.0_DT_ClientPlatform | (no-TO) | comp-trace | comp-trace INF_D_04 --direction down --all | PASS |
+| 2026-05-08 | 0.4.0_DT_ClientPlatform | (no-TO) | comp-blast | comp-blast _build_aua_view | PASS |
+| 2026-05-08 | 0.4.0_DT_ClientPlatform | (no-TO) | comp-blast | comp-blast inf-gold-trigger | PASS |
+| 2026-05-08 | 0.4.0_DT_ClientPlatform | (no-TO) | comp-trace | comp-trace D_04 | PASS |
+| 2026-05-08 | 0.4.0_DT_ClientPlatform | (no-TO) | comp-blast | comp-blast bd-gold-trigger | PASS |
+| 2026-05-08 | 0.4.0_DT_ClientPlatform | (no-TO) | comp-build | comp-build | PASS |
+| 2026-05-08 | 0.4.0_DT_ClientPlatform | (no-TO) | comp-trace | comp-trace INF_D_04 --direction down --all | PASS |
+| 2026-05-08 | 0.4.0_DT_ClientPlatform | (no-TO) | comp-blast | comp-blast _build_aua_view | PASS |
+| 2026-05-08 | 0.4.0_DT_ClientPlatform | (no-TO) | comp-trace | comp-trace s3:platinum/firm/leaderboard.json --direction up | PASS |
+| 2026-05-08 | 0.4.0_DT_ClientPlatform | (no-TO) | comp-trace | comp-trace D_04 | PASS |
+| 2026-05-08 | 0.4.0_DT_ClientPlatform | (no-TO) | comp-blast | comp-blast build_employee_leaderboard | PASS |
+| 2026-05-08 | 0.7.0_AE_CloudOps | ADHC_COMPIL_V4.020 | comp-build | comp-build (post-fix) | PASS | Graph extended: 1250→1772 nodes (+42%); 1047→1344 edges (+28%); INF gold +428 function-level nodes; s3:platinum/* +98 nodes |
+| 2026-05-08 | 0.7.0_AE_CloudOps | ADHC_COMPIL_V4.020 | comp-trace | comp-trace INF_D_04 --all (post-fix) | PASS | Cat 2.1 was FAIL "No nodes matching"; now returns INF_D_04 + 30+ functions; downstream call edges traced |
+| 2026-05-08 | 0.7.0_AE_CloudOps | ADHC_COMPIL_V4.020 | comp-blast | comp-blast _build_aua_view (post-fix) | PASS | Cat 2.2 was FAIL; now BLAST RADIUS shows 4 downstream + 2-deep caller chain (build_partner_analytics → main) |
+| 2026-05-08 | 0.7.0_AE_CloudOps | ADHC_COMPIL_V4.020 | comp-trace | comp-trace s3:platinum/firm/leaderboard.json (post-fix) | PASS | Cat 2.4 was FAIL; now UPSTREAM with D_04 producer + 6 read-upstream artifacts |
+| 2026-05-08 | 0.7.0_AE_CloudOps | ADHC_COMPIL_V4.020 | comp-trace | comp-trace D_04 (BD regression) | PASS | Multi-match output unchanged; same disambiguation flow |
+| 2026-05-08 | 0.7.0_AE_CloudOps | ADHC_COMPIL_V4.020 | comp-blast | comp-blast build_employee_leaderboard (BD regression+enrichment) | PASS | Returns blast radius; BD coverage enriched (7→13 GOLD nodes) due to platinum WRITES_S3 edges baked in via inject |
+| 2026-05-08 | 0.4.0_DT_ClientPlatform | (no-TO) | comp-build | comp-build | PASS |

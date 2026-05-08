@@ -1242,17 +1242,27 @@ def build_multi_pipeline_dag(workspace_root: Path) -> PipelineDAG:
 # Bridge: inject pipeline edges into the trace graph
 # ---------------------------------------------------------------------------
 
-def inject_pipeline_edges(dag: PipelineDAG, workspace_root: Path):
+def inject_pipeline_edges(dag: PipelineDAG, workspace_root: Path, _graph=None):
     """Inject pipeline DAG edges into the comp-trace graph cache.
     This lets comp-trace walk through pipeline dependencies during
-    cross-layer traces."""
+    cross-layer traces.
+
+    ADHC_COMPIL_V4.020: when called with `_graph` (in-process TraceGraph),
+    operates on that graph directly without saving to file. Used by
+    `trace_graph.build_graph` to bake BD + INF gold pipeline edges into
+    fresh comp-build output. Returns int (edges_added) or None if no cache.
+    Backwards-compatible: omitting `_graph` preserves the original cache-load + save flow.
+    """
     from .trace_graph import TraceGraph, Node, Edge
 
-    cache_file = workspace_root / ".comp-graph" / "graph.json"
-    if not cache_file.exists():
-        return
-
-    g = TraceGraph.load(cache_file)
+    if _graph is not None:
+        g = _graph
+        cache_file = None
+    else:
+        cache_file = workspace_root / ".comp-graph" / "graph.json"
+        if not cache_file.exists():
+            return
+        g = TraceGraph.load(cache_file)
 
     edges_added = 0
     for sid, sio in dag.scripts.items():
@@ -1309,5 +1319,6 @@ def inject_pipeline_edges(dag: PipelineDAG, workspace_root: Path):
                 ))
                 edges_added += 1
 
-    g.save(cache_file)
+    if cache_file is not None:
+        g.save(cache_file)
     return edges_added

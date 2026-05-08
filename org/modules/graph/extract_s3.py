@@ -413,6 +413,110 @@ def extract_s3_edges(graph: TraceGraph, workspace_root: Path):
                     edge_type="READS_S3",
                 ))
 
+    # --- INF gold scripts (writers) ---
+    # ADHC_COMPIL_V4.020: extends comp-trace + comp-blast to Tier A by
+    # registering INF gold function-level nodes alongside BD. INF gold lives
+    # at data/orion/scripts/gold/INF_*.py and uses hardcoded path strings
+    # (no s3_layout.py constants), so we run the same loop with constants={}.
+    inf_gold_dir = workspace_root / "data" / "orion" / "scripts" / "gold"
+    if inf_gold_dir.exists():
+        inf_constants: dict[str, str] = {}
+        for py_file in sorted(inf_gold_dir.glob("INF_*.py")):
+            if py_file.name.startswith("__"):
+                continue
+            try:
+                content = py_file.read_text(encoding="utf-8", errors="replace")
+            except Exception:
+                continue
+
+            order = _run_order(py_file.stem.replace("INF_", ""))
+            rel_path = str(py_file.relative_to(workspace_root)).replace("\\", "/")
+
+            script_node_id = f"gold:{py_file.stem}"
+            graph.add_node(Node(
+                id=script_node_id,
+                node_type="GOLD_SCRIPT",
+                label=py_file.stem,
+                file_path=rel_path,
+                run_order=order,
+            ))
+
+            function_names, call_map = _extract_function_graph(content)
+            for func_name in function_names:
+                func_node_id = f"gold:{py_file.stem}:{func_name}"
+                graph.add_node(Node(
+                    id=func_node_id,
+                    node_type="GOLD_SCRIPT",
+                    label=f"{py_file.stem}:{func_name}",
+                    file_path=rel_path,
+                    function_name=func_name,
+                    run_order=order,
+                ))
+
+            for caller, callees in call_map.items():
+                caller_node_id = f"gold:{py_file.stem}:{caller}"
+                for callee in sorted(callees):
+                    callee_node_id = f"gold:{py_file.stem}:{callee}"
+                    graph.add_edge(Edge(
+                        source=caller_node_id,
+                        target=callee_node_id,
+                        edge_type="CALLS",
+                    ))
+
+            builder_writes = _extract_builder_to_save_mapping(content, inf_constants)
+            for builder_name, s3_keys in builder_writes.items():
+                builder_node_id = f"gold:{py_file.stem}:{builder_name}"
+                graph.add_node(Node(
+                    id=builder_node_id,
+                    node_type="GOLD_SCRIPT",
+                    label=f"{py_file.stem}:{builder_name}",
+                    file_path=rel_path,
+                    function_name=builder_name,
+                    run_order=order,
+                ))
+                for s3_key in s3_keys:
+                    s3_node_id = f"s3:{s3_key}"
+                    graph.add_node(Node(
+                        id=s3_node_id, node_type="S3_ARTIFACT", label=s3_key,
+                    ))
+                    graph.add_edge(Edge(
+                        source=builder_node_id, target=s3_node_id,
+                        edge_type="WRITES_S3",
+                    ))
+
+            func_writes = _extract_functions_with_s3(content, inf_constants)
+            for func_name, s3_keys in func_writes.items():
+                if func_name in builder_writes:
+                    continue
+                func_node_id = f"gold:{py_file.stem}:{func_name}"
+                graph.add_node(Node(
+                    id=func_node_id,
+                    node_type="GOLD_SCRIPT",
+                    label=f"{py_file.stem}:{func_name}",
+                    file_path=rel_path,
+                    function_name=func_name,
+                    run_order=order,
+                ))
+                for s3_key in s3_keys:
+                    s3_node_id = f"s3:{s3_key}"
+                    graph.add_node(Node(
+                        id=s3_node_id, node_type="S3_ARTIFACT", label=s3_key,
+                    ))
+                    graph.add_edge(Edge(
+                        source=func_node_id, target=s3_node_id,
+                        edge_type="WRITES_S3",
+                    ))
+
+            for s3_key in _extract_s3_reads(content, inf_constants):
+                s3_node_id = f"s3:{s3_key}"
+                graph.add_node(Node(
+                    id=s3_node_id, node_type="S3_ARTIFACT", label=s3_key,
+                ))
+                graph.add_edge(Edge(
+                    source=s3_node_id, target=script_node_id,
+                    edge_type="READS_S3",
+                ))
+
     # --- Lambda source (readers) ---
     lambda_dir = workspace_root / "infra" / "aws" / "lambda"
     if lambda_dir.exists():

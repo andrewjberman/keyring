@@ -37,8 +37,8 @@ tools:
 
   comp-trace:
     command: "comp-trace <query> [--direction up|down|both] [--depth N] [--json]"
-    segment_scope: segment-aware
-    segment_scope_note: "Graph contains BD gold scripts + all Lambda/COMPONENT/ENDPOINT/EVENTBRIDGE/S3 nodes. INF gold scripts are NOT in the graph (use comp-pipescript instead). For S3 nodes, use 's3:' prefix; platinum/* keys do not exist as graph nodes — use comp-platinum reverse."
+    segment_scope: cross-segment
+    segment_scope_note: "ADHC_COMPIL_V4.020: graph now contains BD gold + INF gold scripts (function-level) + s3:platinum/* artifact nodes alongside Lambda/COMPONENT/ENDPOINT/EVENTBRIDGE/S3. For S3 nodes use 's3:' prefix (e.g. s3:platinum/firm/leaderboard.json). Use --all when query matches multiple nodes."
     when: |
       - "Where does this data come from?" (--direction up)
       - "What consumes this data?" (--direction down)
@@ -60,8 +60,8 @@ tools:
 
   comp-blast:
     command: "comp-blast <query> [--function name] [--json]"
-    segment_scope: segment-aware
-    segment_scope_note: "Same scope as comp-trace — BD gold + all cross-pipeline nodes; INF gold absent. Use comp-pipescript consumers/feeds for INF gold."
+    segment_scope: cross-segment
+    segment_scope_note: "ADHC_COMPIL_V4.020: same scope as comp-trace — BD gold + INF gold (function-level) + Lambda/COMPONENT/ENDPOINT/EVENTBRIDGE/S3 + s3:platinum/* artifacts."
     when: |
       - Before modifying ANYTHING: "what downstream systems will this affect?"
       - Gold script change: "what S3 artifacts, Lambdas, and portal pages does this feed?"
