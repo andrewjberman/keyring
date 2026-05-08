@@ -344,6 +344,22 @@ tools_continued:
     replaces: "Manual cross-reference of boto3 calls against iam.tf; AWS IAM console audit"
     note: "Catches permission gaps before they cause silent failures. The IAM watchdog loop incident (2026-04-09) was caused by s3:DeleteObject missing from bd-exporter-ec2-role -- comp-iam would have flagged this during the Terraform review."
 
+  check-lambda-layer-deps:
+    command: "check-lambda-layer-deps <lambda> [--all] [--json]"
+    when: |
+      - Before deploying a Lambda zip change: confirm imports resolve through declared layers
+      - After adding a new third-party import to a Lambda: verify a layer covers it
+      - Auditing inline-vendoring drift: layer ARN comments may have drifted from layer requirements.txt
+      - Triaging "ModuleNotFoundError" Lambda failures: surface which import is missing from which layer
+    subcommands:
+      single: "check-lambda-layer-deps <lambda> -- audit one Lambda's imports vs its declared layers (handles aws_lambda_layer_version + module references via ADHC_LAMBDADOC.003)"
+      all: "check-lambda-layer-deps --all -- repo-wide audit of every Lambda in lambda-source-map.json"
+      json: "--json output mode for CI/programmatic consumption"
+    cost: "<2s per Lambda (parses Python imports + reads layer requirements.txt; no AWS API calls)"
+    data_sources: "infra/aws/lambda/ci/lambda-source-map.json, infra/aws/lambda/<pipeline>/<lambda>/*.py, infra/aws/lambda/layers/<layer>/requirements.txt, Terraform aws_lambda_layer_version resources"
+    replaces: "Manual cross-reference of Lambda imports against layer requirements.txt; AWS Lambda console trial-and-error for ModuleNotFoundError"
+    note: "Shipped 2026-05-07 under ADHC_LAMBDADOC.003 (`fc4d1f18f` MVP + `59350fdc2` aws_lambda_layer_version + module-reference handling). Empirical anchor: v1.7.38 inf-pipeline regression where 3 of 4 inf-api-* Lambdas had nested-path source_map files leading to ModuleNotFoundError + inf-api-assets-v2 had layers=[pandas_layer] but layer didn't have `requests` — old zip masked it via inline-vendoring. v1.7.39 hotfix flat-zip + layer switch to pandas_pyarrow_requests_layer caught + fixed; this tool prevents the class going forward. Cataloged 2026-05-08 under ADHC_COMPIL_V4.007 doc close-out."
+
   comp-tooltip:
     command: "comp-tooltip <subcommand>"
     when: |
@@ -399,6 +415,8 @@ tools_continued:
 #     Q: "Is this gold artifact output correct?"          -> comp-validate D_04 --artifact /tmp/leaderboard.json
 #     Q: "Does this Lambda role have required permissions?"-> comp-iam service bd-gold-trigger
 #     Q: "Are there any IAM permission gaps across all services?" -> comp-iam gaps
+#     Q: "Do this Lambda's imports resolve through its layers?" -> check-lambda-layer-deps <lambda>
+#     Q: "Are any Lambdas in the repo missing layer coverage?"   -> check-lambda-layer-deps --all
 #
 #   SERVING (CloudFront, auth, Lambda, frontend):
 #     Q: "How does this data reach the browser?" -> comp-routes trace getEmployeeLeaderboard

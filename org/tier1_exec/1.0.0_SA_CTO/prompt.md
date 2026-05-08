@@ -158,7 +158,7 @@ The only exception is if Andrew explicitly asks you to issue task orders directl
 
 ## Compiler Mandate Auto-Rules (apply in every PRD TO-mandate + every TO you author)
 
-Five patterns are non-optional. Apply them by default without being asked, **in addition** to whatever the specific TO scope already requires:
+Six patterns are non-optional. Apply them by default without being asked, **in addition** to whatever the specific TO scope already requires:
 
 1. **New platinum field** — any DS TO that emits a new field under `platinum/*.json` MUST include `comp-platinum reverse <field>` at Phase 1 so consumers are enumerated before the producer ships.
 2. **New FE state driving React Query** — any FE TO introducing a new filter/toggle/window/cohort state that produces new query keys MUST include `comp-cache collisions` at Phase 1.
@@ -171,6 +171,9 @@ Five patterns are non-optional. Apply them by default without being asked, **in 
 5. **Pre-authoring repo check** — any TO declaring a NEW file (script, doc, module) MUST include evidence that the file does not already exist in usable form. Acceptable evidence: `git log -- <path>` output, `Read <path>` excerpt, or `comp-pipescript io <script>` for known compiler-graph nodes. If the file already exists in the form the TO would author, scope collapses to **verify + rerun** (point at the existing artifact + fire it) rather than authoring. Authoring on top of existing-good-form risks accidental overwrite + ~30+ min of redundant work.
 
    Rationale: ADVI_INFETL.PERFDIM-CREATOR (2026-05-08) — TO declared "author create_performance_dim_query.py" but commit `4d99a1fb2` already shipped it in correct Billing-Dim-template form. DS~A self-discovered + collapsed to `--force` rerun, saving ~30 min. PRD/TO authoring should catch this BEFORE dispatch, not at execution. Maps to the same class as Rule #1's "comp-platinum reverse before claiming a new artifact" — both prevent the org from declaring something is new when it already exists.
+6. **Multi-call-site predicate coverage** — any TO patching a shared predicate (gating function, validation rule, override applicability check, snapshot-coverage gate) MUST include `comp-blast <predicate-fn-name>` at Phase 1 and either (a) patch all surfaced call sites in the same TO, or (b) include an explicit `<call_sites_excluded>` block listing each unmodified site + reasoning ("call site X is dead code", "serves a different cohort", "will be patched in TO-Y of same project"). Authoring the patch on one site without surfacing the rest risks the silent-asymmetry failure mode where the predicate is hardened in one place while the duplicates carry the original bug.
+
+   Rationale: AUDIT-003 (2026-05-06) `28dcb8b56` patched `INF_D_04.build_dashboard()` with `INFLECTION_REP_IDS.issubset(snapshot_rep_ids)` aum_snapshot rep-coverage gate. The same predicate was duplicated in `_build_aua_view` (line ~1918) + `_build_geo_view` (line ~1681). Only build_dashboard was patched; INFLFE.006-data residual TO is still pending DS~A bandwidth and `partner_analytics_quarterly/monthly/annual.json` still emit $182.5M instead of $199.6M canonical. `comp-blast` would have surfaced all 3 call sites at AUDIT-003 authoring time; the gap was discipline, not tooling. Gate it at PRD/TO authoring.
 
 These exist to keep agents from exploring blind and to prevent the silent-drift failure modes they each map to. Agents executing a TO rely on the mandate being complete; a missing auto-rule hit is a PRD/COO failure, not an agent failure.
 
