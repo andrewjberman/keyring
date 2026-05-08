@@ -149,9 +149,46 @@ def _make_log_record(
     return rec
 
 
-def telemetry_path(base_dir: str, runner: str, script: str, run_id: str) -> Path:
-    """Canonical file path: {base_dir}/{runner}/{script}/{run_id}.jsonl"""
-    return Path(base_dir) / runner / script / f"{run_id}.jsonl"
+def _next_serial(day_root: Path) -> int:
+    """Count existing .jsonl files under the day's telemetry root + 1.
+
+    Race condition exists for parallel runs (no locking) — acceptable for
+    cascade dispatch where scripts run sequentially. If two parallel runs
+    both compute serial=N at the same instant, both will pick the same
+    serial; the run_id (UUID) in the filename still uniquely identifies them.
+    """
+    if not day_root.exists():
+        return 1
+    return sum(1 for _ in day_root.rglob("*.jsonl")) + 1
+
+
+def telemetry_path(
+    base_dir: str,
+    runner: str,
+    script: str,
+    run_id: str,
+    started_at: datetime | None = None,
+) -> Path:
+    """Canonical path with daily folder + timestamp + version serial.
+
+    Layout: {base_dir}/{YYYY-MM-DD}/{runner}/{script}/v{NNN}-{HHMMSSZ}-{run_id}.jsonl
+
+    - YYYY-MM-DD: UTC date the run STARTED (folder for the day per Andrew directive)
+    - v{NNN}: monotone serial across all telemetry files in that day's tree;
+      zero-padded to 3 digits ("v001", "v002", ...)
+    - HHMMSSZ: UTC time HH:MM:SS the run started, compact format
+    - run_id: existing UUID12 disambiguator
+
+    Andrew direct 2026-05-08T19:18Z: "every run is tagged with a timestamp and
+    version serial and is output to some folder for the day that it ran."
+    """
+    started_at = started_at or datetime.now(timezone.utc)
+    day = started_at.strftime("%Y-%m-%d")
+    hhmmss = started_at.strftime("%H%M%SZ")
+    day_root = Path(base_dir) / day
+    serial = _next_serial(day_root)
+    fname = f"v{serial:03d}-{hhmmss}-{run_id}.jsonl"
+    return day_root / runner / script / fname
 
 
 def sample_pid(
@@ -163,11 +200,20 @@ def sample_pid(
     base_dir: str = DEFAULT_BASE_DIR,
     interval_s: float = DEFAULT_INTERVAL_S,
     stop_event: Optional[threading.Event] = None,
+    out_path: Optional[Path] = None,
+    started_at: Optional[datetime] = None,
 ) -> tuple[str, Path]:
-    """Block-sample a PID tree at `interval_s` rate until process exits."""
+    """Block-sample a PID tree at `interval_s` rate until process exits.
+
+    If `out_path` is not supplied, it's computed via telemetry_path() using
+    `started_at` (defaults to now). Pass `out_path` from sample_subprocess to
+    avoid path-recomputation race when the subprocess wrapper has already
+    yielded the path to its caller.
+    """
     if run_id is None:
         run_id = uuid.uuid4().hex[:12]
-    out_path = telemetry_path(base_dir, runner, script, run_id)
+    if out_path is None:
+        out_path = telemetry_path(base_dir, runner, script, run_id, started_at)
     out_path.parent.mkdir(parents=True, exist_ok=True)
     LOG.info("start pid=%s runner=%s script=%s run_id=%s -> %s",
              pid, runner, script, run_id, out_path)
@@ -217,7 +263,8 @@ def sample_subprocess(
     """Spawn a daemon sampler thread; yield (run_id, out_path); join on exit."""
     if run_id is None:
         run_id = uuid.uuid4().hex[:12]
-    out_path = telemetry_path(base_dir, runner, script, run_id)
+    started_at = datetime.now(timezone.utc)
+    out_path = telemetry_path(base_dir, runner, script, run_id, started_at)
     stop_event = threading.Event()
 
     def _run() -> None:
@@ -229,6 +276,8 @@ def sample_subprocess(
             base_dir=base_dir,
             interval_s=interval_s,
             stop_event=stop_event,
+            out_path=out_path,
+            started_at=started_at,
         )
 
     t = threading.Thread(target=_run, daemon=True, name=f"telemetry-{run_id}")
