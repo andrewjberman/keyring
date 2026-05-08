@@ -1,0 +1,187 @@
+{
+  "scan_date": "2026-05-08",
+  "scan_root_paths": [
+    "infra/aws/lambda/",
+    "infra/aws/lambda-edge/",
+    "data/orion/scripts/",
+    "data/black_diamond/scripts/"
+  ],
+  "notes": "Post-FIRMSEP.05 cleanup baseline. Primary dup-source candidate (lambda/shared-advisor-router/ v1 stale copy) has been removed — Glob infra/aws/lambda/shared-advisor-router/ returns no files. One needs_investigation entry found (public-data-router). tier_policy.mjs duplication is intentional (bun-bundle constraint, identical SHA). Lambda-bundled silver scripts are expected pattern for inf-pipeline Lambdas; all entries flagged for TO-1 drift-check scope.",
+  "duplicate_candidates": [
+    {
+      "basename": "public-data-router/index.mjs",
+      "paths": [
+        {
+          "path": "infra/aws/lambda-edge/public-data-router/index.mjs",
+          "sha": "85745945ce7240cf00f1ecb00fc8170a4dca68fb",
+          "size_bytes": 1644,
+          "lines": 37,
+          "canonical": true,
+          "comment": "v4 — handles /api/general/* paths; renamed from /api/public/ in 2026-02-25 API restructure (commit e125c24d6). Trigger: origin-request."
+        },
+        {
+          "path": "infra/aws/lambda/public-data-router/index.mjs",
+          "sha": "d913bbf87c5a7f3e2052baa74592f684528a4395",
+          "size_bytes": 1810,
+          "lines": 42,
+          "canonical": false,
+          "comment": "Legacy version — handles /api/public/* and /api/shared/advisor-intelligence/*. Different SHA from lambda-edge version. Last commit: 447040d19 ('Remove duplicate session log file' — unrelated change). May be intentional split-function (viewer-request vs origin-request triggers) or stale pre-rename artifact."
+        }
+      ],
+      "status": "needs_investigation",
+      "investigation_note": "Different content and SHA — not a byte-identical dup. The lambda-edge version handles the renamed /api/general/ prefix (v4). The lambda/ version handles the legacy /api/public/ and /api/shared/ prefixes. These may be two distinct deployed functions serving different path-prefix gates, or the lambda/ copy may be a stale pre-rename version. AE TO-4 should verify whether both are wired in terraform and serving distinct CloudFront behaviors, or if lambda/ is an orphan."
+    },
+    {
+      "basename": "tier_policy.mjs",
+      "paths": [
+        {
+          "path": "infra/aws/lambda-edge/shared-advisor-router/tier_policy.mjs",
+          "sha": "41d8acd6aae7d601e529d21a79dd5993d98b790e",
+          "size_bytes": 2451,
+          "canonical": true,
+          "comment": "Tier policy for shared-advisor-router Lambda@Edge bundle."
+        },
+        {
+          "path": "infra/aws/lambda-edge/auth-validator-edge/tier_policy.mjs",
+          "sha": "41d8acd6aae7d601e529d21a79dd5993d98b790e",
+          "size_bytes": 2451,
+          "canonical": true,
+          "comment": "Tier policy for auth-validator-edge Lambda@Edge bundle. Identical SHA."
+        }
+      ],
+      "status": "clean",
+      "investigation_note": "Intentional duplication per bun-bundle constraint (Lambda@Edge: no Layers, no shared modules at deploy time; bun build inlines at bundle). Both copies have identical SHA. File comment explicitly documents: 'Duplicated in auth-validator-edge and shared-advisor-router (each is a separate bun bundle). Keep in sync — same pattern as FIRM_BUCKET_MAP.' Zero false-positive risk for comp-shell dup-source mode."
+    }
+  ],
+  "pre_firmsep05_cleanup_confirmed": {
+    "path": "infra/aws/lambda/shared-advisor-router/",
+    "status": "clean",
+    "note": "Glob infra/aws/lambda/shared-advisor-router/** returns no files. The stale v1 index.mjs copy cited in ROUTER-DRIFT 2026-05-07 incident and PRD §5 evidence has been removed. Post-FIRMSEP.05 state confirmed."
+  },
+  "lambda_bundled_silver_gold": [
+    {
+      "lambda_dir": "infra/aws/lambda/inf-pipeline/inf-silver-chain/",
+      "bundled_scripts": [
+        "convert_orion_api_to_silver.py",
+        "_orion_api_silver_lib.py",
+        "build_billing_dim.py",
+        "build_tax_dim.py"
+      ],
+      "canonical_paths": [
+        "data/orion/scripts/silver/convert_orion_api_to_silver.py",
+        "data/orion/scripts/silver/_orion_api_silver_lib.py",
+        "data/orion/scripts/silver/build_billing_dim.py",
+        "data/orion/scripts/silver/build_tax_dim.py"
+      ],
+      "drift_check": "out of scope for this baseline (TO-1 territory)"
+    },
+    {
+      "lambda_dir": "infra/aws/lambda/inf-pipeline/inf-api-txn/",
+      "bundled_scripts": [
+        "convert_orion_api_to_silver.py",
+        "_orion_api_silver_lib.py",
+        "pull_inflection_transactions_v2.py",
+        "jwt_freshness.py",
+        "rate_limiter.py"
+      ],
+      "canonical_paths": [
+        "data/orion/scripts/silver/convert_orion_api_to_silver.py",
+        "data/orion/scripts/silver/_orion_api_silver_lib.py",
+        "data/orion/manual_api/pull_inflection_transactions_v2.py",
+        "data/orion/scripts/silver/jwt_freshness.py",
+        "data/orion/scripts/silver/rate_limiter.py"
+      ],
+      "drift_check": "out of scope for this baseline (TO-1 territory)"
+    },
+    {
+      "lambda_dir": "infra/aws/lambda/inf-pipeline/inf-api-reps/",
+      "bundled_scripts": [
+        "convert_orion_api_to_silver.py",
+        "_orion_api_silver_lib.py",
+        "pull_inflection_representatives.py",
+        "jwt_freshness.py",
+        "rate_limiter.py"
+      ],
+      "canonical_paths": [
+        "data/orion/scripts/silver/convert_orion_api_to_silver.py",
+        "data/orion/scripts/silver/_orion_api_silver_lib.py",
+        "data/orion/manual_api/pull_inflection_representatives.py",
+        "data/orion/scripts/silver/jwt_freshness.py",
+        "data/orion/scripts/silver/rate_limiter.py"
+      ],
+      "drift_check": "out of scope for this baseline (TO-1 territory)"
+    },
+    {
+      "lambda_dir": "infra/aws/lambda/inf-pipeline/inf-api-positions/",
+      "bundled_scripts": [
+        "convert_orion_api_to_silver.py",
+        "_orion_api_silver_lib.py",
+        "pull_inflection_positions_daily.py",
+        "jwt_freshness.py",
+        "rate_limiter.py"
+      ],
+      "canonical_paths": [
+        "data/orion/scripts/silver/convert_orion_api_to_silver.py",
+        "data/orion/scripts/silver/_orion_api_silver_lib.py",
+        "data/orion/manual_api/pull_inflection_positions_daily.py",
+        "data/orion/scripts/silver/jwt_freshness.py",
+        "data/orion/scripts/silver/rate_limiter.py"
+      ],
+      "drift_check": "out of scope for this baseline (TO-1 territory)"
+    },
+    {
+      "lambda_dir": "infra/aws/lambda/inf-pipeline/inf-accounts-v2-daily/",
+      "bundled_scripts": [
+        "convert_orion_api_to_silver.py",
+        "_orion_api_silver_lib.py",
+        "pull_inflection_new_portfolio.py",
+        "jwt_freshness.py",
+        "rate_limiter.py"
+      ],
+      "canonical_paths": [
+        "data/orion/scripts/silver/convert_orion_api_to_silver.py",
+        "data/orion/scripts/silver/_orion_api_silver_lib.py",
+        "data/orion/manual_api/pull_inflection_new_portfolio.py",
+        "data/orion/scripts/silver/jwt_freshness.py",
+        "data/orion/scripts/silver/rate_limiter.py"
+      ],
+      "drift_check": "out of scope for this baseline (TO-1 territory)"
+    },
+    {
+      "lambda_dir": "infra/aws/lambda/inf-pipeline/inf-billing-daily/",
+      "bundled_scripts": [
+        "orion_billing_dim.py",
+        "jwt_freshness.py"
+      ],
+      "canonical_paths": [
+        "data/orion/scripts/silver/orion_billing_dim.py",
+        "data/orion/scripts/silver/jwt_freshness.py"
+      ],
+      "drift_check": "out of scope for this baseline (TO-1 territory)"
+    },
+    {
+      "lambda_dir": "infra/aws/lambda/inf-pipeline/inf-performance-daily/",
+      "bundled_scripts": [
+        "pull_inflection_performance_dim.py",
+        "jwt_freshness.py"
+      ],
+      "canonical_paths": [
+        "data/orion/manual_api/pull_inflection_performance_dim.py",
+        "data/orion/scripts/silver/jwt_freshness.py"
+      ],
+      "drift_check": "out of scope for this baseline (TO-1 territory)"
+    },
+    {
+      "lambda_dir": "infra/aws/lambda/inf-pipeline/inf-tax-daily/",
+      "bundled_scripts": [
+        "orion_tax_dim.py",
+        "jwt_freshness.py"
+      ],
+      "canonical_paths": [
+        "data/orion/scripts/silver/orion_tax_dim.py",
+        "data/orion/scripts/silver/jwt_freshness.py"
+      ],
+      "drift_check": "out of scope for this baseline (TO-1 territory)"
+    }
+  ]
+}
