@@ -504,7 +504,7 @@ paths:
 
   "org/modules/graph/comp-tools-segment-scope.md":
     lane: ANY_EXEC_OR_AE
-    note: "1-page agent reference card paired with comp-tools.yaml — segment-scope tier guidance + cross-cutting axes. AE-authored per ADHC_COMPIL_V4.OPS."
+    note: "1-page agent reference card paired with comp-tools.yaml — segment-scope tier guidance + cross-cutting axes. AE-authored per ADHC_COMPIL_V4.017."
 
   "org/modules/graph/trace_graph.py":
     lane: ANY_EXEC_OR_AE
@@ -697,9 +697,9 @@ paths:
     lane: CLOUD_OPS_OR_ETL
     note: "FIRMSEP detail/audit docs (PHASE0_AUDIT, ONBOARDING_PLAYBOOK, etc.) — AE-owned per ADVI_FIRMSEP TO authorization (COO 2026-05-07). Top-level ADVI_FIRMSEP.md PRD remains under docs/architecture/** ANY_CTO catch-all. Mirrors INFETL_*/INFLEC_* precedent."
 
-  "docs/architecture/ADHC_COMPIL_V4_OPS_*":
+  "docs/architecture/ADHC_COMPIL_V4_017_*":
     lane: ANY_EXEC_OR_AE
-    note: "V4.OPS test-matrix deliverables (empirical comp-tools validation). AE-authored per ADHC_COMPIL_V4.OPS TO. Top-level ADHC_COMPIL_V4.md PRD stays under docs/architecture/** ANY_CTO catch-all."
+    note: "V4.017 test-matrix deliverables (empirical comp-tools validation). AE-authored per ADHC_COMPIL_V4.017 TO. Top-level ADHC_COMPIL_V4.md PRD stays under docs/architecture/** ANY_CTO catch-all."
 
   "docs/architecture/**":
     lane: ANY_CTO

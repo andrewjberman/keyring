@@ -1,7 +1,7 @@
 # comp-tools segment-scope reference card
 
-**Last updated:** 2026-05-08 (ADHC_COMPIL_V4.OPS)
-**Companion:** `org/modules/graph/comp-tools.yaml` (full catalog) + `docs/architecture/ADHC_COMPIL_V4_OPS_TEST_MATRIX.md` (empirical evidence)
+**Last updated:** 2026-05-08 (ADHC_COMPIL_V4.017)
+**Companion:** `org/modules/graph/comp-tools.yaml` (full catalog) + `docs/architecture/ADHC_COMPIL_V4_017_TEST_MATRIX.md` (empirical evidence)
 
 This is the 1-page "which tool, when?" reference for agents working across BD, INF, and multi-firm surfaces. Use it before reaching for the full `comp-tools.yaml` catalog.
 
@@ -58,4 +58,4 @@ Beyond pipeline (BD/INF), tools may also vary by:
 7. **`loop-quiescence <MACRO_PREFIX>`** (e.g., `ADHC` vs `ADHC_COMPIL_V4`) returns `QUIESCENT_CLEAN total=0` — false-positive when no project file exists. Pass full project code.
 8. **`comp-iam service bd-gold-trigger`** shows role `(not mapped)` — Lambda-source-map IAM mapping incomplete for ~100 BD Lambdas. INF Lambdas mapped via V4.013 fallback (works).
 
-For full empirical evidence + all test cases + recommended fixes, see `docs/architecture/ADHC_COMPIL_V4_OPS_TEST_MATRIX.md`.
+For full empirical evidence + all test cases + recommended fixes, see `docs/architecture/ADHC_COMPIL_V4_017_TEST_MATRIX.md`.
