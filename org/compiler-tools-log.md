@@ -22,6 +22,19 @@ Results: PASS | PARTIAL | FAIL | SKIPPED | WARN
 - SKIPPED: decided not to run (explain in NOTE)
 - WARN: empty result with correct WARN message (valid signal)
 
+**Synthetic test fixtures (forward-only convention; ADHC_COMPIL_V4.016 ship 2026-05-08 PM):**
+
+Test-fixture runs (deliberately-failing inputs during tool-development testing) MUST include `(SYNTHETIC TEST FIXTURE) <description>` in the NOTE column. This distinguishes intentional test failures from real agent-encountered failures during retrospective analysis.
+
+Example:
+```
+| 2026-04-30 | 0.4.0_DS~A | (no-TO) | comp-validate | comp-validate definitely_not_a_thing | FAIL | (SYNTHETIC TEST FIXTURE) ADHC_COMPIL.012 invalid-script-name regression test |
+```
+
+Rationale: the 2026-04-30 v3 testing day produced ~15 synthetic FAILs that inflated the comp-validate raw FAIL rate from 29% real → 36.7% raw across the full corpus. Forward-only — pre-2026-05-08 entries can be retroactively annotated by their authors when next touched, but no backfill required.
+
+See: `docs/architecture/ADHC_COMPIL_FULL_CORPUS_RETROSPECTIVE.md` §1.4 + `org/modules/graph/comp-tools.yaml` for full methodology.
+
 ---
 
 ## 2026-04-09 — Initial Survey (1.0.0_SA_CTO)
@@ -2345,3 +2358,11 @@ Total: 2 PASS, 131 WARN, 133 PRDs scanned.
 | 2026-05-05 | 0.4.0_DS_ClientPlatform~A | ADVI_INFLEC.AUDIT-006 | ds-commit-gate | .tools/ds-commit-gate.sh INF_I_D00c.cumulative_chart.py | PASS | py_compile+AST+ruff all exit 0 |
 | 2026-05-05 | 0.4.0_DS_ClientPlatform~A | ADVI_INFLEC.AUDIT-006 | comp-pipescript | comp-pipescript deployed INF_I_D00c | PARTIAL | Tool targets opal-data-bd; Inflection scripts in opal-data-inf; manual S3 ls confirmed upload (20375 bytes 10:57:01Z) |
 | 2026-05-05 | 0.4.0_DS_ClientPlatform~A | ADVI_INFLEC.AUDIT-006 | comp-pipescript | comp-pipescript io INF_I_D00c | SKIPPED | Phase 0 confirmed via direct script read; script already deferred geo_drill in docstring; top_states available from build_geo_view() |
+| 2026-05-08 | 0.4.0_DT_ClientPlatform | (no-TO) | comp-routes | comp-routes behaviors | PASS |
+| 2026-05-08 | 0.4.0_DT_ClientPlatform | (no-TO) | comp-blast | comp-blast aws_cloudwatch_event_rule.inf_canonical_prices_daily | PASS |
+| 2026-05-08 | 0.4.0_DT_ClientPlatform | (no-TO) | comp-iam | comp-iam service inf-gold-trigger | PASS |
+| 2026-05-08 | 0.4.0_DT_ClientPlatform | (no-TO) | comp-blast | comp-blast aws_cloudwatch_event_rule.inf_canonical_prices_daily | PASS |
+| 2026-05-08 | 0.4.0_DT_ClientPlatform | (no-TO) | comp-blast | comp-blast inf-canonical-prices-daily | PASS |
+| 2026-05-08 | 0.4.0_DT_ClientPlatform | (no-TO) | comp-iam | comp-iam service inf-gold-trigger | PASS |
+| 2026-05-08 | 0.4.0_DT_ClientPlatform | (no-TO) | comp-blast | comp-blast aum_snapshot | PASS |
+| 2026-05-08 | 0.4.0_DT_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript io INF_D_08 | PASS |

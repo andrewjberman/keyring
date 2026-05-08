@@ -14,6 +14,19 @@
 # data paths, imports, or dependencies — run the appropriate comp-*
 # tool first. If the tool answers your question, do not explore further.
 
+compiler_tools_log_conventions:
+  synthetic_test_marker: "(SYNTHETIC TEST FIXTURE)"
+  applies_when: "Tool-development testing with deliberately-bad inputs (e.g., synthetic missing-file, invalid-script-name, malformed-payload regression tests)"
+  example: "| 2026-04-30 | 0.4.0_DS~A | (no-TO) | comp-validate | comp-validate definitely_not_a_thing | FAIL | (SYNTHETIC TEST FIXTURE) ADHC_COMPIL.012 invalid-script-name regression test |"
+  rationale: |
+    Distinguishes intentional test failures from real agent-encountered failures during
+    retrospective analysis. Pre-2026-05-08 v3 testing day produced ~15 synthetic FAILs
+    that inflated comp-validate raw FAIL rate from 29% real to 36.7% raw across the
+    full 1-month corpus.
+  ship_anchor: "ADHC_COMPIL_V4.016 (2026-05-08 PM, 1.0.0_SA_CTO direct)"
+  scope: "Forward-only; pre-2026-05-08 entries may be retroactively annotated when touched, but no backfill required"
+  full_methodology: "docs/architecture/ADHC_COMPIL_FULL_CORPUS_RETROSPECTIVE.md §1.4"
+
 tools:
   comp-build:
     command: comp-build
