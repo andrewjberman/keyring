@@ -67,6 +67,21 @@ CF invalidation `ID5O66TNS0ASSJSJ02LDU81E9Z` Completed on distribution `EVTSA9VE
 |------|--------|
 | `comp-routes behaviors` | Confirmed routing topology — `/api/scoped/advisor-intelligence/*.json` (depth-1) and `/artifacts/*` paths target S3 origins via shared-advisor-router; `/platinum/*` is not a separate behavior — it is a path suffix served via the depth-1 wildcard. Drove path-pattern decision. |
 
+## Follow-up Invalidation — DS~B GOLD-FOLLOWUP-1
+
+DS~B requested single-file invalidation at 16:08Z for INF_D_08 per-advisor existing_aua fix (corrected `platinum/firm/nmec_nmnc_nna.json` uploaded 16:07:53Z, ETag `2cbb4e836558cb23c69ff117dde3c053`). This sits AFTER the 15:08Z broad invalidation, so the new file needs its own cache eviction.
+
+**Evidence:**
+- Distribution: `EVTSA9VEHNZVH`
+- Invalidation ID: `I8T5WQ87AZJBPE0K62R05Z3MRU`
+- Path: `/api/scoped/advisor-intelligence/platinum/firm/nmec_nmnc_nna.json`
+- CreateTime: 2026-05-08T16:09:49.458Z
+- Status: Completed (boto3 `invalidation_completed` waiter)
+
+**Tooling note (saved to memory `feedback_cf_invalidation_gitbash_msys.md`):** the second invalidation surfaced an MSYS path-mangling bug — `aws cloudfront create-invalidation --paths "/api/..."` returned `InvalidArgument`, and the standard `MSYS_NO_PATHCONV=1` workaround broke the aws Python shim itself. Switched to direct boto3 call which is deterministic on Windows + Git Bash. First invalidation (15:08Z) succeeded via aws CLI by accident — boto3 is the standing pattern going forward.
+
+RAVC delivered to DS~B: `20260508T161030Z_0.4.0_DT_ClientPlatform_RAVC___single-file_CF_invalidation_COMPL.md`.
+
 ## Next Steps
 
 - [RD 0.4.2_RD_AdvisorIntelligence] Fire INFNNA.PORTAL-VERIFY when COO dispatches — expected: 4 advisors visible, firm AUA $199.6M, joe_brandenburg LIVE $16.2M.
