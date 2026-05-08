@@ -140,10 +140,34 @@ RAVC3 ACK sent to COO 20260508T~14:17Z.
 
 ---
 
+## COO RAVC2 Final ACK (20260508T~14:2xZ) — Loop Closed
+
+- AC2 update (CTO Option A) logged by COO. Revised AC2 is canonical going forward.
+- Night 1 PASS confirmed by COO.
+- Night 2 passive monitor standing by.
+- Phase 1 denominator fix HOLD confirmed.
+- AC3 deferred to Night 3 close package.
+
+---
+
+## Final Current State (end of startup session)
+
+| Item | Status |
+|------|--------|
+| UAD-CREATOR TO | COMPLETE — `5389dc4e5` |
+| SL-P1c AC2 | REVISED per CTO Option A — `d2a1fb2ab` |
+| SL-P1c Night 1 | PASS — 110.7 KiB, 458 accounts, firm $46.3M |
+| SL-P1c Night 2 | PASSIVE HOLD — expected 2026-05-09T00:30Z |
+| SL-P1c Night 3 | PASSIVE HOLD — expected 2026-05-10T00:30Z |
+| B_01 Phase 1 fix | HOLD per CTO (standing-backlog) |
+| Wave C1 orphan cleanup | PASSIVE HOLD — ~2026-05-08T23:00Z |
+| RAVC chain | FULLY CLOSED — all COO loops ACK'd |
+| DS~B | IDLE — inbox watcher live (bhb6ary28) |
+
+---
+
 ## Next Steps
 
-1. **[Self]** Passive monitor — Night 2/3 expected at ~2026-05-09T00:30Z and ~2026-05-10T00:30Z. Check S3 each session.
-2. **[CTO]** Ruling on AC2 validity + Phase 1 denominator fix scope. DS~B HOLD on B_01 edits.
-3. **[Self]** Night 3 close package: Jones + pure-sleeve spot-check + AC3 silver lookup + cohort count stability. RAVC4 to COO.
-4. **[AE 0.7]** Wave C1 orphan cleanup gate (~2026-05-08T23:00Z). On signal: DS~B runs `delete_orion_catalog_orphans.py` against `_193627Z` pair.
-5. **[AE 0.6.1]** Performance bronze `bronze/orion-api/2026-05-08/performance.csv` not yet appeared — monitor.
+1. **[Self]** Night 2 spot-check on `2026-05-07.parquet` when it appears (~2026-05-09T00:30Z).
+2. **[Self]** Night 3 close package (RAVC4 to COO): SHA `6424b29ab` + ETags + 3-night partition dates + cohort counts + Jones revised AC2 check + AC3 pure-sleeve flag.
+3. **[AE 0.7]** Wave C1 orphan cleanup gate (~2026-05-08T23:00Z). On signal: DS~B runs `delete_orion_catalog_orphans.py` against `_193627Z` pair.
