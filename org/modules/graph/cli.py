@@ -30,16 +30,25 @@ sys.path.insert(0, str(_WORKSPACE))
 from org.modules.graph.trace_graph import (  # noqa: E402
     TraceGraph, build_graph, format_trace, format_blast,
     diff_graphs, save_baseline, format_delta,
+    check_node_freshness, emit_stale_warn,
 )
 
 
-def _get_graph(force_rebuild: bool = False) -> TraceGraph:
-    """Load cached graph or build a new one."""
+def _get_graph(force_rebuild: bool = False, check_freshness: bool = True) -> TraceGraph:
+    """Load cached graph or build a new one.
+
+    When check_freshness=True (default), re-loads emit STALE_NODE_WARN to stderr
+    for any node whose source-file SHA has drifted since indexing
+    (ADHC_COMPIL_V4.012). Doesn't block; preserves clean stdout.
+    """
     if not force_rebuild and _CACHE_FILE.exists():
         try:
             g = TraceGraph.load(_CACHE_FILE)
             age = time.time() - g.built_at
             if age < 300:  # 5 min cache
+                if check_freshness:
+                    drift = check_node_freshness(g, _WORKSPACE)
+                    emit_stale_warn(drift)
                 return g
         except Exception:
             pass
@@ -54,7 +63,23 @@ def _get_graph(force_rebuild: bool = False) -> TraceGraph:
 
 
 def cmd_build(args):
-    g = _get_graph(force_rebuild=True)
+    # --check mode: verify cached graph against current FS without rebuilding
+    # (ADHC_COMPIL_V4.012 AC3). Exits 2 if any node has SHA drift; 0 if clean.
+    if getattr(args, 'check', False):
+        if not _CACHE_FILE.exists():
+            print("comp-build --check: no cached graph found", file=sys.stderr)
+            print("  Run `comp-build` first.", file=sys.stderr)
+            sys.exit(2)
+        g = TraceGraph.load(_CACHE_FILE)
+        drift = check_node_freshness(g, _WORKSPACE)
+        if not drift:
+            indexed = sum(1 for n in g.nodes.values() if n.source_sha)
+            print(f"comp-build --check: clean ({indexed} indexed nodes; no SHA drift)")
+            sys.exit(0)
+        emit_stale_warn(drift)
+        sys.exit(2)
+
+    g = _get_graph(force_rebuild=True, check_freshness=False)
     print(f"Graph built: {len(g.nodes)} nodes, {len(g.edges)} edges")
     print(f"Cached at: {_CACHE_FILE}")
 
@@ -72,6 +97,11 @@ def cmd_build(args):
     print("\nEdge types:")
     for t, c in sorted(edge_types.items()):
         print(f"  {t}: {c}")
+
+    # Source-SHA coverage
+    indexed_count = sum(1 for n in g.nodes.values() if n.source_sha)
+    file_node_count = sum(1 for n in g.nodes.values() if n.file_path)
+    print(f"\nSource SHAs indexed: {indexed_count}/{file_node_count} file-backed nodes")
 
 
 def cmd_trace(args):
@@ -344,7 +374,9 @@ def main():
     sub = parser.add_subparsers(dest="command")
 
     # build
-    sub.add_parser("build", help="Force rebuild the trace graph")
+    p_build = sub.add_parser("build", help="Force rebuild the trace graph")
+    p_build.add_argument("--check", action="store_true",
+                         help="Verify cached graph SHA freshness without rebuilding (exit 2 on drift)")
 
     # trace
     p_trace = sub.add_parser("trace", help="Trace data path from a node")

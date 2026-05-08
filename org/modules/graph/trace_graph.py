@@ -17,6 +17,7 @@ from __future__ import annotations
 import json
 import os
 import re
+import sys
 import time
 from dataclasses import dataclass, field, asdict
 from pathlib import Path
@@ -58,6 +59,20 @@ class Node:
     function_name: str = ""          # specific function within file
     run_order: int = -1              # execution order for GOLD_SCRIPT
     metadata: dict = field(default_factory=dict)
+    source_sha: str = ""             # SHA-256 of source file at index time (ADHC_COMPIL_V4.012)
+
+
+def _compute_file_sha(path: Path) -> str:
+    """Return short (12-char) SHA-256 hex of file contents; empty string on miss."""
+    try:
+        import hashlib
+        h = hashlib.sha256()
+        with open(path, 'rb') as f:
+            for chunk in iter(lambda: f.read(65536), b''):
+                h.update(chunk)
+        return h.hexdigest()[:12]
+    except (OSError, FileNotFoundError):
+        return ""
 
 
 @dataclass
@@ -81,6 +96,18 @@ class TraceGraph:
     _indexed: bool = field(default=False, repr=False)
 
     def add_node(self, node: Node):
+        # Compute source SHA at index time when file_path resolves to a real file
+        # (ADHC_COMPIL_V4.012 STALE_NODE_WARN). Skip if SHA already populated.
+        if node.file_path and not node.source_sha:
+            try:
+                fp = Path(node.file_path)
+                if not fp.is_absolute():
+                    # Resolve against workspace root (parent of org/modules/graph)
+                    fp = Path(__file__).resolve().parent.parent.parent.parent / node.file_path
+                if fp.is_file():
+                    node.source_sha = _compute_file_sha(fp)
+            except Exception:
+                pass
         self.nodes[node.id] = node
         self._indexed = False
 
@@ -166,6 +193,7 @@ class TraceGraph:
                 id=v["id"], node_type=v["node_type"], label=v["label"],
                 file_path=v.get("file_path", ""), function_name=v.get("function_name", ""),
                 run_order=v.get("run_order", -1), metadata=md,
+                source_sha=v.get("source_sha", ""),
             )
         for e in data.get("edges", []):
             g.edges.append(Edge(
@@ -173,6 +201,58 @@ class TraceGraph:
                 edge_type=e["edge_type"], metadata=e.get("metadata", {}),
             ))
         return g
+
+
+# ---------------------------------------------------------------------------
+# Freshness check (ADHC_COMPIL_V4.012 STALE_NODE_WARN)
+# ---------------------------------------------------------------------------
+
+def check_node_freshness(graph: TraceGraph, workspace_root: Path) -> list[tuple[str, str, str]]:
+    """Walk all nodes with file_path + source_sha; recompute current SHA; return drift list.
+
+    Returns list of (node_id, indexed_sha, current_sha) tuples for nodes whose
+    current file SHA differs from indexed SHA. Empty list = no drift.
+
+    Skips nodes where source_sha is empty (first-build case; CTO AC5 — no false
+    positives on empty cache).
+    """
+    drift: list[tuple[str, str, str]] = []
+    for node in graph.nodes.values():
+        if not node.file_path or not node.source_sha:
+            continue
+        fp = Path(node.file_path)
+        if not fp.is_absolute():
+            fp = workspace_root / node.file_path
+        if not fp.is_file():
+            # File deleted since index — count as drift
+            drift.append((node.id, node.source_sha, "<missing>"))
+            continue
+        current = _compute_file_sha(fp)
+        if current and current != node.source_sha:
+            drift.append((node.id, node.source_sha, current))
+    return drift
+
+
+def emit_stale_warn(drift: list[tuple[str, str, str]], stream=None) -> None:
+    """Emit STALE_NODE_WARN to stderr (or provided stream) for each drift entry.
+
+    Output goes to stderr by default to preserve clean stdout for structured
+    tool output (CTO AC2: stdout unchanged).
+    """
+    if not drift:
+        return
+    if stream is None:
+        stream = sys.stderr
+    print(f"STALE_NODE_WARN: {len(drift)} node(s) have source-file SHA drift since last comp-build:",
+          file=stream)
+    for node_id, indexed, current in drift[:10]:
+        print(f"  {node_id}: indexed={indexed} -> current={current}",
+              file=stream)
+    if len(drift) > 10:
+        print(f"  ... and {len(drift) - 10} more (rerun comp-build to refresh)",
+              file=stream)
+    else:
+        print("  Rerun: comp-build", file=stream)
 
 
 # ---------------------------------------------------------------------------

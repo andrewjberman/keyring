@@ -502,6 +502,14 @@ paths:
     lane: ANY_EXEC_OR_AE
     note: "Compiler tool registry. AE adds rows when shipping new compiler tools per ADHC_COMPIL_V4 family. Execs revise wider scope."
 
+  "org/modules/graph/trace_graph.py":
+    lane: ANY_EXEC_OR_AE
+    note: "TraceGraph + Node/Edge dataclasses + freshness check. AE extends per ADHC_COMPIL_V4.012 (STALE_NODE_WARN source-SHA tracking 2026-05-08)."
+
+  "org/modules/graph/cli.py":
+    lane: ANY_EXEC_OR_AE
+    note: "Top-level comp-build/trace/blast/diff CLI entry. AE extends per ADHC_COMPIL_V4.012 (--check mode + freshness wiring 2026-05-08)."
+
   "org/modules/**":
     lane: ANY_EXEC
 
