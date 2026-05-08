@@ -1163,15 +1163,32 @@ def build_silver_dag(
     return dag
 
 
+def build_inf_manual_api_dag(workspace_root: Path) -> PipelineDAG:
+    """Build a DAG for Inflection manual_api scripts (Orion REST pull scripts).
+
+    Path: data/orion/manual_api/*.py (non-recursive)
+    These scripts pull from Orion REST API and write to S3 bronze; classified as
+    pipeline label "inf-manual-api". I/O detection via _extract_hardcoded_paths
+    (same pattern as silver scripts; no dispatch catalog).
+
+    ADHC_COMPIL_V4.008: closes the manual_api graph-coverage gap (anchor: 12+
+    NOT-INDEXED FAILs in 2-week compiler-tools-log including pull_inflection_billing_dim,
+    orion_billing_dim, pull_inflection_performance_dim).
+    """
+    return build_silver_dag(workspace_root, "inf-manual-api", "data/orion/manual_api")
+
+
 def build_multi_pipeline_dag(workspace_root: Path) -> PipelineDAG:
     """Build a combined multi-pipeline DAG covering all indexed layers:
-      - bd-gold  (BD gold scripts, s3_layout-authoritative)
-      - inf-gold (INF gold scripts, hardcoded-path detection)
-      - bd-silver (BD silver scripts, hardcoded-path detection)
-      - inf-silver (INF silver scripts, hardcoded-path detection)
+      - bd-gold        (BD gold scripts, s3_layout-authoritative)
+      - inf-gold       (INF gold scripts, hardcoded-path detection)
+      - bd-silver      (BD silver scripts, hardcoded-path detection)
+      - inf-silver     (INF silver scripts, hardcoded-path detection)
+      - inf-manual-api (INF manual_api Orion REST pull scripts; ADHC_COMPIL_V4.008)
 
     Script IDs in the combined DAG are namespaced:
-      bd-gold:D_04, inf-gold:D_04, bd-silver:convert_assets_to_silver, etc.
+      bd-gold:D_04, inf-gold:D_04, bd-silver:convert_assets_to_silver,
+      inf-manual-api:pull_inflection_billing_dim, etc.
 
     Cross-pipeline edges are built: a silver script's write_keys that overlap with
     a gold script's read_keys produce an implicit cross-layer dependency.
@@ -1180,6 +1197,7 @@ def build_multi_pipeline_dag(workspace_root: Path) -> PipelineDAG:
     inf_gold = build_inf_gold_dag(workspace_root)
     bd_silver = build_silver_dag(workspace_root, "bd-silver", "data/black_diamond/scripts/silver")
     inf_silver = build_silver_dag(workspace_root, "inf-silver", "data/orion/scripts/silver")
+    inf_manual_api = build_inf_manual_api_dag(workspace_root)
 
     merged = PipelineDAG()
 
@@ -1190,7 +1208,7 @@ def build_multi_pipeline_dag(workspace_root: Path) -> PipelineDAG:
         return f"{pipeline}:{script_id}"
 
     # Merge scripts with namespaced IDs
-    for sub_dag in (bd_gold, inf_gold, bd_silver, inf_silver):
+    for sub_dag in (bd_gold, inf_gold, bd_silver, inf_silver, inf_manual_api):
         for sid, sio in sub_dag.scripts.items():
             ns_id = _ns(sio.pipeline, sid)
             # Clone sio with namespaced script_id

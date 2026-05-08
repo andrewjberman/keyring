@@ -34,22 +34,24 @@ sys.path.insert(0, str(_WORKSPACE))
 from org.modules.graph.extract_pipeline import (  # noqa: E402
     build_pipeline_dag, inject_pipeline_edges,
     build_inf_gold_dag, build_silver_dag, build_multi_pipeline_dag,
+    build_inf_manual_api_dag,
     _parse_dispatch, _parse_orion_dispatch,
 )
 
-_PIPELINE_CHOICES = ("bd-gold", "inf-gold", "bd-silver", "inf-silver", "all", "bd", "inf")
+_PIPELINE_CHOICES = ("bd-gold", "inf-gold", "bd-silver", "inf-silver", "inf-manual-api", "all", "bd", "inf")
 
 
 def _build_dag(pipeline: str = "bd-gold"):
     """Return the appropriate DAG for the given pipeline scope.
 
-    pipeline="bd-gold"  → existing BD-gold DAG (backward-compatible default)
-    pipeline="bd"       → shorthand alias for bd-gold (disambiguation flag)
-    pipeline="inf-gold" → INF gold DAG only
-    pipeline="inf"      → shorthand alias for inf-gold (disambiguation flag)
-    pipeline="bd-silver"→ BD silver DAG only
-    pipeline="inf-silver"→ INF silver DAG only
-    pipeline="all"      → combined multi-pipeline DAG (namespaced IDs)
+    pipeline="bd-gold"     → existing BD-gold DAG (backward-compatible default)
+    pipeline="bd"          → shorthand alias for bd-gold (disambiguation flag)
+    pipeline="inf-gold"    → INF gold DAG only
+    pipeline="inf"         → shorthand alias for inf-gold (disambiguation flag)
+    pipeline="bd-silver"   → BD silver DAG only
+    pipeline="inf-silver"  → INF silver DAG only
+    pipeline="inf-manual-api" → INF manual_api DAG (Orion REST pull scripts; ADHC_COMPIL_V4.008)
+    pipeline="all"         → combined multi-pipeline DAG (namespaced IDs)
     """
     if pipeline in ("bd-gold", "bd"):
         return build_pipeline_dag(_WORKSPACE)
@@ -59,6 +61,8 @@ def _build_dag(pipeline: str = "bd-gold"):
         return build_silver_dag(_WORKSPACE, "bd-silver", "data/black_diamond/scripts/silver")
     if pipeline == "inf-silver":
         return build_silver_dag(_WORKSPACE, "inf-silver", "data/orion/scripts/silver")
+    if pipeline == "inf-manual-api":
+        return build_inf_manual_api_dag(_WORKSPACE)
     if pipeline == "all":
         return build_multi_pipeline_dag(_WORKSPACE)
     return build_pipeline_dag(_WORKSPACE)
@@ -242,12 +246,32 @@ def _auto_resolve_script_id(raw_id, pipeline_hint=None):
         print(f"Script not found: {raw}. {hint}")
         sys.exit(1)
 
+    # --- INF manual_api scripts (ADHC_COMPIL_V4.008) ---
+    # Patterns: pull_inflection_*, orion_*_dim, probe_inflec_*, create_*_query
+    is_manual_api_like = (
+        not bd_only and (
+            lower.startswith("pull_inflection") or
+            lower.startswith("orion_") or
+            lower.startswith("probe_inflec") or
+            (lower.startswith("create_") and "query" in lower) or
+            (lower.startswith("diagnose_") and "performance" in lower)
+        )
+    )
+    if is_manual_api_like:
+        manual_dag = _build_dag("inf-manual-api")
+        if lower in manual_dag.scripts:
+            return manual_dag, lower
+        # Also try the raw form (case-preserved) in case scripts have mixed-case names
+        if raw in manual_dag.scripts:
+            return manual_dag, raw
+
     # --- Bare silver script names (snake_case, no LETTER_NN pattern) ---
     is_silver_like = (
         not re.match(r"^[A-Z]_\d", raw) and
         not upper.startswith("INF_") and
         "_" in raw and
-        lower not in _DISPATCHER_NODES
+        lower not in _DISPATCHER_NODES and
+        not is_manual_api_like
     )
     if is_silver_like:
         candidates = []
@@ -259,6 +283,11 @@ def _auto_resolve_script_id(raw_id, pipeline_hint=None):
             inf_s = _build_dag("inf-silver")
             if lower in inf_s.scripts:
                 candidates.append(("inf-silver", inf_s, lower))
+            # Fallback: also check inf-manual-api for snake_case scripts that don't
+            # match the explicit prefix patterns above
+            inf_m = _build_dag("inf-manual-api")
+            if lower in inf_m.scripts:
+                candidates.append(("inf-manual-api", inf_m, lower))
 
         if len(candidates) == 1:
             _, dag, cid = candidates[0]
