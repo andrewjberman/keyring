@@ -30,12 +30,15 @@ compiler_tools_log_conventions:
 tools:
   comp-build:
     command: comp-build
+    segment_scope: cross-segment
     when: "Graph cache is stale (>5 min) or you suspect new files were added"
     cost: "~2s"
     output: "Node/edge counts by type, cached to .comp-graph/graph.json"
 
   comp-trace:
     command: "comp-trace <query> [--direction up|down|both] [--depth N] [--json]"
+    segment_scope: segment-aware
+    segment_scope_note: "Graph contains BD gold scripts + all Lambda/COMPONENT/ENDPOINT/EVENTBRIDGE/S3 nodes. INF gold scripts are NOT in the graph (use comp-pipescript instead). For S3 nodes, use 's3:' prefix; platinum/* keys do not exist as graph nodes — use comp-platinum reverse."
     when: |
       - "Where does this data come from?" (--direction up)
       - "What consumes this data?" (--direction down)
@@ -57,6 +60,8 @@ tools:
 
   comp-blast:
     command: "comp-blast <query> [--function name] [--json]"
+    segment_scope: segment-aware
+    segment_scope_note: "Same scope as comp-trace — BD gold + all cross-pipeline nodes; INF gold absent. Use comp-pipescript consumers/feeds for INF gold."
     when: |
       - Before modifying ANYTHING: "what downstream systems will this affect?"
       - Gold script change: "what S3 artifacts, Lambdas, and portal pages does this feed?"
@@ -80,6 +85,7 @@ tools:
 
   comp-diff:
     command: "comp-diff [--ref HEAD~3] [--staged] [--json]"
+    segment_scope: cross-segment
     when: |
       - Before committing: "what is the blast radius of my uncommitted changes?"
       - After pulling changes: "what graph paths were affected by recent commits?"
@@ -93,6 +99,8 @@ tools:
 
   comp-xref:
     command: "comp-xref [<symbol>] [--save] [--json]"
+    segment_scope: cross-segment
+    segment_scope_note: "Both modes (diff + symbol-lookup) operate on the unified graph. Symbol-lookup matches across all node types (GOLD_SCRIPT/COMPONENT/ENDPOINT/LAMBDA/EVENTBRIDGE/S3); inherits the same BD-gold-only limitation for graph nodes."
     when: |
       - After a gold re-run or deploy: "did the dependency graph change?" -> comp-xref (no-arg = diff mode)
       - Periodic audit: "what nodes/edges were added or removed since last check?" -> comp-xref
@@ -115,6 +123,8 @@ tools:
 
   comp-pipescript:
     command: "comp-pipescript <subcommand> [args]"
+    segment_scope: segment-aware
+    segment_scope_note: "Auto-detects pipeline by script-id prefix (INF_* -> inf-gold; D_*/C_*/B_*/A_* -> bd-gold; pull_inflection_* / orion_* -> inf-manual-api). Explicit --pipeline {bd-gold,bd-silver,inf-gold,inf-silver,inf-manual-api}. Known issues: chain --pipeline inf-gold returns BD chain (bug); deployed --pipeline inf-gold crashes after 2 INF_D scripts (UnboundLocalError, see ADHC_COMPIL_V4_OPS_TEST_MATRIX triage)."
     when: |
       - "What does gold script X read and write?" -> comp-pipescript io X
       - "What feeds script X?" -> comp-pipescript feeds X
@@ -140,6 +150,8 @@ tools:
 
   comp-routes:
     command: "comp-routes <subcommand> [args]"
+    segment_scope: segment-aware
+    segment_scope_note: "URL-based + endpoint-name-based; pipeline-agnostic in input but auto-routes through pipeline-specific CloudFront behaviors + API Gateway routes. Cottonwood paths defer until FIRMSEP.10."
     when: |
       - "How does this data get from S3 to the browser?" -> comp-routes trace <endpoint_fn>
       - "What auth layers does this path go through?" -> comp-routes auth-map
@@ -166,6 +178,8 @@ tools:
 
   comp-transform:
     command: "comp-transform <subcommand> [args]"
+    segment_scope: segment-aware
+    segment_scope_note: "Component-name based; auto-routes by component path. --feature <token> to escalate feature-named UNUSED to WARN."
     when: |
       - "What fields does this component actually render from the API response?" -> comp-transform fields X
       - "What useMemo chains transform the data after fetch?" -> comp-transform chains X
@@ -192,6 +206,8 @@ tools:
 
   comp-platinum:
     command: "comp-platinum <subcommand> [args]"
+    segment_scope: segment-aware
+    segment_scope_note: "page subcommand: component-name based. reverse subcommand: S3-key based + hybrid #field resolution. tab-audit / summary: portal-wide (cross-segment). Use --strict to suppress SPECULATIVE results."
     when: |
       - "For this page, trace the full path from fetch to gold script" -> comp-platinum page X
       - "What S3 key does this endpoint resolve to, and what gold script writes it?" -> comp-platinum page X
@@ -210,6 +226,7 @@ tools:
 
   comp-cache:
     command: "comp-cache <subcommand> [args]"
+    segment_scope: cross-segment
     when: |
       - "Do any components share a React Query cache key?" -> comp-cache collisions
       - "What cache keys exist and which components own them?" -> comp-cache map
@@ -224,6 +241,7 @@ tools:
 
   comp-pii:
     command: "comp-pii <subcommand> [args]"
+    segment_scope: cross-segment
     when: |
       - "Does this component expose PII to external users?" -> comp-pii scan ComponentName
       - "Full PII audit across all ADVI tabs" -> comp-pii audit
@@ -243,6 +261,8 @@ tools:
 
   comp-validate:
     command: "comp-validate <script_id> --artifact <local/path/to/artifact.json>"
+    segment_scope: segment-aware
+    segment_scope_note: "Auto-resolver per script_id prefix (INF_* -> INF config; others -> BD config). Explicit --config <path> override (V4.009)."
     when: |
       - Before uploading any gold artifact to S3: verify output invariants hold
       - After a gold run, before signaling downstream agents: confirm correctness
@@ -268,6 +288,7 @@ tools:
 
   comp-shell:
     command: "comp-shell scan [path ...] [--all] [--guard-lookback N]"
+    segment_scope: cross-segment
     when: |
       - About to commit a .sh file in .tools/, org/mcp/, org/threads/, infra/aws/lambda/ci/, infra/aws/terraform/
       - Adding a new shell script to any local-runtime path (Rule 16 check)
@@ -293,6 +314,8 @@ tools:
 
   comp-freshness:
     command: "comp-freshness {chain {bd|inf} | script <id> | artifact <s3-prefix>} [--list]"
+    segment_scope: segment-aware
+    segment_scope_note: "Explicit pipeline arg required for chain subcommand. script + artifact subcommands work cross-pipeline (inferred from script_id prefix or s3 prefix). DDB target post-V4.015."
     when: |
       - Before dispatching a gold chain: "is the upstream S3 data fresh enough to run?" -> comp-freshness chain bd|inf
       - About to run a specific script: "are the inputs for this script fresh?" -> comp-freshness script A_03
@@ -349,6 +372,8 @@ inf_pipeline:
 tools_continued:
   comp-iam:
     command: "comp-iam <subcommand>"
+    segment_scope: segment-aware
+    segment_scope_note: "service subcommand: Lambda-name first, IAM-role-name fallback (V4.013). gaps/roles/services/role/stats: multi-pipeline scan. NOTE: ~100 BD Lambdas show '(role not mapped)' due to incomplete mapping in lambda-source-map.json (NUISANCE; see V4.OPS triage). cross-firm subcommand pending V4.006."
     when: |
       - Before deploying a Lambda or EC2 script change: verify IAM permissions are sufficient
       - Debugging silent AWS permission failures (no exception caught, operation silently fails)
@@ -367,7 +392,9 @@ tools_continued:
     note: "Catches permission gaps before they cause silent failures. The IAM watchdog loop incident (2026-04-09) was caused by s3:DeleteObject missing from bd-exporter-ec2-role -- comp-iam would have flagged this during the Terraform review."
 
   check-lambda-layer-deps:
-    command: "check-lambda-layer-deps <lambda> [--all] [--json]"
+    command: "check-lambda-layer-deps [--function <name>] [--pipeline <name>] [--strict] [--verbose]"
+    segment_scope: segment-aware
+    segment_scope_note: "No positional args (V4.OPS doc-fix; catalog previously said positional). Default: full repo audit. --function <name> for single Lambda, --pipeline <name> for pipeline scope, --strict to exit 1 on any FAIL."
     when: |
       - Before deploying a Lambda zip change: confirm imports resolve through declared layers
       - After adding a new third-party import to a Lambda: verify a layer covers it
@@ -383,7 +410,9 @@ tools_continued:
     note: "Shipped 2026-05-07 under ADHC_LAMBDADOC.003 (`fc4d1f18f` MVP + `59350fdc2` aws_lambda_layer_version + module-reference handling). Empirical anchor: v1.7.38 inf-pipeline regression where 3 of 4 inf-api-* Lambdas had nested-path source_map files leading to ModuleNotFoundError + inf-api-assets-v2 had layers=[pandas_layer] but layer didn't have `requests` — old zip masked it via inline-vendoring. v1.7.39 hotfix flat-zip + layer switch to pandas_pyarrow_requests_layer caught + fixed; this tool prevents the class going forward. Cataloged 2026-05-08 under ADHC_COMPIL_V4.007 doc close-out."
 
   comp-constants:
-    command: "comp-constants <subcommand> [args]"
+    command: "comp-constants [--config CONFIG] {check,index,new,list} [--file PATH]"
+    segment_scope: segment-aware
+    segment_scope_note: "Lane is determined by config metadata (bd/inf/multifirm), NOT a CLI flag. Auto-detects lane from constant-name prefix during scan. --lane is NOT a supported flag (catalog drift fixed in V4.OPS)."
     when: |
       - Pre-commit on any Python edit -> drift gate (wired into ds-commit-gate.sh)
       - "Did the rep_id=6 propagation actually land in all sites?" -> comp-constants check
@@ -402,6 +431,7 @@ tools_continued:
 
   comp-tooltip:
     command: "comp-tooltip <subcommand>"
+    segment_scope: cross-segment
     when: |
       - Tooltip migration audit: which sites use inline navy/silver/hardcoded tooltips vs <DataTooltip>
       - Before a tooltip cleanup sprint: get full inventory of drift sites
@@ -418,7 +448,9 @@ tools_continued:
     note: "One-off audit tool. Scans for inline navy/silver/hardcoded tooltip patterns vs <DataTooltip> canonical component. Use for tooltip migration sprints only."
 
   loop-quiescence:
-    command: "loop-quiescence <MACRO> [--summary]"
+    command: "loop-quiescence <PROJECT_CODE> [--summary]"
+    segment_scope: cross-segment
+    segment_scope_note: "Pass full PROJECT_CODE (e.g. ADHC_COMPIL_V4), NOT macro prefix (e.g. ADHC). Bare macro prefix returns false-positive QUIESCENT_CLEAN total=0 (V4.OPS triage #7). Tier-1 SA only."
     when: |
       - Tier-1 SA agent (CTO/COO/CVO) about to fire /loop {MACRO} expansion mode and needs to validate quiescence first
       - "Is this macro lane truly quiescent or are there active TOs I'm about to ignore?"

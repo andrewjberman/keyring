@@ -2366,3 +2366,148 @@ Total: 2 PASS, 131 WARN, 133 PRDs scanned.
 | 2026-05-08 | 0.4.0_DT_ClientPlatform | (no-TO) | comp-iam | comp-iam service inf-gold-trigger | PASS |
 | 2026-05-08 | 0.4.0_DT_ClientPlatform | (no-TO) | comp-blast | comp-blast aum_snapshot | PASS |
 | 2026-05-08 | 0.4.0_DT_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript io INF_D_08 | PASS |
+| 2026-05-08 | 0.4.0_DT_ClientPlatform | (no-TO) | comp-build | comp-build | PASS |
+| 2026-05-08 | 0.4.0_DT_ClientPlatform | (no-TO) | comp-build | comp-build | PASS |
+| 2026-05-08 | 0.4.0_DT_ClientPlatform | (no-TO) | comp-trace | comp-trace D_04 --direction both | PASS |
+| 2026-05-08 | 0.4.0_DT_ClientPlatform | (no-TO) | comp-trace | comp-trace INF_D_04 --direction both | PASS |
+| 2026-05-08 | 0.4.0_DT_ClientPlatform | (no-TO) | comp-trace | comp-trace AdvisorIntelligence --direction both | PASS |
+| 2026-05-08 | 0.4.0_DT_ClientPlatform | (no-TO) | comp-trace | comp-trace opal-partners-data --direction up | PASS |
+| 2026-05-08 | 0.4.0_DT_ClientPlatform | (no-TO) | comp-trace | comp-trace platinum/firm/leaderboard.json --direction both | PASS |
+| 2026-05-08 | 0.4.0_DT_ClientPlatform | (no-TO) | comp-trace | comp-trace _build_aua_view --direction down | PASS |
+| 2026-05-08 | 0.4.0_DT_ClientPlatform | (no-TO) | comp-blast | comp-blast build_employee_leaderboard | PASS |
+| 2026-05-08 | 0.4.0_DT_ClientPlatform | (no-TO) | comp-blast | comp-blast _build_aua_view | PASS |
+| 2026-05-08 | 0.4.0_DT_ClientPlatform | (no-TO) | comp-blast | comp-blast inf-gold-trigger | PASS |
+| 2026-05-08 | 0.4.0_DT_ClientPlatform | (no-TO) | comp-blast | comp-blast _compute_window_decomposition | PASS |
+| 2026-05-08 | 0.4.0_DT_ClientPlatform | (no-TO) | comp-diff | comp-diff | PASS |
+| 2026-05-08 | 0.4.0_DT_ClientPlatform | (no-TO) | comp-diff | comp-diff --staged | PASS |
+| 2026-05-08 | 0.4.0_DT_ClientPlatform | (no-TO) | comp-xref | comp-xref | PASS |
+| 2026-05-08 | 0.4.0_DT_ClientPlatform | (no-TO) | comp-trace | comp-trace INF_D_04 --direction down | PASS |
+| 2026-05-08 | 0.4.0_DT_ClientPlatform | (no-TO) | comp-trace | comp-trace INF_D | PASS |
+| 2026-05-08 | 0.4.0_DT_ClientPlatform | (no-TO) | comp-trace | comp-trace leaderboard | PASS |
+| 2026-05-08 | 0.4.0_DT_ClientPlatform | (no-TO) | comp-trace | comp-trace s3:platinum/firm/leaderboard.json | PASS |
+| 2026-05-08 | 0.4.0_DT_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript io D_04 | PASS |
+| 2026-05-08 | 0.4.0_DT_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript io INF_D_04 | PASS |
+| 2026-05-08 | 0.4.0_DT_ClientPlatform | (no-TO) | comp-trace | comp-trace s3:gold/artifacts/employee_leaderboard.json | PASS |
+| 2026-05-08 | 0.4.0_DT_ClientPlatform | (no-TO) | comp-blast | comp-blast s3:gold/canonical/holdings | PASS |
+| 2026-05-08 | 0.4.0_DT_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript dag | PASS |
+| 2026-05-08 | 0.4.0_DT_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript chain downstream | PASS |
+| 2026-05-08 | 0.4.0_DT_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript feeds D_04 | PASS |
+| 2026-05-08 | 0.4.0_DT_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript consumers C_07 | PASS |
+| 2026-05-08 | 0.4.0_DT_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript overlap D_00 D_03 | PASS |
+| 2026-05-08 | 0.4.0_DT_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript dag --pipeline inf-gold | PASS |
+| 2026-05-08 | 0.4.0_DT_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript dag --pipeline inf-manual-api | PASS |
+| 2026-05-08 | 0.4.0_DT_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript chain downstream --pipeline inf-gold | PASS |
+| 2026-05-08 | 0.4.0_DT_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript io INF_C_01 | PASS |
+| 2026-05-08 | 0.4.0_DT_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript feeds INF_D_04 | PASS |
+| 2026-05-08 | 0.4.0_DT_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript consumers INF_C_02 | PASS |
+| 2026-05-08 | 0.4.0_DT_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript overlap D_04 INF_D_04 | FAIL |
+| 2026-05-08 | 0.4.0_DT_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript overlap INF_C_01 INF_C_02 | PASS |
+| 2026-05-08 | 0.4.0_DT_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript postdeps D_04 | PASS |
+| 2026-05-08 | 0.4.0_DT_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript postdeps INF_D_04 | PASS |
+| 2026-05-08 | 0.4.0_DT_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript stats | PASS |
+| 2026-05-08 | 0.4.0_DT_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript chain downstream --pipeline inf-gold | PASS |
+| 2026-05-08 | 0.4.0_DT_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript deployed D_00c | PASS |
+| 2026-05-08 | 0.4.0_DT_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript deployed --pipeline inf-gold INF_D_04 | FAIL |
+| 2026-05-08 | 0.4.0_DT_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript deployed nonexistent_script_xyz | PASS |
+| 2026-05-08 | 0.4.0_DT_ClientPlatform | (no-TO) | comp-routes | comp-routes behaviors | PASS |
+| 2026-05-08 | 0.4.0_DT_ClientPlatform | (no-TO) | comp-routes | comp-routes origins | PASS |
+| 2026-05-08 | 0.4.0_DT_ClientPlatform | (no-TO) | comp-routes | comp-routes auth-map | PASS |
+| 2026-05-08 | 0.4.0_DT_ClientPlatform | (no-TO) | comp-routes | comp-routes trace getPlatinumLeaderboard | PASS |
+| 2026-05-08 | 0.4.0_DT_ClientPlatform | (no-TO) | comp-routes | comp-routes trace getEmployeeLeaderboard | PASS |
+| 2026-05-08 | 0.4.0_DT_ClientPlatform | (no-TO) | comp-routes | comp-routes endpoints | PASS |
+| 2026-05-08 | 0.4.0_DT_ClientPlatform | (no-TO) | comp-routes | comp-routes api-routes | PASS |
+| 2026-05-08 | 0.4.0_DT_ClientPlatform | (no-TO) | comp-routes | comp-routes rewrites | PASS |
+| 2026-05-08 | 0.4.0_DT_ClientPlatform | (no-TO) | comp-routes | comp-routes stats | PASS |
+| 2026-05-08 | 0.4.0_DT_ClientPlatform | (no-TO) | comp-routes | comp-routes components | PASS |
+| 2026-05-08 | 0.4.0_DT_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript deployed --pipeline inf-gold INF_D_04 | FAIL |
+| 2026-05-08 | 0.4.0_DT_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript deployed --pipeline inf-silver | PASS |
+| 2026-05-08 | 0.4.0_DT_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript deployed --pipeline bd-silver | PASS |
+| 2026-05-08 | 0.4.0_DT_ClientPlatform | (no-TO) | comp-cache | comp-cache collisions | PASS |
+| 2026-05-08 | 0.4.0_DT_ClientPlatform | (no-TO) | comp-cache | comp-cache map | PASS |
+| 2026-05-08 | 0.4.0_DT_ClientPlatform | (no-TO) | comp-iam | comp-iam service bd-gold-trigger | PASS |
+| 2026-05-08 | 0.4.0_DT_ClientPlatform | (no-TO) | comp-iam | comp-iam service inf-gold-trigger | PASS |
+| 2026-05-08 | 0.4.0_DT_ClientPlatform | (no-TO) | comp-iam | comp-iam service inf-bronze-runner | PASS |
+| 2026-05-08 | 0.4.0_DT_ClientPlatform | (no-TO) | comp-iam | comp-iam service nonexistent-thing | PASS |
+| 2026-05-08 | 0.4.0_DT_ClientPlatform | (no-TO) | comp-iam | comp-iam gaps | PASS |
+| 2026-05-08 | 0.4.0_DT_ClientPlatform | (no-TO) | comp-iam | comp-iam stats | PASS |
+| 2026-05-08 | 0.4.0_DT_ClientPlatform | (no-TO) | comp-iam | comp-iam roles | PASS |
+| 2026-05-08 | 0.4.0_DT_ClientPlatform | (no-TO) | comp-iam | comp-iam role bd-gold-runner-role | PASS |
+| 2026-05-08 | 0.4.0_DT_ClientPlatform | (no-TO) | comp-iam | comp-iam services | PASS |
+| 2026-05-08 | 0.4.0_DT_ClientPlatform | (no-TO) | comp-validate | comp-validate --list | PASS |
+| 2026-05-08 | 0.4.0_DT_ClientPlatform | (no-TO) | comp-validate | comp-validate D_04 --list | PASS |
+| 2026-05-08 | 0.4.0_DT_ClientPlatform | (no-TO) | comp-validate | comp-validate INF_D_04 --list | PASS |
+| 2026-05-08 | 0.4.0_DT_ClientPlatform | (no-TO) | comp-validate | comp-validate definitely_not_a_thing | PASS |
+| 2026-05-08 | 0.4.0_DT_ClientPlatform | (no-TO) | comp-platinum | comp-platinum page AdvisorIntelligence | FAIL |
+| 2026-05-08 | 0.4.0_DT_ClientPlatform | (no-TO) | comp-platinum | comp-platinum page BooksTab | FAIL |
+| 2026-05-08 | 0.4.0_DT_ClientPlatform | (no-TO) | comp-platinum | comp-platinum reverse gold/artifacts/employee_leaderboard.json | PASS |
+| 2026-05-08 | 0.4.0_DT_ClientPlatform | (no-TO) | comp-platinum | comp-platinum reverse platinum/firm/header_metrics.json#radial_12m | PASS |
+| 2026-05-08 | 0.4.0_DT_ClientPlatform | (no-TO) | comp-platinum | comp-platinum reverse platinum/firm/header_metrics.json --strict | FAIL |
+| 2026-05-08 | 0.4.0_DT_ClientPlatform | (no-TO) | comp-platinum | comp-platinum tab-audit | PASS |
+| 2026-05-08 | 0.4.0_DT_ClientPlatform | (no-TO) | comp-platinum | comp-platinum summary | PASS |
+| 2026-05-08 | 0.4.0_DT_ClientPlatform | (no-TO) | comp-platinum | comp-platinum page PartnerAnalytics | PASS |
+| 2026-05-08 | 0.4.0_DT_ClientPlatform | (no-TO) | comp-platinum | comp-platinum page ClientsTab | PASS |
+| 2026-05-08 | 0.4.0_DT_ClientPlatform | (no-TO) | comp-transform | comp-transform schema-check PartnerAnalytics | PASS |
+| 2026-05-08 | 0.4.0_DT_ClientPlatform | (no-TO) | comp-transform | comp-transform schema-check ClientsTab --feature inflection | PASS |
+| 2026-05-08 | 0.4.0_DT_ClientPlatform | (no-TO) | comp-transform | comp-transform fields PartnerAnalytics | PASS |
+| 2026-05-08 | 0.4.0_DT_ClientPlatform | (no-TO) | comp-transform | comp-transform chains PartnerAnalytics | PASS |
+| 2026-05-08 | 0.4.0_DT_ClientPlatform | (no-TO) | comp-transform | comp-transform unused PartnerAnalytics | PASS |
+| 2026-05-08 | 0.4.0_DT_ClientPlatform | (no-TO) | comp-transform | comp-transform ternary-audit DistributionTab | PASS |
+| 2026-05-08 | 0.4.0_DT_ClientPlatform | (no-TO) | comp-transform | comp-transform trace ClientsTab | PASS |
+| 2026-05-08 | 0.4.0_DT_ClientPlatform | (no-TO) | comp-transform | comp-transform stats | PASS |
+| 2026-05-08 | 0.4.0_DT_ClientPlatform | (no-TO) | comp-pii | comp-pii audit | PASS |
+| 2026-05-08 | 0.4.0_DT_ClientPlatform | (no-TO) | comp-pii | comp-pii fields | PASS |
+| 2026-05-08 | 0.4.0_DT_ClientPlatform | (no-TO) | comp-tooltip | comp-tooltip summary | PASS |
+| 2026-05-08 | 0.4.0_DT_ClientPlatform | (no-TO) | comp-tooltip | comp-tooltip drift | PASS |
+| 2026-05-08 | 0.4.0_DT_ClientPlatform | (no-TO) | comp-tooltip | comp-tooltip canonical | PASS |
+| 2026-05-08 | 0.4.0_DT_ClientPlatform | (no-TO) | comp-constants | comp-constants list | PASS |
+| 2026-05-08 | 0.4.0_DT_ClientPlatform | (no-TO) | comp-constants | comp-constants check | FAIL |
+| 2026-05-08 | 0.4.0_DT_ClientPlatform | (no-TO) | comp-constants | comp-constants new | FAIL |
+| 2026-05-08 | 0.4.0_DT_ClientPlatform | (no-TO) | comp-xref | comp-xref D_04 | PASS |
+| 2026-05-08 | 0.4.0_DT_ClientPlatform | (no-TO) | comp-xref | comp-xref AdvisorPublicProfile | PASS |
+| 2026-05-08 | 0.4.0_DT_ClientPlatform | (no-TO) | comp-xref | comp-xref inf-bronze-runner | PASS |
+| 2026-05-08 | 0.4.0_DT_ClientPlatform | (no-TO) | comp-xref | comp-xref nonexistent_zzz | PASS |
+| 2026-05-08 | 0.4.0_DT_ClientPlatform | (no-TO) | comp-incrparity | comp-incrparity | FAIL |
+| 2026-05-08 | 0.4.0_DT_ClientPlatform | (no-TO) | comp-incrparity | comp-incrparity --help | PASS |
+| 2026-05-08 | 0.4.0_DT_ClientPlatform | (no-TO) | comp-incrparity | comp-incrparity D_00 | PASS |
+| 2026-05-08 | 0.4.0_DT_ClientPlatform | (no-TO) | comp-pii | comp-pii sweep | PASS |
+| 2026-05-08 | 0.4.0_DT_ClientPlatform | (no-TO) | comp-pii | comp-pii routes | PASS |
+| 2026-05-08 | 0.4.0_DT_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript dag --pipeline bd-silver | PASS |
+| 2026-05-08 | 0.4.0_DT_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript dag --pipeline inf-silver | PASS |
+| 2026-05-08 | 0.4.0_DT_ClientPlatform | (no-TO) | comp-cache | comp-cache key advisor | PASS |
+| 2026-05-08 | 0.4.0_DT_ClientPlatform | (no-TO) | comp-trace | comp-trace getEmployeeLeaderboard --direction both | PASS |
+| 2026-05-08 | 0.4.0_DT_ClientPlatform | (no-TO) | comp-trace | comp-trace getFirmLeaderboard --direction both | PASS |
+| 2026-05-08 | 0.4.0_DT_ClientPlatform | (no-TO) | comp-trace | comp-trace endpoint:getEmployeeLeaderboard --direction up | PASS |
+| 2026-05-08 | 0.4.0_DT_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript inject | PASS |
+| 2026-05-08 | 0.4.0_DT_ClientPlatform | (no-TO) | comp-iam | comp-iam role inf-gold-trigger-lambda-role | PASS |
+| 2026-05-08 | 0.4.0_DT_ClientPlatform | (no-TO) | comp-iam | comp-iam services | PASS |
+| 2026-05-08 | 0.4.0_DT_ClientPlatform | (no-TO) | comp-constants | comp-constants check --lane bd | FAIL |
+| 2026-05-08 | 0.4.0_DT_ClientPlatform | (no-TO) | comp-constants | comp-constants check --lane inf | FAIL |
+| 2026-05-08 | 0.4.0_DT_ClientPlatform | (no-TO) | comp-trace | comp-trace --json D_04 | PASS |
+| 2026-05-08 | 0.4.0_DT_ClientPlatform | (no-TO) | comp-validate | comp-validate D_04 | FAIL |
+| 2026-05-08 | 0.4.0_DT_ClientPlatform | (no-TO) | comp-validate | comp-validate INF_D_04 --config data/orion/scripts/gold/gold_validate_config.yaml | PASS |
+| 2026-05-08 | 0.4.0_DT_ClientPlatform | (no-TO) | comp-iam | comp-iam service inf-gold-trigger | PASS |
+| 2026-05-08 | 0.4.0_DT_ClientPlatform | (no-TO) | comp-iam | comp-iam role bd-exporter-ec2-role | PASS |
+| 2026-05-08 | 0.4.0_DT_ClientPlatform | (no-TO) | comp-platinum | comp-platinum page InflectionInsightsPanel | PASS |
+| 2026-05-08 | 0.4.0_DT_ClientPlatform | (no-TO) | comp-platinum | comp-platinum page DistributionTab | PASS |
+| 2026-05-08 | 0.7.0_AE_CloudOps | ADHC_COMPIL_V4.OPS | comp-build | comp-build / comp-build --check | PASS | OPS test matrix; 1250 nodes/1047 edges; SHA coverage 1085/1158 |
+| 2026-05-08 | 0.7.0_AE_CloudOps | ADHC_COMPIL_V4.OPS | comp-trace | comp-trace D_04 / INF_D_04 / s3:gold/... / getFirmLeaderboard | PARTIAL | OPS triage #5/#6 — D_04 multiple-matches noise; INF_D_04 not in graph; platinum/* keys not in graph; Tier B refinement |
+| 2026-05-08 | 0.7.0_AE_CloudOps | ADHC_COMPIL_V4.OPS | comp-blast | comp-blast build_employee_leaderboard / _build_aua_view / inf-gold-trigger | PARTIAL | INF helper not in graph (Tier B reality); BD blast paths PASS |
+| 2026-05-08 | 0.7.0_AE_CloudOps | ADHC_COMPIL_V4.OPS | comp-diff | comp-diff / --staged | PASS | Output formatting noisy ("portal" repeats) but functionally correct |
+| 2026-05-08 | 0.7.0_AE_CloudOps | ADHC_COMPIL_V4.OPS | comp-xref | comp-xref / D_04 / AdvisorPublicProfile / inf-bronze-runner / nonexistent_zzz | PASS | Both modes operational; clean error with hints on zero-match |
+| 2026-05-08 | 0.7.0_AE_CloudOps | ADHC_COMPIL_V4.OPS | comp-pipescript | dag/io/feeds/consumers/overlap/postdeps/deployed/inject/stats variants | PARTIAL | OPS triage #1 BLOCKING (deployed --pipeline inf-gold UnboundLocalError) + #2 BLOCKING (chain --pipeline ignored); other subcommands PASS |
+| 2026-05-08 | 0.7.0_AE_CloudOps | ADHC_COMPIL_V4.OPS | comp-routes | behaviors/origins/auth-map/trace/endpoints/api-routes/rewrites/stats/components | PASS | Origins count drift (6 actual vs 5 documented); not a bug |
+| 2026-05-08 | 0.7.0_AE_CloudOps | ADHC_COMPIL_V4.OPS | comp-cache | collisions/map/key advisor | PASS | 4 shared keys reported with TYPE info |
+| 2026-05-08 | 0.7.0_AE_CloudOps | ADHC_COMPIL_V4.OPS | comp-iam | gaps/service/role/services/roles/stats | PARTIAL | OPS triage #8 — ~100 BD Lambdas show role "(not mapped)"; INF Lambdas + EC2 roles via V4.013 fallback PASS |
+| 2026-05-08 | 0.7.0_AE_CloudOps | ADHC_COMPIL_V4.OPS | comp-validate | --list / D_04 / INF_D_04 / definitely_not_a_thing | PARTIAL | (SYNTHETIC TEST FIXTURE) ADHC_COMPIL_V4.OPS invalid-script-name regression test for definitely_not_a_thing |
+| 2026-05-08 | 0.7.0_AE_CloudOps | ADHC_COMPIL_V4.OPS | comp-platinum | page (4 components) / reverse / reverse #field --strict / tab-audit / summary | PARTIAL | OPS triage #10/#11 — catalog examples AdvisorIntelligence/BooksTab fail (non-existent components); real components PASS |
+| 2026-05-08 | 0.7.0_AE_CloudOps | ADHC_COMPIL_V4.OPS | comp-transform | schema-check/fields/chains/unused/ternary-audit/trace/stats | PASS | --feature flag works; types parent-walk works |
+| 2026-05-08 | 0.7.0_AE_CloudOps | ADHC_COMPIL_V4.OPS | comp-pii | audit/fields/routes/sweep | PASS | 5 PII refs across 11 components; 0 hardcoded |
+| 2026-05-08 | 0.7.0_AE_CloudOps | ADHC_COMPIL_V4.OPS | comp-tooltip | summary/drift/canonical | PASS | 77% migration progress (34/44) |
+| 2026-05-08 | 0.7.0_AE_CloudOps | ADHC_COMPIL_V4.OPS | comp-shell | scan inbox-watch.sh / scan .tools/ / list-forbidden | PASS | 2 WARN guarded findings on inbox-watch.sh (expected) |
+| 2026-05-08 | 0.7.0_AE_CloudOps | ADHC_COMPIL_V4.OPS | comp-freshness | --list / chain bd | PASS | 32 BD entries; live AWS calls return PASS/WARN per artifact |
+| 2026-05-08 | 0.7.0_AE_CloudOps | ADHC_COMPIL_V4.OPS | comp-constants | list/check/new/--lane bd | PARTIAL | OPS triage #4 — --lane flag not implemented (catalog drift); list/check/new PASS |
+| 2026-05-08 | 0.7.0_AE_CloudOps | ADHC_COMPIL_V4.OPS | check-lambda-layer-deps | --function inf-gold-trigger / --pipeline / --strict | PARTIAL | OPS triage #3 — catalog says positional args + --all + --json; actual flags --function/--pipeline/--strict/--verbose only |
+| 2026-05-08 | 0.7.0_AE_CloudOps | ADHC_COMPIL_V4.OPS | comp-incrparity | comp-incrparity D_00 (quick) | PASS | Tier C BD-only confirmed |
+| 2026-05-08 | 0.7.0_AE_CloudOps | ADHC_COMPIL_V4.OPS | loop-quiescence | ADHC_COMPIL_V4 / ADVI_INFETL / ADHC (macro-prefix) | PARTIAL | OPS triage #7 — bare macro prefix returns false-positive QUIESCENT_CLEAN total=0 |
+| 2026-05-08 | 0.4.0_DT_ClientPlatform | (no-TO) | comp-build | comp-build | PASS |
+| 2026-05-08 | 0.4.0_DT_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript deployed --pipeline inf-gold | PASS |
