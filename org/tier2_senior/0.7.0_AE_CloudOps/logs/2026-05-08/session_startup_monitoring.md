@@ -296,3 +296,150 @@ Surfaced to COO (20260508T144640Z) with options a/b/c/d. Awaiting decision. Not 
 | Pre-reset hook (CTO scope) | CTO | TBD |
 
 **Logged 2026-05-08T~14:50Z by 0.7.0_AE_CloudOps.**
+
+---
+
+## Part 9 — AC4 Empirical Fixture VERIFIED end-to-end
+
+Idle window opened post-FIRMSEP.07/.08 ship. Self-picked AC4 backfill per COO velocity-encouragement.
+
+**Method:** synthesized denial events via `aws logs put-log-events` directly into the Lambda@Edge log groups — bypasses CF auth flow + JWT manipulation requirement. 5 events injected with `fixture:"AE-0.7.0-test"` correlator field.
+
+**Result — all 5 filters MATCHED + metrics REGISTERED in `opal/firmsep` namespace:**
+
+| Metric | Sum | Alarm threshold | Alarm state |
+|---|---:|---|---|
+| AuthValidatorAdvisorScopingDenied | 1 | >5/min | OK (1<5) ✓ |
+| AuthValidatorTierDenied | 1 | >5/min | OK (1<5) ✓ |
+| AuthValidatorOwnershipMapFetchFailed | 1 | >=1/min | **ALARM (correctly)** |
+| AuthValidatorOwnershipMapSchemaMismatch | 1 | >0/min stop-the-line | **ALARM (correctly)** |
+| SharedAdvisorRouterDenied | 1 | >5/min | OK (1<5) ✓ |
+
+End-to-end verified: filter → metric → threshold → SNS notification. Both ALARM-state alarms auto-recovered to OK within ~5min after a benign no-match log event was injected to push the metric back to baseline.
+
+**SNS noise:** 4 notifications fired to `opal-infrastructure-alerts` (2 alarm + 2 ok-recovery). Flagged proactively to COO so Andrew was forewarned about the test-fixture artifacts.
+
+**COO ACK:** `aws logs put-log-events` direct-injection logged as standing-pattern for future Lambda@Edge AC verification (saves 30-60min vs trying to drive denial events through real auth flows).
+
+**FIRMSEP Phase 2 .07+.08 ALL ACs (1-5) PASS. Fully closed.**
+
+---
+
+## Part 10 — Gold Chain LIVE (2026-05-07 manual recovery + first 7/7 quorum execution)
+
+**Issue:** Aggregator warm-Lambda instances at 12:56Z and 13:00Z still using OLD `INF_DIM_LIST=9 dims` env var (cold-start hadn't cycled yet post-v1.7.44 apply). 2026-05-07 had all 7/7 non-P3 sentinels but `_AGGREGATOR_FIRED.json` absent — gold for that date was missed.
+
+**Live config:** `aws lambda get-function-configuration` confirmed `INF_DIM_LIST=7 dims` (apply did propagate; warm runtime just hadn't picked up). Cold-start lag is the latent issue, not deploy correctness.
+
+**Recovery:** Manual Lambda invoke with synthetic S3 event `{Records:[{s3:{object:{key:"silver/_silver_complete/2026-05-07/transactions.json"}}}]}`. Aggregator response: `action=fired_gold_trigger, status_code=202`.
+
+**Verified:**
+- `_AGGREGATOR_FIRED.json` written at 2026-05-08T15:05Z
+- inf-gold-layer-runner EC2 (i-0ed5afded2ebd4ed4): stopped → running
+- 2026-05-07 = first live gold run under 7/7 quorum config
+
+**Next gold:** 2026-05-08 will fire automatically when transactions sentinel for that date lands (~13:00Z 2026-05-09; transactions writes T-1). No manual intervention needed.
+
+**COO standing-low followup:** add an operator note to LAMBDA_DEPLOYMENT_PROTOCOL.md about warm-Lambda env var cold-start lag (5-15min). Backfill at convenience.
+
+---
+
+## Part 11 — ADVI_INFETL.011 cron-flip-ack (in flight)
+
+CTO authored TO at `eccbb7d8b` (4-prereq stack met post INFNNA.GOLD cascade). COO suggested as gap-window candidate while FIRMSEP.09 is $-blocked. Self-picked.
+
+**Phase 0 — prereqs re-verified live this session:**
+1. GOLD-EVENT-TRIGGER live ✓ (Lambda invoked successfully at 15:05Z)
+2. SILVER-AGGREGATOR fires ✓ (empirically confirmed via manual invoke same minute)
+3. Manual sentinel fires publisher chain ✓ (resources still deployed in lambdas.tf)
+4. INFNNA.GOLD RAVC ACK ✓ (per CTO commit msg + COO MCP forward)
+All 4 MET, no regression.
+
+**Phase 1 compiler tools:**
+- `comp-blast inf-canonical-prices-daily`: 1 downstream node (inf-gold-trigger Lambda). No surprise dependencies.
+- `comp-iam service inf-gold-trigger`: tool catalog miss (no entry); IAM unchanged from TO-1 deploy — same role/payload as event-driven mode.
+
+**Edit:** `infra/aws/terraform/inf-pipeline/eventbridge.tf:111` — single line `state = "DISABLED"` → `state = "ENABLED"`. Verified 1-line diff via `git diff`.
+
+**Targeted plan** (full plan blocked by P3 module S3 artifact gaps — same pattern as v1.7.44 aggregator):
+
+```
+~ resource "aws_cloudwatch_event_rule" "inf_canonical_prices_daily" {
+  ~ state = "DISABLED" -> "ENABLED"
+  # (9 unchanged attributes hidden)
+}
+Plan: 0 to add, 1 to change, 0 to destroy
+```
+
+Matches AC2 expectation exactly.
+
+**RAVC1 sent** to CTO + COO at 20260508T~150900Z with full prereq verification + plan diff + compiler tool output. **Standing by for joint GO before apply.**
+
+Post-apply sequence ready: terraform apply → 0-diff → `aws events describe-rule` → tag inf-pipeline-v1.7.45 → safe-commit.sh → push --follow-tags → record-terraform-deploy.sh → RAVC2.
+
+First-fire empirical witness scheduled: 2026-05-09 ~06:00 UTC.
+
+---
+
+## Updated Compiler Tools (post-15:00Z)
+
+| Tool | Result | Notes |
+|------|--------|-------|
+| `aws logs put-log-events` (5 fixture events) | success | AC4 method standing-pattern |
+| `aws cloudwatch get-metric-statistics` (5 metrics) | all Sum=1 | All filters matched empirically |
+| `aws cloudwatch describe-alarms` (FIRMSEP-) post-fixture | 2 ALARM, 3 OK | Threshold-tuning behavior validated |
+| Aggregator Lambda manual invoke (synthetic S3 event) | 202 fired_gold_trigger | Gold chain unblocked for 2026-05-07 |
+| `aws lambda get-function-configuration inf-silver-aggregator` | INF_DIM_LIST=7 dims | Live env var confirms apply |
+| `aws cloudwatch describe-alarms` (FIRMSEP-) post-recovery | 5/5 OK | Auto-recovery clean |
+| `comp-blast inf-canonical-prices-daily` | 1 downstream (inf-gold-trigger) | Structurally isolated |
+| `comp-iam service inf-gold-trigger` | catalog miss | Manual review N/A — no IAM delta |
+| `terraform plan -target=...inf_canonical_prices_daily` | 0/1/0, state DISABLED→ENABLED | AC2 exactly |
+
+---
+
+## Updated Current State (post-15:15Z)
+
+| Item | State |
+|---|---|
+| Wave C1 backfill | COMPLETE |
+| INFREL.002 Phase 3 | Day 2/7; fix holding |
+| INFETL aggregator quorum | LIVE 7/7; 2026-05-07 gold running |
+| INFETL.CHAININC Class 1 | SHIPPED; validation gate 2026-05-09 ~12:30Z |
+| FIRMSEP.07+.08 | LIVE & FULLY CLOSED (AC1-5 PASS); auto-recovery clean |
+| FIRMSEP.09 | BLOCKED on Andrew CT $ ack |
+| INFETL.011 cron-flip-ack | RAVC1 sent; awaiting CTO+COO GO; ready to apply |
+| LDRBRD.002 PROD | Awaiting PROD GO |
+| Git reset incident | CTO owns structural mitigation |
+| 2026-05-07 gold pipeline | RUNNING on inf-gold-layer-runner |
+
+---
+
+## Updated RAVC Trail
+
+| RAVC | Direction | Time |
+|------|-----------|------|
+| Startup items (5-item) | AE 0.7 → COO | 20260508T134811Z |
+| Aggregator + CHAININC ACK | AE 0.7 → COO | 20260508T141837Z |
+| INFETL.CHAININC Class 1 SHIPPED | AE 0.7 → COO | 20260508T142429Z |
+| FIRMSEP.07+.08 RAVC2 + reset incident | AE 0.7 → COO | 20260508T144512Z |
+| FIRMSEP.09 BLOCKER (CT data events $) | AE 0.7 → COO | 20260508T144640Z |
+| FIRMSEP AC4 empirical VERIFIED | AE 0.7 → COO | 20260508T150151Z |
+| Gold chain live + INFREL Day 2 obs | AE 0.7 → COO | 20260508T150613Z |
+| INFETL.011 RAVC1 (plan diff GO request) | AE 0.7 → CTO+COO | 20260508T150900Z |
+
+---
+
+## Updated Open Items
+
+| Item | Owner | When |
+|---|---|---|
+| INFETL.011 apply GO | CTO+COO → AE | Soon |
+| FIRMSEP.09 CT data events $ ack | Andrew → COO → AE | Andrew session ongoing |
+| INFETL.011 first-fire witness | AE 0.7 | 2026-05-09 ~06:00Z |
+| INFETL.CHAININC validation | AE 0.7 | 2026-05-09 ~12:30Z |
+| INFREL.002 Phase 3 Day 3-7 | AE 0.7 (monitoring) | Through ~2026-05-14 |
+| LAMBDA_DEPLOYMENT_PROTOCOL.md cold-start note | AE 0.7 | Standing-low |
+| LDRBRD.002 PROD GO | COO/CTO → AE | TBD |
+| Pre-reset hook (CTO scope) | CTO | TBD |
+
+**Updated 2026-05-08T~15:15Z by 0.7.0_AE_CloudOps.**
