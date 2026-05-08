@@ -254,9 +254,23 @@ def cmd_list(args):
 
 
 def cmd_validate(args):
-    # Auto-detect pipeline from script_id prefix: INF_* -> INF config; others -> BD.
-    _sid_upper = (args.script_id or "").upper()
-    _config_file = _INF_VALIDATE_CONFIG if _sid_upper.startswith("INF_") else None
+    # Config-file resolution priority:
+    #   1. Explicit --config <path> (TO-9 AC1) — overrides everything
+    #   2. Auto-detect from script_id prefix: INF_* -> INF config (TO-9 AC2)
+    #   3. Default: BD config
+    explicit_config = getattr(args, 'config', None)
+    if explicit_config:
+        cfg_path = Path(explicit_config)
+        if not cfg_path.is_absolute():
+            cfg_path = (_WORKSPACE / cfg_path).resolve()
+        if not cfg_path.exists():
+            print(f"ERROR: --config path not found: {cfg_path}", file=sys.stderr)
+            sys.exit(2)
+        _config_file = cfg_path
+    else:
+        # Auto-detect pipeline from script_id prefix: INF_* -> INF config; others -> BD.
+        _sid_upper = (args.script_id or "").upper()
+        _config_file = _INF_VALIDATE_CONFIG if _sid_upper.startswith("INF_") else None
     configs = load_validate_config(_WORKSPACE, _config_file)
     strict = getattr(args, 'strict', False)
 
@@ -364,6 +378,8 @@ def main():
                         help='List all configured checks and exit')
     parser.add_argument('--strict', action='store_true',
                         help='Escalate NO_CONFIG to exit 2 (for CI/dispatcher use)')
+    parser.add_argument('--config', default=None,
+                        help='Explicit path to gold_validate_config.yaml; overrides INF_*/BD auto-detection (TO-9)')
 
     # Use parse_known_args() so unknown flags (e.g. --schema, --certified,
     # --cross-check) become pass-through args for the standalone validator
