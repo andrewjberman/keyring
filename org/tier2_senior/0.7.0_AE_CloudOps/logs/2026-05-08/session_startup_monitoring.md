@@ -449,3 +449,138 @@ First-fire empirical witness scheduled: 2026-05-09 ~06:00 UTC.
 | Pre-reset hook (CTO scope) | CTO | TBD |
 
 **Updated 2026-05-08T~15:15Z by 0.7.0_AE_CloudOps.**
+
+---
+
+## Part 12 — ADHC_COMPIL_V4 SEED-wave consumption + AE-wave 8-TO single-session burst
+
+After INFETL.011 shipped + FIRMSEP.09 blocker locked, COO suggested picking up ADHC_COMPIL_V4 AE wave as gap-fill while waiting on Andrew $-ack. Andrew 2026-05-08 PM dispatched CTO to author 4 v0.2 + 5 v0.3 TOs directly (post 2-week retrospective scan). Across the rest of the session, 8 active V4 TOs SHIPPED in single session vs 10.75d budgeted estimate.
+
+### Ship table
+
+| TO | Title | Commit | Budget | Actual | % |
+|---|---|---|---|---|---|
+| .003 | comp-constants AST-indexer + drift gate | `0eb2c8950` (tag `comp-constants-v1.0`) | 1d | 30min | 5% |
+| .009 P1+2 | comp-validate `--config` + auto-resolver | `084f2fe7b` | (split-ship) | (split-ship) | — |
+| .009 P3 | comp-validate symbolic-rule resolution + `set_subset_check` | `c588d99d4` | 0.75d total | ~1.5h total | 25% |
+| .012 | comp-build STALE_NODE_WARN | `b91751910` | 0.5d | 30min | 12.5% |
+| .010 | comp-platinum `--strict` + per-line `[SPECULATIVE]` prefix | `22ac77cb9` | 0.5d | 25min | 10% |
+| .008 | comp-pipescript inf-manual-api graph extension | `7f82ffe01` | 1d | 25min | 4% |
+| .013 | comp-iam EC2 role indexing (Lambda → IAM-role fallback) | `7e246121e` | 0.5d | 12min | 3% |
+| .014 | comp-xref dual-purpose mode (graph-diff + symbol-lookup) | `af0d8ce7a` | 0.75d | 15min | 2.5% |
+| .011 | comp-transform schema-check robustness (3-part fix) | `72e8d6f3f` | 0.75d | 25min | 5.5% |
+
+8 instances of under-budget pattern logged by CTO; 6 of 8 under 13%, all under 26%. Pattern memory-entry shipped at `memory/feedback_ae_under_budget_pattern.md` (CTO 2026-05-08 PM).
+
+### Cross-cutting work
+
+**Owned-paths progressive widening** (4 commits across the V4 burst):
+- `.owned-paths.yaml` rules added: `org/modules/graph/comp_*.py`, `*_cli.py`, `extract_*.py`, `trace_graph.py`, `cli.py`, `comp-tools.yaml`, `comp-constants.config.yaml` — all → ANY_EXEC_OR_AE
+- All under `org/modules/graph/**` ANY_EXEC parent rule
+- AE 0.7 owns build/extend per ADHC_COMPIL_V4 family
+
+**Architectural insights surfaced during ship:**
+- Hybrid `#field` resolution in comp-platinum (TO-10): when artifact-reverse query has `#field` suffix, ALSO consult field-reverse index → unlocked AC5 (AdvisorPublicProfile authoritative consumer for `summary.json#active_since`)
+- Lane-aware drift filtering in comp-constants (TO-3): `FIRM_ID` differs across lanes (`bd='49financial'` vs `inf='inflection'`) — same constant name, different canonical per lane; cross-lane comparison would produce false drift
+- Semantic-set normalization (TO-3): `{3,6,11,12}` ~ `[3,6,11,12]` ~ `'3,6,11,12'` ~ `{'3','6','11','12'}` all compare equal under set-of-stringified-elements semantics
+- Hybrid lookup-mode design pattern (TO-14): argparse `nargs='?'` cleanly disambiguates two modes on same subcommand
+
+**Identifier-mismatch pattern (2 occurrences):**
+- TO-8 listed `INF_I_D02b`, `INF_I_D00b`, `INF_I_D00c`, `pull_inflection_billing_dim` as anchor cases — none exist as files. Real gap was only `data/orion/manual_api/*.py`.
+- TO-13 listed `bd-gold-layer-runner` as anchor — real role is `bd-gold-layer-lambda-role` (Lambda) / `inf-gold-layer-ec2-role` (EC2).
+- CTO retrospective methodology gap: future PRD authoring should validate cited identifier existence. Captured in `ADHC_COMPIL_FULL_CORPUS_RETROSPECTIVE.md §6.1` per CTO 2026-05-08 PM update.
+
+### V4 Phase 1 + addendum status (post-session)
+
+| Surface | Count | Status |
+|---|---|---|
+| AE-tooling TOs | 8 | SHIPPED today (.003 + .008 + .009 + .010 + .011 + .012 + .013 + .014) |
+| CTO-self TOs | 3 | SHIPPED today (.002 + .007 + .016 per CTO ship logs) |
+| Deferred | 1 | .015 (DDB freshness; gates on FIRMSEP.10 Cottonwood onboarding) |
+| Pending | 1 | .VAL (validation pass; ready; parked for tomorrow per CTO end-of-day decision) |
+
+**11 of 12 active V4 surfaces SHIPPED in 1 session.** Materially compresses the 10.75d budgeted timeline.
+
+---
+
+## Part 13 — Cron loop hygiene
+
+Mid-session discovered 2 duplicate crons firing the same `/loop` prompt (`3b2516e5` + `8e14b8a6`). Andrew asked to delete duplicate; deleted both; then Andrew re-issued `/loop` with slightly different prompt ("restart it" added) → new job `4341b6af`. Single watcher tick from this point forward.
+
+---
+
+## Part 14 — End-of-day decision (CTO)
+
+Per CTO RAVC2 ACK on TO-11 at end of session:
+
+> "**.VAL parking decision: dispatch tomorrow morning, NOT tonight.**
+>  Reasoning: 15 substantive ships today is your output; concentration matters more than additional throughput. INFETL.011 first-fire empirical witness 2026-05-09 06:00 UTC is a natural sync point. .VAL output requires CTO review; bandwidth better-fresh tomorrow. .VAL is ~1-1.5h work; not urgent."
+
+**Tomorrow's morning workflow (per CTO):**
+1. Observe INFETL.011 first-fire ~06:00 UTC (passive log inspection)
+2. RAVC3 closes INFETL.011 AC5 if clean
+3. Dispatch .VAL on 8-tool V4 surface
+4. V4 Phase 1 reaches full ACCEPTED close
+
+---
+
+## Final Session Tally
+
+15 substantive ships in single session (2026-05-08):
+
+| # | Item | Tag/Commit |
+|---|---|---|
+| 1 | FIRMSEP.07/.08 CW filters + alarms | `portal-auth-v1.15.6` |
+| 2 | AC4 empirical fixture method (synthetic put-log-events) | RAVC3 documented |
+| 3 | INFETL aggregator 7/7 quorum (Option B) | `inf-pipeline-v1.7.44` |
+| 4 | 2026-05-07 gold chain manual recovery (warm-Lambda env var lag) | EC2 running |
+| 5 | INFETL.CHAININC Class 1 sentinel-timing fix | `eed600eee` |
+| 6 | INFETL.011 cron-flip-ack | `inf-pipeline-v1.7.45` (`e28e24585`) |
+| 7 | Cloud-ops skill + project settings.json | `a0b273cfc` |
+| 8 | COMPIL_V4.003 comp-constants AST-indexer | `comp-constants-v1.0` (`0eb2c8950`) |
+| 9 | COMPIL_V4.009 comp-validate Phase 1+2+3 | `084f2fe7b` + `c588d99d4` |
+| 10 | COMPIL_V4.012 comp-build STALE_NODE_WARN | `b91751910` |
+| 11 | COMPIL_V4.010 comp-platinum --strict | `22ac77cb9` |
+| 12 | COMPIL_V4.008 comp-pipescript inf-manual-api | `7f82ffe01` |
+| 13 | COMPIL_V4.013 comp-iam EC2 role indexing | `7e246121e` |
+| 14 | COMPIL_V4.014 comp-xref dual-purpose mode | `af0d8ce7a` |
+| 15 | COMPIL_V4.011 comp-transform schema-check robustness | `72e8d6f3f` |
+
+---
+
+## Final Open Items / Tomorrow Plan
+
+| Item | Owner | When |
+|---|---|---|
+| INFETL.011 AC5 first-fire empirical | AE 0.7 (passive observe) | 2026-05-09 ~06:00Z |
+| INFETL.CHAININC Class 1 validation gate | AE 0.7 (passive observe) | 2026-05-09 ~12:30Z |
+| ADHC_COMPIL_V4.VAL validation pass | AE 0.7 | 2026-05-09 morning post-INFETL.011 close |
+| FIRMSEP.09 CT data events $ ack | Andrew → COO → AE | TBD |
+| COMPIL_V4.015 DDB freshness | AE 0.7 | post-FIRMSEP.10 (Cottonwood gate) |
+| INFREL.002 Phase 3 Day 3-7 | AE 0.7 monitoring | Through ~2026-05-14 |
+| LAMBDA_DEPLOYMENT_PROTOCOL.md cold-start note | AE 0.7 | Standing-low |
+| LDRBRD.002 PROD GO | COO/CTO → AE | TBD |
+| Pre-reset hook structural mitigation | CTO | TBD |
+| record-terraform-deploy.sh tooling bug | standing ADHC backlog | recurs → spin ADHC_RTDFIX |
+
+---
+
+## Final RAVC Trail (post-15:15Z)
+
+| RAVC | Direction | Time | Result |
+|------|-----------|------|--------|
+| FIRMSEP AC4 empirical VERIFIED | AE → COO | 150151Z | ACK |
+| Gold chain live + INFREL Day 2 obs | AE → COO | 150613Z | ACK |
+| INFETL.011 RAVC1 (plan diff GO request) | AE → CTO+COO | 150900Z | GO from both |
+| INFETL.011 RAVC2 (apply complete + tag) | AE → CTO+COO | 151746Z | ACK clean |
+| COMPIL_V4.003 RAVC2 (comp-constants ship) | AE → COO | 160144Z | ACK clean |
+| COMPIL_V4.009 RAVC1 (Phase 3 design proposal) | AE → CTO+COO | 161555Z | GO Option A |
+| COMPIL_V4.009 RAVC2 (Phase 3 ship) | AE → CTO+COO | 162731Z | ACK clean |
+| COMPIL_V4.012 RAVC2 (STALE_NODE_WARN ship) | AE → CTO+COO | 164450Z | ACK clean |
+| COMPIL_V4.010 RAVC2 (--strict + speculative tagging) | AE → CTO+COO | 170239Z | ACK clean |
+| COMPIL_V4.008 RAVC2 (inf-manual-api coverage) | AE → CTO+COO | 171841Z | ACK clean + scope-narrowing insight noted |
+| COMPIL_V4.013 RAVC2 (EC2 role indexing) | AE → CTO+COO | 172230Z | ACK clean |
+| COMPIL_V4.014 RAVC2 (dual-purpose mode) | AE → CTO+COO | 172721Z | ACK clean |
+| COMPIL_V4.011 RAVC2 (schema-check robustness) | AE → CTO+COO | 173230Z | ACK clean + .VAL parked for tomorrow |
+
+**Logged 2026-05-08T~18:35Z by 0.7.0_AE_CloudOps.**
