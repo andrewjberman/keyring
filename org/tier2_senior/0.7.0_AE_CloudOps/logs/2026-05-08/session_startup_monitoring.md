@@ -584,3 +584,154 @@ Per CTO RAVC2 ACK on TO-11 at end of session:
 | COMPIL_V4.011 RAVC2 (schema-check robustness) | AE → CTO+COO | 173230Z | ACK clean + .VAL parked for tomorrow |
 
 **Logged 2026-05-08T~18:35Z by 0.7.0_AE_CloudOps.**
+
+---
+
+## Part 15 — Andrew Override + V4.OPS Triage Portfolio (PM session, ~18:30Z–19:50Z)
+
+### Trigger
+Andrew direct 2026-05-08T~18:32Z PM: **"do that TO now"** — override of CTO+COO joint decision to park `.OPS` for tomorrow morning. Both execs had recommended pause for concentration after AM session's 11 V4 ships; Andrew's direct call resequenced.
+
+### TO inventory authored under .OPS-related authorship retcon
+CTO `fac2d8b46` retcon renamed `.OPS` → `.017` and `.VAL` → `.018` per Andrew workspace-convention directive (numeric-only TO identifiers). Subsequently CTO authored `.019/.020/.021/.022` as follow-on TOs from .017's triage briefing. AE 0.7 self-authored `.023` post-`.022` Cat 6.1 surfacing per Andrew direct GO ("sure yeah do it").
+
+### V4.OPS Triage Portfolio Ship Trail
+
+| TO | Title | Commit | Tag | Wall-clock | Catalog Est | % of budget |
+|---|---|---|---|---|---|---|
+| `.017` | OPS test matrix + segment-scope taxonomy | `8e7fbbb8a` | — | ~1.0h | 2-3d | ~5% |
+| `.018` | (SUPERSEDED by V4.OPS portfolio) | `ba9b78627` | — | ~2 min | n/a | n/a |
+| `.019` | comp-pipescript BLOCKING bug fixes | `ae193444b` | — | ~30 min | 0.5d | ~13% |
+| `.020` | comp-trace/blast cross-layer graph extension | `db41ab03b` | — | ~45 min | 1-1.5d | ~5% |
+| `.021` | catalog + tool-doc bundle (16 items) | `66a6f1556` | — | ~25 min | 1d | ~5% |
+| `.022` | coverage backfill + verdict validation | `564fd0451` | — | ~30 min | 1d | ~6% |
+| `.023` | bd-time-machine s3:CopyObject grant | `5763b21c0` | `bd-v2.24.7` | ~25 min | 0.5d | ~10% |
+| **Total** | **6 ship commits + 1 closure + 1 tag** | | | **~3.5h** | **6-7.5d** | **~6%** |
+
+### Per-TO Highlight
+
+**.017 — OPS test matrix + segment-scope taxonomy**
+- 108 empirical test cases across 21 comp-* tools
+- Result distribution: 79 PASS / 19 DIFFERS / 6 FAIL / 4 DEFERRED (~85% coverage)
+- Tier classification: 8 cross-segment / 11 segment-aware / 1 segment-locked
+- 16-item triage ledger surfaced (across 7 categories) for follow-on TO authoring
+- Deliverables: `docs/architecture/ADHC_COMPIL_V4_017_TEST_MATRIX.md` + `org/modules/graph/comp-tools-segment-scope.md` (1-page agent reference) + `comp-tools.yaml` segment_scope per tool
+
+**.019 — BLOCKING bug fixes**
+- Bug 1.1: `comp-pipescript deployed --pipeline inf-gold` UnboundLocalError on `skip_gold` at `pipeline_cli.py:1004` — fixed via top-of-function init
+- Bug 1.2: `comp-pipescript chain --pipeline` silently returned BD chain regardless of flag — wired `--pipeline` through `cmd_chain`
+- Bonus discovery: INF chains DO exist in `gold_pipeline_deps.yaml` (full/incremental/label/silver_prep) — `chain full --pipeline inf-gold` returns 47 scripts post-fix
+- BD regression-clean across all default paths
+
+**.020 — Cross-layer graph extension (Tier reclassification A→B)**
+- Architectural seam: `extract_s3.py` was BD-only; `comp-pipescript inject` was a separate step that got wiped on every `comp-build` rebuild
+- Two-pronged fix:
+  1. `extract_s3.py` duplicated gold-extraction loop for `data/orion/scripts/gold/INF_*.py` — script + function-level INF gold nodes + CALLS edges + builder/function S3 writes register during `comp-build`
+  2. `trace_graph.build_graph` adds Pass 6 `_inject_full_pipeline_into_graph()` running `inject_pipeline_edges` for both BD + INF gold DAGs in-process. Extended `inject_pipeline_edges` with optional `_graph` param for in-process operation
+- Graph: 1250→1772 nodes (+42%); 1047→2175 edges (+108%); 36 INF gold scripts + 428 function nodes + 22 s3:platinum/* nodes registered
+- All 4 OPS Cat 2 cases flipped FAIL→PASS empirically
+- `comp-trace` + `comp-blast` officially moved B→A in segment-scope reference card + `comp-tools.yaml`
+
+**.021 — Catalog + tool-doc bundle (16 items)**
+- 6 CLI implementations: --json on check-lambda-layer-deps, --lane on comp-constants, comp-trace --json multi-match disambiguation, comp-validate matcher tightening (exact-or-prefix-with-underscore), comp-validate ERROR + 15-candidate hint on unknown script_id, comp-pipescript dag detected-paths reporter
+- 10 doc-only catalog corrections: stale component examples, role names, --json flag claims, hybrid #field narrowing, postdeps example, origins count
+- 13 rows in compiler-tools-log (8 ship verifications + 5-random regression sample); all PASS
+
+**.022 — Coverage backfill + verdict validation**
+- Cat 6.1: built `.tools/backfill-lambda-iam-mapping.py` — handles 4 role-binding forms (aws_iam_role.X.arn / local.NAME / inline string-ARN / var.shared_lambda_execution_role_arn). Pipeline-wide locals scan handles yang/market-overview cross-file references
+- Result: 129/151 Lambdas backfilled (85% coverage; 22 unresolved are decommissioned/legacy/test)
+- Cat 6.1 empirical: `comp-iam service bd-gold-trigger` role "(not mapped)" → `bd-daily-trigger-lambda-role`, ops [GRANTED] (was [UNKNOWN]); `comp-iam gaps` 0 → 9 (was silently skipping unmapped)
+- Cat 6.2: comp-platinum reverse #field intersection fix — when query has #field, fallback2 directory-prefix speculatives suppressed (user wants narrow resolution). 18 SPECULATIVE → 0 noise
+- Cat 7: loop-quiescence NO_PROJECT_FILE verdict added; bare macro prefix no longer false-positive QUIESCENT_CLEAN total=0
+
+**.018 — SUPERSEDED**
+- Per CTO ratification (1.0.0_SA_CTO RAVC2 ACK 20260508T~PM): scope of .018 (Phase 2 validation against current Inflection state) substantially subsumed by .017 + .019/.020/.021/.022. Status closed pending → complete with close-comment
+
+**.023 — bd-time-machine s3:CopyObject grant (V4.022 Cat 6.1 follow-on)**
+- Andrew direct authorized investigation + remediation: "sure yeah do it"
+- Per-gap classification of the 9 gaps surfaced by .022:
+  - 1 REAL BUG (×2 line refs same fix): bd-time-machine missing s3:CopyObject for boto3 s3.copy_object on versioned gold/* objects
+  - 7 FALSE POSITIVES: 4× historical-prices-scheduler (aws s3 cp in USER_DATA_SCRIPT for ephemeral EC2), 2× inf-assets-trigger (aws s3 cp in SSM-shipped shell), 1× opal-news-layer3-curation (covered by AWS-managed AmazonS3ReadOnlyAccess attachment)
+- Real fix: terraform apply on bd-pipeline added CopyVersionedRestore Sid statement; 1 to change, 0 add/destroy; 0-diff post-apply verified
+- comp-iam gaps 9 → 7 post-apply (real one cleared; remaining 7 explicitly classified)
+- Tag: bd-v2.24.7 (patch bump from bd-v2.24.6; IAM-only additive change)
+- **comp-iam V5 improvement candidates surfaced:**
+  - EC2-shipped-shell distinction (USER_DATA / SSM body should not flag Lambda role — covers 5 of 7 FPs)
+  - AWS-managed-policy attachment parsing (infer actions from policy_arn — covers 2 of 7 FPs)
+  - Cumulative impact: gap detector precision goes from current ~22% to near-100% (real-only signals)
+
+### Pattern Data Points (under-budget compliance)
+
+This session's V4 work added **6 instances** to the under-budget pattern (instances #9–#14):
+- All 6 came in well under catalog (~6% session average)
+- Cumulative pattern at 14 instances; all <26% of catalog estimate
+- CTO note (.022 ACK): "pattern is rock-solid for V4-class compiler tooling work"
+- Per-TO breakdown:
+
+| # | TO | % of budget |
+|---|---|---|
+| 9 | .017 | ~5% |
+| 10 | .019 | ~13% |
+| 11 | .020 | ~5% |
+| 12 | .021 | ~5% |
+| 13 | .022 | ~6% |
+| 14 | .023 | ~10% |
+
+### V4 Family End-of-Day State
+
+**Closed surfaces (this session):**
+- Phase 1 (.001–.016): 11 active surfaces SHIPPED (AM session) + addendum
+- Phase 2 hardening: .017 + .019/.020/.021/.022 SHIPPED
+- .018 SUPERSEDED (per CTO ratification)
+- .023 permission-gap remediation SHIPPED (V4.022 follow-on)
+
+**Remaining V4 surfaces (all externally gated):**
+- .005 comp-events: pending V4.005 ship
+- .015 comp-freshness DDB target: post-FIRMSEP.10 (Cottonwood gate)
+- .006 comp-iam cross-firm: post-FIRMSEP.10
+
+**Standing-backlog observations (cumulative from V4.020/.022/.023):**
+1. INF gold HARDCODED writes detection (`extract_pipeline.py` extension; PRD-tier scope; V5 candidate)
+2. 22 unresolved Lambdas in lambda-source-map (decommissioned/legacy cleanup; small TO when bandwidth opens)
+3. comp-iam EC2-shipped-shell distinction (V5 candidate; covers 5 of 7 FPs from .023)
+4. comp-iam AWS-managed policy attachment parsing (V5 candidate; covers 2 of 7 FPs from .023)
+
+### Cumulative Session Tally
+
+**21 substantive ships today** (per COO log):
+- 11 V4 Phase 1 + addendum (AM session)
+- 5 V4 Phase 2 hardening (.017 + .019–.022)
+- 1 V4 SUPERSEDED closure (.018)
+- 1 V4 remediation (.023)
+- 1 INFETL.011 cron-flip-ack
+- 1 INFETL.CHAININC Class 1 fix
+- 1 aggregator quorum 7/7 deploy
+
+**Combined effort budget vs actual:**
+- Catalog estimate: ~13-15d
+- Wall-clock: ~5h (AM + PM combined)
+- Ratio: ~6% of budget across all V4-class work
+
+### EOD Decision
+
+CTO .023 RAVC2 ACK: "End-of-business-day stop. Standing watch carries through tomorrow morning."
+
+**Tomorrow's expected workflow:**
+1. INFETL.011 first-fire empirical observation 06:00 UTC
+2. Sprint shift to FIRMSEP.10 / Cottonwood (gated on Cottonwood credentials + bucket creation; FIRMSEP.09 still Andrew $-blocked)
+3. If Andrew GO on V5 PRD authoring: 4 standing-backlog items lead anchors
+
+### Final RAVC Trail (PM session)
+
+| RAVC | Direction | Time (UTC) | Result |
+|------|-----------|------|--------|
+| .017 (OPS test matrix ship) | AE → CTO+COO | ~18:25Z | ACK clean |
+| .019 (BLOCKING fixes) | AE → CTO+COO | ~19:05Z | ACK clean |
+| .020 (graph extension) | AE → CTO+COO | ~19:14Z | ACK clean |
+| .021 (catalog bundle) | AE → CTO+COO | ~19:21Z | ACK clean |
+| .022 (backfill + verdict) | AE → CTO+COO | ~19:34Z | ACK clean |
+| .023 (perm-gap remediation) | AE → CTO+COO | ~19:49Z | ACK clean + V5 candidates noted |
+
+---
+
+**Logged 2026-05-08T~19:55Z by 0.7.0_AE_CloudOps. EOD V4 close confirmed by CTO + COO joint posture. Standing watch through INFETL.011 first-fire 06:00Z tomorrow.**
