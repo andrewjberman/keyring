@@ -293,12 +293,35 @@ def cmd_schema_check(args):
         print(f"Could not parse: {path}")
         sys.exit(1)
 
-    # Find types.ts
-    types_file = path.parent / "types.ts"
-    if not types_file.exists():
-        types_file = path.parent.parent / "types.ts"
-    if not types_file.exists():
-        print(f"No types.ts found near {path}")
+    # ADHC_COMPIL_V4.011 (a): walk parent dirs for types.ts (up to 3 levels) +
+    # check _shared/types.ts at each level. Graceful INFO degradation when
+    # resolved via shared module instead of co-located.
+    types_file = None
+    types_resolution_severity = "INFO"  # default when co-located (no degradation message)
+    types_resolution_msg = ""
+    co_located = path.parent / "types.ts"
+    if co_located.exists():
+        types_file = co_located
+    else:
+        # Walk up to 3 parent levels; check both <parent>/types.ts and <parent>/_shared/types.ts
+        candidates = []
+        cur = path.parent
+        for _ in range(3):
+            cur = cur.parent
+            candidates.append(cur / "types.ts")
+            candidates.append(cur / "_shared" / "types.ts")
+        for c in candidates:
+            if c.exists():
+                types_file = c
+                types_resolution_severity = "INFO"
+                try:
+                    rel = c.relative_to(_WORKSPACE)
+                except ValueError:
+                    rel = c
+                types_resolution_msg = f"types resolved from {rel} (not co-located)"
+                break
+    if types_file is None:
+        print(f"  [WARN] types-resolution: no types.ts found near {path} (searched co-located + 3 parent dirs + _shared/)")
         sys.exit(1)
     types_content = types_file.read_text(encoding="utf-8", errors="replace")
 
@@ -319,9 +342,54 @@ def cmd_schema_check(args):
 
     print(f"SCHEMA CHECK: {flow.component_name}")
     print(f"  File: {flow.file_path}")
+    if types_resolution_msg:
+        print(f"  [INFO] {types_resolution_msg}")
     print()
 
     has_issues = False
+
+    # ADHC_COMPIL_V4.011 (b): handler-local-param suppression heuristic.
+    # Identify variable names assigned from event-object-like sources or arrow-fn
+    # params; these are NOT field reads on response data and should not be flagged
+    # as MISSING. Anchor: PartnerAnalytics `period` from click-handler destructure.
+    component_source = path.read_text(encoding="utf-8", errors="replace")
+    handler_local_names: set[str] = set()
+    # const X = e.target.<...>
+    for m in re.finditer(r'const\s+(\w+)\s*=\s*\w+\.(?:target|currentTarget|nativeEvent|detail|value)\b', component_source):
+        handler_local_names.add(m.group(1))
+    # const { X, Y } = e.target / e.currentTarget
+    for m in re.finditer(r'const\s*\{([^}]+)\}\s*=\s*\w+\.(?:target|currentTarget|nativeEvent|detail)\b', component_source):
+        for name in re.split(r'[,\s]+', m.group(1)):
+            clean = name.strip().split(':')[0].strip()
+            if clean and clean.isidentifier():
+                handler_local_names.add(clean)
+    # Arrow function params: (X) => or (X, Y) => or ({X}) =>
+    # Limit to common handler signatures: onChange, onClick, onSubmit, etc.
+    for m in re.finditer(
+        r'on[A-Z]\w*\s*=\s*\{?\s*\(([^)]*)\)\s*=>',
+        component_source
+    ):
+        params = m.group(1)
+        # Extract identifier-like names (skip type annotations + destructure)
+        for token in re.split(r'[,\s:{}|]+', params):
+            t = token.strip()
+            if t and t.isidentifier() and not t[0].isupper():
+                handler_local_names.add(t)
+
+    # Inline-typed arrow function params: (data: { period: string }) => ...
+    # Suppress all keys of the inline type — those are local fields on the param,
+    # not response-data fields. Anchor: PartnerAnalytics handleBarClick
+    # `(data: { period: string }) => ... data.period`.
+    for m in re.finditer(
+        r'\(\s*(\w+)\s*:\s*\{([^}]+)\}\s*\)\s*=>',
+        component_source
+    ):
+        # m.group(2) is the inline type body; extract all key names
+        type_body = m.group(2)
+        for kv in re.finditer(r'(\w+)\s*[?:]\s*', type_body):
+            key = kv.group(1)
+            if key.isidentifier():
+                handler_local_names.add(key)
 
     for fb in flow.fetches:
         # Resolve response type: from useQuery<Type> or from endpoint return type
@@ -409,7 +477,8 @@ def cmd_schema_check(args):
                        'toLowerCase', 'toUpperCase', 'startsWith', 'endsWith',
                        'replace', 'split', 'match', 'search', 'charAt', 'substring'}
 
-        missing = rendered_roots - type_roots - js_builtins
+        # ADHC_COMPIL_V4.011 (b): subtract handler-local names from MISSING candidates.
+        missing = rendered_roots - type_roots - js_builtins - handler_local_names
         unused = type_roots - rendered_roots
         # Filter unused: skip metadata fields
         metadata_fields = {'generated_at', 'data_as_of', 'firm_id', 'relationship_id',
@@ -448,7 +517,8 @@ def cmd_schema_check(args):
 
         if true_missing:
             has_issues = True
-            print(f"    !! MISSING FROM TYPE ({len(true_missing)}):")
+            # ADHC_COMPIL_V4.011 (c): ERROR severity column on confirmed missing fields
+            print(f"    [ERROR] MISSING FROM TYPE ({len(true_missing)}):")
             for m in sorted(true_missing):
                 # Find where it's rendered
                 locations = []
@@ -459,14 +529,15 @@ def cmd_schema_check(args):
                     if any(m in fa for fa in tc.field_accesses):
                         locations.append(f"L{tc.line_number} ({tc.output_variable})")
                 loc_str = f" at {', '.join(locations[:3])}" if locations else ""
-                print(f"       {m}{loc_str}")
+                print(f"       [ERROR] {m}{loc_str}")
                 print(f"         Component renders this but {check_type} does not define it.")
                 print(f"         This will be undefined at runtime unless aliased or injected.")
 
         if aliases_found:
-            print(f"    NOTE (runtime aliases, {len(aliases_found)} -- not type violations):")
+            # ADHC_COMPIL_V4.011 (c): INFO severity for runtime aliases (not violations)
+            print(f"    [INFO] runtime aliases ({len(aliases_found)} -- not type violations):")
             for name, parent in sorted(aliases_found.items()):
-                print(f"       {name}  <- destructured from '{parent}' (const {{ {name} }} = {parent})")
+                print(f"       [INFO] {name}  <- destructured from '{parent}' (const {{ {name} }} = {parent})")
                 print(f"         Check that '{parent}.{name}' exists in the type. Not flagged as MISSING.")
 
         if unused_non_meta:
@@ -475,9 +546,10 @@ def cmd_schema_check(args):
             plain_unused = unused_non_meta - feature_hits
 
             if feature_hits:
-                print(f"    !! WARN — feature-relevant UNUSED ({len(feature_hits)}, token: '{feature_token}'):")
+                # ADHC_COMPIL_V4.011 (c): WARN severity for feature-relevant UNUSED
+                print(f"    [WARN] feature-relevant UNUSED ({len(feature_hits)}, token: '{feature_token}'):")
                 for u in sorted(feature_hits):
-                    print(f"       {u}: {type_fields.get(u, '?')}")
+                    print(f"       [WARN] {u}: {type_fields.get(u, '?')}")
                     print(f"         This field is typed but NEVER rendered.")
                     print(f"         You're building '{feature_token}' support — most likely cause: a routing")
                     print(f"         ternary (e.g. cohort === 'geo' ? ... : ...) is missing the '{feature_token}'")
