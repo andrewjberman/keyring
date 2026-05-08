@@ -360,6 +360,24 @@ tools_continued:
     replaces: "Manual cross-reference of Lambda imports against layer requirements.txt; AWS Lambda console trial-and-error for ModuleNotFoundError"
     note: "Shipped 2026-05-07 under ADHC_LAMBDADOC.003 (`fc4d1f18f` MVP + `59350fdc2` aws_lambda_layer_version + module-reference handling). Empirical anchor: v1.7.38 inf-pipeline regression where 3 of 4 inf-api-* Lambdas had nested-path source_map files leading to ModuleNotFoundError + inf-api-assets-v2 had layers=[pandas_layer] but layer didn't have `requests` — old zip masked it via inline-vendoring. v1.7.39 hotfix flat-zip + layer switch to pandas_pyarrow_requests_layer caught + fixed; this tool prevents the class going forward. Cataloged 2026-05-08 under ADHC_COMPIL_V4.007 doc close-out."
 
+  comp-constants:
+    command: "comp-constants <subcommand> [args]"
+    when: |
+      - Pre-commit on any Python edit -> drift gate (wired into ds-commit-gate.sh)
+      - "Did the rep_id=6 propagation actually land in all sites?" -> comp-constants check
+      - After a coordinated marker-constant change (rep_id sweep, FIRM_ID rename, AUA bound bump) -> comp-constants index to refresh sites + flag missed drift
+      - Pre-PRD authoring: discover undocumented marker constants -> comp-constants new
+      - Lambda-bundled silver/gold copy drift detection -> check covers infra/aws/lambda/<pipeline>/**/*.py per lane
+    subcommands:
+      check: "comp-constants check [--file PATH] -- drift detection. Exit 1 on drift, 0 on clean. With --file, filters to sites in that file (used by pre-commit hook). Lane-aware: BD canonical compared only against BD sites, INF vs INF, multifirm vs multifirm. Semantic equivalence for sets/lists/comma-strings ({3,6,11,12} ~ [3,6,11,12] ~ '3,6,11,12')."
+      index: "comp-constants index -- live AST re-scan; rewrites sites[] in comp-constants.config.yaml from current state. Preserves notes, canonical_value, lane. Stable alphabetical site ordering. Run after coordinated propagation (e.g., rep_id sweep) to refresh ground truth."
+      new: "comp-constants new -- discovery surface. Lists ALL_CAPS_SNAKE constants found in scan but NOT in config. Filters utility patterns (BUFFER_*, RETRY_*, MAX_*, etc.). Operator reviews + manually adds chosen ones. Use case: PRD authoring, pre-FIRMSEP onboarding, post-incident audit."
+      list: "comp-constants list -- print current config summary (debug surface). Shows lane, name, site count, drift count per constant."
+    cost: "<5s full-repo (~150 Python files); <1s --file (single file). Pre-commit hook overhead acceptable."
+    data_sources: "comp-constants.config.yaml (workspace root) + AST parse of Python files matching search_surfaces glob patterns"
+    replaces: "Manual grep + spreadsheet drift tracking. Caught the rep_id=6 propagation gap (INFNNA Joe Brandenburg attribution incident 2026-05-07) but only AFTER it shipped to production -- this tool runs at pre-commit so it catches BEFORE."
+    note: "AST-only (literal forms str/int/float/list/set/frozenset/dict + os.environ.get(name, default) defaults). MISSED forms: function calls (frozenset({...})), subscripts (PARTNER_FIRM_TAGS['inflection']), name references. JS/TS deferred to v2 (SEED-MULTIFIRM 7 constants in .mjs not scanned). Lane-aware drift filtering: same name across lanes (FIRM_ID bd='49financial' vs inf='inflection') is NOT flagged. Semantic-set normalization handles type-form equivalence."
+
   comp-tooltip:
     command: "comp-tooltip <subcommand>"
     when: |

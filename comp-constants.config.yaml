@@ -1,0 +1,527 @@
+# comp-constants.config.yaml — bootstrap from SEED-{BD,INF,MULTIFIRM} YAMLs
+# ADHC_COMPIL_V4.003 (AE 0.7.0 2026-05-08)
+# Re-derive from current AST scan: .tools/comp-constants index
+# Drift gate: .tools/comp-constants check (exit 1 on drift)
+# Discovery: .tools/comp-constants new
+#
+# Schema:
+#   search_surfaces: {<lane>: [<glob>, ...]}
+#   constants:
+#     - name: ALL_CAPS_NAME
+#       lane: bd|inf|multifirm
+#       type: str|set|frozenset|list|int|float|object
+#       canonical_value: <repr>
+#       sites: [{file, line, value, env_backed?, drift?, language?}, ...]
+#       notes: <str>
+search_surfaces:
+  bd:
+  - data/black_diamond/scripts/**/*.py
+  - infra/aws/lambda/bd-pipeline/**/*.py
+  inf:
+  - data/orion/scripts/**/*.py
+  - data/orion/manual_api/**/*.py
+  - infra/aws/lambda/inf-pipeline/**/*.py
+  multifirm:
+  - infra/aws/lambda/portal-auth/**/*.py
+  - infra/aws/lambda/shared-*/**/*.py
+constants:
+- name: FIRM_ID
+  lane: bd
+  type: str
+  canonical_value: '''49financial'''
+  sites:
+  - file: infra/aws/lambda/bd-pipeline/bd-gold-layer/lambda_function.py
+    line: 37
+    value: '''49financial'''
+    comment: 'FIRM_ID = ''49financial''  # hardcoded literal (no env override)'
+  - file: infra/aws/lambda/bd-pipeline/bd-portal-publisher/lambda_function.py
+    line: 41
+    value: os.environ.get('FIRM_ID', '49financial')
+    comment: FIRM_ID = os.environ.get('FIRM_ID', '49financial')
+  - file: infra/aws/lambda/bd-pipeline/bd-portal-advisor-publisher/lambda_function.py
+    line: 37
+    value: os.environ.get('FIRM_ID', '49financial')
+    comment: FIRM_ID = os.environ.get('FIRM_ID', '49financial')
+  - file: data/black_diamond/scripts/gold/C_06.client_mix_timeseries.py
+    line: 98
+    value: os.environ.get('O6B_FIRM_ID', '49financial')
+    comment: 'FIRM_ID = os.environ.get(''O6B_FIRM_ID'', ''49financial'')  # env var name differs: O6B_FIRM_ID not FIRM_ID'
+    drift: true
+  notes: 'Primary BD firm identifier used in S3 path construction and firm-routing predicates. All 4 sites agree on canonical value ''49financial''. Implementation drift: bd-gold-layer uses a bare hardcode
+    while the other 3 use os.environ.get fallbacks. C_06 uses a non-standard env var name (O6B_FIRM_ID) — flag to AE for canonical env-var name enforcement.
+
+    '
+- name: FIRM_NAME
+  lane: bd
+  type: str
+  canonical_value: '''49 Financial'''
+  sites:
+  - file: infra/aws/lambda/bd-pipeline/bd-gold-layer/lambda_function.py
+    line: 38
+    value: '''49 Financial'''
+    comment: 'FIRM_NAME = ''49 Financial''  # hardcoded literal'
+  - file: infra/aws/lambda/bd-pipeline/bd-portal-publisher/lambda_function.py
+    line: 42
+    value: os.environ.get('FIRM_NAME', '49 Financial')
+    comment: FIRM_NAME = os.environ.get('FIRM_NAME', '49 Financial')
+  - file: infra/aws/lambda/bd-pipeline/bd-portal-advisor-publisher/lambda_function.py
+    line: 38
+    value: os.environ.get('FIRM_NAME', '49 Financial')
+    comment: FIRM_NAME = os.environ.get('FIRM_NAME', '49 Financial')
+  notes: 'Display name for the BD firm used in portal JSON payloads. Sister constant to FIRM_ID. Same env-override pattern drift as FIRM_ID: bd-gold-layer hardcodes, publishers use os.environ.get. No value
+    drift across all 3 sites.
+
+    '
+- name: INVALID_REL_IDS
+  lane: bd
+  type: set
+  canonical_value: '{'''', ''0'', ''nan'', ''None'', ''No Relationship''}'
+  sites:
+  - file: infra/aws/lambda/bd-pipeline/bd-gold-layer/lambda_function.py
+    line: 41
+    value: '{'''', ''0'', ''nan'', ''None'', ''No Relationship''}'
+    comment: 'INVALID_REL_IDS = {'''', ''0'', ''nan'', ''None'', ''No Relationship''}  # relationship_id values requiring fallback to account_id'
+  notes: 'Blacklist of invalid relationship_id values. When an account''s relationship_id matches one of these, the gold layer falls back to using account_id as the grouping key. Single-site definition
+    — no drift risk. AE should check for inline equivalents in gold scripts.
+
+    '
+- name: SOURCE_BD
+  lane: bd
+  type: str
+  canonical_value: '''bd'''
+  sites:
+  - file: data/black_diamond/scripts/gold/lib/schwab_flows.py
+    line: 223
+    value: '''bd'''
+    comment: 'SOURCE_BD = ''bd''  # BD present on date; Schwab matches or absent'
+  notes: 'Phase 6a source_system enum label. Indicates a transaction is present in BD (Schwab matches or is absent). Sister constants: SOURCE_BD_DIFF_FLAGGED, SOURCE_SCHWAB_IMPUTED. All three are consumed
+    by PHASE_6A_SOURCE_SYSTEMS.
+
+    '
+- name: SOURCE_BD_DIFF_FLAGGED
+  lane: bd
+  type: str
+  canonical_value: '''bd_diff_flagged'''
+  sites:
+  - file: data/black_diamond/scripts/gold/lib/schwab_flows.py
+    line: 224
+    value: '''bd_diff_flagged'''
+    comment: 'SOURCE_BD_DIFF_FLAGGED = ''bd_diff_flagged''  # BD + Schwab both present, amounts differ > threshold'
+  notes: 'Phase 6a source_system label for BD+Schwab divergence cases. Signals that both feeds are present for this transaction but amounts exceed the numeric tolerance. Sister of SOURCE_BD and SOURCE_SCHWAB_IMPUTED.
+
+    '
+- name: SOURCE_SCHWAB_IMPUTED
+  lane: bd
+  type: str
+  canonical_value: '''schwab_imputed'''
+  sites:
+  - file: data/black_diamond/scripts/gold/lib/schwab_flows.py
+    line: 225
+    value: '''schwab_imputed'''
+    comment: 'SOURCE_SCHWAB_IMPUTED = ''schwab_imputed''  # Schwab present, BD absent on date'
+  notes: 'Phase 6a source_system label for transactions where Schwab feed has data but BD is absent on that date. Represents Schwab-only contribution to NNA enrichment.
+
+    '
+- name: PHASE_6A_SOURCE_SYSTEMS
+  lane: bd
+  type: frozenset
+  canonical_value: frozenset({'bd', 'bd_diff_flagged', 'schwab_imputed'})
+  sites:
+  - file: data/black_diamond/scripts/gold/lib/schwab_flows.py
+    line: 233
+    value: frozenset({SOURCE_BD, SOURCE_BD_DIFF_FLAGGED, SOURCE_SCHWAB_IMPUTED})
+    comment: PHASE_6A_SOURCE_SYSTEMS = frozenset({SOURCE_BD, SOURCE_BD_DIFF_FLAGGED, SOURCE_SCHWAB_IMPUTED})
+  notes: 'Allowlist set of the three Phase 6a source_system values. Used in filter predicates to restrict NNA enrichment to Phase-6a-labelled rows only. Derives from the three sister constants; no hardcoded
+    literals — no drift risk if individual constants change. Phase 6b will add bd_lagged/bd_delayed/bd_only (deferred pending event-level matching).
+
+    '
+- name: MIX_ASSET_CLASSES
+  lane: bd
+  type: list
+  canonical_value: '[''equity'', ''fixed_income'', ''alternatives'']'
+  sites:
+  - file: data/black_diamond/scripts/gold/C_06.client_mix_timeseries.py
+    line: 179
+    value: '[''equity'', ''fixed_income'', ''alternatives'']'
+    comment: MIX_ASSET_CLASSES = ['equity', 'fixed_income', 'alternatives']
+  notes: 'Canonical taxonomy allowlist for the 3-class BD asset mix classification (GLDPRE 4-class model produces equity/fixed_income/alternatives; cash handled separately). Single-site; controls which
+    ETFClassifier output classes appear in the mix timeseries. If BD adds a new asset class, this list must be updated to prevent silent exclusion.
+
+    '
+- name: ALL_ROLES
+  lane: bd
+  type: list
+  canonical_value: '[''architect'', ''implementor'', ''consultant'', ''local_ops'', ''additional_advisor'']'
+  sites:
+  - file: data/black_diamond/scripts/gold/C_07.advisor_attribution.py
+    line: 75
+    value: '[''architect'', ''implementor'', ''consultant'', ''local_ops'', ''additional_advisor'']'
+    comment: ALL_ROLES = ['architect', 'implementor', 'consultant', 'local_ops', 'additional_advisor']
+  notes: 'Canonical allowlist of BD advisor role categories used in attribution gold scripts. Roles not in this list are excluded from attribution rollups. Single-site definition; changes here must be propagated
+    to any portal component that renders role breakdowns.
+
+    '
+- name: NUMERIC_TOLERANCE_DEEP
+  lane: bd
+  type: float
+  canonical_value: '0.01'
+  sites:
+  - file: infra/aws/lambda/bd-pipeline/bd-incrparity-trigger/incrparity_core.py
+    line: 23
+    value: '0.01'
+    comment: 'NUMERIC_TOLERANCE_DEEP = 0.01  # $0.01 per PRD Section 5'
+  notes: 'Incremental parity deep-check threshold: $0.01 per PRD Section 5. Used by the bd-incrparity-trigger Lambda to flag value divergences between incremental and full gold runs. Distinct from surface-level
+    tolerance (if one exists). Single-site.
+
+    '
+- name: FIRM_MV_BASELINE
+  lane: bd
+  type: float
+  canonical_value: '15_900_000.0'
+  sites:
+  - file: data/black_diamond/scripts/gold/validate_sl_nightly_gate.py
+    line: 38
+    value: '15_900_000.0'
+    comment: 'FIRM_MV_BASELINE = 15_900_000.0  # buggy pre-Fix-B baseline'
+  notes: 'Pre-Fix-B firm MV baseline ($15.9M) used in SL-P1c nightly gate validation. The nightly gate confirms that Night 1+ firm shadow MV exceeds this baseline, proving the attrs-wipe fix raised the
+    cohort above the broken pre-fix level. Historical threshold — if re-baselined post-fix, update this constant and note SHA.
+
+    '
+- name: JONES_ACCOUNT_ID
+  lane: bd
+  type: str
+  canonical_value: '"z0817905851"'
+  sites:
+  - file: data/black_diamond/scripts/gold/validate_sl_nightly_gate.py
+    line: 35
+    value: '"z0817905851"'
+    comment: JONES_ACCOUNT_ID = "z0817905851"
+  notes: 'Known-account cohort identifier for SL-P1c nightly gate AC2 validation (Jones). Borderline marker — it is a firm-specific account ID used as a sentinel, not a general cohort filter. Included because
+    it anchors a specific validation contract (AC2 revised per CTO Option A 2026-05-08). Changes require corresponding AC2 rewrite.
+
+    '
+- name: INFLECTION_REP_IDS
+  lane: inf
+  type: set
+  canonical_value: '{3, 6, 11, 12}'
+  sites:
+  - file: data/orion/scripts/silver/_orion_api_silver_lib.py
+    line: 36
+    value: '{3, 6, 11, 12}'
+    comment: 'INFLECTION_REP_IDS = {3, 6, 11, 12}  # authoritative silver-lib definition'
+  - file: data/orion/scripts/silver/convert_orion_api_to_silver.py
+    line: 501
+    value: '{3, 6, 11, 12}'
+    comment: 'INFLECTION_REP_IDS = {3, 6, 11, 12}  # inline copy in convert script'
+  - file: data/orion/scripts/gold/INF_D_08.nmec_nmnc_nna.py
+    line: 17
+    value: frozenset({3, 6, 11, 12})
+    comment: 'INFLECTION_REP_IDS: frozenset[int] = frozenset({3, 6, 11, 12})  # ADVI_INFGRD.001 + joe_brandenburg rep_id=6'
+  - file: data/orion/scripts/gold/INF_D_04.client_portal_summary.py
+    line: 102
+    value: '{''3'', ''6'', ''11'', ''12''}'
+    comment: 'INFLECTION_REP_IDS = {''3'', ''6'', ''11'', ''12''}  # str-set form for string-typed rep_id column'
+  - file: data/orion/manual_api/pull_inflection_transactions_v2.py
+    line: 71
+    value: '"3,6,11,12"'
+    comment: 'INFLECTION_REP_IDS = "3,6,11,12"  # Joe Brandenburg rep_id=6 added 2026-05-07 (INFNNA.001 root cause)'
+  - file: data/orion/manual_api/probe_inflec_household_rep_mapping.py
+    line: 44
+    value: '[3, 6, 11, 12]'
+    comment: 'INFLECTION_REP_IDS = [3, 6, 11, 12]  # IWM, Brandenburg, Scanlan, Lee (core 4)'
+  - file: data/orion/manual_api/create_unified_account_dim_query.py
+    line: 45
+    value: '[3, 6, 11, 12]'
+    comment: INFLECTION_REP_IDS = [3, 6, 11, 12]
+  - file: infra/aws/lambda/inf-pipeline/inf-accounts-v2-daily/_orion_api_silver_lib.py
+    line: 36
+    value: '{3, 6, 11, 12}'
+    comment: 'INFLECTION_REP_IDS = {3, 6, 11, 12}  # Lambda-bundled copy of silver lib'
+  - file: infra/aws/lambda/inf-pipeline/inf-silver-chain/_orion_api_silver_lib.py
+    line: 36
+    value: '{3, 6, 11, 12}'
+    comment: 'INFLECTION_REP_IDS = {3, 6, 11, 12}  # Lambda-bundled copy of silver lib'
+  - file: data/orion/manual_api/pull_inflection_assets.py
+    line: 53
+    value: '[3, 11, 12]'
+    comment: 'INFLECTION_REP_IDS = [3, 11, 12]  # OLD — missing rep_id=6 (Joe Brandenburg)'
+    drift: true
+  - file: data/orion/manual_api/create_tax_dim_queries.py
+    line: 45
+    value: '[3, 11, 12]'
+    comment: 'INFLECTION_REP_IDS = [3, 11, 12]  # OLD — missing rep_id=6 (Joe Brandenburg)'
+    drift: true
+  - file: data/orion/manual_api/pull_inflection_transactions.py
+    line: 49
+    value: '"3,11,12"'
+    comment: 'INFLECTION_REP_IDS = "3,11,12"  # OLD v1 script — missing rep_id=6; superseded by pull_inflection_transactions_v2.py'
+    drift: true
+  notes: 'rep_id=6 (Joe Brandenburg, IWM catch-all) added 2026-05-07 as INFNNA.001 root cause fix. 3 drift sites confirmed: pull_inflection_assets.py, create_tax_dim_queries.py, pull_inflection_transactions.py
+    (v1). pull_inflection_transactions.py (v1) is superseded by v2 but still present in codebase. data/orion/scripts/silver/build_assets_dim.py:66 comment also shows old {3, 11, 12} — cosmetic drift in
+    comment only. data/orion/manual_api/pull_inflection_representatives.py:65 has [3, 6, 7, 8, 10, 11, 12] — extended discovery scope, different purpose (not cohort filter). infra/aws/lambda/inf-portal-publisher/lambda_function.py:71
+    uses private alias _INFLECTION_REP_IDS = frozenset({''3'', ''6'', ''11'', ''12''}) — str-typed, correct.
+
+    '
+- name: INFLECTION_FIRM_TAG
+  lane: inf
+  type: str
+  canonical_value: '''inflection_wealth_management'''
+  sites:
+  - file: data/orion/scripts/gold/INF_D_04b.client_publishers.py
+    line: 64
+    value: '''inflection_wealth_management'''
+    comment: 'INFLECTION_FIRM_TAG = ''inflection_wealth_management''  # used to filter advisor_firm column'
+  - file: data/orion/scripts/gold/INF_D_00d.cumulative_chart.py
+    line: 69
+    value: '''inflection_wealth_management'''
+    comment: 'INFLECTION_FIRM_TAG = ''inflection_wealth_management''  # used to filter advisor_firm column'
+  notes: 'Firm tag string applied at gold layer to filter advisor_firm column. Derived from PARTNER_FIRM_TAGS[''inflection''] in silver layer (as INFLECTION_ADVISOR_FIRM_TAG alias). Gold scripts define
+    this independently; no drift observed. INFLECTION_REP_NAMES_BLACKLIST referenced in PRD §5 / COO dispatch but NOT found in codebase — absent; future constant.
+
+    '
+- name: INFLECTION_ADVISOR_FIRM_TAG
+  lane: inf
+  type: str
+  canonical_value: 'PARTNER_FIRM_TAGS[''inflection'']  # => ''inflection_wealth_management'''
+  sites:
+  - file: data/orion/scripts/silver/_orion_api_silver_lib.py
+    line: 35
+    value: PARTNER_FIRM_TAGS['inflection']
+    comment: 'INFLECTION_ADVISOR_FIRM_TAG = PARTNER_FIRM_TAGS[''inflection'']  # silver-lib backwards-compat alias'
+  - file: data/orion/scripts/silver/convert_orion_to_silver.py
+    line: 116
+    value: PARTNER_FIRM_TAGS['inflection']
+    comment: 'INFLECTION_ADVISOR_FIRM_TAG = PARTNER_FIRM_TAGS[''inflection'']  # backwards-compat alias'
+  - file: infra/aws/lambda/inf-pipeline/inf-accounts-v2-daily/_orion_api_silver_lib.py
+    line: 35
+    value: PARTNER_FIRM_TAGS['inflection']
+    comment: 'INFLECTION_ADVISOR_FIRM_TAG = PARTNER_FIRM_TAGS[''inflection'']  # Lambda-bundled copy'
+  - file: infra/aws/lambda/inf-pipeline/inf-silver-chain/_orion_api_silver_lib.py
+    line: 35
+    value: PARTNER_FIRM_TAGS['inflection']
+    comment: 'INFLECTION_ADVISOR_FIRM_TAG = PARTNER_FIRM_TAGS[''inflection'']  # Lambda-bundled copy'
+  - file: infra/aws/lambda/inf-pipeline/inf-api-txn/_orion_api_silver_lib.py
+    line: 35
+    value: PARTNER_FIRM_TAGS['inflection']
+    comment: 'INFLECTION_ADVISOR_FIRM_TAG = PARTNER_FIRM_TAGS[''inflection'']  # Lambda-bundled copy'
+  - file: infra/aws/lambda/inf-pipeline/inf-api-reps/_orion_api_silver_lib.py
+    line: 35
+    value: PARTNER_FIRM_TAGS['inflection']
+    comment: 'INFLECTION_ADVISOR_FIRM_TAG = PARTNER_FIRM_TAGS[''inflection'']  # Lambda-bundled copy'
+  - file: infra/aws/lambda/inf-pipeline/inf-api-positions/_orion_api_silver_lib.py
+    line: 35
+    value: PARTNER_FIRM_TAGS['inflection']
+    comment: 'INFLECTION_ADVISOR_FIRM_TAG = PARTNER_FIRM_TAGS[''inflection'']  # Lambda-bundled copy'
+  notes: 'Silver-layer alias for the Inflection firm tag. Appears in every _orion_api_silver_lib.py copy (data + 5 Lambda bundles). All copies derive from PARTNER_FIRM_TAGS[''inflection''] — no hardcoded
+    value, so no drift risk if PARTNER_FIRM_TAGS is updated. 7 sites total.
+
+    '
+- name: PARTNER_FIRM_TAGS
+  lane: inf
+  type: dict
+  canonical_value: '{''inflection'': ''inflection_wealth_management''}'
+  sites:
+  - file: data/orion/scripts/silver/_orion_api_silver_lib.py
+    line: 32
+    value: '{''inflection'': ''inflection_wealth_management''}'
+    comment: 'PARTNER_FIRM_TAGS = {''inflection'': ''inflection_wealth_management''}  # INFGRD registry'
+  - file: data/orion/scripts/silver/convert_orion_to_silver.py
+    line: 98
+    value: '{''inflection'': ''inflection_wealth_management''}'
+    comment: 'PARTNER_FIRM_TAGS = {''inflection'': ''inflection_wealth_management'', # Future: ''keil'': ...}'
+  - file: infra/aws/lambda/inf-pipeline/inf-accounts-v2-daily/_orion_api_silver_lib.py
+    line: 32
+    value: '{''inflection'': ''inflection_wealth_management''}'
+    comment: 'PARTNER_FIRM_TAGS = {''inflection'': ''inflection_wealth_management''}  # Lambda-bundled copy'
+  notes: 'Multi-partner registry introduced in ADVI_INFGRD.005 (PRD §5.4) to generalize single-firm hardcodes. Currently inflection-only; future partners (keil etc.) extend this dict. Same dict appears
+    in 5+ Lambda _orion_api_silver_lib.py copies — update all when adding partner.
+
+    '
+- name: PARTNER_REP_IDS
+  lane: inf
+  type: dict
+  canonical_value: '{''inflection'': {3, 6, 11, 12}}'
+  sites:
+  - file: data/orion/scripts/silver/convert_orion_to_silver.py
+    line: 104
+    value: '{''inflection'': {3, 6, 11, 12}}'
+    comment: 'PARTNER_REP_IDS: dict[str, set[int]] = {''inflection'': {3, 6, 11, 12}, # Future: ''keil'': {...}}'
+  notes: 'Per-partner rep_id allowlist registry (ADVI_INFGRD.005). The inflection entry must stay in sync with INFLECTION_REP_IDS standalone copies. Currently only in convert_orion_to_silver.py; _orion_api_silver_lib.py
+    files define INFLECTION_REP_IDS directly rather than deriving from this registry.
+
+    '
+- name: PARTNER_AUA_BOUNDS
+  lane: inf
+  type: dict
+  canonical_value: '{''inflection'': (150_000_000, 300_000_000)}'
+  sites:
+  - file: data/orion/scripts/silver/convert_orion_to_silver.py
+    line: 110
+    value: '{''inflection'': (150_000_000, 300_000_000)}'
+    comment: 'PARTNER_AUA_BOUNDS: dict[str, tuple[float, float]] = {''inflection'': (150_000_000, 300_000_000)  # $150M-$300M}'
+  notes: 'Guard B per-partner AUA sanity bounds. Inflection bounds ($150M-$300M) mirror the standalone GUARD_B_AUA_LOWER/UPPER scalars in _orion_api_silver_lib.py. Must stay in sync if AUA range changes.
+
+    '
+- name: GUARD_B_AUA_LOWER
+  lane: inf
+  type: int
+  canonical_value: '150_000_000'
+  sites:
+  - file: data/orion/scripts/silver/_orion_api_silver_lib.py
+    line: 38
+    value: '150_000_000'
+    comment: 'GUARD_B_AUA_LOWER = 150_000_000  # $150M Guard B lower bound (ADVI_INFGRD.002)'
+  - file: infra/aws/lambda/inf-pipeline/inf-accounts-v2-daily/_orion_api_silver_lib.py
+    line: 38
+    value: '150_000_000'
+    comment: 'GUARD_B_AUA_LOWER = 150_000_000  # Lambda-bundled copy'
+  - file: data/orion/scripts/verify/shape_check.py
+    line: 47
+    value: '150_000_000'
+    comment: 'GUARD_B_LOWER = 150_000_000  # verify-only alias (different name: GUARD_B_LOWER)'
+  notes: 'Inflection Guard B lower AUA bound ($150M). Also appears as GUARD_B_LOWER in shape_check.py (different constant name — divergent naming pattern worth flagging to AE for comp-constants canonical-name
+    enforcement).
+
+    '
+- name: GUARD_B_AUA_UPPER
+  lane: inf
+  type: int
+  canonical_value: '300_000_000'
+  sites:
+  - file: data/orion/scripts/silver/_orion_api_silver_lib.py
+    line: 39
+    value: '300_000_000'
+    comment: 'GUARD_B_AUA_UPPER = 300_000_000  # $300M Guard B upper bound (ADVI_INFGRD.002)'
+  - file: infra/aws/lambda/inf-pipeline/inf-accounts-v2-daily/_orion_api_silver_lib.py
+    line: 39
+    value: '300_000_000'
+    comment: 'GUARD_B_AUA_UPPER = 300_000_000  # Lambda-bundled copy'
+  - file: data/orion/scripts/verify/shape_check.py
+    line: 48
+    value: '300_000_000'
+    comment: 'GUARD_B_UPPER = 300_000_000  # verify-only alias (different name: GUARD_B_UPPER)'
+  notes: 'Inflection Guard B upper AUA bound ($300M). Same divergent naming pattern as GUARD_B_AUA_LOWER — shape_check.py uses GUARD_B_UPPER not GUARD_B_AUA_UPPER.
+
+    '
+- name: INFLECTION_EXTENDED
+  lane: inf
+  type: set
+  canonical_value: '{3, 6, 11, 12}'
+  sites:
+  - file: data/orion/scripts/verify/shape_check.py
+    line: 46
+    value: '{3, 6, 11, 12}'
+    comment: 'INFLECTION_EXTENDED = {3, 6, 11, 12}  # verify-script alias for canonical rep_ids'
+  notes: 'Verify-only alias for the canonical INFLECTION_REP_IDS cohort, defined in shape_check.py. Correct value (includes rep_id=6). Borderline marker — same semantic as INFLECTION_REP_IDS but not named
+    consistently. AE may want to flag as redundant duplicate vs canonical.
+
+    '
+- name: FIRM_CONFIG
+  lane: multifirm
+  type: object
+  canonical_value: '{''49financial'': {bucket: ''opal-data-bd'', displayName: ''49 Financial''}, ''inflection'': {bucket: ''opal-data-inf'', displayName: ''Inflection Wealth Management''}, ''mockadv'':
+    {bucket: ''opal-data-bd'', displayName: ''Mock Advisor (test account)''}}'
+  sites:
+  - file: infra/aws/lambda-edge/_shared/firm-config.mjs
+    line: 29
+    value: 'Object.freeze({...}) — 3 firms: 49financial, inflection, mockadv'
+    language: js
+  notes: 'Canonical SSoT since FIRMSEP.03. Consumers: auth-validator-edge (FIRM_BUCKET_MAP import) + shared-advisor-router (FIRM_BUCKET_MAP import). Cottonwood NOT yet present here (pre-FIRMSEP.10). New
+    firm onboarding = single-line edit. Lambda@Edge bun-build inlines at deploy time.'
+- name: FIRM_BUCKET_MAP
+  lane: multifirm
+  type: object
+  canonical_value: '{''49financial'': ''opal-data-bd'', ''inflection'': ''opal-data-inf'', ''mockadv'': ''opal-data-bd''}'
+  sites:
+  - file: infra/aws/lambda-edge/_shared/firm-config.mjs
+    line: 58
+    value: Object.freeze(Object.fromEntries(Object.entries(FIRM_CONFIG).map(...))) — derived from FIRM_CONFIG
+    language: js
+  notes: Legacy shape (firmId -> full bucket name string). Preserved for back-compat with existing call sites. New consumers should prefer FIRM_CONFIG[firmId] for full metadata access. Values are FULL bucket
+    names (e.g. 'opal-data-bd'), not slugs. Cottonwood gap mirrors FIRM_CONFIG.
+- name: FIRM_ALLOWED_PATHS
+  lane: multifirm
+  type: object
+  canonical_value: '{''49financial'': Set([''/market'',''/portfolios'',''/advisor-intelligence'',...]), ''inflection'': Set([same]), ''cottonwood'': Set([''/market'',''/portfolios'',''/cma'',''/positioning'',''/valuations'',''/macro'',''/trade-submission''])}'
+  sites:
+  - file: portal/src/lib/firmAccess.ts
+    line: 20
+    value: 'Record<string, ReadonlySet<string>> — 3 firms: 49financial, inflection, cottonwood'
+    language: ts
+  notes: Portal-side page access matrix. COTTONWOOD ALREADY PRESENT HERE (pre-populated for Cottonwood onboarding readiness) but cottonwood is NOT yet in FIRM_CONFIG/FIRM_BUCKET_MAP (Lambda@Edge routing
+    still unaware). Cottonwood is missing /advisor-intelligence vs 49F/Inflection — may be intentional scope decision or placeholder.
+- name: FIRM_EMAIL_DOMAINS
+  lane: multifirm
+  type: object
+  canonical_value: '{''49financial'': ''49financial.com'', ''inflection'': ''inflectionwealthmgmt.com'', ''cottonwood'': ''cottonwood.com''}'
+  sites:
+  - file: portal/src/lib/firmAccess.ts
+    line: 74
+    value: Record<string, string> — bare domains (no @)
+    language: ts
+  notes: Portal-side email-domain map for cross-firm aggregate scoping on client side. Defense-in-depth UX filter only (backend does not yet filter by firmId). Cottonwood present here pre-FIRMSEP.10.
+- name: FIRM_DEFAULT_LANDING
+  lane: multifirm
+  type: string
+  canonical_value: '''/market'''
+  sites:
+  - file: portal/src/lib/firmAccess.ts
+    line: 107
+    value: '''/market'''
+    language: ts
+  notes: Universal landing redirect target when a user's firm cannot access the requested path. Must be in every defined firm's FIRM_ALLOWED_PATHS allowlist. Not currently in Lambda@Edge — portal-only constant.
+- name: ROLE_LEVEL
+  lane: multifirm
+  type: object
+  canonical_value: '{implementor: 1, local_ops: 2, consultant: 2, architect: 3}'
+  sites:
+  - file: infra/aws/lambda-edge/shared-advisor-router/tier_policy.mjs
+    line: 55
+    value: '{implementor: 1, local_ops: 2, consultant: 2, architect: 3}'
+    language: js
+  - file: infra/aws/lambda-edge/auth-validator-edge/tier_policy.mjs
+    line: 55
+    value: '{implementor: 1, local_ops: 2, consultant: 2, architect: 3}'
+    language: js
+  notes: 'Edge-routing advisor role access level map. Module-private (not exported). Two sites share identical SHA (41d8acd6ae) — bun-bundle constraint means each Lambda@Edge function must carry its own
+    copy. Comment in file: ''Keep in sync — same pattern as FIRM_BUCKET_MAP.'' Spec: docs/architecture/ADVI_ROLGAT_PRD.md §3.'
+- name: REQUIRED_LEVEL
+  lane: multifirm
+  type: object
+  canonical_value: '{L0: 0, L1: 1, L2: 3}'
+  sites:
+  - file: infra/aws/lambda-edge/shared-advisor-router/tier_policy.mjs
+    line: 58
+    value: '{L0: 0, L1: 1, L2: 3}'
+    language: js
+  - file: infra/aws/lambda-edge/auth-validator-edge/tier_policy.mjs
+    line: 58
+    value: '{L0: 0, L1: 1, L2: 3}'
+    language: js
+  notes: Minimum role level required per tier label. Module-private. Identical SHA across both sites. L2=3 means architect-only. Used in canAccess() alongside ROLE_LEVEL.
+- name: L0_ARTIFACT_DIRS
+  lane: multifirm
+  type: set
+  canonical_value: Set(['summary', 'partner_analytics'])
+  sites:
+  - file: infra/aws/lambda-edge/shared-advisor-router/tier_policy.mjs
+    line: 18
+    value: new Set(['summary', 'partner_analytics'])
+    language: js
+  - file: infra/aws/lambda-edge/auth-validator-edge/tier_policy.mjs
+    line: 18
+    value: new Set(['summary', 'partner_analytics'])
+    language: js
+  notes: Firm-level artifact subdirectories under /artifacts/ that serve L0 (no advisor-role check needed). Any /artifacts/{dir}/... where dir NOT in this set is L1 (per-advisor). Module-private. Identical
+    SHA across both sites.
+- name: ADVISOR_SCOPING_PATH_PATTERNS
+  lane: multifirm
+  type: array
+  canonical_value: '[...array of RegExp patterns for advisor-scoped path extraction...]'
+  sites:
+  - file: infra/aws/lambda-edge/auth-validator-edge/index.mjs
+    line: 87
+    value: const ADVISOR_SCOPING_PATH_PATTERNS = [ ... ]
+    language: js
+  notes: 'Array of regex patterns used in auth-validator-edge to extract advisorId from scoped paths. Module-private. Single site — not replicated in shared-advisor-router (auth-validator-edge owns path-scoping
+    logic). Companion constants: ACCOUNT_SCOPING_PATH (line 93), RELATIONSHIP_SCOPING_PATH (line 96).'

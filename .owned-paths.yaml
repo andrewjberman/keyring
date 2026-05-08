@@ -486,6 +486,14 @@ paths:
     lane: BASE_EXEC
     note: "MCP server source, inbox infrastructure, broker — base exec owns"
 
+  "org/modules/graph/comp_*.py":
+    lane: ANY_EXEC_OR_AE
+    note: "Compiler tool implementations (Python). AE owns build per ADHC_COMPIL_V4 family (003 comp-constants 2026-05-08; 008/009/010/011 pending). More specific than org/modules/** ANY_EXEC."
+
+  "org/modules/graph/comp-tools.yaml":
+    lane: ANY_EXEC_OR_AE
+    note: "Compiler tool registry. AE adds rows when shipping new compiler tools per ADHC_COMPIL_V4 family. Execs revise wider scope."
+
   "org/modules/**":
     lane: ANY_EXEC
 
@@ -820,6 +828,10 @@ paths:
   ".owned-paths.yaml":
     lane: ANY_EXEC_OR_AE
     note: "Owned-paths YAML itself — execs (lane definitions) + AEs (hook integration). Widened 2026-04-30 during TO 5 phase-2 flip after AE 0.7 WARN on bootstrap commit."
+
+  "comp-constants.config.yaml":
+    lane: ANY_EXEC_OR_AE
+    note: "comp-constants tool config (ADHC_COMPIL_V4.003). AE 0.7 maintains via index/check; execs review canonical_value changes."
 
   ".mcp.json":
     lane: BASE_EXEC

@@ -1,0 +1,10 @@
+#!/bin/bash
+# comp-constants — constant-drift indexer + drift gate + discovery surface
+# Subcommands: check [--file PATH] | index | new | list
+# ADHC_COMPIL_V4.003 — AE 0.7.0 2026-05-08
+
+WORKSPACE="$(cd "$(dirname "$0")/.." && pwd)"
+python "$WORKSPACE/org/modules/graph/comp_constants_cli.py" "$@"
+_exit=$?
+python "$WORKSPACE/org/modules/graph/comp_log_auto.py" "comp-constants" "$*" $_exit 2>/dev/null
+exit $_exit
