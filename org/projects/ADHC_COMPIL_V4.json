@@ -1,0 +1,22 @@
+{
+  "project_code": "ADHC_COMPIL_V4",
+  "macro_code": "ADHC",
+  "name": "Compiler Tooling Inflection-Architecture Coverage",
+  "description": "Bundle 6 substantive coverage gaps + 1 close-out for compiler tooling specifically designed around Inflection-architecture patterns (Lambda-bundled silver scripts, multi-firm shared infrastructure, marker-constant contracts spread across 30+ files, EventBridge S3-event chains, 9-dim quorum). Goal: get compiler tooling ahead of the architecture rather than chasing each gap reactively. Anchored on 6 same-week incidents + Andrew 2026-05-08 exchange 'are our compilers adequately designed for the inflection pipeline'.",
+  "prds": [
+    {"path": "docs/architecture/ADHC_COMPIL_V4.md", "label": "ADHC_COMPIL_V4 PRD v0.1", "date": "2026-05-08"}
+  ],
+  "source_brief": "1.0.0_SA_CTO architectural assessment 2026-05-08 + 6 anchor incidents from same-week Inflection sprint (INFETL.CHAININC, AUDIT-003 partial-coverage, INFNNA rep_id=6 sync, ROUTER-DRIFT false-drift, FIRMSEP.02 layer-mismatch, DAILY-AUDIT hand-authoring) + Andrew direct: 'are our compilers adequately designed for the inflection pipeline'",
+  "status": "active",
+  "phase": "Phase 0: PRD v0.1 SHIPPED 2026-05-08T~AM (1.0.0_SA_CTO). 7 TOs sized: comp-pipescript deployed-lambda (TO-1) + Auto-Rule #6 multi-call-site (TO-2) + comp-constants (TO-3) + comp-shell dup-source (TO-4) + comp-events (TO-5) + comp-iam cross-firm (TO-6) + check-lambda-layer-deps doc close-out (TO-7) + Phase 2 validation (TO-VAL). ~4.5 effort-days Phase 1 (parallelizable; no cross-deps) + 0.5d Phase 2. Primary author AE 0.7; CTO authors TO-2 + TO-7. RAVC1 to COO for decomposition + dispatch.",
+  "blocking": "COO decomposition + dispatch. Phase 1 dispatchable in parallel; recommend TO-2 + TO-7 (CTO-side, 0.5d combined) ship first to validate the auto-rule additions, then TO-1 + TO-3 + TO-4 + TO-6 (AE 0.7, ~2.5d combined), then TO-5 (highest effort 1.5d AE 0.7) park-and-resume if AE 0.7 hits FIRMSEP Phase 2 + LAMBDA-DIMS billing/perf bandwidth contention.",
+  "depends_on": [],
+  "depends_on_note": "Independent project. Cross-coordinates with ADVI_INFETL (TO-5 auto-renders the DAILY-AUDIT matrix), ADVI_INFNNA (TO-3 indexes INFLECTION_REP_IDS), ADVI_FIRMSEP (TO-6 reuses the cross-firm view that FIRMSEP.10 Cottonwood onboarding will need). All cross-coords are tooling-consumes-current-state, not blocking dependencies.",
+  "absorbs": [],
+  "created": "2026-05-08",
+  "pods": ["0.7"],
+  "pipeline": "compiler tooling (.tools/comp-*) + auto-rules (CTO prompt.md + PRD_AUTHORING_PROTOCOL.md)",
+  "coo_lane": "2.0.0_SA_COO",
+  "thread_counter": 0,
+  "threads": []
+}
