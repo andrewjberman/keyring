@@ -494,6 +494,10 @@ paths:
     lane: ANY_EXEC_OR_AE
     note: "Compiler tool CLI entrypoints (validate_cli.py, pipeline_cli.py, transform_cli.py, etc.). AE owns extensions per ADHC_COMPIL_V4 family (009 comp-validate config flag 2026-05-08; 008/010/011 pending). More specific than org/modules/** ANY_EXEC."
 
+  "org/modules/graph/extract_*.py":
+    lane: ANY_EXEC_OR_AE
+    note: "Compiler tool engine implementations (extract_validate.py, extract_pipeline.py, etc.) — back-end paired with the *_cli.py entrypoints. AE owns extensions per ADHC_COMPIL_V4 family (009 symbolic-rule resolver in extract_validate.py 2026-05-08)."
+
   "org/modules/graph/comp-tools.yaml":
     lane: ANY_EXEC_OR_AE
     note: "Compiler tool registry. AE adds rows when shipping new compiler tools per ADHC_COMPIL_V4 family. Execs revise wider scope."

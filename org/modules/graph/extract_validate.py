@@ -16,15 +16,105 @@ Check types supported:
     sum_approx        -- two numeric values must be within tolerance_pct of each other
     no_null_numeric   -- no null/NaN values in numeric fields at path
     threshold_pct     -- at least pct% of array entries must satisfy a simple condition
+    set_subset_check  -- ADHC_COMPIL_V4.009: artifact field's distinct values must contain
+                         all elements of canonical set; supports symbolic $CONSTANT_NAME
+                         resolution via comp-constants.config.yaml at config-load time
 """
 
 from __future__ import annotations
 
+import ast
 import json
 import re
 from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Any
+
+
+# ---------------------------------------------------------------------------
+# Symbolic-rule resolver (ADHC_COMPIL_V4.009 Phase 3)
+# Supports $CONSTANT_NAME references in check rule param values; resolved at
+# config-load time via comp-constants.config.yaml lookup.
+# ---------------------------------------------------------------------------
+
+_SYMBOLIC_TOKEN_RE = re.compile(r"^\$([A-Z][A-Z0-9_]+)$")
+
+
+class SymbolicResolutionError(Exception):
+    """Raised when $CONSTANT_NAME cannot be resolved (constant not in comp-constants config)."""
+
+    def __init__(self, name: str, sites: list[str] | None = None):
+        self.name = name
+        self.sites = sites or []
+        super().__init__(f"Symbolic constant ${name} not found in comp-constants.config.yaml")
+
+
+def _load_comp_constants_canonical(workspace_root: Path) -> dict[str, Any]:
+    """Load {name: parsed_canonical_value} from comp-constants.config.yaml.
+
+    Returns empty dict if config absent (rule resolution will then raise on first $<NAME>).
+    """
+    cfg_path = workspace_root / "comp-constants.config.yaml"
+    if not cfg_path.exists():
+        return {}
+    try:
+        import yaml
+        raw = yaml.safe_load(cfg_path.read_text(encoding="utf-8")) or {}
+    except Exception:
+        return {}
+    out: dict[str, Any] = {}
+    for c in raw.get("constants", []) or []:
+        name = c.get("name")
+        canonical = c.get("canonical_value")
+        if not name or canonical is None:
+            continue
+        # canonical is stored as a Python repr; parse via ast.literal_eval
+        try:
+            out[name] = ast.literal_eval(canonical)
+        except (ValueError, SyntaxError, TypeError):
+            # Fall back to raw string
+            out[name] = canonical
+    return out
+
+
+def _resolve_symbolic(value: Any, canonical_map: dict[str, Any]) -> Any:
+    """Recursively resolve $CONSTANT_NAME tokens in value.
+
+    Only resolves exact-match tokens (`$NAME` as a complete string value). Embedded
+    references (e.g., `prefix-$NAME-suffix`) are NOT resolved per CTO ruling Q3
+    (param values only; prose/free-text strings unchanged).
+
+    Raises SymbolicResolutionError if a referenced constant is absent from the map
+    (CTO ruling Q2: missing canonical -> ERROR, never silent drift).
+    """
+    if isinstance(value, str):
+        m = _SYMBOLIC_TOKEN_RE.match(value)
+        if not m:
+            return value
+        name = m.group(1)
+        if name not in canonical_map:
+            raise SymbolicResolutionError(name)
+        return canonical_map[name]
+    if isinstance(value, list):
+        return [_resolve_symbolic(v, canonical_map) for v in value]
+    if isinstance(value, dict):
+        return {k: _resolve_symbolic(v, canonical_map) for k, v in value.items()}
+    return value
+
+
+def _resolve_check_symbolics(check: dict, canonical_map: dict[str, Any]) -> dict:
+    """Resolve symbolic refs in check params; preserve `why:` and `name:` (prose) verbatim.
+
+    Per CTO ruling Q3: symbolic resolution applies to param values only, not prose fields.
+    """
+    PROSE_KEYS = {"name", "why", "comment"}
+    out = {}
+    for k, v in check.items():
+        if k in PROSE_KEYS:
+            out[k] = v
+        else:
+            out[k] = _resolve_symbolic(v, canonical_map)
+    return out
 
 
 # ---------------------------------------------------------------------------
@@ -76,14 +166,29 @@ def load_validate_config(
     except Exception:
         return {}
 
+    # Load comp-constants canonical map for symbolic-rule resolution (ADHC_COMPIL_V4.009 Phase 3)
+    canonical_map = _load_comp_constants_canonical(workspace_root)
+
     configs = {}
     for script_id, data in (raw.get("scripts") or {}).items():
         if not data:
             continue
+        # Resolve $CONSTANT_NAME tokens in check param values; if a constant is missing,
+        # tag the check with a sentinel so the runner can emit a clear ERROR (Q2 ruling).
+        resolved_checks: list[dict] = []
+        for c in (data.get("checks") or []):
+            try:
+                resolved_checks.append(_resolve_check_symbolics(c, canonical_map))
+            except SymbolicResolutionError as e:
+                resolved_checks.append({
+                    **c,
+                    "_symbolic_error": str(e),
+                    "_symbolic_missing": e.name,
+                })
         configs[script_id] = ValidateConfig(
             script_id=script_id,
             primary_artifact=data.get("primary_artifact"),
-            checks=data.get("checks") or [],
+            checks=resolved_checks,
         )
     return configs
 
@@ -174,6 +279,15 @@ def _run_check(check: dict, artifact: Any, artifact_path: str) -> CheckResult:
     severity = check.get("severity", "WARN").upper()
     check_type = check.get("type", "")
 
+    # Symbolic-resolution failure surfaced from config-load (CTO Q2: ERROR-class)
+    if check.get("_symbolic_error"):
+        return CheckResult(
+            name=name, severity="ERROR", status="ERROR",
+            message=f"Symbolic constant ${check['_symbolic_missing']} not found in "
+                    f"comp-constants.config.yaml — cannot evaluate this rule",
+            detail="Add the constant to comp-constants.config.yaml, or remove the symbolic reference.",
+        )
+
     try:
         if check_type == "key_present":
             return _check_key_present(name, severity, check, artifact)
@@ -193,6 +307,9 @@ def _run_check(check: dict, artifact: Any, artifact_path: str) -> CheckResult:
         elif check_type == "threshold_pct":
             return _check_threshold_pct(name, severity, check, artifact)
 
+        elif check_type == "set_subset_check":
+            return _check_set_subset(name, severity, check, artifact)
+
         elif check_type == "script_check":
             # Source-level check -- skipped at runtime (handled by comp-pipescript)
             return CheckResult(name=name, severity=severity, status="SKIP",
@@ -204,6 +321,80 @@ def _run_check(check: dict, artifact: Any, artifact_path: str) -> CheckResult:
     except Exception as e:
         return CheckResult(name=name, severity=severity, status="ERROR",
                            message=f"Check runner error: {e}")
+
+
+def _check_set_subset(name, severity, check, artifact) -> CheckResult:
+    """Check that distinct values at path contain (superset) the canonical set.
+
+    ADHC_COMPIL_V4.009 Phase 3 — supports symbolic $CONSTANT_NAME resolution
+    (already substituted at config-load by _resolve_check_symbolics).
+
+    Config schema:
+        type: set_subset_check
+        path: artifact.json.path[*].field
+        canonical_set: $INFLECTION_REP_IDS  # or [3, 6, 11, 12] literal
+        mode: superset    # default; artifact >= canonical (extras allowed)
+              equal       # artifact == canonical exactly
+        normalize: int    # cast each artifact value to int before comparing (handles str rep_ids)
+    """
+    path = check.get("path", "")
+    canonical_set = check.get("canonical_set")
+    mode = check.get("mode", "superset")
+    normalize = check.get("normalize")
+
+    if canonical_set is None:
+        return CheckResult(name=name, severity="ERROR", status="ERROR",
+                           message="set_subset_check missing canonical_set parameter")
+
+    # Normalize canonical to a Python set
+    canonical = set(canonical_set) if isinstance(canonical_set, (list, tuple, set, frozenset)) else {canonical_set}
+
+    vals = _resolve_path(artifact, path)
+    if not vals:
+        return CheckResult(name=name, severity=severity, status="FAIL",
+                           message=f"Path not found: '{path}'",
+                           detail=check.get("why", ""))
+
+    # Flatten + collect distinct values from artifact path
+    actual: set = set()
+    for v in vals:
+        if isinstance(v, (list, tuple, set, frozenset)):
+            actual.update(v)
+        else:
+            actual.add(v)
+
+    # Apply normalize transform
+    if normalize == "int":
+        normalized: set = set()
+        for v in actual:
+            try:
+                normalized.add(int(v))
+            except (ValueError, TypeError):
+                pass
+        actual = normalized
+
+    if mode == "equal":
+        if actual == canonical:
+            return CheckResult(name=name, severity=severity, status="PASS",
+                               message=f"distinct values at '{path}' = canonical set ({len(canonical)} elements)")
+        missing = canonical - actual
+        extra = actual - canonical
+        msg_parts = []
+        if missing:
+            msg_parts.append(f"missing {sorted(missing)}")
+        if extra:
+            msg_parts.append(f"extra {sorted(extra)}")
+        return CheckResult(name=name, severity=severity, status="FAIL",
+                           message=f"set diverges (mode=equal): {'; '.join(msg_parts)}",
+                           detail=check.get("why", ""))
+    else:  # superset (default)
+        missing = canonical - actual
+        if not missing:
+            return CheckResult(name=name, severity=severity, status="PASS",
+                               message=f"distinct values at '{path}' contain canonical set ({len(canonical)} elements)")
+        return CheckResult(name=name, severity=severity, status="FAIL",
+                           message=f"missing canonical elements: {sorted(missing)}",
+                           detail=check.get("why", ""))
 
 
 def _check_key_present(name, severity, check, artifact) -> CheckResult:
