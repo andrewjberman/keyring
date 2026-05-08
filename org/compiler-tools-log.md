@@ -2587,3 +2587,10 @@ Total: 2 PASS, 131 WARN, 133 PRDs scanned.
 | 2026-05-08 | 0.7.0_AE_CloudOps | ADHC_COMPIL_V4.022 | loop-quiescence | loop-quiescence ADHC --summary (post-fix) | PASS | Cat 7.1 ship: NO_PROJECT_FILE verdict + hint to use full project code; was QUIESCENT_CLEAN total=0 false-positive |
 | 2026-05-08 | 0.7.0_AE_CloudOps | ADHC_COMPIL_V4.022 | loop-quiescence | loop-quiescence INFETL --summary (post-fix) | PASS | Cat 7.2 ship: same NO_PROJECT_FILE verdict |
 | 2026-05-08 | 0.7.0_AE_CloudOps | ADHC_COMPIL_V4.022 | loop-quiescence | loop-quiescence ADHC_COMPIL_V4 --summary (regression) | PASS | AC6 regression: full project code returns ACTIVE verdict with TOs listed (unchanged) |
+| 2026-05-08 | 0.4.0_DT_ClientPlatform | (no-TO) | comp-iam | comp-iam gaps | PASS |
+| 2026-05-08 | 0.4.0_DT_ClientPlatform | (no-TO) | comp-iam | comp-iam service bd-time-machine | PASS |
+| 2026-05-08 | 0.4.0_DT_ClientPlatform | (no-TO) | comp-iam | comp-iam gaps | PASS |
+| 2026-05-08 | 0.7.0_AE_CloudOps | ADHC_COMPIL_V4.023 | comp-iam | comp-iam gaps (pre-fix) | PASS | 9 gaps surfaced post-V4.022 backfill |
+| 2026-05-08 | 0.7.0_AE_CloudOps | ADHC_COMPIL_V4.023 | comp-iam | comp-iam service bd-time-machine (pre-fix) | PASS | s3:CopyObject [MISSING]; bd-time-machine-lambda-role policy lacks the action |
+| 2026-05-08 | 0.7.0_AE_CloudOps | ADHC_COMPIL_V4.023 | comp-iam | comp-iam service bd-time-machine (post-apply) | PASS | s3:CopyObject [GRANTED]; CopyVersionedRestore statement landed on bd-time-machine-lambda-role:s3-access |
+| 2026-05-08 | 0.7.0_AE_CloudOps | ADHC_COMPIL_V4.023 | comp-iam | comp-iam gaps (post-apply) | PASS | 9 → 7 gaps; 7 remaining are EC2-shipped-shell false positives (historical-prices-scheduler, inf-assets-trigger) + AWS-managed-policy false positive (opal-news-layer3-curation under AmazonS3ReadOnlyAccess attachment) |
