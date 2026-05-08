@@ -515,33 +515,69 @@ def _print_field_reverse(query: str, rt, dag):
         print(f"    {entry['component']} via {entry['endpoint_function']} ({field_path})")
 
 
-def _print_artifact_reverse(s3_key: str, rt, dag):
+def _print_artifact_reverse(s3_key: str, rt, dag, strict: bool = False) -> dict:
+    """Reverse-lookup an artifact key. Returns counts dict for classification.
+
+    ADHC_COMPIL_V4.010 Phase 1+2: classify each result as authoritative
+    (exact route.s3_key match) vs speculative (prefix/dir-fallback match);
+    prefix [SPECULATIVE] on speculative output lines; in strict mode skip
+    speculative entirely.
+
+    Returns: {"authoritative": N, "speculative": M}
+    """
     print(f"REVERSE LOOKUP: {s3_key}")
     print()
+
+    # Strip #field suffix for route matching (route s3_keys never include #field)
+    base_key = s3_key.split('#', 1)[0]
 
     # Find gold script that writes this key
     print("  PRODUCER:")
     _print_gold_source(dag, s3_key, indent=4)
 
     # Find routes that resolve to this S3 key
+    # Authoritative: route.s3_key matches base_key exactly (after template substitution check).
+    # Speculative: only prefix-match (covers wildcards but doesn't verify exact key consumption).
     print()
     print("  SERVED VIA:")
-    matching_routes = []
+    authoritative_routes: list = []
+    speculative_routes: list = []
     for route in rt.routes:
-        if route.s3_key and (route.s3_key == s3_key or
-            s3_key.startswith(route.s3_key.split('{')[0].split('*')[0])):
-            matching_routes.append(route)
+        if not route.s3_key:
+            continue
+        # Exact match: route.s3_key == base_key (with optional template substitution)
+        # Templates: route.s3_key may have {param}; treat any segment matching {*} as wildcard
+        route_pattern = re.escape(route.s3_key)
+        # Replace literal escaped \{...\} with .* (any segment)
+        route_pattern = re.sub(r'\\\{[^}]+\\\}', r'[^/]+', route_pattern)
+        route_pattern = route_pattern.replace(r'\*', r'.*')
+        if re.fullmatch(route_pattern, base_key):
+            authoritative_routes.append(route)
+        elif base_key.startswith(route.s3_key.split('{')[0].split('*')[0]):
+            speculative_routes.append(route)
+    matching_routes = authoritative_routes + speculative_routes
 
     reconstructed_url = ""
+    speculative_count = 0
+    authoritative_count = 0
     if matching_routes:
         for r in matching_routes:
+            is_spec = r in speculative_routes
+            if strict and is_spec:
+                speculative_count += 1
+                continue
+            prefix = "[SPECULATIVE] " if is_spec else ""
+            if is_spec:
+                speculative_count += 1
+            else:
+                authoritative_count += 1
             auth_tag = ""
             if r.auth_edge:
                 auth_tag = " [AUTH:edge"
                 if r.auth_api_gw:
                     auth_tag += "+apigw"
                 auth_tag += "]"
-            print(f"    {r.endpoint_function}: {r.url_pattern}")
+            print(f"    {prefix}{r.endpoint_function}: {r.url_pattern}")
             print(f"      CF: {r.cf_behavior} -> {r.cf_origin}{auth_tag}")
             if r.components:
                 print(f"      components: {', '.join(r.components)}")
@@ -560,12 +596,21 @@ def _print_artifact_reverse(s3_key: str, rt, dag):
         else:
             print("    (no matching routes found)")
 
-    # Find components that render data from this key's route
+    # Find components that render data from this key's route.
+    # Classify per-component: authoritative if at least one authoritative route
+    # references it; speculative otherwise.
     print()
     print("  CONSUMED BY:")
-    component_names = set()
-    for r in matching_routes:
-        component_names.update(r.components)
+    auth_components = set()
+    spec_components = set()
+    for r in authoritative_routes:
+        auth_components.update(r.components)
+    for r in speculative_routes:
+        spec_components.update(r.components)
+    # Component is authoritative if it appears in any authoritative route
+    component_names = auth_components | spec_components
+    if strict:
+        component_names = auth_components
 
     # Fallback 1: search by endpoint function URLs matching the reconstructed URL
     # Handles platinum paths that route via API GW (s3_key not set on route objects)
@@ -582,10 +627,11 @@ def _print_artifact_reverse(s3_key: str, rt, dag):
                     if fn_name in comp.endpoint_calls:
                         component_names.add(comp.name)
 
-    # Fallback 2: directory-prefix match
+    # Fallback 2: directory-prefix match (always speculative).
     # Some keys (e.g. platinum/firm/fee_efficiency.json) are sub-fields of a larger
     # aggregate response (e.g. platinum/firm/dashboard.json fetched by getPlatinumFirmDashboard).
     # Search for endpoints whose URL shares the same directory prefix.
+    fallback2_speculatives: list[tuple[str, str, str]] = []
     if not component_names and s3_key:
         key_dir = s3_key.rsplit('/', 1)[0]  # e.g. platinum/firm
         sibling_fns: list[str] = []
@@ -602,29 +648,74 @@ def _print_artifact_reverse(s3_key: str, rt, dag):
                 if ep_dir == key_dir:
                     sibling_fns.append(fn_name)
         if sibling_fns:
-            # ADHC_ROUTER.T3: this fallback is speculative (directory-prefix
-            # match, not actual key match). Flag explicitly so agents do not
-            # treat it as ground-truth consumer attribution.
-            print("    WARN: SPECULATIVE MATCH (directory-prefix fallback, not a verified consumer).")
-            print("    WARN: These endpoints live in the same S3 directory but may not read this specific key.")
             for fn_name in sorted(sibling_fns):
                 ep = rt.endpoints[fn_name]
                 for comp in rt.components:
                     if fn_name in comp.endpoint_calls:
-                        component_names.add(comp.name)
-                        print(f"    via {fn_name} ({ep.url_template}) -> {comp.name}")
+                        fallback2_speculatives.append((fn_name, ep.url_template, comp.name))
+        if fallback2_speculatives and not strict:
+            # ADHC_ROUTER.T3 + ADHC_COMPIL_V4.010: this fallback is speculative
+            # (directory-prefix match, not actual key match). Per-line [SPECULATIVE]
+            # prefix replaces the global WARN block.
+            for fn_name, url, comp_name in fallback2_speculatives:
+                component_names.add(comp_name)
+                speculative_count += 1
+                print(f"    [SPECULATIVE] via {fn_name} ({url}) -> {comp_name}")
+        elif fallback2_speculatives and strict:
+            # In strict mode count speculatives but don't print them
+            for fn_name, url, comp_name in fallback2_speculatives:
+                speculative_count += 1
+
+    # ADHC_COMPIL_V4.010 Phase 1: hybrid resolution for #field queries.
+    # When artifact-reverse query has #field, ALSO consult the field-reverse
+    # index for authoritative consumers (covers AUDIT-007 case b: TSX field
+    # reads that don't surface via route prefix matching).
+    field_authoritative_consumers: set = set()
+    if '#' in s3_key:
+        field_part = s3_key.split('#', 1)[1]
+        try:
+            field_index = _build_field_reverse_index(rt)
+            field_normalized = _normalize_field_path(field_part)
+            field_matches = sorted({
+                fp for fp in field_index
+                if fp == field_normalized or fp.endswith(f".{field_normalized}")
+            })
+            for fp in field_matches:
+                for entry in field_index[fp]:
+                    field_authoritative_consumers.add(entry.get("component", ""))
+            field_authoritative_consumers.discard("")
+            if field_authoritative_consumers:
+                authoritative_count += len(field_authoritative_consumers)
+        except Exception:
+            pass
+
+    if field_authoritative_consumers:
+        # Hybrid case: print authoritative field-reverse hits ABOVE the existing
+        # speculative routes (if any).
+        for cn in sorted(field_authoritative_consumers):
+            print(f"    {cn} (field-reverse: authoritative)")
 
     if component_names:
         for cn in sorted(component_names):
-            if cn not in s3_key:  # avoid double-printing from fallback 2
-                print(f"    {cn}")
-    elif not (s3_key and any(
+            if cn not in s3_key and cn not in field_authoritative_consumers:
+                is_spec = (cn in spec_components and cn not in auth_components)
+                # In strict mode, only print authoritative (already filtered by component_names = auth_components)
+                if strict and is_spec:
+                    continue
+                prefix = "[SPECULATIVE] " if is_spec else ""
+                print(f"    {prefix}{cn}")
+    elif not field_authoritative_consumers and not (s3_key and any(
         rt.resolve_s3_key(ep.url_template.split('{')[0]).rsplit('/', 1)[0] ==
         s3_key.rsplit('/', 1)[0]
         for ep in rt.endpoints.values()
         if ep.url_template and rt.resolve_s3_key(ep.url_template.split('{')[0])
     )):
-        print("    (no components found -- check Lambda@Edge handlers for this key)")
+        if strict and speculative_count > 0:
+            print("    (no authoritative consumers; "
+                  f"{speculative_count} speculative result(s) suppressed; consider manual `grep -rn`)")
+        else:
+            print("    (no components found -- check Lambda@Edge handlers for this key)")
+    return {"authoritative": authoritative_count, "speculative": speculative_count}
 
 
 def cmd_reverse(args):
@@ -639,31 +730,44 @@ def cmd_reverse(args):
         only holds sub-fields of fetch data variables.
     """
     query = args.s3_key
+    strict = getattr(args, 'strict', False)
     rt = build_routing_table(_WORKSPACE)
     dag = build_pipeline_dag(_WORKSPACE)
     dag.build_index()
 
+    counts = {"authoritative": 0, "speculative": 0}
+
     if _looks_like_artifact_query(query):
-        _print_artifact_reverse(query, rt, dag)
-        return
-
-    # ADHC_ROUTER.T3: auto-probe artifact-stem match before field reverse.
-    stem_hits = _artifact_stems_matching(dag, _normalize_field_path(query))
-    if stem_hits:
-        # Exact basename match(es) -- run artifact reverse, not field.
-        exact = [k for k in stem_hits
-                 if re.sub(r'[{*}]', '', k.rsplit('/', 1)[-1].split('.')[0]).strip('_-')
-                    == _normalize_field_path(query)]
-        target_keys = exact or stem_hits[:1]
-        print(f"  [routed as: ARTIFACT (stem match); query='{query}' -> {target_keys[0]}]")
-        print()
-        _print_artifact_reverse(target_keys[0], rt, dag)
-        if len(target_keys) > 1 or (len(stem_hits) > len(target_keys)):
+        counts = _print_artifact_reverse(query, rt, dag, strict=strict) or counts
+    else:
+        # ADHC_ROUTER.T3: auto-probe artifact-stem match before field reverse.
+        stem_hits = _artifact_stems_matching(dag, _normalize_field_path(query))
+        if stem_hits:
+            # Exact basename match(es) -- run artifact reverse, not field.
+            exact = [k for k in stem_hits
+                     if re.sub(r'[{*}]', '', k.rsplit('/', 1)[-1].split('.')[0]).strip('_-')
+                        == _normalize_field_path(query)]
+            target_keys = exact or stem_hits[:1]
+            print(f"  [routed as: ARTIFACT (stem match); query='{query}' -> {target_keys[0]}]")
             print()
-            print(f"  (additional {len(stem_hits) - 1} stem matches; re-run with full S3 key to disambiguate)")
-        return
+            counts = _print_artifact_reverse(target_keys[0], rt, dag, strict=strict) or counts
+            if len(target_keys) > 1 or (len(stem_hits) > len(target_keys)):
+                print()
+                print(f"  (additional {len(stem_hits) - 1} stem matches; re-run with full S3 key to disambiguate)")
+        else:
+            _print_field_reverse(query, rt, dag)
+            # Field reverse hasn't been refactored yet; treat any hit as authoritative
+            # (the empty-result HINT path is implicitly speculative but doesn't yet
+            # propagate counts).
 
-    _print_field_reverse(query, rt, dag)
+    # ADHC_COMPIL_V4.010 AC3: --strict exits 2 when speculative would have been
+    # emitted AND zero authoritative results found. Signals "no authoritative
+    # consumers; consider manual grep -rn".
+    if strict and counts["authoritative"] == 0 and counts["speculative"] > 0:
+        print()
+        print(f"STRICT: 0 authoritative results; {counts['speculative']} speculative suppressed.",
+              file=sys.stderr)
+        sys.exit(2)
 
 
 def cmd_tab_audit(args):
@@ -785,6 +889,8 @@ def main():
 
     p_rev = sub.add_parser('reverse', help='S3 key -> routes -> components')
     p_rev.add_argument('s3_key', help='S3 key (e.g., gold/artifacts/employee_leaderboard.json)')
+    p_rev.add_argument('--strict', action='store_true',
+                       help='Filter speculative results; exit 2 if no authoritative consumers found (ADHC_COMPIL_V4.010)')
 
     sub.add_parser('tab-audit', help='Audit every ADVI tab')
     sub.add_parser('summary', help='One-line summary per component')
