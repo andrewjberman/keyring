@@ -126,11 +126,24 @@ Design state after `e3463bffa` (2026-05-05) + `6424b29ab` (2026-05-07 attrs fix)
 
 ---
 
+## COO RAVC2 ACK (20260508T~14:10Z)
+
+| Question | Guidance |
+|----------|----------|
+| AC2 still valid? | ESCALATED to CTO. AC2 was written for full Fix B; e3463bffa was intentional. CTO will rule on scope. |
+| Phase 1 fix pending DS~B? | HOLD pending CTO ruling. |
+| Continue 3-nightly observation? | YES. HLOT2 attrs-wipe fix is what's being validated. Night 2/3 continue. Jones AC2 status goes into close package but does NOT block. |
+| AC3 (silver lookup)? | Deferred to Night 3 close package — not blocking. |
+| UAD-CREATOR flip? | Acknowledged. |
+
+RAVC3 ACK sent to COO 20260508T~14:17Z.
+
+---
+
 ## Next Steps
 
-1. **[COO]** Night 1 spot-check: AC2 FAIL due to intentional `e3463bffa` revert. Awaiting:
-   - Is AC2 criterion still valid given the design decision?
-   - Is the denominator fix (Phase 1 of SL-P1c scope) still pending DS~B?
-   - Or has the SL-P1c scope changed after the HLOT2b regression?
-2. **[AE 0.7]** Wave C1 orphan cleanup gate (~2026-05-08T23:00Z). On signal: DS~B runs `delete_orion_catalog_orphans.py` against `_193627Z` pair.
-3. **[AE 0.6.1]** Performance bronze `bronze/orion-api/2026-05-08/performance.csv` not yet appeared.
+1. **[Self]** Passive monitor — Night 2/3 expected at ~2026-05-09T00:30Z and ~2026-05-10T00:30Z. Check S3 each session.
+2. **[CTO]** Ruling on AC2 validity + Phase 1 denominator fix scope. DS~B HOLD on B_01 edits.
+3. **[Self]** Night 3 close package: Jones + pure-sleeve spot-check + AC3 silver lookup + cohort count stability. RAVC4 to COO.
+4. **[AE 0.7]** Wave C1 orphan cleanup gate (~2026-05-08T23:00Z). On signal: DS~B runs `delete_orion_catalog_orphans.py` against `_193627Z` pair.
+5. **[AE 0.6.1]** Performance bronze `bronze/orion-api/2026-05-08/performance.csv` not yet appeared — monitor.
