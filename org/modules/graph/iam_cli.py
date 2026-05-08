@@ -111,7 +111,48 @@ def cmd_service(args):
 
     matches = [p for p in profiles if name in p.name.lower()]
     if not matches:
+        # ADHC_COMPIL_V4.013: fall through to EC2/IAM role names when Lambda
+        # profile lookup fails. Reuses the existing roles dict (no new index).
+        # Anchor incidents: 2026-04-16 AE 0.6 dh3_dh7_dispatcher_hygiene
+        # ('No service matching' for gold runner EC2); 2026-05-08 AE 0.7
+        # INFETL.011 RAVC1 (inf-gold-trigger catalog miss).
+        role_matches = {k: v for k, v in roles.items() if name in k.lower()}
+        if role_matches:
+            for role_name, role in sorted(role_matches.items()):
+                print(f"SERVICE: {role_name}  [iam-role]")
+                print(f"  IAM role: {role_name}")
+                print(f"  tf_resource: {role.tf_resource}")
+                print(f"  source: {role.source_file}")
+                print(f"  statements: {len(role.statements)}")
+                print()
+                for i, stmt in enumerate(role.statements, 1):
+                    print(f"  Statement {i}: {stmt.effect}")
+                    print(f"    Actions ({len(stmt.actions)}):")
+                    for a in sorted(stmt.actions):
+                        print(f"      {a}")
+                    if stmt.resources:
+                        print(f"    Resources ({len(stmt.resources)}):")
+                        for r in stmt.resources[:5]:
+                            print(f"      {r}")
+                        if len(stmt.resources) > 5:
+                            print(f"      ... and {len(stmt.resources) - 5} more")
+                print()
+            return
+
+        # Total miss — emit helpful candidate list
         print(f"No service matching '{args.name}'")
+        print()
+        print(f"  Lambda services ({len(profiles)}):")
+        for p in sorted(profiles, key=lambda p: p.name)[:15]:
+            print(f"    {p.name}")
+        if len(profiles) > 15:
+            print(f"    ... and {len(profiles) - 15} more (use 'comp-iam services' to list all)")
+        print()
+        print(f"  IAM roles ({len(roles)}):")
+        for k in sorted(roles.keys())[:15]:
+            print(f"    {k}")
+        if len(roles) > 15:
+            print(f"    ... and {len(roles) - 15} more (use 'comp-iam roles' to list all)")
         return
 
     for profile in matches:
