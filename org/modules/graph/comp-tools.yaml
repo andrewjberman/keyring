@@ -92,17 +92,26 @@ tools:
     replaces: "Manual file-by-file change review"
 
   comp-xref:
-    command: "comp-xref [--save] [--json]"
+    command: "comp-xref [<symbol>] [--save] [--json]"
     when: |
-      - After a gold re-run or deploy: "did the dependency graph change?"
-      - Periodic audit: "what nodes/edges were added or removed since last check?"
+      - After a gold re-run or deploy: "did the dependency graph change?" -> comp-xref (no-arg = diff mode)
+      - Periodic audit: "what nodes/edges were added or removed since last check?" -> comp-xref
       - Save baseline before major work: "comp-xref --save"
+      - "Where is symbol X referenced across the graph?" -> comp-xref <symbol> (symbol-lookup mode; ADHC_COMPIL_V4.014)
+      - "Which nodes/edges mention this Lambda/component/S3-key/function?" -> comp-xref <symbol>
+    modes:
+      diff: "comp-xref (no positional arg) -- compare current graph against baseline snapshot"
+      symbol-lookup: "comp-xref <symbol> -- cross-reference symbol against all graph nodes (id/label/file_path) + edges (source/target). Output mirrors comp-blast structure. Closes 2026-04-21 17/25 FAIL cluster where agents passed positional args expecting symbol-lookup."
     examples:
       - "comp-xref --save"
       - "comp-xref"
       - "comp-xref --json"
-    cost: "~2s"
-    replaces: "Manual before/after comparison of file trees"
+      - "comp-xref D_04"
+      - "comp-xref AdvisorPublicProfile"
+      - "comp-xref inf-bronze-runner"
+    cost: "~2s (diff mode rebuilds graph); <1s (symbol mode uses cached graph)"
+    replaces: "Manual before/after comparison of file trees (diff mode); manual grep across graph nodes (symbol mode)"
+    note: "Dual-purpose tool. No-arg = graph state diff vs baseline. Positional arg = symbol cross-reference lookup. Disambiguation by argparse positional optionality (nargs='?')."
 
   comp-pipescript:
     command: "comp-pipescript <subcommand> [args]"

@@ -316,8 +316,96 @@ def cmd_diff(args):
 _BASELINE_FILE = _CACHE_DIR / "baseline.json"
 
 
+def _xref_symbol_lookup(g: TraceGraph, symbol: str) -> None:
+    """Symbol cross-reference lookup (ADHC_COMPIL_V4.014).
+
+    Searches graph nodes by id/label/file_path substring (case-insensitive) and
+    edges by source/target. Output format mirrors comp-blast structure so agents
+    already know how to read it.
+
+    Anchor: 2026-04-21 17/25 FAILs from agents passing positional args to
+    `comp-xref` thinking it was a symbol-lookup tool. This mode closes the gap.
+    """
+    q = symbol.strip().lower()
+    if not q:
+        print("comp-xref: empty symbol; provide a non-empty argument.", file=sys.stderr)
+        sys.exit(1)
+
+    # Match nodes: substring on id, label, file_path
+    matched_nodes = []
+    for node in g.nodes.values():
+        if (q in node.id.lower() or
+            q in node.label.lower() or
+            (node.file_path and q in node.file_path.lower())):
+            matched_nodes.append(node)
+
+    # Match edges: substring on source/target
+    matched_edges = []
+    for edge in g.edges:
+        if q in edge.source.lower() or q in edge.target.lower():
+            matched_edges.append(edge)
+
+    print(f"XREF LOOKUP: '{symbol}'")
+    print(f"  ({len(matched_nodes)} node(s), {len(matched_edges)} edge(s) matched)")
+    print()
+
+    if not matched_nodes and not matched_edges:
+        print("  No matches in graph.")
+        print()
+        print("  Hints:")
+        print("    - Symbol may be a Python module/function not yet indexed")
+        print("    - Run 'comp-build' to refresh graph; check stale-cache warnings")
+        print("    - For COMP_LEARNS-corpus symbols, comp-xref does not index that tree (out-of-scope)")
+        return
+
+    if matched_nodes:
+        # Group by node_type for readability
+        by_type: dict[str, list] = {}
+        for n in matched_nodes:
+            by_type.setdefault(n.node_type, []).append(n)
+        print(f"  NODES ({len(matched_nodes)}):")
+        for ntype in sorted(by_type.keys()):
+            print(f"    [{ntype}]")
+            for n in sorted(by_type[ntype], key=lambda x: x.id)[:15]:
+                fp = f" — {n.file_path}" if n.file_path else ""
+                fn = f" :: {n.function_name}" if n.function_name else ""
+                print(f"      {n.id}{fn}{fp}")
+            if len(by_type[ntype]) > 15:
+                print(f"      ... and {len(by_type[ntype]) - 15} more")
+        print()
+
+    if matched_edges:
+        # Group by edge_type
+        by_etype: dict[str, list] = {}
+        for e in matched_edges:
+            by_etype.setdefault(e.edge_type, []).append(e)
+        print(f"  EDGES ({len(matched_edges)}):")
+        for etype in sorted(by_etype.keys()):
+            print(f"    [{etype}]")
+            for e in by_etype[etype][:10]:
+                print(f"      {e.source} -> {e.target}")
+            if len(by_etype[etype]) > 10:
+                print(f"      ... and {len(by_etype[etype]) - 10} more")
+        print()
+
+
 def cmd_xref(args):
-    """Compare current graph against baseline snapshot."""
+    """Compare current graph against baseline snapshot, OR cross-reference a symbol.
+
+    Dual-purpose (ADHC_COMPIL_V4.014):
+      no positional arg -> graph-state-diff vs baseline (existing behavior)
+      positional arg    -> symbol cross-reference lookup (NEW)
+
+    Symbol-lookup matches against node ids, labels, file paths, and edge
+    sources/targets. Returns all references for agent disambiguation.
+    """
+    # ADHC_COMPIL_V4.014 — symbol cross-reference mode
+    symbol = getattr(args, 'symbol', None)
+    if symbol:
+        g = _get_graph()
+        _xref_symbol_lookup(g, symbol)
+        return
+
     g = _get_graph(force_rebuild=True)
 
     if args.save:
@@ -409,9 +497,17 @@ def main():
     p_diff.add_argument("--depth", type=int, default=5)
     p_diff.add_argument("--json", action="store_true")
 
-    # xref (placeholder -- COO implementing)
-    p_xref = sub.add_parser("xref", help="Compare graph against baseline snapshot")
-    p_xref.add_argument("--save", action="store_true", help="Save current graph as baseline")
+    # xref — dual-purpose: graph-diff (no-arg) + symbol-lookup (positional)
+    p_xref = sub.add_parser(
+        "xref",
+        help="Compare graph against baseline (no-arg) OR cross-reference a symbol (positional)",
+    )
+    p_xref.add_argument(
+        "symbol", nargs="?", default=None,
+        help="Symbol to cross-reference (function name, file path, S3 key, Lambda name, etc.). "
+             "When provided, runs symbol-lookup mode; otherwise runs graph-diff. (ADHC_COMPIL_V4.014)",
+    )
+    p_xref.add_argument("--save", action="store_true", help="Save current graph as baseline (no-arg mode)")
     p_xref.add_argument("--json", action="store_true")
 
     args = parser.parse_args()
