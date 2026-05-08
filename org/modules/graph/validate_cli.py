@@ -227,16 +227,40 @@ def cmd_list(args):
         return
 
     script_filter = args.script_id or ""
+    lane_filter = getattr(args, "lane", None)
 
     print(f"VALIDATE CONFIG ({len(configs)} scripts)")
     print("  Config (BD):  data/black_diamond/scripts/gold/gold_validate_config.yaml")
     print("  Config (INF): data/orion/scripts/gold/gold_validate_config.yaml")
     print()
 
+    # ADHC_COMPIL_V4.021 Cat 5.2: tighten matcher to exact-or-prefix-with-underscore-boundary
+    # Previously substring match meant "D_04" matched D_04 + INF_D_04 + D_04_positions_output.
+    # Now: exact-match OR prefix-followed-by-underscore (so "D_04" matches "D_04" + "D_04_positions_output"
+    # but NOT "INF_D_04"; user can pass "INF_D_04" to filter to INF-only).
+    def _matches(sid: str, sf: str) -> bool:
+        if not sf:
+            return True
+        sf_u = sf.upper()
+        sid_u = sid.upper()
+        if sid_u == sf_u:
+            return True
+        if sid_u.startswith(sf_u + "_"):
+            return True
+        return False
+
+    # ADHC_COMPIL_V4.021 Cat 5.2: --lane filter scopes to one config (bd/inf)
+    def _lane_of(sid: str) -> str:
+        return "inf" if sid.upper().startswith("INF_") else "bd"
+
+    matched_count = 0
     for sid, config in sorted(configs.items()):
-        if script_filter and script_filter.upper() not in sid.upper():
+        if not _matches(sid, script_filter):
+            continue
+        if lane_filter and _lane_of(sid) != lane_filter:
             continue
 
+        matched_count += 1
         artifact_str = config.primary_artifact or "(no primary artifact)"
         print(f"  {sid}  ({artifact_str})")
 
@@ -251,6 +275,17 @@ def cmd_list(args):
         else:
             print("    (no checks declared)")
         print()
+
+    # ADHC_COMPIL_V4.021 Cat 5.3: emit error + candidate hints if filter matched nothing
+    if script_filter and matched_count == 0:
+        candidates = sorted(configs.keys())
+        print(f"ERROR: no script matching {script_filter!r}", file=sys.stderr)
+        print("  First 15 candidates:", file=sys.stderr)
+        for c in candidates[:15]:
+            print(f"    {c}", file=sys.stderr)
+        if len(candidates) > 15:
+            print(f"    ... and {len(candidates) - 15} more", file=sys.stderr)
+        sys.exit(1)
 
 
 def cmd_validate(args):
@@ -380,6 +415,8 @@ def main():
                         help='Escalate NO_CONFIG to exit 2 (for CI/dispatcher use)')
     parser.add_argument('--config', default=None,
                         help='Explicit path to gold_validate_config.yaml; overrides INF_*/BD auto-detection (TO-9)')
+    parser.add_argument('--lane', choices=['bd', 'inf'], default=None,
+                        help='Filter --list to one lane (V4.021 Cat 5.2)')
 
     # Use parse_known_args() so unknown flags (e.g. --schema, --certified,
     # --cross-check) become pass-through args for the standalone validator

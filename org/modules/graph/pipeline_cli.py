@@ -386,10 +386,22 @@ def cmd_dag(args):
         print(json.dumps(result, indent=2))
         return
 
+    # ADHC_COMPIL_V4.021 Cat 5.4: also count detected paths via hardcoded extraction
+    # (INF/silver lack s3_layout.py named constants; only BD has dag.s3_keys populated).
+    detected_paths: set = set()
+    for _sio in dag.scripts.values():
+        for k in _sio.read_keys:
+            detected_paths.add(k)
+        for k in _sio.write_keys:
+            detected_paths.add(k)
+
     print("PIPELINE DAG")
     print(f"  Pipeline: [{pipeline}]")
     print(f"  Scripts: {len(dag.scripts)}")
-    print(f"  S3 keys: {len(dag.s3_keys)}")
+    if dag.s3_keys:
+        print(f"  S3 keys (named): {len(dag.s3_keys)} | detected paths: {len(detected_paths)}")
+    else:
+        print(f"  S3 keys (named): 0 | detected paths: {len(detected_paths)} (hardcoded)")
     print()
 
     for sid, sio in sorted(dag.scripts.items(), key=lambda x: x[1].run_order):

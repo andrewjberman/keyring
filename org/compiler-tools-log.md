@@ -2552,3 +2552,24 @@ Total: 2 PASS, 131 WARN, 133 PRDs scanned.
 | 2026-05-08 | 0.7.0_AE_CloudOps | ADHC_COMPIL_V4.020 | comp-trace | comp-trace D_04 (BD regression) | PASS | Multi-match output unchanged; same disambiguation flow |
 | 2026-05-08 | 0.7.0_AE_CloudOps | ADHC_COMPIL_V4.020 | comp-blast | comp-blast build_employee_leaderboard (BD regression+enrichment) | PASS | Returns blast radius; BD coverage enriched (7→13 GOLD nodes) due to platinum WRITES_S3 edges baked in via inject |
 | 2026-05-08 | 0.4.0_DT_ClientPlatform | (no-TO) | comp-build | comp-build | PASS |
+| 2026-05-08 | 0.4.0_DT_ClientPlatform | (no-TO) | comp-constants | comp-constants check --lane bd | PASS |
+| 2026-05-08 | 0.4.0_DT_ClientPlatform | (no-TO) | comp-constants | comp-constants check --lane inf | FAIL |
+| 2026-05-08 | 0.4.0_DT_ClientPlatform | (no-TO) | comp-trace | comp-trace D_04 --json | PASS |
+| 2026-05-08 | 0.4.0_DT_ClientPlatform | (no-TO) | comp-validate | comp-validate D_04 --list | PASS |
+| 2026-05-08 | 0.4.0_DT_ClientPlatform | (no-TO) | comp-validate | comp-validate D_04 --list --lane bd | PASS |
+| 2026-05-08 | 0.4.0_DT_ClientPlatform | (no-TO) | comp-validate | comp-validate definitely_not_a_thing --list | FAIL |
+| 2026-05-08 | 0.4.0_DT_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript dag --pipeline inf-gold | PASS |
+| 2026-05-08 | 0.4.0_DT_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript dag | PASS |
+| 2026-05-08 | 0.7.0_AE_CloudOps | ADHC_COMPIL_V4.021 | check-lambda-layer-deps | check-lambda-layer-deps --function inf-gold-trigger --json | PASS | Cat 3.3 ship: --json flag added for CI/programmatic |
+| 2026-05-08 | 0.7.0_AE_CloudOps | ADHC_COMPIL_V4.021 | comp-constants | comp-constants check --lane bd / --lane inf | PASS | Cat 3.4 ship: --lane filter added (bd shows 0 drift; inf shows 7) |
+| 2026-05-08 | 0.7.0_AE_CloudOps | ADHC_COMPIL_V4.021 | comp-trace | comp-trace D_04 --json (multi-match disambiguation) | PASS | Cat 3.5 ship: multi-match path now emits JSON with match_count + matches[] + hint |
+| 2026-05-08 | 0.7.0_AE_CloudOps | ADHC_COMPIL_V4.021 | comp-validate | comp-validate D_04 --list (post-fix tightened matcher) | PASS | Cat 5.2 ship: matcher exact-or-prefix-with-underscore; D_04 matches D_04 + D_04_positions_output but NOT INF_D_04 |
+| 2026-05-08 | 0.7.0_AE_CloudOps | ADHC_COMPIL_V4.021 | comp-validate | comp-validate D_04 --list --lane bd | PASS | Cat 5.2 ship: --lane filter added |
+| 2026-05-08 | 0.7.0_AE_CloudOps | ADHC_COMPIL_V4.021 | comp-validate | comp-validate definitely_not_a_thing --list (post-fix) | PASS | Cat 5.3 ship: ERROR + 15 candidates emitted; exit 1 (was silent exit 0) |
+| 2026-05-08 | 0.7.0_AE_CloudOps | ADHC_COMPIL_V4.021 | comp-pipescript | comp-pipescript dag --pipeline inf-gold (post-fix) | PASS | Cat 5.4 ship: now reports "S3 keys (named): 0 | detected paths: 21 (hardcoded)" instead of misleading "S3 keys: 0" |
+| 2026-05-08 | 0.7.0_AE_CloudOps | ADHC_COMPIL_V4.021 | comp-tools.yaml | catalog example updates | PASS | Cat 4.1/4.2/4.3/4.4 + 5.1/5.5/5.6: stale examples replaced with canonical forms (PartnerAnalytics, getFirmLeaderboard, real role names, gold:* canonical IDs, origins count 6) |
+| 2026-05-08 | 0.7.0_AE_CloudOps | ADHC_COMPIL_V4.021 | comp-trace | comp-trace AdvisorPublicProfile (regression sample 1) | PASS | V4.017 PASS retained |
+| 2026-05-08 | 0.7.0_AE_CloudOps | ADHC_COMPIL_V4.021 | comp-iam | comp-iam stats (regression sample 2) | PASS | V4.017 PASS retained |
+| 2026-05-08 | 0.7.0_AE_CloudOps | ADHC_COMPIL_V4.021 | comp-cache | comp-cache collisions (regression sample 3) | PASS | V4.017 PASS retained |
+| 2026-05-08 | 0.7.0_AE_CloudOps | ADHC_COMPIL_V4.021 | comp-platinum | comp-platinum page PartnerAnalytics (regression sample 4) | PASS | V4.017 PASS retained |
+| 2026-05-08 | 0.7.0_AE_CloudOps | ADHC_COMPIL_V4.021 | comp-pipescript | comp-pipescript io D_04 (regression sample 5) | PASS | V4.017 PASS retained |

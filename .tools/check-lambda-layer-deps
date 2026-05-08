@@ -274,6 +274,8 @@ def main() -> int:
     p.add_argument("--function", help="Audit a single function by name")
     p.add_argument("--strict", action="store_true", help="Exit 1 if any MISSING found")
     p.add_argument("--verbose", "-v", action="store_true", help="Show OK matches too")
+    # ADHC_COMPIL_V4.021 Cat 3.3: machine-readable output for CI/programmatic
+    p.add_argument("--json", action="store_true", help="Emit JSON array (CI-friendly)")
     args = p.parse_args()
 
     if not SOURCE_MAP.exists():
@@ -294,6 +296,7 @@ def main() -> int:
 
     total = 0
     fail_count = 0
+    json_records: list = []
     for fn_name, cfg in sorted(fns.items()):
         if cfg.get("build_type") == "nodejs":
             continue
@@ -303,19 +306,34 @@ def main() -> int:
         total += 1
         if result["missing"]:
             fail_count += 1
-            print(f"FAIL {fn_name}")
-            print(f"  layers_attached: {result['layers_attached'] or '(none)'}")
-            print(f"  MISSING imports: {result['missing']}")
-            print(f"  layer_provided ({len(result['layer_provided'])} modules): {result['layer_provided']}")
-            print()
-        elif args.verbose:
-            print(f"OK   {fn_name}")
-            print(f"  layers_attached: {result['layers_attached'] or '(none)'}")
-            for imp, sat in result["ok"]:
-                print(f"  - {imp}: provided by {sat}")
-            print()
+            if args.json:
+                json_records.append({"fn": fn_name, "status": "FAIL",
+                                     "layers_attached": result["layers_attached"],
+                                     "missing": result["missing"],
+                                     "layer_provided": result["layer_provided"]})
+            else:
+                print(f"FAIL {fn_name}")
+                print(f"  layers_attached: {result['layers_attached'] or '(none)'}")
+                print(f"  MISSING imports: {result['missing']}")
+                print(f"  layer_provided ({len(result['layer_provided'])} modules): {result['layer_provided']}")
+                print()
+        elif args.verbose or args.json:
+            if args.json:
+                json_records.append({"fn": fn_name, "status": "OK",
+                                     "layers_attached": result["layers_attached"],
+                                     "ok": [{"import": imp, "via": sat} for imp, sat in result["ok"]]})
+            else:
+                print(f"OK   {fn_name}")
+                print(f"  layers_attached: {result['layers_attached'] or '(none)'}")
+                for imp, sat in result["ok"]:
+                    print(f"  - {imp}: provided by {sat}")
+                print()
 
-    print(f"\nSummary: {total} function(s) audited, {fail_count} FAIL, {total - fail_count} OK")
+    if args.json:
+        print(json.dumps({"summary": {"total": total, "fail": fail_count, "ok": total - fail_count},
+                          "results": json_records}, indent=2))
+    else:
+        print(f"\nSummary: {total} function(s) audited, {fail_count} FAIL, {total - fail_count} OK")
     if args.strict and fail_count > 0:
         return 1
     return 0

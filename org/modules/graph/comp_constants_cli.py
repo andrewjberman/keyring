@@ -265,13 +265,18 @@ def _load_config(path: Path) -> dict:
 # ---------------------------------------------------------------------------
 
 def cmd_check(args: argparse.Namespace, config: dict) -> int:
-    """Drift detection. Exit 1 on drift, 0 on clean. Lane-aware."""
+    """Drift detection. Exit 1 on drift, 0 on clean. Lane-aware.
+
+    ADHC_COMPIL_V4.021 Cat 3.4: --lane filter restricts to one lane (bd/inf/multifirm).
+    """
     only_file = None
     if getattr(args, "file", None):
         fp = Path(args.file)
         if not fp.is_absolute():
             fp = (WORKSPACE_ROOT / fp).resolve()
         only_file = fp
+
+    only_lane = getattr(args, "lane", None)
 
     scanned = scan_all(config, only_file=only_file)
 
@@ -281,6 +286,8 @@ def cmd_check(args: argparse.Namespace, config: dict) -> int:
         canonical_value = c.get("canonical_value")
         lane = c.get("lane")
         if canonical_value is None:
+            continue
+        if only_lane is not None and lane != only_lane:
             continue
         # Pull only sites scanned under this constant's lane
         sites_for_const = scanned.get((name, lane), [])
@@ -293,7 +300,8 @@ def cmd_check(args: argparse.Namespace, config: dict) -> int:
 
     if not drifts:
         if only_file is None:
-            print(f"OK: no drift detected across {len(config.get('constants', []))} constant(s)")
+            scope = f" (lane={only_lane})" if only_lane else ""
+            print(f"OK: no drift detected across {len(config.get('constants', []))} constant(s){scope}")
         return 0
 
     print(f"DRIFT: {len(drifts)} site(s) diverge from canonical_value\n")
@@ -391,6 +399,8 @@ def main() -> int:
 
     p_check = sub.add_parser("check", help="drift detection (default)")
     p_check.add_argument("--file", help="only check sites in this file")
+    p_check.add_argument("--lane", choices=["bd", "inf", "multifirm"],
+                         help="filter to one lane (V4.021 Cat 3.4)")
     p_check.set_defaults(func=cmd_check)
 
     p_index = sub.add_parser("index", help="rewrite sites[] in config")
@@ -407,6 +417,7 @@ def main() -> int:
     if not args.cmd:
         args.cmd = "check"
         args.file = None
+        args.lane = None
         args.func = cmd_check
 
     config = _load_config(Path(args.config))

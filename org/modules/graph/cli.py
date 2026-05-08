@@ -111,10 +111,23 @@ def cmd_trace(args):
     # Find matching nodes
     matches = g.find_node(query)
     if not matches:
-        print(f"No nodes matching: {query}")
+        if args.json:
+            print(json.dumps({"query": query, "matches": []}))
+        else:
+            print(f"No nodes matching: {query}")
         sys.exit(0)
 
     if len(matches) > 1 and not args.all:
+        # ADHC_COMPIL_V4.021 Cat 3.5: --json honored on multi-match disambiguation
+        if args.json:
+            print(json.dumps({
+                "query": query,
+                "match_count": len(matches),
+                "matches": [{"id": m.id, "type": m.node_type, "label": m.label}
+                            for m in matches],
+                "hint": "use --all to trace all, or be more specific",
+            }, indent=2))
+            sys.exit(0)
         print(f"Multiple matches for '{query}':")
         for m in matches[:10]:
             print(f"  [{m.node_type}] {m.id} -- {m.label}")

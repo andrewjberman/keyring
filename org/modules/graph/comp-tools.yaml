@@ -50,11 +50,13 @@ tools:
       - "Which portal pages call this API function?"
     examples:
       - "comp-trace AdvisorsTab --direction up"
-      - "comp-trace employee_leaderboard --direction both"
+      - "comp-trace gold:D_04.client_portal_summary --direction both  # BD gold (canonical form)"
+      - "comp-trace gold:INF_D_04.client_portal_summary --direction both  # INF gold (V4.020)"
+      - "comp-trace s3:platinum/firm/leaderboard.json --direction up  # platinum artifact (V4.020)"
       - "comp-trace getCumulativeChart --direction both"
-      - "comp-trace trending --direction both --all"
+      - "comp-trace getFirmLeaderboard --direction up  # endpoint with callers"
       - "comp-trace opal-partners-data --direction up"
-      - "comp-trace news-trending-analysis --direction both"
+      - "comp-trace D_04 --all  # disambiguate when query matches multiple nodes"
     cost: "<1s (cached graph)"
     replaces: "Explore agent, manual grep for imports/fetch calls/S3 keys/Lambda routes/EventBridge rules"
 
@@ -142,7 +144,7 @@ tools:
       overlap: "comp-pipescript overlap D_00 D_03 -- shared S3 artifacts between two scripts. COO MANDATE: run this on every pair of scripts before authoring cross-domain coordination blocks."
       inject: "Inject pipeline edges into comp-trace graph cache (run after comp-build)"
       stats: "Graph stats + warnings for scripts with missing reads/writes"
-      deployed: "comp-pipescript deployed [filter] -- compare local gold + silver scripts against s3://opal-data-bd/code/{gold,silver}/ ETags (BD default). For INF scripts: comp-pipescript deployed --pipeline inf-gold [filter] checks INF gold vs s3://opal-data-inf/code/gold/; --pipeline inf-silver checks INF silver vs s3://opal-data-inf/code/silver/. Output prefixed [GOLD] / [SILVER]. MATCH/STALE/MISSING_ON_S3/LOCAL_MISSING/TIMEOUT per script. Filter is substring/filename: gold IDs (D_04, C_08 for BD; INF_D_08, INF_C_01 for INF) match gold only; silver filenames match silver only; omit for full sweep. Run before any gold or silver run to confirm runner has latest code."
+      deployed: "comp-pipescript deployed [filter] -- compare local gold + silver scripts against s3://opal-data-bd/code/{gold,silver}/ ETags (BD default). For INF scripts: comp-pipescript deployed --pipeline inf-gold [filter] checks INF gold vs s3://opal-data-inf/code/gold/. NOTE: --pipeline inf-silver currently shows all MISSING_ON_S3 because INF silver code is not deployed to opal-data-inf (V4.OPS Cat 5.5 finding); INF silver lives in alternate locations. Use bd-silver for verified silver deployment status. Output prefixed [GOLD] / [SILVER]. MATCH/STALE/MISSING_ON_S3/LOCAL_MISSING/TIMEOUT per script. Filter is substring/filename: gold IDs (D_04, C_08 for BD; INF_D_08, INF_C_01 for INF) match gold only; silver filenames match silver only; omit for full sweep. Run before any gold or silver run to confirm runner has latest code."
     cost: "<1s (io/feeds/consumers/overlap); ~2-5s (deployed, makes AWS API calls)"
     data_sources: "lib/s3_layout.py (AST-parsed), gold_dispatch.sh (chain/catalog), each script's imports"
     replaces: "Manual import tracing, grepping s3_layout constants, reading gold_pipeline_script_file_flow.md; manual aws s3 ls + sha256sum for deployment verification"
@@ -164,7 +166,7 @@ tools:
     subcommands:
       trace: "comp-routes trace getEmployeeLeaderboard -- full chain: URL -> CF behavior -> origin -> auth -> router -> S3 key -> components"
       behaviors: "All 23 CloudFront behaviors with origins, auth, edge functions"
-      origins: "All 5 CloudFront origins (S3 buckets + API Gateways)"
+      origins: "All 6 CloudFront origins (S3 buckets + API Gateways)"
       rewrites: "URL->S3 rewrite rules from shared-advisor-router + public-data-router"
       api-routes: "All API Gateway route_keys grouped by pipeline"
       endpoints: "All frontend endpoint functions with resolved URLs"
@@ -216,7 +218,7 @@ tools:
       - "Audit every ADVI tab in one shot" -> comp-platinum tab-audit
       - Phase 2 tab audits: tab-audit gives you fetches, origins, auth, S3 keys, gold sources, transforms per tab
     subcommands:
-      page: "comp-platinum page PartnerAnalytics -- full stack: fetch -> CF -> auth -> S3 key -> gold script, with transforms and JSX refs"
+      page: "comp-platinum page PartnerAnalytics -- full stack: fetch -> CF -> auth -> S3 key -> gold script, with transforms and JSX refs. Real component names: PartnerAnalytics, ClientsTab, AdvisorBookView, DistributionTab, InflectionInsightsPanel. NOT 'AdvisorIntelligence' (directory) or 'BooksTab' (non-existent)."
       reverse: "comp-platinum reverse gold/artifacts/employee_leaderboard.json -- S3 key -> route -> components; also accepts dotted payload paths like rfs.decomposition_max.nna and resolves them back to artifact + producer + component"
       tab-audit: "Audit every ADVI tab: fetches, origin type, auth layers, S3 keys, gold sources, transform count"
       summary: "One-line per component: fetch count, chain count, S3 direct vs API GW, auth coverage"
@@ -271,7 +273,7 @@ tools:
     subcommands:
       validate: "comp-validate D_04 --artifact /tmp/leaderboard.json -- run all configured checks"
       list: "comp-validate --list -- show all configured checks and invariants"
-      list-one: "comp-validate D_00 --list -- show checks for one script"
+      list-one: "comp-validate D_00 --list -- show checks for one script. V4.021 ship: matcher tightened (D_04 matches D_04 + D_04_positions_output but NOT INF_D_04). Use --lane bd|inf to filter; unknown script_id emits ERROR + 15 candidates (mirror comp-iam service unknown-name pattern)."
     check_types: |
       key_present    -- JSON key must exist and be non-null/non-empty
       count_min      -- array at path must have >= N elements
@@ -384,7 +386,7 @@ tools_continued:
       roles: "comp-iam roles -- list all IAM roles parsed from Terraform"
       services: "comp-iam services -- list all Lambda/EC2 services with detected operations"
       service: "comp-iam service bd-gold-trigger -- show operations + grant status for one service"
-      role: "comp-iam role bd-exporter-ec2-role -- show all granted actions for one role"
+      role: "comp-iam role bd-exporter-ec2-role -- show all granted actions for one role (real role names: bd-exporter-ec2-role, bd-gold-layer-lambda-role, inf-gold-trigger-lambda-role; NOT bd-gold-runner-role which doesn't exist)"
       stats: "comp-iam stats -- summary counts (roles, services, gaps)"
     cost: "~2s (scans Lambda sources + Terraform; no AWS API calls)"
     data_sources: "infra/aws/lambda/ci/lambda-source-map.json, infra/aws/terraform/*/iam.tf, Lambda/gold script sources"
@@ -392,9 +394,9 @@ tools_continued:
     note: "Catches permission gaps before they cause silent failures. The IAM watchdog loop incident (2026-04-09) was caused by s3:DeleteObject missing from bd-exporter-ec2-role -- comp-iam would have flagged this during the Terraform review."
 
   check-lambda-layer-deps:
-    command: "check-lambda-layer-deps [--function <name>] [--pipeline <name>] [--strict] [--verbose]"
+    command: "check-lambda-layer-deps [--function <name>] [--pipeline <name>] [--strict] [--verbose] [--json]"
     segment_scope: segment-aware
-    segment_scope_note: "No positional args (V4.OPS doc-fix; catalog previously said positional). Default: full repo audit. --function <name> for single Lambda, --pipeline <name> for pipeline scope, --strict to exit 1 on any FAIL."
+    segment_scope_note: "No positional args. Default: full repo audit. --function <name> for single Lambda, --pipeline <name> for pipeline scope, --strict to exit 1 on any FAIL, --json for CI-friendly machine output (V4.021 ship). --all flag does NOT exist (default no-flag = repo-wide)."
     when: |
       - Before deploying a Lambda zip change: confirm imports resolve through declared layers
       - After adding a new third-party import to a Lambda: verify a layer covers it
@@ -410,9 +412,9 @@ tools_continued:
     note: "Shipped 2026-05-07 under ADHC_LAMBDADOC.003 (`fc4d1f18f` MVP + `59350fdc2` aws_lambda_layer_version + module-reference handling). Empirical anchor: v1.7.38 inf-pipeline regression where 3 of 4 inf-api-* Lambdas had nested-path source_map files leading to ModuleNotFoundError + inf-api-assets-v2 had layers=[pandas_layer] but layer didn't have `requests` — old zip masked it via inline-vendoring. v1.7.39 hotfix flat-zip + layer switch to pandas_pyarrow_requests_layer caught + fixed; this tool prevents the class going forward. Cataloged 2026-05-08 under ADHC_COMPIL_V4.007 doc close-out."
 
   comp-constants:
-    command: "comp-constants [--config CONFIG] {check,index,new,list} [--file PATH]"
+    command: "comp-constants [--config CONFIG] {check,index,new,list} [--file PATH] [--lane {bd,inf,multifirm}]"
     segment_scope: segment-aware
-    segment_scope_note: "Lane is determined by config metadata (bd/inf/multifirm), NOT a CLI flag. Auto-detects lane from constant-name prefix during scan. --lane is NOT a supported flag (catalog drift fixed in V4.OPS)."
+    segment_scope_note: "Lane is determined by config metadata (bd/inf/multifirm), auto-detected from constant-name prefix during scan. V4.021 ship: --lane flag added to `check` for filtering to one lane (e.g. `comp-constants check --lane inf` shows INF drifts only)."
     when: |
       - Pre-commit on any Python edit -> drift gate (wired into ds-commit-gate.sh)
       - "Did the rep_id=6 propagation actually land in all sites?" -> comp-constants check
