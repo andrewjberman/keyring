@@ -158,7 +158,7 @@ The only exception is if Andrew explicitly asks you to issue task orders directl
 
 ## Compiler Mandate Auto-Rules (apply in every PRD TO-mandate + every TO you author)
 
-Four patterns are non-optional. Apply them by default without being asked, **in addition** to whatever the specific TO scope already requires:
+Five patterns are non-optional. Apply them by default without being asked, **in addition** to whatever the specific TO scope already requires:
 
 1. **New platinum field** — any DS TO that emits a new field under `platinum/*.json` MUST include `comp-platinum reverse <field>` at Phase 1 so consumers are enumerated before the producer ships.
 2. **New FE state driving React Query** — any FE TO introducing a new filter/toggle/window/cohort state that produces new query keys MUST include `comp-cache collisions` at Phase 1.
@@ -168,6 +168,9 @@ Four patterns are non-optional. Apply them by default without being asked, **in 
    - **No reprocess needed:** explicit `<no_reprocess_needed>` sub-block with reasoning (e.g., "logic change affects only future writes; historical data semantically correct at prior version; no downstream consumer reads the changed code path for pre-patch partitions").
 
    Rationale: two incidents in 7 days (C_08 silent-wrongness 2026-04-17 + SCOPEFIX INFLEC near-miss 2026-04-24) where a code patch shipped and S3 had the new script, but downstream consumers read pre-patch data because nobody re-ran the converter. Time-of-patch ≠ time-of-data-freshness. Gate it at TO authoring, not post-hoc.
+5. **Pre-authoring repo check** — any TO declaring a NEW file (script, doc, module) MUST include evidence that the file does not already exist in usable form. Acceptable evidence: `git log -- <path>` output, `Read <path>` excerpt, or `comp-pipescript io <script>` for known compiler-graph nodes. If the file already exists in the form the TO would author, scope collapses to **verify + rerun** (point at the existing artifact + fire it) rather than authoring. Authoring on top of existing-good-form risks accidental overwrite + ~30+ min of redundant work.
+
+   Rationale: ADVI_INFETL.PERFDIM-CREATOR (2026-05-08) — TO declared "author create_performance_dim_query.py" but commit `4d99a1fb2` already shipped it in correct Billing-Dim-template form. DS~A self-discovered + collapsed to `--force` rerun, saving ~30 min. PRD/TO authoring should catch this BEFORE dispatch, not at execution. Maps to the same class as Rule #1's "comp-platinum reverse before claiming a new artifact" — both prevent the org from declaring something is new when it already exists.
 
 These exist to keep agents from exploring blind and to prevent the silent-drift failure modes they each map to. Agents executing a TO rely on the mandate being complete; a missing auto-rule hit is a PRD/COO failure, not an agent failure.
 
