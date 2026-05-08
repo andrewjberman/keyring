@@ -623,16 +623,23 @@ def cmd_io(args):
 
 
 def cmd_chain(args):
-    dag = _build_dag()
+    # ADHC_COMPIL_V4.019 Bug 1.2 fix: honor --pipeline flag (was silently
+    # ignored — chain --pipeline inf-gold returned BD chain regardless).
+    pipeline = getattr(args, 'pipeline', 'bd-gold') or 'bd-gold'
+    dag = _build_dag(pipeline)
     chain_name = args.chain_name.lower()
 
     if chain_name not in dag.chains:
-        print(f"Unknown chain: {chain_name}")
-        print(f"Valid chains: {', '.join(sorted(dag.chains.keys()))}")
+        print(f"Unknown chain: {chain_name} for pipeline {pipeline}")
+        if dag.chains:
+            print(f"Valid chains for {pipeline}: {', '.join(sorted(dag.chains.keys()))}")
+        else:
+            print(f"No chains registered for pipeline {pipeline}.")
+            print("Chain config lives in gold_pipeline_deps.yaml; INF-side chain config not yet populated.")
         sys.exit(1)
 
     script_ids = dag.chains[chain_name]
-    print(f"CHAIN: {chain_name} ({len(script_ids)} scripts)")
+    print(f"CHAIN [{pipeline}]: {chain_name} ({len(script_ids)} scripts)")
     print()
 
     for i, sid in enumerate(script_ids, 1):
@@ -926,12 +933,22 @@ def cmd_deployed(args):
     matched, stale, missing_s3, local_missing, timed_out, aws_unreach = [], [], [], [], [], []
     checked_any = False
 
+    # ADHC_COMPIL_V4.019 Bug 1.1 fix: initialize skip_gold so silver-section gating
+    # at line ~1010 doesn't UnboundLocalError on inf-gold or silver-only paths.
+    # Default True = "gold was skipped"; bd-gold and inf-gold branches flip to False.
+    skip_gold = True
+
     # ---- GOLD layer (DAG-driven) ----
     # For non-BD pipelines, skip BD gold entirely unless pipeline == "bd-gold" (default)
     if pipeline in ("inf-gold",):
         # INF gold: check against opal-data-inf/code/gold/
         inf_dag = _build_dag("inf-gold")
         inf_candidates = sorted(inf_dag.scripts.items(), key=lambda x: x[1].run_order)
+        skip_gold = False
+        if script_filter_upper:
+            any_inf_match = any(script_filter_upper in sid.upper() for sid, _ in inf_candidates)
+            if not any_inf_match:
+                skip_gold = True
         for sid, sio in inf_candidates:
             if script_filter_upper and script_filter_upper not in sid.upper():
                 continue

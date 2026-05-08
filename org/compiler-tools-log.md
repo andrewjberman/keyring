@@ -2511,3 +2511,19 @@ Total: 2 PASS, 131 WARN, 133 PRDs scanned.
 | 2026-05-08 | 0.7.0_AE_CloudOps | ADHC_COMPIL_V4.OPS | loop-quiescence | ADHC_COMPIL_V4 / ADVI_INFETL / ADHC (macro-prefix) | PARTIAL | OPS triage #7 — bare macro prefix returns false-positive QUIESCENT_CLEAN total=0 |
 | 2026-05-08 | 0.4.0_DT_ClientPlatform | (no-TO) | comp-build | comp-build | PASS |
 | 2026-05-08 | 0.4.0_DT_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript deployed --pipeline inf-gold | PASS |
+| 2026-05-08 | 0.4.0_DT_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript deployed --pipeline inf-gold INF_D_04 | FAIL |
+| 2026-05-08 | 0.4.0_DT_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript chain downstream --pipeline inf-gold | PASS |
+| 2026-05-08 | 0.4.0_DT_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript chain downstream | PASS |
+| 2026-05-08 | 0.4.0_DT_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript deployed --pipeline inf-gold INF_D_04 | PASS |
+| 2026-05-08 | 0.4.0_DT_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript deployed --pipeline inf-gold | PASS |
+| 2026-05-08 | 0.4.0_DT_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript chain downstream --pipeline inf-gold | FAIL |
+| 2026-05-08 | 0.4.0_DT_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript chain downstream | PASS |
+| 2026-05-08 | 0.4.0_DT_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript deployed D_00c | PASS |
+| 2026-05-08 | 0.4.0_DT_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript deployed --pipeline bd-silver | PASS |
+| 2026-05-08 | 0.4.0_DT_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript chain full --pipeline inf-gold | PASS |
+| 2026-05-08 | 0.4.0_DT_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript chain incremental --pipeline inf-gold | PASS |
+| 2026-05-08 | 0.7.0_AE_CloudOps | ADHC_COMPIL_V4.019 | comp-pipescript | comp-pipescript deployed --pipeline inf-gold INF_D_04 (post-fix) | PASS | Bug 1.1 fixed (was UnboundLocalError); 2 MATCH returned cleanly |
+| 2026-05-08 | 0.7.0_AE_CloudOps | ADHC_COMPIL_V4.019 | comp-pipescript | comp-pipescript chain downstream --pipeline inf-gold (post-fix) | PASS | Bug 1.2 fixed (was silent BD return); now explicit "Unknown chain: downstream for pipeline inf-gold" + lists valid INF chains (full/incremental/label/silver_prep) |
+| 2026-05-08 | 0.7.0_AE_CloudOps | ADHC_COMPIL_V4.019 | comp-pipescript | comp-pipescript chain full --pipeline inf-gold (post-fix bonus) | PASS | INF chains confirmed wired post-fix — returns 47 scripts |
+| 2026-05-08 | 0.7.0_AE_CloudOps | ADHC_COMPIL_V4.019 | comp-pipescript | comp-pipescript deployed D_00c (regression check) | PASS | BD default unchanged |
+| 2026-05-08 | 0.7.0_AE_CloudOps | ADHC_COMPIL_V4.019 | comp-pipescript | comp-pipescript chain downstream (default, regression check) | PASS | BD default unchanged; new label [bd-gold] prefix added |
