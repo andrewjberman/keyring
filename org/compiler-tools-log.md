@@ -2594,3 +2594,25 @@ Total: 2 PASS, 131 WARN, 133 PRDs scanned.
 | 2026-05-08 | 0.7.0_AE_CloudOps | ADHC_COMPIL_V4.023 | comp-iam | comp-iam service bd-time-machine (pre-fix) | PASS | s3:CopyObject [MISSING]; bd-time-machine-lambda-role policy lacks the action |
 | 2026-05-08 | 0.7.0_AE_CloudOps | ADHC_COMPIL_V4.023 | comp-iam | comp-iam service bd-time-machine (post-apply) | PASS | s3:CopyObject [GRANTED]; CopyVersionedRestore statement landed on bd-time-machine-lambda-role:s3-access |
 | 2026-05-08 | 0.7.0_AE_CloudOps | ADHC_COMPIL_V4.023 | comp-iam | comp-iam gaps (post-apply) | PASS | 9 → 7 gaps; 7 remaining are EC2-shipped-shell false positives (historical-prices-scheduler, inf-assets-trigger) + AWS-managed-policy false positive (opal-news-layer3-curation under AmazonS3ReadOnlyAccess attachment) |
+| 2026-05-08 | 0.7.0_AE_CloudOps | ADHC_COMPIL_V4.024 | comp-iam | comp-iam gaps | PASS |
+| 2026-05-08 | 0.7.0_AE_CloudOps | ADHC_COMPIL_V4.024 | comp-iam | comp-iam gaps | PASS |
+| 2026-05-08 | 0.7.0_AE_CloudOps | ADHC_COMPIL_V4.024 | comp-iam | comp-iam gaps | PASS |
+| 2026-05-08 | 0.7.0_AE_CloudOps | ADHC_COMPIL_V4.024 | comp-iam | comp-iam stats | PASS |
+| 2026-05-08 | 0.7.0_AE_CloudOps | ADHC_COMPIL_V4.024 | comp-iam | comp-iam gaps | PASS |
+| 2026-05-08 | 0.7.0_AE_CloudOps | ADHC_COMPIL_V4.024 | comp-iam | comp-iam stats | PASS |
+| 2026-05-11 | 0.4.0_DS_ClientPlatform~B | ADVI_INFNNA.INF_A_03_PARALLEL-EXPAND | comp-pipescript | comp-pipescript deployed INF_A_03 | PASS |
+| 2026-05-11 | 0.4.0_DS_ClientPlatform~B | ADVI_INFNNA.INF_A_03_PARALLEL-EXPAND | comp-pipescript | comp-pipescript deployed INF_A_00.accounts_dimension | PASS |
+| 2026-05-11 | 0.4.0_DS_ClientPlatform~B | ADVI_INFNNA.INF_A_03_PARALLEL-EXPAND | comp-pipescript | comp-pipescript deployed INF_A_01.advisor_assignments | PASS |
+| 2026-05-11 | 0.4.0_DS_ClientPlatform~B | ADVI_INFNNA.INF_A_03_PARALLEL-EXPAND | comp-pipescript | comp-pipescript deployed INF_B_02.canonical_lots | PASS |
+| 2026-05-11 | 0.4.0_DS_ClientPlatform~B | ADVI_INFNNA.INF_A_03_PARALLEL-EXPAND | comp-pipescript | comp-pipescript deployed INF_C_01b.role_aua_backfill | PASS |
+| 2026-05-11 | 0.4.0_DS_ClientPlatform~B | ADVI_INFNNA.INF_A_03_PARALLEL-EXPAND | comp-pipescript | comp-pipescript deployed INF_C_03.account_performance | PASS |
+| 2026-05-11 | 0.4.0_DS_ClientPlatform~B | ADVI_INFNNA.INF_A_03_STALE-PURGE | comp-blast | comp-blast gold/positions_cube | PASS |
+| 2026-05-11 | 0.7.0_AE_CloudOps | ADHC_COMPIL_V4.015 | comp-pipescript | comp-pipescript io INF_D_00.portal_aggregates | PASS |
+| 2026-05-11 | 0.7.0_AE_CloudOps | ADHC_COMPIL_V4.015 | comp-pipescript | comp-pipescript io INF_D_08.nmec_nmnc_nna | PASS |
+| 2026-05-11 | 0.7.0_AE_CloudOps | ADHC_COMPIL_V4.015 | comp-pipescript | comp-pipescript io INF_D_04.client_portal_summary | PASS |
+| 2026-05-11 | 0.7.0_AE_CloudOps | ADHC_COMPIL_V4.015 | comp-pipescript | comp-pipescript io INF_D_05.activity_scan | FAIL |
+| 2026-05-11 | 0.7.0_AE_CloudOps | ADHC_COMPIL_V4.015 | comp-pipescript | comp-pipescript io INF_D_06.cash_drag | FAIL |
+| 2026-05-11 | 0.7.0_AE_CloudOps | ADHC_COMPIL_V4.015 | comp-pipescript | comp-pipescript io INF_D_07.concentration_risk | PASS |
+| 2026-05-11 | 0.7.0_AE_CloudOps | ADHC_COMPIL_V4.015 | comp-platinum | comp-platinum reverse advisor_intelligence_executive_summary | PASS |
+| 2026-05-11 | 0.7.0_AE_CloudOps | ADHC_COMPIL_V4.015 | comp-platinum | comp-platinum reverse leaderboard | PASS |
+| 0.7.0_AE_CloudOps | ADHC_COMPIL_V4.015 | comp-freshness ddb opal-users-v2 WARN(287h>168h) / opal-routing-config FAIL(MISSING) / synthetic 1h FAIL / all exit 1 / chain-bd-regression OK / --list DDB OK | 6/6 ACs PASS | commit 6becc77e5 |
