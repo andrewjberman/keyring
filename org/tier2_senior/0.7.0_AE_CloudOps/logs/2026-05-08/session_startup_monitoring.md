@@ -735,3 +735,140 @@ CTO .023 RAVC2 ACK: "End-of-business-day stop. Standing watch carries through to
 ---
 
 **Logged 2026-05-08T~19:55Z by 0.7.0_AE_CloudOps. EOD V4 close confirmed by CTO + COO joint posture. Standing watch through INFETL.011 first-fire 06:00Z tomorrow.**
+
+---
+
+## Part 16 — V4.024 comp-iam FP elimination (post-EOD pickup, Andrew direct)
+
+### Trigger
+Andrew direct 2026-05-08T~20:13Z PM via CTO dispatch (`c0d531b82`): "Lets get a TO to 0.7.0_AE to fix that iam gap detector." CTO authored ADHC_COMPIL_V4.024 + filed in queue + offered EOD-flex (ship tonight or tomorrow). Picked up tonight given sustained-bandwidth + standing watches still 10+ hours out.
+
+### Ship
+- Commit: `4fd343b45` (pushed CLOUD); 5 files, +571/-9
+- Wall-clock: ~50min Phase 0 (read source) → Phase 5 (push) — under-budget pattern instance #15 (~7% of ~1d catalog)
+- All 7 ACs PASS; 6/6 regression fixture tests PASS
+
+### Empirical
+| Metric | Pre (V4.023 baseline) | Post (V4.024) |
+|--------|-----------------------|---------------|
+| comp-iam gaps | 7 found | 0 found |
+| FP rate | 78% | 0% |
+| Services scanned | 121 | 121 (unchanged) |
+| Roles parsed | 61 | 61 (unchanged) |
+
+### Mechanism (concise)
+**Class A — `_compute_ec2_shipped_line_ranges()`:** Scans triple-quoted multi-line string assignments → records (var → line ranges) → identifies vars referenced as `UserData=` / `commands=[VAR]` / matching `*_CMD|*_SCRIPT|USER_DATA*` naming → AWS-CLI matches inside shipped ranges skip detection.
+
+**Class B — `_resolve_managed_policy_actions()`:** Parses `aws_iam_role_policy_attachment` + `policy_arn = "arn:aws:iam::aws:policy/X"` → static lookup (21 ARNs) → `.comp-graph/managed_policy_actions_cache.json` cache → `aws iam get-policy-version` API fallback → `MANAGED_POLICY_UNKNOWN` advisory if all fail. Synthesized statements appended to role; `IamRole.grants()` extended for general wildcard matching (`s3:Get*` matches `s3:GetObject`).
+
+### Files Changed
+- `org/modules/graph/extract_iam.py` (+225/-10)
+- `org/modules/graph/test_iam_v4_024_fp_elimination.py` (+250 NEW)
+- `org/modules/graph/comp-tools.yaml` (+9/-7)
+- `org/modules/graph/comp-tools-segment-scope.md` (+2/-0; gotchas #10/#11)
+- `.owned-paths.yaml` (+4/-0; `org/modules/graph/test_*.py` → ANY_EXEC_OR_AE)
+
+### Compiler Tools
+| Tool | Result | Notes |
+|------|--------|-------|
+| `comp-iam gaps` (pre-fix baseline) | 7 found | V4.023 anchor cases |
+| `.tools/ds-commit-gate.sh extract_iam.py` | clean | py_compile + AST + ruff |
+| `.tools/ds-commit-gate.sh test_iam_v4_024_fp_elimination.py` | clean | gate clean on new file |
+| `python test_iam_v4_024_fp_elimination.py` | 6/6 PASS | end-to-end synthetic-workspace fixture |
+| `comp-iam gaps` (post-fix) | 0 found | AC5 PASS |
+| `comp-iam stats` (post-fix) | 121 svc / 61 roles / 0 gaps | identity preserved |
+
+### RAVC Trail (post-EOD)
+| RAVC | Direction | Time (UTC) | Result |
+|------|-----------|------|--------|
+| V4.024 RAVC1 ACK + ship-tonight posture | AE → CTO | 20260508T201551Z | sent |
+| V4.024 RAVC1 ACK + ship-tonight posture | AE → COO | 20260508T201555Z | sent |
+| V4.024 RAVC2 (full evidence + AC roll-up) | AE → CTO | 20260508T202749Z | pending ACK |
+| V4.024 RAVC2 (concise + bandwidth note) | AE → COO | 20260508T202754Z | pending ACK |
+
+### TO Closure
+- `org/tier2_senior/0.7.0_AE_CloudOps/task_orders/ADHC_COMPIL_V4.024.ae-comp-iam-gap-detector-fp-elimination.md` flipped pending → complete with `<completed_date>2026-05-08</completed_date>` + `<completed_commit>4fd343b45</completed_commit>`.
+
+### Cumulative Session Tally (Updated)
+**22 substantive ships today** (was 21 pre-V4.024):
+- 11 V4 Phase 1 + addendum (AM)
+- 5 V4 Phase 2 hardening (.017 + .019/.020/.021/.022)
+- 1 V4 SUPERSEDED closure (.018)
+- 1 V4 remediation (.023)
+- **1 V4 FP elimination (.024) — added post-EOD per Andrew direct**
+- 1 INFETL.011 cron-flip-ack
+- 1 INFETL.CHAININC Class 1 fix
+- 1 aggregator quorum 7/7 deploy
+
+Combined catalog est ~14-16d → wall-clock ~5.5h → ratio still ~6%.
+
+**Logged 2026-05-08T~20:30Z by 0.7.0_AE_CloudOps. Returning to standing-watch posture (INFETL.011 06:00Z + INFETL.CHAININC 12:30Z).**
+
+---
+
+## Part 17 — Lambda Function URL anti-pattern audit (Andrew direct)
+
+### Trigger
+Andrew direct 2026-05-08T~20:55Z PM during conversational security-architecture discussion: "make a note of that with regard to the lambda function urls in your most recent log, we should fix that." Context — Andrew was probing the Lambda-as-intermediary pattern; in the answer I flagged Lambda Function URLs (Lambda exposed directly without API GW or CloudFront in front) as a real anti-pattern that loses WAF / throttle / auth-flexibility. Andrew asked me to scan repo for instances + queue remediation.
+
+### Empirical scan (Terraform + live AWS)
+
+```
+grep -rn aws_lambda_function_url infra/  -> 2 hits
+aws lambda list-function-url-configs    -> 2 live URL configs (matches TF)
+```
+
+| Function | TF | Live AuthType | CORS | Risk class |
+|---|---|---|---|---|
+| `inf-otp-relay` | `infra/aws/terraform/inf-pipeline/lambda-otp-relay.tf:72` | **NONE** | `*` | **HIGH — internet-public, no AWS-side auth** |
+| `deck-generation` | `infra/aws/terraform/deck-generation-pipeline/lambdas.tf:88` | AWS_IAM | `*` | LOW — SigV4 required; only IAM principals can invoke |
+
+URL details (do NOT publish):
+- inf-otp-relay: `https://swk4gc6kd7k3osowr3464l7u540exjbp.lambda-url.us-east-1.on.aws/` (created 2026-04-28)
+- deck-generation: `https://7dvozvbxxblaicvzkdqrkrp7640zxeta.lambda-url.us-east-1.on.aws/` (created 2026-03-26)
+
+### Risk Assessment — `inf-otp-relay` (FIX CANDIDATE)
+
+Current rationale (per TF comment line 69): "auth=NONE: URL UUID obscurity + time-sensitive SMS OTP = security layer." Purpose: phone home-screen shortcut for Andrew to enter OTP during Orion exporter MFA flow.
+
+**This is "security through obscurity + temporal narrowing"** — not zero security, but a known anti-pattern category. Specific risks:
+
+1. **URL leakage** — bookmarked on Andrew's phone means also in iCloud sync, browser history, possible Referer header, screenshot, accidental Slack/email paste, future device handoff. UUID-based URLs leak over time.
+2. **No rate limiting** — anyone with the URL can hit it infinitely. Cost-attack + DDoS vector.
+3. **No WAF** — no IP allowlist, no SQLi/XSS rules, no bot detection (because nothing in front of it).
+4. **CORS `*`** — any origin can call it. Combined with `AuthType: NONE`, any malicious page can hit Andrew's OTP relay if the URL leaks.
+5. **OTP race attacks** — if the URL is leaked during an active OTP window, attacker can spam attempts to game the state machine; CloudWatch logs would show but reactive only.
+
+The OTP-bounded window narrows real-world impact, but the structural exposure is the issue. Andrew's directive is to fix.
+
+### Remediation Options (ranked by UX preservation + security gain)
+
+1. **CloudFront + Lambda@Edge JWT in front (preferred)** — same pattern as the rest of Opal portal. Requires the phone to first load a tiny SPA that mints a JWT (or store a long-lived signed cookie). Bookmark UX preserved if the JWT lives in cookie/localStorage post-first-auth. Adds ~60-100ms edge latency. **Aligns with existing FIRMSEP / auth-validator-edge model.**
+
+2. **API GW + API Key** — simplest path. Append `?api-key=X` (or `X-Api-Key` header) to the bookmark URL. WAF-able, throttleable. Lose CORS `*`-with-NONE combo. Mobile bookmark UX: needs URL to embed the key, which means the key is in browser history / iCloud anyway — slight improvement over UUID-as-secret but not massive.
+
+3. **AWS_IAM + sigv4-signed bookmark** — not really viable for mobile bookmark; SigV4 needs signing per-request.
+
+4. **Andrew-IP allowlist via Lambda code (defense in depth, not replacement)** — if Andrew has a static IP / known cellular CIDR. Bookmark UX preserved. Doesn't solve VPN / travel cases. Probably stack with #1 or #2 rather than alone.
+
+**Recommendation:** Option 1 (CloudFront + Lambda@Edge JWT) — symmetric with portal auth. Stack #4 on top as belt-and-suspenders for Andrew's known IPs.
+
+### Risk Assessment — `deck-generation` (NO FIX NEEDED)
+
+`AuthType: AWS_IAM` is the correct security posture for Function URL. Only AWS principals with `lambda:InvokeFunctionUrl` permission can invoke. CORS `*` is fine combined with IAM auth (browsers can't sign SigV4 from cross-origin pages without explicit credential exchange). TF comment notes "internal team tool, no IAM auth required" — but the live config IS `AWS_IAM`, suggesting the comment drifted from the change. Not in scope for this fix; flag the comment for cleanup but no action.
+
+### Catalog Note
+
+`comp-iam` does NOT currently flag Function URL `AuthType: NONE` as a gap. This is a v5+ candidate for the detector — surface internet-public Lambdas (Function URL with NONE OR API GW with no authorizer) as a separate "exposure gap" class distinct from "permission gap." Not in V4.024's scope (FP elimination, not new detection class).
+
+### Action Queue
+
+| Item | Owner | When |
+|---|---|---|
+| ADHC TO authorship: inf-otp-relay → CloudFront+Lambda@Edge migration | COO/CTO | Tomorrow morning standing-watch checkpoint |
+| Comment cleanup on deck-generation TF (comment says NONE, live is AWS_IAM) | AE 0.7 | Standing-low; bundle with next deck-gen change |
+| comp-iam exposure-gap detection class | V5+ candidate | Backlog (post-V5 PRD authoring) |
+
+**Surface to execs tomorrow morning** during standing-watch — not tonight (they signed off EOD). Andrew directive logged + scoped + queued.
+
+**Logged 2026-05-08T~20:55Z by 0.7.0_AE_CloudOps.**
