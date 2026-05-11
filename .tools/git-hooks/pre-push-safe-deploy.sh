@@ -32,6 +32,11 @@ while read -r LOCAL_REF LOCAL_SHA REMOTE_REF REMOTE_SHA; do
         continue
     fi
 
+    # Skip tag pushes — tags are immutable refs, not code changes; no deploy needed
+    if [[ "$LOCAL_REF" == refs/tags/* ]]; then
+        continue
+    fi
+
     # Build commit range: remote_sha..local_sha
     # On new branch (remote = 0000...), diff against merge-base of main
     RANGE="${REMOTE_SHA}..${LOCAL_SHA}"
