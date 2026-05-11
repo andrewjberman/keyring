@@ -2616,3 +2616,25 @@ Total: 2 PASS, 131 WARN, 133 PRDs scanned.
 | 2026-05-11 | 0.7.0_AE_CloudOps | ADHC_COMPIL_V4.015 | comp-platinum | comp-platinum reverse advisor_intelligence_executive_summary | PASS |
 | 2026-05-11 | 0.7.0_AE_CloudOps | ADHC_COMPIL_V4.015 | comp-platinum | comp-platinum reverse leaderboard | PASS |
 | 0.7.0_AE_CloudOps | ADHC_COMPIL_V4.015 | comp-freshness ddb opal-users-v2 WARN(287h>168h) / opal-routing-config FAIL(MISSING) / synthetic 1h FAIL / all exit 1 / chain-bd-regression OK / --list DDB OK | 6/6 ACs PASS | commit 6becc77e5 |
+| 2026-05-11 | 0.7.0_AE_CloudOps | ADHC_COMPIL_V4.015 | comp-pipescript | comp-pipescript deployed --pipeline inf-gold INF_D_04 | PASS |
+| 2026-05-11 | 0.4.2_RD_AdvisorIntelligence | ADVI_INFTGT.TO-4 | comp-transform | comp-transform schema-check DistributionTab | PASS |
+| 2026-05-11 | 0.4.2_RD_AdvisorIntelligence | ADVI_INFTGT.TO-4 | comp-iam | comp-iam gaps | PASS |
+| 2026-05-11 | 0.4.2_RD_AdvisorIntelligence | ADVI_INFTGT.TO-4 | comp-pipescript | comp-pipescript io INF_D_04 | PASS |
+| 2026-05-11 | 0.4.2_RD_AdvisorIntelligence | ADVI_INFTGT.TO-4 | comp-blast | comp-blast build_advisor_summary | PASS |
+| 2026-05-11 | 0.4.2_RD_AdvisorIntelligence | ADVI_INFTGT.TO-4 | comp-pipescript | comp-pipescript deployed INF_D_04 | PASS |
+| 2026-05-11 | 0.4.2_RD_AdvisorIntelligence | ADVI_INFTGT.TO-4 | comp-routes | comp-routes trace getNmecNmncNna | PASS |
+| 2026-05-11 | 0.4.2_RD_AdvisorIntelligence | ADVI_INFTGT.TO-4 | comp-cache | comp-cache collisions | PASS |
+| 2026-05-11 | 0.4.2_RD_AdvisorIntelligence | ADVI_INFTGT.TO-4 | comp-trace | comp-trace period_start_aua --direction both | PASS |
+| 2026-05-11 | 0.4.2_RD_AdvisorIntelligence | ADVI_INFTGT.TO-4 | comp-pipescript | comp-pipescript io INF_D_00b | FAIL |
+| 2026-05-11 | 0.4.2_RD_AdvisorIntelligence | ADVI_INFTGT.TO-4 | comp-pipescript | comp-pipescript io INF_D_00c | FAIL |
+| 2026-05-11 | 0.4.2_RD_AdvisorIntelligence | ADVI_INFTGT.TO-4 | comp-pipescript | comp-pipescript io INF_D_00 | PASS |
+| 2026-05-11 | 0.4.2_RD_AdvisorIntelligence | ADVI_INFTGT.TO-4 | comp-pipescript | comp-pipescript io INF_D_00d | FAIL |
+| 2026-05-11 | 0.7.0_AE_CloudOps | ADHC_INFRUNNERPARITY.ae-inf-gold-runner-boot-dispatcher-into-repo | comp-trace | comp-trace period_start_aua --direction both | PASS |
+| 2026-05-11 | 0.7.0_AE_CloudOps | ADHC_INFRUNNERPARITY.ae-inf-gold-runner-boot-dispatcher-into-repo | comp-pipescript | comp-pipescript io INF_C_02 | PASS |
+| 2026-05-11 | 0.7.0_AE_CloudOps | ADHC_INFRUNNERPARITY.ae-inf-gold-runner-boot-dispatcher-into-repo | comp-pipescript | comp-pipescript io INF_D_00b | FAIL |
+| 2026-05-11 | 0.6.0_AE_PartnerETL | schwab_may_ingest_0508 | comp-transform | comp-transform schema-check PartnerAnalytics | PASS |
+| 2026-05-11 | 0.6.0_AE_PartnerETL | schwab_may_ingest_0508 | comp-transform | comp-transform schema-check DistributionTab | PASS |
+| 2026-05-11 | 0.6.0_AE_PartnerETL | schwab_may_ingest_0508 | comp-cache | comp-cache collisions | PASS |
+| 2026-05-11 | 0.6.0_AE_PartnerETL | schwab_may_ingest_0508 | comp-transform | comp-transform schema-check InflectionInsightsPanel | PASS |
+| 2026-05-11 | 0.6.0_AE_PartnerETL | schwab_may_ingest_0508 | comp-routes | comp-routes trace getFirmHeaderMetrics | PASS |
+| 2026-05-11 | 0.6.0_AE_PartnerETL | schwab_may_ingest_0508 | comp-routes | comp-routes trace getTimeseriesOverview | PASS |
