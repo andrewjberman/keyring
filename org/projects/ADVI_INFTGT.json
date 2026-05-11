@@ -1,0 +1,22 @@
+{
+  "project_code": "ADVI_INFTGT",
+  "macro_code": "ADVI",
+  "name": "Inflection Dashboard Parity & Polish (Partner-Demo Targeting)",
+  "description": "Coordinated cleanup of Inflection partner-dashboard defects surfaced during Andrew's 2026-05-11 ~14:11 ET screenshot walkthrough. Covers AUA-cut canonical labeling across panels ($201M / $203M / $189M conflicts vs canonical $202.75M), broken QTD growth math on advisor profiles (4331.6%, 7741.2% inflated period_start_aua denominators), malformed avg_fee_bps math (10246 bps from `* 10000.0` unit error at INF_D_04:2184), Distribution tab Continuous NNA sign inversion + hardcoded 'Pending Script 09 deploy (D1)' placeholder, missing snapshot-period selector on Books firm radials, empty concentration_risk artifact, zero-valued activity_scan rows, partner_analytics.json orphan staleness, IWM catchall rendering, and a bundle of client-drilldown formatting/ordering polish items. 14 TOs sized P0/P1/P2 in PRD §6.",
+  "prds": [
+    {"path": "docs/architecture/ADVI_INFTGT_PRD.md", "label": "ADVI_INFTGT PRD v0.1", "date": "2026-05-11"}
+  ],
+  "source_brief": "Andrew partner-demo screenshot walkthrough 2026-05-11 ~14:11 ET (15 screenshots cross-referenced in PRD Appendix A). Defect surface blocks Inflection partner-demo readiness.",
+  "status": "active",
+  "phase": "Phase 0 — PRD v0.1 SHIPPED 2026-05-11 (1.0.0_SA_CTO). Andrew GO on dispatch relayed via COO 2026-05-11 ~18:50Z. CTO RAVC2 ACK sent to COO with full 14-TO summary + sequencing recommendation (P0 dispatch first; DS~A bandwidth heads-up — 9 of 14 TOs land on DS~A). COO decomposing into per-team task orders. 5 Open Questions in PRD §7 for COO triage (Script 09 sequencing, TO-6 a-vs-b, IWM copy, period_start_aua sanity floor, partner_analytics.json data_as_of stamp dependency).",
+  "blocking": "COO task order decomposition + dispatch. DS~A bandwidth split (concurrent with any in-flight INFNNA/INFETL surfaces). Andrew sign-off on IWM catchall copy (TO-10). DS~A design call on period_start_aua sanity floor (TO-1).",
+  "depends_on": [],
+  "depends_on_note": "Surfaces are downstream of INFETL/INFINGE Phase 1 (daily gold chain) and INFNNA (txn enrichment) — both are mid-execution but their ship doesn't gate INFTGT TO dispatch. INFTGT works on the gold-script + portal-display layer; the upstream ingest cadence is orthogonal.",
+  "absorbs": [],
+  "created": "2026-05-11",
+  "pods": ["0.4"],
+  "pipeline": "inf-pipeline + portal",
+  "coo_lane": "2.0.0_SA_COO",
+  "thread_counter": 0,
+  "threads": []
+}
