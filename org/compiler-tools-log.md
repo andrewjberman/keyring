@@ -2638,3 +2638,5 @@ Total: 2 PASS, 131 WARN, 133 PRDs scanned.
 | 2026-05-11 | 0.6.0_AE_PartnerETL | schwab_may_ingest_0508 | comp-transform | comp-transform schema-check InflectionInsightsPanel | PASS |
 | 2026-05-11 | 0.6.0_AE_PartnerETL | schwab_may_ingest_0508 | comp-routes | comp-routes trace getFirmHeaderMetrics | PASS |
 | 2026-05-11 | 0.6.0_AE_PartnerETL | schwab_may_ingest_0508 | comp-routes | comp-routes trace getTimeseriesOverview | PASS |
+| 2026-05-11 | 0.6.0_AE_PartnerETL | schwab_may_ingest_0508 | comp-transform | comp-transform schema-check AdvisorsTab --feature unassigned_bucket | PASS |
+| 2026-05-11 | 0.6.0_AE_PartnerETL | schwab_may_ingest_0508 | comp-transform | comp-transform ternary-audit AdvisorsTab | PASS |
