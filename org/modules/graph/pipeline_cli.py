@@ -857,7 +857,17 @@ def cmd_deployed(args):
     S3_BUCKET = "opal-data-bd"
     S3_GOLD_PREFIX = "code/gold/"
     S3_SILVER_PREFIX = "code/silver/"
-    SILVER_LOCAL_DIR = _WORKSPACE / "data" / "black_diamond" / "scripts" / "silver"
+
+    # Table-driven pipeline -> local silver dir (ADHC_DSFLOW.005 INF coverage fix)
+    _PIPELINE_SILVER_DIRS = {
+        "bd-gold":   _WORKSPACE / "data" / "black_diamond" / "scripts" / "silver",
+        "bd-silver": _WORKSPACE / "data" / "black_diamond" / "scripts" / "silver",
+        "inf-gold":  _WORKSPACE / "data" / "orion" / "scripts" / "silver",
+        "inf-silver": _WORKSPACE / "data" / "orion" / "scripts" / "silver",
+    }
+    SILVER_LOCAL_DIR = _PIPELINE_SILVER_DIRS.get(
+        pipeline, _WORKSPACE / "data" / "black_diamond" / "scripts" / "silver"
+    )
 
     # INF pipeline overrides
     if pipeline in ("inf-gold", "inf-silver"):
