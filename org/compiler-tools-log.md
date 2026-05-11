@@ -2640,3 +2640,7 @@ Total: 2 PASS, 131 WARN, 133 PRDs scanned.
 | 2026-05-11 | 0.6.0_AE_PartnerETL | schwab_may_ingest_0508 | comp-routes | comp-routes trace getTimeseriesOverview | PASS |
 | 2026-05-11 | 0.6.0_AE_PartnerETL | schwab_may_ingest_0508 | comp-transform | comp-transform schema-check AdvisorsTab --feature unassigned_bucket | PASS |
 | 2026-05-11 | 0.6.0_AE_PartnerETL | schwab_may_ingest_0508 | comp-transform | comp-transform ternary-audit AdvisorsTab | PASS |
+| 2026-05-11 | 0.6.0_AE_PartnerETL | schwab_may_ingest_0508 | comp-routes | comp-routes trace inf-gold-trigger | PASS |
+| 2026-05-11 | 0.6.0_AE_PartnerETL | schwab_may_ingest_0508 | comp-iam | comp-iam service inf-gold-trigger | PASS |
+| 2026-05-11 | 0.6.0_AE_PartnerETL | schwab_may_ingest_0508 | comp-pipescript | comp-pipescript deployed inf-gold-trigger | PASS |
+| 2026-05-11 | 0.6.0_AE_PartnerETL | schwab_may_ingest_0508 | comp-iam | comp-iam service inf-gold-trigger | PASS |
