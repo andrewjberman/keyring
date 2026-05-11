@@ -33,10 +33,35 @@ _FUTURE_ANNOT_PATTERNS = [
     'data/*/scripts/bronze/*.py',
 ]
 
+# Silver canonical ID dtype enforcement (ADVI_INFNNA.ID-DTYPE-ENFORCEMENT).
+_SILVER_BUILDER_PATTERNS = ['data/*/scripts/silver/*.py']
+_COERCE_HELPER_NAMES = {'coerce_silver_ids'}
+
 
 def _path_requires_future_annotations(filepath: str) -> bool:
     p = str(filepath).replace('\\', '/')
     return any(fnmatch.fnmatch(p, pat) for pat in _FUTURE_ANNOT_PATTERNS)
+
+
+def _path_is_silver_builder(filepath: str) -> bool:
+    p = str(filepath).replace('\\', '/')
+    return any(fnmatch.fnmatch(p, pat) for pat in _SILVER_BUILDER_PATTERNS)
+
+
+def _annotation_text(node: ast.expr | None) -> str:
+    return ast.unparse(node) if node is not None else ''
+
+
+def _annotation_is_dataframe(node: ast.expr | None) -> bool:
+    return 'DataFrame' in _annotation_text(node)
+
+
+def _annotation_excludes_dataframe(node: ast.expr | None) -> bool:
+    """True only when annotation is present and clearly not a DataFrame type."""
+    if node is None:
+        return False
+    text = _annotation_text(node)
+    return bool(text) and 'DataFrame' not in text
 
 
 def _has_future_annotations_at_module_level(tree: ast.Module) -> bool:
@@ -309,6 +334,112 @@ class Scanner(ast.NodeVisitor):
         self._visit_comprehension(node, [node.key, node.value])
 
 
+class _SilverIdCoerceChecker(ast.NodeVisitor):
+    """Detect build_* functions in silver scripts that return DataFrame without coerce_silver_ids."""
+
+    def __init__(self, filepath: str):
+        self.filepath = filepath
+        self.blocks: list[str] = []
+
+    def visit_FunctionDef(self, node: ast.FunctionDef) -> None:
+        if node.name.startswith('build_'):
+            self._check(node)
+        self.generic_visit(node)
+
+    def visit_AsyncFunctionDef(self, node: ast.AsyncFunctionDef) -> None:
+        if node.name.startswith('build_'):
+            self._check(node)
+        self.generic_visit(node)
+
+    def _check(self, node: ast.FunctionDef | ast.AsyncFunctionDef) -> None:
+        # Skip functions whose annotation proves they don't return a DataFrame.
+        if _annotation_excludes_dataframe(node.returns):
+            return
+        # Skip unannotated functions that appear void (no non-None return expr).
+        if not _annotation_is_dataframe(node.returns) and not self._has_df_return(node):
+            return
+        if not self._calls_coerce(node):
+            self.blocks.append(
+                f"{self.filepath}:{node.lineno}: BLOCKED: build function '{node.name}' "
+                f"returns DataFrame but missing coerce_silver_ids() call -- "
+                f"required by ADVI_INFNNA.SILVER-ID-DTYPE-UNIFY Int64 convention. "
+                f"Add `df = coerce_silver_ids(df)` before return."
+            )
+
+    @staticmethod
+    def _calls_coerce(node: ast.FunctionDef | ast.AsyncFunctionDef) -> bool:
+        for child in ast.walk(node):
+            if isinstance(child, ast.Call):
+                func = child.func
+                if isinstance(func, ast.Name) and func.id in _COERCE_HELPER_NAMES:
+                    return True
+                if isinstance(func, ast.Attribute) and func.attr in _COERCE_HELPER_NAMES:
+                    return True
+        return False
+
+    @staticmethod
+    def _has_df_return(node: ast.FunctionDef | ast.AsyncFunctionDef) -> bool:
+        for child in ast.walk(node):
+            if isinstance(child, ast.Return) and child.value is not None:
+                if isinstance(child.value, ast.Constant) and child.value.value is None:
+                    continue
+                return True
+        return False
+
+
+def _check_silver_id_astype_regression(source: str, filepath_hint: str) -> list[str]:
+    """Return WARN strings for *_id columns cast via .astype('str'/'str')."""
+    warns: list[str] = []
+    tree = ast.parse(source)
+    for node in ast.walk(tree):
+        if not isinstance(node, ast.Call):
+            continue
+        func = node.func
+        if not (isinstance(func, ast.Attribute) and func.attr == 'astype'):
+            continue
+        if not node.args:
+            continue
+        arg = node.args[0]
+        is_str_cast = (
+            (isinstance(arg, ast.Name) and arg.id == 'str') or
+            (isinstance(arg, ast.Constant) and arg.value == 'str')
+        )
+        if not is_str_cast:
+            continue
+        obj = func.value
+        if not isinstance(obj, ast.Subscript):
+            continue
+        slice_node = obj.slice
+        key: str | None = None
+        if isinstance(slice_node, ast.Constant):
+            key = slice_node.value
+        elif isinstance(slice_node, ast.Index) and isinstance(slice_node.value, ast.Constant):  # type: ignore[attr-defined]
+            key = slice_node.value.value  # type: ignore[attr-defined]
+        if key and isinstance(key, str) and key.endswith('_id'):
+            warns.append(
+                f"{filepath_hint}:{node.lineno}: WARN: '{key}' cast via .astype(str) -- "
+                f"canonical dtype is Int64 (nullable); use coerce_silver_ids() instead. "
+                f"(ADVI_INFNNA.SILVER-ID-DTYPE-UNIFY regression check)"
+            )
+    return warns
+
+
+def check_silver_id_dtype(
+    source: str, tree: ast.Module, filepath_hint: str
+) -> tuple[list[str], list[str]]:
+    """Return (blocks, warns) for silver canonical ID dtype checks.
+
+    blocks cause exit 1; warns are informational only.
+    Only fires for files matching _SILVER_BUILDER_PATTERNS.
+    """
+    if not _path_is_silver_builder(filepath_hint):
+        return [], []
+    checker = _SilverIdCoerceChecker(filepath_hint)
+    checker.visit(tree)
+    warns = _check_silver_id_astype_regression(source, filepath_hint)
+    return checker.blocks, warns
+
+
 def scan_file(filepath, verbose=False, strict=False):
     path = Path(filepath)
     source = path.read_text(encoding="utf-8")
@@ -320,6 +451,15 @@ def scan_file(filepath, verbose=False, strict=False):
     err = check_future_annotations_source(source, str(filepath))
     if err:
         print(err, file=sys.stderr)
+        rc = 1
+
+    # Silver canonical ID dtype gate (ADVI_INFNNA.ID-DTYPE-ENFORCEMENT)
+    blocks, warns = check_silver_id_dtype(source, tree, str(filepath))
+    for msg in blocks:
+        print(msg, file=sys.stderr)
+    for msg in warns:
+        print(msg, file=sys.stderr)
+    if blocks:
         rc = 1
 
     has_star = any(
