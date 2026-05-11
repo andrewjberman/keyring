@@ -315,13 +315,15 @@ tools:
       Reference: org/mcp/inbox-watch.sh (commit 045296b18, ADHC_BASHFIX.002)
 
   comp-freshness:
-    command: "comp-freshness {chain {bd|inf} | script <id> | artifact <s3-prefix>} [--list]"
+    command: "comp-freshness {chain {bd|inf} | script <id> | artifact <s3-prefix> | ddb <table> [--pattern PK#] | all} [--list]"
     segment_scope: segment-aware
-    segment_scope_note: "Explicit pipeline arg required for chain subcommand. script + artifact subcommands work cross-pipeline (inferred from script_id prefix or s3 prefix). DDB target post-V4.015."
+    segment_scope_note: "Explicit pipeline arg required for chain subcommand. script + artifact work cross-pipeline (inferred from prefix). ddb subcommand targets DynamoDB tables. all runs S3+DDB in one pass."
     when: |
       - Before dispatching a gold chain: "is the upstream S3 data fresh enough to run?" -> comp-freshness chain bd|inf
       - About to run a specific script: "are the inputs for this script fresh?" -> comp-freshness script A_03
       - Investigating a stale-data incident: "how old is this S3 prefix right now?" -> comp-freshness artifact s3://...
+      - Checking firm-config DDB freshness (FIRM_BUCKET_MAP / opal-users-v2): comp-freshness ddb opal-users-v2 --pattern FIRM#
+      - Full workspace freshness sweep (S3 + DDB): comp-freshness all
       - Reviewing all cadence config: "what are the freshness thresholds?" -> comp-freshness --list
       - Debugging a wrong-output run: "was upstream data stale when this ran?"
       - Pre-dispatch gate in bd-gold-dispatch.sh or orion-gold-dispatch.sh (integration wired by ADHC_COMPIL.013)
@@ -330,17 +332,20 @@ tools:
       chain_inf: "comp-freshness chain inf  -- same for INF gold chain"
       script: "comp-freshness script A_03  -- check just the inputs tagged for this script in cadence config"
       artifact: "comp-freshness artifact s3://opal-data-schwab/silver/RPS/  -- check one prefix; exit 1 if FAIL"
-      list: "comp-freshness --list  -- print all entries grouped by pipeline (BD then INF) sorted by artifact_id"
-    output_format: "artifact_id | s3_key | last_modified_iso8601 | age_h | fail_at_h | STATUS (PASS/WARN/FAIL/SKIP)"
-    exit_codes: "0=PASS/WARN (WARN does not block), 1=any FAIL (ERROR-severity beyond fail_age_hours), 2=config error or AWS unreachable"
-    cost: "<30s for full chain (32 BD or 31 INF artifacts; parallel 8-thread AWS calls)"
-    config: "data/black_diamond/scripts/gold/gold_freshness_config.yaml (32 BD entries) | data/orion/scripts/gold/gold_freshness_config.yaml (31 INF entries)"
+      ddb: "comp-freshness ddb opal-users-v2 [--pattern FIRM#]  -- scan DDB table for items with PK prefix; check timestamp vs max_age_hours; PASS/WARN/FAIL; MISSING if table not found"
+      all: "comp-freshness all  -- run full S3 (bd+inf) + all DDB entries in one pass; exit 1 if any FAIL"
+      list: "comp-freshness --list  -- print all entries grouped by pipeline (BD, INF, DDB) sorted by artifact_id"
+    output_format: "artifact_id | s3_key_or_ddb_target | last_modified_iso8601 | age_h | fail_at_h | STATUS (PASS/WARN/FAIL/SKIP)"
+    exit_codes: "0=PASS/WARN (WARN does not block), 1=any FAIL (ERROR-severity beyond fail_age_hours or table MISSING), 2=config error or AWS unreachable"
+    cost: "<30s for full chain (32 BD or 31 INF artifacts; parallel 8-thread AWS calls). DDB scan: <5s per table."
+    config: "S3: data/black_diamond/scripts/gold/gold_freshness_config.yaml (32 BD) | data/orion/scripts/gold/gold_freshness_config.yaml (31 INF) | DDB: data/ddb_freshness_config.yaml (2 tables: opal-users-v2, opal-routing-config)"
+    ddb_schema_convention: "DDB items must have 'updatedAt' or 'createdAt' string attribute (ISO-8601). comp-freshness checks timestamp_attr first (config), falls back to fallback_timestamp_attr. Items without either attribute surface as WARN."
     incidents_caught: |
       2026-04-17: Schwab RPS (opal-data-schwab/silver/RPS/) 10-day stale -> $130M linear_interpolation overshoot
       2026-04-29: silver/aum_snapshot/ 8-day stale -> $89.6M AUA (vs $182.71M correct)
       Both would have been caught at dispatch time with this tool.
-    replaces: "Manual aws s3 ls + timestamp inspection before gold dispatch; post-hoc stale-data forensics"
-    note: "ADHC_COMPIL.012 (Theme G). WARN entries (partner-feed severities, weekly dims) do not block dispatch. ERROR entries beyond fail_age_hours exit 1 and block. Vendor-feed thresholds (Schwab + Orion) require Andrew ACK before removing [PENDING ANDREW ACK] flag from config. Dispatch integration is .013 scope."
+    replaces: "Manual aws s3 ls + timestamp inspection before gold dispatch; post-hoc stale-data forensics. DDB mode replaces manual DDB console inspection for firm-config drift."
+    note: "ADHC_COMPIL.012 (Theme G), DDB extension ADHC_COMPIL_V4.015 (AE 0.7, 2026-05-11). WARN entries (partner-feed severities, weekly dims) do not block dispatch. ERROR entries beyond fail_age_hours exit 1 and block. DDB MISSING (table not found) = FAIL for ERROR-severity entries. Vendor-feed thresholds (Schwab + Orion) require Andrew ACK before removing [PENDING ANDREW ACK] flag from config. Dispatch integration is .013 scope."
 
 # ============================================================================
 # INF PIPELINE DATA REGISTRY

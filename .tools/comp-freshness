@@ -1,19 +1,23 @@
 #!/usr/bin/env python3
 """
-comp-freshness -- S3 artifact freshness gate for BD and INF gold chains.
+comp-freshness -- S3 + DynamoDB artifact freshness gate for BD and INF gold chains.
 
 Detects stale upstream S3 data before a script runs against it and produces
 wrong output silently. Implements the ADHC_COMPIL v3 Theme G specification.
+DynamoDB freshness extension: ADHC_COMPIL_V4.015 (AE 0.7.0, 2026-05-11).
 
 Incidents this tool would have caught:
   2026-04-17 Schwab RPS 10-day staleness -> $130M linear_interpolation overshoot
   2026-04-29 silver/aum_snapshot 8-day staleness -> $89.6M vs $182.71M correct
 
 Usage:
-  comp-freshness chain {bd|inf}       check all chain input artifacts
+  comp-freshness chain {bd|inf}       check all S3 chain input artifacts
   comp-freshness script <id>          check inputs for a specific script
-  comp-freshness artifact <s3-prefix> check a single artifact
-  comp-freshness --list               print cadence config in human-readable form
+  comp-freshness artifact <s3-prefix> check a single S3 artifact
+  comp-freshness ddb <table>          check DynamoDB table freshness (from ddb config)
+  comp-freshness ddb <table> --pattern FIRM#   narrow to items with this PK prefix
+  comp-freshness all                  check all S3 (bd+inf) + all DDB entries in one pass
+  comp-freshness --list               print all cadence config (S3 + DDB)
   comp-freshness --help               show help
 
 Output (one line per artifact):
@@ -30,6 +34,7 @@ from __future__ import annotations
 import argparse
 import concurrent.futures
 import datetime
+import json
 import os
 import shutil
 import subprocess
@@ -47,8 +52,9 @@ except ImportError:
 # Constants
 # ---------------------------------------------------------------------------
 WORKSPACE = Path(__file__).resolve().parent.parent
-BD_CONFIG = WORKSPACE / "data" / "black_diamond" / "scripts" / "gold" / "gold_freshness_config.yaml"
+BD_CONFIG  = WORKSPACE / "data" / "black_diamond" / "scripts" / "gold" / "gold_freshness_config.yaml"
 INF_CONFIG = WORKSPACE / "data" / "orion" / "scripts" / "gold" / "gold_freshness_config.yaml"
+DDB_CONFIG = WORKSPACE / "data" / "ddb_freshness_config.yaml"
 
 CADENCE_LABELS = {
     "daily":          "daily",
@@ -252,6 +258,190 @@ def _load_configs(pipeline: Optional[str] = None) -> tuple[list[dict], list[dict
     return bd_entries, inf_entries
 
 
+def _load_ddb_config() -> list[dict]:
+    """Load DDB freshness config from data/ddb_freshness_config.yaml."""
+    if not DDB_CONFIG.exists():
+        raise ConfigError(f"DDB config not found: {DDB_CONFIG}")
+    try:
+        with open(DDB_CONFIG, encoding="utf-8") as f:
+            data = yaml.safe_load(f)
+    except yaml.YAMLError as e:
+        raise ConfigError(f"YAML parse error in {DDB_CONFIG}: {e}")
+    if not isinstance(data, list):
+        raise ConfigError(f"DDB config must be a YAML list, got {type(data).__name__}")
+    required_fields = {"table", "pk_prefix", "max_age_hours"}
+    for i, entry in enumerate(data):
+        missing = required_fields - set(entry.keys())
+        if missing:
+            raise ConfigError(f"DDB config entry {i} missing required fields: {missing}")
+    return data
+
+
+# ---------------------------------------------------------------------------
+# DynamoDB helpers
+# ---------------------------------------------------------------------------
+
+def _get_ddb_items(table: str, pk_prefix: str, sk_filter: Optional[str] = None) -> Optional[list[dict]]:
+    """Scan DDB table for items with PK beginning with pk_prefix.
+
+    Returns list of raw item dicts (DDB format), or None if table not found.
+    Raises AwsUnreachable on credential / network errors.
+    """
+    env = os.environ.copy()
+    env["AWS_EC2_METADATA_DISABLED"] = "true"
+
+    if sk_filter:
+        filter_expr = "begins_with(PK, :p) AND SK = :s"
+        expr_vals = json.dumps({":p": {"S": pk_prefix}, ":s": {"S": sk_filter}})
+    else:
+        filter_expr = "begins_with(PK, :p)"
+        expr_vals = json.dumps({":p": {"S": pk_prefix}})
+
+    cmd = _resolve_aws_cmd() + [
+        "dynamodb", "scan",
+        "--table-name", table,
+        "--filter-expression", filter_expr,
+        "--expression-attribute-values", expr_vals,
+        "--output", "json",
+    ]
+    try:
+        result = subprocess.run(cmd, capture_output=True, text=True, env=env, timeout=30)
+    except subprocess.TimeoutExpired:
+        raise AwsUnreachable(f"DynamoDB scan timed out for table {table!r}")
+    except FileNotFoundError:
+        raise AwsUnreachable("aws CLI not found in PATH")
+
+    stderr = result.stderr.strip()
+    if result.returncode != 0:
+        if "ResourceNotFoundException" in stderr or "Requested resource not found" in stderr:
+            return None  # table does not exist
+        if "Unable to locate credentials" in stderr or "NoCredentialsError" in stderr:
+            raise AwsUnreachable("AWS credentials not found")
+        if "EndpointResolutionError" in stderr or "ConnectTimeoutError" in stderr:
+            raise AwsUnreachable("AWS endpoint unreachable")
+        raise AwsUnreachable(f"DynamoDB scan failed: {stderr[:200]}")
+
+    try:
+        payload = json.loads(result.stdout)
+    except json.JSONDecodeError as e:
+        raise AwsUnreachable(f"DynamoDB scan returned invalid JSON: {e}")
+
+    return payload.get("Items", [])
+
+
+def _extract_ddb_timestamp(item: dict, primary_attr: str, fallback_attr: Optional[str]) -> Optional[datetime.datetime]:
+    """Extract a timestamp from a DDB item dict.
+
+    Tries primary_attr first, then fallback_attr.
+    DDB string values are wrapped as {"S": "..."}.
+    """
+    for attr in filter(None, [primary_attr, fallback_attr]):
+        raw = item.get(attr)
+        if raw and isinstance(raw, dict) and "S" in raw:
+            try:
+                return _parse_timestamp(raw["S"])
+            except (ValueError, AttributeError):
+                pass
+    return None
+
+
+def _check_ddb_entry(entry: dict, now: datetime.datetime) -> dict:
+    """Check one DDB config entry for freshness.
+
+    Returns result dict with artifact_id, s3_key (reused as ddb_target), last_modified,
+    age_h, fail_at_h, status, severity, cadence, notes — same shape as S3 results for
+    unified rendering by print_results.
+    """
+    table        = entry["table"]
+    pk_prefix    = entry["pk_prefix"]
+    sk_filter    = entry.get("sk_filter")  # may be None or "null"
+    ts_attr      = entry.get("timestamp_attr", "updatedAt")
+    ts_fallback  = entry.get("fallback_timestamp_attr")
+    warn_h       = entry.get("warn_age_hours")
+    fail_h       = entry["max_age_hours"]
+    severity     = entry.get("severity", "ERROR").upper()
+
+    # "null" string in YAML (unquoted null parses to Python None already, but be safe)
+    if sk_filter == "null":
+        sk_filter = None
+
+    artifact_id = f"ddb:{table}[{pk_prefix}*]"
+    ddb_target  = f"dynamodb://{table}/PK={pk_prefix}*"
+
+    base: dict = {
+        "artifact_id":   artifact_id,
+        "s3_key":        ddb_target,
+        "last_modified": None,
+        "age_h":         None,
+        "fail_at_h":     fail_h,
+        "warn_at_h":     warn_h,
+        "status":        "SKIP",
+        "severity":      severity,
+        "cadence":       "ddb",
+        "notes":         entry.get("cadence_note", ""),
+    }
+
+    try:
+        items = _get_ddb_items(table, pk_prefix, sk_filter if sk_filter else None)
+    except AwsUnreachable:
+        raise
+
+    if items is None:
+        # Table does not exist
+        base["status"] = "FAIL" if severity == "ERROR" else "WARN"
+        base["notes"]  = f"MISSING: table {table!r} not found in DynamoDB"
+        return base
+
+    if not items:
+        base["status"] = "WARN"
+        base["notes"]  = f"No items found with PK prefix {pk_prefix!r}" + (f" SK={sk_filter!r}" if sk_filter else "")
+        return base
+
+    # Find the most-recently-updated item across all matching items
+    latest: Optional[datetime.datetime] = None
+    for item in items:
+        ts = _extract_ddb_timestamp(item, ts_attr, ts_fallback)
+        if ts is not None:
+            if ts.tzinfo is None:
+                ts = ts.replace(tzinfo=datetime.timezone.utc)
+            if latest is None or ts > latest:
+                latest = ts
+
+    if latest is None:
+        base["status"] = "WARN"
+        base["notes"]  = f"No timestamp attribute ({ts_attr!r}" + (f" or {ts_fallback!r}" if ts_fallback else "") + ") found on any item"
+        return base
+
+    if now.tzinfo is None:
+        now = now.replace(tzinfo=datetime.timezone.utc)
+
+    age_h = (now - latest).total_seconds() / 3600.0
+    base["last_modified"] = latest.isoformat()
+    base["age_h"]         = round(age_h, 1)
+    base["notes"]         = f"{len(items)} item(s) checked; " + entry.get("cadence_note", "")
+
+    if age_h >= fail_h:
+        base["status"] = "FAIL" if severity == "ERROR" else "WARN"
+    elif warn_h is not None and age_h >= warn_h:
+        base["status"] = "WARN"
+    else:
+        base["status"] = "PASS"
+
+    return base
+
+
+def check_ddb_entries(entries: list[dict]) -> list[dict]:
+    """Check all DDB entries in parallel, return results in original order."""
+    now = datetime.datetime.now(tz=datetime.timezone.utc)
+    with concurrent.futures.ThreadPoolExecutor(max_workers=8) as pool:
+        futures = {pool.submit(_check_ddb_entry, e, now): i for i, e in enumerate(entries)}
+        results = [None] * len(entries)
+        for fut in concurrent.futures.as_completed(futures):
+            idx = futures[fut]
+            results[idx] = fut.result()
+    return results
+
+
 # ---------------------------------------------------------------------------
 # Freshness check logic
 # ---------------------------------------------------------------------------
@@ -436,6 +626,82 @@ def cmd_artifact(s3_prefix: str) -> int:
     return 1 if result["status"] == "FAIL" else 0
 
 
+def cmd_ddb(table: str, pattern: Optional[str] = None) -> int:
+    """Handle 'comp-freshness ddb <table> [--pattern PREFIX]'.
+
+    If table is in ddb_freshness_config.yaml, uses its thresholds.
+    If not, uses permissive defaults (168h warn, ERROR severity).
+    Pattern overrides the pk_prefix from config if supplied.
+    """
+    ddb_entries: list[dict] = []
+    if DDB_CONFIG.exists():
+        try:
+            ddb_entries = _load_ddb_config()
+        except ConfigError:
+            ddb_entries = []
+
+    # Find matching config entry for this table
+    entry = next((e for e in ddb_entries if e["table"] == table), None)
+
+    if entry is None:
+        # No config entry: permissive defaults
+        entry = {
+            "table":                   table,
+            "pk_prefix":               pattern or "",
+            "sk_filter":               None,
+            "timestamp_attr":          "updatedAt",
+            "fallback_timestamp_attr": "createdAt",
+            "warn_age_hours":          120,
+            "max_age_hours":           168,
+            "severity":                "ERROR",
+            "cadence_note":            "No config entry — using default 168h thresholds",
+            "description":             table,
+        }
+    elif pattern:
+        entry = dict(entry)
+        entry["pk_prefix"] = pattern
+
+    now = datetime.datetime.now(tz=datetime.timezone.utc)
+    result = _check_ddb_entry(entry, now)
+    print(_fmt_header())
+    print("-" * (_COL_ID + _COL_KEY + _COL_TS + _COL_AGE + _COL_FAIL + _COL_ST + 15))
+    print(_fmt_row(result))
+    if result.get("notes"):
+        print(f"  NOTE: {result['notes']}")
+    return 1 if result["status"] == "FAIL" else 0
+
+
+def cmd_all() -> int:
+    """Run all S3 (bd + inf) + all DDB entries in one pass."""
+    exit_code = 0
+
+    # S3: BD
+    if BD_CONFIG.exists():
+        bd_entries = _load_config(BD_CONFIG)
+        bd_results = check_entries(bd_entries)
+        exit_code = max(exit_code, print_results(bd_results, label="chain bd (S3)"))
+    else:
+        print(f"WARN: BD config not found: {BD_CONFIG}", file=sys.stderr)
+
+    # S3: INF
+    if INF_CONFIG.exists():
+        inf_entries = _load_config(INF_CONFIG)
+        inf_results = check_entries(inf_entries)
+        exit_code = max(exit_code, print_results(inf_results, label="chain inf (S3)"))
+    else:
+        print(f"WARN: INF config not found: {INF_CONFIG}", file=sys.stderr)
+
+    # DDB
+    if DDB_CONFIG.exists():
+        ddb_entries = _load_ddb_config()
+        ddb_results = check_ddb_entries(ddb_entries)
+        exit_code = max(exit_code, print_results(ddb_results, label="ddb freshness"))
+    else:
+        print(f"WARN: DDB config not found: {DDB_CONFIG}", file=sys.stderr)
+
+    return exit_code
+
+
 def cmd_list() -> int:
     """Print cadence config in human-readable form grouped by pipeline."""
     for label, path in (("BD", BD_CONFIG), ("INF", INF_CONFIG)):
@@ -463,6 +729,34 @@ def cmd_list() -> int:
             print("\n  -- on-demand (not checked in chain) --")
             for e in sorted(on_demand, key=lambda x: x["artifact_id"]):
                 print(f"  {e['artifact_id']:<40} {e['s3_key_prefix']}")
+
+    # DDB section
+    if DDB_CONFIG.exists():
+        try:
+            ddb_entries = _load_ddb_config()
+            print(f"\n== DDB ({len(ddb_entries)} entries) ==")
+            print(f"  Config: {DDB_CONFIG}")
+            print()
+            for e in ddb_entries:
+                pk     = e["pk_prefix"]
+                sk     = e.get("sk_filter") or "*"
+                warn   = e.get("warn_age_hours")
+                fail   = e["max_age_hours"]
+                sev    = e.get("severity", "ERROR")
+                w_str  = f"warn={warn}h" if warn else "warn=none"
+                f_str  = f"fail={fail}h"
+                ts_a   = e.get("timestamp_attr", "updatedAt")
+                ts_fb  = e.get("fallback_timestamp_attr")
+                ts_str = ts_a + (f"/{ts_fb}" if ts_fb else "")
+                label_str = f"  {e['table']:<30} PK={pk}* SK={sk:<8} ts={ts_str:<25} {w_str} {f_str} ({sev})"
+                print(label_str)
+                if e.get("cadence_note"):
+                    print(f"    NOTE: {e['cadence_note']}")
+        except ConfigError as ex:
+            print(f"\n  DDB config error: {ex}")
+    else:
+        print(f"\n-- DDB config not found: {DDB_CONFIG} --")
+
     return 0
 
 
@@ -472,7 +766,7 @@ def cmd_list() -> int:
 def main() -> int:
     parser = argparse.ArgumentParser(
         prog="comp-freshness",
-        description="S3 artifact freshness gate for BD and INF gold chains.",
+        description="S3 + DynamoDB artifact freshness gate for BD and INF gold chains.",
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog="""
 Exit codes:
@@ -483,6 +777,9 @@ Exit codes:
 Examples:
   comp-freshness chain bd
   comp-freshness chain inf
+  comp-freshness ddb opal-users-v2
+  comp-freshness ddb opal-users-v2 --pattern "FIRM#"
+  comp-freshness all
   comp-freshness artifact s3://opal-data-bd/silver/prices/canonical_prices.parquet
   comp-freshness artifact s3://opal-data-schwab/silver/RPS/
   comp-freshness --list
@@ -490,7 +787,7 @@ Examples:
     )
     sub = parser.add_subparsers(dest="command")
 
-    p_chain = sub.add_parser("chain", help="Check all chain input artifacts")
+    p_chain = sub.add_parser("chain", help="Check all S3 chain input artifacts")
     p_chain.add_argument("pipeline", choices=["bd", "inf"])
 
     p_script = sub.add_parser("script", help="Check inputs for a specific script ID")
@@ -499,7 +796,14 @@ Examples:
     p_artifact = sub.add_parser("artifact", help="Check a single S3 prefix")
     p_artifact.add_argument("s3_prefix")
 
-    parser.add_argument("--list", action="store_true", help="Print cadence config")
+    p_ddb = sub.add_parser("ddb", help="Check DynamoDB table freshness")
+    p_ddb.add_argument("table", help="DynamoDB table name (e.g. opal-users-v2)")
+    p_ddb.add_argument("--pattern", default=None,
+                       help="PK prefix pattern override (e.g. 'FIRM#'); uses config default if omitted")
+
+    sub.add_parser("all", help="Check all S3 (bd+inf) + all DDB entries in one pass")
+
+    parser.add_argument("--list", action="store_true", help="Print all cadence config (S3 + DDB)")
 
     args = parser.parse_args()
 
@@ -512,6 +816,10 @@ Examples:
             return cmd_script(args.script_id)
         if args.command == "artifact":
             return cmd_artifact(args.s3_prefix)
+        if args.command == "ddb":
+            return cmd_ddb(args.table, getattr(args, "pattern", None))
+        if args.command == "all":
+            return cmd_all()
         parser.print_help()
         return 2
     except ConfigError as e:
