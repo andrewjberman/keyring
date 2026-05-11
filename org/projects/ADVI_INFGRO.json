@@ -1,0 +1,22 @@
+{
+  "project_code": "ADVI_INFGRO",
+  "macro_code": "ADVI",
+  "name": "Inflection GRO Decomposition (AUA Growth = NNA + Return + ε)",
+  "description": "Replace 'GRO = AUA delta %' (contaminated by NNA flows) with a structurally-decomposed product: AUA_growth_$ = NNA_$ + return_$ + epsilon_$. Three first-class fields surfaced to partner-facing portal so partners can read 'how much bigger is the book' (AUA delta) AND 'how well did the advisor invest' (TWR%) AND 'what residual accounting noise is leaking' (ε). Canonical architecture: single Orion-cashflow taxonomy YAML consumed by BOTH NNA computation (existing INF_C_01) AND new TWR-derived return computation (Stage 1 silver build). One reconciliation table at platinum-tier exposes ε per (entity, period). Architectural invariant: AUA_growth = NNA + Return + ε, with ε MEASURED-not-assumed (CVO ruling: two-stage tolerance — Phase A surface ε empirically, Phase B ratchet tolerance once derivation method proven).",
+  "prds": [
+    {"path": "docs/architecture/ADVI_INFGRO_PRD.md", "label": "ADVI_INFGRO PRD v0.1", "date": "2026-05-11"}
+  ],
+  "source_brief": "Research-agent foundational survey 2026-05-11 ~20:30Z + Andrew direct on GRO product intent ('parse out how much AUA delta is from NNA and how much is from market performance — without misinterpreting accounting cashflows or residual activity as economic NNA or true market growth') + CVO architectural review with 3 sharpenings (TWR%≠return_$ direct conversion; tolerance measured-not-assumed; Q4 escalate-not-fallback).",
+  "status": "active",
+  "phase": "Phase 0 — PRD authoring starting 2026-05-11 ~20:45Z (1.0.0_SA_CTO). DS~A on Stage −1 txn_type universe audit per Andrew direct routing (DS~B busy with TO-1b queue). CTO PRD authors in parallel against hypothesized taxonomy; finalizes §2 against DS~A audit output. Three Q1-Q5 + CVO ruling settled: TWR = return rate; AUA-weighted rollup; Stage −1+0 before silver/gold/platinum; client-TWR-allocated NOT pre-approved production fallback; MAX in TWR gated on coverage + summaries empirical proofs.",
+  "blocking": "Stage −1 DS~A txn_type audit (~30min); CTO PRD authoring (~1.5h post-audit); COO decomposition + dispatch post-PRD-ship.",
+  "depends_on": ["ADVI_INFNNA"],
+  "depends_on_note": "INFGRO inherits the JOE-TXN-BACKFILL transaction classification semantics (Merge In/Out as economic flows). Cashflow taxonomy YAML must NOT re-decide what JOE-TXN-BACKFILL already encoded — INFNNA's INF_C_01 classification is the canonical source for shared txn_type → bucket mappings. INFGRO extends the taxonomy with Internal-bucket and Return-bucket classifications for txn types JOE-TXN-BACKFILL didn't address.",
+  "absorbs": [],
+  "created": "2026-05-11",
+  "pods": ["0.4"],
+  "pipeline": "inf-pipeline + portal",
+  "coo_lane": "2.0.0_SA_COO",
+  "thread_counter": 0,
+  "threads": []
+}
