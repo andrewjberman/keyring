@@ -101,6 +101,7 @@ Removed `coindesk: 75` and `cointelegraph: 70` from `calculate_quality_score`'s 
 | Tool | Command | Result |
 |------|---------|--------|
 | py_compile | `python -m py_compile` on all 3 modified Lambdas | OK: all passed |
+| python -c "yaml.safe_load(...)" | Validate `.owned-paths.yaml` syntax after carve-out | OK |
 | comp-pipescript | N/A — Lambda code, not a gold script |
 | comp-blast | N/A — Lambda function code; downstream is DynamoDB → portal publisher → S3 → portal. No new fan-out. |
 
@@ -110,6 +111,7 @@ Removed `coindesk: 75` and `cointelegraph: 70` from `calculate_quality_score`'s 
 
 | File | Change |
 |------|--------|
+| `.owned-paths.yaml` | Added `POD1_OR_AE` lane (parallel to `POD4_OR_AE`); path overrides for `infra/aws/lambda/news_*/**`, `keyword_*/**`, `semantic-news-*/**`, `v2_portal/01_market_overview/**` route to it |
 | `infra/aws/lambda/news_ingestion_scheduler/lambda_function.py` | Removed 5 crypto RSS feeds from `RSS_FEEDS` |
 | `infra/aws/lambda/news_layer3_curation/lambda_function.py` | Rebalanced composite weights (0.45 recency / 0.30 articles / 0.25 sentiment); `STALE_MARGIN` 0.10→0.30; `PREFILTER_RECENCY_FLOOR` + `BLOCKED_SOURCES` constants + filter logic; updated docstrings + diagnostic log lines |
 | `infra/aws/lambda/news_trending_analysis/lambda_function.py` | Removed crypto entries from `calculate_quality_score.quality_map` |
@@ -121,6 +123,39 @@ Removed `coindesk: 75` and `cointelegraph: 70` from `calculate_quality_score`'s 
 | Brief | Path | Audience |
 |-------|------|----------|
 | DevOps deploy instructions | `docs/briefs/devops-brief-mkov-trending-recency-crypto-cut.md` | 0.1.0_DT_MarketIntelligence |
+
+---
+
+## Commit Sequence
+
+| Commit | Author | Description |
+|--------|--------|-------------|
+| `e4e4d9789` | 0.1.0_DS_MarketIntelligence | chore(owned-paths): carve out POD1_OR_AE lane for news-pipeline + market-overview Lambdas |
+| `c72c9368a` | 0.1.0_DS_MarketIntelligence | fix(news): recency-dominant trending + cut crypto sources |
+
+---
+
+## Lane Carve-Out (unplanned, Andrew-authorized)
+
+First commit attempt was blocked by the owned-paths pre-commit hook — `infra/aws/lambda/**` defaulted to `CLOUD_OPS_OR_ETL` (AE-only) per the 2026-04-30 phase-2 block-mode flip. README's "DS commits Lambda code locally" predates that hook flip; the structural gate now wins (Andrew explicitly chose structural over cultural per `feedback_structural_commit_hygiene.md`).
+
+Surfaced to Andrew with three options (MCP AE / one-time --force / durable lane carve-out). Andrew chose carve-out. Added `POD1_OR_AE` (DE/DS/DT MarketIntelligence + AE 0.5/0.6/0.6.1/0.7) parallel to existing `POD4_OR_AE`. Path overrides cover the full Pod 1 Lambda surface area (news_*, keyword_*, semantic-news-*, market-overview), not just the three files this session touched — avoids the same block repeating next session.
+
+The `.owned-paths.yaml` edit itself required `GIT_COMMIT_AUTHOR_OVERRIDE=ANY_EXEC_OR_AE` since DS isn't in the YAML's own lane. Logged to `org/git-author-override-audit.log` as `OVERRIDE` (not `FORCE-BYPASS`). After the carve-out landed, the Lambda fix committed cleanly under POD1_OR_AE — no further overrides needed.
+
+### Audit trail
+
+```
+2026-05-12T21:57:46Z BLOCK         0.1.0_DS_MarketIntelligence  5 files  (initial Lambda+brief+log attempt — pre-carve-out)
+2026-05-12T22:02:19Z OVERRIDE      0.1.0_DS_MarketIntelligence  1 file   (--author-override ANY_EXEC_OR_AE for .owned-paths.yaml)
+2026-05-12T22:02:42Z PASS          0.1.0_DS_MarketIntelligence  5 files  (Lambda fix — clean under new POD1_OR_AE)
+```
+
+---
+
+## RAVC Outbound
+
+Sent `RAVC-Request` to `0.1.0_DT_MarketIntelligence` for `news-v2.9.8` deploy. Brief path included. Awaiting RAVC-Acknowledge.
 
 ---
 
