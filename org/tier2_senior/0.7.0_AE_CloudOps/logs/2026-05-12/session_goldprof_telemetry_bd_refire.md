@@ -112,13 +112,25 @@ DS~D will RAVC2 to COO + DE + Andrew when chain lands.
 
 ---
 
+## BD Chain #20 — Completion
+
+**Completed:** 20:02:43Z (log uploaded) | **Instance:** stopped (auto-shutdown)
+**Runtime:** ~73 min (18:49Z → 20:02Z) | **Log size:** 107,687,852B (~107.7MB, largest incremental on record — consistent with SCHWAB-BUCKDR expanded dataset)
+**Log key:** `s3://opal-data-bd/logs/gold-layer/gold_incremental_2026-05-12_20260512_200242.log`
+
+Chain ran successfully past D_00 (prior failure point). DS~D RAVC2 to COO + DE + Andrew pending at session close — DS~D likely EOD; expected next session.
+
+**AE inbox watcher note:** Watcher PID 520217 died ~16:30Z local (unknown cause — likely session GC). Restarted at 16:30:55Z as PID 560941 via `bash /c/Users/AndrewBerman/Desktop/ajb_workspace/org/mcp/inbox-watch.sh 0.7.0_AE_CloudOps`. No messages missed (inbox confirmed empty at restart time).
+
+---
+
 ## Open Items
 
 | Item | Status |
 |------|--------|
-| BD chain #20 | Running — DS~D owns RAVC2 on completion |
+| BD chain #20 DS~D RAVC2 | Pending — chain complete, DS~D verifying outcomes (gap_abs + fee_earning_account_count) |
 | gold-cd/gold-d sentinel write coverage | AM-scope, not blocking |
 | opal-telemetry.sh wiring (run-gold-layer.sh calls) | Separate TO, low priority |
 | INFRUNNERPARITY Phase 2 absorption | Pending COO routing |
 
-## Session Status: COMPLETE — gold_prof v2.0 deployed to BD+INF; INF dispatcher wired; BD chain #20 re-fired
+## Session Status: COMPLETE — gold_prof v2.0 deployed to BD+INF; INF dispatcher wired; BD chain #20 complete (exit=0, 73 min); DS~D RAVC2 pending
