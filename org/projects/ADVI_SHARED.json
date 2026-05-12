@@ -11,8 +11,8 @@
     }
   ],
   "status": "active",
-  "phase": "Phase 0: PRD complete, COO decomposition pending",
-  "blocking": "COO task order issuance",
+  "phase": "Phase 0 DISPATCHED 2026-05-12 ~22:40Z. SHARED.000 audit TO authored at org/tier2_senior/0.4.0_DE_ClientPlatform/task_orders/ADVI_SHARED.000.de-multi-tenant-audit-matrix.md (DE 0.4, ~1d, dispatch_held=false — independent of Andrew Q2/Q5). Phase 1 SHARED.001-.008 + Phase 2 SHARED.009-.011 + Phase 3 SHARED.012-.013 NOT YET AUTHORED — awaiting (a) Andrew Q2 ruling (asset class taxonomy authority: portal-only vs DS-mirrored), (b) Andrew Q5 ruling (sequencing: split-Phase-1 vs full-Phase-1-first, with concurrent-overlap implications for ADVI_INFTGT P1/P2 + ADVI_INFGRO Stage 1 + FIRMSEP.10 Cottonwood), (c) Phase 0 audit completion (Phase 1 TOs reference SHARED_AUDIT.md verbatim). PRD v0.1 SHIPPED 2026-05-12 (1.0.0_SA_CTO `54c1ea270`).",
+  "blocking": "(1) Phase 0 audit SHARED.000 in flight (DE 0.4, ~1d ETA). (2) Andrew Q2 ruling on asset class taxonomy authority. (3) Andrew Q5 ruling on sequencing (split-Phase-1 with INFTGT/INFGRO ship-through-old-architecture interleave vs full-Phase-1-first lock-in).",
   "created": "2026-05-12",
   "pods": ["0.4"],
   "pipeline": "portal",
