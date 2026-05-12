@@ -120,6 +120,97 @@ so it does not interfere with future tracked instances.
 
 ---
 
+## Failure mode: "143" / "killed" symptom — bare-path zombie short-circuit (2026-05-12)
+
+**Empirical context (Andrew, 2026-05-12):** The agent observed a tracked-launch
+sequence where every `inbox-watch` Bash-tool task surfaced exit code 143, with
+no actual tracked watcher coming up. Root cause was an auto-respawn zombie from
+a prior session at PPID=1 (`PID 443027`, bare-path cmdline). After killing the
+zombie, a clean canonical-form launch (`PID 445589`, full absolute path)
+succeeded and remained the live owner.
+
+### Mechanism (step-by-step)
+
+1. **Bare-path entry.** A prior session launched the watcher as
+   `bash org/mcp/inbox-watch.sh <serial>`. The eval-wrapper around the launch
+   reflects the relative path in its cmdline.
+2. **Auto-respawn propagates `$0`.** On message delivery, Fix 3 spawns:
+   ```bash
+   ( sleep 1; exec bash "$0" "$SERIAL" >> "/tmp/inbox-watch-${SAFE_SERIAL}.log" 2>&1 ) &
+   disown $! 2>/dev/null || true
+   exit 0
+   ```
+   `$0` is whatever the parent was invoked with — `org/mcp/inbox-watch.sh`
+   in the bare-path case. The detached child inherits the bare-path cmdline.
+3. **Session-death promotion to PPID=1.** When the parent Claude Code session
+   exits, the disowned child is re-parented to PID 1 by the OS. It is now an
+   untracked watcher: still polling and still able to win the atomic `mv` race
+   on inbox files, but its stdout is disconnected from the Claude Code task
+   tracker — no message it delivers will fire an interrupt.
+4. **Next session's guard short-circuits.** The new session's tracked launch
+   runs the single-watcher guard. `pgrep -f "inbox-watch\.sh <serial>$"` (or
+   the `ps -ef | awk` fallback) returns the zombie's PID. `kill -0 $pid`
+   succeeds. The guard logs `"inbox-watch already running for <serial>"` and
+   exits 0.
+5. **Claude Code surfaces guard-exit as 143.** The Bash-tool background task
+   tracker wraps the launch and terminates the wrapper process when the inner
+   script exits early on the guard-exit-0 path. The tracker reports this
+   wrapper termination as exit **143** in the task output — visually
+   indistinguishable from a real `SIGTERM` of the watcher.
+
+### The misleading symptom
+
+Reading the task output as "Claude Code killed my watcher" leads the agent to
+retry the launch, which short-circuits again, producing a 143-retry loop. The
+correct interpretation is: a zombie still owns the watch slot; new launches
+will keep short-circuiting until the zombie is killed.
+
+### Remediation
+
+```bash
+# 1. Enumerate any process matching the script for this serial.
+ps -ef | grep "inbox-watch\.sh <serial>$" | grep -v eval | grep -v grep
+
+# 2. Zombies are PPID=1 with bare-path cmdline (or unattached to a current
+#    Claude Code task tracker). Distinguish them from your own current
+#    eval-wrapper launch (PPID = the task tracker, not 1).
+kill <zombie_pid>
+
+# 3. Relaunch via the canonical form (PATH wrapper) — Bash tool, run_in_background: true.
+inbox-watch <serial>
+```
+
+### Canonical launch form (forward-only)
+
+The `.tools/inbox-watch` PATH wrapper resolves `$WORKSPACE` via
+`cd "$(dirname "$0")/.." && pwd` and exec's the absolute-path form
+internally:
+
+```bash
+WORKSPACE="$(cd "$(dirname "$0")/.." && pwd)"
+exec bash "$WORKSPACE/org/mcp/inbox-watch.sh" "$@"
+```
+
+Result: `$0` inside `inbox-watch.sh` is always the absolute path. Auto-respawn
+children inherit the absolute path, so any future zombie is identifiable by
+its consistent canonical cmdline rather than the ambiguous bare-path form.
+
+**Mandate (now codified in `org/XXX.md` Step 1b section C):**
+
+| Form | Verdict |
+|------|---------|
+| `inbox-watch <serial>` (PATH wrapper) | **Canonical — preferred** |
+| `bash /c/Users/AndrewBerman/Desktop/ajb_workspace/org/mcp/inbox-watch.sh <serial>` | Acceptable fallback |
+| `bash org/mcp/inbox-watch.sh <serial>` (relative path) | **BANNED** — bare-path zombie entry point |
+| `bash org/mcp/inbox-watch.sh <serial> &` (shell `&`) | **BANNED** — untracked, deaf (pre-existing rule) |
+
+The bare-path ban does NOT eliminate auto-respawn zombies altogether (Fix 3's
+detach behavior is unchanged and still required for cross-delivery coverage).
+It eliminates the *ambiguity* between zombies and intentional launches, so
+the diagnostic + `kill-orphans --stale --force` cleanup path stays reliable.
+
+---
+
 ## Respawn policy divergence (intentional)
 
 | Script | Policy | Rationale |

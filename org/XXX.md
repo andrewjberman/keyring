@@ -89,6 +89,22 @@ delivery = one relaunch.** Agents MUST relaunch the watcher via the Bash tool
 disconnected from the Claude Code task tracker, so messages were silently
 swallowed when an orphan won the atomic `mv` race).
 
+**Canonical launch form (NON-NEGOTIABLE — 2026-05-12):** use one of these two
+forms, never any other:
+
+| Form | Example | When |
+|------|---------|------|
+| **PATH wrapper (preferred)** | `inbox-watch {your_serial}` | Default. `.tools/inbox-watch` resolves `$WORKSPACE` via `cd … && pwd` and exec's the absolute-path form internally. |
+| **Absolute path (fallback)** | `bash /c/Users/AndrewBerman/Desktop/ajb_workspace/org/mcp/inbox-watch.sh {your_serial}` | Only if `.tools/inbox-watch` is unreachable from your `$PATH`. |
+
+**BANNED: relative-path form `bash org/mcp/inbox-watch.sh {your_serial}`.** It
+*works* for the launch itself, but the inbox-watch.sh auto-respawn at delivery
+(`exec bash "$0" "$SERIAL"` — see `org/mcp/INBOX_WATCH_DESIGN.md` Fix 3)
+propagates `$0` verbatim into a detached child. A bare-path launch therefore
+produces bare-path zombies that survive session death (PPID=1) and block the
+*next* session's tracked launch via the single-watcher guard — see the
+"143 / killed" failure-mode block below.
+
 **BANNED: `bash org/mcp/inbox-watch.sh {serial} &`** — bare shell `&` looks
 identical but is completely broken. The task-notification that interrupts the
 agent ONLY fires for processes launched via the Bash tool with
@@ -119,6 +135,54 @@ are ALWAYS WRONG, even when they look like they are running fine.
 Andrew empirical 2026-05-05: "the respawn auto-launched at 334721. I need to
 kill that too, then immediately launch a tracked watcher via run_in_background
 so it shows in the session." This rule formalizes that pattern.
+
+**Failure mode: "143" / "killed" symptom in task output — bare-path zombie
+short-circuit (added 2026-05-12, Andrew empirical):**
+
+If a Bash-tool `inbox-watch` launch surfaces as exit code **143** in the task
+output *and* the prior tracked launch is gone, the cause is almost always a
+stale bare-path zombie from a prior session — not a real kill. Mechanism:
+
+1. A prior session launched `bash org/mcp/inbox-watch.sh <serial>` (bare path).
+2. On message delivery the script's auto-respawn (`exec bash "$0" "$SERIAL"`)
+   detached a child carrying the bare path through `$0` into the new cmdline.
+3. The parent session ended; the child was re-parented to PID 1 and kept
+   polling — an untracked, deaf, but technically alive watcher.
+4. The new session's tracked launch hits the single-watcher guard. The guard
+   finds the PPID=1 zombie alive (`kill -0` succeeds), declares "already
+   running," and exits 0.
+5. Claude Code's background task runner terminates the wrapper process when
+   the inner script exits early through the guard short-circuit path, and
+   surfaces that termination as exit **143** in the Bash tool's task output.
+
+The reading is misleading: it *looks* like "Claude Code killed my watcher,"
+but actually the guard short-circuited because a zombie still owns the watch
+slot. There is no live tracked watcher; the zombie is silently swallowing
+deliveries.
+
+**Diagnostic + remediation:**
+
+```bash
+# 1. Find any zombie for this serial (PPID=1 + bare-path cmdline is the tell)
+ps -ef | grep "inbox-watch\.sh <serial>$" | grep -v eval | grep -v grep
+# 2. Kill the zombie PID
+kill <pid>
+# 3. Relaunch via the PATH wrapper (canonical form — Bash tool, run_in_background: true)
+inbox-watch <serial>
+```
+
+If multiple zombies + the eval-wrapper of your own current launch show up,
+filter on PPID=1 to isolate the zombies — the wrapper's PPID is the Claude
+Code task tracker (non-1).
+
+**Why the canonical form prevents recurrence.** When all launches use the
+PATH wrapper or absolute-path form, every `$0` is the absolute path, so
+every auto-respawn child carries the absolute path forward too. Zombies
+still get created on session death (the auto-respawn behavior itself is
+unchanged), but they are visually unambiguous and can be batch-cleaned via
+the existing `kill-orphans --stale --force` path. The bare-path form is what
+makes them indistinguishable from intentional launches and what lets them
+accumulate silently.
 
 **BANNED for `feature_clb`-scope agents (the COMP_LEARNS team —
 `1.1.0_SA_CTO`, `1.1.0`/`1.2.0`/`1.3.0`/`1.4.0_DS_CompLearns`,
