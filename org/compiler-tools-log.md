@@ -3408,3 +3408,15 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-05-12 | 0.4.2_RD_AdvisorIntelligence | (no-TO) | comp-blast | comp-blast getPlatinumFirmMixSummary | PASS |
 | 2026-05-12 | 0.4.2_RD_AdvisorIntelligence | (no-TO) | comp-transform | comp-transform schema-check ClientsTab | PASS |
 | 2026-05-12 | 0.4.2_RD_AdvisorIntelligence | (no-TO) | comp-transform | comp-transform fields BooksTab | FAIL |
+| 2026-05-12 | 0.1.0_DS_MarketIntelligence | (no-TO) | comp-build | comp-build | PASS |
+| 2026-05-12 | 0.1.0_DS_MarketIntelligence | (no-TO) | comp-blast | comp-blast useTenantLayout | PASS |
+| 2026-05-12 | 0.1.0_DS_MarketIntelligence | (no-TO) | comp-blast | comp-blast AdvisorIntelligence | PASS |
+| 2026-05-12 | 0.1.0_DS_MarketIntelligence | (no-TO) | comp-cache | comp-cache collisions | PASS |
+| 2026-05-12 | 0.1.0_DS_MarketIntelligence | (no-TO) | comp-transform | comp-transform schema-check AdvisorIntelligence | FAIL |
+| 2026-05-12 | 0.1.0_DS_MarketIntelligence | (no-TO) | comp-transform | comp-transform schema-check ClientsTab | PASS |
+| 2026-05-12 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-build | comp-build | PASS |
+| 2026-05-12 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-cache | comp-cache collisions | PASS |
+| 2026-05-12 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-transform | comp-transform schema-check InflectionAdvisorIntelligence | FAIL |
+| 2026-05-12 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-transform | comp-transform schema-check FortyNineFinancialAdvisorIntelligence | FAIL |
+| 2026-05-12 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript deployed INF_D_04.client_portal_summary.py | PASS |
+| 2026-05-12 | 0.6.1_AE_PartnerETL | ADVI_INFLEC.GROUPD.chain22 | comp-pipescript | comp-pipescript deployed INF_D_00c | PASS |
