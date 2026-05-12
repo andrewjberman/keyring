@@ -163,7 +163,7 @@ CTO dispositions delivered to COO + DS~C:
 | Item | Disposition | TO-000b action |
 |---|---|---|
 | Item 1 (Starting Value 896 rows) | RATIFIED-APPLY (Andrew global GO + DS~C 5-signal empirical) | APPLY bucket NNA → Internal |
-| Item 4a/4b (Dividend Paid from Cash + Income Paid 101+101 rows ~$34K) | INHERIT EXCLUDE (PRD §2.3 hypothesis resolved against by empirical INF_C_01 cross-check; Phase A ε will measure if material) | NO-OP on bucket; update `prd_proposed_bucket` documentation |
+| Item 4a/4b (Dividend Paid from Cash + Income Paid 101+101 rows; **empirically ~$343/year total** per DS~C Stage 0 YAML impact_estimate — earlier $34K figure in COO dispatch + my session log was authoring imprecision) | INHERIT EXCLUDE (PRD §2.3 hypothesis resolved against by empirical INF_C_01 cross-check; Phase A ε will measure if material) | NO-OP on bucket; update `prd_proposed_bucket` documentation |
 | Tax-withheld ($2.33M, 2,561 rows) | RATIFIED-APPLY NNA → Return (PRD §2.3 Bucket C; Andrew "parse market performance from NNA" intent aligned) | APPLY bucket flip |
 | Other-variants (~40 rows ~$3K) | RATIFIED-APPLY collapse to NNA per §2 structural note 2 | APPLY |
 | Schema (compound → type_desc-only) | Stage 0 keeps compound; TO-000b flips post Item 2+3 | APPLY post-data-changes |
