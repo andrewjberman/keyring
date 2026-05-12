@@ -3335,3 +3335,76 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-05-11 | 0.4.0_DS_ClientPlatform~B | (no-TO) | comp-pipescript | comp-pipescript io INF_D_00 | PASS |
 | 2026-05-11 | 0.4.0_DS_ClientPlatform~B | (no-TO) | comp-pipescript | comp-pipescript io INF_D_08 | PASS |
+| 2026-05-11 | 0.4.0_DS_ClientPlatform~B | (no-TO) | comp-pipescript | comp-pipescript postdeps INF_D_04 | PASS |
+| 2026-05-11 | 0.4.0_DS_ClientPlatform~B | (no-TO) | comp-trace | comp-trace nna_geo --direction both | PASS |
+| 2026-05-11 | 0.4.0_DS_ClientPlatform~B | (no-TO) | comp-platinum | comp-platinum reverse dashboard | PASS |
+| 2026-05-11 | 0.4.0_DS_ClientPlatform~C | ADVI_INFTGT.TO-8 | comp-pipescript | comp-pipescript io INF_D_05 | PASS |
+| 2026-05-11 | 0.4.0_DS_ClientPlatform~D | (no-TO) | comp-pipescript | comp-pipescript io INF_D_06 | PASS |
+| 2026-05-11 | 0.4.0_DS_ClientPlatform~D | ADVI_INFGRO.PHASE1 | comp-pipescript | comp-pipescript io INF_C_00 | PASS |
+| 2026-05-11 | 0.4.0_DS_ClientPlatform~D | ADVI_INFGRO.PHASE1 | comp-pipescript | comp-pipescript io INF_C_02 | PASS |
+| 2026-05-11 | 0.4.0_DS_ClientPlatform~D | ADVI_INFGRO.PHASE1 | comp-pipescript | comp-pipescript io INF_C_03 | PASS |
+| 2026-05-11 | 0.4.0_DS_ClientPlatform~D | ADVI_INFGRO.PHASE1 | comp-pipescript | comp-pipescript io INF_D_00c | FAIL |
+| 2026-05-11 | 0.4.0_DS_ClientPlatform~D | ADVI_INFGRO.PHASE1 | comp-pipescript | comp-pipescript io INF_D_00c.portal_leaderboard | FAIL |
+| 2026-05-11 | 0.4.0_DS_ClientPlatform~D | ADVI_INFGRO.PHASE1 | comp-platinum | comp-platinum reverse leaderboard | PASS |
+| 2026-05-11 | 0.4.0_DS_ClientPlatform~D | ADVI_INFGRO.PHASE1 | comp-blast | comp-blast gold/positions_cube | PASS |
+| 2026-05-11 | 0.4.0_DS_ClientPlatform~A | ADVI_INFTGT.TO-7 | comp-pipescript | comp-pipescript io INF_D_07 | PASS |
+| 2026-05-11 | 0.4.0_DS_ClientPlatform~A | ADVI_INFTGT.TO-7 | comp-trace | comp-trace holdings --direction both | PASS |
+| 2026-05-11 | 0.4.0_DS_ClientPlatform~D | ADVI_INFGRO.STAGE_NEG1 | comp-pipescript | comp-pipescript io INF_C_00 | PASS |
+| 2026-05-11 | 0.4.0_DS_ClientPlatform~D | ADVI_INFGRO.PHASE1_5_DEEP_PROBE | comp-blast | comp-blast canonical_performance | PASS |
+| 2026-05-11 | 0.4.0_DS_ClientPlatform~D | ADVI_INFGRO.PHASE1_5_DEEP_PROBE | comp-pipescript | comp-pipescript deployed INF_C_00 | PASS |
+| 2026-05-11 | 0.4.0_DS_ClientPlatform~D | ADVI_INFGRO.PHASE1_5_DEEP_PROBE | comp-pipescript | comp-pipescript deployed INF_D_07 | PASS |
+| 2026-05-11 | 0.4.0_DS_ClientPlatform~C | ADVI_INFGRO.TO-000 | comp-blast | comp-blast holdings_lots | PASS |
+| 2026-05-11 | 0.4.0_DS_ClientPlatform~C | ADVI_INFGRO.TO-000 | comp-blast | comp-blast gold/timeseries/holdings_lots | PASS |
+| 2026-05-11 | 0.4.0_DS_ClientPlatform~C | ADVI_INFGRO.TO-000 | comp-pipescript | comp-pipescript io INF_D_08 | PASS |
+| 2026-05-11 | 0.4.0_DS_ClientPlatform~C | ADVI_INFGRO.TO-000 | comp-trace | comp-trace nna_geo --direction both | PASS |
+| 2026-05-11 | 0.4.0_DS_ClientPlatform~C | ADVI_INFGRO.TO-000 | comp-pipescript | comp-pipescript io INF_D_00d | FAIL |
+| 2026-05-11 | 0.4.0_DS_ClientPlatform~C | ADVI_INFGRO.TO-000 | comp-trace | comp-trace INF_D_00d.cumulative_chart:build_nna_geo_view --direction both | PASS |
+| 2026-05-11 | 0.4.0_DS_ClientPlatform~C | ADVI_INFGRO.TO-000 | comp-pipescript | comp-pipescript io INF_D_00 | PASS |
+| 2026-05-11 | 0.4.0_DS_ClientPlatform~C | ADVI_INFGRO.TO-000 | comp-platinum | comp-platinum reverse cumulative_chart | PASS |
+| 2026-05-11 | 0.4.0_DS_ClientPlatform~C | ADVI_INFGRO.TO-000 | comp-blast | comp-blast canonical_nna | PASS |
+| 2026-05-11 | 0.4.0_DS_ClientPlatform~C | ADVI_INFGRO.TO-000 | comp-blast | comp-blast INF_C_01 | PASS |
+| 2026-05-11 | 0.4.0_DS_ClientPlatform~C | ADVI_INFGRO.TO-000 | comp-blast | comp-blast INF_C_01.canonical_nna | PASS |
+| 2026-05-11 | 0.4.0_DS_ClientPlatform~C | ADVI_INFGRO.TO-000 | comp-validate | comp-validate INF_D_00 --artifact /tmp/header_metrics_validate.json | FAIL |
+| 2026-05-11 | 0.4.0_DS_ClientPlatform~C | ADVI_INFGRO.TO-000 | comp-validate | comp-validate --help | PASS |
+| 2026-05-11 | 0.4.0_DS_ClientPlatform~C | ADVI_INFGRO.TO-000 | comp-validate | comp-validate --list --lane inf | PASS |
+| 2026-05-11 | 0.4.0_DS_ClientPlatform~C | ADVI_INFGRO.TO-000 | comp-validate | comp-validate INF_D_00c --artifact /tmp/leaderboard_validate.json --lane inf | FAIL |
+| 2026-05-11 | 0.4.0_DS_ClientPlatform~C | ADVI_INFGRO.TO-000 | comp-validate | comp-validate INF_09 --artifact /tmp/pa_validate.json --lane inf | PASS |
+| 2026-05-11 | 0.4.0_DS_ClientPlatform~C | ADVI_INFGRO.TO-000 | comp-blast | comp-blast INF_D_00d.cumulative_chart:build_geo_view | PASS |
+| 2026-05-11 | 0.4.0_DS_ClientPlatform~C | ADVI_INFGRO.TO-000 | comp-pipescript | comp-pipescript io INF_D_04 | PASS |
+| 2026-05-11 | 0.4.0_DS_ClientPlatform~C | ADVI_INFGRO.TO-000 | comp-pipescript | comp-pipescript postdeps INF_D_04 | PASS |
+| 2026-05-11 | 0.4.0_DS_ClientPlatform~C | ADVI_INFGRO.TO-000 | comp-pipescript | comp-pipescript io INF_D_00 | PASS |
+| 2026-05-11 | 0.4.0_DS_ClientPlatform~C | ADVI_INFGRO.TO-000 | comp-pipescript | comp-pipescript io INF_D_00b | FAIL |
+| 2026-05-11 | 0.4.0_DS_ClientPlatform~C | ADVI_INFGRO.TO-000 | comp-pipescript | comp-pipescript io INF_D_00c | FAIL |
+| 2026-05-11 | 0.6.1_AE_PartnerETL | ADVI_INFGRO.AE-TF-APPLY-BILLPERF | comp-blast | comp-blast INF_C_02 | PASS |
+| 2026-05-11 | 0.6.1_AE_PartnerETL | ADVI_INFGRO.AE-TF-APPLY-BILLPERF | comp-blast | comp-blast INF_D_00c | PASS |
+| 2026-05-11 | 0.6.1_AE_PartnerETL | ADVI_INFGRO.AE-TF-APPLY-BILLPERF | comp-pipescript | comp-pipescript overlap INF_C_02 INF_C_01 | PASS |
+| 2026-05-11 | 0.6.1_AE_PartnerETL | ADVI_INFGRO.AE-TF-APPLY-BILLPERF | comp-transform | comp-transform schema-check AdvisorsTab --feature gro_decomposition | PASS |
+| 2026-05-11 | 0.6.1_AE_PartnerETL | ADVI_INFGRO.AE-TF-APPLY-BILLPERF | comp-pipescript | comp-pipescript io INF_C_02 | PASS |
+| 2026-05-12 | 0.4.2_RD_AdvisorIntelligence | (no-TO) | comp-routes | comp-routes trace getPartnerAnalytics | PASS |
+| 2026-05-12 | 0.4.2_RD_AdvisorIntelligence | (no-TO) | comp-pipescript | comp-pipescript io partner_analytics | FAIL |
+| 2026-05-12 | 0.6.1_AE_PartnerETL | (no-TO) | comp-pipescript | comp-pipescript deployed INF_D_04 | PASS |
+| 2026-05-12 | 0.6.1_AE_PartnerETL | (no-TO) | comp-pipescript | comp-pipescript deployed INF_D_04.client_portal_summary | PASS |
+| 2026-05-12 | 1.0.0_SA_CTO | (no-TO) | comp-iam | comp-iam service inf-portal-publisher | PASS |
+| 2026-05-12 | 0.4.0_DS_ClientPlatform~D | BRIEF9_DE_49F_FEE_ACCOUNT_COUNTS_AND_92M_GAP | comp-pipescript | comp-pipescript io D_00 | PASS |
+| 2026-05-12 | 0.4.0_DS_ClientPlatform~D | BRIEF9_DE_49F_FEE_ACCOUNT_COUNTS_AND_92M_GAP | comp-pipescript | comp-pipescript io D_04 | PASS |
+| 2026-05-12 | 0.4.0_DS_ClientPlatform~D | BRIEF9_DE_49F_FEE_ACCOUNT_COUNTS_AND_92M_GAP | comp-pipescript | comp-pipescript deployed D_00 | PASS |
+| 2026-05-12 | 0.4.0_DS_ClientPlatform~D | BRIEF9_DE_49F_FEE_ACCOUNT_COUNTS_AND_92M_GAP | comp-pipescript | comp-pipescript deployed D_04 | PASS |
+| 2026-05-12 | 0.4.0_DS_ClientPlatform~C | (no-TO) | comp-pipescript | comp-pipescript deployed INF_D_04 | PASS |
+| 2026-05-12 | 0.4.0_DS_ClientPlatform~B | (no-TO) | comp-pipescript | comp-pipescript io C_03 | PASS |
+| 2026-05-12 | 0.4.0_DS_ClientPlatform~B | (no-TO) | comp-pipescript | comp-pipescript deployed INF_C_07.advisor_attribution.py | PASS |
+| 2026-05-12 | 0.6.0_AE_PartnerETL | (no-TO) | comp-pipescript | comp-pipescript deployed convert_schwab_rps_to_parquet convert_schwab_acc_to_parquet co... | FAIL |
+| 2026-05-12 | 0.6.0_AE_PartnerETL | (no-TO) | comp-pipescript | comp-pipescript deployed convert_schwab_rps_to_parquet | PASS |
+| 2026-05-12 | 0.6.0_AE_PartnerETL | (no-TO) | comp-pipescript | comp-pipescript deployed convert_schwab_acc_to_parquet | PASS |
+| 2026-05-12 | 0.6.0_AE_PartnerETL | (no-TO) | comp-pipescript | comp-pipescript deployed convert_schwab_trn_to_parquet | PASS |
+| 2026-05-12 | 0.6.0_AE_PartnerETL | (no-TO) | comp-pipescript | comp-pipescript deployed convert_schwab_uln_to_silver | PASS |
+| 2026-05-12 | 0.6.0_AE_PartnerETL | (no-TO) | comp-pipescript | comp-pipescript deployed convert_schwab_trn_to_nna_silver | PASS |
+| 2026-05-12 | 0.6.0_AE_PartnerETL | (no-TO) | comp-pipescript | comp-pipescript deployed build_schwab_bd_account_xref | PASS |
+| 2026-05-12 | 0.6.0_AE_PartnerETL | (no-TO) | comp-pipescript | comp-pipescript deployed convert_schwab_rps_to_silver | PASS |
+| 2026-05-12 | 0.6.0_AE_PartnerETL | (no-TO) | comp-pipescript | comp-pipescript deployed A_03 | PASS |
+| 2026-05-12 | 0.6.0_AE_PartnerETL | (no-TO) | comp-pipescript | comp-pipescript deployed B_01 | PASS |
+| 2026-05-12 | 0.6.0_AE_PartnerETL | (no-TO) | comp-pipescript | comp-pipescript deployed schwab_flows | PASS |
+| 2026-05-12 | 0.4.2_RD_AdvisorIntelligence | (no-TO) | comp-transform | comp-transform schema-check BooksTab | FAIL |
+| 2026-05-12 | 0.4.2_RD_AdvisorIntelligence | (no-TO) | comp-blast | comp-blast getPlatinumFirmDashboard | PASS |
+| 2026-05-12 | 0.4.2_RD_AdvisorIntelligence | (no-TO) | comp-blast | comp-blast getPlatinumFirmMixSummary | PASS |
+| 2026-05-12 | 0.4.2_RD_AdvisorIntelligence | (no-TO) | comp-transform | comp-transform schema-check ClientsTab | PASS |
+| 2026-05-12 | 0.4.2_RD_AdvisorIntelligence | (no-TO) | comp-transform | comp-transform fields BooksTab | FAIL |
