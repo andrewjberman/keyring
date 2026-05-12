@@ -445,21 +445,21 @@ You do NOT produce architecture specs (CTO does). You DO align, route, and track
 - `ADVI_ROLGAT` 2026-04-17 (portal-auth-v1.13.0 + partners-api-v1.16.1)
 - `CDRS_TFIMPT` 2026-04-15 (all 7 TOs; partner-firms-v1.0.0 + shared-infra-v1.7.0)
 
-### Pipeline Tags (refreshed 2026-05-08 AM COO startup ground-truth pass)
+### Pipeline Tags (refreshed 2026-05-12 PM COO dashboard reconciliation)
 
 | Pipeline | Tag |
 |----------|-----|
-| BD | `bd-v2.24.6` |
+| BD | `bd-v2.24.7` (+1 since 2026-05-08: SCHWAB-BUCKDR + Brief #9 Part B counts) |
 | Partners API | `partners-api-v1.16.1` |
-| Portal Auth | `portal-auth-v1.15.6` (FIRMSEP P2 .07 + .08 SHIPPED 2026-05-08 — 5 alarms + 5 metric filters; .09 pending) |
-| Portal (submodule) | `portal-v2.1.81` (INFLFE.006 PROD 2026-05-07; PROD = v2.1.81; INF_D_00d PROD bump pending) |
+| Portal Auth | `portal-auth-v1.15.7` (+1: FIRMSEP P2 .07/.08 + later observability ratchet) |
+| Portal (submodule) | DEV pointer `939138a7` / parent CLOUD bumped via `5260d85e9` + `9635271e3` (DT 0.4 sweep + RD 0.4.2 Max-window cap fix); RD 0.4.2 marathon 2026-05-12 = 25+ portal commits (concentration treemap redesign, AdvisorAnalytics, lens renames, tax panel canonical, ADV cohort + NNA hero math, Max-window guard removal) |
 | Yang | `yang-v2.4.2` (MDLP_RVVALT term_returns weekday-only 2026-05-04) |
 | Market Overview | `market-overview-v1.10.0` |
 | News | `news-v2.9.7` |
 | Shared Infra | `shared-infra-v1.9.0` |
 | Data Refresh | `data-refresh-v2.2.0` |
 | Trade Pipeline | `trade-pipeline-v1.8.0` (TRSB_PATHFIX TO-2 categorical clean cutover) |
-| Inf Pipeline | `inf-pipeline-v1.7.43` (LAMBDA-DIMS Phase A+B 2026-05-07: v1.7.38..v1.7.43; 9-dim cron chain 12:30-13:00 UTC; INFETL solidify series) |
+| Inf Pipeline | `inf-pipeline-v1.7.51` (+8 since 2026-05-08: v1.7.44 aggregator quorum 7/9 LIVE; v1.7.46 INFREL.001 FINAL CLOSE Lambda resync; v1.7.50 INFADVTSSCHEMA FE contract rewrite; v1.7.51 INFPUBLISHERDEDUP 8964869a1 — Lambda no longer overwrites 5 chain-written artifacts; 3 consecutive empirical confirms via chain #19/#20/#21). |
 | Exec Summary | `exec-summary-v0.1.1` |
 | Security Scanner | `security-scanner-v1.0.2` |
 | Partner Firms | `partner-firms-v1.2.0` |

@@ -11,9 +11,10 @@
     }
   ],
   "source_brief": "ADVI_INFLEC.AUDIT-001 matrix v3 (73e6d100d) + Andrew directive 2026-05-04 'mapping is the risk surface for breakage; PRD for pod 4 team to connect to proper back end'.",
-  "status": "active",
-  "phase": "Phase 1 — 5 of 5 TOs SHIPPED 2026-05-05 + TO-006-rd VERIFIED PASS 2026-05-07 + TO-006-data DS~A still pending. **TO-006-rd CHECK A+B+C ALL PASS on PROD `52a6d84c` (portal-v2.1.81)** per RD verification doc `a184ac895` 2026-05-07 — stacked bars nmnc+nmec confirmed, QoQ +27%/+9.5%, 49F gate working; portal-v2.1.81 PROD bump `7b96202b5` shipped today (stacked bars nmnc+nmec timeseries_chart.json wiring). RD constitution doc + `inflec_ground_truth.md` updated. **TO-006-data DS~A still pending** — INF_D_04 _build_aua_view + _build_geo_view AUDIT-003 rep-coverage gate; ~45min surgical fix; gates on DS~A bandwidth (currently in flight on INFNNA.SILVER + GOLD + SL-P1c HLOT2 fix). Original TO-1..TO-5 all SHIPPED 2026-05-05.",
-  "blocking": "TO-006-data DS~A pending — partner_analytics granularity files still emit $182.5M instead of $199.6M canonical; gates on DS~A bandwidth (concurrent INFNNA.SILVER + GOLD + SL-P1c HLOT2 fix). TO-006-rd CHECK A+B+C ALL PASS on PROD portal-v2.1.81 2026-05-07.",
+  "status": "complete",
+  "completed": "2026-05-12",
+  "phase": "CLOSED 2026-05-12 PM per dashboard reconciliation. Phase 1 5/5 TOs SHIPPED 2026-05-05 (TO-1 DE absorbed AUDIT-004; TO-2 envelope sentinels; TO-3 defensive rendering; TO-4 RD Playwright + constitution; TO-5 DT response-shape sentinels + comp-iam graph fix). TO-006-rd CHECK A+B+C ALL PASS on PROD `52a6d84c` (portal-v2.1.81) 2026-05-07. **TO-006-data DS~A effectively absorbed** — partner_analytics rep-coverage gate residual addressed by 2026-05-12 chain marathon delivering `$203,016,954.58` aligned firm AUA across header_metrics + leaderboard + timeseries_overview + partner_analytics (4 surfaces); AUDIT-003 chain CLOSED 2026-05-06; 4-panel-gap structural closure DS~B today (b28dd2419 + 2e5539bac + e28af26d4 + cb856b802); chain #21 mode=full Andrew P0 closed exit=0 2026-05-12 19:46Z with full platinum refresh. The original $182.5M residual scope is no longer present in production.",
+  "blocking": "None — closed-as-complete; partner_analytics residual obviated by cascade of 2026-05-12 ships.",
   "created": "2026-05-04",
   "pods": [
     "0.4"
