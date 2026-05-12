@@ -21,6 +21,7 @@ search_surfaces:
   - data/orion/scripts/**/*.py
   - data/orion/manual_api/**/*.py
   - infra/aws/lambda/inf-pipeline/**/*.py
+  - infra/aws/lambda/inf-portal-*/**/*.py
   multifirm:
   - infra/aws/lambda/portal-auth/**/*.py
   - infra/aws/lambda/shared-*/**/*.py
@@ -51,6 +52,22 @@ constants:
     while the other 3 use os.environ.get fallbacks. C_06 uses a non-standard env var name (O6B_FIRM_ID) — flag to AE for canonical env-var name enforcement.
 
     '
+- name: FIRM_ID
+  lane: inf
+  type: str
+  canonical_value: '''inflection'''
+  sites:
+  - file: infra/aws/lambda/inf-portal-publisher/lambda_function.py
+    line: 52
+    value: os.environ.get('FIRM_ID', 'inflection')
+    comment: FIRM_ID = os.environ.get('FIRM_ID', 'inflection')
+  - file: infra/aws/lambda/inf-portal-advisor-publisher/lambda_function.py
+    line: 37
+    value: os.environ.get('FIRM_ID', 'inflection')
+    comment: FIRM_ID = os.environ.get('FIRM_ID', 'inflection')
+  notes: 'INF firm identifier; sister to BD-lane FIRM_ID. Same os.environ.get fallback pattern. Single canonical value across the inf-portal-* Lambdas. Added 2026-05-13 per DS base RAVC1 — closes the false-positive drift fire that bit every inf-portal-* Lambda commit.
+
+    '
 - name: FIRM_NAME
   lane: bd
   type: str
@@ -70,6 +87,22 @@ constants:
     comment: FIRM_NAME = os.environ.get('FIRM_NAME', '49 Financial')
   notes: 'Display name for the BD firm used in portal JSON payloads. Sister constant to FIRM_ID. Same env-override pattern drift as FIRM_ID: bd-gold-layer hardcodes, publishers use os.environ.get. No value
     drift across all 3 sites.
+
+    '
+- name: FIRM_NAME
+  lane: inf
+  type: str
+  canonical_value: '''Inflection Wealth Management'''
+  sites:
+  - file: infra/aws/lambda/inf-portal-publisher/lambda_function.py
+    line: 53
+    value: os.environ.get('FIRM_NAME', 'Inflection Wealth Management')
+    comment: FIRM_NAME = os.environ.get('FIRM_NAME', 'Inflection Wealth Management')
+  - file: infra/aws/lambda/inf-portal-advisor-publisher/lambda_function.py
+    line: 38
+    value: os.environ.get('FIRM_NAME', 'Inflection Wealth Management')
+    comment: FIRM_NAME = os.environ.get('FIRM_NAME', 'Inflection Wealth Management')
+  notes: 'Display name for INF firm used in portal JSON payloads. Sister to BD-lane FIRM_NAME. Single canonical value across inf-portal-* Lambdas. Added 2026-05-13 per DS base RAVC1.
 
     '
 - name: INVALID_REL_IDS
