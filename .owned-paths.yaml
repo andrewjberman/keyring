@@ -75,6 +75,17 @@ lanes:
       - 0.1.0_DT_MarketIntelligence
     description: "Pod 1 — MarketIntelligence (DE + DS + DT)"
 
+  POD1_OR_AE:
+    permitted_agents:
+      - 0.1.0_DE_MarketIntelligence
+      - 0.1.0_DS_MarketIntelligence
+      - 0.1.0_DT_MarketIntelligence
+      - 0.5.0_AE_OpalETL
+      - 0.6.0_AE_PartnerETL
+      - 0.6.1_AE_PartnerETL
+      - 0.7.0_AE_CloudOps
+    description: "news-pipeline + market-overview Lambda source — POD1 (DE/DS/DT) authors Lambda code, AE owns deployment infra; both permitted. Parallels POD4_OR_AE pattern. Added 2026-05-12 (Andrew authorized — news-trending recency/crypto-cut session)."
+
   POD2:
     permitted_agents:
       - 0.2.0_DE_PortfolioAnalytics
@@ -649,6 +660,24 @@ paths:
   "infra/aws/lambda/inf-*/**":
     lane: POD4_OR_AE
     note: "All inf-* Lambda source dirs (inf-portal-publisher, inf-portal-advisor-publisher, inf-client-detail, inf-gold-trigger, future LAMBDA-DIMS per-dim Lambdas) — DS/DE author code, AE 0.7 deploys. Widened from inf-pipeline/** to inf-*/** (COO URGENT 2026-05-07). Longest-match overrides infra/aws/** AE-only rule."
+
+  # Pod 1 news-pipeline + market-overview Lambdas — DS authors data logic, AE deploys.
+  # Mirrors POD4_OR_AE pattern for inf-*. Added 2026-05-12 (Andrew authorized).
+  "infra/aws/lambda/news_*/**":
+    lane: POD1_OR_AE
+    note: "News-pipeline Lambda source (news_ingestion_scheduler, news_layer3_curation, news_trending_analysis, news_semantic_clustering, etc.) — POD1 DS authors, AE deploys. Longest-match overrides infra/aws/** AE-only rule."
+
+  "infra/aws/lambda/keyword_*/**":
+    lane: POD1_OR_AE
+    note: "Keyword intelligence + drilldown Lambdas — POD1 DS authors, AE deploys."
+
+  "infra/aws/lambda/semantic-news-*/**":
+    lane: POD1_OR_AE
+    note: "Semantic news-pipeline Lambdas (currently inactive but kept in lane) — POD1 DS authors, AE deploys."
+
+  "infra/aws/lambda/v2_portal/01_market_overview/**":
+    lane: POD1_OR_AE
+    note: "Market Overview Lambdas (tiered-generator, rsi-tiered-generator, regime-classifier, fear-greed-fetcher) — POD1 DS authors, AE deploys."
 
   "infra/aws/lambda/trade-pipeline/**":
     lane: TRADE_PIPELINE_INFRA
