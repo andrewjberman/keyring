@@ -132,3 +132,59 @@ AE 0.6.1 escalated to COO with Option A (add to run-gold-layer.sh) / Option B (a
 If Option A routed to AE 0.7: ready to ship same-session.
 
 ## Session Status: COMPLETE — boot dispatcher fix empirically validated 23:39Z 2026-05-11
+
+---
+
+## Patch 2 — INF_PREFER_S3=true (commit 85f00de6f, ~23:42Z)
+
+After boot dispatcher fix confirmed, chain retry #1 (23:36Z) reached INF_API_SILVER_REPS and failed:
+```
+Bronze JSON not found at data/orion/manual_api/pulls/2026-05-11_representatives.json
+```
+Root cause: EC2 runner missing `INF_PREFER_S3=true` env var that Lambda silver-chain sets at invocation.
+COO GO Option A (add to run-gold-layer.sh). Shipped `export INF_PREFER_S3=true` before dispatch block.
+
+| Step | Result |
+|------|--------|
+| Edit run-gold-layer.sh | `export INF_PREFER_S3=true` added before dispatch |
+| bash -n | SYNTAX OK |
+| safe-commit.sh | `85f00de6f` author 0.7.0_AE_CloudOps |
+| S3 upload + SHA verify | `e0703e6f0c4948076ee3ca3de3c45e7aa2a71b9e000218388a5e07a5b3430161` MATCH |
+| COO RAVC4 ACK | INFRUNNERPARITY fully closed + INF_PREFER_S3 accepted |
+| AE 0.6.1 RAVC2 ACK | SHA MATCH confirmed both directions; Lambda #2 fired 23:48Z |
+
+---
+
+## Chain Retry #2 Result (23:48Z start, completed 23:50Z)
+
+EC2 LaunchTime 23:48:30Z. Chain ran, reached INF_API_SILVER_REPS. NEW failure:
+```
+PermissionError: [Errno 13] Permission denied: 'data'
+  File "_orion_api_silver_lib.py", line 301
+    os.makedirs(os.path.dirname(local_path), exist_ok=True)
+```
+Root cause: `LOCAL_SILVER_API_DIMS_DIR = 'data/orion/silver/api_dims'` is a relative path.
+When scripts run from systemd context (cwd likely `/`), `os.makedirs("data/...")` → `mkdir("/data")` → Permission Denied.
+
+Note: `pipeline-complete.json` was written despite chain exit 1 — sentinel-write-gating bug confirmed (DS lane, deferred).
+
+---
+
+## Patch 3 — cwd fix (commit a13e38697, ~00:00Z 2026-05-12)
+
+COO Round 2 GO dispatched at 23:54Z while context was compacting. STAND DOWN followed ~2min later routing fix to DS~C instead. Fix shipped before STAND DOWN was visible (race condition — both arrived at inbox simultaneously after compaction).
+
+Fix applied: `mkdir -p /tmp/orion_gold_scripts && cd /tmp/orion_gold_scripts` before dispatch call in `run-gold-layer.sh`. Silver scripts writing relative `data/` paths now land in `/tmp/orion_gold_scripts/data/...` (ec2-user-writable).
+
+| Step | Result |
+|------|--------|
+| Edit run-gold-layer.sh | mkdir -p + cd /tmp/orion_gold_scripts before dispatch |
+| bash -n | SYNTAX OK |
+| safe-commit.sh | `a13e38697` author 0.7.0_AE_CloudOps |
+| git push origin CLOUD | `650f91a0b..9e44388c4` — pre-push hook PASS |
+| S3 upload + SHA verify | `196bdc95b0c03555300275f6e8c8630d0c03f74f98d0d7a22235e09cd384529b` MATCH |
+| COO RAVC sent | Reported race condition; awaiting (A) leave both or (B) revert direction |
+
+**Compatibility with DS~C's planned fix:** DS~C is adding `_resolve_local_silver_dims_dir()` env-var pattern to `_orion_api_silver_lib.py`. If their fix lands, silver writes use absolute `/tmp/...` regardless of cwd — my `cd` becomes redundant but harmless. Both can coexist.
+
+## Session Status: STANDBY — awaiting COO direction on Patch 3 (leave/revert) + DS~C ship + chain retry #3
