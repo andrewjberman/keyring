@@ -1,0 +1,21 @@
+{
+  "project_code": "ADVI_SHARED",
+  "macro_code": "ADVI",
+  "name": "AdvisorIntelligence Multi-Tenant Architecture + Component Refactor + New-Advisor Scaffolding",
+  "description": "Establish canonical multi-tenant architecture for AdvisorIntelligence portal. Extend TenantLayoutConfig as single source of truth for per-firm divergence (asset class taxonomy, role taxonomy, feature flags, route tree, panel registry, data sources, numeric defaults). Resolve 102 architectural lint warnings (75 react-refresh/only-export-components + 12 react-hooks/static-components + ~15 other) via file-organization + component-extraction conventions. Canonicalize the 4-layer firmId namespace ambiguity (firmAccess.ts vs PARTNER_VIEWS vs _partners/*/FIRM_ID vs LAMBDA_FIRM_ID). Land `bun run scaffold-firm` tool emitting full per-partner wiring on a single command. Phase 1 refactor closes the half-migrated useTenantLayout adoption (currently 4 call-sites adopted; 3 files still carry inline isInflectionFirm). Trigger: Andrew direct 2026-05-12 evening post portal-v2.1.82 PROD deploy.",
+  "prds": [
+    {
+      "path": "docs/architecture/ADVI_SHARED.md",
+      "label": "v0.1 — initial PRD",
+      "date": "2026-05-12"
+    }
+  ],
+  "status": "active",
+  "phase": "Phase 0: PRD complete, COO decomposition pending",
+  "blocking": "COO task order issuance",
+  "created": "2026-05-12",
+  "pods": ["0.4"],
+  "pipeline": "portal",
+  "thread_counter": 0,
+  "threads": []
+}
