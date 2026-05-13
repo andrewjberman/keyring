@@ -7,9 +7,10 @@
     {"path": "docs/architecture/ADVI_INFTGT_PRD.md", "label": "ADVI_INFTGT PRD v0.1", "date": "2026-05-11"}
   ],
   "source_brief": "Andrew partner-demo screenshot walkthrough 2026-05-11 ~14:11 ET (15 screenshots cross-referenced in PRD Appendix A). Defect surface blocks Inflection partner-demo readiness.",
-  "status": "active",
-  "phase": "Phase 0 — PRD v0.1 SHIPPED 2026-05-11 (1.0.0_SA_CTO). Andrew GO on dispatch relayed via COO 2026-05-11 ~18:50Z. CTO RAVC2 ACK sent to COO with full 14-TO summary + sequencing recommendation (P0 dispatch first; DS~A bandwidth heads-up — 9 of 14 TOs land on DS~A). COO decomposing into per-team task orders. 5 Open Questions in PRD §7 for COO triage (Script 09 sequencing, TO-6 a-vs-b, IWM copy, period_start_aua sanity floor, partner_analytics.json data_as_of stamp dependency).",
-  "blocking": "COO task order decomposition + dispatch. DS~A bandwidth split (concurrent with any in-flight INFNNA/INFETL surfaces). Andrew sign-off on IWM catchall copy (TO-10). DS~A design call on period_start_aua sanity floor (TO-1).",
+  "status": "complete",
+  "completed": "2026-05-13",
+  "phase": "COMPLETE 2026-05-13. Final matrix: 16 LANDED + 1 OBVIATED + 0 STILL-NEEDED + 2 DS-emit follow-ups tracked out-of-bundle (chain #26 cycle). RD 0.4.2 scope pass v2 `62fde4bdf` + corrections `64feb2b3f` reconciled 4 false-negatives (TO-1b ff878749d + TO-6 PartnerAnalytics windowed-sibling migration shipped pre-investigation + TO-8 cash_drag/activity_scan shipped 147b85326+be241a8ce+993c369d4 + TO-14 funded-flag LANDED-by-removal). TO-12 RANK column shipped 08844f09 (Inflection tenant-gated). TO-11 4 of 6 sub-items shipped: #1 quarter chip ordering (post-revert to Current-LEFT canonical per Andrew 7f4eb1a8), #2 $0 formatting 0913c616, #5 Newest Relationship via DS~C 52478bb3a Lambda fix, #6 BOOK GROWTH (TTM) via DS~B 2e5539bac. Ad-hoc batch shipped post-scope-pass: chip order revert d5e3bfc50 + ticker masking heuristic 20a0f6407 (CUSIP partial-mask for CD securities). TO-11.#3 Fee Summary chart + #4 BPS columns confirmed DS-emit gap (platinum/clients/{hh}/detail.json#fee_summary absent) — 2 follow-up TOs tracked separately in chain #26 cycle, not as INFTGT residuals. Partner-demo surface ready.",
+  "blocking": "None — project closed. 2 DS-emit follow-up TOs (TO-11.#3 Fee Summary + #4 BPS cols) tracked as fresh chain #26 cycle work, not INFTGT scope.",
   "depends_on": [],
   "depends_on_note": "Surfaces are downstream of INFETL/INFINGE Phase 1 (daily gold chain) and INFNNA (txn enrichment) — both are mid-execution but their ship doesn't gate INFTGT TO dispatch. INFTGT works on the gold-script + portal-display layer; the upstream ingest cadence is orthogonal.",
   "absorbs": [],
