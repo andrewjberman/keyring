@@ -1,0 +1,22 @@
+{
+  "project_code": "ADVI_INFFIN",
+  "macro_code": "ADVI",
+  "name": "Inflection Product Finalization",
+  "description": "9 Andrew-direct surfaces from 2026-05-13 evening walkthrough that must land before Inflection partner portal can be considered finalized. Decomposes across RD (frontend), DS~A/~B/~C (gold-emit + 49F audit + directory artifact), and AE 0.6.1 (chain dispatch + contingent billing backfill). Three cross-cutting themes: (1) canonical NNA/AUA design system universalization via shared <NnaBarLineChart> + <ChartTooltip> primitives; (2) Fee-paying/No-Fee/All toggle as platform-wide concept with cross-firm 49F-Inflection schema parity; (3) null-elimination rule for all account fee fields + count tiles. Phase 1 (5 TOs immediate parallel): TO-A RD UI parity batch + TO-B RD advisor-context wiring + TO-C1 DS~C INF emit + TO-C2 DS~A directory artifact + TO-C3 DS~B 49F audit. Phase 2 (2 TOs dispatch_held): TO-D RD Phase 2 wiring + TO-E AE 0.6.1 chain+backfill. Brief authority: DE 0.4 `e7965874b`. Authoring authority: Andrew direct walkthrough 2026-05-13 evening.",
+  "prds": [
+    {"path": "docs/briefs/inflection-finalize-20260513.md", "label": "INFFIN Brief v1 (DE-authored)", "date": "2026-05-13"}
+  ],
+  "source_brief": "DE 0.4 brief `docs/briefs/inflection-finalize-20260513.md` committed `e7965874b` 2026-05-13 evening per Andrew walkthrough; routing directive: 'write a document covering every single thing that needs to get done, issue it to COO, and have COO distribute the TOs across the relevant parties'. 9 surfaces with per-surface root cause + acceptance criteria + investigation hints. Recommended 5-TO decomposition; COO routing 7 TOs to leverage Andrew direct authorization on DS~A/~B/~C/~D all-lanes-available.",
+  "status": "active",
+  "phase": "Phase 1 TO DISPATCH — 7 TOs authored by COO 2026-05-13 evening (TO-A through TO-E split into 7 to leverage DS~A + DS~B + DS~C parallelism per Andrew direct authorization of all DS sub-lanes). Phase 1 (5 TOs immediate parallel): ADVI_INFFIN.001 (RD UI parity batch) + .002 (RD advisor-context wiring) + .003 (DS~C INF-side emit) + .004 (DS~A directory artifact) + .005 (DS~B 49F audit). Phase 2 (2 TOs dispatch_held): .006 (RD Phase 2 wiring) + .007 (AE 0.6.1 chain + billing backfill).",
+  "blocking": "(1) Phase 1 5-TO RAVC2 from receivers (RD 0.4.2 + DS~C + DS~A + DS~B). (2) Phase 2 dispatch unblock on DS~C .003 ship signal + 49F audit completion from DS~B. (3) AE 0.6.1 chain-fire after DS~C ship. (4) RAVC2 closes back through COO. (5) Andrew acceptance on partner-visible surfaces.",
+  "depends_on": [],
+  "depends_on_note": "Independent project. Adjacent: existing ADVI_INFGRO Stage 1 cascade completed earlier today (DS-base 6b94d8a8a + dependencies); ADVI_DWSPLT atomic bundle architecturally validated end-to-end via chain #27 (~21:01Z). Both completed work feeds INFFIN as foundation; INFFIN consumes their outputs but doesn't gate on additional ship from them.",
+  "session_authority": "Andrew direct evening walkthrough 2026-05-13. Andrew verbatim: 'write a document covering every single thing that needs to get done, issue it to COO, and have COO distribute the TOs across the relevant parties.' Andrew authorized DS~A/~B/~C/~D all 4 sub-lanes available (overrides session-scope 'base DS only' directive for INFFIN scope).",
+  "created": "2026-05-13",
+  "pods": ["0.4.0", "0.4.2", "0.6.1"],
+  "pipeline": "inf-pipeline + portal AdvisorIntelligence",
+  "coo_lane": "2.0.0_SA_COO",
+  "thread_counter": 0,
+  "threads": []
+}
