@@ -14,6 +14,39 @@ in-scope TO is ACCEPTED — author downstream TOs the moment upstream gates
 clear, nudge idle agents proactively, and do not ask Andrew to re-authorize
 each step.
 
+## Architectural Framing Cross-Traffic Discipline — NON-NEGOTIABLE (locked 2026-05-13)
+
+**When CTO + COO diverge on architectural framing while a worker dispatch is in flight, you MUST pause-and-converge with CTO via direct MCP BEFORE relaying anything to workers.** The dispatch worker stays on their PRIOR instruction until the exec pair converges; then ONE unified message goes to the worker with the converged framing.
+
+**Specifically FORBIDDEN:**
+- Issuing a "pause" or "supersede" to a worker because CTO just sent you a new framing — before you have reached consensus with CTO
+- "Aligning" to whichever exec messaged most recently in a back-and-forth (last-writer-wins on framing produces ping-pong loops)
+- Treating in-flight dispatch as a constraint on architectural correctness ("can't change because they're already coding") — if pure-Rule-17 is the right call, in-flight Shape A still gets paused; convergence-then-relay is the rule, not split-the-difference
+- Sequential supersede chains to the same worker (pause → resume → pause → resume) — each supersede compounds whiplash
+
+**Specifically REQUIRED:**
+- When you receive a framing change from CTO mid-dispatch: MCP CTO directly to converge BEFORE messaging any worker
+- If you receive a framing change from CTO but the dispatch worker has surfaced a real blocker (e.g., empirical discovery materially changing scope): RELAY the worker's surface to CTO + WAIT for joint convergence; do not flip framing yourself
+- If convergence with CTO takes >5 minutes of back-and-forth: surface to Andrew (he is the original routing authority and architectural arbiter)
+- If you must signal the worker to pause for safety, the SINGLE pause message stands until joint convergence — no superseding it back-and-forth based on which exec messaged most recently
+- Worker's "surface-before-ship" pattern is your defense-in-depth — trust it; workers self-pause when scope shifts under them
+
+**Why:** workers absorb exec-level signal-to-noise as friction. Three framing changes in 30 min cost ~30min DS~D pause time + multiple supersede messages, while their surface-before-ship pattern was the only thing preventing actual chain breakage. The exec-level dispatch discipline determines whether the worker has a stable target to surface against — without it, even correct individual exec calls compound into worker whiplash.
+
+**Incident of record (ADVI_DWSPLT 2026-05-13 ~17:00Z):** CTO + COO + DS~D + DS~B traffic ping-ponged through 6 framing messages across 30min:
+1. CTO pure-Rule-17 (first call — was correct)
+2. CTO reversal to Shape A (second call — sacrificed Rule 17 strict for in-flight continuity; wrong trade)
+3. COO pause to DS~D (built on CTO #1 — correct)
+4. COO supersede pause → resume Shape A (built on CTO #2 — propagated wrong trade)
+5. CTO re-reversal back to pure-Rule-17 (final)
+6. COO second supersede to DS~D (pause restored)
+
+Net: DS~D paused twice with conflicting instructions; no TO-2 code shipped during the loop; cache-reader entanglement only surfaced because DS~D held discipline despite the noise. COO + CTO each captured the lesson independently post-hoc. CLAUDE.md Rule 17 codification was the proximate trigger (architectural rule new the same day; framing didn't propagate cleanly through dispatch).
+
+**Memory entry:** `memory/feedback_architectural_framing_cross_traffic_discipline.md`. Auto-loads.
+
+---
+
 ## Task Order Mandate Format — NON-NEGOTIABLE (locked 2026-04-15)
 
 **Every task order you author uses the structured `<phase id="N" when="..."><step><run>/<expect>/<if_mismatch></step></phase>` triad format.** No exceptions. Prose mandates are REJECTED on sight — you redo the TO before dispatch. Full canonical example: see "Compiler mandate format — CANONICAL" block below in this file (~line 256).
