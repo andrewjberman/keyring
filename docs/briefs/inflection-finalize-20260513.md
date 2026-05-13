@@ -2,15 +2,16 @@
 
 **Author:** 0.4.0_DE_ClientPlatform (PM, Client Platform pod)
 **Date:** 2026-05-13 (evening)
-**Source:** Andrew direct walkthrough — 9 screenshots, evening session
+**Source:** Andrew direct walkthrough — 9 screenshots + 1 follow-up regression, evening session
 **Routing:** 2.0.0_SA_COO for TO decomposition + fan-out
 **Lanes referenced:** 0.4.2_RD_AdvisorIntelligence, 0.4.0_DS_ClientPlatform (~A/~B/~C/~D), 0.6.1_AE_InfPipeline, 0.7.0_AE_CloudOps
+**Revision history:** v1 (initial 9 surfaces, commit `e7965874b`) → v2 (this file, +Surface #10 Advisor List regression post chain #27)
 
 ---
 
 ## Executive Summary
 
-Andrew walked through 9 specific surfaces on the Inflection partner-portal AdvisorIntelligence page that need to land before the Inflection product can be considered "finalized." The work decomposes cleanly across **RD (frontend)**, **DS~C (gold-emit / per-account + per-HH backend data)**, and **AE 0.6.1 (chain dispatch + optional Lambda billing backfill)** lanes. Most surfaces are tightly scoped FE fixes; a few require parallel backend data emit + cross-firm parity audit with 49Financial's BD pipeline.
+Andrew walked through 9 specific surfaces (plus 1 follow-up regression — **Surface #10** added in v2) on the Inflection partner-portal AdvisorIntelligence page that need to land before the Inflection product can be considered "finalized." The work decomposes cleanly across **RD (frontend)**, **DS~A + DS~C (gold-emit / per-account + per-HH backend data)**, and **AE 0.6.1 (chain dispatch + optional Lambda billing backfill)** lanes. Most surfaces are tightly scoped FE fixes; a few require parallel backend data emit + cross-firm parity audit with 49Financial's BD pipeline.
 
 Three cross-cutting themes emerged:
 
@@ -178,6 +179,26 @@ Three cross-cutting themes emerged:
 
 ---
 
+### Surface #10 — Advisor List panel empty: "No advisor data available" post chain #27 (REGRESSION)
+
+| Field | Value |
+|---|---|
+| Page | AdvisorIntelligence → Books tab → **Advisor List panel** (rendered below BI/InflectionInsights section) |
+| Symptom | Empty state: `"No advisor data available"`; the entire Advisor List panel is suppressed |
+| Andrew quote | *"you and DS~B need to figure out why 'Advisor List' panel is not surfacing anymore on Inflection's ADVI page... A recent gold/platinum run just finished, that is the logical start place"* |
+| Trigger context | Likely regression from **chain #27 mode=full run** (just finished, 20:50Z). DS~A's `INF_D_00c` (commit `6b94d8a8a`, INFGRO.004) shipped that emits `leaderboard.json`. Pre-chain: Advisor List was working. Post-chain: empty state. |
+| FE root-cause path | `portal/src/pages/AdvisorIntelligence/_shared/tabs/ClientsTab.tsx:803` — `periodAdvisors.length > 0 ? <AdvisorSummaryTable> : <EmptyState>`. `periodAdvisors` derives at `ClientsTab.tsx:233-279` from `dashboardQuery.data.employee_leaderboard.windows[bestWindowKey].entries[]` where `bestWindowKey = '1Y'` (preferred) or `available_windows[0]`. Inflection filter at `ClientsTab.tsx:246-251`: `entries.filter(e => allowedAdvisorKeys.includes(e.advisor_id)).slice(0, maxEntries)`. |
+| Inflection layout filter | `portal/src/pages/AdvisorIntelligence/_partners/inflection/layout.ts:46` — `allowedAdvisorKeys: ['inflection_wealth_management', 'peter_lee', 'patrick_scanlan', 'joe_brandenburg']`, `maxEntries: 4` |
+| Falls through to empty if | (1) `employee_leaderboard` key absent in dashboard response. (2) `lb.windows` or `'1Y'` (+ fallback) keys missing. (3) `bestWindow.entries` empty array. (4) After filter on `allowedAdvisorKeys`, zero matches (advisor_id values differ from the 4 hardcoded keys). |
+| Lane (actual) | **DS~A** primary — owns INF_D_00c leaderboard emit. Andrew named DS~B but FE trace lands in DS~A's lane. Both MCP'd; DS~A driving primary empirical S3 check. |
+| Lane (FE contingent) | **RD 0.4.2** — if DS~A confirms entries[] + advisor_id values are intact at S3 level, FE needs defensive logging at `ClientsTab.tsx:233` to surface why filter is dropping (casing / whitespace / key-shape bug) |
+| Empirical check ask | DS~A pull `s3://opal-data-inf/platinum/firm/leaderboard.json` post-chain-27. Verify: (a) `windows.1Y.entries` non-empty array. (b) `entries[].advisor_id` values match `{'inflection_wealth_management', 'peter_lee', 'patrick_scanlan', 'joe_brandenburg'}` exactly (case + whitespace). (c) Compare vs pre-chain-27 backup. |
+| Hypotheses (ranked) | **H1:** INF_D_00c chain run failed silently in mode=full; entries[] empty/missing. **H2:** advisor_id values changed (snake_case → slugified, lowercase → titlecase). **H3:** windows keys changed (`'1Y'` → `'1y'` or `'one_year'`). **H4:** Lambda parity gap with stale read path. |
+| Priority | **P0** — partner-visible regression on previously-working panel |
+| Dispatch sequence | Step 1: DS~A empirical S3 check. Step 2 (data-side broken): DS~A fix + chain re-run via AE 0.6.1. Step 3 (FE-side cause): RD-A absorbs the defensive logging + filter fix. |
+
+---
+
 ## Cross-Cutting Themes
 
 ### Theme 1 — Canonical design system universalization (Surfaces #7, #9, downstream #3)
@@ -221,6 +242,7 @@ This rule should be applied uniformly across all Inflection screens (and 49F, wh
 | **TO-C — DS~C data emit batch** | 0.4.0_DS_ClientPlatform~C | #2 (per-HH stacked) + #4-contingent (directory) + #6 (per-account fees) + #8 (fee-paying split shape) + 49F BD-pipeline audit + shape normalization | None — DS~C starts in parallel with RD-A/B | GO now |
 | **TO-D — RD Phase 2 wiring** | 0.4.2_RD_AdvisorIntelligence | #2 (stacked HH render) + #6 (FeeSummary top half presentation) + #8 (reactive toggle wiring) | DS~C TO-C ship + AE chain fire | dispatch_held=true; GO post-DS~C ship + AE chain |
 | **TO-E — AE 0.6.1 chain + billing backfill** | 0.6.1_AE_InfPipeline | Chain-fire post-DS~C ship; contingent silver/billing/ backfill if DS~C surfaces gap | DS~C TO-C ship signal | dispatch_held=true; GO post-DS~C RAVC2 |
+| **TO-F — DS~A INF_D_00c regression check (URGENT)** | 0.4.0_DS_ClientPlatform~A | #10 (Advisor List empty post chain #27) | None — separate from Phase 1/2 since it's regression vs greenfield | GO now (already MCP'd 21:14Z) |
 
 ### Parallelism model
 
