@@ -1,0 +1,22 @@
+{
+  "project_code": "ADHC_DRIFTD",
+  "macro_code": "ADHC",
+  "name": "Deploy-Record Drift Detection + Source-Map Parity Hardening",
+  "description": "Harden Lambda deploy-record infrastructure against three empirically-observed drift classes surfaced 2026-05-13: (1) last_deployed_commit content-provenance loss in record-terraform-deploy.sh (lines 145+188 unconditional sweep-commit-sha overwrite); (2) source-map files-array vs source_dir parity gap in build-and-upload.sh (DS-authored commits silently exclude files from Lambda zip); (3) CHANGELOG.json gitLogJson escaping bug (bun JSON.parse fails on commit subjects with unescaped quotes). Three-TO atomic-bundle fix + Phase 2 validation sweep against 3 historical incidents. Project code corrected from earlier loose-language ADVI_DRIFTD to ADHC_DRIFTD per MACRO_CODES.md (generic Lambda deploy infra, not AdvisorIntelligence-specific).",
+  "prds": [
+    {"path": "docs/architecture/ADHC_DRIFTD.md", "label": "ADHC_DRIFTD PRD v0.1", "date": "2026-05-13"}
+  ],
+  "source_brief": "3 empirical drift incidents 2026-05-13 (inf-unified-account-dim-daily v1.7.54 bundle + opal-smartx-ingestion-pipeline TO-3 + smartx-ec2-autostart TO-3) — all same record-terraform-deploy.sh root cause; AE manual backfill via 2071a8ace + 25f00249c. Plus source-map parity gap on DS-base 144493642 + CHANGELOG.json gitLogJson escaping bug observed same day. COO scope reinforcement msg 20260513T192247Z + author-greenlight 20260513T192352Z.",
+  "status": "active",
+  "phase": "Phase 1 PRD AUTHORING — PRD v0.1 SHIPPED 2026-05-13 ~19:25Z (1.0.0_SA_CTO). 3-TO atomic-bundle scope locked: TO-1 record-terraform-deploy content-provenance fix (absorbs existing AE 0.7 standalone TO record-terraform-deploy-content-commit-fix.md) + TO-2 build-and-upload source-map parity check + TO-3 record-terraform-deploy gitLogJson escaping fix. Phase 2 TO-VAL = validation sweep against 3 historical incidents on today's commit graph. AE 0.7 pickup post-SMARTX_RECONCILE Path B clear; COO RAVC1 on PRD ship; co-sign + dispatch.",
+  "blocking": "(1) AE 0.7 SMARTX_RECONCILE Path B execution clear (not time-critical; FE Path A masks drift). (2) COO RAVC1 on PRD ship + co-sign. (3) TO-1/2/3 dispatch + atomic-bundle ship. (4) TO-VAL validation sweep against 3 historical incidents.",
+  "depends_on": [],
+  "depends_on_note": "Sibling project ADVI_DWSPLT shares drift-class architectural concern (transactions silver dual-writer) but separate scope per CTO/COO concur 2026-05-13 (scope hygiene). DRIFTD addresses generic Lambda deploy-record infrastructure; affects all inf-* + smartx + future pipelines with bundled Lambdas.",
+  "absorbs": ["record-terraform-deploy-content-commit-fix.md (standalone AE 0.7 P1 TO; absorbs into DRIFTD.001)"],
+  "created": "2026-05-13",
+  "pods": ["0.7"],
+  "pipeline": "deploy-infrastructure (cross-cutting)",
+  "coo_lane": "2.0.0_SA_COO",
+  "thread_counter": 0,
+  "threads": []
+}
