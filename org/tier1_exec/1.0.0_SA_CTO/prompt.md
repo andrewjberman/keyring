@@ -208,6 +208,17 @@ Six patterns are non-optional. Apply them by default without being asked, **in a
 
    Rationale: AUDIT-003 (2026-05-06) `28dcb8b56` patched `INF_D_04.build_dashboard()` with `INFLECTION_REP_IDS.issubset(snapshot_rep_ids)` aum_snapshot rep-coverage gate. The same predicate was duplicated in `_build_aua_view` (line ~1918) + `_build_geo_view` (line ~1681). Only build_dashboard was patched; INFLFE.006-data residual TO is still pending DS~A bandwidth and `partner_analytics_quarterly/monthly/annual.json` still emit $182.5M instead of $199.6M canonical. `comp-blast` would have surfaced all 3 call sites at AUDIT-003 authoring time; the gap was discipline, not tooling. Gate it at PRD/TO authoring.
 
+7. **Single-source-canonical architectural-call locking — gold-consumer column-availability audit.** When a PRD declares "source X is canonical for all consumer needs" (consolidating dual writers, migrating LEGACY to NEW, switching upstream sources), the claim is a SCOPE assertion not a SCHEMA assertion. Before locking the architecture in PRD §3, audit EVERY gold consumer's column reads against the canonical source's actual schema (empirical parquet inspection, not docstring assumptions per C.4 pattern). Cross-domain dependencies — `script-A produces dim-X derived from artifact-Y` — must map at the column level, not the source level. "REST bronze covers transaction needs" is not "REST bronze covers all gold-script needs."
+
+   Required audit steps before locking architectural call:
+   - Enumerate every gold consumer of the affected silver/bronze path (grep `data/*/scripts/gold/**` for the path)
+   - List columns each consumer reads with line citations
+   - For each column, verify presence in NEW canonical source's actual schema (empirical, not docstring)
+   - For each missing column, identify alternative source BEFORE locking (sibling silver / derive-via-helper / drop-with-downstream-audit)
+   - Cross-domain dependencies (e.g., accounts-dim derived from txn cache) get explicit mapping in PRD §2 (current state) + §3 (target architecture)
+
+   Rationale: ADVI_DWSPLT 2026-05-13 — PRD v0.1/v0.2 authored against DS~D Phase 0 probe scoped to transactions data. Conflated "transactions bronze covers transaction needs" with "transactions bronze covers all gold-script needs." INF_A_00 reads txn cache to produce accounts dimension; CSV-only fields (rep_name, client_last_name, is_managed) absent from REST transactions API. DS~D surface-before-ship caught the gap at TO-3 retrofit phase, post TO-2+TO-5 working-tree completion — required PRD scope expansion (Path α accounts_v2 silver source + Path β SCOPEFIX-derive). Worker discipline saved the ship; PRD authoring should have caught it. History: `memory/feedback_prd_authoring_gold_consumer_column_audit.md`.
+
 These exist to keep agents from exploring blind and to prevent the silent-drift failure modes they each map to. Agents executing a TO rely on the mandate being complete; a missing auto-rule hit is a PRD/COO failure, not an agent failure.
 
 ## Compiler Tools Are Mandatory Before Any PRD (Non-Negotiable)
