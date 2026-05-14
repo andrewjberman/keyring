@@ -3420,3 +3420,49 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-05-12 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-transform | comp-transform schema-check FortyNineFinancialAdvisorIntelligence | FAIL |
 | 2026-05-12 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript deployed INF_D_04.client_portal_summary.py | PASS |
 | 2026-05-12 | 0.6.1_AE_PartnerETL | ADVI_INFLEC.GROUPD.chain22 | comp-pipescript | comp-pipescript deployed INF_D_00c | PASS |
+| 2026-05-13 | 0.4.0_DS_ClientPlatform~C | ADHC_INFCAT_ORPHAN-bugA-walkback | comp-pipescript | comp-pipescript io INF_C_07 | PASS |
+| 2026-05-13 | 0.4.0_DS_ClientPlatform~C | ADHC_INFCAT_ORPHAN-bugA-walkback | comp-pipescript | comp-pipescript consumers INF_C_07 | PASS |
+| 2026-05-13 | 0.4.0_DS_ClientPlatform~C | ADHC_INFCAT_ORPHAN-bugA-walkback | comp-iam | comp-iam service inf-unified-account-dim-daily | PASS |
+| 2026-05-13 | 0.4.0_DS_ClientPlatform~C | ADHC_INFCAT_ORPHAN-bugA-walkback | comp-pipescript | comp-pipescript deployed INF_C_07 | PASS |
+| 2026-05-13 | 0.4.0_DS_ClientPlatform~C | ADHC_INFCAT_ORPHAN-bugA-walkback | comp-pipescript | comp-pipescript deployed --help | PASS |
+| 2026-05-13 | 0.4.0_DS_ClientPlatform~C | ADHC_INFCAT_ORPHAN-bugA-walkback | comp-pipescript | comp-pipescript --help | PASS |
+| 2026-05-13 | 0.4.0_DS_ClientPlatform~C | ADHC_INFCAT_ORPHAN-bugA-walkback | comp-pipescript | comp-pipescript deployed INF_C_07 --pipeline inf-gold | PASS |
+| 2026-05-13 | 0.4.0_DS_ClientPlatform~B | ADVI_INFTGT.TO-1b | comp-pipescript | comp-pipescript io INF_D_00c | FAIL |
+| 2026-05-13 | 0.4.0_DS_ClientPlatform~B | ADVI_INFTGT.TO-1b | comp-pipescript | comp-pipescript io INF_D_00c.portal_leaderboard | FAIL |
+| 2026-05-13 | 0.4.0_DS_ClientPlatform~C | brief-ticker-masking-investigation | comp-pipescript | comp-pipescript deployed --pipeline inf-gold | PASS |
+| 2026-05-13 | 0.4.0_DS_ClientPlatform~C | brief-ticker-masking-investigation | comp-pipescript | comp-pipescript deployed INF_D_02b --pipeline inf-gold | PASS |
+| 2026-05-13 | 0.4.0_DS_ClientPlatform~C | brief-ticker-masking-investigation | comp-pipescript | comp-pipescript deployed INF_D_05 --pipeline inf-gold | PASS |
+| 2026-05-13 | 0.4.0_DS_ClientPlatform~C | brief-ticker-masking-investigation | comp-pipescript | comp-pipescript deployed INF_D_07a --pipeline inf-gold | PASS |
+| 2026-05-13 | 0.4.0_DS_ClientPlatform~C | brief-ticker-masking-investigation | comp-pipescript | comp-pipescript deployed D_03 --pipeline bd-gold | PASS |
+| 2026-05-13 | 0.4.0_DS_ClientPlatform~C | brief-ticker-masking-investigation | comp-pipescript | comp-pipescript deployed --pipeline bd-gold | PASS |
+| 2026-05-13 | 0.4.0_DS_ClientPlatform~C | brief-ticker-masking-investigation | comp-pipescript | comp-pipescript deployed INF_D_04 | PASS |
+| 2026-05-13 | 0.4.0_DS_ClientPlatform~B | ADVI_DWSPLT.TO-1 | comp-pipescript | comp-pipescript io convert_transactions_to_silver | PASS |
+| 2026-05-13 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-platinum | comp-platinum reverse platinum/clients/100/detail.json | PASS |
+| 2026-05-13 | 0.4.0_DS_ClientPlatform | SMARTX_NONMDL.TO-1 | comp-iam | comp-iam service smartx-ingestion-lambda | PASS |
+| 2026-05-13 | 0.4.0_DS_ClientPlatform | SMARTX_NONMDL.TO-1 | comp-iam | comp-iam gaps | PASS |
+| 2026-05-13 | 0.4.0_DS_ClientPlatform | SMARTX_NONMDL.TO-1 | comp-iam | comp-iam service smartx-ingestion-lambda | PASS |
+| 2026-05-13 | 0.4.0_DS_ClientPlatform | SMARTX_NONMDL.TO-1 | comp-iam | comp-iam gaps | PASS |
+| 2026-05-13 | 0.4.2_RD_AdvisorIntelligence | ADVI_INFFIN.001 | comp-pipescript | comp-pipescript io INF_D_02 | PASS |
+| 2026-05-13 | 0.4.2_RD_AdvisorIntelligence | ADVI_INFFIN.001 | comp-transform | comp-transform ternary-audit DistributionTab | PASS |
+| 2026-05-13 | 0.4.2_RD_AdvisorIntelligence | ADVI_INFFIN.001 | comp-pipescript | comp-pipescript deployed INF_D_02 | PASS |
+| 2026-05-13 | 0.4.2_RD_AdvisorIntelligence | ADVI_INFFIN.001 | comp-pipescript | comp-pipescript deployed INF_D_02c | PASS |
+| 2026-05-13 | 0.4.2_RD_AdvisorIntelligence | ADVI_INFFIN.001 | comp-pipescript | comp-pipescript --help | PASS |
+| 2026-05-13 | 0.4.2_RD_AdvisorIntelligence | ADVI_INFFIN.001 | comp-pipescript | comp-pipescript deployed --help | PASS |
+| 2026-05-13 | 0.4.2_RD_AdvisorIntelligence | ADVI_INFFIN.001 | comp-pipescript | comp-pipescript deployed --pipeline inf-gold INF_D_02 | PASS |
+| 2026-05-13 | 0.4.2_RD_AdvisorIntelligence | ADVI_INFFIN.001 | comp-pipescript | comp-pipescript deployed --pipeline inf-gold INF_D_02c | PASS |
+| 2026-05-13 | 0.4.2_RD_AdvisorIntelligence | ADVI_INFFIN.001 | comp-routes | comp-routes trace getFirmLeaderboard | PASS |
+| 2026-05-13 | 0.4.2_RD_AdvisorIntelligence | ADVI_INFFIN.002 | comp-pipescript | comp-pipescript deployed INF_D_02 --pipeline inf-gold | PASS |
+| 2026-05-13 | 1.0.0_SA_CTO | (no-TO) | comp-transform | comp-transform schema-check ContinuousNnaDivergingView | FAIL |
+| 2026-05-13 | 0.4.0_DS_ClientPlatform~C | (no-TO) | comp-pipescript | comp-pipescript deployed data/orion/scripts/gold/INF_D_02.advisor_client_detail.py | PASS |
+| 2026-05-13 | 0.4.0_DS_ClientPlatform~C | (no-TO) | comp-pipescript | comp-pipescript deployed INF_D_04.client_portal_summary | PASS |
+| 2026-05-13 | 0.4.0_DT_ClientPlatform | (no-TO) | comp-routes | comp-routes trace getFirmLeaderboard | PASS |
+| 2026-05-14 | 0.4.0_DS_ClientPlatform~B | (no-TO) | comp-pipescript | comp-pipescript io INF_D_00c | FAIL |
+| 2026-05-14 | 0.4.0_DS_ClientPlatform~A | P0_INF_D_00c_dtype_hotfix | comp-pipescript | comp-pipescript io INF_D_00c.portal_leaderboard | FAIL |
+| 2026-05-14 | 0.4.0_DS_ClientPlatform~A | P0_INF_D_00c_dtype_hotfix | comp-pipescript | comp-pipescript io INF_D_00c.portal_leaderboard.py | FAIL |
+| 2026-05-14 | 0.4.0_DS_ClientPlatform~A | P0_INF_D_00c_dtype_hotfix | comp-pipescript | comp-pipescript io INF_D_00c | FAIL |
+| 2026-05-14 | 0.4.0_DE_ClientPlatform | ADVI_INFGRO.005 | comp-transform | comp-transform schema-check AdvisorsTab --feature gro_decomposition | PASS |
+| 2026-05-14 | 0.4.0_DE_ClientPlatform | ADVI_INFGRO.005 | comp-transform | comp-transform ternary-audit AdvisorsTab | PASS |
+| 2026-05-14 | 0.4.0_DE_ClientPlatform | ADVI_INFGRO.005 | comp-routes | comp-routes trace getFirmLeaderboard | PASS |
+| 2026-05-14 | 0.4.0_DE_ClientPlatform | ADVI_INFGRO.005 | comp-cache | comp-cache collisions | PASS |
+| 2026-05-14 | 0.4.0_DE_ClientPlatform | ADVI_INFGRO.005 | comp-pipescript | comp-pipescript deployed INF_D_00c.portal_leaderboard | PASS |
+| 2026-05-14 | 0.7.0_AE_CloudOps | (no-TO) | comp-pipescript | comp-pipescript deployed INF_D_00c | PASS |
