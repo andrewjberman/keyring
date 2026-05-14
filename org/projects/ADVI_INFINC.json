@@ -1,0 +1,22 @@
+{
+  "project_code": "ADVI_INFINC",
+  "macro_code": "ADVI",
+  "name": "Inflection Incremental Pipeline Architecture",
+  "description": "Re-architect the INF gold chain from full-rebuild-daily (~70min wall, ~1750 historical partition rewrites/day, ~35-40min wasted compute) to per-partition idempotence + append-only cumulative timeseries patterns. Target steady-state daily wall: 8-12 min Mon-Sat with weekly Sunday full-pull safety net. Five architectural patterns (A: date-partitioned canonical skip-gate, B: cumulative timeseries blob append-only, C: per-HH historical-replay anchor cache, D: latest-state dependency-skip, E: date-windowed API pulls). Six phases over ~3 weeks calendar / ~19 dev-days across DS~A + DS~B + AE 0.6.1. Each phase independently shippable + reversible via per-script env flag. Trigger: Andrew direct ASK during live chain_full_20260514_131842 ('make a truly incremental version of this flow rather than having to rebuild 7 years of history every single day, analyze every script in detail and write a comprehensive brief').",
+  "prds": [
+    {"path": "docs/briefs/inf-incremental-pipeline-design-20260514.md", "label": "AE 0.6.1 design brief v0.1 (PRD candidate; CTO ratification pending)", "date": "2026-05-14"}
+  ],
+  "source_brief": "AE 0.6.1 comprehensive 399-line design brief (commit 2920719f8 2026-05-14 ~13:50Z) authored against live chain_full_20260514_131842 empirical baseline. Andrew-direct ASK during live chain: '\"make a truly incremental version of this flow rather than having to rebuild 7 years of history every single day, analyze every script in detail and write a comprehensive brief for implementation to send to COO for distribution to DS~A and DS~B.\"'",
+  "status": "active",
+  "phase": "Phase 1 AUTHORED 2026-05-14 ~13:55Z (2.0.0_SA_COO). Phase 1 (.001) ADVI_INFINC.001 dsa-skip-gate-lib + dispatch.sh flag plumbing dispatched to DS~A immediate (~3d SLA). Phase 2-6 NOT YET AUTHORED — Phase 2 dispatch gates on Phase 1 RAVC2 + chain #30 mode=full wrap clean (DS~A INF_D_00c fix fd11a33c2 production-proven through one full chain). Open questions: Q1 (advisor attribution lag) + Q5 (DIAGFIX banner) + Q6 (validation epsilon budget) routed to CTO; Q2 (PULL_TXN/PERF trailing window empirical probe) routed to DS~B; Q3 (schema version stamping) + Q4 (partition_provenance.json layout) folded into Phase 1 TO scope per AE recommendation. Total: ~19 dev-days across 6 phases.",
+  "blocking": "(1) Phase 1 .001 DS~A skip-gate lib + dispatch.sh flag plumbing — IMMEDIATE GO; ~3d SLA. (2) Open questions Q1/Q5/Q6 CTO ruling (architectural calls). (3) Open question Q2 DS~B empirical Orion backdate distribution probe. (4) Phase 2 dispatch gates on Phase 1 RAVC2 + chain #30 wrap clean.",
+  "depends_on": [],
+  "depends_on_note": "Independent. INFNNA + INFGRO + INFETL all consume products of INF gold chain — INFINC migration must preserve their consumer contracts (Pattern A/B/C migrations are gold-side internal; latest-state platinum outputs unchanged in shape). INFTGT closed 2026-05-13; no overlap.",
+  "absorbs": [],
+  "created": "2026-05-14",
+  "pods": ["0.4", "0.6"],
+  "pipeline": "inf-pipeline (gold-stage)",
+  "coo_lane": "2.0.0_SA_COO",
+  "thread_counter": 0,
+  "threads": []
+}
