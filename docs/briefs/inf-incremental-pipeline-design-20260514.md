@@ -247,7 +247,35 @@ Reference: `memory/feedback_signal_bounded_vs_time_bounded_emit.md` (DS~D 2026-0
 
 **Risk (Pattern A subtlety):** as detailed in §2.1, past partitions encode advisor_key at write-time. Under incremental, if a rep changes for an account today, past partitions retain the OLD advisor.
 
-**Mitigation:** document as point-in-time-correct (matches today's accidental behavior — current chain rewrites with latest dim, but the "latest dim" of last week's run was different from this week's run, so historical partitions are NOT consistent across chains anyway). Add `--rebuild-advisor-attribution-only` for explicit refresh.
+**CTO Q1 ruling (2026-05-14):** **(a) point-in-time-correct freezing is the v1 default + `--rebuild-advisor-attribution-only` is the explicit escape hatch.** Bifurcation (raw position layer + advisor join at query time) is the v2 path, deferred until a business surface needs query-time advisor flexibility.
+
+**Mitigation:**
+
+Past partitions encode advisor attribution at write-time. This matches today's accidental behavior in spirit — the current chain rewrites with the latest dim, but the "latest dim" of last week's run was different from this week's run, so historical partitions are NOT consistent across chains anyway. Switching to skip-if-exists makes the frozen state per-date instead of per-chain, which is cleaner.
+
+**`--rebuild-advisor-attribution-only` flag scope:**
+- Forces re-write of partitions affected by Pattern A scripts (B_00, B_03, A_03, C_00, C_01)
+- Re-applies the LATEST `accounts_dimension_latest.parquet` advisor_key to each affected partition
+- Skips silver-input re-computation (positions_mv, transactions, etc) — only the advisor_join step is re-run
+- Env var: `INFINC_REBUILD_ADVISOR_ATTRIBUTION_ONLY=1` (already in DS~D Phase 1 lib contract — `d88b7a7a4`)
+
+**Operational runbook — rep change mid-day:**
+1. **Detection signal:** `silver/api_dims/accounts_v2/snapshot_date={today}/data.parquet` rep_id or representative_name changes for one or more accounts (compared to yesterday's snapshot).
+2. **Standard daily chain handles forward:** today's chain writes today's partition with the new rep. No special action.
+3. **Past-partition correction:** if business surfaces (advisor leaderboard YTD, advisor book.json roll-up) need to retroactively re-attribute past partitions to the new rep:
+   ```bash
+   bash orion-gold-dispatch.sh --chain gold-cd \
+       --rebuild-advisor-attribution-only \
+       --rebuild-start-date YYYY-MM-DD \
+       --rebuild-end-date YYYY-MM-DD
+   ```
+4. **Audit log:** every `--rebuild-advisor-attribution-only` run writes a row to `org/inf-rebuild-attribution-audit.log` with reason, date range, account_ids affected. AE 0.6.1 owns the audit log; reason must be non-empty per `safe-deploy.sh` discipline pattern.
+
+**v2 bifurcation path (deferred):**
+- Future business need: "show all accounts under Joe's book as of today, across historical partitions where his book has churned" — point-in-time freeze breaks this.
+- Mitigation: separate `gold/canonical/holdings_{date}.parquet` from advisor attribution. Move the advisor_join to a downstream view (`gold/views/holdings_advisor_resolved/{date}.parquet`) that re-joins against latest `accounts_dimension_latest.parquet` at view-build time.
+- Cost: ~2 new scripts (latest-state advisor-resolution view + INF_A_00 schema-change to expose a stable historical advisor map). Estimated 1-week DS effort.
+- Decision criterion: when an RD-side product PRD explicitly requires "as-of-today advisor across historical holdings" — file v2 then. Not before.
 
 ### 4.4 Schema migration
 
@@ -270,9 +298,57 @@ Reference: `memory/feedback_signal_bounded_vs_time_bounded_emit.md` (DS~D 2026-0
 
 **Risk:** after migration, behavior diverges from the original full-rebuild output by epsilon (FP drift, dedupe order, dim-as-of subtleties).
 
-**Mitigation:**
-- **One-shot validation chain**: before flipping the cron, run `--rebuild` once to regenerate everything, then run incremental once, diff every output via `comp-validate`. All deltas must be zero or explicitly accepted (timestamp fields exempt).
-- Maintain a `--validate-against-rebuild` flag that for one chain run, produces both outputs side-by-side and emits a delta report.
+**CTO Q6 ruling (2026-05-14):** **PK-stable sort on write + byte-equal (md5) validation contract.** For Pattern A, partition-by-partition byte-equality is the gate. For Pattern B, dedupe-then-sort-then-write — same byte-equal contract applies once the dedupe order is locked.
+
+**Mitigation — write-time discipline:**
+
+Every Pattern A and Pattern B writer MUST sort by primary key immediately before `.to_parquet(...)`:
+```python
+df.sort_values(PK).reset_index(drop=True).to_parquet(buf, index=False, engine='pyarrow', compression='snappy')
+```
+
+Where `PK` is the script-specific primary-key tuple (see table below). This is a one-line discipline that makes outputs byte-stable across runs given identical inputs. Without it, pandas groupby internal hashing order can produce row-permutations that change the md5 even when row content is identical — breaking the byte-equal validation gate without a real semantic delta.
+
+**Per-script PK sort-key map:**
+
+| Script | Pattern | Output | PK (sort-keys, in order) |
+|---|---|---|---|
+| INF_B_00 | A | `gold/canonical/holdings_{date}.parquet` | `(date, account_id, ticker)` |
+| INF_B_03 | A | `gold/account_gains/{date}.parquet` | `(date, account_id, ticker)` |
+| INF_A_03 | A | `gold/positions_cube/{date}.parquet` | `(date, account_id, ticker)` |
+| INF_C_00 | A | `gold/canonical/canonical_performance_{date}.parquet` | `(date, account_id)` |
+| INF_C_01 | A | `gold/canonical/canonical_nna_{date}.parquet` | `(date, account_id)` |
+| INF_C_02 | B | `gold/timeseries/client_performance.parquet` | `(date, household_id)` |
+| INF_C_03 | B | `gold/timeseries/account_performance.parquet` | `(date, account_id)` |
+
+Pattern C/D scripts emit JSON (not parquet); the byte-equal validation applies to the JSON body after `json.dumps(..., sort_keys=True)` discipline (already in place per most platinum publishers — confirm during Phase 4 migration).
+
+**Pattern A validation contract (per partition):**
+1. Pre-migration run: capture `md5sum gold/canonical/holdings_{date}.parquet` for every date.
+2. Post-migration run with `--rebuild`: re-capture md5sum.
+3. Diff: `(date, expected_md5, actual_md5, status)` — every row must show `status=match`. Zero tolerance.
+4. ETag check on S3 side: `aws s3api head-object` ETag matches the local md5 (validates upload integrity too).
+
+**Pattern B validation contract (cumulative blob):**
+
+Append-only writes are sensitive to dedupe order — `pd.concat([existing, new]).drop_duplicates(PK)` keeps FIRST-seen by default, but if existing + new have overlapping (date, household_id) keys with different values (which they shouldn't, given input determinism), the result depends on concat order.
+
+Discipline:
+1. Read existing blob → `existing_df`
+2. Compute today's rows from new canonical partitions → `today_df`
+3. `combined = pd.concat([existing_df, today_df], ignore_index=True)`
+4. `deduped = combined.drop_duplicates(subset=PK, keep='last')` — `keep='last'` ensures today_df overwrites any overlapping rows (the new computation is authoritative)
+5. `sorted_df = deduped.sort_values(PK).reset_index(drop=True)`
+6. `sorted_df.to_parquet(...)` with byte-stable engine settings
+
+Byte-equal validation: pre-migration full-rebuild produces `client_performance.parquet` with md5 `X`. Post-migration incremental run on the same inputs (idempotent — no new dates) must also produce md5 `X`. The dedupe-then-sort discipline makes this achievable.
+
+**Cutover gates:**
+- **One-shot validation chain**: before flipping the cron, run `--rebuild` once to regenerate everything, then run incremental once, diff every output md5. All deltas must be zero or explicitly accepted (timestamp fields like `generated_at` in JSON artifacts exempt — handle via `--ignore-fields generated_at,data_as_of` flag on the diff tool).
+- Maintain a `--validate-against-rebuild` flag that for one chain run produces both outputs side-by-side and emits `gold/meta/validation/{run_id}/diff_report.json` with per-partition status.
+- Phase 6 cutover gate: zero non-exempt deltas across all 55 chain outputs. Hard block on any delta — investigate or accept-with-rationale documented in `gold/meta/validation/exemptions.md`.
+
+**Why this matters operationally:** byte-equal validation is also the foundation for **change-detection-driven downstream consumers**. If a Pattern B blob's md5 doesn't change run-over-run, downstream platinum publishers (INF_D_00b, INF_D_00d, INF_C_06) can skip recomputation entirely — extending the incremental savings into Pattern D territory at no design cost. This makes the PK-sort discipline a force multiplier, not just a validation gate.
 
 ---
 
