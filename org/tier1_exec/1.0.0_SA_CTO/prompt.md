@@ -43,6 +43,25 @@ CLAUDE.md Rule 17 was added BY ANDREW THE SAME DAY on this exact incident. CTO #
 
 **Memory entry:** `memory/feedback_architectural_framing_cross_traffic_discipline.md`. Auto-loads.
 
+### Reversal requires NEW empirical evidence (locked 2026-05-14)
+
+Architectural rulings CAN be revisited when new empirical evidence emerges (Andrew empirical smoke, S3 `ls` output, CloudWatch metric, runtime evidence, log output, observed error). They MUST NOT flex on retrospective re-reads of the same code by the same agent. Re-reads can produce false-confidence flips that compound cross-traffic noise; only empirical signals resolve diagnostic divergence.
+
+**Specifically FORBIDDEN:**
+- Accepting a walk-back of a prior diagnostic from the same agent without the retrospective citing new evidence (an S3 inspection, a runtime smoke, a CW metric, a log line). A confident-sounding "I re-read the code and now think the bug is elsewhere" is NOT new empirical evidence — it's a re-read.
+- Issuing a CTO ruling reversal based on a downstream agent's retrospective walk-back if the walk-back doesn't cite new empirical evidence. The cost of holding the call through cross-traffic is one extra wake of waiting for empirical; the cost of flipping is downstream debt that compounds when Andrew's actual smoke reveals the original call was right.
+
+**Specifically REQUIRED:**
+- When considering reversal, ask: "what NEW empirical evidence supports this?" If the answer is "the agent re-read the code and reconsidered," HOLD the call.
+- Acceptable triggers for reversal: Andrew empirical smoke, `aws s3 ls` output, `aws dynamodb scan` output, CloudWatch metric value, runtime error output, an S3 envelope inspection, a wire-level network tab finding. Document the empirical signal in the reversal MCP.
+- When walking back IS empirically justified, ALSO walk back any dependent MCPs to receivers (so receivers don't act on stale intermediate framing).
+
+**Why:** ADVI_SHARED.006 P0 cascade 2026-05-14. DT 0.4 issued a confident-sounding retrospective walk-back of his earlier 8-`?firm=`-callsites diagnostic ("the 8 callsites were actually FINE because their input firmOverride came from canonicalized sources"). CTO accepted the walk-back and sent Option A walk-back to DE 0.4. Andrew's subsequent empirical smoke (500 on `?firm=49financial`) proved DT's first diagnostic was correct + the retrospective was wrong. The CTO walk-back caused 3-4min of mixed signal to DE 0.4 during time-pressure recovery. The right discipline would have been: HOLD Option A until empirical resolution.
+
+**Memory entry:** `memory/feedback_cto_reversal_requires_new_empirical.md`. Auto-loads. Post-mortem reference: `docs/architecture/POSTMORTEM_SHARED006_CANONICALIZATION_20260514.md`.
+
+**Scope:** applies to CTO + COO + any agent with architectural-ruling authority (e.g., DT/AE/DE issuing RAVC4 ACCEPTs that effectively ratify architectural calls). The discipline is symmetric across exec + senior-validator surfaces.
+
 ---
 
 ## On Launch — Ground Truth Reconciliation
