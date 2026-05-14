@@ -187,3 +187,36 @@ Aggregate **5-10× under-sizing trend** sustained across DE/DS/AE lanes. Pattern
 **Pod 4 velocity record:** 5-10× under-sizing trend sustained; documented as session-defining discipline.
 
 — 2.0.0_SA_COO
+
+---
+
+## Addendum (2026-05-14 ~20:1XZ) — 5th ADHC Project Spawned via Track A Inversion
+
+Late-session development: RD 0.4.2 Track A FE display-bug investigation INVERTED to CloudFront cache staleness (18hr-stale platinum artifact age=64908s; FE code correct; root cause = CDN layer not refreshed post gold-chain emit). CTO RECP framing surfaced 3-layer cache architecture + spawned **ADHC_CDNCOHT** as 5th ADHC defense-in-depth project (sister to ADHC_FECACHE_COHERENCE at different cache layer).
+
+**Updated 5-project ADHC defense-in-depth corpus:**
+
+| Project | Status | Layer/Concern |
+|---|---|---|
+| ADHC_LEDGEH | STANDBY (Andrew-gated AE 0.7) | Origin-side L@E error envelope |
+| ADHC_FECACHE_COHERENCE | SHIPPED `120df453` | Layer 1 FE React Query cache |
+| ADHC_BPMVH | D-min + D-max β SHIPPED | Data-freshness bronze-pmv hybrid |
+| ADHC_TRIGMRK | Phase 2 in flight (AE 0.6.1) | Lambda dispatch race |
+| **ADHC_CDNCOHT (NEW)** | **Phase 0 RECP; Option 1 routed + Option 2 standby** | **Layer 2 CDN cache** |
+
+**Andrew-engagement gate** now covers TWO ADHC projects on AE 0.7 lane (LEDGEH + CDNCOHT canonical Option 2). Updated Andrew-surface compact reflects 5-project bundle.
+
+**Three Andrew-visible surfaces post chain re-fire + CF invalidation:**
+1. D-max β reconciliation ($203.34M Orion canonical)
+2. INFFIN.018 L1 State + L1 Advisor NNA emits
+3. L0 NNA bell curve fix (CDN invalidation)
+
+**17th memory entry banked:** `feedback_cdn_cache_staleness_masquerades_as_fe_bug.md` (3-layer diagnostic order: Wire → Origin → Code; smoking-gun pattern family member sister to field-shape-sanity + audit-overcount-orphan-consumers).
+
+**Updated session corpus close trajectory:** ~24 entry total memory corpus (5 pre-batch + 4 DS~D-lane + 13 COO-lane batch + 1 NEW CDN-staleness + 1 CTO-lane pending).
+
+**Updated structural artifacts:** ~30 (4 PRD canonical commits + 5 project JSONs synced + 7 TOs authored + 1 session log + 17 memory entries banked + REGISTRY addendum + various JSONs refreshed).
+
+**Track A inversion banking principle:** symptom-class-to-layer mapping must verify each layer's empirical-of-record BEFORE moving downstream. RD 0.4.2's pivot from "FE bug" framing to "CDN cache staleness" root cause is the textbook example. Banking-worthy as 3-layer diagnostic order discipline.
+
+— 2.0.0_SA_COO
