@@ -1,0 +1,23 @@
+{
+  "project_code": "ADHC_TRIGMRK",
+  "macro_code": "ADHC",
+  "name": "Trigger-Marker Race-Surface Mitigation (Inflection Gold Pipeline)",
+  "description": "Eliminate the silent-failure surfaces in the Inflection gold-chain trigger contract between `inf-gold-trigger` Lambda and `inf-gold-layer-runner` EC2. Three structurally distinct hardening levers: (A) install `inf-gold-dispatcher.service` systemd daemon on EC2 to close race surface #2 (Lambda's pending-marker pattern when EC2 hot has no consumer; silent no-op); (B) Lambda pre-write `chain_in_flight` check + stale-marker reject to close race surface #1 (preemptive boot consumes stale marker; wrong-mode fire); (C) accurate `source` provenance in mode-marker JSON (currently inherits Lambda env-var default `\"cron\"` regardless of invocation path). Empirically anchored on 3 same-day incidents 2026-05-14: incident #1 stale-marker race (chain_full_20260514_141419 wrong-mode kill+re-dispatch 49min recovery), incident #3 hot-state silent no-op (18:14:06Z Lambda invoke → ~13min elapsed → SSM-direct workaround required at 18:20:52Z). Race surface #1 + #2 together prove the trigger flow is fragile in BOTH boot-state directions. DS~D-attributed memory entry `feedback_lambda_pending_marker_no_daemon.md` banked 2026-05-14 18:30Z with empirical contrast pair (Lambda hot no-op vs SSM-direct clean). Sister to ADHC_COMPIL_V4.030 `comp-pipescript stale-marker` compiler-side companion (already authored + held by COO in v0.5 batch).",
+  "prds": [
+    {"path": "org/tier2_senior/0.6.1_AE_PartnerETL/drafts/ADHC_TRIGMRK.md", "label": "ADHC_TRIGMRK PRD v0.1 (AE draft; COO review + CTO ratify pending)", "date": "2026-05-14"}
+  ],
+  "_prd_authoring_note": "AE 0.6.1 drafted PRD v0.1 with 3-incident empirical anchor + 3 architectural levers (daemon, lock-check, source-provenance) + 11 acceptance criteria + 5 open questions. docs/architecture/ is CTO-lane per ADHC_OWNPTH; draft staged at org/tier2_senior/0.6.1_AE_PartnerETL/drafts/ADHC_TRIGMRK.md for CTO authoring-lane consumption + canonicalize via git mv (same pattern as LEDGEH 5362d0295 + FECACHE_COHERENCE 37ea514b7 + BPMVH 823c3e74b).",
+  "source_brief": "2026-05-14 three-incident empirical anchor: incident #1 (earlier same-day stale-marker race), incident #2 chain_full_20260514_141419 (49min recovery delay via SSM kill + re-dispatch), incident #3 18:14:06Z hot-state silent no-op (Lambda invoke returned 200 + 'pending marker written' but no consumer daemon on EC2; SSM diagnostic confirmed missing inf-gold-dispatcher.service + no orion-gold-dispatch process + no /tmp/inf-trigger-* files + no journalctl entries; SSM-direct workaround at 18:20:52Z fired chain_gold-d_20260514_182107 terminal in 279s). Auxiliary issue: mode-marker JSON `source: \"cron\"` inheritance on direct lambda-invoke breaks provenance attribution. COO ACK incident #3 banking-worthy 2026-05-14 18:19Z: both race surfaces should appear in Phase 1 PRD scope.",
+  "status": "phase1_prd_v01_draft_review_pending",
+  "phase": "Phase 1 PRD v0.1 DRAFTED 2026-05-14 ~18:35Z (0.6.1_AE_PartnerETL). 3 hardening levers + 11 ACs + 5 open questions documented. Forensic appendix captures 3 incidents with wire-level wall + pending-marker fingerprint. Standing by for COO review + CTO architectural ratify + canonicalize.",
+  "blocking": "(1) COO review + ratify per-section scope (especially Q1 BD-pipeline fleet-aware scope decision + Q4 fold-vs-split for Lever C). (2) CTO architectural ratify on 3-lever Option A (preserve pending-marker pattern + add daemon) vs Option B (Lambda → SSM RunCommand) vs Option C (EventBridge → SSM RunCommand). (3) CTO canonicalize via git mv from org/tier2_senior/0.6.1_AE_PartnerETL/drafts/ADHC_TRIGMRK.md to docs/architecture/ADHC_TRIGMRK.md per ADHC_OWNPTH. (4) TO-001 authoring (AE 0.6.1) post PRD ratify with empirical regression sweep + AC1-AC11 acceptance gate.",
+  "depends_on": [],
+  "depends_on_note": "Independent project. Cross-references: (a) sister to ADHC_COMPIL_V4.030 `comp-pipescript stale-marker` compiler-side companion (COO authored + held in v0.5 batch with dispatch_held=true); ships complementarily — ADHC_TRIGMRK is operational fix, .030 is diagnostic tool. (b) supersession-target for `[[reference_inf_ssm_direct_single_script_runbook]]` memory entry (SSM-direct becomes fallback rather than canonical post-TRIGMRK). (c) supersession-target for DS~D-banked `[[feedback_lambda_pending_marker_no_daemon]]` (will be marked RESOLVED post-deploy).",
+  "absorbs": [],
+  "created": "2026-05-14",
+  "pods": ["0.6"],
+  "pipeline": "inf-pipeline / trigger-handoff (Lambda + EC2 + systemd)",
+  "coo_lane": "2.0.0_SA_COO",
+  "thread_counter": 0,
+  "threads": []
+}
