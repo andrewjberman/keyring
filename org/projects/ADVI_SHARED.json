@@ -8,11 +8,21 @@
       "path": "docs/architecture/ADVI_SHARED.md",
       "label": "v0.1 — initial PRD",
       "date": "2026-05-12"
+    },
+    {
+      "path": "docs/architecture/ADVI_SHARED_PARTNER_ONBOARDING_CONSTRUCT.md",
+      "label": "Phase 1 architectural construct (RD 0.4.2 operational reference for partner onboarding)",
+      "date": "2026-05-14"
+    },
+    {
+      "path": "docs/architecture/POSTMORTEM_SHARED006_CANONICALIZATION_20260514.md",
+      "label": "SHARED.006 P0 post-mortem (CTO 4dac7ec34; Andrew-ratified)",
+      "date": "2026-05-14"
     }
   ],
   "status": "active",
-  "phase": "Phase 1 TO AUTHORING COMPLETE 2026-05-14 ~13:30Z (2.0.0_SA_COO). 8 of 8 Phase 1 TOs authored per PRD §4.2 + DE 0.4 audit findings + CTO ratifications from session66 RAVC4. Sequencing per Q5 option (c) recommendation: Round 1 (.001 + .004 + .005) staged + dispatch_held=false — ready for GO. Round 2 (.002 + .003 + .006 + .007 + .008) staged + dispatch_held=true with explicit unblock conditions referencing INFTGT/INFGRO ship + sibling .001 RAVC2 + intra-Phase-1 dependency chain. Q2 (asset class taxonomy) authored with portal-only assumption per PRD §7.2; if Andrew rules data-side, .001 carries TODO annotation. Q5 (sequencing) authored with option (c) per PRD §7.5; Andrew confirmation surfaced openly. SHARED.000 audit COMPLETE (DE 0.4 `8ae3fc209` 2026-05-12 — 711 LOC; PRD §F framing 5x correction captured). SHARED.006 P0 elevation per CTO RAVC4 §H.5 ratify — root-cause fix for prefetchQuery saturation revert `ff54d611`; SUPERSEDES TO `576056e67`. PRD v0.1 SHIPPED 2026-05-12 (1.0.0_SA_CTO `54c1ea270`).",
-  "blocking": "(1) Round 1 GO dispatch to DE 0.4 (.001) + RD 0.4.2 (.004 + .005) — pending COO MCP this session. (2) Andrew Q2 + Q5 finalization (assumptions baked in; reroute work modest if rulings differ). (3) Round 2 sequencing gate — INFTGT P1/P2 wave 2 close + INFGRO Stage 1 .005 close before .002/.003/.006 dispatch unblock. (4) FIRMSEP.10 Cottonwood live ship sequencing gate (.006 must land first per PRD §6.2; AE 0.7 / DT 0.4 readiness coordination required).",
+  "phase": "Phase 1 EXECUTION ~80% COMPLETE 2026-05-14 PM (2.0.0_SA_COO). 6 of 8 Phase 1 TOs SHIPPED: .001 (DE 755dc104) + .002 (DE 79e35429) + .003 (DE 5fb03386) + .004 (RD 2057099c + B8 hotfix 74a29229) + .005 (RD d9882117) + .006 (DE 4-commit chain bf97a24b → 35e0adf9). .007 partial — .007a dead-code sweep SHIPPED (RD b2808fa3 -566 LOC); .007b/c/d Cat OTHER lint sweep (~3-4h) GO dispatched + RD self-flipped pending. .008 (DT+RD Phase 1 close gate) gated on .007 wrap. SHARED.006 P0 CASCADE 2026-05-14 PM — DE 0.4 audit-grep-scope gap (AuthContext.tsx:35) + wire-protocol divergence (?firm= vs ?firmId= ROUTER_FIRM_SUFFIX inverse map) fix-forward pair (8b71292f + 17b3dad7); ~33min break-to-close; SHARED.006 architecture preserved (no revert). Post-mortem `4dac7ec34` ratified by Andrew → §3.X PRD_AUTHORING_PROTOCOL.md additions (cbc2a0e84) + TO_COMPILER_GATE Rule 8 (96079766c) + CTO/COO prompt.md meta-rule (4ffcf1d92) + 7 memory entries banked. RD 0.4.2 brief `ADVI_SHARED_PARTNER_ONBOARDING_CONSTRUCT.md` canonical-placed per CTO accuracy review (Andrew direct request; operational reference for FIRMSEP.10 Cottonwood + future partner onboarding).",
+  "blocking": "(1) RD .007b/c/d in flight (~3-4h actual; engineering-judgment scope per audit §F.0-drift-INVERSION pattern). (2) .008 Phase 1 close gate (DT+RD joint visual smoke) gates on .007 wrap. (3) FIRMSEP.10 Cottonwood live ship — SHARED.006 §6.2 sequencing gate MET (.006 shipped 14:23Z + P0 recovery 14:57Z); AE 0.7 + DT 0.4 readiness coordination unblocked per CTO ratified Cottonwood AC7. (4) Brief §7+§9 enhancement candidates (CTO suggested wire-protocol divergence row + Lesson 5) — non-blocking; RD optional follow-on.",
   "created": "2026-05-12",
   "pods": ["0.4"],
   "pipeline": "portal",
