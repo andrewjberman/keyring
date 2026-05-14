@@ -136,9 +136,32 @@ Body: Original <expect>: "..."
 
 ---
 
+## Rule 8: RAVC1 Reviewer Protocol for Canonicalization-Class Refactors (Non-Negotiable)
+
+**Trigger:** RAVC1 review of any commit touching a Lambda boundary, Lambda@Edge function, JWT issuer / claim path, DynamoDB partition key or GSI, Secrets Manager secret name with firm/tenant suffix, CloudFront behavior / origin selection rule, or any canonicalization / namespace literal change.
+
+**Required pre-push reviewer steps (in addition to commit-message read + visual logic-walk):**
+
+| Step | Tool/command | What it verifies |
+|------|-------------|------------------|
+| 1 | `comp-routes trace <endpoint>` for every modified endpoint | Full CF → auth → S3 path; flags 401 → HTML masquerade risk |
+| 2 | `aws s3 ls opal-data-{firmId}/` for each affected firm | Verifies real bucket names match the canonical form portal would send |
+| 3 | `aws dynamodb scan FIRM_TABLE --filter ...` | Verifies DDB partition keys match the canonical form portal would send |
+| 4 | `git grep -rE "{literal-value}" portal/src/` PORTAL-WIDE | Cross-tree literal grep; catches cross-cutting consumers (Auth contexts, prefetchers, dev-mode env-readers) that subtree-only audits miss |
+| 5 | Per-callsite annotation: which param-key / header / path-param, which downstream consumer, which canonical form expected | Surfaces wire-protocol divergence where same-boundary param-keys have different canonicals |
+
+**Why this rule exists:** ADVI_SHARED.006 P0 cascade 2026-05-14. DT 0.4 pre-push approval on Commit C `46bfda8c` was based on commit-message read + visual logic-walk (concluded "zero behavior change at Lambda boundary"). The approval was empirically wrong on two grounds: (a) AuthContext.tsx:35 was a cross-tree consumer the subtree-only audit missed (Rule 8 step 4 would have caught it); (b) `?firm=` vs `?firmId=` wire-protocol divergence was not enumerated (Rule 8 steps 1-3 + 5 would have caught it). Net: ~33min wall-time P0 cascade with 2 forward-fix commits. Pre-push diligence on canonicalization-class refactors must be broader-than-commit-scope.
+
+**Documented in:** post-mortem `docs/architecture/POSTMORTEM_SHARED006_CANONICALIZATION_20260514.md` §4.3.
+
+DT/AE reviewers MAY mark RAVC1 ACCEPT only after running ALL 5 steps for canonicalization-class commits. Commit-message + visual logic-walk alone is structurally insufficient.
+
+---
+
 ## Enforcement
 
 - COO reviews every TO completion report. If no compiler check is logged, the TO is not accepted as complete.
 - CTO flags cross-domain resources during PRD decomposition. If a PRD has no `comp-blast` run before TO generation, the PRD is not accepted.
 - Agents that repeatedly skip these checks will have their TOs decomposed into smaller, more constrained units in future waves.
 - **Rule 7 (acceptance flex pre-flag):** missing pre-flag MCP = the TO acceptance is rejected and reverted to `<status>pending</status>` until the heads-up is filed and CTO has had the 5-minute redline window.
+- **Rule 8 (RAVC1 canonicalization-class reviewer protocol):** RAVC1 ACCEPT issued on a canonicalization-class commit without the 5-step pre-push diligence = the ACCEPT is rejected and the commit reverted; reviewer re-runs the protocol before re-issuing ACCEPT.
