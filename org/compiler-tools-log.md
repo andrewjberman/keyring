@@ -3570,3 +3570,8 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-05-15 | 0.4.0_DS_ClientPlatform~D | ADVI_INFINC.003 | ds-commit-gate.sh | ds-commit-gate.sh INF_C_02.client_performance.py | PASS | Pattern B append gate + schema version guard |
 | 2026-05-15 | 0.4.0_DS_ClientPlatform~D | ADVI_INFINC.003 | ds-commit-gate.sh | ds-commit-gate.sh INF_C_03.account_performance.py | PASS | Pattern B append gate + schema version guard |
 | 2026-05-15 | 0.4.0_DS_ClientPlatform~D | ADVI_INFINC.003 | safe-deploy.sh | safe-deploy pre-push hook | PASS | SHA-MATCH both scripts; gate PASS |
+| 2026-05-14 | 0.4.0_DS_ClientPlatform~A | ADVI_INFFIN.017.ds-data-as-of-emit-adds-batch | comp-blast | comp-blast inf-gold-trigger | PASS |
+| 2026-05-14 | 0.4.0_DS_ClientPlatform~A | ADVI_INFFIN.017.ds-data-as-of-emit-adds-batch | comp-pipescript | comp-pipescript io INF_D_06 | PASS |
+| 2026-05-14 | 0.4.0_DS_ClientPlatform~A | ADVI_INFFIN.017.ds-data-as-of-emit-adds-batch | comp-pipescript | comp-pipescript io INF_D_05 | PASS |
+| 2026-05-14 | 0.4.0_DS_ClientPlatform~A | ADVI_INFFIN.017.ds-data-as-of-emit-adds-batch | comp-pipescript | comp-pipescript io INF_D_09 | PASS |
+| 2026-05-14 | 0.4.0_DS_ClientPlatform~A | ADVI_INFFIN.017.ds-data-as-of-emit-adds-batch | comp-pipescript | comp-pipescript io INF_D_06 | PASS |
