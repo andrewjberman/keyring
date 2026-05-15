@@ -43,6 +43,19 @@ GEO state donut segments carry no inline `.distribution`, so the `distributionDa
 
 DS~A not needed for Task 2 — no gold change.
 
+## Task 3 — GEO Snapshot counts show households where UI says "Accounts"
+
+**Symptom (Andrew, AUA-mode GEO Snapshot):** bell curve container shows 801 at L0 (correct = accounts) but 251 when drilled into Washington — yet the L0 donut legend calls WA "685 Accounts". Counts must canonically be account-grain.
+
+**Verdict:** FE grain bug, two sites. RD lane. Fixed (`79a512bd`).
+
+Inspected `partner_analytics_quarterly.json` — WA donut segment: `account_count=685`, `client_count=251`; `by_segment['WA'].count=251` (households).
+
+1. **Bell curve container, GEO L1 (State):** `distributionData` memo returned `by_segment[STATE]` (and the city-agg fallback) without an account-grain count override. `by_segment[*].count` is household-grain on Inflection → container read 251. Fix: override every L1 `parentSegment` return with `_getBellCount(parentSegment)` (`account_count ?? client_count`), same invariant as the L0 path's `firmAccountCount`. WA L1 → 685.
+2. **GEO city-drill donut legend:** `segments` memo's city map (L2989) dropped `account_count`/`relationship_count`, so `getRadialCount` fell back to `client_count` — Everett rendered "46 Accounts" (households) vs true 144. Fix: carry both fields through the map.
+
+Also removed `grainView`/`geoAuaGrain` from the `distributionData` dep array — unreferenced after the L1 override replaced the `getRadialCount` call.
+
 ---
 
 ## Compiler Tools
@@ -61,13 +74,14 @@ Direct S3 artifact inspection (`aws s3 cp` + python json) was the decisive tool 
 
 | File | Repo/Branch | Change | Commit |
 |---|---|---|---|
-| `portal/src/pages/AdvisorIntelligence/_shared/tabs/DistributionTab.tsx` | portal/DEV | 4 L1 returns wrapped in `withSynthesizedPercentiles` | `1ac05055` |
+| `portal/src/pages/AdvisorIntelligence/_shared/tabs/DistributionTab.tsx` | portal/DEV | Task 2: 4 L1 returns wrapped in `withSynthesizedPercentiles` | `1ac05055` |
+| `portal/src/pages/AdvisorIntelligence/_shared/tabs/DistributionTab.tsx` | portal/DEV | Task 3: L1 account-grain count override + city-map `account_count` carry-through | `79a512bd` |
 | `org/.../deliverables/brief_ds_inflection_new_clients_by_period.md` | workspace/CLOUD | new — DS~A brief | (this log's commit) |
 | `org/.../logs/2026-05-15/...` | workspace/CLOUD | this log | (this commit) |
 
 ## Next Steps
 
-1. **[0.4.0_DT_ClientPlatform]** Push portal DEV (`1ac05055`) + bundle for release — GEO L1 State median fix needs a portal release to reach deployed env (FE-only change, no artifact dependency).
+1. **[0.4.0_DT_ClientPlatform]** Push portal DEV (`1ac05055` + `79a512bd`) + bundle for release — GEO L1 State median + account-grain count fixes are FE-only (no artifact dependency).
 2. **[2026-05-16 06:00Z chain]** materializes `new_clients_by_period` in Inflection `cumulative_chart.json` — Continuous "New Clients" tile goes live, no FE work.
 3. **[Andrew]** visual confirm both surfaces post-deploy.
 
