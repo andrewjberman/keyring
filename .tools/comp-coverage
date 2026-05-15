@@ -1,0 +1,8 @@
+#!/bin/bash
+# comp-coverage -- compiler-tools TO compliance audit
+# Usage: comp-coverage report [--by-agent] [--gated-only] [--pipeline PIPELINE]
+WORKSPACE="$(cd "$(dirname "$0")/.." && pwd)"
+python "$WORKSPACE/org/modules/graph/coverage_cli.py" "$@"
+_exit=$?
+python "$WORKSPACE/org/modules/graph/comp_log_auto.py" "comp-coverage" "$*" $_exit 2>/dev/null
+exit $_exit

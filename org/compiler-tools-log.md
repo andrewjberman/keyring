@@ -3580,3 +3580,16 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-05-15 | 0.4.0_DS_ClientPlatform~D | ADVI_INFINC.004 | ds-commit-gate.sh | ds-commit-gate.sh INF_D_05.client_top_holdings.py | PASS | Pattern C anchor cache |
 | 2026-05-15 | 0.4.0_DS_ClientPlatform~D | ADVI_INFINC.004 | ds-commit-gate.sh | ds-commit-gate.sh INF_D_09.account_timeseries.py | PASS | Pattern C anchor cache |
 | 2026-05-15 | 0.4.0_DS_ClientPlatform~D | ADVI_INFINC.004 | safe-deploy.sh | safe-deploy pre-push hook | PASS | SHA-MATCH all 3 scripts; gate PASS |
+| 2026-05-15 | 0.7.0_AE_CloudOps | ADHC_COMPIL_V4.025 | comp-pipescript | comp-pipescript skipgate INF_B_00 | PASS | AC1: 2361 partitions <30s; all COMPUTE (Phase 2 not applied) |
+| 2026-05-15 | 0.7.0_AE_CloudOps | ADHC_COMPIL_V4.025 | comp-pipescript | comp-pipescript skipgate INF_B_00 --rebuild-window 2026-05-01:2026-05-14 | PASS | AC2: simulated -- in-window COMPUTE, out-of-window SKIP (decision logic validated) |
+| 2026-05-15 | 0.7.0_AE_CloudOps | ADHC_COMPIL_V4.025 | comp-pipescript | comp-pipescript skipgate INF_B_00 --manifest-fresh-only | PASS | AC4: 0 rows returned (no manifests; filter correct) |
+| 2026-05-15 | 0.7.0_AE_CloudOps | ADHC_COMPIL_V4.025 | comp-pipescript | comp-pipescript skipgate INF_B_03 INF_C_00 INF_C_01 | PASS | AC5: 3 Pattern A scripts; consistent output; no crashes |
+| 2026-05-15 | 0.7.0_AE_CloudOps | ADHC_COMPIL_V4.030 | comp-blast | comp-blast inf-gold-trigger --check-consumers | PASS | AC1+AC3: exit 1 PHANTOM-CONSUMER; TRIGMRK anchor validated |
+| 2026-05-15 | 0.7.0_AE_CloudOps | ADHC_COMPIL_V4.030 | comp-blast | comp-blast --check-consumers --all-producers --pipeline inf | PASS | AC2: 320 zero-consumer producers of 600 checked; exit 1 |
+| 2026-05-15 | 0.7.0_AE_CloudOps | ADHC_COMPIL_V4.030 | comp-blast | comp-blast --check-consumers --all-producers --pipeline bd | PASS | AC7: BD sweep 286 phantoms; no crash; exit 1 |
+| 2026-05-15 | 0.7.0_AE_CloudOps | ADHC_COMPIL_V4.032 | comp-perf | comp-perf vectorize-audit INF_D_06.cash_drag (pre-a4a4fd0b2) | PASS | AC1: detects GROUPBY-APPLY-LAMBDA INFO; retroactive validation |
+| 2026-05-15 | 0.7.0_AE_CloudOps | ADHC_COMPIL_V4.032 | comp-perf | comp-perf vectorize-audit INF_D_06.cash_drag (post-a4a4fd0b2) | PASS | AC4: 0 findings on post-fix state |
+| 2026-05-15 | 0.7.0_AE_CloudOps | ADHC_COMPIL_V4.032 | comp-perf | comp-perf chain | PASS | AC3: 74 scripts scanned; 2 with findings (both INF_D_02 INFO); 0 WARNs chain-wide |
+| 2026-05-15 | 0.7.0_AE_CloudOps | ADHC_COMPIL_V4.032 | comp-perf | comp-perf vectorize-audit INF_B_00 INF_B_03 INF_C_00 | PASS | AC5: 3 Pattern A scripts; all PASS (no false positives) |
+| 2026-05-15 | 0.7.0_AE_CloudOps | ADHC_COMPIL_V4.033 | comp-coverage | comp-coverage report --by-agent | PASS | 7.8% raw; 916 done TOs; 71 logged; 338 unlogged gated; REPORT.md written |
+| 2026-05-15 | 0.7.0_AE_CloudOps | ADHC_COMPIL_V4.033 | comp-coverage | comp-coverage report --gated-only | PASS | gated-only: 393 TOs; 8.4% coverage; FRONTEND/GOLD/API breakdown |

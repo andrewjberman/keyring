@@ -1,0 +1,8 @@
+#!/bin/bash
+# comp-perf -- performance vectorization opportunity audit for gold scripts
+# Usage: comp-perf vectorize-audit <script> | chain [--pipeline inf|bd]
+WORKSPACE="$(cd "$(dirname "$0")/.." && pwd)"
+python "$WORKSPACE/org/modules/graph/vectorize_audit_cli.py" "$@"
+_exit=$?
+python "$WORKSPACE/org/modules/graph/comp_log_auto.py" "comp-perf" "$*" $_exit 2>/dev/null
+exit $_exit
