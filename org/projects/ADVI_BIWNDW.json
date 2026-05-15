@@ -1,0 +1,20 @@
+{
+  "project_code": "ADVI_BIWNDW",
+  "macro_code": "ADVI",
+  "name": "Books-tab BI Window Coverage",
+  "description": "In the /Books tab (49Financial + Inflection) the windowed advisor-summary metrics -- NNA, GRO (AUA growth %), New Clients, Rank -- must re-compute when the user changes the window in the 'Business Intelligence' panel. Today they do not: 49F covers QTD/YTD but 1Y/3Y/Max silently fall back to QTD, and Inflection's window selector does not drive these metrics at all. DE 0.4's root-cause analysis (the brief) found three distinct defects: (1) DATA -- platinum/firm/leaderboard.json emits only QTD/YTD/MAX windows (no 1Y, no 3Y); the orion gold producers D_00c.portal_leaderboard.py (49F) + INF_D_00c.portal_leaderboard.py (Inflection) hardcode the 3-window set. (2) FE map bug -- ClientsTab.tsx PERIOD_TO_LB_WINDOW maps max to '3Y' (a typo; should be 'MAX', and MAX data already exists), and trailing_1y/trailing_3y point at window keys the data lacks, producing a silent QTD fallback. (3) FE Inflection gap -- Inflection renders InflectionInsightsPanel (its own internal window state) instead of FeeEfficiencyPanel, so BooksTab feePeriod is frozen at its default. Fix: a backend-independent FE window-coverage TO + a BE TO that emits 1Y/3Y windows from both orion gold leaderboard producers.",
+  "prds": [],
+  "source_brief": "docs/briefs/books-bi-window-coverage-20260515.md (DE 0.4, commit 4bb9e2012). Andrew direct 2026-05-15: in the /Books tab the windowed metrics should re-compute on the Business Intelligence panel window; 49F 1Y/3Y/Max fall back to QTD, Inflection does not respond. Andrew directed DE 0.4 to analyze both partners (FE + BE) and route the brief to COO for decomposition.",
+  "status": "active",
+  "phase": "Phase 0 -- brief shipped (4bb9e2012), COO decomposed 2026-05-15. TO-1 (ADVI_BIWNDW.001, DE 0.4): FE window-coverage fixes -- FE-1 (max:'MAX' typo), FE-2 (Inflection window-lift), FE-4 (defensive explicit unavailable-window state); backend-independent, dispatched GO. TO-2 (ADVI_BIWNDW.002, DS orion-gold owner): the 1Y/3Y leaderboard window emit across D_00c + INF_D_00c, dispatched GO. FE-5 (window-set reconciliation) deferred pending product Q1.",
+  "blocking": "(1) TO-1 (ADVI_BIWNDW.001) FE window-coverage fixes -- DE 0.4, dispatched GO 2026-05-15; fully backend-independent (FE-1 restores Max for both firms immediately; FE-2 wires Inflection; FE-4 makes the silent QTD fallback explicit). (2) TO-2 (ADVI_BIWNDW.002) 1Y/3Y window emit -- DS, dispatched GO 2026-05-15. The 49F D_00c half has no gate. The INF_D_00c half intersects the open INFGRO firm_return_pct_twr window-aggregation defect (DE 0.4 finding 2026-05-15, log b1fd04b30, HELD + routed to CTO) -- SAME FILE; per the brief the INF gold chain must run ONCE, folding the 1Y/3Y window-emit together with the INFGRO fix. COO coordinates: TO-2 authors the INF window-emit code now; the INF chain run waits for / co-lands with the INFGRO disposition. (3) FE-5 window-set reconciliation (does Inflection's BI panel gain a 3Y option) deferred pending product Q1. (4) PRODUCT QUESTIONS surfaced to Andrew (non-blocking): Q1 window-set unification (unify 49F + Inflection on QTD/YTD/1Y/3Y/Max, or accept Inflection = QTD/YTD/1Y/Max), Q2 MAX-window GRO null handling (em-dash vs hide column).",
+  "depends_on": [],
+  "depends_on_note": "Soft-coordinates with the open INFGRO firm_return_pct_twr defect: TO-2's INF_D_00c.portal_leaderboard.py work shares a file + a gold chain run with the INFGRO fix. Not a hard dependency -- the 49F half and all FE work proceed independently; only the INF chain run co-sequences with the INFGRO disposition (CTO-held).",
+  "absorbs": [],
+  "created": "2026-05-15",
+  "pods": ["0.4"],
+  "pipeline": "orion (D_00c + INF_D_00c leaderboard producers) + portal",
+  "coo_lane": "2.0.0_SA_COO",
+  "thread_counter": 0,
+  "threads": []
+}
