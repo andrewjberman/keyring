@@ -82,7 +82,7 @@ terraform 0-diff: confirmed (step 9).
 - `data/smartx/**` lane: Andrew ruled directly ("smartx backend is a 0.5.0_AE lane") -- applied POD3 -> SHARED_OPAL_ETL (`d208afc52`). Superseded the pending CTO lane ruling.
 - `record-terraform-deploy.sh` internal commit defaulted to author "Andrew Berman" -> owned-paths hook (block mode) rejected it; committed the leftovers (`e45feb846`) with the correct `--author`. Possible tooling gap: the script does not pass an agent `--author`.
 - TO-1 probe harness `data/smartx/scripts/sxpl_restin_probe.py` remains untracked (DS~B TO-1 deliverable, not TO-2 scope) -- left for DS~B / a separate commit.
-- smartx-exporter EC2 untouched (decommission is SXPL_RESTIN TO-3+).
+- smartx-exporter EC2 untouched. Per Andrew direct 2026-05-15, the exporter decommission is DEFERRED INDEFINITELY (not TO-3) -- the REST pull runs as an additive parallel-soak path while the EC2 exporter stays the proven canonical source, revisited weeks-to-months out depending on API performance. Soak isolation confirmed (CTO query): REST pull writes `opal-data-bd/smartx/{raw,bronze}/`; the exporter writes a different bucket (`opal-data-smartx-v2`). No dual-writer; isolation IAM-enforced (smartx-rest-pull-role PutObject scoped to opal-data-bd/smartx/* only).
 
 ---
 
