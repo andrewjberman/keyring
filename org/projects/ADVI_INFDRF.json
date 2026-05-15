@@ -1,0 +1,20 @@
+{
+  "project_code": "ADVI_INFDRF",
+  "macro_code": "ADVI",
+  "name": "Inflection Live-Portal Data Drift Remediation",
+  "description": "Andrew-flagged URGENT 2026-05-15: Inflection live-portal numbers drifted after the 17:57Z full chain (Segment Analytics WA count 685 -> 744; visible slippage between snapshot / radial / header). DS~A + DE 0.4 co-investigated; BE root-caused, all evidence-backed (S3 object-versions + INF_D_04 code). TWO distinct defect clusters: (A) INF_D_04 client_portal_summary.py geo-view + histogram-block count-reconciliation defects -- null-city accounts dropped from the city breakdown so state != sum(city); the histogram 1K floor emits no excluded-count so plotted != total; client_count has a dual source of truth (geo-derived 321 vs accounts_dim 307); radial_12m partial decomposition is unlabeled. (B) the 06:00 daily cron SYSTEMATICALLY under-builds gold/canonical/holdings_{date}.parquet -- CHAIN_INCREMENTAL omits INF_B_00 (canonical_holdings), so the portal serves short-holdings numbers most of every day until an on-demand full chain runs (the 17:57Z full chain corrected 2026-05-15; 2026-05-14 showed the same pattern). Note: 744 is CORRECT, 685 was the regression -- the drift was a defective 06:00 build being corrected, not a methodology change; INF_D_04 code is unchanged since 2026-05-14.",
+  "prds": [],
+  "source_brief": "DS~A BE root-cause diagnosis 2026-05-15 (Andrew-flagged URGENT co-investigation with DE 0.4; DS~A session log forthcoming -- S3 object-version evidence + INF_D_04 code trace). RD 0.4.2 shipped the sibling FE fixes the same day (GEO L1 median fix 1ac05055, account-grain count fix 79a512bd, GEO city->Books route fix 92365e05, portal/DEV). DE 0.4 owns the FE surface->field-grain map.",
+  "status": "active",
+  "phase": "Phase 0 -- COO decomposed 2026-05-15 from DS~A's BE root-cause diagnosis. TO-1 (ADVI_INFDRF.001, DS~A): INF_D_04 geo + histogram count-reconciliation fix (defects A/B/D immediate; defect C client_count canonicalization gated on a CTO ruling). TO-2 (ADVI_INFDRF.002, AE 0.6.1): root-cause + fix the 06:00 cron holdings under-build (CHAIN_INCREMENTAL omits INF_B_00). Defect C (canonical client_count 307 vs 321) routed to CTO -- may escalate to Andrew (product: definition of a client).",
+  "blocking": "(1) TO-1 (ADVI_INFDRF.001) INF_D_04 geo reconciliation fix -- DS~A, dispatched GO 2026-05-15; defects A (null-city accounts) + B (histogram excluded-count) + D (radial_12m labeling) are immediate; defect C (client_count dual source of truth) gates on the CTO ruling. (2) TO-2 (ADVI_INFDRF.002) 06:00 cron holdings under-build -- AE 0.6.1, dispatched GO 2026-05-15; root-cause why CHAIN_INCREMENTAL omits INF_B_00 + fix so the daily 06:00 build produces full canonical holdings. P1 -- the portal serves short-holdings numbers most of every day until fixed. (3) CTO RULING -- defect C: which is the canonical firm client_count, 307 (accounts_dim, the dedicated client dimension; radial_12m clients also sum to 307) or 321 (geo view holdings-merge household nunique)? DS~A recommends 307; may escalate to Andrew (product definition of a client). Gates TO-1's defect-C portion. (4) Both TOs require a gold chain re-run to materialize -- coordinate against the pending INFGRO firm_return_pct_twr + ADVI_BIWNDW.002 co-landing INF chain run to avoid redundant cycles.",
+  "depends_on": [],
+  "depends_on_note": "TO-2 (the 06:00 cron CHAIN_INCREMENTAL holdings under-build) overlaps ADVI_INFINC (Inflection Incremental Pipeline Architecture -- chain-mode definitions) and ADVI_INFETL (daily ETL + cron orchestration); AE 0.6.1 authored the INFINC incremental design brief, so it holds the chain-mode context. TO-1 + TO-2 both need a gold chain re-run to materialize -- coordinate against the pending INFGRO firm_return_pct_twr + ADVI_BIWNDW.002 co-landing INF chain run.",
+  "absorbs": [],
+  "created": "2026-05-15",
+  "pods": ["0.4", "0.6"],
+  "pipeline": "inf-pipeline (gold-stage INF_D_04 + chain orchestration) + portal",
+  "coo_lane": "2.0.0_SA_COO",
+  "thread_counter": 0,
+  "threads": []
+}
