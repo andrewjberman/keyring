@@ -79,6 +79,19 @@ The FE has only firm-level period counts — it cannot derive per-segment new-cl
 - **FE (`1bc8e4ad`, portal/DEV):** added `resolveNewClientsByPeriod()` — selects firm / per-state / per-city / per-advisor slice by cohort + drill keys, firm-wide fallback when the breakdown is absent (DS pre-emit). Wired into both tile blocks (AUA `ContinuousChartView` + NNA `ContinuousNnaDivergingView`). `types.ts`: `new_clients_by_period` extended with `by_geo`/`by_geo_city`/`by_adv` (`Record<key, NewClientsPeriodSet>`). Ships defensively — current firm-wide behavior preserved until DS emits.
 - **DS brief:** `deliverables/brief_ds_inflection_new_clients_drill_breakdown.md` → DS~A. Extend `build_new_clients_by_period` in `INF_D_00d.cumulative_chart.py` to bucket by the same household→state/city/advisor assignment the geo/adv views use. Follow-up to `4e4a3c321`.
 
+## Task 6 — ADVI_INFFIN.006 Surface #2 status + close (COO request)
+
+COO asked for the state of Surface #2 — last open item on INFFIN Phase 2 ("11/12 ACCEPTED + Surface #2 HOLD re-ship pending").
+
+**Orientation:** the record was stale. The Surface #2 re-ship — commit `d622a249` (one-line adapter delta threading `relationship_stacked_periods` through the Inflection static adapter) — shipped to portal DEV on 2026-05-14 and CTO RAVC4-accepted it the same day. The only open item was the final dev-smoke against chain-fresh data, which on 2026-05-14 was gated because `book.json` did not yet carry `relationship_stacked_periods`.
+
+**Verified 2026-05-15:**
+- `d622a249` confirmed in portal DEV + PROD; adapter line live at `advisor-intelligence.ts:1167`.
+- `s3://opal-data-inf/platinum/advisors/peter_lee/book.json` (regen 2026-05-15T18:56Z) carries top-level `relationship_stacked_periods` — 5 periods Q2'25–Q2'26, 10 stacks each, `{client_key, display_name, aua}` — exact FE-contract match.
+- Browser smoke (localhost:5175, Inflection, Continuous/ADV/AUA, drill Peter Lee): stacked HH bar chart renders — 5 quarters, top-9 households + Other, legend, advisor-scoped hero. `/tmp/s2_smoke_04_post_drill_chart.png`.
+
+**RAVC2 to COO:** Surface #2 VERIFIED, clear to close → .006 → INFFIN Phase 2. Non-blocking observation surfaced: bars render ~80% grey "Other" — data-faithful (Peter Lee = 199 clients, fragmented $166M book), not a defect; flagged the top-N rollup threshold as a possible separate small TO if wanted.
+
 ---
 
 ## Compiler Tools
