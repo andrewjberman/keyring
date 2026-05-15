@@ -56,6 +56,16 @@ Inspected `partner_analytics_quarterly.json` — WA donut segment: `account_coun
 
 Also removed `grainView`/`geoAuaGrain` from the `distributionData` dep array — unreferenced after the L1 override replaced the `getRadialCount` call.
 
+## Task 4 — errant route: Continuous GEO L2 city click goes to Books tab
+
+**Symptom (Andrew):** Continuous-GEO-AUA, drilled into a state — clicking an L2 city navigates to Books tab L0 instead of showing the city's period-over-period.
+
+**Verdict:** FE errant route. RD lane. Fixed (`92365e05`).
+
+`ContinuousChartView`'s drilled-legend click handler (`DistributionTab.tsx:2596-2610`) computes `isInflectionHh = !isOther && firmOverride === 'inflection' && !!onNavigateToBooksClient` with no cohort gate. The INFFIN.024 §3.5d HH-to-Books navigation is correct for the **ADV** cohort (advisor drill lists households; HH click opens Books) — but the **GEO** cohort's drilled children are **cities** (state→city is terminal). So every Inflection GEO city click hit `onNavigateToBooksClient(drillParent, cat)` → Books L0.
+
+**Fix:** gate `isInflectionHh` on `cohort === 'adv'`. GEO city clicks now fall through to `setSelectedChildKey` (collapse-to-series) → city period-over-period. 49F unaffected.
+
 ---
 
 ## Compiler Tools
@@ -76,12 +86,13 @@ Direct S3 artifact inspection (`aws s3 cp` + python json) was the decisive tool 
 |---|---|---|---|
 | `portal/src/pages/AdvisorIntelligence/_shared/tabs/DistributionTab.tsx` | portal/DEV | Task 2: 4 L1 returns wrapped in `withSynthesizedPercentiles` | `1ac05055` |
 | `portal/src/pages/AdvisorIntelligence/_shared/tabs/DistributionTab.tsx` | portal/DEV | Task 3: L1 account-grain count override + city-map `account_count` carry-through | `79a512bd` |
+| `portal/src/pages/AdvisorIntelligence/_shared/tabs/DistributionTab.tsx` | portal/DEV | Task 4: gate `isInflectionHh` on `cohort==='adv'` — GEO city click no longer routes to Books | `92365e05` |
 | `org/.../deliverables/brief_ds_inflection_new_clients_by_period.md` | workspace/CLOUD | new — DS~A brief | (this log's commit) |
 | `org/.../logs/2026-05-15/...` | workspace/CLOUD | this log | (this commit) |
 
 ## Next Steps
 
-1. **[0.4.0_DT_ClientPlatform]** Push portal DEV (`1ac05055` + `79a512bd`) + bundle for release — GEO L1 State median + account-grain count fixes are FE-only (no artifact dependency).
+1. **[0.4.0_DT_ClientPlatform]** Push portal DEV (`1ac05055` + `79a512bd` + `92365e05`) + bundle for release — GEO L1 State median + account-grain counts + errant-route fix, all FE-only (no artifact dependency).
 2. **[2026-05-16 06:00Z chain]** materializes `new_clients_by_period` in Inflection `cumulative_chart.json` — Continuous "New Clients" tile goes live, no FE work.
 3. **[Andrew]** visual confirm both surfaces post-deploy.
 
