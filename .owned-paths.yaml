@@ -786,6 +786,13 @@ paths:
     note: "Gold layer outputs — DS 0.4.0 primary (black diamond gold chain)"
 
   # -----------------------------------------------------------------------
+  # etf_netassets_watch/ — ETFS_NETAST net-assets probe (DS~C-built)
+  # -----------------------------------------------------------------------
+  "etf_netassets_watch/**":
+    lane: POD4
+    note: "ETF net-assets probe + pull scripts + parquet data — Pod 4 DS owns (DS~C built it, ETFS_NETAST project, Andrew-directed 2026-05-15). AE 0.7.0's ETFS_NETAST infra work lives in infra/aws/** (already AE-laned). Added by CTO 2026-05-15 — path was UNDEFINED; DS~C's da4931c85 commit needed an audited override."
+
+  # -----------------------------------------------------------------------
   # goldfish/ — agent orchestration tooling
   # -----------------------------------------------------------------------
   "goldfish/**":
