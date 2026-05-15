@@ -92,17 +92,24 @@ COO asked for the state of Surface #2 — last open item on INFFIN Phase 2 ("11/
 
 **RAVC2 to COO:** Surface #2 VERIFIED, clear to close → .006 → INFFIN Phase 2. Non-blocking observation surfaced: bars render ~80% grey "Other" — data-faithful (Peter Lee = 199 clients, fragmented $166M book), not a defect; flagged the top-N rollup threshold as a possible separate small TO if wanted.
 
+**Closure (COO RAVC2 chain):**
+- COO RAVC2 ACCEPTED Surface #2 → `.006` CLOSED 12/12 (COO commit `33399b972`).
+- Caught a stale record: COO's close note marked INFFIN `.011`/`.012` as `dispatch_held`; git showed both shipped 2026-05-14 (`3b924da1` INFFIN.011, `22b7b7b4` INFFIN.012 — both on `origin/DEV` + `origin/PROD`). Sent COO the commit evidence; COO corrected the stale `ADVI_INFFIN.json` phase prose (`f7081cce8`). Ground-truth-over-claims discipline.
+- Supplied `.011` validation evidence (`feeBucket.ts` consolidation — 3 fee-view primitives + canonical `FeeView` type into one source-of-truth, 4 call-sites migrated with net LOC reduction, latent AdvisorsTab `client_count`/`new_clients` projection bug fixed, tsc-clean, cross-firm by data-shape not firmId). COO retro-RAVC2 ACCEPTED `.011`.
+- **INFFIN Phase 2 FE work complete** — `.006`/`.011`/`.012` all closed + verified. Only remaining INFFIN item is Andrew's acceptance of the 9 partner-visible surfaces — no FE work outstanding.
+
 ---
 
 ## Compiler Tools
 
 | Tool | Target | Result |
 |---|---|---|
-| `bun run tsc --noEmit` | portal full | 0 errors (exit 0) |
-| `bun run lint` | portal full | 10 warnings, 0 errors — unchanged from baseline; this patch added 0 |
-| `comp-transform schema-check` | — | Not run — no component-contract change; pure data-resolution logic inside an existing memo, no new rendered field |
+| `bun run tsc --noEmit` | portal full | 0 errors (exit 0) — re-run after every commit (Tasks 2–5) |
+| `bun run lint` | portal full | 10 warnings, 0 errors — held at baseline across all 4 FE commits; +0 added |
+| `comp-transform schema-check` | — | Not run — no component-contract change; pure data-resolution logic inside existing memos, no new rendered field |
+| Browser smoke (general-purpose agent + Playwright, dev server :5175) | Task 4 route verify + Task 6 Surface #2 verify | GEO city click stays on Distribution (collapses to city series); ADV-drill stacked-HH chart renders 5 quarters — both empirically confirmed against live code |
 
-Direct S3 artifact inspection (`aws s3 cp` + python json) was the decisive tool for both tasks — confirmed emit presence/absence and the median/p50 field divergence.
+Direct S3 artifact inspection (`aws s3 cp` + python json) was the decisive diagnostic for Tasks 1/2/3 (emit presence/absence, median/p50 field divergence, account vs household count). Browser smoke on a fresh dev server was decisive for Tasks 4 and 6.
 
 ---
 
@@ -121,10 +128,10 @@ Direct S3 artifact inspection (`aws s3 cp` + python json) was the decisive tool 
 ## Next Steps
 
 1. **[0.4.0_DT_ClientPlatform]** Push portal DEV (`1ac05055` + `79a512bd` + `92365e05` + `1bc8e4ad`) + bundle for release — median + account-grain counts + errant-route + drill-scoped New Clients tile, all FE-only (no artifact dependency).
-1b. **[0.4.0_DS_ClientPlatform~A]** `brief_ds_inflection_new_clients_drill_breakdown.md` — extend `new_clients_by_period` with `by_geo`/`by_geo_city`/`by_adv`. Drill-scoped tile (`1bc8e4ad`) activates on emit.
-2. **[2026-05-16 06:00Z chain]** materializes `new_clients_by_period` in Inflection `cumulative_chart.json` — Continuous "New Clients" tile goes live, no FE work.
-3. **[Andrew]** visual confirm both surfaces post-deploy.
+2. **[0.4.0_DS_ClientPlatform~A]** Two briefs: `brief_ds_inflection_new_clients_by_period.md` shipped firm-wide (`4e4a3c321`); `brief_ds_inflection_new_clients_drill_breakdown.md` acked + parked behind an AUA-drift incident, folding into the same chain rerun. Drill-scoped tile (`1bc8e4ad`) activates on the `by_geo`/`by_geo_city`/`by_adv` emit.
+3. **[next INF_D chain]** materializes `new_clients_by_period` (+ breakdowns) in Inflection `cumulative_chart.json` — Continuous "New Clients" tile goes live firm-wide then per-drill, no further FE work.
+4. **[Andrew]** visual confirm post-deploy; acceptance of the 9 INFFIN partner-visible surfaces is the only open INFFIN item.
 
-## Blockers
+## Status
 
-None.
+All six tasks complete. 4 FE commits on portal/DEV (awaiting DT push+bundle), 2 DS~A briefs dispatched, INFFIN `.006`/`.011`/`.012` closed + RAVC2-verified, INFFIN Phase 2 FE work complete. No blockers.
