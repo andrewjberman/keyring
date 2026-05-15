@@ -628,9 +628,13 @@ paths:
   "data/yang_pkl/**":
     lane: POD2
 
-  # SmartX — Pod 3 (TradingOperations)
+  # SmartX backend — 0.5.0_AE OpalETL lane.
+  # Andrew direct ruling 2026-05-15: "smartx (backend) is a 0.5.0_AE lane."
+  # SmartX = shared Opal resources -> the Opal ETL agent owns the backend
+  # (REST pull flow, manual_api-style pull scripts). Was POD3 (TradingOperations).
+  # Supersedes the pending CTO data/smartx/ lane ruling (SXPL_RESTIN.002 TO).
   "data/smartx/**":
-    lane: POD3
+    lane: SHARED_OPAL_ETL
 
   # Seeking Alpha — Pod 1 (MarketIntelligence)
   "data/seeking-alpha/**":
