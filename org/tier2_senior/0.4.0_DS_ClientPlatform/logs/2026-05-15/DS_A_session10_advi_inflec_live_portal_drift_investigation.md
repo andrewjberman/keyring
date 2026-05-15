@@ -68,14 +68,26 @@ Producer: `INF_D_04.client_portal_summary.py` — `_build_geo_view` + `_compute_
 | INF_C_02/C_03 S3 | s3://opal-data-inf/code/gold/ — sha MATCH vs HEAD |
 | INF_D_04 commits | 7a1b57a2b (A/B/D) + 9ad466d1d (C geo), pushed origin/CLOUD |
 | INF_D_04 S3 | s3://opal-data-inf/code/gold/INF_D_04.client_portal_summary.py — sha MATCH |
-| Materialization | PENDING — AE 0.7.0 `--from INF_C_02` chain rerun (one cycle fixes the live $787K + materializes INFDRF.001) |
-| AC5 smoke-test | PENDING the chain run — RAVC2-close follows |
+| Materialization | DONE — AE 0.7.0 `--from INF_C_02` rerun (SSM a0e77feb), complete 2026-05-15T20:56Z; 29 scripts |
+| AC5 smoke-test | 7/7 PASS — `inf_infdrf_ac5_smoke.py` against artifacts generated 20:53-20:55Z |
+
+## AC5 Smoke-Test Results (post-rerun, 7/7 PASS)
+
+| Check | Result |
+|-------|--------|
+| Defect 2 — cumulative_chart geo.data[-1] sum | $203,845,242.41 EXACT (drift was $204,632,759.83) |
+| Defect 2 — timeseries_overview aua.{m,q,a}.data[-1] | $203,845,242.41 all three; zero drift-value occurrences |
+| Defect A — geo state account_count == sum(city) | all states reconcile; "Other Cities" bucket present |
+| Defect B — histogram plotted + excluded == total | total=865, plotted=770, excluded=95 |
+| Defect C — geo distribution.total.count de-inflated | 296 (was phantom-inflated 321) |
+| Defect D — header.radial_12m_meta | present: is_partial=true, unclassified_aua=$2,246,329.81 |
+| COO fold-in — dimension freshness | OUTCOME (b): silver/accounts_dim STILL 04-29, household STILL 04-28 — did NOT un-freeze; orphaned from chain, separate AE item |
 
 ## Next Steps
 
 | Recipient | Item |
 |-----------|------|
-| **AE 0.7.0** | Fire the `--from INF_C_02` chain rerun — all code deployed + MATCH. One cycle fixes the live $787K drift + materializes INFDRF.001. |
-| **DS~A (self)** | Post-rerun: AC5 smoke-test (state==sum-city; plotted+excluded==total; timeseries current == $203.8M); then RAVC2-close ADVI_INFDRF.001 + .003 to COO + CC CTO + CC DE 0.4. |
-| **COO 2.0.0** | Route the dimension-refresh-path freeze (`silver/accounts_dim` 04-29 + `silver/api_dims/household` 04-28) as its own item — it is the deeper cause behind the geo phantom-households AND the radial_12m partial gap; Defect C canonical-count is blocked on it. |
+| **AE 0.7.0** | DONE — `--from INF_C_02` rerun complete 20:56Z; ADVI_INFDRF.002 also shipped (gold cron 06:00->14:00 UTC, inf-pipeline-v1.7.62). |
+| **DS~A (self)** | DONE — AC5 smoke-test 7/7 PASS; RAVC2-close ADVI_INFDRF.001 + .003 sent to COO (CC CTO/DE/AE). |
+| **COO 2.0.0** | Route the dimension-refresh-path freeze as a NEW item (ADVI_INFDRF.00x to AE): `silver/accounts_dim` + `silver/api_dims/household` have NO pull/build step in the chain — orphaned, frozen 04-29/04-28. Confirmed outcome (b) — not the append-gate. Defect C canonical client_count is blocked on this. |
 | **CTO 1.0.0** | Defect C canonical client_count held for the post-freshness clean re-compare; will verify the accounts_v2-vs-accounts_dim inclusion-semantics (closed-account) hypothesis then. |
