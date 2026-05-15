@@ -3593,3 +3593,78 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-05-15 | 0.7.0_AE_CloudOps | ADHC_COMPIL_V4.032 | comp-perf | comp-perf vectorize-audit INF_B_00 INF_B_03 INF_C_00 | PASS | AC5: 3 Pattern A scripts; all PASS (no false positives) |
 | 2026-05-15 | 0.7.0_AE_CloudOps | ADHC_COMPIL_V4.033 | comp-coverage | comp-coverage report --by-agent | PASS | 7.8% raw; 916 done TOs; 71 logged; 338 unlogged gated; REPORT.md written |
 | 2026-05-15 | 0.7.0_AE_CloudOps | ADHC_COMPIL_V4.033 | comp-coverage | comp-coverage report --gated-only | PASS | gated-only: 393 TOs; 8.4% coverage; FRONTEND/GOLD/API breakdown |
+| 2026-05-15 | 0.4.0_DS_ClientPlatform~A | ADVI_INFFIN.017.ds-data-as-of-emit-adds-batch | comp-pipescript | comp-pipescript overlap INF_API_PULL_TXN INF_API_PULL_PERF | FAIL |
+| 2026-05-15 | 1.0.0_SA_CTO | ADVI_INFINC.006-validation | comp-pipescript | comp-pipescript io data/orion/manual_api/pull_inflection_transactions_rest.py | FAIL |
+| 2026-05-15 | 1.0.0_SA_CTO | ADVI_INFINC.006-validation | comp-pipescript | comp-pipescript io data/orion/scripts/silver/convert_transactions_to_silver.py | PASS |
+| 2026-05-15 | 2.0.0_SA_COO | ADVI_INFINC.006 | comp-pipescript | comp-pipescript consumers convert_transactions_to_silver.py | PASS |
+| 2026-05-15 | 2.0.0_SA_COO | ADVI_INFINC.006 | comp-blast | comp-blast convert_transactions_to_silver | PASS |
+| 2026-05-15 | 2.0.0_SA_COO | ADVI_INFINC.006 | comp-pipescript | comp-pipescript consumers INF_D_05.activity_scan.py | FAIL |
+| 2026-05-15 | 2.0.0_SA_COO | ADVI_INFINC.006 | comp-blast | comp-blast activity_scan | PASS |
+| 2026-05-15 | 2.0.0_SA_COO | ADVI_INFINC.006 | comp-platinum | comp-platinum reverse platinum/firm/activity_scan_1y.json | PASS |
+| 2026-05-15 | 2.0.0_SA_COO | ADVI_INFINC.006 | comp-iam | comp-iam service inf-api-txn | PASS |
+| 2026-05-15 | 2.0.0_SA_COO | ADVI_INFINC.006 | comp-pipescript | comp-pipescript io data/orion/scripts/gold/INF_D_05.activity_scan.py | FAIL |
+| 2026-05-15 | 2.0.0_SA_COO | ADVI_INFINC.006 | comp-platinum | comp-platinum reverse platinum/firm/activity_scan_1y.json | PASS |
+| 2026-05-15 | 0.4.0_DS_ClientPlatform~A | ADVI_ECLDAT-freshness-verify | comp-pipescript | comp-pipescript io INF_E_00.eclipse_model_portfolios | FAIL |
+| 2026-05-15 | 0.4.0_DS_ClientPlatform~A | ADVI_ECLDAT-freshness-verify | comp-pipescript | comp-pipescript io INF_E_00 | FAIL |
+| 2026-05-15 | 0.4.0_DS_ClientPlatform~A | ADVI_ECLDAT-freshness-verify | comp-build | comp-build | PASS |
+| 2026-05-15 | 0.6.1_AE_PartnerETL | ADVI_ECLIPSE_WIRE | comp-pipescript | comp-pipescript io INF_E_00.eclipse_model_portfolios.py | FAIL |
+| 2026-05-15 | 0.6.1_AE_PartnerETL | ADVI_ECLIPSE_WIRE | comp-pipescript | comp-pipescript io INF_E_00 | FAIL |
+| 2026-05-15 | 0.6.1_AE_PartnerETL | ADVI_ECLIPSE_WIRE | comp-build | comp-build | PASS |
+| 2026-05-15 | 0.6.1_AE_PartnerETL | ADVI_ECLIPSE_WIRE | comp-pipescript | comp-pipescript io INF_E_00 | PASS |
+| 2026-05-15 | 0.6.1_AE_PartnerETL | ADVI_ECLIPSE_WIRE | comp-pipescript | comp-pipescript deployed pull_eclipse_portfolios | PASS |
+| 2026-05-15 | 0.6.1_AE_PartnerETL | ADVI_ECLIPSE_WIRE | comp-pipescript | comp-pipescript deployed convert_eclipse_portfolios_to_silver | PASS |
+| 2026-05-15 | 0.6.1_AE_PartnerETL | ADVI_ECLIPSE_WIRE | comp-pipescript | comp-pipescript deployed INF_E_00 | PASS |
+| 2026-05-15 | 0.4.0_DS_ClientPlatform~B | ADVI_TXNAMG.002.dsb-consumer-migration | comp-pipescript | comp-pipescript io INF_D_05 | PASS |
+| 2026-05-15 | 0.4.0_DS_ClientPlatform~B | ADVI_TXNAMG.002.dsb-consumer-migration | comp-pipescript | comp-pipescript io INF_D_05.activity_scan | FAIL |
+| 2026-05-15 | 0.4.0_DS_ClientPlatform~B | ADVI_TXNAMG.002.dsb-consumer-migration | comp-routes | comp-routes trace getFirmLeaderboard | PASS |
+| 2026-05-15 | 0.4.0_DS_ClientPlatform~D | ADVI_TXNAMG.001 | n/a | none — read-only investigation; comp graph does not model manual_api/ pulls or silver/transactions artifact (PRD 5.2); empirical S3 probes are sanctioned basis | N/A |
+| 2026-05-15 | 0.7.0_AE_CloudOps | ADVI_TXNAMG.002-AE-assist | comp-pipescript | comp-pipescript postdeps INF_D_05.activity_scan | PASS |
+| 2026-05-15 | 0.7.0_AE_CloudOps | ADVI_TXNAMG.002-AE-assist | comp-pipescript | comp-pipescript postdeps INF_D_05.activity_scan.py | PASS |
+| 2026-05-15 | 0.4.0_DS_ClientPlatform~D | ADVI_TXNAMG.003 | comp-pipescript | comp-pipescript io convert_transactions_to_silver.py | PASS |
+| 2026-05-15 | 0.4.0_DE_ClientPlatform | ADVI_INFGRO.005 | comp-cache | comp-cache collisions | PASS |
+| 2026-05-15 | 0.4.0_DE_ClientPlatform | ADVI_INFGRO.005 | comp-pipescript | comp-pipescript deployed convert_transactions_to_silver.py | PASS |
+| 2026-05-15 | 0.4.0_DS_ClientPlatform~D | ADVI_TXNAMG.003 | comp-pipescript | comp-pipescript io convert_transactions_to_silver.py | PASS (coverage gap — S3-DYNAMIC only, manual review basis per PRD 5.2) |
+| 2026-05-15 | 0.4.0_DS_ClientPlatform~D | ADVI_TXNAMG.003 | safe-deploy | safe-deploy.sh convert_transactions_to_silver.py (pre-push hook) | PASS — DEPLOYED [inf], SHA verify MATCH |
+| 2026-05-15 | 0.7.0_AE_CloudOps | ADVI_TXNAMG.004 | comp-iam | comp-iam service inf-api-txn | PASS |
+| 2026-05-15 | 0.4.0_DS_ClientPlatform~A | ADVI_INFLEC.new-clients-by-period | comp-pipescript | comp-pipescript io INF_D_00d | FAIL |
+| 2026-05-15 | 0.5.0_AE_OpalETL | SXPL_RESTIN.002 | comp-iam | comp-iam gaps | PASS |
+| 2026-05-15 | 0.4.0_DS_ClientPlatform~C | ADVI_BIWNDW.002 | comp-pipescript | comp-pipescript io data/orion/scripts/gold/D_00c.portal_leaderboard.py | FAIL |
+| 2026-05-15 | 0.4.0_DS_ClientPlatform~C | ADVI_BIWNDW.002 | comp-pipescript | comp-pipescript io D_00c.portal_leaderboard.py | FAIL |
+| 2026-05-15 | 0.4.0_DS_ClientPlatform~C | ADVI_BIWNDW.002 | comp-pipescript | comp-pipescript io INF_D_00c.portal_leaderboard.py | FAIL |
+| 2026-05-15 | 0.4.0_DS_ClientPlatform~C | ADVI_BIWNDW.002 | comp-pipescript | comp-pipescript io D_00 | PASS |
+| 2026-05-15 | 0.4.0_DS_ClientPlatform~D | ADVI_INFINC.006 | comp-routes | comp-routes behaviors | PASS |
+| 2026-05-15 | 0.4.0_DS_ClientPlatform~D | ADVI_INFINC.006 | comp-build | comp-build | PASS |
+| 2026-05-15 | 0.4.0_DS_ClientPlatform~D | ADVI_INFINC.006 | comp-pipescript | comp-pipescript io D_00c.portal_leaderboard.py | FAIL |
+| 2026-05-15 | 0.4.0_DS_ClientPlatform~D | ADVI_INFINC.006 | comp-pipescript | comp-pipescript io INF_C_02 | PASS |
+| 2026-05-15 | 0.4.0_DS_ClientPlatform~D | ADVI_INFINC.006 | comp-pipescript | comp-pipescript io INF_C_03 | PASS |
+| 2026-05-15 | 0.4.0_DS_ClientPlatform~D | ADVI_INFINC.006 | comp-iam | comp-iam service smartx-jwt-refresher | PASS |
+| 2026-05-15 | 0.4.0_DS_ClientPlatform~D | ADVI_INFINC.006 | comp-iam | comp-iam service smartx-rest-pull | PASS |
+| 2026-05-15 | 0.6.1_AE_PartnerETL | ADVI_INFDRF.002 | comp-pipescript | comp-pipescript deployed INF_C_02 | PASS |
+| 2026-05-15 | 0.6.1_AE_PartnerETL | ADVI_INFDRF.002 | comp-pipescript | comp-pipescript deployed INF_C_03 | PASS |
+| 2026-05-15 | 0.4.0_DS_ClientPlatform~A | ADVI_INFDRF.001 | comp-blast | comp-blast INF_B_00 | PASS |
+| 2026-05-15 | 0.4.0_DS_ClientPlatform~A | ADVI_INFDRF.001 | comp-pipescript | comp-pipescript io INF_D_04 | PASS |
+| 2026-05-15 | 0.4.0_DS_ClientPlatform~A | ADVI_INFDRF.001 | comp-pipescript | comp-pipescript io D_04.client_portal_summary.py | PASS |
+| 2026-05-15 | 0.4.0_DS_ClientPlatform~A | ADVI_INFDRF.001 | comp-pipescript | comp-pipescript io INF_D_00c.portal_leaderboard.py | FAIL |
+| 2026-05-15 | 0.7.0_AE_CloudOps | ADVI_INFLEC-from-c02-rerun | comp-pipescript | comp-pipescript deployed INF_C_02.client_performance | PASS |
+| 2026-05-15 | 0.4.0_DS_ClientPlatform~D | ADVI_INFINC.006 | ds-commit-gate | ds-commit-gate.sh pull_inflection_transactions_rest.py | PASS |
+| 2026-05-15 | 0.4.0_DS_ClientPlatform~D | ADVI_INFINC.006 | safe-deploy | safe-deploy.sh (pre-push) — manual_api not in mapping; S3 cp to code/manual_api/ done manually | N/A (manual deploy) |
+| 2026-05-15 | 0.7.0_AE_CloudOps | ADVI_INFLEC-from-c02-rerun | comp-pipescript | comp-pipescript deployed D_04.client_portal_summary.py | PASS |
+| 2026-05-15 | 0.7.0_AE_CloudOps | ADVI_INFLEC-from-c02-rerun | comp-pipescript | comp-pipescript postdeps D_04.client_portal_summary.py | PASS |
+| 2026-05-15 | 0.7.0_AE_CloudOps | ADVI_INFLEC-from-c02-rerun | comp-pipescript | comp-pipescript io INF_D_00c.portal_leaderboard.py | FAIL |
+| 2026-05-15 | 0.7.0_AE_CloudOps | ADVI_INFLEC-from-c02-rerun | comp-pipescript | comp-pipescript io INF_C_02.client_performance.py | PASS |
+| 2026-05-15 | 0.7.0_AE_CloudOps | ADVI_INFLEC-from-c02-rerun | comp-pipescript | comp-pipescript io INF_D_05a | FAIL |
+| 2026-05-15 | 0.7.0_AE_CloudOps | ADVI_INFLEC-from-c02-rerun | comp-pipescript | comp-pipescript io INF_D_00c | FAIL |
+| 2026-05-15 | 0.7.0_AE_CloudOps | ADVI_INFLEC-from-c02-rerun | comp-pipescript | comp-pipescript io data/orion/scripts/gold/INF_D_00c.portal_leaderboard.py | FAIL |
+| 2026-05-15 | 0.7.0_AE_CloudOps | ADVI_INFLEC-from-c02-rerun | comp-build | comp-build | PASS |
+| 2026-05-15 | 0.7.0_AE_CloudOps | ADVI_INFLEC-from-c02-rerun | comp-pipescript | comp-pipescript io INF_D_00c | PASS |
+| 2026-05-15 | 0.7.0_AE_CloudOps | ADVI_INFLEC-from-c02-rerun | comp-pipescript | comp-pipescript io INF_D_05a | PASS |
+| 2026-05-15 | 0.7.0_AE_CloudOps | ADVI_INFLEC-from-c02-rerun | comp-pipescript | comp-pipescript io INF_B_01b | PASS |
+| 2026-05-15 | 0.7.0_AE_CloudOps | ADVI_INFLEC-from-c02-rerun | comp-pipescript | comp-pipescript io INF_C_02 | PASS |
+| 2026-05-15 | 0.7.0_AE_CloudOps | ADVI_INFLEC-from-c02-rerun | comp-pipescript | comp-pipescript io inf_d_06a | PASS |
+| 2026-05-15 | 0.7.0_AE_CloudOps | ADVI_INFLEC-from-c02-rerun | comp-pipescript | comp-pipescript list bd-gold | FAIL |
+| 2026-05-15 | 0.7.0_AE_CloudOps | ADVI_INFLEC-from-c02-rerun | comp-pipescript | comp-pipescript io | FAIL |
+| 2026-05-15 | 0.7.0_AE_CloudOps | ADVI_INFLEC-from-c02-rerun | comp-pipescript | comp-pipescript io INF_D_99z | FAIL |
+| 2026-05-15 | 0.7.0_AE_CloudOps | ADVI_INFLEC-from-c02-rerun | comp-pipescript | comp-pipescript io B_01b | PASS |
+| 2026-05-15 | 0.7.0_AE_CloudOps | ADVI_INFLEC-from-c02-rerun | comp-pipescript | comp-pipescript io D_00c | PASS |
+| 2026-05-15 | 0.7.0_AE_CloudOps | ADVI_INFLEC-from-c02-rerun | comp-pipescript | comp-pipescript io b_00 | PASS |
+| 2026-05-15 | 0.7.0_AE_CloudOps | ADVI_INFLEC-from-c02-rerun | comp-pipescript | comp-pipescript io C_01c | PASS |
