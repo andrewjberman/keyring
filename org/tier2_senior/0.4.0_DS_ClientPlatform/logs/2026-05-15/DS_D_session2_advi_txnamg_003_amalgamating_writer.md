@@ -56,15 +56,40 @@ The exact committed code, run against the exact production S3 inputs:
 - `git push origin CLOUD` — pre-push hook fired `safe-deploy.sh`: `DEPLOYED [inf]
   convert_transactions_to_silver.py`, gate PASS, S3 cp + SHA verify MATCH on `opal-data-inf`.
 
-## Open / handoff — live chain-run is AE-coordinated
+## Deploy wave + AC5 artifact-level closure (2026-05-15, with AE 0.7.0)
 
-The TO-3 deliverable code is shipped, deployed, and locally validated against production S3.
-The **live in-EC2 chain-run** that materializes the amalgamated `silver/transactions/`
-artifact requires an INF gold runner — both `inf-gold-layer-runner` and `inf-gold-qa-runner`
-are **stopped**, and EC2 start/stop is AE-exclusive (DS cannot self-serve; same constraint
-DS~B hit on TO-2). Per the TO `<cross_domain_coordination>` sequencing invariant (PRD §3):
-TO-3 lands **before or same-wave as** TO-4 (writer-#3 silver-write removal). The live
-chain-run is the TO-3/TO-4 coordinated deploy wave — AE 0.7.0 owns the runner start + TO-4.
+The TO-3/TO-4 same-wave deploy was choreographed with AE 0.7.0 per the PRD §3 sequencing
+invariant and executed:
+
+- **Step 1 — TO-4 (AE 0.7.0):** `inf-api-txn` Lambda trimmed (writer #3's silver-write
+  removed, sentinel body revised to "txn bronze done"), terraform-apply 0-diff, tag
+  `inf-pipeline-v1.7.61`, live CodeSha verified. Writer #3's silver-write is gone first —
+  eliminates the clobber race entirely.
+- **Step 2 — chain-run (AE 0.7.0):** `inf-gold-trigger` `{"mode":"full"}` → plain
+  `--chain full` on `inf-gold-layer-runner` (production). Dispatched 17:57Z, completed
+  18:55Z exit 0 (`gold/meta/pipeline-complete.json` written — dispatch.sh writes it only
+  on `chain_exit==0`). `INF_API_SILVER_TXN` (this writer) ran ~10min in.
+
+**AC5 — artifact-level validation (`txnamg003_artifact_validate.py`):** ran against the
+materialized `s3://opal-data-inf/silver/transactions/2026-05-15.parquet` (36.8 MB, LM
+18:07:20Z) — **ALL PASS:**
+
+| Check | Result |
+|---|---|
+| AC1 column count == 48 | PASS — 31 REST + 6 meta + 11 CR, all present |
+| AC1 `id` unique (no fan-out) | PASS |
+| AC5 row count preserved vs REST spine | PASS — silver 1,299,493 == `bronze/transactions/2026-05-15.parquet` 1,299,493 |
+| AC3 enrichment present | PASS — 1,148,059/1,299,493 rows (88.35%) carry `repName` |
+| AC3 NULL-elsewhere | PASS — 151,434 non-overlap rows have all 11 carry cols NULL |
+| AC4 sparsity preserved (no fillna) | PASS |
+| AC2 2021 txn id=390362 carries all 11 join columns | PASS — repName=Peter Lee, createdDate=2021-01-13, currentAccountValue=851437.78 |
+| AC2 2023 txn id=572441 carries all 11 join columns | PASS — repName=Peter Lee, createdDate=2023-01-11, currentAccountValue=95873.08 |
+
+The full `--chain full` ran the D-tier end-to-end at exit 0 — TO-2's migrated `INF_D_05`
+consumer read the amalgamated camelCase silver without error (chain-exit-0 evidence).
+
+**TO-3 COMPLETE — all AC1-6 PASS, artifact materialized + validated.** `silver/transactions/`
+now has exactly one writer (the gold chain). AE 0.7.0 sends the TO-4 RAVC2 on this PASS.
 
 ## Compiler Tools
 
