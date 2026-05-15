@@ -161,3 +161,26 @@ $28.66/account.
   (Ultra Short +44.9%, Short +34.5%) — Eclipse's cached model headline lags the live portfolio
   list. Documented, not blocking; the account-decomposable `total_value` is the canonical figure.
 - **comp graph:** INF_E_00 should be registered once chain-wired so `comp-pipescript` covers it.
+
+---
+
+## Addendum — Daily automation wired + decoupled (same session, post-gold-build)
+
+Andrew directed coordination with AE 0.6.1 to get the pipeline running daily, then ruled
+that Eclipse must never be able to block the portal publish.
+
+**Chain wiring (AE 0.6.1, commit `81b53ab97`):** Eclipse trio added to `orion-gold-dispatch.sh`
+CATALOG (`INF_ECLIPSE_PULL` / `INF_ECLIPSE_SILVER` / `INF_E_00`, each `--date {date}`).
+
+**Decouple (AE 0.6.1, commit `415d8d121`) — Andrew product-invariant:** Eclipse trio removed
+from `CHAIN_FULL` / `CHAIN_INCREMENTAL` (chain_exit purely A/B/C/D); runs as a best-effort
+post-sentinel `ECLIPSE-BLOCK` after `pipeline-complete.json` is written. `run_eclipse_step()`
+is `timeout -k 60 600`-bounded (hang case) and never returns non-zero. Observability:
+`gold/eclipse/_meta/dispatch_eclipse_status.json`. New `--chain eclipse` standalone mode.
+
+**Validation (DS~A eyes-on):**
+- In-chain test `--from INF_ECLIPSE_PULL` 16:16Z: `gold/eclipse/2026-05-15/` 399/214/9, exact match to manual baseline.
+- Decouple test `--chain incremental` 16:46Z: post-sentinel ECLIPSE-BLOCK fired best-effort, all 3 steps ok, `chain_exit=0` unaffected; `dispatch_eclipse_status.json` `{overall:ok, chain_exit:0}` confirmed on S3. Post-sentinel ordering verified by code position in `415d8d121` (incremental writes no sentinel to test live).
+- JWT self-heal confirmed live: SM eclipse JWT stale at chain time -> Path 3 Orion-exchange mints a live JWT. No SM-eclipse-JWT ordering dependency.
+
+**First live run:** 06:00 UTC 2026-05-16, `--chain full`. Health signal: `dispatch_eclipse_status.json`.
