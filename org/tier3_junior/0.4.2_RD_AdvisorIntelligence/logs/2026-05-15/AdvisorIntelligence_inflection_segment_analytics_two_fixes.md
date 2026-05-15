@@ -66,6 +66,19 @@ Also removed `grainView`/`geoAuaGrain` from the `distributionData` dep array —
 
 **Fix:** gate `isInflectionHh` on `cohort === 'adv'`. GEO city clicks now fall through to `setSelectedChildKey` (collapse-to-series) → city period-over-period. 49F unaffected.
 
+**Verified:** browser smoke on a fresh dev server — Continuous/GEO/AUA → drill Washington → click Everett → stayed on Distribution tab, chart collapsed to Everett's series ($37.6M, Q2'25–Q2'26 POP), breadcrumb `All States / Washington / Everett`, BOOKS tab inactive. Andrew confirmed. (Andrew's initial "still broken" report was a stale Vite HMR build pre-`92365e05`.)
+
+## Task 5 — Continuous "New Clients" tile must scope by GEO/ADV drill
+
+**Symptom (Andrew):** the tile is adjusted by Window only — it reads firm-wide `new_clients_by_period` regardless of drill, so drilling into a state/city/advisor still shows the firm-wide count.
+
+**Verdict:** needs a DS emit extension + FE wiring. FE shipped (`1bc8e4ad`); DS extension briefed to DS~A.
+
+The FE has only firm-level period counts — it cannot derive per-segment new-client counts. The artifact's `new_clients_by_period` needs per-segment breakdowns.
+
+- **FE (`1bc8e4ad`, portal/DEV):** added `resolveNewClientsByPeriod()` — selects firm / per-state / per-city / per-advisor slice by cohort + drill keys, firm-wide fallback when the breakdown is absent (DS pre-emit). Wired into both tile blocks (AUA `ContinuousChartView` + NNA `ContinuousNnaDivergingView`). `types.ts`: `new_clients_by_period` extended with `by_geo`/`by_geo_city`/`by_adv` (`Record<key, NewClientsPeriodSet>`). Ships defensively — current firm-wide behavior preserved until DS emits.
+- **DS brief:** `deliverables/brief_ds_inflection_new_clients_drill_breakdown.md` → DS~A. Extend `build_new_clients_by_period` in `INF_D_00d.cumulative_chart.py` to bucket by the same household→state/city/advisor assignment the geo/adv views use. Follow-up to `4e4a3c321`.
+
 ---
 
 ## Compiler Tools
@@ -87,12 +100,15 @@ Direct S3 artifact inspection (`aws s3 cp` + python json) was the decisive tool 
 | `portal/src/pages/AdvisorIntelligence/_shared/tabs/DistributionTab.tsx` | portal/DEV | Task 2: 4 L1 returns wrapped in `withSynthesizedPercentiles` | `1ac05055` |
 | `portal/src/pages/AdvisorIntelligence/_shared/tabs/DistributionTab.tsx` | portal/DEV | Task 3: L1 account-grain count override + city-map `account_count` carry-through | `79a512bd` |
 | `portal/src/pages/AdvisorIntelligence/_shared/tabs/DistributionTab.tsx` | portal/DEV | Task 4: gate `isInflectionHh` on `cohort==='adv'` — GEO city click no longer routes to Books | `92365e05` |
+| `portal/src/pages/AdvisorIntelligence/_shared/tabs/DistributionTab.tsx` + `_shared/types.ts` | portal/DEV | Task 5: `resolveNewClientsByPeriod()` — drill-scope the New Clients tile (by_geo/by_geo_city/by_adv) | `1bc8e4ad` |
+| `org/.../deliverables/brief_ds_inflection_new_clients_drill_breakdown.md` | workspace/CLOUD | new — DS~A follow-up brief (drill breakdowns) | (this log's commit) |
 | `org/.../deliverables/brief_ds_inflection_new_clients_by_period.md` | workspace/CLOUD | new — DS~A brief | (this log's commit) |
 | `org/.../logs/2026-05-15/...` | workspace/CLOUD | this log | (this commit) |
 
 ## Next Steps
 
-1. **[0.4.0_DT_ClientPlatform]** Push portal DEV (`1ac05055` + `79a512bd` + `92365e05`) + bundle for release — GEO L1 State median + account-grain counts + errant-route fix, all FE-only (no artifact dependency).
+1. **[0.4.0_DT_ClientPlatform]** Push portal DEV (`1ac05055` + `79a512bd` + `92365e05` + `1bc8e4ad`) + bundle for release — median + account-grain counts + errant-route + drill-scoped New Clients tile, all FE-only (no artifact dependency).
+1b. **[0.4.0_DS_ClientPlatform~A]** `brief_ds_inflection_new_clients_drill_breakdown.md` — extend `new_clients_by_period` with `by_geo`/`by_geo_city`/`by_adv`. Drill-scoped tile (`1bc8e4ad`) activates on emit.
 2. **[2026-05-16 06:00Z chain]** materializes `new_clients_by_period` in Inflection `cumulative_chart.json` — Continuous "New Clients" tile goes live, no FE work.
 3. **[Andrew]** visual confirm both surfaces post-deploy.
 
