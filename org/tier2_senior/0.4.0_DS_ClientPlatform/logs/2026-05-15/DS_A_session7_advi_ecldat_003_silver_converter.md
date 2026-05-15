@@ -50,7 +50,7 @@ Author `data/orion/scripts/silver/convert_eclipse_portfolios_to_silver.py` — c
 | ds-commit-gate.sh | PASS (py_compile + AST scan + ruff py39) |
 | Dry-run | PASS — 835 portfolios, 18 models, 9 model_compositions |
 | Full run (S3 upload) | PASS — 4 S3 objects written |
-| Commit SHA | TBD (pending commit below) |
+| Commit SHA | `9ea03e512` |
 | Author | `0.4.0_DS_ClientPlatform~A <0.4.0_DS_ClientPlatform~A@opal.agent>` |
 | safe-deploy gate | PASS |
 
