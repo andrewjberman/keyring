@@ -3530,3 +3530,22 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-05-14 | 0.7.0_AE_CloudOps | ADHC_COMPIL_V4.028 | comp-pipescript | comp-pipescript shadow-detect _compute_hh_lifecycle --recent-failures 7d | PASS | Phase 3 AC5: 10-commit cascade; 9-link chain |
 | 2026-05-14 | 0.7.0_AE_CloudOps | ADHC_COMPIL_V4.028 | comp-pipescript | comp-pipescript shadow-detect _aggregate_tax_status_per_advisor --recent-failures 7d | PASS | Phase 3 AC5: 4-commit cascade; 11-link chain |
 | 2026-05-14 | 0.7.0_AE_CloudOps | ADHC_COMPIL_V4.028 | comp-pipescript | comp-pipescript shadow-detect _aggregate_gro_per_advisor_window [retroactive at fd11a33c2] | PASS | Phase 3 AC3: 7-link chain visible pre-fix; dropna_subset at line 628 — advisor_key lock-in confirmed |
+| 2026-05-14 | 0.4.0_DS_ClientPlatform~A | ADVI_INFFIN.017.ds-data-as-of-emit-adds-batch | comp-pipescript | comp-pipescript deployed INF_D_02 | PASS |
+| 2026-05-14 | 0.4.0_DS_ClientPlatform~A | ADVI_INFFIN.017.ds-data-as-of-emit-adds-batch | comp-pipescript | comp-pipescript deployed INF_D_00 | PASS |
+| 2026-05-15 | 0.4.0_DS_ClientPlatform~C | ADVI_INFFIN.020 | comp-pipescript | comp-pipescript io INF_D_02 | PASS | Phase 0: confirmed canonical_lots (gold/lots/lots_latest.parquet) in read map; account_gains S3 path confirmed |
+| 2026-05-15 | 0.4.0_DS_ClientPlatform~C | ADVI_INFFIN.020 | comp-pipescript | comp-pipescript io INF_D_00 | PASS | Phase 0: WRITES: none detected (stale aua_by_tax_status orphan confirmed; no emitter in code) |
+| 2026-05-15 | 0.4.0_DS_ClientPlatform~C | ADVI_INFFIN.020 | ds-commit-gate | ds-commit-gate.sh INF_D_02 INF_D_00 | PASS | 3-gate clean: py_compile + AST + ruff py39 on both scripts |
+| 2026-05-14 | 0.4.0_DS_ClientPlatform~A | ADVI_INFFIN.017.ds-data-as-of-emit-adds-batch | comp-types | comp-types index TenantLayoutConfig | PASS |
+| 2026-05-14 | 0.4.0_DS_ClientPlatform~A | ADVI_INFFIN.017.ds-data-as-of-emit-adds-batch | comp-types | comp-types index TenantLayoutConfig | PASS |
+| 2026-05-14 | 0.4.0_DS_ClientPlatform~A | ADVI_INFFIN.017.ds-data-as-of-emit-adds-batch | comp-types | comp-types index TenantLayoutConfig | PASS |
+| 2026-05-14 | 0.4.0_DS_ClientPlatform~A | ADVI_INFFIN.017.ds-data-as-of-emit-adds-batch | comp-types | comp-types index TenantLayoutConfig | PASS |
+| 2026-05-14 | 0.4.0_DS_ClientPlatform~A | ADVI_INFFIN.017.ds-data-as-of-emit-adds-batch | comp-types | comp-types index TenantLayoutConfig | PASS |
+| 2026-05-14 | 0.4.0_DS_ClientPlatform~A | ADVI_INFFIN.017.ds-data-as-of-emit-adds-batch | comp-types | comp-types index TenantLayoutConfig --firm-conditional-sites | PASS |
+| 2026-05-14 | 0.4.0_DS_ClientPlatform~A | ADVI_INFFIN.017.ds-data-as-of-emit-adds-batch | comp-types | comp-types blast TenantLayoutConfig | PASS |
+| 2026-05-14 | 0.4.0_DS_ClientPlatform~A | ADVI_INFFIN.017.ds-data-as-of-emit-adds-batch | comp-types | comp-types index TenantLayoutConfig --firm-conditional-sites | PASS |
+| 2026-05-14 | 0.4.0_DS_ClientPlatform~A | ADVI_INFFIN.017.ds-data-as-of-emit-adds-batch | comp-types | comp-types index TenantLayoutConfig --firm-conditional-sites | PASS |
+| 2026-05-14 | 0.4.0_DS_ClientPlatform~A | ADVI_INFFIN.017.ds-data-as-of-emit-adds-batch | comp-types | comp-types fields TenantLayoutConfig | PASS |
+| 2026-05-14 | 0.4.0_DS_ClientPlatform~A | ADVI_INFFIN.017.ds-data-as-of-emit-adds-batch | comp-types | comp-types index TenantLayoutConfig --firm-conditional-sites | PASS |
+| 2026-05-14 | 0.4.0_DS_ClientPlatform~A | ADVI_INFFIN.017.ds-data-as-of-emit-adds-batch | comp-types | comp-types index TenantLayoutConfig --firm-conditional-sites | PASS |
+| 2026-05-14 | 0.4.0_DS_ClientPlatform~A | ADVI_INFFIN.017.ds-data-as-of-emit-adds-batch | comp-types | comp-types index CanonicalFirmId | PASS |
+| 2026-05-14 | 0.4.0_DS_ClientPlatform~A | ADVI_INFFIN.017.ds-data-as-of-emit-adds-batch | comp-types | comp-types index AdvisorTimeseriesPoint | PASS |
