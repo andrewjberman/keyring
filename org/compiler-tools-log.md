@@ -3499,3 +3499,34 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-05-14 | 0.6.1_AE_PartnerETL | (no-TO) | comp-validate | comp-validate gold-nan | PASS |
 | 2026-05-14 | 0.6.1_AE_PartnerETL | (no-TO) | comp-validate | comp-validate gold-nan --strict | FAIL |
 | 2026-05-14 | 0.6.1_AE_PartnerETL | (no-TO) | comp-pipescript | comp-pipescript deployed data/orion/scripts/bronze/pull_eclipse_portfolios.py | PASS |
+| 2026-05-14 | 0.4.0_DS_ClientPlatform~A | ADVI_INFFIN.017.ds-data-as-of-emit-adds-batch | comp-pipescript | comp-pipescript io INF_D_02 | PASS |
+| 2026-05-14 | 0.4.0_DS_ClientPlatform~A | ADVI_INFFIN.017.ds-data-as-of-emit-adds-batch | comp-pipescript | comp-pipescript io INF_D_00 | PASS |
+| 2026-05-14 | 0.4.0_DS_ClientPlatform~A | ADVI_INFFIN.017.ds-data-as-of-emit-adds-batch | comp-pipescript | comp-pipescript --help | PASS |
+| 2026-05-14 | 0.4.0_DS_ClientPlatform~A | ADVI_INFFIN.017.ds-data-as-of-emit-adds-batch | comp-pipescript | comp-pipescript io INF_D_00c | FAIL |
+| 2026-05-14 | 0.4.0_DS_ClientPlatform~A | ADVI_INFFIN.017.ds-data-as-of-emit-adds-batch | comp-pipescript | comp-pipescript deployed data/orion/scripts/gold/lib/skip_gate.py | PASS |
+| 2026-05-14 | 0.4.0_DS_ClientPlatform~A | ADVI_INFFIN.017.ds-data-as-of-emit-adds-batch | comp-pipescript | comp-pipescript io INF_D_00c.portal_leaderboard | FAIL |
+| 2026-05-14 | 0.4.0_DS_ClientPlatform~A | ADVI_INFFIN.017.ds-data-as-of-emit-adds-batch | comp-pipescript | comp-pipescript stats --pipeline inf-gold | FAIL |
+| 2026-05-14 | 0.4.0_DS_ClientPlatform~A | ADVI_INFFIN.017.ds-data-as-of-emit-adds-batch | comp-pipescript | comp-pipescript stats | PASS |
+| 2026-05-14 | 0.4.0_DS_ClientPlatform~A | ADVI_INFFIN.017.ds-data-as-of-emit-adds-batch | comp-pipescript | comp-pipescript io INF_B_00 | PASS |
+| 2026-05-14 | 0.4.0_DS_ClientPlatform~A | ADVI_INFFIN.017.ds-data-as-of-emit-adds-batch | comp-pipescript | comp-pipescript io INF_B_03 | PASS |
+| 2026-05-14 | 0.4.0_DS_ClientPlatform~A | ADVI_INFFIN.017.ds-data-as-of-emit-adds-batch | comp-pipescript | comp-pipescript io INF_C_00 | PASS |
+| 2026-05-14 | 0.4.0_DS_ClientPlatform~A | ADVI_INFFIN.017.ds-data-as-of-emit-adds-batch | comp-pipescript | comp-pipescript io INF_C_01 | PASS |
+| 2026-05-14 | 0.4.0_DS_ClientPlatform~A | ADVI_INFFIN.017.ds-data-as-of-emit-adds-batch | comp-pipescript | comp-pipescript io INF_A_03 | PASS |
+| 2026-05-14 | 0.4.0_DS_ClientPlatform~A | ADVI_INFFIN.017.ds-data-as-of-emit-adds-batch | comp-pipescript | comp-pipescript postmerge-cols INF_D_00c | PASS |
+| 2026-05-14 | 0.4.0_DS_ClientPlatform~A | ADVI_INFFIN.017.ds-data-as-of-emit-adds-batch | comp-pipescript | comp-pipescript postmerge-cols INF_D_00c --strict | FAIL |
+| 2026-05-14 | 0.4.0_DS_ClientPlatform~A | ADVI_INFFIN.017.ds-data-as-of-emit-adds-batch | comp-pipescript | comp-pipescript shadow-detect _aggregate_gro_per_advisor_window | PASS |
+| 2026-05-14 | 0.4.0_DS_ClientPlatform~A | ADVI_INFFIN.017.ds-data-as-of-emit-adds-batch | comp-pipescript | comp-pipescript postmerge-cols INF_B_00 | PASS |
+| 2026-05-14 | 0.4.0_DS_ClientPlatform~A | ADVI_INFFIN.017.ds-data-as-of-emit-adds-batch | comp-pipescript | comp-pipescript postmerge-cols INF_C_00 | PASS |
+| 2026-05-14 | 0.4.0_DS_ClientPlatform~A | ADVI_INFFIN.017.ds-data-as-of-emit-adds-batch | comp-pipescript | comp-pipescript postmerge-cols INF_C_01 | PASS |
+| 2026-05-14 | 0.4.0_DS_ClientPlatform~A | ADVI_INFFIN.017.ds-data-as-of-emit-adds-batch | comp-pipescript | comp-pipescript shadow-detect _aggregate_gro_per_advisor_window --recent-failures 7d | PASS |
+| 2026-05-14 | 0.4.0_DS_ClientPlatform~A | ADVI_INFFIN.017.ds-data-as-of-emit-adds-batch | comp-pipescript | comp-pipescript shadow-detect _compute_hh_lifecycle --recent-failures 7d | PASS |
+| 2026-05-14 | 0.4.0_DS_ClientPlatform~A | ADVI_INFFIN.017.ds-data-as-of-emit-adds-batch | comp-pipescript | comp-pipescript shadow-detect _aggregate_tax_status_per_advisor --recent-failures 7d | PASS |
+| 2026-05-14 | 0.4.0_DS_ClientPlatform~A | ADVI_INFFIN.017.ds-data-as-of-emit-adds-batch | comp-pipescript | comp-pipescript io INF_D_00 | PASS |
+| 2026-05-14 | 0.7.0_AE_CloudOps | ADHC_COMPIL_V4.027 | comp-pipescript | comp-pipescript postmerge-cols INF_D_00c [retroactive at fd11a33c2] | PASS | Phase 3 AC1: advisor_key flagged at lines 628+634 pre-fix; retroactive validation PASS |
+| 2026-05-14 | 0.7.0_AE_CloudOps | ADHC_COMPIL_V4.027 | comp-pipescript | comp-pipescript postmerge-cols INF_B_00 | PASS | Phase 3 AC4: 2 merge sites, 18 flags |
+| 2026-05-14 | 0.7.0_AE_CloudOps | ADHC_COMPIL_V4.027 | comp-pipescript | comp-pipescript postmerge-cols INF_C_00 | PASS | Phase 3 AC4: 3 merge sites, 39 flags |
+| 2026-05-14 | 0.7.0_AE_CloudOps | ADHC_COMPIL_V4.027 | comp-pipescript | comp-pipescript postmerge-cols INF_C_01 | PASS | Phase 3 AC4: 0 merge sites — clean |
+| 2026-05-14 | 0.7.0_AE_CloudOps | ADHC_COMPIL_V4.028 | comp-pipescript | comp-pipescript shadow-detect _aggregate_gro_per_advisor_window --recent-failures 7d | PASS | Phase 2 AC2: 3-commit CASCADE PATTERN DETECTED; 7-link chain |
+| 2026-05-14 | 0.7.0_AE_CloudOps | ADHC_COMPIL_V4.028 | comp-pipescript | comp-pipescript shadow-detect _compute_hh_lifecycle --recent-failures 7d | PASS | Phase 3 AC5: 10-commit cascade; 9-link chain |
+| 2026-05-14 | 0.7.0_AE_CloudOps | ADHC_COMPIL_V4.028 | comp-pipescript | comp-pipescript shadow-detect _aggregate_tax_status_per_advisor --recent-failures 7d | PASS | Phase 3 AC5: 4-commit cascade; 11-link chain |
+| 2026-05-14 | 0.7.0_AE_CloudOps | ADHC_COMPIL_V4.028 | comp-pipescript | comp-pipescript shadow-detect _aggregate_gro_per_advisor_window [retroactive at fd11a33c2] | PASS | Phase 3 AC3: 7-link chain visible pre-fix; dropna_subset at line 628 — advisor_key lock-in confirmed |
