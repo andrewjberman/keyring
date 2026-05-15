@@ -1,0 +1,20 @@
+{
+  "project_code": "ETFS_NETAST",
+  "macro_code": "ETFS",
+  "name": "ETF Net-Assets Daily Monitoring",
+  "description": "ETF net-assets daily probe (TrueShares DIVZ/IDVZ -- NAV, market price, shares, net assets; silver-tier daily parquet) graduating from an off-the-books pilot to managed. Probe code (etf_netassets_watch/: etf_probe.py / backfill.py / run_daily.cmd) committed da4931c85. The probe writes to a new S3 bucket opal-data-etfs (us-east-1), created ad-hoc via `aws s3 mb` (296 objects). Andrew directed 2026-05-15 that the bucket be brought under shared-infra Terraform management. First managed task: Terraform-adopt the bucket (import-to-0-diff into infra/aws/terraform/shared-infra/s3.tf).",
+  "prds": [],
+  "source_brief": "Andrew direct directive 2026-05-15 (ETF net-assets probe built this session; opal-data-etfs bucket created; directed the bucket be brought under shared-infra Terraform). DS~C TO request relayed via COO. Turnkey implementation brief: docs/briefs/ae-brief-opal-data-etfs-bucket.md (commit da4931c85).",
+  "status": "active",
+  "phase": "Phase 0 -- off-the-books pilot graduating to managed (2026-05-15). The ETF net-assets daily probe is live (etf_netassets_watch/, committed da4931c85) and writing to opal-data-etfs (296 objects). COO created this project + dispatched TO-1 (ETFS_NETAST.001) GO to AE 0.7.0: Terraform-adopt the opal-data-etfs bucket into shared-infra s3.tf (import-to-0-diff -- the bucket pre-exists with data). Turnkey brief da4931c85 is the implementation guide.",
+  "blocking": "(1) TO-1 (ETFS_NETAST.001) opal-data-etfs Terraform adoption -- AE 0.7.0, dispatched GO 2026-05-15; AE sequences it around the in-flight ADVI_INFETL.RUNDATE-DISPATCH. (2) .owned-paths.yaml has no etf_netassets_watch/** path rule -- DS~C's probe commit da4931c85 used an audited GIT_COMMIT_AUTHOR_OVERRIDE; the permanent fix is a path rule in .owned-paths.yaml (CTO-owned governance file) -- routed to CTO 2026-05-15.",
+  "depends_on": [],
+  "depends_on_note": "Independent. opal-data-etfs is a standalone S3 bucket; the Terraform adoption goes into the shared-infra module -- no pipeline module exists for ETF data, so shared-infra is the pragmatic home per Andrew's directive (flagged in the brief).",
+  "absorbs": [],
+  "created": "2026-05-15",
+  "pods": ["0.4", "0.7"],
+  "pipeline": "shared-infra (S3) + etf_netassets_watch local probe",
+  "coo_lane": "2.0.0_SA_COO",
+  "thread_counter": 0,
+  "threads": []
+}
