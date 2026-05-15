@@ -149,6 +149,22 @@ def _canonicalize_script_id(raw: str) -> str:
     return s
 
 
+def _ci_lookup(scripts, ident):
+    """Case-insensitive exact-key lookup into a DAG's scripts dict.
+
+    Returns the canonical key if `ident` matches a key ignoring case, else None.
+    The orion-gold dispatch catalog carries lowercase chain-step suffixes
+    (INF_D_00c, INF_D_05a, INF_B_01b, ...) that a blanket .upper() mangles.
+    """
+    if ident in scripts:
+        return ident
+    il = ident.lower()
+    for k in scripts:
+        if k.lower() == il:
+            return k
+    return None
+
+
 def _auto_resolve_script_id(raw_id, pipeline_hint=None):
     """Resolve a script ID to (dag, canonical_id) across all indexed pipelines.
 
@@ -232,15 +248,16 @@ def _auto_resolve_script_id(raw_id, pipeline_hint=None):
     # --- INF-prefixed gold scripts ---
     if upper.startswith("INF_") and not bd_only:
         dag = _build_dag("inf-gold")
-        if upper in dag.scripts:
-            return dag, upper
-        matches = [s for s in dag.scripts if upper in s]
+        hit = _ci_lookup(dag.scripts, raw)
+        if hit:
+            return dag, hit
+        matches = [s for s in dag.scripts if lower in s.lower()]
         if len(matches) == 1:
             return dag, matches[0]
         if len(matches) > 1:
             print(f"Multiple INF matches for {raw!r}: {', '.join(sorted(matches))}")
             sys.exit(1)
-        close = get_close_matches(upper, list(dag.scripts.keys()), n=3, cutoff=0.45)
+        close = get_close_matches(raw, list(dag.scripts.keys()), n=3, cutoff=0.45)
         hint = f"Did you mean: {', '.join(close)}?" if close else \
                f"Available INF scripts: {', '.join(sorted(dag.scripts.keys()))}"
         print(f"Script not found: {raw}. {hint}")
@@ -308,10 +325,11 @@ def _auto_resolve_script_id(raw_id, pipeline_hint=None):
 
     if not inf_only:
         bd_dag = _build_dag("bd-gold")
-        if upper in bd_dag.scripts:
-            bd_cid = upper
+        bd_hit = _ci_lookup(bd_dag.scripts, raw)
+        if bd_hit:
+            bd_cid = bd_hit
         else:
-            bd_matches = [s for s in bd_dag.scripts if upper in s]
+            bd_matches = [s for s in bd_dag.scripts if lower in s.lower()]
             if len(bd_matches) == 1:
                 bd_cid = bd_matches[0]
 
@@ -322,8 +340,9 @@ def _auto_resolve_script_id(raw_id, pipeline_hint=None):
         # use the same bare IDs as BD. Substring match creates false collisions (e.g. D_04
         # would spuriously match INF_D_04). Only fire disambiguation when the exact same ID
         # exists in both pipeline DAGs.
-        if upper in inf_dag.scripts:
-            inf_cid = upper
+        inf_hit = _ci_lookup(inf_dag.scripts, raw)
+        if inf_hit:
+            inf_cid = inf_hit
 
     if bd_cid and inf_cid:
         print(f"Ambiguous script ID: {raw!r} found in multiple pipelines:")
@@ -351,7 +370,7 @@ def _auto_resolve_script_id(raw_id, pipeline_hint=None):
     except Exception:
         pass
 
-    close = get_close_matches(upper, all_ids, n=3, cutoff=0.45)
+    close = get_close_matches(raw, all_ids, n=3, cutoff=0.45)
     if close:
         print(f"Script not found: {raw}. Did you mean: {', '.join(close)}?")
     else:
