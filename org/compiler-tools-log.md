@@ -3466,3 +3466,36 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-05-14 | 0.4.0_DE_ClientPlatform | ADVI_INFGRO.005 | comp-cache | comp-cache collisions | PASS |
 | 2026-05-14 | 0.4.0_DE_ClientPlatform | ADVI_INFGRO.005 | comp-pipescript | comp-pipescript deployed INF_D_00c.portal_leaderboard | PASS |
 | 2026-05-14 | 0.7.0_AE_CloudOps | (no-TO) | comp-pipescript | comp-pipescript deployed INF_D_00c | PASS |
+| 2026-05-14 | 0.7.0_AE_CloudOps | (no-TO) | comp-pipescript | comp-pipescript deployed INF_D_00c.portal_leaderboard | PASS |
+| 2026-05-14 | 0.7.0_AE_CloudOps | (no-TO) | comp-transform | comp-transform schema-check AdvisorsTab | PASS |
+| 2026-05-14 | 0.7.0_AE_CloudOps | (no-TO) | comp-cache | comp-cache collisions | PASS |
+| 2026-05-14 | 0.7.0_AE_CloudOps | YANG_ALLOC_CLEANUP | comp-pipescript | comp-pipescript io yang-generate-allocation-summary | FAIL |
+| 2026-05-14 | 0.7.0_AE_CloudOps | YANG_ALLOC_CLEANUP | comp-iam | comp-iam service yang-generate-allocation-summary | PASS |
+| 2026-05-14 | 0.7.0_AE_CloudOps | YANG_ALLOC_CLEANUP | comp-iam | comp-iam service yang-generate-allocation-summary | PASS |
+| 2026-05-14 | 0.4.0_DE_ClientPlatform | ADVI_SHARED.001 | comp-transform | comp-transform schema-check TenantLayoutConfig | FAIL |
+| 2026-05-14 | 0.4.0_DE_ClientPlatform | ADVI_SHARED.001 | comp-blast | comp-blast TenantLayoutConfig | PASS |
+| 2026-05-14 | 0.4.0_DS_ClientPlatform~D | ADVI_INFINC.001 | comp-pipescript | comp-pipescript io INF_B_00 | PASS |
+| 2026-05-14 | 0.4.0_DE_ClientPlatform | ADVI_SHARED.006 | comp-cache | comp-cache collisions | PASS |
+| 2026-05-14 | 0.4.0_DE_ClientPlatform | ADVI_SHARED.006 | comp-routes | comp-routes trace advisor-intelligence | PASS |
+| 2026-05-14 | 0.4.0_DT_ClientPlatform | (no-TO) | comp-cache | comp-cache collisions | PASS |
+| 2026-05-14 | 0.4.2_RD_AdvisorIntelligence | ADVI_SHARED.007 | comp-routes | comp-routes trace advisor-intelligence | PASS |
+| 2026-05-14 | 0.4.2_RD_AdvisorIntelligence | ADVI_SHARED.007 | comp-routes | comp-routes behaviors | PASS |
+| 2026-05-14 | 0.4.2_RD_AdvisorIntelligence | ADVI_SHARED.007 | comp-routes | comp-routes trace getClientsTab | PASS |
+| 2026-05-14 | 0.4.2_RD_AdvisorIntelligence | ADVI_SHARED.007 | comp-routes | comp-routes trace /api/scoped/advisor-intelligence | PASS |
+| 2026-05-14 | 0.4.2_RD_AdvisorIntelligence | ADVI_SHARED.007 | comp-pipescript | comp-pipescript io shared-auth-validator-edge | FAIL |
+
+| 0.1.0_DE_MarketIntelligence | 2026-05-14 | comp-tooltip drift | N/A (no tooltip work) | P1 circular import fix session |
+| 2026-05-14 | 0.1.0_DE_MarketIntelligence | (no-TO) | comp-routes | comp-routes trace getPlatinumPartnerAnalytics | PASS |
+| 2026-05-14 | 0.1.0_DE_MarketIntelligence | (no-TO) | comp-routes | comp-routes behaviors | PASS |
+| 2026-05-14 | 0.1.0_DE_MarketIntelligence | (no-TO) | comp-routes | comp-routes behaviors | PASS |
+| 2026-05-14 | 0.4.0_DE_ClientPlatform | P1_5surface_phase_1_4_fee_cascade_wiring | comp-routes | comp-routes trace getHeaderMetrics | PASS |
+| 2026-05-14 | 0.4.0_DS_ClientPlatform~C | P0_156k_bronze_vs_gold_5_14_variance | comp-pipescript | comp-pipescript io INF_D_04.client_portal_summary | PASS |
+| 2026-05-14 | 0.4.0_DS_ClientPlatform~C | P0_156k_bronze_vs_gold_5_14_variance | comp-blast | comp-blast INF_D_04.client_portal_summary | PASS |
+| 2026-05-14 | 0.4.2_RD_AdvisorIntelligence | ADVI_INFFIN.NNN.rd-nna-l0-firm-wide-display-bug | comp-validate | comp-validate --help | PASS |
+| 2026-05-14 | 0.4.2_RD_AdvisorIntelligence | ADVI_INFFIN.NNN.rd-nna-l0-firm-wide-display-bug | comp-pipescript | comp-pipescript deployed data/orion/scripts/gold/INF_D_02.advisor_client_detail.py | PASS |
+| 2026-05-14 | 0.6.1_AE_PartnerETL | (no-TO) | comp-pipescript | comp-pipescript deployed inf-gold-trigger | PASS |
+| 2026-05-14 | 0.6.1_AE_PartnerETL | (no-TO) | comp-iam | comp-iam service inf-gold-trigger | PASS |
+| 2026-05-14 | 0.6.1_AE_PartnerETL | (no-TO) | comp-blast | comp-blast inf-gold-trigger | PASS |
+| 2026-05-14 | 0.6.1_AE_PartnerETL | (no-TO) | comp-validate | comp-validate gold-nan | PASS |
+| 2026-05-14 | 0.6.1_AE_PartnerETL | (no-TO) | comp-validate | comp-validate gold-nan --strict | FAIL |
+| 2026-05-14 | 0.6.1_AE_PartnerETL | (no-TO) | comp-pipescript | comp-pipescript deployed data/orion/scripts/bronze/pull_eclipse_portfolios.py | PASS |
