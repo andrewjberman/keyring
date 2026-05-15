@@ -1,0 +1,20 @@
+{
+  "project_code": "SXPL_RESTIN",
+  "macro_code": "SXPL",
+  "name": "SmartX REST Integration",
+  "description": "Replace the SmartX browser-automation exporter (infra/aws/ec2/smartx-exporter, Playwright page-scrape) with a direct REST integration, and give SmartX the Orion parked-JWT token-management pattern. SmartX is a standards-compliant OIDC/OAuth2 stack (IdentityServer); a ROPC password grant works fully headless -> 2h Bearer JWT, so token refresh runs in a Lambda (no EC2, no browser). NOT an Orion replacement -- a parallel sibling pipeline tracking different clients. First data goal (Andrew): daily model value + holdings weights for each Opal model, pulled ~09:00 ET (SmartX settles the day's data by ~9 AM ET). JWT store + data colocated in opal-data-bd (SmartX feeds 49F/BD-domain work).",
+  "prds": [],
+  "source_brief": "Andrew direct directive 2026-05-15 (HAR analysis of a live SmartX manager-portal session; live ROPC token test + endpoint spot-check). Design brief authored by DS~B: docs/briefs/smartx-rest-integration-design-20260515.md (commit 352ab4585). Andrew routed it to COO for TO decomposition.",
+  "status": "active",
+  "phase": "Phase 0 -- design brief shipped (352ab4585), COO decomposed 2026-05-15. Andrew's directed TO structure (brief section-9): TO-1 (DS) per-model data availability assessment -- the designated initial TO; TO-2 (AE) stand up the whole pull flow (smartx-jwt-refresher Lambda + EventBridge 09:00 ET + IAM + smartx/jwt/current secret + the daily pull landing model value + holdings weights to opal-data-bd); TO-3+ (DS) silver/gold modeling + portal wiring + the smartx-exporter EC2 decommission, scoped after TO-1. COO dispatch 2026-05-15: TO-1 (SXPL_RESTIN.001) GO to DS~B; TO-2 (SXPL_RESTIN.002) authored for AE 0.6.1 (SXPL = PartnerETL domain, 0.6.1 idle post-Eclipse) but STAGED dispatch_held pending Andrew's confirm to engage AE 0.6.1; TO-3+ not yet authored (scope after TO-1).",
+  "blocking": "(1) TO-1 (SXPL_RESTIN.001) per-model availability assessment -- DS~B, dispatched GO 2026-05-15 (additive to DS~B's ADVI_TXNAMG.002, no conflict). (2) TO-2 (SXPL_RESTIN.002) the pull flow -- authored for AE 0.6.1, STAGED dispatch_held pending Andrew confirming AE 0.6.1 engagement on this new (non-TXNAMG) PartnerETL-domain workstream. (3) TO-3+ (DS silver/gold + portal + exporter decommission) not authored -- scope after TO-1 per Andrew's structure.",
+  "depends_on": [],
+  "depends_on_note": "Independent of Orion -- a parallel sibling pipeline. Applies the Orion parked-JWT pattern (data/orion/manual_api/jwt_freshness.py) to SmartX; the JWT reader lib generalizes or siblings that. SmartX JWT + data land in opal-data-bd (BD-domain colocation, Andrew 2026-05-15).",
+  "absorbs": [],
+  "created": "2026-05-15",
+  "pods": ["0.4", "0.6"],
+  "pipeline": "smartx (new REST pull) + opal-data-bd",
+  "coo_lane": "2.0.0_SA_COO",
+  "thread_counter": 0,
+  "threads": []
+}
