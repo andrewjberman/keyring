@@ -87,9 +87,16 @@ architecture migration; the speed objective is empirically unmet and surfaced as
 
 ### First post-deploy run watch (INFINC.006)
 
-The next daily `INF_API_PULL_TXN` chain step runs the new account-windowed pull from
-`s3://opal-data-inf/code/manual_api/`. Mode auto-resolves (Mon-Sat incremental / Sunday
-full-pull). It merges into the existing `bronze/transactions/2026-05-15.parquet` baseline —
-no manual baseline establishment needed. If a future agent observes the first incremental
-run, confirm: 7-day window logged, merge reconciles, bronze row count ~1.3M, 31 cols, all
-statuses present.
+AE 0.7.0 confirmed (2026-05-15 ~21:00Z): **neither of today's chain runs exercised the new
+INFINC.006 pull** — the TXNAMG TO-3/TO-4 wave (17:57-18:55Z) predated the 20:47Z deploy, and
+the ADVI_INFDRF `--from INF_C_02` rerun starts downstream of `INF_API_PULL_TXN`. The account-
+windowed pull is fully validated **locally** against live Orion + prod S3; the in-EC2 chain
+confirmation is **post-close**, not a gate (COO accepted the RAVC2 as the close).
+
+It rides the **2026-05-16 14:00Z daily cron** (`inf-pipeline-v1.7.62`) — `INF_API_PULL_TXN`
+runs the new pull from `s3://opal-data-inf/code/manual_api/`. Mode auto-resolves (Mon-Sat
+incremental / Sunday full-pull); the incremental path merges into the existing
+`bronze/transactions/2026-05-15.parquet` baseline — no manual baseline establishment needed.
+No on-demand runner spin was requested (not worth a spin to re-confirm local validation).
+Whoever observes that run should confirm: 7-day window logged, merge reconciles, bronze
+~1.3M rows / 31 cols, all 6 statuses present.
