@@ -48,7 +48,7 @@ There are 21 Terraform modules. Their **Lambda code** is covered everywhere by `
 | `causality` + `seeking-alpha` Terraform modules | TF | NO | NO — not even on the S3 Terraform backend; dormant | **DECLINE** — vestigial |
 | Data-scripts *persistent* manifest | code-artifact audit trail | tool only, no manifest | YES, but tool already suffices | **DECLINE** — see §4 |
 
-EventBridge cron distribution (67 rules, 23 files): news-pipeline 25, inf-pipeline ~17, bd-pipeline 12, market-overview 6, smartx-pipeline 4, seeking-alpha 2, exec-summary 1. The cron is the one non-Lambda resource class where a silent commit-but-unapplied drift **changes production behavior invisibly** — a pipeline runs on the wrong schedule, or doesn't run at all. (Note: inf-pipeline crons live in per-Lambda `.tf` files, so they are *not* caught by `lambda-source-map.json`, which tracks code in `source_dir`, not the `.tf`.)
+EventBridge cron distribution (67 rules, 23 files): news-pipeline 25, inf-pipeline 17, bd-pipeline 12, market-overview 6, smartx-pipeline 3, seeking-alpha 2, exec-summary 1, portal-auth 1 (a CloudWatch-alarm rule, not a cron). The cron is the one non-Lambda resource class where a silent commit-but-unapplied drift **changes production behavior invisibly** — a pipeline runs on the wrong schedule, or doesn't run at all. (Note: inf-pipeline crons live in per-Lambda `.tf` files, so they are *not* caught by `lambda-source-map.json`, which tracks code in `source_dir`, not the `.tf`.)
 
 ---
 
@@ -56,7 +56,7 @@ EventBridge cron distribution (67 rules, 23 files): news-pipeline 25, inf-pipeli
 
 ### Map (both extend existing patterns — minimal new surface)
 
-1. **EventBridge crons for the active daily pipelines** — `inf`, `bd`, `news`, `market-overview`, `smartx`, `yang`. Add a `{module}-resource-map.json` per pipeline scoped to its `aws_cloudwatch_event_rule` / `aws_scheduler_schedule` (and, free, its Lambda *infra-config* — memory/timeout, which `lambda-source-map.json` also doesn't track). Zero new tooling; `drift-check-resource-map.sh` already handles any module. TO authoring will confirm which of the 67 rules are genuinely live vs dormant before mapping them — per the "not vestigial" directive.
+1. **EventBridge crons for the active daily pipelines** — `inf`, `bd`, `news`, `market-overview`, `smartx` — the five modules that declare cron rules (`yang` declares none; it orchestrates via Step Functions, so its daily-trigger path is confirmed during triage, not assumed). Add a `{module}-resource-map.json` per pipeline scoped to its `aws_cloudwatch_event_rule` / `aws_scheduler_schedule` (and, free, its Lambda *infra-config* — memory/timeout, which `lambda-source-map.json` also doesn't track). Zero new tooling; `drift-check-resource-map.sh` already handles any module. TO authoring will confirm which of the 67 rules are genuinely live vs dormant before mapping them — per the "not vestigial" directive.
 
 2. **Portal frontend deployment manifest** — a lightweight manifest tying the S3 + CloudFront deployed assets back to the `portal` submodule PROD commit. It is the only customer-facing code artifact today with *zero* drift tracking; "did prod get the latest build" is currently answerable only by manual inspection.
 
@@ -72,7 +72,7 @@ EventBridge cron distribution (67 rules, 23 files): news-pipeline 25, inf-pipeli
 
 **Andrew reviews §2–§4.** If the two-item recommendation holds (or is adjusted), the work becomes **ADHC_DRIFTD v0.2**, decomposed into TOs owned by 0.7.0_AE_CloudOps:
 
-- TO — EventBridge cron resource-maps for the 6 active pipelines (live-vs-dormant triage first, then `{module}-resource-map.json` + `record-resource-deploy.sh` wiring).
-- TO — portal frontend deployment manifest + drift check.
+- TO-4 — EventBridge cron resource-maps for the 5 cron-declaring active pipelines (live-vs-dormant triage first, then `{module}-resource-map.json` + `record-resource-deploy.sh` wiring).
+- TO-5 — portal frontend deployment manifest + drift check.
 
 No mapping is started until Andrew confirms the scope.
