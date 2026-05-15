@@ -3549,3 +3549,19 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-05-14 | 0.4.0_DS_ClientPlatform~A | ADVI_INFFIN.017.ds-data-as-of-emit-adds-batch | comp-types | comp-types index TenantLayoutConfig --firm-conditional-sites | PASS |
 | 2026-05-14 | 0.4.0_DS_ClientPlatform~A | ADVI_INFFIN.017.ds-data-as-of-emit-adds-batch | comp-types | comp-types index CanonicalFirmId | PASS |
 | 2026-05-14 | 0.4.0_DS_ClientPlatform~A | ADVI_INFFIN.017.ds-data-as-of-emit-adds-batch | comp-types | comp-types index AdvisorTimeseriesPoint | PASS |
+| 2026-05-14 | 0.4.0_DS_ClientPlatform~A | ADVI_INFFIN.017.ds-data-as-of-emit-adds-batch | comp-pipescript | comp-pipescript io INF_C_02 | PASS |
+| 2026-05-14 | 0.4.0_DS_ClientPlatform~A | ADVI_INFFIN.017.ds-data-as-of-emit-adds-batch | comp-pipescript | comp-pipescript io INF_C_03 | PASS |
+| 2026-05-14 | 0.4.0_DS_ClientPlatform~A | ADVI_INFFIN.017.ds-data-as-of-emit-adds-batch | comp-pipescript | comp-pipescript io INF_D_02 | PASS |
+| 2026-05-14 | 0.4.0_DS_ClientPlatform~A | ADVI_INFFIN.017.ds-data-as-of-emit-adds-batch | comp-pipescript | comp-pipescript deployed INF_D_02 | PASS |
+| 2026-05-14 | 0.4.0_DS_ClientPlatform~A | ADVI_INFFIN.017.ds-data-as-of-emit-adds-batch | comp-pipescript | comp-pipescript deployed INF_D_02 --pipeline inf | PASS |
+| 2026-05-15 | 0.7.0_AE_CloudOps | ADHC_COMPIL_V4.031.ae-adapter-audit | comp-adapter-audit | comp-adapter-audit getPlatinumAdvisorSummaryStaticInflection | PASS | AC1: 65 WARNs — 5 SCHEMA-DRIFT (book/fee_summary/relationship_stacked_periods/summary/top_holdings), 58 NESTED-SCHEMA-DRIFT, 2 TYPE-ONLY (headline=INFFIN#7 root, composition=removed) |
+| 2026-05-15 | 0.7.0_AE_CloudOps | ADHC_COMPIL_V4.031.ae-adapter-audit | comp-adapter-audit | retroactive at 32df3b85 (pre-cae9dcb2): fallback detection | PASS | AC2: FALLBACK-ORDER WARN — book_pos=30 < summary_pos=51, no spread; confirms inverted fallback losing historical_quarters |
+| 2026-05-15 | 0.7.0_AE_CloudOps | ADHC_COMPIL_V4.031.ae-adapter-audit | comp-adapter-audit | retroactive pre-d622a249: relationship_stacked_periods threading | PASS | AC3: SCHEMA-DRIFT WARN — relationship_stacked_periods in S3 but not in typed interface (not added until d622a249) |
+| 2026-05-15 | 0.7.0_AE_CloudOps | ADHC_COMPIL_V4.031.ae-adapter-audit | comp-adapter-audit | comp-adapter-audit getPlatinumAdvisorSummary | PASS | AC5 breadth run 2 — no crash, SCHEMA-DRIFT + NOT-THREADED findings |
+| 2026-05-15 | 0.7.0_AE_CloudOps | ADHC_COMPIL_V4.031.ae-adapter-audit | comp-adapter-audit | comp-adapter-audit getPlatinumFirmDashboard | PASS | AC5 breadth run 3 — no crash, consistent output structure |
+| 2026-05-15 | 0.7.0_AE_CloudOps | ADHC_COMPIL_V4.031.ae-adapter-audit | comp-adapter-audit | comp-adapter-audit getAdvisorBook | PASS | AC5 breadth run 4 — 46 WARNs, manifest written; total 4 adapters tested across session |
+| 2026-05-14 | 0.4.0_DS_ClientPlatform~A | ADVI_INFFIN.017.ds-data-as-of-emit-adds-batch | comp-pipescript | comp-pipescript deployed INF_C_02 | PASS |
+| 2026-05-14 | 0.4.0_DS_ClientPlatform~A | ADVI_INFFIN.017.ds-data-as-of-emit-adds-batch | comp-pipescript | comp-pipescript deployed INF_C_03 | PASS |
+| 2026-05-14 | 0.4.0_DS_ClientPlatform~A | ADVI_INFFIN.017.ds-data-as-of-emit-adds-batch | comp-pipescript | comp-pipescript deployed INF_C_02 --bucket opal-data-inf | FAIL |
+| 2026-05-14 | 0.4.0_DS_ClientPlatform~A | ADVI_INFFIN.017.ds-data-as-of-emit-adds-batch | comp-pipescript | comp-pipescript deployed INF_C_02 --pipeline inf | PASS |
+| 2026-05-14 | 0.4.0_DS_ClientPlatform~A | ADVI_INFFIN.017.ds-data-as-of-emit-adds-batch | comp-pipescript | comp-pipescript deployed INF_C_03 --pipeline inf | PASS |

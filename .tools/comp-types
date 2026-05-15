@@ -1,0 +1,10 @@
+#!/bin/bash
+# comp-types — TypeScript type consumer index, blast, and field audit tool
+# Usage: comp-types index <TypeName> [--firm-conditional-sites] [--severity warn|error]
+#        comp-types blast <TypeName>
+#        comp-types fields <TypeName> [--severity warn|error]
+WORKSPACE="$(cd "$(dirname "$0")/.." && pwd)"
+python "$WORKSPACE/org/modules/graph/types_cli.py" "$@"
+_exit=$?
+python "$WORKSPACE/org/modules/graph/comp_log_auto.py" "comp-types" "$*" $_exit 2>/dev/null
+exit $_exit
