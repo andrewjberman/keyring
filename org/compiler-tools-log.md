@@ -3575,3 +3575,8 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-05-14 | 0.4.0_DS_ClientPlatform~A | ADVI_INFFIN.017.ds-data-as-of-emit-adds-batch | comp-pipescript | comp-pipescript io INF_D_05 | PASS |
 | 2026-05-14 | 0.4.0_DS_ClientPlatform~A | ADVI_INFFIN.017.ds-data-as-of-emit-adds-batch | comp-pipescript | comp-pipescript io INF_D_09 | PASS |
 | 2026-05-14 | 0.4.0_DS_ClientPlatform~A | ADVI_INFFIN.017.ds-data-as-of-emit-adds-batch | comp-pipescript | comp-pipescript io INF_D_06 | PASS |
+| 2026-05-15 | 0.4.0_DS_ClientPlatform~D | ADVI_INFINC.004 | comp-pipescript | comp-pipescript io INF_D_06/D_05/D_09 | PARTIAL | Phase 0 — static scan sparse (dynamic S3 paths); read scripts directly for loop structure |
+| 2026-05-15 | 0.4.0_DS_ClientPlatform~D | ADVI_INFINC.004 | ds-commit-gate.sh | ds-commit-gate.sh INF_D_06.client_timeseries.py | PASS | Pattern C anchor cache |
+| 2026-05-15 | 0.4.0_DS_ClientPlatform~D | ADVI_INFINC.004 | ds-commit-gate.sh | ds-commit-gate.sh INF_D_05.client_top_holdings.py | PASS | Pattern C anchor cache |
+| 2026-05-15 | 0.4.0_DS_ClientPlatform~D | ADVI_INFINC.004 | ds-commit-gate.sh | ds-commit-gate.sh INF_D_09.account_timeseries.py | PASS | Pattern C anchor cache |
+| 2026-05-15 | 0.4.0_DS_ClientPlatform~D | ADVI_INFINC.004 | safe-deploy.sh | safe-deploy pre-push hook | PASS | SHA-MATCH all 3 scripts; gate PASS |
