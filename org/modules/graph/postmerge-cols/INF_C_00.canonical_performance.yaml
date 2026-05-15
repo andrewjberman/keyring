@@ -1,0 +1,148 @@
+script_id: INF_C_00.canonical_performance
+path: data/orion/scripts/gold/INF_C_00.canonical_performance.py
+merge_sites:
+- line: 137
+  func_name: process_date
+  result_var: acct_aua
+  left_expr: acct_aua
+  right_expr: 'prev_aua[[''account_id'', ''total_aua'']].rename(columns={''total_aua'':
+    ''aua_prior''})'
+  on_cols:
+  - account_id
+  how: left
+  flagged_cols:
+  - col: aua_change
+    line: 144
+    pattern: subscript
+  - col: growth
+    line: 161
+    pattern: subscript
+  - col: date
+    line: 170
+    pattern: subscript
+  - col: date
+    line: 171
+    pattern: dropna_subset
+  - col: aua_prior
+    line: 142
+    pattern: subscript
+  - col: total_aua
+    line: 144
+    pattern: subscript
+  - col: daily_inflow
+    line: 151
+    pattern: subscript
+  - col: daily_outflow
+    line: 152
+    pattern: subscript
+  - col: net_nna
+    line: 153
+    pattern: subscript
+  - col: aua_change
+    line: 161
+    pattern: subscript
+  - col: net_nna
+    line: 161
+    pattern: subscript
+  - col: total_aua
+    line: 192
+    pattern: subscript_multi
+  - col: aua_prior
+    line: 144
+    pattern: subscript
+- line: 149
+  func_name: process_date
+  result_var: acct_aua
+  left_expr: acct_aua
+  right_expr: nna
+  on_cols:
+  - account_id
+  how: left
+  flagged_cols:
+  - col: aua_change
+    line: 144
+    pattern: subscript
+  - col: growth
+    line: 161
+    pattern: subscript
+  - col: date
+    line: 170
+    pattern: subscript
+  - col: date
+    line: 171
+    pattern: dropna_subset
+  - col: aua_prior
+    line: 142
+    pattern: subscript
+  - col: total_aua
+    line: 144
+    pattern: subscript
+  - col: daily_inflow
+    line: 151
+    pattern: subscript
+  - col: daily_outflow
+    line: 152
+    pattern: subscript
+  - col: net_nna
+    line: 153
+    pattern: subscript
+  - col: aua_change
+    line: 161
+    pattern: subscript
+  - col: net_nna
+    line: 161
+    pattern: subscript
+  - col: total_aua
+    line: 192
+    pattern: subscript_multi
+  - col: aua_prior
+    line: 144
+    pattern: subscript
+- line: 165
+  func_name: process_date
+  result_var: acct_aua
+  left_expr: acct_aua
+  right_expr: acct_dim[merge_cols]
+  on_cols:
+  - account_id
+  how: left
+  flagged_cols:
+  - col: aua_change
+    line: 144
+    pattern: subscript
+  - col: growth
+    line: 161
+    pattern: subscript
+  - col: date
+    line: 170
+    pattern: subscript
+  - col: date
+    line: 171
+    pattern: dropna_subset
+  - col: aua_prior
+    line: 142
+    pattern: subscript
+  - col: total_aua
+    line: 144
+    pattern: subscript
+  - col: daily_inflow
+    line: 151
+    pattern: subscript
+  - col: daily_outflow
+    line: 152
+    pattern: subscript
+  - col: net_nna
+    line: 153
+    pattern: subscript
+  - col: aua_change
+    line: 161
+    pattern: subscript
+  - col: net_nna
+    line: 161
+    pattern: subscript
+  - col: total_aua
+    line: 192
+    pattern: subscript_multi
+  - col: aua_prior
+    line: 144
+    pattern: subscript

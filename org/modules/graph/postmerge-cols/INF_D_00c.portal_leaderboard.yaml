@@ -1,0 +1,159 @@
+script_id: INF_D_00c.portal_leaderboard
+path: data/orion/scripts/gold/INF_D_00c.portal_leaderboard.py
+merge_sites:
+- line: 377
+  func_name: _aua_at_start
+  result_var: agg
+  left_expr: agg
+  right_expr: acc_sets
+  on_cols:
+  - advisor_key
+  how: left
+  flagged_cols:
+  - col: account_ids_start
+    line: 378
+    pattern: subscript
+  - col: account_ids_start
+    line: 381
+    pattern: subscript
+  - col: account_ids_start
+    line: 378
+    pattern: subscript
+- line: 480
+  func_name: _compute_new_clients_per_advisor
+  result_var: merged
+  left_expr: team
+  right_expr: adim
+  on_cols:
+  - account_id
+  how: inner
+  flagged_cols:
+  - col: advisor_key
+    line: 483
+    pattern: groupby
+  - col: household_id
+    line: 483
+    pattern: groupby
+- line: 524
+  func_name: _aggregate_perf_per_advisor
+  result_var: joined
+  left_expr: p
+  right_expr: at
+  on_cols:
+  - account_id
+  how: inner
+  flagged_cols:
+  - col: advisor_key
+    line: 530
+    pattern: subscript
+- line: 643
+  func_name: _aggregate_gro_per_advisor_window
+  result_var: joined
+  left_expr: iw
+  right_expr: hh_to_adv
+  on_cols:
+  - household_id
+  how: left
+  flagged_cols:
+  - col: advisor_key
+    line: 644
+    pattern: dropna_subset
+  - col: advisor_key
+    line: 650
+    pattern: subscript
+- line: 795
+  func_name: _compute_hh_lifecycle
+  result_var: merged
+  left_expr: adim
+  right_expr: acct_aua
+  on_cols:
+  - account_id
+  how: left
+  flagged_cols:
+  - col: aua
+    line: 796
+    pattern: subscript
+  - col: aua
+    line: 796
+    pattern: subscript
+  - col: household_id
+    line: 819
+    pattern: groupby
+- line: 813
+  func_name: _compute_hh_lifecycle
+  result_var: acct_window
+  left_expr: acct_window
+  right_expr: acct_to_hh
+  on_cols:
+  - account_id
+  how: left
+  flagged_cols:
+  - col: household_id
+    line: 814
+    pattern: groupby
+- line: 834
+  func_name: _compute_hh_lifecycle
+  result_var: hh
+  left_expr: hh
+  right_expr: win_inflows
+  on_cols:
+  - household_id
+  how: left
+  flagged_cols:
+  - col: window_inflows
+    line: 835
+    pattern: subscript
+  - col: window_net_nna
+    line: 836
+    pattern: subscript
+  - col: lifecycle
+    line: 840
+    pattern: subscript
+  - col: attributed_aua
+    line: 844
+    pattern: subscript
+  - col: aua
+    line: 844
+    pattern: subscript
+  - col: inception_source
+    line: 826
+    pattern: subscript
+  - col: first_trade_date
+    line: 829
+    pattern: subscript
+  - col: inception_source
+    line: 833
+    pattern: subscript
+  - col: first_trade_date
+    line: 838
+    pattern: subscript
+  - col: first_trade_date
+    line: 831
+    pattern: subscript
+  - col: window_inflows
+    line: 835
+    pattern: subscript
+  - col: window_net_nna
+    line: 836
+    pattern: subscript
+  - col: window_inflows
+    line: 839
+    pattern: subscript
+- line: 377
+  func_name: _filter_partition
+  result_var: agg
+  left_expr: agg
+  right_expr: acc_sets
+  on_cols:
+  - advisor_key
+  how: left
+  flagged_cols:
+  - col: account_ids_start
+    line: 378
+    pattern: subscript
+  - col: account_ids_start
+    line: 381
+    pattern: subscript
+  - col: account_ids_start
+    line: 378
+    pattern: subscript

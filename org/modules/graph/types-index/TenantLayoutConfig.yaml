@@ -1,0 +1,306 @@
+type_name: TenantLayoutConfig
+definition_file: portal\src\pages\AdvisorIntelligence\_shared\types\TenantLayoutConfig.ts
+total_consumer_sites: 60
+elapsed_seconds: 1.06
+default_fallback_sites: 1
+consumers:
+  - file: portal\src\pages\AdvisorIntelligence\_partners\inflection\index.tsx
+    line: 132
+    category: hook-call
+    default_fallback: false
+    code: 'const layout = useTenantLayout(firmId)'
+  - file: portal\src\pages\AdvisorIntelligence\_shared\AdvisorBookView.tsx
+    line: 143
+    category: hook-call
+    default_fallback: false
+    code: 'const tenantLayout = useTenantLayout(firmOverride)'
+  - file: portal\src\pages\AdvisorIntelligence\_shared\AdvisorPublicProfile.tsx
+    line: 1125
+    category: hook-call
+    default_fallback: false
+    code: 'const layout = useTenantLayout(firmOverride)'
+  - file: portal\src\pages\AdvisorIntelligence\_shared\components\PartnerAnalytics.tsx
+    line: 158
+    category: hook-call
+    default_fallback: false
+    code: 'const tenantLayout = useTenantLayout(firmOverride)'
+  - file: portal\src\pages\AdvisorIntelligence\_shared\tabs\AdvisorsTab.tsx
+    line: 241
+    category: hook-call
+    default_fallback: false
+    code: 'const tenantLayout = useTenantLayout(firmId)'
+  - file: portal\src\pages\AdvisorIntelligence\_shared\tabs\ClientsTab.tsx
+    line: 128
+    category: hook-call
+    default_fallback: false
+    code: 'const layout = useTenantLayout(firmId)'
+  - file: portal\src\pages\AdvisorIntelligence\_shared\tabs\ClientsTab.tsx
+    line: 136
+    category: hook-call
+    default_fallback: false
+    code: 'const dataSourceLayout = useTenantLayout(firmOverride)'
+  - file: portal\src\pages\AdvisorIntelligence\_shared\tabs\DistributionTab.tsx
+    line: 776
+    category: hook-call
+    default_fallback: false
+    code: 'const layout = useTenantLayout(firmId)'
+  - file: portal\src\pages\AdvisorIntelligence\_partners\49financial\layout.ts
+    line: 1
+    category: import
+    default_fallback: false
+    code: "import type { TenantLayoutConfig } from '../../_shared/types/TenantLayoutConfig'"
+  - file: portal\src\pages\AdvisorIntelligence\_partners\inflection\layout.ts
+    line: 1
+    category: import
+    default_fallback: false
+    code: "import type { TenantLayoutConfig } from '../../_shared/types/TenantLayoutConfig'"
+  - file: portal\src\pages\AdvisorIntelligence\_shared\hooks\useTenantLayout.ts
+    line: 1
+    category: import
+    default_fallback: false
+    code: "import type { TenantLayoutConfig } from '../types/TenantLayoutConfig'"
+  - file: portal\src\pages\AdvisorIntelligence\_shared\hooks\useTenantLayout.ts
+    line: 2
+    category: import
+    default_fallback: false
+    code: "import { DEFAULT_LAYOUT } from '../types/TenantLayoutConfig'"
+  - file: portal\src\pages\AdvisorIntelligence\_partners\49financial\layout.ts
+    line: 20
+    category: type-annotation
+    default_fallback: false
+    code: 'export const FORTY_NINE_FINANCIAL_LAYOUT: TenantLayoutConfig = {'
+  - file: portal\src\pages\AdvisorIntelligence\_partners\inflection\layout.ts
+    line: 24
+    category: type-annotation
+    default_fallback: false
+    code: 'export const INFLECTION_LAYOUT: TenantLayoutConfig = {'
+  - file: portal\src\pages\AdvisorIntelligence\_shared\hooks\useTenantLayout.ts
+    line: 27
+    category: type-annotation
+    default_fallback: false
+    code: 'export function useTenantLayout(firmId: string | undefined | null): TenantLayout'
+  - file: portal\src\pages\AdvisorIntelligence\_shared\hooks\useTenantLayout.ts
+    line: 28
+    category: default-fallback
+    default_fallback: false
+    code: 'if (!firmId) return DEFAULT_LAYOUT'
+  - file: portal\src\pages\AdvisorIntelligence\_shared\hooks\useTenantLayout.ts
+    line: 29
+    category: default-fallback
+    default_fallback: true
+    code: 'return LAYOUTS[firmId] ?? DEFAULT_LAYOUT'
+  - file: portal\src\pages\AdvisorIntelligence\_partners\inflection\index.tsx
+    line: 23
+    category: reference
+    default_fallback: false
+    code: "import { useTenantLayout } from '../../_shared/hooks/useTenantLayout'"
+  - file: portal\src\pages\AdvisorIntelligence\_partners\inflection\index.tsx
+    line: 134
+    category: reference
+    default_fallback: false
+    code: "layout.tabs.advisors.enabled ? { id: 'advisors' as TabType, label: 'Advisors' } "
+  - file: portal\src\pages\AdvisorIntelligence\_partners\inflection\index.tsx
+    line: 135
+    category: reference
+    default_fallback: false
+    code: "layout.tabs.distribution.enabled ? { id: 'distribution' as TabType, label: 'Dist"
+  - file: portal\src\pages\AdvisorIntelligence\_partners\inflection\index.tsx
+    line: 136
+    category: reference
+    default_fallback: false
+    code: "layout.tabs.books.enabled ? { id: 'books' as TabType, label: 'Books' } : null,"
+  - file: portal\src\pages\AdvisorIntelligence\_partners\inflection\index.tsx
+    line: 139
+    category: reference
+    default_fallback: false
+    code: "layout.tabs.advisors.enabled ? { id: 'advisors' as TabType, label: 'Advisors' } "
+  - file: portal\src\pages\AdvisorIntelligence\_partners\inflection\index.tsx
+    line: 140
+    category: reference
+    default_fallback: false
+    code: "layout.panels.advisorPublicProfile.enabled ? { id: 'profile' as TabType, label: "
+  - file: portal\src\pages\AdvisorIntelligence\_partners\inflection\index.tsx
+    line: 248
+    category: reference
+    default_fallback: false
+    code: 'users when layout.tabs.books.enabled. Removes the 49F-pattern admin'
+  - file: portal\src\pages\AdvisorIntelligence\_partners\inflection\index.tsx
+    line: 265
+    category: reference
+    default_fallback: false
+    code: "{activeTab === 'profile' && !isFirmAdmin && layout.panels.advisorPublicProfile.e"
+  - file: portal\src\pages\AdvisorIntelligence\_shared\AdvisorBookView.tsx
+    line: 28
+    category: reference
+    default_fallback: false
+    code: "import { useTenantLayout } from './hooks/useTenantLayout'"
+  - file: portal\src\pages\AdvisorIntelligence\_shared\AdvisorBookView.tsx
+    line: 144
+    category: reference
+    default_fallback: false
+    code: 'const usesStaticClientDetail = tenantLayout.dataSources.staticPaths.clientDetail'
+  - file: portal\src\pages\AdvisorIntelligence\_shared\AdvisorBookView.tsx
+    line: 145
+    category: reference
+    default_fallback: false
+    code: 'const usesStaticAccountTimeseries = tenantLayout.dataSources.staticPaths.account'
+  - file: portal\src\pages\AdvisorIntelligence\_shared\AdvisorBookView.tsx
+    line: 150
+    category: reference
+    default_fallback: false
+    code: 'const includesCashInComposition = tenantLayout.assetClasses.includesCash'
+  - file: portal\src\pages\AdvisorIntelligence\_shared\AdvisorPublicProfile.tsx
+    line: 37
+    category: reference
+    default_fallback: false
+    code: "import { useTenantLayout } from './hooks/useTenantLayout'"
+  - file: portal\src\pages\AdvisorIntelligence\_shared\AdvisorPublicProfile.tsx
+    line: 1126
+    category: reference
+    default_fallback: false
+    code: 'const showRoleComposition = layout.roles.composition.enabled !== false'
+  - file: portal\src\pages\AdvisorIntelligence\_shared\components\PartnerAnalytics.tsx
+    line: 33
+    category: reference
+    default_fallback: false
+    code: "import { useTenantLayout } from '../hooks/useTenantLayout'"
+  - file: portal\src\pages\AdvisorIntelligence\_shared\components\PartnerAnalytics.tsx
+    line: 159
+    category: reference
+    default_fallback: false
+    code: "const usesPartnerAnalyticsAuaDonut = tenantLayout.features.auaDonut.source === '"
+  - file: portal\src\pages\AdvisorIntelligence\_shared\components\PartnerAnalytics.tsx
+    line: 160
+    category: reference
+    default_fallback: false
+    code: 'const usesStackedBars = tenantLayout.features.barChart.stacked'
+  - file: portal\src\pages\AdvisorIntelligence\_shared\components\PartnerAnalytics.tsx
+    line: 161
+    category: reference
+    default_fallback: false
+    code: 'const includesCash = tenantLayout.assetClasses.includesCash'
+  - file: portal\src\pages\AdvisorIntelligence\_shared\components\PartnerAnalytics.tsx
+    line: 162
+    category: reference
+    default_fallback: false
+    code: 'const orderedAssetClasses = tenantLayout.assetClasses.ordered'
+  - file: portal\src\pages\AdvisorIntelligence\_shared\components\PartnerAnalytics.tsx
+    line: 273
+    category: reference
+    default_fallback: false
+    code: "const initialViewMode = (tenantLayout.tabs.partnerAnalytics.defaultViewMode ?? '"
+  - file: portal\src\pages\AdvisorIntelligence\_shared\hooks\useTenantLayout.ts
+    line: 15
+    category: reference
+    default_fallback: false
+    code: 'const LAYOUTS: Record<string, TenantLayoutConfig> = {'
+  - file: portal\src\pages\AdvisorIntelligence\_shared\tabs\AdvisorsTab.tsx
+    line: 46
+    category: reference
+    default_fallback: false
+    code: "import { useTenantLayout } from '../hooks/useTenantLayout'"
+  - file: portal\src\pages\AdvisorIntelligence\_shared\tabs\AdvisorsTab.tsx
+    line: 242
+    category: reference
+    default_fallback: false
+    code: 'const showRankDelta = tenantLayout.panels.advisorList.showRankDelta !== false'
+  - file: portal\src\pages\AdvisorIntelligence\_shared\tabs\AdvisorsTab.tsx
+    line: 245
+    category: reference
+    default_fallback: false
+    code: 'const groEnabled = tenantLayout.panels.groDecomposition?.enabled === true'
+  - file: portal\src\pages\AdvisorIntelligence\_shared\tabs\AdvisorsTab.tsx
+    line: 1201
+    category: reference
+    default_fallback: false
+    code: 'Tenant-gated via showRankDelta (TenantLayoutConfig.panels.advisorList) â€”'
+  - file: portal\src\pages\AdvisorIntelligence\_shared\tabs\ClientsTab.tsx
+    line: 65
+    category: reference
+    default_fallback: false
+    code: "import { useTenantLayout } from '../hooks/useTenantLayout'"
+  - file: portal\src\pages\AdvisorIntelligence\_shared\tabs\ClientsTab.tsx
+    line: 137
+    category: reference
+    default_fallback: false
+    code: 'const usesStaticClientDetail = dataSourceLayout.dataSources.staticPaths.clientDe'
+  - file: portal\src\pages\AdvisorIntelligence\_shared\tabs\ClientsTab.tsx
+    line: 138
+    category: reference
+    default_fallback: false
+    code: 'const usesStaticAccountTimeseries = dataSourceLayout.dataSources.staticPaths.acc'
+  - file: portal\src\pages\AdvisorIntelligence\_shared\tabs\ClientsTab.tsx
+    line: 139
+    category: reference
+    default_fallback: false
+    code: 'const includesCashInComposition = dataSourceLayout.assetClasses.includesCash'
+  - file: portal\src\pages\AdvisorIntelligence\_shared\tabs\ClientsTab.tsx
+    line: 253
+    category: reference
+    default_fallback: false
+    code: 'const { allowedAdvisorKeys, maxEntries } = layout.panels.advisorList'
+  - file: portal\src\pages\AdvisorIntelligence\_shared\tabs\ClientsTab.tsx
+    line: 286
+    category: reference
+    default_fallback: false
+    code: '}, [dashboardQuery.data, layout.panels.advisorList])'
+  - file: portal\src\pages\AdvisorIntelligence\_shared\tabs\ClientsTab.tsx
+    line: 772
+    category: reference
+    default_fallback: false
+    code: "{!!revenueOpsSlot && layout.tabs.books.revenueOpsPanel !== 'inflection_insights'"
+  - file: portal\src\pages\AdvisorIntelligence\_shared\tabs\ClientsTab.tsx
+    line: 787
+    category: reference
+    default_fallback: false
+    code: "hideFeeEfficiency={layout.tabs.books.revenueOpsPanel !== 'standard'}"
+  - file: portal\src\pages\AdvisorIntelligence\_shared\tabs\ClientsTab.tsx
+    line: 851
+    category: reference
+    default_fallback: false
+    code: 'onAdvisorClick={layout.tabs.books.advisorDrill.enabled'
+  - file: portal\src\pages\AdvisorIntelligence\_shared\tabs\ClientsTab.tsx
+    line: 865
+    category: reference
+    default_fallback: false
+    code: 'onSelectAdvisor={layout.tabs.books.advisorDrill.enabled'
+  - file: portal\src\pages\AdvisorIntelligence\_shared\tabs\ClientsTab.tsx
+    line: 868
+    category: reference
+    default_fallback: false
+    code: "selectedRoles={layout.tabs.books.revenueOpsPanel === 'standard' ? feeRoles : und"
+  - file: portal\src\pages\AdvisorIntelligence\_shared\tabs\ClientsTab.tsx
+    line: 869
+    category: reference
+    default_fallback: false
+    code: "onToggleRole={layout.tabs.books.revenueOpsPanel === 'standard' ? toggleFeeRole :"
+  - file: portal\src\pages\AdvisorIntelligence\_shared\tabs\DistributionTab.tsx
+    line: 87
+    category: reference
+    default_fallback: false
+    code: "import { useTenantLayout } from '../hooks/useTenantLayout'"
+  - file: portal\src\pages\AdvisorIntelligence\_shared\tabs\DistributionTab.tsx
+    line: 780
+    category: reference
+    default_fallback: false
+    code: "const advLabel = layout.panels.advCohortLabel?.singular ?? 'Architect'"
+  - file: portal\src\pages\AdvisorIntelligence\_shared\tabs\DistributionTab.tsx
+    line: 781
+    category: reference
+    default_fallback: false
+    code: "const advLabelPlural = layout.panels.advCohortLabel?.plural ?? 'Architects'"
+  - file: portal\src\pages\AdvisorIntelligence\_shared\tabs\DistributionTab.tsx
+    line: 782
+    category: reference
+    default_fallback: false
+    code: 'const availableCohortOptions = COHORT_OPTIONS.filter(o => layout.tabs.distributi'
+  - file: portal\src\pages\AdvisorIntelligence\_shared\tabs\DistributionTab.tsx
+    line: 784
+    category: reference
+    default_fallback: false
+    code: "if (layout.tabs.distribution.cohorts[cohort] === 'disabled') setCohort('geo')"
+  - file: portal\src\pages\AdvisorIntelligence\_shared\tabs\FeeSummaryPanel.tsx
+    line: 362
+    category: reference
+    default_fallback: false
+    code: 'can slot in without reshaping the layout. Advisor Split +'

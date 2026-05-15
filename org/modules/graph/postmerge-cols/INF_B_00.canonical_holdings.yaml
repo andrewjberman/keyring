@@ -1,0 +1,76 @@
+script_id: INF_B_00.canonical_holdings
+path: data/orion/scripts/gold/INF_B_00.canonical_holdings.py
+merge_sites:
+- line: 287
+  func_name: build_snapshot
+  result_var: merged
+  left_expr: pos
+  right_expr: accounts
+  on_cols:
+  - account_id
+  how: left
+  flagged_cols:
+  - col: representative_name
+    line: 291
+    pattern: subscript
+  - col: representative_name
+    line: 291
+    pattern: subscript
+  - col: ticker
+    line: 298
+    pattern: subscript
+  - col: representative_name
+    line: 300
+    pattern: subscript
+  - col: representative_name
+    line: 301
+    pattern: subscript
+  - col: custodian
+    line: 302
+    pattern: subscript
+  - col: current_shares
+    line: 303
+    pattern: subscript
+  - col: current_price
+    line: 304
+    pattern: subscript
+  - col: current_value
+    line: 305
+    pattern: subscript
+  - col: name
+    line: 299
+    pattern: subscript
+- line: 392
+  func_name: build_snapshot_reconciled
+  result_var: merged
+  left_expr: pmv_out
+  right_expr: bronze_keyed[['account_id', 'ticker', '_bronze_mv', '_bronze_product_name']]
+  on_cols:
+  - account_id
+  - ticker
+  how: outer
+  flagged_cols:
+  - col: source
+    line: 400
+    pattern: subscript
+  - col: pmv_market_value
+    line: 401
+    pattern: subscript
+  - col: market_value
+    line: 401
+    pattern: subscript
+  - col: _merge
+    line: 403
+    pattern: subscript
+  - col: _merge
+    line: 404
+    pattern: subscript
+  - col: _merge
+    line: 405
+    pattern: subscript
+  - col: _bronze_mv
+    line: 408
+    pattern: subscript
+  - col: market_value
+    line: 408
+    pattern: subscript

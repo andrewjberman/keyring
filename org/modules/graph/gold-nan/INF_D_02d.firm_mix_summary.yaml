@@ -1,0 +1,5 @@
+script_id: INF_D_02d.firm_mix_summary
+path: data/orion/scripts/gold/INF_D_02d.firm_mix_summary.py
+classification: NEITHER
+emit_sites:
+- line 113

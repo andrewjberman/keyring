@@ -1,0 +1,5 @@
+script_id: INF_D_00b.portal_timeseries
+path: data/orion/scripts/gold/INF_D_00b.portal_timeseries.py
+classification: NEITHER
+emit_sites:
+- line 106

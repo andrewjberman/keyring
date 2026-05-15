@@ -1087,6 +1087,482 @@ def cmd_deployed(args):
         print(f"  No scripts matched filter: {raw_filter!r}")
 
 
+def _resolve_gold_script(script_id: str) -> 'tuple[Path | None, str]':
+    """Find a gold script file by ID prefix.
+
+    Checks data/orion/scripts/gold/ first, then data/black_diamond/scripts/gold/.
+    Returns (path, normalized_stem) or (None, '').
+    """
+    gold_dirs = [
+        _WORKSPACE / 'data' / 'orion' / 'scripts' / 'gold',
+        _WORKSPACE / 'data' / 'black_diamond' / 'scripts' / 'gold',
+    ]
+    for gd in gold_dirs:
+        if not gd.exists():
+            continue
+        for p in sorted(gd.glob('*.py')):
+            if p.stem == script_id:
+                return p, p.stem
+        prefix_matches = sorted(p for p in gd.glob(f'{script_id}*.py') if not p.name.startswith('__'))
+        if prefix_matches:
+            return prefix_matches[0], prefix_matches[0].stem
+    return None, ''
+
+
+def _extract_merge_sites(func_node: 'ast.FunctionDef', source: str) -> 'list[dict]':
+    """Extract merge() call sites from a function AST node.
+
+    Returns list of dicts: {line, result_var, left_expr, right_expr, on_cols, how, func_name}
+    """
+    import ast as _ast
+
+    sites: list[dict] = []
+
+    def _visit(node: '_ast.AST') -> None:
+        if isinstance(node, (_ast.Assign,)):
+            val = node.value
+            if (isinstance(val, _ast.Call)
+                    and isinstance(val.func, _ast.Attribute)
+                    and val.func.attr == 'merge'):
+                result_var = None
+                if len(node.targets) == 1 and isinstance(node.targets[0], _ast.Name):
+                    result_var = node.targets[0].id
+                left_expr = _ast.unparse(val.func.value)
+                right_expr = _ast.unparse(val.args[0]) if val.args else '?'
+                on_cols: list[str] = []
+                how = 'inner'
+                for kw in val.keywords:
+                    if kw.arg == 'on':
+                        if isinstance(kw.value, _ast.Constant):
+                            on_cols = [kw.value.value]
+                        elif isinstance(kw.value, _ast.List):
+                            on_cols = [e.value for e in kw.value.elts
+                                       if isinstance(e, _ast.Constant) and isinstance(e.value, str)]
+                    elif kw.arg == 'how' and isinstance(kw.value, _ast.Constant):
+                        how = kw.value.value
+                sites.append({
+                    'line': val.lineno,
+                    'result_var': result_var or '?',
+                    'left_expr': left_expr,
+                    'right_expr': right_expr,
+                    'on_cols': on_cols,
+                    'how': how,
+                    'func_name': func_node.name,
+                })
+        for child in _ast.iter_child_nodes(node):
+            _visit(child)
+
+    for stmt in func_node.body:
+        _visit(stmt)
+    return sites
+
+
+def _extract_col_accesses(func_node: 'ast.FunctionDef', target_var: str) -> 'list[dict]':
+    """Find column accesses on target_var within a function body.
+
+    Returns list of {line, pattern, columns}.
+    """
+    import ast as _ast
+
+    accesses: list[dict] = []
+
+    def _check(node: '_ast.AST') -> None:
+        if (isinstance(node, _ast.Subscript)
+                and isinstance(node.value, _ast.Name)
+                and node.value.id == target_var):
+            sl = node.slice
+            if isinstance(sl, _ast.Constant) and isinstance(sl.value, str):
+                accesses.append({'line': node.lineno, 'pattern': 'subscript', 'columns': [sl.value]})
+            elif isinstance(sl, _ast.List):
+                cols = [e.value for e in sl.elts if isinstance(e, _ast.Constant) and isinstance(e.value, str)]
+                if cols:
+                    accesses.append({'line': node.lineno, 'pattern': 'subscript_multi', 'columns': cols})
+
+        if (isinstance(node, _ast.Call)
+                and isinstance(node.func, _ast.Attribute)
+                and isinstance(node.func.value, _ast.Name)
+                and node.func.value.id == target_var):
+            method = node.func.attr
+            if method == 'dropna':
+                for kw in node.keywords:
+                    if kw.arg == 'subset' and isinstance(kw.value, _ast.List):
+                        cols = [e.value for e in kw.value.elts
+                                if isinstance(e, _ast.Constant) and isinstance(e.value, str)]
+                        accesses.append({'line': node.lineno, 'pattern': 'dropna_subset', 'columns': cols})
+            elif method in ('sort_values', 'drop_duplicates'):
+                for kw in node.keywords:
+                    if kw.arg in ('by', 'subset'):
+                        if isinstance(kw.value, _ast.Constant):
+                            accesses.append({'line': node.lineno, 'pattern': method, 'columns': [kw.value.value]})
+                        elif isinstance(kw.value, _ast.List):
+                            cols = [e.value for e in kw.value.elts
+                                    if isinstance(e, _ast.Constant) and isinstance(e.value, str)]
+                            accesses.append({'line': node.lineno, 'pattern': method, 'columns': cols})
+            elif method == 'groupby':
+                if node.args:
+                    arg = node.args[0]
+                    if isinstance(arg, _ast.Constant):
+                        accesses.append({'line': node.lineno, 'pattern': 'groupby', 'columns': [arg.value]})
+                    elif isinstance(arg, _ast.List):
+                        cols = [e.value for e in arg.elts
+                                if isinstance(e, _ast.Constant) and isinstance(e.value, str)]
+                        accesses.append({'line': node.lineno, 'pattern': 'groupby', 'columns': cols})
+
+    for node in _ast.walk(func_node):
+        _check(node)
+    return accesses
+
+
+def cmd_postmerge_cols(args: 'argparse.Namespace') -> None:
+    """postmerge-cols subcommand: flag suffix-collision risks at merge() call sites.
+
+    For each pd.DataFrame.merge() call in the script, reports the post-merge
+    column access sites and flags any accessed column that is NOT in the on=
+    join key list (potential _x/_y suffix-collision or KeyError risk).
+
+    Writes per-script manifest to org/modules/graph/postmerge-cols/{script_id}.yaml.
+    --strict exits 1 on any flagged access.
+    """
+    import ast as _ast
+    import yaml as _yaml
+
+    script_id = args.postmerge_script_id
+    strict = getattr(args, 'strict', False)
+
+    script_path, normalized_id = _resolve_gold_script(script_id)
+    if script_path is None:
+        print(f'ERROR: gold script not found for {script_id!r}', file=sys.stderr)
+        print('  Checked: data/orion/scripts/gold/ + data/black_diamond/scripts/gold/', file=sys.stderr)
+        sys.exit(1)
+
+    rel_path = script_path.relative_to(_WORKSPACE).as_posix()
+
+    try:
+        source = script_path.read_text(encoding='utf-8')
+        tree = _ast.parse(source, filename=str(script_path))
+    except SyntaxError as e:
+        print(f'ERROR: syntax error in {rel_path}: {e}', file=sys.stderr)
+        sys.exit(1)
+
+    print(f'COMP-PIPESCRIPT postmerge-cols: {normalized_id}')
+    print(f'  Script: {rel_path}')
+    print()
+
+    func_nodes = [n for n in _ast.walk(tree)
+                  if isinstance(n, (_ast.FunctionDef, _ast.AsyncFunctionDef))]
+
+    all_sites: list[dict] = []
+    for fn in func_nodes:
+        for site in _extract_merge_sites(fn, source):
+            accesses = _extract_col_accesses(fn, site['result_var'])
+            flagged: list[dict] = []
+            for acc in accesses:
+                for col in acc['columns']:
+                    if col not in site['on_cols'] and not col.endswith('_x') and not col.endswith('_y'):
+                        flagged.append({'col': col, 'line': acc['line'], 'pattern': acc['pattern']})
+            site['flagged_cols'] = flagged
+            site['downstream_accesses'] = accesses
+            all_sites.append(site)
+
+    flag_count = 0
+    for site in all_sites:
+        on_str = ', '.join(repr(c) for c in site['on_cols']) if site['on_cols'] else '(none)'
+        status = 'WARN' if site['flagged_cols'] else 'OK  '
+        print(f'  {status}  line {site["line"]:4d}  {site["func_name"]}()')
+        print(f'         {site["left_expr"]}.merge({site["right_expr"]}, on=[{on_str}], how={site["how"]!r})')
+        print(f'         result_var: {site["result_var"]}')
+        for fc in site['flagged_cols']:
+            print(f'         WARN: col {fc["col"]!r} accessed at line {fc["line"]} ({fc["pattern"]})'
+                  f' — NOT in on=[{on_str}]; may become {fc["col"]!r}_x/{fc["col"]!r}_y after merge')
+            flag_count += 1
+        if not site['flagged_cols']:
+            print(f'         No unguarded post-merge column accesses detected')
+        print()
+
+    output_dir = _WORKSPACE / 'org' / 'modules' / 'graph' / 'postmerge-cols'
+    output_dir.mkdir(parents=True, exist_ok=True)
+    manifest = {
+        'script_id': normalized_id,
+        'path': rel_path,
+        'merge_sites': [
+            {
+                'line': s['line'],
+                'func_name': s['func_name'],
+                'result_var': s['result_var'],
+                'left_expr': s['left_expr'],
+                'right_expr': s['right_expr'],
+                'on_cols': s['on_cols'],
+                'how': s['how'],
+                'flagged_cols': s['flagged_cols'],
+            }
+            for s in all_sites
+        ],
+    }
+    yaml_path = output_dir / f'{normalized_id}.yaml'
+    with open(yaml_path, 'w', encoding='utf-8') as f:
+        _yaml.dump(manifest, f, default_flow_style=False, sort_keys=False)
+
+    print(f'  Summary: {len(all_sites)} merge site(s) | {flag_count} flag(s)')
+    print(f'  Manifest: {yaml_path.relative_to(_WORKSPACE)}')
+    print()
+
+    if strict and flag_count > 0:
+        print(f'FAIL: --strict: {flag_count} post-merge column access risk(s) detected (exit 1)')
+        sys.exit(1)
+
+    print('PASS: postmerge-cols analysis complete')
+
+
+def _extract_lock_in_chain(func_node: 'ast.FunctionDef') -> 'list[dict]':
+    """Extract the post-condition lock-in chain from a function body.
+
+    A lock-in chain link is any operation that requires a column/type precondition
+    that a prior op in the same function could invalidate:
+      - dropna(subset=[...])  — requires column existence
+      - astype(...)           — requires dtype compatibility
+      - merge(on=[...])       — requires column existence on both sides
+      - fillna(...)           — column must exist
+      - sort_values(by=[...]) — column must exist
+
+    Returns list of chain links sorted by line number.
+    """
+    import ast as _ast
+
+    chain: list[dict] = []
+
+    def _visit(node: '_ast.AST') -> None:
+        if not isinstance(node, _ast.Call):
+            for child in _ast.iter_child_nodes(node):
+                _visit(child)
+            return
+
+        func = node.func
+        if not isinstance(func, _ast.Attribute):
+            for child in _ast.iter_child_nodes(node):
+                _visit(child)
+            return
+
+        method = func.attr
+        receiver = _ast.unparse(func.value)
+
+        if method == 'dropna':
+            for kw in node.keywords:
+                if kw.arg == 'subset' and isinstance(kw.value, _ast.List):
+                    cols = [e.value for e in kw.value.elts
+                            if isinstance(e, _ast.Constant) and isinstance(e.value, str)]
+                    chain.append({
+                        'line': node.lineno,
+                        'op': 'dropna_subset',
+                        'receiver': receiver,
+                        'columns': cols,
+                        'assumption': f'Columns {cols} must exist in {receiver}',
+                    })
+
+        elif method == 'astype':
+            if node.args:
+                arg = node.args[0]
+                dtype_str = _ast.unparse(arg)
+                chain.append({
+                    'line': node.lineno,
+                    'op': 'astype',
+                    'receiver': receiver,
+                    'dtype': dtype_str,
+                    'assumption': f'{receiver} must be castable to {dtype_str}',
+                })
+
+        elif method == 'merge':
+            on_cols: list[str] = []
+            how = 'inner'
+            for kw in node.keywords:
+                if kw.arg == 'on':
+                    if isinstance(kw.value, _ast.Constant):
+                        on_cols = [kw.value.value]
+                    elif isinstance(kw.value, _ast.List):
+                        on_cols = [e.value for e in kw.value.elts
+                                   if isinstance(e, _ast.Constant) and isinstance(e.value, str)]
+                elif kw.arg == 'how' and isinstance(kw.value, _ast.Constant):
+                    how = kw.value.value
+            right = _ast.unparse(node.args[0]) if node.args else '?'
+            chain.append({
+                'line': node.lineno,
+                'op': 'merge',
+                'receiver': receiver,
+                'right': right,
+                'on_cols': on_cols,
+                'how': how,
+                'assumption': f'Columns {on_cols} must exist on both {receiver} and {right}; non-join shared cols will get _x/_y suffix',
+            })
+
+        elif method in ('sort_values', 'drop_duplicates', 'groupby'):
+            cols: list[str] = []
+            for kw in node.keywords:
+                if kw.arg in ('by', 'subset'):
+                    if isinstance(kw.value, _ast.Constant):
+                        cols = [kw.value.value]
+                    elif isinstance(kw.value, _ast.List):
+                        cols = [e.value for e in kw.value.elts
+                                if isinstance(e, _ast.Constant) and isinstance(e.value, str)]
+            if node.args:
+                arg = node.args[0]
+                if isinstance(arg, _ast.Constant):
+                    cols = [arg.value]
+                elif isinstance(arg, _ast.List):
+                    cols = [e.value for e in arg.elts
+                            if isinstance(e, _ast.Constant) and isinstance(e.value, str)]
+            if cols:
+                chain.append({
+                    'line': node.lineno,
+                    'op': method,
+                    'receiver': receiver,
+                    'columns': cols,
+                    'assumption': f'Columns {cols} must exist in {receiver}',
+                })
+
+        for child in _ast.iter_child_nodes(node):
+            _visit(child)
+
+    for stmt in func_node.body:
+        _visit(stmt)
+
+    return sorted(chain, key=lambda x: x['line'])
+
+
+def cmd_shadow_detect(args: 'argparse.Namespace') -> None:
+    """shadow-detect subcommand: enumerate the post-condition lock-in chain for a function.
+
+    Static mode: walks the named function body and enumerates all assertion-class
+    operations (dropna, astype, merge, sort_values, groupby) that form the lock-in
+    chain. Each link assumes a precondition that prior ops may invalidate — a cascade
+    of sequential fixes (bug-shadows pattern) surfaces as multiple chain links each
+    touched by a different commit.
+
+    --recent-failures <Nd>: cross-references git log (--since=<N>d) for commits
+    that touched the named function (via git log -S pickaxe); flags cascade pattern
+    when 3+ commits each touch distinct chain links.
+
+    Writes manifest to org/modules/graph/shadow-detect/{script_stem}.{func}.yaml.
+    """
+    import ast as _ast
+    import subprocess
+    import yaml as _yaml
+
+    func_name = args.shadow_function
+    recent_failures = getattr(args, 'recent_failures', None)
+
+    gold_dirs = [
+        _WORKSPACE / 'data' / 'orion' / 'scripts' / 'gold',
+        _WORKSPACE / 'data' / 'black_diamond' / 'scripts' / 'gold',
+    ]
+
+    # Search all gold scripts for the named function
+    found_fn: '_ast.FunctionDef | None' = None
+    found_path: 'Path | None' = None
+    found_stem: str = ''
+
+    for gd in gold_dirs:
+        if not gd.exists():
+            continue
+        for script_path in sorted(gd.glob('*.py')):
+            try:
+                source = script_path.read_text(encoding='utf-8')
+                tree = _ast.parse(source, filename=str(script_path))
+            except SyntaxError:
+                continue
+            for node in _ast.walk(tree):
+                if (isinstance(node, (_ast.FunctionDef, _ast.AsyncFunctionDef))
+                        and node.name == func_name):
+                    found_fn = node
+                    found_path = script_path
+                    found_stem = script_path.stem
+                    break
+            if found_fn is not None:
+                break
+        if found_fn is not None:
+            break
+
+    if found_fn is None:
+        print(f'ERROR: function {func_name!r} not found in any gold script', file=sys.stderr)
+        sys.exit(1)
+
+    rel_path = found_path.relative_to(_WORKSPACE).as_posix()  # type: ignore[union-attr]
+
+    print(f'COMP-PIPESCRIPT shadow-detect: {func_name}()')
+    print(f'  Found in: {rel_path}  (lines {found_fn.lineno}-{found_fn.end_lineno})')
+    print()
+
+    chain = _extract_lock_in_chain(found_fn)
+
+    print(f'  Lock-in chain ({len(chain)} link(s)):')
+    for i, link in enumerate(chain, 1):
+        cols = link.get('columns') or link.get('on_cols') or []
+        op_str = link['op']
+        if op_str == 'astype':
+            detail = f"dtype={link.get('dtype', '?')}"
+        elif cols:
+            detail = f"cols={cols}"
+        else:
+            detail = ''
+        print(f'  [{i:2d}] line {link["line"]:5d}  {op_str:20s}  {link["receiver"]}  {detail}')
+        print(f'         assumption: {link["assumption"]}')
+    print()
+
+    # --recent-failures mode: git log -S <func_name> pickaxe
+    cascade_commits: list[dict] = []
+    if recent_failures:
+        # Parse duration: "7d" -> since="7 days ago"
+        duration_str = recent_failures.rstrip('dDhHmM')
+        unit = recent_failures[len(duration_str):]
+        unit_map = {'d': 'days', 'h': 'hours', 'm': 'minutes', 'D': 'days', 'H': 'hours', 'M': 'minutes'}
+        since_str = f'{duration_str} {unit_map.get(unit, "days")} ago'
+
+        print(f'  --recent-failures: git log -S {func_name!r} --since={since_str!r}')
+        try:
+            result = subprocess.run(
+                ['git', 'log', '--all', '--oneline', f'--since={since_str}', '-S', func_name],
+                capture_output=True, text=True, cwd=str(_WORKSPACE),
+            )
+            commits = [line.strip() for line in result.stdout.splitlines() if line.strip()]
+            if commits:
+                print(f'  Commits touching {func_name!r} (last {recent_failures}):')
+                for i, commit_line in enumerate(commits, 1):
+                    sha = commit_line[:9]
+                    subject = commit_line[10:]
+                    cascade_commits.append({'sha': sha, 'subject': subject, 'depth': i})
+                    print(f'    [{i}] {sha}  {subject}')
+                if len(commits) >= 3:
+                    print(f'  CASCADE PATTERN DETECTED: {len(commits)} commits in {recent_failures} window'
+                          f' touching {func_name!r} — bug-shadows cascade (fix #1 unmasks #2 unmasks #3)')
+                elif len(commits) == 2:
+                    print(f'  WATCH: 2 commits in {recent_failures} window — potential bug-shadows developing')
+                else:
+                    print(f'  OK: 1 commit; no cascade pattern')
+            else:
+                print(f'  No commits found touching {func_name!r} in last {recent_failures}')
+        except Exception as e:
+            print(f'  WARN: git log failed: {e}', file=sys.stderr)
+        print()
+
+    # Write manifest
+    output_dir = _WORKSPACE / 'org' / 'modules' / 'graph' / 'shadow-detect'
+    output_dir.mkdir(parents=True, exist_ok=True)
+    manifest = {
+        'function': func_name,
+        'script': found_stem,
+        'path': rel_path,
+        'func_lines': f'{found_fn.lineno}-{found_fn.end_lineno}',
+        'lock_in_chain': chain,
+        'cascade_commits': cascade_commits,
+    }
+    safe_func = func_name.lstrip('_')
+    yaml_path = output_dir / f'{found_stem}.{safe_func}.yaml'
+    with open(yaml_path, 'w', encoding='utf-8') as f:
+        _yaml.dump(manifest, f, default_flow_style=False, sort_keys=False)
+
+    print(f'  Manifest: {yaml_path.relative_to(_WORKSPACE)}')
+    print()
+    print('PASS: shadow-detect analysis complete')
+
+
 def cmd_postdeps(args):
     """Show and validate post-step dependencies and preconditions for gold scripts."""
     # Try PyYAML first; fall back to a minimal inline parser for our specific YAML shape
@@ -1266,6 +1742,161 @@ def _parse_deps_yaml_fallback(text: str) -> dict:
 
 
 # ---------------------------------------------------------------------------
+# .025 skipgate — per-partition SKIP/COMPUTE/MISSING-INPUT preview
+# ---------------------------------------------------------------------------
+
+# Script-to-input-prefix mapping for Pattern A scripts
+_SKIPGATE_INPUT_PREFIXES = {
+    'INF_B_00': ('s3://opal-data-inf/gold/canonical/', 'holdings_', '.parquet'),
+    'INF_B_03': ('s3://opal-data-inf/gold/canonical/', 'nna_', '.parquet'),
+    'INF_A_03': ('s3://opal-data-inf/gold/canonical/', 'flows_', '.parquet'),
+    'INF_C_00': ('s3://opal-data-inf/gold/canonical/', 'performance_', '.parquet'),
+    'INF_C_01': ('s3://opal-data-inf/gold/canonical/', 'nna_canonical_', '.parquet'),
+}
+_SKIPGATE_META_BASE = 's3://opal-data-inf/gold/meta/'
+_SKIPGATE_CURRENT_SCHEMA_VERSION = 1
+
+
+def _skipgate_list_s3_dates(script_id: str) -> list[str]:
+    """List input partition dates for a Pattern A script via S3 listing."""
+    import subprocess
+    prefix_info = _SKIPGATE_INPUT_PREFIXES.get(script_id)
+    if not prefix_info:
+        return []
+    s3_bucket_prefix, key_prefix, key_suffix = prefix_info
+    result = subprocess.run(
+        [sys.executable, '-m', 'awscli', 's3', 'ls', s3_bucket_prefix],
+        capture_output=True, text=True, timeout=30,
+    )
+    if result.returncode != 0:
+        return []
+    dates = []
+    for line in result.stdout.splitlines():
+        m = re.search(rf'{re.escape(key_prefix)}(\d{{4}}-\d{{2}}-\d{{2}}){re.escape(key_suffix)}', line)
+        if not m:
+            # Also handle date-only filenames like holdings_2019-09-17.parquet
+            m = re.search(rf'{re.escape(key_prefix)}(\d{{4}}-\d{{2}}-\d{{2}})', line)
+        if m:
+            dates.append(m.group(1))
+    return sorted(set(dates))
+
+
+def _skipgate_check_provenance(script_id: str, date: str) -> dict | None:
+    """Check partition_provenance manifest for (script_id, date). Returns None if missing."""
+    import subprocess, json as _json
+    s3_key = f'{_SKIPGATE_META_BASE}partition_provenance/{script_id}/{date}.json'
+    result = subprocess.run(
+        [sys.executable, '-m', 'awscli', 's3', 'cp', s3_key, '-'],
+        capture_output=True, text=True, timeout=10,
+    )
+    if result.returncode != 0 or not result.stdout:
+        return None
+    try:
+        return _json.loads(result.stdout)
+    except Exception:
+        return None
+
+
+def _skipgate_decide(script_id: str, date: str, manifest: dict | None,
+                     rebuild_start: str | None, rebuild_end: str | None) -> tuple[str, str]:
+    """Return (status, reason) for a single partition."""
+    # Rebuild window override
+    if rebuild_start and rebuild_end:
+        if rebuild_start <= date <= rebuild_end:
+            return 'COMPUTE', f'in rebuild window {rebuild_start}:{rebuild_end}'
+
+    # No provenance manifest
+    if manifest is None:
+        return 'COMPUTE', 'no partition_provenance manifest (not yet computed or Phase 2 not applied)'
+
+    # Schema version check
+    stored_schema = manifest.get('schema_version', 0)
+    if stored_schema < _SKIPGATE_CURRENT_SCHEMA_VERSION:
+        return 'COMPUTE', f'schema_version {stored_schema} < current {_SKIPGATE_CURRENT_SCHEMA_VERSION}'
+
+    # Empty sentinel
+    if manifest.get('empty_sentinel', False):
+        return 'SKIP', 'empty sentinel -- no rows for this date (valid skip)'
+
+    # All checks pass
+    return 'SKIP', 'manifest current; no upstream silver changes detected'
+
+
+def cmd_skipgate(args) -> None:
+    import subprocess, json as _json
+    script_id = args.skipgate_script_id.upper().replace('-', '_')
+
+    rebuild_start = rebuild_end = None
+    if args.rebuild_window:
+        parts = args.rebuild_window.split(':')
+        if len(parts) == 2:
+            rebuild_start, rebuild_end = parts[0].strip(), parts[1].strip()
+
+    print(f'COMP-PIPESCRIPT SKIPGATE: {script_id}')
+
+    # Phase 1: list input partitions
+    dates = _skipgate_list_s3_dates(script_id)
+    if not dates:
+        # Fallback: generic canonical listing
+        print(f'  WARN: no date partitions found for {script_id} via known prefix mapping')
+        print(f'  Hint: add script to _SKIPGATE_INPUT_PREFIXES or verify S3 canonical path')
+        return
+
+    print(f'  Input partitions: {len(dates):,} dates ({dates[0]} to {dates[-1]})')
+
+    # Phase 2: check provenance manifests (batch — parallel would require threading)
+    # For large partition sets, check a sample for speed then extrapolate
+    sample_dates = dates if len(dates) <= 100 else (dates[:10] + dates[-10:])
+    print(f'  Checking provenance manifests (sampling {len(sample_dates)} of {len(dates):,} for speed)...')
+
+    rows: list[tuple[str, str, str]] = []
+    has_any_manifest = False
+    for date in sample_dates:
+        manifest = _skipgate_check_provenance(script_id, date)
+        if manifest:
+            has_any_manifest = True
+        status, reason = _skipgate_decide(script_id, date, manifest, rebuild_start, rebuild_end)
+        rows.append((date, status, reason))
+
+    # For remaining dates (non-sampled), fast-path: no manifest = COMPUTE
+    if len(dates) > len(sample_dates):
+        sampled_set = set(sample_dates)
+        for date in dates:
+            if date not in sampled_set:
+                status, reason = _skipgate_decide(script_id, date, None, rebuild_start, rebuild_end)
+                rows.append((date, status, reason))
+        rows.sort()
+
+    # Filter --manifest-fresh-only (filter to dates where manifest exists or COMPUTE needed)
+    if args.manifest_fresh_only:
+        rows = [(d, s, r) for d, s, r in rows if 'no partition_provenance' not in r]
+
+    # Summarize
+    skip_count = sum(1 for _, s, _ in rows if s == 'SKIP')
+    compute_count = sum(1 for _, s, _ in rows if s == 'COMPUTE')
+    missing_count = sum(1 for _, s, _ in rows if s == 'MISSING-INPUT')
+
+    print(f'\n  {"DATE":<12}  {"STATUS":<16}  REASON')
+    print(f'  {"-"*12}  {"-"*16}  {"-"*55}')
+
+    limit = args.limit if args.limit > 0 else len(rows)
+    for date, status, reason in rows[:limit]:
+        print(f'  {date:<12}  {status:<16}  {reason[:55]}')
+
+    if len(rows) > limit:
+        print(f'  ... ({len(rows) - limit} more rows; use --limit 0 to see all)')
+
+    print(f'\n  Summary: {skip_count} SKIP / {compute_count} COMPUTE / {missing_count} MISSING-INPUT')
+    if not has_any_manifest:
+        print(f'  INFO: no partition_provenance manifests found -- ADVI_INFINC Phase 2 not yet applied to {script_id}')
+        print(f'        All {len(dates):,} partitions show COMPUTE (expected pre-Phase-2 state)')
+
+    if rebuild_window := args.rebuild_window:
+        in_window = sum(1 for d, s, _ in rows if rebuild_start <= d <= rebuild_end and s == 'COMPUTE')
+        print(f'  Rebuild window {rebuild_window}: {in_window} partition(s) forced to COMPUTE')
+
+
+# ---------------------------------------------------------------------------
 # Main
 # ---------------------------------------------------------------------------
 
@@ -1336,6 +1967,42 @@ def main():
     p_postdeps.add_argument('script_name', nargs='?', default='',
                             help='Optional: filter to this script name (e.g. D_01 or build_canonical_prices_v2.py)')
 
+    # postmerge-cols (ADHC_COMPIL_V4.027)
+    p_postmerge = sub.add_parser(
+        'postmerge-cols',
+        help='Flag suffix-collision risks at merge() call sites (ADHC_COMPIL_V4.027)',
+    )
+    p_postmerge.add_argument('postmerge_script_id',
+                             help='Script ID to analyze (e.g. INF_D_00c, D_02)')
+    p_postmerge.add_argument('--strict', action='store_true',
+                             help='Exit 1 on any unguarded post-merge column access')
+
+    # skipgate (ADHC_COMPIL_V4.025)
+    p_skipgate = sub.add_parser(
+        'skipgate',
+        help='Per-partition SKIP/COMPUTE/MISSING-INPUT preview for Pattern A scripts (ADHC_COMPIL_V4.025)',
+    )
+    p_skipgate.add_argument('skipgate_script_id',
+                            help='Script ID to preview (e.g. INF_B_00, INF_C_00)')
+    p_skipgate.add_argument('--rebuild-window', dest='rebuild_window', default=None,
+                            metavar='START:END',
+                            help='Force COMPUTE for partitions in date range (e.g. 2026-05-01:2026-05-14)')
+    p_skipgate.add_argument('--manifest-fresh-only', dest='manifest_fresh_only', action='store_true',
+                            help='Filter to partitions where input mtime > last skip-gate emit')
+    p_skipgate.add_argument('--limit', type=int, default=50,
+                            help='Limit rows displayed (default 50; 0 = all)')
+
+    # shadow-detect (ADHC_COMPIL_V4.028)
+    p_shadow = sub.add_parser(
+        'shadow-detect',
+        help='Enumerate post-condition lock-in chain for a function (ADHC_COMPIL_V4.028)',
+    )
+    p_shadow.add_argument('shadow_function',
+                          help='Function name to analyze (e.g. _aggregate_gro_per_advisor_window)')
+    p_shadow.add_argument('--recent-failures', dest='recent_failures', default=None,
+                          metavar='DURATION',
+                          help='Cross-reference git log for cascade pattern (e.g. 7d, 14d)')
+
     args = parser.parse_args()
     if not args.command:
         parser.print_help()
@@ -1352,6 +2019,9 @@ def main():
         'stats': cmd_stats,
         'deployed': cmd_deployed,
         'postdeps': cmd_postdeps,
+        'postmerge-cols': cmd_postmerge_cols,
+        'shadow-detect': cmd_shadow_detect,
+        'skipgate': cmd_skipgate,
     }
     commands[args.command](args)
 

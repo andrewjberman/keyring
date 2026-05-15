@@ -1,0 +1,6 @@
+script_id: INF_D_00d.cumulative_chart
+path: data/orion/scripts/gold/INF_D_00d.cumulative_chart.py
+classification: NEITHER
+emit_sites:
+- line 104
+- line 589

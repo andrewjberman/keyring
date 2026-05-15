@@ -1,0 +1,5 @@
+script_id: INF_D_04.client_portal_summary
+path: data/orion/scripts/gold/INF_D_04.client_portal_summary.py
+classification: PASS
+emit_sites:
+- line 4035

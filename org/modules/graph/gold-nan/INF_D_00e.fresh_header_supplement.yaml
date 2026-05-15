@@ -1,0 +1,6 @@
+script_id: INF_D_00e.fresh_header_supplement
+path: data/orion/scripts/gold/INF_D_00e.fresh_header_supplement.py
+classification: NEITHER
+emit_sites:
+- line 148
+- line 269

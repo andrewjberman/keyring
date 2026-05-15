@@ -1,0 +1,5 @@
+script_id: INF_C_08.advisor_fee_efficiency
+path: data/orion/scripts/gold/INF_C_08.advisor_fee_efficiency.py
+classification: NEITHER
+emit_sites:
+- line 273

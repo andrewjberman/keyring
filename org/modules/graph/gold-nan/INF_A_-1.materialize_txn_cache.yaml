@@ -1,0 +1,5 @@
+script_id: INF_A_-1.materialize_txn_cache
+path: data/orion/scripts/gold/INF_A_-1.materialize_txn_cache.py
+classification: NEITHER
+emit_sites:
+- line 115

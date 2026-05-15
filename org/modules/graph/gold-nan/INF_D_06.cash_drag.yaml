@@ -1,0 +1,5 @@
+script_id: INF_D_06.cash_drag
+path: data/orion/scripts/gold/INF_D_06.cash_drag.py
+classification: NEITHER
+emit_sites:
+- line 568

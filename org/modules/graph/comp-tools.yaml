@@ -347,6 +347,42 @@ tools:
     replaces: "Manual aws s3 ls + timestamp inspection before gold dispatch; post-hoc stale-data forensics. DDB mode replaces manual DDB console inspection for firm-config drift."
     note: "ADHC_COMPIL.012 (Theme G), DDB extension ADHC_COMPIL_V4.015 (AE 0.7, 2026-05-11). WARN entries (partner-feed severities, weekly dims) do not block dispatch. ERROR entries beyond fail_age_hours exit 1 and block. DDB MISSING (table not found) = FAIL for ERROR-severity entries. Vendor-feed thresholds (Schwab + Orion) require Andrew ACK before removing [PENDING ANDREW ACK] flag from config. Dispatch integration is .013 scope."
 
+  comp-types:
+    command: "comp-types {index <TypeName> [--firm-conditional-sites] [--severity warn|error] | blast <TypeName> | fields <TypeName> [--severity warn|error]}"
+    when: |
+      - About to edit a TypeScript type (interface or type alias): which components consume it? -> comp-types index <TypeName>
+      - Blast radius: comp-types blast <TypeName> (files with direct imports)
+      - Field audit: comp-types fields <TypeName> (all fields + access patterns)
+      - Debugging "component shows wrong data / undefined field": comp-types index <TypeName> --firm-conditional-sites
+    subcommands:
+      index: "comp-types index TenantLayoutConfig -- finds all consumer sites (hook use, field access, DEFAULT_LAYOUT refs); 60 sites in <4s. Manifest: org/modules/graph/types-index/<TypeName>.yaml"
+      blast: "comp-types blast TenantLayoutConfig -- files directly importing the type (blast radius for interface changes)"
+      fields: "comp-types fields TenantLayoutConfig -- enumerates all top-level fields with TS type and access count"
+    output_format: "consumer site list: file:line | kind (USE/IMPORT/FIELD/LAYOUT) | content snippet. Manifest written to types-index/<TypeName>.yaml"
+    exit_codes: "0=PASS (findings logged; no exit-1 unless --severity error + WARNs present), 1=FAIL or definition not found"
+    cost: "<5s (regex-based portal grep; no ts-morph required)"
+    incidents_caught: |
+      ADHC_COMPIL_V4.026 (2026-05-14): TenantLayoutConfig blast = 10 files, 60 consumer sites — supports multi-tenant FIRMSEP refactor scope analysis.
+    replaces: "Manual portal src grep for TypeName; blast-radius estimation before type restructuring"
+    note: "ADHC_COMPIL_V4.026 (AE 0.7, 2026-05-14). Python regex approach (ts-morph absent on this machine). Strips Config/Type/Props suffix to derive hook name (useTenantLayout from TenantLayoutConfig). Windows C: drive-letter path parsing handled."
+
+  comp-adapter-audit:
+    command: "comp-adapter-audit <adapter-fn> [--severity warn|error]"
+    when: |
+      - About to write or modify a portal adapter function: pre-ship field-threading audit
+      - After pulling new platinum S3 data: verify typed interface matches live envelope
+      - Debugging "component shows undefined / 0 for a field that S3 has": comp-adapter-audit <adapter-fn>
+      - Reviewing a multi-tenant adapter (e.g., Inflection vs 49F): check schema-drift vs live S3
+    output_format: "per-field audit: STATUS (SCHEMA-DRIFT|NOT-THREADED|TYPE-ONLY|NESTED-SCHEMA-DRIFT|FALLBACK-ORDER) | SEV (WARN|INFO) | field.path | detail. Manifest: org/modules/graph/adapter-audit/<adapter-fn>.yaml"
+    exit_codes: "0=PASS (findings written; no crash), 1=FAIL or adapter not found, or --severity error + WARNs"
+    cost: "<60s (live S3 fetch ~10s + regex parse)"
+    incidents_caught: |
+      INFFIN #7 (32df3b85->cae9dcb2 2026-05-13): FALLBACK-ORDER WARN — raw.book ?? raw.summary inverted fallback silently dropped historical_quarters
+      Surface #2 (pre-d622a249 2026-05-13): SCHEMA-DRIFT WARN — relationship_stacked_periods in S3 but not typed, not threaded
+      Surface #8 (.012): is_fee_paying type-aligned but adapter missed propagation
+    replaces: "Manual S3 envelope inspection at adapter boundary; empirical post-ship drift detection"
+    note: "ADHC_COMPIL_V4.031 (AE 0.7, 2026-05-15). Uses live S3 fetch (sys.executable -m awscli). Field access uses .field notation to avoid variable-name collisions. Python regex-based (no ts-morph). Manifests under org/modules/graph/adapter-audit/."
+
 # ============================================================================
 # INF PIPELINE DATA REGISTRY
 # Source-of-truth for all Inflection pipeline artifact paths, producers,

@@ -165,8 +165,49 @@ def cmd_trace(args):
                 print(output)
 
 
+def _producer_node_types() -> set[str]:
+    return {'LAMBDA', 'GOLD_SCRIPT', 'GOLD_FUNCTION', 'SILVER_SCRIPT', 'S3_ARTIFACT'}
+
+
+def _is_producer_pipeline_match(node_id: str, pipeline: str | None) -> bool:
+    if not pipeline or pipeline == 'all':
+        return True
+    nid = node_id.lower()
+    if pipeline == 'inf':
+        return 'inf' in nid or 'inflect' in nid or 'orion' in nid or 'INF' in node_id
+    if pipeline == 'bd':
+        return 'bd' in nid or 'black_diamond' in nid or 'BD' in node_id
+    return True
+
+
 def cmd_blast(args):
     g = _get_graph()
+
+    # --all-producers sweep mode: list all producer nodes with zero downstream consumers
+    if getattr(args, 'all_producers', False):
+        pipeline = getattr(args, 'pipeline', None)
+        producer_types = _producer_node_types()
+        phantoms = []
+        checked = 0
+        for node_id, node in sorted(g.nodes.items()):
+            if node.node_type not in producer_types:
+                continue
+            if not _is_producer_pipeline_match(node_id, pipeline):
+                continue
+            checked += 1
+            downstream = g.downstream(node_id, max_depth=1)
+            if not downstream:
+                phantoms.append(node)
+        print(f'PHANTOM-CONSUMER SWEEP: {len(phantoms)} zero-consumer producers of {checked} checked')
+        if phantoms:
+            print(f'  {"NODE-ID":<60}  TYPE')
+            print(f'  {"-"*60}  {"-"*20}')
+            for n in phantoms:
+                print(f'  {n.id:<60}  {n.node_type}')
+        if getattr(args, 'check_consumers', False):
+            sys.exit(1 if phantoms else 0)
+        return
+
     query = args.query
 
     # If --function specified, look for gold:script:function
@@ -203,6 +244,17 @@ def cmd_blast(args):
         upstream = g.upstream(node.id, max_depth=args.depth)
     else:
         upstream = []
+
+    # --check-consumers: exit 0 if >=1 downstream consumer, exit 1 if zero
+    if getattr(args, 'check_consumers', False):
+        if downstream:
+            print(f'CONSUMER-OK: {node.id} has {len(downstream)} downstream consumer(s)')
+            sys.exit(0)
+        else:
+            print(f'PHANTOM-CONSUMER: {node.id} -- zero downstream consumers in graph')
+            print(f'  Node type: {node.node_type}')
+            print(f'  This producer emits with no registered consumer. Pattern: silent-failure.')
+            sys.exit(1)
 
     if args.json:
         by_type = {}
@@ -502,6 +554,14 @@ def main():
                          help="Traversal direction: up (upstream callers), down (downstream consumers, "
                               "default), both. Works with prefix-qualified queries "
                               "(lambda:, gold:, silver:, component:).")
+    p_blast.add_argument("--check-consumers", action="store_true",
+                         help="Exit 0 if node has >=1 downstream consumer; exit 1 if zero (phantom-consumer check). "
+                              "Combine with --all-producers for sweep mode.")
+    p_blast.add_argument("--all-producers", action="store_true",
+                         help="Sweep all producer nodes in graph; list those with zero downstream consumers. "
+                              "Use with --check-consumers and --pipeline.")
+    p_blast.add_argument("--pipeline", choices=["inf", "bd", "all"], default=None,
+                         help="Filter --all-producers sweep by pipeline (inf/bd/all).")
 
     # diff
     p_diff = sub.add_parser("diff", help="Map git changes to graph impact")

@@ -1,0 +1,5 @@
+script_id: INF_D_03.composition_artifacts
+path: data/orion/scripts/gold/INF_D_03.composition_artifacts.py
+classification: NEITHER
+emit_sites:
+- line 165

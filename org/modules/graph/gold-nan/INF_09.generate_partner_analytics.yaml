@@ -1,0 +1,7 @@
+script_id: INF_09.generate_partner_analytics
+path: data/orion/scripts/gold/INF_09.generate_partner_analytics.py
+classification: NEITHER
+emit_sites:
+- line 102
+- line 252
+- line 258

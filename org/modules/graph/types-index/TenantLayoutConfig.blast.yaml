@@ -1,0 +1,13 @@
+type_name: TenantLayoutConfig
+blast_radius_files: 10
+affected_files:
+  - portal\src\pages\AdvisorIntelligence\_partners\49financial\layout.ts
+  - portal\src\pages\AdvisorIntelligence\_partners\inflection\index.tsx
+  - portal\src\pages\AdvisorIntelligence\_partners\inflection\layout.ts
+  - portal\src\pages\AdvisorIntelligence\_shared\AdvisorBookView.tsx
+  - portal\src\pages\AdvisorIntelligence\_shared\AdvisorPublicProfile.tsx
+  - portal\src\pages\AdvisorIntelligence\_shared\components\PartnerAnalytics.tsx
+  - portal\src\pages\AdvisorIntelligence\_shared\hooks\useTenantLayout.ts
+  - portal\src\pages\AdvisorIntelligence\_shared\tabs\AdvisorsTab.tsx
+  - portal\src\pages\AdvisorIntelligence\_shared\tabs\ClientsTab.tsx
+  - portal\src\pages\AdvisorIntelligence\_shared\tabs\DistributionTab.tsx

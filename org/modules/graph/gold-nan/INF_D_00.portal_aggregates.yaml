@@ -1,0 +1,5 @@
+script_id: INF_D_00.portal_aggregates
+path: data/orion/scripts/gold/INF_D_00.portal_aggregates.py
+classification: NEITHER
+emit_sites:
+- line 95

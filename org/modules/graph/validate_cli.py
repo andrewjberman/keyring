@@ -400,6 +400,231 @@ def cmd_validate(args):
         print("  All checks passed. Artifact is ready for S3 upload.")
 
 
+def _ast_classify_gold_script(path: Path) -> tuple[str, list[int]]:
+    """Classify a gold script for NaN-safe JSON-emit compliance via AST analysis.
+
+    Returns (classification, json_emit_line_numbers).
+    classification: 'PASS' | 'INLINE' | 'NEITHER' | 'N/A' | 'ERROR'
+
+    Priority order (highest wins):
+      PASS    — imports safe_json_serialize + calls safe_json_dumps
+      INLINE  — defines inline _strip_nan OR uses json.dumps(..., allow_nan=False)
+      NEITHER — any json.dumps/json.dump call without the above guards
+      N/A     — no json.dumps/json.dump calls at all (parquet/CSV-only script)
+    """
+    import ast as _ast
+
+    try:
+        source = path.read_text(encoding='utf-8')
+        tree = _ast.parse(source, filename=str(path))
+    except SyntaxError:
+        return 'ERROR', []
+
+    has_safe_json_import = False
+    has_safe_json_call = False
+    has_inline_strip_nan = False
+    has_allow_nan_false = False
+    json_emit_lines: list[int] = []
+
+    for node in _ast.walk(tree):
+        if isinstance(node, _ast.ImportFrom):
+            if node.module == 'safe_json_serialize':
+                has_safe_json_import = True
+        elif isinstance(node, _ast.Import):
+            for alias in node.names:
+                if alias.name == 'safe_json_serialize':
+                    has_safe_json_import = True
+
+        if isinstance(node, _ast.Call):
+            func = node.func
+            if isinstance(func, _ast.Name) and func.id == 'safe_json_dumps':
+                has_safe_json_call = True
+            elif isinstance(func, _ast.Attribute) and func.attr == 'safe_json_dumps':
+                has_safe_json_call = True
+            if (isinstance(func, _ast.Attribute)
+                    and func.attr in ('dumps', 'dump')
+                    and isinstance(func.value, _ast.Name)
+                    and func.value.id == 'json'):
+                for kw in node.keywords:
+                    if (kw.arg == 'allow_nan'
+                            and isinstance(kw.value, _ast.Constant)
+                            and kw.value.value is False):
+                        has_allow_nan_false = True
+                json_emit_lines.append(node.lineno)
+
+        if isinstance(node, (_ast.FunctionDef, _ast.AsyncFunctionDef)):
+            if '_strip_nan' in node.name:
+                has_inline_strip_nan = True
+
+    if has_safe_json_import and has_safe_json_call:
+        return 'PASS', json_emit_lines
+    if has_inline_strip_nan or has_allow_nan_false:
+        return 'INLINE', json_emit_lines
+    if json_emit_lines:
+        return 'NEITHER', json_emit_lines
+    return 'N/A', []
+
+
+def cmd_gold_nan(args: argparse.Namespace) -> None:
+    """gold-nan subcommand: audit all gold scripts for NaN-safe JSON-emit compliance.
+
+    Walks data/orion/scripts/gold/*.py (top-level only; lib/ and tests/ excluded).
+    Classifies each script as PASS / INLINE / NEITHER / N/A.
+    Writes per-script YAML manifests + chain-wide REPORT.md to
+    org/modules/graph/gold-nan/.
+
+    --strict exits 1 if any NEITHER-class scripts are detected.
+    """
+    import yaml as _yaml
+
+    strict = getattr(args, 'strict', False)
+    gold_dir = _WORKSPACE / 'data' / 'orion' / 'scripts' / 'gold'
+    output_dir = _WORKSPACE / 'org' / 'modules' / 'graph' / 'gold-nan'
+    output_dir.mkdir(parents=True, exist_ok=True)
+
+    scripts: list[Path] = sorted(gold_dir.glob('*.py'))
+    scripts = [p for p in scripts if not p.name.startswith('__')]
+
+    pass_list: list[tuple[str, Path]] = []
+    inline_list: list[tuple[str, Path]] = []
+    neither_list: list[tuple[str, Path]] = []
+    na_list: list[tuple[str, Path]] = []
+
+    print('COMP-VALIDATE gold-nan: NaN-safe JSON-emit compliance audit')
+    print(f'  Lane: data/orion/scripts/gold/ ({len(scripts)} top-level scripts)')
+    print()
+
+    for script_path in scripts:
+        script_id = script_path.stem
+        rel = script_path.relative_to(_WORKSPACE).as_posix()
+        classification, emit_lines = _ast_classify_gold_script(script_path)
+
+        entry = (script_id, script_path)
+        if classification == 'PASS':
+            pass_list.append(entry)
+        elif classification == 'INLINE':
+            inline_list.append(entry)
+        elif classification == 'NEITHER':
+            neither_list.append(entry)
+        else:
+            na_list.append(entry)
+
+        if classification != 'N/A':
+            yaml_data = {
+                'script_id': script_id,
+                'path': rel,
+                'classification': classification,
+                'emit_sites': [f'line {ln}' for ln in emit_lines] if emit_lines else [],
+            }
+            yaml_path = output_dir / f'{script_id}.yaml'
+            with open(yaml_path, 'w', encoding='utf-8') as f:
+                _yaml.dump(yaml_data, f, default_flow_style=False, sort_keys=False)
+
+        label_map = {'PASS': 'PASS   ', 'INLINE': 'INLINE ', 'NEITHER': 'NEITHER', 'N/A': 'N/A    ', 'ERROR': 'ERROR  '}
+        label = label_map.get(classification, classification)
+        sites_str = f' ({len(emit_lines)} json.dumps site(s))' if emit_lines else ''
+        print(f'  {label}  {script_id}{sites_str}')
+
+    total_with_emit = len(pass_list) + len(inline_list) + len(neither_list)
+    total = total_with_emit + len(na_list)
+
+    def _pct(n: int) -> str:
+        return f'{n/max(1, total_with_emit)*100:.0f}%'
+
+    report_lines = [
+        '# gold-nan NaN-Compliance Audit Report',
+        '',
+        '**Generated:** 2026-05-14 (ADHC_COMPIL_V4.029b)',
+        '**Lane:** `data/orion/scripts/gold/` (top-level scripts only; lib/ and tests/ excluded)',
+        '',
+        '## Summary',
+        '',
+        '| Classification | Count | % of emit-boundary scripts |',
+        '|---|---|---|',
+        f'| PASS    | {len(pass_list)}  | {_pct(len(pass_list))} |',
+        f'| INLINE  | {len(inline_list)}  | {_pct(len(inline_list))} |',
+        f'| NEITHER | {len(neither_list)} | {_pct(len(neither_list))} |',
+        f'| N/A (no JSON emit) | {len(na_list)} | — |',
+        f'| **Total** | **{total}** | |',
+        '',
+        '## PASS (compliant — safe_json_dumps from shared lib)',
+        '',
+    ]
+    if pass_list:
+        for sid, p in pass_list:
+            report_lines.append(f'- `{sid}` (`{p.relative_to(_WORKSPACE).as_posix()}`)')
+    else:
+        report_lines.append('(none)')
+
+    report_lines += ['', '## INLINE (opportunistic-refactor candidates)', '']
+    if inline_list:
+        for sid, p in inline_list:
+            report_lines.append(f'- `{sid}` (`{p.relative_to(_WORKSPACE).as_posix()}`)')
+    else:
+        report_lines.append('(none — no inline _strip_nan defs or allow_nan=False found)')
+
+    report_lines += ['', '## NEITHER (silent-drift risk — follow-up TOs needed)', '']
+    if neither_list:
+        for sid, p in neither_list:
+            report_lines.append(f'- `{sid}` (`{p.relative_to(_WORKSPACE).as_posix()}`)')
+    else:
+        report_lines.append('(none)')
+
+    report_lines += ['', '## N/A (no JSON-emit boundary — parquet/CSV-only scripts)', '']
+    if na_list:
+        for sid, _ in na_list:
+            report_lines.append(f'- `{sid}`')
+    else:
+        report_lines.append('(none)')
+
+    report_lines += [
+        '',
+        '## Upgrade Path',
+        '',
+        'For all NEITHER-class scripts, migrate each S3-emit `json.dumps` to `safe_json_dumps`:',
+        '',
+        '```python',
+        'from safe_json_serialize import safe_json_dumps  # noqa: E402',
+        '# before: body = json.dumps(obj, default=str, separators=(",", ":"))',
+        '# after:  body = safe_json_dumps(obj, default=str, separators=(",", ":"))',
+        '```',
+        '',
+        'Shared lib: `data/orion/scripts/gold/lib/safe_json_serialize.py`',
+        'S3 mirror: `s3://opal-data-inf/code/gold/lib/safe_json_serialize.py`',
+        '',
+        '## Ruling',
+        '',
+        '**AC2:** This enumeration is NOT a forced migration. NEITHER-class scripts are flagged',
+        'for opportunistic follow-up TOs (DS lanes). No immediate data reprocess required.',
+        'Priority order for follow-up: INF_D portal-emit scripts first (user-facing JSON);',
+        'C/B-chain parquet-adjacent scripts second.',
+    ]
+
+    report_path = output_dir / 'REPORT.md'
+    report_path.write_text('\n'.join(report_lines) + '\n', encoding='utf-8')
+
+    print()
+    print(f'  Summary: {len(pass_list)} PASS | {len(inline_list)} INLINE | {len(neither_list)} NEITHER | {len(na_list)} N/A')
+    print(f'  Report written: {report_path.relative_to(_WORKSPACE)}')
+    print(f'  Per-script YAMLs written: {output_dir.relative_to(_WORKSPACE)}/{{script_id}}.yaml')
+    print()
+
+    if neither_list:
+        print(f'  NEITHER-class ({len(neither_list)} scripts flagged for follow-up):')
+        for sid, _ in neither_list:
+            print(f'    {sid}')
+        print()
+
+    if strict and neither_list:
+        print(f'FAIL: --strict: {len(neither_list)} NEITHER-class script(s) detected (exit 1)')
+        sys.exit(1)
+
+    if strict:
+        print('PASS: --strict: no NEITHER-class scripts detected')
+
+    print('PASS: gold-nan audit complete')
+
+
 def main():
     parser = argparse.ArgumentParser(
         prog='comp-validate',
@@ -422,6 +647,11 @@ def main():
     # --cross-check) become pass-through args for the standalone validator
     # instead of hard-erroring in argparse (proposal E).
     args, extras = parser.parse_known_args()
+
+    # gold-nan subcommand (ADHC_COMPIL_V4.029b)
+    if args.script_id == 'gold-nan':
+        cmd_gold_nan(args)
+        return
 
     # List path is unchanged.
     if args.list_only:

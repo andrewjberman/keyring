@@ -1,0 +1,5 @@
+script_id: INF_D_02b.top_holdings
+path: data/orion/scripts/gold/INF_D_02b.top_holdings.py
+classification: NEITHER
+emit_sites:
+- line 215

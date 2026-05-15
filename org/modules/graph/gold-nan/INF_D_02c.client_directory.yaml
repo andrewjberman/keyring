@@ -1,0 +1,6 @@
+script_id: INF_D_02c.client_directory
+path: data/orion/scripts/gold/INF_D_02c.client_directory.py
+classification: NEITHER
+emit_sites:
+- line 95
+- line 201

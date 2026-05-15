@@ -1,0 +1,5 @@
+script_id: INF_C_06.client_mix_timeseries
+path: data/orion/scripts/gold/INF_C_06.client_mix_timeseries.py
+classification: NEITHER
+emit_sites:
+- line 162

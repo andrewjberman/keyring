@@ -1,0 +1,243 @@
+type_name: TenantLayoutConfig
+total_fields: 38
+fields:
+  - name: firmId
+    consumer_count: 19
+    status: READ-EVERYWHERE
+    consumers:
+      - portal\src\App.tsx:291
+      - portal\src\components\ProtectedRoute.tsx:44
+      - portal\src\components\ProtectedRoute.tsx:57
+      - portal\src\contexts\AuthContext.tsx:35
+      - portal\src\contexts\AuthContext.tsx:136
+  - name: displayName
+    consumer_count: 7
+    status: READ-EVERYWHERE
+    consumers:
+      - portal\src\components\Button.tsx:47
+      - portal\src\components\Card.tsx:37
+      - portal\src\components\Card.tsx:49
+      - portal\src\components\Card.tsx:61
+      - portal\src\components\Card.tsx:73
+  - name: primaryCustodian
+    consumer_count: 0
+    status: UNUSED
+  - name: sourceAttribution
+    consumer_count: 0
+    status: UNUSED
+  - name: tooltipAttribution
+    consumer_count: 0
+    status: UNUSED
+  - name: dataSources
+    consumer_count: 4
+    status: USED
+    consumers:
+      - portal\src\pages\AdvisorIntelligence\_shared\AdvisorBookView.tsx:144
+      - portal\src\pages\AdvisorIntelligence\_shared\AdvisorBookView.tsx:145
+      - portal\src\pages\AdvisorIntelligence\_shared\tabs\ClientsTab.tsx:137
+      - portal\src\pages\AdvisorIntelligence\_shared\tabs\ClientsTab.tsx:138
+  - name: lambdaScopeKey
+    consumer_count: 0
+    status: UNUSED
+  - name: staticPaths
+    consumer_count: 4
+    status: USED
+    consumers:
+      - portal\src\pages\AdvisorIntelligence\_shared\AdvisorBookView.tsx:144
+      - portal\src\pages\AdvisorIntelligence\_shared\AdvisorBookView.tsx:145
+      - portal\src\pages\AdvisorIntelligence\_shared\tabs\ClientsTab.tsx:137
+      - portal\src\pages\AdvisorIntelligence\_shared\tabs\ClientsTab.tsx:138
+  - name: tabs
+    consumer_count: 14
+    status: READ-EVERYWHERE
+    consumers:
+      - portal\src\pages\AdvisorIntelligence\_partners\inflection\index.tsx:134
+      - portal\src\pages\AdvisorIntelligence\_partners\inflection\index.tsx:135
+      - portal\src\pages\AdvisorIntelligence\_partners\inflection\index.tsx:136
+      - portal\src\pages\AdvisorIntelligence\_partners\inflection\index.tsx:139
+      - portal\src\pages\AdvisorIntelligence\_partners\inflection\index.tsx:248
+  - name: partnerAnalytics
+    consumer_count: 1
+    status: USED
+    consumers:
+      - portal\src\pages\AdvisorIntelligence\_shared\components\PartnerAnalytics.tsx:273
+  - name: distribution
+    consumer_count: 39
+    status: READ-EVERYWHERE
+    consumers:
+      - portal\src\pages\AdvisorIntelligence\_partners\inflection\index.tsx:135
+      - portal\src\pages\AdvisorIntelligence\_shared\components\PartnerAnalytics.tsx:758
+      - portal\src\pages\AdvisorIntelligence\_shared\components\PartnerAnalytics.tsx:798
+      - portal\src\pages\AdvisorIntelligence\_shared\components\PartnerAnalytics.tsx:817
+      - portal\src\pages\AdvisorIntelligence\_shared\components\PartnerAnalytics.tsx:872
+  - name: books
+    consumer_count: 8
+    status: READ-EVERYWHERE
+    consumers:
+      - portal\src\pages\AdvisorIntelligence\_partners\inflection\index.tsx:136
+      - portal\src\pages\AdvisorIntelligence\_partners\inflection\index.tsx:248
+      - portal\src\pages\AdvisorIntelligence\_shared\tabs\ClientsTab.tsx:772
+      - portal\src\pages\AdvisorIntelligence\_shared\tabs\ClientsTab.tsx:787
+      - portal\src\pages\AdvisorIntelligence\_shared\tabs\ClientsTab.tsx:851
+  - name: advisors
+    consumer_count: 5
+    status: READ-EVERYWHERE
+    consumers:
+      - portal\src\pages\AdvisorIntelligence\_partners\inflection\index.tsx:134
+      - portal\src\pages\AdvisorIntelligence\_partners\inflection\index.tsx:139
+      - portal\src\pages\AdvisorIntelligence\_shared\tabs\DistributionTab.tsx:3750
+      - portal\src\pages\AdvisorIntelligence\_shared\tabs\FeeEfficiencyPanel.tsx:217
+      - portal\src\pages\AdvisorIntelligence\_shared\tabs\FeeEfficiencyPanel.tsx:245
+  - name: panels
+    consumer_count: 15
+    status: READ-EVERYWHERE
+    consumers:
+      - portal\src\pages\AdvisorIntelligence\_partners\inflection\index.tsx:140
+      - portal\src\pages\AdvisorIntelligence\_partners\inflection\index.tsx:265
+      - portal\src\pages\AdvisorIntelligence\_shared\tabs\AdvisorsTab.tsx:242
+      - portal\src\pages\AdvisorIntelligence\_shared\tabs\AdvisorsTab.tsx:245
+      - portal\src\pages\AdvisorIntelligence\_shared\tabs\AdvisorsTab.tsx:814
+  - name: advisorList
+    consumer_count: 6
+    status: READ-EVERYWHERE
+    consumers:
+      - portal\src\pages\AdvisorIntelligence\_shared\tabs\AdvisorsTab.tsx:242
+      - portal\src\pages\AdvisorIntelligence\_shared\tabs\AdvisorsTab.tsx:1086
+      - portal\src\pages\AdvisorIntelligence\_shared\tabs\AdvisorsTab.tsx:1201
+      - portal\src\pages\AdvisorIntelligence\_shared\tabs\ClientsTab.tsx:252
+      - portal\src\pages\AdvisorIntelligence\_shared\tabs\ClientsTab.tsx:253
+  - name: advCohortLabel
+    consumer_count: 5
+    status: READ-EVERYWHERE
+    consumers:
+      - portal\src\pages\AdvisorIntelligence\_shared\tabs\DistributionTab.tsx:778
+      - portal\src\pages\AdvisorIntelligence\_shared\tabs\DistributionTab.tsx:780
+      - portal\src\pages\AdvisorIntelligence\_shared\tabs\DistributionTab.tsx:781
+      - portal\src\pages\AdvisorIntelligence\_shared\tabs\DistributionTab.tsx:2121
+      - portal\src\pages\AdvisorIntelligence\_shared\tabs\DistributionTab.tsx:2854
+  - name: advisorPublicProfile
+    consumer_count: 3
+    status: USED
+    consumers:
+      - portal\src\pages\AdvisorIntelligence\_partners\inflection\index.tsx:140
+      - portal\src\pages\AdvisorIntelligence\_partners\inflection\index.tsx:262
+      - portal\src\pages\AdvisorIntelligence\_partners\inflection\index.tsx:265
+  - name: groDecomposition
+    consumer_count: 2
+    status: USED
+    consumers:
+      - portal\src\pages\AdvisorIntelligence\_shared\tabs\AdvisorsTab.tsx:245
+      - portal\src\pages\AdvisorIntelligence\_shared\tabs\AdvisorsTab.tsx:814
+  - name: dataSourcePanel
+    consumer_count: 0
+    status: UNUSED
+  - name: assetClasses
+    consumer_count: 4
+    status: USED
+    consumers:
+      - portal\src\pages\AdvisorIntelligence\_shared\AdvisorBookView.tsx:150
+      - portal\src\pages\AdvisorIntelligence\_shared\components\PartnerAnalytics.tsx:161
+      - portal\src\pages\AdvisorIntelligence\_shared\components\PartnerAnalytics.tsx:162
+      - portal\src\pages\AdvisorIntelligence\_shared\tabs\ClientsTab.tsx:139
+  - name: ordered
+    consumer_count: 1
+    status: USED
+    consumers:
+      - portal\src\pages\AdvisorIntelligence\_shared\components\PartnerAnalytics.tsx:162
+  - name: includesCash
+    consumer_count: 3
+    status: USED
+    consumers:
+      - portal\src\pages\AdvisorIntelligence\_shared\AdvisorBookView.tsx:150
+      - portal\src\pages\AdvisorIntelligence\_shared\components\PartnerAnalytics.tsx:161
+      - portal\src\pages\AdvisorIntelligence\_shared\tabs\ClientsTab.tsx:139
+  - name: colorPalette
+    consumer_count: 0
+    status: UNUSED
+  - name: groupings
+    consumer_count: 0
+    status: UNUSED
+  - name: roles
+    consumer_count: 14
+    status: READ-EVERYWHERE
+    consumers:
+      - portal\src\pages\AdvisorIntelligence\_shared\AdvisorPublicProfile.tsx:1126
+      - portal\src\pages\AdvisorIntelligence\_shared\AdvisorPublicProfile.tsx:1240
+      - portal\src\pages\AdvisorIntelligence\_shared\tabs\AdvisorsTab.tsx:376
+      - portal\src\pages\AdvisorIntelligence\_shared\tabs\AdvisorsTab.tsx:422
+      - portal\src\pages\AdvisorIntelligence\_shared\tabs\AdvisorsTab.tsx:449
+  - name: keys
+    consumer_count: 58
+    status: READ-EVERYWHERE
+    consumers:
+      - portal\src\api\endpoints\advisor-intelligence.ts:1245
+      - portal\src\api\endpoints\aum.ts:311
+      - portal\src\api\endpoints\market.ts:275
+      - portal\src\api\portal-proxy.ts:524
+      - portal\src\api\portal-proxy.ts:560
+  - name: meta
+    consumer_count: 46
+    status: READ-EVERYWHERE
+    consumers:
+      - portal\src\api\api-client.ts:14
+      - portal\src\api\api-client.ts:17
+      - portal\src\api\api-client.ts:20
+      - portal\src\api\client\axios.ts:7
+      - portal\src\api\client\axios.ts:26
+  - name: composition
+    consumer_count: 4
+    status: USED
+    consumers:
+      - portal\src\api\endpoints\advisor-intelligence.ts:1075
+      - portal\src\api\endpoints\advisor-intelligence.ts:1496
+      - portal\src\pages\AdvisorIntelligence\_shared\AdvisorPublicProfile.tsx:1126
+      - portal\src\pages\AdvisorIntelligence\_shared\tabs\ClientsTab.tsx:338
+  - name: features
+    consumer_count: 2
+    status: USED
+    consumers:
+      - portal\src\pages\AdvisorIntelligence\_shared\components\PartnerAnalytics.tsx:159
+      - portal\src\pages\AdvisorIntelligence\_shared\components\PartnerAnalytics.tsx:160
+  - name: gro
+    consumer_count: 0
+    status: UNUSED
+  - name: nna
+    consumer_count: 76
+    status: READ-EVERYWHERE
+    consumers:
+      - portal\src\pages\AdvisorIntelligence\_partners\inflection\layout.ts:67
+      - portal\src\pages\AdvisorIntelligence\_shared\AdvisorBookAccountDetail.tsx:98
+      - portal\src\pages\AdvisorIntelligence\_shared\AdvisorBookAccountDetail.tsx:282
+      - portal\src\pages\AdvisorIntelligence\_shared\AdvisorBookAccountModal.tsx:212
+      - portal\src\pages\AdvisorIntelligence\_shared\AdvisorBookAccountModal.tsx:232
+  - name: auaDonut
+    consumer_count: 1
+    status: USED
+    consumers:
+      - portal\src\pages\AdvisorIntelligence\_shared\components\PartnerAnalytics.tsx:159
+  - name: barChart
+    consumer_count: 1
+    status: USED
+    consumers:
+      - portal\src\pages\AdvisorIntelligence\_shared\components\PartnerAnalytics.tsx:160
+  - name: smallAccountThreshold
+    consumer_count: 0
+    status: UNUSED
+  - name: routes
+    consumer_count: 0
+    status: UNUSED
+  - name: tabs
+    consumer_count: 14
+    status: READ-EVERYWHERE
+    consumers:
+      - portal\src\pages\AdvisorIntelligence\_partners\inflection\index.tsx:134
+      - portal\src\pages\AdvisorIntelligence\_partners\inflection\index.tsx:135
+      - portal\src\pages\AdvisorIntelligence\_partners\inflection\index.tsx:136
+      - portal\src\pages\AdvisorIntelligence\_partners\inflection\index.tsx:139
+      - portal\src\pages\AdvisorIntelligence\_partners\inflection\index.tsx:248
+  - name: defaultTab
+    consumer_count: 0
+    status: UNUSED
+  - name: customRoutes
+    consumer_count: 0
+    status: UNUSED
