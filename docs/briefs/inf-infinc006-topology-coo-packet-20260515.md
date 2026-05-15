@@ -130,3 +130,21 @@ DWSPLT is JSON-active but its TO-2/3/5 shipped (`f69461357`); JSON is stale (CTO
 | Gold `full`/`incremental` chain fires daily | `org/projects/ADVI_INFETL.json` phase ("chain #24 cron-fallback fire mode=full") |
 
 — 2.0.0_SA_COO
+
+---
+
+## Addendum A — `INF_D_05` consumer finding + correction cycle (2026-05-15 ~14:0XZ)
+
+Post-empirical (CTO ran §8.1's S3 discriminator directly — AE 0.6.1 offline): the dual-writer is **ACTIVE** and **schema-level**. Every `silver/transactions/` partition older than today is last-written ~13:00 UTC by the `inf-api-txn` Lambda in **snake_case** Custom-Report schema with **`trans_date` 100% NULL**; today's partition is the gold chain's **camelCase** DWSPLT Rule-17 schema. Day-by-day clobbering observed (DS~B saw `2026-05-14.parquet` camelCase on 05-14; CTO's probe found it snake_case post-05-15 13:00).
+
+**Consumer enumeration** (grep `silver/transactions` across `data/orion/scripts/gold/`; `comp-blast` does not model the artifact):
+- **Shielded:** the 6 DWSPLT §2.4 consumers (TO-3-migrated to bronze-name canonical) + the `txn_cache_reader` path. `txn_cache_reader` is *structurally* shielded — it mtime-sorts, takes latest-5, rejects partitions missing `REQUIRED_CANONICAL_COLS` (`:181-207`); the gold chain's daily camelCase write always lands in that window; worst case is fail-loud, not silent. `INF_D_02` shielded (newest-key source-select, `:1012`).
+- **NOT migrated:** `INF_D_05.activity_scan.py` (chain step `INF_D_05a`; in `CHAIN_FULL` + `CHAIN_GOLD_D`). It does NOT use `txn_cache_reader`; `load_all_transactions()` (`:204-239`) paginate-concats ALL ~1,510 partitions. Not in DWSPLT §2.4's list — a **concrete second instance of the §7 DWSPLT TO-3 scope gap**.
+
+**Correction cycle (recorded for discipline).** Static schema analysis of `_load_txn_partition` (`:168-201`) predicted `INF_D_05` produces empty output: camelCase partitions hit `return None` (no `account_id`), snake-Lambda partitions hit `dropna` (NULL `trans_date`). That prediction was **over-extrapolated** — the COO surfaced it to CTO as a severity upgrade, then **retracted it** on pulling the live artifact: `s3://opal-data-inf/platinum/firm/activity_scan_1y.json` is **non-empty** (`txn_count` 1447/1497/1743/2572…), `LastModified 2026-05-15T07:08:38Z`. The INFINC.005→.006 lesson — *do not extrapolate past the probe* — applied to the COO mid-investigation.
+
+**Reconciled true state.** Code analysis (camelCase + snake-Lambda partitions both unreadable) AND the non-empty artifact reconcile via the **older partitions**: dates ≤ ~2026-05-05 retain the pre-Lambda old-NEW-REST snake schema (`account_id` / populated `trans_date` / `trans_id`) — readable by `INF_D_05`, and full-history snapshots. So `INF_D_05` is **silently recency-stale** — txn universe frozen at `max_date ≤ ~2026-05-05` (≥ ~10 days), output otherwise plausible — **NOT empty, NOT a visibly-broken panel.** `activity_scan_*` feeds `portal/src/.../inflection/InflectionInsightsPanel.tsx`. Exact `max_date` pending the `INF_D_05a` runner-log line (`:237-239`).
+
+**Thread implication (unchanged by the correction):** migrate `INF_D_05` to the canonical camelCase Rule-17 schema **and complete the consumer re-enumeration TO-3 left half-done** — adopted into the ADVI_INFINC-001 agenda. The fix is correct regardless of the canonical-writer ruling; `INF_D_05` provably cannot read the canonical schema. Andrew-report severity word: **"silently ~10-day-stale,"** not "broken."
+
+— 2.0.0_SA_COO
