@@ -359,5 +359,50 @@ Endpoint contract reported to TO-8b's owner (RD 0.3.2) per AC5. AC1-5 all PASS.
 
 The TRSB_LEDGER backend serial lane (TO-0, 010a, 1, 2, 3, 4, 5, 8) is COMPLETE — all
 dispatched TOs shipped + deployed + RAVC2'd. TO-9 stays staged (droppable stretch — do NOT
-start without a GO). TO-10 reassigned to AE 0.6.1. Awaiting COO~B RAVC acceptance on
-TO-3/4/5/8.
+start without a GO). TO-10 reassigned to AE 0.6.1. TO-3/4/5 RAVC-accepted by COO~B; TO-8
+acceptance pending.
+
+## P0 Incident — 2026-05-18 — production trade-approve fails (HTML not JSON)
+
+Andrew's first-ever live test trade: APPROVE failed in the portal with "Unexpected token
+'<', '<!doctype'... is not valid JSON". Diagnosed for COO~B (CC CTO~B).
+
+### Diagnosis
+- **The 403 is CORRECT TO-1 group-auth enforcement, not a defect.** Reproduced on the
+  deployed `trade-workflow-handler` (jwt=andrew@opalinvest.com, action=approve, Andrew's
+  real trade TRADE-20260518-181840-2E31B0): `403 {"message": "User andrew@opalinvest.com
+  is not in the approvers group and cannot approve trades"}`, Content-Type
+  application/json. The 403 returns before any write — the trade stayed PENDING_APPROVAL.
+  andrew@ had trade-users groups=['executors'] only; the trade was submitted by lauren@
+  (an approver). dev role bypasses segregation but NOT group membership (TO-1 by design).
+- **Candidate "JWT claim-key mismatch" (potential TO-2 bug) RULED OUT** by reading the live
+  authorizer source `portal_authorizer/index.mjs`: it returns Simple Response
+  `context:{email: decoded.sub, ...}` — key is `email`, delivered at
+  `event.requestContext.authorizer.lambda.email`, exactly what `workflow_handler.py` reads.
+  The "not in the approvers group" branch is only reachable after `jwt_email` resolves, so
+  the JWT path works. TO-2 has no bug.
+- **The HTML masking** — CloudFront dist `EVTSA9VEHNZVH` (opalinvest.dev) has
+  `custom_error_response` `403 -> 200 /index.html` + `404 -> 200 /index.html`. That
+  distribution-global SPA fallback also catches `/api/general/trades/*`, rewriting the
+  Lambda's clean 403 JSON into a 200 + index.html HTML body. This is the only real defect;
+  fix routed to CTO~B (move the SPA fallback to the S3 default behavior only). AE 0.7.0 to
+  own the fix TO on CTO~B's GO — NOT changed yet.
+
+### P0 unblock — trade-users group change (Andrew direct authorization)
+Andrew (principal) directly authorized, relayed by COO~B: andrew@opalinvest.com to carry
+the full recognized group set. Confirmed by grep of all 4 trade Lambdas that the trade
+system recognizes exactly two groups — `approvers` + `executors` (submission is ungated;
+`initiators`/`authorizers` were retired in the TRSB_PATHFIX W2 migration).
+
+| Field | Before | After |
+|-------|--------|-------|
+| trade-users row | andrew@opalinvest.com | andrew@opalinvest.com |
+| groups | `['executors']` | `['approvers','executors']` |
+| role | `dev` | `dev` (unchanged) |
+| when | — | 2026-05-18T18:45:38Z |
+| by | — | 0.7.0_AE_CloudOps (Andrew direct authz via COO~B) |
+
+Direct `aws dynamodb update-item` — no audited trade-users management path exists yet
+(TO-7 management path was dropped in favor of Andrew's direct control, Q4). Logged here
+for traceability. Andrew can retry the approve immediately — group membership is read live
+per invocation, no redeploy needed.
