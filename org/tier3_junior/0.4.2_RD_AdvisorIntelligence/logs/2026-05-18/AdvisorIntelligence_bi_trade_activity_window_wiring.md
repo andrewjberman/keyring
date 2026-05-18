@@ -3,7 +3,9 @@
 
 **Date:** 2026-05-18
 **Mode:** Andrew-direct investigation + fix
-**Portal commit:** `<this commit>` (DEV)
+**Portal commit:** `23e8ab14` (DEV) — pushed by DT, parent CLOUD pointer `ca63fe2da`
+**Workspace commit:** `fa0c16d7b` (CLOUD) — log + page_inventory; this log amended post-RAVC-closure
+**DS follow-on:** `d31efbe9e` (CLOUD, DS~D) — activity_scan contract documented + legacy emit retired
 **Related project:** ADVI_BIWNDW (Books-tab BI Window Coverage) — sibling to TO-1 `ADVI_BIWNDW.001`
 
 ---
@@ -109,17 +111,55 @@ the strict `pages/AdvisorIntelligence/` page dir but is page-exclusive (serves
 only InflectionInsightsPanel per `comp-platinum reverse`) and the 2-line change
 is mechanically required for the page fix. MCP heads-up sent to 0.4.0_DE_ClientPlatform.
 
+## Coordination — RAVC chain (post-commit, same session)
+
+The FE fix triggered a clean Request->Acknowledge->Validate->Close chain across
+the pod. All resolved within the session:
+
+1. **DE 0.4.0 — PM validation.** ACK'd `23e8ab14`. Verified it stacks cleanly on
+   their `fe881e2b` (ADVI_BIWNDW.001) — both `InflectionInsightsPanel.tsx`
+   changesets coexist (DE's = props/window-toggle lift; mine = queryFn
+   window-pass + `txn_count` rename), non-overlapping by region, no clobber.
+   Explicitly APPROVED the `advisor-intelligence.ts` lane touch (page-exclusive,
+   2-line mechanical change). Directed handoff to DT.
+
+2. **DT 0.4.0 — QA gate + push.** QA PASS — typecheck exit 0 on HEAD, 3 files
+   FE-only, `txn_count_12m`->`txn_count` rename grep-verified consistent (only
+   2 residual refs, both explanatory comments). Pushed: portal DEV
+   `fe881e2b..23e8ab14`; parent CLOUD `a6e9efd3e..ca63fe2da` (submodule pointer).
+   Zero-diff vs origin, PROD untouched. Flagged the DS `data_contract.xml`
+   drift as a follow-on.
+
+3. **DS~D 0.4.0_DS_ClientPlatform~D — contract + legacy retirement.** Andrew
+   brought DS~D online; I handed off two items. DS~D shipped `d31efbe9e`
+   (CLOUD, deployed):
+   - **data_contract.xml** — the contract had *no* `activity_scan` entry at all
+     (per-window emit was entirely undocumented). DS~D added the full section:
+     4 per-window artifacts, `txn_count` row schema, window definitions,
+     legacy retirement note.
+   - **Legacy emit retired** — `INF_D_05.activity_scan.py` no longer writes
+     `platinum/firm/activity_scan.json` (the script header had flagged this as
+     owed once the FE PR shipped). ds-commit-gate PASS, pre-push safe-deploy
+     auto-deployed [inf], S3 script match, `--dry-run` 4-window clean. Rides the
+     next INF gold chain run.
+   - Residual: the stale `activity_scan.json` S3 object is left in place
+     (unwritten + unreferenced — harmless; S3 deletion is a destructive op not
+     worth a sign-off cycle for dead weight). RAVC-closed.
+
 ## Next Steps
 
-1. **[0.4.0_DT_ClientPlatform]** Push portal DEV + bundle — FE-only, no artifact
-   dependency (the 4 per-window files are already live on S3).
-2. **[0.4.0_DS_ClientPlatform / DS~D]** Optional cleanup: `INF_D_05.activity_scan.py`
-   can drop the legacy `activity_scan.json` emit now that no FE path reads it
-   (the script header flags this as the owed retirement). Non-blocking.
-3. **[Andrew]** Visual confirm post-deploy.
+1. **[Andrew]** Visual confirm post-deploy once DT bundles DEV->PROD.
+2. **[next INF gold chain run]** `INF_D_05` stops emitting the legacy
+   `activity_scan.json` — no action needed; mechanical.
 
 ## Status
 
-Complete. 1 portal/DEV commit (3 files, awaiting DT push+bundle), workspace
-commit (log + page_inventory.xml). Smoke PASS. No DS work needed — DS already
-shipped the per-window artifacts. No blockers.
+COMPLETE — fully shipped and closed.
+- FE fix: portal DEV `23e8ab14` + parent CLOUD `ca63fe2da` (DT-pushed,
+  DE-approved, browser smoke PASS).
+- DS cleanup: `d31efbe9e` (CLOUD, deployed — contract documented + legacy
+  emit retired).
+- RAVC chain DE -> DT -> DS~D all closed within session.
+- No DS data *work* was needed for the fix itself — DS had already shipped the
+  per-window artifacts; only the FE consumption + doc/cleanup loose ends.
+No blockers. Nothing outstanding in RD lane.
