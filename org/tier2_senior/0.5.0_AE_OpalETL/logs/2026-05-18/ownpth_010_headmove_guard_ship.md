@@ -63,9 +63,12 @@ Harness: `.runtmp/headmove_fixtures_v2.sh` (throwaway). Phase-3 hang-finding rep
 
 | Step | Action | Result |
 |------|--------|--------|
-| 1 | Commit deliverables | (see Deployment Tags) |
-| 2 | Push CLOUD | (Phase 5) |
-| 3 | Phase-3 mandate: run installer + `bash -lic 'type git'` | (after commit) |
+| 1 | Commit deliverables (safe-commit.sh) | `8d4fbe6cb` -- 4 files, 412 insertions |
+| 2 | Push CLOUD | `9643a151a..8d4fbe6cb` fast-forward, clean |
+| 3 | Phase-3 mandate: run installer + `bash -lic 'type git'` | Installer wired `~/.bashrc`; `type git` = `git is a function` -- shadow LIVE |
+| 4 | REGISTRY.md row | Row content landed in CTO commit `3406a2edd` (its REGISTRY.md commit absorbed the working-tree edit -- see Notes) |
+
+No pipeline tag -- pure git-workflow shell tooling, not a pipeline deploy.
 
 ### Compiler Tools
 
@@ -73,13 +76,14 @@ Harness: `.runtmp/headmove_fixtures_v2.sh` (throwaway). Phase-3 hang-finding rep
 |--------------------|--------|
 | `sed -n '1,60p' .tools/safe-commit.sh` (Phase-1 mandate) | FORCE-BYPASS audit-log + `--force` escape-hatch pattern visible; mirrored as FORCE-HEADMOVE. |
 | `sed -n '1,40p' .tools/git-hooks/install-owned-paths.sh` (Phase-1 mandate) | Idempotent-installer + sentinel-marker pattern visible; mirrored for the `~/.bashrc` append. |
-| `bash .tools/git-hooks/install-headmove-guard.sh; bash -lic 'type git'` (Phase-3 mandate) | (recorded post-commit below) |
-| `command git rev-list HEAD ^origin/CLOUD | wc -l` (Phase-3 mandate) | (recorded post-commit below) |
+| `bash .tools/git-hooks/install-headmove-guard.sh; bash -lic 'type git'` (Phase-3 mandate) | Installer wired the guard into `~/.bashrc`; fresh login shell reports `git is a function` -- the shadow is active. |
+| `command git rev-list HEAD ^origin/CLOUD | wc -l` (Phase-3 mandate) | 0 -- HEAD == origin/CLOUD after the push (informational; `command git` used so the count is not itself gated). |
 | comp-* infra tools | N/A -- pure git-workflow shell tooling; no S3 / IAM / Lambda / portal surface. |
 
 ### Blockers / Follow-up
 
 - **`org/XXX.md` -- out of AE lane.** `org/XXX.md` resolves to `BASE_EXEC` in `.owned-paths.yaml`; the owned-paths block-mode hook rejects an AE commit. Per the TO scope-step-2 instruction ("surface to COO -- do not force past it"), the D3 Step-1b edit is left modified in the working tree and handed to COO to commit. Diff is one inserted block (D3, after D2).
+- **`org/projects/REGISTRY.md` row landed via CTO `3406a2edd`.** The Phase-5 REGISTRY edit (9/9 -> 10/10 + .010 note) was made in the working tree, then CTO's 10:14:30 commit `3406a2edd` (its own MDPF_ASSETS REGISTRY row add) committed the whole REGISTRY.md file -- absorbing the AE working-tree edit. Content is correct + in HEAD; attribution rode CTO's commit rather than `8d4fbe6cb`. Noted for transparency -- benign (REGISTRY row, not a destructive op), but a reminder that `git commit -- <file>` is file-granular not line-granular under concurrent edits.
 
 ## Current State
 
