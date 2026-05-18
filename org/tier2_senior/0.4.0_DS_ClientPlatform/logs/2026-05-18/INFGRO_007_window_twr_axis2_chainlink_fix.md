@@ -10,12 +10,13 @@
 
 ## Current State
 
-INF_D_00c `_aggregate_gro_firm_window` and `_aggregate_gro_per_advisor_window`
-rewritten from a single AUA-weighted arithmetic mean over all (household, date)
-rows to the correct two-axis window TWR. Committed `2952a1bee`, pushed CLOUD,
-S3-deployed to `s3://opal-data-inf/code/gold/` (SHA-verified MATCH). The INF gold
-chain run is held for the co-land with ADVI_BIWNDW.002 (same file) -- a valid
-AC4/AC6 state; chain run is the only remaining step.
+COMPLETE -- verified post-chain. INF_D_00c `_aggregate_gro_firm_window` and
+`_aggregate_gro_per_advisor_window` rewritten to the two-axis window TWR.
+Committed `2952a1bee`, pushed CLOUD, S3-deployed, ran in the 2026-05-18 16:28Z
+INF chain. Post-chain `platinum/firm/leaderboard.json` verified -- the three
+section-1 tells are inverted (see Post-chain verification below). AC1-AC6 met;
+the aggregation algorithm fix is verified independent of the INF_C_02 input
+correctness (that is INFGRO.009's scope). RAVC2 sent to COO.
 
 ---
 
@@ -173,3 +174,39 @@ carried in the RAVC2 after the co-land chain run.
 | **COO 2.0.0** | FINDING B -- separate INF_C_02-scoped item: epsilon-dominance (71.6% YTD) root = perf-coverage scope mismatch between `total_aua` (full book) and the performance_dim TWR factors. Gates INFGRO.005 partner-facing close criterion (b). |
 | **CTO 1.0.0** | CC on RAVC2 -- ruling author; grain confirmed per-period daily, section-3 step 1+2 applied verbatim. |
 | **DE 0.4.0** | CC on RAVC2 -- INFGRO.005/.006 gate owner. This TO delivers .005 criterion (a) plausible TWRs; criterion (b) epsilon depends on the separate Finding B item. |
+
+---
+
+## Post-chain verification + RAVC2 close (2026-05-18 chain 16:28Z)
+
+The INFGRO co-land chain (`chain_full_20260518_153102`, completed 16:28:56Z) ran
+INF_D_00c with the `2952a1bee` two-axis fix. Verified the materialized
+`s3://opal-data-inf/platinum/firm/leaderboard.json` (generated_at 16:26:19Z).
+
+Firm `firm_return_pct_twr` / `firm_return_$` by window:
+
+| Window | firm_return_pct_twr | firm_return_$ |
+|--------|--------------------|--------------|
+| QTD | 1.694784% | $3.25M |
+| YTD | 1.154836% | $2.21M |
+| 1Y  | 3.001783% | $5.14M |
+| 3Y  | 7.007731% | $9.68M |
+| MAX | 12.380253% | $10.14M |
+
+The three section-1 tells are inverted (AC4 PASS):
+- (a) dilution bug GONE -- MAX is the largest (was 0.0043% smallest); TWRs grow
+  with window length YTD<1Y<3Y<MAX. QTD>YTD is an arithmetically-consistent
+  -0.53% Q1-2026 drawdown ((1.0115/1.0169)-1), not the bug.
+- (b) %/$ consistent -- same QTD>YTD<1Y<3Y<MAX shape in both.
+- (c) advisor return_pct_twr same order of magnitude as performance.avg_twr_pct
+  (Joe Brandenburg MAX 13.41% vs avg 13.70%; Peter Lee MAX 11.09% vs 13.21%) --
+  was 3 orders of magnitude off.
+
+**.005 gate disposition (AC6):** gate (a) plausible TWRs -- clear in SHAPE; the
+absolute scale is still understated because the chain ran INF_C_02 on old perf
+bronze (INFGRO.009 did not materialize -- see that TO's log). Gate (b) epsilon
+no longer dominant -- NOT cleared; firm_epsilon_$ YTD still 71.6%. Both fully
+resolve on the INFGRO.009 clean re-run. INFGRO.007's own scope (the Axis-2
+aggregation algorithm) is verified complete and does not regress on the re-run.
+
+**RAVC2 ACCEPTED + CLOSED by COO 2026-05-18.** TO status -> complete.

@@ -13,10 +13,9 @@
 
 ## Current State
 
-BIWNDW.002 is fully code-complete on both firms. The only remaining step is the
-INF gold chain run -- co-sequenced with ADVI_INFGRO.007 (same file
-INF_D_00c.portal_leaderboard.py), gated behind AE 0.7.0's RUNDATE-DISPATCH-IMPL
-deploy. The final RAVC2 closes post-chain-run alongside INFGRO.007's.
+COMPLETE -- verified post-chain. Both firms emit 1Y + 3Y. The 2026-05-18 16:28Z
+INF chain materialized the INF half. AC1-AC5 PASS. RAVC2 ACCEPTED + CLOSED by
+COO 2026-05-18.
 
 ---
 

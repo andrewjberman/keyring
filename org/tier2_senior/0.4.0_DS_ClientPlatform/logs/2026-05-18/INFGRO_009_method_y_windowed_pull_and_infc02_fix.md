@@ -10,10 +10,12 @@
 
 ## Current State
 
-Phase 0 (probe) + Phase 1 (code) COMPLETE and deployed. Phase 2 (chain run +
-AC5 verification) awaits the COO/AE-coordinated full INF gold chain run, which
-co-lands INFGRO.007 + BIWNDW.002 + INFGRO.009. This log will be finalized with
-the AC5 post-chain numbers after that run.
+Phase 0 (probe) + Phase 1 (code) COMPLETE and deployed. Phase 2 NOT yet
+materialized -- the 2026-05-18 16:28Z INF chain ran INF_C_02 on the OLD
+pre-windowed perf bronze (it synced ~15:32Z, before the 4e64b254 windowed
+puller reached code/gold/+code/bronze/ at ~16:18Z). A clean full INF chain
+re-run is AUTHORIZED by COO (2026-05-18) and is being coordinated with AE 0.7.0.
+AC5 verification + RAVC2 follow that re-run. See Post-chain finding below.
 
 ---
 
@@ -150,4 +152,36 @@ correct in ABSOLUTE scale + epsilon no longer dominant (PRD section 8.5 a+b).
 | **AE 0.7.0** | Run ONE full INF gold chain (`mode=full`) post timeout-check -- co-lands .007/.002/.009. Ping on completion (CC COO). |
 | **DS~C (self)** | On the ping: AC4 (.007 leaderboard tells) + BIWNDW.002 (1Y/3Y coverage) + AC5 (.009 absolute-scale TWRs + non-dominant epsilon) verification, all off the one post-run leaderboard.json. Three separate RAVC2s. |
 | **COO 2.0.0 / CTO 1.0.0** | Three RAVC2s (one per TO). INFGRO.005 partner-facing unblocks when the post-run leaderboard clears PRD section 8.5 (a)+(b). |
+
+---
+
+## Post-chain finding (2026-05-18) -- chain 16:28Z did NOT carry INFGRO.009
+
+Verified the materialized `platinum/firm/leaderboard.json` (generated 16:26Z).
+INFGRO.009 did NOT materialize -- the chain ran INF_C_02 on the old perf bronze.
+Empirical proof:
+
+- `bronze/performance/2026-05-18.parquet` IS the windowed INFGRO.009 output
+  (3.3MB, daily continuous, ~1594 rows/client, factor 0..170, no summary_*
+  cols) -- but written **17:49Z**, i.e. 88 minutes AFTER INF_C_02 produced
+  `gold/timeseries/client_performance.parquet` at 16:21Z. INF_C_02 could not
+  have read it.
+- `silver/api_dims/performance/snapshot_date=2026-05-18/data.parquet` = 59KB,
+  written 12:51Z -- the old thin annualized shape.
+- leaderboard `firm_epsilon_$` YTD = 71.6% of the AUA-growth decomposition --
+  EXACTLY the INFGRO.008 pre-fix Finding B number, unchanged.
+
+Root: the chain synced ~15:32Z; the 4e64b254 windowed puller only reached
+code/gold/+code/bronze/ at ~16:18Z (the AE SYNC-COLLISION b95fa3a6 clobber had
+diverged those prefixes; restored this session). The chain's INF_API_PULL_PERF
+ran old code.
+
+Disposition: COO AUTHORIZED one clean full INF chain re-run (2026-05-18).
+Everything is staged -- 4e64b254 uniform on all 3 puller prefixes, corrected
+INF_C_02 on code/gold/. AC5 (a) absolute-scale TWRs + (b) epsilon-not-dominant
+get verified on the re-run leaderboard; RAVC2 follows. TO stays pending.
+
+Compiler tools: `comp-pipescript deployed` is BD-bucket-scoped (N/A for orion);
+puller S3 parity verified by direct sha256 -- 4e64b254 uniform on code/gold/,
+code/manual_api/, code/bronze/.
 | **COO 2.0.0** | Follow-up (not scope-crept): INF_C_03.performance_canonical.py docstring + `period_basis` constant still say "weekly" -- now stale (bronze factor is daily continuous). 2-line opportunistic fix; flagging, not touching, per INFGRO.009's 1a/1b/1c scope. |
