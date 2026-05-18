@@ -106,6 +106,74 @@ Phase-3 deployed smoke (AC4) — synthetic-event invokes of the deployed Lambda:
 identity"; JWT-resolved actor (no body email) -> passes identity, 404 on a fake submission.
 ALL PASS. AC1-4/6 PASS; AC5 N/A (fork not triggered).
 
+## TO-3 — Append-only audit_events — COMPLETE
+
+Closes B1 (no event log — state was a destructive `SET` overwrite) and B3 (the execute
+failure path silently erased the failed attempt). Embedded `audit_events` list per the
+CTO~B Q3 ruling — atomicity with the status update, not a separate table.
+
+- `workflow_handler.py`: `build_audit_event()` (PRD §3.2 7-field schema); `update_submission()`
+  gained an `audit_event` param that appends via `list_append(if_not_exists(#audit_events,
+  []), [event])` — atomic with the status SET, single `update_item`, no dual-write/lost-update
+  window. `handle_approve` appends APPROVED; `handle_reject` appends REJECTED (detail =
+  rejection reason); `handle_execute` appends EXECUTED on the success path (the COMPLETE
+  `final_updates` write — only after the brokerage send succeeds). Failure path (B3 fix):
+  the except block appends EXECUTION_FAILED (outcome FAILURE, detail = the error) **atomically
+  with** the status revert — one `update_item`, so the failed attempt can never be lost
+  between two writes. (TO scope said "before the revert"; atomic-with is strictly stronger —
+  noted in the RAVC2.)
+- `submission_handler.py`: row is created with the SUBMITTED event already in `audit_events`;
+  `get_user` + `build_audit_event` helpers added; initiator `groups` snapshotted at
+  submission time (B7).
+- Each event snapshots `actor_groups` — `build_audit_event` copies the list so a later change
+  to the executors/approvers lists cannot rewrite history.
+- `tests/test_audit_events.py` 5/5 (schema, groups-snapshot copy, list_append expression,
+  no-event omission); TO-1 `test_group_auth` 10/10 + TO-2 `test_actor_identity` 6/6 still
+  green. ds-commit-gate clean. Commit 7f81306e1.
+
+Deploy mechanism — `trade-submission-handler` was still on `placeholder.zip` + `lifecycle
+ignore_changes` (config-only; code deployed out-of-band via `aws lambda
+update-function-code`, which CLAUDE.md Rule 1 bans). TO-3 Phase 3 mandates terraform apply,
+so that one resource block was flipped to the S3-backed `aws_s3_object` pattern — the same
+flip TO-1 did for `trade-workflow-handler`, and the `trade-submission-handler` slice of the
+planned TRSB_TFIMPT.W3 migration done early. Parity verified first: deployed code is
+content-identical to the repo src (line-endings only) — no divergence reclaimed. Commit
+db386bc13 (lambdas.tf + source-map). Both Lambdas built + uploaded; terraform apply
+0 add / 2 change / 0 destroy; 0-diff verified; live CodeSha256 matches both uploads
+(submission `r1dqGn2+...`, workflow `DdCmbyi6...`). record-terraform-deploy 5a3e43e08.
+trade-pipeline-v1.12.0.
+
+Phase-3 deployed end-to-end smoke (AC3/AC5) — `.runtmp/to3_smoke_probe.py`, self-contained,
+19/19 checks PASS. Two full trade lifecycles through the DEPLOYED Lambdas:
+- SUCCESS: submit -> approve -> execute(vident) -> `audit_events` == [SUBMITTED, APPROVED,
+  EXECUTED], status COMPLETE; actor_groups snapshots [] / ['approvers'] / ['executors'].
+- FAILURE: submit -> approve -> execute(brokerage not in BROKERAGE_EMAILS -> ValueError in
+  the execute try-block) -> `audit_events` == [SUBMITTED, APPROVED, EXECUTION_FAILED],
+  status reverted to APPROVED. **B3 confirmed fixed** — the failed attempt (actor, time,
+  error in `detail`, outcome FAILURE) is durably recorded despite the row reverting.
+- Email isolation: the deployed handlers broadcast approval/execution-request emails to
+  every active trade-users row (all 9 are real Opal staff, all SES-verified). The smoke
+  temporarily set the 9 real rows `active=False` + created 3 temp `@opal.test` users, so
+  the broadcasts resolved only to unverified addresses (SES sandbox rejects -> handler
+  try/except swallows -> nothing delivered). Real `active` values restored in the `finally`
+  block, restoration verified (check 19 PASS). Only one real email delivered: the brokerage
+  email for the success trade -> andrew@opalinvest.com (BROKERAGE_EMAILS, SES-verified).
+- Cleanup: 3 temp users + 2 temp submissions deleted. Two `executed_trade.xlsx` artifacts
+  remain under test-submission-scoped S3 keys in `opal-data-trade-submissions`
+  (`submissions/2026-05-18/TRADE-20260518-1751{31,34}-*/`) — orphaned test artifacts, left
+  in place (S3 object deletion is a confirmation-gated op, out of this smoke's scope).
+
+AC1-6 all PASS.
+
+### Compiler Tools
+| Tool | Use | Result |
+|------|-----|--------|
+| comp-* | trade-* Lambdas | Not modeled (PRD §5) — direct Terraform + source read is the TO-sanctioned substitute. |
+| Direct read | workflow_handler.py, submission_handler.py, email_utils.py, excel_generator.py, config.py, dynamodb.tf, lambdas.tf | Confirmed item schemaless beyond keys (`audit_events` = new top-level list, no TF schema change); located the handle_execute revert block; confirmed send_brokerage_email raises ValueError on an unknown brokerage (the forced-failure trigger). |
+| build-and-upload.sh | trade-workflow-handler + trade-submission-handler | Built + uploaded both artifacts to s3://opal-313476888478-lambda-artifacts/trade-pipeline/. |
+| terraform plan/apply | trade-pipeline | 0 add / 2 change / 0 destroy; 0-diff verified post-apply. |
+| Deployed-Lambda parity probe | trade-submission-handler | Confirmed deployed code == repo src (content-identical) before the S3-backed migration. |
+
 ## Current State
 
 | Item | Status |
@@ -114,14 +182,15 @@ ALL PASS. AC1-4/6 PASS; AC5 N/A (fork not triggered).
 | TRSB_LEDGER TO-010a | COMPLETE — unauth route removed, shared-infra-v1.12.0; RAVC2 to COO~B + CC CTO~B |
 | TRSB_LEDGER TO-1 | COMPLETE — trade-pipeline-v1.10.0; AC1-6 PASS, deployed smoke 403; RAVC2 to COO~B |
 | TRSB_LEDGER TO-2 | COMPLETE — trade-pipeline-v1.11.0; AC1-4/6 PASS, deployed smoke ALL PASS; RAVC2 to COO~B |
-| TRSB_LEDGER TO-3..TO-5/TO-8 | PENDING — serial lane, TO-3 next |
-| opal-data-mdpf bucket (DS~B request) | PENDING — shared-infra TF add, slotted after TO-2 startup |
+| TRSB_LEDGER TO-3 | COMPLETE — trade-pipeline-v1.12.0; AC1-6 PASS, deployed e2e smoke 19/19; RAVC2 to COO~B |
+| TRSB_LEDGER TO-4/TO-5/TO-8 | PENDING — serial lane, TO-4 next |
+| opal-data-mdpf bucket (DS~B request) | PENDING — shared-infra TF add, slotted after TO-3 |
 | TRSB_LEDGER TO-9 | STAGED — droppable stretch, do NOT start |
 | TRSB_LEDGER TO-10 | STAGED — gated on Andrew legacy-form supersession confirm; do NOT start |
 
 ## Next Steps
 
-1. TO-1 — group-auth enforcement (next in the serial lane).
-2. TO-5 dynamodb.tf: AE 0.5.0's TO-6 lands first (durability attrs); rebase the by-approver GSI
-   stanza on top. Coordination open with 0.5.0.
-3. COO~B routing decision owed on the `/api/public/trades/*` NONE-auth bypass (brief §3).
+1. TO-4 — compliance JSON snapshot + retire-on-COMPLETE (next in the serial lane).
+2. TO-5 dynamodb.tf: AE 0.5.0's TO-6 already landed (trade-pipeline-v1.9.0, durability attrs);
+   rebase the by-approver GSI stanza on top.
+3. opal-data-mdpf S3 bucket for DS~B (MDPF_ASSETS.008) — shared-infra TF add.
