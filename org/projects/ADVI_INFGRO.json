@@ -4,7 +4,8 @@
   "name": "Inflection GRO Decomposition (AUA Growth = NNA + Return + ε)",
   "description": "Replace 'GRO = AUA delta %' (contaminated by NNA flows) with a structurally-decomposed product: AUA_growth_$ = NNA_$ + return_$ + epsilon_$. Three first-class fields surfaced to partner-facing portal so partners can read 'how much bigger is the book' (AUA delta) AND 'how well did the advisor invest' (TWR%) AND 'what residual accounting noise is leaking' (ε). Canonical architecture: single Orion-cashflow taxonomy YAML consumed by BOTH NNA computation (existing INF_C_01) AND new TWR-derived return computation (Stage 1 silver build). One reconciliation table at platinum-tier exposes ε per (entity, period). Architectural invariant: AUA_growth = NNA + Return + ε, with ε MEASURED-not-assumed (CVO ruling: two-stage tolerance — Phase A surface ε empirically, Phase B ratchet tolerance once derivation method proven).",
   "prds": [
-    {"path": "docs/architecture/ADVI_INFGRO_PRD.md", "label": "ADVI_INFGRO PRD v0.1", "date": "2026-05-11"}
+    {"path": "docs/architecture/ADVI_INFGRO_PRD.md", "label": "ADVI_INFGRO PRD v0.1 -> v0.5 (v0.5 2026-05-15 folds the window-TWR aggregation correctness ruling as new section 8)", "date": "2026-05-15"},
+    {"path": "docs/briefs/infgro-window-twr-aggregation-ruling-20260515.md", "label": "Window-TWR aggregation defect CTO ruling (doc-of-record; folded into PRD section 8)", "date": "2026-05-15"}
   ],
   "source_brief": "Research-agent foundational survey 2026-05-11 ~20:30Z + Andrew direct on GRO product intent ('parse out how much AUA delta is from NNA and how much is from market performance — without misinterpreting accounting cashflows or residual activity as economic NNA or true market growth') + CVO architectural review with 3 sharpenings (TWR%≠return_$ direct conversion; tolerance measured-not-assumed; Q4 escalate-not-fallback).",
   "status": "active",
