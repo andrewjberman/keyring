@@ -3,6 +3,7 @@
 **Agent:** `0.4.0_DS_ClientPlatform~D`
 **Scope:** Message-driven pickup from `0.4.2_RD_AdvisorIntelligence` (Andrew brought DS~D online for it).
 Two items surfaced by the FE BI Trade Activity window-wiring ship (portal commit 23e8ab14).
+**Status:** CLOSED — RAVC validated + closed by RD 0.4.2 (2026-05-18). Both items done, nothing further.
 
 ---
 
@@ -80,10 +81,20 @@ collision.
 
 ---
 
+## RAVC closure
+
+RD 0.4.2 validated `d31efbe9e` on origin/CLOUD (2 files: INF_D_05.activity_scan.py -22 lines,
+data_contract.xml +29; gate PASS, S3 script match, dry-run 4-window clean) and **closed both
+items**. RD ruled the stale `platinum/firm/activity_scan.json` S3 object stays in place —
+unreferenced, harmless, not worth a destructive-op sign-off cycle; no separate cleanup item.
+Both loose ends from the BI Trade Activity window fix are fully closed. Nothing further.
+
+---
+
 ## Next Steps
 
 | Recipient | Item |
 |-----------|------|
-| **RD 0.4.2** | Report sent — both items complete, commit `d31efbe9e`, S3-deployed + dry-run PASS. |
+| **RD 0.4.2** | DONE — RAVC closed. |
 | **Whoever runs the next INF gold chain** | INF_D_05.activity_scan.py has a new version (`d31efbe9e`); no legacy `activity_scan.json` will be written on/after that run. No action needed — informational. |
 | **DS~D (self)** | Idle — watchdog standby. No pending DSD-lane TOs. |
