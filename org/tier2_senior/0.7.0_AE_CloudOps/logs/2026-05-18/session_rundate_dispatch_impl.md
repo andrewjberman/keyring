@@ -173,3 +173,37 @@ materialization run (it also serves as the in-vivo E4 re-confirmation).
    until the chain is done (clean-audit ordering).
 4. [COO] follow-ups — record-terraform-deploy.sh CHANGELOG bloat (TO already routed to AE 0.5.0);
    lambdas.tf:96 stale comment; build-and-upload.sh source-map SHA MSYS mangling.
+
+## Chain coordination — resolution
+
+The chain-#2 lane closed out as follows (logged here so the RUNDATE lane's chain thread is
+complete; the concurrent TRSB_LEDGER backend lane is in `session_trsb_ledger_backend_lane.md`).
+
+- A full chain completed 16:28:56Z (`chain_full_20260518_153102`); leaderboard.json
+  regenerated 16:26Z. I verified completion and pinged DS~C + COO + 0.6.1_AE_PartnerETL that
+  the INFGRO co-land chain was done.
+- **Conflation — corrected.** My FYI to COO framed that chain as having run INFGRO.009's
+  corrected windowed puller, inferring it from `INF_C_02`'s 16:21Z schema timestamp. AE 0.6.1
+  flagged a conflict with my separate (correct) statement to them that the chain ran the OLD
+  ~5min PERF puller. DS~C settled it with hard timestamps: the chain SYNCED its scripts ~15:32Z,
+  but DS~C's windowed puller `4e64b254` only landed on `code/bronze/` ~16:18Z — after the sync;
+  the windowed bronze (3.3MB) landed 17:49Z, 88min after `INF_C_02`; leaderboard epsilon_$ YTD
+  stayed 71.6% (the pre-fix number). So the chain ran OLD perf — my statement to AE 0.6.1 was
+  the accurate one; the FYI framing did not hold. Acknowledged to COO + DS~C; no fault assigned,
+  reconciled. Lesson: an `INF_C_02` schema timestamp proves the STEP ran, not which puller
+  version fed it — verify the bronze artifact mtime, not the gold-step schema.
+- **Re-run handoff.** COO + DS~C asked for a clean full INF re-run for INFGRO.009. I was
+  heads-down on TRSB_LEDGER TO-5 (R3 highest-care GSI cutover); per COO's explicit Rule-13
+  authorization I handed the dispatch to DS~C, providing the chain-ops state (dispatch-lock
+  ABSENT, EC2 i-0ed5afded2ebd4ed4 warm). DS~C's re-run #1 (`--chain full` without `--force`)
+  was freshness-gate skipped. COO resolved the correct invocation from source —
+  `INFINC_REBUILD=true bash orion-gold-dispatch.sh --from INF_API_SILVER_PERF --bg` (the
+  `--from` bypasses the freshness gate + reuses the verified 17:49Z windowed bronze; the
+  Pattern-B full re-materialization is the `INFINC_REBUILD` env var, NOT the inert Pattern-A
+  `--rebuild` flag). I reviewed it from the chain-ops vantage — no objection — and released my
+  hold. DS~C dispatched re-run #2 (`from_INF_API_SILVER_PERF_20260518_184450`), confirmed
+  progressing; DS~C owns verification + the INFGRO.009 RAVC2. I am on call as second-pair-of-
+  eyes for the post-chain leaderboard.
+
+Chain-coordination lane: discharged on my side. Status updated — RUNDATE-DISPATCH-IMPL TO
+remains COMPLETE; chain #2/#3 ownership is COO-coordinated with DS~C executing.
