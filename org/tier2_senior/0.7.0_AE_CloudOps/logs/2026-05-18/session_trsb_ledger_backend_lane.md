@@ -89,6 +89,23 @@ route is indefensible — removed expedited, ahead of the serial queue.
 - Note: AC3 expected 404; actual is 401 because `$default` (authorizer-protected) catches the
   path — a safe catch, arguably stronger than 404. Reported in the RAVC2.
 
+## TO-2 — Actor-identity binding — COMPLETE
+
+§7-Q5 fork did NOT trigger (TO-0 confirmed the authorizer passes a verified
+`email`). Standard repoint executed. `workflow_handler.py` `lambda_handler`: the acting
+party is now derived from `event.requestContext.authorizer.lambda.email` (the verified JWT
+principal), never the body. AC2b — a request with NO authorizer context is hard-rejected 403
+(the structural catch for the unauthenticated `/api/public/trades/*` twin; no body fallback).
+AC2 — a body `user_email` conflicting with the JWT principal -> 403 mismatch; matching/absent
+accepted. Commit 7d02fb663. 6/6 unit tests (`tests/test_actor_identity.py`); TO-1 tests still
+10/10. Deployed S3-backed via terraform apply (0 add, 1 change, 0 destroy; 0-diff; live
+CodeSha256 G55O991ZA74u... matches); trade-pipeline-v1.11.0.
+
+Phase-3 deployed smoke (AC4) — synthetic-event invokes of the deployed Lambda: jwt!=body ->
+403 "Acting-party identity mismatch"; no-authorizer-context -> 403 "no verified acting-party
+identity"; JWT-resolved actor (no body email) -> passes identity, 404 on a fake submission.
+ALL PASS. AC1-4/6 PASS; AC5 N/A (fork not triggered).
+
 ## Current State
 
 | Item | Status |
@@ -96,7 +113,8 @@ route is indefensible — removed expedited, ahead of the serial queue.
 | TRSB_LEDGER TO-0 | COMPLETE — brief shipped; RAVC2 accepted by COO~B |
 | TRSB_LEDGER TO-010a | COMPLETE — unauth route removed, shared-infra-v1.12.0; RAVC2 to COO~B + CC CTO~B |
 | TRSB_LEDGER TO-1 | COMPLETE — trade-pipeline-v1.10.0; AC1-6 PASS, deployed smoke 403; RAVC2 to COO~B |
-| TRSB_LEDGER TO-2..TO-5/TO-8 | PENDING — serial lane, TO-2 next |
+| TRSB_LEDGER TO-2 | COMPLETE — trade-pipeline-v1.11.0; AC1-4/6 PASS, deployed smoke ALL PASS; RAVC2 to COO~B |
+| TRSB_LEDGER TO-3..TO-5/TO-8 | PENDING — serial lane, TO-3 next |
 | opal-data-mdpf bucket (DS~B request) | PENDING — shared-infra TF add, slotted after TO-2 startup |
 | TRSB_LEDGER TO-9 | STAGED — droppable stretch, do NOT start |
 | TRSB_LEDGER TO-10 | STAGED — gated on Andrew legacy-form supersession confirm; do NOT start |
