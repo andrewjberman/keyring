@@ -331,7 +331,7 @@ tools:
       chain: "comp-freshness chain bd  -- check all silver/bronze inputs to the BD gold chain; exit 0=PASS/WARN, 1=FAIL, 2=config error"
       chain_inf: "comp-freshness chain inf  -- same for INF gold chain"
       script: "comp-freshness script A_03  -- check just the inputs tagged for this script in cadence config"
-      artifact: "comp-freshness artifact s3://opal-data-schwab/silver/RPS/  -- check one prefix; exit 1 if FAIL"
+      artifact: "comp-freshness artifact s3://opal-data-bd/schwab/silver/rps/  -- check one prefix; exit 1 if FAIL"
       ddb: "comp-freshness ddb opal-users-v2 [--pattern FIRM#]  -- scan DDB table for items with PK prefix; check timestamp vs max_age_hours; PASS/WARN/FAIL; MISSING if table not found"
       all: "comp-freshness all  -- run full S3 (bd+inf) + all DDB entries in one pass; exit 1 if any FAIL"
       list: "comp-freshness --list  -- print all entries grouped by pipeline (BD, INF, DDB) sorted by artifact_id"
