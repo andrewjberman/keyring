@@ -98,3 +98,31 @@ Side-note (not a push blocker): consumes a changed DS artifact shape — per-win
 
 - [DS 0.4.0] Confirm `data_contract.xml` reflects per-window `activity_scan_{window}.json` emit + `txn_count_12m`->`txn_count`.
 - [Andrew] Dev-smoke `23e8ab14` — Inflection BI Trade Activity Window toggle now re-fetches per-window data (was cosmetic).
+
+---
+
+# CLOUD Push 3 — remove archived fuzzy Schwab-BD matcher (51059ea69)
+
+**Trigger:** Push request from 0.4.0_DE_ClientPlatform. Andrew-direct via MDPF_ASSETS.011, COO-relayed. Routed to DT because DE structurally cannot push.
+
+## Current State
+
+- Parent CLOUD: `89a976425..51059ea69` LIVE, zero-diff vs origin.
+
+## QA Gate
+
+Commit `51059ea69` — single-file deletion: `data/black_diamond/archive/integration/build_schwab_bd_account_mapping.py` (403 deletions, 1 file changed). The file's fuzzy Schwab<->BD account-join (market-value +/-1% + name Levenshtein) is the wrong methodology; the join is deterministic (`account_id.lstrip('0') == BD original_account_number`). Andrew wants it gone so future agents don't reuse it.
+
+Checks:
+- Commit is exactly one file deletion, nothing else staged.
+- `grep build_schwab_bd_account_mapping` across all `*.py` — ZERO matches. No live or archived Python imports the deleted module. Corroborates DE's 19:01:20Z zero-live-references verification (COO-accepted).
+- Live deterministic producer `data/black_diamond/scripts/bronze/build_schwab_bd_account_xref.py` present, untouched.
+- Recoverable from git history.
+
+## Compiler Tools
+
+None — verified-dead-file deletion; QA was a targeted `grep` for live references (zero) + commit-scope inspection. No infra/Lambda/route/pipeline surface touched.
+
+## Next Steps
+
+- [DE 0.4.0] Give COO the done-confirmation on MDPF_ASSETS.011.
