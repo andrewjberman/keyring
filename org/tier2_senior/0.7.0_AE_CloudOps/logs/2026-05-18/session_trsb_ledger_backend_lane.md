@@ -406,3 +406,63 @@ Direct `aws dynamodb update-item` — no audited trade-users management path exi
 (TO-7 management path was dropped in favor of Andrew's direct control, Q4). Logged here
 for traceability. Andrew can retry the approve immediately — group membership is read live
 per invocation, no redeploy needed.
+
+## TRSB_LEDGER.011 — CloudFront SPA-fallback / API-error fix — COMPLETE
+
+P0 follow-on (root cause B). The portal CloudFront distribution `EVTSA9VEHNZVH`
+(opalinvest.dev) carried a distribution-global `custom_error_response` `403/404 -> 200
+/index.html` (SPA deep-link fallback). Because `custom_error_response` is
+distribution-global it also caught `/api/*`, masking clean API 403/404 JSON as
+`200 <!doctype html>` — the crash Andrew hit. **Portal-wide change** — base-team courtesy
+heads-up went out and was CLEARED by base COO (no base-team portal work depended on the
+masking; INF portal pages are a beneficiary) before the apply.
+
+- **Phase 0** — preconditions: all 22 `/api/*` ordered cache behaviors outrank the default
+  `/*` behavior (CONFIRMED). Default origin `S3-opalinvest-portal` is private — legacy
+  **OAI**-backed (`origin-access-identity/cloudfront/EU39UXW7CMSI5`), not a public website
+  endpoint. TO said "OAC"; it is OAI — immaterial: OAI is equally incompatible with the S3
+  website error-document, so CTO~B's "CloudFront Function, not website error-document"
+  ruling holds. STOP condition (public website endpoint) not triggered — proceeded; flagged
+  the OAI-vs-OAC wording in the RAVC2.
+- **Mechanism (CTO~B-ruled):** new `aws_cloudfront_function` `portal-spa-fallback`
+  (viewer-request, cloudfront-js-2.0) — rewrites extensionless URIs to `/index.html`,
+  passes extensioned paths through; source `portal-auth/spa-fallback-function.js`. Attached
+  to the DEFAULT (S3) cache behavior ONLY. Both distribution-global `custom_error_response`
+  blocks (403 + 404) removed.
+- Commit 534c09230; plan verified isolated (1 add function + the function_association +
+  the 2 custom_error_response removals — nothing else); `terraform apply` 1 add / 1 change
+  / 0 destroy; 0-diff after. CloudFront invalidation `/*` (I5PESC2Z3RYCERRMW2TQJP0K6G)
+  Completed. record 1c38af9d3; portal-auth-v1.15.9.
+
+### Phase 4 — portal-wide regression smoke (post-invalidation), ALL PASS
+- (a) SPA deep-links — `/advisor-intelligence/clients` + `/trade-submission` -> HTTP 200
+  text/html (the index.html SPA shell). Deep-link routing preserved.
+- (b) Extensioned paths pass through untouched — `/index.html` -> 200 text/html; and a
+  non-existent extensioned asset `/nonexistent-trsb011-probe.js` reached the S3 origin
+  (was NOT rewritten to index.html), confirming the function leaves extensioned paths alone.
+- (c) **API 4xx no longer masked as HTML** — `/api/general/trades/*` paths return real
+  `application/json` error bodies (401 `{"error":...}`), not index.html. **Decisive 403
+  proof:** `GET /nonexistent-trsb011-probe.js` returns **HTTP 403 application/xml** (S3
+  AccessDenied) — pre-fix that exact 403 would have been rewritten to `200 /index.html`;
+  post-fix it passes through with its real 403 status. Combined with the directly-reproduced
+  trade-workflow-handler `403 application/json {"message":"...not in the approvers
+  group..."}` and the now-zero `custom_error_response` on the distribution, the
+  workflow-handler's 403 JSON now reaches the portal intact. (A browser-level authenticated
+  trade-approve 403 needs a portal JWT; the structural + empirical proof above closes it —
+  noted in the RAVC2.)
+
+### Compiler Tools
+| Tool | Use | Result |
+|------|-----|--------|
+| comp-routes behaviors | EVTSA9VEHNZVH | Pre: confirmed custom_error_response 403/404->index.html + /api/* behaviors outrank default. Post: no custom_error_response remains. |
+| boto3 cloudfront get_distribution_config | EVTSA9VEHNZVH | Phase 0 origin/OAI + behavior precedence; post-apply confirmed 0 custom_error_responses + function on default behavior. |
+| terraform plan/apply | portal-auth | Plan isolated to function + association + custom_error_response removal; apply 1/1/0; 0-diff after. |
+| curl | opalinvest.dev | Portal-wide regression smoke (a)/(b)/(c) — all pass. |
+
+AC1-6 all PASS. RAVC2 to COO~B, CC CTO~B.
+
+## Session Close
+
+TRSB_LEDGER backend serial lane (TO-0/010a/1/2/3/4/5/8) COMPLETE + the P0 trade-approve
+incident diagnosed, Andrew unblocked, and the CloudFront masking fixed (TO-11). TO-9 stays
+staged (droppable — not started). TO-10 reassigned to AE 0.6.1.
