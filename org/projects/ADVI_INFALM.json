@@ -1,0 +1,20 @@
+{
+  "project_code": "ADVI_INFALM",
+  "macro_code": "ADVI",
+  "name": "INF Pipeline Gold-Chain Failure Alarming (Defense-in-Depth)",
+  "description": "Close a real defense-in-depth observability hole on the Inflection partner-facing surface: inf-pipeline/alarms.tf carries only OTP/JWT/histbf-class alarms (orion_otp_timeout, jwtres_near_expiry_spike, histbf_failure_spike -> inf_otp_alert SNS). There is NO CloudWatch alarm on the INF gold chain itself hard-failing -- a reconciliation ERROR, a non-zero dispatch exit, or pipeline-complete.json not being written. The entire partner-facing INF surface (advisor summaries, leaderboard, NNA/GRO) depends on that chain, and a silent failure is currently unalarmed. Surfaced by the MDPF Global v0 daily-chain codify (mdpf-pipeline-v1.0.0): MDPF did NOT inherit the gap -- it wired its own ChainFailed + DLQ alarms -> opal-infrastructure-alerts -- and flagged the INF asymmetry per the phantom-consumer-class discipline. CTO endorsed it as a tracked follow-on; routed by CTO to COO (origin: MDPF_ASSETS RAVC1 2026-05-18) for a durable backlog TO so it does not evaporate as a mention.",
+  "prds": [],
+  "source_brief": "AE 0.7.0 RAVC1 message to COO 20260518T233202Z (item 1 of 2 CTO-directed backlog items). Origin: MDPF_ASSETS RAVC1 2026-05-18; CTO-endorsed as a tracked follow-on. MDPF precedent: mdpf-pipeline ChainFailed + DLQ alarm pattern (commit ff2368d27, tag mdpf-pipeline-v1.0.0).",
+  "status": "active",
+  "phase": "Phase 0 -- BACKLOG. One TO authored: ADVI_INFALM.001 (AE 0.7.0) -- add an inf-gold-chain-failure CW alarm (metric-filter on the gold dispatch failure sentinel, or a ChainFailed metric mirroring the MDPF pattern) -> opal-infrastructure-alerts SNS, in inf-pipeline/alarms.tf. NOT dispatched -- backlog/pending; CTO endorsed as a tracked follow-on (not urgent-now), AE 0.7.0 offered to author/execute on COO GO. Awaiting COO/Andrew dispatch-priority call.",
+  "blocking": "ADVI_INFALM.001 is authored + backlog/pending, NOT dispatched. No hard gate -- it is a self-contained inf-pipeline/alarms.tf addition (one CW alarm + SNS wiring, Terraform-managed, mirrors the shipped MDPF ChainFailed/DLQ pattern). AE 0.7.0 (the inf-pipeline + observability owner; offered) is the proposed owner. Dispatch deferred: backlog defense-in-depth follow-on, no active INF incident, AE MDPF lane closing pending CTO RAVC2 acceptance, sole-DS-Base directive in force (does not constrain this -- AE/infra lane). Surface to Andrew for dispatch-priority.",
+  "depends_on": [],
+  "depends_on_note": "No hard dependency. Reads/extends inf-pipeline/alarms.tf only -- no INF gold-chain code or data-path change (pure observability add). Mirrors the mdpf-pipeline ChainFailed + DLQ alarm pattern (mdpf-pipeline-v1.0.0).",
+  "absorbs": [],
+  "created": "2026-05-18",
+  "pods": ["0.7"],
+  "pipeline": "inf-pipeline",
+  "coo_lane": "2.0.0_SA_COO",
+  "thread_counter": 0,
+  "threads": []
+}
