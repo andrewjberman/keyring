@@ -51,7 +51,7 @@ Brief: `docs/briefs/trsb-ledger-to0-identity-seeding-probe-20260518.md`.
 
 Phase 3 compiler mandate: N/A — probe deliverable is a brief, no code commit, no AWS surface change.
 
-## TO-1 — Group-auth enforcement — DEPLOYED (smoke + RAVC2 pending)
+## TO-1 — Group-auth enforcement — COMPLETE
 
 `workflow_handler.py`: new `require_group()` helper; `handle_approve`/`handle_reject` require
 `approvers`, `handle_execute` requires `executors` (groups list, PRD 3.1). `role` untouched (Q1);
@@ -62,8 +62,14 @@ Deploy mechanism — trade-workflow-handler was on `placeholder.zip` + `lifecycl
 (TF managed config only, not code). Andrew-directed: migrate it to the S3-backed pattern the
 other 2 trade Lambdas already use. Migrated (commit 85773bf7f — `aws_s3_object` data source,
 source-map `tf_file`/`artifact_s3_key`); build-and-upload + terraform apply (0 add, 1 change,
-0 destroy; 0-diff; live CodeSha256 jCEKq9G6ez+... matches). trade-pipeline-v1.10.0. Phase-3
-deployed smoke + RAVC2 still pending — paused for the 010a P0 expedite.
+0 destroy; 0-diff; live CodeSha256 jCEKq9G6ez+... matches). trade-pipeline-v1.10.0.
+
+Phase-3 deployed smoke (AC5): self-contained fixture — created a temp non-executor user
+(groups=[]) + a temp APPROVED submission, invoked the DEPLOYED trade-workflow-handler with
+action=execute -> HTTP 403 "User ... is not in the executors group and cannot execute trades";
+the trade did NOT advance (status still APPROVED — the 403 returns before update_submission).
+Both temp fixtures deleted. The group gate is confirmed wired + enforced in the deployed
+runtime. AC1-6 all PASS.
 
 ## TO-010a — Remove unauthenticated workflow route — COMPLETE (P0 EXPEDITE)
 
@@ -89,8 +95,9 @@ route is indefensible — removed expedited, ahead of the serial queue.
 |------|--------|
 | TRSB_LEDGER TO-0 | COMPLETE — brief shipped; RAVC2 accepted by COO~B |
 | TRSB_LEDGER TO-010a | COMPLETE — unauth route removed, shared-infra-v1.12.0; RAVC2 to COO~B + CC CTO~B |
-| TRSB_LEDGER TO-1 | DEPLOYED — trade-pipeline-v1.10.0; Phase-3 smoke + RAVC2 pending |
-| TRSB_LEDGER TO-2..TO-5/TO-8 | PENDING — serial lane, resume after TO-1 closeout |
+| TRSB_LEDGER TO-1 | COMPLETE — trade-pipeline-v1.10.0; AC1-6 PASS, deployed smoke 403; RAVC2 to COO~B |
+| TRSB_LEDGER TO-2..TO-5/TO-8 | PENDING — serial lane, TO-2 next |
+| opal-data-mdpf bucket (DS~B request) | PENDING — shared-infra TF add, slotted after TO-2 startup |
 | TRSB_LEDGER TO-9 | STAGED — droppable stretch, do NOT start |
 | TRSB_LEDGER TO-10 | STAGED — gated on Andrew legacy-form supersession confirm; do NOT start |
 
