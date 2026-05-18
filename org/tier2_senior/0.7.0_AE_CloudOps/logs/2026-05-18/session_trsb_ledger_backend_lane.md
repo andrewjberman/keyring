@@ -51,13 +51,48 @@ Brief: `docs/briefs/trsb-ledger-to0-identity-seeding-probe-20260518.md`.
 
 Phase 3 compiler mandate: N/A — probe deliverable is a brief, no code commit, no AWS surface change.
 
+## TO-1 — Group-auth enforcement — DEPLOYED (smoke + RAVC2 pending)
+
+`workflow_handler.py`: new `require_group()` helper; `handle_approve`/`handle_reject` require
+`approvers`, `handle_execute` requires `executors` (groups list, PRD 3.1). `role` untouched (Q1);
+dev gets no group bypass. Stale "No role restriction" comments removed. 10/10 unit tests pass
+(`tests/test_group_auth.py`); ds-commit-gate clean. Commit 144c2e187.
+
+Deploy mechanism — trade-workflow-handler was on `placeholder.zip` + `lifecycle ignore_changes`
+(TF managed config only, not code). Andrew-directed: migrate it to the S3-backed pattern the
+other 2 trade Lambdas already use. Migrated (commit 85773bf7f — `aws_s3_object` data source,
+source-map `tf_file`/`artifact_s3_key`); build-and-upload + terraform apply (0 add, 1 change,
+0 destroy; 0-diff; live CodeSha256 jCEKq9G6ez+... matches). trade-pipeline-v1.10.0. Phase-3
+deployed smoke + RAVC2 still pending — paused for the 010a P0 expedite.
+
+## TO-010a — Remove unauthenticated workflow route — COMPLETE (P0 EXPEDITE)
+
+CTO~B ruled on the TO-0 §3 finding: the unauthenticated `POST /api/public/trades/workflow`
+route is indefensible — removed expedited, ahead of the serial queue.
+
+- Removed route `r_5qmxcef` from `shared-infra/apigateway-portal/routes.tf`; shared integration
+  `i_xkuchu9` retained (the authenticated `/api/general/trades/workflow` route depends on it).
+- terraform plan: `0 add, 0 change, 1 destroy` (only r_5qmxcef); apply clean; 0-diff verified.
+  Commit bab59c8d8; shared-infra-v1.12.0.
+- Smoke: `POST /api/public/trades/workflow` -> HTTP 401 (route gone — request now falls through
+  to `$default`, which is CUSTOM-authorizer-protected (authorizer naqxlm), verified via
+  get-routes; it no longer reaches trade-workflow-handler unauthenticated — pre-010a it would
+  have hit the handler and returned a 400-class handler response). `POST /api/general/trades/
+  workflow` -> HTTP 401, route intact (CUSTOM auth). get-routes confirms the public workflow
+  route is absent and 73 routes remain. Exposure closed.
+- Note: AC3 expected 404; actual is 401 because `$default` (authorizer-protected) catches the
+  path — a safe catch, arguably stronger than 404. Reported in the RAVC2.
+
 ## Current State
 
 | Item | Status |
 |------|--------|
-| TRSB_LEDGER TO-0 | COMPLETE — brief shipped; RAVC2 to COO~B |
-| TRSB_LEDGER TO-1..TO-5/TO-8 | PENDING — serial lane, TO-1 next |
+| TRSB_LEDGER TO-0 | COMPLETE — brief shipped; RAVC2 accepted by COO~B |
+| TRSB_LEDGER TO-010a | COMPLETE — unauth route removed, shared-infra-v1.12.0; RAVC2 to COO~B + CC CTO~B |
+| TRSB_LEDGER TO-1 | DEPLOYED — trade-pipeline-v1.10.0; Phase-3 smoke + RAVC2 pending |
+| TRSB_LEDGER TO-2..TO-5/TO-8 | PENDING — serial lane, resume after TO-1 closeout |
 | TRSB_LEDGER TO-9 | STAGED — droppable stretch, do NOT start |
+| TRSB_LEDGER TO-10 | STAGED — gated on Andrew legacy-form supersession confirm; do NOT start |
 
 ## Next Steps
 
