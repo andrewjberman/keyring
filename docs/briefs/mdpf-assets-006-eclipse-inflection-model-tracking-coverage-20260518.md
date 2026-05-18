@@ -7,6 +7,10 @@
 **Issued to:** 2.0.0_SA_COO (RAVC2) -- feeds the WS-C Phase-2 build TO scoping
 **Status:** Coverage verified against live S3 artifacts. Read-only investigation -- no pipeline producer modified.
 
+> **Note on numbering:** "Q1"-"Q6" throughout this brief mean Andrew's six numbered
+> *questions* from the MDPF_ASSETS.006 task order -- they are NOT calendar quarters.
+> Question 4 (Q4) = "transactions vs model distribution," the deep-dive.
+
 ---
 
 ## TL;DR
@@ -16,8 +20,8 @@
    `overall:success`, refreshed daily by the gold chain. Q1/Q2/Q3/Q5/Q6 are **covered** -- the
    .003 feasibility brief is confirmed against live artifacts.
 
-2. **Q4 -- transactions vs model distribution -- is the genuine gap, and it is bigger than "not
-   built yet."** Inflection transactions ARE fully ingested (738,451 rows on the 398 model
+2. **Question 4 (Q4) -- transactions vs model distribution -- is the genuine gap, and it is
+   bigger than "not built yet."** Inflection transactions ARE fully ingested (738,451 rows on the 398 model
    accounts, 6-year history, 398/398 coverage). But the transaction schema carries **no model
    dimension at all** -- the one model/sleeve-like column, `registrationSleeveStrategyName`, is
    **100% NULL across all 1.3M silver rows**. There is **no model-distribution / rebalance /
@@ -166,7 +170,7 @@ that carries both a transaction and its model.
 
 ---
 
-## 4. Q4 deep-dive -- transactions vs model distribution (AC3)
+## 4. Question 4 (Q4) deep-dive -- transactions vs model distribution (AC3)
 
 ### 4.1 Are Inflection transactions ingested? YES -- fully.
 
