@@ -64,7 +64,18 @@ Artifacts written locally (`.runtmp/mdpf007/wsb_out/`): `model_aua_positions` 6,
 | Phase-0 brief | f5991b5bd, pushed CLOUD |
 | Phase 1+2 commit | a691eb9f5, pushed CLOUD |
 | Feeder run | 2026-05-18 — model_aua(49financial) $1,360,250,355 (ref $1,360.27M, −0.001%) |
-| S3 landing | **PENDING** — `opal-data-mdpf` bucket does not exist; AE creates it (CTO ruling vi) |
+| S3 landing | **DONE** — opal-data-mdpf bucket live (MDPF_ASSETS.012, shared-infra-v1.13.0); artifacts uploaded 2026-05-18T17:43Z |
+
+## Closure addendum — Cohort 1c re-tag + S3 landing (post CTO AMENDMENT 1)
+
+After the initial Phase 1+2 build, Andrew directed a taxonomy change (Cohort 1c = Opal SMAs, distinct from Cohort 1a = Opal Models). CTO ratified it (PRD v0.5 + WS-A contract AMENDMENT 1, commit 7d8934ff2). WS-B re-tagged (commit 24251a794): `model_aua_positions` gains a `cohort_class` {model|sma} column derived from registry v3 `model_type`; registry carries the 843d875b SmartX display-name-trap flag. Re-verified, 1a and 1c reported DISTINCT (no conflated total):
+
+| Sub-cohort | WS-B output | Accounts | Validation ref |
+|------------|------------:|---------:|---------------:|
+| Cohort 1a — Opal Models (5 core) | $1,335,951,336 | 6,755 | $1,335.66M |
+| Cohort 1c — Opal SMAs (Equity Growth + Dividend) | $24,787,898 | 94 | $24.61M |
+
+S3 landing (AC4 closed): `s3://opal-data-mdpf/mdpf/feeds/model_aua_positions/49financial/2026-05-18.parquet` (6,849 rows) + `.../model_composition/49financial/2026-05-18.parquet` (125 rows), uploaded 2026-05-18T17:43Z. All six ACs MET. (Robustness follow-up: the feeder's `api_get` fails the whole run on any single transient SmartX error — one run aborted on a holdings-call hiccup, the retry succeeded; a per-call retry would harden the daily run.)
 
 ## Next Steps
 
