@@ -192,6 +192,13 @@ Wires the lane-enforcement pre-commit hook on first use. Idempotent — safe to 
 **D2. Commit hygiene (use safe-commit.sh — ADHC_OWNPTH.007):**
 Use `.tools/safe-commit.sh --author "..." -m "..." -- <paths>` for every commit. The wrapper aborts if the staged index contains any file outside your declared pathspec — the exact failure mode that produced three CLASS-C sweep incidents on 2026-04-27. With `--force`, the wrapper still runs but logs a `FORCE-BYPASS` audit entry to `org/git-author-override-audit.log` (use only when you cannot clean the shared index — e.g. multi-agent worktree contention). Bare `git commit` is allowed only when explicitly justified in the commit message.
 
+**D3. Destructive-HEAD-move guard (install if absent — ADHC_OWNPTH.010):**
+```bash
+# git() destructive-HEAD-move guard — wires into ~/.bashrc if absent (ADHC_OWNPTH.010)
+grep -qF "ADHC_OWNPTH.010 headmove-guard" ~/.bashrc 2>/dev/null || bash .tools/git-hooks/install-headmove-guard.sh
+```
+Installs a `git()` shell-shadow function that gates destructive `git reset` / `git rebase` / `git commit --amend` (moves that discard or rewrite local-only commits). Idempotent — safe to re-run. Override an intentional destructive move with `FORCE_HEADMOVE=1` (audited to `org/git-author-override-audit.log`). Covers Bash-tool shells that source `~/.bashrc`; NOT PowerShell or `command git`.
+
 **E. Set compiler tool context (enables auto-logging):**
 ```bash
 mkdir -p .comp-graph && printf "SERIAL=%s\nTO_ID=\n" "{your_serial}" > .comp-graph/.agent_context
