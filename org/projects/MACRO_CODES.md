@@ -71,7 +71,8 @@ Responsible pod: `0.4.0_DE` / `0.4.0_DS` / `0.4.0_DT`
 
 | Code | Surface Area | Portal Directory | RD Agent | Pipeline |
 |------|-------------|-----------------|----------|----------|
-| `MDLP` | ModelPortfolios | `portal/src/pages/ModelPortfolios.tsx` | `0.4.1_RD_ModelPortfolios` | yang-pipeline |
+| `MDLP` | ModelPortfolios (legacy page-render macro) | `portal/src/pages/ModelPortfolios.tsx` | `0.4.1_RD_ModelPortfolios` | yang-pipeline |
+| `MDPF` | Model Portfolios -- aggregate AUA & multi-partner asset tracking | `portal/src/pages/ModelPortfolios.tsx` | `0.4.1_RD_ModelPortfolios` | smartx + inf-pipeline + etfs |
 | `ADVI` | AdvisorIntelligence | `portal/src/pages/AdvisorIntelligence/` | `0.4.2_RD_AdvisorIntelligence` | bd-pipeline |
 
 ---

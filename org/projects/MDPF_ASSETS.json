@@ -1,0 +1,22 @@
+{
+  "project_code": "MDPF_ASSETS",
+  "macro_code": "MDPF",
+  "name": "Opal Aggregate AUA -- Multi-Partner Model Portfolio Asset Tracking",
+  "description": "Evolve the Model Portfolios portal page's 'Opal AUA' from a structurally single-tenant 49 Financial view (SmartX-scraped model holdings + a frozen non-model plug) into a partner-decomposed aggregate. Opal is no longer single-tenant -- Inflection is onboarding actively (~$96M to date), Cottonwood follows. Canonical architecture: Opal Aggregate AUA = sum over partners of (model AUA + non-model AUA), with a first-class `partner`/firmId dimension on every row, sourced from partner-specific custodian pipelines (49F via SmartX, Inflection via Eclipse/Orion, extensible), plus an ETF ownership decomposition attributing each Opal ETF's total net-assets (DIVZ/IDVZ/PFDE/PFOE) across 49F-held + Inflection-held + public residual. The portal Model Portfolios page gets a 'Select Partners:' control architected identically to the ADVI firmId partner-scoping pattern -- default Aggregate, per-partner filter. Consolidates four previously-separate threads (SmartX REST ingestion, TrueShares ETF net-assets ingestion, the 49F non-model AUM derivation, Inflection Eclipse model tracking) into one macro_project per Andrew direct directive 2026-05-18.",
+  "prds": [
+    {"path": "docs/architecture/MDPF_ASSETS.md", "label": "MDPF_ASSETS PRD v0.1", "date": "2026-05-18"}
+  ],
+  "source_brief": "Andrew direct architectural directive 2026-05-18 (full connective-tissue framing: current single-tenant 49F state, the Inflection/Cottonwood multi-partner driver, the 4 AUA sources -- 49F model via SmartX / Inflection model via Eclipse-Orion / ETF net-assets decomposition / 49F non-model with custody cutouts -- and the ADVI-firmId-pattern partner selector as the product goal). Consolidates: docs/briefs/smartx-rest-integration-design-20260515.md (SXPL_RESTIN), docs/briefs/ae-brief-opal-data-etfs-bucket.md + docs/architecture/ETFS_SECIDX_PRD.md (ETF), docs/briefs/smartx-non-model-live-derivation-20260513.md (49F non-model), ADVI_ECLDAT (Eclipse).",
+  "status": "active",
+  "phase": "Phase 0 -- PRD v0.1 SHIPPED 2026-05-18 (1.0.0_SA_CTO). Macro MDPF registered. Six workstreams decomposed (WS-A canonical aggregate-AUA model + partner dimension; WS-B 49F model AUA via SmartX; WS-C Inflection model AUA via Eclipse/Orion; WS-D ETF net-assets + ownership decomposition incl. PFDE/PFOE extension; WS-E 49F non-model AUA custody-cutout decomposition; WS-F portal partner selector). 4-phase plan (Phase 0 investigation / Phase 1 WS-A foundation / Phase 2 partner pipelines / Phase 3 portal). Awaiting COO TO decomposition -- recommended first wave is the Phase 0 investigation trio (MDPF_ASSETS.001 49F book audit, .002 PFDE/PFOE source feasibility, .003 Eclipse->model-AUA feasibility).",
+  "blocking": "Awaiting COO TO decomposition from PRD v0.1 section 6. Phase 0 investigation TOs (.001/.002/.003) have no blockers and are the recommended first wave. Phase 1 (WS-A canonical model) gates all of Phase 2. 6 open questions in PRD section 7 -- the MDPF-vs-MDLP macro reconciliation (Q1) is a CTO+Andrew housekeeping call that does not block decomposition; the rest resolve at Phase 0 or decomposition.",
+  "depends_on": ["SXPL_RESTIN", "ETFS_NETAST", "ADVI_ECLDAT"],
+  "depends_on_note": "MDPF_ASSETS is the umbrella consuming/reconciling project; the three feeders are ingestion substrate. Per PRD section 6.1 CTO boundary ruling: MDPF_ASSETS does NOT formally `absorb` the in-flight feeders (that would orphan their live TOs) -- their current TOs complete under their own codes. MDPF_ASSETS depends_on them and is the single home for all NEW model-portfolio-AUA work going forward. WS-B consumes SXPL_RESTIN (SmartX 49F model data); WS-C consumes ADVI_ECLDAT (Eclipse Inflection portfolios -- Phases 1-4 shipped); WS-D consumes/extends ETFS_NETAST (TrueShares DIVZ/IDVZ done, PFDE/PFOE new). WS-F reuses the ADVI/ADVI_FIRMSEP firmId partner-scoping machinery -- reuse, do not fork. ETFS_SECIDX (Phase 0 complete) is reference for the ETF securities inventory.",
+  "absorbs": [],
+  "created": "2026-05-18",
+  "pods": ["0.4", "0.5", "0.6", "0.7"],
+  "pipeline": "smartx + inf-pipeline (Eclipse) + etfs + portal",
+  "coo_lane": "2.0.0_SA_COO",
+  "thread_counter": 0,
+  "threads": []
+}
