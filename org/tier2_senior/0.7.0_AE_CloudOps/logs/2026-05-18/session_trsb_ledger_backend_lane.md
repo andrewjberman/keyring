@@ -174,23 +174,80 @@ AC1-6 all PASS.
 | terraform plan/apply | trade-pipeline | 0 add / 2 change / 0 destroy; 0-diff verified post-apply. |
 | Deployed-Lambda parity probe | trade-submission-handler | Confirmed deployed code == repo src (content-identical) before the S3-backed migration. |
 
+## TO-4 — Compliance JSON snapshot + EXECUTED-rests — COMPLETE
+
+Closes B4 (compliance JSON snapshot never written — `json_s3_key` always null) and B2
+(EXECUTED status never durably rests). Retires `COMPLETE` per Andrew Q2 ruling 2026-05-18.
+
+- Phase 1 — `iam.tf` confirmed: `s3:PutObject` on `opal-data-trade-submissions` (+`/*`)
+  already granted (S3Access sid). No IAM change.
+- `workflow_handler.py` `handle_execute`, after a successful back-office handoff (Excel
+  generated + S3-archived + brokerage email sent):
+  - B4: writes the immutable compliance snapshot — the full row INCLUDING `audit_events` —
+    as `submission.json` to `opal-data-trade-submissions` under
+    `submissions/{date}/{submission_id}/submission.json`, and sets `json_s3_key` on the row.
+    The snapshot is the ALL_NEW row returned by the audit-append update, so it is complete
+    and self-describing (carries its own `json_s3_key`). Previously `json_s3_key` was always
+    null — `handle_execute` never called the only code (`excel_generator.lambda_handler`)
+    that wrote it.
+  - B2: the same-invocation auto-advance to `COMPLETE` is removed. The first
+    `update_submission` already set status=EXECUTED; the row now RESTS there. No
+    `completed_at` auto-write. A table query can finally observe an EXECUTED row.
+- `config.py`: `COMPLETE` removed from the `Status` enum. No backend path in the
+  trade-workflow-handler bundle produces or asserts `COMPLETE`.
+- Scope boundary (per the TO + data_reprocess_scope): `dashboard-api` retains its `COMPLETE`
+  references intentionally — legacy-row read-tolerance, TRSB_LEDGER.008b scope. The FE
+  `completeSubmission` removal is also TO-8b. `trade-submission-handler` /
+  `trade-parquet-batch-export` config.py copies keep a now-dead unused `COMPLETE` constant
+  (not asserted) — left untouched, out of this TO's deploy unit. Legacy `COMPLETE` rows in
+  the table are left as-is. Reported in the RAVC2.
+- ds-commit-gate clean; unit tests green (test_audit_events 5/5, test_group_auth 10/10,
+  test_actor_identity 6/6). Commit b7782b9fc.
+
+Deploy — build-and-upload + terraform apply (0 add / 1 change / 0 destroy; 0-diff verified;
+live CodeSha256 `zyjQKOZJ...` matches the upload). Source-map 87f601b55; record
+66eea17fe. trade-pipeline-v1.13.0.
+
+Phase-3 deployed empirical execute run (AC4) — `.runtmp/to4_smoke_probe.py`, 14/14 PASS.
+One trade through the DEPLOYED Lambdas submit -> approve -> execute(vident):
+- B2: execute response + row status both `EXECUTED` (not COMPLETE); `completed_at` is
+  None / not auto-written; `executed_at` set. The row rests at EXECUTED.
+- B4: `json_s3_key` non-null on the row; the S3 object exists in
+  `opal-data-trade-submissions`; the snapshot contains the full row, status EXECUTED, and
+  `audit_events` == [SUBMITTED, APPROVED, EXECUTED]; the snapshot is self-describing
+  (carries its own `json_s3_key`).
+- Email isolation identical to the TO-3 smoke (9 real users active=False for the window +
+  3 temp @opal.test users; restored + verified in the finally block — check 14 PASS).
+- Cleanup: temp users + temp submission deleted. Executed S3 artifacts (`.xlsx` +
+  `submission.json` under the test-submission key) left in place.
+
+AC1-5 all PASS.
+
+### Compiler Tools
+| Tool | Use | Result |
+|------|-----|--------|
+| comp-* | trade-* Lambdas | Not modeled (PRD §5) — direct Terraform + source read is the TO-sanctioned substitute. comp-iam N/A (uninstrumented). |
+| Direct read | iam.tf | Confirmed s3:PutObject on opal-data-trade-submissions already granted (S3Access sid) — no IAM change. |
+| Grep | trade-pipeline backend for COMPLETE / completed_at / json_s3_key | Mapped every reference; retired the workflow-handler bundle's; documented the deliberately-retained dashboard-api refs (TO-8b legacy-tolerance) + the dead unused constants in other Lambda config.py copies. |
+| build-and-upload.sh + terraform plan/apply | trade-workflow-handler | 0 add / 1 change / 0 destroy; 0-diff verified; CodeSha256 match. |
+
 ## Current State
 
 | Item | Status |
 |------|--------|
 | TRSB_LEDGER TO-0 | COMPLETE — brief shipped; RAVC2 accepted by COO~B |
 | TRSB_LEDGER TO-010a | COMPLETE — unauth route removed, shared-infra-v1.12.0; RAVC2 to COO~B + CC CTO~B |
-| TRSB_LEDGER TO-1 | COMPLETE — trade-pipeline-v1.10.0; AC1-6 PASS, deployed smoke 403; RAVC2 to COO~B |
-| TRSB_LEDGER TO-2 | COMPLETE — trade-pipeline-v1.11.0; AC1-4/6 PASS, deployed smoke ALL PASS; RAVC2 to COO~B |
+| TRSB_LEDGER TO-1 | COMPLETE — trade-pipeline-v1.10.0; AC1-6 PASS, deployed smoke 403; RAVC2 accepted |
+| TRSB_LEDGER TO-2 | COMPLETE — trade-pipeline-v1.11.0; AC1-4/6 PASS, deployed smoke ALL PASS; RAVC2 accepted |
 | TRSB_LEDGER TO-3 | COMPLETE — trade-pipeline-v1.12.0; AC1-6 PASS, deployed e2e smoke 19/19; RAVC2 to COO~B |
-| TRSB_LEDGER TO-4/TO-5/TO-8 | PENDING — serial lane, TO-4 next |
-| opal-data-mdpf bucket (DS~B request) | PENDING — shared-infra TF add, slotted after TO-3 |
+| TRSB_LEDGER TO-4 | COMPLETE — trade-pipeline-v1.13.0; AC1-5 PASS, deployed execute run 14/14; RAVC2 to COO~B |
+| TRSB_LEDGER TO-5/TO-8 | PENDING — serial lane, TO-5 next |
+| opal-data-mdpf bucket | DONE by 0.5.0_AE_OpalETL (MDPF_ASSETS.012, shared-infra-v1.13.0) — dropped from my queue |
 | TRSB_LEDGER TO-9 | STAGED — droppable stretch, do NOT start |
 | TRSB_LEDGER TO-10 | STAGED — gated on Andrew legacy-form supersession confirm; do NOT start |
 
 ## Next Steps
 
-1. TO-4 — compliance JSON snapshot + retire-on-COMPLETE (next in the serial lane).
-2. TO-5 dynamodb.tf: AE 0.5.0's TO-6 already landed (trade-pipeline-v1.9.0, durability attrs);
-   rebase the by-approver GSI stanza on top.
-3. opal-data-mdpf S3 bucket for DS~B (MDPF_ASSETS.008) — shared-infra TF add.
+1. TO-5 — by-approver GSI repoint (next in the serial lane). AE 0.5.0's TO-6 already landed
+   (trade-pipeline-v1.9.0, durability attrs); rebase the by-approver GSI stanza on top.
+2. TO-8 — /api/general/trades/users/me endpoint.
