@@ -66,3 +66,35 @@ git ls-files -s portal -> 160000 fe881e2b... 0 portal
 - [Andrew] Dev-smoke validation on remote DEV `fe881e2b` — Books-tab BI window coverage: Inflection BI panel window selection lifts to advisor-summary metric table (FE-2); explicit "window unavailable" state when leaderboard.json lacks the window (FE-4); DistributionTab drill-scoped New Clients tile + GEO L1/L2 fixes.
 - [DE 0.4.0] Visual smoke once frontend-dev subagents register.
 - [Andrew/CTO] PROD promote signal — PROD remains `portal-v2.1.86`.
+
+---
+
+# Portal DEV Push 2 — BI Trade Activity per-window wiring (23e8ab14)
+
+**Trigger:** Push request from 0.4.2_RD_AdvisorIntelligence (DE 0.4.0 pre-approved; RAVC closed PM-side).
+
+## Current State
+
+- Portal DEV: `fe881e2b..23e8ab14` LIVE
+- Parent CLOUD: `a6e9efd3e..ca63fe2da` LIVE (pointer bump `ca63fe2da`, authored DT)
+- Both refs zero-diff vs origin. PROD untouched.
+
+## QA Gate
+
+Commit `23e8ab14` — stacks on `fe881e2b` (DE BIWNDW.001), 1 commit ahead, no clobber. 3 files, all FE-only:
+- `src/api/endpoints/advisor-intelligence.ts` — `getInflectionActivityScan` takes a `window` arg, interpolates `activity_scan_{window}.json`; `InflectionActivityScanRow.txn_count_12m` -> `txn_count`.
+- `src/pages/AdvisorIntelligence/_partners/inflection/InflectionInsightsPanel.tsx` — `txn_count_12m` -> `txn_count` across scoring/chart/tooltip/table; queryFn passes `selectedWindow`; sentinel warn for missing `txn_count`.
+- `.frontend-dev/testing/inflection_advisor_intelligence.md` — constitution row updated.
+
+Checks:
+- typecheck `tsc -b --noEmit` — EXIT=0 clean.
+- `grep -rn txn_count_12m src/` — only 2 hits, both explanatory comments (legacy-field doc); zero stray code refs. Rename consistent.
+- No .env/binaries/infra mix. No emoji.
+- RD pre-push (reported): bun lint 10 warn / 0 err (baseline +0), comp-transform schema-check clean, Playwright smoke PASS (4 per-window files fetched; HH 449 txn 1Y=1661/QTD=231/YTD=690/Max=7124).
+
+Side-note (not a push blocker): consumes a changed DS artifact shape — per-window `activity_scan_{window}.json` + `txn_count` field. RD verified the 4 files live/fresh on S3 (INF_D_05.activity_scan.py). Flagged DS 0.4.0 to confirm `data_contract.xml` reflects the per-window emit + field rename.
+
+## Next Steps
+
+- [DS 0.4.0] Confirm `data_contract.xml` reflects per-window `activity_scan_{window}.json` emit + `txn_count_12m`->`txn_count`.
+- [Andrew] Dev-smoke `23e8ab14` — Inflection BI Trade Activity Window toggle now re-fetches per-window data (was cosmetic).
