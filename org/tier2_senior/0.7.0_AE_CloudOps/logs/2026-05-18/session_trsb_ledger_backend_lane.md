@@ -294,22 +294,70 @@ AC1-6 all PASS. record f153bd61f; trade-pipeline-v1.14.0 + v1.15.0.
 | terraform plan (x2) | create-GSI apply + drop-GSI apply | Each plan isolated to the single GSI op (Phase-2 gate) — no base key schema / billing change. |
 | aws dynamodb describe-table / query | GSI status + populations | Empirically proved B5 (11 vs 17), GSI ACTIVE, post-cutover rejected trades returned. |
 
+## TO-8 — /api/general/trades/users/me endpoint — COMPLETE
+
+Adds a dedicated `GET /api/general/trades/users/me` endpoint (CTO~B ruling — a queried
+endpoint, NOT a JWT auth claim) returning the caller's own `trade-users` record so the
+portal can gate the Approvals/Execution tabs on actual group membership (A4; portal side =
+TO-8b).
+
+- `dashboard_api.py`: `get_users_me(event)` handler. Caller identified from the JWT
+  authorizer context (`event.requestContext.authorizer.lambda.email`, consistent with TO-2;
+  bare `.authorizer` fallback) — never a query param, so a caller cannot read another
+  user's record. Returns `{email, name, groups, role}`. Fail-closed: no `trade-users` row,
+  or no `groups` -> empty `groups` list, not a 500. Routed before the generic `/users`
+  check so `/users/me` does not fall through to `get_users`.
+- `shared-infra/apigateway-portal/routes.tf`: `GET /api/general/trades/users/me` route
+  (`r_trades_users_me`) under the `portal_jwt` CUSTOM authorizer, same trade-dashboard-api
+  integration `i_x3p4wrq`. A distinct exact route from `/users` — HTTP API v2 matches the
+  more specific path first. (The route lives in shared-infra's apigateway-portal module —
+  the TO scope said "apigateway.tf"; trade-pipeline/apigateway.tf only holds
+  `aws_lambda_permission` resources, and its existing `GeneralTradesPermission` wildcard
+  `.../api/general/trades/*` already covers the new route, so it needed no change.)
+- Phase 1/2: `iam.tf` confirmed — `dynamodb:GetItem` on `trade-users` already granted
+  (DynamoDBAccess sid). No IAM change.
+- Commit 0f50220a4 (handler + route); build 2ee11351c; trade-pipeline apply 0/1/0 +
+  shared-infra apply 1/0/0, both 0-diff verified. trade-pipeline-v1.16.0 +
+  shared-infra-v1.14.0. record f129b2044.
+
+Phase-3 deployed smoke — `.runtmp/to8_smoke_probe.py` 6/6 PASS (read-only, no fixtures):
+- AC1: authenticated caller (adam@opalinvest.com) -> 200 `{email,name,groups,role}`,
+  `groups` matches the trade-users row (`['approvers','executors']`).
+- AC2: a query-param `email` is ignored — the response is always the JWT caller's record.
+- AC3: a caller with no trade-users row -> 200 with `groups: []` (fail-closed), not 500.
+- no authorizer context -> 403.
+- Real HTTPS `GET /api/general/trades/users/me` unauthenticated -> HTTP 401 (route live +
+  JWT-authorizer-protected, identical to the sibling `/users` route) — end-to-end route
+  wiring confirmed.
+
+Endpoint contract reported to TO-8b's owner (RD 0.3.2) per AC5. AC1-5 all PASS.
+
+### Compiler Tools
+| Tool | Use | Result |
+|------|-----|--------|
+| comp-routes | trade routes | Not modeled (PRD §5) — direct Terraform read is the TO-sanctioned substitute. |
+| Direct read | dashboard_api.py get_users + lambda_handler routing, apigateway.tf, apigateway-portal/routes.tf, iam.tf, TO-0 brief | get_users template confirmed; routes live in shared-infra apigateway-portal (i_x3p4wrq integration, portal_jwt authorizer); iam GetItem on trade-users already granted; trade-pipeline apigateway.tf wildcard permission already covers the route. |
+| terraform plan/apply (x2) | trade-pipeline + shared-infra | trade-pipeline 0/1/0; shared-infra 1/0/0 (route add only); both 0-diff after. |
+| curl + Lambda invoke | deployed endpoint | unauth HTTPS 401; handler smoke 6/6. |
+
 ## Current State
 
 | Item | Status |
 |------|--------|
 | TRSB_LEDGER TO-0 | COMPLETE — brief shipped; RAVC2 accepted by COO~B |
-| TRSB_LEDGER TO-010a | COMPLETE — unauth route removed, shared-infra-v1.12.0; RAVC2 to COO~B + CC CTO~B |
+| TRSB_LEDGER TO-010a | COMPLETE — unauth route removed, shared-infra-v1.12.0; RAVC2 accepted |
 | TRSB_LEDGER TO-1 | COMPLETE — trade-pipeline-v1.10.0; RAVC2 accepted |
 | TRSB_LEDGER TO-2 | COMPLETE — trade-pipeline-v1.11.0; RAVC2 accepted |
 | TRSB_LEDGER TO-3 | COMPLETE — trade-pipeline-v1.12.0; RAVC2 accepted |
 | TRSB_LEDGER TO-4 | COMPLETE — trade-pipeline-v1.13.0; RAVC2 accepted |
-| TRSB_LEDGER TO-5 | COMPLETE — trade-pipeline-v1.14.0 + v1.15.0; AC1-6 PASS; RAVC2 to COO~B |
-| TRSB_LEDGER TO-8 | PENDING — serial lane, TO-8 next (last in the lane) |
+| TRSB_LEDGER TO-5 | COMPLETE — trade-pipeline-v1.14.0 + v1.15.0; RAVC2 to COO~B |
+| TRSB_LEDGER TO-8 | COMPLETE — trade-pipeline-v1.16.0 + shared-infra-v1.14.0; AC1-5 PASS; RAVC2 to COO~B |
 | TRSB_LEDGER TO-9 | STAGED — droppable stretch, do NOT start |
 | TRSB_LEDGER TO-10 | REASSIGNED to AE 0.6.1 (COO~B 2026-05-18) — off my lane |
-| opal-data-mdpf bucket | DONE by 0.5.0_AE_OpalETL (MDPF_ASSETS.012) — off my queue |
 
-## Next Steps
+## Lane Complete
 
-1. TO-8 — /api/general/trades/users/me endpoint (last TO in the serial lane).
+The TRSB_LEDGER backend serial lane (TO-0, 010a, 1, 2, 3, 4, 5, 8) is COMPLETE — all
+dispatched TOs shipped + deployed + RAVC2'd. TO-9 stays staged (droppable stretch — do NOT
+start without a GO). TO-10 reassigned to AE 0.6.1. Awaiting COO~B RAVC acceptance on
+TO-3/4/5/8.
