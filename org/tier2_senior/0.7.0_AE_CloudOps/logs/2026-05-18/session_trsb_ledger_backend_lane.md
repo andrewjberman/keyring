@@ -231,23 +231,85 @@ AC1-5 all PASS.
 | Grep | trade-pipeline backend for COMPLETE / completed_at / json_s3_key | Mapped every reference; retired the workflow-handler bundle's; documented the deliberately-retained dashboard-api refs (TO-8b legacy-tolerance) + the dead unused constants in other Lambda config.py copies. |
 | build-and-upload.sh + terraform plan/apply | trade-workflow-handler | 0 add / 1 change / 0 destroy; 0-diff verified; CodeSha256 match. |
 
+## TO-5 — by-approver GSI repoint — COMPLETE
+
+Closes B5 (rejected trades fall out of the by-approver GSI — the approver's decision history
+is incomplete by construction). PRD R3 HIGHEST-CARE item — a GSI key-schema change, executed
+as the mandatory create-new -> backfill -> cutover -> drop-old sequence (DynamoDB does not
+permit an in-place key-schema change; one GSI op per UpdateTable).
+
+Root cause confirmed empirically: the old `by-approver` GSI ranged on `approved_at`, which a
+REJECTED trade never carries -> 11 indexed items vs 17 decided rows (6 rejected trades absent).
+
+### GSI cutover step log (ordered)
+
+1. **Handler decided_at (trade-pipeline-v1.14.0)** — `workflow_handler.py` `handle_approve` +
+   `handle_reject` both write `decided_at` (= the decision timestamp); `approved_at` /
+   `rejected_at` retained. Deployed FIRST so all new decisions carry `decided_at` before the
+   new GSI is created. Commit ef7cc2d1f; build faf907ba6; apply 0/1/0, 0-diff; tag v1.14.0.
+2. **Backfill (committed, idempotent)** — `tools/trsb_ledger_005_backfill_decided_at.py`
+   scans `opal-trade-submissions`: writes `decided_at` on every decided row lacking it
+   (= existing `approved_at`/`rejected_at`); appends a synthetic `MIGRATED` audit event
+   (PRD R1, 7-field schema, outcome INFO) to every row with no `audit_events` list. Commit
+   38a649f47. Ran from the local repo (Rule 12 — boto3, no EC2/SSM). Result: 17 rows, all
+   17 backfilled both ways (all predate TO-3). Post-backfill verification re-scan: 17/17
+   decided rows carry `decided_at`; every row carries an `audit_events` list.
+3. **Create GSI (separate apply)** — `dynamodb.tf`: added `decided_at` attribute +
+   `by-approver-decided` GSI (hash=approver_email, range=decided_at). Commit c72ea81c9;
+   plan isolated to the single GSI add (0/1/0); apply 4m16s (DynamoDB index backfill);
+   0-diff after. GSI reached IndexStatus ACTIVE. Verified: `by-approver-decided` indexes
+   17 items (6 REJECTED + 11 COMPLETE) vs the old `by-approver`'s 11 — the 6 rejected
+   trades are now indexed.
+4. **Cutover (trade-pipeline-v1.15.0)** — `dashboard_api.py`: `get_by_approver` AND
+   `get_approver_dashboard` repointed to `by-approver-decided`. BOTH query sites moved —
+   the TO names `get_by_approver`, but `get_approver_dashboard` runs the same
+   approver-history query and would (a) also omit rejected trades and (b) break at runtime
+   once the old GSI is dropped. Also removed 2 pre-existing unused imports (`Attr`, `Role`)
+   flagged by the ds-commit-gate ruff check. Commit 531ec823a; build a1468fd2a; apply
+   0/1/0, 0-diff. Deployed-Lambda verification: `get_by_approver` for andrew@opalinvest.com
+   returned 15 trades including all 6 REJECTED — pre-cutover it returned only the COMPLETE
+   ones.
+5. **Drop old GSI (separate apply)** — `dynamodb.tf`: removed the `by-approver` GSI + the
+   now-orphaned `approved_at` attribute declaration (`approved_at` remains a stored data
+   field; only its index-key declaration is removed). Commit 85ada4473 (before apply);
+   plan isolated to the single GSI removal (0/1/0); apply 4s; 0-diff after.
+
+### Phase 3 — end-state verification
+Query of `by-approver-decided` for andrew@opalinvest.com (a known-rejected-trade approver):
+15 trades, 6 REJECTED, known rejected trade `TRADE-20260106-224805-0A54BD` present. The
+table now carries 4 GSIs (by-date, by-initiator, by-approver-decided, by-status); `by-approver`
+is gone. B5 closed.
+
+Coordination: TO-6 (AE 0.5.0, point_in_time_recovery + deletion_protection) already landed
+(trade-pipeline-v1.9.0); MCP'd 0.5.0_AE_OpalETL before editing dynamodb.tf — they ACK'd
+dynamodb.tf clear, no concurrent edit. Every TO-5 plan was isolated to its own single change.
+
+AC1-6 all PASS. record f153bd61f; trade-pipeline-v1.14.0 + v1.15.0.
+
+### Compiler Tools
+| Tool | Use | Result |
+|------|-----|--------|
+| comp-* | trade-* Lambdas / GSI | Not modeled (PRD §5) — direct Terraform + source read is the TO-sanctioned substitute. |
+| Direct read | dynamodb.tf, dashboard_api.py get_by_approver, workflow_handler handle_approve/reject | by-approver = hash approver_email / range approved_at confirmed; found get_by_approver AND get_approver_dashboard both query it. |
+| terraform plan (x2) | create-GSI apply + drop-GSI apply | Each plan isolated to the single GSI op (Phase-2 gate) — no base key schema / billing change. |
+| aws dynamodb describe-table / query | GSI status + populations | Empirically proved B5 (11 vs 17), GSI ACTIVE, post-cutover rejected trades returned. |
+
 ## Current State
 
 | Item | Status |
 |------|--------|
 | TRSB_LEDGER TO-0 | COMPLETE — brief shipped; RAVC2 accepted by COO~B |
 | TRSB_LEDGER TO-010a | COMPLETE — unauth route removed, shared-infra-v1.12.0; RAVC2 to COO~B + CC CTO~B |
-| TRSB_LEDGER TO-1 | COMPLETE — trade-pipeline-v1.10.0; AC1-6 PASS, deployed smoke 403; RAVC2 accepted |
-| TRSB_LEDGER TO-2 | COMPLETE — trade-pipeline-v1.11.0; AC1-4/6 PASS, deployed smoke ALL PASS; RAVC2 accepted |
-| TRSB_LEDGER TO-3 | COMPLETE — trade-pipeline-v1.12.0; AC1-6 PASS, deployed e2e smoke 19/19; RAVC2 to COO~B |
-| TRSB_LEDGER TO-4 | COMPLETE — trade-pipeline-v1.13.0; AC1-5 PASS, deployed execute run 14/14; RAVC2 to COO~B |
-| TRSB_LEDGER TO-5/TO-8 | PENDING — serial lane, TO-5 next |
-| opal-data-mdpf bucket | DONE by 0.5.0_AE_OpalETL (MDPF_ASSETS.012, shared-infra-v1.13.0) — dropped from my queue |
+| TRSB_LEDGER TO-1 | COMPLETE — trade-pipeline-v1.10.0; RAVC2 accepted |
+| TRSB_LEDGER TO-2 | COMPLETE — trade-pipeline-v1.11.0; RAVC2 accepted |
+| TRSB_LEDGER TO-3 | COMPLETE — trade-pipeline-v1.12.0; RAVC2 accepted |
+| TRSB_LEDGER TO-4 | COMPLETE — trade-pipeline-v1.13.0; RAVC2 accepted |
+| TRSB_LEDGER TO-5 | COMPLETE — trade-pipeline-v1.14.0 + v1.15.0; AC1-6 PASS; RAVC2 to COO~B |
+| TRSB_LEDGER TO-8 | PENDING — serial lane, TO-8 next (last in the lane) |
 | TRSB_LEDGER TO-9 | STAGED — droppable stretch, do NOT start |
-| TRSB_LEDGER TO-10 | STAGED — gated on Andrew legacy-form supersession confirm; do NOT start |
+| TRSB_LEDGER TO-10 | REASSIGNED to AE 0.6.1 (COO~B 2026-05-18) — off my lane |
+| opal-data-mdpf bucket | DONE by 0.5.0_AE_OpalETL (MDPF_ASSETS.012) — off my queue |
 
 ## Next Steps
 
-1. TO-5 — by-approver GSI repoint (next in the serial lane). AE 0.5.0's TO-6 already landed
-   (trade-pipeline-v1.9.0, durability attrs); rebase the by-approver GSI stanza on top.
-2. TO-8 — /api/general/trades/users/me endpoint.
+1. TO-8 — /api/general/trades/users/me endpoint (last TO in the serial lane).
