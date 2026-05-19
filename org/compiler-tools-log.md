@@ -3744,3 +3744,31 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-05-19 | 0.3.0_DS_TradingOperations | SSCN_DIVDEF.003.ds-divz-preset-empirical-validation-and-group-taxonomy-doc | comp-cache | comp-cache collisions | PASS |
 | 2026-05-19 | 0.3.0_DS_TradingOperations | SSCN_DIVDEF.003.ds-divz-preset-empirical-validation-and-group-taxonomy-doc | comp-transform | comp-transform fields SecurityScanner | PASS |
 | 2026-05-19 | 0.3.0_DT_TradingOperations | SSCN_DIVDEF.002.dt-production-data-refresh-2026-05-18 | comp-iam | comp-iam service opal-security-scanner-processor | PARTIAL (3 ops resolved on sscn_processor; policy attachment UNKNOWN — relied on PRD section 5 attestation 11:13Z) |
+| 2026-05-19 | 0.3.0_DE_TradingOperations | SSCN_DIVDEF.001.de-portal-default-state-and-ranking-method-ui | comp-transform | comp-transform schema-check SecurityScanner --feature divdef | PASS (Phase 1) |
+| 2026-05-19 | 0.3.0_DE_TradingOperations | SSCN_DIVDEF.001.de-portal-default-state-and-ranking-method-ui | comp-transform | comp-transform ternary-audit SecurityScanner | PASS (no union routing required; rankingMethod is visual-state only) |
+| 2026-05-19 | 0.3.0_DE_TradingOperations | SSCN_DIVDEF.001.de-portal-default-state-and-ranking-method-ui | comp-cache | comp-cache collisions \| grep -i scanner | PASS (clean) |
+| 2026-05-19 | 0.3.0_DE_TradingOperations | SSCN_DIVDEF.001.de-portal-default-state-and-ranking-method-ui | comp-transform | comp-transform schema-check SecurityScanner --feature divdef | PASS (Phase 3 re-run) |
+| 2026-05-19 | 0.3.0_DE_TradingOperations | SSCN_DIVDEF.001.de-portal-default-state-and-ranking-method-ui | comp-transform | comp-transform ternary-audit SecurityScanner | PASS (Phase 3 re-run) |
+| 2026-05-19 | 0.3.0_DE_TradingOperations | SSCN_DIVDEF.001.de-portal-default-state-and-ranking-method-ui | comp-cache | comp-cache collisions \| grep -i scanner | PASS (Phase 3 re-run) |
+| 2026-05-19 | 0.3.0_DE_TradingOperations | SSCN_DIVDEF.001.de-portal-default-state-and-ranking-method-ui | comp-transform | comp-transform fields SecurityScanner | INFO (0 fields — orchestrator composes child tabs; data fields render in UniverseDataTab/UniverseScannerTab) |
+| 2026-05-19 | 0.3.0_DS_TradingOperations | SSCN_DIVDEF.003.ds-divz-preset-empirical-validation-and-group-taxonomy-doc | comp-routes | comp-routes trace getUniverseScanner | PASS |
+| 2026-05-19 | 0.3.0_DS_TradingOperations | SSCN_DIVDEF.003.ds-divz-preset-empirical-validation-and-group-taxonomy-doc | comp-cache | comp-cache collisions | PASS |
+| 2026-05-19 | 0.3.0_DS_TradingOperations | SSCN_DIVDEF.003.ds-divz-preset-empirical-validation-and-group-taxonomy-doc | comp-routes | comp-routes trace getUniverseScanner | PASS |
+| 2026-05-19 | 0.3.0_DS_TradingOperations | SSCN_DIVDEF.003.ds-divz-preset-empirical-validation-and-group-taxonomy-doc | comp-cache | comp-cache collisions | PASS |
+| 2026-05-19 | 0.3.0_DS_TradingOperations | SSCN_DIVDEF.003.ds-divz-preset-empirical-validation-and-group-taxonomy-doc | comp-transform | comp-transform schema-check SecurityScanner | PASS |
+| 2026-05-19 | 0.3.0_DE_TradingOperations | SSCN_DIVDEF.005.de-portal-universe-ids-swap-v0-2-addendum | comp-routes | comp-routes trace getUniverseScanner | PASS (Phase 1) |
+| 2026-05-19 | 0.3.0_DE_TradingOperations | SSCN_DIVDEF.005.de-portal-universe-ids-swap-v0-2-addendum | comp-cache | comp-cache collisions \| grep -i scanner | PASS (clean) |
+| 2026-05-19 | 0.3.0_DE_TradingOperations | SSCN_DIVDEF.005.de-portal-universe-ids-swap-v0-2-addendum | comp-routes | comp-routes trace getUniverseScanner | PASS (Phase 4 re-run, identical) |
+| 2026-05-19 | 0.3.0_DE_TradingOperations | SSCN_DIVDEF.005.de-portal-universe-ids-swap-v0-2-addendum | comp-cache | comp-cache collisions \| grep -i scanner | PASS (Phase 4 re-run, identical) |
+| 2026-05-19 | 0.3.0_DE_TradingOperations | SSCN_DIVDEF.005.de-portal-universe-ids-swap-v0-2-addendum | comp-transform | comp-transform schema-check SecurityScanner | PASS (AC6) |
+| 2026-05-19 | 0.3.0_DE_TradingOperations | SSCN_DIVDEF.005.de-portal-universe-ids-swap-v0-2-addendum | comp-transform | comp-transform fields SecurityScanner | INFO (0 fields — orchestrator pattern; same as TO-1) |
+| 2026-05-19 | 0.5.0_AE_OpalETL | MDLP_VOLAUD.002.ae-lambda-runtime-1d-wtd-mtd-anomaly-investigation | comp-pipescript | comp-pipescript io yang-model-portfolio-benchmarks | FAIL |
+| 2026-05-19 | 0.5.0_AE_OpalETL | MDLP_VOLAUD.002.ae-lambda-runtime-1d-wtd-mtd-anomaly-investigation | comp-routes | comp-routes trace trade-submission-handler | PASS |
+| 2026-05-19 | 0.5.0_AE_OpalETL | MDLP_VOLAUD.002.ae-lambda-runtime-1d-wtd-mtd-anomaly-investigation | comp-platinum | comp-platinum page PortfolioManagement | PASS |
+| 2026-05-19 | 0.5.0_AE_OpalETL | SSCN_DIVDEF.004.ae-lambda-universe-map-swap-and-redeploy | comp-iam | comp-iam service opal-security-scanner-processor | PASS |
+| 2026-05-19 | 0.5.0_AE_OpalETL~B | MDLP_VOLAUD.003 | comp-blast | comp-blast yang-generate-benchmark-returns | PASS |
+| 2026-05-19 | 0.5.0_AE_OpalETL~B | MDLP_VOLAUD.003 | comp-pipescript | comp-pipescript io yang-generate-benchmark-returns | FAIL |
+| 2026-05-19 | 0.5.0_AE_OpalETL~B | MDLP_VOLAUD.003 | comp-blast | comp-blast yang-model-portfolio-benchmarks | PASS |
+| 2026-05-19 | 0.5.0_AE_OpalETL~B | MDLP_VOLAUD.003 | comp-routes | comp-routes trace yang-model-portfolio-benchmarks | PASS |
+| 2026-05-19 | 0.3.0_DT_TradingOperations | portfolio-management-v2.1.1-openpyxl-layer-fix | comp-routes | comp-routes trace trade-submission-handler | NO MATCH (function-name resolution failed; pivoted to grep + AWS lookup) |
+| 2026-05-19 | 0.3.0_DT_TradingOperations | portfolio-management-v2.1.1-openpyxl-layer-fix | comp-platinum | comp-platinum page PortfolioManagement | PASS (PortfolioManagement.tsx has no fetches; routed to ExportModal.tsx via grep) |
