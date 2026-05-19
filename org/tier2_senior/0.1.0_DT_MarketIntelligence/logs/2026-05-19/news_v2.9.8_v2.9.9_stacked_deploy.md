@@ -100,3 +100,63 @@ All 3 Lambdas LastModified `2026-05-19T15:38:55Z`:
 - DO NOT trust truncated session-start gitStatus. Re-run unfiltered `git status` + per-Lambda blob-hash check before every build.
 - DO NOT commit another agent's uncommitted WIP under your author — attribution forgery. Hold posture is the answer; route via owner.
 - DO NOT pre-empt an open sequencing surface (e.g., DS-to-CTO) by unilateral action.
+
+---
+
+## Addendum — v2.9.10 Hotfix (added later this session)
+
+**Trigger:** DS post-v2.9.9 verification (T+30min, ~16:00Z) found 2 crypto-tagged entries leaked via `backfill_from_layer2` bypass — when GPT picks <10 topics for a direction, backfill pulls Layer 2 directly without re-applying the new BLOCKED_SOURCES + BANNED_KEYWORDS + CRYPTO_RAW_PATTERN gates. Plus old `apply_topical_caps` cap-at-1 allowed 1 crypto in top-3.
+
+**DS commit:** `efe281914` — single Lambda (opal-news-layer3-curation only). 3 atomic changes:
+1. `backfill_from_layer2()` — added `_is_blocked_source_dominated()` + `_is_crypto_dominated()` after sports filter
+2. `apply_topical_caps()` — cap-at-1 → DROP-ALL
+3. `_is_crypto_topic()` — regex on kw + raw_kw for symmetry
+
+**Sequence:**
+
+| Event | Time | Detail |
+|-------|------|--------|
+| DT pre-build gate (DISCIPLINED this time) | 16:00Z | Unfiltered git status + per-Lambda blob-hash verify + DS `get_agent_status` "Standby for DT deploy" confirmed |
+| DT build-and-upload (single Lambda) | 16:01Z | opal-news-layer3-curation SHA `1zeEySxkep0Cs8A2IsWZZ8uxLRKTTRO6ViKLYDETO6A=` uploaded; other 2 Lambdas unchanged |
+| DT v2.9.10 GO ping → AE 0.7 | 16:01Z | Recap + chain handoff |
+| **AE missed the ping** | — | Queued behind v1.0.1 RAVC1 + 3 new TO dispatches in same inbox window |
+| DS Andrew-requested 3-way sync ping | 16:56Z | DS asked DT/AE/DS for v2.9.10 status; DT noticed AE summary still on v2.9.9 |
+| DT re-ping AE + status reply to DS | 16:57Z | 15-min escalation timer set to COO |
+| **Andrew direct-flagged the miss to AE** | ~17:00Z | AE APOLOGIES ack: "missed your 16:01Z ping; picking up NOW" |
+| **AE 0.7 ships v2.9.10** | 17:02Z | Source-map `1c9072cef`, recommit `b13c88b2e`, tag `news-v2.9.10` pushed, terraform 0-diff verified |
+
+**Live state (post-v2.9.10):**
+
+| Lambda | CodeSha256 | LastModified | Source |
+|--------|-----------|--------------|--------|
+| opal-news-layer3-curation | `1zeEySxkep0Cs8A2IsWZZ8uxLRKTTRO6ViKLYDETO6A=` | 2026-05-19T17:01:56Z | efe281914 |
+| news-trending-analysis | `GZ2Q9tRrgjno30b0khwoCA0GPTsNLliZk9f/0uu/5tI=` | (v2.9.9 — no apply touch in v2.9.10) | 39bc01c3b |
+| news-ingestion-scheduler | `Q3IjWURrQzHoJrN1+Lp88/D4b+hW7CYTSCX5OyClVm8=` | (v2.9.8 — same content across v2.9.9 + v2.9.10) | c72c9368a |
+
+**ADHC_DSFLOW.007 anchor #4** surfaced — `safe-deploy.sh:37` MSYS path-mangle on first push attempt. 4th anchor in 24h (ds-commit-gate + ds-precommit-check + DS's `aws logs` MSYS hit + safe-deploy.sh). AE bundling fix across all 4 anchor sites when ADHC_DSFLOW.007 picked up (currently 3rd in their queue after v1.0.1 + SXIN_PRODCT.001).
+
+**Discipline observations from the v2.9.10 cycle:**
+
+1. **Pre-build gate worked this time.** Unfiltered `git status --short` + per-Lambda blob-hash verify + DS `get_agent_status` lane-coordination check ALL ran before build. Lesson learned from the v2.9.8 false-alarm/v2.9.9 timing window applied successfully — no Rule 2 risk this round.
+2. **Missed-ping recovery flow.** Andrew direct-flagged the miss to AE; 15-min COO escalation timer didn't need to fire. Pattern: when deploy coordinator stalls past stated ETA, primary driver re-pings + sets escalation timer; cross-pod surfacing (DS Andrew-requested 3-way sync) can recover faster than escalation if the right person flags.
+3. **Watcher canonical form caught.** Mid-session check found my watcher was using the absolute-path fallback (allowed but not canonical per XXX.md 2026-05-12). Switched to `inbox-watch {serial}` PATH wrapper.
+4. **Broker-only message delivery** for AE v2.9.10 RAVC2 — filesystem inbox empty when I checked, but broker had the message via `get_agent_status`. The XXX.md belt-and-suspenders rule ("after sending a message where you expect a near-term reply, call BOTH check_inbox AND get_agent_status at the top of each turn") is exactly the catch. I'd been polling filesystem-only; missed the broker delivery until the watcher reset triggered a get_agent_status pull.
+
+## Current State (updated)
+
+| Item | Status |
+|------|--------|
+| news-v2.9.8 | SHIPPED |
+| news-v2.9.9 | SHIPPED |
+| news-v2.9.10 | SHIPPED |
+| deployment_map.xml | UPDATED for v2.9.10 (this commit) |
+| RAVC-Validate to DS (combined) | SENT this commit for v2.9.10 |
+| DS 24h verification window | RESET FROM v2.9.10 ship (17:02Z) |
+| ADHC_DSFLOW.007 anchor count | 4 (24h) — AE bundling fix |
+
+## Next Steps (updated)
+
+1. **[DS 0.1.0]** Re-run verification cycle from v2.9.10 (manual invoke opal-news-layer3-curation → CW `BLOCKED:` log lines for both inner-backfill + POST-GPT-DROP → DynamoDB scan zero crypto including backfill slots). +1h MCP to CTO with CW + DDB result. +24h final RAVC-Validate close to CTO.
+2. **[DE 0.1.0_DE]** Word-cloud consequence unchanged from v2.9.9 notes (TOP_20_KEYWORDS 18 → 16).
+3. **[COO]** Sequencing — ADHC_DSFLOW.007 dispatch (anchor count now 4 in 24h; AE bundling fix when picked up).
+4. **[CTO/COO]** news-pipeline continuous-deploy hook (DS-surfaced; would have prevented 7-day inbox lag).
