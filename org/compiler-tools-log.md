@@ -3668,3 +3668,79 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-05-15 | 0.7.0_AE_CloudOps | ADVI_INFLEC-from-c02-rerun | comp-pipescript | comp-pipescript io D_00c | PASS |
 | 2026-05-15 | 0.7.0_AE_CloudOps | ADVI_INFLEC-from-c02-rerun | comp-pipescript | comp-pipescript io b_00 | PASS |
 | 2026-05-15 | 0.7.0_AE_CloudOps | ADVI_INFLEC-from-c02-rerun | comp-pipescript | comp-pipescript io C_01c | PASS |
+| 2026-05-18 | 0.7.0_AE_CloudOps | ADVI_INFETL.RUNDATE-DISPATCH-IMPL | comp-pipescript | comp-pipescript io data/orion/scripts/gold/orion-gold-dispatch.sh | FAIL |
+| 2026-05-18 | 0.6.1_AE_PartnerETL | ADVI_INFDRF.002 | comp-pipescript | comp-pipescript io data/orion/scripts/gold/INF_D_00c.portal_leaderboard.py | PASS |
+| 2026-05-18 | 0.6.1_AE_PartnerETL | ADVI_INFDRF.002 | comp-pipescript | comp-pipescript deployed data/orion/scripts/gold/INF_D_00c.portal_leaderboard.py | PASS |
+| 2026-05-18 | 0.4.0_DE_ClientPlatform | ADVI_BIWNDW.001 | comp-transform | comp-transform schema-check BooksTab | FAIL |
+| 2026-05-18 | 0.4.0_DE_ClientPlatform | ADVI_BIWNDW.001 | comp-transform | comp-transform schema-check FeeEfficiencyPanel | PASS |
+| 2026-05-18 | 0.4.0_DE_ClientPlatform | ADVI_BIWNDW.001 | comp-transform | comp-transform schema-check InflectionInsightsPanel | PASS |
+| 2026-05-18 | 0.4.0_DE_ClientPlatform | ADVI_BIWNDW.001 | comp-transform | comp-transform schema-check ClientsTab | PASS |
+| 2026-05-18 | 0.4.0_DE_ClientPlatform | ADVI_BIWNDW.001 | comp-cache | comp-cache collisions | PASS |
+| 2026-05-18 | 0.4.0_DE_ClientPlatform | ADVI_BIWNDW.001 | comp-pipescript | comp-pipescript deployed orion-gold-dispatch.sh | PASS |
+| 2026-05-18 | 0.6.1_AE_PartnerETL | ADVI_INFINC.006 | comp-transform | comp-transform schema-check ClientsTab | PASS |
+| 2026-05-18 | 0.6.1_AE_PartnerETL | ADVI_INFINC.006 | comp-transform | comp-transform schema-check InflectionInsightsPanel | PASS |
+| 2026-05-18 | 0.6.1_AE_PartnerETL | ADVI_INFINC.006 | comp-cache | comp-cache collisions | PASS |
+| 2026-05-18 | 0.6.1_AE_PartnerETL | ADVI_INFINC.006 | comp-pipescript | comp-pipescript io INF_C_02.client_performance | PASS |
+| 2026-05-18 | 0.6.1_AE_PartnerETL | ADVI_INFINC.006 | comp-pipescript | comp-pipescript feeds INF_C_02.client_performance | PASS |
+| 2026-05-18 | 0.4.0_DS_ClientPlatform | ADVI_INFGRO.008 | comp-pipescript | comp-pipescript io INF_C_02.client_performance | PASS |
+| 2026-05-18 | 0.4.0_DS_ClientPlatform | ADVI_INFGRO.008 | comp-pipescript | comp-pipescript feeds INF_C_02.client_performance | PASS |
+| 2026-05-18 | 0.6.1_AE_PartnerETL | ADVI_INFETL.SYNC-COLLISION | comp-blast | comp-blast orion-gold-dispatch | PASS |
+| 2026-05-18 | 0.4.0_DS_ClientPlatform~B | (no-TO) | comp-pipescript | comp-pipescript consumers aua_certification | FAIL |
+| 2026-05-18 | 0.4.0_DS_ClientPlatform~A | MDPF_ASSETS.002 | comp-pipescript | comp-pipescript io INF_E_00.eclipse_model_portfolios | PASS |
+| 2026-05-18 | 0.5.0_AE_OpalETL | record-terraform-deploy-changelog-scoping-fix | comp-pipescript | comp-pipescript io INF_C_02.client_performance | PASS |
+| 2026-05-18 | 0.5.0_AE_OpalETL | partners-api-changelog-malformed-json-repair | comp-pipescript | comp-pipescript io E_19.write_aua_certification | FAIL |
+| 2026-05-18 | 0.5.0_AE_OpalETL | partners-api-changelog-malformed-json-repair | comp-blast | comp-blast orion-gold-dispatch | PASS |
+| 2026-05-18 | 0.5.0_AE_OpalETL | partners-api-changelog-malformed-json-repair | comp-blast | comp-blast build-and-upload | PASS |
+| 2026-05-18 | 0.5.0_AE_OpalETL | partners-api-changelog-malformed-json-repair | comp-pipescript | comp-pipescript io convert_transactions_to_silver | PASS |
+| 2026-05-18 | 0.4.0_DS_ClientPlatform~A | MDPF_ASSETS.004 | comp-transform | comp-transform schema-check ModelPortfolios | FAIL |
+| 2026-05-18 | 0.4.0_DS_ClientPlatform~A | MDPF_ASSETS.004 | comp-pipescript | comp-pipescript io mdpf_aggregate_aua | FAIL |
+| 2026-05-18 | 0.4.0_DS_ClientPlatform~A | MDPF_ASSETS.004 | comp-blast | comp-blast mdpf_aggregate_aua | PASS |
+| 2026-05-18 | 0.4.0_DS_ClientPlatform~B | MDPF_ASSETS.005.dsb-wsd1-pfde-pfoe-netassets-holdings-ingestion | comp-iam | comp-iam service trade-workflow-handler | PASS |
+| 2026-05-18 | 0.4.0_DS_ClientPlatform~B | MDPF_ASSETS.005.dsb-wsd1-pfde-pfoe-netassets-holdings-ingestion | comp-routes | comp-routes trace executeSubmission | PASS |
+| 2026-05-18 | 0.4.0_DS_ClientPlatform~B | MDPF_ASSETS.005.dsb-wsd1-pfde-pfoe-netassets-holdings-ingestion | comp-blast | comp-blast trade-workflow-handler | PASS |
+| 2026-05-18 | 0.4.0_DS_ClientPlatform~C | MDPF_ASSETS.006 | comp-pipescript | comp-pipescript io INF_A_-1.materialize_txn_cache | PASS |
+| 2026-05-18 | 0.4.0_DS_ClientPlatform~C | MDPF_ASSETS.006 | comp-trace | comp-trace transactions --direction both | PASS |
+| 2026-05-18 | 0.4.2_RD_AdvisorIntelligence | (no-TO) | comp-pipescript | comp-pipescript io convert_eclipse_portfolios_to_silver | PASS |
+| 2026-05-18 | 0.4.2_RD_AdvisorIntelligence | (no-TO) | comp-blast | comp-blast wsb_49f_smartx_model_aua | PASS |
+| 2026-05-18 | 0.7.0_AE_CloudOps | TRSB_LEDGER.010a | comp-platinum | comp-platinum reverse platinum/firm/activity_scan.json | PASS |
+| 2026-05-18 | 0.7.0_AE_CloudOps | TRSB_LEDGER.010a | comp-blast | comp-blast build_mdpf_wsc_inflection_feeder | PASS |
+| 2026-05-18 | 0.7.0_AE_CloudOps | TRSB_LEDGER.010a | comp-blast | comp-blast pull_orion_model_composition | PASS |
+| 2026-05-18 | 0.4.2_RD_AdvisorIntelligence | ADVI_BIWNDW.activity-scan-window-wiring | comp-transform | comp-transform schema-check InflectionInsightsPanel | PASS |
+| 2026-05-18 | 0.4.2_RD_AdvisorIntelligence | ADVI_BIWNDW.activity-scan-window-wiring | comp-blast | comp-blast build_mdpf_wsd2_etf_netassets_feeder | PASS |
+| 2026-05-18 | 0.4.0_DS_ClientPlatform~D | ADVI_INFLEC-activity-scan-contract-legacy-retire | comp-pipescript | comp-pipescript io INF_D_05.activity_scan.py | PASS |
+| 2026-05-18 | 0.4.0_DS_ClientPlatform~D | ADVI_INFLEC-activity-scan-contract-legacy-retire | comp-pipescript | comp-pipescript deployed INF_D_05.activity_scan.py | PASS |
+| 2026-05-18 | 0.4.0_DS_ClientPlatform~D | ADVI_INFLEC-activity-scan-contract-legacy-retire | comp-routes | comp-routes behaviors | PASS |
+| 2026-05-18 | 0.4.0_DS_ClientPlatform~D | ADVI_INFLEC-activity-scan-contract-legacy-retire | comp-routes | comp-routes behaviors | PASS |
+| 2026-05-18 | 0.4.0_DS_ClientPlatform~D | ADVI_INFLEC-activity-scan-contract-legacy-retire | comp-routes | comp-routes behaviors | PASS |
+| 2026-05-18 | 0.4.0_DS_ClientPlatform~D | ADVI_INFLEC-activity-scan-contract-legacy-retire | comp-routes | comp-routes behaviors | PASS |
+| 2026-05-18 | 0.4.0_DE_ClientPlatform | MDPF_ASSETS.011-fuzzy-join-verify | comp-blast | comp-blast build_schwab_bd_account_xref | PASS |
+| 2026-05-18 | 0.4.0_DE_ClientPlatform | MDPF_ASSETS.011-fuzzy-join-verify | comp-blast | comp-blast build_schwab_bd_account_mapping | PASS |
+| 2026-05-18 | 2.0.0_SA_COO~B | (no-TO) | comp-pipescript | comp-pipescript io build_mdpf_wse_49f_non_model_aua | FAIL |
+| 2026-05-18 | 1.0.0_SA_CTO | (no-TO) | comp-blast | comp-blast build_mdpf_wse_49f_non_model_aua | PASS |
+| 2026-05-18 | 1.0.0_SA_CTO | (no-TO) | comp-blast | comp-blast build_non_model_aua | PASS |
+| 2026-05-18 | 0.4.0_DS_ClientPlatform~A | MDPF_ASSETS.013 | comp-pipescript | comp-pipescript io mdpf_aggregate_aua | FAIL |
+| 2026-05-18 | 0.4.0_DS_ClientPlatform~A | MDPF_ASSETS.013 | comp-pipescript | comp-pipescript consumers INF_C_03.performance_canonical.py | FAIL |
+| 2026-05-18 | 0.4.0_DS_ClientPlatform~A | MDPF_ASSETS.013 | comp-blast | comp-blast mdpf_aggregate_aua | PASS |
+| 2026-05-18 | 0.4.0_DS_ClientPlatform~A | MDPF_ASSETS.013 | comp-pipescript | comp-pipescript deployed INF_C_02.client_performance | PASS |
+| 2026-05-18 | 0.7.0_AE_CloudOps | MDPF_GLOBAL.ae-lambda-route | comp-pipescript | comp-pipescript io data/mdpf/scripts/gold/mdpf_aggregate_aua.py | FAIL |
+| 2026-05-18 | 0.7.0_AE_CloudOps | MDPF_GLOBAL.ae-daily-chain-codify | comp-iam | comp-iam service mdpf-daily-trigger | PASS |
+| 2026-05-19 | 1.0.0_SA_CTO | (no-TO) | comp-iam | comp-iam service opal-smartx-ingestion-pipeline | PASS |
+| 2026-05-19 | 0.4.0_DS_ClientPlatform~B | (no-TO) | comp-pipescript | comp-pipescript io build_mdpf_wsc_inflection_feeder | FAIL |
+| 2026-05-19 | 0.4.0_DS_ClientPlatform~B | (no-TO) | comp-blast | comp-blast build_mdpf_wsc_inflection_feeder | PASS |
+| 2026-05-19 | 0.3.0_DE_TradingOperations | (no-TO) | comp-blast | comp-blast SecurityScanner | PASS |
+| 2026-05-19 | 0.3.0_DE_TradingOperations | (no-TO) | comp-blast | comp-blast ScannerHeaderPanel | PASS |
+| 2026-05-19 | 0.3.0_DE_TradingOperations | (no-TO) | comp-blast | comp-blast useScannerState | PASS |
+| 2026-05-19 | 0.3.0_DE_TradingOperations | (no-TO) | comp-transform | comp-transform schema-check SecurityScanner | PASS |
+| 2026-05-19 | 0.3.0_DE_TradingOperations | (no-TO) | comp-routes | comp-routes trace getUniverseScanner | PASS |
+| 2026-05-19 | 0.3.0_DE_TradingOperations | (no-TO) | comp-routes | comp-routes trace getSecurityScannerFactors | PASS |
+| 2026-05-19 | 0.3.0_DE_TradingOperations | (no-TO) | comp-cache | comp-cache collisions | PASS |
+| 2026-05-19 | 0.3.0_DE_TradingOperations | (no-TO) | comp-iam | comp-iam service opal-security-scanner-processor | PASS |
+| 2026-05-19 | 0.3.0_DT_TradingOperations | SSCN_DIVDEF.002.dt-production-data-refresh-2026-05-18 | comp-iam | comp-iam service opal-security-scanner-processor | PASS |
+| 2026-05-19 | 0.3.0_DT_TradingOperations | SSCN_DIVDEF.002.dt-production-data-refresh-2026-05-18 | comp-transform | comp-transform schema-check SecurityScanner --feature divdef | PASS |
+| 2026-05-19 | 0.3.0_DT_TradingOperations | SSCN_DIVDEF.002.dt-production-data-refresh-2026-05-18 | comp-transform | comp-transform ternary-audit SecurityScanner | PASS |
+| 2026-05-19 | 0.3.0_DT_TradingOperations | SSCN_DIVDEF.002.dt-production-data-refresh-2026-05-18 | comp-cache | comp-cache collisions | PASS |
+| 2026-05-19 | 0.3.0_DS_TradingOperations | SSCN_DIVDEF.003.ds-divz-preset-empirical-validation-and-group-taxonomy-doc | comp-transform | comp-transform schema-check SecurityScanner --feature divdef | PASS |
+| 2026-05-19 | 0.3.0_DS_TradingOperations | SSCN_DIVDEF.003.ds-divz-preset-empirical-validation-and-group-taxonomy-doc | comp-transform | comp-transform ternary-audit SecurityScanner | PASS |
+| 2026-05-19 | 0.3.0_DS_TradingOperations | SSCN_DIVDEF.003.ds-divz-preset-empirical-validation-and-group-taxonomy-doc | comp-cache | comp-cache collisions | PASS |
+| 2026-05-19 | 0.3.0_DS_TradingOperations | SSCN_DIVDEF.003.ds-divz-preset-empirical-validation-and-group-taxonomy-doc | comp-transform | comp-transform fields SecurityScanner | PASS |
+| 2026-05-19 | 0.3.0_DT_TradingOperations | SSCN_DIVDEF.002.dt-production-data-refresh-2026-05-18 | comp-iam | comp-iam service opal-security-scanner-processor | PARTIAL (3 ops resolved on sscn_processor; policy attachment UNKNOWN — relied on PRD section 5 attestation 11:13Z) |
