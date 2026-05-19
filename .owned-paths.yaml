@@ -178,6 +178,7 @@ lanes:
   CLOUD_OPS_OR_ETL:
     permitted_agents:
       - 0.5.0_AE_OpalETL
+      - 0.5.0_AE_OpalETL~B
       - 0.6.0_AE_PartnerETL
       - 0.6.1_AE_PartnerETL
       - 0.7.0_AE_CloudOps
@@ -318,6 +319,7 @@ lanes:
       - 1.1.0_SA_CTO
       - 2.1.0_SA_COO
       - 0.5.0_AE_OpalETL
+      - 0.5.0_AE_OpalETL~B
       - 0.6.0_AE_PartnerETL
       - 0.6.1_AE_PartnerETL
       - 0.7.0_AE_CloudOps
