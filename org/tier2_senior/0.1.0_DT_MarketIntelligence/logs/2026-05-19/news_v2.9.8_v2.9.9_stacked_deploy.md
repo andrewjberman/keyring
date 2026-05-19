@@ -1,8 +1,9 @@
-# MKOV — Stacked Deploy: news-v2.9.8 + news-v2.9.9 (ADHC_CRYPCT.001)
+# MKOV — Three-Stack Deploy: news-v2.9.8 + news-v2.9.9 + news-v2.9.10 (ADHC_CRYPCT.001 full cycle)
 **Date:** 2026-05-19
 **Agent:** 0.1.0_DT_MarketIntelligence
-**Tags:** `news-v2.9.8` + `news-v2.9.9` (stacked back-to-back per CTO Option B)
+**Tags:** `news-v2.9.8` + `news-v2.9.9` + `news-v2.9.10` (v2.9.8/v2.9.9 stacked per CTO Option B; v2.9.10 hotfix on post-v2.9.9 verification finding)
 **Co-driver:** 0.7.0_AE_CloudOps (deployment-infra lane: source-map commit, terraform apply, tag push)
+**Closeout commits:** `96bb43df3` (v2.9.8/v2.9.9 body) + `da20be3fd` (v2.9.10 addendum + deployment_map bump) + `[this commit]` (Session Close)
 
 ## Context
 
@@ -160,3 +161,63 @@ All 3 Lambdas LastModified `2026-05-19T15:38:55Z`:
 2. **[DE 0.1.0_DE]** Word-cloud consequence unchanged from v2.9.9 notes (TOP_20_KEYWORDS 18 → 16).
 3. **[COO]** Sequencing — ADHC_DSFLOW.007 dispatch (anchor count now 4 in 24h; AE bundling fix when picked up).
 4. **[CTO/COO]** news-pipeline continuous-deploy hook (DS-surfaced; would have prevented 7-day inbox lag).
+
+---
+
+## Session Close — 2026-05-19 ~17:15Z
+
+### Final State (canonical — supersedes prior "Current State" sections above)
+
+| Item | Status | Evidence |
+|------|--------|----------|
+| news-v2.9.8 | SHIPPED, RAVC-Validated by DS | tag `news-v2.9.8` on origin; CodeSha256 verified pre-v2.9.9 |
+| news-v2.9.9 | SHIPPED, RAVC-Validated by DS | tag `news-v2.9.9` on origin; CodeSha256 verified pre-v2.9.10 |
+| news-v2.9.10 | SHIPPED, RAVC-Validate ACK'd by DS at 17:11Z | tag `news-v2.9.10` on origin; opal-news-layer3 LastModified 2026-05-19T17:01:56Z; CodeSha256 `1zeEy..` LIVE |
+| DS 24h verification window | OPEN (clock running from 17:01:56Z) | DS triggering manual invoke; +1h MCP to CTO with CW + DDB; +24h final close |
+| deployment_map.xml | CANONICAL (commit `da20be3fd`) | news-pipeline current_tag=news-v2.9.10; opal-news-layer3 deployed_sha256=1zeEy.., supersession notes for all 3 deploys |
+| Session log | THIS FILE (3 commits incl. Session Close) | Comprehensive narrative — context, sequencing, race convergence, halt-false-alarm, hotfix recovery, discipline notes |
+
+### Inter-pod loop close
+
+- **Pod 1 v2.9.X loop:** functionally CLOSED. All 3 deploys live. ADHC_CRYPCT.001 4-layer crypto rip-out (+ backfill bypass closure) in production.
+- **DS verification:** in flight, +1h CW/DDB result pending, +24h final RAVC-Validate close to CTO.
+- **ADHC_CRYPCT.001 TO:** functionally complete pending DS's +24h close to CTO.
+
+### Mid-session discipline catches (chronological)
+
+1. **14:50Z** — POD1_OR_AE source-map carve-out gap discovered. Clean-reroute to AE 0.7 ratified by COO as the correct interim pattern. Andrew-decision pending on extending carve-out.
+2. **15:10Z** — AE 0.7 HALT on WT-vs-origin/CLOUD divergence. Real catch (DS WIP in shared WT); false alarm on artifact content (determinism proved zips were clean c72c9368a). Both readings were correct discipline.
+3. **15:13Z** — Attribution-integrity hold: refused to commit DS's WIP under DT author. Path 3 (wait for CTO sequencing) was structurally cleanest.
+4. **15:36Z** — DT/AE parallel-build race (Andrew direct-ping kicked AE's v2.9.9 pickup before they saw my GO). Deterministic build resolved cleanly; same SHAs either way.
+5. **16:00Z** — Disciplined pre-build gate applied for v2.9.10 (unfiltered status + per-Lambda blob hashes + DS standby-confirm). Lesson learned from v2.9.8/v2.9.9 cycle directly applied.
+6. **16:01-17:00Z** — AE missed-ping for v2.9.10 (queued behind 4 inbox events). 15-min COO escalation timer set; Andrew direct-flagged AE before timer fired. Recovery flow worked.
+7. **17:08Z** — Watcher canonicalization. Caught I'd been using absolute-path fallback form instead of canonical `inbox-watch {serial}` PATH wrapper (per XXX.md 2026-05-12 update). Killed + relaunched canonical.
+8. **17:08Z** — Broker-channel message delivery for AE v2.9.10 RAVC2 — fs inbox empty, broker had the message. Belt-and-suspenders rule (XXX.md): pull BOTH `check_inbox` AND `get_agent_status` when expecting near-term reply.
+
+### Cross-cousin memory writes from this session
+
+- **`feedback_build_zips_working_tree_not_committed_head.md`** (NEW) — build-and-upload.sh zips WORKING TREE, not committed HEAD. Re-verify clean WT for ALL Lambda paths + `get_agent_status` on pod DS IMMEDIATELY before each build. Session-start gitStatus stale the moment another agent active. Indexed in MEMORY.md.
+
+### Structural findings active for org follow-up (status update)
+
+| Finding | Status | Owner |
+|---------|--------|-------|
+| POD1_OR_AE source-map carve-out gap (`lambda-source-map.json` + CHANGELOG.json AE-only) | Andrew-decision pending; AE recommends option-b ratify + prompt reword | Andrew → COO/CTO |
+| ADHC_DSFLOW.007 MSYS path-mangle | **Anchor count = 4 in 24h** (ds-commit-gate, ds-precommit-check, DS's `aws logs`, safe-deploy.sh:37). AE bundling fix across all 4 sites; TO is 3rd in their queue post v1.0.1 + SXIN_PRODCT.001. DS design note: wire `MSYS_NO_PATHCONV=1` into each gate script's env block (structural-over-cultural). | AE 0.7 (when TO picked up); COO may expedite-dispatch |
+| news-pipeline continuous-deploy hook gap | Structural ADHC candidate. DS willing to draft sketch PRD if COO asks. | CTO/COO |
+
+### Compiler Tools (final tally)
+
+| Tool | Run count this session | Notes |
+|------|----------------------|-------|
+| comp-pipescript io / deployed / postdeps | 0 | **Discipline gap — same as upper "Compiler Tools" table.** Inbox-triage-driven session; no comp-* checks. Captured to memory. |
+| comp-blast | 0 | Same — should have run on 3 Lambdas before deploy + after for blast-radius delta. |
+| comp-iam service | N/A | No new boto3 calls across c72c9368a / 39bc01c3b / efe281914. |
+
+### Next Steps (final)
+
+1. **[DS 0.1.0_DS]** Complete 24h verification window from 17:01:56Z. +1h MCP CTO with CW + DDB result. +24h final RAVC-Validate close to CTO. ADHC_CRYPCT.001 functional close at the +24h.
+2. **[me — 0.1.0_DT]** Watchdog standby with canonical PATH-wrapper watcher. Pull `check_inbox` + `get_agent_status` at top of each turn while DS's 24h window is open (in case any prefilter expectation fails and DS surfaces a v2.9.11 hotfix request).
+3. **[AE 0.7]** Continue queue: v1.0.1 → SXIN_PRODCT.001 → ADHC_DSFLOW.007 (4-anchor bundle fix).
+4. **[COO / Andrew]** Andrew-decision pending on POD1_OR_AE carve-out source-map extension.
+5. **[COO]** Optional: expedite-dispatch ADHC_DSFLOW.007 given 4-anchor-in-24h signal.
