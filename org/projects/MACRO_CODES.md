@@ -88,6 +88,7 @@ Assign the DE/DS/DT of the primary pod, or the AE for pipeline-only projects.
 | `BDPL` | BD pipeline | `0.6.0_AE_PartnerETL` |
 | `NPPL` | News pipeline | `0.5.0_AE_OpalETL` |
 | `SXPL` | SmartX pipeline | `0.6.0_AE_PartnerETL` |
+| `SXIN` | SmartX Ingestion Lambda (Schwab non-model derivation / opal-smartx-ingestion-pipeline; AE 0.7-owned half of the SmartX surface, distinct from SXPL's partner-ETL REST scrape lane) | `0.7.0_AE_CloudOps` |
 | `SHIF` | Shared infrastructure | `0.7.0_AE_CloudOps` |
 | `AUTH` | Portal Authentication, Authorization, and Identity | `0.7.0_AE_CloudOps` (infra) + `0.4.0_DT_ClientPlatform` (app layer) |
 | `CDRS` | Cloud Resources (account-wide AWS inventory + Terraform-import catch-up; CF/Lambda/DynamoDB/S3 gaps) | `0.7.0_AE_CloudOps` (infra) + `0.4.0_DT_ClientPlatform` (lane partner) |

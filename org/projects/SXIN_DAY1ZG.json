@@ -1,0 +1,19 @@
+{
+  "project_code": "SXIN_DAY1ZG",
+  "macro_code": "SXIN",
+  "name": "SmartX Ingestion Write-Time Day-1-of-Period Zero-Emission Guard",
+  "description": "Defensive write-time sentinel in `append_non_model_today.py` (opal-smartx-ingestion-pipeline Lambda) that fails LOUD on the SmartX day-1-of-period roster-before-value-accrues defect (SmartX upstream emits `EndMarketVal = $0.00` across all model CSVs on the first trading day of each reporting period: Jan 2/3/4, Feb 2, Mar 2, Apr 1, May 1 in 2026 -- empirically root-caused by DS 0.4 2026-05-19, two-layer fix shipped on the MDPF aggregate + legacy aum-timeseries paths via fb9a910b8 + e0f22b108). The AE Lambda's `model_aum`-read step inherits the same upstream defect risk; without a guard the next at-risk live run is 2026-06-01 (Mon, first first-trading-day-of-month after smartx-pipeline-v1.0.0 went live 2026-05-19). Recipe per DS 0.4 canonical (RAVC4 follow-up 2026-05-19 ~13:23Z): assert model_aum > MIN_PLAUSIBLE_THRESHOLD (~$100M; AE right-sizes) AND/OR within +/-15% of prior business day; failure -> honest skip + DLQ alert + last_append carry-forward (NOT silent emit with zeroed model). Same drop-rather-than-fabricate philosophy as DS's two-layer fix; closes the rider-2 gap CTO endorsed 2026-05-19. Today's 4-anchor masking-class memory `memory/feedback_identity1_masks_absolute_value_class.md` is the cross-link target -- this TO is the gate response to anchor #3 (SmartX day-1-of-period zero emission).",
+  "prds": [],
+  "status": "active",
+  "phase": "Phase 0 -- DISPATCHED 2026-05-19 (2.0.0_SA_COO, CTO-authored sketch ratified). Single Phase-0 write-time-guard TO SXIN_DAY1ZG.001 (AE 0.7.0) issued: add defensive sentinel inside append_non_model_today.py at the model_aum-read step; fail-LOUD on day-1-zero with honest skip + DLQ + last_append carry-forward. Deadline before 2026-06-01 14:00 UTC (12-day runway from authoring). Reasoning attribution: DS 0.4 structural observation MCP 2026-05-19 ~13:23Z + CTO ratification MCP 2026-05-19; rider-2 to the smartx-pipeline-v1.0.0 ship (de03b497a, RAVC2-accepted by CTO). Pure Lambda code edit + tag bump (smartx-pipeline-v1.0.1 or v1.1.0 per AE convention) -- no new resources, no new IAM. If guard fires cleanly on smoke and 2026-06-01 lands without a fabricated emit -> project closes after RAVC2.",
+  "blocking": "None -- Phase 0 dispatched. Time-pressure deadline 2026-06-01 (Mon) is the first at-risk live cron; AE 0.7 SLA ~0.5d wall puts ship 10+ days before the gate window.",
+  "depends_on": [],
+  "depends_on_note": "Rider-2 to the just-shipped smartx-pipeline-v1.0.0 (commit de03b497a, RAVC2-accepted by CTO 2026-05-19). Cross-references: DS 0.4 two-layer fix (fb9a910b8 + e0f22b108) on the aggregate/legacy paths; today's 4-anchor masking-class memory anchor #3.",
+  "absorbs": [],
+  "created": "2026-05-19",
+  "pods": ["0.7"],
+  "pipeline": "smartx-pipeline (opal-smartx-ingestion-pipeline Lambda; sibling to MDPF and the legacy SmartX REST scrape)",
+  "coo_lane": "2.0.0_SA_COO",
+  "thread_counter": 0,
+  "threads": []
+}
