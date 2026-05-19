@@ -7,7 +7,50 @@
 
 ---
 
-## TL;DR / Verdict
+## v2.9.10 Hotfix Supplement (2026-05-19, +30min post-v2.9.9 deploy)
+
+**Trigger:** post-deploy verification at 15:55Z surfaced 2 crypto-tagged topics in the bullish output that v2.9.9 was supposed to prevent. Re-surfaced to CTO at <T+30min instead of waiting for the +24h gate (the contingent "v2.9.10 if Mode-1/2/3 residual surfaces" trigger).
+
+**Bug class:** structural -- the v2.9.9 TO and brief enumerated 4 surfaces (TOP_20_KEYWORDS / KEYWORD_NORMALIZATION / prefilter+BANNED_KEYWORDS / GPT prompt) + the BLOCKED_SOURCES threshold change, but missed a 5th parallel ingest path -- `backfill_from_layer2()` (L889 in the same Lambda) which is invoked when GPT picks <10 topics for a direction (today: 5 bullish). Backfill checks SPORTS + sentiment + already-used-keywords, but does NOT check BLOCKED_SOURCES / BANNED_KEYWORDS / CRYPTO_RAW_PATTERN. So crypto topics that the prefilter dropped get re-pulled directly from Layer 2 when GPT under-fills.
+
+Plus: the post-GPT `apply_topical_caps()` had the OLD cap-at-1 logic (max 1 crypto in top-3) as defense-in-depth, expecting prefilter to do the heavy lifting. Cap-at-1 isn't "zero crypto" -- it allows 1 in top-3 and unlimited beyond top-3. Today's bullish-1 was the allowed 1 crypto in top-3; bullish-8 was outside the cap zone entirely.
+
+**Verification failure evidence (2026-05-19, post-v2.9.9 manual invoke):**
+
+| Slot | Keyword | Headline | Sources | Mechanism |
+|------|---------|----------|---------|-----------|
+| bullish-1 | gemini bitcoin investment | "Winklevoss' Gemini jumps 25% on $100 million bitcoin..." | 5/6 crypto-pub + Zerohedge | backfilled from Layer 2 (bypassed prefilter); kept in top-3 by cap-at-1 |
+| bullish-8 | crypto investment trusts | "Polish lawmakers back revised crypto bill..." | 3/3 crypto-pub | backfilled from Layer 2 (bypassed prefilter); outside cap-at-1 zone |
+
+CloudWatch prefilter summary: `BLOCKED: SOURCE (>30% from blocklist): 15` + `BLOCKED: CRYPTO (keyword OR >40% headlines): 0`. Both bullish-1 and bullish-8 keywords appear in the `BLOCKED: SOURCE` drop list -- meaning the prefilter caught them, but backfill re-pulled them.
+
+**Fix (atomic, single Lambda, code-only):**
+
+1. `backfill_from_layer2()` (L982-993): add `_is_blocked_source_dominated(sample_articles)` + `_is_crypto_dominated(layer2_topic)` checks after the sports filter, before sentiment classification. Mirrors the prefilter gates exactly. Print `BLOCKED: SOURCE:` and `BLOCKED: CRYPTO:` log lines for visibility.
+
+2. `apply_topical_caps()` (L2104-2113): convert from cap-at-1 (demote out of top-3) to DROP-ALL (remove from direction list entirely). Filter `direction_topics` through `_is_crypto_topic()` upfront; surviving topics never see the cap-loop. Removes the `crypto_in_top` cap tracking + violation branch (now dead code).
+
+3. `_is_crypto_topic()` (L2068-2091): added regex check on `kw` and `raw_kw` for symmetry with `_is_crypto_dominated()`. Catches keywords like `gemini bitcoin investment` that aren't in the BANNED_KEYWORDS exact set but contain crypto words.
+
+**Total LOC delta:** ~25 added, ~5 removed.
+
+**Architectural lesson (cross-link to memory):**
+
+This is the `feedback_audit_completeness_vs_behavior_correctness` pattern in action -- v2.9.9 audit enumerated 4 surfaces correctly, behavior verification on the deployed system surfaced a 5th. The lesson for next ADHC structural-removal TO: run `comp-blast <prefilter-function>` at Phase 0 to enumerate every function that consumes from the same Layer 2 input -- they're all parallel exclusion surfaces and must apply the same gates. Adding to my TO checklist for follow-on work.
+
+**v2.9.10 verification plan (re-run after DT deploys):**
+
+Same as v2.9.9 but with attention to backfill scenarios:
+- Trigger a manual invoke (or wait for next EventBridge fire) on a quiet macro day where GPT under-fills bullish (which is what unmasked the bug today)
+- Confirm new log lines: `BLOCKED: SOURCE: ... (>30% articles from blocked publications)` AND `BLOCKED: CRYPTO: ... (banned keyword OR >40% crypto-pattern headlines)` fire inside the backfill section
+- Confirm new log line: `POST-GPT CRYPTO DROP ({direction}): removed N crypto topic(s)` -- N should be 0 once prefilter + backfill both gate properly
+- DynamoDB acceptance: zero crypto-tagged entries (same as v2.9.9 acceptance)
+
+24h window RESETS from v2.9.10 deploy time.
+
+---
+
+
 
 **ZERO crypto-tagged topics will appear in the trending output once news-v2.9.9 lands.** Crypto is dropped at four independent layers in `opal-news-layer3-curation`:
 

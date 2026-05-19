@@ -5,6 +5,20 @@
 
 ---
 
+## v2.9.10 Hotfix Supplement (T+30min post-v2.9.9 deploy)
+
+Post-deploy verification at 15:55Z surfaced 2 crypto-tagged topics in today's bullish output (slots 1 + 8). Re-surfaced to CTO at <T+30min; CTO ratified hotfix scope. Two atomic changes:
+
+1. `backfill_from_layer2()` (L982-993): added `_is_blocked_source_dominated()` + `_is_crypto_dominated()` gates after the SPORTS filter. The backfill function bypasses the prefilter -- when GPT picks <10 topics for a direction (today: 5 bullish), it pulls Layer 2 topics directly without re-applying the new gates.
+2. `apply_topical_caps()` (L2104-2113): converted from cap-at-1 to DROP-ALL. The old cap-at-1 was the pre-v2.9.9 architecture allowing 1 crypto in top-3; Andrew's "any and all crypto" directive needs drop-all.
+3. `_is_crypto_topic()` (L2078-2091): added regex checks on `kw` and `raw_kw` for symmetry with `_is_crypto_dominated()`. Catches keywords like `gemini bitcoin investment` that aren't in BANNED_KEYWORDS exact set but contain crypto words.
+
+**Architectural lesson:** `feedback_audit_completeness_vs_behavior_correctness` in action. v2.9.9 audit enumerated 4 surfaces correctly; behavior verification surfaced a 5th (backfill_from_layer2 as a parallel ingest path to Layer 2). CTO's lesson for next TO: `comp-blast <prefilter-function>` at Phase 0 enumerates every function consuming from the same Layer 2 input -- all are parallel exclusion surfaces.
+
+CTO RAVC ratified. DT 0.1.0_DT deploys v2.9.10 (single Lambda, code-only).
+
+---
+
 ## Summary
 
 Comprehensive structural rip-out of crypto from the news pipeline at four independent layers in `opal-news-layer3-curation`, plus a Layer 2 GPT-validator prompt fix. Crypto can no longer reach the trending output regardless of source mix, keyword shape, or GPT preferences. Replaces the May 12 source-layer cut + cap-at-one architecture with a hard-drop-at-prefilter ban.

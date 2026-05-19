@@ -7,6 +7,49 @@
 
 ---
 
+## v2.9.10 Hotfix Supplement (2026-05-19, +30min post-v2.9.9)
+
+**Trigger:** post-deploy verification surfaced 2 crypto entries in today's DynamoDB bullish output (slots 1 + 8) via the `backfill_from_layer2` bypass + the old cap-at-1 logic. CTO ratified hotfix scope at 15:55Z.
+
+**Single Lambda, code-only, no Terraform resource changes:**
+
+| Lambda | Source | Why |
+|--------|--------|-----|
+| `opal-news-layer3-curation` | `infra/aws/lambda/news_layer3_curation/lambda_function.py` | Backfill function now applies BLOCKED_SOURCES + BANNED_KEYWORDS + CRYPTO_RAW_PATTERN gates. apply_topical_caps converts cap-at-1 -> drop-all. _is_crypto_topic adds regex check on kw + raw_kw. |
+
+**Sequence (after v2.9.9 lands):**
+
+```bash
+# v2.9.10 commit hash will be set by DS commit; check git log on CLOUD
+git log --oneline -3 -- infra/aws/lambda/news_layer3_curation/lambda_function.py
+# Latest entry: "fix(news-l3): v2.9.10 backfill crypto gates + drop-all topical cap (ADHC_CRYPCT.001 hotfix)"
+
+cd infra/aws/terraform/news-pipeline
+../../../../.tools/build-and-upload.sh   # or pipeline-local equivalent
+../../../../.tools/terraform.exe plan    # expect 1 aws_lambda_function source_hash diff (layer3 only)
+../../../../.tools/terraform.exe apply
+git tag -a news-v2.9.10 -m "ADHC_CRYPCT.001 hotfix: backfill crypto gates + drop-all topical cap (DS 0.1.0)"
+git push --follow-tags
+```
+
+**Post-deploy verification:**
+
+```bash
+aws lambda get-function --function-name opal-news-layer3-curation \
+  --query 'Configuration.LastModified'
+
+aws lambda invoke --function-name opal-news-layer3-curation /tmp/l3_v2.9.10.json
+```
+
+Then pull CloudWatch logs. Expected NEW log lines that didn't fire in v2.9.9:
+- `BLOCKED: SOURCE: ... (>30% articles from blocked publications)` inside the backfill loop (when GPT under-fills bullish)
+- `BLOCKED: CRYPTO: ... (banned keyword OR >40% crypto-pattern headlines)` inside the backfill loop
+- `POST-GPT CRYPTO DROP ({direction}): removed N crypto topic(s)` in the apply_topical_caps section (N should be 0 once upstream gates catch)
+
+DynamoDB acceptance: zero crypto in bullish or bearish, including backfilled slots.
+
+---
+
 ## Sequencing -- Critical
 
 This deploy STACKS on v2.9.8. Recommended sequence:
