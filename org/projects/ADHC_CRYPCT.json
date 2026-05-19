@@ -1,0 +1,15 @@
+{
+  "project_code": "ADHC_CRYPCT",
+  "macro_code": "ADHC",
+  "name": "Comprehensive Crypto Removal from News Scanner (Phase 2)",
+  "description": "Andrew-direct directive 2026-05-19: 'we need to get rid of any and all crypto news sources from the news scanner process [...] we're still seeing crypto news dominating' despite the 2026-05-12 fix (commit c72c9368a) which cut INGESTION + added SOURCE BLOCKLIST + RECENCY FLOOR. Defense-in-depth gap: prior fix did NOT remove crypto from the RANKING / NORMALIZATION / GPT-PROMPTING layers. Non-blocked sources (TechCrunch, Bloomberg, Reuters, Yahoo Finance, MarketWatch, CNBC) all cover crypto news -- those stories still flow through Layer 2 -> Layer 3, get normalized into crypto/bitcoin keyword buckets via KEYWORD_NORMALIZATION, and are explicitly prompted as preferred portal keywords. This project tears out crypto presence at all 4 layers structurally: TOP_20_KEYWORDS removal, KEYWORD_NORMALIZATION crypto-variant block removal, BLOCKED_SOURCES extension + threshold reduction, CRYPTO_CAP -> BANNED_KEYWORDS hard-drop-at-prefilter conversion, content-level CRYPTO_RAW_PATTERN regex filter, comprehensive GPT prompt scrub including explicit EXCLUSION instruction.",
+  "prds": [],
+  "status": "active",
+  "phase": "Phase 0 -- DISPATCHED 2026-05-19 (1.0.0_SA_CTO, Andrew-direct authorization). Single TO ADHC_CRYPCT.001 (DS 0.1.0_DS_MarketIntelligence) authored for comprehensive crypto removal at the RANKING / NORMALIZATION / GPT-PROMPTING layers (the layers the 2026-05-12 fix explicitly left out-of-scope). RAVC2 to CTO base direct. DT 0.1.0_DT_MarketIntelligence handles deploy via DevOps-brief pattern (mirror of May 12 `c72c9368a -> news-v2.9.8`); DE 0.1.0_DE_MarketIntelligence coordinated for word-cloud 20->18 keyword consequence.",
+  "blocking": "None -- Phase 0 dispatched. Brief verdict + 24h verification close the project; if residual crypto observed in verification window, extends with TO-002 against the specific residual class.",
+  "created": "2026-05-19",
+  "pods": ["0.1"],
+  "pipeline": "news-pipeline (news_layer3_curation Lambda primary + news_trending_analysis Lambda audit)",
+  "thread_counter": 0,
+  "threads": []
+}
