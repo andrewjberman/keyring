@@ -1,0 +1,15 @@
+{
+  "project_code": "MDLP_VOLAUD",
+  "macro_code": "MDLP",
+  "name": "Model Portfolio Benchmark Volatility Audit (ETF vs Index)",
+  "description": "Empirical audit of the ETF-benchmark vs INDEX-benchmark volatility difference visible in the Model Portfolios -> Benchmarks tab -> Return vs Volatility (period volatility) chart. Both vols are computed gold-side by yang-model-portfolio-benchmarks Lambda using identical methodology (np.std * sqrt(252) * 100) against two different daily-return series; structurally ETF vol >= INDEX vol expected from microstructure overlay (premium/discount, bid-ask spread effects, tracking error, dividend cadence, embedded fees BIL ~14bps / AGG ~3bps / IVV ~3bps). This project confirms empirically whether the published difference is consistent with that framing or surfaces a specific data-construction / methodology anomaly.",
+  "prds": [],
+  "status": "active",
+  "phase": "Phase 0 -- DISPATCHED 2026-05-19 (1.0.0_SA_CTO, Andrew-direct authorization). Single Phase-0 audit TO MDLP_VOLAUD.001 (DS~B) issued for empirical confirmation that the ETF-vs-INDEX vol gap in the Period-Volatility scatter is microstructure-explainable, not a defect. No PRD -- small empirical-audit scope. If audit clean -> project closes after brief lands. If audit surfaces anomaly -> project extends with Yang-pipeline fix TO (AE 0.5.0 lane) authored against the brief.",
+  "blocking": "None -- Phase 0 dispatched. Phase-1 follow-up scoping gated on the brief outcome.",
+  "created": "2026-05-19",
+  "pods": ["0.4"],
+  "pipeline": "yang-pipeline (read-only audit of yang-model-portfolio-benchmarks Lambda output + the source data.pkl)",
+  "thread_counter": 0,
+  "threads": []
+}
