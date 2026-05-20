@@ -53,7 +53,9 @@ if [ -f "$HALT_GATE" ]; then
   . "$HALT_GATE"
   halt_gate_check "safe-apply" || exit $?
 else
-  echo "safe-apply: WARN -- halt-gate-check.sh not found at $HALT_GATE; proceeding ungated." >&2
+  echo "safe-apply: ERROR -- halt-gate-check.sh not found at $HALT_GATE; refusing to apply ungated." >&2
+  echo "safe-apply: the primary HALTGT net cannot run without its checkpoint library." >&2
+  exit 3
 fi
 
 # Checkpoint passed (empty inbox, or routine acked, or audited STOP override).
