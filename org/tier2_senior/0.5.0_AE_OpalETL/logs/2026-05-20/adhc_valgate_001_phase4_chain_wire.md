@@ -81,6 +81,20 @@ INF_D_04 done
 4. The chain PROCEEDED to `INF_09` and completed (`CHAIN chain:full COMPLETE`) -- the
    non-fatal wire did NOT block the platinum emit.
 
+## Verification scope (explicit -- CTO~B 2026-05-20)
+
+Phase-4's verification proves the **WIRING**, not the WARN logic on a filled baseline.
+The chain run confirmed: placement (post-D / pre-INF_09), clean `valgate_gate.py`
+execution, verdict emitted to the chain log, and the non-fatal wire letting the chain
+proceed. It did NOT -- and by construction CANNOT -- exercise C-1/C-2's WARN-on-breach
+behaviour, because the rolling baseline is empty (this run recorded sample #1; the gate
+is in WARN-SUPPRESSED bootstrap until >= N/2 = 10 samples). **The gate's WARN behaviour
+on a filled baseline is unverified-by-construction until the rolling window fills
+(~20 daily chain runs).** This is an accurate scope statement, not a gap -- AC2's
+bootstrap design makes a filled-baseline WARN impossible to exercise on day 1, and
+DS~B's Phases-2-3 fixtures (6/6 PASS, incl. the DWSPLT-#27 150x + zero-NNA WARN cases)
+are the standing evidence for the WARN logic itself.
+
 ## WARN -> BLOCK ratchet-readiness checklist (PRD section 7-Q1 follow-on)
 
 v1 ships WARN-not-BLOCK. The ratchet to BLOCK -- after ~1-2 weeks of empirical
