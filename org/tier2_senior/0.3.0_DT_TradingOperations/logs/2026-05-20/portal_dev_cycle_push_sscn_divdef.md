@@ -63,6 +63,29 @@ index-based path has an unavoidable race window. Mitigation when it recurs:
 sync the submodule working tree TO the target commit first so `--only` becomes
 usable — only viable when no other agent is mid-work in the submodule.
 
+## Addendum — second DEV-cycle: f9b2d81e refresh + :5175 server
+
+CTO 1.0.0_SA_CTO~B requested the :5175 dev server refreshed to the portal DEV tip
+so Andrew can do a combined SSCN + TRSB_LEDGER verify in one sitting. Portal DEV
+had advanced b05388dc -> f9b2d81e (be5d7631 TRSB_LEDGER.008b role-aware tab gating
++ f9b2d81e TRSB_LEDGER.014 EXECUTED/COMPLETE display normalization, both RD 0.3.2).
+
+| Step | Action | Result |
+|------|--------|--------|
+| 1 | Bench QA on f9b2d81e working tree | `typecheck` exit 0 / `build` exit 0 (12.28s) |
+| 2 | `git push origin DEV` (portal) | origin/DEV b05388dc..f9b2d81e |
+| 3 | CLOUD gitlink bump b05388dc -> f9b2d81e via safe-commit.sh | commit `b33e7a477` — clean, 1 file; CLOUD pushed |
+| 4 | Kill old Vite (PIDs 3672/26796), restart `bun run dev --port 5175` | Vite v7.3.1 ready, serving DEV @ f9b2d81e |
+| 5 | Re-run SSCN smoke runner on f9b2d81e | 21/21 PASS, 0 console errors — SecurityScanner unchanged on new tip |
+
+Served state: portal DEV @ f9b2d81e — carries all SSCN_DIVDEF .007/.008 + all 5
+TRSB portal fixes. Working tree also has 2 uncommitted SecurityScanner files
+(FactorBankTab.tsx, categoryOrder.ts) — another agent's active WIP, not mine;
+they did NOT regress the SSCN smoke (still 21/21). Flagged to CTO~B + COO~B + COO.
+
+DEV smoke surface for Andrew (combined): http://localhost:5175 — /security-scanner
+(SSCN) + TradeSubmission page (TRSB). Server stays up.
+
 ## Compiler Tools
 
 | Tool | Result |
@@ -71,12 +94,11 @@ usable — only viable when no other agent is mid-work in the submodule.
 
 ## Current State
 
-- portal origin/DEV synced to b05388dc; CLOUD gitlink synced to match; CLOUD pushed.
+- portal origin/DEV synced to f9b2d81e; CLOUD gitlink synced to match (b33e7a477); CLOUD pushed.
+- :5175 dev server UP, serving portal DEV @ f9b2d81e — SSCN smoke 21/21 PASS, 0 console errors.
 - SSCN_DIVDEF .002/.003/.004/.005/.007/.008 all closed. Only TO-006 (PROD push) remains.
-- TO-006 `SSCN_DIVDEF.006` STAGED, `dispatch_held=true`. Gate: Andrew DEV smoke
-  approval. COO has surfaced the smoke ask to Andrew.
-- DEV smoke surface answered to COO: no deployed DEV env (DEV push = CI only per
-  portal/DEPLOY_HERE.md); smoke = local `bun run dev` on portal DEV @ b05388dc.
+- TO-006 `SSCN_DIVDEF.006` STAGED, `dispatch_held=true`. Gate: Andrew DEV smoke approval.
+- TRSB_LEDGER .008b + .014 portal commits also on the served build (combined-verify surface).
 
 ## Next Steps
 
