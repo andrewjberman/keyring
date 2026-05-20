@@ -65,8 +65,9 @@ lanes:
   ANY_CTO:
     permitted_agents:
       - 1.0.0_SA_CTO
+      - 1.0.0_SA_CTO~B
       - 1.1.0_SA_CTO
-    description: "Either CTO (base or COMP_LEARNS) — architecture docs"
+    description: "Any CTO (base, ~B C-suite, or COMP_LEARNS) — architecture docs"
 
   POD1:
     permitted_agents:
