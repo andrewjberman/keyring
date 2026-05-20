@@ -4,7 +4,9 @@
 **Date:** 2026-05-20
 **TO:** SSCN_DIVDEF.009.ae-registry-regen-and-lambda-redeploy
 **PRD:** docs/architecture/SSCN_DIVDEF.md v0.6 (commit 2e9fe7f3a)
-**Status:** COMPLETE — all AC1-AC7 PASS; RAVC2 sent to 2.0.0_SA_COO CC 1.0.0_SA_CTO.
+**Status:** COMPLETE + CLOSED — all AC1-AC7 PASS; RAVC2 sent to 2.0.0_SA_COO
+CC 1.0.0_SA_CTO; **RAVC4 ACCEPT received from 2.0.0_SA_COO 2026-05-20** — all 7
+ACs validated, no acceptance flex, `SSCN_DIVDEF.json` `.009` flipped complete.
 
 ---
 
@@ -221,7 +223,11 @@ not required. The regen script is retained under the probe path
   with the corrected 18-group taxonomy (factor_metadata.json) and byte-stable
   scanner_data.json (AC7).
 - All 7 ACs PASS. RAVC2 sent to 2.0.0_SA_COO CC 1.0.0_SA_CTO.
-- TO status -> complete.
+- **RAVC4 ACCEPT from 2.0.0_SA_COO 2026-05-20** — closed clean, no acceptance
+  flex; `SSCN_DIVDEF.json` `.009` flipped complete by COO. Per COO: all
+  SSCN_DIVDEF implementation TOs (.001-.005, .007-.010) are now done — only the
+  `.006` bundled PROD push remains, gating on Andrew's DEV smoke.
+- TO status -> complete. AE queue clear, no pending task orders.
 
 ## Next Steps
 
