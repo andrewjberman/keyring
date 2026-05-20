@@ -93,13 +93,30 @@ name-search. It is NOT a feed of Opal's live managed model-portfolio performance
 only carry Opal's model performance if an analyst manually rebuilt each Opal model inside the
 YCharts seat — a manual-maintenance burden, and still a *reconstruction*, not the system of record.
 
-**WS-1 corroboration** (`mdsrc-ycharts-live-session-test-20260520.md` §4): under a valid
-authenticated YCharts session, `/model_portfolios/` and `/model_portfolios/collection_status`
-JSON both return **HTTP 403 "You are signed out"** while `/indices/table_data` JSON returns 200
-real data in the same session. Most probable cause: the `/model_portfolios/*` JSON API is
-subscription-tier / feature-entitlement gated on the current seat (consistent with WS-1 Finding
-F3 — YCharts features are plan-gated with inconsistent error messaging). So the endpoint class
-is, on the current seat, **both the wrong kind of data and not reachable**.
+**WS-1 fresh-session probe** (`mdsrc-ycharts-live-session-test-20260520.md` §4+§9, commit
+`391f1321f` — supersedes WS-1's earlier 403 reading, see correction note below): with a fresh
+authenticated session, `/model_portfolios/` returns **HTTP 200, 54 KB** — `data.items[]` = 25
+model-portfolio items, each carrying *construction metadata*: `benchmark`, `benchmark_symbol`,
+`base_currency`, `auto_refresh_frequency`, `household_level_calc_method`, `description`.
+`/model_portfolios/collection_status` returns 200 (138 model portfolios, all "available");
+`/model_portfolios/transition_analysis/list` 200. The endpoints are **reachable and not
+entitlement-gated**.
+
+This *reinforces* the rejection of `/model_portfolios/*` as a model-portfolio performance source —
+on **content/provenance** grounds, not availability. The `data.items[]` payload is portfolio
+**definition/configuration metadata** (`auto_refresh_frequency`, `household_level_calc_method` are
+portfolio-builder settings) for user-constructed and YCharts demo portfolios — not a managed-model
+performance time series, and not the system of record for Opal's actual managed models. WS-1's
+corrected note agrees the open question is exactly this: whether YCharts holds Opal's *actual*
+managed models or only what is manually built in the seat — and the system of record for Opal's
+managed models is SmartX, not a YCharts seat.
+
+> **Correction note (2026-05-20):** an earlier draft of this brief cited a WS-1 finding that
+> `/model_portfolios/*` JSON 403'd ("signed out") as evidence of entitlement-gating. WS-1
+> retracted that finding on fresh empirical evidence — the 403 was a stale/disturbed replayed-
+> cookie artifact (WS-1 Finding F1, single-concurrent-session fragility), not entitlement-gating.
+> This brief is corrected: the availability ground is **withdrawn**; the rejection of YCharts
+> `/model_portfolios/*` as the Q4 source stands on content/provenance grounds alone (see §5).
 
 ---
 
@@ -134,7 +151,7 @@ that is what SmartX holds.
 
 | Source | Verdict | Reasoning |
 |---|---|---|
-| **YCharts `/model_portfolios/*`** | **REJECTED** | Wrong data kind (portfolio-construction directory, not a managed-model performance feed) AND not reachable on the current seat tier (403, §3). Would require an analyst to manually rebuild Opal models in YCharts + a tier upgrade. |
+| **YCharts `/model_portfolios/*`** | **REJECTED** (on content/provenance) | Reachable and not entitlement-gated (§3, WS-1 fresh-session probe). Rejected on **content**: it is a portfolio-construction directory of user-built / YCharts-demo portfolios with definition metadata — not a feed of Opal's *actual* managed-model performance, and not the system of record for it. Using YCharts would require an analyst to manually rebuild + maintain each Opal model inside the seat — a reconstruction, not the source of truth. Secondary operational caveat: WS-1 Finding F1 single-concurrent-session fragility applies to any YCharts session-scrape. |
 | **yang `model.pkl`** | **RETAIN as the proprietary/design view** | Opal's own computed model-return series. Authoritative for "the model as Opal designs it." But: weekly manual Bloomberg upload — not a daily automated pull, and not the realized managed-account return. |
 | **SmartX REST API `api/3.1`** | **RECOMMENDED as the canonical live source** | The system of record for the actual managed Opal model portfolios. `reportedmodels/{rmid}/historicalperformance` + `models/{id}/statistics` + `performance.smartxadvisory.com/models/performance` give a daily-automatable performance series for all 7 models, with proper machine API auth (no WAF, no session-eviction). Already a live, trusted Opal integration (MDPF_ASSETS WS-B). |
 
@@ -168,8 +185,8 @@ Bloomberg-pkl-only / hybrid / proprietary / SmartX-sourced.
 
 | surface_id | portal_page | component | surface | json_artifact | serving_path | current_source | refresh_cadence | data_class | ycharts_endpoint | ycharts_coverage | classification | evidence | notes |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|---|
-| WS3-MP-01 | Model Portfolios | ModelPortfolioBenchmarks | model-portfolio performance (`model` field, 9 periods) | json/benchmarks/model_portfolio_benchmarks.json | /api/public/json/benchmarks/model_portfolio_benchmarks.json | yang `model_pkl` | weekly (manual pkl) | model-portfolio performance | none usable | 403 / un-entitled + wrong kind | **SmartX-sourced** (recommend) | §3,§4,§5; SXPL_RESTIN.001 | WS-2/WS-3 seam — `model` col WS-3; benchmark cols WS-2 |
-| WS3-MP-02 | Model Portfolios | ModelPortfolioTimeseries | model daily return series (`model_return`) | json/benchmarks/model_portfolio_timeseries.json | /api/public/json/benchmarks/model_portfolio_timeseries.json | yang `model_pkl` | weekly (manual pkl) | model-portfolio performance | none usable | 403 / un-entitled | **SmartX-sourced** (recommend) | §4,§5; portal-proxy.ts:720 | `model_return` WS-3; `benchmark_return`/`rfr` WS-2 |
+| WS3-MP-01 | Model Portfolios | ModelPortfolioBenchmarks | model-portfolio performance (`model` field, 9 periods) | json/benchmarks/model_portfolio_benchmarks.json | /api/public/json/benchmarks/model_portfolio_benchmarks.json | yang `model_pkl` | weekly (manual pkl) | model-portfolio performance | `/model_portfolios/` (reachable, not usable for this surface) | construction-tool: demo + user-built portfolios, not Opal managed-model performance | **SmartX-sourced** (recommend) | §3,§4,§5; SXPL_RESTIN.001 | WS-2/WS-3 seam — `model` col WS-3; benchmark cols WS-2 |
+| WS3-MP-02 | Model Portfolios | ModelPortfolioTimeseries | model daily return series (`model_return`) | json/benchmarks/model_portfolio_timeseries.json | /api/public/json/benchmarks/model_portfolio_timeseries.json | yang `model_pkl` | weekly (manual pkl) | model-portfolio performance | `/model_portfolios/` (reachable, not usable for this surface) | construction-tool: demo + user-built portfolios, not Opal managed-model performance | **SmartX-sourced** (recommend) | §4,§5; portal-proxy.ts:720 | `model_return` WS-3; `benchmark_return`/`rfr` WS-2 |
 | WS3-SX-01 | Portfolios / AUM | AUMTimeSeries | model AUM daily series | json/portfolios/aum-timeseries.json | /api/general/portfolios/aum-timeseries.json | SmartX legacy scrape | daily Mon-Fri 09:00 ET | client-account AUM | n/a (not market data) | n/a | **SmartX-sourced** (already) | §2.1; SMARTX_BIBLE.md | Client-account backend — not a YCharts candidate |
 | WS3-SX-02 | Portfolios / AUM | AUMMetrics | latest AUM + quarterly change | json/portfolios/aum-metrics.json | /api/general/portfolios/aum-metrics.json | SmartX legacy scrape | daily Mon-Fri 09:00 ET | client-account AUM | n/a | n/a | **SmartX-sourced** (already) | §2.1 | — |
 | WS3-SX-03 | Portfolios / AUM | AccountDistribution | account-size bell curve | json/portfolios/account-distribution.json | /api/general/portfolios/account-distribution.json | SmartX legacy scrape | daily Mon-Fri 09:00 ET | client-account distribution | n/a | n/a | **SmartX-sourced** (already) | §2.1 | — |
