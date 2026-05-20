@@ -34,4 +34,15 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 PYTHON="python"
 command -v python3 >/dev/null 2>&1 && PYTHON="python3"
 
+# --- ADHC_HALTGT.002 -- HALTGT deploy-time checkpoint ---
+# Source the .001 checkpoint library and gate before the S3 deploy: a STOP-class
+# inbox message hard-blocks; a routine message surfaces + needs HALT_ACK=1; an
+# empty inbox passes silently. Non-zero = abort before exec.
+HALT_GATE="$SCRIPT_DIR/halt-gate-check.sh"
+if [ -f "$HALT_GATE" ]; then
+    # shellcheck source=/dev/null
+    . "$HALT_GATE"
+    halt_gate_check "safe-deploy" || exit $?
+fi
+
 exec "$PYTHON" "$SCRIPT_DIR/safe_deploy_core.py" "$@"

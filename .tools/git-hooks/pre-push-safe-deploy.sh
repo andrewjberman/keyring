@@ -23,6 +23,18 @@ if [ ! -f "$SAFE_DEPLOY" ]; then
     exit 0
 fi
 
+# --- ADHC_HALTGT.002 -- HALTGT deploy-time checkpoint ---
+# Source the .001 checkpoint library and gate on its exit code before the push:
+# a STOP-class inbox message hard-blocks; a routine message surfaces + needs
+# HALT_ACK=1; an empty inbox passes silently. Non-zero = abort the push.
+# The library never reads stdin, so the git pre-push refspec on stdin is intact.
+HALT_GATE="$REPO_ROOT/.tools/halt-gate-check.sh"
+if [ -f "$HALT_GATE" ]; then
+    # shellcheck source=/dev/null
+    . "$HALT_GATE"
+    halt_gate_check "pre-push" || exit $?
+fi
+
 REMOTE="$1"
 REMOTE_URL="$2"
 
