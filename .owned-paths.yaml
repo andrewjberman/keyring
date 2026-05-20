@@ -155,6 +155,7 @@ lanes:
       - 0.4.0_DS_ClientPlatform~D
       - 0.4.0_DT_ClientPlatform
       - 0.4.2_RD_AdvisorIntelligence
+      - 0.3.4_RD_SecurityScanner
     description: "Any pod agent (all pods)"
 
   SHARED_OPAL_ETL:
