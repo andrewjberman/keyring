@@ -37,11 +37,11 @@ Gate-status legend:
 | P3 | Terraform config vs live AWS resources | `.tf` config + tfstate | actual AWS resources | BUILT (process) | per-pipeline AE/DT |
 | P4 | EventBridge cron resource-maps vs declared | cron resource-map | EventBridge rules in AWS | SCOPED | ADHC_DRIFTD v0.2 (TO-4) |
 | P5 | Portal deployment manifest vs deployed bundle | portal deployment manifest | deployed frontend bundle | SCOPED | ADHC_DRIFTD v0.2 (TO-5) |
-| P6 | `EC2_MANIFEST.json` service set vs running EC2 fleet | `EC2_MANIFEST.json` (18 services) | `aws ec2 describe-instances` | UN-BUILT | AE infra (CloudOps) |
-| P7 | comp-graph node-set vs source files on disk | `.comp-graph/graph.json` (~1940 nodes) | `.py` / `.tsx` files on disk | UN-BUILT | comp-tooling lane |
-| P8 | repo-HEAD vs S3-deployed code, swept across INF chain | `origin/CLOUD` HEAD of each chain script | object in `s3://{pipeline}/code/scripts/` | UN-BUILT | AE pipeline (INF/ETL) |
-| P9 | source-map entry set vs deployed AWS Lambda set | `lambda-source-map.json` (~8 fn entries) | `aws lambda list-functions` | UN-BUILT | AE infra (CloudOps) |
-| P10 | `gold_validate_config.yaml` coverage vs gold scripts | validate-config script entries | `data/*/scripts/gold/*.py` on disk | UN-BUILT | DS / comp-tooling |
+| P6 | `EC2_MANIFEST.json` service set vs running EC2 fleet | `EC2_MANIFEST.json` (18 services) | `aws ec2 describe-instances` | BUILT (ADHC_VALGATE.009 -- `.tools/parity-gates.sh ec2-manifest`, WARN-mode v1) | AE infra (CloudOps) |
+| P7 | comp-graph node-set vs source files on disk | `.comp-graph/graph.json` (~1940 nodes) | `.py` / `.tsx` files on disk | DOCUMENTED-OUT -- NOT a VALGATE TO (CTO~B ruling 2026-05-20); overlaps ADHC_COMPIL_V4.012, reconcile there first | comp-tooling lane / ADHC_COMPIL_V4 (base) |
+| P8 | repo-HEAD vs S3-deployed code, swept across INF chain | `origin/CLOUD` HEAD of each chain script | object in `s3://{pipeline}/code/scripts/` | BUILT (ADHC_VALGATE.009 -- `.tools/parity-gates.sh inf-deploy`, gold+silver tiers; bronze/pull-tier sweep = follow-on candidate) | AE pipeline (INF/ETL) |
+| P9 | source-map entry set vs deployed AWS Lambda set | `lambda-source-map.json` (~163 fn entries, .functions{}+top-level union) | `aws lambda list-functions` | BUILT (ADHC_VALGATE.009 -- `.tools/parity-gates.sh lambda-sourcemap`, WARN-mode v1) | AE infra (CloudOps) |
+| P10 | `gold_validate_config.yaml` coverage vs gold scripts | validate-config script entries | `data/*/scripts/gold/*.py` on disk | DOCUMENTED-OUT -- NOT a VALGATE TO (CTO~B ruling 2026-05-20); comp-tooling / gold-validate scope | DS / comp-tooling |
 
 ---
 
