@@ -102,6 +102,35 @@ once on an RD-agent's file in the shared index -- `git reset HEAD --` the extra,
 re-ran clean). ADHC_DSFLOW.json .007 -> COMPLETE; TO status -> complete. RAVC2 to
 COO + CC CTO.
 
+## 5. 15:00Z chain fire -- FAILED at WS-C (.018 verification BLOCKED)
+
+Today's 15:00Z mdpf chain (run_id mdpf_daily_20260520_150030) FAILED. Stage 1
+WS-C exited rc=1 -> chain aborted (WS-B/D.1/D.2 ok).
+
+Error: `RuntimeError: no Orion model-composition bronze found for 2026-05-20
+(source=s3)` -- build_mdpf_wsc_inflection_feeder.py:209 read_orion_bronze().
+
+Root cause: WS-C reads the Orion model-composition bronze from
+`opal-data-mdpf/mdpf/bronze/orion_model_composition/{bronze_date}/model_*.json`.
+`bronze_date` defaults to `--date`; the chain dispatch passes `--date 2026-05-20`.
+`aws s3 ls` of that prefix shows exactly ONE partition: 2026-05-18. No daily
+producer for the orion_model_composition bronze -- it is an orphaned input,
+2 days stale. (The OTHER WS-C input, INF_E_00 eclipse gold, auto-resolved to
+latest 5/19 fine -- the mdpf-pipeline-v1.0.1 opal-data-inf IAM grant works.)
+
+What WORKED (the .018 design held):
+- mdpf-daily-chain-failed CW alarm -> ALARM state. No silent failure.
+- .018 fail-loud: WS-C fail -> chain aborted, NO partial 49F-only emit. The 5/19
+  bad-Cohort-0 incident did NOT recur. .018 converted a silent-bad-data risk
+  into a loud no-emit fail -- working as designed.
+
+Impact: today's 5/20 MDPF daily refresh did not run; P0-but-CONTAINED (no bad
+data published, alarm fired). This is the .018/.019 seam -- .018 (chain
+integration) is structurally correct but exposes WS-C's unmet upstream. Escalated
+to COO~B + DS Base (0.4.0_DS_ClientPlatform) with 3 questions (daily producer for
+the orion_model_composition bronze / stale-consume acceptable / does .019 resolve
+it). .018 RAVC2 HELD -- cannot close on a failed fire.
+
 ## Compiler Tools
 
 | Tool | Use | Result |
@@ -115,16 +144,32 @@ COO + CC CTO.
 |------|--------|
 | 5/19 log of record | WRITTEN (logs/2026-05-19/session_reconstructed_*) |
 | MDPF_ASSETS.021 IAM fix | SHIPPED -- mdpf-pipeline-v1.0.1 / 9944deb75; SSM-doc invocation verification PENDING |
-| MDPF_ASSETS.018 | Phase 1 done+deployed; COO~B CONCURRED close-on-Phase-1 (Phase 2/AC3 N/A); 15:00Z fire verification PENDING |
-| ADHC_DSFLOW.007 | COMPLETE -- `74c2cffee`; 4-case matrix PASS; RAVC2 sent COO + CC CTO |
+| MDPF_ASSETS.018 | Phase 1 done+deployed; 15:00Z fire FAILED at WS-C (orion_model_composition bronze missing) -- RAVC2 BLOCKED; escalated COO~B + DS Base |
+| ADHC_DSFLOW.007 | CLOSED -- `74c2cffee`; COO~B RAVC2-accepted + 3-step project closure executed |
+| MDPF_ASSETS.021 | SSM doc VERIFIED working post-IAM-fix (cmd edf893cb, Status=Success rc=0, dry-run; the 5/19 opal-data-inf AccessDenied is fixed). RAVC2 sent COO~B -- AC1/3/4/5/6 met; AC2 (DS Base workstation invocation) pending cross-agent |
 | TRSB_LEDGER.009 | GO received; queued |
+
+## 6. MDPF_ASSETS.021 -- SSM doc verification (post-IAM-fix)
+
+Started the (stopped) runner i-02448edb624a7a7cf, waited SSM-online, invoked
+mdpf-legacy-emit-on-demand with Upload=false (dry-run). Status=Success, rc=0
+(command edf893cb-5a45-48e8-87cf-1fa35bac566d). The run log confirms the fix:
+"Inflection daily Eclipse dates available: 4 (2026-05-15 -> 2026-05-19)" -- the
+list_inf_dates() opal-data-inf pagination that AccessDenied'd 4x on 5/19 now
+succeeds. Telemetry legacy_emit_20260520_150828.json: status=complete,
+exit_code=0, all schema fields present (AC3). Ran dry-run not --upload on
+purpose -- build_legacy_compat_emit.py is DS Base's sole-SoT producer for the
+partner-facing non_model_assets.json; a production write on her behalf is her
+methodology call (flagged to her as the available fallback for today's stale
+file given the chain failure). Stopped the runner (designed state). AC2 (DS
+Base workstation invocation) is the remaining cross-agent step.
 
 ## Next Steps
 
-1. Monitor today's 15:00Z mdpf chain fire -- verify .018 Phase 1 (WS-C in Stage 1
-   populates Inflection partition; Cohort 0 ~$91M) + the IAM fix's WS-C path.
-2. Verify .021 SSM-doc invocation now succeeds (post-IAM-fix); telemetry artifact.
-3. RAVC2 .021 to COO~B + .018 to COO~B (concurrence already given; cite the
-   list-rules evidence + 15:00Z verification per their two conditions).
-4. Then SXIN_PRODCT.001 -> ADVI_INFALM.001 -> TRSB_LEDGER.009. (ADHC_DSFLOW.007
-   done out-of-order during the chain wait -- only ready item.)
+1. [DS Base + COO~B] WS-C upstream: orion_model_composition bronze has no daily
+   producer (only 5/18 exists) -- .018 RAVC2 held until resolved.
+2. [DS Base] .021 AC2: attach MDPFLegacyEmitInvoker policy to workstation role +
+   invoke once to confirm.
+3. SXIN_PRODCT.001 (foundation .021 SSM doc now verified) -> ADVI_INFALM.001
+   (needs orion-gold-dispatch.sh metric-emit, not pure-TF -- scope flagged) ->
+   TRSB_LEDGER.009 -> ADHC_HALTGT .000-.004.
