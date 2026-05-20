@@ -92,4 +92,29 @@ None of these are blockers — they are v0.3 implementation tasks. The commoditi
 3. For each migrated ticker, the v0.3 acceptance test is this fidelity check: pull YCharts for the *derived* symbol, compare to the portal's current value, require the gap within an as-of-adjusted tolerance. The check VERIFIES a mapping; it does not DERIVE one.
 4. Confirm with YCharts (alongside the API quote) that commodity + crypto symbols — and the index families generally — are in the API tier (the `pycharts` SDK shows no index client; §master-brief §6).
 
-The map CSV (`mdsrc-ycharts-ticker-map-20260520.csv`) is the machine-readable companion: `entity_type, portal_name, ycharts_symbol, ycharts_label, portal_1Y_pct, ycharts_1Y_pct, gap_pt, fidelity, source`.
+The map CSV (`mdsrc-ycharts-ticker-map-20260520.csv`) is the machine-readable companion — **71 rows** (the full portal universe): `entity_type, portal_name, bbg_ticker, ycharts_symbol_draft, ycharts_label_draft, portal_1Y_pct, ycharts_1Y_pct, gap_pt, fidelity`.
+
+---
+
+## 6. UNLOCK — the authoritative source-side ticker codes were found (no need to ask Yang)
+
+§3.1 / §5 said the variant mapping must come from "the yang-pipeline's source-side ticker definitions" and treated obtaining them as an open v0.3 dependency requiring Yang / an AE 0.5.0 consult. **They were already in S3.** Yang's `data_pkl` (`s3://opal-data-portal-v2/benchmarks/data_20260519_v1.pkl`) — the raw Bloomberg export the whole portal market-data layer is built from — carries a **`bbg_ticker` column**. Its `return_daily` DataFrame is `[date, index_name, bbg_ticker, price, return, price_return]`.
+
+**Every one of the 71 portal entities now has its exact Bloomberg ticker** (in the rebuilt CSV). Examples:
+
+| Portal name | Bloomberg ticker | What it definitively is |
+|---|---|---|
+| MSCI South Korea | `MXKR Index` | the standard MSCI Korea index (resolves the §3 ambiguity — it is NOT a "Large Cap" variant; `^MSKRLCAP` was a wrong candidate) |
+| Communication Services | `S5COMM Index` | S&P 500 Communication Services GICS sector index |
+| Bloomberg Aggregate | `LBUSTRUU Index` | Bloomberg US Aggregate, Total Return, Unhedged USD (`TRUU` suffix) |
+| S&P GSCI | `SPGSCI Index` | S&P GSCI (the headline index) |
+| Gold / Bitcoin | `XAU BGN Curncy` / `XBTUSD BGN Curncy` | Bloomberg spot quotes |
+| Crude Oil WTI | `CL1 Comdty` | front-month WTI future |
+
+**This converts the project's #1 risk from open to tractable.** The v0.3 mapping task is no longer "guess which MSCI/commodity variant the portal tracks" — it is the **deterministic** task "map a known Bloomberg ticker to its YCharts equivalent." Each Bloomberg ticker identifies exactly one index; YCharts' crosswalk for Bloomberg tickers (or a per-ticker lookup) closes it, and the §2 fidelity check verifies.
+
+**Two further wins from the same file:**
+- The `data_pkl` `return_daily` has **both `return` and `price_return`** columns — the total-return-vs-price-return basis question (§3 / master brief §5) is resolved at the source: the pipeline carries both; v0.3 simply pins which column the portal heatmap consumes and queries the matching YCharts metric.
+- `return_monthly` carries the valuation columns (`dy, eps_ltm, eps_ntm, ev_sales, pb, pe_ltm, pe_ntm, pfcf, lt_growth`) — the Valuation page's exact source fields, also Bloomberg-ticker-keyed.
+
+**Revised §5 recommendation #1:** the v0.3 mapping is built from the `bbg_ticker` column of `data_pkl` (committed here as the CSV's `bbg_ticker` field) crosswalked to YCharts — a bounded, deterministic, fidelity-verifiable task. The "ask Yang" dependency is removed.
