@@ -3772,3 +3772,64 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-05-19 | 0.5.0_AE_OpalETL~B | MDLP_VOLAUD.003 | comp-routes | comp-routes trace yang-model-portfolio-benchmarks | PASS |
 | 2026-05-19 | 0.3.0_DT_TradingOperations | portfolio-management-v2.1.1-openpyxl-layer-fix | comp-routes | comp-routes trace trade-submission-handler | NO MATCH (function-name resolution failed; pivoted to grep + AWS lookup) |
 | 2026-05-19 | 0.3.0_DT_TradingOperations | portfolio-management-v2.1.1-openpyxl-layer-fix | comp-platinum | comp-platinum page PortfolioManagement | PASS (PortfolioManagement.tsx has no fetches; routed to ExportModal.tsx via grep) |
+| 2026-05-19 | 0.5.0_AE_OpalETL~B | MDLP_VOLAUD.003 | comp-blast | comp-blast yang-generate-benchmark-returns | PASS |
+| 2026-05-20 | 0.3.4_RD_SecurityScanner | (no-TO) | comp-transform | comp-transform schema-check ScannerHeaderPanel | PASS |
+| 2026-05-20 | 0.3.4_RD_SecurityScanner | (no-TO) | comp-cache | comp-cache collisions | PASS |
+| 2026-05-20 | 0.3.4_RD_SecurityScanner | (no-TO) | comp-transform | comp-transform schema-check ScannerHeaderPanel | PASS |
+| 2026-05-20 | 0.3.0_DE_TradingOperations | SSCN_DIVDEF.008.de-rd-presets-dropdown | comp-transform | comp-transform schema-check ScannerHeaderPanel | PASS |
+| 2026-05-20 | 0.3.4_RD_SecurityScanner | SSCN_DIVDEF.008_presets_dropdown | comp-transform | comp-transform schema-check ScannerHeaderPanel | PASS |
+| 2026-05-20 | 0.3.4_RD_SecurityScanner | SSCN_DIVDEF.008_presets_dropdown | comp-transform | comp-transform schema-check ScannerHeaderPanel | PASS |
+| 2026-05-20 | 0.3.4_RD_SecurityScanner | SSCN_DIVDEF.008_presets_dropdown | comp-cache | comp-cache collisions | PASS |
+| 2026-05-20 | 0.3.4_RD_SecurityScanner | SSCN_DIVDEF.008_presets_dropdown | comp-transform | comp-transform schema-check ScannerHeaderPanel | PASS |
+| 2026-05-20 | 0.7.0_AE_CloudOps | (no-TO) | comp-transform | comp-transform schema-check TradeSubmission | PASS |
+| 2026-05-20 | 0.7.0_AE_CloudOps | (no-TO) | comp-cache | comp-cache collisions | PASS |
+| 2026-05-20 | 0.7.0_AE_CloudOps | (no-TO) | comp-pipescript | comp-pipescript io build_legacy_compat_emit | FAIL |
+| 2026-05-20 | 0.7.0_AE_CloudOps | (no-TO) | comp-blast | comp-blast build_legacy_compat_emit | PASS |
+| 2026-05-20 | 0.7.0_AE_CloudOps | (no-TO) | comp-transform | comp-transform schema-check TradeSubmission | PASS |
+| 2026-05-20 | 0.4.0_DS_ClientPlatform | MDPF_ASSETS.019 | comp-build | comp-build | PASS |
+| 2026-05-20 | 0.4.0_DS_ClientPlatform | MDPF_ASSETS.019 | comp-blast | comp-blast build_legacy_compat_emit | PASS |
+| 2026-05-20 | 0.3.0_DE_TradingOperations | SSCN_DIVDEF.010.de-rd-factor-bank-group-ordering | comp-transform | comp-transform schema-check FactorBankTab | PASS |
+| 2026-05-20 | 0.3.0_DE_TradingOperations | SSCN_DIVDEF.010.de-rd-factor-bank-group-ordering | comp-transform | comp-transform schema-check TradeSubmission | PASS |
+| 2026-05-20 | 0.3.0_DE_TradingOperations | SSCN_DIVDEF.010.de-rd-factor-bank-group-ordering | comp-transform | comp-transform schema-check TradeSubmission | PASS |
+| 2026-05-20 | 0.3.4_RD_SecurityScanner | SSCN_DIVDEF.010_factor_bank_group_relabel | comp-transform | comp-transform schema-check FactorBankTab | PASS |
+| 2026-05-20 | 0.3.4_RD_SecurityScanner | SSCN_DIVDEF.010_factor_bank_group_relabel | comp-iam | comp-iam service opal-security-scanner-processor | PASS |
+| 2026-05-20 | 0.4.0_DS_ClientPlatform | MDPF_ASSETS.024 | comp-transform | comp-transform schema-check FactorBankTab | PASS |
+| 2026-05-20 | 0.4.2_RD_AdvisorIntelligence | (no-TO) | comp-pipescript | comp-pipescript io data/mdpf/scripts/gold/build_mdpf_wse_49f_non_model_aua.py | FAIL |
+| 2026-05-20 | 0.3.0_DT_TradingOperations | SSCN_DIVDEF.006.dt-portal-dev-to-prod-push | comp-routes | comp-routes trace getUniverseScanner | PASS |
+| 2026-05-20 | 0.3.0_DT_TradingOperations | SSCN_DIVDEF.006.dt-portal-dev-to-prod-push | comp-cache | comp-cache collisions | PASS |
+| 2026-05-20 | 0.4.0_DS_ClientPlatform | MDPF_ASSETS.025 | comp-pipescript | comp-pipescript io data/mdpf/scripts/gold/build_mdpf_wse_49f_non_model_aua.py | FAIL |
+| 2026-05-20 | 0.4.0_DS_ClientPlatform | MDPF_ASSETS.025 | comp-pipescript | comp-pipescript io data/mdpf/scripts/gold/mdpf_aggregate_aua.py | FAIL |
+| 2026-05-20 | 0.4.0_DS_ClientPlatform~B | MDPF_ASSETS.024 | comp-pipescript | comp-pipescript io data/mdpf/scripts/gold/mdpf_aggregate_aua.py | FAIL |
+| 2026-05-20 | 0.4.0_DS_ClientPlatform~B | MDPF_ASSETS.024 | comp-blast | comp-blast append_non_model_today | PASS |
+| 2026-05-20 | 0.4.0_DS_ClientPlatform~B | MDPF_ASSETS.024 | comp-iam | comp-iam service opal-smartx-ingestion-pipeline | PASS |
+| 2026-05-20 | 0.4.0_DS_ClientPlatform~B | MDPF_ASSETS.024 | comp-pipescript | comp-pipescript deployed data/mdpf/scripts/gold/mdpf_aggregate_aua.py | PASS |
+| 2026-05-20 | 0.4.0_DS_ClientPlatform~B | MDPF_ASSETS.024 | comp-pipescript | comp-pipescript deployed data/mdpf/scripts/gold/build_mdpf_wse_49f_non_model_aua.py | PASS |
+| 2026-05-20 | 0.4.0_DS_ClientPlatform~B | MDPF_ASSETS.024 | comp-validate | comp-validate mdpf_aggregate_aua --artifact /tmp/mdpf_agg_20260520.json | FAIL |
+| 2026-05-20 | 0.4.0_DS_ClientPlatform~B | MDPF_ASSETS.024 | comp-validate | comp-validate build_mdpf_wse_49f_non_model_aua --artifact /tmp/mdpf_agg_20260520.json | FAIL |
+| 2026-05-20 | 0.4.0_DS_ClientPlatform | ADVI_INFGRO.009 | comp-pipescript | comp-pipescript io INF_C_02.client_performance | PASS |
+| 2026-05-20 | 0.4.0_DS_ClientPlatform~B | MDPF_ASSETS.016 | comp-pipescript | comp-pipescript deployed INF_C_02.client_performance | PASS |
+| 2026-05-20 | 0.4.0_DS_ClientPlatform~B | MDPF_ASSETS.016 | comp-pipescript | comp-pipescript postdeps INF_C_02.client_performance | PASS |
+| 2026-05-20 | 0.4.0_DS_ClientPlatform~B | MDPF_ASSETS.016 | comp-pipescript | comp-pipescript deployed smartx-pipeline | PASS |
+| 2026-05-20 | 0.4.0_DS_ClientPlatform~B | MDPF_ASSETS.016 | comp-iam | comp-iam gaps | PASS |
+| 2026-05-20 | 0.5.0_AE_OpalETL~B | ADHC_HALTGT.000 | comp-blast | comp-blast mdpf_aggregate_aua | PASS |
+| 2026-05-20 | 0.5.0_AE_OpalETL~B | ADHC_HALTGT.000 | comp-iam | comp-iam gaps | PASS |
+| 2026-05-20 | 0.3.0_DT_TradingOperations | SSCN_DIVDEF.006.dt-portal-dev-to-prod-push | comp-routes | comp-routes trace getUniverseScanner | PASS |
+| 2026-05-20 | 0.3.0_DT_TradingOperations | SSCN_DIVDEF.006.dt-portal-dev-to-prod-push | comp-cache | comp-cache collisions | PASS |
+| 2026-05-20 | 0.4.0_DS_ClientPlatform~B | ADHC_VALGATE.001 | comp-pipescript | comp-pipescript io convert_transactions_to_silver | PASS |
+| 2026-05-20 | 0.1.0_DS_MarketIntelligence | ADHC_CRYPCT.001.ds-comprehensive-crypto-removal-news-pipeline | comp-blast | comp-blast _is_blocked_source_dominated | PASS |
+| 2026-05-20 | 1.0.0_SA_CTO | YCHARTS_PRD | comp-build | comp-build | PASS |
+| 2026-05-20 | 1.0.0_SA_CTO | YCHARTS_PRD | comp-blast | comp-blast yang-generate-valuation | PASS |
+| 2026-05-20 | 1.0.0_SA_CTO | YCHARTS_PRD | comp-blast | comp-blast opal-market-overview-tiered-generator | PASS |
+| 2026-05-20 | 1.0.0_SA_CTO | YCHARTS_PRD | comp-trace | comp-trace yang-pipeline --direction both | PASS |
+| 2026-05-20 | 1.0.0_SA_CTO | YCHARTS_PRD | comp-routes | comp-routes trace valuation_data | PASS |
+| 2026-05-20 | 1.0.0_SA_CTO | YCHARTS_PRD | comp-routes | comp-routes behaviors | PASS |
+| 2026-05-20 | 1.0.0_SA_CTO | YCHARTS_PRD | comp-platinum | comp-platinum page Valuation | PASS |
+| 2026-05-20 | 0.2.0_DS_PortfolioAnalytics | YALP_MDSRC.002.ds-ws2-portfolio-analytics-domain-audit | comp-routes | comp-routes behaviors | PASS |
+| 2026-05-20 | 0.2.0_DS_PortfolioAnalytics | YALP_MDSRC.002.ds-ws2-portfolio-analytics-domain-audit | comp-routes | comp-routes behaviors | PASS |
+| 2026-05-20 | 0.2.0_DS_PortfolioAnalytics | YALP_MDSRC.002.ds-ws2-portfolio-analytics-domain-audit | comp-routes | comp-routes behaviors | PASS |
+| 2026-05-20 | 0.2.0_DS_PortfolioAnalytics | YALP_MDSRC.002.ds-ws2-portfolio-analytics-domain-audit | comp-pipescript | comp-pipescript io INF_C_02.client_performance | PASS |
+| 2026-05-20 | 0.2.0_DS_PortfolioAnalytics | YALP_MDSRC.002.ds-ws2-portfolio-analytics-domain-audit | comp-iam | comp-iam gaps | PASS |
+| 2026-05-20 | 0.2.0_DS_PortfolioAnalytics | YALP_MDSRC.002.ds-ws2-portfolio-analytics-domain-audit | comp-iam | comp-iam service inf-gold-layer-runner | PASS |
+| 2026-05-20 | 0.2.0_DS_PortfolioAnalytics | YALP_MDSRC.002.ds-ws2-portfolio-analytics-domain-audit | comp-iam | comp-iam service orion-gold-dispatch | PASS |
+| 2026-05-20 | 0.2.0_DS_PortfolioAnalytics | YALP_MDSRC.002.ds-ws2-portfolio-analytics-domain-audit | comp-iam | comp-iam gaps | PASS |
+| 2026-05-20 | 0.2.0_DS_PortfolioAnalytics | YALP_MDSRC.002.ds-ws2-portfolio-analytics-domain-audit | comp-pipescript | comp-pipescript deployed orion-gold-dispatch.sh | PASS |
