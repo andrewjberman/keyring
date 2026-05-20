@@ -66,3 +66,13 @@ Not committed: `.runtmp/ycharts_live_session_test.py` -- throwaway test runner p
 2. [WS-3 0.4.0_DS_ClientPlatform] consume the /model_portfolios/* 403 finding for the Q4 YCharts-vs-SmartX adjudication.
 3. [WS-5 / CTO] fold the technical-PASS into the Q1 evidence -- official API vs scrape; F1 single-session stands.
 4. [DS 0.1.0_DS_MarketIntelligence] available for v0.3 / WS-5 follow-ups on GO.
+
+## Correction Addendum (post-retry, 2026-05-20 ~22:15Z)
+
+Andrew flagged the /model_portfolios/* 403 could have been a session he disturbed, and supplied a fresh authenticated capture (ycharts.com3.har -- a clean re-login). Re-probed /model_portfolios/* with the fresh-session cookie:
+- /model_portfolios/ -> HTTP 200, 54 KB, 25 model-portfolio items (benchmark/construction fields)
+- /model_portfolios/collection_status -> HTTP 200, 138 tracked portfolios
+- /model_portfolios/transition_analysis/list -> HTTP 200 (also 200 in ycharts.com3.har itself)
+- /indices/table_data control -> HTTP 200
+
+RESULT FLIPPED: the original 403 was a stale/disturbed-session artifact of the ycharts.com2 cookie, NOT a tier/entitlement gate. Verdict upgraded PARTIAL-PASS (3/4) -> PASS (4/4). Brief corrected (commit follows): §1 verdict, §4 reversed (entitlement-gate -> stale-session artifact), §8 WS-3 handoff reversed (mark-against-YCharts -> viable candidate source), §9 correction trail added. WS-3 + COO + CTO re-notified. Per reversal-requires-new-empirical discipline, the correction rests on the fresh-HAR re-probe, not a re-read. New WS-4 input: a disturbed YCharts session can fail PARTIALLY (some endpoints 403, others 200) -- the freshness gate must not assume all-or-nothing.
