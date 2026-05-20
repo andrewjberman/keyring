@@ -154,8 +154,22 @@ lanes:
       - 0.4.0_DS_ClientPlatform~C
       - 0.4.0_DS_ClientPlatform~D
       - 0.4.0_DT_ClientPlatform
-      - 0.4.2_RD_AdvisorIntelligence
+      # tier3_junior RD leaf agents -- all pods (closes recurring own-folder commit gap; CTO 2026-05-20)
+      - 0.1.1_RD_MarketPerformance
+      - 0.1.2_RD_CausalityEngine
+      - 0.1.3_RD_CapitalMarketAssumptions
+      - 0.2.1_RD_Positioning
+      - 0.2.2_RD_Attribution
+      - 0.2.3_RD_FactorTilts
+      - 0.2.4_RD_Valuation
+      - 0.2.5_RD_Macroeconomics
+      - 0.2.6_RD_Correlation
+      - 0.3.1_RD_PortfolioManagement
+      - 0.3.2_RD_TradeSubmission
+      - 0.3.3_RD_DataRefresh
       - 0.3.4_RD_SecurityScanner
+      - 0.4.1_RD_ModelPortfolios
+      - 0.4.2_RD_AdvisorIntelligence
     description: "Any pod agent (all pods)"
 
   SHARED_OPAL_ETL:
@@ -285,6 +299,21 @@ lanes:
       - 0.4.0_DS_ClientPlatform~C
       - 0.4.0_DS_ClientPlatform~D
       - 0.4.0_DT_ClientPlatform
+      # tier3_junior RD leaf agents -- all pods (closes recurring own-folder commit gap; CTO 2026-05-20)
+      - 0.1.1_RD_MarketPerformance
+      - 0.1.2_RD_CausalityEngine
+      - 0.1.3_RD_CapitalMarketAssumptions
+      - 0.2.1_RD_Positioning
+      - 0.2.2_RD_Attribution
+      - 0.2.3_RD_FactorTilts
+      - 0.2.4_RD_Valuation
+      - 0.2.5_RD_Macroeconomics
+      - 0.2.6_RD_Correlation
+      - 0.3.1_RD_PortfolioManagement
+      - 0.3.2_RD_TradeSubmission
+      - 0.3.3_RD_DataRefresh
+      - 0.3.4_RD_SecurityScanner
+      - 0.4.1_RD_ModelPortfolios
       - 0.4.2_RD_AdvisorIntelligence
       - 1.0.0_SA_CTO
       - 2.0.0_SA_COO
