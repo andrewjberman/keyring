@@ -87,6 +87,25 @@ The 2 SecurityScanner files flagged earlier as uncommitted WIP (`FactorBankTab.t
 `categoryOrder.ts`) were committed AS `7ef0f4a6` = SSCN_DIVDEF.010 — confirmed SSCN
 scope, not foreign. portal/DEV working tree now clean.
 
+## Work Item 6 — final verification on the post-.009 complete bundle
+
+`SSCN_DIVDEF.009` closed (security-scanner-v1.1.3; Lambda re-fired; `latest/factor_metadata.json`
+now emits the corrected 18 master groups, live on the PROD account). COO requested a
+final confirm before handing Andrew the green light.
+
+| Check | Result |
+|-------|--------|
+| Served SHA includes 7ef0f4a6 (.010) | YES — :5175 serving 7ef0f4a6, no refresh needed |
+| Factor Bank Group dropdown (.009 proof) | 18 master groups: size/efficiency/growth/management/solvency/profitability/quality/value/analyst/governance/crowding/insider/short/beta/volatility/liquidity/momentum/technical. NO "systematic"/"yield" sentinels. Real names confirmed. |
+| SSCN smoke (final state) | 21/21 PASS, 0 fail, 0 post-login console errors |
+
+Factor Bank check script: `portal/.runtmp/factorbank_check.mjs` (ad-hoc, gitignored);
+screenshot `portal/.runtmp/factorbank_groups.png`. The 4x "401" seen in a full-session
+console capture are the pre-existing CDP-bootstrap-401 auth race (TO-1 AC8 caveat) —
+auth-bootstrap, not a page error; the runner's per-scenario post-login AC8 = 0 confirms.
+
+RAVC2 sent to COO 2.0.0_SA_COO — the green light to hand Andrew the smoke URL.
+
 ## Deployment Tags
 
 | Pipeline | Tag | Commit | Note |
@@ -152,9 +171,10 @@ path has an unavoidable race window on the shared multi-agent CLOUD branch.
 
 - portal origin/DEV synced to 7ef0f4a6; CLOUD gitlink synced (a756bde3a); CLOUD pushed.
 - :5175 dev server UP, serving portal DEV @ 7ef0f4a6 — SSCN smoke 21/21 PASS, 0 errors.
-- SSCN_DIVDEF .002/.003/.004/.005/.007/.008/.010 closed. TO-006 (PROD push) remains.
-- `SSCN_DIVDEF.006` STAGED `dispatch_held=true` — gate: Andrew DEV smoke approval
-  AND SSCN_DIVDEF.009 close (AE 0.5.0 Phase 3, registry/Lambda data side).
+- All SSCN_DIVDEF implementation TOs closed (.001-.005, .007-.010). TO-006 (PROD push) remains.
+- `SSCN_DIVDEF.006` STAGED `dispatch_held=true` — sole remaining gate: Andrew DEV smoke
+  approval (.009 closed — security-scanner-v1.1.3, corrected 18 groups verified live).
+- Factor Bank renders the .009-corrected 18 master groups; SSCN smoke 21/21 on final state.
 - TRSB_LEDGER .008b + .014 portal commits on the served build — combined-verify surface.
 
 ## Next Steps
