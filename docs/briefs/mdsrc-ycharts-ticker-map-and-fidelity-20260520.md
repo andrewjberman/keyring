@@ -1,0 +1,85 @@
+# YALP_MDSRC — YCharts Ticker Map + Universe-Wide Fidelity (v0.3-ready artifact)
+
+**Date:** 2026-05-20 (overnight session)
+**Author:** 0.1.0_DS_MarketIntelligence
+**Companion to:** `docs/briefs/mdsrc-ycharts-master-reconnaissance-20260520.md`
+**Purpose:** the portal-universe -> YCharts-symbol mapping table + a universe-wide data-fidelity check. Directly feeds the v0.3 migration implementation.
+**Machine-readable map:** `docs/briefs/mdsrc-ycharts-ticker-map-20260520.csv`
+
+---
+
+## 1. Summary
+
+The portal's market-data backbone is the DynamoDB `opal-portal-market-data` table — **71 entities** (53 INDEX, 11 BOND_INDEX, 7 COMMODITY). This artifact maps each to its YCharts symbol and validates the data against a live YCharts pull.
+
+| | Count | |
+|---|---|---|
+| Mapped to YCharts symbol | **53 / 71** | full map in the CSV |
+| — of which **high-fidelity** (1Y gap <= 6 pt vs portal) | **44 / 53 (83%)** | YCharts is a faithful substitute |
+| — of which **variant-review needed** (gap 6–34 pt) | **9 / 53** | §3 — the variant-pinning problem, in action |
+| Unmapped residue | **18 / 71** | §4 — needs manual mapping (commodities, crypto, ambiguous Bloomberg bonds) |
+
+**Bottom line:** for 44 of 53 mapped tickers — including S&P 500, every Russell index, every GICS sector, MSCI EAFE/EM/USA, and the core Bloomberg bond indices — YCharts 1Y returns match the portal's current Bloomberg-pkl values within ~1–3 points (consistent with a 2-day as-of gap). **A YCharts-sourced market-data feed is data-equivalent for the bulk of the portal universe.** The 9 wide cases and the 18-ticker residue are the v0.3 implementation work — and they are exactly the variant-pinning risk the master brief flagged, now demonstrated concretely.
+
+---
+
+## 2. High-fidelity confirmation (44 tickers)
+
+Across the 44 CLOSE tickers the 1Y gap is overwhelmingly 0–3 points, portal consistently a touch higher (consistent with the portal snapshot being 2 days stale vs the live YCharts pull). Sample:
+
+| Portal name | YCharts | Portal 1Y | YCharts 1Y | Gap |
+|---|---|---|---|---|
+| S&P 500 | `^SPX` | +25.7% | +24.8% | 0.9 |
+| Russell 2000 | `^RUT` | +33.1% | +32.2% | 0.9 |
+| MSCI Emerging Markets | `^MSEM` | +45.4% | +44.0% | 1.4 |
+| Information Technology (GICS) | `^SPXIFTS` | +44.6% | +43.6% | 1.0 |
+| Bloomberg US Aggregate | `^BBUSATR` | +4.4% | +4.1% | 0.3 |
+| MSCI EAFE | `^MSEAFE` | +22.4% | +21.2% | 1.3 |
+
+This is the universe-scale confirmation of the master brief's Phase-C finding (which sampled 5 indices). It holds broadly.
+
+---
+
+## 3. Variant-review cases (9 tickers) — the variant-pinning problem, demonstrated
+
+These 9 tickers diverge 6–34 pt. The mapping auto-picked *a* YCharts symbol of the right name family, but not necessarily the exact variant the portal tracks. This is the master brief's flagged #1 migration risk — here it is, concrete:
+
+| Portal name | Auto-mapped | Portal 1Y | YCharts 1Y | Gap | Likely cause |
+|---|---|---|---|---|---|
+| MSCI South Korea | `^MSKR` | +257.6% | +223.9% | 33.7 | **Confirmed variant mismatch** — portal tracks `^MSKRLCAP` (MSCI Korea Large Cap, +255.95% — near-exact). Re-map to `^MSKRLCAP`. |
+| Communication Services | `^SPXCMSVS` | +68.6% | +43.6% | 25.0 | Probable mis-mapped GICS-sector variant — needs the correct S&P 500 Communication Services index symbol. |
+| S&P GSCI | `^GNX` | +43.6% | +63.5% | 19.9 | Commodity-index return-basis variant (GSCI Spot vs Excess Return vs Total Return are distinct series). |
+| MSCI Japan | `^MSJP` | +43.4% | +31.8% | 11.7 | TR-vs-PR + standard-vs-variant; currency effects on a single-country index. |
+| MSCI India | `^MSIN` | -1.4% | -12.6% | 11.2 | As above. |
+| MSCI Australia | `^MSAU` | +5.6% | +16.4% | 10.8 | As above. |
+| MSCI Taiwan | `^MSTW` | +107.2% | +97.2% | 10.1 | TR/PR + variant; Taiwan very volatile. |
+| MSCI South Africa | `^MSZA` | +33.8% | +42.2% | 8.4 | As above. |
+| MSCI Switzerland | `^MSCH` | +10.9% | +17.4% | 6.5 | As above. |
+
+**Pattern:** the wide cases cluster on (a) single-country MSCI indices — where total-return vs price-return basis + index-variant selection (Standard / IMI / Large Cap / capped) compound, and (b) commodity/sector indices with multiple return-basis variants. **Implication for v0.3:** the ticker-mapping table must be human-reviewed per ticker, pinning the exact variant AND the return basis (price vs total return) to match what the portal currently displays. An automated name-match silently mis-maps ~17% of the universe by 6–34 points.
+
+---
+
+## 4. Unmapped residue (18 tickers) — v0.3 manual mapping
+
+Not cleanly auto-mappable from the YCharts index families captured this session:
+
+| Type | Tickers | Why unmapped / path |
+|---|---|---|
+| COMMODITY (6) | Gold, Silver, Copper, Crude Oil WTI, Crude Oil Brent, Natural Gas | YCharts commodities are not in an `indexFamily`; they sit under a different symbol scheme (commodity spot / futures). Needs a YCharts commodity-symbol lookup. |
+| INDEX — crypto (2) | Bitcoin, Ethereum | YCharts crypto symbols — separate asset class. |
+| BOND_INDEX (8) | Bloomberg 0-1 Yr Treasury, 20+ Yr Treasury, 1-3 Yr Gov/Credit, 1-5 Yr Gov/Credit, 0-5 Yr High Yield, 0-5 Yr TIPS, Bloomberg TIPS, Bloomberg High Yield | The 506-member Bloomberg family carries dozens of currency/hedged/maturity variants; the portal's short names need pinning to the exact USD-unhedged US variant. Tractable, but per-name judgment — exactly the variant-review discipline of §3. |
+| INDEX (2) | MSCI ACWI ex US, MSCI USA Size | "MSCI ACWI ex US" -> "MSCI ACWI Ex USA" exists; "MSCI USA Size" has no clean YCharts equivalent of that exact name — needs vendor confirmation. |
+
+None of these are blockers — they are v0.3 implementation tasks. The commodities + crypto (8 tickers) are the genuinely different-structure cases; the 10 bond/MSCI ones are name-variant pinning.
+
+---
+
+## 5. Recommendation for v0.3
+
+1. The §3 + §4 work — a fully human-reviewed 71-row mapping table pinning exact YCharts symbol + return basis per portal ticker — is a prerequisite v0.3 task. Budget it explicitly; do not auto-generate it. The CSV here is the **starting draft** (53 rows, 44 verified-close), not the final.
+2. Re-map MSCI South Korea `^MSKR` -> `^MSKRLCAP` (verified).
+3. For each migrated ticker, the v0.3 acceptance test should be exactly this fidelity check: pull YCharts, compare to the portal's current value, require the gap within an as-of-adjusted tolerance. The check is cheap and catches mis-mappings before they ship.
+4. Confirm with YCharts (alongside the API quote) that commodity + crypto symbols are in the API tier.
+
+The map CSV (`mdsrc-ycharts-ticker-map-20260520.csv`) is the machine-readable companion: `entity_type, portal_name, ycharts_symbol, ycharts_label, portal_1Y_pct, ycharts_1Y_pct, gap_pt, fidelity, source`.
