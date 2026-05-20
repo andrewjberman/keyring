@@ -46,17 +46,27 @@ These 9 tickers diverge 6–34 pt. The mapping auto-picked *a* YCharts symbol of
 
 | Portal name | Auto-mapped | Portal 1Y | YCharts 1Y | Gap | Likely cause |
 |---|---|---|---|---|---|
-| MSCI South Korea | `^MSKR` | +257.6% | +223.9% | 33.7 | **Confirmed variant mismatch** — portal tracks `^MSKRLCAP` (MSCI Korea Large Cap, +255.95% — near-exact). Re-map to `^MSKRLCAP`. |
-| Communication Services | `^SPXCMSVS` | +68.6% | +43.6% | 25.0 | Probable mis-mapped GICS-sector variant — needs the correct S&P 500 Communication Services index symbol. |
+| Portal name | Auto-mapped | Portal 1Y | YCharts 1Y | Gap | Note |
+|---|---|---|---|---|---|
+| MSCI South Korea | `^MSKR` | +257.6% | +223.9% | 33.7 | The +257.6% portal value is *consistent with* a large-cap-tilted Korea variant — `^MSKRLCAP` (MSCI Korea Large Cap) reads +255.95% — vs plain MSCI Korea `^MSKR` at +223.9%. **Candidate, NOT confirmed** — see §3.1. |
+| Communication Services | `^SPXCMSVS` | +68.6% | +43.6% | 25.0 | Probable mis-mapped GICS-sector variant. |
 | S&P GSCI | `^GNX` | +43.6% | +63.5% | 19.9 | Commodity-index return-basis variant (GSCI Spot vs Excess Return vs Total Return are distinct series). |
-| MSCI Japan | `^MSJP` | +43.4% | +31.8% | 11.7 | TR-vs-PR + standard-vs-variant; currency effects on a single-country index. |
+| MSCI Japan | `^MSJP` | +43.4% | +31.8% | 11.7 | Name-matched but variant-divergent — the portal "MSCI Japan" is not YCharts' plain `^MSJP`. |
 | MSCI India | `^MSIN` | -1.4% | -12.6% | 11.2 | As above. |
 | MSCI Australia | `^MSAU` | +5.6% | +16.4% | 10.8 | As above. |
-| MSCI Taiwan | `^MSTW` | +107.2% | +97.2% | 10.1 | TR/PR + variant; Taiwan very volatile. |
+| MSCI Taiwan | `^MSTW` | +107.2% | +97.2% | 10.1 | As above; Taiwan very volatile. |
 | MSCI South Africa | `^MSZA` | +33.8% | +42.2% | 8.4 | As above. |
 | MSCI Switzerland | `^MSCH` | +10.9% | +17.4% | 6.5 | As above. |
 
-**Pattern:** the wide cases cluster on (a) single-country MSCI indices — where total-return vs price-return basis + index-variant selection (Standard / IMI / Large Cap / capped) compound, and (b) commodity/sector indices with multiple return-basis variants. **Implication for v0.3:** the ticker-mapping table must be human-reviewed per ticker, pinning the exact variant AND the return basis (price vs total return) to match what the portal currently displays. An automated name-match silently mis-maps ~17% of the universe by 6–34 points.
+### 3.1 Variant resolution cannot be reverse-engineered from return-matching (methodological finding)
+
+An obvious-looking shortcut — for each wide case, search the 33,997-member YCharts MSCI family for the variant whose 1Y return is *closest* to the portal's — was attempted and **fails**. With ~34k candidates, some index always has a coincidentally-matching return: a closest-1Y search returned "MSCI Japan" -> "MSCI AC Pacific **Ex Japan** SMID Cap" and "MSCI Brazil" -> "MSCI Emerging Markets Latin America **ex Brazil**" — spurious matches of the *opposite* index. Return-matching across a large family overfits.
+
+**Consequence:** the fidelity check is a sound *verification* gate (does a name-derived mapping hold?) but it **cannot be the *derivation* method** for variant selection. The correct mapping authority is the **yang-pipeline's own source-side ticker definitions** — the exact MSCI/Bloomberg variant codes that Yang's `data_pkl` Bloomberg export uses. Those codes (in the yang-pipeline config / Yang's Bloomberg terminal export) tell you *which* MSCI Japan / Korea / GSCI variant the portal actually tracks; YCharts is then queried for that specific variant and the fidelity check confirms. **Derivation source (yang-pipeline ticker codes) is not the same as the verification gate (fidelity check)** — conflating them produces nonsense.
+
+So even the `^MSKRLCAP` Korea remap above is a *candidate* (plausible by name + number), not a confirmed mapping — confirmation requires the yang-pipeline source-side code for that ticker.
+
+**Pattern:** the 9 wide cases are single-country MSCI / commodity / sector indices that share a *name* with a YCharts index but are a different *variant*. **Implication for v0.3:** the 71-row mapping must be derived from the yang-pipeline ticker definitions, then fidelity-verified — not name-matched-and-hoped. An automated name-match silently mis-maps ~17% of the universe by 6–34 points.
 
 ---
 
@@ -77,9 +87,9 @@ None of these are blockers — they are v0.3 implementation tasks. The commoditi
 
 ## 5. Recommendation for v0.3
 
-1. The §3 + §4 work — a fully human-reviewed 71-row mapping table pinning exact YCharts symbol + return basis per portal ticker — is a prerequisite v0.3 task. Budget it explicitly; do not auto-generate it. The CSV here is the **starting draft** (53 rows, 44 verified-close), not the final.
-2. Re-map MSCI South Korea `^MSKR` -> `^MSKRLCAP` (verified).
-3. For each migrated ticker, the v0.3 acceptance test should be exactly this fidelity check: pull YCharts, compare to the portal's current value, require the gap within an as-of-adjusted tolerance. The check is cheap and catches mis-mappings before they ship.
-4. Confirm with YCharts (alongside the API quote) that commodity + crypto symbols are in the API tier.
+1. The 71-row mapping table must be **derived from the yang-pipeline's source-side ticker definitions** — the exact MSCI/Bloomberg variant codes Yang's `data_pkl` Bloomberg export uses — NOT name-matched against YCharts and hoped (§3.1). Obtaining those codes (yang-pipeline config + Yang's Bloomberg export setup; AE 0.5.0 is the YALP-pipeline consult) is a prerequisite v0.3 task. The CSV here is a **starting draft** (53 rows, 44 fidelity-verified-close), not the final.
+2. MSCI South Korea: the portal value indicates a large-cap-tilted Korea variant (`^MSKRLCAP` is the candidate, +255.95% vs plain `^MSKR` +223.9%) — confirm against the yang-pipeline source code, do not assume.
+3. For each migrated ticker, the v0.3 acceptance test is this fidelity check: pull YCharts for the *derived* symbol, compare to the portal's current value, require the gap within an as-of-adjusted tolerance. The check VERIFIES a mapping; it does not DERIVE one.
+4. Confirm with YCharts (alongside the API quote) that commodity + crypto symbols — and the index families generally — are in the API tier (the `pycharts` SDK shows no index client; §master-brief §6).
 
 The map CSV (`mdsrc-ycharts-ticker-map-20260520.csv`) is the machine-readable companion: `entity_type, portal_name, ycharts_symbol, ycharts_label, portal_1Y_pct, ycharts_1Y_pct, gap_pt, fidelity, source`.
