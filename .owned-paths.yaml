@@ -206,8 +206,9 @@ lanes:
     permitted_agents:
       - 0.3.0_DT_TradingOperations
       - 0.5.0_AE_OpalETL
+      - 0.5.0_AE_OpalETL~B
       - 0.7.0_AE_CloudOps
-    description: "Trade-pipeline Lambda source (infra/aws/lambda/trade-pipeline/**) — DT 0.3.0 authorized for code edits until TRSB_TFIMPT.W3 Terraform migration; AE 0.5/0.7 for infra. TRSB_PATHFIX scope (COO ruling 2026-05-01)."
+    description: "Trade-pipeline Lambda source (infra/aws/lambda/trade-pipeline/**) — DT 0.3.0 authorized for code edits until TRSB_TFIMPT.W3 Terraform migration; AE 0.5/0.7 (+ 0.5 ~B sub-lane, TRSB_LEDGER.009 re-route 2026-05-20) for infra. TRSB_PATHFIX scope (COO ruling 2026-05-01)."
 
   ANY:
     permitted_agents: "*"
