@@ -144,7 +144,7 @@ it). .018 RAVC2 HELD -- cannot close on a failed fire.
 |------|--------|
 | 5/19 log of record | WRITTEN (logs/2026-05-19/session_reconstructed_*) |
 | MDPF_ASSETS.021 IAM fix | SHIPPED -- mdpf-pipeline-v1.0.1 / 9944deb75; SSM-doc invocation verification PENDING |
-| MDPF_ASSETS.018 | Phase 1 done+deployed; 15:00Z fire FAILED at WS-C (orion_model_composition bronze missing) -- RAVC2 BLOCKED; escalated COO~B + DS Base |
+| MDPF_ASSETS.018 | COMPLETE -- WS-C blocker resolved (DS Base feeder roll-forward 7d41d28cd); chain re-triggered, mdpf_daily_20260520_151238 completed clean (2 partners, Cohort 0 $91.31M, reconciliation PASS); RAVC2 sent COO~B. TO self-marked complete |
 | ADHC_DSFLOW.007 | CLOSED -- `74c2cffee`; COO~B RAVC2-accepted + 3-step project closure executed |
 | MDPF_ASSETS.021 | SSM doc VERIFIED working post-IAM-fix (cmd edf893cb, Status=Success rc=0, dry-run; the 5/19 opal-data-inf AccessDenied is fixed). RAVC2 sent COO~B -- AC1/3/4/5/6 met; AC2 (DS Base workstation invocation) pending cross-agent |
 | TRSB_LEDGER.009 | GO received; queued |
@@ -164,12 +164,31 @@ methodology call (flagged to her as the available fallback for today's stale
 file given the chain failure). Stopped the runner (designed state). AC2 (DS
 Base workstation invocation) is the remaining cross-agent step.
 
+## 7. MDPF_ASSETS.018 -- WS-C blocker resolved, chain verified clean
+
+DS Base shipped a feeder-side roll-forward fix (build_mdpf_wsc_inflection_feeder.py
+commit 7d41d28cd, resolve_bronze_date -- rolls forward to the latest-available
+orion_model_composition partition on-or-before the date; model composition is
+slow-changing structural data so a 2-day-stale carry is methodologically sound).
+Re-triggered the chain via the mdpf-daily-trigger Lambda (200, ssm_command_id
+95679bd8...). Run mdpf_daily_20260520_151238 COMPLETED clean:
+- WS-C rc=0 in Stage 1; log "roll-forward to 2026-05-18 (2 day(s) stale)"; WS-C
+  section-7 PASS.
+- 4 stages rc=0; WS-A reconciliation=PASS; partners=2.
+- platinum/mdpf/aggregate_aua/2026-05-20.json: 49financial $1.654B + inflection
+  $199.95M; Cohort 0 (etf_public_residual_total) $91,310,278.05 ~ $91.31M
+  baseline. 5/19 understatement did NOT recur.
+RAVC2 sent COO~B; TO self-marked complete. COO~B confirmed: don't fold the
+producer-gap into .018; it becomes a new TO MDPF_ASSETS.023 (Phase-2.5
+hardening -- wire pull_orion_model_composition.py into the chain as a pre-Stage-1
+step; DS owns puller, AE wires the chain step; not urgent, queued behind current
+load).
+
 ## Next Steps
 
-1. [DS Base + COO~B] WS-C upstream: orion_model_composition bronze has no daily
-   producer (only 5/18 exists) -- .018 RAVC2 held until resolved.
-2. [DS Base] .021 AC2: attach MDPFLegacyEmitInvoker policy to workstation role +
-   invoke once to confirm.
-3. SXIN_PRODCT.001 (foundation .021 SSM doc now verified) -> ADVI_INFALM.001
+1. [COO~B] .018 RAVC2 acceptance; .021 close on DS Base AC2 confirmation.
+2. [DS Base] .021 AC2: attach MDPFLegacyEmitInvoker policy + invoke once.
+3. Queue: SXIN_PRODCT.001 (foundation .021 SSM doc verified) -> ADVI_INFALM.001
    (needs orion-gold-dispatch.sh metric-emit, not pure-TF -- scope flagged) ->
-   TRSB_LEDGER.009 -> ADHC_HALTGT .000-.004.
+   TRSB_LEDGER.009 -> ADHC_HALTGT .000-.004. MDPF_ASSETS.023 queued (COO~B to
+   author).
