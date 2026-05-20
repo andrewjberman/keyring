@@ -50,8 +50,21 @@ pre-edit the .006 TO; surfaced to CTO for ratification of the 8-commit set.
 - `.006` TO `<dispatch_unblock_condition>` references "d71ac15b" + the 7-SHA set —
   edit deferred until CTO gates the 8-set (one clean edit).
 
+## SSCN_DIVDEF.006 — SHIPPED + PROJECT CLOSED (same session)
+
+DT 0.3.0 executed `.006` end-to-end:
+- Phase 0 RAVC2 — `cfdf9a5c` pushed to origin/DEV, CLOUD gitlink synced (`bf0d0d122`). COO independently verified origin/DEV HEAD. CTO Gate Condition 1 satisfied.
+- Phases 1-5 — 8-commit SSCN-only cherry-pick onto portal PROD (origin/PROD `4f8502e6..a7fd7655`, zero non-SSCN promoted; three contiguous range-picks, zero conflicts). CTO Gate Condition 2 satisfied (`git show --stat cfdf9a5c` = `.frontend-dev/**` only). GHA deploy.yml run 26182828524 SUCCESS; tag `portal-v2.1.95`; opalinvest.dev live; AC1-AC8 all PASS (smoke 25/25). COO verified origin/PROD HEAD + tag + 8-commit count. RAVC4 ACCEPT.
+
+**3-step closure committed `3d7247a67`** (2 of 3 steps — COO-owned paths):
+1. `SSCN_DIVDEF.json` — status `active`->`complete`, `completed: 2026-05-20`, phase rewritten as closure summary, blocking `None`.
+2. `REGISTRY.md` — SSCN_DIVDEF row Active->Completed. **Incidental cleanup:** removed an orphan SXIN_DAY1ZG row fragment (malformed, no leading `|`) left in the Active table by a prior botched move — flagged here for awareness.
+3. PRD Status row — **routed to CTO** (owned-paths hook blocks COO from `docs/architecture/**` = ANY_CTO lane). MCP'd 1.0.0_SA_CTO the exact row to fold into the pending v0.6 closeout. Non-blocking — project is functionally closed by the JSON+REGISTRY commit.
+
+**Carried to Andrew:** DT-flagged cosmetic observation — a faint "Category" `<th>` on the separate selected-factors/weight-config table (NOT the Factor Bank tab; outside `.010` scope; present in the Andrew-approved DEV build). Andrew's call on a cosmetic follow-up TO.
+
 ## Compiler Tools
 
 | Tool | Result |
 |------|--------|
-| comp-* | N/A — startup reconciliation + orchestration session; no source/route/schema/blast edit. The .006 cherry-pick mechanism was already comp-routes/comp-cache verified in DT's pre-flight (TO `<dt_preflight>`). |
+| comp-* | N/A — startup reconciliation + orchestration + project-closure session; no source/route/schema/blast edit. The .006 cherry-pick mechanism was comp-routes/comp-cache verified in DT's pre-flight (TO `<dt_preflight>`) and re-run by DT at Phase 1 per the TO compiler mandate. |
