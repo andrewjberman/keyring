@@ -10,15 +10,10 @@
 
 ## Current State
 
-- **Code + infra SHIPPED; Phase 3 chain-re-trigger verification PENDING.** Both TOs'
-  chain-script edits are committed, the dispatch script is S3-deployed, and the
-  MDPF_ASSETS.023 IAM grant is `terraform apply`'d + 0-diff verified + tagged.
-- **MDPF_ASSETS.023 is blocked for full completion** on a DS-lane dependency:
-  `pull_orion_model_composition.py` is NOT yet on `s3://opal-data-mdpf/code/scripts/bronze/`
-  (Rule 13 — DS owns bronze-script S3 deploy). MCP'd to DS 0.4. Until it lands, Stage 0
-  WARN-skips (non-fatal by design); the chain is unaffected.
-- **SXIN_PRODCT.002** code is fully shipped; only the Phase 3 chain re-trigger remains —
-  best bundled with .023's (one re-trigger verifies both, after the DS bronze upload).
+- **BOTH TOs COMPLETE.** Code + infra shipped AND Phase 3 verified on a clean chain
+  re-trigger (run `mdpf_daily_20260520_193329`, status=complete). DS~B uploaded the
+  bronze script; the IAM grant works; Stage 0 + Stage 3.5 both ran clean. See the
+  Phase 3 Verification section below.
 
 ## Phase 0 probe (MDPF_ASSETS.023)
 
@@ -75,16 +70,38 @@ prefix scope, consistent with the existing eclipse/BD-scoped statements.
 | Phase 0 — `aws s3 ls .../bronze/` + read `pull_orion_model_composition.py` + read `mdpf-pipeline/iam.tf` | OK | bronze script absent on S3 (DS dep); runner role lacked Orion JWT access (Phase 1 in scope). comp-* N/A — the mdpf chain scripts are not graph-modeled (documented PRD-section-5 gap). |
 | Phase 2 — `bash -n mdpf-daily-dispatch.sh`; `terraform fmt -check iam.tf` | OK | shellcheck not installed (env gap, CTO~B-accepted substitute for the sequence); bash -n clean; Stage 0 control flow verified non-fatal. |
 | Phase 2 — `comp-iam gaps` (iam.tf changed) | clean for my scope | No gap introduced on the runner role. |
-| Phase 3 — chain re-trigger | **PENDING** | See Next Steps — bundled with the DS bronze upload. |
+| Phase 3 — chain re-trigger | **PASS** | See Phase 3 Verification below. |
+
+## Phase 3 Verification (chain re-trigger `mdpf_daily_20260520_193329`)
+
+DS~B uploaded `pull_orion_model_composition.py` to `s3://opal-data-mdpf/code/scripts/bronze/`
+(md5 MATCH). I re-triggered the mdpf daily chain (invoked `mdpf-daily-trigger` Lambda,
+runner `i-02448edb624a7a7cf`, SSM `29a5ce5f-...`). Run completed `status=complete`.
+
+`steps_done`: `STAGE0-BRONZE ok 12s` -> `WS-E ok` -> `WS-A ok` -> `LEGACY-EMIT ok 18s`
+-> `ROLLUP ok` (the 4 Stage-1 feeders run backgrounded so their `record_step` lands in a
+subshell and is not in the parent telemetry — a PRE-EXISTING chain quirk, not introduced
+here; the feeders did run, WS-E/WS-A depend on their output).
+
+- **MDPF_ASSETS.023 — Stage 0 PASS (AC2/AC4).** Stage 0 S3-pulled the bronze script,
+  read the Orion JWT from Secrets Manager `orion/jwt/current` (the `OrionJwtReadStage0Bronze`
+  IAM grant works), pulled all 9 Opal models, wrote 9 `model_*.json` + `_meta/pull_complete.json`
+  to `s3://opal-data-mdpf/mdpf/bronze/orion_model_composition/2026-05-20/` — `overall=success`,
+  `errors: []`. AC3 (best-effort/non-fatal) — control flow has no `exit` on a Stage-0 failure;
+  the earlier WARN-skip runs (script-absent) already exercised the non-fatal path with the
+  chain completing. AC1 probe + AC5 terraform-0-diff/tag + AC6 documented above.
+- **SXIN_PRODCT.002 — Stage 3.5 PASS (AC1/AC2/AC4).** `LEGACY-EMIT` ran after `WS-A`
+  (Stage 3) and before `ROLLUP` (Stage 4) — exactly the designed placement, independent of
+  Stage 4. `non_model_assets.json` refreshed: `generated_at 2026-05-20T19:35:27Z`,
+  `latest.date 2026-05-20`, enterprise_total $1,898,213,922.32, non_model_aum $457,606,190.54.
+  AC3 (Stage-3-fail skips the emit) is structural — the chain fail-fasts at the WS-A
+  `RC_WSA` check before the emit step is reached; verified by placement + code-read.
 
 ## Next Steps
 
-- `[0.4.0_DS_ClientPlatform~B / DS 0.4]` Upload `pull_orion_model_composition.py` to
-  `s3://opal-data-mdpf/code/scripts/bronze/` (DS-lane, Rule 13). MCP sent.
-- `[0.5.0_AE_OpalETL~B]` Phase 3 — after the DS bronze upload, re-trigger the mdpf daily
-  chain once: verifies (a) Stage 0 produces + uploads the run-date orion bronze and the
-  WS-C feeder consumes it fresh (MDPF_ASSETS.023 AC4), and (b) Stage 3.5 runs post-Stage-3
-  and refreshes `non_model_assets.json` (SXIN_PRODCT.002 AC4) — plus the simulated-failure
-  paths (AC3 both). One re-trigger covers both TOs.
-- `[2.0.0_SA_COO~B]` RAVC2 — code/infra shipped; Phase 3 verification pending the DS
-  upload. Both TOs stay in-flight until the chain re-trigger confirms AC3/AC4.
+- `[2.0.0_SA_COO~B]` RAVC2 — both TOs COMPLETE, Phase 3 verified on run
+  `mdpf_daily_20260520_193329`. mdpf-pipeline-v1.0.2.
+- `[follow-up, non-blocking]` Pre-existing chain quirk: the 4 Stage-1 feeders' `record_step`
+  is lost to the `&`-subshell so they are absent from the telemetry `steps_done` (and the
+  final `LAST_OUTPUT` still reads "All 4 stages complete" — cosmetically stale vs the now
+  6-stage chain). Neither is introduced by this work; flagged for an opportunistic cleanup.
