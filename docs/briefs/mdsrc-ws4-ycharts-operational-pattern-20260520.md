@@ -247,21 +247,43 @@ probe**, not a stored-timestamp read. This is the cookie-world analogue of Orion
 Proposed shared lib `cookie_freshness.py` (mirrors `jwt_freshness.py`'s skeleton):
 
 - `check_session_freshness()` -- loads the bundle (SM primary, S3 fallback; both fail ->
-  `SessionUnreadableError`), then issues **one cheap authenticated GET** to a stable, low-cost
-  YCharts endpoint (candidate: `/indices/asset_class/root/index_list`, ~41 KB, or a cheaper
-  reference endpoint WS-1 identifies) carrying the cookie bundle + CSRF/XHR headers. It
-  classifies the response:
+  `SessionUnreadableError`), then issues a **multi-endpoint probe set** (NOT a single GET --
+  see "Partial-failure detection" below) of cheap authenticated GETs that is **representative
+  of the production pull's endpoint classes** -- at minimum one per distinct YCharts data
+  family the puller depends on (e.g. an `/indices/*` call AND a `/model_portfolios/*` call AND
+  a `/charts/*` call), carrying the cookie bundle + CSRF/XHR headers. It classifies the
+  **worst** response across the probe set (any single stale endpoint fails the whole gate):
 
-  | Response | Classification | Returned state |
+  | Response (any probe endpoint) | Classification | Returned state |
   |---|---|---|
-  | HTTP 200 + well-formed JSON | FRESH | `is_fresh=True` |
-  | HTTP 403, body matches "concurrent sign in" | STALE -- **EVICTED** (Finding 2) | `is_fresh=False`, `reason=evicted` |
-  | HTTP 401/403 login-redirect, or session-invalid body | STALE -- EXPIRED | `is_fresh=False`, `reason=expired` |
-  | HTTP 403, body matches "don't have access" | ENTITLEMENT (not a freshness fault) | `is_fresh=False`, `reason=entitlement` |
+  | HTTP 200 + well-formed JSON on ALL probe endpoints | FRESH | `is_fresh=True` |
+  | HTTP 403 on ANY endpoint, body matches "concurrent sign in using your credentials" | STALE -- **EVICTED** (hard, WS-1 Finding 2) | `is_fresh=False`, `reason=evicted` |
+  | HTTP 403 on ANY endpoint, body matches "You are signed out. Please sign in again" | STALE -- **DISTURBED** (partial; WS-1 .007 finding) | `is_fresh=False`, `reason=disturbed` |
+  | HTTP 401/403 login-redirect, or other session-invalid body | STALE -- EXPIRED | `is_fresh=False`, `reason=expired` |
+  | HTTP 403, body matches "don't have access to this feature" | ENTITLEMENT (not a freshness fault) | `is_fresh=False`, `reason=entitlement` |
   | SM + S3 both unreadable / transport error | UNREADABLE | `is_fresh=False`, `reason=unreadable` |
 
-  Returns a `SessionFreshnessReport` (`is_fresh`, `reason`, `source`, `probe_status`,
-  `raises_on_stale`, `bundle`).
+  Returns a `SessionFreshnessReport` (`is_fresh`, `reason`, `source`, `probe_status` -- a
+  per-endpoint status map, not a scalar -- `raises_on_stale`, `bundle`).
+
+**Partial-failure detection (WS-1 .007 empirical finding).** The YALP_MDSRC.007 live test
+(`docs/briefs/mdsrc-ycharts-live-session-test-20260520.md` Section 4/8) found a YCharts session
+does **not** fail all-or-nothing: a slightly-stale / concurrently-disturbed bundle returned, in
+the **same session, same second**, HTTP 200 + real JSON on `/indices/table_data` and
+`/charts/fund_data.json` while `/model_portfolios/` and `/model_portfolios/collection_status`
+returned 403 "You are signed out" -- and a fresh-session re-probe then returned 200 on all four
+(confirming the 403s were session-disturbance, not entitlement). Two consequences, both folded
+into the gate above:
+1. **A single-endpoint probe can false-pass.** Hitting one cheap endpoint and seeing 200 proves
+   nothing about the other endpoint classes the production puller needs. The probe set MUST
+   span the production pull's endpoint families; the gate verdict is the worst result, not the
+   first 200.
+2. **The 403 body string discriminates the failure mode.** "You have been signed out due to a
+   concurrent sign in using your credentials" = hard eviction (WS-1 Finding 2 -> `reason=evicted`);
+   "You are signed out. Please sign in again" = partial disturbance (-> `reason=disturbed`).
+   Both are STALE and both must feed the `SessionEvicted`-class metric (Section 4.5) -- a
+   partial 403 is an eviction signal, not a tolerable degradation. Recovery (Section 4.4) treats
+   `disturbed` and `evicted` identically: re-capture.
 
 - `assert_fresh_or_exit()` -- fail-fast wrapper; on stale prints `FATAL [reason]` and
   `sys.exit(2)` (`EXIT_CODE_STALE_SESSION`, reusing the distinguishable-exit-code convention).
@@ -275,8 +297,9 @@ active probe -- which tests the exact thing the pull needs, "can this bundle sti
 scheduler input only*, never the gate. This is a deliberate divergence from Orion, forced by
 the credential's failure model, and is the central Q2 answer.
 
-**Probe cost.** One ~41 KB GET per pull-start (and optionally once per long pull's mid-point) --
-negligible. The probe doubles as the eviction detector that feeds the `SessionEvicted` metric.
+**Probe cost.** A handful of cheap GETs (one per endpoint family) per pull-start, and once per
+long pull's mid-point -- still negligible. The probe set doubles as the eviction/disturbance
+detector that feeds the `SessionEvicted` metric.
 
 ### 4.4 Refresh mechanism
 
@@ -308,9 +331,9 @@ emission -- failures logged and swallowed, never double-fail the pull (Orion con
 
 | Metric | Emitted when | Dimension |
 |---|---|---|
-| `SessionProbeOk` | freshness probe returns FRESH | `script_name` |
+| `SessionProbeOk` | freshness probe returns FRESH (all probe endpoints 200) | `script_name` |
 | `SessionExpired` | probe -> EXPIRED | `script_name` |
-| `SessionEvicted` | probe -> EVICTED (the Finding-2 concurrent-sign-in 403) | `script_name` |
+| `SessionEvicted` | probe -> EVICTED or DISTURBED -- the concurrent-sign-in 403 (WS-1 Finding 2) OR a partial "You are signed out" 403 on any probe endpoint (WS-1 .007). Dimension `failure_mode` = `evicted` / `disturbed` distinguishes them | `script_name`, `failure_mode` |
 | `SessionUnreadable` | SM + S3 both unreadable | `script_name` |
 | `SessionEntitlementDenied` | probe -> "don't have access" 403 (Finding 3) | `script_name` |
 | `CaptureFailed` | a `ycharts-session-trigger` capture run fails (WAF block / bad creds / form change) | `capture_method` |
