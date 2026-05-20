@@ -333,6 +333,29 @@ the HAR headers:
 - This is the same finding WS-1 will hit; WS-2 contributes the corroboration, not a fourth
   probe. WS-4 consumes it for Q2/Q3.
 
+**WS-1 shared-probe results (MCP `20260520T211916Z` — consumed, not re-probed):** WS-1
+reached the auth layer first and replayed the captured HAR cookie bundle ~5.5h post-capture.
+Three findings materially affect the WS-2 operational picture:
+
+1. **AWS WAF does NOT block headless replayed-token requests.** `curl` carrying the captured
+   `aws-waf-token` returned HTTP 200 + JSON. The WAF gates *initial token acquisition* only
+   (needs a real browser once); a captured token then works headless. Lowers the WS-4
+   capture-mechanism risk (Q3) — but see below.
+2. **YCharts enforces a SINGLE CONCURRENT SESSION.** Mid-probe WS-1's session died with HTTP
+   403 *"You have been signed out due to a concurrent sign in using your credentials."* **A
+   programmatic pull on a shared YCharts seat is mutually evicted with any human user of that
+   seat.** For WS-2 this is decisive on the operational shape: a daily automated analytics
+   pull cannot share a seat with a YCharts analyst — it forces either a **dedicated
+   integration seat** or the **official Data API**. This is a direct input to Q1 and is
+   flagged in the matrix slice `notes` for every migration-candidate row.
+3. **Feature/endpoint access is plan-tier gated.** WS-1 saw `/classifications/sectors.json`
+   return 403 *"You don't have access to this feature"*. The WS-2 analytics endpoints
+   (`scatter_plot_data.json`, `/calculations/*`) **may or may not be in the current seat's
+   tier** — unverified. Treat tier-gating of the analytics endpoints as an **open risk**: any
+   v0.3 plan that depends on the session-scrape path for WS-2 surfaces must first confirm the
+   seat tier includes them. (Does not affect the proprietary classifications — those have no
+   YCharts endpoint regardless of tier.)
+
 ### 6.4 Pipeline-mechanism findings (deltas surfaced during the audit)
 
 Recorded as findings per the Phase-1 `<if_mismatch>` mandate; none change a classification.
@@ -369,7 +392,7 @@ Recorded as findings per the Phase-1 `<if_mismatch>` mandate; none change a clas
 
 | Q | WS-2 position |
 |---|---|
-| **Q1** — official API vs session-scrape | Returned open. Official API *could* serve the 2 YCharts-replaceable + the benchmark legs of the 5 hybrid surfaces; it changes nothing for the 6 proprietary surfaces. Andrew/CTO call at v0.3. |
+| **Q1** — official API vs session-scrape | Returned open. Official API *could* serve the 2 YCharts-replaceable + the benchmark legs of the 5 hybrid surfaces; it changes nothing for the 6 proprietary surfaces. **WS-1's single-concurrent-session finding (§6) pushes hard toward the official API or a dedicated seat** — a shared-seat scrape is operationally non-viable for a daily pull. Andrew/CTO call at v0.3. |
 | **Q5** — catalog coverage | Answered: YCharts catalog coverage of the *metric vocabulary* is effectively complete (§3.2), but it is **orthogonal** to WS-2 replaceability because the proprietary surfaces' inputs (Opal model holdings) are not YCharts-resident. Minor named gap: `capture_ratio`. |
 | **Q6** — peer/attribution/cma sourceability | Answered §5: `cma_excel` + `attribution_excel` permanently manual; `peer_excel` hybrid/methodology-bound. |
 | **Q7** — ToS / licensing | Surfaced, not adjudicated. Programmatic extraction from a YCharts *seat* (the session-scrape path) carries ToS exposure; the official API path would be contractually clean. Andrew business call. |

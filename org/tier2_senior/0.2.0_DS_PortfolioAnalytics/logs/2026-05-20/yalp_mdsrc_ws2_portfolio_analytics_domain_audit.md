@@ -41,6 +41,10 @@ manual, peer hybrid/methodology-bound). Q1/Q7 returned open per `<do_not>`.
 - WS-3 (0.4.0_DS_ClientPlatform): opened the Model Portfolios seam (MCP 20260520T210045Z) —
   WS-2 owns benchmark/ETF/peer analytics, WS-3 owns model-portfolio performance sourcing.
   One open item put to WS-3 (model_portfolio_timeseries.json column split).
+- WS-1 shared Q3 auth/WAF probe consumed (MCP 20260520T211916Z, NOT re-probed): WAF gates
+  only initial token acquisition; YCharts enforces a single concurrent session (shared-seat
+  scrape evicted by any human user); analytics-endpoint tier-gating unverified. Folded into
+  brief §6 + §7-Q1 + matrix slice notes.
 
 ## Files Modified
 
