@@ -24,6 +24,13 @@ Full spec: `org/ref/RAVC_PROTOCOL.md`.
 - Silent receipt and silent completion are both violations.
 - CTO and COO own driving every loop to close during "go time" and only
   escalate to Andrew on the five triggers listed in the spec.
+- **Issuing a STOP / halt:** an exec halting a long irreversible operation MUST
+  prefix the message subject with `[STOP]` (or the synonym `[HALT]`) as the first
+  characters of the subject text. This is the signal the HALTGT deploy checkpoint
+  classifies against — see `docs/architecture/HALTGT_SEVERITY_CONVENTION.md`. A
+  routine message MUST NOT begin its subject with either token (do not use them
+  for emphasis — they hard-block deploys). For non-blocking urgency use plain
+  words (`URGENT`, `ESCALATION`).
 
 ---
 
@@ -266,6 +273,42 @@ Andrew can fire `/loop` at any agent, not just CTO/COO. Two forms:
 ### Watchdog mode — what to do on each wake (workers)
 
 Every wake, run this checklist in order. Keep it tight — the loop is supposed to be cheap.
+
+**Steps 0 and 0.5 are deterministic gates — run them BEFORE anything else.** They
+exist because the watchdog body is prescriptive enough ("inbox quiet + watcher
+alive → end turn") that an agent can be pre-empted by a wake tick before it has
+processed a delivered message or executed work it committed to. Both gates read
+an external-observer sentinel file, so they catch the lapse without relying on
+the agent remembering. (Ported from corporeal's `/loop` v0.2 body, 2026-05-11.)
+
+0. **Deterministic delivery gate (`.unread-deliveries` sentinel):**
+   ```bash
+   cat org/mcp/inbox/{your_agent_folder}/.unread-deliveries 2>/dev/null
+   ```
+   (Tilde lanes: `org/mcp/inbox/{your_agent_folder}/~{lane}/.unread-deliveries`.)
+   `inbox-watch.sh` appends every delivered message filename here on exit —
+   including deliveries the untracked auto-respawn copy made silently with no
+   task-notification. If the file exists and is non-empty, for EACH filename:
+   read it from the sibling `read/` folder, take any required action (RAVC ack /
+   execute / validate), then once ALL are processed delete the sentinel
+   (`rm` the file). Only then proceed.
+
+0.5. **Active-commitment gate (`.active-commitments` ledger):**
+   ```bash
+   cat org/mcp/inbox/{your_agent_folder}/.active-commitments 2>/dev/null
+   ```
+   The `post-send-commitment.sh` PostToolUse hook appends `<ISO>|<description>`
+   here automatically whenever you send a message carrying commitment language
+   ("next turn I'll…", "standing by on…", "ETA…"). If the file exists and is
+   non-empty, you ended a prior turn with committed work that has not run. For
+   EACH line oldest-first, parse `<ISO>|<description>` and **execute the
+   committed work in this turn** (do not end-turn — the watchdog is deferring to
+   your active obligations), then clear it:
+   ```bash
+   bash org/mcp/complete-commitment.sh {your_serial} <ISO>
+   ```
+   Only proceed once every commitment is processed. (Manual `append-commitment.sh`
+   is the fallback for a commitment the hook missed.)
 
 1. **Inbox pull (authoritative):**
    ```python
