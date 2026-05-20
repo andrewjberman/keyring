@@ -63,8 +63,41 @@ DT 0.3.0 executed `.006` end-to-end:
 
 **Carried to Andrew:** DT-flagged cosmetic observation — a faint "Category" `<th>` on the separate selected-factors/weight-config table (NOT the Factor Bank tab; outside `.010` scope; present in the Andrew-approved DEV build). Andrew's call on a cosmetic follow-up TO.
 
+## ADHC_CRYPCT — GO/veto whipsaw (resolved)
+
+CTO GO'd a v2.9.11 follow-on (residual crypto cleanup); COO formalized ADHC_CRYPCT.002
+(commit 331ac8b0e). Andrew vetoed v2.9.11 ~2min behind the GO. Walk-back: first deleted
+the .002 TO (b6abd6bfe), then — per CTO's REVERSE instruction — restored it as
+`<status>cancelled</status>` with a `<cancellation_note>` preserving the GO-then-veto
+audit trail (f12acd614). JSON phase set to ".001 functionally complete; .002 cancelled;
+3-step closure parked as a CTO housekeeping item." No COO carry-forward.
+
+## YALP_MDSRC — PRD v0.2 decomposition (Andrew-direct mid-session)
+
+CTO handed off YALP_MDSRC PRD for decomposition. Began against v0.1 (3 draft TOs
+written, uncommitted); Andrew directed mid-authoring "check the amended PRD v0.2."
+v0.2 (Andrew-direct, pre-dispatch) re-parallelized the audit across THREE DS by domain
+(too large for one DS). Discarded the 3 v0.1-cut drafts (never committed/dispatched),
+re-cut to the v0.2 workstreams, authored 5 TOs (commit — see dispatch table). JSON phase
+updated to "COO decomposition complete; awaiting Andrew GO."
+
+### Task Order Dispatch — YALP_MDSRC v0.2
+
+| Agent | Task Order Path | Summary |
+|-------|----------------|---------|
+| 0.1.0_DS_MarketIntelligence | org/tier2_senior/0.1.0_DS_MarketIntelligence/task_orders/YALP_MDSRC.001.ds-ws1-external-market-data-domain-audit.md | (NEW) WS-1 External Market Data domain audit — staged, unblocks on Andrew GO |
+| 0.2.0_DS_PortfolioAnalytics | org/tier2_senior/0.2.0_DS_PortfolioAnalytics/task_orders/YALP_MDSRC.002.ds-ws2-portfolio-analytics-domain-audit.md | (NEW) WS-2 Portfolio Analytics domain audit — staged, unblocks on Andrew GO |
+| 0.4.0_DS_ClientPlatform | org/tier2_senior/0.4.0_DS_ClientPlatform/task_orders/YALP_MDSRC.003.ds-ws3-client-facing-data-domain-audit.md | (NEW) WS-3 Client-Facing Data domain audit (SmartX + model-portfolio sourcing) — staged; MDPF coordination threaded |
+| 0.7.0_AE_CloudOps | org/tier2_senior/0.7.0_AE_CloudOps/task_orders/YALP_MDSRC.004.ae-ws4-ycharts-operational-pattern-declaration.md | (NEW) WS-4 YCharts operational-pattern declaration — staged, unblocks on Andrew GO |
+| 1.0.0_SA_CTO | org/tier1_exec/1.0.0_SA_CTO/task_orders/YALP_MDSRC.005.cto-ws5-synthesis-migration-matrix-prd-v0-3.md | (NEW) WS-5 CTO synthesis -> PRD v0.3 — staged, gated on TO-1..4 RAVC-complete |
+
+Execution dependencies:
+  TO-1, TO-2, TO-3, TO-4 — parallel, no inter-deps; all unblock on a single Andrew GO.
+  TO-5 (CTO) waits for TO-1..4 all RAVC-complete (no Andrew GO needed — the completion gate IS the unblock).
+  WS-3 (TO-3) <-> MDPF_ASSETS (~B-lane): base-lane <-> ~B-lane coordination threaded by COO via 2.0.0_SA_COO~B.
+
 ## Compiler Tools
 
 | Tool | Result |
 |------|--------|
-| comp-* | N/A — startup reconciliation + orchestration + project-closure session; no source/route/schema/blast edit. The .006 cherry-pick mechanism was comp-routes/comp-cache verified in DT's pre-flight (TO `<dt_preflight>`) and re-run by DT at Phase 1 per the TO compiler mandate. |
+| comp-* | N/A for the orchestration/closure work. YALP_MDSRC decomposition: PRD v0.2 §5 carries the authoritative Compiler Evidence (comp-build / comp-routes / comp-blast / comp-trace, CTO-run) — satisfies the PRD-authoring §5 requirement; no COO backfill needed. The per-TO `<compiler_tools_mandate>` blocks were structured into the `<phase><step><run>/<expect>/<if_mismatch>` triad per the COO non-negotiable (content verbatim from PRD §8; the legitimately-"none" audit phases stated as documented-none). comp-blast `_is_blocked_source_dominated` run during the (cancelled) ADHC_CRYPCT.002 authoring returned "No nodes" — intra-Lambda helper, below comp-graph granularity. The .006 cherry-pick mechanism was comp-routes/comp-cache verified in DT's pre-flight. |
