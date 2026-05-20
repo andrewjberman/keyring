@@ -100,9 +100,17 @@ final confirm before handing Andrew the green light.
 | SSCN smoke (final state) | 21/21 PASS, 0 fail, 0 post-login console errors |
 
 Factor Bank check script: `portal/.runtmp/factorbank_check.mjs` (ad-hoc, gitignored);
-screenshot `portal/.runtmp/factorbank_groups.png`. The 4x "401" seen in a full-session
-console capture are the pre-existing CDP-bootstrap-401 auth race (TO-1 AC8 caveat) —
-auth-bootstrap, not a page error; the runner's per-scenario post-login AC8 = 0 confirms.
+screenshot `portal/.runtmp/factorbank_groups.png`.
+
+The 4x "401" seen in a full-session console capture were initially mislabeled by this
+agent as a "CDP-bootstrap-401 race per TO-1 AC8 caveat" — that label was wrong (parroted
+from the TO-006 task-order text without verification; SSCN_DIVDEF.001 AC8 is about stale
+data vintage, not 401s). Probe `portal/.runtmp/probe_401.mjs` captured the real cause:
+all 4 are `POST {api}/auth/refresh -> 401` — the auth provider's session-restore probe on
+app mount returning an expected 401 when no token is stored (2 per /login load = React
+StrictMode dev double-invoke; 0 after login). Benign, pre-existing, handled gracefully,
+unrelated to .006/.009/.010. The runner's per-scenario post-login AC8 = 0 confirms the
+page itself is console-clean. Correction MCP'd to COO 2026-05-20T15:57Z.
 
 RAVC2 sent to COO 2.0.0_SA_COO — the green light to hand Andrew the smoke URL.
 
@@ -157,6 +165,10 @@ path has an unavoidable race window on the shared multi-agent CLOUD branch.
 - Chrome headless on CDP :9444 died once mid-session (silent exit); restarted with a
   fresh `--user-data-dir`. The smoke runner has no auto-relaunch — if re-smoking, verify
   `curl :9444/json/version` first.
+- Optional follow-up (separate, not this project): the `POST /auth/refresh -> 401`
+  session-restore probe logs an expected-401 to the browser console on every
+  unauthenticated load. Cosmetic noise; could be suppressed (skip the call when no token
+  is stored, or downgrade the log). Flag to whoever owns portal-auth if desired.
 - `deployment_map.xml` does not record the portal deployment surface (opalinvest.dev /
   S3 `opalinvest-portal` / CloudFront `EVTSA9VEHNZVH` / GHA `deploy.yml`). Doc gap — to
   add on the TO-006 close commit.
