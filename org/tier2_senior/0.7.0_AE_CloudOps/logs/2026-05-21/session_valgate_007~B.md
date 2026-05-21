@@ -11,9 +11,10 @@ the MDPF first-v0.9-chain readiness check (directed work, 2.0.0_SA_COO~B).
 | Item | Status |
 |------|--------|
 | Phase 1 -- comp-chainrun wrapper | SHIPPED -- commit `b56077081`, pushed to origin/CLOUD |
-| Phase 2 -- TO-template mandate | (A) APPLIED by COO~B `ef55ab6cf`; (B) Rule 9 full text sent to COO~B to apply; (C) org/XXX.md SKIPPED (BASE_EXEC-owned, optional, non-gating); (D) dispatcher echo fix SHIPPED `445b3033d` |
+| Phase 2 -- TO-template mandate | (A) APPLIED by COO~B `ef55ab6cf`; (B) Rule 9 APPLIED by COO~B `9465d8bab`; (C) org/XXX.md SKIPPED (BASE_EXEC-owned, optional, non-gating); (D) dispatcher echo fix SHIPPED `445b3033d` |
 | Phase 3 -- gate table + verification | DONE -- GATE_SPEC["B"] (PRD 3.2 six-field contract) in-code + `comp-chainrun spec`; verified offline + live |
-| RAVC2 | SENT to 1.0.0_SA_CTO~B CC 2.0.0_SA_COO~B |
+| RAVC2 | CLOSED -- CTO~B output-validation CONFIRM PASS + COO~B independent `comp-chainrun selfcheck` 12/12 PASS; 3-step close `098f102bb` |
+| TO status | `complete` -- RAVC-CLOSED 2026-05-21 |
 
 ## What shipped
 
@@ -59,10 +60,10 @@ block (the dispatcher is AE-lane). Commit `445b3033d`.
   snapshots reporting flipped sentinels. MET (`b56077081`).
 - **AC2** -- discipline-codification mandate added to the TO template. MET --
   (A) the atomic-bundle SPECIAL CASE applied by COO~B `ef55ab6cf`; (B) Rule 9
-  full text handed to COO~B (org/standards/** is ANY_EXEC -- COO applies);
-  (C) org/XXX.md pointer documented-skipped (BASE_EXEC-owned, optional,
-  non-gating -- COO~B ruling). Template surface handled per lane as the TO's
-  `<cross_domain_coordination>` block anticipated.
+  (atomic-bundle Class-B gate) + the Enforcement-section line applied by COO~B
+  `9465d8bab`; (C) org/XXX.md pointer documented-skipped (BASE_EXEC-owned,
+  optional, non-gating -- COO~B ruling). Template surface handled per lane as
+  the TO's `<cross_domain_coordination>` block anticipated.
 - **AC3** -- verified: no-op pre/post -> empty diff; synthetic
   dropped/column-lost/emptied -> expected leak report; section-3.2 six-field
   table filled. MET -- `comp-chainrun selfcheck` 12/12 PASS; live S3 no-op
@@ -95,12 +96,31 @@ block (the dispatcher is AE-lane). Commit `445b3033d`.
 Gap found: none. comp-chainrun is itself a new compiler tool; its `selfcheck`
 is the structural self-verification.
 
+## Close
+
+ADHC_VALGATE.007 RAVC2 ACCEPTED -- CLOSED 2026-05-21. CTO~B output-validation
+CONFIRM PASS (ratified the in-code `CHAIN_MANIFEST` call as the faithful
+Class-C convention reuse, not a deviation); COO~B independent
+`comp-chainrun selfcheck` 12/12 PASS. 3-step close by COO~B `098f102bb`
+(`coo_close` on the TO + `ADHC_VALGATE.json` + REGISTRY row). VALGATE project:
+6/9 TOs closed (.001-.003 Class-C, .007 Class-B, .008/.009 parity); remaining
+.004-.006 (Class-D) are DE-lane, gated on a DE~B session.
+
 ## Next Steps
 
-1. [2.0.0_SA_COO~B] Apply Rule 9 to org/standards/TO_COMPILER_GATE.md (full
-   text sent 2026-05-21T16:15Z).
-2. [1.0.0_SA_CTO~B] RAVC2 output-validation of .007.
-3. [~B 0.7.0_AE_CloudOps] Watchdog standby after RAVC2 -- no further .007 work.
+1. [~B 0.7.0_AE_CloudOps] No pending ~B AE work. Watchdog standby -- COO~B
+   sequences any further ~B AE work.
+
+## Watcher health
+
+End-of-session inbox-watch remediation: found an orphaned watcher
+(PID 774612, PPID=1 -- untracked, deaf to the Claude Code task tracker).
+Killed it; relaunched a tracked watcher via the Bash tool
+(`run_in_background`, absolute-path canonical form). Earlier auto-relaunch
+attempts hit transient Git Bash fork-resource exhaustion
+(`fork: Resource temporarily unavailable`); the clean launch took -- one
+tracked watcher (PID 787984, parented to the Bash-tool launcher) confirmed
+running.
 
 ## MDPF first-v0.9-chain readiness check (directed work -- discharged)
 
