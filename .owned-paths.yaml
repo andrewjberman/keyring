@@ -178,7 +178,8 @@ lanes:
     permitted_agents:
       - 0.5.0_AE_OpalETL
       - 0.5.0_AE_OpalETL~B
-    description: "OpalETL shared service (AE 0.5.0 + ~B lane)"
+      - 0.7.0_AE_CloudOps~A
+    description: "OpalETL shared service (AE 0.5.0 + ~B lane). 0.7.0_AE_CloudOps~A added 2026-05-21 by COO: the OpalETL lane (0.5.0 base + ~B) went fully offline; YALP_MDSRC.B2 was reassigned to ~A, which needs this lane to commit the SmartX pull .py (data/smartx/**). Tilde-lane owned-paths-gap pattern."
 
   SHARED_PARTNER_ETL:
     permitted_agents:
@@ -200,8 +201,9 @@ lanes:
       - 0.6.0_AE_PartnerETL
       - 0.6.1_AE_PartnerETL
       - 0.7.0_AE_CloudOps
+      - 0.7.0_AE_CloudOps~A
       - 0.7.0_AE_CloudOps~B
-    description: "Any AE agent — infra/aws, pipeline Terraform, hook wiring"
+    description: "Any AE agent — infra/aws, pipeline Terraform, hook wiring. 0.7.0_AE_CloudOps~A added 2026-05-21 by COO: the lane is literally 'any AE agent' and ~A is one — the ~A suffix simply was not enumerated (tilde-lane owned-paths gap). A correct permanent add, not an exception."
 
   TRADE_PIPELINE_INFRA:
     permitted_agents:
