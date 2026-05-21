@@ -73,13 +73,26 @@ No code / Terraform / Lambda / portal change — all audit/spec deliverables.
   (start Docker) or a CTO/AE re-architecture (zip-package Lambda, no Docker dependency).
 - C2 (co-owned with 0.1.0_DS) is staged behind C1 — legitimately gated, not idle-waiting.
 
+## YALP_MDSRC.S2 — SmartX comprehensive inventory (formalized + closed)
+
+COO formalized the SmartX comprehensive reverse-engineering as YALP_MDSRC.S2 (retroactive
+wrapper). Deliverable = docs/briefs/mdsrc-smartx-comprehensive-endpoint-inventory-20260521.md,
+v2 commit e2bd44014. The api/3.1 exhaustion sweep (prong A) ran after the v1 draft:
+- Sweep-discovered /api/3.1/models/{modelId}/performance — a daily/weekly/monthly
+  flow-adjusted model-return series (grouping=daily -> 431 records, pnl.percent, fresh T-1).
+  MATERIAL: supersedes the prior "SmartX monthly-only" consensus (b2597ea25 caveat 7);
+  flagged to 0.4.0_DS. + 6 other net-new endpoints; 18 candidates confirmed ABSENT (404).
+- S2 status flipped pending -> complete; RAVC2 to COO + CC CTO citing e2bd44014.
+- Follow-on (not an S2 blocker): the GraphQL + api/3.1 sweep probes land in
+  data/smartx/scripts/ (SHARED_OPAL_ETL lane) via 0.7.0_AE_CloudOps~A; retained in .runtmp.
+
 ## Compiler Tools
 
-| Tool | Where | Result |
+| Tool / check | Where | Result |
 |------|-------|--------|
 | comp-routes behaviors | .002, S1 audits | serving-path confirmed (/api/general/* via public-data-router) |
 | comp-pipescript io | C3, C5 | yang generators not comp-graph nodes -> source-read fallback (documented) |
-| (SmartX recon) | n/a | SmartX is an external system — no comp-* applies; evidence is the HAR + live probe |
+| S2 Phase-2 structural self-check | SmartX inventory | PASS — 5 surfaces inventoried; api/3.1 exhausted via a LIVE sweep (not HAR-only); GraphQL schema introspected; absent-endpoint set empirically 404-confirmed; per-endpoint grain + procurable-vs-gap table present. No comp-* graph tool covers SmartX backend-API probing (external system) — the self-check is the TO_COMPILER_GATE audit record per the S2 mandate. |
 
 ## Next Steps
 
