@@ -126,8 +126,25 @@ whatever `price_monthly` row Bloomberg supplies. This matters for the FRED mappi
   `portal-proxy.ts` `getVolatilityData` says "via yang-generate-macro Lambda" — wrong (producer
   is `opal-portal-volatility-fetcher`). `portal/etl/pages/macroeconomics/README.md` (dated
   2025-12-17) describes a `MacroSummaryPanel` and `VIXTab` that no longer exist.
+- **F7 — drill-down timeseries: 16 of 80 files ~4 months stale; depth uneven; ~36yr not 40yr.**
+  The `MacroTimeSeriesModal` drill-down consumes `json/macro/timeseries/{slug}.json`. S3 holds
+  80 files (79 served indicators + 1 orphan `fed_balance_sheet_as_pct_of_gdp.json` from a
+  superseded slug scheme). The current `yang-generate-macro-timeseries` Lambda's `INDICATORS`
+  list has only **64 entries** — 64 files regenerate weekly (LastModified 2026-05-19), **16 are
+  frozen at 2026-01-12** (~4 months stale): all 5 Currency (DXY, EUR/USD, USD/JPY, GBP/USD,
+  USD/CNH), Factory Orders MoM, Trade Balance, Net Long Term TIC Flows, Unit Labor Cost YoY,
+  Retail Sales ex Auto MoM, Retail Sales ex Auto and Gas MoM, Wards Total Vehicle Sales,
+  S&P PMI Manufacturing, S&P PMI Services, Fed NLP Sentiment (+ the orphan). These 15 were
+  generated once by a fuller/older process and never refresh — clicking e.g. DXY in the modal
+  shows a chart ending 2026-01-09 while the heatmap row beside it shows May data (visible
+  internal inconsistency). Same failure class as F1 (config list shorter than rendered set).
+  Separately: history runs **1990 -> 2026 (~36 years, ~437 monthly points)** — not 40 years
+  (the Bloomberg `data_pkl` `price_monthly` history starts ~1990); and depth is uneven —
+  `unemployment_rate` carries only 145 points where a monthly series should have ~432
+  (`gdp_qoq`'s 145 is correct — GDP is natively quarterly). Fix: extend the Lambda's
+  `INDICATORS` list from 64 to the full 79 + delete the orphan file.
 
-These are recorded for the implementation TO and for COO/CTO; F1/F3 have user-visible impact.
+These are recorded for the implementation TO and for COO/CTO; F1/F3/F7 have user-visible impact.
 
 ---
 
@@ -336,10 +353,11 @@ groups + 8 named indices) and cannot move without paid survey subscriptions.
    `DTWEXBGS` is NOT a drop-in — either keep DXY on Bloomberg or relabel the page metric.
    USD/CNH: onshore CNY proxy is acceptable in calm regimes, not in stress.
 4. **Fix the Phase-1 mechanism findings independent of the FRED migration:** F3 (deploy the
-   yield-curve ingestion on a schedule — it is 4 months stale and user-visible), F1 (surface
-   the 2 silently-dropped indicators, or remove them from config), F2 (resolve the
-   `vix_data.json` dual-writer), F4 (correct the CloudFront invalidation path), F6 (standardize
-   the Secrets Manager region).
+   yield-curve ingestion on a schedule — it is 4 months stale and user-visible), F7 (extend the
+   `yang-generate-macro-timeseries` `INDICATORS` list 64 -> 79 so the 16 stale drill-down files
+   refresh, and delete the orphan file — also user-visible), F1 (surface the 2 silently-dropped
+   indicators, or remove them from config), F2 (resolve the `vix_data.json` dual-writer), F4
+   (correct the CloudFront invalidation path), F6 (standardize the Secrets Manager region).
 5. **Free option already on the page:** Bloomberg FCI's FRED substitute (Chicago Fed NFCI) is
    *already rendered as a separate indicator on the same heatmap* — the page could drop the
    proprietary Bloomberg FCI row at zero data cost.

@@ -56,6 +56,12 @@ FRED; volatility VIX already FRED.
   attribution wrong; portal/etl macroeconomics README dated 2025-12-17 describes removed components.
 - F6: Secrets Manager region inconsistency — generate-volatility reads opal/external-apis from
   us-east-2, opal-portal-volatility-fetcher from us-east-1.
+- F7 (added post-ratification, drill-down probe): MacroTimeSeriesModal timeseries — 80 S3 files
+  (79 served + 1 orphan); yang-generate-macro-timeseries INDICATORS list is 64, so 16 files are
+  ~4mo stale (frozen 2026-01-12: all 5 Currency, Factory Orders, Trade Balance, TIC Flows, Unit
+  Labor Cost, Retail ex-Auto x2, Vehicle Sales, S&P PMI x2, Fed NLP + orphan). History 1990->2026
+  (~36yr, NOT 40yr); depth uneven (unemployment_rate 145 pts vs ~432 expected). Fix: extend
+  INDICATORS 64->79, delete orphan. User-visible (modal/heatmap inconsistency).
 
 ## Files Modified
 
