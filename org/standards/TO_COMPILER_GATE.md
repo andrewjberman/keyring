@@ -158,6 +158,26 @@ DT/AE reviewers MAY mark RAVC1 ACCEPT only after running ALL 5 steps for canonic
 
 ---
 
+## Rule 9: Atomic-Bundle TOs Carry a Class-B Chain-Run Pre/Post Gate (Non-Negotiable)
+
+**Effective:** 2026-05-21 (ADHC_VALGATE.007 -- Class-B gate formalization, N7).
+
+An ATOMIC-BUNDLE TO is a multi-commit refactor that ships a producer and one or more of its consumers as one logical unit -- a helper signature change, a shared-shape change, a co-landed producer+consumer rename. This class ships clean past py_compile / ruff / tsc / human code-walk / runtime smoke AND past the chain-run A/B/C/D-stage shape sentinels, then leaks in production: a consumer the bundle did not update, a dropped sibling.
+
+Every atomic-bundle TO MUST carry a Phase-N pre/post chain-run gate:
+
+1. **Phase 1 (before the bundle ships):** `comp-chainrun snapshot --label pre --out {to_id}-pre.json` captures the A/B/C/D-stage shape-sentinel set -- the pre-refactor reference.
+2. **Phase 3 (after the bundle ships and the chain re-runs):** `comp-chainrun snapshot --label post --out {to_id}-post.json` then `comp-chainrun diff {to_id}-pre.json {to_id}-post.json`.
+3. A non-empty leak report -- any sentinel classed DROPPED (flipped green->absent), COLUMNS-LOST, or EMPTIED (row-count>0->0) -- is a partial-refactor leak. Resolve every leak before the TO is marked complete.
+
+v1 is WARN-not-BLOCK: the diff does not fail the chain, and the WARN->BLOCK ratchet follows the same empirical-false-positive discipline as the Class-C suite (a one-line GATE_VERDICT_POLICY flip in chainrun_cli.py after ~1-2 weeks of FP data). An unaddressed leak is nonetheless a TO-acceptance blocker: COO does not accept an atomic-bundle TO whose post-diff carries an unresolved leak.
+
+The pre/post snapshot+diff steps are filled into the TO's `<compiler_tools_mandate>` per the atomic-bundle SPECIAL CASE in the TO template (org/ref/TASK_ORDER_PROTOCOL.md).
+
+**Why this rule exists:** DWSPLT chain #26 partial-refactor leak -- a consumer signature mismatch survived an atomic-bundle ship past every code-level check and every shape sentinel (forward-fix dd1206258, validated by chain #27). The pre/post sentinel-diff is the only gate whose reference -- the pre-refactor sentinel set -- can structurally catch it. Gate tool: comp-chainrun (ADHC_VALGATE.007). PRD: docs/architecture/ADHC_VALGATE.md section 4.B (N7).
+
+---
+
 ## Enforcement
 
 - COO reviews every TO completion report. If no compiler check is logged, the TO is not accepted as complete.
@@ -165,3 +185,4 @@ DT/AE reviewers MAY mark RAVC1 ACCEPT only after running ALL 5 steps for canonic
 - Agents that repeatedly skip these checks will have their TOs decomposed into smaller, more constrained units in future waves.
 - **Rule 7 (acceptance flex pre-flag):** missing pre-flag MCP = the TO acceptance is rejected and reverted to `<status>pending</status>` until the heads-up is filed and CTO has had the 5-minute redline window.
 - **Rule 8 (RAVC1 canonicalization-class reviewer protocol):** RAVC1 ACCEPT issued on a canonicalization-class commit without the 5-step pre-push diligence = the ACCEPT is rejected and the commit reverted; reviewer re-runs the protocol before re-issuing ACCEPT.
+- **Rule 9 (atomic-bundle Class-B gate):** an atomic-bundle TO marked complete with an unresolved leak in its post-diff = the acceptance is rejected and reverted to `<status>pending</status>` until every leak is resolved or explicitly waived with CTO sign-off.
