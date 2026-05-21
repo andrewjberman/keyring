@@ -3920,3 +3920,9 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-05-21 | 0.2.0_DS_PortfolioAnalytics | YALP_MDSRC.SA2 | comp-platinum | comp-platinum reverse json/benchmarks/model_portfolio_timeseries.json | PASS |
 | 2026-05-21 | 0.2.0_DS_PortfolioAnalytics | YALP_MDSRC.SA2 | comp-platinum | comp-platinum reverse json/benchmarks/model_portfolio_benchmarks.json | PASS |
 | 2026-05-21 | 0.2.0_DS_PortfolioAnalytics | YALP_MDSRC.SA2 | comp-cache | comp-cache collisions | PASS |
+| 2026-05-21 | 0.2.0_DS_PortfolioAnalytics | YALP_MDSRC.SA3 | comp-platinum | comp-platinum reverse json/positioning/positioning_data.json | PASS |
+| 2026-05-21 | 0.2.0_DS_PortfolioAnalytics | YALP_MDSRC.SA3 | comp-transform | comp-transform schema-check PartnerAnalytics | PASS |
+| 2026-05-21 | 0.2.0_DS_PortfolioAnalytics | YALP_MDSRC.SA3 | comp-platinum | comp-platinum reverse json/positioning/holdings_attribution_data.json | PASS |
+| 2026-05-21 | 0.2.0_DS_PortfolioAnalytics | YALP_MDSRC.SA3 | comp-platinum | comp-platinum reverse json/valuation/valuation_data.json | PASS |
+| 2026-05-21 | 0.2.0_DS_PortfolioAnalytics | YALP_MDSRC.SA3 | comp-platinum | comp-platinum reverse json/valuation/risk_premium_data.json | PASS |
+| 2026-05-21 | 0.4.0_DE_ClientPlatform~B | ADHC_VALGATE.006 | comp-transform schema-check PartnerAnalytics; D-2 runner structural-assertion run (live AC3) | D-2 visual-rendering-baseline gate built + verified 11/11 synthetic + live AC3 3/3 |
