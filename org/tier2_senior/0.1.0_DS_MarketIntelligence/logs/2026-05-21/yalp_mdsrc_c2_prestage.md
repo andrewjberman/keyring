@@ -18,8 +18,10 @@ Columns: entity_type, portal_name, yc_symbol, yc_kind, c2_endpoint, c2_method, c
 
 Readiness tally (76):
 - 31 READY -- fund_data.json, A4-captured. calc by yc_kind (id:level for ^-indices, id:price for securities/ETF). maxPoints=100000, format=real. Pull structure final.
-- 36 PENDING-RECAPTURE -- general_data.json (the MSCI + Bloomberg-bond indices). metrics/params marked PIN-during-recapture (A4 AC5 -- the working general_data.json invocation is pinned when the recapture runs on a non-contended seat).
+- 36 PENDING-RECAPTURE -- fund_data.json calcs=id:level, full quote-page param form. (A5 correction, committed ddbcc6cc1: the 36 MSCI/bond indices ARE fund_data.json items -- HARs ycharts.com5/6 show ^BBUSATR/^SGSA/^MSACXUSNTR all 200 on calcs=id:level; the A4 "general_data.json-only" framing was a sweep param-set artifact. general_data.json is a returns-table endpoint, not the daily series -- dropped from the pull-spec.) Numbers pending the dedicated-seat recapture.
 - 9 BLOCKED -- yc_symbol unresolved; Track 2.
+
+A5 UPDATE (2026-05-21): pull-spec regenerated -- all 67 symbol-resolved entities now use ONE endpoint, fund_data.json (was 31 fund_data + 36 general_data). Uniform pull, no per-class endpoint branching.
 
 C2 pull design encoded in the spec: full native-history pull (no date-bounded YCharts path -- A4 Finding 2), maxPoints=100000 for native daily, client-side bound to the portal ~6yr daily window; resample to monthly only where a consuming surface needs it (Valuation time_series).
 
