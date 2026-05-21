@@ -3863,3 +3863,30 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-05-20 | 0.7.0_AE_CloudOps~A | YALP_MDSRC.F3 | comp-pipescript | comp-pipescript io yang-generate-macro-timeseries | FAIL |
 | 2026-05-21 | 0.2.0_DS_PortfolioAnalytics~A | YALP_MDSRC.F6.dsa-fred-bloomberg-residue-merge-spec | comp-pipescript | comp-pipescript io yang-generate-macro | FAIL |
 | 2026-05-21 | 0.2.0_DS_PortfolioAnalytics~A | YALP_MDSRC.F6.dsa-fred-bloomberg-residue-merge-spec | comp-routes | comp-routes behaviors | PASS |
+| 2026-05-21 | 1.0.0_SA_CTO | (no-TO) | comp-iam | comp-iam service fred-data-ingestion | PASS |
+| 2026-05-21 | 1.0.0_SA_CTO | (no-TO) | comp-iam | comp-iam gaps | PASS |
+| 2026-05-21 | 0.7.0_AE_CloudOps~A | YALP_MDSRC.A4 | comp-iam | comp-iam service fred-macro-ingestion | PASS |
+| 2026-05-21 | 0.2.0_DS_PortfolioAnalytics | SMARTX-REVERSE-ENGINEERING | comp-pipescript | comp-pipescript io yang-model-portfolio-benchmarks | FAIL |
+| 2026-05-21 | 0.2.0_DS_PortfolioAnalytics | SMARTX-REVERSE-ENGINEERING | comp-iam | comp-iam service yang-model-portfolio-benchmarks | PASS |
+| 2026-05-21 | 0.4.0_DS_ClientPlatform~C | (no-TO) | comp-iam | comp-iam service ycharts-session-capture | PASS |
+| 2026-05-21 | 0.4.0_DS_ClientPlatform~C | (no-TO) | comp-iam | comp-iam service ycharts-session-probe | PASS |
+| 2026-05-21 | 0.4.0_DS_ClientPlatform~C | (no-TO) | comp-iam | comp-iam gaps | PASS |
+| 2026-05-21 | 2.0.0_SA_COO~C | (no-TO) | comp-chainrun | comp-chainrun selfcheck | FAIL |
+| 2026-05-21 | 2.0.0_SA_COO~C | (no-TO) | comp-chainrun | comp-chainrun selfcheck | PASS |
+| 2026-05-21 | 2.0.0_SA_COO~C | (no-TO) | comp-chainrun | comp-chainrun spec | PASS |
+| 2026-05-21 | 2.0.0_SA_COO~C | (no-TO) | comp-chainrun | comp-chainrun snapshot --label live1 --out .runtmp/valgate007/live1.json | PASS |
+| 2026-05-21 | 2.0.0_SA_COO~C | (no-TO) | comp-chainrun | comp-chainrun snapshot --label live2 --out .runtmp/valgate007/live2.json | PASS |
+| 2026-05-21 | 2.0.0_SA_COO~C | (no-TO) | comp-chainrun | comp-chainrun diff .runtmp/valgate007/live1.json .runtmp/valgate007/live2.json --verbose | PASS |
+| 2026-05-21 | 1.0.0_SA_CTO | ADVI_DEMOV1-PRD | comp-blast | comp-blast opal-partners-data | PASS |
+| 2026-05-21 | 1.0.0_SA_CTO | ADVI_DEMOV1-PRD | comp-routes | comp-routes behaviors | PASS |
+| 2026-05-21 | 1.0.0_SA_CTO | ADVI_DEMOV1-PRD | comp-pii | comp-pii audit | PASS |
+| 2026-05-21 | 1.0.0_SA_CTO | ADVI_DEMOV1-PRD | comp-routes | comp-routes trace getPlatinumFirmDashboard | PASS |
+| 2026-05-21 | 0.4.0_DS_ClientPlatform~C | ADVI_DEMOV1.000.dsc-static-platinum-serving-path-pii-probe | comp-routes | comp-routes trace getPlatinumFirmDashboard | PASS |
+| 2026-05-21 | 0.4.0_DS_ClientPlatform~C | ADVI_DEMOV1.000.dsc-static-platinum-serving-path-pii-probe | comp-blast | comp-blast opal-partners-data | PASS |
+| 2026-05-21 | 0.4.0_DS_ClientPlatform~C | ADVI_DEMOV1.000.dsc-static-platinum-serving-path-pii-probe | comp-chainrun | comp-chainrun selfcheck | PASS |
+| 2026-05-21 | 0.4.0_DS_ClientPlatform~C | ADVI_DEMOV1.000.dsc-static-platinum-serving-path-pii-probe | comp-chainrun | comp-chainrun snapshot --label v1 --out .runtmp/valgate007/v1.json | PASS |
+| 2026-05-21 | 0.4.0_DS_ClientPlatform~C | ADVI_DEMOV1.000.dsc-static-platinum-serving-path-pii-probe | comp-chainrun | comp-chainrun snapshot --label v2 --out .runtmp/valgate007/v2.json | PASS |
+| 2026-05-21 | 0.4.0_DS_ClientPlatform~C | ADVI_DEMOV1.000.dsc-static-platinum-serving-path-pii-probe | comp-chainrun | comp-chainrun diff .runtmp/valgate007/v1.json .runtmp/valgate007/v2.json | PASS |
+| 2026-05-21 | 0.4.0_DS_ClientPlatform~C | ADVI_DEMOV1.000.dsc-static-platinum-serving-path-pii-probe | comp-pii | comp-pii audit | PASS |
+| 2026-05-21 | 0.4.0_DS_ClientPlatform~C | ADVI_DEMOV1.000.dsc-static-platinum-serving-path-pii-probe | comp-chainrun | comp-chainrun selfcheck | PASS |
+| 2026-05-21 | 0.4.0_DS_ClientPlatform~C | ADVI_DEMOV1.000.dsc-static-platinum-serving-path-pii-probe | comp-blast | comp-blast opal-partners-data | PASS |
