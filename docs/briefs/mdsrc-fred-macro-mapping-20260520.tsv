@@ -1,0 +1,81 @@
+group	indicator	bbg_ticker	unit	served	fred_series_id	fred_class	fred_units_param	fidelity	residue_alt_source	notes
+Leading Indicator	Leading Index	LEI YOY  Index	%	yes	(none)	NON-FRED	-	-	Conference Board (licensed subscription); OECD CLI USALOLITONOSTSAM is a different-methodology proxy	Conference Board LEI is licensed; FRED USSLIND (Philly Fed leading index) discontinued 2020-02
+Leading Indicator	PMI Manufacturing	NAPMPMI  Index		yes	(none)	NON-FRED	-	-	ISM subscription	ISM withdrew PMI series from FRED in 2016; licensed survey
+Leading Indicator	PMI Services	NAPMNMI  Index		yes	(none)	NON-FRED	-	-	ISM subscription	licensed survey, not on FRED
+Leading Indicator	S&P PMI Manufacturing	MPMIUSMA Index		yes	(none)	NON-FRED	-	-	S&P Global subscription	S&P Global/Markit PMI is licensed; FRED carries the public ISM PMI historically but not S&P Global
+Leading Indicator	S&P PMI Services	MPMIUSSA Index		yes	(none)	NON-FRED	-	-	S&P Global subscription	licensed
+Leading Indicator	ISM Manufacturing New Orders	NAPMNEWO Index		yes	(none)	NON-FRED	-	-	ISM subscription	ISM sub-index, licensed
+Leading Indicator	ISM Services New Orders	NAPMNNO  Index		yes	(none)	NON-FRED	-	-	ISM subscription	ISM sub-index, licensed
+Leading Indicator	NFIB Small Business Optimism	SBOITOTL Index		yes	(none)	NON-FRED	-	-	NFIB direct (licensed)	NFIB survey, licensed
+Lagging Indicator	GDP QoQ	GDP CQOQ Index	%	yes	A191RL1Q225SBEA	FRED-DIRECT	lin	EXACT (Bloomberg Mar 2.0 = FRED Q1 2.0)	-	BEA real GDP, annualized QoQ % change; native series
+Lagging Indicator	Industrial Productivity MoM	IP  CHNG Index	%	yes	INDPRO	FRED-TRANSFORM	pch	HIGH (same Fed G.17 source)	-	FRED INDPRO is index level; units=pch gives MoM %
+Lagging Indicator	Durable Goods Orders MoM	DGNOCHNG Index	%	yes	DGORDER	FRED-TRANSFORM	pch	HIGH (same Census source)	-	DGORDER level; units=pch -> MoM %
+Lagging Indicator	Factory Orders MoM	USPHTMOM Index	%	yes	AMTMNO	FRED-TRANSFORM	pch	HIGH (same Census M3 source)	-	use AMTMNO total factory orders (NOT NEWORDER, which is nondefense cap goods ex-air)
+Lagging Indicator	Capacity Utilization	CPTICHNG Index	%	yes	TCU	FRED-DIRECT	lin	EXACT (Bloomberg Apr 76.12 = FRED Apr 76.1194)	-	Fed G.17 total capacity utilization
+Lagging Indicator	Business Inventories YoY	MTIBYOY Index	%	yes	BUSINV	FRED-TRANSFORM	pc1	HIGH (same Census source)	-	BUSINV level; units=pc1 -> YoY %
+Lagging Indicator	Trade Balance	USTBTOT Index	B	yes	BOPGSTB	FRED-DIRECT	lin	EXACT (Bloomberg Mar -60.3B = FRED Mar -60307M)	-	Census/BEA goods+services trade balance; FRED in $M, portal in $B
+Financial Condition	Bloomberg Financial Condition Index	BFCIUS   Index		yes	(none)	NON-FRED	-	-	Bloomberg proprietary; Chicago Fed NFCI (already on the page) is the FRED-native substitute	proprietary Bloomberg composite
+Financial Condition	Chicago Fed Financial Condition Index	NFCIINDX Index		yes	NFCI	FRED-DIRECT	lin	HIGH (same Chicago Fed source)	-	Chicago Fed National Financial Conditions Index, weekly
+Financial Condition	Fed Fund Rate	FEDL01 Index	%	yes	FEDFUNDS	FRED-DIRECT	lin	EXACT (Bloomberg Apr 3.64 = FRED Apr 3.64)	-	monthly effective; DFF (daily) / EFFR also available
+Financial Condition	Fed Balance Sheet	FARBAST Index	B	yes	WALCL	FRED-DIRECT	lin	HIGH (same Fed H.4.1 source)	-	Fed total assets, weekly; FRED in $M
+Financial Condition	Fed Balance Sheet as % of GDP	BSPGCPUS Index	%	yes	WALCL,GDP	FRED-TRANSFORM	computed	HIGH	-	compute WALCL/GDP*100; both on FRED
+Financial Condition	Net Long Term TIC Flows	FRNTTOTL Index	B	yes	(partial)	FRED-PROXY	lin	PARTIAL	Treasury TIC release	FRED TIC coverage is thin; verify exact series with FRED API search at implementation time
+Inflation	CPI MoM	CPI CHNG Index	%	yes	CPIAUCSL	FRED-TRANSFORM	pch	HIGH (same BLS source)	-	CPIAUCSL index; units=pch -> MoM %
+Inflation	Core CPI MoM	CPUPXCHG Index	%	yes	CPILFESL	FRED-TRANSFORM	pch	HIGH (same BLS source)	-	CPI less food & energy
+Inflation	PCE MoM	PCE DEFM Index	%	yes	PCEPI	FRED-TRANSFORM	pch	HIGH (same BEA source)	-	PCE price index
+Inflation	Core PCE MoM	PCE CMOM Index	%	yes	PCEPILFE	FRED-TRANSFORM	pch	HIGH (same BEA source)	-	core PCE; Fed's preferred gauge
+Inflation	PPI MoM	FDIDFDMO Index	%	yes	PPIFIS	FRED-TRANSFORM	pch	HIGH (same BLS source)	-	PPI final demand
+Inflation	Unit Labor Cost YoY	COSYNFRM Index	%	yes	ULCNFB	FRED-TRANSFORM	pc1	HIGH (same BLS source)	-	nonfarm business unit labor cost; quarterly
+Inflation	UMich 1 Year Inflation	CONSPXMD Index	%	yes	MICH	FRED-DIRECT	lin	HIGH (same UMich survey)	-	UMich 1-year expected inflation
+Inflation	UMich 5-10 Year Inflation	CONSP5MD Index	%	yes	(none)	NON-FRED	-	-	UMich subscription; market 5y breakeven T5YIE (FRED) is a different-concept proxy	FRED carries only the 1-year UMich expectation, not the 5-10 year survey
+Labor Market	Unemployment Rate	EHUPUS   Index	%	yes	UNRATE	FRED-DIRECT	lin	EXACT (same BLS source)	-	BLS U-3
+Labor Market	Initial Jobless Claims	INJCJC   Index	K	yes	ICSA	FRED-DIRECT	lin	HIGH (same DOL source)	-	weekly; portal takes monthly snapshot of the weekly series
+Labor Market	Continuing Jobless Claims	INJCSP   Index	K	yes	CCSA	FRED-DIRECT	lin	HIGH (same DOL source)	-	weekly insured unemployment
+Labor Market	US Job Openings	JOLTTOTL Index	K	yes	JTSJOL	FRED-DIRECT	lin	EXACT (Bloomberg Mar 6866 = FRED Mar 6866)	-	BLS JOLTS total job openings
+Labor Market	Nonfarm Payrolls	NFP TCH  Index	K	yes	PAYEMS	FRED-TRANSFORM	chg	HIGH (same BLS source)	-	PAYEMS is the level; units=chg -> MoM change (the headline NFP number)
+Labor Market	ADP Employment Change	ADP CHNG Index	K	yes	(none)	NON-FRED	-	-	ADP Research / ADP National Employment Report (licensed)	ADP monthly-change report not freely on FRED
+Labor Market	Labor Force Participation Rate	PRUSTOT  Index	%	yes	CIVPART	FRED-DIRECT	lin	EXACT (Bloomberg Apr 61.8 = FRED Apr 61.8)	-	BLS LFPR
+Labor Market	Weekly Hours	AWH TOTL Index	hrs	yes	AWHAETP	FRED-DIRECT	lin	EXACT (Bloomberg Apr 34.3 = FRED Apr 34.3)	-	avg weekly hours, total private
+Labor Market	Hourly Earnings MoM	AHE MOM% Index	%	yes	CES0500000003	FRED-TRANSFORM	pch	HIGH (same BLS source)	-	avg hourly earnings level; units=pch -> MoM %
+Consumer	Retail Sales MoM	RSTAMOM  Index	%	yes	RSAFS	FRED-TRANSFORM	pch	HIGH (same Census source)	-	advance retail sales; units=pch
+Consumer	Retail Sales ex Auto MoM	RSTAXMOM Index	%	yes	RSFSXMV	FRED-TRANSFORM	pch	HIGH (same Census source)	-	retail ex motor vehicles
+Consumer	Retail Sales ex Auto and Gas MoM	RSTAXAG% Index	%	yes	MARTSSM44X72USS	FRED-TRANSFORM	pch	HIGH (same Census source)	-	retail ex motor vehicle & gas; confirm exact series ID at implementation
+Consumer	UMich Consumer Sentiment	CONSSENT Index		yes	UMCSENT	FRED-DIRECT	lin	HIGH (same UMich survey)	-	UMich Index of Consumer Sentiment
+Consumer	Conference Board Consumer Confidence	CONCCONF Index		yes	(none)	NON-FRED	-	-	Conference Board (licensed); OECD CCI USACSCICP02STSAM is a normalized proxy (different scale ~100-centered)	Conf Board consumer confidence licensed; not on FRED
+Consumer	Consumer Credit YoY	CCOSYOY Index	%	yes	TOTALSL	FRED-TRANSFORM	pc1	HIGH (same Fed G.19 source)	-	total consumer credit; units=pc1 -> YoY %
+Consumer	Wards Total Vehicle Sales	SAARTOTL Index	M	yes	TOTALSA	FRED-DIRECT	lin	HIGH (same Wards/BEA source)	-	total vehicle sales SAAR
+Housing Market	NAHB Housing Market Index	USHBMIDX Index		yes	(none)	NON-FRED	-	-	NAHB direct (licensed)	NAHB/Wells Fargo builder-confidence survey, licensed
+Housing Market	New Home Sales	NHSLTOT Index	K	yes	HSN1F	FRED-DIRECT	lin	EXACT (Bloomberg Mar 682 = FRED Mar 682)	-	Census new single-family home sales
+Housing Market	Existing Home Sales	ETSLTOTL Index	M	yes	EXHOSLUSM495S	FRED-DIRECT	lin	HIGH (NAR-sourced; FRED carries it)	-	NAR existing home sales; FRED in units (annualized)
+Housing Market	Pending Home Sales	USPHTOTL Index		yes	(none)	NON-FRED	-	-	NAR direct (licensed)	NAR Pending Home Sales Index not on FRED (FRED carries NAR Existing but not Pending)
+Housing Market	Housing Starts	NHSPSTOT Index	K	yes	HOUST	FRED-DIRECT	lin	EXACT (Bloomberg Mar 1502 = FRED Mar 1502)	-	Census housing starts
+Housing Market	Building Permits	NHSPATOT Index	K	yes	PERMIT	FRED-DIRECT	lin	EXACT (Bloomberg Mar 1363 = FRED Mar 1363)	-	Census building permits
+Housing Market	S&P CoreLogic CS Home Price MoM	SPCS20SM Index	%	NO (config'd, dropped)	CSUSHPINSA	FRED-TRANSFORM	pch	HIGH (S&P/CoreLogic licensed to FRED)	-	configured in MACRO_GROUPS but absent from served macro_data.json (no data_pkl row); FRED CSUSHPINSA or SPCS20RSA available
+Investor Sentiment	AAII Sentiment Bullish	AAIIBULL Index	%	yes	(none)	NON-FRED	-	-	AAII (aaii.com publishes the weekly survey; semi-public download)	AAII Investor Sentiment Survey, licensed
+Investor Sentiment	AAII Sentiment Neutral	AAIINEUT Index	%	yes	(none)	NON-FRED	-	-	AAII	licensed
+Investor Sentiment	AAII Sentiment Bearish	AAIIBEAR Index	%	yes	(none)	NON-FRED	-	-	AAII	licensed
+Investor Sentiment	AAII Stock Allocation	AAIISTCK Index	%	yes	(none)	NON-FRED	-	-	AAII Asset Allocation Survey	licensed
+Investor Sentiment	AAII Bond Allocation	AAIIBOND Index	%	yes	(none)	NON-FRED	-	-	AAII Asset Allocation Survey	licensed
+Investor Sentiment	AAII Cash Allocation	AAIICASH Index	%	yes	(none)	NON-FRED	-	-	AAII Asset Allocation Survey	licensed
+Investor Sentiment	Fed NLP Sentiment	BENLPFED Index		yes	(none)	NON-FRED	-	-	Opal/Bloomberg proprietary NLP	proprietary; no public source
+Treasury Yields	1M	USGG1M Index	%	yes	DGS1MO	FRED-DIRECT	lin	HIGH (Treasury CMT; portal monthly snapshot vs FRED daily)	-	already proven via yield_curve_fred.json
+Treasury Yields	3M	USGG3M Index	%	yes	DGS3MO	FRED-DIRECT	lin	HIGH	-	-
+Treasury Yields	1Y	USGG12M Index	%	yes	DGS1	FRED-DIRECT	lin	HIGH	-	-
+Treasury Yields	2Y	USGG2YR Index	%	yes	DGS2	FRED-DIRECT	lin	HIGH	-	-
+Treasury Yields	3Y	USGG3YR Index	%	yes	DGS3	FRED-DIRECT	lin	HIGH	-	-
+Treasury Yields	5Y	USGG5YR Index	%	yes	DGS5	FRED-DIRECT	lin	HIGH	-	-
+Treasury Yields	7Y	USGG7YR Index	%	yes	DGS7	FRED-DIRECT	lin	HIGH	-	-
+Treasury Yields	10Y	USGG10YR Index	%	yes	DGS10	FRED-DIRECT	lin	HIGH	-	-
+Treasury Yields	20Y	USGG20YR Index	%	yes	DGS20	FRED-DIRECT	lin	HIGH	-	-
+Treasury Yields	30Y	USGG30YR Index	%	yes	DGS30	FRED-DIRECT	lin	HIGH	-	-
+Credit Spread	Ted Spread	.BSBYTED G Index	bps	yes	(none)	NON-FRED	-	-	no FRED equivalent; SOFR-based funding-stress spreads on FRED are a different-concept substitute	FRED TEDRATE discontinued 2022-01 (LIBOR retirement); Bloomberg ticker is itself a BSBY-based TED replacement
+Credit Spread	AAA	LU3AOAS Index	%	yes	BAMLC0A1CAAA	FRED-PROXY	lin	MEDIUM (ICE BofA AAA OAS vs Bloomberg AAA OAS - different index families)	-	FRED ICE BofA AAA Corporate OAS
+Credit Spread	IG	LUACOAS Index	%	yes	BAMLC0A0CM	FRED-PROXY	lin	MEDIUM (ICE BofA Corp Master vs Bloomberg US Corp - close, not identical)	-	already cached by refresh-fred-cache Lambda
+Credit Spread	AGG	LBUSOAS Index	%	yes	(none)	NON-FRED	-	-	Bloomberg index OAS (licensed); ICE BofA US Broad Market OAS is a non-FRED proxy	Bloomberg US Aggregate index OAS; no FRED equivalent
+Credit Spread	HY	LF98OAS Index	%	yes	BAMLH0A0HYM2	FRED-PROXY	lin	MEDIUM (ICE BofA US HY OAS vs Bloomberg HY OAS - close, not identical)	-	already cached by refresh-fred-cache Lambda
+Market Indicator	VIX	VIX Index		yes	VIXCLS	FRED-DIRECT	lin	HIGH (CBOE VIX; portal monthly snapshot vs FRED daily)	-	already used by volatility_data.json (opal-portal-volatility-fetcher)
+Currency	DXY	DXY Curncy		yes	DTWEXBGS	FRED-PROXY	lin	LOW (trade-weighted broad dollar, different basket+scale vs ICE DXY ~99 vs DTWEXBGS ~119)	-	ICE US Dollar Index is licensed; DTWEXBGS is the Fed trade-weighted broad index, not a drop-in
+Currency	EUR/USD	EURUSD BGN Curncy		yes	DEXUSEU	FRED-DIRECT	lin	HIGH (same FX rate, Fed H.10)	-	FRED daily noon rate
+Currency	USD/JPY	USDJPY Curncy		yes	DEXJPUS	FRED-DIRECT	lin	HIGH (same FX rate, Fed H.10)	-	-
+Currency	GBP/USD	GBPUSD BGN Curncy		yes	DEXUSUK	FRED-DIRECT	lin	HIGH (same FX rate, Fed H.10)	-	-
+Currency	USD/CNH	USDCNH Curncy		yes	DEXCHUS	FRED-PROXY	lin	MEDIUM (FRED DEXCHUS is onshore CNY; portal tracks offshore CNH)	-	onshore/offshore yuan diverge in stress periods
