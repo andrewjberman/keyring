@@ -1,0 +1,23 @@
+{
+  "version": "v1",
+  "description": "VALGATE D-3 multi-axis envelope-validation gate -- seed config (ADHC_VALGATE.005). Each surface declares an entity-metric surface in a platinum artifact, its per-axis plausibility envelopes, and the joint-implausibility fire threshold. Config-driven by design -- add a surface to cover a new entity-metric surface; no gate-code change.",
+  "surfaces": [
+    {
+      "name": "advisor_book",
+      "entity_type": "advisor",
+      "description": "Per-advisor operational metrics. Generalizes the shipped INFFIN.006 AdvisorBookView 6-axis threshold-2 sentinel (portal/src/pages/AdvisorIntelligence/_shared/AdvisorBookView.tsx, warnOnInflectionAdvisorDrift). The 'nonzero' envelope on every axis + threshold 2 reproduces that sentinel's null-or-zero check exactly -- the existing coverage is preserved through the generalized gate (ADHC_VALGATE.005 AC2).",
+      "artifact_filename": "book.json",
+      "entity_id_path": "advisor_key",
+      "metric_path": "book",
+      "threshold": 2,
+      "axes": [
+        {"key": "total_aua", "envelope": {"nonzero": true}},
+        {"key": "fee_earning_aua", "envelope": {"nonzero": true}},
+        {"key": "nna_ytd", "envelope": {"nonzero": true}},
+        {"key": "client_count", "envelope": {"nonzero": true}},
+        {"key": "account_count", "envelope": {"nonzero": true}},
+        {"key": "implied_annual_revenue", "envelope": {"nonzero": true}}
+      ]
+    }
+  ]
+}
