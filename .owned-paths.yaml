@@ -91,8 +91,9 @@ lanes:
     permitted_agents:
       - 0.2.0_DE_PortfolioAnalytics
       - 0.2.0_DS_PortfolioAnalytics
+      - 0.2.0_DS_PortfolioAnalytics~A
       - 0.2.0_DT_PortfolioAnalytics
-    description: "Pod 2 — PortfolioAnalytics (DE + DS + DT)"
+    description: "Pod 2 — PortfolioAnalytics (DE + DS + DT). ~A = Andrew-spawned DS sub-lane (YALP_MDSRC.F1)."
 
   POD3:
     permitted_agents:
@@ -237,6 +238,7 @@ lanes:
     permitted_agents:
       - 0.2.0_DE_PortfolioAnalytics
       - 0.2.0_DS_PortfolioAnalytics
+      - 0.2.0_DS_PortfolioAnalytics~A
       - 0.2.0_DT_PortfolioAnalytics
       - 1.0.0_SA_CTO
       - 2.0.0_SA_COO
