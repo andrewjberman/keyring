@@ -6,7 +6,28 @@
 | Trigger | Andrew-direct, 2026-05-21: "know how deep SmartX goes ... all available endpoints and granularities ... the extent of snapshot and historical portfolio analytics and raw info for downstream portfolio analytics procurable on the platform." |
 | Author | `0.2.0_DS_PortfolioAnalytics` |
 | Date | 2026-05-21 |
-| Status | DRAFT — surfaces A-E inventoried from HAR + GraphQL introspection + the B1/S1/SXPL REST baseline. Live api/3.1 exhaustion sweep is the one remaining confirmation step (see §8). |
+| Status | v2 — surfaces A-E inventoried + the live api/3.1 exhaustion sweep COMPLETE. The sweep found a material net-new endpoint (`/models/{id}/performance`) that 4 prior work-pieces missed — see §0 and §8. |
+
+## 0. Sweep correction (READ FIRST) — SmartX HAS a daily flow-adjusted model-return series
+
+The live api/3.1 exhaustion sweep (§8) found **`/models/{id}/performance`** — an endpoint
+**no prior work probed** (not B1, not S1, not SXPL_RESTIN.001, not b2597ea25). It is
+multi-cadence (`?grouping=daily|weekly|monthly`) and at `grouping=daily` returns a **431-record
+daily series**, fresh to T-1, each record:
+`pnl{dollar, percent}` + `summary{beginningMarketValue, endingMarketValue, increaseByAmount,
+decreaseByAmount, isFullRange, transactions, fees}`.
+
+`pnl.percent` is a **daily return**, and `summary` carries the cash flows
+(`increaseBy/decreaseByAmount`) + an `isFullRange` clean-period flag — i.e. it is a
+**flow-adjusted** daily return, not the flow-contaminated `enterprises/aum.closingEquity`.
+
+**This corrects the prior consensus.** b2597ea25 caveat 7 and this brief's earlier draft both
+stated "SmartX model-performance is monthly end-to-end; no daily model-return series." That
+is **WRONG** — superseded by this finding. SmartX has a daily, weekly, AND monthly
+flow-adjusted model-return series via `/models/{id}/performance`. Consequence: the S1
+Factor-Tilts sub-finding ("SmartX gives only a monthly model-return input") no longer holds —
+a daily model-return input IS available (the factor *spreads* + regression remain non-SmartX,
+so Factor Tilts is not fully unlocked, but the model-return leg can be daily-SmartX-sourced).
 | Method | Reverse-engineer / integrate against the provider backend — NOT scrape (Third-Party Data Integration Standard). |
 | Evidence | SmartX HAR `portal.managedaccounts.io.har` (2026-05-15, 243 entries) parsed; live GraphQL schema introspection (this session); `docs/briefs/smartx-rest-api-inventory-20260521.md` (b2597ea25, the B1+S1+SXPL_RESTIN.001 REST baseline) consumed. |
 
@@ -30,16 +51,21 @@ no factor data, no peer universe.
 | D | Legacy REST `api/3.0` | `smartx.managedaccounts.io` | Superseded by `api/3.1` | none — drop |
 | E | Portal internal | `portal.managedaccounts.io/ng_api` | Portal dashboard widgets | none — UI plumbing |
 
-**The two hard limits on SmartX analytics depth:**
-1. **Performance is monthly.** Every model-return / risk-stat series is monthly cadence.
-   There is **no daily model-return series** — the only daily series (`enterprises/aum`
-   `closingEquity`) is a flow-contaminated book value, not a return.
-2. **Holdings are snapshot-only.** No historical-holdings endpoint exists; holdings history
-   must be **accrued** by daily-snapshotting `/holdings`.
+**The hard limits on SmartX analytics depth (revised post-sweep):**
+1. **Holdings are snapshot-only.** No historical-holdings endpoint exists; holdings history
+   must be **accrued** by daily-snapshotting `/holdings`. (This limit STANDS.)
+2. **Performance** — NOT monthly-only (corrected, §0): `/models/{id}/performance` serves a
+   daily / weekly / monthly flow-adjusted model-return series. The `performance.smartxadvisory.com`
+   service and `historicalperformance` are monthly; the api/3.1 `/models/{id}/performance`
+   endpoint is multi-cadence incl. daily.
+3. **Still genuinely absent:** per-segment / per-asset-class returns (attribution input),
+   peer / category-relative analytics, holdings classification, factor data, market data.
+   The sweep confirmed NO `/attribution`, `/risk`, `/sectors`, `/characteristics`,
+   `/transactions` endpoints exist (all 404).
 
-So SmartX answers "what does the model hold now" and "how did the model perform, monthly" —
-not "what did it hold last quarter" or "what was the daily return" or "how did it do vs peers"
-or "decompose the excess return."
+So SmartX answers "what does the model hold now", "how did the model perform — daily, weekly
+or monthly", "what trades happened", and "what is the AUM" — but NOT "what did it hold last
+quarter", "how did it do vs peers", or "decompose the excess return by segment".
 
 ---
 
@@ -96,6 +122,18 @@ Envelope `{data, version, hostDetails, statusCode, requestId, timestamp}`.
 | `reportedmodels/{rmid}/changerequesthistory` | per-trade | event log (historical) | tradeTimestamp, ticker, qty, activity, from/to | rebalance/trade history |
 | `users` | user | snapshot | user record | **net-new** (not in b2597ea25); access-control, not analytics |
 | `users/access` | user | snapshot | access-control grants | **net-new**; not analytics |
+| `models/{modelId}/performance?grouping=` | model | **daily / weekly / monthly series** | per-period `pnl{dollar,percent}` + `summary{begin/endMarketValue, increase/decreaseByAmount, isFullRange, transactions, fees}` | **NET-NEW — sweep-discovered; the key find.** `grouping=daily` -> 431 daily records (flow-adjusted return, fresh T-1); `weekly` -> 90; `monthly` -> 21. THE SmartX daily model-return source. |
+| `models` / `reportedmodels` / `enterprises` | collection | snapshot/list | roster/list of models / reportedmodels / enterprises | net-new (sweep); the bare-collection forms (b2597ea25 had only the `/{id}` forms) |
+| `models/{modelId}/holdings` | model | snapshot | HTTP 400 unparameterized — a model-keyed holdings variant of `reportedmodels/{rmid}/holdings` | net-new (sweep); exists, needs params |
+| `benchmarks` | benchmark | snapshot/list | benchmark reference list (small, 394 B) | net-new (sweep) |
+| `accounts` | account | (empty for this credential) | account roster | net-new (sweep); returned empty for `opal7` |
+
+**Sweep negative results (confirmed ABSENT — HTTP 404):** `reportedmodels/{rmid}/`
+`{statistics, performance, transactions, trades, allocations, attribution, risk,
+characteristics, sectors, commentary}`; `models/{id}/{allocations, transactions}`;
+`/securities`, `/sleeves`, `/transactions`, `/enterprises/{models, transactions, performance}`.
+This bounds the api/3.1 surface: **no attribution / risk / per-segment / transactions /
+sectors data endpoint exists** — confirming the §5 gaps empirically, not by inference.
 
 ### Surface B — `performance.smartxadvisory.com/models/performance`
 
@@ -146,8 +184,9 @@ performance, or risk data. Mapped and bounded — no further depth here.
 | Current model holdings + weights | **YES** (snapshot) | `reportedmodels/{rmid}/holdings` — per-symbol |
 | Holdings history (point-in-time) | **NO** | snapshot-only; must accrue daily snapshots |
 | Holdings asset-class classification | **NO** | `assetType` broken; needs an external classifier (Opal ETFClassifier) |
-| Model return series | **YES, monthly** | Surface B `monthly_statistics` — fresh, monthly cadence |
-| Daily model return series | **NO** | only `enterprises/aum.closingEquity` = flow-contaminated value |
+| Model return series (monthly) | **YES** | `/models/{id}/performance?grouping=monthly` OR Surface B `monthly_statistics` |
+| Model return series — **DAILY** | **YES** (corrected — §0) | `/models/{id}/performance?grouping=daily` -> 431 daily `pnl.percent`, flow-adjusted, fresh T-1 |
+| Model return series — weekly | **YES** | `/models/{id}/performance?grouping=weekly` -> 90 records |
 | Model risk statistics (sharpe/sortino/drawdown/etc.) | **YES, monthly** | Surface B `model.calculations` |
 | Benchmark return series | **YES** (one benchmark/model, monthly) | Surface B `monthly_benchmark_statistics` |
 | Peer / category-relative analytics | **NO** | confirmed absent across Surfaces A+B |
@@ -177,7 +216,11 @@ forward-only hybrid build; Factor Tilts stays proprietary.
 4. `holdings` is current-snapshot only — no historical endpoint.
 5. `performance/models/performance` ignores date params — always full-history.
 6. `enterprises/aum.totalAum` mis-scaled — use per-day `closingEquity`.
-7. SmartX model-performance is monthly end-to-end — no daily model-return series.
+7. **CORRECTED (§0):** SmartX model-performance is NOT monthly-only. `historicalperformance`
+   + the `performance.smartxadvisory.com` service are monthly, but `/models/{id}/performance`
+   (api/3.1, sweep-discovered) serves daily / weekly / monthly. The prior "monthly end-to-end,
+   no daily model-return series" claim (b2597ea25 caveat 7 + this brief's earlier draft) is
+   superseded — a daily flow-adjusted model-return series exists.
 
 ---
 
@@ -189,12 +232,20 @@ forward-only hybrid build; Factor Tilts stays proprietary.
 - "Raw info for downstream analytics" — §5: model performance + holdings + trades + AUM
   procurable; daily/classification/attribution/peer/factor/market = gaps.
 
-## 8. Open items
+## 8. Live api/3.1 exhaustion sweep — DONE
 
-- **Live api/3.1 exhaustion sweep** — the HAR is a thin session; a systematic sweep would
-  confirm no api/3.1 data endpoint exists beyond the 12 in §4A. The HAR + b2597ea25 + the
-  SXPL_RESTIN.001 13-endpoint probe together bound it strongly, but a sweep closes it.
-- **A fuller SmartX HAR** walking the attribution / performance-drilldown / risk screens
-  would confirm whether those screens fire any endpoint not already listed — nice-to-have,
-  not believed to change the §5 verdict (those screens almost certainly render Surface B).
-- COO is formalizing the TO; this draft is the work-in-motion deliverable.
+Ran 2026-05-21 (read-only, ROPC-JWT, 3.6s throttle; probe `.runtmp/smartx_api31_sweep.py`
++ `.runtmp/smartx_netnew_characterize.py`). 11 known endpoints re-confirmed live (all 200);
+27 candidate endpoints tested. **Result: 9 candidates EXIST, 18 ABSENT (404).**
+
+- **Material find:** `/models/{id}/performance` — daily/weekly/monthly model-return series
+  (§0). No prior work probed it. This is why an exhaustion sweep was worth running.
+- Other net-new: `/benchmarks`, `/accounts`, the `/models` `/reportedmodels` `/enterprises`
+  collection forms, `/models/{id}/holdings` — all folded into §4A.
+- 18 ABSENT confirms no attribution/risk/transactions/sectors/securities endpoint exists —
+  the §5 gaps are now empirically bounded, not inferred.
+
+Open: a fuller SmartX HAR walking the attribution/risk screens would be belt-and-suspenders,
+but the sweep + the HAR + b2597ea25 now bound the api/3.1 data surface with confidence. The
+GraphQL introspection probe + the two sweep probes are in `.runtmp/` pending the OpalETL-lane
+landing into `data/smartx/scripts/` (per the COO routing — SHARED_OPAL_ETL, 0.7.0_AE~A).
