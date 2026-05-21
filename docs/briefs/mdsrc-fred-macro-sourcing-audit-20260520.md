@@ -128,8 +128,8 @@ whatever `price_monthly` row Bloomberg supplies. This matters for the FRED mappi
   2025-12-17) describes a `MacroSummaryPanel` and `VIXTab` that no longer exist.
 - **F7 — drill-down timeseries: 16 of 80 files ~4 months stale; depth uneven; ~36yr not 40yr.**
   The `MacroTimeSeriesModal` drill-down consumes `json/macro/timeseries/{slug}.json`. S3 holds
-  80 files (79 served indicators + 1 orphan `fed_balance_sheet_as_pct_of_gdp.json` from a
-  superseded slug scheme). The current `yang-generate-macro-timeseries` Lambda's `INDICATORS`
+  80 files (79 served indicators + 1 orphan from a slug-scheme mismatch — see the
+  CORRECTION note below). The current `yang-generate-macro-timeseries` Lambda's `INDICATORS`
   list has only **64 entries** — 64 files regenerate weekly (LastModified 2026-05-19), **16 are
   frozen at 2026-01-12** (~4 months stale): all 5 Currency (DXY, EUR/USD, USD/JPY, GBP/USD,
   USD/CNH), Factory Orders MoM, Trade Balance, Net Long Term TIC Flows, Unit Labor Cost YoY,
@@ -143,6 +143,16 @@ whatever `price_monthly` row Bloomberg supplies. This matters for the FRED mappi
   `unemployment_rate` carries only 145 points where a monthly series should have ~432
   (`gdp_qoq`'s 145 is correct — GDP is natively quarterly). Fix: extend the Lambda's
   `INDICATORS` list from 64 to the full 79 + delete the orphan file.
+
+  > **CORRECTION (2026-05-21)** — the orphan-file polarity above was stated backwards.
+  > Per `0.7.0_AE_CloudOps` empirical work during YALP_MDSRC.F3 (slugify-alignment fix,
+  > commit `c7bac415d`): the frontend `MacroTimeSeriesModal` slugify maps `%`->`pct`, so
+  > `fed_balance_sheet_as_pct_of_gdp.json` is the **LIVE** file the frontend actually
+  > reads. The true orphan was `fed_balance_sheet_as_of_gdp.json` — the old Python
+  > generator's `re.sub(r'[^a-zA-Z0-9]+','_')` collapsed `% of` -> `_of_`, producing a
+  > filename the frontend never requests. AE correctly deleted the `_as_of_gdp` variant
+  > and aligned the generator slugify. The F7 finding stands (stale/incomplete drill-down
+  > timeseries, fixed under F3); only the named orphan was reversed.
 
 These are recorded for the implementation TO and for COO/CTO; F1/F3/F7 have user-visible impact.
 
