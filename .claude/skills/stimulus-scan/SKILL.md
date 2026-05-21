@@ -1,6 +1,6 @@
 ---
 name: stimulus-scan
-description: Action-oriented meta-supervisor scan for the Opal multi-agent fabric. Reads peer-agent state from the opal-agent-comms broker, classifies each agent by staleness, cross-references inboxes for unresolved blockers, and **dispatches work to fix blockers and redirect idle capacity**. NOT a reporting tool — every STALE / STANDING_BY / BLOCKED agent receives a TO or nudge in the same scan. For CTO/COO use, primarily inside the `/loop` body. Trigger: sooner-of (~45min since last scan) OR (watcher down / fresh wake). Adapted for ajb_workspace from corporeal's stimulus-scan — agent state is the broker, not telemetry files.
+description: Action-oriented meta-supervisor scan for the Opal multi-agent fabric. Reads per-agent telemetry from `org/mcp/agent_telemetry/*.jsonl` (the PostToolUse-hook stream, kind:work/loop-tagged), cross-checks the opal-agent-comms broker + inboxes, classifies each agent by staleness, and **dispatches work to fix blockers and redirect idle capacity**. NOT a reporting tool — every STALE / STANDING_BY / BLOCKED agent receives a TO or nudge in the same scan. For CTO/COO use, primarily inside the `/loop` body. Trigger: sooner-of (~45min since last scan) OR (watcher down / fresh wake). Adapted for ajb_workspace from corporeal's stimulus-scan.
 ---
 
 # /stimulus-scan
@@ -25,14 +25,28 @@ Per scan: at LEAST one outbound action per non-ACTIVE agent. No "flagged for rev
 
 Run each step in order. Use the MCP broker tools + Bash; emit findings as a markdown table AND fire the dispatches via `mcp__opal-agent-comms__send_message` in the same scan.
 
-### Step 1 — Read agent state (the broker is the source)
+### Step 1 — Read agent state (telemetry primary, broker cross-check)
 
-ajb_workspace agent state lives in the `opal-agent-comms` broker, not in telemetry files:
+ajb_workspace runs the corporeal-style telemetry architecture: the PostToolUse hook `.tools/hooks/post-tool-telemetry.sh` appends one JSONL line per tool call to `org/mcp/agent_telemetry/<serial>.jsonl` — `{ts, agent, tool, kind, session_id}`, with `kind` tagged `work` vs `loop` (loop = check_inbox / heartbeat / get_live_agents / get_agent_status / inbox-watch / kill-orphans / the loop+stimulus-scan Skills). This is the **primary, finest-grained** activity signal — per-tool-call, work/loop-separated.
 
-- `get_live_agents()` — every registered agent: serial, LIVE/STALE flag, last-seen age, one-line work summary. This is the primary staleness signal.
-- `get_org_summary()` — active projects + every agent with pending task orders.
+Extract the last `kind:work` ts per agent (staleness) and the last-any ts (alive-but-loop-only):
 
-For an in-scope agent with no broker registration at all, classify `NOT_REGISTERED` (the agent may be offline this cycle, or crashed mid-session — a meta-signal; do not invent activity for it).
+```bash
+NOW=$(date -u +%s)
+for f in org/mcp/agent_telemetry/*.jsonl; do
+  a=$(basename "$f" .jsonl)
+  w=$(jq -r 'select((.kind//"work")=="work").ts' "$f" 2>/dev/null | tail -1)
+  y=$(grep -oE '"ts":"[^"]+"' "$f" 2>/dev/null | tail -1 | sed 's/.*:"//;s/"//')
+  echo "$a work=$w any=$y"
+done
+```
+Pitfall (corporeal-banked): use `jq -r | tail -1` / `grep -oE | tail -1` for the ts — never `tail -n1 | head -1` (it returns the OLDEST entry on a single-line file).
+
+Then layer the broker for what telemetry does not carry:
+- `get_live_agents()` — registration state + each agent's one-line work summary + last-seen.
+- `get_org_summary()` — active projects + which agents have pending TOs.
+
+An agent with a telemetry file but stale `kind:work` AND only `kind:loop` recent entries is STALE even though it looks "alive". An agent absent from both telemetry and `get_live_agents()` is `NOT_REGISTERED` (offline this cycle / crashed — a meta-signal). A telemetry file frozen for an agent the broker shows LIVE is `TELEMETRY_GAP` — flag the hook, not the agent. `_unknown.jsonl` collecting entries = a session launched without its serial resolvable (no `OPAL_AGENT_SERIAL`, no `.comp-graph/.agent_context`) — a meta-signal, not agent activity.
 
 ### Step 2 — Compute staleness per agent (the broker summary is LOW-FIDELITY — cross-check with git)
 
@@ -56,10 +70,11 @@ Classify:
 
 | Bucket | Signal | Meaning |
 |---|---|---|
-| ACTIVE | broker LIVE + recent heartbeat/commit/SSM (< ~10 min) | working — no action |
-| IDLE | LIVE but no work signal ~10-30 min | between tasks — eligible for capacity routing |
-| STALE | LIVE but no heartbeat/commit/inbound ~30+ min | no observable progress — REQUIRES re-dispatch or a blocker trace |
-| NOT_REGISTERED | absent from `get_live_agents()` | offline this cycle / crashed — meta-signal |
+| ACTIVE | last `kind:work` telemetry ts < ~10 min (or a recent commit/SSM) | working — no action |
+| IDLE | last `kind:work` ~10-30 min, but `kind:loop` entries fresh | between tasks — eligible for capacity routing |
+| STALE | last `kind:work` ~30+ min AND no commit/inbound — even if `kind:loop` is fresh (a watcher self-ping is not work) | no observable progress — REQUIRES re-dispatch or a blocker trace |
+| NOT_REGISTERED | absent from both telemetry and `get_live_agents()` | offline this cycle / crashed — meta-signal |
+| TELEMETRY_GAP | broker LIVE but the telemetry file is frozen / missing | the hook is broken — flag the hook, not the agent |
 
 **Posture (Andrew directive):** "Standing by for X" is never an acceptable terminal state. An idle agent always routes to ready work — there is concurrent generative work available (audits on un-audited surfaces, validator pre-staging, scaffolds for ratified PRDs, pre-stage of a downstream of an about-to-ship peer). Tolerating IDLE/STALE because the "next deliverable is gated" is a supervisor failure.
 
@@ -146,4 +161,4 @@ date -u +%s > org/mcp/.last-stimulus-scan
 
 ## Configuration
 
-State file: `org/mcp/.last-stimulus-scan` (unix-epoch of the last scan). Agent state source: the `opal-agent-comms` broker (`get_live_agents` / `get_agent_status` / `get_org_summary`). Inbox: `org/mcp/inbox/<serial>/`.
+State file: `org/mcp/.last-stimulus-scan` (unix-epoch of the last scan). Primary activity source: the per-agent telemetry JSONL at `org/mcp/agent_telemetry/<serial>.jsonl`, written by the PostToolUse hook `.tools/hooks/post-tool-telemetry.sh` (the corporeal telemetry architecture, ported). Cross-check: the `opal-agent-comms` broker (`get_live_agents` / `get_agent_status` / `get_org_summary`) for registration + summaries. Inbox: `org/mcp/inbox/<serial>/`.
