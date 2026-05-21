@@ -1,8 +1,48 @@
 #!/bin/bash
-# Portal pre-push hook: gate PROD pushes on tsc -b --noEmit
+# Portal pre-push hook.
+#   - VALGATE D-1 adapter-threading gate (ADHC_VALGATE.004) -- every push.
+#   - tsc -b --noEmit typecheck -- PROD pushes only.
 # Installed by: DT session startup / .tools/portal-hooks/install.sh
+#
+# D-1 lives at <workspace>/.tools/portal-hooks/d1_adapter_threading_gate.py
+# (parent repo) -- the pre-push surface is parent-repo .tools/portal-hooks/;
+# the portal submodule carries no committed hook machinery. install.sh copies
+# this file into portal/.git/hooks/pre-push; the D-1 script is referenced in
+# place and is not copied.
 
-while read local_ref local_sha remote_ref remote_sha; do
+HOOK_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
+# Resolve the D-1 gate whether this hook runs as the canonical source
+# (.tools/portal-hooks/pre-push) or the installed copy (portal/.git/hooks/).
+D1_GATE=""
+for cand in \
+  "$HOOK_DIR/d1_adapter_threading_gate.py" \
+  "$HOOK_DIR/../../../.tools/portal-hooks/d1_adapter_threading_gate.py" \
+; do
+  if [ -f "$cand" ]; then
+    D1_GATE="$cand"
+    break
+  fi
+done
+
+D1_BLOCKED=0
+
+while read -r local_ref local_sha remote_ref remote_sha; do
+
+  # --- VALGATE D-1: adapter-threading gate (every push) ---
+  if [ -n "$D1_GATE" ]; then
+    python "$D1_GATE" \
+      --local-sha "$local_sha" \
+      --remote-sha "$remote_sha" \
+      --remote-ref "$remote_ref"
+    if [ $? -ne 0 ]; then
+      D1_BLOCKED=1
+    fi
+  else
+    echo "WARN: VALGATE D-1 gate script not found -- adapter-threading gate skipped"
+  fi
+
+  # --- typecheck: PROD pushes only ---
   if echo "$remote_ref" | grep -q "refs/heads/PROD"; then
     echo "INFO: PROD push detected -- running typecheck (tsc -b --noEmit)"
     if command -v bun >/dev/null 2>&1; then
@@ -17,6 +57,13 @@ while read local_ref local_sha remote_ref remote_sha; do
     fi
     echo "OK: typecheck passed -- proceeding with PROD push"
   fi
+
 done
+
+if [ "$D1_BLOCKED" -ne 0 ]; then
+  echo "ERROR: VALGATE D-1 adapter-threading gate BLOCKED this push"
+  echo "ERROR: a partner-facing adapter has an un-threaded output path -- see above"
+  exit 1
+fi
 
 exit 0
