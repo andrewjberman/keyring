@@ -83,19 +83,40 @@ The v0.3 implementation of the WS-3 Q4 outcome. Progression:
     (`871091686`) per the COO stimulus-scan — 8 live checks (sidecar shape,
     model_source structure, dual-input-not-fallback, relational fidelity,
     legacy-label, plausibility, freshness); fires instantly on B2's RAVC2.
-- **Current B1 state**: author + verify + AE hand-off brief + pre-staged verify
-  all DONE. The only remaining step — fire the harness on B2's deploy + RAVC2 —
-  is gated on B2, which is gated on `0.5.0_AE_OpalETL` being booted (an Andrew
-  decision; surfaced + escalated). Correct ready-wait, not idle-stalled.
+  - **Bridge-work** (COO stimulus-scan dispatch, during the B2 window): committed
+    the consolidated SmartX REST API reverse-engineered inventory
+    `docs/briefs/smartx-rest-api-inventory-20260521.md` (`b2597ea25`) — auth model,
+    full api/3.1 + performance.smartxadvisory.com endpoint table, 7-model identity
+    map, 7 known vendor-side bugs; confirmed-vs-inferred flagged. Pre-stage input
+    for Andrew's comprehensive SmartX reverse-engineering ask.
+- **B2 reassignment** (COO, 2026-05-21): the OpalETL lane (`0.5.0_AE_OpalETL`
+  base + ~B) is fully offline, so COO reassigned B2 — commit + deploy of both B1
+  Lambda artifacts — to `0.7.0_AE_CloudOps~A` (live, AE-capable). ~A deploys off
+  the AE hand-off brief. The Andrew `0.5.0_AE_OpalETL`-boot gate is therefore no
+  longer B1's blocker.
+- **SmartX-comprehensive coordination**: 0.2.0_DS opened Andrew's comprehensive
+  SmartX reverse-engineering work; coordinated to avoid double-probe — gave them
+  B1's 2-endpoint coverage + the auth gotchas, pointed them at the `b2597ea25`
+  inventory as their extend-from baseline. Their HAR parse added 3 net-new
+  surfaces (GraphQL flags/actions service, `/users`+`/users/access`,
+  `ng_api/v1/mngr/*`) — confirmed none overlap `b2597ea25` (REST-data only); the
+  GraphQL surface introspected as a narrow non-analytics microservice, so the
+  analytics surface stays bounded to the REST inventory. Clean compose.
+- **Current B1 state**: author + verify + AE hand-off brief + pre-staged e2e
+  verify harness + the SmartX-inventory bridge-work all DONE. The only remaining
+  step — fire the harness on ~A's B2 deploy + RAVC2-close — is now in flight with
+  `0.7.0_AE_CloudOps~A` (no longer blocked on the offline OpalETL lane). Standing
+  ready for ~A.
 
 ## Commits this session (CLOUD)
 
 `bc70e6995` `4ccbce567` (.009) · `b7153c70c` `678f02649` `f963b8727` (WS-3) ·
 `08fa25f7d` (B1 Phase 0) · `40c63252f` (S1 Part A) · `8b9ec9583` (B1 Phase-1
 arch) · `43e13faf6` `e0ef079bf` (ADVI_INFINC.002) · `8caacbadc` (B1 AE hand-off
-brief) · `871091686` (B1 e2e verify harness) · + this summary. The two B1 Lambda
-code artifacts are authored + verified in the working tree, unstaged — B2 commits
-them.
+brief) · `871091686` (B1 e2e verify harness) · `4bf7ec8b5` (this summary) ·
+`b2597ea25` (SmartX REST inventory bridge-work). The two B1 Lambda code artifacts
+are authored + verified in the working tree, unstaged — B2 (`0.7.0_AE_CloudOps~A`)
+commits them.
 
 ## Compiler Tools (session aggregate)
 
@@ -114,13 +135,26 @@ them.
 
 ## Open follow-ups
 
-1. **B1 close** — gated on B2 (AE-OpalETL) deploying both Lambdas; B2 gated on
-   the `0.5.0_AE_OpalETL` boot (Andrew decision). On B2's RAVC2: run
-   `docs/briefs/b1_e2e_verify.py`, then RAVC2-close B1.
+1. **B1 close** — B2 reassigned to `0.7.0_AE_CloudOps~A` (the offline-OpalETL
+   gate is cleared). On ~A's B2 deploy + RAVC2: run `docs/briefs/b1_e2e_verify.py`,
+   then RAVC2-close B1 to COO CC CTO.
 2. ADVI_INFINC.002 TO is mis-numbered (collides with the Pattern-A `.002`) — COO
    to renumber (flagged by CTO; not DS action).
 3. safe-deploy gate is not deletion-aware (`LOCAL_MISSING` on a git-rm'd `.py`) —
    AE/tooling follow-up (flagged during .009 item 4).
+4. Andrew's comprehensive SmartX reverse-engineering ask — 0.2.0_DS-owned;
+   `b2597ea25` is the REST-data baseline it extends. DS Base likely folded in
+   when COO TO-ifies it (per the COO bridge-work note).
+
+## Status as of this update (2026-05-21)
+
+`0.4.0` lane: ADVI_INFGRO.009 / YALP_MDSRC.003 / S1 Part A / ADVI_INFINC.002 all
+RAVC-accepted-closed. YALP_MDSRC.B1 — all DS-side work done (code + AE hand-off
+brief + e2e harness + SmartX inventory bridge-work); B2 (commit + deploy) in
+flight with `0.7.0_AE_CloudOps~A`; DS Base standing ready to fire the e2e verify
++ RAVC2-close on ~A's deploy signal. Broker summary re-set after a DS~B clobber.
+No actionable DS-side work pending — B1 close is the only open item, gated on
+~A's deploy.
 
 ## Session logs (this session)
 
