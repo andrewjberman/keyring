@@ -105,6 +105,7 @@ lanes:
   POD4:
     permitted_agents:
       - 0.4.0_DE_ClientPlatform
+      - 0.4.0_DE_ClientPlatform~B
       - 0.4.0_DS_ClientPlatform
       - 0.4.0_DS_ClientPlatform~A
       - 0.4.0_DS_ClientPlatform~B
@@ -112,7 +113,7 @@ lanes:
       - 0.4.0_DS_ClientPlatform~D
       - 0.4.0_DT_ClientPlatform
       - 0.4.2_RD_AdvisorIntelligence
-    description: "Pod 4 — ClientPlatform (DE + DS + DS~A-~D + DT + RD)"
+    description: "Pod 4 — ClientPlatform (DE + DE~B + DS + DS~A-~D + DT + RD). 0.4.0_DE_ClientPlatform~B added 2026-05-21 by CTO~B: DE~B's home-folder logs/** commits were owned-paths-blocked (the ~B variant was enumerated in POD4_OR_EXEC for task_orders but not in plain POD4 for logs). Tilde-lane owned-paths-gap pattern."
 
   POD4_OR_AE:
     permitted_agents:
