@@ -1,0 +1,36 @@
+surface_id	requirement	verdict	internal_endpoint	method	key_params	json_path_to_value	delta_vs_a2	status
+WS1-DDB-01	71-entity daily price series (the DynamoDB backbone)	YCharts-replaceable	/indices/table_data (snapshot) + /charts/general_data.json (history)	GET	indices={yc_syms csv} OR indexFamily={fam}; columns={metric csv} | securities=id:{sym},include:true,, metrics=id:price,include:true,, xAxis=time	indicesData[].data[].calc_raw_value | chart_data[].raw_data[[ts_ms,value]]	none - A2 endpoint IS the internal XHR	VERIFIED
+WS1-MO-01	Market Overview performance heatmap	YCharts-replaceable	/indices/table_data	GET	indices={yc_syms}; columns=roc_1,one_month_total_return,ytd_total_return,one_year_total_return,annualized_daily_three_year_total_return	indicesData[].data[].calc_raw_value (match .calc_name)	none	VERIFIED
+WS1-MO-02	Market Overview RSI summary	YCharts-replaceable	/indices/table_data	GET	indices={yc_syms}; columns=rsi_14	indicesData[].data[] where calc_name=rsi_14	none	VERIFIED
+WS1-MO-03	Market Overview RSI details	YCharts-replaceable	/indices/table_data	GET	indices={class syms}; columns=rsi_14	indicesData[].data[] rsi_14	none	VERIFIED
+WS1-MO-04	Market Overview ticker timeseries	YCharts-replaceable	/charts/general_data.json	GET	securities=id:{sym},include:true,, metrics=id:price,include:true,, xAxis=time startDate endDate	chart_data[].raw_data	none	VERIFIED
+WS1-VAL-01	Valuation multiples + ranges	YCharts-replaceable	/indices/table_data	GET	indices={yc_syms}; columns=pe_ratio,pb_ratio,ps_ratio,price_to_free_cash_flow,ev_to_sales,dividend_yield	indicesData[].data[].calc_raw_value	A2 UNVERIFIED on exact column internal_names - confirm in P4/C2 against all_calc_menu	UNVERIFIED-COLS
+WS2-MP-04	Model Portfolios ETF benchmark returns (5 ETFs)	YCharts-replaceable	/charts/fund_data.json	GET	securities=id:{etf},include:true,, calcs=id:level,include:true,, format=indexed	chart_data[][].raw_data	none - ETFs served by the same generic endpoint (entity-agnostic)	VERIFIED
+WS1-MO-05	Market regime - input series	hybrid	/indices/table_data + /charts/general_data.json	GET	momentum / volatility / correlation input series; Opal regime classifier unchanged	(input series; Opal computes regime)	none	VERIFIED-inputs
+WS1-VAL-02	Risk premium - ERP + credit-spread components	hybrid	/charts/general_data.json	GET	securities= earnings-yield + treasury-yield + IG/HY credit series; ERP derivation stays Opal	chart_data	A2 UNVERIFIED on credit-spread metric names - confirm in P4	UNVERIFIED-METRICS
+WS1-COR-01	Correlation - 59-ticker input series	hybrid	/charts/general_data.json	GET	securities=id:{sym},include:true,, metrics=id:price,include:true,, xAxis=time (per ticker); Opal computes the matrix	chart_data[].raw_data	none	VERIFIED
+WS1-MAC-01	Macroeconomics - 12 macro indicator groups	hybrid (Bloomberg-leaning)	/charts/general_data.json (indicator securities) OR FRED	GET	per-indicator; needs the Bloomberg-ticker -> YCharts-indicator / FRED-series map (C2 sub-task)	chart_data	per-indicator mapping unresolved - C2	NEEDS-INDICATOR-MAP
+WS2-FT-02	Factor Tilts - market factor-spread series	hybrid	/charts/general_data.json	GET	public-index spread legs; spread definition stays Opal	chart_data	FT factor-spread constituent index pairs are model.pkl-precomputed (C3 finding) - Yang-source consult routed	NEEDS-YANG-CONSULT
+WS2-FT-03	Factor Tilts - factor-spread history	hybrid	/charts/general_data.json	GET	as FT-02, longer date range	chart_data	as FT-02	NEEDS-YANG-CONSULT
+WS2-MP-01	Model Portfolios benchmark returns table (benchmark leg)	hybrid	/indices/table_data + /charts/fund_data.json	GET	index+ETF benchmark legs; model leg -> WS-3/SmartX	indicesData[].data[] / chart_data	none	VERIFIED
+WS2-MP-02	Model Portfolios comprehensive benchmark table (benchmark leg)	hybrid	/indices/table_data + /charts/fund_data.json	GET	as MP-01	indicesData[].data[] / chart_data	none	VERIFIED
+WS2-MP-03	Model Portfolios risk/return scatter (benchmark+rfr leg)	hybrid	/charts/scatter_plot_data.json	POST	body: securities=id:{sym},include:true,type:security,, xAxisMetric=monthly_standard_deviation_annualized_5y yAxisMetric=annualized_five_year_total_return	data.series[]	none - POST needs X-CSRFToken header	VERIFIED
+WS2-MP-05	Model Portfolios peer performance	hybrid	/calculations/metric_sets + /indices/table_data percentile metrics	GET	methodology-gated: only if Opal adopts the YCharts peer taxonomy	-	A2 methodology-gated; unchanged	METHODOLOGY-GATED
+WS1-COR-TR1	Correlation input - Bloomberg US Treasury (C3 gap)	hybrid	/charts/general_data.json	GET	YCharts symbol UNRESOLVED - needs internal-API lookup + dc01d4b8a crosswalk extension	chart_data[].raw_data	NEW row (C3 finding - not in A2/dc01d4b8a)	NEEDS-SYMBOL-LOOKUP
+WS1-COR-TR2	Correlation input - 1-3 Year Treasury (C3 gap; NOT 1-3 Yr Gov/Credit)	hybrid	/charts/general_data.json	GET	YCharts symbol UNRESOLVED; keep STRICTLY distinct from the 1-3 Yr Gov/Credit row	chart_data[].raw_data	NEW row (C3 finding) - conflation caution	NEEDS-SYMBOL-LOOKUP
+WS1-COR-TR3	Correlation input - 7-10 Year Treasury (C3 gap)	hybrid	/charts/general_data.json	GET	YCharts symbol UNRESOLVED - internal-API lookup	chart_data[].raw_data	NEW row (C3 finding)	NEEDS-SYMBOL-LOOKUP
+WS3-MP-01	Model Portfolios model performance (9 periods)	SmartX-sourced	n/a - SmartX REST reportedmodels/{rmid}/historicalperformance	n/a	n/a	n/a	not-YCharts (PRD 6.2)	N/A
+WS3-MP-02	Model Portfolios model daily return series	SmartX-sourced	n/a - SmartX REST	n/a	n/a	n/a	not-YCharts	N/A
+WS3-SX-01	Portfolios/AUM - AUM time series	SmartX-sourced	n/a - SmartX	n/a	n/a	n/a	client-account data	N/A
+WS3-SX-02	Portfolios/AUM - AUM metrics	SmartX-sourced	n/a - SmartX	n/a	n/a	n/a	client-account data	N/A
+WS3-SX-03	Portfolios/AUM - account distribution	SmartX-sourced	n/a - SmartX	n/a	n/a	n/a	client-account data	N/A
+WS3-SX-05	Model Portfolios per-account allocation views	SmartX-sourced	n/a - SmartX	n/a	n/a	n/a	client-account data	N/A
+WS2-FT-01	Factor Tilts snapshot (6 Opal factor pairs)	proprietary	n/a	n/a	n/a	n/a	Opal 6-factor decomposition - YCharts has CAPM single-factor only	N/A
+WS2-POS-02	Positioning/Attribution allocation summary	proprietary	n/a	n/a	n/a	n/a	Opal mandate policy_weight methodology	N/A
+WS2-POS-03	Attribution - holdings attribution (Brinson)	proprietary	n/a	n/a	n/a	n/a	Brinson port-vs-benchmark; YCharts attribution is index-constituent only	N/A
+WS2-CMA-01	CMA - 10-year expected return/vol	proprietary	n/a	n/a	n/a	n/a	Opal forward-looking IP	N/A
+WS2-CMA-02	CMA - strategic/tactical allocation views	proprietary	n/a	n/a	n/a	n/a	Opal house views	N/A
+WS3-SX-04	Portfolios/AUM - non-model assets (derived residual)	proprietary	n/a	n/a	n/a	n/a	49F-specific derived residual	N/A
+WS2-POS-01	Positioning - model holdings + allocation	Bloomberg-pkl-only	n/a	n/a	n/a	n/a	Opal model holdings - not market data	N/A
+WS1-MAC-02	Macroeconomics - VIX	already-FRED	n/a - FRED VIXCLS	n/a	n/a	n/a	already off Bloomberg-pkl	N/A
+WS1-MAC-03	Macroeconomics - Treasury yield curve	already-FRED	n/a - FRED	n/a	n/a	n/a	already off Bloomberg-pkl	N/A

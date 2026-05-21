@@ -91,9 +91,22 @@ An automated client must: (a) obtain the cookie bundle via a real-browser captur
 
 ---
 
-## 4. P3 — Requirement -> internal-API mapping (IN PROGRESS)
+## 4. P3 — Requirement -> internal-API mapping (COMPLETE)
 
-Re-mapping every PRD v0.3.2 §5.2 YCharts-served requirement onto its §2.1 internal-API call (endpoint + params + JSON path), upgrading the A2 page-level spec. Folds in the COO-relayed C3 inputs: 3 Treasury crosswalk gaps (Bloomberg US Treasury, 1-3 Year Treasury [kept distinct from 1-3 Yr Gov/Credit], 7-10 Year Treasury) + the Crude Oil Brent(`CO1`)/WTI(`CL1`) variant pin. Join key with C3 = `bbg_ticker`. Pending.
+Every PRD v0.3.2 §5.2 surface mapped to its internal-API call. **Machine-readable table: `docs/briefs/mdsrc-ycharts-internal-api-mapping-20260520.tsv`** — 35 rows (the 32 §5.2 surfaces + 3 new Correlation-input Treasury rows from the C3 finding), columns: `surface_id, requirement, verdict, internal_endpoint, method, key_params, json_path_to_value, delta_vs_a2, status`.
+
+**Headline finding — there is no "deeper" layer; A2's endpoints ARE the internal API.** Andrew's hypothesis was that a richer backend-DB API sits behind the page-level mapping. P1+P3 establish: the endpoints A2 catalogued (`/indices/table_data`, `/charts/general_data.json`, `/charts/fund_data.json`, `/charts/scatter_plot_data.json`) **are themselves the internal XHR/fetch JSON API** the SPA calls — there is no further layer. So for 14 of the 17 YCharts-served surfaces the `delta_vs_a2` is "none" — P3's value-add is the precise **JSON path to the value** (so C2 reads the datum deterministically) + the entity-agnostic confirmation, not a new endpoint set. The backend-DB API Andrew wanted = these endpoints; the win is they are clean structured JSON, not DOM scraping.
+
+**The 17 YCharts-served surfaces** map to just 4 internal endpoints: `/indices/table_data` (index snapshots — MO heatmap, RSI, valuation multiples, benchmark tables), `/charts/general_data.json` (metric/price time series — ticker timeseries, correlation inputs, risk-premium components, factor-spread series, macro), `/charts/fund_data.json` (ETF/fund chart series — MP-04), `/charts/scatter_plot_data.json` POST (risk/return — MP-03). The 15 not-YCharts surfaces carry their SmartX/FRED/proprietary marker.
+
+**Open rows flagged in the TSV `status` column** (carried into P4 / C2, not gaps in the endpoint itself):
+- `WS1-VAL-01` UNVERIFIED-COLS — exact YCharts valuation-multiple `internal_name`s to confirm against `all_calc_menu`.
+- `WS1-VAL-02` UNVERIFIED-METRICS — credit-spread metric names to confirm.
+- `WS1-MAC-01` NEEDS-INDICATOR-MAP — per-indicator Bloomberg-ticker -> YCharts/FRED mapping (C2 sub-task).
+- `WS2-FT-02/03` NEEDS-YANG-CONSULT — the 6 factor-spread constituent index pairs are `model.pkl`-precomputed (C3 finding); a Yang-source consult is routed.
+- `WS1-COR-TR1/2/3` NEEDS-SYMBOL-LOOKUP — the 3 new Treasury correlation-input series (C3 gap); YCharts symbols to be resolved in P4 + the dc01d4b8a crosswalk extended. `1-3 Year Treasury` kept strictly distinct from `1-3 Yr Gov/Credit`.
+
+Join key with C3's input spec = `bbg_ticker` (the dc01d4b8a crosswalk column); C2 zips C3.bbg_ticker == this table's row.
 
 ## 5. P4 — 27-imperfect-case retest against the internal API (IN PROGRESS, FOCAL)
 
@@ -103,4 +116,4 @@ Re-testing the 9 wide + 18 unmapped A2 cases against the internal API to test An
 
 ## 6. Status
 
-P1 + P2 complete and committed. P3 + P4 in progress — the next interim. P1+P2 are sufficient for TO-C1 to begin its build spec now (the auth/session model is the C1 input). No external blocker; the YCharts seat is held.
+P1 + P2 + P3 complete and committed (P3 table: `mdsrc-ycharts-internal-api-mapping-20260520.tsv`). P4 (27-case retest against the internal API) in progress — the next + final interim. P1+P2 are sufficient for TO-C1 to begin now; P3 is the TO-C2 build spec (the per-requirement internal-API mapping). No external blocker; the YCharts seat is held.
