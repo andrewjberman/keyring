@@ -6,21 +6,30 @@
 | Agent | 0.7.0_AE_CloudOps |
 | Date | 2026-05-21 |
 | Build spec | docs/briefs/mdsrc-ycharts-internal-api-20260520.md §3 (A3 P2, af5102dd3) |
-| Status | Phase 0 COMPLETE — build cleared to proceed (live-capture stage seat-gated) |
+| Status | Phase 0 COMPLETE — CREDENTIAL BLOCKER surfaced (see §6); path-invariant build proceeding |
 
 ---
+
+> **§6 UPDATE (2026-05-21, post-COO-expedite):** an empirical check of
+> `ycharts/credentials` corrected §1 below — it holds a captured **cookie
+> bundle**, NOT `{username, password}`. That blocks an automated fresh login.
+> See §6. The §1 text is left with a correction note rather than rewritten,
+> to preserve the audit trail.
 
 ## 1. Secret decision (TO Phase-0 requirement: reuse/rename vs new — do not duplicate)
 
 Two DISTINCT credential artifacts — not a duplication:
 
 - **`ycharts/credentials`** (EXISTS, `infra/aws/terraform/inf-pipeline/secrets.tf:65`) —
-  the YCharts **login** credentials `{username, password}`. TF manages the
-  secret resource; the value is placed out-of-band via `put-secret-value`
-  (mirrors the `orion/credentials` pattern — the credential never lands in
-  TF state). This is the INPUT to a (re-)login. **C1 reuses it read-only** —
-  the capture Lambda reads it to log in. C1 does NOT move or re-manage it
-  (it stays in inf-pipeline; `System: InflectionPipeline`).
+  ~~the YCharts **login** credentials `{username, password}`~~ **CORRECTED (§6):
+  the secret holds only a `cookies` key — a captured cookie-bundle string, no
+  username/password.** TF manages the secret resource; the value is placed
+  out-of-band via `put-secret-value` (mirrors the `orion/credentials` pattern
+  — the credential never lands in TF state). C1 reads it; it stays in
+  inf-pipeline (`System: InflectionPipeline`). The §1 assumption that it held
+  login creds came from the inf-pipeline `secrets.tf` comment (which describes
+  the secret's *intended* `{username, password}` shape); the value actually
+  placed is a cookie bundle — see §6.
 
 - **`ycharts/session/current`** (NEW — C1 stands it up) — the captured
   **session cookie bundle** `{ycsessionid, csrftoken, aws-waf-token, AWSALB}`
@@ -91,7 +100,52 @@ build is part of the cycle (build/push image -> TF references the image URI).
 
 ## 5. Phase 0 verdict
 
-No blocker. The secret architecture is decided (reuse `ycharts/credentials`
-read-only; stand up `ycharts/session/current`). The seat is understood
-(build now; live-capture gated on the `~A`/A4 handoff). The capture runtime is
-decided (container-image Lambda, real Node). Build proceeds.
+~~No blocker.~~ **Superseded by §6.** The secret architecture, the seat
+status, and the capture runtime are all decided as stated — but §6 (added
+after the COO Phase-0 expedite) surfaces a credential-availability blocker on
+the *fresh-session* capability. The path-invariant pieces build; the capture
+Lambda + the live general_data.json test are blocked on the §6 decision.
+
+## 6. CREDENTIAL BLOCKER — fresh-session capability (2026-05-21, post-expedite)
+
+COO expedited a Phase-0 diagnostic: capture a FRESH YCharts session and do one
+GET to `/charts/general_data.json` — 200 vs 403 settles whether 36 A4 entities
+(29 MSCI + 7 Bloomberg-bond indices) are a recoverable degraded-session issue
+or a permanent account-entitlement gap.
+
+**The blocker.** An empirical check of `ycharts/credentials` (key names +
+value-classes only, never values) found it holds exactly ONE key — `cookies`,
+a ~1428-char captured-cookie-bundle string. There is NO `username`/`password`.
+Therefore C1 **cannot perform an automated fresh login** — and the existing
+(degraded) cookie bundle just reproduces ~A's 403. A genuinely fresh session
+cannot be established autonomously.
+
+This also forks C1 itself: the capture/refresh Lambda was scoped as "automated
+headless login -> fresh cookie bundle." Without login credentials, the capture
+Lambda cannot renew `ycsessionid` (it could only re-mint the `aws-waf-token`
+via headless app-page navigation). `ycsessionid` is what general_data.json's
+403 "You are signed out" implicates.
+
+**Two paths (COO/Andrew call, surfaced to COO 2026-05-21T14:17Z):**
+- **(A)** Andrew places YCharts `username`+`password` into `ycharts/credentials`
+  -> C1 builds the automated-login capture as the TO scopes it; the
+  general_data.json verdict drops out of C1's first capture; fully automated.
+- **(B)** No credentials -> C1 is an ATTENDED-refresh model: a human logs in
+  and places a fresh cookie bundle in the secret; C1 automates only the
+  freshness probe + `aws-waf-token` re-mint + the eviction alarm. The
+  general_data.json test then needs one attended login.
+
+**Evidence lean (not the definitive test):** the 403 body "You are signed out.
+Please sign in again." is A3 P2 §3.4's *disturbed-session* signature; an
+entitlement block typically reads "feature not available / upgrade," not
+"signed out." That leans toward (A) — a fresh session probably DOES restore
+general_data.json — but the fresh-session GET remains the only definitive test.
+
+**Recommendation: path (A).** It is the TO-as-written (fully automated
+capture/refresh), it makes the capture Lambda viable, and it produces the
+36-entity verdict cleanly.
+
+**Build status under the blocker:** path-invariant pieces proceed —
+the `ycharts-pipeline` module skeleton + the `ycharts/session/current` secret
+(`8d4a27a8a`) and the freshness-probe Lambda (`188be4686`) are committed. The
+capture Lambda + its Terraform + the live test are held for the §6 routing.
