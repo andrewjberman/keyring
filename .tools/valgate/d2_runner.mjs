@@ -142,6 +142,26 @@ async function main() {
       await sleep(5000);
     }
 
+    // ---- readiness wait: poll until the SPA has rendered substantial content,
+    // capped, so a cold-start render race does not produce false "missing"
+    // observations. A generic settle signal -- not node-specific (a check for a
+    // specific node could mask a real structural emptiness).
+    {
+      const deadline = Date.now() + 25000;
+      let ready = false;
+      while (Date.now() < deadline) {
+        const s = await page.evaluate(() => ({
+          complete: document.readyState === 'complete',
+          textLen: (document.body && document.body.innerText || '').length,
+          svgCount: document.querySelectorAll('svg').length,
+        }));
+        if (s.complete && s.textLen > 400 && s.svgCount > 0) { ready = true; break; }
+        await sleep(800);
+      }
+      results.readiness = ready ? 'settled' : 'timeout';
+      await sleep(2500);
+    }
+
     // ---- data-bearing node checks ----
     for (const node of baseline.data_bearing_nodes || []) {
       try {

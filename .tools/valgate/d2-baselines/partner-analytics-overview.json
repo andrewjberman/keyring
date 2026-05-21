@@ -1,0 +1,30 @@
+{
+  "panel": "partner-analytics-overview",
+  "_comment": "VALGATE D-2 structural baseline -- the AdvisorIntelligence partner-analytics 'ASSETS OVERVIEW' panel, after switching to the Inflection partner. Selectors verified live against the served portal (2026-05-21, ADHC_VALGATE.006 AC3 runner-session). The baseline is data, not code -- re-tune selectors here without touching d2_runner.mjs.",
+  "base_url": "http://localhost:5175",
+  "login": {
+    "email": "michael@opalinvest.com",
+    "password": "REPLACE_AT_RUNTIME",
+    "select_partner": "inflection"
+  },
+  "route": "/advisor-intelligence",
+  "navigation": [
+    { "action": "wait", "wait_ms": 5000 }
+  ],
+  "data_bearing_nodes": [
+    {
+      "name": "assets-overview-chart",
+      "selector": ".recharts-surface",
+      "check": "chart_nonempty",
+      "_note": "The ASSETS OVERVIEW recharts chart(s). Catches the empty-bell-curve / structurally-empty-chart class (INFFIN anchor) -- a chart container rendered with no data elements."
+    }
+  ],
+  "scope_checks": [
+    {
+      "name": "partner-scoped-inflection",
+      "selector": "body",
+      "expect_contains": "Inflection Wealth Management",
+      "_note": "After the Inflection partner switch, the panel must render Inflection-scoped content. Catches the wrong-partner / firm-aggregate scope-drift class."
+    }
+  ]
+}

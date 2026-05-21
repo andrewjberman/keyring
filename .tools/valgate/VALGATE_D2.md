@@ -59,7 +59,7 @@ lets the runner be re-pointed at any panel by swapping the baseline JSON.
 |---|---|
 | `.tools/valgate/d2_runner.mjs` | The render-half runner — puppeteer-core / CDP. |
 | `.tools/valgate/d2_visual_baseline_gate.py` | The verdict-half gate. |
-| `.tools/valgate/d2-baselines/advisor-book-headline.json` | Seed/template structural baseline. |
+| `.tools/valgate/d2-baselines/partner-analytics-overview.json` | Seed structural baseline (selectors verified live). |
 | `.tools/valgate/d2_gate_test.py` | Verdict-layer verification harness. |
 | `.tools/valgate/VALGATE_D2.md` | This document. |
 
@@ -71,17 +71,31 @@ deliberately-emptied panel (`--` hero card / empty bell-curve) → WARN; a
 wrong-scope panel (firm-aggregate where advisor expected) → WARN. Plus
 missing-node, runner-error, and unrecognized-value cases all fail loud to WARN.
 
-**Render layer — live AC3 runner-session (procedure).** The `d2_runner.mjs`
-half is exercised against a served portal:
-1. Serve the portal — `cd portal && bun run dev --port 5175` (DEV branch).
-2. Launch system Chrome — `chrome --remote-debugging-port=9444`.
-3. Tune `d2-baselines/advisor-book-headline.json` selectors against the live
-   DOM (the baseline is data — no code change).
-4. `bun run .tools/valgate/d2_runner.mjs --baseline d2-baselines/advisor-book-headline.json --out d2-results.json`
-   then `python .tools/valgate/d2_visual_baseline_gate.py --results d2-results.json`.
-5. AC3 live: a healthy panel → PASS; deliberately empty a data-bearing node
-   (or point at an advisor with no data) → WARN; a firm-scope leak → WARN.
+**Render layer — live AC3, VERIFIED 2026-05-21.** The `d2_runner.mjs` half was
+exercised against the served portal (`localhost:5175`) via an isolated headless
+Chrome on CDP port 9445. All three AC3 cases passed live against the
+`partner-analytics-overview` panel (the AdvisorIntelligence ASSETS OVERVIEW
+panel, Inflection partner):
 
-The render-layer live verification needs a served portal + a CDP Chrome
-session; it is the environment-dependent step. The verdict layer — the
-deterministic core — is fully verified above.
+| Case | Baseline | Result |
+|---|---|---|
+| Correct render | `partner-analytics-overview.json` | 2/2 checks OK — `.recharts-surface` chart non-empty + body Inflection-scoped → **PASS** |
+| Deliberately-emptied panel | + a data-bearing node with a no-match selector | 2/3 OK, 1 structural-emptiness breach → **WARN** |
+| Wrong-scope panel | scope check expecting an absent partner | 1/2 OK, 1 scope-drift breach → **WARN** |
+
+**Cold-start note.** The first run produced false `missing` observations — a
+SPA render race. `d2_runner.mjs` carries a generic readiness wait (poll until
+`document.readyState` complete + substantial body text + ≥1 SVG, capped 25s)
+that resolved it; all three cases above are post-readiness-wait. The runner
+records `readiness: settled|timeout` in its results.
+
+**Run procedure (reproduce):**
+1. Serve the portal — `cd portal && bun run dev --port 5175`.
+2. Launch Chrome with CDP — `chrome --remote-debugging-port=<port> --headless=new --user-data-dir=<temp>`.
+3. Fill the baseline's `login.password` in a non-committed runtime copy
+   (the committed baseline carries `REPLACE_AT_RUNTIME`).
+4. `NODE_PATH=portal/node_modules bun run .tools/valgate/d2_runner.mjs --baseline <baseline> --out <results.json> --cdp-port <port>`
+   then `python .tools/valgate/d2_visual_baseline_gate.py --results <results.json>`.
+
+`NODE_PATH=portal/node_modules` is required so the runner resolves
+`puppeteer-core` (installed in the portal submodule, not the workspace root).
