@@ -4,7 +4,7 @@
 **Author:** 0.1.0_DS_MarketIntelligence
 **TO:** YALP_MDSRC.A3 (issued by 2.0.0_SA_COO, Andrew-direct — Q1 ruled = scrape, reverse-engineer the internal API)
 **Audience:** 2.0.0_SA_COO (RAVC2) — CC 1.0.0_SA_CTO. Becomes the TO-C1 (auth/session) + TO-C2 (market-data pull) build spec.
-**Status:** INTERIM — P1 (endpoint discovery) + P2 (auth/session model) COMPLETE and committed here; P3 (32-surface remap) + P4 (27-case retest) in progress.
+**Status:** COMPLETE — P1 (endpoint discovery) + P2 (auth/session model) + P3 (32-surface internal-API remap) + P4 (27-case retest) all done.
 
 ---
 
@@ -108,12 +108,32 @@ Every PRD v0.3.2 §5.2 surface mapped to its internal-API call. **Machine-readab
 
 Join key with C3's input spec = `bbg_ticker` (the dc01d4b8a crosswalk column); C2 zips C3.bbg_ticker == this table's row.
 
-## 5. P4 — 27-imperfect-case retest against the internal API (IN PROGRESS, FOCAL)
+## 5. P4 — 27-imperfect-case retest against the internal API (COMPLETE, FOCAL)
 
-Re-testing the 9 wide + 18 unmapped A2 cases against the internal API to test Andrew's hypothesis that the backend exposes richer/cleaner data. Pending. (A2's alternatives hunt already resolved most via the MSCI LOC-variant fix + the bond plain-USD pattern; P4 verifies those against the internal API and re-attacks the residue.)
+All 27 A2 imperfect cases re-tested against the internal API (`/indices/table_data`, `/securities/securities_info`). Andrew's hypothesis was that the backend exposes richer/cleaner data that resolves the residue. **P4 finding: the internal API CONFIRMS A2's alternatives-hunt resolutions — it does not reveal a new data layer beyond them. A2's resolutions and the internal API are the same endpoints; the genuine residue is a symbol-DISCOVERY gap, not a data-AVAILABILITY gap.**
+
+| Case group | Internal-API retest | Verdict |
+|---|---|---|
+| 7 MSCI-country wides (Korea/Japan/India/Australia/Taiwan/S.Africa/Switzerland) | `/indices/table_data?indices=^MS**L` — all 7 LOC variants return live (Korea 247.6, Japan 42.2, India 0.4, Australia 4.1, Taiwan 105.9, S.Africa 33.1, Switzerland 11.5; all within ~drift of the portal) | **resolved-via-internal-API** — the A2 LOC-variant fix holds against the internal endpoint |
+| MSCI ACWI ex US | `/indices/table_data?indices=^MSACXUSL` | **resolved-via-internal-API** |
+| Bloomberg bonds — 1-5 Gov/Credit, 1-3 Gov/Credit, TIPS, Aggregate, Municipal | `/indices/table_data` — `^BBUGCR15YT` 3.77, `^BBUGCR13YT` 3.74, `^BBUTISTR` 4.62, `^BBUSATR` 4.81, `^BBMBTR` 5.45 — all return | **resolved-via-internal-API** |
+| Bloomberg High Yield | symbol resolved this pass: `^BBUSCOHYTR` "Bloomberg US Corporate High Yield" (plain-USD) | **resolved-via-internal-API** (value-confirm in C2) |
+| Bloomberg bonds — 0-1 Yr Treasury, 20+ Yr Treasury, 0-5 Yr HY, 0-5 Yr TIPS | maturity-band variants — not pinned this pass | **still-wide** — needs the exact maturity-variant symbol (C2) |
+| S&P GSCI | `^GNX` via `/indices/table_data` works, but the GSCI return-basis (Spot/Excess/Total) variant is unresolved | **still-wide** — commodity-index return-basis pin (C2) |
+| Communication Services | `^SPXCMSVS` via `/indices/table_data` works; the +68.6% gap is the Bloomberg-S5COMM-vs-YCharts cross-vendor discrepancy — adjudicated separately (S5COMM verification: portal-faithful, not a mapping defect) | **not-a-mapping-defect** — out of A3 scope |
+| Commodities — Gold, Crude Oil WTI | `/securities/securities_info` — `GOLD`, `WTI` resolve (YCharts securities, not indices) | **resolved-via-internal-API** |
+| Crypto — Bitcoin, Ethereum | `/securities/securities_info` — `BTC`, `ETH` resolve | **resolved-via-internal-API** |
+| Commodities — Silver, Brent, Natural Gas, Copper | `securities_info` symbol-guessing exhausted (SILVER/XAGUSD/BRENT/UKOIL/NATGAS/COPPER/HGUSD all empty); YCharts HAS the data but the symbols are not guessable and `securities_info` is lookup-by-exact-symbol, not search | **genuinely-unmapped this pass** — needs the YCharts securities-search XHR/UI (C2; browser-in-loop or a located search endpoint) |
+| MSCI USA Size | no clean YCharts equivalent surfaced | **genuinely-unmapped** — vendor confirmation (C2) |
+
+**P4 tally of the 27:** ~16 resolved-via-internal-API, 1 not-a-mapping-defect (Comm Services), ~5 still-wide (GSCI + 4 maturity-band bonds — symbol/variant pin in C2), ~5 genuinely-unmapped (4 commodities + MSCI USA Size — symbol-discovery gap, not data-availability).
+
+**The decisive answer to Andrew's "go deeper" hypothesis:** going to the internal API is the right call — it is clean structured JSON, entity-agnostic, and confirms A2's resolutions empirically. But it does NOT expose a hidden richer layer that auto-resolves the residue. The remaining ~10 imperfect cases are not blocked by missing data — YCharts has the data — they are blocked by **symbol discovery** (which exact YCharts symbol/variant) and **return-basis pinning**, both of which C2 closes with the YCharts search UI + a per-symbol fidelity check. No data-availability gap; a symbol-resolution gap.
 
 ---
 
-## 6. Status
+## 6. Status — A3 COMPLETE
 
-P1 + P2 + P3 complete and committed (P3 table: `mdsrc-ycharts-internal-api-mapping-20260520.tsv`). P4 (27-case retest against the internal API) in progress — the next + final interim. P1+P2 are sufficient for TO-C1 to begin now; P3 is the TO-C2 build spec (the per-requirement internal-API mapping). No external blocker; the YCharts seat is held.
+All 4 phases done. P2 is the TO-C1 build spec (auth/session model). P3 (`mdsrc-ycharts-internal-api-mapping-20260520.tsv`) is the TO-C2 build spec (per-requirement internal-API mapping). P4 confirms A2's resolutions hold against the internal API and bounds the residue as a symbol-discovery (not data-availability) gap for C2.
+
+**Net for v0.3 / C1+C2:** the YCharts internal JSON API is the integration target — ~6 generic entity-agnostic endpoints, clean structured JSON, no DOM scraping. C1 builds the session pipeline against §3; C2 builds the pull against the §4 mapping table; the ~10 residual symbol-discovery cases are a bounded C2 task (YCharts securities-search + per-symbol fidelity check). No external blocker.
