@@ -314,6 +314,35 @@ tools:
       Canonical guard pattern: if command -v pgrep >/dev/null 2>&1; then ...
       Reference: org/mcp/inbox-watch.sh (commit 045296b18, ADHC_BASHFIX.002)
 
+  comp-chainrun:
+    command: "comp-chainrun {snapshot --label L [--out P] [--manifest P] [--bucket B] [--from-dir D] | diff <pre.json> <post.json> [--verbose] [--json] | spec | selfcheck}"
+    segment_scope: cross-segment
+    when: |
+      - Shipping an ATOMIC-BUNDLE TO (a multi-commit refactor touching a producer + its consumers): snapshot --label pre BEFORE the bundle ships, snapshot --label post AFTER the chain re-runs, diff
+      - Verifying a chain refactor did not silently drop a stage artifact, lose a column, or empty a partition
+      - Class-B gate of the VALGATE acceptance-gate suite (ADHC_VALGATE.007, N7)
+    subcommands:
+      snapshot: "comp-chainrun snapshot --label pre -- capture the A/B/C/D-stage shape-sentinel set into a snapshot"
+      diff: "comp-chainrun diff pre.json post.json -- partial-refactor-leak report (DROPPED / COLUMNS-LOST / EMPTIED)"
+      spec: "comp-chainrun spec -- print the PRD 3.2 six-field Class-B gate contract"
+      selfcheck: "comp-chainrun selfcheck -- offline no-op + synthetic-leak verification"
+    exit_codes: "0 = PASS / WARN / SKIP (v1 WARN-not-BLOCK); 1 = BLOCK (post-ratchet only)"
+    cost: "~3-10s per snapshot (reads ~10 S3 gold artifacts); diff <1s"
+    data_sources: "INF gold S3 artifacts per the in-code curated CHAIN_MANIFEST in chainrun_cli.py (parquet + json); --from-dir reads a local directory for offline / fixture use"
+    replaces: "Worker-discipline 'eyeball the A/B/C/D chain sentinels' -- no structural pre/post diff existed before"
+    note: |
+      Class-B gate (ADHC_VALGATE.007, N7 -- formalizes the Class-B half of the
+      VALGATE taxonomy). Catches partial-refactor leaks: a sentinel that flips
+      green->absent, loses a column, or goes row-count>0->0 across an
+      atomic-bundle ship. Reference = the pre-bundle snapshot (the pre-refactor
+      sentinel set). The stage-sentinel set is the in-code CHAIN_MANIFEST in
+      chainrun_cli.py -- add a sentinel by editing that dict, no separate file
+      (the same in-code declared-registry convention as the Class-C
+      valgate_baseline.py registries). v1 WARN-not-BLOCK
+      per PRD 7-Q1; the WARN->BLOCK ratchet is a one-line GATE_VERDICT_POLICY
+      flip in chainrun_cli.py. Anchor: DWSPLT chain #26 partial-refactor leak.
+      PRD: docs/architecture/ADHC_VALGATE.md section 4.B.
+
   comp-freshness:
     command: "comp-freshness {chain {bd|inf} | script <id> | artifact <s3-prefix> | ddb <table> [--pattern PK#] | all} [--list]"
     segment_scope: segment-aware

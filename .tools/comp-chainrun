@@ -1,0 +1,15 @@
+#!/bin/bash
+# comp-chainrun -- Class-B chain-run pre/post sentinel-diff gate (ADHC_VALGATE.007)
+# Catches partial-refactor leaks across an atomic-bundle ship: a sentinel that
+# flips green->absent, loses a column, or goes row-count>0->0.
+# Usage:
+#   comp-chainrun snapshot --label pre [--out PATH] [--manifest PATH]
+#                          [--bucket B] [--from-dir DIR]
+#   comp-chainrun diff <pre-snapshot.json> <post-snapshot.json> [--verbose] [--json]
+#   comp-chainrun spec                # print the PRD 3.2 six-field gate contract
+#   comp-chainrun selfcheck           # offline no-op + synthetic-leak verification
+WORKSPACE="$(cd "$(dirname "$0")/.." && pwd)"
+python "$WORKSPACE/org/modules/graph/chainrun_cli.py" "$@"
+_exit=$?
+python "$WORKSPACE/org/modules/graph/comp_log_auto.py" "comp-chainrun" "$*" $_exit 2>/dev/null
+exit $_exit
