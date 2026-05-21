@@ -3893,3 +3893,27 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-05-21 | 0.4.0_DS_ClientPlatform~C | ADVI_DEMOV1.002.dsc-transform-engine-two-pass-pseudonymizer | comp-pipescript | comp-pipescript deployed data/mdpf/scripts/backfill/build_legacy_compat_emit.py | PASS |
 | 2026-05-21 | 0.2.0_DS_PortfolioAnalytics | YALP_MDSRC.C2-WS2-stage | comp-pipescript | comp-pipescript deployed smartx-model-monthly-pull | PASS |
 | 2026-05-21 | 0.2.0_DS_PortfolioAnalytics | YALP_MDSRC.C2-WS2-stage | comp-pipescript | comp-pipescript deployed yang-model-portfolio-benchmarks | PASS |
+| 2026-05-21 | 0.3.0_DE_TradingOperations | (no-TO) | comp-adapter-audit | comp-adapter-audit | FAIL |
+| 2026-05-21 | 0.3.0_DE_TradingOperations | (no-TO) | comp-adapter-audit | comp-adapter-audit getPlatinumAdvisorSummaryStaticInflection | PASS |
+| 2026-05-21 | 0.4.0_DE_ClientPlatform~B | ADHC_VALGATE.004.de-d1-adapter-threading-gate | comp-adapter-audit | comp-adapter-audit getPlatinumAdvisorSummaryStaticInflection | PASS |
+| 2026-05-21 | 0.4.0_DE_ClientPlatform~B | ADHC_VALGATE.004.de-d1-adapter-threading-gate | comp-adapter-audit | comp-adapter-audit getPlatinumAdvisorSummaryStaticInflection --severity error | FAIL |
+| 2026-05-21 | 0.4.0_DE_ClientPlatform~B | ADHC_VALGATE.004.de-d1-adapter-threading-gate | comp-adapter-audit | comp-adapter-audit getPlatinumAdvisorSummaryStaticInflection --severity warn | PASS |
+| 2026-05-21 | 0.4.0_DE_ClientPlatform~B | ADHC_VALGATE.004.de-d1-adapter-threading-gate | comp-cache | comp-cache collisions | PASS |
+| 2026-05-21 | 0.7.0_AE_CloudOps | (no-TO) | comp-transform | comp-transform schema-check AdvisorBookView | PASS |
+| 2026-05-21 | 0.7.0_AE_CloudOps | (no-TO) | comp-transform | comp-transform schema-check AdvisorPublicProfile | PASS |
+| 2026-05-21 | 0.4.0_DE_ClientPlatform~B | ADHC_VALGATE.004 | comp-cache collisions; comp-transform schema-check (AdvisorBookView, AdvisorPublicProfile); comp-adapter-audit (getPlatinumAdvisorSummaryStaticInflection + via D-1 gate path) | D-1 adapter-threading gate built + verified 15/15; hook-surface reconciliation |
+| 2026-05-21 | 1.0.0_SA_CTO | YALP_MDSRC-v0.4 | comp-build | comp-build | PASS |
+| 2026-05-21 | 0.4.0_DE_ClientPlatform~B | ADHC_VALGATE.005.de-d3-multi-axis-envelope-sentinel-gate | comp-trace | comp-trace Macroeconomics --direction both | PASS |
+| 2026-05-21 | 0.4.0_DE_ClientPlatform~B | ADHC_VALGATE.005.de-d3-multi-axis-envelope-sentinel-gate | comp-trace | comp-trace FactorTilts --direction both | PASS |
+| 2026-05-21 | 0.4.0_DE_ClientPlatform~B | ADHC_VALGATE.005.de-d3-multi-axis-envelope-sentinel-gate | comp-platinum | comp-platinum page Correlation | PASS |
+| 2026-05-21 | 0.5.0_AE_OpalETL | SSCN_UNVREV.001.ae-lambda-universe-revert-and-data-refresh | comp-iam | comp-iam service opal-security-scanner-processor | PASS |
+| 2026-05-21 | 0.4.0_DE_ClientPlatform~B | ADHC_VALGATE.006.de-d2-visual-rendering-baseline-gate | comp-blast | comp-blast model_portfolio_timeseries.json | PASS |
+| 2026-05-21 | 0.4.0_DE_ClientPlatform~B | ADHC_VALGATE.006.de-d2-visual-rendering-baseline-gate | comp-trace | comp-trace CorrelationMatrix --direction down | PASS |
+| 2026-05-21 | 0.4.0_DE_ClientPlatform~B | ADHC_VALGATE.006.de-d2-visual-rendering-baseline-gate | comp-trace | comp-trace FactorTiltBarsTab --direction down | PASS |
+| 2026-05-21 | 0.5.0_AE_OpalETL | SSCN_UNVREV.001.ae-lambda-universe-revert-and-data-refresh | comp-trace | comp-trace ValuationSummaryPanel --direction down | PASS |
+| 2026-05-21 | 0.5.0_AE_OpalETL | SSCN_UNVREV.001.ae-lambda-universe-revert-and-data-refresh | comp-trace | comp-trace PositioningSummary --direction down | PASS |
+| 2026-05-21 | 0.5.0_AE_OpalETL | SSCN_UNVREV.001.ae-lambda-universe-revert-and-data-refresh | comp-trace | comp-trace MacroHeatmap --direction down | PASS |
+| 2026-05-21 | 0.5.0_AE_OpalETL | SSCN_UNVREV.001.ae-lambda-universe-revert-and-data-refresh | comp-blast | comp-blast model_portfolio_timeseries.json | PASS |
+| 2026-05-21 | 0.5.0_AE_OpalETL | SSCN_UNVREV.001.ae-lambda-universe-revert-and-data-refresh | comp-platinum | comp-platinum reverse model_portfolio_timeseries.json | PASS |
+| 2026-05-21 | 0.5.0_AE_OpalETL | SSCN_UNVREV.001.ae-lambda-universe-revert-and-data-refresh | comp-trace | comp-trace model_portfolio_timeseries --direction both | PASS |
+| 2026-05-21 | 0.4.0_DE_ClientPlatform~B | ADHC_VALGATE.005 | comp-transform schema-check AdvisorBookView (Phase 1 + 3) | D-3 multi-axis envelope gate built + verified 24/24; seed config preserves AdvisorBookView 6-axis coverage |
