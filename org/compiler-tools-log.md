@@ -3852,3 +3852,11 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-05-20 | 0.2.0_DS_PortfolioAnalytics~A | YALP_MDSRC.F1.dsa-macro-page-input-audit-and-fred-exploration | comp-pipescript | comp-pipescript io yang-generate-macro-timeseries | FAIL |
 | 2026-05-20 | 0.2.0_DS_PortfolioAnalytics~A | YALP_MDSRC.F1.dsa-macro-page-input-audit-and-fred-exploration | comp-pipescript | comp-pipescript deployed data/orion/scripts/gold/valgate_gate.py | PASS |
 | 2026-05-20 | 0.2.0_DS_PortfolioAnalytics | YALP_MDSRC.S1.ds-smartx-coverage-deep-dive-positioning-attribution-factortilts | comp-routes | comp-routes behaviors | PASS |
+| 2026-05-20 | 0.4.0_DS_ClientPlatform | YALP_MDSRC.B1.ds-smartx-rest-model-portfolio-performance-pull | comp-iam | comp-iam service yang-model-portfolio-benchmarks | PASS |
+| 2026-05-20 | 0.2.0_DS_PortfolioAnalytics | YALP_MDSRC.C3.ds-ws2-hybrid-surface-input-series-spec | comp-pipescript | comp-pipescript io yang-generate-correlation | FAIL |
+| 2026-05-20 | 0.2.0_DS_PortfolioAnalytics | YALP_MDSRC.C3.ds-ws2-hybrid-surface-input-series-spec | comp-pipescript | comp-pipescript io yang-generate-factor-tilts | FAIL |
+| 2026-05-20 | 0.2.0_DS_PortfolioAnalytics | YALP_MDSRC.C3.ds-ws2-hybrid-surface-input-series-spec | comp-pipescript | comp-pipescript io yang-model-portfolio-benchmarks | FAIL |
+| 2026-05-20 | 0.2.0_DS_PortfolioAnalytics | YALP_MDSRC.C3.ds-ws2-hybrid-surface-input-series-spec | comp-pipescript | comp-pipescript io INF_C_03.account_performance | PASS |
+| 2026-05-20 | 0.2.0_DS_PortfolioAnalytics | YALP_MDSRC.C3.ds-ws2-hybrid-surface-input-series-spec | comp-pipescript | comp-pipescript io INF_D_05.client_top_holdings | PASS |
+| 2026-05-20 | 0.2.0_DS_PortfolioAnalytics | YALP_MDSRC.C3.ds-ws2-hybrid-surface-input-series-spec | comp-pipescript | comp-pipescript io INF_D_06.client_timeseries | PASS |
+| 2026-05-20 | 0.2.0_DS_PortfolioAnalytics | YALP_MDSRC.C3.ds-ws2-hybrid-surface-input-series-spec | comp-pipescript | comp-pipescript io INF_D_09.account_timeseries | PASS |
