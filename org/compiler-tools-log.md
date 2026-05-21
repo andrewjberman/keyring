@@ -3891,3 +3891,5 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-05-21 | 0.4.0_DS_ClientPlatform~C | ADVI_DEMOV1.000.dsc-static-platinum-serving-path-pii-probe | comp-chainrun | comp-chainrun selfcheck | PASS |
 | 2026-05-21 | 0.4.0_DS_ClientPlatform~C | ADVI_DEMOV1.000.dsc-static-platinum-serving-path-pii-probe | comp-blast | comp-blast opal-partners-data | PASS |
 | 2026-05-21 | 0.4.0_DS_ClientPlatform~C | ADVI_DEMOV1.002.dsc-transform-engine-two-pass-pseudonymizer | comp-pipescript | comp-pipescript deployed data/mdpf/scripts/backfill/build_legacy_compat_emit.py | PASS |
+| 2026-05-21 | 0.2.0_DS_PortfolioAnalytics | YALP_MDSRC.C2-WS2-stage | comp-pipescript | comp-pipescript deployed smartx-model-monthly-pull | PASS |
+| 2026-05-21 | 0.2.0_DS_PortfolioAnalytics | YALP_MDSRC.C2-WS2-stage | comp-pipescript | comp-pipescript deployed yang-model-portfolio-benchmarks | PASS |
