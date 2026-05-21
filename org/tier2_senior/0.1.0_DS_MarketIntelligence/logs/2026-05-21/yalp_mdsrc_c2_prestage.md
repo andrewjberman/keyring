@@ -25,7 +25,8 @@ C2 pull design encoded in the spec: full native-history pull (no date-bounded YC
 
 ## Track 2 -- the 9 blocked-pending-symbol resolutions
 
-Pending. 4 Bloomberg->ICE cross-vendor (analysis -- candidate mapping + fidelity, then surface the decision to COO); 5 securities-search (browser-in-loop -- spec for the paired AE). Not started this session.
+- 4 Bloomberg->ICE cross-vendor bonds: analysis complete -- docs/briefs/mdsrc-c2-bloomberg-ice-crossvendor-prestage-20260521.md (commit 0f21b87e9). Of the 4, only 20+ Yr Treasury has a clean YCharts candidate (cross-vendor: ICE 20+ Yr Treasury ^ICEUT2YTR); the other 3 have no maturity-band match. The cross-vendor substitution decision (Bloomberg->ICE vendor swap; proxy-vs-stays-Bloomberg-pkl for the 3) is surfaced to COO for an Andrew/architectural ruling.
+- 5 securities-search (MSCI USA Size, Silver, Brent, Natural Gas, Copper): browser-in-loop capture spec issued to the paired AE 0.7.0_AE_CloudOps~A (MCP 2026-05-21). Spec ready; execution holds for the dedicated YCharts seat -- recommended bundled with the 36-entity general_data.json recapture as one seat session. The 3 no-match bonds may join this search batch pending COO's cross-vendor ruling.
 
 ## Compiler Tools
 
@@ -36,11 +37,12 @@ C2 pre-stage prep -- no comp-* graph node yet (C2 pull not authored/deployed). P
 | File | Change |
 |------|--------|
 | `docs/briefs/mdsrc-c2-pull-spec-prestage-20260521.csv` | NEW -- per-entity C2 pull-spec (76 rows) |
+| `docs/briefs/mdsrc-c2-bloomberg-ice-crossvendor-prestage-20260521.md` | NEW -- Track 2 Bloomberg->ICE cross-vendor analysis |
 | `org/tier2_senior/0.1.0_DS_MarketIntelligence/logs/2026-05-21/yalp_mdsrc_c2_prestage.md` | NEW -- this log |
 
 ## Next Steps
 
-1. Track 2: the 4 Bloomberg->ICE cross-vendor candidate-mapping + fidelity assessment; surface the cross-vendor decision to COO.
-2. Track 2: spec the 5 securities-search as browser-in-loop capture for the paired AE.
+1. COO ruling on the cross-vendor decision (Bloomberg->ICE vendor swap; proxy-vs-stays-Bloomberg-pkl for the 3 no-match bonds).
+2. Dedicated-seat capture session (AE): the 36-entity general_data.json recapture + the 5 (or 8) browser-in-loop securities-search -- bundled.
 3. Track 1 cont.: client-side resample logic + the pull module structure once the C2 endpoint home (Lambda/EC2) is settled in the C2 TO.
-4. The 36 PENDING-RECAPTURE entities finalize on the general_data.json recapture (non-contended seat) -- folds into C2 pre-build.
+4. Full C2 build once COO authors the TO (post C1 credential decision).
