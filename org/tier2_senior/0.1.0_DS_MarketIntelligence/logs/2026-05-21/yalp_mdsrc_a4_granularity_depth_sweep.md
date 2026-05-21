@@ -73,8 +73,12 @@ A4 is a YCharts-internal-API investigation TO -- no comp-* graph tool covers the
 | Capture handoff (31/67 + boundary) + 36-entity finding | 0.7.0_AE_CloudOps~A -> DS | RECEIVED |
 | RAVC2 complete (matrix + brief; 36 provisional) | DS -> COO + CC CTO | SENT this closeout |
 
+## Amendment -- 2026-05-21 (CTO ruling, post-RAVC2-accept)
+
+CTO ruling (Andrew-direct): the general_data.json 403 that deferred the 36 MSCI/Bloomberg-bond indices was F1 SESSION EVICTION -- a concurrent human login (Alyssa) on the shared YCharts seat -- operational contention, NOT an entitlement gap. The degraded-session-vs-entitlement fork and the "36 permanently stay Bloomberg-pkl" conditional are RETRACTED. Working architecture: full index universe is YCharts-resident; Andrew acquiring a dedicated seat. Brief §1/§3.2/§5/§6/§8 amended; matrix 36-row verdict pending-C1-fresh-session-test -> pending-recapture. COO RAVC2-accepted A4 (d4a61092f); 36-finalization folds into C2 pre-build (no A4.1).
+
 ## Next Steps
 
-1. [base 0.7.0_AE_CloudOps, C1 Phase 0] fresh-session general_data.json GET -- reports 200-vs-403 to DS + ~A + COO; resolves the 36-entity fork.
-2. [follow-on] finalize the 36 provisional matrix rows on the C1 probe result -- either ~A re-captures (degraded-session) or they convert to confirmed stays-Bloomberg-pkl (entitlement gap). Recommend folding into C2's pre-build step.
-3. [C2, 0.1.0_DS + 0.2.0_DS] consume the matrix to bound pulls; close the 9 blocked-pending-symbol via browser-in-loop search / cross-vendor decision.
+1. [C2 pre-build] re-capture the 36 pending-recapture entities via general_data.json on a non-contended / the dedicated YCharts seat; finalize their matrix rows (expected meets/partial).
+2. [C2 pre-stage -- COO GO 2026-05-21] scaffold the C2 market-data pull against the 29 meets + 2 partial confirmed-ready entities (A3 P3 build spec + the A4 matrix); begin the 9 blocked-pending-symbol resolutions (5 browser-in-loop securities-search + 4 Bloomberg->ICE cross-vendor).
+3. [C2, 0.1.0_DS + 0.2.0_DS] full C2 build once COO authors the TO (post C1 credential decision).

@@ -7,6 +7,8 @@
 **Deliverable matrix:** `docs/briefs/mdsrc-a4-granularity-depth-matrix-20260521.csv` — 76 rows, one per portal-tracked entity.
 **Reference:** Phase 0 universe `mdsrc-a4-entity-universe-20260521.csv`; A3 internal-API brief `mdsrc-ycharts-internal-api-20260520.md`.
 
+> **Amendment 2026-05-21 (CTO ruling):** Andrew/CTO ruled the `general_data.json` 403 that deferred the 36 MSCI + Bloomberg-bond indices was **F1 session eviction** (a concurrent human login on the shared YCharts seat), operational contention — **not** an entitlement gap. The original degraded-session-vs-entitlement "fork" and the conditional "36 entities permanently stay Bloomberg-pkl" scope fact are **retracted.** §1, §3.2, §5, §6, §8 updated; the 36 carry `verdict = pending-recapture`. Finding 2 (no date-bounded pull) is unaffected.
+
 ---
 
 ## 1. Summary + verdict
@@ -19,10 +21,10 @@ A4 verifies, per portal-tracked entity, the **granularity** and **depth** the YC
 |---|---|---|
 | **meets** | 29 | Clean daily series, depth 12.2–96.4 yr — far exceeds the ~6yr daily backbone requirement. YCharts-replaceable. |
 | **partial** | 2 | Bitcoin + Ethereum — clean daily, but only 1.8 yr deep (YCharts crypto coverage starts 2024-07). |
-| **pending-C1-fresh-session-test** | 36 | All 29 MSCI indices + all 7 Bloomberg-bond indices — `fund_data.json` does not carry them; their canonical endpoint `general_data.json` is 403-gated on the capture session. Verdict hinges on a fresh-session test (see §6). |
+| **pending-recapture** | 36 | All 29 MSCI indices + all 7 Bloomberg-bond indices — `fund_data.json` does not carry them; their canonical endpoint `general_data.json` returned 403, which Andrew/CTO ruled was F1 session eviction (a concurrent login on the shared seat) — operational, not an entitlement gap. Expected YCharts-resident; pending re-capture on a non-contended / dedicated seat (see §6). |
 | **blocked-pending-symbol** | 9 | Batch-0 entities with no YCharts symbol resolvable in one attempt — a C2 symbol-discovery task, not a data-availability gap. |
 
-**Net:** for the 31 entities that ARE `fund_data.json` items, YCharts replacement is confirmed sound — 29 meet outright, 2 are shallow-but-daily. **But ~half the index universe (the 36) sits behind an unresolved endpoint-access fork** that materially shapes C2 scope and must be settled by base's C1 fresh-session probe before C2 builds.
+**Net:** for the 31 entities that ARE `fund_data.json` items, YCharts replacement is confirmed sound — 29 meet outright, 2 are shallow-but-daily. The other 36 (all MSCI + all Bloomberg-bond indices) were not captured only because a concurrent login evicted the capture session mid-sweep (F1 single-session) — operational contention, **not** a data-availability or entitlement gap. The working architecture is that the full index universe is YCharts-resident; a dedicated YCharts seat (being acquired) removes the contention permanently, and a non-contended re-capture confirms the 36.
 
 ---
 
@@ -52,7 +54,7 @@ All 31 returned a clean daily/trading-day series (median inter-point gap 1.0 day
 
 ### 3.2 The 36 not captured — all 29 MSCI + all 7 Bloomberg-bond indices
 
-Every MSCI index and every Bloomberg-bond index returned `fund_data.json` HTTP 400 *"There are no valid items on this chart"* — on every calc tried (level/price/total_return/none). They are simply **not `fund_data.json` items.** ~A confirmed their real time-series endpoint is `general_data.json` (the `/indices/^MSEM` detail page's own chart calls it) — and `general_data.json` returns **HTTP 403 "You are signed out"** consistently, while `fund_data.json` + `table_data` return 200 on the *same session in the same run*. The seat is alive; `general_data.json` is endpoint-gated. See §6 — this is the open fork.
+Every MSCI index and every Bloomberg-bond index returned `fund_data.json` HTTP 400 *"There are no valid items on this chart"* — on every calc tried (level/price/total_return/none). They are simply **not `fund_data.json` items**; their real time-series endpoint is `general_data.json` (the `/indices/^MSEM` detail page's own chart calls it). `general_data.json` returned **HTTP 403 "You are signed out"** during the sweep — the partial-failure signature of a disturbed YCharts session (the known F1 mode: some endpoints 403 while others still 200). **Andrew/CTO ruled (2026-05-21): this 403 was F1 session eviction** — a concurrent human login on the shared YCharts account killed the capture session mid-sweep — **operational contention, not an entitlement gate.** The 36 are expected YCharts-resident and capturable; they need re-capture on a non-contended session (see §6).
 
 ### 3.3 The 9 blocked-pending-symbol (Batch 0)
 
@@ -74,20 +76,19 @@ The ~A calibration on `^SPX` answered AC5 and corrected the A4 scoping assumptio
 
 1. **C2 pulls full native history via `fund_data.json` + `maxPoints=100000` and bounds client-side.** There is no working date-bounded YCharts path on this account — design C2 accordingly.
 2. **C2 must select the calc by entity-class** — `id:level` for `^`-prefixed indices, `id:price` for securities/ETFs/crypto. A per-entity `yc_kind` flag (already in the A4 universe CSV) drives this.
-3. **The 36 MSCI + Bloomberg-bond indices are the load-bearing C2 scope question** (§6). They are ~half the index universe and a large share of the DynamoDB backbone. C2 cannot be scoped until base's C1 fresh-session probe resolves the fork. C2 is sequenced behind C1 — the timing works.
+3. **The 36 MSCI + Bloomberg-bond indices are expected YCharts-resident** (§6) — the sweep missed them only to F1 session contention, not a data gap. C2 captures them via `general_data.json` on a non-contended / dedicated YCharts seat. They are ~half the index universe and a large share of the DynamoDB backbone, so confirming them is C2 pre-build work — but they are not a scope risk.
 4. **9 blocked-pending-symbol** — C2 closes these with a browser-in-loop securities-search (5) and a Bloomberg→ICE cross-vendor decision (4).
 5. **BTC/ETH** — YCharts daily but only 1.8yr; if the portal needs a deeper crypto backbone it stays partly Bloomberg-pkl for the pre-2024 tail. C2 / portal-owner confirm.
 
 ---
 
-## 6. The open fork — the 36 MSCI + Bloomberg-bond indices (AC4)
+## 6. The 36 MSCI + Bloomberg-bond indices — resolved as session contention (AC4)
 
-`general_data.json` 403s on the capture session while `fund_data.json`/`table_data` 200 on the same run. Two outcomes, indistinguishable from the capture side:
+During the sweep `general_data.json` 403'd while `fund_data.json`/`table_data` 200'd on the same run. A4 originally flagged this as a fork (degraded-session vs entitlement-gap). **Andrew/CTO ruled it on 2026-05-21:** the 403 was **F1 session eviction** — a concurrent human login on the shared YCharts account, and YCharts' single-concurrent-session constraint (F1) killed the capture session mid-sweep. This is **operational contention, not an entitlement gap.** Andrew's directive: *"should not take these 403s as blocks, it's an operational issue not a permissions issue"* — and he is acquiring a **dedicated YCharts seat**, which removes the contention permanently.
 
-- **(a) Degraded session** — the stored `ycharts/credentials` cookie bundle is only partially valid (good for `fund_data.json`, not `general_data.json`). A **fresh full YCharts session** (base's C1 work) would restore `general_data.json` → all 36 become capturable, and ~A runs a second capture batch to finalize their verdicts.
-- **(b) Account entitlement gap** — this YCharts plan does not include the `general_data.json` index time-series feature. Then the 36 genuinely **cannot be daily-sourced from YCharts and stay Bloomberg-pkl** — a real, large C2 migration-scope finding (AC4).
+**Working architecture: the full index universe is YCharts-resident.** The "36 entities permanently stay on the manual Bloomberg feed" conditional that A4 originally raised is **retracted.** The 36 MSCI + Bloomberg-bond indices are expected to capture cleanly via `general_data.json` once pulled on a non-contended session (the dedicated seat, or any window with no concurrent login).
 
-**Resolution path (per COO 2026-05-21):** a fresh-session `general_data.json` GET is folded into **C1 Phase 0** (base, 0.7.0_AE_CloudOps, C1 owner). Base reports 200-vs-403 to 0.1.0_DS + ~A + COO before C1's full deploy. The 36 carry **provisional matrix rows** (`verdict = pending-C1-fresh-session-test`) so the matrix is structurally complete now; their verdict finalizes when base's probe lands — a small, defined follow-on.
+**Confirmation step (not a gate):** a `general_data.json` GET on a non-contended session confirms the 36 — folded into C1 Phase 0 / C2 pre-build. It is verification, not a blocker. Their A4 matrix rows carry `verdict = pending-recapture` until that capture runs; expected outcome is meets/partial in line with their captured peers.
 
 ---
 
@@ -105,10 +106,10 @@ A4 is a YCharts-internal-API investigation — no comp-* graph tool covers the Y
 
 - **AC1** — all 76 entities (INDEX/BOND_INDEX/COMMODITY/ETF) enumerated + probed; none skipped; 9 unresolved entities present as explicit blocked rows. **MET.**
 - **AC2** — per captured entity: finest granularity, depth (earliest date + span), resample boundary recorded from the live pull. **MET** for the 31; the 36 pending the §6 probe.
-- **AC3** — per-entity meets/partial/gap verdict. **MET** — 29 meets, 2 partial, 36 provisional (`pending-C1-fresh-session-test`), 9 blocked.
-- **AC4** — entities YCharts cannot serve at the required granularity/depth explicitly flagged stays-Bloomberg-pkl. **MET as a flagged fork** — the 36 are the candidates; final stays-Bloomberg-pkl vs recoverable hinges on the §6 C1 probe.
+- **AC3** — per-entity meets/partial/gap verdict. **MET** — 29 meets, 2 partial, 36 `pending-recapture` (session-contention-deferred, §6), 9 blocked.
+- **AC4** — entities YCharts cannot serve at the required granularity/depth explicitly flagged stays-Bloomberg-pkl. **MET** — per the §6 CTO ruling, no entity is a confirmed permanent stays-Bloomberg-pkl: the 36 are session-contention-deferred (expected YCharts-resident, pending re-capture), and the 9 blocked are symbol-discovery not data-availability. The only granularity/depth shortfall is BTC/ETH (daily but 1.8yr — a portal-owner call on whether YCharts' crypto depth suffices or the pre-2024 tail stays Bloomberg-pkl).
 - **AC5** — canonical C2 time-series endpoint resolved. **MET** — §4: `fund_data.json` canonical (entity-class calc, maxPoints-driven granularity, date params ignored); `general_data.json` 403-gated.
 - **AC6** — committed machine-readable matrix + brief; compiler self-checks reproduced. **MET** (§7, this commit).
 - **AC7** — RAVC2 to COO + CC CTO; C2 implications stated. **MET** (§5, this RAVC2).
 
-**Follow-on (defined, gated):** finalize the 36 provisional rows when base's C1 fresh-session `general_data.json` probe reports — either ~A re-captures the 36 (outcome a) or they convert to confirmed stays-Bloomberg-pkl (outcome b). Recommend this folds into C2's pre-build step (C2 is sequenced behind C1).
+**Follow-on (defined):** re-capture the 36 `pending-recapture` entities via `general_data.json` on a non-contended / the dedicated YCharts seat, and finalize their matrix rows (expected meets/partial). Per COO 2026-05-21 this folds into C2's pre-build step — no separate A4.1.
