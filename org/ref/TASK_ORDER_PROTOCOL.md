@@ -55,6 +55,22 @@ One file per feature. Never overwrite into a monolith.
     Why: W3 OFC (2026-04-14) — nna_ofc typed but never rendered because L1956 routing ternary
     had no ofc branch. ternary-audit at Phase 1 generates the complete fix list automatically.
 
+    SPECIAL CASE — TO is an ATOMIC-BUNDLE ship (a multi-commit refactor touching a producer
+    + one or more of its consumers — a helper signature change, a shared-shape change, a
+    co-landed producer+consumer rename):
+    Phase 1 MUST capture the pre-bundle snapshot BEFORE the bundle ships:
+      <run>comp-chainrun snapshot --label pre --out {to_id}-pre.json</run>
+      <expect>snapshot writes; present == sentinel count, errors=0</expect>
+      <if_mismatch>errors>0 = a stage sentinel is unreadable; resolve before capturing the reference</if_mismatch>
+    Phase 3 MUST capture the post-bundle snapshot and diff it:
+      <run>comp-chainrun snapshot --label post --out {to_id}-post.json</run>
+      <run>comp-chainrun diff {to_id}-pre.json {to_id}-post.json</run>
+      <expect>overall=PASS, leaks=0 — no sentinel flipped green→absent, lost a column, or went row-count>0→0</expect>
+      <if_mismatch>Each LEAK row is a partial-refactor leak — a consumer the bundle did not update, or a dropped sibling. Fix every leak before marking the TO complete.</if_mismatch>
+
+    Why: DWSPLT chain #26 — a consumer signature mismatch survived an atomic-bundle ship past
+    every code-level + shape-sentinel check. PRD: docs/architecture/ADHC_VALGATE.md section 4.B.
+
     Example (filled):
     Phase 1 — before writing:
       <run>comp-blast DistributionTab</run>
