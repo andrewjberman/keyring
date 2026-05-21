@@ -262,6 +262,7 @@ lanes:
   POD4_OR_EXEC:
     permitted_agents:
       - 0.4.0_DE_ClientPlatform
+      - 0.4.0_DE_ClientPlatform~B
       - 0.4.0_DS_ClientPlatform
       - 0.4.0_DS_ClientPlatform~A
       - 0.4.0_DS_ClientPlatform~B
@@ -274,10 +275,11 @@ lanes:
       - 0.4.0_DT_ClientPlatform
       - 0.4.2_RD_AdvisorIntelligence
       - 1.0.0_SA_CTO
+      - 1.0.0_SA_CTO~B
       - 2.0.0_SA_COO
       - 1.1.0_SA_CTO
       - 2.1.0_SA_COO
-    description: "Pod 4 + any exec (task_orders/ authoring; underscore + tilde tilde-lane variants both included)"
+    description: "Pod 4 + any exec (task_orders/ authoring; underscore + tilde tilde-lane variants both included). 0.4.0_DE_ClientPlatform~B + 1.0.0_SA_CTO~B added 2026-05-21 by CTO~B: Andrew directed CTO~B to dispatch ADHC_VALGATE Phase 2 (Class-D, .004-.006) to DE~B after COO~B was closed -- the ~B C-suite was only ever in ANY_CTO (arch docs), never the task_orders lane. Tilde-lane owned-paths-gap pattern (cf. the 0.5.0/AE 2026-05-21 adds)."
 
   SHARED_OPAL_ETL_OR_EXEC:
     permitted_agents:
