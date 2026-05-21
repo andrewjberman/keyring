@@ -3917,3 +3917,6 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-05-21 | 0.5.0_AE_OpalETL | SSCN_UNVREV.001.ae-lambda-universe-revert-and-data-refresh | comp-platinum | comp-platinum reverse model_portfolio_timeseries.json | PASS |
 | 2026-05-21 | 0.5.0_AE_OpalETL | SSCN_UNVREV.001.ae-lambda-universe-revert-and-data-refresh | comp-trace | comp-trace model_portfolio_timeseries --direction both | PASS |
 | 2026-05-21 | 0.4.0_DE_ClientPlatform~B | ADHC_VALGATE.005 | comp-transform schema-check AdvisorBookView (Phase 1 + 3) | D-3 multi-axis envelope gate built + verified 24/24; seed config preserves AdvisorBookView 6-axis coverage |
+| 2026-05-21 | 0.2.0_DS_PortfolioAnalytics | YALP_MDSRC.SA2 | comp-platinum | comp-platinum reverse json/benchmarks/model_portfolio_timeseries.json | PASS |
+| 2026-05-21 | 0.2.0_DS_PortfolioAnalytics | YALP_MDSRC.SA2 | comp-platinum | comp-platinum reverse json/benchmarks/model_portfolio_benchmarks.json | PASS |
+| 2026-05-21 | 0.2.0_DS_PortfolioAnalytics | YALP_MDSRC.SA2 | comp-cache | comp-cache collisions | PASS |
