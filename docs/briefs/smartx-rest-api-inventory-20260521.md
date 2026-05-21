@@ -38,6 +38,7 @@ Envelope: `{data, version, hostDetails, statusCode, requestId, timestamp}` — p
 |---|---|---|---|---|
 | `models/{modelId}` | GET | static metadata | `name, shortName, status, type, reportedModelId, enterprise` | OK 7/7. Chains modelId -> reportedModelId (required for `reportedmodels/*`). |
 | `models/{modelId}/statistics` | GET | live snapshot | `statistics.{value, cash, exposure{long/short/net/gross}, returns{today,mtd,qtd,ytd}}` | **BUGGY** — B1/S1 confirmed: returns the WRONG model (requested ST, got LTC); `returns.today` identical across all 5 models; `returns.mtd/qtd/ytd` 0.0 for 4/5. value/cash/exposure look real; returns do not. Do not rely on for per-model returns. |
+| `models/{modelId}/performance?grouping=daily\|weekly\|monthly` | GET | **daily / weekly / monthly** flow-adjusted return series | `data.performance.{grouping, range, recordCount, performance[]}`; each record `{range, pnl{dollar,percent}, summary{beginningMarketValue, endingMarketValue, increaseByAmount, decreaseByAmount, isFullRange, transactions, fees}}` | OK — **the daily model-return source** (added 2026-05-21; 0.2.0_DS HAR-sweep found it, DS Base verified ST). `grouping=daily` -> 431 records, FRESH to T-1 (last 2026-05-20), `isFullRange=true` on all 431; `pnl.percent` is a per-period **flow-adjusted** return (`summary` carries the increase/decrease cash flows + the `isFullRange` clean-period flag) — NOT the flow-contaminated `closingEquity`. weekly/monthly groupings on the same endpoint. **This supersedes caveat 7** and is a cleaner single-endpoint perf source than `performance.smartxadvisory.com/models/performance`. |
 | `enterprises/aum?modelid=` | GET | **daily** time series | `data.totalAum` (mis-scaled — ignore), `data.performance[].{performanceDate, closingEquity}` | OK. FRESH (to T-1). ~336-425 daily points/model. `closingEquity` = model book VALUE (flow-contaminated; not a TWR). |
 | `enterprises/allocations?modelid=` | GET | per-allocation roster, snapshot | `allocationId, status, advisor{id,name,crd}, model, value, openedDate` | OK 7/7. Snapshot only (no history). |
 | `enterprises/advisors?modelid=` | GET | advisor roster, snapshot | advisor roster | OK 7/7. |
@@ -76,8 +77,15 @@ Pathfinder are real active Opal models outside the portal scope.
    Daily holdings history must be accrued by snapshotting.
 5. `performance/models/performance` ignores date params — always full-history.
 6. `enterprises/aum.totalAum` is mis-scaled (billions); use the per-day `closingEquity`.
-7. SmartX model-PERFORMANCE is monthly-cadence end to end — there is no daily model-return
-   series; the only daily series (`enterprises/aum.closingEquity`) is a flow-contaminated value.
+7. ~~SmartX model-PERFORMANCE is monthly-cadence end to end — there is no daily model-return
+   series~~ — **SUPERSEDED 2026-05-21.** `models/{modelId}/performance?grouping=daily`
+   provides a 431-record DAILY flow-adjusted model-return series (T-1 fresh, `pnl.percent`
+   per day, `isFullRange` clean-period flag) — see §3. The earlier "monthly-only" reading
+   was a probe-coverage gap: every prior effort (B1, S1, SXPL_RESTIN.001) used
+   `performance.smartxadvisory.com/models/performance` + `historicalperformance` +
+   `enterprises/aum`, and `models/{id}/performance` was never in the probe set.
+   `enterprises/aum.closingEquity` remains flow-contaminated, but it is no longer the only
+   daily option — `models/{id}/performance?grouping=daily` is a clean daily return source.
 
 ## 6. What B1/S1 used each for
 
@@ -92,7 +100,10 @@ Pathfinder are real active Opal models outside the portal scope.
 ## 7. Confidence
 
 CONFIRMED against live responses (this session + SXPL_RESTIN.001): all §3 endpoints'
-status/shape, the §5 bugs 1-7, the §2 auth model, the §4 identity map. INFERRED (flag for
+status/shape (incl. `models/{id}/performance?grouping=daily` — DS-verified 2026-05-21:
+431 daily records, T-1 fresh, isFullRange 431/431), the §5 caveats, the §2 auth model,
+the §4 identity map. CORRECTION LOG: caveat 7 superseded 2026-05-21 — SmartX DOES have a
+daily model-return series (0.2.0_DS HAR-sweep find, DS-verified). INFERRED (flag for
 the comprehensive TO to confirm): `performanceValue` exact units/sign on `historicalperformance`;
 `historicalperformance` cadence beyond "monthly" from shape; `allocations/performance` full
 schema (1 model unprobed — timeout).
