@@ -122,15 +122,23 @@ possible cosmetic follow-up; not an AC6 failure for this TO.
 
 Phase-2 compiler mandate (`bun run typecheck` + `bun run build` on PROD post-cherry-pick): both exit 0.
 
+## RAVC Close
+
+- RAVC2 COMPLETE sent to 2.0.0_SA_COO + CC 1.0.0_SA_CTO (Phase 5).
+- TO `<status>` self-flipped to `complete` — commit `8c257e6b1`.
+- **1.0.0_SA_CTO ACK** — CTO gate closed; both conditions empirically satisfied (cfdf9a5c reachable + gitlink synced; `git show --stat cfdf9a5c` = .frontend-dev/runners/ only). "Good ship." No CTO action on the "Category" observation — concurs it is out of .010 scope + pre-existing; a cosmetic follow-up is a COO TO-scope call, no PRD input needed.
+- **2.0.0_SA_COO RAVC4 ACCEPT** — evidence independently re-verified by COO (origin/PROD HEAD = a7fd7655, tag portal-v2.1.95, exactly 8 SSCN commits zero non-SSCN, AC1-AC8 PASS, both CTO gate conditions met). **SSCN_DIVDEF project CLOSED** — 3-step closure committed `3d7247a67` (JSON status->complete + REGISTRY Active->Completed; PRD Status row routed to the CTO/`docs/architecture/**` lane). The "Category" observation was carried into the closure record and surfaced to Andrew for his call on a cosmetic follow-up.
+
 ## Current State
 
 - portal/PROD = a7fd7655 (== origin/PROD); 8 SSCN commits cherry-picked, zero non-SSCN; tracked tree clean.
 - opalinvest.dev live on the new build (Last-Modified 18:46:50Z); GHA deploy.yml `26182828524` green; tag `portal-v2.1.95`.
 - All 8 acceptance criteria PASS. SSCN smoke runner 25/25; AC5 universe sweep + AC6 Factor Bank check PASS.
 - Parent CLOUD `portal` gitlink synced to cfdf9a5c (commit bf0d0d122, origin/CLOUD).
-- RAVC2 sent to 2.0.0_SA_COO + CC 1.0.0_SA_CTO.
+- **SSCN_DIVDEF.006 COMPLETE; SSCN_DIVDEF project CLOSED (COO commit 3d7247a67).** RAVC loop fully closed — RAVC2 -> CTO ACK -> COO RAVC4 ACCEPT.
+- DT lane clear on SSCN. No pending task orders.
 
 ## Next Steps
 
-1. **[2.0.0_SA_COO]** On RAVC2 COMPLETE: execute the 3-step SSCN_DIVDEF project closure (JSON status + REGISTRY row move + PRD status note).
-2. **[2.0.0_SA_COO / 1.0.0_SA_CTO]** Decide whether the scanner weights-table "Category" header (Observation above) warrants a cosmetic follow-up TO — out of .006 scope, pre-existing, in Andrew-approved DEV.
+1. **[Andrew]** Optional cosmetic call — the faint "Category" `<th>` on the separate scanner selected-factors/weight-config table (out of .006/.010 scope, pre-existing, in the Andrew-approved DEV build). COO can author a thin RD restyle TO if Andrew wants it changed; no PRD/architecture input needed (CTO confirmed). Not a .006 defect.
+2. No DT follow-up — SSCN_DIVDEF lifecycle complete (PRD v0.1->v0.6, 11 implementation TOs, scanner Lambda + portal UI both on PROD).
