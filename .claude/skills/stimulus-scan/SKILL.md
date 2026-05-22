@@ -14,7 +14,7 @@ Scans peer-agent state + inbox, classifies each agent, and **dispatches work to 
 
 ## Purpose
 
-This is NOT a reporting tool (that is `/status`). It exists to:
+This is NOT a reporting tool (that is `/overview`). It exists to:
 1. **Restructure capacity** — idle agents redirected to validation / audit / scaffold work.
 2. **Fix blockers** — an agent with an unread inbox or an unanswered escalation gets the missing dependency routed NOW.
 3. **Keep agents working** — no agent leaves a scan in STALE / STANDING_BY state without a dispatch.
