@@ -83,3 +83,21 @@ only structurally validated.
   `c2_ws1_validation_followup_result.json`, `c2_val01_probe_result.json`.
 - The joint C2 RAVC2 (0.1.0_DS + 0.2.0_DS) folds this in alongside the WS-2
   validation results; AC3 (model_portfolio_* / TO-B1 seam) flagged open.
+
+## 6. VAL-01 disposition — COO ruling 2026-05-22
+
+The Check-2 finding was carried to a definitive per-multiple discovery and a COO
+ruling. **WS1-VAL-01 is a HYBRID surface:**
+- `pe_ratio` — MIGRATES to YCharts: indicator entities `I:SP500PNM` (trailing) /
+  `I:SP500PND` (estimate/forward), pulled via `fund_data` `calc=id:level`.
+- `pb_ratio`, `ps_ratio`, `price_to_free_cash_flow`, `ev_to_sales`,
+  `dividend_yield` — **STAY Bloomberg-pkl-sourced.** They have no YCharts
+  indicator entity (robust negative, multi-phrasing search). COO ruling: the
+  project's hybrid migration model keeps hard-to-migrate surfaces on the pkl
+  rather than chasing a fragile multi-component discovery — these 5 are not
+  migrated.
+
+Folded into `ws1_surface_pull.py` — `VAL01_PE_INDICATORS` (the migrated leg) +
+`VAL01_STAYS_PKL` (the 5 pkl-retained multiples); `pull_valuation_multiples`
+pulls only the YCharts `pe_ratio` leg. The index-fundamental discovery item is
+closed — ERP forward-P/E and VAL-01 both definitively resolved.
