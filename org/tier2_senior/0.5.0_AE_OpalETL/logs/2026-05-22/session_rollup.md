@@ -2,87 +2,79 @@
 
 **Agent:** 0.5.0_AE_OpalETL (AWS Engineer, base lane)
 **Date:** 2026-05-22
-**Scope:** SSCN_UNVREV.001 verification + closure; /watcher self-check (CTO directive).
-**Lane:** base serial — brought online by Andrew specifically for the Security
-Scanner universe revert; base-serial dispatch from 0.3.0_DE_TradingOperations.
+**Scope:** SSCN_UNVREV.001 + .002 (Security Scanner Lambda) + /watcher self-check.
+**Lane:** base serial — brought online by Andrew for the Security Scanner work;
+base-serial dispatch (DE-authored TOs, COO-committed/GO'd).
 
-This is a session-level index. The TO has its own detailed log:
-`sscn_unvrev_001_universe_revert_verify_and_close.md`.
+Session-level index. Each TO has its own detailed log in this folder.
 
 ---
 
-## Task orders
+## Task orders — both shipped + RAVC4-accepted
 
-| TO | Deliverable | Outcome |
-|----|-------------|---------|
-| SSCN_UNVREV.001 | Lambda `UNIVERSE_MAP` revert to legacy 6-set + data refresh | COMPLETE — RAVC4-accepted by DE, all 6 ACs PASS |
+| TO | Deliverable | Tag | RAVC4 |
+|----|-------------|-----|-------|
+| SSCN_UNVREV.001 | Lambda `UNIVERSE_MAP` revert to legacy 6-set + 20260519 data refresh | `security-scanner-v1.2.0` | ACCEPT (DE) |
+| SSCN_UNVREV.002 | Lambda model-weight exclusion + `divzWeight`/`universeWeight` emit + 20260521 refresh | `security-scanner-v1.3.0` | ACCEPT (DE) |
 
 ### SSCN_UNVREV.001 — verification + closure
 
-Andrew ruled 2026-05-21 to revert the SSCN_DIVDEF v0.2 universe migration (Yang's
-refreshed FactSet export carries the legacy 6-set weight columns, not the v0.2
-5-set). Part A (Lambda revert + deploy) and Part B (xlsx upload + trigger run) had
-both been executed 2026-05-21 by a prior session of this lane that was interrupted
-before logging or closing the TO.
+Andrew-ruled revert of the SSCN_DIVDEF v0.2 universe migration. Part A (Lambda
+revert + deploy) and Part B (xlsx upload + trigger run) had been executed
+2026-05-21 by a prior interrupted session of this lane. This session ran the
+verification + closure pass — all 6 ACs re-verified against live AWS/S3/git/
+CloudWatch state. `security-scanner-v1.2.0`; commit `ee442cd07`. Closure commit
+`e0286ec3b`. Detail: `sscn_unvrev_001_universe_revert_verify_and_close.md`.
 
-This session ran the **verification + closure pass** — re-verified every AC against
-live AWS/S3/git/CloudWatch state (ship-attestation is necessary-not-sufficient;
-deploy-attestation confirmed independently), then closed the TO:
+### SSCN_UNVREV.002 — weight fields + 20260521 refresh
 
-- AC1 — deployed Lambda `CodeSha256 AUDtMWNcR1vkr6CQQEQkFrhnd+LI5ZpzFXOM5NRXZME=`
-  byte-matches the `security-scanner-v1.2.0` artifact; `UNIVERSE_MAP` = legacy 6-set.
-- AC2 — `terraform plan` 0-diff ("No changes"); tag `security-scanner-v1.2.0`
-  (`dc3fc2bb8`) on origin; commit `ee442cd07` on origin/CLOUD; source map updated.
-- AC3 — xlsx present at `uploads/20260519/Screening_DIVZ_IDVZ_20260519.xlsx`.
-- AC4 — all 6 universes + `latest/factor_metadata.json` regenerated, run 2026-05-21
-  19:46Z.
-- AC5 — sp500 502 securities w/ country; acwx 1,682 securities, 0 empty country.
-- AC6 — sp500 scanner_data.json rows carry both `values` + `pctls` (284 keys each).
+Yang feedback (Andrew-direct). `opal-security-scanner-processor`: `NON_SCORING_COLS`
++= `wt_divz/wt_idvz/wt_pfde/wt_pfoe`; `_build_universe_rows` emits `divzWeight`;
+`_build_scanner_rows` threads `universe_col` + emits `universeWeight`/`divzWeight`.
+Deployed `security-scanner-v1.3.0` via safe-apply (0-diff verified); 20260521 file
+loaded (2707x339, 6 universes, 0 errors). All 6 ACs PASS. Commits `5fd7d6049`
+(code) + `939cdb2d4` (record-deploy); closure commit `e7e9c1875`. Detail:
+`sscn_unvrev_002_weight_fields_and_20260521_refresh.md`.
 
-CloudWatch trigger run: 2,707 rows x 335 cols loaded, 6 universes processed, 0 errors
-(sp500 502 / r1000 1002 / r1000v 864 / acwx 1682 / eafe 677 / eafev 405).
+## Tags shipped
 
-Closure commit `e0286ec3b` — TO -> complete, `pipeline_inventory.xml` security-scanner
-`current_tag` v1.0.0 -> v1.2.0 (drift fix predating this TO), session log. Pushed to
-CLOUD. RAVC2 sent to DE (CC COO); **DE returned RAVC4 ACCEPT — RAVC loop closed.**
+`security-scanner-v1.2.0` (verified, prior-session deploy), `security-scanner-v1.3.0`
+(this session). pipeline_inventory.xml `current_tag` brought current v1.0.0 -> v1.3.0
+(drift fix predating these TOs).
 
 ## Other session activity
 
-- **/watcher self-check** (CTO directive, Andrew 2026-05-22 — every active agent runs
-  it on itself). Diagnostic found one ORPHAN watcher (PID 55737, PPID=1 — a deaf
-  auto-respawn leftover). Killed it, verified `VERDICT: NONE`, launched one tracked
-  watcher (task `bnidq6s6g`). Registration LIVE; inbox empty both paths.
-- COO message on YALP_MDSRC.D1 — informational (D1 stays staged-gated on Phase 2C +
-  the YCharts seat); no action required.
+- **/watcher self-check** (CTO directive, Andrew 2026-05-22). Killed 2 ORPHAN
+  auto-respawn watchers across cycles; standalone `/watcher` 10m health loop now
+  running (not in a primary `/loop`, so the standalone loop is correct).
+- COO `D1` note (informational — D1 stays staged-gated); DE portal-PROD-promotion
+  FYI (no AE action — my side is the satisfied prerequisite).
 
 ## Compiler Tools
 
 | Tool | Result |
 |------|--------|
-| `comp-iam service opal-security-scanner-processor` | 3 S3 ops (`get_object` x2, `put_object`) — all pre-existing; the revert is a `UNIVERSE_MAP` dict edit only, no new boto3 call. No MISSING flagged. Clean. |
-| `comp-pipescript deployed` | N/A — Lambda, not a gold runner. The 0-diff `terraform plan` is the deployed-state check (AC2). |
-| `comp-iam gaps` | N/A — `iam.tf` not touched. |
-
-No comp gaps found.
-
-## Tags shipped
-
-None this session — `security-scanner-v1.2.0` was tagged in the prior (interrupted)
-session; this session verified it. No new deploy.
+| `comp-iam service opal-security-scanner-processor` | run for both TOs — 3 pre-existing S3 ops, no new boto3 call, no MISSING. Clean. |
+| `comp-pipescript deployed` | N/A — Lambda, not a gold runner. 0-diff `terraform plan` is the deployed-state check (both TOs' AC2). |
+| `comp-iam gaps` | N/A — `iam.tf` not touched in either TO. |
+| `python -m py_compile` | PASS on `lambda_function.py` post-edit (SSCN_UNVREV.002). |
 
 ## Current state
 
-- SSCN_UNVREV.001 complete + RAVC4-accepted. `security-scanner-v1.2.0` is the deployed
-  state; Lambda `UNIVERSE_MAP` on the legacy 6-set; all 6 universes live in S3.
-- Watcher healthy — one tracked instance; registration LIVE.
-- Nothing pending in the TO queue.
+- Both Security Scanner TOs shipped, deployed, RAVC4-accepted. `security-scanner-v1.3.0`
+  is the live state; 20260521 data live in S3 across all 6 universes.
+- All work committed + pushed to origin/CLOUD. Local HEAD == origin/CLOUD.
+- Watcher healthy (one tracked instance); registration LIVE.
+- No pending task orders.
 
 ## Next steps
 
-- `[DT]` Portal PROD push bundles the DE portal-side revert (`47330865` on DEV) after
-  Andrew's DEV smoke. AC4 (6 universes live in S3) already satisfied — no AE blocker.
+- `[DT]` Portal PROD promotion of the SSCN_UNVREV set dispatched by DE to `0.3.0_DT`
+  (Andrew GO'd) — cherry-pick the 12 SSCN commits onto portal PROD, deploy, bump the
+  parent gitlink. AE side is the satisfied prerequisite; no AE action.
+- `[2.0.0_SA_COO~B]` `SSCN_DATA_CONTRACT.md` Section 5 doc delta (`divzWeight` /
+  `universeWeight` row fields) — flagged, non-blocking, COO~B's canonicalization lane.
 - `[follow-up, non-blocking — needs sign-off]` 3 stale v0.2-only S3 prefixes
-  (`msciusa/`, `rmidcap/`, `sp400/` under `latest/universes/`, dated 2026-05-20) left
-  in place — no longer emitted by the reverted Lambda, harmless (the reverted portal
-  `UniverseId` union references only the 6-set). S3 deletion needs explicit sign-off.
-- `[0.5.0_AE_OpalETL]` Idle / watchdog standby.
+  (`msciusa/`, `rmidcap/`, `sp400/` under `latest/universes/`) — S3 deletion needs
+  explicit sign-off.
+- `[0.5.0_AE_OpalETL]` Idle / watchdog standby — `/watcher` 10m health loop running.
