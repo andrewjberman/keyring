@@ -214,21 +214,42 @@ permitted_agents — same path as SSCN_UNVREV.001).
   toggle to the Universe Data + Universe Scanner panels (Escape to exit),
   mirroring the PortfolioManagement Trade tab.
 
+## Addendum 4 2026-05-22 — Delta-shading, column-width, factor-order, timestamp polish
+
+Rapid Andrew iteration on the live :5175 DEV preview:
+
+- **Delta shading (`921551bf` -> `771de362`).** Delta Wt % switched from colored
+  text to a full-cell background tint; alpha raised 0.15 -> 0.40 per "heavier".
+- **Weight-column widths (`3b6dbfe8` -> `a66d4215` -> `5f322e89`).** Universe/
+  DIVZ/Delta Wt columns were at AG Grid's 200px default; narrowed, then re-sized
+  to fit each header (no truncation) — Universe Wt % 144, DIVZ Wt % 118, Delta
+  Wt % 120, `width === minWidth` so they can't be squeezed below the no-truncate
+  floor.
+- **Factor column order (`1888288d`).** Universe Data + Universe Scanner grids
+  now sort the dynamic factor columns through `compareFactors` — left-to-right
+  column order matches the top-to-bottom Scanner Controls factor list.
+- **Page timestamps (`b5dce977`).** The Scanner Controls footer showed the
+  Lambda processing time (manifest `timestamp`), not the spreadsheet date.
+  Repointed every SSCN timestamp to the API `asOf` (the screening file's date):
+  new `utils/asOf.ts`, footer via `PanelFooter` fed `asOfToISO(asOf)`, tab
+  subtitles formatted via `formatAsOfLabel`. The page no longer reads the
+  manifest for freshness.
+
 ## Current State
 
-Portal SSCN_UNVREV delta on DEV at `f23aaeea`. Chain:
-`47330865` (universe 5->6 + raw-toggle) -> `6f66c67f` (Composite revert) ->
-`7786eef9` (weight/sector columns) -> `437c9eba` (Delta Wt %) ->
-`f23aaeea` (column-width + fullscreen). All statically verified (typecheck +
-lint exit 0 at each step). AE-side SSCN_UNVREV.001 + .002 both closed +
-RAVC4-accepted; `security-scanner-v1.3.0` + the 20260521 data live in AWS.
-DEV only — nothing in PROD. DEV-code dev server up on :5175
-(`portal/.runtmp/portal-dev-verify` worktree) for Andrew's verification.
+Portal SSCN_UNVREV delta on DEV at `b5dce977`. Chain:
+`47330865` -> `6f66c67f` -> `7786eef9` -> `437c9eba` -> `f23aaeea` ->
+`921551bf` -> `771de362` -> `3b6dbfe8` -> `a66d4215` -> `5f322e89` ->
+`1888288d` -> `b5dce977`. All statically verified (typecheck + lint exit 0 at
+each step). AE-side SSCN_UNVREV.001 + .002 both closed + RAVC4-accepted;
+`security-scanner-v1.3.0` + the 20260521 data live in AWS. DEV only — nothing in
+PROD. DEV-code dev server up on :5175 (`portal/.runtmp/portal-dev-verify`
+worktree) for Andrew's verification.
 
 ## Next Steps
 
 - `[0.3.0_DT_TradingOperations]` PROD-promotion of the full portal SSCN_UNVREV
-  set (`47330865`->`f23aaeea`) after Andrew's DEV smoke + a GO. Return the portal
+  set (`47330865`->`b5dce977`) after Andrew's DEV smoke + a GO. Return the portal
   submodule to DEV once the MDPF WIP clears.
 - `[0.4.0_DE_ClientPlatform]` Commit the MDPF_ASSETS.033 WIP to DEV.
 - `[2.0.0_SA_COO~B]` SSCN_DATA_CONTRACT.md Section 5 — add `divzWeight` /
