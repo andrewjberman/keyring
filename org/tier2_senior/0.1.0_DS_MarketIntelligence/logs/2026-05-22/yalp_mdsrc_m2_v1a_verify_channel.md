@@ -92,8 +92,18 @@ Built `infra/aws/lambda/ycharts-market-data-pull/ycharts_client.py` -- the share
 
 Structurally validated: py_compile + Rule-14 ds-commit-gate (ds-precommit + ruff py39) all clean; a no-network structural test exercised every parser + the csrf/cookie/seat-eviction helpers -- ALL PASS. Interface posted to 0.2.0_DS so WS-2 builds against a stable contract.
 
+## C2 phase-2 -- WS-1 surface-pull section built (same day)
+
+Built `infra/aws/lambda/ycharts-market-data-pull/ws1_surface_pull.py` -- the WS-1 section, one pull function per YCharts-replaceable surface against the shared YChartsClient: pull_market_heatmap (MO-01), pull_rsi_summary (MO-02), pull_rsi_details (MO-03), pull_ticker_timeseries (MO-04), pull_valuation_multiples (VAL-01, A3-P3 UNVERIFIED-COLS flagged for first-live-run column confirm), pull_etf_benchmark_returns (MP-04), pull_ddb_backbone (DDB-01) + the WS1_SURFACES registry. Freeze-aware -- defined + structurally validated, no live call.
+
+ETF-calc reconciliation RESOLVED (the item flagged to 0.2.0_DS): ETF/security fund_data pulls use calc=PRICE -- A3 P3's MP-04 "calcs=id:level" is superseded by the later A4 live calibration + the V1-verified C2 pull-spec (ETF rows carry calcs=id:price). WS-1 MP-04 and WS-2 MP-01/02/03 both pull ETFs at calc=price -- consistent. (My module corrected level->price; 0.2.0_DS already used price.)
+
+Structurally validated: py_compile + Rule-14 ds-commit-gate clean; a no-network structural test exercised the 7-surface registry, the A3-P3 column specs, _envelope_ok, and the ETF-calc=price assertion -- ALL PASS.
+
+WS-2 status (0.2.0_DS): MP section built (53f358b70); Correlation leg plan committed (5a788c179); regime/ERP next, FT-02/03 last.
+
 ## Next Steps
 
-1. [C2 -- next block] build the WS-1 section against the shared client: the 7 replaceable-surface pull functions (DDB-01 / MO-01-04 / VAL-01 / MP-04) + the 71-entity ticker map; then the ~10-case A3 P4 symbol-discovery sub-task. Freeze-aware -- structural validation only. lambda_function.py handler + lambda-source-map.json entry land when the module is build-complete.
-2. [C2] WS-2 section is 0.2.0_DS's -- they build MP-01/02/03 first against the shared client.
+1. [C2 -- WS-1 cont.] the 71-entity ticker map (extend the dc01d4b8a crosswalk with the V1/V1A/V1B resolutions + ^BBUSTTR for Bloomberg US Treasury) + the ~10-case A3 P4 symbol-discovery sub-task (seat-frozen -- structure now, live-pin post-seat); then the lambda_function.py handler wiring the WS-1 + WS-2 sections + the lambda-source-map.json entry once the module is build-complete.
+2. [C2] WS-2 section is 0.2.0_DS's -- continuing in parallel.
 3. [implementation TO, downstream of M2] scope the FRED macro-ingestion Lambda off the 56 FRED/Treasury rows; the YCharts channel for the 15 carried originating-body rows; escalate the 4 no-channel rows (idx 1/4/5/29) as a licensing cost/scope call.
