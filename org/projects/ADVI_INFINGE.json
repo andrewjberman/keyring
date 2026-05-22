@@ -4,28 +4,72 @@
   "name": "Inflection Ingestion Daily Automation",
   "description": "All Inflection bronze prefix pulls automated daily without manual intervention. DS~D bronze state audit (2026-05-05) confirms ZERO of 6+ Inflection bronze prefixes are scheduled — every pull script lives in data/orion/manual_api/, none on cron / EventBridge / Lambda schedule. Phase B silver chain Lambda runs daily but consumes whatever bronze partitions happen to exist, producing silent staleness. Same systemic failure class produced AUDIT-002 (canonical_prices 2 weeks stale), AUDIT-008 (silver/assets_v2 5 days stale), and the AUDIT-008 INF_B_00 blocker (silver/api_dims/positions_mv 5 days stale) — three same-class incidents in two weeks. Andrew P1 directive 2026-05-05T~17:52Z: 'daily pulls on ALL INGESTION PIPELINES is priority #1.'",
   "prds": [
-    {"path": "docs/architecture/ADVI_INFINGE.md", "label": "Inflection Ingestion Daily Automation PRD v0.2 (5-tier model; Phase 1a 3 TOs ops cleanup + 1b 5 TOs REST-pull Lambda migration; Phase 2 orchestrator-dim migration future PRD scope; Phase 3 inf-bronze-runner decom gates on Phase 2)", "date": "2026-05-05"}
+    {
+      "path": "docs/architecture/ADVI_INFINGE.md",
+      "label": "Inflection Ingestion Daily Automation PRD v0.2 (5-tier model; Phase 1a 3 TOs ops cleanup + 1b 5 TOs REST-pull Lambda migration; Phase 2 orchestrator-dim migration future PRD scope; Phase 3 inf-bronze-runner decom gates on Phase 2)",
+      "date": "2026-05-05"
+    }
   ],
   "salvage_references": [
-    {"commit": "04448b49c", "author": "0.6.1_AE_PartnerETL", "context": "AUDIT-008.PERM C-gold authoring (sentinel pattern + IAM enumeration + EventBridge structure) — SUPERSEDED by Andrew Lambda-native directive but reusable as Phase 1b TO-1 reference; Lambda body + tag bump replaced; ds-commit-gate PASS + comp-iam gaps clean preserved as §5 Compiler Evidence inputs"}
+    {
+      "commit": "04448b49c",
+      "author": "0.6.1_AE_PartnerETL",
+      "context": "AUDIT-008.PERM C-gold authoring (sentinel pattern + IAM enumeration + EventBridge structure) — SUPERSEDED by Andrew Lambda-native directive but reusable as Phase 1b TO-1 reference; Lambda body + tag bump replaced; ds-commit-gate PASS + comp-iam gaps clean preserved as §5 Compiler Evidence inputs"
+    }
   ],
   "source_brief": "COO escalation 20260505T~17:52Z (forwarding Andrew P1 directive); DS~D bronze state audit RAVC during AUDIT-008 cycle.",
-  "status": "active",
-  "phase": "**Phase 1 COMPLETE — 5 of 5 P1 Lambda TOs SHIPPED + 1 of 3 ops 2026-05-05/06; INFINGE.005b CLOSED 2026-05-07 per AE 0.6.1 `17c9a301a`.** TO-1 ASSETS_V2 SHIPPED (absorbs AUDIT-008.PERM). TO-2 REPS SHIPPED. TO-3 POSITIONS SHIPPED. TO-5a (txn rate-empirical) COMPLETE — REST class 5.2 RPS Class A 0/0 429s/503s. TO-5b TXN_V2 COMPLETE 2026-05-06 (AE 0.6.1 orchestrator decom `1d73c2e5c` + silver-chain cleanup `22a119af9` + tag `inf-pipeline-v1.7.24`; DS~A silver builder `33180d972` 9th DIM_BUILDER). **INFINGE.005b CLOSED 2026-05-07** (AE 0.6.1 audit `17c9a301a`; T-1 default date `fd4105bec` + INF_PREFER_S3 `2aaa504d9` + Lambda resync v1.7.X). TO-4 PERF DEFERRED 2026-05-05 — performance silver fed via INFREL.001b bronze producer (CLOSED 2026-05-07 `766455039`). TO 1a-1 (S3 lib drift CI) COMPLETE 2026-05-05 (AE 0.7; tag `inf-pipeline-v1.7.20`). TO 1a-2/1a-3 — 1a-3 folded into INFREL TO-8 (`0dd9d4791`); 1a-2 status TBD. **Phase 2 ABSORBED 2026-05-07** — orchestrator-dim migration (billing/tax/unified_account_dim/performance) ABSORBED into ADVI_INFETL.LAMBDA-DIMS per Andrew architectural revision; was queued as future ADVI_INFINGE_V2 PRD scope. **Phase 3 inf-bronze-runner decom** now gates on ADVI_INFETL.LAMBDA-DIMS ship + 48h soak (NOT future ADVI_INFINGE_V2 PRD as v0.2 originally framed). Bonus IAM apply 2026-05-05T~19:40Z closed AUDIT-003 + AUDIT-008 IAM gaps. PRD v0.2 SHIPPED 2026-05-05; v0.3 ratchet not needed — Phase 2/3 absorption is captured in ADVI_INFETL v0.2 PRD §3 + §6 instead.",
-  "blocking": "Phase 1 essentially CLOSED. Carry-overs: (1) INFREL.001b CLOSED `766455039` — performance silver pattern-equivalent shipped. (2) TO 1a-2 deployment doc — 1a-3 already folded into INFREL TO-8 ship; 1a-2 status remains TBD (likely also folded; verify on next session). (3) Phase 2 orchestrator-dim migration ABSORBED into ADVI_INFETL.LAMBDA-DIMS per 2026-05-07 architectural revision; INFINGE Phase 2 closes when LAMBDA-DIMS ships. (4) Phase 3 inf-bronze-runner decom gates on ADVI_INFETL.LAMBDA-DIMS ship + 48h soak.",
+  "status": "complete",
+  "phase": "CLOSED COMPLETE-AS-SUPERSEDED 2026-05-22 (3-step close, 2.0.0_SA_COO). Inflection ingestion daily automation; Phase-1 5/5 shipped, Phase-2/3 absorbed into ADVI_INFETL. Closed complete-as-superseded. || PRIOR PHASE: **Phase 1 COMPLETE — 5 of 5 P1 Lambda TOs SHIPPED + 1 of 3 ops 2026-05-05/06; INFINGE.005b CLOSED 2026-05-07 per AE 0.6.1 `17c9a301a`.** TO-1 ASSETS_V2 SHIPPED (absorbs AUDIT-008.PERM). TO-2 REPS SHIPPED. TO-3 POSITIONS SHIPPED. TO-5a (txn rate-empirical) COMPLETE — REST class 5.2 RPS Class A 0/0 429s/503s. TO-5b TXN_V2 COMPLETE 2026-05-06 (AE 0.6.1 orchestrator decom `1d73c2e5c` + silver-chain cleanup `22a119af9` + tag `inf-pipeline-v1.7.24`; DS~A silver builder `33180d972` 9th DIM_BUILDER). **INFINGE.005b CLOSED 2026-05-07** (AE 0.6.1 audit `17c9a301a`; T-1 default date `fd4105bec` + INF_PREFER_S3 `2aaa504d9` + Lambda resync v1.7.X). TO-4 PERF DEFERRED 2026-05-05 — performance silver fed via INFREL.001b bronze producer (CLOSED 2026-05-07 `766455039`). TO 1a-1 (S3 lib drift CI) COMPLETE 2026-05-05 (AE 0.7; tag `inf-pipeline-v1.7.20`). TO 1a-2/1a-3 — 1a-3 folded into INFREL TO-8 (`0dd9d4791`); 1a-2 status TBD. **Phase 2 ABSORBED 2026-05-07** — orchestrator-dim migration (billing/tax/unified_account_dim/performance) ABSORBED into ADVI_INFETL.LAMBDA-DIMS per Andrew architectural revision; was queued as future ADVI_INFINGE_V2 PRD scope. **Phase 3 inf-bronze-runner decom** now gates on ADVI_INFETL.LAMBDA-DIMS ship + 48h soak (NOT future ADVI_INFINGE_V2 PRD as v0.2 originally framed). Bonus IAM apply 2026-05-05T~19:40Z closed AUDIT-003 + AUDIT-008 IAM gaps. PRD v0.2 SHIPPED 2026-05-05; v0.3 ratchet not needed — Phase 2/3 absorption is captured in ADVI_INFETL v0.2 PRD §3 + §6 instead.",
+  "blocking": "None -- closed complete-as-superseded into ADVI_INFETL (2026-05-22).",
   "created": "2026-05-05",
-  "pods": ["0.6.1", "0.7"],
+  "pods": [
+    "0.6.1",
+    "0.7"
+  ],
   "pipeline": "inf-pipeline",
-  "lanes": ["0.6.1_AE_PartnerETL", "0.7.0_AE_CloudOps"],
+  "lanes": [
+    "0.6.1_AE_PartnerETL",
+    "0.7.0_AE_CloudOps"
+  ],
   "lane_note": "AE 0.6.1 LEAD — owns Inflection bronze pull script set + per-prefix scheduling decisions. AE 0.7 SECONDARY — EventBridge rule authoring + IAM role updates + cross-resource Terraform if needed. CTO directive: prefer EventBridge cron rules over CronCreate scaffolding (one ingestion → one trigger, observable via CW Metrics + CW Alarms; CronCreate is the operator scaffolding pattern, not the production pattern). Each prefix gets its own observability surface.",
   "waves": [
-    {"id": "P0", "label": "Audit — enumerate every Inflection bronze prefix + current schedule state + automation gaps + per-prefix runtime characteristics + Lambda-fit disposition (Y/N + reason for any N) + IAM/resource gaps + inf-bronze-runner dependency graph. RAVC = audit deliverable + Phase 1 TO scope sketch + EC2 decom recommendation.", "owners": ["0.6.1_AE_PartnerETL"], "target_tag": "—"},
-    {"id": "P1", "label": "Per-prefix automation — 3-5 Lambda-native TOs (per-script Lambda + EventBridge cron + scoped IAM + CW Metric/Alarm). TO-1 = assets_v2 (absorbs AUDIT-008.PERM). EC2 outliers only with explicit Phase 0 justification.", "owners": ["0.6.1_AE_PartnerETL", "0.7.0_AE_CloudOps"], "target_tag": "inf-pipeline-v1.7.X"},
-    {"id": "P2", "label": "inf-bronze-runner EC2 deprecation if 100% pulls Lambda-native (zero-responsibilities check + IAM/SG/EBS teardown + Terraform module removal).", "owners": ["0.7.0_AE_CloudOps"], "target_tag": "—"},
-    {"id": "P3", "label": "Cross-prefix freshness dashboard + alarming consolidation (optional; depends on P1 emergent observability needs).", "owners": ["0.7.0_AE_CloudOps"], "target_tag": "—"}
+    {
+      "id": "P0",
+      "label": "Audit — enumerate every Inflection bronze prefix + current schedule state + automation gaps + per-prefix runtime characteristics + Lambda-fit disposition (Y/N + reason for any N) + IAM/resource gaps + inf-bronze-runner dependency graph. RAVC = audit deliverable + Phase 1 TO scope sketch + EC2 decom recommendation.",
+      "owners": [
+        "0.6.1_AE_PartnerETL"
+      ],
+      "target_tag": "—"
+    },
+    {
+      "id": "P1",
+      "label": "Per-prefix automation — 3-5 Lambda-native TOs (per-script Lambda + EventBridge cron + scoped IAM + CW Metric/Alarm). TO-1 = assets_v2 (absorbs AUDIT-008.PERM). EC2 outliers only with explicit Phase 0 justification.",
+      "owners": [
+        "0.6.1_AE_PartnerETL",
+        "0.7.0_AE_CloudOps"
+      ],
+      "target_tag": "inf-pipeline-v1.7.X"
+    },
+    {
+      "id": "P2",
+      "label": "inf-bronze-runner EC2 deprecation if 100% pulls Lambda-native (zero-responsibilities check + IAM/SG/EBS teardown + Terraform module removal).",
+      "owners": [
+        "0.7.0_AE_CloudOps"
+      ],
+      "target_tag": "—"
+    },
+    {
+      "id": "P3",
+      "label": "Cross-prefix freshness dashboard + alarming consolidation (optional; depends on P1 emergent observability needs).",
+      "owners": [
+        "0.7.0_AE_CloudOps"
+      ],
+      "target_tag": "—"
+    }
   ],
   "depends_on": [],
   "depends_on_note": "ABSORBS ADVI_INFLEC.AUDIT-008.PERM — Andrew architectural directive 2026-05-05T~18:10Z 'if we're just using endpoints with JWT, we wouldnt need a scraper EC2 anymore' redirects assets_v2 permanent fix from C-gold (gold-runner SSM dispatch) to Phase 1 TO-1 (per-script Lambda + EventBridge cron). Standalone AUDIT-008.PERM dispatch CANCELLED to avoid double-touch rework. AUDIT-008 closes when Phase 1 TO-1 ships. Immediate-data gap already closed via backfill 2026-05-01 + 2026-05-05.",
   "thread_counter": 0,
-  "threads": []
+  "threads": [],
+  "completed": "2026-05-22"
 }

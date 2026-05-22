@@ -15,9 +15,9 @@
       "date": "2026-04-15"
     }
   ],
-  "status": "active",
-  "phase": "Phase 0: PRD complete, COO TO issuance pending. Phase 0 discovery (quantity source selection) must fire first.",
-  "blocking": "COO TO issuance for Phase 0. Quantity source selection (Andrew/DS decision at Phase 0) gates Phase 1+.",
+  "status": "complete",
+  "phase": "CLOSED COMPLETE-AS-SUPERSEDED 2026-05-22 (3-step close, 2.0.0_SA_COO). Sub-custody sleeve reconstruction; executed in full as the ADVI_ROLLUP SL-P0..P3 series (all complete). Closed complete-as-superseded. || PRIOR PHASE: Phase 0: PRD complete, COO TO issuance pending. Phase 0 discovery (quantity source selection) must fire first.",
+  "blocking": "None -- closed complete-as-superseded into ADVI_ROLLUP (2026-05-22).",
   "parent_project": "ADVI_ROLLUP",
   "open_decisions": [
     {
@@ -33,8 +33,11 @@
     }
   ],
   "created": "2026-04-15",
-  "pods": ["0.4"],
+  "pods": [
+    "0.4"
+  ],
   "pipeline": "bd-pipeline",
   "thread_counter": 0,
-  "threads": []
+  "threads": [],
+  "completed": "2026-05-22"
 }

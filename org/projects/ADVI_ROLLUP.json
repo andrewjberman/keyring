@@ -4,35 +4,142 @@
   "name": "ADVI Master Rollup — Post-Presentation Edit Queue",
   "description": "Master project consolidating every outstanding ADVI-surface work item from the 2026-04-15 DS post-presentation master brief. Absorbs ADVI_FNTEND (Wave 3), BDPL_ASTDIM (Wave 1), and BDPL_CNPRCS (Waves 0+2) and adds three structural convergence waves (ROLEAUA role-AUA canonical, CANNNA NNA canonical, SLEEVE sub-custody reconstruction) plus a standalone D_04 RFS window NNA point fix and a trivial FE cost-basis year-bucket parameterization. Eleven work items from the DS brief, organized into six waves. Child PRDs remain authoritative for scope; this project is the coordination layer.",
   "prds": [
-    {"path": "docs/architecture/ADVI_ROLLUP.md",                                  "label": "ADVI Master Rollup PRD",                                  "date": "2026-04-15"},
-    {"path": "docs/architecture/ADVI_FRONTEND_CORRECTNESS.md",                    "label": "Wave 3 — ADVI FE correctness (ex ADVI_FNTEND)",           "date": "2026-04-14"},
-    {"path": "docs/architecture/BD_ASSET_DIM_PIPELINE.md",                        "label": "Wave 1 — BD asset dim pipeline (ex BDPL_ASTDIM)",         "date": "2026-04-14"},
-    {"path": "docs/architecture/BD_CANONICAL_PRICES_CLASSIFICATION_REFACTOR.md",  "label": "Waves 0+2 — BD canonical prices (ex BDPL_CNPRCS)",        "date": "2026-04-14"},
-    {"path": "docs/architecture/ROLE_AUA_CANONICAL_CONVERGENCE_PLAN.md",          "label": "Wave 4A — ROLEAUA DS plan",                               "date": "2026-04-14"},
-    {"path": "docs/architecture/ADVI_CANNNA_PLAN.md",                             "label": "Wave 4B — CANNNA DS plan",                                "date": "2026-04-15"},
-    {"path": "docs/architecture/ADVI_SLEEVE_PLAN.md",                             "label": "Wave 4C — SLEEVE DS plan",                                "date": "2026-04-15"},
-    {"path": "docs/architecture/ADVI_ROLLUP_ADDENDUM_small_account_count.md",     "label": "Wave 3 addendum — Small Account Count on Fee Efficiency",  "date": "2026-04-15"}
+    {
+      "path": "docs/architecture/ADVI_ROLLUP.md",
+      "label": "ADVI Master Rollup PRD",
+      "date": "2026-04-15"
+    },
+    {
+      "path": "docs/architecture/ADVI_FRONTEND_CORRECTNESS.md",
+      "label": "Wave 3 — ADVI FE correctness (ex ADVI_FNTEND)",
+      "date": "2026-04-14"
+    },
+    {
+      "path": "docs/architecture/BD_ASSET_DIM_PIPELINE.md",
+      "label": "Wave 1 — BD asset dim pipeline (ex BDPL_ASTDIM)",
+      "date": "2026-04-14"
+    },
+    {
+      "path": "docs/architecture/BD_CANONICAL_PRICES_CLASSIFICATION_REFACTOR.md",
+      "label": "Waves 0+2 — BD canonical prices (ex BDPL_CNPRCS)",
+      "date": "2026-04-14"
+    },
+    {
+      "path": "docs/architecture/ROLE_AUA_CANONICAL_CONVERGENCE_PLAN.md",
+      "label": "Wave 4A — ROLEAUA DS plan",
+      "date": "2026-04-14"
+    },
+    {
+      "path": "docs/architecture/ADVI_CANNNA_PLAN.md",
+      "label": "Wave 4B — CANNNA DS plan",
+      "date": "2026-04-15"
+    },
+    {
+      "path": "docs/architecture/ADVI_SLEEVE_PLAN.md",
+      "label": "Wave 4C — SLEEVE DS plan",
+      "date": "2026-04-15"
+    },
+    {
+      "path": "docs/architecture/ADVI_ROLLUP_ADDENDUM_small_account_count.md",
+      "label": "Wave 3 addendum — Small Account Count on Fee Efficiency",
+      "date": "2026-04-15"
+    }
   ],
   "source_brief": "org/tier2_senior/0.4.0_DS_ClientPlatform/briefs/2026-04-15_post_presentation_master_summary.md",
-  "absorbs": ["ADVI_FNTEND", "BDPL_ASTDIM", "BDPL_CNPRCS"],
-  "status": "active",
-  "phase": "Phase 1 — multi-wave execution. **55 COMPLETE / 0 PENDING / 3 STAGED / 1 DEFERRED / 1 OBSERVING** (updated 2026-05-07). **SL-P1c HLOT2 attrs-wipe fix SHIPPED 2026-05-07** (DS~A `6424b29ab` — preserves df.attrs across HLOT2 pd.concat so shadow writes on nights HLOT2 fires; root cause: HLOT2 pd.concat loses df.attrs which the SL-P1c shadow gate keys off; DS~A log `c4a060c91` documents). AC#6 3-nightly observation window remains OPEN. **ASSETCLASSc COMPLETE** (090d11f6 — bd_assets_dim join replaces cost_per_unit ≤ 2.0 heuristic). **SL-P1 COMPLETE** (first-fire 2026-04-23 00:26:17Z; 1,169 rows / 458 accts / $15.87M MV). **WP-10b OBSERVING 2026-04-29** (gold↔silver recon harness wired into gold_dispatch post-chain `5700854e6` — 3-nightly-run observation now active; harness shipped via `cff234b5` + `4e94f41a9`). **ORPHRELID COMPLETE** (e28e0f5d). **CP-DS1 + CP-VETO-AUTH + CP-WP5 + CP-RES20 + RA-P1c COMPLETE**. **TOPPOSOPAL CANCELLED 2026-04-24** per Andrew. **SL-P1b COMPLETE 2026-05-01 — VERDICT: ITERATE** (commit c52f1fc5e DS~B). Root cause: B_01 denominator bug. **SL-P1c COMPLETE 2026-05-01** — Fix B (7c9f1b13c: non-vetoed denominator filter) + Fix C (040c81b4f: pandas 2.3.3 groupby key fix); S3 MATCH ETag 01d183981bb3430917e898c825ecc0a7. **DS~C Fix B correction shipped 2026-05-05 `e3463bffa`** post AE 0.7 probe `8ca92eccb` ruling out env-var blocker `SLEEVE_SHADOW_DISABLE` (was already NOT SET; false alarm from stale assumption). **AC#6 3-nightly observation window OPEN 2026-05-05 → 2026-05-07** (passive nightly emission count; no agent action). **STAGED:** SL-P2, SL-P3 (gate: 3 clean nightlies passing SL-P1c assertions + COO PROMOTE call); BDPLNNASCHEMA (state vs client_state schema alignment + eliminate silent-fill 'Unknown' defaults — child of C_08 silent-wrongness class); CP-FEEDEXP Cohort B vendor coord (AE 0.6). **DEFERRED:** CP-MAP (2026-04-22 per CTO). Original audit basis (per MCP 2026-04-21 joint audit, post-CP-DS1 close): CP-DS1 flipped pending→complete 2026-04-21 per CTO Option A decision (MCP 20260421T141326Z) — de-facto acceptance via HLOT2 proceeding on same B_01 file without reverting CP-DS1 gates + 4-day no-objection window. W0/W1/W4/W5 COMPLETE structurally. W2 CNPRCS: WP-3 AE staged, WP-4..9 staged, WP-10b shipped (cff234b5). W3 FNTEND complete. W4 RA wave TERMINAL (d9ab1719) + CN wave TERMINAL (49eac17d) + W4-CG PASS 26/0 (f886a7d3). W5 RF01 COMPLETE (21c0637f). DH-1..DH-7 shipped (8 TOs). 2026-04-17 B_01 cap saga: bond-100x convention fix (d45fc0dc cost_per_unit<=2 -> closing_price/100), share-class ticker correction (178d0cce), tiered cap on B+C compression (cb6d78e2), Run 11 confirmed $3.587B -> $1.758B per CTO session 32 — 916 bond lots repriced, market_value_uncapped col shipped, post-cap firm total $1,646.4M vs silver canonical $1,694.6M = -2.9% residual within band. C_08 silent-wrongness recovery (Andrew flagged): defensive backfill 9e537f9f (aua_current/growth=0.0 quick-patch) followed by real fix cd177553 (CANONICAL_NNA_ATOMIC_PREFIX -> CANONICAL_NNA_PREFIX swap on C_08+D_00b+D_01+D_04 per DS decision matrix; D_04 second silent-wrongness mode caught — atomic has 'state' not 'client_state', defensive fallback was writing 'Unknown' for every row; BDPL_NNA.S1 schema-alignment TO drafted by CTO). CP-DS1 in-flight stack 2026-04-17: PIVOT 5 alloc-billable synth-inject gate (7e57576f), PIVOT 6 per-acct MV cap 1.10->1.00 (c693d5a3 -> d39c4dff), Gate 3 FIFO-only silent-close (cd00ff2c), Gate 1 cusip-keyed silver/unrealized veto fix (c4ebde9a), runtime CUSIP enrichment via bd_assets_dim (f5f19e77), RPS sell-correction merge re-key to (account_id, cusip) (1db831aa), gold snapshot_date from latest silver/allocations (ec2c1efc). C_03 phantom outflow pulse fix (85bb2daa). D_03 step 6b composition.json for non-architect advisors (09ac915b). Schwab ULN -> silver/ULN/ ingestion landed (6c80c5ed) for B_01 position authority. CP-AE1 backfill audit 1,520 partitions complete (0830bae7); CP-AE1 closeout 21ce0fc6 -> 80917a1e (silver/transactions cusip via bd_assets_dim). CP-W4 bd_assets blend verify complete (bb3b1d2b). bd-gold-layer-runner deployed @ cb6d78e2 (88fd8d1c). bd-exporter deploy-merge-daily-incremental.sh shipped (07ed0f5c+94ed5718). DH-2 wrapper fix 8e3176a1 verified Run 11 successful per CTO session 32; full chain HALTED at C_08 19:52Z 2026-04-17 then RECOVERED via cd177553; AE C_08->D_04 re-run SSM d83a1d11 fired (CTO awaited completion at session 32 close). RPS feed dead since 2026-04-08 — tactical compensation via tiered cap; root-cause restore deferred. compiler-validator B_01 SKIP-by-default gap surfaced — config-add follow-up TO (BDPL_NNA.S1 plus B_01 validate config).",
-  "blocking": "(1) SL-P1c COMPLETE — nightly gate active; 3 consecutive passing nightlies needed for SL-P2 PROMOTE. DS~A reports on each nightly. SL-P2/SL-P3 gate on SL-P1c fix + 3 clean nightlies + SL-P1b re-run PASS + COO PROMOTE. (2) WP-10b 3-nightly-run observation active 2026-04-29 (`5700854e6` AE wire-up). (3) BDPLNNASCHEMA staged for DS bandwidth (state vs client_state schema alignment + eliminate silent-fill 'Unknown' defaults — C_08 silent-wrongness class). (4) CP-FEEDEXP Cohort B vendor coord (AE 0.6). **RESOLVED:** ASSETCLASSc COMPLETE (090d11f6); TOPPOSOPAL CANCELLED 2026-04-24 (replaces former #3 Top Positions filter authoring); SL-P1 first-fire CONFIRMED 2026-04-23 (replaces former #1); ADVI_PROFAU.006 lands with chain-full recovery; AE 0.6 W3 B-series validator evidence captured. **RESOLVED 2026-04-21 — Cap-timing-rule disposition (removed from open items):** per Andrew directive, CTO MCP 20260417T174410Z recommendation ACCEPTED as the call: (a) KEEP `market_value_uncapped` column in B_01 output + per-account cap log for post-hoc audit, (b) DROP ramp-up schedule (superseded by tiered cap `cb6d78e2` shipped Run 11), (c) DROP persistence gate (don't require cap decision to persist across re-runs; recompute per A→D cycle). Rationale: tiered cap is in production, residual gap -2.9% within band, no observable drift. No follow-up TO needed.",
-  "depends_on": ["ADVI_PROFAU"],
+  "absorbs": [
+    "ADVI_FNTEND",
+    "BDPL_ASTDIM",
+    "BDPL_CNPRCS"
+  ],
+  "status": "complete",
+  "phase": "CLOSED COMPLETE 2026-05-22 (3-step close, 2.0.0_SA_COO startup ground-truth pass). ADVI master rollup post-presentation edit queue; ~60 TOs all complete (TOPPOSOPAL cancelled, CP-MAP deferred). || PRIOR PHASE: Phase 1 — multi-wave execution. **55 COMPLETE / 0 PENDING / 3 STAGED / 1 DEFERRED / 1 OBSERVING** (updated 2026-05-07). **SL-P1c HLOT2 attrs-wipe fix SHIPPED 2026-05-07** (DS~A `6424b29ab` — preserves df.attrs across HLOT2 pd.concat so shadow writes on nights HLOT2 fires; root cause: HLOT2 pd.concat loses df.attrs which the SL-P1c shadow gate keys off; DS~A log `c4a060c91` documents). AC#6 3-nightly observation window remains OPEN. **ASSETCLASSc COMPLETE** (090d11f6 — bd_assets_dim join replaces cost_per_unit ≤ 2.0 heuristic). **SL-P1 COMPLETE** (first-fire 2026-04-23 00:26:17Z; 1,169 rows / 458 accts / $15.87M MV). **WP-10b OBSERVING 2026-04-29** (gold↔silver recon harness wired into gold_dispatch post-chain `5700854e6` — 3-nightly-run observation now active; harness shipped via `cff234b5` + `4e94f41a9`). **ORPHRELID COMPLETE** (e28e0f5d). **CP-DS1 + CP-VETO-AUTH + CP-WP5 + CP-RES20 + RA-P1c COMPLETE**. **TOPPOSOPAL CANCELLED 2026-04-24** per Andrew. **SL-P1b COMPLETE 2026-05-01 — VERDICT: ITERATE** (commit c52f1fc5e DS~B). Root cause: B_01 denominator bug. **SL-P1c COMPLETE 2026-05-01** — Fix B (7c9f1b13c: non-vetoed denominator filter) + Fix C (040c81b4f: pandas 2.3.3 groupby key fix); S3 MATCH ETag 01d183981bb3430917e898c825ecc0a7. **DS~C Fix B correction shipped 2026-05-05 `e3463bffa`** post AE 0.7 probe `8ca92eccb` ruling out env-var blocker `SLEEVE_SHADOW_DISABLE` (was already NOT SET; false alarm from stale assumption). **AC#6 3-nightly observation window OPEN 2026-05-05 → 2026-05-07** (passive nightly emission count; no agent action). **STAGED:** SL-P2, SL-P3 (gate: 3 clean nightlies passing SL-P1c assertions + COO PROMOTE call); BDPLNNASCHEMA (state vs client_state schema alignment + eliminate silent-fill 'Unknown' defaults — child of C_08 silent-wrongness class); CP-FEEDEXP Cohort B vendor coord (AE 0.6). **DEFERRED:** CP-MAP (2026-04-22 per CTO). Original audit basis (per MCP 2026-04-21 joint audit, post-CP-DS1 close): CP-DS1 flipped pending→complete 2026-04-21 per CTO Option A decision (MCP 20260421T141326Z) — de-facto acceptance via HLOT2 proceeding on same B_01 file without reverting CP-DS1 gates + 4-day no-objection window. W0/W1/W4/W5 COMPLETE structurally. W2 CNPRCS: WP-3 AE staged, WP-4..9 staged, WP-10b shipped (cff234b5). W3 FNTEND complete. W4 RA wave TERMINAL (d9ab1719) + CN wave TERMINAL (49eac17d) + W4-CG PASS 26/0 (f886a7d3). W5 RF01 COMPLETE (21c0637f). DH-1..DH-7 shipped (8 TOs). 2026-04-17 B_01 cap saga: bond-100x convention fix (d45fc0dc cost_per_unit<=2 -> closing_price/100), share-class ticker correction (178d0cce), tiered cap on B+C compression (cb6d78e2), Run 11 confirmed $3.587B -> $1.758B per CTO session 32 — 916 bond lots repriced, market_value_uncapped col shipped, post-cap firm total $1,646.4M vs silver canonical $1,694.6M = -2.9% residual within band. C_08 silent-wrongness recovery (Andrew flagged): defensive backfill 9e537f9f (aua_current/growth=0.0 quick-patch) followed by real fix cd177553 (CANONICAL_NNA_ATOMIC_PREFIX -> CANONICAL_NNA_PREFIX swap on C_08+D_00b+D_01+D_04 per DS decision matrix; D_04 second silent-wrongness mode caught — atomic has 'state' not 'client_state', defensive fallback was writing 'Unknown' for every row; BDPL_NNA.S1 schema-alignment TO drafted by CTO). CP-DS1 in-flight stack 2026-04-17: PIVOT 5 alloc-billable synth-inject gate (7e57576f), PIVOT 6 per-acct MV cap 1.10->1.00 (c693d5a3 -> d39c4dff), Gate 3 FIFO-only silent-close (cd00ff2c), Gate 1 cusip-keyed silver/unrealized veto fix (c4ebde9a), runtime CUSIP enrichment via bd_assets_dim (f5f19e77), RPS sell-correction merge re-key to (account_id, cusip) (1db831aa), gold snapshot_date from latest silver/allocations (ec2c1efc). C_03 phantom outflow pulse fix (85bb2daa). D_03 step 6b composition.json for non-architect advisors (09ac915b). Schwab ULN -> silver/ULN/ ingestion landed (6c80c5ed) for B_01 position authority. CP-AE1 backfill audit 1,520 partitions complete (0830bae7); CP-AE1 closeout 21ce0fc6 -> 80917a1e (silver/transactions cusip via bd_assets_dim). CP-W4 bd_assets blend verify complete (bb3b1d2b). bd-gold-layer-runner deployed @ cb6d78e2 (88fd8d1c). bd-exporter deploy-merge-daily-incremental.sh shipped (07ed0f5c+94ed5718). DH-2 wrapper fix 8e3176a1 verified Run 11 successful per CTO session 32; full chain HALTED at C_08 19:52Z 2026-04-17 then RECOVERED via cd177553; AE C_08->D_04 re-run SSM d83a1d11 fired (CTO awaited completion at session 32 close). RPS feed dead since 2026-04-08 — tactical compensation via tiered cap; root-cause restore deferred. compiler-validator B_01 SKIP-by-default gap surfaced — config-add follow-up TO (BDPL_NNA.S1 plus B_01 validate config).",
+  "blocking": "None -- project closed complete 2026-05-22.",
+  "depends_on": [
+    "ADVI_PROFAU"
+  ],
   "depends_on_note": "Only Wave 3 AE B1 rerun depends on ADVI_PROFAU.006 landing on PROD. Other waves are independent.",
   "created": "2026-04-15",
-  "pods": ["0.4", "0.6"],
+  "pods": [
+    "0.4",
+    "0.6"
+  ],
   "pipeline": "bd-pipeline + portal",
   "coo_lane": "2.0.0_SA_COO",
   "coo_lane_note": "Andrew directive 2026-04-16 session 30 PM: base COO owns ADVI_ROLLUP for remainder of session. COMP_LEARNS routes to 2.0.0_SA_COO~B. Do not cross-contaminate project scope between the two COO lanes. See ADVI_ROLLUP driver-loop updates in 2.0.0_SA_COO logs; COMP_LEARNS authoring + operator/validator smoke in 2.0.0_SA_COO~B logs.",
   "waves": [
-    {"id": "W0", "label": "Tactical thaw",                                  "items": ["3-bond scoped-exceptions blocklist", "WP-11 tactical formalization"],      "owners": ["DS"]},
-    {"id": "W1", "label": "BD pipeline foundation (ex BDPL_ASTDIM)",         "items": ["ASTDIM W7 scheduled-run verification"],                                       "owners": ["AE"]},
-    {"id": "W2", "label": "BD canonical refactor (ex BDPL_CNPRCS)",          "items": ["CNPRCS WP-3..WP-10"],                                                         "owners": ["DS", "AE"]},
-    {"id": "W3", "label": "ADVI frontend correctness (ex ADVI_FNTEND)",      "items": ["FE B0..B8, D6, D7", "B1 AE rerun", "cost-basis year-bucket parameterize"],   "owners": ["RD", "DE", "DS", "AE"]},
-    {"id": "W4", "label": "Structural convergence",                          "items": ["ADVI_ROLEAUA P0..P5", "ADVI_CANNNA P0..P5", "ADVI_SLEEVE P0..P3"],           "owners": ["DS"], "status": "convergence_complete", "convergence_note": "RA wave TERMINAL (d9ab1719) + CN wave TERMINAL (49eac17d) + W4-CG PASS 26/0 (f886a7d3). All 6 role_aua + all 30 nna_atomic consumer sites on canonical. Rule 7 nna_txn=0 cleared by CTO 2026-04-16 (INFO — per-date snapshot structurally cannot carry flow metric). SLEEVE P1 shadow-emit pending tonight nightly; P2/P3 staged."},
-    {"id": "W5", "label": "Standalone point fix",                            "items": ["D_04 RFS window NNA delta fix (RF01)"],                                      "owners": ["DS"]}
+    {
+      "id": "W0",
+      "label": "Tactical thaw",
+      "items": [
+        "3-bond scoped-exceptions blocklist",
+        "WP-11 tactical formalization"
+      ],
+      "owners": [
+        "DS"
+      ]
+    },
+    {
+      "id": "W1",
+      "label": "BD pipeline foundation (ex BDPL_ASTDIM)",
+      "items": [
+        "ASTDIM W7 scheduled-run verification"
+      ],
+      "owners": [
+        "AE"
+      ]
+    },
+    {
+      "id": "W2",
+      "label": "BD canonical refactor (ex BDPL_CNPRCS)",
+      "items": [
+        "CNPRCS WP-3..WP-10"
+      ],
+      "owners": [
+        "DS",
+        "AE"
+      ]
+    },
+    {
+      "id": "W3",
+      "label": "ADVI frontend correctness (ex ADVI_FNTEND)",
+      "items": [
+        "FE B0..B8, D6, D7",
+        "B1 AE rerun",
+        "cost-basis year-bucket parameterize"
+      ],
+      "owners": [
+        "RD",
+        "DE",
+        "DS",
+        "AE"
+      ]
+    },
+    {
+      "id": "W4",
+      "label": "Structural convergence",
+      "items": [
+        "ADVI_ROLEAUA P0..P5",
+        "ADVI_CANNNA P0..P5",
+        "ADVI_SLEEVE P0..P3"
+      ],
+      "owners": [
+        "DS"
+      ],
+      "status": "convergence_complete",
+      "convergence_note": "RA wave TERMINAL (d9ab1719) + CN wave TERMINAL (49eac17d) + W4-CG PASS 26/0 (f886a7d3). All 6 role_aua + all 30 nna_atomic consumer sites on canonical. Rule 7 nna_txn=0 cleared by CTO 2026-04-16 (INFO — per-date snapshot structurally cannot carry flow metric). SLEEVE P1 shadow-emit pending tonight nightly; P2/P3 staged."
+    },
+    {
+      "id": "W5",
+      "label": "Standalone point fix",
+      "items": [
+        "D_04 RFS window NNA delta fix (RF01)"
+      ],
+      "owners": [
+        "DS"
+      ]
+    }
   ],
   "thread_counter": 0,
-  "threads": []
+  "threads": [],
+  "completed": "2026-05-22"
 }

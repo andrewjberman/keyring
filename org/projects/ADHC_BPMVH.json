@@ -4,20 +4,30 @@
   "name": "Bronze-PMV Hybrid (Headline-Fresh AUA Supplement)",
   "description": "Resolve trade-settlement reporting latency between two Orion API endpoints feeding the Inflection portal: bronze `assets.csv` (CSV daily-AUM, fresher; captures same-day rebalance trades) vs silver `positions_mv` (REST per-client positions, reconciliation-stable; lags ~24h on same-day trades). Empirical 2026-05-14: bronze $203.34M vs pmv $203.18M = $156,715.66 gap (0.077% firm AUA), driven by 1 new HH + ~13 same-day-rebalance accounts. Andrew direct framing: 'headline/global AUA must show current state, get clever for the rest.' D-min implementation (~1h ship, ~50 LOC): new gold script `INF_D_00e.fresh_header_supplement.py` emits `platinum/firm/header_metrics_fresh.json` with `total_aua_fresh` field + `_meta.source_distribution_manifest`. FE prefers `total_aua_fresh` for header tile with fallback. D-max conditional follow-on (~1-2d ship, ~150-250 LOC at INF_B_00) gates on 1-2 weeks of D-min daily-delta observability data — earn-the-right discipline before broader reconciliation rollout. Sister project to ADHC_LEDGEH (origin-response L@E error envelope) + ADHC_FECACHE_COHERENCE (FE queryKey URL/chain decoupling): 3-project ADHC defense-in-depth corpus for cross-firm + cross-source + cross-cache data-freshness hardening.",
   "prds": [
-    {"path": "docs/architecture/ADHC_BPMVH.md", "label": "v0.2 canonical via git mv 823c3e74b (CTO); covers D-min + D-max β both via Decision branches D1-D4 + AC8 Cottonwood fixture", "date": "2026-05-14"}
+    {
+      "path": "docs/architecture/ADHC_BPMVH.md",
+      "label": "v0.2 canonical via git mv 823c3e74b (CTO); covers D-min + D-max β both via Decision branches D1-D4 + AC8 Cottonwood fixture",
+      "date": "2026-05-14"
+    }
   ],
   "_prd_authoring_note": "DS~C authored v0.1 → v0.2 at docs/briefs/inflection-bronze-pmv-hybrid-proposal-20260514.md. CTO ratified 4-D questions + AC8 Cottonwood fixture. CTO canonicalized via git mv 823c3e74b to docs/architecture/ADHC_BPMVH.md per ADHC_OWNPTH. Andrew direct override 19:15Z on D1 sequenced 1-2wk observability gate (product invariant 'we need to be at the same number whenever we show AUA').",
   "source_brief": "2026-05-14 P0 $156K investigation: DS~C Andrew-direct $156K secondary divergence investigation (post $581K $580,948.02 primary divergence close via DS~C ADVI_INFFIN.015 RAVC2 decomposition: $737,663.68 day-over-day − $156,715.66 same-day = exact match). Decomposition: $50K from new HH 1366 bronze-captured today + pmv-not-yet-ingested + $106,715.66 from 13 same-day-rebalance accounts. CTO architectural absorption: $156K bronze-vs-pmv gap is scope-difference primary ($132K Unmanaged + $24K residual; pmv definitionally excludes Unmanaged) NOT settlement-latency primary. Andrew product invariant 'we need to be at the same number whenever we show AUA' triggered D1 override.",
-  "status": "phase1_d_min_AND_d_max_shipped_chain_materialization_pending",
-  "phase": "Phase 1 END-TO-END COMPLETE 2026-05-14 PM (2.0.0_SA_COO). D-min implementation SHIPPED `49f2af6fd` (DS~C ~25min wall vs 1h sizing) + FE foundation `a6ba1fbe` + FE wire-up `d18cb305` (DE 0.4 ~15min wall vs 30min sizing; auaDonutTotal:153-159 firm-level override). D-min chain materialization 19:01:48Z: total_aua_fresh=$203,339,876.18 EXACT spec match. D-max β reconciliation SHIPPED `7be0dda7e` (DS~C ~35min wall vs 6-8h sizing = 10-14× under sizing UPPER BOUND TODAY) per Andrew direct override 19:15Z on D1 sequenced 1-2wk gate. Sentinel PASS AT THE CENT: $203,339,876.18 = Orion canonical = $203,207,082 Managed + $132,794 Unmanaged. Source distribution: reconciled 4,312 rows / bronze_override 5,118 / bronze_only 20,041 / pmv_only 0 (bronze strict superset confirmed). Schema additions: source enum + pmv_market_value column + reconciliation_summary_holdings_{date}.json manifest. INF_B_01:120 isolation proof confirmed B-chain integrity preserved.",
-  "blocking": "(1) AE 0.6.1 chain re-fire (Option B gold-b + gold-c + gold-d from INF_B_00 ~25-30min wall per CTO endorse). Bundles D-max β materialization + concurrent ADVI_INFFIN.018 NNA Track B emit (DS~C 459742261). (2) Andrew empirical visual confirm post-chain (every AUA surface reconciles to $203.34M Orion canonical). (3) DT 0.4 PROD promote sequence Andrew-gated (portal-v2.1.87 candidate; 14 portal commits + parent gitlink aa4b38a6e LIVE on origin/DEV + origin/CLOUD). (4) Memory entry update (DS~C lane): feedback_date_asymmetry_cross_artifact_aua.md mechanism update to primary scope-difference + minor settlement-latency residual per CTO 19:20Z route.",
-  "depends_on": ["ADHC_LEDGEH", "ADHC_FECACHE_COHERENCE"],
+  "status": "complete",
+  "phase": "CLOSED COMPLETE 2026-05-22 (3-step close, 2.0.0_SA_COO startup ground-truth pass). Bronze-PMV hybrid headline-fresh AUA; D-min + D-max shipped (TO .001 complete). || PRIOR PHASE: Phase 1 END-TO-END COMPLETE 2026-05-14 PM (2.0.0_SA_COO). D-min implementation SHIPPED `49f2af6fd` (DS~C ~25min wall vs 1h sizing) + FE foundation `a6ba1fbe` + FE wire-up `d18cb305` (DE 0.4 ~15min wall vs 30min sizing; auaDonutTotal:153-159 firm-level override). D-min chain materialization 19:01:48Z: total_aua_fresh=$203,339,876.18 EXACT spec match. D-max β reconciliation SHIPPED `7be0dda7e` (DS~C ~35min wall vs 6-8h sizing = 10-14× under sizing UPPER BOUND TODAY) per Andrew direct override 19:15Z on D1 sequenced 1-2wk gate. Sentinel PASS AT THE CENT: $203,339,876.18 = Orion canonical = $203,207,082 Managed + $132,794 Unmanaged. Source distribution: reconciled 4,312 rows / bronze_override 5,118 / bronze_only 20,041 / pmv_only 0 (bronze strict superset confirmed). Schema additions: source enum + pmv_market_value column + reconciliation_summary_holdings_{date}.json manifest. INF_B_01:120 isolation proof confirmed B-chain integrity preserved.",
+  "blocking": "None -- project closed complete 2026-05-22.",
+  "depends_on": [
+    "ADHC_LEDGEH",
+    "ADHC_FECACHE_COHERENCE"
+  ],
   "depends_on_note": "3-project ADHC defense-in-depth corpus: ADHC_LEDGEH (origin-response L@E structured JSON error envelope; eliminates toxic CF SPA-HTML-on-error primitive at wire boundary) + ADHC_FECACHE_COHERENCE (FE queryKey URL/chain decoupling; tightens consumer-side cache contract against URL/chain-emission boundary changes) + ADHC_BPMVH (this project; bronze-pmv hybrid; reconciles same-source-different-latency endpoint disagreement at data boundary). All three SHIP INDEPENDENTLY (no hard dependency) but compose as defense-in-depth: LEDGEH hardens wire-boundary error states / FECACHE_COHERENCE hardens consumer-side cache coherence / BPMVH hardens data-source-of-record currency. FIRMSEP.10 Cottonwood live-ship is primary risk-window beneficiary — landing all three BEFORE Cottonwood preempts cross-firm + cross-cache + cross-source data-freshness hazards. Per CTO recommendation, bundle all 3 materializations into single chain-fire window.",
   "absorbs": [],
   "created": "2026-05-14",
-  "pods": ["0.4"],
+  "pods": [
+    "0.4"
+  ],
   "pipeline": "orion-pipeline / data-freshness-supplement (cross-cutting; gold-tier emit)",
   "coo_lane": "2.0.0_SA_COO",
   "thread_counter": 0,
-  "threads": []
+  "threads": [],
+  "completed": "2026-05-22"
 }

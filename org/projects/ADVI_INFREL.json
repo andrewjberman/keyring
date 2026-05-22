@@ -4,26 +4,78 @@
   "name": "Inflection Pipeline Reliability + Residuals",
   "description": "Residual investigation + remediation work surfaced by DS~A pipeline audit (2026-05-05) + AE 0.6.1 Phase 0 RAVC3 dep-graph: silver-chain automation gap (sentinel/Lambda not propagating despite enabled rule); May 4 Inflection bronze gap (weekday cron miss); clients_tab.json 6-day stale; Phase 2 orchestrator-dim migration (path-1: billing/tax/unified_account_dim/transactions_v2 — INFINGE PRD v0.2 §6 framed as future PRD scope). Plus TO 1a-3 watchdog regex broaden folded in for completeness. Phase 4 = inf-bronze-runner EC2 decom (gates on INFINGE Phase 1b complete + INFREL Phase 2 complete + 48h soak).",
   "prds": [
-    {"path": "docs/architecture/ADVI_INFREL.md", "label": "Inflection Pipeline Reliability + Residuals PRD v0.1 (silver-chain RCA + May 4 RCA + clients_tab regen + Phase 2 orchestrator-dim Lambda migration + watchdog regex broaden + Phase 4 decom)", "date": "2026-05-05"}
+    {
+      "path": "docs/architecture/ADVI_INFREL.md",
+      "label": "Inflection Pipeline Reliability + Residuals PRD v0.1 (silver-chain RCA + May 4 RCA + clients_tab regen + Phase 2 orchestrator-dim Lambda migration + watchdog regex broaden + Phase 4 decom)",
+      "date": "2026-05-05"
+    }
   ],
   "source_brief": "DS~A pipeline audit `org/tier2_senior/0.4.0_DS_ClientPlatform/logs/2026-05-05/ADVI_INFLEC_pipeline_audit_session.md` + Andrew directive 'PRD on what needs to happen to finish the remaining items' 2026-05-05T~21:05Z",
-  "status": "active",
-  "phase": "**Phase 1 EXECUTION 2026-05-07 PM update — 9 of 10 P1 TOs shipped or in flight; TO-001b CLOSED `766455039` 'DimSpec wired 09c309b01, validation PASS'; TO-010 SCOPE-REVISED (orchestrator backfill SHELVED — COO pivot to per-dim Lambdas absorbed into ADVI_INFETL.LAMBDA-DIMS) per AE 0.6.1 `6636f021e`; TO-010 billing Wave C 83/83 silver COMPLETE per AE 0.6.1 `1f02556d5`; multi-fix stack today: leap-day ValueError fix `a70eadd04`, retry script `075a61728`/`e8a6efdd7`/`09b1b22b5`, NoSuchKey catch `f427c6aed`, $0-AUA pre-onboarding skip `b2e634a12`, T-1 default date `fd4105bec`, INF_PREFER_S3=true `2aaa504d9`. INFREL.002 SHIPPED, TO-3 COMPLETE, TO-8 COMPLETE, TO-10 SCOPE-REVISED + billing wave 83/83 done, INFREL.005 SUPERSEDED.** TO-1 Fix A+C 24-48h empirical window running (silver self-healing). Fix D DS~B (tax exit=2) sequential within DS~B lane. Fix B = TO-INFREL.001b — performance_dim bronze producer (CTO ruling Option-2 pre-check tripped → Option-1; normal priority): DS~B authored `pull_inflection_performance_dim.py` + Orion saved-query catalog id `b22505ec` (`d6f1c847f`+`d8177380e`+`fdd109704`+`160c97a29`+`4d99a1fb2`); orchestrator DimSpec wired `5954bbc6b`; EC2 syncs from S3 on every boot; first cron fire 2026-05-07 12:30 UTC. TO-2 May 4 RCA SHIPPED (AE 0.7 `5a7c55f51` tag `inf-pipeline-v1.7.22`; root cause Andrew StopInstances 2m31s before cron; 5-fix stack: stopping-state poll-until-stopped + TriggerMissedStart CW alarm + Lambda timeout 30→180s + cloudwatch:PutMetricData IAM + source-map registration; empirical confirm 2026-05-07 12:43Z cron). TO-3 (clients_tab regen) COMPLETE 2026-05-05 `7a71e68f2` (DS~A — diagnosis: gold/artifacts/clients_tab.json is dead legacy artifact; real bug = Lambda /clients-tab reads platinum/firm/clients-tab-slim.json missing for Inflection — scope widened). TO-8 (deployment doc) COMPLETE 2026-05-05 `0dd9d4791` INF_GOLD_RUNNER_DEPLOYMENT.md. TO-10 (Orion lookback audit + 2020 historical backfill + daily cadence confirm) Phase 0 RAVC4 ACCEPTED 2026-05-06 (per-dim capability matrix: backfill-capable billing/tax/transactions; snapshot-only unified_account_dim/accounts_v2/assets); Wave C1 sentinel redispatch script `2c1fe85ab` + Wave C2 perf backfill runner `064dc4ab9` shipped; Wave C billing backfill SSM `84647370-05ab-4ed8-8efc-1052620218c7` dispatched 2026-05-06 (76 monthly snapshots 2020-01-31 → present); Lambda v1.7.25 with empty-partition guard `c5714ac54`+`67af73d84`+`b9e80e0ca`+`173ebc49b` for pre-onboarding dates. TO-4..7 STAGED (gate on TO-1 final close + INFINGE Phase 1b). TO-9 STAGED. **INFREL.005 (transactions-v2-lambda-migration) SUPERSEDED 2026-05-06** by ADVI_INFINGE.005b (CTO Q-A/B/C path rulings). LDRBRD.001 CLOSED 2026-05-06 `f1f9ec8b5` (Bug A YELLOW + Bug C2 GREEN; matrix v13). AUDIT-003B CLOSED. AUDIT matrix v13 (post-AUDIT-003 close): dashboard.json headline.total_aua RED-(c) → GREEN ($199.6M = canonical via 28dcb8b56 INF_D_04 aum_snapshot override predicate full-rep coverage gate); leaderboard period_start_aua RED → YELLOW; lifecycle_aua RED → GREEN.",
-  "blocking": "(1) TO-1 final RAVC6 24-48h silver self-healing empirical window — ongoing. (2) INFREL.001b CRON FIRE EMPIRICAL CLOSED — DimSpec validated PASS; TO marked complete `766455039`. (3) TO-2 empirical confirm 2026-05-07 12:43Z — should observe today. (4) **TO-10 SCOPE-REVISED 2026-05-07** — orchestrator backfill SHELVED per COO; per-dim Lambdas migration absorbed into ADVI_INFETL.LAMBDA-DIMS instead. Billing Wave C 83/83 silver COMPLETE; remaining tax+perf bronze ETA ~3h. (5) Phase 2 TOs (TO-4..7 unified_account/txn/billing/tax Lambda migrations) ABSORBED into ADVI_INFETL.LAMBDA-DIMS; INFREL Phase 2 closes when LAMBDA-DIMS ships. (6) TO-9 inf-bronze-runner decom gates on INFETL.LAMBDA-DIMS ship + 48h soak.",
+  "status": "complete",
+  "phase": "CLOSED COMPLETE-AS-SUPERSEDED 2026-05-22 (3-step close, 2.0.0_SA_COO). Inflection pipeline reliability; Phase-2 TOs absorbed into ADVI_INFETL.LAMBDA-DIMS per Andrew ruling. Closed complete-as-superseded. || PRIOR PHASE: **Phase 1 EXECUTION 2026-05-07 PM update — 9 of 10 P1 TOs shipped or in flight; TO-001b CLOSED `766455039` 'DimSpec wired 09c309b01, validation PASS'; TO-010 SCOPE-REVISED (orchestrator backfill SHELVED — COO pivot to per-dim Lambdas absorbed into ADVI_INFETL.LAMBDA-DIMS) per AE 0.6.1 `6636f021e`; TO-010 billing Wave C 83/83 silver COMPLETE per AE 0.6.1 `1f02556d5`; multi-fix stack today: leap-day ValueError fix `a70eadd04`, retry script `075a61728`/`e8a6efdd7`/`09b1b22b5`, NoSuchKey catch `f427c6aed`, $0-AUA pre-onboarding skip `b2e634a12`, T-1 default date `fd4105bec`, INF_PREFER_S3=true `2aaa504d9`. INFREL.002 SHIPPED, TO-3 COMPLETE, TO-8 COMPLETE, TO-10 SCOPE-REVISED + billing wave 83/83 done, INFREL.005 SUPERSEDED.** TO-1 Fix A+C 24-48h empirical window running (silver self-healing). Fix D DS~B (tax exit=2) sequential within DS~B lane. Fix B = TO-INFREL.001b — performance_dim bronze producer (CTO ruling Option-2 pre-check tripped → Option-1; normal priority): DS~B authored `pull_inflection_performance_dim.py` + Orion saved-query catalog id `b22505ec` (`d6f1c847f`+`d8177380e`+`fdd109704`+`160c97a29`+`4d99a1fb2`); orchestrator DimSpec wired `5954bbc6b`; EC2 syncs from S3 on every boot; first cron fire 2026-05-07 12:30 UTC. TO-2 May 4 RCA SHIPPED (AE 0.7 `5a7c55f51` tag `inf-pipeline-v1.7.22`; root cause Andrew StopInstances 2m31s before cron; 5-fix stack: stopping-state poll-until-stopped + TriggerMissedStart CW alarm + Lambda timeout 30→180s + cloudwatch:PutMetricData IAM + source-map registration; empirical confirm 2026-05-07 12:43Z cron). TO-3 (clients_tab regen) COMPLETE 2026-05-05 `7a71e68f2` (DS~A — diagnosis: gold/artifacts/clients_tab.json is dead legacy artifact; real bug = Lambda /clients-tab reads platinum/firm/clients-tab-slim.json missing for Inflection — scope widened). TO-8 (deployment doc) COMPLETE 2026-05-05 `0dd9d4791` INF_GOLD_RUNNER_DEPLOYMENT.md. TO-10 (Orion lookback audit + 2020 historical backfill + daily cadence confirm) Phase 0 RAVC4 ACCEPTED 2026-05-06 (per-dim capability matrix: backfill-capable billing/tax/transactions; snapshot-only unified_account_dim/accounts_v2/assets); Wave C1 sentinel redispatch script `2c1fe85ab` + Wave C2 perf backfill runner `064dc4ab9` shipped; Wave C billing backfill SSM `84647370-05ab-4ed8-8efc-1052620218c7` dispatched 2026-05-06 (76 monthly snapshots 2020-01-31 → present); Lambda v1.7.25 with empty-partition guard `c5714ac54`+`67af73d84`+`b9e80e0ca`+`173ebc49b` for pre-onboarding dates. TO-4..7 STAGED (gate on TO-1 final close + INFINGE Phase 1b). TO-9 STAGED. **INFREL.005 (transactions-v2-lambda-migration) SUPERSEDED 2026-05-06** by ADVI_INFINGE.005b (CTO Q-A/B/C path rulings). LDRBRD.001 CLOSED 2026-05-06 `f1f9ec8b5` (Bug A YELLOW + Bug C2 GREEN; matrix v13). AUDIT-003B CLOSED. AUDIT matrix v13 (post-AUDIT-003 close): dashboard.json headline.total_aua RED-(c) → GREEN ($199.6M = canonical via 28dcb8b56 INF_D_04 aum_snapshot override predicate full-rep coverage gate); leaderboard period_start_aua RED → YELLOW; lifecycle_aua RED → GREEN.",
+  "blocking": "None -- closed complete-as-superseded into ADVI_INFETL (2026-05-22).",
   "created": "2026-05-05",
-  "pods": ["0.6.1", "0.7", "0.4"],
+  "pods": [
+    "0.6.1",
+    "0.7",
+    "0.4"
+  ],
   "pipeline": "inf-pipeline",
-  "lanes": ["0.6.1_AE_PartnerETL", "0.7.0_AE_CloudOps", "0.4.0_DS_ClientPlatform"],
+  "lanes": [
+    "0.6.1_AE_PartnerETL",
+    "0.7.0_AE_CloudOps",
+    "0.4.0_DS_ClientPlatform"
+  ],
   "lane_note": "AE 0.6.1 LEAD on TO-1 (Inflection-specific surface knowledge) + Phase 2 Lambda migrations (matches INFINGE Phase 1b authorship pattern). AE 0.7 LEAD on TO-2 (CloudOps owns runner + cron debugging) + TO-8 (watchdog regex; INFINGE TO 1a-2 deployment doc author) + TO-9 (decom). DS 0.4 SECONDARY on TO-3 (clients_tab.json — gold script authoring lane if producer needs adding). Same per-script Lambda template as INFINGE Phase 1b: shared `pandas-pyarrow-requests-layer:1` + sys.path co-location for rate_limiter + jwt_freshness + LOCAL_PULLS_DIR /var/task → /tmp/pulls patch.",
   "waves": [
-    {"id": "P0", "label": "PRD authoring + project registration (COMPLETE 2026-05-05T~21:05Z; CTO).", "owners": ["1.0.0_SA_CTO"], "target_tag": "—"},
-    {"id": "P1-INV", "label": "Investigation TOs — TO-1 silver-chain RCA + TO-2 May 4 bronze RCA. Outputs feed v0.2 §5 Compiler Evidence + Phase 2 design lock.", "owners": ["0.6.1_AE_PartnerETL", "0.7.0_AE_CloudOps"], "target_tag": "—"},
-    {"id": "P2", "label": "Path-1 orchestrator-dim Lambda migration — TO-4 unified_account_dim / TO-5 transactions_v2 / TO-6 billing / TO-7 tax. Mirrors INFINGE Phase 1b template; shared layer.", "owners": ["0.6.1_AE_PartnerETL"], "target_tag": "inf-pipeline-v1.7.X"},
-    {"id": "P3", "label": "Cleanup + hardening — TO-3 clients_tab.json regen + TO-8 watchdog regex broaden.", "owners": ["0.4.0_DS_ClientPlatform", "0.7.0_AE_CloudOps"], "target_tag": "—"},
-    {"id": "P4", "label": "inf-bronze-runner EC2 decom — TO-9. Gates on INFINGE Phase 1b + INFREL Phase 2 + 48h soak.", "owners": ["0.7.0_AE_CloudOps"], "target_tag": "—"}
+    {
+      "id": "P0",
+      "label": "PRD authoring + project registration (COMPLETE 2026-05-05T~21:05Z; CTO).",
+      "owners": [
+        "1.0.0_SA_CTO"
+      ],
+      "target_tag": "—"
+    },
+    {
+      "id": "P1-INV",
+      "label": "Investigation TOs — TO-1 silver-chain RCA + TO-2 May 4 bronze RCA. Outputs feed v0.2 §5 Compiler Evidence + Phase 2 design lock.",
+      "owners": [
+        "0.6.1_AE_PartnerETL",
+        "0.7.0_AE_CloudOps"
+      ],
+      "target_tag": "—"
+    },
+    {
+      "id": "P2",
+      "label": "Path-1 orchestrator-dim Lambda migration — TO-4 unified_account_dim / TO-5 transactions_v2 / TO-6 billing / TO-7 tax. Mirrors INFINGE Phase 1b template; shared layer.",
+      "owners": [
+        "0.6.1_AE_PartnerETL"
+      ],
+      "target_tag": "inf-pipeline-v1.7.X"
+    },
+    {
+      "id": "P3",
+      "label": "Cleanup + hardening — TO-3 clients_tab.json regen + TO-8 watchdog regex broaden.",
+      "owners": [
+        "0.4.0_DS_ClientPlatform",
+        "0.7.0_AE_CloudOps"
+      ],
+      "target_tag": "—"
+    },
+    {
+      "id": "P4",
+      "label": "inf-bronze-runner EC2 decom — TO-9. Gates on INFINGE Phase 1b + INFREL Phase 2 + 48h soak.",
+      "owners": [
+        "0.7.0_AE_CloudOps"
+      ],
+      "target_tag": "—"
+    }
   ],
-  "depends_on": ["ADVI_INFINGE"],
+  "depends_on": [
+    "ADVI_INFINGE"
+  ],
   "depends_on_note": "INFINGE Phase 1b TOs ship in parallel with INFREL Phase 1+2; INFINGE shared layer (pandas-pyarrow-requests-layer:1) is reused by INFREL Phase 2 Lambdas. INFREL Phase 4 decom gates on BOTH INFINGE Phase 1b AND INFREL Phase 2 complete (zero-responsibilities check on inf-bronze-runner).",
   "thread_counter": 0,
-  "threads": []
+  "threads": [],
+  "completed": "2026-05-22"
 }

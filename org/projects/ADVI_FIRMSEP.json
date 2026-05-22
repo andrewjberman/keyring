@@ -4,18 +4,31 @@
   "name": "Multi-Firm Compartmentalization + Cottonwood Onboarding Readiness",
   "description": "Targeted, non-breaking structural hardening of ADVI multi-tenant CloudFront + Lambda@Edge architecture. Andrew direct 2026-05-07: 'I want to make sure that we are properly splitting these based on firm-id... containment of data in those cached layers is paramount' + 'third partner Cottonwood coming in sooner than later, these kind of fixes should be handled the sooner the better.' CTO read-side audit confirms cache-layer compartmentalization IS structurally sound for /api/scoped/advisor-intelligence/* (cache policy opal_scoped_advisor_by_firm includes firm query string + X-Firm-Id header in cache key; X-Firm-Id is JWT-injected not request-derived). Real gaps are structural-reflection level: opal-data-inf NOT declared as CF origin in Terraform (reached via runtime origin mutation in shared-advisor-router); OAI grant cross-references invisible across modules; FIRM_BUCKET_MAP duplicated in 2 Lambda@Edge files; no CI integration test on firm-routing logic; opal-data-portal-v2-json shared bucket cache-key composition unaudited; CW denial-event alarming absent. Cottonwood proximity makes 'implicit and brittle' costly — every gap becomes a per-onboarding manual checklist instead of a Terraform-driven playbook. ZERO production data-path change in scope.",
   "prds": [
-    {"path": "docs/architecture/ADVI_FIRMSEP.md", "label": "ADVI_FIRMSEP PRD v0.2", "date": "2026-05-07"},
-    {"path": "docs/architecture/ADVI_FIRMSEP_PHASE0_AUDIT.md", "label": "FIRMSEP Phase 0 audit (AE 0.7~B)", "date": "2026-05-07"}
+    {
+      "path": "docs/architecture/ADVI_FIRMSEP.md",
+      "label": "ADVI_FIRMSEP PRD v0.2",
+      "date": "2026-05-07"
+    },
+    {
+      "path": "docs/architecture/ADVI_FIRMSEP_PHASE0_AUDIT.md",
+      "label": "FIRMSEP Phase 0 audit (AE 0.7~B)",
+      "date": "2026-05-07"
+    }
   ],
   "source_brief": "CTO architectural assessment 2026-05-07 + Andrew direct ('targeted decisions that bolster robustness but not at the risk of breaking changes' + 'third partner Cottonwood coming in sooner than later') + CF/Lambda@Edge canonical-source read-side audit",
-  "status": "active",
-  "phase": "Phase 1 COMPLETE 2026-05-07T~21:30Z — 7 of 7 P1 TOs SHIPPED + portal-auth-v1.15.2..v1.15.5 tag chain. AE 0.7~B EOD log fcaaaa808 close-out: .00 audit doc 1d8279790 + .04 CI integration test 32fe863ed/7633dda85 + .01 declare opal-data-inf as CF origin 004b89359 (portal-auth-v1.15.2; 32s set-rebuild) + .03 shared FIRM_CONFIG module f215cfddd (portal-auth-v1.15.3; two-stage 6s+1m30s) + .05 ROUTER-DRIFT cleanup 901a2a250 (portal-auth-v1.15.4; tier-router-edge dead-code removal) + .02 OAI drift-detect a799ebc2f (portal-auth-v1.15.5; Path B output-only 0/0/0) + .06 close N/A fcb445f0a (MODE-A per Phase 0 NO FIRE). Phase 2 obs (.07/.08/.09 CW + CloudTrail alarms) ACTIVE post-Phase-1; no commits yet. Phase 3 (TO-FIRMSEP.10 Cottonwood live ship) DISPATCHABLE on Cottonwood credentials + bucket creation. PRD v0.2 SHIPPED 2026-05-07T~20:15Z (1.0.0_SA_CTO) absorbing Phase 0 close + Andrew content-layer rulings + Cottonwood OQ resolutions + tier-router-edge DEAD verdict + bucket name correction. PRD v0.1 SHIPPED 2026-05-07 (1.0.0_SA_CTO). 10 TOs sized originally + TO-FIRMSEP.11 placeholder added (model_portfolios content-layer firm-split; COO authors when product timeline materializes). ABSORBS ADVI_INFETL.ROUTER-DRIFT scope (resolved via TO-FIRMSEP.05). ZERO production data-path change. v0.3 PRD ratchet scheduled post LAMBDA-DIMS Phase B full-quorum first-fire empirical.",
+  "status": "inactive",
+  "phase": "ON HOLD 2026-05-22 (moved to REGISTRY Inactive/On-Hold by 2.0.0_SA_COO startup pass). Phase 1+2 complete; Phase 3 (.10 Cottonwood live ship) gated on Cottonwood credentials + bucket creation -- external Andrew/vendor action. || PRIOR PHASE: Phase 1 COMPLETE 2026-05-07T~21:30Z — 7 of 7 P1 TOs SHIPPED + portal-auth-v1.15.2..v1.15.5 tag chain. AE 0.7~B EOD log fcaaaa808 close-out: .00 audit doc 1d8279790 + .04 CI integration test 32fe863ed/7633dda85 + .01 declare opal-data-inf as CF origin 004b89359 (portal-auth-v1.15.2; 32s set-rebuild) + .03 shared FIRM_CONFIG module f215cfddd (portal-auth-v1.15.3; two-stage 6s+1m30s) + .05 ROUTER-DRIFT cleanup 901a2a250 (portal-auth-v1.15.4; tier-router-edge dead-code removal) + .02 OAI drift-detect a799ebc2f (portal-auth-v1.15.5; Path B output-only 0/0/0) + .06 close N/A fcb445f0a (MODE-A per Phase 0 NO FIRE). Phase 2 obs (.07/.08/.09 CW + CloudTrail alarms) ACTIVE post-Phase-1; no commits yet. Phase 3 (TO-FIRMSEP.10 Cottonwood live ship) DISPATCHABLE on Cottonwood credentials + bucket creation. PRD v0.2 SHIPPED 2026-05-07T~20:15Z (1.0.0_SA_CTO) absorbing Phase 0 close + Andrew content-layer rulings + Cottonwood OQ resolutions + tier-router-edge DEAD verdict + bucket name correction. PRD v0.1 SHIPPED 2026-05-07 (1.0.0_SA_CTO). 10 TOs sized originally + TO-FIRMSEP.11 placeholder added (model_portfolios content-layer firm-split; COO authors when product timeline materializes). ABSORBS ADVI_INFETL.ROUTER-DRIFT scope (resolved via TO-FIRMSEP.05). ZERO production data-path change. v0.3 PRD ratchet scheduled post LAMBDA-DIMS Phase B full-quorum first-fire empirical.",
   "blocking": "Phase 1 closed clean. Carry-overs: (1) Phase 2 obs TOs .07/.08/.09 ACTIVE — AE 0.7~B not yet started CW + CloudTrail alarm work. (2) Phase 3 TO-FIRMSEP.10 Cottonwood live ship DISPATCHABLE on Cottonwood credentials + bucket creation only (OQ1+OQ2+OQ3 RESOLVED + Phase 0 closed cleanly + Phase 1 hardening live = no remaining gates internal to Opal). (3) TO-FIRMSEP.11 model_portfolios placeholder gated on MDPF page build timeline; COO authors when materialized. (4) v0.3 PRD ratchet (consolidated INFETL + FIRMSEP) scheduled post LAMBDA-DIMS Phase B full-quorum first-fire empirical + CI test empirical evidence absorption.",
   "depends_on": [],
   "depends_on_note": "Independent project. Cross-coordinates with ADVI_INFETL (shares ROUTER-DRIFT scope; absorbed via TO-FIRMSEP.05) and bd-pipeline + inf-pipeline (TO-FIRMSEP.02 introduces cross-module Terraform references; coordinate ordering with ongoing pipeline work to avoid module-state conflicts).",
-  "absorbs": ["ADVI_INFETL.ROUTER-DRIFT (scope only — TO file remains in INFETL project, executed under FIRMSEP TO-FIRMSEP.05)"],
+  "absorbs": [
+    "ADVI_INFETL.ROUTER-DRIFT (scope only — TO file remains in INFETL project, executed under FIRMSEP TO-FIRMSEP.05)"
+  ],
   "created": "2026-05-07",
-  "pods": ["0.7", "0.4"],
+  "pods": [
+    "0.7",
+    "0.4"
+  ],
   "pipeline": "portal-auth + shared infrastructure",
   "coo_lane": "2.0.0_SA_COO",
   "thread_counter": 0,

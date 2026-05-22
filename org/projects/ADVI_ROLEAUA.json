@@ -15,13 +15,16 @@
       "date": "2026-04-14"
     }
   ],
-  "status": "active",
-  "phase": "Phase 0: PRD complete, COO TO issuance pending.",
-  "blocking": "COO task order issuance. Part of ADVI_ROLLUP wave.",
+  "status": "complete",
+  "phase": "CLOSED COMPLETE-AS-SUPERSEDED 2026-05-22 (3-step close, 2.0.0_SA_COO). Role-AUA canonical convergence; executed in full as the ADVI_ROLLUP RA-P0..P5 series (all complete). Closed complete-as-superseded. || PRIOR PHASE: Phase 0: PRD complete, COO TO issuance pending.",
+  "blocking": "None -- closed complete-as-superseded into ADVI_ROLLUP (2026-05-22).",
   "parent_project": "ADVI_ROLLUP",
   "created": "2026-04-15",
-  "pods": ["0.4"],
+  "pods": [
+    "0.4"
+  ],
   "pipeline": "bd-pipeline",
   "thread_counter": 0,
-  "threads": []
+  "threads": [],
+  "completed": "2026-05-22"
 }
