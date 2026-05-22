@@ -1,0 +1,18 @@
+{
+  "project_code": "ADVI_VALFIN",
+  "macro_code": "ADVI",
+  "name": "ADVI Product Validation (Finish ADVI)",
+  "description": "Validate the existing ADVI (Advisor Intelligence) product end-to-end -- every key data point and function across inf-pipeline (Inflection), bd-pipeline (49 Financial), the portal, middleware, and cloud/Lambda infra -- and CORRECT what validation finds, so numbers and methodology are trustworthy and consistent. Three-layer method: verify-channel discipline (data layer -- EXISTS/FRESH/SCALED/NOT-FROZEN, pipelines robust as new data flows), meta-analysis (correctness layer -- numbers do not look wrong, nothing accidentally broken, no missed caveat), front-end display verification (presentation layer -- validated numbers actually render correctly and reliably). Priority order: (1) Inflection books/ tab -- cost basis, tax lots, realized + unrealized capital gains, advisor book growth (lowest-confidence cluster, first and deepest); (2) rest of Inflection; (3) 49 Financial. Named consistency rule: no data displayed before January 2021; any Max window/toggle floors at January 2021. Out of scope: visual/UI design changes, new features/metrics/cohorts/views, governance changes. Coordinates with -- does not supersede -- the active ADVI projects.",
+  "source_brief": "Conversion of Tier-0 Directive D-001 'Finish ADVI' (transcribed 2026-05-22, commit a5c9d6d16) into a normal CTO PRD per Andrew ruling 2026-05-22: the cost-basis/tax-lot/window-floor specifics in D-001 were task-altitude, not mandate-altitude, and belong in a PRD the COO decomposes. D-001 is being rewritten into a broad two-phase whole-workspace Directive; this project carries the ADVI-specific substance intact.",
+  "prds": [
+    {"path": "docs/architecture/ADVI_PRODUCT_VALIDATION.md", "label": "ADVI_VALFIN PRD v0.1 -- ADVI product validation method + 7 TO candidates", "date": "2026-05-22"}
+  ],
+  "status": "active",
+  "phase": "Phase 0 -- PRD v0.1 COMPLETE 2026-05-22 (1.0.0_SA_CTO), COO decomposition pending. Converted from Tier-0 Directive D-001. 7 TO candidates: TO-1 Inflection books/ tab validation (the spearhead -- cost basis / tax lots / realized+unrealized cap gains / advisor book growth), TO-2 rest-of-Inflection, TO-3 49 Financial, TO-4 Jan-2021 consistency-floor enforcement, TO-5 pipeline robustness/self-healing audit, TO-6 front-end display verification, TO-7 product-wide meta-analysis sweep. Priority TO-1->TO-2->TO-3; TO-4/5/6/7 cross-cutting.",
+  "blocking": "COO task order decomposition + issuance",
+  "created": "2026-05-22",
+  "pods": ["0.4", "0.6", "0.7"],
+  "pipeline": "inf-pipeline + bd-pipeline",
+  "thread_counter": 0,
+  "threads": []
+}
