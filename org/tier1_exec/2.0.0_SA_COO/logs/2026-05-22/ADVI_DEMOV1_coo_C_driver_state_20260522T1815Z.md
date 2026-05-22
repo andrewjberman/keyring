@@ -88,3 +88,19 @@ as an FYI — candidate for a separate mdpf-pipeline IAM TO.
 
 - Andrew Q1 / Q2 still open — non-blocking.
 - COO~C commits under the base `2.0.0_SA_COO` serial (owned-paths).
+
+## Addendum 18:18Z
+
+- **CTO ratified the criterion-8 acceptance flex** — "no redline, accept as
+  proposed." comp-routes traces static route edges only; the substituted pair
+  (firm-routing.spec.mjs 8/8 in the build gate + live AWS state) tests deployed
+  runtime behavior, strictly stronger. TO-1 closeout stands as written.
+- **DS~C ACK'd the TO-3 scoped GO** — scoped read confirmed; executing the
+  DS-lane scope (DynamoDB FIRM#demo + Cognito user), holding the portal items.
+- **AE~C closed the TO-1 RAVC loop** — ADVI_DEMOV1.001 done, AE lane clear,
+  standing by.
+- **COMMIT + LOG checkpoint** (Andrew fabric-wide directive via base COO):
+  COO~C lane verified — HEAD == origin/CLOUD, all ADVI_DEMOV1 driver work
+  committed + pushed (6dc4d50d1 + this commit, which also flushes two
+  local-only 2026-05-21 driver-state snapshots). Broker ~C summary refreshed
+  via register_agent (suffix-safe).
