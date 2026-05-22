@@ -235,25 +235,38 @@ Rapid Andrew iteration on the live :5175 DEV preview:
   subtitles formatted via `formatAsOfLabel`. The page no longer reads the
   manifest for freshness.
 
+## Addendum 5 2026-05-22 — SHIPPED TO PROD (opalinvest.dev live)
+
+Andrew-direct GO 2026-05-22 ("get it done"). DE dispatched 0.3.0_DT; DT executed
+the promotion and RAVC2'd; DE RAVC4-accepted. Evidence:
+
+- origin/DEV fast-forwarded to `b5dce977` (12-commit push, CI green).
+- The 12 SSCN_UNVREV commits cherry-picked clean onto portal PROD (SSCN_DIVDEF.006
+  mechanism) — `a7fd7655..7442fc9d`, 12 commits / 10 files, exit 0, zero
+  conflicts, zero overlap with the MDPF_ASSETS.033 WIP.
+- origin/PROD = `7442fc9d`, pre-push typecheck PASS, tag `portal-v2.1.96` pushed.
+- GHA "Deploy to Production" SUCCESS — **opalinvest.dev live, HTTP 200,
+  Last-Modified 2026-05-22 17:25:19 GMT**.
+- Parent-repo portal gitlink bumped to `7442fc9d`, commit `e463f93fa`, pushed
+  origin/CLOUD.
+- DEV verification worktree (`portal/.runtmp/portal-dev-verify`) + the :5175 dev
+  server torn down.
+
 ## Current State
 
-Portal SSCN_UNVREV delta on DEV at `b5dce977`. Chain:
-`47330865` -> `6f66c67f` -> `7786eef9` -> `437c9eba` -> `f23aaeea` ->
-`921551bf` -> `771de362` -> `3b6dbfe8` -> `a66d4215` -> `5f322e89` ->
-`1888288d` -> `b5dce977`. All statically verified (typecheck + lint exit 0 at
-each step). AE-side SSCN_UNVREV.001 + .002 both closed + RAVC4-accepted;
-`security-scanner-v1.3.0` + the 20260521 data live in AWS. DEV only — nothing in
-PROD. DEV-code dev server up on :5175 (`portal/.runtmp/portal-dev-verify`
-worktree) for Andrew's verification.
+**SHIPPED.** The full SSCN_UNVREV portal set is live in PROD on opalinvest.dev
+(portal PROD `7442fc9d`, tag `portal-v2.1.96`) — 6-universe revert,
+Composite-as-weighted-average, raw-toggle interleave, weight/sector/Delta
+columns, panel fullscreen, spreadsheet-date timestamps. Paired with
+`security-scanner-v1.3.0` + the 20260521 data live in AWS (SSCN_UNVREV.001/.002).
+All RAVC loops closed. No pending DE task orders.
 
 ## Next Steps
 
-- `[0.3.0_DT_TradingOperations]` PROD-promotion of the full portal SSCN_UNVREV
-  set (`47330865`->`b5dce977`) after Andrew's DEV smoke + a GO. Return the portal
-  submodule to DEV once the MDPF WIP clears.
-- `[0.4.0_DE_ClientPlatform]` Commit the MDPF_ASSETS.033 WIP to DEV.
-- `[2.0.0_SA_COO~B]` SSCN_DATA_CONTRACT.md Section 5 — add `divzWeight` /
-  `universeWeight` fields when the SSCN exec lane is back online.
-- `[Andrew]` DEV smoke of the Security Scanner before the PROD bundle.
-- `[Dashboard Engineer]` All Yang/Andrew SSCN feedback shipped to DEV; watcher
-  healthy; standing by.
+- `[0.4.0_DE_ClientPlatform]` Commit the MDPF_ASSETS.033 WIP to DEV (still
+  uncommitted in the portal working tree; unrelated to this work).
+- `[2.0.0_SA_COO~B]` SSCN project-state: SSCN_DATA_CONTRACT.md Section 5 needs
+  the `divzWeight` / `universeWeight` fields; SSCN_UNVREV registry/closure
+  canonicalization — COO~B's lane.
+- `[Dashboard Engineer]` SSCN_UNVREV fully shipped to PROD. No pending TOs;
+  watcher healthy; standing by for dispatch.
