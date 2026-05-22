@@ -280,8 +280,73 @@ the fix). CVO spot-checked 5 generators + zero-duplicate sweep; F1+F2 both close
 2. `json/macro/vix_data.json` — `getVIXData` exported in portal-proxy.ts, no React
    component consumes it. Route entry in endpoint-mapping.ts also stale.
 
+## Session 7 (2026-05-22 cont.) — COO REWORK + AC2 field-grain + AC4 Data Refresh cross-check
+
+**Context:** COO issued REWORK on L1 RAVC2 with two hard gates before re-file:
+- **AC2 gate:** field-grain atomic layer — data-point-by-data-point / every field of
+  every artifact for all 17 yang S3 portal artifacts.
+- **AC4 gate:** Data Refresh portal cross-check + compiler-mandate tool reproduction
+  as evidence. Both gates CLOSED this session.
+
+**AC4 Data Refresh cross-check COMPLETE (§4b of lineage-map artifact).**
+`PipelineProgress.tsx` STEP_GROUPS maps 14 UI steps 1:1 to yang generators.
+`generate-volatility` is absent from the UI step list — confirms the D3 orphaned
+finding independently. Compiler-mandate tool results documented:
+- `comp-routes behaviors` → CF behavior #16 (`/api/general/*`, `public-data-router`)
+  confirmed as the yang route
+- `comp-routes trace`: S3-proxy pattern produces no TF ENDPOINT nodes in yang path;
+  trace returning empty is expected, not a gap
+- `comp-pipescript`: not applicable (yang Lambdas are not gold scripts with io config)
+- `comp-transform`: not applicable at generator output level (no React component
+  transforms inside yang generators)
+
+**AC2 field-grain atomic layer COMPLETE (§6 of lineage-map artifact, §6.1–6.17).**
+All 11 remaining yang generator lambda source files read this session:
+- `yang-generate-macro` (12 categories / 84 Bloomberg series; INDICATOR_UNITS;
+  `macro_data.json` + `vix_data.json` schemas)
+- `yang-generate-macro-timeseries` (79 indicators; slugify() convention;
+  per-indicator gzip per-file; stats block)
+- `yang-generate-etf-returns` (5 ETFs; 9 periods incl. Since Inception=2024-04-30)
+- `yang-generate-peer-performance` ("Models Performance vs Peers" xlsx;
+  "Peer Table" sheet; 5 models; 6 periods)
+- `yang-model-portfolio-benchmarks` (3 output keys: legacy + comprehensive +
+  timeseries; SmartX B1 monthly + B3 daily sidecar scheme; RFR tenor map;
+  model_source: smartx_realized vs yang_design)
+- `yang-generate-positioning` (ETF_CLASSIFICATIONS ~100 ETFs;
+  BETA_OVERRIDES; cross-pipeline aum-metrics BD read; holdings schema + portfolio
+  summary schema with beta/duration aggregations)
+- `yang-generate-allocation-summary` (reads upstream holdings_attribution_data.json;
+  BENCHMARK_ALLOCATIONS 6 models; Cash→FI / Hedge→Equity reclassification;
+  FI/Equity symmetric tilt enforcement)
+- `yang-generate-holdings-attribution` (Attribution xlsx; horizontal 5-portfolio
+  layout; 10 per-holding columns per period; 4 periods; ETFClassifier DynamoDB)
+- `generate-manifest` (aggregates json/latest/*.json; timestamp 5pm ET;
+  source_count + sources map)
+- `generate-latest` (1 put_object for benchmarks/LATEST.json; version/pkl metadata)
+- `generate-volatility` (FRED VIXCLS via Secrets Manager; MOVE stub null;
+  canonical volatility from market-overview pipeline confirmed in source comment)
+
+§6.1–6.17 each contain: Source(s), field table with type + notes, cross-refs to
+Yang rubric Bloomberg origins.
+
+**Progress table update:**
+
+| Item | Status |
+|------|--------|
+| AC2 field-grain atomic layer | COMPLETE — §6 of lineage-map |
+| AC4 Data Refresh cross-check + compiler evidence | COMPLETE — §4b of lineage-map |
+| RAVC2 re-file to COO | PENDING — this commit |
+
+## Compiler Tools (session 7)
+
+| Tool | Use | Result |
+|------|-----|--------|
+| `comp-routes behaviors` | AC4 — confirm CF behavior for yang route | Behavior #16: `/api/general/*` → `public-data-router` |
+| `comp-routes trace` (yang paths) | AC4 — trace S3 key through CF | Empty — expected (S3-proxy pattern; no ENDPOINT TF nodes in yang path) |
+| `comp-pipescript io` | AC4 — check yang generator io graph | Not applicable (gold-script-only tool) |
+| `comp-transform schema-check` | AC4 — check component schema for yang generators | Not applicable at generator output level |
+
 ## Next Steps
 
-- Wait for COO L1 CLOSE (RAVC2 filed)
-- Field-grain AC2 detail (cross-ref Yang rubric for Bloomberg origins per series):
-  COO may direct as a separate TO or as L1 supplement — deferred until COO CLOSE.
+- COO L1 CLOSE (RAVC2 re-filed after this commit)
+- CVO re-verification of AC2 field-grain layer (§6)
