@@ -180,7 +180,8 @@ lanes:
       - 0.5.0_AE_OpalETL
       - 0.5.0_AE_OpalETL~B
       - 0.7.0_AE_CloudOps~A
-    description: "OpalETL shared service (AE 0.5.0 + ~B lane). 0.7.0_AE_CloudOps~A added 2026-05-21 by COO: the OpalETL lane (0.5.0 base + ~B) went fully offline; YALP_MDSRC.B2 was reassigned to ~A, which needs this lane to commit the SmartX pull .py (data/smartx/**). Tilde-lane owned-paths-gap pattern."
+      - 0.7.0_AE_CloudOps
+    description: "OpalETL shared service (AE 0.5.0 + ~B lane). 0.7.0_AE_CloudOps~A added 2026-05-21 by COO: the OpalETL lane (0.5.0 base + ~B) went fully offline; YALP_MDSRC.B2 was reassigned to ~A, which needs this lane to commit the SmartX pull .py (data/smartx/**). Tilde-lane owned-paths-gap pattern. 0.7.0_AE_CloudOps (base) added 2026-05-22 by COO: the ~A session re-registered to the base lane per Andrew directive (same agent); YALP_MDSRC.B4 (the B3-continuation deploy) commits the same SmartX pull .py from the base serial."
 
   SHARED_PARTNER_ETL:
     permitted_agents:
