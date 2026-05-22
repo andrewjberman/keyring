@@ -56,7 +56,13 @@ BROKER_PORT = int(os.environ.get("OPAL_BROKER_PORT", "7800"))
 BROKER_URL = f"http://127.0.0.1:{BROKER_PORT}"
 POLL_INTERVAL_S = 2.0  # seconds between broker polls
 
+# tier0_exec holds ONLY the Tier-0 agent (0.0.0_AB_MSTR), so the broker can
+# resolve / register / message it. It is deliberately SEPARATE from org/tier0/
+# (the Constitution + ledger/cycles/ratifications control plane) -- org/tier0/
+# must never be scanned here, or its subdirs (audit/, cycles/, ledger/,
+# ratifications/) would be mistaken for agent folders.
 TIER_DIRS = {
+    "tier0_exec": ORG_ROOT / "tier0_exec",
     "tier1_exec": ORG_ROOT / "tier1_exec",
     "tier2_senior": ORG_ROOT / "tier2_senior",
     "tier3_junior": ORG_ROOT / "tier3_junior",
@@ -1139,8 +1145,8 @@ async def check_inbox(agent_serial: str, mark_read: bool = False, ctx: Context =
 @mcp.tool()
 async def list_agents(tier: str = "", ctx: Context = None) -> str:
     """List all agents in the org, optionally filtered by tier
-    ('tier1_exec', 'tier2_senior', 'tier3_junior'). Returns agent serial,
-    role, latest log date, and liveness status."""
+    ('tier0_exec', 'tier1_exec', 'tier2_senior', 'tier3_junior'). Returns
+    agent serial, role, latest log date, and liveness status."""
     global _active_ctx
     _active_ctx = ctx
 
