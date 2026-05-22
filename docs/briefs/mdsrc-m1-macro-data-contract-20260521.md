@@ -7,7 +7,7 @@
 | Author | `0.2.0_DS_PortfolioAnalytics` (reassigned from `~A`; F1 brief consumed as documented reference) |
 | Date | 2026-05-21 |
 | Audience | `2.0.0_SA_COO` (RAVC2) — CC `1.0.0_SA_CTO`; handed to `0.1.0_DS_MarketIntelligence` (TO-M2 verifier) |
-| Status | COMPLETE — contract authored; **NOT self-certified** (R5: verifier != author — M2 validates) |
+| Status | COMPLETE — contract authored; **NOT self-certified** (R5: verifier != author — M2 validates). M2 verify-channel pass complete 2026-05-22 (M2 commit `776e086e3`): 80/81 rows confirmed; idx 41 FRED series-ID typo reworked here (`MARTSSM44X72USS` -> `MARTSSM44W72USS`). |
 | Companion | `docs/briefs/mdsrc-m1-macro-data-contract-20260521.tsv` (machine-readable 81-row contract) |
 
 ---
@@ -168,7 +168,7 @@ The entire group is licensed survey data — no government source. ISM withdrew 
 |---|---|---|
 | 39 | Retail Sales MoM | FRED-replaceable (RSAFS units=pch / Census) |
 | 40 | Retail Sales ex Auto MoM | FRED-replaceable (RSFSXMV units=pch / Census) |
-| 41 | Retail Sales ex Auto and Gas MoM | FRED-replaceable (MARTSSM44X72USS units=pch / Census) |
+| 41 | Retail Sales ex Auto and Gas MoM | FRED-replaceable (MARTSSM44W72USS units=pch / Census) — M2 REWORK 2026-05-22: X->W series-ID typo corrected |
 | 42 | UMich Consumer Sentiment | FRED-replaceable (UMCSENT / U. Michigan) |
 | 43 | Conference Board Consumer Confidence | **originating-body-direct** (CB) / YCharts-if-carried |
 | 44 | Consumer Credit YoY | FRED-replaceable (TOTALSL units=pc1 / Fed G.19) |
@@ -292,7 +292,7 @@ the specific verification target per indicator. M2's verification priorities:
 1. **FRED `units=` transforms (24 rows)** — confirm each `pch`/`pc1`/`chg` transform reproduces
    the Bloomberg pre-computed MoM/YoY/QoQ row (F1 probed values, not transforms, for most).
 2. **FRED series-ID confirmation** — idx 12 (`AMTMNO` not `NEWORDER`), idx 21 (TIC — exact
-   Treasury table), idx 41 (`MARTSSM44X72USS` ex-auto-and-gas), idx 52 (Case-Shiller 20-City
+   Treasury table), idx 41 (`MARTSSM44W72USS` ex-auto-and-gas — corrected from `MARTSSM44X72USS` per M2 REWORK 2026-05-22), idx 52 (Case-Shiller 20-City
    SA vs NSA), idx 26 (`PPIFIS`).
 3. **Proxy fidelity (4 rows)** — AAA/IG/HY ICE-BofA-vs-Bloomberg OAS divergence; USD/CNH
    onshore-vs-offshore yuan divergence — quantify and rule acceptable/not for the heatmap.
