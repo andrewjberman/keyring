@@ -13,9 +13,42 @@ is set up for continuation below.
 |------|--------|
 | Phase 1 — survey (comp-graph schema, extractors, yang scripts) | COMPLETE |
 | Deliverable A — Yang-scripts structured rubric | COMPLETE — `287502c28` |
-| Deliverable B — write-side map (yang Lambda -> source -> S3) | NOT STARTED |
-| Deliverable B — read-side map (S3 -> publisher -> React) | NOT STARTED |
-| comp-graph extractor extensions | NOT STARTED |
+| Deliverable B — write-side map (yang Lambda -> source -> S3) | COMPLETE (artifact-grain) — checkpoint this session |
+| Deliverable B — extractor gap diagnosis | COMPLETE — root cause pinned (see below) |
+| Deliverable B — read-side map (S3 -> CF route -> React) | NOT STARTED — next phase |
+| comp-graph extractor FIX (implement) | NOT STARTED — next phase (scoped) |
+
+## Session 2 (2026-05-22 cont.) — write-side map + extractor gap
+
+Artifact: `docs/reference/yang-pipeline-lineage-map.md`.
+
+**Write-side map COMPLETE at artifact granularity.** All 27 yang-pipeline Lambdas
+enumerated from `infra/aws/terraform/yang-pipeline/lambdas.tf` (ground truth).
+14 portal-data generators mapped to their output S3 key(s) + procurement source +
+manifest trigger; 12 orchestration/state Lambdas mapped; 3 cross-pipeline feeders
+(SmartX sidecars, FRED cache, BD aum-metrics) identified.
+
+**Stale-doc finding:** in-repo `LAMBDA_REGISTRY.md` + `PORTAL_DATA_FLOW.md`
+(2026-01-19) are stale on folder paths AND output keys (e.g. CMA writes
+`json/capital-markets/{assumptions,views}.json` not `json/cma/*`; macro-timeseries
+writes a `json/macro/timeseries/` prefix; etf-returns -> `json/benchmarks/`).
+Lineage-map artifact supersedes them.
+
+**Extractor gap diagnosed (AC4 groundwork).** `comp-trace yang-generate-valuation`
+returns 0 edges; comp-graph has all 27 yang LAMBDA nodes but only 4 edges touch
+them, 0 WRITES_S3. Root cause: `extract_s3.py` Lambda branch does not resolve
+module-level constants — yang generators write via `Key=key` (variable holding
+`OUTPUT_KEY` constant); regex captures the bare name `key`, discarded at the
+`'/' in key` filter. Gold branch resolves constants but only from
+`gold/lib/s3_layout.py`. Fix scoped in artifact §3 (extension, not new compiler).
+
+## Compiler Tools (session 2)
+
+| Tool | Use | Result |
+|------|-----|--------|
+| `comp-trace yang-generate-valuation --direction both` | verify yang edge coverage | 0 up / 0 down — confirms extractor gap |
+| direct `graph.json` inspection | enumerate yang nodes/edges | 27 LAMBDA nodes, 4 edges touching yang, 0 WRITES_S3 |
+| `grep` over yang lambda source | write-side key + procurement extraction | OUTPUT_KEY constants + put_object/get_object patterns mapped |
 
 ## Phase 1 — survey findings
 
@@ -69,12 +102,19 @@ The mirror-image map, both directions per data point, atomic + grouped:
 
 ## Current State
 
-L1 Deliverable A shipped + committed. Deliverable B not started — a multi-day
-piece. 0.3.0_DE to be coordinated on the React-component side.
+L1 Deliverable A shipped. Deliverable B write-side map COMPLETE (artifact-grain)
++ extractor gap diagnosed — committed as `docs/reference/yang-pipeline-lineage-map.md`.
+Remaining: implement the extractor fix, build the read-side map, emit atomic
+field-grain detail + the 3 grouped roll-ups, RAVC2. Multi-day TO (~3-5d SLA).
 
 ## Next Steps
 
-1. [~self] Deliverable B write-side: enumerate yang-pipeline producer Lambdas, run comp-pipescript io / comp-trace, build the Lambda -> source -> S3-key map.
-2. [0.3.0_DE_TradingOperations] React-component side: which granular component renders which datum; the "Data Refresh" page as a visibility source.
-3. [~self] Deliverable B read-side + the 3 grouped roll-ups; extractor extensions where COMPONENT edges are thin.
+1. [~self] Implement the `extract_s3.py` Lambda-constant-resolution fix (artifact
+   §3) — module-level constant map + `key = CONSTANT` alias; rebuild graph;
+   re-verify with `comp-trace`. Lights up yang WRITES_S3/READS_S3 edges.
+2. [0.3.0_DE_TradingOperations] React-component side: which granular component
+   renders which datum; the "Data Refresh" page as a visibility source.
+3. [~self] Deliverable B read-side map (S3 -> CF `/api/public/*` route -> React)
+   + atomic field-grain write-side (cross-ref Yang rubric) + the 3 grouped
+   roll-ups (best emitted from the fixed comp-graph).
 4. [~self] RAVC2 to COO on the full lineage-map artifact.
