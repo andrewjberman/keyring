@@ -215,6 +215,13 @@ lanes:
       - 0.7.0_AE_CloudOps
     description: "Trade-pipeline Lambda source (infra/aws/lambda/trade-pipeline/**) — DT 0.3.0 authorized for code edits until TRSB_TFIMPT.W3 Terraform migration; AE 0.5/0.7 (+ 0.5 ~B sub-lane, TRSB_LEDGER.009 re-route 2026-05-20) for infra. TRSB_PATHFIX scope (COO ruling 2026-05-01)."
 
+  YCHARTS_PULL_MODULE:
+    permitted_agents:
+      - 0.1.0_DS_MarketIntelligence
+      - 0.2.0_DS_PortfolioAnalytics
+      - 0.7.0_AE_CloudOps
+    description: "YCharts market-data pull Lambda source (infra/aws/lambda/ycharts-market-data-pull/**) — YALP_MDSRC.C2 co-owners 0.1.0_DS + 0.2.0_DS authorized for code edits (the C2 TO 353b00116 assigns the DS pair to BUILD the pull module); 0.7.0_AE_CloudOps for infra/Terraform/deploy. Mirrors the TRADE_PIPELINE_INFRA DS-code/AE-infra split. COO ruling 2026-05-22 (YALP_MDSRC.C2 owned-paths gap)."
+
   ANY:
     permitted_agents: "*"
     description: "Intentionally multi-agent-writable (shared logs, timeseries, misc)"
@@ -730,6 +737,10 @@ paths:
   "infra/aws/lambda/trade-pipeline/**":
     lane: TRADE_PIPELINE_INFRA
     note: "Trade-pipeline Lambda source — DT 0.3.0 authorized for code edits until TRSB_TFIMPT.W3; longest-match overrides infra/aws/** AE-only rule (COO ruling 2026-05-01 TRSB_PATHFIX)"
+
+  "infra/aws/lambda/ycharts-market-data-pull/**":
+    lane: YCHARTS_PULL_MODULE
+    note: "YCharts pull Lambda source — C2 co-owners 0.1.0_DS + 0.2.0_DS author code, 0.7.0_AE deploys; longest-match overrides the infra/aws/** AE-only rule (COO ruling 2026-05-22 YALP_MDSRC.C2)"
 
   "infra/aws/**":
     lane: CLOUD_OPS_OR_ETL
