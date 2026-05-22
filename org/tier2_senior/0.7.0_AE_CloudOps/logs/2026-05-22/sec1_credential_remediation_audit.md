@@ -88,23 +88,71 @@ on the widened scope. Surfaced in the RAVC1:
 | 0 (classify) | `.runtmp/sec1_phase0_classify.py` + live `aws lambda get-function-configuration` | Ran — established 2-of-4 genuine plaintext; live-vs-committed comparison per consumer. |
 | 1 (`comp-iam service`) | per consuming Lambda | NOT YET — Phase 1 is a pre-rotation step; rotation is held at the Phase-0 STOP. Runs when COO clears ITEM 2 scope. |
 
+## ITEM 2 — Rotation (resolved 2026-05-22, post-COO/Andrew ruling)
+
+COO relayed Andrew's scoped ITEM 2 ruling: 2.1 FRED = rewire-now / defer
+regeneration; 2.2 JWT = carved out to a standalone TO (outline only under
+SEC1); 2.3 NEWS/OPENAI = confirmed no-op.
+
+### ITEM 2.1 — FRED Lambda Secrets-Manager rewire — COMPLETE
+
+| Step | Action | Result |
+|------|--------|--------|
+| 1 | Code: `lambda_fred_ingestion.py` | Added `get_fred_api_key()` (reads `opal/external-apis` via `secretsmanager:GetSecretValue`, mirrors the F5 pattern); `lambda_handler` + `__main__` use it; plaintext env read removed |
+| 2 | iam.tf | `fred_ingestion_secrets_read` — `GetSecretValue` on the one `opal/external-apis` ARN, least-privilege |
+| 3 | lambdas.tf | dropped `ignore_changes=[environment]` so Terraform manages the env empty |
+| 4 | Commit | `5fd73c704` (code+TF) |
+| 5 | Build | **INCIDENT** — ran `build-and-upload.sh` which zips only `files[]`; fred-data-ingestion is a vendored-deps Lambda (source-map `_build_note`). The deps-less zip broke the function (`No module named 'requests'`). |
+| 6 | Recovery | Rebuilt via the documented swap-into-deployed-zip method: pulled the prior deps-bearing S3 version (`agzMMs0o...`, 1MB/195 entries), swapped in the SEC1-rewired `files[]` `.py`, re-zipped, uploaded with `content-sha256` metadata. Source-map sha corrected (`44d3aca69`). |
+| 7 | Apply | terraform apply 0-diff (IAM grant created earlier; final apply 1-change). Tag `fred-pipeline-v1.1.1`. |
+| 8 | Verify | `fred-data-ingestion` re-invoked (`{"frequency":"monthly"}`) -> StatusCode 200, `success:True`; `Environment` = `null` (no `FRED_API_KEY` plaintext) — the key resolves from Secrets Manager. |
+
+Provider-side FRED key REGENERATION: **deferred by Andrew's ruling** (free key,
+low-stakes) — a tracked follow-up, NOT a SEC1 blocker.
+
+**Build-tooling lesson:** always read the source-map `_build_note` before
+`build-and-upload.sh` — a vendored-deps Lambda needs the swap-into-zip method,
+not the standard build. (The vendored-deps -> Lambda Layer migration is the
+separate P3 fred-family cleanup TO.)
+
+### ITEM 2.2 — JWT cutover-plan outline — DELIVERED to COO
+
+The JWT_SECRET rotation is carved out of SEC1 to a standalone CTO-ratified TO.
+SEC1 deliverable = the cutover-plan outline (dual-secret 3-phase window, the 6
+trade Lambdas, the new SM secret, the cross-lane DT+AE split, the 3rd-file
+scrub of the 2026-04-15 session log). Delivered to COO 2026-05-22 (MCP) — COO
+authors the standalone TO from it. No secret generated, no trade-Lambda code
+touched under SEC1.
+
+### ITEM 2.3 — NEWS/OPENAI — NO-OP (confirmed)
+
+Both env vars already hold Secrets Manager secret NAMES — no committed-plaintext
+exposure. Dropped from ITEM 2 scope.
+
+## Compiler Tools (ITEM 2.1 addendum)
+
+| Phase | Tool | Result |
+|-------|------|--------|
+| 1 | `comp-iam service fred-data-ingestion` | Graph pre-commit-stale; manual enumeration: the one new boto3 call is `secretsmanager:GetSecretValue` on `opal/external-apis` — matched 1:1 by the `fred_ingestion_secrets_read` iam.tf grant (one secret, one action, least-privilege). |
+| 2 | `comp-iam gaps` | 0 fred-pipeline gaps. (2 unrelated pre-existing `mdpf-daily-trigger` gaps noted in the C1 log — out of scope.) |
+| 3 | `aws lambda get-function-configuration` | `Environment=null` — no plaintext key on the consuming Lambda; resolves via Secrets Manager. PASS. |
+
 ## Current State
 
 | Item | Status |
 |------|--------|
-| ITEM 1 (audit) | COMPLETE — table above; 2-of-4 correction + 1 additional finding |
-| ITEM 3 (file fate) | COMPLETE for the snapshot (`4dfeaf85a`, pushed); `.gitignore` line routed to COO |
-| ITEM 2 (rotation) | HELD at Phase-0 STOP — RAVC1 to COO + CTO for scope |
+| ITEM 1 (audit) | COMPLETE — 2-of-4 correction + 1 additional finding |
+| ITEM 2.1 (FRED SM-rewire) | COMPLETE — `fred-pipeline-v1.1.1`; verified (invoke `success:True`, env clean) |
+| ITEM 2.2 (JWT outline) | COMPLETE — outline delivered to COO; rotation = standalone TO |
+| ITEM 2.3 (NEWS/OPENAI) | NO-OP — confirmed already SM-refs |
+| ITEM 3 (file fate) | COMPLETE — snapshot removed (`4dfeaf85a`); `.gitignore` rule landed by COO (`e1a094554`) |
 | ITEM 4 (history scrub) | WONTFIX — declined by Andrew |
 
 ## Next Steps
 
-1. [2.0.0_SA_COO] Rule on ITEM 2 scope: (a) FRED provider-key regeneration owner
-   (needs a FRED account); (b) JWT cutover plan + the cross-lane DT call for the
-   6 trade-Lambda code changes; (c) confirm NEWS/OPENAI ITEM-2 is a no-op.
-2. [2.0.0_SA_COO] Commit the `.gitignore` `LAMBDA_SNAPSHOT_PRE_TERRAFORM_*.json`
-   rule (BASE_EXEC lane) — or add `0.7.0_AE_CloudOps` to its permitted_agents.
-3. [2.0.0_SA_COO] Decide whether to redact the JWT plaintext from the 2026-04-15
-   session log (additional finding) — moot once JWT_SECRET is rotated.
-4. [~self] On COO ITEM-2 scoping: run Phase-1 `comp-iam service`, build the
-   rotation Terraform, RAVC2.
+1. [2.0.0_SA_COO] Author the standalone JWT-rotation security TO from the
+   delivered cutover outline.
+2. [tracked follow-up] FRED API key provider-side regeneration — deferred by
+   Andrew (free key); fold into the P3 fred-family cleanup or rotate
+   opportunistically.
+3. [~self] SEC1 RAVC2 to COO — SEC1 closes (ITEM 1 + 2.1 + 2.2 + 3 done).
