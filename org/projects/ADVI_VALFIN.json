@@ -8,8 +8,8 @@
     {"path": "docs/architecture/ADVI_PRODUCT_VALIDATION.md", "label": "ADVI_VALFIN PRD v0.1 -- ADVI product validation method + 7 TO candidates", "date": "2026-05-22"}
   ],
   "status": "active",
-  "phase": "Phase 0 -- PRD v0.1 COMPLETE 2026-05-22 (1.0.0_SA_CTO), COO decomposition pending. Converted from Tier-0 Directive D-001. 7 TO candidates: TO-1 Inflection books/ tab validation (the spearhead -- cost basis / tax lots / realized+unrealized cap gains / advisor book growth), TO-2 rest-of-Inflection, TO-3 49 Financial, TO-4 Jan-2021 consistency-floor enforcement, TO-5 pipeline robustness/self-healing audit, TO-6 front-end display verification, TO-7 product-wide meta-analysis sweep. Priority TO-1->TO-2->TO-3; TO-4/5/6/7 cross-cutting.",
-  "blocking": "COO task order decomposition + issuance",
+  "phase": "Phase 1 -- DECOMPOSITION 2026-05-22 (2.0.0_SA_COO, full-authority session per Andrew, CTO + MSTR sessions down). TO-1 spearhead AUTHORED + GO'd: ADVI_VALFIN.001 ds-books-tab-validation-spearhead -- 9 gold scripts (INF_B_00/01/01b/02/03, INF_C_05, INF_C_07/08, INF_D_00c) + the Inflection books-tab portal surface; 0.4.0_DS_ClientPlatform lead, 0.4.0_DE_ClientPlatform co-owner (portal-consumer-confirm half). 3-layer method: verify-channel data / meta-analysis correctness / portal-consumer confirm. Cross-domain coordination with ADVI_INFGRO (book-growth INF_C_07/08/D_00c) + ADVI_INFETL (INF_B_* upstream). TO-2..TO-7 STAGED for next-decomposition pass. Priority TO-1 -> TO-2 -> TO-3 per PRD section 6; TO-4 (Jan-2021 floor) / TO-5 (pipeline robustness) / TO-6 (FE display) / TO-7 (meta-analysis) cross-cutting parallel.",
+  "blocking": "EXECUTION 2026-05-22: TO-1 in flight (DS + DE Pod 4 -- books/ tab cost-basis cluster spearhead). TO-2..TO-7 pending continuation of COO decomposition (next-pass). ADVI_VALFIN closes when all 7 TOs RAVC-accepted + the consolidated validation record is shipped. 3.0.0_SA_CVO continuous-validation loop covers commits in this scope independently.",
   "created": "2026-05-22",
   "pods": ["0.4", "0.6", "0.7"],
   "pipeline": "inf-pipeline + bd-pipeline",
