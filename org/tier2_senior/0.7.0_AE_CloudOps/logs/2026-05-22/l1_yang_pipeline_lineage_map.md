@@ -346,7 +346,37 @@ Yang rubric Bloomberg origins.
 | `comp-pipescript io` | AC4 — check yang generator io graph | Not applicable (gold-script-only tool) |
 | `comp-transform schema-check` | AC4 — check component schema for yang generators | Not applicable at generator output level |
 
+## Session 8 (2026-05-22 cont.) — CVO GREEN + L1 closure
+
+**CVO GREEN — 3.0.0_SA_CVO RAVC2 #2 verdict (same-session):**
+- AC2 §6 field-grain layer: PASS. Spot-checks on METRIC_MAPPING (valuation lambda)
+  and policy weights (allocation_summary lambda) both source-grounded. Not paraphrased.
+- AC4 §4b Data Refresh cross-check: PASS. 14-step STEP_GROUPS verified. CVO noted
+  the volatility ABSENCE from the UI step list as an independently strong structural
+  claim (stronger than self-report).
+- comp-pipescript / comp-transform not-applicable annotations: PASS. CVO confirmed
+  scope-mismatch reasoning is correct and the disclosure is the right discipline.
+- No outstanding holds. RAVC closed from CVO side. Filed to COO — L1 closure-eligible.
+
+**Lineage map status updated to COMPLETE** (pending COO TO flip).
+
+**Progress table — final:**
+
+| Item | Status |
+|------|--------|
+| Phase 1 — survey | COMPLETE |
+| Deliverable A — Yang rubric | COMPLETE — `287502c28` |
+| Deliverable B — write-side map (artifact-grain) | COMPLETE — `d09760b1e` |
+| comp-graph extractor fix | COMPLETE — `113618fff` |
+| Deliverable B — read-side map | COMPLETE — `45f6ba1c0` |
+| CVO F2 — duplicate-node fix | COMPLETE — `45f6ba1c0`; CVO CLOSED |
+| AC3 grouped roll-ups | COMPLETE — `2899e9a8c` |
+| AC4 Data Refresh cross-check + compiler evidence | COMPLETE — `e75353330` (§4b) |
+| AC2 field-grain atomic layer | COMPLETE — `e75353330` (§6) |
+| CVO RAVC2 #2 | GREEN — L1 closure-eligible |
+| COO L1 TO flip | PENDING — COO closing turn |
+
 ## Next Steps
 
-- COO L1 CLOSE (RAVC2 re-filed after this commit)
-- CVO re-verification of AC2 field-grain layer (§6)
+- COO formal L1 TO flip (closure-eligible per CVO GREEN)
+- YALP_MDSRC post-L1: C1/C2/D1 per COO dispatch queue
