@@ -4,7 +4,7 @@
 **Date:** 2026-05-22
 **Session type:** Resume — landed an in-flight portal revert left uncommitted by a prior session; closed the AE-side RAVC loop.
 
-**Portal DEV commit:** `47330865`
+**Portal DEV commits:** `47330865` -> `6f66c67f` (Composite-revert addendum — see below)
 **Workspace CLOUD commit:** `aca762ae9` (this session log)
 
 ---
@@ -145,12 +145,34 @@ Ran `/watcher` per CTO `[ACTION]` directive (Andrew 2026-05-22, every active age
 `comp-blast` not run — this is a revert to a prior-shipped universe set, no new
 downstream nodes introduced; the `UniverseId` union returns to its pre-.005 shape.
 
+## Addendum 2026-05-22 — Composite-column revert (`6f66c67f`)
+
+Andrew reviewed the work-in-progress on a DEV-code dev server (a portal `DEV`
+worktree served on :5175 — the CORS-allowlisted port) and rejected **only**
+Work-Completed item 2: the Composite-column 0-100 percentile-rank reranking.
+"What we had before was better." Reverted in portal DEV `6f66c67f`:
+
+- `UniverseScannerTab.tsx` `scoredRows` useMemo restored to the prior logic —
+  `compositeScore = sum(pctls[code] * weight[code]) / 100` (skip null pctls),
+  `rank` = sort order by `compositeScore` descending, nulls last. The
+  intermediate-`rawScore` / rank-rescale indirection is removed; the displayed
+  weighted-average value is the sort key again.
+- File-header + `ScannerRowWithScore` docstrings reverted to match.
+- typecheck exit 0, lint exit 0.
+
+**Items 1 and 3 stay shipped** — the universe-set revert 5->6 and the
+raw-value toggle interleave (Yang-confirmed column order) are unchanged. The
+net SSCN_UNVREV portal delta is now: 6-universe set + raw-toggle interleave,
+with the Composite column at its original weighted-average score.
+
 ## Current State
 
-Portal SSCN_UNVREV revert committed to DEV `47330865`, statically verified clean.
+Portal SSCN_UNVREV portal delta on DEV at `6f66c67f` (`47330865` universe +
+raw-toggle, `6f66c67f` Composite-revert), statically verified clean.
 AE-side SSCN_UNVREV.001 closed (`e0286ec3b`) and RAVC4-accepted — 6 universe
-artifacts live in S3, PROD coupling cleared. DEV only — nothing in PROD. No pending
-task orders. Watcher tracked + healthy; idle, standing by.
+artifacts live in S3, PROD coupling cleared. DEV only — nothing in PROD. No
+pending task orders. A DEV-code dev server is up on :5175 from the
+`portal/.runtmp/portal-dev-verify` worktree for Andrew's verification.
 
 ## Next Steps
 
