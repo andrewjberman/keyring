@@ -48,6 +48,12 @@ Three Yang-feedback items on the live Security Scanner page, all SSCN_UNVREV
 3. **Raw-value toggle interleave.** The "Percentiles + Raw" toggle appended raw
    columns far off-screen (Yang: "not working"). Each factor's raw column is now
    interleaved immediately after its percentile column.
+   **Acceptance spec (Yang confirmed to Andrew 2026-05-22, 11:26 AM):** per-factor
+   order is `{Factor} %ile -> {Factor} raw -> {next Factor} %ile -> ...` — e.g.
+   `Dividend Yield %ile -> Dividend Yield raw -> Factor N+1`. Each signal's raw
+   value sits immediately right of that signal's percentile column; raws are NOT
+   appended at the far right past all percentile columns. The committed
+   `selectedFactors.flatMap(f => [pctlCol, rawCol])` produces exactly this order.
 
 | File | Change | Committed |
 |------|--------|-----------|
