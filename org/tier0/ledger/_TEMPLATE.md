@@ -8,6 +8,7 @@ created_by: 0.0.0_AB_MSTR
 last_modified_by: 0.0.0_AB_MSTR
 cycle_id: CY-NNNN
 directive_refs: [D-NNN]              # >=1 for S1+; empty/null => enforced S4 + proposed
+mandate_distance: 0                   # 0 stated | 1 decomposition | 2 dependency/risk | 3 inferred(=>S4)
 authority_source: directive          # directive | andrew_instruction | ratification | halt
 andrew_instruction_ref: null          # set when authority_source: andrew_instruction
 decision_summary: <one line — also the H1 below>

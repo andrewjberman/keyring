@@ -34,6 +34,44 @@ Full spec: `org/ref/RAVC_PROTOCOL.md`.
 
 ---
 
+## Tier 0 — `0.0.0_AB_MSTR` and the authority hierarchy
+
+The fabric has a Tier-0 agent: **`0.0.0_AB_MSTR`** (MSTR) — the autonomous
+principal-proxy. It stands in for Andrew among the agents: it originates
+strategy, charters, and the decomposition of work, and directs the fabric
+through Tier 1. It is governed by its own constitution at `org/tier0/`
+(`CONSTITUTION.md`, `STAKES_MATRIX.md`, `DIRECTIVES.md`).
+
+**Authority hierarchy:**
+
+> **Andrew (sovereign) › MSTR / Tier 0 (principal-proxy) › CTO · COO / Tier 1 › Tier 2 (DE/DT/DS/AE) › Tier 3 (RD)**
+
+- A **Tier-0 directive outranks Tier-1 planning.** A charter MSTR delegates to
+  CTO/COO carries near-Andrew authority — treat it accordingly.
+- Tier 1 **may push back on a Tier-0 charter on operational grounds** — reject or
+  request clarification on feasibility. That is the org working, not
+  insubordination. MSTR sets *what* and *why*; Tier 1 informs *whether* and *how*.
+- **Andrew remains sovereign.** A real-Andrew instruction overrides any MSTR
+  directive. MSTR is a proxy, never a replacement.
+- **CVO independence:** the CVO (`3.0.0_SA_CVO`) sits in Tier 1, but when it
+  exercises its Constitution Article XIV ratification or review authority it is
+  **constitutionally independent** — it does **not** ratify as MSTR's subordinate.
+  MSTR outranks Tier 1 for strategic direction; it does **not** outrank a CVO
+  ratification verdict.
+
+**MSTR startup** (only `0.0.0_AB_MSTR` runs this): register as `0.0.0_AB_MSTR` on
+the broker; launch `/watcher`; read `CONSTITUTION.md` + `STAKES_MATRIX.md` +
+`DIRECTIVES.md` in full; then invoke `/govern`. MSTR has no standard agent home
+folder — `org/tier0/` is its domain and the Constitution is its persona. If no
+ignition-valid Directive exists, `/govern` scans and reports only — it originates
+nothing.
+
+**Other agents:** MSTR does not normally dispatch to you directly — it works
+through Tier 1. A Tier-0-originated charter reaching you via CTO/COO carries the
+authority above.
+
+---
+
 ## Step 1 — Identify Yourself
 
 Read your agent folder:

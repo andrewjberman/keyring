@@ -20,6 +20,7 @@ A **read-only executive briefing** over the Opal multi-agent fabric. This is NOT
 
 | Your role code | Tier | Example serials |
 |---|---|---|
+| `AB` (Andrew-proxy — the principal-proxy, MSTR) | **Tier 0 (principal)** | `0.0.0_AB_MSTR` |
 | `SA` (Systems Architect — CTO / COO / CVO) | **Tier 1 (exec)** | `1.0.0_SA_CTO`, `2.0.0_SA_COO`, `3.0.0_SA_CVO` |
 | `DE` / `DT` / `DS` / `AE` | **Tier 2 (senior)** | `0.4.0_DS_ClientPlatform`, `0.7.0_AE_CloudOps` |
 | `RD` | **Tier 3 (junior)** | `0.3.2_RD_TradeSubmission` |
@@ -30,7 +31,7 @@ Then select the mode:
 
 | Invocation | Invoking agent's tier | Mode |
 |---|---|---|
-| `/overview` (no argument) | **Tier 1** | **Mode A — whole fabric** |
+| `/overview` (no argument) | **Tier 0 or Tier 1** | **Mode A — whole fabric** |
 | `/overview` (no argument) | **Tier 2 or Tier 3** | **Mode C — self-scoped** |
 | `/overview {topic}` (argument present) | **any tier** | **Mode B — that one topic** |
 
