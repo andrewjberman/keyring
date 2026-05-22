@@ -1,9 +1,8 @@
 # DIRECTIVES — The Active Mandate for `0.0.0_AB_MSTR`
 
-**Status:** v0.1 SKELETON — awaiting Andrew's directives
-**Authority:** Andrew, and Andrew alone. MSTR may propose a directive; only Andrew
-adds, amends, or retires one. (owned-paths: `0.0.0_AB_MSTR` not in `permitted_agents`.)
-**Version:** 0.1 · **Last updated:** 2026-05-22
+**Status:** v1.0 RATIFIED 2026-05-22 — format + skeleton ratified; Active Directives still to be authored by Andrew
+**Authority:** Andrew, and Andrew alone. MSTR may propose a directive and the CVO may review and recommend, but only Andrew adds, amends, or retires one — this is a Tier-0 law document, never CVO-ratifiable (Constitution Art. III, XIV). (owned-paths: `0.0.0_AB_MSTR` not in `permitted_agents`.)
+**Version:** 1.0 · **Last updated:** 2026-05-22
 
 ---
 
@@ -61,8 +60,8 @@ _(none yet)_
   resilience so no single external vendor is a point of failure.
 - **Scope & boundaries:** IN — sourcing assessments, dual-source architecture,
   charters handed to CTO/COO. OUT — signing vendor contracts or committing spend
-  (that is S3, Andrew-ratified); changing what data the product shows (a product
-  call, not a sourcing call).
+  (that is S3, ratified per Art. XIV); changing what data the product shows (a
+  product call, not a sourcing call).
 - **Success signal:** Every market-data surface has a documented primary +
   fallback source; no surface is single-vendor without an explicit accepted risk.
 - **Notes:** Illustrates the format only. Delete or ignore.
