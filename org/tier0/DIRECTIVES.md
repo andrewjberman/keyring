@@ -1,9 +1,9 @@
 # DIRECTIVES — The Active Mandate for `0.0.0_AB_MSTR`
 
-**Status:** v1.1 RATIFIED 2026-05-22 — format ratified; Active Directives still to be authored by Andrew
-**Authority:** Andrew, and Andrew alone. MSTR may propose a directive and the CVO may review and recommend, but only Andrew adds, amends, or retires one — this is a Tier-0 law document, never CVO-ratifiable (Constitution Art. III, XIV). (owned-paths: `0.0.0_AB_MSTR` not in `permitted_agents`.)
-**Version:** 1.1 · **Last updated:** 2026-05-22
-**v1.1 amendment:** Directive format tightened to a full schema — `non_goals`, `allowed_stakes`, `stop_conditions`, `issued_by` and the ignition-validation rule added (external Phase-3 review).
+**Status:** v1.2 RATIFIED 2026-05-22 — format + authoring protocol ratified; Active Directives still to be authored by Andrew
+**Authority:** Andrew authors; the CTO transcribes. A Directive's mandate is Andrew's alone — MSTR may *propose* and the CVO may review and recommend, but a Directive is added, amended, or retired only by Andrew, via the Directive Authoring Protocol below. A Tier-0 law document, never CVO-ratifiable (Constitution Art. III, XIV). (owned-paths: `TIER0_LAW`, `permitted_agents: []` — no standing agent write access.)
+**Version:** 1.2 · **Last updated:** 2026-05-22
+**Amendment history:** v1.1 — Directive format tightened to a full schema (external Phase-3 review). v1.2 — Directive Authoring Protocol codified (Andrew directive 2026-05-22).
 
 ---
 
@@ -23,6 +23,42 @@ top layer, edit this document.
   Directive is a new goal — out of mandate — proposed back to Andrew.
 - A Directive that conflicts with the Constitution is void to the extent of the
   conflict (Art. III); MSTR surfaces such a conflict rather than acting on it.
+
+## Directive Authoring Protocol
+
+A Directive is the sovereign's mandate. It enters this document by exactly **one
+channel** — every other path is invalid, and any Directive arriving by another
+path is void.
+
+1. **Origin — Andrew alone.** A Directive originates only from Andrew, stated
+   directly to the CTO (`1.0.0_SA_CTO`) in a CTO terminal session. It is never
+   originated by MSTR, by another agent, by a relayed or forwarded message, or by
+   the CTO's own initiative. MSTR may *propose* a goal to Andrew (Constitution
+   Art. II) — a proposal is **not** a Directive and never auto-promotes; it
+   becomes a Directive only if Andrew then speaks it through this protocol.
+
+2. **Transcription — the CTO is scribe, not author.** The CTO transcribes
+   Andrew's spoken Directive into the schema below. The CTO does not originate,
+   expand, narrow, reinterpret, or fill gaps in a Directive. If Andrew's
+   statement is ambiguous or incomplete against the schema, the CTO flags it back
+   to Andrew and asks — it never resolves the gap on its own judgment.
+
+3. **Confirmation — read-back before commit.** Before committing, the CTO
+   presents the fully drafted Directive — the exact `DIRECTIVES.md` text — back
+   to Andrew in-session. It is committed only on Andrew's explicit confirmation
+   that the transcription matches his intent.
+
+4. **Commit — audited, scoped, per-instance.** The CTO commits, scoped to this
+   file alone, via the audited Tier-0 owned-paths override
+   (`GIT_COMMIT_AUTHOR_OVERRIDE=TIER0_LAW`). The lock stays `TIER0_LAW`
+   (`permitted_agents: []`) — there is no standing agent write access; the
+   override is the per-instance, Andrew-directed channel, so every Directive
+   commit leaves an `OVERRIDE` audit line proving it was Andrew-directed.
+
+5. **Scope.** Add, amend, and retire all follow this protocol. `issued_by` is
+   always `andrew` — the CTO is the instrument; Andrew is the author.
+
+This protocol is ratified law; it changes only by Andrew.
 
 ## Ignition validation
 
