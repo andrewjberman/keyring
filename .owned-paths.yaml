@@ -222,6 +222,18 @@ lanes:
       - 0.7.0_AE_CloudOps
     description: "YCharts market-data pull Lambda source (infra/aws/lambda/ycharts-market-data-pull/**) — YALP_MDSRC.C2 co-owners 0.1.0_DS + 0.2.0_DS authorized for code edits (the C2 TO 353b00116 assigns the DS pair to BUILD the pull module); 0.7.0_AE_CloudOps for infra/Terraform/deploy. Mirrors the TRADE_PIPELINE_INFRA DS-code/AE-infra split. COO ruling 2026-05-22 (YALP_MDSRC.C2 owned-paths gap)."
 
+  TIER0_LAW:
+    permitted_agents: []
+    description: "Tier-0 governance law -- Constitution, Stakes Matrix, Directives. NO agent; Andrew-only (human commit). Constitution Art. III. The owned-paths hook fails OPEN for a no-serial human committer (owned-paths-check.sh lines 67-72: GIT_AUTHOR_NAME unset -> skip), so Andrew commits the law docs unimpeded while any agent serial hits the empty permitted_agents and is blocked. Added 2026-05-22 by COO per Andrew directive (Tier-0 framework)."
+  TIER0_MSTR:
+    permitted_agents:
+      - 0.0.0_AB_MSTR
+    description: "Tier-0 operating artifacts -- ledger, cycle records, /mstr_review outputs. MSTR-owned. Added 2026-05-22 by COO per Andrew directive."
+  TIER0_RATIFY:
+    permitted_agents:
+      - 3.0.0_SA_CVO
+    description: "Tier-0 ratification records -- CVO S3/operational-S4 ratification verdicts (Constitution Art. XIV). Added 2026-05-22 by COO per Andrew directive."
+
   ANY:
     permitted_agents: "*"
     description: "Intentionally multi-agent-writable (shared logs, timeseries, misc)"
@@ -381,6 +393,36 @@ lanes:
 # Longest match wins — more specific globs override broader ones at hook eval time.
 # =========================================================================
 paths:
+
+  # -----------------------------------------------------------------------
+  # Tier-0 governance framework (org/tier0/). Added 2026-05-22 by COO per
+  # Andrew directive. Law docs = TIER0_LAW (Andrew-only / human commit);
+  # operating artifacts = TIER0_MSTR; ratification records = TIER0_RATIFY.
+  # -----------------------------------------------------------------------
+  "org/tier0/CONSTITUTION.md":
+    lane: TIER0_LAW
+    note: "Tier-0 Constitution -- Andrew-only law doc (human commit)"
+  "org/tier0/STAKES_MATRIX.md":
+    lane: TIER0_LAW
+    note: "Tier-0 Stakes Matrix -- Andrew-only law doc (human commit)"
+  "org/tier0/DIRECTIVES.md":
+    lane: TIER0_LAW
+    note: "Tier-0 Directives -- Andrew-only law doc (human commit)"
+  "org/tier0/ratifications/**":
+    lane: TIER0_RATIFY
+    note: "CVO ratification verdicts (Constitution Art. XIV)"
+  "org/tier0/ledger/**":
+    lane: TIER0_MSTR
+    note: "MSTR ledger"
+  "org/tier0/cycles/**":
+    lane: TIER0_MSTR
+    note: "MSTR cycle records"
+  "org/tier0/reviews/**":
+    lane: TIER0_MSTR
+    note: "MSTR /mstr_review outputs"
+  "org/tier0/**":
+    lane: TIER0_MSTR
+    note: "Tier-0 catch-all -- MSTR operating artifacts (longest-match yields the specific rules above)"
 
   # -----------------------------------------------------------------------
   # Task-order authoring overrides (more-specific than parent home-folder rules)
