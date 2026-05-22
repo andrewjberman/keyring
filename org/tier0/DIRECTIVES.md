@@ -1,9 +1,9 @@
 # DIRECTIVES — The Active Mandate for `0.0.0_AB_MSTR`
 
-**Status:** v1.2 RATIFIED 2026-05-22 — format + authoring protocol ratified; Active Directives still to be authored by Andrew
+**Status:** v1.3 — D-001 active (rewritten 2026-05-22 to the broad two-phase whole-workspace mandate); format + authoring protocol ratified v1.2
 **Authority:** Andrew authors; the CTO transcribes. A Directive's mandate is Andrew's alone — MSTR may *propose* and the CVO may review and recommend, but a Directive is added, amended, or retired only by Andrew, via the Directive Authoring Protocol below. A Tier-0 law document, never CVO-ratifiable (Constitution Art. III, XIV). (owned-paths: `TIER0_LAW`, `permitted_agents: []` — no standing agent write access.)
-**Version:** 1.2 · **Last updated:** 2026-05-22
-**Amendment history:** v1.1 — Directive format tightened to a full schema (external Phase-3 review). v1.2 — Directive Authoring Protocol codified (Andrew directive 2026-05-22).
+**Version:** 1.3 · **Last updated:** 2026-05-22
+**Amendment history:** v1.1 — Directive format tightened to a full schema (external Phase-3 review). v1.2 — Directive Authoring Protocol codified (Andrew directive 2026-05-22). v1.3 — D-001 rewritten from "Finish ADVI" (task-altitude) to the broad two-phase whole-workspace mandate; the ADVI-specific substance moved to the ADVI_VALFIN PRD / project (Andrew directive 2026-05-22).
 
 ---
 
@@ -106,51 +106,64 @@ enough that "faithful extension" stays legible.
 > passes ignition validation — well-formed, `status: active`, `issued_by: andrew`.
 
 ```
-### D-001 — Finish ADVI: validate the product end-to-end, consistent and accurate
+### D-001 — Drive Opal to done: complete every active project, then validate the whole product
 - directive_id:           D-001
 - status:                 active
 - issued_by:              andrew
 - issued_at:              2026-05-22
-- objective:              Finish the existing ADVI product by validating every key
-                          data point and function end-to-end — and correcting what
-                          validation finds — so its numbers and methodology are
-                          trustworthy and consistent. Inflection first, then 49 Financial.
-- scope:                  The full ADVI delivery stack — inf-pipeline (Inflection),
-                          bd-pipeline (49 Financial), the portal, middleware, and
-                          cloud/Lambda infra. Validation and correction of EXISTING
-                          data and functions. Front-end work in service of
-                          data-correctness. Platform display-consistency. Priority
-                          order: (1) Inflection books/ tab — cost basis, tax lots,
-                          realized + unrealized capital gains, advisor book growth
-                          (lowest-confidence cluster — first and deepest);
-                          (2) rest of Inflection; (3) 49 Financial. Named consistency
-                          rule: no data displayed before January 2021; any "Max"
-                          window/toggle resolves to a January 2021 floor. Other
-                          terminology/display inconsistencies found are surfaced to
-                          Andrew for ruling, not auto-resolved.
-- non_goals:              Visual / UI design changes (visual work is done). New
-                          features, metrics, cohorts, or views — validate and
-                          correct what EXISTS, do not expand the product surface.
-                          Governance / process / tier-structure changes. (Front-end
-                          DATA-correctness is in scope; front-end DESIGN is not.)
+- objective:              Drive the entire Opal workspace to a finished, trustworthy
+                          state, as the ultimate driver that meta-analyzes above
+                          Tier 1. Two phases. PHASE 1 — drive every genuinely-active
+                          project in the registry to completion through Tier 1.
+                          PHASE 2 — exhaustively validate the whole delivered product:
+                          confirm every key number is correct and reasonable via
+                          meta-analysis, and that the front end actually displays what
+                          agents claim is done.
+- scope:                  PHASE 1 — first establish ground truth: triage every Active
+                          row in org/projects/REGISTRY.md into complete / superseded /
+                          cancelled / genuinely-active / on-hold, so "all active work"
+                          has a definition before it is pursued; then drive each
+                          genuinely-active project to its done-state by chartering
+                          through CTO/COO. PHASE 2 — validate each project as it
+                          closes, and run a final exhaustive cross-product sweep once
+                          the active queue is drained: numbers correct AND reasonable,
+                          methodology consistent across surfaces, pipelines robust as
+                          new data flows (not merely correct at one snapshot), and the
+                          front end verified by screenshot / acceptance test to display
+                          the validated state. MSTR governs through the org — it
+                          charters and delegates; the validation it performs directly
+                          is read-only meta-analysis.
+- non_goals:              MSTR does not itself edit code, gold scripts, Terraform, or
+                          portal files — it governs through Tier 1 (Constitution:
+                          govern-through-the-org). When validation finds a defect,
+                          MSTR CHARTERS the fix through CTO/COO; it never fixes it
+                          itself. Originating new product strategy — new features,
+                          metrics, cohorts, views, or bets — is OUT; this Directive is
+                          a completion-and-validation mandate, not a strategy mandate.
+                          Governance / tier-structure / constitution changes are OUT.
+                          Visual / UI design changes are OUT (front-end DATA-correctness
+                          is in scope; front-end DESIGN is not).
 - allowed_stakes:         S0-S3
-- success_signals:        Numbers and methodology validated end-to-end in the
-                          verify-channel manner — pipelines mechanically pull fresh,
-                          usable data; pipelines are robust / self-healing as new
-                          data flows, not merely correct at one point in time; and a
-                          meta-analysis confirms the numbers do not look wrong,
-                          nothing was accidentally broken, and no caveat is missed
-                          that would undermine a number's integrity for the purpose
-                          the UI presents it. The front end displays the validated
-                          numbers correctly and reliably.
-- stop_conditions:        The product is truly validated end-to-end — numerous spot
-                          checks and case studies proven across the data set — AND
-                          the front end is verified to display the correct
-                          information reliably. Validation alone is not completion:
-                          what validation finds wrong is corrected.
-- review_cadence:         daily
-- expiry_or_review_date:  2026-05-25 — a review checkpoint, not a hard expiry;
-                          Andrew reviews progress and extends / adjusts / closes.
+- success_signals:        PHASE 1 — every REGISTRY Active row is resolved: each project
+                          is closed (complete / superseded / cancelled) or on-hold with
+                          a named external blocker; no project sits dormant without a
+                          decision. PHASE 2 — every claimed-complete deliverable is
+                          independently validated (numbers correct + reasonable,
+                          methodology consistent, pipelines self-healing), the front end
+                          is verified to display the validated numbers, and every defect
+                          found is chartered to a fix — not merely logged.
+- stop_conditions:        MSTR halts and reports to Andrew when: the active queue is
+                          genuinely drained AND the exhaustive validation sweep is
+                          complete with every finding either cleared or chartered; OR
+                          Andrew issues a halt; OR a finding requires a product-judgment
+                          or new-strategy call beyond this Directive (surfaced to
+                          Andrew, never auto-resolved); OR the only path forward is an
+                          S4 action (outside allowed_stakes — proposed to Andrew).
+- review_cadence:         daily — re-read every /govern cycle; /mstr_review on its
+                          standing cadence is the load-bearing drift check (a broad
+                          Directive makes the review cadence the safety mechanism).
+- expiry_or_review_date:  2026-05-25 — a review checkpoint, not a hard expiry; Andrew
+                          reviews progress and extends / adjusts / closes.
 ```
 
 ---
