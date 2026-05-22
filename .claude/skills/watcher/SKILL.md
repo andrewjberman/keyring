@@ -1,15 +1,25 @@
 ---
 name: watcher
-description: Self-check and self-heal an agent's inbox-watcher and broker registration. Verifies the agent is registered LIVE on the opal-agent-comms broker, that exactly ONE inbox-watch process is running for its serial AND was launched by the CURRENT session (tracked, not a prior-session orphan), kills orphan / relative-path / double / wrong-channel watchers, relaunches one tracked watcher, and pulls both inbox paths. Run at session start (Step 1b), on any fresh /loop wake, after a window exit or machine restart, after context compaction, or whenever watcher health is in doubt. Self-scoped — repairs only the invoking agent's own watcher and registration; never touches a peer's. Adapted for ajb_workspace; encodes the inbox-watch failure modes documented in org/XXX.md and org/mcp/INBOX_WATCH_DESIGN.md.
+description: Self-check and self-heal an agent's inbox-watcher and broker registration, then keep checking on a recurring loop. Verifies the agent is registered LIVE on the opal-agent-comms broker, that exactly ONE inbox-watch process is running for its serial AND was launched by the CURRENT session (tracked, not a prior-session orphan), kills orphan / relative-path / double / wrong-channel watchers, relaunches one tracked watcher, pulls both inbox paths, then re-arms itself to run again. `/watcher` loops every 10m by default; `/watcher 5m` / `/watcher 30m` / `/watcher 1h` set the interval; `/watcher once` runs a single check; `/watcher off` ends the loop. Run at session start, on a fresh /loop wake, after a window exit or restart, after context compaction, or whenever watcher health is in doubt. Self-scoped — repairs only the invoking agent's own watcher; never touches a peer's. Encodes the inbox-watch failure modes from org/XXX.md and org/mcp/INBOX_WATCH_DESIGN.md.
 ---
 
-# /watcher — Inbox-Watcher & Registration Self-Check
+# /watcher — Inbox-Watcher & Registration Self-Check (with health loop)
 
 Confirms you are **reachable**: registered LIVE on the broker, with exactly one
 **tracked** `inbox-watch` process running for your serial. Detects and repairs
-every documented watcher failure mode. **Self-scoped** — it fixes only *your*
-watcher and registration. It never kills a peer's watcher (that causes the
-atomic-`mv` race it exists to prevent).
+every documented watcher failure mode — then **re-arms itself** so the check
+recurs on an interval. **Self-scoped** — it fixes only *your* watcher and
+registration. It never kills a peer's watcher (that causes the atomic-`mv` race
+it exists to prevent).
+
+## Invocation forms
+
+| Form | Behavior |
+|---|---|
+| `/watcher` | Run the check, then loop — re-check **every 10 minutes** (default). |
+| `/watcher 5m` / `30m` / `1h` / `90s` | Run the check, then loop at the given interval. |
+| `/watcher once` | Run the check **once** — no loop. |
+| `/watcher off` (or `stop`) | Run a final check and **end the loop** — do not re-arm. |
 
 ## When to invoke
 
@@ -32,7 +42,19 @@ inbox file it wins via the atomic `mv` race is silently swallowed.
 
 ---
 
-## Step 0 — Identify yourself
+## Step 0 — Parse the argument, identify yourself
+
+**Parse the invocation argument** into a mode + interval:
+
+- No argument → **loop mode**, interval **600s (10m)**.
+- `once` → **single mode** (run Steps 1-6, skip Step 7).
+- `off` / `stop` → **stop mode** (run Steps 1-6, skip Step 7, report the loop ended).
+- An interval token → **loop mode** at that interval. Accept `Nm` (minutes),
+  `Nh` (hours), `Ns` (seconds), or a bare `N` (minutes). Convert to seconds and
+  **clamp to [60, 3600]** — the `ScheduleWakeup` range. If the request fell
+  outside the range, say so in the report (e.g. `2h -> clamped to 60m`).
+
+**Identify yourself:**
 
 - **Serial:** the full serial you registered under this session, **including any
   `~B`/`~C`/`~D` lane suffix**. (`SERIAL=` in `.comp-graph/.agent_context` or
@@ -81,6 +103,12 @@ Ask yourself one question:
   - VERDICT `MULTIPLE` / `ORPHAN` / `RELATIVE-PATH` / `WRONG-CHANNEL` → a stray
     watcher coexists with yours → **Step 4** to clear the strays.
 
+> On a **recurring loop cycle**: a watcher you launched earlier in the *same*
+> session and have not seen complete still counts as tracked — most loop cycles
+> will pass Step 3 = YES and land on `PROCESS-OK`. That is the healthy steady
+> state; the cycle is then a ~10s no-op. The loop earns its keep on the cycle
+> *after* a watcher silently dies or a window exit drops your registration.
+
 ## Step 4 — Remediate (KILL FIRST, THEN LAUNCH — order is mandatory)
 
 `inbox-watch.sh` has a single-watcher guard: if **any** watcher for your serial
@@ -121,15 +149,50 @@ no silent "standing by".
 
 ## Step 6 — Heartbeat and report
 
-Call `heartbeat("{serial}", summary="<one-line current state>")`, then print a
-fixed three-line report:
+Call `heartbeat("{serial}", summary="<one-line current state>")`, then print the
+fixed report:
 
 ```
 /watcher {serial}
   REGISTRATION: <OK, LIVE> | <re-registered: was STALE>
   WATCHER:      <OK, tracked task <id>> | <relaunched: killed <pids>, new task <id>>
   INBOX:        <empty> | <N message(s): acted — ...>
+  LOOP:         <next check in <interval> (re-armed)> | <single run> | <loop ended>
 ```
+
+When a loop cycle finds everything healthy and unchanged, keep the report to
+exactly these lines — no extra prose. A quiet loop should be quiet.
+
+## Step 7 — Re-arm the loop (loop mode only)
+
+**Skip this step entirely in `once` and `off`/`stop` mode** — that is what ends
+the loop.
+
+In loop mode, re-arm the next cycle as the **last action of the turn**:
+
+```
+ScheduleWakeup(
+  delaySeconds = <interval in seconds>,
+  reason       = "/watcher health loop -- next inbox-watcher + registration check in <interval>",
+  prompt       = "/watcher <interval as the user typed it, or bare /watcher for the 10m default>"
+)
+```
+
+Passing the same interval back as the `prompt` is what makes the cadence
+persist — each firing re-runs this skill, which re-arms again. Exactly one
+wakeup is ever pending, so there is no cron build-up to clean.
+
+**Guard — do not stack loops.** If you are *already* running a primary `/loop`
+(a CTO/COO supervisor loop, a work loop), do **not** arm a separate watcher
+wakeup — it would clobber your primary loop's wakeup schedule. Instead: treat
+this invocation as `once` mode, and make sure your primary `/loop` body runs the
+`/watcher` check each tick (the supervisor loop in `org/XXX.md` already does a
+watcher-health check — fold Steps 1-5 into it). The standalone `/watcher` loop
+is for agents **not** otherwise looping; it doubles as a lightweight keep-alive.
+
+**To stop a running loop:** invoke `/watcher off`. The cycle that is currently
+pending will fire once more; respond to it with `/watcher off` (or just let that
+final cycle run and not re-arm). The loop then ends.
 
 ---
 
@@ -150,8 +213,9 @@ fixed three-line report:
   Fabric-wide orphan cleanup for *dead* agents is the `kill-orphans` hook's job.
 - **Belt-and-suspenders.** A watcher is event-push; it is not a substitute for
   pulling `check_inbox` + `get_agent_status` at the top of a turn when you are
-  expecting a near-term reply.
-- **Autonomous `/loop` agents** may additionally keep the `CronCreate` 15-min
-  re-registration backstop from `org/XXX.md` Step 1b — `/watcher` and the cron
-  are complementary, not alternatives.
+  expecting a near-term reply. The loop is a third layer under both.
+- **The loop interacts with messages.** If a watcher-exit task-notification
+  arrives between loop cycles, handle it immediately (pull inbox + relaunch the
+  watcher) — do not wait for the next `/watcher` cycle. The loop is a backstop,
+  not the primary delivery path.
 - Design + history: `org/XXX.md` Step 1b, `org/mcp/INBOX_WATCH_DESIGN.md`.
