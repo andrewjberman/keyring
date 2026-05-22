@@ -52,13 +52,39 @@ the closes.
 - Flipped `ADVI_INFGRO.009` TO status pending -> complete (was RAVC4-accepted
   per the 2026-05-21 session summary; stale-doc drift corrected).
 
+## Addendum — COO ruling + B4 close-out (2026-05-22, same session)
+
+- **COO ruling 2026-05-22:** B1 ACCEPTED (architecture-verified basis), B3
+  ACCEPTED + close. Flipped B1 + B3 TO statuses pending -> complete (commit
+  `1df22c955`). Added B3 TO **AC6** (graceful-UST, satisfied-by-construction
+  at the data layer) per COO confirm.
+- **B4 deployed** by `0.7.0_AE_CloudOps` — smartx-pipeline-v1.2.0 +
+  yang-v2.4.8, both Lambdas re-run.
+- **Post-B4 freshness confirmation (the tracked B1-accept obligation):**
+  re-ran `b1_e2e_verify.py` — **CHECK 5 (fidelity) + CHECK 8 (freshness) now
+  PASS**: the producer/pull skew flagged at B1-close is cleared (yang-v2.4.8
+  re-ran after the pull; benchmarks generated_at 2026-05-22T15:07:41Z).
+  Harness overall 8/10 — CHECK 3 + CHECK 9 FAIL BY DESIGN (the harness encodes
+  B1's pre-B3 1D/WTD=yang_design contract; B3 changed 1D/WTD to smartx_realized;
+  the CHECK 9 deltas are exactly the intended model-return swap — benchmarks +
+  model_volatility unchanged).
+- **Independent B3 deployed-state verification (verify-channel):** benchmarks
+  9/9 periods smartx_realized x5 models; timeseries additive (`timeseries`
+  2675 design rows + `timeseries_realized` 2055 SmartX rows, identical schema,
+  5 models); daily sidecar `smartx_model_daily_v1` x5; series_note present —
+  all PASS.
+- Sent the post-B4 confirmation to COO CC CTO; confirmed B4-clean to
+  `0.7.0_AE_CloudOps` (clear to close B4). Flagged `b1_e2e_verify.py` as
+  now-stale (B1-shaped) for retirement / B3-aware successor.
+
+**B-chain (B1/B2/B3/B4) is fully landed end to end. DS-side complete.**
+
 ## Next Steps
 
 | Recipient | Item |
 |-----------|------|
-| **2.0.0_SA_COO** | B1 ruling — accept on architecture-verified basis vs producer-re-sync-first. B3 RAVC2-accept + TO close. Q-v0.4-A AC-on-record confirm. |
-| **DS Base (self)** | On COO accept: flip B1 + B3 TO statuses to complete. |
-| **0.7.0_AE_CloudOps** | B4 (deploy-half of B3) — GO-ON-PICKUP; the two AE-lane files are gate-clean + uncommitted in the shared working tree. |
+| **2.0.0_SA_COO** | Post-B4 freshness confirmation delivered — B-chain closed. Optional: author a B3-aware successor to `b1_e2e_verify.py` or retire it. |
+| **0.7.0_AE_CloudOps** | B4 verified clean — clear to close the B4 TO. |
 
 ## Compiler Tools
 
