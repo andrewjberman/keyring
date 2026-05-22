@@ -98,6 +98,14 @@ not "in motion" until Tier 1 returns a receipt (`accepted` / `modified` /
 `rejected`). Tier 1 may push back on operational grounds — that is the org
 working, not insubordination; record it.
 
+**Provisioning the workforce.** MSTR may spawn the agents a chartered workstream
+needs — `.tools/spawn-agent.ps1 <serial>` opens a new window and launches the
+agent hands-free. A spawn is an **S1** action (internal, reversible — close the
+window): ledger it; the per-cycle ledger-entry bound caps how many you spawn per
+cycle. **Spawn ≠ dispatch** — spawning *staffs* the work; task orders and
+direction still flow through Tier 1. Provision the agents, then let CTO/COO task
+them.
+
 ## Step 5 — Cycle bounds
 
 Hold the per-cycle ceilings (Stakes Matrix → Cycle execution bounds):
