@@ -17,9 +17,9 @@ is set up for continuation below.
 | Deliverable B — extractor gap diagnosis | COMPLETE — root cause pinned |
 | comp-graph extractor FIX (implement) | COMPLETE — `113618fff`; 14/14 generators; 1 dynamic-key gap noted |
 | Deliverable B — read-side map (S3 -> CF route -> React) | COMPLETE — §2 of lineage-map artifact |
-| CVO F2 — duplicate LAMBDA nodes (closure gate) | COMPLETE — extract_s3.py yang-name correction; all 11 prefix-less nodes deduped |
-| AC3 grouped roll-ups | PENDING |
-| RAVC2 | PENDING (after AC3) |
+| CVO F2 — duplicate LAMBDA nodes (closure gate) | COMPLETE — extract_s3.py yang-name correction; all 11 prefix-less nodes deduped; CVO CLOSED |
+| AC3 grouped roll-ups | COMPLETE — `2899e9a8c` |
+| RAVC2 | FILED — pending COO CLOSE |
 
 ## Session 2 (2026-05-22 cont.) — write-side map + extractor gap
 
@@ -254,14 +254,34 @@ if 'yang_pipeline' in parts and not lambda_name.startswith('yang'):
 | `comp-trace generate-manifest/generate-latest/generate-volatility` | confirm single canonical node, no "Multiple matches" | WRITES_S3 on canonical nodes; "Multiple matches" gone |
 | Python graph sweep | all 14 generators under canonical names | 14/14 with WRITES_S3 edges; 11 prefix-less nodes GONE |
 
+## Session 6 (2026-05-22 cont.) — AC3 + RAVC2
+
+**CVO F2 CLOSED (independent re-verification).** All 4 checklist points PASS per
+3.0.0_SA_CVO message: single canonical node for manifest/latest/volatility; zero
+prefix-less duplicates; graph node count dropped 1988→1976 (12-node collapse confirms
+the fix). CVO spot-checked 5 generators + zero-duplicate sweep; F1+F2 both closed.
+
+**AC3 roll-ups COMPLETE (`2899e9a8c`).** §5 of lineage-map artifact:
+- (a) By React page/component — 20 rows (orphaned + no-consumer entries documented)
+- (b) By producer Lambda — 21 rows
+- (c) By proxy fn/CF route → S3 key → React consumer — 19 rows
+
+**L1 RAVC2 FILED to 2.0.0_SA_COO.** All ACs green:
+- AC1 Yang rubric ✓ `287502c28`
+- AC2 write-side ✓ `d09760b1e`; read-side ✓ `45f6ba1c0`
+- AC3 grouped roll-ups ✓ `2899e9a8c`
+- AC4 extractor fix ✓ `113618fff` + F2 fix ✓ `45f6ba1c0`
+- CVO F1 ✓ CLOSED; CVO F2 ✓ CLOSED
+
+**Two findings documented in RAVC2 for COO triage:**
+1. `yang-generate-volatility` → `json/yang/volatility_data.json` ORPHANED — no active
+   CF consumer; live portal volatility is from `opal-portal-volatility-fetcher`
+   (market-overview pipeline), different S3 key.
+2. `json/macro/vix_data.json` — `getVIXData` exported in portal-proxy.ts, no React
+   component consumes it. Route entry in endpoint-mapping.ts also stale.
+
 ## Next Steps
 
-1. [~self] AC3 grouped roll-ups — 3 tables:
-   (a) By React component: which components consume which yang S3 keys
-   (b) By lambda-write: each yang generator → its output keys
-   (c) By lambda-read (proxy fn): each portal-proxy fn → which S3 key → component
-2. [~self] RAVC2 to COO when AC3 committed. Flag findings:
-   (a) `generate-volatility` yang output orphaned (non-yang Lambda writes actual consumer path)
-   (b) `json/macro/vix_data.json` no active React consumer
-3. [~self] Field-grain AC2 detail (cross-ref Yang rubric for Bloomberg origins per
-   series) — can emit post-RAVC2 or as same-commit supplement.
+- Wait for COO L1 CLOSE (RAVC2 filed)
+- Field-grain AC2 detail (cross-ref Yang rubric for Bloomberg origins per series):
+  COO may direct as a separate TO or as L1 supplement — deferred until COO CLOSE.
