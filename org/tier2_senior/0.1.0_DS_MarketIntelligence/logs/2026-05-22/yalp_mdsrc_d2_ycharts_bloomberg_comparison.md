@@ -42,7 +42,8 @@ D2 is an analytical comparison run -- no gold/portal/route/IAM/Terraform change;
 |------|---------|--------|
 | GO D2 | COO -> DS | RECEIVED + ACK |
 | seat stagger + anchor | DS <-> 0.2.0_DS | AGREED (anchor 2026-05-18; me first, seat freed) |
-| joint RAVC2 D2 | DS + 0.2.0_DS -> COO | pending WS-2 section + assembly |
+| joint RAVC2 D2 | DS + 0.2.0_DS -> COO | SENT 19:05Z (brief 8d6bde3ca) -> RAVC2-ACCEPTED by COO. D2 CLOSED. |
+| D2 close relay | DS -> 0.2.0_DS | COO ACCEPT relayed to co-owner 19:21Z |
 
 ## ERP forward-P/E re-probe (D2, post-WS-2-finding)
 
@@ -59,7 +60,7 @@ Yang's original notebooks (docs/reference/yang-original-scripts/, d386c8d2d) rea
 
 ## Next Steps
 
-1. [0.2.0_DS] WS-2 section (§3) of the joint brief -- MP (5/5 ETF exact) / Correlation (60/61 agree) / FT (spread-definition finding) / ERP (UNRESOLVED-on-YCharts per the re-probe).
-2. [D2 close] joint RAVC2 to COO once §3 lands + the brief is assembled.
-3. [COO/Andrew] the ERP forward-P/E disposition (hybrid-pkl vs entitled-seat).
-4. [future D1 cutover] the 22 WS-1 symbol-variant/calc-basis corrections + the RSI-30D re-pull -- cutover-prep, not D2 scope.
+1. [DONE] WS-2 §3 landed (8d6bde3ca, 0.2.0_DS); joint brief assembled; joint RAVC2 sent to COO -> RAVC2-ACCEPTED. D2 CLOSED.
+2. [COO] ERP forward-P/E ruled -- hybrid (forward-P/E stays Bloomberg-pkl, 10Y FRED); I:SP500PND wire reverted (bc139cdd6).
+3. [future D1 cutover] 22 WS-1 symbol-variant/calc-basis corrections + RSI-30D re-pull + 2-commit-stale ycharts-pipeline-v1.2.1 artifact (fb053a108/bc139cdd6) -- COO logged as D1 pre-reqs, NOT D2 scope.
+4. [0.7.0_AE] L1 yang-pipeline-lineage-map is YALP_MDSRC's last closure gate -- project closes on L1 RAVC-accept (not my lane).
