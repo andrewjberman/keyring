@@ -13,10 +13,10 @@ is set up for continuation below.
 |------|--------|
 | Phase 1 — survey (comp-graph schema, extractors, yang scripts) | COMPLETE |
 | Deliverable A — Yang-scripts structured rubric | COMPLETE — `287502c28` |
-| Deliverable B — write-side map (yang Lambda -> source -> S3) | COMPLETE (artifact-grain) — checkpoint this session |
-| Deliverable B — extractor gap diagnosis | COMPLETE — root cause pinned (see below) |
+| Deliverable B — write-side map (yang Lambda -> source -> S3) | COMPLETE (artifact-grain) — `d09760b1e` |
+| Deliverable B — extractor gap diagnosis | COMPLETE — root cause pinned |
+| comp-graph extractor FIX (implement) | COMPLETE — `113618fff`; 14/14 generators; 1 dynamic-key gap noted |
 | Deliverable B — read-side map (S3 -> CF route -> React) | NOT STARTED — next phase |
-| comp-graph extractor FIX (implement) | NOT STARTED — next phase (scoped) |
 
 ## Session 2 (2026-05-22 cont.) — write-side map + extractor gap
 
@@ -41,6 +41,17 @@ module-level constants — yang generators write via `Key=key` (variable holding
 `OUTPUT_KEY` constant); regex captures the bare name `key`, discarded at the
 `'/' in key` filter. Gold branch resolves constants but only from
 `gold/lib/s3_layout.py`. Fix scoped in artifact §3 (extension, not new compiler).
+
+## COO guidance (RAVC ack of d09760b1e, 2026-05-22)
+
+2.0.0_SA_COO ACK'd the checkpoint; d09760b1e verified on origin/CLOUD. Notes:
+- extract_s3.py extractor fix — direction APPROVED (extend, not a new compiler).
+  Proceed next phase.
+- Stale-doc finding (LAMBDA_REGISTRY.md + PORTAL_DATA_FLOW.md) — do NOT fix in
+  L1 scope. Note as a found-issue in the L1 RAVC2; COO decides follow-on TO vs
+  supersede-pointer at L1 close. Keep L1 tight.
+- L1 is YALP_MDSRC's single remaining closure gate (D2 RAVC2-accepted this
+  session). Surface each next phase artifact; RAVC2 when AC3/AC4 land.
 
 ## Compiler Tools (session 2)
 
@@ -107,14 +118,72 @@ L1 Deliverable A shipped. Deliverable B write-side map COMPLETE (artifact-grain)
 Remaining: implement the extractor fix, build the read-side map, emit atomic
 field-grain detail + the 3 grouped roll-ups, RAVC2. Multi-day TO (~3-5d SLA).
 
+## Session 3 (2026-05-22 cont.) — comp-graph extractor fix
+
+**Context:** session resumed after context compaction. COO status-check prompted
+(gap ~40min explained by compaction, not stall). 3.0.0_SA_CVO also in validation
+loop; F1 finding (stale §3 text in d09760b1e) acknowledged and resolved this
+session.
+
+**extract_s3.py Lambda constant-resolution fix — COMPLETE (`113618fff`).**
+
+Two patterns resolved:
+1. `upload_json(bucket, OUTPUT_KEY, data)` — `_S3_HELPER_CONST` captures the
+   constant name; per-file constant map resolves to `json/.../foo.json`.
+2. `TIER1_KEY = OUTPUT_PREFIX + 'tier1-snapshot.json'` — new `_CONST_CONCAT`
+   pattern resolves single-hop prefix concatenations after the simple-literal
+   pass.
+
+Also: `_extract_s3_reads` now receives the per-file map for Lambda reads (was
+called with empty constants — read-side READS_S3 edges also improved).
+
+**Coverage sweep (all yang-generate lambdas, post-fix):**
+
+| Lambda | WRITES_S3 | Notes |
+|---|---|---|
+| `yang-generate-valuation` | `json/valuation/valuation_data.json` | |
+| `yang-generate-risk-premium` | `json/valuation/risk_premium_data.json` | |
+| `yang-generate-correlation` | `json/correlations/correlation_data.json` | |
+| `yang-generate-macro` | `json/macro/macro_data.json`, `json/macro/vix_data.json` | |
+| `yang-generate-factor-tilts` | tier1/tier2/tier3 (3 keys) | concat resolution |
+| `yang-generate-cma` | assumptions + views | |
+| `yang-generate-etf-returns` | `json/benchmarks/etf_returns.json` | |
+| `yang-generate-peer-performance` | `json/peers/peer_performance.json` | |
+| `yang-generate-positioning` | `json/positioning/positioning_data.json` | |
+| `yang-generate-allocation-summary` | `json/positioning/allocation_summary.json` | |
+| `yang-generate-holdings-attribution` | `json/positioning/holdings_attribution_data.json` | |
+| `generate-manifest` | `json/latest/manifest.json` | graph node name differs |
+| `generate-latest` | `benchmarks/LATEST.json` | |
+| `generate-volatility` | `json/yang/volatility_data.json` | |
+| `yang-generate-macro-timeseries` | (none — dynamic key) | `output_key = OUTPUT_PREFIX + filename`; not statically resolvable; prefix `json/macro/timeseries/` documented in lineage map |
+
+**Finding — generate-latest attribution correction.** Lineage map §1b had
+`yang-generate-latest` writing `benchmarks/LATEST.json + json/latest/*`. Source
+verification: `generate-latest` (84 lines) has exactly 1 put_object call for
+`LATEST_KEY = 'benchmarks/LATEST.json'`. The `json/latest/` writes belong to
+`generate-manifest` (MANIFEST_KEY) and `trigger` — corrected in artifact.
+
+**Graph post-fix:** 1988 nodes / 2218 edges (was 1953/2143). WRITES_S3: 277.
+READS_S3: 309. S3_ARTIFACTs: 219.
+
+## Compiler Tools (session 3)
+
+| Tool | Use | Result |
+|------|-----|--------|
+| `comp-build` | rebuild after extractor fix | 1988 nodes / 2218 edges |
+| `comp-build` (2nd, after concat fix) | recheck with TIER*_KEY resolution | 1988/2218 + 3 more S3 nodes |
+| `comp-trace yang-generate-valuation --direction both` | verify WRITES_S3 lit up | DOWNSTREAM WRITES_S3 json/valuation/valuation_data.json |
+| `comp-trace yang-generate-factor-tilts --direction both` | verify concat resolution | DOWNSTREAM 3 tier keys |
+| Python graph sweep | all yang-generate lambdas coverage | 14/15 with edges; 1 dynamic-key gap |
+
 ## Next Steps
 
-1. [~self] Implement the `extract_s3.py` Lambda-constant-resolution fix (artifact
-   §3) — module-level constant map + `key = CONSTANT` alias; rebuild graph;
-   re-verify with `comp-trace`. Lights up yang WRITES_S3/READS_S3 edges.
-2. [0.3.0_DE_TradingOperations] React-component side: which granular component
+1. [0.3.0_DE_TradingOperations] React-component side: which granular component
    renders which datum; the "Data Refresh" page as a visibility source.
-3. [~self] Deliverable B read-side map (S3 -> CF `/api/public/*` route -> React)
-   + atomic field-grain write-side (cross-ref Yang rubric) + the 3 grouped
-   roll-ups (best emitted from the fixed comp-graph).
-4. [~self] RAVC2 to COO on the full lineage-map artifact.
+2. [~self] Deliverable B read-side map (S3 -> CF `/api/public/*` route -> React
+   component) — use comp-routes + comp-trace from S3 artifact nodes; coordinate
+   with DE on React-leaf identification.
+3. [~self] Atomic field-grain write-side (cross-ref Yang rubric for Bloomberg
+   origins per datum) + the 3 grouped roll-ups (by component / by lambda-read /
+   by lambda-write) — emit from fixed comp-graph.
+4. [~self] RAVC2 to COO when read-side + roll-ups complete.
