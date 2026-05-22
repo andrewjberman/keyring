@@ -1,0 +1,17 @@
+{
+  "project_code": "ADHC_TIER0G",
+  "macro_code": "ADHC",
+  "name": "Tier-0 Governance Framework -- 0.0.0_AB_MSTR",
+  "description": "Andrew-directed initiative 2026-05-22: stands up the Tier-0 autonomous principal-proxy 0.0.0_AB_MSTR above the CTO/COO tier. The ratified Tier-0 law -- CONSTITUTION.md / STAKES_MATRIX.md / DIRECTIVES.md under org/tier0/ -- IS the specification; there is no docs/architecture PRD. Establishes: the Constitution (Art. III law-doc ownership, Art. XIV CVO ratification authority); the control plane (ledger / cycles / ratifications records + an owned-paths enforcement hook); and the MSTR agent operating loop (the /govern, /mstr_review, /charter skills). MSTR governs by reading the law, scanning the fabric against active Directives, ledgering commitments before they propagate, and delegating originated work through Tier 1 (CTO/COO) only.",
+  "prds": [
+    "org/tier0/CONSTITUTION.md",
+    "org/tier0/STAKES_MATRIX.md",
+    "org/tier0/DIRECTIVES.md"
+  ],
+  "status": "active",
+  "phase": "Phase 3 -- BUILD COMPLETE, ACTIVATION PENDING (2026-05-22). Phase 1: Tier-0 law authored + RATIFIED v1.0 (e9546d700 law v0.1 -> 06c1a2f0e v1.0 RATIFIED + CVO Art. XIV authority). Phase 2: control plane -- ledger / cycles / ratifications records + owned-paths enforcement hook (695ed58e4). Phase 3: the MSTR agent -- /govern, /mstr_review, /charter skills + tier-0 wiring (dc526a721 STAKES_MATRIX v1.2 + DIRECTIVES v1.1 -> c539fb613 skills). owned-paths for org/tier0/ landed (a19c88f62: TIER0_LAW Andrew-only/human-commit, TIER0_MSTR, TIER0_RATIFY lanes). The framework is INERT by design -- 0.0.0_AB_MSTR originates nothing until Andrew authors the first ignition-valid Directive.",
+  "blocking": "ACTIVATION pending two steps: (1) Andrew authors the first ignition-valid Directive in org/tier0/DIRECTIVES.md -- until then /govern scans and reports but originates nothing; (2) wire the ledger-enforcement hook live + register 0.0.0_AB_MSTR on the broker. Build is complete; nothing blocks activation but the Andrew Directive.",
+  "created": "2026-05-22",
+  "pods": "0.0, 1.0, 3.0",
+  "coo_lane": "Registry entry created by 2.0.0_SA_COO 2026-05-22 per CTO request (REGISTRY is the COO lane). CTO-driven project (Andrew-directed initiative); 3.0.0_SA_CVO holds Constitution Art. XIV ratification authority."
+}
