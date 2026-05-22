@@ -235,6 +235,19 @@ lanes:
     permitted_agents:
       - 3.0.0_SA_CVO
     description: "Tier-0 ratification records -- CVO S3/operational-S4 ratification verdicts (Constitution Art. XIV). Added 2026-05-22 by COO per Andrew directive."
+  TIER0_EXEC:
+    permitted_agents:
+      - 0.0.0_AB_MSTR
+      - 1.0.0_SA_CTO
+      - 2.0.0_SA_COO
+    description: "Tier-0 agent home folder (org/tier0_exec/0.0.0_AB_MSTR/) -- MSTR's broker-resolvable agent directory: logs, task_orders. MSTR owns its own logs; CTO/COO maintain the control-plane plumbing. Distinct from TIER0_MSTR (org/tier0/ operating artifacts). Added 2026-05-22 by CTO per MSTR charter LD-0001 (broker activation)."
+
+  CVO_WORKSPACE:
+    permitted_agents:
+      - 3.0.0_SA_CVO
+      - 1.0.0_SA_CTO
+      - 2.0.0_SA_COO
+    description: "Workspace-wide CVO home (org/tier1_exec/3.0.0_SA_CVO/**) -- CVO writes + commits its own continuous-validation-loop cycle logs (VALIDATION_LOOP.md, Andrew directive 2026-05-22 MCP-loop model). CTO + COO retain write access to author gate-review reports into the CVO inbox. Replaces the BASE_EXEC mapping, which was correct only under the old Codex no-commit model where CTO committed CVO responses on its behalf. Added 2026-05-22 by COO."
 
   ANY:
     permitted_agents: "*"
@@ -425,6 +438,9 @@ paths:
   "org/tier0/**":
     lane: TIER0_MSTR
     note: "Tier-0 catch-all -- MSTR operating artifacts (longest-match yields the specific rules above)"
+  "org/tier0_exec/**":
+    lane: TIER0_EXEC
+    note: "MSTR agent home folder -- the broker-resolvable directory (org/mcp/server.py TIER_DIRS). Holds ONLY 0.0.0_AB_MSTR/; deliberately separate from org/tier0/ so the law + control-plane subdirs are never scanned as agent folders."
 
   # -----------------------------------------------------------------------
   # Task-order authoring overrides (more-specific than parent home-folder rules)
@@ -475,8 +491,8 @@ paths:
     note: "COMP_LEARNS COO home — TOs, session logs"
 
   "org/tier1_exec/3.0.0_SA_CVO/**":
-    lane: BASE_EXEC
-    note: "Workspace-wide CVO home — inbox, responses, templates; spawned by COO 2026-05-01 (ADHC_WAVPLN prep)"
+    lane: CVO_WORKSPACE
+    note: "Workspace-wide CVO home — inbox, responses, templates, AND continuous-loop cycle logs. CVO commits its own loop logs under the MCP-loop model (Andrew 2026-05-22, VALIDATION_LOOP.md). Lane changed BASE_EXEC -> CVO_WORKSPACE 2026-05-22 by COO (the old BASE_EXEC mapping blocked the CVO from committing its own logs)."
 
   "org/tier1_exec/3.1.0_SA_CVO/**":
     lane: COMP_LEARNS
