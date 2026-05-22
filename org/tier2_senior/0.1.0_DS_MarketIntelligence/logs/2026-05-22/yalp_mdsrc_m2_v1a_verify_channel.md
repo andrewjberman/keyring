@@ -73,8 +73,27 @@ Andrew ruled the V1A 3-band escalation: not ICE cross-vendor, not pkl -- find a 
 - C2 pull-spec 3 rows corrected -- with V1A's band 1, all 76 pull-spec rows are now resolved.
 - Deliverable: `docs/briefs/mdsrc-v1b-3-band-bbg-proxy-20260522.md`. Probe artifact: `.runtmp/v1b_catalog_result.json`.
 
+## C2 phase-0 -- orientation (same day, post-V1B)
+
+YALP_MDSRC.C2 GO'd (353b00116) -- co-owner model: 0.1.0_DS leads WS-1, 0.2.0_DS co-owns WS-2. Freeze-aware build (build + structurally validate the pull module; no live YCharts run until the dedicated seat). ACK'd to COO; WS-1/WS-2 seam coordination MCP'd to 0.2.0_DS (proposed: one module / two sections + a shared YCharts client layer; awaiting their structural preference).
+
+Orientation complete -- read the 3 build inputs:
+- A3 P3 build spec (mdsrc-ycharts-internal-api-mapping-20260520.tsv, 35 rows): the canonical per-surface endpoint/method/params/json-path spec. The 17 YCharts-served surfaces collapse to 4 generic internal endpoints -- /indices/table_data (GET, snapshot metrics), /charts/general_data.json (GET, history), /charts/fund_data.json (GET, ETF/fund series), /charts/scatter_plot_data.json (POST, needs X-CSRFToken).
+- C3 input spec (mdsrc-ws2-c2-input-spec-20260520.md): WS-2 hybrid legs. MP-01/02/03 = 9 public series (3 idx + 3 ETF + 3 RFR tenor) + re-blend weights in-generator -- build-ready, sequence first. FT-02/03 = 6 factor-spread constituent tickers not in-repo -- ratify first, sequence last. Correlation = 59/63 clean + 3 Treasury crosswalk gaps + Crude Oil variant.
+- C1 code home located: infra/aws/lambda/ycharts-session-capture + ycharts-session-probe; terraform infra/aws/terraform/ycharts-pipeline (tag ycharts-pipeline-v1.1.0). C2's pull module joins this pipeline family.
+
+Build foundation: the proven .runtmp/a4_ycharts_capture.py (exercised live this session across A4/A5/V1/M2/V1A/V1B) is the de-facto reference client -- C2 productionizes its mechanics (get_secret/build_cookie_header/http_get/freshness_probe + the 4 generic endpoints) into the pull module.
+
+## C2 phase-1 -- shared YCharts client built (same day)
+
+Seam corrected with 0.2.0_DS: MP-01/02/03 is WS-2 (theirs), not WS-1 -- my mistake, accepted. Clean split: WS-1 (me) = the 7 YCharts-replaceable surfaces (WS1-DDB-01, WS1-MO-01/02/03/04, WS1-VAL-01, WS2-MP-04) + the 71-entity ticker map; WS-2 (0.2.0_DS) = all 10 hybrid legs (regime/correlation/ERP/FT/MP-01-03/peer). Module structure agreed: one module, two sections, both importing the shared client.
+
+Built `infra/aws/lambda/ycharts-market-data-pull/ycharts_client.py` -- the shared YCharts internal-API client. Productionizes the proven a4_ycharts_capture.py mechanics: YChartsClient class, auth from the C1 `ycharts/credentials` secret (callers never touch auth), the 4 A3-P3 generic endpoints (indices_table_data / general_data / fund_data / scatter_plot_data) + search() for the symbol-discovery sub-task, freshness_probe() seat-liveness gate, and the json-path parsers (parse_table_data / parse_chart_series per the A3 P3 spec). Freeze-aware: side-effect-free import + construction, no live YCharts call.
+
+Structurally validated: py_compile + Rule-14 ds-commit-gate (ds-precommit + ruff py39) all clean; a no-network structural test exercised every parser + the csrf/cookie/seat-eviction helpers -- ALL PASS. Interface posted to 0.2.0_DS so WS-2 builds against a stable contract.
+
 ## Next Steps
 
-1. [implementation TO, downstream of M2] scope the FRED macro-ingestion Lambda off the 56 FRED/Treasury rows; the YCharts channel for the 15 carried originating-body rows; escalate the 4 no-channel rows (idx 1/4/5/29) as a licensing cost/scope call.
-2. [C2] the C2 pull-spec is now complete (76/76 rows resolved) -- C2 stays STAGED, gated on the C1 credential pipeline; not DS-actionable.
-3. [CTO] ADHC_CRYPCT.001 status-check pending -- the 2026-05-19 log shows it deployed (v2.9.10) + verified + RAVC-ratified; awaiting CTO confirm to flip the stale pending flag.
+1. [C2 -- next block] build the WS-1 section against the shared client: the 7 replaceable-surface pull functions (DDB-01 / MO-01-04 / VAL-01 / MP-04) + the 71-entity ticker map; then the ~10-case A3 P4 symbol-discovery sub-task. Freeze-aware -- structural validation only. lambda_function.py handler + lambda-source-map.json entry land when the module is build-complete.
+2. [C2] WS-2 section is 0.2.0_DS's -- they build MP-01/02/03 first against the shared client.
+3. [implementation TO, downstream of M2] scope the FRED macro-ingestion Lambda off the 56 FRED/Treasury rows; the YCharts channel for the 15 carried originating-body rows; escalate the 4 no-channel rows (idx 1/4/5/29) as a licensing cost/scope call.
