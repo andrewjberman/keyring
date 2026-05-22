@@ -44,8 +44,22 @@ D2 is an analytical comparison run -- no gold/portal/route/IAM/Terraform change;
 | seat stagger + anchor | DS <-> 0.2.0_DS | AGREED (anchor 2026-05-18; me first, seat freed) |
 | joint RAVC2 D2 | DS + 0.2.0_DS -> COO | pending WS-2 section + assembly |
 
+## ERP forward-P/E re-probe (D2, post-WS-2-finding)
+
+0.2.0_DS's WS-2 D2 run caught the C2 ERP discovery wrong: YCharts I:SP500PND ("PE Ratio Estimate", 29.02) is trailing-magnitude, not the Bloomberg BEST_PE_RATIO forward P/E (pe_ntm 20.89; +38.9% gap). Owned + ran the re-probe on the Menachem seat (binding test: a valid candidate must be ~21).
+
+DEFINITIVE VERDICT -- the S&P 500 forward P/E is NOT sourceable from YCharts on the Menachem session:
+- I:SP500PND (29) + I:SP500PNM (28): both trailing-magnitude. Neither is the ~21 forward.
+- 6 forward-PE search phrasings: zero hits. I:SPFPER / I:SPFPERR (the plausible "S&P Forward PE Ratio" entities, surfaced by the "S&P 500 PE Ratio" search) 400 on every access form -- exist-but-unpullable, likely a Menachem-account estimates-entitlement gap.
+- 6 forward-EPS search phrasings: zero hits -- the component-calc (price/forward-EPS) has no EPS leg. ^SPX index price pulls fine.
+
+Disposition (COO/Andrew call): ERP forward-P/E leg either stays Bloomberg-pkl-sourced (the VAL-01-style hybrid pattern -- recommended) or needs a dedicated YCharts seat WITH the estimates entitlement to reach SPFPER. The C2 ws2_regime_erp_pull I:SP500PND wire is wrong, needs reverting. RAVC'd to COO; verdict handed to 0.2.0_DS for §3. Probe artifact: .runtmp/d2/d2_erp_reprobe_result.json.
+
+Yang's original notebooks (docs/reference/yang-original-scripts/, d386c8d2d) read -- dc_fields_all confirms forward-P/E = Bloomberg BEST_PE_RATIO; RSI = RSI_30D (the C2 pull used rsi_14 -- methodology note for the RSI surface comparison); valuation multiples are Bloomberg fields per index (confirms the VAL-01 hybrid disposition).
+
 ## Next Steps
 
-1. [0.2.0_DS] WS-2 section of the joint brief (MP/Correlation/Regime-ERP/FT hybrid-leg comparison) -- they have the seat.
-2. [D2 close] joint RAVC2 to COO once the WS-2 section lands + the brief is assembled.
-3. [future D1 cutover] the 22 WS-1 symbol-variant/calc-basis corrections are the cutover-prep list -- not D2 scope.
+1. [0.2.0_DS] WS-2 section (§3) of the joint brief -- MP (5/5 ETF exact) / Correlation (60/61 agree) / FT (spread-definition finding) / ERP (UNRESOLVED-on-YCharts per the re-probe).
+2. [D2 close] joint RAVC2 to COO once §3 lands + the brief is assembled.
+3. [COO/Andrew] the ERP forward-P/E disposition (hybrid-pkl vs entitled-seat).
+4. [future D1 cutover] the 22 WS-1 symbol-variant/calc-basis corrections + the RSI-30D re-pull -- cutover-prep, not D2 scope.
