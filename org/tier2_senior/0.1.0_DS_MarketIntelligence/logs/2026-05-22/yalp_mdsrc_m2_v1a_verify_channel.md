@@ -102,8 +102,21 @@ Structurally validated: py_compile + Rule-14 ds-commit-gate clean; a no-network 
 
 WS-2 status (0.2.0_DS): MP section built (53f358b70); Correlation leg plan committed (5a788c179); regime/ERP next, FT-02/03 last.
 
+## C2 phase-3 -- joint handler, module BUILD-COMPLETE (same day)
+
+COO cleared the dependency boundary -- WS-2 4/4 done (0.2.0_DS: MP / Correlation / Regime-ERP / FT, last leg 901cf4271). Built the joint build-complete unit:
+
+- `ticker_map.py` -- the bundled 71-entity portal_name -> ycharts_symbol map (TICKER_MAP + YC_KIND dicts), generated from mdsrc-c2-ticker-map-final-20260522.csv. Embedded so the deployed Lambda has no docs/briefs/ path dependency.
+- `ws1_surface_pull.py` -- added structural_self_test() for parity with the 4 WS-2 modules.
+- `lambda_function.py` -- the handler wiring WS-1 + WS-2 into one deployable unit. Modes: `validate` (default, freeze-aware -- runs every module's structural_self_test, no network) and `pull` (the live path -- built + wired, dormant until the seat; fail-fasts on a dead-seat freshness probe). WS-2 dispatched via the 4 entry contracts (pull_mp_benchmark_inputs / pull_erp_inputs / pull_correlation_inputs(symbol_map) / pull_factor_tilt_inputs(symbol_map)).
+
+C2 module BUILD-COMPLETE + structurally validated: `python lambda_function.py` runs the full handler validation -- 7/7 modules structurally valid, ok=True (every WS-1 + WS-2 structural_self_test PASS, no network/AWS/YCharts call). Rule-14 ds-commit-gate clean on all 3 files.
+
+Source-map note: the infra/aws/lambda/ci/lambda-source-map.json entry + the ycharts-pipeline terraform for ycharts-market-data-pull are the AE infra-side (the YCHARTS_PULL_MODULE owned-paths lane = DS code / AE infra) -- flagged to COO in the joint RAVC2 for AE 0.7.0 to add alongside the tf wiring.
+
 ## Next Steps
 
-1. [C2 -- WS-1 cont.] the 71-entity ticker map (extend the dc01d4b8a crosswalk with the V1/V1A/V1B resolutions + ^BBUSTTR for Bloomberg US Treasury) + the ~10-case A3 P4 symbol-discovery sub-task (seat-frozen -- structure now, live-pin post-seat); then the lambda_function.py handler wiring the WS-1 + WS-2 sections + the lambda-source-map.json entry once the module is build-complete.
-2. [C2] WS-2 section is 0.2.0_DS's -- continuing in parallel.
-3. [implementation TO, downstream of M2] scope the FRED macro-ingestion Lambda off the 56 FRED/Treasury rows; the YCharts channel for the 15 carried originating-body rows; escalate the 4 no-channel rows (idx 1/4/5/29) as a licensing cost/scope call.
+1. [C2] joint RAVC2 to COO (0.1.0_DS + 0.2.0_DS) -- C2 build-complete; the last YALP build TO before D1.
+2. [AE 0.7.0] the lambda-source-map.json entry + ycharts-pipeline terraform for ycharts-market-data-pull (infra-side per the lane split).
+3. [D1, downstream] the surface cutover behind the parallel-run diff gate -- not C2.
+4. [implementation TO, downstream of M2] scope the FRED macro-ingestion Lambda off the 56 FRED/Treasury rows; escalate the 4 no-channel macro rows (idx 1/4/5/29).
