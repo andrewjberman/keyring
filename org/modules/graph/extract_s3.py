@@ -132,6 +132,11 @@ _CONST_ASSIGNMENT = re.compile(
     r"""^(\w+)\s*=\s*['"]([^'"]+)['"]""", re.MULTILINE
 )
 
+# Single-hop prefix concatenation: TIER1_KEY = OUTPUT_PREFIX + 'tier1.json'
+_CONST_CONCAT = re.compile(
+    r"""^(\w+)\s*=\s*(\w+)\s*\+\s*['"]([^'"]+)['"]""", re.MULTILINE
+)
+
 def _resolve_constants(gold_dir: Path) -> dict[str, str]:
     """Build a map of constant names to their S3 key values from lib/s3_layout.py and similar."""
     constants = {}
@@ -541,8 +546,29 @@ def extract_s3_edges(graph: TraceGraph, workspace_root: Path):
                 label=lambda_name, file_path=rel_path,
             ))
 
+            # Build per-file constant map for Lambda constant resolution.
+            # Yang generators define OUTPUT_KEY = 'json/.../foo.json' at module
+            # level and pass the constant name to upload_json(bucket, OUTPUT_KEY,
+            # data); the base write loop discards the captured variable name
+            # because '/' not in 'OUTPUT_KEY'. Collecting module-level string
+            # constants whose values contain '/' lets _S3_HELPER_CONST /
+            # _S3_PUT_CONST resolve them to the actual S3 key.
+            file_constants: dict[str, str] = {}
+            for _cm in _CONST_ASSIGNMENT.finditer(content):
+                _cname, _cvalue = _cm.group(1), _cm.group(2)
+                if '/' in _cvalue:
+                    file_constants[_cname] = _cvalue
+            # Resolve single-hop prefix concatenations after simple literals are
+            # collected: TIER1_KEY = OUTPUT_PREFIX + 'tier1-snapshot.json'
+            for _cm in _CONST_CONCAT.finditer(content):
+                _cname, _prefix_name, _suffix = _cm.group(1), _cm.group(2), _cm.group(3)
+                if _prefix_name in file_constants and _cname not in file_constants:
+                    _cvalue = file_constants[_prefix_name] + _suffix
+                    if '/' in _cvalue:
+                        file_constants[_cname] = _cvalue
+
             # S3 reads
-            for s3_key in _extract_s3_reads(content):
+            for s3_key in _extract_s3_reads(content, file_constants):
                 s3_node_id = f"s3:{s3_key}"
                 graph.add_node(Node(
                     id=s3_node_id, node_type="S3_ARTIFACT", label=s3_key,
@@ -558,6 +584,23 @@ def extract_s3_edges(graph: TraceGraph, workspace_root: Path):
                     key = m.group(1) or (m.group(2) if m.lastindex >= 2 else None)
                     if key and '/' in key and not key.startswith('{'):
                         s3_key = _clean_s3_key(key)
+                        s3_node_id = f"s3:{s3_key}"
+                        graph.add_node(Node(
+                            id=s3_node_id, node_type="S3_ARTIFACT", label=s3_key,
+                        ))
+                        graph.add_edge(Edge(
+                            source=lambda_node_id, target=s3_node_id,
+                            edge_type="WRITES_S3",
+                        ))
+
+            # Constant-based writes: upload_json(bucket, CONSTANT, data) and
+            # put_object(Key=CONSTANT). Resolves the yang-generator pattern where
+            # the module-level key constant is passed by name to a helper.
+            for pattern in (_S3_HELPER_CONST, _S3_PUT_CONST):
+                for m in pattern.finditer(content):
+                    const_name = m.group(1)
+                    if const_name in file_constants:
+                        s3_key = file_constants[const_name]
                         s3_node_id = f"s3:{s3_key}"
                         graph.add_node(Node(
                             id=s3_node_id, node_type="S3_ARTIFACT", label=s3_key,
