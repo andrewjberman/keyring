@@ -2,9 +2,9 @@
 #
 # Usage:  .tools\spawn-agent.ps1 <Serial> [extra first-message words]
 #
-# Opens a NEW detached PowerShell window, dot-sources cclaude.ps1, and runs
-# `cclaude <Serial>` -- which cd's into ajb_workspace and launches `claude`
-# hands-free (cclaude carries --dangerously-skip-permissions, so the spawned
+# Opens a NEW detached PowerShell window, dot-sources ajb.ps1, and runs
+# `ajb <Serial>` -- which cd's into ajb_workspace and launches `claude`
+# hands-free (ajb carries --dangerously-skip-permissions, so the spawned
 # agent never stalls on a folder-trust or per-tool permission prompt). Each
 # spawn is appended to org/mcp/agent-spawn-audit.log.
 #
@@ -27,10 +27,10 @@ param(
 )
 
 $ws = 'C:\Users\AndrewBerman\Desktop\ajb_workspace'
-$cclaude = Join-Path $ws '.tools\cclaude.ps1'
+$ajb = Join-Path $ws '.tools\ajb.ps1'
 
-if (-not (Test-Path $cclaude)) {
-    Write-Error "spawn-agent: cclaude.ps1 not found at $cclaude"
+if (-not (Test-Path $ajb)) {
+    Write-Error "spawn-agent: ajb.ps1 not found at $ajb"
     exit 1
 }
 
@@ -43,9 +43,9 @@ if ($Serial -notmatch '^[0-9]+\.[0-9]+\.[0-9]+_[A-Za-z]+_[A-Za-z0-9]+(~[A-Za-z0-
 $extraStr = if ($Extra) { ' ' + ($Extra -join ' ') } else { '' }
 
 # New window: -NoProfile (deterministic -- does not depend on $PROFILE setup),
-# -NoExit (window persists so the session stays visible). Dot-source cclaude.ps1
-# explicitly so the `cclaude` function exists regardless of profile setup.
-$inner = ". `"$cclaude`"; cclaude $Serial$extraStr"
+# -NoExit (window persists so the session stays visible). Dot-source ajb.ps1
+# explicitly so the `ajb` function exists regardless of profile setup.
+$inner = ". `"$ajb`"; ajb $Serial$extraStr"
 Start-Process powershell -ArgumentList '-NoProfile', '-NoExit', '-Command', $inner
 
 # Audit -- every spawn is recorded.
