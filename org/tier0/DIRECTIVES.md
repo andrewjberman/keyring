@@ -101,11 +101,57 @@ enough that "faithful extension" stays legible.
 
 ## Active Directives
 
-> _Andrew: author the standing directives here. Until at least one Directive
-> exists that passes ignition validation, MSTR has no mandate — `/govern` will
-> only scan, report, and surface the empty-mandate state; it originates nothing._
+> Directives are authored by Andrew and transcribed by the CTO per the Directive
+> Authoring Protocol above. `/govern` originates work only under a Directive that
+> passes ignition validation — well-formed, `status: active`, `issued_by: andrew`.
 
-_(none yet)_
+```
+### D-001 — Finish ADVI: validate the product end-to-end, consistent and accurate
+- directive_id:           D-001
+- status:                 active
+- issued_by:              andrew
+- issued_at:              2026-05-22
+- objective:              Finish the existing ADVI product by validating every key
+                          data point and function end-to-end — and correcting what
+                          validation finds — so its numbers and methodology are
+                          trustworthy and consistent. Inflection first, then 49 Financial.
+- scope:                  The full ADVI delivery stack — inf-pipeline (Inflection),
+                          bd-pipeline (49 Financial), the portal, middleware, and
+                          cloud/Lambda infra. Validation and correction of EXISTING
+                          data and functions. Front-end work in service of
+                          data-correctness. Platform display-consistency. Priority
+                          order: (1) Inflection books/ tab — cost basis, tax lots,
+                          realized + unrealized capital gains, advisor book growth
+                          (lowest-confidence cluster — first and deepest);
+                          (2) rest of Inflection; (3) 49 Financial. Named consistency
+                          rule: no data displayed before January 2021; any "Max"
+                          window/toggle resolves to a January 2021 floor. Other
+                          terminology/display inconsistencies found are surfaced to
+                          Andrew for ruling, not auto-resolved.
+- non_goals:              Visual / UI design changes (visual work is done). New
+                          features, metrics, cohorts, or views — validate and
+                          correct what EXISTS, do not expand the product surface.
+                          Governance / process / tier-structure changes. (Front-end
+                          DATA-correctness is in scope; front-end DESIGN is not.)
+- allowed_stakes:         S0-S3
+- success_signals:        Numbers and methodology validated end-to-end in the
+                          verify-channel manner — pipelines mechanically pull fresh,
+                          usable data; pipelines are robust / self-healing as new
+                          data flows, not merely correct at one point in time; and a
+                          meta-analysis confirms the numbers do not look wrong,
+                          nothing was accidentally broken, and no caveat is missed
+                          that would undermine a number's integrity for the purpose
+                          the UI presents it. The front end displays the validated
+                          numbers correctly and reliably.
+- stop_conditions:        The product is truly validated end-to-end — numerous spot
+                          checks and case studies proven across the data set — AND
+                          the front end is verified to display the correct
+                          information reliably. Validation alone is not completion:
+                          what validation finds wrong is corrected.
+- review_cadence:         daily
+- expiry_or_review_date:  2026-05-25 — a review checkpoint, not a hard expiry;
+                          Andrew reviews progress and extends / adjusts / closes.
+```
 
 ---
 
