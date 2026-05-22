@@ -314,11 +314,28 @@ These are explicitly future-cutover scope per the TO; D3 changes nothing live.
 
 ---
 
-## 8. WS-2 leg (0.2.0_DS) -- placeholder
+## 8. WS-2 leg (0.2.0_DS) -- companion brief
 
-[0.2.0_DS to fill: FT-02/03 spread-definition reconcile finalization
-(commit 47871c033 fix already referenced) + any WS-2 hybrid-leg residual
-disposition. RSI basis check already incorporated into §3.7.]
+**Reference:** `docs/briefs/mdsrc-d3-ws2-confirmed-section-20260522.md`
+(commit `e9a4b8c21`, on origin/CLOUD, 163 lines). Folds into this brief as the
+WS-2 confirmed-table section -- same two-file pattern as D2's joint brief.
+
+WS-2 terminal verdicts (full detail + evidence in the companion brief):
+
+| WS-2 surface | D2 stated cause | ACTUAL cause | Verdict |
+|---|---|---|---|
+| FT-02/03 factor spreads | Different larger-scale construct (rolling/cumulative spread) | FALSIFIED -- identical 1-day-return-diff construct; 100x unit convention divergence (Bloomberg percent vs ws2 module decimal). Fix in `ws2_factor_tilts_pull.py` commit `47871c033` (decimal -> percent x100) | CONFIRMED-MATCH |
+| MP-01/02/03 ETF + index legs | (MATCH in D2; carries forward) | -- | CONFIRMED-MATCH (5/5 ETF exact, index legs representative-residual per V1A/V1B pattern) |
+| Correlation (61-index monthly) | (~60/61 MATCH in D2) | -- | CONFIRMED-MATCH |
+| ERP forward-P/E | "DIVERGENCE" -- I:SP500PND wrong-metric | YCharts has no forward-P/E indicator at the Menachem entitlement; SPFPER 400; hybrid disposition per COO ruling 2026-05-22 (Bloomberg-pkl + FRED 10Y) | CONFIRMED-BLOOMBERG-ONLY (the only WS-2 BLOOMBERG-ONLY) |
+
+CVO loop independently validated 0.2.0_DS's FT-02/03 reconcile clean
+(`f8a00bf27`). RSI basis check (the WS-2 hand-off item) is incorporated into
+WS-1 §3.7 above (CONFIRMED-DERIVED via Wilder RSI-30D in `ws1_surface_pull.py`,
+commit `6835b5de1`).
+
+The companion brief carries the full per-leg evidence (Bloomberg field source,
+daily std + extremes table, the cross-reference to Yang notebook §8).
 
 ---
 
