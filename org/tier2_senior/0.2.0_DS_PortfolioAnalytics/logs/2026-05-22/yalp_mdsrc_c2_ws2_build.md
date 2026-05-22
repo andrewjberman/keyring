@@ -75,6 +75,28 @@ Correlation 6/6, Regime+ERP 4/4, FT 7/7, all green. Rule 14 pre-commit gate clea
 | Module `structural_self_test()` | MP 9/9, Correlation 6/6, Regime+ERP 4/4, FT 7/7 — all pass, no network. The freeze-aware validation per each leg plan §6. The MP self-test caught a real non-positive-level guard bug pre-commit. |
 | `comp-blast` | New pull-module files are not comp-graph nodes (external-API integration, new code path) — documented-none, same class as C3/C5/S2. |
 
+## Live Validation (2026-05-22, post-build)
+
+Andrew directive (via COO) lifted the freeze for validation: validate the WS-2
+choices live on the Menachem YCharts session NOW. Seat used + released, staggered
+with 0.1.0_DS (no eviction). Results:
+
+- **Fidelity** — PASS. ^BBUTB13MTR / ^BBUSTTR / ^BBUSATR / ^MSACWI all return
+  healthy current daily series (^BBUTB13MTR 7285 pts, matches V1A exactly).
+- **TR2/TR3** — full 8-query `client.search()` CONFIRMED no pure-Treasury
+  Bloomberg 1-3yr/7-10yr maturity-band index on YCharts (only ETFs/strategies).
+  Routed to COO for the drop-vs-escalate call.
+- **Finding A — ERP forward-P/E** (`9ab5eb891`): metric name validated
+  (`forward_pe_ratio`) but `general_data(^SPX, forward_pe_ratio)` HTTP 500 /
+  `table_data` 200-empty — index general_data serves price/TR only, not
+  fundamental ratios. S&P 500 forward-P/E pull path UNRESOLVED; needs YCharts
+  index-fundamental endpoint discovery. `ERP_PE_METRIC_VERIFIED=False`.
+- **Finding B — generator staleness** (`7e196b17e`): `data.pkl return_monthly`
+  has no bare `Crude Oil` row — it has `Crude Oil WTI` (CL1) + `Crude Oil Brent`
+  (CO1). The generator's `MARKET_OVERVIEW_INDICES` bare `Crude Oil` is silently
+  dropped by its own `idx in available` filter (deployed correlation runs 62 not
+  63). C2 corrected to `Crude Oil WTI`; generator alignment is a D1 hand-off.
+
 ## Next Steps
 
 - [COO] RAVC2 — C2 WS-2 side complete (4/4 module sections, commits above). Coordinating the final C2 close with 0.1.0_DS (WS-1).
