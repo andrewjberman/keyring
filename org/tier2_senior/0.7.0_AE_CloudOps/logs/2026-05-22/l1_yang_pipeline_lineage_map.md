@@ -16,7 +16,10 @@ is set up for continuation below.
 | Deliverable B — write-side map (yang Lambda -> source -> S3) | COMPLETE (artifact-grain) — `d09760b1e` |
 | Deliverable B — extractor gap diagnosis | COMPLETE — root cause pinned |
 | comp-graph extractor FIX (implement) | COMPLETE — `113618fff`; 14/14 generators; 1 dynamic-key gap noted |
-| Deliverable B — read-side map (S3 -> CF route -> React) | NOT STARTED — next phase |
+| Deliverable B — read-side map (S3 -> CF route -> React) | COMPLETE — §2 of lineage-map artifact |
+| CVO F2 — duplicate LAMBDA nodes (closure gate) | COMPLETE — extract_s3.py yang-name correction; all 11 prefix-less nodes deduped |
+| AC3 grouped roll-ups | PENDING |
+| RAVC2 | PENDING (after AC3) |
 
 ## Session 2 (2026-05-22 cont.) — write-side map + extractor gap
 
@@ -176,14 +179,89 @@ READS_S3: 309. S3_ARTIFACTs: 219.
 | `comp-trace yang-generate-factor-tilts --direction both` | verify concat resolution | DOWNSTREAM 3 tier keys |
 | Python graph sweep | all yang-generate lambdas coverage | 14/15 with edges; 1 dynamic-key gap |
 
+## Session 4 (2026-05-22 cont.) — read-side map
+
+**Context:** 0.3.0_DE_TradingOperations YALP read-leaf HELD (SSCN-vs-YALP
+priority call). DE left a substantial draft (`docs/reference/yang-pipeline-
+lineage-readside-draft.md`, untracked) covering 18 rows with a route correction
+and D1-D5 divergences. Integrated + resolved remaining items this session.
+
+**Route correction (DE finding, confirmed):** yang data served via `/api/general/*`
+(CF behavior #16, `public-data-router` origin-request Lambda), NOT `/api/public/*`
+(stale in old PORTAL_DATA_FLOW.md). Source: `portal-proxy.ts` all yang fetches
+use `apiRequest('/api/general/...')`.
+
+**D3 volatility resolution (AE-owned):** `generate-volatility` (yang pipeline)
+writes `json/yang/volatility_data.json`. Portal `getVolatilityData()` reads
+`json/macro/volatility_data.json` — written by `opal-portal-volatility-fetcher`
+(market-overview pipeline), NOT yang. `generate-volatility` output has no active
+CF consumer. `generate-volatility` source comment: "Canonical volatility data is
+from opal-portal-volatility-fetcher (has MOVE data via Yahoo)." Flagged to COO.
+
+**Pending consumer resolutions:**
+- #5 `json/macro/vix_data.json` (yang-generate-macro) — `getVIXData()` exported
+  but no component imports it; no active portal consumer.
+- #10/#11 CMA — `getCMAAssumptions`/`getOpalViews` → `CapitalMarketAssumptions/
+  CapitalMarketAssumptions.tsx` (confirmed via grep).
+- #14c `json/benchmarks/model_portfolio_timeseries.json` — `getModelPortfolioTimeseries`
+  → `components/ReturnVolatilityScatter.tsx` (confirmed via grep).
+
+**Read-side map COMPLETE** — all 17 portal-data rows mapped (S3 key → CF route →
+proxy fn → React component). D3 resolved, divergences D1/D2/D5 documented. Two
+findings for COO: (1) `generate-volatility` yang output is orphaned (non-yang
+Lambda writes the actual consumer path); (2) `json/macro/vix_data.json` has no
+active React consumer despite existing function + route entry.
+
+## Session 5 (2026-05-22 cont.) — CVO F2 duplicate-node fix
+
+**Context:** resumed after context compaction. CVO F2 (P1) was the outstanding
+hard gate: duplicate LAMBDA nodes (`lambda:generate-manifest` AND
+`lambda:yang-generate-manifest`, same for `generate-latest`, `generate-volatility`).
+WRITES_S3 edges were on prefix-less nodes; canonical TF-named nodes had zero edges.
+
+**Root cause:** `extract_s3.py` Lambda branch derived `lambda_name = parts[-2]`
+(directory name). Yang orchestration/outputs dirs omit the `yang-` prefix that TF
+applies (e.g. dir `generate-manifest` → TF name `yang-generate-manifest`). 11
+directories affected; `trigger` directory additionally maps to `yang-pipeline-trigger`
+(different stem).
+
+**Fix (extract_s3.py, after lambda_name derivation):**
+```python
+if 'yang_pipeline' in parts and not lambda_name.startswith('yang'):
+    lambda_name = ('yang-pipeline-trigger' if lambda_name == 'trigger'
+                   else 'yang-' + lambda_name)
+```
+
+**Post-fix verification:**
+- All 11 prefix-less duplicate nodes GONE from graph
+- 14/14 generators WRITES_S3 edges on canonical TF-named nodes:
+  `yang-generate-manifest → json/latest/manifest.json` ✓
+  `yang-generate-latest → benchmarks/LATEST.json` ✓
+  `yang-generate-volatility → json/yang/volatility_data.json` ✓
+  (remaining 11 generators: all mapped, unchanged from `113618fff`)
+- `yang-generate-macro-timeseries`: still 0 edges (dynamic key, expected)
+- Graph post-fix: same 1988 nodes / 2218 edges (duplicate nodes collapsed to
+  canonical, net node count unchanged — TF extractor already had the canonical
+  nodes; S3 extractor now writes to those same nodes instead of creating duplicates)
+
+**CVO F2 gate cleared.** Committed this session.
+
+## Compiler Tools (session 5)
+
+| Tool | Use | Result |
+|------|-----|--------|
+| `comp-build` | rebuild after F2 fix | 1988 nodes / 2218 edges |
+| `comp-trace generate-manifest/generate-latest/generate-volatility` | confirm single canonical node, no "Multiple matches" | WRITES_S3 on canonical nodes; "Multiple matches" gone |
+| Python graph sweep | all 14 generators under canonical names | 14/14 with WRITES_S3 edges; 11 prefix-less nodes GONE |
+
 ## Next Steps
 
-1. [0.3.0_DE_TradingOperations] React-component side: which granular component
-   renders which datum; the "Data Refresh" page as a visibility source.
-2. [~self] Deliverable B read-side map (S3 -> CF `/api/public/*` route -> React
-   component) — use comp-routes + comp-trace from S3 artifact nodes; coordinate
-   with DE on React-leaf identification.
-3. [~self] Atomic field-grain write-side (cross-ref Yang rubric for Bloomberg
-   origins per datum) + the 3 grouped roll-ups (by component / by lambda-read /
-   by lambda-write) — emit from fixed comp-graph.
-4. [~self] RAVC2 to COO when read-side + roll-ups complete.
+1. [~self] AC3 grouped roll-ups — 3 tables:
+   (a) By React component: which components consume which yang S3 keys
+   (b) By lambda-write: each yang generator → its output keys
+   (c) By lambda-read (proxy fn): each portal-proxy fn → which S3 key → component
+2. [~self] RAVC2 to COO when AC3 committed. Flag findings:
+   (a) `generate-volatility` yang output orphaned (non-yang Lambda writes actual consumer path)
+   (b) `json/macro/vix_data.json` no active React consumer
+3. [~self] Field-grain AC2 detail (cross-ref Yang rubric for Bloomberg origins per
+   series) — can emit post-RAVC2 or as same-commit supplement.

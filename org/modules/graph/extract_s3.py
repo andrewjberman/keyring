@@ -540,6 +540,16 @@ def extract_s3_edges(graph: TraceGraph, workspace_root: Path):
             parts = py_file.relative_to(lambda_dir).parts
             lambda_name = parts[-2] if len(parts) >= 2 else py_file.stem
 
+            # Yang pipeline: directory names don't always match TF canonical
+            # function names. TF always adds 'yang-' prefix; directories like
+            # 'generate-manifest', 'generate-latest', 'generate-volatility',
+            # and other orchestration/outputs dirs omit it. Correct here so
+            # WRITES_S3 edges land on the canonical node, not a duplicate.
+            # Special case: 'trigger' directory -> 'yang-pipeline-trigger'.
+            if 'yang_pipeline' in parts and not lambda_name.startswith('yang'):
+                lambda_name = ('yang-pipeline-trigger' if lambda_name == 'trigger'
+                               else 'yang-' + lambda_name)
+
             lambda_node_id = f"lambda:{lambda_name}"
             graph.add_node(Node(
                 id=lambda_node_id, node_type="LAMBDA",
