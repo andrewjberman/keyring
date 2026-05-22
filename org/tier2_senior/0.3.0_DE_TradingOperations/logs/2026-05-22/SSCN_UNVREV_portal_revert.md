@@ -252,21 +252,53 @@ the promotion and RAVC2'd; DE RAVC4-accepted. Evidence:
 - DEV verification worktree (`portal/.runtmp/portal-dev-verify`) + the :5175 dev
   server torn down.
 
+## Addendum 6 2026-05-22 — Security Scanner filter toolbar (DEV `4938bf36`)
+
+Post-PROD-ship, Andrew relayed new Yang feedback: add the PFDE Trade-Grid-style
+header filter to the Security Scanner — (1) ticker/company search bar,
+(2) sector dropdown, (3) per-column filtering (e.g. marketcap > 10Bn).
+
+Built on a fresh DEV worktree, committed to portal DEV `4938bf36`:
+- New shared `components/ScannerFilterToolbar.tsx` (search input + sector
+  select), mirroring the PortfolioManagement Trade Grid toolbar.
+- Wired into BOTH grid tabs (Universe Data + Universe Scanner): searchQuery +
+  sectorFilter state, rows pre-filtered before the grid, subtitle shows
+  "<shown> of <total>" when filtered.
+- AG Grid column-header filters enabled on every column — Universe Data: country
+  + factor columns gained filters; Universe Scanner: defaultColDef filter
+  false -> agNumberColumnFilter with agTextColumnFilter on the 5 text columns.
+- typecheck exit 0, lint exit 0.
+
+**ENV NOTE — DEV preview unavailable.** The :5175 DEV preview server will not
+stay up: the machine is in Git-Bash/Cygwin fork-resource exhaustion
+(`fork: retry: Resource temporarily unavailable`, `CreateProcessW failed
+errno 11`) after the long multi-process session. The inbox watcher also cannot
+launch for the same reason — running watcher-less, pulling `check_inbox` (an
+MCP call, no local fork) instead. Code deliverable is unaffected and committed.
+Surfaced to Andrew; awaiting his call on machine-resource cleanup vs.
+promote-and-verify-on-PROD.
+
 ## Current State
 
-**SHIPPED.** The full SSCN_UNVREV portal set is live in PROD on opalinvest.dev
-(portal PROD `7442fc9d`, tag `portal-v2.1.96`) — 6-universe revert,
-Composite-as-weighted-average, raw-toggle interleave, weight/sector/Delta
-columns, panel fullscreen, spreadsheet-date timestamps. Paired with
-`security-scanner-v1.3.0` + the 20260521 data live in AWS (SSCN_UNVREV.001/.002).
-All RAVC loops closed. No pending DE task orders.
+SSCN_UNVREV: **SHIPPED to PROD** — opalinvest.dev (portal PROD `7442fc9d`, tag
+`portal-v2.1.96`); `security-scanner-v1.3.0` + 20260521 data live in AWS; all
+RAVC loops closed.
+
+Security Scanner filter toolbar: **built + committed to portal DEV `4938bf36`**,
+typecheck+lint clean — DEV-only, not yet promoted; awaiting Andrew review (DEV
+preview blocked by the machine fork-exhaustion noted above).
+
+Queued: YALP_MDSRC.L1 (co-owned React-component lineage map, 0.7.0_AE leads) —
+ACK'd to COO, to start once the filter toolbar review settles.
 
 ## Next Steps
 
-- `[0.4.0_DE_ClientPlatform]` Commit the MDPF_ASSETS.033 WIP to DEV (still
-  uncommitted in the portal working tree; unrelated to this work).
-- `[2.0.0_SA_COO~B]` SSCN project-state: SSCN_DATA_CONTRACT.md Section 5 needs
-  the `divzWeight` / `universeWeight` fields; SSCN_UNVREV registry/closure
-  canonicalization — COO~B's lane.
-- `[Dashboard Engineer]` SSCN_UNVREV fully shipped to PROD. No pending TOs;
-  watcher healthy; standing by for dispatch.
+- `[Andrew]` Filter-toolbar review path — machine-resource cleanup to restore
+  the :5175 preview, OR promote `4938bf36` to PROD and verify on opalinvest.dev.
+- `[0.3.0_DT_TradingOperations]` When GO'd: promote `4938bf36` to portal PROD
+  (same cherry-pick mechanism as the SSCN_UNVREV set).
+- `[0.4.0_DE_ClientPlatform]` Commit the MDPF_ASSETS.033 WIP (still uncommitted
+  in the portal working tree; unrelated).
+- `[2.0.0_SA_COO~B]` SSCN_DATA_CONTRACT.md Section 5 + SSCN registry closure.
+- `[Dashboard Engineer]` Filter toolbar on DEV; YALP_MDSRC.L1 queued; watcher
+  down (machine fork-exhaustion) — pulling check_inbox via MCP.
