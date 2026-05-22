@@ -7,8 +7,20 @@
 | Author | `0.2.0_DS_PortfolioAnalytics` (WS-2 / portfolio-analytics specialist) |
 | Date | 2026-05-21 |
 | Audience | **Andrew / Yang — ratification sign-off** (one-pass); RAVC2 to `2.0.0_SA_COO` CC `1.0.0_SA_CTO` |
-| Status | **PROPOSED — pending Andrew/Yang ratification.** Not a decision. |
+| Status | **RATIFIED 2026-05-22 by Andrew** (via COO /loop) — see §0. |
 | Feeds | `YALP_MDSRC.C2` FT-02/03 build (pre-clears the C3-Finding-2 Phase-0 prerequisite) |
+
+---
+
+## 0. RATIFICATION — Andrew, 2026-05-22
+
+**All 12 legs RATIFIED.** Andrew ratified the packet via the COO YALP_MDSRC /loop, 2026-05-22:
+
+- The **10 HIGH/MEDIUM standard legs** — accepted as proposed (§3).
+- `Agg vs Short` **SHORT leg** (the LOW-confidence leg) — **Bloomberg 1-3 Year Gov/Credit (`LGC3TRUU Index`)** confirmed. Andrew's call selected the proposed pick: a clean duration-only spread with the short-leg credit composition matched to the Agg (Gov+Credit on both legs).
+- `Equity vs FI` **EQUITY leg** (the MEDIUM leg) — **MSCI ACWI (`MXWD Index`)** confirmed. Andrew's call selected the proposed pick: the global-equity index matching the Opal model-portfolio benchmark's equity component (not the US-only S&P 500 alternative).
+
+§3 as proposed, with the two flagged legs confirmed above, is now the **ratified C2 FT-02/03 build spec**. C2 builds the 6 factor spreads against this table (9 distinct constituent indices), replacing the pre-computed `model.pkl/factor_spread`.
 
 ---
 
