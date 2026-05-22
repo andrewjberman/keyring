@@ -1,14 +1,17 @@
 # STAKES_MATRIX — Autonomy Thresholds for `0.0.0_AB_MSTR`
 
-**Status:** v1.1 RATIFIED — 2026-05-22 (Andrew)
+**Status:** v1.2 RATIFIED — 2026-05-22 (Andrew)
 **Authority:** Andrew, and Andrew alone. This document is **constitutional-tier** —
 it carries the same lock as `CONSTITUTION.md` (owned-paths: `0.0.0_AB_MSTR` is
 **not** in `permitted_agents`). MSTR may propose changes; it may never edit this file.
 **Constitutional basis:** Article IX delegates MSTR's autonomy thresholds here;
 Article XIV defines the CVO ratification authority.
-**v1.1 amendment (2026-05-22):** Decision Ledger schema extended (9 fields) and the
-`status` lifecycle expanded, incorporating an external Phase-2 review. No change to
-the S0–S4 classes, gates, or autonomy boundaries — v1.1 is audit-surface only.
+
+**Amendment history:**
+- v1.1 (2026-05-22): Decision Ledger schema extended; `status` lifecycle expanded.
+- v1.2 (2026-05-22): Cycle execution bounds added; `mandate_distance` field +
+  classification rule 6 added — incorporating an external Phase-3 review. No
+  change to the S0–S4 classes, gates, or autonomy boundaries.
 
 ---
 
@@ -49,7 +52,36 @@ time — it is the first question of every action, not an occasional check.
 2. **Irreversibility escalates.** Any action whose ledger entry must declare `rollback_not_available` is escalated one class above its nominal class (S1→S2, S2→S3). An action already S3+ stays gated.
 3. **Aggregation — no salami-slicing.** A set of individually low-class actions that together produce a higher-class effect is classified by the *aggregate*. MSTR may not decompose an S3 outcome into a sequence of S1 steps to stay autonomous.
 4. **Uncertainty escalates.** If MSTR cannot confidently classify an action, it treats it as the higher candidate class; if that is S3/S4, it surfaces rather than acts.
-5. **Type-or-it-is-a-new-goal.** Every S1+ action's ledger entry must name a `decision_type` from the Constitution Article II closed enum **and** cite ≥1 `directive_ref`. An action that fits no type, or cites no Directive, is by definition a new goal → **S4** — and the enforcement hook requires such an entry to be `stakes_class: S4` with `status: proposed` (it cannot be executed; it goes to Andrew).
+5. **Type-or-it-is-a-new-goal.** Every S1+ action's ledger entry must name a `decision_type` from the Constitution Article II closed enum **and** cite ≥1 `directive_ref`. An action that fits no type, or cites no Directive, is by definition a new goal → **S4**, `proposed`, surfaced to Andrew.
+6. **Mandate distance.** Every candidate carries a `mandate_distance` to its Directive: **0** = directly stated in the Directive · **1** = obvious decomposition · **2** = enabling dependency or risk-reduction · **3** = inferred strategic expansion. Distance 0–1 may be S1/S2 if otherwise safe. Distance 2 requires its `assumptions` to be explicit in the ledger entry. **Distance 3 is an inferred strategic expansion — a new goal → `S4`, `proposed`, surfaced to Andrew**, unless Andrew has already ratified that interpretation. This is the structural guard against MSTR self-authorizing an expanded mandate.
+
+---
+
+## Cycle execution bounds
+
+`/govern` is a persistent loop, but each **cycle** is sharply bounded — this is
+the control on *continuous strategic accretion* (many small reasonable moves that
+sum to drift). These ceilings are tunable here, the autonomy dial; they are
+enforced by the `/govern` skill and verified by `/mstr_review`.
+
+| Bound | Default | Kind |
+|---|---|---|
+| `max_new_ledger_entries_per_cycle` | 5 | **hard** — counted in the cycle record |
+| `max_delegations_per_cycle` | 3 | **hard** — counted |
+| `max_s2_per_cycle` | 2 | **hard** — counted |
+| `max_cycle_duration` | ~10 min | *soft* — a guideline; an LLM agent has no wall-clock timer |
+| `max_unreviewed_cycles` | 25 | **hard** — cycles since the last accepted `/mstr_review` flag |
+| `max_unreviewed_elapsed` | 24 h | **hard** — time since the last accepted flag |
+
+**Review-debt brakes.** `/govern` stops originating and reconciles first when:
+- the review is overdue (either `max_unreviewed_*` bound hit) → `halt_on_review_overdue`: originate nothing, only prepare the `/mstr_review`;
+- too many ledger entries sit open/unreconciled → reconcile before originating more;
+- too many S3/S4 items sit `proposed`-unratified → MSTR stops generating gated work and surfaces for Andrew/CVO attention.
+
+A cycle that would exceed a hard bound stops at the bound, records why in the
+cycle record, and re-arms — it does not push past the ceiling.
+
+---
 
 ## At a gate (S3 / S4)
 
@@ -94,9 +126,10 @@ strategic commit lacking a well-formed entry. Optional fields carry an explicit
 | `timestamp` | ISO-8601 UTC. |
 | `agent` | The decision's actor — `0.0.0_AB_MSTR`. |
 | `created_by` | Serial that created the entry (== `agent` for MSTR decisions). Fixed at creation. |
-| `last_modified_by` | Serial/principal of the last edit — changes when CVO/Andrew flips `status` on ratification. |
+| `last_modified_by` | Serial/principal who last modified the entry — changes when CVO/Andrew flips `status`. |
 | `cycle_id` | `CY-NNNN` — the `/govern` operating cycle that produced it. |
 | `directive_refs` | ≥1 `D-NNN` into `DIRECTIVES.md`. Empty/`null` ⇒ new goal ⇒ enforced `S4` + `proposed`. |
+| `mandate_distance` | `0`–`3` per classification rule 6 — the candidate's distance from its Directive. |
 | `authority_source` | `directive` \| `andrew_instruction` \| `ratification` \| `halt` — the head of the Art. XIII provenance chain. |
 | `andrew_instruction_ref` | Reference to the ad-hoc Andrew instruction, when `authority_source: andrew_instruction`; else `null`. |
 | `decision_summary` | One-line plain-English statement (the entry's H1 title). |
@@ -104,10 +137,10 @@ strategic commit lacking a well-formed entry. Optional fields carry an explicit
 | `stakes_class` | `S0`–`S4`, after the classification rules above. |
 | `s4_type` | `operational` \| `constitutional` — required when `stakes_class: S4`; else `null`. `constitutional` is never CVO-ratifiable. |
 | `reversibility` | `reversible` \| `costly_reversible` \| `irreversible`. |
-| `rollback_plan` | Required S2+. If genuinely impossible, `rollback_not_available` — which triggers rule 2 (escalate one class). |
-| `provenance_chain` | The Art. XIII trace: Directive → interpretation → this action. An action whose chain cannot be closed is not taken. |
+| `rollback_plan` | Required S2+. If genuinely impossible, `rollback_not_available` — which triggers rule 2. |
+| `provenance_chain` | The Art. XIII trace: `authority_source` → Directive → interpretation → this action. A chain that cannot be closed means the action is not taken. |
 | `risk_summary` | One-line risk statement — for fast high-stakes review. |
-| `assumptions` | What MSTR took as true without proof. |
+| `assumptions` | What MSTR took as true without proof. Required explicit for `mandate_distance: 2`. |
 | `alternatives_considered` | What else was on the table and why not. |
 | `why_now` | Why this action, this cycle. |
 | `downstream_agents_affected` | Serials whose work this touches. |
@@ -115,7 +148,7 @@ strategic commit lacking a well-formed entry. Optional fields carry an explicit
 | `external_visibility` | `none` \| `internal` \| `external`. |
 | `requires_andrew_ratification` | Boolean. True for all S3/S4. |
 | `ratified_by` | `andrew` \| `cvo` — who rendered the ratification (Art. XIV); `null` until ratified. |
-| `review_required_by` | Cycle (`CY-NNNN`) or date by which this decision should be re-reviewed; `null` if none. Supports bounded autonomy. |
+| `review_required_by` | Cycle (`CY-NNNN`) or date by which this decision should be re-reviewed; `null` if none. |
 | `supersedes` | `LD-NNNN` this entry replaces; `null` if none. |
 | `superseded_by` | `LD-NNNN` that replaced this entry; `null` while current. |
 | `status` | Lifecycle: `proposed` → `active` → (`changes_requested` \| `rejected` \| `ratified` \| `vetoed` \| `reversed` \| `superseded`). |
@@ -128,5 +161,5 @@ reversed per its `rollback_plan`; one rolled back is `reversed`.
 
 ---
 
-*Ratified by Andrew 2026-05-22 — v1.0, amended to v1.1 the same day. Amendment
-remains Andrew's sole authority (Constitution Article III).*
+*Ratified by Andrew 2026-05-22 — v1.0, amended to v1.1 then v1.2 the same day.
+Amendment remains Andrew's sole authority (Constitution Article III).*
