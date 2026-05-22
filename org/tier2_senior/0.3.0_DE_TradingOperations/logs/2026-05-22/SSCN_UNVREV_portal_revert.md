@@ -165,22 +165,58 @@ raw-value toggle interleave (Yang-confirmed column order) are unchanged. The
 net SSCN_UNVREV portal delta is now: 6-universe set + raw-toggle interleave,
 with the Composite column at its original weighted-average score.
 
+## Addendum 2 2026-05-22 — Column additions + new source file (`7786eef9` + SSCN_UNVREV.002)
+
+Yang (via Andrew) asked for two column additions, plus supplied a new source
+file. DE verified `Screening_DIVZ_IDVZ_20260521 (1).xlsx` — 2,707 rows x 339
+cols, carrying 4 new model-weight columns (`wt_divz/wt_idvz/wt_pfde/wt_pfoe`)
+the 20260519 file lacked, plus `wt_iwb` / `sector_name` / `indgrp_name` /
+`dy_ntm`.
+
+**Portal (DE, DEV `7786eef9`):**
+- `UniverseDataRow` += `divzWeight`; `ScannerRow` += `universeWeight` + `divzWeight`.
+- Universe Data tab: `Universe Wt %` + `DIVZ Wt %` columns inserted between
+  Industry Group and the factor columns.
+- Security Scanner tab: `Sector` + `Industry Group` + `Universe Wt %` +
+  `DIVZ Wt %` inserted between Name and Composite.
+- `Universe Wt %` = the selected-universe weight (Andrew ruling 2026-05-22 —
+  per-selected-universe, not Russell-1000-fixed). `DIVZ Wt %` = `wt_divz`,
+  null for non-DIVZ-holdings. Weights percent-formatted `toFixed(3) + "%"`.
+- typecheck exit 0, lint exit 0.
+
+**Data dependency:** Sector / Industry Group (both tabs) and the Universe-Data-tab
+universe weight are already in the JSON contract — render now. `divzWeight`
+(both tabs) and the Security-Scanner-tab `universeWeight` are NOT emitted by
+`opal-security-scanner-processor` yet — columns render blank until the AE side
+ships.
+
+**AE side (SSCN_UNVREV.002 — authored, awaiting exec commit):** TO authored to
+`org/tier2_senior/0.5.0_AE_OpalETL/task_orders/SSCN_UNVREV.002.ae-lambda-weight-fields-and-20260521-refresh.md`.
+Scope: add the 4 new weight columns to `NON_SCORING_COLS` (else they get
+percentile-ranked as factors), emit `divzWeight` + scanner-row `universeWeight`,
+redeploy (`security-scanner-v1.3.0`), load the 20260521 file. Routed to COO for
+commit into the 0.5.0_* lane + dispatch (DE-0.3.0 not in that lane's
+permitted_agents — same path as SSCN_UNVREV.001).
+
 ## Current State
 
-Portal SSCN_UNVREV portal delta on DEV at `6f66c67f` (`47330865` universe +
-raw-toggle, `6f66c67f` Composite-revert), statically verified clean.
-AE-side SSCN_UNVREV.001 closed (`e0286ec3b`) and RAVC4-accepted — 6 universe
-artifacts live in S3, PROD coupling cleared. DEV only — nothing in PROD. No
-pending task orders. A DEV-code dev server is up on :5175 from the
+Portal SSCN_UNVREV delta on DEV at `7786eef9`:
+`47330865` (universe 5->6 + raw-toggle interleave) -> `6f66c67f` (Composite
+revert) -> `7786eef9` (weight/sector columns). Statically verified clean.
+AE-side SSCN_UNVREV.001 closed + RAVC4-accepted. SSCN_UNVREV.002 (Lambda weight
+fields + 20260521 refresh) authored, awaiting exec commit/dispatch. DEV only —
+nothing in PROD. DEV-code dev server up on :5175 from the
 `portal/.runtmp/portal-dev-verify` worktree for Andrew's verification.
 
 ## Next Steps
 
-- `[0.3.0_DT_TradingOperations]` On Andrew's DEV smoke + a COO/CTO GO: run the
-  PROD-promotion TO bundling `47330865` (cherry-pick set, `/frontend-dev` smoke
-  folded in). Return the portal submodule to DEV once the MDPF WIP clears.
-- `[0.4.0_DE_ClientPlatform]` Commit the MDPF_ASSETS.033 WIP to DEV — it currently
-  blocks the portal branch return.
+- `[2.0.0_SA_COO / COO~B]` Commit SSCN_UNVREV.002 into the 0.5.0_AE lane + GO.
+- `[0.5.0_AE_OpalETL]` Execute SSCN_UNVREV.002 — Lambda weight-field emit +
+  20260521 data refresh; RAVC2 to DE.
+- `[0.3.0_DT_TradingOperations]` PROD-promotion of the portal SSCN_UNVREV set
+  (`47330865`+`6f66c67f`+`7786eef9`) after Andrew's DEV smoke + SSCN_UNVREV.002
+  AC4 + a GO. Return the portal submodule to DEV once the MDPF WIP clears.
+- `[0.4.0_DE_ClientPlatform]` Commit the MDPF_ASSETS.033 WIP to DEV.
 - `[Andrew]` DEV smoke of the Security Scanner before the PROD bundle.
-- `[Dashboard Engineer]` Idle — no pending TOs; watcher healthy; standing by for
-  dispatch.
+- `[Dashboard Engineer]` Validate SSCN_UNVREV.002 RAVC2 on receipt; watcher
+  healthy; standing by.
