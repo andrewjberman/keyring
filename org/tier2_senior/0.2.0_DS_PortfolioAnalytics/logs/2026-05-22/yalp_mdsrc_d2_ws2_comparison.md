@@ -5,7 +5,7 @@
 | Agent | 0.2.0_DS_PortfolioAnalytics |
 | Date | 2026-05-22 |
 | TO | YALP_MDSRC.D2 — YCharts-vs-Bloomberg parallel comparison, co-owned (WS-2 = 0.2.0_DS) |
-| Status | WS-2 run COMPLETE — 4 surfaces diffed live; 3 module fixes committed; joint-brief §3 in flight |
+| Status | COMPLETE — joint RAVC2 ACCEPTED by COO 2026-05-22; YALP_MDSRC.D2 CLOSED |
 
 ## Scope
 
@@ -43,15 +43,19 @@ production/AWS/portal change.
 
 All three: synthetic self-tests could not reach these (they need live YCharts data) — D2's first live run is exactly what caught them. Self-tests updated, Rule 14 gate clean on each.
 
-## RAVC state
+## RAVC state — CLOSED
 
-- WS-2 findings RAVC'd to COO progressively (ERP 175831Z; will RAVC the full set with the joint brief).
-- Joint D2 brief: `docs/briefs/mdsrc-d2-ycharts-bloomberg-comparison-20260522.md` — §2 WS-1 committed by 0.1.0_DS (`fc3b19641`); §3 WS-2 = my next deliverable.
+- WS-2 findings RAVC'd to COO progressively (ERP 175831Z) and in full via the joint brief.
+- Joint D2 brief: `docs/briefs/mdsrc-d2-ycharts-bloomberg-comparison-20260522.md` — §2 WS-1 committed by 0.1.0_DS (`fc3b19641`); §3 WS-2 + §4 AC table committed by me (`8d6bde3ca`). Both on origin/CLOUD.
+- **Joint RAVC2 ACCEPTED by COO 2026-05-22** (relayed via 0.1.0_DS): all 4 ACs validated against origin/CLOUD; AC4 — COO independently confirmed `fb053a108` + `bc139cdd6` touch only dormant C2 source (no Terraform/manifest/portal/data_pkl; ycharts-pipeline still v1.2.1). **YALP_MDSRC.D2 CLOSED.**
+
+## Carried forward (future D1 cutover project — NOT actioned now)
+
+- Deployed `ycharts-pipeline-v1.2.1` is 2 commits stale vs repo for the WS-2 modules (`fb053a108` + `bc139cdd6`) — COO logged as a D1 pre-req.
+- 22 WS-1 symbol-variant/calc-basis corrections + RSI-30D re-pull — D1 correction list.
+- FT-02/03 spread-definition reconcile vs Yang notebook §8 — C2-module correction, future-cutover scope; did not gate D2.
+- Finding B — generator `MARKET_OVERVIEW_INDICES` bare `Crude Oil` alignment -> D1 TO.
 
 ## Next Steps
 
-- [0.2.0_DS] Draft §3 (WS-2) of the joint comparison brief with the per-surface diffs above.
-- [0.2.0_DS] Read Yang's `model_portfolio_regression_analysis.ipynb` §8 — pin the factor-spread definition; reconcile the FT module's spread arithmetic (COO directive: flag any divergence of the `ws2_*.py` modules vs Yang's original logic).
-- [0.1.0_DS] Joint-brief assembly + joint RAVC2 to COO once §3 lands.
-- [COO] Rule the ERP forward-P/E hybrid disposition (forward-P/E leg stays Bloomberg-pkl).
-- [COO] Finding B carried — generator `MARKET_OVERVIEW_INDICES` bare `Crude Oil` alignment -> D1 TO.
+- [none — D2 closed] YALP_MDSRC project has one remaining closure gate: L1 (0.7.0_AE). Not my lane.
