@@ -198,25 +198,41 @@ redeploy (`security-scanner-v1.3.0`), load the 20260521 file. Routed to COO for
 commit into the 0.5.0_* lane + dispatch (DE-0.3.0 not in that lane's
 permitted_agents — same path as SSCN_UNVREV.001).
 
+## Addendum 3 2026-05-22 — Delta column, SSCN_UNVREV.002 closed, panel polish
+
+- **SSCN_UNVREV.002 — COMPLETE + RAVC4-accepted.** COO committed/GO'd it
+  (`02689bb55`); AE shipped `security-scanner-v1.3.0` + the 20260521 data refresh,
+  all 6 ACs PASS (closure `e7e9c1875`). The Lambda now emits `divzWeight` +
+  scanner `universeWeight`, the 4 new weight columns are excluded from scoring.
+  DE validated AC1-AC6 and sent RAVC4 ACCEPT — the portal weight columns now
+  have live data.
+- **Delta Wt % column (DEV `437c9eba`).** Computed column right of DIVZ Wt % on
+  both tabs: `divzWeight - universeWeight` (DIVZ active weight). Green positive /
+  red negative, null for non-DIVZ-holdings.
+- **Panel polish (DEV `f23aaeea`).** Narrowed Ticker (width 92) + Mkt Val (width
+  118) — they were rendering at AG Grid's 200px default. Added a fullscreen
+  toggle to the Universe Data + Universe Scanner panels (Escape to exit),
+  mirroring the PortfolioManagement Trade tab.
+
 ## Current State
 
-Portal SSCN_UNVREV delta on DEV at `7786eef9`:
-`47330865` (universe 5->6 + raw-toggle interleave) -> `6f66c67f` (Composite
-revert) -> `7786eef9` (weight/sector columns). Statically verified clean.
-AE-side SSCN_UNVREV.001 closed + RAVC4-accepted. SSCN_UNVREV.002 (Lambda weight
-fields + 20260521 refresh) authored, awaiting exec commit/dispatch. DEV only —
-nothing in PROD. DEV-code dev server up on :5175 from the
-`portal/.runtmp/portal-dev-verify` worktree for Andrew's verification.
+Portal SSCN_UNVREV delta on DEV at `f23aaeea`. Chain:
+`47330865` (universe 5->6 + raw-toggle) -> `6f66c67f` (Composite revert) ->
+`7786eef9` (weight/sector columns) -> `437c9eba` (Delta Wt %) ->
+`f23aaeea` (column-width + fullscreen). All statically verified (typecheck +
+lint exit 0 at each step). AE-side SSCN_UNVREV.001 + .002 both closed +
+RAVC4-accepted; `security-scanner-v1.3.0` + the 20260521 data live in AWS.
+DEV only — nothing in PROD. DEV-code dev server up on :5175
+(`portal/.runtmp/portal-dev-verify` worktree) for Andrew's verification.
 
 ## Next Steps
 
-- `[2.0.0_SA_COO / COO~B]` Commit SSCN_UNVREV.002 into the 0.5.0_AE lane + GO.
-- `[0.5.0_AE_OpalETL]` Execute SSCN_UNVREV.002 — Lambda weight-field emit +
-  20260521 data refresh; RAVC2 to DE.
-- `[0.3.0_DT_TradingOperations]` PROD-promotion of the portal SSCN_UNVREV set
-  (`47330865`+`6f66c67f`+`7786eef9`) after Andrew's DEV smoke + SSCN_UNVREV.002
-  AC4 + a GO. Return the portal submodule to DEV once the MDPF WIP clears.
+- `[0.3.0_DT_TradingOperations]` PROD-promotion of the full portal SSCN_UNVREV
+  set (`47330865`->`f23aaeea`) after Andrew's DEV smoke + a GO. Return the portal
+  submodule to DEV once the MDPF WIP clears.
 - `[0.4.0_DE_ClientPlatform]` Commit the MDPF_ASSETS.033 WIP to DEV.
+- `[2.0.0_SA_COO~B]` SSCN_DATA_CONTRACT.md Section 5 — add `divzWeight` /
+  `universeWeight` fields when the SSCN exec lane is back online.
 - `[Andrew]` DEV smoke of the Security Scanner before the PROD bundle.
-- `[Dashboard Engineer]` Validate SSCN_UNVREV.002 RAVC2 on receipt; watcher
+- `[Dashboard Engineer]` All Yang/Andrew SSCN feedback shipped to DEV; watcher
   healthy; standing by.
