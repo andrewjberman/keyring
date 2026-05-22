@@ -194,7 +194,8 @@ lanes:
     permitted_agents:
       - 0.7.0_AE_CloudOps
       - 0.7.0_AE_CloudOps~B
-    description: "CloudOps shared service (AE 0.7.0 + ~B sub-lane) — infra, EC2_MANIFEST, Terraform"
+      - 0.7.0_AE_CloudOps~C
+    description: "CloudOps shared service (AE 0.7.0 + ~B + ~C sub-lanes) — infra, EC2_MANIFEST, Terraform. 0.7.0_AE_CloudOps~C added 2026-05-22 by COO~C: the ~C lane needs its 0.7.0_AE_CloudOps home folder (session logs) for ADVI_DEMOV1.001 — same tilde-lane gap as the CLOUD_OPS_OR_ETL ~C add."
 
   CLOUD_OPS_OR_ETL:
     permitted_agents:
@@ -205,7 +206,8 @@ lanes:
       - 0.7.0_AE_CloudOps
       - 0.7.0_AE_CloudOps~A
       - 0.7.0_AE_CloudOps~B
-    description: "Any AE agent — infra/aws, pipeline Terraform, hook wiring. 0.7.0_AE_CloudOps~A added 2026-05-21 by COO: the lane is literally 'any AE agent' and ~A is one — the ~A suffix simply was not enumerated (tilde-lane owned-paths gap). A correct permanent add, not an exception."
+      - 0.7.0_AE_CloudOps~C
+    description: "Any AE agent — infra/aws, pipeline Terraform, hook wiring. 0.7.0_AE_CloudOps~A added 2026-05-21 by COO: the lane is literally 'any AE agent' and ~A is one — the ~A suffix simply was not enumerated (tilde-lane owned-paths gap). A correct permanent add, not an exception. 0.7.0_AE_CloudOps~C added 2026-05-22 by COO~C: same gap — ~C is the ADVI_DEMOV1 AE lane running ADVI_DEMOV1.001 (infra/aws shared-infra TF + lambda-edge) under COO~C GO."
 
   TRADE_PIPELINE_INFRA:
     permitted_agents:
