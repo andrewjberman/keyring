@@ -63,9 +63,18 @@ Self-checks: M2 -- 81/81 rows carry a verdict + live-probe evidence; transform s
 | `org/tier2_senior/0.1.0_DS_MarketIntelligence/task_orders/YALP_MDSRC.M2...md` | status -> complete |
 | `org/tier2_senior/0.1.0_DS_MarketIntelligence/task_orders/YALP_MDSRC.V1A...md` | status -> complete |
 
+## V1B addendum (same day, post-Andrew-ruling)
+
+Andrew ruled the V1A 3-band escalation: not ICE cross-vendor, not pkl -- find a representative Bloomberg-origin index on YCharts (exact maturity band not required). COO authored V1B (c58396a29), GO on pickup.
+
+- Ran a full Bloomberg fixed-income catalog scan on YCharts (`v1b_catalog_scan.py`, 13 family queries): 75 BBG index entities / 19 distinct base indices -- confirms YCharts carries no Bloomberg HY/TIPS maturity band and no pure-Treasury long band.
+- Resolved all 3 bands: 0-5Yr HY -> `Bloomberg US Corporate High Yield` (^BBUSCOHYTR); 0-5Yr TIPS -> `Bloomberg US TIPS (Series-L)` (^BBUTISTR); 20+Yr Treasury -> `Bloomberg US Long Government/Credit` (^BBUSLGCRTR -- the only Bloomberg long-duration FI index on YCharts; credit residual documented).
+- All 3 depth-confirmed live (6973 / 7057 / 8092 daily pts; 1994-1998 -> 2026).
+- C2 pull-spec 3 rows corrected -- with V1A's band 1, all 76 pull-spec rows are now resolved.
+- Deliverable: `docs/briefs/mdsrc-v1b-3-band-bbg-proxy-20260522.md`. Probe artifact: `.runtmp/v1b_catalog_result.json`.
+
 ## Next Steps
 
-1. [COO] V1A escalation ruling -- the 3 maturity-band bonds (0-5Yr HY / 0-5Yr TIPS / 20+Yr Treasury): ICE cross-vendor maturity-band index vs broad Bloomberg parent family vs stays-Bloomberg-pkl.
-2. [implementation TO, downstream of M2] scope the FRED macro-ingestion Lambda off the 56 FRED/Treasury rows; the YCharts channel for the 15 carried originating-body rows; escalate the 4 no-channel rows (idx 1/4/5/29) as a licensing cost/scope call.
-3. [DT] push M1's 206423a01 (idx 41 rework) to origin/CLOUD -- M1 flagged it to COO.
-4. C2 stays STAGED -- gated on the C1 credential pipeline; not DS-actionable.
+1. [implementation TO, downstream of M2] scope the FRED macro-ingestion Lambda off the 56 FRED/Treasury rows; the YCharts channel for the 15 carried originating-body rows; escalate the 4 no-channel rows (idx 1/4/5/29) as a licensing cost/scope call.
+2. [C2] the C2 pull-spec is now complete (76/76 rows resolved) -- C2 stays STAGED, gated on the C1 credential pipeline; not DS-actionable.
+3. [CTO] ADHC_CRYPCT.001 status-check pending -- the 2026-05-19 log shows it deployed (v2.9.10) + verified + RAVC-ratified; awaiting CTO confirm to flip the stale pending flag.
