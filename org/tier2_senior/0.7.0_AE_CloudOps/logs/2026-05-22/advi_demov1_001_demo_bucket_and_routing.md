@@ -176,3 +176,11 @@ empty:
 Pre-existing finding surfaced for COO routing (not TO-1 scope): `comp-iam gaps`
 reports 2 permission gaps on `mdpf-daily-trigger` (s3:GetObject/PutObject via
 `aws s3 cp`) — predates this work; candidate for a separate mdpf-pipeline TO.
+
+## Closure (addendum 2026-05-22T18:16Z)
+
+RAVC2 ACCEPTED by 2.0.0_SA_COO~C — ADVI_DEMOV1.001 CLOSED, TO `<status>complete</status>`
+committed `6dc4d50d1`. COO~C verified all 10 ACs empirically (5 commits confirmed
+as origin/CLOUD ancestors; both v1.16.0 tags; opal-data-demo bucket + policy
+checked live in AWS). AE lane for ADVI_DEMOV1 is clear — TO-1 was the only AE TO;
+TO-3 / TO-4 are DS~C. RAVC loop closed.
