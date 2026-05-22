@@ -86,11 +86,13 @@ with 0.1.0_DS (no eviction). Results:
 - **TR2/TR3** — full 8-query `client.search()` CONFIRMED no pure-Treasury
   Bloomberg 1-3yr/7-10yr maturity-band index on YCharts (only ETFs/strategies).
   Routed to COO for the drop-vs-escalate call.
-- **Finding A — ERP forward-P/E** (`9ab5eb891`): metric name validated
-  (`forward_pe_ratio`) but `general_data(^SPX, forward_pe_ratio)` HTTP 500 /
-  `table_data` 200-empty — index general_data serves price/TR only, not
-  fundamental ratios. S&P 500 forward-P/E pull path UNRESOLVED; needs YCharts
-  index-fundamental endpoint discovery. `ERP_PE_METRIC_VERIFIED=False`.
+- **Finding A — ERP forward-P/E** (`9ab5eb891` -> RESOLVED `06e0e82c8`): the
+  `^SPX` index serves no P/E metric (general_data 500s). 0.1.0_DS's A3 endpoint
+  discovery found the YCharts indicator entity `I:SP500PND` ("S&P 500 PE Ratio
+  Estimate", forward) — pulls via `fund_data(calc=level)`, live-verified.
+  `ws2_regime_erp_pull.py` wired to `I:SP500PND`; `ERP_PE_METRIC_VERIFIED=True`.
+  Reusable result: YCharts index fundamentals live on indicator entities, not
+  on the index symbol (parallels 0.1.0_DS's WS1-VAL-01 finding).
 - **Finding B — generator staleness** (`7e196b17e`): `data.pkl return_monthly`
   has no bare `Crude Oil` row — it has `Crude Oil WTI` (CL1) + `Crude Oil Brent`
   (CO1). The generator's `MARKET_OVERVIEW_INDICES` bare `Crude Oil` is silently
