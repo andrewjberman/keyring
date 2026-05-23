@@ -212,13 +212,26 @@ spawn / kill / nudge primitives. Resource-allocation discipline:
 | FORK-STALLED cycle=2, block=informational | **(a) Direct directive** — MSTR ledgers the chosen path; Tier 1 (COO typically) authors the resolving TO or MCP to the stuck agent. Use when the agent would proceed if simply told the answer. |
 | FORK-STALLED cycle=2, block=prompt/context | **(b) SPAWN-WITH-DIRECTION** — COO pre-places a fresh TO + inbox message with the recommended path baked in; MSTR spawns a new agent under the next-free tilde-lane to pick it up; original session is killed or left to time-out per situation. Use when the stuck agent wouldn't move forward even with the answer in hand (compacted context, lost thread, etc.). |
 | FORK-STALLED cycle=2, session unrecoverable | **(c) Kill + replace** — variant of (b) for sessions where leaving the original to time-out would block downstream work; (b) + explicit kill first. |
-| FORK-STALLED cycle=2, architecturally deep | **Escalate to Andrew** — product strategy / new-Directive class / S3-S4 procurement remains sovereign-only. Mechanical-resolution-when-architecturally-deep is itself a finding. |
+| FORK-STALLED cycle=2, architecturally deep | **Escalate to Andrew** — surface with draft recommendation + provenance chain. Architecturally deep = forks committing the fabric to a structural pattern (data model, Lambda topology, governance mechanic, cross-pipeline coupling) as classified by MSTR at scan-time. Mechanical-resolution-when-architecturally-deep is itself a finding. |
+| Architectural fork + Andrew non-response >1 cycle | **Consult CVO (priority) / CTO (fallback)** for architectural corroboration. CVO/CTO returns **CORROBORATES** (MSTR ledgers + Tier 1 authors resolving TO) or **COUNTERS** (MSTR adopts counter — CVO/CTO architectural read trumps MSTR's working interpretation). If both CVO and CTO are unavailable, **re-surface to Andrew** with "no corroborator available" framing. **No unilateral architectural action by MSTR.** |
 
 **Choosing among (a)/(b)/(c):** heuristic = pick the reversible / cheapest /
 most-information-producing path. Ledger the choice with fork reference +
 COO-cycle + chosen-option + chosen-path. The three options form a graceful
 intensification ladder within cycle=2 itself: (a) requires zero population
 change; (b) adds a population slot; (c) swaps a population slot.
+
+**Architectural-fork resolver chain — no node leaks.** The complete
+framework: Worker → COO (cycle-1) → MSTR mechanical via (a)/(b)/(c)
+toolkit (cycle-2 operational) OR Andrew (cycle-1 sovereign for
+architectural) → CVO-priority/CTO-fallback corroboration (cycle-2 if
+Andrew silent). Every fork resolves to a named node; no fork is left
+without a resolver. CVO-priority is load-bearing: independent
+ratification authority makes them higher-confidence than CTO (which is
+operationally adjacent to MSTR). Both CVO and CTO can COUNTER; their
+architectural read trumps MSTR's working interpretation. Andrew can
+overturn either on re-surface, but in the corroborator's window the
+CVO/CTO call is the working ratification.
 
 **Spawn.** `.tools/spawn-agent.ps1 <serial>` opens a new PowerShell window and
 launches the agent hands-free (via `ajb -Headless`; no Y/N prompt stall). Use
