@@ -76,7 +76,7 @@ For each surviving commit:
 - **Beyond-CVO judgment** → escalate to MSTR / Andrew.
 
 Fix-scope: see `SPOT_CHECK.md` "Fix authority — explicit scope" for the canonical IN / OUT / ESCALATE lists. Summary:
-- **IN:** `org/projects/{CODE}.json` status drift, `org/projects/REGISTRY.md` row drift, `org/tier*/...task_orders/*.md` `<status>` flips, doc cross-ref drift, stale pointers / checkpoint files.
+- **IN:** `org/projects/{CODE}.json` status drift, `org/projects/REGISTRY.md` row drift, `org/tier*/...task_orders/*.md` `<status>` flips, doc cross-ref drift, stale pointers / checkpoint files, **TO-closure cascade** (COO TO-flip-to-complete commits → CVO propagates the narrative update to project JSON `blocking` + REGISTRY row Blocking column; ratified pattern per COO 2026-05-23 commit `55a6ef4bc` ACK; keeps COO closures atomic + verifier-not-fixer-adjacent because the cascade is alignment-metadata only). Urgent-escalation: if cascade-drift blocks another agent + next /spot-check >5min away, MCP COO for inline same-commit update.
 - **OUT:** `data/*/scripts/{gold,silver,bronze}/*.py`, `infra/aws/lambda/**/*.py` code, Terraform, EC2, IAM, manifests, source-maps, `portal/src/**`, runtime state, another agent's TO `<scope>` / `<acceptance_criteria>`, PRD substance.
 - **ESCALATE:** lane reassignments, mandate changes, project cancellations.
 
