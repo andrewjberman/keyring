@@ -1,8 +1,8 @@
 # DIRECTIVES — The Active Mandate for `0.0.0_AB_MSTR`
 
-**Status:** v1.4 — D-001 active with PHASE 2 amended to verify-channel methodology + retroactive Completed-sweep; D-002 (standing maintenance via comp-* dev) + D-003 (standing CL fabric facilitation) added; format + authoring protocol ratified v1.2
+**Status:** v1.5 — D-001 success_signals extended with OPERATIONAL THROUGHPUT + ANTI-META-RECURSION GUARD + BOTTLENECK-RESPONSE INTENSIFICATION (every /govern cycle must move work; META-amendments cap at 1/cycle and only paired with operational action; STALE-for-N-cycles triggers escalating response); D-002 + D-003 unchanged; format + authoring protocol ratified v1.2
 **Authority:** Andrew authors; the CTO transcribes. A Directive's mandate is Andrew's alone — MSTR may *propose* and the CVO may review and recommend, but a Directive is added, amended, or retired only by Andrew, via the Directive Authoring Protocol below. A Tier-0 law document, never CVO-ratifiable (Constitution Art. III, XIV). (owned-paths: `TIER0_LAW`, `permitted_agents: []` — no standing agent write access.)
-**Version:** 1.4 · **Last updated:** 2026-05-22
+**Version:** 1.5 · **Last updated:** 2026-05-23
 **Amendment history:** v1.1 — Directive format tightened to a full schema (external Phase-3 review). v1.2 — Directive Authoring Protocol codified (Andrew directive 2026-05-22). v1.3 — D-001 rewritten from "Finish ADVI" (task-altitude) to the broad two-phase whole-workspace mandate; the ADVI-specific substance moved to the ADVI_VALFIN PRD / project (Andrew directive 2026-05-22). v1.4 — D-001 PHASE 2 amended to verify-channel methodology (mechanical/novel/meta) + retroactive Completed-sweep; meta-analysis success signal (holistic-purpose alignment) added to PHASE 2; D-002 standing maintenance via comp-* dev added; D-003 standing CL fabric facilitation added. (Andrew architectural ruling 2026-05-22; MSTR LD-0006 proposal feedback folded.)
 
 ---
@@ -176,7 +176,37 @@ enough that "faithful extension" stays legible.
                           don't represent what the chart claims — is NOT a success.
                           It is a finding that gets chartered to a fix. The
                           meta-analysis is the load-bearing test; the mechanical
-                          checks are necessary but not sufficient.
+                          checks are necessary but not sufficient. OPERATIONAL
+                          THROUGHPUT — every /govern cycle must produce ≥1
+                          OPERATIONAL action (a nudge / spawn / kill / charter for
+                          in-Directive work content). META-amendments — rubric
+                          refinements to the operating skills, ledger housekeeping,
+                          self-modifications to /govern itself, Directive-amendment
+                          proposals — count as ZERO toward this threshold. A cycle
+                          that produces only META work is a META-ONLY cycle and is
+                          itself a finding flagged in the cycle record, NOT a
+                          successful cycle. MSTR's value is moving work, not
+                          sharpening the rubric used to look at work. ANTI-META-
+                          RECURSION GUARD — at most 1 rubric-amendment charter per
+                          cycle, AND only when ≥1 operational action also lands
+                          that cycle. Structural fix for the 5-cycle drift pattern
+                          caught 2026-05-23 where Step 1(b) accreted three
+                          procedural refinements (LD-0010, LD-0013, LD-0015)
+                          without proportional operational throughput; multiple
+                          META charters in one cycle is forbidden; a META charter
+                          without a paired operational action is forbidden.
+                          BOTTLENECK-RESPONSE INTENSIFICATION — an agent classified
+                          STALE, STANDING_BY-with-convergent-asks, or BLOCKED
+                          across N consecutive cycles triggers escalating MSTR
+                          response: cycle 1 → nudge via MCP; cycle 2 → re-route
+                          specific work to a peer OR CTO-absorb-via-charter (so
+                          the bottleneck does not compound); cycle 3 → kill +
+                          spawn replacement OR escalate to Andrew with a specific
+                          STALE-lane finding ("agent X has been STALE 3 cycles;
+                          needs your call: replace, redirect, or accept"). Multi-
+                          cycle staleness without intensifying response is itself
+                          a finding — the rubric exists to drive action, not to
+                          log classifications.
 - stop_conditions:        MSTR halts and reports to Andrew when: the active queue is
                           genuinely drained AND the exhaustive validation sweep is
                           complete with every finding either cleared or chartered; OR
