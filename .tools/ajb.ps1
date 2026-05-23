@@ -120,3 +120,31 @@ function ajb {
         Pop-Location
     }
 }
+
+# spawn-agent: terminal-global wrapper that invokes .tools\spawn-agent.ps1 with
+# its absolute path. Means you can type `spawn-agent 0.0.0_AB_MSTR` from any
+# directory in PowerShell after this file is dot-sourced (typically once via
+# $PROFILE -- see top of file). Otherwise the bare `.tools\spawn-agent.ps1`
+# form fails from non-workspace cwds because PowerShell's auto-module-load
+# misreads the leading `.tools` as a module name unless preceded by `.\`.
+function spawn-agent {
+    [CmdletBinding()]
+    param(
+        [Parameter(Mandatory = $true, Position = 0)]
+        [string]$Serial,
+
+        [Parameter(Position = 1, ValueFromRemainingArguments = $true)]
+        [string[]]$Extra
+    )
+
+    $script = 'C:\Users\AndrewBerman\Desktop\ajb_workspace\.tools\spawn-agent.ps1'
+    if (-not (Test-Path $script)) {
+        Write-Error "spawn-agent: script not found at $script"
+        return
+    }
+    if ($Extra) {
+        & $script $Serial @Extra
+    } else {
+        & $script $Serial
+    }
+}
