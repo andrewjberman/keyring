@@ -85,6 +85,16 @@ grain). For each live agent, classify:
 | `STANDING_BY` | Alive but no queued work AND no chartered next-step AND no inbound routing asks. |
 | `BLOCKED` | Open work but waiting on a NAMED external dependency. Distinct from STALE — BLOCKED has a verifiable wait-target; STALE does not. |
 
+**Tracking `consecutive_stale_cycles` (per agent, persisted across cycles
+— D-001 v1.5 BOTTLENECK-RESPONSE INTENSIFICATION enabler).** Each cycle
+reads the previous cycle's population scan (from `CY-(NNNN-1).md`) and
+updates a per-agent `consecutive_stale_cycles` counter — incremented when
+the agent stays in STALE / STANDING_BY-with-convergent-asks / BLOCKED
+across two cycles; reset to 0 when the agent classifies PROGRESSING. The
+counter persists in the cycle record's population scan table as an
+explicit column. The counter drives the bottleneck-response intensification
+ladder in Step 4 Population management.
+
 Also identify two cross-population states:
 
 - **Unaddressed work surface** — a workstream or TO family with no live
@@ -213,13 +223,50 @@ work itself is still authored via `/charter` and delegated through Tier 1.
 A spawn without a follow-on charter is a wasted slot; a charter without
 staffing is a stalled lane. Both move together.
 
+**Bottleneck-response intensification (D-001 v1.5).** When an agent's
+`consecutive_stale_cycles` counter (from Step 1(b)) exceeds 1, the
+response intensifies per the D-001 success_signal ladder:
+
+| `consecutive_stale_cycles` | Required action |
+|---|---|
+| 1 | Nudge via MCP (the default STALE response). |
+| 2 | Re-route specific work to a peer (different lane that can absorb) OR CTO-absorb-via-charter (CTO takes a specific surface, freeing the STALE agent for what they ARE doing). |
+| 3 | Kill + spawn replacement OR escalate to Andrew with a specific STALE-lane finding ("agent X has been STALE 3 cycles; needs your call: replace, redirect, or accept"). |
+
+Multi-cycle staleness without intensifying response is itself a finding
+per the D-001 success_signal — MSTR does NOT nudge-nudge-nudge and call
+it done; the ladder MUST step up. The intensification is mandatory; the
+specific choice within each step (e.g., re-route vs CTO-absorb at cycle
+2) is judgment.
+
+**Operational-first gate (D-001 v1.5 OPERATIONAL THROUGHPUT).** Before
+completing the cycle record at Step 6, count operational actions this
+cycle: nudges sent, spawns executed, kills executed, charters with
+in-Directive work content issued. META work (rubric refinements to
+`/govern` itself, Directive-amendment proposals to CTO, ledger
+housekeeping, /mstr_review self-modifications) does NOT count toward the
+operational threshold. If the operational count is 0 and the cycle
+produced META work, the cycle's `status` becomes `meta-only-finding`
+(not `complete`) and `bounds_status` records `META_ONLY_CYCLE_VIOLATION`.
+The next cycle's Step 1(b) reads this and prioritizes operational action
+explicitly — the META-only-finding cycle is itself a finding to
+remediate, not a precedent.
+
 ## Step 5 — Cycle bounds
 
 Hold the per-cycle ceilings (Stakes Matrix → Cycle execution bounds):
 `max_new_ledger_entries_per_cycle` 5 · `max_delegations_per_cycle` 3 ·
-`max_s2_per_cycle` 2. A cycle that would exceed a hard bound **stops at the
-bound**, records `bounds_status: bound-hit` and which bound, and re-arms — it
-does not push past the ceiling.
+`max_s2_per_cycle` 2 · **`max_meta_amendments_per_cycle` 1** ·
+**`meta_amendment_requires_operational_action: true`** (D-001 v1.5
+ANTI-META-RECURSION GUARD — at most one rubric-refinement /
+Directive-amendment proposal / self-modification charter per cycle, AND
+that META charter requires ≥1 paired operational action landing the same
+cycle). A cycle that would exceed a hard bound **stops at the bound**,
+records `bounds_status: bound-hit` and which bound, and re-arms — it
+does not push past the ceiling. A META amendment attempted without a
+paired operational action is a hard `META_RECURSION_VIOLATION` — the
+META work is not committed; the cycle is forced to find an operational
+action first.
 
 ## Step 6 — Cycle record + review cadence
 
