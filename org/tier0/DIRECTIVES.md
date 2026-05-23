@@ -1,9 +1,9 @@
 # DIRECTIVES — The Active Mandate for `0.0.0_AB_MSTR`
 
-**Status:** v1.6 — D-001 success_signals extended with FORK-STALL ESCALATION (worker fork → COO first-line 1-cycle resolution → MSTR mechanical resolution at cycle 2 → Andrew escalation for architecturally deep forks); v1.5 OPERATIONAL THROUGHPUT + ANTI-META-RECURSION GUARD + BOTTLENECK-RESPONSE INTENSIFICATION retained; D-002 + D-003 unchanged; format + authoring protocol ratified v1.2
+**Status:** v1.6 — D-001 success_signals extended with FORK-STALL ESCALATION + mechanical-resolution toolkit (worker fork → COO first-line 1-cycle resolution → MSTR mechanical resolution at cycle 2 via three-option toolkit: direct directive / SPAWN-WITH-DIRECTION / kill+replace → Andrew escalation for architecturally deep forks); v1.5 OPERATIONAL THROUGHPUT + ANTI-META-RECURSION GUARD + BOTTLENECK-RESPONSE INTENSIFICATION retained; D-002 + D-003 unchanged; format + authoring protocol ratified v1.2
 **Authority:** Andrew authors; the CTO transcribes. A Directive's mandate is Andrew's alone — MSTR may *propose* and the CVO may review and recommend, but a Directive is added, amended, or retired only by Andrew, via the Directive Authoring Protocol below. A Tier-0 law document, never CVO-ratifiable (Constitution Art. III, XIV). (owned-paths: `TIER0_LAW`, `permitted_agents: []` — no standing agent write access.)
 **Version:** 1.6 · **Last updated:** 2026-05-23
-**Amendment history:** v1.1 — Directive format tightened to a full schema (external Phase-3 review). v1.2 — Directive Authoring Protocol codified (Andrew directive 2026-05-22). v1.3 — D-001 rewritten from "Finish ADVI" (task-altitude) to the broad two-phase whole-workspace mandate; the ADVI-specific substance moved to the ADVI_VALFIN PRD / project (Andrew directive 2026-05-22). v1.4 — D-001 PHASE 2 amended to verify-channel methodology (mechanical/novel/meta) + retroactive Completed-sweep; meta-analysis success signal (holistic-purpose alignment) added to PHASE 2; D-002 standing maintenance via comp-* dev added; D-003 standing CL fabric facilitation added. (Andrew architectural ruling 2026-05-22; MSTR LD-0006 proposal feedback folded.) v1.5 — D-001 success_signals extended with OPERATIONAL THROUGHPUT (every cycle must produce ≥1 operational action; META-only cycles are findings, not successes) + ANTI-META-RECURSION GUARD (max 1 rubric-amendment charter per cycle, paired with ≥1 operational action) + BOTTLENECK-RESPONSE INTENSIFICATION (STALE-for-N-cycles ladder: nudge → re-route or CTO-absorb → kill+spawn or escalate-to-Andrew). (Andrew directive 2026-05-23; structural fix for the 5-cycle META-drift pattern post-COO-bottleneck.) v1.6 — D-001 success_signals extended with FORK-STALL ESCALATION: a worker fork (competing paths / ambiguous requirements / "which way" blocker) is COO first-line within 1 /govern cycle; observed STALE-on-fork in 2 consecutive Step 1(b) scans triggers MSTR mechanical resolution at discretion (heuristic: reversible / cheapest / most-information-producing path); architecturally deep forks still escalate to Andrew rather than mechanically resolve. (Andrew sovereign directive 2026-05-23T16:28Z; MSTR LD-0020 charter.)
+**Amendment history:** v1.1 — Directive format tightened to a full schema (external Phase-3 review). v1.2 — Directive Authoring Protocol codified (Andrew directive 2026-05-22). v1.3 — D-001 rewritten from "Finish ADVI" (task-altitude) to the broad two-phase whole-workspace mandate; the ADVI-specific substance moved to the ADVI_VALFIN PRD / project (Andrew directive 2026-05-22). v1.4 — D-001 PHASE 2 amended to verify-channel methodology (mechanical/novel/meta) + retroactive Completed-sweep; meta-analysis success signal (holistic-purpose alignment) added to PHASE 2; D-002 standing maintenance via comp-* dev added; D-003 standing CL fabric facilitation added. (Andrew architectural ruling 2026-05-22; MSTR LD-0006 proposal feedback folded.) v1.5 — D-001 success_signals extended with OPERATIONAL THROUGHPUT (every cycle must produce ≥1 operational action; META-only cycles are findings, not successes) + ANTI-META-RECURSION GUARD (max 1 rubric-amendment charter per cycle, paired with ≥1 operational action) + BOTTLENECK-RESPONSE INTENSIFICATION (STALE-for-N-cycles ladder: nudge → re-route or CTO-absorb → kill+spawn or escalate-to-Andrew). (Andrew directive 2026-05-23; structural fix for the 5-cycle META-drift pattern post-COO-bottleneck.) v1.6 — D-001 success_signals extended with FORK-STALL ESCALATION + mechanical-resolution toolkit: a worker fork (competing paths / ambiguous requirements / "which way" blocker) is COO first-line within 1 /govern cycle; observed STALE-on-fork in 2 consecutive Step 1(b) scans triggers MSTR mechanical resolution at discretion via three-option toolkit — (a) direct directive (informational block), (b) SPAWN-WITH-DIRECTION (prompt/context block, COO pre-places fresh TO with path baked in + MSTR spawns next-free tilde-lane), (c) kill+replace (unrecoverable sessions); heuristic: reversible / cheapest / most-information-producing; architecturally deep forks still escalate to Andrew. (Andrew sovereign directives 2026-05-23T16:28Z + 16:40Z; MSTR LD-0020 + LD-0021 unified charters.)
 
 ---
 
@@ -215,14 +215,31 @@ enough that "faithful extension" stays legible.
                           two consecutive Step 1(b) scans, tracked via
                           per-agent per-fork `consecutive_fork_stall_cycles`
                           counter) triggers MSTR **mechanical resolution at
-                          discretion** — heuristic: pick the reversible /
-                          cheapest / most-information-producing path; ledger the
-                          choice with the fork reference + COO-cycle + chosen
-                          path. Architecturally deep forks (product-strategy
-                          calls, new-Directive class, S3/S4 procurement) still
-                          escalate to Andrew rather than mechanically resolve.
-                          Mechanical-resolution-without-escalation when the fork
-                          is architecturally deep is itself a finding.
+                          discretion** via a three-option toolkit:
+                          (a) **Direct directive** — when the block is
+                          informational (agent would proceed if told the
+                          answer): MSTR ledgers the chosen path; Tier 1
+                          (typically COO) authors the resolving TO or message
+                          to the stuck agent. (b) **SPAWN-WITH-DIRECTION** —
+                          when the block is prompt/context (a stuck session
+                          that wouldn't move forward even with the answer in
+                          hand): COO pre-places a fresh TO + inbox message
+                          with the recommended path baked in; MSTR spawns a
+                          new agent under the next-free tilde-lane to pick it
+                          up; the original session is killed or left to
+                          time-out per the situation. (c) **Kill + replace**
+                          — variant of (b) for unrecoverable sessions where
+                          leaving the original to time-out would block
+                          downstream work; (b) + explicit kill first.
+                          Heuristic for choosing among (a)/(b)/(c): pick the
+                          reversible / cheapest / most-information-producing
+                          path. Ledger the choice with the fork reference +
+                          COO-cycle + chosen-option + chosen-path.
+                          Architecturally deep forks (product-strategy calls,
+                          new-Directive class, S3/S4 procurement) still
+                          escalate to Andrew rather than mechanically resolve;
+                          mechanical-resolution-without-escalation when the
+                          fork is architecturally deep is itself a finding.
 - stop_conditions:        MSTR halts and reports to Andrew when: the active queue is
                           genuinely drained AND the exhaustive validation sweep is
                           complete with every finding either cleared or chartered; OR
