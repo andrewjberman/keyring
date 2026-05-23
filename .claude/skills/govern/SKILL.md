@@ -61,6 +61,15 @@ population against the workstream's actual shape. This is a **two-dimensional
 scan** — the work side surfaces what needs doing; the population side surfaces
 who should be doing it (or whether the right population is even alive).
 
+**Step 1(b) IS the continuous stimulus scan.** Its output is the input to
+Step 4's meta-coordination authority — the FORK-STALLED / STALE / BLOCKED
+counters drive the mechanical-resolution toolkit decisions. Scan without
+acting is META-only; action without scan is uninformed. They run together
+every cycle (Andrew sovereign framing 2026-05-23T16:40Z: "constantly
+running stimulus scans to know what resources are allocated where and then
+you have meta analysis/meta coordination capabilities via govern that
+dictate how to resolve the unresolved to keep work flowing").
+
 **(a) Work scan.** Per active Directive, classify `progressing | stalled |
 drifted | gap | blocked` and record the evidence, its confidence, and any
 uncertainty in the cycle record's scan table.
@@ -200,7 +209,16 @@ spawn / kill / nudge primitives. Resource-allocation discipline:
 | Unaddressed TO surface | **spawn** (provision new lane) |
 | Wrong-mix (population ≠ queue shape) | **kill + spawn** (swap) |
 | FORK-STALLED cycle=1 | **nudge COO** to resolve (COO is first-line on worker forks per D-001 v1.6) |
-| FORK-STALLED cycle=2 | **MSTR mechanically resolves** at discretion — heuristic: reversible / cheapest / most-information-producing path; ledger LD entry referencing fork + COO-cycle + chosen path. **Exception:** architecturally deep forks (product strategy, new Directive, S3/S4 procurement) escalate to Andrew rather than mechanically resolve. |
+| FORK-STALLED cycle=2, block=informational | **(a) Direct directive** — MSTR ledgers the chosen path; Tier 1 (COO typically) authors the resolving TO or MCP to the stuck agent. Use when the agent would proceed if simply told the answer. |
+| FORK-STALLED cycle=2, block=prompt/context | **(b) SPAWN-WITH-DIRECTION** — COO pre-places a fresh TO + inbox message with the recommended path baked in; MSTR spawns a new agent under the next-free tilde-lane to pick it up; original session is killed or left to time-out per situation. Use when the stuck agent wouldn't move forward even with the answer in hand (compacted context, lost thread, etc.). |
+| FORK-STALLED cycle=2, session unrecoverable | **(c) Kill + replace** — variant of (b) for sessions where leaving the original to time-out would block downstream work; (b) + explicit kill first. |
+| FORK-STALLED cycle=2, architecturally deep | **Escalate to Andrew** — product strategy / new-Directive class / S3-S4 procurement remains sovereign-only. Mechanical-resolution-when-architecturally-deep is itself a finding. |
+
+**Choosing among (a)/(b)/(c):** heuristic = pick the reversible / cheapest /
+most-information-producing path. Ledger the choice with fork reference +
+COO-cycle + chosen-option + chosen-path. The three options form a graceful
+intensification ladder within cycle=2 itself: (a) requires zero population
+change; (b) adds a population slot; (c) swaps a population slot.
 
 **Spawn.** `.tools/spawn-agent.ps1 <serial>` opens a new PowerShell window and
 launches the agent hands-free (via `ajb -Headless`; no Y/N prompt stall). Use
