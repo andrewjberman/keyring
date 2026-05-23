@@ -50,6 +50,17 @@ function ajb {
         [Parameter(Mandatory = $true, Position = 0)]
         [string]$Serial,
 
+        # -Headless: drop --dangerously-load-development-channels so the agent
+        # launches fully hands-free (no Y/N startup confirmation prompt). Used
+        # by spawn-agent.ps1 for autonomous MSTR-driven spawns where no human
+        # is at the keyboard to clear the prompt. Safe to drop: org/mcp/server.py
+        # lines 299-300 confirm Claude Code silently ignores the custom
+        # notifications/claude/channel mechanism the flag enables -- current
+        # push uses standard MCP send_log_message + piggyback, neither of which
+        # requires the flag. Without -Headless, the legacy ad-hoc launch path
+        # is unchanged (flag still set, Y prompt still surfaces for the human).
+        [switch]$Headless,
+
         [Parameter(Position = 1, ValueFromRemainingArguments = $true)]
         [string[]]$Extra
     )
@@ -93,11 +104,18 @@ function ajb {
         # Claude Code's permission LAYER only; the CLAUDE.md non-negotiables
         # (owned-paths pre-commit, safe-commit, safe-deploy/safe-apply, HALTGT)
         # are git-hook + wrapper enforced and remain fully in force.
-        # --dangerously-load-development-channels enables the opal-agent-comms
-        # MCP push channel (instant inter-agent message delivery). The `--`
-        # terminates the greedy channel-list parse so $firstMessage is the first
-        # user message, not another channel entry.
-        claude --dangerously-skip-permissions --dangerously-load-development-channels server:opal-agent-comms -- $firstMessage
+        # --dangerously-load-development-channels: legacy flag that surfaces a
+        # Y/N startup confirmation prompt. It enabled a custom
+        # notifications/claude/channel push mechanism that Claude Code silently
+        # ignores (see org/mcp/server.py:299-300). Skipped in -Headless mode so
+        # autonomous spawns never stall on the Y prompt.
+        $claudeArgs = @('--dangerously-skip-permissions')
+        if (-not $Headless) {
+            $claudeArgs += @('--dangerously-load-development-channels', 'server:opal-agent-comms')
+        }
+        $claudeArgs += @('--', $firstMessage)
+
+        & claude @claudeArgs
     } finally {
         Pop-Location
     }
