@@ -50,6 +50,18 @@ For OUT-OF-SCOPE issues, follow the normal CVO findings pattern: MCP the respons
 
 - Lane reassignments, mandate changes, Tier-0 decisions, project cancellations — these are not CVO's call. Flag to Andrew via MCP `0.0.0_AB_MSTR` (or directly if MSTR is down per his per-instance authorization).
 
+### META-CHECK HEURISTIC (Step 2c.4 SCAN — added per MSTR charter LD-0012, 2026-05-23)
+
+When a commit body / session log / artifact surfaces a numeric assertion, run these heuristics. Any failure triggers a substance-meta finding (Step 3, routes to code-owner + COO + MSTR via verify-channel verdict). The SCAN extends CVO's reach; the FIX still belongs to the code-owner.
+
+1. **Magnitude vs surrounding context.** Does the number's magnitude make sense given (a) book size / asset class / advisor scale, (b) prior values for the same metric, (c) typical-range expectations for this asset class? Example: a -$54.8M `capital_gains_ttm` on a ~$200M book reads as -27% of book — sense-test against what kind of event would have to occur (market drop, mass selling, account churn) and whether such an event is consistent with the surrounding period.
+2. **Sign expectations.** Does a metric named "growth" / "gain" / "balance" / "yield" coming out wrong-signed (or zero) admit a reasonable explanation? Wrong-sign on a metric whose name implies a direction is a strong meta-signal.
+3. **Naming-vs-semantic alignment.** Does the field name match what the code actually computes? The LD-0012 class: `capital_gains_ttm` (name says "realized TTM gains") computed as delta cumulative UNREALIZED (per `INF_D_02.advisor_client_detail.py:627-677`). Portal display had already been renamed (INFFIN.019 Fix C) but the data layer kept the misleading name — anyone reading the raw field hits the same mismatch. **Naming mismatches in data layers cascade through every downstream reader (analysts, agents in session logs, future debugging).**
+4. **Verdict shape.** When emitting a substance-meta finding, structure as GREEN/YELLOW/RED with MECHANICAL / NOVEL / META layered evidence per `/verify-channel` skill discipline. The LD-0012 verdict file at `logs/2026-05-23/spot_check_0453Z_LD0012_capital_gains_verdict.md` is the worked example template.
+5. **D-001 v1.4 META invariant.** A mechanically-functional output that fails this test IS NOT a success. It is a finding that gets chartered to a fix.
+
+**What this heuristic is NOT.** Not a numeric-correctness audit (that's the code-owner's gold-script test suite). Not a full forensic dive (cap at a sharpest-test probe per cycle; deeper investigations route to the producer). Not a substitute for the producer's own Phase-N validation — but a cross-check on whether the producer's framing of their finding got the semantic right (the LD-0012 case: DS flagged it as "TTM rolling realized" — wrong, the computation is delta unrealized — and that semantic confusion is what CVO catches independently).
+
 ---
 
 ## The cycle — every 20 minutes
@@ -82,12 +94,14 @@ For each surviving commit:
    - A project marked complete in JSON — is the `completed` date set + REGISTRY row moved + PRD `Status:` updated (the Closure Discipline 3-step)?
    - A new doc/PRD — are inbound cross-refs updated?
    - A deploy commit — did the source-map / manifest / `CHANGELOG.json` get updated in the same commit (Rule 4)?
+4. **Substance meta-check on numeric assertions** (added per MSTR charter LD-0012, 2026-05-23 Andrew directive). When a commit body / session log / changed artifact surfaces a number with magnitude (currency, percentage, count), apply the **META-CHECK HEURISTIC** from the Fix-authority section above (magnitude-vs-context, sign expectations, naming-vs-semantic alignment, D-001 v1.4 META invariant). A mechanically-functional output that fails the meta-check IS NOT a success — it is a finding that routes to the code-owner via a verify-channel-style verdict (Step 3 "substance-meta finding" branch). This is the SCAN extension; FIX still belongs to the producer via the safe-deploy chain.
 
 ### Step 3 — Decide: nothing / fix / escalate
 
 - **Nothing wrong → quiet log line, advance checkpoint, done.** Three or more consecutive quiet cycles → no log at all (just checkpoint advance + heartbeat refresh).
 - **Misalignment, IN SCOPE for CVO → fix it directly** under CVO author line via `.tools/safe-commit.sh`. Then MCP COO with: what was misaligned, what was fixed, commit hash. One MCP per fix; multiple fixes in a cycle = one MCP with a list.
 - **Misalignment, OUT OF SCOPE → MCP the responsible driver + CC COO** with a priority-marked finding per the normal CVO discipline. Do not touch the file.
+- **Substance-meta finding (numbers fail the META-CHECK HEURISTIC) → MCP the responsible driver + CC COO + MSTR** with a verify-channel-style verdict (MECHANICAL / NOVEL / META layered, GREEN/YELLOW/RED shape) per the LD-0012 worked example. **Never CVO-fixed directly**, even if the fix would be metadata-only (e.g., a field rename) — substance findings always route to the code-owner via the safe-deploy chain. The substance-meta SCAN is the verifier extension; the FIX routing is unchanged.
 - **Beyond-CVO judgment call (lane reassignment, scope decision, cancellation) → escalate to MSTR / Andrew.**
 
 ### Step 4 — Log + re-arm

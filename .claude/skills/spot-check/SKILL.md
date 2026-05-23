@@ -59,17 +59,19 @@ If CVO, continue.
 - `git log {checkpoint}..origin/CLOUD --pretty=format:"%h %an %s"`.
 - **Filter:** drop CVO's own author-line commits; drop pure session-log / doc-hygiene commits unless they carry a status/registry claim.
 
-### 2c — Per-commit work + alignment check
+### 2c — Per-commit work + alignment check + substance meta-check
 For each surviving commit:
 
 1. **What system did it touch?** `git show --name-only` → classify (gold/silver/bronze script, Lambda, Terraform, portal, TO file, project JSON, REGISTRY, doc, brief, infra `.tools/`, Tier-0, etc.).
 2. **Does the system still work?** Cheapest applicable verify-channel check (charter §2 Step 2 lists the per-class checks). For gold scripts: `comp-pipescript deployed` + downstream artifact landed. For Lambda code: `infra/aws/terraform/{pipeline}/CHANGELOG.json` shows deploy + Lambda LastModified consistent. For TO files: `<status>` claims consistent with linked commit/log/artifact. For project JSON / REGISTRY: in-sync with TO statuses + each other.
 3. **Cross-doc alignment.** TO marked complete → REGISTRY entry still in Active? Project JSON status=complete → `completed` date set + REGISTRY row moved + PRD `Status:` updated (the Closure Discipline 3-step)? New doc/PRD → inbound cross-refs updated? Deploy commit → source-map / manifest / `CHANGELOG.json` updated in the same commit?
+4. **Substance meta-check on numeric assertions** (added per MSTR charter LD-0012, 2026-05-23 — Andrew directive "3.0.0 should be all over that with their spot check skill"). When a commit body / session log / changed artifact surfaces a number with magnitude, apply 4 quick heuristics: **(a) Magnitude vs context** — does this number make sense given book size, prior values, asset-class typical ranges? Example trigger: a -$54.8M `capital_gains_ttm` on a ~$200M book reads as -27% of book — sense-test what kind of event would have to occur and whether that event is consistent with the surrounding period. **(b) Sign expectations** — a metric named "growth"/"gain"/"balance"/"yield" coming out wrong-signed (or zero) needs to admit a reasonable explanation. **(c) Naming-vs-semantic alignment** — does the field name match what the code actually computes? Naming mismatches in data layers cascade through every downstream reader (analysts, agents in session logs, future debugging) — the LD-0012 class. **(d) D-001 v1.4 META invariant** — a mechanically-functional output that fails this test IS NOT a success; it is a finding that gets chartered to a fix. See `SPOT_CHECK.md` "META-CHECK HEURISTIC" section for the canonical reference + the LD-0012 worked example at `logs/2026-05-23/spot_check_0453Z_LD0012_capital_gains_verdict.md`.
 
-### 2d — Decide per item: nothing / fix / escalate
+### 2d — Decide per item: nothing / fix / route-substance / escalate
 - **Nothing wrong** → no action. Quiet.
 - **Misalignment, IN SCOPE for CVO fix** → make the fix under CVO author line via `.tools/safe-commit.sh`. Then MCP COO with the fix description + commit hash. Multiple fixes in one cycle = one MCP with a list.
 - **Misalignment, OUT OF SCOPE** → MCP the responsible driver + CC COO with priority-marked finding (P0/P1/P2 per `prompt.md` §3). Do NOT touch the file.
+- **Substance-meta finding (numbers fail the META-CHECK HEURISTIC)** → MCP the responsible driver + CC COO + MSTR with a verify-channel-style verdict (MECHANICAL / NOVEL / META layered, GREEN/YELLOW/RED shape) per the LD-0012 pattern. **Never CVO-fixed directly**, even if the fix would be metadata-only (e.g., a field rename) — substance findings always route to the code-owner via the safe-deploy chain. The substance-meta SCAN is the verifier extension; the FIX routing is unchanged.
 - **Beyond-CVO judgment** → escalate to MSTR / Andrew.
 
 Fix-scope: see `SPOT_CHECK.md` "Fix authority — explicit scope" for the canonical IN / OUT / ESCALATE lists. Summary:
