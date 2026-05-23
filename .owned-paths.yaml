@@ -40,7 +40,8 @@ lanes:
     permitted_agents:
       - 1.0.0_SA_CTO
       - 2.0.0_SA_COO
-    description: "Base workspace execs — CTO + COO (not project-scoped)"
+      - 3.0.0_SA_CVO
+    description: "Base workspace execs — CTO + COO + CVO (not project-scoped). 3.0.0_SA_CVO added 2026-05-23 by COO: CVO is now a Tier-1 Claude-agent exec per Andrew 2026-05-22 ruling (was Codex no-commit under prior model); lane membership catches up. Closes the gap caught by CVO /spot-check cycle 1 on ANY_EXEC_OR_AE REGISTRY-write attempt."
 
   COMP_LEARNS:
     permitted_agents:
@@ -58,9 +59,11 @@ lanes:
     permitted_agents:
       - 1.0.0_SA_CTO
       - 2.0.0_SA_COO
+      - 3.0.0_SA_CVO
       - 1.1.0_SA_CTO
       - 2.1.0_SA_COO
-    description: "Any exec agent — base or project-scoped CTO/COO"
+      - 3.1.0_SA_CVO
+    description: "Any exec agent — base or project-scoped CTO/COO/CVO. 3.0.0_SA_CVO + 3.1.0_SA_CVO added 2026-05-23 by COO: CVO is now Tier-1 Claude exec per Andrew 2026-05-22 ruling; same gap as BASE_EXEC + ANY_EXEC_OR_AE."
 
   ANY_CTO:
     permitted_agents:
@@ -392,15 +395,18 @@ lanes:
     permitted_agents:
       - 1.0.0_SA_CTO
       - 2.0.0_SA_COO
+      - 3.0.0_SA_CVO
       - 1.1.0_SA_CTO
       - 2.1.0_SA_COO
+      - 3.1.0_SA_CVO
       - 0.5.0_AE_OpalETL
       - 0.5.0_AE_OpalETL~B
       - 0.6.0_AE_PartnerETL
       - 0.6.1_AE_PartnerETL
       - 0.7.0_AE_CloudOps
       - 0.7.0_AE_CloudOps~B
-    description: "Execs + AEs — used for project JSONs (AE updates own project state) and hook-config files (AE 0.7 implements hook ecosystem)"
+      - 0.7.0_AE_CloudOps~C
+    description: "Execs + AEs — used for project JSONs (AE updates own project state) and hook-config files (AE 0.7 implements hook ecosystem). 3.0.0_SA_CVO + 3.1.0_SA_CVO added 2026-05-23 by COO: CVO is now Tier-1 Claude exec per Andrew 2026-05-22 ruling; enables CVO /spot-check fix-authorized alignment-metadata commits without routing every diff to COO. 0.7.0_AE_CloudOps~C added 2026-05-23 by COO: ~C is the ADVI_DEMOV1 AE infra lane (LD-0008 spawn); shares same tilde-lane gap pattern."
 
 # =========================================================================
 # PATHS
