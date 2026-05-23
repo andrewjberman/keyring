@@ -106,6 +106,13 @@ while true; do
             [ -f "$msg" ] || continue
             dest="$WATCH_DIR/read/$(basename "$msg")"
             mv "$msg" "$dest" 2>/dev/null || continue
+            # Deterministic delivery sentinel: append the delivered filename to
+            # .unread-deliveries. The supervisor /loop body Step 0 (org/XXX.md)
+            # cats this file every tick as a failsafe against the agent replying
+            # to the task-notification without reading the messages above. The
+            # untracked auto-respawn copy also appends here, so deliveries it
+            # makes silently (no interrupt) are still recorded for the next tick.
+            printf '%s\n' "$(basename "$dest")" >> "$WATCH_DIR/.unread-deliveries"
             echo "===================================================================="
             echo "FROM: $(basename "$dest")"
             echo "===================================================================="
@@ -114,6 +121,11 @@ while true; do
         done
 
         echo "===================================================================="
+        echo ""
+        echo "DETERMINISTIC SENTINEL: $WATCH_DIR/.unread-deliveries"
+        echo "  Lists the message(s) just delivered. After reading and acting on"
+        echo "  them, delete the file. The supervisor /loop body Step 0 cats it"
+        echo "  every tick as a failsafe -- see org/XXX.md '/loop' section."
         echo ""
         # Respawn next watcher (untracked). Sleep 1s first so this instance
         # exits before the new copy starts -- otherwise the single-watcher guard
