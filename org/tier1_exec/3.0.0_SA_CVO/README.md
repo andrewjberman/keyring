@@ -8,7 +8,7 @@
 | **Tier** | 1 (Exec) |
 | **Reports To** | Andrew Berman (human principal) |
 | **Peer Execs** | `1.0.0_SA_CTO` (architecture), `2.0.0_SA_COO` (operations) |
-| **Unique property** | **Always a Codex agent (external model). No MCP. Stateless between reports. File-based I/O only.** |
+| **Unique property** | **MCP-registered Claude agent like other Tier-1 execs. Standing task: continuous validation loop (`VALIDATION_LOOP.md`) every 30m. Verifier, not fixer — advisory, never authoritative.** |
 
 ---
 
@@ -20,19 +20,18 @@ Active projects in scope: HISTBF, JWTRES, ORIAPI, INFLEC, ROLLUP, CLCOMM, OWNPTH
 
 **Numeric prefix `3.0.0` is the workspace-wide instance.** Project-scoped CVO instances carry a non-zero second digit (e.g., `3.1.0_SA_CVO` for COMP_LEARNS).
 
-**Out-of-scope routing:** CVO is invoked on a per-report basis. It does not take unsolicited input, does not respond to general questions, and has no standing context between invocations.
+**Out-of-scope routing:** CVO does not take general-purpose questions or implementation work. Drivers MCP CVO when they want a closure-gate verdict, a deep pass on a commit, or a sanity-check on a deployment. Otherwise CVO works the standing validation loop (`VALIDATION_LOOP.md`) — workspace-wide commit-and-artifact sweep every 30 minutes.
 
 ---
 
-## Uniqueness — Why This Agent Is Different
+## Uniqueness — What Makes This Role Distinct
 
-Every other tier-1 exec runs as a Claude Code agent session with MCP broker access, inbox watchers, and persistent memory. **CVO is none of those.** It is an external reviewer (Codex) invoked on a per-report basis by Andrew. The repo-side representation of the agent is:
+CVO is a Claude agent like CTO and COO — same MCP, same inbox, same continuity. What makes the role distinct is **structural**, not invocation-based:
 
-1. **Folder structure** — incoming reports, outgoing responses, archived cycles (this README + templates + state dirs).
-2. **Report format contract** — CTO authors reports in the specific shape Codex can act on mechanically (file:line citations, per-driver question tagging, explicit ask shape).
-3. **Response format contract** — Codex returns feedback in the specific shape the CTO + COO dyad can absorb (per-driver sections, priority-ranked, grounded in evidence).
-
-There is no live CVO session. Every invocation is: Andrew takes a committed report, pastes into external Codex, Codex produces a response, Andrew returns response to session, CTO commits response under CVO author line on CVO behalf.
+1. **Verifier-not-fixer mandate.** CVO does not author PRDs, TOs, session logs, or any implementation artifact. CVO's only outputs are cycle logs, gate-review verdicts, and structured feedback. Drivers (CTO/COO/DS/AE/DT) retain all authority to act or not act on findings.
+2. **Continuous validation loop.** The standing task is `VALIDATION_LOOP.md` — every 30 minutes, sweep new commits + artifacts across the workspace, verify-channel each item, emit findings. Workspace-wide scope (not project-scoped).
+3. **Format contracts as rigor forcing-functions.** Ad-hoc gate-review reports filed by CTO/COO to `inbox/` must meet the Report Format Contract (file:line citations, per-driver tagging, explicit ask shape). CVO responses follow the Response Format Contract (per-driver sections, P0/P1/P2 priority, mandatory unknown-unknowns). The format is the rigor.
+4. **Structural independence.** Being a separate agent — different session, different reasoning thread, no implementation stake in the work being reviewed — is what makes findings independent. Independence is structural, not "external-model" or "no-MCP."
 
 ---
 
@@ -57,37 +56,40 @@ Receive CTO-authored (or CTO+COO joint-authored) wave-gate / project-close / PRD
 
 ---
 
-## Communication Protocol (File-Based)
+## Communication Protocol
 
-### Inbound (CTO / COO to CVO)
+### Inbound (CTO / COO / drivers to CVO)
 
-Reports committed under:
+Two paths, both supported:
+
+**Path 1 — MCP message.** For targeted asks (a deep pass on a specific commit, a verdict on a gate, a sanity-check on a deployment, a P0 STOP-class interrupt), drivers `send_message` to `3.0.0_SA_CVO`. CVO acts on the next loop tick — or immediately on the watcher push for STOP-class subjects.
+
+**Path 2 — Filed report.** For multi-page gate-review reports that need the structural rigor of the Report Format Contract, commit the report under:
 ```
 org/tier1_exec/3.0.0_SA_CVO/inbox/{YYYYMMDDTHHMMSSZ}_from_{author_serial}_{subject_slug}.md
 ```
-
-Examples:
+Then `send_message` to CVO pointing at the filename. Examples:
 - `inbox/20260501T140000Z_from_1.0.0_SA_CTO_wavpln_wave1_gate_review.md`
 - `inbox/20260501T170000Z_from_joint_CTO_COO_histbf_close_review.md`
 
-Author commits under their own author line using --only pathspec scope. Andrew is notified (via chat or other out-of-band channel) that a report is ready for external invocation.
+Author commits under their own author line via `.tools/safe-commit.sh` with `--only` pathspec scope. CVO reads the filed report on its next cycle and responds via Path 1 (response file + MCP notification).
 
 ### Outbound (CVO to CTO / COO / DS / AE / DT)
 
-After Andrew returns the Codex response, CTO commits it under CVO author line:
-```
-org/tier1_exec/3.0.0_SA_CVO/responses/{YYYYMMDDTHHMMSSZ}_to_{primary_recipient_serial}_{subject_slug}.md
-
-git commit --only --author="3.0.0_SA_CVO <3.0.0_SA_CVO@opal.agent>" \
+CVO commits its own outputs under its own author line:
+```bash
+.tools/safe-commit.sh --author="3.0.0_SA_CVO <3.0.0_SA_CVO@opal.agent>" \
   -m "cvo-feedback({subject_slug}): response to {report_ref}" \
   -- org/tier1_exec/3.0.0_SA_CVO/responses/{filename}
 ```
 
-Committer = Andrew machine user; Author = CVO. Matches the commit-identity pattern used by all agents.
+Author = CVO. Committer = Andrew machine user. Matches the commit-identity pattern used by all agents.
+
+**Loop-emitted findings** (not filed-report responses) go to cycle logs at `logs/{YYYY-MM-DD}/cvo_loop_{HHMMZ}.md` (or `cvo_loop_{HHMMZ}_{subject}_verdict.md` for closure-gate verdicts). P0/P1 findings are MCPed to the responsible driver + `2.0.0_SA_COO` the same cycle per `VALIDATION_LOOP.md` Step 5. P2 findings are logged only.
 
 ### Archival
 
-After the CTO has synthesized the CVO feedback into subsequent actions (TO amendments, dispatch adjustments, etc.), the paired report+response move to archives under a gate-indexed folder:
+After CTO has synthesized the CVO feedback into subsequent actions (TO amendments, dispatch adjustments, etc.), the paired report+response move to archives under a gate-indexed folder:
 ```
 archives/{gate_ref}/
 ├── {YYYYMMDDTHHMMSSZ}_from_{author}_report.md
@@ -97,11 +99,13 @@ archives/{gate_ref}/
 
 The `inbox/` and `responses/` directories hold only the current cycle. Archives keeps the historical trail citable for PRD amendments and future gate reviews.
 
-### What to do if CVO response never arrives
+### What to do if CVO loop is down
 
-External-model invocation is Andrew manual step. If he is offline or unavailable, the report sits in `inbox/` and the gate it was meant to unblock holds. CTO should NOT synthesize substitute feedback — the whole point of CVO is that the feedback is from an independent mind.
+CVO is a Claude session like CTO/COO — it can terminate (context exhaustion, machine restart, Andrew explicit stop). If a CVO verdict is requested and the loop has not responded within a reasonable window (~1 hour for non-urgent, ~10 minutes for STOP-class):
 
-Exception: mandatory-trigger reports can be bypassed with CTO+COO joint-signed waiver if Andrew explicitly authorizes. The waiver lands in the gate decision record as a `CVO_WAIVED:` line.
+1. Assume the session is down. Andrew restarts: register `3.0.0_SA_CVO`, invoke `/loop 30m`.
+2. While the session is down, mandatory-trigger reports (wave gates, major closes, PRD ships) hold by default — drivers should NOT synthesize substitute feedback, since the whole point of CVO is feedback from an independent mind.
+3. Exception: with explicit Andrew authorization, a CTO+COO joint-signed waiver can bypass the CVO gate. The waiver lands in the gate decision record as a `CVO_WAIVED:` line. Use rarely.
 
 ---
 
@@ -127,11 +131,11 @@ CTO authors against `templates/cto_review_report.md`. Key structural requirement
 
 - **Every claim has a file:line citation.** "The AE dispatch failed" is not a claim; "AE dispatch failed per `org/tier2_senior/0.6.1_AE_PartnerETL/logs/2026-04-30/...md:42`" is.
 - **Questions are tagged per driver.** "For CTO:", "For COO:", "For DS:" — not a mixed list.
-- **Ask-shape is explicit.** Tell Codex what answer shape is useful — mechanism-level critique, go/no-go verdict, advisory-only.
-- **Evidence paths are enumerated.** Every file Codex would need to reach its own conclusions is listed.
+- **Ask-shape is explicit.** Tell CVO what answer shape is useful — mechanism-level critique, go/no-go verdict, advisory-only.
+- **Evidence paths are enumerated.** Every file CVO would need to reach its own conclusions is listed.
 - **Non-scope is explicit.** What is NOT being asked about.
 
-A report without these is a weak report; Codex will produce generic feedback against a generic report. The format is the rigor forcing-function.
+A report without these is a weak report; CVO will produce generic feedback against a generic report. The format is the rigor forcing-function.
 
 ## Response Format Contract
 
@@ -157,7 +161,7 @@ CVO knows it is in STEERCO mode when the input contains a `CONTEXT_COMPILED.md` 
 | Element | Value |
 |---------|-------|
 | Participants | `2.0.0_SA_COO,1.0.0_SA_CTO,3.0.0_SA_CVO` |
-| Per-agent models | CTO=`claude-opus-4-7`, CVO=Codex, COO=`claude-sonnet-4-6` |
+| Per-agent models | CTO=`claude-opus-4-7`, CVO=`claude-opus-4-7`, COO=`claude-sonnet-4-6` |
 | Tool use | `--no-tools` (planning, not code-grounded) |
 | Max turns | 3 per participant |
 
@@ -208,9 +212,9 @@ Author = CVO. Committer = Andrew (machine user). CVO authorship is preserved so 
 ## Related Documentation
 
 - `org/XXX.md` — AGENT START HERE (general agent protocol; most N/A for CVO since external)
-- `org/ref/RAVC_PROTOCOL.md` — Request/Acknowledge/Validate/Close (CVO cycle is structurally R to V to C; no A because no MCP)
+- `org/ref/RAVC_PROTOCOL.md` — Request/Acknowledge/Validate/Close (CVO participates as a normal MCP agent: ack on receipt of a verdict request, then deliver the V→C)
 - `org/projects/REGISTRY.md` — active project registry; source of truth for project states CVO reviews
 - `org/projects/ADHC_WAVPLN.json` — consolidated wave execution plan (primary CVO review target)
 - `templates/cto_review_report.md` — authoring template for CTO-originated reports
-- `templates/cvo_feedback_response.md` — response template for Codex-authored replies
+- `templates/cvo_feedback_response.md` — response template for CVO-authored replies
 - `feature_clb/org/tier1_exec/3.1.0_SA_CVO/` — COMP_LEARNS scoped CVO instance (reference pattern)

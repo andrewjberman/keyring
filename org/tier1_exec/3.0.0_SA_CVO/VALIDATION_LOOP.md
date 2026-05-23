@@ -1,12 +1,6 @@
 # CVO Validation Loop — 3.0.0_SA_CVO
 
-**Andrew directive 2026-05-22:** `3.0.0_SA_CVO` is now an **MCP-registered Claude
-agent** (not the file-based Codex instance) running a **continuous validation
-loop**. This file is the loop charter — the body the agent executes every cycle.
-It supersedes the Codex single-report invocation model as the agent's *standing*
-mode. The report-review doctrine (`prompt.md` §1-§9 + README) is NOT discarded —
-it now governs the **quality of every finding** the loop emits, and ad-hoc gate
-reports still interleave.
+`3.0.0_SA_CVO` is an MCP-registered Claude agent (Tier-1 exec) running a **continuous validation loop**. This file is the loop charter — the body the agent executes every cycle. It is the CVO's *standing* task; ad-hoc gate-review reports filed by CTO/COO to `inbox/` interleave with the loop. The report-review doctrine (`prompt.md` §1-§9 + README Report Format Contract) governs the **quality of every finding** the loop emits, applied per cycle.
 
 ---
 
