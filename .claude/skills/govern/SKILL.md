@@ -84,6 +84,7 @@ grain). For each live agent, classify:
 | `STALE` | Registered LIVE AND no recent commit-activity-by-serial AND **(open TO OR pending charter receipt OR named blocker dependency OR routing-ask-from-peer in inbox)**. **Loosened from the original "open TO only" rule** — STALE now fires on convergent pressure (multiple peers waiting, multiple routing asks) even without a formal TO, because that is the empirical bottleneck pattern (LD-0015 Part 1 anchor: COO 2026-05-23, 176 min quiet + 5+ converging threads + no TO; old rule did not fire, new rule does). |
 | `STANDING_BY` | Alive but no queued work AND no chartered next-step AND no inbound routing asks. |
 | `BLOCKED` | Open work but waiting on a NAMED external dependency. Distinct from STALE — BLOCKED has a verifiable wait-target; STALE does not. |
+| `FORK-STALLED` | Agent surfaced a **fork** (competing paths / ambiguous requirements / "which way" blocker) via MCP / RAVC / TO blocking field / session log AND no resolving directive has reached them within 1 full /govern cycle. **Distinct from BLOCKED** — BLOCKED is waiting on an external producer; FORK-STALLED is waiting on a routing call. Tracked per-agent per-fork via `consecutive_fork_stall_cycles` counter; at counter=2, MSTR mechanically resolves per Step 4 ladder (D-001 v1.6 anchor). |
 
 **Tracking `consecutive_stale_cycles` (per agent, persisted across cycles
 — D-001 v1.5 BOTTLENECK-RESPONSE INTENSIFICATION enabler).** Each cycle
@@ -94,6 +95,19 @@ across two cycles; reset to 0 when the agent classifies PROGRESSING. The
 counter persists in the cycle record's population scan table as an
 explicit column. The counter drives the bottleneck-response intensification
 ladder in Step 4 Population management.
+
+**Tracking `consecutive_fork_stall_cycles` (per agent per fork, persisted
+across cycles — D-001 v1.6 FORK-STALL ESCALATION enabler).** Each open
+fork an agent surfaces gets a tracking entry keyed by
+`(agent_serial, fork_id)` where `fork_id` is a short hash of the fork
+description. Incremented when the same agent + same fork remains
+unresolved across cycles; reset (entry removed) when the fork resolves
+(resolving directive lands in the agent's inbox AND agent acknowledges
+or commits work on the chosen path). At `consecutive_fork_stall_cycles =
+2`, MSTR's Step 4 mechanical-resolution branch triggers per the D-001
+v1.6 fork-stall ladder. The counter persists in the cycle record under
+an explicit `forks_in_flight` sub-table (per cycle: agent / fork_id /
+fork_summary / consecutive_cycles / first_observed_at / status).
 
 Also identify two cross-population states:
 
@@ -185,6 +199,8 @@ spawn / kill / nudge primitives. Resource-allocation discipline:
 | BLOCKED — unrecoverable | **kill + spawn replacement** |
 | Unaddressed TO surface | **spawn** (provision new lane) |
 | Wrong-mix (population ≠ queue shape) | **kill + spawn** (swap) |
+| FORK-STALLED cycle=1 | **nudge COO** to resolve (COO is first-line on worker forks per D-001 v1.6) |
+| FORK-STALLED cycle=2 | **MSTR mechanically resolves** at discretion — heuristic: reversible / cheapest / most-information-producing path; ledger LD entry referencing fork + COO-cycle + chosen path. **Exception:** architecturally deep forks (product strategy, new Directive, S3/S4 procurement) escalate to Andrew rather than mechanically resolve. |
 
 **Spawn.** `.tools/spawn-agent.ps1 <serial>` opens a new PowerShell window and
 launches the agent hands-free (via `ajb -Headless`; no Y/N prompt stall). Use
