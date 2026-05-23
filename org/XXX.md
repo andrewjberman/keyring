@@ -558,6 +558,14 @@ Full template and filename convention: `org/ref/TASK_ORDER_PROTOCOL.md`
 - Session log with Compiler Tools section is an explicit deliverable on every task order
 - A TO with no compiler check logged is NOT accepted as complete — see `org/standards/TO_COMPILER_GATE.md`
 
+**Author + GO pairing — Non-Negotiable (Andrew directive 2026-05-23, MSTR CY-0017 finding):**
+
+Every TO commit MUST be paired with an MCP `send_message` GO to the assignee within the same operational window. A TO file landing on disk via `git commit` alone does **NOT** fire a broker push — the assignee can sit unnotified indefinitely, even with inbox-watch running. The visible `author + GO` pattern in existing commits (e.g., `fcfaeb3ca` "author + GO ADVI_VALFIN.001") is the convention; this rule names it as a stated requirement.
+
+**The TO author is responsible for the GO.** The commit IS the authoring; the MCP GO IS the dispatch. If the GO isn't sent, the TO isn't dispatched — regardless of file presence on disk.
+
+Empirical anchor: `ADVI_DEMOV1.005` commit `2991f63ea` 2026-05-23 06:50Z sat ~20 min before AE~C session-side processing because no GO MCP fired; the gap was visible only because MSTR's CY-0017 stimulus-scan classified AE~C STALE with a convergent ask. A structural git post-commit hook that auto-sends GO on every `org/tier*/task_orders/*.md` commit is a planned follow-on infra task; until that lands, the discipline is procedural.
+
 **COO/CTO parallel wave protocol:**
 Before writing any TOs for a parallelized wave: run `comp-blast` on every affected component/script. Any node appearing in 2+ TOs' blast radii is a CROSS-DOMAIN resource — flag it in the PRD and in each relevant TO's `<cross_domain_coordination>` block. Agents must MCP-message each other before committing to cross-domain files.
 
