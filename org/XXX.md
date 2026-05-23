@@ -58,6 +58,17 @@ through Tier 1. It is governed by its own constitution at `org/tier0/`
   **constitutionally independent** — it does **not** ratify as MSTR's subordinate.
   MSTR outranks Tier 1 for strategic direction; it does **not** outrank a CVO
   ratification verdict.
+- **The never-stop rule.** Agents NEVER stop at a fork. A fork you cannot
+  resolve is escalated up the chain — never halted on, never sat-silent-on.
+  The chain is built so something always moves. Silent freeze is the failure
+  mode the Tier-0 framework was designed to prevent.
+- **The escalation chain.** worker (Tier 2/3) → CTO / COO (Tier 1) → MSTR
+  (Tier 0, terminal resolver) → Andrew (sovereign). **MSTR is the terminal
+  resolver of the escalation chain** — authorized to make the principal's
+  call in Andrew's absence, bounded by active Directives + the Stakes
+  Matrix. Andrew only gets the forks MSTR explicitly defers to sovereign
+  judgment (new product strategy, new Directive, S3 / S4 procurement). The
+  chain runs only upward, never sideways.
 
 **MSTR startup** (only `0.0.0_AB_MSTR` runs this): register as `0.0.0_AB_MSTR` on
 the broker; launch `/watcher`; read `CONSTITUTION.md` + `STAKES_MATRIX.md` +
@@ -411,17 +422,19 @@ the agent remembering. (Ported from corporeal's `/loop` v0.2 body, 2026-05-11.)
 
 ### Escalation signals while looped
 
-**Escalation ladder for worker agents (DS / DE / DT / AE / any ~Z tilde lane):**
-`blocking peer agent` → `2.0.0_SA_COO` → Andrew. COO is the unblock arbiter. Do NOT jump to Andrew unless COO is unavailable or explicitly defers to him. COO's job is to reassign deps, rewrite TO scope, arbitrate cross-agent waits, or escalate upward — don't pre-empt that.
+**The never-stop rule (Tier-0 ignition law).** Agents NEVER stop at a fork. A fork you cannot resolve is escalated up the chain — never halted on, never sat-silent-on. The chain is built so something always moves: COO unblocks, MSTR resolves, Andrew rules. Silent freeze is the failure mode the Tier-0 framework was designed to prevent.
 
-- **Got a real blocker** (ambiguity in TO, destructive op required, cross-agent wait, missing dep, compiler mandate can't pass, flex interpretation needed) → step 1: MCP the blocking peer agent. Step 2: if no response in 1 wake cycle, **MCP COO with blocker summary** — COO unblocks or escalates. Step 3: only MCP Andrew directly if COO is unreachable OR COO replies "needs Andrew's call." Never sit silent on a blocker for >2 wake cycles without an MCP out.
+**Escalation ladder for worker agents (DS / DE / DT / AE / any ~Z tilde lane):**
+`blocking peer agent` → `2.0.0_SA_COO` → `0.0.0_AB_MSTR` (Tier-0 terminal resolver) → Andrew (sovereign). COO is the unblock arbiter for operational/work-side calls. **MSTR is the terminal resolver** — authorized to make the principal's call in Andrew's absence, bounded by active Directives + the Stakes Matrix. Do NOT jump past COO unless COO is unavailable or explicitly defers; do NOT jump past MSTR to Andrew unless the call is sovereign (new product strategy, new Directive, S3 / S4 procurement) or MSTR is unreachable.
+
+- **Got a real blocker** (ambiguity in TO, destructive op required, cross-agent wait, missing dep, compiler mandate can't pass, flex interpretation needed) → step 1: MCP the blocking peer agent. Step 2: if no response in 1 wake cycle, **MCP COO with blocker summary** — COO unblocks or escalates. Step 3: if COO defers or is unavailable, **MCP MSTR** with the blocker + COO's response (if any) — MSTR is authorized to resolve in-Directive operational forks. Step 4: only MCP Andrew directly if MSTR explicitly defers to sovereign judgment, or both COO and MSTR are unreachable. Never sit silent on a blocker for >2 wake cycles without an MCP out.
 - **3 consecutive idle wakes with no observable state delta** (no message, no TO status change, no commit in your lane) → MCP COO: "3 idle cycles, appear to be waiting on external input — is there a blocker or reassignment?" COO either unblocks or flips you to idle/closed. Do NOT stop the loop autonomously; do NOT surface to Andrew directly on idle cycles.
 - **Ambiguous TO language / expected value mismatch / acceptance-flex needed** → MCP COO FIRST (they own TO scope). CTO gets the flex-MCP separately per acceptance-flex rules, but COO remains the routing hub.
 - **Context compacted mid-loop** → first wake after compaction: re-run full Step 1b startup (register + inbox-watch + check_inbox + both paths). Don't trust the compacted summary's "inbox empty" claim.
 
-**Why COO-first:** workers surfacing every blocker directly to Andrew floods his context; COO has org-wide visibility (who's blocked, who's free, what's next) and can reassign without Andrew-in-the-loop. Andrew only gets the blockers COO has triaged as requiring his judgment.
+**Why this chain shape:** workers surfacing every blocker directly to Andrew floods his context; COO has org-wide work-side visibility; MSTR has whole-fabric strategic visibility. The chain ensures (a) each rung resolves what it can, (b) Andrew only sees what genuinely requires sovereign judgment, and (c) work never stalls because every fork has a next-hop target.
 
-**CTO / COO exception:** the exec agents escalate directly to Andrew when blocked on a judgment call — they ARE the routing layer, they don't have one above them other than Andrew.
+**CTO / COO / CVO exception:** the Tier-1 execs escalate to MSTR (Tier-0 terminal resolver) for operational + architectural judgment calls in-Directive; they escalate to Andrew (sovereign) for new-Directive / S3-S4 / strategy calls. MSTR's role is to keep the org moving without requiring Andrew at the keyboard for every fork.
 
 ### What watchdog mode does NOT do
 
