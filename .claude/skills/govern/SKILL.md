@@ -54,15 +54,47 @@ Count cycles and elapsed time since the last accepted `/mstr_review` flag
 prepares and runs `/mstr_review` (Step 6), then re-arms. Do not originate under
 review-debt.
 
-## Step 1 — Scan
+## Step 1 — Scan (work + population, stimulus-scan style)
 
-Assess fabric state against each active Directive. **Source-of-truth precedence**
-(highest confidence first): Tier-0 law → Andrew messages / halts → ratifications
-→ ledger & cycle records → git state → broker state → telemetry → **agent
-self-reports** (lowest — a claim, not evidence, unless an artifact backs it;
-Constitution Art. VIII). Classify each Directive `progressing | stalled | drifted
-| gap | blocked` and record the evidence, its confidence, and any uncertainty in
-the cycle record's scan table.
+Assess fabric state against each active Directive **AND** assess the live agent
+population against the workstream's actual shape. This is a **two-dimensional
+scan** — the work side surfaces what needs doing; the population side surfaces
+who should be doing it (or whether the right population is even alive).
+
+**(a) Work scan.** Per active Directive, classify `progressing | stalled |
+drifted | gap | blocked` and record the evidence, its confidence, and any
+uncertainty in the cycle record's scan table.
+
+**(b) Population scan (stimulus-scan extension).** Read live agents
+(`get_live_agents` / `org/mcp/liveness.json`), per-agent telemetry
+(`org/mcp/agent_telemetry/*.jsonl`), pending task-order queues across all
+`org/tier{1,2,3}*` folders, and commit-activity-by-serial since the last
+cycle. For each live agent, classify:
+
+| State | Definition |
+|---|---|
+| `PROGRESSING` | Commits + telemetry tied to an active charter; healthy. |
+| `STALE` | Registered LIVE but no recent activity AND has an open TO. |
+| `STANDING_BY` | Alive but no queued work AND no chartered next-step. |
+| `BLOCKED` | Open TO but waiting on external dependency. |
+
+Also identify two cross-population states:
+
+- **Unaddressed work surface** — a workstream or TO family with no live
+  agent covering it (= spawn candidate).
+- **Wrong-mix** — population shape doesn't match queue shape (e.g., 3 DS
+  lanes alive when the queue needs a DE; or no agent covers feature_clb
+  CL fabric when D-003 facilitation needs Tier-0 attention there).
+
+**Source-of-truth precedence** (highest confidence first): Tier-0 law → Andrew
+messages / halts → ratifications → ledger & cycle records → git state → broker
+state → telemetry → **agent self-reports** (lowest — a claim, not evidence,
+unless an artifact backs it; Constitution Art. VIII).
+
+The scan's output is the **menu for Steps 2-4**: every gap and every population
+mismatch finds a `directive_ref`, classifies against Stakes, and either gets a
+charter (Tier 1 dispatch), a population action (spawn / kill / nudge), or
+surfaces as an S3/S4 proposal to Andrew.
 
 ## Step 2 — Ideate + score
 
@@ -98,13 +130,57 @@ not "in motion" until Tier 1 returns a receipt (`accepted` / `modified` /
 `rejected`). Tier 1 may push back on operational grounds — that is the org
 working, not insubordination; record it.
 
-**Provisioning the workforce.** MSTR may spawn the agents a chartered workstream
-needs — `.tools/spawn-agent.ps1 <serial>` opens a new window and launches the
-agent hands-free. A spawn is an **S1** action (internal, reversible — close the
-window): ledger it; the per-cycle ledger-entry bound caps how many you spawn per
-cycle. **Spawn ≠ dispatch** — spawning *staffs* the work; task orders and
-direction still flow through Tier 1. Provision the agents, then let CTO/COO task
-them.
+**Population management — supply-side authority.** MSTR is the fabric's
+**creator and destroyer** (Andrew architectural ruling 2026-05-22). The
+population actions that flow from the Step 1(b) population scan map to the
+spawn / kill / nudge primitives. Resource-allocation discipline:
+
+| Population state (from Step 1b) | Action |
+|---|---|
+| PROGRESSING with chartered work | no action (track in scan) |
+| STALE + active TO | nudge via MCP (existing pattern) |
+| STANDING_BY + no queued work | **kill** (free the slot) |
+| BLOCKED — recoverable | escalate / reassign via CTO/COO |
+| BLOCKED — unrecoverable | **kill + spawn replacement** |
+| Unaddressed TO surface | **spawn** (provision new lane) |
+| Wrong-mix (population ≠ queue shape) | **kill + spawn** (swap) |
+
+**Spawn.** `.tools/spawn-agent.ps1 <serial>` opens a new PowerShell window and
+launches the agent hands-free (via `ajb -Headless`; no Y/N prompt stall). Use
+for an unaddressed TO surface, a wrong-mix swap (paired with a kill), or a
+blocked agent needing a sibling for parallel work. Spawn is **S1**: **ledger
+the LD entry FIRST**, then call the script. Spawn ≠ dispatch — staffing only;
+TOs + direction still flow through Tier 1 (Constitution Art. VI).
+
+**Kill.** `.tools/kill-agent.ps1 <serial> -Reason "<text>"` (or `-All -Reason
+"<text>"` for fabric-wide reset). Walks the process tree (powershell → claude
+→ ...) with `Stop-Process -Force`. Required `-Reason` for audit traceability.
+Use for: reallocation (chartered work done), STANDING_BY-with-no-next-step,
+or unrecoverable-BLOCKED replacement. Kill is **S1** (reversible — spawn a
+replacement if you reconsider): ledger BEFORE calling. The audit line
+(`org/mcp/agent-spawn-audit.log`) captures `by 0.0.0_AB_MSTR` and the reason
+for every MSTR-originated kill.
+
+**Concurrency cap.** `spawn-agent.ps1` enforces a hard ceiling of **8 live
+spawned-agent PowerShell windows** workspace-wide (counted via
+`Get-CimInstance Win32_Process` + marker grep). Spawning beyond 8 fails with
+a `REJECT` audit line. If a 9th is needed, **kill an idle agent first** —
+do not use `$env:FORCE_SPAWN` to overflow unless the cycle's purpose
+genuinely requires it (the bypass is audited and `/mstr_review` will
+surface it). The cap counts across both fabrics (workspace + feature_clb)
+combined.
+
+**Soft governance.** The scripts are fabric-wide-callable, but spawn / kill
+is MSTR's domain by Constitution Art. VI + Andrew ruling 2026-05-22. Other
+agents may call in unusual cases; the audit log makes that visible. MSTR is
+the *originator*; CTO / COO / CVO are demand-side consumers who may request
+via MCP if they have a population need MSTR hasn't surfaced.
+
+**Where charters fit.** Population actions are a subset of Step 4 work — but
+not a substitute for charters. Provisioning fixes the staffing; the chartered
+work itself is still authored via `/charter` and delegated through Tier 1.
+A spawn without a follow-on charter is a wasted slot; a charter without
+staffing is a stalled lane. Both move together.
 
 ## Step 5 — Cycle bounds
 
