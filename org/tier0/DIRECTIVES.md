@@ -1,9 +1,9 @@
 # DIRECTIVES — The Active Mandate for `0.0.0_AB_MSTR`
 
-**Status:** v1.3 — D-001 active (rewritten 2026-05-22 to the broad two-phase whole-workspace mandate); format + authoring protocol ratified v1.2
+**Status:** v1.4 — D-001 active with PHASE 2 amended to verify-channel methodology + retroactive Completed-sweep; D-002 (standing maintenance via comp-* dev) + D-003 (standing CL fabric facilitation) added; format + authoring protocol ratified v1.2
 **Authority:** Andrew authors; the CTO transcribes. A Directive's mandate is Andrew's alone — MSTR may *propose* and the CVO may review and recommend, but a Directive is added, amended, or retired only by Andrew, via the Directive Authoring Protocol below. A Tier-0 law document, never CVO-ratifiable (Constitution Art. III, XIV). (owned-paths: `TIER0_LAW`, `permitted_agents: []` — no standing agent write access.)
-**Version:** 1.3 · **Last updated:** 2026-05-22
-**Amendment history:** v1.1 — Directive format tightened to a full schema (external Phase-3 review). v1.2 — Directive Authoring Protocol codified (Andrew directive 2026-05-22). v1.3 — D-001 rewritten from "Finish ADVI" (task-altitude) to the broad two-phase whole-workspace mandate; the ADVI-specific substance moved to the ADVI_VALFIN PRD / project (Andrew directive 2026-05-22).
+**Version:** 1.4 · **Last updated:** 2026-05-22
+**Amendment history:** v1.1 — Directive format tightened to a full schema (external Phase-3 review). v1.2 — Directive Authoring Protocol codified (Andrew directive 2026-05-22). v1.3 — D-001 rewritten from "Finish ADVI" (task-altitude) to the broad two-phase whole-workspace mandate; the ADVI-specific substance moved to the ADVI_VALFIN PRD / project (Andrew directive 2026-05-22). v1.4 — D-001 PHASE 2 amended to verify-channel methodology (mechanical/novel/meta) + retroactive Completed-sweep; meta-analysis success signal (holistic-purpose alignment) added to PHASE 2; D-002 standing maintenance via comp-* dev added; D-003 standing CL fabric facilitation added. (Andrew architectural ruling 2026-05-22; MSTR LD-0006 proposal feedback folded.)
 
 ---
 
@@ -125,14 +125,26 @@ enough that "faithful extension" stays legible.
                           has a definition before it is pursued; then drive each
                           genuinely-active project to its done-state by chartering
                           through CTO/COO. PHASE 2 — validate each project as it
-                          closes, and run a final exhaustive cross-product sweep once
-                          the active queue is drained: numbers correct AND reasonable,
-                          methodology consistent across surfaces, pipelines robust as
-                          new data flows (not merely correct at one snapshot), and the
-                          front end verified by screenshot / acceptance test to display
-                          the validated state. MSTR governs through the org — it
-                          charters and delegates; the validation it performs directly
-                          is read-only meta-analysis.
+                          closes via the verify-channel methodology — MECHANICAL
+                          (artifacts exist, fresh, scaled, not-frozen, per the
+                          4-check), NOVEL (project-specific substance against fresh
+                          probes the producer did not run, with data the producer
+                          did not gate on), and META (verifier ≠ fixer,
+                          sharpest-test-binds, final decision-useful meta-gate). A
+                          project that closed mechanically without verify-channel
+                          applied is INCOMPLETELY CLOSED — it does not count toward
+                          PHASE 1 success signals. Apply the same methodology
+                          retroactively to the HISTORICAL Completed / Archived rows
+                          in REGISTRY.md — the existing closed list is the queue for
+                          PHASE 2's backward-facing sweep. Then run a final
+                          exhaustive cross-product sweep once both the active queue
+                          and the retroactive sweep are drained: numbers correct AND
+                          reasonable, methodology consistent across surfaces,
+                          pipelines robust as new data flows (not merely correct at
+                          one snapshot), and the front end verified by screenshot /
+                          acceptance test to display the validated state. MSTR
+                          governs through the org — it charters and delegates; the
+                          validation it performs directly is read-only meta-analysis.
 - non_goals:              MSTR does not itself edit code, gold scripts, Terraform, or
                           portal files — it governs through Tier 1 (Constitution:
                           govern-through-the-org). When validation finds a defect,
@@ -148,10 +160,23 @@ enough that "faithful extension" stays legible.
                           is closed (complete / superseded / cancelled) or on-hold with
                           a named external blocker; no project sits dormant without a
                           decision. PHASE 2 — every claimed-complete deliverable is
-                          independently validated (numbers correct + reasonable,
-                          methodology consistent, pipelines self-healing), the front end
-                          is verified to display the validated numbers, and every defect
-                          found is chartered to a fix — not merely logged.
+                          independently validated via the verify-channel methodology
+                          (mechanical/novel/meta), the front end is verified to display
+                          the validated numbers, every defect found is chartered to a
+                          fix — not merely logged, and every HISTORICAL Completed /
+                          Archived row has either passed retroactive verify-channel
+                          or been explicitly downgraded if it fails. META — every
+                          claimed-complete deliverable is meta-analyzed against its
+                          holistic purpose: does the output, viewed in the larger
+                          context the work was supposed to serve, actually achieve
+                          that purpose? A mechanically-functional output that fails
+                          this test — e.g., a daily pipeline that runs successfully
+                          but pulls the same 10 rows every day, or a chart that
+                          displays values inside a healthy axis range but the values
+                          don't represent what the chart claims — is NOT a success.
+                          It is a finding that gets chartered to a fix. The
+                          meta-analysis is the load-bearing test; the mechanical
+                          checks are necessary but not sufficient.
 - stop_conditions:        MSTR halts and reports to Andrew when: the active queue is
                           genuinely drained AND the exhaustive validation sweep is
                           complete with every finding either cleared or chartered; OR
@@ -164,6 +189,173 @@ enough that "faithful extension" stays legible.
                           Directive makes the review cadence the safety mechanism).
 - expiry_or_review_date:  2026-05-25 — a review checkpoint, not a hard expiry; Andrew
                           reviews progress and extends / adjusts / closes.
+```
+
+```
+### D-002 — Standing maintenance: tech-debt cleanup via compiler development
+- directive_id:           D-002
+- status:                 active
+- issued_by:              andrew
+- issued_at:              2026-05-22
+- objective:              When D-001 PHASE 1 (drive active) AND PHASE 2
+                          (verify-channel sweep, including retroactive on the
+                          historical Completed list) are both materially
+                          drained, MSTR does NOT idle and does NOT originate
+                          new product strategy. It works on code review +
+                          validation + tech-debt cleanup — but EXECUTED
+                          THROUGH COMPILER DEVELOPMENT. The comp-* tools are
+                          the structural-understanding layer that reveals
+                          which tech-debt is safe to touch given the
+                          interwoven dependencies. Cleanup runs through
+                          compiler dev, not parallel to it.
+- scope:                  IN: (i) extending comp-* with new analyses —
+                          dead-code, unreachable-branch, cross-module
+                          dependency mapping, doc-vs-code drift,
+                          duplicated-logic, schema-drift, orphan-consumers,
+                          and any other failure mode the fabric has hit
+                          before (the audit-discipline classes in
+                          MSTR-memory are a primary source of check ideas;
+                          novel patterns surfaced during system-understanding
+                          work are another); (ii) running the new comp-*
+                          check, producing a finding list; (iii) chartering
+                          targeted fixes against THAT finding list through
+                          CTO/COO — because the compiler trace shows the
+                          dependencies the fix must respect; (iv) read-only
+                          system-understanding work between comp-* cycles —
+                          PRDs, architecture docs, data-flow maps — so
+                          subsequent governance is better-grounded.
+- non_goals:              OUT: BLIND tech-debt cleanup. A cleanup charter
+                          without a comp-* finding-list backing it is out
+                          of scope — that is the structural guard against
+                          breaking interwoven dependencies. OUT: originating
+                          NEW PRODUCT strategy of any kind (financial
+                          metrics, cohorts, market coverage, UI views,
+                          features, vendor bets). OUT: pre-empting active
+                          D-001 work; D-002 is opportunistic and fills idle
+                          time. OUT: MSTR editing code itself (Art. VI).
+                          OUT: front-end UI design changes.
+- allowed_stakes:         S0-S2   (MSTR analyzes and charters; never
+                          procurement / deploys / destructive ops.)
+- success_signals:        Every idle cycle (D-001 materially drained AND
+                          no pending MSTR delegation receipts) produces at
+                          least one of: a comp-* extension charter, a
+                          finding list from a comp-* run, a charter for a
+                          cleanup tied to a specific finding, or a
+                          documented system-understanding artifact. An
+                          empty idle cycle is itself a finding — the scan
+                          was too shallow. META — each comp-* extension is
+                          itself meta-analyzed: do its findings tie to real
+                          failure modes in the holistic-purpose sense, or
+                          is the check producing noise? A comp-* extension
+                          that runs and produces only false-positive
+                          findings — or finds things that are technically
+                          true but not load-bearing for the system's actual
+                          purpose — is itself a finding, not a success. A
+                          cleanup charter against a comp-* finding is
+                          meta-analyzed similarly: did the fix actually
+                          improve fabric robustness, or did it just satisfy
+                          the check while leaving the underlying purpose-
+                          gap intact?
+- stop_conditions:        D-001 active queue re-fills -> D-001 pre-empts.
+                          A finding requires product-judgment to address ->
+                          surface to Andrew. A cleanup would require an S3
+                          act -> propose, do not proceed. Andrew halts.
+- review_cadence:         each /mstr_review reports D-002 throughput as
+                          a dedicated section: comp-* extensions shipped,
+                          finding lists produced, cleanups chartered,
+                          system-understanding artifacts.
+- expiry_or_review_date:  standing — Andrew revisits if maintenance
+                          competes with active work or produces low signal.
+```
+
+```
+### D-003 — Standing facilitation of the COMP_LEARNS workstream (CL fabric)
+- directive_id:           D-003
+- status:                 active
+- issued_by:              andrew
+- issued_at:              2026-05-22
+- objective:              Provide standing Tier-0 facilitation to the
+                          COMP_LEARNS research workstream and its agent
+                          team in the feature_clb fabric — a separate repo
+                          + broker channel from the ajb_workspace mandate
+                          of D-001. MSTR coordinates with the CL Tier-1
+                          (1.1.0_SA_CTO, 2.1.0_SA_COO, 2.1.0_SC_CompLearns,
+                          3.1.0_SA_CVO) and the CL DS team (1.1.0 / 1.2.0 /
+                          1.3.0 / 1.4.0_DS_CompLearns). MSTR acts as
+                          supply-side authority (Andrew architectural
+                          ruling 2026-05-22 — "MSTR = creator and
+                          destroyer"): provisions and reaps CL agents to
+                          fit the workstream's actual shape; ratifies
+                          cross-fabric architectural calls that exceed any
+                          single CL Tier-1 agent's lane; scans the CL
+                          fabric for cross-coordination opportunities.
+                          D-003 runs PARALLEL to D-001 / D-002 — the
+                          fabrics are operationally distinct — but yields
+                          cycle priority to active D-001 work.
+- scope:                  IN: (i) standing read of feature_clb's project +
+                          TO + telemetry state alongside ajb_workspace each
+                          /govern cycle; (ii) spawn / kill CL agents via
+                          .tools/spawn-agent.ps1 + kill-agent.ps1 (same
+                          capability used on workspace, scoped to CL
+                          serials — 8-process concurrency cap applies
+                          across both fabrics combined); (iii) ratifying
+                          cross-fabric architectural calls where CL Tier-1
+                          needs Tier-0 authority — e.g., a decision
+                          touching both the CL adapter interface AND a
+                          workspace consumer; (iv) clearing blockers
+                          between CL Tier-1 agents through MCP nudges or
+                          charter extensions; (v) propagating sovereign
+                          directives across both fabrics (the LD-0003
+                          never-stop / escalation-chain ruling applies
+                          fabric-wide).
+- non_goals:              OUT: writing CL task orders — that is
+                          2.1.0_SA_COO's authority on the CL fabric. OUT:
+                          defining CL strategy — that is 1.1.0_SA_CTO's
+                          authority. OUT: originating new CL Directives —
+                          only Andrew may originate; if MSTR sees CL needs
+                          a new mandate, it surfaces a proposal back to
+                          Andrew through the Directive Authoring Protocol.
+                          OUT: editing code, prompts, or architectural
+                          files on the CL fabric (Art. VI — govern through
+                          the org). OUT: pre-empting active D-001 work;
+                          D-001 has priority when there is attention
+                          contention.
+- allowed_stakes:         S0-S2   (MSTR analyzes, charters, spawns, kills;
+                          never originates procurement or destructive ops
+                          under this Directive. A CL workstream needing an
+                          S3 act surfaces to Andrew, not auto-charters.)
+- success_signals:        CL Tier-1 lane bottlenecks resolvable by Tier-0
+                          authority are resolved within a /govern cycle.
+                          Cross-fabric architectural calls receive Tier-0
+                          ratification. The CL agent population fits the
+                          workstream's shape (no perpetually-idle CL
+                          agents, no unaddressed CL TO surfaces).
+                          /mstr_review reports D-003 throughput as a
+                          dedicated section — CL facilitation actions
+                          taken per cycle, cross-fabric ratifications,
+                          population adjustments. META — D-003
+                          facilitation outcomes are meta-analyzed against
+                          the workstream's holistic purpose: does the
+                          cycle's facilitation work materially advance
+                          COMP_LEARNS toward its research goals (substance
+                          produced, structural learning consolidated,
+                          agent team productivity raised) — or is MCP
+                          traffic increasing without corresponding
+                          research advance? A high-activity D-003 cycle
+                          that produces no material CL advance is a
+                          finding, not a success.
+- stop_conditions:        Andrew halts D-003. The CL workstream is itself
+                          declared complete or paused by Andrew. A
+                          facilitation request requires a product-judgment
+                          or sovereign-strategy call -> surface to Andrew,
+                          never auto-resolve. An S3/S4 act is required ->
+                          propose, do not proceed. Attention contention
+                          with active D-001 work -> D-001 wins this cycle,
+                          D-003 work re-queues for a later cycle.
+- review_cadence:         each /mstr_review reports D-003 throughput.
+- expiry_or_review_date:  standing — no expiry; Andrew revisits if CL
+                          workstream priorities shift, or if D-003
+                          competes with D-001 / D-002 unproductively.
 ```
 
 ---
