@@ -58,6 +58,7 @@ If CVO, continue.
 - Read `org/tier1_exec/3.0.0_SA_CVO/.spot-check-checkpoint` (separate from `.cvo-loop-checkpoint`). If absent, default to `HEAD~10` and create it.
 - `git log {checkpoint}..origin/CLOUD --pretty=format:"%h %an %s"`.
 - **Filter:** drop CVO's own author-line commits; drop pure session-log / doc-hygiene commits unless they carry a status/registry claim.
+- **Timestamp discipline (added 2026-05-23 after AE~C catch):** for any commit-age claim in a finding, use `%aI` (author ISO-UTC with explicit offset) — never the default `git show` output which displays local-tz-with-offset-suffix and is easily mis-read as UTC. See `/cvo-loop` SKILL.md §1b for the full normalization protocol.
 
 ### 2c — Per-commit work + alignment check + substance meta-check
 For each surviving commit:
