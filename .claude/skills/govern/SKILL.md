@@ -68,23 +68,54 @@ uncertainty in the cycle record's scan table.
 **(b) Population scan (stimulus-scan extension).** Read live agents
 (`get_live_agents` / `org/mcp/liveness.json`), per-agent telemetry
 (`org/mcp/agent_telemetry/*.jsonl`), pending task-order queues across all
-`org/tier{1,2,3}*` folders, and commit-activity-by-serial since the last
-cycle. For each live agent, classify:
+`org/tier{1,2,3}*` folders, and **commit-activity-by-serial — computed
+per-agent, not workspace-wide**. Use:
+```
+git log --all --author="<serial>" -1 --pretty=format:"%aI"
+```
+per LIVE agent for elapsed since their LAST commit. The workspace-wide
+"any commits this cycle" check is too coarse to detect a single-agent
+stall (LD-0015 Part 1 anchor — COO bottleneck visible only at per-agent
+grain). For each live agent, classify:
 
 | State | Definition |
 |---|---|
-| `PROGRESSING` | Commits + telemetry tied to an active charter; healthy. |
-| `STALE` | Registered LIVE but no recent activity AND has an open TO. |
-| `STANDING_BY` | Alive but no queued work AND no chartered next-step. |
-| `BLOCKED` | Open TO but waiting on external dependency. |
+| `PROGRESSING` | Recent commit-activity-by-serial + telemetry tied to an active charter; healthy. |
+| `STALE` | Registered LIVE AND no recent commit-activity-by-serial AND **(open TO OR pending charter receipt OR named blocker dependency OR routing-ask-from-peer in inbox)**. **Loosened from the original "open TO only" rule** — STALE now fires on convergent pressure (multiple peers waiting, multiple routing asks) even without a formal TO, because that is the empirical bottleneck pattern (LD-0015 Part 1 anchor: COO 2026-05-23, 176 min quiet + 5+ converging threads + no TO; old rule did not fire, new rule does). |
+| `STANDING_BY` | Alive but no queued work AND no chartered next-step AND no inbound routing asks. |
+| `BLOCKED` | Open work but waiting on a NAMED external dependency. Distinct from STALE — BLOCKED has a verifiable wait-target; STALE does not. |
 
 Also identify two cross-population states:
 
 - **Unaddressed work surface** — a workstream or TO family with no live
-  agent covering it (= spawn candidate).
+  agent covering it. **Before classifying as a spawn candidate, cross-check
+  `org/projects/{CODE}.json` status (LD-0013 project-status predicate):**
+  - `status: active` → spawn IS in scope (proceed to Steps 2-4).
+  - `status: dormant` / `on-hold` / `needs-sovereign-call` → **surface to
+    Andrew as a proposal, NOT auto-spawn**. Stale TOs in a dormant
+    project's queue are not unaddressed work; they are work parked pending
+    sovereign judgment. (Worked example: ADVI_INFGRO rollback 2026-05-23
+    — pending TOs sat in a dormant project's queue; pre-refinement scan
+    saw them as unaddressed and spawned DE 0.4; the work was architecturally
+    misaligned and had to be reverted under Andrew direction.)
+  - `status: complete` / `cancelled` / `superseded` → skip; this is
+    queue-hygiene for COO, not a spawn candidate.
 - **Wrong-mix** — population shape doesn't match queue shape (e.g., 3 DS
   lanes alive when the queue needs a DE; or no agent covers feature_clb
   CL fabric when D-003 facilitation needs Tier-0 attention there).
+
+**Magnitude-sanity heuristic — applies across every numeric assertion the
+scan surfaces (F-005 anchor).** For every dollar amount, count, percentage,
+or ratio that lands in a broker summary, ledger entry, charter, or cycle
+record, apply a quick magnitude-vs-context sanity check. If a magnitude
+is implausible given surrounding context (worked example: `-$54.8M
+capital_gains_ttm` on a `$200M` book = -27% in a year — that warrants
+**surfacing not routing**), classify it as a **verify-channel candidate
+finding** rather than treating as a routine queue item. The check is
+cheap (one mental ratio) and catches the semantic-mislabel +
+upstream-data-defect classes the existing scan otherwise treats as ordinary
+asks. (Worked example anchor: capital_gains_ttm finding 2026-05-23 → CVO
+YELLOW verdict → semantic-mislabel root.)
 
 **Source-of-truth precedence** (highest confidence first): Tier-0 law → Andrew
 messages / halts → ratifications → ledger & cycle records → git state → broker
