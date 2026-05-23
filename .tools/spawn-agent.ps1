@@ -44,6 +44,13 @@ $ws  = 'C:\Users\AndrewBerman\Desktop\ajb_workspace'
 $ajb = Join-Path $ws '.tools\ajb.ps1'
 $log = Join-Path $ws 'org\mcp\agent-spawn-audit.log'
 
+# Marker string baked into the spawned PowerShell window's command line as a
+# trailing comment. Used by (a) the live-process concurrency cap below to count
+# alive spawned windows, and (b) .tools/kill-agent.ps1 to locate kill targets
+# by serial. Marker version bumped if the format ever changes -- old running
+# windows with v1 will be invisible to v2 counts (graceful drift).
+$marker = '# OPAL_SPAWN_MARKER_v1'
+
 if (-not (Test-Path $ajb)) {
     Write-Error "spawn-agent: ajb.ps1 not found at $ajb"
     exit 1
@@ -108,6 +115,30 @@ if ($env:OPAL_AGENT_SERIAL -and -not $env:FORCE_SPAWN) {
         Write-Error "spawn-agent: $reason. Bypass with `$env:FORCE_SPAWN = '<reason>' if you must. Audit: $log"
         exit 1
     }
+
+    # Live-process concurrency cap: max 8 spawned-agent PowerShell windows
+    # alive at any moment. Distinct from the rate cap above -- rate cap limits
+    # spawns/time, this caps simultaneous instances. Count via Win32_Process
+    # CommandLine grep for the marker; kills + closed windows naturally release
+    # budget. Andrew direct directive 2026-05-22 ("no more than 8").
+    # Fail-open on CIM query failure (loud audit) so a COM-service blip doesn't
+    # silently block MSTR ops -- the rate cap above is still in force as the
+    # second layer.
+    $concurrencyCap = 8
+    try {
+        $liveSpawned = @(Get-CimInstance Win32_Process -Filter "Name='powershell.exe'" -ErrorAction Stop |
+            Where-Object { $_.CommandLine -and $_.CommandLine -like "*$marker*" })
+        $liveCount = $liveSpawned.Count
+        if ($liveCount -ge $concurrencyCap) {
+            $reason = "concurrency-cap exceeded: $liveCount/${concurrencyCap} spawned PowerShell windows alive"
+            Add-Content -Path $log -Value "$ts  REJECT $Serial  by $by  reason=concurrency-cap  live=$liveCount/$concurrencyCap"
+            Write-Error "spawn-agent: $reason. Tell MSTR to kill-agent <serial> on agents whose work is done, or bypass with `$env:FORCE_SPAWN = '<reason>' if you must. Audit: $log"
+            exit 1
+        }
+    } catch {
+        # CIM query failed -- log loudly but allow the spawn (fail-open).
+        Add-Content -Path $log -Value "$ts  WARN  concurrency-cap check failed: $($_.Exception.Message) -- proceeding (rate cap still in force)"
+    }
 }
 
 # Audited bypass (use only when you really must overflow the cap; reason
@@ -123,7 +154,10 @@ $extraStr = if ($Extra) { ' ' + ($Extra -join ' ') } else { '' }
 # explicitly so the `ajb` function exists regardless of profile setup.
 # -Headless is passed to ajb so the dev-channels Y prompt never surfaces and
 # the spawn is fully hands-free.
-$inner = ". `"$ajb`"; ajb -Headless $Serial$extraStr"
+# Trailing comment "# OPAL_SPAWN_MARKER_v1: <Serial>" is a harmless no-op that
+# stays in the spawned PowerShell process's CommandLine, where the concurrency
+# cap above and .tools/kill-agent.ps1 both grep for it.
+$inner = ". `"$ajb`"; ajb -Headless $Serial$extraStr $marker`: $Serial"
 Start-Process powershell -ArgumentList '-NoProfile', '-NoExit', '-Command', $inner
 
 # Audit -- every successful spawn is recorded.

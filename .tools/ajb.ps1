@@ -148,3 +148,26 @@ function spawn-agent {
         & $script $Serial
     }
 }
+
+# kill-agent: terminal-global wrapper for .tools\kill-agent.ps1. MSTR's
+# reallocation capability -- when an agent's chartered work is done, kill the
+# window to release a slot under the 8-process concurrency cap. Forwards args
+# (Serial or -All, optional -Reason).
+function kill-agent {
+    [CmdletBinding()]
+    param(
+        [Parameter(Position = 0, ValueFromRemainingArguments = $true)]
+        [string[]]$Args
+    )
+
+    $script = 'C:\Users\AndrewBerman\Desktop\ajb_workspace\.tools\kill-agent.ps1'
+    if (-not (Test-Path $script)) {
+        Write-Error "kill-agent: script not found at $script"
+        return
+    }
+    if ($Args) {
+        & $script @Args
+    } else {
+        & $script
+    }
+}
