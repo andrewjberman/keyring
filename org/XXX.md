@@ -558,13 +558,20 @@ Full template and filename convention: `org/ref/TASK_ORDER_PROTOCOL.md`
 - Session log with Compiler Tools section is an explicit deliverable on every task order
 - A TO with no compiler check logged is NOT accepted as complete — see `org/standards/TO_COMPILER_GATE.md`
 
-**Author + GO pairing — Non-Negotiable (Andrew directive 2026-05-23, MSTR CY-0017 finding):**
+**Author + GO pairing — Non-Negotiable (Andrew directive 2026-05-23, MSTR CY-0017 finding, COO suffix-routing refinement):**
 
-Every TO commit MUST be paired with an MCP `send_message` GO to the assignee within the same operational window. A TO file landing on disk via `git commit` alone does **NOT** fire a broker push — the assignee can sit unnotified indefinitely, even with inbox-watch running. The visible `author + GO` pattern in existing commits (e.g., `fcfaeb3ca` "author + GO ADVI_VALFIN.001") is the convention; this rule names it as a stated requirement.
+Every TO commit MUST be paired with an MCP `send_message` GO to the assignee — **addressed to the EXACT registered serial including any `~lane` suffix** — within the same operational window. A TO file landing on disk via `git commit` alone does **NOT** fire a broker push to the assignee's session, and a GO MCP addressed to the wrong serial (base when assignee registered `~C`, or vice versa) is functionally equivalent to no GO at all because the broker push routes by exact-serial channel match.
 
-**The TO author is responsible for the GO.** The commit IS the authoring; the MCP GO IS the dispatch. If the GO isn't sent, the TO isn't dispatched — regardless of file presence on disk.
+**Two failure modes the rule covers:**
 
-Empirical anchor: `ADVI_DEMOV1.005` commit `2991f63ea` 2026-05-23 06:50Z sat ~20 min before AE~C session-side processing because no GO MCP fired; the gap was visible only because MSTR's CY-0017 stimulus-scan classified AE~C STALE with a convergent ask. A structural git post-commit hook that auto-sends GO on every `org/tier*/task_orders/*.md` commit is a planned follow-on infra task; until that lands, the discipline is procedural.
+1. **Missing GO** — TO file committed, no MCP send_message fired. Assignee only sees the file on next filesystem poll (polling-cadence-dependent delay, can be minutes to hours).
+2. **Wrong-channel GO** — MCP fired, but addressed to the base serial when the assignee is registered under a `~lane` suffix (or vice versa). Per the MCP suffix-strip semantic, the broker push lands on the base channel; the `~lane` watcher only fires on `~lane`-channel push, so the push doesn't trigger their session — same effective gap as missing GO. Filesystem inbox still gets the write (visible on next poll), but the real-time delivery fails.
+
+**The TO author is responsible for the GO AND for addressing it correctly.** The commit IS the authoring; the MCP GO IS the dispatch; the exact-serial addressing IS what makes the broker push reach the assignee's session. Check `<issued_to>` in the TO file; address the MCP to that exact string.
+
+Empirical anchor: `ADVI_DEMOV1.005` commit `2991f63ea` 2026-05-23 06:50Z sat ~20 min before AE~C session-side processing. COO DID fire a paired GO MCP — but addressed to `0.7.0_AE_CloudOps` (base) while AE~C was registered as `0.7.0_AE_CloudOps~C`. Broker push followed suffix-strip semantics, landing on the base channel; AE~C's watcher (listening on `~C` channel) didn't fire. AE~C only saw the message on next filesystem poll. MSTR's CY-0017 stimulus-scan classified AE~C STALE with a convergent ask and surfaced the structural pattern.
+
+A **structural git post-commit hook** that auto-sends GO on every `org/tier*/task_orders/*.md` commit — suffix-aware: parses `<issued_to>` exactly and addresses the MCP to that string verbatim — is a planned follow-on infra task. Until that lands, the discipline is procedural.
 
 **COO/CTO parallel wave protocol:**
 Before writing any TOs for a parallelized wave: run `comp-blast` on every affected component/script. Any node appearing in 2+ TOs' blast radii is a CROSS-DOMAIN resource — flag it in the PRD and in each relevant TO's `<cross_domain_coordination>` block. Agents must MCP-message each other before committing to cross-domain files.
