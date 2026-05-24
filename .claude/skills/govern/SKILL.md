@@ -154,6 +154,32 @@ upstream-data-defect classes the existing scan otherwise treats as ordinary
 asks. (Worked example anchor: capital_gains_ttm finding 2026-05-23 → CVO
 YELLOW verdict → semantic-mislabel root.)
 
+**Six-class signal taxonomy + class-6 archetype-cluster detection (D-003 v1.11
+scope item xvii + LD-0043 + LD-0045).** Step 1(b) extends to catalog six signal
+classes per cycle for surfacing Input 1 candidate briefs to CL CTO per
+`org/tier0/MSTR_INPUT_1_CHANNEL_ARCHITECTURE.md` §1.1: (1) highest-trafficked
+rails; (2) bug-frequency rails; (3) mechanical-fidelity failures;
+(4) meta-fidelity failures; (5) body-class generalization gaps;
+(6) high-cost-archetype clusters. Per Opal CTO V1.0 design insight:
+bite-frequency (classes 2-4) is lagging + structurally decreases as logging/comms
+improve; high-cost-correct repeated activity (class-6) is the durable leading
+indicator — compiler tooling's highest leverage is COST, not BUGS.
+
+**Class-6 aggregation mechanics.** Read `**archetype:**` headers from BOTH
+fabrics' session logs (ajb `org/tier{1,2,3}*/.../logs/**/*.md` + feature_clb
+analog paths) for the trailing scan window. Per archetype, compute
+`Sum(frequency * archetype-weight * entry-count-proxy)` using the canonical
+enum + weights at `org/tier0/COMPILER_ARCHETYPES.md` (LD-0043). Archetypes
+meeting brief-surface threshold per `MSTR_INPUT_1_CHANNEL_ARCHITECTURE.md`
+§2.1 generate Input 1 candidate briefs ferried to CL CTO via the §3 brief
+packaging mechanics. Threshold tuning expectations: V1 thresholds refine
+empirically after first ~5 class-6 surfaces; threshold changes are
+operational tuning surface (not Tier-0 law), surfaced in `/mstr_review`
+reporting. **Cutover 2026-05-25T00:00 UTC forward-only** — pre-cutover
+session logs are untagged and excluded from aggregation; the cutover fires
+on wall-clock independent of D-003 v1.11 commit timing (v1.11 codifies the
+discipline; it does not trigger it).
+
 **Source-of-truth precedence** (highest confidence first): Tier-0 law → Andrew
 messages / halts → ratifications → ledger & cycle records → git state → broker
 state → telemetry → **agent self-reports** (lowest — a claim, not evidence,
@@ -333,6 +359,24 @@ agents may call in unusual cases; the audit log makes that visible. MSTR is
 the *originator*; CTO / COO / CVO are demand-side consumers who may request
 via MCP if they have a population need MSTR hasn't surfaced.
 
+**Spawn-request protocol (D-003 v1.11 scope item xvi + LD-0042).** Per
+LD-0042 consolidation of Q1-Q4 sub-rulings: MSTR is the singular
+spawn-executor (LD-0036 preserved). **Division COO is the sole
+spawn-request originator for their own fabric's serials** — ws COO
+(2.0.0_SA_COO) for ws serials; CL COO (2.1.0_SA_COO) for CL serials. **CTO
+2-cycle-COO-unresponsive backstop** — if division COO is unresponsive >2
+/govern cycles on a chartered spawn need, the same-fabric CTO may escalate
+the spawn-request directly to MSTR (parallel to LD-0026
+sovereign-pending-backstop applied one tier down). **Cross-fabric
+spawn-requests are structurally precluded** — a request received from a
+COO for a serial outside their fabric is rejected at MSTR's
+request-receipt gate (no bridging mechanism). **LIVE-vs-COO-request
+honored via tilde-lane fallback per LD-0027** — if a same-base-serial is
+already LIVE when a COO requests a fresh spawn, MSTR spawns under the
+next-free tilde-lane suffix per the LD-0021 SPAWN-WITH-DIRECTION
+contemplated path. Operational mechanics in
+`docs/architecture/AGENT_SPAWN_KILL_METHODOLOGY.md` (LD-0028).
+
 **Where charters fit.** Population actions are a subset of Step 4 work — but
 not a substitute for charters. Provisioning fixes the staffing; the chartered
 work itself is still authored via `/charter` and delegated through Tier 1.
@@ -473,4 +517,17 @@ progress (Art. I). Do not finish the cycle first.
   cycles consuming a CL-built tool embed `comp_tool_commit_hash:` at emit
   (deferred-implementation per LD-0033 #6 — schema-discipline anchor
   documented; cite-emit activates at first-use cycle).
+- **D-003 v1.11 operational substrate (LD-0042 + LD-0043 + LD-0045).** The
+  three v1.11 mechanisms — three-Input cascade, spawn-request protocol,
+  six-class signal taxonomy + class-6 detection — are canonical in
+  DIRECTIVES v1.11 + materialized across these references:
+  `org/tier0/ledger/LD-0042.md` (spawn-request protocol consolidation);
+  `org/tier0/COMPILER_ARCHETYPES.md` + `org/tier0/ledger/LD-0043.md`
+  (canonical archetype taxonomy + cutover); `org/tier0/MSTR_INPUT_1_CHANNEL_ARCHITECTURE.md`
+  + `org/tier0/ledger/LD-0045.md` (MSTR-side Input 1 channel mechanism).
+  Step 1(b) class-6 aggregation reads archetype headers cross-fabric;
+  Step 4 spawn-request protocol enforces cross-fabric preclusion at
+  request-receipt. Companion CL doc:
+  `feature_clb/docs/architecture/COMP_LEARNS_CONTINUOUS_CYCLE_OPERATING_MODEL.md` V1.1
+  §5 (CL-side contract).
 - Design + law: `org/tier0/README.md`, `CONSTITUTION.md`, `STAKES_MATRIX.md`.
