@@ -307,14 +307,25 @@ log format, kill-tracking gap, lane discipline, and the spawn-vs-kill
 decision table. This /govern Step 4 section is the operational summary;
 the doctrine doc has the full detail.
 
-**Concurrency cap.** `spawn-agent.ps1` enforces a hard ceiling of **8 live
+**Concurrency cap.** `spawn-agent.ps1` enforces a hard ceiling of **16 live
 spawned-agent PowerShell windows** workspace-wide (counted via
-`Get-CimInstance Win32_Process` + marker grep). Spawning beyond 8 fails with
-a `REJECT` audit line. If a 9th is needed, **kill an idle agent first** —
-do not use `$env:FORCE_SPAWN` to overflow unless the cycle's purpose
-genuinely requires it (the bypass is audited and `/mstr_review` will
-surface it). The cap counts across both fabrics (workspace + feature_clb)
-combined.
+`Get-CimInstance Win32_Process` + marker grep; raised from 8→16 by Andrew
+sovereign instruction 2026-05-24T~2058Z — LD-0049 / CY-0087). Spawning
+beyond 16 fails with a `REJECT` audit line. **The cap is a ceiling, not a
+target:** Andrew's instruction clarified verbatim — *"that does not mean
+that you are obligated to run 16 simultaneously if there is nothing for
+the associated agents to do, it just means that is the cap. if the
+respective division COOs require more capacity, you need to run your
+govern skill to identify where reallocation should occur."*
+Reallocation-before-spawn discipline preserved — if a 17th is needed,
+**kill an idle agent first** — do not use `$env:FORCE_SPAWN` to overflow
+unless the cycle's purpose genuinely requires it (the bypass is audited
+and `/mstr_review` will surface it). The cap counts across both fabrics
+(workspace + feature_clb) combined, **and includes MSTR's own
+marker-tracked window** when the MSTR session was launched via
+`spawn-agent.ps1` (CY-0087 empirical correction to SS-0002 §1 narrative —
+the original SS-0002 §1 narrative "MSTR not counted as spawned" was
+inaccurate when MSTR is itself marker-tracked).
 
 **Soft governance.** The scripts are fabric-wide-callable, but spawn / kill
 is MSTR's domain by Constitution Art. VI + Andrew ruling 2026-05-22. Other
@@ -440,8 +451,11 @@ progress (Art. I). Do not finish the cycle first.
 - **Fabric scope (CONSTITUTION Art. XV, LD-0031 Path B + LD-0032).** Tier-0 law
   is canonical for both ajb_workspace + feature_clb fabrics. MSTR's
   creator/destroyer authority + meta-analysis + sovereign-pending-backstop
-  operate cross-fabric. Concurrency cap of 8 spawned windows counts across both
-  fabrics combined (LD-0028 invariant). Path C migration (separate
+  operate cross-fabric. Concurrency cap of 16 spawned windows counts across
+  both fabrics combined (raised from 8→16 by Andrew sovereign instruction
+  2026-05-24 per LD-0049 / CY-0087; LD-0028 invariant preserved on structure,
+  value amended; cap is ceiling not target — reallocation-before-spawn
+  discipline preserved). Path C migration (separate
   opal-governance repo) is conditional on the four Art. XV triggers, not
   scheduled.
 - **Unified canonical broker (LD-0034).** `opal-agent-comms` is the canonical
