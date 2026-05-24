@@ -544,6 +544,16 @@ Minimum compiler tools by role:
 
 "Blank" and "N/A" are not acceptable. One sentence explaining why you didn't run is fine.
 
+### Archetype tag — required from 2026-05-25T00:00 UTC
+
+Every substantive session-log entry includes a single-line `**archetype:** TAG` header immediately after the title. Pick one of eight: `EXPLORE` / `TRACE` / `DIAGNOSE` / `VALIDATE` / `DEPLOY` / `IMPLEMENT` / `COORDINATE` / `SCRIBE`, or `MIXED` if dominant archetype is genuinely unclear. Optional `**secondary_archetypes:** A, B` line for high-mixed cases. ~5 sec per emission; no scoring; under-classify is fine. Canonical taxonomy + weights + aggregation logic: `org/tier0/COMPILER_ARCHETYPES.md`.
+
+The tag feeds MSTR's cross-fabric stimulus-scan signal class 6 (high-cost-archetype clusters). Compiler-tooling R&D's highest-leverage target is COST, not BUGS — archetype aggregation surfaces where time is being paid (leading indicator) rather than waiting for bites to surface (lagging). Forward-only cutover from named date; no retroactive tagging.
+
+Heartbeat-only entries, watcher self-checks, and minor housekeeping commits do not require tags (would dilute signal).
+
+Per LD-0043 + Opal CTO + MSTR working-session lock 2026-05-24T19:45Z. Canonical for both fabrics per CONSTITUTION Art. XV.
+
 ---
 
 ## Task Orders
