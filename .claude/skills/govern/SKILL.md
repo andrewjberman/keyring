@@ -210,7 +210,7 @@ spawn / kill / nudge primitives. Resource-allocation discipline:
 | Wrong-mix (population ≠ queue shape) | **kill + spawn** (swap) |
 | FORK-STALLED cycle=1 | **nudge COO** to resolve (COO is first-line on worker forks per D-001 v1.6) |
 | FORK-STALLED cycle=2, block=informational | **(a) Direct directive** — MSTR ledgers the chosen path; Tier 1 (COO typically) authors the resolving TO or MCP to the stuck agent. Use when the agent would proceed if simply told the answer. |
-| FORK-STALLED cycle=2, block=prompt/context | **(b) SPAWN-WITH-DIRECTION** — COO pre-places a fresh TO + inbox message with the recommended path baked in; MSTR spawns a new agent under the next-free tilde-lane to pick it up; original session is killed or left to time-out per situation. Use when the stuck agent wouldn't move forward even with the answer in hand (compacted context, lost thread, etc.). |
+| FORK-STALLED cycle=2, block=prompt/context | **(b) SPAWN-WITH-DIRECTION** — COO pre-places a fresh TO + inbox message with the recommended path baked in; MSTR spawns a new agent under the next-free tilde-lane to pick it up; original session is killed or left to time-out per situation. Use when the stuck agent wouldn't move forward even with the answer in hand (compacted context, lost thread, etc.). **Kill-tracking gap caveat (LD-0027):** when the original target was launched outside `spawn-agent.ps1` (no marker), `kill-agent.ps1` cannot find it — default to leave-to-time-out + tilde-lane spawn (the LD-0021 contemplated fallback). Force-kill by PID is destructive-without-marker-audit class and requires Andrew per-instance authorization or LD-charter. |
 | FORK-STALLED cycle=2, session unrecoverable | **(c) Kill + replace** — variant of (b) for sessions where leaving the original to time-out would block downstream work; (b) + explicit kill first. |
 | FORK-STALLED cycle=2, architecturally deep | **Escalate to Andrew** — surface with draft recommendation + provenance chain. Architecturally deep = forks committing the fabric to a structural pattern (data model, Lambda topology, governance mechanic, cross-pipeline coupling) as classified by MSTR at scan-time. Mechanical-resolution-when-architecturally-deep is itself a finding. |
 | Sovereign-pending item + Andrew non-response >1 cycle (LD-0026 generalization, D-001 v1.7 — applies to architectural forks, population disposition, project-scoping clarification, audit-trail batch acceptance, cross-domain coordination, product-strategy deferrals) | **Consult CVO (priority) / CTO (fallback)** for CORROBORATE/COUNTER verdict on the MSTR draft recommendation. **CORROBORATES** → working ratification; Tier 1 materializes. **COUNTERS** → MSTR adopts counter (corroborator's domain-relevant read trumps MSTR's working interpretation); Tier 1 materializes the adopted version. Additive considerations (CVO M-1-class, CTO architectural-context-class) from CORROBORATE verdicts fold into materialization design as constraints/checks per CY-0055 banked discipline, NOT as gates that re-open the question. If both CVO and CTO are unavailable, **re-surface to Andrew** with "no corroborator available" framing. **No unilateral action by MSTR** in the silence window. Andrew override authority preserved on re-surface. |
@@ -251,21 +251,57 @@ CVO/CTO are the chartered backstop, not a replacement. Andrew sovereign
 instruction 2026-05-24T01:40Z verbatim: "Yes it is a good idea to
 generally consult CVO in my place if i don't respond within 1 cycle."
 
-**Spawn.** `.tools/spawn-agent.ps1 <serial>` opens a new PowerShell window and
+**Spawn.** `.tools\spawn-agent.ps1 <serial>` opens a new PowerShell window and
 launches the agent hands-free (via `ajb -Headless`; no Y/N prompt stall). Use
 for an unaddressed TO surface, a wrong-mix swap (paired with a kill), or a
 blocked agent needing a sibling for parallel work. Spawn is **S1**: **ledger
 the LD entry FIRST**, then call the script. Spawn ≠ dispatch — staffing only;
 TOs + direction still flow through Tier 1 (Constitution Art. VI).
+**Invocation: PowerShell tool ONLY** — Bash cannot run `.ps1` scripts; an
+attempted bash invocation produces `syntax error near unexpected token
+'newline'` on the `param(` line (empirical CY-0057).
 
-**Kill.** `.tools/kill-agent.ps1 <serial> -Reason "<text>"` (or `-All -Reason
+**Kill.** `.tools\kill-agent.ps1 <serial> -Reason "<text>"` (or `-All -Reason
 "<text>"` for fabric-wide reset). Walks the process tree (powershell → claude
 → ...) with `Stop-Process -Force`. Required `-Reason` for audit traceability.
 Use for: reallocation (chartered work done), STANDING_BY-with-no-next-step,
 or unrecoverable-BLOCKED replacement. Kill is **S1** (reversible — spawn a
 replacement if you reconsider): ledger BEFORE calling. The audit line
 (`org/mcp/agent-spawn-audit.log`) captures `by 0.0.0_AB_MSTR` and the reason
-for every MSTR-originated kill.
+for every MSTR-originated kill. **Invocation: PowerShell tool ONLY** (same
+Bash-can't-run-ps1 constraint as spawn).
+
+**Kill-tracking gap (LD-0027 empirical finding, CY-0057).** `kill-agent.ps1`
+ONLY finds windows whose CommandLine carries the `# OPAL_SPAWN_MARKER_v1`
+comment (set by `spawn-agent.ps1` at launch). Windows launched **outside**
+`spawn-agent.ps1` — manually started, system-restart-recovered, started
+before MSTR was alive in this session — do NOT carry the marker and are
+invisible to `kill-agent.ps1`; the script returns `[kill-agent] No live
+spawned windows for serial '<serial>' found -- nothing to kill.` even when
+the broker shows the serial LIVE with a valid PID.
+**Two recovery paths:**
+- **Tilde-lane fallback (DEFAULT).** Spawn replacement under next-free
+  tilde-lane suffix (`~D`, `~E`, ...); leave original to natural time-out;
+  MCP-dispatch chartered work to the new tilde-lane through Tier 1. The
+  tilde-lane spawn DOES carry the marker, so future kills work normally.
+  This is the LD-0021 SPAWN-WITH-DIRECTION contemplated "left to time-out
+  per situation" path; empirically validated by LD-0027 on DS Base STALE
+  cycle-3 (CY-0057 `17fb97415`).
+- **Force-kill by PID** (`Stop-Process -Id <PID> -Force`). PID from
+  `liveness.json` / `get_agent_status`. **Destructive-without-marker-audit
+  class** — bypasses `kill-agent.ps1`'s audit logging. Requires Andrew
+  explicit per-instance authorization OR LD-entry chartering the destructive
+  action (Stakes Matrix rollback + reversibility assessment).
+Choose force-kill only when the original session is actively destructive
+(e.g., looping bad commits) and must stop. Otherwise default to the
+tilde-lane fallback.
+
+**Doctrine reference.** Canonical operational doctrine for spawn/kill is
+**`docs/architecture/AGENT_SPAWN_KILL_METHODOLOGY.md`** — the single source
+of truth for mechanism, marker tracking, concurrency cap mechanics, audit
+log format, kill-tracking gap, lane discipline, and the spawn-vs-kill
+decision table. This /govern Step 4 section is the operational summary;
+the doctrine doc has the full detail.
 
 **Concurrency cap.** `spawn-agent.ps1` enforces a hard ceiling of **8 live
 spawned-agent PowerShell windows** workspace-wide (counted via
