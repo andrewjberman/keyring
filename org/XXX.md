@@ -178,25 +178,24 @@ Andrew empirical 2026-05-05: "the respawn auto-launched at 334721. I need to
 kill that too, then immediately launch a tracked watcher via run_in_background
 so it shows in the session." This rule formalizes that pattern.
 
-**BANNED for `feature_clb`-scope agents (the COMP_LEARNS team —
-`1.1.0_SA_CTO`, `1.1.0`/`1.2.0`/`1.3.0`/`1.4.0_DS_CompLearns`,
-`2.1.0_SA_COO`, `2.1.0_SC_CompLearns`): launching `inbox-watch` via the
-`ajb_workspace`-rooted wrapper or any path whose cmdline contains
-`ajb_workspace`.** CL-channel agents use `cl-inbox-watch.sh` (isolated CL channel),
-not the generic `inbox-watch.sh`. Use the feature_clb-rooted absolute path:
-```bash
-# Bash tool, run_in_background: true, NO &
-bash /c/Users/AndrewBerman/Desktop/feature_clb/org/mcp/cl-inbox-watch.sh {your_serial}
-```
-**Why:** (1) `cl-inbox-watch.sh` watches `feature_clb/org/mcp/cl_inbox/` — the CL
-channel inbox. The generic `inbox-watch.sh` watches `ajb_workspace/org/mcp/inbox/`
-and will never fire for CL-channel messages. (2) `kill-orphans` (run by the
-workspace-global PostToolUse hook on the `ajb_workspace` side post ADHC_PUSHFIX.001
-`a27fdf831`) reads only `ajb_workspace/org/mcp/liveness.json` and applies a
-`cmdline contains $WORKSPACE` filter. If the watcher cmdline matches `ajb_workspace`,
-the scan classifies the watcher stale and kills it mid-session. The feature_clb-rooted
-path keeps the cmdline outside that filter. Surfaced 2026-04-29 by AE 0.7.0.
-Full cross-channel architecture: `docs/architecture/AGENT_COMMS_ARCHITECTURE.md`.
+**Post-LD-0034 unified broker + inbox migration (2026-05-24).** ALL agents
+(ws + CL combined) use the ws-rooted `inbox-watch` PATH wrapper, which polls
+the unified inbox at `ajb_workspace/org/mcp/inbox/{serial}/`. CL serials
+(`1.1.0_SA_CTO`, `1.1.0`/`1.2.0`/`1.3.0`/`1.4.0_DS_CompLearns`, `2.1.0_SA_COO`,
+`2.1.0_SC_CompLearns`, `3.1.0_SA_CVO`) all have inbox directories under that
+unified path; the legacy `feature_clb/org/mcp/cl_inbox/` path is orphaned.
+The prior CL-specific carve-out (`cl-inbox-watch.sh` against the legacy CL
+path) is **retired**. Empirically confirmed twice 2026-05-24 by CL CTO + CL
+CVO: agents following the old carve-out launch deaf watchers against an empty
+directory and never fire task-notifications. Outbound MCP still works
+(broker push routes by serial-prefix on the unified channel) + `check_inbox`
+/ `get_agent_status` still surface inbound on next pull, but the real-time
+watcher-exit task-notification never fires. The `kill-orphans` hook's
+`cmdline contains $WORKSPACE` filter does NOT classify ws-rooted CL watchers
+as stale (the prior "Why" paragraph misread the filter polarity — it KEEPS
+workspace-matching cmdlines, not kills them); empirically validated by CL
+agents running cleanly on ws-rooted watchers across many cycles since
+LD-0034. Full cross-channel architecture: `docs/architecture/AGENT_COMMS_ARCHITECTURE.md`.
 
 **When you get a watcher-exit task-notification, that IS the signal that a new
 message arrived.** Your required response:
