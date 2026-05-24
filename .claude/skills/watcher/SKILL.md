@@ -60,11 +60,15 @@ inbox file it wins via the atomic `mv` race is silently swallowed.
   `~B`/`~C`/`~D` lane suffix**. (`SERIAL=` in `.comp-graph/.agent_context` or
   `$OPAL_AGENT_SERIAL` are fallbacks, but they can be stale or shared between
   lanes — trust the serial from your own session registration first.)
-- **Channel:** CL-channel agents — the COMP_LEARNS team (`1.1.0_SA_CTO`,
-  `1.1.0`/`1.2.0`/`1.3.0`/`1.4.0_DS_CompLearns`, `2.1.0_SA_COO`,
-  `2.1.0_SC_CompLearns`) — use `feature_clb/org/mcp/cl-inbox-watch.sh`. Every
-  other agent uses the `ajb_workspace` `inbox-watch`. The helper auto-detects
-  this; just know which one you are.
+- **Channel:** post-LD-0034 unified broker + inbox migration (`opal-agent-comms`
+  canonical; `complearns-agent-comms` retired) — **ALL agents (ws + CL) use the
+  ws-rooted `inbox-watch` PATH wrapper**, which polls the unified inbox at
+  `ajb_workspace/org/mcp/inbox/{serial}/`. CL serials have inbox directories
+  under that unified path; the legacy `feature_clb/org/mcp/cl_inbox/` path is
+  orphaned. The prior CL-specific carve-out (`cl-inbox-watch.sh` against the
+  legacy CL path) is retired. Empirically confirmed twice 2026-05-24 by CL CTO
+  + CL CVO: agents following the old carve-out launch deaf watchers against an
+  empty directory and never fire task-notifications.
 
 ## Step 1 — Registration check
 
@@ -124,11 +128,15 @@ guard-exit as a misleading **exit 143**, and you are left with only the stale
    and confirm `VERDICT: NONE`. If a PID survives, `kill -9 <pid>`.
 3. **Launch exactly ONE tracked watcher** — Bash tool, `run_in_background: true`,
    **no trailing `&`**:
-   - ws agents: `inbox-watch {serial}`
-   - CL agents: `bash /c/Users/AndrewBerman/Desktop/feature_clb/org/mcp/cl-inbox-watch.sh {serial}`
+   - **ALL agents (ws + CL, post-LD-0034 unified broker + inbox):**
+     `inbox-watch {serial}` (PATH wrapper exec's the ws-rooted absolute path
+     `bash /c/Users/AndrewBerman/Desktop/ajb_workspace/org/mcp/inbox-watch.sh {serial}`
+     which polls the unified inbox).
    - **BANNED:** `bash org/mcp/inbox-watch.sh {serial}` (relative path → PPID=1
      zombie that short-circuits the next session); any `&` form (runs invisibly,
-     fires no notification — you go deaf for the session).
+     fires no notification — you go deaf for the session); the retired
+     `feature_clb/org/mcp/cl-inbox-watch.sh` legacy CL-channel script (polls
+     orphaned `feature_clb/org/mcp/cl_inbox/` post-LD-0034 — deaf watcher).
 4. The Bash tool returns a **background task ID**. That ID is your proof of
    tracking — note it. When it later completes, that is a new-message signal:
    pull the inbox (Step 5) and relaunch the watcher (one delivery = one relaunch).
@@ -204,7 +212,7 @@ final cycle run and not re-arm). The loop then ends.
 | `ORPHAN` | Watcher has no live eval-launcher parent (PPID=1 / dead / reparented) — a prior-session leftover | Step 4: kill, then launch |
 | `MULTIPLE` | >1 watcher for your serial — atomic-`mv` race, deliveries lost | Step 4: kill ALL, then launch one |
 | `RELATIVE-PATH` | Launched via banned `bash org/mcp/inbox-watch.sh` — PPID=1 zombie risk | Step 4: kill, relaunch via PATH wrapper |
-| `WRONG-CHANNEL` | CL agent on the ajb watcher (or vice-versa) — watches the wrong inbox; the `kill-orphans` hook may also kill it mid-session | Step 4: kill, relaunch via the correct-channel form |
+| `WRONG-CHANNEL` | Watcher launched against the retired `feature_clb/org/mcp/cl-inbox-watch.sh` legacy CL path (orphaned post-LD-0034 unified broker + inbox migration); polls empty directory, deaf to deliveries | Step 4: kill, relaunch via the ws-rooted `inbox-watch {serial}` PATH wrapper (all agents, ws + CL, use the unified path post-LD-0034) |
 | `PROCESS-OK` | Process tree healthy — **but** confirm Step 3. A prior session's watcher also reads `PROCESS-OK` | If Step 3 = NO → Step 4 anyway |
 
 ## Notes
