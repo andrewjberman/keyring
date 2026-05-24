@@ -213,7 +213,7 @@ spawn / kill / nudge primitives. Resource-allocation discipline:
 | FORK-STALLED cycle=2, block=prompt/context | **(b) SPAWN-WITH-DIRECTION** — COO pre-places a fresh TO + inbox message with the recommended path baked in; MSTR spawns a new agent under the next-free tilde-lane to pick it up; original session is killed or left to time-out per situation. Use when the stuck agent wouldn't move forward even with the answer in hand (compacted context, lost thread, etc.). |
 | FORK-STALLED cycle=2, session unrecoverable | **(c) Kill + replace** — variant of (b) for sessions where leaving the original to time-out would block downstream work; (b) + explicit kill first. |
 | FORK-STALLED cycle=2, architecturally deep | **Escalate to Andrew** — surface with draft recommendation + provenance chain. Architecturally deep = forks committing the fabric to a structural pattern (data model, Lambda topology, governance mechanic, cross-pipeline coupling) as classified by MSTR at scan-time. Mechanical-resolution-when-architecturally-deep is itself a finding. |
-| Architectural fork + Andrew non-response >1 cycle | **Consult CVO (priority) / CTO (fallback)** for architectural corroboration. CVO/CTO returns **CORROBORATES** (MSTR ledgers + Tier 1 authors resolving TO) or **COUNTERS** (MSTR adopts counter — CVO/CTO architectural read trumps MSTR's working interpretation). If both CVO and CTO are unavailable, **re-surface to Andrew** with "no corroborator available" framing. **No unilateral architectural action by MSTR.** |
+| Sovereign-pending item + Andrew non-response >1 cycle (LD-0026 generalization, D-001 v1.7 — applies to architectural forks, population disposition, project-scoping clarification, audit-trail batch acceptance, cross-domain coordination, product-strategy deferrals) | **Consult CVO (priority) / CTO (fallback)** for CORROBORATE/COUNTER verdict on the MSTR draft recommendation. **CORROBORATES** → working ratification; Tier 1 materializes. **COUNTERS** → MSTR adopts counter (corroborator's domain-relevant read trumps MSTR's working interpretation); Tier 1 materializes the adopted version. Additive considerations (CVO M-1-class, CTO architectural-context-class) from CORROBORATE verdicts fold into materialization design as constraints/checks per CY-0055 banked discipline, NOT as gates that re-open the question. If both CVO and CTO are unavailable, **re-surface to Andrew** with "no corroborator available" framing. **No unilateral action by MSTR** in the silence window. Andrew override authority preserved on re-surface. |
 
 **Choosing among (a)/(b)/(c):** heuristic = pick the reversible / cheapest /
 most-information-producing path. Ledger the choice with fork reference +
@@ -232,6 +232,24 @@ operationally adjacent to MSTR). Both CVO and CTO can COUNTER; their
 architectural read trumps MSTR's working interpretation. Andrew can
 overturn either on re-surface, but in the corroborator's window the
 CVO/CTO call is the working ratification.
+
+**Andrew-pending-backstop — generalized fabric-wide (D-001 v1.7,
+LD-0026).** The architectural-fork resolver chain above is one
+application of a broader principle: any sovereign-surfaced question
+unresolved >1 /govern cycle after MSTR surface with draft recommendation
+triggers the same CVO-priority/CTO-fallback corroboration mechanism.
+Scope includes architectural forks (v1.6 case), population disposition
+(e.g., DS Base STALE cycle-3 — first application landing same cycle as
+LD-0026), project-scoping clarification (Q1/Q2 questions), audit-trail
+batch acceptance (RV-batches), cross-domain coordination, and product-
+strategy deferrals. The mechanism is the same: MSTR drafts recommendation,
+Andrew has 1-cycle SLA, corroborator returns CORROBORATE (working
+ratification, Tier 1 materializes) or COUNTER (MSTR adopts, Tier 1
+materializes adopted version); additive considerations fold as
+constraints not gates per CY-0055. Andrew preferred resolver throughout;
+CVO/CTO are the chartered backstop, not a replacement. Andrew sovereign
+instruction 2026-05-24T01:40Z verbatim: "Yes it is a good idea to
+generally consult CVO in my place if i don't respond within 1 cycle."
 
 **Spawn.** `.tools/spawn-agent.ps1 <serial>` opens a new PowerShell window and
 launches the agent hands-free (via `ajb -Headless`; no Y/N prompt stall). Use
