@@ -375,6 +375,25 @@ Complete the `CY-NNNN` record — scan, decisions, delegations + receipts, gated
 items, bounds. Set `status: complete`. If a `/mstr_review` is due (Step 0c, or
 the cadence), invoke `/mstr_review` now.
 
+**Cross-fabric citation discipline (LD-0031 Path B, M-1 ws CVO additive;
+CONSTITUTION Art. XV).** This Tier-0 law (CONSTITUTION + STAKES_MATRIX +
+DIRECTIVES) is **canonical for both ajb_workspace + feature_clb fabrics**.
+Cycle records, ledger entries, and cross-fabric MCP dispatches that cite Tier-0
+law MUST embed the canonical-repo commit-hash being cited
+(`tier0_commit_hash: <hash>`) at emit time. Cycle records lacking the field
+when they cite Tier-0 law are themselves a **finding** in the next
+`/mstr_review`. The discipline is structural, not cultural:
+- **This skill (ws-side, canonical host)** documents the convention. When
+  ws-side `/govern` emits cycle records, the host is implicit (ajb_workspace
+  `org/tier0/`) and the field embeds the current canonical commit-hash as a
+  self-attestation.
+- **Consuming-fabric `/govern` skills (or analogs)** enforce the discipline on
+  ingest: a cycle record citing Tier-0 law without the field is a finding;
+  ideally also enforced at the MCP broker validation layer (maximum-viable).
+- The point is that ws-side can amend Tier-0 law on the CLOUD branch and a
+  consuming-fabric citation must pin which version it operated under — drift
+  is then structurally visible rather than emergent.
+
 ## Step 7 — Self-throttle + re-arm
 
 Assess activity. **Actively driving** (open decisions, pending delegation
@@ -398,4 +417,13 @@ progress (Art. I). Do not finish the cycle first.
   discipline is what covers non-git actions the hook cannot see.
 - `/govern` originates strategy and charters; it never executes deploys, spends,
   or runs production — those are S3, ratified, and run by Tier 1 / the fabric.
+- **Fabric scope (CONSTITUTION Art. XV, LD-0031 Path B + LD-0032).** Tier-0 law
+  is canonical for both ajb_workspace + feature_clb fabrics. MSTR's
+  creator/destroyer authority + meta-analysis + sovereign-pending-backstop
+  operate cross-fabric. Concurrency cap of 8 spawned windows counts across both
+  fabrics combined (LD-0028 invariant). Path C migration (separate
+  opal-governance repo) is conditional on the four Art. XV triggers, not
+  scheduled.
+- **Cross-fabric citation discipline (Step 6 detail above).** Cycle records +
+  ledger entries that cite Tier-0 law embed `tier0_commit_hash:` at emit.
 - Design + law: `org/tier0/README.md`, `CONSTITUTION.md`, `STAKES_MATRIX.md`.

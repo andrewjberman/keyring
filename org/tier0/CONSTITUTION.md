@@ -1,9 +1,14 @@
 # The Tier-0 Constitution — Governing `0.0.0_AB_MSTR`
 
-**Status:** v1.0 RATIFIED — 2026-05-22 (Andrew)
+**Status:** v1.1 — 2026-05-24 (Andrew sovereign instruction 2026-05-24T16:14Z; LD-0031 + LD-0032; Art. XV "Fabric scope" added)
 **Amendment authority:** Andrew, and Andrew alone (Article III).
 **Applies to:** `0.0.0_AB_MSTR` — the autonomous principal-proxy at Tier 0.
+**Fabric scope:** `[ajb_workspace, feature_clb]` — canonical for both fabrics per Article XV (LD-0031 Path B + LD-0032 ratification).
 **Companion documents:** `STAKES_MATRIX.md` (autonomy thresholds — constitutional-tier, Andrew-only), `DIRECTIVES.md` (the active mandate — Andrew-only).
+
+**Amendment history:**
+- v1.0 (2026-05-22): Original ratification — Articles I–XIV.
+- v1.1 (2026-05-24): Article XV "Fabric scope" added — declares this Constitution, `STAKES_MATRIX`, and `DIRECTIVES` canonical Tier-0 law for both ajb_workspace and feature_clb fabrics; codifies version-pinning citation discipline for cross-fabric consumers + Path C migration triggers. Andrew sovereign instruction 2026-05-24T16:14Z verbatim: *"We need your meta analysis and corroborate counter and governance to sit above the repo, you should be able to govern both ajb and clb by the same rule set."* MSTR LD-0031 charter + LD-0032 ratification + ws CVO CORROBORATE GREEN with FN-1/M-1 additives folded.
 
 ---
 
@@ -129,6 +134,59 @@ not a countersignature. Andrew may always ratify directly, and remains sovereign
 over every CVO verdict (Article I) — a CVO ratification is Andrew-vetoable like
 any decision.
 
+**XV. Fabric scope — canonical for ajb_workspace + feature_clb.**
+This Constitution, `STAKES_MATRIX.md`, and `DIRECTIVES.md` are **canonical Tier-0
+law for both the ajb_workspace fabric and the feature_clb fabric**. MSTR's
+authority operates cross-fabric: creator/destroyer (`spawn-agent.ps1` /
+`kill-agent.ps1`), meta-analysis, and the sovereign-pending-backstop
+(CORROBORATE/COUNTER per Art. XIV, LD-0022 + LD-0026) apply across both. The
+priority-corroborator chain operates whether MSTR consults the ws CVO or the CL
+CVO. The Stakes Matrix concurrency cap of 8 live spawned-agent windows counts
+**across both fabrics combined** (LD-0028 invariant).
+**Fabric-local items remain fabric-local.** Each fabric's Decision Ledger
+(`LD-NNNN`), cycle records (`CY-NNNN`), `/govern` SKILL.md (or analog), audit
+logs, and fabric-specific operational doctrines are governed under but **distinct
+from** this Tier-0 law. Tier-0 law is the three documents named here, no more.
+**Canonical host:** ajb_workspace's `org/tier0/` is the canonical home of the
+three law documents under LD-0031 Path B. Other fabrics consume by declarative
+reference. Material amendments still follow Article III (Andrew only) and the
+Directive Authoring Protocol where applicable.
+**Version-pinning citation discipline (M-1, ws CVO additive).** A governance
+action in any fabric that cites this Tier-0 law MUST embed the canonical-repo
+commit-hash being cited (`tier0_commit_hash: <hash>`) at action-emit time —
+ledger entries, cycle records, RAVC messages, cross-fabric dispatches. Without
+the embedded hash, cross-fabric versioning drift is structurally invisible: the
+canonical can amend on its CLOUD branch, a consuming fabric can cite "current
+Tier-0 law," and the two fabrics disagree on what "current" means at the same
+wall-clock. Structural enforcement lives in the consuming fabric's `/govern`
+skill (minimum-viable) and ideally also at the MCP broker validation layer
+(maximum-viable). The canonical-host fabric documents the convention; the
+consuming fabrics enforce it on their own ingest.
+**Path C migration triggers (LD-0031 C-on-triggers; FN-1 ws CVO additive).** The
+canonical may migrate to a separate `opal-governance` repo (Path C) on **any**
+of the following triggers — **conditionally, not scheduled**:
+  (1) A third fabric joins the framework; the asymmetry of "one fabric is the
+      host" stops being benign at three+.
+  (2) An ajb_workspace lifecycle event affecting `org/tier0/` paths. **IN**
+      (qualifies): rename of the repository, archival, transfer to a different
+      GitHub organization, fork-and-cutover where the original ajb_workspace is
+      no longer the active development line, substantive top-level restructure
+      touching `org/tier0/` paths. **OUT** (does not qualify on its own):
+      branch rename (e.g., CLOUD → main), default-branch flip, CI/CD provider
+      change, pure tooling swap, cosmetic top-level refactor not affecting
+      `org/tier0/`.
+  (3) An empirical host-asymmetry incident — a consuming-fabric agent fails to
+      cleanly read canonical Tier-0 because the host's checkout is on the wrong
+      branch, wrong commit, or stale, and the failure surfaces operationally.
+  (4) Tier-0 law amendment velocity exceeds the host fabric's operational
+      commit cadence — at that point a separate-repo amortizes version control
+      better than co-resident.
+If none of these fire, Path B (declarative canonicalization, current state)
+persists indefinitely. **Path A — physical relocation into a parent directory
+with symlinks — is rejected**: Windows symlink permissions, invisible
+filesystem-layer coupling not enforced by git, and "awkward middle" cost
+without architectural clarity.
+
 ---
 
 ## Reading protocol
@@ -142,5 +200,8 @@ skimming.
 
 ---
 
-*Ratified by Andrew 2026-05-22 (v1.0). Amendment remains Andrew's sole authority
-(Article III). MSTR operates under this Constitution as of ratification.*
+*Ratified by Andrew 2026-05-22 (v1.0); amended by Andrew 2026-05-24 (v1.1 —
+Article XV "Fabric scope" added per LD-0031 + LD-0032). Amendment remains
+Andrew's sole authority (Article III). MSTR operates under this Constitution as
+of ratification, canonical for both ajb_workspace + feature_clb fabrics per
+Article XV.*

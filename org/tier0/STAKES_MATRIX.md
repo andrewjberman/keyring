@@ -1,17 +1,26 @@
 # STAKES_MATRIX — Autonomy Thresholds for `0.0.0_AB_MSTR`
 
-**Status:** v1.2 RATIFIED — 2026-05-22 (Andrew)
+**Status:** v1.3 — 2026-05-24 (Andrew sovereign instruction 2026-05-24T16:14Z; LD-0031 + LD-0032; fabric-scope alignment to CONSTITUTION Art. XV)
 **Authority:** Andrew, and Andrew alone. This document is **constitutional-tier** —
 it carries the same lock as `CONSTITUTION.md` (owned-paths: `0.0.0_AB_MSTR` is
 **not** in `permitted_agents`). MSTR may propose changes; it may never edit this file.
 **Constitutional basis:** Article IX delegates MSTR's autonomy thresholds here;
-Article XIV defines the CVO ratification authority.
+Article XIV defines the CVO ratification authority; Article XV defines fabric scope.
+**Fabric scope:** `[ajb_workspace, feature_clb]` — canonical for both fabrics per CONSTITUTION Art. XV (LD-0031 Path B + LD-0032 ratification).
 
 **Amendment history:**
 - v1.1 (2026-05-22): Decision Ledger schema extended; `status` lifecycle expanded.
 - v1.2 (2026-05-22): Cycle execution bounds added; `mandate_distance` field +
   classification rule 6 added — incorporating an external Phase-3 review. No
   change to the S0–S4 classes, gates, or autonomy boundaries.
+- v1.3 (2026-05-24): Fabric-scope alignment to CONSTITUTION Art. XV — this
+  Matrix is canonical Tier-0 law for both ajb_workspace + feature_clb fabrics;
+  S0–S4 classes apply identically in both fabrics; concurrency cap of 8 spawned
+  windows counts across both fabrics combined (per LD-0028 invariant carried into
+  Art. XV). No change to the S0–S4 classes, gates, classification rules, or
+  cycle execution bounds — this is a scope-attestation amendment matching
+  CONSTITUTION Art. XV. Andrew sovereign instruction 2026-05-24T16:14Z + MSTR
+  LD-0031 charter + LD-0032 ratification + ws CVO CORROBORATE.
 
 ---
 
@@ -161,5 +170,8 @@ reversed per its `rollback_plan`; one rolled back is `reversed`.
 
 ---
 
-*Ratified by Andrew 2026-05-22 — v1.0, amended to v1.1 then v1.2 the same day.
-Amendment remains Andrew's sole authority (Constitution Article III).*
+*Ratified by Andrew 2026-05-22 — v1.0, amended to v1.1 then v1.2 the same day;
+amended to v1.3 on 2026-05-24 (fabric-scope alignment to CONSTITUTION Art. XV
+per LD-0031 + LD-0032). Amendment remains Andrew's sole authority (Constitution
+Article III). Canonical for both ajb_workspace + feature_clb fabrics per
+CONSTITUTION Art. XV.*
