@@ -1,10 +1,10 @@
 # DIRECTIVES — The Active Mandate for `0.0.0_AB_MSTR`
 
-**Status:** v1.8 — fabric-scope alignment to CONSTITUTION Art. XV (LD-0031 Path B + LD-0032): this Directive set is canonical Tier-0 law for both ajb_workspace + feature_clb fabrics; D-001/D-002/D-003 success signals apply cross-fabric; v1.7 ANDREW-PENDING-BACKSTOP + v1.6 FORK-STALL ESCALATION + v1.5 OPERATIONAL THROUGHPUT/ANTI-META-RECURSION/BOTTLENECK-RESPONSE all carry forward unchanged; format + authoring protocol ratified v1.2
+**Status:** v1.10 — D-003 amended to codify the asymmetric graph-adoption-mandate authority half (LD-0033 #7 held in v1.9; LD-0035 routed to joint ws CTO + ws CVO + ratified by Andrew direct 2026-05-24T18:08:00Z). Joint verdict CORROBORATED base authority + (B) lift-evidence tightening + (C) scope discipline + (D) drift-management/Opal-veto preservation; 5 additive sharpenings fold as constraints per LD-0025 banked doctrine (CTO §4-cond-4 consumer-side ratification + CTO §1+§4 mandate-phase framing + CTO §8 ws-Tier-1-wide breach-declaration + CTO §4-cond-5 freshness floor + CVO §7 FN-1 adoption-signal). MSTR creator/destroyer authority + LD-0036 sole-spawn-originator discipline integrates the mandate-firing capacity into the unified-broker cross-fabric stimulus scan loop. Paired with v1.9 (post-PROGRAM continuous-cycle R&D mode + primary/secondary purpose ordering + cross-fabric coordination protocol per LD-0033 ratified subset + unified comms layer per LD-0034 + adoption-surface clarification + M-1 generalization). Prior v1.7 ANDREW-PENDING-BACKSTOP + v1.6 FORK-STALL ESCALATION + v1.5 OPERATIONAL THROUGHPUT/ANTI-META-RECURSION/BOTTLENECK-RESPONSE all carry forward unchanged; format + authoring protocol ratified v1.2
 **Authority:** Andrew authors; the CTO transcribes. A Directive's mandate is Andrew's alone — MSTR may *propose* and the CVO may review and recommend, but a Directive is added, amended, or retired only by Andrew, via the Directive Authoring Protocol below. A Tier-0 law document, never CVO-ratifiable (Constitution Art. III, XIV). (owned-paths: `TIER0_LAW`, `permitted_agents: []` — no standing agent write access.)
 **Fabric scope:** `[ajb_workspace, feature_clb]` — canonical for both fabrics per CONSTITUTION Art. XV (LD-0031 Path B + LD-0032 ratification).
-**Version:** 1.8 · **Last updated:** 2026-05-24
-**Amendment history:** v1.1 — Directive format tightened to a full schema (external Phase-3 review). v1.2 — Directive Authoring Protocol codified (Andrew directive 2026-05-22). v1.3 — D-001 rewritten from "Finish ADVI" (task-altitude) to the broad two-phase whole-workspace mandate; the ADVI-specific substance moved to the ADVI_VALFIN PRD / project (Andrew directive 2026-05-22). v1.4 — D-001 PHASE 2 amended to verify-channel methodology (mechanical/novel/meta) + retroactive Completed-sweep; meta-analysis success signal (holistic-purpose alignment) added to PHASE 2; D-002 standing maintenance via comp-* dev added; D-003 standing CL fabric facilitation added. (Andrew architectural ruling 2026-05-22; MSTR LD-0006 proposal feedback folded.) v1.5 — D-001 success_signals extended with OPERATIONAL THROUGHPUT (every cycle must produce ≥1 operational action; META-only cycles are findings, not successes) + ANTI-META-RECURSION GUARD (max 1 rubric-amendment charter per cycle, paired with ≥1 operational action) + BOTTLENECK-RESPONSE INTENSIFICATION (STALE-for-N-cycles ladder: nudge → re-route or CTO-absorb → kill+spawn or escalate-to-Andrew). (Andrew directive 2026-05-23; structural fix for the 5-cycle META-drift pattern post-COO-bottleneck.) v1.6 — D-001 success_signals extended with FORK-STALL ESCALATION + mechanical-resolution toolkit: a worker fork (competing paths / ambiguous requirements / "which way" blocker) is COO first-line within 1 /govern cycle; observed STALE-on-fork in 2 consecutive Step 1(b) scans triggers MSTR mechanical resolution at discretion via three-option toolkit — (a) direct directive (informational block), (b) SPAWN-WITH-DIRECTION (prompt/context block, COO pre-places fresh TO with path baked in + MSTR spawns next-free tilde-lane), (c) kill+replace (unrecoverable sessions); heuristic: reversible / cheapest / most-information-producing; architecturally deep forks still escalate to Andrew. (Andrew sovereign directives 2026-05-23T16:28Z + 16:40Z + 16:46Z; MSTR LD-0020 + LD-0021 + LD-0022 unified charters; architectural-fork branch with CVO-priority/CTO-fallback corroboration if Andrew non-responsive >1 cycle.) v1.7 — D-001 success_signals extended with ANDREW-PENDING-BACKSTOP: the LD-0022 architectural-fork-only CVO/CTO corroboration backstop generalizes to ALL Andrew-pending sovereign items. Any sovereign-surfaced question — architectural fork, population disposition, project-scoping clarification, audit-trail batch acceptance, cross-domain coordination, product-strategy deferral — that sits unresolved >1 /govern cycle after MSTR surface with draft recommendation triggers MSTR consult CVO (priority) / CTO (fallback) for CORROBORATE/COUNTER verdict on the MSTR draft. CORROBORATE = working ratification (Tier 1 materializes); COUNTER = MSTR adopts counter (corroborator's domain-relevant read trumps MSTR's working interpretation; Tier 1 materializes adopted version). Additive considerations (CVO M-1-class, CTO architectural-context-class) from CORROBORATE verdicts fold into materialization design as constraints/checks per CY-0055 banked discipline, NOT as gates that re-open the question. Andrew override authority preserved on re-surface. (Andrew sovereign instruction 2026-05-24T01:40Z verbatim: "Yes it is a good idea to generally consult CVO in my place if i don't respond within 1 cycle"; MSTR LD-0026 charter; resolves the asymmetry where v1.6 generalized architectural-fork handling cleanly but left STALE-ladder cycle-3 + other sovereign-pending classes without a corresponding backstop.) v1.8 — fabric-scope alignment to CONSTITUTION Art. XV: this Directive set is canonical Tier-0 law for BOTH ajb_workspace + feature_clb fabrics under one rule set. D-001 (drive Opal to done + verify-channel + operational throughput + bottleneck-response + fork-stall escalation + Andrew-pending-backstop) applies whether MSTR's stimulus scan reads ws fabric state or CL fabric state. D-002 (standing maintenance via compiler development) applies cross-fabric — comp-* extensions developed in ws can analyze CL artifacts and vice versa. D-003 (CL fabric facilitation) is now operationally co-canonical: rather than ws governing ws + CL via D-001 with D-003 as a parallel facilitation Directive, both fabrics operate under the same D-001/D-002/D-003 set with MSTR's authority cross-fabric per Art. XV. The Directive Authoring Protocol (above) applies identically; Andrew remains the sole author of Directives for both fabrics. (Andrew sovereign instruction 2026-05-24T16:14Z verbatim: "We need your meta analysis and corroborate counter and governance to sit above the repo, you should be able to govern both ajb and clb by the same rule set"; MSTR LD-0031 architectural-design charter → CTO architectural verdict + ws CVO CORROBORATE GREEN with FN-1 [C-trigger #2 IN/OUT enumeration] + M-1 [version-pinning structural enforcement] additives folded → MSTR LD-0032 ratification + materialization charter; ws-side Tier-0 amendments shipped this commit, CL-side cross-reference doc + M-1 structural enforcement coordinated in parallel.)
+**Version:** 1.10 · **Last updated:** 2026-05-24
+**Amendment history:** v1.1 — Directive format tightened to a full schema (external Phase-3 review). v1.2 — Directive Authoring Protocol codified (Andrew directive 2026-05-22). v1.3 — D-001 rewritten from "Finish ADVI" (task-altitude) to the broad two-phase whole-workspace mandate; the ADVI-specific substance moved to the ADVI_VALFIN PRD / project (Andrew directive 2026-05-22). v1.4 — D-001 PHASE 2 amended to verify-channel methodology (mechanical/novel/meta) + retroactive Completed-sweep; meta-analysis success signal (holistic-purpose alignment) added to PHASE 2; D-002 standing maintenance via comp-* dev added; D-003 standing CL fabric facilitation added. (Andrew architectural ruling 2026-05-22; MSTR LD-0006 proposal feedback folded.) v1.5 — D-001 success_signals extended with OPERATIONAL THROUGHPUT (every cycle must produce ≥1 operational action; META-only cycles are findings, not successes) + ANTI-META-RECURSION GUARD (max 1 rubric-amendment charter per cycle, paired with ≥1 operational action) + BOTTLENECK-RESPONSE INTENSIFICATION (STALE-for-N-cycles ladder: nudge → re-route or CTO-absorb → kill+spawn or escalate-to-Andrew). (Andrew directive 2026-05-23; structural fix for the 5-cycle META-drift pattern post-COO-bottleneck.) v1.6 — D-001 success_signals extended with FORK-STALL ESCALATION + mechanical-resolution toolkit: a worker fork (competing paths / ambiguous requirements / "which way" blocker) is COO first-line within 1 /govern cycle; observed STALE-on-fork in 2 consecutive Step 1(b) scans triggers MSTR mechanical resolution at discretion via three-option toolkit — (a) direct directive (informational block), (b) SPAWN-WITH-DIRECTION (prompt/context block, COO pre-places fresh TO with path baked in + MSTR spawns next-free tilde-lane), (c) kill+replace (unrecoverable sessions); heuristic: reversible / cheapest / most-information-producing; architecturally deep forks still escalate to Andrew. (Andrew sovereign directives 2026-05-23T16:28Z + 16:40Z + 16:46Z; MSTR LD-0020 + LD-0021 + LD-0022 unified charters; architectural-fork branch with CVO-priority/CTO-fallback corroboration if Andrew non-responsive >1 cycle.) v1.7 — D-001 success_signals extended with ANDREW-PENDING-BACKSTOP: the LD-0022 architectural-fork-only CVO/CTO corroboration backstop generalizes to ALL Andrew-pending sovereign items. Any sovereign-surfaced question — architectural fork, population disposition, project-scoping clarification, audit-trail batch acceptance, cross-domain coordination, product-strategy deferral — that sits unresolved >1 /govern cycle after MSTR surface with draft recommendation triggers MSTR consult CVO (priority) / CTO (fallback) for CORROBORATE/COUNTER verdict on the MSTR draft. CORROBORATE = working ratification (Tier 1 materializes); COUNTER = MSTR adopts counter (corroborator's domain-relevant read trumps MSTR's working interpretation; Tier 1 materializes adopted version). Additive considerations (CVO M-1-class, CTO architectural-context-class) from CORROBORATE verdicts fold into materialization design as constraints/checks per CY-0055 banked discipline, NOT as gates that re-open the question. Andrew override authority preserved on re-surface. (Andrew sovereign instruction 2026-05-24T01:40Z verbatim: "Yes it is a good idea to generally consult CVO in my place if i don't respond within 1 cycle"; MSTR LD-0026 charter; resolves the asymmetry where v1.6 generalized architectural-fork handling cleanly but left STALE-ladder cycle-3 + other sovereign-pending classes without a corresponding backstop.) v1.8 — fabric-scope alignment to CONSTITUTION Art. XV: this Directive set is canonical Tier-0 law for BOTH ajb_workspace + feature_clb fabrics under one rule set. D-001 (drive Opal to done + verify-channel + operational throughput + bottleneck-response + fork-stall escalation + Andrew-pending-backstop) applies whether MSTR's stimulus scan reads ws fabric state or CL fabric state. D-002 (standing maintenance via compiler development) applies cross-fabric — comp-* extensions developed in ws can analyze CL artifacts and vice versa. D-003 (CL fabric facilitation) is now operationally co-canonical: rather than ws governing ws + CL via D-001 with D-003 as a parallel facilitation Directive, both fabrics operate under the same D-001/D-002/D-003 set with MSTR's authority cross-fabric per Art. XV. The Directive Authoring Protocol (above) applies identically; Andrew remains the sole author of Directives for both fabrics. (Andrew sovereign instruction 2026-05-24T16:14Z verbatim: "We need your meta analysis and corroborate counter and governance to sit above the repo, you should be able to govern both ajb and clb by the same rule set"; MSTR LD-0031 architectural-design charter → CTO architectural verdict + ws CVO CORROBORATE GREEN with FN-1 [C-trigger #2 IN/OUT enumeration] + M-1 [version-pinning structural enforcement] additives folded → MSTR LD-0032 ratification + materialization charter; ws-side Tier-0 amendments shipped this commit, CL-side cross-reference doc + M-1 structural enforcement coordinated in parallel.) v1.9 — D-003 substantively amended from "facilitation of the COMPLEARNS research workstream" to "facilitation of the COMPLEARNS R&D fabric in its post-PROGRAM continuous-cycle mode." The CL research workstream achieved PROGRAM 2026-05-24T122000Z (CERT_LEDGER `ed3e5fb0f`; 5/5 endpoint predicates SATISFIED; K=5 cert evidence). CL fabric pivots to continuous-cycle R&D shipping a generalized dynamic graph compiler/indexer product suite + methodology. Purpose ordering codified: (1) primary — advance Opal's efficacy with graph usage; (2) secondary — abstract those learnings into a generalizable autonomous indexer/rail system for agent-driven repositories. The secondary flows from doing the primary well. Cross-fabric coordination protocol per LD-0033 partial ratification (symmetric-directives authority; 11-step operational flow steps 1-7+9-11; Q1-Q6 protocol-design positions; git visibility-grant; MSTR cross-fabric reachability operational fix; M-1 generalization to `comp_tool_commit_hash:`) folds into scope. Unified comms layer (opal-agent-comms canonical broker for both fabrics per LD-0034; complearns-agent-comms retired) + sibling-read telemetry across both fabrics' `org/mcp/agent_telemetry/` paths land paired with this commit per LD-0032 ship-paired precedent. The asymmetric-graph-adoption-mandate authority half (LD-0033 #7 held; LD-0035 routed) is NOT codified in v1.9 — pending joint ws CTO + ws CVO recommendation + Andrew/CVO ratification under Art. XIV S4-operational gate; if approved, folds in via v1.10 amendment or standalone authority instrument per joint verdict shape. (Andrew sovereign instructions 2026-05-24T122500Z+ + 2026-05-24T123500Z+ to CL CTO + 2026-05-24T17:37Z to MSTR ratifying the formal-amendment path; MSTR LD-0033 partial-ratification + LD-0034 comms-unification + LD-0035 routing; CVO preliminary verdict `93f5e829a` 2026-05-24T18:20Z confirming Andrew-preferred all 4 held items + #10 lift-evidence tightening GREEN substantive.) v1.10 — D-003 amended to codify the asymmetric graph-adoption-mandate authority half held in v1.9 (LD-0033 #7 / LD-0035) per Andrew direct ratification 2026-05-24T18:08:00Z + joint ws CTO + ws CVO CORROBORATE verdict (ws CTO render via MCP `20260524T180100Z_1.0.0_SA_CTO__JOINT_VERDICT__LD-0035`; ws CVO log `cvo_loop_1900Z_LD0035_joint_verdict_aligned.md` commit `ef27ff8c9`). Pre-close-down landing per Andrew 17:49Z path (I) compressed. Substance: CL CTO (1.1.0_SA_CTO) gains formal mandate-authority over Opal product agents in validated scope post-water-test per `feature_clb/docs/architecture/COMP_LEARNS_GRAPH_VALIDATION_DISCIPLINE.md` §4 — 5 fidelity bounds + trust contract + lift-AND-fidelity (joint additive B) + ws-Tier-1 consumer-side ratification (joint additive 1) + re-validation cadence (joint additive 4). Post-ratification, mandate-eligible artifact MUST be used in validated scope absent active fidelity dispute (joint additive 2). Breach-declaration authority extends to any ws Tier-1 — CTO/COO/CVO — with MSTR ratifying suspension within 1 cycle per LD-0026 (joint additive 3). Invitation-phase adoption-signal mechanism documented in §7 of discipline doc for first-per-body-class lift-evidence accumulation (joint additive 5, CVO FN-1). Step 8 MANDATE of CL CTO inter-fabric coordination protocol (LD-0033 §3 11-step flow) is now unblocked per this amendment. (Andrew sovereign instructions 2026-05-24T123500Z+ originating substance + 2026-05-24T17:37Z routing to joint CTO+CVO + 2026-05-24T18:08:00Z ratification verbatim "ratify LD-0035. I choose the D-003 v.10 paired with v1.9 standalone ratification"; MSTR LD-0033 partial-ratification + LD-0035 routing + LD-0035 status:ratified update; joint verdict from ws CTO + ws CVO landed pre-close-down per path (I) per LD-0036 sequencing.)
 
 ---
 
@@ -384,75 +384,243 @@ enough that "faithful extension" stays legible.
 - issued_by:              andrew
 - issued_at:              2026-05-22
 - objective:              Provide standing Tier-0 facilitation to the
-                          COMP_LEARNS research workstream and its agent
-                          team in the feature_clb fabric — a separate repo
-                          + broker channel from the ajb_workspace mandate
-                          of D-001. MSTR coordinates with the CL Tier-1
-                          (1.1.0_SA_CTO, 2.1.0_SA_COO, 2.1.0_SC_CompLearns,
-                          3.1.0_SA_CVO) and the CL DS team (1.1.0 / 1.2.0 /
-                          1.3.0 / 1.4.0_DS_CompLearns). MSTR acts as
+                          COMPLEARNS R&D fabric (feature_clb) in its
+                          post-PROGRAM continuous-cycle mode.
+                          **Primary purpose:** advance Opal's efficacy
+                          with graph usage. **Secondary purpose:**
+                          abstract those learnings into a generalizable
+                          autonomous indexer/rail system for
+                          agent-driven repositories. The secondary flows
+                          from doing the primary well. MSTR coordinates
+                          with the CL Tier-1 (1.1.0_SA_CTO, 2.1.0_SA_COO,
+                          2.1.0_SC_CompLearns, 3.1.0_SA_CVO) and the CL
+                          DS team (1.1.0 / 1.2.0 / 1.3.0 /
+                          1.4.0_DS_CompLearns) under the unified comms
+                          layer (opal-agent-comms canonical broker for
+                          both fabrics per LD-0034) + cross-fabric
+                          stimulus scan extending Step 1(b) population
+                          scan to both fabrics' telemetry. MSTR acts as
                           supply-side authority (Andrew architectural
                           ruling 2026-05-22 — "MSTR = creator and
-                          destroyer"): provisions and reaps CL agents to
-                          fit the workstream's actual shape; ratifies
-                          cross-fabric architectural calls that exceed any
-                          single CL Tier-1 agent's lane; scans the CL
-                          fabric for cross-coordination opportunities.
-                          D-003 runs PARALLEL to D-001 / D-002 — the
-                          fabrics are operationally distinct — but yields
-                          cycle priority to active D-001 work.
+                          destroyer"): provisions and reaps agents in
+                          either fabric to fit the workstreams' actual
+                          shape; ratifies cross-fabric architectural
+                          calls that exceed any single Tier-1 agent's
+                          lane; scans both fabrics for cross-coordination
+                          opportunities. D-003 runs PARALLEL to D-001 /
+                          D-002 — the fabrics are operationally distinct
+                          but share Tier-0 law per CONSTITUTION Art. XV
+                          — yielding cycle priority to active D-001
+                          work.
+                          **Asymmetric graph-adoption mandate authority
+                          (v1.10 — LD-0035 ratified):** Post-water-test
+                          per the COMPLEARNS validation discipline +
+                          joint ws Tier-1 ratification (joint additive
+                          1), CL CTO holds formal mandate-authority over
+                          Opal product agents in the validated scope.
+                          Mandate-eligible artifacts MUST be used in
+                          validated scope absent active fidelity dispute
+                          (joint additive 2). Drift-management +
+                          Opal-veto-via-fidelity-dispute safeguards (§6
+                          + §8 of discipline doc + joint additive 3)
+                          preserve reversibility; breach-declaration
+                          authority extends to any ws Tier-1
+                          (CTO/COO/CVO); MSTR ratifies suspension within
+                          1 cycle per LD-0026. Step 8 MANDATE of
+                          LD-0033 §3 11-step flow now unblocked. MSTR
+                          sole spawn-originator discipline (LD-0036)
+                          operates over the mandate-firing process via
+                          the chartered ratification path.
 - scope:                  IN: (i) standing read of feature_clb's project +
-                          TO + telemetry state alongside ajb_workspace each
-                          /govern cycle; (ii) spawn / kill CL agents via
-                          .tools/spawn-agent.ps1 + kill-agent.ps1 (same
-                          capability used on workspace, scoped to CL
-                          serials — 8-process concurrency cap applies
-                          across both fabrics combined); (iii) ratifying
-                          cross-fabric architectural calls where CL Tier-1
-                          needs Tier-0 authority — e.g., a decision
-                          touching both the CL adapter interface AND a
-                          workspace consumer; (iv) clearing blockers
-                          between CL Tier-1 agents through MCP nudges or
-                          charter extensions; (v) propagating sovereign
-                          directives across both fabrics (the LD-0003
-                          never-stop / escalation-chain ruling applies
-                          fabric-wide).
+                          TO + telemetry state alongside ajb_workspace
+                          each /govern cycle (cross-fabric stimulus scan
+                          via sibling-read telemetry per LD-0034); (ii)
+                          spawn / kill agents in either fabric via
+                          .tools/spawn-agent.ps1 + kill-agent.ps1
+                          (8-process concurrency cap applies across both
+                          fabrics combined per LD-0028); (iii) ratifying
+                          cross-fabric architectural calls where CL
+                          Tier-1 needs Tier-0 authority (LD-0022 +
+                          LD-0026 priority-corroborator chain); (iv)
+                          clearing blockers between Tier-1 agents across
+                          either fabric through MCP nudges or charter
+                          extensions; (v) propagating sovereign
+                          directives across both fabrics; (vi)
+                          **cross-fabric coordination protocol per
+                          LD-0033 ratified subset** — symmetric-directives
+                          authority + 11-step operational flow steps
+                          1-7+9-11 (pre-validation invitation phase +
+                          downstream DRIFT-MANAGE/CODIFY/NEXT loop) +
+                          Q1-Q6 protocol-design positions + git
+                          visibility-grant + MSTR cross-fabric
+                          reachability via opal-agent-comms; (vii)
+                          **adoption-surface coordination per ws CTO
+                          clarification** (CL-built MCP tool surfaces
+                          ship to Opal via MCP server registration in
+                          `.claude/settings.local.json`; no
+                          code-copy / submodule / path-coupling); (viii)
+                          **M-1 generalization to inter-fabric tool
+                          consumption** (ws cycle records / ledger
+                          entries citing a COMPLEARNS-built tool embed
+                          `comp_tool_commit_hash: <hash>` at emit,
+                          parallel to `tier0_commit_hash:` for Tier-0
+                          law citations; implementation deferred to
+                          first CL-tool-mandate cycle); (ix) **joint ws
+                          Tier-1 consumer-side ratification of any
+                          CL-built mandate-eligible artifact** per
+                          discipline §4 condition 4 (CTO joint additive
+                          1) — ws CTO + ws CVO render the binding
+                          ratification; CL CTO + CL CVO co-ratification
+                          additive welcome but ws-side binding;
+                          preserves author-independent validation per
+                          Art. XIV; (x) **lift-evidence-AND-fidelity
+                          requirement on first mandate per body-class**
+                          per discipline §4 condition 3 (joint additive
+                          B — CORROBORATED structurally required, not
+                          optional); fidelity-only mandates permitted
+                          ONLY after ≥1 cycle of empirical lift evidence
+                          in production accumulated via invitation-phase
+                          adoption per discipline §7 + joint additive 5
+                          (CVO FN-1); (xi) **mandate-phase framing** per
+                          discipline §1 + §4 (CTO joint additive 2):
+                          post-ratification, mandate-eligible artifact
+                          MUST be used in validated scope absent active
+                          fidelity dispute; (xii) **breach-declaration
+                          authority extension + suspension cadence** per
+                          discipline §8 (CTO joint additive 3): any ws
+                          Tier-1 (CTO/COO/CVO) may declare fidelity
+                          breach; MSTR ratifies suspension within 1
+                          cycle per LD-0026; tool reverts to invitation
+                          until re-water-tested + re-ratified; (xiii)
+                          **default 30-day max staleness floor** per
+                          discipline §4 condition 5 (CTO joint additive
+                          4): default 30-day staleness OR
+                          per-canonical-source-change for mandate
+                          domains, whichever fires first; explicit
+                          per-artifact in trust contract; (xiv)
+                          **adoption-signal mechanism for invitation
+                          phase** per discipline §7 + CVO joint additive
+                          5 (FN-1): voluntary per-cycle adoption
+                          tracking + per-body curation by CL CTO for
+                          high-Opal-value bodies first to break
+                          chicken-and-egg lift-evidence deadlock on
+                          first-per-body-class mandate.
 - non_goals:              OUT: writing CL task orders — that is
-                          2.1.0_SA_COO's authority on the CL fabric. OUT:
-                          defining CL strategy — that is 1.1.0_SA_CTO's
-                          authority. OUT: originating new CL Directives —
-                          only Andrew may originate; if MSTR sees CL needs
-                          a new mandate, it surfaces a proposal back to
-                          Andrew through the Directive Authoring Protocol.
-                          OUT: editing code, prompts, or architectural
-                          files on the CL fabric (Art. VI — govern through
-                          the org). OUT: pre-empting active D-001 work;
-                          D-001 has priority when there is attention
-                          contention.
+                          2.1.0_SA_COO's authority on the CL fabric
+                          (unchanged). OUT: defining CL R&D strategy —
+                          that is 1.1.0_SA_CTO's authority (unchanged).
+                          OUT: originating new CL Directives — only
+                          Andrew may originate; if MSTR sees CL needs a
+                          new mandate, it surfaces a proposal back to
+                          Andrew through the Directive Authoring
+                          Protocol (unchanged). OUT: editing code,
+                          prompts, or architectural files on the CL
+                          fabric (Art. VI — govern through the org).
+                          OUT: pre-empting active D-001 work; D-001 has
+                          priority when there is attention contention.
+                          OUT (v1.9 additions): originating Opal product
+                          strategy from CL fabric (CL fabric advances
+                          Opal graph efficacy via tool-shipping, not via
+                          product strategy direction; product strategy
+                          remains ws CTO domain under D-001).
+                          OUT (v1.10 — unblocked from v1.9): step 8
+                          MANDATE firing of LD-0033 §3 11-step flow is
+                          **now unblocked** under D-003 v1.10 — but
+                          firing on any specific graph artifact STILL
+                          requires per-artifact joint ws CTO + ws CVO
+                          ratification under §4 condition 4 (joint
+                          additive 1) + meets §4 conditions 1-5 (5
+                          fidelity bounds + trust contract +
+                          lift-AND-fidelity on first-per-body-class +
+                          cadence + joint ratification). MSTR cannot
+                          fire a per-artifact mandate under D-003 v1.10
+                          — the joint-ratification-per-artifact gate
+                          preserves S4-operational separation between
+                          authority charter (D-003 v1.10) and per-firing
+                          ratification (Art. XIV joint).
 - allowed_stakes:         S0-S2   (MSTR analyzes, charters, spawns, kills;
                           never originates procurement or destructive ops
                           under this Directive. A CL workstream needing an
                           S3 act surfaces to Andrew, not auto-charters.)
 - success_signals:        CL Tier-1 lane bottlenecks resolvable by Tier-0
                           authority are resolved within a /govern cycle.
-                          Cross-fabric architectural calls receive Tier-0
-                          ratification. The CL agent population fits the
-                          workstream's shape (no perpetually-idle CL
-                          agents, no unaddressed CL TO surfaces).
-                          /mstr_review reports D-003 throughput as a
-                          dedicated section — CL facilitation actions
-                          taken per cycle, cross-fabric ratifications,
-                          population adjustments. META — D-003
-                          facilitation outcomes are meta-analyzed against
-                          the workstream's holistic purpose: does the
+                          Cross-fabric architectural calls receive
+                          Tier-0 ratification. The CL agent population
+                          fits the workstream's shape (no
+                          perpetually-idle CL agents, no unaddressed CL
+                          TO surfaces). /mstr_review reports D-003
+                          throughput as a dedicated section — CL
+                          facilitation actions taken per cycle,
+                          cross-fabric ratifications, population
+                          adjustments. META — D-003 facilitation
+                          outcomes are meta-analyzed against the
+                          workstream's holistic purpose: does the
                           cycle's facilitation work materially advance
-                          COMP_LEARNS toward its research goals (substance
-                          produced, structural learning consolidated,
-                          agent team productivity raised) — or is MCP
-                          traffic increasing without corresponding
-                          research advance? A high-activity D-003 cycle
-                          that produces no material CL advance is a
-                          finding, not a success.
+                          COMPLEARNS toward its research goals
+                          (substance produced, structural learning
+                          consolidated, agent team productivity raised)
+                          — or is MCP traffic increasing without
+                          corresponding research advance? A
+                          high-activity D-003 cycle that produces no
+                          material CL advance is a finding, not a
+                          success.
+                          **v1.9 additions:** Cross-fabric stimulus
+                          scan integrates CL fabric into MSTR /govern
+                          Step 1(b) cleanly each cycle (CL agents
+                          classified PROGRESSING / STALE / STANDING_BY
+                          / BLOCKED / FORK-STALLED alongside ws agents;
+                          CL telemetry sibling-read operational; no
+                          per-cycle hand-ferry required for cross-fabric
+                          coordination). CL-built tools shipped to Opal
+                          as invitations + water-test results published
+                          per
+                          `feature_clb/docs/architecture/COMP_LEARNS_GRAPH_VALIDATION_DISCIPLINE.md`
+                          + lift measurement on real Opal work surfaces.
+                          Cross-fabric coordination protocol operates
+                          without conflict-escalation in steady state
+                          (any cross-fabric conflict routes to MSTR
+                          within 1 cycle per LD-0033 Q5 + 5th trigger
+                          mandate-dispute per validation discipline §8
+                          — proper triggers fire when needed, but the
+                          steady-state cadence stays clean). META —
+                          D-003 v1.9 facilitation outcomes meta-analyzed
+                          against the workstream's holistic purpose:
+                          does the cycle's facilitation work materially
+                          advance the primary purpose (Opal graph
+                          efficacy improvement) AND the secondary
+                          purpose (generalizable indexer/rail system) —
+                          or is MCP traffic increasing without
+                          corresponding lift on Opal work? A
+                          high-activity D-003 cycle that produces no
+                          material Opal-lift advance + no generalizable
+                          doctrine advance is a finding, not a success.
+                          **v1.10 additions:** First per-body-class
+                          mandate fires cleanly on a CL-built graph
+                          artifact post-water-test + joint ws CTO + ws
+                          CVO ratification + lift-AND-fidelity evidence
+                          + within drift-management envelope;
+                          Opal-veto-via-fidelity-dispute does not fire
+                          spuriously (i.e., the discipline's
+                          defense-in-depth works). Mandate-class
+                          authority is exercised structurally without
+                          Goodharting at the authority gate (joint
+                          additive 1 closes this) + without
+                          mechanism-succeeds-while-goal-fails META
+                          invariant breach (joint additive B closes
+                          this) + with drift-management + Opal-veto
+                          active (joint additives 3 + 4 close this).
+                          META — mandate-firing outcomes meta-analyzed
+                          against discipline's holistic purpose
+                          (preserving Opal product correctness + agent
+                          velocity, not narrow fidelity bounds at
+                          expense of substance). A mandate-fired
+                          artifact that produces measurable lift on
+                          Opal-task surfaces over its first cycle of
+                          production deployment is the success signal;
+                          a fidelity-only-mandate that doesn't
+                          accumulate lift evidence per joint additive B
+                          + 5 is a finding-not-success requiring
+                          re-water-test scope review or scope-narrowing.
 - stop_conditions:        Andrew halts D-003. The CL workstream is itself
                           declared complete or paused by Andrew. A
                           facilitation request requires a product-judgment

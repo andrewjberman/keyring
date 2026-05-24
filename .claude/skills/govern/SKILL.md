@@ -75,9 +75,13 @@ drifted | gap | blocked` and record the evidence, its confidence, and any
 uncertainty in the cycle record's scan table.
 
 **(b) Population scan (stimulus-scan extension).** Read live agents
-(`get_live_agents` / `org/mcp/liveness.json`), per-agent telemetry
-(`org/mcp/agent_telemetry/*.jsonl`), pending task-order queues across all
-`org/tier{1,2,3}*` folders, and **commit-activity-by-serial — computed
+(`get_live_agents` / `org/mcp/liveness.json` — both ws + CL fabrics on
+unified opal-agent-comms broker per LD-0034), per-agent telemetry from
+**both fabrics' paths** — `ajb_workspace/org/mcp/agent_telemetry/*.jsonl`
+AND `feature_clb/org/mcp/agent_telemetry/*.jsonl` (sibling-read per
+LD-0034), pending task-order queues across all `org/tier{1,2,3}*`
+folders in BOTH fabrics' worktree paths (D-003 v1.9 cross-fabric
+stimulus-scan scope), and **commit-activity-by-serial — computed
 per-agent, not workspace-wide**. Use:
 ```
 git log --all --author="<serial>" -1 --pretty=format:"%aI"
@@ -376,13 +380,14 @@ items, bounds. Set `status: complete`. If a `/mstr_review` is due (Step 0c, or
 the cadence), invoke `/mstr_review` now.
 
 **Cross-fabric citation discipline (LD-0031 Path B, M-1 ws CVO additive;
-CONSTITUTION Art. XV).** This Tier-0 law (CONSTITUTION + STAKES_MATRIX +
-DIRECTIVES) is **canonical for both ajb_workspace + feature_clb fabrics**.
-Cycle records, ledger entries, and cross-fabric MCP dispatches that cite Tier-0
-law MUST embed the canonical-repo commit-hash being cited
-(`tier0_commit_hash: <hash>`) at emit time. Cycle records lacking the field
-when they cite Tier-0 law are themselves a **finding** in the next
-`/mstr_review`. The discipline is structural, not cultural:
+CONSTITUTION Art. XV; extended per D-003 v1.9 + LD-0033 #6 + LD-0034).** This
+Tier-0 law (CONSTITUTION + STAKES_MATRIX + DIRECTIVES) is **canonical for both
+ajb_workspace + feature_clb fabrics**. Cycle records, ledger entries, and
+cross-fabric MCP dispatches that cite Tier-0 law MUST embed the canonical-repo
+commit-hash being cited (`tier0_commit_hash: <hash>`) at emit time. Cycle
+records lacking the field when they cite Tier-0 law are themselves a
+**finding** in the next `/mstr_review`. The discipline is structural, not
+cultural:
 - **This skill (ws-side, canonical host)** documents the convention. When
   ws-side `/govern` emits cycle records, the host is implicit (ajb_workspace
   `org/tier0/`) and the field embeds the current canonical commit-hash as a
@@ -393,6 +398,21 @@ when they cite Tier-0 law are themselves a **finding** in the next
 - The point is that ws-side can amend Tier-0 law on the CLOUD branch and a
   consuming-fabric citation must pin which version it operated under — drift
   is then structurally visible rather than emergent.
+
+**Inter-fabric tool consumption citation discipline (D-003 v1.9 M-1
+generalization; deferred-implementation per LD-0033 #6).** When a ws cycle
+record / ledger entry / cross-fabric MCP cites a **COMPLEARNS-built tool**
+consumed via the cross-fabric protocol (e.g., an MCP server registration in
+`.claude/settings.local.json` mounting a CL `comp/targets/*/` artifact), the
+cite MUST embed the CL-fabric commit-hash that built the tool —
+`comp_tool_commit_hash: <hash>` — at emit time. Parallel to the
+`tier0_commit_hash:` field for Tier-0 law citations; same structural-drift-
+visibility purpose, different artifact class. **Implementation is deferred to
+the first cycle that consumes a CL-built tool under D-003 v1.9 scope item
+(viii)** — until that cycle fires, the convention is documented here as the
+schema-discipline anchor; the actual cite-emit shape activates at first-use.
+Cycle records that consume a CL tool without the field are findings in the
+next `/mstr_review` (post-activation).
 
 ## Step 7 — Self-throttle + re-arm
 
@@ -424,6 +444,19 @@ progress (Art. I). Do not finish the cycle first.
   fabrics combined (LD-0028 invariant). Path C migration (separate
   opal-governance repo) is conditional on the four Art. XV triggers, not
   scheduled.
+- **Unified canonical broker (LD-0034).** `opal-agent-comms` is the canonical
+  broker for both ajb_workspace + feature_clb fabrics; `complearns-agent-comms`
+  retired. Every agent in either fabric registers on opal-agent-comms;
+  serial-prefix is the fabric-distinguisher; cross-fabric routing is regular
+  routing (no relay). Cross-fabric stimulus scan + cross-fabric delegations
+  through the unified broker per D-003 v1.9.
+- **Cross-fabric Tier-1 delegations explicitly in scope** per D-003 v1.9 +
+  LD-0033 — MSTR may charter Tier-1 work in either fabric (ws CTO + COO + CVO
+  OR CL CTO + COO + CVO) under D-003's standing-facilitation scope; conflict
+  routes to MSTR per LD-0033 Q5.
 - **Cross-fabric citation discipline (Step 6 detail above).** Cycle records +
-  ledger entries that cite Tier-0 law embed `tier0_commit_hash:` at emit.
+  ledger entries that cite Tier-0 law embed `tier0_commit_hash:` at emit;
+  cycles consuming a CL-built tool embed `comp_tool_commit_hash:` at emit
+  (deferred-implementation per LD-0033 #6 — schema-discipline anchor
+  documented; cite-emit activates at first-use cycle).
 - Design + law: `org/tier0/README.md`, `CONSTITUTION.md`, `STAKES_MATRIX.md`.
