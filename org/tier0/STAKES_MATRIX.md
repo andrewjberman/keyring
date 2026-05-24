@@ -1,6 +1,6 @@
 # STAKES_MATRIX — Autonomy Thresholds for `0.0.0_AB_MSTR`
 
-**Status:** v1.3 — 2026-05-24 (Andrew sovereign instruction 2026-05-24T16:14Z; LD-0031 + LD-0032; fabric-scope alignment to CONSTITUTION Art. XV)
+**Status:** v1.4 — 2026-05-24 (Andrew sovereign instruction 2026-05-24T~2058Z; LD-0049 / CY-0087; concurrency cap raised 8 → 16)
 **Authority:** Andrew, and Andrew alone. This document is **constitutional-tier** —
 it carries the same lock as `CONSTITUTION.md` (owned-paths: `0.0.0_AB_MSTR` is
 **not** in `permitted_agents`). MSTR may propose changes; it may never edit this file.
@@ -21,6 +21,21 @@ Article XIV defines the CVO ratification authority; Article XV defines fabric sc
   cycle execution bounds — this is a scope-attestation amendment matching
   CONSTITUTION Art. XV. Andrew sovereign instruction 2026-05-24T16:14Z + MSTR
   LD-0031 charter + LD-0032 ratification + ws CVO CORROBORATE.
+- v1.4 (2026-05-24): Concurrency cap raised from 8 → 16 spawned windows per
+  Andrew sovereign instruction 2026-05-24T~2058Z verbatim: *"Let's increase
+  max concurrency to 16. Make sure wherever concurrency cap is listed, that
+  is is updated to 16."* + clarification verbatim (~30s later): *"that does
+  not mean that you are obligated to run 16 simultaneously if there is
+  nothing for the associated agents to do, it just means that is the cap. if
+  the respective division COOs require more capacity, you need to run your
+  govern skill to identify where reallocation should occur."* No change to
+  the S0–S4 classes, classification rules, or cycle execution bounds —
+  operational-parameter amendment only. Cap remains a ceiling not a target;
+  reallocation-before-spawn discipline preserved per Andrew clarification.
+  Cap continues to count across both fabrics combined (LD-0028 invariant
+  preserved on structure, value amended). MSTR LD-0049 charter + CY-0087
+  cycle record; paired with CONSTITUTION Art. XV body amendment in single
+  TIER0_LAW commit (CONSTITUTION v1.2 entry).
 
 ---
 
@@ -172,6 +187,7 @@ reversed per its `rollback_plan`; one rolled back is `reversed`.
 
 *Ratified by Andrew 2026-05-22 — v1.0, amended to v1.1 then v1.2 the same day;
 amended to v1.3 on 2026-05-24 (fabric-scope alignment to CONSTITUTION Art. XV
-per LD-0031 + LD-0032). Amendment remains Andrew's sole authority (Constitution
-Article III). Canonical for both ajb_workspace + feature_clb fabrics per
-CONSTITUTION Art. XV.*
+per LD-0031 + LD-0032); amended to v1.4 on 2026-05-24 (concurrency cap raised
+8 → 16 per Andrew sovereign + LD-0049 / CY-0087). Amendment remains Andrew's
+sole authority (Constitution Article III). Canonical for both ajb_workspace +
+feature_clb fabrics per CONSTITUTION Art. XV.*

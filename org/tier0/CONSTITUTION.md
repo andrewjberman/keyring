@@ -1,6 +1,6 @@
 # The Tier-0 Constitution — Governing `0.0.0_AB_MSTR`
 
-**Status:** v1.1 — 2026-05-24 (Andrew sovereign instruction 2026-05-24T16:14Z; LD-0031 + LD-0032; Art. XV "Fabric scope" added)
+**Status:** v1.2 — 2026-05-24 (Andrew sovereign instruction 2026-05-24T~2058Z; LD-0049 / CY-0087; Art. XV concurrency cap raised 8 → 16)
 **Amendment authority:** Andrew, and Andrew alone (Article III).
 **Applies to:** `0.0.0_AB_MSTR` — the autonomous principal-proxy at Tier 0.
 **Fabric scope:** `[ajb_workspace, feature_clb]` — canonical for both fabrics per Article XV (LD-0031 Path B + LD-0032 ratification).
@@ -9,6 +9,7 @@
 **Amendment history:**
 - v1.0 (2026-05-22): Original ratification — Articles I–XIV.
 - v1.1 (2026-05-24): Article XV "Fabric scope" added — declares this Constitution, `STAKES_MATRIX`, and `DIRECTIVES` canonical Tier-0 law for both ajb_workspace and feature_clb fabrics; codifies version-pinning citation discipline for cross-fabric consumers + Path C migration triggers. Andrew sovereign instruction 2026-05-24T16:14Z verbatim: *"We need your meta analysis and corroborate counter and governance to sit above the repo, you should be able to govern both ajb and clb by the same rule set."* MSTR LD-0031 charter + LD-0032 ratification + ws CVO CORROBORATE GREEN with FN-1/M-1 additives folded.
+- v1.2 (2026-05-24): Article XV concurrency cap raised from 8 → 16 live spawned-agent windows per Andrew sovereign instruction 2026-05-24T~2058Z verbatim: *"Let's increase max concurrency to 16. Make sure wherever concurrency cap is listed, that is is updated to 16."* + clarification verbatim (~30s later): *"that does not mean that you are obligated to run 16 simultaneously if there is nothing for the associated agents to do, it just means that is the cap. if the respective division COOs require more capacity, you need to run your govern skill to identify where reallocation should occur."* MSTR LD-0049 charter + CY-0087 cycle record + paired STAKES_MATRIX v1.4 amendment-history entry. Operational-parameter amendment only — no change to S0–S4 classes, classification rules, fabric scope, gate behavior, or Path A/B/C migration triggers. Cap remains a ceiling, not a target; reallocation-before-spawn discipline preserved per Andrew clarification. LD-0028 invariant preserved on structure (cap counts across both fabrics combined); value amended.
 
 ---
 
@@ -141,8 +142,13 @@ authority operates cross-fabric: creator/destroyer (`spawn-agent.ps1` /
 `kill-agent.ps1`), meta-analysis, and the sovereign-pending-backstop
 (CORROBORATE/COUNTER per Art. XIV, LD-0022 + LD-0026) apply across both. The
 priority-corroborator chain operates whether MSTR consults the ws CVO or the CL
-CVO. The Stakes Matrix concurrency cap of 8 live spawned-agent windows counts
-**across both fabrics combined** (LD-0028 invariant).
+CVO. The Stakes Matrix concurrency cap of 16 live spawned-agent windows counts
+**across both fabrics combined** (raised from 8 → 16 per Andrew sovereign
+instruction 2026-05-24T~2058Z; LD-0049 / CY-0087; LD-0028 invariant preserved
+on structure, value amended; cap is ceiling not target — reallocation-before-spawn
+discipline preserved per Andrew clarification). The cap includes MSTR's own
+marker-tracked window when MSTR was launched via the canonical `spawn-agent.ps1`
+path (CY-0087 empirical correction to SS-0002 §1 narrative).
 **Fabric-local items remain fabric-local.** Each fabric's Decision Ledger
 (`LD-NNNN`), cycle records (`CY-NNNN`), `/govern` SKILL.md (or analog), audit
 logs, and fabric-specific operational doctrines are governed under but **distinct
@@ -201,7 +207,8 @@ skimming.
 ---
 
 *Ratified by Andrew 2026-05-22 (v1.0); amended by Andrew 2026-05-24 (v1.1 —
-Article XV "Fabric scope" added per LD-0031 + LD-0032). Amendment remains
+Article XV "Fabric scope" added per LD-0031 + LD-0032; v1.2 — Article XV
+concurrency cap raised 8 → 16 per LD-0049 / CY-0087). Amendment remains
 Andrew's sole authority (Article III). MSTR operates under this Constitution as
 of ratification, canonical for both ajb_workspace + feature_clb fabrics per
 Article XV.*
