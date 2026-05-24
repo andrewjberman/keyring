@@ -1,10 +1,11 @@
 # MSTR Input 1 Channel Architecture
 
 **Author:** `0.0.0_AB_MSTR`
-**Authored:** 2026-05-24T20:00:00Z (post Opal CTO + MSTR working-session lock 19:45Z + Beat 2 LD-0043 commit)
-**Status:** V1 — canonical MSTR-side companion to `feature_clb/docs/architecture/COMP_LEARNS_CONTINUOUS_CYCLE_OPERATING_MODEL.md` V1.1 §5; defines the MSTR-internal mechanism for the Input 1 channel between Opal product work and COMPLEARNS R&D
-**Authority:** D-003 v1.10 cross-fabric facilitation + (forthcoming) D-003 v1.11 amendment codifying three-Input model + Input 1 channel mechanics
-**Tier-0 commit hash:** `2d5fdc03f` (canonical at authoring)
+**Authored:** 2026-05-24T20:00:00Z (V1 — post Opal CTO + MSTR working-session lock 19:45Z + Beat 2 LD-0043 commit)
+**Status:** V2 — §6 [COMPILER-ASK] mechanism LOCKED per ws CTO + ws CVO joint-decide verdict (`66ce7c024`) + Andrew sovereign preemptive ratification 2026-05-24T~2128Z + CVO FN-2 sharpening on Q-D ack-shape folded; LD-0051 establishment. V1 substance §0-§5 + §7-§8 unchanged.
+**V2 amendment authority:** Joint ws CTO + ws CVO under Andrew preemptive ratification grant per LD-0026 generalized one tier down (operating-mode doctrine: Andrew preemptive ratification + joint Tier-1 verdict = paired ratification when Andrew working-session slot is delegated)
+**Authority:** D-003 v1.11 cross-fabric facilitation (codifies three-Input model + Input 1 channel mechanics; scope items xv-xviii)
+**Tier-0 commit hash:** `d355302c1` (canonical post DIRECTIVES v1.11 ship; CONSTITUTION v1.2 + STAKES_MATRIX v1.4 unchanged at `1a515b769`)
 
 ---
 
@@ -177,38 +178,66 @@ When all three hold: CL CTO preempts in-flight CL work at next cycle boundary (N
 
 ---
 
-## §6 — Co-design surface: `[COMPILER-ASK]` mechanism (Opal CTO joint design)
+## §6 — `[COMPILER-ASK]` mechanism (LOCKED V2)
 
-Andrew framing: *"i think there is probably a relatively non-invasive/overindulgent way for Opal CTO to convey directly what its struggling with most lately, that is something you and I and Opal CTO need to develop."*
+Andrew framing originating the design space: *"i think there is probably a relatively non-invasive/overindulgent way for Opal CTO to convey directly what its struggling with most lately, that is something you and I and Opal CTO need to develop."*
 
-This section is **deliberately pending Opal CTO joint working-session** to lock the exact `[COMPILER-ASK]` mechanism. MSTR's standing-shape proposal:
+**LOCK STATUS:** V2 LOCKED via ws CTO + ws CVO joint-decide verdict (commit `66ce7c024` 2026-05-24T21:55Z) under Andrew sovereign preemptive ratification 2026-05-24T~2128Z ("approve whatever the team recommends"). CVO FN-2 sharpening on Q-D folded. LD-0051 establishment.
 
-### §6.1 — MSTR proposed `[COMPILER-ASK]` mechanism (working-session input)
+### §6.1 — `[COMPILER-ASK]` mechanism specification (LOCKED V2)
 
-| Element | Proposal |
+| Element | Specification |
 |---|---|
-| Trigger condition | Acute pain — recurring activity across multiple ships OR workaround burning >30 min wall-clock per incident OR Opal CTO judgment "this is biting now" |
+| Trigger condition | Acute pain — recurring activity across multiple ships OR workaround burning wall-clock per incident OR Opal CTO judgment "this is biting now"; no formal threshold (Opal CTO discretion per Q-B lock) |
 | Mechanism | Single MCP from Opal CTO to MSTR via `opal-agent-comms send_message` |
-| Subject convention | Begins with `[COMPILER-ASK]` (uniform pattern, parseable) |
-| Body density | Opal CTO discretion — minimum "X is biting"; richer is welcome but not required |
-| Expected MSTR response | Acknowledge within same cycle + brief packaging fast-path + ferry to CL CTO same-cycle |
-| Expected cadence | Rare event (only when really biting); no required cadence |
-| Visibility back to Opal CTO | Standard `/mstr_review` window roll-up + on-disk audit; no per-event push back unless live-gate |
+| Subject convention | Begins with `[COMPILER-ASK]` (uniform pattern, parseable per Q-A lock) |
+| Body density | Minimum viable floor: "X is biting"; richer is welcome at Opal CTO discretion; no template (per Q-C lock) |
+| Expected MSTR response | (1) **MCP ack on receipt as SEPARATE message back to Opal CTO** (NOT just ferry-to-CL-CTO MCP) — see §6.1.1 below; (2) brief packaging fast-path; (3) ferry to CL CTO same-cycle |
+| Expected cadence | Rare event (only when really biting); no required cadence (per Q-E lock) |
+| Visibility back to Opal CTO | Standard `/mstr_review` window roll-up (§4.1) + on-disk audit (§4.2); no per-event push back unless live-gate (§5) per Q-F lock; MSTR-absorbs-silent default for counter-route reverse-flow + single closing MCP only on Opal-CTO-initiated briefs (per §3.4 existing) |
 
-### §6.2 — Open design questions (Opal CTO ownership)
+### §6.1.1 — Q-D ack-shape specification (CVO FN-2 sharpening)
 
-These resolve in the joint working session with Andrew + Opal CTO + MSTR:
+The MCP ack back to Opal CTO is structurally distinct from the ferry-to-CL-CTO MCP. Without an explicit ack, the signal could get lost in transit and Opal CTO only discovers at next `/mstr_review` window — this is the failure mode CVO FN-2 catches.
 
-| Q | Question |
+**Ack-shape canonical forms (single message, not multi-round):**
+
+| Scenario | MSTR ack-back to Opal CTO |
 |---|---|
-| Q-A | Format: MCP subject tag (MSTR proposal above) or build on existing session-log compiler-notes pattern or something else? |
-| Q-B | Urgency threshold: when is something "biting enough" to flag — Opal CTO judgment empirically tuned |
-| Q-C | Information density: minimum viable vs richer — Opal CTO preference |
-| Q-D | Expected response shape: MCP ack + roll-up (MSTR proposal) vs finer granularity if Opal CTO wants |
-| Q-E | Cadence: rare event (MSTR proposal) vs regular cadence "weekly compiler pain check-in" if Opal CTO wants |
-| Q-F | Counter-route reverse-flow: MSTR-absorbs-silent (MSTR proposal) vs explicit-visibility-to-Opal if Opal CTO wants |
+| Brief is fresh + ferry-bound | `[COMPILER-ASK-ACK] ack — packaging this for ferry to CL CTO. Brief id: input1-{slug}-{timestamp}.` |
+| Brief duplicates existing brief | `[COMPILER-ASK-ACK] ack — duplicates existing brief input1-{slug}-{prior-timestamp}; will fold into existing.` |
+| MSTR judges out-of-shape for compiler R&D | `[COMPILER-ASK-ACK] ack — judged out-of-shape for compiler R&D ({short reason}); not ferrying. Closing.` |
+| Live-gate flag warranted | `[COMPILER-ASK-ACK] ack — packaging with urgency=LIVE-GATE per §5 three-conjunctive concur from ws COO. Brief id: input1-{slug}-{timestamp}.` |
 
-V1 of this doc updates with locked answers post-working-session.
+**Ack-back delivery cadence:** within same /govern cycle as receipt; same-cycle ferry to CL CTO does not skip the ack-back to Opal CTO. Both happen; both required.
+
+**Why single message not multi-round:** Q-D lock preserves Opal CTO non-distraction — confirmation of delivery is enough; richer status updates (verdict from CL CTO, mandate-eligibility outcome) flow through the standard /mstr_review window roll-up (§4.1), not per-event push.
+
+### §6.2 — Q dispositions (LOCKED — joint CTO+CVO verdict)
+
+The six Q's that V1 §6.2 listed as "open design questions" are now LOCKED per the joint-decide verdict. Audit-trail of the lock:
+
+| Q | Disposition | Authority |
+|---|---|---|
+| Q-A Format | MCP subject tag `[COMPILER-ASK]` | CORROBORATE §6.1 V1 proposal |
+| Q-B Urgency threshold | Opal CTO discretion; no formal threshold | CORROBORATE §6.1 V1 proposal |
+| Q-C Information density | Minimum viable floor ("X is biting"); richer at Opal CTO discretion; no template | CORROBORATE §6.1 V1 proposal |
+| Q-D Expected response shape | MCP ack on receipt as SEPARATE message back to Opal CTO + ferry-to-CL-CTO MCP; ack-shape per §6.1.1 canonical forms; single message not multi-round | CORROBORATE §6.1 V1 proposal + CVO FN-2 sharpening on explicit ack-shape spec |
+| Q-E Cadence | Rare event, no required cadence | CORROBORATE §6.1 V1 proposal |
+| Q-F Counter-route reverse-flow | MSTR-absorbs-silent default + single closing MCP only on Opal-CTO-initiated briefs (per §3.4) | CORROBORATE §6.1 V1 proposal |
+
+**Lock authority chain:** Andrew sovereign 2026-05-24T~2128Z preemptive ratification grant ("approve whatever the team recommends") → ws CTO + ws CVO joint-decide verdict commit `66ce7c024` 2026-05-24T21:55Z → ws CTO scribe-pass DIRECTIVES v1.11 + /govern SKILL.md at `d355302c1` (Items 1 + 3 materialized) → this LD-0051 scribes Item 2 §6 V2 lock with CVO FN-2 folded.
+
+### §6.3 — V3 amendment triggers (future)
+
+§6 V2 may amend to V3 on any of the following empirical triggers (operational tuning surface, not Tier-0 law amendment — surfaced in /mstr_review reporting):
+
+- (a) Q-D ack-shape proves too heavy (Opal CTO observes ack-back as distracting) OR too light (delivery confirmation insufficient empirically)
+- (b) Q-B threshold proves needed (Opal CTO emissions empirically too noisy without a soft threshold)
+- (c) Q-E cadence proves wrong (regular cadence wanted OR rare-event interpretation surfaces operational gap)
+- (d) Q-F counter-route mechanism proves wrong (MSTR-absorbs-silent default empirically loses visibility Opal CTO wanted)
+
+Any V3 amendment follows the same joint-decide path: ws CTO + ws CVO render under Andrew sovereign authority (preemptive or direct).
 
 ---
 
@@ -229,14 +258,16 @@ MSTR's role at ratification time: govern the trigger + ledger the ratification +
 
 ## §8 — Reference
 
-- **Establishing LD:** (forthcoming this cycle — LD-0045 for this MSTR Input 1 channel arch doc establishment)
+- **Establishing LD:** `org/tier0/ledger/LD-0045.md` (V1 doc establishment)
+- **§6 V2 LOCK LD:** `org/tier0/ledger/LD-0051.md` (this commit — §6 V2 [COMPILER-ASK] mechanism lock per joint CTO+CVO verdict + Andrew preemptive ratification + CVO FN-2)
+- **Joint-decide verdict source:** ws CVO commit `66ce7c024` 2026-05-24T21:55Z (CORROBORATE-with-FN-1/FN-2 on 3-item CTO ask; Andrew preemptive 2128Z covers all three)
+- **DIRECTIVES v1.11 ship (paired):** ws CTO commit `d355302c1` 2026-05-24T22:13Z (Items 1 + 3 materialized; this LD-0051 materializes Item 2)
 - **Companion CL doc:** `feature_clb/docs/architecture/COMP_LEARNS_CONTINUOUS_CYCLE_OPERATING_MODEL.md` V1.1 §5 (CL-side contract)
 - **Substrate doc:** `org/tier0/COMPILER_ARCHETYPES.md` (LD-0043 — enum + weights for class-6 detection)
 - **Spawn-request protocol:** `org/tier0/ledger/LD-0042.md` (orthogonal to this doc but referenced for operational completeness)
 - **Mandate-eligibility discipline:** `feature_clb/docs/architecture/COMP_LEARNS_GRAPH_VALIDATION_DISCIPLINE.md`
-- **Tier-0 law:** CONSTITUTION v1.1 + STAKES_MATRIX v1.3 + DIRECTIVES v1.10 (canonical `2d5fdc03f`)
-- **Forward integration:** D-003 v1.11 amendment brief (forthcoming this cycle) — codifies three-Input model + Input 1 channel mechanics + spawn-request protocol into D-003 Directive
+- **Tier-0 law:** CONSTITUTION v1.2 + STAKES_MATRIX v1.4 + DIRECTIVES v1.11 (canonical `d355302c1` for D-003 substance; CONSTITUTION + STAKES_MATRIX at `1a515b769`)
 
 ---
 
-*MSTR Input 1 Channel Architecture V1 — Opal CTO + MSTR co-design open at §6 (working session pending); rest of doc is canonical. Authored 2026-05-24T20:00Z under LD-0045 establishment (this commit). Pairs with CL V1.1 §5; together they form the complete inter-fabric Input 1 contract.*
+*MSTR Input 1 Channel Architecture — V1 authored 2026-05-24T20:00Z under LD-0045 establishment; V2 §6 LOCK 2026-05-24T22:25Z under LD-0051 establishment per joint CTO+CVO verdict + Andrew sovereign preemptive ratification 2128Z + CVO FN-2 folded. Pairs with CL V1.1 §5; together they form the complete inter-fabric Input 1 contract. §1-§5 + §7 substance V1 unchanged at V2; §6 V2 LOCKED + §8 references updated; doc-level Status advances V1 → V2.*
