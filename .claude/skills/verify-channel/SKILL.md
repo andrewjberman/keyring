@@ -237,10 +237,16 @@ Per Step 2.5 added 2026-05-25: include "Consumer-output-vs-bucket-write-state al
 For NOVEL PRD pre-propagate gate (per LD-0062 Round-2 Q6): MISALIGNED verdict blocks /drive execution start; CONCERN-with-mitigation permits with conditions; CLEAN permits unblocked.
 
 **REPAIR-AMENDMENT authorization signal (per LD-0066 ratified 2026-05-25 + LD-0065 AMEND-scope refinement):** /verify-channel verdicts of two specific classes are the **structural authorization** for ws CTO REPAIR-AMENDMENT authority:
-- **Mechanical untruth to reality detected** (e.g., PRD claims artifact-X delivers ABC but artifact-X observably delivers XYZ) → ws CTO may scribe repair-amendment to the PRD
-- **Inadequate solution-coverage detected via meta-analysis** (e.g., PRD AC-set leaves a known failure-mode unaddressed; Step 3.5 meaning-axis surfaces a coverage gap) → ws CTO may scribe repair-amendment
+- **(a) Mechanical untruth to reality detected** (e.g., PRD claims artifact-X delivers ABC but artifact-X observably delivers XYZ) → ws CTO may scribe repair-amendment to the PRD
+- **(b) Inadequate solution-coverage detected via meta-analysis** (e.g., PRD AC-set leaves a known failure-mode unaddressed; Step 3.5 meaning-axis surfaces a coverage gap) → ws CTO may scribe repair-amendment
 
-ws CTO does NOT autonomously decide to amend — /verify-channel's finding IS the authority. When emitting either of these verdict classes, the cycle log MUST tag the finding as `REPAIR-AMENDMENT-AUTHORIZED` so ws CTO's scribe path is structurally validated. Routine MISALIGNED / CONCERN findings without these specific patterns do NOT carry REPAIR-AMENDMENT authorization (route via standard P0/P1/P2 chain).
+ws CTO does NOT autonomously decide to amend — /verify-channel's finding IS the authority.
+
+**Emission discipline (two structural anchors):**
+1. **Cycle log on-disk tag:** the cycle log MUST tag the finding as `REPAIR-AMENDMENT-AUTHORIZED` so ws CTO's scribe path is structurally validated (auditable on-disk).
+2. **MCP subject prefix to ws CTO (per ws CTO coordination 2026-05-25):** `[RECOMMEND_REPAIR_AMENDMENT: (a)/(b) {finding-summary}]` — explicit (a)/(b) classification + 1-line finding summary in the subject line. Auto-routes to /ws-charter Step 2 inbox classification as REPAIR-AMENDMENT tick.
+
+Both anchors required: on-disk audit trail + structurally-discoverable MCP routing. Routine MISALIGNED / CONCERN findings without these specific patterns do NOT carry REPAIR-AMENDMENT authorization (route via standard P0/P1/P2 chain).
 
 ## Step 7 — Commit + push
 
