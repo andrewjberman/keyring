@@ -236,6 +236,12 @@ Per Step 2.5 added 2026-05-25: include "Consumer-output-vs-bucket-write-state al
 
 For NOVEL PRD pre-propagate gate (per LD-0062 Round-2 Q6): MISALIGNED verdict blocks /drive execution start; CONCERN-with-mitigation permits with conditions; CLEAN permits unblocked.
 
+**REPAIR-AMENDMENT authorization signal (per LD-0066 ratified 2026-05-25 + LD-0065 AMEND-scope refinement):** /verify-channel verdicts of two specific classes are the **structural authorization** for ws CTO REPAIR-AMENDMENT authority:
+- **Mechanical untruth to reality detected** (e.g., PRD claims artifact-X delivers ABC but artifact-X observably delivers XYZ) → ws CTO may scribe repair-amendment to the PRD
+- **Inadequate solution-coverage detected via meta-analysis** (e.g., PRD AC-set leaves a known failure-mode unaddressed; Step 3.5 meaning-axis surfaces a coverage gap) → ws CTO may scribe repair-amendment
+
+ws CTO does NOT autonomously decide to amend — /verify-channel's finding IS the authority. When emitting either of these verdict classes, the cycle log MUST tag the finding as `REPAIR-AMENDMENT-AUTHORIZED` so ws CTO's scribe path is structurally validated. Routine MISALIGNED / CONCERN findings without these specific patterns do NOT carry REPAIR-AMENDMENT authorization (route via standard P0/P1/P2 chain).
+
 ## Step 7 — Commit + push
 
 `.tools/safe-commit.sh --author "3.0.0_SA_CVO <3.0.0_SA_CVO@opal.agent>" -m "verify-channel({project}): {VERDICT} -- {summary}" -- {verify_channel_path}` + `git push origin CLOUD`.
