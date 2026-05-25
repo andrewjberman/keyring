@@ -275,11 +275,27 @@ NOVEL tag drives the routing; /charter author tags PRD header at authoring time.
 
 ## §5.6 outcome-feedback emission to Input 0 (Phase 2 trigger)
 
-Per joint CVO council reconciliation 2026-05-25 (§4(d) multi-source Input 0): /verify-channel verdict stream emits to Input 0 substrate as ONE telemetry source among multiple (paired with /spot-check findings, RAVC2 outcomes, /charter loop tick decisions). Mutually informative:
-- /verify-channel MISALIGNED verdict on artifact gated by tool X = X failed-to-prevent (surfaced_finding for X) — feeds Input 1 compiler-asks "we need a tool to catch this class"
-- /verify-channel CLEAN verdict on artifact gated by tool X = X prevented_incident_candidate — feeds Input 0 prevented_incidents counter
+Per joint CVO council 2026-05-25 ratified shape (§4(d) multi-source Input 0; cross-fabric ws + CL CVO converged 2026-05-25T21:21Z):
 
-Emission shape: joint draft pending with CL CVO post-MSTR canonical-merge ratification (single-paragraph add for cross-fabric Input 0 infrastructure consistency).
+> Every comprehensive /verify-channel verdict emits a per-axis signal to the Input 0 outcome-feedback substrate, consumable by the Input 0 weekly aggregator. Mechanical-correct / intent-coverage / decision-useful axis verdicts each contribute as outcome-feedback telemetry. CVO ≠ Input 0 author — verdict-stream is one telemetry feed of several into Input 0 (alongside `comp-*` invocation-count, PyPI download delta, /charter tick records, /spot-check findings, RAVC2 outcomes). Per LD-0062 §4(d) reconciliation: CVO observability layer + telemetry-producer; verifier-≠-fixer discipline preserved. Emission shape: MISALIGNED verdicts → surfaced_findings (feeds Input 1 compiler-asks "we need a tool to catch this class"); CLEAN verdicts on tool-gated artifacts → prevented_incidents counter increment. PRE-EXECUTION mode (PRD-grain NOVEL-PRD pre-propagate gate per LD-0062 Round-2 Q6) emits same substrate with `mode: pre-execution` field. Emit JSON record at `ajb_workspace/org/mcp/input0/verdicts/{YYYY-MM-DD}/verdict_{HHMMZ}_{PROJECT_CODE}.json` (unified cross-fabric path per LD-0034 canonical-paths convention) with fields: `{verdict: CLEAN|CONCERN|MISALIGNED, project, artifacts_verified, tools_gating_artifacts, axis_mechanical: GREEN|YELLOW|RED, axis_intent_coverage: GREEN|YELLOW|RED, axis_decision_useful: GREEN|YELLOW|RED, timestamp_utc, mode: comprehensive|scan|pre-execution, source: "verify-channel-{ws|cl}"}`. Input 0 weekly sweep aggregates by-tool counters from emitted records (lightweight read, no re-execution).
+
+**Verdict-enum projection mapping** (canonical SKILL.md verdict shapes → 3-value §5.6 substrate enum):
+
+| SKILL.md verdict (canonical) | §5.6 substrate `verdict` field |
+|---|---|
+| Mode A: PASS | CLEAN |
+| Mode A: CONCERN | CONCERN |
+| Mode A: CONDITIONAL (cannot-verify-yet) | CONCERN (lossy projection; CONDITIONAL semantic preserved upstream via SKILL.md Step 6 + standard CVO routing chain) |
+| Mode B comprehensive: CLEAN | CLEAN |
+| Mode B comprehensive: CONCERN | CONCERN |
+| Mode B comprehensive: MISALIGNED | MISALIGNED |
+| Mode B PRE-EXECUTION: CLEAN | CLEAN (with `mode: pre-execution`) |
+| Mode B PRE-EXECUTION: CONCERN-with-mitigation | CONCERN (with `mode: pre-execution`) |
+| Mode B PRE-EXECUTION: MISALIGNED-block | MISALIGNED (with `mode: pre-execution`) |
+
+The 3-value substrate enum is for Input 0 aggregator consumption (prevented_incidents counting / surfaced_findings flagging); SKILL.md Step 6 verdict canonicals (6-value across modes) remain intact for verify-channel internal logic + downstream driver routing. Substrate is a projection, not a replacement.
+
+Cross-fabric ship coordination: CL CVO `dce8efae6` (§5.6 final, CL fabric) + ws this SKILL.md §5.6 final. Both fabrics emit identical record shape to unified cross-fabric path.
 
 ## D4 holding pattern (parallel cascade revisit threshold)
 
