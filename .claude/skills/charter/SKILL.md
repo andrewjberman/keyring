@@ -1,9 +1,20 @@
 ---
 name: charter
-description: Authors a project charter / PRD framework in the Tier-0 house format, for 0.0.0_AB_MSTR to originate work that Tier 1 (CTO/COO) then decomposes and executes. Invoked from within a /govern cycle once a candidate move has been ledgered. Produces a structured charter — objective, scope, non-goals, workstream decomposition, TO candidates, success signals, the Tier-1 owner, and an explicit "not authorized" section bounding what downstream agents may NOT do. Every charter traces to a Directive and an originating ledger entry; it never grants authority beyond its Directive.
+description: DEPRECATED per LD-0066 (`c4ec7f7a0`). 3-way split into /ws-charter (ws CTO cron-loop body) + /cl-charter (CL CTO queue-pull) + /mstr-charter (MSTR rare-use dual-division). This generic /charter body preserved for reference until /mstr-charter scribe lands; prefer the role-specific skills.
 ---
 
-# /charter — Tier-0 charter / PRD-framework authoring
+# /charter — DEPRECATED per LD-0066 — see /ws-charter / /cl-charter / /mstr-charter
+
+> **DEPRECATED 2026-05-25 per LD-0066 (`c4ec7f7a0`).** The generic /charter skill has been split 3-way:
+> - **`/ws-charter`** — ws CTO cron-fired loop body (30m); REPAIR-AMENDMENT / FIX / NOVEL / CLEAN-SWEEP / CVO_CONSULT classification per LD-0062 + LD-0065. Canonical at `.claude/skills/ws-charter/SKILL.md`.
+> - **`/cl-charter`** — CL CTO queue-pull + sequential PRD authoring; consumes Input 1/2/3 cascade. Canonical TBD (CL CTO authors).
+> - **`/mstr-charter`** — MSTR rare-use dual-division coordination charters; event-triggered. Canonical TBD (MSTR authors).
+>
+> The single-shot MSTR-from-/govern body below is preserved as reference until /mstr-charter SKILL.md lands; prefer /mstr-charter once available.
+
+---
+
+# /charter — Tier-0 charter / PRD-framework authoring (DEPRECATED — see /mstr-charter)
 
 How MSTR turns a ledgered decision into a charter Tier 1 can act on. `/govern`
 decides *whether* to originate; `/charter` defines *how* the charter is written.
