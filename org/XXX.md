@@ -271,7 +271,7 @@ Per LD-0062 ratification 2026-05-25T~20:05Z (Andrew sovereign via "go with your 
 
 | Serial-class | Primary loop arming | Notes |
 |---|---|---|
-| `0.0.0_AB_MSTR` | `/govern 30m` (ScheduleWakeup chain or CronCreate per discretion) + `/mstr-charter` event-triggered | meta-supervisor; Tier-1-loop-health subscan per LD-0062; /mstr-charter is rare-use dual-division (LD-0066) |
+| `0.0.0_AB_MSTR` | `CronCreate /mstr-review 12h` (ONLY periodic loop) + `/watcher 10m` heartbeat; `/mstr-charter` + `/compiler-ferry` + 3 other MSTR skills event-triggered on inbox match | per LD-0069 ratification 2026-05-25 (`04f705733`) /govern periodic loop RETIRED; MSTR = 1 loop + 5 event-triggered skills; /mstr-review 12h is the sole MSTR cron |
 | `1.0.0_SA_CTO` (ws) | `CronCreate /ws-charter 30m` | LD-0062 30m symmetric cadence + LD-0066 3-way split; ws is direction-only + REPAIR-AMENDMENT (CVO-finding gate) per LD-0065 |
 | `1.x.0_SA_CTO` (CL) | `CronCreate /cl-charter 30m` | LD-0066 3-way split; CL is queue-pull + sequential PRD authoring; consumes Input 1/2/3 cascade |
 | `2.x.0_SA_COO` | `CronCreate /drive 20m` | already operational pattern per LD-0056 |

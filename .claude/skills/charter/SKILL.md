@@ -10,7 +10,7 @@ description: DEPRECATED per LD-0066 (`c4ec7f7a0`). 3-way split into /ws-charter 
 > - **`/cl-charter`** — CL CTO queue-pull + sequential PRD authoring; consumes Input 1/2/3 cascade. Canonical TBD (CL CTO authors).
 > - **`/mstr-charter`** — MSTR rare-use dual-division coordination charters; event-triggered. Canonical TBD (MSTR authors).
 >
-> The single-shot MSTR-from-/govern body below is preserved as reference until /mstr-charter SKILL.md lands; prefer /mstr-charter once available.
+> **Additionally per LD-0069 (`04f705733`):** /govern as periodic supervision loop is RETIRED. MSTR architecture = 1 loop (`/mstr-review 12h`) + 5 event-triggered skills. The "single-shot MSTR-from-/govern" framing below is doubly-historical now (both /charter and /govern context changed). Body preserved as reference until /mstr-charter SKILL.md lands; prefer /mstr-charter once available.
 
 ---
 
