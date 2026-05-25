@@ -513,6 +513,25 @@ progress (Art. I). Do not finish the cycle first.
 
 ## Notes
 
+- **Tier-1 layer-of-concerns + /govern refocus (LD-0056, CY-0102, Andrew sovereign 2026-05-25T04:50Z).**
+  Per Andrew sovereign architectural directive, the operational driving locus
+  is at COO tier (`/drive`), not MSTR `/govern`. Layer breakdown:
+  - **CTO** (1.0/1.1): `/charter` — architectural authoring
+  - **COO** (2.0/2.1): `/drive` — operational advancement of hot-registry projects (NEW per LD-0056; see `.claude/skills/drive/SKILL.md`)
+  - **CVO** (3.0/3.1): `/spot-check` — alignment + ratification
+  - **MSTR** (0.0): `/govern` — meta-supervisor: verify each Tier-1 loop is firing healthily
+  **/govern's revised operational gate (forward-looking, full Step amendment
+  deferred to LD-0057+ pending ws CTO + ws CVO ratification):** counting
+  receipt-acks + mechanical sub-step firings as "operational throughput"
+  is the CY-0099/0100/0101 failure-mode (Operating-mode #7 abdication
+  pattern). Going forward, operational-throughput criteria favors: (a)
+  verifying each Tier-1 loop fired this window (telemetry + commit
+  evidence per loop), (b) routing loop-health correction MCPs to Tier-1s
+  with silent loops, (c) handling escalations Tier-1 loops surface to
+  MSTR. **/govern does NOT run /drive itself** — it verifies /drive is
+  running. Full Step 1(b) Tier-1-loop-health subscan + Step 4
+  operational-throughput gate amendment ships in subsequent cycle post-
+  ratification chain completion.
 - This skill governs MSTR's actions; the `mstr-ledger-check` hook governs MSTR's
   *commits*. They are two enforcement points — the skill's classify-then-ledger
   discipline is what covers non-git actions the hook cannot see.
