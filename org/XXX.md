@@ -265,6 +265,30 @@ printf "SERIAL=%s\nTO_ID=%s\n" "{your_serial}" "{TO_filename_without_.md}" > .co
 # Example: printf "SERIAL=0.4.0_DS_ClientPlatform\nTO_ID=ADVI_OFFICE.W1\n" > .comp-graph/.agent_context
 ```
 
+**F. Arm role-appropriate primary loop (per LD-0062 §materialization-chain step 5):**
+
+Per LD-0062 ratification 2026-05-25T~20:05Z (Andrew sovereign via "go with your recommendation"), each agent arms a role-appropriate primary cron loop at session start. Run the matching CronCreate command at the END of Step 1b, AFTER A-E above:
+
+| Serial-class | Primary loop arming | Notes |
+|---|---|---|
+| `0.0.0_AB_MSTR` | `/govern 30m` (ScheduleWakeup chain or CronCreate per discretion) | meta-supervisor; Tier-1-loop-health subscan per LD-0062 |
+| `1.x.0_SA_CTO` (ws + CL) | `CronCreate /charter 30m` | LD-0062 30m symmetric cadence; ws is direction-only, CL is full free-rein |
+| `2.x.0_SA_COO` | `CronCreate /drive 20m` | already operational pattern per LD-0056 |
+| `3.x.0_SA_CVO` | `CronCreate /spot-check 20m` + event-trigger arming for `/verify-channel` | event-based per LD-0062 trigger refinement; 2h scan body |
+| `0.x.0` / Tier-2 worker | per-role basis as defined in `prompt.md`; default = `/watcher 10m` only (already armed in section A) | no primary cron unless prompt.md specifies one |
+
+**Run the skill ONCE immediately after arming** to fire the first cycle (avoids the cron-interval gap before first fire):
+
+```
+CronCreate /<skill> <interval>
+# then in same turn:
+/<skill>   # runs first cycle now; cron picks up at next interval
+```
+
+**Two-loop guard (already in `/watcher` SKILL.md):** if a primary cron is armed for your role, `/watcher` MUST NOT also arm a separate ScheduleWakeup chain — it folds inline (Steps 1-5 only). Same principle applies across all loop skills: arm exactly ONE primary cron per agent; other skills fold inline OR are event-triggered. Per LD-0062 loop body skeleton: `/watcher` Steps 1-5 fold into the primary cron tick; standalone `/watcher` loop is for agents NOT otherwise looping (Tier-2 default).
+
+**CL fabric inheritance:** CL agents (`feature_clb/`) inherit this convention via cwd=ajb_workspace per LD-0033/0034 unified-broker substrate; org/XXX.md is workspace-canonical (no CL-side mirror needed). The CL CTO `/charter 30m` arming matches ws CTO arming under the LD-0062 symmetric-cadence ruling.
+
 ---
 
 ## Step 2 — Read Your Recent Logs
