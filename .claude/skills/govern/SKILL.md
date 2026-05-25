@@ -180,7 +180,7 @@ session logs are untagged and excluded from aggregation; the cutover fires
 on wall-clock independent of D-003 v1.11 commit timing (v1.11 codifies the
 discipline; it does not trigger it).
 
-**CL_STALL_CHECK + MSTR-emit `[COMPILER-ASK]` (D-003 v1.12 scope item xviii [forthcoming via ws CTO scribe per LD-0053] + MSTR_INPUT_1_CHANNEL_ARCHITECTURE.md V3 §6.4 + §6.5).** Per Andrew direct sovereign instruction 2026-05-24T~2348Z (verbatim: *"in essence, both you and 1.0.0 should have 'compiler-ask' abilities to request. The pattern for you doing it is on your govern loop, if you notice that complearns team is stalling, not being blocked but rather have no active phases of compiler r&d running, this is when you take action to assess telemetry patterns and identify opportunities to issue a compiler ask. These processes have to be designed into loop patterns so that they are consistent and daily deterministic at least mechanically"*), Step 1(b) extends with a deterministic daily-mechanical CL-stall check + EXPLORE/TRACE aggregation that may MSTR-emit `[COMPILER-ASK]` to CL CTO at parity with §6.1 Opal-CTO-emit. Mechanical = no judgment on whether to RUN the check (runs every cycle); judgment is in cluster substance only.
+**CL_STALL_CHECK + MSTR-emit `[COMPILER-ASK]` (D-003 v1.12 scope item xix [forthcoming via ws CTO scribe per LD-0053] + MSTR_INPUT_1_CHANNEL_ARCHITECTURE.md V3 §6.4 + §6.5).** Per Andrew direct sovereign instruction 2026-05-24T~2348Z (verbatim: *"in essence, both you and 1.0.0 should have 'compiler-ask' abilities to request. The pattern for you doing it is on your govern loop, if you notice that complearns team is stalling, not being blocked but rather have no active phases of compiler r&d running, this is when you take action to assess telemetry patterns and identify opportunities to issue a compiler ask. These processes have to be designed into loop patterns so that they are consistent and daily deterministic at least mechanically"*), Step 1(b) extends with a deterministic daily-mechanical CL-stall check + EXPLORE/TRACE aggregation that may MSTR-emit `[COMPILER-ASK]` to CL CTO at parity with §6.1 Opal-CTO-emit. Mechanical = no judgment on whether to RUN the check (runs every cycle); judgment is in cluster substance only.
 
 ```
 CL_STALL_CHECK (deterministic every cycle):
@@ -195,7 +195,7 @@ CL_STALL_CHECK (deterministic every cycle):
     per MSTR_INPUT_1_CHANNEL_ARCHITECTURE.md §6.5.2 aggregation formula
   )
   THEN MSTR-emit [COMPILER-ASK] per §6.4 + ledger as LD-NNNN
-       (directive_ref D-003 v1.12 scope item xviii; authority_source: directive;
+       (directive_ref D-003 v1.12 scope item xix; authority_source: directive;
         ceiling: max 1 MSTR-emit per cycle V1)
   ELIF CL_STALL but no coherent cluster:
        Log in cycle record "CL_STALL detected, no coherent EXPLORE/TRACE cluster, no emit"

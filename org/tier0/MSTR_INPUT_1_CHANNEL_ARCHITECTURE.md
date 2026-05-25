@@ -5,7 +5,7 @@
 **Status:** V3 — §6 extended with §6.4 MSTR-emit `[COMPILER-ASK]` parity capability per Andrew direct sovereign instruction 2026-05-24T~2348Z; CL-stall trigger criterion + EXPLORE/TRACE telemetry aggregation + /govern Step 1(b) deterministic daily-mechanical integration; §6 V2 LOCK substance for Opal CTO emit-mechanism preserved unchanged (§6.1 + §6.1.1 + §6.2 + §6.3 all canonical V2 state). V1/V2 substance §0-§5 + §7 unchanged. §1.2 updated per Andrew clarification (Opal CTO emit fires only on Andrew direction). LD-0053 establishment.
 **V3 amendment authority:** Andrew direct sovereign instruction 2026-05-24T~2348Z (path A self-driving execution per MSTR prior-turn proposal; Andrew firing /govern CY-0092 = execute-signal per Art. I)
 **V2 amendment authority:** Joint ws CTO + ws CVO under Andrew preemptive ratification grant per LD-0026 generalized one tier down (operating-mode doctrine: Andrew preemptive ratification + joint Tier-1 verdict = paired ratification when Andrew working-session slot is delegated)
-**Authority:** D-003 v1.11 cross-fabric facilitation (codifies three-Input model + Input 1 channel mechanics; scope items xv-xviii) + forthcoming v1.12 amendment (scope item xviii NEW: MSTR-emit Input 1 parity, routed to ws CTO scribe pass per LD-0053)
+**Authority:** D-003 v1.11 cross-fabric facilitation (codifies three-Input model + Input 1 channel mechanics; scope items xv-xviii) + forthcoming v1.12 amendment (scope item xix NEW: MSTR-emit Input 1 parity, routed to ws CTO scribe pass per LD-0053)
 **Tier-0 commit hash:** `d355302c1` (canonical post DIRECTIVES v1.11 ship; CONSTITUTION v1.2 + STAKES_MATRIX v1.4 unchanged at `1a515b769`; v1.12 not yet committed)
 
 ---
@@ -312,7 +312,7 @@ CL_STALL_CHECK (deterministic every cycle):
   IF CL_STALL (per §6.5.1 criterion)
   AND EXPLORE/TRACE cluster coherent (per §6.5.2 aggregation)
   THEN MSTR-emit [COMPILER-ASK] per §6.4 + ledger as LD-NNNN
-       (directive_ref D-003 v1.12 scope item xviii; authority_source: directive)
+       (directive_ref D-003 v1.12 scope item xix; authority_source: directive)
   ELIF CL_STALL but no coherent cluster:
        Log in cycle record "CL_STALL detected, no coherent EXPLORE/TRACE cluster, no emit"
        Re-check next cycle (trigger is per-cycle)
@@ -371,7 +371,7 @@ MSTR's role at ratification time: govern the trigger + ledger the ratification +
 - **§6 V3 MSTR-emit-parity LD:** `org/tier0/ledger/LD-0053.md` (this V3 — §6.4 + §6.5 MSTR-emit `[COMPILER-ASK]` parity capability per Andrew direct sovereign 2026-05-24T~2348Z)
 - **Joint-decide verdict source (V2 LOCK):** ws CVO commit `66ce7c024` 2026-05-24T21:58:19Z UTC (CORROBORATE-with-FN-1/FN-2 on 3-item CTO ask; Andrew preemptive 2128Z covers all three)
 - **DIRECTIVES v1.11 ship (paired):** ws CTO commit `d355302c1` 2026-05-24T22:13:15Z UTC (Items 1 + 3 materialized; LD-0051 materializes Item 2)
-- **DIRECTIVES v1.12 ship (paired forthcoming for V3):** ws CTO scribe pass next-action via TIER0_LAW override per LD-0053 (D-003 scope item xviii NEW: MSTR-emit Input 1 parity codified)
+- **DIRECTIVES v1.12 ship (paired forthcoming for V3):** ws CTO scribe pass next-action via TIER0_LAW override per LD-0053 (D-003 scope item xix NEW: MSTR-emit Input 1 parity codified)
 - **Companion CL doc:** `feature_clb/docs/architecture/COMP_LEARNS_CONTINUOUS_CYCLE_OPERATING_MODEL.md` V1.1 §5 (CL-side contract)
 - **Substrate doc:** `org/tier0/COMPILER_ARCHETYPES.md` (LD-0043 — enum + weights for class-6 detection + EXPLORE/TRACE aggregation per §6.5.2)
 - **Spawn-request protocol:** `org/tier0/ledger/LD-0042.md` (orthogonal to this doc but referenced for operational completeness)
