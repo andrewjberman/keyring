@@ -5,9 +5,11 @@ description: CVO-scoped alignment-sweep cycle. Reads recent commits from ajb_wor
 
 # /spot-check — CVO Alignment-Sweep Cycle
 
-The agent-commit-grain analogue to `VALIDATION_LOOP.md`'s artifact-and-key-juncture focus. Sweeps recent agent commits, verifies their systems still work, repairs alignment-metadata drift directly within bounded scope, MCPs the change to COO. Coexists with `/loop 30m`.
+The agent-commit-grain alignment sweep — recent agent commits, verify systems still work, repair alignment-metadata drift directly within bounded scope, MCP the change to COO. Sister skill to `/verify-channel` (the comprehensive project-scope verification skill, fired event-based at closeout per LD-0062 + Andrew trigger refinement 2026-05-25).
 
-**Authoritative charter:** `org/tier1_exec/3.0.0_SA_CVO/SPOT_CHECK.md` — this skill is the executable entry point; the charter has the full doctrine, fix-scope table, and coexistence rules. Read the charter once per session if not in context.
+**Authoritative charter:** `org/tier1_exec/3.0.0_SA_CVO/SPOT_CHECK.md` — this skill is the executable entry point; the charter has the full doctrine, fix-scope table, and sister-skill coordination rules. Read the charter once per session if not in context.
+
+**LD-0064 (2026-05-25) retirement context:** `/cvo-loop` (30m scheduled comprehensive verify) was the prior third CVO skill; retired per Andrew direct order as structurally redundant with `/spot-check` + `/verify-channel` under LD-0062. Post-retirement CVO canonical skill family = `/spot-check` + `/verify-channel` only.
 
 ---
 
@@ -58,7 +60,7 @@ If CVO, continue.
 - Read `org/tier1_exec/3.0.0_SA_CVO/.spot-check-checkpoint` (separate from `.cvo-loop-checkpoint`). If absent, default to `HEAD~10` and create it.
 - `git log {checkpoint}..origin/CLOUD --pretty=format:"%h %an %s"`.
 - **Filter:** drop CVO's own author-line commits; drop pure session-log / doc-hygiene commits unless they carry a status/registry claim.
-- **Timestamp discipline (added 2026-05-23 after AE~C catch):** for any commit-age claim in a finding, use `%aI` (author ISO-UTC with explicit offset) — never the default `git show` output which displays local-tz-with-offset-suffix and is easily mis-read as UTC. See `/cvo-loop` SKILL.md §1b for the full normalization protocol.
+- **Timestamp discipline (added 2026-05-23 after AE~C catch):** for any commit-age claim in a finding, use `%aI` (author ISO-UTC with explicit offset) — never the default `git show` output which displays local-tz-with-offset-suffix and is easily mis-read as UTC. Full normalization: `git log -1 --pretty=format:"%aI" {hash}` then explicit UTC convert (`-04:00` = subtract from UTC). When in doubt, compute the delta explicitly via `python -c "from datetime import datetime, timezone; ..."`.
 
 ### 2c — Per-commit work + alignment check + substance meta-check
 For each surviving commit:
@@ -84,7 +86,7 @@ Fix-scope: see `SPOT_CHECK.md` "Fix authority — explicit scope" for the canoni
 
 ### 2e — Log + checkpoint advance
 - **Clean cycle (no findings)** → silent log (`spot_check_{HHMMZ}_CLEAN.md` one-liner) + checkpoint advance + heartbeat refresh. **Three consecutive clean cycles → no log at all**, just checkpoint advance. A quiet loop should be quiet.
-- **Cycle with findings** → full cycle log at `org/tier1_exec/3.0.0_SA_CVO/logs/{YYYY-MM-DD}/spot_check_{HHMMZ}.md`. Distinct prefix from `cvo_loop_*` so both loops' logs sort separately. Operating Doctrine §1-§9 governs the log's quality (file:line citations, per-driver framing, P0/P1/P2, mechanism-specific).
+- **Cycle with findings** → full cycle log at `org/tier1_exec/3.0.0_SA_CVO/logs/{YYYY-MM-DD}/spot_check_{HHMMZ}.md`. Operating Doctrine §1-§9 governs the log's quality (file:line citations, per-driver framing, P0/P1/P2, mechanism-specific).
 - Checkpoint: `echo {new_HEAD} > org/tier1_exec/3.0.0_SA_CVO/.spot-check-checkpoint`. Commit the checkpoint + log together via `.tools/safe-commit.sh` (your own folder; no lane issue).
 
 ### 2f — Report
@@ -101,14 +103,16 @@ A clean three-streak cycle prints nothing — just runs and re-checkpoints.
 
 ---
 
-## Coexistence with `/loop 30m`
+## Coordination with `/verify-channel` (sister CVO skill, post-LD-0064)
 
-- `/loop 30m` (charter `VALIDATION_LOOP.md`) — workspace-wide delta sweep + closure-gate / wave-gate / PRD-ship deep verdicts; **verifier-not-fixer**.
-- `/spot-check 20m` (this skill) — per-commit alignment sweep; **fix-authorized within alignment-metadata scope**.
+- `/verify-channel` — event-based primary trigger (composite closeout-threshold any-of-N) + 2h lightweight threshold-scan; comprehensive 4-component body fires ONLY at closeout-class signal. **Verifier-not-fixer.**
+- `/spot-check 20m` (this skill) — continuous per-commit alignment sweep; **fix-authorized within alignment-metadata scope**.
 
-Both inherit Operating Doctrine §1-§9 quality bar. Deliberate focus split; deliberate overlap.
+Both inherit Operating Doctrine §1-§9 quality bar. Deliberate role split:
+- /spot-check owns routine drift detection between closeouts (Andrew direct: "spot-check is more than enough for most activity")
+- /verify-channel owns comprehensive closeout-gate verification only
 
-If both cycles fire same wall-clock minute, run `/spot-check` first (faster, fix-capable), then `/loop 30m` (deeper). The two loops share `org/tier1_exec/3.0.0_SA_CVO/logs/{YYYY-MM-DD}/` but use distinct filename prefixes (`spot_check_*` vs `cvo_loop_*`).
+/spot-check escalates a closeout-class finding to /verify-channel via MCP subject-prefix `[SPOT-ESCALATE-CLOSEOUT]` (single explicit-tag mechanism per joint CVO council 2026-05-25). All other /spot-check findings stay within standard alignment fix-scope OR route to COO/driver as normal CVO findings.
 
 ---
 
@@ -126,5 +130,5 @@ If both cycles fire same wall-clock minute, run `/spot-check` first (faster, fix
 - Cron is session-only by default (dies when Claude exits). To survive across restarts: `CronCreate(..., durable=true)` — only if Andrew has asked for durability.
 - 7-day auto-expire: re-arm on session restart or at the 7-day boundary; the skill itself logs the cron expiry date in its first cycle.
 - The `13,33,53 * * * *` default off-marks pattern is from the `CronCreate` "avoid :00 and :30" jitter-spreading guidance — every Claude session that just asked for "every 20m" gets `*/20` aligned to the same wall-clock instant; the off-marks de-collide.
-- This skill is workspace-tracked (`.claude/skills/spot-check/SKILL.md` checked into git, like `/watcher` and `/loop`). Any agent on this workspace can invoke `/spot-check`, but Step 0's identity gate halts non-CVO invocations.
-- Design + history: `org/tier1_exec/3.0.0_SA_CVO/SPOT_CHECK.md` (charter); `feedback_cvo_spot_check_loop_fix_authorized.md` in workspace memory; Andrew directive 2026-05-23 (verbatim: "if you catch issues, you need to address them (fix it) and then write your changes in to COO").
+- This skill is workspace-tracked (`.claude/skills/spot-check/SKILL.md` checked into git, like `/watcher` and `/verify-channel`). Any agent on this workspace can invoke `/spot-check`, but Step 0's identity gate halts non-CVO invocations.
+- Design + history: `org/tier1_exec/3.0.0_SA_CVO/SPOT_CHECK.md` (charter); `feedback_cvo_spot_check_loop_fix_authorized.md` in workspace memory; Andrew directive 2026-05-23 (verbatim: "if you catch issues, you need to address them (fix it) and then write your changes in to COO"). LD-0064 (2026-05-25) retired /cvo-loop; post-LD-0064 CVO canonical skill family = /spot-check + /verify-channel only.

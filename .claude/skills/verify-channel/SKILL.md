@@ -240,7 +240,7 @@ For NOVEL PRD pre-propagate gate (per LD-0062 Round-2 Q6): MISALIGNED verdict bl
 
 `.tools/safe-commit.sh --author "3.0.0_SA_CVO <3.0.0_SA_CVO@opal.agent>" -m "verify-channel({project}): {VERDICT} -- {summary}" -- {verify_channel_path}` + `git push origin CLOUD`.
 
-Per `[[feedback-cvo-loop-cycle-5-spot-check-push-after-each-cycle]]`: push after each cycle so MCP-cited commit hashes are visible on origin.
+Push after each cycle so MCP-cited commit hashes are visible on origin (CVO discipline pattern: a verdict-citing MCP whose commit hasn't been pushed will dangle for downstream consumers; push immediately after commit closes the gap).
 
 ## Step 8 — Update PRD-Inventory + re-arm
 

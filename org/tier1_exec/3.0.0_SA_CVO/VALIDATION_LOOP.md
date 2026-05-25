@@ -1,4 +1,14 @@
-# CVO Validation Loop — 3.0.0_SA_CVO
+# CVO Validation Loop — 3.0.0_SA_CVO — **DEPRECATED PER LD-0064 (2026-05-25)**
+
+> **STATUS: DEPRECATED.** This charter is retired per LD-0064 (Andrew direct 2026-05-25T~20:40Z: "yeah we need to get rid of cvo-loop first of all"). /cvo-loop is structurally redundant with /verify-channel + /spot-check under LD-0062 + Andrew /verify-channel trigger refinement. Specifically, 30m scheduled comprehensive deep-verdict cycles directly contradict Andrew's discipline that /verify-channel "should be exhaustive ... only at project/channel/pipeline/definitive closeout."
+>
+> **Post-retirement CVO canonical skill family (LD-0064):**
+> - `/spot-check` (20m cron) — fast alignment + drift + substance-meta-check; fix-authorized for alignment-metadata
+> - `/verify-channel` (event-based primary + 2h lightweight scan + comprehensive-only-at-closeout per ratified ANDREW-LOCKS 2026-05-25T20:31Z) — verifier-not-fixer
+>
+> **File preserved for historical context.** Do not invoke `/cvo-loop`. Do not run the cycle body below — it operates on assumptions superseded by LD-0062 + trigger refinement. Rollback per LD-0064 §4 reversible within 4 weeks if empirical use shows /verify-channel + /spot-check insufficient.
+
+---
 
 `3.0.0_SA_CVO` is an MCP-registered Claude agent (Tier-1 exec) running a **continuous validation loop**. This file is the loop charter — the body the agent executes every cycle. It is the CVO's *standing* task; ad-hoc gate-review reports filed by CTO/COO to `inbox/` interleave with the loop. The report-review doctrine (`prompt.md` §1-§9 + README Report Format Contract) governs the **quality of every finding** the loop emits, applied per cycle.
 

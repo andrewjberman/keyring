@@ -1,15 +1,19 @@
 # CVO Spot-Check Loop — 3.0.0_SA_CVO
 
-`3.0.0_SA_CVO` runs a second, tighter-cadence loop alongside `VALIDATION_LOOP.md`: the **spot-check**. Every 20 minutes, sweep recent commits from `ajb_workspace` agents, verify the systems those commits touch still work, check cross-system alignment, and — uniquely for this mode — **fix alignment issues directly** (within scope) before MCPing the change to COO.
+`3.0.0_SA_CVO` runs `/spot-check` every 20 minutes — sweep recent commits from `ajb_workspace` agents, verify the systems those commits touch still work, check cross-system alignment, and — uniquely for this mode — **fix alignment issues directly** (within scope) before MCPing the change to COO.
 
-This is the agent-commit-grain analogue to the artifact-and-key-juncture focus of `VALIDATION_LOOP.md`. Both loops coexist:
+Sister skill: `/verify-channel` — comprehensive project-scope verification fired event-based at closeout (per LD-0062 + Andrew trigger refinement 2026-05-25). Role split:
 
-| Loop | Cadence | Focus | Authority |
+| Skill | Cadence | Focus | Authority |
 |---|---|---|---|
-| `VALIDATION_LOOP.md` (`/loop 30m`) | 30m | workspace-wide delta sweep; closure-gate / wave-gate / PRD-ship deep passes; per-driver findings | verifier-not-fixer — findings only, drivers act |
-| `SPOT_CHECK.md` (`/spot-check 20m`) | 20m | recent agent commits; do-the-systems-still-work + cross-doc alignment | **fix-authorized within scope** — CVO repairs alignment, then tells COO |
+| `/spot-check 20m` (this skill) | 20m cron | recent agent commits; do-the-systems-still-work + cross-doc alignment; routine drift detection | **fix-authorized within scope** — CVO repairs alignment, then tells COO |
+| `/verify-channel` (sister) | event-based (composite closeout-threshold any-of-N) + 2h lightweight scan | comprehensive project-scope verification at closeout-class signals | verifier-not-fixer — findings only, drivers act |
 
-`prompt.md` Operating Doctrine §1-§9 (file:line citations, per-driver framing, P0/P1/P2, mechanism-specific, mandatory unknown-unknowns) governs both loops. Spot-check inherits the same quality bar.
+Andrew directive: "spot-check is more than enough for most activity, it really should only be verify-channel at project/channel/pipeline/definitive closeout."
+
+`prompt.md` Operating Doctrine §1-§9 (file:line citations, per-driver framing, P0/P1/P2, mechanism-specific, mandatory unknown-unknowns) governs both skills. Spot-check inherits the same quality bar.
+
+**LD-0064 (2026-05-25) retirement context:** `/cvo-loop` (the prior 30m scheduled comprehensive verify loop, charter at `VALIDATION_LOOP.md`) was retired per Andrew direct order as structurally redundant with /spot-check + /verify-channel under LD-0062. The companion `VALIDATION_LOOP.md` charter is preserved as DEPRECATED for historical context.
 
 ---
 
@@ -109,32 +113,31 @@ For each surviving commit:
 - **Misalignment, IN SCOPE for CVO → fix it directly** under CVO author line via `.tools/safe-commit.sh`. Then MCP COO with: what was misaligned, what was fixed, commit hash. One MCP per fix; multiple fixes in a cycle = one MCP with a list.
 - **Misalignment, OUT OF SCOPE → MCP the responsible driver + CC COO** with a priority-marked finding per the normal CVO discipline. Do not touch the file.
 - **Substance-meta finding (numbers fail the META-CHECK HEURISTIC) → MCP the responsible driver + CC COO + MSTR** with a verify-channel-style verdict (MECHANICAL / NOVEL / META layered, GREEN/YELLOW/RED shape) per the LD-0012 worked example. **Never CVO-fixed directly**, even if the fix would be metadata-only (e.g., a field rename) — substance findings always route to the code-owner via the safe-deploy chain. The substance-meta SCAN is the verifier extension; the FIX routing is unchanged.
+- **Closeout-class finding (/verify-channel escalation candidate) → MCP COO with subject-prefix `[SPOT-ESCALATE-CLOSEOUT]`** per joint CVO council 2026-05-25 ratified handoff mechanism. Single explicit-tag escalation = high signal-to-noise; routine /spot-check findings do NOT auto-escalate. Triggered when /spot-check empirically detects (a) a substance-class finding explicitly judged closeout-shaped (NOT routine drift) OR (b) a multi-tick same-pattern observation suggesting project approaching closeout state.
 - **Beyond-CVO judgment call (lane reassignment, scope decision, cancellation) → escalate to MSTR / Andrew.**
 
 ### Step 4 — Log + re-arm
 
 - Cycle log only when something happened (a fix landed, a finding routed, an escalation went). A clean cycle is silent — checkpoint advance + heartbeat refresh is all.
-- Cycle logs at `org/tier1_exec/3.0.0_SA_CVO/logs/{YYYY-MM-DD}/spot_check_{HHMMZ}.md` (distinct prefix from `cvo_loop_*` so the two loops' logs sort separately).
+- Cycle logs at `org/tier1_exec/3.0.0_SA_CVO/logs/{YYYY-MM-DD}/spot_check_{HHMMZ}.md`.
 - Spot-check is driven by a `CronCreate` at startup (`*/20` off-marks, e.g. `13,33,53 * * * *`). No per-cycle re-arm needed — the cron fires until canceled. Runs auto-expire after 7 days per CronCreate's default; refresh by re-arming the cron at session restart or on the 7-day boundary.
 
 ---
 
 ## What does NOT change
 
-- **Operating Doctrine §1-§9 still governs every finding.** A spot-check MCP to COO carries the same rigor as a `VALIDATION_LOOP` cycle log: file:line citations, mechanism-specific, P0/P1/P2 priority, per-driver framing where applicable.
-- **Verifier-not-fixer is still CVO's default.** Spot-check carves a bounded fix exception for alignment metadata; everywhere else (including `VALIDATION_LOOP` cycles), CVO emits findings and drivers act.
-- **Ad-hoc gate-review reports filed to `inbox/`** still interleave with both loops per the README Report Format Contract.
+- **Operating Doctrine §1-§9 still governs every finding.** A spot-check MCP to COO carries the same rigor as a comprehensive /verify-channel verdict: file:line citations, mechanism-specific, P0/P1/P2 priority, per-driver framing where applicable.
+- **Verifier-not-fixer is still CVO's default.** Spot-check carves a bounded fix exception for alignment metadata; everywhere else (including /verify-channel comprehensive cycles), CVO emits findings and drivers act.
+- **Ad-hoc gate-review reports filed to `inbox/`** still interleave with the skill per the README Report Format Contract.
 - **STEERCO thread mode** unchanged.
 
 ---
 
-## Coexistence with `/loop 30m` (VALIDATION_LOOP)
+## Coordination with `/verify-channel` (sister CVO skill, post-LD-0064)
 
-The two loops have deliberate overlap (both look at commits) but different focus:
+Role split per LD-0062 + Andrew trigger refinement 2026-05-25:
 
-- `/loop 30m` weights **closure gates, wave gates, PRD ships, key junctures** — produces deep verdicts and per-driver findings; does not fix.
-- `/spot-check 20m` weights **per-commit alignment** — produces silent advances when clean, fixes-and-tells-COO when drift is in-scope, findings-to-driver when out-of-scope.
+- `/verify-channel` weights **closeout-class signals** — fires event-based on composite closeout-threshold (status flip / RAVC2-CLOSE / Andrew direct / /spot-check escalation tag) OR 2h lightweight scan detecting phase-transition / wave-gate / PRD ratification / multi-project blast-radius. Produces comprehensive 4-component verdicts at closeout only. **Verifier-not-fixer.**
+- `/spot-check 20m` (this skill) weights **per-commit alignment + routine drift** — produces silent advances when clean, fixes-and-tells-COO when drift is in-scope, findings-to-driver when out-of-scope. Escalates closeout-class findings to /verify-channel via MCP subject-prefix `[SPOT-ESCALATE-CLOSEOUT]`.
 
-A finding that appears in both lenses is still emitted only once (whichever loop catches it first); the other loop's checkpoint advances past it on the next tick. To avoid duplicate work, both loops cite each other's most-recent log in the cycle commit when relevant.
-
-If both cycles fire in the same wall-clock minute, run `/spot-check` first (faster, fix-capable), then `/loop 30m` (deeper).
+Andrew framing: "/spot-check is more than enough for most activity." Most cycles run fully within /spot-check scope; /verify-channel only fires at closeout-class moments.
