@@ -180,6 +180,32 @@ session logs are untagged and excluded from aggregation; the cutover fires
 on wall-clock independent of D-003 v1.11 commit timing (v1.11 codifies the
 discipline; it does not trigger it).
 
+**CL_STALL_CHECK + MSTR-emit `[COMPILER-ASK]` (D-003 v1.12 scope item xviii [forthcoming via ws CTO scribe per LD-0053] + MSTR_INPUT_1_CHANNEL_ARCHITECTURE.md V3 §6.4 + §6.5).** Per Andrew direct sovereign instruction 2026-05-24T~2348Z (verbatim: *"in essence, both you and 1.0.0 should have 'compiler-ask' abilities to request. The pattern for you doing it is on your govern loop, if you notice that complearns team is stalling, not being blocked but rather have no active phases of compiler r&d running, this is when you take action to assess telemetry patterns and identify opportunities to issue a compiler ask. These processes have to be designed into loop patterns so that they are consistent and daily deterministic at least mechanically"*), Step 1(b) extends with a deterministic daily-mechanical CL-stall check + EXPLORE/TRACE aggregation that may MSTR-emit `[COMPILER-ASK]` to CL CTO at parity with §6.1 Opal-CTO-emit. Mechanical = no judgment on whether to RUN the check (runs every cycle); judgment is in cluster substance only.
+
+```
+CL_STALL_CHECK (deterministic every cycle):
+  IF CL_STALL = (
+    zero CL-fabric commits with archetype IMPLEMENT/DEPLOY/VALIDATE in trailing N=6h
+    AND CL TO queue: zero `active` status across 1.1.0_SA_CTO + 1.{1,2,3,4}.0_DS_CompLearns + 2.1.0_SC_CompLearns
+    AND CL continuous-cycle Input 3 (per CL CTO V1.2 PRD §3) hasn't advanced in trailing M=12h
+    AND no CL agent surfaced `[BLOCKED]` subject prefix OR named blocker-dependency in trailing window
+  )
+  AND EXPLORE/TRACE cluster coherent (
+    cluster concentration ≥40% of trailing-5-day-window EXPLORE+TRACE weighted-sum
+    per MSTR_INPUT_1_CHANNEL_ARCHITECTURE.md §6.5.2 aggregation formula
+  )
+  THEN MSTR-emit [COMPILER-ASK] per §6.4 + ledger as LD-NNNN
+       (directive_ref D-003 v1.12 scope item xviii; authority_source: directive;
+        ceiling: max 1 MSTR-emit per cycle V1)
+  ELIF CL_STALL but no coherent cluster:
+       Log in cycle record "CL_STALL detected, no coherent EXPLORE/TRACE cluster, no emit"
+       Re-check next cycle (trigger is per-cycle)
+  ELSE (CL not stalled):
+       No emit; cycle continues normal Step 1(b) flow
+```
+
+V1 thresholds (N=6h + M=12h + 40% cluster concentration) tunable empirically after first ~3 MSTR-emit fires per `/mstr_review` reporting (parallel to class-6 §2.2 threshold-tuning paradigm). The two output paths (class-6 → brief-candidate; CL_STALL → MSTR-emit) read the same input substrate (archetype headers) but feed different mechanisms. Substrate-fill timing: post-cutover EXPLORE/TRACE corpus needs ~5+ days to produce coherent clusters; CL_STALL deterministic check fires immediately each cycle; first substantive MSTR-emit empirically when-ready.
+
 **Source-of-truth precedence** (highest confidence first): Tier-0 law → Andrew
 messages / halts → ratifications → ledger & cycle records → git state → broker
 state → telemetry → **agent self-reports** (lowest — a claim, not evidence,

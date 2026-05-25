@@ -2,10 +2,11 @@
 
 **Author:** `0.0.0_AB_MSTR`
 **Authored:** 2026-05-24T20:00:00Z (V1 — post Opal CTO + MSTR working-session lock 19:45Z + Beat 2 LD-0043 commit)
-**Status:** V2 — §6 [COMPILER-ASK] mechanism LOCKED per ws CTO + ws CVO joint-decide verdict (`66ce7c024`) + Andrew sovereign preemptive ratification 2026-05-24T~2128Z + CVO FN-2 sharpening on Q-D ack-shape folded; LD-0051 establishment. V1 substance §0-§5 + §7-§8 unchanged.
+**Status:** V3 — §6 extended with §6.4 MSTR-emit `[COMPILER-ASK]` parity capability per Andrew direct sovereign instruction 2026-05-24T~2348Z; CL-stall trigger criterion + EXPLORE/TRACE telemetry aggregation + /govern Step 1(b) deterministic daily-mechanical integration; §6 V2 LOCK substance for Opal CTO emit-mechanism preserved unchanged (§6.1 + §6.1.1 + §6.2 + §6.3 all canonical V2 state). V1/V2 substance §0-§5 + §7 unchanged. §1.2 updated per Andrew clarification (Opal CTO emit fires only on Andrew direction). LD-0053 establishment.
+**V3 amendment authority:** Andrew direct sovereign instruction 2026-05-24T~2348Z (path A self-driving execution per MSTR prior-turn proposal; Andrew firing /govern CY-0092 = execute-signal per Art. I)
 **V2 amendment authority:** Joint ws CTO + ws CVO under Andrew preemptive ratification grant per LD-0026 generalized one tier down (operating-mode doctrine: Andrew preemptive ratification + joint Tier-1 verdict = paired ratification when Andrew working-session slot is delegated)
-**Authority:** D-003 v1.11 cross-fabric facilitation (codifies three-Input model + Input 1 channel mechanics; scope items xv-xviii)
-**Tier-0 commit hash:** `d355302c1` (canonical post DIRECTIVES v1.11 ship; CONSTITUTION v1.2 + STAKES_MATRIX v1.4 unchanged at `1a515b769`)
+**Authority:** D-003 v1.11 cross-fabric facilitation (codifies three-Input model + Input 1 channel mechanics; scope items xv-xviii) + forthcoming v1.12 amendment (scope item xviii NEW: MSTR-emit Input 1 parity, routed to ws CTO scribe pass per LD-0053)
+**Tier-0 commit hash:** `d355302c1` (canonical post DIRECTIVES v1.11 ship; CONSTITUTION v1.2 + STAKES_MATRIX v1.4 unchanged at `1a515b769`; v1.12 not yet committed)
 
 ---
 
@@ -44,9 +45,13 @@ MSTR's `/govern` Step 1(b) population scan catalogs six signal classes per cycle
 
 **Aggregation cadence:** at the start of each `/govern` cycle, MSTR runs the six-class scan; clusters meeting brief-surface threshold (§4) generate Input 1 candidate briefs.
 
-### §1.2 — Source B: `[COMPILER-ASK]` urgent flag from Opal CTO
+### §1.2 — Source B: `[COMPILER-ASK]` urgent flag (Opal CTO emit + MSTR emit at parity per V3)
 
-When Opal CTO experiences an acute pain point that Source A's cycle cadence would surface too slowly, Opal CTO emits a single MCP to MSTR with `[COMPILER-ASK]` subject prefix. MSTR fast-paths the brief to CL CTO same-cycle.
+`[COMPILER-ASK]` is an emit-mechanism with **two originators at parity**: Opal CTO + MSTR. Both use the same subject convention, ferry to CL CTO via the same §3 packaging path, and follow the same §3.3 implicit-accept / §3.4 counter-route mechanism on the consumer side. CL CTO ferry-recipient role doesn't differ by originator; `from_agent` field distinguishes source at receipt.
+
+**Opal CTO emit (V2 LOCK substance — see §6.1/§6.1.1/§6.2):** When Opal CTO experiences an acute pain point that Source A's cycle cadence would surface too slowly, Opal CTO emits a single MCP to MSTR with `[COMPILER-ASK]` subject prefix. MSTR fast-paths the brief to CL CTO same-cycle. **Per Andrew clarification 2026-05-24T~2348Z**: Opal CTO emit fires only when Andrew directly asks 1.0.0_SA_CTO to emit — not Opal-CTO-self-detected. Andrew is the actual originator; Opal CTO is the channel + body-author.
+
+**MSTR emit (V3 NEW — see §6.4):** When MSTR observes CL fabric stall (not blocked but no active R&D phases) via deterministic daily check in /govern Step 1(b), MSTR aggregates EXPLORE + TRACE archetype telemetry from ws fabric session logs + identifies coherent compiler-shape opportunity cluster + emits `[COMPILER-ASK]` MCP directly to CL CTO. MSTR is both originator + dispatcher; no Opal-CTO-ack-back path needed (§6.1.1 ack-shape table applies to Opal-CTO-emit only). Trigger criterion + aggregation mechanics in §6.4.
 
 **Opal CTO side responsibility (`[COMPILER-ASK]` mechanism):**
 - Emit single MCP to MSTR (`opal-agent-comms send_message`)
@@ -67,16 +72,19 @@ When Opal CTO experiences an acute pain point that Source A's cycle cadence woul
 - No subscription/notification system adding to inbox noise
 - No urgency-scoring or classification requirement on Opal CTO side (just flag-and-forget if that's what works)
 
-### §1.3 — The two-source resilience property
+### §1.3 — The hybrid resilience property (V3: Source A + Source B with two originators)
 
 The hybrid is robust because:
 
-| Source | Catches |
-|---|---|
-| A (passive scan) | Patterns Opal CTO doesn't have time to flag explicitly; cost classes (1, 5, 6) Opal CTO might not see from their lane |
-| B (urgent flag) | Acute biting that Source A's cadence (cycle-boundary) would surface too slowly; specific cases Opal CTO has unique visibility into |
+| Source | Originator(s) | Catches |
+|---|---|---|
+| A (passive scan) | MSTR | Patterns Opal CTO + Andrew don't have time to flag explicitly; cost classes (1, 5, 6) lane-blind from anyone but cross-fabric scan |
+| B (urgent flag — Opal CTO emit per §6.1) | Andrew (via Opal CTO as channel + body-author per §1.2) | Acute biting Andrew has direct visibility into via Opal product work; lane-specific cases Andrew unique-visibility on |
+| B (urgent flag — MSTR emit per §6.4 — V3) | MSTR | CL fabric stall (not blocked) where EXPLORE/TRACE telemetry shows coherent compiler-shape opportunity; deterministic daily-mechanical detection in /govern Step 1(b) |
 
-Both sources feed the same outbound brief shape (§3). CL CTO doesn't need to know which source triggered a brief; uniformity preserved.
+All sources feed the same outbound MCP shape (`[COMPILER-ASK]` subject; §3 brief packaging for Source A briefs; §6.1 direct-MCP for Source B). CL CTO doesn't need to know which originator triggered an emit; `from_agent` field distinguishes source at receipt without affecting consumer-side mechanism.
+
+**Why two originators on Source B not three:** Andrew sovereign authority operates through Opal CTO channel for Opal-product-anchored asks (Andrew knows Opal CTO has the lane visibility); MSTR operates from cross-fabric stimulus-scan position. The two originator perspectives are structurally complementary; both are necessary because each catches what the other can't see from their lane.
 
 ---
 
@@ -228,16 +236,116 @@ The six Q's that V1 §6.2 listed as "open design questions" are now LOCKED per t
 
 **Lock authority chain:** Andrew sovereign 2026-05-24T~2128Z preemptive ratification grant ("approve whatever the team recommends") → ws CTO + ws CVO joint-decide verdict commit `66ce7c024` 2026-05-24T21:55Z → ws CTO scribe-pass DIRECTIVES v1.11 + /govern SKILL.md at `d355302c1` (Items 1 + 3 materialized) → this LD-0051 scribes Item 2 §6 V2 lock with CVO FN-2 folded.
 
-### §6.3 — V3 amendment triggers (future)
+### §6.3 — V2 → V3 amendment-history note
 
-§6 V2 may amend to V3 on any of the following empirical triggers (operational tuning surface, not Tier-0 law amendment — surfaced in /mstr_review reporting):
+V3 added §6.4 MSTR-emit `[COMPILER-ASK]` parity capability per Andrew direct sovereign instruction 2026-05-24T~2348Z (LD-0053 / CY-0092). V2 LOCK substance for Opal CTO emit-mechanism (§6.1 + §6.1.1 + §6.2) preserved unchanged. V3 amendment path: Andrew direct sovereign + MSTR self-driving execution (per LD-0053 prior-turn path-A proposal; Andrew firing /govern CY-0092 = execute-signal per Art. I).
 
+### §6.4 — MSTR-emit `[COMPILER-ASK]` mechanism (V3 NEW; parity with §6.1 Opal CTO emit)
+
+**Andrew framing (verbatim 2026-05-24T~2348Z):** *"in essence, both you and 1.0.0 should have 'compiler-ask' abilities to request. The pattern for you doing it is on your govern loop, if you notice that complearns team is stalling, not being blocked but rather have no active phases of compiler r&d running, this is when you take action to assess telemetry patterns and identify opportunities to issue a compiler ask. These processes have to be designed into loop patterns so that they are consistent and daily deterministic at least mechanically."*
+
+#### §6.4.1 — MSTR-emit specification
+
+| Element | Specification |
+|---|---|
+| Trigger condition | CL fabric stall detected (deterministic mechanical criterion per §6.5) + EXPLORE/TRACE telemetry aggregation produces coherent cluster (per §6.5 aggregation formula) |
+| Mechanism | Single MCP from MSTR to CL CTO via `opal-agent-comms send_message` |
+| Subject convention | Begins with `[COMPILER-ASK]` (uniform with §6.1 — `from_agent=0.0.0_AB_MSTR` distinguishes source at receipt) |
+| Body density | MSTR's read of compiler-shape opportunity from EXPLORE/TRACE cluster substance + concrete evidence anchors (commits / session-log entries / archetype-tag aggregation summary) |
+| Expected CL CTO response | Standard §3.3 implicit-accept (no counter-route in 1 cycle → CL CTO PRD authorship begins) or §3.4 counter-route mechanism unchanged from V2 |
+| Cadence ceiling | Max 1 MSTR-emit per /govern cycle (V1 ceiling; tunable per /mstr_review) |
+| Self-ack-back | NOT applicable — MSTR is both originator + dispatcher; §6.1.1 Opal-CTO-ack-shape table applies to §6.1 only |
+| Integration | /govern Step 1(b) deterministic daily-mechanical check (CL_STALL_CHECK sub-step); see §6.5 |
+
+#### §6.4.2 — Distinguishing MSTR-emit vs Opal-CTO-emit at receipt
+
+CL CTO reads `from_agent` field on MCP receipt:
+- `from_agent: 1.0.0_SA_CTO` → Opal CTO emit per §6.1 (Andrew-originated per §1.2 V3 clarification; rare, lane-specific)
+- `from_agent: 0.0.0_AB_MSTR` → MSTR emit per §6.4 (CL-stall-triggered per §6.5; daily-deterministic, cross-fabric aggregation source)
+
+Body shape + ferry-recipient role unchanged for either originator.
+
+### §6.5 — CL-stall criterion + EXPLORE/TRACE aggregation (V3 NEW; deterministic mechanical detection per Andrew framing)
+
+#### §6.5.1 — CL_STALL trigger criterion (mechanical, deterministic, daily per /govern Step 1(b))
+
+```
+CL_STALL = (
+  # No active R&D phase (commit-activity dimension)
+  zero CL-fabric commits with archetype IMPLEMENT/DEPLOY/VALIDATE
+    in trailing N hours (V1 N=6h)
+  AND
+  # No pending CL TOs in active state (queue dimension)
+  CL TO queue: zero `active` status across
+    1.1.0_SA_CTO + 1.{1,2,3,4}.0_DS_CompLearns + 2.1.0_SC_CompLearns
+  AND
+  # Input 3 floor not absorbing (cascade dimension per CL CTO V1.2 PRD §3)
+  CL continuous-cycle Input 3 (OSS case studies) hasn't advanced
+    in trailing M hours (V1 M=12h)
+  AND
+  # NOT blocked-class (distinguishes from BLOCKED waiting on external)
+  no CL agent surfaced `[BLOCKED]` subject prefix
+    OR named blocker-dependency in trailing window
+)
+```
+
+The AND structure preserves Andrew's "stalling, not blocked" distinction. The first 3 AND clauses distinguish "no active phases" from normal CL operation; the 4th AND clause distinguishes from BLOCKED waiting-on-external (which has its own escalation path per /govern Step 4 ladder).
+
+#### §6.5.2 — EXPLORE/TRACE telemetry aggregation (signal source per Andrew framing)
+
+Post-archetype-cutover (2026-05-25T00:00Z UTC), every ws session-log entry carries `**archetype:** TAG` per LD-0043. The aggregation per /govern Step 1(b):
+
+1. Read ws fabric session logs for trailing 5-day window
+2. Filter entries with primary archetype EXPLORE OR TRACE per `org/tier0/COMPILER_ARCHETYPES.md` (EXPLORE weight=3.0; TRACE weight=3.0 — the two highest-cost discovery archetypes per Opal CTO V1.0 design insight)
+3. Cluster by topic: component / file-path-anchor / domain (grep on entry titles + body anchors)
+4. Top-1 cluster by weighted entry count = candidate compiler-ask topic
+5. If cluster concentration ≥40% of trailing-window EXPLORE+TRACE weighted-sum (same threshold as class-6 brief-surface per §2.1 — preserves parity with established threshold-tuning baseline), the cluster is coherent enough to ask against
+
+Pairs cleanly with existing class-6 detection — same input substrate (archetype headers), different output path.
+
+#### §6.5.3 — /govern Step 1(b) integration (CL_STALL_CHECK sub-step)
+
+After existing class-6 aggregation paragraph in /govern Step 1(b), the new sub-step:
+
+```
+CL_STALL_CHECK (deterministic every cycle):
+  IF CL_STALL (per §6.5.1 criterion)
+  AND EXPLORE/TRACE cluster coherent (per §6.5.2 aggregation)
+  THEN MSTR-emit [COMPILER-ASK] per §6.4 + ledger as LD-NNNN
+       (directive_ref D-003 v1.12 scope item xviii; authority_source: directive)
+  ELIF CL_STALL but no coherent cluster:
+       Log in cycle record "CL_STALL detected, no coherent EXPLORE/TRACE cluster, no emit"
+       Re-check next cycle (trigger is per-cycle)
+  ELSE (CL not stalled):
+       No emit; cycle continues normal Step 1(b) flow
+```
+
+Mechanical = no judgment on whether to RUN the check (runs every cycle); judgment is in cluster substance only.
+
+#### §6.5.4 — V1 threshold-tuning expectations
+
+Initial thresholds (N=6h CL-stall commit-window + M=12h Input 3 floor window + 40% EXPLORE/TRACE cluster concentration) are V1; refines empirically after first ~3 MSTR-emit fires per /mstr_review reporting. Threshold changes are operational tuning surface (not Tier-0 law); MSTR amends without amendment cycle, surfacing changes in /mstr_review.
+
+**Substrate-fill timing:** post-cutover EXPLORE/TRACE corpus needs ~5+ days to produce coherent clusters (parallel to class-6 §2.2 expectations). CL_STALL deterministic check fires immediately each cycle from CY-0092 forward; first substantive MSTR-emit empirically when-ready (likely days out).
+
+### §6.6 — V4 amendment triggers (future)
+
+§6 V3 may amend to V4 on any of the following empirical triggers (operational tuning surface, not Tier-0 law amendment — surfaced in /mstr_review reporting):
+
+**Opal-CTO-emit side (carry from V2 LOCK):**
 - (a) Q-D ack-shape proves too heavy (Opal CTO observes ack-back as distracting) OR too light (delivery confirmation insufficient empirically)
 - (b) Q-B threshold proves needed (Opal CTO emissions empirically too noisy without a soft threshold)
 - (c) Q-E cadence proves wrong (regular cadence wanted OR rare-event interpretation surfaces operational gap)
-- (d) Q-F counter-route mechanism proves wrong (MSTR-absorbs-silent default empirically loses visibility Opal CTO wanted)
+- (d) Q-F counter-route mechanism proves wrong (MSTR-absorbs-silent default empirically loses visibility)
 
-Any V3 amendment follows the same joint-decide path: ws CTO + ws CVO render under Andrew sovereign authority (preemptive or direct).
+**MSTR-emit side (V3 NEW triggers):**
+- (e) V1 CL_STALL thresholds (N=6h + M=12h) produce false-positive triggers — re-tune via §6.5.4 operational surface
+- (f) EXPLORE/TRACE substrate proves insufficient signal source post-substrate-fill — re-evaluate Source A two-output structure OR alternative aggregation formula
+- (g) MSTR-emit volume exceeds V1 ceiling (1/cycle) unexpectedly — hard-cap holds; surplus deferred
+- (h) `[COMPILER-ASK]` subject convention causes confusion at CL CTO receipt — add distinct suffix `[COMPILER-ASK FROM MSTR]` via V4 minor amendment
+- (i) MSTR-emit-vs-Andrew-direct-Opal-CTO-emit ratio empirically unhealthy — re-evaluate originator parity structure
+
+Any V4 amendment follows the same authority paths: Andrew direct sovereign + MSTR self-drive (path A), OR Andrew preemptive + joint ws CTO + ws CVO render (path B per LD-0049/LD-0051 precedent).
 
 ---
 
@@ -259,15 +367,17 @@ MSTR's role at ratification time: govern the trigger + ledger the ratification +
 ## §8 — Reference
 
 - **Establishing LD:** `org/tier0/ledger/LD-0045.md` (V1 doc establishment)
-- **§6 V2 LOCK LD:** `org/tier0/ledger/LD-0051.md` (this commit — §6 V2 [COMPILER-ASK] mechanism lock per joint CTO+CVO verdict + Andrew preemptive ratification + CVO FN-2)
-- **Joint-decide verdict source:** ws CVO commit `66ce7c024` 2026-05-24T21:55Z (CORROBORATE-with-FN-1/FN-2 on 3-item CTO ask; Andrew preemptive 2128Z covers all three)
-- **DIRECTIVES v1.11 ship (paired):** ws CTO commit `d355302c1` 2026-05-24T22:13Z (Items 1 + 3 materialized; this LD-0051 materializes Item 2)
+- **§6 V2 LOCK LD:** `org/tier0/ledger/LD-0051.md` (V2 §6 [COMPILER-ASK] mechanism lock per joint CTO+CVO verdict + Andrew preemptive ratification + CVO FN-2)
+- **§6 V3 MSTR-emit-parity LD:** `org/tier0/ledger/LD-0053.md` (this V3 — §6.4 + §6.5 MSTR-emit `[COMPILER-ASK]` parity capability per Andrew direct sovereign 2026-05-24T~2348Z)
+- **Joint-decide verdict source (V2 LOCK):** ws CVO commit `66ce7c024` 2026-05-24T21:58:19Z UTC (CORROBORATE-with-FN-1/FN-2 on 3-item CTO ask; Andrew preemptive 2128Z covers all three)
+- **DIRECTIVES v1.11 ship (paired):** ws CTO commit `d355302c1` 2026-05-24T22:13:15Z UTC (Items 1 + 3 materialized; LD-0051 materializes Item 2)
+- **DIRECTIVES v1.12 ship (paired forthcoming for V3):** ws CTO scribe pass next-action via TIER0_LAW override per LD-0053 (D-003 scope item xviii NEW: MSTR-emit Input 1 parity codified)
 - **Companion CL doc:** `feature_clb/docs/architecture/COMP_LEARNS_CONTINUOUS_CYCLE_OPERATING_MODEL.md` V1.1 §5 (CL-side contract)
-- **Substrate doc:** `org/tier0/COMPILER_ARCHETYPES.md` (LD-0043 — enum + weights for class-6 detection)
+- **Substrate doc:** `org/tier0/COMPILER_ARCHETYPES.md` (LD-0043 — enum + weights for class-6 detection + EXPLORE/TRACE aggregation per §6.5.2)
 - **Spawn-request protocol:** `org/tier0/ledger/LD-0042.md` (orthogonal to this doc but referenced for operational completeness)
 - **Mandate-eligibility discipline:** `feature_clb/docs/architecture/COMP_LEARNS_GRAPH_VALIDATION_DISCIPLINE.md`
-- **Tier-0 law:** CONSTITUTION v1.2 + STAKES_MATRIX v1.4 + DIRECTIVES v1.11 (canonical `d355302c1` for D-003 substance; CONSTITUTION + STAKES_MATRIX at `1a515b769`)
+- **Tier-0 law:** CONSTITUTION v1.2 + STAKES_MATRIX v1.4 + DIRECTIVES v1.11 (canonical `d355302c1` for D-003 substance; CONSTITUTION + STAKES_MATRIX at `1a515b769`; v1.12 not yet committed — routes via ws CTO scribe per LD-0053)
 
 ---
 
-*MSTR Input 1 Channel Architecture — V1 authored 2026-05-24T20:00Z under LD-0045 establishment; V2 §6 LOCK 2026-05-24T22:25Z under LD-0051 establishment per joint CTO+CVO verdict + Andrew sovereign preemptive ratification 2128Z + CVO FN-2 folded. Pairs with CL V1.1 §5; together they form the complete inter-fabric Input 1 contract. §1-§5 + §7 substance V1 unchanged at V2; §6 V2 LOCKED + §8 references updated; doc-level Status advances V1 → V2.*
+*MSTR Input 1 Channel Architecture — V1 authored 2026-05-24T20:00Z under LD-0045 establishment; V2 §6 LOCK 2026-05-24T22:24:39Z UTC under LD-0051 per joint CTO+CVO verdict + Andrew sovereign preemptive ratification 2128Z + CVO FN-2 folded; V3 §6.4+§6.5+§6.6 added 2026-05-25T00:00Z UTC under LD-0053 per Andrew direct sovereign 2026-05-24T~2348Z (MSTR-emit `[COMPILER-ASK]` parity capability + CL-stall trigger + EXPLORE/TRACE aggregation + /govern Step 1(b) deterministic daily-mechanical integration). Pairs with CL V1.1 §5; together they form the complete inter-fabric Input 1 contract. §1-§5 + §7 substance V1 unchanged at V2 + V3; §6 V2 LOCKED substance preserved + §6.4/§6.5/§6.6 NEW; §1.2 + §1.3 updated for two-originator Source B framing; §8 references updated; doc-level Status advances V2 → V3.*

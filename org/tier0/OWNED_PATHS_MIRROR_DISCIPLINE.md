@@ -139,7 +139,8 @@ Mirror Discipline operates on the canonical lane definitions, not on override me
 
 - **Establishing LD:** `org/tier0/ledger/LD-0046.md`
 - **Existing PRD on owned-paths:** `docs/architecture/ADHC_OWNPTH.md` (PRD §6.1 schema reference cited by both fabrics' .owned-paths.yaml headers)
-- **Tier-0 law context:** CONSTITUTION v1.1 Art. XV (fabric scope); STAKES_MATRIX v1.3; DIRECTIVES v1.10 (canonical at `2d5fdc03f`)
+- **Tier-0 law context (current):** CONSTITUTION v1.2 Art. XV (fabric scope); STAKES_MATRIX v1.4; DIRECTIVES v1.11 (canonical at `d355302c1`). Hash drift fix per ws CTO Finding A in /stimulus-scan 2026-05-24T23:37Z cross-doc audit; applied CY-0092 + LD-0053.
+- **Tier-0 law context (at-establishment historical):** CONSTITUTION v1.1; STAKES_MATRIX v1.3; DIRECTIVES v1.10 (canonical at `2d5fdc03f`) — preserved as audit trail per M-1 at-establishment-time discipline; line 6 doc-header `Tier-0 commit hash at establishment` remains canonical historical.
 - **Cross-fabric governance origin:** LD-0031 Path B + LD-0032 ratification + LD-0033 cross-fabric coordination protocol
 - **Both fabrics' owned-paths files:**
   - `ajb_workspace/.owned-paths.yaml` (rollout_phase 2; AUTHORED_BY 1.0.0_SA_CTO 2026-04-24)
