@@ -42,7 +42,9 @@ for arg in "$@"; do
 done
 
 # Build set of LIVE agent serials from liveness.json (used by --stale filter).
-# Live = last_seen within 120s (matches server.py STALE_THRESHOLD).
+# Live = last_seen within 600s (10min; raised from 120s per LD-0063 to accommodate
+# substantive-work-without-explicit-heartbeat gaps. NOTE: now diverged from
+# server.py STALE_THRESHOLD=120s; kill-orphans uses local 600s threshold).
 LIVENESS_FILE="$WORKSPACE/org/mcp/liveness.json"
 LIVE_SERIALS=""
 if [ "$STALE_ONLY" -eq 1 ] && [ -f "$LIVENESS_FILE" ]; then
@@ -58,7 +60,7 @@ except Exception:
     sys.exit(0)
 now = time.time()
 for serial, info in data.items():
-    if now - info.get('last_seen_epoch', 0) < 120:
+    if now - info.get('last_seen_epoch', 0) < 600:
         print(serial)
 " 2>/dev/null | tr -d '\r')
 fi
