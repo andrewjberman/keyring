@@ -6,7 +6,7 @@
   "prds": [
     {
       "path": "docs/architecture/MDPF_OWNTS.md",
-      "label": "v0.1.1 PRD canonical via /ws-charter NOVEL authoring (cycle 0040) per Andrew direct sovereign 2026-05-26 (3 asks + 2 methodology refinements) relayed via 0.4.0_DS_ClientPlatform [BRIEF-FOR-PRD]; v0.1.1 amendment same-cycle pre-implementation precision-pin per DS author-chain clarification ask (3 rulings folded — null-vs-pre-onboard-zero semantic distinction in rollup math + 5/1 historical gap AC3 ground-truth + dual-gate reconcile tolerance dollar-cent + 0.01-pp absolute)",
+      "label": "v0.1.2 PRD canonical via /ws-charter NOVEL authoring (cycle 0040) per Andrew direct sovereign 2026-05-26; v0.1.1 same-cycle pre-impl precision-pin per DS author-chain clarification (3 rulings folded); v0.1.2 post-impl bookkeeping amendment per DS Flag 1 mathematical-infeasibility surface at MDPF_OWNTS.001 RAVC2-Request `0a7c18df0` — §5.3 dollar-gate corrected from literal $0.01 (unsatisfiable at 6-decimal × $100M-300M NAVs) to scale-aware max($0.01, NAV × 1e-5); ratio-gate (0.0001 absolute on ownership_pct) UNCHANGED; DS impl is canonical, PRD literal-text catches up",
       "date": "2026-05-26"
     }
   ],
