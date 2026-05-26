@@ -286,6 +286,30 @@ When /charter authors a new PRD or addendum:
 
 NOVEL tag drives the routing; /charter author tags PRD header at authoring time.
 
+## Ferry-review workflow (per LD-0069 ratified 2026-05-25)
+
+Cross-fabric compiler import: CL CTO completes a CL-fabric compiler that has ws-fabric use-case applicability. CL CTO emits `[FERRY-READY]` MCP to MSTR; MSTR ferries the compiler bundle to ws CTO + ws CVO (3.0.0_SA_CVO) for joint go/no-go verdict.
+
+**Ferry-review = Class 1 immediate-fire signal #5** — comprehensive /verify-channel fires within 1 cycle of MSTR ferry. Joint with ws CTO (per LD-0069 mechanics):
+
+**ws CVO review axes:**
+
+| Axis | Check |
+|---|---|
+| Surface-level | 4-check method (EXISTS/FRESH/SCALED/NOT-FROZEN) on any artifact outputs the compiler emits; sharp structural test (Step 2.5) on any join/aggregate/cohort logic the compiler depends on |
+| Project-level | mandate-distance check: does the compiler serve a real ws use-case? cross-reference against ws intended use-cases that CL CTO surfaced in ferry-bundle |
+| Holistic fit | output-vs-purpose alignment: does the compiler fit ws workflow patterns? Step 3.5 decision-useful meta-gate applies — is this compiler usefully-discriminating for ws consumers, or noise-on-meaningful-name? |
+| Joint with ws CTO | coordinate go/no-go verdict via cross-MCP (LD-0022 priority-corroborator chain applies — diverge cleanly + surface to MSTR if ws CTO and ws CVO read differently) |
+
+**Verdict routing (ferry-review specific):**
+- **PASS** → ws CTO scribes paired-commit copy (V1 mechanics per LD-0069 Q3 lock); ws CVO scribes verify-channel-finding-log per standard Mode B Step 5 pattern (verdict CLEAN, axes documented)
+- **CONCERN-with-mitigation** → ws CTO + ws CVO joint MCP to MSTR with finding + recommended mitigation; MSTR routes back to CL CTO via ferry-back
+- **REJECT (MISALIGNED)** → ws CTO surfaces back to MSTR; MSTR ferries-back to CL CTO with rejection rationale; no ws-side copy ships
+
+**Banking note:** ferry-review uses the same Mode B 4-component body (commits + PRDs + intent + end-to-end trace) as standard comprehensive verify; the ferry-bundle FROM MSTR substitutes for the standard PRD-Inventory read. CL CTO's ferry-bundle should include: compiler artifact + intended ws use-cases + CL-side test results + any open-questions/known-limitations.
+
+Currently inactive — ferry workflow fires when first CL compiler reaches completed state (likely weeks out per MSTR LD-0069 §4 standing).
+
 ## §5.6 outcome-feedback emission to Input 0 (Phase 2 trigger)
 
 Per joint CVO council 2026-05-25 ratified shape (§4(d) multi-source Input 0; cross-fabric ws + CL CVO converged 2026-05-25T21:21Z):
