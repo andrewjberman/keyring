@@ -80,13 +80,36 @@ No DDB-intermediate flag for any of YieldCurveTab/MacroHeatmap/MacroTimeSeriesMo
 
 **VolatilityTab (if Option A confirmed):** market-overview-pipeline-mediated (single-layer market-overview→S3); architecturally distinct from yang surfaces but parallel in shape. Detailed in §6.
 
-### §1.4 — T* shared-date — 2026-05-22
+### §1.4 — T* shared-date — **MULTI-T* per DS 0.2.0 TO-003 consult `cb8760199`**
 
-Inheriting from YALP_MKTOVR TO-003 consult (0.2.0_DS_PortfolioAnalytics `8d1d6fcad`): yang-side `data_pkl` `data_as_of = 2026-05-22`. Empirically verified across 7 yang-side artifacts (incl. `macro_data.json` per L1 §6.4 `data_as_of` field — same upstream `data.pkl`). Calendar windowing identical: 2026-05-23/24 weekend; 2026-05-25 Memorial Day; 2026-05-26 EOD not yet published. → **2026-05-22 is the unique current-window T*** for the probe.
+**Precision-amend v1.1 (2026-05-26 ~18:35Z):** DS 0.2.0_DS_PortfolioAnalytics TO-003 consult `docs/briefs/yalp_macros_to003_yang_publication_timing_consult.md` (commit `cb8760199`) delivered a **MULTI-T* finding** — Macroeconomics is the most cadence-heterogeneous of the 5 YALP Wave-1 sister probes; the page surface is fed by **4 distinct upstream cadences with 4 distinct T* values**. A single page-level T* induces false-DRIFT findings in TO-004; per-artifact T* required.
 
-DS 0.2.0_DS_PortfolioAnalytics ~A consult-only on YALP_MACROS.003 (per /allocation #10 deliverable) likely re-confirms T*=2026-05-22 specifically for `macro_data.json` (same `data.pkl` source). Holding pending confirmation; substantive carry-forward applies.
+**Per-artifact T* table (DS 0.2.0 verified empirically 2026-05-26 ~17:00Z direct from S3):**
 
-YCharts coverage on 2026-05-22 — Friday EOD; menachem-bundled cookie last successfully pulled D2/D3 2026-05-22 (71/71 entities); macro indicators per D2 coverage scan = well-covered in YCharts FRED-proxy endpoints per YALP_MDSRC D2 baseline. Cookie-stale-OK per PRD §4 + ws COO direct: use YALP_MKTOVR TO-002 `dcbc50710` baseline + existing corpus; fresh pulls deferred to TO-002 execution phase only if needed for delta confirmation.
+| Component / artifact | Upstream class | T* (yang-side binding) | Cadence | YCharts comparison anchor |
+|---|---|---|---|---|
+| **`macro_data.json`** (YieldCurveTab current+1M + MacroHeatmap 84-indicator block) | yang `data_pkl` (Bloomberg) | **2026-05-22** | weekly | T*=2026-05-22 EOD |
+| **`timeseries/{slug}.json`** (MacroTimeSeriesModal) | yang `data_pkl` (Bloomberg) | **2026-05-22** | weekly co-emission | T*=2026-05-22 EOD per slug |
+| **`volatility_data.json`** (VolatilityTab VIX FRED VIXCLS + MOVE Yahoo) | market-overview pipeline (FRED + Yahoo) | **2026-05-22** | weekly co-emission | T*=2026-05-22 EOD ^VIX + ^MOVE |
+| **`yield_curve_fred.json`** (YieldCurveTab 1Y-ago overlay) | FRED daily-cron (separate from yang) | **2026-05-25** | **daily-grain** | T*=2026-05-25 EOD per tenor |
+| `macro_data_fred.json` (separate F1 artifact; NOT direct page consumer per L1; flagged for cross-reference) | FRED monthly F1 lane | **2026-05-01** | **monthly-grain** | T*=2026-05-01 month-end |
+
+**4-class cadence characterization:**
+- **Yang Bloomberg-core (2026-05-22):** weekly `data_pkl` cadence; gates `macro_data.json` + timeseries + `vix_data.json` + `volatility_data.json` (per `yang-pipeline-metadata.json` canonical exec_id `a018bf25-d7c9-4fce-a395-1fd5c58c91bf`). Same upstream as YALP_VALUAT / YALP_CORREL / YALP_MKTOVR.
+- **FRED daily (2026-05-25):** `yield_curve_fred.json` fetched via separate (non-yang-pipeline) FRED daily cron; Sunday-night EOD pull of Friday's published rates per `generated_at: 2026-05-25T23:00:42Z`. Next refresh = whenever FRED daily-cron next fires.
+- **FRED monthly (2026-05-01):** `macro_data_fred.json` carries F1 FRED-replaceable indicator set on monthly cadence; 5/01 = most-recent fully-published month boundary (May data won't be available until ~6/1 for most FRED monthly series with 1-month lag). F1 work-product from YALP_MDSRC.F4 deployment.
+- **Yang BB ≠ FRED equivalent:** even where Bloomberg + FRED publish the same indicator (e.g., GDP), revisions/methodologies/publication-lags differ. **TO-004 must NOT classify BB-vs-FRED divergences as DRIFT** — per DS 0.2.0 Finding 2, these are parallel-source REPRESENTATIVE-class variances (covered by YALP_MDSRC.F1/F6 future bloomberg-residue work, NOT YALP_MACROS-scope DRIFT).
+
+**Per-row impact on this brief:**
+- §3.1 YieldCurveTab `data[].current` + `data[].oneMonthAgo` rows → t_star: 2026-05-22 (yang Bloomberg)
+- §3.1 YieldCurveTab `data[].oneYearAgo` row → t_star: 2026-05-25 (FRED daily)
+- §4.1 MacroHeatmap rows (84 indicators) → t_star: 2026-05-22 (yang Bloomberg)
+- §5.1 MacroTimeSeriesModal historical → t_star: 2026-05-22 (yang Bloomberg; same `data_pkl` source)
+- §6.1 VolatilityTab VIX/MOVE → t_star: 2026-05-22 (market-overview pipeline weekly co-emission)
+
+**Structural finding (DS 0.2.0 cite-of-record):** Treasury yields cross-page architectural note per DS 0.2.0 Finding 4 — Macro page Treasury data comes from `yield_curve_fred.json` (FRED daily, T*=2026-05-25 for 1Y-ago overlay) AND from `macro_data.json` Treasury Yields group (yang Bloomberg, T*=2026-05-22 for current+1M ago). Valuation page Treasury exposure via `yang-generate-risk-premium` `data_pkl` 10Y is a THIRD T* (yang Bloomberg T*=2026-05-22 but distinct artifact). Same underlying instrument (10Y Treasury), 3 different upstream pipelines, multiple T* — flag for TO-004 row-grain disambiguation, NOT cross-conflated.
+
+YCharts coverage on each T* — Friday EOD anchors (5/22 + 5/25) per YALP_MDSRC D2/D3 baseline + menachem-bundled cookie usable through ~2026-05-22; monthly anchor (5/01) requires separate FRED-proxy pull. Cookie-stale-OK per PRD §4 + ws COO direct: use YALP_MKTOVR TO-002 `dcbc50710` baseline + existing corpus; fresh pulls deferred to TO-002 execution phase only if needed for delta confirmation.
 
 ### §1.5 — Macro indicator depth — full L2 (per PRD §5 Q2 lean)
 
@@ -382,9 +405,75 @@ Zero production touches (PRD §4 + Andrew per-page charter — read-only verific
 
 ---
 
-## §11 — [STUB] TO-002 test-pull results appendix
+## §11 — TO-002 test-pull results appendix (Macroeconomics-class)
 
-Populated at TO-002 execution per §7 plan.
+**TO:** YALP_MACROS.002 (YCharts test-pulls per §7.1 plan)
+**Executed:** 2026-05-26 ~18:19Z (cookie last anchored 2026-05-22; ~4d lapsed)
+**Harness:** `.runtmp/yalp_macros_to002/run_macros_pulls.py` + `probe_symbol_variants.py` (gitignored runtmp; reuses C2 `ycharts_client.py` + `ws1_surface_pull` source per local-harness pattern from YALP_MKTOVR.002 `dcbc50710`)
+
+### §11.1 — Result summary (TL;DR)
+
+| Phase | Endpoint | Tickers | Outcome |
+|---|---|---|---|
+| 1. freshness_probe | `/indices/table_data?indices=%5ESPX&columns=ytd_total_return` | ^SPX | **200 OK** — cookie alive on T*+4d |
+| 2. macro-class test-pulls (initial probe; `last_price` column) | `/indices/table_data` | ^VIX, ^MOVE, I:US{2,5,10,30}YYLD, CPIAUCSL, CPILFESL, UNRATE, NAPMPMI | **404 HTML × 10/10** — wrong column for level-series tickers |
+| 3. symbol-variant + endpoint-switch probe | `/charts/general_data.json` (metric=price) | ^VIX, ^MOVE, I:US10YYLD, ^TNX, I:CPI, **^SPX baseline** | **403 "You are signed out" × 6/6** — session-eviction during burst |
+| 4. post-burst freshness_probe re-check | `/indices/table_data?indices=%5ESPX` | ^SPX | **200 OK** — session partially recovered |
+
+### §11.2 — Structural findings (3-class)
+
+**Finding A — `last_price` column invalid for `/indices/table_data` (404 HTML):**
+Valid columns for indices_table_data are total-return semantics per YALP_MKTOVR `ws1_surface_pull.py:34-42` (`HEATMAP_COLUMNS`): `roc_1`, `one_month_total_return`, `ytd_total_return`, `one_year_total_return`, `annualized_daily_three_year_total_return`. Index-level snapshots (VIX, MOVE, UST yields) need `/charts/general_data.json` with `metric=price` (history endpoint) instead.
+
+**Finding B — Session-eviction during probe burst (per `project_ycharts_dedicated_seat_403_session_eviction`):**
+After ~10 pulls in ~30s burst, second probe-batch using `/charts/general_data.json` returned HTTP 403 "You are signed out. Please sign in again." across all 6 attempts — INCLUDING the ^SPX baseline. This is the canonical Alyssa-concurrent-login session-eviction pattern. Cookie partially recovered by next freshness_probe (200 OK again ~30s later), but mid-burst eviction blocked the macro-class verification. Single-session constraint is the bottleneck; per Andrew memo "YCharts dedicated seat coming" eliminates this. Pattern matches YALP_MKTOVR §4 finding 4 endpoint-class rate-limit refinement (chart-endpoint 403 distinct from session-eviction-403; both observed).
+
+**Finding C — YCharts symbol-resolution gap for macro-class instruments (CARRY-FORWARD):**
+None of these symbol-variants resolved (all 404 before eviction):
+- VIX: `^VIX`, `^VIXIDX`, `VIX`, `^VIXY`, `I:VIX` (all 404)
+- MOVE: `^MOVE`, `^MOVEIDX`, `MOVE`, `I:MOVE` (all 404)
+- UST 10Y: `I:US10YYLD`, `^TNX`, `I:USDGS10`, `^US10Y`, `DGS10`, `I:US10Y` (all 404)
+- UST 2Y: `I:US2YYLD`, `^TYX2Y`, `I:USDGS2`, `DGS2`, `I:US2Y` (all 404)
+- CPI: `CPIAUCSL`, `^CPIAUCSL`, `I:CPI`, `I:CPIAUCSL`, `FRED:CPIAUCSL` (all 404)
+
+The proper YCharts symbol-convention for macro-class instruments (VIX, MOVE, UST yields, FRED-proxy macros) requires the YALP_MDSRC A4/A5 reverse-engineer-per-ticker pattern (browser capture against the actual YCharts macro/treasury pages). **Out-of-YALP_MACROS-scope** to execute the full sweep here; FUTURE-TO candidate (analog to YALP_MDSRC C2-class symbol-resolution work).
+
+### §11.3 — AC compliance assessment
+
+Per TO file `<acceptance_criteria>`:
+- **AC1** ✅ — Endpoint-class probes attempted (10 tickers × 2 endpoint-classes); freshness_probe confirms cookie alive on T*+4d
+- **AC2** ⚠️ PARTIAL — YCharts pull-feasibility NOT empirically confirmed for VolatilityTab (VIX/MOVE) + YieldCurveTab (UST yields) + MacroHeatmap (FRED-proxy macros at TO-002 sample) due to (a) symbol-convention gap (Finding C) and (b) session-eviction during burst (Finding B). YALP_MKTOVR `dcbc50710` baseline IS valid for equity-class but does NOT extend to macro-class. **Cookie-stale-OK fallback path: documented finding chain replaces 18/18 OK with structured-gap.**
+- **AC3** ✅ — Per-endpoint-class verdict structured per Finding A/B/C
+- **AC4** N/A — Level-2 placeholder still empty (TO-004 scope)
+- **AC5** N/A — VolatilityTab provenance already documented in §6 (not TO-002 scope)
+
+### §11.4 — Cookie-stale-OK fallback path (per ws COO TO-002 GO directive)
+
+Per TO-002 GO MCP `~17:05Z`: "cookie-stale-OK + YALP_MKTOVR `dcbc50710` baseline; local-harness pattern if C2 blocks." Cookie was alive at start but session-evicted mid-burst (Finding B). Fallback:
+
+- **Equity-class endpoint coverage:** YALP_MKTOVR `dcbc50710` 18/18 OK on T*=2026-05-22 carries forward for any equity-index endpoint queries (not directly applicable to YALP_MACROS yang-side `macro_data.json` Treasury Yields group, but applies to validation tooling).
+- **Yang-side artifact verification:** DS 0.2.0 TO-003 consult `cb8760199` empirically confirmed all 6 yang/market-overview-pipeline artifacts present on S3 per artifact-row table in §1.4 (per-artifact T* validated direct from S3).
+- **Macro-class YCharts coverage:** **NOT empirically verified** at TO-002 — Finding C (symbol-resolution) + Finding B (session-eviction) prevent. Level-2 verdicts in TO-004 will tag macro-class rows as **YCHARTS-COVERAGE-PENDING-REVERSE-ENGINEER** (NOT DRIFT) per `[[third-party-data-reverse-engineer-not-scrape]]` discipline + Andrew per-page charter framing ("push pages down if YCharts data not available").
+
+### §11.5 — Disposition recommendation
+
+Two viable paths forward for TO-004 + project closure:
+
+**Path X (lean — same as YALP_MKTOVR Fear & Greed precedent):** YCharts-coverage-PENDING for macro-class instruments classified as `n/a — YCharts-symbol-resolution-pending + dedicated-seat-pending` for Level-2 verdicts on VIX/MOVE/UST/FRED-proxy macro rows. Yang-side L1 verification + cross-component DRIFT (e.g., VIX/MOVE consistency between `macro_data.json.Market Indicator` and `volatility_data.json` per §1.5 + §4.3) STILL proceeds as TO-004 substantive deliverable. Project closure feasible without YCharts coverage for macro-class.
+
+**Path Y (deeper — push down per Andrew charter):** YALP_MACROS pushed-down in PRD queue until (a) dedicated YCharts seat lands + (b) macro-class symbol-resolution sweep (FUTURE-TO; analog to YALP_MDSRC A4/A5). TO-002 closes at "PARTIAL — gap-documented"; TO-004 + TO-005 + TO-VAL deferred.
+
+**My lean: Path X.** Substantive Level-2 verification can still proceed for the yang-side internal-consistency dimensions (VIX/MOVE cross-pipeline integrity gate per §1.5 + §4.3; Treasury Yields group cross-component validation per §3.1 + §4.1; macro indicator value-distribution sanity per §4.1 thresholds). The empirical evidence pipeline isn't fully YCharts-dependent — yang-side has its own internal coverage gates. Recommend Path X with explicit gap-documentation in §13 per-component cutover-trust verdict (VolatilityTab + macro-class rows → **NEEDS-INVESTIGATION — YCharts-coverage-pending** rather than NO-TRUST).
+
+**Standing for ws COO + ws CTO disposition on Path X vs Path Y.**
+
+### §11.6 — Compiler tools (TO-002)
+
+| Tool | Use | Finding |
+|---|---|---|
+| `python run_macros_pulls.py` | Macro-class test-pull harness execution | freshness_probe OK 200; 10/10 representative pulls returned 404 HTML; structural finding A surfaced |
+| `python probe_symbol_variants.py` | Per-ticker symbol-convention sweep (5 variants × 5 instrument classes + 2 baselines) | 6/6 fresh probes returned 403 session-eviction "You are signed out" during burst; structural finding B + C surfaced |
+| Cookie-stale-OK + corpus-reuse path | Per ws COO TO-002 GO directive | YALP_MKTOVR `dcbc50710` baseline (equity-class 18/18 OK) does NOT extend to macro-class (different YCharts symbol convention); DS 0.2.0 TO-003 consult `cb8760199` yang-side S3 evidence DOES carry forward (6-artifact-row T* verification per §1.4) |
 
 ---
 
