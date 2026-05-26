@@ -79,6 +79,24 @@ else
 fi
 mkdir -p "$WATCH_DIR/read"
 
+# Tracker write for sub-case-aware watcher-status (per MSTR TARGET B-EXT
+# 2026-05-26T~04:45Z; option (a) session-id-keyed tracker file pattern).
+# inbox-watch.sh writes its PID + launch-type (LAUNCH | RESPAWN) + ts + serial
+# to a session-scoped tracker file; watcher-status.sh reads it to disambiguate
+# ORPHAN sub-cases into DETACHED-OK / AUTO-RESPAWN-INTERRUPT-LOST. Tracker file
+# is per-session ephemeral; gitignored at org/mcp/tracked_watchers/*.list.
+if [ -n "${CLAUDE_CODE_SESSION_ID:-}" ]; then
+    TRACKER_DIR="$SCRIPT_DIR/tracked_watchers"
+    mkdir -p "$TRACKER_DIR" 2>/dev/null || true
+    TRACKER_FILE="$TRACKER_DIR/${CLAUDE_CODE_SESSION_ID}.list"
+    if [ "${INBOX_WATCH_RESPAWN:-}" = "1" ]; then
+        LAUNCH_TYPE="RESPAWN"
+    else
+        LAUNCH_TYPE="LAUNCH"
+    fi
+    printf '%s|%s|%s|%s\n' "$$" "$LAUNCH_TYPE" "$(date -u +%FT%TZ)" "$SERIAL" >> "$TRACKER_FILE" 2>/dev/null || true
+fi
+
 # Poll until message(s) arrive in the watched dir, then print and exit.
 # Exit-on-message is load-bearing: Claude Code background task completion fires
 # the interrupt that wakes the agent.
@@ -130,8 +148,10 @@ while true; do
         # Respawn next watcher (untracked). Sleep 1s first so this instance
         # exits before the new copy starts -- otherwise the single-watcher guard
         # in the new copy sees this PID as a live duplicate and kills itself.
+        # INBOX_WATCH_RESPAWN=1 marks the respawn for watcher-status sub-case
+        # disambiguation per LD-TARGET-B-EXT (MSTR 2026-05-26T~04:45Z).
         SAFE_SERIAL=$(printf '%s' "$SERIAL" | tr '/~' '__')
-        ( sleep 1; exec bash "$0" "$SERIAL" >> "/tmp/inbox-watch-${SAFE_SERIAL}.log" 2>&1 ) &
+        ( sleep 1; INBOX_WATCH_RESPAWN=1 exec bash "$0" "$SERIAL" >> "/tmp/inbox-watch-${SAFE_SERIAL}.log" 2>&1 ) &
         disown $! 2>/dev/null || true
         exit 0
     fi

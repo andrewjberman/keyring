@@ -96,22 +96,60 @@ done <<EOF
 $WATCHERS
 EOF
 
+# --- ORPHAN sub-case disambiguation (per MSTR TARGET B-EXT 2026-05-26T~04:45Z) -
+# Read session-scoped tracker file to distinguish DETACHED-OK (this-session LAUNCH
+# whose launcher detached) from AUTO-RESPAWN-INTERRUPT-LOST (this-session RESPAWN
+# from inbox-watch.sh:130-137 post-delivery) from PRIOR-SESSION-ORPHAN (not in
+# this session's tracker at all). Only fires when COUNT=1 + ORPHAN; multi-PID
+# orphans fall through to MULTIPLE.
+ORPHAN_SUBCASE=""
+if [ "$SAW_ORPHAN" -eq 1 ] && [ "$COUNT" -eq 1 ] && [ -n "${CLAUDE_CODE_SESSION_ID:-}" ]; then
+  SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+  TRACKER_FILE="$SCRIPT_DIR/tracked_watchers/${CLAUDE_CODE_SESSION_ID}.list"
+  if [ -f "$TRACKER_FILE" ]; then
+    ORPHAN_PID="$(printf '%s\n' "$WATCHERS" | head -1 | cut -d'|' -f1)"
+    # Look up the latest tracker entry for this PID
+    TRACKER_ENTRY="$(grep "^${ORPHAN_PID}|" "$TRACKER_FILE" 2>/dev/null | tail -1)"
+    if [ -n "$TRACKER_ENTRY" ]; then
+      LAUNCH_TYPE="$(echo "$TRACKER_ENTRY" | cut -d'|' -f2)"
+      case "$LAUNCH_TYPE" in
+        LAUNCH)  ORPHAN_SUBCASE="DETACHED-OK" ;;
+        RESPAWN) ORPHAN_SUBCASE="AUTO-RESPAWN-INTERRUPT-LOST" ;;
+      esac
+    else
+      ORPHAN_SUBCASE="PRIOR-SESSION-ORPHAN"
+    fi
+  fi
+fi
+
 # --- verdict (worst-wins) ----------------------------------------------------
 FLAGS=""
 [ "$COUNT" -gt 1 ]        && FLAGS="$FLAGS MULTIPLE"
 [ "$SAW_WRONGCHAN" -eq 1 ] && FLAGS="$FLAGS WRONG-CHANNEL"
 [ "$SAW_ORPHAN" -eq 1 ]    && FLAGS="$FLAGS ORPHAN"
 [ "$SAW_RELATIVE" -eq 1 ]  && FLAGS="$FLAGS RELATIVE-PATH"
+[ -n "$ORPHAN_SUBCASE" ]   && FLAGS="$FLAGS $ORPHAN_SUBCASE"
 echo "FLAGS:${FLAGS:- (none)}"
 
 if   [ "$SAW_WRONGCHAN" -eq 1 ]; then V="WRONG-CHANNEL"
 elif [ "$COUNT" -gt 1 ];         then V="MULTIPLE"
+elif [ "$SAW_ORPHAN" -eq 1 ] && [ -n "$ORPHAN_SUBCASE" ]; then V="$ORPHAN_SUBCASE"
 elif [ "$SAW_ORPHAN" -eq 1 ];    then V="ORPHAN"
 elif [ "$SAW_RELATIVE" -eq 1 ];  then V="RELATIVE-PATH"
 else V="PROCESS-OK"; fi
 echo "VERDICT: $V"
 
-if [ "$V" = "PROCESS-OK" ]; then
+if [ "$V" = "PROCESS-OK" ] || [ "$V" = "DETACHED-OK" ]; then
   echo "NOTE: process-tree health only -- confirm via your session task list that"
   echo "      THIS session launched it. A prior session's watcher also reads OK here."
+fi
+if [ "$V" = "AUTO-RESPAWN-INTERRUPT-LOST" ]; then
+  echo "NOTE: this PID is the legitimate auto-respawn copy from inbox-watch.sh:130-137"
+  echo "      (deaf to Claude Code interrupts). Kill + relaunch tracked to restore"
+  echo "      interrupt path; deliveries to filesystem still work via .unread-deliveries."
+fi
+if [ "$V" = "PRIOR-SESSION-ORPHAN" ]; then
+  echo "NOTE: this PID does not appear in the current session's tracker file"
+  echo "      ($SCRIPT_DIR/tracked_watchers/\${CLAUDE_CODE_SESSION_ID}.list);"
+  echo "      kill + relaunch tracked."
 fi
