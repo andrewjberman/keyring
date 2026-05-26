@@ -125,13 +125,18 @@ function ajb {
     # + 1.[1-4].0_DS_CompLearns (matches Get-AgentLoopDirective CL pattern + the
     # owned-paths COMP_LEARNS lane in .owned-paths.yaml).
     $base = $Serial -replace '~[A-Za-z0-9]+$', ''
-    switch -Regex ($base) {
-        '^(1\.1\.0_SA_CTO|2\.1\.0_SA_COO|3\.1\.0_SA_CVO|2\.1\.0_SC_CompLearns|1\.[1-4]\.0_DS_CompLearns)$' {
-            $ws = 'C:\Users\AndrewBerman\Desktop\feature_clb'
-            Write-Host "[ajb] CL-serial routing -> feature_clb cwd (LD-0088 A.1)" -ForegroundColor Cyan
-        }
-        default {
-            $ws = 'C:\Users\AndrewBerman\Desktop\ajb_workspace'
+    if ($env:AJB_FORCE_WS -eq '1') {
+        $ws = 'C:\Users\AndrewBerman\Desktop\ajb_workspace'
+        Write-Host "[ajb] AJB_FORCE_WS=1 -> ajb_workspace cwd (LD-0088 A.1 bypass; Andrew-direct framework-3 fallback)" -ForegroundColor Yellow
+    } else {
+        switch -Regex ($base) {
+            '^(1\.1\.0_SA_CTO|2\.1\.0_SA_COO|3\.1\.0_SA_CVO|2\.1\.0_SC_CompLearns|1\.[1-4]\.0_DS_CompLearns)$' {
+                $ws = 'C:\Users\AndrewBerman\Desktop\feature_clb'
+                Write-Host "[ajb] CL-serial routing -> feature_clb cwd (LD-0088 A.1)" -ForegroundColor Cyan
+            }
+            default {
+                $ws = 'C:\Users\AndrewBerman\Desktop\ajb_workspace'
+            }
         }
     }
     if (-not (Test-Path $ws)) {
