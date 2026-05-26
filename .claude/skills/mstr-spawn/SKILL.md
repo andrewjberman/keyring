@@ -51,7 +51,7 @@ If `LIVE` AND last seen < 120s → **a session already exists**. Default action:
 
 If `STALE` / `NOT_REGISTERED` / not found → safe to proceed.
 
-### 1b — Marker scan
+### 1b — Marker scan (AUTHORITATIVE live-state check — LD-0105)
 
 ```powershell
 $selfPid = $PID
@@ -62,9 +62,15 @@ Get-CimInstance Win32_Process -Filter "Name='powershell.exe'" |
   }
 ```
 
-Catches the gap that 1a misses: a session whose process is alive but broker is `STALE` / unregistered (post-window-exit-pre-deregister, or a registration failure). If a marked window exists for this serial → refuse with the same surface (treat as duplicate).
+**This is the AUTHORITATIVE pre-spawn live-state check** per LD-0105 Andrew sovereign 2026-05-26T~22:00Z. Step 1a (broker `get_agent_status`) is supplementary; the broker `opal-agent-comms` has a **suffix-strip semantic** that returns base-serial state for tilde-lane queries — meaning `get_agent_status("0.1.0_DS_MarketIntelligence~D")` returns the base serial registration, NOT the tilde-lane registration. The marker scan above uses the FULL tilde-suffixed serial in its match pattern, so it disambiguates accurately.
 
-This double-check is the cheap defense against a class of cap-evasion bug where the broker says STALE but the PowerShell window is still alive holding a concurrency-cap slot.
+Empirical anchor for the elevation: 2026-05-26T~21:38Z /allocation #12 BATCHED-2 spawn of DS 0.1.0~C + ~D — both ws COO `get_live_agents()` read AND MSTR Step 1a `get_agent_status` returned NOT REGISTERED for the tilde-lanes, but the lanes WERE alive from prior /allocation #10 batch (16:30Z) that Andrew countermanded "let it go." Visual collision surfaced 2026-05-26T~21:50Z.
+
+**Mandatory refusal:** If marker scan returns count > 0 (post-`$PID` exclusion + tilde-suffix-sensitive match) → **refuse the spawn**. Surface to spawn-requester: "{full-tilde-suffixed-serial} already LIVE at PID {pid}; spawn refused per LD-0105 authoritative-marker-scan gate. Either redirect the proposed work to the existing LIVE agent OR pass `--force "intentional-duplicate <reason>"` if a genuine duplicate is needed (audited bypass per existing discipline)."
+
+The audited `--force "intentional-duplicate <reason>"` bypass remains for rare cases (e.g., reverse-engineering a prior session crashed mid-init that left a zombie marker). Scanner-self false-positive protection per LD-0100 retained via `$PID` exclusion.
+
+**Tilde-suffix-sensitivity discipline:** the `*# OPAL_SPAWN_MARKER_v1: {serial}*` pattern requires the FULL serial including any tilde-suffix verbatim. Passing the BASE serial when a tilde-lane is the proposed target will miss the disambiguation — always interpolate the full target serial into the pattern.
 
 **Scanner-self false-positive (empirical 2026-05-26).** The `$_.CommandLine -like "*# OPAL_SPAWN_MARKER_v1: {serial}*"` pattern matches the scanner's OWN PowerShell process because the search-pattern literal is embedded in the scanner's CommandLine. Without the `$_.ProcessId -ne $selfPid` exclusion above, every fresh-spawn pre-check returns count=1 (the scanner itself) → false-positive refuse. The `$PID` exclusion eliminates the self-hit. **Diagnostic fallback if a count still surfaces:** inspect each hit's `ProcessId` + `CreationDate` + `CommandLine` — a legitimate spawn-marker window is a long-lived `powershell.exe -NoProfile -NoExit -Command "$Host.UI.RawUI.WindowTitle = '{serial}'; ..."` whose command line ENDS with the marker; a one-shot scanner is short-lived + has the marker EMBEDDED IN ITS Where-Object filter argument. Sister-pattern to memory `feedback_b_lane_orders_only_from_b_agents` family of "structural-self vs other distinction" empirics.
 
@@ -158,6 +164,26 @@ mcp__opal-agent-comms__get_live_agents()
 ```
 
 Expected: `{serial}` appears in `get_live_agents` output, broker `liveness=LIVE`, last_seen < 60s. If `--say` was sent, the message should be in the agent's read or unread inbox depending on whether the watcher fired.
+
+(Caveat: broker `get_live_agents()` is suffix-strip; tilde-lane LIVE state is not reliably surfaced. The marker scan in Step 1b is the authoritative tilde-disambiguating check. Step 5 broker verify is for base-serial confirmation + freshness ack only.)
+
+## Step 5b — Update `live_agents_by_marker.json` ground-truth artifact (LD-0105 Fix 2)
+
+Post-spawn confirm-LIVE, append entry to `org/mcp/live_agents_by_marker.json`:
+
+```json
+{
+  "serial": "{full-tilde-suffixed-serial}",
+  "pid": {register-returned-PID},
+  "spawn_timestamp": "{ISO-8601-UTC}",
+  "spawn_authority": "{spawn-request-source — e.g., 'ws COO /allocation #N' or 'Andrew direct'}",
+  "marker": "# OPAL_SPAWN_MARKER_v1: {full-tilde-suffixed-serial}"
+}
+```
+
+Bump `last_updated` to current ISO timestamp. This artifact is the marker-based LIVE-set source-of-truth consumed by ws COO `/allocation` (per LD-0105 Fix 3) + read-only by other Tier-1 + MSTR own scans. Bypasses the broker suffix-strip semantic that caused the empirical anchor failure.
+
+Reconciliation (out-of-band): `/govern` Step 1 sub-check + `/mstr-review` Step 2 sweep should reconcile artifact against current marker scan to catch crashed/exited PIDs that didn't trigger Step 5b removal.
 
 ## Step 6 — Report
 
