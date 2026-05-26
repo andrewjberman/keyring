@@ -47,3 +47,6 @@
 # ===========================================================================
 # AUDIT LOG INITIALIZED 2026-05-26T~03:30Z by 1.0.0_SA_CTO per LD-0080 (MSTR-authored content; ws CTO scribed under WS_CHARTER_AUDIT lane post-12b97229e lane bootstrap)
 # ===========================================================================
+2026-05-26T05:27:25Z  HARD-EXIT  class=5 intended_action="A.3 MCP broker config extension -- opal-agent-comms reachable from feature_clb cwd (.mcp.json or equivalent) per LD-0089 AC1 sequencing"
+                                  cycle=ws-charter-0009 override=none (LD-0089 ratification was prior cycle; per Meta-catch §2 explicit Andrew-direct via /ws-charter not provided this cycle for class-5 action)
+                                  commit_pre_exit=25f07c6cc
