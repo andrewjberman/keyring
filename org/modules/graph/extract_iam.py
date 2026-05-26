@@ -314,6 +314,45 @@ def _compute_ec2_shipped_line_ranges(content: str) -> set[int]:
         string_ranges.setdefault(var_name, []).append((start_line, end_line))
         pos = close_pos + len(delim)
 
+    # Step 1b (ADHC_COMPIL_V5 post-TO-VAL refinement, 2026-05-26): also catch
+    # the `"\n".join([...])` multi-line string-builder pattern, which composes a
+    # shell script line-by-line for SSM-ship. Empirical anchor: mdpf-daily-
+    # trigger Lambda surfaced as comp-iam-gap byproduct in COMPIL_V5.001 AC4
+    # cross-product detection (bootstrap = "\n".join([..., f"aws s3 cp ...", ...])
+    # → ssm.send_command(Parameters={"commands": [bootstrap]})). The aws-cli line
+    # runs on EC2 under mdpf-daily-runner-ec2-role (which DOES grant s3:Get/Put),
+    # not on the Lambda role — the Lambda-role IAM gap was a false positive.
+    # Detection: find `var = "..."` joiner across a multi-line `.join([...])`
+    # argument; capture lines between the `[` and its matching `]`.
+    pos = 0
+    while pos < len(content):
+        m = re.search(
+            r'(\w+)\s*=\s*["\'][^"\']*["\']\.join\s*\(\s*\[',
+            content[pos:],
+        )
+        if not m:
+            break
+        var_name = m.group(1)
+        open_bracket_pos = pos + m.end() - 1  # position of '['
+        # Walk forward to matching ']' tracking bracket nesting
+        depth = 1
+        scan = open_bracket_pos + 1
+        n = len(content)
+        while scan < n and depth > 0:
+            ch = content[scan]
+            if ch == '[':
+                depth += 1
+            elif ch == ']':
+                depth -= 1
+            scan += 1
+        if depth != 0:
+            break  # unbalanced; skip
+        close_bracket_pos = scan - 1
+        start_line = content[:pos + m.start()].count('\n') + 1
+        end_line = content[:close_bracket_pos].count('\n') + 1
+        string_ranges.setdefault(var_name, []).append((start_line, end_line))
+        pos = close_bracket_pos + 1
+
     if not string_ranges:
         return shipped_lines
 
