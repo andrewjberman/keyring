@@ -248,6 +248,12 @@ lanes:
       - 2.0.0_SA_COO
     description: "Tier-0 agent home folder (org/tier0_exec/0.0.0_AB_MSTR/) -- MSTR's broker-resolvable agent directory: logs, task_orders. MSTR owns its own logs; CTO/COO maintain the control-plane plumbing. Distinct from TIER0_MSTR (org/tier0/ operating artifacts). Added 2026-05-22 by CTO per MSTR charter LD-0001 (broker activation)."
 
+  WS_CHARTER_AUDIT:
+    permitted_agents:
+      - 0.0.0_AB_MSTR
+      - 1.0.0_SA_CTO
+    description: "ws-charter HARD-BLOCK audit log (org/ws-charter-hard-block-audit.log) -- MSTR-owned header content (TIER0_LAW-equivalent per /ws-charter SKILL.md Step 4a Meta-catches §3); ws CTO appends per-fire HARD-EXIT entries. Init at LD-0080 (10f7ed154); lane added 2026-05-26 by ws CTO per MSTR INIT-REQUEST + LD-0080 authorization chain."
+
   CVO_WORKSPACE:
     permitted_agents:
       - 3.0.0_SA_CVO
@@ -452,6 +458,10 @@ paths:
   "org/tier0_exec/**":
     lane: TIER0_EXEC
     note: "MSTR agent home folder -- the broker-resolvable directory (org/mcp/server.py TIER_DIRS). Holds ONLY 0.0.0_AB_MSTR/; deliberately separate from org/tier0/ so the law + control-plane subdirs are never scanned as agent folders."
+
+  "org/ws-charter-hard-block-audit.log":
+    lane: WS_CHARTER_AUDIT
+    note: "/ws-charter HARD-BLOCK audit log -- MSTR-owned header content (TIER0_LAW-equivalent enumeration per /ws-charter SKILL.md Step 4a Meta-catches §3); ws CTO appends HARD-EXIT entries per fire. Init landed at LD-0080 (10f7ed154); lane added per LD-0080 authorization chain + MSTR INIT-REQUEST 2026-05-26."
 
   # -----------------------------------------------------------------------
   # Task-order authoring overrides (more-specific than parent home-folder rules)
