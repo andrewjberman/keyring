@@ -154,7 +154,20 @@ if ($env:FORCE_SPAWN) {
     Add-Content -Path $log -Value "$ts  FORCE-SPAWN $Serial  by $by  reason=$($env:FORCE_SPAWN)"
 }
 
-$extraStr = if ($Extra) { ' ' + ($Extra -join ' ') } else { '' }
+# Wrap extras as a single-quoted PowerShell literal so semicolons / colons /
+# parentheses / ampersands / other PS metacharacters in --say text don't get
+# re-parsed by the spawned window's PowerShell as additional statements.
+# Empirical bug 2026-05-26 (LD-0078): unquoted extras containing ';' broke the
+# inner ajb invocation -- claude.exe never launched, agent never registered,
+# but the PowerShell window stayed alive holding a concurrency-cap slot.
+# Single-quote escape: literal "'" becomes "''" inside a single-quoted string.
+if ($Extra) {
+    $extraJoined = ($Extra -join ' ')
+    $extraQuoted = $extraJoined.Replace("'", "''")
+    $extraStr = " '$extraQuoted'"
+} else {
+    $extraStr = ''
+}
 
 # New window: -NoProfile (deterministic -- does not depend on $PROFILE setup),
 # -NoExit (window persists so the session stays visible). Dot-source ajb.ps1
