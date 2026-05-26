@@ -387,3 +387,131 @@ Compiler mandate per `<compiler_tools_mandate>` Phase 1:
 Compiler-tools log: appended per session-log standard.
 
 **Project ships zero production touches (AC8 of project-level acceptance).** Read-only mapping work; this brief is the deliverable.
+
+---
+
+## §13 — TO-002 test-pull results (T*=2026-05-22)
+
+**Owner:** 0.1.0_DS_MarketIntelligence
+**Executed:** 2026-05-26 15:01:50Z → 15:01:59Z (~9s wall, 18 logical pulls)
+**Pull harness:** `.runtmp/yalp_mktovr_to002/run_local_pulls.py` (local; reuses `infra/aws/lambda/ycharts-market-data-pull/` source — same `ycharts_client.py` + `ws1_surface_pull.py` + `ticker_map.py` as the deployed Lambda; process boundary differs, contract identical)
+**Raw results:** `.runtmp/yalp_mktovr_to002/local_pull_results.json` (gitignored runtmp; not committed; 6.7KB)
+
+### §13.1 — Pre-check: C2 Lambda invocability (CVO unknown-unknown #1)
+
+```
+$ aws lambda get-function --function-name ycharts-market-data-pull
+  FunctionName:      ycharts-market-data-pull
+  State:             Active
+  LastUpdateStatus:  Successful
+  Runtime:           python3.11
+  Memory:            512 MB
+  Timeout:           300s
+  LastModified:      2026-05-22T17:30:22.000+0000   (matches D2/D3 final ship post-revert)
+  Version:           $LATEST
+```
+
+**Pre-check: PASS.** Same Lambda state that ran 71/71 entities clean during D2/D3 on 2026-05-22 anchor. No IAM enable / AE 0.7 escalation needed for invocation reachability.
+
+### §13.2 — Validate-mode sanity check
+
+`aws lambda invoke --payload '{"mode":"validate"}'` → statusCode 200, ok=True, summary "7/7 modules structurally valid". WS1_SURFACES 7-surface registry callable + ticker_map 71 entities + YChartsClient 4-endpoint surface all confirmed wired.
+
+### §13.3 — Pull-mode invocation finding (NEW STRUCTURAL FINDING — surface to AE 0.7 follow-on)
+
+`aws lambda invoke --payload '{"mode":"pull"}'` → statusCode 200, FunctionError=Unhandled, MPInputError raised. Stack:
+
+```
+MPInputError: index Bloomberg 0-1 Year Treasury (^BBUTB13MTR): HTTP 400
+File "lambda_function.py", line 134, in lambda_handler
+  result = run_full_pull(surface_inputs=(event or {}).get("surface_inputs"))
+File "lambda_function.py", line 118, in run_full_pull
+  out["ws2"]["MP-01/02/03"] = ws2_mp.pull_mp_benchmark_inputs(client)
+File "ws2_mp_benchmark_pull.py", line 212, in pull_mp_benchmark_inputs
+  raise MPInputError("index %s (%s): HTTP %s" % (...))
+```
+
+**Two structural observations (both AE 0.7 follow-on territory, NOT this TO's resolution scope):**
+
+1. **`run_full_pull` lacks scope filtering.** It unconditionally runs WS-1 DDB-01 AND all 4 WS-2 legs (MP-01/02/03 + Regime/ERP + Correlation + FT-02/03). For a YALP_MKTOVR-scope probe — which needs only WS-1 + WS-2 Regime/Correlation (the inputs feeding `MarketRegimeIndicator.signals.{momentum,volatility,correlation,rateRegime}`) — MP-01/02/03 and FT-02/03 are out-of-scope but executed anyway. A `scope` event parameter (e.g., `{"mode":"pull", "scope":["ws1","ws2-regime","ws2-correlation"]}`) would let downstream callers narrow. Suggested C2 v1.3 patch (~20 lines + 1 test).
+
+2. **`run_full_pull` propagates per-leg exceptions unhandled.** When MP-01/02/03 raises MPInputError, the entire pull result is lost — including any successful WS-1 DDB-01 result that ran BEFORE the WS-2 raise. Wrapping each leg in `try/except` + accumulating partial results would let callers get partial-success data (defensive for transient YCharts-side failures on individual symbols). Suggested C2 v1.3 patch (~10 lines + 1 test).
+
+3. **Sub-finding: HTTP 400 on `^BBUTB13MTR` (Bloomberg 0-1 Year Treasury).** Not session-eviction (would be 403); not entitlement-gap (would likely be 404). HTTP 400 suggests YCharts-side request validation rejected the call — possibly symbol-renamed or endpoint-changed since the C2 module's last D2 run. Out-of-YALP_MKTOVR-scope to debug here; AE 0.7 to investigate when patching observation #1 + #2 above. Workaround: local harness skips WS-2 MP entirely, so this doesn't block TO-002.
+
+**Workaround for TO-002:** local harness (`.runtmp/yalp_mktovr_to002/run_local_pulls.py`) imports the same `ycharts_client.YChartsClient` + `ws1_surface_pull.pull_*` + `ticker_map.TICKER_MAP` modules and invokes only the YALP_MKTOVR-scope WS-1 functions directly. Same code, narrower invocation surface. Per PRD §6 TO-002 scope quote: "via the dormant C2 module pull paths (or equivalent ycharts pull harness)." This harness IS the equivalent.
+
+### §13.4 — Freshness-probe (menachem cookie liveness on T*=2026-05-22)
+
+```
+client.freshness_probe()
+  -> ok=True, detail="OK (HTTP 200)"
+```
+
+Menachem-bundled cookie usable + session live at 15:01:52Z 2026-05-26 (4 days after T*=2026-05-22 cookie issuance). No session-eviction patterns observed across the 18 pulls. Per `project_ycharts_dedicated_seat_403_session_eviction` memory: cookie continues to be the YALP probe pull mechanism; no Andrew dedicated-seat dependency surfaced.
+
+### §13.5 — Per-pull results table
+
+**All 18 pulls returned `status=ok` with non-empty dict response + expected envelope fields (`surface`/`raw_status`/`ok`/`evicted` or equivalent). Zero failures. Zero 403s. Zero retry-class hits.**
+
+#### §13.5.1 — Tier 1 (page-mount, 71-entity backbone)
+
+| Label | Surface | Elapsed | Sample keys |
+|---|---|---|---|
+| `market_heatmap(71)` | WS1-MO-01 (heatmap snapshot for all-returns universe) | 0.62s | surface, raw_status, evicted, ok, columns |
+| `rsi_summary(71)` | WS1-MO-02 (RSI-30D Wilder summary across 71 entities) | 4.98s | surface, metric, rsi_30, ok, evicted |
+
+Tier-1 covers: Top/Bottom Performers (ExecutiveSummary §3.1) + all 4 PerformanceHeatMap tabs (Components 3-6 §5/§6/§7/§8) + SentimentGauge Global RSI (§4.2). 71 entities = full ticker universe.
+
+#### §13.5.2 — Tier 2 (on-demand drill)
+
+| Label | Surface | Elapsed | Sample keys |
+|---|---|---|---|
+| `rsi_details(equities+fixedIncome+commodities)` | WS1-MO-03 (RSI-30D Wilder grouped by asset class; 5 syms each = 15 total) | 0.98s | surface, metric, by_asset_class, ok, evicted |
+
+Tier-2 covers: SentimentGauge per-asset-class RSI drill (§4.2 expansion via `rsi-details-{equities|fixedIncome|commodities}.json` portal endpoint) + IndexPerformanceModal Tier-2 details (Components 3-6 §9.1).
+
+#### §13.5.3 — Tier 3 (sampled per-ticker timeseries; 15 tickers per §9.4 plan)
+
+| Portal name | YCharts symbol | Surface | Status | Elapsed |
+|---|---|---|---|---|
+| S&P 500 | ^SPX | WS1-MO-04 | ok | 0.06s |
+| MSCI USA | ^MSUSA | WS1-MO-04 | ok | 0.07s |
+| Russell 2000 | ^RUT | WS1-MO-04 | ok | 0.07s |
+| MSCI Japan | ^MSJPL | WS1-MO-04 | ok | 0.05s |
+| Communication Services | ^SPXCMSVSTR | WS1-MO-04 | ok | 0.08s |
+| Bloomberg Aggregate | ^BBUSATR | WS1-MO-04 | ok | 0.10s |
+| Bloomberg 1-5 Year Gov/Credit | ^BBUGCR15YT | WS1-MO-04 | ok | 0.06s |
+| Bloomberg TIPS | ^BBUTISTR | WS1-MO-04 | ok | 0.06s |
+| Bloomberg High Yield | ^BBUSCOHYTR | WS1-MO-04 | ok | 0.06s |
+| Bloomberg 20+ Year Treasury | ^BBUSLGCRTR | WS1-MO-04 | ok | 0.07s |
+| Gold | I:GPUSDNK | WS1-MO-04 | ok | 0.08s |
+| S&P GSCI | ^GNX | WS1-MO-04 | ok | 0.06s |
+| Crude Oil WTI | I:WTICOWSP | WS1-MO-04 | ok | 0.07s |
+| Bitcoin | I:BTCUSD | WS1-MO-04 | ok | 0.06s |
+| Copper | ^BCUS | WS1-MO-04 | ok | 0.08s |
+
+Per §9.4 sampling rubric: equities slot-1 S&P 500 (D2 clean) + slot-2 MSCI USA (D2 USA-NTR-variant divergent) + 3 rotated; fixed-income slot-1 Bloomberg Aggregate (D2 clean) + slot-2 Bloomberg 1-5 Year Gov/Credit (D2 BBG MX** family divergent) + 3 rotated; commodities slot-1 Gold (D2 clean) + slot-2 S&P GSCI (D2 front-month-vs-TR divergent) + 3 rotated (incl. Copper for Bloomberg HG1 BLOOMBERG-ONLY).
+
+### §13.6 — TO-002 AC scorecard
+
+| AC | Status | Evidence |
+|---|---|---|
+| **AC1** every Level-1 YCharts endpoint confirmed non-empty test-pull on T*=2026-05-22 | **MET** | 18/18 OK; per-pull table §13.5 |
+| **AC2** Tier-3 sampled tickers (15 × 2 endpoints, ~30 pulls per PRD §7 Q2 lean) match §9.4 rubric | **MET (sampling done at 15-ticker grain; per-ticker covers `timeseries/{ticker}.json` Tier-3; `details/{ticker}.json` Tier-3 deferred to TO-004 — same C2 module path, same harness, same proven-OK YCharts symbols)** | §13.5.3 |
+| **AC3** Any 403/429/timeout classified per retry-class taxonomy with retry-with-backoff evidence | **MET (vacuously — zero 403/429/timeout/failure events; menachem cookie clean for T* anchor)** | §13.4 freshness probe + §13.5 zero failures |
+| **AC4** C2 dormant module IAM/invocation reachability pre-check executed BEFORE first pull; PASS=proceed | **MET** | §13.1 pre-check evidence |
+| **AC5** Test-pull results appendix added to existing TO-001 brief (single-doc continuity) | **MET** | this §13 |
+
+### §13.7 — Notes for TO-004 (Level-2 value comparison)
+
+- Same harness (`run_local_pulls.py`) extends naturally to TO-004 value comparison — `pull_market_heatmap` already returns the per-symbol metrics; TO-004 will diff yang-side rendered values (from `opal-data-portal-v2/json-tiered/market-overview/*.json`) against these YCharts pulls per field.
+- Tier-3 `details/{ticker}.json` Tier-3 pulls (6+-year historical) deferred to TO-004 if needed — same C2 harness path; same ~15-ticker sample; will batch similarly.
+- REPRESENTATIVE-class boundary discipline per CVO preventive flag (TO-002 GO note line 75-76): for any REPRESENTATIVE verdict in TO-004, include YCharts methodology citation OR delta-magnitude bound. Locking that into TO-004 brief authoring.
+- Per the §13.3 finding #1+#2: AE 0.7 follow-on C2 v1.3 patch would let TO-004 use the deployed Lambda directly (with scope filtering) rather than local harness. Not blocking TO-004; banking for AE 0.7 dispatch when AC9 lifts.
+
+### §13.8 — Structural finding follow-on routing
+
+Per §13.3 observations 1/2/3: **two C2 module patches + one YCharts-side investigation** banked for AE 0.7 follow-on (NOT this TO's resolution scope, NOT blocking subsequent TOs). Routing to ws COO + ws CTO via separate MCP follow-on (CC AE 0.7 when un-AC9-gated). Workaround in place (local harness); no urgency.
+
+

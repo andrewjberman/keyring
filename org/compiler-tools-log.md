@@ -4160,3 +4160,6 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-05-26 | 0.1.0_DS_MarketIntelligence | YALP_MKTOVR.001.ds-market-overview-endpoint-and-field-mapping | comp-pipescript | comp-pipescript io opal-market-overview-tiered-generator | FAIL |
 | 2026-05-26 | 0.1.0_DS_MarketIntelligence | YALP_MKTOVR.001.ds-market-overview-endpoint-and-field-mapping | comp-pipescript | comp-pipescript io opal-market-rsi-tiered-generator | FAIL |
 | 2026-05-26 | 0.1.0_DS_MarketIntelligence | YALP_MKTOVR.001.ds-market-overview-endpoint-and-field-mapping | comp-transform | comp-transform fields MarketPerformance | PASS |
+| 2026-05-26 | 0.6.1_AE_PartnerETL | YALP_MKTOVR.001.ds-market-overview-endpoint-and-field-mapping | comp-platinum | comp-platinum reverse json/portfolios/aum-timeseries.json | PASS |
+| 2026-05-26 | 0.6.1_AE_PartnerETL | YALP_MKTOVR.001.ds-market-overview-endpoint-and-field-mapping | comp-platinum | comp-platinum reverse json/portfolios/non_model_assets.json | PASS |
+| 2026-05-26 | 0.6.1_AE_PartnerETL | YALP_MKTOVR.001.ds-market-overview-endpoint-and-field-mapping | comp-platinum | comp-platinum reverse platinum/mdpf/aggregate_aua | PASS |
