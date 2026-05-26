@@ -186,6 +186,20 @@ function ajb {
     # "I want their serial in the tab title of powershell by default. When you
     # load 1.0.0_SA_CTO, it should literally display 1.0.0_SA_CTO in the
     # powershell tab of the new window."
+    #
+    # **STRUCTURAL FIX (2026-05-26 Andrew direct follow-on):** the OSC escape +
+    # WindowTitle pair alone was empirically insufficient -- claude.exe issues
+    # its own OSC 0/2 sequences during interactive runtime that override the
+    # launch-time title. The complete fix REQUIRES Windows Terminal's
+    # `suppressApplicationTitle: true` setting under `profiles.defaults` in
+    # `%LOCALAPPDATA%\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json`.
+    # With that flag set, WT IGNORES tab-title OSC sequences from running
+    # applications AND keeps whatever was set via PowerShell at launch ($Host.UI.RawUI.WindowTitle
+    # or OSC emit before the application started). The user-local settings.json
+    # edit is one-time + reversible (set flag to false to restore default). This
+    # ajb.ps1 launch-time title-set then sticks through the entire session.
+    # Verify the setting is present if tab titles fail to display agent serial
+    # automatically on a fresh spawn.
     $esc = [char]27
     $bel = [char]7
     [Console]::Write("${esc}]0;${Serial}${bel}")
