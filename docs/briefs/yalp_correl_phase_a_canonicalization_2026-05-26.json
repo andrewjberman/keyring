@@ -1,0 +1,842 @@
+{
+ "to": "YALP_CORREL.006-EMPIRICAL Phase A",
+ "ts_utc": "2026-05-26T22:44:10Z",
+ "universe_size": 63,
+ "candidates_total": 131,
+ "matched_count": 33,
+ "match_pct": 52.4,
+ "map": {
+  "S&P 500": {
+   "candidates_tried": [
+    "^SPX"
+   ],
+   "matched_symbols": [
+    "^SPX"
+   ],
+   "matched_names": [
+    "S&P 500"
+   ],
+   "status": "MATCH",
+   "canonical": "^SPX",
+   "canonical_name": "S&P 500"
+  },
+  "Dow Jones": {
+   "candidates_tried": [
+    "^DJI",
+    "^INDU"
+   ],
+   "matched_symbols": [
+    "^DJI"
+   ],
+   "matched_names": [
+    "Dow Jones Industrial Average"
+   ],
+   "status": "MATCH",
+   "canonical": "^DJI",
+   "canonical_name": "Dow Jones Industrial Average"
+  },
+  "Nasdaq": {
+   "candidates_tried": [
+    "^IXIC",
+    "^CCMP",
+    "^NDX"
+   ],
+   "matched_symbols": [
+    "^IXIC",
+    "^NDX"
+   ],
+   "matched_names": [
+    "Nasdaq Composite",
+    "Nasdaq-100"
+   ],
+   "status": "MATCH",
+   "canonical": "^IXIC",
+   "canonical_name": "Nasdaq Composite"
+  },
+  "Russell 1000": {
+   "candidates_tried": [
+    "^RUI",
+    "^R1000"
+   ],
+   "matched_symbols": [
+    "^RUI"
+   ],
+   "matched_names": [
+    "Russell 1000"
+   ],
+   "status": "MATCH",
+   "canonical": "^RUI",
+   "canonical_name": "Russell 1000"
+  },
+  "MSCI USA": {
+   "candidates_tried": [
+    "^MIUS00000PUS",
+    "^MSUSGRTR",
+    "^MIUS00000NUS"
+   ],
+   "matched_symbols": [],
+   "matched_names": [],
+   "status": "NO-MATCH",
+   "canonical": null,
+   "canonical_name": null
+  },
+  "Russell Mid Cap": {
+   "candidates_tried": [
+    "^RMC",
+    "^RMID"
+   ],
+   "matched_symbols": [
+    "^RMC"
+   ],
+   "matched_names": [
+    "Russell Midcap"
+   ],
+   "status": "MATCH",
+   "canonical": "^RMC",
+   "canonical_name": "Russell Midcap"
+  },
+  "Russell Mid Cap Growth": {
+   "candidates_tried": [
+    "^RMG",
+    "^RMCG"
+   ],
+   "matched_symbols": [],
+   "matched_names": [],
+   "status": "NO-MATCH",
+   "canonical": null,
+   "canonical_name": null
+  },
+  "Russell Mid Cap Value": {
+   "candidates_tried": [
+    "^RMV",
+    "^RMCV"
+   ],
+   "matched_symbols": [
+    "^RMV"
+   ],
+   "matched_names": [
+    "Russell Midcap Value"
+   ],
+   "status": "MATCH",
+   "canonical": "^RMV",
+   "canonical_name": "Russell Midcap Value"
+  },
+  "Russell 2000": {
+   "candidates_tried": [
+    "^RUT",
+    "^R2000"
+   ],
+   "matched_symbols": [
+    "^RUT"
+   ],
+   "matched_names": [
+    "Russell 2000"
+   ],
+   "status": "MATCH",
+   "canonical": "^RUT",
+   "canonical_name": "Russell 2000"
+  },
+  "Russell 1000 Growth": {
+   "candidates_tried": [
+    "^RLG",
+    "^R1000G"
+   ],
+   "matched_symbols": [
+    "^RLG"
+   ],
+   "matched_names": [
+    "Russell 1000 Growth"
+   ],
+   "status": "MATCH",
+   "canonical": "^RLG",
+   "canonical_name": "Russell 1000 Growth"
+  },
+  "Russell 1000 Value": {
+   "candidates_tried": [
+    "^RLV",
+    "^R1000V"
+   ],
+   "matched_symbols": [
+    "^RLV"
+   ],
+   "matched_names": [
+    "Russell 1000 Value"
+   ],
+   "status": "MATCH",
+   "canonical": "^RLV",
+   "canonical_name": "Russell 1000 Value"
+  },
+  "MSCI USA Growth": {
+   "candidates_tried": [
+    "^MIUS0G000PUS",
+    "^MSUSG"
+   ],
+   "matched_symbols": [],
+   "matched_names": [],
+   "status": "NO-MATCH",
+   "canonical": null,
+   "canonical_name": null
+  },
+  "MSCI USA Value": {
+   "candidates_tried": [
+    "^MIUS0V000PUS",
+    "^MSUSV"
+   ],
+   "matched_symbols": [],
+   "matched_names": [],
+   "status": "NO-MATCH",
+   "canonical": null,
+   "canonical_name": null
+  },
+  "MSCI USA Momentum": {
+   "candidates_tried": [
+    "^M1USMOM",
+    "^MSUSMOM"
+   ],
+   "matched_symbols": [],
+   "matched_names": [],
+   "status": "NO-MATCH",
+   "canonical": null,
+   "canonical_name": null
+  },
+  "MSCI USA Quality": {
+   "candidates_tried": [
+    "^M1USQU",
+    "^MSUSQ"
+   ],
+   "matched_symbols": [],
+   "matched_names": [],
+   "status": "NO-MATCH",
+   "canonical": null,
+   "canonical_name": null
+  },
+  "MSCI USA Minimum Volatility": {
+   "candidates_tried": [
+    "^M1USMV",
+    "^MSUSMV"
+   ],
+   "matched_symbols": [],
+   "matched_names": [],
+   "status": "NO-MATCH",
+   "canonical": null,
+   "canonical_name": null
+  },
+  "Communication Services": {
+   "candidates_tried": [
+    "^SP500-50",
+    "^SP500.50"
+   ],
+   "matched_symbols": [],
+   "matched_names": [],
+   "status": "NO-MATCH",
+   "canonical": null,
+   "canonical_name": null
+  },
+  "Consumer Discretionary": {
+   "candidates_tried": [
+    "^SP500-25",
+    "^SP500.25"
+   ],
+   "matched_symbols": [],
+   "matched_names": [],
+   "status": "NO-MATCH",
+   "canonical": null,
+   "canonical_name": null
+  },
+  "Consumer Staples": {
+   "candidates_tried": [
+    "^SP500-30",
+    "^SP500.30"
+   ],
+   "matched_symbols": [],
+   "matched_names": [],
+   "status": "NO-MATCH",
+   "canonical": null,
+   "canonical_name": null
+  },
+  "Energy": {
+   "candidates_tried": [
+    "^SP500-10",
+    "^SP500.10"
+   ],
+   "matched_symbols": [],
+   "matched_names": [],
+   "status": "NO-MATCH",
+   "canonical": null,
+   "canonical_name": null
+  },
+  "Financials": {
+   "candidates_tried": [
+    "^SP500-40",
+    "^SP500.40"
+   ],
+   "matched_symbols": [],
+   "matched_names": [],
+   "status": "NO-MATCH",
+   "canonical": null,
+   "canonical_name": null
+  },
+  "Health Care": {
+   "candidates_tried": [
+    "^SP500-35",
+    "^SP500.35"
+   ],
+   "matched_symbols": [],
+   "matched_names": [],
+   "status": "NO-MATCH",
+   "canonical": null,
+   "canonical_name": null
+  },
+  "Industrials": {
+   "candidates_tried": [
+    "^SP500-20",
+    "^SP500.20"
+   ],
+   "matched_symbols": [],
+   "matched_names": [],
+   "status": "NO-MATCH",
+   "canonical": null,
+   "canonical_name": null
+  },
+  "Information Technology": {
+   "candidates_tried": [
+    "^SP500-45",
+    "^SP500.45"
+   ],
+   "matched_symbols": [],
+   "matched_names": [],
+   "status": "NO-MATCH",
+   "canonical": null,
+   "canonical_name": null
+  },
+  "Materials": {
+   "candidates_tried": [
+    "^SP500-15",
+    "^SP500.15"
+   ],
+   "matched_symbols": [],
+   "matched_names": [],
+   "status": "NO-MATCH",
+   "canonical": null,
+   "canonical_name": null
+  },
+  "Real Estate": {
+   "candidates_tried": [
+    "^SP500-60",
+    "^SP500.60"
+   ],
+   "matched_symbols": [],
+   "matched_names": [],
+   "status": "NO-MATCH",
+   "canonical": null,
+   "canonical_name": null
+  },
+  "Utilities": {
+   "candidates_tried": [
+    "^SP500-55",
+    "^SP500.55"
+   ],
+   "matched_symbols": [],
+   "matched_names": [],
+   "status": "NO-MATCH",
+   "canonical": null,
+   "canonical_name": null
+  },
+  "MSCI ACWI": {
+   "candidates_tried": [
+    "^MIWO00000PUS",
+    "^MSACWI"
+   ],
+   "matched_symbols": [
+    "^MSACWI"
+   ],
+   "matched_names": [
+    "MSCI ACWI"
+   ],
+   "status": "MATCH",
+   "canonical": "^MSACWI",
+   "canonical_name": "MSCI ACWI"
+  },
+  "MSCI ACWI ex US": {
+   "candidates_tried": [
+    "^MIWXUSPUS",
+    "^MSACWIXUS"
+   ],
+   "matched_symbols": [],
+   "matched_names": [],
+   "status": "NO-MATCH",
+   "canonical": null,
+   "canonical_name": null
+  },
+  "MSCI EAFE": {
+   "candidates_tried": [
+    "^MIEA00000PUS",
+    "^MSEAFE"
+   ],
+   "matched_symbols": [
+    "^MSEAFE"
+   ],
+   "matched_names": [
+    "MSCI EAFE"
+   ],
+   "status": "MATCH",
+   "canonical": "^MSEAFE",
+   "canonical_name": "MSCI EAFE"
+  },
+  "MSCI EAFE Growth": {
+   "candidates_tried": [
+    "^MIEA0G000PUS",
+    "^MSEAFEG"
+   ],
+   "matched_symbols": [
+    "^MSEAFEG"
+   ],
+   "matched_names": [
+    "MSCI EAFE Growth"
+   ],
+   "status": "MATCH",
+   "canonical": "^MSEAFEG",
+   "canonical_name": "MSCI EAFE Growth"
+  },
+  "MSCI EAFE Value": {
+   "candidates_tried": [
+    "^MIEA0V000PUS",
+    "^MSEAFEV"
+   ],
+   "matched_symbols": [
+    "^MSEAFEV"
+   ],
+   "matched_names": [
+    "MSCI EAFE Value"
+   ],
+   "status": "MATCH",
+   "canonical": "^MSEAFEV",
+   "canonical_name": "MSCI EAFE Value"
+  },
+  "MSCI Australia": {
+   "candidates_tried": [
+    "^MIAU00000PUS",
+    "^MSAU"
+   ],
+   "matched_symbols": [
+    "^MSAU"
+   ],
+   "matched_names": [
+    "MSCI Australia"
+   ],
+   "status": "MATCH",
+   "canonical": "^MSAU",
+   "canonical_name": "MSCI Australia"
+  },
+  "MSCI France": {
+   "candidates_tried": [
+    "^MIFR00000PUS",
+    "^MSFR"
+   ],
+   "matched_symbols": [
+    "^MSFR"
+   ],
+   "matched_names": [
+    "MSCI France"
+   ],
+   "status": "MATCH",
+   "canonical": "^MSFR",
+   "canonical_name": "MSCI France"
+  },
+  "MSCI Germany": {
+   "candidates_tried": [
+    "^MIDE00000PUS",
+    "^MSDE"
+   ],
+   "matched_symbols": [
+    "^MSDE"
+   ],
+   "matched_names": [
+    "MSCI Germany"
+   ],
+   "status": "MATCH",
+   "canonical": "^MSDE",
+   "canonical_name": "MSCI Germany"
+  },
+  "MSCI Italy": {
+   "candidates_tried": [
+    "^MIIT00000PUS",
+    "^MSIT"
+   ],
+   "matched_symbols": [
+    "^MSIT"
+   ],
+   "matched_names": [
+    "MSCI Italy"
+   ],
+   "status": "MATCH",
+   "canonical": "^MSIT",
+   "canonical_name": "MSCI Italy"
+  },
+  "MSCI Japan": {
+   "candidates_tried": [
+    "^MIJP00000PUS",
+    "^MSJP"
+   ],
+   "matched_symbols": [
+    "^MSJP"
+   ],
+   "matched_names": [
+    "MSCI Japan"
+   ],
+   "status": "MATCH",
+   "canonical": "^MSJP",
+   "canonical_name": "MSCI Japan"
+  },
+  "MSCI Netherlands": {
+   "candidates_tried": [
+    "^MINL00000PUS",
+    "^MSNL"
+   ],
+   "matched_symbols": [
+    "^MSNL"
+   ],
+   "matched_names": [
+    "MSCI Nihonkabu LOC"
+   ],
+   "status": "MATCH",
+   "canonical": "^MSNL",
+   "canonical_name": "MSCI Nihonkabu LOC"
+  },
+  "MSCI Spain": {
+   "candidates_tried": [
+    "^MIES00000PUS",
+    "^MSES"
+   ],
+   "matched_symbols": [
+    "^MSES"
+   ],
+   "matched_names": [
+    "MSCI Spain"
+   ],
+   "status": "MATCH",
+   "canonical": "^MSES",
+   "canonical_name": "MSCI Spain"
+  },
+  "MSCI Sweden": {
+   "candidates_tried": [
+    "^MISE00000PUS",
+    "^MSSE"
+   ],
+   "matched_symbols": [
+    "^MSSE"
+   ],
+   "matched_names": [
+    "MSCI Sweden"
+   ],
+   "status": "MATCH",
+   "canonical": "^MSSE",
+   "canonical_name": "MSCI Sweden"
+  },
+  "MSCI Switzerland": {
+   "candidates_tried": [
+    "^MICH00000PUS",
+    "^MSCH"
+   ],
+   "matched_symbols": [
+    "^MSCH"
+   ],
+   "matched_names": [
+    "MSCI Switzerland"
+   ],
+   "status": "MATCH",
+   "canonical": "^MSCH",
+   "canonical_name": "MSCI Switzerland"
+  },
+  "MSCI United Kindom": {
+   "candidates_tried": [
+    "^MIGB00000PUS",
+    "^MSGB",
+    "^MIUKMUKL"
+   ],
+   "matched_symbols": [],
+   "matched_names": [],
+   "status": "NO-MATCH",
+   "canonical": null,
+   "canonical_name": null
+  },
+  "MSCI Saudi Arabia": {
+   "candidates_tried": [
+    "^MISA00000PUS",
+    "^MSSA"
+   ],
+   "matched_symbols": [
+    "^MSSA"
+   ],
+   "matched_names": [
+    "MSCI Saudi Arabia"
+   ],
+   "status": "MATCH",
+   "canonical": "^MSSA",
+   "canonical_name": "MSCI Saudi Arabia"
+  },
+  "MSCI Emerging Markets": {
+   "candidates_tried": [
+    "^MIEM00000PUS",
+    "^MSEM"
+   ],
+   "matched_symbols": [
+    "^MSEM"
+   ],
+   "matched_names": [
+    "MSCI Emerging Markets"
+   ],
+   "status": "MATCH",
+   "canonical": "^MSEM",
+   "canonical_name": "MSCI Emerging Markets"
+  },
+  "MSCI Brazil": {
+   "candidates_tried": [
+    "^MIBR00000PUS",
+    "^MSBR"
+   ],
+   "matched_symbols": [
+    "^MSBR"
+   ],
+   "matched_names": [
+    "MSCI Brazil"
+   ],
+   "status": "MATCH",
+   "canonical": "^MSBR",
+   "canonical_name": "MSCI Brazil"
+  },
+  "MSCI China": {
+   "candidates_tried": [
+    "^MICN00000PUS",
+    "^MSCN"
+   ],
+   "matched_symbols": [
+    "^MSCN"
+   ],
+   "matched_names": [
+    "MSCI China"
+   ],
+   "status": "MATCH",
+   "canonical": "^MSCN",
+   "canonical_name": "MSCI China"
+  },
+  "MSCI India": {
+   "candidates_tried": [
+    "^MIIN00000PUS",
+    "^MSIN"
+   ],
+   "matched_symbols": [
+    "^MSIN"
+   ],
+   "matched_names": [
+    "MSCI India"
+   ],
+   "status": "MATCH",
+   "canonical": "^MSIN",
+   "canonical_name": "MSCI India"
+  },
+  "MSCI South Africa": {
+   "candidates_tried": [
+    "^MIZA00000PUS",
+    "^MSZA"
+   ],
+   "matched_symbols": [
+    "^MSZA"
+   ],
+   "matched_names": [
+    "MSCI South Africa"
+   ],
+   "status": "MATCH",
+   "canonical": "^MSZA",
+   "canonical_name": "MSCI South Africa"
+  },
+  "MSCI South Korea": {
+   "candidates_tried": [
+    "^MIKR00000PUS",
+    "^MSKR"
+   ],
+   "matched_symbols": [
+    "^MSKR"
+   ],
+   "matched_names": [
+    "MSCI Korea"
+   ],
+   "status": "MATCH",
+   "canonical": "^MSKR",
+   "canonical_name": "MSCI Korea"
+  },
+  "MSCI Taiwan": {
+   "candidates_tried": [
+    "^MITW00000PUS",
+    "^MSTW"
+   ],
+   "matched_symbols": [
+    "^MSTW"
+   ],
+   "matched_names": [
+    "MSCI Taiwan"
+   ],
+   "status": "MATCH",
+   "canonical": "^MSTW",
+   "canonical_name": "MSCI Taiwan"
+  },
+  "Bloomberg Aggregate": {
+   "candidates_tried": [
+    "^BBUSATR",
+    "^BBUSAGG"
+   ],
+   "matched_symbols": [
+    "^BBUSATR"
+   ],
+   "matched_names": [
+    "Bloomberg US Aggregate"
+   ],
+   "status": "MATCH",
+   "canonical": "^BBUSATR",
+   "canonical_name": "Bloomberg US Aggregate"
+  },
+  "Bloomberg US Corporate": {
+   "candidates_tried": [
+    "^BBUSCTR",
+    "^BBUSCORP"
+   ],
+   "matched_symbols": [],
+   "matched_names": [],
+   "status": "NO-MATCH",
+   "canonical": null,
+   "canonical_name": null
+  },
+  "Bloomberg High Yield": {
+   "candidates_tried": [
+    "^BBHYTR",
+    "^BBHYC"
+   ],
+   "matched_symbols": [],
+   "matched_names": [],
+   "status": "NO-MATCH",
+   "canonical": null,
+   "canonical_name": null
+  },
+  "Bloomberg Municipal": {
+   "candidates_tried": [
+    "^BBMUTR",
+    "^BBMUNI"
+   ],
+   "matched_symbols": [],
+   "matched_names": [],
+   "status": "NO-MATCH",
+   "canonical": null,
+   "canonical_name": null
+  },
+  "Bloomberg US Treasury": {
+   "candidates_tried": [
+    "^BBUSTTR",
+    "^BBUSTREAS"
+   ],
+   "matched_symbols": [
+    "^BBUSTTR"
+   ],
+   "matched_names": [
+    "Bloomberg US Treasury"
+   ],
+   "status": "MATCH",
+   "canonical": "^BBUSTTR",
+   "canonical_name": "Bloomberg US Treasury"
+  },
+  "Bloomberg 1-3 Year Treasury": {
+   "candidates_tried": [
+    "^BBT13TR",
+    "^BBT13MTR"
+   ],
+   "matched_symbols": [],
+   "matched_names": [],
+   "status": "NO-MATCH",
+   "canonical": null,
+   "canonical_name": null
+  },
+  "Bloomberg 7-10 Year Treasury": {
+   "candidates_tried": [
+    "^BBT710TR",
+    "^BBT710MTR"
+   ],
+   "matched_symbols": [],
+   "matched_names": [],
+   "status": "NO-MATCH",
+   "canonical": null,
+   "canonical_name": null
+  },
+  "Bloomberg 20+ Year Treasury": {
+   "candidates_tried": [
+    "^BBT20PTR",
+    "^BBUTB20"
+   ],
+   "matched_symbols": [],
+   "matched_names": [],
+   "status": "NO-MATCH",
+   "canonical": null,
+   "canonical_name": null
+  },
+  "Gold": {
+   "candidates_tried": [
+    "^XAU",
+    "^GOLD",
+    "^GLD"
+   ],
+   "matched_symbols": [
+    "^XAU"
+   ],
+   "matched_names": [
+    "PHLX Gold/Silver Sector"
+   ],
+   "status": "MATCH",
+   "canonical": "^XAU",
+   "canonical_name": "PHLX Gold/Silver Sector"
+  },
+  "Silver": {
+   "candidates_tried": [
+    "^XAG",
+    "^SILVER",
+    "^SLV"
+   ],
+   "matched_symbols": [],
+   "matched_names": [],
+   "status": "NO-MATCH",
+   "canonical": null,
+   "canonical_name": null
+  },
+  "Crude Oil": {
+   "candidates_tried": [
+    "^OIL",
+    "^CRUDE",
+    "^WTI"
+   ],
+   "matched_symbols": [],
+   "matched_names": [],
+   "status": "NO-MATCH",
+   "canonical": null,
+   "canonical_name": null
+  },
+  "Natural Gas": {
+   "candidates_tried": [
+    "^NGAS",
+    "^NG"
+   ],
+   "matched_symbols": [],
+   "matched_names": [],
+   "status": "NO-MATCH",
+   "canonical": null,
+   "canonical_name": null
+  },
+  "Copper": {
+   "candidates_tried": [
+    "^COPPER",
+    "^HG"
+   ],
+   "matched_symbols": [],
+   "matched_names": [],
+   "status": "NO-MATCH",
+   "canonical": null,
+   "canonical_name": null
+  }
+ }
+}
