@@ -66,32 +66,32 @@ function Get-AgentLoopDirective {
     # Strip tilde-lane suffix for role detection.
     $base = $Serial -replace '~[A-Za-z0-9]+$', ''
 
-    $header = "DETERMINISTIC LOOP ARMING (LD-0082) -- after /watcher self-heal, arm canonical loops via CronCreate before proceeding with org/XXX.md balance:"
+    $header = "Loop arming (per LD-0082) after /watcher:"
 
     switch -Regex ($base) {
         '^0\.0\.0_AB_MSTR$' {
-            return "$header`n  role: MSTR (Tier-0)`n  1. CronCreate /watcher 10m, then /watcher  (separate cron because MSTR primary is 12h -- watcher needs faster cadence)`n  2. CronCreate /mstr-review 12h, then /mstr-review`n  Event-triggered (no cron): /mstr-spawn, /mstr-kill, /mstr-charter, /comp-ferry, embedded LD ratification."
+            return "$header`n  MSTR`n  1. CronCreate /watcher 10m, then /watcher`n  2. CronCreate /mstr-review 12h, then /mstr-review`n  Event-triggered: /mstr-spawn, /mstr-kill, /mstr-charter, /comp-ferry, embedded LD ratification."
         }
         '^1\.0\.0_SA_CTO$' {
-            return "$header`n  role: ws CTO (Tier-1)`n  1. CronCreate /ws-charter 30m, then /ws-charter  (/watcher folds inline)`n  Event-triggered: REPAIR-AMENDMENT scribes (gated on CVO finding)."
+            return "$header`n  ws CTO`n  1. CronCreate /ws-charter 30m, then /ws-charter  (/watcher folds inline)`n  Event-triggered: REPAIR-AMENDMENT scribes (gated on CVO finding)."
         }
         '^1\.1\.0_SA_CTO$' {
-            return "$header`n  role: CL CTO (Tier-1)`n  1. CronCreate /cl-charter 30m, then /cl-charter  (/watcher folds inline)`n  If /cl-charter SKILL.md not yet scribed (LD-0066 materialization pending), fall back to CronCreate /watcher 10m primary until scribe lands."
+            return "$header`n  CL CTO`n  1. CronCreate /cl-charter 30m, then /cl-charter  (/watcher folds inline)"
         }
         '^2\.[01]\.0_SA_COO$' {
-            return "$header`n  role: COO (Tier-1)`n  1. CronCreate /drive 20m, then /drive  (/watcher + /stimulus-scan fold inside /drive body)"
+            return "$header`n  COO`n  1. CronCreate /drive 20m, then /drive  (/watcher folds inline)"
         }
         '^3\.0\.0_SA_CVO$' {
-            return "$header`n  role: ws CVO (Tier-1)`n  1. CronCreate /spot-check 20m, then /spot-check  (/watcher folds inline; 20m primary)`n  2. CronCreate /verify-channel 2h, then /verify-channel  (lightweight threshold-scan baseline; comprehensive runs event-triggered on closeout-class signals)"
+            return "$header`n  ws CVO`n  1. CronCreate /spot-check 20m, then /spot-check  (/watcher folds inline)`n  2. CronCreate /verify-channel 2h, then /verify-channel  (lightweight baseline; comprehensive event-triggered)"
         }
         '^3\.1\.0_SA_CVO$' {
-            return "$header`n  role: CL CVO (Tier-1)`n  1. CronCreate /spot-check 20m, then /spot-check  (/watcher folds inline; 20m primary)`n  2. CronCreate /verify-channel 2h, then /verify-channel  (baseline; comprehensive event-triggered)`n  3. CronCreate /case-find 24h, then /case-find  (daily; /case-mgmt chain-invokes from /case-find body at end -- no separate cron for /case-mgmt per LD-0082 Q5)"
+            return "$header`n  CL CVO`n  1. CronCreate /spot-check 20m, then /spot-check  (/watcher folds inline)`n  2. CronCreate /verify-channel 2h, then /verify-channel  (lightweight baseline; comprehensive event-triggered)`n  3. CronCreate /case-find 24h, then /case-find  (/case-mgmt chain-invokes per LD-0082 Q5)"
         }
         '^0\.[0-9]+\.[0-9]+_(DS|AE|DE|DT|RD)_' {
-            return "$header`n  role: Tier-2/3 worker`n  1. CronCreate /work 20m, then /work  (/watcher folds inline)`n  Self-classify blockers + MCP lane COO with [BLOCKED-ASK] per /work Step 4."
+            return "$header`n  Tier-2/3 worker`n  1. CronCreate /work 20m, then /work  (/watcher folds inline)`n  Self-classify blockers + MCP lane COO with [BLOCKED-ASK] per /work."
         }
         default {
-            return "$header`n  role: UNRECOGNIZED (serial '$Serial' did not match any role pattern)`n  1. CronCreate /watcher 10m, then /watcher  (default fallback)`n  WARN MSTR via MCP: 'role-mapping gap in ajb.ps1 Get-AgentLoopDirective for serial $Serial'."
+            return "$header`n  UNRECOGNIZED ('$Serial' matched no role pattern)`n  1. CronCreate /watcher 10m, then /watcher`n  WARN MSTR: 'role-mapping gap for $Serial in ajb.ps1'."
         }
     }
 }
@@ -133,7 +133,7 @@ function ajb {
     # the agent is never silently deaf to message pushes. The launcher injects
     # the directive into the first message so it is automatic, not reliant on
     # the agent remembering it from org/XXX.md.
-    $watcherDirective = "FIRST, run the /watcher skill to self-heal your inbox-watcher + broker registration (Andrew global ruling 2026-05-22 -- every agent runs /watcher at startup). THEN proceed with the org/XXX.md startup protocol."
+    $watcherDirective = "FIRST: run /watcher to self-heal inbox-watcher + broker registration. THEN: org/XXX.md startup protocol."
 
     # DETERMINISTIC LOOP ARMING (LD-0082): map serial to role; emit CronCreate
     # directives so canonical loops are armed at launch, not relied on the
