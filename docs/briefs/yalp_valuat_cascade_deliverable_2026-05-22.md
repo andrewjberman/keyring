@@ -179,3 +179,47 @@ Neither blocks cutover-trust assessment; both are scope-clarifications.
    - FRED cache fallback-mode resolution (why active on T\*=2026-05-22)
    - Treasury 10Y vendor-of-record (Bloomberg vs FRED cadence)
 6. **[DS 0.1.0~B — me]** Cascade complete; standing for RAVC2 disposition. /work cron continues 7,27,47 cadence; will pick up next TO if dispatched OR remain standby through TO-VAL closeout
+
+---
+
+## §11 — Framing amendment per CVO META-CHECK YELLOW 2026-05-26T~20:14Z
+
+CVO 3.0.0_SA_CVO issued META-CHECK YELLOW on this brief's "NO-TRUST (0.4% sourceable)" headline language per LD-0012 substance-meta heuristic. Substance is sound; framing inflates the apparent gap. Amendment below per CVO heuristic (a) magnitude-vs-context + (c) naming-semantic alignment + Andrew direct 2026-05-26 ~17:42Z framing ("logistical not real issue" on cookie/freshness class). RAVC2-ACCEPT 19:32Z disposition stands; this is communication-cleanup only.
+
+### §11.1 — Refined denominator (CVO heuristic (a))
+
+Original brief §0 + §4 framed YCharts-sourceable surface as "~0.4% of theoretical (1 of 259)". Denominator (259 = 7 metrics × 37 indices) included only the summary-level grid; refined accounting per CVO:
+
+| Class | Count | By-design unsourceable? |
+|---|---|---|
+| Source-bearing primitives MATCH | **3** | no — actual matches (IG OAS, HY OAS, Treasury when cadence aligns) |
+| Source-bearing primitives REPRESENTATIVE | **2** | no — bounded by cadence/freshness |
+| Source-bearing primitives DRIFT-routed-GAP | **2** | yes — F6 magnitude-mismatch (forward PE indicator empirically trailing) |
+| Primitive GAP-class (no YCharts provider entity) | **252** | yes — VAL01_STAYS_PKL + non-S&P-500 indices |
+| Derived-stat fields (percentile ranks, distribution thresholds, tooltip-render, metadata) | **~1,300** | **yes — by design** (computed locally from primitives; never independently sourceable) |
+| **Source-bearing primitives total** (MATCH + REP + DRIFT + GAP) | **259** | mixed |
+| **Total rendered fields** (source-bearing + derived-stat) | **~1,559** | — |
+
+**Per-row primitive-coverage:** 5 sourceable (MATCH + REP) / 259 source-bearing primitives = **~1.9%** YCharts/FRED-MATCH-or-REPRESENTATIVE; **~2.7%** if counting the 2 DRIFT-routed-GAP as evaluated. The original "0.4%" headline used a different ratio (1 in 7×37 grid cells) that conflated the universal denominator with the YCharts-indicator-entity-presence ratio. Both are technically true but the **~2.7% primitive-source ratio with ~99% derived-stat by design** framing is more honest about what the cutover would face.
+
+### §11.2 — Refined verdict naming (CVO heuristic (c))
+
+Original verdict: **"Valuation main view: NO-TRUST"**
+
+Refined verdict: **"Valuation main view: per-component cutover-scope is BLOOMBERG-PKL-RETAINED-BY-PROVIDER-AVAILABILITY (~2.7% primitive-source ratio with ~99% derived-stat by design); no logistical blocker observed"**
+
+This better aligns with the YALP_MKTOVR precedent bar (which reported 0 NO-TRUST, 8 `n/a-out-of-cutover-scope`) and Andrew direct framing 2026-05-26 ~17:42Z (cookie/freshness = LOGISTICAL not SUBSTANTIVE; the VAL01_STAYS_PKL structural absence is provider-availability-by-design, not a substantive cutover blocker).
+
+The action recommendation unchanged: **Bloomberg-pkl retention for `valuation_data.json` equity valuation multiples**. The reframe distinguishes *why*: not "cutover would fail" but "cutover doesn't apply to most of this surface because YCharts provider doesn't expose these multiples for index entities".
+
+### §11.3 — RiskPremiumTab verdict unchanged
+
+§4.2 NEEDS-INVESTIGATION verdict stands. Action items (FRED cache fallback-mode resolution + Treasury vendor-of-record) are cookie-stale + cadence class = exactly the LOGISTICAL class Andrew direct flagged as resolvable. CVO META-CHECK aligned implicitly with this framing for §4.2.
+
+### §11.4 — Routing per LD-0012 substance-meta
+
+Per CVO's META-CHECK ask (Sister `68b0e67ce`-amendment commit OR brief-amendment in next work-cycle) — choosing brief-amendment-in-same-artifact for cleaner downstream readability. CC ws COO + MSTR via the amendment commit body per LD-0012 substance-meta-routing. CVO ACK MCP separately. RAVC2-ACCEPT disposition 19:32Z stands; this amendment is observation-and-cleanup not a re-RAVC2 cycle.
+
+### §11.5 — Pattern banking — META-CHECK YELLOW as 9th-fire boundary-test
+
+This META-CHECK fires NOT in the `[[self-correction-upstream-of-verify-channel]]` pattern (which catches authoring-chain misses pre-verify-channel); it fires in the META-class observation pattern (CVO heuristic-class find on substance-sound but framing-imprecise artifact). LD-0012 distinguishes these. The 9th cumulative fire across all session classes this YALP_VALUAT cycle preserves "8-fire substance + 1-fire meta" decomposition — cleaner than collapsing into a single counter.
