@@ -34,6 +34,24 @@ If COO, continue.
 
 ---
 
+## Step 0.5 — Self-registration health check (per cycle start)
+
+Before pulling registry / agent state, verify own broker registration is live:
+
+```python
+agents = get_live_agents()
+if {coo_serial} not in agents:
+    register_agent({coo_serial}, summary="<current cycle summary>")
+```
+
+If `register_agent` succeeds (no error), continue. If error, surface to MSTR via `[SYNC-SELF-REG-FAIL]` and proceed with cycle (broker hygiene issue separate from project-axis work).
+
+**Why:** broker TTL drops agent from active set after ~120-300s without heartbeat (MSTR-confirmed pattern; STALE-at-120s threshold per `register_agent` summary text). Mid-cycle `heartbeat()` calls fail silently with "not registered" error. Cousin to `/watcher` Step 1 registration-check pattern. Empirical anchor: CL COO 2.1.0_SA_COO cycles #2 + #4 banking 2026-05-26 (`feature_clb/org/tier1_exec/2.1.0_SA_COO/briefs/DRIVE_SKILL_SELF_HEARTBEAT_FOLD.md`); ws-canonical ship per MSTR `20260526T074710Z` §3 (b) draft-then-route APPROVED + LD-0090 ALWAYS-PROCEED.
+
+**Cycle TTL bracketing:** Step 0.5 catches cycle-start re-registration; Step 8 `heartbeat()` (cycle-end) extends TTL through next cycle. Together they bracket TTL coverage. If broker drops between Step 8 (cycle N end) and Step 0.5 (cycle N+1 start), Step 0.5 catches it.
+
+---
+
 ## Step 1 — Arm / cancel cron per invocation form
 
 | Invocation | Cron action |
