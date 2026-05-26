@@ -122,6 +122,15 @@ Makes you visible. Starts broker. Enables message push. Also auto-launches `agen
 Registering under the base serial means your `~C` inbox directory is never checked — you will
 silently miss all GOs and MCP messages addressed to your lane serial.
 
+**A.1 — Write session-id-keyed serial file (LD-0070 §7.2):**
+```bash
+mkdir -p org/mcp/sessions
+if [ -n "${CLAUDE_CODE_SESSION_ID:-}" ]; then
+    echo "{your_full_suffixed_serial}" > "org/mcp/sessions/${CLAUDE_CODE_SESSION_ID}.serial"
+fi
+```
+Enables the PostToolUse hook to resolve agent serial via per-session deterministic source (tilde-lane-safe; broker-outage-resilient; survives `.comp-graph/.agent_context` race). Hook applies once WB-1.1 patch lands; this file write is harmless ~50-byte data until then. Env var name is `$CLAUDE_CODE_SESSION_ID` (with `_CODE_` infix) — empirically verified set by Claude Code at session start. Files are per-session ephemeral; gitignored at `org/mcp/sessions/*.serial`; GC'd 24h post-last-activity per spec §7.4.
+
 **B. Check inbox for offline messages — two paths, both required:**
 ```bash
 check-inbox {your_serial}   # filesystem path: reads inbox/{serial}/ + inbox/{base}/
