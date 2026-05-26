@@ -136,6 +136,7 @@ Comprehensive Mode B fires **ONLY** when a closeout-threshold signal fires. The 
 | 2 | Close-out RAVC2 dispatched | MCP subject-prefix `[RAVC2-CLOSE]` OR final-phase RAVC2-Accept landed per PRD-phase state |
 | 3 | Andrew direct trigger | MCP subject-prefix `[VERIFY-CHANNEL-NOW]` or explicit Andrew request |
 | 4 | /spot-check explicit escalation | MCP subject-prefix `[SPOT-ESCALATE-CLOSEOUT]` (TIGHTENED from Round-1 5-condition handoff to single explicit-tag mechanism per joint CVO council) |
+| 5 | Ferry-review request (cross-fabric compiler import per LD-0069) | MCP subject-prefix `[FERRY-READY]` ferried by MSTR from CL CTO; ferry-bundle contains completed CL compiler; ws CTO + ws CVO joint-review |
 
 **Class 2 — Scan-detected (at next 2h scan moment):**
 
