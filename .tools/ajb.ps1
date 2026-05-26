@@ -90,6 +90,12 @@ function ajb {
 
     Write-Host "[ajb] launching $Serial in ajb_workspace ..." -ForegroundColor Cyan
 
+    # Set the PowerShell window title to the agent serial so the operator can
+    # identify each agent's tab at a glance in Windows Terminal (LD-0079).
+    # Applies whether ajb is invoked from spawn-agent.ps1 (autonomous spawn) or
+    # typed manually in a fresh terminal -- title gets set in either path.
+    $Host.UI.RawUI.WindowTitle = $Serial
+
     # Per-process serial -> the PostToolUse telemetry hook reads $OPAL_AGENT_SERIAL
     # first (it wins over the shared .comp-graph/.agent_context file), so this
     # session's tool calls land in org/mcp/agent_telemetry/<serial>.jsonl correctly

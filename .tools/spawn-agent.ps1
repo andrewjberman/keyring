@@ -177,7 +177,11 @@ if ($Extra) {
 # Trailing comment "# OPAL_SPAWN_MARKER_v1: <Serial>" is a harmless no-op that
 # stays in the spawned PowerShell process's CommandLine, where the concurrency
 # cap above and .tools/kill-agent.ps1 both grep for it.
-$inner = ". `"$ajb`"; ajb -Headless $Serial$extraStr $marker`: $Serial"
+# Set the PowerShell window title to the agent serial so the operator can
+# identify each spawned tab at a glance in Windows Terminal (LD-0079).
+# Backtick-escape the leading $ so the outer interpolation doesn't expand $Host;
+# the inner $Serial DOES interpolate (gets baked into the inner script string).
+$inner = "`$Host.UI.RawUI.WindowTitle = '$Serial'; . `"$ajb`"; ajb -Headless $Serial$extraStr $marker`: $Serial"
 Start-Process powershell -ArgumentList '-NoProfile', '-NoExit', '-Command', $inner
 
 # Audit -- every successful spawn is recorded.
