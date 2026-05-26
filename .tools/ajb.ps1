@@ -117,9 +117,25 @@ function ajb {
         [string[]]$Extra
     )
 
-    $ws = 'C:\Users\AndrewBerman\Desktop\ajb_workspace'
+    # CL-serial cwd routing per LD-0088 A.1 (Andrew sovereign ratify 5c399a27f
+    # + LD-0089 AC1 standing authorization). CL-fabric agents launch in the
+    # feature_clb worktree so feature_clb/.claude/skills/ + feature_clb/.mcp.json
+    # are the discovered configs; ws-fabric agents launch in ajb_workspace. CL
+    # serials enumerated: 1.1.0_SA_CTO + 2.1.0_SA_COO + 3.1.0_SA_CVO + 2.1.0_SC_CompLearns
+    # + 1.[1-4].0_DS_CompLearns (matches Get-AgentLoopDirective CL pattern + the
+    # owned-paths COMP_LEARNS lane in .owned-paths.yaml).
+    $base = $Serial -replace '~[A-Za-z0-9]+$', ''
+    switch -Regex ($base) {
+        '^(1\.1\.0_SA_CTO|2\.1\.0_SA_COO|3\.1\.0_SA_CVO|2\.1\.0_SC_CompLearns|1\.[1-4]\.0_DS_CompLearns)$' {
+            $ws = 'C:\Users\AndrewBerman\Desktop\feature_clb'
+            Write-Host "[ajb] CL-serial routing -> feature_clb cwd (LD-0088 A.1)" -ForegroundColor Cyan
+        }
+        default {
+            $ws = 'C:\Users\AndrewBerman\Desktop\ajb_workspace'
+        }
+    }
     if (-not (Test-Path $ws)) {
-        Write-Error "ajb: ajb_workspace not found at $ws"
+        Write-Error "ajb: workspace not found at $ws"
         return
     }
 

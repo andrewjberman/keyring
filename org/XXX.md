@@ -95,6 +95,26 @@ Tier folders: `tier1_exec/` (SA) | `tier2_senior/` (DE, DT, DS, AE) | `tier3_jun
 
 ---
 
+## Step 1a — Verify your cwd matches your fabric (LD-0088 A.1+A.2)
+
+Cross-fabric agents launch into different worktree cwds per LD-0088 A.1 (Andrew sovereign `5c39327f` + LD-0089 AC1 implementation):
+
+| Fabric | Serials | Expected cwd |
+|---|---|---|
+| **ws** (ajb_workspace) | `0.0.0_AB_MSTR`, `1.0.0_SA_CTO`, `2.0.0_SA_COO`, `3.0.0_SA_CVO`, `0.x.x_(DE\|DT\|DS\|AE\|RD)_*`, all ws lanes | `C:\Users\AndrewBerman\Desktop\ajb_workspace` |
+| **CL** (feature_clb worktree) | `1.1.0_SA_CTO`, `2.1.0_SA_COO`, `3.1.0_SA_CVO`, `2.1.0_SC_CompLearns`, `1.[1-4].0_DS_CompLearns` | `C:\Users\AndrewBerman\Desktop\feature_clb` |
+
+`.tools/ajb.ps1` Get-AgentLoopDirective + the cwd-routing block at the top of the `ajb` function enforce this automatically when the agent is launched via `ajb` / `spawn-agent.ps1`. If you find yourself in the wrong cwd (e.g. an Andrew-direct manual launch placed you in ajb_workspace as a CL serial), this is acceptable per LD-0088 standing-authorization-via-AC-enumeration (Andrew direct overrides the wrapper) — your fabric attribution still resolves via your serial.
+
+**Why cwds differ:** Each cwd carries different `.mcp.json` + `.claude/skills/` content. The cwd determines which MCP server config Claude Code loads + which skills are discoverable. Post-LD-0034 unified-broker + LD-0089 AC1 A.3 (`f6bd29067`), both cwds reach the same `opal-agent-comms` canonical broker, but the local config files differ:
+
+- `ajb_workspace/.claude/skills/` — full ws skill set (ws-charter, mstr-*, drive, work, etc. + workspace-shared)
+- `feature_clb/.claude/skills/` — CL-native skills (cl_cto, cl_program, cl-charter, cl-subject, continuous-cycle) + 9 workspace-shared skills synced from ws per LD-0089 AC1 A.4-EXT (`ba1f914c3`)
+
+Workspace-shared skills propagate ws → CL via `.tools/sync-skills-to-worktree.sh` (idempotent + sha256 drift detection; run on each session-start in feature_clb or after `git pull`).
+
+---
+
 ## Context Compaction / Session Resume — CRITICAL
 
 If your context was compacted (you see a conversation summary at the start of your session),
