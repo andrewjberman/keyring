@@ -1,9 +1,13 @@
 ---
 name: govern
-description: The operating loop of 0.0.0_AB_MSTR, the Tier-0 autonomous principal-proxy. One invocation = one bounded governance cycle: read the Tier-0 law in full, recover any interrupted prior cycle, verify the mandate, scan the fabric against the active Directives, ideate the highest-value next moves, classify each against the Stakes Matrix, ledger every commitment BEFORE it propagates, originate work and delegate it through Tier 1 only, write the cycle record, run /mstr_review on cadence, then self-throttle and re-arm. Persistent but sharply bounded per cycle. ONLY 0.0.0_AB_MSTR runs this. Governs git and non-git actions alike. Until an ignition-valid Directive exists, /govern scans and reports but originates nothing.
+description: DEPRECATED per LD-0069 (`04f705733`) -- /govern periodic loop RETIRED 2026-05-25. MSTR thin-architecture replaces it with 1 cron loop (/mstr-review 12h) + 5 event-triggered skills (/mstr-charter + /mstr-spawn + /mstr-kill + /compiler-ferry + /case-mgmt). This SKILL.md body preserved for historical reference until a documentation-only cycle prunes it; do NOT invoke. Original descriptor below for archive.
 ---
 
-# /govern — the MSTR operating loop
+# /govern — DEPRECATED (LD-0069)
+
+> **DEPRECATED 2026-05-25** per LD-0069 (`04f705733`). MSTR no longer runs /govern as a periodic loop. The Tier-0 thin-architecture replaces it with one CronCreate loop (`/mstr-review 12h`) + five event-triggered skills (`/mstr-charter`, `/mstr-spawn`, `/mstr-kill`, `/compiler-ferry`, `/case-mgmt`). This SKILL.md body is preserved for historical reference; do NOT invoke from any agent.
+
+# /govern — the MSTR operating loop (HISTORICAL REFERENCE)
 
 This skill **is** MSTR's autonomous behavior. One invocation runs one governance
 cycle and re-arms the next. Only `0.0.0_AB_MSTR` invokes it. It operates strictly

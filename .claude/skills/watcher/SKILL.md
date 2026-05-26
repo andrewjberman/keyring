@@ -104,16 +104,18 @@ Ask yourself one question:
   belongs to a dead session).
 - **YES** → you have a tracked watcher.
   - VERDICT `PROCESS-OK` with exactly one watcher → healthy. Skip to **Step 5**.
-  - VERDICT `ORPHAN` with exactly one watcher AND your latest tracked task's
-    completion task-notification has NOT yet fired → this is likely your tracked
-    watcher whose launcher shell detached (PPID reparented to 1); the watcher
-    itself is still polling correctly. Treat as PROCESS-OK-equivalent. Skip to
-    **Step 5**.
-  - VERDICT `ORPHAN` with exactly one watcher AND your latest tracked task's
-    completion task-notification HAS fired → that single PID is the legitimate
-    auto-respawn copy spawned by `inbox-watch.sh:130-135` after delivery
-    (still polling but deaf — no Claude Code interrupt path). **Step 4** to
-    kill + launch a fresh tracked watcher to restore interrupt coverage.
+  - VERDICT `DETACHED-OK` → helper-confirmed this-session tracked watcher whose
+    launcher shell detached; still polling correctly. Skip to **Step 5**.
+  - VERDICT `AUTO-RESPAWN-INTERRUPT-LOST` → helper-confirmed this-session
+    auto-respawn copy from `inbox-watch.sh:130-137` post-delivery; polling but
+    deaf to interrupts. **Step 4** to kill + relaunch tracked, restoring
+    interrupt path.
+  - VERDICT `PRIOR-SESSION-ORPHAN` → helper-confirmed PID not in this session's
+    tracker; genuine leftover. **Step 4** to kill + relaunch.
+  - VERDICT `ORPHAN` (legacy fallback — helper could not disambiguate sub-case;
+    typically `$CLAUDE_CODE_SESSION_ID` missing) → fall back to Step 3
+    tracked-ness check: if YES + your latest task-notification has NOT fired,
+    treat as DETACHED-OK; otherwise **Step 4** to kill + relaunch.
   - VERDICT `MULTIPLE` / `RELATIVE-PATH` / `WRONG-CHANNEL` → strays coexist with
     yours → **Step 4** to clear.
 
@@ -236,7 +238,10 @@ final cycle run and not re-arm). The loop then ends.
 | Helper VERDICT | What it means | Fix |
 |---|---|---|
 | `NONE` | No watcher process for your serial | Step 4 launch (no kill needed) |
-| `ORPHAN` | Watcher has no live eval-launcher parent (PPID=1 / dead / reparented). THREE sub-cases: (1) prior-session leftover; (2) THIS-session tracked watcher whose launcher shell detached (task-notification not yet fired); (3) THIS-session auto-respawn copy from `inbox-watch.sh:130-135` post-delivery (task-notification fired, untracked respawn polling without interrupt path). Disambiguate via Step 3. | (1)/(3): Step 4 kill + relaunch (restore interrupt path). (2): PROCESS-OK-equivalent; skip Step 4. |
+| `ORPHAN` (legacy fallback) | Watcher has no live eval-launcher parent (PPID=1 / dead / reparented); helper could not disambiguate (no `$CLAUDE_CODE_SESSION_ID` env var, or tracker file missing). Three structural sub-cases collapsed under this single verdict. Disambiguate via Step 3. | Step 4 kill + relaunch (conservative; cost of redundant kill < cost of missed delivery). |
+| `DETACHED-OK` | THIS-session tracked watcher whose launcher shell detached (helper read tracker file `org/mcp/tracked_watchers/${CLAUDE_CODE_SESSION_ID}.list` + matched single ORPHAN PID to a `LAUNCH` entry). Still polling correctly. | PROCESS-OK-equivalent; skip Step 4. |
+| `AUTO-RESPAWN-INTERRUPT-LOST` | THIS-session auto-respawn copy from `inbox-watch.sh:130-137` post-delivery (helper matched single ORPHAN PID to a `RESPAWN` entry in tracker file). Polling correctly but deaf to Claude Code interrupts. | Step 4 kill + relaunch (restore interrupt path; filesystem deliveries still work via `.unread-deliveries` sentinel). |
+| `PRIOR-SESSION-ORPHAN` | Single ORPHAN PID present + `$CLAUDE_CODE_SESSION_ID` set + PID NOT found in this session's tracker file. Genuine prior-session or external leftover. | Step 4 kill + relaunch. |
 | `MULTIPLE` | >1 watcher for your serial — atomic-`mv` race, deliveries lost | Step 4: kill ALL, then launch one |
 | `RELATIVE-PATH` | Launched via banned `bash org/mcp/inbox-watch.sh` — PPID=1 zombie risk | Step 4: kill, relaunch via PATH wrapper |
 | `WRONG-CHANNEL` | Watcher launched against the retired `feature_clb/org/mcp/cl-inbox-watch.sh` legacy CL path (orphaned post-LD-0034 unified broker + inbox migration); polls empty directory, deaf to deliveries | Step 4: kill, relaunch via the ws-rooted `inbox-watch {serial}` PATH wrapper (all agents, ws + CL, use the unified path post-LD-0034) |
