@@ -188,7 +188,32 @@ if ($Extra) {
 # Backtick-escape the leading $ so the outer interpolation doesn't expand $Host;
 # the inner $Serial DOES interpolate (gets baked into the inner script string).
 $inner = "[Console]::Write(([char]27).ToString() + ']0;$Serial' + ([char]7).ToString()); `$Host.UI.RawUI.WindowTitle = '$Serial'; . `"$ajb`"; ajb -Headless $Serial$extraStr $marker`: $Serial"
-Start-Process powershell -ArgumentList '-NoProfile', '-NoExit', '-Command', $inner
+
+# Title-setting path (Andrew direct 2026-05-26 + LD-0102): prefer wt.exe with
+# explicit --title flag when Windows Terminal is available, since wt.exe
+# directly tells WT the tab title at creation -- works WITHOUT requiring the
+# suppressApplicationTitle profile setting. The OSC + $Host.UI.RawUI.WindowTitle
+# pair in $inner is belt-and-suspenders fallback for any code path that doesn't
+# end up in WT (conhost legacy console host, ssh remote, etc.).
+# wt.exe action-separator is `;` which appears in $inner -- pass $inner as a
+# single quoted commandline arg to powershell.exe inside the wt.exe new-tab
+# subcommand, so wt.exe doesn't try to parse our PowerShell statements as wt
+# actions.
+$wt = Get-Command wt.exe -ErrorAction SilentlyContinue
+if ($wt) {
+    # wt.exe semicolon-escape: wt parses `;` as action-separator. Use `\;` to
+    # escape ANY semicolon inside the -Command payload so wt passes the full
+    # statement string to powershell.exe.
+    $innerForWt = $inner -replace ';', '\;'
+    # `-w new` opens a fresh WT window (preserves the one-window-per-agent UX
+    # convention). `new-tab --title $Serial` sets the tab title that WT will
+    # display at creation. powershell.exe then runs our $inner script inside.
+    & wt.exe -w new new-tab --title $Serial powershell.exe -NoProfile -NoExit -Command $innerForWt
+} else {
+    # Fallback for non-WT environments (e.g. legacy conhost) -- relies on the
+    # OSC + WindowTitle in $inner to set title best-effort.
+    Start-Process powershell -ArgumentList '-NoProfile', '-NoExit', '-Command', $inner
+}
 
 # Audit -- every successful spawn is recorded.
 Add-Content -Path $log -Value "$ts  SPAWN  $Serial  by $by"
