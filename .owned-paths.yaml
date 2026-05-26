@@ -905,6 +905,16 @@ paths:
     note: "DeckGeneration pipeline — AE-managed (deck-generation-v1.0.0)"
 
   # -----------------------------------------------------------------------
+  # projects/ — workspace-infra projects (LD-0067 family + future siblings).
+  # Most of /projects/ is gitignored (vendor / external — see .gitignore);
+  # explicit per-subpath entries below cover workspace-infra subpaths that
+  # are git-tracked + consumed by skills.
+  # -----------------------------------------------------------------------
+  "projects/case_find_bridge/**":
+    lane: ANY_EXEC_OR_AE
+    note: "LD-0067 v1 bridge for /case-find external material quarantine — AE 0.7 owns the bridge code; CL CVO consumes via /case-find skill body; execs (incl CVO) author review-edits. Supersedes when projects/case_find_quarantine/ lands per WS-B (CASE_FIND_SECURITY_PROTOCOL.md §10 companion-docs). Added 2026-05-26 by COO per AE 0.7 [OWNED-PATHS-ASK] (Andrew Path-1 directive 2026-05-26T~0040Z 'Path 1 go'; tilde-lane-gap-style 1-line lane add pattern)."
+
+  # -----------------------------------------------------------------------
   # gold/ — gold outputs / meta
   # -----------------------------------------------------------------------
   "gold/**":
