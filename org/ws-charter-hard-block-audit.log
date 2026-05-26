@@ -1,0 +1,49 @@
+# ws-charter HARD-BLOCK Audit Log
+#
+# Authority: MSTR-authorized init per LD-0080 + Andrew direct 2026-05-26T~02:38Z
+# Provenance: LD-0066 (/charter 3-way split) -> LD-0062 (charter loop architecture)
+# Owner: 1.0.0_SA_CTO (ws CTO) — appends HARD-EXIT entries per /ws-charter Step 4a
+# Schema: One line per HARD-EXIT fire (format below). NEVER edit past lines.
+#
+# ===========================================================================
+# 13-CLASS HARD-BLOCK ENUMERATION (per .claude/skills/ws-charter/SKILL.md Step 4a)
+# ===========================================================================
+#  1. TIER0_LAW authoring (DIRECTIVES / CONSTITUTION / STAKES_MATRIX scribe)
+#  2. Cross-fabric coordination authoring (CTO x CL CTO x MSTR coord artifacts)
+#  3. Destructive ops (rm -rf, git reset --hard, force-push, S3/EC2/DB deletion)
+#  4. S3/S4 procurement, principal-strategy, Stakes-Matrix amendment
+#  5. MCP broker config mutations / channel registrations
+#  6. Git remote-network ops beyond push-to-CLOUD (push to main, tag create+push,
+#     gh pr create/merge, force-push)
+#  7. New project code creation / REGISTRY.md Active-section additions
+#     (= NOVEL class; NOVEL itself is the override path)
+#  8. Agent spawn / kill operations (.tools/spawn-agent.ps1, .tools/kill-agent.ps1)
+#     (MSTR creator-destroyer scope; never /ws-charter)
+#  9. Memory-bank writes that contradict canonical memories
+# 10. safe-commit.sh --force / TIER0_LAW override invocations
+# 11. CL-specific (Cases substrate / /case-find equivalent) -- NOT applicable to ws
+# 12. CL-specific (Input 1/2/3 cascade authoring per V1.3) -- NOT applicable to ws
+# 13. CL-specific (queue-pull sequencing) -- NOT applicable to ws PARALLEL
+#
+# Per-instance Andrew override window: "within same cycle" only -- direction at
+# cycle N authorizes class action cycle N only; cycle N+1 requires re-authorize.
+#
+# Council-of-experts membership for HARD-BLOCK enumeration updates is itself
+# TIER0_LAW-equivalent (Class 1). Add/remove entries only via per-instance
+# Andrew direction + MSTR ratification.
+#
+# ===========================================================================
+# ENTRY FORMAT (one per HARD-EXIT fire)
+# ===========================================================================
+# <UTC ISO timestamp>  HARD-EXIT  class=<N> intended_action="<one-line>"
+#                                  cycle=<ws-charter cycle ID> override=<none|"<andrew-direction-ref>">
+#                                  commit_pre_exit=<sha-or-NONE>
+#
+# Example (synthetic):
+# 2026-05-26T03:00:00Z  HARD-EXIT  class=1 intended_action="scribe DIRECTIVES.md per CTO design"
+#                                  cycle=ws-charter-0042 override=none
+#                                  commit_pre_exit=2682f0b63
+#
+# ===========================================================================
+# AUDIT LOG INITIALIZED 2026-05-26T~03:30Z by 1.0.0_SA_CTO per LD-0080 (MSTR-authored content; ws CTO scribed under WS_CHARTER_AUDIT lane post-12b97229e lane bootstrap)
+# ===========================================================================
