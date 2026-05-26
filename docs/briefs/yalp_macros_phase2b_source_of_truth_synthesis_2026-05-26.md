@@ -624,3 +624,90 @@ Cleanup-class follow-up MCPs chained from this brief (non-blocking for synthesis
 
 — 0.1.0_DS_MarketIntelligence~A
 2026-05-26 work-cycle:2 (Phase 2b YALP_MACROS.007 synthesis)
+
+---
+
+## §12 — Post-RAVC2-ACCEPT amendment: Fed NLP Sentiment empirical reclassification (2026-05-26 ~21:50Z)
+
+**Trigger:** Per §11 standing posture commitment + §5.2 self-clarify follow-up + ws COO RAVC2-ACCEPT routing (cycle 112 carry-on). Post-RAVC2-ACCEPT amendment per [[feedback_corroborate_with_concern_verdict_shape]] additive-amendment pattern — original §1-§11 ratified-as-is; this §12 reports the empirical finding + propagates reclassification implications.
+
+### §12.1 — Empirical finding: Fed NLP Sentiment is Bloomberg-licensed, NOT yang-internal
+
+**Code-spelunk evidence (~21:50Z):**
+
+`infra/aws/lambda/v2_portal/yang_pipeline/macroeconomics/yang-generate-macro/lambda_function.py:102`:
+```python
+'Investor Sentiment': {
+    ...
+    'Fed NLP Sentiment': 'BENLPFED Index',
+},
+```
+
+Yang ingests "Fed NLP Sentiment" via Bloomberg ticker **`BENLPFED Index`** through the same Bloomberg `data.pkl` upstream as all other Investor Sentiment group indicators (AAII series). Sister `docs/reference/yang-original-scripts/YANG_SCRIPTS_RUBRIC.md:108` confirms verbatim mapping.
+
+**Original §5.2 + §1 row 58 + §2.8 hypothesis REFUTED.** "Fed NLP Sentiment" is NOT yang-internal NLP derivation; it IS Bloomberg-published. Reclassify to **Bloomberg-licensed PAID-SUBSCRIPTION class**, sister to:
+- Bloomberg Financial Condition Index `BFCIUS` (§1 row 18; original brief)
+- Bloomberg US Aggregate Bond Index (`AGG`; §1 row 72; original brief — substitute via Yahoo ETF-NAV exists)
+
+`BENLPFED` is Bloomberg Economics' NLP-sentiment-of-Fed-text composite (FOMC minutes / beige book / Powell pressers); Bloomberg-Terminal-licensed; no FRED-mirror; no public REST API; no obvious open substitute (Atlanta Fed historical NLP series `ATLSBUIREI` + `ATLSBUSGUI` are DISCONTINUED per ~A §2.8).
+
+### §12.2 — Reclassification implications
+
+**§1 row 58 (Investor Sentiment / Fed NLP Sentiment) amendments:**
+- PRIMARY-source: was "yang-internal NLP derivation (suspected)" → **"Bloomberg `BENLPFED Index` (Bloomberg-licensed proprietary)"**
+- PRIMARY-endpoint: was "(yang code path TBD; clarify ~A)" → **"(Bloomberg Terminal subscription only; no public endpoint)"**
+- Cadence: was "Indeterminate pending yang-side clarification" → **"Daily/Weekly (Bloomberg release cadence; precise schedule TBD post-subscription onboard)"**
+- SECONDARY: was "(none)" → **"(none — no open substitute available; Atlanta Fed historical NLP discontinued)"**
+- Cost/access: was "YANG-INTERNAL-CLARIFY" → **"PAID-SUBSCRIPTION (Bloomberg-Terminal-licensed)"**
+- RE-class: was "RE-GAP (or yang-internal-not-RE-class)" → **"RE-DEFERRED (PAID-class; no substitute path)"**
+
+**§2.8 group-level Investor Sentiment summary:**
+- Group total stays 7 (no change)
+- FRED-MATCH stays 0 (no change)
+- All 7 indicators now PAID-class:
+  - 6 AAII × via AAII-PAID-or-HAR-RE-CANDIDATE (HAR-RE workaround under Cloudflare 403)
+  - 1 Fed NLP via Bloomberg-PAID-SUBSCRIPTION (no substitute)
+- ~E PRIMARY scope changes: was 6 AAII HAR-RE + 1 yang-internal; **now 6 AAII HAR-RE + 1 Bloomberg-PAID-architectural-call**
+
+**§4 architectural-call surface count: was 5 PAID → now 6 PAID-no-substitute.** Sister §4.2 row addition:
+
+| # | Indicator | (a) Subscribe ? | (b) Substitute available | (c) RE-GAP acceptable | RECOMMENDATION |
+|---:|---|---|---|---|---|
+| 58 | Fed NLP Sentiment | Bloomberg Terminal subscription (~$24K/yr per seat; same-class as BFCI + AGG) | (no clean substitute; Atlanta Fed historical NLP discontinued; building yang-internal NLP from FOMC corpus is build-not-buy) | YES — Investor Sentiment group has 6 AAII Wave-2 HAR-RE coverage; Fed NLP is 7th-slot decorative | **(c)** with documented Bloomberg-proprietary-no-substitute footnote |
+
+**§4.3 default recommendation: (c) RE-GAP acceptable-by-documentation STANDS for all 6 PAID indicators** (was 5; now 6 with Fed NLP added). Andrew sovereign 21:00Z "push down" framing applies symmetrically. Investor Sentiment group falls from PAID-class-load-bearing if Fed NLP elevated — but Wave-2 6 AAII HAR-RE provides 86% group-coverage which is sufficient per Andrew sovereign framing.
+
+**§6 verdict-taxonomy distribution amendment:**
+- RE-GAP: was ~11 → **~10** (Fed NLP moves OUT; AAII×6 stay; remaining ~10 = NAHB + PHSI + UMich 5Y + CCI + LEI-substitute + 4 other HAR-RE rows)
+- RE-DEFERRED: was 6 → **7** (Fed NLP moves IN; sister-class to AGG-Bloomberg + BFCI-Bloomberg already in RE-DEFERRED-candidate-class per §1 row 18 + §1 row 72; Fed NLP now formally RE-DEFERRED no-substitute variant)
+- Total 79: 79 unchanged
+
+**§8 coverage gaps amendment:**
+- Net Wave-5(c) accept-GAP indicators count: was 5 (PAID-only-no-substitute) → **6** (+1 Fed NLP)
+- 100% routing closure unchanged (Fed NLP was already 1 in §8.3 "GAP" bucket; just reclassified between RE-GAP-yang-internal-suspect vs RE-DEFERRED-Bloomberg-paid)
+
+**§5.6 routing summary amendment:**
+- Finding 5.2 (Fed NLP yang-internal) status: **was open self-clarify → now RESOLVED** with reclassification to PAID-SUB / RE-DEFERRED per §4 architectural-call surface. Cleanup-class finding count drops from 5 → 4 net (Fed NLP is no longer cleanup-class; it's architectural-call-class).
+
+### §12.3 — Memory candidate refinement
+
+§9 candidate #7 (`yang-internal-vs-publisher-published-indicator-class-distinction`) refinement:
+
+> **Empirical correction:** Fed NLP Sentiment was initially hypothesized as yang-internal-class (sister to F4 Industrial Productivity label-variant + F5 Ted Spread post-LIBOR + PPI modern/legacy class-distinction); empirically confirmed as **publisher-published-Bloomberg-class** (sister to BFCI + AGG = Bloomberg-licensed-proprietary-class). The hypothesis class itself stands as a reconnaissance discipline; **the worked example now serves as a discipline-correction case — always live-verify yang upstream code-path before classifying as yang-internal**, per [[feedback_api_catalog_live_verify_before_committing_ids]] LD-31 discipline extended to yang-side ingest assertions.
+
+**New memory candidate (banked this amendment):**
+
+14. **`yang-internal-vs-publisher-published-class-must-be-live-verified-against-yang-code-path-not-hypothesized`** — sister to [[feedback_api_catalog_live_verify_before_committing_ids]] LD-31 + ~A §1.6 release_id ground-truth discipline. **Anchor:** Fed NLP Sentiment hypothesized yang-internal in synthesis brief §5.2 (~21:35Z); empirically refuted via yang Lambda code-spelunk ~21:50Z (BENLPFED Bloomberg ticker confirmed). **Discipline:** when reconnaissance-brief surfaces a "yang-internal-suspect" indicator-class candidate, code-spelunk yang Lambda source-of-truth (`infra/aws/lambda/v2_portal/yang_pipeline/.../lambda_function.py` `BBG_TICKERS` dict OR `MACRO_GROUPS` rubric) BEFORE banking the candidate — same empirical-anchor-over-assumption discipline as release_id / series_id catalog ground-truth.
+
+### §12.4 — Standing posture refresh
+
+- TO-007 synthesis RAVC2-ACCEPTED ✓ (cycle 112; original brief stands; §12 is additive amendment)
+- §5.2 self-clarify commitment RESOLVED ✓ (Fed NLP empirical class confirmed)
+- Cleanup-class findings count: was 5 → 4 (Fed NLP reclassified out of cleanup-class into architectural-call-class)
+- §4 architectural-call surface count: was 5 → 6 (+Fed NLP)
+- /work 20m cron continued (job 408883d5)
+- Standing for ws COO TO-008 multi-source RE harness build GO dispatch (deferred to cycle 113 cron ~21:47Z per ws COO RAVC2-ACCEPT message)
+
+— 0.1.0_DS_MarketIntelligence~A
+2026-05-26 ~21:50Z (post-RAVC2-ACCEPT amendment; work-cycle:3)
+
