@@ -439,6 +439,216 @@ def cmd_dag(args):
         print()
 
 
+def scan_lambda_io(content: str) -> dict:
+    """ADHC_COMPIL_V5 TO-VAL AC-VAL-Y -- public Lambda I/O scanner.
+
+    Extracted from _lambda_pipescript_io so the graph-extraction pass in
+    extract_s3.extract_lambda_s3_edges can reuse the same regex + AST +
+    call-graph DFA pipeline without duplicating logic. Returns a dict:
+
+        {
+            "s3_reads": set[str],          # resolved S3 keys read
+            "s3_writes": set[str],         # resolved S3 keys written
+            "s3_prefix_reads": set[str],   # prefix patterns ending with '*'
+            "ddb_tables": set[str],        # DynamoDB table names
+            "dynamic_refs": list[str],     # s3:// + f-string refs not in s3_reads/writes
+        }
+
+    Reusable from BOTH the CLI print path (comp-pipescript io <Lambda-path>)
+    AND the graph-extraction pass (build_graph -> extract_lambda_s3_edges ->
+    Lambda<->S3_ARTIFACT edges queryable via comp-trace + comp-blast).
+    """
+    constants: dict[str, str] = {}
+    for m in re.finditer(
+        r"""^([A-Z_][A-Z0-9_]*)\s*=\s*['"]([^'"\n]+)['"]\s*$""",
+        content,
+        re.MULTILINE,
+    ):
+        constants[m.group(1)] = m.group(2)
+
+    def _resolve(var_or_lit: str) -> str:
+        return constants.get(var_or_lit, var_or_lit)
+
+    s3_reads: set[str] = set()
+    s3_writes: set[str] = set()
+    s3_prefix_reads: set[str] = set()
+    ddb_tables: set[str] = set()
+
+    from org.modules.graph.extract_pipeline import _collapse_multiline_calls
+    collapsed = _collapse_multiline_calls(content)
+
+    for m in re.finditer(
+        r"""(?:get_object|head_object|download_file|download_fileobj)\s*\([^)]*Key\s*=\s*(?:f?['"]([^'"]+)['"]|([A-Za-z_][A-Za-z_0-9.]*))""",
+        collapsed,
+    ):
+        key = _resolve(m.group(1) or m.group(2) or "")
+        if key:
+            s3_reads.add(re.sub(r"\{[^}]+\}", "{*}", key))
+    for m in re.finditer(
+        r"""(?:list_objects(?:_v2)?)\s*\([^)]*Prefix\s*=\s*(?:f?['"]([^'"]+)['"]|([A-Za-z_][A-Za-z_0-9.]*))""",
+        collapsed,
+    ):
+        pfx = _resolve(m.group(1) or m.group(2) or "")
+        if pfx:
+            s3_prefix_reads.add(re.sub(r"\{[^}]+\}", "{*}", pfx) + "*")
+    for m in re.finditer(
+        r"""(?:put_object|upload_file|upload_fileobj|copy_object)\s*\([^)]*Key\s*=\s*(?:f?['"]([^'"]+)['"]|([A-Za-z_][A-Za-z_0-9.]*))""",
+        collapsed,
+    ):
+        key = _resolve(m.group(1) or m.group(2) or "")
+        if key:
+            s3_writes.add(re.sub(r"\{[^}]+\}", "{*}", key))
+    for m in re.finditer(
+        r"""dynamodb\.Table\s*\(\s*(?:['"]([^'"]+)['"]|([A-Za-z_][A-Za-z_0-9]*))\s*\)""",
+        collapsed,
+    ):
+        tbl = _resolve(m.group(1) or m.group(2) or "")
+        if tbl:
+            ddb_tables.add(tbl)
+    for m in re.finditer(
+        r"""TableName\s*=\s*(?:['"]([^'"]+)['"]|([A-Za-z_][A-Za-z_0-9]*))""",
+        collapsed,
+    ):
+        tbl = _resolve(m.group(1) or m.group(2) or "")
+        if tbl:
+            ddb_tables.add(tbl)
+
+    # AST-based helper-fn call-graph + intermediate-var DFA
+    try:
+        import ast as _ast
+        tree = _ast.parse(content)
+
+        local_var_maps: dict[str, dict[str, str]] = {}
+
+        def _eval_str_expr(value_node) -> str | None:
+            if isinstance(value_node, _ast.Constant) and isinstance(value_node.value, str):
+                return value_node.value
+            if isinstance(value_node, _ast.Name):
+                return constants.get(value_node.id)
+            if isinstance(value_node, _ast.JoinedStr):
+                parts: list[str] = []
+                for v in value_node.values:
+                    if isinstance(v, _ast.Constant) and isinstance(v.value, str):
+                        parts.append(v.value)
+                    elif isinstance(v, _ast.FormattedValue):
+                        if isinstance(v.value, _ast.Name) and v.value.id in constants:
+                            parts.append(constants[v.value.id])
+                        else:
+                            parts.append("{*}")
+                    else:
+                        parts.append("{*}")
+                return "".join(parts)
+            return None
+
+        for fn_node in _ast.walk(tree):
+            if not isinstance(fn_node, _ast.FunctionDef):
+                continue
+            local: dict[str, str] = {}
+            for inner in _ast.walk(fn_node):
+                if not isinstance(inner, _ast.Assign):
+                    continue
+                if len(inner.targets) != 1:
+                    continue
+                tgt = inner.targets[0]
+                if not isinstance(tgt, _ast.Name):
+                    continue
+                if tgt.id in local:
+                    continue
+                resolved = _eval_str_expr(inner.value)
+                if resolved is not None:
+                    local[tgt.id] = resolved
+            local_var_maps[fn_node.name] = local
+
+        helper_key_param: dict[str, tuple[str, str]] = {}
+        S3_READ_FNS = {"get_object", "head_object", "download_file", "download_fileobj"}
+        S3_WRITE_FNS = {"put_object", "upload_file", "upload_fileobj", "copy_object"}
+        for node in _ast.walk(tree):
+            if not isinstance(node, _ast.FunctionDef):
+                continue
+            for inner in _ast.walk(node):
+                if not isinstance(inner, _ast.Call):
+                    continue
+                attr = getattr(inner.func, "attr", None)
+                if attr in S3_READ_FNS | S3_WRITE_FNS:
+                    for kw in inner.keywords:
+                        if kw.arg == "Key" and isinstance(kw.value, _ast.Name):
+                            param_name = kw.value.id
+                            params = [a.arg for a in node.args.args]
+                            if param_name in params:
+                                kind = "write" if attr in S3_WRITE_FNS else "read"
+                                helper_key_param[node.name] = (param_name, kind)
+
+        for node in _ast.walk(tree):
+            if not isinstance(node, _ast.Call):
+                continue
+            fname = None
+            if isinstance(node.func, _ast.Name):
+                fname = node.func.id
+            elif isinstance(node.func, _ast.Attribute):
+                fname = node.func.attr
+            if not fname or fname not in helper_key_param:
+                continue
+            param_name, op_kind = helper_key_param[fname]
+            params: list[str] = []
+            for fn_node in _ast.walk(tree):
+                if isinstance(fn_node, _ast.FunctionDef) and fn_node.name == fname:
+                    params = [a.arg for a in fn_node.args.args]
+                    break
+            try:
+                idx = params.index(param_name)
+            except ValueError:
+                continue
+            arg_node = None
+            if idx < len(node.args):
+                arg_node = node.args[idx]
+            else:
+                for kw in node.keywords:
+                    if kw.arg == param_name:
+                        arg_node = kw.value
+                        break
+            if arg_node is None:
+                continue
+            enclosing_fn: str | None = None
+            for fn_node in _ast.walk(tree):
+                if not isinstance(fn_node, _ast.FunctionDef):
+                    continue
+                for inner in _ast.walk(fn_node):
+                    if inner is node:
+                        enclosing_fn = fn_node.name
+                        break
+                if enclosing_fn:
+                    break
+            local = local_var_maps.get(enclosing_fn, {}) if enclosing_fn else {}
+            resolved_key: str | None = _eval_str_expr(arg_node)
+            if resolved_key is None and isinstance(arg_node, _ast.Name):
+                resolved_key = local.get(arg_node.id)
+            if resolved_key:
+                normalized = re.sub(r"\{[^}]+\}", "{*}", resolved_key)
+                if op_kind == "write":
+                    s3_writes.add(normalized)
+                else:
+                    s3_reads.add(normalized)
+
+        for ph in ("key", "Key", "k", "object_key", "s3_key"):
+            s3_writes.discard(ph)
+            s3_reads.discard(ph)
+    except (SyntaxError, ValueError):
+        pass
+
+    from org.modules.graph.extract_pipeline import _extract_dynamic_refs
+    dynamic = _extract_dynamic_refs(content)
+    covered = s3_reads | s3_writes | s3_prefix_reads
+    dynamic_refs = [d for d in dynamic if d not in covered and d.rstrip("/") not in covered]
+
+    return {
+        "s3_reads": s3_reads,
+        "s3_writes": s3_writes,
+        "s3_prefix_reads": s3_prefix_reads,
+        "ddb_tables": ddb_tables,
+        "dynamic_refs": dynamic_refs,
+    }
+
+
 def _lambda_pipescript_io(script_path_arg: str) -> bool:
     """ADHC_COMPIL_V5.002 -- Lambda-side I/O manifest scan.
 

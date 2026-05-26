@@ -619,3 +619,42 @@ def extract_s3_edges(graph: TraceGraph, workspace_root: Path):
                             source=lambda_node_id, target=s3_node_id,
                             edge_type="WRITES_S3",
                         ))
+
+            # ADHC_COMPIL_V5 TO-VAL AC-VAL-Y -- supplemental scan via the
+            # `scan_lambda_io` AST-based helper that catches Lambda patterns
+            # the regex above misses (helper-fn call-graph + per-FunctionDef
+            # intermediate-var DFA + f-string component-wise resolution).
+            # Anchor: DS 0.1.0 YALP_MKTOVR.001 brief §11 -- market-overview-
+            # tiered-generator's `save_to_s3(SUMMARY_KEY, ...)` + intermediate
+            # `key = f"{DETAILS_PREFIX}{ticker}.json"` patterns previously
+            # missed by the regex-only path; supplemental scan adds these
+            # READS_S3/WRITES_S3 edges to make comp-trace + comp-blast
+            # cross-stack traversal Lambda-aware.
+            if py_file.name == "lambda_function.py":
+                try:
+                    from org.modules.graph.pipeline_cli import scan_lambda_io
+                    io = scan_lambda_io(content)
+                    for s3_key in io.get("s3_reads", set()):
+                        if "/" not in s3_key:
+                            continue
+                        s3_node_id = f"s3:{s3_key}"
+                        graph.add_node(Node(
+                            id=s3_node_id, node_type="S3_ARTIFACT", label=s3_key,
+                        ))
+                        graph.add_edge(Edge(
+                            source=s3_node_id, target=lambda_node_id,
+                            edge_type="READS_S3",
+                        ))
+                    for s3_key in io.get("s3_writes", set()):
+                        if "/" not in s3_key:
+                            continue
+                        s3_node_id = f"s3:{s3_key}"
+                        graph.add_node(Node(
+                            id=s3_node_id, node_type="S3_ARTIFACT", label=s3_key,
+                        ))
+                        graph.add_edge(Edge(
+                            source=lambda_node_id, target=s3_node_id,
+                            edge_type="WRITES_S3",
+                        ))
+                except (ImportError, Exception):
+                    pass  # supplemental scan failure must not break the build
