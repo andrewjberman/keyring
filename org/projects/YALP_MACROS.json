@@ -1,0 +1,23 @@
+{
+  "project_code": "YALP_MACROS",
+  "macro_code": "YALP",
+  "name": "Macroeconomics Portal YCharts-vs-Yang Field-Level Verification",
+  "description": "Andrew direct sovereign 2026-05-26 ~16:15Z YALP per-page charter — instantiates YALP_MKTOVR verification probe methodology for the Macroeconomics portal page (portal/src/pages/Macroeconomics/). Scope: YieldCurveTab (UST 2Y/5Y/10Y/30Y yields + 2Y-10Y spread) + MacroHeatmap (CPI, unemployment, housing, PMI macro indicator grid) + MacroTimeSeriesModal (per-indicator historical). Yang upstream: yang-generate-macro (macro_data.json) + yang-generate-macro-timeseries (per-series files). YCharts equivalent: FRED-proxy macro indicator endpoints + per-tenor UST yields. NOT a cutover project; same empirical verification probe class as YALP_MKTOVR.",
+  "prds": [
+    {"path": "docs/architecture/YALP_MACROS.md", "label": "v0.1 PRD canonical via /ws-charter NOVEL authoring per Andrew per-page charter (DS 0.1.0~A tilde-lane parallel-serialized)", "date": "2026-05-26"}
+  ],
+  "_prd_authoring_note": "PRD v0.1 authored 2026-05-26 ~16:20Z by 1.0.0_SA_CTO. Methodology template: YALP_MKTOVR v0.4 (COMPLETE). DS 0.1.0~A tilde-lane primary owner per Andrew tilde-parallel mandate (centralizes YCharts toolchain on DS 0.1.0 + sub-lanes per page). DS 0.2.0 consult-only on TO-003 shared-date. AC9-independent (read-only verification scope). Macro indicators well-covered in YCharts FRED-proxy endpoints per YALP_MDSRC D2 baseline. 7 TOs scoped: TO-001 mapping + TO-002 YCharts pulls + TO-003 shared-date + TO-004 value comparison + TO-005 spreadsheet finalize + TO-VAL consolidated RAVC2. Wave 1 of yang-pipeline-fed-page batch (sister: YALP_VALUAT + YALP_CORREL + YALP_POSITN + YALP_FACTOR).",
+  "source_brief": "Andrew direct sovereign 2026-05-26 ~16:15Z: 'this process [YALP_MKTOVR], exactly how we did it for MKTOVR, has to be done the exact same way for each of the Portal UI pages. I think we make a project for each one... PFAN_PSTION (Positioning) (or whatever macro code we used for portfolio analytics, I dont remember the canonical one), MKOV_MACROS (Macroeconomics), etc. We can then parallelize... parallelizing agents via tilde serializing ~A ~B etc as needed to get it done fast. If there is data that we dont have from past ycharts exploration that is necessary to get these analyses done, then push those pages down in the PRD queue.' Canonical macro per MACRO_CODES.md = MACR (Macroeconomics, Pod 2); macro for YCharts-vs-Yang verification class = YALP (cross-cutting; sister to YALP_MDSRC + YALP_MKTOVR). Project code = YALP_MACROS.",
+  "status": "phase1_prd_v0.1_canonical_dispatch_pending",
+  "phase": "Phase 1 PRD v0.1 CANONICAL 2026-05-26 ~16:20Z via /ws-charter NOVEL authoring. Phase 2 implementation pending COO decomposition + tilde-lane GO dispatch (DS 0.1.0~A primary). Methodology mirrors YALP_MKTOVR v0.4 verbatim; per-page specifics in PRD §1-§3. NOT BLOCKED on AC9 sovereign (read-only verification probe).",
+  "blocking": "(1) COO co-sign + TO-001 GO dispatch to DS 0.1.0~A tilde-lane (parallel with sibling YALP_* probes per Andrew tilde-parallel mandate). (2) Menachem-bundled cookie staleness — fresh YCharts pulls blocked today; use most-recent successful pulls from corpus per Andrew direct guidance. (3) DS 0.2.0 consult availability on TO-003 yang-pipeline publication-timing (low-touch ~30min). (4) `T*` shared-date inheritance from YALP_MKTOVR work (2026-05-22) — reuse expected. (5) Sibling parallel probes via DS 0.1.0~A/~B/~C/~D/~E tilde-lanes per Andrew tilde-parallel mandate.",
+  "depends_on": ["YALP_MKTOVR", "YALP_MDSRC"],
+  "depends_on_note": "Inherits methodology from YALP_MKTOVR v0.4 (COMPLETE 2026-05-26); inherits D2/D3 baseline surface-mapping from YALP_MDSRC (CLOSED 2026-05-22). This PRD adds Macroeconomics-specific Level-1 + Level-2 + spreadsheet deliverable.",
+  "absorbs": [],
+  "created": "2026-05-26",
+  "pods": ["0.1", "0.2"],
+  "pipeline": "yang-pipeline (yang-generate-macro + yang-generate-macro-timeseries) + YCharts (test-pull harness)",
+  "coo_lane": "2.0.0_SA_COO",
+  "thread_counter": 0,
+  "threads": []
+}

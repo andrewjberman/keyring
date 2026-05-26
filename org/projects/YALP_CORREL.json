@@ -1,0 +1,23 @@
+{
+  "project_code": "YALP_CORREL",
+  "macro_code": "YALP",
+  "name": "Correlation Portal YCharts-vs-Yang Field-Level Verification",
+  "description": "Andrew direct sovereign 2026-05-26 ~16:15Z YALP per-page charter — instantiates YALP_MKTOVR methodology for Correlation portal page (portal/src/pages/Correlation/). Scope: pairwise correlation grid across asset-class indices + rolling windows + asset-class filter. Yang upstream: yang-generate-correlation (correlation_data.json from data.pkl return series). YCharts equivalent: per-ticker return series via /v3/companies/<ticker>/prices + computed pairwise correlations matching Yang window methodology. Correlation = derived metric; methodology citation required per Andrew direct.",
+  "prds": [
+    {"path": "docs/architecture/YALP_CORREL.md", "label": "v0.1 PRD canonical via Andrew per-page charter (DS 0.1.0~C tilde-lane)", "date": "2026-05-26"}
+  ],
+  "_prd_authoring_note": "PRD v0.1 authored 2026-05-26 ~16:20Z. Methodology = YALP_MKTOVR v0.4. DS 0.1.0~C tilde-lane primary. Correlation = derived metric; TO-004 includes pairwise correlation computation on YCharts side. Window methodology match critical (TO-001 + TO-003 jointly establish). Sampled top-N pairs to avoid quadratic explosion (N(N-1)/2). AC9-independent.",
+  "source_brief": "Andrew per-page charter 2026-05-26 ~16:15Z (see YALP_MACROS source_brief).",
+  "status": "phase1_prd_v0.1_canonical_dispatch_pending",
+  "phase": "Phase 1 PRD v0.1 CANONICAL 2026-05-26 ~16:20Z. Phase 2 pending COO dispatch to DS 0.1.0~C.",
+  "blocking": "(1) COO co-sign + TO-001 GO to DS 0.1.0~C. (2) Cookie staleness — use corpus. (3) DS 0.2.0 consult ~30min on TO-003 + window methodology cross-check. (4) Pairwise sampling rubric establishment (top-N magnitude + edge-cases). (5) Tilde-lane parallel sibling probes.",
+  "depends_on": ["YALP_MKTOVR", "YALP_MDSRC"],
+  "depends_on_note": "Methodology + baseline inheritance.",
+  "absorbs": [],
+  "created": "2026-05-26",
+  "pods": ["0.1", "0.2"],
+  "pipeline": "yang-pipeline (yang-generate-correlation) + YCharts",
+  "coo_lane": "2.0.0_SA_COO",
+  "thread_counter": 0,
+  "threads": []
+}

@@ -1,0 +1,23 @@
+{
+  "project_code": "YALP_FACTOR",
+  "macro_code": "YALP",
+  "name": "FactorTilts Portal YCharts-vs-Yang Field-Level Verification (3-tier deliverable)",
+  "description": "Andrew direct sovereign 2026-05-26 ~16:15Z YALP per-page charter — instantiates YALP_MKTOVR methodology for FactorTilts portal page (portal/src/pages/FactorTilts/). Scope: 3-tier output — tier1-snapshot (page-mount factor-tilt cards ~46KB) + tier2-spreads (Factor Spreads tab ~196KB) + tier3-timeseries (Time Series toggle ~2.1MB). Yang upstream: single Lambda yang-generate-factor-tilts reading model.pkl FACTOR_SPREADS rubric. YCharts equivalent: 7 MSCI USA factor variants (Momentum / Quality / Value / Growth / Min Vol / Size / Dividend Yield) - all CONFIRMED-REPRESENTATIVE per YALP_MDSRC D2 NTR-variant TR-vs-PR-basis mismatch. This PRD adds Level-2 actual-value verification + 3-tier deliverable structure D2 didn't enumerate.",
+  "prds": [
+    {"path": "docs/architecture/YALP_FACTOR.md", "label": "v0.1 PRD canonical via Andrew per-page charter (DS 0.1.0~E tilde-lane; 3-tier deliverable structure)", "date": "2026-05-26"}
+  ],
+  "_prd_authoring_note": "PRD v0.1 authored 2026-05-26 ~16:20Z. Methodology = YALP_MKTOVR v0.4. DS 0.1.0~E tilde-lane primary. 7 MSCI USA factors confirmed REPRESENTATIVE per D2 baseline (NTR-variant TR-vs-PR persistent ~5-50bp deltas). 3-tier output (snapshot + spreads + timeseries) adds spreadsheet sub-section structure. Tier-3 timeseries sampled (monthly-anchor + 5 most-recent dates × 7 factors) to manage row count. Factor spread methodology citation required (Yang spreads are derived). AC9-independent.",
+  "source_brief": "Andrew per-page charter 2026-05-26 ~16:15Z (see YALP_MACROS source_brief).",
+  "status": "phase1_prd_v0.1_canonical_dispatch_pending",
+  "phase": "Phase 1 PRD v0.1 CANONICAL 2026-05-26 ~16:20Z. Phase 2 pending COO dispatch to DS 0.1.0~E.",
+  "blocking": "(1) COO co-sign + TO-001 GO to DS 0.1.0~E. (2) Cookie staleness — 7-factor YCharts pull set (manageable). (3) DS 0.2.0 consult ~30min. (4) 3-tier sampling rubric (monthly-anchor on Tier-3). (5) Factor spread methodology citation in spreadsheet column. (6) Tilde-lane parallel sibling probes.",
+  "depends_on": ["YALP_MKTOVR", "YALP_MDSRC"],
+  "depends_on_note": "Methodology + D2/D3 prior-art inheritance (7 MSCI USA factors CONFIRMED-REPRESENTATIVE).",
+  "absorbs": [],
+  "created": "2026-05-26",
+  "pods": ["0.1", "0.2"],
+  "pipeline": "yang-pipeline (yang-generate-factor-tilts; model.pkl FACTOR_SPREADS) + YCharts MSCI USA factor endpoints",
+  "coo_lane": "2.0.0_SA_COO",
+  "thread_counter": 0,
+  "threads": []
+}

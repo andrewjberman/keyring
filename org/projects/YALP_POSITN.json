@@ -1,0 +1,23 @@
+{
+  "project_code": "YALP_POSITN",
+  "macro_code": "YALP",
+  "name": "Positioning Portal YCharts-vs-Yang Field-Level Verification",
+  "description": "Andrew direct sovereign 2026-05-26 ~16:15Z YALP per-page charter — instantiates YALP_MKTOVR methodology for Positioning portal page (portal/src/pages/Positioning/). Scope: Positioning main + PositioningSummary panel + HoldingsTab. Yang upstream: yang-generate-positioning (positioning_data.json from data.pkl + model.pkl + cross-pipeline aum-metrics.json) + yang-generate-holdings-attribution (holdings_attribution_data.json from attribution_excel + ETF DynamoDB classifications). YCharts equivalent: per-asset-class index returns (MATCH-class likely) + per-holding allocation + classifications = GAP-class (Yang/BD-internal). Expected verdict mix: ~30-50% MATCH-class (index returns) + ~50-70% GAP-class (allocation metadata).",
+  "prds": [
+    {"path": "docs/architecture/YALP_POSITN.md", "label": "v0.1 PRD canonical via Andrew per-page charter (DS 0.1.0~D tilde-lane)", "date": "2026-05-26"}
+  ],
+  "_prd_authoring_note": "PRD v0.1 authored 2026-05-26 ~16:20Z. Methodology = YALP_MKTOVR v0.4. DS 0.1.0~D tilde-lane primary. GAP-heavy verdict profile expected (Yang/BD-internal allocation metadata); framed as documentation-of-record per Andrew direct sourcing/methodology direction. Attribution page consumes same data but is NOT in this PRD's scope (Wave 2 batch per Andrew push-down rule). AC9-independent.",
+  "source_brief": "Andrew per-page charter 2026-05-26 ~16:15Z (see YALP_MACROS source_brief).",
+  "status": "phase1_prd_v0.1_canonical_dispatch_pending",
+  "phase": "Phase 1 PRD v0.1 CANONICAL 2026-05-26 ~16:20Z. Phase 2 pending COO dispatch to DS 0.1.0~D.",
+  "blocking": "(1) COO co-sign + TO-001 GO to DS 0.1.0~D. (2) Cookie staleness — small YCharts pull surface vs MKTOVR. (3) DS 0.2.0 consult ~30min. (4) GAP-class framing per Andrew sourcing/methodology direction. (5) Tilde-lane parallel sibling probes.",
+  "depends_on": ["YALP_MKTOVR", "YALP_MDSRC"],
+  "depends_on_note": "Methodology + baseline inheritance; cross-page sister Attribution deferred to Wave 2.",
+  "absorbs": [],
+  "created": "2026-05-26",
+  "pods": ["0.1", "0.2"],
+  "pipeline": "yang-pipeline (yang-generate-positioning + yang-generate-holdings-attribution) + YCharts + ETFClassifier DynamoDB",
+  "coo_lane": "2.0.0_SA_COO",
+  "thread_counter": 0,
+  "threads": []
+}

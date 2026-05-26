@@ -1,0 +1,23 @@
+{
+  "project_code": "YALP_VALUAT",
+  "macro_code": "YALP",
+  "name": "Valuation Portal YCharts-vs-Yang Field-Level Verification",
+  "description": "Andrew direct sovereign 2026-05-26 ~16:15Z YALP per-page charter — instantiates YALP_MKTOVR methodology for Valuation portal page (portal/src/pages/Valuation/). Scope: Valuation main view (equity + bond valuation series: P/E, dividend yields, term premiums) + RiskPremiumTab (IG + HY OAS spreads + Yang monthly ERP). Yang upstream: yang-generate-valuation (valuation_data.json) + yang-generate-risk-premium (risk_premium_data.json reading FRED IG/HY OAS + Yang ERP fallback). YCharts equivalent: per-index P/E + dividend yield + per-bond-index endpoints + ICE-BofA OAS series; Yang ERP is GAP-class (internal-derived).",
+  "prds": [
+    {"path": "docs/architecture/YALP_VALUAT.md", "label": "v0.1 PRD canonical via Andrew per-page charter (DS 0.1.0~B tilde-lane)", "date": "2026-05-26"}
+  ],
+  "_prd_authoring_note": "PRD v0.1 authored 2026-05-26 ~16:20Z. Methodology = YALP_MKTOVR v0.4. DS 0.1.0~B tilde-lane primary. Yang ERP = GAP-class (Yang-internal derive; no YCharts equivalent); documented with sourcing/methodology per Andrew direct. AC9-independent.",
+  "source_brief": "Andrew per-page charter 2026-05-26 ~16:15Z (see YALP_MACROS source_brief for full quote).",
+  "status": "phase1_prd_v0.1_canonical_dispatch_pending",
+  "phase": "Phase 1 PRD v0.1 CANONICAL 2026-05-26 ~16:20Z. Phase 2 pending COO dispatch to DS 0.1.0~B.",
+  "blocking": "(1) COO co-sign + TO-001 GO to DS 0.1.0~B. (2) Cookie staleness — use existing corpus. (3) DS 0.2.0 consult ~30min on TO-003. (4) T*=2026-05-22 inheritance from YALP_MKTOVR. (5) Tilde-lane parallel sibling probes.",
+  "depends_on": ["YALP_MKTOVR", "YALP_MDSRC"],
+  "depends_on_note": "Methodology + baseline inheritance per YALP_MKTOVR v0.4 + YALP_MDSRC D2/D3.",
+  "absorbs": [],
+  "created": "2026-05-26",
+  "pods": ["0.1", "0.2"],
+  "pipeline": "yang-pipeline (yang-generate-valuation + yang-generate-risk-premium) + YCharts + FRED cache",
+  "coo_lane": "2.0.0_SA_COO",
+  "thread_counter": 0,
+  "threads": []
+}
