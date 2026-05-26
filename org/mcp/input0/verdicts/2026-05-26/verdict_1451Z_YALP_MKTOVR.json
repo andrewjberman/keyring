@@ -1,0 +1,34 @@
+{
+  "verdict": "CLEAN",
+  "project": "YALP_MKTOVR",
+  "artifacts_verified": [
+    "docs/architecture/YALP_MKTOVR.md@42cbf164c",
+    "docs/briefs/yalp_mktovr_market_overview_field_comparison_2026-05-22.md@cc4a3d575",
+    "docs/briefs/yalp_mktovr_to003_yang_publication_timing_consult.md@8d1d6fcad",
+    "org/projects/YALP_MKTOVR.json@146f033db",
+    "org/projects/REGISTRY.md@146f033db",
+    "org/tier2_senior/0.1.0_DS_MarketIntelligence/task_orders/YALP_MKTOVR.001.ds-market-overview-endpoint-and-field-mapping.md"
+  ],
+  "tools_gating_artifacts": [
+    "comp-platinum page MarketPerformance",
+    "comp-platinum reverse",
+    "comp-routes trace",
+    "comp-blast",
+    "comp-transform fields"
+  ],
+  "axis_mechanical": "GREEN",
+  "axis_intent_coverage": "GREEN",
+  "axis_decision_useful": "GREEN",
+  "axis_constitution_coherence": "GREEN",
+  "constitution_drift_articles": [],
+  "repair_amendment_authorized": false,
+  "timestamp_utc": "2026-05-26T14:51:00Z",
+  "mode": "comprehensive",
+  "source": "verify-channel-ws",
+  "trigger_class": "Class1#3-AndrewDirect",
+  "banking_observations": [
+    "PRD title/versioning vs body v0.3 minor cross-doc inconsistency (ws CTO routine fix, not gate-block)",
+    "TO-001 22min wall vs 3-5h estimate compression (banked for COO RAVC2-Accept review awareness)",
+    "REPRESENTATIVE-class boundary discipline carry-over for TO-004 dispatch (PRD §3.1 explicit-reasoning bar tightening)"
+  ]
+}
