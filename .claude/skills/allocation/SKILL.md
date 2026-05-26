@@ -60,6 +60,26 @@ The deliverable enumerates the candidate list with COO reasoning per agent; MSTR
 
 ---
 
+## Step 3.5 — MSTR pre-clear MCP round-trip (LD-0105 Fix 3)
+
+Before publishing the /allocation deliverable with SPAWN-NEEDED entries, MCP MSTR with subject `[ALLOCATION-PRECHECK]` listing proposed spawn-target serials. MSTR responds within ~30s with per-serial classification:
+
+- **ALREADY-LIVE** — existing marker found via `org/mcp/live_agents_by_marker.json` ground-truth artifact OR live-marker scan. Redirect work to existing serial OR use `FORCE_SPAWN=1 reason="intentional-duplicate <reason>"` if a fresh spawn is genuinely required.
+- **NOT-LIVE** — no marker found; safe to spawn. Promote to SPAWN-NEEDED in deliverable.
+
+**Why this step exists:** broker `get_live_agents()` has a suffix-strip gap that can drop tilde-suffixed serials from the visible-LIVE-set. Empirical anchor: /allocation #12 ~21:38Z proposed SPAWN-NEEDED for DS 0.1.0~D while DS 0.4.0~D was already LIVE on a different scope — visual-collision-class slip that MSTR marker-scan ground-truth artifact catches. LD-0105 Fix 3 (Andrew sovereign 2026-05-26T~22:00Z "Lets do all three yes" + MSTR `5174e6b01`).
+
+**Responsibility split codified in LD-0105:**
+- **COO** = workload-state planning ("what work needs an agent")
+- **MSTR** = spawn-time population gate ("is this serial already alive")
+- **MSTR exposes** `org/mcp/live_agents_by_marker.json` ground-truth artifact; COO consumes for /allocation classification
+
+**Cost:** ~10-30s wall MCP round-trip per cycle when SPAWN-NEEDED list is non-empty. Empty SPAWN-NEEDED skips the precheck (no spawns to verify). Cheap structural insurance.
+
+**Skip-able:** if /allocation deliverable verdict is NO-DELTA (no spawns or kills), Step 3.5 is N/A. Only fires when SPAWN-NEEDED list has entries.
+
+---
+
 ## Step 4 — Emit structured deliverable
 
 Write to `org/tier1_exec/{COO_SERIAL}/briefs/allocation_{YYYYMMDDTHHMMZ}.md`:
