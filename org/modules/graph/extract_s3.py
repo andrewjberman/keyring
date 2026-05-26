@@ -18,6 +18,11 @@ from pathlib import Path
 
 from .trace_graph import TraceGraph, Node, Edge
 
+# ADHC_COMPIL_V5 TO-VAL AC-VAL-Y.5 -- module-private cache for source-map
+# reverse-lookup (source_dir → TF-canonical Lambda name). Populated lazily
+# on first call to extract_s3_edges; cleared on test fixtures via setattr.
+_lambda_source_map_cache: dict[str, str] | None = None
+
 # ---------------------------------------------------------------------------
 # S3 write patterns (gold scripts / Lambdas)
 # ---------------------------------------------------------------------------
@@ -524,6 +529,29 @@ def extract_s3_edges(graph: TraceGraph, workspace_root: Path):
 
     # --- Lambda source (readers) ---
     lambda_dir = workspace_root / "infra" / "aws" / "lambda"
+
+    # ADHC_COMPIL_V5 TO-VAL AC-VAL-Y.5 -- build source_dir → TF-canonical-name
+    # reverse-map once for alias resolution (used by supplemental scan below).
+    # Cached in module-private global to avoid re-parse per Lambda file.
+    global _lambda_source_map_cache
+    if _lambda_source_map_cache is None:
+        _lambda_source_map_cache = {}
+        sm_file = workspace_root / "infra" / "aws" / "lambda" / "ci" / "lambda-source-map.json"
+        if sm_file.exists():
+            try:
+                import json as _json
+                sm_data = _json.loads(sm_file.read_text(encoding="utf-8"))
+                if isinstance(sm_data.get("functions"), dict):
+                    sm_data = sm_data["functions"]
+                for fn_name, entry in sm_data.items():
+                    if isinstance(entry, dict):
+                        src = entry.get("source_dir") or entry.get("source")
+                        if src:
+                            src_norm = src.replace("\\", "/").rstrip("/")
+                            _lambda_source_map_cache[src_norm] = fn_name
+            except Exception:
+                pass  # malformed source-map; alias resolution skipped
+
     if lambda_dir.exists():
         for py_file in lambda_dir.rglob("*.py"):
             if py_file.name.startswith("__") or "layer" in str(py_file).lower():
@@ -630,10 +658,33 @@ def extract_s3_edges(graph: TraceGraph, workspace_root: Path):
             # missed by the regex-only path; supplemental scan adds these
             # READS_S3/WRITES_S3 edges to make comp-trace + comp-blast
             # cross-stack traversal Lambda-aware.
+            #
+            # AC-VAL-Y.5 alias resolution: lambda-source-map.json maps the
+            # TF-canonical function name (e.g. opal-market-overview-tiered-
+            # generator) to source_dir; we lookup the TF-canonical via the
+            # source_dir of this py_file and ALSO add edges under the
+            # TF-canonical Lambda Node so comp-trace works for both name
+            # variants (directory vs TF/AWS-canonical).
             if py_file.name == "lambda_function.py":
                 try:
                     from org.modules.graph.pipeline_cli import scan_lambda_io
                     io = scan_lambda_io(content)
+
+                    # AC-VAL-Y.5 alias lookup: TF-canonical from source-map
+                    tf_canonical_name = None
+                    if _lambda_source_map_cache is not None:
+                        py_parent = str(py_file.parent.relative_to(workspace_root)).replace("\\", "/")
+                        tf_canonical_name = _lambda_source_map_cache.get(py_parent)
+
+                    lambda_ids = {lambda_node_id}
+                    if tf_canonical_name and tf_canonical_name != lambda_name:
+                        tf_node_id = f"lambda:{tf_canonical_name}"
+                        graph.add_node(Node(
+                            id=tf_node_id, node_type="LAMBDA",
+                            label=tf_canonical_name, file_path=rel_path,
+                        ))
+                        lambda_ids.add(tf_node_id)
+
                     for s3_key in io.get("s3_reads", set()):
                         if "/" not in s3_key:
                             continue
@@ -641,10 +692,11 @@ def extract_s3_edges(graph: TraceGraph, workspace_root: Path):
                         graph.add_node(Node(
                             id=s3_node_id, node_type="S3_ARTIFACT", label=s3_key,
                         ))
-                        graph.add_edge(Edge(
-                            source=s3_node_id, target=lambda_node_id,
-                            edge_type="READS_S3",
-                        ))
+                        for lid in lambda_ids:
+                            graph.add_edge(Edge(
+                                source=s3_node_id, target=lid,
+                                edge_type="READS_S3",
+                            ))
                     for s3_key in io.get("s3_writes", set()):
                         if "/" not in s3_key:
                             continue
@@ -652,9 +704,10 @@ def extract_s3_edges(graph: TraceGraph, workspace_root: Path):
                         graph.add_node(Node(
                             id=s3_node_id, node_type="S3_ARTIFACT", label=s3_key,
                         ))
-                        graph.add_edge(Edge(
-                            source=lambda_node_id, target=s3_node_id,
-                            edge_type="WRITES_S3",
-                        ))
+                        for lid in lambda_ids:
+                            graph.add_edge(Edge(
+                                source=lid, target=s3_node_id,
+                                edge_type="WRITES_S3",
+                            ))
                 except (ImportError, Exception):
                     pass  # supplemental scan failure must not break the build
