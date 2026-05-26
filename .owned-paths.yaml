@@ -87,8 +87,13 @@ lanes:
     permitted_agents:
       - 0.1.0_DE_MarketIntelligence
       - 0.1.0_DS_MarketIntelligence
+      - 0.1.0_DS_MarketIntelligence~A
+      - 0.1.0_DS_MarketIntelligence~B
+      - 0.1.0_DS_MarketIntelligence~C
+      - 0.1.0_DS_MarketIntelligence~D
+      - 0.1.0_DS_MarketIntelligence~E
       - 0.1.0_DT_MarketIntelligence
-    description: "Pod 1 — MarketIntelligence (DE + DS + DT)"
+    description: "Pod 1 — MarketIntelligence (DE + DS + DT); DS tilde-lanes ~A-E added 2026-05-26 per Andrew direct YALP per-page parallelization mandate (Wave 1)"
 
   POD1_OR_AE:
     permitted_agents:
