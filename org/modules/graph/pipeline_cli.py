@@ -552,6 +552,104 @@ def _lambda_pipescript_io(script_path_arg: str) -> bool:
     ):
         pass
 
+    # ADHC_COMPIL_V5 TO-VAL AC-VAL-X: helper-fn call-graph resolution.
+    # Many Lambdas wrap put_object/get_object in a helper (`save_to_s3(key, data)`)
+    # called from elsewhere with literal Key arguments. Straight regex scan above
+    # sees `Key=key` inside the helper body and can't resolve `key` (function param,
+    # not module constant). AST walk finds these helpers and follows call-sites to
+    # extract the literal/constant Key values actually written. Empirical anchor:
+    # DS 0.1.0 YALP_MKTOVR.001 brief §11 reproduction for market-overview-tiered-
+    # generator (SUMMARY_KEY via save_to_s3 helper at line 491).
+    try:
+        import ast as _ast
+
+        tree = _ast.parse(content)
+
+        # Pass 1: helper FunctionDefs containing S3 ops with Key=<param>
+        helper_key_param: dict[str, tuple[str, str]] = {}
+
+        S3_READ_FNS = {"get_object", "head_object", "download_file", "download_fileobj"}
+        S3_WRITE_FNS = {"put_object", "upload_file", "upload_fileobj", "copy_object"}
+
+        for node in _ast.walk(tree):
+            if not isinstance(node, _ast.FunctionDef):
+                continue
+            for inner in _ast.walk(node):
+                if not isinstance(inner, _ast.Call):
+                    continue
+                attr = getattr(inner.func, "attr", None)
+                if attr in S3_READ_FNS | S3_WRITE_FNS:
+                    for kw in inner.keywords:
+                        if kw.arg == "Key" and isinstance(kw.value, _ast.Name):
+                            param_name = kw.value.id
+                            params = [a.arg for a in node.args.args]
+                            if param_name in params:
+                                kind = "write" if attr in S3_WRITE_FNS else "read"
+                                helper_key_param[node.name] = (param_name, kind)
+
+        # Pass 2: call-sites of helper functions; extract literal Key values
+        for node in _ast.walk(tree):
+            if not isinstance(node, _ast.Call):
+                continue
+            fname = None
+            if isinstance(node.func, _ast.Name):
+                fname = node.func.id
+            elif isinstance(node.func, _ast.Attribute):
+                fname = node.func.attr
+            if not fname or fname not in helper_key_param:
+                continue
+            param_name, op_kind = helper_key_param[fname]
+            params: list[str] = []
+            for fn_node in _ast.walk(tree):
+                if isinstance(fn_node, _ast.FunctionDef) and fn_node.name == fname:
+                    params = [a.arg for a in fn_node.args.args]
+                    break
+            try:
+                idx = params.index(param_name)
+            except ValueError:
+                continue
+            arg_node = None
+            if idx < len(node.args):
+                arg_node = node.args[idx]
+            else:
+                for kw in node.keywords:
+                    if kw.arg == param_name:
+                        arg_node = kw.value
+                        break
+            if arg_node is None:
+                continue
+            resolved_key: str | None = None
+            if isinstance(arg_node, _ast.Constant) and isinstance(arg_node.value, str):
+                resolved_key = arg_node.value
+            elif isinstance(arg_node, _ast.Name):
+                resolved_key = constants.get(arg_node.id)
+            elif isinstance(arg_node, _ast.JoinedStr):
+                parts: list[str] = []
+                for v in arg_node.values:
+                    if isinstance(v, _ast.Constant) and isinstance(v.value, str):
+                        parts.append(v.value)
+                    elif isinstance(v, _ast.FormattedValue):
+                        if isinstance(v.value, _ast.Name) and v.value.id in constants:
+                            parts.append(constants[v.value.id])
+                        else:
+                            parts.append("{*}")
+                    else:
+                        parts.append("{*}")
+                resolved_key = "".join(parts)
+            if resolved_key:
+                normalized = re.sub(r"\{[^}]+\}", "{*}", resolved_key)
+                if op_kind == "write":
+                    s3_writes.add(normalized)
+                else:
+                    s3_reads.add(normalized)
+
+        # Remove unresolved param-name placeholders that AST-walk now resolved
+        for ph in ("key", "Key", "k", "object_key", "s3_key"):
+            s3_writes.discard(ph)
+            s3_reads.discard(ph)
+    except (SyntaxError, ValueError):
+        pass
+
     # Dynamic s3:// + f-string keys via existing extractor
     from org.modules.graph.extract_pipeline import _extract_dynamic_refs
     dynamic = _extract_dynamic_refs(content)
