@@ -35,7 +35,7 @@ All 6 pod pages draw from yang-pipeline exclusively. No EC2 services in this pod
 | Positioning, Attribution | `yang-generate-holdings-attribution` | `json/positioning/holdings_attribution_data.json` | attribution_excel (monthly) |
 | Positioning, Attribution | `yang-generate-allocation-summary` | `json/positioning/allocation_summary.json` | model_pkl (weekly) |
 | Positioning, Attribution | `yang-generate-etf-returns` | `json/benchmarks/etf_returns.json` | model_pkl (weekly) |
-| FactorTilts | `yang-generate-factor-tilts` | `json/factor_tilts/` (3 files: snapshot/spreads/timeseries) | model_pkl (weekly) |
+| FactorTilts | `yang-generate-factor-tilts` | `json/factor-tilts/` (3 files: tier1-snapshot/tier2-spreads/tier3-timeseries) | model_pkl (weekly) |
 | Valuation | `yang-generate-valuation` | `json/valuation/valuation_data.json` | data_pkl (weekly) |
 | Valuation (Risk Premium tab) | `yang-generate-risk-premium` | `json/valuation/risk_premium_data.json` | data_pkl (weekly) |
 | Macroeconomics | `yang-generate-macro` | `json/macro/` (macro groups JSON) | data_pkl (weekly) |
@@ -100,7 +100,8 @@ needs to define a policy portfolio data source and a benchmark return mapping fo
 
 **yang-generate-factor-tilts** (1024 MB, 600s, pandas_layer):
 - Reads `model_pkl` for factor regression analysis
-- Outputs 3 files for tiered loading: snapshot (~46 KB), spreads (~196 KB), timeseries (~2.1 MB)
+- Outputs 3 files at `json/factor-tilts/` for tiered loading: `tier1-snapshot.json` (~10 KB), `tier2-spreads.json` (~126 KB), `tier3-timeseries.json` (~3.4 MB)
+  (S3 prefix is HYPHEN `factor-tilts/`, not underscore; filenames carry `tier1-`/`tier2-`/`tier3-` prefix — verified empirically 2026-05-26 per YALP_FACTOR TO-003 consult)
 - 6 factor keys (must match exactly): `'Equity vs FI'`, `'Growth vs Value'`, `'US vs Foreign'`, `'Large vs Small'`, `'Agg vs Short'`, `'HY vs Agg'`
   (migrated from 'Short vs Agg' and 'HY vs IG' in yang-v2.x -- do not revert)
 - 6 windows: 1M, 2M, 3M, 6M, 1Y, 2Y
