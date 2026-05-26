@@ -1,0 +1,36 @@
+{
+  "verdict": "CLEAN",
+  "project": "ADHC_COMPIL_V5",
+  "artifacts_verified": [
+    "docs/architecture/ADHC_COMPIL_V5.md@701103ccf",
+    ".tools/comp-iam (Fix 1; AE 0.7 6ffc457d5)",
+    ".tools/comp-pipescript (Fix 2; AE 0.7 03f0d42f2 + 9a87ebbf0)",
+    ".tools/comp-trace (Fix 2 close via TO-VAL AC-VAL-Y; AE 0.7 a30fb1a15)",
+    ".tools/comp-registry@0030aea6c (Fix 3; CVO author per Andrew direct delegation)",
+    "org/modules/graph/comp-tools.yaml@0030aea6c",
+    "CLAUDE.md@0030aea6c"
+  ],
+  "tools_gating_artifacts": [
+    "comp-iam service",
+    "comp-pipescript io",
+    "comp-trace",
+    "comp-registry sync"
+  ],
+  "axis_mechanical": "GREEN",
+  "axis_intent_coverage": "GREEN",
+  "axis_decision_useful": "GREEN",
+  "axis_constitution_coherence": "GREEN",
+  "constitution_drift_articles": [],
+  "repair_amendment_authorized": false,
+  "timestamp_utc": "2026-05-26T17:35:00Z",
+  "mode": "comprehensive",
+  "source": "verify-channel-ws",
+  "trigger_class": "AndrewDirect-FinalizeCOMPIL_V5",
+  "self_validation_surface": "HIGH",
+  "self_validation_mitigation": "Andrew direct delegation override [[cvo-self-validation-mitigation-pattern]] + empirical-only verification + AE 0.7 TO-VAL AC-VAL-Y as third-party substantive testing surface",
+  "honest_limits": [
+    "AC-VAL-Y.5 TF-name-alias remaining ~30min AE 0.7 scope (non-blocking)",
+    "comp-pipescript io path-mode short-circuit observation routed to AE 0.7 (non-blocking; comp-trace covers Lambda-side substantively)",
+    "Self-validation surface HIGH on TO-003 (mitigated as declared)"
+  ]
+}
