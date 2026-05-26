@@ -589,3 +589,122 @@ For minimum operational overhead, Andrew can record HARs in this sequence (singl
 
 — 0.1.0_DS_MarketIntelligence~D
 2026-05-26
+
+---
+
+## §9 — Addendum: FRED v2 `release/observations` endpoint obsoletes §7.1 HAR-capture pattern (Andrew direct ~23:?Z post-RAVC2-ACCEPT)
+
+**Andrew direct (post-RAVC2-ACCEPT, this same cycle):** surfaced FRED's `v2/release/observations` endpoint as the right primitive instead of HAR-recording the FRB DDP wizard. Documentation: `https://fred.stlouisfed.org/docs/api/fred/v2/release_observations.html`.
+
+### §9.1 — Endpoint pattern
+
+```
+GET https://api.stlouisfed.org/fred/v2/release/observations
+    ?release_id={N}                                       (integer; e.g., 52 for Z.1)
+    &format=json                                          (json|xml)
+    &limit=500000                                         (max per page; default 500000)
+    &next_cursor={prior-response-cursor}                  (cursor-based pagination)
+    &api_key={32-char-alpha-num-lowercase}                (REQUIRED — standard FRED API key)
+```
+
+**Live-probe disposition (~23:?Z):**
+- `release_id=52&format=json` without key → HTTP **401** `{"code":401,"message":"Missing or invalid credentials."}` (auth-gated)
+- Standard FRED API key signup: `https://fred.stlouisfed.org/docs/api/api_key.html` (free, instant, 32-char-alpha-num-lowercase).
+- Same auth class as Census + BEA + CFPB API-key model. **No HAR capture required.**
+
+### §9.2 — Why this obsoletes §7.1 HAR-REQUIRED items
+
+§7.1 listed FRB DDP wizard (H.15 / H.4.1 / G.17 / G.19) as HAR-REQUIRED HIGH priority for recovery of canonical series IDs. FRED's `release/observations` makes this **unnecessary**:
+
+- FRED is organized BY Fed statistical release at the release_id level.
+- A single call (paginated by cursor; up to 500k observations/page) returns **ALL series** in a release + **full observation history** + metadata (frequency, units, seasonal_adjustment, last_updated, source notes).
+- No per-series HAR-RE; no FRB DDP wizard friction; no silent-empty-on-malformed-series-ID class.
+
+### §9.3 — FRED release IDs for ~D-PRIMARY Fed releases
+
+FRED release IDs for the 4 Fed statistical releases referenced in this brief's §7.1 (well-known from FRED's public release listing at `fred.stlouisfed.org/releases` — verification via authenticated `/fred/releases?api_key=...` recommended at harness build time):
+
+| FRB release | ~D-PRIMARY indicator(s) | FRED release_id (canonical) |
+|---|---|---|
+| H.15 Selected Interest Rates | (Treasury Yield cross-validation rows 1-10) + Fed Fund Rate (row 11 cross-ref) | **18** |
+| H.4.1 Factors Affecting Reserve Balances | Fed Balance Sheet (row 12) | **20** |
+| G.17 Industrial Production and Capacity Utilization | Industrial Production + Capacity Utilization (rows 15-16) | **13** |
+| G.19 Consumer Credit | Consumer Credit YoY (row 19) | **17** |
+| Z.1 Financial Accounts | (Wave-2 candidate per §2.4 — Z.1 Flow of Funds) | **52** (Andrew's example) |
+
+**Recovery method if any release ID is wrong:** `GET /fred/releases?api_key=...&file_type=json` returns the full release catalog (~300 entries) with id + name + frequency + last_updated; harness should cache this at startup OR pre-bake the mapping after one-time discovery.
+
+### §9.4 — Updated harness adapter (replaces §1.5 FRB DDP adapter)
+
+```python
+class FREDReleaseAdapter:
+    """Replaces FRB DDP HAR-RE per Andrew direct ~23:?Z.
+    One adapter handles H.15 / H.4.1 / G.17 / G.19 / Z.1 + any FRED release."""
+    BASE = "https://api.stlouisfed.org/fred/v2/release/observations"
+    def __init__(self):
+        self.api_key = os.environ["FRED_API_KEY"]   # signup: fred.stlouisfed.org/docs/api/api_key.html
+    def pull_release(self, release_id: int, limit: int = 500000) -> list[dict]:
+        """Returns flattened (series_id, date, value) tuples for ALL series in release."""
+        results, next_cursor = [], None
+        while True:
+            params = {"release_id":release_id, "format":"json", "limit":limit, "api_key":self.api_key}
+            if next_cursor: params["next_cursor"] = next_cursor
+            r = requests.get(self.BASE, params=params, timeout=60)
+            r.raise_for_status()
+            payload = r.json()
+            for s in payload.get("series", []):
+                for obs in s.get("observations", []):
+                    if obs["value"] == ".": continue   # FRED missing-value sentinel
+                    results.append({
+                        "series_id": s["series_id"], "date": obs["date"], "value": float(obs["value"]),
+                        "frequency": s["frequency"], "units": s["units"],
+                        "seasonal_adjustment": s["seasonal_adjustment"],
+                        "last_updated": s["last_updated"],
+                    })
+            if not payload.get("has_more"): break
+            next_cursor = payload["next_cursor"]
+        return results
+```
+
+### §9.5 — Updated §7 HAR-capture list disposition
+
+| Original §7.1 item | New disposition |
+|---|---|
+| H.15 DDP HAR | **OBSOLETED** — use `release_id=18` via FRED `release/observations` |
+| H.4.1 DDP HAR | **OBSOLETED** — use `release_id=20` |
+| G.17 DDP HAR | **OBSOLETED** — use `release_id=13` |
+| G.19 DDP HAR | **OBSOLETED** — use `release_id=17` |
+| Treasury TIC T2 XLSX HAR (MEDIUM) | **STILL APPLIES** — TIC is published by Treasury, not in FRED's H-series releases; FRED partial coverage via `release/observations` for `TICFLT` (Major Foreign Holders) but not full T2 (Net Long-Term TIC Flows). HAR remains the path to confirm Treasury TIC XLSX URL stability. **NB:** confirm via FRED release catalog at harness build time whether a TIC-specific release_id exists (FRED has `release_id=39` for "Treasury International Capital System" — if so, this MAY ALSO obsolete the TIC HAR). |
+| Regional Fed surveys ×5 (LOW) | **MOSTLY OBSOLETED** for the headline series — Empire State / Philly Fed BOS / KC / Richmond / Dallas all have FRED-mirrored headline diffusion indices (e.g., `GACDISA066MSFRBNY` for Empire State headline; check via FRED's release_id catalog for survey-specific releases). HAR retained as fallback for sub-component / breakdown data FRED may not mirror. |
+
+### §9.6 — Updated 2-tier harness architecture for TO-007 synthesis
+
+**Original recommendation (§5.3):** FRED-PRIMARY runtime + ~D-CROSS-CHECK via Treasury Direct / FRB DDP / BEA.
+
+**Updated recommendation (post-Andrew direct §9):** **FRED `release/observations` BULK-PRIMARY runtime + ~D-source-specific CROSS-CHECK only for the gaps FRED doesn't cover.**
+
+Reasons:
+1. FRED `release/observations` returns ALL series in a Fed statistical release in one paginated call — more efficient than 4 individual DDP adapter calls.
+2. Single adapter class (`FREDReleaseAdapter` §9.4) replaces FRBDDPAdapter (§4.1 row 5) + simplifies harness.
+3. Cursor-based pagination + 500k-observation limit = single call per release for typical historical depth.
+4. FRED's series metadata (frequency, units, SA, last_updated, source notes) preserves audit trail equivalent to FRB DDP raw downloads.
+
+**~D-source-specific CROSS-CHECK remaining tier:**
+- **Treasury Direct CSV** (§1.1) — same-day-freshness for Treasury Yields when FRED next-morning lag matters
+- **Treasury Fiscal Data** (§1.2) — fiscal-side cross-validation (avg interest rates, debt-to-the-penny)
+- **NY Fed Markets API** (§1.3) — EFFR daily granularity beyond FRED's `FEDFUNDS` monthly
+- **BEA API** (§1.4) — GDP/PCE upstream when BEA vintage matters
+- **Treasury TIC XLSX** (§1.6) — only if FRED `release_id=39` (TIC system) coverage is partial post-HAR-verify
+
+**HAR-capture pattern for Andrew NARROWED:** §7.1 HIGH/MED items obsoleted (4 of 5); only Treasury TIC XLSX (§7.1 #5) potentially survives, gated on FRED `release_id=39` coverage check.
+
+### §9.7 — Updated outstanding-for-Andrew
+
+- **OLD (§8):** "HAR recordings per §7.1 unlock 5 of 20 ~D-PRIMARY indicators ... HAR is harness-enhancement not harness-blocker."
+- **NEW (post-§9):** "FRED API key signup + `release_id=18,20,13,17` baked into harness obsoletes 4 of 5 §7.1 HAR items. TIC HAR optional gated on FRED `release_id=39` coverage check. Andrew HAR-capture-window NARROWED to optional single XLSX session if FRED TIC coverage is incomplete + the regional Fed surveys are Wave-2-deferred."
+
+**Net effect:** ~D's TO-007 synthesis input upgrades from "two-tier harness with HAR-recovered FRB DDP series" to "FRED-release-bulk-PRIMARY harness with narrow ~D-source CROSS-CHECK". Cleaner architecture; less HAR friction; FRED's release-organizing primitive aligns naturally with the macro page's Fed-statistical-release source structure.
+
+— 0.1.0_DS_MarketIntelligence~D
+2026-05-26 (§9 addendum post-RAVC2-ACCEPT per Andrew direct ~23:?Z)
+
