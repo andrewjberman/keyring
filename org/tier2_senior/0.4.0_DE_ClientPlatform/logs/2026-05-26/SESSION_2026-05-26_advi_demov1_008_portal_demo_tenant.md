@@ -116,3 +116,64 @@ Observed patterns worth distilling for the memory system once Phase 6 fully clos
 - **Type-system-load-bearing additive shape** — item 6 (CanonicalFirmId union extension) was strictly required for AC5 `bun tsc` clean, distinct from item 5's runtime-correctness rationale. Distinguishing "compile-load-bearing" vs "runtime-load-bearing" additives sharpens the COO scope-ratify call from "ratify or counter" to "ratify (must-have) + ratify (should-have)".
 - **comp-graph multi-"index"-component naming collision** — observable structural limitation in comp-transform schema-check / ternary-audit lookup for the AdvisorIntelligence component family; surfaced as Fix-4 candidate for ADHC_COMPIL_V5. Reusable across any portal codebase area with per-directory `index.tsx` barrel exports (i.e., most React feature folders).
 - **Crossed-in-transit ACK pattern** — COO RAVC2-ACCEPT + DE RAVC2-Request shipped within ~10min of each other (no causal dependency; both racing toward closure). Sister pattern to [[feedback_standby_prep_compress_to_delivery_when_context_sufficient]] for compression on the closure-side rather than the dispatch-side.
+
+## Phase 6 follow-on: portal-DEV-rule brief arc (Andrew-direct → CLAUDE.md Rule 19)
+
+Separate sub-session arc triggered by Andrew direct 2026-05-26 ~16:35Z immediately after the TO-008 strand discussion: *"DT will do it, I want you to write a brief on the subject because we need to make it a rule that you always switch localhost back to DEV because this is an obnoxious footgun that keeps happening."*
+
+Trigger: discovery during TO-008 that the main `portal/` worktree was stranded on PROD (commit `0be05530`), forcing DE 0.4 to detour into the `.runtmp/portal-dev-verify` ephemeral worktree to access DEV. Andrew then hit `localhost` expecting demo + couldn't see it — diagnostic question "is PROD on localhost again?" confirmed footgun recurrence.
+
+### Brief authoring + dispatch
+
+**Brief artifact:** `docs/briefs/portal-main-tree-stays-on-dev-rule-20260526.md` committed `14235c0d2` (CLOUD; `--force` safe-commit bypass with audit entry per persistent multi-agent index contention from DS 0.1 staging files in shared `docs/briefs/` directory — canonical wrapper-doc scenario).
+
+**Brief structure:**
+- §1 Problem statement (silent footgun: `bun run dev` doesn't warn that branch is PROD)
+- §2 Incident inventory (3 strands in 5 days: 2026-05-22 pod 3 + SSCN + 2026-05-26 TO-008)
+- §3 Root cause (cherry-pick-onto-PROD mechanism does `git checkout PROD` in main tree with no `git checkout DEV` after)
+- §4 Proposed rule (main tree always sits on DEV; any branch-state change restores DEV in same operation; 3 corollaries)
+- §5 Structural enforcement candidates (A post-checkout hook warning + B `.tools/portal-promote.sh` wrapper + git()-shadow ban + C predev check; ranked by reliability)
+- §6 Routing recommendation (CLAUDE.md rule + structural-enforcement PRD)
+- §7 Asks of ws CTO (ratify + PRD authoring + COO routing)
+- §8 Asks of ws COO (DT decomposition + /spot-check HEAD check + `.runtmp` cleanup)
+- §9 Open questions (cultural-vs-structural sufficiency, replace-vs-coexist, carve-outs)
+
+**Dispatch:**
+- ws CTO `1.0.0_SA_CTO` — `[BRIEF-ASK-RATIFY]` MCP 16:50Z (primary ratifier)
+- ws COO `2.0.0_SA_COO` — `[CC]` MCP 16:50Z (decomposition awareness; ACK received 17:09Z confirming 3-in-5-days = "cultural alone insufficient" signal + R&D candidate framing; ACK noted that brief §8 Ask 2 `/spot-check` HEAD check is CVO scope not COO scope — banked routing correction)
+
+### CTO ratify outcome (cycle #32, commit `c08f4287f` ~17:30Z)
+
+**Brief RATIFIED.** Both my leans confirmed:
+
+- **Q1 (cultural vs structural sufficiency):** STRUCTURAL warranted. CTO cited ADHC_HALTGT precedent (similar multi-incident → structural transition). Cultural rule binds NOW via Rule 19; structural enforcement (A+B+C combo) implements via PRD next session.
+- **Q2 (`.tools/portal-promote.sh` REPLACE vs coexist):** REPLACE + shadow-ban. CTO cited ADHC_OWNPTH.010 `git()` shell-shadow for destructive HEAD moves as binding precedent. Partial adoption keeps footgun alive.
+- **Q3 (carve-outs):** Deferred to Andrew enumeration via the MCP CC already routed.
+
+**Shipped this CTO tick (commit `c08f4287f`):**
+- **CLAUDE.md Rule 19** — portal main worktree always stays on DEV; restore-on-discovery rule; ban on `.runtmp/portal-*` workaround as workaround pattern. Co-located with Rules 17-18 in Critical Deployment Rules block (binding rule, not portal-section informational).
+
+**Deferred to next CTO session:**
+- Structural enforcement PRD (A+B+C combo, ~2-4h DT wall) per CTO capacity flag (queued alongside Wave-2 YALP_* PRDs + ADHC_COMPIL_V5 TO-003 + LD-scribe).
+- Memory update bundling — CTO will extend [[feedback_portal_prod_promotion_strands_main_tree]] with the implemented enforcement reference once structural PRD ships. If another strand surfaces in interim, DE 0.4 can extend the memory directly per brief §6 (3).
+- `.runtmp/portal-dev-verify` cleanup — COO operational doctrine call via her /drive sweep + DT-pod coordination.
+
+### Brief arc timeline
+
+| Time | Event |
+|---|---|
+| ~16:30Z | TO-008 strand discovered; Andrew hits localhost, sees PROD, asks "is PROD on localhost again?" |
+| ~16:35Z | Andrew direct: "write a brief on the subject ... make it a rule" |
+| ~16:45Z | Brief authored at `docs/briefs/portal-main-tree-stays-on-dev-rule-20260526.md` |
+| ~16:50Z | Brief committed `14235c0d2` (--force bypass; DS 0.1 multi-agent contention; audit logged); MCP dispatch to ws CTO + CC ws COO |
+| ~17:09Z | ws COO ACK CC received (well-scoped; 3-in-5-days signals structural-warranted; routing-deferred on CTO capacity) |
+| ~17:30Z | ws CTO RATIFY (cycle #32); CLAUDE.md Rule 19 shipped `c08f4287f`; structural PRD deferred next session |
+
+End-to-end wall: Andrew-direct ask → CLAUDE.md rule binding = ~55min. Sub-arc included: brief authoring (~10min) + dispatch (~5min) + COO ACK (~20min) + CTO ratify (~20min).
+
+### Standing posture
+
+- Cultural Rule 19 binds NOW (CLAUDE.md committed).
+- Structural enforcement (A+B+C) PRD pending next CTO session.
+- If DT pods do another bare `git checkout PROD` in the main tree during interim window → Rule 19 violation surfaced via /spot-check or /verify-channel → REPAIR-AMENDMENT or DRIVE_ESCALATION routing per CTO close-out note.
+- DE 0.4 KEEP-ACTIVE per /allocation #7 disposition for any Phase 6 follow-on (TO-008 ship + brief arc both shipped; standby for TO-VAL-FE issue surface or interim-strand discovery).
