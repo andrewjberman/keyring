@@ -3926,3 +3926,237 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-05-21 | 0.2.0_DS_PortfolioAnalytics | YALP_MDSRC.SA3 | comp-platinum | comp-platinum reverse json/valuation/valuation_data.json | PASS |
 | 2026-05-21 | 0.2.0_DS_PortfolioAnalytics | YALP_MDSRC.SA3 | comp-platinum | comp-platinum reverse json/valuation/risk_premium_data.json | PASS |
 | 2026-05-21 | 0.4.0_DE_ClientPlatform~B | ADHC_VALGATE.006 | comp-transform schema-check PartnerAnalytics; D-2 runner structural-assertion run (live AC3) | D-2 visual-rendering-baseline gate built + verified 11/11 synthetic + live AC3 3/3 |
+| 2026-05-21 | 0.4.0_DE_ClientPlatform~B | MDPF_ASSETS.033.de-chart-surface-estimate-marker | comp-platinum | comp-platinum reverse json-tiered/market-overview | PASS |
+| 2026-05-21 | 0.4.0_DE_ClientPlatform~B | MDPF_ASSETS.033.de-chart-surface-estimate-marker | comp-platinum | comp-platinum reverse json/market/market-regime.json | PASS |
+| 2026-05-21 | 0.4.0_DE_ClientPlatform~B | MDPF_ASSETS.033.de-chart-surface-estimate-marker | comp-platinum | comp-platinum reverse json/correlations/correlation_data.json | PASS |
+| 2026-05-21 | 0.2.0_DS_PortfolioAnalytics | YALP_MDSRC.M1 | comp-platinum | comp-platinum reverse json/macro/macro_data.json | PASS |
+| 2026-05-21 | 0.2.0_DS_PortfolioAnalytics | YALP_MDSRC.M1 | comp-platinum | comp-platinum reverse json/macro/** | PASS |
+| 2026-05-22 | 0.3.0_DE_TradingOperations | SSCN_UNVREV.portal | comp-iam | comp-iam service opal-security-scanner-processor | PASS |
+| 2026-05-22 | 0.3.0_DE_TradingOperations | SSCN_UNVREV.portal | comp-transform | comp-transform schema-check UniverseScannerTab | PASS |
+| 2026-05-22 | 0.3.0_DE_TradingOperations | SSCN_UNVREV.portal | comp-transform | comp-transform schema-check SecurityScanner | PASS |
+| 2026-05-22 | 0.3.0_DT_TradingOperations | YALP_MDSRC.C4.dt-phase2c-serving-path-drift-baseline | comp-routes | comp-routes behaviors | PASS |
+| 2026-05-22 | 0.4.0_DS_ClientPlatform | YALP_MDSRC.B3 | comp-routes | comp-routes | PASS |
+| 2026-05-22 | 0.4.0_DS_ClientPlatform | YALP_MDSRC.B3 | comp-routes | comp-routes trace /api/general/general_data.json | PASS |
+| 2026-05-22 | 0.4.0_DS_ClientPlatform | YALP_MDSRC.B3 | comp-routes | comp-routes rewrites | PASS |
+| 2026-05-22 | 0.1.0_DS_MarketIntelligence | YALP_MDSRC.V1B | comp-iam | comp-iam gaps | PASS |
+| 2026-05-22 | 0.2.0_DS_PortfolioAnalytics | YALP_MDSRC.C2 | comp-iam | comp-iam service fred-data-ingestion | PASS |
+| 2026-05-22 | 0.5.0_AE_OpalETL | SSCN_UNVREV.002 | comp-iam | comp-iam service opal-security-scanner-processor | PASS |
+| 2026-05-22 | 0.5.0_AE_OpalETL | SSCN_UNVREV.002 | comp-pipescript | comp-pipescript io yang-generate-factor-tilts | FAIL |
+| 2026-05-22 | 0.5.0_AE_OpalETL | SSCN_UNVREV.002 | comp-routes | comp-routes behaviors | PASS |
+| 2026-05-22 | 0.5.0_AE_OpalETL | SSCN_UNVREV.002 | comp-routes | comp-routes behaviors | PASS |
+| 2026-05-22 | 0.7.0_AE_CloudOps~C | ADVI_DEMOV1.001.aec-infra-demo-bucket-and-routing | comp-iam | comp-iam service opal-partners-data | PASS |
+| 2026-05-22 | 0.7.0_AE_CloudOps~C | ADVI_DEMOV1.001.aec-infra-demo-bucket-and-routing | comp-iam | comp-iam service shared-advisor-router | PASS |
+| 2026-05-22 | 0.7.0_AE_CloudOps~C | YALP_MDSRC.D2 | comp-iam | comp-iam gaps | PASS |
+| 2026-05-22 | 0.7.0_AE_CloudOps~C | YALP_MDSRC.D2 | comp-routes | comp-routes behaviors | PASS |
+| 2026-05-22 | 0.7.0_AE_CloudOps~C | ADVI_DEMOV1.001.aec-infra-demo-bucket-and-routing | comp-routes | comp-routes trace getPlatinumFirmDashboard | PASS |
+| 2026-05-22 | 0.7.0_AE_CloudOps~C | ADVI_DEMOV1.001.aec-infra-demo-bucket-and-routing | comp-trace | comp-trace --help | PASS |
+| 2026-05-22 | 0.4.0_DS_ClientPlatform~C | ADVI_DEMOV1.003 | comp-routes | comp-routes auth-map | PASS |
+| 2026-05-22 | 2.0.0_SA_COO~C | ADVI_DEMOV1.003 | comp-cache | comp-cache collisions | PASS |
+| 2026-05-22 | 0.7.0_AE_CloudOps | YALP_MDSRC.L1 | comp-trace | comp-trace yang-generate-valuation --direction both | PASS |
+| 2026-05-22 | 1.0.0_SA_CTO | ADVI_VALFIN-PRD | comp-platinum | comp-platinum page AdvisorIntelligence | FAIL |
+| 2026-05-22 | 1.0.0_SA_CTO | ADVI_VALFIN-PRD | comp-platinum | comp-platinum page | FAIL |
+| 2026-05-22 | 1.0.0_SA_CTO | MDPF_ASSETS.033.de-chart-surface-estimate-marker | comp-trace | comp-trace inf-pipeline --direction both | PASS |
+| 2026-05-22 | 1.0.0_SA_CTO | MDPF_ASSETS.033.de-chart-surface-estimate-marker | comp-pipescript | comp-pipescript io INF_B_03.account_gains.py | PASS |
+| 2026-05-22 | 0.4.0_DS_ClientPlatform~C | MDPF_ASSETS.033.de-chart-surface-estimate-marker | comp-routes | comp-routes auth-map | PASS |
+| 2026-05-22 | 1.1.0_DS_CompLearns | MDPF_ASSETS.033.de-chart-surface-estimate-marker | comp-build | comp-build | PASS |
+| 2026-05-22 | 0.7.0_AE_CloudOps | MDPF_ASSETS.033.de-chart-surface-estimate-marker | comp-build | comp-build | PASS |
+| 2026-05-22 | 0.7.0_AE_CloudOps | MDPF_ASSETS.033.de-chart-surface-estimate-marker | comp-trace | comp-trace yang-generate-valuation --direction both | PASS |
+| 2026-05-22 | 0.7.0_AE_CloudOps | MDPF_ASSETS.033.de-chart-surface-estimate-marker | comp-trace | comp-trace yang-generate-factor-tilts --direction both | PASS |
+| 2026-05-22 | 0.4.0_DE_ClientPlatform~B | MDPF_ASSETS.033.de-chart-surface-estimate-marker | comp-transform | comp-transform schema-check ModelPortfolios | FAIL |
+| 2026-05-22 | 0.7.0_AE_CloudOps | MDPF_ASSETS.033.de-chart-surface-estimate-marker | comp-build | comp-build | PASS |
+| 2026-05-22 | 0.7.0_AE_CloudOps | MDPF_ASSETS.033.de-chart-surface-estimate-marker | comp-trace | comp-trace yang-generate-factor-tilts --direction both | PASS |
+| 2026-05-22 | 0.7.0_AE_CloudOps | MDPF_ASSETS.033.de-chart-surface-estimate-marker | comp-trace | comp-trace yang-generate-macro --direction both | PASS |
+| 2026-05-22 | 0.7.0_AE_CloudOps | MDPF_ASSETS.033.de-chart-surface-estimate-marker | comp-trace | comp-trace lambda:yang-generate-macro --direction both | PASS |
+| 2026-05-22 | 0.7.0_AE_CloudOps | MDPF_ASSETS.033.de-chart-surface-estimate-marker | comp-trace | comp-trace lambda:yang-generate-macro-timeseries --direction both | PASS |
+| 2026-05-22 | 3.0.0_SA_CVO | SSCN_TOOLBAR.001 | comp-trace | comp-trace yang-generate-valuation --direction both | PASS |
+| 2026-05-22 | 3.0.0_SA_CVO | SSCN_TOOLBAR.001 | comp-trace | comp-trace yang-generate-risk-premium --direction down | PASS |
+| 2026-05-22 | 1.1.0_DS_CompLearns | SSCN_TOOLBAR.001 | comp-build | comp-build | PASS |
+| 2026-05-22 | 1.1.0_DS_CompLearns | SSCN_TOOLBAR.001 | comp-build | comp-build | PASS |
+| 2026-05-22 | 1.2.0_DS_CompLearns | YALP_MDSRC.D3 | comp-build | comp-build | PASS |
+| 2026-05-22 | 0.4.0_DS_ClientPlatform~C | YALP_MDSRC.D3 | comp-routes | comp-routes trace getPlatinumFirmDashboard | PASS |
+| 2026-05-22 | 0.7.0_AE_CloudOps | YALP_MDSRC.D3 | comp-routes | comp-routes behaviors | PASS |
+| 2026-05-22 | 1.1.0_DS_CompLearns | YALP_MDSRC.D3 | comp-build | comp-build | PASS |
+| 2026-05-22 | 0.7.0_AE_CloudOps | YALP_MDSRC.D3 | comp-routes | comp-routes behaviors | PASS |
+| 2026-05-22 | 0.7.0_AE_CloudOps | YALP_MDSRC.D3 | comp-trace | comp-trace s3:json/valuation/valuation_data.json --direction both | PASS |
+| 2026-05-22 | 0.7.0_AE_CloudOps | YALP_MDSRC.D3 | comp-trace | comp-trace s3:json/factor-tilts/tier1-snapshot.json --direction both | PASS |
+| 2026-05-22 | 0.7.0_AE_CloudOps | YALP_MDSRC.D3 | comp-trace | comp-trace component:portal/src/pages/FactorTilts/FactorTilts.tsx --direction both | PASS |
+| 2026-05-22 | 1.2.0_DS_CompLearns | YALP_MDSRC.D3 | comp-build | comp-build | PASS |
+| 2026-05-22 | 3.0.0_SA_CVO | YALP_MDSRC.D3 | comp-trace | comp-trace yang-generate-valuation --direction both | PASS |
+| 2026-05-22 | 3.0.0_SA_CVO | YALP_MDSRC.D3 | comp-trace | comp-trace yang-generate-factor-tilts --direction both | PASS |
+| 2026-05-22 | 1.1.0_DS_CompLearns | YALP_MDSRC.D3 | comp-build | comp-build | PASS |
+| 2026-05-22 | 3.0.0_SA_CVO | YALP_MDSRC.D3 | comp-trace | comp-trace yang-generate-manifest --direction down | PASS |
+| 2026-05-22 | 3.0.0_SA_CVO | YALP_MDSRC.D3 | comp-trace | comp-trace generate-manifest --direction down | PASS |
+| 2026-05-22 | 3.0.0_SA_CVO | YALP_MDSRC.D3 | comp-trace | comp-trace yang-generate-volatility --direction down | PASS |
+| 2026-05-22 | 3.0.0_SA_CVO | YALP_MDSRC.D3 | comp-trace | comp-trace generate-volatility --direction down | PASS |
+| 2026-05-22 | 3.0.0_SA_CVO | YALP_MDSRC.D3 | comp-trace | comp-trace generate-manifest --direction down | PASS |
+| 2026-05-22 | 3.0.0_SA_CVO | YALP_MDSRC.D3 | comp-trace | comp-trace lambda:generate-manifest --direction down | PASS |
+| 2026-05-22 | 3.0.0_SA_CVO | YALP_MDSRC.D3 | comp-trace | comp-trace lambda:yang-generate-manifest --direction down | PASS |
+| 2026-05-22 | 1.1.0_DS_CompLearns | YALP_MDSRC.D3 | comp-build | comp-build | PASS |
+| 2026-05-22 | 1.1.0_DS_CompLearns | YALP_MDSRC.D3 | comp-routes | comp-routes auth-map | PASS |
+| 2026-05-22 | 1.1.0_DS_CompLearns | YALP_MDSRC.D3 | comp-cache | comp-cache collisions | PASS |
+| 2026-05-22 | 1.1.0_DS_CompLearns | YALP_MDSRC.D3 | comp-pipescript | comp-pipescript consumers news_trending_analysis | FAIL |
+| 2026-05-22 | 1.1.0_DS_CompLearns | YALP_MDSRC.D3 | comp-pipescript | comp-pipescript feeds keyword_intelligence_generator | FAIL |
+| 2026-05-22 | 1.1.0_DS_CompLearns | YALP_MDSRC.D3 | comp-pipescript | comp-pipescript io keyword_intelligence_generator | FAIL |
+| 2026-05-22 | 1.1.0_DS_CompLearns | YALP_MDSRC.D3 | comp-iam | comp-iam service keyword_intelligence_generator | PASS |
+| 2026-05-22 | 1.2.0_DS_CompLearns | YALP_MDSRC.D3 | comp-build | comp-build | PASS |
+| 2026-05-22 | 1.1.0_DS_CompLearns | YALP_MDSRC.D3 | comp-trace | comp-trace s3:json/sentiment/keyword-sentiments.json --direction both | PASS |
+| 2026-05-22 | 1.1.0_DS_CompLearns | YALP_MDSRC.D3 | comp-trace | comp-trace keyword_intelligence_generator --direction both | PASS |
+| 2026-05-22 | 1.1.0_DS_CompLearns | YALP_MDSRC.D3 | comp-routes | comp-routes behaviors | PASS |
+| 2026-05-22 | 1.2.0_DS_CompLearns | YALP_MDSRC.D3 | comp-build | comp-build | PASS |
+| 2026-05-22 | 0.7.0_AE_CloudOps | YALP_MDSRC.D3 | comp-build | comp-build | PASS |
+| 2026-05-22 | 0.7.0_AE_CloudOps | YALP_MDSRC.D3 | comp-trace | comp-trace generate-manifest --direction both | PASS |
+| 2026-05-22 | 0.7.0_AE_CloudOps | YALP_MDSRC.D3 | comp-trace | comp-trace generate-latest --direction both | PASS |
+| 2026-05-22 | 0.7.0_AE_CloudOps | YALP_MDSRC.D3 | comp-trace | comp-trace generate-volatility --direction both | PASS |
+| 2026-05-22 | 0.7.0_AE_CloudOps | ADVI_DEMOV1.004 | comp-trace | comp-trace yang-generate-valuation --direction down | PASS |
+| 2026-05-22 | 0.7.0_AE_CloudOps | ADVI_DEMOV1.004 | comp-trace | comp-trace yang-generate-risk-premium --direction down | PASS |
+| 2026-05-22 | 0.7.0_AE_CloudOps | ADVI_DEMOV1.004 | comp-trace | comp-trace yang-generate-correlation --direction down | PASS |
+| 2026-05-22 | 0.7.0_AE_CloudOps | ADVI_DEMOV1.004 | comp-trace | comp-trace yang-generate-macro --direction down | PASS |
+| 2026-05-22 | 0.7.0_AE_CloudOps | ADVI_DEMOV1.004 | comp-trace | comp-trace yang-generate-factor-tilts --direction down | PASS |
+| 2026-05-22 | 0.7.0_AE_CloudOps | ADVI_DEMOV1.004 | comp-trace | comp-trace yang-generate-cma --direction down | PASS |
+| 2026-05-22 | 0.7.0_AE_CloudOps | ADVI_DEMOV1.004 | comp-trace | comp-trace yang-generate-etf-returns --direction down | PASS |
+| 2026-05-22 | 0.7.0_AE_CloudOps | ADVI_DEMOV1.004 | comp-trace | comp-trace yang-generate-peer-performance --direction down | PASS |
+| 2026-05-22 | 0.7.0_AE_CloudOps | ADVI_DEMOV1.004 | comp-trace | comp-trace yang-generate-positioning --direction down | PASS |
+| 2026-05-22 | 0.7.0_AE_CloudOps | ADVI_DEMOV1.004 | comp-trace | comp-trace yang-generate-allocation-summary --direction down | PASS |
+| 2026-05-22 | 0.7.0_AE_CloudOps | ADVI_DEMOV1.004 | comp-trace | comp-trace yang-generate-holdings-attribution --direction down | PASS |
+| 2026-05-22 | 0.7.0_AE_CloudOps | ADVI_DEMOV1.004 | comp-trace | comp-trace yang-generate-manifest --direction down | PASS |
+| 2026-05-22 | 0.7.0_AE_CloudOps | ADVI_DEMOV1.004 | comp-trace | comp-trace yang-generate-latest --direction down | PASS |
+| 2026-05-22 | 0.7.0_AE_CloudOps | ADVI_DEMOV1.004 | comp-trace | comp-trace yang-generate-volatility --direction down | PASS |
+| 2026-05-22 | 0.7.0_AE_CloudOps | ADVI_DEMOV1.004 | comp-trace | comp-trace yang-generate-macro-timeseries --direction down | PASS |
+| 2026-05-22 | 0.4.0_DS_ClientPlatform~C | ADVI_DEMOV1.004 | comp-pii | comp-pii audit | PASS |
+| 2026-05-22 | 0.7.0_AE_CloudOps | ADVI_DEMOV1.004 | comp-trace | comp-trace lambda:yang-generate-macro --direction down | PASS |
+| 2026-05-22 | 3.0.0_SA_CVO | ADVI_DEMOV1.004 | comp-trace | comp-trace generate-manifest --direction down | PASS |
+| 2026-05-22 | 3.0.0_SA_CVO | ADVI_DEMOV1.004 | comp-trace | comp-trace generate-latest --direction down | PASS |
+| 2026-05-22 | 3.0.0_SA_CVO | ADVI_DEMOV1.004 | comp-trace | comp-trace generate-volatility --direction down | PASS |
+| 2026-05-22 | 1.2.0_DS_CompLearns | ADVI_DEMOV1.004 | comp-build | comp-build | PASS |
+| 2026-05-22 | 1.2.0_DS_CompLearns | ADVI_DEMOV1.004 | comp-build | comp-build | PASS |
+| 2026-05-22 | 0.7.0_AE_CloudOps | ADVI_DEMOV1.004 | comp-routes | comp-routes behaviors | PASS |
+| 2026-05-22 | 0.7.0_AE_CloudOps | ADVI_DEMOV1.004 | comp-pipescript | comp-pipescript io yang-generate-valuation | FAIL |
+| 2026-05-22 | 0.7.0_AE_CloudOps | ADVI_DEMOV1.004 | comp-routes | comp-routes trace getValuationData | PASS |
+| 2026-05-22 | 0.7.0_AE_CloudOps | ADVI_DEMOV1.004 | comp-transform | comp-transform schema-check Valuation | PASS |
+| 2026-05-22 | 0.7.0_AE_CloudOps | ADVI_DEMOV1.004 | comp-transform | comp-transform schema-check FactorTilts | PASS |
+| 2026-05-22 | 0.7.0_AE_CloudOps | ADVI_DEMOV1.004 | comp-routes | comp-routes trace public-data-router | PASS |
+| 2026-05-22 | 0.7.0_AE_CloudOps | ADVI_DEMOV1.004 | comp-routes | comp-routes trace /api/general/valuation/valuation_data.json | PASS |
+| 2026-05-22 | 0.7.0_AE_CloudOps | ADVI_DEMOV1.004 | comp-routes | comp-routes trace getValuationData | PASS |
+| 2026-05-22 | 2.0.0_SA_COO | ADVI_DEMOV1.004 | comp-blast | comp-blast INF_B_00 | PASS |
+| 2026-05-22 | 2.0.0_SA_COO | ADVI_DEMOV1.004 | comp-blast | comp-blast INF_B_01 | PASS |
+| 2026-05-22 | 2.0.0_SA_COO | ADVI_DEMOV1.004 | comp-blast | comp-blast INF_B_01b | PASS |
+| 2026-05-22 | 2.0.0_SA_COO | ADVI_DEMOV1.004 | comp-blast | comp-blast INF_B_02 | PASS |
+| 2026-05-22 | 2.0.0_SA_COO | ADVI_DEMOV1.004 | comp-blast | comp-blast INF_B_03 | PASS |
+| 2026-05-22 | 2.0.0_SA_COO | ADVI_DEMOV1.004 | comp-blast | comp-blast INF_C_05 | PASS |
+| 2026-05-22 | 2.0.0_SA_COO | ADVI_DEMOV1.004 | comp-blast | comp-blast INF_C_07 | PASS |
+| 2026-05-22 | 2.0.0_SA_COO | ADVI_DEMOV1.004 | comp-blast | comp-blast INF_C_08 | PASS |
+| 2026-05-22 | 2.0.0_SA_COO | ADVI_DEMOV1.004 | comp-blast | comp-blast INF_D_00c | PASS |
+| 2026-05-22 | 1.2.0_DS_CompLearns | ADVI_DEMOV1.004 | comp-build | comp-build | PASS |
+| 2026-05-22 | 1.2.0_DS_CompLearns | ADVI_DEMOV1.004 | comp-build | comp-build | PASS |
+| 2026-05-22 | 1.2.0_DS_CompLearns | ADVI_DEMOV1.004 | comp-build | comp-build | PASS |
+| 2026-05-22 | 1.2.0_DS_CompLearns | (no-TO) | comp-build | comp-build | PASS |
+| 2026-05-22 | 1.1.0_DS_CompLearns | (no-TO) | comp-build | comp-build | PASS |
+| 2026-05-22 | 1.2.0_DS_CompLearns | (no-TO) | comp-build | comp-build | PASS |
+| 2026-05-22 | 1.1.0_DS_CompLearns | (no-TO) | comp-build | comp-build | PASS |
+| 2026-05-22 | 1.2.0_DS_CompLearns | (no-TO) | comp-build | comp-build | PASS |
+| 2026-05-22 | 1.2.0_DS_CompLearns | (no-TO) | comp-build | comp-build | PASS |
+| 2026-05-22 | 0.4.0_DS_ClientPlatform | ADVI_VALFIN.001 | comp-pipescript | comp-pipescript io INF_B_00 | PASS |
+| 2026-05-22 | 0.4.0_DS_ClientPlatform | ADVI_VALFIN.001 | comp-pipescript | comp-pipescript feeds INF_B_00 | PASS |
+| 2026-05-22 | 0.4.0_DS_ClientPlatform | ADVI_VALFIN.001 | comp-pipescript | comp-pipescript consumers INF_B_00 | PASS |
+| 2026-05-22 | 0.4.0_DS_ClientPlatform | ADVI_VALFIN.001 | comp-blast | comp-blast INF_B_00 | PASS |
+| 2026-05-22 | 0.4.0_DS_ClientPlatform | ADVI_VALFIN.001 | comp-pipescript | comp-pipescript io INF_B_01 | PASS |
+| 2026-05-22 | 0.4.0_DS_ClientPlatform | ADVI_VALFIN.001 | comp-pipescript | comp-pipescript feeds INF_B_01 | PASS |
+| 2026-05-22 | 0.4.0_DS_ClientPlatform | ADVI_VALFIN.001 | comp-pipescript | comp-pipescript consumers INF_B_01 | PASS |
+| 2026-05-22 | 0.4.0_DS_ClientPlatform | ADVI_VALFIN.001 | comp-blast | comp-blast INF_B_01 | PASS |
+| 2026-05-22 | 1.1.0_DS_CompLearns | ADVI_VALFIN.001 | comp-build | comp-build | PASS |
+| 2026-05-22 | 0.4.0_DS_ClientPlatform | ADVI_VALFIN.001 | comp-pipescript | comp-pipescript io INF_B_01b | PASS |
+| 2026-05-22 | 0.4.0_DS_ClientPlatform | ADVI_VALFIN.001 | comp-pipescript | comp-pipescript feeds INF_B_01b | PASS |
+| 2026-05-22 | 0.4.0_DS_ClientPlatform | ADVI_VALFIN.001 | comp-pipescript | comp-pipescript consumers INF_B_01b | PASS |
+| 2026-05-22 | 0.4.0_DS_ClientPlatform | ADVI_VALFIN.001 | comp-blast | comp-blast INF_B_01b | PASS |
+| 2026-05-22 | 0.4.0_DS_ClientPlatform | ADVI_VALFIN.001 | comp-pipescript | comp-pipescript io INF_B_02 | PASS |
+| 2026-05-22 | 0.4.0_DS_ClientPlatform | ADVI_VALFIN.001 | comp-pipescript | comp-pipescript feeds INF_B_02 | PASS |
+| 2026-05-22 | 0.4.0_DS_ClientPlatform | ADVI_VALFIN.001 | comp-pipescript | comp-pipescript consumers INF_B_02 | PASS |
+| 2026-05-22 | 0.4.0_DS_ClientPlatform | ADVI_VALFIN.001 | comp-blast | comp-blast INF_B_02 | PASS |
+| 2026-05-22 | 0.4.0_DS_ClientPlatform | ADVI_VALFIN.001 | comp-pipescript | comp-pipescript io INF_B_03 | PASS |
+| 2026-05-22 | 0.4.0_DS_ClientPlatform | ADVI_VALFIN.001 | comp-pipescript | comp-pipescript feeds INF_B_03 | PASS |
+| 2026-05-22 | 0.4.0_DS_ClientPlatform | ADVI_VALFIN.001 | comp-pipescript | comp-pipescript consumers INF_B_03 | PASS |
+| 2026-05-22 | 0.4.0_DS_ClientPlatform | ADVI_VALFIN.001 | comp-blast | comp-blast INF_B_03 | PASS |
+| 2026-05-22 | 0.4.0_DS_ClientPlatform | ADVI_VALFIN.001 | comp-pipescript | comp-pipescript io INF_C_05 | PASS |
+| 2026-05-22 | 0.4.0_DS_ClientPlatform | ADVI_VALFIN.001 | comp-pipescript | comp-pipescript feeds INF_C_05 | PASS |
+| 2026-05-22 | 0.4.0_DS_ClientPlatform | ADVI_VALFIN.001 | comp-pipescript | comp-pipescript consumers INF_C_05 | PASS |
+| 2026-05-22 | 0.4.0_DS_ClientPlatform | ADVI_VALFIN.001 | comp-blast | comp-blast INF_C_05 | PASS |
+| 2026-05-23 | 0.4.0_DE_ClientPlatform | ADVI_INFGRO.005 | comp-transform | comp-transform schema-check AdvisorsTab --feature gro_decomposition | PASS |
+| 2026-05-23 | 0.4.0_DE_ClientPlatform | ADVI_INFGRO.005 | comp-transform | comp-transform ternary-audit AdvisorsTab | PASS |
+| 2026-05-23 | 0.4.0_DE_ClientPlatform | ADVI_INFGRO.005 | comp-routes | comp-routes trace getFirmLeaderboard | PASS |
+| 2026-05-23 | 0.4.0_DE_ClientPlatform | ADVI_INFGRO.005 | comp-cache | comp-cache collisions | PASS |
+| 2026-05-23 | 0.4.0_DS_ClientPlatform | ADVI_INFGRO.005 | comp-pipescript | comp-pipescript io INF_C_07 | PASS |
+| 2026-05-23 | 0.4.0_DS_ClientPlatform | ADVI_INFGRO.005 | comp-pipescript | comp-pipescript feeds INF_C_07 | PASS |
+| 2026-05-23 | 0.4.0_DS_ClientPlatform | ADVI_INFGRO.005 | comp-pipescript | comp-pipescript consumers INF_C_07 | PASS |
+| 2026-05-23 | 0.4.0_DS_ClientPlatform | ADVI_INFGRO.005 | comp-blast | comp-blast INF_C_07 | PASS |
+| 2026-05-23 | 0.4.0_DS_ClientPlatform | ADVI_INFGRO.005 | comp-pipescript | comp-pipescript io INF_C_08 | PASS |
+| 2026-05-23 | 0.4.0_DS_ClientPlatform | ADVI_INFGRO.005 | comp-blast | comp-blast INF_C_08 | PASS |
+| 2026-05-23 | 0.4.0_DS_ClientPlatform | ADVI_INFGRO.005 | comp-pipescript | comp-pipescript io INF_D_00c | PASS |
+| 2026-05-23 | 0.4.0_DS_ClientPlatform | ADVI_INFGRO.005 | comp-pipescript | comp-pipescript feeds INF_D_00c | PASS |
+| 2026-05-23 | 0.4.0_DS_ClientPlatform | ADVI_INFGRO.005 | comp-blast | comp-blast INF_D_00c | PASS |
+| 2026-05-23 | 0.4.0_DS_ClientPlatform | ADVI_INFGRO.005 | comp-pipescript | comp-pipescript io INF_D_02 | PASS |
+| 2026-05-23 | 0.4.0_DS_ClientPlatform | ADVI_INFGRO.005 | comp-blast | comp-blast INF_D_02 | PASS |
+| 2026-05-23 | 0.4.0_DE_ClientPlatform | ADVI_INFGRO.005 | comp-transform | comp-transform schema-check AdvisorsTab --feature gro_decomposition | PASS |
+| 2026-05-23 | 0.4.0_DE_ClientPlatform | ADVI_INFGRO.005 | comp-transform | comp-transform ternary-audit AdvisorsTab | PASS |
+| 2026-05-23 | 0.4.0_DE_ClientPlatform | ADVI_INFGRO.005 | comp-routes | comp-routes trace getFirmLeaderboard | PASS |
+| 2026-05-23 | 1.2.0_DS_CompLearns | ADVI_INFGRO.005 | comp-build | comp-build | PASS |
+| 2026-05-23 | 1.1.0_DS_CompLearns | ADVI_INFGRO.005 | comp-build | comp-build | PASS |
+| 2026-05-23 | 0.4.0_DS_ClientPlatform | ADVI_INFGRO.005 | comp-validate | comp-validate INF_B_00 --artifact gold/canonical/holdings_2026-05-22.parquet | FAIL |
+| 2026-05-23 | 0.4.0_DS_ClientPlatform | ADVI_INFGRO.005 | comp-validate | comp-validate INF_B_00.canonical_holdings --artifact gold/canonical/holdings_2026-05-22... | FAIL |
+| 2026-05-23 | 0.4.0_DS_ClientPlatform | ADVI_INFGRO.005 | comp-validate | comp-validate --list | PASS |
+| 2026-05-23 | 0.4.0_DS_ClientPlatform | ADVI_INFGRO.005 | comp-validate | comp-validate B_00 | PASS |
+| 2026-05-23 | 0.4.0_DS_ClientPlatform | ADVI_INFGRO.005 | comp-pipescript | comp-pipescript io INF_D_02 | PASS |
+| 2026-05-23 | 0.4.0_DS_ClientPlatform | ADVI_INFGRO.005 | comp-platinum | comp-platinum reverse capital_gains_ttm | PASS |
+| 2026-05-23 | 3.0.0_SA_CVO | ADVI_INFGRO.005 | comp-pipescript | comp-pipescript deployed INF_B_00 | PASS |
+| 2026-05-23 | 0.4.0_DS_ClientPlatform | ADVI_INFGRO.005 | comp-pipescript | comp-pipescript deployed INF_D_02 | PASS |
+| 2026-05-23 | 0.4.0_DS_ClientPlatform | ADVI_INFGRO.005 | comp-pipescript | comp-pipescript deployed INF_D_00 | PASS |
+| 2026-05-23 | 0.4.0_DS_ClientPlatform | ADVI_INFGRO.005 | comp-blast | comp-blast capital_gains_ttm | PASS |
+| 2026-05-23 | 0.4.0_DS_ClientPlatform | ADVI_INFGRO.005 | comp-platinum | comp-platinum reverse capital_gains_ttm | PASS |
+| 2026-05-23 | 0.4.0_DS_ClientPlatform | ADVI_INFGRO.005 | comp-validate | comp-validate B_00 | PASS |
+| 2026-05-23 | 0.4.0_DS_ClientPlatform | ADVI_INFGRO.005 | comp-validate | comp-validate INF_D_02 | PASS |
+| 2026-05-23 | 0.4.0_DS_ClientPlatform | ADVI_INFGRO.005 | comp-validate | comp-validate INF_D_00 | FAIL |
+| 2026-05-23 | 0.4.0_DS_ClientPlatform | ADVI_INFGRO.005 | comp-validate | comp-validate D_00 | PASS |
+| 2026-05-23 | 0.4.0_DS_ClientPlatform | ADVI_DEMOV1.005.aec-iam-ec2-grant-demo-transform | comp-platinum | comp-platinum reverse unrealized_gain_ttm | PASS |
+| 2026-05-23 | 0.4.0_DS_ClientPlatform | ADVI_DEMOV1.005.aec-iam-ec2-grant-demo-transform | comp-platinum | comp-platinum reverse unrealized_gain | PASS |
+| 2026-05-23 | 0.4.0_DS_ClientPlatform | ADVI_DEMOV1.005.aec-iam-ec2-grant-demo-transform | comp-platinum | comp-platinum reverse cost_basis | PASS |
+| 2026-05-23 | 0.4.0_DS_ClientPlatform | ADVI_DEMOV1.005.aec-iam-ec2-grant-demo-transform | comp-platinum | comp-platinum reverse tax_exposure | PASS |
+| 2026-05-23 | 0.4.0_DS_ClientPlatform | ADVI_DEMOV1.005.aec-iam-ec2-grant-demo-transform | comp-platinum | comp-platinum reverse unrealized_gain_change_ttm | PASS |
+| 2026-05-23 | 0.7.0_AE_CloudOps~C | ADVI_DEMOV1.005.aec-iam-ec2-grant-demo-transform | comp-iam | comp-iam service demo-transform-runner | PASS |
+| 2026-05-23 | 0.7.0_AE_CloudOps~C | ADVI_DEMOV1.005.aec-iam-ec2-grant-demo-transform | comp-iam | comp-iam gaps | PASS |
+| 2026-05-23 | 0.7.0_AE_CloudOps~C | ADVI_DEMOV1.005.aec-iam-ec2-grant-demo-transform | comp-iam | comp-iam service demo-transform-runner-ec2-role | PASS |
+| 2026-05-23 | 0.7.0_AE_CloudOps~C | ADVI_DEMOV1.005.aec-iam-ec2-grant-demo-transform | comp-blast | comp-blast demo-transform-runner-ec2-role | PASS |
+| 2026-05-23 | 0.4.0_DS_ClientPlatform~D | ADVI_VALFIN.009 | comp-pipescript | comp-pipescript io INF_D_02 | PASS |
+| 2026-05-23 | 0.4.0_DS_ClientPlatform~D | ADVI_VALFIN.009 | comp-validate | comp-validate INF_D_02 | PASS |
+| 2026-05-23 | 0.4.0_DS_ClientPlatform~D | ADVI_VALFIN.009 | comp-validate | comp-validate --help | PASS |
+| 2026-05-23 | 0.4.0_DS_ClientPlatform~D | ADVI_VALFIN.009 | comp-validate | comp-validate INF_D_02 | PASS |
+| 2026-05-23 | 0.4.0_DS_ClientPlatform~D | ADVI_VALFIN.009 | comp-validate | comp-validate INF_D_02 --artifact C:\Users\ANDREW~1\AppData\Local\Temp\pl_book.json | PASS |
+| 2026-05-23 | 0.4.0_DS_ClientPlatform~D | ADVI_VALFIN.009 | comp-validate | comp-validate INF_D_02 --artifact C:\Users\ANDREW~1\AppData\Local\Temp\pl_book.json | PASS |
+| 2026-05-23 | 1.1.0_DS_CompLearns | ADVI_VALFIN.009 | comp-build | comp-build | PASS |
+| 2026-05-23 | 1.2.0_DS_CompLearns | ADVI_VALFIN.009 | comp-build | comp-build | PASS |
+| 2026-05-23 | 1.2.0_DS_CompLearns | ADVI_VALFIN.009 | comp-build | comp-build | PASS |
+| 2026-05-23 | 1.1.0_DS_CompLearns | ADVI_VALFIN.009 | comp-build | comp-build | PASS |
+| 2026-05-23 | 1.2.0_DS_CompLearns | ADVI_VALFIN.009 | comp-build | comp-build | PASS |
+| 2026-05-24 | 2.1.0_SA_COO | ADVI_VALFIN.009 | comp-build | comp-build | PASS |
+| 2026-05-25 | 0.4.0_DS_ClientPlatform~E | (no-TO) | comp-platinum | comp-platinum reverse fee_status_audit | PASS |
+| 2026-05-25 | 0.4.0_DS_ClientPlatform~E | (no-TO) | comp-pipescript | comp-pipescript consumers INF_C_09.fee_status_audit | PASS |
+| 2026-05-25 | 0.4.0_DS_ClientPlatform~E | (no-TO) | comp-pipescript | comp-pipescript consumers INF_C_09 | PASS |
+| 2026-05-25 | 0.4.0_DS_ClientPlatform~E | (no-TO) | comp-pipescript | comp-pipescript io INF_C_09 | PASS |
+| 2026-05-25 | 0.4.0_DS_ClientPlatform~E | (no-TO) | comp-pipescript | comp-pipescript io INF_D_02 | PASS |
+| 2026-05-25 | 0.4.0_DS_ClientPlatform~E | (no-TO) | comp-pipescript | comp-pipescript deployed INF_C_09 | PASS |
+| 2026-05-25 | 3.0.0_SA_CVO | (no-TO) | comp-platinum | comp-platinum reverse INF_C_09 | PASS |
+| 2026-05-26 | 1.0.0_SA_CTO | (no-TO) | comp-build | comp-build | PASS |
+| 2026-05-26 | 1.0.0_SA_CTO | (no-TO) | comp-routes | comp-routes behaviors | PASS |
+| 2026-05-26 | 1.0.0_SA_CTO | (no-TO) | comp-cache | comp-cache collisions | PASS |
+| 2026-05-26 | 1.0.0_SA_CTO | (no-TO) | comp-blast | comp-blast cache-control-injector | PASS |
+| 2026-05-26 | 1.0.0_SA_CTO | (no-TO) | comp-blast | comp-blast shared-advisor-router-response | PASS |
+| 2026-05-26 | 1.0.0_SA_CTO | (no-TO) | comp-iam | comp-iam service cache-control-injector | PASS |
+| 2026-05-26 | 0.6.1_AE_PartnerETL | ADHC_CDNCOHT.TO-001-INTERIM | comp-routes | comp-routes behaviors | PASS |
+| 2026-05-26 | 1.0.0_SA_CTO | ADHC_CDNCOHT.TO-001-INTERIM | comp-platinum | comp-platinum page MarketOverview | PASS |
+| 2026-05-26 | 1.0.0_SA_CTO | ADHC_CDNCOHT.TO-001-INTERIM | comp-platinum | comp-platinum page MarketPerformance | PASS |
+| 2026-05-26 | 0.2.0_DS_PortfolioAnalytics | (no-TO) | comp-pipescript | comp-pipescript consumers yang-generate-positioning | FAIL |
+| 2026-05-26 | 0.1.0_DS_MarketIntelligence | YALP_MKTOVR.001.ds-market-overview-endpoint-and-field-mapping | comp-platinum | comp-platinum page MarketPerformance | PASS |
+| 2026-05-26 | 0.1.0_DS_MarketIntelligence | YALP_MKTOVR.001.ds-market-overview-endpoint-and-field-mapping | comp-routes | comp-routes trace /api/general/json-tiered/market-overview/summary/all-returns.json | PASS |
+| 2026-05-26 | 0.1.0_DS_MarketIntelligence | YALP_MKTOVR.001.ds-market-overview-endpoint-and-field-mapping | comp-platinum | comp-platinum reverse json-tiered/market-overview/summary/all-returns.json | PASS |
+| 2026-05-26 | 0.1.0_DS_MarketIntelligence | YALP_MKTOVR.001.ds-market-overview-endpoint-and-field-mapping | comp-platinum | comp-platinum reverse json-tiered/market-overview/rsi-summary.json | PASS |
+| 2026-05-26 | 0.1.0_DS_MarketIntelligence | YALP_MKTOVR.001.ds-market-overview-endpoint-and-field-mapping | comp-pipescript | comp-pipescript io opal-market-overview-tiered-generator | FAIL |
+| 2026-05-26 | 0.1.0_DS_MarketIntelligence | YALP_MKTOVR.001.ds-market-overview-endpoint-and-field-mapping | comp-pipescript | comp-pipescript io opal-market-rsi-tiered-generator | FAIL |
+| 2026-05-26 | 0.1.0_DS_MarketIntelligence | YALP_MKTOVR.001.ds-market-overview-endpoint-and-field-mapping | comp-transform | comp-transform fields MarketPerformance | PASS |
