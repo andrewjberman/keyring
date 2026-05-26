@@ -137,7 +137,7 @@ tools:
       - Modifying a gold script: check who consumes your output before changing schema
     subcommands:
       dag: "Full pipeline DAG with I/O per script (--json for machine output)"
-      io: "comp-pipescript io D_00 -- input/output manifest with upstream writers and downstream consumers. Now includes: S3-DYNAMIC annotations for runtime-resolved reads (dim CSVs, pandas s3:// URIs), and PORTAL CONSUMERS section resolving platinum/* write targets to portal endpoints + components. Use --no-portal to skip routing table lookup."
+      io: "comp-pipescript io D_00 -- input/output manifest with upstream writers and downstream consumers. Now includes: S3-DYNAMIC annotations for runtime-resolved reads (dim CSVs, pandas s3:// URIs), and PORTAL CONSUMERS section resolving platinum/* write targets to portal endpoints + components. Use --no-portal to skip routing table lookup. ADHC_COMPIL_V5.002 (2026-05-26): path-mode short-circuit -- when arg is a path to infra/aws/lambda/**/lambda_function.py, output uses node-class `lambda_pipeline_script` and scans boto3 S3/DDB ops directly (module-constant resolution for Key/TableName variables). Empirical AC anchor: DS 0.1.0 YALP_MKTOVR.001 brief §11 Level-1 mapping. Partial AC5: traversal integration (comp-trace + comp-blast wiring) deferred — Lambda nodes not yet linked into BD-gold pipeline DAG. Cross-link via comp-iam service <name> for IAM-side."
       chain: "comp-pipescript chain downstream -- chain membership + order + I/O counts"
       feeds: "comp-pipescript feeds D_00 -- upstream scripts that write artifacts D_00 reads"
       consumers: "comp-pipescript consumers C_07 -- downstream scripts that read C_07 output"

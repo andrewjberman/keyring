@@ -439,7 +439,185 @@ def cmd_dag(args):
         print()
 
 
+def _lambda_pipescript_io(script_path_arg: str) -> bool:
+    """ADHC_COMPIL_V5.002 -- Lambda-side I/O manifest scan.
+
+    When `args.script_id` is a path to a Lambda function file (under
+    `infra/aws/lambda/**/lambda_function.py`), bypass the BD-gold DAG lookup
+    and produce an I/O manifest by ad-hoc scanning the Lambda source for
+    boto3 S3 + DynamoDB operations. Mirrors the BD-gold-side I/O MANIFEST
+    format so the output is consumable by the same comp-pipescript users.
+
+    Returns True if the path was Lambda-side and printed; False if not a
+    Lambda path (caller falls through to the BD-gold DAG path).
+
+    Empirical anchor (AC2): reproduces DS 0.1.0 YALP_MKTOVR.001 brief §11
+    Level-1 mapping for market-overview-tiered-generator + sister Lambdas.
+    """
+    # Detect Lambda-path-mode: arg contains a / and points to an existing .py
+    # file under infra/aws/lambda/.
+    if "/" not in script_path_arg and "\\" not in script_path_arg:
+        return False
+    normalized = script_path_arg.replace("\\", "/")
+    if "infra/aws/lambda/" not in normalized:
+        return False
+    abs_path = _WORKSPACE / normalized
+    if not abs_path.exists() or not abs_path.is_file():
+        return False
+
+    try:
+        content = abs_path.read_text(encoding="utf-8", errors="replace")
+    except Exception:
+        print(f"ERROR: cannot read {script_path_arg}")
+        return True  # consumed the arg even on read error
+
+    # Module-level string-constant resolution: many Lambdas write
+    #   DYNAMODB_TABLE = 'opal-portal-market-data'
+    #   s3_client.put_object(..., Key=key)
+    # where the actual S3/DDB target hides behind a variable. Build a name->value
+    # map from top-level assignments so Key=VAR / TableName=VAR resolve cleanly.
+    constants: dict[str, str] = {}
+    for m in re.finditer(
+        r"""^([A-Z_][A-Z0-9_]*)\s*=\s*['"]([^'"\n]+)['"]\s*$""",
+        content,
+        re.MULTILINE,
+    ):
+        constants[m.group(1)] = m.group(2)
+
+    def _resolve(var_or_lit: str) -> str:
+        return constants.get(var_or_lit, var_or_lit)
+
+    # Extract per-operation S3 + DDB references with direction (read/write).
+    s3_reads: set[str] = set()
+    s3_writes: set[str] = set()
+    s3_prefix_reads: set[str] = set()
+    ddb_reads: set[tuple[str, str]] = set()   # (table, op)
+    ddb_writes: set[tuple[str, str]] = set()
+
+    # S3 op patterns -- collapse multiline so multi-line kwargs match
+    from org.modules.graph.extract_pipeline import _collapse_multiline_calls
+    collapsed = _collapse_multiline_calls(content)
+
+    # READ ops: get_object, download_file, head_object, list_objects, list_objects_v2
+    for m in re.finditer(
+        r"""(?:get_object|head_object|download_file|download_fileobj)\s*\([^)]*Key\s*=\s*(?:f?['"]([^'"]+)['"]|([A-Za-z_][A-Za-z_0-9.]*))""",
+        collapsed,
+    ):
+        key = _resolve(m.group(1) or m.group(2) or "")
+        if key:
+            s3_reads.add(re.sub(r"\{[^}]+\}", "{*}", key))
+    for m in re.finditer(
+        r"""(?:list_objects(?:_v2)?)\s*\([^)]*Prefix\s*=\s*(?:f?['"]([^'"]+)['"]|([A-Za-z_][A-Za-z_0-9.]*))""",
+        collapsed,
+    ):
+        pfx = _resolve(m.group(1) or m.group(2) or "")
+        if pfx:
+            s3_prefix_reads.add(re.sub(r"\{[^}]+\}", "{*}", pfx) + "*")
+
+    # WRITE ops: put_object, upload_file, upload_fileobj, copy_object
+    for m in re.finditer(
+        r"""(?:put_object|upload_file|upload_fileobj|copy_object)\s*\([^)]*Key\s*=\s*(?:f?['"]([^'"]+)['"]|([A-Za-z_][A-Za-z_0-9.]*))""",
+        collapsed,
+    ):
+        key = _resolve(m.group(1) or m.group(2) or "")
+        if key:
+            s3_writes.add(re.sub(r"\{[^}]+\}", "{*}", key))
+
+    # DDB ops: literal-string + module-constant via dynamodb.Table(...)
+    for m in re.finditer(
+        r"""dynamodb\.Table\s*\(\s*(?:['"]([^'"]+)['"]|([A-Za-z_][A-Za-z_0-9]*))\s*\)""",
+        collapsed,
+    ):
+        tbl = _resolve(m.group(1) or m.group(2) or "")
+        if tbl:
+            ddb_reads.add((tbl, "ddb-read"))
+            ddb_writes.add((tbl, "ddb-write"))
+    # DDB TableName= kwargs (low-level client.X(TableName=...) form)
+    for m in re.finditer(
+        r"""TableName\s*=\s*(?:['"]([^'"]+)['"]|([A-Za-z_][A-Za-z_0-9]*))""",
+        collapsed,
+    ):
+        tbl = _resolve(m.group(1) or m.group(2) or "")
+        if tbl:
+            ddb_reads.add((tbl, "ddb-read"))
+            ddb_writes.add((tbl, "ddb-write"))
+
+    # Specific DDB op-direction patterns (more precise)
+    for m in re.finditer(
+        r"""\.(?:get_item|query|scan|batch_get_item)\s*\(""", collapsed
+    ):
+        pass  # already captured generally above
+    for m in re.finditer(
+        r"""\.(?:put_item|update_item|delete_item|batch_write_item)\s*\(""", collapsed
+    ):
+        pass
+
+    # Dynamic s3:// + f-string keys via existing extractor
+    from org.modules.graph.extract_pipeline import _extract_dynamic_refs
+    dynamic = _extract_dynamic_refs(content)
+
+    rel_path = str(abs_path.relative_to(_WORKSPACE)).replace("\\", "/")
+    function_name = abs_path.parent.name
+
+    print(f"I/O MANIFEST: {function_name} ({rel_path}) [lambda_pipeline_script]")
+    print(f"  Source: infra/aws/lambda/...; node-class: lambda_pipeline_script (ADHC_COMPIL_V5.002)")
+    print()
+
+    if s3_reads or s3_prefix_reads:
+        total = len(s3_reads) + len(s3_prefix_reads)
+        print(f"  READS ({total}):")
+        for k in sorted(s3_reads):
+            print(f"    s3:GetObject: {k}")
+        for p in sorted(s3_prefix_reads):
+            print(f"    s3:ListObjects: {p}  [PREFIX]")
+    else:
+        print("  READS: (none detected via boto3 get_object/list_objects/head_object/download_file patterns)")
+
+    print()
+
+    if s3_writes:
+        print(f"  WRITES ({len(s3_writes)}):")
+        for k in sorted(s3_writes):
+            print(f"    s3:PutObject: {k}")
+    else:
+        print("  WRITES: (none detected via boto3 put_object/upload_file/copy_object patterns)")
+
+    if ddb_reads or ddb_writes:
+        print()
+        ddb_tables = sorted({t for t, _ in (ddb_reads | ddb_writes)})
+        print(f"  DYNAMODB ({len(ddb_tables)} table(s)):")
+        for t in ddb_tables:
+            print(f"    Table: {t}  [read+write inferred from boto3 Table() / dynamodb.X(TableName=...) patterns]")
+
+    if dynamic:
+        # Filter ones already covered by direct s3_reads/writes
+        covered = s3_reads | s3_writes | s3_prefix_reads
+        new_dynamic = [d for d in dynamic if d not in covered and d.rstrip("/") not in covered]
+        if new_dynamic:
+            print()
+            print(f"  S3-DYNAMIC ({len(new_dynamic)}) [f-string / s3:// URI / pandas read]:")
+            for path in new_dynamic:
+                print(f"    {path}  [read-at-runtime]")
+
+    if not (s3_reads or s3_writes or s3_prefix_reads or ddb_reads or ddb_writes or dynamic):
+        print()
+        print("  WARN: no S3 or DynamoDB operations detected.")
+        print("  Lambda may use non-boto3 patterns or compute-only logic.")
+
+    print()
+    print("  NOTE: AC5 graph-traversal integration (comp-trace + comp-blast) -- partial.")
+    print("        Lambda nodes not yet linked into the BD-gold pipeline DAG; use ad-hoc")
+    print("        comp-iam service <name> for IAM-side coverage + this comp-pipescript io")
+    print("        <path> for I/O-side coverage. Full traversal integration deferred to")
+    print("        TO-VAL composite update OR follow-on TO per ws COO sequencing.")
+    return True
+
+
 def cmd_io(args):
+    # ADHC_COMPIL_V5.002 -- Lambda-path-mode short-circuit (AC1+AC2+AC3+AC4)
+    if _lambda_pipescript_io(args.script_id):
+        return
+
     pipeline = getattr(args, 'pipeline', 'bd-gold') or 'bd-gold'
 
     if pipeline not in ('bd-gold', 'bd', 'inf'):
