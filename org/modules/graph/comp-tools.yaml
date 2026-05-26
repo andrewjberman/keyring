@@ -463,6 +463,28 @@ tools_continued:
     replaces: "Manual cross-reference of boto3 calls against iam.tf; AWS IAM console audit"
     note: "Catches permission gaps before they cause silent failures. The IAM watchdog loop incident (2026-04-09) was caused by s3:DeleteObject missing from bd-exporter-ec2-role -- comp-iam would have flagged this during the Terraform review. V4.024 (2026-05-08) eliminated the two FP classes that surfaced post-V4.022 backfill: (A) EC2-shipped-shell distinction — aws-cli patterns inside triple-quoted strings shipped via run_instances UserData= or send_command commands=[] no longer flag against the Lambda role; (B) AWS-managed-policy attachment parsing — aws_iam_role_policy_attachment with policy_arn = arn:aws:iam::aws:policy/X contributes X's actions to the role's grant set via static lookup table (S3/Lambda/SSM/DynamoDB/SecretsManager/CloudWatch + 21 ARNs) plus aws iam get-policy-version cache+API fallback for unknown ARNs (emits MANAGED_POLICY_UNKNOWN advisory + does NOT claim coverage when offline)."
 
+  comp-registry:
+    command: "comp-registry sync ROW=N | --project CODE | --all | (+ --apply)"
+    segment_scope: workspace-wide
+    segment_scope_note: "Operates on `org/projects/REGISTRY.md` table rows + `org/projects/{CODE}.json` source-of-truth fields. ADHC_COMPIL_V5.003 ship (2026-05-26): NEW tool — REGISTRY-vs-JSON-vs-PRD narrative drift detection + write-back per ADHC_COMPIL_V5 PRD v0.1 §6 TO-003 + CVO brief 92b198aac §3 Fix 3. Author: 3.0.0_SA_CVO per Andrew direct delegation 2026-05-26 ~16:55Z overriding the original [[cvo-self-validation-mitigation-pattern]] default carve-out. Detects 5 drift classes: PHASE-LAG (REGISTRY narrative cites Phase N < JSON status='phaseM_'), COMMIT-CITATION-LAG (REGISTRY narrative missing >25% or >=3 of JSON-cited commit hashes), PRD-LABEL-LAG (JSON cites PRD vX.Y newer than REGISTRY PRD column reference), STATUS-MISMATCH (JSON status='complete' but row in Active table = missed Closure-Discipline-3-step move), ROW-MISSING (project JSON exists but no REGISTRY row found). Acceptance anchor: 7 Sub-class Y CVO /spot-check fires today (bca1e1234 + bdaed5f7b + 6d8d4206b + 146f033db + 1082f9b56 + 47ad2978a + a84912406) + 3rd-fire today of 'new-project REGISTRY-row backlog' class (5 YALP Wave-1 PRDs missing rows; ADHC_COMPIL_V5 row pre-COO-add; ADVI_DEMOV1 row 22 multi-day stale narrative) — tool empirically reproduces all 3 classes on present-state --all sweep."
+    when: |
+      - After a project JSON `status` / `current_phase` / `blocking` advance: verify REGISTRY row narrative reflects the change
+      - After a new project JSON ships: check REGISTRY row exists (ROW-MISSING detection)
+      - After a PRD-version-revision (v0.N → v0.N+1): verify REGISTRY PRD column cites the new version
+      - Post-Closure-Discipline-3-step check: confirm JSON `status=complete` rows actually moved to Completed table
+      - Periodic workspace-wide drift sweep (`--all`) — recommended at /verify-channel 2h cron tick
+    subcommands:
+      sync: "comp-registry sync -- diff-report (default) or write-back with --apply"
+    modes:
+      row: "comp-registry sync ROW=N -- diff-report for row N (1-indexed within active table; falls back to other tables)"
+      project: "comp-registry sync --project YALP_MKTOVR -- diff-report by project code (handles JSON-without-row case via ROW-MISSING)"
+      all: "comp-registry sync --all -- workspace-wide sweep across all Active rows + all project JSONs (catches both row-side drift and JSON-without-row backlog)"
+      apply: "comp-registry sync ROW=N --apply -- write JSON-derived narrative back to REGISTRY via safe-commit.sh under CVO author line (lane discipline preserved)"
+    cost: "<1s (read-only stdlib; no AWS API calls; no comp-build invocation; pure filesystem read of REGISTRY.md + project JSONs)"
+    data_sources: "org/projects/REGISTRY.md (active + completed + held tables); org/projects/*.json (project JSONs)"
+    replaces: "Manual REGISTRY-vs-JSON narrative cross-reference; multi-day-latent Sub-class Y /spot-check cascade fires; new-project REGISTRY-row backlog catch via ad-hoc COO observation"
+    note: "Empirically validated 2026-05-26 ship: --all sweep on workspace caught 10 drift findings (5 YALP Wave-1 ROW-MISSING + ADVI_DEMOV1 COMMIT-CITATION-LAG + ADVI_SHARED COMMIT-CITATION-LAG + ADHC_FECACHE_COHERENCE COMMIT-CITATION-LAG + ADVI_BFIX4/ADVI_FIRMSEP ROW-MISSING) reproducing the same drift classes that today's 7 Sub-class Y CVO /spot-check fires manually caught. --apply write-back regenerates phase narrative from JSON current_phase as authoritative source; safe-commit.sh wrapper invocation preserves CVO-author-line + --only pathspec discipline (no lane drift; no FORCE-BYPASS). Read-only is the default — no --apply flag = report-only stdout (no mutation, no commit). Exit code: 0 if no drift, 2 if drift detected (CI-flag-friendly). Honest-limit: PRD §6 TO-003 AC#1+#2 strict historical-commit-state replay (`bca1e1234`-window etc.) is PARTIAL via present-state-equivalent-class-detection — the tool catches the same drift CLASSES the historical fires caught; strict git-checkout-and-replay deferred to TO-VAL composite regression (AE 0.7 lead with CVO co-consult). Pattern matches AE 0.7 TO-002 honest-partial-discipline shape."
+
   check-lambda-layer-deps:
     command: "check-lambda-layer-deps [--function <name>] [--pipeline <name>] [--strict] [--verbose] [--json]"
     segment_scope: segment-aware

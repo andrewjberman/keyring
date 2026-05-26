@@ -1,0 +1,8 @@
+#!/bin/bash
+# comp-registry -- REGISTRY-vs-JSON-vs-PRD narrative drift detection + sync
+# Usage: comp-registry sync ROW=N | --project CODE | --all | (+ --apply)
+WORKSPACE="$(cd "$(dirname "$0")/.." && pwd)"
+python "$WORKSPACE/org/modules/graph/registry_cli.py" "$@"
+_exit=$?
+python "$WORKSPACE/org/modules/graph/comp_log_auto.py" "comp-registry" "$*" $_exit 2>/dev/null
+exit $_exit
