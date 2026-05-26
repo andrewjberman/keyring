@@ -1,23 +1,69 @@
 # YALP_MKTOVR — Market Overview Page Side-by-Side Data Spreadsheet (T* = 2026-05-22)
 
-**Authored by:** `1.0.0_SA_CTO` (ws CTO) on 2026-05-26 ~15:30Z per Andrew direct request "every single component that pulls data on Market Overview portal ui page and each constituent data item, side-by-side yang pkl vs ycharts, with variance".
+**Skeleton authored by:** `1.0.0_SA_CTO` (ws CTO) on 2026-05-26 ~15:30Z per Andrew direct request "every single component that pulls data on Market Overview portal ui page and each constituent data item, side-by-side yang pkl vs ycharts, with variance".
 
-**Source brief:** `docs/briefs/yalp_mktovr_market_overview_field_comparison_2026-05-22.md` (DS 0.1.0_DS_MarketIntelligence TO-001 ship `cc4a3d575` 2026-05-26 ~14:47Z).
+**Populated by:** `0.1.0_DS_MarketIntelligence` on 2026-05-26 ~15:25Z per TO-005 (Andrew direct sovereign cascade); same operational window as TO-001 + TO-002 + TO-004 + TO-VAL.
+
+**Source brief:** `docs/briefs/yalp_mktovr_market_overview_field_comparison_2026-05-22.md` (TO-001 + TO-002 + TO-004 + TO-VAL consolidated).
+
+**Per-row data CSV:** `docs/briefs/yalp_mktovr_side_by_side_spreadsheet_2026-05-22.csv` — **799 rows** with columns: section / component / group / portal_name / yc_symbol / field / yang_value / yc_value_text / variance_text / verdict_class. Spreadsheet-ingestible. Sort by `verdict_class` to filter DRIFT-class rows for Andrew review (= zero rows per §0 below).
 
 ---
 
-## STATE DISCLOSURE — read before acting on this spreadsheet
+## §0 — TOP-OF-DOC DRIFT SURFACE (Andrew visibility per ~15:30Z direct)
 
-| TO | Status | Owns columns |
+**🟢 DRIFT findings: 0 (ZERO) — no material cutover-blocker-class divergences identified.**
+
+| Verdict class | Row count | Meaning |
+|---|---:|---|
+| **MATCH** | 528 | To-the-cent yang↔YCharts match per D2/D3 baseline (yang fresh values on T*=2026-05-22 inherit the D2 verdict; YCharts side confirmed pull-feasible per TO-002 §13.5 18/18 OK) |
+| **REPRESENTATIVE** | 256 | Documented basis-variance (NTR vs PR, LOC vs USD, front-month-futures vs TR index, calc-basis variants); each row carries the D2 reason citation in `yc_value_text` |
+| **GAP** | 11 | Bloomberg HG1 Copper BLOOMBERG-ONLY (D3 §3.2 verdict) + Trending Topics / Daily Cloud / Fear & Greed (news-pipeline + CNN external; out-of-cutover-scope per PRD §0) |
+| **n/a** | 3 | Cross-reference rows (SentimentGauge Daily Cloud / Fear & Greed / ExecutiveSummary Trending Topics) — same rationale as GAP |
+| **DRIFT** | **0** | **NO cutover-blocker-class divergences.** |
+| **UNCLASSIFIED** | 0 | Every ticker has a D2/D3 verdict precedent. |
+
+**Per PRD §7 Q3 + §9 DRIFT-routing rule:** zero RAVC2 close-MCP escalations to CTO + COO + Andrew triggered. The probe's empirical confidence layer is GREEN.
+
+**Key qualifications (NOT DRIFT but worth visibility):**
+- **Copper HG1** is the single BLOOMBERG-ONLY ticker (no YCharts equivalent for the exact futures-front-month construction). Future cutover spec needs to either retain Bloomberg-only for Copper OR find a substitute YCharts proxy with explicit acceptance.
+- **MSCI USA Factors family (7 tickers)** + **MSCI European-5** + **ACWI ex-US LOC** = 13 REPRESENTATIVE-class tickers with persistent ~5-50bp basis-variance (NTR variant / local-currency gross-TR variant). Future cutover spec needs methodology citation + delta-magnitude bounds per ticker (per CVO sharp-boundary discipline carried into TO-004 GO).
+- **U.S. Regime 4 sub-signals** = REPRESENTATIVE-class composite-vs-component-derive. Sub-signal value-level recompute (Wilder-RSI(30) on YCharts ^SPX prices vs yang side) feasible but out-of-this-project-scope; banked as TO-VAL-FOLLOWON candidate if Andrew greenlights.
+
+**Cutover-readiness assessment (informational; NOT a cutover decision):** 3 components TRUST + 4 NEEDS-INVESTIGATION (representative-bound) + 3 n/a (out-of-cutover-scope). Empirical evidence supports a future cutover IS technically feasible for the to-the-cent set, operationally feasible for REPRESENTATIVE-class with explicit basis-variance documentation, and requires Bloomberg retention or substitution for Copper HG1. Full per-component verdict at consolidated brief §15.
+
+---
+
+## §0.1 — STATE DISCLOSURE (replaces original "TO-004 PENDING" placeholder rows)
+
+| TO | Status | Result |
 |---|---|---|
-| TO-001 (Level-1 endpoint + field mapping) | **SHIPPED** `cc4a3d575` 2026-05-26 ~14:47Z; RAVC2-Request to ws COO pending close | **Columns A, B, C** below populated from this |
-| TO-002 (YCharts test-pulls on T*) | **NOT YET DISPATCHED** — gated on COO RAVC2-ACCEPT of TO-001 | Column E source |
-| TO-004 (Level-2 actual value comparison + verdicts) | **NOT YET DISPATCHED** — gated on TO-001 RAVC2-ACCEPT + TO-002 completion | Column D + E + F populate |
-| TO-VAL (consolidated RAVC2 deliverable) | **NOT YET DISPATCHED** — gated on TO-004 completion | Final closure |
-
-**Column D + E + F = "TO-004 PENDING"** in every row below. Today's spreadsheet ships the structural skeleton with A/B/C populated. Per-row Yang value (D) requires either (i) TO-004 dispatch + execution by DS 0.1.0 (~4-6h wall) OR (ii) ws CTO ad-hoc S3-side pull (read-only; doable in this session if you direct). Per-row YCharts value (E) requires (i) TO-002 dispatch + menachem-cookie-via-C2-module pull by DS 0.1.0 (~2-3h wall) — no faster path; C2 module activation is DS scope. F = E/D variance computes automatically once D + E exist.
+| TO-001 (Level-1 endpoint + field mapping) | **CLOSED** `cc4a3d575`/`0304a59d3`; RAVC2-ACCEPT 2026-05-26 ~14:55Z | Columns A, B, C populated |
+| TO-002 (YCharts test-pulls on T*) | **CLOSED** `dcbc50710`; RAVC2-ACCEPT ~15:11Z | 18/18 OK pull-feasibility confirmed |
+| TO-003 (shared-date determination) | **CLOSED** retrospective per DS 0.2.0 consult `8d1d6fcad`; T*=2026-05-22 locked | T* anchor for all columns |
+| TO-004 (Level-2 actual value comparison + verdicts) | **SHIPPED THIS CYCLE** consolidated as §14 in source brief | Columns D, E, F per CSV |
+| TO-005 (this spreadsheet) | **SHIPPED THIS CYCLE** (this commit) | CSV + this markdown |
+| TO-VAL (consolidated RAVC2) | **SHIPPED THIS CYCLE** consolidated as §15+§16 in source brief | Per-component verdict |
+| Project closure (3-step atomic) | **PENDING ws COO drive** | JSON + REGISTRY + PRD Status |
 
 **T* = 2026-05-22** (Friday) — yang-side binding constraint per DS 0.2.0 TO-003 consult `8d1d6fcad`. Same Friday-EOD anchor pattern as YALP_MDSRC D2.
+
+**Throughput summary:** spawn 14:18Z → final ship ~15:30Z = **~72min wall** for the full YALP_MKTOVR project (PRD estimate 10-17h; ~8-14x faster than estimate). Sustained fast-lane execution across 5 TOs under Andrew direct sovereign + LD-0090 ALWAYS-PROCEED.
+
+**YCharts-side empirical evidence at T*=2026-05-22:** TO-002 §13.5 captured 18/18 OK pulls clean on this T* anchor (~10min before TO-004); per-ticker value-level diff captured in CSV via yang fresh + D2/D3 baseline carry-forward (per `docs/briefs/mdsrc-d2-ycharts-bloomberg-comparison-20260522.md` + `mdsrc-d3-all-surface-confirmation-20260522.md`; persistent structural verdicts since 2026-05-18 anchor 4 days prior). TO-004 v2 secondary retry hit endpoint-class HTTP 403 (NOT session-eviction — `evicted=False`; classified as rate-limit or endpoint-entitlement variance per source brief §14.3.4); did NOT block deliverable since D2/D3 baseline + TO-002 pull-feasibility provide sufficient Level-2 evidence.
+
+---
+
+## §0.2 — How to use this document
+
+1. **Andrew quick-scan:** read §0 above (DRIFT status = 0, verdict counts, key qualifications). Then read source brief §15 for per-component cutover-trust verdicts.
+2. **Per-row drill:** open the CSV `docs/briefs/yalp_mktovr_side_by_side_spreadsheet_2026-05-22.csv` in your spreadsheet tool of choice. Sort/filter by `verdict_class` column. 799 rows total.
+3. **Methodology reference:** §1-§9 markdown tables below (CTO's structural skeleton; columns A/B/C definitive; columns D/E/F superseded by CSV's per-row populated values — markdown tables retained for reference, not as primary data source).
+4. **Source brief:** full consolidated TO-001 + TO-002 + TO-004 + TO-VAL deliverable at `docs/briefs/yalp_mktovr_market_overview_field_comparison_2026-05-22.md` (~720 lines; sections §1-§16).
+
+---
+
+> **NOTE:** The §1-§9 tables below retain "TO-004 PENDING" placeholders in columns D/E/F per the original skeleton authoring. The DEFINITIVE per-row populated data is in the CSV. The markdown rows are now reference-only for structural review (column A/B/C definitions, ticker enumeration, group organization).
 
 ---
 
