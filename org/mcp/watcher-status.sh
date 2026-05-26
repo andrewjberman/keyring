@@ -27,13 +27,15 @@
 set -uo pipefail
 SERIAL="${1:?Usage: watcher-status.sh <agent_serial>}"
 
-# --- channel detection -------------------------------------------------------
-# CL-channel agents (the feature_clb / COMP_LEARNS team) watch a separate inbox
-# via cl-inbox-watch.sh. Everyone else uses the ajb_workspace inbox-watch.sh.
-case "$SERIAL" in
-  *CompLearns*|1.1.0_SA_CTO|2.1.0_SA_COO|2.1.0_SC_*) CHANNEL="cl" ;;
-  *) CHANNEL="ws" ;;
-esac
+# --- channel detection (post-LD-0034 unified broker + inbox) ----------------
+# All agents (ws + CL) use the ws-rooted inbox-watch.sh PATH wrapper. The legacy
+# feature_clb/org/mcp/cl-inbox-watch.sh path is RETIRED per LD-0034; watchers
+# found running against it fire the WRONG-CHANNEL VERDICT (form="cl" path-detect
+# at line ~70 produces wchan="cl" != CHANNEL="ws" -> SAW_WRONGCHAN=1).
+# Prior CL-serial -> CHANNEL="cl" branch removed 2026-05-26 per CL CTO §6 finding
+# (false-positive WRONG-CHANNEL on every CL agent /watcher cycle since LD-0034
+# migration completed); restoration of the branch requires LD-0034 reversal.
+CHANNEL="ws"
 
 PSOUT="$(ps -ef 2>/dev/null || true)"
 
