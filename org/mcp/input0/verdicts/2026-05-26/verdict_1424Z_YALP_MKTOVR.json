@@ -1,0 +1,31 @@
+{
+  "verdict": "CLEAN",
+  "project": "YALP_MKTOVR",
+  "artifacts_verified": [
+    "docs/architecture/YALP_MKTOVR.md@63439b288",
+    "org/projects/YALP_MKTOVR.json@63439b288",
+    "org/projects/REGISTRY.md#row28@63439b288",
+    "org/projects/YALP_MDSRC.json#status=complete",
+    "git://b8a6e83bf (YALP_MDSRC close commit)",
+    "docs/reference/yang-pipeline-lineage-map.md@48448bytes",
+    "infra/aws/lambda/ycharts-market-data-pull/",
+    "infra/aws/lambda/v2_portal/01_market_overview/"
+  ],
+  "tools_gating_artifacts": [
+    "comp-platinum page MarketPerformance",
+    "comp-routes trace",
+    "comp-platinum reverse",
+    "comp-blast"
+  ],
+  "axis_mechanical": "GREEN",
+  "axis_intent_coverage": "GREEN",
+  "axis_decision_useful": "GREEN",
+  "axis_constitution_coherence": "GREEN",
+  "constitution_drift_articles": [],
+  "repair_amendment_authorized": false,
+  "timestamp_utc": "2026-05-26T14:24:00Z",
+  "mode": "pre-execution",
+  "source": "verify-channel-ws",
+  "trigger_class": "Class2#7-NOVEL-PRD-escalated-to-immediate",
+  "pre_propagate_gate_disposition": "PERMIT (no MISALIGNED block; no CONCERN-with-mitigation conditions)"
+}
