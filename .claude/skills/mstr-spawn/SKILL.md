@@ -54,22 +54,34 @@ If `STALE` / `NOT_REGISTERED` / not found → safe to proceed.
 ### 1b — Marker scan
 
 ```powershell
+$selfPid = $PID
 Get-CimInstance Win32_Process -Filter "Name='powershell.exe'" |
-  Where-Object { $_.CommandLine -like "*# OPAL_SPAWN_MARKER_v1: {serial}*" }
+  Where-Object {
+    $_.ProcessId -ne $selfPid -and
+    $_.CommandLine -like "*# OPAL_SPAWN_MARKER_v1: {serial}*"
+  }
 ```
 
 Catches the gap that 1a misses: a session whose process is alive but broker is `STALE` / unregistered (post-window-exit-pre-deregister, or a registration failure). If a marked window exists for this serial → refuse with the same surface (treat as duplicate).
 
 This double-check is the cheap defense against a class of cap-evasion bug where the broker says STALE but the PowerShell window is still alive holding a concurrency-cap slot.
 
+**Scanner-self false-positive (empirical 2026-05-26).** The `$_.CommandLine -like "*# OPAL_SPAWN_MARKER_v1: {serial}*"` pattern matches the scanner's OWN PowerShell process because the search-pattern literal is embedded in the scanner's CommandLine. Without the `$_.ProcessId -ne $selfPid` exclusion above, every fresh-spawn pre-check returns count=1 (the scanner itself) → false-positive refuse. The `$PID` exclusion eliminates the self-hit. **Diagnostic fallback if a count still surfaces:** inspect each hit's `ProcessId` + `CreationDate` + `CommandLine` — a legitimate spawn-marker window is a long-lived `powershell.exe -NoProfile -NoExit -Command "$Host.UI.RawUI.WindowTitle = '{serial}'; ..."` whose command line ENDS with the marker; a one-shot scanner is short-lived + has the marker EMBEDDED IN ITS Where-Object filter argument. Sister-pattern to memory `feedback_b_lane_orders_only_from_b_agents` family of "structural-self vs other distinction" empirics.
+
 ### 1c — Concurrency-cap headroom (informational; spawn-agent.ps1 enforces)
 
 ```powershell
+$selfPid = $PID
 $live = @(Get-CimInstance Win32_Process -Filter "Name='powershell.exe'" |
-  Where-Object { $_.CommandLine -like "*# OPAL_SPAWN_MARKER_v1*" }).Count
+  Where-Object {
+    $_.ProcessId -ne $selfPid -and
+    $_.CommandLine -like "*# OPAL_SPAWN_MARKER_v1*"
+  }).Count
 ```
 
 If `$live >= 16` → spawn-agent.ps1 will reject. Either kill an idle session first (`/mstr-kill {idle-serial}`) OR re-invoke with `--force "<reason>"` (audited bypass).
+
+(Same `$PID` exclusion as Step 1b applies; the scanner's CommandLine contains the marker literal verbatim. Pre-fix 2026-05-26 empirical: `CONCURRENCY_LIVE=7/16` was actually 6 spawned agents + 1 scanner-self. The exclusion ensures the cap-headroom signal reflects only true spawned-agent windows.)
 
 Surface the count in the Step 6 report regardless — useful context for population-management decisions.
 
