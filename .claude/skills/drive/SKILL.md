@@ -68,6 +68,66 @@ Build the hot list: all `status: active` projects + any `status: dormant`/`on-ho
 
 ---
 
+## Step 2b — Agent-state scan (operative core embedded; LD-0083)
+
+**Do NOT skip this step. Do NOT rely on reading `.claude/skills/stimulus-scan/SKILL.md` separately — the operative steps you need are embedded below.** /stimulus-scan SKILL.md remains the doc-of-record for full taxonomy + edge cases, but this embed is what you execute every /drive cycle.
+
+**Why this step exists:** /drive's project-axis (Step 3) sees "Project X is BLOCKED" but doesn't see "the agent that owns Project X has been STALE for 90 min with an unread inbox holding the answer." Different dispatches. The agent-axis context from Step 2b INFORMS Step 3 per-project classification.
+
+### 2b.1 — Read agent state (telemetry primary, broker cross-check)
+
+For each LIVE agent in your fabric:
+
+```bash
+# Per-agent last work-call timestamp (telemetry primary)
+for f in org/mcp/agent_telemetry/*.jsonl; do
+  a=$(basename "$f" .jsonl)
+  w=$(jq -r 'select((.kind//"work")=="work").ts' "$f" 2>/dev/null | tail -1)
+  y=$(grep -oE '"ts":"[^"]+"' "$f" 2>/dev/null | tail -1 | sed 's/.*:"//;s/"//')
+  echo "$a work=$w any=$y"
+done
+```
+
+**Pitfall (banked):** use `jq -r | tail -1` / `grep -oE | tail -1` — never `tail -n1 | head -1` (returns OLDEST on a single-line file).
+
+Cross-check with `get_live_agents()` + `get_org_summary()` for broker-side registration + summaries.
+
+### 2b.2 — Classify each agent
+
+| State | Signal | Action |
+|---|---|---|
+| **ACTIVE** | last `kind:work` < ~10m OR recent commit / SSM chain | none — working |
+| **IDLE** | last `kind:work` 10-30m + `kind:loop` recent | eligible for capacity routing |
+| **STALE** | last `kind:work` 30+ min AND no commit/inbound (even if `kind:loop` fresh — watcher self-ping is not work) | REQUIRES re-dispatch or blocker trace |
+| **NOT_REGISTERED** | absent from telemetry + `get_live_agents` | meta-signal (offline this cycle / crashed) |
+| **TELEMETRY_GAP** | broker LIVE but telemetry frozen | flag the hook, not the agent |
+
+**Cross-check before classifying STALE/IDLE:** broker summary is aspirational (heartbeat-lagged); git is ground truth. A "heads-down" agent in a long generation looks STALE but is working — verify via `git log --all --oneline --since="30 minutes ago"` + recent inbox traffic.
+
+### 2b.3 — Classify cause for each STALE/IDLE agent
+
+| Class | Detection | Resolving dispatch |
+|---|---|---|
+| **BLOCKED** | unread inbox > 0 OR pending unanswered escalation from the agent | route missing dep / answer escalation / reassign |
+| **STUCK_MID_CLOSEOUT** | staged-not-committed files OR TO `active` >2 wakes with no commit | nudge with exact staged files — agent executed but never `git commit` |
+| **STARVED** | inbox empty, no pending dep, `pending`/`staged` TO with gates met | flip + GO the staged TO |
+| **STANDING_BY_REDIRECT** | log/heartbeat says "standing by" >30min | dispatch hot-work parallelization TO; **never accept terminal standby** |
+
+### 2b.4 — Fire dispatches (mandatory; one per non-ACTIVE agent)
+
+For EVERY non-ACTIVE agent, fire a dispatch via `mcp__opal-agent-comms__send_message` in THIS /drive cycle. **No "flagged for review" without a dispatch — the dispatch IS the review.**
+
+**Posture (Andrew directive):** "Standing by for X" is never acceptable terminal state. An idle agent always routes to ready work — audits on un-audited surfaces, validator pre-staging, scaffolds for ratified PRDs, pre-stage downstream of about-to-ship peer.
+
+### 2b.5 — Inform Step 3 with agent-state context
+
+Carry the agent-state findings forward into Step 3 project-state classification:
+- "Project X blocked on dep Y" + "Owner agent STALE w/ unread inbox" → unblock the agent first; do NOT dispatch new project-advancement TO
+- "Project Y advancing" + "Owner agent NOT_REGISTERED" → re-classify as STUCK (phantom monitoring per CY-0102 anchor)
+- "Project Z dormant" + "Idle worker fits the work shape" → eligible for STANDING_BY_REDIRECT to that project IF dormancy resolution path clears
+
+---
+
 ## Step 3 — Per-project classification (the core)
 
 For each project on the hot list, classify into one of 5 states:

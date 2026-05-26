@@ -7,6 +7,8 @@ description: Action-oriented meta-supervisor scan for the Opal multi-agent fabri
 
 Scans peer-agent state + inbox, classifies each agent, and **dispatches work to fix the gaps**. Run from the CTO/COO `/loop` body on the sooner-of (~45min elapsed) OR (fresh wake / watcher relaunched). This is the operational skill behind the COO Step-0.5 active-push discipline.
 
+> **LD-0083 update (2026-05-26):** The operative core (read agent state → classify → classify cause → dispatch) is **EMBEDDED directly into `/drive` Step 2b** — COOs execute it inline every /drive cycle (20m) without reading this SKILL.md. The 45min trigger heuristic + `.last-stimulus-scan` state-file logic below applies ONLY to standalone invocations (rare; CTOs / on-demand fabric sweep). When folded inline from /drive, cadence is governed by the primary cron; this trigger is bypassed. This SKILL.md remains the **doc-of-record** for the full taxonomy, dispatch-quality criteria, and edge cases — but agents driving the COO cycle should rely on the `/drive` Step 2b embed for mechanical execution, not this body.
+
 ## When to invoke
 
 - Inside the `/loop` body: when `now - mtime(org/mcp/.last-stimulus-scan) >= 2700s` (~45min) OR on a fresh wake after the watcher exited.
