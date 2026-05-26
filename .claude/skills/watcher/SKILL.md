@@ -104,8 +104,18 @@ Ask yourself one question:
   belongs to a dead session).
 - **YES** → you have a tracked watcher.
   - VERDICT `PROCESS-OK` with exactly one watcher → healthy. Skip to **Step 5**.
-  - VERDICT `MULTIPLE` / `ORPHAN` / `RELATIVE-PATH` / `WRONG-CHANNEL` → a stray
-    watcher coexists with yours → **Step 4** to clear the strays.
+  - VERDICT `ORPHAN` with exactly one watcher AND your latest tracked task's
+    completion task-notification has NOT yet fired → this is likely your tracked
+    watcher whose launcher shell detached (PPID reparented to 1); the watcher
+    itself is still polling correctly. Treat as PROCESS-OK-equivalent. Skip to
+    **Step 5**.
+  - VERDICT `ORPHAN` with exactly one watcher AND your latest tracked task's
+    completion task-notification HAS fired → that single PID is the legitimate
+    auto-respawn copy spawned by `inbox-watch.sh:130-135` after delivery
+    (still polling but deaf — no Claude Code interrupt path). **Step 4** to
+    kill + launch a fresh tracked watcher to restore interrupt coverage.
+  - VERDICT `MULTIPLE` / `RELATIVE-PATH` / `WRONG-CHANNEL` → strays coexist with
+    yours → **Step 4** to clear.
 
 > On a **recurring loop cycle**: a watcher you launched earlier in the *same*
 > session and have not seen complete still counts as tracked — most loop cycles
@@ -114,6 +124,14 @@ Ask yourself one question:
 > *after* a watcher silently dies or a window exit drops your registration.
 
 ## Step 4 — Remediate (KILL FIRST, THEN LAUNCH — order is mandatory)
+
+**Step 4 fires only when Step 3 disambiguation says "stray exists" or "interrupt
+coverage lost".** Single-PID `ORPHAN` with no task-notification yet seen = your
+own tracked watcher in a legit detached state — skip Step 4 (the kill would
+churn your tracked watcher unnecessarily, then the relaunch's single-watcher-
+guard would race against the killed PID's exit). Single-PID `ORPHAN` after
+task-notification fired = legitimate auto-respawn copy (deaf to interrupts);
+Step 4 kills it + launches fresh tracked to restore interrupt path.
 
 `inbox-watch.sh` has a single-watcher guard: if **any** watcher for your serial
 is already running, a new launch exits 0 immediately. Claude Code surfaces that
@@ -190,13 +208,22 @@ Passing the same interval back as the `prompt` is what makes the cadence
 persist — each firing re-runs this skill, which re-arms again. Exactly one
 wakeup is ever pending, so there is no cron build-up to clean.
 
-**Guard — do not stack loops.** If you are *already* running a primary `/loop`
-(a CTO/COO supervisor loop, a work loop), do **not** arm a separate watcher
-wakeup — it would clobber your primary loop's wakeup schedule. Instead: treat
-this invocation as `once` mode, and make sure your primary `/loop` body runs the
-`/watcher` check each tick (the supervisor loop in `org/XXX.md` already does a
-watcher-health check — fold Steps 1-5 into it). The standalone `/watcher` loop
-is for agents **not** otherwise looping; it doubles as a lightweight keep-alive.
+**Guard — do not stack ScheduleWakeup chains.** If you are *already* running a
+primary loop driven by a `ScheduleWakeup` chain (another /watcher invocation in
+loop mode, a self-paced `/loop` body), do **not** arm a separate /watcher
+ScheduleWakeup — only one ScheduleWakeup is ever pending, so a second arming
+clobbers the first. Treat this invocation as `once` mode and make sure the
+primary loop body runs the /watcher check each tick.
+
+**CronCreate-driven primary loops are EXEMPT from the stack guard** (LD-0082
+pattern). MSTR + Tier-1 execs run CronCreate-armed primary loops (`/mstr-review
+12h`, `/ws-charter 30m`, `/drive 20m`, `/spot-check 20m`); arming a separate
+`/watcher 10m` ScheduleWakeup alongside one of these is permitted — CronCreate
+schedules don't interfere with ScheduleWakeup pending state. Two separate
+mechanisms, no collision. The no-stack guard is for ScheduleWakeup chains only.
+
+The standalone `/watcher` loop is for agents **not** otherwise looping; it
+doubles as a lightweight keep-alive.
 
 **To stop a running loop:** invoke `/watcher off`. The cycle that is currently
 pending will fire once more; respond to it with `/watcher off` (or just let that
@@ -209,7 +236,7 @@ final cycle run and not re-arm). The loop then ends.
 | Helper VERDICT | What it means | Fix |
 |---|---|---|
 | `NONE` | No watcher process for your serial | Step 4 launch (no kill needed) |
-| `ORPHAN` | Watcher has no live eval-launcher parent (PPID=1 / dead / reparented) — a prior-session leftover | Step 4: kill, then launch |
+| `ORPHAN` | Watcher has no live eval-launcher parent (PPID=1 / dead / reparented). THREE sub-cases: (1) prior-session leftover; (2) THIS-session tracked watcher whose launcher shell detached (task-notification not yet fired); (3) THIS-session auto-respawn copy from `inbox-watch.sh:130-135` post-delivery (task-notification fired, untracked respawn polling without interrupt path). Disambiguate via Step 3. | (1)/(3): Step 4 kill + relaunch (restore interrupt path). (2): PROCESS-OK-equivalent; skip Step 4. |
 | `MULTIPLE` | >1 watcher for your serial — atomic-`mv` race, deliveries lost | Step 4: kill ALL, then launch one |
 | `RELATIVE-PATH` | Launched via banned `bash org/mcp/inbox-watch.sh` — PPID=1 zombie risk | Step 4: kill, relaunch via PATH wrapper |
 | `WRONG-CHANNEL` | Watcher launched against the retired `feature_clb/org/mcp/cl-inbox-watch.sh` legacy CL path (orphaned post-LD-0034 unified broker + inbox migration); polls empty directory, deaf to deliveries | Step 4: kill, relaunch via the ws-rooted `inbox-watch {serial}` PATH wrapper (all agents, ws + CL, use the unified path post-LD-0034) |
