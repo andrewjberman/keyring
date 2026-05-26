@@ -1,0 +1,32 @@
+{
+  "verdict": "CONCERN",
+  "project": "ADHC_CDNCOHT",
+  "artifacts_verified": [
+    "docs/architecture/ADHC_CDNCOHT.md@1a61f61c3",
+    "org/projects/ADHC_CDNCOHT.json",
+    "data/black_diamond/scripts/gold/gold_dispatch.sh@053bba6f7",
+    "data/orion/scripts/gold/orion-gold-dispatch.sh@b00e2733e",
+    "infra/aws/terraform/inf-pipeline/iam.tf@b00e2733e",
+    "infra/aws/terraform/bd-pipeline/iam.tf@053bba6f7",
+    "cloudfront://EVTSA9VEHNZVH/invalidations[I7UM4P5I13VU9QL1H1307HCIXD,I9SL0UBI5EL0HDQJY5GYFTBZ11]"
+  ],
+  "tools_gating_artifacts": [
+    "comp-routes behaviors",
+    "comp-iam service inf_gold_layer",
+    "comp-iam service bd_exporter",
+    "comp-blast shared-advisor-router-response",
+    "comp-cache collisions"
+  ],
+  "axis_mechanical": "GREEN",
+  "axis_intent_coverage": "YELLOW",
+  "axis_decision_useful": "GREEN",
+  "axis_constitution_coherence": "GREEN",
+  "constitution_drift_articles": [],
+  "repair_amendment_authorized": true,
+  "repair_amendment_class": "(a)",
+  "repair_amendment_summary": "AC4 path-scoping mechanical-untruth-to-reality: PRD AC4 + §6 explicit per-chain output_paths-derived invalidation vs shipped blanket-pattern /api/scoped/advisor-intelligence/*",
+  "timestamp_utc": "2026-05-26T14:11:00Z",
+  "mode": "comprehensive",
+  "source": "verify-channel-ws",
+  "trigger_class": "Class1#3-AndrewDirect"
+}
