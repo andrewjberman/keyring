@@ -86,3 +86,33 @@ Per PRD Sec. 6.1: shared-advisor-router L@E + CloudFront behaviors already firm-
 ## Throughput note
 
 Spawn 15:23Z -> commit 03a85441 ~16:00Z = ~37min DE wall (well under PRD's ~3-5h estimate). Single-session compression via: clean spawn-with-direction context + 49F template fidelity + parallel pre-work + same-session COO completeness-ratify cycle (15:29Z finding -> 15:40Z ratify -> commit ~16:00Z).
+
+## Post-ship closure
+
+**ws COO RAVC2-ACCEPT** delivered 15:48Z (`20260526T154838Z` MCP) — crossed-in-transit with my RAVC2-Request (~10min apart). All 8 ACs evidence-banked; AC2/AC3 comp-graph multi-"index" component-name tool-gap folded into ADHC_COMPIL_V5 follow-on as Fix-4 candidate (distinct from existing 3 fixes per CVO comp-* expansion brief `92b198aac`). Joined today's fast-lane bank as 5th spawn-to-ship record (sibling to AE 0.6.1 CDNCOHT-INTERIM ~10/5min two-chain + AE 0.7 CDNCOHT TO-001 ~19min + DS 0.1.0 YALP_MKTOVR cascade 72min end-to-end). Banked as canonical DE-pod-4 revival fast-lane reference pattern.
+
+**COO 4-ask disposition:**
+1. RAVC2-ACCEPT TO-008 — DONE
+2. Author + dispatch TO-009 — pending next /drive cycle (~15:47Z); DT pod choice via /allocation #8 (likely DT 0.4 P3 SPAWN-NEEDED per Andrew implicit-lift Phase 6 parallel to DE 0.4 spawn pattern)
+3. Tool-gap surface — banked in RAVC2-ACCEPT body; folded into ADHC_COMPIL_V5
+4. ADVI_DEMOV1 JSON phase advance — COO in-flight (status stays `active` for TO-009 + TO-VAL-FE remainder of Phase 6)
+
+**CronCreate /work 20m cycles post-RAVC2-ACCEPT:**
+
+| Cycle | Time | Outcome | Notes |
+|---|---|---|---|
+| 1 | ~16:05Z | NO-WORK | Inbox: 1 message (COO RAVC2-ACCEPT — closure ACK; no return work required). Watcher repair: PRIOR-SESSION-ORPHAN AUTO-RESPAWN-INTERRUPT-LOST (PID 135857) killed + relaunched tracked (bzriq2d4y). TO queue: 0 actionable (TO-008 complete; TO-009 DT scope; TO-VAL-FE Andrew scope). |
+| 2 | ~16:25Z | NO-WORK | Inbox empty. Watcher PROCESS-OK tracked (byrv8iziz). TO queue unchanged. KEEP-ACTIVE per /allocation #7 disposition for any Phase 6 follow-on. |
+
+**ws CTO CC informational** delivered 15:47Z proposing PRD v0.4.1 micro-amendment (Phase 6 §6.1 item enumeration + AC list update to match shipped 6-item reality + cottonwood sister-class precedent note). Non-gating; at CTO's /ws-charter cycle convenience. No response required from me.
+
+**Standing posture:** KEEP-ACTIVE; CronCreate /work 20m primary loop; tracked watcher live; heartbeat current. Available for any Phase 6 follow-on surface (TO-VAL-FE-driven DE fix if Andrew UAT exposes issue; /allocation #8 re-evaluation if COO disposition changes; cross-pod DE dispatches per POD_DE_ANY lane discipline).
+
+## Memory candidates (banked for future write)
+
+Observed patterns worth distilling for the memory system once Phase 6 fully closes:
+
+- **Pre-implementation source-walk PRD-completeness finding pattern** — DE walked source pre-coding and surfaced 2 structurally-required edits (useTenantLayout LAYOUTS + CanonicalFirmId union) not in PRD's explicit enumeration; ratified by COO direct-Option-A pre-commit; shipped in same coordinated commit. Empirical anchor for [[feedback_self_correction_upstream_of_verify_channel]] extended downward to DE-level. Useful for: future partner-onboarding work, multi-tenant module wiring.
+- **Type-system-load-bearing additive shape** — item 6 (CanonicalFirmId union extension) was strictly required for AC5 `bun tsc` clean, distinct from item 5's runtime-correctness rationale. Distinguishing "compile-load-bearing" vs "runtime-load-bearing" additives sharpens the COO scope-ratify call from "ratify or counter" to "ratify (must-have) + ratify (should-have)".
+- **comp-graph multi-"index"-component naming collision** — observable structural limitation in comp-transform schema-check / ternary-audit lookup for the AdvisorIntelligence component family; surfaced as Fix-4 candidate for ADHC_COMPIL_V5. Reusable across any portal codebase area with per-directory `index.tsx` barrel exports (i.e., most React feature folders).
+- **Crossed-in-transit ACK pattern** — COO RAVC2-ACCEPT + DE RAVC2-Request shipped within ~10min of each other (no causal dependency; both racing toward closure). Sister pattern to [[feedback_standby_prep_compress_to_delivery_when_context_sufficient]] for compression on the closure-side rather than the dispatch-side.
