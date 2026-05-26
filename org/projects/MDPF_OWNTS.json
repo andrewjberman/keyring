@@ -1,0 +1,32 @@
+{
+  "project_code": "MDPF_OWNTS",
+  "macro_code": "MDPF",
+  "name": "Partner ETF Ownership Time-Series (Productionized)",
+  "description": "Productionize a partner-by-ETF ownership time-series riding on the existing MDPF daily chain. The substrate data (etf_decomposition.held_by_partner x etf_total_net_assets) is already emitted by mdpf_aggregate_aua.py to s3://opal-data-portal-v2/platinum/mdpf/aggregate_aua/{date}.json. v1 adds (1) a derived ownership_pct field on the existing daily emit (additive minor methodology bump v0_9 -> v0_9_1), (2) a per-ticker time-series gold script writing s3://opal-data-portal-v2/platinum/mdpf/etf_ownership_timeseries/{ticker}.json with date-keyed series + MTD/YTD rollups, (3) trading-day-canonical NYSE/pandas_market_calendars binding with explicit coverage_fraction for partial-window partner onboards, (4) full-window-with-pre-onboard-zeros canonical headline + present-only + coverage-fraction audit fields. Scope v1: all current+future MDPF partners x the 4 Opal ETFs (DIVZ/IDVZ/PFDE/PFOE). Architecture decision Option A LEAN-EXTENSION-OF-MDPF-CHAIN selected per CTO judgment + DS recommendation; Andrew framing leaned Option B DEDICATED-RUNNER, surfaced as headline Andrew-ratification question Q1. Out of scope v1: other ETFs / sub-daily cadence / portal surface / dedicated EC2 / historical backfill (forward-only emit; historical backfill = separate follow-on TO if Andrew directs).",
+  "prds": [
+    {
+      "path": "docs/architecture/MDPF_OWNTS.md",
+      "label": "v0.1 PRD canonical via /ws-charter NOVEL authoring (cycle 0040) per Andrew direct sovereign 2026-05-26 (3 asks + 2 methodology refinements) relayed via 0.4.0_DS_ClientPlatform [BRIEF-FOR-PRD]",
+      "date": "2026-05-26"
+    }
+  ],
+  "source_brief": "0.4.0_DS_ClientPlatform brief docs/briefs/mdpf-etf-ownership-inflection-tracking-20260526.md (commits 12f01b4e1 initial + d0aa4073b methodology amendment) -- Andrew sovereign direct 2026-05-26 during /work-cycle interrupt: (1) snapshot Inflection % NAV ownership PFDE/PFOE/DIVZ/IDVZ, (2) MTD avg across daily values, (3) productionize via EC2 schedule 'variation on INF-gold-runner with smaller CPU', (4) trading-day basis only Refinement, (5) prorated-methodology-for-partial-month Refinement. DS findings inline: snapshot 2026-05-26 DIVZ 0.000% / IDVZ 0.000% / PFDE 7.414% / PFOE 7.239%; post-onboard MTD n=6 DIVZ 0.000% / IDVZ 0.000% / PFDE 7.413% / PFOE 6.520%; PFOE 5/21-5/22 anomaly flagged not RC'd (-2.28pp DoD). DS recommended Option A lean chain extension.",
+  "status": "active",
+  "phase": "Phase 0 -- PRD v0.1 SHIPPED 2026-05-26 (1.0.0_SA_CTO via /ws-charter cycle 0040 NOVEL). Architecture Option A SELECTED + 9-question disposition (7 CTO best-judgment defaults proceed; 2 Andrew-ratification-flagged Q1+Q2). 3 TOs scoped sequential single-threaded: MDPF_OWNTS.001 (DS author build_mdpf_etf_ownership_timeseries.py + mdpf_aggregate_aua.py additive ownership_pct + trading_day_calendar shim + fixtures + comp-validate config + self-consistency reconcile check ~1d Pod 0.4), MDPF_OWNTS.002 (AE Stage 4 chain wire mdpf-daily-dispatch.sh + per-stage CloudWatch alarm + RUNBOOK update ~1d Pod 0.7 gates on .001 RAVC), MDPF_OWNTS.003 (DS RAVC consolidation live-run verification ~30min Pod 0.4 gates on .002 ship + first chain fire). Wall ~2d if both lanes have capacity. Routed to ws COO for TO authoring + dispatch.",
+  "current_phase": "Phase 0 PRD-SHIPPED awaiting ws COO TO authoring. 2 Andrew-ratification flags pending: Q1 (Option A vs B; v1 defaults A) + Q2 (canonical headline methodology a/b/c; v1 defaults b). [C]-tagged items Q3-Q9 ship under v1 defaults per ALWAYS-PROCEED LD-0084. ws CTO routing MCP to ws COO this commit; ws CVO consult-candidate on Q1+Q2 per joint-decide doctrine if Andrew silent 1 cycle.",
+  "blocking": "(1) ws COO TO authoring + dispatch for MDPF_OWNTS.001 (DS Pod 0.4 -- 0.4.0_DS_ClientPlatform substrate-rich; same agent that authored the brief). (2) Andrew ratification on Q1 (Option A v1 default vs Andrew-framing-leaned Option B; ws CVO consult-candidate per LD-0026 joint-decide if Andrew silent >1 cycle) + Q2 (canonical headline methodology; label-only question since artifact emits all 3 regardless). (3) MDPF_OWNTS.002 AE chain wire gates on .001 RAVC-accepted + S3-deployed. (4) MDPF_OWNTS.003 RAVC gates on .002 ship + first live chain fire post-Stage-4 wire. (5) Project closes when .001 + .002 + .003 RAVC-accepted AND first live chain fire emits augmented platinum + time-series artifact AND new self-consistency reconcile gate runs PASS.",
+  "depends_on": [
+    "MDPF_ASSETS"
+  ],
+  "depends_on_note": "MDPF_ASSETS CLOSED 2026-05-21; consumed read-only via the stable v0.9 platinum aggregate-AUA emit (s3://opal-data-portal-v2/platinum/mdpf/aggregate_aua/{date}.json). MDPF daily chain mdpf-pipeline-v1.0.2 LIVE; new Stage 4 attaches additive (no contract-breaking change). inf-gold-runner-ec2-role IAM existing -- no new policy. Does NOT depend on or block: ADVI work / WS-F portal partner selector / any feeder pipeline.",
+  "absorbs": [],
+  "created": "2026-05-26",
+  "pods": [
+    "0.4",
+    "0.7"
+  ],
+  "pipeline": "mdpf-pipeline (extension; Stage 4 post-aggregate)",
+  "coo_lane": "2.0.0_SA_COO",
+  "thread_counter": 0,
+  "threads": []
+}
