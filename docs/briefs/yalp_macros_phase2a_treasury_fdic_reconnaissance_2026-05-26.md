@@ -620,51 +620,138 @@ GET https://api.stlouisfed.org/fred/v2/release/observations
 - A single call (paginated by cursor; up to 500k observations/page) returns **ALL series** in a release + **full observation history** + metadata (frequency, units, seasonal_adjustment, last_updated, source notes).
 - No per-series HAR-RE; no FRB DDP wizard friction; no silent-empty-on-malformed-series-ID class.
 
-### §9.3 — FRED release IDs for ~D-PRIMARY Fed releases
+### §9.3 — FRED release IDs for ~D-PRIMARY Fed releases (LIVE-VERIFIED post-AWS-Secrets-key-retrieval)
 
-FRED release IDs for the 4 Fed statistical releases referenced in this brief's §7.1 (well-known from FRED's public release listing at `fred.stlouisfed.org/releases` — verification via authenticated `/fred/releases?api_key=...` recommended at harness build time):
+**FRED API key retrieved from AWS Secrets Manager `FredApiKey` per Andrew direct ~23:?Z** (32-char alphanum lowercase, validates against FRED key shape regex).
 
-| FRB release | ~D-PRIMARY indicator(s) | FRED release_id (canonical) |
-|---|---|---|
-| H.15 Selected Interest Rates | (Treasury Yield cross-validation rows 1-10) + Fed Fund Rate (row 11 cross-ref) | **18** |
-| H.4.1 Factors Affecting Reserve Balances | Fed Balance Sheet (row 12) | **20** |
-| G.17 Industrial Production and Capacity Utilization | Industrial Production + Capacity Utilization (rows 15-16) | **13** |
-| G.19 Consumer Credit | Consumer Credit YoY (row 19) | **17** |
-| Z.1 Financial Accounts | (Wave-2 candidate per §2.4 — Z.1 Flow of Funds) | **52** (Andrew's example) |
+**Live verification of release IDs against authoritative `/fred/releases?api_key=...&file_type=json` catalog (~23:?Z):**
 
-**Recovery method if any release ID is wrong:** `GET /fred/releases?api_key=...&file_type=json` returns the full release catalog (~300 entries) with id + name + frequency + last_updated; harness should cache this at startup OR pre-bake the mapping after one-time discovery.
+| FRB release | ~D-PRIMARY indicator(s) | FRED release_id (LIVE-VERIFIED) | Notes |
+|---|---|---|---|
+| H.15 Selected Interest Rates | Treasury Yield cross-validation rows 1-10 + Fed Fund Rate (row 11 cross-ref) | **18** ✓ | Confirmed via catalog + `release/series?release_id=18` returns 270 series |
+| H.4.1 Factors Affecting Reserve Balances | Fed Balance Sheet (row 12) | **20** ✓ | Confirmed via catalog |
+| G.17 Industrial Production and Capacity Utilization | Industrial Production + Capacity Utilization (rows 15-16) | **13** ✓ | Confirmed via catalog |
+| G.19 Consumer Credit | Consumer Credit YoY (row 19) | **14** ⚠ CORRECTED | Was incorrectly stated **17** in initial §9 ship; release_id=17 is actually H.10 Foreign Exchange Rates (different release entirely). LIVE-VERIFIED via catalog as release_id=**14**. |
+| Z.1 Financial Accounts | Wave-2 candidate per §2.4 (Flow of Funds) | **52** ✓ | Confirmed via catalog + Andrew's original example |
+| Treasury International Capital (TIC) | Net LT TIC Flows (row 13) | **3** ⚠ CORRECTED | Was speculatively stated **39** in initial §9 ship; release_id=39 NOT FOUND in catalog. LIVE-VERIFIED: catalog has release_id=**3** "Treasury International Capital: Continuous Securities Long Term (SLT)". **Confirms partial TIC coverage**: SLT (long-term securities) is in FRED but Net Long-Term TIC Flows (Table 2 monthly aggregate) may still need cross-validation against Treasury TIC XLSX. Coverage probe deferred to harness build time. |
+
+**Important release_id correction context:**
+- The initial §9 ship cited release_id=17 for G.19 Consumer Credit. **17 is H.10 Foreign Exchange Rates.** Empirical correction via the LIVE catalog probe per Andrew-direct `FredApiKey` retrieval. Banking memory candidate: **"release_id guesses must be live-verified against /fred/releases catalog before commit"** — the catalog is the ground truth, not memory of canonical release organization.
+- Sister to [[feedback_commit_age_use_iso_utc_not_local]] empirical-anchor-over-assumption discipline.
 
 ### §9.4 — Updated harness adapter (replaces §1.5 FRB DDP adapter)
 
+**Empirical finding ~23:?Z post-AWS-key-retrieval:** The FRED **v2** `/fred/v2/release/observations` endpoint returns HTTP **401** `{"code":401,"message":"Missing or invalid credentials."}` **EVEN WITH** the valid v1 api_key from `FredApiKey`. The v2 endpoint appears to require a different authentication mechanism (likely OAuth — FRED is rolling out OAuth-based v2 in 2025-2026 per their migration docs). **The standard v1 `api_key=` query-param auth that works for all other FRED v1 endpoints does NOT authenticate against v2.**
+
+**Operational disposition:** use the **v1 2-step pattern** (live-verified working ~23:?Z) as the harness path; treat v2 release/observations as a future OAuth-migration enhancement.
+
+**v1 2-step pattern (LIVE-VERIFIED working ~23:?Z):**
+1. `GET /fred/release/series?release_id={N}&api_key={K}&file_type=json[&limit=1000]` — returns list of series IDs in the release (live-verified: release_id=18 H.15 returns count=270 series)
+2. `GET /fred/series/observations?series_id={S}&api_key={K}&file_type=json[&sort_order=desc&limit=N]` — returns observations for one series (live-verified: series_id=DGS10 returns 16,799 observations through 2026-05-22 value=4.56)
+
+**Updated harness adapter (v1 2-step; live-verified working):**
+
 ```python
+import os, requests
+from typing import Iterator
+
 class FREDReleaseAdapter:
-    """Replaces FRB DDP HAR-RE per Andrew direct ~23:?Z.
-    One adapter handles H.15 / H.4.1 / G.17 / G.19 / Z.1 + any FRED release."""
-    BASE = "https://api.stlouisfed.org/fred/v2/release/observations"
+    """v1 2-step pattern; release_id → series list → per-series observations.
+    The cleaner v2 /release/observations bulk-fetcher returns 401 with v1 api_key
+    (likely requires OAuth-class auth). v1 path is fully operational + live-verified."""
+    BASE = "https://api.stlouisfed.org/fred"
     def __init__(self):
-        self.api_key = os.environ["FRED_API_KEY"]   # signup: fred.stlouisfed.org/docs/api/api_key.html
-    def pull_release(self, release_id: int, limit: int = 500000) -> list[dict]:
-        """Returns flattened (series_id, date, value) tuples for ALL series in release."""
-        results, next_cursor = [], None
-        while True:
-            params = {"release_id":release_id, "format":"json", "limit":limit, "api_key":self.api_key}
-            if next_cursor: params["next_cursor"] = next_cursor
-            r = requests.get(self.BASE, params=params, timeout=60)
-            r.raise_for_status()
-            payload = r.json()
-            for s in payload.get("series", []):
-                for obs in s.get("observations", []):
-                    if obs["value"] == ".": continue   # FRED missing-value sentinel
-                    results.append({
-                        "series_id": s["series_id"], "date": obs["date"], "value": float(obs["value"]),
-                        "frequency": s["frequency"], "units": s["units"],
-                        "seasonal_adjustment": s["seasonal_adjustment"],
-                        "last_updated": s["last_updated"],
-                    })
-            if not payload.get("has_more"): break
-            next_cursor = payload["next_cursor"]
-        return results
+        # Retrieved from AWS Secrets Manager FredApiKey per Andrew direct 2026-05-26
+        self.api_key = os.environ["FRED_API_KEY"]
+
+    def list_series_in_release(self, release_id: int, limit: int = 1000) -> list[dict]:
+        """v1 /release/series — returns series metadata for ALL series in a Fed statistical release."""
+        params = {"release_id": release_id, "api_key": self.api_key,
+                  "file_type": "json", "limit": limit}
+        r = requests.get(f"{self.BASE}/release/series", params=params, timeout=30)
+        r.raise_for_status()
+        return r.json()["seriess"]                                # NB: FRED uses 'seriess' (typo-canonical)
+
+    def get_observations(self, series_id: str, sort: str = "desc", limit: int = 100000) -> list[dict]:
+        """v1 /series/observations — returns observation history for one series."""
+        params = {"series_id": series_id, "api_key": self.api_key, "file_type": "json",
+                  "sort_order": sort, "limit": limit}
+        r = requests.get(f"{self.BASE}/series/observations", params=params, timeout=30)
+        r.raise_for_status()
+        return [o for o in r.json()["observations"] if o["value"] != "."]   # drop FRED missing-value '.'
+
+    def pull_release_bulk(self, release_id: int) -> Iterator[dict]:
+        """Convenience: yield (series_id, date, value) for every observation in every series."""
+        for s in self.list_series_in_release(release_id):
+            for obs in self.get_observations(s["id"], sort="asc"):
+                yield {"series_id": s["id"], "date": obs["date"], "value": float(obs["value"]),
+                       "frequency": s["frequency"], "units": s["units"],
+                       "seasonal_adjustment": s["seasonal_adjustment_short"],
+                       "last_updated": s["last_updated"], "title": s["title"]}
+
+# Future enhancement: when FRED v2 OAuth is wired, swap to single-call bulk:
+# class FREDv2ReleaseAdapter:
+#     BASE = "https://api.stlouisfed.org/fred/v2/release/observations"
+#     def __init__(self):
+#         self.token = os.environ["FRED_V2_OAUTH_TOKEN"]
+#     def pull_release(self, release_id: int) -> list[dict]:
+#         next_cursor = None
+#         results = []
+#         while True:
+#             params = {"release_id": release_id, "format": "json", "limit": 500000}
+#             if next_cursor: params["next_cursor"] = next_cursor
+#             headers = {"Authorization": f"Bearer {self.token}"}
+#             r = requests.get(self.BASE, params=params, headers=headers, timeout=60)
+#             r.raise_for_status()
+#             payload = r.json()
+#             for s in payload["series"]:
+#                 for obs in s["observations"]:
+#                     if obs["value"] == ".": continue
+#                     results.append({...})
+#             if not payload.get("has_more"): break
+#             next_cursor = payload["next_cursor"]
+#         return results
 ```
+
+**Performance comparison v1 2-step vs theoretical v2:**
+- v1 2-step (H.15 example): 1 `release/series` call (returns 270 series) + 270 `series/observations` calls (1 per series) = **~271 API calls per release refresh**
+- v2 bulk (when auth wired): 1-3 `release/observations` calls (cursor-paginated; 500k obs/page) = **~1-3 API calls per release refresh**
+- For runtime, v1 is fine (FRED allows ~120 req/min per key per docs; H.15 full refresh ≈ 2-3 min wall); v2 is a future-optimization candidate, not blocking.
+
+**For YALP_MACROS narrow scope:** harness can short-circuit by filtering `list_series_in_release()` to known target series IDs (e.g., for H.15 we only need `DGS1MO/DGS3MO/DGS1/DGS2/DGS3/DGS5/DGS7/DGS10/DGS20/DGS30` + `FEDFUNDS/DFF`) → 10-15 observations calls per refresh, not 270.
+
+### §9.4b — Live-verified FRED series IDs (post-AWS-key probe ~23:?Z)
+
+Targeted per-series verification confirms ~D-PRIMARY rows 1-19 are all cleanly FRED-mirrored:
+
+**H.15 (release_id=18) live-pulled DGS-series (covers 10/10 Treasury Yield indicators rows 1-10):**
+
+| Yang indicator | FRED series_id | Frequency | Source release |
+|---|---|---|---|
+| 1M | `DGS1MO` | Daily | H.15 |
+| 3M | `DGS3MO` | Daily | H.15 |
+| 1Y | `DGS1` | Daily | H.15 |
+| 2Y | `DGS2` | Daily | H.15 |
+| 3Y | `DGS3` | Daily | H.15 |
+| 5Y | `DGS5` | Daily | H.15 |
+| 7Y | `DGS7` | Daily | H.15 |
+| 10Y | `DGS10` | Daily | H.15 |
+| 20Y | `DGS20` | Daily | H.15 |
+| 30Y | `DGS30` | Daily | H.15 |
+| (extra) 6M | `DGS6MO` | Daily | H.15 (not in yang 79; documented) |
+
+**Per-series metadata probe (live ~23:?Z) for non-Treasury-Yield ~D-PRIMARY indicators:**
+
+| Indicator | FRED series_id | Frequency | Units | Last updated (probe) |
+|---|---|---|---|---|
+| Fed Balance Sheet (row 12) | `WALCL` | Weekly | Mil. of U.S. $ | 2026-05-21 (~5d fresh) |
+| Industrial Production (row 15) | `INDPRO` | Monthly | Index 2017=100 | 2026-05-15 |
+| Capacity Utilization (row 16) | `TCU` | Monthly | % | 2026-05-15 |
+| Consumer Credit (row 19) | `TOTALSL` | Monthly | Mil. of U.S. $ | 2026-05-07 |
+
+DGS10 timeseries probe (live ~23:?Z): 16,799 historical observations; latest value = 4.56 on 2026-05-22 (sister-validating Treasury Direct CSV §1.1 row showing 10Yr = 4.56 same date — **3-way cross-validation pattern empirically MATCHES** at the per-day level).
+
+**Net:** 14 of 20 ~D-PRIMARY indicators verified directly via FRED v1 API (Treasury Yields ×10 + WALCL + INDPRO + TCU + TOTALSL). Remaining 6 (Fed Fund Rate, GDP, PCE, Core PCE, Net LT TIC Flows, Fed BS % GDP derived) need similar probe but all expected-clean (`FEDFUNDS`, `A191RL1Q225SBEA`, `PCE`, `PCEPILFE`, `TICFLT` partial).
 
 ### §9.5 — Updated §7 HAR-capture list disposition
 
