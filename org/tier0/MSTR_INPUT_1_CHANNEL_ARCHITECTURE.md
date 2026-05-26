@@ -1,4 +1,18 @@
-# MSTR Input 1 Channel Architecture
+> **DEPRECATED per LD-0065 (`734b849fb`, 2026-05-25T~21:35Z) + further superseded per LD-0069 (`04f705733`, 2026-05-25T~23:55Z).** Input 1 (compiler-asks) collapsed to inbox-injection layer per Andrew architectural insight 2026-05-25T~21:30Z: *"We are never going to obligate a compiler-ask, and if we do not obligate it, it will not happen. Therefore all loops and progress are at the behest of what we obligate deterministically through loops. Therefore Input 1 effectively does not exist."* MSTR-emit compiler-ask MCPs now flow directly to CL CTO inbox; CL CTO `/cl-charter` Step 3 inbox-classification handles them per LD-0066 — same MCP delivery as any other injection-class message; no separate Input 1 queue.
+>
+> Further per LD-0069 (`04f705733`): MSTR `/govern` periodic supervision loop is RETIRED entirely; `/compiler-ask` as periodic loop is RETIRED (class-6 archetype-cluster detection + CL_STALL_CHECK functions absorbed into CL CVO `/case-find` daily cadence). The `/compiler-ask` name was REPURPOSED as `/comp-ferry` (event-triggered cross-fabric ferry of CL-completed compilers to ws CTO + ws CVO review, NOT compiler-ask emission).
+>
+> This doc preserved as **historical reference** — covers the original Input 1 channel mechanism design (V1-V3) pre-collapse. Operational mechanisms it describes (class-6 archetype aggregation in §6.5; CL_STALL_CHECK in §6.4) survive but live in:
+> - CL CVO `/case-find` SKILL.md (class-6 archetype-cluster detection + cross-fabric session-log reading)
+> - CL CVO `/case-mgmt` SKILL.md (CL_STALL_CHECK as Case-priority signal)
+>
+> The 10-field compiler-ask brief schema (§3) survives as **optional MCP body format guidance** for MSTR-escalation MCPs to CL CTO — a consistency convention, not a queue-schema requirement. CL CTO inbox-classification recognizes the format.
+>
+> See: LD-0065, LD-0066, LD-0067, LD-0069, LD-0070 for the full architectural evolution.
+
+---
+
+# MSTR Input 1 Channel Architecture (HISTORICAL — DEPRECATED)
 
 **Author:** `0.0.0_AB_MSTR`
 **Authored:** 2026-05-24T20:00:00Z (V1 — post Opal CTO + MSTR working-session lock 19:45Z + Beat 2 LD-0043 commit)
