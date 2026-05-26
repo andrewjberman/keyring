@@ -77,7 +77,7 @@ Listed all available May 2026 snapshots under `s3://opal-data-portal-v2/platinum
 
 **Anomaly flag — PFOE 5/21 + 5/22 dip:** PFOE ownership dropped from 7.296% on 5/20 to 5.013% on 5/21 (a 2.28 pp drop in one day), held at 5.100% on 5/22, and recovered to 7.239% by 5/26. PFDE and the other three series do not show a parallel discontinuity, so it is not a generalized data-pipeline outage. Could be (a) a real Inflection holding change (model rebalance or composition update), (b) a one-day PFOE NAV jump from a creation/redemption event widening the denominator, or (c) a transient data-emit anomaly. **Not in scope for this brief to root-cause; flagging for CTO's awareness in case the PRD wants a sentinel.** Drill-down available on request.
 
-**Pre-onboard full-month context** (for completeness): including the pre-5/18 zero days, the full-May average is PFDE 7.413% / PFOE 6.520% (n=6 nonzero of 16 total). Averaging methodology in the PRD should explicitly choose between (i) post-onboard-only mean, (ii) full-window-with-zeros mean, (iii) Inflection-only-emit-days mean — these will diverge as more months ship.
+**Pre-onboard full-month context** (for completeness): including the pre-5/18 zero days, the full-May average is PFDE 7.413% / PFOE 6.520% (n=6 nonzero of 16 total). **See "Methodology Refinements" below — Andrew has since specified (i) trading-day basis only and (ii) a prorated headline methodology; the PRD must pick the canonical formula.**
 
 ---
 
@@ -131,15 +131,47 @@ If any of those are in scope for the PRD, B's overhead is justified.
 
 ---
 
+## Methodology refinements — Andrew direct 2026-05-26 follow-up
+
+After the initial brief was authored, Andrew specified two binding refinements that the PRD MUST encode. These are not open questions — they are ratified inputs:
+
+### Refinement 1 — Trading-day basis (not calendar-day)
+
+All averaging windows MUST be defined over **trading days only**, never calendar days. Weekends and US market holidays are excluded from both the denominator and the numerator of any window average. The PRD must reference a canonical trading-day calendar source (e.g., NYSE/`pandas_market_calendars`, or whichever calendar the existing MDPF chain consumes — verify against the EventBridge cron schedule that gates `mdpf_aggregate_aua.py`).
+
+**Empirical observation:** The data already conforms. The 16 May 2026 platinum snapshots used in Ask 2 are weekdays only; 2026-05-25 (Memorial Day, Monday) has no snapshot, with the chain resuming 2026-05-26. Daily-MTD averaging on the present snapshots is therefore already trading-day-based, and the n=6 post-onboard count is a trading-day count. The PRD just needs to make this explicit + reject any future calendar-day-naive averaging code.
+
+**Operational implication for Option A/B:** if a trading day's MDPF chain fails to emit (incident class), the ownership timeseries should record an explicit `null` / `MISSING` for that trading day rather than silently skipping or interpolating — and an audit-gate should escalate beyond N consecutive misses. Calendar-day skips (weekends/holidays) are NOT misses.
+
+### Refinement 2 — Prorated methodology for partial-month coverage
+
+The headline MTD/YTD figure must honestly reflect partial coverage when a partner onboarded mid-window. For May 2026 specifically: Inflection joined the MDPF aggregate on trading day 2026-05-18, the **12th trading day of May 2026** (May trading days through 5/26: 5/01, 5/04, 5/05, 5/06, 5/07, 5/08, 5/11, 5/12, 5/13, 5/14, 5/15, 5/18, 5/19, 5/20, 5/21, 5/22, 5/26 = 17 trading days so far; Inflection present on the last 6).
+
+**Three candidate methodologies — PRD picks one as the canonical headline; the others may co-exist as audit fields:**
+
+- **(a) Present-only mean** — average ownership % only over trading days the partner was onboard (n=6 for May 2026 so far). **PFOE = 6.520%, PFDE = 7.413%.** Highest fidelity to "what was Inflection's average % when they were present" — but not comparable across partners with different onboard dates and ignores time-weighting.
+- **(b) Full-window mean with pre-onboard zeros** — treat pre-onboard trading days as 0% holdings and average over the full month. For May: PFOE avg = 6.520% × 6/17 ≈ **2.30%**, PFDE avg ≈ 2.61%. Honest about the partial year but ARTIFICIALLY DRAGS the headline — could mislead "what is Inflection's typical ownership."
+- **(c) Prorate-factor reporting** — report the present-only mean as the headline AND an explicit `coverage_fraction` field (`6/17 = 35.3%` for May 2026 so far). Lets downstream consumers choose the framing. Most flexible.
+
+**DS read on Andrew's framing:** "prorated methodology that accounts for not having any ownership for the first 17 days" most naturally maps to **(b)** — i.e., the pre-onboard trading days are explicit 0%s in the average. That is the prorate. But this should be PRD-ratified by CTO + Andrew, not assumed.
+
+**Recommended PRD encoding:** emit ALL THREE figures alongside the coverage fraction in the timeseries artifact, and have the PRD declare ONE of them the canonical headline. Computing all three at emit time is trivial; locking in only one risks future regret.
+
+**YTD + multi-month extension:** the same methodology applies — the rolling YTD average for Inflection should treat trading days before 2026-05-18 as 0% if (b) is canonical, or be measured only over present-days if (a). Carrying coverage_fraction is essential once the window spans multiple months with different partner-onboard timelines.
+
+---
+
 ## Open questions for CTO (PRD scoping)
 
 1. **A vs. B?** (see DS recommendation above)
-2. **Which averaging methodology** for the headline number — post-onboard-only mean, full-window-with-zeros mean, or emit-days-only mean? (See Ask 2 note.)
-3. **Scope of partners** — Inflection-only, or all current/future MDPF partners (49F, Inflection, and any new ones)?
-4. **Scope of ETFs** — Opal-four-only (DIVZ/IDVZ/PFDE/PFOE), or any ETF for which an Opal partner has measurable ownership (would imply a broader NAV feed)?
-5. **PFOE 5/21–5/22 anomaly** — does PRD want a sentinel (e.g., DoD-change > X pp = ERROR-gate or audit-flag)?
-6. **Portal consumer** — is there a planned portal surface (page/widget) that needs the timeseries shape locked in? If so, the JSON shape should be PRD-ratified up front.
-7. **Project code** — suggesting `MDPF_OWNTS` (MDPF ETF Ownership Time-Series); CTO to confirm or rename.
+2. **Which of (a)/(b)/(c) is the canonical headline methodology?** (See Methodology Refinement 2 — DS read leans (b) per Andrew's "prorated" framing, but PRD must ratify.)
+3. **Trading-day calendar source** — which canonical calendar does the PRD bind to? (See Methodology Refinement 1.)
+4. **Scope of partners** — Inflection-only, or all current/future MDPF partners (49F, Inflection, and any new ones)?
+5. **Scope of ETFs** — Opal-four-only (DIVZ/IDVZ/PFDE/PFOE), or any ETF for which an Opal partner has measurable ownership (would imply a broader NAV feed)?
+6. **PFOE 5/21–5/22 anomaly** — does PRD want a sentinel (e.g., DoD-change > X pp = ERROR-gate or audit-flag)?
+7. **Portal consumer** — is there a planned portal surface (page/widget) that needs the timeseries shape locked in? If so, the JSON shape should be PRD-ratified up front.
+8. **Missing trading-day handling** — null / interpolate / escalate-after-N? (See Methodology Refinement 1 operational implication.)
+9. **Project code** — suggesting `MDPF_OWNTS` (MDPF ETF Ownership Time-Series); CTO to confirm or rename.
 
 ---
 
