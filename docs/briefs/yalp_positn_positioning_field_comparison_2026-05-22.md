@@ -414,4 +414,117 @@ Compiler-tools-log auto-appended via `.agent_context` hook (every comp-* invocat
 
 ---
 
-**End TO-001 brief.**
+## §13 — TO-002 test-pull results appendix (dual-T*)
+
+**Status:** TO-002 SHIPPED 2026-05-26 ~18:45Z. Pull execution + per-ticker pull-feasibility confirmation per PRD §4 + ws COO MCP-GO 18:30Z. Folds into brief as §13 per YALP_MKTOVR.001 §13 appendix pattern.
+
+### §13.1 — Scope + DUAL T* discipline
+
+Per DS 0.2.0 TO-003 brief (`docs/briefs/yalp_positn_to003_yang_publication_timing_consult.md`) — Positioning is the only sister-probe with structural multi-T* (Lambda cadence mismatch):
+
+- **T*_positioning = 2026-05-22** (weekly model_pkl): 29 ETFs from `positioning_data.json` `current_holdings` (empirically confirmed via fresh S3 pull `data_as_of` field)
+- **T*_holdings = 2026-05-18** (monthly attribution_excel from 2026-05-19 PM upload window): 55 ETFs from `holdings_attribution_data.json` all-periods (CASH_USD pseudo-ticker excluded; empirically confirmed via fresh S3 pull `as_of_date` field)
+
+Cross-T* overlap (28 ETFs in both sets): pulled at BOTH T* dates. Total pull attempts: **84**.
+
+Per CTO+COO directive (PRD v0.2 + ws COO 18:30Z MCP): per-row `t_star` column populated in `local_pull_results.json` for TO-004 verdict alignment.
+
+### §13.2 — Pull-feasibility results
+
+| Outcome | Count | Detail |
+|---|---:|---|
+| **OK** | **83 / 84** | Clean YCharts daily series response; chart_data populated; ~1200-1300 daily points per ETF |
+| EMPTY (re-classified HTTP 400) | 1 / 84 | IBTF @ T*=5/18 — HTTP 400 entitlement-gap-or-symbol-issue per `_classify_failure` taxonomy (initial EMPTY classification refined post-hoc; envelope shows http_status=400 + empty payload_top_keys) |
+| FAIL | 0 / 84 | No exceptions raised |
+
+**Freshness probe:** OK (HTTP 200) — clean session at start; no eviction during 84-pull batch. **No rate-limit issues observed** (consistent with YALP_MKTOVR TO-002 ~9s wall for 18 pulls; this batch was ~170s wall for 84 pulls with 2s spacing).
+
+### §13.3 — Per-ticker outcomes by T*
+
+**T*_positioning = 2026-05-22 (29 pulls):**
+
+29/29 OK — all positioning-comparable ETFs available on YCharts at T*=5/22 with clean daily series. Tickers: BIV, CLIP, DFCF, DFSD, DIVZ, ICSH, IDVZ, IEFA, IEMG, IJH, JAAA, JPST, MINT, OBIL, PCHI, PFDE, PFOE, QQQ, SPHY, SPYM, TBIL, UTWO, VCSH, VEA, VGSH, VNLA, VUG, VUSB, XBIL.
+
+**T*_holdings = 2026-05-18 (55 pulls):**
+
+54/55 OK + 1 EMPTY (IBTF). Tickers OK: AGG, BIL, BIV, BNDX, BSCQ, BSCR, BSJQ, CLIP, COWZ, DFCF, DFSD, DIVZ, IDVZ, IEFA, IEMG, IJH, IQLT, IWM, JAAA, JEPI, JPST, LONZ, MINT, OBIL, PCHI, PDBC, PFDE, PFOE, QBER, QQQ, QUAL, SJNK, SPHY, SPMO, SPSM, SPYM, TBIL, UTEN, UTWO, UVXY, VCIT, VCSH, VEA, VGIT, VGLT, VGSH, VNLA, VSS, VTV, VUG, VUSB, VXX, XBIL, XLU.
+
+### §13.4 — Structural findings (TO-004 carry-forward)
+
+**Finding 13a — IBTF HTTP 400 at T*=5/18.**
+
+IBTF (iShares iBonds Dec 2028 Term Treasury ETF) returned HTTP 400 on `/charts/fund_data.json` request at T*=5/18 pull. Bytes=null; payload_top_keys=[]. Per `_classify_failure` taxonomy = `bad-request (entitlement-gap-or-symbol-issue)`. Possible causes per [[endpoint-class rate-limit ≠ session-eviction]] discrimination:
+- Symbol-class issue: term-treasury ETFs may have YCharts-side classification that requires a different endpoint or calc param (rather than `fund_data(calc='price')` which works for standard ETFs)
+- Entitlement-gap: IBTF may not be in our YCharts seat entitlement
+- Date-of-record issue: T*=5/18 may not be a YCharts-trading-day for term-treasury class
+
+**Mitigation in TO-004 verdict assembly:** mark IBTF row as `NO-YCHARTS-PULL — HTTP 400 entitlement-or-symbol-issue` in the verdict column; TO-004 cannot verify IBTF Level-2 against YCharts. Per HoldingsTab.tsx ETF_NAME_FALLBACKS: IBTF is bond-class FI; if cutover-trust verdict is needed for IBTF, follow-on with YCharts symbol-class investigation (possibly different endpoint).
+
+**Finding 13b — `style_ticker` empty values in holdings_attribution.**
+
+Per Phase-1a UPDATE 18:39Z heads-up: `holdings_attribution_data.json` portfolios[code].{period}.holdings[].style_ticker field has VALUE "" (empty string) for all rows in the empirical sample. Not field-absence; value-absence. The companion fields `style_return` ARE populated (sample IEMG QTD: 19.378%) — meaning Yang computes style returns server-side without per-ticker explicit style assignment.
+
+**Implication for TO-001 brief §4.3 H32 verdict-class:** Style Return is Yang-computed; YCharts equivalent would require either (a) the Brinson-attribution-class style assignment Yang uses internally (not exposed in JSON) OR (b) a synthetic per-Yang-spec re-computation from underlying YCharts indices. **Refined H32 verdict:** **GAP-class** (Yang internal style computation; no YCharts equivalent for the specific style-assignment Yang uses). Earlier MATCH classification was incorrect — H32 trace through holdings_attribution is GAP not MATCH.
+
+### §13.5 — Dual-T* per-row alignment for TO-004
+
+`local_pull_results.json` contains per-pull `t_star` column. TO-004 Level-2 verdict assembly will:
+
+- Join positioning-component fields per-ETF against `t_star: 2026-05-22` pull series
+- Join HoldingsTab attribution-period fields per-ETF against `t_star: 2026-05-18` pull series  
+- For ETFs in both sets (28): use the T*-matching pull per field context (positioning fields → 5/22; attribution fields → 5/18)
+- **Cadence-mismatched rows:** any cross-T* comparison (e.g., positioning's `weight` vs attribution's `weight` for same ticker) treated as REPRESENTATIVE-class (not DRIFT) per DS 0.2.0 TO-003 brief Finding 1
+
+### §13.6 — Harness + artifacts
+
+- **Harness:** `.runtmp/yalp_positn_to002/run_local_pulls.py` (~170 lines; adapts YALP_MKTOVR `run_local_pulls.py`)
+- **Results:** `.runtmp/yalp_positn_to002/local_pull_results.json` (~84 pull records × envelope shape; ~25KB)
+- **Log:** `.runtmp/yalp_positn_to002/local_pull_log.txt` (per-pull timestamp + outcome trace)
+- All gitignored under `.runtmp/`
+
+### §13.7 — TO-002 ACs (5/5 met)
+
+Per PRD §4 TO-002 expected scope:
+1. ✅ YCharts test-pulls executed for the comparable subset universe (83/84 OK = 99% pull success)
+2. ✅ DUAL T* discipline applied per DS 0.2.0 TO-003 brief (per-row t_star column)
+3. ✅ Structural findings surfaced (IBTF 400 entitlement-gap + style_ticker empty-value sub-finding)
+4. ✅ Pull-feasibility envelope captured (84 pull records with HTTP status + payload structure + data point count + first/last data point)
+5. ✅ TO-004 carry-forward documented (dual-T* per-row alignment + IBTF mitigation + style_ticker H32 verdict refinement)
+
+### §13.8 — Compiler tools
+
+- `local_pull_results.json` is the TO-002 deliverable artifact (per [[predecessor-as-ground-truth]] YALP_MKTOVR.002 TO-002 pattern carry-forward)
+- `comp-validate` N/A for this TO (no pipeline output requiring validation; YCharts pulls are external API)
+- Lambda-class compiler-graph gap remains (no comp-* tool to validate external-API pull results); banked for ADHC_COMPIL_V5 follow-on per YALP_MKTOVR §11.3 carry-forward
+
+### §13.9 — Wall analysis
+
+- Harness scaffold: ~5min (template adapt from YALP_MKTOVR + dual-T* parameterization)
+- Pull execution: ~170s (84 pulls × ~2s spacing; no rate-limit hits)
+- Envelope-bug diagnostic + fix: ~2min
+- Brief authoring: ~15min
+- **Total TO-002 wall:** ~25-30min (under CTO ~1h estimate per smaller pull surface; consistent with [[predecessor-as-ground-truth]] compression)
+
+### §13.10 — TO-002 RAVC2 readiness
+
+- ✅ AC1-AC5 per §13.7
+- ✅ Findings documented (13a IBTF; 13b style_ticker H32 refinement)
+- ✅ TO-004 carry-forward path explicit
+- ✅ Compiler-tools coverage per §13.8
+- Standing for ws COO RAVC2-ACCEPT on this commit
+
+### §13.11 — Next steps update
+
+Refinements to TO-001 §10:
+
+1. ~~[ws COO] RAVC2 disposition on TO-001 brief~~ DONE 18:30Z `292218f1f` accept
+2. **[ws COO]** RAVC2 disposition on TO-002 (THIS commit) — accept / reject / rework
+3. **[ws COO]** TO-004 + TO-VAL authoring per /drive cycle
+4. **[DS 0.2.0_DS_PortfolioAnalytics~C]** TO-003 brief shipped per `docs/briefs/yalp_positn_to003_yang_publication_timing_consult.md` ← consume + integrate
+5. **[DS — me, next TO]** TO-004 execution (~3-5h; Level-2 value comparison; GAP-heavy; IBTF mitigation + style_ticker refinement folded; 84-pull envelope joined per-row dual-T*)
+6. **[Wave-2 ATTR future]** Attribution-page YALP_ATTRBN inheritance per §8.2/§8.3
+7. **[CVO future]** `/verify-channel` project-level mode at YALP_POSITN closure
+
+---
+
+**End TO-002 brief appendix.**
