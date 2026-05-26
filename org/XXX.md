@@ -276,7 +276,8 @@ Per LD-0062 ratification 2026-05-25T~20:05Z (Andrew sovereign via "go with your 
 | `1.x.0_SA_CTO` (CL) | `CronCreate /cl-charter 30m` | LD-0066 3-way split; CL is queue-pull + sequential PRD authoring; consumes Input 1/2/3 cascade |
 | `2.x.0_SA_COO` | `CronCreate /drive 20m` | already operational pattern per LD-0056 |
 | `3.x.0_SA_CVO` | `CronCreate /spot-check 20m` + event-trigger arming for `/verify-channel` | event-based per LD-0062 trigger refinement; 2h scan body |
-| `0.x.0` / Tier-2 worker | per-role basis as defined in `prompt.md`; default = `/watcher 10m` only (already armed in section A) | no primary cron unless prompt.md specifies one |
+| `0.x.0_(DS\|AE\|DE\|DT\|RD)_*` Tier-2/3 worker (+ tilde-lanes) | `CronCreate /work 20m` + run `/work` once for immediate first cycle | per LD-0072 ratification Andrew sovereign 2026-05-26; /watcher folds inline (Step 1); workers self-classify blockers + MCP lane COO with `[BLOCKED-ASK]` for unblock-routing |
+| `0.x.0` non-worker / unspecified | per-role basis as defined in `prompt.md`; default = `/watcher 10m` only (already armed in section A) | no primary cron unless prompt.md specifies one |
 
 **Run the skill ONCE immediately after arming** to fire the first cycle (avoids the cron-interval gap before first fire):
 
