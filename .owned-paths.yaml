@@ -874,6 +874,14 @@ paths:
     lane: ANY_EXEC_OR_AE
     note: "V4.017 test-matrix deliverables (empirical comp-tools validation). AE-authored per ADHC_COMPIL_V4.017 TO. Top-level ADHC_COMPIL_V4.md PRD stays under docs/architecture/** ANY_CTO catch-all."
 
+  "docs/architecture/CASE_FIND_QUARANTINE_IMPL.md":
+    lane: ANY_EXEC_OR_AE
+    note: "LD-0067 Workstream-B implementation spec — AE-authored per MSTR LD-0084 RATIFY of WB-1 design-readout (4ae1fa61f). Companion to CTO-authored CASE_FIND_SECURITY_PROTOCOL.md (which stays ANY_CTO via catch-all). COO unblock ws CTO+CVO observable per AE [BLOCKED-ASK] 2026-05-26T~03:53Z."
+
+  "docs/architecture/TELEMETRY_LIVENESS_IMPL.md":
+    lane: ANY_EXEC_OR_AE
+    note: "LD-0070 Workstream-B implementation spec — AE-authored per MSTR LD-0084 RATIFY of WB-1 design-readout (4ae1fa61f). Companion to CTO-authored TELEMETRY_LIVENESS_FRAMEWORK.md (which stays ANY_CTO via catch-all). COO unblock ws CTO+CVO observable per AE [BLOCKED-ASK] 2026-05-26T~03:53Z."
+
   "docs/architecture/**":
     lane: ANY_CTO
     note: "Architecture PRDs — either CTO (base or project-scoped)"
