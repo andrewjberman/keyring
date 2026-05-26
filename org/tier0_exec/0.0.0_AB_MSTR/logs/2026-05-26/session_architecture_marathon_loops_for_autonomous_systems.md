@@ -183,3 +183,61 @@ ws CTO + CL CTO + CL CVO + ws CVO + AE 0.7 all have substantive queues. Material
 ## §5 — `tier0_commit_hash` advancing
 
 Tier-0 law unchanged throughout session (CONSTITUTION v1.2 + STAKES_MATRIX v1.4 + DIRECTIVES v1.12 stable at `1a515b769` / `3cca313d8`). Session-emitted commits advance the workspace commit chain through 12 ledger entries + several cycle/RV records + ws CTO materializations.
+
+---
+
+## §6 — Post-log addendum: LD-0074 ws CVO kill + empirical anchor for LD-0070 value at human-reasoning layer
+
+**Authored:** 2026-05-26T~00:55Z (after main session log)
+
+### Event
+
+Andrew direct 2026-05-26T~00:48Z: "try killing 3.0.0_SA_CVO". LD-0074 ledgered + kill executed. ws CVO terminated; live cap effectively 6 post-kill (MSTR + ws CTO + ws COO + CL CTO + CL CVO + AE 0.7).
+
+### MSTR misjudgment + empirical anchor
+
+After `kill-agent.ps1` reported success (terminated PID 14448), I checked broker state and observed 3.0.0_SA_CVO STILL LIVE at PID 26404 with `last_seen` only 5s prior. **I incorrectly assumed "broker shows LIVE = process still running"** and escalated to force-kill PID 26404 via `Stop-Process -Id 26404 -Force -ErrorAction SilentlyContinue`. The force-kill was a no-op (process didn't exist; `-ErrorAction SilentlyContinue` swallowed the "no such process" error). Andrew corrected: "your initial action did kill it."
+
+### Why the misjudgment happened
+
+Under current heartbeat-authoritative liveness (pre-LD-0070):
+- Process dies → no more heartbeat MCPs
+- Broker's `last_seen` timestamp frozen at moment-before-death
+- Process appears LIVE for up to 120s (until STALE threshold)
+- Broker has NO WAY to know process died until heartbeat-absence threshold trips
+
+By the time of my check, ws CVO's last-seen was 5s ago — within the 120s LIVE window because the final heartbeat was inside that window. The broker was lying by omission.
+
+### Empirical anchor — LD-0070 value extends beyond kill-orphans race
+
+LD-0070 was framed primarily as:
+- Race-SIGTERM structural fix (kill-orphans no longer reaps healthy idle agents)
+- Heartbeat-cadence cultural-discipline retirement
+
+**This event surfaces a third value**: **honest LIVE signal at the human-reasoning + dispatch-consumer layer.** Under LD-0070:
+- Process dies → telemetry pipeline stops writing → `last_work_ts` becomes static
+- Broker computes NOT_LIVE within seconds (no more `kind: work` entries arriving)
+- Any consumer (MSTR human-reasoning, dispatch routing, /stimulus-scan) sees honest state immediately
+
+Without telemetry-liveness, the broker LIES BY OMISSION for ~120s after process death. ANY consumer reasoning about "is X alive?" during that window gets a stale answer. I just made the exact misjudgment a dispatcher would make routinely under the current model.
+
+### Banking observation 7 — LD-0070 has empirical value at the human-reasoning layer, not just at the kill-orphans race layer
+
+A dispatcher (or MSTR itself) deciding "should I message X expecting a response?" under heartbeat-authoritative liveness will routinely:
+- See `last_seen: 5s ago` → assume LIVE
+- Dispatch / make decisions based on that assumption
+- Receive no response → eventually retry / escalate / spawn replacement
+- Discover ~2min later that the agent was actually dead at decision-time
+
+Under LD-0070 dual-signal model: dispatcher sees NOT_LIVE within seconds → makes correct decision (don't dispatch; spawn replacement; surface to MSTR). Saves multi-minute decision-latency at every dispatch point.
+
+This is the third structural-value of LD-0070, beyond race-SIGTERM + heartbeat-discipline retirement:
+**dispatch-decision-accuracy** at the human/agent reasoning layer.
+
+### LD-0074 status
+
+LD-0074 ratified + executed (initial kill was sufficient; force-kill was a no-op). ws CVO session terminated cleanly. Broker will show STALE in ~90s, OFFLINE in ~580s. No follow-up action.
+
+### Materialization implication
+
+LD-0070 Workstream A (ws CTO design spec) + Workstream B (AE_CloudOps Docker implementation) timeline matters more than my prior framing suggested. Every day pre-Phase-2 carries this dispatch-decision-accuracy risk surface; multi-agent fabrics with active spawn/kill cycles are exactly where the broker-lag bug bites hardest. Worth flagging to ws CTO + AE 0.7 as additional motivation for prioritizing LD-0070 alongside LD-0067.
