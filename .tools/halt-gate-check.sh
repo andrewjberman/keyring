@@ -38,11 +38,31 @@ HALT_GATE_INBOX_ROOT="${HALT_GATE_INBOX_ROOT:-${HALT_GATE_REPO_ROOT}/org/mcp/inb
 HALT_GATE_CONTEXT_FILE="${HALT_GATE_CONTEXT_FILE:-${HALT_GATE_REPO_ROOT}/.comp-graph/.agent_context}"
 HALT_GATE_AUDIT_LOG="${HALT_GATE_AUDIT_LOG:-${HALT_GATE_REPO_ROOT}/org/halt-gate-override-audit.log}"
 
-# --- serial resolution (PRD R4) -------------------------------------------------
-# Echo the agent serial from .comp-graph/.agent_context (the SERIAL= line).
-# Return 1 if the file is absent, unreadable, or the SERIAL value is empty.
+# --- serial resolution (PRD R4 + LD-0070 §7.2 session-id-keyed) -----------------
+# Resolve the agent serial via the session-id-keyed pattern first (per LD-0070
+# §7.2; matches TARGET A telemetry hook pattern at e410400f8). Falls back to the
+# legacy .comp-graph/.agent_context if session-id path unavailable. Eliminates
+# the cross-agent contamination class where one agent's serial in the shared
+# .comp-graph/.agent_context file clobbers the halt-gate diagnostic for any
+# other concurrent agent running halt-gate-check.sh. Empirical anchor:
+# 2026-05-26 cycle #21 -- CL CTO clobbered ws CTO's .comp-graph state mid-session;
+# halt-gate misroutd MSTR-FERRY-addressed-to-CL-CTO as ws CTO's pending message.
 halt_gate_resolve_serial() {
-  local ctx="${HALT_GATE_CONTEXT_FILE}" serial=""
+  local repo_root="${HALT_GATE_REPO_ROOT}" ctx="${HALT_GATE_CONTEXT_FILE}" serial=""
+
+  # Primary: session-id-keyed serial file (LD-0070 §7.2 canonical)
+  if [ -n "${CLAUDE_CODE_SESSION_ID:-}" ]; then
+    local sess_file="${repo_root}/org/mcp/sessions/${CLAUDE_CODE_SESSION_ID}.serial"
+    if [ -f "$sess_file" ]; then
+      serial="$(tr -d '\r\n[:space:]' < "$sess_file" 2>/dev/null)"
+      if [ -n "$serial" ]; then
+        printf '%s\n' "$serial"
+        return 0
+      fi
+    fi
+  fi
+
+  # Fallback: legacy .comp-graph/.agent_context (per-workspace-shared; clobber-prone)
   [ -f "$ctx" ] || return 1
   serial="$(grep -m1 '^SERIAL=' "$ctx" 2>/dev/null | sed 's/^SERIAL=//' | tr -d '\r' | sed 's/[[:space:]]*$//')"
   [ -n "$serial" ] || return 1
