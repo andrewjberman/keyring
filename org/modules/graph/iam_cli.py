@@ -107,16 +107,21 @@ def cmd_services(args):
 
 def cmd_service(args):
     profiles, roles, gaps = _build()
-    name = args.name.lower()
+    # ADHC_COMPIL_V5.001: normalize underscore<->dash so Terraform-resource-style
+    # lookups (e.g. `bd_exporter` matching role `bd-exporter-ec2-role`) work
+    # symmetrically. Anchor: today's AE 0.6.1 manual IAM additions
+    # (b00e2733e + 053bba6f7) where role-name dashes vs TF-resource underscores
+    # blocked direct `comp-iam service <terraform-name>` lookup.
+    name = args.name.lower().replace("_", "-")
 
-    matches = [p for p in profiles if name in p.name.lower()]
+    matches = [p for p in profiles if name in p.name.lower().replace("_", "-")]
     if not matches:
         # ADHC_COMPIL_V4.013: fall through to EC2/IAM role names when Lambda
         # profile lookup fails. Reuses the existing roles dict (no new index).
         # Anchor incidents: 2026-04-16 AE 0.6 dh3_dh7_dispatcher_hygiene
         # ('No service matching' for gold runner EC2); 2026-05-08 AE 0.7
         # INFETL.011 RAVC1 (inf-gold-trigger catalog miss).
-        role_matches = {k: v for k, v in roles.items() if name in k.lower()}
+        role_matches = {k: v for k, v in roles.items() if name in k.lower().replace("_", "-")}
         if role_matches:
             for role_name, role in sorted(role_matches.items()):
                 print(f"SERVICE: {role_name}  [iam-role]")

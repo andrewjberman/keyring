@@ -780,10 +780,22 @@ def _load_lambda_profiles(workspace_root: Path, roles: dict[str, IamRole]) -> li
 
 
 def _load_ec2_profiles(workspace_root: Path) -> list[ServiceProfile]:
-    """Load EC2 service scripts from EC2_MANIFEST.json and gold scripts directory."""
+    """Load EC2 service scripts from EC2_MANIFEST.json and gold scripts directory.
+
+    ADHC_COMPIL_V5.001 (2026-05-26): extended to consume the full EC2_MANIFEST.json
+    catalog. Previously hardcoded ONLY bd-gold-runner (gold scripts under
+    data/black_diamond/scripts/gold/[A-D]_*.py with role bd-exporter-ec2-role).
+    Now iterates every manifest service with an iam_role + source_path and creates
+    one ServiceProfile per service, scanning its source dir/file for boto3 ops.
+    Multi-service-per-role (e.g. bd-allocations / bd-transactions / bd-fees /
+    bd-assets / bd-price-runner all on bd-exporter-ec2-role) all surface in
+    `comp-iam services` output and contribute to cross-product gap detection
+    (AC4). Gold-script-dir hardcode preserved as bd-gold-runner profile to keep
+    historical baseline + cover scripts not in manifest source_path.
+    """
     profiles = []
 
-    # Gold scripts (run on EC2 bd-gold-layer-runner)
+    # Gold scripts (run on EC2 bd-gold-layer-runner) -- preserved hardcoded entry
     gold_dir = workspace_root / "data" / "black_diamond" / "scripts" / "gold"
     if gold_dir.exists():
         gold_ops = []
@@ -804,6 +816,59 @@ def _load_ec2_profiles(workspace_root: Path) -> list[ServiceProfile]:
                 source_files=["data/black_diamond/scripts/gold/*.py"],
                 operations=gold_ops,
             ))
+
+    # ADHC_COMPIL_V5.001: EC2_MANIFEST.json full catalog
+    manifest_file = workspace_root / "infra" / "aws" / "ec2" / "EC2_MANIFEST.json"
+    if not manifest_file.exists():
+        return profiles
+    try:
+        manifest = json.loads(manifest_file.read_text(encoding="utf-8"))
+    except Exception:
+        return profiles
+
+    for svc_name, cfg in manifest.get("services", {}).items():
+        if not isinstance(cfg, dict):
+            continue
+        iam_role = cfg.get("iam_role")
+        if not iam_role:
+            continue
+        source_path = cfg.get("source_path") or cfg.get("source_dir")
+        if not source_path:
+            continue
+
+        abs_path = workspace_root / source_path
+        ops: list = []
+        files_scanned: list[str] = []
+
+        if abs_path.is_dir():
+            for py_file in sorted(abs_path.rglob("*.py")):
+                try:
+                    content = py_file.read_text(encoding="utf-8", errors="replace")
+                except Exception:
+                    continue
+                rel = str(py_file.relative_to(workspace_root)).replace("\\", "/")
+                ops.extend(_scan_python_for_operations(content, rel))
+                files_scanned.append(rel)
+        elif abs_path.is_file() and abs_path.suffix == ".py":
+            try:
+                content = abs_path.read_text(encoding="utf-8", errors="replace")
+            except Exception:
+                continue
+            rel = str(abs_path.relative_to(workspace_root)).replace("\\", "/")
+            ops = _scan_python_for_operations(content, rel)
+            files_scanned = [rel]
+        else:
+            # Path doesn't exist or non-Python file; still register profile
+            # so service-name lookup works (role-side actions still visible).
+            files_scanned = [source_path]
+
+        profiles.append(ServiceProfile(
+            name=svc_name,
+            service_type="ec2",
+            iam_role=iam_role,
+            source_files=files_scanned or [source_path],
+            operations=ops,
+        ))
 
     return profiles
 
