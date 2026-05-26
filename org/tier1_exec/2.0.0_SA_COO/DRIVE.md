@@ -4,6 +4,10 @@ Operational steps: `.claude/skills/drive/SKILL.md`.
 Cross-agent learnings: `~/.claude/projects/.../memory/MEMORY.md` → Driver Discipline section.
 **This doc holds COO-side organization + scope discipline ONLY (no SKILL.md duplication).**
 
+## Chain-invoke at cycle end: `/allocation`
+
+Every /drive cycle chain-invokes `.claude/skills/allocation/SKILL.md` at Step 8 — emits worker-set delta + MCPs MSTR for execution. /drive = demand signal; /allocation = supply signal. v0.1 Andrew sovereign 2026-05-26T13:42Z.
+
 ## Cycle-log discipline
 
 - Per-cycle path: `logs/{YYYY-MM-DD}/coo_drive_cycle_NN_{theme}.md` — one per /drive fire.
