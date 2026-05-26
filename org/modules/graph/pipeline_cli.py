@@ -565,6 +565,59 @@ def _lambda_pipescript_io(script_path_arg: str) -> bool:
 
         tree = _ast.parse(content)
 
+        # ADHC_COMPIL_V5 TO-VAL AC-VAL-X intermediate-var resolution:
+        # Build per-function local name->value map for `<name> = <literal|f-string>`
+        # assignments. Lets us resolve call-site args like
+        #   key = f"{DETAILS_PREFIX}{ticker}.json"
+        #   save_to_s3(key, ...)
+        # by looking up `key` in the enclosing FunctionDef's local map. First
+        # assignment wins (covers common ship-once pattern); reassignment ignored
+        # to keep MVP-simple. Module-constants map (built upstream) takes
+        # precedence when name matches a top-level CONST.
+        local_var_maps: dict[str, dict[str, str]] = {}  # fn_qualname -> {name: value}
+
+        def _eval_str_expr(value_node) -> str | None:
+            """Best-effort: resolve an AST expression to a string literal using
+            constants + (later) the enclosing local_var map. Returns None if
+            non-resolvable. f-strings collapse non-literal parts to {*}."""
+            if isinstance(value_node, _ast.Constant) and isinstance(value_node.value, str):
+                return value_node.value
+            if isinstance(value_node, _ast.Name):
+                return constants.get(value_node.id)
+            if isinstance(value_node, _ast.JoinedStr):
+                parts: list[str] = []
+                for v in value_node.values:
+                    if isinstance(v, _ast.Constant) and isinstance(v.value, str):
+                        parts.append(v.value)
+                    elif isinstance(v, _ast.FormattedValue):
+                        if isinstance(v.value, _ast.Name) and v.value.id in constants:
+                            parts.append(constants[v.value.id])
+                        else:
+                            parts.append("{*}")
+                    else:
+                        parts.append("{*}")
+                return "".join(parts)
+            return None
+
+        for fn_node in _ast.walk(tree):
+            if not isinstance(fn_node, _ast.FunctionDef):
+                continue
+            local: dict[str, str] = {}
+            for inner in _ast.walk(fn_node):
+                if not isinstance(inner, _ast.Assign):
+                    continue
+                if len(inner.targets) != 1:
+                    continue
+                tgt = inner.targets[0]
+                if not isinstance(tgt, _ast.Name):
+                    continue
+                if tgt.id in local:
+                    continue  # first-assignment-wins
+                resolved = _eval_str_expr(inner.value)
+                if resolved is not None:
+                    local[tgt.id] = resolved
+            local_var_maps[fn_node.name] = local
+
         # Pass 1: helper FunctionDefs containing S3 ops with Key=<param>
         helper_key_param: dict[str, tuple[str, str]] = {}
 
@@ -618,24 +671,24 @@ def _lambda_pipescript_io(script_path_arg: str) -> bool:
                         break
             if arg_node is None:
                 continue
-            resolved_key: str | None = None
-            if isinstance(arg_node, _ast.Constant) and isinstance(arg_node.value, str):
-                resolved_key = arg_node.value
-            elif isinstance(arg_node, _ast.Name):
-                resolved_key = constants.get(arg_node.id)
-            elif isinstance(arg_node, _ast.JoinedStr):
-                parts: list[str] = []
-                for v in arg_node.values:
-                    if isinstance(v, _ast.Constant) and isinstance(v.value, str):
-                        parts.append(v.value)
-                    elif isinstance(v, _ast.FormattedValue):
-                        if isinstance(v.value, _ast.Name) and v.value.id in constants:
-                            parts.append(constants[v.value.id])
-                        else:
-                            parts.append("{*}")
-                    else:
-                        parts.append("{*}")
-                resolved_key = "".join(parts)
+            # Identify the enclosing FunctionDef of THIS call-site for local-var
+            # lookup (intermediate-var resolution path).
+            enclosing_fn: str | None = None
+            for fn_node in _ast.walk(tree):
+                if not isinstance(fn_node, _ast.FunctionDef):
+                    continue
+                for inner in _ast.walk(fn_node):
+                    if inner is node:
+                        enclosing_fn = fn_node.name
+                        break
+                if enclosing_fn:
+                    break
+            local = local_var_maps.get(enclosing_fn, {}) if enclosing_fn else {}
+
+            resolved_key: str | None = _eval_str_expr(arg_node)
+            # If straight eval returned None for a Name, try local-var map
+            if resolved_key is None and isinstance(arg_node, _ast.Name):
+                resolved_key = local.get(arg_node.id)
             if resolved_key:
                 normalized = re.sub(r"\{[^}]+\}", "{*}", resolved_key)
                 if op_kind == "write":
