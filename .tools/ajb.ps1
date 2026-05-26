@@ -174,6 +174,21 @@ function ajb {
     # identify each agent's tab at a glance in Windows Terminal (LD-0079).
     # Applies whether ajb is invoked from spawn-agent.ps1 (autonomous spawn) or
     # typed manually in a fresh terminal -- title gets set in either path.
+    #
+    # Belt-and-suspenders: emit OSC 0 escape sequence directly via [Console]::Write
+    # AND set $Host.UI.RawUI.WindowTitle. Windows Terminal natively binds OSC 0
+    # (ESC ] 0 ; TEXT BEL) for tab titles; $Host.UI.RawUI.WindowTitle sets the
+    # underlying Win32 console title which WT also reads. claude.exe's console
+    # writes may transiently overwrite either path, but the OSC escape is the
+    # last-write-wins terminal protocol -- emitting it immediately before
+    # `& claude` gives the spawned agent's tab the highest probability of
+    # displaying the serial through the session. Andrew direct 2026-05-26
+    # "I want their serial in the tab title of powershell by default. When you
+    # load 1.0.0_SA_CTO, it should literally display 1.0.0_SA_CTO in the
+    # powershell tab of the new window."
+    $esc = [char]27
+    $bel = [char]7
+    [Console]::Write("${esc}]0;${Serial}${bel}")
     $Host.UI.RawUI.WindowTitle = $Serial
 
     # Per-process serial -> the PostToolUse telemetry hook reads $OPAL_AGENT_SERIAL

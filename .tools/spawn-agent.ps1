@@ -178,10 +178,16 @@ if ($Extra) {
 # stays in the spawned PowerShell process's CommandLine, where the concurrency
 # cap above and .tools/kill-agent.ps1 both grep for it.
 # Set the PowerShell window title to the agent serial so the operator can
-# identify each spawned tab at a glance in Windows Terminal (LD-0079).
+# identify each spawned tab at a glance in Windows Terminal (LD-0079 + Andrew
+# direct hardening 2026-05-26 "I want their serial in the tab title of
+# powershell by default").
+# Belt-and-suspenders: emit OSC 0 escape sequence ([char]27 ]0;TEXT [char]7)
+# AND set $Host.UI.RawUI.WindowTitle in the outer shell BEFORE dot-sourcing
+# ajb.ps1. ajb.ps1's own pre-claude title-set repeats the same pair for
+# last-write-wins coverage immediately before claude.exe takes over the console.
 # Backtick-escape the leading $ so the outer interpolation doesn't expand $Host;
 # the inner $Serial DOES interpolate (gets baked into the inner script string).
-$inner = "`$Host.UI.RawUI.WindowTitle = '$Serial'; . `"$ajb`"; ajb -Headless $Serial$extraStr $marker`: $Serial"
+$inner = "[Console]::Write(([char]27).ToString() + ']0;$Serial' + ([char]7).ToString()); `$Host.UI.RawUI.WindowTitle = '$Serial'; . `"$ajb`"; ajb -Headless $Serial$extraStr $marker`: $Serial"
 Start-Process powershell -ArgumentList '-NoProfile', '-NoExit', '-Command', $inner
 
 # Audit -- every successful spawn is recorded.
