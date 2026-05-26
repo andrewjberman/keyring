@@ -293,12 +293,17 @@ lanes:
     permitted_agents:
       - 0.1.0_DE_MarketIntelligence
       - 0.1.0_DS_MarketIntelligence
+      - 0.1.0_DS_MarketIntelligence~A
+      - 0.1.0_DS_MarketIntelligence~B
+      - 0.1.0_DS_MarketIntelligence~C
+      - 0.1.0_DS_MarketIntelligence~D
+      - 0.1.0_DS_MarketIntelligence~E
       - 0.1.0_DT_MarketIntelligence
       - 1.0.0_SA_CTO
       - 2.0.0_SA_COO
       - 1.1.0_SA_CTO
       - 2.1.0_SA_COO
-    description: "Pod 1 + any exec (task_orders/ authoring)"
+    description: "Pod 1 + any exec (task_orders/ authoring); DS tilde-lanes ~A-E added 2026-05-26 per Andrew YALP per-page mandate (Wave 1)"
 
   POD2_OR_EXEC:
     permitted_agents:
