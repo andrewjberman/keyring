@@ -1,0 +1,26 @@
+{
+  "project_code": "YALP_CAUSAL",
+  "macro_code": "YALP",
+  "name": "Causality Engine Portal Verification",
+  "description": "Andrew direct sovereign 2026-05-26T~22:42Z /goal directive 'running a project for every single portal page' — portal-page-coverage discipline instantiation for CausalityEngine portal page (portal/src/pages/CausalityEngine/). Scope: CausalityEngine main view + Tab1_Discovery + Tab2_Generate + Tab2_History + MarketOverview + CausalityEngineHeader + FilterControls + SelectedThemesPanel + SystemDescription + ThemeBubbleGalaxy visualization components. Page is OPAL-PROPRIETARY AI/ML theme-discovery feature (no yang-generate references in page directory tree per fast-scan; theme/causal-discovery model output proprietary). Verification scope BOUNDED: in-scope = observable market-overview inputs (MarketOverview component likely renders market price/return/vol data with 3rd-party authoritative sources) + portal-render-correctness; out-of-scope = AI-theme-discovery outputs + causal-engine methodology validation + peer-product comparison. Smallest YALP-family project (~3-5h end-to-end).",
+  "prds": [
+    {"path": "docs/architecture/YALP_CAUSAL.md", "label": "v0.1 PRD canonical via /ws-charter NOVEL authoring per Andrew /goal portal-page-coverage directive; OPAL-PROPRIETARY-CLASS bounded-verification scope", "date": "2026-05-26"}
+  ],
+  "_prd_authoring_note": "PRD v0.1 authored 2026-05-26 ~22:50Z by 1.0.0_SA_CTO between-tick under cycle 0040 NOVEL authority chain (Andrew /goal direction). Methodology template: YALP_MKTOVR v0.4 + YALP_FACTOR §15 opal-proprietary precedent + sister YALP_CMASMP v0.1 (this commit). Verdict-class distribution expected: very small N MATCH (market-overview observable inputs only) + dominant N RE-GAP (AI-derived theme/causal/discovery surfaces acceptable-by-documentation). Smallest YALP-family scope due to overwhelmingly-proprietary-AI nature.",
+  "source_brief": "Andrew direct sovereign 2026-05-26T~22:42Z /goal: 'running a project for every single portal page.' Routed via ws COO 20260526T...ROUTE-PRD-AUTHORING.",
+  "status": "complete",
+  "closed_at": "2026-05-26T~23:03Z",
+  "closed_via": "YALP_CAUSAL.001 Phase 0 substrate-survey RAVC2-ACCEPTED (~E ~15min wall; 4/4 ACs MET; SCOPE-CLARIFICATION-CLASS finding NOT full Phase 1/2); architectural-finding ratified — CausalityEngine = news+AI+ticker-API SEPARATE service stack (no yang-pipeline consumption); 8/12 outputs OPAL-PROPRIETARY-DERIVED (LLM-gen + opal scoring + sentiment NLP); 3 MATCH-class ticker primitives sister-YALP-covered; 1 DERIVED + 1 RE-GAP; equivalent precedent YALP_FACTOR §15 regression-layer out-of-cutover-scope; ws COO 3-step atomic project-close (JSON+REGISTRY this commit; PRD COMPLETE bundle ws CTO routed cycle 116)",
+  "phase": "Phase 1 PRD v0.1 CANONICAL 2026-05-26 ~22:50Z. Phase 0 substrate-survey ratified cycle 116/117; PROJECT CLOSE via scope-clarification.",
+  "current_phase": "PROJECT COMPLETE via scope-clarification (separate-service-stack class + universal-opal-proprietary-derived). Brief at `docs/briefs/yalp_causal_phase0_substrate_survey_20260526.md` is the canonical side-by-side comparison evidence per Andrew /goal directive.",
+  "blocking": "(1) ws COO TO-001 dispatch + DS lane assignment per MSTR /allocation cap-status (lowest priority of new YALP triple given overwhelmingly-proprietary scope; likely re-use post-other-YALP-close lane). (2) Phase 2 TOs (-002 market-overview observable-input pulls, -003 spreadsheet, -VAL consolidated RAVC2) sequential + short. (3) No cookie-window dependency in Phase 1; Phase 2 pulls market data from open public sources (FRED / Yahoo Finance).",
+  "depends_on": ["YALP_MKTOVR", "YALP_CMASMP"],
+  "depends_on_note": "Inherits methodology from YALP_MKTOVR v0.4. Sister-class to YALP_CMASMP v0.1 + YALP_FACTOR §15 OPAL-PROPRIETARY precedent.",
+  "absorbs": [],
+  "created": "2026-05-26",
+  "pods": ["0.1", "0.2"],
+  "pipeline": "opal-proprietary causality-engine API + portal-render + (Phase 2 market-overview observable sources: FRED / Yahoo Finance)",
+  "coo_lane": "2.0.0_SA_COO",
+  "thread_counter": 0,
+  "threads": []
+}

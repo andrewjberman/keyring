@@ -1,0 +1,26 @@
+{
+  "project_code": "YALP_CMASMP",
+  "macro_code": "YALP",
+  "name": "Capital Market Assumptions Portal Verification",
+  "description": "Andrew direct sovereign 2026-05-26T~22:42Z /goal directive 'running a project for every single portal page' — portal-page-coverage discipline instantiation for CapitalMarketAssumptions portal page (portal/src/pages/CapitalMarketAssumptions/). Scope: CMA main view + ExpectationsTab + OpalViewsTab + AssumptionsTable + ConvergingSlider + GradientSlider components. Page uses getCMAAssumptions (queryKey 'cma-assumptions') + getOpalViews (queryKey 'opal-views') -- both OPAL-PROPRIETARY forward-looking assumptions (10-year capital market expected returns + asset-allocation views); no public 3rd-party equivalent for canonical opal-published forecast values. Verification scope BOUNDED: in-scope = observable-input fields (historical anchors used as inputs to forward model -- Damodaran ERP / Shiller PE10 / FRED historical returns) + portal-render-correctness; out-of-scope = forward-expectation values + methodology validation + peer-firm CMA comparison. Per YALP_FACTOR §15 OPAL-PROPRIETARY precedent.",
+  "prds": [
+    {"path": "docs/architecture/YALP_CMASMP.md", "label": "v0.1 PRD canonical via /ws-charter NOVEL authoring per Andrew /goal portal-page-coverage directive; OPAL-PROPRIETARY-CLASS scope", "date": "2026-05-26"}
+  ],
+  "_prd_authoring_note": "PRD v0.1 authored 2026-05-26 ~22:50Z by 1.0.0_SA_CTO between-tick under cycle 0040 NOVEL authority chain (Andrew /goal direction). Methodology template: YALP_MKTOVR v0.4 + YALP_FACTOR §15 opal-proprietary precedent. Verdict-class distribution expected: small N MATCH (historical-anchor inputs) + large N RE-GAP (forward-expectation fields acceptable-by-documentation per Andrew 'push down' framing). Smaller scope project (~6-10h end-to-end vs YALP_MACROS ~15-25h) due to high RE-GAP fraction.",
+  "source_brief": "Andrew direct sovereign 2026-05-26T~22:42Z /goal: 'running a project for every single portal page.' Routed via ws COO 20260526T...ROUTE-PRD-AUTHORING.",
+  "status": "complete",
+  "closed_at": "2026-05-26T~23:00Z",
+  "closed_via": "YALP_CMASMP.001 Phase 0 substrate-survey RAVC2-ACCEPTED (~D ~30min wall; 4/4 ACs MET; 84/84 universal-opal-proprietary-derived classification; 11-shape verdict-taxonomy extension via OPAL-PROPRIETARY-DERIVED + OUT-OF-CUTOVER-SCOPE classes); architectural-finding ratified — CMA outputs structurally out-of-scope-for-3rd-party-RE per YALP_FACTOR §15 precedent; Phase 1 LIGHTWEIGHT + Phase 2 DEFERRED per universal-opal-derived disposition; ws COO 3-step atomic project-close (JSON+REGISTRY this commit; PRD COMPLETE bundle ws CTO routed cycle 116)",
+  "phase": "Phase 1 PRD v0.1 CANONICAL 2026-05-26 ~22:50Z. Phase 0 substrate-survey ratified cycle 116; PROJECT CLOSE via scope-clarification.",
+  "current_phase": "PROJECT COMPLETE via scope-clarification (universal-opal-proprietary-derived class). Brief at `docs/briefs/yalp_cmasmp_phase0_substrate_survey_20260526.md` is the canonical side-by-side comparison evidence per Andrew /goal directive — 84/84 universal-opal classification + per-field yang-source documentation.",
+  "blocking": "(1) ws COO TO-001 dispatch + DS lane assignment per MSTR /allocation cap-status (likely re-use ~B/~C/~D/~E post-current-Phase-2-close given OPAL-PROPRIETARY scope = lower priority than YALP_ATTRBN). (2) Phase 2 TOs (-002 observable-input pulls, -003 Level-2 comparison, -004 spreadsheet, -VAL consolidated RAVC2) sequential. (3) No cookie-window dependency in Phase 1 (PRD-authoring + schema-enumeration only); Phase 2 may pull historical-anchor sources (FRED/Shiller/Damodaran) which are open public.",
+  "depends_on": ["YALP_MKTOVR", "YALP_FACTOR"],
+  "depends_on_note": "Inherits methodology from YALP_MKTOVR v0.4. Sister-class to YALP_FACTOR §15 OPAL-PROPRIETARY precedent (forward-looking proprietary derived values acceptable as RE-GAP with documentation).",
+  "absorbs": [],
+  "created": "2026-05-26",
+  "pods": ["0.1", "0.2"],
+  "pipeline": "opal-proprietary CMA + OpalViews API endpoints + portal-render + (Phase 2 observable-anchor sources: FRED + Shiller PE10 + Damodaran ERP tables)",
+  "coo_lane": "2.0.0_SA_COO",
+  "thread_counter": 0,
+  "threads": []
+}
