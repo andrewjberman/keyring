@@ -195,7 +195,7 @@ Scan does NOT itself run the 4-component comprehensive body; it ONLY queues hits
 
 ## Step 4 — Comprehensive verify body (heavy — fires only on Class 1 immediate-fire OR Class 2 hit)
 
-**4-component body per LD-0062 ratified design:**
+**5-component body per LD-0062 ratified design + Article X.(c) Constitution-drift-review fold per CL Const v1.0 AUTHORITATIVE 6ad4636af + CC-X-1-FOLLOWUP per CL CVO v1.0 verdict 20260526T042816Z + LD-0088 sovereign ratification 5c399a27f:**
 
 ### (a) Read commits
 
@@ -218,6 +218,59 @@ For each pipeline / Lambda / portal artifact in the project:
 - Aggregate Mode A verdicts into per-AC grid.
 
 Per Step 2.5 added 2026-05-25: include "Consumer-output-vs-bucket-write-state alignment" check (LastModified-partition pattern) for any consumer-facing decision artifact (leaderboard.json / platinum field / portal artifact).
+
+### (e) Constitution-drift-review subscan (per CL Const v1.0 AUTHORITATIVE Article X.(c); added 2026-05-26 per CC-X-1-FOLLOWUP)
+
+Per CL Const Article X.(c) firing cadence: "Periodic drift review — via /verify-channel project-level cadence." Per CL Const Article IX subordination: any ws CONSTITUTION Art XV cross-fabric invariants binding CL fabric work are in-scope at the same Article-level altitude.
+
+**When this subscan fires:** every comprehensive Mode B fire (post-Class-1 immediate-fire OR post-Class-2 scan-detected hit). Does NOT fire on Mode A surface-level invocations OR on Mode B 2h scan body (Step 3a). Cadence binding is at the **comprehensive-cycle** moment, where the cycle has already done (a)-(d) substantive substrate read; (e) layers Constitution-coherence on the assembled evidence.
+
+**Per-fabric Constitution paths (resolve based on invoker fabric):**
+
+| Fabric | Constitution path | Notes |
+|---|---|---|
+| ws (3.0.0_SA_CVO) | `docs/architecture/CONSTITUTION.md` (canonical ws Tier-0) | ws CONSTITUTION + STAKES_MATRIX + DIRECTIVES per ws tier-0 framework |
+| CL (3.1.0_SA_CVO) | `feature_clb/org/foundations/CL_CONSTITUTION.md` (post-LD-0088 A.3 broker extension); pre-LD-0088: ferry via Andrew hand-ferry OR CL CTO inline MCP body | Per LD-0088 once A.3 lands, native cross-fabric read; pre-A.3 ferry pattern per Path-1 doctrine |
+
+**Drift-detection per-Article checklist** (apply to each Article of the invoker-fabric Constitution; example here for CL Const v1.0 AUTHORITATIVE; ws Constitution scan applies same shape to its Articles):
+
+| Article | Assertion | Drift-detection heuristic | Sample drift trigger |
+|---|---|---|---|
+| **I — Principal mandate** | "R&D toward generalized agentic graph compiler NEVER STOPS" | Walk recent /cl-charter tick decisions + Case-queue consumption + PRD authoring activity in window. Mandate-distance to current PRD set < threshold? | New PRDs all decisively scope to operational-tier non-R&D work; mandate-distance drifts up |
+| **II — Continuous-cycle property** | "Each link has downstream fallback; no single node offline stalls mandate" | Check fabric live-state matrix in window: any single-point-of-failure pattern? | Andrew non-responsive >2 cycles AND MSTR proxying without CVO escalation chain; downstream fallback empirically absent |
+| **III — Authority distribution** | CTO/CVO/COO/MSTR/Andrew named-authority bounds | Cross-check recent commits + MCP dispatches: any cross-authority drift (e.g., MSTR authoring PRDs; COO rendering /verify-channel verdicts; etc.)? | MSTR commit authors a PRD-class artifact under TIER0_MSTR lane |
+| **IV — Non-overlap rules** | 4 non-overlap constraints | Per-rule empirical check in window | CL CTO direct MCP to Opal CTO bypassing MSTR ferry |
+| **V — Three-Input cascade** | Strict priority 1→2→3 with mechanical fall-through | Walk /cl-charter ticks: cascade order honored? Idle_count thresholds respected? | /cl-charter pulled Input 2 work while Input 1 brief outstanding from MSTR |
+| **VI — Earned mandate authority** | Pre-validation symmetric; post-validation mandate via water-test clearance | Check any "mandate" assertion on Opal product adoption: water-test cleared? | CL CTO claims mandate-rail on compiler tool without 5-fidelity + joint CL CTO+CVO + MSTR trigger |
+| **VII — `/cl-charter` loop** | 7-step body; Step 2 re-read + Step 5 coherence-gate mandatory | Walk recent /cl-charter session logs: re-read attestation present? Coherence-gate-7 ladder fired? | /cl-charter ticks skip Step 2 re-read; coherence-gate-7 omitted |
+| **VIII — Doctrine codification** | CL CTO + CL CVO 4-shape concurrence on doctrine candidates | Any new doctrine in window without joint concurrence? | A doctrine-candidate pattern referenced as "bound" without 4-shape verdict chain |
+| **IX — Subordination to ws tier-0** | No CL Article overrides ws CONSTITUTION + STAKES_MATRIX + DIRECTIVES | Cross-check CL Articles vs current ws tier-0 state: conflicts surfaced to Andrew + MSTR rather than resolved? | CL operational artifact resolves a conflict with ws tier-0 inline rather than escalating |
+| **X — Amendment mechanism** | Andrew sovereign + CL CTO scribe + MSTR coherence-check + CL CVO consumer-ratify | Recent amendments: full firing-cadence chain (a)/(b)/(c) honored? | A CL artifact updates Article body without Andrew sovereign ratification |
+
+**Per-Article verdict shape (LD-0084 §2 4-shape taxonomy):**
+- **CORROBORATE** — Article assertion holds; no drift detected
+- **CORROBORATE-with-additives** — Article assertion holds; additive observations worth banking (operational scope clarification, future-amendment-candidate flag)
+- **CORROBORATE-with-CONCERN** — soft drift; recommend operational adjustment without Article amendment
+- **COUNTER** — hard drift; Article assertion violated or empirically untenable; **escalate to Andrew/MSTR via Article X firing cadence (b) amendment proposal**
+
+**Aggregate Constitution-coherence-axis for the cycle:** rolls per-Article verdicts to single axis verdict for §5.6 emission:
+- **GREEN** — all Articles CORROBORATE
+- **YELLOW** — any CORROBORATE-with-additives OR CORROBORATE-with-CONCERN; no COUNTER
+- **RED** — any COUNTER
+
+**Drift-detection scope-discipline:**
+- This subscan is **observation-only** (verifier-≠-fixer binds). A COUNTER finding escalates via Article X firing cadence (b) amendment proposal MCP to CL CTO + CC MSTR + Andrew; CVO never directly amends the Constitution body
+- Apply LD-0084 §2 boundary criteria to any per-Article COUNTER claim: (1) methodology + (2) CVO author-line + (3) trigger-ground citation must all satisfy
+- Iterate-as-empirical-surfaces: this checklist ships as v1 framework. As empirical drift patterns surface in actual cycles, the per-Article heuristics get sharpened. Premature exhaustive elaboration violates LD-0064 strict-cadence-discipline (don't over-engineer)
+
+**Out-of-scope (deliberate):**
+- Constitution-text grammar / phrasing critique (that's CC-V-1-class verdict at amendment-cycle gate, not drift-review)
+- Operating-model / SKILL.md body drift (that's /spot-check Step 2c sub-step (3) cross-doc alignment scope)
+- Per-PRD AC drift (that's Step 4(c) mandate-distance scope)
+
+The subscan is specifically about **whether the fabric's operational state has drifted from the Constitution's assertions**, NOT about whether the Constitution itself reads well or whether operational artifacts have drifted from PRDs.
+
+**Cross-fabric coordination note (LD-0088 forward-looking):** post-A.3 broker extension + A.4 skills mirror, both fabrics' /verify-channel comprehensive cycles execute this subscan natively. Cross-fabric drift findings (e.g., CL Const Art IX violation triggered by ws fabric work) MCP both fabrics' CVOs + MSTR. Pre-LD-0088 materialization, ferry pattern applies for cross-fabric content read.
 
 ## Step 5 — Emit verify_channel artifact
 
@@ -314,7 +367,7 @@ Currently inactive — ferry workflow fires when first CL compiler reaches compl
 
 Per joint CVO council 2026-05-25 ratified shape (§4(d) multi-source Input 0; cross-fabric ws + CL CVO converged 2026-05-25T21:21Z):
 
-> Every comprehensive /verify-channel verdict emits a per-axis signal to the Input 0 outcome-feedback substrate, consumable by the Input 0 weekly aggregator. Mechanical-correct / intent-coverage / decision-useful axis verdicts each contribute as outcome-feedback telemetry. CVO ≠ Input 0 author — verdict-stream is one telemetry feed of several into Input 0 (alongside `comp-*` invocation-count, PyPI download delta, /charter tick records, /spot-check findings, RAVC2 outcomes). Per LD-0062 §4(d) reconciliation: CVO observability layer + telemetry-producer; verifier-≠-fixer discipline preserved. Emission shape: MISALIGNED verdicts → surfaced_findings (feeds Input 1 compiler-asks "we need a tool to catch this class"); CLEAN verdicts on tool-gated artifacts → prevented_incidents counter increment. PRE-EXECUTION mode (PRD-grain NOVEL-PRD pre-propagate gate per LD-0062 Round-2 Q6) emits same substrate with `mode: pre-execution` field. Emit JSON record at `ajb_workspace/org/mcp/input0/verdicts/{YYYY-MM-DD}/verdict_{HHMMZ}_{PROJECT_CODE}.json` (unified cross-fabric path per LD-0034 canonical-paths convention) with fields: `{verdict: CLEAN|CONCERN|MISALIGNED, project, artifacts_verified, tools_gating_artifacts, axis_mechanical: GREEN|YELLOW|RED, axis_intent_coverage: GREEN|YELLOW|RED, axis_decision_useful: GREEN|YELLOW|RED, timestamp_utc, mode: comprehensive|scan|pre-execution, source: "verify-channel-{ws|cl}"}`. Input 0 weekly sweep aggregates by-tool counters from emitted records (lightweight read, no re-execution).
+> Every comprehensive /verify-channel verdict emits a per-axis signal to the Input 0 outcome-feedback substrate, consumable by the Input 0 weekly aggregator. Mechanical-correct / intent-coverage / decision-useful axis verdicts each contribute as outcome-feedback telemetry. CVO ≠ Input 0 author — verdict-stream is one telemetry feed of several into Input 0 (alongside `comp-*` invocation-count, PyPI download delta, /charter tick records, /spot-check findings, RAVC2 outcomes). Per LD-0062 §4(d) reconciliation: CVO observability layer + telemetry-producer; verifier-≠-fixer discipline preserved. Emission shape: MISALIGNED verdicts → surfaced_findings (feeds Input 1 compiler-asks "we need a tool to catch this class"); CLEAN verdicts on tool-gated artifacts → prevented_incidents counter increment. PRE-EXECUTION mode (PRD-grain NOVEL-PRD pre-propagate gate per LD-0062 Round-2 Q6) emits same substrate with `mode: pre-execution` field. Emit JSON record at `ajb_workspace/org/mcp/input0/verdicts/{YYYY-MM-DD}/verdict_{HHMMZ}_{PROJECT_CODE}.json` (unified cross-fabric path per LD-0034 canonical-paths convention) with fields: `{verdict: CLEAN|CONCERN|MISALIGNED, project, artifacts_verified, tools_gating_artifacts, axis_mechanical: GREEN|YELLOW|RED, axis_intent_coverage: GREEN|YELLOW|RED, axis_decision_useful: GREEN|YELLOW|RED, axis_constitution_coherence: GREEN|YELLOW|RED|NULL, constitution_drift_articles: [{article: "X", verdict: "CORROBORATE|CORROBORATE-with-additives|CORROBORATE-with-CONCERN|COUNTER", finding: "..."}], timestamp_utc, mode: comprehensive|scan|pre-execution, source: "verify-channel-{ws|cl}"}` (the `axis_constitution_coherence` axis added 2026-05-26 per CC-X-1-FOLLOWUP + CL Const Art X.(c); emit NULL on Mode A surface-level verdicts + Mode B 2h scan body since drift-review fires only on Mode B comprehensive per Step 4 (e); emit GREEN/YELLOW/RED on Mode B comprehensive + Mode B PRE-EXECUTION when subscan executes; `constitution_drift_articles` array empty when axis=GREEN, populated per-Article when axis=YELLOW or RED). Input 0 weekly sweep aggregates by-tool counters from emitted records (lightweight read, no re-execution).
 
 **Verdict-enum projection mapping** (canonical SKILL.md verdict shapes → 3-value §5.6 substrate enum):
 
