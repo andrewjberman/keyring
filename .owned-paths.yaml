@@ -43,6 +43,17 @@ lanes:
       - 3.0.0_SA_CVO
     description: "Base workspace execs — CTO + COO + CVO (not project-scoped). 3.0.0_SA_CVO added 2026-05-23 by COO: CVO is now a Tier-1 Claude-agent exec per Andrew 2026-05-22 ruling (was Codex no-commit under prior model); lane membership catches up. Closes the gap caught by CVO /spot-check cycle 1 on ANY_EXEC_OR_AE REGISTRY-write attempt."
 
+  TIER0_TIER1_STARTUP_DOCS:
+    permitted_agents:
+      - 0.0.0_AB_MSTR
+      - 1.0.0_SA_CTO
+      - 2.0.0_SA_COO
+      - 3.0.0_SA_CVO
+      - 1.1.0_SA_CTO
+      - 2.1.0_SA_COO
+      - 3.1.0_SA_CVO
+    description: "Tier-0 + Tier-1 startup-protocol docs — MSTR + ws CTO/COO/CVO + CL CTO/COO/CVO. Per Andrew direct 2026-05-26 (LD-0099 cluster): 'all tier 0 and tier 1 agents need to be able to modify XXX.md and startup docs'. Routed to ws CTO for BASE_EXEC lane authorship (MSTR was blocked on BASE_EXEC for the LD-0099 c7dee9cd5 XXX.md edits + had to route them via MSTR [BLOCKED-ASK] ASK 1 cluster 2026-05-26T~13:05Z). Applies to org/XXX.md + org/ref/COO_STARTUP.md + org/ref/RAVC_PROTOCOL.md + org/ref/SESSION_LOG_STANDARD.md + org/ref/TASK_ORDER_PROTOCOL.md + org/ref/PROMPT_CONSTRUCTION_PROCESS.md. Added 2026-05-26 by ws CTO."
+
   COMP_LEARNS:
     permitted_agents:
       - 1.1.0_SA_CTO
@@ -622,8 +633,8 @@ paths:
     lane: ANY_EXEC
 
   "org/XXX.md":
-    lane: BASE_EXEC
-    note: "Universal agent startup protocol — base exec only (CLAUDE.md Rule equiv)"
+    lane: TIER0_TIER1_STARTUP_DOCS
+    note: "Universal agent startup protocol — MSTR + Tier-1 execs across both fabrics. Lane widened BASE_EXEC -> TIER0_TIER1_STARTUP_DOCS 2026-05-26 by ws CTO per Andrew direct via LD-0099 + MSTR [BLOCKED-ASK] ASK 1 cluster (Andrew direct quote: 'all tier 0 and tier 1 agents need to be able to modify XXX.md and startup docs'). Closes the gap that forced LD-0099 c7dee9cd5 to ship 'excl org/XXX.md' + route to ws CTO."
 
   "org/mcp/**":
     lane: BASE_EXEC
@@ -666,6 +677,29 @@ paths:
 
   "org/standards/**":
     lane: ANY_EXEC
+
+  # Startup-protocol class ref docs (Andrew direct 2026-05-26 via MSTR ASK 1 cluster):
+  # widen to TIER0_TIER1_STARTUP_DOCS so MSTR + both fabrics' CTO/COO/CVO can author.
+  # Longest-match-wins over the org/ref/** ANY_EXEC catch-all.
+  "org/ref/COO_STARTUP.md":
+    lane: TIER0_TIER1_STARTUP_DOCS
+    note: "COO startup ground-truth-reconciliation protocol — Tier-0+Tier-1 startup-doc class"
+
+  "org/ref/RAVC_PROTOCOL.md":
+    lane: TIER0_TIER1_STARTUP_DOCS
+    note: "RAVC inter-agent protocol — Tier-0+Tier-1 startup-doc class"
+
+  "org/ref/SESSION_LOG_STANDARD.md":
+    lane: TIER0_TIER1_STARTUP_DOCS
+    note: "Session-log standard — Tier-0+Tier-1 startup-doc class"
+
+  "org/ref/TASK_ORDER_PROTOCOL.md":
+    lane: TIER0_TIER1_STARTUP_DOCS
+    note: "Task-order protocol — Tier-0+Tier-1 startup-doc class"
+
+  "org/ref/PROMPT_CONSTRUCTION_PROCESS.md":
+    lane: TIER0_TIER1_STARTUP_DOCS
+    note: "Prompt-construction process — Tier-0+Tier-1 startup-doc class"
 
   "org/ref/**":
     lane: ANY_EXEC
@@ -1063,5 +1097,5 @@ paths:
     lane: ANY
 
   "org/XXX.md":
-    lane: BASE_EXEC
-    note: "Duplicate entry for clarity — same path as above"
+    lane: TIER0_TIER1_STARTUP_DOCS
+    note: "Duplicate entry for clarity — same path as above (widened 2026-05-26)"
