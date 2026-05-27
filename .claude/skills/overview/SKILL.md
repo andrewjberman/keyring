@@ -1,6 +1,6 @@
 ---
 name: overview
-description: Executive, non-technical status of the Opal multi-agent fabric. Read-only, fixed-format, zero dispatches. THREE modes, auto-selected. `/overview` from a Tier-1 agent (CTO/COO/CVO) = whole-fabric briefing: exec-summary intro, per-agent Doing/Why/Next blocks (plain English, no jargon), closing bottom-line. `/overview` from a Tier-2/3 agent (DE/DT/DS/AE/RD) = self-scoped briefing: only that agent's own current work + its direct dependencies. `/overview {topic}` (any tier) = same executive depth scoped to ONE named topic. Built for a human operator who needs "what's going on" without technical context. Invoke on-demand. Adapted for ajb_workspace from corporeal's status skill — confirms who is working from the agent_telemetry stream + the opal-agent-comms broker.
+description: Executive, non-technical status of the Opal multi-agent fabric. Read-only, fixed-format, zero dispatches. THREE modes, auto-selected from invoker tier + argument shape. `/overview` (no arg) from a Tier-0/1 agent = whole-fabric briefing (Mode A). `/overview` (no arg) from a Tier-2/3 agent = self-scoped briefing (Mode C-self). With an argument, the Step-0a classifier routes by shape — a **macro code** (e.g., `ADVI`) → all active projects under that macro, combined Mode-B view; a **project code** (e.g., `ADVI_DEMOV1`) → that single project, Mode B; a **bare serial** (e.g., `0.4.0_DS_ClientPlatform`) or a **natural-language agent-status question** (e.g., `what is your current status`, `what is ws COO doing`) → that agent's current work, Mode C-target; any other **free-text topic** → Mode B with REGISTRY narrative resolution. Built for a human operator who needs "what's going on" without technical context. Invoke on-demand. Adapted for ajb_workspace from corporeal's status skill — confirms who is working from the agent_telemetry stream + the opal-agent-comms broker.
 ---
 
 # /overview — Executive Status
@@ -32,10 +32,31 @@ Then select the mode:
 | Invocation | Invoking agent's tier | Mode |
 |---|---|---|
 | `/overview` (no argument) | **Tier 0 or Tier 1** | **Mode A — whole fabric** |
-| `/overview` (no argument) | **Tier 2 or Tier 3** | **Mode C — self-scoped** |
-| `/overview {topic}` (argument present) | **any tier** | **Mode B — that one topic** |
+| `/overview` (no argument) | **Tier 2 or Tier 3** | **Mode C-self — self-scoped** |
+| `/overview <argument>` (any shape) | **any tier** | **Step 0a classifier** routes to Mode B or Mode C-target |
 
-Rationale: an exec needs the whole picture; a worker needs *their own* picture. Naming a topic explicitly always wins regardless of who invokes it.
+Rationale: an exec needs the whole picture; a worker needs *their own* picture. Naming any argument explicitly always wins regardless of who invokes it — the classifier below selects the right mode by argument shape.
+
+## Step 0a — Argument classifier (when an argument is present)
+
+Match the argument against these patterns **in order** — first match wins:
+
+| # | Pattern | Mode | Target |
+|---|---|---|---|
+| 1 | Bare serial — regex `\d+\.\d+\.\d+_[A-Z]+_[A-Za-z0-9]+(~[A-Za-z0-9]+)?` (e.g., `0.4.0_DS_ClientPlatform`, `1.0.0_SA_CTO~B`) | **Mode C-target** | that serial verbatim |
+| 2 | Bare macro code — exactly 4 uppercase letters matching a known macro in `org/projects/REGISTRY.md` (e.g., `ADVI`, `ADHC`, `MDPF`, `SXIN`, `SXPL`, `TRSB`, `YALP`, `FIND`) | **Mode B (macro)** | aggregate all active projects under that macro |
+| 3 | Bare project code — `MACRO_SUFFIX` shape (4 uppercase + underscore + 6 uppercase, in REGISTRY active projects, e.g., `ADVI_DEMOV1`, `FIND_INSURE`, `YALP_MACROS`) | **Mode B (project)** | that single project |
+| 4 | Natural-language agent-status question containing `your` / `you` / `my` (e.g., `what is your current status`, `your work`, `my next step`) | **Mode C-target** | self (the invoking agent) |
+| 5 | Natural-language agent-status question containing a role-name token — `CTO` / `COO` / `CVO` (with optional fabric prefix `ws` / `CL`) or `MSTR` (e.g., `what is ws COO doing`, `CTO status`, `MSTR posture`) | **Mode C-target** | canonical serial in the active fabric (e.g., `ws COO` → `2.0.0_SA_COO`; `CL CTO` → `1.1.0_SA_CTO`; bare `CTO` from a ws-side invoker → `1.0.0_SA_CTO`). If both fabrics ambiguous and no prefix, ask once before proceeding. |
+| 6 | Anything else — free-text topic phrase (e.g., `the scanner`, `deploys`, `Schwab ingest`) | **Mode B (topic)** | REGISTRY narrative resolve |
+
+If the argument matches none of the above and REGISTRY resolves nothing recognizable, fall through to Mode B and emit `topic not recognized` per the existing Mode-B Step-1 honest-fallback (never fabricate).
+
+**Tilde-lane suffix on a serial argument** (e.g., `0.4.0_DS_ClientPlatform~D`) targets that exact lane, not the base.
+
+**Cross-fabric note for row #5:** the active fabric is the one the invoking agent belongs to (ws or CL). If the invoker is Tier-0 MSTR (cross-fabric), default to ws unless prefix specifies CL. `MSTR` is unambiguous — always `0.0.0_AB_MSTR`.
+
+**Ambiguous classification:** if an argument could match #2 (4-letter macro) AND #5 (role-name token) — unlikely, but e.g., a future macro literally named `CTOX` — prefer the explicit role mapping in #5. The classifier is order-sensitive precisely to make these calls deterministic.
 
 ---
 
@@ -126,53 +147,66 @@ Nothing before Part 1, nothing after Part 4. No tables, no per-agent timestamps,
 
 ## Procedure (Mode B)
 
-1. **Resolve the topic.** Map the operator's plain word to the internal project(s)/macro(s) it names (e.g. "the scanner" -> the Security Scanner project; "the YCharts work" -> YALP_MDSRC; "deploys" -> the in-flight Terraform/PROD-push workstream). Use `org/projects/REGISTRY.md` to resolve. If it maps to nothing recognizable, say so honestly in Part 1 and make Parts 2-4 `n/a — topic not recognized` (optionally: "did you mean <closest 1-2>?"). Never fabricate a topic.
-2. **Who's on it.** Run the Mode-A Step-1 broker scan for confirmed-live agents; for each, check broker summary / recent commits / pending TOs against the resolved topic; include only those genuinely on it. An agent *gated/waiting on* the topic counts as on it (say so plainly in Doing); an agent that *finished its part* is not "on it" now (mention in Part 4 as a completed dependency if it matters).
-3. **Translate technical -> executive** — identical mandatory rules to Mode-A Step 2.
-4. **Emit exactly per the Mode-B output contract.** Concise — one screen max.
+1. **Resolve the topic by sub-case** (Step 0a has already selected the B sub-shape):
+   - **Macro sub-case** (Step 0a row 2 — bare 4-letter macro code): enumerate **all active projects** under that macro from `org/projects/REGISTRY.md`. The topic IS the macro's collective work. Part 1 names the macro in plain English (what surface area it owns) + lists the active projects (plain-English names, not codes). Part 2 aggregates "Who's on it" across all active projects under the macro — one block per confirmed-live agent, even if they work on different sub-projects; their Doing line names which sub-project they hold in plain English. Part 3 Desired-outcome is the macro-level goal. Part 4 Next-steps name the next macro-level milestones (not per-project).
+   - **Project sub-case** (Step 0a row 3 — bare `MACRO_SUFFIX` code): the project code resolves directly to its `org/projects/{CODE}.json` + REGISTRY row. Part 1 names the project in plain English from JSON `phase` / `blocking`; standard Mode-B shape from there.
+   - **Free-text sub-case** (Step 0a row 6 — any other phrase): map the operator's plain word to the internal project(s) / macro(s) it names (e.g., "the scanner" → Security Scanner project; "the YCharts work" → YALP_MDSRC; "deploys" → in-flight Terraform/PROD-push workstream). Use REGISTRY to resolve. If it maps to nothing recognizable, say so honestly in Part 1 and make Parts 2-4 `n/a — topic not recognized` (optionally: "did you mean <closest 1-2>?"). Never fabricate a topic.
+2. **Who's on it.** Run the Mode-A Step-1 broker + telemetry scan for confirmed-live agents; for each, check broker summary / recent commits / pending TOs against the resolved topic; include only those genuinely on it. An agent *gated/waiting on* the topic counts as on it (say so plainly in Doing); an agent that *finished its part* is not "on it" now (mention in Part 4 as a completed dependency if it matters). For the macro sub-case, each agent's project-affiliation appears in their Doing line ("Driving the dashboard validation work on \<sub-project plain name\>") — but kept in plain English, not as a bare code.
+3. **Translate technical → executive** — identical mandatory rules to Mode-A Step 2.
+4. **Emit exactly per the Mode-B output contract.** Concise — one screen max. For the macro sub-case, if more than ~5 active sub-projects produce >7 confirmed-live agents on Part 2, prefer grouping by Tier-1 lead + the largest sub-project blocks rather than listing every agent (honest aggregation, not omission — name how many agents are not individually shown and why).
 
 ---
 
-# Mode C — `/overview` from a Tier-2/3 agent (self-scoped)
+# Mode C — single-agent-scoped (self OR named target)
 
-When a senior (DE/DT/DS/AE) or junior (RD) agent invokes `/overview` with no argument, the briefing is scoped to **that agent's own current work only** — not the whole fabric. The operator wants "what is *this* agent doing", not an org-wide sweep.
+Mode C is the **single-agent focus** mode. Two entry points:
+
+- **Mode C-self** — invoked by a Tier-2/3 agent with no argument; target = the invoking agent itself. The operator wants "what is *this* agent doing."
+- **Mode C-target** — invoked from any tier with an argument matching Step 0a row 1 (bare serial), row 4 (NL "your"/"you"/"my"), or row 5 (NL role-name token); target = the resolved agent (which may be the invoker, in the "your" case, or a peer).
+
+The output contract is the same shape regardless of entry point — only the agent being described changes. The narrating voice shifts: Mode C-self uses second-person ("you are…"), Mode C-target uses third-person ("ws COO is…").
 
 ## Output contract — IDENTICAL every Mode-C invocation, do not deviate
 
 ALWAYS exactly these four parts, in this order, and nothing else:
 
 ### Part 1 — Focus summary
-1-2 sentences in plain English: what this agent (you) is currently working on, plus its state, one of: **on-track** / **waiting-on-X** / **blocked** / **idle** / **closing-out**. No TO numbers, no project codes, no jargon.
+1-2 sentences in plain English: what the **target agent** is currently working on, plus its state, one of: **on-track** / **waiting-on-X** / **blocked** / **idle** / **closing-out** / **offline**. No TO numbers, no project codes, no jargon. (Mode C-self: "you are…"; Mode C-target: "\<role/serial\> is…")
 
-### Part 2 — Your work block
-Exactly one block — the invoking agent itself — in this shape:
+### Part 2 — Target work block
+Exactly one block — the **target agent** — in this shape:
 
-> **\<AGENT\>** — \<plain-English role, <=8 words\>
-> - **Doing:** \<one plain sentence — your current activity in business terms\>
+> **\<TARGET AGENT\>** — \<plain-English role, <=8 words\>
+> - **Doing:** \<one plain sentence — current activity in business terms\>
 > - **Why:** \<one plain sentence — what it protects or unlocks\>
-> - **Next:** \<one plain sentence — your immediate next step, or what completes when this finishes\>
+> - **Next:** \<one plain sentence — immediate next step, or what completes when this finishes\>
 
-If you hold more than one active task, add one extra **Doing/Why/Next** trio per additional task under the same block — but only genuinely active ones (a `pending` TO you are mid-execution on). A `staged` TO is *not* active — mention staged/queued work in Part 4 instead.
+If the target holds more than one active task, add one extra **Doing/Why/Next** trio per additional task under the same block — but only genuinely active ones (a `pending` TO mid-execution). A `staged` TO is *not* active — mention staged/queued work in Part 4 instead.
 
 ### Part 3 — Dependencies
-1-2 lines, plain English, covering ONLY direct dependencies of your own work:
-- **Waiting on:** the agent(s) you are blocked by or expecting a hand-off / GO / validation from, and what you need from them — or `nothing`.
-- **Hands off to:** the agent(s) who pick up when you finish, and what they get — or `nothing`.
+1-2 lines, plain English, covering ONLY direct dependencies of the **target agent's** work:
+- **Waiting on:** the agent(s) the target is blocked by or expecting a hand-off / GO / validation from, and what they need — or `nothing`.
+- **Hands off to:** the agent(s) who pick up when the target finishes, and what they get — or `nothing`.
 If neither applies: exactly one line — `**Dependencies:** None — self-contained.`
 
 ### Part 4 — Bottom line
 Exactly one line, this exact shape:
-`**Bottom line:** Goal: <what your current work delivers>. Status: <where you are>. Watch: <your immediate next event, or the thing blocking you>.`
+`**Bottom line:** Goal: <what the target's current work delivers>. Status: <where they are>. Watch: <their immediate next event, or the thing blocking them>.`
 
 Nothing before Part 1, nothing after Part 4. No other agents' blocks, no whole-fabric summary, no tables, no timestamps.
 
 ## Procedure (Mode C)
 
-1. **Confirm your own current work.** Read your own `task_orders/` directory for `pending` TOs, your most recent session log, your recent commits (`git log --all --oneline --author="<your-serial-prefix>" --since="6 hours ago"`), and your last inbox messages. Ground truth is git + the TO files — a stale heartbeat summary is aspirational; describe what the commits and TO status actually show.
-2. **Characterize honestly.** If you are mid-execution on a TO, that is your "Doing". If you are blocked, say `blocked` and name the blocker in Part 3. If you have no active TO and nothing in flight, say `idle` plainly — do not invent activity.
-3. **Identify direct dependencies only.** Check your active TO's `<cross_domain_coordination>` block and any RAVC threads: who must deliver before you proceed (Waiting on), and who consumes your output (Hands off to). Do NOT enumerate the wider fabric — only your own edges.
-4. **Translate technical -> executive** — identical mandatory rules to Mode-A Step 2. The reader is non-technical: gloss every TO ID, project code, Lambda name, and lane suffix.
-5. **Emit exactly per the Mode-C output contract.** Concise — well under one screen.
+1. **Resolve the target** (Step 0a already did this — confirm here):
+   - **Mode C-self:** target = the invoking agent (your own serial).
+   - **Mode C-target row 1** (bare serial): target = that serial verbatim, including any tilde-lane suffix.
+   - **Mode C-target row 4** (NL `your` / `you` / `my`): target = the invoking agent.
+   - **Mode C-target row 5** (NL role-name): target = the canonical serial in the active fabric (e.g., `ws COO` → `2.0.0_SA_COO`; `CL CTO` → `1.1.0_SA_CTO`; bare `CTO` from a ws-side invoker → `1.0.0_SA_CTO`; `MSTR` → `0.0.0_AB_MSTR`).
+2. **Confirm the target's current work.** Read the target's `task_orders/` directory for `pending` TOs (path: `org/tier{N}_{role-folder}/{target-serial}/task_orders/`), their most recent session log under their `logs/<date>/`, their recent commits (`git log --all --oneline --author="<target-serial-prefix>" --since="6 hours ago"`), their broker summary via `get_agent_status("<target-serial>")`, and their last inbox messages if accessible (filesystem: `org/mcp/inbox/<target-serial>/`). Ground truth is git + TO files — a stale heartbeat summary is aspirational; describe what the commits and TO status actually show. For Mode C-self, "the target" is yourself — use the same sources against your own serial.
+3. **Characterize honestly.** If the target is mid-execution on a TO, that is the "Doing". If they are blocked, say `blocked` and name the blocker in Part 3. If they have no active TO and nothing in flight, say `idle` plainly — do not invent activity. If the target is **offline** (no broker entry AND no recent telemetry AND no recent commits), say so in Part 1 (`<target> is currently offline — last observed at <human-readable time>`) and make Parts 2-4 reflect last-known state with the offline caveat. Never fabricate activity for an offline agent.
+4. **Identify direct dependencies only.** Check the target's active TO's `<cross_domain_coordination>` block and any RAVC threads in their recent inbox / outbox: who must deliver before they proceed (Waiting on), and who consumes their output (Hands off to). Do NOT enumerate the wider fabric — only the target's edges.
+5. **Translate technical → executive** — identical mandatory rules to Mode-A Step 2. The reader is non-technical: gloss every TO ID, project code, Lambda name, and lane suffix.
+6. **Emit exactly per the Mode-C output contract.** Concise — well under one screen. (Mode C-self uses "you/your"; Mode C-target uses "\<role/serial\>" + "they/their".)
 
 ---
 

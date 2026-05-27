@@ -237,6 +237,17 @@ Heartbeat to broker with summary reflecting drive cycle output (e.g., `"drive ti
 
 ---
 
+## Step 9 — Chain-invoke `/allocation`
+
+After cycle close (Step 8 marker + heartbeat), chain-invoke `.claude/skills/allocation/SKILL.md` to emit worker-set supply signal complementing this cycle's project-axis demand signal.
+
+- /drive = demand (which projects need to advance)
+- /allocation = supply (which workers must be alive to advance them)
+
+Per ws COO v0.1 ratification (Andrew sovereign 2026-05-26T~13:42Z). CL COO chain-invokes the same /allocation skill body (canonical for both fabrics post-skill-sync per LD-0089 AC1 A.4-EXT); CL fabric most cycles will emit `[ALLOCATION-NO-DELTA]` due to structural thinness (Tier-1-primary fabric per LD-0042); /allocation still fires for defensive coverage + cross-fabric MSTR aggregation symmetry.
+
+---
+
 ## Coexistence with /loop and /stimulus-scan
 
 - **`/loop` continues as COO's general supervisory wrapper** — pulls inbox, fires heartbeat, runs `/watcher` health check, monitors in-flight SSM. `/drive` is invoked **inside** `/loop` body on the 20m cadence (sooner-of: cron fire OR loop tick where 20m elapsed since last /drive).

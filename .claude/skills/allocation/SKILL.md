@@ -137,7 +137,31 @@ MSTR executes per `org/tier0/CONSTITUTION.md` spawn/kill authority + `feedback_c
 
 ## Cross-fabric
 
-ws COO emits ws-fabric allocation deliverable; CL COO emits CL-fabric. MSTR aggregates both for unified cap-aware allocation across the live cap (LD-0042 fabric-scope; LD-0049 cap=16).
+ws COO emits ws-fabric allocation deliverable; CL COO emits CL-fabric. MSTR aggregates both for unified cap-aware allocation across the live cap (LD-0042 fabric-scope; LD-0049 cap=16). /allocation never cross-fabric-kills or cross-fabric-spawns directly.
+
+---
+
+## CL-fabric adaptation
+
+When invoked by CL COO (`2.1.0_SA_COO`), the same skill body applies with the following CL-specific deviations. ws COO can skip this section.
+
+**Required-set source (Step 2 deviation):**
+- For CL fabric the canonical hot project is **COMP_LEARNS**. Its JSON `pods` field is **stale / ws-flavored** (lists `0.4`, `0.7` — ws-fabric pod IDs); treat those as **out-of-scope cross-fabric dependencies** per LD-0042. Cross-fabric worker demand routes via MSTR or joint Tier-1 consult, NOT via CL /allocation.
+- The CL required-set is dominated by the **CL Tier-1 canonical set itself** + any spawned CL-side `~lane` (rare). LD-0097 §B/§C in-flight items implicate Tier-1 owners (CL CTO + CL CVO + CL COO + MSTR) — all canonical, all always-required.
+
+**Tier-1 canonical set (Step 3 deviation):**
+- CL fabric /allocation NEVER signals KILL on: `0.0.0_AB_MSTR`, `1.1.0_SA_CTO`, `2.1.0_SA_COO`, `3.1.0_SA_CVO`.
+- ws-fabric Tier-1 (`1.0.0_SA_CTO` / `2.0.0_SA_COO` / `3.0.0_SA_CVO`) are out-of-scope for CL /allocation per LD-0042; ws COO's /allocation handles them.
+
+**Broker dual-state caveat (LD-0099 transitional, Step 3 deviation):**
+- Until LD-0099 session-restart cohort closes, `get_live_agents()` from CL-side broker may NOT see ws-side agents (different `liveness.json` file). If a required-set has a ws-fabric serial (rare; should route cross-fabric not here), use `ajb_workspace/org/mcp/liveness.json` filesystem read as supplementary check. Post-restart-cohort, this caveat retires.
+- Inverse pattern (ws-side broker doesn't see CL): MCP outbound from CL agents to MSTR may need filesystem-direct fallback to `ajb_workspace/org/mcp/inbox/0.0.0_AB_MSTR/{ts}_2.1.0_SA_COO__ALLOCATION-{REQUEST|NO-DELTA}__...md` per LD-0034 unified-path doctrine.
+
+**Expected verdict shape:**
+- Most CL fabric cycles will emit `[ALLOCATION-NO-DELTA]` (4/4 Tier-1 LIVE + no Tier-2/3 demand). The skill retains defensive value (catch dropped Tier-1, surface rare CL-side `~lane` spawn) + audit-trail symmetry with ws fabric for MSTR cross-fabric aggregation.
+
+**Deliverable path:**
+- CL writes to `org/tier1_exec/2.1.0_SA_COO/briefs/allocation_{YYYYMMDDTHHMMZ}.md` (CL fabric tier1_exec lives in feature_clb worktree).
 
 ---
 
