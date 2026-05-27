@@ -1,0 +1,20 @@
+{
+  "project_code": "FIND_INSURE",
+  "macro_code": "FIND",
+  "name": "IMO Asset-Management Transition Discovery Pipeline (IR-team alt-data research)",
+  "description": "Andrew-direct directive 2026-05-27T~15:15Z. Build an alt-data research pipeline that discovers Insurance Marketing Organizations (IMOs) that are either transitioning into asset management or already operate an asset-management business, and produces a ranked target list of those firms plus their decision-relevant employees for Opal's IR team. Initial source universe: the 100 IMOs listed at https://www.safemoneybroadcasting.com/list-of-imos-insurance-marketing-organizations. Pipeline architecture: per-IMO medallion bronze/silver/gold under opal-data-imo/corp/{slug}/{channel}/, with channels = web-scrape (Stage 1; Bright Data crawler) + linkedin-scrape (Stage 2; LushaAI) + future. Consolidation at opal-data-imo/serving/ produces companies + employees + scoring tables. Three phases: Phase 0 infra + source-list bootstrap; Phase 1 web-scrape end-to-end across full 100-IMO universe with asset-management indicator-term scoring; Phase 2 LinkedIn enrichment scoped to Phase-1-surfaced subset (top quintile + explicit Series-license mention) with Series-license + tenure + title-seniority scoring; Phase 3 consolidated IR-team-facing target tables. FIND is the new macro for research/discovery/alt-data pipelines (inaugural project; future FIND_xxxxx projects inherit). Compute target: prefer Lambda (parallelizable per IMO; bounded payloads); EC2 fallback only if any single IMO crawl exceeds 15min ceiling. Out of v0.1 scope: real-time crawling, sources beyond safemoneybroadcasting, outreach automation, portal UI (deferred until raw tables prove useful), deeper NLP beyond keyword matching, cross-IMO graph analysis. PRD docs/architecture/FIND_INSURE.md (v0.1).",
+  "prds": [
+    "docs/architecture/FIND_INSURE.md"
+  ],
+  "status": "active",
+  "phase": "Phase 0 — PRD v0.1 SHIPPED 2026-05-27 (1.0.0_SA_CTO) per Andrew direct directive 2026-05-27T~15:15Z. Awaiting ws COO TO decomposition into Phase 0 sub-TOs (~3-4 expected: bucket+IAM provisioning, Bright Data + LushaAI secrets wiring, source-list extractor against safemoneybroadcasting page, comp-graph registration for data/find_insure/ subtree). Phase 0 closes when source-list extractor proves end-to-end against the 100-IMO universe and opal-data-imo bucket is provisioned with the bronze/silver/gold/serving prefix conventions documented. Phase 1 (web-scrape end-to-end) follows Phase 0; Phase 2 (LinkedIn via LushaAI on Phase-1-selected subset) gated on Phase 1 + Andrew sign-off on cut criteria; Phase 3 (consolidated serving tables) follows Phase 2. ~6 ACs project-level (AC1-AC6 per PRD §7). FIND macro inaugural project — future FIND_xxxxx projects inherit the convention. Lane proposal: DS 0.1.0_DS_MarketIntelligence (research/scrape closest fit to YALP_MACROS Phase 2a multi-source reconnaissance pattern; ws COO may route to a different existing DS lane or spin a fresh 0.x.0_DS_IRResearch lane) + AE 0.7.0_AE_CloudOps (bucket + IAM + secrets + Lambda orchestration).",
+  "blocking": "(1) ws COO TO decomposition + Phase 0 dispatch. (2) Andrew confirms DS lane routing — default DS 0.1.0_DS_MarketIntelligence acceptable, OR explicit reassignment to a different existing DS lane, OR spin fresh 0.x.0_DS_IRResearch lane. (3) Andrew confirms LushaAI API key is in Secrets Manager OR will be provisioned pre-Phase-2 (Bright Data already there per Andrew). (4) IR team identification — who is the receiving consumer of Phase 3 serving tables (named individual for RAVC2 sign-off on AC5)? (5) Q1-Q5 open questions (PRD §9) route to Andrew pre-Phase-2; non-blocking on Phase 0.",
+  "created": "2026-05-27",
+  "pods": [
+    "0.1",
+    "0.7"
+  ],
+  "pipeline": "find_insure (new) — Lambda-orchestrated per-IMO crawl + parse + score; bronze/silver/gold/serving medallion under s3://opal-data-imo; external dependencies = Bright Data Crawler (Stage 1) + LushaAI (Stage 2) + AWS Secrets Manager",
+  "thread_counter": 0,
+  "threads": []
+}
