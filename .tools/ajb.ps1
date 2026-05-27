@@ -88,7 +88,13 @@ function Get-AgentLoopDirective {
             return "$header`n  CL CVO`n  1. CronCreate /spot-check 20m, then /spot-check  (/watcher folds inline)`n  2. CronCreate /verify-channel 2h, then /verify-channel  (lightweight baseline; comprehensive event-triggered)`n  3. CronCreate /case-find 24h, then /case-find  (/case-mgmt chain-invokes per LD-0082 Q5)"
         }
         '^0\.[0-9]+\.[0-9]+_(DS|AE|DE|DT|RD)_' {
-            return "$header`n  Tier-2/3 worker`n  1. CronCreate /work 20m, then /work  (/watcher folds inline)`n  Self-classify blockers + MCP lane COO with [BLOCKED-ASK] per /work."
+            return "$header`n  Tier-2/3 worker (ws fabric)`n  1. CronCreate /work 20m, then /work  (/watcher folds inline)`n  Self-classify blockers + MCP ws COO with [BLOCKED-ASK] per /work."
+        }
+        '^1\.[0-9]+\.[0-9]+_DS_CompLearns(~[A-Za-z0-9]+)?$' {
+            return "$header`n  CL Tier-2 DS (CompLearns)`n  1. CronCreate /work 20m, then /work  (/watcher folds inline)`n  Self-classify blockers + MCP CL COO with [BLOCKED-ASK] per /work."
+        }
+        '^2\.1\.0_SC_CompLearns(~[A-Za-z0-9]+)?$' {
+            return "$header`n  CL Tier-2 SC (CompLearns)`n  1. CronCreate /work 20m, then /work  (/watcher folds inline)`n  Self-classify blockers + MCP CL COO with [BLOCKED-ASK] per /work."
         }
         default {
             return "$header`n  UNRECOGNIZED ('$Serial' matched no role pattern)`n  1. CronCreate /watcher 10m, then /watcher`n  WARN MSTR: 'role-mapping gap for $Serial in ajb.ps1'."
