@@ -1,0 +1,31 @@
+{
+  "verdict": "CLEAN",
+  "project": "FIND_INSURE",
+  "artifacts_verified": [
+    "s3://opal-data-imo/corp/avantax-wealth-management/bronze+silver+gold/web-scrape/2026-05-27/",
+    "s3://opal-data-imo/corp/1st-atlantic-insurance-group/bronze+silver+gold/web-scrape/2026-05-27/",
+    "s3://opal-data-imo/corp/carl-ostenson/bronze/web-scrape/2026-05-27/",
+    "data/find/imo/scripts/_meta/phase1_ravc2_evidence_aggregator.py runtime output"
+  ],
+  "tools_gating_artifacts": ["aws s3 cp + python json + grep + curl direct-probe"],
+  "axis_mechanical": "GREEN",
+  "axis_intent_coverage": "GREEN",
+  "axis_decision_useful": "GREEN",
+  "axis_constitution_coherence": null,
+  "constitution_drift_articles": [],
+  "timestamp_utc": "2026-05-27T19:18:00Z",
+  "mode": "comprehensive",
+  "source": "verify-channel-ws",
+  "trigger": "Andrew sovereign 18:55Z META-VERIFY-REQUEST via ws COO 18:58Z",
+  "items_verified": [
+    {"id": 1, "name": "Avantax score=100 noise-vs-signal", "verdict": "GREEN-CONFIRMED"},
+    {"id": 2, "name": "AE crawl content quality + coverage", "verdict": "YELLOW-coverage-bias-watch"},
+    {"id": 3, "name": "Empty-body classification Carl Ostenson", "verdict": "YELLOW-phase1-conditional-watch"},
+    {"id": 4, "name": "1st-Atlantic 0-score true-negative discrimination", "verdict": "GREEN-CONFIRMED"},
+    {"id": 5, "name": "AC2a 25KB empirical threshold", "verdict": "YELLOW-N=2-statistical-limit"},
+    {"id": 6, "name": "DS~B LOCK v0.2.1 schema cleanup", "verdict": "GREEN-CONFIRMED"},
+    {"id": 7, "name": "DS~A silver universe-completeness", "verdict": "GREEN-CONFIRMED"}
+  ],
+  "aggregate": "4 GREEN + 3 YELLOW + 0 RED",
+  "phase_1_ravc2_accept_disposition": "GREEN-LIGHT from CVO spirit axis; 2 telemetry-AC adds recommended pre-RAVC2 (AC-T1 crawl-coverage + AC-T2 empty-body-escape-valve-trigger); NO RED blocking"
+}
