@@ -90,6 +90,9 @@ function Get-AgentLoopDirective {
         '^0\.[0-9]+\.[0-9]+_AE_CloudOps(~[A-Za-z0-9]+)?$' {
             return "$header`n  AE_CloudOps lane (ws fabric)`n  0. FIRST after /watcher startup-fold: invoke /cloud-ops once to load operational reference + permissions profile + current CLAUDE.md Rules 1-19 cross-reference + LD-cycle pointers + pipeline/bucket/secrets/KMS inventory (skill at .claude/skills/cloud-ops/SKILL.md). Not a cron loop -- session-orient one-shot.`n  1. CronCreate /work 20m, then /work  (/watcher folds inline)`n  Self-classify blockers + MCP ws COO with [BLOCKED-ASK] per /work."
         }
+        '^0\.8\.0_AE_CloudComp(~[A-Za-z0-9]+)?$' {
+            return "$header`n  AE_CloudComp lane (ws fabric tester for CL compiler tools)`n  0. FIRST after /watcher startup-fold: invoke /cloud-ops once to load operational reference (you do cloud-ops-class work testing compilers on real ws workload)`n  1. CronCreate /work 20m, then /work  (/watcher folds inline)`n  Self-classify blockers + MCP ws COO with [BLOCKED-ASK] per /work. Read MSTR queue at org/mcp/comp_ferry_queue.json for ferry test scheduling context."
+        }
         '^0\.[0-9]+\.[0-9]+_(DS|AE|DE|DT|RD)_' {
             return "$header`n  Tier-2/3 worker (ws fabric)`n  1. CronCreate /work 20m, then /work  (/watcher folds inline)`n  Self-classify blockers + MCP ws COO with [BLOCKED-ASK] per /work."
         }

@@ -4163,3 +4163,37 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-05-26 | 0.6.1_AE_PartnerETL | YALP_MKTOVR.001.ds-market-overview-endpoint-and-field-mapping | comp-platinum | comp-platinum reverse json/portfolios/aum-timeseries.json | PASS |
 | 2026-05-26 | 0.6.1_AE_PartnerETL | YALP_MKTOVR.001.ds-market-overview-endpoint-and-field-mapping | comp-platinum | comp-platinum reverse json/portfolios/non_model_assets.json | PASS |
 | 2026-05-26 | 0.6.1_AE_PartnerETL | YALP_MKTOVR.001.ds-market-overview-endpoint-and-field-mapping | comp-platinum | comp-platinum reverse platinum/mdpf/aggregate_aua | PASS |
+| 2026-05-27 | 0.4.0_DS_ClientPlatform~D | (no-TO) | comp-pipescript | comp-pipescript deployed data/demo/scripts/transform/demo_transform.py | PASS |
+| 2026-05-27 | 0.7.0_AE_CloudOps | (no-TO) | comp-iam | comp-iam gaps | PASS |
+| 2026-05-27 | 0.7.0_AE_CloudOps | (no-TO) | comp-pipescript | comp-pipescript --help | PASS |
+| 2026-05-27 | 0.7.0_AE_CloudOps | (no-TO) | comp-pipescript | comp-pipescript stats | PASS |
+| 2026-05-27 | 0.7.0_AE_CloudOps | (no-TO) | comp-pipescript | comp-pipescript io data/find/imo/scripts/_meta/extract_source_list.py | FAIL |
+| 2026-05-27 | 0.7.0_AE_CloudOps | (no-TO) | comp-iam | comp-iam service find-insure-lambda-role | PASS |
+| 2026-05-27 | 0.7.0_AE_CloudOps | (no-TO) | comp-iam | comp-iam --help | PASS |
+| 2026-05-27 | 0.1.0_DS_MarketIntelligence~A | (no-TO) | comp-pipescript | comp-pipescript io data/find/imo/scripts/silver/parse_web_silver.py | FAIL |
+| 2026-05-27 | 0.1.0_DS_MarketIntelligence~B | (no-TO) | comp-pipescript | comp-pipescript io data/find/imo/scripts/gold/score_web_gold.py | FAIL |
+| 2026-05-27 | 0.1.0_DS_MarketIntelligence~A | (no-TO) | comp-pipescript | comp-pipescript io data/find/imo/scripts/silver/parse_web_silver.py | FAIL |
+| 2026-05-27 | 0.1.0_DS_MarketIntelligence~A | (no-TO) | comp-iam | comp-iam service find-insure-parse-web | PASS |
+| 2026-05-27 | 0.7.0_AE_CloudOps~B | (no-TO) | comp-pipescript | comp-pipescript io gold/score_web_gold | FAIL |
+| 2026-05-27 | 0.7.0_AE_CloudOps~B | (no-TO) | comp-pipescript | comp-pipescript io score_web_gold | FAIL |
+| 2026-05-27 | 0.1.0_DS_MarketIntelligence~A | (no-TO) | comp-pipescript | comp-pipescript io data/find/imo/scripts/silver/parse_web_silver.py | FAIL |
+| 2026-05-27 | 0.1.0_DS_MarketIntelligence~A | (no-TO) | comp-pipescript | comp-pipescript io data/find/imo/scripts/silver/parse_web_silver.py | FAIL |
+| 2026-05-27 | 0.1.0_DS_MarketIntelligence~A | (no-TO) | comp-pipescript | comp-pipescript io find-insure-parse-web | FAIL |
+| 2026-05-27 | 0.1.0_DS_MarketIntelligence~A | (no-TO) | comp-pipescript | comp-pipescript io parse_web_silver | FAIL |
+| 2026-05-27 | 0.1.0_DS_MarketIntelligence~B | (no-TO) | comp-pipescript | comp-pipescript io data/find/imo/scripts/gold/score_web_gold.py | FAIL |
+| 2026-05-27 | 0.1.0_DS_MarketIntelligence~B | (no-TO) | comp-pipescript | comp-pipescript deployed score_web_gold | PASS |
+| 2026-05-27 | 3.0.0_SA_CVO | (no-TO) | comp-pipescript | comp-pipescript deployed data/find/imo/scripts/silver/parse_web_silver.py | PASS |
+| 2026-05-27 | 0.1.0_DS_MarketIntelligence~A | (no-TO) | comp-pipescript | comp-pipescript io data/find/imo/scripts/silver/parse_web_silver.py | FAIL |
+| 2026-05-27 | 0.1.0_DS_MarketIntelligence~A | (no-TO) | comp-iam | comp-iam service find-insure-parse-web | PASS |
+| 2026-05-27 | 0.1.0_DS_MarketIntelligence~A | (no-TO) | comp-iam | comp-iam roles | PASS |
+| 2026-05-27 | 0.1.0_DS_MarketIntelligence~A | (no-TO) | comp-iam | comp-iam role find-insure-lambda-role | PASS |
+| 2026-05-27 | 0.1.0_DS_MarketIntelligence~A | (no-TO) | comp-iam | comp-iam role find-insure-lambda-role | PASS |
+| 2026-05-27 | 0.1.0_DS_MarketIntelligence~A | (no-TO) | comp-pipescript | comp-pipescript deployed find-insure-parse-web | PASS |
+| 2026-05-27 | 0.1.0_DS_MarketIntelligence~A | (no-TO) | comp-pipescript | comp-pipescript deployed data/find/imo/scripts/silver/parse_web_silver.py | PASS |
+| 2026-05-27 | 0.1.0_DS_MarketIntelligence~B | (no-TO) | comp-pipescript | comp-pipescript io data/find/imo/scripts/gold/score_web_gold.py | FAIL |
+| 2026-05-27 | 0.7.0_AE_CloudOps~Z | (no-TO) | comp-iam | comp-iam --help | PASS |
+| 2026-05-27 | 0.7.0_AE_CloudOps~Z | (no-TO) | comp-iam | comp-iam roles | PASS |
+| 2026-05-27 | 0.7.0_AE_CloudOps~Z | (no-TO) | comp-iam | comp-iam services | PASS |
+| 2026-05-27 | 0.1.0_DS_MarketIntelligence~B | (no-TO) | comp-pipescript | comp-pipescript io data/find/imo/scripts/gold/score_web_gold.py | FAIL |
+| 2026-05-27 | 0.1.0_DS_MarketIntelligence~B | (no-TO) | comp-pipescript | comp-pipescript deployed score_web_gold | PASS |
+| 2026-05-27 | 3.0.0_SA_CVO | (no-TO) | comp-registry | comp-registry sync --project FIND_INSURE | PASS |
