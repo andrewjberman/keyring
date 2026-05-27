@@ -79,7 +79,7 @@ function Get-AgentLoopDirective {
             return "$header`n  CL CTO`n  1. CronCreate /cl-charter 30m, then /cl-charter  (/watcher folds inline)"
         }
         '^2\.[01]\.0_SA_COO$' {
-            return "$header`n  COO`n  1. CronCreate /drive 20m, then /drive  (/watcher folds inline)"
+            return "$header`n  COO`n  1. CronCreate /watcher 10m, then /watcher  (interrupt-recovery backstop for AUTO-RESPAWN-INTERRUPT-LOST on high-volume cycles; symmetric with MSTR pattern)`n  2. CronCreate /drive 20m, then /drive  (/watcher Steps 1-5 still fold inline at cycle start)"
         }
         '^3\.0\.0_SA_CVO$' {
             return "$header`n  ws CVO`n  1. CronCreate /spot-check 20m, then /spot-check  (/watcher folds inline)`n  2. CronCreate /verify-channel 2h, then /verify-channel  (lightweight baseline; comprehensive event-triggered)"
