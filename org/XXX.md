@@ -318,7 +318,7 @@ Per LD-0062 ratification 2026-05-25T~20:05Z (Andrew sovereign via "go with your 
 
 | Serial-class | Primary loop arming | Notes |
 |---|---|---|
-| `0.0.0_AB_MSTR` | `CronCreate /mstr-review 12h` (ONLY periodic loop) + `/watcher 10m` heartbeat; `/mstr-charter` + `/compiler-ferry` + 3 other MSTR skills event-triggered on inbox match | per LD-0069 ratification 2026-05-25 (`04f705733`) /govern periodic loop RETIRED; MSTR = 1 loop + 5 event-triggered skills; /mstr-review 12h is the sole MSTR cron |
+| `0.0.0_AB_MSTR` | `CronCreate /mstr-review 12h` + `CronCreate /govern 20m` + `/watcher 10m` heartbeat; `/mstr-charter` + `/compiler-ferry` + remaining MSTR skills event-triggered on inbox match | per LD-0124 ratification 2026-05-27 Andrew direct "govern should be in launch/startup for MSTR, yes...as a loop on 20m" + LD-0090 ALWAYS-PROCEED restoration (`7b613e2db`); supersedes LD-0069 /govern-retire on operational-scope grounds (LD-0090 /govern is ALWAYS-PROCEED discipline, not the supervision loop LD-0069 retired) |
 | `1.0.0_SA_CTO` (ws) | `CronCreate /ws-charter 30m` | LD-0062 30m symmetric cadence + LD-0066 3-way split; ws is direction-only + REPAIR-AMENDMENT (CVO-finding gate) per LD-0065 |
 | `1.x.0_SA_CTO` (CL) | `CronCreate /cl-charter 30m` | LD-0066 3-way split; CL is queue-pull + sequential PRD authoring; consumes Input 1/2/3 cascade |
 | `2.x.0_SA_COO` | `CronCreate /drive 20m` | already operational pattern per LD-0056 |
