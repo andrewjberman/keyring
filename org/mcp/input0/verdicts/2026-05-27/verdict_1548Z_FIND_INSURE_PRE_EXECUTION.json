@@ -1,0 +1,20 @@
+{
+  "verdict": "CLEAN",
+  "project": "FIND_INSURE",
+  "artifacts_verified": ["docs/architecture/FIND_INSURE.md", "org/projects/FIND_INSURE.json", "org/projects/REGISTRY.md"],
+  "tools_gating_artifacts": [],
+  "axis_mechanical": "GREEN",
+  "axis_intent_coverage": "GREEN",
+  "axis_decision_useful": "GREEN",
+  "axis_constitution_coherence": "GREEN",
+  "constitution_drift_articles": [
+    {"article": "Authority distribution", "verdict": "CORROBORATE", "finding": "CTO architectural / COO decomposition / DS+AE execution honored"},
+    {"article": "Non-overlap rules", "verdict": "CORROBORATE", "finding": "PRD §10 cross-domain block; new bucket + new secrets namespace + new comp-graph subtree; zero overlap"},
+    {"article": "NOVEL PRD authoring", "verdict": "CORROBORATE", "finding": "Andrew direct verbatim 14:15Z; /ws-charter HARD-BLOCK #7 override"},
+    {"article": "Compiler-tools mandate", "verdict": "CORROBORATE", "finding": "PRD §6 cites comp-pipescript io + comp-iam service + comp-validate + comp-blast per phase"},
+    {"article": "Macro doctrine", "verdict": "CORROBORATE", "finding": "FIND macro surface defined §1+§2; future FIND_xxxxx inheritance documented per REGISTRY.md doctrine"}
+  ],
+  "timestamp_utc": "2026-05-27T15:48:00Z",
+  "mode": "pre-execution",
+  "source": "verify-channel-ws"
+}
