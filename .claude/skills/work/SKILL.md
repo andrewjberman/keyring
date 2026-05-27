@@ -83,6 +83,32 @@ Pick the most specific class:
 | `sovereign` | Need Andrew direct decision; need S3/S4 procurement; need principal-strategy call | Andrew (via MSTR) |
 | `peer-resource` | Need another worker's artifact / commit / coordination | Named peer (specify in body) |
 
+### §4a.1 — MCP escalation ladder — chain-of-command binding (LD-0116 sovereign edict)
+
+**Tier-2/3 workers MUST NOT MCP MSTR directly.** Per LD-0116 (Andrew sovereign direct 2026-05-27T~17:18Z) + Constitution Art. VI:
+
+- Worker `[BLOCKED-ASK]` / `[CONSULT-REQUEST]` / `[SYNC-ASK]` / `[RAVC2-Request]` / `[SPAWN-ACK]` / status updates → **lane COO ONLY**
+- Worker architectural questions / CONSULT → **lane CTO** via direct or via lane COO routing
+- COO routes upward to CTO + MSTR per existing /drive cascade pattern
+- CTO routes upward to MSTR + Andrew per existing /ws-charter / /cl-charter cascade pattern
+
+**Direct worker → MSTR MCP is BANNED.** Going-forward dispatch pattern post-LD-0116:
+
+```
+COO ALLOCATION-REQUEST → MSTR
+MSTR spawn-agent.ps1 [unchanged]
+MSTR SPAWN-WITH-DIRECTION-SUBSTRATE → COO (single MCP)
+COO authors/forwards to Worker per their lane
+Worker → COO (ACKs, BLOCKED-ASK, etc.)
+COO summarizes upstream to MSTR via /drive cycle ground-truth
+```
+
+**MSTR will bounce any T2/3 MCP with redirect-to-COO/CTO + not act on substantive content; will CC the responsible T1.**
+
+Constitutional grounding: Art. VI ("govern through the org; do not bypass"). LD-0116 makes explicit that bypass includes any MCP routing direction, not just substantive task delegation. Chain-of-command is structural.
+
+Override: explicit per-instance Andrew instruction (realistically never per LD-0116 framing).
+
 ### §4b — MCP lane COO with `[BLOCKED-ASK]`
 
 ```
