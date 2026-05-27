@@ -430,6 +430,13 @@ lanes:
       - 2.1.0_SA_COO
     description: "CloudOps AE + any exec (task_orders/ authoring). 0.7.0_AE_CloudOps~A added 2026-05-27 by COO: AE~A spawned per /allocation #4 18:01Z; needs task_orders/ authoring scope for FIND_INSURE Phase 1+2A TO ratify-amend + RAVC2-cycle log writes."
 
+  CLOUD_COMP_TESTER:
+    permitted_agents:
+      - 0.8.0_AE_CloudComp
+      - 1.0.0_SA_CTO
+      - 2.0.0_SA_COO
+    description: "Cloud Compiler Tester (ws-fabric Tier-2 worker) home folder. Created 2026-05-27 by COO per LD-0119 — Andrew sovereign 2026-05-27T~19:25Z + CL CVO architectural ask 19:30Z + MSTR LD-0119 materialization + ws CTO [OWNED-PATHS AMEND ASK] 19:55Z. ws CTO authors initial substrate (prompt.md + README); ws COO routes ferry-test TOs (task_orders/**); 0.8.0_AE_CloudComp self-commits ferry results + session logs + deliverables. Tilde-lane variants deferred to future per-instance amend cycles."
+
   ANY_EXEC_OR_AE:
     permitted_agents:
       - 1.0.0_SA_CTO
@@ -585,6 +592,10 @@ paths:
   "org/tier2_senior/0.7.0_*/**":
     lane: SHARED_CLOUD_OPS
     note: "CloudOps AE agent folder"
+
+  "org/tier2_senior/0.8.0_AE_CloudComp/**":
+    lane: CLOUD_COMP_TESTER
+    note: "Cloud Compiler Tester (ws-fabric Tier-2 worker) home folder per LD-0119. ws CTO substrate authoring + 0.8.0_AE_CloudComp self-commits + ws COO TO authoring."
 
   "org/tier2_senior/1.1.0_DS_CompLearns/**":
     lane: COMP_LEARNS
