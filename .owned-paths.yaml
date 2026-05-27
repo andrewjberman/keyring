@@ -658,6 +658,11 @@ paths:
     lane: MSTR_ARTIFACT_PATHS
     note: "MSTR-maintained ground-truth artifact addressing broker-suffix-strip-gap visual-collision-class per LD-0105 Fix 2 + Andrew direct 2026-05-26T~22:00Z verbatim 'Lets do all three yes'. Fix 1 SHIPPED via MSTR scribe authority 5174e6b01; Fix 2 owned-paths lane grant SHIPPED via ws CTO this commit."
 
+  # MSTR-owned comp-ferry empirical-test queue per LD-0119 (Andrew sovereign 2026-05-27T~19:25Z + CL CVO routing 19:30Z + MSTR materialization):
+  "org/mcp/comp_ferry_queue.json":
+    lane: MSTR_ARTIFACT_PATHS
+    note: "MSTR-owned comp-ferry empirical-test queue. Per LD-0119 Andrew sovereign 2026-05-27T~19:25Z + CL CVO ARCHITECTURAL DESIGN ASK 19:30Z + MSTR LD-0119 materialization. Expansion-class precedent per MSTR_ARTIFACT_PATHS scope. ws COO YAML amend per MSTR [OWNED-PATHS AMEND ASK] 19:48Z per feedback_tilde_lane_owned_paths_gap_route_to_coo discipline."
+
   "org/mcp/**":
     lane: BASE_EXEC
     note: "MCP server source, inbox infrastructure, broker — base exec owns"
