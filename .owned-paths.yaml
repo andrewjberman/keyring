@@ -220,9 +220,10 @@ lanes:
   SHARED_CLOUD_OPS:
     permitted_agents:
       - 0.7.0_AE_CloudOps
+      - 0.7.0_AE_CloudOps~A
       - 0.7.0_AE_CloudOps~B
       - 0.7.0_AE_CloudOps~C
-    description: "CloudOps shared service (AE 0.7.0 + ~B + ~C sub-lanes) — infra, EC2_MANIFEST, Terraform. 0.7.0_AE_CloudOps~C added 2026-05-22 by COO~C: the ~C lane needs its 0.7.0_AE_CloudOps home folder (session logs) for ADVI_DEMOV1.001 — same tilde-lane gap as the CLOUD_OPS_OR_ETL ~C add."
+    description: "CloudOps shared service (AE 0.7.0 + ~A + ~B + ~C sub-lanes) — infra, EC2_MANIFEST, Terraform. 0.7.0_AE_CloudOps~C added 2026-05-22 by COO~C: the ~C lane needs its 0.7.0_AE_CloudOps home folder (session logs) for ADVI_DEMOV1.001 — same tilde-lane gap as the CLOUD_OPS_OR_ETL ~C add. 0.7.0_AE_CloudOps~A added 2026-05-27 by COO: AE~A spawned per /allocation #4 18:01Z for FIND_INSURE Phase 2A workload-balance; needs CloudOps home folder for per-tick work logs + lane-scoped session logs. Tilde-lane gap pattern."
 
   CLOUD_OPS_OR_ETL:
     permitted_agents:
@@ -421,12 +422,13 @@ lanes:
   SHARED_CLOUD_OPS_OR_EXEC:
     permitted_agents:
       - 0.7.0_AE_CloudOps
+      - 0.7.0_AE_CloudOps~A
       - 0.7.0_AE_CloudOps~B
       - 1.0.0_SA_CTO
       - 2.0.0_SA_COO
       - 1.1.0_SA_CTO
       - 2.1.0_SA_COO
-    description: "CloudOps AE + any exec (task_orders/ authoring)"
+    description: "CloudOps AE + any exec (task_orders/ authoring). 0.7.0_AE_CloudOps~A added 2026-05-27 by COO: AE~A spawned per /allocation #4 18:01Z; needs task_orders/ authoring scope for FIND_INSURE Phase 1+2A TO ratify-amend + RAVC2-cycle log writes."
 
   ANY_EXEC_OR_AE:
     permitted_agents:
