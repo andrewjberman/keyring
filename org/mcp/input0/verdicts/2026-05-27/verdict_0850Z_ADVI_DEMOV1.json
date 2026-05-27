@@ -1,0 +1,29 @@
+{
+  "verdict": "CLEAN",
+  "project": "ADVI_DEMOV1",
+  "artifacts_verified": [
+    "docs/architecture/ADVI_DEMOV1.md v0.1.4 §3.6 amendment",
+    "org/projects/ADVI_DEMOV1.json status field flip active->complete",
+    "Phase 6 + F2 addendum narrative",
+    "ws COO cycle 145 close-attest commit 0400a882f"
+  ],
+  "tools_gating_artifacts": [
+    "/verify-channel SKILL.md Step 6 REPAIR-AMENDMENT framework LD-0066",
+    "LD-0084 §2 4-shape verdict taxonomy",
+    "[[feedback-cvo-self-validation-mitigation-pattern]]"
+  ],
+  "axis_mechanical": "GREEN",
+  "axis_intent_coverage": "GREEN",
+  "axis_decision_useful": "GREEN",
+  "axis_constitution_coherence": "GREEN",
+  "constitution_drift_articles": [],
+  "timestamp_utc": "2026-05-27T08:50Z",
+  "mode": "comprehensive",
+  "source": "verify-channel-ws",
+  "self_validation_surface_flag": true,
+  "honest_limit_deferred": [
+    "Mode A 4-check independent re-read on Fire 7 output (self-validation surface)",
+    "Step 2.5 LastModified-partition Consumer-output-vs-bucket-write-state probe",
+    "Step 3.5 decision-useful meaning probe -- overlapping self-validation surface"
+  ]
+}
