@@ -157,6 +157,62 @@ def _schedule_cleanup():
 
 
 # ---------------------------------------------------------------------------
+# Parent-death watchdog (RV-0017 F-004)
+# ---------------------------------------------------------------------------
+# Captured at startup. If this PID disappears, the broker has been orphaned and
+# must exit gracefully so it cannot accumulate CPU/state from agents whose
+# sessions outlive its parent. Per RV-0017 incident 2026-05-27 PID 3812 orphan
+# (8158 CPU-sec / 6h45m vs dead parent PID 20276).
+_INITIAL_PARENT_PID = None
+_WATCHDOG_INTERVAL_S = 30.0
+
+
+def _parent_alive() -> bool:
+    """True if the broker's launching parent process is still alive.
+
+    Conservative: returns True on any uncertainty. The watchdog only fires
+    on a definitive 'parent gone' signal, never on a transient PID-check
+    failure.
+    """
+    if _INITIAL_PARENT_PID is None:
+        return True
+    return _pid_alive(_INITIAL_PARENT_PID)
+
+
+def _parent_watchdog():
+    """Re-arming watchdog: exit broker if launching parent process died."""
+    try:
+        if not _parent_alive():
+            _log_event(
+                "broker_orphan_exit",
+                "",
+                f"parent PID {_INITIAL_PARENT_PID} no longer alive -- exiting",
+            )
+            db.commit()
+            print(
+                f"[opal-broker] parent PID {_INITIAL_PARENT_PID} died -- exiting gracefully",
+                file=sys.stderr, flush=True,
+            )
+            # os._exit bypasses the HTTPServer's serve_forever() select-loop
+            # cleanly without requiring shutdown() coordination from another
+            # thread. The Timer thread cannot call server.shutdown() because
+            # serve_forever() must be running on a different thread, which is
+            # not the case in single-thread mode.
+            os._exit(0)
+    except Exception as exc:
+        # Watchdog failures must never crash the broker; log and re-arm.
+        try:
+            _log_event("watchdog_error", "", f"{type(exc).__name__}: {exc}")
+            db.commit()
+        except Exception:
+            pass
+
+    t = Timer(_WATCHDOG_INTERVAL_S, _parent_watchdog)
+    t.daemon = True
+    t.start()
+
+
+# ---------------------------------------------------------------------------
 # HTTP Request Handler
 # ---------------------------------------------------------------------------
 
@@ -408,15 +464,30 @@ _start_time = time.time()
 
 
 def main():
-    global db, _start_time
+    global db, _start_time, _INITIAL_PARENT_PID
     _start_time = time.time()
     db = _init_db()
 
-    _log_event("broker_start", "", f"port={PORT}")
+    # Capture launching parent PID for the watchdog. Allow override via env
+    # for testing (OPAL_BROKER_PARENT_PID); production captures os.getppid().
+    parent_env = os.environ.get("OPAL_BROKER_PARENT_PID")
+    if parent_env:
+        try:
+            _INITIAL_PARENT_PID = int(parent_env)
+        except ValueError:
+            _INITIAL_PARENT_PID = os.getppid()
+    else:
+        _INITIAL_PARENT_PID = os.getppid()
+
+    _log_event(
+        "broker_start", "",
+        f"port={PORT} parent_pid={_INITIAL_PARENT_PID} pid={os.getpid()}",
+    )
     db.commit()
 
     _clean_stale()
     _schedule_cleanup()
+    _parent_watchdog()
 
     server = HTTPServer(("127.0.0.1", PORT), BrokerHandler)
     print(
