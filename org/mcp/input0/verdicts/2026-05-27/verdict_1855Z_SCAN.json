@@ -1,0 +1,19 @@
+{
+  "verdict": "CLEAN",
+  "project": "FIND_INSURE",
+  "artifacts_verified": [],
+  "tools_gating_artifacts": [],
+  "axis_mechanical": "GREEN",
+  "axis_intent_coverage": "GREEN",
+  "axis_decision_useful": "GREEN",
+  "axis_constitution_coherence": null,
+  "constitution_drift_articles": [],
+  "timestamp_utc": "2026-05-27T18:55:00Z",
+  "mode": "scan",
+  "source": "verify-channel-ws",
+  "scan_class_2_hits": [
+    {"project": "FIND_INSURE", "signal": "PRD-ratification", "commit": "a9b72b942", "class": "REPAIR-AMENDMENT-class-CVO-content-absorption-by-CTO", "disposition": "DEFER-no-Mode-B-fire-self-validation-saturation-rule-1"},
+    {"project": "FIND_INSURE", "signal": "PRD-ratification", "commit": "45251aa6e", "class": "REPAIR-AMENDMENT-class-CVO-content-absorption-by-CTO", "disposition": "DEFER-no-Mode-B-fire-self-validation-saturation-rule-1"}
+  ],
+  "next_legit_class_1_fire": "Phase 1 RAVC2-Accept ETA ~19:30-20:00Z; comprehensive Mode B will fire on FIND_INSURE event-driven; Andrew #2 + #3 named moments candidate for Mode A sub-routine per Step 4(d)"
+}
