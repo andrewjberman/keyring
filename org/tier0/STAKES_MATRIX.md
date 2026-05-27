@@ -1,6 +1,6 @@
 # STAKES_MATRIX — Autonomy Thresholds for `0.0.0_AB_MSTR`
 
-**Status:** v1.4 — 2026-05-24 (Andrew sovereign instruction 2026-05-24T~2058Z; LD-0049 / CY-0087; concurrency cap raised 8 → 16)
+**Status:** v1.5 — 2026-05-27 (Andrew sovereign instruction 2026-05-27T~17:18Z; LD-0115 / CY-0158; concurrency cap raised 16 → 20)
 **Authority:** Andrew, and Andrew alone. This document is **constitutional-tier** —
 it carries the same lock as `CONSTITUTION.md` (owned-paths: `0.0.0_AB_MSTR` is
 **not** in `permitted_agents`). MSTR may propose changes; it may never edit this file.
@@ -36,6 +36,19 @@ Article XIV defines the CVO ratification authority; Article XV defines fabric sc
   preserved on structure, value amended). MSTR LD-0049 charter + CY-0087
   cycle record; paired with CONSTITUTION Art. XV body amendment in single
   TIER0_LAW commit (CONSTITUTION v1.2 entry).
+- v1.5 (2026-05-27): Concurrency cap raised from 16 → 20 spawned windows per
+  Andrew sovereign instruction 2026-05-27T~17:18Z verbatim: *"Let's push cap to 20"*.
+  Context: MSTR surfaced 14/16 effective cap-use during FIND_INSURE peak-priority
+  Fix-3 fire #7 5-spawn batch (~16:46-49Z Andrew-direct); 2 slots headroom tight
+  against possible Phase 3 DE/DT/RD addition needs as FIND_INSURE matures +
+  case-queue PRD flow ramping. No change to the S0–S4 classes, classification
+  rules, fabric scope, gate behavior, or cycle execution bounds —
+  operational-parameter amendment only. Cap remains a ceiling not a target;
+  reallocation-before-spawn discipline preserved per LD-0049 + Andrew
+  clarification invariants. Cap continues to count across both fabrics combined
+  (LD-0028 + LD-0049 invariants preserved on structure, value amended). MSTR
+  LD-0115 charter + CY-0158 cycle record; paired with CONSTITUTION Art. XV body
+  amendment in single TIER0_LAW commit (CONSTITUTION v1.5 entry).
 
 ---
 

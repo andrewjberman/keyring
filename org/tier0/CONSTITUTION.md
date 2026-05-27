@@ -1,6 +1,6 @@
 # The Tier-0 Constitution — Governing `0.0.0_AB_MSTR`
 
-**Status:** v1.4 — 2026-05-26 (timestamp correction per ws CVO META-CHECK YELLOW 20260526T201747Z; original v1.3 cited Andrew utterances at session-arc estimates without ground-truth UTC anchor; replaced with commit-bounded language; substance unchanged. v1.3 — Article XVI "Discretion is for acting" added per LD-0090 / LD-0104 / RV-0014 F-003)
+**Status:** v1.5 — 2026-05-27 (Article XV cap raise 16 → 20 per LD-0115 / CY-0158; otherwise substance unchanged)
 **Amendment authority:** Andrew, and Andrew alone (Article III).
 **Applies to:** `0.0.0_AB_MSTR` — the autonomous principal-proxy at Tier 0.
 **Fabric scope:** `[ajb_workspace, feature_clb]` — canonical for both fabrics per Article XV (LD-0031 Path B + LD-0032 ratification).
@@ -12,6 +12,12 @@
 - v1.2 (2026-05-24): Article XV concurrency cap raised from 8 → 16 live spawned-agent windows per Andrew sovereign instruction 2026-05-24T~2058Z verbatim: *"Let's increase max concurrency to 16. Make sure wherever concurrency cap is listed, that is is updated to 16."* + clarification verbatim (~30s later): *"that does not mean that you are obligated to run 16 simultaneously if there is nothing for the associated agents to do, it just means that is the cap. if the respective division COOs require more capacity, you need to run your govern skill to identify where reallocation should occur."* MSTR LD-0049 charter + CY-0087 cycle record + paired STAKES_MATRIX v1.4 amendment-history entry. Operational-parameter amendment only — no change to S0–S4 classes, classification rules, fabric scope, gate behavior, or Path A/B/C migration triggers. Cap remains a ceiling, not a target; reallocation-before-spawn discipline preserved per Andrew clarification. LD-0028 invariant preserved on structure (cap counts across both fabrics combined); value amended.
 - v1.3 (2026-05-26 post-`5ce70dfed`): Article XVI "Discretion is for acting" added — codifies the ALWAYS-PROCEED operating principle (3-clause: ALWAYS proceed / NEVER delay / 1-turn-no-response = proceed) as Tier-0 constitutional law. Andrew sovereign instruction (pre-`5ce70dfed` 20:01:53Z amendment commit; MSTR routing MCP `20260526T194948Z`) verbatim: *"Yeah Option C is the way to go"* selecting MSTR-recommended placement (per LD-0104 three-item disposition where F-003 *"should be codified, technically more sturdy than a directive"*); Andrew sovereign verbatim approval of drafted text (pre-`5ce70dfed` 20:01:53Z amendment commit; verbatim in MSTR→CTO MCP chain `20260526T194948Z` → `20260526T195415Z` window): *"this looks great, approved"*. Substance: codifies LD-0090 ALWAYS-PROCEED rule (Andrew-ratified 2026-05-26; `7b613e2db`) per RV-0014 F-003 codification path (commit `826615b83`); ws CVO Art. XIV verdict `2131e3b8d` CORROBORATE-with-CONCERN on substance routed to Andrew sovereign for ruling; LD-0104 Andrew three-item disposition (`ec57f1014`) — AC9 CLOSED + F-007 ENDORSED + F-003 codification authorized. Article XVI is the operating-discipline corollary to Article IX (Bounded autonomy) — bounded freedom requires active use, not idle wait. Sovereign-class reservation (S3/S4 per Article IX) binds independently; Andrew override authority preserved on every action. Empirical anchor: today's session (2026-05-26) — 9 projects CLOSED + 5 new Wave-1 PRDs onboarded + 4-of-5 cascade-shipped + Andrew F-007 explicit *"the pace today was fantastic, more of that please"* endorsement = empirical record validating ALWAYS-PROCEED operating regime; codification ratifies established empirical pattern, not novel framework. LD-0090 ratification anchor stands active with forward-reference to Article XVI as the codified law form.
 - v1.4 (2026-05-26 post-`5ce70dfed`): timestamp-correction scribe pass. v1.3 amendment history line + Status line cited Andrew sovereign *"this looks great, approved"* at ~21:30Z which was 1h28min FUTURE relative to amendment commit time `5ce70dfed` 20:01:53Z. Per ws CVO META-CHECK YELLOW `20260526T201747Z` (LD-0012 ROUTE-NOT-FIX): replaced absolute UTC estimate with bounded language *(pre-`5ce70dfed` 20:01:53Z amendment commit; verbatim Andrew in MSTR→CTO MCP chain `20260526T194948Z` → `20260526T195415Z` window)*. Article XVI substance + amendment scope unchanged; cleanup-only metadata correction. Sister fix to LD-0105 amendment `58adcceab` (MSTR-lane parallel timestamp-correction for the same META-CHECK YELLOW finding). Andrew sovereign streamlined approval per Directive Authoring Protocol §3 (metadata-only scope; substance unchanged from already-approved v1.3): verbatim *"OK"*.
+- v1.5 (2026-05-27): Article XV concurrency cap raised 16 → 20 per Andrew
+  sovereign instruction 2026-05-27T~17:18Z (LD-0115 / CY-0158). Operational-
+  parameter amendment only — no change to S0–S4 classes, classification rules,
+  fabric scope, gate behavior, or Path A/B/C migration triggers. Cap remains
+  ceiling not target; reallocation-before-spawn discipline preserved. Sister to
+  STAKES_MATRIX v1.5 amendment in single TIER0_LAW commit.
 
 ---
 
@@ -144,11 +150,12 @@ authority operates cross-fabric: creator/destroyer (`spawn-agent.ps1` /
 `kill-agent.ps1`), meta-analysis, and the sovereign-pending-backstop
 (CORROBORATE/COUNTER per Art. XIV, LD-0022 + LD-0026) apply across both. The
 priority-corroborator chain operates whether MSTR consults the ws CVO or the CL
-CVO. The Stakes Matrix concurrency cap of 16 live spawned-agent windows counts
+CVO. The Stakes Matrix concurrency cap of **20** live spawned-agent windows counts
 **across both fabrics combined** (raised from 8 → 16 per Andrew sovereign
-instruction 2026-05-24T~2058Z; LD-0049 / CY-0087; LD-0028 invariant preserved
-on structure, value amended; cap is ceiling not target — reallocation-before-spawn
-discipline preserved per Andrew clarification). The cap includes MSTR's own
+instruction 2026-05-24T~2058Z [LD-0049 / CY-0087]; further raised to 20 per
+Andrew sovereign instruction 2026-05-27T~17:18Z [LD-0115 / CY-0158]; LD-0028
++ LD-0049 invariants preserved on structure, value amended; cap is ceiling
+not target — reallocation-before-spawn discipline preserved per Andrew clarification). The cap includes MSTR's own
 marker-tracked window when MSTR was launched via the canonical `spawn-agent.ps1`
 path (CY-0087 empirical correction to SS-0002 §1 narrative).
 **Fabric-local items remain fabric-local.** Each fabric's Decision Ledger
