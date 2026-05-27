@@ -1,0 +1,42 @@
+{
+  "verdict": "CLEAN",
+  "project": "ADVI_DEMOV1.011",
+  "artifacts_verified": [
+    "data/demo/scripts/transform/demo_transform.py:_snapshot_clean_pass2_subpaths",
+    "Fire 7 SSM 8498fae7 R5 PASS result",
+    "PRD v0.1.4 §3.6"
+  ],
+  "tools_gating_artifacts": [
+    "comp-validate (R5 PII leak scan)",
+    "ws CTO PRD ratify chain",
+    "ws COO RAVC2-ACCEPT-CLOSE"
+  ],
+  "axis_mechanical": "GREEN",
+  "axis_intent_coverage": "GREEN",
+  "axis_decision_useful": "GREEN-deferred-to-independent-chain",
+  "axis_constitution_coherence": "GREEN",
+  "constitution_drift_articles": [
+    {
+      "article": "VIII",
+      "verdict": "CORROBORATE-with-additives",
+      "finding": "new pattern banking candidate: repair-amendment authority discharged by independent chain restores verifier purity at acceptance moment; 2nd empirical fire (1st=0850Z LANDMARK CLOSE)"
+    }
+  ],
+  "timestamp_utc": "2026-05-27T14:45:00Z",
+  "mode": "comprehensive",
+  "source": "verify-channel-ws",
+  "trigger_class": "Class 1 #2 immediate-fire (RAVC2-ACCEPT-CLOSE landed per PRD-phase state)",
+  "trigger_commit": "d85290ee4",
+  "self_validation_surface_flag": true,
+  "honest_limit_deferred": [
+    "Mode A independent re-read of Fire 7 R5 PASS — would re-grade own gate-criterion authorization (PRD v0.1.4 §3.6 scribed under CVO (b)-class CORROBORATE-clean authority 42333ed49); deferred to chartered independent-agent chain (AE 0.7 + ws COO + DS~D + ws CTO; 4 independent authors absorbed CVO's authority cleanly)"
+  ],
+  "ac_verdicts": {
+    "AC1": "PASS",
+    "AC2": "PASS",
+    "AC3": "PASS",
+    "AC4": "PASS-folded-to-.012"
+  },
+  "mandate_distance": 0,
+  "prior_comprehensive": "2026-05-27T0850Z (ADVI_DEMOV1 LANDMARK CLOSE aa33ebeb6)"
+}
