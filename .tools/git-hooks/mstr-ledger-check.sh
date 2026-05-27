@@ -22,7 +22,9 @@
 
 set -uo pipefail
 
-REPO_ROOT="$(git rev-parse --show-toplevel 2>/dev/null || pwd)"
+# precomp_v1 (RV0017-F002): orchestrator may pre-resolve REPO_ROOT via
+# PRECOMP_REPO_ROOT to skip the redundant git rev-parse subprocess.
+REPO_ROOT="${PRECOMP_REPO_ROOT:-$(git rev-parse --show-toplevel 2>/dev/null || pwd)}"
 AUDIT_LOG="$REPO_ROOT/org/tier0/audit/ledger-hook-audit.log"
 TS="$(date -u +%Y-%m-%dT%H:%M:%SZ)"
 MSTR="0.0.0_AB_MSTR"
@@ -136,9 +138,17 @@ fi
 
 # ===== CHECK 1 -- record integrity (universal) =====
 PROBLEMS=""
+# precomp_v1: bash parameter expansion `${path##*/}` replaces `basename` subprocess
+# spawn (was ~200-300ms x N_files on Windows). Loop short-circuits paths outside
+# org/tier0/{ledger,ratifications,cycles}/ entirely before any per-file work.
 while IFS= read -r path; do
   [ -z "$path" ] && continue
-  case "$(basename "$path")" in _TEMPLATE.md|README.md) continue ;; esac
+  case "$path" in
+    org/tier0/ledger/LD-*.md|org/tier0/ratifications/RT-*.md|org/tier0/cycles/CY-*.md) : ;;
+    *) continue ;;
+  esac
+  bn="${path##*/}"
+  case "$bn" in _TEMPLATE.md|README.md) continue ;; esac
   case "$path" in
     org/tier0/ledger/LD-*.md)        p="$(validate_ld "$REPO_ROOT/$path")" || PROBLEMS="$PROBLEMS
   $p" ;;

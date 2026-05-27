@@ -19,7 +19,9 @@
 
 set -euo pipefail
 
-REPO_ROOT="$(git rev-parse --show-toplevel 2>/dev/null || pwd)"
+# precomp_v1 (RV0017-F002): orchestrator may pre-resolve REPO_ROOT via
+# PRECOMP_REPO_ROOT to skip the redundant git rev-parse subprocess.
+REPO_ROOT="${PRECOMP_REPO_ROOT:-$(git rev-parse --show-toplevel 2>/dev/null || pwd)}"
 YAML="$REPO_ROOT/.owned-paths.yaml"
 VALIDATE="$REPO_ROOT/.tools/owned-paths-validate.py"
 # Test seam: OWNED_PATHS_AUDIT_LOG lets unit tests redirect the audit log.
@@ -50,7 +52,15 @@ if [ -z "$STAGED" ]; then
     exit 0
 fi
 
-N_FILES="$(printf '%s\n' "$STAGED" | grep -c . || true)"
+# Bash-builtin file count (avoids printf | grep -c subprocess fan-out).
+# Counts non-empty lines via positional-parameter expansion.
+_OLDIFS="$IFS"
+IFS=$'\n'
+# shellcheck disable=SC2086
+set -- $STAGED
+N_FILES=$#
+IFS="$_OLDIFS"
+unset _OLDIFS
 
 # ---------------------------------------------------------------------------
 # Override escape hatch
