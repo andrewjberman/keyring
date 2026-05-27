@@ -1,0 +1,30 @@
+{
+  "verdict": "CLEAN",
+  "project": "ALL_ACTIVE",
+  "artifacts_verified": [],
+  "tools_gating_artifacts": [],
+  "axis_mechanical": "GREEN",
+  "axis_intent_coverage": "GREEN",
+  "axis_decision_useful": "GREEN",
+  "axis_constitution_coherence": null,
+  "constitution_drift_articles": [],
+  "timestamp_utc": "2026-05-27T16:50:00Z",
+  "mode": "scan",
+  "source": "verify-channel-ws",
+  "scan_class_2_hits": [
+    {
+      "project": "FIND_INSURE",
+      "signal": "PRD-ratification",
+      "commit": "bacf90484",
+      "class": "REPAIR-AMENDMENT-class",
+      "disposition": "DEFER-no-Mode-B-fire-per-self-correction-upstream-doctrine"
+    },
+    {
+      "project": "FIND_INSURE",
+      "signal": "PRD-ratification",
+      "commit": "0719c576f",
+      "class": "NOVEL-extension-class-CVO-brief-absorption",
+      "disposition": "DEFER-no-Mode-B-fire-per-Rule-1-self-validation-saturation"
+    }
+  ]
+}
