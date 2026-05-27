@@ -1,0 +1,21 @@
+{
+  "verdict": "CLEAN",
+  "project": "FIND_INSURE",
+  "artifacts_verified": [
+    "s3://opal-data-imo/corp/1st-atlantic-insurance-group/bronze/web-scrape/2026-05-27/",
+    "s3://opal-data-imo/corp/avantax-wealth-management/bronze/web-scrape/2026-05-27/",
+    "s3://opal-data-imo/corp/carl-ostenson/bronze/web-scrape/2026-05-27/"
+  ],
+  "tools_gating_artifacts": ["comp-pipescript io", "aws s3 ls/cp + content grep"],
+  "axis_mechanical": "GREEN",
+  "axis_intent_coverage": "GREEN",
+  "axis_decision_useful": "GREEN",
+  "axis_constitution_coherence": null,
+  "constitution_drift_articles": [],
+  "timestamp_utc": "2026-05-27T18:10:00Z",
+  "mode": "comprehensive",
+  "source": "verify-channel-ws",
+  "high_leverage_moment": "Andrew #1 named — scraping-correct-locations",
+  "empirical_sample": "3 IMOs AC8 (1st-atlantic + avantax + carl-ostenson)",
+  "key_finding": "Avantax content includes 'Wealth Management' + 'Advisory services' + 'Financial Advisors' + 'Tax Professionals' + 'CPAs' — directly asset-mgmt-indicative; load-bearing crawler-to-scorer pipeline-alignment preview-fires positive"
+}
