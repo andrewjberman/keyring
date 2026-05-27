@@ -161,7 +161,7 @@ guard-exit as a misleading **exit 143**, and you are left with only the stale
    tracking — note it. When it later completes, that is a new-message signal:
    pull the inbox (Step 5) and relaunch the watcher (one delivery = one relaunch).
 
-## Step 5 — Inbox pull (both paths, always)
+## Step 5 — Inbox pull (BOTH probes + ferry check, always)
 
 ```bash
 check-inbox {serial}
@@ -170,9 +170,24 @@ check-inbox {serial}
 get_agent_status("{serial}")
 ```
 
-`check-inbox` reads the filesystem inbox; `get_agent_status` surfaces
-broker-channel messages. Either can hold a message the other misses — run both.
-**Act on anything found this turn** (ack, do the work, or validate evidence) —
+The two probes cover different deliveries and neither sees everything:
+- `check-inbox` reads files at the **top level** of `org/mcp/inbox/{serial}/`.
+  Once `inbox-watch` atomic-mv's a message to `read/`, check-inbox returns
+  empty even though the message just landed.
+- `get_agent_status` surfaces **broker-channel** messages (those sent via
+  the MCP `send_message` API, which fires a push at send-time).
+- **Neither probe sees LD-0099 cross-org-root filesystem-direct ferry
+  messages** (CL→ws or ws→CL writes that bypass the broker because the
+  recipient isn't in the sender's per-org-root registry). Those land
+  directly on disk and only `inbox-watch` notices.
+
+Diagnostic for the ferry blind spot: **watcher-exit notification fired +
+check-inbox empty + get_agent_status empty = look in `read/` for newest
+entries.** A fresh ferry delivery has already been mv'd there and is the
+reason the watcher fired. Scan `ls -t org/mcp/inbox/{serial}/read/ | head`
+and compare against what you've handled this session.
+
+**Act on anything found this turn** (ack, do the work, validate evidence) —
 no silent "standing by".
 
 ## Step 6 — Heartbeat and report
