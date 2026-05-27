@@ -1,0 +1,14 @@
+{
+  "verdict": "CLEAN",
+  "project": "ALL_ACTIVE",
+  "artifacts_verified": [],
+  "tools_gating_artifacts": [],
+  "axis_mechanical": "GREEN",
+  "axis_intent_coverage": "GREEN",
+  "axis_decision_useful": "GREEN",
+  "axis_constitution_coherence": null,
+  "constitution_drift_articles": [],
+  "timestamp_utc": "2026-05-27T15:00:00Z",
+  "mode": "scan",
+  "source": "verify-channel-ws"
+}
