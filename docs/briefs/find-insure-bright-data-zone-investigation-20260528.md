@@ -192,4 +192,29 @@ Carl Ostenson's "empty-body" classification was a **Bright Data cert-502 surface
 
 Render mechanism (v0.6.2) stands fully proven; these are wait/cert capture-robustness refinements for actual Stage-2 effectiveness. GO-asked ws COO for the v0.3.1 escape-valve fix (R1+R2+R3); R4 routed to DS~B.
 
-— AE 0.7~B 2026-05-28T~04:25Z (§7 ~04:34Z; §8 ~04:42Z; §9 ~04:52Z; §10 probe ~05:00Z)
+---
+
+## §11 — v0.3.1 capture-robustness RESOLVED: signal-extraction PROVEN (tag v0.6.3, ~05:10Z)
+
+ws COO GO `050405Z` authorized R1+R2+R3. Implemented + applied + re-probed.
+
+**Shipped (commits `59c92b7be` source + `1c08b505e` artifact + `0cdcefa3c` record-deploy; tag `imo-pipeline-v0.6.3`):**
+- **R1** (`crawl_web_scraping_browser_bronze.py`): catch `PlaywrightTimeoutError` on `goto` → capture rendered DOM as degraded-success with `wait_timeout_exceeded:true` meta, instead of raising/discarding. Hard nav errors (cert/connect) still raise. Threaded the flag through `write_page` meta + summary.
+- **R2** (`phase1-scraping-browser-lambda.tf` env): `WAIT_UNTIL` networkidle→domcontentloaded + `EXTRA_WAIT_MS` 0→3000 (SPA-settle).
+- **R3** (bronze script): `browser.new_context(ignore_https_errors=True)`.
+- Rule 14 gate clean; Rule 2 commit-before-apply; safe-apply 0-diff verified; Lambda in-place update (code hash + 2 env vars).
+
+**SIGNAL-EXTRACTION PROOF (re-probe of the two fixtures that timed out at v0.3.0):**
+
+| Fixture | v0.3.0 | v0.3.1 | Rendered content (word-boundary AM-signal hits) |
+|---|---|---|---|
+| Wealthfront | `Timeout 30000ms` | **pages_fetched=1**, 2.46MB / 21,465 text chars, 13.3s, `wait_timeout_exceeded=False` | wealth×82, invest×57, account×38, portfolio×14, advisor×9, fees×4, financial×4, planning×4 |
+| Fisher Investments | `Timeout 30000ms` | **pages_fetched=1**, 302KB / 13,351 text chars, 16.2s, `wait_timeout_exceeded=False` | invest×74, wealth×21, financial×14, portfolio×12, planning×7, retirement×5, fees×3 |
+
+R2 (domcontentloaded+3s) fixed the timeout cleanly — both rendered without needing R1's capture-on-timeout fallback (`wait_timeout_exceeded=False`). The escape-valve now delivers **usable, scoreable public AM content** — not just a rendered page. This closes the meaning-axis CVO flagged in §9/`3ced0c99e`: render-mechanism AND signal-extraction both proven.
+
+**Test-pollution note:** the probe wrote test slugs under `corp/` (`_control-*`, `_reprobe-*`, underscore-prefixed). Harmless — they don't match real IMO slugs in Stage 2. S3-delete is a sandbox-gated destructive op (Andrew-direct only per [[feedback_destructive_op_peer_auth_insufficient_sandbox_gate]]); left in place, flagged for natural cleanup.
+
+**AC-T2 escape-valve = FULLY CLOSED** (render v0.6.2 + signal-extraction v0.6.3). F4 (empty-body classifier cert/parked/SPA split) routed by COO to AE 0.7 base (one_shotter `crawl_web_bronze.py` lane).
+
+— AE 0.7~B 2026-05-28T~04:25Z (§7 ~04:34Z; §8 ~04:42Z; §9 ~04:52Z; §10 ~05:00Z; §11 RESOLVED ~05:10Z)
