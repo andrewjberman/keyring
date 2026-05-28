@@ -11,14 +11,14 @@
     }
   ],
   "status": "active",
-  "phase": "Phase 1 IN-EXECUTION 2026-05-28T~20:41Z. S4 COMPLETE: RD~B display-mapping layer (4 pages + shared libs) 06328859. S3 IN-PROGRESS: DS~B per-firm timeseries slice emit 6b21c8cf4; investigation-first architecture live. S1 IN-PROGRESS: RD~B scaffold Select Partner: dropdown d9e74ec3. S2 IN-PROGRESS: DS~B Orion daily backfill (Andrew Option-2 confirmed 65e8d9024). S3 is spine — S1 modes + S2 split read per-firm artifacts; S4 parallel completed. Tilde lanes both spawned + live.",
-  "blocking": "(1) S3 Phase-1 implementation ongoing — DS~B locating per-firm cohort data structure + emitting per-firm daily slice. (2) S2 gated on S3 Inflection artifact landing (DS~B managing both in same lane). (3) S1 RD~B integration: firmAccess.ts namespace shared with ADVI_INFMVP F2 (F2 DEV-landed first, no conflict). (4) Andrew Q1-Q4 PRD §8 baked into TOs as flag-at-completion.",
+  "phase": "Phase 1 IN-EXECUTION 2026-05-28T~20:41Z. S4 COMPLETE: RD~B display-mapping layer (4 pages + shared libs) 06328859. S3 COMPLETE: DS~B per-firm timeseries slice + backfill script ca9a1ae34, COO RAVC2-ACCEPT confirmed. S1 IN-PROGRESS: RD~B scaffold Select Partner: dropdown d9e74ec3. S2 IN-PROGRESS: DS~B Orion daily backfill (Andrew Option-2 confirmed 65e8d9024). S3 is spine — S1 modes + S2 split read per-firm artifacts; S4 parallel completed. Tilde lanes both spawned + live.",
+  "blocking": "(1) S3 COMPLETE (ca9a1ae34). (2) S2 executing (DS~B Orion daily backfill per Andrew Option-2). (3) S1 RD~B in_progress (Select Partner: dropdown scaffold). (4) Andrew Q1-Q4 PRD §8 baked into TOs as flag-at-completion.",
   "created": "2026-05-28",
   "pods": ["0.4"],
   "pipeline": "portal / model-portfolios",
   "thread_counter": 4,
   "threads": [
-    {"to": "MDPF_SCOPED.S3", "owner": "0.4.0_DS_ClientPlatform~B", "status": "in_progress", "summary": "Multi-firm daily-parsed data architecture (SPINE, investigation-first)"},
+    {"to": "MDPF_SCOPED.S3", "owner": "0.4.0_DS_ClientPlatform~B", "status": "complete", "summary": "Multi-firm daily-parsed data architecture (SPINE) — backfill script + per-firm slice ca9a1ae34, COO RAVC2-ACCEPT confirmed"},
     {"to": "MDPF_SCOPED.S1", "owner": "0.4.2_RD_AdvisorIntelligence~B", "status": "in_progress", "summary": "Partner-mode selector (mirror AdvisorIntelligence; scaffold-parallel)"},
     {"to": "MDPF_SCOPED.S4", "owner": "0.4.2_RD_AdvisorIntelligence~B", "status": "complete", "summary": "Canonical model naming (audit-first, 30 files)"},
     {"to": "MDPF_SCOPED.S2", "owner": "0.4.0_DS_ClientPlatform~B", "status": "in_progress", "summary": "Inflection 5/18 data shape — Andrew Option-2 Orion daily backfill confirmed; DS~B executing"}
