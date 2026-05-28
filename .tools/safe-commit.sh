@@ -98,6 +98,37 @@ REPO_ROOT="$(git rev-parse --show-toplevel 2>/dev/null)" || {
 AUDIT_LOG="${SAFE_COMMIT_AUDIT_LOG:-$REPO_ROOT/org/git-author-override-audit.log}"
 ISO_TS="$(date -u +%Y-%m-%dT%H:%M:%SZ)"
 
+# RV-0017 F-006 Pattern A -- mkdir-mutex commit-serialization (Rule 16 Git-Bash
+# compatible; flock not available). Serializes safe-commit.sh body across all
+# concurrent agents in this repo so the shared-index contamination race
+# (git diff --cached returning a peer's staged paths) cannot trip lane-violation
+# BLOCKs that aren't real. Lock held from staged-index capture through commit +
+# pre-commit hook completion. Stale-lock reclaim via kill -0 on holder PID.
+LOCK_DIR="${SAFE_COMMIT_LOCK_DIR:-$REPO_ROOT/.git/commit-queue.lock}"
+LOCK_TIMEOUT_SEC="${SAFE_COMMIT_LOCK_TIMEOUT:-60}"
+LOCK_ACQUIRED=0
+elapsed=0
+while ! mkdir "$LOCK_DIR" 2>/dev/null; do
+  # Stale-lock detection: holder PID dead -> reclaim
+  if [ -f "$LOCK_DIR/pid" ]; then
+    holder_pid="$(cat "$LOCK_DIR/pid" 2>/dev/null || true)"
+    if [ -n "$holder_pid" ] && ! kill -0 "$holder_pid" 2>/dev/null; then
+      rm -rf "$LOCK_DIR" 2>/dev/null || true
+      continue
+    fi
+  fi
+  elapsed=$((elapsed + 1))
+  if [ "$elapsed" -ge "$LOCK_TIMEOUT_SEC" ]; then
+    echo "ERROR: safe-commit mutex held >${LOCK_TIMEOUT_SEC}s by PID $(cat "$LOCK_DIR/pid" 2>/dev/null || echo unknown)." >&2
+    echo "       Other agent's commit stuck or hung. Inspect $LOCK_DIR." >&2
+    exit 3
+  fi
+  sleep 1
+done
+echo "$$" > "$LOCK_DIR/pid"
+LOCK_ACQUIRED=1
+trap '[ "$LOCK_ACQUIRED" -eq 1 ] && rm -rf "$LOCK_DIR" 2>/dev/null || true' EXIT
+
 # Extract agent name from --author "agent <email>" for audit log attribution
 RAW_AUTHOR=""
 n=${#COMMIT_ARGS[@]}
@@ -177,5 +208,7 @@ if [ "$N_EXTRA" -gt 0 ]; then
   fi
 fi
 
-# Proceed with the actual scoped commit
-exec git commit --only "${COMMIT_ARGS[@]}" -- "${PATHSPEC[@]}"
+# Proceed with the actual scoped commit. Use plain invocation (not exec) so the
+# EXIT trap fires after commit completion and releases the mutex.
+git commit --only "${COMMIT_ARGS[@]}" -- "${PATHSPEC[@]}"
+exit $?
