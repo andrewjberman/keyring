@@ -10,9 +10,9 @@
       "date": "2026-05-28"
     }
   ],
-  "status": "active",
-  "phase": "Phase 0 — PRD v0.1 SHIPPED 2026-05-28 (1.0.0_SA_CTO), Andrew direct NOVEL (/ws-charter HARD-BLOCK #7 override = Andrew direction). Small/lean project. Phase 0 = confirm exact current on-demand path (does TopicCloud trigger GPT live, or does keyword_intelligence_generator already precompute but isn't scheduled/consumed?) + identify trigger/GPT-call-site/consumer-fetch + design cache artifact/key + confirm cadence (Q1) with Andrew. Phase 1 = EventBridge async schedule + S3 cache + consumer repoint with safe fallback (Lambda + schedule via Terraform per CLAUDE.md; source-map update) + decommission on-demand GPT-on-request. Pending COO TO-decomposition.",
-  "blocking": "(1) COO TO-decomposition + lane assignment (news-pipeline = pod 0.1 historically per MKOV_TRENDS; AE for the EventBridge/Lambda/TF + DS/RD for the analysis + consumer repoint). (2) Phase 0 must confirm the exact current on-demand mechanism before Phase 1 scoping. (3) Andrew open questions Q1 cadence / Q2 exact surface / Q3 staleness tolerance (PRD §8) — non-blocking on Phase 0.",
+  "status": "merged",
+  "phase": "MERGED into ADVI_INFMVP F3 2026-05-28T~19:46Z (ws COO /drive). The keyword instant-analysis popup async-precompute work is rolled up into ADVI_INFMVP (Inflection-Scoped Portal MVP) workstream F3 per CTO PRD v0.1 (5f6018778) — it must work for the Inflection demo, so it executes there. MKOV_DLYCLD Phase 0/1 (trace on-demand path, confirm whether keyword_intelligence_generator already precomputes, EventBridge schedule + S3 cache + TopicCloud.tsx repoint w/ graceful fallback, decommission on-demand GPT) is the F3 deliverable. See org/tier2_senior/0.1.0_DS_MarketIntelligence/task_orders/ADVI_INFMVP.F3.keyword-popup-precompute-mkov-rollup.md. NOTE: F3 carries a heavy MDPF_SCOPED overlap flag (general-portal keyword popup) - F3 owner COO-gates before Phase-1 infra build.",
+  "blocking": "SUBSUMED — no standalone decomposition. Executes as ADVI_INFMVP F3. MDPF_SCOPED (Andrew's forthcoming whole-Portal scoping PRD) overlaps the general-portal keyword popup surface; reconcile there.",
   "created": "2026-05-28",
   "pods": ["0.1"],
   "pipeline": "news-pipeline",

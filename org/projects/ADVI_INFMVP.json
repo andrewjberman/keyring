@@ -11,11 +11,17 @@
     }
   ],
   "status": "active",
-  "phase": "Phase 0 - PRD v0.1 SHIPPED 2026-05-28 (1.0.0_SA_CTO), Andrew direct NOVEL (/ws-charter HARD-BLOCK #7 override = Andrew direction this cycle). 5 workstreams F1-F5. F5 (canonical Advisor NNA) is the spine + highest priority - all NNA views (Segment Analytics snapshot+continuous, Lifetime Activity) must read one canonical source and agree exactly; CVO empirical cross-view-equality gate is the acceptance bar, not advisory. F4 (fee-split tie-out) depends on F5. F1/F2/F3 independent + parallel. Pending COO TO-decomposition + lane assignment.",
-  "blocking": "(1) COO TO-decomposition + lane assignment: F1=0.4.0_DT or DE (permissions/data-scoping investigation-first); F2=0.4.2_RD (small FE-only); F3=pod 0.1 (MKOV_DLYCLD async-precompute, DS/RD + AE); F4+F5=DS-owned (canonical NNA emit) + RD (FE repoint) + CVO-RIGID gate. (2) F5 Phase-0 must determine whether a canonical Advisor-NNA field already exists to standardize on or DS must define+emit one. (3) MDPF_SCOPED overlap reconciliation (esp. F3 general-portal keyword popup) when Andrew's sibling PRD lands - avoid double-dispatch.",
+  "phase": "Phase 1 EXECUTION-READY - PRD v0.1 SHIPPED 2026-05-28 (1.0.0_SA_CTO commit 5f6018778), Andrew direct NOVEL. COO TO-decomposition COMPLETE 2026-05-28T~19:46Z (/drive): F1 (DT assets-overview-zeroes investigation-first), F2 (RD inflection-sidebar-strip GO-immediate one-liner), F3 (pod 0.1 DS-MI keyword-popup-precompute, MKOV_DLYCLD subsumed), F5 (DS-CP canonical-advisor-nna SPINE/highest-pri), F4 (DS-CP feesplit-nna-tieout STAGED hard-gated on F5). F5 is the spine - all NNA views (Segment Analytics snapshot+continuous, Lifetime Activity) read one canonical source + agree exactly; CVO empirical cross-view-equality gate is acceptance bar not advisory. F4 depends on F5 (sub-buckets sum to canonical total). F1/F2/F3 parallel. F5/F4 RD-repoint + CVO-gate legs authored at DS-emit RAVC2 moment. Allocation/spawn requested of MSTR per Andrew direct 2026-05-28T~19:48Z.",
+  "blocking": "(1) SPAWN/ALLOCATION - all owner lanes (0.4.0_DT, 0.4.0_DS_ClientPlatform, 0.4.2_RD, 0.1.0_DS_MarketIntelligence, 0.7.0_AE_CloudOps) NOT_REGISTERED as of /drive 2026-05-28T~19:46Z; allocation/spawn requested of MSTR (Andrew-directed). TOs authored + pending; F2 GO-immediate on RD spawn. (2) F5 Phase-0 must determine whether a canonical Advisor-NNA field already exists to standardize on or DS must define+emit one (Q2). (3) F3 heavy MDPF_SCOPED overlap (general-portal keyword popup) - F3 TO instructs DS to COO-gate before Phase-1 infra build; reconcile when Andrew's sibling PRD lands (Q3). (4) F1 may spawn a DS-emit follow-on if root-cause = missing Inflection artifact (Q1) - DT surfaces to COO at root-cause moment.",
   "created": "2026-05-28",
   "pods": ["0.1", "0.4"],
   "pipeline": "inf-pipeline / portal",
-  "thread_counter": 0,
-  "threads": []
+  "thread_counter": 5,
+  "threads": [
+    {"to": "ADVI_INFMVP.F1", "owner": "0.4.0_DT_ClientPlatform", "status": "pending", "summary": "Assets Overview all-zeroes investigation-first"},
+    {"to": "ADVI_INFMVP.F2", "owner": "0.4.2_RD_AdvisorIntelligence", "status": "pending", "summary": "Inflection sidebar Tools strip (GO-immediate one-liner)"},
+    {"to": "ADVI_INFMVP.F3", "owner": "0.1.0_DS_MarketIntelligence", "status": "pending", "summary": "Keyword popup async-precompute (MKOV_DLYCLD subsumed)"},
+    {"to": "ADVI_INFMVP.F5", "owner": "0.4.0_DS_ClientPlatform", "status": "pending", "summary": "Canonical Advisor NNA (SPINE/highest-pri)"},
+    {"to": "ADVI_INFMVP.F4", "owner": "0.4.0_DS_ClientPlatform", "status": "staged", "summary": "Fee-split NNA tie-out (hard-gated on F5)"}
+  ]
 }
