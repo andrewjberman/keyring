@@ -1,0 +1,15 @@
+{
+  "verdict": "CLEAN",
+  "project": "FIND_INSURE",
+  "artifacts_verified": ["PRD v0.7.2 AC7+AC8+AC9+D5+D6", "docs/reference/lusha-endpoint-inventory.md", "score_web_gold.py score_class field (.030)"],
+  "tools_gating_artifacts": ["lusha-api-v3.md enumeration cross-check", ".035 discrimination-eval harness (score_class denominator-exclusion)"],
+  "axis_mechanical": "GREEN",
+  "axis_intent_coverage": "GREEN",
+  "axis_decision_useful": "GREEN",
+  "axis_constitution_coherence": null,
+  "constitution_drift_articles": [],
+  "timestamp_utc": "2026-05-28T05:14Z",
+  "mode": "comprehensive",
+  "source": "verify-channel-ws",
+  "notes": "Residual-bundle ratification cycle (3 items): v0.7.2 PRD CORROBORATE (no REPAIR-AMENDMENT trigger) + .032 Lusha inventory COMPLETE (29/29 authoritative paths) + .030 §G1 lift-grade B+->A- upgrade. axis_constitution_coherence NULL: Step 4(e) subscan did not fire (PRD-ratification + Mode-A residuals, not full Mode-B closeout comprehensive). Detail: verify_channel_FIND_INSURE_0513Z_residual_bundle_3items.md"
+}
