@@ -164,4 +164,36 @@ For direct paste-in to `docs/briefs/find-insure-phase1-ravc2-accept-template.md`
 
 ---
 
-— AE 0.7~B 2026-05-28T~03:45Z
+---
+
+## §10 — AC-T2 invocation-trigger discipline static audit (added 2026-05-28T~04:05Z)
+
+ws COO `033612Z` §4 option (b) — static source audit of `data/find/imo/scripts/bronze/crawl_web_scraping_browser_bronze.py` v0.3.0 for invocation-trigger + failure-mode discipline. Complements §2 empirical smoke (which exercised only the secret-resolve failure path); this audit confirms ALL failure modes are graceful by construction.
+
+### Failure-mode coverage matrix (all → graceful `pages_blocked=1` minimal-record; never crash)
+
+| # | Failure mode | Source path | Disposition | Smoke-verified |
+|---|---|---|---|---|
+| 1 | Secret value absent / resolve error | `crawl_one_page` L268-288 try/except around `get_scraping_browser_wss()` | minimal record `blocked_reason=scraping_browser1-secret-resolve` | YES (§2) |
+| 2 | Playwright import missing (layer absent) | `fetch_rendered_html` L148-152 → `ScrapingBrowserError` | caught L312 → minimal record | static only |
+| 3 | Bright Data CDP connect failure | L182-183 generic → `ScrapingBrowserError` | caught L312 → minimal record | static only |
+| 4 | Navigation failure / `networkidle` timeout | L164-167 `page.goto` exception → `ScrapingBrowserError` | caught L312 → minimal record | static only |
+| 5 | Bad secret format (non-`wss://`) | L131-134 → `ScrapingBrowserError` | caught L312 → minimal record | static only |
+| 6 | Browser close failure | L176-179 finally + bare except | swallowed (non-fatal) | static only |
+
+**Verdict: AC-T2 invocation-trigger discipline SOUND for v0.3.0.** Every documented failure mode produces a structured `{ok:false, pages_blocked:1, error:...}` return + a `.meta.json` blocked record (silver detects blocked status via `blocked_reason` field; Rule 17 passthrough preserved). The handler returns structured output on every path. Schema parity with `crawl_web_bronze.py` confirmed (additive `fetch_method`/`fallback_trigger`/`source_url_hash`/`js_render_wait_ms`/`js_render_wait_until`/`final_url` fields).
+
+### Observational v0.3.1 candidates (NONE are v0.3.0 defects)
+
+| ID | Observation | Why deferrable | Trigger to revisit |
+|---|---|---|---|
+| O1 | Warm-container `_wss_cache` module-global (L94/110-112) serves stale wss URL after a Bright Data credential rotation until container recycle | Benign — cache only ever stores VALIDATED wss URLs (secret-error raises before cache-set at L113, so no bad-value poisoning); Bright Data zone creds rotate rarely; Lambda containers recycle within minutes-hours | If credential rotation becomes frequent → add clear-on-auth-failure or TTL |
+| O2 | No transient-failure retry on `connect_over_cdp` (single attempt → blocked) | Orchestrator/EventBridge re-fire handles retry at higher level for v0.3.0 single-shot | If Stage 2 empirical shows >X% transient Bright Data connect failures → add 1-retry-with-backoff |
+| O3 | No per-operation wall-clock deadline beyond 30s navigation timeout | Lambda 300s + 30s nav timeout = adequate headroom; runaway page bounded by nav timeout firing on stuck `networkidle` | If BFS multi-page lands (v0.3.1+) → add operation deadline |
+| O4 | No response-size cost-cap (Bright Data $8/GB) | v0.3.0 single-page homepage scope bounds payload reasonably | If BFS lands → add size cap |
+
+All four are v0.3.1+ refinement candidates surfacing at the deferred-multi-page or empirical-pattern moment — none block Phase 1 RAVC2-Accept and none surface as REPAIR-AMENDMENT triggers (no mechanical-untruth + no inadequate-solution-coverage at v0.3.0 scope per [[feedback_self_correction_upstream_of_verify_channel]] boundary test).
+
+---
+
+— AE 0.7~B 2026-05-28T~03:45Z (§10 added ~04:05Z)
