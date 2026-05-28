@@ -1,0 +1,21 @@
+{
+  "project_code": "MDPF_SCOPED",
+  "macro_code": "MDPF",
+  "name": "Model Portfolios Partner Scoping + Canonical Naming",
+  "description": "Andrew direct 2026-05-28: split Model Portfolios apart by partner using the EXACT same pattern as Advisor Intelligence (Select Partner: dropdown upper-right, canonical placement + styling). S1: 3 modes - Global (default, today's all-cohort aggregate), 49 Financial (today minus Cohort 2), Inflection Wealth Management (Cohort 2a + 2b); mirror portal/src/pages/AdvisorIntelligence/index.tsx dispatcher pattern (note: MDPF default = Global the aggregate, not a firm, unlike AI which defaults to a firm). S2: Inflection only funded models ~2026-05-18; Daily AUA Trend Analysis (stacked bar + area) must track rolling-365d daily Orion-processed AUA entirely in GRAY (Non-Model group, already present, #C3CADA) then split model holdings out of total from 5/18 forward. S3 (core backend, investigation-first): locate where Model Portfolios data is held today, replace single aggregate-of-split-cohorts with shared per-firm daily-parsed structure - Opal Global method uses cohorts + firm subfolders for 49 Financial + Inflection, extensible to Cottonwood/others without central-logic edits. S4: canonical model naming comprehensive across Model Portfolios + Attribution + Positioning + Factor Tilts - Ultra-Short Term (keep), Short Term (no hyphen, was Short-Term), Intermediate Term (was Intermediate), Long Term/LT (rename from Long-Term Conservative/LTC), Ultra-Long Term/ULT (rename from Long-Term Aggressive/LTA); AUDIT-FIRST whether LTC/LTA are data keys vs display strings - mapping layer if data keys. Sibling ADVI_INFMVP overlaps (Inflection scoping + keyword popup F3); keyword popup stays under ADVI_INFMVP, do not double-dispatch.",
+  "prds": [
+    {
+      "path": "docs/architecture/MDPF_SCOPED.md",
+      "label": "Model Portfolios Partner Scoping + Canonical Naming PRD v0.1",
+      "date": "2026-05-28"
+    }
+  ],
+  "status": "active",
+  "phase": "Phase 0 - PRD v0.1 SHIPPED 2026-05-28 (1.0.0_SA_CTO), Andrew direct NOVEL (/ws-charter HARD-BLOCK #7 override = Andrew direction this cycle). 4 workstreams S1-S4. S3 (per-firm daily-parsed data architecture) is the backend spine - S1 modes + S2 Inflection 5/18 split both read the per-firm artifacts S3 produces; S3 Phase-0 locate-where-data-held first. S1 FE selector scaffolds in parallel against Global artifact. S2 depends on S3 Inflection artifact (rolling-365d Non-Model AUA + 5/18 model-split). S4 naming largely independent (FE rename + mapping, audit-first re data-keys). Pending COO TO-decomposition + lane assignment.",
+  "blocking": "(1) COO TO-decomposition + lane assignment: S1=RD (FE partner-mode selector mirroring AdvisorIntelligence), S2=DS+RD (Inflection 5/18 trend shape), S3=DS+AE (per-firm daily-parse data architecture, investigation-first - locate current Model Portfolios data store), S4=RD (canonical naming, audit-first). (2) S3 Phase-0 must locate where Model Portfolios data is held today + how cohorts split before designing the per-firm structure. (3) S4 audit-first: determine if LTC/LTA are data keys (needs mapping layer or coordinated DS rename) vs display-only. (4) ADVI_INFMVP overlap - keyword popup stays under ADVI_INFMVP F3 (do not double-dispatch); shared partner-selection/firmAccess primitives must not be edited by two lanes simultaneously. (5) Andrew Q1-Q4 (PRD section 8): internal-admin default mode, 5/18 hard-coded vs data-driven split date, LT/ULT abbrev confirm, per-firm bucket prefix convention - non-blocking on Phase 0.",
+  "created": "2026-05-28",
+  "pods": ["0.4"],
+  "pipeline": "portal / model-portfolios",
+  "thread_counter": 0,
+  "threads": []
+}
