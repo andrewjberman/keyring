@@ -147,4 +147,20 @@ ws COO GO `043503Z` authorized the scoped python3.12 migration. Executed + verif
 
 **Status:** FIND_INSURE.036 + AC-T2 escape-valve functional-readiness CLOSED. Tag `imo-pipeline-v0.6.2`.
 
-— AE 0.7~B 2026-05-28T~04:25Z (§7 ~04:34Z; §8 RESOLVED ~04:42Z)
+---
+
+## §9 — CVO Mode A independent verify + scope-boundary finding (2026-05-28T~05:18Z)
+
+CVO independently verified the v0.6.2 E2E (verdict `3ced0c99e`) by reading the S3 artifact directly (not my self-report): EXISTS + FRESH (04:40:27Z) + SCALED (87KB rendered where direct-fetch hit empty-body) + NOT-FROZEN (content_hash a7247929167c170a). **Mechanical axis PASS confirmed independently.** Meaning axis flagged CONCERN/UNTESTED — two distinct things separated:
+
+**(a) Render-mechanism PROVEN vs signal-extraction UNTESTED.** Cambridge IR's content probe is login-wall-dominated (b2clogin×30, password×36, SAML×4); the "ria"×23 hits are substring noise in a login-portal context, not genuine RIA signal. For Cambridge IR this is CORRECT (its public surface IS the login wall) — but it proves the escape-valve RENDERS, not that it EXTRACTS scoreable AM content. The non-auth-SPA signal-extraction probe is the right confirmation step.
+
+- **Disposition:** the natural fixture is the **Stage 2 universe-run empty-body subset** (actual IMOs that hit SPA-render-failure across the 99-IMO run) — the P2 validation subset has `empty_body_rate=0.0` (no current public-SPA fixture), and Stage 2 is held on the W1-revision. Running a synthetic guessed fixture now would be make-work; the real meaning-axis proof folds into **A3 (AC-T2 first-fire empirical capture)** at Stage 2 first-empty-body-IMO. Committed to run it then.
+
+**(b) Scope-boundary — auth-gated-SPA is a structural unrecoverable-signal tail (distinct from render-failure).** AC-T2 fixes the **public-JS-SPA-render-failure** class (content exists publicly, needs JS render). It CANNOT fix the **auth-gated-SPA** class (no public content; signal sits behind login). Cambridge IR is the latter — the escape-valve "succeeds" mechanically (renders the login wall) but recovers no signal. This is a distinct known-tail, analogous to BLOCKED-ROBOTS (→ per-IMO Andrew sign-off §9 Q5).
+- **Recommendation (DS scoring lane):** auth-gated SPAs map to `wm_classification=null (reason: auth-gated-no-public-content)`, NOT escape-valve-success-as-if-signal-recovered.
+- **Tokenizer correctness risk (DS~B `score_web_gold.py`):** the token matcher must use **word-boundary matching** for terms like "ria", NOT substring — else auth-gated login walls (23 "ria" substrings in the Cambridge probe) accrue spurious RIA signal. Routed to DS~B via ws COO.
+
+Neither (a) nor (b) is a Stage-2 gate (AC-T2 = acquisition-failure remediation, separate from W1-classification). AC-T2 closure stands; these refine the downstream signal-extraction + classification path.
+
+— AE 0.7~B 2026-05-28T~04:25Z (§7 ~04:34Z; §8 RESOLVED ~04:42Z; §9 CVO-verify ~04:52Z)
