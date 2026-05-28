@@ -1,0 +1,60 @@
+{
+  "schema_version": "v1",
+  "goal_binding": "/goal-FIND_INSURE-VERIFY",
+  "authority": "Andrew direct 2026-05-28T~03:18Z verbatim + PRD v0.7.2 ff27f57ef §1.1 + AC7 + ws CTO GOAL-BINDING MCP 20260528T033637Z; per LD-0090 ALWAYS-PROCEED",
+  "off_ramp": "CVO_GOAL_COMPLETE fires when 297/297 cells COMPLETE",
+  "cell_states": ["COMPLETE", "IN-FLIGHT", "FAILED", "NOT-YET-STARTED"],
+  "complete_definition": "bronze + silver + gold + serving-merge all landed AND independently validated (Mode A 4-check EXISTS/FRESH/SCALED/NOT-FROZEN + per-channel sharp structural test) per channel",
+  "matrix_dimensions": {"imos": 99, "channels": 3, "total_cells": 297},
+  "snapshot": {
+    "snapshot_at": "2026-05-28T03:50Z",
+    "snapshot_cycle": "spot-check cycle 15",
+    "seed_source": ".runtmp/find_insure/phase1-ravc2-evidence-2026-05-28T0334Z.json (DS base aggregator re-fire 03:35Z; coverage 12/99 web-scrape through-gold)",
+    "independent_verify_status": "DEFERRED — aggregator-seeded v1; CVO independent S3 head-object + content-hash binds at Stage 2 Mode A #2 fire (per [[feedback_verification_class_taxonomy_for_b_extension_rulings]] empirical-smoke-class). v1 is honest-aggregator-derived, NOT yet CVO-empirically-attested."
+  },
+  "channel_summary": {
+    "web_scrape": {
+      "COMPLETE": 0,
+      "IN-FLIGHT": 12,
+      "FAILED": 0,
+      "NOT-YET-STARTED": 87,
+      "note": "12 IMOs bronze+silver+gold present per aggregator; serving-merge + CVO-independent-validation pending → IN-FLIGHT not COMPLETE. 87 awaiting AE 0.7~A Stage 2 universe-burn. ac2_gold_bar (90%) NOT met (12.12%).",
+      "in_flight_imos": [
+        "1st-atlantic-insurance-group",
+        "allianz-life",
+        "american-equity-investment-life-insurance-company",
+        "avantax-wealth-management",
+        "cambridge-investment-research",
+        "d-a-davidson-co",
+        "liberty-bankers",
+        "lincoln-financial-group",
+        "lincoln-investment",
+        "midland-national",
+        "structured-asset-management",
+        "the-preferred-annuity-group"
+      ]
+    },
+    "job_postings": {
+      "COMPLETE": 0,
+      "IN-FLIGHT": 0,
+      "FAILED": 0,
+      "NOT-YET-STARTED": 99,
+      "note": "Phase 2 Part B not begun. Gate: Andrew HAR-supply (PRD §9 Q6) pre-Phase-2-Part-B dispatch + Stage Bα cost-ceiling Q7. DS~D .028 multi-board architecture survey in-flight per ws COO /drive 172."
+    },
+    "linkedin_org_chart": {
+      "COMPLETE": 0,
+      "IN-FLIGHT": 0,
+      "FAILED": 0,
+      "NOT-YET-STARTED": 99,
+      "note": "Phase 3 pre-staged (sister-deploy substrate 4 Lambda TF modules comment-wrapped UN-COMMENT TRIGGER) but not live. Gate: IR-team consumer identification (PRD §9 Q5) pre-Phase-3 + Lusha org-chart endpoints narrowed per v0.7.2 §4 (companies/search + companies/enrich + contacts/prospecting; contact-reveal DEFERRED v0.7.3+)."
+    }
+  },
+  "aggregate": {
+    "COMPLETE": 0,
+    "IN-FLIGHT": 12,
+    "FAILED": 0,
+    "NOT-YET-STARTED": 285,
+    "completion_pct": 0.0
+  },
+  "next_deepening": "Stage 2 Mode A #2 fire (AE 0.7~A universe-burn completion) → CVO independent S3 verify of the 12 web-scrape IN-FLIGHT cells (serving-merge confirm) + the Stage-2-fanned 87. Job-postings + LinkedIn cells remain NOT-YET-STARTED until their phase gates clear."
+}
