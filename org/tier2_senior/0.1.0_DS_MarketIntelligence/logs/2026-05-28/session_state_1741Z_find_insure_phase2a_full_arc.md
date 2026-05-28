@@ -48,3 +48,11 @@ None run — work was external-API integration (Lusha v3 reverse-engineering) + 
 - Memory banked: feedback_stub_fixtures_encode_false_premise_canary_real_api.
 
 — 0.1.0_DS_MarketIntelligence~C 2026-05-28T1741Z
+
+## Update @ ~1810Z — no substantive change since 1741Z (standby)
+- All four work items state UNCHANGED: .024 CLOSED, .037 CLOSED, Deliverable-6 v1.0.1 CLOSED + v1.1 emitted, .024 pagination CVO-VERIFIED PASS @e8845b2e6 (RAVC2-Accept = COO render formality, pending on COO side; not chased — it's their render).
+- Corrected CVO's allianz root-cause hypothesis (it guessed tier keyed on rollup_score): evidence showed driver tiers on wm_classification (allianz rerun contacts_prospected=25, line :136) and the gold=50 is the cap-50 canary leftover (COO-dispositioned "leave it"). No criterion fix needed. (CVO msg 173736Z; my correction 173920Z.)
+- Several NO-WORK /work ticks since — no new dispatch; next surfaces (Phase 2B HAR-gated, Phase 3 serving / DS~E lane, Deliverable-6 v1.x task #10) deferred until scoped; COO aware standby is by-design.
+- Watcher exit-143 RECURRING: diagnosed as environmental SIGTERM (not solely my kill — persists without a preemptive kill; likely orphan-cleanup/env). NOT message loss — check_inbox runs every /work tick (authoritative); "zero-watcher + check_inbox-every-turn" is an acceptable state per the watcher skill. Relaunch opportunistically; stopped preemptive kill-all to avoid self-inducing the SIGTERM.
+
+— 0.1.0_DS_MarketIntelligence~C 2026-05-28T~1810Z
