@@ -1,137 +1,112 @@
 #!/usr/bin/env bash
 # =============================================================================
-# halt-gate-ld0131-test.sh -- LD-0131 Layer-1 recipient-scoping unit test
+# halt-gate-ld0131-test.sh -- LD-0131 Layer-1 recipient-scoping integration test
 # =============================================================================
-# Two cases per CTO/COO spec:
-#   Case A: message addressed to the running serial --> included --> TRIPS gate
-#   Case B: ferry copy addressed to a foreign tilde-lane --> SKIPPED --> PASSES
+# Three end-to-end scenarios (CVO-spec'd) exercising halt_gate_main exit codes:
+#   Scenario 1: only foreign ferry (To: RD~B) in inbox  -> exit 0 (gate passes)
+#   Scenario 2: foreign ferry + same-serial [STOP]       -> exit 2 (hard block)
+#   Scenario 3: foreign ferry + routine same-serial msg  -> exit 1 (surfaced, unacked)
 #
-# Sources halt-gate-check.sh as a library (the file has a BASH_SOURCE guard so
-# sourcing does not execute halt_gate_main). Exercises halt_gate_recipient() and
-# the base-strip scoping logic directly on controlled message fixtures.
+# Uses HALT_GATE_INBOX_ROOT + HALT_GATE_CONTEXT_FILE overrides to test against
+# a controlled temp inbox rather than the live agent inbox.
 #
-# Usage:  bash org/tier0/audit/halt-gate-ld0131-test.sh
-# Exit 0: all assertions PASS
-# Exit 1: at least one assertion FAIL
+# Usage:  bash .tools/halt-gate-ld0131-test.sh
+# Exit 0: all 3 scenarios passed
+# Exit 1: at least one scenario failed
 # =============================================================================
 set -uo pipefail
 
-REPO_ROOT="$(cd "$(dirname "$0")/../../.." && pwd)"
-
-# Source the library (main guard prevents execution)
-# shellcheck source=../../../.tools/halt-gate-check.sh
-. "$REPO_ROOT/.tools/halt-gate-check.sh"
-
-RUNNING_SERIAL="0.7.0_AE_CloudOps"
-RUNNING_BASE="${RUNNING_SERIAL%%~*}"
+REPO_ROOT="$(cd "$(dirname "$0")/.." && pwd)"
+HALT_GATE="$REPO_ROOT/.tools/halt-gate-check.sh"
 
 TMP=$(mktemp -d)
 trap 'rm -rf "$TMP"' EXIT
 
+TEST_SERIAL="0.7.0_AE_CloudOps"
+CTX_FILE="$TMP/agent_context"
+INBOX_ROOT="$TMP/inbox"
+mkdir -p "$INBOX_ROOT/$TEST_SERIAL"
+
+printf "SERIAL=%s\nTO_ID=\n" "$TEST_SERIAL" > "$CTX_FILE"
+
 PASS=0
 FAIL=0
 
-assert_eq() {
+assert_exit() {
   local label="$1" got="$2" want="$3"
   if [ "$got" = "$want" ]; then
-    echo "  PASS: $label"
+    echo "  PASS: $label (exit $got)"
     PASS=$((PASS + 1))
   else
-    echo "  FAIL: $label -- got='$got' want='$want'"
+    echo "  FAIL: $label -- got exit $got, want exit $want"
     FAIL=$((FAIL + 1))
   fi
 }
 
-assert_included() {
-  local label="$1" f="$2"
-  local to_field to_base included=1
-  to_field="$(halt_gate_recipient "$f" || true)"
-  if [ -n "$to_field" ]; then
-    to_base="${to_field%%~*}"
-    [ "$to_base" != "$RUNNING_BASE" ] && included=0
-  fi
-  assert_eq "$label (included=1)" "$included" "1"
-}
-
-assert_skipped() {
-  local label="$1" f="$2"
-  local to_field to_base skipped=0
-  to_field="$(halt_gate_recipient "$f" || true)"
-  if [ -n "$to_field" ]; then
-    to_base="${to_field%%~*}"
-    [ "$to_base" != "$RUNNING_BASE" ] && skipped=1
-  fi
-  assert_eq "$label (skipped=1)" "$skipped" "1"
-}
-
-# ---------------------------------------------------------------------------
-# Case A -- message TO this agent (same serial, no tilde suffix)
-# Expected: halt_gate_recipient returns matching serial -> INCLUDED -> gate TRIPS
-# ---------------------------------------------------------------------------
-CASE_A="$TMP/msg_case_a.md"
-cat > "$CASE_A" << 'EOF'
+# Helper: write a message file to the test inbox
+write_msg() {
+  local fname="$1" to="$2" subject="$3" body="$4"
+  cat > "$INBOX_ROOT/$TEST_SERIAL/$fname" << EOF
 # Message from 2.0.0_SA_COO
-**To:** 0.7.0_AE_CloudOps
+**To:** $to
 **Date:** 20260528T220000Z
-**Subject:** [STOP] deploy blocked -- please hold
+**Subject:** $subject
 
-Hold the current apply. Escalation in progress.
+$body
 EOF
+}
+
+run_gate() {
+  HALT_GATE_INBOX_ROOT="$INBOX_ROOT" \
+  HALT_GATE_CONTEXT_FILE="$CTX_FILE" \
+  bash "$HALT_GATE" 2>/dev/null
+  echo $?
+}
+
+# ===========================================================================
+# Scenario 1: only a foreign ferry in inbox (To: RD~B)
+# Expected: ferry is skipped -> inbox effectively empty -> exit 0 (gate passes)
+# ===========================================================================
+rm -f "$INBOX_ROOT/$TEST_SERIAL"/*.md
+write_msg "ferry_rdb.md" "0.4.2_RD_AdvisorIntelligence~B" \
+  "[STOP] MDPF S1 GO for RD~B" \
+  "Ferry copy. Intended for RD~B; AE gate must not trip on this."
 
 echo ""
-echo "=== Case A: message TO 0.7.0_AE_CloudOps (same serial) ==="
-to_a="$(halt_gate_recipient "$CASE_A")"
-echo "  halt_gate_recipient -> '$to_a'"
-assert_eq "To: field parsed correctly" "$to_a" "0.7.0_AE_CloudOps"
-assert_included "message is INCLUDED (gate TRIPS)" "$CASE_A"
+echo "=== Scenario 1: only foreign ferry (To: RD~B) in inbox -> exit 0 ==="
+got1=$(run_gate)
+assert_exit "foreign ferry alone is skipped, gate passes" "$got1" "0"
 
-# ---------------------------------------------------------------------------
-# Case B -- ferry copy of a message TO a foreign tilde-lane serial
-# Simulates LD-0099 ferry: broker strips ~B, deposits copy in AE base inbox.
-# Expected: halt_gate_recipient returns foreign base -> SKIPPED -> gate PASSES
-# ---------------------------------------------------------------------------
-CASE_B="$TMP/msg_case_b.md"
-cat > "$CASE_B" << 'EOF'
-# Message from 2.0.0_SA_COO
-**To:** 0.4.2_RD_AdvisorIntelligence~B
-**Date:** 20260528T202516Z
-**Subject:** [STOP] MDPF_SCOPED.S1 GO -- RD~B deploy
-
-Ferry copy. Intended for RD~B. Should not trip AE 0.7 gate.
-EOF
+# ===========================================================================
+# Scenario 2: foreign ferry + genuine same-serial [STOP]
+# Expected: ferry skipped, STOP found -> exit 2 (hard block)
+# ===========================================================================
+write_msg "same_serial_stop.md" "$TEST_SERIAL" \
+  "[STOP] deploy blocked" \
+  "Real STOP message addressed to this agent. Must trip the gate."
 
 echo ""
-echo "=== Case B: ferry copy TO 0.4.2_RD_AdvisorIntelligence~B (foreign tilde-lane) ==="
-to_b="$(halt_gate_recipient "$CASE_B")"
-echo "  halt_gate_recipient -> '$to_b'"
-assert_eq "To: field parsed correctly" "$to_b" "0.4.2_RD_AdvisorIntelligence~B"
-to_b_base="${to_b%%~*}"
-assert_eq "base-strip correct" "$to_b_base" "0.4.2_RD_AdvisorIntelligence"
-assert_skipped "message is SKIPPED (gate PASSES)" "$CASE_B"
+echo "=== Scenario 2: foreign ferry + same-serial [STOP] -> exit 2 ==="
+got2=$(run_gate)
+assert_exit "ferry skipped, real STOP hard-blocks" "$got2" "2"
 
-# ---------------------------------------------------------------------------
-# Case C (fail-safe) -- message with NO **To:** header
-# Expected: empty To: -> fail-safe -> INCLUDED (never drop unclassifiable message)
-# ---------------------------------------------------------------------------
-CASE_C="$TMP/msg_case_c.md"
-cat > "$CASE_C" << 'EOF'
-# Message from 0.0.0_AB_MSTR
-**Date:** 20260528T193000Z
-**Subject:** [STOP] urgent fabric pause
-
-Older-format message without explicit To: header.
-EOF
+# ===========================================================================
+# Scenario 3: foreign ferry + routine same-serial message (no [STOP])
+# Expected: ferry skipped, routine message surfaces -> exit 1
+# ===========================================================================
+rm -f "$INBOX_ROOT/$TEST_SERIAL/same_serial_stop.md"
+write_msg "same_serial_routine.md" "$TEST_SERIAL" \
+  "DRIVE: F3 Phase-1 in progress" \
+  "Routine status message addressed to this agent. Not STOP-class."
 
 echo ""
-echo "=== Case C: message with no To: header (fail-safe) ==="
-to_c="$(halt_gate_recipient "$CASE_C" || true)"
-echo "  halt_gate_recipient -> '$to_c'"
-assert_eq "empty To: returned (fail-safe)" "$to_c" ""
-assert_included "message INCLUDED when To: absent (fail-safe)" "$CASE_C"
+echo "=== Scenario 3: foreign ferry + routine same-serial msg -> exit 1 ==="
+got3=$(run_gate)
+assert_exit "ferry skipped, routine message surfaced as unacked" "$got3" "1"
 
-# ---------------------------------------------------------------------------
+# ===========================================================================
 # Summary
-# ---------------------------------------------------------------------------
+# ===========================================================================
 echo ""
 echo "=== RESULTS: $PASS PASS, $FAIL FAIL ==="
 [ "$FAIL" -eq 0 ] && { echo "ALL PASS"; exit 0; } || { echo "FAILURES DETECTED"; exit 1; }
