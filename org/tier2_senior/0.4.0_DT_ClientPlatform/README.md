@@ -75,25 +75,49 @@
 
 **Never call a portal deploy "complete" until CI shows green.**
 
+> **Rule 19 + DEV/PROD divergence (empirical 2026-05-28, ADVI_INFDEMO):** the
+> main portal tree NEVER leaves DEV. Do NOT `git checkout PROD && git merge
+> DEV --ff-only` — that strands the main tree on PROD and fails outright when
+> DEV/PROD have diverged (PROD carries cherry-pick hashes not on DEV). Promote
+> by **synthesizing a merge commit with `git commit-tree`** (no checkout, no
+> force-push). Verify DEV is a content-superset of PROD first so nothing is
+> dropped.
+
 ```bash
-# 1. Run typecheck — uses tsc -b --noEmit (matches CI exactly)
+# 0. RD/DE commits frontend to portal DEV (NOT DT — DT cannot commit frontend).
+#    DT promotes what is on origin/DEV; ensure RD has PUSHED (not just :5173 HMR).
+
+# 1. Typecheck — tsc -b --noEmit (matches CI). Pre-push hook re-runs on PROD push.
 cd portal && bun run typecheck
 
-# 2. Commit to portal DEV, fast-forward PROD
-git commit --only --author "..." -m "..." -- src/...
-git checkout PROD && git merge DEV --ff-only
+# 2. Push DEV
+git push origin DEV
 
-# 3. Push PROD (triggers CI deploy.yml)
-git push origin PROD
-git checkout DEV && git push origin DEV
+# 3. PROD promote via commit-tree (Rule 19 — main tree stays on DEV, no checkout).
+#    Pre-check: confirm DEV ⊇ PROD content (no genuine PROD-only commits to lose).
+git fetch origin
+TREE=$(git rev-parse origin/DEV^{tree})
+MERGE=$(GIT_AUTHOR_NAME="0.4.0_DT_ClientPlatform" GIT_AUTHOR_EMAIL="0.4.0_DT_ClientPlatform@opal.agent" \
+  git commit-tree "$TREE" -p origin/PROD -p origin/DEV -m "merge DEV->PROD: <desc>; PROD==DEV")
+git diff --stat "$MERGE" origin/DEV   # MUST be empty (tree identical to DEV)
 
-# 4. MANDATORY: verify CI completes successfully
-gh run watch $(gh run list --branch PROD --limit 1 --json databaseId -q '.[0].databaseId')
+# 4. Push the merge to PROD (triggers CI deploy.yml; hook runs typecheck)
+git push origin "$MERGE":PROD
+
+# 5. MANDATORY: verify CI completes successfully
+gh run watch $(gh run list --branch PROD --limit 1 --json databaseId -q '.[0].databaseId') --exit-status
 # Must show: Build ✓  Deploy to S3 + CloudFront ✓  Tag ✓
 # A push is NOT a deploy. CI failure = live site unchanged.
 
-# 5. Bump workspace pointer
-cd .. && .tools/safe-commit.sh --author "..." -m "bump portal pointer..." -- portal
+# 6. Bump workspace pointer — record DEV-HEAD via safe-commit.sh --only (CONTAMINATION-GUARDED),
+#    document the live deployed PROD merge-SHA + tag in the commit MESSAGE.
+#    DEV-HEAD is content-identical to live PROD (PROD tree == DEV tree per Rule 19).
+#    NEVER `git update-index --cacheinfo <PROD-SHA>` + bare `git commit` to force the
+#    gitlink to the exact PROD-SHA — bare commit forfeits safe-commit's index guard and
+#    WILL sweep a concurrent agent's staged file (incident a7310f2ce 2026-05-28).
+#    Convention APPROVED by ws COO 2026-05-28.
+cd .. && .tools/safe-commit.sh --author "0.4.0_DT_ClientPlatform <0.4.0_DT_ClientPlatform@opal.agent>" \
+  -m "bump portal pointer -> <DEV-HEAD>; live PROD=<merge-SHA>, tag portal-vX.Y.Z" -- portal
 git push origin CLOUD
 ```
 
