@@ -78,3 +78,50 @@
 ## Notes
 - Watcher: ran /watcher loop, multiple kill+relaunch cycles (auto-respawn-interrupt-lost handling); healthy at session end.
 - MSTR pre-reboot-log directive (2026-05-27T14:53Z) was stale (reboot already happened); this log supersedes.
+
+---
+
+## UPDATE — end-of-session state (~1740Z, holding per Andrew)
+
+### F11 (fee-sliced NNA) — SHIPPED + follow-ons
+- **Leg 0 (original fee_breakdown, ac95741d6): LIVE + CVO-verified + CLOSED.** AE 0.6.1 deployed (QA->PROD, rollback armed); CVO PASS on live leaderboard.json (20 entries, sum-invariant exact, Peter MAX nna 108.68M = 102.89M fee + 5.79M no_fee). The Exec Summary Fees toggle re-slices inflows/outflows/nna.
+- **Leg 1 (new_clients fee-split, 9950a3f2c): SHIPPED THIS SESSION (Andrew "just get clients fixed right now").** Was flattened (fee_breakdown.*.new_clients=None). Fix = any-fee-paying-account rule. I ran the gold regen (INF_D_00c --upload, rollback-first, backup _rollback/leaderboard.json.pre-F11newclients-20260528T173355Z), verified additive-only + sum-invariant (Peter MAX 198=184+14), AE 0.6.1 fired CF (I2UXSDO7FFZKPXRW9VXIZS1VQJ). LIVE.
+- **Leg 2 (Lifetime Activity real daily fee sub-streams, 982394f01 LAMBDA inf-portal-advisor-publisher): BUILT+VALIDATED, DEFERRED POST-DEMO (Andrew).** Root cause of "Lifetime Activity vs Flows NNA varying" = timeseries fee-split was SYNTHETIC (no fee sub-streams emitted) while leaderboard split is real. Fix emits nna/inflows/outflows _canonical_{fee_paying,no_fee} via same billing is_fee_earning join (sum-invariant exact, 2194 pts). Deploy = Terraform Lambda (AE/CloudOps lane) + RD adapter switch off synthetic ratio. OPEN AUA-feasibility gate (COO 173202Z): leg-2 emits NNA-split but NOT total_aua_fee_paying/_no_fee -> AUA toggle would go inert; needs either real per-account daily AUA-MV split (option a) or RD per-metric hasFeeSplitSeries (option b). Feasibility read pending (post-demo).
+
+### ETF retag (ADVI_INFDEMO — Andrew-direct ASAP) — SHIPPED + CVO PASS
+- PFDE/PFOE/PCHI mistagged security_type=single_stock (showed under "Name" not "Basket"). Root cause: INF_D_07a classifier over-trusted Orion product_sub_type (vendor tags these ETFs 'Common Stock' under 'Stock/ETF'); no assets_v2 field discriminates -> asset NAME only signal.
+- **Sweep caught a 4th: IDVZ** (the whack-a-mole COO warned of).
+- Fix (f2f813348): ETF-recovery branch (Stock/ETF universe only) — tight name pattern (\bETF\b|EXCHANGE TRADED|\bFD TR\b|\bFUND TRUST\b) + ticker backstop. Validated: EXACTLY 4 flip single_stock->etf, ZERO false positives across 487 tickers. Committed+pushed+safe-deploy MATCH; ran regen (backup _rollback/firm_concentrations.json.pre-ETFretag-20260528T172352Z); CF fired (AE~A I4HAK7... + AE0.6.1 I5FNUW... — 2 redundant, harmless). CVO PASS (display-artifact; full-universe on DS attestation per ADVI light-touch). LIVE.
+- Andrew also ran a parallel FE band-aid (RD overrides) for instant demo correction; RD pulls it now the data fix is live.
+
+### Billing "TTM" mislabel — FLAGGED + RD RELABELED
+- Andrew suspected fee imputation. Verified: NO imputation; fee_amount = raw Orion "Billing Fee Amount". Orion fee data STARTS 7/1/2025 (snapshots before = NaN; confirms Andrew's Q3-2025 recollection). The figure is CUMULATIVE-since-7/1/2025 (accrues quarterly: acct 650 $3.2K->6.1K->9.0K->11.8K), NOT trailing-12-months. "Total Fee (TTM)" label inaccurate.
+- RD relabeled "Total Fee (TTM)" -> "Total Fee (since 7/1/2025)" (c9fab075). Value untouched.
+
+### Account 67 NNA ($10.83 vs $183K AUA) — EXPLAINED (not a bug)
+- Funded 2023-01-04 by $108K "Internal Account Journal In" (intra-firm transfer), correctly EXCLUDED from NNA per cashflow taxonomy. Only external inflow = $10.83. AUA=market value (incl internal funding); NNA=external-net-new only. Idiosyncrasy, not canary.
+
+### HH 226 (Judith Ozinga) Unrealized/Realized/Billing provenance — call-prep
+- All VENDOR (Orion tax + billing APIs). We only sum per-account -> household + classify reg_type buckets + AUA-weighted avg fee. No modeling. Unrealized $790K / Realized $1.87M cost basis = entirely acct 650 (taxable Trust); 488 IRA + 67 Roth = $0 (Orion doesn't track cost basis for tax-advantaged).
+
+## Commits added this session-continuation
+- `9950a3f2c` INF_D_00c new_clients fee-split (leg-1, SHIPPED+CF).
+- `982394f01` inf-portal-advisor-publisher Lambda timeseries fee sub-streams (leg-2, DEFERRED post-demo).
+- `f2f813348` INF_D_07a ETF-recovery classifier (SHIPPED+CF).
+- TOs: `3765c054e` F4-followon; `a2c6d77d5` F11-followonB (timeseries); session-log `0a1acef96`.
+
+## Open / handoffs (end of session)
+- **F11 leg-2 (Lifetime Activity)**: DEFERRED post-demo. Lambda Terraform deploy (982394f01) + RD adapter switch + the AUA-split feasibility decision (option a real per-account daily AUA-MV vs option b RD per-metric). My feasibility read owed to COO post-demo.
+- **F4-followon (ADVI_INFDEMO.F4-followon)**: post-demo per-year attribution + $0.87M ticker-normalization residual.
+- **F10**: post-demo DS TO — day-by-day advisor revenue vs snapshot estimate (not yet authored).
+- **Standing queue UNTOUCHED**: ADVI_DEMOV1.003/004/006, ADVI_VALFIN.010.
+- **Stale gold/holdings/* ($348M) artifact**: confirm consumer + retire (lower-pri).
+- **HOLDING per Andrew (~1740Z)** — no new work until his advice; watcher live for reachability.
+
+### Demo-ready scorecard (going into the demo)
+- PFDE/PFOE/PCHI/IDVZ ETF retag: LIVE (Basket).
+- Fees toggle flow split (inflows/outflows/NNA): LIVE.
+- New-clients fee-split: LIVE.
+- Billing "Total Fee" relabel: LIVE (RD c9fab075).
+- Cost Basis by Year reconciliation ($166M): LIVE (per-year breakdown suppressed; totals carry).
+- Lifetime Activity NNA fee-split: SYNTHETIC (knowingly deferred post-demo).
