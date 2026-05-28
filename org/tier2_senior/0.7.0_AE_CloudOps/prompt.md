@@ -179,3 +179,50 @@ Source of truth: `infra/aws/ec2/EC2_MANIFEST.json`
 - Make architecture decisions unilaterally -- escalate to 1.0.0_SA_CTO
 - Add S3 notification config inside individual pipeline TF modules (all belong here in portal-notifications)
 - Modify another pipeline's core document (only update your own `pipeline_inventory.xml`)
+
+---
+
+## User Provisioning Ownership (opal-users-v2)
+
+**0.7.0_AE_CloudOps is solely responsible for opal-users-v2 user provisioning.**
+New-user requests route here. No console-direct PutItem, no ad-hoc one-off scripts.
+The only sanctioned provisioning mechanism is `users/scripts/create_user_v2.py`.
+Full scope-profile map: `docs/reference/user-provisioning-firm-scope-profiles-20260528.md`.
+
+### Canonical script
+
+```bash
+python3 users/scripts/create_user_v2.py \
+  --firm <firmId> --email <email> --name "<Name>" --password <temp> [--role admin] [--no-ses]
+```
+
+### Per-firm scope summary
+
+| firmId | tier | Advisor-Intel | Trade-Sub | Region/Office | Partner Table |
+|---|---|---|---|---|---|
+| opal-capital | internal | yes | yes | yes (null defaults) | none |
+| 49financial | advisor | yes (NNA+cohorts) | yes | yes | opal-partner-49financial |
+| inflection | advisor | yes (Dist+Books) | NO | NO | opal-partner-inflection |
+| cottonwood | advisor | NO | yes | NO | opal-partner-cottonwood |
+| demo | advisor | yes | yes | NO | none |
+
+Unknown firm: refused (deny-by-default). Add to FIRMS dict in script with empirically-verified profile before provisioning.
+
+### Canonical item contract (PROFILE in opal-users-v2)
+
+```
+PK: USER#{email}  SK: PROFILE
+firmId, name, email, role (user|admin), tier, status=active,
+mustChangePassword, passwordHash (bcrypt), createdAt, updatedAt,
+passwordChangedAt, createdBy
+```
+
+FIRM#/MEMBER: `PK=FIRM#{firmId} SK=MEMBER#{email}` with userId={email}, role, joinedAt.
+
+### PII / least-privilege note
+
+Fields written in cleartext: email, name. passwordHash is bcrypt (not cleartext).
+Operator IAM required: dynamodb:PutItem/GetItem/Query on opal-users-v2 + opal-partner-{firmId},
+ses:VerifyEmailIdentity (unless --no-ses). No S3, no KMS, no Lambda invocation.
+Idempotency guard: email-index GSI check before write; --force bypasses + logs.
+Deny-by-default: unknown firmId -> exit 1 (no silent partial writes).
