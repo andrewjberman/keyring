@@ -1,0 +1,15 @@
+{
+  "verdict": "CLEAN",
+  "project": "FIND_INSURE",
+  "artifacts_verified": ["v0.7.3 W1 classifier 0e53822a4", "regrade_v073_result.json (dual-bar)", "discrimination-eval-v0.7.3-20260528.json"],
+  "tools_gating_artifacts": ["DS~A .035 discrimination-eval harness (discrimination_pass)", "DS~B regrade_v073.py dual-bar"],
+  "axis_mechanical": "GREEN",
+  "axis_intent_coverage": "GREEN",
+  "axis_decision_useful": "GREEN",
+  "axis_constitution_coherence": null,
+  "constitution_drift_articles": [],
+  "timestamp_utc": "2026-05-28T05:22Z",
+  "mode": "comprehensive",
+  "source": "verify-channel-ws",
+  "notes": "v0.7.3 dual-bar re-verify PASS = Stage-2 release gate cleared. Independent read of actual re-grade output: dual_bar_pass=True, tn_false_positives=[], tp_false_negatives=[], discrimination_pass=true, fp_rate 1.0->0.0, precision 0.25->1.0. F-1 (class_diversity FP) + F-2 (american-equity 20->91 regression) both empirically fixed. lincoln 0.9415->present (TP-preserved); allianz 0.0117/american-equity 0.0/midland 0.0482->adjacent (TN-suppressed, enormous margin from T_present 0.50). Cambridge SPA-render-shell->null CORROBORATED (acquisition-failure not true-negative; AC-T2 escape-valve re-crawl recovery). Closes (b)(i) inadequate-solution-coverage empirically at v0.7.3. prevented_incident: universe-burn on 3/4-FP classifier averted. Detail: verify_channel_FIND_INSURE_v073_dual_bar_RE_VERIFY_PASS_stage2_cleared.md"
+}
