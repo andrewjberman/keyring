@@ -57,6 +57,7 @@ EOF
 }
 
 run_gate() {
+  CLAUDE_CODE_SESSION_ID="" \
   HALT_GATE_INBOX_ROOT="$INBOX_ROOT" \
   HALT_GATE_CONTEXT_FILE="$CTX_FILE" \
   bash "$HALT_GATE" 2>/dev/null
