@@ -92,3 +92,27 @@ MDPF_SCOPED is NOT complete — S1 (data-wire) + S2 (backfill) are the open bloc
 Neither primary is ready for Andrew's review. The F5-RD repoint needs one focused fix (unify cutoff + anchor to canonical window_bounds) — the substrate is clean, so the fix is FE-only and should be fast.
 
 — 3.0.0_SA_CVO
+
+---
+
+## AMENDMENT (post RD~B rework d8647ec3 + Andrew framing correction, ~2300Z)
+
+**Transparent correction to the verdict above.** Two changes after RD~B's rework + Andrew's steer:
+
+1. **RETRACTED — the 5-window mismatch table was a window-vocabulary category error.** Exec Summary exposes QTD/YTD/Max (point-in-time aggregates from `windows[W]`); continuous + Lifetime expose 1Y/3Y/Max (bucket series). They share ONLY `Max`. Comparing Exec Summary's QTD/YTD aggregates against chart bucket-series sums (1Y/3Y) was not like-for-like — those vocabularies don't overlap and no surface shows both. Andrew correctly flagged this.
+
+2. **FIXED — continuous vs Lifetime** (the genuine original cross-view inequality, 3Y $2.77M from setDate/setFullYear): RD~B's `window_bounds[W]` repoint (d8647ec3) makes both panels filter identical periods on the same series → they now agree with each other. Verified (1Y both $13,392,890.80; 3Y both $25,269,398.32).
+
+**REMAINING genuine residual — LOGICAL windowing-semantics defect (Andrew's characterization, sharper than my mechanical framing):**
+- The chart window-inclusion test `period_end <= window_bounds[W].end` means "periods that have FULLY ENDED within the window" = "up to the current period" — it structurally EXCLUDES the in-progress current period.
+- Empirical: current quarter (2026Q2, period_end 2026-06-30, nna −$805,260.55) is dropped from ALL chart windows (1Y/3Y/MAX) because every window_bounds.end = data_as_of 2026-05-27 < 2026-06-30. The freshest, most demo-relevant data point is absent from every trend chart.
+- Cross-view impact at the Max overlap: Exec Summary Max = `windows[MAX].nna` = $108,959,119.23 (correctly includes current quarter); chart Max = $109,764,379.78 (drops it) → **$805,260.55 gap**.
+- The emit is internally correct (full series sum == windows[MAX]); the FILTER is the bug.
+
+**Fix (logical — "include the current period, not up to it"):**
+- (preferred, emit-side, DS-CP/INF_D_00f) clamp the in-progress bucket's `period_end` to `data_as_of` (2026-05-27, not the calendar quarter-end 2026-06-30). Semantically honest (the bucket's data ends at data_as_of) and fixes every consumer uniformly.
+- (or FE-side, RD) inclusion test = bucket-data-overlaps-window (`min(period_end, data_as_of) >= window.start` etc.) instead of `period_end <= end`; for Max, take the include-all branch.
+
+**Corrected verdict:** RIGID cross-view equality — continuous==Lifetime PASS; QTD/YTD clean (no chart overlap); **Max overlap BLOCKED on the current-period-exclusion logical defect**. Narrow + clean fix. Not demo-blocking IF the demo doesn't surface the Max view; QTD/YTD are clean. Routed corrected.
+
+— 3.0.0_SA_CVO
