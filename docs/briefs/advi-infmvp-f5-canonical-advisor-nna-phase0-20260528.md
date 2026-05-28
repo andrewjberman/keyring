@@ -15,9 +15,13 @@ Peter's Advisor-NNA appears different in every panel:
 - Segment Analytics **continuous** (cumulative, trailing window): **−$274K**
 - Lifetime Activity: a third number
 
-**The CTO root-cause hypothesis (three different upstream series, each with its own aggregation) is empirically PARTIALLY incorrect.** All three surfaces already derive from the **same single source** — `gold/canonical/canonical_nna_{date}.parquet` (I_C01) — and **each is internally correct**. The divergence is **NOT a calculation bug and NOT competing definitions**. It is a **window-semantics mismatch**: each surface sums the same canonical series over a **different, non-comparable window**, with no shared per-advisor × window × cohort × fee-view field rendered identically.
+**Empirical finding (two parts):**
 
-This *simplifies* the fix: there is no competing-definition reconciliation to do. We unify the window vocabulary and emit ONE shared canonical field all three surfaces read for the matching window.
+1. **Three of four surfaces ARE canonical-consistent** — the Segment Analytics **snapshot** donut (`views.nna`, INF_D_04), the **Lifetime Activity** panel (`book.json` + `timeseries.json`, INF_D_02), and the combined `partner_analytics.json` windows — all sum the same source (`gold/canonical/canonical_nna_{date}.parquet`, I_C01) and are each internally correct. Their apparent disagreement is **window-semantics**: each shows the same canonical series over a different, non-comparable window, with no shared per-advisor field rendered identically.
+
+2. **The Segment Analytics CONTINUOUS chart (`cumulative_chart.json` `nna_adv`/`nna_geo`, INF_D_00d) is NUMERICALLY WRONG** — a genuine data-correctness bug, not just a window mismatch. `build_nna_adv_view` weekly-**samples** the NNA series (keeps 1 day per week via `_weekly_sample`, `daily[daily['date'].isin(sampled_dates)]`) and **discards the other ~6 days' flows**. Weekly-sampling is correct for AUA (a *stock* — sampling the level is lossless) but **corrupts NNA (a *flow*)**. Empirical: Peter's canonical NNA over the chart's exact 2Y window (all 476 flow-days) = **+$18.28M**; the weekly-sampled chart keeps 104 days → **+$7.32M** — **60% of the flow lost**.
+
+This means the fix has two parts: (a) emit ONE shared canonical field/series all surfaces read (window totals + a bucket-summed per-period series), and (b) the continuous chart repoints to the canonical series (its buggy `nna_adv`/`nna_geo` are superseded — no sampling, flows bucket-summed correctly).
 
 ---
 
@@ -29,7 +33,7 @@ All values below are sums of `canonical_nna.net_nna` (signed external flow = `da
 |---|---|---|---|
 | Snapshot donut `partner_analytics_quarterly.json` `views.nna.current.adv` | 2026 Q2 partial (= QTD) | **−$805,260.55** | == `partner_analytics.json` combined **QTD** by_advisor (−$805,260.55) ✓ EXACT |
 | Snapshot donut `views.nna.q1.adv` | calendar **Q1 '26** (Jan–Mar) | **+$2,354,781.18** | single-quarter slice — **this is the screenshot +$2.35M** |
-| Continuous `cumulative_chart.json` `nna_adv` (last pt) | cumulative over chart window | **−$260,000.26** | ≈ screenshot **−$274K** (trailing-1Y vintage) |
+| Continuous `cumulative_chart.json` `nna_adv` (INF_D_00d) | weekly-SAMPLED 2Y series | net **+$7.32M** over 2Y (sampled) | **WRONG** — canonical all-days over same window = **+$18.28M**; sampler dropped **60%** of flow (stock-vs-flow bug). The −$274K screenshot hero is an artifact of the FE diffing this corrupted, mostly-empty series. |
 | Lifetime `book.json` `headline.ytd_nna` | **YTD** 2026 | **+$1,549,520.63** | == combined **YTD** by_advisor (+$1,549,520.63) ✓ EXACT |
 | Lifetime `timeseries.json` last `nna_canonical` | **MAX** (since inception) | **+$108,959,119.23** | == combined **MAX** by_advisor ($108,959,119.23) ✓ EXACT |
 
@@ -44,9 +48,9 @@ All values below are sums of `canonical_nna.net_nna` (signed external flow = `da
 
 ## Q2 RESOLUTION
 
-> **A canonical Advisor-NNA series ALREADY EXISTS and is already the single source of truth: `gold/canonical/canonical_nna_{date}.parquet` (I_C01).** No competing or divergent upstream series exists. All four platinum NNA surfaces (snapshot donut, continuous chart, Lifetime book + timeseries, leaderboard) already derive from it and agree exactly when sliced to the same window.
+> **The canonical Advisor-NNA SOURCE already exists and is the single source of truth: `gold/canonical/canonical_nna_{date}.parquet` (I_C01).** No competing *definition* exists. The snapshot donut, Lifetime panel, and combined-windows block all derive from it correctly. The **continuous chart also reads it but corrupts it via lossy weekly-sampling** (the only true calc bug, not a definition divergence).
 
-The missing piece is a **single per-advisor × window × cohort × fee-view canonical aggregate field**, computed once over a **unified window vocabulary**, that all three FE surfaces read for their NNA display.
+Two missing pieces, both now shipped in `INF_D_00f`: (1) a **single per-advisor × window × fee-view canonical aggregate field** over a **unified window vocabulary** that all surfaces read for their NNA display; (2) a **bucket-summed per-period series** the continuous chart repoints onto so it stops sampling.
 
 ---
 
@@ -66,20 +70,31 @@ The missing piece is a **single per-advisor × window × cohort × fee-view cano
 
 ---
 
-## Proposed EMIT (ADDITIVE — Rule 17 spirit)
+## EMIT (ADDITIVE — Rule 17 spirit) — SHIPPED
 
-Emit a single canonical block/artifact keyed:
+New script `data/orion/scripts/gold/INF_D_00f.advisor_nna_canonical.py` → `platinum/firm/advisor_nna_canonical.json`. Fully additive (net-new artifact; touches no existing series). Structure:
 
-    advisor_nna_canonical[advisor_key][window][cohort][fee_view] = {nna, inflows, outflows, account_count}
+    firm: { windows: {<window>: {nna,inflows,outflows,account_count, fee_paying:{...}, no_fee:{...}}}, series: {weekly,monthly,quarterly: [{period,period_end,nna,inflows,outflows}]} }
+    advisors: { <advisor_key>: { windows: {...}, series: {...} } }
 
-computed once from `canonical_nna` (the same code path already proven correct in `INF_09.build_combined_partner_analytics` + `INF_D_00c` leaderboard). Candidate emit site: extend the existing `partner_analytics.json` `windows` block (already QTD/YTD/MAX by_advisor, canonical-exact) to the full window × cohort × fee_view matrix, OR a dedicated `platinum/firm/advisor_nna_canonical.json`. **No existing series pruned** — RD removes per-view *re-derivation* on the FE side, not the DS series.
+- **windows** (totals): QTD, YTD, MAX, 1Y, 3Y, q_current, q1, q2, q3 — each with fee_paying/no_fee split (F4 tie-out).
+- **series** (per-period): weekly/monthly/quarterly, **bucket-summed** (the correct flow aggregation — supersedes INF_D_00d's lossy sampling).
+
+Computed once from `canonical_nna` (same logic proven exact in `INF_09.build_combined_partner_analytics` + `INF_D_00c` leaderboard). Validated canonical-exact (Peter QTD/YTD/MAX/q1 to the cent; firm==sum(advisors); fee_paying+no_fee==total; quarterly-series-sum==MAX-window).
+
+**Cohort dimension (new-vs-existing client):** NOT in v1 of this emit — flagged as an additive follow-on reusing the F11 `hh_lifecycle` inception classification. Core spine (advisor × window × fee_view) shipped first; COO/CVO to confirm whether the client-type cohort split is needed in F5 or rides with F4.
 
 Downstream (COO authors at emit-RAVC2):
-- **RD (0.4.2):** repoint snapshot donut + continuous hero metrics + Lifetime Activity to read `advisor_nna_canonical` for the matching window; align the window vocabulary/labels so the same selection shows the same number across panels.
-- **CVO (3.0.0):** RIGID empirical gate — Peter + 1 control, displayed Advisor-NNA identical across all three surfaces for every window × cohort × fee_view, on real data.
+- **RD (0.4.2):** repoint snapshot donut + continuous (hero totals → `windows`; area/tooltips → `series`) + Lifetime Activity to read `advisor_nna_canonical` for the matching window. The continuous repoint also FIXES the 60%-flow-loss bug (it stops reading the sampled `nna_adv`). Align window vocab/labels.
+- **CVO (3.0.0):** RIGID empirical gate — Peter + 1 control, displayed Advisor-NNA identical across all three surfaces for every window × fee_view, on real data.
 
 ---
 
 ## AC5-DS-self-check (reconciliation of −$274K vs +$2.35M)
 
-**Resolved to a single explained model, not a single number** — because the two were measuring *different windows of the same canonical series*: +$2,354,781 = Peter's **calendar Q1 '26** net external flow (snapshot donut, Q1 selected); −$274K ≈ Peter's **trailing-~1Y cumulative** net external flow (continuous). Both are `Σ canonical_nna.net_nna` over their window, verified canonical-exact against the combined `partner_analytics.json` windows block (QTD −$805,261 / YTD +$1,549,521 / MAX +$108.96M all matched to the cent). The canonical field makes this explicit by exposing every window under one shared tuple so no surface can show a window-mismatched number unlabeled.
+**Resolved into two distinct causes, not one:**
+
+1. **+$2,354,781 (snapshot) is correct** — it is Peter's **calendar Q1 '26** net external flow (snapshot donut with Q1 selected), `Σ canonical_nna.net_nna` over Jan–Mar 2026. Verified canonical-exact against the combined windows block (snapshot `current` = QTD −$805,261; book ytd = YTD +$1,549,521; timeseries last = MAX +$108.96M — all matched to the cent).
+2. **−$274K (continuous) is WRONG** — it is NOT simply a different window. The continuous `nna_adv` weekly-**samples** the NNA flow series (INF_D_00d), keeping ~104 of 476 flow-days and dropping **60%** of Peter's flow (+$18.28M canonical all-days → +$7.32M sampled over the same 2Y window). The −$274K hero is the FE's endpoint-diff over this corrupted, mostly-empty series.
+
+So the spine defect is BOTH (a) mismatched/unlabeled window vocabularies across the canonical-correct surfaces AND (b) a real flow-sampling bug in the continuous chart. The canonical artifact resolves both: window totals give every surface one identical number per window×fee_view, and the bucket-summed `series` gives the continuous chart a correct per-period source (sum-within-period, no sampling) to repoint onto.
