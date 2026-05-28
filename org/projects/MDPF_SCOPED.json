@@ -19,7 +19,7 @@
   "thread_counter": 4,
   "threads": [
     {"to": "MDPF_SCOPED.S3", "owner": "0.4.0_DS_ClientPlatform~B", "status": "complete", "summary": "Multi-firm daily-parsed data architecture (SPINE) — backfill script + per-firm slice ca9a1ae34, COO RAVC2-ACCEPT confirmed"},
-    {"to": "MDPF_SCOPED.S1", "owner": "0.4.2_RD_AdvisorIntelligence~B", "status": "in_progress", "summary": "Partner-mode selector (mirror AdvisorIntelligence; scaffold-parallel)"},
+    {"to": "MDPF_SCOPED.S1", "owner": "0.4.2_RD_AdvisorIntelligence~B", "status": "complete", "summary": "Partner-mode selector COMPLETE (Phase-2-trend) — scaffold + per-firm timeseries wired to trend chart 931b22e3; 49F+Inflection re-scope; CTO flex-affirmed. Phase-2b (donut/distribution/metrics whole-page) = follow-on gated on DS~B per-firm-snapshot emit (within S3 scope)"},
     {"to": "MDPF_SCOPED.S4", "owner": "0.4.2_RD_AdvisorIntelligence~B", "status": "complete", "summary": "Canonical model naming (audit-first, 30 files)"},
     {"to": "MDPF_SCOPED.S2", "owner": "0.4.0_DS_ClientPlatform~B", "status": "in_progress", "summary": "Inflection 5/18 data shape — Andrew Option-2 Orion daily backfill confirmed; DS~B executing"}
   ]
