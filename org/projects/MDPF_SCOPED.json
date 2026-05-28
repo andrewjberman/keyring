@@ -11,8 +11,8 @@
     }
   ],
   "status": "active",
-  "phase": "Phase 1 EXECUTION-READY - PRD v0.1 SHIPPED 2026-05-28 (1.0.0_SA_CTO commit 486da0470), Andrew direct NOVEL. COO TO-decomposition COMPLETE 2026-05-28T~20:00Z (/drive): S3 (DS~B+AE multi-firm-daily-parsed-data-architecture, SPINE/investigation-first), S1 (RD~B partner-mode-selector mirror AdvisorIntelligence, scaffold-parallel), S4 (RD~B canonical-model-naming, audit-first 30 files), S2 (DS~B+RD~B inflection-5/18-data-shape, STAGED gated on S3 Inflection artifact). LANE ARCHITECTURE: MDPF runs on TILDE-LANES (~B) so ADVI_INFMVP keeps the DS-CP + RD base lanes (Andrew priority) - the two projects parallelize. S3 is backend spine (S1 modes + S2 split read its per-firm artifacts). GATING: tilde lanes 0.4.0_DS_ClientPlatform~B + 0.4.2_RD_AdvisorIntelligence~B not yet spawned - SPAWN-NEEDED routed to MSTR. OVERLAP RESOLVED w/ ADVI_INFMVP: keyword popup sole-owned by ADVI F3 (CTO confirmed); shared firmAccess.ts namespace - F2 (ADVI, RD base) lands before S1 (MDPF, RD~B) touches it.",
-  "blocking": "(1) SPAWN-NEEDED - tilde lanes 0.4.0_DS_ClientPlatform~B (S3+S2) + 0.4.2_RD_AdvisorIntelligence~B (S1+S4) not spawned; AE (S3 infra, light/investigation-first) = 0.7.0_AE_CloudOps base (MSTR spawning for ADVI F3 too). SPAWN routed to MSTR 2026-05-28T~20:01Z. (2) S3 Phase-0 must locate where Model Portfolios data is held today + cohort-split before designing per-firm structure. (3) S4 audit-first: LTC/LTA data-keys-vs-display (mapping layer or coordinated DS rename) - critical gate before any rename. (4) ADVI_INFMVP firmAccess.ts namespace shared - sequence F2(base) before S1(~B); keyword popup NOT here (ADVI F3). (5) Andrew Q1-Q4 (PRD section 8) non-blocking on Phase 0 - baked into TOs as flag-at-completion (Q1 admin-default, Q2 5/18 data-driven-recommend, Q3 LT/ULT abbrev, Q4 bucket prefix).",
+  "phase": "Phase 1 IN-EXECUTION 2026-05-28T~20:41Z. S4 COMPLETE: RD~B display-mapping layer (4 pages + shared libs) 06328859. S3 IN-PROGRESS: DS~B per-firm timeseries slice emit 6b21c8cf4; investigation-first architecture live. S1 IN-PROGRESS: RD~B scaffold Select Partner: dropdown d9e74ec3. S2 IN-PROGRESS: DS~B Orion daily backfill (Andrew Option-2 confirmed 65e8d9024). S3 is spine — S1 modes + S2 split read per-firm artifacts; S4 parallel completed. Tilde lanes both spawned + live.",
+  "blocking": "(1) S3 Phase-1 implementation ongoing — DS~B locating per-firm cohort data structure + emitting per-firm daily slice. (2) S2 gated on S3 Inflection artifact landing (DS~B managing both in same lane). (3) S1 RD~B integration: firmAccess.ts namespace shared with ADVI_INFMVP F2 (F2 DEV-landed first, no conflict). (4) Andrew Q1-Q4 PRD §8 baked into TOs as flag-at-completion.",
   "created": "2026-05-28",
   "pods": ["0.4"],
   "pipeline": "portal / model-portfolios",
@@ -21,6 +21,6 @@
     {"to": "MDPF_SCOPED.S3", "owner": "0.4.0_DS_ClientPlatform~B", "status": "in_progress", "summary": "Multi-firm daily-parsed data architecture (SPINE, investigation-first)"},
     {"to": "MDPF_SCOPED.S1", "owner": "0.4.2_RD_AdvisorIntelligence~B", "status": "in_progress", "summary": "Partner-mode selector (mirror AdvisorIntelligence; scaffold-parallel)"},
     {"to": "MDPF_SCOPED.S4", "owner": "0.4.2_RD_AdvisorIntelligence~B", "status": "complete", "summary": "Canonical model naming (audit-first, 30 files)"},
-    {"to": "MDPF_SCOPED.S2", "owner": "0.4.0_DS_ClientPlatform~B", "status": "staged", "summary": "Inflection 5/18 data shape (hard-gated on S3 Inflection artifact)"}
+    {"to": "MDPF_SCOPED.S2", "owner": "0.4.0_DS_ClientPlatform~B", "status": "in_progress", "summary": "Inflection 5/18 data shape — Andrew Option-2 Orion daily backfill confirmed; DS~B executing"}
   ]
 }

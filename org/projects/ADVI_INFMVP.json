@@ -11,17 +11,18 @@
     }
   ],
   "status": "active",
-  "phase": "Phase 1 EXECUTION-READY - PRD v0.1 SHIPPED 2026-05-28 (1.0.0_SA_CTO commit 5f6018778), Andrew direct NOVEL. COO TO-decomposition COMPLETE 2026-05-28T~19:46Z (/drive): F1 (DT assets-overview-zeroes investigation-first), F2 (RD inflection-sidebar-strip GO-immediate one-liner), F3 (pod 0.1 DS-MI keyword-popup-precompute, MKOV_DLYCLD subsumed), F5 (DS-CP canonical-advisor-nna SPINE/highest-pri), F4 (DS-CP feesplit-nna-tieout STAGED hard-gated on F5). F5 is the spine - all NNA views (Segment Analytics snapshot+continuous, Lifetime Activity) read one canonical source + agree exactly; CVO empirical cross-view-equality gate is acceptance bar not advisory. F4 depends on F5 (sub-buckets sum to canonical total). F1/F2/F3 parallel. F5/F4 RD-repoint + CVO-gate legs authored at DS-emit RAVC2 moment. Allocation/spawn requested of MSTR per Andrew direct 2026-05-28T~19:48Z.",
-  "blocking": "(1) SPAWN/ALLOCATION - all owner lanes (0.4.0_DT, 0.4.0_DS_ClientPlatform, 0.4.2_RD, 0.1.0_DS_MarketIntelligence, 0.7.0_AE_CloudOps) NOT_REGISTERED as of /drive 2026-05-28T~19:46Z; allocation/spawn requested of MSTR (Andrew-directed). TOs authored + pending; F2 GO-immediate on RD spawn. (2) F5 Phase-0 must determine whether a canonical Advisor-NNA field already exists to standardize on or DS must define+emit one (Q2). (3) F3 heavy MDPF_SCOPED overlap (general-portal keyword popup) - F3 TO instructs DS to COO-gate before Phase-1 infra build; reconcile when Andrew's sibling PRD lands (Q3). (4) F1 may spawn a DS-emit follow-on if root-cause = missing Inflection artifact (Q1) - DT surfaces to COO at root-cause moment.",
+  "phase": "Phase 1 IN-EXECUTION 2026-05-28T~20:41Z. F1 COMPLETE: DT fix shipped portal/DEV 7c03cd4b (FE firmId not firmOverride), CVO client-facing GO GRANTED e8641317d; PROD promotion pending (DT 0.4.0 post-crash). F2 COMPLETE portal/DEV. F3 IN-PROGRESS: root cause gpt-5.4 max_completion_tokens fix d73c281dd, AE deployed zip YP7HWByW, DS-MI gated-standby awaiting AE invoke result. F5 DS-EMIT COMPLETE (bcc29881c INF_D_00f canonical Advisor-NNA, RAVC2-ACCEPT 20:38Z; 60% NNA-flow calc-bug confirmed + fixed, not just window-semantics per CTO REPAIR-AMENDMENT 2a2f4acc0); F5-RD TO authored+GO'd to RD~B (3-view repoint). F4 GO'd (DS-CP executing fee-split tie-out, gated on F5 emit now done). CVO RIGID gate pre-positioned: awaiting F5-RD RAVC2-Request to fire cross-view-equality empirical check.",
+  "blocking": "(1) F1 PROD promotion: DT 0.4.0 needs GO re-send post-crash; portal/DEV fix 7c03cd4b + CVO client-facing GO already in hand. (2) F3 gated on AE TF-apply + invoke result; DS-MI in gated-standby. (3) F5-RD: RD~B (0.4.2~B) must repoint 3 NNA views to INF_D_00f canonical emit; CVO RIGID gate fires after RD RAVC2-Request. (4) F4 executing (DS-CP); gated on F5-RD+CVO PASS for final portal wire. (5) LD-0131 Layer-2 broker tilde-suffix fix DEFERRED (MSTR/Andrew-explicit per d64beaac8) — tilde-lanes functioning via filesystem-direct; L1 halt-gate-check.sh recipient-scoping shipped.",
   "created": "2026-05-28",
   "pods": ["0.1", "0.4"],
   "pipeline": "inf-pipeline / portal",
   "thread_counter": 5,
   "threads": [
-    {"to": "ADVI_INFMVP.F1", "owner": "0.4.0_DT_ClientPlatform", "status": "pending", "summary": "Assets Overview all-zeroes investigation-first"},
+    {"to": "ADVI_INFMVP.F1", "owner": "0.4.0_DT_ClientPlatform", "status": "complete", "summary": "Assets Overview all-zeroes — FE firmId fix 7c03cd4b; CVO client-facing GO GRANTED; PROD promotion pending DT post-crash"},
     {"to": "ADVI_INFMVP.F2", "owner": "0.4.2_RD_AdvisorIntelligence", "status": "complete", "summary": "Inflection sidebar Tools strip (GO-immediate one-liner)"},
-    {"to": "ADVI_INFMVP.F3", "owner": "0.1.0_DS_MarketIntelligence", "status": "in_progress", "summary": "Keyword popup async-precompute (MKOV_DLYCLD subsumed)"},
-    {"to": "ADVI_INFMVP.F5", "owner": "0.4.0_DS_ClientPlatform", "status": "pending", "summary": "Canonical Advisor NNA (SPINE/highest-pri)"},
-    {"to": "ADVI_INFMVP.F4", "owner": "0.4.0_DS_ClientPlatform", "status": "staged", "summary": "Fee-split NNA tie-out (hard-gated on F5)"}
+    {"to": "ADVI_INFMVP.F3", "owner": "0.1.0_DS_MarketIntelligence", "status": "in_progress", "summary": "Keyword popup async-precompute — root cause fixed d73c281dd; AE deployed; DS-MI gated-standby on AE invoke"},
+    {"to": "ADVI_INFMVP.F5", "owner": "0.4.0_DS_ClientPlatform", "status": "complete", "summary": "Canonical Advisor NNA SPINE — INF_D_00f emit bcc29881c RAVC2-ACCEPTED; 60%-flow calc-bug fixed"},
+    {"to": "ADVI_INFMVP.F5-RD", "owner": "0.4.2_RD_AdvisorIntelligence~B", "status": "pending", "summary": "3-view canonical NNA repoint + F4 fee-split render fold-in (CVO RIGID gate fires post-RAVC2)"},
+    {"to": "ADVI_INFMVP.F4", "owner": "0.4.0_DS_ClientPlatform", "status": "pending", "summary": "Fee-split NNA tie-out (GO'd, DS-CP executing)"}
   ]
 }
