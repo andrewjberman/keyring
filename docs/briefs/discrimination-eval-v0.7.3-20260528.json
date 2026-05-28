@@ -1,0 +1,186 @@
+{
+  "label": "v0.7.3",
+  "generated_at": "2026-05-28T05:09:28.320194+00:00",
+  "harness": "discrimination_eval.py (FIND_INSURE.035)",
+  "metrics": {
+    "tp": 1,
+    "fp": 0,
+    "tn": 3,
+    "fn": 0,
+    "eligible_total": 4,
+    "excluded_blocked_count": 6,
+    "precision": 1.0,
+    "recall": 1.0,
+    "fp_rate": 0.0,
+    "fp_list": [],
+    "fn_list": [],
+    "excluded_blocked": [
+      {
+        "company_slug": "cambridge-investment-research",
+        "expected": "TP",
+        "score_class": "BLOCKED_UPSTREAM"
+      },
+      {
+        "company_slug": "d-a-davidson-co",
+        "expected": "TP",
+        "score_class": "BLOCKED_UPSTREAM"
+      },
+      {
+        "company_slug": "lincoln-financial-group",
+        "expected": "TP",
+        "score_class": "BLOCKED_UPSTREAM"
+      },
+      {
+        "company_slug": "structured-asset-management",
+        "expected": "TP",
+        "score_class": "BLOCKED_UPSTREAM"
+      },
+      {
+        "company_slug": "liberty-bankers",
+        "expected": "TN",
+        "score_class": "BLOCKED_UPSTREAM"
+      },
+      {
+        "company_slug": "the-preferred-annuity-group",
+        "expected": "TN",
+        "score_class": "BLOCKED_UPSTREAM"
+      }
+    ],
+    "score_class_wm_consistency_errors": [],
+    "per_imo": [
+      {
+        "company_slug": "cambridge-investment-research",
+        "expected": "TP",
+        "rollup_score": 0,
+        "class_diversity": 0,
+        "wm_classification": null,
+        "score_class": "BLOCKED_UPSTREAM",
+        "contribution": {
+          "rollup_score": 0,
+          "class_diversity": 0
+        },
+        "disposition": "excluded-blocked-or-no-pages"
+      },
+      {
+        "company_slug": "d-a-davidson-co",
+        "expected": "TP",
+        "rollup_score": 0,
+        "class_diversity": 0,
+        "wm_classification": null,
+        "score_class": "BLOCKED_UPSTREAM",
+        "contribution": {
+          "rollup_score": 0,
+          "class_diversity": 0
+        },
+        "disposition": "excluded-blocked-or-no-pages"
+      },
+      {
+        "company_slug": "lincoln-financial-group",
+        "expected": "TP",
+        "rollup_score": 0,
+        "class_diversity": 0,
+        "wm_classification": null,
+        "score_class": "BLOCKED_UPSTREAM",
+        "contribution": {
+          "rollup_score": 0,
+          "class_diversity": 0
+        },
+        "disposition": "excluded-blocked-or-no-pages"
+      },
+      {
+        "company_slug": "lincoln-investment",
+        "expected": "TP",
+        "rollup_score": 100,
+        "class_diversity": 9,
+        "wm_classification": "present",
+        "score_class": "SCORED",
+        "contribution": {
+          "rollup_score": 100,
+          "class_diversity": 9
+        },
+        "disposition": "TP"
+      },
+      {
+        "company_slug": "structured-asset-management",
+        "expected": "TP",
+        "rollup_score": 0,
+        "class_diversity": 0,
+        "wm_classification": null,
+        "score_class": "BLOCKED_UPSTREAM",
+        "contribution": {
+          "rollup_score": 0,
+          "class_diversity": 0
+        },
+        "disposition": "excluded-blocked-or-no-pages"
+      },
+      {
+        "company_slug": "allianz-life",
+        "expected": "TN",
+        "rollup_score": 100,
+        "class_diversity": 7,
+        "wm_classification": "adjacent",
+        "score_class": "SCORED",
+        "contribution": {
+          "rollup_score": 100,
+          "class_diversity": 7
+        },
+        "disposition": "TN"
+      },
+      {
+        "company_slug": "american-equity-investment-life-insurance-company",
+        "expected": "TN",
+        "rollup_score": 20,
+        "class_diversity": 2,
+        "wm_classification": "adjacent",
+        "score_class": "SCORED",
+        "contribution": {
+          "rollup_score": 20,
+          "class_diversity": 2
+        },
+        "disposition": "TN"
+      },
+      {
+        "company_slug": "liberty-bankers",
+        "expected": "TN",
+        "rollup_score": 0,
+        "class_diversity": 0,
+        "wm_classification": null,
+        "score_class": "BLOCKED_UPSTREAM",
+        "contribution": {
+          "rollup_score": 0,
+          "class_diversity": 0
+        },
+        "disposition": "excluded-blocked-or-no-pages"
+      },
+      {
+        "company_slug": "midland-national",
+        "expected": "TN",
+        "rollup_score": 85,
+        "class_diversity": 7,
+        "wm_classification": "adjacent",
+        "score_class": "SCORED",
+        "contribution": {
+          "rollup_score": 85,
+          "class_diversity": 7
+        },
+        "disposition": "TN"
+      },
+      {
+        "company_slug": "the-preferred-annuity-group",
+        "expected": "TN",
+        "rollup_score": 0,
+        "class_diversity": 0,
+        "wm_classification": null,
+        "score_class": "BLOCKED_UPSTREAM",
+        "contribution": {
+          "rollup_score": 0,
+          "class_diversity": 0
+        },
+        "disposition": "excluded-blocked-or-no-pages"
+      }
+    ]
+  },
+  "fn_rate": 0.0,
+  "discrimination_pass": true,
+  "halt_reasons": []
+}
