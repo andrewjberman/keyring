@@ -20,7 +20,7 @@
   "threads": [
     {"to": "ADVI_INFMVP.F1", "owner": "0.4.0_DT_ClientPlatform", "status": "pending", "summary": "Assets Overview all-zeroes investigation-first"},
     {"to": "ADVI_INFMVP.F2", "owner": "0.4.2_RD_AdvisorIntelligence", "status": "complete", "summary": "Inflection sidebar Tools strip (GO-immediate one-liner)"},
-    {"to": "ADVI_INFMVP.F3", "owner": "0.1.0_DS_MarketIntelligence", "status": "pending", "summary": "Keyword popup async-precompute (MKOV_DLYCLD subsumed)"},
+    {"to": "ADVI_INFMVP.F3", "owner": "0.1.0_DS_MarketIntelligence", "status": "in_progress", "summary": "Keyword popup async-precompute (MKOV_DLYCLD subsumed)"},
     {"to": "ADVI_INFMVP.F5", "owner": "0.4.0_DS_ClientPlatform", "status": "pending", "summary": "Canonical Advisor NNA (SPINE/highest-pri)"},
     {"to": "ADVI_INFMVP.F4", "owner": "0.4.0_DS_ClientPlatform", "status": "staged", "summary": "Fee-split NNA tie-out (hard-gated on F5)"}
   ]
