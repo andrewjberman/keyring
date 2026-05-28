@@ -90,6 +90,15 @@ halt_gate_sender() {
   grep -m1 '^# Message from ' "$1" 2>/dev/null | sed 's/^# Message from //' | tr -d '\r'
 }
 
+halt_gate_recipient() {
+  # Message files carry the intended recipient on a "**To:** <serial>" line.
+  # Empty string if absent (older files / non-broker writes) -- callers must
+  # fail SAFE on empty (include the message; never drop a possible STOP we
+  # cannot classify). Used by the LD-0131 recipient-scoping filter.
+  grep -m1 '^\*\*To:\*\*' "$1" 2>/dev/null \
+    | sed 's/^\*\*To:\*\* *//' | tr -d '\r' | sed 's/[[:space:]]*$//'
+}
+
 halt_gate_age_label() {
   # Human age from file mtime. Falls back to "unknown" if mtime is unreadable.
   local f="$1" now mtime delta
@@ -151,9 +160,27 @@ halt_gate_check() {
   scan_serials=("$serial")
   [ "$base" != "$serial" ] && scan_serials+=("$base")
 
+  # LD-0131 Layer 1 -- recipient-scoping. A HALTGT must only trip on messages
+  # addressed to the RUNNING agent. LD-0099 filesystem-direct ferries to a
+  # tilde-lane (broker strips the ~suffix per LD-0105) scatter EXTRA copies into
+  # UNRELATED base inboxes; those land at top-level here and falsely trip the
+  # wrong agent's gate (DS-MI/AE hit by RD~B ferries 2026-05-28; the
+  # MSTR-FERRY-to-CL-CTO anchor at line ~49). Filter: skip a file whose intended
+  # recipient (**To:**), base-stripped, differs from the running serial's base.
+  # FAIL-SAFE: a file with no parseable To: is INCLUDED -- never drop a message
+  # we cannot classify (guardrail (i): no regression on a genuine same-serial
+  # STOP). Same-base messages (incl. sibling ~lanes + the base itself) are kept,
+  # matching the scan-both-serial-and-base philosophy and MSTR's anti-over-scope
+  # bound (do NOT suppress same-base pendings).
+  local to_field to_base
   for s in "${scan_serials[@]}"; do
     while IFS= read -r f; do
       [ -n "$f" ] || continue
+      to_field="$(halt_gate_recipient "$f")"
+      if [ -n "$to_field" ]; then
+        to_base="${to_field%%~*}"
+        [ "$to_base" != "$base" ] && continue
+      fi
       msg_files+=("$f")
       if halt_gate_is_stop_class "$f"; then
         stop_files+=("$f")
