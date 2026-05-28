@@ -116,7 +116,7 @@ if ($env:OPAL_AGENT_SERIAL -and -not $env:FORCE_SPAWN) {
         exit 1
     }
 
-    # Live-process concurrency cap: max 16 spawned-agent PowerShell windows
+    # Live-process concurrency cap: max 20 spawned-agent PowerShell windows
     # alive at any moment. Distinct from the rate cap above -- rate cap limits
     # spawns/time, this caps simultaneous instances. Count via Win32_Process
     # CommandLine grep for the marker; kills + closed windows naturally release
@@ -126,12 +126,15 @@ if ($env:OPAL_AGENT_SERIAL -and -not $env:FORCE_SPAWN) {
     # obligated to run 16 simultaneously if there is nothing for the associated
     # agents to do, it just means that is the cap. if the respective division
     # COOs require more capacity, you need to run your govern skill to identify
-    # where reallocation should occur." Cap is ceiling, not target;
-    # reallocation-before-spawn discipline preserved (see CY-0087 + LD-0049).
-    # Fail-open on CIM query failure (loud audit) so a COM-service blip doesn't
-    # silently block MSTR ops -- the rate cap above is still in force as the
-    # second layer.
-    $concurrencyCap = 16
+    # where reallocation should occur." Raised again 16->20 by Andrew sovereign
+    # 2026-05-28T~03:20Z verbatim "We can raise cap to 20" in response to MSTR
+    # cap-saturation surfaced after CL 5 + ws 5 spawn batch fulfilled 10/14
+    # cross-fabric /allocation demand (LD-0129). Cap remains ceiling, not target;
+    # reallocation-before-spawn discipline preserved (see CY-0087 + LD-0049 +
+    # LD-0129). Fail-open on CIM query failure (loud audit) so a COM-service
+    # blip doesn't silently block MSTR ops -- the rate cap above is still in
+    # force as the second layer.
+    $concurrencyCap = 20
     try {
         $liveSpawned = @(Get-CimInstance Win32_Process -Filter "Name='powershell.exe'" -ErrorAction Stop |
             Where-Object { $_.CommandLine -and $_.CommandLine -like "*$marker*" })
