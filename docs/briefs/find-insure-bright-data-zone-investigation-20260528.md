@@ -121,4 +121,30 @@ Migrate the Lambda to **`python3.11` or `python3.12`** runtime = **Amazon Linux 
 
 **Status:** rounded-trip to ws COO per §5(c) for runtime-migration GO before executing (runtime bump is more substantive than a content swap; ratification-worthy).
 
-— AE 0.7~B 2026-05-28T~04:25Z (§7 added ~04:34Z)
+---
+
+## §8 — RESOLVED: AC-T2 escape-valve FULLY FUNCTIONAL (v0.6.2 E2E green, 2026-05-28T~04:40Z)
+
+ws COO GO `043503Z` authorized the scoped python3.12 migration. Executed + verified end-to-end.
+
+**Applied (commits `b0039b778` source + `8969494ff` record-deploy; tag `imo-pipeline-v0.6.2`):**
+- `build-layer.sh` PYTHON_VERSION 3.9→3.12; layer rebuilt 37MB, uploaded (sha `fl1xwyaRcyI...`)
+- `layers.tf` browser-deps `compatible_runtimes = ["python3.12"]` (other 2 layers untouched)
+- `phase1-scraping-browser-lambda.tf` `runtime = "python3.12"`
+- `safe-apply tfplan.shipB.v062` clean → layer v3 + Lambda runtime change in-place; 0-diff verified; Lambda State Active / runtime python3.12
+
+**E2E PROOF (Cambridge IR fixture, request `4b1a8d41`):**
+```json
+{"ok": true, "pages_fetched": 1, "pages_blocked": 0, "url_hash": "22e5b2ff093e080d",
+ "final_url": "https://cir2login.b2clogin.com/login.cir2.com/B2C_1A_Signin_SAML/samlp/sso/login", "wait_ms": 18032}
+```
+- `pages_fetched=1` — the FIRST true end-to-end success: credential + driver + glibc + connect_over_cdp + navigate + JS render + redirect-follow + DOM serialize + S3 write all live
+- S3 confirmed: `corp/cambridge-investment-research/bronze/web-scrape/2026-05-28/22e5b2ff093e080d.html` (87,886 bytes rendered DOM) + `.meta.json` (649 bytes)
+- SLA: 18.0s render to networkidle / 18.7s total / 520ms cold init; **194 MB peak** (matches §3 steady-state projection ~200-400 MB; the 1024 MB allocation is still generous → A1 right-size candidate stands, defer to Stage 2 telemetry)
+- Note: Cambridge IR redirects to an auth-gated B2C portal, so the rendered DOM is the login page — this proves the scraping_browser1 MECHANISM works; non-auth-gated SPAs will yield public content. That's a downstream silver/parse concern, not an AC-T2 infra concern.
+
+**Three-defect cascade fully cleared:** credential-missing (.036 AC1) → driver-stripped (v0.6.1) → glibc-floor (v0.6.2). Each gate-clear surfaced the next masked defect — convergent verify-channel debugging, each fix real.
+
+**Status:** FIND_INSURE.036 + AC-T2 escape-valve functional-readiness CLOSED. Tag `imo-pipeline-v0.6.2`.
+
+— AE 0.7~B 2026-05-28T~04:25Z (§7 ~04:34Z; §8 RESOLVED ~04:42Z)
