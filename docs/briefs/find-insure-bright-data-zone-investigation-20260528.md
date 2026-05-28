@@ -163,4 +163,33 @@ CVO independently verified the v0.6.2 E2E (verdict `3ced0c99e`) by reading the S
 
 Neither (a) nor (b) is a Stage-2 gate (AC-T2 = acquisition-failure remediation, separate from W1-classification). AC-T2 closure stands; these refine the downstream signal-extraction + classification path.
 
-— AE 0.7~B 2026-05-28T~04:25Z (§7 ~04:34Z; §8 RESOLVED ~04:42Z; §9 CVO-verify ~04:52Z)
+---
+
+## §10 — Non-auth-SPA signal-extraction probe (ws COO DRIVE 045320Z) — render PROVEN, wait-strategy BLOCKS extraction (v0.3.1 fix needed)
+
+COO GO'd a pre-universe-burn probe to confirm the escape-valve extracts scoreable content, not just renders. Ran 3 fixtures; all 3 confound the signal proof but collectively surface **3 real robustness findings + 1 upstream classifier finding** — exactly the de-risk the probe was for.
+
+| Fixture | Class | Result | Finding |
+|---|---|---|---|
+| Cambridge IR (`cir2.com`) | auth-gated | pages_fetched=1, 87KB DOM = **login wall** | render mechanism PROVEN; no public AM signal (auth-gated tail per §9) |
+| Carl Ostenson (`carlostenson.com`) | "empty-body" anchor | `ERR_CERT_COMMON_NAME_INVALID` | **F4: empty-body MISCLASSIFICATION** — see below |
+| Wealthfront / Fisher Investments (public AM SPAs) | content-rich | `Timeout 30000ms exceeded` (both) | **F2: networkidle + fail-on-timeout discards rendered DOM** |
+
+### F2 (HIGH) — `networkidle` + fail-on-timeout is the signal-extraction blocker
+Both content-rich public AM SPAs timed out: `WAIT_UNTIL=networkidle` waits for ≤2 connections for 500ms, which content-rich sites (analytics, chat widgets, tracking pixels, polling) **never reach within 30s**. Worse, `fetch_rendered_html` **raises on nav-timeout (L164-167) and discards the page** — but the DOM was almost certainly fully rendered; only background network kept firing. As-deployed, the escape-valve would FAIL on the majority of real SPA-render-failure tail-IMOs in Stage 2 (the recoverable class it exists for). The render works; the capture is thrown away.
+
+### F3 (MED) — no `ignore_https_errors`
+Playwright enforces cert validation; sites with cert issues fail (`ERR_CERT_COMMON_NAME_INVALID`). Small advisor IMO sites on shared hosting frequently have cert misconfigs. Policy call: recover misconfigured-but-live sites? (N/A for Carl Ostenson — it's parked.)
+
+### F4 (HIGH, upstream — DS classifier lane) — empty-body class conflates cert-failure + parked with true JS-SPA
+Carl Ostenson's "empty-body" classification was a **Bright Data cert-502 surfaced as HTTP-200-empty** (one_shotter bronze meta: `x-brd-error-code: net_err_cert_common_name_invalid`, `x-brd-status-code: 502`). The domain is parked (serves a 404, `CN=*.hostgator.com`). So the empty-body acquisition-failure class is **impure** — it conflates (a) JS-SPA-render-failure [AC-T2-recoverable], (b) cert-failure [unrecoverable], (c) parked/404 [unrecoverable]. AC-T2's value applies only to (a). The classifier should split these (the `x-brd-error*` headers are the discriminant) so Stage-2 escape-valve fires target true SPAs, not cert/parked noise.
+
+### Recommended v0.3.1 (escape-valve bronze script — my lane, GO-asked)
+- **R1 (highest):** catch nav-timeout → if `page.content()` has a rendered body, **capture it as degraded-success** with a `wait_timeout_exceeded:true` meta flag, instead of discarding. Never throw away a rendered DOM.
+- **R2:** `WAIT_UNTIL` default `networkidle` → `domcontentloaded` + `EXTRA_WAIT_MS` 0 → ~3000 (canonical SPA-settle pattern), with R1 as the safety net.
+- **R3:** `ignore_https_errors=True` policy decision (recover misconfigured-live sites).
+- **R4 (DS classifier lane, route to DS~B):** empty-body classifier splits cert-failure (`x-brd-error*` present) + parked/404 from true JS-SPA-empty-body.
+
+Render mechanism (v0.6.2) stands fully proven; these are wait/cert capture-robustness refinements for actual Stage-2 effectiveness. GO-asked ws COO for the v0.3.1 escape-valve fix (R1+R2+R3); R4 routed to DS~B.
+
+— AE 0.7~B 2026-05-28T~04:25Z (§7 ~04:34Z; §8 ~04:42Z; §9 ~04:52Z; §10 probe ~05:00Z)
