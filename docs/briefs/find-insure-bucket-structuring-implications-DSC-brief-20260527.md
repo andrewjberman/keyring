@@ -409,11 +409,11 @@ CVO Q-B baseline = `serving/scoring.json` history-only. **This artifact's recomm
 | `serving/scoring.json` | **YES** (CVO Q-B ratified) | Methodology changes (scoring weight tuning) are intentional + cite-able |
 | `serving/employees.json` | **NO at v0.1; YES at v0.2** for opt-out audit trail | Routine overwrite at v0.1; opt-out compliance audit at v0.2 requires being able to prove "we suppressed this contact within the legal window" → snapshot pre+post opt-out events |
 | `serving/companies.json` | **NO at v0.1** | Routine overwrite per CVO baseline |
-| `serving/opt_out_register.json` (NEW) | **YES** (immutable append-log semantic) | GDPR audit trail — every opt-out event captured, never modified or deleted |
+| `serving/opt_out_register/{webhook_ts}_{contact_id}.json` (NEW; per-event object prefix per CVO soft-fix 01:33Z) | **YES** (truly immutable append-log via per-event objects; no read-modify-write) | GDPR audit trail — every opt-out event a separate immutable S3 object; never modified or deleted; concurrent-webhook-race eliminated structurally |
 
-**`serving/opt_out_register.json` is a NEW serving file** this artifact proposes for the v0.1 GDPR compliance surface. Distinct from the per-corp `silver/linkedin/opt_out/` (which is per-IMO-grouped per the medallion structure) — the serving register is **cross-IMO unified** for IR-team-wide opt-out lookup (a single contact may appear across multiple IMOs' employee lists; central register prevents per-IMO-silo drift).
+**`serving/opt_out_register/` is a NEW serving prefix** this artifact proposes for the v0.1 GDPR compliance surface — **per-event immutable S3 object pattern** (refined per CVO CORROBORATE-with-CONCERN soft-fix option (a) 2026-05-28T01:33Z; implementation at commit `03b20bbfd`). Each opt-out webhook delivery writes a separate immutable S3 object at `serving/opt_out_register/{webhook_timestamp_iso}_{contact_id}.json`; eliminates the read-modify-write race that single-file `serving/opt_out_register.json` allowed under concurrent webhook deliveries. Distinct from the per-corp `silver/linkedin/opt_out/` (which is per-IMO-grouped per the medallion structure) — the serving register is **cross-IMO unified** for IR-team-wide opt-out lookup (a single contact may appear across multiple IMOs' employee lists; central register prevents per-IMO-silo drift).
 
-Implementation: opt-out webhook Lambda writes to BOTH (a) per-corp `silver/linkedin/opt_out/{date}/{webhook_id}.parquet` (per-IMO lineage) AND (b) appends to `serving/opt_out_register.json` (cross-IMO authoritative register). Phase 2A `.024` AC9 pre-flight check reads (b).
+Implementation: opt-out webhook Lambda writes to BOTH (a) per-corp `silver/linkedin/opt_out/{date}/{webhook_id}.parquet` (per-IMO lineage) AND (b) per-event PutObject under `serving/opt_out_register/` prefix (cross-IMO authoritative register). Phase 2A `.024` AC9 pre-flight check uses the DDB `find_insure_opt_out` table (the actual compliance gate); the S3 register is audit-trail-only and read via `ListObjectsV2(Prefix="serving/opt_out_register/")` + `GetObject` per matched key (out of scope of webhook receiver). See [[feedback_immutable_per_event_S3_pattern_eliminates_RMW_race]].
 
 ### §4.4 Bronze retention (CVO §4 lifecycle)
 
@@ -529,7 +529,7 @@ Per PRD v0.4 §3.1 — SSE-KMS scope = `silver/linkedin/`, `silver/job-posting/`
 - `corp/{slug}/bronze/linkedin/{endpoint}/{date}/` ← SSE-KMS
 - `corp/{slug}/silver/linkedin/{endpoint}/{date}/` ← SSE-KMS
 - `corp/{slug}/gold/linkedin/{date}/` ← SSE-KMS (per PRD §3.1 gold/linkedin is PII-scope; consumer-readable summaries are derived but underlying data is PII-bearing)
-- `serving/{employees,opt_out_register}.{json,parquet}` ← SSE-KMS
+- `serving/{employees.{json,parquet}, opt_out_register/*.json}` ← SSE-KMS
 
 **Non-LushaAI artifacts continue under SSE-S3:**
 - `corp/{slug}/{bronze,silver,gold}/web-scrape/` ← SSE-S3 (Phase 1; no PII)
@@ -549,13 +549,13 @@ Cross-referenced against `org/tier1_exec/3.0.0_SA_CVO/responses/20260527T1620Z_t
 | §2.1 PRD §3.2 per-IMO corp/{slug}/{medallion}/{channel}/{date}/ layout CORROBORATE | This artifact REFINES `linkedin/` channel sub-structure as per-endpoint at silver, per-data-class at gold | **Aligned — refinement within CVO frame** |
 | §2.2 5 root prefixes (code/+config/+telemetry/+qa/+archives/) | This artifact does NOT touch root prefixes; operates within `corp/{slug}/linkedin/` channel scope | **Aligned — orthogonal scope** |
 | §3.1 YYYY-MM-DD UTC date format | This artifact's `{date}` placeholder MUST be YYYY-MM-DD UTC | **Aligned** |
-| §3.2 append-by-date for corp/medallion + overwrite-in-place for serving | This artifact CORROBORATES + extends with §4.3 history-archive recommendations for `serving/opt_out_register.json` (NEW) | **Aligned + extends** |
+| §3.2 append-by-date for corp/medallion + overwrite-in-place for serving | This artifact CORROBORATES + extends with §4.3 history-archive recommendations for `serving/opt_out_register/` (NEW per-event prefix; per-event PutObject pattern eliminates write-race; never modified) | **Aligned + extends** |
 | §3.3 slug normalization via shared util | This artifact's `corp/{slug}/` paths inherit; no new convention | **Aligned** |
 | §4 6-prefix lifecycle policy | This artifact CORROBORATES bronze NEVER-expire (Lusha re-fetch cost-bearing); proposes NO new lifecycle rules | **Aligned** |
 | §5 IAM least-privilege with delete-restrict on gold/silver/serving/config/code | This artifact CORROBORATES — opt-out webhook receiver writes to silver but does NOT delete | **Aligned** |
 | §9 cost-discipline gates (Lambda-side) with `config/cost-budgets-{version}.json` + per-IMO `lusha_credits_phase_2a: 50` | This artifact OPERATIONALIZES — §5 DDB cost-state schema is the read-side mechanism for the §9 budgets | **Aligned + operationalizes** |
 | §10 Q-A NO latest/ symlinks | Not applicable (this artifact doesn't propose any) | **Aligned** |
-| §10 Q-B YES serving/_history/scoring only | This artifact EXTENDS Q-B with `serving/opt_out_register.json` immutable-log + `serving/employees_history/` v0.2 candidate | **Extension recommendation** |
+| §10 Q-B YES serving/_history/scoring only | This artifact EXTENDS Q-B with `serving/opt_out_register/` per-event immutable-object prefix (CVO soft-fix option (a) per 03b20bbfd) + `serving/employees_history/` v0.2 candidate | **Extension recommendation** |
 | §10 Q-C centralize config under root | This artifact's `cost-budgets-{version}.json` lives at `config/` root per CVO | **Aligned** |
 | §10 Q-D SINGLE bucket | This artifact operates within single `opal-data-imo` bucket | **Aligned** |
 | §11 banking observation #2 (`docs/templates/aws-bucket-greenfield.md` skeleton) | Not in scope of this artifact; FYI for future FIND_xxxxx | **Aligned — informational** |
@@ -566,7 +566,7 @@ Cross-referenced against `org/tier1_exec/3.0.0_SA_CVO/responses/20260527T1620Z_t
 
 ## §8. Open questions (route to ws CTO via COO if material)
 
-- **Q-BS1 (extension):** Adopt `serving/opt_out_register.json` immutable append-log as NEW serving file? Default-recommendation YES per GDPR audit trail need. Material to v0.1 Phase 2A `.024` ACs — needs CTO ratify before opt-out-webhook Lambda hardcodes the write path.
+- **Q-BS1 (extension):** Adopt `serving/opt_out_register/` per-event immutable S3 object prefix as NEW serving location? Default-recommendation YES per GDPR audit trail need. **RESOLVED 2026-05-28T01:33Z** via ws CVO CORROBORATE-with-CONCERN option (a) soft-fix on `.011` AC5 (commit `03b20bbfd`): per-event pattern adopted; eliminates concurrent-webhook race that single-file pattern would have allowed. ws COO RAVC2-ACCEPT-CLOSE 02:04Z confirmed.
 - **Q-BS2 (extension):** Adopt `serving/employees_history/{date}/` at v0.2 for opt-out audit trail beyond just register? Default-recommendation YES at v0.2; flag at v0.1 ship.
 - **Q-BS3 (operational):** Cost-state DDB write cadence — end-of-run atomic (this artifact's recommendation) vs per-call. Default-recommendation end-of-run for v0.1; tighten to per-call if empirical overshoot exceeds PRD §3.8 5% tolerance.
 - **Q-BS4 (architectural):** Bronze JSON dump granularity — one-file-per-Lambda-invocation per endpoint (this artifact's recommendation) vs one-file-per-IMO-per-endpoint. Default-recommendation one-file-per-invocation for re-run isolation; consider per-IMO-rollup if S3 small-files cost becomes issue (~30 IMOs × 7 endpoints × daily = ~210 files/day — acceptable).
