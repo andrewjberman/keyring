@@ -1,0 +1,30 @@
+{
+  "verdict": "CLEAN",
+  "project": "FIND_INSURE",
+  "leg": "phase1_modeA2_am_prominence_scoring_correctness",
+  "artifacts_verified": "99 gold web-scrape score.json (corp/{slug}/gold/web-scrape/2026-05-27/)",
+  "tools_gating_artifacts": ["score_web_gold.py v0.7.3", "scoring-weights-v0.3.json", "term-taxonomy-v3.json"],
+  "axis_mechanical": "GREEN",
+  "axis_intent_coverage": "GREEN",
+  "axis_decision_useful": "GREEN",
+  "axis_constitution_coherence": null,
+  "constitution_drift_articles": [],
+  "key_findings": {
+    "exists": "99/99",
+    "fresh": "all LastModified 2026-05-28T05:50-06:22Z single run window",
+    "scaled": "99/99",
+    "not_frozen": "99 distinct ETags / 99",
+    "taxonomy_version": "v3 on all 99 (TF env-pin v1->v3 confirmed deployed)",
+    "rollup_vs_aggregator_mismatch": 0,
+    "classifier_recompute_mismatch": 0,
+    "wm_classification_dist": {"present": 7, "adjacent": 17, "absent": 23, "null_blocked_upstream": 52},
+    "tn_suppress": "annuity-carrier FP class (allianz/eagle/national-life/midland/metlife) all amp<0.05 -> not present; v0.7.1 regression fixed; fp_rate=0",
+    "tp_preserve": "7 present all amp>=0.50 and hs_weight>0; no logic violations",
+    "calibration_drift": "none; 0.50 cleanly separates present[0.68-1.0] from suppressed[0.002-0.34]",
+    "unrecoverable_tail": "52 null = blocked_upstream (parked-404 26, robots 19, cert-fail 4, empty-body 2); bronze median 0KB vs classified 1520KB = absent-data not broken-compute",
+    "effective_yield_observation": "47/99 usable classifications; non-blocking design-expected"
+  },
+  "timestamp_utc": "2026-05-28T12:40Z",
+  "mode": "comprehensive",
+  "source": "verify-channel-ws"
+}
