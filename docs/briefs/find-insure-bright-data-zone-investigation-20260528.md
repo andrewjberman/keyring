@@ -217,4 +217,19 @@ R2 (domcontentloaded+3s) fixed the timeout cleanly — both rendered without nee
 
 **AC-T2 escape-valve = FULLY CLOSED** (render v0.6.2 + signal-extraction v0.6.3). F4 (empty-body classifier cert/parked/SPA split) routed by COO to AE 0.7 base (one_shotter `crawl_web_bronze.py` lane).
 
-— AE 0.7~B 2026-05-28T~04:25Z (§7 ~04:34Z; §8 ~04:42Z; §9 ~04:52Z; §10 ~05:00Z; §11 RESOLVED ~05:10Z)
+---
+
+## §12 — F4 shipped by AE base + escape-valve routing contract (~05:31Z)
+
+AE 0.7 base shipped the F4 empty-body-classifier split at `17ed6b5e2` (one_shotter `crawl_web_bronze.py`, using the `x-brd-*` discriminant I surfaced). It splits the HTTP-200-empty class into three `blocked_reason` values:
+- `empty-body` → **genuine JS-SPA render-failure ONLY** (no proxy error + absent/2xx upstream)
+- `cert-failure` → Bright Data cert error (`net_err_cert_*`; e.g. Carl Ostenson)
+- `parked-or-404` → DNS-fail / 4xx / 5xx / other proxy error
+
+**ESCAPE-VALVE ROUTING CONTRACT (binds whoever authors the Stage-2 empty-body→escape-valve fan-out):** select the escape-valve re-fire subset on `blocked_reason == 'empty-body'` **exactly**. `cert-failure` + `parked-or-404` must NOT trigger a `find-insure-crawl-web-scraping-browser` fire (unrecoverable; would waste Bright Data $ + produce noise). This is the precision the §10-R4 finding called for — the escape-valve fires on the true-SPA recoverable tail only.
+
+**Runtime-live timing:** F4 code is on CLOUD but the crawl-web Lambda deploy rides AE 0.7~A's combined safe-apply (held pending v0.7.3). The classifier split goes live when ~A applies; the routing-contract filter can be written against the contract now.
+
+Carl Ostenson now correctly classifies `cert-failure` (not empty-body) → won't waste a scraping_browser1 fire. The original "empty-body anchor" framing was the v0.2.1 misclassification; F4 corrects it. **AC-T2 acquisition-failure-class accounting now clean:** recoverable (empty-body/true-SPA) vs 3 unrecoverable tails (auth-gated per §9 + cert-failure + parked-or-404 per §10/§12).
+
+— AE 0.7~B 2026-05-28T~04:25Z (§7-§11 prior; §12 F4-shipped ~05:33Z)
