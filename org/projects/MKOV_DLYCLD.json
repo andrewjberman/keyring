@@ -1,0 +1,21 @@
+{
+  "project_code": "MKOV_DLYCLD",
+  "macro_code": "MKOV",
+  "name": "Daily Keyword Cloud — Async Precompute",
+  "description": "Andrew direct 2026-05-28: the keyword 'daily cloud' analysis (market-performance keyword/topic cloud, GPT-analyzed) runs on-demand and is far too slow (GPT latency on the request path). Move it off the request path — precompute asynchronously on a schedule, cache to S3, and have the consumer pull the ready artifact instead of triggering GPT live. The analysis is daily-grained so per-view GPT latency is wasteful. Lean project: leverage existing GPT logic (keyword_intelligence_generator / news_trending_analysis), add async schedule (EventBridge) + cache artifact + consumer repoint with graceful fallback; do not rebuild GPT logic. Consumer = portal/src/components/market-performance/TopicCloud.tsx. Pipeline = news-pipeline (sibling to MKOV_TRENDS).",
+  "prds": [
+    {
+      "path": "docs/architecture/MKOV_DLYCLD.md",
+      "label": "Daily Keyword Cloud Async Precompute PRD v0.1",
+      "date": "2026-05-28"
+    }
+  ],
+  "status": "active",
+  "phase": "Phase 0 — PRD v0.1 SHIPPED 2026-05-28 (1.0.0_SA_CTO), Andrew direct NOVEL (/ws-charter HARD-BLOCK #7 override = Andrew direction). Small/lean project. Phase 0 = confirm exact current on-demand path (does TopicCloud trigger GPT live, or does keyword_intelligence_generator already precompute but isn't scheduled/consumed?) + identify trigger/GPT-call-site/consumer-fetch + design cache artifact/key + confirm cadence (Q1) with Andrew. Phase 1 = EventBridge async schedule + S3 cache + consumer repoint with safe fallback (Lambda + schedule via Terraform per CLAUDE.md; source-map update) + decommission on-demand GPT-on-request. Pending COO TO-decomposition.",
+  "blocking": "(1) COO TO-decomposition + lane assignment (news-pipeline = pod 0.1 historically per MKOV_TRENDS; AE for the EventBridge/Lambda/TF + DS/RD for the analysis + consumer repoint). (2) Phase 0 must confirm the exact current on-demand mechanism before Phase 1 scoping. (3) Andrew open questions Q1 cadence / Q2 exact surface / Q3 staleness tolerance (PRD §8) — non-blocking on Phase 0.",
+  "created": "2026-05-28",
+  "pods": ["0.1"],
+  "pipeline": "news-pipeline",
+  "thread_counter": 0,
+  "threads": []
+}
