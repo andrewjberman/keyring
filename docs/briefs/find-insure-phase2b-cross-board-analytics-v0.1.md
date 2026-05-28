@@ -65,10 +65,19 @@ hiring_velocity_30d   = count(deduped_postings WHERE posted_date >= run_date - 3
 hiring_velocity_90d   = count(deduped_postings WHERE posted_date >= run_date - 90 days)
 hiring_velocity_180d  = count(deduped_postings WHERE posted_date >= run_date - 180 days)
 hiring_velocity_360d  = count(deduped_postings WHERE posted_date >= run_date - 360 days)
-hiring_velocity_acceleration = (hiring_velocity_90d / 3) / (hiring_velocity_180d / 6)
-                              # ratio of recent-90d-monthly-pace to prior-90d-monthly-pace
-                              # > 1.0 = accelerating; < 1.0 = decelerating
+prior_90d_count = hiring_velocity_180d - hiring_velocity_90d
+                  # mutually-exclusive prior 90-day window (days 91-180 back)
+
+hiring_velocity_acceleration =
+    (hiring_velocity_90d / 3) / (prior_90d_count / 3)
+    # ratio of recent-90d-monthly-pace to PRIOR-mutually-exclusive-90d-monthly-pace
+    # > 1.0 = accelerating; < 1.0 = decelerating
+    # Edge cases:
+    #   prior_90d_count == 0  AND  hiring_velocity_90d == 0  -> 1.0 (quiet; no signal)
+    #   prior_90d_count == 0  AND  hiring_velocity_90d > 0   -> clamp to 5.0 (all-recent; new-hiring class)
 ```
+
+**v0.1.1 amendment (2026-05-28; per CVO SUBSTANCE-META YELLOW finding `01:32Z` LD-0012):** v0.1 carried `(hiring_velocity_90d / 3) / (hiring_velocity_180d / 6)` which mathematically computes "recent-90d-monthly-pace divided by ALL-180d-monthly-average" — the denominator folds the recent-90d window into the baseline it's being compared against, dampening true acceleration by ~2x. Corrected to mutually-exclusive prior-90d window: `prior_90d_count = hiring_velocity_180d - hiring_velocity_90d`; denominator monthly-pace divides by 3 (not 6). Worked example post-fix: 9 recent + 3 prior 90d postings → `(9/3) / (3/3) = 3.0` true 3x acceleration (v0.1 formula read this as 1.5x — false negative for HIGH-CONVICTION-BUILDOUT threshold `>= 1.3`).
 
 **Decision-relevance class threshold** (calibrated post-empirical; v0.1 candidates):
 
@@ -317,3 +326,4 @@ forward_signal_index = (corp_finance_hires_180d * 1.0) + (tech_hires_180d * 0.7)
 ## 11. Authoring lineage
 
 - **v0.1** 2026-05-27 — initial cross-board analytics framework per FIND_INSURE.028 AC4 ws COO dispatch 23:28Z. Defines 5 orthogonal signals (#1 syndication + #2 hiring-velocity + #3 keyword-density-consistency + #4 Series-license freq + #5 forward-signal) + unified `aggregated_hiring_signal_class` enum + `serving/hiring_signals.json` cross-IMO table schema + empirical-first-run calibration plan. v0.2 follow-on on first-empirical run will refine thresholds + introduce IR-team-feedback iteration loop per Phase 3 RAVC2.
+- **v0.1.1** 2026-05-28 — §2 Signal #2 hiring-velocity acceleration formula correction per CVO SUBSTANCE-META YELLOW finding `01:32Z` (LD-0012 routing). v0.1 formula `(hiring_velocity_90d / 3) / (hiring_velocity_180d / 6)` was mathematically incorrect: denominator includes the recent-90d window in the baseline it's being compared against, dampening true acceleration by ~2x. Corrected to mutually-exclusive prior-90d window via `prior_90d_count = hiring_velocity_180d - hiring_velocity_90d`. Edge-case handling added for prior_90d_count == 0 (quiet vs all-recent classes). Decision-relevance thresholds (§2 lines 75-78) UNCHANGED — the correct formula computes acceleration values that map cleanly to the existing `>= 1.3` / `[0.8, 1.3]` / `< 0.5` thresholds; v0.1 formula was UNDER-firing these thresholds, so v0.1.1 fix surfaces previously-missed HIGH-CONVICTION-BUILDOUT IMOs. No downstream schema change required (`hiring_velocity_acceleration` field unchanged in `aggregate.json` §6 + `serving/hiring_signals.json` §7).
