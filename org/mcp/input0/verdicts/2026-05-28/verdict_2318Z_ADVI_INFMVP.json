@@ -1,0 +1,15 @@
+{
+  "verdict": "CLEAN",
+  "project": "ADVI_INFMVP",
+  "artifacts_verified": ["platinum/firm/advisor_nna_canonical.json@2026-05-28T23:07:11Z"],
+  "tools_gating_artifacts": ["advisor_nna_canonical (INF_D_00f)", "DistributionTab.tsx", "AdvisorAnalytics.tsx", "AdvisorPublicProfile.tsx"],
+  "axis_mechanical": "GREEN",
+  "axis_intent_coverage": "GREEN",
+  "axis_decision_useful": "GREEN",
+  "axis_constitution_coherence": "NULL",
+  "constitution_drift_articles": [],
+  "timestamp_utc": "2026-05-28T23:18:00Z",
+  "mode": "comprehensive",
+  "source": "verify-channel-ws",
+  "note": "F5 RIGID cross-view Advisor-NNA gate PASS — all 4 NNA surfaces single-source on windows[W] by construction (hero fix 84df1272). 3-iteration converge: 3Y-cutoff -> Max-current-period-clamp -> hero-source. Peter+control exact, fee-split invariant, no regression."
+}
