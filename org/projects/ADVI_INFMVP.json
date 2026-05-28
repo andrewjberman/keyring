@@ -1,0 +1,21 @@
+{
+  "project_code": "ADVI_INFMVP",
+  "macro_code": "ADVI",
+  "name": "Inflection-Scoped Opal Portal MVP",
+  "description": "Andrew direct 2026-05-28: scoped version of the Opal Portal specific to Inflection users. peter@inflectionwealth.com is mostly scoped correctly; this project enumerates the remaining deltas to make the Inflection tenant demo-ready. F1: Assets Overview panel surfaces all zeroes for Peter (suspected permissions/data-scoping; DT or DE investigation-first). F2: remove Trade Submission / Tools from Inflection sidebar (no Tools pages at this time; RD, small FE-only - drop /trade-submission from inflection allowlist firmAccess.ts:39, section auto-hides). F3: keyword instant-analysis popup must work + be fast (roll up MKOV_DLYCLD async-precompute; general-portal functionality, pod 0.1). F4: fee-split NNA (fee-paying vs no-fee) in Lifetime Activity panel correct + ties to Advisor-level NNA in Exec Summary Flows container. F5 (HIGHEST PRIORITY): Advisor NNA differs in every view - Segment Analytics snapshot (+$2.35M donut) vs continuous (-$274K) vs Lifetime Activity all disagree for Peter; MANDATE canonical single-source-of-truth Advisor NNA identical across all views, DS-owned + CVO-RIGID empirical cross-view-equality gate. Sibling MDPF_SCOPED (whole-Portal scoping, overlaps) authored by Andrew next - reconcile shared surfaces.",
+  "prds": [
+    {
+      "path": "docs/architecture/ADVI_INFMVP.md",
+      "label": "Inflection-Scoped Portal MVP PRD v0.1",
+      "date": "2026-05-28"
+    }
+  ],
+  "status": "active",
+  "phase": "Phase 0 - PRD v0.1 SHIPPED 2026-05-28 (1.0.0_SA_CTO), Andrew direct NOVEL (/ws-charter HARD-BLOCK #7 override = Andrew direction this cycle). 5 workstreams F1-F5. F5 (canonical Advisor NNA) is the spine + highest priority - all NNA views (Segment Analytics snapshot+continuous, Lifetime Activity) must read one canonical source and agree exactly; CVO empirical cross-view-equality gate is the acceptance bar, not advisory. F4 (fee-split tie-out) depends on F5. F1/F2/F3 independent + parallel. Pending COO TO-decomposition + lane assignment.",
+  "blocking": "(1) COO TO-decomposition + lane assignment: F1=0.4.0_DT or DE (permissions/data-scoping investigation-first); F2=0.4.2_RD (small FE-only); F3=pod 0.1 (MKOV_DLYCLD async-precompute, DS/RD + AE); F4+F5=DS-owned (canonical NNA emit) + RD (FE repoint) + CVO-RIGID gate. (2) F5 Phase-0 must determine whether a canonical Advisor-NNA field already exists to standardize on or DS must define+emit one. (3) MDPF_SCOPED overlap reconciliation (esp. F3 general-portal keyword popup) when Andrew's sibling PRD lands - avoid double-dispatch.",
+  "created": "2026-05-28",
+  "pods": ["0.1", "0.4"],
+  "pipeline": "inf-pipeline / portal",
+  "thread_counter": 0,
+  "threads": []
+}
