@@ -115,5 +115,51 @@
       "PowerShell(git reset --hard*)",
       "PowerShell(Remove-Item -Recurse*)"
     ]
+  },
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Bash|PowerShell",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash .tools/hooks/block-bare-inbox-watch.sh",
+            "timeout": 5
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "mcp__opal-agent-comms__register_agent",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python org/mcp/hook_launch_poller.py",
+            "timeout": 15
+          },
+          {
+            "type": "command",
+            "command": "bash .tools/kill-orphans --stale --force",
+            "timeout": 15
+          }
+        ]
+      },
+      {
+        "matcher": "*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash .tools/hooks/post-tool-telemetry.sh",
+            "timeout": 10
+          },
+          {
+            "type": "command",
+            "command": "bash .tools/hooks/post-send-commitment.sh",
+            "timeout": 10
+          }
+        ]
+      }
+    ]
   }
 }
