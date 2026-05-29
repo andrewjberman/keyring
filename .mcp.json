@@ -11,11 +11,8 @@
       "cwd": "C:\\Users\\AndrewBerman\\Desktop\\ajb_workspace"
     },
     "playwright": {
-      "command": "npx",
-      "args": ["-y", "@executeautomation/playwright-mcp-server"],
-      "env": {
-        "PLAYWRIGHT_HEADLESS": "false"
-      }
+      "command": "C:\\Users\\AndrewBerman\\.bun\\bin\\bunx.exe",
+      "args": ["@playwright/mcp@latest", "--headless"]
     }
   }
 }
