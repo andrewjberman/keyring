@@ -584,11 +584,13 @@ async def set_summary(
         return f"Agent '{agent_serial}' not found."
 
     with _locked_liveness(write=True) as data:
-        if folder.name not in data:
-            return f"{folder.name} is not registered. Call register_agent first."
-        data[folder.name]["summary"] = summary
+        # Prefer full serial (with ~suffix); fall back to base for backward compat
+        live_serial = agent_serial if agent_serial in data else folder.name
+        if live_serial not in data:
+            return f"{agent_serial} is not registered. Call register_agent first."
+        data[live_serial]["summary"] = summary
 
-    return f"Summary updated for {folder.name}: \"{summary}\""
+    return f"Summary updated for {agent_serial}: \"{summary}\""
 
 
 @mcp.tool()
@@ -803,11 +805,12 @@ async def get_agent_status(agent_serial: str, ctx: Context = None) -> str:
     parts = []
     if urgent:
         parts.append(urgent)
-    parts.append(f"# Status: {folder.name}\n")
+    parts.append(f"# Status: {agent_serial}\n")
 
-    # Liveness info
+    # Liveness info — look up by full serial (with ~suffix) first; fall back to
+    # base serial for backward compat with pre-tilde registrations.
     with _locked_liveness() as data:
-        info = data.get(folder.name)
+        info = data.get(agent_serial) or data.get(folder.name)
     if info:
         status = _liveness_status(info)
         elapsed = int(time.time() - info.get("last_seen_epoch", 0))
@@ -849,8 +852,12 @@ async def get_agent_status(agent_serial: str, ctx: Context = None) -> str:
     else:
         parts.append("## No pending task orders")
 
-    # Check inbox
-    inbox = INBOX_DIR / folder.name
+    # Check inbox — tilde agents have a private nested inbox/base/~suffix/ dir
+    _inbox_suffix = _instance_suffix(agent_serial)
+    if _inbox_suffix:
+        inbox = INBOX_DIR / folder.name / f"~{_inbox_suffix}"
+    else:
+        inbox = INBOX_DIR / folder.name
     if inbox.exists():
         messages = sorted(inbox.iterdir())
         unread = [m for m in messages if m.suffix == ".md"]
