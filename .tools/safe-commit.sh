@@ -104,7 +104,13 @@ ISO_TS="$(date -u +%Y-%m-%dT%H:%M:%SZ)"
 # (git diff --cached returning a peer's staged paths) cannot trip lane-violation
 # BLOCKs that aren't real. Lock held from staged-index capture through commit +
 # pre-commit hook completion. Stale-lock reclaim via kill -0 on holder PID.
-LOCK_DIR="${SAFE_COMMIT_LOCK_DIR:-$REPO_ROOT/.git/commit-queue.lock}"
+# Worktree-safe: $REPO_ROOT/.git is a FILE (gitdir pointer) in a linked worktree,
+# so mkdir "$REPO_ROOT/.git/commit-queue.lock" fails ENOTDIR and the lock can
+# NEVER be acquired (spins to timeout -> agents fall back to unserialized/force
+# commits -> commit storm). --absolute-git-dir resolves the per-worktree gitdir,
+# which is ALWAYS a real directory (main: .git ; worktree: .git/worktrees/<name>),
+# giving correct per-index serialization in every checkout. (Fix: worktree commit-storm 2026-05-29)
+LOCK_DIR="${SAFE_COMMIT_LOCK_DIR:-$(git rev-parse --absolute-git-dir 2>/dev/null)/commit-queue.lock}"
 LOCK_TIMEOUT_SEC="${SAFE_COMMIT_LOCK_TIMEOUT:-60}"
 LOCK_ACQUIRED=0
 elapsed=0
