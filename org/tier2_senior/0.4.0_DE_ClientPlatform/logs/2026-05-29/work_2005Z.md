@@ -30,3 +30,23 @@ Andrew UAT F3: demo Data Source panel showed "Black Diamond Connected: Source: S
 - AC1 satisfied (renders "Database Connected: Lone Pine Analytics"); AC2 satisfied (demo/* grep-clean of "Black Diamond"); `tsc -b --noEmit` exit 0.
 - Shipped portal/DEV **81fc3b38**, pushed origin/DEV (VALGATE D-1 PASS). RD~B's concurrent ModelPortfolios.tsx + modelPortfolioColors.ts WIP left untouched (--only scoping).
 - AC4 authenticated visual smoke deferred to DT PROD-promotion / Andrew (CLI cannot auth demo tenant; playwright MCP unavailable this session). Cognito→DynamoDB fold-in skipped per TO scope L33 (routed to CTO v0.4.2).
+- COO RAVC2-ACCEPTED (clean closeout; AC4 visual rides DT/Andrew glance).
+
+## 3. MDPF D3 unblock — answered RD~B's 2 shape Q-MCPs (COO critical-path)
+
+D1 resolved (pre-publish) + D2 (naming) landed by RD~B; D3 (Portfolio Analytics panel + AUA-by-Model radial re-scope on selectedPartner) was the last MDPF defect, blocked on my shape-confirm.
+
+Answered from live json/mdpf/{firm}/ artifacts:
+- **by_model is data-driven 7-per-firm, DIFFERENT per firm:** Inflection = 5 base models + 2 BLENDS ('50/50 INT/LTC','50/50 ST/INT'), all cohort_class='model'. 49F = 5 base 'model' + 2 'sma' (Dividend SMA, Opal Equity Growth SMA). Told RD~B: render donut data-driven from actual by_model (NOT hardcode-5, NOT cohort_class filter for a 5-selector) + Non-Model from non_model_aua.
+- **No canonical collisions** (verified vs CANONICAL_MODEL_NAME L125-147: 'Long Term'≠'Ultra-Long Term'; blends/SMAs pass through verbatim). 7 distinct names per firm.
+- **Quarterly AUMGrowthMetrics:** confirmed RD~B derives per-firm quarter-end from daily partner_custody_total (authoritative; no per-firm quarterly object).
+- **Distribution bell-curve = GLOBAL-ONLY** (verified: no per-firm distribution artifact; json/portfolios/account-distribution.json single global file, getAccountDistribution takes no firmId). Flagged COO: scope-call A (FE graceful-degradation now) vs B (DS~B per-firm distribution slice).
+
+COO disposition: PATH A AFFIRMED (RD~B builds — re-scope left partition fully + explicit-labeled aggregate bell-curve on right; closes the radial defect Andrew named). PATH B (per-firm bell-curve) surfaced to Andrew (his "everything should change" call); DS~B held-ready. Pre-scoped the Path-B DE endpoint (getAccountDistributionByFirm → /api/general/portfolios/{firmId}/account-distribution.json, existing CF rewrite, no infra) for fast handoff if greenlit.
+
+## 4. portal-proxy doc-comment fix (COO-flagged follow-on)
+
+Fixed the misleading "→ platinum/mdpf/..." doc-comments on the MDPF aggregate + per-firm endpoints (portal-proxy.ts) — live serving is json/ via the CF /api/general/*→/json/* rewrite; platinum/ is the build-tier source. Comment-only, no behavior change. Shipped portal/DEV **03dddcae**, pushed origin/DEV (VALGATE PASS).
+
+## Cycle outcome
+MDPF: D1 accepted, D2 landed, D3 unblocked (Path A building), DEMOV1.010 shipped+accepted, doc-drift fixed. Idle pending RD~B Path-A completion + Andrew Path-B call. Older non-MDPF queue held per COO steer until MDPF fully closes.
