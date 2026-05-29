@@ -14,4 +14,16 @@ DE work this tick:
 
 State: prep-ahead/standby. When DS~B's slice lands → verify shape from S3 (D1 EXISTS/FRESH/SCALED + field-match method) → RAVC2 the wired query to COO + hand RD~B the confirmed hook. No blocker.
 
+### UPDATE (same tick) — DS~B slice landed within minutes; query WIRED + VERIFIED
+
+DS~B published both per-firm distribution artifacts to my exact key (json/mdpf/{firmId}/account-distribution.json) minutes after coordination. Verified from S3 (D1 method):
+- EXISTS ✓ both; FRESH ✓ (generated 21:08Z); SCALED ✓ (49F 6,838 accts/$1.38B; Inflection 400 accts/$96.6M); shape field-match ✓ (full AccountDistribution: total + by_model{canonical: DistributionStats incl histogram{21 bins/20 counts}+percentiles}).
+- by_model CANONICAL display names: 49F 5 (no SMA — distribution source = model_portfolio_accounts/SmartX, no 49F SMA accounts), Inflection 7 (incl 2 blends).
+- Extra top-level fields firm_id/firm_name/source = harmless (structural typing; no slimming).
+
+NO code change needed — the 5e88321d scaffold was already correct. Query wired + verified SAME tick.
+Handed RD~B the confirmed hook + flagged the 49F 5-vs-7 (distribution vs AUA) model-set divergence. RAVC2'd COO. ACK'd DS~B (PASS).
+
+DE work on all 3 MDPF defects now done: D1 (pre-publish-resolved), D2 (RD~B lane), D3 (both partitions data-wired: left AUA from perFirmMdpfData, right bell-curve from getAccountDistributionByFirm). Remaining = RD~B render + /frontend-dev visual smoke.
+
 Commits this tick: portal/DEV 5e88321d.
