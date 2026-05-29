@@ -20,18 +20,19 @@ USAGE:
   .tools/safe-commit.sh [--force] [git-commit-options...] -- <path1> [path2...]
   .tools/safe-commit.sh --help
 
-BEHAVIOR:
-  1. Captures the full staged index (git diff --cached --name-only).
-  2. Compares against the declared pathspec (everything after --).
-  3. If staged set contains any file NOT in the pathspec, abort with exit 1
-     and list the contaminating files. The commit does NOT proceed.
-  4. With --force, the abort is bypassed and a FORCE-BYPASS entry is written
-     to org/git-author-override-audit.log. Use only when you cannot clean
-     the shared index (e.g. multi-agent worktree contention).
-  5. On pass (or after --force log), runs:
-        git commit --only [git-commit-options] -- <pathspec>
-     so the commit is scoped to the listed paths regardless of what else
-     is in the shared index.
+BEHAVIOR (commit-mutex v2 -- stage-inside-lock, MSTR-approved 2026-05-29):
+  DO NOT pre-`git add` -- this wrapper stages your declared pathspec itself.
+  1. Acquires a per-worktree mkdir-mutex (serializes concurrent agents).
+  2. Captures the BASELINE staged set at lock-entry (peers' / pre-staged files).
+  3. Stages your declared pathspec inside the lock: git add -f -- <pathspec>
+     (force so a new file under a gitignored prefix needs no separate add).
+  4. Contamination = files staged by THIS run that are outside the pathspec
+     AND not in the baseline. Peers' baseline files are IGNORED (git commit
+     --only can never commit them anyway). If contamination found, abort
+     exit 1 (or --force bypass with FORCE-BYPASS audit entry).
+  5. Runs: git commit --only [git-commit-options] -- <pathspec>
+     scoped to the listed paths regardless of index state. Mutex released
+     on EXIT (trap). Stale lock reclaimed via dead-PID or age>=timeout.
 
 OPTIONS:
   --force              Bypass contamination check; log to audit trail.
