@@ -4197,3 +4197,82 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-05-27 | 0.1.0_DS_MarketIntelligence~B | (no-TO) | comp-pipescript | comp-pipescript io data/find/imo/scripts/gold/score_web_gold.py | FAIL |
 | 2026-05-27 | 0.1.0_DS_MarketIntelligence~B | (no-TO) | comp-pipescript | comp-pipescript deployed score_web_gold | PASS |
 | 2026-05-27 | 3.0.0_SA_CVO | (no-TO) | comp-registry | comp-registry sync --project FIND_INSURE | PASS |
+| 2026-05-27 | 0.7.0_AE_CloudOps~A | (no-TO) | comp-pipescript | comp-pipescript deployed data/find/imo/scripts/bronze/crawl_web_bronze.py | PASS |
+| 2026-05-27 | 0.7.0_AE_CloudOps~A | (no-TO) | comp-iam | comp-iam service find-insure-crawl-web | PASS |
+| 2026-05-27 | 0.1.0_DS_MarketIntelligence~A | (no-TO) | comp-pipescript | comp-pipescript io data/find/imo/scripts/silver/parse_web_silver.py | FAIL |
+| 2026-05-27 | 0.7.0_AE_CloudOps~A | (no-TO) | comp-blast | comp-blast find-insure-crawl-web | PASS |
+| 2026-05-27 | 0.1.0_DS_MarketIntelligence~B | (no-TO) | comp-pipescript | comp-pipescript io data/find/imo/scripts/gold/score_linkedin_gold.py | FAIL |
+| 2026-05-27 | 0.7.0_AE_CloudOps~C | (no-TO) | comp-iam | comp-iam service find-insure-serving-consolidate | PASS |
+| 2026-05-27 | 0.7.0_AE_CloudOps~C | (no-TO) | comp-blast | comp-blast find-insure-serving-consolidate | PASS |
+| 2026-05-27 | 0.1.0_DS_MarketIntelligence~A | (no-TO) | comp-pipescript | comp-pipescript io data/find/imo/scripts/gold/score_web_gold.py | FAIL |
+| 2026-05-27 | 0.1.0_DS_MarketIntelligence~B | (no-TO) | comp-pipescript | comp-pipescript deployed data/find/imo/scripts/gold/score_web_gold.py | PASS |
+| 2026-05-27 | 0.7.0_AE_CloudOps~A | (no-TO) | comp-pipescript | comp-pipescript deployed find-insure-score-web | PASS |
+| 2026-05-28 | 0.1.0_DS_MarketIntelligence~C | (no-TO) | comp-iam | comp-iam service find-insure-crawl-linkedin | PASS |
+| 2026-05-28 | 0.7.0_AE_CloudOps~A | (no-TO) | comp-iam | comp-iam service find-insure-score-web | PASS |
+| 2026-05-28 | 0.7.0_AE_CloudOps~A | (no-TO) | comp-build | comp-build | PASS |
+| 2026-05-28 | 0.7.0_AE_CloudOps~A | (no-TO) | comp-pipescript | comp-pipescript deployed find-insure-crawl-web | PASS |
+| 2026-05-28 | 3.0.0_SA_CVO | (no-TO) | comp-registry | comp-registry sync --project FIND_INSURE | FAIL |
+| 2026-05-28 | 0.7.0_AE_CloudOps~A | (no-TO) | comp-pipescript | comp-pipescript deployed find-insure-crawl-web | PASS |
+| 2026-05-28 | 0.7.0_AE_CloudOps~A | (no-TO) | comp-iam | comp-iam service find-insure-crawl-web | PASS |
+| 2026-05-28 | 0.7.0_AE_CloudOps~A | (no-TO) | comp-iam | comp-iam gaps | PASS |
+| 2026-05-28 | 0.4.2_RD_AdvisorIntelligence | FIND_INSURE.024 | comp-transform | comp-transform schema-check ConsolidatedOverviewPanel | PASS |
+| 2026-05-28 | 0.4.2_RD_AdvisorIntelligence | FIND_INSURE.024 | comp-transform | comp-transform schema-check ConsolidatedOverviewPanel | PASS |
+| 2026-05-28 | 0.7.0_AE_CloudOps~A | FIND_INSURE.024 | comp-routes | comp-routes behaviors | PASS |
+| 2026-05-28 | 0.4.2_RD_AdvisorIntelligence | FIND_INSURE.024 | comp-transform | comp-transform schema-check TaxCostBasisPanel | PASS |
+| 2026-05-28 | 0.4.2_RD_AdvisorIntelligence | FIND_INSURE.024 | comp-transform | comp-transform schema-check FeeSummaryPanel | PASS |
+| 2026-05-28 | 0.6.1_AE_PartnerETL | ADVI_INFDEMO.F11-RUN | comp-pipescript | comp-pipescript deployed data/orion/scripts/gold/INF_D_00c.portal_leaderboard.py | PASS |
+| 2026-05-28 | 0.4.2_RD_AdvisorIntelligence | (no-TO) | comp-transform | comp-transform schema-check PartnerAnalytics | PASS |
+| 2026-05-28 | 0.7.0_AE_CloudOps~A | (no-TO) | comp-routes | comp-routes behaviors | PASS |
+| 2026-05-28 | 0.4.2_RD_AdvisorIntelligence | (no-TO) | comp-transform | comp-transform schema-check InflectionInsightsPanel | PASS |
+| 2026-05-28 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript io data/orion/scripts/gold/INF_D_07a.firm_concentrations.py | PASS |
+| 2026-05-28 | 0.7.0_AE_CloudOps~B | (no-TO) | comp-iam | comp-iam gaps | PASS |
+| 2026-05-28 | 0.4.0_DT_ClientPlatform | ADVI_INFMVP.F5.canonical-advisor-nna | comp-transform | comp-transform schema-check PartnerAnalytics | PASS |
+| 2026-05-28 | 0.4.2_RD_AdvisorIntelligence~B | MDPF_SCOPED.S1.partner-mode-selector | comp-transform | comp-transform schema-check ModelPortfolios | FAIL |
+| 2026-05-28 | 0.4.2_RD_AdvisorIntelligence | MDPF_SCOPED.S1.partner-mode-selector | comp-transform | comp-transform schema-check ModelPortfolios | FAIL |
+| 2026-05-28 | 0.4.2_RD_AdvisorIntelligence~B | MDPF_SCOPED.S1.partner-mode-selector | comp-transform | comp-transform schema-check ModelPortfolios | FAIL |
+| 2026-05-28 | 0.4.0_DS_ClientPlatform~B | MDPF_SCOPED.S1.partner-mode-selector | comp-pipescript | comp-pipescript io data/mdpf/scripts/backfill/build_aggregate_aua_timeseries.py | FAIL |
+| 2026-05-28 | 0.4.2_RD_AdvisorIntelligence | MDPF_SCOPED.S1.partner-mode-selector | comp-transform | comp-transform schema-check Attribution | FAIL |
+| 2026-05-28 | 0.4.2_RD_AdvisorIntelligence | MDPF_SCOPED.S1.partner-mode-selector | comp-transform | comp-transform schema-check Positioning | PASS |
+| 2026-05-28 | 0.4.2_RD_AdvisorIntelligence | MDPF_SCOPED.S1.partner-mode-selector | comp-transform | comp-transform schema-check FactorTilts | PASS |
+| 2026-05-28 | 0.4.0_DS_ClientPlatform | MDPF_SCOPED.S1.partner-mode-selector | comp-pipescript | comp-pipescript io data/orion/scripts/gold/INF_D_00f.advisor_nna_canonical.py | FAIL |
+| 2026-05-28 | 0.7.0_AE_CloudOps | ADVI_INFMVP.F4.feesplit-nna-tieout | comp-pipescript | comp-pipescript deployed keyword-intelligence-generator | PASS |
+
+| 2026-05-28 | 0.4.0_DS_ClientPlatform | ADVI_INFMVP.F4 | empirical artifact check | Pulled s3://opal-data-inf/platinum/firm/advisor_nna_canonical.json; verified fee_paying.nna + no_fee.nna == total.nna (delta=0.00) for Peter + joe_brandenburg + firm across QTD/YTD/MAX. All PASS. No new script. |
+| 2026-05-28 | 0.4.0_DS_ClientPlatform | MDPF_SCOPED.S2.inflection-funding-date-data-shape | comp-pipescript | comp-pipescript io INF_C_09 | PASS |
+| 2026-05-28 | 0.7.0_AE_CloudOps | MDPF_SCOPED.S2.inflection-funding-date-data-shape | comp-iam | comp-iam service opal-portal-data-proxy | PASS |
+| 2026-05-28 | 0.4.0_DS_ClientPlatform | ADVI_VALFIN.010.ds-inf-c-09-placeholder-zero-filter-fix | comp-pipescript | comp-pipescript deployed INF_C_09 | PASS |
+| 2026-05-28 | 0.4.2_RD_AdvisorIntelligence~B | ADVI_VALFIN.010.ds-inf-c-09-placeholder-zero-filter-fix | comp-transform | comp-transform schema-check DistributionTab | PASS |
+| 2026-05-28 | 0.7.0_AE_CloudOps | ADVI_VALFIN.010.ds-inf-c-09-placeholder-zero-filter-fix | comp-routes | comp-routes behaviors | PASS |
+| 2026-05-28 | 0.7.0_AE_CloudOps | ADVI_VALFIN.010.ds-inf-c-09-placeholder-zero-filter-fix | comp-routes | comp-routes trace get_mdpf_timeseries | PASS |
+| 2026-05-28 | 0.7.0_AE_CloudOps | ADVI_VALFIN.010.ds-inf-c-09-placeholder-zero-filter-fix | comp-routes | comp-routes trace /api/general/mdpf/aggregate-aua-timeseries.json | PASS |
+| 2026-05-28 | 0.7.0_AE_CloudOps | ADVI_VALFIN.010.ds-inf-c-09-placeholder-zero-filter-fix | comp-routes | comp-routes trace shared-advisor-router | PASS |
+| 2026-05-28 | 0.7.0_AE_CloudOps | ADVI_VALFIN.010.ds-inf-c-09-placeholder-zero-filter-fix | comp-routes | comp-routes behaviors | PASS |
+| 2026-05-28 | 0.4.2_RD_AdvisorIntelligence~B | ADVI_VALFIN.010.ds-inf-c-09-placeholder-zero-filter-fix | comp-transform | comp-transform schema-check DistributionTab | PASS |
+| 2026-05-28 | 0.4.2_RD_AdvisorIntelligence~B | ADVI_VALFIN.010.ds-inf-c-09-placeholder-zero-filter-fix | comp-transform | comp-transform schema-check AdvisorAnalytics | PASS |
+| 2026-05-28 | 0.4.0_DS_ClientPlatform~B | ADVI_VALFIN.010.ds-inf-c-09-placeholder-zero-filter-fix | comp-pipescript | comp-pipescript io build_aggregate_aua_timeseries | FAIL |
+| 2026-05-28 | 0.7.0_AE_CloudOps | ADVI_VALFIN.010.ds-inf-c-09-placeholder-zero-filter-fix | comp-iam | comp-iam gaps | PASS |
+| 2026-05-28 | 0.7.0_AE_CloudOps | ADVI_VALFIN.010.ds-inf-c-09-placeholder-zero-filter-fix | comp-iam | comp-iam service mdpf-daily-runner | PASS |
+| 2026-05-28 | 1.0.0_SA_CTO | ADVI_VALFIN.010.ds-inf-c-09-placeholder-zero-filter-fix | comp-platinum | comp-platinum reverse advisor_nna_canonical.json | PASS |
+| 2026-05-28 | 1.0.0_SA_CTO | ADVI_VALFIN.010.ds-inf-c-09-placeholder-zero-filter-fix | comp-pipescript | comp-pipescript deployed INF_D_00f.advisor_nna_canonical | PASS |
+| 2026-05-28 | 1.0.0_SA_CTO | ADVI_VALFIN.010.ds-inf-c-09-placeholder-zero-filter-fix | comp-pipescript | comp-pipescript io INF_D_00f.advisor_nna_canonical | FAIL |
+| 2026-05-28 | 0.7.0_AE_CloudOps | ADVI_VALFIN.010.ds-inf-c-09-placeholder-zero-filter-fix | comp-pii | comp-pii audit | PASS |
+| 2026-05-28 | 0.4.0_DS_ClientPlatform | ADVI_VALFIN.010.ds-inf-c-09-placeholder-zero-filter-fix | comp-pipescript | comp-pipescript deployed INF_D_00f | PASS |
+| 2026-05-28 | 0.7.0_AE_CloudOps | ADVI_VALFIN.010.ds-inf-c-09-placeholder-zero-filter-fix | comp-build | comp-build | PASS |
+| 2026-05-28 | 0.7.0_AE_CloudOps | ADVI_VALFIN.010.ds-inf-c-09-placeholder-zero-filter-fix | comp-iam | comp-iam gaps | PASS |
+| 2026-05-28 | 0.7.0_AE_CloudOps | ADVI_VALFIN.010.ds-inf-c-09-placeholder-zero-filter-fix | comp-routes | comp-routes auth-map | PASS |
+| 2026-05-28 | 0.7.0_AE_CloudOps | ADVI_VALFIN.010.ds-inf-c-09-placeholder-zero-filter-fix | comp-routes | comp-routes trace /api/scoped/security-scanner/ | PASS |
+| 2026-05-28 | 0.7.0_AE_CloudOps | ADVI_VALFIN.010.ds-inf-c-09-placeholder-zero-filter-fix | comp-routes | comp-routes behaviors | PASS |
+| 2026-05-28 | 0.7.0_AE_CloudOps | ADVI_VALFIN.010.ds-inf-c-09-placeholder-zero-filter-fix | comp-routes | comp-routes behaviors | PASS |
+| 2026-05-29 | 0.7.0_AE_CloudOps~A | MDPF_SCOPED.F4.49f-1226-reclass | comp-pipescript | comp-pipescript deployed find-insure-crawl-web | PASS |
+| 2026-05-29 | 0.7.0_AE_CloudOps~A | MDPF_SCOPED.F4.49f-1226-reclass | comp-iam | comp-iam service find-insure-crawl-web | PASS |
+| 2026-05-29 | 0.4.0_DS_ClientPlatform~B | MDPF_SCOPED.F4.49f-1226-reclass | comp-pipescript | comp-pipescript io data/mdpf/scripts/gold/build_mdpf_wsc_inflection_feeder.py | FAIL |
+| 2026-05-29 | 0.4.0_DS_ClientPlatform~B | MDPF_SCOPED.F4.49f-1226-reclass | comp-pipescript | comp-pipescript io data/mdpf/scripts/backfill/build_mdpf_process_backfill.py | FAIL |
+| 2026-05-29 | 0.4.0_DS_ClientPlatform~C | FIND_INSURE.024-phase3-consolidation | comp-pipescript | comp-pipescript io data/find/imo/scripts/serving/build_contacts_target.py | FAIL |
+| 2026-05-29 | 0.4.0_DS_ClientPlatform~B | FIND_INSURE.024-phase3-consolidation | comp-pipescript | comp-pipescript deployed data/mdpf/scripts/backfill/build_mdpf_inflection_history_from_... | PASS |
+| 2026-05-29 | 0.4.0_DS_ClientPlatform~C | FIND_INSURE.024-phase3-consolidation | comp-pipescript | comp-pipescript deployed data/find/imo/scripts/serving/reveal_top25_contacts.py | PASS |
+| 2026-05-29 | 0.4.2_RD_AdvisorIntelligence~B | (no-TO) | comp-transform | comp-transform schema-check ModelPortfolios | FAIL |
+| 2026-05-29 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-routes | comp-routes trace getMdpfAggregateAUATimeSeriesByFirm | PASS |
+| 2026-05-29 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-routes | comp-routes behaviors | PASS |
+| 2026-05-29 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-routes | comp-routes behaviors | PASS |
+| 2026-05-29 | 0.4.0_DS_ClientPlatform~B | ADVI_INFMVP.F4b.cohort-dim-nmnc-nmec | comp-pipescript | comp-pipescript io data/orion/scripts/gold/INF_D_00f.advisor_nna_canonical.py | PASS |
+2026-05-29T21:39:44Z | 1.0.0_SA_CTO | session 2140Z | ds-commit-gate(3 PASS) + safe-commit(mutex-v2 dogfood) + halt-gate(per-tick) + bash -n + live FINRA/SEC-IAPD/Lusha/BrightData probes | find/imo uninstrumented at comp-* tier (instrumentation candidate)
