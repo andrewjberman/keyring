@@ -115,13 +115,33 @@ LOCK_TIMEOUT_SEC="${SAFE_COMMIT_LOCK_TIMEOUT:-60}"
 LOCK_ACQUIRED=0
 elapsed=0
 while ! mkdir "$LOCK_DIR" 2>/dev/null; do
-  # Stale-lock detection: holder PID dead -> reclaim
+  # Stale-lock detection #1: holder PID dead -> reclaim immediately.
   if [ -f "$LOCK_DIR/pid" ]; then
     holder_pid="$(cat "$LOCK_DIR/pid" 2>/dev/null || true)"
     if [ -n "$holder_pid" ] && ! kill -0 "$holder_pid" 2>/dev/null; then
       rm -rf "$LOCK_DIR" 2>/dev/null || true
       continue
     fi
+  fi
+  # Stale-lock detection #2 (ADHC commit-mutex v2): age-based break. Covers the
+  # PID-reuse hole -- a crashed holder whose PID was recycled by a different live
+  # process would read as alive under kill -0 and deadlock the fabric forever.
+  # If the lock dir is >= LOCK_TIMEOUT_SEC old, break it. mtime via `stat -c %Y`
+  # (Git-Bash 3.6.7 default, Rule 16 OK); `find -mmin` guarded fallback.
+  lock_mtime=""
+  if command -v stat >/dev/null 2>&1; then
+    lock_mtime="$(stat -c %Y "$LOCK_DIR" 2>/dev/null || true)"
+  fi
+  if [ -n "$lock_mtime" ]; then
+    now_s="$(date +%s)"
+    if [ $((now_s - lock_mtime)) -ge "$LOCK_TIMEOUT_SEC" ]; then
+      rm -rf "$LOCK_DIR" 2>/dev/null || true
+      continue
+    fi
+  elif find "$LOCK_DIR" -maxdepth 0 -mmin +1 2>/dev/null | grep -q .; then
+    # stat unavailable -> 1-minute mmin fallback
+    rm -rf "$LOCK_DIR" 2>/dev/null || true
+    continue
   fi
   elapsed=$((elapsed + 1))
   if [ "$elapsed" -ge "$LOCK_TIMEOUT_SEC" ]; then
@@ -152,8 +172,31 @@ done
 AGENT="${RAW_AUTHOR%% <*}"
 AGENT="${AGENT:-UNKNOWN}"
 
-# Capture staged set
-STAGED="$(git diff --cached --name-only 2>/dev/null || true)"
+# ADHC commit-mutex v2 (MSTR-approved 2026-05-29): stage-inside-lock + baseline-diff.
+# WHY: the mutex alone (LD-0138) serializes safe-commit bodies but NOT the `git add`
+# callers ran separately, nor a peer's out-of-band add on the shared index -- so
+# `git diff --cached` saw peers' staged files and false-aborted (empirically 2x
+# 2026-05-29). Fix: (1) capture BASELINE first (foreign/pre-staged files present at
+# lock-entry); (2) stage our OWN declared pathspec INSIDE the lock (callers no longer
+# pre-`git add`); (3) contamination = (staged-now \ baseline) \ pathspec -- i.e. ONLY
+# files THIS run staged outside its own pathspec. Peers' baseline files are excluded
+# (and `git commit --only` structurally can never commit them anyway). The guard still
+# catches a genuine self-scope error; it stops policing peers.
+
+# (1) BASELINE: what was already staged at lock-entry (foreign + any caller pre-add).
+BASELINE="$(git diff --cached --name-only 2>/dev/null || true)"
+declare -A BASELINE_SET=()
+if [ -n "$BASELINE" ]; then
+  while IFS= read -r f; do
+    [ -z "$f" ] && continue
+    BASELINE_SET["$f"]=1
+  done <<< "$BASELINE"
+fi
+
+# (2) Stage our declared pathspec inside the lock. -f so a new file under a
+# gitignored prefix (e.g. .tools/) is staged without a separate caller `git add -f`
+# (the caller listed it explicitly = intent). Idempotent for already-tracked/staged.
+git add -f -- "${PATHSPEC[@]}" 2>/dev/null || true
 
 # Build pathspec lookup
 declare -A PATHSPEC_SET=()
@@ -161,12 +204,14 @@ for p in "${PATHSPEC[@]}"; do
   PATHSPEC_SET["$p"]=1
 done
 
-# Find contaminating files
+# (3) Contamination = staged-now files that are NEITHER in the declared pathspec
+# NOR in the baseline (= files THIS run staged beyond its own scope).
+STAGED="$(git diff --cached --name-only 2>/dev/null || true)"
 EXTRA=()
 if [ -n "$STAGED" ]; then
   while IFS= read -r f; do
     [ -z "$f" ] && continue
-    if [ -z "${PATHSPEC_SET[$f]+x}" ]; then
+    if [ -z "${PATHSPEC_SET[$f]+x}" ] && [ -z "${BASELINE_SET[$f]+x}" ]; then
       EXTRA+=("$f")
     fi
   done <<< "$STAGED"
