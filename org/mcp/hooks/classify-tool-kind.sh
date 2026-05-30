@@ -11,10 +11,21 @@
 TOOL_NAME="$1"
 HOOK_INPUT="$(cat)"
 
+# Resolve jq deterministically (PATH-less Claude Code hook shell). Honor $JQ from
+# the caller (post-tool-telemetry.sh exports it); else script-dir relative; else
+# PATH; else bare "jq" (classifier is non-fatal -- a failed jq just yields empty
+# CMD and the default "work" kind, never a hard error).
+if [ -z "${JQ:-}" ]; then
+    _CD="$(cd "$(dirname "$0")" 2>/dev/null && pwd)" || _CD="."
+    if [ -x "${_CD}/../jq.exe" ]; then JQ="${_CD}/../jq.exe"
+    elif command -v jq >/dev/null 2>&1; then JQ="jq"
+    else JQ="jq"; fi
+fi
+
 case "${TOOL_NAME}" in
     Bash)
         # §3.3 Bash kind detection
-        CMD="$(echo "${HOOK_INPUT}" | jq -r '.tool_input.command // empty')"
+        CMD="$(echo "${HOOK_INPUT}" | "$JQ" -r '.tool_input.command // empty' 2>/dev/null || echo "")"
         # NOTE: CMD is read here for classification ONLY; never written to jsonl per CV-B1.
         case "${CMD}" in
             *inbox-watch*|*watcher-status*|*kill-orphans*|*cleanup-poller*|*check-inbox*)
@@ -28,7 +39,7 @@ case "${TOOL_NAME}" in
     WebFetch|WebSearch|Agent|RemoteTrigger|AskUserQuestion|SendUserFile|ShareOnboardingGuide)
         echo "work" ;;
     Skill)
-        SKILL_NAME="$(echo "${HOOK_INPUT}" | jq -r '.tool_input.skill // empty')"
+        SKILL_NAME="$(echo "${HOOK_INPUT}" | "$JQ" -r '.tool_input.skill // empty' 2>/dev/null || echo "")"
         case "${SKILL_NAME}" in
             watcher) echo "watcher" ;;
             *)       echo "work" ;;

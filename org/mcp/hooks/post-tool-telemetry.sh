@@ -16,8 +16,27 @@ set -euo pipefail
 
 HOOK_INPUT="$(cat)"
 
+# Resolve jq + classifier deterministically. Claude Code's PostToolUse hook shell
+# does NOT load the user profile, so workspace .tools/ is NOT on PATH and a bare
+# `jq` call fails 127 -> `set -e` kills the script BEFORE any jsonl/error write
+# (silent telemetry death -- root cause of the 05-26->05-29 freeze, AE diag
+# 2026-05-29). Resolve relative to this script's location (always .tools/hooks/ at
+# runtime), then fall back to PATH for Linux/Mac dev. Same pattern as
+# .tools/hooks/block-bare-inbox-watch.sh.
+SCRIPT_DIR="$(cd "$(dirname "$0")" 2>/dev/null && pwd)" || SCRIPT_DIR="."
+if [ -x "${SCRIPT_DIR}/../jq.exe" ]; then
+    JQ="${SCRIPT_DIR}/../jq.exe"
+elif command -v jq >/dev/null 2>&1; then
+    JQ="jq"
+else
+    # jq genuinely unavailable -- log once and exit cleanly (never silent-crash).
+    echo "$(date -u +%FT%TZ) TELEMETRY_HOOK_NO_JQ session_id=${CLAUDE_CODE_SESSION_ID:-} script_dir=${SCRIPT_DIR}" >> org/mcp/hook_errors.log 2>/dev/null || true
+    exit 0
+fi
+export JQ   # classify-tool-kind.sh honors $JQ (same PATH-less hook-shell condition)
+
 # §7.2 session-id-keyed serial resolution (canonical §7.2 binding)
-SESSION_ID="$(echo "${HOOK_INPUT}" | jq -r '.session_id // empty')"
+SESSION_ID="$(echo "${HOOK_INPUT}" | "$JQ" -r '.session_id // empty')"
 # WB-1.1 empirical fix (2026-05-26T~04:05Z, commit 0e8fffe1e): Claude Code hook stdin does NOT
 # always carry .session_id field in production runtime; $CLAUDE_CODE_SESSION_ID env var is the
 # reliable source per LD-0070 §7.2.
@@ -41,21 +60,24 @@ if [[ -z "${AGENT:-}" ]]; then
 fi
 
 # Parse tool info from hook input
-TOOL_NAME="$(echo "${HOOK_INPUT}" | jq -r '.tool_name // "_unknown_"')"
+TOOL_NAME="$(echo "${HOOK_INPUT}" | "$JQ" -r '.tool_name // "_unknown_"')"
 TS_UNIX="$(date +%s.%N)"
 TS_ISO="$(date -u +%FT%T.%3NZ)"
 
-# §3.2 kind classification (canonical §3.2 + §3.3 binding)
-KIND="$(.tools/hooks/classify-tool-kind.sh "${TOOL_NAME}" <<<"${HOOK_INPUT}")"
+# §3.2 kind classification (canonical §3.2 + §3.3 binding). Resolve via SCRIPT_DIR
+# (PATH-less hook shell). Classification is non-fatal: fall back to "work" on any
+# classifier error so a classifier hiccup never blocks the durable jsonl write.
+KIND="$("${SCRIPT_DIR}/classify-tool-kind.sh" "${TOOL_NAME}" <<<"${HOOK_INPUT}" 2>/dev/null || echo "work")"
+[[ -z "${KIND}" ]] && KIND="work"
 
 # bg_task event detection (canonical §4)
-BG_EVENT="$(echo "${HOOK_INPUT}" | jq -r '.bg_task.event // empty')"
-BG_TASK_ID="$(echo "${HOOK_INPUT}" | jq -r '.bg_task.task_id // empty')"
-BG_EXIT_CODE="$(echo "${HOOK_INPUT}" | jq -r '.bg_task.exit_code // empty')"
+BG_EVENT="$(echo "${HOOK_INPUT}" | "$JQ" -r '.bg_task.event // empty')"
+BG_TASK_ID="$(echo "${HOOK_INPUT}" | "$JQ" -r '.bg_task.task_id // empty')"
+BG_EXIT_CODE="$(echo "${HOOK_INPUT}" | "$JQ" -r '.bg_task.exit_code // empty')"
 
 # === CV-B1 PRIVACY INVARIANT ENFORCEMENT (canonical §3.4 HARD RULE binding) ===
 # Allowed fields enumerated explicitly. DO NOT echo $HOOK_INPUT to jsonl.
-JSONL_LINE="$(jq -nc \
+JSONL_LINE="$("$JQ" -nc \
     --arg ts "${TS_ISO}" \
     --arg ts_unix "${TS_UNIX}" \
     --arg serial "${AGENT}" \
