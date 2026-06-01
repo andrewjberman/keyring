@@ -74,3 +74,17 @@ Re-emit the 8 affected dates (5/18,19,20,22,25,26,27,29) with the **canonical ag
 **F4 constraint honored:** re-emit window is all-May, date-disjoint from the F4 12/26 (Dec) partition; F4 patch f44ab785d untouched. No independent F4-class period-roll artifact on any of the 8 dates (all DoD sentinels PASS).
 
 **Pending:** CVO /verify-channel (3.0.0_SA_CVO) independent confirm; DE linkage-matrix flip inflection→fixed.
+
+## ROLLUP COMPLETION (2026-06-01 ~1334Z — AE caught partition-fix != serving-fix)
+AE (0.7.0_AE_CloudOps) verified the FE-facing feeds and found the partition re-emit had NOT propagated: the ROLLUP stage `build_aggregate_aua_timeseries.py` reads the partitions and builds the actual FE trend feeds (`platinum/mdpf/aggregate_aua_timeseries.json` + `json/mdpf/{global,49financial,inflection}/aggregate-aua-timeseries.json`). Those still carried the 5/29 19:38Z post-clobber rollup (inflection tail null).
+
+**Re-ran `build_aggregate_aua_timeseries.py --upload`** — read 402 restored partitions, rebuilt + uploaded all timeseries + per-firm FE slices (gen 2026-06-01T13:34:20Z). VERIFIED: inflection FE slice tail now non-null all dates — 5/22=94.74M, 5/25=94.91M, 5/26=95.64M, 5/27=95.64M, 5/28=96.21M, 5/29=96.60M (1 null in full 402-pt series). **The empty-inflection-panel defect is now fixed in the FE-FACING feeds, not just partitions.**
+
+LESSON: `comp-pipescript postdeps` would have flagged the rollup as a required post-step — should have run it before signaling. Partition emit has a downstream rollup dependency.
+
+## CVO VERDICT: PASS 4/4 (9b54e8453) — independent S3 read. Inflection matrix-cell clear→confirmed.
+
+## FOLLOW-ON (non-blocking, upstream): CVO Step-3.5 note (5/26=5/27 identical) root-caused
+Inflection feeder partition `inflection/2026-05-27.parquet` carries `as_of_date=2026-05-26` (stale carry-forward, 402 rows == 5/26). 49f feeder fresh per-date but artifact 49f total also identical → parallel carry at 49f non-model/1b layer. UPSTREAM WS-C feeder freshness, pre-existing, NOT the re-emit. Routed COO+AE.
+
+## GUARD: keep all 3 layers (COO + AE concur). a9352506f (onboard-date) stays. My next leg = version-monotonic write-guard in the shared emit helper (refuse write with methodology_version older than existing). AE owns IAM s3:PutObject runner-role lock.
