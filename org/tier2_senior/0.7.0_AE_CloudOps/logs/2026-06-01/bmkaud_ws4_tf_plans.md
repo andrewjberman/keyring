@@ -23,8 +23,11 @@ Plus: source-map entry `smartx-model-monthly-pull` (lines ~2205-2217) + script `
 - **FOR retirement:** Post-revert (`80224d674`) the benchmark producer is pure-yang and reads NEITHER sidecar. Repo-wide grep for `_smartx_model_monthly`/`_smartx_model_daily` → ZERO live consumers (only docs/logs/source-map/the producer itself). The lambda fires daily, calls the SmartX API, and writes 2 unread files → dead infra + an ongoing external API pull + a standing write path into the audited S3 surface (a latent re-clobber vector). Andrew's governing principle: Benchmark data is Yang-PKL-only; a live SmartX writer to `json/benchmarks/` contradicts that even when unread.
 - **AGAINST / risk of retiring:** (a) If a hidden consumer exists that grep missed (e.g., a runtime-constructed key, an external/portal fetch by literal URL) it would 404 post-destroy. Mitigation: grep was exhaustive (repo + the FE benchmarks.ts reads only `benchmark_returns/model_portfolio_benchmarks/model_portfolio_timeseries`, not the sidecars); CVO WS-5 to independently confirm. (b) Loss of the SmartX-realized series if a future "model vs realized" feature wants it — but that's explicitly out-of-scope per Andrew's Yang-truth ruling; can be re-introduced from git if ever needed. (c) The 2 stale sidecars remain in S3 after destroy (destroy removes the WRITER, not the objects) — recommend a separate explicit `aws s3 rm` of the 2 sidecars OR leave as frozen evidence.
 
+### 1.2-bis DAILY-ORPHAN CONFIRMED (CTO review item 2 — RESOLVED)
+There is NO separate "B3 daily" producer. `pull_smartx_model_monthly_performance.py` (the smartx-model-monthly-pull lambda) writes BOTH sidecars in one run: `_smartx_model_monthly.json` (`OUT_KEY`) AND `_smartx_model_daily.json` (`OUT_KEY_DAILY`, L98; both emitted at L422/462; `output_keys=[OUT_KEY,OUT_KEY_DAILY]` L466). So LEG 1's retirement of smartx-model-monthly-pull **retires BOTH sidecar producers** — no LEG 1b needed. (Census doc `bmkaud_benchmarks_writer_census.md` row B.)
+
 ### 1.3 Proposed change
-1. Remove `infra/aws/terraform/smartx-pipeline/model-perf-pull.tf` (entire file — it contains ONLY these resources).
+1. Remove `infra/aws/terraform/smartx-pipeline/model-perf-pull.tf` (entire file — it contains ONLY these resources). Retires the monthly+daily sidecar producer in one destroy.
 2. Remove the `smartx-model-monthly-pull` source-map entry (AE lane).
 3. Route script removal (`data/smartx/scripts/pull_smartx_model_monthly_performance.py`) to DS-CP (Rule 13 data-script lane) — coordinate, not my commit.
 4. (Optional, separate) `aws s3 rm` the 2 stale sidecars after CVO sign-off.
@@ -97,9 +100,21 @@ Then `terraform import aws_s3_bucket_policy.opal_data_portal_v2 opal-data-portal
     "arn:aws:sts::313476888478:assumed-role/mdpf-daily-runner-ec2-role/*",
     "<NARROW break-glass admin ARN — TBD, confirm NOT a routine dev/agent cred>" ] } } }
 ```
-`terraform plan` then shows exactly **+1 Deny statement, OAC statements unchanged**.
-- **A-scope (CTO-ratified ship-now):** Resource = `platinum/mdpf/aggregate_aua/*` only.
-- **C-scope (fast-follow):** extend Resource to `platinum/mdpf/aggregate_aua_timeseries.json` + (only after MDPF leg-1a/1b make the runner the legit json/mdpf writer) `json/mdpf/*`. Do NOT lock `json/mdpf/*` before the runner writes it on-schedule.
+**Phase B also adds the BENCHMARK Deny (CTO review 154xZ — Andrew's actual lock-down ask; SEPARATE canonical writer = the yang lambda role, NOT mdpf-runner):**
+```hcl
+{ Sid = "DenyNonYangWriteBenchmarks", Effect = "Deny",
+  Principal = "*", Action = ["s3:PutObject","s3:DeleteObject"],
+  Resource = "arn:aws:s3:::opal-data-portal-v2/json/benchmarks/*",
+  Condition = { ArnNotLike = { "aws:PrincipalArn" = [
+    "arn:aws:sts::313476888478:assumed-role/yang-pipeline-lambda-role/*",
+    "<NARROW break-glass admin ARN>" ] } } }
+```
+Canonical writer confirmed (live `get-function-configuration`): yang-model-portfolio-benchmarks runs as **`yang-pipeline-lambda-role`** (shared by all yang-pipeline lambdas — all canonical yang writers; excepting it permits the yang pipeline while structurally DENYING the smartx-monthly/daily sidecar writer [B], the EC2 dual-writer [C], smartx-ingestion [D], news [E], AND any rogue/manual/dev-cred). This is the lock Andrew asked for: after apply, ONLY the yang role (+break-glass) can write `json/benchmarks/*`.
+
+`terraform plan` then shows **+2 Deny statements (benchmarks + mdpf-aggregate), OAC statements unchanged**. Both Denys coexist in the one imported policy.
+- **Benchmark Deny (Andrew's directive — ship with this batch):** Resource = `json/benchmarks/*`, except yang-pipeline-lambda-role.
+- **MDPF aggregate Deny (CTO-ratified):** Resource = `platinum/mdpf/aggregate_aua/*`, except mdpf-daily-runner-ec2-role.
+- **MDPF C-scope (fast-follow):** extend to `platinum/mdpf/aggregate_aua_timeseries.json` + (only after MDPF leg-1a/1b make the runner the legit json/mdpf writer) `json/mdpf/*`.
 
 ### 2.3 Technical correctness notes (both sides)
 - **Write-only is the safety guarantee:** Action set = `{PutObject,DeleteObject}` ONLY, never `GetObject`. A Deny that excludes GetObject is structurally incapable of affecting CloudFront OAC/OAI reads — the portal cannot break from this Deny by construction (CTO condition 1).
