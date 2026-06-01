@@ -23,3 +23,21 @@ EXACT per-date historical 1c is **NOT reconstructable from existing data** — t
 ## Hand-off
 - DE (leads pipeline): the 1c-surfacing starts at the 5/18 canonical-aggregator/feeder boundary; pre-5/18 platinum is the 49F-only backfiller (sma_aua=None, SMA-in-1b). Combined "what's needed to reconstruct" scope = my source verdict above + your pipeline-path trace.
 - COO+CTO: (a)-vs-(b) = "value captured (in 1b) but not separably reconstructable from existing source; estimate-only without a new SmartX historical SMA pull." NO backfill until Andrew sees scope.
+
+## CONSOLIDATED SCOPE (DS~B absorbed lead 2026-06-01 ~1545Z; DE unresponsive ~2.9h, COO routed)
+
+### Pipeline-consumer check — does ANY consumer read Cohort-1c STANDALONE?
+**NO standalone 1c-timeseries consumer.** `sma_aua` is TYPED in portal/src/api/portal-proxy.ts (the AUA-timeseries shape) and PRESENT in the served json/mdpf/{firm}/aggregate-aua-timeseries.json, but **no FE component renders the sma_aua timeseries as its own line**. The only consumers:
+- ModelPortfolios.tsx AUA trend reads `model_aua` + `non_model_aua` (NOT `sma_aua`); per-firm Non-Model = the artifact `non_model_aua` (L404). RD~B (Directive-1a) is rolling 1b+1c together for this view.
+- ModelPortfolios by_model "SMA sleeves" = the DONUT snapshot distribution + snapshot Total cards (current-date, NOT a historical timeseries) — no historical-jump dimension.
+=> Nothing surfaces the 1c historical jump as a standalone series.
+
+### Likely current FE presentation of the reclassification (for completeness)
+Post-5/18 `non_model_aua` EXCLUDES the broken-out SMA (it moved to `sma_aua`). Since ModelPortfolios renders `non_model_aua` directly and NOT `sma_aua`, the current (pre-RD-fix) per-firm Non-Model line likely DIPS ~$25M at 5/18 (and/or total dips), OR a cohort breakdown shows 1c jumping 0→$25M — depending on the view Andrew looked at. RD's Directive-1a 1b+1c rollup (add SMA back into the displayed non-model) makes it continuous either way.
+
+### THREE OPTIONS + RECOMMENDATION
+- **(i) FE rollup resolves it, NO backfill — RECOMMENDED.** RD's Directive-1a rolls 1b+1c together; the combined non-model is continuous across 5/18 (SMA is in the combined total either way). No standalone 1c consumer exists, so nothing else needs the historical split. Backfill is MOOT for the current views.
+- (ii) ESTIMATE reclass — only if 1c must be shown SEPARATELY over time later. Hold-flat/custody-proportional (~$25M, SMA slow-moving); presentation-only split within the already-correct total; NOT new data.
+- (iii) EXACT historical per-date 1c — needs a NEW SmartX historical-SMA pull (existing source is model-only). Data-availability Q for AE/DE+SmartX. Only path to true per-date.
+
+**DS~B recommendation: (i) — no backfill.** The reclassification leaves total AUA correct; the RD rollup resolves continuity; no consumer reads 1c standalone. Revisit (ii)/(iii) only if a future requirement surfaces a standalone historical-1c view. One verify for RD: confirm the Directive-1a rollup adds SMA into the displayed non-model (so the post-5/18 ~$25M dip doesn't persist).
