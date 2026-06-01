@@ -44,6 +44,7 @@ The interpolated 1c (and any estimated pre-1/16 total) are Andrew-ruled-acceptab
 - AC3: pre-1/16 disposition per Andrew's §4 ruling; estimated regions flagged, never shown as measured.
 - AC4: the ~$172M 5/15-region step is gone (continuous trend); DE continuity-verify PASS.
 - AC5: CVO independent verify PASS before the re-derived series serves to the portal.
+- AC6 (folds Item-3, COO 171034Z): the re-derive's date-selection is WEEKDAY/TRADING-CALENDAR-AWARE — drops spurious weekend/holiday partitions (root cause of the 12/27/2025 Saturday anomaly: INF→$0, 49F all-into-UST) and emits ALL business days (the 12/27 backfill also dropped 12/30-31). One coherent re-emit so the spurious-weekend class can't reintroduce. (A standalone glitch-clean of the visible 12/27 spike is GO'd separately by COO now, independent of basis; this AC is the permanent class-fix.)
 
 ## 9. Open items for Andrew (first-TO surface)
 - §4 pre-1/16 disposition (estimate-total / old-basis / start-at-1/16).
