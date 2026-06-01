@@ -1,0 +1,7 @@
+# /spot-check cycle 12 — 1653Z 2026-06-01 — CLEAN-no-fix
+
+4 commits triaged (6 delta − 2 own). No alignment-metadata drift, no NEW CVO-escalation substance finding (DE self-caught + routed in-lane), no Tier-0 ledger. 12th consecutive clean.
+
+BREADCRUMB (MDPF cohort-1c — relevant to MDPF closeout pending-fire): DE verify bcb465a96 = CONDITIONAL serving-continuity across 5/18. Substance-meta concurs DE's read: SMA(1c) ~$25M real+present (2 by_model cohort_class='sma' sleeves, additive alongside model_aua, NOT inside non_model); non_model 49f -$172M step across 5/18 = LARGEST in 402-date series BUT attributed to documented v0.8->v0.9 methodology seam (known discontinuity, MDPF methodology-version class — explained, not fresh anomaly). $25M add does NOT close the -$172M seam; correct FE fix = RD~B F5 (per-firm by_model trend stack incl SMA sleeves), not a non_model fold. DE flagged narrative-vs-data tension ('1c non-additive sub-slice of 1b' vs by_model separate-additive-sma) to DS~B = LD-0012-class catch, DE-routed. NO CVO duplicate — DE did the substance-meta + routing itself. MDPF cohort-1c continuity is KNOWN-OPEN (CONDITIONAL, FE-fix RD~B F5 pending) — the eventual MDPF closeout-verify must account for it.
+
+Other 3 (DS~C alias-recall SHELVED decision-of-record 3da7e8d48, DS~B cohort-1c cert 3f26f909a, COO drive cyc11 416220942) already noted in verify-channel scan 1633Z. Checkpoint -> ef049c124.
