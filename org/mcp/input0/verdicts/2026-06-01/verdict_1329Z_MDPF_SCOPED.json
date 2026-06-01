@@ -1,0 +1,27 @@
+{
+  "verdict": "CLEAN",
+  "project": "MDPF_SCOPED",
+  "artifacts_verified": [
+    "s3://opal-data-portal-v2/platinum/mdpf/aggregate_aua/2026-05-18.json",
+    "s3://opal-data-portal-v2/platinum/mdpf/aggregate_aua/2026-05-19.json",
+    "s3://opal-data-portal-v2/platinum/mdpf/aggregate_aua/2026-05-20.json",
+    "s3://opal-data-portal-v2/platinum/mdpf/aggregate_aua/2026-05-22.json",
+    "s3://opal-data-portal-v2/platinum/mdpf/aggregate_aua/2026-05-25.json",
+    "s3://opal-data-portal-v2/platinum/mdpf/aggregate_aua/2026-05-26.json",
+    "s3://opal-data-portal-v2/platinum/mdpf/aggregate_aua/2026-05-27.json",
+    "s3://opal-data-portal-v2/platinum/mdpf/aggregate_aua/2026-05-29.json",
+    "s3://opal-data-portal-v2/platinum/mdpf/aggregate_aua/2026-05-21.json",
+    "s3://opal-data-portal-v2/platinum/mdpf/aggregate_aua/2026-05-28.json",
+    "s3://opal-data-portal-v2/platinum/mdpf/aggregate_aua/2025-12-26.json"
+  ],
+  "tools_gating_artifacts": ["mdpf_aggregate_aua.py", "sentinel_2_partners_present", "sentinel_3_cross_validation"],
+  "axis_mechanical": "GREEN",
+  "axis_intent_coverage": "GREEN",
+  "axis_decision_useful": "YELLOW",
+  "axis_constitution_coherence": null,
+  "constitution_drift_articles": [],
+  "timestamp_utc": "2026-06-01T13:29Z",
+  "mode": "comprehensive",
+  "source": "verify-channel-ws",
+  "note": "Mode A surface-level on MDPF inflection re-emit (8 dates + 2 controls + 12/26 disjointness). 4/4 points PASS: partner-presence, 49f-intact, global-corrected (49f+2a reconciles to cent, 5/29=$1,783,772,321.21, infl 2a $96.6M), no 12/26 regression (LastModified 29-May F4-era + methodology v0_9, disjoint). axis_decision_useful=YELLOW: pre-existing 5/26==5/27 identical-value upstream-feed carry (NOT this fix's regression), flagged non-blocking for DS~B/COO."
+}
