@@ -103,6 +103,23 @@ All three are infra changes → Terraform (Rule 1) + safe-apply (Rule 18); pendi
 
 **GUARD SPLIT (final, no overlap):** (i) DS~B keeps `a9352506f` onboard-date guard (path-scoped; catches new post-onboard dates with no prior partition to compare); (ii) version-monotonic write-guard in the shared emit helper = DS~B script-side leg; (iii) `s3:PutObject` restriction to the `mdpf_runner` role on `platinum/mdpf/aggregate_aua/*` = AE IAM/Terraform leg (closes the local `--upload` path the clobber + the restore both used).
 
+## 5d. json/mdpf WRITER CENSUS (work-cycle 0005, ~1355Z) — FE serving feed is NOT scheduled (deploy-drift + grant-gap)
+
+CTO+COO asked: what writes `json/mdpf/*` today, under which grant? Decisive census:
+
+1. **Runner IAM grant** (`mdpf-pipeline/iam.tf`): runner writes `opal-data-portal-v2` at `platinum/mdpf/*` (L109) + `json/portfolios/*` (L132) ONLY. **No `json/mdpf/*` grant.**
+2. **Deployed runner rollup** (`s3://opal-data-mdpf/code/scripts/backfill/build_aggregate_aua_timeseries.py`, dated **2026-05-20 13:59**): writes ONLY `platinum/mdpf/aggregate_aua_timeseries.json` — **no `json/mdpf` write code**. The 5/29 chain log confirms: ROLLUP rc=0 logged exactly one upload (`platinum/mdpf/aggregate_aua_timeseries.json`), nothing under `json/mdpf/`.
+3. **Repo rollup** has the `json/mdpf/*` dual-write (JSON_TIMESERIES_KEY + per-firm json slices) — added by MDPF_SCOPED.S3 commits `44afa1dd2` + `6b21c8cf4`, both **2026-05-28** (8 days AFTER the deployed 5/20 copy). **Never deployed to the runner.**
+
+**CONCLUSION:** the FE-facing `json/mdpf/{global,49financial,inflection}/aggregate-aua-timeseries.json` slices are written by **NO scheduled principal** — only by manual LOCAL dev-cred runs of the current repo script (the 5/29 19:38Z clobber rebuild; DS~B's restore today). Two compounding causes: (a) deployed runner rollup is 8-day-stale (lacks the MDPF_SCOPED.S3 dual-write); (b) even if deployed, the runner role lacks `json/mdpf/*` write → would AccessDenied. **The FE serving feed is off-schedule and WILL re-stale after today's manual fix** (tomorrow's 15:00 chain won't refresh `json/mdpf/*`). This is a deeper layer of Andrew's "comparable intervals" question than the clobber: `platinum/mdpf/aggregate_aua_timeseries.json` IS scheduled; the `json/mdpf/*` FE slices are NOT.
+
+**portal-v2 bucket policy is UNMANAGED by Terraform:** no `aws_s3_bucket`/`aws_s3_bucket_policy` resource for `opal-data-portal-v2` anywhere (only IAM grants + CloudFront origin config in `portal-auth/`). Live policy = 2 OAC read statements (`AllowCloudFrontOAI` + `AllowCloudFrontOACPublicData`). So the IAM-A/C Deny requires `terraform import` + exact OAC-statement replication on a shared origin — high blast radius; flag for CTO before authoring.
+
+**REFRAMED REMEDIATION (priority-ordered):**
+1. **FE-FEED-SCHEDULING FIX (new, highest value — directly serves Andrew's interval ask):** (a) deploy the current repo rollup (with dual-write) to `s3://opal-data-mdpf/code/scripts/backfill/` so the scheduled chain writes the FE slices [DS-owned script deploy, Rule 13]; (b) add a scoped `json/mdpf/*` write grant to the runner role [AE, clean ADDITIVE grant in `mdpf-pipeline/iam.tf`, low blast radius]. Together: the FE feed becomes daily-scheduled.
+2. **IAM-A (aggregate_aua/ partition Deny):** valid, but gated on the unmanaged-bucket-policy import decision (CTO).
+3. **IAM-C (json/mdpf/ Deny):** only AFTER #1 makes the runner the legit scheduled writer — then Deny-except-runner is coherent (locking it before #1 would block the only-current writer = the local restore path, with nothing scheduled to replace it).
+
 ## 6. SPLIT NOTE
 
 0.5.0_AE not yet registered LIVE at audit time → completed solo. When it comes up, suggested split: 0.5.0_AE takes remediation-impl legs (CloudTrail attribution §5.2 + IAM write-restriction §5.3); 0.7.0_AE_CloudOps retains this audit + the write-guard coordination. All infra changes via Terraform (Rule 1) + safe-apply (Rule 18).
