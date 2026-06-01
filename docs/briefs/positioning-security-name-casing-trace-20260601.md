@@ -48,5 +48,10 @@ AE deploy: terraform via safe-apply (Rule 1) -> re-run the positioning rollup so
 
 **A+ canonical source (follow-on):** the 22 of 28 remaining all-caps tickers have provider names in the FE `ETF_NAME_FALLBACKS`; ALL of them (and the rest) have clean names in the `holdings_attribution_data.json` source — that attribution source is the canonical full-name reference for the sweep (satisfies the CTO's "pull from a reference, don't un-truncate"). Scope A+ with AE.
 
+## DEPLOYED + VERIFIED (2026-06-01)
+AE (0.7.0_AE_CloudOps) deployed Option A: code `f981f6ae6` (yang-v2.4.10), safe-apply HALTGT 0-diff, positioning rollup re-emitted (`generated_at 2026-06-01T17:05:24Z`), CloudFront invalidation `I20LMCX2L11PR0E1EEHNLNC86F`.
+- **DE independent serving-verify (RAVC validate) = PASS:** re-pulled `json/positioning/positioning_data.json` (gen 17:05:24Z — the re-emitted artifact); `current_holdings.{INT,LTC,LTA,AGG}.holdings` VUG = "Vanguard Growth ETF" (4 clean, 0 all-caps). The FE Current Holdings target path is FIXED. Rendered visual = Andrew (CF inval was InProgress; headless blocked).
+- **`portfolios.*.holdings` all-caps (AE flag) = LATENT, NOT a visible defect.** That section's `name` field is NOT rendered by any live FE component: `PositioningSummary` consumes `positioningData.portfolios[code]` only for portfolio-level metrics (no holdings `.name`); HoldingsTab renders names from `current_holdings` (Current, fixed) + `attributionData` (QTD/YTD, already clean). Recommendation: apply the same override to the `portfolios`-section name path as part of **A+** (data-cleanliness + de-risk future consumers), not a blocking fast-follow.
+
 ## Compiler Tools
 - `comp-platinum page Positioning` — ran (FE component had no directly-resolved fetch; getPositioningData traced manually to /api/general/positioning/positioning_data.json). comp-pipescript io applies if/when AE touches a gold script (this fix is in a Lambda, not data/*/scripts/gold). Decomposition + all-caps scope read directly from the live serving artifact.
