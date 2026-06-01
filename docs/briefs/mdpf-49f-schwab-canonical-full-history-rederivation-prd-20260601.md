@@ -54,3 +54,12 @@ The interpolated 1c (and any estimated pre-1/16 total) are Andrew-ruled-acceptab
 ## 9. Open items for Andrew (first-TO surface)
 - §4 pre-1/16 disposition (estimate-total / old-basis / start-at-1/16).
 - The 1c interpolation basis (DS-CP proposes; Andrew confirms if it materially affects the displayed numbers).
+
+## 10. Closed-work staleness verification (DS~B, 2026-06-01, post-close — COO-directed)
+After the 1/16-5/17 re-derive landed + was DE+CVO-verified, two staleness angles were raised against the now-closed work (CTO deeper blast-radius). BOTH checked CLEAN — the re-derive STAYS CLOSED:
+
+- **Angle 1 — near-empty Mar/Apr smartx-allocations (202603=6 rows, 202604=4 rows, $0):** does NOT affect the re-derive. The 49F daily 1a (model_aua) is sourced from a SEPARATE populated daily source, not the near-empty MONTHLY allocation snapshots — evidenced by the served re-derived timeseries: Mar 1a ~$1.20B, Apr ~$1.21B, all 82 dates (1/16-5/17) populated, 0 nulls, 0 near-zero. (RAVC2 20:35Z; COO-accepted.) The Mar/Apr monthly near-empty only affects an account-distribution snapshot we don't use (latest-funded=May) — separate low-pri housekeeping.
+
+- **Angle 2 — stale Jan-14 smartx-exporter image (missing undeployed AUM-affecting fixes d621311b5 Jan-21 retroactive-AUM-smoothing / feca94a1f total-returns-calendar / May-13 Path-B model_aum reconcile):** the re-derive's 49F 1a is **confirmed insulated** — it reads raw SmartX daily-export CSVs directly (historical via build_mdpf_process_backfill.py off the raw per-model rosters; live 5/18+ via wsb_49f_smartx_model_aua.py off the REST API → opal-data-mdpf feeder, "never the canonical SmartX exporter path"), **bypassing the exporter aggregation layer** where all three cited fixes live (d621311b5 is in aggregate_smartx_by_transaction_dates.py = the GLOBAL AUM daily-timeseries pipeline, a different pipeline). Plus the MDPF 1a's own independent point-in-time period-aware logic (the MDPF_SCOPED.F4 fix: per-date period-end-consensus de-dup + drop-day1-$0). A current-code recompute matches by construction (same immutable raw CSVs + deterministic period-aware code). (RAVC2 21:38Z; COO-accepted.) Non-gating residual (AE, when convenient): confirm the raw-CSV pull/export step soundness on the stale image — but the cited fixes are aggregation-layer not pull-step, and the 1/16-5/17 CSVs are immutable months-old snapshots, so the raw 1a source is sound regardless.
+
+NET: the 1/16-5/17 Schwab re-derive is clean on both staleness angles and stays closed.
