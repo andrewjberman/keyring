@@ -18,7 +18,7 @@ The series-license dimension (previously dormant — Lusha carries no license da
 | 3 | gradient-financial-group | 0.563 | 6 | Jon Vanorden (S66/S7, CRD 5270047); Nicole Alexander (S65, CRD 4249833); Leo Carton (S6/S63/S65/S7, CRD 1289027) |
 | 4 | allianz-life | 0.466 | 4 | Jasmine Jirele (S24/S26/S6, CRD 4180840); Michael Brazys (S24/S7, CRD 5223949); Gordon Collins (S26/S63/S7, CRD 4691983) |
 | 5 | american-equity-life | 0.387 | 1 | Mark Mullings (S24/S26/S6/S63/S7, CRD 3272512) |
-| 6 | eagle-strategies | 0.375 | 0 | — |
+| 6 | New York Life [slug: eagle-strategies] | 0.375 | 0 | — **OVER-SCOPE:** resolved to the NY Life PARENT carrier, not the Eagle Strategies RIA the slug names (no distinct Eagle Strategies Lusha id exists, checked 2026-06-01). Score reflects NY Life broadly. Kept in-universe (insurance), relabeled honest. |
 | 7 | futurity-first | 0.361 | 1 | Curtis Carey (S66/S7, CRD 5723594) |
 | 8 | midland-national | 0.348 | 1 | Spencer Halgerson (S6/S63, CRD 6846771) |
 | 9 | metlife | 0.323 | 0 | — |
