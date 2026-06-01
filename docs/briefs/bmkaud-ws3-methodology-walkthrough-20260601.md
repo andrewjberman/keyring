@@ -86,3 +86,17 @@ Peers does NOT flow through this producer — FE `PeersTab.tsx` ← `json/peers/
 - PKL `index_name` series present for Long Term: `Long Term Conservative`, `Long Term Agressive`, `Long Term Benchmark`, `Long Term ETF`. There is **exactly one** `Long Term Benchmark` (and one `Long Term ETF`) — **no** separate Conservative/Aggressive benchmark series exists.
 - UST/ST/INT each have their OWN `{tier} Term Benchmark`; the Long Term tier has a SINGLE benchmark shared by two distinct model series. So the lambda mapping both LTC and LTA → `Long Term Benchmark` is **faithful to the source** (there is nothing else to map to) — **not a transform/mis-mapping bug.**
 - **Verdict: source-of-truth / design question, not a code bug.** Is one shared `Long Term Benchmark` (displayed as 15% Agg / 85% ACWI — aggressive-leaning, identical to the LTA composition label) appropriate for the "Conservative" long-term sleeve? If LTC should be benchmarked against a more bond-heavy blend, the **source PKL must provide a separate `Long Term Conservative Benchmark`** — an upstream-data change (same class as the `Agressive` typo), NOT a lambda fix. Route to WS-1 (PKL provenance) + the CTO/Andrew source-of-truth ruling.
+
+---
+
+## RESOLUTION — Andrew ruling 2026-06-01 · WS-3 CLOSED
+
+**Window-definition ruling (the primary finding): Andrew ruled (a) KEEP trailing-30/91 calendar days** (ws CTO relay 20260601T144714Z; recorded in directive 631d8d0d9). The trailing-30-cal-day (1M) and trailing-91-cal-day (1Q) windows are the **methodology-of-record** — a rolling 1M/1Q, intentionally distinct from MTD/QTD and from last-complete-calendar-period. **Disposition:**
+- **No producer code change** (`calculate_period_returns` unchanged). Producer **comments added** at the 1M (`elif period == '1M'`) and 1Q (`elif period == '1Q'`) blocks citing this ruling so the choice is self-documenting. Comment-only, **zero behavior change**; **NOT redeployed** (benchmark writers are WS-0-quarantined + a comment carries no runtime delta). Code-freeze on the producer is permanent for this item (not pending).
+- The empirical divergence table above (INT 1M 2.95 trailing-30d vs 4.62 last-complete-month; 1Q sign-flip) stands as the rationale record for WHY the ruling matters and what the alternatives would have produced.
+
+**Flag dispositions (ws CTO accepted):**
+- **Flag 1 (end_date edge):** BENIGN, accepted; jointly-concurred with DS~B WS-2. The optional hardening (assert end_date==expected-latest-business-day; calendar-holiday-aware vs all-zero filter; the 5/25 sparse-holiday slip) = **low-priority backlog item, OUT OF SCOPE for this audit** (accepted known minor-count-inflation edge).
+- **Flag 2 (LTC/LTA shared 'Long Term Benchmark' + 'Agressive' typo):** faithful-to-source, NOT a lambda bug. **Upstream-data / product items** for Andrew (CTO surfacing in the consolidated RAVC2): (a) should Conservative + Aggressive long-term sleeves share the same 15/85 benchmark — if not, source PKL needs a separate `Long Term Conservative Benchmark`; (b) the `Long Term Agressive` typo is a cosmetic source-data fix. Both route through the **PKL-generation owner (WS-1 provenance)**, NOT this producer lambda.
+
+**WS-3 status: CLOSED** (window ruled + both flags disposed). Remaining audit-close items are other lanes: CVO WS-5 (independent recompute vs the ruled trailing-30/91d), RD~B Peers FE falsy-zero fix, WS-0 byte-verify, WS-4 change ledger, Peers-staleness remediation.
