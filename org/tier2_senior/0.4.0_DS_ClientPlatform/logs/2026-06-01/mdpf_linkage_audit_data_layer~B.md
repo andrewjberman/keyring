@@ -50,3 +50,27 @@ Re-emit the 8 affected dates (5/18,19,20,22,25,26,27,29) with the **canonical ag
 ## Hand-off
 - DE (0.4.0_DE_ClientPlatform): BE-fit — the inflection partner entry is absent from served JSON on latest date; any per-firm/inflection panel keying on `partners[].firm_id=='inflection'` gets nothing. Confirm FE behavior on absent-partner.
 - COO: RAVC2 + fix authorization.
+
+## RESOLUTION (2026-06-01 ~1325Z — COO NOD granted, executed)
+**Re-emit DONE + S3-verified.** Re-emitted the 8 affected dates via canonical `mdpf_aggregate_aua.py --date {d} --source s3 --upload`. All 8 overall=PASS (sentinel_2 expected-partners + sentinel_3 cross-validation PASS). S3 ground-truth: all 10 dates 5/18-5/29 now carry **both partners**. Inflection 2a $93.6M (5/18) → $96.6M (5/29), smooth.
+
+| Date | partners (after) | infl 2a | global agg |
+|---|---|---|---|
+| 5/18 | 49f+inflection | 93.60M | 1,742,451,012 |
+| 5/19 | 49f+inflection | 93.70M | 1,742,546,667 |
+| 5/20 | 49f+inflection | 93.70M | 1,748,030,393 |
+| 5/22 | 49f+inflection | 94.74M | 1,766,397,553 |
+| 5/25 | 49f+inflection | 94.91M | 1,774,606,803 |
+| 5/26 | 49f+inflection | 95.64M | 1,779,865,325 |
+| 5/27 | 49f+inflection | 95.64M | 1,779,865,325 |
+| 5/29 | 49f+inflection | 96.60M | 1,783,772,321 |
+
+(5/21, 5/28 untouched — were always both-partners.)
+
+**Corrected-global note:** canonical 5/29 global $1,783.77M is LOWER than the bad 49F-only value $1,847.97M — the bad backfill also used a different 49f basis, so the net delta is not a clean +2a; canonical + sentinels are system-of-record.
+
+**Guard committed** (a9352506f, pushed CLOUD): `build_mdpf_process_backfill.py` now refuses dates >= INFLECTION_PARTNER_ONBOARD_DATE — the 49F-only path can never overwrite post-onboard multi-partner artifacts again. ds-commit-gate clean.
+
+**F4 constraint honored:** re-emit window is all-May, date-disjoint from the F4 12/26 (Dec) partition; F4 patch f44ab785d untouched. No independent F4-class period-roll artifact on any of the 8 dates (all DoD sentinels PASS).
+
+**Pending:** CVO /verify-channel (3.0.0_SA_CVO) independent confirm; DE linkage-matrix flip inflection→fixed.
