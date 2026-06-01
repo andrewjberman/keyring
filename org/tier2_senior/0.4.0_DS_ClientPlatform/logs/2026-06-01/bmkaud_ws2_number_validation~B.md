@@ -24,5 +24,30 @@ I flagged "Peers running on a ~5-month-stale Dec-2025 xlsx" from the `uploads/` 
 ## Governance flag (legitimate, weaker than "stale") + remediation rec
 Peers source = an EXTERNALLY-PREPARED monthly xlsx ("Models Performance vs Peers YYYYMM.xlsx"), NOT yang-PKL-derived and NOT TF-managed in the yang-PKL sense (inherent — peer-universe data doesn't exist in yang). Ingested by the data_refresh lambda (recognizes *peer*.xlsx). Open question for WS-4/governance: is the monthly xlsx UPLOAD automated or human-triggered? who owns it? Remediation rec: (1) confirm/automate the monthly peers-xlsx refresh + make it identifiable-to-the-minute like the directive wants; (2) clean the stale `uploads/202512` leftover; (3) the peers provenance (external xlsx) is a documented exception to "yang PKL = single source of truth" — ratify it explicitly.
 
+## WS-2 FOLLOW-ON (CTO direct): 1M/1Q window both-ways + end_date edge
+
+### end_date edge — CLEAN
+weekday-filtered max date = 2026-05-29; term_returns max AFTER all-zero(holiday) drop = 2026-05-29 (Friday, real trading day; UST model daily=0.0644 non-zero). NO all-zero rows dropped after end_date. So lambda end_date=index.max() is the legit last trading day, NOT a dropped-row artifact. AE's end_date edge confirmed.
+
+### 1M/1Q window BOTH-WAYS (window is the only variable; geometric compound held constant)
+end_date=2026-05-29. 1M: trailing-30d=(4/29,5/29] | MTD=[5/1,5/29] | lastCalMonth=[4/1,4/30]. 1Q: trailing-91d=(2/27,5/29] | QTD=[4/1,5/29] | lastCalQtr=[1/1,3/31]. Current lambda serves the TRAILING column (matches my 360/360).
+
+| model/series | 1M_trail30 | 1M_MTD | 1M_lastMo | 1Q_trail91 | 1Q_QTD | 1Q_lastQ |
+|---|---|---|---|---|---|---|
+| UST model | 0.37 | 0.31 | 0.43 | 0.45 | 0.73 | 0.44 |
+| UST index | 0.26 | 0.16 | 0.24 | -0.06 | 0.40 | 0.28 |
+| ST model | 0.73 | 0.34 | 1.11 | -0.37 | 1.45 | 0.15 |
+| ST index | 1.27 | 1.03 | 1.58 | -0.02 | 2.63 | -0.49 |
+| INT model | 2.95 | 1.75 | 4.62 | 1.49 | 6.45 | -0.01 |
+| INT index | 3.84 | 3.23 | 6.08 | 4.03 | 9.50 | -1.85 |
+| LTC model | 3.85 | 2.29 | 6.19 | 2.22 | 8.62 | -0.05 |
+| LTC index | 5.29 | 4.46 | 8.65 | 6.31 | 13.50 | -2.63 |
+| LTA model | 4.08 | 2.48 | 6.74 | 2.97 | 9.39 | -0.12 |
+| LTA index | 5.29 | 4.46 | 8.65 | 6.31 | 13.50 | -2.63 |
+
+(etf series in harness output; omitted for brevity.) Harness: .runtmp/bmkaud/ws2_windows_and_edge.py.
+
+**Decision-useful observation (for Andrew's window ruling):** the window choice changes the numbers MATERIALLY (e.g. INT 1Q: 1.49 / 6.45 / -0.01). BUT the lambda applies ONE window definition to model+index+etf alike, so the SPREAD (model-benchmark) stays apples-to-apples coherent under ANY single consistent window. The SmartX defect was MIXING windows (model=cal-month vs benchmark=trailing) → incoherent spread; the pure-yang revert uses trailing for all three → coherent. So "which window is 1M/1Q" is a LABELING/presentation ruling, NOT a correctness bug, provided consistency holds (it now does). Methodology-correctness of the chosen window = HALF-B (WS-3/CVO).
+
 ## Net WS-2 (HALF-A) verdict: NO data-layer derivation bug in either tab.
 Both symptoms explained: Benchmark 1M/1Q = pre-revert SmartX (resolved); Peers UST-1M = data present+correct (FE-side). HALF-B (methodology) joint-pending WS-3 + CVO independent recompute.
