@@ -98,3 +98,16 @@ Inflection feeder partition `inflection/2026-05-27.parquet` carries `as_of_date=
 **(b) inflection flat = chain-ordering TIMING RACE, self-healing, not an integrity bug.** Both inflection feeder partitions for 5/27 (model + non_model) carry as_of_date=2026-05-26. Root cause: WS-C inflection feeder ran 5/27 @11:01:00; the upstream Eclipse 5/27 gold_complete.json marker landed @11:12:26 (~11 min later). The feeder's designed latest-on-or-before roll-forward (WS-A contract §3.4, methodologically sound for slow-changing model composition) correctly used 5/26 (latest COMPLETE source at run time). NOT a feeder bug; NOT permanent stale source (5/27 Eclipse exists now).
   - Decision-useful fix = CHAIN-ORDERING hardening (WS-C feeder must run AFTER upstream Eclipse gold_complete) → AE scheduling leg; prevents recurrence in the 15:00 UTC chain.
   - Re-pulling the single 5/27 inflection partition is COSMETIC (slow-changing composition, sub-1% delta) — offered to COO as optional, not recommended as priority.
+
+## LEG-1a — ROLLUP REDEPLOY (durable FE-feed-scheduling fix, 2026-06-01 ~1410Z)
+AE (0.7.0) writer-census found the real structural gap: the DEPLOYED runner rollup (s3://opal-data-mdpf/code/scripts/backfill/build_aggregate_aua_timeseries.py) was the **8-day-stale 5/20 copy LACKING the MDPF_SCOPED.S3 json/mdpf dual-write** (44afa1dd2+6b21c8cf4). So json/mdpf/{global,49f,inflection}/aggregate-aua-timeseries.json (the FE-read slices) were written by NO scheduled job — only manual local runs. My 13:34Z rollup was a one-shot; the next 15:00 chain would re-stale the FE feed.
+**FIX (commit bf5d24861, deployed):** redeployed the current rollup to the runner code bucket (drift-checked clean superset). PLUS added a **graceful-degrade** on the additive json/mdpf dual-write (try/except → loud WARN, continue) so it can't crash the chain rollup if the runner lacks json/mdpf/* PutObject — decouples this redeploy from AE's leg-1b runner-grant timing (no crash window, no strict ordering). comp-pipescript doesn't track MDPF (opal-data-bd only); verified deployed via direct S3 grep (7 dual-write refs).
+**Pairs with:** AE leg-1b (additive json/mdpf/* runner IAM grant, on COO confirm) + 0.5.0_AE Stage-0.5 eclipse-gate (24c222ab8, deployed — daily chain ordering fixed). Verify post-grant+chain: json/mdpf/* generated_at advances on schedule.
+
+## RE-EMIT — DOWNGRADED to optional-after-structural (COO, accepting my sub-1% read)
+Not running now. 0.5.0_AE caught a flag error in my feeder-first sequence: `--date {d}` alone resolves the LATEST eclipse gold (5/29) and back-stamps the wrong vintage; the vintage PIN is `--eclipse-date {d}`. BANKED corrected per-date sequence (dry-run-validated by 0.5.0_AE):
+  1. build_mdpf_wsc_inflection_feeder.py --date {d} --eclipse-date {d} --upload
+  2. mdpf_aggregate_aua.py --date {d} --source s3 --upload
+  3. build_aggregate_aua_timeseries.py --upload (once, after both)
+  (NOT via mdpf-daily-dispatch.sh --date — L206 runs WS-C without --eclipse-date → grabs 5/29.)
+Run only if Andrew wants the exact sub-1% figure after seeing the trend; 0.5.0_AE runs the runner dispatch, I data-layer verify + ping CVO.
