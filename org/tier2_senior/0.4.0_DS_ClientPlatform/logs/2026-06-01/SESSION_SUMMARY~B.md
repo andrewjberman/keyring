@@ -1,6 +1,6 @@
 # DS_ClientPlatform~B — Session Summary (2026-06-01)
 
-Session arc: startup → MDPF_SCOPED inflection restore → BMKAUD WS-2 audit → Cohort-1c → MDPF 49F Schwab re-derive (TO-1a) + global fix + Inflection adjudication. Worker (Tier-2 DS), lane COO 2.0.0_SA_COO. ~23 work-cycles.
+Session arc: startup → MDPF_SCOPED inflection restore → BMKAUD WS-2 audit → Cohort-1c → MDPF 49F Schwab re-derive (TO-1a) + global fix + Inflection adjudication → **[session died ~67min; RESPAWNED]** → pre-1/16 disposition options artifact + TO-B bell-curve durable footer fix (3-firm) + re-derive staleness re-verification (2 angles). Worker (Tier-2 DS), lane COO 2.0.0_SA_COO. ~28+ work-cycles across both sessions. (Sections 1-7 = pre-respawn; "RESPAWN SESSION" block below = post-respawn.)
 
 ## 1. Startup + infra
 - /watcher self-heal (was NOT REGISTERED → re-registered LIVE), tracked inbox-watcher relaunched. Armed /work 20m cron (later stopped by Andrew; switched to watcher-driven event loop).
@@ -45,3 +45,41 @@ Made several over-framings this session — peers-5mo-stale, sma-null-pre-5/18, 
 
 ## Key commits
 a9352506f, f304319f7, bf5d24861 (MDPF guards/rollup); 22bb6f9bf, 3af2911c7 (cohort labels/meta); 120652cb6 (rollup provenance); TO-1a partition emits (S3, via .runtmp/bmkaud/to1a_emit_v2.py); BMKAUD WS-2 + Cohort-1c + Item-3 evidence docs under this logs dir.
+
+---
+
+# RESPAWN SESSION (2026-06-01 ~1948Z+) — dispatches #1, #2 + re-derive staleness re-verify
+
+Prior session died ~67min (broker phantom-LIVE pinned to broker-daemon PID 4812; MSTR [STUCK] respawn). Picked up 2 unprocessed ws COO dispatches + handled 2 CTO/COO closed-work-verification asks.
+
+## 8. Respawn recovery
+- /watcher self-heal: re-registered LIVE (was phantom 4812), killed prior-session orphan watcher (auto-respawn loop), launched tracked watcher. Armed /work 20m cron (fd526b5c).
+- Recovered BOTH dispatches from `~B/read/` — the dead session's orphan watcher had swallowed them (top-level + check-inbox empty; found via grep). Lane-subdir vs concatenated-path: COO addressed `0.4.0_DS_ClientPlatform/~B/`.
+
+## 9. Dispatch #1 — pre-1/16 disposition OPTIONS artifact (DONE, arms Andrew #3)
+`docs/briefs/mdpf-49f-pre-1-16-disposition-options-20260601.md` (b3e627a75). 3 options (A back-cast estimate / B flag-at-1/16 / C start-at-1/16), each with what-Andrew-sees + honesty posture + data implications + AC6-dates (12/30,12/31,1/2) handling + rec.
+- DECISIVE empirical finding (pulled served 49F timeseries): the 1/16 boundary is ALREADY numerically continuous (1/15 $1,409.3M → 1/16 $1,412.9M, +$3.6M, no cliff) — the full-book→Schwab divergence only opened April→5/17. Reframes the decision as PROVENANCE/labeling, not a visible jump.
+- REC = Option B (flag-at-1/16, keep pre-1/16 labeled legacy): A buys ~nothing visible while adding a widening error band; C discards real continuous growth history (Nov'24 ~$776M→Jan'26 ~$1.4B). CTO CONCURRED strongly (rejected A as fabricated-precision-for-zero-change). Routed to Andrew #3. **AWAITING Andrew ruling.**
+
+## 10. Dispatch #2 — TO-B bell-curve durable footer fix (3-firm, all served+verified)
+The footer "Excludes N unfunded holdings" was an FE cross-scope subtraction `metrics.account_count(7039 GLOBAL) − distribution.account_count(per-firm)` = 6639 garbage for inflection. Durable fix = emit the excluded-unfunded count DIRECTLY in the producer.
+- PRODUCER-CORRECTION (material): DE/COO cited INF_09/09.generate_partner_analytics as the emit-target — WRONG (those publish partner_analytics.json/NNA). The real producer of `json/mdpf/{firm}/account-distribution.json` is `compute_per_firm_account_distribution.py` (+ `compute_account_distribution.py` global). Proved by shape+source+period match.
+- EMITTED total + by_model `excluded_unfunded_count` for all 3 firms (49F=2, inflection=5, global=2), each self-consistent (excl=active−funded) + reconciled (Σ by_model = total). by_model per CTO ruling 29b310e4f. Triple-verified: DS data-layer + DE serving-verify (1a026099c) + CVO cert (bf244cac1 inflection / bfd43a981 global). LD-0012 cross-scope-subtraction defect eliminated.
+- ANTI-REGRESSION GUARD + LATEST-FUNDED-PERIOD selection: dry-run-before-upload caught that re-running 49F would regress 6838→0 (smartx June 202606 is an unvalued $0 shell — AE confirmed genuine end-of-period, the served 7025@June was a spurious transient). Guard refuses to upload a 0-account distribution; latest-funded selection skips the $0 shell. Global -187 correction (7025@June→6838@May) COO-approved as a correction, AE re-emitted.
+- OWNED-PATHS: `data/smartx/**` = AE OpalETL lane; my DS serial can't commit → handed AE the diffs (did NOT --force). AE committed (4ffb21d7b, cfc278f38, 9dfb66dcb). §2 finding: the per-firm producer is MANUAL-ONLY (not in the smartx daily DAG/Docker bundle/Lambda) → recommended + AE wiring it into the daily DAG + bundle on the same pending Docker rebuild.
+- DURABLE-CLOSE GATE: the smartx-exporter EC2 daily run (~14:16Z) runs a DIVERGED old bundled copy → would re-clobber to the anomaly until AE's Docker rebuild. So data-correct NOW, durable-close = AE Docker rebuild (CVO conditional cert + DE re-verify gate on the post-deploy daily run) + RD FE cutover. **In AE/RD hands.**
+
+## 11. Re-derive staleness re-verification (both angles CLEAN — closed work stays closed)
+Two staleness angles raised against the verified-closed TO-1a re-derive (CTO blast-radius):
+- Angle 1 (Mar/Apr near-empty smartx-allocations): 1a from a SEPARATE populated daily source; not affected (served Mar/Apr 1a ~$1.2B, 0 nulls/82 dates). COO-accepted.
+- Angle 2 (stale Jan-14 smartx-exporter image, missing d621311b5 Jan-21 AUM-smoothing + feca94a1f + May-13): 49F 1a INSULATED — reads raw SmartX daily-export CSVs directly (build_mdpf_process_backfill.py historical; wsb_49f_smartx_model_aua.py REST-API live), bypassing the exporter aggregation layer where the fixes live (d621311b5 is in aggregate_smartx_by_transaction_dates.py = global AUM timeseries, a different pipeline) + independent point-in-time F4 logic; current-code-consistent by construction. COO-accepted.
+- Annotated the re-derive close record §10 (844921778, COO-directed).
+
+## Open / gated (none silently wrong)
+- **pre-1/16 #3** — Andrew ruling (artifact delivered + CTO-concurred rec B).
+- **TO-B durable close** — AE Docker rebuild (per-firm DAG wiring + global daily-run) gated on Andrew push-vs-ride + wound-down AE pod; then DE/CVO post-deploy re-verify + RD FE cutover.
+- (From prior session, still tracked:) Inflection 5/18 display preference; AC6 add-days 2/2,3/2,4/1,5/1; MDPF leg-1 scheduling.
+- Fabric converged/Andrew-gated at session end; holding armed-quiet keep-warm.
+
+## Respawn-session key commits
+b3e627a75 (pre-1/16 options artifact); 4ffb21d7b + cfc278f38 + 9dfb66dcb (AE-committed TO-B producers); 1308043ab + 844921778 (re-derive staleness verify + §10 annotation); work logs work_1955Z/2014Z/2039Z/2053Z/2109Z/2138Z under this dir. Served emits: json/mdpf/{49financial,inflection}/account-distribution.json + json/portfolios/account-distribution.json (all 3 with total+by_model excluded_unfunded_count).
