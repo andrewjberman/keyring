@@ -19,19 +19,20 @@ The count is computed **in the FE**, not the backend — it's a SUBTRACTION of t
 
 So: number = (metrics account_count) − (bell-curve funded account_count). Valid ONLY if both are the same grain.
 
-## 3. ROOT CAUSE — Inflection grain mismatch (the 6639)
-The two counts subtracted are on **different grains for Inflection**. Documented in-code (`DistributionTab.tsx:175`): *"Inflection: distribution.total.count is CLIENT count, not accounts."* So for Inflection the FE computes **(accounts/holdings) − (clients)** — a cross-grain subtraction that yields a meaningless large positive (6639), mislabeled as "unfunded holdings." For 49/Global the two feeds are the same grain (accounts − accounts), so the difference is the genuine small unfunded-account count (201, 14).
-- Secondary contributor to investigate: Inflection's post-5/18 model-funding structure (many $0 model-sleeve positions) may also inflate whichever count is holdings-grain.
-- This is the SAME grain-discipline class as the cohort/Inflection issues today — Inflection's separate `INF_*` producers carry a different grain than the 49/Global ones, and a FE calc that assumes uniform grain breaks on Inflection.
+## 3. ROOT CAUSE — SCOPE mismatch (global metrics − per-firm distribution); grain secondary (DE TO-A verified, 1d3df59f3)
+The DOMINANT bug is **SCOPE, not grain**. The metrics numerator (`metricsData.total.account_count`) is **GLOBAL** (7039; there is NO firm_id / no per-firm account_count in the metrics feed); the distribution denominator is **PER-FIRM**. So every per-firm footer computes **global_metrics − firm_distribution**. Reproduced to the integer: **Inflection 6639 = 7039 (global metrics) − 400 (Inflection distribution)**.
+- The grain issue (Inflection distribution = CLIENT count, not accounts; `DistributionTab.tsx:175`) is REAL but **secondary/compounding** (it shrinks Inflection's denominator further → larger residual).
+- REFINED vs first draft: **only Global's 14 is genuinely correct** (global − global). **49's 201 is ALSO wrong** (global 7039 − 49 6838) — coincidentally-plausible ONLY because 49 ≈ 97% of global, so it's **MASKED**, not a true per-firm count. The scope bug affects **ALL per-firm footers**, not just Inflection — Inflection is merely the most visible (smallest, client-grained denominator).
+- Same per-firm-scope / Inflection-separate-grain class as today's cohort issues.
 
 ## 4. CORRECT INTENT
 The footer should report the number of **genuinely newly-opened-AND-unfunded ACCOUNTS excluded from the bell curve**, computed **consistently at the accounts grain across all firms** — never a cross-grain subtraction. (Global ~14, 49F ~201 are the right order of magnitude; Inflection's true number should be similarly small.)
 
-## 5. FIX OPTIONS (for TO-decomp — confirm grains first)
-- **(a) Source-grain fix (preferred-correctness):** make Inflection's metrics + distribution feeds both expose a same-grain **accounts** count (align `INF_09.generate_partner_analytics`/the Inflection metrics source so `account_count` means accounts on both sides). Then the existing FE subtraction is correct for all firms.
-- **(b) Direct count (preferred-robustness):** compute the excluded-unfunded count DIRECTLY at the accounts grain (count newly-opened accounts with $0 balance) in the producer, emit it as an explicit field the FE renders — kills the cross-grain-subtraction fragility for every firm.
-- **(c) FE guard (stopgap):** suppress/relabel the footer when the metrics and distribution grains don't match (prevents the wrong 6639 from displaying while (a)/(b) lands).
-Lean: (b) as the durable fix (explicit, grain-safe field) + (c) as an immediate stopgap so Inflection stops showing 6639 on the live page.
+## 5. FIX OPTIONS (DE TO-A determined (b) is NECESSARY, not just preferred)
+- **(a) Align grains — INSUFFICIENT (ruled out as a standalone fix).** Per DE: there is NO per-firm accounts-grain count in ANY served feed (metrics is global-only; per-firm aggregate-aua has no account count). A scope-fix has nothing to substitute as the per-firm numerator — so aligning grains alone cannot produce a correct per-firm count.
+- **(b) Producer emits the count DIRECTLY at the per-firm accounts grain — NECESSARY.** Compute the newly-opened-$0-unfunded **account** count per firm in the producer (`INF_09` + `09.generate_partner_analytics`, off the positions cube / canonical_holdings) and emit it as an explicit field the FE renders verbatim — eliminating the global-minus-per-firm subtraction for every firm. DE handed DS~B the exact emit-target.
+- **(c) FE guard (stopgap) — covers ALL per-firm footers, not just Inflection.** Since every per-firm footer is the buggy global−firm subtraction (49's 201 is masked-wrong too), the stopgap must suppress/relabel the per-firm footers (49 + Inflection) until (b) lands; Global's footer (global−global) is the only correct one and can stay.
+Plan: ship (c) fast (kill the visible 6639 + the masked-wrong 49 number) → (b) as the durable per-firm grain-safe emitted count.
 
 ## 6. FIRST TO — lineage verification (gate before fix)
 Confirm empirically: the EXACT grain of `metricsData.total.account_count` vs `activeDistribution.total.account_count` for Inflection (accounts / clients / holdings), reproduce 6639 = (X − Y), and identify which feed is the wrong grain (the `INF_09` distribution per the documented note, or the metrics source). Then implement (b)+(c). DS owns the producer/grain; RD owns the FE calc + guard; DE/CVO verify the corrected count is plausible + consistent.
