@@ -49,5 +49,17 @@ end_date=2026-05-29. 1M: trailing-30d=(4/29,5/29] | MTD=[5/1,5/29] | lastCalMont
 
 **Decision-useful observation (for Andrew's window ruling):** the window choice changes the numbers MATERIALLY (e.g. INT 1Q: 1.49 / 6.45 / -0.01). BUT the lambda applies ONE window definition to model+index+etf alike, so the SPREAD (model-benchmark) stays apples-to-apples coherent under ANY single consistent window. The SmartX defect was MIXING windows (model=cal-month vs benchmark=trailing) → incoherent spread; the pure-yang revert uses trailing for all three → coherent. So "which window is 1M/1Q" is a LABELING/presentation ruling, NOT a correctness bug, provided consistency holds (it now does). Methodology-correctness of the chosen window = HALF-B (WS-3/CVO).
 
+## WS-2 FINAL CLOSES (frozen-snapshot byte-verify + p95 disposition)
+
+### HALF-A byte-verified vs FROZEN evidence — caveat CLOSED
+Frozen snapshot: s3://opal-data-mdpf/bmkaud-evidence/20260601T1445Z/. Chain proven byte-for-byte:
+- local recompute copy md5 = `d2503d3c8f4bdd8223f2fbd6afdb9147`
+- live `opal-data-portal-v2/benchmarks/data_20260531_v1.pkl` ETag = `d2503d3c8f4bdd8223f2fbd6afdb9147` (size 8388499)
+- frozen `bmkaud-evidence/20260601T1445Z/benchmarks/data_20260531_v1.pkl` ETag = `d2503d3c8f4bdd8223f2fbd6afdb9147` (size 8388499)
+=> what-I-recomputed-against == live == frozen, identical. The 360/360 benchmark + 30/30 peers HALF-A results are proven against the immutable frozen evidence. Confirmed-canonical = the `data_` file (lambda reads data_ not the co-snapshotted model_; base WS-1 confirmed).
+
+### UST 1M p95 == 0.0 — LEGITIMATE (CTO low-pri item)
+xlsx UST 1M p95 raw = -1.82546433524777e-07 (real float, NOT NaN), in a clean monotonic ladder p5=0.3126 > p25=0.2926 > p50=0.2664 > p75=0.0919 > p95≈0. The 95th-percentile peer genuinely sits at ~0% 1M return -> a real clustered near-zero that rounds to -0.0, NOT a computation artifact. RD's FE falsy-zero fix is correct and 0.0 is the right number.
+
 ## Net WS-2 (HALF-A) verdict: NO data-layer derivation bug in either tab.
 Both symptoms explained: Benchmark 1M/1Q = pre-revert SmartX (resolved); Peers UST-1M = data present+correct (FE-side). HALF-B (methodology) joint-pending WS-3 + CVO independent recompute.
