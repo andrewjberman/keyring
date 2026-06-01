@@ -12,6 +12,15 @@ Andrew-direct 2026-06-01. Symptoms on the Model-Portfolios portal tabs:
 Andrew sought a first revert via 0.4.0_DS base (commit 80224d674) **but there
 may be others** — this audit is the comprehensive pass.
 
+## RULINGS OF RECORD (Andrew sovereign)
+- **2026-06-01 — 1M/1Q window definition = KEEP trailing-30/91 calendar days** (option a).
+  Andrew ruled the current yang definition (1M=trailing-30-cal-days, 1Q=trailing-91-cal-days)
+  is the deliberate convention, informed by the empirical both-ways table (1M INT 2.95
+  trailing-30d vs 4.62 last-complete-month). NO producer code change; document as
+  methodology-of-record. The MTD/QTD-anchoring inconsistency is a DOCUMENTED,
+  Andrew-accepted known-divergence, not a bug. Benchmark tab thereby VINDICATED: the
+  only defect was the SmartX cross-source contamination, already reverted (80224d674).
+
 ## GOVERNING PRINCIPLE (Andrew sovereign)
 **Yang's PKL files are the SINGLE SOURCE OF TRUTH for all Benchmark-tab data.**
 Every number displayed must be reproducible from raw Yang PKL via an audited,
