@@ -1,0 +1,19 @@
+{
+  "verdict": "CONCERN",
+  "project": "MDPF_SCOPED",
+  "artifacts_verified": [
+    "s3://opal-data-portal-v2/json/portfolios/account-distribution.json",
+    "s3://opal-data-portal-v2/json/mdpf/49financial/account-distribution.json",
+    "s3://opal-data-portal-v2/json/mdpf/inflection/account-distribution.json"
+  ],
+  "tools_gating_artifacts": [],
+  "axis_mechanical": "GREEN",
+  "axis_intent_coverage": "YELLOW",
+  "axis_decision_useful": "GREEN",
+  "axis_constitution_coherence": null,
+  "constitution_drift_articles": [],
+  "timestamp_utc": "2026-06-01T20:57:00Z",
+  "mode": "comprehensive",
+  "source": "verify-channel-ws",
+  "notes": "3-firm bell-curve TO-B close. Current artifacts PASS all 3 firms (inflection excl=5/405, 49F excl=2/6840, global=SmartX-default=49F excl=2/6840; by_model reconciles exactly to total on each; LD-0012 cross-scope-subtraction defect eliminated). CONDITIONAL (->CONCERN projection) on DURABILITY: served global correct NOW (corrected producer run-to-S3) but EC2 daily exporter ~14:16Z runs diverged old smartx-workspace/scripts copy that re-clobbers to anomalous 7025@June until AE redeploys EC2 docker. Ship!=deploy. Durable cert gates on AE EC2 redeploy + post-deploy daily-run emitting 6838@202605 from runtime. Verifier-conservative: no clean durable cert."
+}
