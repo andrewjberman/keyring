@@ -81,16 +81,18 @@ Canonical name source = `holdings_attribution_data.json` (already-clean provider
     'VUSB': 'Vanguard Ultra-Short Bond ETF',
     'XBIL': 'US Treasury 6 Month Bill ETF',
 ```
-STYLE-FLAG note (surface, not guess): 5 tickers (MINT/QQQ/SPHY/SPYM/TBIL) — the attr canonical name is verbose/inconsistent ("Exchange-Traded Fund", "State Street SPDR", "Series I", "F/m...Fund"); the FE display name is cleaner. Shown the FE display value above; AE/CTO confirm attr-verbatim vs FE-display for these 5. The other 17 are attr canonical verbatim.
+STYLE-FLAG note — RESOLVED (CTO ruling 2026-06-01): use the cleaner FE-display value (shown above) for the 5 (MINT/QQQ/SPHY/SPYM/TBIL). Principle: "display = clean + readable; attr-canonical is the FALLBACK when no cleaner curated version exists" — preserve the FE-map curation into the backend as the FE map retires. The other 17 are attr canonical verbatim.
 
-**Part 2 — apply the override on the `portfolios`-section name path** (currently latent all-caps): line 2071
+**Part 2 (FINALIZED per CTO ruling — bake at the name-SOURCE, not per-consumer) — apply the override at BOTH `etf_lookup` build points.** Verified: lines 1549 + 2032 are where the two `etf_lookup` dicts are built from `etf_characteristics_df` (`ticker = row.iloc[0]`); every downstream name read (`etf_meta.get('name')` at 1444 aggregated, 1587 current_holdings, 2071 portfolios via `etf_lookup.get(ticker)`) flows from these. Baking the override here cleans ALL paths at the single source (robust — no per-consumer whack-a-mole; a future new consumer can't re-introduce the bug):
 ```python
--            name = etf_meta.get('name', ticker)
-+            name = ETF_NAME_OVERRIDES.get(ticker, etf_meta.get('name', ticker))
+# line 1549 (etf_lookup build #1 -> feeds current_holdings 1587 + aggregated 1444):
+-                'name': row['name'] if pd.notna(row['name']) else ticker,
++                'name': ETF_NAME_OVERRIDES.get(ticker, row['name'] if pd.notna(row['name']) else ticker),
+# line 2032 (etf_lookup build #2 -> feeds portfolios builder 2071/2097):
+-                'name': row['name'] if pd.notna(row['name']) else ticker,
++                'name': ETF_NAME_OVERRIDES.get(ticker, row['name'] if pd.notna(row['name']) else ticker),
 ```
-(feeds line 2097 `'name': name` in the portfolios holdings builder.)
-
-**Part 3 — FLAG for AE (confirm + apply same pattern if those sections emit all-caps):** two other name paths use `row['name']` with NO override — line 1549 + line 2032 (`'name': row['name'] if pd.notna(row['name']) else ticker`). If the sections they emit carry all-caps in the served artifact, wrap with the override too. AE owns the Lambda + can confirm from its emitted output.
+This SUPERSEDES the earlier separate "wrap line 2071" proposal (2071 reads the now-clean 2032 lookup, so no separate wrap needed). The existing read-overrides at 1444/1587 become redundant-but-harmless (optional removal; not required). NOTE for AE: override keys are uppercase tickers; if `row.iloc[0]` may carry whitespace, `.strip()` the ticker before `.get()`.
 
 **Part 4 — FE map retirement (RD~B, SEQUENCED AFTER backend deploy):** slim/retire FE `ETF_NAME_FALLBACKS` (HoldingsTab.tsx:68) so there's ONE canonical source. MUST land AFTER the backend sweep is deployed+verified — retiring it first would regress tickers the FE map currently rescues. Rides the next portal promote; coordinate with RD~B.
 
