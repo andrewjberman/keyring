@@ -11,8 +11,9 @@ Re-derive the **ENTIRE 49 Financial per-firm Daily-AUA time series** on the Schw
 - Total (= Schwab custody total) = 1a + 1b + 1c, all disjoint.
 
 ## 2. Scope
-- 49 Financial per-firm series only (Global needs no work; Inflection separate). Full historical date range, subject to §4 feasibility.
-- Replaces the per-partition methodology_version seam (v0_8_ruling2 ≤ boundary → v0_9_1) with a single Schwab-canonical derivation across the whole series.
+- 49 Financial per-firm series — full historical range, subject to §4 feasibility. Replaces the per-partition methodology_version seam (v0_8_ruling2 ≤ boundary → v0_9_1) with a single Schwab-canonical derivation.
+- **GLOBAL — CORRECTED (DE scope-probe 1832Z; "Global needs no work" was WRONG):** Global's pre-5/18 aggregate still sums OLD-49F, not the re-derived 49F → a **$180.75M coherence gap** (49F slice = seam-closed but Global = seam-open; a consumer comparing them sees a contradiction). Global needs a **MECHANICAL RE-AGGREGATION from the re-derived 49F partitions (TO-1b, FIX-class — not a re-derive)**. Post-5/18 Global already aggregates coherently (residual 0).
+- **INFLECTION — classified DISTINCT (DE 1832Z):** its 5/18 step is a total-PRESERVING model-breakout re-decomposition (custody continuous −$4.1M normal; models 0→$93.6M, non_model −$97.7M; no SMA) — NOT 49F's custody-total re-measurement (49F total really moved −$156M BD→Schwab). **NO custody re-derive needed.** Default ACCEPT (legitimate total-preserving decomposition); OPTIONAL cosmetic pre-5/18 model back-decompose for DISPLAY only if the non_model-band step is undesirable (Andrew preference, not a data fix). So closing Global = TO-1b 49F-re-aggregation (mechanical, do it) + accept-Inflection (or the optional display tweak).
 
 ## 3. Method detail
 - **1a (model):** SmartX model daily values — already available; use directly.
