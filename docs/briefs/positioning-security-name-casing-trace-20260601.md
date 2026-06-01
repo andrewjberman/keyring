@@ -53,5 +53,48 @@ AE (0.7.0_AE_CloudOps) deployed Option A: code `f981f6ae6` (yang-v2.4.10), safe-
 - **DE independent serving-verify (RAVC validate) = PASS:** re-pulled `json/positioning/positioning_data.json` (gen 17:05:24Z — the re-emitted artifact); `current_holdings.{INT,LTC,LTA,AGG}.holdings` VUG = "Vanguard Growth ETF" (4 clean, 0 all-caps). The FE Current Holdings target path is FIXED. Rendered visual = Andrew (CF inval was InProgress; headless blocked).
 - **`portfolios.*.holdings` all-caps (AE flag) = LATENT, NOT a visible defect.** That section's `name` field is NOT rendered by any live FE component: `PositioningSummary` consumes `positioningData.portfolios[code]` only for portfolio-level metrics (no holdings `.name`); HoldingsTab renders names from `current_holdings` (Current, fixed) + `attributionData` (QTD/YTD, already clean). Recommendation: apply the same override to the `portfolios`-section name path as part of **A+** (data-cleanliness + de-risk future consumers), not a blocking fast-follow.
 
+## A+ CONSOLIDATED DIFF (CTO GO 2026-06-01 171xZ) — DE-authored, hand to AE
+Canonical name source = `holdings_attribution_data.json` (already-clean provider names); fallback = FE `ETF_NAME_FALLBACKS` where attr lacks the ticker. NONE of the 22 remaining all-caps tickers are missing a canonical name (no surface-as-gap needed). `.title()` NOT used.
+
+**Part 1 — add 22 entries to `ETF_NAME_OVERRIDES`** (yang-generate-positioning lambda_function.py, after the existing 7th entry incl. VUG):
+```python
+    'BIV':  'Vanguard Intermediate-Term Bond ETF',
+    'CLIP': 'Global X 1-3 Month T-Bill ETF',
+    'DFCF': 'Dimensional Core Fixed Income ETF',
+    'DFSD': 'Dimensional Short-Duration Fixed Income ETF',
+    'ICSH': 'BlackRock Ultra Short-Term Bond ETF',          # src: FE (attr lacks ICSH)
+    'IEFA': 'iShares Core MSCI EAFE ETF',
+    'IEMG': 'iShares Core MSCI Emerging Markets ETF',
+    'IJH':  'iShares Core S&P Mid-Cap ETF',
+    'JPST': 'JPMorgan Ultra-Short Income ETF',
+    'MINT': 'PIMCO Enhanced Short Maturity Active ETF',     # STYLE-FLAG: attr="...Active Exchange-Traded Fund" (verbose); FE shown
+    'OBIL': 'US Treasury 12 Month Bill ETF',
+    'QQQ':  'Invesco QQQ Trust',                            # STYLE-FLAG: attr="Invesco QQQ Trust Series I"; FE shown
+    'SPHY': 'SPDR Portfolio High Yield Bond ETF',           # STYLE-FLAG: attr="State Street SPDR..."; FE shown
+    'SPYM': 'SPDR Portfolio S&P 500 ETF',                   # STYLE-FLAG: attr="State Street SPDR..."; FE shown
+    'TBIL': 'US Treasury 3 Month Bill ETF',                 # STYLE-FLAG: attr="F/m US Treasury 3 Month Bill Fund" (odd casing/"Fund"); FE shown
+    'UTWO': 'US Treasury 2 Year Note ETF',
+    'VCSH': 'Vanguard Short-Term Corporate Bond ETF',
+    'VEA':  'Vanguard FTSE Developed Markets ETF',
+    'VGSH': 'Vanguard Short-Term Treasury ETF',
+    'VNLA': 'Janus Henderson Short Duration Income ETF',
+    'VUSB': 'Vanguard Ultra-Short Bond ETF',
+    'XBIL': 'US Treasury 6 Month Bill ETF',
+```
+STYLE-FLAG note (surface, not guess): 5 tickers (MINT/QQQ/SPHY/SPYM/TBIL) — the attr canonical name is verbose/inconsistent ("Exchange-Traded Fund", "State Street SPDR", "Series I", "F/m...Fund"); the FE display name is cleaner. Shown the FE display value above; AE/CTO confirm attr-verbatim vs FE-display for these 5. The other 17 are attr canonical verbatim.
+
+**Part 2 — apply the override on the `portfolios`-section name path** (currently latent all-caps): line 2071
+```python
+-            name = etf_meta.get('name', ticker)
++            name = ETF_NAME_OVERRIDES.get(ticker, etf_meta.get('name', ticker))
+```
+(feeds line 2097 `'name': name` in the portfolios holdings builder.)
+
+**Part 3 — FLAG for AE (confirm + apply same pattern if those sections emit all-caps):** two other name paths use `row['name']` with NO override — line 1549 + line 2032 (`'name': row['name'] if pd.notna(row['name']) else ticker`). If the sections they emit carry all-caps in the served artifact, wrap with the override too. AE owns the Lambda + can confirm from its emitted output.
+
+**Part 4 — FE map retirement (RD~B, SEQUENCED AFTER backend deploy):** slim/retire FE `ETF_NAME_FALLBACKS` (HoldingsTab.tsx:68) so there's ONE canonical source. MUST land AFTER the backend sweep is deployed+verified — retiring it first would regress tickers the FE map currently rescues. Rides the next portal promote; coordinate with RD~B.
+
+**comp-pipescript io:** N/A — the producer is a Lambda (`infra/aws/lambda/...`), not a `data/*/scripts/gold/*.py` script, so comp-pipescript (gold-script indexer) does not apply. Decomposition validated directly from the live serving artifacts + the Lambda source.
+
 ## Compiler Tools
 - `comp-platinum page Positioning` — ran (FE component had no directly-resolved fetch; getPositioningData traced manually to /api/general/positioning/positioning_data.json). comp-pipescript io applies if/when AE touches a gold script (this fix is in a Lambda, not data/*/scripts/gold). Decomposition + all-caps scope read directly from the live serving artifact.
