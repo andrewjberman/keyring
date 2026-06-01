@@ -1,0 +1,21 @@
+{
+  "verdict": "CLEAN",
+  "project": "BMKAUD",
+  "artifacts_verified": [
+    "s3://opal-data-mdpf/bmkaud-evidence/20260601T1445Z/benchmarks/data_20260531_v1.pkl",
+    "s3://opal-data-mdpf/bmkaud-evidence/20260601T1445Z/json/benchmarks/model_portfolio_benchmarks.json",
+    "s3://opal-data-mdpf/bmkaud-evidence/20260601T1445Z/json/peers/peer_performance.json",
+    "lambda:yang-model-portfolio-benchmarks (CodeSha256 IYrvZ0zN==revert 80224d674)",
+    "portal/src/api/portal-proxy.ts (FE source-of-truth)"
+  ],
+  "tools_gating_artifacts": ["yang-model-portfolio-benchmarks", "yang-generate-peer-performance", "lambda-source-map.json", "CHANGELOG.json"],
+  "axis_mechanical": "GREEN",
+  "axis_intent_coverage": "GREEN",
+  "axis_decision_useful": "GREEN",
+  "axis_constitution_coherence": null,
+  "constitution_drift_articles": [],
+  "timestamp_utc": "2026-06-01T15:07Z",
+  "mode": "comprehensive",
+  "source": "verify-channel-ws",
+  "note": "BMKAUD WS-5 final sign-off (surface-level multi-component audit; no Mode-B constitution subscan, axis null). All 3 components PASS: (1) number-validity independent PKL recompute 40/40 match incl INT 1M=2.95 trailing-30d vindicated per Andrew KEEP ruling; (2) change-completeness revert PROVEN complete (sha IYrvZ0zN==80224d674 triple-corroborated, change-set exhaustive, orphan smartx-monthly disabled+unconsumed, no console deploys); (3) FE source-of-truth pure-yang only, _smartx sidecars unconsumed. UN-QUARANTINE GO for yang benchmark/peers data-writers; smartx orphan stays disabled (retire). Non-blocking: 2 Andrew design-residuals (LTC/LTA shared-benchmark, peers xlsx provenance) + RD FE falsy-zero fast-follow. Honest-limit: peers source xlsx not in frozen prefix (couldn't re-parse; JSON-presence confirmed + DS-CP xlsx trace)."
+}
