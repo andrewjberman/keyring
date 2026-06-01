@@ -5,7 +5,9 @@
 **archetype:** VALIDATE
 **secondary_archetypes:** TRACE, DIAGNOSE
 **Dispatch:** COO (2.0.0_SA_COO) redirect — data-side check pairing RD~B's per-firm trend rollup fix. Asked: "confirm in the SERVING data that combined (1b+1c) non_model is genuinely continuous across the 5/18 boundary (total AUA unchanged pre/post) so RD's FE rollup has correct numbers to sum."
-**Verdict:** **CONDITIONAL** — the ~$25M SMA(1c) is real & present (RD has a correct number to surface), BUT the "combined 1b+1c non_model continuous across 5/18 / total unchanged" premise does NOT hold against the serving data, and the ~$25M lives in **model/SMA-sleeve space**, not non_model. The correct FE fix is RD~B's already-flagged **F5** (per-firm SMA sleeves into the trend model stack), NOT folding sma into the non_model band.
+**Verdict:** **CONDITIONAL** — the ~$25M SMA(1c) is real & present (RD has a correct number to surface), BUT the "combined 1b+1c non_model continuous across 5/18 / total unchanged" premise does NOT hold against the serving data, and the ~$25M lives in **model/SMA-sleeve space**, not non_model.
+
+> **RESOLUTION (2026-06-01, post-reconcile — see §Reconciliation below):** Andrew-direct ruling = **"fold SMA everywhere"** (displayed non_model = `non_model_aua + sma_aua`). This SUPERSEDES the F5-stack recommendation originally in this brief. My data **validates the fold**: because `sma_aua` is additive-separate (NOT already inside `non_model_aua`, confirmed to the dollar by DS~B), the fold does not double-count; and it keeps SMA inside non_model on BOTH sides of the seam, so it avoids introducing an SMA-step on top of the methodology seam (which the F5-stack would have added). The real `-$172M` item is a Black-Diamond->Schwab source change (routed DS~B). DS~B confirmed both data flags + withdrew its earlier non_model-fold-of-the-residual rec.
 
 ## Artifacts read (live S3, not assumed)
 - `s3://opal-data-portal-v2/json/mdpf/49financial/aggregate-aua-timeseries.json` (91,886 B, generated `2026-06-01T13:34:20Z`)
@@ -56,5 +58,29 @@ So crossing 5/18 the SMA series goes **null -> $24.9M**. RD has a correct **live
 - **DS~B (CC):** reconcile meta-narrative ("1c non-additive sub-slice of 1b") vs serving by_model (SMA = additive `cohort_class='sma'`); confirm the pre-5/18 sma null-gap (4/28-5/15) is intended (live region not broken out) vs a backfill miss.
 - **COO/CTO:** the "total unchanged across 5/18" premise holds for the GLOBAL headline (~-$62M, normal) but NOT for per-firm component bands; any continuous trend will show the documented seam.
 
+## Finding 5 — source-partition corroboration (definitive: per-date `methodology_version` flip)
+The rollup `build_aggregate_aua_timeseries.py` is a pure pass-through bundler — it copies `model_aua`/`sma_aua`/`non_model_aua`/`by_model`/`cohort_class` straight from each per-date partition `platinum/mdpf/aggregate_aua/{date}.json` and captures each partition's `methodology_version`. Reading the source partitions directly settles the data-model at the producer:
+
+| field | 5/14, 5/15 (pre) | 5/18, 5/19 (post) |
+|---|---|---|
+| `methodology_version` | `v0_8_ruling2` | `v0_9_1` |
+| `meta.backfill_method` | `process_derived_v0_8_rulingII_20260520_MDPF_ASSETS_016` | `null` (live) |
+| `sma_aua` | `None` | $24.9M |
+| `by_model` | 5 (`cohort_class='model'`) | 7 (5 model + 2 `cohort_class='sma'`: `opal_div_sma` $19.76M, `opal_growth_sma` $5.15M) |
+| `headline_formula` | "1a+1b+2a; **1c (SMA) is a non-additive sub-slice of 1b**" | "**1a+1b+1c+2a** = partner_aua_subtotal - cohort_2b_audit" |
+| 49f `non_model_aua` | 455.5M (SMA-inclusive) | 283.5M (SMA-exclusive) |
+| `cohort_2b_audit` | 203.8M | 106.1M |
+
+The tag flips **exactly at 5/18**. So the 49f `-$172M` non_model step decomposes precisely: **-$25M** SMA breaks out of the 1b residual into additive 1c (the reclassification) **+ -$147M** the v0.9 basis re-levels the 1b residual itself (the source change). The `headline_formula` itself changes (1c moves from non-additive-sub-slice to additive term), which is why the rollup-level `meta.cohort0_historical_backfill` narrative (still the v0.8 wording) is stale against the v0.9 partitions.
+
+## Reconciliation (with DS~B 0.4.0_DS_ClientPlatform~B) + final dispositions
+DS~B independently confirmed both flags on live 5/29 data and corrected its earlier consolidated scope:
+- **ITEM #1 (additive vs narrative):** CONFIRMED — `model_aua + sma_aua = Σ(by_model)` to the dollar; SMA sleeves are `cohort_class='sma'`; `non_model` excludes them. The meta "1c = non-additive sub-slice of 1b" is **stale v0.8 framing**. **DS-lane fix:** DS~B updates the producer meta narrative to the additive `cohort_class='sma'` reality (or scopes it to the pre-v0.9 region). [DS~B owns — producer script is DS lane.]
+- **ITEM #2 (pre-5/18 history):** classified — pre-Mar-10 history is the **bandaid estimate** (`build_mdpf_v0_bandaid_backfill.py`: weekly-interp, synthetic accounts, self-labeled "no production source historically"); Mar-11..May-15 null = bandaid-coverage-vs-live-cutover seam, not recoverable real data. Fine for the FE (sleeves render from 5/18). Exact real historical 1c is unavailable (estimate only).
+- **FE fix:** **Andrew-direct = fold** (displayed non_model = `non_model + sma`). Validated by the data (no double-count; keeps SMA in non_model both sides of the seam). DS~B withdrew its non_model-fold-of-residual rec and the F5-stack alternative is moot — Andrew's word governs. RD~B proceeding.
+- **The `-$172M` seam:** CONFIRMED as the real backend item — a **Black-Diamond (pre-5/18) -> Schwab (post)** source change (Andrew-direct canonical = `Schwab - SmartX-model - SmartX-SMA`). Routed to DS~B (`mdpf_aggregate_aua.py` owner) for backend re-derivation. **DE serving-side support offered:** re-run this continuity verify on the re-derived artifacts to confirm the seam closes. This is a DS-methodology item, distinct from the 1c display.
+
+**Net agreed scope:** NO 1c backfill (the fold handles live sleeves; historical real 1c unavailable). Meta-narrative reconcile = clean DS fix. v0.8->v0.9 (Black-Diamond->Schwab) seam = separate DS backend re-derivation.
+
 ## Compiler Tools
-- N/A this cycle — task was a read-only serving-data correctness probe against live S3 JSON (no gold-script edit, no portal-component change, no fetch/endpoint change). Decomposition reconciled directly from the artifact arrays (`model_aua`/`sma_aua`/`non_model_aua`/`by_model` to-the-dollar). comp-* tools would apply if/when RD's F5 lands a portal-component change (then `comp-transform schema-check ModelPortfolios`).
+- N/A this cycle — task was a read-only serving-data correctness probe against live S3 JSON + source partitions (no gold-script edit, no portal-component change, no fetch/endpoint change). Decomposition reconciled directly from the artifact arrays + source partitions (`model_aua`/`sma_aua`/`non_model_aua`/`by_model`/`methodology_version` to-the-dollar). comp-* tools apply when RD's fold lands a portal-component change (then `comp-transform schema-check ModelPortfolios`).
