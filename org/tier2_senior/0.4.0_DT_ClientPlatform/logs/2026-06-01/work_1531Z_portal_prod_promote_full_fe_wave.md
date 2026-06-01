@@ -51,6 +51,14 @@ AE's /json/* invalidation ID to COO + CTO when it arrives.
   — secondary; on CTO/Andrew word.
 - Rollback path if needed: PROD `b7acadab` (pre-promote).
 
+## Closure verification (1535Z — /work tick)
+Both paired CloudFront invalidations on EVTSA9VEHNZVH confirmed **Completed** (not just fired):
+- FE bundle (DT): `I8FXH0VTVR6868YE20K2UPJ5JE` (/*) — Completed.
+- /json data (AE 0.7.0): `I6G44KIAUVDVYHTS0WL5OHIGJE` (/json/benchmarks/* + /json/peers/*) — Completed.
+origin/PROD = fca1e5a8 (verified). => PROD refresh FULLY PROPAGATED: edge caches flushed, fresh FE bundle
++ fresh pure-yang benchmark/peers data serving live. Both halves reported to COO + CTO (paired report
+`20260601T1535Z`). Deploy SETTLED. Open item: Andrew live-PROD eyeball (smoke gate he cleared).
+
 ## Compiler Tools
 No comp-* this tick — portal FE promote (git plumbing + CI + CloudFront), not a Lambda/script/IAM edit.
 `comp-pipescript io` / `comp-iam` N/A (no Lambda source or boto3 change). Pre-push VALGATE D-1 +
