@@ -91,6 +91,18 @@ Pre-authorized read-only forensic on the §3 out-of-band rebuild, to determine i
 
 All three are infra changes → Terraform (Rule 1) + safe-apply (Rule 18); pending COO leg-ownership confirmation before authoring.
 
+## 5c. ROOT-CAUSE CONFIRMED + RESTORE-INCOMPLETE CATCH (work-cycle 0003, ~1333Z, post RAVC2-ACCEPT)
+
+**Authoritative root-cause (code-inspection — CloudTrail dark):** the rogue clobberer is `data/mdpf/scripts/backfill/build_mdpf_process_backfill.py`:
+- L118 `METHODOLOGY_VERSION = "v0_8_ruling2"`; L120 `PARTNER = "49financial"` (hardcoded, 49F-only); L80 `PLATINUM_PREFIX = "platinum/mdpf/aggregate_aua"`; L524 reconciliation `"NOT_APPLICABLE_HISTORICAL"` — **exact signature match** to the 5/29 19:26Z clobbered partitions.
+- L618 self-documented rule "NEVER write a date >= INFLECTION_PARTNER_ONBOARD_DATE" was **comment-only, not code-enforced** → it clobbered post-onboard dates (5/18–5/29). Reconciles AE's "stale v0_8_ruling2 code" + DS~B's "49F-only backfiller" = the same script. DS~B shipped a narrow onboard-date enforcement (`a9352506f`).
+
+**Restore status (verified):** DS~B re-emitted the daily PARTITIONS via canonical `v0_9_1` local `--upload` — 8 dates (5/18,19,20,22,25,26,27,29) now both-partners, gen `2026-06-01T13:22Z`, confirmed. 5/21 + 5/28 were never clobbered (own-date 15:03Z originals).
+
+**INCOMPLETE-RESTORE CATCH (verify-channel):** partition re-emit ≠ serving-artifact fix. The ROLLUP was NOT re-run — `platinum/mdpf/aggregate_aua_timeseries.json` + `json/mdpf/{inflection,global,49financial}/aggregate-aua-timeseries.json` all still `meta.generated_at=2026-05-29T19:38:07Z` (built from the clobbered partitions); inflection `model_aua` tail still `[None,None,None,None,96211989.78,None]` over `[5/22,25,26,27,28,29]`. The FE inflection/global TREND feed remains stale until the ROLLUP (`build_aggregate_aua_timeseries.py`) re-runs against the restored partitions. Coordinated to DS~B (their Rule-13 script-run); today's 15:00 UTC scheduled chain self-heals it otherwise, but Andrew-priority → re-run now.
+
+**GUARD SPLIT (final, no overlap):** (i) DS~B keeps `a9352506f` onboard-date guard (path-scoped; catches new post-onboard dates with no prior partition to compare); (ii) version-monotonic write-guard in the shared emit helper = DS~B script-side leg; (iii) `s3:PutObject` restriction to the `mdpf_runner` role on `platinum/mdpf/aggregate_aua/*` = AE IAM/Terraform leg (closes the local `--upload` path the clobber + the restore both used).
+
 ## 6. SPLIT NOTE
 
 0.5.0_AE not yet registered LIVE at audit time → completed solo. When it comes up, suggested split: 0.5.0_AE takes remediation-impl legs (CloudTrail attribution §5.2 + IAM write-restriction §5.3); 0.7.0_AE_CloudOps retains this audit + the write-guard coordination. All infra changes via Terraform (Rule 1) + safe-apply (Rule 18).
