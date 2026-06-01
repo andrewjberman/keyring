@@ -1,0 +1,18 @@
+{
+  "verdict": "CONCERN",
+  "project": "MDPF_SCOPED",
+  "artifacts_verified": [
+    "s3://opal-data-portal-v2/json/mdpf/49financial/aggregate-aua-timeseries.json",
+    "s3://opal-data-portal-v2/json/mdpf/global/aggregate-aua-timeseries.json"
+  ],
+  "tools_gating_artifacts": ["mdpf 49F Schwab re-derive (TO-1a)", "build_aggregate_aua_timeseries.py"],
+  "axis_mechanical": "YELLOW",
+  "axis_intent_coverage": "YELLOW",
+  "axis_decision_useful": "YELLOW",
+  "axis_constitution_coherence": null,
+  "constitution_drift_articles": [],
+  "timestamp_utc": "2026-06-01T18:27Z",
+  "mode": "comprehensive",
+  "source": "verify-channel-ws",
+  "note": "TO-1a 49F Schwab re-derive. 49F-SLICE PASS 5/5 (seam closed custody-step=$0/non_model+8.7M; 4/15 custody $1,556.2M Schwab-exact; identity 1a+1b+1c=$0; cohort_provenance honest 1c=interpolated_estimate + meta pre_1_16=pending; 12/26 untouched). GLOBAL CONCERN: Schwab re-derive NOT propagated to global aggregate pre-5/18 (1/16-5/17) — global 4/15 agg=$1,699.3M=full-book vs 49F-slice $1,556.2M Schwab (+$143M=exact Schwab-delta); global model==49F model but full-book custody/non_model carried; -$62M residual seam at 5/18 instead of clean +$93.6M inflection-funding step. Contradicts full-history Schwab PRD intent. FIX: re-aggregate global pre-5/18 on Schwab-49F. Sharpest-test-binds: CONCERN gates the close. Honest-limit: 49F custody verified vs spec-anchor+range, not from-silver recompute. Class=rollup/slice-vs-aggregate propagation gap."
+}
