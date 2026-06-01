@@ -1,0 +1,17 @@
+{
+  "verdict": "CLEAN",
+  "project": "MDPF_SCOPED",
+  "artifacts_verified": [
+    "s3://opal-data-portal-v2/json/mdpf/inflection/account-distribution.json"
+  ],
+  "tools_gating_artifacts": [],
+  "axis_mechanical": "GREEN",
+  "axis_intent_coverage": "GREEN",
+  "axis_decision_useful": "GREEN",
+  "axis_constitution_coherence": null,
+  "constitution_drift_articles": [],
+  "timestamp_utc": "2026-06-01T20:29:00Z",
+  "mode": "scan",
+  "source": "verify-channel-ws",
+  "notes": "Inflection bell-curve footer slice (TO-B): durable fix served (excluded_unfunded_count=5 vs bogus 6639), accounts-grain arithmetic exact (active 405 - funded 400 = 5), distribution non-degenerate (mean 241503 >> median 106999, right-skewed). CLEAN applies to the LANDED inflection slice only; FULL TO-B queued-pending (49F+global+by_model emit outstanding, AC3 cross-firm consistency unmet per DE 09e4446c9). Corroborates DE PARTIAL PASS independently. Non-gating follow-on to MDPF data-half close."
+}
