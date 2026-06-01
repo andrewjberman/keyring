@@ -70,3 +70,19 @@ Peers does NOT flow through this producer — FE `PeersTab.tsx` ← `json/peers/
 4. **For WS-2:** recompute 1M/1Q BOTH ways (current trailing-day AND last-complete-calendar-period) so the team can show Andrew the exact numbers each definition produces and he can rule.
 
 **Gate:** WS-3 methodology = SOUND except the 1M/1Q definition, which needs an Andrew/CTO ruling. No code change should ship until the intended definition is ruled; if the ruling is "last-complete-calendar-period," I (AE) will patch `calculate_period_returns` 1M/1Q windows + redeploy via the Lambda Terraform path. CVO WS-5 independent recompute should validate against the RULED definition.
+
+---
+
+## Secondary Flags — RESOLVED (empirical, 2026-06-01, data_20260531_v1.pkl)
+
+### Flag 1 (end_date after holiday-drop) — BENIGN (latent mechanism, not firing)
+- Raw `return_daily` max date (all + Term) = **2026-05-29**; after weekday filter = 5/29; after holiday drop, `end_date` used = **5/29** — the correct latest trading day, **no backward shift**.
+- The holiday filter (`(fillna(0)!=0).any(axis=1)`) dropped exactly **ONE** row in the entire history: **2023-12-29** — deep history, nowhere near the tail.
+- Last 5 weekday rows are populated (5/26–5/29 = 13/13 non-zero cols), so the latest trading day is never the dropped one on canonical data.
+- **Verdict: benign now.** The off-by-one *could* occur only if the latest trading day were fully all-zero (unpopulated) → dropped → end_date shifts back. Does not occur on the canonical PKL. Optional hardening: take `end_date` from the raw weekday-max and only drop interior all-zero rows, OR assert end_date == expected latest business day.
+- **Extra-rigor sub-note:** 5/25/2026 (Memorial Day, US market closed) shows **3/13** non-zero Term cols and therefore **survives** the all-zero filter — the holiday drop is "all-zero" based, NOT calendar-holiday-aware, so a holiday with any sparse non-zero data slips into the trailing windows as a "trading day" (minor ~1-day count inflation in annualization windows that span it). Not the 1M/1Q symptom; flag for optional calendar-aware filtering if precision matters. Reconcile with DS~B (WS-2 also checking).
+
+### Flag 2 (LTC/LTA shared 'Long Term Benchmark') — NOT a lambda mis-mapping; UPSTREAM design question
+- PKL `index_name` series present for Long Term: `Long Term Conservative`, `Long Term Agressive`, `Long Term Benchmark`, `Long Term ETF`. There is **exactly one** `Long Term Benchmark` (and one `Long Term ETF`) — **no** separate Conservative/Aggressive benchmark series exists.
+- UST/ST/INT each have their OWN `{tier} Term Benchmark`; the Long Term tier has a SINGLE benchmark shared by two distinct model series. So the lambda mapping both LTC and LTA → `Long Term Benchmark` is **faithful to the source** (there is nothing else to map to) — **not a transform/mis-mapping bug.**
+- **Verdict: source-of-truth / design question, not a code bug.** Is one shared `Long Term Benchmark` (displayed as 15% Agg / 85% ACWI — aggressive-leaning, identical to the LTA composition label) appropriate for the "Conservative" long-term sleeve? If LTC should be benchmarked against a more bond-heavy blend, the **source PKL must provide a separate `Long Term Conservative Benchmark`** — an upstream-data change (same class as the `Agressive` typo), NOT a lambda fix. Route to WS-1 (PKL provenance) + the CTO/Andrew source-of-truth ruling.
