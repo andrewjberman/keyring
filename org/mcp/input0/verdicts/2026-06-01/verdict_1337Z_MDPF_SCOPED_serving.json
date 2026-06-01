@@ -1,0 +1,19 @@
+{
+  "verdict": "CLEAN",
+  "project": "MDPF_SCOPED",
+  "artifacts_verified": [
+    "s3://opal-data-portal-v2/platinum/mdpf/aggregate_aua_timeseries.json",
+    "s3://opal-data-portal-v2/json/mdpf/inflection/aggregate-aua-timeseries.json",
+    "s3://opal-data-portal-v2/json/mdpf/global/aggregate-aua-timeseries.json"
+  ],
+  "tools_gating_artifacts": ["build_aggregate_aua_timeseries.py", "mdpf_aggregate_aua.py"],
+  "axis_mechanical": "GREEN",
+  "axis_intent_coverage": "GREEN",
+  "axis_decision_useful": "GREEN",
+  "axis_constitution_coherence": null,
+  "constitution_drift_articles": [],
+  "timestamp_utc": "2026-06-01T13:37Z",
+  "mode": "comprehensive",
+  "source": "verify-channel-ws",
+  "note": "SECOND verify (serving/rollup layer) — the FE-consumed feed, the real data-half close. Partition-PASS (verdict_1329Z) was precondition. 4/4 serving PASS: inflection non-null entire 5/18-5/29 window, global picks up +2a (== partition to cent), generated_at 13:34:20Z (advanced +18h), trend renders plausibly. Sharp check: rollup faithfully propagated partitions (serving==partition to cent, no rollup-stage transform defect). Carry-forward 5/26==5/27 root-caused as upstream feeder as_of stale (NOT this fix), routed COO+AE. LESSON: partition/producer-verify != serving/consumer-verify when a rollup sits between; Mode-A Step 1 consumer-path under-executed on first pass."
+}
