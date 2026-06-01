@@ -22,3 +22,7 @@ Re-derived 49F 1/16-5/17 onto the Schwab canonical basis (Andrew Mandate Change 
 - CVO independent-verify on the SERVED timeseries.
 - AC6 add-days FOLLOW-ON: 2/2,3/2,4/1,5/1 (need 1a-scoping) in-scope; 12/30,12/31,1/2 pre-1/16-gated (TO-1b).
 - TO-1b pre-1/16 disposition artifact -> Andrew #3 ruling.
+
+## GLOBAL CLOSE-GATE FIX (DE+CVO flagged, 2026-06-01 ~1834Z)
+DE+CVO PASSED the 49F slice 5/5 but flagged global still seamed. ROOT CAUSE (independently caught, matches CVO a6d895c09): my emit fixed the 49F PARTNER block but not the partition AGGREGATE block -> global slice carried stale full-book 49F (4/15 agg $1,699.3M vs corrected $1,556.2M, +$143M). FIX: re-apply recomputes aggregate from corrected partners (agg.non_model=Σpartner; opal=partner_subtotal-cohort_2b; canonical headline_formula) -> re-rollup. VERIFIED served global: opal_aggregate 5/15->5/18 step now +$93.6M (clean Inflection onboarding, was -$62M cliff); 4/15 global $1,556.2M Schwab. 49F-propagation CLOSED.
+RESIDUAL = TO-1c: global non_model still -$89M step at 5/18 = Inflection pre-5/18 backfilled non_model (~$200M) vs live (~$107M) = same-class basis issue on the Inflection side (eclipse/orion source). Near-term follow-on (Andrew default view).
