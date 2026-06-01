@@ -31,5 +31,22 @@
 - After deploy: the positioning rollup must re-run so `positioning_data.json` re-emits with the clean name (AE).
 - **Visual smoke is human** (headless Chrome/Playwright blocked fabric-wide) — flag Andrew to confirm the rendered "Vanguard Growth ETF" on the Positioning Holdings tab post-deploy.
 
+## RESOLUTION (CTO GO Option A — verified, 2026-06-01)
+CTO ruled (165454Z): GO Option A now (DE authors diff -> AE deploys); A+ follow-on gated on a canonical name source. Pre-handoff verification settled two things:
+
+1. **The FE-read path DOES apply the override.** The serving artifact has TWO holdings sections: `portfolios/{model}/holdings` (NO override — all all-caps) and `current_holdings/{model}/holdings` (override APPLIED — PFDE/DIVZ clean). The FE Holdings tab (Current period) reads `positioningData.current_holdings[selectedPortfolio].holdings` (HoldingsTab.tsx:592). VUG in `current_holdings` is all-caps ONLY because it's absent from `ETF_NAME_OVERRIDES` -> **adding VUG to the dict fixes the FE Current view.** Confirmed VUG's current_holdings entry carries the attribution columns (fee/aum/beta/returns) matching the CTO reference row.
+2. **The QTD/YTD/1Y/SI view is already clean.** It reads a SEPARATE Lambda (`yang-generate-holdings-attribution` -> `holdings_attribution_data.json`), whose serving artifact ALREADY shows VUG = "Vanguard Growth ETF". So (a) the defect is isolated to the Current view / yang-generate-positioning, and (b) **the proper name "Vanguard Growth ETF" is confirmed by a live artifact, not guessed** — and that attribution source is the canonical clean-name source A+ needs.
+
+**EXACT DIFF (Option A) — handed to 0.7.0_AE_CloudOps to apply + deploy:**
+File `infra/aws/lambda/v2_portal/yang_pipeline/positioning/yang-generate-positioning/lambda_function.py`, in the `ETF_NAME_OVERRIDES` dict (lines 122-129), add one entry:
+```python
+     'PCHI': 'Polen High Yield ETF',  # NOT MSCI China (that's MCHI)
++    'VUG': 'Vanguard Growth ETF',   # all-caps "VANGUARD GROWTH ETF" from BD PKL source (Andrew-flagged 2026-06-01)
+ }
+```
+AE deploy: terraform via safe-apply (Rule 1) -> re-run the positioning rollup so `positioning_data.json` re-emits -> CloudFront-invalidate the positioning path. Post-deploy verify: `current_holdings.*.holdings` VUG name = "Vanguard Growth ETF"; visual smoke = Andrew (headless blocked).
+
+**A+ canonical source (follow-on):** the 22 of 28 remaining all-caps tickers have provider names in the FE `ETF_NAME_FALLBACKS`; ALL of them (and the rest) have clean names in the `holdings_attribution_data.json` source — that attribution source is the canonical full-name reference for the sweep (satisfies the CTO's "pull from a reference, don't un-truncate"). Scope A+ with AE.
+
 ## Compiler Tools
 - `comp-platinum page Positioning` — ran (FE component had no directly-resolved fetch; getPositioningData traced manually to /api/general/positioning/positioning_data.json). comp-pipescript io applies if/when AE touches a gold script (this fix is in a Lambda, not data/*/scripts/gold). Decomposition + all-caps scope read directly from the live serving artifact.
