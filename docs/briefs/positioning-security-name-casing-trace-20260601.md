@@ -98,5 +98,12 @@ This SUPERSEDES the earlier separate "wrap line 2071" proposal (2071 reads the n
 
 **comp-pipescript io:** N/A — the producer is a Lambda (`infra/aws/lambda/...`), not a `data/*/scripts/gold/*.py` script, so comp-pipescript (gold-script indexer) does not apply. Decomposition validated directly from the live serving artifacts + the Lambda source.
 
+## A+ DEPLOYED + DE-VERIFIED (2026-06-01)
+AE deployed the finalized A+ diff: yang-v2.4.11 (build sbB8scYP), safe-apply HALTGT 0-diff, re-emit `generated_at 2026-06-01T17:50:57Z`, CF inval `I7JXA7ZBV8T7A63KN21KCUDHU9`. PART 1 (22 overrides: 17 attr + 5 FE-display) + PART 2 (override baked at both etf_lookup builds ~1550/~2033) both applied.
+- **DE independent serving-verify = PASS** (re-pull gen 17:50:57Z): ALL-CAPS multiword ETF names remaining across current_holdings + portfolios = **0**. All 22 added tickers resolve to exactly the expected clean name; the 5 FE-display tickers carry the cleaner values (MINT="PIMCO Enhanced Short Maturity Active ETF", QQQ="Invesco QQQ Trust", SPHY/SPYM="SPDR Portfolio...", TBIL="US Treasury 3 Month Bill ETF"); VUG="Vanguard Growth ETF". The portfolios-section (previously latent all-caps) is now clean too — PART 2's build-point bake covered it. Rendered visual = Andrew.
+
+## FE map retirement (Part 4) — SAFETY VERIFIED, GO to RD~B
+The FE `ETF_NAME_FALLBACKS` (HoldingsTab.tsx:68) corrects BOTH name AND assetClass (e.g. Pathfinder=Equity). Verified before retiring: backend now serves the SAME asset_class as the FE override for ALL currently-held tickers — **0 divergences** (PFDE/PFOE/DIVZ/IDVZ = Equity in both). So retirement is safe on name + assetClass; future fixes go to the backend ETF_NAME_OVERRIDES (the single canonical source). FE slim = remove the map + simplify `ETF_NAME_FALLBACKS[h.ticker]?.name || h.name` -> `h.name` (and the assetClass usages -> `h.asset_class`). SEQUENCING: safe now (backend deployed+verified); rides next portal promote; coordinated with RD~B.
+
 ## Compiler Tools
 - `comp-platinum page Positioning` — ran (FE component had no directly-resolved fetch; getPositioningData traced manually to /api/general/positioning/positioning_data.json). comp-pipescript io applies if/when AE touches a gold script (this fix is in a Lambda, not data/*/scripts/gold). Decomposition + all-caps scope read directly from the live serving artifact.
