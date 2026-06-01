@@ -1,0 +1,4 @@
+# /spot-check cycle 3 — 1343Z 2026-06-01 — CLEAN-no-fix
+
+10 commits triaged (12 delta − 2 own) — all MDPF_SCOPED P1 linkage-audit storm (DS~B re-emit+cert+guard a9352506f, DE BE-fit RAVC2-accepted shape-parity PASS, RD FE↔BE matrix, AE schedule-parity+forensic, CTO FIND_INSURE alias ruling, COO drive cyc2). All coherent + COO-routed; my verify 9b54e8453 part of delta. MDPF JSON correctly active/REOPENED (P1 in-progress, no closure flip). No drift, no Tier-0 ledger, no substance anomaly ($96M/methodology versions consistent w/ my verify).
+BREADCRUMB for closeout verify: AE flagged json/mdpf/global = likely unwired-Global FE gap (b921844a6) + 5/29 clobber not telemetry-attributable=manual/external w/ IAM write-lock proposed (682a0696c) — both routed to AE; ties to visual-smoke-gate (data-valid≠FE-consumes-it). Checkpoint -> 9b54e8453.
