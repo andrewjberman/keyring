@@ -442,6 +442,23 @@ inf_pipeline:
     guard_b_aua_bounds: "[$150M, $300M] — recalibrated 2026-05-07 (was [$50M, $400M]); baseline $203.2M"
 
 tools_continued:
+  comp-lambdamap:
+    command: "comp-lambdamap check"
+    segment_scope: cross-segment
+    when: |
+      - Before/after editing infra/aws/lambda/ci/lambda-source-map.json: verify it matches TF + on-disk dirs
+      - CI gate: detect lambda source-map drift (always-on; exits 1 on drift)
+      - After adding/renaming a Lambda or its source dir: confirm the map tracks it
+    cost: "~1s (read-only; no AWS, no map mutation)"
+    output: |
+      Drift report keyed by class: WRONG_SOURCE_DIR (source-map source_dir != TF, or absent on disk),
+      MISSING_ENTRY (TF-backed lambda w/ no functions{} entry = CI-drift-blind), INCOMPLETE_SCHEMA
+      (functions{} entry w/o source_dir), MISLOCATED (top-level key outside functions{}), ORPHAN_ENTRY
+      (entry w/ no TF + no dir). EXTERNAL sentinel = not drift. Phase-1 (check) shipped 218c1b289 off CTO
+      PRD f9e70457a / CVO audit 359375d87 (day-1 regression fixture). Phase-2 (sha-recompute vs live
+      CodeSha256 / multi-runtime dir enum / derive[--write] normalize-by-construction, CVO-gated write) WIP.
+    impl: org/modules/graph/lambdamap_cli.py
+
   comp-iam:
     command: "comp-iam <subcommand>"
     segment_scope: segment-aware

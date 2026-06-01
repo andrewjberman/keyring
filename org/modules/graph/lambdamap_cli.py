@@ -98,7 +98,8 @@ def parse_tf(root: str) -> dict:
     return out
 
 
-def check(root: str) -> int:
+def compute_findings(root: str):
+    """Return (findings, stats). findings = [(class, name, detail)]. Pure (no print) -- testable."""
     sm = load_srcmap(root)
     funcs = sm.get("functions", {})
     top_level = {k: v for k, v in sm.items() if k not in META_KEYS}
@@ -140,20 +141,27 @@ def check(root: str) -> int:
             findings.append(("MISSING_ENTRY", name,
                              f"TF-backed (in {tf[name]['tf_file']}) but no functions{{}} entry"))
 
-    # report
-    order = ["WRONG_SOURCE_DIR", "MISSING_ENTRY", "INCOMPLETE_SCHEMA",
-             "MISLOCATED", "ORPHAN_ENTRY"]
-    findings.sort(key=lambda f: (order.index(f[0]) if f[0] in order else 99, f[1]))
+    findings.sort(key=lambda f: (CLASS_ORDER.index(f[0]) if f[0] in CLASS_ORDER else 99, f[1]))
+    stats = {"functions": len(funcs), "top_level": len(top_level), "tf": len(tf)}
+    return findings, stats
+
+
+CLASS_ORDER = ["WRONG_SOURCE_DIR", "MISSING_ENTRY", "INCOMPLETE_SCHEMA",
+               "MISLOCATED", "ORPHAN_ENTRY"]
+
+
+def check(root: str) -> int:
+    findings, stats = compute_findings(root)
     print("comp-lambdamap check -- source-map vs TF + on-disk dirs (read-only)")
-    print(f"  source-map functions: {len(funcs)} | top-level non-meta: {len(top_level)} "
-          f"| TF lambdas: {len(tf)}")
+    print(f"  source-map functions: {stats['functions']} | top-level non-meta: {stats['top_level']} "
+          f"| TF lambdas: {stats['tf']}")
     if not findings:
         print("  CLEAN: no drift. source-map matches TF + dirs.")
         return 0
     counts: dict = {}
     for cls, _, _ in findings:
         counts[cls] = counts.get(cls, 0) + 1
-    print("  DRIFT: " + ", ".join(f"{counts[c]} {c}" for c in order if c in counts))
+    print("  DRIFT: " + ", ".join(f"{counts[c]} {c}" for c in CLASS_ORDER if c in counts))
     for cls, name, detail in findings:
         print(f"    [{cls}] {name}: {detail}")
     return 1
