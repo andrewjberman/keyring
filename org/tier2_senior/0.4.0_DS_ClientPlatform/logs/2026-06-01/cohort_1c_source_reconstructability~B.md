@@ -41,3 +41,18 @@ Post-5/18 `non_model_aua` EXCLUDES the broken-out SMA (it moved to `sma_aua`). S
 - (iii) EXACT historical per-date 1c — needs a NEW SmartX historical-SMA pull (existing source is model-only). Data-availability Q for AE/DE+SmartX. Only path to true per-date.
 
 **DS~B recommendation: (i) — no backfill.** The reclassification leaves total AUA correct; the RD rollup resolves continuity; no consumer reads 1c standalone. Revisit (ii)/(iii) only if a future requirement surfaces a standalone historical-1c view. One verify for RD: confirm the Directive-1a rollup adds SMA into the displayed non-model (so the post-5/18 ~$25M dip doesn't persist).
+
+## CORRECTION + RECONCILE w/ DE continuity-verify (bcb465a96) — 2026-06-01 ~1610Z
+DE (0.4.0_DE, back online) ran the serving-continuity verify (docs/briefs/mdpf-cohort-1c-serving-continuity-verify-20260601.md). It SUPERSEDES two points above + I correct my own earlier under-checks (3rd this session — own it):
+
+1. **MY "null pre-5/18" WAS WRONG.** The sma_aua TIMESERIES is largely POPULATED historically: 2024-11 seed ~$19.67M, varying Jan5–Mar10 2026 (~$20.5–22.7M), null gap Mar11–May15, live ~$25M from 5/18. My finding #11 checked per-date partitions with a jq that under-read; DE's timeseries read is authoritative. (Also: my "additive" check earlier used a STALE pre-re-emit local file; the LIVE 5/29 partition confirms additive — see below.)
+
+2. **The historical SMA is a BANDAID ESTIMATE, not real production** — `build_mdpf_v0_bandaid_backfill.py` (weekly-interpolation from a REF_PARQUET, SYNTHETIC account rows, self-labeled "the BANDAID; no production source historically"). So my ORIGINAL "no real production historical SMA source → estimate-only for exact history" HOLDS; the existing history IS that estimate.
+
+3. **ITEM #1 (additive vs narrative) — CONFIRMED on LIVE data.** 49F 5/29: model_aua $1,377.19M + sma_aua $25.10M = sum(by_model) $1,402.30M to the dollar; by_model SMA sleeves = Dividend SMA $19.89M + Opal Equity Growth SMA $5.22M (cohort_class='sma'); non_model EXCLUDES them. So 1c is ADDITIVE model-stack space. The meta `cohort0_historical_backfill` narrative ("1c = non-additive sub-slice of 1b") is the STALE v0.8 framing. RECONCILE = update the meta narrative to the additive-`cohort_class='sma'` reality (or scope it explicitly to the pre-v0.9 historical region).
+
+4. **CORRECTED FE-fix rec (defer to DE):** NOT "fold 1b+1c into non_model" (that mis-attributes SMA, which is model-stack not non_model, and adds nothing pre-5/18). The correct fix = **RD's F5**: drive the trend stacked-chart from the per-firm by_model key-set so the 2 SMA sleeves STACK in firm view (renders from 5/18; null-gap acceptable).
+
+5. **SEPARATE, BIGGER ITEM (DE Finding 3):** 5/18 is also a −$172M non_model re-level (v0.8 .016 backfill → live v0.9 basis) — the largest non_model step in the 402-date series. SMA ($25M) does NOT close it (off ~1 order of magnitude). GLOBAL headline only −$62M (≈normal) → internal re-decomposition, cross-firm headline ~continuous. This v0.8→v0.9 seam is a DS-methodology/CTO decision, distinct from the 1c question.
+
+**Net (reconciled): NO 1c backfill needed** for the FE (RD F5 stacks live sleeves from 5/18); exact REAL historical 1c is unavailable (only the bandaid estimate exists). The null-gap (Mar11–May15) is a bandaid-vs-live coverage seam — fillable only by extending the bandaid estimate, not real data. The v0.8→v0.9 −$172M non_model seam is the larger separate methodology item. Meta-narrative reconcile (item #1) is the one clean DS-lane fix.
