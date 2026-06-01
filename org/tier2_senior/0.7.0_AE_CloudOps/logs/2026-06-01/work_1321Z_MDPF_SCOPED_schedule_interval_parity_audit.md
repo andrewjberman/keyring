@@ -120,6 +120,30 @@ CTO+COO asked: what writes `json/mdpf/*` today, under which grant? Decisive cens
 2. **IAM-A (aggregate_aua/ partition Deny):** valid, but gated on the unmanaged-bucket-policy import decision (CTO).
 3. **IAM-C (json/mdpf/ Deny):** only AFTER #1 makes the runner the legit scheduled writer — then Deny-except-runner is coherent (locking it before #1 would block the only-current writer = the local restore path, with nothing scheduled to replace it).
 
+## 5e. IAM-A PLAN PREP (work-cycle 0007, ~1412Z) — ready for CTO import ruling
+
+leg-1b APPLIED (a797bc195 — runner json/mdpf/* write grant; FE feed now writable by the scheduled chain once DS~B leg-1a rollup-redeploy lands). Inflection 5/27 chain-ordering RESOLVED (0.5.0_AE Stage-0.5 eclipse-gate `gold/eclipse/<date>/_meta/gold_complete.json`, deployed to runner code/, verified sentinel-match). EC2_MANIFEST cron-note corrected (281c1dec7).
+
+**A-plan prep — captured the exact LIVE portal-v2 bucket policy (unmanaged by TF):**
+```json
+{ "Version":"2012-10-17", "Statement":[
+  {"Sid":"AllowCloudFrontOAI","Effect":"Allow","Principal":{"AWS":"arn:aws:iam::cloudfront:user/CloudFront Origin Access Identity EU39UXW7CMSI5"},"Action":"s3:GetObject","Resource":"arn:aws:s3:::opal-data-portal-v2/*"},
+  {"Sid":"AllowCloudFrontOACPublicData","Effect":"Allow","Principal":{"Service":"cloudfront.amazonaws.com"},"Action":"s3:GetObject","Resource":["arn:aws:s3:::opal-data-portal-v2/json/*","arn:aws:s3:::opal-data-portal-v2/json-tiered/*"],"Condition":{"StringEquals":{"AWS:SourceArn":"arn:aws:cloudfront::313476888478:distribution/EVTSA9VEHNZVH"}}}
+]}
+```
+Both existing statements are `s3:GetObject` reads → a **write-only** Deny ({PutObject,DeleteObject}) is structurally incapable of touching CloudFront OAC/OAI reads (CTO condition 1 satisfied by construction).
+
+**Proposed A merge (pending CTO import-approach ruling):** `terraform import` the policy into a new `aws_s3_bucket_policy.opal_data_portal_v2` (likely in `shared-infra/`), preserving the 2 statements VERBATIM, + ADD:
+```
+{"Sid":"DenyNonRunnerWriteMdpfAggregateAua","Effect":"Deny",
+ "Principal":"*","Action":["s3:PutObject","s3:DeleteObject"],
+ "Resource":"arn:aws:s3:::opal-data-portal-v2/platinum/mdpf/aggregate_aua/*",
+ "Condition":{"ArnNotLike":{"aws:PrincipalArn":[
+   "arn:aws:sts::313476888478:assumed-role/mdpf-daily-runner-ec2-role/*",
+   "<NARROW break-glass admin ARN — confirm not a routine dev/agent cred>"]}}}
+```
+(C variant extends Resource to `platinum/mdpf/aggregate_aua_timeseries.json` + the runner-granted serving keys, AFTER leg-1a+1b make the runner the legit json/mdpf writer.) **GATING DECISION for CTO:** the policy is UNMANAGED by TF — confirm the import-and-manage-in-shared-infra approach (vs an alternative) before I author the resource + 0-diff plan. Mis-replication of the 2 OAC statements on the shared origin = breaks all portal reads, so the import diff must show the 2 statements byte-identical + only the Deny added. **HOLD apply for CTO ruling.**
+
 ## 6. SPLIT NOTE
 
 0.5.0_AE not yet registered LIVE at audit time → completed solo. When it comes up, suggested split: 0.5.0_AE takes remediation-impl legs (CloudTrail attribution §5.2 + IAM write-restriction §5.3); 0.7.0_AE_CloudOps retains this audit + the write-guard coordination. All infra changes via Terraform (Rule 1) + safe-apply (Rule 18).
