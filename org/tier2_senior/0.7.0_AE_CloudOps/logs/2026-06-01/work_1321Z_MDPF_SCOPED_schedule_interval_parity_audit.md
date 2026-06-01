@@ -76,6 +76,21 @@ Priority: LOW relative to the inflection clobber.
 
 ---
 
+## 5b. FORENSIC ADDENDUM (work-cycle 0002, ~1343Z) — attribution of the 19:26Z clobber
+
+Pre-authorized read-only forensic on the §3 out-of-band rebuild, to determine if retroactive principal-attribution is possible:
+
+1. **Runner telemetry history** `s3://opal-data-mdpf/telemetry/mdpf-daily-runner/history/`: the ONLY 5/29 record is `mdpf_daily_20260529_150030.json` (the scheduled 15:00 run). **No out-of-band run is recorded** → the 19:26Z clobber did NOT execute via `mdpf-daily-runner`. It was a **manual/external run** (workstation/agent session running an old `v0_8_ruling2` checkout directly against S3).
+2. **CloudTrail** `lookup-events EventName=PutObject` for the 19:00–20:00Z 5/29 window: **empty**. S3 object-level PutObject is a *data event*, not captured by the default management-event trail.
+3. **S3 server access logging** on `opal-data-portal-v2` (`get-bucket-logging`): **not configured** — empty.
+
+**Attribution verdict: the clobber is NOT retroactively attributable** — neither CloudTrail data events nor S3 access logging is enabled on the bucket. Therefore the remediation MUST be **preventive/structural, not investigative**:
+- The §5.3 **IAM write-lock** (restrict `s3:PutObject` on `platinum/mdpf/aggregate_aua/*` to the `mdpf_runner` instance role only — `infra/aws/terraform/mdpf-pipeline/ec2.tf:34` `aws_iam_instance_profile.mdpf_runner`) would have **structurally blocked this manual clobber**. This is now the highest-leverage fix.
+- The §5.3 **methodology-monotonic write-guard** is the second layer (defends even a runner-role write that regresses methodology).
+- **Going-forward attribution:** enable S3 server access logging (or a CloudTrail S3 data-event selector) on `opal-data-portal-v2 platinum/mdpf/*` so the next anomaly IS attributable. Low cost, AE-domain.
+
+All three are infra changes → Terraform (Rule 1) + safe-apply (Rule 18); pending COO leg-ownership confirmation before authoring.
+
 ## 6. SPLIT NOTE
 
 0.5.0_AE not yet registered LIVE at audit time → completed solo. When it comes up, suggested split: 0.5.0_AE takes remediation-impl legs (CloudTrail attribution §5.2 + IAM write-restriction §5.3); 0.7.0_AE_CloudOps retains this audit + the write-guard coordination. All infra changes via Terraform (Rule 1) + safe-apply (Rule 18).
