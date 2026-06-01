@@ -1,0 +1,9 @@
+#!/bin/bash
+# comp-lambdamap -- derive/verify the Lambda source-map against ground truth (TF + dirs)
+# Phase 1: comp-lambdamap check   (read-only drift detection; CI-gate friendly, exits 1 on drift)
+# Origin: BMKAUD source-map audit + CTO charter (f9e70457a). Phase 2 (derive/provenance) TBD.
+WORKSPACE="$(cd "$(dirname "$0")/.." && pwd)"
+python "$WORKSPACE/org/modules/graph/lambdamap_cli.py" "$@"
+_exit=$?
+python "$WORKSPACE/org/modules/graph/comp_log_auto.py" "comp-lambdamap" "$*" $_exit 2>/dev/null
+exit $_exit
