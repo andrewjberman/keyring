@@ -19,7 +19,7 @@
   "depends_on_note": "Sibling project to ADVI_INFETL — INFETL.011 cron-flip-ack gates on INFNNA.GOLD RAVC ACK + 3 other empirical gates.",
   "absorbs": [],
   "created": "2026-05-07",
-  "pods": ["0.4", "0.4.2"],
+  "pods": ["0.4", "0.4.2", "0.7"],
   "pipeline": "inf-pipeline + portal",
   "coo_lane": "2.0.0_SA_COO",
   "thread_counter": 0,
