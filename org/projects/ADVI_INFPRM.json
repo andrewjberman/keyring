@@ -1,0 +1,26 @@
+{
+  "project_code": "ADVI_INFPRM",
+  "macro_code": "ADVI",
+  "name": "Firm-scoped (external partner) layout & data-resolution fixes",
+  "description": "Andrew-direct 2026-06-02 (with screenshots). After MDPF_SCOPED.S5 put external partner users (peter@inflectionwealth.com, firmId=inflection) onto firm-scoped views, a cluster of panel-visibility + data-load bugs surfaced that do NOT appear for internal/Opal users. CONFIRMED SINGLE ROOT CAUSE (not stale entitlement - firmId IS provisioned): _partners/inflection/index.tsx:154 sets firmOverride=undefined for external users; _shared consumers resolve firmId-scoped gates (panels/roles/tabs) + data fetches from firmOverride alone -> useTenantLayout(undefined) -> DEFAULT_LAYOUT(49F) + unscoped/failed fetches. Symptoms: (1) Role Composition panel wrongly renders for Inflection (49F-specific, should be suppressed via roles.composition.enabled=false); (2) Firm Overview panel absent for Peter but present for internal Andrew; (3) Book view 'Could not load book data' (49F dynamic-Lambda handler instead of Inflection static + unscoped fetch). This is the audit-sweep ADVI_INFMVP F1 flagged (F1 fixed the first instance in PartnerAnalytics the same way). Phases: P0 (RD, empirical confirm + full _shared sweep, sizes W1/W2 + decides FE-only-vs-needs-AE); W1 (RD, resolve firmId-scoped gates from firmId, durable = SHARED.006 two-param useTenantLayout(firmId,firmOverride?)); W2 (RD FE + AE conditional, route firm-scoped data for external users). REGRESSION MATRIX MANDATORY across 49F/demo/internal (asymmetric bug).",
+  "prds": [
+    {
+      "path": "docs/architecture/ADVI_INFPRM.md",
+      "label": "ADVI_INFPRM PRD v0.1 (ws CTO, Andrew-direct)",
+      "date": "2026-06-02"
+    }
+  ],
+  "source_brief": "Andrew-direct 2026-06-02 with 5 screenshots ('group this whole subject as its own project'). ws CTO root-caused (single mechanism, NOT stale entitlement) + authored PRD e5f750f7f, handed to COO for registration + TO-decomposition. Same bug class as ADVI_INFMVP F1.",
+  "status": "active",
+  "phase": "Phase 0 DECOMPOSED 2026-06-02 (2.0.0_SA_COO from ws CTO PRD e5f750f7f). TOs: P0 (INFPRM.P0, RD~B, empirical confirm each symptom's failing gate/fetch + sweep EVERY _shared consumer reading firmOverride for layout/data, produce exhaustive site list + FE-vs-edge determination per site) DISPATCHED (can start parallel per CTO; gates W1/W2 scope). W1 (firmId-scoped gate resolution, two-param useTenantLayout) + W2 (route firm data, AE-conditional if Book-view needs edge/X-Firm-Id) AUTHORED-ON-P0-OUTPUT (not full TOs yet; P0 sizes them). SEQUENCING: separate from + likely SECOND DEV->PROD promotion AFTER ADVI_INFOTD (CTO rec, Andrew final call); INFPRM is the deeper layout-resolution sweep. Closure = rendered-pixel visual smoke (Andrew/CTO) + MANDATORY cross-tenant regression matrix (49F/demo/internal, CVO-verified).",
+  "blocking": "None blocking decomposition. W1/W2 full-TO authoring gated on P0 output (P0 sizes the sweep + decides FE-only vs needs-AE per site). AE (0.7.0_AE_CloudOps) is CONDITIONAL - only engaged if P0 finds the Book-view data half needs a Lambda@Edge/CloudFront X-Firm-Id/auth-edge fix. RD~B (owner) LIVE.",
+  "depends_on": ["MDPF_SCOPED"],
+  "depends_on_note": "MDPF_SCOPED.S5 EXPOSED these bugs (they pre-existed but were unreachable before external users could land on firm-scoped views). Same bug class as ADVI_INFMVP F1 (PartnerAnalytics, already-fixed reference pattern). Independent of ADVI_INFOTD (parallel; INFPRM likely ships in a LATER promotion).",
+  "absorbs": [],
+  "created": "2026-06-02",
+  "pods": ["0.4"],
+  "pipeline": "portal FE (Advisor Intelligence _shared: useTenantLayout firmId-vs-firmOverride resolution, panel/role gates, Book-view static-handler choice, firm-scoped data fetches); AE conditional (Lambda@Edge/CloudFront X-Firm-Id routing for external-user firm data, only if P0 finds it non-FE)",
+  "coo_lane": "2.0.0_SA_COO",
+  "thread_counter": 0,
+  "threads": []
+}

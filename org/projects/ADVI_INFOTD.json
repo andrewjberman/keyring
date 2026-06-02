@@ -1,0 +1,26 @@
+{
+  "project_code": "ADVI_INFOTD",
+  "macro_code": "ADVI",
+  "name": "Inflection Out-The-Door FE polish — AUA->AUM relabel + per-firm Count metric",
+  "description": "Andrew-direct 2026-06-02 FE polish to ship the Inflection firm-scoped experience out the door, building on MDPF_SCOPED.S5 (external partners now land on firm-scoped Model Portfolios; smoke-passed portal DEV 99d049d9, PROD promotion HELD to bundle these). TWO workstreams: W1 (FE-only, RD~B) = AUA->AUM display relabel on firm-scoped views (AdvisorIntelligence is ALWAYS firm-scoped -> rename ~90 sites UNCONDITIONALLY; ModelPortfolios has a global view -> rename ~15 sites CONDITIONALLY on effectiveFirmId!=='global'; ~105 total display-label sites/~24 files; introduce assetsLabel(firmScoped) helper; CRITICAL never rename the ~13 mode/data/sort KEYS, display labels only). W2 (DS data + RD FE) = per-firm Count metric in the ModelPortfolios Trend chart (model-holdings-only); root cause = build_aggregate_aua_timeseries.py:191-218 drops the account_count the partition mdpf_aggregate_aua.py:316-326 already computes; fix = DS adds account_count[] columnar series to by_model in the rollup + republish + served-verify (postdeps), RD adds the type portal-proxy.ts:407-413 + one-line FE consume ModelPortfolios.tsx:476-479.",
+  "prds": [
+    {
+      "path": "docs/architecture/ADVI_INFOTD.md",
+      "label": "ADVI_INFOTD PRD v0.1 (ws CTO, Andrew-direct)",
+      "date": "2026-06-02"
+    }
+  ],
+  "source_brief": "Andrew-direct 2026-06-02 'to get this out the door' after the S5 firm-scoping fix. ws CTO scoped + authored PRD e5f750f7f, handed to COO for registration + TO-decomposition. Grounded in verified code investigation (full file:line inventory in PRD sec.3).",
+  "status": "active",
+  "phase": "Phase 1 DECOMPOSED 2026-06-02 (2.0.0_SA_COO from ws CTO PRD e5f750f7f). TOs: W1 (INFOTD.W1, RD~B, FE AUA->AUM relabel, FE-only INDEPENDENT can-land-immediately) DISPATCHED; W2-DATA (INFOTD.W2D, DS, account_count[] rollup + republish + served-verify) DISPATCHED parallel; W2-FE (INFOTD.W2F, RD~B, type + 1-line consume) GATED on W2D served-verify. SEQUENCING: bundles into the FIRST DEV->PROD promotion with S5 (99d049d9) + NNA-tooltip (9df6ea69); RD~B owns the single 5-phase promote (Rule 19) on CTO GO once W1+W2 land+smoke. Closure = visual smoke (Andrew/CTO; headless FE smoke fabric-down) + W2 served-artifact data-verify (CVO). Promotion HELD until W1/W2 land.",
+  "blocking": "None blocking decomposition. W2-FE gated on W2-DATA served-verify (DS rollup must carry account_count in json/mdpf/{firm}/aggregate-aua-timeseries.json BEFORE the FE consume is meaningful). FE smoke falls to Andrew/CTO (headless-Chrome fabric-down). All owner lanes LIVE (RD~B + DS).",
+  "depends_on": ["MDPF_SCOPED"],
+  "depends_on_note": "Builds on MDPF_SCOPED.S5 (the firm-scoping foundation; smoke-passed, PROD held to bundle INFOTD). Bundles into the same first DEV->PROD promotion as S5 + the NNA tooltip. Independent of ADVI_INFPRM (relabel/data-field vs auth/panel-visibility) - parallel.",
+  "absorbs": [],
+  "created": "2026-06-02",
+  "pods": ["0.4"],
+  "pipeline": "portal FE (Model Portfolios + Advisor Intelligence display labels + Trend Count), MDPF data rollup (build_aggregate_aua_timeseries.py account_count series + served json/mdpf/{firm})",
+  "coo_lane": "2.0.0_SA_COO",
+  "thread_counter": 0,
+  "threads": []
+}
