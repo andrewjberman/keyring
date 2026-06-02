@@ -1,0 +1,31 @@
+{
+  "verdict": "CONCERN",
+  "project": "MDPF_SCOPED",
+  "scope": "two closeout TOs — S5 (RD external-partner login-scope FE) + OPS1 (AE daily-chain scheduling-hardening)",
+  "artifacts_verified": [
+    "portal/src/pages/ModelPortfolios.tsx (S5 effectiveFirmId fix + React-Query cache-key threading)",
+    "s3://opal-data-portal-v2/json/mdpf/inflection/aggregate-aua-timeseries.json (S5 data layer)",
+    "s3://opal-data-portal-v2/platinum/mdpf/aggregate_aua_timeseries.json (OPS1 chain output)",
+    "ec2 i-02448edb624a7a7cf mdpf-daily-runner (OPS1 root fix — enforcer exclusion, proven live self-stop)",
+    "lambda mdpf-freshness-checker (OPS1 D3 staleness alarm, State=Active)"
+  ],
+  "tools_gating_artifacts": [],
+  "verification_method": "direct AWS s3api/ec2/lambda read + portal code read + git provenance (not comp-tool-gated this cycle)",
+  "axis_mechanical": "YELLOW",
+  "axis_intent_coverage": "YELLOW",
+  "axis_decision_useful": "YELLOW",
+  "axis_constitution_coherence": "GREEN",
+  "constitution_drift_articles": [],
+  "findings_summary": {
+    "S5": "code substance VERIFIED correct (effectiveFirmId L269, cache keys threaded L275/286, 16 reads routed); portal main tree on DEV (Rule 19); 99d049d9 on origin/DEV; CI green; inflection data fresh+populated. Held at IMPL_DONE correctly — only remaining gate = Andrew rendered-pixel visual smoke (AC1-4; headless fabric-down = honest-limit DEFERRED). No defect, no premature close.",
+    "OPS1": "root fix (enforcer exclusion cef6e5d6d) substantively correct + PROVEN LIVE (runner launched 15:00Z, wrote 15:12Z, self-stopped — not idle-killed); chain delivers fresh 6/2 data with honest generated_at stamp; D3 freshness-checker Lambda Active. SHARP CATCH: served timeseries last3=[05-28,05-29,06-02] — 06-01 (Monday business day) genuinely MISSING = the tracked '6/1 backfill' item, visible in served artifact. CONDITIONAL: 6/1 backfill into rollup + N scheduled-cron runs proof + staleness-alarm validation remain."
+  },
+  "surfaced_findings": [
+    "OPS1: 2026-06-01 business-day gap in served MDPF rollup (json/mdpf + platinum/mdpf aggregate-aua-timeseries) pending backfill",
+    "OPS1: scheduled-cron-cadence proof pending (today's 15:00Z run was manual verify, not scheduled)"
+  ],
+  "held_open_correctly": true,
+  "timestamp_utc": "2026-06-02T16:14:00Z",
+  "mode": "comprehensive",
+  "source": "verify-channel-ws"
+}
