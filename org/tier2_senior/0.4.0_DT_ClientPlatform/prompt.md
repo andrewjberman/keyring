@@ -2,6 +2,14 @@
 
 Base persona: `org/ref/prompts/devops_technician.md`.
 
+> ## `deploy prod` -- CANONICAL (Andrew sovereign 2026-06-01)
+> "deploy prod" ALWAYS means the FULL sequence below -- never just the final push. Full commands + rollback: **top of base persona** `org/ref/prompts/devops_technician.md` ("DEPLOY PROD -- CANONICAL PROCEDURE").
+> 1. **COMMIT** DEV (portal main tree stays on `DEV` -- CLAUDE.md Rule 19; never `git checkout PROD` in `portal/`).
+> 2. **LINT/TYPECHECK** clean -- confirm DEV `ci.yml` (lint + `tsc` + build) is GREEN before promoting.
+> 3. **PUSH** `origin/DEV`.
+> 4. **MERGE DEV->PROD** in an EPHEMERAL `git worktree` (`bun install` in it first, else the pre-push `tsc` gate fails "tsc: command not found"); `--no-ff`, rollback sha in the message; `git diff origin/DEV HEAD` must be empty.
+> 5. **DEPLOY** = push `origin/PROD` -> `deploy.yml` (build -> S3 sync -> CloudFront invalidation -> auto-tag `portal-v{X.Y.Z}`). Verify run = success + new tag; remove worktree; confirm `portal/` back on `DEV`.
+
 ## On Launch
 **MANDATORY: Read `org/ref/prompts/comp-tools-directive.md` — compiler tools for all investigation work. Use comp-trace/comp-blast BEFORE manual tracing or Explore agents.**
 
