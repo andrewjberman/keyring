@@ -11,7 +11,7 @@
   <priority>HIGH — Andrew-direct, live critical path. The full Inflection surface is CVO-cleared + Andrew-pixel-green.</priority>
   <references>
     <ref type="andrew">2026-06-02 verbatim: "yep this works, ask MSTR for 0.4.0_DT and get the tree cleaned up, dev pushed, prod deployed"</ref>
-    <ref type="dev-head">portal DEV c009f98c (ci-green; RD~C pre-stage warm; rollback a33c230f)</ref>
+    <ref type="dev-head">portal DEV 23982a8c (current head, ci-green; RD~C pre-stage warm; rollback a33c230f) — CONFIRM exact GO target with CTO at promote (was c009f98c; advanced to 23982a8c via a9434226e moot advisors-guard re-add)</ref>
     <ref type="rule">CLAUDE.md Rule 19 (portal main worktree stays DEV; promote in ephemeral worktree + cleanup) + Rule 18 (safe-apply/HALTGT if any terraform) + the EC2/portal deploy standards</ref>
     <ref type="process">portal-promote.sh + the canonical 5-phase portal DEV->PROD deploy (CTO hands the staged plan)</ref>
   </references>
