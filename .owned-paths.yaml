@@ -138,7 +138,9 @@ lanes:
       - 0.4.0_DS_ClientPlatform~E
       - 0.4.0_DT_ClientPlatform
       - 0.4.2_RD_AdvisorIntelligence
-    description: "Pod 4 — ClientPlatform (DE + DE~B + DS + DS~A-~D + DT + RD). 0.4.0_DE_ClientPlatform~B added 2026-05-21 by CTO~B: DE~B's home-folder logs/** commits were owned-paths-blocked (the ~B variant was enumerated in POD4_OR_EXEC for task_orders but not in plain POD4 for logs). Tilde-lane owned-paths-gap pattern."
+      - 0.4.2_RD_AdvisorIntelligence~B
+      - 0.4.2_RD_AdvisorIntelligence~C
+    description: "Pod 4 — ClientPlatform (DE + DE~B + DS + DS~A-~D + DT + RD + RD~B/~C). 0.4.0_DE_ClientPlatform~B added 2026-05-21 by CTO~B: DE~B's home-folder logs/** commits were owned-paths-blocked (the ~B variant was enumerated in POD4_OR_EXEC for task_orders but not in plain POD4 for logs). Tilde-lane owned-paths-gap pattern. 0.4.2_RD_AdvisorIntelligence~B + ~C added 2026-06-02 by ws CTO: same gap — RD~B (INFNNA W2) + RD~C (INFPRM W1) spawned for the 3 parallel Inflection PRDs; base RD was enumerated but the tilde lanes weren't, blocking their own home-folder logs/** + task_orders/** self-commits (RD~B [BLOCKED-ASK] via COO)."
 
   POD4_OR_AE:
     permitted_agents:
@@ -350,6 +352,8 @@ lanes:
       - 0.4.0_DS_ClientPlatform_D
       - 0.4.0_DT_ClientPlatform
       - 0.4.2_RD_AdvisorIntelligence
+      - 0.4.2_RD_AdvisorIntelligence~B
+      - 0.4.2_RD_AdvisorIntelligence~C
       - 1.0.0_SA_CTO
       - 1.0.0_SA_CTO~B
       - 2.0.0_SA_COO
