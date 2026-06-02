@@ -1,0 +1,15 @@
+{
+  "verdict": "CLEAN",
+  "project": "ADVI_INFPRM",
+  "artifacts_verified": ["portal DEV c009f98c (inflection/index.tsx W4f tab-gating)"],
+  "tools_gating_artifacts": ["comp-transform schema-check (FE)", "auth-validator-edge .004a/.004c (edge access-scope, code-read)"],
+  "axis_mechanical": "GREEN",
+  "axis_intent_coverage": "GREEN",
+  "axis_decision_useful": "GREEN",
+  "axis_constitution_coherence": null,
+  "constitution_drift_articles": [],
+  "timestamp_utc": "2026-06-02T21:01:50Z",
+  "mode": "scan",
+  "source": "verify-channel-ws",
+  "note": "W4f corrected non-admin access model ([Distribution, Profile]); no-BI-leak boundary relocated to Books (3-layer: not-in-nonAdminTabs + deep-link-severed + render-guard); Distribution correctly shared per CTO ruling (a); Profile self-scoped (claims.advisorId) + role-gated toggle; cross-advisor drill self-scoped at edge .004a by-design (NOT a defect). Mode-A surface verify surfaced via scan as Class-1 RAVC2 fire; constitution-coherence axis NULL (drift-review fires only on Mode-B comprehensive). HONEST-LIMIT: code/logic; rendered-pixel = Andrew Joe-login smoke."
+}
