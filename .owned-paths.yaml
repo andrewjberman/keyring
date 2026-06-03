@@ -197,12 +197,14 @@ lanes:
       - 0.2.5_RD_Macroeconomics
       - 0.2.6_RD_Correlation
       - 0.3.1_RD_PortfolioManagement
+      - 0.3.1_RD_PortfolioManagement~B
+      - 0.3.1_RD_PortfolioManagement~C
       - 0.3.2_RD_TradeSubmission
       - 0.3.3_RD_DataRefresh
       - 0.3.4_RD_SecurityScanner
       - 0.4.1_RD_ModelPortfolios
       - 0.4.2_RD_AdvisorIntelligence
-    description: "Any pod agent (all pods)"
+    description: "Any pod agent (all pods). 0.3.1_RD_PortfolioManagement~B + ~C added 2026-06-03 by ws COO: same tilde-lane owned-paths-gap as the 0.4.0_DS~A-~E + 0.4.2_RD~B/~C precedents — RD~B (PMTRDX.001 x100 trade-bug, MSTR-spawned) was blocked committing its own org/tier3_rd/0.3.1_RD_PortfolioManagement/{logs,task_orders}/** (base enumerated, tilde lanes not). RD~B [BLOCKED-ASK] via COO per feedback_tilde_lane_owned_paths_gap_route_to_coo."
 
   SHARED_OPAL_ETL:
     permitted_agents:
