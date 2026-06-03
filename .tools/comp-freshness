@@ -581,9 +581,16 @@ def cmd_script(script_id: str) -> int:
         if script_id in e.get("scripts", []) or script_id.upper() in [s.upper() for s in e.get("scripts", [])]
     ]
     if not script_entries:
+        # absence != fresh: no config entry tagged -> this script's input freshness
+        # was NOT checked. Was exit-0 (read as 'fresh/fine'); now exit-2 (config
+        # error / UNCHECKED) per this tool's own exit convention (see header: 2 =
+        # config error). A missing config must not silently pass as fresh.
+        print(f"NO_FRESHNESS_CONFIG: no cadence config entries tagged for script {script_id!r} "
+              f"-- UNCHECKED, NOT a freshness pass (0 inputs verified).")
+        print(f"  Add a {pipeline} freshness_config entry, or run "
+              f"'comp-freshness chain {pipeline}' to check all {pipeline.upper()} artifacts.")
         print(f"WARN: no cadence config entries tagged for script {script_id!r}.", file=sys.stderr)
-        print(f"Run 'comp-freshness chain {pipeline}' to check all {pipeline.upper()} artifacts.", file=sys.stderr)
-        return 0
+        return 2
 
     results = check_entries(script_entries)
     return print_results(results, label=f"script {script_id}")
