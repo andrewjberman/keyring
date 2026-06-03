@@ -116,8 +116,17 @@ def _locked_liveness(write=False):
 
 
 def _find_agent_folder(serial: str) -> Path | None:
-    """Find the agent's folder in the org hierarchy."""
-    for tier in ["tier1_exec", "tier2_senior", "tier3_junior"]:
+    """Find the agent's folder in the org hierarchy.
+
+    Tier list MUST stay in parity with inbox-watch.sh's resolver
+    (tier0_exec tier1_exec tier2_senior tier3_junior) — a divergence is
+    exactly the MSTR infra-finding (2026-06-03): tier0_exec was omitted here,
+    so the tier0 MSTR serial (org/tier0_exec/0.0.0_AB_MSTR) failed resolution,
+    the poller exited immediately, last_seen_epoch decayed, and kill-orphans
+    reap-exposed MSTR's LD-0146 stream watcher. (tier3_rd is absent from BOTH
+    resolvers — a separate consistent gap, flagged, not a divergence.)
+    """
+    for tier in ["tier0_exec", "tier1_exec", "tier2_senior", "tier3_junior"]:
         tier_dir = ORG_ROOT / tier
         if not tier_dir.exists():
             continue
