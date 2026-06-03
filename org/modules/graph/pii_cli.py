@@ -21,10 +21,12 @@ Authoritative sources:
     comp-routes -- serving path auth layers
 """
 
+from __future__ import annotations
+
 import argparse
 import re
 import sys
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 from pathlib import Path
 
 _THIS_DIR = Path(__file__).resolve().parent
@@ -32,8 +34,8 @@ _WORKSPACE = _THIS_DIR.parent.parent.parent
 
 sys.path.insert(0, str(_WORKSPACE))
 
-from org.modules.graph.extract_transforms import build_component_dataflow, build_all_dataflows
-from org.modules.graph.extract_routes import build_routing_table
+from org.modules.graph.extract_transforms import build_component_dataflow, build_all_dataflows  # noqa: E402
+from org.modules.graph.extract_routes import build_routing_table  # noqa: E402
 
 
 # ---------------------------------------------------------------------------
@@ -88,6 +90,131 @@ SYNTHETIC_IDS = {
     'z00000001', 'z00000000', 'z99999999', 'z12345678',
     'ABC0000001', 'ABC1234567', 'XYZ0000001',
 }
+
+
+# ---------------------------------------------------------------------------
+# RUNTIME pseudonymizer truth + heuristic (ADHC_COMPIL drift-cleanup)
+#
+# The PII_FIELDS list above CLAIMED "Parsed from pseudonymizer.py" but was a
+# hardcoded literal that silently DRIFTS when the pseudonymizer changes (a field
+# added/removed/re-prefixed in _transform_field() would NOT be reflected here).
+# _derive_pseudonymized_fields() parses the LIVE pseudonymizer.py at runtime so
+# the hashed-field set is truth-derived; on disagreement we warn LOUDLY on stdout
+# and use the runtime set. _looks_like_pii() is a high-precision heuristic so a
+# NEW cleartext PII field the hardcoded list never knew about is flagged
+# (POTENTIAL) instead of reported "clean" -- killing the confidently-incomplete
+# false-green on an unrecognized sensitive field.
+# ---------------------------------------------------------------------------
+
+_PREFIX_CATEGORY = {
+    'Client': 'Client PII', 'Book': 'Advisor PII', 'Acct': 'Account PII',
+    'id': 'Navigation ID', 'Location': 'Location PII',
+}
+
+
+def _derive_pseudonymized_fields(workspace_root: Path):
+    """Parse the LIVE pseudonymizer.py _transform_field() for the actual
+    {field_name: hash_prefix} set it hashes. Returns (mapping, source_path) or
+    (None, None) if the source can't be located/parsed. Runtime truth -- beats
+    the hardcoded PII_FIELDS list, which drifts."""
+    cands = [p for p in workspace_root.glob('infra/aws/lambda/**/opal-partners-data/pseudonymizer.py')
+             if 'worktrees' not in str(p) and 'node_modules' not in str(p)]
+    src = cands[0] if cands else None
+    if src is None:
+        return None, None
+    try:
+        text = src.read_text(encoding='utf-8', errors='replace')
+    except Exception:
+        return None, None
+    m = re.search(r'def _transform_field\(.*?\):(.*?)(?:\ndef |\Z)', text, re.DOTALL)
+    body = m.group(1) if m else text
+    mapping: dict[str, str] = {}
+    pending: list[str] = []
+    for line in body.splitlines():
+        s = line.strip()
+        kc = re.search(r"\bkey\s+(?:==|in)\s+\(?([^):]+?)\)?\s*:", s)
+        if kc:
+            pending = re.findall(r"['\"]([^'\"]+)['\"]", kc.group(1))
+            continue
+        hc = re.search(r"_hash\([^,]+,[^,]+,\s*['\"]([^'\"]+)['\"]\)", s)
+        if hc and pending:
+            for k in pending:
+                mapping[k] = hc.group(1)
+            pending = []
+    return (mapping or None), src
+
+
+_RUNTIME_PII_LOADED = False
+
+
+def _ensure_runtime_pii_truth(verbose: bool = True) -> None:
+    """Reconcile the hardcoded PII_FIELDS against the live pseudonymizer and,
+    on drift, warn on stdout + rebuild the module globals from runtime truth.
+    Fails LOUD if the source can't be read -- never silently trusts the stale
+    list as if authoritative."""
+    global PII_FIELDS, PII_FIELD_NAMES, PSEUDONYMIZED_FIELDS, POTENTIAL_PII_FIELDS, _RUNTIME_PII_LOADED
+    if _RUNTIME_PII_LOADED:
+        return
+    _RUNTIME_PII_LOADED = True
+    derived, src = _derive_pseudonymized_fields(_WORKSPACE)
+    if derived is None:
+        if verbose:
+            print("WARN [comp-pii]: could not locate/parse live pseudonymizer.py -- hashed-field "
+                  "truth FALLS BACK to the hardcoded list (DRIFT RISK; verify manually).")
+        return
+    static = {f.name: f.hash_prefix for f in PII_FIELDS if f.hash_prefix}
+    added = sorted(set(derived) - set(static))
+    removed = sorted(set(static) - set(derived))
+    changed = sorted(k for k in set(derived) & set(static) if derived[k] != static[k])
+    if (added or removed or changed) and verbose:
+        print(f"WARN [comp-pii] PII-DRIFT: hardcoded list disagrees with live pseudonymizer.py ({src}):")
+        if added:
+            print(f"  + pseudonymizer HASHES (comp-pii was blind to): {added}")
+        if removed:
+            print(f"  - comp-pii listed as hashed, pseudonymizer no longer does: {removed}")
+        if changed:
+            print(f"  ~ hash-prefix changed: {[(k, static[k], derived[k]) for k in changed]}")
+        print("  -> using the RUNTIME pseudonymizer set as truth.")
+    potential_extras = [f for f in PII_FIELDS if not f.hash_prefix]
+    runtime_hashed = [PiiField(name=k, category=_PREFIX_CATEGORY.get(v, 'PII'), hash_prefix=v,
+                               context='hashed by live pseudonymizer.py (_transform_field)')
+                      for k, v in sorted(derived.items())]
+    # Fields the hardcoded list claimed were HASHED but the live pseudonymizer
+    # does NOT hash (removed/changed): DEMOTE to cleartext-potential -- keep
+    # tracking them (they're still PII names) but mark them UNPROTECTED. Never
+    # drop them, else the runtime fix would make comp-pii BLIND to them.
+    demoted = [PiiField(name=f.name, category=f.category, hash_prefix="",
+                        context="WAS listed hashed; live pseudonymizer does NOT hash it (drift) -- treat as CLEARTEXT PII")
+               for f in PII_FIELDS if f.hash_prefix and f.name not in derived]
+    PII_FIELDS = runtime_hashed + potential_extras + demoted
+    PII_FIELD_NAMES = {f.name for f in PII_FIELDS}
+    PSEUDONYMIZED_FIELDS = {f.name for f in PII_FIELDS if f.hash_prefix}
+    POTENTIAL_PII_FIELDS = {f.name for f in PII_FIELDS if not f.hash_prefix}
+
+
+# High-precision PII-name tokens: a field whose name matches one of these but is
+# NOT in any known list is flagged POTENTIAL (heuristic) instead of passing
+# silently. Deliberately high-precision (no ambiguous 'name'/'city'/'state',
+# already curated) to avoid flooding non-PII React fields.
+_PII_HEURISTIC_TOKENS = (
+    'ssn', 'socialsecurity', 'taxid', 'taxpayer', 'phone', 'email', 'dob',
+    'dateofbirth', 'birthdate', 'birthday', 'passport', 'driverlicense',
+    'routingnumber', 'accountnumber', 'streetaddress', 'homeaddress',
+    'zipcode', 'postalcode',
+)
+
+
+def _looks_like_pii(field_name: str) -> bool:
+    """High-precision heuristic for an UNRECOGNIZED PII-looking field name."""
+    n = re.sub(r'[^a-z0-9]', '', field_name.lower())
+    return any(tok in n for tok in _PII_HEURISTIC_TOKENS)
+
+
+def _heuristic_hit(name: str, path: str, location: str, line_number: int, component: str) -> "PiiHit":
+    return PiiHit(field_name=name, field_path=path,
+                  pii_category="Potential PII (heuristic)", pseudonymized=False,
+                  location=f"{location} [HEURISTIC: unrecognized PII-looking field]",
+                  line_number=line_number, component=component)
 
 
 # ---------------------------------------------------------------------------
@@ -179,6 +306,9 @@ def _scan_component_pii(component_path: Path, workspace_root: Path, rt=None) -> 
                         serving_path=serving,
                         auth_layers=auth,
                     ))
+                elif _looks_like_pii(part):
+                    hits.append(_heuristic_hit(part, fa, f"transform: {tc.output_variable}",
+                                               tc.line_number, flow.component_name))
 
     # Scan JSX references
     for ref in flow.jsx_refs:
@@ -196,6 +326,9 @@ def _scan_component_pii(component_path: Path, workspace_root: Path, rt=None) -> 
                     line_number=ref.line_number,
                     component=flow.component_name,
                 ))
+            elif _looks_like_pii(part):
+                hits.append(_heuristic_hit(part, ref.field_path, f"jsx ({ref.context})",
+                                           ref.line_number, flow.component_name))
 
     # Scan response type fields
     for type_name, fields in flow.response_types.items():
@@ -210,6 +343,9 @@ def _scan_component_pii(component_path: Path, workspace_root: Path, rt=None) -> 
                     location="response type field",
                     component=flow.component_name,
                 ))
+            elif _looks_like_pii(f.name):
+                hits.append(_heuristic_hit(f.name, f"{type_name}.{f.name}", "response type field",
+                                           0, flow.component_name))
 
     # Scan raw source for PII value patterns (z-numbers, account IDs in literals/URLs)
     try:
@@ -303,7 +439,7 @@ def cmd_scan(args):
     for cat, cat_hits in sorted(by_cat.items()):
         pseudonymized_count = sum(1 for h in cat_hits if h.pseudonymized)
         unprotected_count = len(cat_hits) - pseudonymized_count
-        warning = " !! UNPROTECTED !!" if unprotected_count > 0 and cat != "Potential PII" else ""
+        warning = " !! UNPROTECTED !!" if unprotected_count > 0 and not cat.startswith("Potential PII") else ""
         print(f"  {cat} ({len(cat_hits)} refs, {pseudonymized_count} pseudonymized){warning}")
 
         for h in cat_hits:
@@ -317,8 +453,8 @@ def cmd_scan(args):
 
     # Summary
     total_hashed = sum(1 for h in hits if h.pseudonymized)
-    total_cleartext = sum(1 for h in hits if not h.pseudonymized and h.pii_category != "Potential PII")
-    total_potential = sum(1 for h in hits if h.pii_category == "Potential PII")
+    total_cleartext = sum(1 for h in hits if not h.pseudonymized and not h.pii_category.startswith("Potential PII"))
+    total_potential = sum(1 for h in hits if h.pii_category.startswith("Potential PII"))
     print(f"  SUMMARY: {total_hashed} pseudonymized, {total_cleartext} cleartext PII, {total_potential} potential PII")
 
     # S3-direct serving path warning
@@ -336,12 +472,23 @@ def cmd_scan(args):
 
 def cmd_audit(args):
     """Full PII audit across all ADVI components."""
-    advi_components = [
+    curated = [
         "PartnerAnalytics", "DistributionTab", "AdvisorsTab", "ClientsTab",
         "AssetIntelligenceTab", "ClientDetailPage", "MixTimeseriesPanel",
         "ConcentrationPanel", "FeeEfficiencyPanel", "FeeRoleBreakdownPanel",
         "FeeSummaryPanel",
     ]
+    # DISCOVER additional ADVI components so a newly-added tab/panel/page isn't
+    # silently outside the audit scope (the hardcoded list was confidently
+    # incomplete -- a PII-exposing component not listed was never scanned).
+    advi_dir = _WORKSPACE / "portal" / "src" / "pages" / "AdvisorIntelligence"
+    discovered = []
+    if advi_dir.exists():
+        for tsx in sorted(advi_dir.rglob("*.tsx")):
+            stem = tsx.stem
+            if stem.endswith(("Tab", "Panel", "Page", "View")) and stem not in curated:
+                discovered.append(stem)
+    advi_components = curated + discovered
 
     rt = build_routing_table(_WORKSPACE)
     total_hits = 0
@@ -351,6 +498,8 @@ def cmd_audit(args):
 
     print("PII AUDIT: All Advisor Intelligence Components")
     print(f"{'=' * 70}")
+    if discovered:
+        print(f"  (+{len(discovered)} discovered beyond the curated list: {discovered})")
     print()
 
     for comp_name in advi_components:
@@ -364,8 +513,8 @@ def cmd_audit(args):
             continue
 
         hashed = sum(1 for h in hits if h.pseudonymized)
-        cleartext = sum(1 for h in hits if not h.pseudonymized and h.pii_category != "Potential PII")
-        potential = sum(1 for h in hits if h.pii_category == "Potential PII")
+        cleartext = sum(1 for h in hits if not h.pseudonymized and not h.pii_category.startswith("Potential PII"))
+        potential = sum(1 for h in hits if h.pii_category.startswith("Potential PII"))
         s3_pii = sum(1 for h in hits if h.pseudonymized and h.serving_path and "s3" in h.serving_path)
 
         total_hits += len(hits)
@@ -379,7 +528,7 @@ def cmd_audit(args):
 
         # Show cleartext PII fields
         for h in hits:
-            if not h.pseudonymized and h.pii_category != "Potential PII":
+            if not h.pseudonymized and not h.pii_category.startswith("Potential PII"):
                 print(f"    !! CLEARTEXT: {h.field_name} at L{h.line_number} ({h.location})")
 
     print()
@@ -405,7 +554,7 @@ def cmd_fields(args):
             print(f"    {f.name:25s} [{f.category}] -> '{f.hash_prefix} {{8-char hex}}'")
             print(f"      {f.context}")
     print()
-    print(f"  POTENTIAL PII (not hashed, but may carry sensitive data):")
+    print("  POTENTIAL PII (not hashed, but may carry sensitive data):")
     for f in PII_FIELDS:
         if not f.hash_prefix:
             print(f"    {f.name:25s} [{f.category}]")
@@ -465,7 +614,7 @@ def cmd_routes(args):
             print(f"      origin: {origin} | auth: {auth} | {pseudo_tag}")
             print(f"      PII fields: {', '.join(pii_field_names)}")
             if not has_pseudonymizer and pii_field_names:
-                print(f"      !! S3-direct with PII: relies on client-side masking only")
+                print("      !! S3-direct with PII: relies on client-side masking only")
             print()
 
 
@@ -548,6 +697,11 @@ def main():
     if not args.command:
         parser.print_help()
         sys.exit(0)
+
+    # Reconcile the hashed-field set against the LIVE pseudonymizer before any
+    # command runs (warns + supersedes the hardcoded list on drift; warns LOUD
+    # if the source can't be read rather than silently trusting a stale list).
+    _ensure_runtime_pii_truth()
 
     commands = {
         'scan': cmd_scan,
