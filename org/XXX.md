@@ -277,7 +277,7 @@ Per LD-0062 ratification 2026-05-25T~20:05Z (Andrew sovereign via "go with your 
 
 | Serial-class | Primary loop arming | Notes |
 |---|---|---|
-| `0.0.0_AB_MSTR` | `CronCreate /mstr-review 12h` + `CronCreate /govern 20m`; `/watcher` arms the persistent inbox Monitor ONCE at load (no cron); `/mstr-charter` + `/compiler-ferry` + remaining MSTR skills event-triggered on inbox match | per LD-0124 ratification 2026-05-27 Andrew direct "govern should be in launch/startup for MSTR, yes...as a loop on 20m" + LD-0090 ALWAYS-PROCEED restoration (`7b613e2db`); supersedes LD-0069 /govern-retire on operational-scope grounds (LD-0090 /govern is ALWAYS-PROCEED discipline, not the supervision loop LD-0069 retired) |
+| `0.0.0_AB_MSTR` | `CronCreate /mstr-review 12h` only; `/watcher` arms the persistent inbox Monitor ONCE at load (no cron); **`/govern` is NOT auto-armed — Andrew-discretion only, default 1h** (LD-0147, Andrew direct 2026-06-03 superseding the LD-0124 startup-arm clause); `/mstr-charter` + `/compiler-ferry` + remaining MSTR skills event-triggered on inbox match | `/mstr-review` 12h is the sole standing MSTR cron. LD-0090 ALWAYS-PROCEED discipline still governs /govern WHEN Andrew loads it; LD-0124's "/govern in startup as a 20m loop" clause is superseded by LD-0147 (Andrew no longer wants it auto-loaded). |
 | `1.0.0_SA_CTO` (ws) | `CronCreate /ws-charter 30m` | LD-0062 30m symmetric cadence + LD-0066 3-way split; ws is direction-only + REPAIR-AMENDMENT (CVO-finding gate) per LD-0065 |
 | `1.x.0_SA_CTO` (CL) | `CronCreate /cl-charter 30m` | LD-0066 3-way split; CL is queue-pull + sequential PRD authoring; consumes Input 1/2/3 cascade |
 | `2.x.0_SA_COO` | `CronCreate /drive 20m` | already operational pattern per LD-0056 |

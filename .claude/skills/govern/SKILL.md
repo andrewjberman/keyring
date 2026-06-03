@@ -19,15 +19,18 @@ MSTR-only. Other agents invoking halt at Step 0.
 
 | Form | Behavior |
 |---|---|
-| `/govern` | Run sweep, then loop — re-fire **every 20 minutes** (default; matches /drive cadence). |
-| `/govern 10m` / `30m` / `1h` | Run sweep, then loop at the given interval. |
+| `/govern` | Run sweep, then loop — re-fire **every 1 hour** (default). |
+| `/govern 20m` / `30m` / `90m` | Run sweep, then loop at the given interval. |
 | `/govern once` | Run sweep once — no loop. |
 | `/govern off` (or `stop`) | End the loop. |
 
 ## When to invoke
 
-- Andrew direct: `/govern` initiates the loop.
-- MSTR autonomous: at session start as part of MSTR primary-loop arming (alongside /watcher + /mstr-review per LD-0082).
+- **Andrew discretion only.** `/govern` is NOT auto-armed at session start (Andrew
+  direct 2026-06-03, superseding the LD-0124 startup-arm clause). MSTR does not load
+  a `/govern` loop at load; whether to run it — and at what cadence — is Andrew's call.
+- When Andrew invokes `/govern`, it initiates the loop at the 1-hour default (or the
+  interval Andrew gives).
 - Never invoked by any agent other than `0.0.0_AB_MSTR`.
 
 ## Step 0 — Identity gate
@@ -101,7 +104,7 @@ heartbeat(serial="0.0.0_AB_MSTR", summary="/govern cycle {N} — {N} PROCEED exe
 
 Per LD-0082 pattern (CronCreate-driven), the loop is already armed at the cron schedule. No ScheduleWakeup needed.
 
-If invoking standalone (not on cron), arm via `CronCreate("*/20 * * * *", "/govern")` OR re-evaluate per the interval.
+If invoking standalone (not on cron), arm via `CronCreate("7 * * * *", "/govern")` (hourly default) OR re-evaluate per the interval Andrew gave.
 
 ---
 
@@ -111,7 +114,8 @@ If invoking standalone (not on cron), arm via `CronCreate("*/20 * * * *", "/gove
 - **S3/S4 reservation is non-negotiable.** Sovereign-class decisions (constitutional amendments, principal redirects, S3+ risk-class actions per Stakes Matrix) NEVER auto-fire under /govern. They surface to Andrew + remain RESERVED until Andrew responds. Per LD-0090 §Sovereign-class reservation.
 - **Authorization chain mandatory.** Every PROCEED action cites LD-0090 + the originating open-subject MCP. Audit trail enables Andrew countermand + post-hoc review.
 - **Andrew countermand respected.** If Andrew explicitly counter-directs after MSTR proceeds, MSTR reverts the action (per LD-0090 §Rollback) + updates classification rule for that subject-class.
-- **Companion to /mstr-review.** /mstr-review (12h cadence) is the long-form governance review — git-rooted commit walk, directive progress, S0-S4 decision distribution. /govern (20m cadence) is the action-pacing operating loop — discretion-execution on open subjects. /mstr-review surfaces strategic state; /govern executes tactical proceed-on-rec discipline. Both run in parallel via separate CronCreate per LD-0082.
+- **Companion to /mstr-review.** /mstr-review (12h cadence) is the long-form governance review — git-rooted commit walk, directive progress, S0-S4 decision distribution. /govern (1h default cadence, Andrew-discretion) is the action-pacing operating loop — discretion-execution on open subjects. /mstr-review surfaces strategic state; /govern executes tactical proceed-on-rec discipline.
+- **Not auto-armed.** Unlike /mstr-review (the standing MSTR cron), /govern is loaded at Andrew's discretion only — never at session start (Andrew direct 2026-06-03).
 - **Cousin to /drive.** Both implement "no standing-by terminal state" pattern at different tiers — COO drives lane fulfillment, MSTR drives sovereign-discretion fulfillment.
 - **Quiet loop is healthy.** Most cycles will be PRE-1-TURN/RESPONDED quiet. The cycle earns its keep when an item crosses the 1-turn-silent threshold — that's when MSTR proceeds.
 
