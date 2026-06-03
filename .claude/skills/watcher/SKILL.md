@@ -1,167 +1,116 @@
 ---
 name: watcher
-description: Self-check and self-heal an agent's inbox-watcher and broker registration, then keep checking on a recurring loop. Verifies the agent is registered LIVE on the opal-agent-comms broker, that exactly ONE inbox-watch process is running for its serial AND was launched by the CURRENT session (tracked, not a prior-session orphan), kills orphan / relative-path / double / wrong-channel watchers, relaunches one tracked watcher, pulls both inbox paths, then re-arms itself to run again. `/watcher` loops every 10m by default; `/watcher 5m` / `/watcher 30m` / `/watcher 1h` set the interval; `/watcher once` runs a single check; `/watcher off` ends the loop. Run at session start, on a fresh /loop wake, after a window exit or restart, after context compaction, or whenever watcher health is in doubt. Self-scoped — repairs only the invoking agent's own watcher; never touches a peer's. Encodes the inbox-watch failure modes from org/XXX.md and org/mcp/INBOX_WATCH_DESIGN.md.
+description: Ensure this agent is reachable — registered LIVE on the broker with exactly one persistent inbox Monitor armed for this session. Post-LD persistent-Monitor model: the watcher is a long-running Monitor task armed ONCE at load that streams one chat notification per inbox message, survives in-session compaction, handles batches, and never exits. There is no recurring watcher loop anymore — a fresh session re-arms at startup; within a session the Monitor just keeps running. Run at session start, after a window exit / restart, or whenever reachability is in doubt. Self-scoped — only touches the invoking agent's own watcher.
 ---
 
-# /watcher — Inbox-Watcher & Registration Self-Check (with health loop)
+# /watcher — Inbox Reachability (persistent-Monitor model, arm-at-load)
 
 Confirms you are **reachable**: registered LIVE on the broker, with exactly one
-**tracked** `inbox-watch` process running for your serial. Detects and repairs
-every documented watcher failure mode — then **re-arms itself** so the check
-recurs on an interval. **Self-scoped** — it fixes only *your* watcher and
-registration. It never kills a peer's watcher (that causes the atomic-`mv` race
-it exists to prevent).
+**persistent inbox Monitor** streaming your inbox for this session. **Self-scoped**
+— it only ever touches *your* watcher and registration.
+
+## The model (read this first)
+
+The inbox watcher is a **persistent Monitor task** running
+`inbox-watch.sh <serial> stream`. The Monitor tool turns every stdout line the
+script emits (`[INBOX] <file>`) into a chat notification, so you are interrupted
+**per message while you keep working** — and the script **never exits**.
+
+This replaces the old exit-on-delivery bash watcher (launched under Bash
+`run_in_background`, which re-launched itself after every delivery). That design
+was the entire reason `/watcher` used to be a recurring loop: the bash watcher
+silently died, orphaned, went deaf to a prior session, or short-circuited on its
+own single-watcher guard (the misleading exit-143), so it needed periodic
+re-checking. The persistent Monitor removes every one of those failure modes:
+
+| Old failure mode | Why it's gone |
+|---|---|
+| ORPHAN / PPID=1 zombie | Monitor is a tracked session task, not a detached bash process |
+| MULTIPLE / atomic-mv race | TaskList is the single-instance check; atomic `mv` makes any overlap exactly-once anyway |
+| AUTO-RESPAWN-INTERRUPT-LOST | no respawn — the script never exits, so there's nothing to respawn |
+| "deaf prior-session watcher" | a session's Monitor dies with the session; a fresh session arms its own |
+| exit-143 guard short-circuit | no exit-on-delivery, no guard race |
+| missed 2nd+ message in a batch | the poll loops over **all** `*.md` each cycle |
+| dies on compaction | a persistent Monitor survives in-session compaction |
+
+**Decisive reachability test:** *is there a live persistent Monitor task running
+`inbox-watch.sh <serial> stream` in this session?* Check your **TaskList** — that
+is structural truth, not a `ps` heuristic. If yes, you are reachable. If no, arm one.
 
 ## Invocation forms
 
 | Form | Behavior |
 |---|---|
-| `/watcher` | Run the check, then loop — re-check **every 10 minutes** (default). |
-| `/watcher 5m` / `30m` / `1h` / `90s` | Run the check, then loop at the given interval. |
-| `/watcher once` | Run the check **once** — no loop. |
-| `/watcher off` (or `stop`) | Run a final check and **end the loop** — do not re-arm. |
+| `/watcher` | Arm-at-load check, **once**. Register if STALE; arm the Monitor if absent; pull inbox; report. **No loop is armed** — the persistent Monitor is the standing mechanism. |
+| `/watcher status` | Report-only: registration + Monitor presence + inbox. No changes. |
+| `/watcher rearm` | Force a clean re-arm: TaskStop any existing inbox Monitor for this serial, kill any legacy bash watcher, arm a fresh stream Monitor. |
+| `/watcher off` / `stop` / `Nm` / `10m` (legacy interval forms) | **Deprecated, accepted gracefully.** There is no loop to start or stop. Run the one-shot check, then if a stale `/watcher` CronCreate job exists, cancel it (Step 5) and say so. |
 
 ## When to invoke
 
-- Session start (the `org/XXX.md` Step 1b MCP startup), and after any context compaction.
-- Any fresh `/loop` wake, or after a window exit / machine restart.
-- Whenever you cannot positively confirm you launched a watcher **this session**.
-- Inside a CTO/COO supervision sweep, dispatched to each live agent to run on itself.
-
-## The core principle (read this first)
-
-A watcher only delivers messages to the session that launched it **via the Bash
-tool with `run_in_background: true`**. A watcher process can look perfectly
-healthy in `ps` — correct path, live parent — and still be **deaf**: if a *prior*
-session launched it, its exit notification fires into a dead session and the
-inbox file it wins via the atomic `mv` race is silently swallowed.
-
-> **The decisive test is your own session task list, not `ps`.**
-> If you did not launch a background `inbox-watch` task *this session*, you have
-> no tracked watcher — no matter what `ps` shows.
+- Session start (`org/XXX.md` Step 1b startup), and after any context compaction
+  (the Monitor should still be live across compaction — this just confirms it).
+- After a window exit / machine restart / fresh `/loop` wake (the prior session's
+  Monitor died with it — this arms a new one).
+- Whenever you cannot positively confirm a live inbox Monitor in your TaskList.
 
 ---
 
-## Step 0 — Parse the argument, identify yourself
-
-**Parse the invocation argument** into a mode + interval:
-
-- No argument → **loop mode**, interval **600s (10m)**.
-- `once` → **single mode** (run Steps 1-6, skip Step 7).
-- `off` / `stop` → **stop mode** (run Steps 1-6, skip Step 7, report the loop ended).
-- An interval token → **loop mode** at that interval. Accept `Nm` (minutes),
-  `Nh` (hours), `Ns` (seconds), or a bare `N` (minutes). Convert to seconds and
-  **clamp to [60, 3600]** — the `ScheduleWakeup` range. If the request fell
-  outside the range, say so in the report (e.g. `2h -> clamped to 60m`).
-
-**Identify yourself:**
+## Step 0 — Identify yourself
 
 - **Serial:** the full serial you registered under this session, **including any
-  `~B`/`~C`/`~D` lane suffix**. (`SERIAL=` in `.comp-graph/.agent_context` or
-  `$OPAL_AGENT_SERIAL` are fallbacks, but they can be stale or shared between
-  lanes — trust the serial from your own session registration first.)
-- **Channel:** post-LD-0034 unified broker + inbox migration (`opal-agent-comms`
-  canonical; `complearns-agent-comms` retired) — **ALL agents (ws + CL) use the
-  ws-rooted `inbox-watch` PATH wrapper**, which polls the unified inbox at
-  `ajb_workspace/org/mcp/inbox/{serial}/`. CL serials have inbox directories
-  under that unified path; the legacy `feature_clb/org/mcp/cl_inbox/` path is
-  orphaned. The prior CL-specific carve-out (`cl-inbox-watch.sh` against the
-  legacy CL path) is retired. Empirically confirmed twice 2026-05-24 by CL CTO
-  + CL CVO: agents following the old carve-out launch deaf watchers against an
-  empty directory and never fire task-notifications.
+  `~B`/`~C`/`~D` lane suffix**. Lane agents watch their nested dir; registering or
+  arming under the base serial means your lane inbox is never watched.
+- **Workspace abs path:** `/c/Users/AndrewBerman/Desktop/ajb_workspace` (the
+  Monitor command must use the absolute path — the bare-path guard hook blocks
+  relative `org/mcp/inbox-watch.sh` launches).
 
 ## Step 1 — Registration check
 
 Call `get_agent_status("{serial}")`.
 
 - **LIVE, last seen < 120s, summary reflects current work** → registration OK.
-- **STALE, absent, or stale summary** → call
-  `register_agent("{serial}", summary="<current work>")`. A window exit always
-  drops you to STALE — re-registering is expected, not exceptional.
-- Lane agents (`~B`/`~C`/`~D`): register under the **full suffixed serial**.
-  Registering under the base serial means your lane inbox is never watched.
+- **STALE, absent, or stale summary** → `register_agent("{serial}", summary="<current work>")`.
+  A window exit always drops you to STALE — re-registering is expected.
+- Lane agents register under the **full suffixed serial**.
 
-## Step 2 — Watcher process scan
+## Step 2 — Monitor presence check (decisive)
 
-Run the diagnostic (Bash tool, **foreground**):
+Look at your **TaskList** for a **running** task whose command contains
+`inbox-watch.sh {serial} stream`.
 
-```bash
-bash org/mcp/watcher-status.sh {serial}
-```
+- **Present and running** → reachable. Skip to Step 4. (This is the steady state,
+  including right after a compaction — the persistent Monitor is still live.)
+- **Absent** (fresh session, restart, or never armed) → go to Step 3.
+- **`/watcher rearm`** → TaskStop the existing one first, then Step 3.
 
-Read the `VERDICT:` line. It is `NONE`, `WRONG-CHANNEL`, `MULTIPLE`, `ORPHAN`,
-`RELATIVE-PATH`, or `PROCESS-OK`.
+## Step 3 — Arm the persistent inbox Monitor
 
-## Step 3 — The tracked-ness test (decisive)
-
-Ask yourself one question:
-
-> **Did I launch an `inbox-watch` via the Bash tool (`run_in_background: true`)
-> in THIS session, and have I NOT since seen its completion task-notification?**
-
-- **NO** → you have no tracked watcher. Go to **Step 4 (full remediation)**
-  regardless of the helper VERDICT — even if it says `PROCESS-OK` (that watcher
-  belongs to a dead session).
-- **YES** → you have a tracked watcher.
-  - VERDICT `PROCESS-OK` with exactly one watcher → healthy. Skip to **Step 5**.
-  - VERDICT `DETACHED-OK` → helper-confirmed this-session tracked watcher whose
-    launcher shell detached; still polling correctly. Skip to **Step 5**.
-  - VERDICT `AUTO-RESPAWN-INTERRUPT-LOST` → helper-confirmed this-session
-    auto-respawn copy from `inbox-watch.sh:130-137` post-delivery; polling but
-    deaf to interrupts. **Step 4** to kill + relaunch tracked, restoring
-    interrupt path.
-  - VERDICT `PRIOR-SESSION-ORPHAN` → helper-confirmed PID not in this session's
-    tracker; genuine leftover. **Step 4** to kill + relaunch.
-  - VERDICT `ORPHAN` (legacy fallback — helper could not disambiguate sub-case;
-    typically `$CLAUDE_CODE_SESSION_ID` missing) → fall back to Step 3
-    tracked-ness check: if YES + your latest task-notification has NOT fired,
-    treat as DETACHED-OK; otherwise **Step 4** to kill + relaunch.
-  - VERDICT `MULTIPLE` / `RELATIVE-PATH` / `WRONG-CHANNEL` → strays coexist with
-    yours → **Step 4** to clear.
-
-> On a **recurring loop cycle**: a watcher you launched earlier in the *same*
-> session and have not seen complete still counts as tracked — most loop cycles
-> will pass Step 3 = YES and land on `PROCESS-OK`. That is the healthy steady
-> state; the cycle is then a ~10s no-op. The loop earns its keep on the cycle
-> *after* a watcher silently dies or a window exit drops your registration.
-
-## Step 4 — Remediate (KILL FIRST, THEN LAUNCH — order is mandatory)
-
-**Step 4 fires only when Step 3 disambiguation says "stray exists" or "interrupt
-coverage lost".** Single-PID `ORPHAN` with no task-notification yet seen = your
-own tracked watcher in a legit detached state — skip Step 4 (the kill would
-churn your tracked watcher unnecessarily, then the relaunch's single-watcher-
-guard would race against the killed PID's exit). Single-PID `ORPHAN` after
-task-notification fired = legitimate auto-respawn copy (deaf to interrupts);
-Step 4 kills it + launches fresh tracked to restore interrupt path.
-
-`inbox-watch.sh` has a single-watcher guard: if **any** watcher for your serial
-is already running, a new launch exits 0 immediately. Claude Code surfaces that
-guard-exit as a misleading **exit 143**, and you are left with only the stale
-(deaf) watcher. So strays must die *before* you launch.
-
-1. **Kill every watcher PID** the helper listed for your serial:
+1. **Clear any legacy bash watcher** for this serial (transition hygiene — an old
+   exit-on-delivery watcher and the new stream Monitor both mv to `read/`, so
+   delivery stays exactly-once, but the legacy one is redundant). Enumerate +
+   kill:
    ```bash
-   kill <pid> [<pid> ...]
+   bash org/mcp/watcher-status.sh {serial}   # lists any legacy watcher PIDs
+   kill <pid> [<pid> ...]                     # if any were listed
    ```
-2. **Verify they are gone** — re-run `bash org/mcp/watcher-status.sh {serial}`
-   and confirm `VERDICT: NONE`. If a PID survives, `kill -9 <pid>`.
-3. **Launch exactly ONE tracked watcher** — Bash tool, `run_in_background: true`,
-   **no trailing `&`**:
-   - **ALL agents (ws + CL, post-LD-0034 unified broker + inbox):**
-     `inbox-watch {serial}` (PATH wrapper exec's the ws-rooted absolute path
-     `bash /c/Users/AndrewBerman/Desktop/ajb_workspace/org/mcp/inbox-watch.sh {serial}`
-     which polls the unified inbox).
-   - **BANNED:** `bash org/mcp/inbox-watch.sh {serial}` (relative path → PPID=1
-     zombie that short-circuits the next session); any `&` form (runs invisibly,
-     fires no notification — you go deaf for the session); the retired
-     `feature_clb/org/mcp/cl-inbox-watch.sh` legacy CL-channel script (polls
-     orphaned `feature_clb/org/mcp/cl_inbox/` post-LD-0034 — deaf watcher).
-4. The Bash tool returns a **background task ID**. That ID is your proof of
-   tracking — note it. When it later completes, that is a new-message signal:
-   pull the inbox (Step 5) and relaunch the watcher (one delivery = one relaunch).
+2. **Arm the Monitor** — use the **Monitor tool**, `persistent: true`,
+   `timeout_ms: 3600000`:
+   - command: `bash /c/Users/AndrewBerman/Desktop/ajb_workspace/org/mcp/inbox-watch.sh {serial} stream`
+   - The tool returns a task ID — that ID in your TaskList **is** your reachability
+     proof. Each `[INBOX] <file>` event it later emits is a new-message signal:
+     read the file from `org/mcp/inbox/<agent>/read/` (the script already mv'd it
+     there) and act. **You do not relaunch anything** — the Monitor keeps running.
 
-## Step 5 — Inbox pull (BOTH probes + ferry check, always)
+   **BANNED:** launching `inbox-watch.sh {serial} stream` under Bash
+   `run_in_background` (the Bash tool only notifies on *exit*, and stream mode
+   never exits → you go silent for the session). It MUST run under the Monitor
+   tool. Equally banned: the legacy bare-path relative launch (guard-hook blocked).
+
+## Step 4 — Inbox pull (BOTH probes + ferry check)
+
+Even with the Monitor live, pull once at load to catch anything delivered before
+it armed:
 
 ```bash
 check-inbox {serial}
@@ -170,107 +119,48 @@ check-inbox {serial}
 get_agent_status("{serial}")
 ```
 
-The two probes cover different deliveries and neither sees everything:
-- `check-inbox` reads files at the **top level** of `org/mcp/inbox/{serial}/`.
-  Once `inbox-watch` atomic-mv's a message to `read/`, check-inbox returns
-  empty even though the message just landed.
-- `get_agent_status` surfaces **broker-channel** messages (those sent via
-  the MCP `send_message` API, which fires a push at send-time).
-- **Neither probe sees LD-0099 cross-org-root filesystem-direct ferry
-  messages** (CL→ws or ws→CL writes that bypass the broker because the
-  recipient isn't in the sender's per-org-root registry). Those land
-  directly on disk and only `inbox-watch` notices.
+- `check-inbox` reads **top-level** `org/mcp/inbox/{serial}/` (empty once the
+  stream Monitor has mv'd a message to `read/`).
+- `get_agent_status` surfaces **broker-channel** push messages.
+- **Neither sees LD-0099 cross-org-root filesystem-direct ferry messages.** If you
+  suspect one (a `[INBOX]` event fired but both probes are empty), scan
+  `ls -t org/mcp/inbox/{serial}/read/ | head` for the newest entry — the stream
+  Monitor already delivered it there.
 
-Diagnostic for the ferry blind spot: **watcher-exit notification fired +
-check-inbox empty + get_agent_status empty = look in `read/` for newest
-entries.** A fresh ferry delivery has already been mv'd there and is the
-reason the watcher fired. Scan `ls -t org/mcp/inbox/{serial}/read/ | head`
-and compare against what you've handled this session.
+**Act on anything found this turn** — no silent "standing by".
 
-**Act on anything found this turn** (ack, do the work, validate evidence) —
-no silent "standing by".
+## Step 5 — Cancel any stale `/watcher` loop, heartbeat, report
 
-## Step 6 — Heartbeat and report
+The recurring `/watcher` loop is **retired**. If you (or a prior startup) armed
+one, clean it up:
 
-Call `heartbeat("{serial}", summary="<one-line current state>")`, then print the
-fixed report:
+- `CronList` → if a `/watcher` job exists, `CronDelete` it.
+- If you have a pending `ScheduleWakeup` chain whose prompt is `/watcher ...`,
+  do **not** re-arm it (just let it lapse / re-point it at your real loop body).
+
+Then `heartbeat("{serial}", summary="<one-line current state>")` and print:
 
 ```
 /watcher {serial}
   REGISTRATION: <OK, LIVE> | <re-registered: was STALE>
-  WATCHER:      <OK, tracked task <id>> | <relaunched: killed <pids>, new task <id>>
+  MONITOR:      <OK, live task <id>> | <armed: task <id>> | <re-armed: stopped <old>, killed legacy <pids>, task <id>>
   INBOX:        <empty> | <N message(s): acted — ...>
-  LOOP:         <next check in <interval> (re-armed)> | <single run> | <loop ended>
+  LOOP:         <none — persistent Monitor is the standing mechanism> | <cancelled stale /watcher cron <id>>
 ```
 
-When a loop cycle finds everything healthy and unchanged, keep the report to
-exactly these lines — no extra prose. A quiet loop should be quiet.
-
-## Step 7 — Re-arm the loop (loop mode only)
-
-**Skip this step entirely in `once` and `off`/`stop` mode** — that is what ends
-the loop.
-
-In loop mode, re-arm the next cycle as the **last action of the turn**:
-
-```
-ScheduleWakeup(
-  delaySeconds = <interval in seconds>,
-  reason       = "/watcher health loop -- next inbox-watcher + registration check in <interval>",
-  prompt       = "/watcher <interval as the user typed it, or bare /watcher for the 10m default>"
-)
-```
-
-Passing the same interval back as the `prompt` is what makes the cadence
-persist — each firing re-runs this skill, which re-arms again. Exactly one
-wakeup is ever pending, so there is no cron build-up to clean.
-
-**Guard — do not stack ScheduleWakeup chains.** If you are *already* running a
-primary loop driven by a `ScheduleWakeup` chain (another /watcher invocation in
-loop mode, a self-paced `/loop` body), do **not** arm a separate /watcher
-ScheduleWakeup — only one ScheduleWakeup is ever pending, so a second arming
-clobbers the first. Treat this invocation as `once` mode and make sure the
-primary loop body runs the /watcher check each tick.
-
-**CronCreate-driven primary loops are EXEMPT from the stack guard** (LD-0082
-pattern). MSTR + Tier-1 execs run CronCreate-armed primary loops (`/mstr-review
-12h`, `/ws-charter 30m`, `/drive 20m`, `/spot-check 20m`); arming a separate
-`/watcher 10m` ScheduleWakeup alongside one of these is permitted — CronCreate
-schedules don't interfere with ScheduleWakeup pending state. Two separate
-mechanisms, no collision. The no-stack guard is for ScheduleWakeup chains only.
-
-The standalone `/watcher` loop is for agents **not** otherwise looping; it
-doubles as a lightweight keep-alive.
-
-**To stop a running loop:** invoke `/watcher off`. The cycle that is currently
-pending will fire once more; respond to it with `/watcher off` (or just let that
-final cycle run and not re-arm). The loop then ends.
-
----
-
-## Failure-mode reference
-
-| Helper VERDICT | What it means | Fix |
-|---|---|---|
-| `NONE` | No watcher process for your serial | Step 4 launch (no kill needed) |
-| `ORPHAN` (legacy fallback) | Watcher has no live eval-launcher parent (PPID=1 / dead / reparented); helper could not disambiguate (no `$CLAUDE_CODE_SESSION_ID` env var, or tracker file missing). Three structural sub-cases collapsed under this single verdict. Disambiguate via Step 3. | Step 4 kill + relaunch (conservative; cost of redundant kill < cost of missed delivery). |
-| `DETACHED-OK` | THIS-session tracked watcher whose launcher shell detached (helper read tracker file `org/mcp/tracked_watchers/${CLAUDE_CODE_SESSION_ID}.list` + matched single ORPHAN PID to a `LAUNCH` entry). Still polling correctly. | PROCESS-OK-equivalent; skip Step 4. |
-| `AUTO-RESPAWN-INTERRUPT-LOST` | THIS-session auto-respawn copy from `inbox-watch.sh:130-137` post-delivery (helper matched single ORPHAN PID to a `RESPAWN` entry in tracker file). Polling correctly but deaf to Claude Code interrupts. | Step 4 kill + relaunch (restore interrupt path; filesystem deliveries still work via `.unread-deliveries` sentinel). |
-| `PRIOR-SESSION-ORPHAN` | Single ORPHAN PID present + `$CLAUDE_CODE_SESSION_ID` set + PID NOT found in this session's tracker file. Genuine prior-session or external leftover. | Step 4 kill + relaunch. |
-| `MULTIPLE` | >1 watcher for your serial — atomic-`mv` race, deliveries lost | Step 4: kill ALL, then launch one |
-| `RELATIVE-PATH` | Launched via banned `bash org/mcp/inbox-watch.sh` — PPID=1 zombie risk | Step 4: kill, relaunch via PATH wrapper |
-| `WRONG-CHANNEL` | Watcher launched against the retired `feature_clb/org/mcp/cl-inbox-watch.sh` legacy CL path (orphaned post-LD-0034 unified broker + inbox migration); polls empty directory, deaf to deliveries | Step 4: kill, relaunch via the ws-rooted `inbox-watch {serial}` PATH wrapper (all agents, ws + CL, use the unified path post-LD-0034) |
-| `PROCESS-OK` | Process tree healthy — **but** confirm Step 3. A prior session's watcher also reads `PROCESS-OK` | If Step 3 = NO → Step 4 anyway |
+When everything is already healthy, keep it to these lines — no extra prose.
 
 ## Notes
 
-- **Self-scoped only.** Do not kill a watcher for a serial that is not yours.
-  Fabric-wide orphan cleanup for *dead* agents is the `kill-orphans` hook's job.
-- **Belt-and-suspenders.** A watcher is event-push; it is not a substitute for
-  pulling `check_inbox` + `get_agent_status` at the top of a turn when you are
-  expecting a near-term reply. The loop is a third layer under both.
-- **The loop interacts with messages.** If a watcher-exit task-notification
-  arrives between loop cycles, handle it immediately (pull inbox + relaunch the
-  watcher) — do not wait for the next `/watcher` cycle. The loop is a backstop,
-  not the primary delivery path.
-- Design + history: `org/XXX.md` Step 1b, `org/mcp/INBOX_WATCH_DESIGN.md`.
+- **Self-scoped only.** Never TaskStop or kill a watcher for a serial that isn't
+  yours.
+- **No loop to keep alive.** A persistent Monitor IS the standing mechanism; the
+  only re-arm trigger is a brand-new session, handled by arming at load. Do not
+  add a `/watcher` ScheduleWakeup/CronCreate loop — it's obsolete and would just
+  re-run an idempotent no-op.
+- **Survives compaction.** The Monitor is a session task; in-session compaction
+  does not end it. After a compaction, Step 2 should find it still running.
+- **Belt-and-suspenders.** The Monitor is event-push; still pull `check-inbox` +
+  `get_agent_status` at the top of a turn when you're expecting a near-term reply.
+- Design + history: `org/XXX.md` Step 1b, `org/mcp/INBOX_WATCH_DESIGN.md`,
+  and the LD record for the persistent-Monitor migration.

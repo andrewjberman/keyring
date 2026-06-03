@@ -3,6 +3,19 @@
 #
 # Usage:  bash org/mcp/watcher-status.sh <agent_serial>
 #
+# POST-MIGRATION ROLE (persistent-Monitor model): the canonical inbox watcher is
+# now a persistent Monitor task running `inbox-watch.sh <serial> stream`, and the
+# decisive reachability test is the session TaskList -- NOT this ps scan. This
+# helper is retained as a TRANSITION HELPER: /watcher Step 3 calls it to enumerate
+# any *legacy* exit-on-delivery bash watcher PIDs still running for a serial so
+# they can be killed before arming the stream Monitor. It does NOT see the stream
+# Monitor (that's a Claude Code task, not a `ps`-visible inbox-watch.sh <serial>
+# process -- a stream launch's last ps field is "stream", not the serial, so the
+# `$NF == serial` filter below skips it by design). The VERDICT taxonomy below
+# (ORPHAN sub-cases etc.) is legacy-model vocabulary kept only for diagnosing
+# pre-migration bash watchers during the transition; it is irrelevant to the
+# Monitor model and will be removed once no legacy bash watchers remain.
+#
 # Scans `ps -ef` for the inbox watcher(s) belonging to <agent_serial>, classifies
 # each one, and prints a single VERDICT line the /watcher skill keys on.
 # READ-ONLY: never kills, never launches. The /watcher skill owns remediation.

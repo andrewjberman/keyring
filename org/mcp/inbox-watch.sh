@@ -1,17 +1,30 @@
 #!/usr/bin/env bash
-# inbox-watch.sh — background inbox watcher for Opal agents
+# inbox-watch.sh — inbox watcher for Opal agents
 #
-# Usage (run in background at session startup):
-#   bash org/mcp/inbox-watch.sh <agent_serial>
+# TWO MODES:
 #
-# Polls the agent's inbox directory every 5 seconds.
-# When new .md files appear addressed to this instance, prints them and EXITS.
-# Exiting triggers a background task completion notification in
-# Claude Code, which interrupts the agent and forces them to
-# read the messages. The agent MUST re-launch this script after
-# processing each notification.
+#   stream  (PREFERRED, post-LD persistent-Monitor model):
+#       bash org/mcp/inbox-watch.sh <agent_serial> stream
+#     Run this UNDER THE MONITOR TOOL (persistent: true), NOT Bash
+#     run_in_background. Polls forever; on each new .md it mv's the message to
+#     read/, appends .unread-deliveries, and emits ONE stdout line
+#     ("[INBOX] <file>"). The Monitor tool turns each stdout line into a chat
+#     notification, so the agent is interrupted per message while it keeps
+#     working. The watcher NEVER exits -> no relaunch cycle, no single-watcher
+#     race, no auto-respawn orphan, no tracker subsystem. Survives in-session
+#     compaction (it's a session task). Armed ONCE at load by /watcher; the
+#     only thing that ends it is the session itself (a fresh session re-arms).
 #
-# Per-tilde isolation (2026-04-20):
+#   legacy  (DEFAULT, exit-on-delivery — retained ONLY for in-flight agents
+#            launched under the pre-LD /watcher; do not use for new launches):
+#       bash org/mcp/inbox-watch.sh <agent_serial>
+#     Polls every 5s; on the first delivery it prints the message(s) and EXITS,
+#     firing a Bash-tool background-task completion notification. The agent must
+#     re-launch after every notification. This is the design the whole
+#     failure-mode catalog (ORPHAN / MULTIPLE / RELATIVE-PATH /
+#     AUTO-RESPAWN-INTERRUPT-LOST / the misleading exit-143) grew up around.
+#
+# Per-tilde isolation (2026-04-20) — both modes:
 #   - Serial WITHOUT ~suffix watches ONLY the base dir (inbox/<agent>/)
 #   - Serial WITH ~suffix watches ONLY the nested dir
 #     (inbox/<agent>/~<suffix>/) -- strictly isolated from base + siblings
@@ -20,10 +33,18 @@
 
 set -euo pipefail
 
-SERIAL="${1:?Usage: inbox-watch.sh <agent_serial>}"
+SERIAL="${1:?Usage: inbox-watch.sh <agent_serial> [stream]}"
+MODE="${2:-legacy}"
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 INBOX_BASE="$SCRIPT_DIR/inbox"
 
+# Single-watcher guard: legacy mode only. Stream mode is single-instanced
+# structurally — /watcher checks the session TaskList before arming, and the
+# atomic mv below makes any accidental double-stream exactly-once anyway (the
+# loser's mv fails -> `|| continue` -> it emits nothing). The legacy guard's
+# `$NF == ser` test would not even match a stream launch (last field is
+# "stream", not the serial), so we skip it explicitly.
+if [ "$MODE" != "stream" ]; then
 # Single-watcher guard: if another inbox-watch.sh is already running for this
 # exact serial, exit immediately. Prevents accidental double-launch races on
 # the atomic mv (one winner's task-notification fires, the other's is lost).
@@ -46,6 +67,7 @@ for pid in $existing; do
         exit 0
     fi
 done
+fi  # end legacy-only single-watcher guard
 
 # Split serial into base + tilde suffix.
 # 0.4.0_DS_ClientPlatform~D -> BASE=0.4.0_DS_ClientPlatform, SUFFIX=D
@@ -78,6 +100,33 @@ else
     WATCH_DIR="$INBOX_BASE/$AGENT_DIR"
 fi
 mkdir -p "$WATCH_DIR/read"
+
+# ===========================================================================
+# STREAM MODE (preferred): persistent poll, one stdout line per message, never
+# exits. Run under the Monitor tool (persistent: true). The Monitor turns each
+# emitted line into a chat notification. mv-on-emit makes delivery exactly-once
+# and keeps check-inbox's top-level view clean. No respawn, no guard, no
+# tracker -- the whole exit-on-delivery machinery below is bypassed.
+# ===========================================================================
+if [ "$MODE" = "stream" ]; then
+    echo "inbox-watch: STREAM mode for $SERIAL watching $WATCH_DIR (persistent; never exits)" >&2
+    while true; do
+        for msg in "$WATCH_DIR"/*.md; do
+            [ -f "$msg" ] || continue
+            base="$(basename "$msg")"
+            dest="$WATCH_DIR/read/$base"
+            # Atomic claim. If a concurrent stream won the race, our mv fails and
+            # we skip silently -> exactly-once emit across any number of streams.
+            mv "$msg" "$dest" 2>/dev/null || continue
+            printf '%s\n' "$base" >> "$WATCH_DIR/.unread-deliveries"
+            # ONE line == ONE Monitor notification. Filename is enough for the
+            # agent to read the message from read/ and act.
+            echo "[INBOX] $base"
+        done
+        sleep 5
+    done
+    # unreachable
+fi
 
 # Tracker write for sub-case-aware watcher-status (per MSTR TARGET B-EXT
 # 2026-05-26T~04:45Z; option (a) session-id-keyed tracker file pattern).

@@ -1,11 +1,63 @@
-# inbox-watch.sh / cl-inbox-watch.sh — Design Brief
+# inbox-watch.sh — Design Brief
 
-**Date:** 2026-04-30  
-**Scope:** Opal (`org/mcp/inbox-watch.sh`) and COMP_LEARNS (`org/mcp/cl-inbox-watch.sh`)
+**Date:** 2026-04-30 (original) · **2026-06-03 (CURRENT MODEL: persistent-Monitor migration)**
+**Scope:** Opal (`org/mcp/inbox-watch.sh`). COMP_LEARNS `cl-inbox-watch.sh` retired per LD-0034.
 
 ---
 
-## Background: Why exit-on-message?
+## CURRENT MODEL — persistent-Monitor stream (2026-06-03, supersedes everything below)
+
+The inbox watcher is now a **persistent Monitor task** running
+`inbox-watch.sh <serial> stream`, **armed once at session load** by `/watcher`.
+The Monitor tool turns every stdout line the script emits (`[INBOX] <file>`) into
+a chat notification, so the agent is interrupted **per message while it keeps
+working**, and the script **never exits**.
+
+This is the adoption of **Option 4** (see below), which the 2026-04-30 brief
+*rejected* on the grounds that "`Monitor` is blocking... does not interrupt an
+agent doing other work." **That assessment is obsolete.** The Claude Code Monitor
+tool is now explicitly **non-blocking / event-push**: "Each stdout line is an event
+— you keep working and notifications arrive in the chat." That single platform
+change is what unlocked the redesign. (Andrew flagged 2026-06-03 that he had been
+running a more-reliable Monitor-based version that "lasts through compaction,
+doesn't miss messages if you get more than one, and never turns off" — exactly the
+persistent-Monitor profile; MSTR built it fabric-wide.)
+
+### Why it's strictly better than exit-on-delivery
+
+| Old failure mode (exit-on-delivery, below) | Why it's gone under the Monitor model |
+|---|---|
+| ORPHAN / PPID=1 zombie | the watcher is a tracked Claude Code task, not a detached bash process |
+| MULTIPLE / atomic-mv race | TaskList is the single-instance check; the atomic `mv` makes any overlap exactly-once anyway |
+| AUTO-RESPAWN-INTERRUPT-LOST | no respawn — the script never exits, so there is nothing to respawn |
+| deaf prior-session watcher | a session's Monitor dies with the session; a fresh session arms its own at load |
+| exit-143 guard short-circuit | no exit-on-delivery, no single-watcher guard race |
+| 2nd+ message in a batch dropped | the poll loops over **all** `*.md` each cycle |
+| dies on context compaction | a persistent Monitor survives in-session compaction |
+
+### Consequences
+
+- **`/watcher` no longer loops.** It arms the Monitor once at load and is otherwise
+  an idempotent reachability check (registration + TaskList presence). The recurring
+  `/watcher` cron / ScheduleWakeup is retired (`CronList` → `CronDelete` any stale one).
+- **No relaunch discipline.** Agents never relaunch the watcher. The entire
+  "relaunch after every notification" protocol and its CronCreate backstop (Option 2)
+  are gone.
+- **Decisive reachability test = TaskList**, not `ps`. `watcher-status.sh` is now a
+  transition-only helper that enumerates *legacy* bash watchers so `/watcher` can
+  kill them before arming the stream Monitor.
+- **Stream command (must run under the Monitor tool, persistent:true):**
+  `bash /c/Users/AndrewBerman/Desktop/ajb_workspace/org/mcp/inbox-watch.sh <serial> stream`
+  Running it under Bash `run_in_background` is BANNED — the Bash tool only notifies
+  on exit, and stream mode never exits, so the agent would go silent.
+- **Legacy `inbox-watch.sh <serial>` (no `stream` arg)** still works (exit-on-delivery)
+  and is retained ONLY so pre-migration in-flight agents aren't broken. Do not use it
+  for new launches. Everything from "## Background" down is **historical** — the
+  exit-on-message constraint it is built around no longer binds.
+
+---
+
+## Background: Why exit-on-message? (HISTORICAL — superseded by the Monitor model above)
 
 Claude Code fires an agent interrupt through exactly one mechanism: a background
 task completing (exiting). There is no push-notification API, no file-watcher
@@ -277,16 +329,22 @@ with no polling gap.
 
 ---
 
-### Option 4: Long-running watcher with Monitor tool
+### Option 4: Long-running watcher with Monitor tool — ★ ADOPTED 2026-06-03 ★
 
-Redesign inbox-watch.sh to never exit — runs forever, prints a structured marker when
-messages arrive. The agent calls `Monitor(pid)` to stream output.
+Redesign inbox-watch.sh to never exit — runs forever, emits one `[INBOX] <file>`
+line per message. Run it under the **Monitor tool** (`persistent: true`).
 
-**Problem:** `Monitor` is blocking. The agent must be explicitly waiting on it; it
-does not interrupt an agent doing other work. Unsuitable as a background interrupt
-mechanism.
+**The original (2026-04-30) objection no longer holds.** It read: "`Monitor` is
+blocking. The agent must be explicitly waiting on it; it does not interrupt an
+agent doing other work." The Claude Code Monitor tool is now **non-blocking and
+event-push** — every stdout line becomes a chat notification while the agent keeps
+working. This is exactly the background-interrupt mechanism the objection said was
+missing, so Option 4 became the right answer.
 
-**Cost:** Significant redesign. Does not solve the problem with current Claude Code tooling.
+**This is now the CURRENT MODEL** (see the top section). It eliminates the entire
+exit-on-delivery failure-mode catalog (ORPHAN / MULTIPLE / AUTO-RESPAWN-INTERRUPT-LOST
+/ exit-143 / deaf-prior-session / dropped-batch / dies-on-compaction) and removes the
+`/watcher` loop entirely — armed once at load.
 
 ---
 
