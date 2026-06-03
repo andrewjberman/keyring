@@ -20,8 +20,16 @@
 <scope>
 The demo AdvisorIntelligence firm-landing is blank because opal-data-demo is missing platinum/firm/* (and likely more — the clone is ~58% complete). Re-clone the missing artifacts from opal-data-bd THROUGH the ADVI_DEMOV1 deterministic-seeded pseudonymizer so the demo is restored WITHOUT leaking real 49F PII.
 
+## CONCRETE PREFIX-GAP MAP (0.6.0 full audit 201316Z — bd vs demo under platinum/):
+   firm/      bd=14      demo=0       <- 100% MISSING (firm-landing rollups = Andrew's symptom)
+   clients/   bd=14,922  demo=1,795   <- ~13,127 MISSING (~88% short) = the BULK of the gap; most client-detail drilldowns would 403 too
+   advisors/  bd=887     demo=886     <- ~complete (off by 1, no re-clone)
+   accounts/  bd=6,600   demo=6,600   <- COMPLETE (no re-clone)
+   TOTAL bd 22,424 vs demo 9,282 (~41% present). SIZING: ~13.1k-object re-clone = a multi-hour DS job (the original ADVI_DEMOV1 clone ran ~hours), NOT a quick patch. Likely also wants a re-clean/verify pass (gap came from the snapshot-clean version-delete saga).
+
 ## REQUIRED:
 1. Re-clone platinum/firm/* (14 objects: header_metrics_fresh, leaderboard, partner_analytics_*, timeseries_overview, cohort_a_summary, + the rest) from opal-data-bd/platinum/firm/ -> opal-data-demo/platinum/firm/.
+1b. Re-clone platinum/clients/* (~13,127 missing objects) — restores client-detail drilldowns (currently only 12% present).
 2. **PII-SAFE — MUST go through the ADVI_DEMOV1 pseudonymizer (data/demo/scripts/transform/) using the SAME fake_identities mapping**, NOT a raw S3 cp. Firm artifacts (leaderboard, partner_analytics) carry advisor NAMES + numbers = PII. The fake advisor names in firm/leaderboard MUST match the already-cloned advisors/ (deterministic seed) or the demo is internally inconsistent (leaderboard names != advisor-detail names). This is the critical correctness+PII constraint.
 3. AUDIT the full prefix gap: opal-data-demo 9,282 vs original ~22,253 (~13k objects short). Enumerate which prefixes under opal-data-demo/platinum/ (and elsewhere) are short vs opal-data-bd, and re-clone any other missing firm-or-render-critical prefix through the pseudonymizer. firm/ is the confirmed-broken one; there may be others (the firm-landing was just the first surface Andrew hit).
 4. Verify served: after re-clone, the platinum/firm/*.json?firm=demo fetches return 200 (not 403), and the firm-landing renders. Then re-smoke (Andrew visual).
