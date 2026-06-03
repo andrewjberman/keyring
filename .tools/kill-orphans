@@ -114,12 +114,19 @@ while IFS= read -r line; do
         esac
     fi
 
-    # --stale filter: extract the agent serial from the inbox-watch.sh cmdline
-    # (the last argument) and skip if it's currently live in liveness.json.
-    # agent-poller.py and check-inbox.sh use the same arg position.
+    # --stale filter: extract the agent serial from the cmdline and skip if it's
+    # currently live in liveness.json. Extract the token IMMEDIATELY AFTER the
+    # script name (the serial is always the first positional arg to inbox-watch.sh
+    # / check-inbox.sh / agent-poller.py) -- NOT by field position. Field position
+    # is fragile: a persistent-Monitor stream watcher (LD-0146) has a trailing
+    # `stream` arg, AND the Monitor's launcher wraps the command as
+    # `... eval 'bash .../inbox-watch.sh <serial> stream' && pwd -P >| '<tmp>/...cwd'`
+    # so $NF is a temp-path redirect target, not the serial. Reading the wrong
+    # token made every live stream watcher read as stale -> reaped on any peer's
+    # register_agent (the exit-143 incident that broke the LD-0146 rollout).
     if [ "$STALE_ONLY" -eq 1 ]; then
-        serial=$(echo "$cmd" | awk '{print $NF}' | tr -d '[:space:]')
-        if is_live_serial "$serial"; then
+        serial=$(echo "$cmd" | grep -oE "($PATTERNS)[[:space:]]+[^[:space:]']+" | head -1 | sed -E 's/^.*[[:space:]]+//')
+        if [ -n "$serial" ] && is_live_serial "$serial"; then
             continue
         fi
     fi
