@@ -6,7 +6,7 @@
   <assigned_to>0.6.0_AE_PartnerETL</assigned_to>
   <issued_by>2.0.0_SA_COO</issued_by>
   <issued_date>2026-06-03</issued_date>
-  <status>dispatched — PREP NOW, apply HELD for Andrew nod (CTO ruling 171434Z)</status>
+  <status>complete — SHIPPED 2026-06-03 (bd-v2.26.0, f68a270de). Andrew gave 0.6.0 the nod DIRECTLY (out-of-band, ~same time this TO was authored). 0.6.0 executed clean TF destroy: module + IAM + fan-out env + source-map + source removed; 2destroy/2change/0add; safe-apply HALTGT; 0-diff confirmed; function gone. NO console-drift (proper TF destroy, CTO-verified 172128Z). ADHC_BDTSCLB CLOSED end-to-end (.001 AC4-GREEN + .002 decommission). No-clobber quadruple-overdetermined.</status>
   <dispatch_held>false</dispatch_held>
   <priority>LOW — harmless-dormant (can't write, crashes pre-write); no urgency. Cleanup/attack-surface reduction.</priority>
   <references>
