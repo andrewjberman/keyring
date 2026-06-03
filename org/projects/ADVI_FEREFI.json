@@ -1,0 +1,22 @@
+{
+  "project_code": "ADVI_FEREFI",
+  "macro_code": "ADVI",
+  "name": "Advisor Intelligence FE refinements (6-item batch)",
+  "description": "Andrew-direct 2026-06-03, walked the product live with COO. Six Advisor Intelligence FE refinements: (1) Assets Overview top firm panel defaults -> Year interval + 3Y window; (2) remove all user-visible '(pseudonymized)' labels (keep logic); (3) remove the Segment-Analytics 'Search all advisors/states' search bar for both Inflection + 49F; (4) Lifetime Activity panel defaults -> Max window + Year interval; (5) Lifetime Activity AUM-mode tooltip adds period-over-period $ + % change; (6) [cross-lane FE+DS] replace the fee-paying 'approx' synthetic ratio with REAL per-period *_fee_paying/*_no_fee sub-streams (49F full history; Inflection floor July 2025 -> back-attribute fee-paying since inception per account/household w/ any fee record, gold-tier per Rule 17). Items 1-5 pure FE; #6 FE gated on DS data leg. Bundles into next DEV->PROD promote behind Andrew smoke, with footnote 548c9d7d.",
+  "prds": [
+    {
+      "path": "docs/architecture/ADVI_FEREFI_PRD.md",
+      "label": "ADVI_FEREFI PRD v0.1 (ws CTO, Andrew-direct, code-verified)",
+      "date": "2026-06-03",
+      "commit": "a2ba67707"
+    }
+  ],
+  "source_brief": "Andrew-direct 2026-06-03 live product walk -> COO scoped 6 items w/ exact code locations -> CTO authored + code-verified FE PRD a2ba67707 -> COO decompose.",
+  "status": "active",
+  "phase": "Phase 1 DECOMPOSED 2026-06-03 (2.0.0_SA_COO from ws CTO PRD a2ba67707). TOs: W1 (RD-AI FE lane 0.4.2_RD_AdvisorIntelligence, items 1-5 pure FE — chart defaults 1+4, pseudonymized-label removal 2, search-bar removal 3, AUM tooltip delta 5; + #6-FE-tail GATED on W2 DS) DISPATCHED 2026-06-03. W2 (DS 0.4.0_DS_ClientPlatform, item 6 data leg — fee-history feasibility per firm THEN emit real *_fee_paying/*_no_fee sub-streams + Inflection since-inception back-attribution, gold-tier) — DS already on ad-hoc feasibility (secondary to the Andrew-direct Unrealized/Realized investigation); formal #6 build TO on feasibility return. SEQUENCING: whole batch -> next DEV->PROD promote behind Andrew smoke, bundled w/ footnote 548c9d7d; CTO tracks promote manifest, HELD for Andrew GO. Closure = rendered-pixel visual smoke (Andrew/CTO) per item acceptance + #6 real-data verify (CVO/DS).",
+  "pods": ["0.4.2", "0.4.0"],
+  "created": "2026-06-03",
+  "blocking": "Items 1-5 FE: ready, RD-AI lane spawning. Item 6 FE: GATED on DS real fee sub-streams (W2). Promote: HELD for Andrew GO (gated on his INFOTD/INFNNA smoke + this batch landing on DEV).",
+  "coo_lane": "2.0.0_SA_COO",
+  "thread_counter": 2
+}
