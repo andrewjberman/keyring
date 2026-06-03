@@ -55,6 +55,17 @@ open) + RAVC2 to CTO + COO.
 - STEP-0 PROD-base discipline applied (no dry-run pollution this real promote since push advances origin/PROD legitimately).
 - SERVED-PROD rendered e2e is CVO's; CTO owns the convene (smoke-scope in RAVC2).
 
+## Tag-object note (post-ship MSTR verify, resolved)
+
+MSTR's independent verify flagged `git ls-remote --tags origin portal-v2.1.114` -> `c8819c58`
+(read as an "ancestor merge", suspected double-merge). Resolved: **c8819c58 is the
+ANNOTATED-TAG OBJECT** (`git cat-file -t c8819c58` = `tag`), which peels to commit **1695a754**
+(the PROD head): `git cat-file -p portal-v2.1.114` = `object 1695a754 / type commit`;
+`refs/tags/portal-v2.1.114^{}` = 1695a754. deploy.yml uses `git tag -a` (annotated), so
+`ls-remote --tags` shows the tag-object sha on the ref line and the commit only on the peeled
+`^{}` line. No double-merge (origin/PROD = single merge 1695a754, parents 9f890e0f + 850f70ba);
+the tag correctly marks the PROD head; no re-point needed. The "-> 1695a754" above is accurate.
+
 ## Compiler Tools
 
 No comp-* — portal FE promote is git plumbing + CI + CloudFront. Change-gates: ci.yml on DEV
