@@ -158,3 +158,25 @@ edge census (compute→IAM, role→bucket, compute→SG). AE pings CVO for hand-
 
 **PASS-1 disposition: JOINTLY SIGNED (CVO oracle + AE co-sign). Node axis certified GREEN; edge axis +
 IAM-drift field are the certified-open cert-gaps carried to PASS-2.**
+
+---
+
+## 6. G1 CLOSED-GREEN — re-verified against the served artifact (AE ee462b4f7)
+
+AE added per-role `tf_managed` + a `tf_reconciliation` summary to the IAM census (commit ee462b4f7).
+**CVO re-verification (against the committed JSON, NOT the summary claim):**
+- All **111/111** roles now carry `tf_managed`.
+- **92 tf_managed=true / 19 tf_managed=false.**
+- The 19-false set is **SET-EQUAL to my independent §2.G1 diff** (`set(mine)==set(census_false)` → True;
+  zero symmetric difference). Literal-grep method = no false-positives, confirming the upper-bound 19
+  was in fact the exact shadow set.
+- `tf_reconciliation` documents the 76 (comp-iam source-map subset) / TF-declared-full / 111-live axis.
+
+**G1 (cert-blocking) RESOLVED.** The IAM census now carries the declared-vs-live drift axis at parity
+with the S3 fixture — the sub-compiler can diff-to-0-diff on IAM drift. Per-role disposition of the 19
+(14 import-candidate / 5 accept-external; portal-auth+portfolio-management+schwab-anonymizer highest-pri;
+lambda-test-role flagged scrutinize) lives in the security tracker for Andrew's Track-2 steer.
+
+**Updated cert-gap status:** G1 CLOSED-GREEN ✓ · G2 (edge census) = PASS-2 AE-build-gated · G3 (4 node
+classes) open · G4 (minor) open. PASS-1 node axis + IAM-drift axis both certified; edge axis is the sole
+remaining long-pole.
