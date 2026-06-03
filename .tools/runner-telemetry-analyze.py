@@ -30,7 +30,8 @@ from pathlib import Path
 from typing import Iterator
 
 DEFAULT_ROOT = ".runtmp/telemetry"
-VECTORS = ("cpu_pct", "memory_mb", "threads", "disk_read_mbs", "disk_write_mbs")
+VECTORS = ("cpu_pct", "memory_mb", "memory_pss_mb", "memory_rss_mb", "sys_mem_pct",
+           "threads", "disk_read_mbs", "disk_write_mbs")
 
 
 def _iter_jsonl(path: Path) -> Iterator[Path]:
@@ -63,9 +64,10 @@ def _percentile(values: list[float], pct: float) -> float:
 
 def _dist_stats(values: list[float]) -> dict[str, float]:
     if not values:
-        return {"min": 0.0, "max": 0.0, "mean": 0.0, "median": 0.0, "p95": 0.0}
+        return {"min": 0.0, "p5": 0.0, "max": 0.0, "mean": 0.0, "median": 0.0, "p95": 0.0}
     return {
         "min": round(min(values), 2),
+        "p5": round(_percentile(values, 5.0), 2),
         "max": round(max(values), 2),
         "mean": round(statistics.fmean(values), 2),
         "median": round(statistics.median(values), 2),
@@ -139,20 +141,26 @@ def _print_per_script(summaries: list[dict]) -> None:
     if not summaries:
         print("(no telemetry rows)")
         return
+    # Per Andrew 2026-06-03: surface the p5/median/mean/p95 basis for CPU + memory.
+    # mem_* columns are PSS-based true physical (memory_mb); sysmem_* is instance-level.
     cols = [
         ("script", "script"),
         ("ticks", "ticks"),
         ("wall_s", "wall_s"),
-        ("cpu_max", "cpu_pct.max"),
+        ("cpu_p5", "cpu_pct.p5"),
         ("cpu_p50", "cpu_pct.median"),
         ("cpu_mean", "cpu_pct.mean"),
-        ("mem_max", "memory_mb.max"),
+        ("cpu_p95", "cpu_pct.p95"),
+        ("cpu_max", "cpu_pct.max"),
+        ("mem_p5", "memory_mb.p5"),
         ("mem_p50", "memory_mb.median"),
         ("mem_mean", "memory_mb.mean"),
+        ("mem_p95", "memory_mb.p95"),
+        ("mem_max", "memory_mb.max"),
+        ("sysmem_p95", "sys_mem_pct.p95"),
+        ("sysmem_max", "sys_mem_pct.max"),
         ("th_max", "threads.max"),
-        ("rd_p95", "disk_read_mbs.p95"),
         ("rd_total", "tot_read_mb"),
-        ("wr_p95", "disk_write_mbs.p95"),
         ("wr_total", "tot_write_mb"),
     ]
     rows = []

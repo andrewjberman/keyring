@@ -91,16 +91,38 @@ def _refresh_process_tree(pid: int, cache: dict[int, psutil.Process]) -> list:
 
 
 def _aggregate_sample(procs: list) -> dict[str, float]:
-    """Sum CPU%, memory, threads, cumulative IO across the process tree."""
+    """Sum CPU%, memory, threads, cumulative IO across the process tree.
+
+    MEMORY (NFRA telemetry-fix 2026-06-03): the primary `memory_mb` is now
+    tree-summed **PSS** (proportional set size), not RSS. Forked multiprocessing
+    workers share the parent's data via copy-on-write; RSS counts those shared
+    pages in EVERY worker, so summed-RSS over-reports physical memory many-fold
+    (the phantom "TB peaks" on a 128 GB box). PSS counts each physical page once,
+    split proportionally among sharers — so tree-summed PSS is the true physical
+    footprint of the script's process tree. RSS retained as `memory_rss_mb` for
+    comparison; system-wide used is captured as `sys_mem_*` (the instance-level
+    right-sizing number). PSS needs Linux + /proc access (root on the runners);
+    falls back to RSS where unavailable.
+    """
     cpu_pct = 0.0
-    memory_mb = 0.0
+    mem_pss = 0.0
+    mem_rss = 0.0
+    pss_ok = False
     threads = 0
     disk_read = 0
     disk_write = 0
     for p in procs:
         try:
             cpu_pct += p.cpu_percent(interval=None)
-            memory_mb += p.memory_info().rss / (1024 * 1024)
+            try:
+                fi = p.memory_full_info()
+                _pss = getattr(fi, "pss", 0) or 0
+                mem_pss += _pss / (1024 * 1024)
+                mem_rss += fi.rss / (1024 * 1024)
+                if _pss:
+                    pss_ok = True
+            except (psutil.AccessDenied, AttributeError, OSError):
+                mem_rss += p.memory_info().rss / (1024 * 1024)
             threads += p.num_threads()
             try:
                 io = p.io_counters()
@@ -110,9 +132,22 @@ def _aggregate_sample(procs: list) -> dict[str, float]:
                 pass
         except (psutil.NoSuchProcess, psutil.AccessDenied):
             continue
+    try:
+        vm = psutil.virtual_memory()
+        sys_used_mb = vm.used / (1024 * 1024)
+        sys_pct = vm.percent
+    except Exception:
+        sys_used_mb = 0.0
+        sys_pct = 0.0
     return {
         "cpu_pct": cpu_pct,
-        "memory_mb": memory_mb,
+        # primary memory metric = true physical (PSS); rss fallback if PSS absent
+        "memory_mb": mem_pss if pss_ok else mem_rss,
+        "memory_pss_mb": mem_pss,
+        "memory_rss_mb": mem_rss,
+        "pss_available": 1.0 if pss_ok else 0.0,
+        "sys_mem_used_mb": sys_used_mb,
+        "sys_mem_pct": sys_pct,
         "threads": float(threads),
         "disk_read_bytes": float(disk_read),
         "disk_write_bytes": float(disk_write),
@@ -135,6 +170,10 @@ def _make_log_record(
         "run_id": run_id,
         "cpu_pct": round(sample["cpu_pct"], 2),
         "memory_mb": round(sample["memory_mb"], 1),
+        "memory_pss_mb": round(sample.get("memory_pss_mb", 0.0), 1),
+        "memory_rss_mb": round(sample.get("memory_rss_mb", 0.0), 1),
+        "sys_mem_used_mb": round(sample.get("sys_mem_used_mb", 0.0), 1),
+        "sys_mem_pct": round(sample.get("sys_mem_pct", 0.0), 2),
         "threads": int(sample["threads"]),
     }
     if prev is not None and interval_s > 0:
