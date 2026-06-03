@@ -631,13 +631,14 @@ Before writing any TOs for a parallelized wave: run `comp-blast` on every affect
 
 ## Closure Discipline (Non-Negotiable — SA/COO/CTO only)
 
-Closing a project is a **3-step atomic operation**, not a single JSON edit. All three steps happen in the same commit:
+Closing a project is a **2-step atomic operation**, not a single JSON edit. Both steps happen in the same commit:
 
 1. **JSON status flip.** `org/projects/{CODE}.json` → `"status": "complete"` + add `"completed": "YYYY-MM-DD"` + rewrite `phase` narrative as closure summary + set `blocking` to "None" (or "None — {reason}" if superseded/absorbed).
 2. **REGISTRY row move.** `org/projects/REGISTRY.md` → delete the row from "Active Projects" (or "Inactive / On Hold") table. Insert a new row at the TOP of "Completed / Archived Projects" table (newest-first convention) with `Completed` date column + closure notes citing ship evidence (commits, tags, supersession path).
-3. **PRD status note.** PRDs stay in `docs/architecture/` — do NOT archive active PRDs. But if the PRD has a top-of-file `Status:` line, update it to `Status: COMPLETE — {date}` or `Status: SUPERSEDED BY {project_code}`.
 
-**Why all three:** we've observed JSON-flipped projects whose REGISTRY row stayed in Active for days (ADVI_ROLGAT 2026-04-17→2026-04-21; discovered in joint audit `f959fbcb`). Any one step alone is silent-drift to the other two. Authors of closure commits MUST edit all three in one `git commit --only` so the atomicity is structural.
+**PRDs are NOT a close-step (amended 2026-06-03 — CVO P3 finding / CTO doctrine; CC MSTR for LD-ratification).** PRDs stay in `docs/architecture/` — do NOT archive active PRDs, and do NOT bump their top-of-file `Status:` line on close. The PRD is an authored-once design artifact; `org/projects/{CODE}.json` status is the single authoritative close-state (`org/projects/REGISTRY.md` §"Closing a project" is the canonical 2-step, which this section now matches). The older "3-step atomic close" convention (a vestigial PRD-`Status:` bump, still echoed in some completed-row narratives like YALP_FACTOR/POSITN) is **RETIRED** — bumping PRD Status created the systemic PRD-Status-lag CVO repeatedly flagged as drift when it was never authoritative.
+
+**Why both:** we've observed JSON-flipped projects whose REGISTRY row stayed in Active for days (ADVI_ROLGAT 2026-04-17→2026-04-21; discovered in joint audit `f959fbcb`). Either step alone is silent-drift to the other. Authors of closure commits MUST edit both in one `git commit --only` so the atomicity is structural.
 
 **Closure triggers:**
 - **Complete** — all authored TOs status=complete; no authored-but-unshipped work; final-deploy mechanical only. Use when the project achieved its stated goal.
@@ -645,7 +646,7 @@ Closing a project is a **3-step atomic operation**, not a single JSON edit. All 
 - **Cancelled** — explicit Andrew or CTO directive cancelled the work. JSON `phase` cites the directive. Different from superseded (no successor work).
 - **Inactive / On Hold** — blocked by external dependency (Andrew/IT, vendor, regulatory). Stays in On Hold table; do NOT move to Completed until the external blocker clears or cancellation call is made.
 
-**Anti-pattern — single-step closure:** flipping JSON status alone while REGISTRY + PRD lag. Always 3-step, always one commit.
+**Anti-pattern — single-step closure:** flipping JSON status alone while the REGISTRY row lags. Always 2-step (JSON + REGISTRY), always one commit.
 
 ---
 
