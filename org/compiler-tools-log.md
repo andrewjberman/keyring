@@ -4276,3 +4276,69 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-05-29 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-routes | comp-routes behaviors | PASS |
 | 2026-05-29 | 0.4.0_DS_ClientPlatform~B | ADVI_INFMVP.F4b.cohort-dim-nmnc-nmec | comp-pipescript | comp-pipescript io data/orion/scripts/gold/INF_D_00f.advisor_nna_canonical.py | PASS |
 2026-05-29T21:39:44Z | 1.0.0_SA_CTO | session 2140Z | ds-commit-gate(3 PASS) + safe-commit(mutex-v2 dogfood) + halt-gate(per-tick) + bash -n + live FINRA/SEC-IAPD/Lusha/BrightData probes | find/imo uninstrumented at comp-* tier (instrumentation candidate)
+| 2026-06-01 | 0.4.0_DS_ClientPlatform~B | MDPF_SCOPED.P1.de-be-fit-mapping | comp-pipescript | comp-pipescript io data/mdpf/scripts/gold/mdpf_aggregate_aua.py | FAIL |
+| 2026-06-01 | 0.7.0_AE_CloudOps | MDPF_SCOPED.P1.de-be-fit-mapping | comp-pipescript | comp-pipescript deployed data/mdpf/scripts/gold/mdpf_aggregate_aua.py | PASS |
+| 2026-06-01 | 0.4.0_DS_ClientPlatform~B | MDPF_SCOPED.P1.de-be-fit-mapping | comp-pipescript | comp-pipescript deployed data/mdpf/scripts/gold/mdpf_aggregate_aua.py | PASS |
+| 2026-06-01 | 0.7.0_AE_CloudOps | MDPF_SCOPED.P1.de-be-fit-mapping | comp-iam | comp-iam service mdpf_runner | PASS |
+| 2026-06-01 | 0.7.0_AE_CloudOps | MDPF_SCOPED.P1.de-be-fit-mapping | comp-iam | comp-iam service mdpf-daily-runner | PASS |
+| 2026-06-01 | 0.5.0_AE_PartnerETL | MDPF_SCOPED.P1.de-be-fit-mapping | comp-pipescript | comp-pipescript deployed yang-model-portfolio-benchmarks | PASS |
+| 2026-06-01 | 0.4.0_DS_ClientPlatform | BENCHMARK_SMARTX_OVERLAY_REVERT | ds-commit-gate | py_compile + ruff(py39) yang-model-portfolio-benchmarks/lambda_function.py | PASS (comp-pipescript/validate N/A: infra-lambda+forensic, not gold) |
+| 2026-06-01 | 0.4.0_DE_ClientPlatform | POSITIONING_NAMECASE | comp-platinum | comp-platinum page Positioning | PASS |
+| 2026-06-01 | 0.5.0_AE_PartnerETL | (no-TO) | comp-pipescript | comp-pipescript io yang-generate-macro | FAIL |
+| 2026-06-01 | 3.0.0_SA_CVO | (no-TO) | comp-lambdamap | comp-lambdamap check | FAIL |
+| 2026-06-01 | 3.0.0_SA_CVO | (no-TO) | comp-lambdamap | comp-lambdamap check | FAIL |
+| 2026-06-01 | 1.0.0_SA_CTO | (no-TO) | comp-lambdamap | comp-lambdamap check | FAIL |
+| 2026-06-01 | 0.4.0_DS_ClientPlatform~B | MDPF_BELLCURVE_FOOTER.TO-A | comp-pipescript | comp-pipescript io data/orion/scripts/gold/INF_09.generate_partner_analytics.py | PASS |
+| 2026-06-01 | 0.4.0_DS_ClientPlatform~B | MDPF_BELLCURVE_FOOTER.TO-A | comp-pipescript | comp-pipescript io data/orion/scripts/gold/09.generate_partner_analytics.py | FAIL |
+| 2026-06-01 | 0.1.0_DS_MarketIntelligence | YALP_MACROS.yield-curve-1yago-missing-tenors | comp-lambdamap | comp-lambdamap check | FAIL |
+| 2026-06-01 | 0.1.0_DS_MarketIntelligence | YALP_MACROS.yield-curve-1yago-missing-tenors | comp-trace | comp-trace yield_curve --direction both | PASS |
+| 2026-06-01 | 0.1.0_DS_MarketIntelligence | YALP_MACROS.yield-curve-1yago-missing-tenors | comp-pipescript | comp-pipescript io infra/aws/lambda/fred-data-ingestion/ingest_yield_curve_fred.py | PASS |
+| 2026-06-02 | 0.7.0_AE_CloudOps | (no-TO) | comp-iam | comp-iam service mdpf-freshness-checker | PASS |
+| 2026-06-02 | 3.0.0_SA_CVO | (no-TO) | comp-registry | comp-registry sync --project MDPF_SCOPED | PASS |
+| 2026-06-02 | 3.0.0_SA_CVO | (no-TO) | comp-registry | comp-registry sync --project ADVI_INFOTD | PASS |
+| 2026-06-02 | 3.0.0_SA_CVO | (no-TO) | comp-registry | comp-registry sync --project ADVI_INFPRM | PASS |
+| 2026-06-02 | 3.0.0_SA_CVO | (no-TO) | comp-registry | comp-registry sync --project ADVI_INFOTD | PASS |
+| 2026-06-02 | 3.0.0_SA_CVO | (no-TO) | comp-registry | comp-registry sync --project ADVI_INFPRM | PASS |
+| 2026-06-02 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript postdeps data/mdpf/scripts/backfill/build_aggregate_aua_timeseries.py | PASS |
+| 2026-06-02 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript deployed data/orion/scripts/gold/INF_D_00f.advisor_nna_canonical.py | PASS |
+| 2026-06-02 | 3.0.0_SA_CVO | (no-TO) | comp-registry | comp-registry sync --project ADVI_INFPRM | PASS |
+| 2026-06-02 | 3.0.0_SA_CVO | (no-TO) | comp-registry | comp-registry sync --project ADVI_INFOTD | PASS |
+| 2026-06-02 | 3.0.0_SA_CVO | (no-TO) | comp-registry | comp-registry sync --project ADVI_INFNNA | FAIL |
+| 2026-06-02 | 3.0.0_SA_CVO | (no-TO) | comp-registry | comp-registry sync --project ADVI_INFNNA --apply | FAIL |
+| 2026-06-02 | 3.0.0_SA_CVO | (no-TO) | comp-registry | comp-registry sync --project ADVI_INFNNA | FAIL |
+| 2026-06-02 | 0.7.0_AE_CloudOps | (no-TO) | comp-iam | comp-iam service opal-partners-data | PASS |
+| 2026-06-02 | 0.7.0_AE_CloudOps | (no-TO) | comp-iam | comp-iam service opal-partners-data | PASS |
+| 2026-06-02 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript postdeps build_canonical_prices | PASS |
+| 2026-06-02 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript deployed inject_scoped_overrides.py | PASS |
+| 2026-06-02 | 0.7.0_AE_CloudOps | (no-TO) | comp-iam | comp-iam service inf-nna-partition-checker | PASS |
+| 2026-06-02 | 2.0.0_SA_COO | (no-TO) | comp-transform | comp-transform schema-check AdvisorPublicProfile | PASS |
+| 2026-06-02 | 2.0.0_SA_COO | (no-TO) | comp-transform | comp-transform schema-check NonAdminProfileTab | FAIL |
+| 2026-06-02 | 2.0.0_SA_COO | (no-TO) | comp-routes | comp-routes trace getPlatinumAdvisorSummary | PASS |
+| 2026-06-02 | 2.0.0_SA_COO | (no-TO) | comp-trace | comp-trace AdvisorPublicProfile --direction both | PASS |
+| 2026-06-02 | 0.4.2_RD_AdvisorIntelligence~C | (no-TO) | comp-trace | comp-trace AdvisorPublicProfile --direction both | PASS |
+| 2026-06-02 | 0.4.2_RD_AdvisorIntelligence~C | (no-TO) | comp-transform | comp-transform schema-check AdvisorPublicProfile | PASS |
+| 2026-06-02 | 2.0.0_SA_COO | (no-TO) | comp-routes | comp-routes behaviors | PASS |
+| 2026-06-03 | 0.4.0_DS_ClientPlatform | MDPF_SCOPED.OPS1.ae-daily-chain-stall-and-freshness-alarm | comp-pipescript | comp-pipescript io data/black_diamond/scripts/gold/D_02.advisor_client_detail.py | PASS |
+| 2026-06-03 | 0.4.0_DS_ClientPlatform | MDPF_SCOPED.OPS1.ae-daily-chain-stall-and-freshness-alarm | comp-pipescript | comp-pipescript deployed data/black_diamond/scripts/gold/D_02.advisor_client_detail.py | PASS |
+| 2026-06-03 | 0.4.0_DS_ClientPlatform | MDPF_SCOPED.OPS1.ae-daily-chain-stall-and-freshness-alarm | comp-pipescript | comp-pipescript postdeps data/black_diamond/scripts/gold/D_02.advisor_client_detail.py | PASS |
+| 2026-06-03 | 0.6.0_AE_PartnerETL | bd-advisor-timeseries-clobber-fix | comp-platinum | comp-platinum reverse gold/entities/advisors/{id}/timeseries.json | PASS |
+| 2026-06-03 | 0.6.0_AE_PartnerETL | bd-advisor-timeseries-clobber-fix | comp-blast | comp-blast build_advisor_timeseries | PASS |
+| 2026-06-03 | 0.6.0_AE_PartnerETL | ADHC_BDTSCLB.001 | comp-blast | comp-blast gold/advisors/{id}/timeseries.json | PASS |
+| 2026-06-03 | 0.6.0_AE_PartnerETL | ADHC_BDTSCLB.001 | comp-iam | comp-iam service bd-portal-advisor-publisher | PASS |
+| 2026-06-03 | 0.4.0_DS_ClientPlatform | ADHC_BDTSCLB.001 | comp-pii | comp-pii fields | PASS |
+| 2026-06-03 | 0.4.0_DS_ClientPlatform | ADHC_BDTSCLB.001 | comp-pii | comp-pii scan DistributionTab | PASS |
+| 2026-06-03 | 0.4.0_DS_ClientPlatform | ADHC_BDTSCLB.001 | comp-pii | comp-pii fields | PASS |
+| 2026-06-03 | 0.4.0_DS_ClientPlatform | ADHC_BDTSCLB.001 | comp-pii | comp-pii fields | PASS |
+| 2026-06-03 | 0.6.0_AE_PartnerETL | ADHC_BDTSCLB.001 | comp-pipescript | comp-pipescript deployed data/black_diamond/scripts/gold/D_02.advisor_client_detail.py | PASS |
+| 2026-06-03 | 0.6.0_AE_PartnerETL | ADHC_BDTSCLB.001 | comp-pipescript | comp-pipescript deployed data/black_diamond/scripts/gold/D_04.client_portal_summary.py | PASS |
+| 2026-06-03 | 0.7.0_AE_CloudOps | ADHC_BDTSCLB.001 | comp-iam | comp-iam | PASS |
+| 2026-06-03 | 0.4.0_DS_ClientPlatform | ADHC_BDTSCLB.001 | comp-iam | comp-iam gaps | PASS |
+| 2026-06-03 | 0.4.0_DS_ClientPlatform | ADHC_BDTSCLB.001 | comp-iam | comp-iam gaps | PASS |
+| 2026-06-03 | 0.4.0_DS_ClientPlatform | TRSB_XLSX_CVE_FIX | comp-blast | comp-blast --all-producers | FAIL |
+| 2026-06-03 | 0.4.0_DS_ClientPlatform | TRSB_XLSX_CVE_FIX | comp-blast | comp-blast D_02 | PASS |
+| 2026-06-03 | 0.4.0_DS_ClientPlatform | TRSB_XLSX_CVE_FIX | comp-blast | comp-blast --all-producers _ | FAIL |
+| 2026-06-03 | 0.4.0_DS_ClientPlatform | TRSB_XLSX_CVE_FIX | comp-blast | comp-blast --check-consumers gold/artifacts/timeseries_chart.json | PASS |
+| 2026-06-03 | 0.4.0_DS_ClientPlatform | TRSB_XLSX_CVE_FIX | comp-blast | comp-blast D_02 | PASS |
+| 2026-06-03 | 0.4.0_DS_ClientPlatform | TRSB_XLSX_CVE_FIX | comp-adapter-audit | comp-adapter-audit getPlatinumAdvisorSummary | PASS |
+| 2026-06-03 | 0.4.0_DS_ClientPlatform | SECRETS-SCAN | comp-adapter-audit | comp-adapter-audit getPlatinumAdvisorSummary | PASS |
+| 2026-06-03 | 0.3.2_RD_TradeSubmission | bun audit / API-parity / vite build | xlsx CDN-swap CVE fix | audit-clean + parity PASS; comp-transform N/A (service-dep swap, no component change) |
