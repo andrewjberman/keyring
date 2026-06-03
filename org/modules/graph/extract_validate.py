@@ -136,6 +136,12 @@ class ValidateConfig:
     script_id: str
     primary_artifact: str | None
     checks: list[dict] = field(default_factory=list)
+    # CTO ruling (comp-validate NO_CONFIG): an EXPLICIT auditable waiver. A stanza
+    # `validation: not_required` + `reason:` is a deliberate "this artifact needs no
+    # validation" decision -> WAIVED (exit-0). Distinct from a script nobody decided
+    # about (true NO_CONFIG -> blocks, post-flip). The structural escape hatch.
+    validation_not_required: bool = False
+    waiver_reason: str = ""
 
 
 # ---------------------------------------------------------------------------
@@ -189,6 +195,8 @@ def load_validate_config(
             script_id=script_id,
             primary_artifact=data.get("primary_artifact"),
             checks=resolved_checks,
+            validation_not_required=(str(data.get("validation", "")).strip().lower() == "not_required"),
+            waiver_reason=str(data.get("reason", "")).strip(),
         )
     return configs
 
@@ -589,6 +597,15 @@ def run_validate(script_id: str, artifact_path: Path, configs: dict[str, Validat
                 status="SKIP",
                 message=f"Multiple matches for '{script_id}': {matches}. Be more specific."
             )]
+
+    # EXPLICIT WAIVER (CTO ruling): a deliberate `validation: not_required` stanza
+    # passes WITHOUT loading/checking the artifact -- distinct from true NO_CONFIG
+    # (which blocks post-flip). Auditable: carries the reason.
+    if config.validation_not_required:
+        return [CheckResult(
+            name="validation_waived", severity="INFO", status="WAIVED",
+            message=("validation explicitly not-required for " + script_id
+                     + (f" ({config.waiver_reason})" if config.waiver_reason else " (no reason given)")))]
 
     if not artifact_path.exists():
         return [CheckResult(

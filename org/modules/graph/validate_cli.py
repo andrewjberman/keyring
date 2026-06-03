@@ -368,9 +368,19 @@ def cmd_validate(args):
         elif r.status == "ERROR":
             error_count += 1
             print(f"  ERROR [{r.severity}] {r.name}: {r.message}")
+        elif r.status == "WAIVED":
+            print(f"  WAIVED [{r.severity}] {r.name}: {r.message}")
         print()
 
     print(f"  Summary: {pass_count} PASS, {error_count} ERROR, {warn_count} WARN, {skip_count} SKIP")
+
+    # EXPLICIT WAIVER short-circuit (CTO ruling): a deliberate `validation: not_required`
+    # decision PASSES (exit 0) -- auditable + distinct from true NO_CONFIG (UNVALIDATED).
+    if any(r.status == "WAIVED" for r in results):
+        wr = next(r for r in results if r.status == "WAIVED")
+        print()
+        print(f"WAIVED: {wr.message} -- exit 0 (explicit not_required decision; NOT an unchecked pass).")
+        return
 
     # Detect NO_CONFIG: all results are SKIP from config_lookup or no_checks
     no_config = all(r.status == "SKIP" for r in results) and any(
@@ -641,7 +651,11 @@ def main():
     parser.add_argument('--list', action='store_true', dest='list_only',
                         help='List all configured checks and exit')
     parser.add_argument('--strict', action='store_true',
-                        help='Escalate NO_CONFIG to exit 2 (for CI/dispatcher use)')
+                        help='Escalate NO_CONFIG to exit 2 (for CI/dispatcher use). '
+                             '(Per CTO ruling this becomes the DEFAULT post-migration; flag kept for back-compat.)')
+    parser.add_argument('--lenient', action='store_true',
+                        help='Post-flip escape hatch: restore exit-0 on NO_CONFIG for rare '
+                             'transitional use. Prefer an explicit `validation: not_required` waiver stanza instead.')
     parser.add_argument('--config', default=None,
                         help='Explicit path to gold_validate_config.yaml; overrides INF_*/BD auto-detection (TO-9)')
     parser.add_argument('--lane', choices=['bd', 'inf'], default=None,
