@@ -1,0 +1,310 @@
+{
+  "_meta": {
+    "project": "ADHC_CMPAWS",
+    "phase": "compute+messaging census (security lens)",
+    "author": "0.7.0_AE_CloudOps",
+    "method": "live-AWS read-only (boto3)"
+  },
+  "summary": {
+    "ec2_count": 25,
+    "ec2_ebs_unencrypted": [],
+    "ec2_imdsv2_NOT_required": [
+      "seeking-alpha-scraper",
+      "bd-gold-layer-runner",
+      "seeking-alpha-scraper",
+      "bd-gold-qa-runner",
+      "smartx-exporter"
+    ],
+    "ec2_public": [
+      "bd-gold-layer-runner",
+      "smartx-exporter",
+      "demo-transform-runner",
+      "inf-exporter"
+    ],
+    "sns_count": 8,
+    "sns_unencrypted": [
+      "bd-allocation-file-missing",
+      "ec2-auto-shutdown-alerts",
+      "ec2-long-running-alerts",
+      "inf-otp-alert",
+      "opal-infrastructure-alerts",
+      "trade-pipeline-ses-bounces",
+      "trade-pipeline-ses-complaints"
+    ],
+    "sqs_count": 2,
+    "sqs_unencrypted": []
+  },
+  "ec2": [
+    {
+      "instance_id": "i-0800437d1dbb0b5cc",
+      "name": "bd-allocations",
+      "state": "stopped",
+      "public_ip": null,
+      "ebs_all_encrypted": true,
+      "ebs_unencrypted_vols": [],
+      "imdsv2_required": true
+    },
+    {
+      "instance_id": "i-07ebae29a16e43ed1",
+      "name": "seeking-alpha-scraper",
+      "state": "stopped",
+      "public_ip": null,
+      "ebs_all_encrypted": true,
+      "ebs_unencrypted_vols": [],
+      "imdsv2_required": false
+    },
+    {
+      "instance_id": "i-0b784d4908e320fc4",
+      "name": "moltbot",
+      "state": "stopped",
+      "public_ip": null,
+      "ebs_all_encrypted": true,
+      "ebs_unencrypted_vols": [],
+      "imdsv2_required": true
+    },
+    {
+      "instance_id": "i-01003b035d2988dfb",
+      "name": "bd-gold-layer-runner",
+      "state": "stopped",
+      "public_ip": "34.234.222.147",
+      "ebs_all_encrypted": true,
+      "ebs_unencrypted_vols": [],
+      "imdsv2_required": false
+    },
+    {
+      "instance_id": "i-06376c11d8b3c3443",
+      "name": "seeking-alpha-scraper",
+      "state": "stopped",
+      "public_ip": null,
+      "ebs_all_encrypted": true,
+      "ebs_unencrypted_vols": [],
+      "imdsv2_required": false
+    },
+    {
+      "instance_id": "i-00c7568bc510f7423",
+      "name": "bd-transactions",
+      "state": "stopped",
+      "public_ip": null,
+      "ebs_all_encrypted": true,
+      "ebs_unencrypted_vols": [],
+      "imdsv2_required": true
+    },
+    {
+      "instance_id": "i-0090b823a4a0997e3",
+      "name": "bd-gold-qa-runner",
+      "state": "stopped",
+      "public_ip": null,
+      "ebs_all_encrypted": true,
+      "ebs_unencrypted_vols": [],
+      "imdsv2_required": false
+    },
+    {
+      "instance_id": "i-0e6f6dc014fdcf1cd",
+      "name": "bd-assets",
+      "state": "stopped",
+      "public_ip": null,
+      "ebs_all_encrypted": true,
+      "ebs_unencrypted_vols": [],
+      "imdsv2_required": true
+    },
+    {
+      "instance_id": "i-074bfc40ee049dc62",
+      "name": "bd-gold-detail-generator",
+      "state": "stopped",
+      "public_ip": null,
+      "ebs_all_encrypted": true,
+      "ebs_unencrypted_vols": [],
+      "imdsv2_required": true
+    },
+    {
+      "instance_id": "i-06ebcb27395eb3f49",
+      "name": "smartx-exporter",
+      "state": "stopped",
+      "public_ip": "3.224.35.253",
+      "ebs_all_encrypted": true,
+      "ebs_unencrypted_vols": [],
+      "imdsv2_required": false
+    },
+    {
+      "instance_id": "i-00abf626b065373bc",
+      "name": "historical-prices-fetcher",
+      "state": "stopped",
+      "public_ip": null,
+      "ebs_all_encrypted": true,
+      "ebs_unencrypted_vols": [],
+      "imdsv2_required": true
+    },
+    {
+      "instance_id": "i-0416edf7e4b901380",
+      "name": "historical-prices-fetcher",
+      "state": "stopped",
+      "public_ip": null,
+      "ebs_all_encrypted": true,
+      "ebs_unencrypted_vols": [],
+      "imdsv2_required": true
+    },
+    {
+      "instance_id": "i-0868fc7e7ebec26f2",
+      "name": "bd-fees",
+      "state": "stopped",
+      "public_ip": null,
+      "ebs_all_encrypted": true,
+      "ebs_unencrypted_vols": [],
+      "imdsv2_required": true
+    },
+    {
+      "instance_id": "i-0ed5afded2ebd4ed4",
+      "name": "inf-gold-layer-runner",
+      "state": "stopped",
+      "public_ip": null,
+      "ebs_all_encrypted": true,
+      "ebs_unencrypted_vols": [],
+      "imdsv2_required": true
+    },
+    {
+      "instance_id": "i-04373615f03fbf9a9",
+      "name": "inf-gold-qa-runner",
+      "state": "stopped",
+      "public_ip": null,
+      "ebs_all_encrypted": true,
+      "ebs_unencrypted_vols": [],
+      "imdsv2_required": true
+    },
+    {
+      "instance_id": "i-02448edb624a7a7cf",
+      "name": "mdpf-daily-runner",
+      "state": "stopped",
+      "public_ip": null,
+      "ebs_all_encrypted": true,
+      "ebs_unencrypted_vols": [],
+      "imdsv2_required": true
+    },
+    {
+      "instance_id": "i-03343a6072834f77d",
+      "name": "demo-transform-runner",
+      "state": "running",
+      "public_ip": "44.201.21.41",
+      "ebs_all_encrypted": true,
+      "ebs_unencrypted_vols": [],
+      "imdsv2_required": true
+    },
+    {
+      "instance_id": "i-094c504a4384f9c47",
+      "name": "historical-prices-fetcher",
+      "state": "stopped",
+      "public_ip": null,
+      "ebs_all_encrypted": true,
+      "ebs_unencrypted_vols": [],
+      "imdsv2_required": true
+    },
+    {
+      "instance_id": "i-025cba31603a6c8a6",
+      "name": "historical-prices-fetcher",
+      "state": "stopped",
+      "public_ip": null,
+      "ebs_all_encrypted": true,
+      "ebs_unencrypted_vols": [],
+      "imdsv2_required": true
+    },
+    {
+      "instance_id": "i-032fa1babe1abe48a",
+      "name": "historical-prices-fetcher",
+      "state": "stopped",
+      "public_ip": null,
+      "ebs_all_encrypted": true,
+      "ebs_unencrypted_vols": [],
+      "imdsv2_required": true
+    },
+    {
+      "instance_id": "i-081ae6aafb394fb1a",
+      "name": "inf-exporter",
+      "state": "running",
+      "public_ip": "3.235.95.91",
+      "ebs_all_encrypted": true,
+      "ebs_unencrypted_vols": [],
+      "imdsv2_required": true
+    },
+    {
+      "instance_id": "i-083ad9ae297f88e9f",
+      "name": "inf-bronze-runner",
+      "state": "stopped",
+      "public_ip": null,
+      "ebs_all_encrypted": true,
+      "ebs_unencrypted_vols": [],
+      "imdsv2_required": true
+    },
+    {
+      "instance_id": "i-0ec91038b9a2c73a6",
+      "name": "historical-prices-fetcher",
+      "state": "stopped",
+      "public_ip": null,
+      "ebs_all_encrypted": true,
+      "ebs_unencrypted_vols": [],
+      "imdsv2_required": true
+    },
+    {
+      "instance_id": "i-088e7fa9323bac1b9",
+      "name": "historical-prices-fetcher",
+      "state": "stopped",
+      "public_ip": null,
+      "ebs_all_encrypted": true,
+      "ebs_unencrypted_vols": [],
+      "imdsv2_required": true
+    },
+    {
+      "instance_id": "i-03c397afaa967d978",
+      "name": "historical-prices-fetcher",
+      "state": "stopped",
+      "public_ip": null,
+      "ebs_all_encrypted": true,
+      "ebs_unencrypted_vols": [],
+      "imdsv2_required": true
+    }
+  ],
+  "sns": [
+    {
+      "name": "bd-allocation-file-missing",
+      "kms_encrypted": false
+    },
+    {
+      "name": "ec2-auto-shutdown-alerts",
+      "kms_encrypted": false
+    },
+    {
+      "name": "ec2-long-running-alerts",
+      "kms_encrypted": false
+    },
+    {
+      "name": "find-insure-budget-alerts",
+      "kms_encrypted": true
+    },
+    {
+      "name": "inf-otp-alert",
+      "kms_encrypted": false
+    },
+    {
+      "name": "opal-infrastructure-alerts",
+      "kms_encrypted": false
+    },
+    {
+      "name": "trade-pipeline-ses-bounces",
+      "kms_encrypted": false
+    },
+    {
+      "name": "trade-pipeline-ses-complaints",
+      "kms_encrypted": false
+    }
+  ],
+  "sqs": [
+    {
+      "name": "inf-gold-trigger-dlq",
+      "encrypted": true,
+      "type": "SSE-SQS"
+    },
+    {
+      "name": "mdpf-daily-trigger-dlq",
+      "encrypted": true,
+      "type": "SSE-SQS"
+    }
+  ]
+}
