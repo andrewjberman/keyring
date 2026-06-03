@@ -16,6 +16,7 @@ Usage:
 """
 
 import argparse
+import json
 import sys
 from pathlib import Path
 
@@ -263,6 +264,95 @@ def cmd_stats(args):
             print(f"    {svc}: {', '.join(sorted(set(actions)))}")
 
 
+_DEFAULT_CENSUS = "docs/briefs/cmpaws-iam-axis-census-20260603.json"
+
+
+def cmd_reconcile(args):
+    """DESIRED-vs-LIVE reconcile (ADHC comp-iam drift conversion).
+
+    comp-iam's default modes parse Terraform = DESIRED state; they never see live
+    AWS. This overlays a live-AWS IAM census (per-role statements, emitted by
+    comp-aws / 0.7.0) ON TOP of the TF-parsed roles to surface DESIRED-vs-LIVE
+    drift -- the class TF-parse is structurally blind to:
+      - LIVE-ONLY role:    granted live, absent from TF (console/manual = ungoverned)
+      - LIVE-ONLY action:  a role's live grant not covered by its TF policy (drift)
+      - OVER-PERM:         census-flagged *FullAccess / wildcard-broad grants
+    Wildcard-aware: a live action is 'covered' iff the TF role .grants() it (so a
+    TF `s3:*` covers a live `s3:GetObject`). TF-only roles are reported as INFO
+    (the census is customer-role-scoped; service-linked/internal roles aren't in it).
+    """
+    census_path = Path(args.census) if args.census else (_WORKSPACE / _DEFAULT_CENSUS)
+    if not census_path.exists():
+        print(f"CENSUS NOT FOUND: {census_path}")
+        print("  Pass --census <path> to the comp-aws live IAM census JSON "
+              "(per-role statements[{effect,actions,resources,condition,source}]).")
+        sys.exit(2)
+    try:
+        census = json.loads(census_path.read_text(encoding="utf-8"))
+    except Exception as e:
+        print(f"CENSUS PARSE FAILED ({census_path}): {e}")
+        sys.exit(2)
+
+    live = {}
+    for r in (census.get("roles") or []):
+        acts = set()
+        for s in (r.get("statements") or []):
+            if str(s.get("effect", "")).lower() == "allow":
+                acts |= {str(a).lower() for a in (s.get("actions") or [])}
+        live[r.get("role_name")] = {"actions": acts, "overperm": r.get("overperm_flags") or []}
+
+    _profiles, tf_roles, _gaps = _build()
+
+    live_only_roles = sorted(set(live) - set(tf_roles))
+    tf_only_roles = sorted(set(tf_roles) - set(live))
+    matched = sorted(set(live) & set(tf_roles))
+
+    drift_action_findings = []   # (role, [live-only actions])
+    overperm_findings = []       # (role, [flags])
+    for name in matched:
+        tfrole = tf_roles[name]
+        live_only = sorted(a for a in live[name]["actions"] if not tfrole.grants(a))
+        if live_only:
+            drift_action_findings.append((name, live_only))
+        if live[name]["overperm"]:
+            overperm_findings.append((name, live[name]["overperm"]))
+
+    src_meta = (census.get("_meta") or {})
+    print(f"IAM DESIRED-vs-LIVE RECONCILE  (census: {census_path.name})")
+    print(f"  live roles (census): {len(live)} | TF-parsed roles: {len(tf_roles)} | matched: {len(matched)}")
+    if src_meta.get("scp_included") is False or "scp" in str(src_meta).lower():
+        print("  NOTE: SCP layer NOT in census -- effective-deny from SCPs not reconciled here.")
+    print()
+
+    if live_only_roles:
+        print(f"DRIFT-LIVE-ONLY ROLES ({len(live_only_roles)}) -- granted live but ABSENT from Terraform")
+        print("  (console/manual creation = ungoverned-by-IaC; the shadow-bucket class for roles):")
+        for n in live_only_roles:
+            print(f"    !! {n}")
+        print()
+    if drift_action_findings:
+        print(f"DRIFT-LIVE-ONLY ACTIONS ({len(drift_action_findings)} role(s)) -- live grants NOT in the TF policy")
+        for n, acts in drift_action_findings:
+            print(f"    !! {n}: {', '.join(acts[:12])}{' ...' if len(acts) > 12 else ''}")
+        print()
+    if overperm_findings:
+        print(f"OVER-PERM ({len(overperm_findings)} role(s)) -- census-flagged broad/*FullAccess grants:")
+        for n, flags in overperm_findings:
+            print(f"    ?? {n}: {flags}")
+        print()
+    if tf_only_roles:
+        print(f"INFO: {len(tf_only_roles)} TF-parsed role(s) not in the (customer-scoped) census "
+              f"-- expected if service-linked/internal; not drift.")
+        print()
+
+    total_drift = len(live_only_roles) + len(drift_action_findings)
+    print(f"Total: {len(live_only_roles)} live-only-role | {len(drift_action_findings)} live-only-action | "
+          f"{len(overperm_findings)} over-perm")
+    if total_drift == 0 and not overperm_findings:
+        print("  CLEAN: live AWS matches Terraform (no desired-vs-live drift, no over-perms).")
+    sys.exit(1 if total_drift else 0)
+
+
 def main():
     parser = argparse.ArgumentParser(
         prog='comp-iam',
@@ -278,6 +368,9 @@ def main():
     p_role = sub.add_parser('role', help='Show granted actions for one role')
     p_role.add_argument('name', help='Role name (partial match)')
     sub.add_parser('stats', help='Summary counts')
+    p_rec = sub.add_parser('reconcile', help='DESIRED(TF)-vs-LIVE(census) drift reconcile')
+    p_rec.add_argument('--census', default=None,
+                       help='Path to the comp-aws live IAM census JSON (default: docs/briefs/cmpaws-iam-axis-census-*.json)')
 
     # Also add --service flag to gaps command
     p_gaps = sub.add_parser('gaps-filtered', help='Show gaps for one service')
@@ -303,6 +396,8 @@ def main():
         cmd_role(args)
     elif args.command == 'stats':
         cmd_stats(args)
+    elif args.command == 'reconcile':
+        cmd_reconcile(args)
     else:
         parser.print_help()
 
