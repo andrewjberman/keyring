@@ -1,0 +1,3 @@
+# /spot-check cycle 6 — CLEAN
+2026-06-03T~1644Z. 7-commit delta (2 own dropped). 5 triaged, no alignment drift: RV-0027 (144589c85) MSTR review ACCEPTED-SOVEREIGN by Andrew (window RV-0026->HEAD 209c/8LD) — Andrew sovereign acceptor, not CVO-proxy, no re-derivation obligation, observed; comp-validate step(i) WAIVER/--lenient (5009155c0) = DS tool code OUT-scope (LD-0148 work); RD dep-sweep plan (867660fd5) analysis-only; COO INFNNA reshape (8ab4bd945) = my P3, re-derived correct; COO tick10 seen. No numeric META trigger. Checkpoint -> 144589c85.
+NOTE: #2 bd full-publish still not landed (publish running ~1h+, healthy per COO). render-smoke staged behind #2.
