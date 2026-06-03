@@ -449,10 +449,24 @@ def format_delta(delta: DeltaResult) -> str:
     return "\n".join(lines)
 
 
+# Blast radius is bounded by EXTRACTED graph edges. Dynamic/FUNC-key reads the
+# extractors don't model (the comp-pipescript D_02 advisor_timeseries miss class)
+# produce no edge -> a real consumer is invisible. So "zero consumers" means "no
+# EXTRACTED edge," NOT "provably none," and any count is a LOWER BOUND. Never let
+# blast/phantom output read as "safe to delete/change."
+BLAST_EDGE_CAVEAT = (
+    "NOTE: counts EXTRACTED graph edges only (LOWER BOUND). Dynamic/FUNC-key "
+    "consumers the extractors don't edge are NOT counted. Before treating a "
+    "producer as orphan/safe, grep its artifact key for dynamic reads "
+    "(comp-pipescript consumers / a literal-key grep)."
+)
+
+
 def format_blast(node_id: str, results: list[tuple[Node, Edge, int]]) -> str:
     """Format blast radius as advisory warnings."""
     if not results:
-        return f"No downstream consumers found for: {node_id}"
+        return (f"No downstream consumers found for: {node_id} "
+                f"(no EXTRACTED edge -- NOT provably zero).\n  {BLAST_EDGE_CAVEAT}")
 
     # Group by type
     by_type: dict[str, list[Node]] = {}
@@ -465,5 +479,6 @@ def format_blast(node_id: str, results: list[tuple[Node, Edge, int]]) -> str:
         for n in nodes:
             lines.append(f"    - {n.label}")
     lines.append("")
-    lines.append(f"WARNING: {node_id} affects {len(results)} downstream nodes")
+    lines.append(f"WARNING: {node_id} affects >= {len(results)} downstream nodes")
+    lines.append(f"  {BLAST_EDGE_CAVEAT}")
     return "\n".join(lines)

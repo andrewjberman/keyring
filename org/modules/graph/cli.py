@@ -12,6 +12,8 @@ Or via bash wrappers:
     opal-blast D_00.portal_aggregates.py --function build_employee_leaderboard
 """
 
+from __future__ import annotations
+
 import argparse
 import json
 import sys
@@ -198,7 +200,9 @@ def cmd_blast(args):
             downstream = g.downstream(node_id, max_depth=1)
             if not downstream:
                 phantoms.append(node)
-        print(f'PHANTOM-CONSUMER SWEEP: {len(phantoms)} zero-consumer producers of {checked} checked')
+        print(f'PHANTOM-CONSUMER SWEEP: {len(phantoms)} producers with zero EXTRACTED-edge consumers of {checked} checked')
+        print('  (LOWER BOUND -- "zero" = no extracted edge, NOT provably orphan; dynamic/FUNC-key')
+        print('   consumers are invisible. Treat as CANDIDATES to verify, not confirmed orphans.)')
         if phantoms:
             print(f'  {"NODE-ID":<60}  TYPE')
             print(f'  {"-"*60}  {"-"*20}')
@@ -251,9 +255,12 @@ def cmd_blast(args):
             print(f'CONSUMER-OK: {node.id} has {len(downstream)} downstream consumer(s)')
             sys.exit(0)
         else:
-            print(f'PHANTOM-CONSUMER: {node.id} -- zero downstream consumers in graph')
+            print(f'PHANTOM-CONSUMER: {node.id} -- zero downstream consumers IN GRAPH')
             print(f'  Node type: {node.node_type}')
-            print(f'  This producer emits with no registered consumer. Pattern: silent-failure.')
+            print('  "Zero" = no EXTRACTED edge, NOT provably no consumer. A real consumer')
+            print('  reading this via a dynamic/FUNC-key (the comp-pipescript miss class) is')
+            print('  INVISIBLE here. Verify (grep the artifact key / comp-pipescript consumers)')
+            print('  before treating as orphan -- do not assume safe-to-delete.')
             sys.exit(1)
 
     if args.json:
