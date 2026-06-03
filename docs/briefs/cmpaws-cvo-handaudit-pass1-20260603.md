@@ -124,3 +124,37 @@ fixtures feed (right-sizing) and the compute→EBS edge. Low priority; note for 
 
 Status: HAND-AUDIT PASS 1 COMPLETE. No fixture defects; 4 cert-completeness gaps (G1 cert-blocking,
 G2 long-pole, G3 coverage, G4 minor) routed to the build. AE-join async.
+
+---
+
+## 5. AE CO-SIGN + Q-RESOLUTION (0.7.0_AE_CloudOps, 20260603T184358Z) — PASS-1 JOINTLY SIGNED
+
+AE co-signed the GREEN node-consistency/typing verdict. All 3 banked Qs resolved:
+
+- **Q1 RESOLVED + REFINED:** AE diffed all 14 "app-role shadow" candidates vs TF *including
+  name_prefix/interpolation stems* — **all 14 are genuinely not-in-TF, zero false-positives.** So the
+  upper-bound 19 narrows to a CONFIRMED split: **14 = real shadow drift (import candidates)** + **5 =
+  intentionally-non-TF (accept-external: ecsTaskExecutionRole, rds-monitoring-role, vpc-flow-logs-role,
+  github-actions-opal-deploy, codebuild-semantic-clustering-role).** Highest-priority imports:
+  portal-auth + portfolio-management + schwab-anonymizer (auth/financial/PII-adjacent ungoverned).
+  NEW FLAG from AE: `lambda-test-role` live in prod = scrutinize (likely leftover, possibly
+  over-permissioned). AE will add `tf_managed` to the IAM census via literal-grep (the method that
+  caught the opalinvest false-positive on the S3 fixture).
+- **Q2 RESOLVED:** 76 (comp-iam MODELS — lambda-source-map subset) / 88 (all TF aws_iam_role decls,
+  superset incl EC2/non-Lambda) / 111 (live customer roles, census skips AWSServiceRole*). 111 −
+  ~88-applied ≈ 23 live-only = the 19 shadow + a few exact-name edge cases. AE documents the 3-way
+  reconciliation in the fixture `_meta`; exact intersection closes when `tf_managed` lands per-role.
+- **Q3 CORRECTED (my hypothesis was wrong — material):** stopped-state is **NOT** an acceptable
+  mitigant. bd-gold-layer-runner runs the bd gold chain NIGHTLY (starts/stops) and smartx-exporter is
+  periodic → the public-IP + IMDSv1 SSRF window OPENS on every scheduled run. AE prioritizes tracker-C2
+  IMDSv2-enforce (`HttpTokens=required`) on both, WITH an IMDSv1-caller check first (confirm the
+  launch-template/user-data SDK is IMDSv2-compatible so the nightly doesn't break). The 2 always-running
+  publics being IMDSv2-required already is the good baseline. **This corrects §3 Q3's "stopped = latent
+  mitigant" framing — banked-as-question, not asserted, precisely because it needed AE's operational
+  knowledge of the run schedule.**
+
+**PASS-2 (AE-build-gated, queued post-Andrew-walkthrough):** add `tf_managed` to IAM census + ship the
+edge census (compute→IAM, role→bucket, compute→SG). AE pings CVO for hand-audit PASS-2 on landing.
+
+**PASS-1 disposition: JOINTLY SIGNED (CVO oracle + AE co-sign). Node axis certified GREEN; edge axis +
+IAM-drift field are the certified-open cert-gaps carried to PASS-2.**
