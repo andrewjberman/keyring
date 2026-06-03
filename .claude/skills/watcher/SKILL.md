@@ -25,17 +25,37 @@ re-checking. The persistent Monitor removes every one of those failure modes:
 
 | Old failure mode | Why it's gone |
 |---|---|
-| ORPHAN / PPID=1 zombie | Monitor is a tracked session task, not a detached bash process |
-| MULTIPLE / atomic-mv race | TaskList is the single-instance check; atomic `mv` makes any overlap exactly-once anyway |
+| ORPHAN / PPID=1 zombie | Monitor is a harness-tracked background task, not a detached bash process |
+| MULTIPLE / atomic-mv race | atomic `mv` on emit makes any overlap exactly-once anyway |
 | AUTO-RESPAWN-INTERRUPT-LOST | no respawn — the script never exits, so there's nothing to respawn |
 | "deaf prior-session watcher" | a session's Monitor dies with the session; a fresh session arms its own |
 | exit-143 guard short-circuit | no exit-on-delivery, no guard race |
 | missed 2nd+ message in a batch | the poll loops over **all** `*.md` each cycle |
 | dies on compaction | a persistent Monitor survives in-session compaction |
 
-**Decisive reachability test:** *is there a live persistent Monitor task running
-`inbox-watch.sh <serial> stream` in this session?* Check your **TaskList** — that
-is structural truth, not a `ps` heuristic. If yes, you are reachable. If no, arm one.
+**Decisive reachability test — what it is NOT:** *do NOT use `TaskList`.* `TaskList`
+lists `TaskCreate` to-do items, **not** Monitor/background tasks. If you never made
+to-dos it returns "No tasks found" *regardless of whether your Monitor is alive* —
+an empty `TaskList` is NOT evidence of a dead Monitor. Treating it as one is how
+agents double-arm a second watcher on top of a healthy first (empirically observed
+across multiple agents 2026-06-03). **An empty `TaskList` proves nothing about your watcher.**
+
+**Decisive reachability test — what it IS** (any one of these, in order of convenience):
+1. **Death-notification rule (primary, harness-native):** a persistent Monitor runs
+   until it dies, and when it dies it fires a `<task-notification>` with status
+   `failed`/`completed` for its task id. So: *if you armed a Monitor this session and
+   have NOT seen a death notification for its task id → it is alive. Do nothing.*
+2. **Positive check by task id:** `TaskOutput(<monitor_task_id>, block=false)` →
+   `<status>running</status>` confirms alive. (You get the task id from the Monitor
+   tool's return when you arm it, or from the `/tasks` CLI command.)
+3. **OS-level check (task-id-independent — use after compaction when you may not
+   recall the id):** `ps -ef | grep 'inbox-watch.sh <serial> stream' | grep -v grep`.
+   A matching process = alive. This is reliable structural truth and the right
+   fallback — *not* a discouraged heuristic.
+
+Only arm a new Monitor if **none** of these confirm a live one (genuinely fresh
+session / restart / a death notification you actually saw). When unsure, check
+(2) or (3) — never re-arm off an empty `TaskList`.
 
 ## Invocation forms
 
@@ -52,7 +72,8 @@ is structural truth, not a `ps` heuristic. If yes, you are reachable. If no, arm
   (the Monitor should still be live across compaction — this just confirms it).
 - After a window exit / machine restart / fresh `/loop` wake (the prior session's
   Monitor died with it — this arms a new one).
-- Whenever you cannot positively confirm a live inbox Monitor in your TaskList.
+- Whenever you cannot positively confirm a live inbox Monitor (via the death-notification
+  rule + a `ps`/`TaskOutput` check — **not** TaskList).
 
 ---
 
@@ -74,15 +95,24 @@ Call `get_agent_status("{serial}")`.
   A window exit always drops you to STALE — re-registering is expected.
 - Lane agents register under the **full suffixed serial**.
 
-## Step 2 — Monitor presence check (decisive)
+## Step 2 — Monitor presence check (decisive — do NOT use TaskList)
 
-Look at your **TaskList** for a **running** task whose command contains
-`inbox-watch.sh {serial} stream`.
+Determine whether a live inbox Monitor exists, using the death-notification rule
+plus a positive check. **Never** use `TaskList` here — it does not track Monitors
+(see "Decisive reachability test" above) and returns empty even when your Monitor
+is alive.
 
-- **Present and running** → reachable. Skip to Step 4. (This is the steady state,
-  including right after a compaction — the persistent Monitor is still live.)
-- **Absent** (fresh session, restart, or never armed) → go to Step 3.
-- **`/watcher rearm`** → TaskStop the existing one first, then Step 3.
+1. **Did you arm an inbox Monitor this session and NOT see a death notification for
+   it?** → it's alive. Confirm positively if you want: `ps -ef | grep
+   'inbox-watch.sh {serial} stream' | grep -v grep` (matching process = alive), or
+   `TaskOutput(<task_id>, block=false)` → `running`. Reachable → skip to Step 4.
+2. **No process found by `ps` AND no Monitor armed this session** (fresh session,
+   restart, post-compaction with nothing running) → go to Step 3 to arm one.
+3. **`/watcher rearm`** → `TaskStop` the existing Monitor (by its task id) first,
+   then Step 3.
+
+Steady state — including right after a compaction — is case 1: the persistent
+Monitor is still running and `ps` confirms it. Re-arm only when `ps` shows none.
 
 ## Step 3 — Arm the persistent inbox Monitor
 
@@ -97,10 +127,12 @@ Look at your **TaskList** for a **running** task whose command contains
 2. **Arm the Monitor** — use the **Monitor tool**, `persistent: true`,
    `timeout_ms: 3600000`:
    - command: `bash /c/Users/AndrewBerman/Desktop/ajb_workspace/org/mcp/inbox-watch.sh {serial} stream`
-   - The tool returns a task ID — that ID in your TaskList **is** your reachability
-     proof. Each `[INBOX] <file>` event it later emits is a new-message signal:
-     read the file from `org/mcp/inbox/<agent>/read/` (the script already mv'd it
-     there) and act. **You do not relaunch anything** — the Monitor keeps running.
+   - The tool returns a **task id** — note it; that id is what you pass to
+     `TaskOutput(<id>, block=false)` (positive liveness check) or `TaskStop(<id>)`
+     (clean teardown). It is **not** visible in `TaskList`. Each `[INBOX] <file>`
+     event it later emits is a new-message signal: read the file from
+     `org/mcp/inbox/<agent>/read/` (the script already mv'd it there) and act.
+     **You do not relaunch anything** — the Monitor keeps running.
 
    **BANNED:** launching `inbox-watch.sh {serial} stream` under Bash
    `run_in_background` (the Bash tool only notifies on *exit*, and stream mode

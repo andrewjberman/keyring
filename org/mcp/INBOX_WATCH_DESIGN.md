@@ -28,7 +28,7 @@ persistent-Monitor profile; MSTR built it fabric-wide.)
 | Old failure mode (exit-on-delivery, below) | Why it's gone under the Monitor model |
 |---|---|
 | ORPHAN / PPID=1 zombie | the watcher is a tracked Claude Code task, not a detached bash process |
-| MULTIPLE / atomic-mv race | TaskList is the single-instance check; the atomic `mv` makes any overlap exactly-once anyway |
+| MULTIPLE / atomic-mv race | the atomic `mv` on emit makes any overlap exactly-once anyway |
 | AUTO-RESPAWN-INTERRUPT-LOST | no respawn — the script never exits, so there is nothing to respawn |
 | deaf prior-session watcher | a session's Monitor dies with the session; a fresh session arms its own at load |
 | exit-143 guard short-circuit | no exit-on-delivery, no single-watcher guard race |
@@ -38,12 +38,19 @@ persistent-Monitor profile; MSTR built it fabric-wide.)
 ### Consequences
 
 - **`/watcher` no longer loops.** It arms the Monitor once at load and is otherwise
-  an idempotent reachability check (registration + TaskList presence). The recurring
+  an idempotent reachability check (registration + Monitor-liveness). The recurring
   `/watcher` cron / ScheduleWakeup is retired (`CronList` → `CronDelete` any stale one).
 - **No relaunch discipline.** Agents never relaunch the watcher. The entire
   "relaunch after every notification" protocol and its CronCreate backstop (Option 2)
   are gone.
-- **Decisive reachability test = TaskList**, not `ps`. `watcher-status.sh` is now a
+- **Decisive reachability test is NOT `TaskList`.** `TaskList` lists `TaskCreate`
+  to-do items, not Monitor/background tasks — it returns empty even when the Monitor
+  is alive, so an empty `TaskList` must never be read as a dead watcher (that false
+  read caused multiple agents to double-arm a redundant second Monitor, 2026-06-03).
+  The real checks: the **death-notification rule** (a Monitor runs until it dies and
+  fires a `<task-notification>` for its task id — no notification seen = alive),
+  `TaskOutput(<task_id>, block=false)` → `running`, or the task-id-independent
+  `ps -ef | grep 'inbox-watch.sh <serial> stream'`. `watcher-status.sh` remains a
   transition-only helper that enumerates *legacy* bash watchers so `/watcher` can
   kill them before arming the stream Monitor.
 - **Stream command (must run under the Monitor tool, persistent:true):**

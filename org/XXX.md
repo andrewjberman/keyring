@@ -197,14 +197,20 @@ Monitor(
   persistent=true, timeout_ms=3600000)
 ```
 
-**The decisive reachability test is your TaskList, not `ps`.** A live persistent
-Monitor task running `inbox-watch.sh {serial} stream` = reachable. This replaces
-the entire old exit-on-delivery model and its failure-mode catalog (ORPHAN /
-PPID=1 zombie / MULTIPLE / AUTO-RESPAWN-INTERRUPT-LOST / the misleading exit-143 /
-deaf-prior-session watcher / dropped 2nd-message-in-a-batch). The persistent
-Monitor: survives in-session compaction, loops over **all** `*.md` each poll
-(batch-safe), and never turns off. **You never relaunch** — there is no
-exit-and-relaunch cycle anymore.
+**Decisive reachability test — do NOT use `TaskList`.** `TaskList` lists `TaskCreate`
+to-do items, NOT Monitor/background tasks; it returns "No tasks found" even when your
+Monitor is alive, so an empty `TaskList` is NOT evidence of a dead watcher (treating
+it as one makes agents double-arm — observed across multiple agents 2026-06-03). The
+real check: (1) **death-notification rule** — a Monitor runs until it dies and fires a
+`<task-notification>` (status `failed`/`completed`) for its task id; if you armed one
+this session and saw no such notification, it's alive; (2) positive check
+`TaskOutput(<task_id>, block=false)` → `running`; (3) task-id-independent fallback
+`ps -ef | grep 'inbox-watch.sh {serial} stream' | grep -v grep`. This replaces the
+old exit-on-delivery model and its failure-mode catalog (ORPHAN / PPID=1 zombie /
+MULTIPLE / AUTO-RESPAWN-INTERRUPT-LOST / the misleading exit-143 / deaf-prior-session
+watcher / dropped 2nd-message-in-a-batch). The persistent Monitor: survives in-session
+compaction, loops over **all** `*.md` each poll (batch-safe), and never turns off.
+**You never relaunch** — there is no exit-and-relaunch cycle anymore.
 
 **BANNED:**
 - Launching `inbox-watch.sh {serial} stream` under Bash `run_in_background` — the
@@ -401,13 +407,16 @@ the agent remembering. (Ported from corporeal's `/loop` v0.2 body, 2026-05-11.)
 2. **Watcher health — the persistent inbox Monitor (DO NOT relaunch on every wake).**
    The watcher is a persistent Monitor task running `inbox-watch.sh {serial} stream`,
    armed ONCE at load. It never exits and survives in-session compaction, so on a
-   normal wake there is nothing to do. The decisive test is your **TaskList**, not `ps`:
+   normal wake there is nothing to do. **Do NOT use `TaskList` to check it** — `TaskList`
+   tracks `TaskCreate` to-dos, not Monitors, and returns empty even when the Monitor
+   is alive; an empty `TaskList` is NOT a dead-watcher signal (that false read makes
+   agents double-arm). Check it this way instead:
 
    | Observation | Action |
    |-------------|--------|
-   | A running Monitor task with command `inbox-watch.sh {serial} stream` is in your TaskList | Reachable — **do nothing** |
-   | No such task (fresh session / restart / never armed) | Run `/watcher` to arm exactly one |
-   | Uncertain | Run `/watcher` — it is idempotent (arms only if absent) |
+   | You armed a Monitor this session and saw NO `<task-notification>` death for it (confirm: `ps -ef \| grep 'inbox-watch.sh {serial} stream'` shows a process, or `TaskOutput(<id>, block=false)` → running) | Reachable — **do nothing** |
+   | `ps` shows no stream process AND none armed this session (fresh / restart) | Run `/watcher` to arm exactly one |
+   | Uncertain | Run `ps` (above) first; only run `/watcher` if no process is found |
 
    `check_inbox` in Step 1 is the authoritative pull — it catches messages whether the
    Monitor is live or not. The Monitor is a real-time-push optimization, not a
@@ -462,7 +471,7 @@ the agent remembering. (Ported from corporeal's `/loop` v0.2 body, 2026-05-11.)
 - **Got a real blocker** (ambiguity in TO, destructive op required, cross-agent wait, missing dep, compiler mandate can't pass, flex interpretation needed) → step 1: MCP the blocking peer agent. Step 2: if no response in 1 wake cycle, **MCP COO with blocker summary** — COO unblocks or escalates. Step 3: if COO defers or is unavailable, **MCP MSTR** with the blocker + COO's response (if any) — MSTR is authorized to resolve in-Directive operational forks. Step 4: only MCP Andrew directly if MSTR explicitly defers to sovereign judgment, or both COO and MSTR are unreachable. Never sit silent on a blocker for >2 wake cycles without an MCP out.
 - **3 consecutive idle wakes with no observable state delta** (no message, no TO status change, no commit in your lane) → MCP COO: "3 idle cycles, appear to be waiting on external input — is there a blocker or reassignment?" COO either unblocks or flips you to idle/closed. Do NOT stop the loop autonomously; do NOT surface to Andrew directly on idle cycles.
 - **Ambiguous TO language / expected value mismatch / acceptance-flex needed** → MCP COO FIRST (they own TO scope). CTO gets the flex-MCP separately per acceptance-flex rules, but COO remains the routing hub.
-- **Context compacted mid-loop** → first wake after compaction: re-pull `check_inbox` + `get_agent_status` (both paths) and re-`heartbeat`. Don't trust the compacted summary's "inbox empty" claim. The persistent inbox Monitor **survives compaction** — it should still be in your TaskList; confirm via Step 2 rather than relaunching. Only re-arm (via `/watcher`) if the Monitor is genuinely absent.
+- **Context compacted mid-loop** → first wake after compaction: re-pull `check_inbox` + `get_agent_status` (both paths) and re-`heartbeat`. Don't trust the compacted summary's "inbox empty" claim. The persistent inbox Monitor **survives compaction** — confirm it via Step 2 (`ps -ef | grep 'inbox-watch.sh {serial} stream'`, NOT TaskList) rather than relaunching. Only re-arm (via `/watcher`) if `ps` shows no stream process.
 
 **Why this chain shape:** workers surfacing every blocker directly to Andrew floods his context; COO has org-wide work-side visibility; MSTR has whole-fabric strategic visibility. The chain ensures (a) each rung resolves what it can, (b) Andrew only sees what genuinely requires sovereign judgment, and (c) work never stalls because every fork has a next-hop target.
 
