@@ -475,10 +475,26 @@ tools_continued:
       service: "comp-iam service bd-gold-trigger -- show operations + grant status for one service"
       role: "comp-iam role bd-exporter-ec2-role -- show all granted actions for one role (real role names: bd-exporter-ec2-role, bd-gold-layer-lambda-role, inf-gold-trigger-lambda-role; NOT bd-gold-runner-role which doesn't exist)"
       stats: "comp-iam stats -- summary counts (roles, services, gaps)"
+      reconcile: "comp-iam reconcile [--census <json>] -- DESIRED(TF-parse)-vs-LIVE(comp-aws census) drift: live-only roles (ungoverned-by-IaC), live-only actions, over-perm flags. The runtime overlay (see overlay_pattern below)."
     cost: "~2s (scans Lambda sources + Terraform; no AWS API calls in default path; managed-policy unknown ARNs trigger one-time aws iam get-policy-version + cache to .comp-graph/managed_policy_actions_cache.json)"
     data_sources: "infra/aws/lambda/ci/lambda-source-map.json, infra/aws/terraform/*/iam.tf, Lambda/gold script sources, .comp-graph/managed_policy_actions_cache.json (managed-policy action cache)"
     replaces: "Manual cross-reference of boto3 calls against iam.tf; AWS IAM console audit"
     note: "Catches permission gaps before they cause silent failures. The IAM watchdog loop incident (2026-04-09) was caused by s3:DeleteObject missing from bd-exporter-ec2-role -- comp-iam would have flagged this during the Terraform review. V4.024 (2026-05-08) eliminated the two FP classes that surfaced post-V4.022 backfill: (A) EC2-shipped-shell distinction — aws-cli patterns inside triple-quoted strings shipped via run_instances UserData= or send_command commands=[] no longer flag against the Lambda role; (B) AWS-managed-policy attachment parsing — aws_iam_role_policy_attachment with policy_arn = arn:aws:iam::aws:policy/X contributes X's actions to the role's grant set via static lookup table (S3/Lambda/SSM/DynamoDB/SecretsManager/CloudWatch + 21 ARNs) plus aws iam get-policy-version cache+API fallback for unknown ARNs (emits MANAGED_POLICY_UNKNOWN advisory + does NOT claim coverage when offline)."
+    overlay_pattern: "DESIRED-vs-LIVE OVERLAY (generalizable + worth knowing): comp-iam parses Terraform = the DESIRED/source state (fast, offline); comp-aws emits the LIVE-AWS census; `comp-iam reconcile` OVERLAYS live ON desired to regress one against the other, surfacing drift the source-parse is structurally blind to (ungoverned/console-created roles, grants added outside IaC, over-perms). The same shape applies to ANY source-parse tool + a live census -- comp-routes (CF/router from TF+index.mjs) and comp-lambdamap (source-map vs TF) are desired-state too and could be overlaid the same way. Source-parse = the cheap always-on check; live census = the periodic regression."
+
+  # comp-aws is placed adjacent to comp-iam ON PURPOSE: they're the two halves of
+  # the overlay/regression pattern above -- comp-iam = desired/source, comp-aws = live.
+  comp-aws:
+    command: "comp-aws <axis>  (early Phase-0; 0.7.0_AE-owned)"
+    segment_scope: cross-segment
+    when: |
+      - Need LIVE-AWS ground truth (vs repo/TF desired-state): the declared-vs-live drift class
+      - Feeds `comp-iam reconcile` (live IAM per-role statements) + S3 declared-vs-live (shadow buckets)
+    output: |
+      Per-resource live census. IAM axis: per-role statements[{effect,actions,resources,condition,source}]
+      + overperm_flags, in comp-iam's reconcile contract shape. Phase-0 shipped as fixtures
+      (docs/briefs/cmpaws-{iam,s3}-*-census-*.json); EC2/Dynamo/eventing/edge/observability WIP + CVO-cert pending.
+    note: "The LIVE half of the desired-vs-live overlay (see comp-iam.overlay_pattern). 0.7.0_AE-owned; comp-iam consumes its IAM census via `reconcile`."
 
   comp-registry:
     command: "comp-registry sync ROW=N | --project CODE | --all | (+ --apply)"
