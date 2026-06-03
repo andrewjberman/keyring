@@ -307,7 +307,8 @@ def cmd_validate(args):
         _sid_upper = (args.script_id or "").upper()
         _config_file = _INF_VALIDATE_CONFIG if _sid_upper.startswith("INF_") else None
     configs = load_validate_config(_WORKSPACE, _config_file)
-    strict = getattr(args, 'strict', False)
+    # --strict is now a no-op alias: NO_CONFIG fails closed (exit 2) by DEFAULT
+    # post-flip (LD-0148). Kept as a flag for back-compat; --lenient is the bypass.
 
     # Build alias map for script-id -> artifact-id resolution (ADHC_COMPIL.015)
     raw_configs = _load_raw_validate_configs()
@@ -391,13 +392,19 @@ def cmd_validate(args):
         print()
         print(f"NO_CONFIG: no validation rules defined for {resolved_id}")
         print("  UNVALIDATED -- this is NOT a pass. ZERO checks ran (no config stanza for this")
-        print("  artifact). Do NOT read exit-0 here as 'safe to signal' -- nothing was verified.")
-        print("  Add a gold_validate_config.yaml stanza, or run with --strict (exit 2) in")
-        print("  gates/dispatchers so absence-of-config blocks instead of silently passing.")
-        if strict:
-            print("  (--strict: escalating NO_CONFIG to exit 2)")
-            sys.exit(2)
-        return
+        print("  artifact). Do NOT read this as 'safe to signal' -- nothing was verified.")
+        # DEFAULT FLIPPED (CTO ruling / LD-0148, live 2026-06-03): NO_CONFIG fails
+        # CLOSED (exit 2 = UNVALIDATED), structural-over-cultural -- absence != PASS.
+        # Escapes: add a gold_validate_config.yaml stanza, OR a `validation: not_required`
+        # + reason: waiver (see E_02/E_04/E_22), OR --lenient for a transitional bypass.
+        lenient = getattr(args, 'lenient', False)
+        if lenient:
+            print("  (--lenient: NO_CONFIG returns exit 0 -- transitional bypass. Prefer a")
+            print("   `validation: not_required` waiver for a deliberate no-validation decision.)")
+            return
+        print("  Fix: add a config stanza, OR a `validation: not_required`+reason waiver, OR --lenient.")
+        print("  (NO_CONFIG -> exit 2, fail-closed per COMP_VALIDATE_PROTOCOL §10.1 / LD-0148.)")
+        sys.exit(2)
 
     if error_count > 0:
         print()
