@@ -13,7 +13,6 @@ import io
 import json
 import math
 from dataclasses import dataclass, field
-from typing import Iterable
 
 S3_BUCKET = "opal-data-bd"
 PARITY_PREFIX = "gold/_parity"
@@ -43,12 +42,19 @@ class DiffResult:
     incremental_prefix: str
     divergences: list[Divergence] = field(default_factory=list)
     errors: list[str] = field(default_factory=list)
+    # absence != PASS: a script with NO dual-run parity comparison performed
+    # (not registered) is UNVERIFIED, not "PARITY OK". Distinct from passed/failed.
+    unverified: bool = False
 
     @property
     def passed(self) -> bool:
-        return not self.divergences and not self.errors
+        # Unverified is NOT passed -- no comparison ran, so we cannot assert parity.
+        return not self.divergences and not self.errors and not self.unverified
 
     def summary(self) -> str:
+        if self.unverified:
+            return (f"PARITY UNVERIFIED: {self.script_id} ({self.mode}) - "
+                    f"no dual-run comparison performed (not registered); NOT a pass")
         if self.passed:
             return f"PARITY OK: {self.script_id} ({self.mode}) - 0 divergences"
         return (
@@ -63,6 +69,7 @@ class DiffResult:
             "full_prefix": self.full_prefix,
             "incremental_prefix": self.incremental_prefix,
             "passed": self.passed,
+            "unverified": self.unverified,
             "divergences": [d.to_dict() for d in self.divergences],
             "errors": list(self.errors),
         }
@@ -131,7 +138,7 @@ def diff_json_bodies(left: bytes, right: bytes, mode: str, *, path_prefix: str =
 
 def _deep_walk(a, b, path: str, tol: float) -> list[Divergence]:
     out: list[Divergence] = []
-    if type(a) != type(b):
+    if type(a) is not type(b):
         # Allow int vs float cross-type numeric comparison.
         if isinstance(a, (int, float)) and isinstance(b, (int, float)):
             if not _within_tolerance(float(a), float(b), tol):

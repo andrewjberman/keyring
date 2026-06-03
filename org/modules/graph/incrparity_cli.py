@@ -79,10 +79,13 @@ def run_one(script_id: str, mode: str, date: str | None, s3) -> core.DiffResult:
                 result.divergences.extend(core.diff_json_bodies(body, body, mode, path_prefix=key))
         return result
 
-    # No registration — conservative PASS with note.
+    # No registration -- UNVERIFIED (was a silent "conservative PASS"; absence of a
+    # parity comparison is NOT a pass -- the script just isn't wired for dual-run
+    # parity yet, so we cannot assert it). Caller surfaces UNVERIFIED distinctly.
     result = core.DiffResult(
         script_id=script_id, mode=mode,
         full_prefix="(none registered)", incremental_prefix="(none registered)",
+        unverified=True,
     )
     return result
 
@@ -114,16 +117,23 @@ def main(argv=None) -> int:
             print("ALL: incremental_promoted.json is empty - 0 scripts to check. PASS.")
             return 0
         any_fail = False
+        any_unverified = False
         for sid in promoted:
             result = run_one(sid, args.mode, args.date, s3)
             print(result.summary())
-            if not result.passed:
+            if result.unverified:
+                any_unverified = True
+            elif not result.passed:
                 any_fail = True
                 _emit_failure(result, run_ts, s3, no_s3_report=args.no_s3_report)
-        return 1 if any_fail else 0
+        # exit 1 = real parity FAIL; exit 2 = UNVERIFIED (absence, not pass); 0 = clean
+        return 1 if any_fail else (2 if any_unverified else 0)
 
     result = run_one(args.script_id, args.mode, args.date, s3)
     print(result.summary())
+    if result.unverified:
+        # Distinct exit 2 (UNCHECKED) -- absence of a parity run is NOT exit-0 pass.
+        return 2
     if result.passed:
         return 0
     _emit_failure(result, run_ts, s3, no_s3_report=args.no_s3_report)
