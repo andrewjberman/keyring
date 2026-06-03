@@ -178,6 +178,12 @@ _BOTO3_DYNAMODB = {
     'batch_get_item':   ['dynamodb:BatchGetItem'],
 }
 
+# Services comp-iam models method->action for. A boto3 client of ANY OTHER
+# service (secretsmanager/sns/sqs/kms/bedrock/states/...) currently produced ZERO
+# ops -> a confident "no gap" while structurally blind. We now emit an UNMODELED
+# sentinel op for those so the blindness is VISIBLE, not silent.
+_MODELED_BOTO3_SERVICES = {'s3', 's3_client', 'ssm', 'dynamodb', 'DynamoDB'}
+
 # AWS CLI patterns in shell/Python subprocess -> IAM action(s)
 _AWS_CLI_S3 = [
     (re.compile(r'aws\s+s3\s+rm\b'),         ['s3:DeleteObject']),
@@ -244,6 +250,34 @@ class IamRole:
                     if re.fullmatch(pattern, action_lower):
                         return True
         return False
+
+    def deny_matches(self, action: str) -> list["IamStatement"]:
+        """Return Deny statements whose action pattern matches `action`.
+
+        grants() above considers ONLY Allow -- it silently ignored Deny, so an
+        explicit Deny (which overrides Allow in AWS eval) read as GRANTED (a
+        false-safe; e.g. opal-data-schwab's TLS/SSE Deny bucket-policies). This
+        SURFACES matching Deny statements so a false-GRANTED becomes a visible
+        'granted-but-Deny-present, verify' rather than a silent pass. We do NOT
+        hard-flip to denied here: a Deny is usually resource- and/or
+        condition-scoped (e.g. Deny s3:* unless SecureTransport), so treating any
+        action-match as an unconditional block would OVER-deny (false gaps). The
+        resource/condition-precise effective-allow-after-deny resolution is the
+        census-backed reconcile tier (0.7.0 comp-aws live statements w/ resources
+        + conditions); here we make the Deny visible, not assumed-either-way."""
+        action_lower = action.lower()
+        matched: list[IamStatement] = []
+        for stmt in self.statements:
+            if stmt.effect.lower() != 'deny':
+                continue
+            for a in stmt.actions:
+                a_lower = a.lower()
+                if a == '*' or a_lower == action_lower or (
+                    '*' in a_lower and re.fullmatch(re.escape(a_lower).replace(r'\*', '.*'), action_lower)
+                ):
+                    matched.append(stmt)
+                    break
+        return matched
 
 
 @dataclass
@@ -388,6 +422,10 @@ def _scan_python_for_operations(content: str, file_path: str) -> list[Operation]
     lines = content.splitlines()
     ec2_shipped_lines = _compute_ec2_shipped_line_ranges(content)
 
+    # Track (file, service) pairs already flagged UNMODELED so we emit ONE
+    # coverage sentinel per unmodeled service per file, not one per call.
+    unmodeled_emitted: set = set()
+
     # Map client variable names to service: s3_client = boto3.client('s3') -> {'s3_client': 's3'}
     client_map: dict[str, str] = {}
     for m in re.finditer(
@@ -420,6 +458,16 @@ def _scan_python_for_operations(content: str, file_path: str) -> list[Operation]
                 line
             ):
                 method = m.group(1)
+                if service not in _MODELED_BOTO3_SERVICES:
+                    if (file_path, service) not in unmodeled_emitted:
+                        unmodeled_emitted.add((file_path, service))
+                        ops.append(Operation(
+                            iam_actions=[f'{service}:UNMODELED'],
+                            source_pattern=f'{client_var}.{method} (boto3 service {service!r} not modeled by comp-iam)',
+                            file_path=file_path,
+                            line_number=lineno,
+                        ))
+                    continue
                 action_map = {}
                 if service in ('s3', 's3_client'):
                     action_map = _BOTO3_S3
@@ -443,6 +491,16 @@ def _scan_python_for_operations(content: str, file_path: str) -> list[Operation]
         for m in re.finditer(r"boto3\.client\s*\(\s*['\"](\w+)['\"]\s*\)\.(\w+)\s*\(", line):
             service = m.group(1)
             method = m.group(2)
+            if service not in _MODELED_BOTO3_SERVICES:
+                if (file_path, service) not in unmodeled_emitted:
+                    unmodeled_emitted.add((file_path, service))
+                    ops.append(Operation(
+                        iam_actions=[f'{service}:UNMODELED'],
+                        source_pattern=f"boto3.client('{service}').{method} (service not modeled by comp-iam)",
+                        file_path=file_path,
+                        line_number=lineno,
+                    ))
+                continue
             action_map = {}
             if service == 's3':
                 action_map = _BOTO3_S3
@@ -934,6 +992,17 @@ def build_iam_report(workspace_root: Path) -> tuple[list[ServiceProfile], dict[s
 
         for op in profile.operations:
             for action in op.iam_actions:
+                # UNMODELED sentinel: the source uses a boto3 service comp-iam
+                # doesn't model -> coverage-unknown, NOT a real perm gap and NOT
+                # clean. Surface distinctly so "no gaps" isn't falsely confident.
+                if action.endswith(':UNMODELED'):
+                    gaps.append(PermissionGap(
+                        service=profile.name, iam_role=profile.iam_role,
+                        iam_action=action, source_pattern=op.source_pattern,
+                        file_path=op.file_path, line_number=op.line_number,
+                        severity="UNMODELED",
+                    ))
+                    continue
                 if not role.grants(action):
                     gaps.append(PermissionGap(
                         service=profile.name,
@@ -944,5 +1013,18 @@ def build_iam_report(workspace_root: Path) -> tuple[list[ServiceProfile], dict[s
                         line_number=op.line_number,
                         severity="ERROR",
                     ))
+                else:
+                    # Granted via Allow -- but does a Deny also match? grants()
+                    # used to ignore Deny entirely (false-safe). Surface it.
+                    denies = role.deny_matches(action)
+                    if denies:
+                        deny_res = sorted({r for s in denies for r in (s.resources or ['*'])})
+                        gaps.append(PermissionGap(
+                            service=profile.name, iam_role=profile.iam_role,
+                            iam_action=action,
+                            source_pattern=f"{op.source_pattern} -- ALLOW granted BUT Deny present on {deny_res}",
+                            file_path=op.file_path, line_number=op.line_number,
+                            severity="DENY-PRESENT",
+                        ))
 
     return all_profiles, roles, gaps

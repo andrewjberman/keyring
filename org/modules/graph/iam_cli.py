@@ -24,7 +24,7 @@ _WORKSPACE = _THIS_DIR.parent.parent.parent
 
 sys.path.insert(0, str(_WORKSPACE))
 
-from org.modules.graph.extract_iam import build_iam_report, ServiceProfile, IamRole, PermissionGap
+from org.modules.graph.extract_iam import build_iam_report, PermissionGap  # noqa: E402
 
 
 def _build():
@@ -36,35 +36,62 @@ def cmd_gaps(args):
 
     service_filter = (args.service or "").lower()
 
-    if not gaps:
-        print("No permission gaps detected.")
-        print(f"  ({len(profiles)} services scanned, {len(roles)} IAM roles parsed)")
-        return
-
     filtered = [g for g in gaps if not service_filter or service_filter in g.service.lower()]
 
+    # Partition by severity: real MISSING-permission gaps vs coverage-UNKNOWN
+    # (unmodeled service) vs DENY-PRESENT (granted-but-Deny, verify effective).
+    errors = [g for g in filtered if g.severity == "ERROR"]
+    unmodeled = [g for g in filtered if g.severity == "UNMODELED"]
+    deny_present = [g for g in filtered if g.severity == "DENY-PRESENT"]
+
+    # Only a true "all clear" when there are NO error gaps AND coverage is full
+    # (no unmodeled services) AND no Deny ambiguity. Otherwise we must NOT print
+    # a confident "no gaps" -- that's the false-green this fix exists to kill.
     if not filtered:
-        print(f"No gaps for service filter: {service_filter}")
+        if service_filter:
+            print(f"No findings for service filter: {service_filter}")
+        else:
+            print("No permission gaps detected.")
+            print(f"  ({len(profiles)} services scanned, {len(roles)} IAM roles parsed)")
         return
 
-    print(f"PERMISSION GAPS ({len(filtered)} found)")
-    print()
-
-    # Group by service
-    by_service: dict[str, list[PermissionGap]] = {}
-    for g in filtered:
-        by_service.setdefault(g.service, []).append(g)
-
-    for svc, svc_gaps in sorted(by_service.items()):
-        print(f"  {svc}  (role: {svc_gaps[0].iam_role})")
-        for gap in svc_gaps:
-            print(f"    !! MISSING: {gap.iam_action}")
-            print(f"       Called via: {gap.source_pattern}")
-            print(f"       At: {gap.file_path}:{gap.line_number}")
-            print(f"       Fix: add '{gap.iam_action}' to {gap.iam_role} policy in iam.tf")
+    if errors:
+        print(f"PERMISSION GAPS ({len(errors)} missing-permission)")
+        print()
+        by_service: dict[str, list[PermissionGap]] = {}
+        for g in errors:
+            by_service.setdefault(g.service, []).append(g)
+        for svc, svc_gaps in sorted(by_service.items()):
+            print(f"  {svc}  (role: {svc_gaps[0].iam_role})")
+            for gap in svc_gaps:
+                print(f"    !! MISSING: {gap.iam_action}")
+                print(f"       Called via: {gap.source_pattern}")
+                print(f"       At: {gap.file_path}:{gap.line_number}")
+                print(f"       Fix: add '{gap.iam_action}' to {gap.iam_role} policy in iam.tf")
+            print()
+    else:
+        print("No MISSING-permission gaps among MODELED services.")
         print()
 
-    print(f"Total: {len(gaps)} gap(s) across {len(by_service)} service(s)")
+    if deny_present:
+        print(f"DENY-PRESENT ({len(deny_present)}) -- ALLOW granted but a Deny statement matches; verify effective-allow:")
+        for g in deny_present:
+            print(f"    ?? {g.service} [{g.iam_role}] {g.iam_action}")
+            print(f"       {g.source_pattern}")
+            print(f"       At: {g.file_path}:{g.line_number}")
+        print("    (resource/condition-precise resolution = census-backed reconcile tier)")
+        print()
+
+    if unmodeled:
+        svcs = sorted({g.iam_action.split(':')[0] for g in unmodeled})
+        print(f"COVERAGE-UNKNOWN ({len(unmodeled)}) -- boto3 services comp-iam does NOT model: {svcs}")
+        print("    These produce NO gap signal either way -- comp-iam CANNOT verify their IAM perms.")
+        for g in unmodeled:
+            print(f"    ?? {g.service} [{g.iam_role}] {g.iam_action}  ({g.file_path}:{g.line_number})")
+        print()
+
+    print(f"Total: {len(errors)} missing | {len(deny_present)} deny-present | "
+          f"{len(unmodeled)} coverage-unknown  across {len({g.service for g in filtered})} service(s)")
 
 
 def cmd_roles(args):
@@ -77,7 +104,6 @@ def cmd_roles(args):
     print(f"IAM ROLES ({len(roles)} found)")
     print()
     for role_name, role in sorted(roles.items()):
-        action_count = sum(len(s.actions) for s in role.statements)
         allow_count = sum(len(s.actions) for s in role.statements if s.effect.lower() == 'allow')
         print(f"  {role_name}")
         print(f"    tf_resource: {role.tf_resource}")
