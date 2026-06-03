@@ -152,3 +152,27 @@ def test_validate_waiver_parsed_and_short_circuits(tmp_path):
     # short-circuits to WAIVED without needing the artifact to exist
     res = ev.run_validate("WAIVED_X", tmp_path / "does_not_exist.json", configs)
     assert len(res) == 1 and res[0].status == "WAIVED"
+
+
+def test_validate_all_script_check_config_is_zero_checks(tmp_path):
+    """ZERO_CHECKS precondition (LD-0148 §10.1b): a config whose checks are ALL
+    source-level (script_check, deferred to comp-pipescript / a named validator)
+    yields 0 runnable checks -> all SKIP -> pass_count==0. The CLI maps that to
+    ZERO_CHECKS exit-2 (NOT 'PASS: all 0 checks') -- verified live on C_01/nna_atomic.
+    This locks the data-layer precondition."""
+    cfg = tmp_path / "cfg.yaml"
+    cfg.write_text(
+        "scripts:\n"
+        "  ALLSKIP_X:\n"
+        "    primary_artifact: x.json\n"
+        "    checks:\n"
+        "      - {type: script_check, name: 'deferred to validate_x.py',"
+        " severity: INFO, description: 'run validate_x.py'}\n"
+    )
+    art = tmp_path / "x.json"
+    art.write_text("{}")
+    configs = ev.load_validate_config(tmp_path, cfg)
+    res = ev.run_validate("ALLSKIP_X", art, configs)
+    assert res, "expected at least one (SKIP) result"
+    assert all(r.status == "SKIP" for r in res), "all-script_check config must yield all-SKIP"
+    assert not any(r.status == "PASS" for r in res), "0 PASS checks == the ZERO_CHECKS condition"

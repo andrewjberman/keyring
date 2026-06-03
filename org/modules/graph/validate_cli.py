@@ -415,6 +415,32 @@ def cmd_validate(args):
         print()
         print(f"  ADVISORY: {warn_count} WARN check(s) failed. Review before uploading.")
         print(f"PASS: all checks passed for {resolved_id} ({warn_count} WARN advisory)")
+    elif pass_count == 0:
+        # ZERO_CHECKS (CTO ruling / LD-0148 §10.1b, live 2026-06-03): a config EXISTS
+        # but 0 artifact-checks actually ran -- all SKIP/source-level-deferred. That's
+        # the same absence!=PASS false-green as NO_CONFIG, just MORE reachable (these
+        # ids ARE recognized). 'PASS: all 0 checks' is NOT a pass. Distinct from
+        # NO_CONFIG: validation here is DEFERRED-to-another-tool, not absent -- so
+        # name the real (per-config) deferred check rather than implying nobody validates.
+        print()
+        # Surface the per-config deferred-validator target(s) verbatim from the SKIP
+        # messages (the script_check descriptions name them, e.g. validate_nna_atomic.py).
+        deferred = "; ".join(
+            f"{r.name} -- {r.message}".strip(" -") for r in results
+            if r.status == "SKIP" and (r.name or r.message)
+        )
+        if not deferred:
+            deferred = "(no named target in the config's script_check -- config-quality gap, flag to CTO)"
+        print(f"ZERO_CHECKS: UNVALIDATED -- config present but 0 artifact-checks ran for {resolved_id} "
+              f"({skip_count} SKIP/deferred).")
+        print(f"  comp-validate validated 0 artifact-checks. The REAL check is deferred: {deferred}")
+        print("  Run that; do NOT read this as a pass.")
+        lenient = getattr(args, 'lenient', False)
+        if lenient:
+            print("  (--lenient: returning exit 0 -- transitional bypass.)")
+            return
+        print("  (ZERO_CHECKS -> exit 2, fail-closed per COMP_VALIDATE_PROTOCOL §10.1b / LD-0148.)")
+        sys.exit(2)
     else:
         print()
         print(f"PASS: all {pass_count} checks passed for {resolved_id}")
