@@ -380,6 +380,10 @@ def cmd_validate(args):
     if no_config:
         print()
         print(f"NO_CONFIG: no validation rules defined for {resolved_id}")
+        print("  UNVALIDATED -- this is NOT a pass. ZERO checks ran (no config stanza for this")
+        print("  artifact). Do NOT read exit-0 here as 'safe to signal' -- nothing was verified.")
+        print("  Add a gold_validate_config.yaml stanza, or run with --strict (exit 2) in")
+        print("  gates/dispatchers so absence-of-config blocks instead of silently passing.")
         if strict:
             print("  (--strict: escalating NO_CONFIG to exit 2)")
             sys.exit(2)
