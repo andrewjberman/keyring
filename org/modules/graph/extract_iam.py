@@ -178,11 +178,86 @@ _BOTO3_DYNAMODB = {
     'batch_get_item':   ['dynamodb:BatchGetItem'],
 }
 
-# Services comp-iam models method->action for. A boto3 client of ANY OTHER
-# service (secretsmanager/sns/sqs/kms/bedrock/states/...) currently produced ZERO
-# ops -> a confident "no gap" while structurally blind. We now emit an UNMODELED
-# sentinel op for those so the blindness is VISIBLE, not silent.
-_MODELED_BOTO3_SERVICES = {'s3', 's3_client', 'ssm', 'dynamodb', 'DynamoDB'}
+# boto3 secretsmanager method -> IAM action(s)
+_BOTO3_SECRETSMANAGER = {
+    'get_secret_value': ['secretsmanager:GetSecretValue'],
+    'list_secrets':     ['secretsmanager:ListSecrets'],
+    'describe_secret':  ['secretsmanager:DescribeSecret'],
+    'put_secret_value': ['secretsmanager:PutSecretValue'],
+    'create_secret':    ['secretsmanager:CreateSecret'],
+}
+
+# boto3 ec2 method -> IAM action(s). get_waiter polls describe_* (separately detected).
+_BOTO3_EC2 = {
+    'describe_instances':       ['ec2:DescribeInstances'],
+    'start_instances':          ['ec2:StartInstances'],
+    'stop_instances':           ['ec2:StopInstances'],
+    'run_instances':            ['ec2:RunInstances'],
+    'terminate_instances':      ['ec2:TerminateInstances'],
+    'describe_volumes':         ['ec2:DescribeVolumes'],
+    'describe_security_groups': ['ec2:DescribeSecurityGroups'],
+    'describe_addresses':       ['ec2:DescribeAddresses'],
+    'get_waiter':               [],
+}
+
+# boto3 lambda method -> IAM action(s)
+_BOTO3_LAMBDA = {
+    'invoke':         ['lambda:InvokeFunction'],
+    'invoke_async':   ['lambda:InvokeFunction'],
+    'list_functions': ['lambda:ListFunctions'],
+    'get_function':   ['lambda:GetFunction'],
+    'get_paginator':  [],
+}
+
+# boto3 sns method -> IAM action(s)
+_BOTO3_SNS = {
+    'publish': ['sns:Publish'],
+}
+
+# boto3 stepfunctions method -> IAM action(s). NOTE: client('stepfunctions') but
+# the IAM action prefix is 'states:'.
+_BOTO3_STEPFUNCTIONS = {
+    'start_execution':        ['states:StartExecution'],
+    'stop_execution':         ['states:StopExecution'],
+    'describe_execution':     ['states:DescribeExecution'],
+    'list_state_machines':    ['states:ListStateMachines'],
+    'describe_state_machine': ['states:DescribeStateMachine'],
+}
+
+# boto3 cloudfront method -> IAM action(s)
+_BOTO3_CLOUDFRONT = {
+    'create_invalidation': ['cloudfront:CreateInvalidation'],
+    'list_distributions':  ['cloudfront:ListDistributions'],
+    'get_invalidation':    ['cloudfront:GetInvalidation'],
+}
+
+# boto3 cloudwatch method -> IAM action(s)
+_BOTO3_CLOUDWATCH = {
+    'put_metric_data':       ['cloudwatch:PutMetricData'],
+    'get_metric_statistics': ['cloudwatch:GetMetricStatistics'],
+    'put_metric_alarm':      ['cloudwatch:PutMetricAlarm'],
+}
+
+# Unified service -> method-map registry. A boto3 client of any service NOT in
+# this registry produces an UNMODELED sentinel (coverage-unknown, surfaced LOUD)
+# rather than a silent zero-ops "no gap". Modeling a new service = add its map
+# here. The 7 services below were added after comp-iam's UNMODELED sweep surfaced
+# 50 coverage-unknowns (secretsmanager secret-reads, ec2 start/stop, lambda
+# invoke, sns, stepfunctions, cloudfront, cloudwatch) -- now VERIFIED, not just
+# flagged. Method maps grounded in the actual calls in infra/aws/lambda.
+_BOTO3_BY_SERVICE: dict[str, dict] = {
+    's3': _BOTO3_S3, 's3_client': _BOTO3_S3,
+    'ssm': _BOTO3_SSM,
+    'dynamodb': _BOTO3_DYNAMODB, 'DynamoDB': _BOTO3_DYNAMODB,
+    'secretsmanager': _BOTO3_SECRETSMANAGER,
+    'ec2': _BOTO3_EC2,
+    'lambda': _BOTO3_LAMBDA,
+    'sns': _BOTO3_SNS,
+    'stepfunctions': _BOTO3_STEPFUNCTIONS, 'sfn': _BOTO3_STEPFUNCTIONS,
+    'cloudfront': _BOTO3_CLOUDFRONT,
+    'cloudwatch': _BOTO3_CLOUDWATCH,
+}
+_MODELED_BOTO3_SERVICES = set(_BOTO3_BY_SERVICE)
 
 # AWS CLI patterns in shell/Python subprocess -> IAM action(s)
 _AWS_CLI_S3 = [
@@ -468,13 +543,7 @@ def _scan_python_for_operations(content: str, file_path: str) -> list[Operation]
                             line_number=lineno,
                         ))
                     continue
-                action_map = {}
-                if service in ('s3', 's3_client'):
-                    action_map = _BOTO3_S3
-                elif service == 'ssm':
-                    action_map = _BOTO3_SSM
-                elif service in ('dynamodb', 'DynamoDB'):
-                    action_map = _BOTO3_DYNAMODB
+                action_map = _BOTO3_BY_SERVICE.get(service, {})
 
                 if method in action_map:
                     actions = action_map[method]
@@ -501,13 +570,7 @@ def _scan_python_for_operations(content: str, file_path: str) -> list[Operation]
                         line_number=lineno,
                     ))
                 continue
-            action_map = {}
-            if service == 's3':
-                action_map = _BOTO3_S3
-            elif service == 'ssm':
-                action_map = _BOTO3_SSM
-            elif service == 'dynamodb':
-                action_map = _BOTO3_DYNAMODB
+            action_map = _BOTO3_BY_SERVICE.get(service, {})
             if method in action_map and action_map[method]:
                 ops.append(Operation(
                     iam_actions=action_map[method],
