@@ -1,0 +1,2 @@
+# /spot-check cycle 2 — CLEAN
+2026-06-03T~1539Z. 6-commit delta (2 own dropped). 4 triaged: bd v2.25.0 session-log + W2b cascade script (queue-#2 WIP, verify pending 0.6.0 routing), comp-pii pii_cli.py (DS tool code, OUT-scope), ADHC_CMPAWS phase-0 census (JSON active+REGISTRY row present = aligned). No actionable drift. Held: dual ADHC_BDTSCLB.001 TO (0.6.0+0.7.0 lanes) — confirm authoritative copy at #2 verify. Checkpoint -> 432227a1a.
