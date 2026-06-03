@@ -4342,3 +4342,31 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-06-03 | 0.4.0_DS_ClientPlatform | TRSB_XLSX_CVE_FIX | comp-adapter-audit | comp-adapter-audit getPlatinumAdvisorSummary | PASS |
 | 2026-06-03 | 0.4.0_DS_ClientPlatform | SECRETS-SCAN | comp-adapter-audit | comp-adapter-audit getPlatinumAdvisorSummary | PASS |
 | 2026-06-03 | 0.3.2_RD_TradeSubmission | bun audit / API-parity / vite build | xlsx CDN-swap CVE fix | audit-clean + parity PASS; comp-transform N/A (service-dep swap, no component change) |
+| 2026-06-03 | 0.4.0_DS_ClientPlatform | SECRETS-SCAN | comp-incrparity | comp-incrparity D_04 | FAIL |
+| 2026-06-03 | 0.4.0_DS_ClientPlatform | FE_DEPSWEEP_PLAN | comp-iam | comp-iam gaps | PASS |
+| 2026-06-03 | 0.4.0_DS_ClientPlatform | FE_DEPSWEEP_PLAN | comp-iam | comp-iam role yang-pipeline-lambda-role | PASS |
+| 2026-06-03 | 0.7.0_AE_CloudOps | FE_DEPSWEEP_PLAN | comp-iam | comp-iam service yang-canon-interlock | PASS |
+| 2026-06-03 | 0.4.0_DS_ClientPlatform | FE_DEPSWEEP_PLAN | comp-validate | comp-validate E_02 | PASS |
+| 2026-06-03 | 0.4.0_DS_ClientPlatform | FE_DEPSWEEP_PLAN | comp-validate | comp-validate E_02 --artifact /tmp/dummy.json | PASS |
+| 2026-06-03 | 0.4.0_DS_ClientPlatform | FE_DEPSWEEP_PLAN | comp-validate | comp-validate E_25 --artifact /tmp/dummy.json | FAIL |
+| 2026-06-03 | 0.4.0_DS_ClientPlatform | FE_DEPSWEEP_PLAN | comp-validate | comp-validate SOME_UNCONFIGURED_SCRIPT --artifact /tmp/d.json | FAIL |
+| 2026-06-03 | 0.4.0_DS_ClientPlatform | FE_DEPSWEEP_PLAN | comp-validate | comp-validate SOME_UNCONFIGURED_SCRIPT --artifact /tmp/d.json --lenient | FAIL |
+| 2026-06-03 | 0.4.0_DS_ClientPlatform | FE_DEPSWEEP_PLAN | comp-validate | comp-validate E_02 --artifact /tmp/d.json | PASS |
+| 2026-06-03 | 0.4.0_DS_ClientPlatform | FE_DEPSWEEP_PLAN | comp-validate | comp-validate E_16 --artifact /tmp/d.json | FAIL |
+| 2026-06-03 | 0.4.0_DS_ClientPlatform | FE_DEPSWEEP_PLAN | comp-validate | comp-validate E_17 --artifact /tmp/d.json | FAIL |
+| 2026-06-03 | 0.4.0_DS_ClientPlatform | FE_DEPSWEEP_PLAN | comp-validate | comp-validate E_23 --artifact /tmp/d.json | FAIL |
+| 2026-06-03 | 0.4.0_DS_ClientPlatform | FE_DEPSWEEP_PLAN | comp-validate | comp-validate E_16 --artifact /tmp/d.json --lenient | FAIL |
+| 2026-06-03 | 0.4.0_DS_ClientPlatform | FE_DEPSWEEP_PLAN | comp-validate | comp-validate D_03 --artifact /tmp/d.json | FAIL |
+| 2026-06-03 | 0.4.0_DS_ClientPlatform | FE_DEPSWEEP_PLAN | comp-validate | comp-validate C_03 --artifact /tmp/d.json | FAIL |
+| 2026-06-03 | 0.4.0_DS_ClientPlatform | FE_DEPSWEEP_PLAN | comp-validate | comp-validate D_00b --artifact /tmp/d.json | FAIL |
+| 2026-06-03 | 0.4.0_DS_ClientPlatform | FE_DEPSWEEP_PLAN | comp-validate | comp-validate C_01 --artifact /tmp/d.json | PASS |
+| 2026-06-03 | 0.4.0_DS_ClientPlatform | FE_DEPSWEEP_PLAN | comp-validate | comp-validate B_01 --artifact /tmp/d.json | PASS |
+| 2026-06-03 | 0.4.0_DS_ClientPlatform | FE_DEPSWEEP_PLAN | comp-validate | comp-validate D_01 --artifact /tmp/d.json | FAIL |
+| 2026-06-03 | 0.4.0_DS_ClientPlatform | FE_DEPSWEEP_PLAN | comp-validate | comp-validate C_01 --artifact /tmp/d.json | PASS |
+| 2026-06-03 | 0.4.0_DS_ClientPlatform | FE_DEPSWEEP_PLAN | comp-validate | comp-validate zzz_definitely_no_config_xyz --artifact /tmp/d.json | FAIL |
+| 2026-06-03 | 0.4.0_DS_ClientPlatform | FE_DEPSWEEP_PLAN | comp-iam | comp-iam reconcile | FAIL |
+| 2026-06-03 | 0.4.0_DS_ClientPlatform | FE_DEPSWEEP_PLAN | comp-validate | comp-validate C_01 --artifact /tmp/d.json | FAIL |
+| 2026-06-03 | 0.4.0_DS_ClientPlatform | FE_DEPSWEEP_PLAN | comp-validate | comp-validate C_01 --artifact /tmp/d.json --lenient | PASS |
+| 2026-06-03 | 0.4.0_DS_ClientPlatform | FE_DEPSWEEP_PLAN | comp-validate | comp-validate D_04 --artifact /tmp/d.json | FAIL |
+| 2026-06-03 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript deployed data/black_diamond/scripts/gold/gold_prof.py | PASS |
+- 2026-06-03 0.4.0_DS_ClientPlatform NFRA.W2b: comp-pipescript deployed gold_prof.py -> 0-matched (profiler utility not in named gold-data registry; MATCH N/A) -> verified via re-pull byte-match (opal-runner-shared == c07c52383, 12 PSS markers). GAP: comp-pipescript deployed-check does not cover shared utility scripts on opal-runner-shared.
