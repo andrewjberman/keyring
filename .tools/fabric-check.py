@@ -38,10 +38,13 @@ Usage:
   python .tools/fabric-check.py --blocks   # only BLOCKED + SOVEREIGN + PHANTOM (COO drive triage)
 """
 from __future__ import annotations
+import glob
 import json
 import os
+import subprocess
 import sys
 import time
+from collections import Counter
 
 # Canonical thresholds (LD-0070 TELEMETRY_LIVENESS_FRAMEWORK §1.1)
 LIVE_WORK_S = 120      # last kind:work within this -> LIVE (dispatch-grade)
@@ -103,6 +106,21 @@ def telemetry_signals(serial: str) -> dict:
 
 
 INBOX_DIR = os.path.join(ROOT, "org", "mcp", "inbox")
+REAPED_FILE = os.path.join(ROOT, "org", "mcp", "reaped_serials.json")
+REAPED_RECENT_S = 21600  # 6h -- a serial reaped within this is excluded from DEAF
+
+
+def reaped_recently() -> set:
+    """Serials intentionally reaped within REAPED_RECENT_S (optional org/mcp/reaped_serials.json,
+    {serial: reaped_ts_unix}). A reaped lane is intentionally dead -- not a DEAF lane needing
+    respawn -- so DEAF detection excludes it (COO LD-0158 tuning). No file => empty set => no-op."""
+    try:
+        with open(REAPED_FILE, "r", encoding="utf-8", errors="replace") as f:
+            d = json.load(f)
+        now = time.time()
+        return {s for s, ts in d.items() if (now - float(ts)) < REAPED_RECENT_S}
+    except (OSError, ValueError, TypeError):
+        return set()
 
 
 def unread_inbox(serial: str) -> tuple[int, float]:
@@ -125,6 +143,78 @@ def unread_inbox(serial: str) -> tuple[int, float]:
     except OSError:
         pass
     return count, newest
+
+
+PROJECTS_DIR = os.path.join(ROOT, "org", "projects")
+_TOOLS_DIR = os.path.dirname(os.path.abspath(__file__))
+
+
+def project_codes() -> list[str]:
+    """Registered project codes (org/projects/*.json basenames), longest-first."""
+    codes = set()
+    try:
+        for p in glob.glob(os.path.join(PROJECTS_DIR, "*.json")):
+            codes.add(os.path.splitext(os.path.basename(p))[0])
+    except OSError:
+        pass
+    return sorted(codes, key=len, reverse=True)
+
+
+def commits_by_author(days: int = 14) -> dict:
+    """{author: [commits]} via fabric-commits.py --json (decoupled). Empty on any failure."""
+    try:
+        out = subprocess.run(
+            [sys.executable, os.path.join(_TOOLS_DIR, "fabric-commits.py"),
+             "--json", "--days", str(days)],
+            capture_output=True, text=True, encoding="utf-8", errors="replace", timeout=120,
+        )
+        return json.loads(out.stdout).get("by_author", {})
+    except (OSError, ValueError, subprocess.SubprocessError):
+        return {}
+
+
+def _distinctive_tokens(codes: list[str]) -> dict:
+    """{token: code} for code-tokens (split on _) that are UNIQUE to one code and len>=5.
+    Lets a summary short-form ('MDLP', 'GLDINC', 'DEMOAUTH') map to its full code, while
+    excluding shared macros (ADVI, ADHC, FIND...) that don't disambiguate."""
+    tok_codes: dict[str, set] = {}
+    for c in codes:
+        for tok in c.split("_"):
+            if len(tok) >= 5:
+                tok_codes.setdefault(tok, set()).add(c)
+    return {tok: next(iter(cs)) for tok, cs in tok_codes.items() if len(cs) == 1}
+
+
+def infer_project(summary: str, agent_commits: list[dict], codes: list[str],
+                  distinctive: dict | None = None) -> str:
+    """Map an agent to a project (deterministic, best-effort): (1) exact code in summary,
+    (2) a distinctive code-token in summary, (3) its latest commit's code, (4) dominant
+    code across recent commits, (5) (unmapped). The one-line summary is authoritative;
+    this tag is the inferred project context."""
+    s = summary or ""
+    for c in codes:                      # (1) longest-first; first exact summary hit wins
+        if c in s:
+            return c
+    if distinctive is None:
+        distinctive = _distinctive_tokens(codes)
+    for tok, code in distinctive.items():  # (2) distinctive short-form in summary
+        if tok in s:
+            return code
+    commits = agent_commits or []
+    for cm in commits:                   # (3) latest commit's code (most recent work)
+        for c in codes:
+            if c in cm.get("subject", ""):
+                return c
+    hits = Counter()                     # (4) dominant code across recent commits
+    for cm in commits:
+        tt = cm.get("subject", "")
+        for c in codes:
+            if c in tt:
+                hits[c] += 1
+                tt = tt.replace(c, " ")
+    if hits:
+        return hits.most_common(1)[0][0]
+    return "(unmapped)"
 
 
 def classify_declared(summary: str) -> tuple[str, str]:
@@ -220,6 +310,7 @@ def gather() -> list[dict]:
     except OSError:
         pass
 
+    reaped = reaped_recently()
     rows = []
     for serial in serials:
         tel = telemetry_signals(serial)
@@ -256,7 +347,8 @@ def gather() -> list[dict]:
         # (>600s) = the lane's Monitor isn't delivering + it's not self-ticking to re-arm.
         # Post-LD-0157 (no /work self-tick) this is the reachability failure mode for a
         # lane whose persistent Monitor died (esp. ~A lanes the broker can't push to).
-        deaf = unread > 0 and SESSION_ALIVE_S < age_any < DEAF_RECENT_S
+        deaf = (unread > 0 and SESSION_ALIVE_S < age_any < DEAF_RECENT_S
+                and serial not in reaped)  # exclude intentionally-reaped lanes (COO tuning)
 
         # coherence: does declared status match objective telemetry?
         coherence = "OK"
@@ -382,11 +474,38 @@ def render(rows: list[dict]) -> str:
     return "\n".join(out)
 
 
+def render_agents(rows: list[dict]) -> str:
+    """Agent -> project activity: each non-dead agent mapped to the project it's working,
+    with a one-line what-it's-doing (from its broker summary). Project inferred from the
+    summary's project-code reference, else its recent commits."""
+    codes = project_codes()
+    distinctive = _distinctive_tokens(codes)
+    ba = commits_by_author()
+    live = [r for r in rows if r["live"] in ("LIVE", "ALIVE")]
+    mapped = []
+    for r in live:
+        proj = infer_project(r["summary"], ba.get(r["serial"], []), codes, distinctive)
+        one = ascii_clean((r["summary"] or "(no summary)").replace("\n", " "))
+        if len(one) > 110:
+            one = one[:107] + "..."
+        mapped.append((proj, r["serial"], r["live"], one))
+    mapped.sort(key=lambda x: (x[0] == "(unmapped)", x[0], x[1]))
+    out = [f"AGENT -> PROJECT ACTIVITY ({len(mapped)} live agents)  [telemetry-mapped]"]
+    if not mapped:
+        out.append("  (no live agents)")
+    for proj, serial, lv, one in mapped:
+        out.append(f"  {proj:<22} {serial:<28} [{lv:<5}] {one}")
+    return "\n".join(out)
+
+
 def main():
     args = sys.argv[1:]
     rows = gather()
     if "--json" in args:
         print(json.dumps({"rows": rows, "ts": time.time()}, indent=2))
+        return
+    if "--agents" in args:
+        print(render_agents(rows))
         return
     if "--blocks" in args:
         b = bucket(rows)
@@ -407,6 +526,8 @@ def main():
               f"sovereign={len(b['SOVEREIGN'])} stale_verify={len(b['STALE_VERIFY'])}")
         return
     print(render(rows))
+    print("")
+    print(render_agents(rows))
 
 
 if __name__ == "__main__":

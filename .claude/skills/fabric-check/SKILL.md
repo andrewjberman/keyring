@@ -1,6 +1,6 @@
 ---
 name: fabric-check
-description: Displays the true state of every agent in the fabric by fusing TWO signals — objective liveness from PostToolUse telemetry (org/mcp/agent_telemetry/*.jsonl, dual-signal per LD-0070: LIVE<120s work / ALIVE<600s any / STALE>600s) and the self-declared status from the broker summary (org/mcp/liveness.json). Classifies each agent WORKING / IDLE-AVAILABLE / BLOCKED / SOVEREIGN-DECISION-REQUEST / STALE-VERIFY / NEEDS-STATUS, and surfaces the single-point blocks that hold up projects. Telemetry-derived liveness is ground truth (cannot go phantom like the heartbeat-based get_live_agents); the summary is a claim — when they disagree (claims work + telemetry stale) it flags it. Any agent can run `/fabric-check` ad hoc; COO runs it every `/drive` cycle to find and resolve blocks. Read-only, pure filesystem, no MCP round-trip. Run `python .tools/fabric-check.py` (full) / `--blocks` (COO triage) / `--json` (machine).
+description: Deterministic, structured whole-fabric status — a 4-script suite covering both the AGENT axis and the PROJECT axis. AGENTS (fabric-check.py): telemetry-derived dual-signal liveness (LD-0070: LIVE<120s/ALIVE<600s/STALE) fused with the broker summary -> WORKING/IDLE/BLOCKED/SOVEREIGN/STALE-VERIFY/NEEDS-STATUS/DEAF, plus `--agents` mapping each live agent to its project with a one-line what-it's-doing. PROJECTS (fabric-projects.py): not-closed registered projects partitioned HOT (worked <72h) / COLD (>72h, still not closed), each with a <=2-sentence status. COMMITS (fabric-commits.py): scrapes git -> maps commits to project codes + authors, enriching both. Read-only, pure-filesystem/git, no MCP. Any agent ad hoc; COO chains it into /drive. Run: `python .tools/fabric-check.py` (agents, +--blocks/--agents/--json), `python .tools/fabric-projects.py` (--hot/--cold/--json), `python .tools/fabric-commits.py` (--project/--by-author/--json).
 ---
 
 # /fabric-check — Fused Fabric Telemetry + Status
@@ -27,16 +27,35 @@ but-stale summary). That reconciliation is the whole point.
 
 ---
 
-## Invocation
+## The fabric suite — 4 deterministic scripts (2 axes)
+
+`/fabric-check` now spans the **agent axis** AND the **project axis**, deterministically. Four
+scripts, all read-only, all structured (human + `--json`):
+
+| # | Script | Covers | Key invocations |
+|---|---|---|---|
+| 1 | `fabric-projects.py --hot` | **HOT projects** — not-closed, worked <72h. <=2-sentence status each. | `--hot` / `--cold` / (both) / `--json` |
+| 2 | `fabric-projects.py --cold` | **COLD projects** — not-closed, >72h since work (closure-debt / stalled). | same script, `--cold` |
+| 3 | `fabric-check.py --agents` | **Agent activity** — each live agent mapped to its project + a one-line what-it's-doing (telemetry + summary). | `--agents` (or folded into the full `fabric-check.py` run) |
+| 4 | `fabric-commits.py` | **Commit scraper** — maps commits -> project codes + authors; ENRICHES hot/cold (last-activity + "what was done") and the agent->project mapping. | `--project CODE` / `--by-author` / `--json` |
+
+**How they compose:** `fabric-commits` is the shared enrichment layer — `fabric-projects` uses it
+for each project's last-activity (the hot/cold cut) + recent-commit context, and `fabric-check
+--agents` uses it to map agents to the projects they've been committing to. "Worked on" =
+max(project-JSON mtime, latest commit referencing the code). "Not closed" = status not in
+complete/closed/cancelled/merged.
+
+## Invocation (agent axis)
 
 | Form | Use |
 |---|---|
-| `/fabric-check` | Full grouped view of the live fabric. Any agent, any time. |
-| `/fabric-check blocks` | Triage view — only BLOCKED + SOVEREIGN + STALE-VERIFY. COO `/drive` uses this. |
-| `/fabric-check json` | Machine-readable rows (for chaining / scripting). |
+| `/fabric-check` | Full agent view (buckets) + the agent->project activity map. Any agent, any time. |
+| `/fabric-check blocks` | Triage — DEAF + BLOCKED + SOVEREIGN + STALE-VERIFY. COO `/drive` uses this. |
+| `/fabric-check agents` | Just the agent->project activity map (one line each). |
+| `/fabric-check json` | Machine-readable rows. |
 
-Mechanically: run `python .tools/fabric-check.py` (add `--blocks` or `--json`). It is
-read-only, pure-filesystem (no broker call), so it is cheap and safe for any agent to run.
+Mechanically: `python .tools/fabric-check.py` (`--blocks` / `--agents` / `--json`) for agents;
+`python .tools/fabric-projects.py` (`--hot` / `--cold`) for projects. Read-only, pure-filesystem.
 
 ---
 
