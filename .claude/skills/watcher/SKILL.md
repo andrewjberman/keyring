@@ -33,24 +33,25 @@ re-checking. The persistent Monitor removes the OLD bash-watcher failure modes:
 | missed 2nd+ message in a batch | the poll loops over **all** `*.md` each cycle |
 | dies on compaction | a persistent Monitor normally survives in-session compaction |
 
-**EMPIRICAL CAVEAT (2026-06-05, LD-0146 amend — supersedes the "never-off" claim).** The Monitor
-is NOT "never-off." It is **self-healing, not immortal.** Corroborated across 3 agents (ws CTO /
-MSTR / CVO) in one session: the stream Monitor receives **exit-143 (SIGTERM) at irregular intervals
-(~18–133 min)**. **Mechanism KNOWN (MSTR-traced 2026-06-05):** the `register_agent` PostToolUse hook
-runs `kill-orphans --stale --force`, which SIGTERMs any stream watcher whose agent
-`liveness.json last_seen_epoch` is **>600s stale**. The defense — a per-agent **agent-poller** that
-refreshes `last_seen_epoch` every 2s — is **broken this session: ZERO pollers running fabric-wide**
-(`hook_launch_poller.py` fires but produces no live poller). So during any idle>600s gap an agent's
-liveness goes stale, and the next peer's `register_agent` (e.g. any spawn) reaps that agent's
-now-stale stream watcher → exit-143. NOT a cross-agent targeting bug (guards are exact-serial-scoped);
-it's the stale-liveness reap firing because the poller defense is down. **The real fix = restore the
-pollers** (diagnose why `hook_launch_poller.py` yields 0 live pollers) — fabric-infra fix-charter,
-ws-CTO/COO-routed. **Until fixed:** delivery integrity holds — **0 messages lost** across every death
-via death-notification + re-arm + `check_inbox` backstop. Treat death as EXPECTED-and-handled: on a
-`<task-notification status=failed>` for your Monitor's task id, run Step 2→3 (confirm no orphan, pull
-inbox, re-arm). **Residual deaf-window** (idle/compacting agent missing the death-notification) is
-bounded for looped agents — every loop body folds a turn-top `check_inbox`/`get_agent_status` pull, so
-max-deafness ≤ one loop interval.
+**CAVEAT (2026-06-05, LD-0146 amend — Andrew-sovereign-settled).** The "never-off / exit-143 catalog
+GONE" claim is too strong, but the practical reality is: **the Monitor is robust + lossless.** Andrew
+ground-truth (verbatim): *"the monitor function has always been particularly robust, messages are
+never dropped, they live through compactions… no adverse effect… with regard to the actual operations
+of mcp communications."* So:
+- The stream Monitor occasionally receives **exit-143 (SIGTERM)** at irregular intervals. **Source is
+  UNDETERMINED and operational impact is ZERO** — 0 messages dropped, survives compaction, re-arms
+  cleanly. Treat death as EXPECTED-and-handled: on a `<task-notification status=failed>` for your
+  Monitor's task id, run Step 2→3 (confirm no orphan, pull inbox, re-arm). That's the whole protocol.
+- **DO NOT escalate this as a fire/charter.** A FALSIFIED hypothesis chain this session
+  (exit-143 → "0 pollers fabric-wide → kill-orphans stale-liveness reap") was disproven by
+  ground-truth: **"0 pollers" was an MSYS `ps -ef|grep` artifact** — it cannot enumerate DETACHED
+  native-Windows poller processes, which were in fact ALL alive with fresh liveness. So kill-orphans
+  was NOT reaping on stale liveness. Do not re-chase the poller mechanism off a `ps|grep` count;
+  enumerate detached Windows procs by liveness+PID, not `ps|grep`. Residual deaf-window (idle/
+  compacting agent missing the death-notification) is bounded for looped agents anyway — every loop
+  body folds a turn-top `check_inbox`/`get_agent_status` pull, so max-deafness ≤ one loop interval.
+- **Proportionality lesson (banked):** verify OPERATIONAL impact + ground-truth the PREMISE before
+  escalating an infra quirk. This one self-heals losslessly — it never warranted a charter.
 
 **Decisive reachability test — what it is NOT:** *do NOT use `TaskList`.* `TaskList`
 lists `TaskCreate` to-do items, **not** Monitor/background tasks. If you never made
