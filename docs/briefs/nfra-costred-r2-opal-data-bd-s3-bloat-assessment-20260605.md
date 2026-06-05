@@ -179,20 +179,35 @@ concern confirmed for inf too). Cleanest IaC path (AE/DT executes — DS propose
 Home: `infra/aws/terraform/shared-infra/s3.tf` (alongside the other standalone opal-data-* buckets)
 or `bd-pipeline/` — AE's call on module placement.
 
+**CORRECTION (AE pre-apply catch 2026-06-05 162805Z):** an earlier 3-rule draft *removed* the
+whole-bucket 90d rule — which would have stripped noncurrent expiry from silver/bronze/schwab/code
+(versions kept forever = storage grows = NOT status quo, opposite of the cost goal). Corrected to the
+**4-rule Option B** below: KEEP the whole-bucket 90d (status quo for non-gold/platinum) + ADD the two
+scoped 36d rules. S3 overlap semantics apply the shorter (36d) to gold/+platinum/ objects; everything
+else stays 90d. (My 3-rule draft's safety-proof covered gold/platinum rebuildability but not the
+remove-90d-elsewhere side effect — AE caught exactly that.)
+
 ```hcl
-# opal-data-bd lifecycle — NFRA_COSTRED R2 (Andrew 2026-06-05: cut Time Machine to 35d).
+# opal-data-bd lifecycle — NFRA_COSTRED R2 (Andrew 2026-06-05: "Approve scoped cut").
 # Bucket is console-managed (no aws_s3_bucket resource); reference by literal name.
 # IMPORT existing config into state before first apply:
 #   terraform import aws_s3_bucket_lifecycle_configuration.opal_data_bd opal-data-bd
 resource "aws_s3_bucket_lifecycle_configuration" "opal_data_bd" {
   bucket = "opal-data-bd"
 
-  # Noncurrent-version expiry, PREFIX-SCOPED to the pure-supersession, deterministically-
-  # rebuildable serving tiers (gold/ + platinum/ = 2,610 of 2,615 GB of noncurrent bloat).
-  # 90d -> 36d: 35d = Portal Time Machine coherence floor (DynamoDB PITR = 35d rolling); +1d
-  # buffer for day-granular expiry / 5PM-ET rounding. SCOPING RATIONALE (R2 safety gate §3a):
-  # silver/ bronze/ schwab/ code/ are EXCLUDED so the rule can never delete a delete-marker-
-  # orphaned only-copy in those prefixes (custodian history protection — structural, not judgment).
+  # KEEP — existing whole-bucket noncurrent expiry; status quo for silver/bronze/schwab/code/all-else.
+  rule {
+    id     = "expire-noncurrent-versions-90d"
+    status = "Enabled"
+    filter { prefix = "" }
+    noncurrent_version_expiration { noncurrent_days = 90 }
+  }
+
+  # NEW — tighter 36d for the daily-overwrite, deterministically-rebuildable serving tiers.
+  # 90d -> 36d: 35d = Portal Time Machine coherence floor (DynamoDB PITR = 35d rolling); +1d buffer
+  # for day-granular expiry / 5PM-ET rounding. S3 OVERLAP: a gold/ object matches both this 36d rule
+  # and the prefix="" 90d rule -> S3 applies the SHORTER (36d). silver/bronze/schwab/code match only
+  # the 90d -> unchanged (custodian history protection — structural).
   rule {
     id     = "expire-noncurrent-gold-36d"
     status = "Enabled"
@@ -206,24 +221,21 @@ resource "aws_s3_bucket_lifecycle_configuration" "opal_data_bd" {
     noncurrent_version_expiration { noncurrent_days = 36 }
   }
 
-  # UNCHANGED — already live (0 incomplete MPUs currently). Kept so import->apply is a clean modify.
+  # UNCHANGED — already live (0 incomplete MPUs currently).
   rule {
     id     = "abort-incomplete-mpu-7d"
     status = "Enabled"
     filter { prefix = "" }
-    abort_incomplete_multipart_upload {
-      days_after_initiation = 7
-    }
+    abort_incomplete_multipart_upload { days_after_initiation = 7 }
   }
 }
 ```
 
-**Net diff vs live:** the live `expire-noncurrent-versions-90d` (prefix="") is REPLACED by two
-prefix-scoped 36d rules (`gold/`, `platinum/`). abort-MPU-7d unchanged. silver/bronze/schwab/code keep
-no noncurrent-expiry (status quo — they're write-once dated keys, near-zero version churn anyway).
-**Alternative (whole-bucket 36d)** = a single `prefix=""` 36d rule; frees ~1,186 GB incl. the 7.82 GB
-disposable code/intermediate at-risk set — only if COO/Andrew accept that at-risk set is benign (§3a).
-The recommended scoped variant avoids that judgment entirely at ~99% of the savings.
+**Net diff vs live:** the live `expire-noncurrent-versions-90d` + `abort-incomplete-mpu-7d` rules are
+KEPT unchanged; **+2 new rules** (`gold/` 36d, `platinum/` 36d). Net storage effect: gold/+platinum/
+noncurrent versions >36d expire (~1,175 GB / ~$27/mo); every other prefix stays exactly at 90d.
+**Alternative (whole-bucket 36d, single prefix="" rule)** = frees ~1,186 GB incl. the 7.82 GB
+disposable code/intermediate at-risk set — a SEPARATE future decision (§3a); NOT this apply.
 
 ### 4c. Equivalent `put-bucket-lifecycle-configuration` JSON (fallback if not importing to TF)
 Same two rules; provided in the RAVC2 packet for AE. Either path is C2-gated (destructive).
