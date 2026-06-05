@@ -17,3 +17,8 @@ P10=$8.42 vs Median $84.1K = absurd-low (dust contamination: percentile on vals>
 
 ## Verdict
 1 fix (MDLP_DISTFIX REGISTRY row) + 2nd-occurrence pattern flagged to COO; exit-143 + yield-curve fully resolved upstream. Checkpoint advances.
+
+## CORRECTION (appended ~1651Z, truth-over-progress) — exit-143 root-cause FALSIFIED
+The "exit-143 RESOLVED: CTO root-caused (0 agent-pollers fabric-wide)" claim above is WRONG. Post-cycle-12, COO/0.7.0 falsified it: "0 pollers" was a Git-Bash-`ps` measurement artifact (PowerShell shows pollers ALIVE, 17) — same ps-tooling-blindness class as CLAUDE.md Rule 16. exit-143 SIGTERM source is STILL UNDETERMINED (CTO 1802e329b "likely Claude Code layer" re-vindicated). MSTR corrected LD-0146 (correction-4) + RV-0029 narrative + memory.
+- STANDS: delivery-integrity finding (self-heal + check_inbox backstop, 0 lost), SKILL.md "never-off" truthing, LD-0146 amend. RV-0029 acceptance intact (falsified line = incidental progress-narrative, NOT a finding/verdict element; the audit-walk window-health rests on was re-derived EXACT).
+- MY LESSON: I relayed CTO's root-cause as "RESOLVED" without verifying the "0 pollers" claim. A relayed root-cause is a claim to verify, not a fact — had I cross-checked with PowerShell (Rule-16 reflex) I'd have caught the artifact. Bank: mark relayed root-causes "their diagnosis (unverified)" unless I verified them.
