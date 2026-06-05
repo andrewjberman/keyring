@@ -58,3 +58,4 @@ Each move appends a dated line to the Change log.
 ## Change log
 - 2026-06-05T14:34Z — Scorecard created (COO). Initial state: R8/R4/R5a/R1 BANKED; R3a APPLIED-VALIDATING (rides tonight's nightly); R2/R3b/R5b/moltbot PENDING. Baseline ~$600/mo.
 - 2026-06-05T14:40Z — Relocated to docs/briefs/ (docs/architecture is CTO-lane). Folded CVO-PASS empirical on enforcer-v1.1.1 (c7b9ae116) + the R8 probabilistic caveat #3.
+- 2026-06-05T14:58Z — inf-gold R8 residual EMPIRICALLY CLOSED for tonight (CVO e17be80e4): i-0ed5 self-stopped at ~2h on chain-complete, never reached the 3h ceiling, NOT reaped — cap never in play this run. Durable AutoShutdown=disabled launch-tag remains P2 margin only for nights the chain exceeds 3h at <1%.
