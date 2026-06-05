@@ -223,10 +223,17 @@ def classify_declared(summary: str) -> tuple[str, str]:
     low = s.lower()
     if not s:
         return ("UNCLEAR", "(no summary set)")
-    # Sovereign request -- highest precedence (a block needing Andrew/MSTR ruling)
-    sov_markers = ("blocked-sovereign", "[sovereign", "sovereign decision",
-                   "sovereign-decision", "needs andrew", "andrew ruling",
-                   "needs sovereign", "sovereign discretion", "sovereign ruling")
+    # Sovereign request -- a block REQUESTING an Andrew/MSTR ruling (NOT a report of a
+    # past ruling). Request-phrasing only: explicit BLOCKED-SOVEREIGN token, or a
+    # request verb (needs/awaiting/pending/requires) + andrew/sovereign. Deliberately
+    # excludes report phrasings ("per andrew ruling", "andrew-direct", "sovereign
+    # decision made") that caused false escalations.
+    sov_markers = ("blocked-sovereign", "[sovereign", "[bl-sov",
+                   "needs andrew", "awaiting andrew", "pending andrew", "requires andrew",
+                   "needs sovereign", "awaiting sovereign", "pending sovereign",
+                   "requires sovereign", "sovereign-decision-request", "needs a sovereign",
+                   "needs a ruling from andrew", "sovereign call needed",
+                   "needs sovereign ruling", "sovereign discretion needed")
     if any(m in low for m in sov_markers):
         return ("SOVEREIGN", s)
     # Explicit blocked
