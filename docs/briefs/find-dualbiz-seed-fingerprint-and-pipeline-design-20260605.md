@@ -137,6 +137,37 @@ Two disclosure-string web searches (`"advisory services offered through Alphasta
 
 **Immediate scale path:** repeat the disclosure-string search per insurance-channel TAMP/RIA name (broaden beyond Alphastar) → each returns its producing-agency roster → fingerprint-score + size-screen → tier-labeled serving table. Codify B1 as the lead Lambda/script; B2 (ADV graph) + A (scorer) + C (broad web-search) layer on for depth + recall.
 
+## 5.3 Broader-scan — peer-provider discovery + disclosure-string reverse-engineering (2026-06-05)
+
+Andrew direct: "find similar providers like alpha and FIG and reverse engineer from them
+the disclosures that would appear on paraclete-style firms." Codified as `broaden.py` +
+`config/provider-seeds-v1.json`.
+
+**Primitive:** a *provider* = an IMO/FMO (FIG-class) paired with its commonly-controlled /
+affiliated RIA-TAMP (Alphastar-class) — the dual-business engine. The affiliated-RIA name
+is the lever: `broaden.generate_disclosure_strings(ria)` reverse-engineers the exact
+footer-disclosure search-strings (`"offered through {ria}"`, `"{ria}" "separate and
+independent entities"`, ...), and reverse-searching each returns that provider's
+producing-agency roster. One provider → a whole batch of Paraclete-style leads.
+
+**Providers discovered (web research 2026-06-05):**
+
+| IMO/FMO | Affiliated RIA/TAMP | Relationship |
+|---|---|---|
+| Financial Independence Group | Alphastar Capital Management | FOC (seed) |
+| Advisors Excel | AE Wealth Management | affiliated |
+| AmeriLife | Brookstone Capital Management | AmeriLife acquired majority — "turnkey platform specifically supporting insurance-licensed retirement advisors" |
+| Senior Market Sales | Sequent Planning | SMS acquired the RIA |
+
+**Expansion proven end-to-end:** roster grew 5 → 11 firms; 2 new providers (Brookstone, AE Wealth)
+harvested 6 new producing candidates (Capital Wealth, Airlie Wealth Advisors, Hackmann Wealth,
+Cornerstone Retirement, Retirement Wealth Advisors, Brookstone Insurance Group). Pipeline result:
+4 `present` via curl (Paraclete 190 / Capital Wealth 175 / Ramer 123 / 49 160); the other harvested
+firms land **producing/adjacent** — correctly, because their dual-entity disclosure is **JS-rendered**
+(curl can't see the footer even though the disclosure-search proved it exists), so they are flagged
+fetch-limited rather than mislabeled. **This makes the Playwright escape-valve the clear next hardening:**
+it converts known-but-JS-hidden `adjacent` → `present` at scale.
+
 ## 6. Open decisions / next steps
 
 1. **Project code + registration** — provisional `FIND_DUALBIZ`; confirm with Andrew/CTO; register `org/projects/*.json` + REGISTRY row if formalized (2-step). Until then this is ad-hoc exploration under the engagement.
