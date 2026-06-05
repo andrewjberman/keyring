@@ -42,4 +42,20 @@ The two biggest long poles (B_01 20m, D_02 12m = 35% of wall) are **single-threa
 - HARD CONSTRAINT honored: no manufactured c6i.16xlarge run (memory `feedback_no_adhoc_gold_runs_validate_on_scheduled_nightly`).
 
 ## Sequencing recommendation
-Spot-first (reversible, immediate ~70%, no re-validation) → then right-size to r6i.4xlarge validated on one nightly (structural ~63%, stacks with Spot to ~85%) → then archive perf_history for ongoing right-size governance. A_03 memory-chunking is a separate future lever that would unlock an even smaller (64 GB) box.
+Spot-first (reversible, immediate ~70%, no re-validation) → then right-size to r6i.4xlarge validated on one nightly (structural ~63%, stacks with Spot to ~85%) → then archive perf_history for ongoing right-size governance. A_03 memory-chunking is a separate future lever that would unlock an even smaller (64 GB) box. **(See addendum — the persistent-instance architecture inverts this; right-size is actually the trivial reversible-first step.)**
+
+## ADDENDUM — instance architecture re-shapes the mechanism (post-CTO-bless)
+The bd-gold runner is a **PERSISTENT on-demand instance** `i-01003b035d2988dfb` (c6i.16xlarge), NOT launched fresh each night. `bd-gold-trigger` Lambda does `start_instances([i-01003b...])` (hardcoded id, env `GOLD_INSTANCE_ID`) on an EventBridge schedule (~04:00Z UTC start; last run 04:00:25Z→~05:22Z, ~82 min); the runner self-stops after the chain. `infra/aws/ec2/bd-gold-layer-runner/launch-instance.sh` is **STALE** (says `r6i.xlarge`, runs an old `run_all.sh`) — it created the instance once and is NOT the live mechanism; do not edit it for right-sizing.
+
+This **inverts the CTO's "Spot-first = zero-effort" assumption**:
+- **RIGHT-SIZE is the trivial, instantly-reversible step:** one command on the already-stopped instance — `aws ec2 modify-instance-attribute --instance-id i-01003b035d2988dfb --instance-type r6i.4xlarge`. Rides the next nightly start. Revert = same command back to `c6i.16xlarge`. No new infra, no file change.
+- **SPOT is the BIGGER step:** a persistent on-demand instance's lifecycle is immutable — can't flip to Spot in place. Spot needs NEW launch infra (launch-template + spot request + HARD-#1 on-demand fallback + re-pointing the trigger off `start_instances`). A design+build, not a config stage.
+
+Architecture-correct reversible-first order: **RIGHT-SIZE first** (modify-instance-attribute, one nightly, instant revert) → **THEN** build the Spot launch path with on-demand fallback. Still satisfies one-variable-per-nightly + reversible-first — better than Spot-first given the persistent model.
+
+### #4 timing (confirmed safe)
+Nightly starts ~04:00Z UTC, completes ~05:22Z. Portal morning consumption ~13:00Z+ ⇒ **~7-8 h margin**. Right-size's est. +10-20 min wall lands ~05:42Z — zero risk to portal morning reads.
+
+### Staged (DEPLOY NONE — gated on Andrew GO)
+- **Right-size (ready):** `aws ec2 modify-instance-attribute --instance-id i-01003b035d2988dfb --instance-type r6i.4xlarge` (instance stopped now). Validate next nightly: perf_report wall + `sys_mem < 128 GB` + chain exit 0. Revert documented above.
+- **Spot (design item):** launch-template + capacity-optimized spot request + on-demand `r6i.4xlarge` fallback (HARD #1) + trigger re-point. Needs a build pass after the right-size validates.
