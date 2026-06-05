@@ -1,6 +1,11 @@
 {
   "status": "active",
-  "current_phase": "Phase 0 EXPLORATORY-AUDIT — REGISTERED 2026-06-05 (2.0.0_SA_COO, Andrew-direct). GOAL: assess incrementalizing the heavy gold pipelines — move from nightly FULL-RECOMPUTE toward new-row->transform->append (true incremental), script-by-script + layer-by-layer, STARTING WITH bd-gold (inf-gold next). The engineering-correct fix beneath the R3 right-size band-aid: compute scales with the delta, not total dataset. OWNERS: 0.6.0_AE (LEAD — compute/DAG/dispatch mechanics + the fresh R3 perf_report substrate) + 0.4.0_DS (CO — data-transform semantics: which transforms are append-friendly vs aggregation/ranking/full-join that inherently need the whole population). DELIVERABLE: per-script incrementalizability classification (CLEAN-APPEND / INCREMENTAL-WITH-RECONCILE / FULL-RECOMPUTE-INHERENT) + the lift + infra prereqs (watermark/delta-detection/checkpoint-state/periodic-reconcile) + phased roadmap (highest-win-lowest-risk first) + est. compute/memory reduction. ANALYSIS-ONLY: no pipeline changes, no ad-hoc runs; read scripts + perf telemetry + data model; leverage existing --incremental (date-watermark) + --from (resume) primitives; respect bronze/silver/gold tier discipline (Rule 17) + reconcile-correctness (incremental pipelines drift -> need periodic full reconcile). Feeds NFRA cost-reduction (the durable lever beyond R3c). CTO looped — formalizes into a build PRD if the audit greenlights.",
-  "pods": ["0.6.0", "0.4.0", "1.0"],
-  "macro": "ADHC"
+  "current_phase": "Phase 1 BUILD-PRD AUTHORED 2026-06-05 (1.0.0_SA_CTO) — Andrew greenlit build-GO + 5 hard safety gates (dual-run parity oracle / phased one-at-a-time lowest-risk-first / reconcile-correctness gate / CHECKPOINT-primitive-first / cost-model sizing). PRD v0.1 = docs/architecture/ADHC_GLDINC_PRD.md, DRAFT FOR ANDREW REVIEW (plan NOT build-authorization — production untouched until Andrew approves mechanics; each cutover separately Andrew-gated). Roadmap P0 CHECKPOINT(standalone, also unblocks R3b-Spot) -> P1 load_flows watermark(plumbing-proof, zero correctness change) -> P2 A_03 memory-floor prize(drops 76GB->smaller box, compounds R3) -> P3 D_02/D_04 dirty-entity fan-out -> P4 cumulative-carry+B_01 FIFO -> P5 D_00b freeze-baseline. Phase-0 audit: 27 scripts CA=8/IWR=12/FRI=7 -> 0 truly FRI under freeze-baseline (residue=C_07 cheap global core). Validate-on-nightly only (C1). Pending Andrew PRD review -> then COO decomposes phase-TOs (0.6.0 lead mechanics + 0.4.0 reconcile-correctness).",
+  "pods": [
+    "0.6.0",
+    "0.4.0",
+    "1.0"
+  ],
+  "macro": "ADHC",
+  "prd": "docs/architecture/ADHC_GLDINC_PRD.md"
 }
