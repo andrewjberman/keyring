@@ -108,6 +108,12 @@ most fabric advancement is event-driven and self-healing, but the failure mode /
 catch is the **single block that holds up a whole project or the whole fabric**. fabric-check
 finds those. For each item in the triage:
 
+- **DEAF / UNREACHABLE** → the lane has unread inbox + quiet telemetry = its Monitor isn't
+  delivering and (post-LD-0157) it has no self-tick to re-arm. It CANNOT be tasked. **Respawn-request
+  to MSTR** (a respawn re-arms its Monitor + lets it drain the backlog); reroute any time-sensitive
+  work it was holding to a reachable lane (e.g. the base lane) in the meantime. Most common on `~A`
+  lanes (broker can't push to them). This is the reachability failure mode the retired self-tick used
+  to mask — DEAF detection is now how it surfaces.
 - **BLOCKED** → resolve it (dispatch the unblocking move via Step 5) OR escalate it (`[STUCK]` to
   MSTR per the LD-0026 chain) — this cycle. Never leave a block un-acted.
 - **SOVEREIGN-DECISION REQUEST** → **declare it**: route the decision to Andrew, CC MSTR. If the

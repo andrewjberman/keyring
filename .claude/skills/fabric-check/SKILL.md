@@ -44,12 +44,21 @@ read-only, pure-filesystem (no broker call), so it is cheap and safe for any age
 
 | Bucket | Meaning | Who acts |
 |---|---|---|
+| **DEAF / UNREACHABLE** | unread messages piling in the top-level inbox + telemetry-quiet (>600s) but recently-active (<2h) — the lane's Monitor isn't delivering and (post-LD-0157) it has no self-tick to re-arm. Critical for `~A` lanes the broker can't push to. | **COO: respawn-request to MSTR** (a respawn re-arms its Monitor + lets it process the backlog). It CANNOT be tasked until then. |
 | **WORKING** | telemetry LIVE/ALIVE + summary describes active work | nobody — flowing |
 | **IDLE / AVAILABLE** | declared idle/available/parked/standing-by (telemetry-quiet is expected) | nobody — but a candidate for reallocation if there is queued work |
 | **BLOCKED** | declared blocked, or holding/pending a ruling/decision | **COO: resolve or escalate EACH this cycle** |
 | **SOVEREIGN-DECISION REQUEST** | a block whose resolution needs an Andrew/MSTR ruling | **COO declares it**; MSTR rules via `/govern` if Andrew silent 1 turn |
 | **STALE-VERIFY** | summary reads as work but telemetry > 600s — stuck/dead session OR a stale summary | **COO: confirm the owner is alive** (could be a single-point stall) |
 | **NEEDS-STATUS** | alive but summary declares no clear state (empty / ambiguous) | nudge the agent to set an explicit state token |
+
+**DEAF is the post-LD-0157 reachability guard.** With worker/CTO self-tick loops retired, a lane
+whose persistent Monitor dies (the occasional exit-143) no longer has a self-tick to re-arm it —
+so it goes silently unreachable (unread inbox accrues, no telemetry). `~A` lanes are most exposed
+(the broker suffix-strips their push, so the Monitor poll is their only delivery path). DEAF
+detection (unread + quiet + recently-active) is how COO's centralized `/drive` catches these; the
+fix is a respawn (MSTR creator-destroyer) which re-arms the Monitor. The deeper root-cause
+(Monitor-death resilience + `~A` event-delivery) is charted to infra.
 
 The bottom line `FABRIC-CHECK-RESULT blocked=N sovereign=N stale_verify=N needs_status=N`
 is machine-parseable for chaining; `ACTION-REQUIRED:` states whether a COO move is owed.

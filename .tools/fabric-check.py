@@ -48,6 +48,10 @@ LIVE_WORK_S = 120      # last kind:work within this -> LIVE (dispatch-grade)
 SESSION_ALIVE_S = 600  # last any-kind within this -> session alive
 # An agent is shown if it is in liveness.json OR had any telemetry within this window.
 RELEVANCE_S = 900      # 15 min -- keeps the historical lane files out of the view
+# DEAF window: a lane counts as "was a live session that went deaf" only if it had
+# telemetry within this window. Older (or never) = just an offline agent with leftover
+# mail, NOT a deaf-live-session needing respawn. Bounds the unread-inbox signal.
+DEAF_RECENT_S = 7200   # 2h
 
 ROOT = os.environ.get("CLAUDE_PROJECT_DIR") or os.getcwd()
 LIVENESS = os.path.join(ROOT, "org", "mcp", "liveness.json")
@@ -96,6 +100,31 @@ def telemetry_signals(serial: str) -> dict:
         if last_any and last_work and (last_any - ts) > SESSION_ALIVE_S * 2:
             break
     return {"last_any": last_any, "last_work": last_work, "last_tool": last_tool}
+
+
+INBOX_DIR = os.path.join(ROOT, "org", "mcp", "inbox")
+
+
+def unread_inbox(serial: str) -> tuple[int, float]:
+    """(count, newest_mtime) of unread top-level *.md in inbox/{serial}/.
+    The stream Monitor mv's delivered messages to read/, so top-level *.md left in
+    the inbox = messages NOT yet processed by the lane's Monitor. A pile of these on
+    a telemetry-quiet lane = the lane is DEAF (dead Monitor + no self-tick to re-arm)."""
+    d = os.path.join(INBOX_DIR, serial)
+    count = 0
+    newest = 0.0
+    try:
+        for fn in os.listdir(d):
+            if fn.endswith(".md"):
+                p = os.path.join(d, fn)
+                if os.path.isfile(p):
+                    count += 1
+                    m = os.path.getmtime(p)
+                    if m > newest:
+                        newest = m
+    except OSError:
+        pass
+    return count, newest
 
 
 def classify_declared(summary: str) -> tuple[str, str]:
@@ -174,11 +203,20 @@ def gather() -> list[dict]:
         liveness = {}
 
     # candidate serials: registered (liveness.json) UNION recently-active (telemetry)
+    # UNION any serial with unread top-level inbox (a deaf lane may be telemetry-stale
+    # + unregistered yet still have a pile of undelivered messages -- must not be filtered out)
     serials = set(liveness.keys())
     try:
         for fn in os.listdir(TELDIR):
             if fn.endswith(".jsonl") and fn != ".jsonl":
                 serials.add(fn[:-len(".jsonl")])
+    except OSError:
+        pass
+    try:
+        for dn in os.listdir(INBOX_DIR):
+            dp = os.path.join(INBOX_DIR, dn)
+            if os.path.isdir(dp) and any(f.endswith(".md") for f in os.listdir(dp)):
+                serials.add(dn)
     except OSError:
         pass
 
@@ -189,14 +227,19 @@ def gather() -> list[dict]:
         summary = info.get("summary", "")
         hb = float(info.get("last_seen_epoch") or 0)
         registered = serial in liveness
+        unread, unread_newest = unread_inbox(serial)
 
         last_any = tel["last_any"]
         last_work = tel["last_work"]
         age_any = (now - last_any) if last_any else 1e12
         age_work = (now - last_work) if last_work else 1e12
 
-        # relevance filter: skip dormant historical lanes
-        if not registered and age_any > RELEVANCE_S:
+        # relevance filter: skip dormant historical lanes. Keep a lane only if it is
+        # registered, recently active, OR a DEAF candidate (unread + recently-a-live-
+        # session). A long-offline lane with leftover mail (unread but no telemetry in
+        # 2h) is NOT actionable here -- skip it.
+        deaf_candidate = unread > 0 and age_any < DEAF_RECENT_S
+        if not registered and age_any > RELEVANCE_S and not deaf_candidate:
             continue
 
         # objective liveness from telemetry (ground truth)
@@ -209,9 +252,17 @@ def gather() -> list[dict]:
 
         decl_state, detail = classify_declared(summary)
 
+        # DEAF: unread messages piling in the top-level inbox while telemetry is quiet
+        # (>600s) = the lane's Monitor isn't delivering + it's not self-ticking to re-arm.
+        # Post-LD-0157 (no /work self-tick) this is the reachability failure mode for a
+        # lane whose persistent Monitor died (esp. ~A lanes the broker can't push to).
+        deaf = unread > 0 and SESSION_ALIVE_S < age_any < DEAF_RECENT_S
+
         # coherence: does declared status match objective telemetry?
         coherence = "OK"
-        if live == "STALE" and decl_state == "WORKING":
+        if deaf:
+            coherence = "DEAF"      # unread inbox + telemetry-quiet = unreachable lane
+        elif live == "STALE" and decl_state == "WORKING":
             coherence = "PHANTOM"   # claims working, telemetry says dead
         elif live in ("LIVE", "ALIVE") and decl_state == "UNCLEAR":
             coherence = "UNCLEAR"   # alive but declares no clear state
@@ -230,6 +281,7 @@ def gather() -> list[dict]:
             "detail": detail,
             "registered": registered,
             "hb_age_s": round(now - hb) if hb else None,
+            "unread": unread,
         })
     return rows
 
@@ -240,9 +292,13 @@ def bucket(rows: list[dict]) -> dict:
     agent legitimately makes no tool calls); NEEDS_STATUS captures the status-hygiene
     gap (empty/undeclared summary) Andrew wants surfaced."""
     b = {"WORKING": [], "IDLE": [], "BLOCKED": [], "SOVEREIGN": [],
-         "STALE_VERIFY": [], "NEEDS_STATUS": [], "STALE": []}
+         "DEAF": [], "STALE_VERIFY": [], "NEEDS_STATUS": [], "STALE": []}
     for r in rows:
-        if r["declared"] == "SOVEREIGN":
+        if r["coherence"] == "DEAF":
+            # unreachable lane (unread inbox + telemetry-quiet) -- highest-priority
+            # reachability emergency: it cannot be tasked until respawned.
+            b["DEAF"].append(r)
+        elif r["declared"] == "SOVEREIGN":
             b["SOVEREIGN"].append(r)
         elif r["declared"] == "BLOCKED":
             b["BLOCKED"].append(r)
@@ -286,6 +342,16 @@ def render(rows: list[dict]) -> str:
             out.append(f"  {r['serial']:<30} [{r['live']:<5}] {agestr:<16} | {s}")
         out.append("")
 
+    # DEAF section -- custom (show unread count; the actionable detail)
+    out.append(f"DEAF / UNREACHABLE ({len(b['DEAF'])})   <-- unread inbox + telemetry-quiet: lane can't be tasked; COO -> MSTR RESPAWN")
+    if not b["DEAF"]:
+        out.append("  (none)")
+    for r in sorted(b["DEAF"], key=lambda x: x["serial"]):
+        aa = humum(r["age_any_s"])
+        out.append(f"  {r['serial']:<30} [{r['live']:<5}] act {aa:<6} unread={r.get('unread', 0)} | "
+                   f"{ascii_clean((r['summary'] or '(no summary)'))[:90]}")
+    out.append("")
+
     section("WORKING", "WORKING")
     section("IDLE / AVAILABLE", "IDLE")
     section("BLOCKED", "BLOCKED", "<-- COO /drive: resolve or escalate EACH")
@@ -296,15 +362,18 @@ def render(rows: list[dict]) -> str:
             "<-- ask agent to set WORKING: / IDLE: available / BLOCKED: <what>")
     section("STALE (quiet, declared-idle)", "STALE")
 
+    nd = len(b["DEAF"])
     nb, ns, nsv = len(b["BLOCKED"]), len(b["SOVEREIGN"]), len(b["STALE_VERIFY"])
     nns = len(b["NEEDS_STATUS"])
     out.append(f"SUMMARY: {len(b['WORKING'])} working | {len(b['IDLE'])} idle | "
-               f"{nb} blocked | {ns} sovereign-req | {nsv} stale-verify | "
+               f"{nd} deaf | {nb} blocked | {ns} sovereign-req | {nsv} stale-verify | "
                f"{nns} needs-status")
     # machine-parseable line for /drive chaining
-    out.append(f"FABRIC-CHECK-RESULT blocked={nb} sovereign={ns} stale_verify={nsv} "
+    out.append(f"FABRIC-CHECK-RESULT deaf={nd} blocked={nb} sovereign={ns} stale_verify={nsv} "
                f"needs_status={nns}")
-    if nb or ns:
+    if nd:
+        out.append("ACTION-REQUIRED: DEAF lane(s) -- unreachable, can't be tasked. COO: respawn-request to MSTR (re-arms its Monitor). Critical for ~A lanes (no self-tick).")
+    elif nb or ns:
         out.append("ACTION-REQUIRED: blocked/sovereign present -- COO must resolve or escalate this cycle.")
     elif nsv:
         out.append("ACTION-REQUIRED: stale-verify present -- COO: confirm those owners are alive (could be a single-point stall).")
@@ -321,18 +390,20 @@ def main():
         return
     if "--blocks" in args:
         b = bucket(rows)
-        triage = ([("BLOCKED", r) for r in b["BLOCKED"]]
+        triage = ([("DEAF", r) for r in b["DEAF"]]
+                  + [("BLOCKED", r) for r in b["BLOCKED"]]
                   + [("SOVEREIGN", r) for r in b["SOVEREIGN"]]
                   + [("STALE-VERIFY", r) for r in b["STALE_VERIFY"]])
         if not triage:
-            print("FABRIC-CHECK: no blocks / sovereign-requests / stale-verify. Fabric flowing.")
-            print("FABRIC-CHECK-RESULT blocked=0 sovereign=0 stale_verify=0")
+            print("FABRIC-CHECK: no deaf / blocks / sovereign-requests / stale-verify. Fabric flowing.")
+            print("FABRIC-CHECK-RESULT deaf=0 blocked=0 sovereign=0 stale_verify=0")
             return
         print(f"FABRIC-CHECK TRIAGE ({len(triage)} items need COO attention):")
         for tag, r in triage:
             s = ascii_clean((r["summary"] or "(no summary)").replace("\n", " "))
-            print(f"  [{tag}] {r['serial']} [{r['live']}] :: {s[:160]}")
-        print(f"FABRIC-CHECK-RESULT blocked={len(b['BLOCKED'])} "
+            extra = f" unread={r.get('unread', 0)}" if tag == "DEAF" else ""
+            print(f"  [{tag}] {r['serial']} [{r['live']}]{extra} :: {s[:150]}")
+        print(f"FABRIC-CHECK-RESULT deaf={len(b['DEAF'])} blocked={len(b['BLOCKED'])} "
               f"sovereign={len(b['SOVEREIGN'])} stale_verify={len(b['STALE_VERIFY'])}")
         return
     print(render(rows))
