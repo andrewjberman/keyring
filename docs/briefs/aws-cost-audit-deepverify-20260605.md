@@ -82,7 +82,7 @@ Andrew (verbatim): *"everything should be on the 3hr kill, there is no reason an
 
 **Tests:** `test_enforcer.py` 10/10 pass (idle-reap / busy-spare / sub-ceiling-spare / None-coverage-conservative / AutoShutdown-disabled / demo-busy-spare / inf-exporter-idle-reap / hard-cap disabled+enabled). ds-commit-gate clean. `terraform plan` = 1 resource in-place (0 add/destroy).
 
-**Immediate actions executed (Andrew GO):** inf-exporter i-081ae6aa STOPPED (was idle 0.3% the full prior 30min); 4 unattached EBS vols snapshotted (pre-delete insurance) then deleted.
+**Immediate actions executed (Andrew GO):** inf-exporter i-081ae6aa STOPPED (was idle 0.3% the full prior 30min); **ALL 4/4** unattached EBS vols snapshotted (pre-delete insurance) then DELETED — vol-07e6ca7175ef9d1c1, vol-05425c3a28f7e2ca9, vol-0a6bb3594ff6393cc (bd-snapshot, 8GB ea), vol-0ba59aa26025649d5 (docker-builder-temp, 20GB). Snapshots retained: snap-05db82f8d4286a2ba, snap-01771ef4a3a1dcb3f, snap-06d7ff3c4fc26977f, snap-04d33fef82d0d16bf. (Reconciled 4/4 per CVO correction — an interim report read 3/4 while the docker-builder-temp snapshot was still completing.)
 
 **demo-transform note:** the universal cap also handles it — once its live re-clone completes + goes idle 3h, the enforcer auto-reaps it (stop), no manual EXCLUDED maintenance. 0.6.0 still terminates at DEMOAUTH.002 close for full teardown.
 
