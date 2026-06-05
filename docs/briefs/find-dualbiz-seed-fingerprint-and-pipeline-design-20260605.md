@@ -58,6 +58,10 @@ Ranked desirability of what the pipeline surfaces:
 
 The scorer and the output ranking weight to this order. Tier is an **emitted label**, not a filter — surface all three, route by tag.
 
+**Size / practicality screen (Andrew direct 2026-06-05) — first-class filter.** The old `FIND_INSURE` IMO universe (the 99 safemoneybroadcasting IMOs — Allianz, Midland, American Equity, etc.) is **explicitly out of scope as a seed**: those firms are too large to be practical leads ("so huge it's kind of useless for us in practice"). The target sweet spot is the **small/mid producing agency** doing real insurance volume while building AUM — the Paraclete shape, not the carrier/giant-IMO shape. Discovery and ranking **de-prioritize / drop giant carriers and mega-aggregators**; a practicality screen (employee-count / AUM band / "is this a sellable-sized firm") is part of the serving rank, not a post-hoc cleanup.
+
+**Calibration posture (Andrew direct 2026-06-05): overfitting on 49 / Paraclete early is acceptable.** Lock the fingerprint on the 3 seeds now (weighted to the 49 + Paraclete producing/integrated cluster); do NOT wait on additional Sales exemplars to generalize. Broaden later if recall proves thin.
+
 ### 3.3 Terminology clusters (verbatim, by register)
 
 | Cluster | Exact on-site terms observed |
@@ -81,7 +85,10 @@ The bronze→silver→gold→serving skeleton in `data/find/imo/scripts/` and th
 
 ### Three discovery engines (cheapest / highest-precision first)
 
-- **Engine B — Affiliation-graph walk (LEAD; free, structured, high-precision).** The §3.1 disclosure names the affiliated RIA/TAMP and BD. Pull each named RIA's **Form ADV** (SEC IAPD / `adviserinfo.sec.gov` / `reports.adviserinfo.sec.gov` — public, no auth) → it enumerates affiliated entities, DBAs, and the **IAR roster** → each IAR's producing agency is a fresh **producing-tier** lookalike (priority 1). Reverse-search ADVs for "under common control with [insurance wholesaler/IMO]" to find **aggregator-tier** firms. Reuses the existing FINRA/ADV client (`brokercheck_client.py`). Turns "find comparable companies" from fuzzy NLP into a mostly-deterministic public-records walk.
+- **Engine B — Affiliation-graph walk (LEAD; free, structured, high-precision).** The §3.1 disclosure names the affiliated RIA/TAMP and BD — these are graph edges. Two realizations, sharpest first:
+  - **B1 — disclosure-string reverse-search (sharpest, yields small producers).** Every producing agency that uses a given TAMP/RIA prints the exact phrase `"offered through [RIA name]"` in its footer. Reverse-searching that string (e.g. `"offered through Alphastar Capital Management"`) returns the **roster of that TAMP's producing agencies directly** — and they are inherently the small/mid Paraclete-shape firms (giant carriers don't disclose a third-party TAMP), so the §3.2 size screen comes nearly for free. Each hit → score via Engine A. Overfit-start on the Alphastar cluster (Paraclete's TAMP); broaden to other insurance-channel TAMP/RIA names as the fingerprint widens.
+  - **B2 — Form ADV graph (structured depth).** Pull each named RIA's **Form ADV** (SEC IAPD / `adviserinfo.sec.gov` / `reports.adviserinfo.sec.gov` — public, no auth) → affiliated entities, DBAs, IAR roster, and **confirmed AUM** (feeds the size screen) → each IAR's producing agency is a producing-tier lookalike. Reverse-read ADVs for "under common control with [insurance wholesaler/IMO]" to find **aggregator-tier** firms. Reuses the existing FINRA/ADV client (`brokercheck_client.py`).
+  - Net: turns "find comparable companies" from fuzzy NLP into a mostly-deterministic public-records + disclosure-string walk.
 - **Engine A — Fingerprint scoring (re-tuned taxonomy).** New `config/term-taxonomy-dualbiz-v1.json` + a **disclosure-regex module** + recalibrated weights, validated so all 3 seeds score `present` and tier-classify correctly (Paraclete→producing, 49→integrated, FIG→aggregator). Runs on every candidate domain to confirm + assign tier + extract named RIA/BD.
 - **Engine C — Fingerprint-query web search (recall extender; top-of-funnel breadth).** Distinctive-phrase queries (e.g. "retirement income distribution planning insurance" + "advisory services offered through"; "Power of Zero"; "Family of Companies" IMO RIA; "principal protection" "fiduciary") → candidate domains → feed Engine A. The broad net for firms not reachable via the ADV graph.
 
@@ -111,6 +118,24 @@ Per candidate firm: `firm_name`, `domain`, `tier ∈ {producing, integrated, agg
 - **Bright Data dependency: removed** from the new path. FIND_INSURE's `crawl_web_bronze.py` (Bright Data) is replaced by a browser-UA curl fetcher + Playwright fallback.
 
 ---
+
+## 5.2 Engine B1 PoC — first candidate batch (2026-06-05, validated)
+
+Two disclosure-string web searches (`"advisory services offered through Alphastar Capital Management"`; `"offered through Alphastar Capital Management" "separate and independent entities"`) surfaced Alphastar's producing-agency roster directly — the Paraclete cohort:
+
+| Firm | Domain | Tier | Status |
+|---|---|---|---|
+| Paraclete Wealth Partners | paracleteusa.com | producing | seed |
+| **Ramer Retirement Resources** | ramerretirement.com | producing | **CONFIRMED** — disclosure hit; retirement×14 / tax×10 / "security" register; small site (small firm) |
+| **Refined Financial Management** | refinedfinancial.co | producing/integrated | **CONFIRMED** — disclosure hit; "wealth management"×4; Alphastar×6; small |
+| Mainstay Financial Group | (resolve) | producing | candidate (disclosure hit in search) |
+| Independence Wealth Advisors | (resolve) | producing | candidate (disclosure hit in search) |
+| Crown Wealth Group / **Evolv Family Wealth** | — | aggregator | byproduct — Alphastar+Crown launched a multi-family-office platform |
+| Envestnet Insurance Exchange | — | aggregator/integration | byproduct — Alphastar income/protection TAMP integration |
+
+**Method validated end-to-end at ZERO cost, browser-UA only (no Bright Data):** disclosure-string search → browser-UA `curl` fetch → fingerprint-scan confirm. The confirmed firms are exactly the on-thesis target: small/mid agencies, insurance/retirement-"financial-security" front, Alphastar as the RIA. This is the highest-precision, cheapest discovery path and it works on the first pass.
+
+**Immediate scale path:** repeat the disclosure-string search per insurance-channel TAMP/RIA name (broaden beyond Alphastar) → each returns its producing-agency roster → fingerprint-score + size-screen → tier-labeled serving table. Codify B1 as the lead Lambda/script; B2 (ADV graph) + A (scorer) + C (broad web-search) layer on for depth + recall.
 
 ## 6. Open decisions / next steps
 
