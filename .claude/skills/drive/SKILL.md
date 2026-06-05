@@ -92,7 +92,41 @@ Build the hot list: all `status: active` projects + any `status: dormant`/`on-ho
 
 **Why this step exists:** /drive's project-axis (Step 3) sees "Project X is BLOCKED" but doesn't see "the agent that owns Project X has been STALE for 90 min with an unread inbox holding the answer." Different dispatches. The agent-axis context from Step 2b INFORMS Step 3 per-project classification.
 
+### 2b.0 — Run /fabric-check FIRST (the canonical fused scan; LD-0155)
+
+Begin the agent-state scan by running the fused telemetry+status tool — it does the
+telemetry-derived dual-signal liveness + the declared-status reconciliation in one
+deterministic command, and it is the single-point-block detector this whole step exists for:
+
+```bash
+python .tools/fabric-check.py --blocks    # triage: BLOCKED + SOVEREIGN + STALE-VERIFY
+# (run plain `python .tools/fabric-check.py` for the full WORKING/IDLE/... view)
+```
+
+**Act on its buckets THIS cycle — this is the load-bearing reason /drive runs (Andrew direct):**
+most fabric advancement is event-driven and self-healing, but the failure mode /drive exists to
+catch is the **single block that holds up a whole project or the whole fabric**. fabric-check
+finds those. For each item in the triage:
+
+- **BLOCKED** → resolve it (dispatch the unblocking move via Step 5) OR escalate it (`[STUCK]` to
+  MSTR per the LD-0026 chain) — this cycle. Never leave a block un-acted.
+- **SOVEREIGN-DECISION REQUEST** → **declare it**: route the decision to Andrew, CC MSTR. If the
+  nature of a block is that it needs sovereign discretion, reclassify it as sovereign and declare
+  it — do not sit on it as a normal block. (MSTR's `/govern` picks up COO sovereign-requests and
+  rules if Andrew is silent one cycle — LD-0090 / Constitution Art. XVI.)
+- **STALE-VERIFY** → confirm the owner is actually alive (telemetry quiet >10min while the summary
+  claims work). Dead/stuck owner = a single-point stall → respawn-request to MSTR or re-dispatch;
+  stale-summary = nudge a refresh.
+- **NEEDS-STATUS** → nudge the agent to set an explicit `WORKING:/IDLE:/BLOCKED:` token (hygiene).
+
+fabric-check's `FABRIC-CHECK-RESULT` line is the count of owed COO actions; its `ACTION-REQUIRED`
+line tells you whether a move is required this cycle. Full skill: `.claude/skills/fabric-check/SKILL.md`.
+
 ### 2b.1 — Read agent state (telemetry primary, broker cross-check)
+
+> 2b.1-2b.5 are the DEEPER per-agent logic that fabric-check's output feeds. fabric-check (2b.0)
+> gives the fused buckets fast; use 2b.1-2b.3 to classify the *cause* of any STALE/BLOCKED/STALE-VERIFY
+> agent before firing its dispatch.
 
 For each LIVE agent in your fabric:
 

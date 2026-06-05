@@ -41,7 +41,8 @@ Confirm caller is `0.0.0_AB_MSTR` (`$env:OPAL_AGENT_SERIAL` or session registrat
 
 Build the list of currently-open subjects awaiting Andrew direction. Sources:
 
-- **Inbox MCPs from agents** asking for MSTR/Andrew direction (subjects matching `[BLOCKED-ASK]`, `[STUCK]`, `[CONSULT-REQUEST]`, `[RATIFY-REQUEST]`, `[ANDREW-DIRECT-NEEDED]`, `[HARD-EXIT]`)
+- **Inbox MCPs from agents** asking for MSTR/Andrew direction (subjects matching `[BLOCKED-ASK]`, `[STUCK]`, `[CONSULT-REQUEST]`, `[RATIFY-REQUEST]`, `[ANDREW-DIRECT-NEEDED]`, `[HARD-EXIT]`, `[SOVEREIGN]`)
+- **COO sovereign-decision-requests (run `/fabric-check`; LD-0155).** Andrew-direct: part of the /govern sweep is checking whether COO has declared any sovereign-decision-requests. Run `python .tools/fabric-check.py --blocks` (or check your inbox for COO `[SOVEREIGN]`-tagged messages) — any agent in the SOVEREIGN-DECISION-REQUEST bucket, or any COO message declaring a block needs sovereign discretion, is an open subject. These are blocks COO surfaced because their resolution needs an Andrew/MSTR ruling; under LD-0090 / Art. XVI, if Andrew is silent ≥1 turn MSTR issues the ruling (bounded by Directives + Stakes Matrix — a genuinely S3/S4-sovereign item still holds for Andrew).
 - **Open LD-0089 (PAVC) ACs** with pending owner decisions OR awaiting Andrew sovereign sign-off
 - **MSTR's own surfaced recs** to Andrew in the last 1-2 turns that haven't been responded to (re-read your own outbound text-to-user)
 - **Cross-fabric forks** routed via LD-0022 1-tick auto-route discipline

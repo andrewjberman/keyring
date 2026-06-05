@@ -1,0 +1,11 @@
+#!/bin/bash
+# fabric-check -- PATH wrapper for the fused fabric telemetry+status display.
+# Runnable like the comp-* tools: `fabric-check` / `fabric-check --blocks` / `fabric-check --json`.
+# Resolves python deterministically (Git Bash hook-shell may lack PATH python).
+SCRIPT_DIR="$(cd "$(dirname "$0")" 2>/dev/null && pwd)" || SCRIPT_DIR="."
+PY="$(command -v python3 || command -v python)"
+if [ -z "$PY" ]; then
+  echo "fabric-check: python not found on PATH" >&2
+  exit 127
+fi
+exec "$PY" "${SCRIPT_DIR}/fabric-check.py" "$@"
