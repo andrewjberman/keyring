@@ -1,0 +1,693 @@
+# ADHC_CMPAWS Phase 1 — S3 Hand-Audit Oracle Fixture
+# Author: 3.0.0_SA_CVO
+# Date: 2026-06-05
+# Schema: CTO-ratified 2026-06-05T20:32Z (Q1 flat S3_BUCKET + purpose_class; Q2 separate S3_BUCKET_POLICY + HAS_POLICY/GRANTS edges)
+# Status: DRAFT-RAVC1 — ready for AE live-AWS cross-check
+#
+# Coverage: All S3_BUCKET nodes reachable from TF + references in IAM/notification/lifecycle TF resources.
+# Enumeration method: TF grep (aws_s3_bucket resource) + cross-ref grep (bucket = "opal-...") + S3 notification TF scan.
+# Gaps: IAM_PRINCIPAL stubs marked provisional pending Phase 1 IAM sub-audit join.
+# Deferred: us-east-2 buckets (provider alias required — explicitly noted in TF comments).
+
+meta:
+  fixture_version: "1.0"
+  phase: "Phase 1 — S3 hand-audit oracle"
+  tf_commit_at_audit: "11d6edaf4"
+  cvo_author: "3.0.0_SA_CVO"
+  schema_ref: "ADHC_CMPAWS PRD docs/briefs/comp-aws-comprehensive-cloud-compiler-prd-20260601.md"
+  iam_stubs: "IAM_PRINCIPAL nodes are provisional stubs; Phase 1 IAM sub-audit will resolve"
+
+# =============================================================================
+# S3_BUCKET NODES
+# =============================================================================
+#
+# purpose_class vocabulary (CTO Q1):
+#   data     — pipeline data (bronze/silver/gold/platinum/parquet)
+#   artifact — deployment artifacts (Lambda zips, layers, runner code, TF state)
+#   log      — audit/access/CloudTrail logs
+#   portal   — CloudFront static-site origins (user-facing HTML/JS/JSON serving)
+#   staging  — CI/CD scratch space (ephemeral, not served)
+#   other    — no clean bucket above classification
+
+s3_buckets:
+
+  # ---------------------------------------------------------------------------
+  # SHARED-INFRA module (declared in infra/aws/terraform/shared-infra/s3.tf)
+  # ---------------------------------------------------------------------------
+
+  - bucket_name: "opalinvest-portal"
+    region: "us-east-1"
+    tf_managed: true
+    owner_pipeline: "shared-infra"
+    purpose_class: "portal"
+    versioning_enabled: false
+    public_access_block: true
+    website_hosting: false
+    provenance:
+      tf_module: "shared-infra"
+      tf_resource: "aws_s3_bucket.opalinvest_portal"
+      declared_state: "portal-v1 static hosting origin (CloudFront)"
+    notes: "Portal v1 origin — superseded by opal-data-portal-v2 for v2; v1 still declared."
+    event_notifications: []
+
+  - bucket_name: "opal-cloudfront-logs-313476888478"
+    region: "us-east-1"
+    tf_managed: true
+    owner_pipeline: "shared-infra"
+    purpose_class: "log"
+    versioning_enabled: false
+    public_access_block: true
+    website_hosting: false
+    provenance:
+      tf_module: "shared-infra"
+      tf_resource: "aws_s3_bucket.cloudfront_logs"
+      declared_state: "CloudFront access log delivery target"
+    event_notifications: []
+
+  - bucket_name: "opal-cloudtrail-logs-313476888478"
+    region: "us-east-1"
+    tf_managed: true
+    owner_pipeline: "shared-infra"
+    purpose_class: "log"
+    versioning_enabled: false
+    public_access_block: true
+    website_hosting: false
+    provenance:
+      tf_module: "shared-infra"
+      tf_resource: "aws_s3_bucket.cloudtrail_logs"
+      declared_state: "CloudTrail audit log delivery target"
+    event_notifications: []
+
+  - bucket_name: "opal-analytics-dashboard"
+    region: "us-east-1"
+    tf_managed: true
+    owner_pipeline: "shared-infra / analytics-dashboard"
+    purpose_class: "portal"
+    versioning_enabled: true
+    public_access_block: true
+    website_hosting: true
+    provenance:
+      tf_module: "shared-infra"
+      tf_resource: "aws_s3_bucket.analytics_dashboard"
+      declared_state: "Analytics static site with website hosting + CF-OAC bucket policy"
+    bucket_policy_tf_managed: true
+    bucket_policy_tf_resource: "analytics-dashboard/cloudfront.tf: aws_s3_bucket_policy.dashboard"
+    event_notifications: []
+
+  - bucket_name: "opal-ci-staging"
+    region: "us-east-1"
+    tf_managed: true
+    owner_pipeline: "shared-infra"
+    purpose_class: "staging"
+    versioning_enabled: false
+    public_access_block: true
+    website_hosting: false
+    provenance:
+      tf_module: "shared-infra"
+      tf_resource: "aws_s3_bucket.ci_staging"
+      declared_state: "CI staging artifact scratch space"
+    event_notifications: []
+
+  - bucket_name: "opal-data-etfs"
+    region: "us-east-1"
+    tf_managed: true
+    owner_pipeline: "shared-infra"
+    purpose_class: "data"
+    versioning_enabled: false
+    public_access_block: true
+    website_hosting: false
+    provenance:
+      tf_module: "shared-infra"
+      tf_resource: "aws_s3_bucket.opal_data_etfs"
+      declared_state: "ETF net-assets daily silver parquet (TrueShares DIVZ/IDVZ); ETFS_NETAST.001 no-pipeline-module exception"
+    event_notifications: []
+
+  - bucket_name: "opal-data-mdpf"
+    region: "us-east-1"
+    tf_managed: true
+    owner_pipeline: "shared-infra"
+    purpose_class: "data"
+    versioning_enabled: true
+    public_access_block: true
+    website_hosting: false
+    provenance:
+      tf_module: "shared-infra"
+      tf_resource: "aws_s3_bucket.opal_data_mdpf"
+      declared_state: "MDPF Phase-2 feeder intermediate parquet; mdpf/feeds/{artifact}/{firm_id}/{date}.parquet; NOT CloudFront-fronted"
+    notes: "Has code/ prefix for EC2 runner script deploy. mdpf-pipeline and inf-pipeline write here."
+    event_notifications: []
+
+  - bucket_name: "opal-data-demo"
+    region: "us-east-1"
+    tf_managed: true
+    owner_pipeline: "shared-infra"
+    purpose_class: "data"
+    versioning_enabled: true
+    public_access_block: true
+    website_hosting: false
+    provenance:
+      tf_module: "shared-infra"
+      tf_resource: "aws_s3_bucket.opal_data_demo"
+      declared_state: "ADVI_DEMOV1 demo-tenant static snapshot; platinum/* clone of opal-data-bd; served via CF EVTSA9VEHNZVH"
+    bucket_policy_tf_managed: true
+    bucket_policy_tf_resource: "shared-infra/s3.tf: aws_s3_bucket_policy.opal_data_demo"
+    bucket_policy_statements:
+      - sid: "AllowCloudFrontOACReadPlatinum"
+        effect: "Allow"
+        principal: {Service: "cloudfront.amazonaws.com"}
+        action: "s3:GetObject"
+        resource: "arn:aws:s3:::opal-data-demo/platinum/*"
+        condition: "AWS:SourceArn = arn:aws:cloudfront::313476888478:distribution/EVTSA9VEHNZVH"
+      - sid: "AllowScopedAdvisorOAI"
+        effect: "Allow"
+        principal: {AWS: "arn:aws:iam::cloudfront:user/CloudFront Origin Access Identity E139998VWH0PD"}
+        action: "s3:GetObject"
+        resource: "arn:aws:s3:::opal-data-demo/*"
+    notes: "ADVI_DEMOAUTH.002 DATA CORRECTION PENDING (AE re-transform + DS PII re-verify, COO ruling 203237Z)."
+    event_notifications: []
+
+  # ---------------------------------------------------------------------------
+  # SHARED-INFRA main.tf (lambda + runner buckets)
+  # ---------------------------------------------------------------------------
+
+  - bucket_name: "opal-313476888478-lambda-layers"
+    region: "us-east-1"
+    tf_managed: true
+    owner_pipeline: "shared-infra"
+    purpose_class: "artifact"
+    versioning_enabled: true
+    public_access_block: true
+    website_hosting: false
+    provenance:
+      tf_module: "shared-infra"
+      tf_resource: "aws_s3_bucket.lambda_layers"
+      declared_state: "Lambda layer zips before aws_lambda_layer_version deploy"
+    event_notifications: []
+
+  - bucket_name: "opal-313476888478-lambda-artifacts"
+    region: "us-east-1"
+    tf_managed: true
+    owner_pipeline: "shared-infra"
+    purpose_class: "artifact"
+    versioning_enabled: true
+    public_access_block: true
+    website_hosting: false
+    provenance:
+      tf_module: "shared-infra"
+      tf_resource: "aws_s3_bucket.lambda_artifacts"
+      declared_state: "Lambda function zips; s3://{bucket}/{pipeline}/{function}.zip; source-map: infra/aws/lambda/ci/lambda-source-map.json"
+    event_notifications: []
+
+  - bucket_name: "opal-runner-shared"
+    region: "us-east-1"
+    tf_managed: true
+    owner_pipeline: "shared-infra"
+    purpose_class: "artifact"
+    versioning_enabled: true
+    public_access_block: true
+    website_hosting: false
+    provenance:
+      tf_module: "shared-infra"
+      tf_resource: "aws_s3_bucket.runner_shared"
+      declared_state: "Cross-pipeline shared EC2 runner code (gold_prof.py, opal-telemetry.sh/py); read by bd-exporter-ec2-role + inf-gold-layer-ec2-role"
+    notes: "Read: bd-exporter-ec2-role + inf-gold-layer-ec2-role. Write: humans via deploy only (no EC2 write access)."
+    event_notifications: []
+
+  # ---------------------------------------------------------------------------
+  # IMO PIPELINE (infra/aws/terraform/imo-pipeline/s3.tf)
+  # ---------------------------------------------------------------------------
+
+  - bucket_name: "opal-data-imo"
+    region: "us-east-1"
+    tf_managed: true
+    owner_pipeline: "imo-pipeline"
+    purpose_class: "data"
+    versioning_enabled: true
+    public_access_block: true
+    website_hosting: false
+    provenance:
+      tf_module: "imo-pipeline"
+      tf_resource: "aws_s3_bucket.imo_data"
+      declared_state: "FIND_INSURE pipeline data; 7-prefix layout corp/serving/code/config/telemetry/qa/archives"
+    lifecycle_rules:
+      - id: "corp-bronze-cold-tier"
+        filter: "corp/"
+        transitions: [90d STANDARD_IA, 365d GLACIER, 730d DEEP_ARCHIVE]
+      - id: "serving-history-cold-tier"
+        filter: "serving/_history/"
+        transitions: [90d STANDARD_IA, 365d GLACIER]
+      - id: "telemetry-tier-and-expire"
+        filter: "telemetry/"
+        transitions: [30d STANDARD_IA]
+        expiration: 365d
+      - id: "qa-90d-expire"
+        filter: "qa/"
+        expiration: 90d
+      - id: "archives-cold-tier"
+        filter: "archives/"
+        transitions: [30d STANDARD_IA, 365d GLACIER]
+      - id: "abort-incomplete-multipart"
+        filter: ""
+        mpu_abort: 7d
+      - id: "noncurrent-telemetry-expire"
+        filter: "telemetry/"
+        noncurrent_expiration: 30d
+      - id: "noncurrent-qa-expire"
+        filter: "qa/"
+        noncurrent_expiration: 30d
+    event_notifications: []
+
+  # ---------------------------------------------------------------------------
+  # INF PIPELINE (infra/aws/terraform/inf-pipeline/s3.tf + s3-notifications.tf)
+  # ---------------------------------------------------------------------------
+
+  - bucket_name: "opal-data-inf"
+    region: "us-east-1"
+    tf_managed: true
+    owner_pipeline: "inf-pipeline"
+    purpose_class: "data"
+    versioning_enabled: true
+    public_access_block: true
+    website_hosting: false
+    cors_enabled: true
+    eventbridge_enabled: true
+    provenance:
+      tf_module: "inf-pipeline"
+      tf_resource: "aws_s3_bucket.inf_data"
+      declared_state: "Inflection partner data; bronze/silver/gold/platinum/code/otp layout; OAI E139998VWH0PD bucket policy is CONSOLE-managed (drift-checked via TF data source in portal-auth)"
+    lifecycle_rules:
+      - id: "otp-prefix-expiry"
+        filter: "otp/"
+        expiration: 1d
+    bucket_policy_tf_managed: false
+    bucket_policy_console_drift_check: "portal-auth/firm-bucket-cross-ref.tf: data.aws_s3_bucket_policy.inf_oai_grant (read-only drift assert)"
+    bucket_policy_expected_principals: ["arn:aws:iam::cloudfront:user/CloudFront Origin Access Identity E139998VWH0PD"]
+    event_notifications:
+      - id: "inf-portal-publisher-trigger"
+        lambda: "inf-portal-publisher"
+        event: "s3:ObjectCreated:*"
+        filter_prefix: "gold/meta/"
+        filter_suffix: "pipeline-complete.json"
+        tf_resource: "inf-pipeline/s3-notifications.tf: aws_s3_bucket_notification.opal_data_inf"
+      - id: "inf-silver-aggregator-trigger"
+        lambda: "inf-silver-aggregator"
+        event: "s3:ObjectCreated:*"
+        filter_prefix: "silver/_silver_complete/"
+        filter_suffix: ".json"
+        tf_resource: "inf-pipeline/s3-notifications.tf: aws_s3_bucket_notification.opal_data_inf"
+
+  # ---------------------------------------------------------------------------
+  # MARKET OVERVIEW (infra/aws/terraform/market-overview/s3.tf)
+  # ---------------------------------------------------------------------------
+
+  - bucket_name: "opal-market-data-v2"
+    region: "us-east-1"
+    tf_managed: true
+    owner_pipeline: "market-overview"
+    purpose_class: "data"
+    versioning_enabled: true
+    public_access_block: true
+    website_hosting: false
+    provenance:
+      tf_module: "market-overview"
+      tf_resource: "aws_s3_bucket.market_data_v2"
+      declared_state: "Market data v2; FRED yield curve / macro data"
+    event_notifications: []
+
+  # ---------------------------------------------------------------------------
+  # TRADE PIPELINE (infra/aws/terraform/trade-pipeline/s3.tf)
+  # ---------------------------------------------------------------------------
+
+  - bucket_name: "opal-trade-recon-ui"
+    region: "us-east-1"
+    tf_managed: true
+    owner_pipeline: "trade-pipeline"
+    purpose_class: "portal"
+    versioning_enabled: true
+    public_access_block: true
+    website_hosting: true
+    provenance:
+      tf_module: "trade-pipeline"
+      tf_resource: "aws_s3_bucket.trade_recon_ui"
+      declared_state: "Trade recon static UI site; CF-fronted; TF bucket policy (OAC)"
+    bucket_policy_tf_managed: true
+    bucket_policy_tf_resource: "trade-pipeline/cloudfront-trade-recon.tf: aws_s3_bucket_policy.trade_recon_ui"
+    event_notifications: []
+
+  - bucket_name: "opal-trade-recon-confirms"
+    region: "us-east-1"
+    tf_managed: true
+    owner_pipeline: "trade-pipeline"
+    purpose_class: "data"
+    versioning_enabled: true
+    public_access_block: true
+    website_hosting: false
+    provenance:
+      tf_module: "trade-pipeline"
+      tf_resource: "aws_s3_bucket.trade_recon_confirms"
+      declared_state: "Trade recon confirms data"
+    event_notifications: []
+
+  - bucket_name: "opal-trade-recon-reports"
+    region: "us-east-1"
+    tf_managed: true
+    owner_pipeline: "trade-pipeline"
+    purpose_class: "data"
+    versioning_enabled: true
+    public_access_block: true
+    website_hosting: false
+    provenance:
+      tf_module: "trade-pipeline"
+      tf_resource: "aws_s3_bucket.trade_recon_reports"
+      declared_state: "Trade recon reports output"
+    event_notifications: []
+
+  - bucket_name: "opal-trade-recon-requests"
+    region: "us-east-1"
+    tf_managed: true
+    owner_pipeline: "trade-pipeline"
+    purpose_class: "data"
+    versioning_enabled: true
+    public_access_block: true
+    website_hosting: false
+    provenance:
+      tf_module: "trade-pipeline"
+      tf_resource: "aws_s3_bucket.trade_recon_requests"
+      declared_state: "Trade form request inputs"
+    event_notifications: []
+
+  - bucket_name: "opal-data-trade-submissions"
+    region: "us-east-1"
+    tf_managed: true
+    owner_pipeline: "trade-pipeline"
+    purpose_class: "data"
+    versioning_enabled: true
+    public_access_block: true
+    website_hosting: false
+    provenance:
+      tf_module: "trade-pipeline"
+      tf_resource: "aws_s3_bucket.trade_submissions_data"
+      declared_state: "Trade form upload data"
+    event_notifications: []
+
+  # ---------------------------------------------------------------------------
+  # CONSOLE-MANAGED (no aws_s3_bucket resource; TF references lifecycle/notifications)
+  # ---------------------------------------------------------------------------
+
+  - bucket_name: "opal-data-bd"
+    region: "us-east-1"
+    tf_managed: false
+    owner_pipeline: "bd-pipeline"
+    purpose_class: "data"
+    versioning_enabled: true
+    public_access_block: true
+    website_hosting: false
+    provenance:
+      tf_module: "bd-pipeline (NO aws_s3_bucket resource declared)"
+      declared_state: "CONSOLE-MANAGED; bd-pipeline s3.tf: opal-data-schwab deferred — s3.tf is placeholder only"
+      drift_note: "LIVE-no-DECLARED class — highest-value drift signal per CTO Q2 rationale"
+    lifecycle_rules_tf_managed: true
+    lifecycle_tf_resource: "shared-infra/main.tf: aws_s3_bucket_lifecycle_configuration.bd_versions (noncurrent 90d + MPU 7d)"
+    bucket_policy_tf_managed: false
+    bucket_policy_console_drift_check: "portal-auth/firm-bucket-cross-ref.tf: data.aws_s3_bucket_policy.bd_oai_grant (read-only drift assert)"
+    bucket_policy_expected_principals: ["arn:aws:iam::cloudfront:user/CloudFront Origin Access Identity E139998VWH0PD"]
+    event_notifications:
+      - id: "allocation-processor-trigger"
+        lambda: "bd-allocation-processor"
+        event: "s3:ObjectCreated:*"
+        filter_prefix: "forwardfill_v2/allocations/"
+        filter_suffix: ".xlsx"
+        tf_resource: "bd-pipeline/s3-notifications.tf: aws_s3_bucket_notification.bd_data_bucket"
+      - id: "gold-trigger-prices"
+        lambda: "bd-gold-trigger"
+        event: "s3:ObjectCreated:*"
+        filter_prefix: "silver/prices/20"
+        filter_suffix: ".parquet"
+        tf_resource: "bd-pipeline/s3-notifications.tf: aws_s3_bucket_notification.bd_data_bucket"
+    notes: "Primary BD pipeline data store; gold/platinum/silver/bronze/snapshots layout. Time Machine source (noncurrent versions + NFRA_COSTRED R2 lifecycle)."
+
+  - bucket_name: "opal-data-portal-v2"
+    region: "us-east-1"
+    tf_managed: false
+    owner_pipeline: "yang-pipeline / portal-notifications"
+    purpose_class: "portal"
+    versioning_enabled: true
+    public_access_block: true
+    website_hosting: false
+    provenance:
+      tf_module: "portal-notifications (NO aws_s3_bucket resource; TF owns notifications + lifecycle)"
+      declared_state: "CONSOLE-MANAGED; LIVE-no-DECLARED class"
+    lifecycle_rules_tf_managed: true
+    lifecycle_tf_resource: "shared-infra/main.tf: aws_s3_bucket_lifecycle_configuration.portal_v2_versions (noncurrent 90d + MPU 7d)"
+    bucket_policy_tf_managed: false
+    bucket_policy_note: "Console-managed; CF-fronted (EVTSA9VEHNZVH serves /api/general/* + /api/scoped/advisor-intelligence/*); likely OAI E139998VWH0PD principal"
+    event_notifications:
+      - id: "yang-pipeline-manifest-trigger"
+        lambda: "yang-pipeline-trigger"
+        event: "s3:ObjectCreated:*"
+        filter_prefix: "uploads/"
+        filter_suffix: "manifest.json"
+        tf_resource: "portal-notifications/main.tf: aws_s3_bucket_notification.portal_triggers"
+      - id: "sscn-processor-trigger"
+        lambda: "opal-security-scanner-processor"
+        event: "s3:ObjectCreated:*"
+        filter_prefix: "security_scanner/uploads/"
+        filter_suffix: ".xlsx"
+        tf_resource: "portal-notifications/main.tf: aws_s3_bucket_notification.portal_triggers"
+    notes: "CloudFront dist EVTSA9VEHNZVH serves json/* + platinum/* paths; yang-pipeline writes json/; bd-pipeline writes platinum/ (portal publisher)."
+
+  - bucket_name: "opal-313476888478-terraform-state"
+    region: "us-east-1"
+    tf_managed: false
+    owner_pipeline: "terraform-backend"
+    purpose_class: "artifact"
+    versioning_enabled: true
+    public_access_block: true
+    website_hosting: false
+    provenance:
+      tf_module: "N/A — S3 backend; referenced as backend config in all terraform {} blocks"
+      declared_state: "CONSOLE-MANAGED; TF backend state bucket; not a TF-managed resource (bootstrap)"
+    event_notifications: []
+    notes: "Bootstrap bucket. Cannot import into TF (state of the state). Versioning required (TF docs)."
+
+  # ---------------------------------------------------------------------------
+  # DEFERRED (us-east-2; provider alias required; NOT TF-managed)
+  # ---------------------------------------------------------------------------
+
+  - bucket_name: "opal-data-schwab"
+    region: "us-east-2"
+    tf_managed: false
+    owner_pipeline: "bd-pipeline"
+    purpose_class: "data"
+    versioning_enabled: null
+    public_access_block: null
+    website_hosting: false
+    provenance:
+      tf_module: "bd-pipeline/s3.tf (DEFERRED COMMENT ONLY)"
+      declared_state: "DEFERRED — us-east-2, provider alias required; Schwab RPS/ACC/TRN files"
+    deferred: true
+    event_notifications: []
+
+  - bucket_name: "opal-market-update"
+    region: "us-east-2"
+    tf_managed: false
+    owner_pipeline: "market-overview"
+    purpose_class: "data"
+    versioning_enabled: null
+    public_access_block: null
+    website_hosting: false
+    provenance:
+      tf_module: "market-overview/s3.tf (DEFERRED COMMENT ONLY)"
+      declared_state: "DEFERRED — us-east-2, provider alias required"
+    deferred: true
+    event_notifications: []
+
+# =============================================================================
+# S3_BUCKET_POLICY NODES (separate graph nodes per CTO Q2)
+# =============================================================================
+#
+# Edges:
+#   S3_BUCKET -[HAS_POLICY]-> S3_BUCKET_POLICY
+#   S3_BUCKET_POLICY -[GRANTS]-> IAM_PRINCIPAL  (stubs — Phase 1 IAM co-class resolves)
+
+s3_bucket_policies:
+
+  - policy_id: "opal-analytics-dashboard-policy"
+    bucket_name: "opal-analytics-dashboard"
+    tf_managed: true
+    tf_resource: "analytics-dashboard/cloudfront.tf: aws_s3_bucket_policy.dashboard"
+    effect: "Allow"
+    principals: ["cloudfront.amazonaws.com (OAC)"]
+    actions: ["s3:GetObject"]
+    conditions: ["AWS:SourceArn = CF distribution ARN"]
+    provenance: {source: "tf"}
+    grants_iam_principals: ["IAM_PRINCIPAL:cloudfront-oac-ANALYTICS-DASHBOARD"]
+
+  - policy_id: "opal-data-demo-policy"
+    bucket_name: "opal-data-demo"
+    tf_managed: true
+    tf_resource: "shared-infra/s3.tf: aws_s3_bucket_policy.opal_data_demo"
+    effect: "Allow"
+    principals:
+      - "cloudfront.amazonaws.com (OAC: EVTSA9VEHNZVH SourceArn condition)"
+      - "arn:aws:iam::cloudfront:user/CloudFront Origin Access Identity E139998VWH0PD"
+    actions: ["s3:GetObject"]
+    conditions:
+      - "AllowCloudFrontOACReadPlatinum: SourceArn = EVTSA9VEHNZVH; resource = platinum/*"
+      - "AllowScopedAdvisorOAI: OAI E139998VWH0PD; resource = /*"
+    provenance: {source: "tf"}
+    grants_iam_principals:
+      - "IAM_PRINCIPAL:cloudfront-oac-EVTSA9VEHNZVH"
+      - "IAM_PRINCIPAL:cloudfront-oai-E139998VWH0PD"
+
+  - policy_id: "opal-trade-recon-ui-policy"
+    bucket_name: "opal-trade-recon-ui"
+    tf_managed: true
+    tf_resource: "trade-pipeline/cloudfront-trade-recon.tf: aws_s3_bucket_policy.trade_recon_ui"
+    effect: "Allow"
+    principals: ["cloudfront.amazonaws.com (OAC)"]
+    actions: ["s3:GetObject"]
+    provenance: {source: "tf"}
+    grants_iam_principals: ["IAM_PRINCIPAL:cloudfront-oac-TRADE-RECON-UI"]
+
+  - policy_id: "opal-data-inf-policy"
+    bucket_name: "opal-data-inf"
+    tf_managed: false
+    tf_resource: null
+    drift_check: "portal-auth/firm-bucket-cross-ref.tf: data.aws_s3_bucket_policy.inf_oai_grant (non-owning read-only assert)"
+    effect: "Allow (expected)"
+    principals: ["arn:aws:iam::cloudfront:user/CloudFront Origin Access Identity E139998VWH0PD"]
+    actions: ["s3:GetObject (expected)"]
+    provenance: {source: "live"}
+    grants_iam_principals: ["IAM_PRINCIPAL:cloudfront-oai-E139998VWH0PD"]
+    notes: "LIVE-no-DECLARED policy. Path A TF import deferred per FIRMSEP ruling. CVO verifies drift-check TF assertion fires on plan."
+
+  - policy_id: "opal-data-bd-policy"
+    bucket_name: "opal-data-bd"
+    tf_managed: false
+    tf_resource: null
+    drift_check: "portal-auth/firm-bucket-cross-ref.tf: data.aws_s3_bucket_policy.bd_oai_grant (non-owning read-only assert)"
+    effect: "Allow (expected)"
+    principals: ["arn:aws:iam::cloudfront:user/CloudFront Origin Access Identity E139998VWH0PD"]
+    actions: ["s3:GetObject (expected)"]
+    provenance: {source: "live"}
+    grants_iam_principals: ["IAM_PRINCIPAL:cloudfront-oai-E139998VWH0PD"]
+    notes: "LIVE-no-DECLARED policy (canonical motivating case per CTO Q2). Path A TF import is the long-term cert goal."
+
+  - policy_id: "opal-data-portal-v2-policy"
+    bucket_name: "opal-data-portal-v2"
+    tf_managed: false
+    tf_resource: null
+    drift_check: null
+    effect: "Allow (expected)"
+    principals: ["cloudfront.amazonaws.com or OAI E139998VWH0PD (provisional — no TF data source read)"]
+    provenance: {source: "provisional"}
+    grants_iam_principals: ["IAM_PRINCIPAL:cloudfront-oai-E139998VWH0PD"]
+    notes: "PROVISIONAL stub — no TF data source read on this bucket policy; AE live-AWS cross-check will resolve actual policy content."
+
+# =============================================================================
+# EDGE INVENTORY: TRIGGERS (S3_BUCKET -[TRIGGERS]-> LAMBDA)
+# =============================================================================
+
+s3_triggers:
+
+  - source_bucket: "opal-data-bd"
+    target_lambda: "bd-allocation-processor"
+    filter_prefix: "forwardfill_v2/allocations/"
+    filter_suffix: ".xlsx"
+    event_type: "s3:ObjectCreated:*"
+    tf_resource: "bd-pipeline/s3-notifications.tf: aws_s3_bucket_notification.bd_data_bucket[ProcessAllocationFiles]"
+
+  - source_bucket: "opal-data-bd"
+    target_lambda: "bd-gold-trigger"
+    filter_prefix: "silver/prices/20"
+    filter_suffix: ".parquet"
+    event_type: "s3:ObjectCreated:*"
+    tf_resource: "bd-pipeline/s3-notifications.tf: aws_s3_bucket_notification.bd_data_bucket[GoldLayerPricesTrigger]"
+
+  - source_bucket: "opal-data-inf"
+    target_lambda: "inf-portal-publisher"
+    filter_prefix: "gold/meta/"
+    filter_suffix: "pipeline-complete.json"
+    event_type: "s3:ObjectCreated:*"
+    tf_resource: "inf-pipeline/s3-notifications.tf: aws_s3_bucket_notification.opal_data_inf"
+    eventbridge_routing: true
+
+  - source_bucket: "opal-data-inf"
+    target_lambda: "inf-silver-aggregator"
+    filter_prefix: "silver/_silver_complete/"
+    filter_suffix: ".json"
+    event_type: "s3:ObjectCreated:*"
+    tf_resource: "inf-pipeline/s3-notifications.tf: aws_s3_bucket_notification.opal_data_inf"
+    eventbridge_routing: true
+
+  - source_bucket: "opal-data-portal-v2"
+    target_lambda: "yang-pipeline-trigger"
+    filter_prefix: "uploads/"
+    filter_suffix: "manifest.json"
+    event_type: "s3:ObjectCreated:*"
+    tf_resource: "portal-notifications/main.tf: aws_s3_bucket_notification.portal_triggers[yang-pipeline-manifest-trigger]"
+
+  - source_bucket: "opal-data-portal-v2"
+    target_lambda: "opal-security-scanner-processor"
+    filter_prefix: "security_scanner/uploads/"
+    filter_suffix: ".xlsx"
+    event_type: "s3:ObjectCreated:*"
+    tf_resource: "portal-notifications/main.tf: aws_s3_bucket_notification.portal_triggers[sscn-processor-trigger]"
+
+# =============================================================================
+# OPEN QUESTIONS / ORACLE GAPS (for AE live-AWS cross-check)
+# =============================================================================
+
+oracle_gaps:
+
+  - id: "GAP-1"
+    description: "opal-data-portal-v2 bucket policy actual content — no TF data source; AE should aws s3api get-bucket-policy + compare against expected OAI principal"
+    severity: "P1"
+    owner: "AE"
+
+  - id: "GAP-2"
+    description: "opal-data-bd bucket policy full statement list — TF drift-check only asserts OAI principal presence; full statement inventory needed for GRANTS-edge completeness"
+    severity: "P1"
+    owner: "AE"
+
+  - id: "GAP-3"
+    description: "opal-data-inf bucket policy full statement list — same as GAP-2"
+    severity: "P1"
+    owner: "AE"
+
+  - id: "GAP-4"
+    description: "opal-data-schwab + opal-market-update (us-east-2): versioning_enabled + public_access_block actual state unknown; AE must check via aws s3api"
+    severity: "P2"
+    owner: "AE"
+
+  - id: "GAP-5"
+    description: "opal-313476888478-terraform-state: actual versioning + MFA delete + replication state unknown (bootstrap bucket, no TF resource)"
+    severity: "P2"
+    owner: "AE"
+
+  - id: "GAP-6"
+    description: "IAM_PRINCIPAL stub resolution: all grants_iam_principals stubs need mapping to real IAM entities (CF OAI = E139998VWH0PD IAM user; CF distribution = service principal with SourceArn condition) — Phase 1 IAM sub-audit"
+    severity: "P1"
+    owner: "AE + CVO"
+
+  - id: "GAP-7"
+    description: "inf-silver-chain EventBridge rule (inf-pipeline/inf-silver-chain.tf) routes opal-data-inf bronze/orion-api/*/_BRONZE_COMPLETE.json to inf-silver-chain Lambda via EventBridge (not direct S3 notification). This is an S3 -[TRIGGERS via EventBridge]-> LAMBDA edge variant. Confirm node type and edge label."
+    severity: "P2"
+    owner: "CTO (edge taxonomy)"
+
+# =============================================================================
+# SUMMARY
+# =============================================================================
+
+summary:
+  total_s3_buckets: 24
+  tf_declared: 19
+  console_managed: 3
+  deferred_region_mismatch: 2
+  s3_bucket_policies_tf_managed: 3
+  s3_bucket_policies_console_managed: 3
+  s3_trigger_edges: 6
+  iam_principal_stubs: 6
+  oracle_gaps: 7
+  fixture_status: "DRAFT-RAVC1 — ready for AE live-AWS cross-check"
