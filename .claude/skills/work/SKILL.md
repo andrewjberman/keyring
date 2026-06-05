@@ -1,17 +1,16 @@
 ---
 name: work
-description: Universal Tier-2/3 worker-loop body. Runs every 20m per LD-0072 ratification (Andrew sovereign 2026-05-26). Walks the worker's TO queue, executes substantive work, self-classifies blockers the moment they surface and MCPs lane COO with `[BLOCKED-ASK]` for unblock-routing. Tier-2/3 only (DS / AE / DE / DT / RD + tilde-lanes); non-worker invocations halt at Step 0. Coexists with /drive (COO scans + dispatches); /work executes worker's assigned work. /watcher folds inline.
+description: Tier-2/3 worker self-execution body. NO LONGER AUTO-ARMED AT LAUNCH (LD-0157, Andrew direct 2026-06-05, supersedes LD-0072's 20m-loop). Workers are now event-driven via the persistent inbox Monitor; COO's /drive + /fabric-check is the centralized tick driver that finds blocks. This skill is AD-HOC ONLY now (run it for an off-cycle pass if useful) — do NOT arm it as a cron. Keep your broker status accurate (WORKING:/IDLE:/BLOCKED:) so COO's scan classifies you. Tier-2/3 only.
 ---
 
-# /work — Tier-2/3 worker-loop body
+# /work — Tier-2/3 worker self-execution body (ad-hoc; NOT a launch loop)
 
-Universal worker self-execution + self-escalation loop. Replaces the prior implicit pattern where workers waited for COO /drive to detect their STALE state and surface blockers reactively (~30-60m latency). With /work, workers self-classify blockers the moment they surface and route directly to lane COO for unblock (~5-10m latency).
+**Not auto-armed at launch anymore (LD-0157, Andrew direct 2026-06-05).** Workers do not self-tick. Reachability = the persistent inbox Monitor (`/watcher`, armed once at load); work = event-driven (act on Monitor-delivered dispatches/TOs as they arrive); blocks are carried by your broker STATUS, which COO's centralized `/drive`+`/fabric-check` reads. Run `/work` only ad hoc for an off-cycle pass (e.g. right after a RAVC2-Accept to pick up the next TO). Do NOT `CronCreate /work`.
 
 ## When to invoke
 
-- Auto-armed at session start via `CronCreate /work 20m` (per `org/XXX.md` Step 1b §F worker row)
-- Each cron tick re-invokes this skill
-- Manually OK via `/work` for an off-cycle tick if needed (e.g., immediately after RAVC2-Accept to pick up next TO)
+- **Ad hoc only.** Not armed as a cron at launch (the LD-0072 20m auto-arm is retired).
+- If you have a leftover `/work` cron from a prior session, `CronList`→`CronDelete` it.
 
 Other tiers invoking `/work` should HALT at Step 0 (out of scope; Tier-1 execs use /ws-charter / /cl-charter / /drive / /spot-check / /mstr-review; Tier-0 MSTR uses /mstr-* and event-triggered skills).
 
