@@ -1,0 +1,15 @@
+{
+  "verdict": "CLEAN",
+  "project": "ADHC_GLDINC",
+  "artifacts_verified": ["build-PRD v0.2 (Andrew-approved 46e7f5285)", "5 safety gates §2", "dual-run parity mechanics §4", "§4a reconcile-parity carve-out"],
+  "tools_gating_artifacts": ["pre-propagate gate (LD-0062 Round-2 Q6)"],
+  "axis_mechanical": "GREEN",
+  "axis_intent_coverage": "GREEN",
+  "axis_decision_useful": "GREEN",
+  "axis_constitution_coherence": "GREEN",
+  "constitution_drift_articles": [],
+  "timestamp_utc": "2026-06-05T17:07:00Z",
+  "mode": "pre-execution",
+  "source": "verify-channel-ws",
+  "note": "NOVEL-PRD pre-propagate gate CLEAN-permit. Build-PRD has verifier-discipline baked into its 5 safety gates: frozen-epsilon-is-re-review (anti-erosion), asymmetric-fail human-review (oracle-not-infallible), and §4a (closes the reconcile-path-unexercised degeneracy a naive parity gate falsely passes). Production protected (oracle stays serving, per-phase cutover Andrew-gated, revertible). (d) artifact-trace N/A (pre-build). Watch-note: §4a is the one sanctioned no-ad-hoc carve-out (single-date small-box only). Each per-phase cutover re-verifies separately."
+}
