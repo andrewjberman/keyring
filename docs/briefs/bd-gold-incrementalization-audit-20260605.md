@@ -84,3 +84,36 @@ Tally: **CA = 8** (5 built) · **IWR = 12** · **FRI = 7**.
 **Realistic compute reduction:** on a typical small-delta night, P1-P4 could cut the per-date + per-entity compute substantially (the long poles B_01/D_02/A_03 = ~44% of wall are all in the incrementalizable set), PLUS the A_03 memory-floor drop. But the firm-aggregate floor (D_00b timeseries, D_00c ranking, C_07, D_00/D_01) is irreducible full-recompute — so this is a **hybrid ~50-70%-on-typical-nights win + a memory-floor structural drop, not a 90%+ elimination.** The A_03 memory win (P2) is the standout because it changes the BOX SIZE (compounds R3 directly), independent of wall time.
 
 **Greenlight recommendation:** YES to a build PRD, scoped as the P1→P2→P3 sequence (P1 quick I/O win to validate the watermark plumbing, P2 the memory-floor prize, P3 the fan-out long-pole). P4 + the FRI read-optimizations as a follow-on. Each phase independently shippable + validatable on the scheduled nightly (no ad-hoc runs), revert-per-phase. Coordinate the reconcile-correctness design (cumulative reassignment, FIFO restatement, dirty-set completeness) with 0.4.0_DS — that's where the data-semantics rigor binds.
+
+---
+
+# ADDENDUM — two-axis optimization (Andrew framework 2026-06-05)
+Per `docs/briefs/gold-rightsizing-optimization-framework-20260605.md`. This materially upgrades the §2 verdicts and the §6 honest headline.
+
+## A1. Temporal-freeze-baseline re-examination of the 6 FULL-RECOMPUTE-INHERENT scripts
+The freeze-baseline test: a firm aggregate/ranking/distribution that reads all history nightly is usually **frozen-closed-baseline + incremental-open-period + periodic-rebaseline = IWR**, not inherent. Applying it dissolves most of my "irreducible floor":
+
+| Script | Phase-0 | freeze-baseline re-exam | New verdict |
+|---|---|---|---|
+| **D_00b portal_timeseries** | FRI | **Canonical case.** Closed periods of the firm timeseries are immutable → freeze as materialized baseline; nightly recompute only the OPEN current period + append; rebaseline at period boundary. Top-N per closed date is frozen; only the open tail re-pivots. Currently reads ALL canonical_nna partitions nightly = the biggest single freeze win. | **IWR (freeze-baseline)** |
+| **D_00c portal_leaderboard** | FRI | Per-advisor windowed sums (3M…MAX): freeze each closed sub-period's per-advisor sufficient-statistic, nightly add open-period delta, then **re-rank across advisors (cheap O(N_adv) pass)**. OLS: carry frozen Σx/Σy/Σxy/Σx²/n + open-period updates → closed-form refit. The "ranking is global" objection dissolves — ranking is cheap; the expensive full-history window aggregation is what freezes. | **IWR (freeze + cheap re-rank/refit)** |
+| **D_01 partner_analytics** | FRI | Distributions/percentiles at PERIOD-ENDS. Closed period-ends (Q1/Q2/months) are immutable → freeze their artifacts (computed once); nightly recompute only the CURRENT open period-end's cross-section. + the date-pushdown read win. | **IWR (freeze per-period-end)** |
+| **D_00 portal_aggregates** | FRI | Trailing-window NNA (TTM/QTD/YTD) reads full history → freeze closed-period cumulative NNA, incremental open-period. The current AUA total is already a current-snapshot read (latest only), not a history scan. | **IWR (freeze windowed NNA)** |
+| **C_05 client_tax_liability** | FRI | No date axis (latest-snapshot lot aggregation) — temporal-freeze does NOT apply. BUT snapshot-delta does: only positions whose lots changed since the prior snapshot need re-aggregation. Cheap (8s) so low priority. | **IWR (snapshot-delta)** |
+| **C_07 advisor_attribution** | FRI | The genuinely population-global one: firm-wide true-architect thresholds + modal voting + a learned implementor→architect pairing table — a new account can cross a threshold / shift the learned table. BUT the learned pairing + thresholds are stable period-over-period → freeze them (recompute weekly), nightly only apply modal/threshold logic. Cheap (13s) so lowest priority. | **IWR-marginal (freeze learned table)** |
+
+**Result: 0 of the 6 remain truly FULL-RECOMPUTE-INHERENT.** The "irreducible firm-aggregate floor" from §6 largely DISSOLVES under freeze-baseline — D_00b/D_00c/D_01 (the expensive all-history firm readers) become open-period-only nightly + a once-per-period rebaseline. The only genuinely-population-global residue is C_07's threshold/pairing core, which is both freezable (weekly) and cheap.
+
+**Restatement/reconcile rigor (0.4.0_DS axis):** late-arriving/restated data for a FROZEN period invalidates the baseline → a **restatement trigger** must re-freeze the affected closed period (detect via a frozen-period-input watermark / checksum; re-run that period's baseline). The periodic full rebaseline is the standing drift-catch. This is the subtle correctness core — design it explicitly with 0.4.0.
+
+## A2. Machine-sizing as a cost function (not "smallest box")
+Objective = **minimize Σ(runtime × machine_rate)**, fit per-script + chain on the **perf_history archive** (just shipped — accruing from tonight). Break-even (Andrew): 1 hr @ $3 = $3; a $2/hr box wins only if < 1.5 hr. So the right-size box is the OUTPUT of the cost model, not a fixed target.
+- **R3 (tonight's r6i.4xlarge) = a first-order point** on the CURRENT full-recompute algorithm — cut wasted cores at the same algorithm. Tonight's nightly gives the first r6i.4xlarge perf_history point; combined with the c6i.16xlarge history = 2 points to seed the runtime-vs-machine regression.
+- As GLDINC incrementalizes (axis 1), the working set shrinks → BOTH the memory floor (smaller box) AND runtime drop together → re-fit the cost model after each phase; the cost-optimal box co-moves smaller, and shorter runtime also improves Spot economics (less interruption exposure). A_03 (P2) is the canonical synergy — it moves both factors at once.
+
+## A3. Revised roadmap (folds both axes)
+- **P0.5** (new, analysis): the freeze-baseline reclassification above → feeds the cost model the algorithm-axis options for the firm-level scripts (previously written off as inherent). Restatement-trigger design with 0.4.0_DS.
+- **P1–P4** unchanged in order, but each phase now also emits a perf_history-fitted cost-model update (axis 2) so the box choice is re-derived, not assumed. D_00b freeze-baseline (formerly "leave FRI") joins as a high-value phase (it's the biggest all-history firm reader).
+- **Sizing method throughout:** the cost model (A2) decides the box at each phase; R3 is the t=0 baseline point on the frontier.
+
+**Upgraded honest headline:** with freeze-baseline, the win is LARGER than the original ~50-70% framing — the firm-level all-history readers (D_00b/D_00c/D_01) are incrementalizable too, so a typical-delta night recomputes only the open period + changed entities + a periodic rebaseline. The genuinely-irreducible residue shrinks to C_07's cheap global core. R3 + GLDINC are one joint (algorithm × machine) cost-optimization, exactly per the framework.
