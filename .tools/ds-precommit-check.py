@@ -27,15 +27,17 @@ import os
 import sys
 from pathlib import Path
 
-# Dual-pipeline byte-identical synced helpers (MDLP_DISTFIX I3; CTO dual-pipeline-sync
-# ruling 2026-06-05). Each tuple = two repo-root-relative paths that MUST be byte-identical
-# (gold runtimes are separate, so a shared helper is two physical copies + this mechanical
-# gate = one enforced canonical impl). Generalizes to any bd<->orion shared gold-lib helper.
-_DUAL_PIPELINE_SYNCED_PAIRS = [
-    (
+# Byte-identical synced helper GROUPS (MDLP_DISTFIX I3; CTO dual-pipeline-sync ruling
+# 2026-06-05). Each list = N>=2 repo-root-relative paths that MUST be byte-identical
+# (the bd/orion/smartx runtimes are separate, so a shared helper is N physical copies +
+# this mechanical gate = one enforced canonical impl). Generalizes to any cross-pipeline
+# shared helper. floored_percentiles spans bd-gold + orion-gold + smartx (I1+I2 re-source).
+_SYNCED_HELPER_GROUPS = [
+    [
         'data/black_diamond/scripts/gold/lib/floored_percentiles.py',
         'data/orion/scripts/gold/lib/floored_percentiles.py',
-    ),
+        'data/smartx/scripts/floored_percentiles.py',
+    ],
 ]
 
 # Paths that must carry `from __future__ import annotations` (ADHC_DSFLOW.004).
@@ -457,29 +459,32 @@ def _norm(p: str) -> str:
 
 
 def check_dual_pipeline_sync(filepath_hint: str) -> str | None:
-    """If the scanned file is a member of a byte-identical synced pair, assert BOTH copies
-    exist and are byte-for-byte identical. Returns an error string on divergence/missing,
-    else None. Fires on any commit touching either copy (MDLP_DISTFIX I3 / CTO ruling)."""
+    """If the scanned file is a member of a byte-identical synced GROUP (N>=2 copies that MUST
+    be identical -- the bd/orion/smartx runtimes are separate, so a shared helper is N physical
+    copies + this mechanical gate = one enforced canonical impl), assert ALL copies exist and are
+    byte-for-byte identical. Returns an error string on divergence/missing, else None. Fires on
+    any commit touching any copy (MDLP_DISTFIX I3 / CTO dual-pipeline-sync ruling 2026-06-05)."""
     norm = _norm(os.path.abspath(filepath_hint))
-    for a, b in _DUAL_PIPELINE_SYNCED_PAIRS:
-        a_n, b_n = _norm(a), _norm(b)
+    for group in _SYNCED_HELPER_GROUPS:
+        members = [_norm(m) for m in group]
         root = None
-        if norm == a_n or norm.endswith('/' + a_n):
-            root = norm[:len(norm) - len(a_n)]
-        elif norm == b_n or norm.endswith('/' + b_n):
-            root = norm[:len(norm) - len(b_n)]
+        for m in members:
+            if norm == m or norm.endswith('/' + m):
+                root = norm[:len(norm) - len(m)]
+                break
         if root is None:
             continue
-        pa, pb = Path(root + a_n), Path(root + b_n)
+        paths = [Path(root + m) for m in members]
         try:
-            same = pa.read_bytes() == pb.read_bytes()
+            blobs = [p.read_bytes() for p in paths]
         except FileNotFoundError as e:
-            return (f"{filepath_hint}: SYNC-GUARD ERROR: dual-pipeline synced helper missing a copy "
-                    f"({e}); both '{a}' and '{b}' must exist + be byte-identical (MDLP_DISTFIX I3).")
-        if not same:
-            return (f"{filepath_hint}: SYNC-GUARD ERROR: dual-pipeline synced helper DIVERGED -- "
-                    f"'{a}' != '{b}' byte-for-byte. They are ONE canonical impl; re-sync "
-                    f"(`cp` one onto the other) so they match before committing "
+            return (f"{filepath_hint}: SYNC-GUARD ERROR: synced helper group missing a copy "
+                    f"({e}); ALL of {group} must exist + be byte-identical (MDLP_DISTFIX I3).")
+        canon = blobs[0]
+        if any(b != canon for b in blobs[1:]):
+            return (f"{filepath_hint}: SYNC-GUARD ERROR: synced helper group DIVERGED -- the copies "
+                    f"{group} are NOT byte-identical. They are ONE canonical impl; re-sync "
+                    f"(`cp` the canonical onto the others) before committing "
                     f"(MDLP_DISTFIX I3 / CTO dual-pipeline-sync ruling 2026-06-05).")
     return None
 
