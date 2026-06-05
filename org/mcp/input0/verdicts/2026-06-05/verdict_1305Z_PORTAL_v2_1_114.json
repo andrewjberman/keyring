@@ -1,0 +1,20 @@
+{
+  "verdict": "CONCERN",
+  "project": "PORTAL_v2.1.114_SERVED_PROD_e2e",
+  "artifacts_verified": [
+    "portal-v2.1.114 tag -> 1695a754 (peel-verified)",
+    "6 smoke-scope commits in-bundle (858bd374,f2f62b17,ed16010c,90f67b5e,3b7dbea5,3e0ce8d0)",
+    "keep-warm ?warm=1 cache-buster ping (LIVE, network reqs 78+258)",
+    "clean FE boot under lodash 4.18.1"
+  ],
+  "tools_gating_artifacts": ["playwright-mcp (node+edge)", "git merge-base --is-ancestor"],
+  "axis_mechanical": "GREEN",
+  "axis_intent_coverage": "GREEN",
+  "axis_decision_useful": "YELLOW",
+  "axis_constitution_coherence": "GREEN",
+  "constitution_drift_articles": [],
+  "timestamp_utc": "2026-06-05T13:05:00Z",
+  "mode": "comprehensive",
+  "source": "verify-channel-ws",
+  "note": "PASS on deploy-integrity/source-completeness/runtime-boot + surface-3 keep-warm live-confirmed + firmId=inflection routing. axis_decision_useful YELLOW = honest-limit: independent agent pixel-render of the 4 data-bearing surfaces (ModelPortfolios Orion label / TaxCostBasis Realized-YTD / chart paint / xlsx export) is blocked by PROD scoped-data auth on localhost (dev-bypass token rejected 401 across all platinum/firm/*.json + /auth/refresh). This is a verification-COVERAGE gap, not a deploy defect. Residual render-correctness rests on 2-day live-PROD authenticated stability + source-verification. Literal pixel confirmation DEFERRED to authenticated PROD session (Andrew). Not faked, not dropped."
+}
