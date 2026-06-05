@@ -25,6 +25,20 @@ Its commit is the watermark — everything up to it is principal-approved;
 everything after is the review window. If no flag exists, the window is the
 whole history of `org/tier0/`.
 
+**Pin the window boundaries precisely (RV-0026 + RV-0028 boundary-error fix).**
+Two CVO corrections (RV-0026 tail-N; RV-0028 calendar-day) prove the window edges
+must be derived, never approximated:
+- **START = the flag commit's author-timestamp**, not a calendar day:
+  `git log -1 --pretty=%aI <flag>` (convert to UTC for audit-line comparison).
+  A date-prefix grep (`grep '2026-06-03'`) sweeps in pre-window entries from the
+  prior, already-accepted window — at RV-0028 this over-counted 11 overrides
+  (incl. the 4 MSTR-self ones), creating a false "MSTR authored 0 commits but has
+  4 overrides" contradiction.
+- **END = the window_to commit's author-timestamp** (HEAD/boot at review time),
+  not "now" — exclude this review's own acceptance-commit overrides (they belong
+  to the NEXT window).
+- Record both `window_from_commit` and `window_to_commit` (sha) in the RV record.
+
 ## Step 1 — Diff the window
 
 Deterministic, since the flag:
@@ -45,6 +59,13 @@ Read the window, not just list it:
 - **Audit-log walk** — read `org/tier0/audit/ledger-hook-audit.log` over the
   window; any non-append edit (a deleted or rewritten past line) is a finding.
   Every `OVERRIDE` line raises a mandatory `OVERRIDE_REVIEW` finding.
+  **Filter audit lines by explicit timestamp range `START <= ts < END`** (the
+  Step-0 flag-author-time boundaries), NOT a date-prefix grep — `awk '$1 >= START
+  && $1 < END'`. Walk BOTH the constitutional log (`tier0/audit/ledger-hook-audit.log`)
+  AND the commit-scope log (`org/git-author-override-audit.log`); they are distinct
+  (constitutional ledger-hook overrides vs commit-scope owned-paths/author overrides)
+  and the OVERRIDE_REVIEW must name which log each override came from. Re-derive
+  counts independently every time — never carry a prior summary or a tail-N sample.
 - **S0–S4 distribution** — count the window's decisions by class. A high S3/S4
   share is a flag that the autonomy dial is mis-set — report it so Andrew can
   tune the Stakes Matrix.
