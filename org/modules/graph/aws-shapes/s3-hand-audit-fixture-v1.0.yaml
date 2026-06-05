@@ -10,12 +10,13 @@
 # Deferred: us-east-2 buckets (provider alias required — explicitly noted in TF comments).
 
 meta:
-  fixture_version: "1.0"
+  fixture_version: "1.1"
   phase: "Phase 1 — S3 hand-audit oracle"
   tf_commit_at_audit: "11d6edaf4"
   cvo_author: "3.0.0_SA_CVO"
   schema_ref: "ADHC_CMPAWS PRD docs/briefs/comp-aws-comprehensive-cloud-compiler-prd-20260601.md"
   iam_stubs: "IAM_PRINCIPAL nodes are provisional stubs; Phase 1 IAM sub-audit will resolve"
+  v1_1_changes: "GAP-7 resolved (CTO 204113Z): removed eventbridge_routing flag from direct S3 triggers (inf-portal-publisher + inf-silver-aggregator); added event_rules section with inf-silver-chain EVENT_RULE node; updated GAP-7 status=RESOLVED."
 
 # =============================================================================
 # S3_BUCKET NODES
@@ -611,7 +612,6 @@ s3_triggers:
     filter_suffix: "pipeline-complete.json"
     event_type: "s3:ObjectCreated:*"
     tf_resource: "inf-pipeline/s3-notifications.tf: aws_s3_bucket_notification.opal_data_inf"
-    eventbridge_routing: true
 
   - source_bucket: "opal-data-inf"
     target_lambda: "inf-silver-aggregator"
@@ -619,7 +619,6 @@ s3_triggers:
     filter_suffix: ".json"
     event_type: "s3:ObjectCreated:*"
     tf_resource: "inf-pipeline/s3-notifications.tf: aws_s3_bucket_notification.opal_data_inf"
-    eventbridge_routing: true
 
   - source_bucket: "opal-data-portal-v2"
     target_lambda: "yang-pipeline-trigger"
@@ -634,6 +633,32 @@ s3_triggers:
     filter_suffix: ".xlsx"
     event_type: "s3:ObjectCreated:*"
     tf_resource: "portal-notifications/main.tf: aws_s3_bucket_notification.portal_triggers[sscn-processor-trigger]"
+
+# =============================================================================
+# EVENT_RULE NODES (S3_BUCKET -[EMITS_TO]-> EVENT_RULE -[TRIGGERS]-> LAMBDA)
+# =============================================================================
+#
+# CTO GAP-7 disposition (204113Z): EventBridge-routed triggers use a SEPARATE EVENT_RULE node.
+# Edge model: S3_BUCKET -[EMITS_TO]-> EVENT_RULE -[TRIGGERS]-> LAMBDA
+# (distinct from direct S3 bucket notification: S3_BUCKET -[TRIGGERS]-> LAMBDA)
+
+event_rules:
+
+  - event_rule_id: "inf-silver-chain-rule"
+    source_bucket: "opal-data-inf"
+    event_pattern:
+      source: ["aws.s3"]
+      detail_type: ["Object Created"]
+      detail:
+        bucket.name: ["opal-data-inf"]
+        object.key: [{prefix: "bronze/orion-api/"}, {suffix: "_BRONZE_COMPLETE.json"}]
+    tf_resource: "inf-pipeline/inf-silver-chain.tf"
+    tf_managed: true
+    target_lambda: "inf-silver-chain"
+    notes: "AE live-AWS cross-check should verify the exact event pattern detail matches TF declaration."
+    # Edges:
+    #   opal-data-inf -[EMITS_TO]-> EVENT_RULE:inf-silver-chain-rule
+    #   EVENT_RULE:inf-silver-chain-rule -[TRIGGERS]-> LAMBDA:inf-silver-chain
 
 # =============================================================================
 # OPEN QUESTIONS / ORACLE GAPS (for AE live-AWS cross-check)
@@ -675,6 +700,8 @@ oracle_gaps:
     description: "inf-silver-chain EventBridge rule (inf-pipeline/inf-silver-chain.tf) routes opal-data-inf bronze/orion-api/*/_BRONZE_COMPLETE.json to inf-silver-chain Lambda via EventBridge (not direct S3 notification). This is an S3 -[TRIGGERS via EventBridge]-> LAMBDA edge variant. Confirm node type and edge label."
     severity: "P2"
     owner: "CTO (edge taxonomy)"
+    status: "RESOLVED"
+    resolution: "CTO disposition 204113Z: use separate EVENT_RULE node. Edge model: S3_BUCKET -[EMITS_TO]-> EVENT_RULE -[TRIGGERS]-> LAMBDA. Direct S3 triggers (inf-portal-publisher + inf-silver-aggregator) are S3_BUCKET -[TRIGGERS]-> LAMBDA (no intermediary). EVENT_RULE node added to event_rules section; eventbridge_routing flag removed from direct trigger entries."
 
 # =============================================================================
 # SUMMARY
@@ -688,6 +715,9 @@ summary:
   s3_bucket_policies_tf_managed: 3
   s3_bucket_policies_console_managed: 3
   s3_trigger_edges: 6
+  event_rule_nodes: 1
   iam_principal_stubs: 6
   oracle_gaps: 7
-  fixture_status: "DRAFT-RAVC1 — ready for AE live-AWS cross-check"
+  oracle_gaps_resolved: 1
+  oracle_gaps_open: 6
+  fixture_status: "DRAFT-RAVC1 v1.1 — GAP-7 resolved; AE live-AWS cross-check in progress (COO-dispatched)"
