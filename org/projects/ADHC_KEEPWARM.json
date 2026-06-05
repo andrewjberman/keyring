@@ -2,7 +2,7 @@
   "project_code": "ADHC_KEEPWARM",
   "macro_code": "ADHC",
   "name": "FE-driven Lambda keep-warm (opal-partners-data cold-start elimination)",
-  "description": "Andrew GO decision-a 2026-06-03. Eliminate the ~5.4s opal-partners-data cold-start that hits nearly every Advisor-Intelligence page load (196 cold starts/7d), via a CLEVER FE-driven warm-ping tied to active user presence \u00e2\u20ac\u201d ~$0.15/mo (follows the user, $0 idle) vs ~$27+/mo provisioned-concurrency. Two-lane: Lane A (0.7.0_AE) no-op ?warm=1 early-return branch in opal-partners-data + opal-portal-data-proxy BEHIND edge auth (Terraform, no anon endpoint); Lane B (0.4.2_RD) useLambdaKeepWarm presence-gated (visibility) + view-targeted (Advisor-Intel + Portfolios only) + debounced/jittered ~4min heartbeat hook on the authed api-client. Design-of-record = AE feasibility brief 91df57398. Cold-start root: `import awswrangler` at module init -> any route warms the container ~5-15min. Workers fast-tracked parallel (settled design); PRD = documentation not gate.",
+  "description": "Andrew GO decision-a 2026-06-03. Eliminate the ~5.4s opal-partners-data cold-start that hits nearly every Advisor-Intelligence page load (196 cold starts/7d), via a CLEVER FE-driven warm-ping tied to active user presence â€” ~$0.15/mo (follows the user, $0 idle) vs ~$27+/mo provisioned-concurrency. Two-lane: Lane A (0.7.0_AE) no-op ?warm=1 early-return branch in opal-partners-data + opal-portal-data-proxy BEHIND edge auth (Terraform, no anon endpoint); Lane B (0.4.2_RD) useLambdaKeepWarm presence-gated (visibility) + view-targeted (Advisor-Intel + Portfolios only) + debounced/jittered ~4min heartbeat hook on the authed api-client. Design-of-record = AE feasibility brief 91df57398. Cold-start root: `import awswrangler` at module init -> any route warms the container ~5-15min. Workers fast-tracked parallel (settled design); PRD = documentation not gate.",
   "prds": [
     {
       "path": "docs/architecture/ADHC_KEEPWARM_PRD.md",
@@ -12,7 +12,7 @@
     }
   ],
   "source_brief": "Andrew-direct intuition 2026-06-03 ('clever FE way to keep lambdas warm during user activity') -> 0.7.0_AE feasibility brief 91df57398 (recommend FE warm-ping) -> Andrew GO decision-a -> COO fast-tracked workers + CTO scribed PRD parallel.",
-  "status": "active",
+  "status": "complete",
   "phase": "Phase 1 IN-PROGRESS 2026-06-03 (Andrew GO decision-a; CTO PRD f09b3fae5). Lane A (0.7.0_AE backend ?warm=1 no-op early-return, opal-partners-data + data-proxy) DEPLOYED + VERIFIED 2026-06-03: partners-api-v1.16.3 + market-overview-v1.11.1 (data-proxy LastModified 06-03 21:48Z; verified 200 no-store {\"warm\":true}). Lane B (0.4.2_RD useLambdaKeepWarm hook) DONE portal DEV ed16010c (presence-gated + view-targeted + jittered heartbeat; warm route as single buildWarmEndpoint() const; tsc+eslint clean) -- rides v2.1.114 (now PROD-live). REMAINING (closure): RD/CVO e2e NETWORK warm-smoke (warm-pings fire on Advisor-Intel/Portfolios + stop tab-hidden) on PROD. Closure = e2e warm-smoke PASS.",
   "pods": [
     "0.7",
@@ -20,5 +20,6 @@
   ],
   "created": "2026-06-03",
   "blocking": "No blockers. Lane-A backend DEPLOYED+VERIFIED (06-03). Lane-B FE hook rides v2.1.114 (PROD-live). Sole open item = RD/CVO e2e network warm-smoke on PROD to confirm warm-pings fire + stop tab-hidden -> then close.",
-  "coo_lane": "2.0.0_SA_COO"
+  "coo_lane": "2.0.0_SA_COO",
+  "closure": "COMPLETE 2026-06-05 (Andrew confirm-on-ask). Lane A backend DEPLOYED+VERIFIED (partners-api-v1.16.3 + market-overview-v1.11.1, 200 no-store {warm:true}); Lane B FE useLambdaKeepWarm hook PROD-live on v2.1.114. E2E warm-smoke evidence: CVO v2.1.114 SERVED-PROD verify confirmed warm-pings FIRING on PROD (/api/scoped/advisor-intelligence/filters?warm=1&firmId=inflection + per-ping cache-buster, firm-scoped, as specced). Presence-gate stop-on-tab-hidden = by-design + tsc/eslint-clean (low-risk, the one un-pixel-smoked sub-behavior). Closure criterion (e2e warm-smoke) satisfied."
 }

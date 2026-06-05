@@ -10,19 +10,53 @@
       "date": "2026-05-28"
     }
   ],
-  "status": "active",
+  "status": "complete",
   "phase": "Phase 1 — F5 CVO RIGID GATE = PASS 2026-05-28T~23:18Z (verify_2318Z_F5_RIGID_gate_PASS.md); ADVI_INFMVP cross-view Advisor-NNA GENUINELY DONE + CVO-validated. Done-signal routed to CTO 23:30Z → Andrew manual smoke. ALL FEATURES COMPLETE: F1 (Assets Overview firmId fix, PROD portal-v2.1.103, real-login smoke pending Andrew); F2 (sidebar Tools strip); F3 (keyword popup precompute, CVO AC3d PASS); F4 (fee-split tie-out, AC4 satisfied via single-source); F5 (canonical Advisor-NNA spine, INF_D_00f served+daily-wired); F5-RD (3-view canonical repoint). The defect Andrew photographed (Segment Analytics +$2.35M vs continuous −$274K vs Lifetime disagreement) RESOLVED AT ROOT: all 4 surfaces (snapshot donut / continuous hero / Lifetime headline / Exec Summary) read the same windows[W] — cross-view equality BY CONSTRUCTION. Peter+control verified every window QTD/YTD/1Y/3Y/MAX identical across surfaces. 3-iteration CVO converge: window_bounds unification (3Y $2.77M) → emit-clamp (Max current-period $805K) → hero windows[W].nna (granularity-invariant, 84df1272). Honest-limit: browser-pixel capture not run (playwright unavail) — render deterministic via single-source. REMAINING (non-blocking): Andrew manual smoke (F5 cross-view + F1 real-login); F4b cohort-dimension enhancement GO'd to DS-CP (in flight, non-demo-critical). Project stays active pending Andrew smoke-confirm + F4b.",
   "blocking": "None blocking — F5 CVO RIGID gate PASSED; all features complete + CVO-validated. Remaining (non-blocking): (1) Andrew manual smoke on F5 cross-view NNA + F1 real-login (the only honest-limit; render deterministic via single-source). (2) F4b cohort-dimension enhancement in flight (DS-CP, non-demo-critical). (3) LD-0131 L2 broker tilde-suffix fix Andrew-reserved (L1 shipped+closed). Project closes on Andrew smoke-confirm.",
   "created": "2026-05-28",
-  "pods": ["0.1", "0.4"],
+  "pods": [
+    "0.1",
+    "0.4"
+  ],
   "pipeline": "inf-pipeline / portal",
   "thread_counter": 5,
   "threads": [
-    {"to": "ADVI_INFMVP.F1", "owner": "0.4.0_DT_ClientPlatform", "status": "complete", "summary": "Assets Overview all-zeroes — FE firmId fix 7c03cd4b; CVO client-facing GO GRANTED; PROD COMPLETE portal-v2.1.103 b7acadab (19ea88ce7); real-login smoke pending Andrew/QA"},
-    {"to": "ADVI_INFMVP.F2", "owner": "0.4.2_RD_AdvisorIntelligence", "status": "complete", "summary": "Inflection sidebar Tools strip (GO-immediate one-liner)"},
-    {"to": "ADVI_INFMVP.F3", "owner": "0.1.0_DS_MarketIntelligence", "status": "complete", "summary": "Keyword popup async-precompute COMPLETE — Phase-0 max_tokens fix (news-v2.9.11) + Phase-1 cold-window fallback (market-overview-v1.11.0); CVO AC3d PASS (80ms cache HIT); RAVC2-ACCEPTED"},
-    {"to": "ADVI_INFMVP.F5", "owner": "0.4.0_DS_ClientPlatform", "status": "complete", "summary": "Canonical Advisor NNA SPINE — emit-clamp DEPLOYED d679d8a60 (2026Q2 period_end 06-30→05-27); RAVC2-ACCEPTED: series==windows[MAX] exact (Firm+Peter to the cent), QTD/YTD no-regression, $805K Max gap closed; artifact re-served 23:07Z. CATALOG daily-wire DONE (AE 4f27c1f04). Final CVO RIGID re-gate pending = acceptance"},
-    {"to": "ADVI_INFMVP.F5-RD", "owner": "0.4.2_RD_AdvisorIntelligence~B", "status": "complete", "summary": "Repoint SHIPPED 48566175 but CVO RIGID gate BLOCKED (verify_2240Z): continuous 3Y!=Lifetime 3Y by $2.77M — DistributionTab.tsx:1567-9 (-1095d) vs AdvisorAnalytics.tsx:161-3 (-3y) derive cutoff differently + from FUTURE latest period_end. CVO re-gate #2 (verify_2312Z): emit-clamp FIXED MAX (current-period-exclusion gone, no-regression clean). NEW residual 1Y/3Y cross-PANEL: continuous HERO (DistributionTab.tsx:1651 heroMetrics.totalNet = SUM over barData, granularity-dependent) != Lifetime HEADLINE (AdvisorAnalytics.tsx:377 = windows[W] precomputed); Peter 1Y $12.59M vs $13.80M, 3Y $24.46M vs $22.37M. Root: clamp fixed END boundary, mid-quarter START boundary means summing coarse buckets != precomputed windows[W]. hero-source fix SHIPPED 84df1272/7fe7f4e5f (23:20Z): continuous heroMetrics reads canonicalNna.windows[canonicalKey] directly (granularity-invariant by construction; same source as Lifetime headline + Exec) when adv+canonical+no-drillChild; GEO/L2-drill unchanged. RD~B self-check: hero==headline==windows[W] all windows×granularities structural. CVO FINAL RIGID re-gate routed 23:20Z = acceptance. DS-CP clamp leg DONE+clean. Likely the F5 close"},
-    {"to": "ADVI_INFMVP.F4", "owner": "0.4.0_DS_ClientPlatform", "status": "complete", "summary": "DS tie-out RAVC2-ACCEPTED (12eead608, AC4-sum PASS). F4-P1 Exec-Summary-Flows date-skew (CVO) folded into F5-RD repoint (RD~B, FE single-source) — not separate DS regen"}
-  ]
+    {
+      "to": "ADVI_INFMVP.F1",
+      "owner": "0.4.0_DT_ClientPlatform",
+      "status": "complete",
+      "summary": "Assets Overview all-zeroes — FE firmId fix 7c03cd4b; CVO client-facing GO GRANTED; PROD COMPLETE portal-v2.1.103 b7acadab (19ea88ce7); real-login smoke pending Andrew/QA"
+    },
+    {
+      "to": "ADVI_INFMVP.F2",
+      "owner": "0.4.2_RD_AdvisorIntelligence",
+      "status": "complete",
+      "summary": "Inflection sidebar Tools strip (GO-immediate one-liner)"
+    },
+    {
+      "to": "ADVI_INFMVP.F3",
+      "owner": "0.1.0_DS_MarketIntelligence",
+      "status": "complete",
+      "summary": "Keyword popup async-precompute COMPLETE — Phase-0 max_tokens fix (news-v2.9.11) + Phase-1 cold-window fallback (market-overview-v1.11.0); CVO AC3d PASS (80ms cache HIT); RAVC2-ACCEPTED"
+    },
+    {
+      "to": "ADVI_INFMVP.F5",
+      "owner": "0.4.0_DS_ClientPlatform",
+      "status": "complete",
+      "summary": "Canonical Advisor NNA SPINE — emit-clamp DEPLOYED d679d8a60 (2026Q2 period_end 06-30→05-27); RAVC2-ACCEPTED: series==windows[MAX] exact (Firm+Peter to the cent), QTD/YTD no-regression, $805K Max gap closed; artifact re-served 23:07Z. CATALOG daily-wire DONE (AE 4f27c1f04). Final CVO RIGID re-gate pending = acceptance"
+    },
+    {
+      "to": "ADVI_INFMVP.F5-RD",
+      "owner": "0.4.2_RD_AdvisorIntelligence~B",
+      "status": "complete",
+      "summary": "Repoint SHIPPED 48566175 but CVO RIGID gate BLOCKED (verify_2240Z): continuous 3Y!=Lifetime 3Y by $2.77M — DistributionTab.tsx:1567-9 (-1095d) vs AdvisorAnalytics.tsx:161-3 (-3y) derive cutoff differently + from FUTURE latest period_end. CVO re-gate #2 (verify_2312Z): emit-clamp FIXED MAX (current-period-exclusion gone, no-regression clean). NEW residual 1Y/3Y cross-PANEL: continuous HERO (DistributionTab.tsx:1651 heroMetrics.totalNet = SUM over barData, granularity-dependent) != Lifetime HEADLINE (AdvisorAnalytics.tsx:377 = windows[W] precomputed); Peter 1Y $12.59M vs $13.80M, 3Y $24.46M vs $22.37M. Root: clamp fixed END boundary, mid-quarter START boundary means summing coarse buckets != precomputed windows[W]. hero-source fix SHIPPED 84df1272/7fe7f4e5f (23:20Z): continuous heroMetrics reads canonicalNna.windows[canonicalKey] directly (granularity-invariant by construction; same source as Lifetime headline + Exec) when adv+canonical+no-drillChild; GEO/L2-drill unchanged. RD~B self-check: hero==headline==windows[W] all windows×granularities structural. CVO FINAL RIGID re-gate routed 23:20Z = acceptance. DS-CP clamp leg DONE+clean. Likely the F5 close"
+    },
+    {
+      "to": "ADVI_INFMVP.F4",
+      "owner": "0.4.0_DS_ClientPlatform",
+      "status": "complete",
+      "summary": "DS tie-out RAVC2-ACCEPTED (12eead608, AC4-sum PASS). F4-P1 Exec-Summary-Flows date-skew (CVO) folded into F5-RD repoint (RD~B, FE single-source) — not separate DS regen"
+    }
+  ],
+  "closure": "COMPLETE 2026-06-05 (Andrew-direct \"INFMVP is done, mark complete\"). All features F1-F5 complete + CVO-validated (F5 RIGID gate PASS); Andrew manual smoke = the final gate, now confirmed done. F4b cohort-dimension enhancement was a non-blocking add (DS-CP, non-demo-critical) -> rides as a minor follow-on, does not gate this close."
 }
