@@ -21,5 +21,6 @@
   "created": "2026-06-03",
   "blocking": "No blockers. Lane-A backend DEPLOYED+VERIFIED (06-03). Lane-B FE hook rides v2.1.114 (PROD-live). Sole open item = RD/CVO e2e network warm-smoke on PROD to confirm warm-pings fire + stop tab-hidden -> then close.",
   "coo_lane": "2.0.0_SA_COO",
-  "closure": "COMPLETE 2026-06-05 (Andrew confirm-on-ask). Lane A backend DEPLOYED+VERIFIED (partners-api-v1.16.3 + market-overview-v1.11.1, 200 no-store {warm:true}); Lane B FE useLambdaKeepWarm hook PROD-live on v2.1.114. E2E warm-smoke evidence: CVO v2.1.114 SERVED-PROD verify confirmed warm-pings FIRING on PROD (/api/scoped/advisor-intelligence/filters?warm=1&firmId=inflection + per-ping cache-buster, firm-scoped, as specced). Presence-gate stop-on-tab-hidden = by-design + tsc/eslint-clean (low-risk, the one un-pixel-smoked sub-behavior). Closure criterion (e2e warm-smoke) satisfied."
+  "closure": "COMPLETE 2026-06-05 (Andrew confirm-on-ask). Lane A backend DEPLOYED+VERIFIED (partners-api-v1.16.3 + market-overview-v1.11.1, 200 no-store {warm:true}); Lane B FE useLambdaKeepWarm hook PROD-live on v2.1.114. E2E warm-smoke evidence: CVO v2.1.114 SERVED-PROD verify confirmed warm-pings FIRING on PROD (/api/scoped/advisor-intelligence/filters?warm=1&firmId=inflection + per-ping cache-buster, firm-scoped, as specced). Presence-gate stop-on-tab-hidden = by-design + tsc/eslint-clean (low-risk, the one un-pixel-smoked sub-behavior). Closure criterion (e2e warm-smoke) satisfied.",
+  "completed": "2026-06-05"
 }

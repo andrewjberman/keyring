@@ -58,5 +58,6 @@
       "summary": "DS tie-out RAVC2-ACCEPTED (12eead608, AC4-sum PASS). F4-P1 Exec-Summary-Flows date-skew (CVO) folded into F5-RD repoint (RD~B, FE single-source) — not separate DS regen"
     }
   ],
-  "closure": "COMPLETE 2026-06-05 (Andrew-direct \"INFMVP is done, mark complete\"). All features F1-F5 complete + CVO-validated (F5 RIGID gate PASS); Andrew manual smoke = the final gate, now confirmed done. F4b cohort-dimension enhancement was a non-blocking add (DS-CP, non-demo-critical) -> rides as a minor follow-on, does not gate this close."
+  "closure": "COMPLETE 2026-06-05 (Andrew-direct \"INFMVP is done, mark complete\"). All features F1-F5 complete + CVO-validated (F5 RIGID gate PASS); Andrew manual smoke = the final gate, now confirmed done. F4b cohort-dimension enhancement was a non-blocking add (DS-CP, non-demo-critical) -> rides as a minor follow-on, does not gate this close.",
+  "completed": "2026-06-05"
 }
