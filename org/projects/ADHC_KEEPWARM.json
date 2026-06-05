@@ -2,7 +2,7 @@
   "project_code": "ADHC_KEEPWARM",
   "macro_code": "ADHC",
   "name": "FE-driven Lambda keep-warm (opal-partners-data cold-start elimination)",
-  "description": "Andrew GO decision-a 2026-06-03. Eliminate the ~5.4s opal-partners-data cold-start that hits nearly every Advisor-Intelligence page load (196 cold starts/7d), via a CLEVER FE-driven warm-ping tied to active user presence — ~$0.15/mo (follows the user, $0 idle) vs ~$27+/mo provisioned-concurrency. Two-lane: Lane A (0.7.0_AE) no-op ?warm=1 early-return branch in opal-partners-data + opal-portal-data-proxy BEHIND edge auth (Terraform, no anon endpoint); Lane B (0.4.2_RD) useLambdaKeepWarm presence-gated (visibility) + view-targeted (Advisor-Intel + Portfolios only) + debounced/jittered ~4min heartbeat hook on the authed api-client. Design-of-record = AE feasibility brief 91df57398. Cold-start root: `import awswrangler` at module init -> any route warms the container ~5-15min. Workers fast-tracked parallel (settled design); PRD = documentation not gate.",
+  "description": "Andrew GO decision-a 2026-06-03. Eliminate the ~5.4s opal-partners-data cold-start that hits nearly every Advisor-Intelligence page load (196 cold starts/7d), via a CLEVER FE-driven warm-ping tied to active user presence \u00e2\u20ac\u201d ~$0.15/mo (follows the user, $0 idle) vs ~$27+/mo provisioned-concurrency. Two-lane: Lane A (0.7.0_AE) no-op ?warm=1 early-return branch in opal-partners-data + opal-portal-data-proxy BEHIND edge auth (Terraform, no anon endpoint); Lane B (0.4.2_RD) useLambdaKeepWarm presence-gated (visibility) + view-targeted (Advisor-Intel + Portfolios only) + debounced/jittered ~4min heartbeat hook on the authed api-client. Design-of-record = AE feasibility brief 91df57398. Cold-start root: `import awswrangler` at module init -> any route warms the container ~5-15min. Workers fast-tracked parallel (settled design); PRD = documentation not gate.",
   "prds": [
     {
       "path": "docs/architecture/ADHC_KEEPWARM_PRD.md",
@@ -13,9 +13,12 @@
   ],
   "source_brief": "Andrew-direct intuition 2026-06-03 ('clever FE way to keep lambdas warm during user activity') -> 0.7.0_AE feasibility brief 91df57398 (recommend FE warm-ping) -> Andrew GO decision-a -> COO fast-tracked workers + CTO scribed PRD parallel.",
   "status": "active",
-  "phase": "Phase 1 IN-PROGRESS 2026-06-03 (Andrew GO decision-a; CTO PRD f09b3fae5). Lane A (0.7.0_AE backend ?warm=1 no-op early-return, opal-partners-data + data-proxy) CODE SHIPPED f8d1c304b, Terraform deploy in flight. Lane B (0.4.2_RD useLambdaKeepWarm hook) DONE portal DEV ed16010c (presence-gated + view-targeted + jittered heartbeat; warm route as single buildWarmEndpoint() const = 1-line flip for AE's final path; tsc+eslint clean). REMAINING: AE backend deploy -> RAVC2 RD live path+200 -> e2e NETWORK smoke (warm-pings fire on Advisor-Intel/Portfolios + stop tab-hidden) -> FE hook rides v2.1.114 promote (Andrew smoke). Closure = backend live + e2e warm-smoke + FE hook promoted.",
-  "pods": ["0.7", "0.4.2"],
+  "phase": "Phase 1 IN-PROGRESS 2026-06-03 (Andrew GO decision-a; CTO PRD f09b3fae5). Lane A (0.7.0_AE backend ?warm=1 no-op early-return, opal-partners-data + data-proxy) DEPLOYED + VERIFIED 2026-06-03: partners-api-v1.16.3 + market-overview-v1.11.1 (data-proxy LastModified 06-03 21:48Z; verified 200 no-store {\"warm\":true}). Lane B (0.4.2_RD useLambdaKeepWarm hook) DONE portal DEV ed16010c (presence-gated + view-targeted + jittered heartbeat; warm route as single buildWarmEndpoint() const; tsc+eslint clean) -- rides v2.1.114 (now PROD-live). REMAINING (closure): RD/CVO e2e NETWORK warm-smoke (warm-pings fire on Advisor-Intel/Portfolios + stop tab-hidden) on PROD. Closure = e2e warm-smoke PASS.",
+  "pods": [
+    "0.7",
+    "0.4.2"
+  ],
   "created": "2026-06-03",
-  "blocking": "Lane A backend deploy (0.7.0, Terraform in flight) -> then RD e2e network smoke. FE hook (Lane B) rides v2.1.114 promote (HELD for Andrew GO). No blockers; both lanes in motion.",
+  "blocking": "No blockers. Lane-A backend DEPLOYED+VERIFIED (06-03). Lane-B FE hook rides v2.1.114 (PROD-live). Sole open item = RD/CVO e2e network warm-smoke on PROD to confirm warm-pings fire + stop tab-hidden -> then close.",
   "coo_lane": "2.0.0_SA_COO"
 }
