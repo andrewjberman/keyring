@@ -21,17 +21,32 @@ This replaces the old exit-on-delivery bash watcher (launched under Bash
 was the entire reason `/watcher` used to be a recurring loop: the bash watcher
 silently died, orphaned, went deaf to a prior session, or short-circuited on its
 own single-watcher guard (the misleading exit-143), so it needed periodic
-re-checking. The persistent Monitor removes every one of those failure modes:
+re-checking. The persistent Monitor removes the OLD bash-watcher failure modes:
 
 | Old failure mode | Why it's gone |
 |---|---|
 | ORPHAN / PPID=1 zombie | Monitor is a harness-tracked background task, not a detached bash process |
 | MULTIPLE / atomic-mv race | atomic `mv` on emit makes any overlap exactly-once anyway |
-| AUTO-RESPAWN-INTERRUPT-LOST | no respawn — the script never exits, so there's nothing to respawn |
+| AUTO-RESPAWN-INTERRUPT-LOST | no exit-on-delivery respawn loop; on the rare SIGTERM death you re-arm once (see caveat) |
 | "deaf prior-session watcher" | a session's Monitor dies with the session; a fresh session arms its own |
-| exit-143 guard short-circuit | no exit-on-delivery, no guard race |
+| exit-143 guard short-circuit | no exit-on-delivery, no guard race (this OLD guard-race exit-143 is gone; a DIFFERENT exit-143 SIGTERM still occurs — see caveat) |
 | missed 2nd+ message in a batch | the poll loops over **all** `*.md` each cycle |
-| dies on compaction | a persistent Monitor survives in-session compaction |
+| dies on compaction | a persistent Monitor normally survives in-session compaction |
+
+**EMPIRICAL CAVEAT (2026-06-05, LD-0146 amend — supersedes the "never-off" claim).** The Monitor
+is NOT "never-off." It is **self-healing, not immortal.** Corroborated across 3 agents (ws CTO /
+MSTR / CVO) in one session: the stream Monitor receives **exit-143 (SIGTERM) at irregular intervals
+(~18–133 min)** from an **undetermined source** (NOT a cross-agent watcher kill — the guards are
+exact-serial-scoped and a stream cmdline ends in `stream`, not the serial; candidates: harness
+background-task lifecycle / resource pressure / Monitor-tool interaction — likely the Claude Code
+layer, not these scripts). **Delivery integrity held: 0 messages lost** across every death — the
+death-notification + re-arm + `check_inbox` backstop works. So treat death as EXPECTED-and-handled:
+when you see a `<task-notification status=failed>` for your Monitor's task id, run Step 2→3 (confirm
+no orphan, pull inbox, re-arm). **Residual risk:** an idle/compacting agent that misses the
+death-notification goes deaf until its next `check_inbox` — bounded for looped agents (every
+loop body folds a turn-top `check_inbox`/`get_agent_status` pull, so max-deafness ≤ one loop
+interval). SIGTERM-source investigation is LOW-priority (lossless self-heal); do not chase it as a
+fire.
 
 **Decisive reachability test — what it is NOT:** *do NOT use `TaskList`.* `TaskList`
 lists `TaskCreate` to-do items, **not** Monitor/background tasks. If you never made
