@@ -168,6 +168,36 @@ firms land **producing/adjacent** — correctly, because their dual-entity discl
 fetch-limited rather than mislabeled. **This makes the Playwright escape-valve the clear next hardening:**
 it converts known-but-JS-hidden `adjacent` → `present` at scale.
 
+## 5.4 Peer-provider discovery + strategy refinement (Andrew direct 2026-06-05)
+
+Andrew strategy rulings (post-broader-scan): (1) **annuity/retirement IMOs first**; (2) **acquisition by a
+megacap is a NEGATIVE signal** — if a provider's RIA was acquired/integrated by a blue-chip consolidator,
+the acquirer already gave the roster an AUM platform, so Opal has no room to enter → prefer INDEPENDENT
+providers, de-rank acquired; (3) giants OK as roster sources (size screen lead-side only) but the
+independence axis trumps size; (4) **rank firms by insurance-language density, then financial-security-language
+density** on their pages; (5) SEC ADV is a *name source* for upstream aggregators (whose disclosure we
+reverse-search), not a deep structured spine.
+
+**Provider universe (annuity/retirement, independence-tagged) — `config/provider-seeds-v1.json` v2:**
+
+| IMO/FMO | Affiliated RIA | Independence | Disposition |
+|---|---|---|---|
+| FIG | Alphastar Capital Management + RIA Insurance Solutions | independent | PREFERRED |
+| Gradient Financial Group | Gradient Securities / d.b.a. Gradient Wealth Management + Gradient Investments | independent | PREFERRED (roster-harvest pending — thin single-query recall) |
+| Advisors Excel | AE Wealth Management | independent | PREFERRED |
+| AmeriLife | Brookstone Capital Management | **acquired_megacap** | DE-RANK (acquirer solved AUM) |
+| Senior Market Sales | Sequent Planning | acquired_megacap | DE-RANK (also off-channel: health/Medicare) |
+| Simplicity Group | Simplicity Wealth | pe_rollup | BORDERLINE |
+| Envestnet IX / DPL / RetireOne / FIDx / Osaic | — | platform | NOT a roster source (RIA-adds-insurance, reverse direction) |
+
+**Implemented:** the scorer (`fingerprint.py`) now emits `insurance_match_count` + `security_match_count`
++ page-level acquisition/independence flags; the pipeline ranks by
+`(tier + provider_penalty, insurance_density desc, security_density desc, dualbiz_score desc)` with
+`provider_penalty` driven by `independence_status` (acquired_megacap +20, platform +15, pe_rollup +10,
+independent 0). Re-run result: independent producing firms top the list (Paraclete / Airlie / Capital
+Wealth / Ramer); the AmeriLife/Brookstone-acquired cluster is correctly pushed to the bottom band
+despite decent insurance density. ds-gate clean.
+
 ## 6. Open decisions / next steps
 
 1. **Project code + registration** — provisional `FIND_DUALBIZ`; confirm with Andrew/CTO; register `org/projects/*.json` + REGISTRY row if formalized (2-step). Until then this is ad-hoc exploration under the engagement.
