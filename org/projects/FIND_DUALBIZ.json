@@ -1,0 +1,11 @@
+{
+  "status": "active",
+  "provisional": true,
+  "current_phase": "SEED-PHASE EXPLORATORY — PROVISIONAL tracking entry REGISTERED 2026-06-05 (2.0.0_SA_COO, after DS_MI scope-confirm). LIVE Andrew-direct engagement running turn-by-turn in 0.1.0_DS_MarketIntelligence's session (Andrew directing live, NOT a dispatched TO). Doc-of-record = the seed fingerprint + pipeline design brief (commit b1a9aa6d7) — Andrew chose 'write the fingerprint brief first' as the build; NO CTO PRD expected to start (PRD only if/when Andrew elevates). GOAL: discover small/mid dual-business PRODUCING agencies (insurance + AUM, Paraclete shape) via seed->lookalike fingerprinting. 3 Andrew-direct seeds (Paraclete / 49Financial / FIG) = one insurance+AUM organism at 3 tiers (producing > integrated > aggregator). PRIMARY signal = dual-entity disclosure-footer boilerplate (near-deterministic regex; the existing FIND_INSURE am_prominence scorer false-negatives Paraclete). DISTINCT from FIND_INSURE (does NOT pollute its 99-IMO 297-cell completion-matrix): (a) target universe DISJOINT — Andrew ruled OUT the 99-IMO safemoneybroadcasting list ('those companies are so huge it's kind of useless'); (b) method INVERTED — seed->lookalike vs FIND_INSURE's known-list->score. REUSES FIND_INSURE medallion + free FINRA enrich; swaps the discovery front-end to 3 engines (B=ADV/BrokerCheck affiliation-graph walk = LEAD, A=re-tuned taxonomy-dualbiz scorer, C=fingerprint web-search). Scrape stack = browser-UA curl + Playwright escape-valve, NO Bright Data. NEXT STEP (in progress): Engine-B PoC = disclosure-string reverse-search (e.g. 'offered through Alphastar Capital Management') -> producing-agency roster = first batch of small dual-business lookalikes. LEAD = 0.1.0_DS_MarketIntelligence (Andrew-direct). No hard blockers; only 'gate' = Andrew's live direction. **FORMALIZATION PENDING (CTO+Andrew call):** full project-JSON/PRD + the new-standalone-project-vs-FIND_INSURE-phase decision + bucket/architecture = CTO's call WHEN Andrew elevates this from seed-phase exploratory; until then this is a light provisional tracking entry only. COO routes the elevate to CTO when Andrew signals.",
+  "pods": [
+    "0.1.0",
+    "1.0"
+  ],
+  "macro": "FIND",
+  "prd": "docs/briefs/ (seed brief b1a9aa6d7 — FIND_DUALBIZ fingerprint + pipeline design; no formal PRD yet)"
+}
