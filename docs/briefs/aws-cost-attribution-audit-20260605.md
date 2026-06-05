@@ -112,5 +112,81 @@ gold runners + opal-data-bd retention. And none of it is *attributable in billin
 cost-allocation tags are activated — that's the first PRD action.
 
 ---
-*First-pass live recon; numbers are CE/CloudWatch-derived (UnblendedCost, 30-35d windows).
-Hand off to NFRA for the formalized cost-reduction PRD.*
+
+## 8. DEEP-DIVE ADDENDUM — CTO scope (per COO de-dup split 130121Z)
+
+COO+0.7.0_AE own EC2 instance-ops / enforcer-gaps / EBS + did inf-gold runtime forensics
+(the 6.7h/day was failed-self-stop; **already largely curtailed by the NFRA W4 idle-reaper
+shipped 06-03** -> inf-gold settles ~$40/mo, not $124). This addendum = my assigned scope:
+opal-data-bd retention + April step-up + Lambda/Secrets.
+
+### 8a. opal-data-bd — 97.5% of the 2.4TB is NONCURRENT-VERSION BLOAT (biggest low-risk lever)
+
+**Current data is only ~58 GB. The bucket bills for 2,396 GB. ~2.3 TB is old versions.**
+
+| | size |
+|---|---|
+| gold/ (67,588 objs, daily-rebuilt) | 23.6 GB current |
+| schwab/ | 7.4 GB | 
+| platinum/ | 4.5 GB |
+| silver/ (7,565) | 2.4 GB |
+| bronze/ | 0.6 GB |
+| forwardfill_v2 + backfill_v2 | ~5 GB |
+| logs/ | 10.8 GB (no expiry rule) |
+| all cruft (GOOD_RUN Jan one-off, v4_output, diagnostics, temp, tmp, debug, qa-scratch, ajb_workspace...) | ~4 GB |
+| **= current total** | **~58 GB** |
+| **CloudWatch BucketSizeBytes (StandardStorage, all versions)** | **2,396 GB** |
+| **=> noncurrent-version bloat** | **~2,338 GB (97.5%)** |
+
+ROOT CAUSE: versioning=**Enabled** + the gold layer is **overwritten daily** + lifecycle
+`NoncurrentVersionExpiration` is **90 days**. 23.6GB gold rewritten daily x up to 90 retained
+versions ~= 2.1-2.3TB. **Confirmed empirically:** `gold/_deprecated/` sampled at 1 current :
+**20 noncurrent**; low-churn `status/` at 0 noncurrent. Existing lifecycle has ONLY noncurrent-
+90d + abort-MPU-7d -> **no current-version expiry at all** (current data never ages out, but
+current is tiny; the cost is the 90d version tail).
+
+LEVERS (low risk — gold/silver/bronze are deterministically rebuildable from upstream):
+1. **NoncurrentVersionExpiration 90d -> 7-14d** (or `NewerNoncurrentVersions: 2-3` keep-N).
+   Cuts noncurrent ~85% -> frees ~2TB -> **~$45/mo on this bucket alone, near-zero risk.**
+2. Consider **suspending versioning** on the reproducible gold tier (a regenerable artifact
+   has ~no version-recovery value); keep versioning only where source-of-truth.
+3. Secondary cleanup (~19GB, minor): delete `GOOD_RUN_2026-01-21_1015AM/` (Jan one-off),
+   stale `v4_output/`/`backfill_v2`/`forwardfill_v2` if obsolete, add a `logs/` expiry rule.
+4. **Likely fabric-wide:** check the same versioning+90d pattern on opal-data-inf (88GB),
+   opal-data-mdpf, opal-data-schwab, etc. — probably a default applied at bucket-create.
+   A standard data-lake lifecycle (short noncurrent window) belongs in the PRD.
+
+### 8b. April step-up forensic — what onboarded (Mar $422 -> Apr $814)
+
+The +$392 is almost pure compute (+$348 EC2-Compute, +$50 S3). By usage type Mar->Apr:
+- **BoxUsage:c6i.16xlarge $225 -> $510 (+$285)** — bd-gold runner ran ~2x (runaway / failed-
+  self-stop class, same as inf-gold; curtailed by the W4 enforcer post-06-03).
+- **c6a family $0 -> ~$110 NEW** — the **Inflection pipeline came online in April**:
+  c6a.16xlarge +$99 (a one-off heavy backfill; not in current inventory = ephemeral),
+  + c6a.4xl/2xl/8xl inf-gold runners onboarded.
+
+So the structural step-up = **Inflection pipeline launch (durable new baseline ~$110/mo)** +
+**bd-gold runaway (volatile, now enforcer-curtailed)**. The level won't fully revert — inf is
+real recurring workload; the lever there is right-sizing, not removal.
+
+### 8c. Lambda / Secrets — low materiality
+
+- **Lambda** ~$21/mo, 50 functions — routine, no action.
+- **Secrets Manager** ~$17/mo, only **10 secrets** ($4 base) -> ~$13 is **API-call volume**
+  (~2.6M GetSecretValue/mo) = runners/Lambdas fetching secrets per-invocation w/o caching.
+  Minor; a fetch-and-cache pass would save ~$13/mo. Not a priority.
+
+### 8d. Revised lever ranking (supersedes §7 where noted)
+
+| Lever | ~$/mo | Risk | Owner | Status |
+|---|---|---|---|---|
+| Right-size/Spot **bd-gold c6i.16xlarge** nightly | up to ~$200 | med | NFRA W3 / 0.7 AE | open — THE prize |
+| **opal-data-bd noncurrent 90d->14d** (+ fabric-wide audit) | **~$45+** | **low** | NFRA W4 / DS+AE | open — best risk/reward |
+| **Activate cost-allocation tags + standard** | enables all attribution | none | NFRA W1 | do first (forward-only) |
+| inf-gold right-size / self-stop reliability | ~$40-80 | med | NFRA W3/W4 | largely DONE (enforcer) |
+| Kill leaked runners + orphan EBS + idle EIPs | ~$50-100 | low | NFRA W4 / 0.7 AE | open (COO-owned) |
+| Secrets caching | ~$13 | low | low priority | optional |
+
+---
+*First-pass live recon + CTO deep-dive addendum; numbers are CE/CloudWatch/S3-derived.
+COO owns EC2-ops half (msg 130121Z). Hand off to NFRA for the formalized cost-reduction PRD.*
