@@ -65,6 +65,29 @@ All 4 are **Feb-17 one-time temp/build leftovers**, unattached 3.5 months, no co
 
 **Recommendation:** snapshot all 4 first (cheap reversible insurance, ~$0.50/mo for snapshots vs $4/mo for volumes), then delete the volumes. EBS delete is destructive → needs explicit GO (COO/Andrew).
 
+---
+
+## ADDENDUM — SUPERSEDED BY R8 UNIVERSAL CAP (Andrew sovereign scope-up, 13:10Z)
+
+Andrew (verbatim): *"everything should be on the 3hr kill, there is no reason anything should be running longer than 3 hrs."* This **retires the per-ID allowlist architecture** (EXCLUDED_INSTANCES / IDLE_CEILING_INSTANCES) entirely — the narrow Wave-1 diff above is superseded. Now PRD **R8 (NFRA_COSTRED v0.2)**: "Universal 3h idle-aware cap, no per-instance exemptions" (absorbs R4+R6).
+
+**Implemented (enforcer redesign, this session):**
+- Single universal rule for EVERY running instance: reap if `uptime > 3h` AND `idle across the entire 3h window` (Maximum CPU < 3% in every 5-min bucket). No allowlist.
+- Only exemption = a consciously-set `AutoShutdown=disabled` instance tag (currently ZERO, per Andrew's no-exceptions).
+- **IDLE-AWARE** (Andrew confirmed to CTO 13:15Z): any 5-min bucket above threshold spares the box → no mid-write corruption. **AC4 preserved exactly** from the i-0ed5 logic (`idle_entire_window`, Maximum-per-bucket) and now generalized fleet-wide.
+- Optional hard-cap `MAX_RUNTIME_HOURS` = `0` (DISABLED) — idle-aware only per COO. Knob retained for the runaway-busy gap (process pegged >3% for >3h is never "idle") if Andrew later wants hard-kill.
+- **R6 reliable stop-path:** the enforcer calls `ec2.stop_instances` directly (AWS-side), independent of the unreliable in-OS `shutdown -h now` that was the root of the inf-exporter 34d + the 24h runaways.
+
+**AC4 fleet-wide poll-gap safety verification:** legit run durations all < 3h → none reach the idle-check while busy: bd-gold ~77min full (~2.4h incl poll), inf-gold ~2h active, demo-reclone ~2.7h (CPU-busy, spared), mdpf eclipse-wait bounded 1800s/30min < 3h. **Watch-item for nightly validation (C1, no ad-hoc):** any exporter/scraper class (smartx-exporter, inf-exporter) that could have a >3h LOW-CPU I/O/network-bound active phase — none observed (inf-exporter export bursts hit 14-18% > 3% threshold), but confirm on the scheduled runs that no legit job is false-reaped.
+
+**Tests:** `test_enforcer.py` 10/10 pass (idle-reap / busy-spare / sub-ceiling-spare / None-coverage-conservative / AutoShutdown-disabled / demo-busy-spare / inf-exporter-idle-reap / hard-cap disabled+enabled). ds-commit-gate clean. `terraform plan` = 1 resource in-place (0 add/destroy).
+
+**Immediate actions executed (Andrew GO):** inf-exporter i-081ae6aa STOPPED (was idle 0.3% the full prior 30min); 4 unattached EBS vols snapshotted (pre-delete insurance) then deleted.
+
+**demo-transform note:** the universal cap also handles it — once its live re-clone completes + goes idle 3h, the enforcer auto-reaps it (stop), no manual EXCLUDED maintenance. 0.6.0 still terminates at DEMOAUTH.002 close for full teardown.
+
+---
+
 ## Underlying-bug flag (route to inf owner 0.5.0_AE_OpalETL, offline)
 
 inf-exporter's 34-day uptime is the *symptom*; the *root cause* is its self-stop not firing on the export path (the 21:00 `opal-inf-export-run` SSM doc likely lacks the `shutdown -h now` that the jwt-fetch path has). The idle-ceiling backstop covers the cost regardless, but the self-stop bug should also be fixed. Routing to COO since 0.5.0_AE is offline.
