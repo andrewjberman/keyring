@@ -818,6 +818,24 @@ def _verbs_for_action(action):
             return [(verb, kind)]
     return []
 
+def _res_kind(res):
+    """The service-kind of a resource ARN (for the EDGE-CROSSWIRE-1 kind-gate)."""
+    if res.startswith("arn:aws:s3:::"):
+        return "s3"
+    if ":dynamodb:" in res:
+        return "dynamodb"
+    if ":secretsmanager:" in res:
+        return "secret"
+    if ":sns:" in res:
+        return "sns"
+    if ":sqs:" in res:
+        return "sqs"
+    if ":kms:" in res:
+        return "kms"
+    if ":logs:" in res or ":log-group:" in res:
+        return "logs"
+    return None
+
 def derive_data_access_edges():
     """sec3.x DERIVED edge layer (EDGE-GAP-DATA): project each IAM role's GRANTS
     (inline-policy statements) onto typed data-access edges, sourced from the
@@ -864,7 +882,12 @@ def derive_data_access_edges():
                     for res in (s.get("resource") or []):
                         if res == "*" or res.strip() == "*":
                             glist.append((verb, None, True, act))
-                        else:
+                        elif _res_kind(res) == kind:
+                            # kind-gate (EDGE-CROSSWIRE-1): only pair a verb with a resource of
+                            # its OWN service. A multi-service statement (e.g. s3:* +
+                            # secretsmanager:GetSecretValue on [secret-arn, s3-arn]) otherwise
+                            # cross-wires READS_SECRET->s3 / READS->secret. The mismatched
+                            # (verb,res) belongs to the sibling action -> drop (not wildcard).
                             glist.append((verb, res, False, act))
         if glist:
             grants[rarn] = glist
