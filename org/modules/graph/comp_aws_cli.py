@@ -471,14 +471,22 @@ def live_kms():
     pag = c.get_paginator("list_keys")
     for pg in pag.paginate():
         for k in pg["Keys"]:
+            aws_managed = False
             try:
                 meta = c.describe_key(KeyId=k["KeyId"])["KeyMetadata"]
-                if meta.get("KeyManager") == "AWS":
-                    continue  # AWS-managed keys are not customer resources
+                aws_managed = meta.get("KeyManager") == "AWS"
                 aliases = sorted(a["AliasName"] for a in c.list_aliases(KeyId=k["KeyId"]).get("Aliases", []))
             except Exception:
                 aliases = []
             node = {"id": k["KeyId"], "type": "KMS_KEY", "arn": k.get("KeyArn"), "aliases": aliases}
+            if aws_managed:
+                # AWS-service-owned key (alias/aws/*) -> AWS_MANAGED node (KMS-SCHEMA-1,
+                # schema v0.3) so ENCRYPTS_WITH edges to it terminate cleanly. No policy/
+                # rotation pull (not a customer resource); the _aws_managed flag overrides
+                # the tf-join in derive_class -> provenance=AWS_MANAGED.
+                node["_aws_managed"] = True
+                nodes.append(node)
+                continue
             try:
                 node["rotation_enabled"] = c.get_key_rotation_status(KeyId=k["KeyId"]).get("KeyRotationEnabled")
             except Exception:
@@ -490,6 +498,18 @@ def live_kms():
             except Exception:
                 node["key_policy_statements"] = None
             nodes.append(node)
+    return nodes
+
+def live_log_groups():
+    nodes = []
+    c = _boto("logs")
+    pag = c.get_paginator("describe_log_groups")
+    for pg in pag.paginate():
+        for lg in pg.get("logGroups", []):
+            nodes.append({"id": lg["logGroupName"], "name": lg["logGroupName"],
+                          "arn": (lg.get("arn") or "").rstrip(":*"), "type": "LOG_GROUP",
+                          "retention_days": lg.get("retentionInDays"),
+                          "kms_key_arn": lg.get("kmsKeyId")})
     return nodes
 
 def live_cloudwatch_alarms():
@@ -521,6 +541,7 @@ CLASSES = {
     "secrets":     (live_secrets,           ["aws_secretsmanager_secret"]),
     "kms":         (live_kms,               ["aws_kms_key"]),
     "cloudwatch":  (live_cloudwatch_alarms, ["aws_cloudwatch_metric_alarm"]),
+    "logs":        (live_log_groups,        ["aws_cloudwatch_log_group"]),
 }
 
 def _node_arn(cls, node):
@@ -551,22 +572,29 @@ def derive_class(cls):
     for n in live:
         arn = _node_arn(cls, n)
         n["arn"] = arn
-        # ARN-canonical join, with id/name fallback (CVO sec 1 matching key).
-        # name fallback uses (name or id) because some classes (IAM) set the
-        # universal `name` prop only AFTER the join -- id IS the resolved name there.
-        join_name = n.get("name") or n.get("id")
-        prov = by_arn.get(arn) or by_id.get(str(n["id"])) or (by_name.get(join_name) if join_name else None)
-        if prov:
-            n["drift_class"] = "DECLARED"
-            n["provenance"] = prov
-            n["tf_managed"] = True
-            n["owner_pipeline"] = prov.get("tf_module")
-            matched_decl.add(prov["tf_resource"])
-        else:
-            n["drift_class"] = "LIVE-no-DECLARED"
-            n["provenance"] = None
+        if n.get("_aws_managed"):
+            # AWS-service-owned (KMS-SCHEMA-1, schema v0.3): not a tf-join candidate
+            n["drift_class"] = "AWS_MANAGED"
+            n["provenance"] = {"tf_kind": "aws_managed"}
             n["tf_managed"] = False
-            n["owner_pipeline"] = None
+            n["owner_pipeline"] = "aws"
+        else:
+            # ARN-canonical join, with id/name fallback (CVO sec 1 matching key).
+            # name fallback uses (name or id) because some classes (IAM) set the
+            # universal `name` prop only AFTER the join -- id IS the resolved name there.
+            join_name = n.get("name") or n.get("id")
+            prov = by_arn.get(arn) or by_id.get(str(n["id"])) or (by_name.get(join_name) if join_name else None)
+            if prov:
+                n["drift_class"] = "DECLARED"
+                n["provenance"] = prov
+                n["tf_managed"] = True
+                n["owner_pipeline"] = prov.get("tf_module")
+                matched_decl.add(prov["tf_resource"])
+            else:
+                n["drift_class"] = "LIVE-no-DECLARED"
+                n["provenance"] = None
+                n["tf_managed"] = False
+                n["owner_pipeline"] = None
         # sec 1.1 universal node properties
         if "type" not in n:           # 0-untyped invariant
             n["type"] = cls.upper()
@@ -836,30 +864,64 @@ def derive_data_access_edges():
                 prof_role[prof] = []
         for rarn in prof_role[prof]:
             consumers.setdefault(rarn, []).append(_node_arn("ec2", e))
-    # emit consumer -[verb]-> target (or GRANTS wildcard) ; dedupe
+    # node-ARN sets for grant->node resolution (DATA-EDGE-DANGLING fix): a grant to a
+    # sub-resource / object-path / name-pattern resolves to the PARENT node, or -- if no
+    # concrete node matches -- becomes a wildcard=true edge. NEVER a concrete non-node ARN.
+    sets = {
+        "s3": {f"arn:aws:s3:::{n['id']}" for n in live_s3()},
+        "dynamodb": {n["arn"] for n in live_dynamodb() if n.get("arn")},
+        "secret": {n["arn"] for n in live_secrets() if n.get("arn")},
+        "sns": {n["arn"] for n in live_sns() if n.get("arn")},
+        "kms": {n["arn"] for n in live_kms() if n.get("arn")},
+        "logs": {n["arn"] for n in live_log_groups() if n.get("arn")},
+    }
+
+    def _resolve(res):
+        """grant resource-ARN -> (node_arn, is_wildcard). Parent-strip + prefix/pattern match."""
+        if res.startswith("arn:aws:s3:::"):
+            base = "arn:aws:s3:::" + res.split(":::", 1)[1].split("/")[0]
+            return (base, False) if base in sets["s3"] else (None, True)
+        if ":dynamodb:" in res and ":table/" in res:
+            base = res.split("/index/")[0].split("/stream/")[0]
+            return (base, False) if base in sets["dynamodb"] else (None, True)
+        if ":secretsmanager:" in res:
+            stem = res.rstrip("*").rstrip("-")
+            for sarn in sets["secret"]:
+                if sarn == res or sarn.startswith(stem):
+                    return sarn, False
+            return None, True
+        if ":sns:" in res:
+            return (res, False) if res in sets["sns"] else (None, True)
+        if ":logs:" in res or ":log-group:" in res:
+            base = res.rstrip(":*").rstrip("*")
+            m = [lg for lg in sets["logs"] if lg.startswith(base) or base.startswith(lg)]
+            return (m[0], False) if len(m) == 1 else (None, True)
+        if ":kms:" in res:
+            return (res, False) if res in sets["kms"] else (None, True)
+        for s in sets.values():
+            if res in s:
+                return res, False
+        return None, True
+
+    # emit consumer -[verb]-> resolved-node (or wildcard) ; dedupe
     seen = set()
     for rarn, glist in grants.items():
         for carn in consumers.get(rarn, []):
             for verb, target, wild, act in glist:
                 if wild:
-                    key = (carn, verb, "*")
-                    if key in seen:
-                        continue
-                    seen.add(key)
-                    edges.append({"source": carn, "target": f"*:{verb.lower()}", "edge_type": verb,
-                                  "via_role": rarn.split("/")[-1], "wildcard": True,
-                                  "semantic": "capability"})
+                    tgt, is_wild = f"*:{verb.lower()}", True
                 else:
-                    # resolve resource arn -> node arn (strip /key suffix for s3)
-                    tgt = target
-                    if target.startswith("arn:aws:s3:::"):
-                        tgt = "arn:aws:s3:::" + target.split(":::", 1)[1].split("/")[0]
-                    key = (carn, verb, tgt)
-                    if key in seen:
-                        continue
-                    seen.add(key)
-                    edges.append({"source": carn, "target": tgt, "edge_type": verb,
-                                  "via_role": rarn.split("/")[-1], "semantic": "capability"})
+                    node, w = _resolve(target)
+                    tgt, is_wild = (f"*:{verb.lower()}", True) if w else (node, False)
+                key = (carn, verb, tgt)
+                if key in seen:
+                    continue
+                seen.add(key)
+                e = {"source": carn, "target": tgt, "edge_type": verb,
+                     "via_role": rarn.split("/")[-1], "semantic": "capability"}
+                if is_wild:
+                    e["wildcard"] = True
+                edges.append(e)
     return edges
 
 def derive_event_sources():
