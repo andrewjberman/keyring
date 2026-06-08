@@ -6,7 +6,8 @@
 # Cert target: the F1 done-gate (org/tier1_exec/3.0.0_SA_CVO/CMPAWS_F1_CERT_METHODOLOGY.md).
 
 meta:
-  fixture_version: "0.3"
+  fixture_version: "0.4"
+  v0_4_changes: "MDPF_CADENCE re-cert (CVO-verified live, 0.6.0 ping 154454Z; tag mdpf-pipeline-v1.2.0 / fe5ab37e8). mdpf-daily-refresh-trigger swapped IN-PLACE (same ARN, PROPERTY DELTA not node churn): schedule_expression cron(0 15 ? * MON-FRI *) -> null; event_pattern ADDED = S3 aws.s3 Object Created on opal-data-inf gold/meta/pipeline-complete.json. So the rule moves SCHEDULED -> EVENT_PATTERN, origin = S3_BUCKET:opal-data-inf (resource-bound flavor-1). opal-data-inf EMITS_TO out-degree 2 -> 3 (inf-silver-chain + inf-assets-trigger + mdpf-daily-refresh-trigger). Counts: scheduled 85->84, event-pattern 7->8. This IS Andrew's Inflection-AUM sync fix live (MDPF now fires off the spine completion sentinel, synced to ADVI). Lambda-class note (mdpf-daily-trigger): gained READS opal-data-inf sentinel + bd silver + timeout 300->360 — folds into the Lambda oracle, not the EVENT_RULE node."
   phase: "Phase 1 — eventing hand-audit oracle"
   tf_commit_at_audit: "post-7a0cbb31c"
   cvo_author: "3.0.0_SA_CVO"
@@ -71,6 +72,14 @@ event_pattern_rules:
       - "inf-assets-trigger-bronze-complete -[TRIGGERS]-> LAMBDA:inf-assets-trigger"
       - "LAMBDA:inf-assets-trigger -[STARTS]-> EC2:i-0ed5afded2ebd4ed4 (inf-gold-layer-runner)"   # D4 STARTS edge (ec2:StartInstances, assets_v2 silver)
     note: "D4 full 3-edge chain EMITS_TO->TRIGGERS->STARTS, all DECLARED. The STARTS edge is the compute-lifecycle-control family CTO ruled."
+  - rule: mdpf-daily-refresh-trigger   # v0.4: SWAPPED scheduled->event-pattern (MDPF_CADENCE, CVO-verified live)
+    target: "LAMBDA:mdpf-daily-trigger"
+    source: "S3_BUCKET:opal-data-inf (resource-bound flavor-1; pattern pins detail.bucket.name=opal-data-inf, object.key=gold/meta/pipeline-complete.json)"
+    tf: "mdpf-pipeline (fe5ab37e8, tag mdpf-pipeline-v1.2.0) — DECLARED"
+    edges:
+      - "S3_BUCKET:opal-data-inf -[EMITS_TO]-> mdpf-daily-refresh-trigger"   # opal-data-inf out-degree now 3 (this + inf-silver-chain + inf-assets-trigger)
+      - "mdpf-daily-refresh-trigger -[TRIGGERS]-> LAMBDA:mdpf-daily-trigger"
+    note: "Andrew Inflection-AUM sync fix LIVE: MDPF re-samples the spine right after the INF pipeline-complete sentinel instead of cron MON-FRI 15:00Z -> Model Portfolios now synced to the spine/ADVI cadence. Was the only MON-FRI-cron divergence; resolved."
   - rule: inf-otp-state-change
     target: "LAMBDA:inf-otp-relay"
     source: "(state-change event; AE confirm exact pattern — likely OTP table/stream or a custom event)"
@@ -126,8 +135,9 @@ oracle_gaps:
 summary:
   event_rule_nodes: 92
   event_source_nodes: "3 service/API (AWS_SERVICE x1 + CLOUDTRAIL_API x2) + 1 S3_BUCKET resource-bound (opal-data-inf, 2 rules) + a SCHEDULED EVENT_SOURCE per the 85 cron rules (origin-totality, CTO 0fc6f95d3)"
-  event_pattern_fully_audited: 7
-  scheduled_enumerated: 85
+  event_pattern_fully_audited: 8   # v0.4: +mdpf-daily-refresh-trigger (MDPF_CADENCE swap)
+  scheduled_enumerated: 84         # v0.4: -mdpf-daily-refresh-trigger (now event-pattern)
+  opal_data_inf_emits_to_outdegree: 3   # inf-silver-chain + inf-assets-trigger + mdpf-daily-refresh-trigger (D4 fan-out)
   d4_chain_folded: "inf-assets-trigger 3-edge EMITS_TO->TRIGGERS->STARTS + inf-silver-chain pair (opal-data-inf out-degree 2)"
   oracle_gaps: 5
   schema_gaps_resolved: "EV-SCHEMA-GAP-1 -> EVENT_SOURCE node (CTO 0fc6f95d3); eventing origins now 0-untyped-certifiable"
