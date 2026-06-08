@@ -1,7 +1,7 @@
 # GLDINC P1 — `load_flows` watermark plumbing-proof — design brief
 
 **Author:** 0.6.0_AE_PartnerETL (GLDINC LEAD) · **Date:** 2026-06-08
-**Status:** STAGED — RAVC2 to COO + CTO for endorsement (mirrors the P0 design→endorse→build flow)
+**Status:** ENDORSED by CTO 2026-06-08 with one required correction now folded in (cache grain = PER-EVENT, not daily — §3/§4); COO endorsement pending. Build on COO GO.
 **PRD anchor:** `docs/architecture/ADHC_GLDINC_PRD.md` §5 (hidden full-scan), §5a (unifying primitive), §4b (parity machine), §6 P1 row
 **Predecessors:** P0 CHECKPOINT (`f815db45e`, validated-live 6/6–6/7) · NFRA W2a telemetry (`a4062e09c`, RAVC-closed)
 
@@ -29,19 +29,21 @@ It is **NOT** a production cutover. The oracle (the existing full-scan) **serves
 
 `load_flows_from_transactions()` is **NOT** a pure per-partition map. After loading + static exclusions + flow classification, it applies an **AUA-dependent garbage filter** (`_load_latest_silver_aua()` → per-event `|market_value| > 10× account's CURRENT silver AUA` ⇒ excluded; `nna_flows.py:248+`). The full-scan re-evaluates **every historical event against TODAY's silver AUA each night**. A naïve "cache old days' final flows + append new days" design would **freeze** old days against stale AUA → **divergence** whenever an account's AUA crosses a garbage threshold relative to a historical event. Same caveat for `load_nna_transaction_exclusions()` (a current-state (account,date) blocklist).
 
-**Resolution — cache at the AUA-invariant boundary.** The watermark/cache stores the **classified daily flows BEFORE the AUA garbage filter and the (account,date) txn-date exclusions**. Each night:
-1. Window-read only `silver/transactions/` partitions with `date > watermark` (the dominant I/O cost).
-2. Run the **static** pipeline on the new partitions only: dedup → action/desc exclusions (these are content-static, not state-dependent) → flow classification → pre-filter daily (date, account_id, daily_inflow, daily_outflow).
-3. **Union** with the cached pre-filter flows for `date ≤ watermark`.
-4. Apply the **AUA garbage filter + txn-date exclusions over the FULL union** against CURRENT silver AUA / current exclusion list (cheap; operates on aggregated daily flows, not raw events).
-5. Aggregate → return — **byte-identical to the full-scan by construction**, because the only state-dependent steps run over the complete set every night, exactly as the oracle does. Dominant transaction-read I/O is cut for all dates `≤ watermark`.
+**Resolution — cache at the AUA-invariant PER-EVENT boundary (CTO correction 2026-06-08).** The garbage filter is **per-event** (`nna_flows.py:250` `_event_mv = max(daily_inflow,daily_outflow)` → `:257-259` mask → `:280` drop), applied BEFORE the daily `groupby` at `:285`. Caching at the daily-aggregated grain is therefore **NOT byte-identical** — a day of several sub-threshold events vs one over-threshold event of the same daily sum are treated oppositely by the oracle, and a daily aggregate cannot reproduce that. The cache grain must match the filter grain = **per-event**. Two further per-event/whole-set operations are likewise state- or cross-partition-sensitive and must run over the union, not be baked into the cache: the **composite dedup** (`:145-149`, keyed `account_id,trade_date,type_col,_mv_abs` — a duplicate whose twin straddles the watermark by FILE date but shares a trade_date would survive a cache-side dedup) and the **(account,date) txn-date exclusions** (`:227-242`, a CURRENT-state blocklist). Cleanest fully-correct boundary: cache the **minimal RAW per-event columns** for `date ≤ watermark` and re-run the entire cheap CPU pipeline over the union each night.
 
-This is the substantive engineering of the plumbing-proof; the shadow scorecard **empirically confirms** the byte-identity and catches any miss in this reasoning.
+Each night:
+1. Window-read only `silver/transactions/` partitions with `date > watermark` (the dominant I/O cost — re-reading + re-parsing ~1764 parquet files for `date ≤ watermark` is exactly what's saved).
+2. Extract the minimal per-event columns from the new partitions (post `trade_date` coercion + `dropna`): `{account_id, trade_date, transaction_id, transaction_type/action, action, market_value, description}`.
+3. **Union** with the cached per-event rows for `date ≤ watermark` (`preflt_events.parquet`).
+4. Run the **whole transform over the full union** exactly as the oracle: transaction_id dedup → composite dedup → action/desc static exclusions → flow classification → txn-date exclusions → **per-event AUA garbage filter** (vs CURRENT silver AUA) → `groupby(trade_date,account_id).sum()` → return. All cheap CPU on the in-memory union.
+5. Result = **byte-identical to the full-scan by construction**, because every state-dependent and cross-partition step runs over the complete EVENT set every night, identical to the oracle. Dominant transaction-read I/O is cut for all dates `≤ watermark`.
+
+This per-event grain is the substantive engineering of the plumbing-proof; the shadow scorecard **empirically confirms** the byte-identity and would catch any miss in this reasoning on night 1.
 
 ## 4. Watermark object + lifecycle
 
-- **Object:** `s3://opal-data-bd/gold/_state/load_flows/watermark.json` — `{ "max_partition_date": "YYYY-MM-DD", "partition_fingerprint": {<key>: <LastModified ISO>}, "cache_key": "gold/_state/load_flows/preflt_flows.parquet", "updated_at": ISO }`.
-- **Cache:** `s3://opal-data-bd/gold/_state/load_flows/preflt_flows.parquet` — the pre-garbage-filter classified daily flows for all dates `≤ max_partition_date`.
+- **Object:** `s3://opal-data-bd/gold/_state/load_flows/watermark.json` — `{ "max_partition_date": "YYYY-MM-DD", "partition_fingerprint": {<key>: <LastModified ISO>}, "cache_key": "gold/_state/load_flows/preflt_events.parquet", "updated_at": ISO }`.
+- **Cache:** `s3://opal-data-bd/gold/_state/load_flows/preflt_events.parquet` — the minimal RAW **per-event** rows (`account_id, trade_date, transaction_id, transaction_type/action, action, market_value, description`) for all dates `≤ max_partition_date`. PER-EVENT (not daily-aggregated) so the per-event garbage filter + composite dedup + exclusions re-run over the union reproduce the oracle exactly (CTO correction 2026-06-08).
 - **Restatement awareness (P1-scope = DETECT-and-fall-back, not yet incremental-repair):** `partition_fingerprint` records each processed partition's `LastModified`. If any partition for `date ≤ watermark` shows an advanced `LastModified` (a restatement, per the §5a unifying primitive), the windowed path **falls back to a full-scan for that run and rebuilds the cache** — guaranteeing correctness while the incremental-repair of restatement is deferred to its own phase (§5/§5a). The scorecard records fallback events. This keeps P1 strictly zero-correctness-risk.
 - **Both paths use CURRENT-version metadata only** (R2-lifecycle-robust; no version history).
 
