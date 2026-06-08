@@ -299,8 +299,15 @@ def live_lambda():
     pag = c.get_paginator("list_functions")
     for pg in pag.paginate():
         for fn in pg["Functions"]:
-            nodes.append({"id": fn["FunctionName"], "type": "LAMBDA",
-                          "runtime": fn.get("Runtime"), "role": (fn.get("Role") or "").split("/")[-1]})
+            env = (fn.get("Environment") or {}).get("Variables", {}) or {}
+            nodes.append({"id": fn["FunctionName"], "type": "LAMBDA", "arn": fn.get("FunctionArn"),
+                          "runtime": fn.get("Runtime"), "handler": fn.get("Handler"),
+                          "role": (fn.get("Role") or "").split("/")[-1],
+                          "code_sha": fn.get("CodeSha256"), "memory": fn.get("MemorySize"),
+                          "timeout": fn.get("Timeout"),
+                          "env_keys": sorted(env.keys()),   # KEYS only, never values
+                          "layers": sorted((layer.get("Arn") or "").split(":layer:")[-1]
+                                           for layer in fn.get("Layers", []))})
     return nodes
 
 def live_eventbridge():
@@ -357,12 +364,20 @@ def live_sns():
     for t in c.list_topics().get("Topics", []):
         arn = t["TopicArn"]
         name = arn.split(":")[-1]
+        node = {"id": name, "type": "SNS_TOPIC", "arn": arn}
         try:
             attrs = c.get_topic_attributes(TopicArn=arn)["Attributes"]
-            kms = bool(attrs.get("KmsMasterKeyId"))
+            node["kms_encrypted"] = bool(attrs.get("KmsMasterKeyId"))
+            node["kms_key_arn"] = attrs.get("KmsMasterKeyId")
+            node["subscription_count"] = int(attrs.get("SubscriptionsConfirmed", 0))
         except Exception:
-            kms = None
-        nodes.append({"id": name, "type": "SNS_TOPIC", "kms_encrypted": kms})
+            node["kms_encrypted"] = None
+        try:
+            subs = c.list_subscriptions_by_topic(TopicArn=arn).get("Subscriptions", [])
+            node["subscriptions"] = sorted(f'{s["Protocol"]}:{s["Endpoint"]}' for s in subs)
+        except Exception:
+            node["subscriptions"] = []
+        nodes.append(node)
     return nodes
 
 def live_sqs():
@@ -370,12 +385,20 @@ def live_sqs():
     c = _boto("sqs")
     for url in c.list_queues().get("QueueUrls", []):
         name = url.split("/")[-1]
+        node = {"id": name, "type": "SQS_QUEUE"}
         try:
-            a = c.get_queue_attributes(QueueUrl=url, AttributeNames=["KmsMasterKeyId","SqsManagedSseEnabled"])["Attributes"]
-            enc = bool(a.get("KmsMasterKeyId")) or a.get("SqsManagedSseEnabled") == "true"
+            a = c.get_queue_attributes(QueueUrl=url, AttributeNames=["All"])["Attributes"]
+            node["arn"] = a.get("QueueArn")
+            node["encrypted"] = bool(a.get("KmsMasterKeyId")) or a.get("SqsManagedSseEnabled") == "true"
+            node["kms_key_arn"] = a.get("KmsMasterKeyId")
+            node["fifo"] = name.endswith(".fifo")
+            node["visibility_timeout"] = a.get("VisibilityTimeout")
+            import json as _j
+            rd = a.get("RedrivePolicy")
+            node["redrive_dlq_arn"] = (_j.loads(rd).get("deadLetterTargetArn") if rd else None)
         except Exception:
-            enc = None
-        nodes.append({"id": name, "type": "SQS_QUEUE", "encrypted": enc})
+            node["encrypted"] = None
+        nodes.append(node)
     return nodes
 
 def live_dynamodb():
@@ -384,12 +407,25 @@ def live_dynamodb():
     pag = c.get_paginator("list_tables")
     for pg in pag.paginate():
         for t in pg["TableNames"]:
+            node = {"id": t, "type": "DYNAMODB_TABLE"}
             try:
                 d = c.describe_table(TableName=t)["Table"]
-                sse = d.get("SSEDescription", {}).get("SSEType")
+                node["arn"] = d.get("TableArn")
+                node["sse_type"] = d.get("SSEDescription", {}).get("SSEType")
+                node["kms_key_arn"] = d.get("SSEDescription", {}).get("KMSMasterKeyArn")
+                node["billing_mode"] = d.get("BillingModeSummary", {}).get("BillingMode")
+                node["deletion_protection"] = d.get("DeletionProtectionEnabled")
+                node["gsi"] = sorted(g["IndexName"] for g in d.get("GlobalSecondaryIndexes", []))
+                node["stream_arn"] = d.get("LatestStreamArn")
             except Exception:
-                sse = None
-            nodes.append({"id": t, "type": "DYNAMODB_TABLE", "sse_type": sse})
+                pass
+            try:
+                node["pitr_enabled"] = c.describe_continuous_backups(TableName=t)[
+                    "ContinuousBackupsDescription"]["PointInTimeRecoveryDescription"][
+                    "PointInTimeRecoveryStatus"] == "ENABLED"
+            except Exception:
+                node["pitr_enabled"] = None
+            nodes.append(node)
     return nodes
 
 def live_cloudfront():
@@ -400,9 +436,18 @@ def live_cloudfront():
     except Exception:
         dl = []
     for d in dl:
+        behaviors = []
+        dcb = d.get("DefaultCacheBehavior") or {}
+        if dcb:
+            behaviors.append({"path": "default", "target_origin": dcb.get("TargetOriginId")})
+        for cb in (d.get("CacheBehaviors", {}) or {}).get("Items", []):
+            behaviors.append({"path": cb.get("PathPattern"), "target_origin": cb.get("TargetOriginId")})
         nodes.append({"id": d["Id"], "type": "CLOUDFRONT_DISTRIBUTION",
+                      "arn": f"arn:aws:cloudfront::{ACCOUNT}:distribution/{d['Id']}",
                       "domain": d.get("DomainName"), "enabled": d.get("Enabled"),
-                      "aliases": d.get("Aliases", {}).get("Items", [])})
+                      "aliases": sorted(d.get("Aliases", {}).get("Items", [])),
+                      "cache_behaviors": behaviors,
+                      "origins": sorted(o.get("DomainName", "") for o in (d.get("Origins", {}) or {}).get("Items", []))})
     return nodes
 
 def live_secrets():
@@ -412,7 +457,9 @@ def live_secrets():
     for pg in pag.paginate():
         for s in pg["SecretList"]:
             nodes.append({"id": s["Name"], "name": s["Name"], "arn": s.get("ARN"),
-                          "type": "SECRET", "kms": bool(s.get("KmsKeyId"))})
+                          "type": "SECRET", "kms": bool(s.get("KmsKeyId")),
+                          "kms_key_arn": s.get("KmsKeyId"),
+                          "rotation_enabled": s.get("RotationEnabled", False)})
     return nodes
 
 def live_kms():
@@ -425,10 +472,21 @@ def live_kms():
                 meta = c.describe_key(KeyId=k["KeyId"])["KeyMetadata"]
                 if meta.get("KeyManager") == "AWS":
                     continue  # AWS-managed keys are not customer resources
-                aliases = [a["AliasName"] for a in c.list_aliases(KeyId=k["KeyId"]).get("Aliases", [])]
+                aliases = sorted(a["AliasName"] for a in c.list_aliases(KeyId=k["KeyId"]).get("Aliases", []))
             except Exception:
                 aliases = []
-            nodes.append({"id": k["KeyId"], "type": "KMS_KEY", "aliases": aliases})
+            node = {"id": k["KeyId"], "type": "KMS_KEY", "arn": k.get("KeyArn"), "aliases": aliases}
+            try:
+                node["rotation_enabled"] = c.get_key_rotation_status(KeyId=k["KeyId"]).get("KeyRotationEnabled")
+            except Exception:
+                node["rotation_enabled"] = None
+            try:
+                import json as _j
+                pol = _j.loads(c.get_key_policy(KeyId=k["KeyId"], PolicyName="default")["Policy"])
+                node["key_policy_statements"] = _norm_statements(pol)
+            except Exception:
+                node["key_policy_statements"] = None
+            nodes.append(node)
     return nodes
 
 def live_cloudwatch_alarms():
@@ -437,7 +495,12 @@ def live_cloudwatch_alarms():
     pag = c.get_paginator("describe_alarms")
     for pg in pag.paginate():
         for a in pg.get("MetricAlarms", []):
-            nodes.append({"id": a["AlarmName"], "type": "CW_ALARM", "state": a.get("StateValue")})
+            nodes.append({"id": a["AlarmName"], "type": "CW_ALARM", "arn": a.get("AlarmArn"),
+                          "state": a.get("StateValue"),
+                          "metric_namespace": a.get("Namespace"), "metric_name": a.get("MetricName"),
+                          "threshold": a.get("Threshold"), "comparison": a.get("ComparisonOperator"),
+                          "treat_missing_data": a.get("TreatMissingData"),
+                          "alarm_actions": sorted(a.get("AlarmActions", []))})
     return nodes
 
 # class -> (live_fn, [tf_resource_types that materialize this class's nodes])
