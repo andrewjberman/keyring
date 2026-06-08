@@ -35,6 +35,19 @@ tools:
     cost: "~2s"
     output: "Node/edge counts by type, cached to .comp-graph/graph.json"
 
+  comp-aws:
+    command: "comp-aws <derive|classes|metrics|diff|dual-managed|snapshot|score> [opts]"
+    segment_scope: aws-cloud
+    when: |
+      - "What AWS resources exist + how are they typed/connected?" (derive — typed cloud graph, live vs terraform-state)
+      - "What's the drift / blast radius / unmanaged surface?" (metrics, diff)
+      - "Is any resource dual-managed across TF states?" (dual-managed — MULTI_STATE_MANAGED detector)
+      - Cloud-shape snapshot + diff over time (snapshot, diff)
+    cost: "live-AWS reconcile (snapshot-cached, not per-run); static compile sub-10s"
+    output: "Typed cloud graph (17 node classes + edge vocab + drift/provenance classes incl AWS_MANAGED/MULTI_STATE_MANAGED) -> .comp-graph; snapshot tarballs -> opal-313476888478-globgrph"
+    usage_guide: "org/modules/graph/comp-aws-agent-usage.yaml"
+    project: "NFRA_COMPAWS"
+
   comp-trace:
     command: "comp-trace <query> [--direction up|down|both] [--depth N] [--json]"
     segment_scope: cross-segment
