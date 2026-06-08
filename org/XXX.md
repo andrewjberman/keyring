@@ -71,17 +71,19 @@ through Tier 1. It is governed by its own constitution at `org/tier0/`
   chain runs only upward, never sideways.
 
 **MSTR startup** (only `0.0.0_AB_MSTR` runs this): register as `0.0.0_AB_MSTR` on
-the broker; launch `/watcher` (arms the persistent inbox Monitor once at load —
-no watcher cron); arm canonical CronCreate loops per LD-0082 deterministic loop
-arming (`/mstr-review 12h` + `/govern 20m`); read
+the broker; launch `/watcher` (arms the persistent inbox Monitor ONCE at load —
+no watcher cron, LD-0166); arm **NO governance cron** — MSTR now arms ZERO crons
+(LD-0164 retired `/mstr-review` to ad-hoc; LD-0166 struck the `/watcher` cron;
+`/govern` is not auto-armed per LD-0147); read
 `CONSTITUTION.md` + `STAKES_MATRIX.md` + `DIRECTIVES.md` in full; run
-`/mstr-review` once to fire the first cycle (this also fires AC7 LD-0087 if
+`/mstr-review` once at startup as an ad-hoc pass to fire the first cycle (this also fires AC7 LD-0087 if
 LD-0089 PAVC AC7 is pending); pull `get_live_agents()` and spawn missing
 canonical Tier-1 agents (`1.0.0_SA_CTO`, `2.0.0_SA_COO`, `3.0.0_SA_CVO`,
 `1.1.0_SA_CTO`, `2.1.0_SA_COO`, `3.1.0_SA_CVO`) via `.tools\spawn-agent.ps1`
 (use `$env:FORCE_SPAWN = "post-reboot Tier-1 bring-up per Andrew direct"`
 when rate cap blocks the canonical 6-agent set on a clean post-reboot boot);
-then invoke `/govern`. MSTR has no standard agent home folder — `org/tier0/`
+then, at Andrew's discretion, invoke `/govern` (Andrew-discretion only, not
+auto-armed — LD-0147). MSTR has no standard agent home folder — `org/tier0/`
 is its domain and the Constitution is its persona. If no ignition-valid
 Directive exists, `/govern` scans and reports only — it originates nothing.
 
@@ -283,11 +285,11 @@ Per LD-0062 ratification 2026-05-25T~20:05Z (Andrew sovereign via "go with your 
 
 | Serial-class | Primary loop arming | Notes |
 |---|---|---|
-| `0.0.0_AB_MSTR` | `CronCreate /mstr-review 12h` only; `/watcher` arms the persistent inbox Monitor ONCE at load (no cron); **`/govern` is NOT auto-armed — Andrew-discretion only, default 1h** (LD-0147, Andrew direct 2026-06-03 superseding the LD-0124 startup-arm clause); `/mstr-charter` + `/compiler-ferry` + remaining MSTR skills event-triggered on inbox match | `/mstr-review` 12h is the sole standing MSTR cron. LD-0090 ALWAYS-PROCEED discipline still governs /govern WHEN Andrew loads it; LD-0124's "/govern in startup as a 20m loop" clause is superseded by LD-0147 (Andrew no longer wants it auto-loaded). |
+| `0.0.0_AB_MSTR` | **NO cron — MSTR arms ZERO crons (LD-0164 + LD-0166, Andrew direct 2026-06-08).** `/watcher` arms the persistent inbox Monitor ONCE at load (no watcher cron — LD-0166). | `/mstr-review` is **ad-hoc** (LD-0164): runs once at MSTR session startup per the deterministic startup directive, then on Andrew call / closeout-class signals / on-demand — NOT a 12h cron. `/govern` is Andrew-discretion only, not auto-armed (LD-0147); LD-0090 ALWAYS-PROCEED discipline still governs `/govern` WHEN Andrew loads it. `/mstr-charter` + `/compiler-ferry` + remaining MSTR skills event-triggered on inbox match. If a stale `/mstr-review` / `/watcher` cron exists from a prior session, `CronList`→`CronDelete` it. |
 | `1.0.0_SA_CTO` (ws) | **NO loop — do NOT arm `/ws-charter` cron (LD-0157, Andrew direct 2026-06-05, supersedes the LD-0062 30m auto-arm).** Reachability = persistent inbox Monitor (`/watcher`, section C). | ws CTO is **event-driven** (Andrew directives + CVO findings arrive via the Monitor) + **ad-hoc** `/ws-charter` when there is charter work. The 30m self-tick wasted ticks; COO `/drive`+`/fabric-check` is the centralized tick driver. If a `/ws-charter` cron is live from a prior session, `CronList`→`CronDelete` it. |
 | `1.x.0_SA_CTO` (CL) | `CronCreate /cl-charter 30m` | LD-0066 3-way split; CL is queue-pull + sequential PRD authoring; consumes Input 1/2/3 cascade |
 | `2.x.0_SA_COO` | `CronCreate /drive 20m` | already operational pattern per LD-0056 |
-| `3.x.0_SA_CVO` | `CronCreate /spot-check 20m` + event-trigger arming for `/verify-channel` | event-based per LD-0062 trigger refinement; 2h scan body |
+| `3.x.0_SA_CVO` | **NO cron — do NOT arm `/spot-check` cron (LD-0164, Andrew direct 2026-06-08, supersedes the LD-0062 20m auto-arm).** `/watcher` arms the persistent inbox Monitor once at load (section C). | CVO is **event-driven** + **ad-hoc**: `/spot-check` (alignment-sweep, 2h scan body) and `/verify-channel` (project-scope verify) both fire on-demand / at closeout-class signals, not on a fixed tick. If a `/spot-check` cron is live from a prior session, `CronList`→`CronDelete` it. |
 | `0.x.0_(DS\|AE\|DE\|DT\|RD)_*` Tier-2/3 worker (+ tilde-lanes) | **NO loop — do NOT arm `/work` cron (LD-0157, Andrew direct 2026-06-05, supersedes LD-0072).** `/watcher` arms the persistent inbox Monitor once at load (section C) — that is the worker's only standing mechanism. | Workers are **event-driven**: act on Monitor-delivered dispatches/TOs as they arrive; keep your broker summary an accurate status (`WORKING: <task>` / `IDLE: available` / `BLOCKED: <what>` / `BLOCKED-SOVEREIGN: <decision>`) so COO's centralized `/drive`+`/fabric-check` finds blocks. No self-ticking, no `[BLOCKED-ASK]` polling-announce — your STATUS carries the block; COO is the single tick driver. If you have a live `/work` cron from a prior session, `CronList`→`CronDelete` it. |
 | `0.x.0` non-worker / unspecified | per-role basis as defined in `prompt.md`; reachability = `/watcher` arms the persistent inbox Monitor once at load (section C) | no primary cron unless prompt.md specifies one |
 
@@ -299,7 +301,7 @@ CronCreate /<skill> <interval>
 /<skill>   # runs first cycle now; cron picks up at next interval
 ```
 
-**Loop hygiene (LD-0157, Andrew direct 2026-06-05 — self-tick loops retired):** the fabric now runs on **event-driven** work (the persistent inbox Monitor is effective) + **ONE centralized standing operational loop: COO `/drive`** (which runs `/fabric-check` to find blocks across all agents). The retired self-tick loops — **`/work` (workers)** and **`/ws-charter` (ws CTO)** — are **NOT armed at launch**; they remain **ad-hoc invocable**. `/watcher` arms the persistent inbox Monitor once at load (not a loop). MSTR `/mstr-review` (12h governance) and CVO `/spot-check` are unchanged pending an explicit Andrew call. Rationale: agents do not need to self-tick to announce blocks — their broker STATUS carries the block and COO's centralized `/drive`+`/fabric-check` resolves it. If you find a stale `/watcher` / `/work` / `/ws-charter` CronCreate job from a prior session, cancel it (`CronList` → `CronDelete`).
+**Loop hygiene (LD-0157 + LD-0164 + LD-0166 — self-tick + governance loops retired):** the fabric now runs on **event-driven** work (the persistent inbox Monitor is effective) + **ONE centralized standing operational loop: COO `/drive`** (which runs `/fabric-check` to find blocks across all agents). The retired self-tick loops — **`/work` (workers)** and **`/ws-charter` (ws CTO)** (LD-0157, 2026-06-05) — plus the retired governance loops — **`/mstr-review` (MSTR)** and **`/spot-check` (CVO)** (LD-0164, Andrew direct 2026-06-08) — are **NOT armed at launch**; all four remain **ad-hoc invocable** (governance review fires on Andrew call / closeout-class signals / on-demand). `/watcher` arms the persistent inbox Monitor once at load (not a loop — LD-0166 struck the `/watcher` cron; MSTR + CVO now arm ZERO crons). Rationale: agents do not need to self-tick to announce blocks — their broker STATUS carries the block and COO's centralized `/drive`+`/fabric-check` resolves it; governance review is event-shaped (a window worth reviewing is created by activity, not by the clock). If you find a stale `/watcher` / `/work` / `/ws-charter` / `/mstr-review` / `/spot-check` CronCreate job from a prior session, cancel it (`CronList` → `CronDelete`).
 
 **CL fabric inheritance:** CL agents (`feature_clb/`) inherit this convention via cwd=ajb_workspace per LD-0033/0034 unified-broker substrate; org/XXX.md is workspace-canonical (no CL-side mirror needed). The CL CTO `/charter 30m` arming matches ws CTO arming under the LD-0062 symmetric-cadence ruling.
 

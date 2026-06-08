@@ -6,7 +6,7 @@ Sister skill: `/verify-channel` — comprehensive project-scope verification fir
 
 | Skill | Cadence | Focus | Authority |
 |---|---|---|---|
-| `/spot-check 20m` (this skill) | 20m cron | recent agent commits; do-the-systems-still-work + cross-doc alignment; routine drift detection | **fix-authorized within scope** — CVO repairs alignment, then tells COO |
+| `/spot-check` (this skill) | **ad-hoc / on-demand (LD-0164 — no 20m cron)** + closeout-class signals | recent agent commits; do-the-systems-still-work + cross-doc alignment; routine drift detection | **fix-authorized within scope** — CVO repairs alignment, then tells COO |
 | `/verify-channel` (sister) | event-based (composite closeout-threshold any-of-N) + 2h lightweight scan | comprehensive project-scope verification at closeout-class signals | verifier-not-fixer — findings only, drivers act |
 
 Andrew directive: "spot-check is more than enough for most activity, it really should only be verify-channel at project/channel/pipeline/definitive closeout."
@@ -116,11 +116,11 @@ For each surviving commit:
 - **Closeout-class finding (/verify-channel escalation candidate) → MCP COO with subject-prefix `[SPOT-ESCALATE-CLOSEOUT]`** per joint CVO council 2026-05-25 ratified handoff mechanism. Single explicit-tag escalation = high signal-to-noise; routine /spot-check findings do NOT auto-escalate. Triggered when /spot-check empirically detects (a) a substance-class finding explicitly judged closeout-shaped (NOT routine drift) OR (b) a multi-tick same-pattern observation suggesting project approaching closeout state.
 - **Beyond-CVO judgment call (lane reassignment, scope decision, cancellation) → escalate to MSTR / Andrew.**
 
-### Step 4 — Log + re-arm
+### Step 4 — Log (no re-arm)
 
 - Cycle log only when something happened (a fix landed, a finding routed, an escalation went). A clean cycle is silent — checkpoint advance + heartbeat refresh is all.
 - Cycle logs at `org/tier1_exec/3.0.0_SA_CVO/logs/{YYYY-MM-DD}/spot_check_{HHMMZ}.md`.
-- Spot-check is driven by a `CronCreate` at startup (`*/20` off-marks, e.g. `13,33,53 * * * *`). No per-cycle re-arm needed — the cron fires until canceled. Runs auto-expire after 7 days per CronCreate's default; refresh by re-arming the cron at session restart or on the 7-day boundary.
+- **AD-HOC — NOT cron-driven (LD-0164, Andrew direct 2026-06-08).** Spot-check is no longer armed as a 20m `CronCreate` at startup; the CVO arms ZERO crons. Run it on-demand or at closeout-class signals. There is no per-cycle re-arm and no standing cron to refresh. If a human explicitly wants a recurring sweep they may still arm one with `/spot-check 20m`, but a fresh CVO session must NOT auto-arm it — and should `CronList`→`CronDelete` any `/spot-check` cron stranded from a prior session.
 
 ---
 
