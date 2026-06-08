@@ -10,13 +10,14 @@
 # Deferred: us-east-2 buckets (provider alias required — explicitly noted in TF comments).
 
 meta:
-  fixture_version: "1.1"
+  fixture_version: "1.2"
   phase: "Phase 1 — S3 hand-audit oracle"
   tf_commit_at_audit: "11d6edaf4"
   cvo_author: "3.0.0_SA_CVO"
   schema_ref: "ADHC_CMPAWS PRD docs/briefs/comp-aws-comprehensive-cloud-compiler-prd-20260601.md"
   iam_stubs: "IAM_PRINCIPAL nodes are provisional stubs; Phase 1 IAM sub-audit will resolve"
   v1_1_changes: "GAP-7 resolved (CTO 204113Z): removed eventbridge_routing flag from direct S3 triggers (inf-portal-publisher + inf-silver-aggregator); added event_rules section with inf-silver-chain EVENT_RULE node; updated GAP-7 status=RESOLVED."
+  v1_2_changes: "AE Step-2 live-AWS cross-check folded + CVO-adjudicated (CVO independently re-confirmed D1/D2/D3 via live aws s3api 2026-06-08). 24/24 versioning+PAB EXACT (zero drift). D1 ACCEPT: opal-data-bd 3rd trigger PortalPublisherTrigger->bd-portal-publisher added (DRIFT-CLASS: oracle grep-miss of a TF-DECLARED edge — bd-pipeline/s3-notifications.tf owns all 3; bucket console-created but notification config TF-managed). D2 ACCEPT: opal-data-portal-v2 policy OAI corrected E139998VWH0PD(WRONG-GUESS)->EU39UXW7CMSI5 + OAC statement added (DRIFT-CLASS: LIVE-no-DECLARED console policy). D3 ACCEPT: bd+inf OAC GRANTS statements added (DRIFT-CLASS: LIVE-no-DECLARED). D4 ACCEPT-NODE: 2nd EventBridge rule inf-assets-trigger added; edge-taxonomy modeling routed to CTO. GAP-1..6 RESOLVED (GAP-4 schwab/market-update us-east-2 versioning=Enabled+PAB-all-true; GAP-5 tf-state versioning=Enabled/MFADelete=Disabled/repl=none; GAP-6 2 CF OAIs + OAC resolved). s3_trigger_edges 6->7; event_rule_nodes 1->2. fixture_status -> CERTIFIED (S3 sub-class 0-diff vs live)."
 
 # =============================================================================
 # S3_BUCKET NODES
@@ -412,6 +413,7 @@ s3_buckets:
     bucket_policy_tf_managed: false
     bucket_policy_console_drift_check: "portal-auth/firm-bucket-cross-ref.tf: data.aws_s3_bucket_policy.bd_oai_grant (read-only drift assert)"
     bucket_policy_expected_principals: ["arn:aws:iam::cloudfront:user/CloudFront Origin Access Identity E139998VWH0PD"]
+    notification_config_tf_managed: true   # bucket console-created; notification config TF-owned (bd-pipeline/s3-notifications.tf: aws_s3_bucket_notification.bd_data_bucket owns ALL triggers)
     event_notifications:
       - id: "allocation-processor-trigger"
         lambda: "bd-allocation-processor"
@@ -425,7 +427,13 @@ s3_buckets:
         filter_prefix: "silver/prices/20"
         filter_suffix: ".parquet"
         tf_resource: "bd-pipeline/s3-notifications.tf: aws_s3_bucket_notification.bd_data_bucket"
-    notes: "Primary BD pipeline data store; gold/platinum/silver/bronze/snapshots layout. Time Machine source (noncurrent versions + NFRA_COSTRED R2 lifecycle)."
+      - id: "PortalPublisherTrigger"   # D1 (v1.2): AE-found + CVO-confirmed live 2026-06-08; TF-DECLARED (oracle grep-miss)
+        lambda: "bd-portal-publisher"
+        event: "s3:ObjectCreated:*"
+        filter_prefix: "gold/pipeline-complete"
+        filter_suffix: ".json"
+        tf_resource: "bd-pipeline/s3-notifications.tf: aws_s3_bucket_notification.bd_data_bucket"
+    notes: "Primary BD pipeline data store; gold/platinum/silver/bronze/snapshots layout. Time Machine source (noncurrent versions + NFRA_COSTRED R2 lifecycle). D1: 3 TF-managed notification triggers (not 2) — notification config is TF-owned even though the bucket resource is console-managed."
 
   - bucket_name: "opal-data-portal-v2"
     region: "us-east-1"
@@ -441,7 +449,7 @@ s3_buckets:
     lifecycle_rules_tf_managed: true
     lifecycle_tf_resource: "shared-infra/main.tf: aws_s3_bucket_lifecycle_configuration.portal_v2_versions (noncurrent 90d + MPU 7d)"
     bucket_policy_tf_managed: false
-    bucket_policy_note: "Console-managed; CF-fronted (EVTSA9VEHNZVH serves /api/general/* + /api/scoped/advisor-intelligence/*); likely OAI E139998VWH0PD principal"
+    bucket_policy_note: "Console-managed; CF-fronted (EVTSA9VEHNZVH serves /api/general/* + /api/scoped/advisor-intelligence/*). D2 (v1.2) RESOLVED: actual OAI = EU39UXW7CMSI5 ('OAI for opalinvest.dev'), NOT the v1.1-guessed E139998VWH0PD; policy also carries an OAC statement (cloudfront.amazonaws.com SourceArn distribution/EVTSA9VEHNZVH). CVO-confirmed live 2026-06-08."
     event_notifications:
       - id: "yang-pipeline-manifest-trigger"
         lambda: "yang-pipeline-trigger"
@@ -468,8 +476,10 @@ s3_buckets:
     provenance:
       tf_module: "N/A — S3 backend; referenced as backend config in all terraform {} blocks"
       declared_state: "CONSOLE-MANAGED; TF backend state bucket; not a TF-managed resource (bootstrap)"
+    mfa_delete: false        # GAP-5 (v1.2): AE live-confirmed Disabled
+    replication: "none"      # GAP-5 (v1.2): AE live-confirmed no replication
     event_notifications: []
-    notes: "Bootstrap bucket. Cannot import into TF (state of the state). Versioning required (TF docs)."
+    notes: "Bootstrap bucket. Cannot import into TF (state of the state). Versioning required (TF docs). GAP-5 RESOLVED: versioning=Enabled, MFADelete=Disabled, replication=none (AE live 2026-06-05; CVO-adjudicated)."
 
   # ---------------------------------------------------------------------------
   # DEFERRED (us-east-2; provider alias required; NOT TF-managed)
@@ -480,8 +490,8 @@ s3_buckets:
     tf_managed: false
     owner_pipeline: "bd-pipeline"
     purpose_class: "data"
-    versioning_enabled: null
-    public_access_block: null
+    versioning_enabled: true   # GAP-4 (v1.2): AE live-confirmed Enabled
+    public_access_block: true  # GAP-4 (v1.2): AE live-confirmed all-true
     website_hosting: false
     provenance:
       tf_module: "bd-pipeline/s3.tf (DEFERRED COMMENT ONLY)"
@@ -494,8 +504,8 @@ s3_buckets:
     tf_managed: false
     owner_pipeline: "market-overview"
     purpose_class: "data"
-    versioning_enabled: null
-    public_access_block: null
+    versioning_enabled: true   # GAP-4 (v1.2): AE live-confirmed Enabled
+    public_access_block: true  # GAP-4 (v1.2): AE live-confirmed all-true
     website_hosting: false
     provenance:
       tf_module: "market-overview/s3.tf (DEFERRED COMMENT ONLY)"
@@ -556,35 +566,73 @@ s3_bucket_policies:
     tf_managed: false
     tf_resource: null
     drift_check: "portal-auth/firm-bucket-cross-ref.tf: data.aws_s3_bucket_policy.inf_oai_grant (non-owning read-only assert)"
-    effect: "Allow (expected)"
-    principals: ["arn:aws:iam::cloudfront:user/CloudFront Origin Access Identity E139998VWH0PD"]
-    actions: ["s3:GetObject (expected)"]
+    effect: "Allow"
+    statements:   # D3 (v1.2): full 2-statement list — CVO-confirmed live 2026-06-08
+      - sid: "AllowScopedAdvisorOAI"
+        principal: {AWS: "arn:aws:iam::cloudfront:user/CloudFront Origin Access Identity E139998VWH0PD"}
+        action: "s3:GetObject"
+      - sid: "AllowCFDistributionGold"
+        principal: {Service: "cloudfront.amazonaws.com"}
+        action: "s3:GetObject"
+        condition: "AWS:SourceArn = arn:aws:cloudfront::313476888478:distribution/EVTSA9VEHNZVH (OAC)"
+    principals:
+      - "arn:aws:iam::cloudfront:user/CloudFront Origin Access Identity E139998VWH0PD"
+      - "cloudfront.amazonaws.com (OAC: EVTSA9VEHNZVH SourceArn condition)"
+    actions: ["s3:GetObject"]
     provenance: {source: "live"}
-    grants_iam_principals: ["IAM_PRINCIPAL:cloudfront-oai-E139998VWH0PD"]
-    notes: "LIVE-no-DECLARED policy. Path A TF import deferred per FIRMSEP ruling. CVO verifies drift-check TF assertion fires on plan."
+    grants_iam_principals:
+      - "IAM_PRINCIPAL:cloudfront-oai-E139998VWH0PD"
+      - "IAM_PRINCIPAL:cloudfront-oac-EVTSA9VEHNZVH"
+    notes: "LIVE-no-DECLARED policy. Path A TF import deferred per FIRMSEP ruling. CVO verifies drift-check TF assertion fires on plan. D3: OAC statement (AllowCFDistributionGold) added v1.2 — drift-check asserts only OAI presence, so the OAC grant is an untracked-by-TF-assertion surface."
 
   - policy_id: "opal-data-bd-policy"
     bucket_name: "opal-data-bd"
     tf_managed: false
     tf_resource: null
     drift_check: "portal-auth/firm-bucket-cross-ref.tf: data.aws_s3_bucket_policy.bd_oai_grant (non-owning read-only assert)"
-    effect: "Allow (expected)"
-    principals: ["arn:aws:iam::cloudfront:user/CloudFront Origin Access Identity E139998VWH0PD"]
-    actions: ["s3:GetObject (expected)"]
+    effect: "Allow"
+    statements:   # D3 (v1.2): full 2-statement list — CVO-confirmed live 2026-06-08
+      - sid: "AllowCloudFrontOACReadGold"
+        principal: {Service: "cloudfront.amazonaws.com"}
+        action: "s3:GetObject"
+        condition: "AWS:SourceArn = arn:aws:cloudfront::313476888478:distribution/EVTSA9VEHNZVH (OAC)"
+      - sid: "AllowScopedAdvisorOAI"
+        principal: {AWS: "arn:aws:iam::cloudfront:user/CloudFront Origin Access Identity E139998VWH0PD"}
+        action: "s3:GetObject"
+    principals:
+      - "cloudfront.amazonaws.com (OAC: EVTSA9VEHNZVH SourceArn condition)"
+      - "arn:aws:iam::cloudfront:user/CloudFront Origin Access Identity E139998VWH0PD"
+    actions: ["s3:GetObject"]
     provenance: {source: "live"}
-    grants_iam_principals: ["IAM_PRINCIPAL:cloudfront-oai-E139998VWH0PD"]
-    notes: "LIVE-no-DECLARED policy (canonical motivating case per CTO Q2). Path A TF import is the long-term cert goal."
+    grants_iam_principals:
+      - "IAM_PRINCIPAL:cloudfront-oac-EVTSA9VEHNZVH"
+      - "IAM_PRINCIPAL:cloudfront-oai-E139998VWH0PD"
+    notes: "LIVE-no-DECLARED policy (canonical motivating case per CTO Q2). Path A TF import is the long-term cert goal. D3: OAC statement (AllowCloudFrontOACReadGold) added v1.2 — drift-check asserts only OAI presence, OAC grant untracked-by-TF-assertion."
 
   - policy_id: "opal-data-portal-v2-policy"
     bucket_name: "opal-data-portal-v2"
     tf_managed: false
     tf_resource: null
     drift_check: null
-    effect: "Allow (expected)"
-    principals: ["cloudfront.amazonaws.com or OAI E139998VWH0PD (provisional — no TF data source read)"]
-    provenance: {source: "provisional"}
-    grants_iam_principals: ["IAM_PRINCIPAL:cloudfront-oai-E139998VWH0PD"]
-    notes: "PROVISIONAL stub — no TF data source read on this bucket policy; AE live-AWS cross-check will resolve actual policy content."
+    effect: "Allow"
+    statements:   # D2 (v1.2): RESOLVED via live get-bucket-policy — CVO-confirmed live 2026-06-08
+      - sid: "AllowCloudFrontOAI"
+        principal: {AWS: "arn:aws:iam::cloudfront:user/CloudFront Origin Access Identity EU39UXW7CMSI5"}
+        action: "s3:GetObject"
+        note: "OAI for opalinvest.dev S3 bucket — NOT the v1.1-guessed E139998VWH0PD"
+      - sid: "AllowCloudFrontOACPublicData"
+        principal: {Service: "cloudfront.amazonaws.com"}
+        action: "s3:GetObject"
+        condition: "AWS:SourceArn = arn:aws:cloudfront::313476888478:distribution/EVTSA9VEHNZVH (OAC)"
+    principals:
+      - "arn:aws:iam::cloudfront:user/CloudFront Origin Access Identity EU39UXW7CMSI5"
+      - "cloudfront.amazonaws.com (OAC: EVTSA9VEHNZVH SourceArn condition)"
+    actions: ["s3:GetObject"]
+    provenance: {source: "live"}
+    grants_iam_principals:
+      - "IAM_PRINCIPAL:cloudfront-oai-EU39UXW7CMSI5"
+      - "IAM_PRINCIPAL:cloudfront-oac-EVTSA9VEHNZVH"
+    notes: "D2 RESOLVED (v1.2): the v1.1 provisional guess (OAI E139998VWH0PD) was WRONG — actual OAI is EU39UXW7CMSI5 (opalinvest.dev), plus an OAC public-data statement. LIVE-no-DECLARED console policy."
 
 # =============================================================================
 # EDGE INVENTORY: TRIGGERS (S3_BUCKET -[TRIGGERS]-> LAMBDA)
@@ -605,6 +653,13 @@ s3_triggers:
     filter_suffix: ".parquet"
     event_type: "s3:ObjectCreated:*"
     tf_resource: "bd-pipeline/s3-notifications.tf: aws_s3_bucket_notification.bd_data_bucket[GoldLayerPricesTrigger]"
+
+  - source_bucket: "opal-data-bd"   # D1 (v1.2): 7th trigger edge — AE-found + CVO-confirmed live 2026-06-08
+    target_lambda: "bd-portal-publisher"
+    filter_prefix: "gold/pipeline-complete"
+    filter_suffix: ".json"
+    event_type: "s3:ObjectCreated:*"
+    tf_resource: "bd-pipeline/s3-notifications.tf: aws_s3_bucket_notification.bd_data_bucket[PortalPublisherTrigger]"
 
   - source_bucket: "opal-data-inf"
     target_lambda: "inf-portal-publisher"
@@ -655,10 +710,26 @@ event_rules:
     tf_resource: "inf-pipeline/inf-silver-chain.tf"
     tf_managed: true
     target_lambda: "inf-silver-chain"
-    notes: "AE live-AWS cross-check should verify the exact event pattern detail matches TF declaration."
+    notes: "AE live-AWS cross-check verified the rule ENABLED + pattern matches TF (2026-06-05)."
     # Edges:
     #   opal-data-inf -[EMITS_TO]-> EVENT_RULE:inf-silver-chain-rule
     #   EVENT_RULE:inf-silver-chain-rule -[TRIGGERS]-> LAMBDA:inf-silver-chain
+
+  - event_rule_id: "inf-assets-trigger-bronze-complete"   # D4 (v1.2): AE-found 2nd ENABLED rule on the same pattern
+    source_bucket: "opal-data-inf"
+    event_pattern:
+      source: ["aws.s3"]
+      detail_type: ["Object Created"]
+      detail:
+        bucket.name: ["opal-data-inf"]
+        object.key: [{prefix: "bronze/orion-api/"}, {suffix: "_BRONZE_COMPLETE.json"}]
+    tf_managed: "UNKNOWN — AE found it live ENABLED; TF-provenance not yet confirmed (possible LIVE-no-DECLARED)"
+    target_lambda: "inf-assets-trigger (per rule name; AE to confirm target on re-pull)"
+    cto_review: "D4: a SECOND ENABLED EventBridge rule matches the same opal-data-inf bronze-complete pattern as inf-silver-chain-rule. Two rules fan a single S3 event to two consumers. Edge-taxonomy modeling of the fan-out (one EMITS_TO with two downstream EVENT_RULEs) is a CTO call — routed. Also: confirm TF-provenance to set drift-class (DECLARED vs LIVE-no-DECLARED)."
+    notes: "Node recorded as factual (AE live-confirmed ENABLED). Edge label + TF-provenance pending CTO + an AE re-pull."
+    # Edges (pending CTO disposition):
+    #   opal-data-inf -[EMITS_TO]-> EVENT_RULE:inf-assets-trigger-bronze-complete
+    #   EVENT_RULE:inf-assets-trigger-bronze-complete -[TRIGGERS]-> LAMBDA:inf-assets-trigger
 
 # =============================================================================
 # OPEN QUESTIONS / ORACLE GAPS (for AE live-AWS cross-check)
@@ -670,31 +741,43 @@ oracle_gaps:
     description: "opal-data-portal-v2 bucket policy actual content — no TF data source; AE should aws s3api get-bucket-policy + compare against expected OAI principal"
     severity: "P1"
     owner: "AE"
+    status: "RESOLVED"
+    resolution: "D2 (AE live + CVO-confirmed 2026-06-08): OAI = EU39UXW7CMSI5 (NOT v1.1-guessed E139998VWH0PD) + OAC statement (SourceArn EVTSA9VEHNZVH). Folded into opal-data-portal-v2-policy node."
 
   - id: "GAP-2"
     description: "opal-data-bd bucket policy full statement list — TF drift-check only asserts OAI principal presence; full statement inventory needed for GRANTS-edge completeness"
     severity: "P1"
     owner: "AE"
+    status: "RESOLVED"
+    resolution: "D3 (AE live + CVO-confirmed 2026-06-08): 2 statements — AllowCloudFrontOACReadGold (OAC EVTSA9VEHNZVH) + AllowScopedAdvisorOAI (OAI E139998VWH0PD). Folded into opal-data-bd-policy node."
 
   - id: "GAP-3"
     description: "opal-data-inf bucket policy full statement list — same as GAP-2"
     severity: "P1"
     owner: "AE"
+    status: "RESOLVED"
+    resolution: "D3 (AE live + CVO-confirmed 2026-06-08): 2 statements — AllowScopedAdvisorOAI (OAI E139998VWH0PD) + AllowCFDistributionGold (OAC EVTSA9VEHNZVH). Folded into opal-data-inf-policy node."
 
   - id: "GAP-4"
     description: "opal-data-schwab + opal-market-update (us-east-2): versioning_enabled + public_access_block actual state unknown; AE must check via aws s3api"
     severity: "P2"
     owner: "AE"
+    status: "RESOLVED"
+    resolution: "AE live 2026-06-05: both versioning=Enabled, PAB=all-true. Folded into the two us-east-2 bucket nodes."
 
   - id: "GAP-5"
     description: "opal-313476888478-terraform-state: actual versioning + MFA delete + replication state unknown (bootstrap bucket, no TF resource)"
     severity: "P2"
     owner: "AE"
+    status: "RESOLVED"
+    resolution: "AE live 2026-06-05: versioning=Enabled, MFADelete=Disabled, replication=none. Folded into terraform-state node."
 
   - id: "GAP-6"
     description: "IAM_PRINCIPAL stub resolution: all grants_iam_principals stubs need mapping to real IAM entities (CF OAI = E139998VWH0PD IAM user; CF distribution = service principal with SourceArn condition) — Phase 1 IAM sub-audit"
     severity: "P1"
     owner: "AE + CVO"
+    status: "RESOLVED-FOR-S3-CLASS"
+    resolution: "AE live 2026-06-05 + CVO 2026-06-08: 2 CF OAIs resolved — EU39UXW7CMSI5 (opalinvest.dev; canonical 7579b8...) + E139998VWH0PD (opal-scoped-advisor-oai; canonical d4ad9d...); OAC = cloudfront.amazonaws.com service-principal gated by SourceArn distribution/EVTSA9VEHNZVH. S3-class stubs now carry real OAI/OAC identities (cloudfront-oai-EU39UXW7CMSI5, cloudfront-oai-E139998VWH0PD, cloudfront-oac-EVTSA9VEHNZVH). NOTE: the formal IAM_PRINCIPAL node TYPING remains the Phase-1 IAM sub-audit's deliverable — these are now real-identity-pinned stubs, not provisional guesses."
 
   - id: "GAP-7"
     description: "inf-silver-chain EventBridge rule (inf-pipeline/inf-silver-chain.tf) routes opal-data-inf bronze/orion-api/*/_BRONZE_COMPLETE.json to inf-silver-chain Lambda via EventBridge (not direct S3 notification). This is an S3 -[TRIGGERS via EventBridge]-> LAMBDA edge variant. Confirm node type and edge label."
@@ -714,10 +797,11 @@ summary:
   deferred_region_mismatch: 2
   s3_bucket_policies_tf_managed: 3
   s3_bucket_policies_console_managed: 3
-  s3_trigger_edges: 6
-  event_rule_nodes: 1
-  iam_principal_stubs: 6
+  s3_trigger_edges: 7          # v1.2: +1 (D1 bd-portal-publisher, TF-declared, was oracle grep-miss)
+  event_rule_nodes: 2          # v1.2: +1 (D4 inf-assets-trigger-bronze-complete, edge-taxonomy pending CTO)
+  iam_principal_stubs: 7       # v1.2: now real-identity-pinned (2 OAI + 1 OAC + per-policy); formal typing = IAM sub-audit
   oracle_gaps: 7
-  oracle_gaps_resolved: 1
-  oracle_gaps_open: 6
-  fixture_status: "DRAFT-RAVC1 v1.1 — GAP-7 resolved; AE live-AWS cross-check in progress (COO-dispatched)"
+  oracle_gaps_resolved: 7      # v1.2: GAP-1..7 all resolved (GAP-1/2/3=D2/D3, GAP-4/5=us-east-2+tf-state, GAP-6=identity-pin, GAP-7=CTO)
+  oracle_gaps_open: 0
+  live_cross_check: "versioning + public_access_block = 24/24 EXACT (zero drift); 4 discrepancies (D1-D4) all additive (live richer than oracle), all ACCEPTED + folded"
+  fixture_status: "CERTIFIED v1.2 — S3 sub-class hand-audit reconciled 0-diff vs live AWS (AE Step-2 cross-check, CVO-adjudicated 2026-06-08). Becomes the S3-class regression fixture. RESIDUAL: D4 edge-taxonomy modeling + inf-assets-trigger TF-provenance = CTO/AE follow-up (does not block S3 node/property certification)."
