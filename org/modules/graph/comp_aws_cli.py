@@ -748,12 +748,25 @@ _ACTION_VERB = [
     ("logs:putlogevents", "LOGS_TO", "logs"), ("logs:createlogstream", "LOGS_TO", "logs"),
 ]
 
-def _verb_for_action(action):
+def _verbs_for_action(action):
+    """Return ALL data-access (verb, kind) a single action grants. Service-wildcards
+    (s3:*, dynamodb:*) + full admin (*) grant BOTH read+write capability -> emit both
+    (the FullAccess/admin blast-radius is the high-value capability edge set)."""
     a = action.lower()
+    out = []
+    if a in ("*", "s3:*"):
+        out += [("READS", "s3"), ("WRITES", "s3")]
+    if a in ("*", "dynamodb:*"):
+        out += [("READS", "dynamodb"), ("WRITES", "dynamodb")]
+    if a == "*":
+        out += [("READS_SECRET", "secret"), ("PUBLISHES_TO", "sns"),
+                ("SENDS_TO", "sqs"), ("ENCRYPTS_WITH", "kms"), ("LOGS_TO", "logs")]
+    if out:
+        return out
     for pfx, verb, kind in _ACTION_VERB:
         if a.startswith(pfx):
-            return verb, kind
-    return None, None
+            return [(verb, kind)]
+    return []
 
 def derive_data_access_edges():
     """sec3.x DERIVED edge layer (EDGE-GAP-DATA): project each IAM role's GRANTS
@@ -763,16 +776,33 @@ def derive_data_access_edges():
     GRANTS-class edge rather than fan-out to every resource. Discovery-based."""
     iamc = _boto("iam")
     edges = []
+    _mp_cache = {}  # managed-policy arn -> normalized statements (a policy attaches to many roles)
+
+    def _managed_stmts(parn):
+        if parn not in _mp_cache:
+            try:
+                ver = iamc.get_policy(PolicyArn=parn)["Policy"]["DefaultVersionId"]
+                doc = iamc.get_policy_version(PolicyArn=parn, VersionId=ver)["PolicyVersion"]["Document"]
+                _mp_cache[parn] = _norm_statements(doc if isinstance(doc, dict) else {})
+            except Exception:
+                _mp_cache[parn] = []
+        return _mp_cache[parn]
+
     # role_arn -> [(verb, target_arn|None, wildcard, action)]
     grants = {}
     for n in live_iam_roles():
         rn = n["id"]
         rarn = n["arn"]
         stmts = []
-        try:
+        try:  # INLINE policy grants
             for pn in iamc.list_role_policies(RoleName=rn).get("PolicyNames", []):
                 doc = iamc.get_role_policy(RoleName=rn, PolicyName=pn).get("PolicyDocument", {})
                 stmts += _norm_statements(doc if isinstance(doc, dict) else {})
+        except Exception:
+            pass
+        try:  # MANAGED policy grants (incl AWS-managed *FullAccess = service:* on * -> wildcard edges; DATA-EDGE-COVERAGE)
+            for ap in iamc.list_attached_role_policies(RoleName=rn).get("AttachedPolicies", []):
+                stmts += _managed_stmts(ap["PolicyArn"])
         except Exception:
             pass
         glist = []
@@ -780,14 +810,12 @@ def derive_data_access_edges():
             if s.get("effect") != "Allow":
                 continue
             for act in s.get("action", []):
-                verb, kind = _verb_for_action(act)
-                if not verb:
-                    continue
-                for res in (s.get("resource") or []):
-                    if res == "*" or "*" == res.strip():
-                        glist.append((verb, None, True, act))
-                    else:
-                        glist.append((verb, res, False, act))
+                for verb, kind in _verbs_for_action(act):
+                    for res in (s.get("resource") or []):
+                        if res == "*" or res.strip() == "*":
+                            glist.append((verb, None, True, act))
+                        else:
+                            glist.append((verb, res, False, act))
         if glist:
             grants[rarn] = glist
     # consumers: compute nodes that ASSUME each role
