@@ -1,0 +1,12 @@
+#!/bin/bash
+# comp-kuzu — Cypher query wrapper for NFRA_GLOBGRPH Kuzu local DB
+# Usage: comp-kuzu "MATCH (n:CloudNode) WHERE n.node_type='LAMBDA' RETURN n.id LIMIT 10"
+#        comp-kuzu --json "..."         # JSON output
+#        comp-kuzu --limit 20 "..."     # auto-append LIMIT
+#        comp-kuzu --db-path PATH "..."
+# DB is rebuilt via: python3 infra/aws/globgrph/kuzu_load.py [--force]
+WORKSPACE="$(cd "$(dirname "$0")/.." && pwd)"
+python "$WORKSPACE/infra/aws/globgrph/kuzu_cli.py" "$@"
+_exit=$?
+python "$WORKSPACE/org/modules/graph/comp_log_auto.py" "comp-kuzu" "$*" $_exit 2>/dev/null
+exit $_exit
