@@ -6,12 +6,13 @@
 # Cert target: the F1 done-gate (org/tier1_exec/3.0.0_SA_CVO/CMPAWS_F1_CERT_METHODOLOGY.md).
 
 meta:
-  fixture_version: "0.2"
+  fixture_version: "0.3"
   phase: "Phase 1 — eventing hand-audit oracle"
   tf_commit_at_audit: "post-7a0cbb31c"
   cvo_author: "3.0.0_SA_CVO"
-  schema_ref: "docs/architecture/ADHC_CMPAWS_SCHEMA.md §3.3 (CTO 51218a486) — canonical EVENT_RULE vocabulary; this oracle aligned to it v0.2."
-  v0_2_changes: "Reconciled to CTO canonical schema §3.3: EVENT_RULE props use the §3.3 names (rule_name/arn/event_pattern/schedule_expression/state/event_bus/tf_managed/provenance/owner_pipeline); provenance = §1.3 drift classes; declared-side per §1.4 terraform-show-json union. SURFACED a schema-coverage gap (EV-SCHEMA-GAP-1) — see below — routed to CTO."
+  schema_ref: "docs/architecture/ADHC_CMPAWS_SCHEMA.md §3.3 (CTO schema v0.2 0fc6f95d3) — canonical EVENT_RULE + EVENT_SOURCE vocabulary; this oracle aligned v0.3."
+  v0_3_changes: "EV-SCHEMA-GAP-1 RESOLVED per CTO ruling (0fc6f95d3): EMITS_TO source is now total via two flavors — (1) RESOURCE-BOUND (event_pattern pins a concrete id -> the resource node IS the source: S3_BUCKET/EC2_INSTANCE) and (2) SERVICE/API-SCOPED -> a typed EVENT_SOURCE node (closed source_kind enum {AWS_SERVICE|CLOUDTRAIL_API|CUSTOM|SCHEDULED}, service_or_api, detail_type, provenance). Scheduled rules get a SCHEDULED EVENT_SOURCE so every rule has a typed origin (0-untyped gate trivially total). Determination is DETERMINISTIC from event_pattern (95%-F1 requirement). My 3 service/API rules typed as the named §3.3 anchors."
+  v0_2_changes: "Reconciled to CTO canonical schema §3.3 EVENT_RULE props; provenance = §1.3; declared-side per §1.4. Surfaced EV-SCHEMA-GAP-1 (now resolved in v0.3)."
   provenance_method: "DECLARED side = UNION of `terraform show -json` across ALL discovered root-module states, ARN-matched (§1.4 / CTO invariant 142141Z; NOT grep). A rule is LIVE-no-DECLARED only if absent from that union AND all HCL configs."
   live_pull: "aws events list-rules / list-targets-by-rule, default bus, 2026-06-08 ~15:11Z"
 
@@ -20,24 +21,25 @@ meta:
 # =============================================================================
 schema:
   node_EVENT_RULE_props: [rule_name, arn, event_pattern, schedule_expression, state, event_bus, tf_managed, provenance, owner_pipeline]   # §3.3 exact
+  node_EVENT_SOURCE_props: [source_kind, service_or_api, detail_type, provenance]   # CTO v0.2 0fc6f95d3; source_kind enum {AWS_SERVICE|CLOUDTRAIL_API|CUSTOM|SCHEDULED}
   edges:
     - "EVENT_RULE -[TRIGGERS]-> {LAMBDA|EC2_INSTANCE|SNS_TOPIC|SQS_QUEUE|STEP_FN}"   # §3.3; multiple targets = multiple TRIGGERS edges
-    - "{S3_BUCKET} -[EMITS_TO]-> EVENT_RULE"                                          # §3.3: EMITS_TO source defined ONLY for S3 (the S3->EventBridge bridge). Pairwise fan-out, source out-degree (D4).
+    - "{S3_BUCKET|EC2_INSTANCE|...resource} -[EMITS_TO]-> EVENT_RULE"                # RESOURCE-BOUND: pattern pins a concrete id -> that resource node is the source. Pairwise fan-out, source out-degree (D4).
+    - "EVENT_SOURCE -[EMITS_TO]-> EVENT_RULE"                                         # SERVICE/API-SCOPED + SCHEDULED: typed EVENT_SOURCE node is the origin (CTO ruling)
     - "{LAMBDA} -[STARTS]-> EC2_INSTANCE"                                             # §1.2/§3.3 compute-lifecycle-control (D4 STARTS; ec2:StartInstances)
-  rule_classification: "SCHEDULED (schedule_expression set, NO EMITS_TO in-edge) vs EVENT_PATTERN (event_pattern set, has an EMITS_TO in-edge). Structural per §3.3 — derivable, not a separate typed property. 0-untyped is the hard cert gate (§4)."
+  origin_totality: "EVERY rule has exactly one typed EMITS_TO origin (CTO ruling): resource-bound -> the resource node; service/API -> EVENT_SOURCE{AWS_SERVICE|CLOUDTRAIL_API|CUSTOM}; cron -> EVENT_SOURCE{SCHEDULED, schedule_expression}. No untyped/no-edge case -> 0-untyped gate trivially total. Determination is deterministic from event_pattern."
 
 # =============================================================================
 # EV-SCHEMA-GAP-1 (CVO -> CTO, schema-amendment candidate, surfaced per CTO's 'flag uncovered classes' invite)
 # =============================================================================
 schema_coverage_gap:
   id: "EV-SCHEMA-GAP-1"
-  finding: "§3.3 defines the EMITS_TO source ONLY as S3_BUCKET (the S3->EventBridge bridge). But 3 of the 7 live event-pattern rules have NON-S3 event sources that have no typeable EMITS_TO source node under the current §1.2 vocabulary:"
-  uncovered_sources:
-    - "opal-inf-ec2-state-change-monitor: source = EC2 instance-state-change event (aws.ec2) -> would need EC2_INSTANCE -[EMITS_TO]-> EVENT_RULE, OR an aws.ec2 service-event pseudo-source."
-    - "FIRMSEP-s3-direct-access-bypass: source = a CloudTrail/data-access event (S3 access via CloudTrail, not an S3 ObjectCreated notification) -> a CLOUDTRAIL/SERVICE event source."
-    - "moltbot-ssm-sendcommand-alert: source = CloudTrail ssm:SendCommand API event -> a CLOUDTRAIL/SERVICE event source."
-  why_it_matters: "Without a vocabulary for these sources, the compiler must either drop the in-edge (incomplete graph) or dump it UNCATEGORIZED (§1.3 = cert-fail). Per Andrew's 0-untyped bar, the eventing class CANNOT certify until these EMITS_TO sources are typeable."
-  cvo_recommendation: "Generalize EMITS_TO to admit non-S3 event sources — e.g. add an EVENT_SOURCE node (or extend EMITS_TO's source set to {S3_BUCKET | EC2_INSTANCE | CLOUDTRAIL_EVENT/SERVICE}) so aws.ec2 state-change + CloudTrail-API-event rules have a typed in-edge. CTO ruling (vocabulary add > untyped oracle entry, per your invite)."
+  status: "RESOLVED — CTO ruling 152051Z (schema v0.2 0fc6f95d3): new typed EVENT_SOURCE node (closed source_kind enum) covers non-resource-bound origins; no untyped entry. Folded into this oracle v0.3."
+  resolution_anchors:
+    - "opal-inf-ec2-state-change-monitor -> EVENT_SOURCE{AWS_SERVICE, aws.ec2, 'EC2 Instance State-change'} -[EMITS_TO]-> rule -[TRIGGERS]-> LAMBDA:inf-ec2-launch-monitor"
+    - "FIRMSEP-s3-direct-access-bypass -> EVENT_SOURCE{CLOUDTRAIL_API, 'S3 data-access'} -[EMITS_TO]-> rule -[TRIGGERS]-> SNS:opal-infrastructure-alerts"
+    - "moltbot-ssm-sendcommand-alert -> EVENT_SOURCE{CLOUDTRAIL_API, ssm:SendCommand} -[EMITS_TO]-> rule -[TRIGGERS]-> SNS:opal-infrastructure-alerts"
+  note: "Resource-bound rules (inf-silver-chain + inf-assets-trigger, pattern pins detail.bucket.name=opal-data-inf) keep S3_BUCKET:opal-data-inf as the EMITS_TO source (flavor 1). The 85 scheduled rules each get an EVENT_SOURCE{SCHEDULED, schedule_expression} origin. Every rule now has exactly one typed origin."
 
 # =============================================================================
 # ENUMERATION (live, default bus)
@@ -76,23 +78,23 @@ event_pattern_rules:
     edges: ["<source> -[EMITS_TO]-> inf-otp-state-change", "inf-otp-state-change -[TRIGGERS]-> LAMBDA:inf-otp-relay"]
   - rule: opal-inf-ec2-state-change-monitor
     target: "LAMBDA:inf-ec2-launch-monitor"
-    source: "EC2 instance-state-change event (aws.ec2)"
+    source: "EVENT_SOURCE{source_kind: AWS_SERVICE, service_or_api: aws.ec2, detail_type: 'EC2 Instance State-change'}"   # CTO v0.3 anchor
     tf: "inf-pipeline (AE confirm)"
-    edges: ["EC2-state-change -[EMITS_TO]-> opal-inf-ec2-state-change-monitor", "opal-inf-ec2-state-change-monitor -[TRIGGERS]-> LAMBDA:inf-ec2-launch-monitor"]
+    edges: ["EVENT_SOURCE{AWS_SERVICE,aws.ec2} -[EMITS_TO]-> opal-inf-ec2-state-change-monitor", "opal-inf-ec2-state-change-monitor -[TRIGGERS]-> LAMBDA:inf-ec2-launch-monitor"]
   - rule: exec-summary-trigger
     target: "LAMBDA:exec-summary-generator"
     source: "(AE confirm event pattern)"
     tf: "exec-summary (AE confirm)"
   - rule: FIRMSEP-s3-direct-access-bypass
     target: "SNS:opal-infrastructure-alerts"
-    source: "(S3 data-access / CloudTrail event — a FIRMSEP security guardrail alert)"
+    source: "EVENT_SOURCE{source_kind: CLOUDTRAIL_API, service_or_api: 'S3 data-access'}"   # CTO v0.3 anchor
     tf: "(AE confirm — possibly shared-infra/security)"
-    edges: ["<source> -[EMITS_TO]-> FIRMSEP-s3-direct-access-bypass", "FIRMSEP-s3-direct-access-bypass -[TRIGGERS]-> SNS:opal-infrastructure-alerts"]
+    edges: ["EVENT_SOURCE{CLOUDTRAIL_API,'S3 data-access'} -[EMITS_TO]-> FIRMSEP-s3-direct-access-bypass", "FIRMSEP-s3-direct-access-bypass -[TRIGGERS]-> SNS:opal-infrastructure-alerts"]
   - rule: moltbot-ssm-sendcommand-alert
     target: "SNS:opal-infrastructure-alerts"
-    source: "(SSM SendCommand / CloudTrail event)"
+    source: "EVENT_SOURCE{source_kind: CLOUDTRAIL_API, service_or_api: 'ssm:SendCommand'}"   # CTO v0.3 anchor
     tf: "(AE confirm)"
-    note: "ORPHAN-CANDIDATE: moltbot EC2 was decommissioned (i-0b784d49) + MoltbotEC2Role orphaned (IAM/EC2 oracle disposition). This alert RULE persists too — same expected-vs-drift teardown-completeness question. Flag with the moltbot disposition to COO/Andrew."
+    note: "ORPHAN-CANDIDATE (EV-GAP-5): moltbot EC2 decommissioned (i-0b784d49) + MoltbotEC2Role orphaned. This alert RULE persists too — same teardown-completeness question; held with the moltbot disposition bundle to Andrew (COO 151610Z)."
 
 # =============================================================================
 # SCHEDULED RULES (85) — cron/rate -> target. SET enumerated; per-rule target+provenance = AE cross-check.
@@ -123,10 +125,12 @@ oracle_gaps:
 
 summary:
   event_rule_nodes: 92
+  event_source_nodes: "3 service/API (AWS_SERVICE x1 + CLOUDTRAIL_API x2) + 1 S3_BUCKET resource-bound (opal-data-inf, 2 rules) + a SCHEDULED EVENT_SOURCE per the 85 cron rules (origin-totality, CTO 0fc6f95d3)"
   event_pattern_fully_audited: 7
   scheduled_enumerated: 85
   d4_chain_folded: "inf-assets-trigger 3-edge EMITS_TO->TRIGGERS->STARTS + inf-silver-chain pair (opal-data-inf out-degree 2)"
   oracle_gaps: 5
-  fixture_status: "DRAFT-SCAFFOLD v0.1 — 92 rules enumerated + classified (85 sched / 7 event-pattern); event-pattern subgraph (incl D4) fully hand-audited; scheduled targets + per-rule provenance = AE cross-check (EV-GAP-1..3). Ready for AE eventing-compiler build + cross-check -> CVO D-list adjudicate -> certify -> F1-measure vs the done-gate. Catalog-only."
+  schema_gaps_resolved: "EV-SCHEMA-GAP-1 -> EVENT_SOURCE node (CTO 0fc6f95d3); eventing origins now 0-untyped-certifiable"
+  fixture_status: "DRAFT-SCAFFOLD v0.3 (schema-aligned, origin-total) — 92 rules + typed EVENT_SOURCE origins; event-pattern subgraph + D4 fully audited; scheduled targets + per-rule provenance = AE cross-check (EV-GAP-1..3). Sequencing: re-base to post-MDPF_CADENCE-swap state, THEN eventing F1-cert. Catalog-only."
 
 # — 3.0.0_SA_CVO
