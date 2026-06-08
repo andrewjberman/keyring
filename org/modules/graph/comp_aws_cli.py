@@ -676,6 +676,7 @@ def derive_class(cls):
     live = live_fn()
     by_arn, by_id, by_name, declared = tf_state_index(tf_types)
     matched_decl = set()
+    _dm = dual_managed()   # sec1.3: ARNs managed in >1 root-module state
     for n in live:
         arn = _node_arn(cls, n)
         n["arn"] = arn
@@ -702,6 +703,9 @@ def derive_class(cls):
                 n["provenance"] = None
                 n["tf_managed"] = False
                 n["owner_pipeline"] = None
+            if arn in _dm:   # sec1.3 override: over-declared (>1 state) -> latent apply-conflict
+                n["drift_class"] = "MULTI_STATE_MANAGED"
+                n["multi_state_modules"] = _dm[arn]
         # sec 1.1 universal node properties
         if "type" not in n:           # 0-untyped invariant
             n["type"] = cls.upper()
