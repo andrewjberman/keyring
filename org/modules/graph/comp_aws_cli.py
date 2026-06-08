@@ -697,7 +697,10 @@ def derive_edges():
             for pk in prkeys:
                 if pk and pk not in seen_pr:
                     seen_pr.add(pk)
-                    E(parn, pk, "GRANTS", effect=st.get("effect"))
+                    # principal is external (service / OAI / cross-account) -- not an
+                    # in-graph resource node -> wildcard-exempt (IAM_PRINCIPAL node class
+                    # is a CTO schema decision; flagged).
+                    E(parn, pk, "GRANTS", effect=st.get("effect"), wildcard=True)
     # CLOUDFRONT -[ORIGIN]-> S3
     cf = _boto("cloudfront")
     try:
@@ -748,7 +751,9 @@ def derive_edges():
         if n.get("kms_key_arn"):
             E(n.get("arn"), n["kms_key_arn"], "ENCRYPTS_WITH")
         for sub in n.get("subscriptions", []):
-            E(n.get("arn"), sub, "SUBSCRIBES")
+            # subscription endpoint (email/https/lambda-arn) -- external delivery target,
+            # not an in-graph resource node -> wildcard-exempt.
+            E(n.get("arn"), sub, "SUBSCRIBES", wildcard=True)
     for n in live_dynamodb():
         if n.get("kms_key_arn"):
             E(n.get("arn"), n["kms_key_arn"], "ENCRYPTS_WITH")
@@ -940,6 +945,32 @@ def derive_event_sources():
                          "owner_pipeline": None, "provenance": None}
     return list(seen.values())
 
+def derive_aux_nodes(edges):
+    """Emit the structural-edge TARGET node classes not enumerated by the per-class
+    derive, so HAS_POLICY / HAS_PROFILE terminate (0-dangling, sec3.2 node classes):
+      IAM_POLICY      -- HAS_POLICY targets (managed ARN | inline pseudo-id)
+      INSTANCE_PROFILE-- HAS_PROFILE targets
+    Provenance is edge-derived (approximate) here; refined at IAM full-edge cert."""
+    nodes = []
+    for parn in sorted({e["target"] for e in edges if e["edge_type"] == "HAS_POLICY"}):
+        aws_mgd = parn.startswith("arn:aws:iam::aws:policy/")
+        inline = "/inline/" in parn
+        nodes.append({
+            "id": parn, "arn": parn, "name": parn.split("/")[-1].split(":")[-1],
+            "type": "IAM_POLICY",
+            "policy_kind": "inline" if inline else ("managed-aws" if aws_mgd else "managed-customer"),
+            "drift_class": "AWS_MANAGED" if aws_mgd else ("DECLARED" if inline else "LIVE-no-DECLARED"),
+            "tf_managed": False, "owner_pipeline": None,
+            "provenance": {"tf_kind": "aws_managed" if aws_mgd else "edge-derived"},
+        })
+    for parn in sorted({e["target"] for e in edges if e["edge_type"] == "HAS_PROFILE"}):
+        nodes.append({
+            "id": parn, "arn": parn, "name": parn.split("/")[-1], "type": "INSTANCE_PROFILE",
+            "drift_class": "DECLARED", "tf_managed": True,
+            "owner_pipeline": None, "provenance": {"tf_kind": "edge-derived"},
+        })
+    return nodes
+
 # ---------------------------------------------------------------------------
 # SCORE -- P/R/F1 vs certified oracle.  Oracle = ground truth.
 # ---------------------------------------------------------------------------
@@ -1041,6 +1072,15 @@ def cmd_derive(args):
             "declared_no_live": [], "counts": {"live": len(es), "untyped": 0}}
         print(f"  event_source live={len(es):3} (typed EVENT_SOURCE origins, sec 3.3)")
         graph["edges"] = derive_edges() + derive_data_access_edges()
+        aux = derive_aux_nodes(graph["edges"])
+        graph["classes_data"]["iam_policy"] = {"class": "iam_policy",
+            "nodes": [n for n in aux if n["type"] == "IAM_POLICY"], "declared_no_live": [],
+            "counts": {"live": sum(1 for n in aux if n["type"] == "IAM_POLICY"), "untyped": 0}}
+        graph["classes_data"]["instance_profile"] = {"class": "instance_profile",
+            "nodes": [n for n in aux if n["type"] == "INSTANCE_PROFILE"], "declared_no_live": [],
+            "counts": {"live": sum(1 for n in aux if n["type"] == "INSTANCE_PROFILE"), "untyped": 0}}
+        print(f"  aux nodes    IAM_POLICY={sum(1 for n in aux if n['type']=='IAM_POLICY')} "
+              f"INSTANCE_PROFILE={sum(1 for n in aux if n['type']=='INSTANCE_PROFILE')}")
         from collections import Counter
         ec = Counter(e["edge_type"] for e in graph["edges"])
         print(f"  edges        total={len(graph['edges'])}  " +
