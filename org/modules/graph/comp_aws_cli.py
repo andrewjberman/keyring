@@ -989,6 +989,77 @@ def derive_aux_nodes(edges):
     return nodes
 
 # ---------------------------------------------------------------------------
+# ANALYTICS -- summary metrics + snapshot diff (NFRA_GLOBGRPH P1 analytics layer,
+# in-process over the canonical graph JSON; the daily key-number-delta + audit
+# change-log the versioned archive feeds. No Nessie/cluster needed for this layer.)
+# ---------------------------------------------------------------------------
+def compute_metrics(graph):
+    """The 'key summary numbers' for a graph snapshot (the daily-delta + alarm surface)."""
+    from collections import Counter
+    cd = graph.get("classes_data", {})
+    per_class, drift = {}, Counter()
+    untyped = 0
+    for cls, d in cd.items():
+        ns = d.get("nodes", [])
+        per_class[cls] = len(ns)
+        for n in ns:
+            drift[n.get("drift_class", "?")] += 1
+            if not n.get("type"):
+                untyped += 1
+    edges = graph.get("edges", [])
+    findings = {
+        "overperm_roles": sum(1 for n in cd.get("iam", {}).get("nodes", []) if n.get("broad_managed")),
+        "imdsv2_optional_ec2": sum(1 for n in cd.get("ec2", {}).get("nodes", []) if n.get("imdsv2_required") is False),
+        "unencrypted_sns": sum(1 for n in cd.get("sns", {}).get("nodes", []) if n.get("kms_encrypted") is False),
+        "unmanaged_secrets": sum(1 for n in cd.get("secrets", {}).get("nodes", []) if n.get("drift_class") == "LIVE-no-DECLARED"),
+        "live_no_declared_total": drift.get("LIVE-no-DECLARED", 0),
+    }
+    return {
+        "node_total": sum(per_class.values()), "edge_total": len(edges), "untyped": untyped,
+        "per_class": per_class, "drift_distribution": dict(drift),
+        "edge_types": dict(Counter(e["edge_type"] for e in edges)),
+        "security_findings": findings,
+    }
+
+def _node_keys(graph):
+    return {n["arn"]: (cls, n) for cls, d in graph.get("classes_data", {}).items()
+            for n in d.get("nodes", []) if n.get("arn")}
+
+def _edge_keys(graph):
+    return {(e["source"], e["target"], e["edge_type"]): e for e in graph.get("edges", [])}
+
+def compute_diff(ga, gb):
+    """ga (prior) -> gb (current): node/edge add/remove/modify + metric deltas (graph_changes)."""
+    na, nb = _node_keys(ga), _node_keys(gb)
+    ea, eb = _edge_keys(ga), _edge_keys(gb)
+    nodes_added = sorted(set(nb) - set(na))
+    nodes_removed = sorted(set(na) - set(nb))
+    nodes_modified = sorted(k for k in (set(na) & set(nb))
+                            if na[k][1].get("drift_class") != nb[k][1].get("drift_class"))
+    ma, mb = compute_metrics(ga), compute_metrics(gb)
+    deltas = {}
+    for cls in set(ma["per_class"]) | set(mb["per_class"]):
+        d = mb["per_class"].get(cls, 0) - ma["per_class"].get(cls, 0)
+        if d:
+            deltas[cls] = f"{ma['per_class'].get(cls,0)}->{mb['per_class'].get(cls,0)} ({d:+d})"
+    fdeltas = {k: f"{ma['security_findings'].get(k,0)}->{v}"
+               for k, v in mb["security_findings"].items() if v != ma["security_findings"].get(k, 0)}
+    return {
+        "nodes_added": nodes_added, "nodes_removed": nodes_removed, "nodes_modified": nodes_modified,
+        "edges_added": len(set(eb) - set(ea)), "edges_removed": len(set(ea) - set(eb)),
+        "class_count_deltas": deltas, "security_finding_deltas": fdeltas,
+    }
+
+def cmd_metrics(args):
+    graph = json.load(open(args.graph)) if args.graph else cmd_derive(argparse.Namespace(cls=None, out=None))
+    print(json.dumps(compute_metrics(graph), indent=2, default=str))
+
+def cmd_diff(args):
+    ga = json.load(open(args.prior))
+    gb = json.load(open(args.current))
+    print(json.dumps(compute_diff(ga, gb), indent=2, default=str))
+
+# ---------------------------------------------------------------------------
 # SCORE -- P/R/F1 vs certified oracle.  Oracle = ground truth.
 # ---------------------------------------------------------------------------
 def _load_yaml(p):
@@ -1174,6 +1245,13 @@ def main():
     sn.add_argument("--stamp")
     sn.add_argument("--no-s3", action="store_true", dest="no_s3")
     sn.set_defaults(fn=cmd_snapshot)
+    m = sub.add_parser("metrics")
+    m.add_argument("--graph")
+    m.set_defaults(fn=cmd_metrics)
+    df = sub.add_parser("diff")
+    df.add_argument("prior")
+    df.add_argument("current")
+    df.set_defaults(fn=cmd_diff)
     c = sub.add_parser("classes")
     c.set_defaults(fn=cmd_classes)
     args = ap.parse_args()
