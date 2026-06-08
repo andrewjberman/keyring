@@ -1,0 +1,118 @@
+# ADHC_CMPAWS Phase-1 — Eventing (EventBridge) Hand-Audit Oracle Fixture
+# Author: 3.0.0_SA_CVO · Date: 2026-06-08
+# Class: EVENTING (EventBridge rules + targets). NEXT class after certified S3 + IAM/EC2.
+# Status: DRAFT-SCAFFOLD v0.1 — ready for AE live cross-check + the eventing sub-compiler build.
+# Folds the D4 edge-taxonomy CTO ruled (pairwise EMITS_TO fan-out + EVENT_RULE node + STARTS edge).
+# Cert target: the F1 done-gate (org/tier1_exec/3.0.0_SA_CVO/CMPAWS_F1_CERT_METHODOLOGY.md).
+
+meta:
+  fixture_version: "0.1"
+  phase: "Phase 1 — eventing hand-audit oracle"
+  tf_commit_at_audit: "post-7a0cbb31c"
+  cvo_author: "3.0.0_SA_CVO"
+  provenance_method: "DECLARED side = UNION of `terraform show -json` across ALL discovered root-module states, ARN-matched (CTO invariant 142141Z; NOT grep). A rule is LIVE-no-DECLARED only if absent from that union AND all HCL configs."
+  live_pull: "aws events list-rules / list-targets-by-rule, default bus, 2026-06-08 ~15:11Z"
+
+# =============================================================================
+# SCHEMA (extends the S3/IAM-EC2 pattern; D4-ruled edges)
+# =============================================================================
+schema:
+  nodes:
+    - EVENT_RULE   # name, bus, state(ENABLED|DISABLED), rule_type(SCHEDULED|EVENT_PATTERN), schedule_expr|event_pattern, owning_tf_module, tf_managed
+  edges:
+    - "EVENT_RULE -[TRIGGERS]-> {LAMBDA|EC2_INSTANCE|SNS_TOPIC|SQS_QUEUE|STEP_FN|SSM}"   # rule fires its target
+    - "{S3_BUCKET|EC2_INSTANCE|SERVICE} -[EMITS_TO]-> EVENT_RULE"                          # event-source -> rule (pairwise; source out-degree = fan-out, per D4)
+    - "{LAMBDA|IAM_ROLE} -[STARTS]-> EC2_INSTANCE"                                         # compute-lifecycle-control (D4; ec2:StartInstances), where a rule's Lambda target starts an instance
+  rule_type_total_typing: "every rule is EXACTLY one of SCHEDULED (ScheduleExpression set) or EVENT_PATTERN (EventPattern set). No untyped catchall (0-untyped is a hard cert gate)."
+
+# =============================================================================
+# ENUMERATION (live, default bus)
+# =============================================================================
+summary_counts:
+  total_rules: 92
+  enabled: 82
+  disabled: 10
+  scheduled: 85    # cron(...) or rate(...)
+  event_pattern: 7 # ScheduleExpression == None
+  event_bus: "default (single bus; AE confirm no custom buses)"
+
+# =============================================================================
+# EVENT-PATTERN RULES — the relationship-dense subgraph (FULLY hand-audited; D4 lives here)
+# =============================================================================
+event_pattern_rules:
+  - rule: inf-silver-chain-bronze-complete
+    target: "LAMBDA:inf-silver-chain"
+    source: "S3:opal-data-inf (bronze/orion-api/*/_BRONZE_COMPLETE.json ObjectCreated)"
+    tf: "inf-pipeline (inf-silver-chain.tf)"  # DECLARED
+    edges: ["opal-data-inf -[EMITS_TO]-> inf-silver-chain-bronze-complete", "inf-silver-chain-bronze-complete -[TRIGGERS]-> LAMBDA:inf-silver-chain"]
+    note: "D4 pair member. opal-data-inf has out-degree 2 on EMITS_TO (this + inf-assets-trigger) — fan-out via source out-degree (CTO ruling)."
+  - rule: inf-assets-trigger-bronze-complete
+    target: "LAMBDA:inf-assets-trigger"
+    source: "S3:opal-data-inf (bronze/orion-api/*/_BRONZE_COMPLETE.json ObjectCreated)"
+    tf: "inf-pipeline/inf-assets-trigger.tf"  # DECLARED (CTO local-confirmed; was a fixture grep-miss in S3 oracle, now corrected)
+    edges:
+      - "opal-data-inf -[EMITS_TO]-> inf-assets-trigger-bronze-complete"
+      - "inf-assets-trigger-bronze-complete -[TRIGGERS]-> LAMBDA:inf-assets-trigger"
+      - "LAMBDA:inf-assets-trigger -[STARTS]-> EC2:i-0ed5afded2ebd4ed4 (inf-gold-layer-runner)"   # D4 STARTS edge (ec2:StartInstances, assets_v2 silver)
+    note: "D4 full 3-edge chain EMITS_TO->TRIGGERS->STARTS, all DECLARED. The STARTS edge is the compute-lifecycle-control family CTO ruled."
+  - rule: inf-otp-state-change
+    target: "LAMBDA:inf-otp-relay"
+    source: "(state-change event; AE confirm exact pattern — likely OTP table/stream or a custom event)"
+    tf: "inf-pipeline (AE confirm)"
+    edges: ["<source> -[EMITS_TO]-> inf-otp-state-change", "inf-otp-state-change -[TRIGGERS]-> LAMBDA:inf-otp-relay"]
+  - rule: opal-inf-ec2-state-change-monitor
+    target: "LAMBDA:inf-ec2-launch-monitor"
+    source: "EC2 instance-state-change event (aws.ec2)"
+    tf: "inf-pipeline (AE confirm)"
+    edges: ["EC2-state-change -[EMITS_TO]-> opal-inf-ec2-state-change-monitor", "opal-inf-ec2-state-change-monitor -[TRIGGERS]-> LAMBDA:inf-ec2-launch-monitor"]
+  - rule: exec-summary-trigger
+    target: "LAMBDA:exec-summary-generator"
+    source: "(AE confirm event pattern)"
+    tf: "exec-summary (AE confirm)"
+  - rule: FIRMSEP-s3-direct-access-bypass
+    target: "SNS:opal-infrastructure-alerts"
+    source: "(S3 data-access / CloudTrail event — a FIRMSEP security guardrail alert)"
+    tf: "(AE confirm — possibly shared-infra/security)"
+    edges: ["<source> -[EMITS_TO]-> FIRMSEP-s3-direct-access-bypass", "FIRMSEP-s3-direct-access-bypass -[TRIGGERS]-> SNS:opal-infrastructure-alerts"]
+  - rule: moltbot-ssm-sendcommand-alert
+    target: "SNS:opal-infrastructure-alerts"
+    source: "(SSM SendCommand / CloudTrail event)"
+    tf: "(AE confirm)"
+    note: "ORPHAN-CANDIDATE: moltbot EC2 was decommissioned (i-0b784d49) + MoltbotEC2Role orphaned (IAM/EC2 oracle disposition). This alert RULE persists too — same expected-vs-drift teardown-completeness question. Flag with the moltbot disposition to COO/Andrew."
+
+# =============================================================================
+# SCHEDULED RULES (85) — cron/rate -> target. SET enumerated; per-rule target+provenance = AE cross-check.
+# =============================================================================
+scheduled_rules_notes:
+  mdpf_cadence_callout: "mdpf-daily-refresh-trigger = cron(0 15 ? * MON-FRI *) -> the MDPF runner. This is the EXACT rule the Andrew-sovereign MDPF_CADENCE directive changes (sync to the spine cadence). The eventing oracle will need re-cert after that schedule_expression change lands."
+  bus: "all 85 on the default bus"
+  enrichment_gap: "the 85 scheduled rules' TARGET edges (rule -> Lambda/EC2-start/SNS) + per-rule tf_managed provenance are the bulk AE cross-check deliverable (EV-GAP-2). Schedule expressions captured live this pull."
+  observed_examples: "mdpf-daily-refresh-trigger, mdpf-freshness-check-trigger, the bd-*-pipeline-trigger family (MON-FRI staggered), inf-*-daily family (~12:xx UTC), fred-ingestion-*, news-api-* (multi-fire), ec2-auto-shutdown-enforcer (rate 5min), ec2-runtime-monitor (rate 15min)."
+
+eventing_cataloged_findings_HELD:   # catalog, not remediation
+  disabled_rules:   # 10 — record (disabled != deleted; an intentionally-off rule is a valid state, not drift)
+    [bd-gold-layer-monthly-trigger, keyword-drilldown-generator-daily, keyword-intelligence-generator-daily,
+     layer3-gpt-curation-daily, news-api-1100am, smartx-daily-export-trigger,
+     trending-topics-portal-publisher-afternoon, trending-topics-portal-publisher-daily,
+     trending-topics-portal-publisher-morning, ycharts-session-capture-schedule]
+  note: "smartx-daily-export-trigger DISABLED is consistent with the R5 smartx decommission (Andrew HOLD). The trending-topics/keyword/layer3-gpt cluster = the disabled content pipelines. Each disabled rule = a deliberate-off vs drift question for COO, NOT a CVO call."
+
+# =============================================================================
+# ORACLE GAPS (AE eventing cross-check — the D-list targets)
+# =============================================================================
+oracle_gaps:
+  - {id: EV-GAP-1, sev: P1, owner: AE, desc: "Confirm the 7 event-pattern rules' exact EventPattern source (esp inf-otp-state-change, exec-summary-trigger, FIRMSEP, moltbot-ssm) so each EMITS_TO source node is typed (S3 vs EC2-state vs CloudTrail/service)."}
+  - {id: EV-GAP-2, sev: P1, owner: AE, desc: "Enumerate all 85 scheduled rules' TARGET edges (rule -> Lambda/EC2-start/SNS/SQS/StepFn) via list-targets-by-rule, to complete the TRIGGERS edge set."}
+  - {id: EV-GAP-3, sev: P1, owner: AE, desc: "Provenance per rule via terraform-show-json UNION across all root-module states (CTO invariant) — classify each of the 92 as DECLARED vs LIVE-no-DECLARED. Expect most DECLARED (per-pipeline TF); surface any shadow rules."}
+  - {id: EV-GAP-4, sev: P2, owner: AE, desc: "Confirm single default bus (no custom EventBuses) + 0 archives/replays in scope, OR enumerate them as nodes."}
+  - {id: EV-GAP-5, sev: P2, owner: "CVO+COO", desc: "moltbot-ssm-sendcommand-alert orphan-candidate: does it persist by design or is it teardown-residue (pairs with MoltbotEC2Role + the moltbot EC2 removal)? Disposition with the moltbot question."}
+
+summary:
+  event_rule_nodes: 92
+  event_pattern_fully_audited: 7
+  scheduled_enumerated: 85
+  d4_chain_folded: "inf-assets-trigger 3-edge EMITS_TO->TRIGGERS->STARTS + inf-silver-chain pair (opal-data-inf out-degree 2)"
+  oracle_gaps: 5
+  fixture_status: "DRAFT-SCAFFOLD v0.1 — 92 rules enumerated + classified (85 sched / 7 event-pattern); event-pattern subgraph (incl D4) fully hand-audited; scheduled targets + per-rule provenance = AE cross-check (EV-GAP-1..3). Ready for AE eventing-compiler build + cross-check -> CVO D-list adjudicate -> certify -> F1-measure vs the done-gate. Catalog-only."
+
+# — 3.0.0_SA_CVO
