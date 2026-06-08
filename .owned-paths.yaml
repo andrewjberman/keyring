@@ -718,6 +718,10 @@ paths:
     lane: ANY_EXEC_OR_AE
     note: "Compiler tool regression fixtures paired with comp_*.py / extract_*.py implementations. AE authors per ADHC_COMPIL_V4 family (024 comp-iam FP-elimination test 2026-05-08)."
 
+  "org/modules/graph/aws-shapes/**":
+    lane: ANY_EXEC_OR_AE
+    note: "ADHC_CMPAWS AWS-shape hand-audit fixtures + live-AWS cross-check records (s3-hand-audit-fixture-*.yaml, s3-live-aws-crosscheck-*.md). Co-owned: ws CTO design/schema, 0.7.0_AE live-AWS cross-check (the *-AE.md records), 3.0.0_SA_CVO hand-audit/certify. Was falling through to org/modules/** ANY_EXEC (which excludes AE), stranding AE's crosscheck record (RV-0030 F-003 — exec-record-path enumeration gap; AE base not in ANY_EXEC at all, so the tilde base-fallback can't reach it). Added 2026-06-08 by ws CTO. Longest-match overrides org/modules/** ANY_EXEC."
+
   "org/modules/**":
     lane: ANY_EXEC
 

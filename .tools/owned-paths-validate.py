@@ -87,7 +87,28 @@ def check_agent(agent: str, path: str, lanes: dict[str, Any],
 
     if isinstance(permitted, list):
         agent_norm = _normalize_serial(agent)
-        return any(_normalize_serial(p) == agent_norm for p in permitted)
+        permitted_norm = {_normalize_serial(p) for p in permitted}
+        if agent_norm in permitted_norm:
+            return True
+        # RV-0030 F-003 (2026-06-08, ws CTO): tilde/underscore lane-suffix
+        # auto-permit. A spawned work lane (e.g. 0.4.0_DE_ClientPlatform~A ->
+        # normalized 0.4.0_DE_ClientPlatform_A) is the SAME agent identity as its
+        # base serial, so it is permitted wherever the base serial is enumerated.
+        # This eliminates the recurring per-session "lane X blocked on its own
+        # home-folder logs/**" BLOCK class without unbounded per-lane YAML adds.
+        # SAFE BY CONSTRUCTION:
+        #   - additive-only: consulted solely AFTER exact match fails, so it can
+        #     never REVOKE a previously-allowed commit;
+        #   - grants only to a genuine lane of an already-permitted base: enumerated
+        #     entries are always full serials, so the stripped form (drop one
+        #     trailing _<alnum> lane segment) can equal an enumerated entry ONLY
+        #     when the committer is literally <that-base>~<lane> -- no cross-agent
+        #     leak (a true base serial strips to a non-serial like 0.4.0_DE that
+        #     matches nothing).
+        agent_base = re.sub(r"_[A-Za-z0-9]+$", "", agent_norm)
+        if agent_base != agent_norm and agent_base in permitted_norm:
+            return True
+        return False
 
     return False
 
