@@ -38,7 +38,7 @@ from org.modules.graph.extract_pipeline import (  # noqa: E402
     _parse_dispatch, _parse_orion_dispatch,
 )
 
-_PIPELINE_CHOICES = ("bd-gold", "inf-gold", "bd-silver", "inf-silver", "inf-manual-api", "all", "bd", "inf")
+_PIPELINE_CHOICES = ("bd-gold", "inf-gold", "bd-silver", "inf-silver", "inf-manual-api", "mdpf", "all", "bd", "inf")
 
 
 def _build_dag(pipeline: str = "bd-gold"):
@@ -1403,8 +1403,13 @@ def cmd_deployed(args):
       (runner key read from EC2_MANIFEST.json: inf-gold-layer-runner).
     --pipeline bd-silver: BD silver scripts only.
     --pipeline inf-silver: INF silver scripts vs opal-data-inf/code/silver/.
+    --pipeline mdpf: MDPF scripts (gold + backfill + feeders + bronze) vs
+      s3://opal-data-mdpf/code/scripts/<layer>/ (ADHC_DEPINT widen 2026-06-08 --
+      closes the opal-data-bd-only blind spot that hid the stale MDPF rollup
+      behind the MDPF_COUNTS incident). MDPF preserves scripts/<layer>/ under
+      code/, a different layout than BD/INF; enumerated by directory glob (no DAG).
 
-    Output is prefixed [bd-gold] / [inf-gold] / [bd-silver] / [inf-silver].
+    Output is prefixed [bd-gold] / [inf-gold] / [bd-silver] / [inf-silver] / [mdpf:<layer>].
     Uses S3 ETag (MD5) comparison."""
     import hashlib
     import shutil
@@ -1430,6 +1435,14 @@ def cmd_deployed(args):
     # INF pipeline overrides
     if pipeline in ("inf-gold", "inf-silver"):
         S3_BUCKET = "opal-data-inf"
+
+    # MDPF pipeline override (ADHC_DEPINT widen 2026-06-08): MDPF deploys to a
+    # DIFFERENT layout -- s3://opal-data-mdpf/code/scripts/<layer>/ (it preserves
+    # the scripts/<layer>/ subpath), unlike BD (code/{gold,silver}/) and INF. The
+    # stale build_aggregate_aua_timeseries.py at code/scripts/backfill/ caused the
+    # MDPF_COUNTS incident because comp-pipescript deployed was opal-data-bd-only.
+    if pipeline == "mdpf":
+        S3_BUCKET = "opal-data-mdpf"
 
     # Resolve aws CLI once, full path -- avoids subprocess PATH-loss on some shells.
     aws_bin = shutil.which("aws") or shutil.which("aws.cmd") or shutil.which("aws.exe")
@@ -1504,6 +1517,9 @@ def cmd_deployed(args):
         inf_instance = inf_svc.get("instance_id", "unknown")
         print("DEPLOYED STATUS [inf-gold]: local repo vs s3://opal-data-inf/code/gold/")
         print(f"  Runner: inf-gold-layer-runner ({inf_instance})")
+    elif pipeline == "mdpf":
+        print("DEPLOYED STATUS [mdpf]: local repo vs s3://opal-data-mdpf/code/scripts/{gold,backfill,feeders,bronze}/")
+        print("  Runner: mdpf-daily-runner")
     elif pipeline in ("bd-silver", "inf-silver"):
         print(f"DEPLOYED STATUS [{pipeline}]: local repo vs s3://{S3_BUCKET}/code/silver/")
     else:
@@ -1518,9 +1534,41 @@ def cmd_deployed(args):
     # Default True = "gold was skipped"; bd-gold and inf-gold branches flip to False.
     skip_gold = True
 
-    # ---- GOLD layer (DAG-driven) ----
+    # ---- GOLD layer (DAG-driven for BD/INF; directory-glob for MDPF) ----
     # For non-BD pipelines, skip BD gold entirely unless pipeline == "bd-gold" (default)
-    if pipeline in ("inf-gold",):
+    if pipeline == "mdpf":
+        # MDPF has no comp-graph DAG -> enumerate the deployed script layers directly.
+        # Layout: data/mdpf/scripts/<layer>/X.py -> s3://opal-data-mdpf/code/scripts/<layer>/X.py
+        skip_gold = False
+        _mdpf_root = _WORKSPACE / "data" / "mdpf" / "scripts"
+        for _layer in ("gold", "backfill", "feeders", "bronze"):
+            _ldir = _mdpf_root / _layer
+            if not _ldir.is_dir():
+                continue
+            for p in sorted(_ldir.glob("*.py")):
+                if p.name.startswith("__") or p.name.endswith("_fixtures.py"):
+                    continue
+                if script_filter_lower and script_filter_lower not in p.stem.lower():
+                    continue
+                label = f"[mdpf:{_layer}] {p.name}"
+                checked_any = True
+                status, extras = _check_one("mdpf", label, p, f"code/scripts/{_layer}/{p.name}")
+                print(f"  [mdpf:{_layer}] {p.name:<44} {status:<14}")
+                for line in extras:
+                    print(f"             {line}")
+                if status == "MATCH":
+                    matched.append(label)
+                elif status == "STALE":
+                    stale.append(label)
+                elif status == "MISSING_ON_S3":
+                    missing_s3.append(label)
+                elif status == "LOCAL_MISSING":
+                    local_missing.append(label)
+                elif status == "TIMEOUT":
+                    timed_out.append(label)
+                elif status == "AWS_UNREACHABLE":
+                    aws_unreach.append(label)
+    elif pipeline in ("inf-gold",):
         # INF gold: check against opal-data-inf/code/gold/
         inf_dag = _build_dag("inf-gold")
         inf_candidates = sorted(inf_dag.scripts.items(), key=lambda x: x[1].run_order)
@@ -1585,8 +1633,11 @@ def cmd_deployed(args):
                     aws_unreach.append(label)
 
     # ---- SILVER layer (directory-walk-driven) ----
+    # MDPF handles all its layers (gold/backfill/feeders/bronze) in the gold-section
+    # branch above; it has no separate silver dir, and SILVER_LOCAL_DIR would wrongly
+    # point at BD silver for the mdpf pipeline -- so skip the silver section for mdpf.
     silver_files = []
-    if SILVER_LOCAL_DIR.is_dir():
+    if pipeline != "mdpf" and SILVER_LOCAL_DIR.is_dir():
         for p in sorted(SILVER_LOCAL_DIR.glob("*.py")):
             if p.name.startswith("__"):
                 continue
