@@ -326,11 +326,13 @@ def live_eventbridge():
     return nodes
 
 def classify_event_source(rule):
-    """sec 3.3 determination: return (source_kind, service_or_api, detail_type, pinned_resource_arn|None).
-    Deterministic from the event_pattern; SCHEDULED if no pattern + a schedule."""
+    """sec 3.3 determination: return (source_kind, service_or_api, detail_type, [pinned_resource_arns]).
+    The pinned list is EMPTY for non-resource-bound origins (the rule gets an EVENT_SOURCE node);
+    for a resource-bound pattern it holds ONE arn PER pinned resource-id (EV-EDGE-1: a pattern pinning
+    N ids -> N EMITS_TO edges, the D4 fan-out on the source side). SCHEDULED if no pattern + a schedule."""
     pat = rule.get("event_pattern")
     if not pat:
-        return ("SCHEDULED", rule.get("schedule") or "rate", None, None)
+        return ("SCHEDULED", rule.get("schedule") or "rate", None, [])
     srcs = pat.get("source") or []
     dts = pat.get("detail-type") or []
     detail = pat.get("detail") or {}
@@ -341,22 +343,23 @@ def classify_event_source(rule):
         if isinstance(detail, dict):
             ev = detail.get("eventName") or detail.get("eventSource")
             api = (ev[0] if isinstance(ev, list) else ev) if ev else None
-        return ("CLOUDTRAIL_API", api or "api", detail_type, None)
-    # resource-pinned (S3 bucket / EC2 instance)
+        return ("CLOUDTRAIL_API", api or "api", detail_type, [])
+    # resource-pinned (S3 bucket(s) / EC2 instance(s)) -- ALL pinned ids (EV-EDGE-1)
     if isinstance(detail, dict):
         bn = (((detail.get("bucket") or {}).get("name")) if isinstance(detail.get("bucket"), dict) else None)
         if bn:
-            b = bn[0] if isinstance(bn, list) else bn
-            return ("RESOURCE", "aws.s3", detail_type, f"arn:aws:s3:::{b}")
+            blist = bn if isinstance(bn, list) else [bn]
+            return ("RESOURCE", "aws.s3", detail_type, [f"arn:aws:s3:::{b}" for b in blist])
         iid = detail.get("instance-id")
         if iid:
-            i = iid[0] if isinstance(iid, list) else iid
-            return ("RESOURCE", "aws.ec2", detail_type, f"arn:aws:ec2:us-east-1:{ACCOUNT}:instance/{i}")
+            ilist = iid if isinstance(iid, list) else [iid]
+            return ("RESOURCE", "aws.ec2", detail_type,
+                    [f"arn:aws:ec2:us-east-1:{ACCOUNT}:instance/{i}" for i in ilist])
     # AWS service-scoped (non-pinned) vs CUSTOM
     src = srcs[0] if isinstance(srcs, list) and srcs else (srcs if isinstance(srcs, str) else None)
     if src and str(src).startswith("aws."):
-        return ("AWS_SERVICE", src, detail_type, None)
-    return ("CUSTOM", src or "custom", detail_type, None)
+        return ("AWS_SERVICE", src, detail_type, [])
+    return ("CUSTOM", src or "custom", detail_type, [])
 
 def live_sns():
     nodes = []
@@ -686,8 +689,9 @@ def derive_edges():
             rarn = r.get("arn")
             # EMITS_TO (origin)
             kind, svc, dt, pinned = classify_event_source(r)
-            if pinned:
-                E(pinned, rarn, "EMITS_TO")
+            if pinned:  # one EMITS_TO per pinned resource-id (EV-EDGE-1 D4 source-side fan-out)
+                for parn in pinned:
+                    E(parn, rarn, "EMITS_TO")
             else:
                 es_arn = f"event-source::{kind}::{svc}"
                 E(es_arn, rarn, "EMITS_TO")
