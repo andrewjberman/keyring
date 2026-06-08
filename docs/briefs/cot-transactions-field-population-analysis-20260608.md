@@ -2,7 +2,7 @@
 
 **Author:** 0.4.0_DS_ClientPlatform
 **Date:** 2026-06-08
-**Project (proposed):** ADVI_CCAETL
+**Project (proposed):** ADVI_COTETL
 **Source artifact:** `C:\Users\AndrewBerman\Downloads\CW_Transactions_Rich (1).xlsx`
 **Companion:** Brief 1 (HAR auth/API) — this export is the output of the DataMining `queryTypeId=2` (Transactions) template documented there.
 

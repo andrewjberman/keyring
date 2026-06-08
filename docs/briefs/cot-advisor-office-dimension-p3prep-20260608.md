@@ -2,7 +2,7 @@
 
 **Author:** 0.4.0_DS_ClientPlatform
 **Date:** 2026-06-08
-**Project:** ADVI_CCAETL (P3-prep)
+**Project:** ADVI_COTETL (P3-prep)
 **Companions:** Brief 1 (HAR/API), Brief 2 (field population §6.1 flag), Brief 3 (medallion port §5.1)
 **Purpose:** Scope what a COT `office_mapping`/advisor-dimension equivalent needs, and sharpen the §6.1 advisor-gap open-decision into a concrete, empirically-grounded question for Andrew. **Per COO: do NOT build the C_07 COT variant until Andrew rules §6.1.**
 

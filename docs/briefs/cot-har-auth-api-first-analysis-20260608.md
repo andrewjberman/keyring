@@ -2,7 +2,7 @@
 
 **Author:** 0.4.0_DS_ClientPlatform
 **Date:** 2026-06-08
-**Project (proposed):** ADVI_CCAETL
+**Project (proposed):** ADVI_COTETL
 **Source artifact:** `C:\Users\AndrewBerman\Downloads\bd3.bdreporting.com.har` (338 entries, capture of a full login → DataMining template build → run → export session)
 **Governing standard:** `docs/architecture/THIRD_PARTY_DATA_INTEGRATION_STANDARD.md` (RATIFIED 2026-05-20) — *"we do not scrape, we reverse engineer."*
 

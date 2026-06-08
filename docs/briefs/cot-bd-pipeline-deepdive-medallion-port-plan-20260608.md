@@ -2,7 +2,7 @@
 
 **Author:** 0.4.0_DS_ClientPlatform
 **Date:** 2026-06-08
-**Project (proposed):** ADVI_CCAETL
+**Project (proposed):** ADVI_COTETL
 **Companions:** Brief 1 (HAR auth / DataMining API), Brief 2 (COT transactions field population)
 **Subject pipeline:** bd-pipeline (49 Financial), gold runner `bd-gold-layer-runner` (`i-01003b035d2988dfb`), data plane `s3://opal-data-bd`
 
@@ -151,4 +151,4 @@ The **manually-built `CW_Transactions_Rich` export is the bronze ground-truth or
 
 ## 6. Bottom line
 
-bd-pipeline is a mature, well-structured medallion that ports to Cottonwood as a **per-partner instantiation of shared, parameterized code over an isolated data plane** (Model B). Silver and platinum are near-free (firm-agnostic / already env-parameterized); gold ports with a small FIRM_ID de-hardcoding PR plus a firm-specific config rebuild (advisor/office mapping); bronze is the one genuinely new build — the API-first ingest of Brief 1, owned by AE `0.6.2_AE_PartnerETL`. The largest open scope question is whether COT carries a usable advisor dimension at all (§5.1). Recommend the CTO instantiate PRD **ADVI_CCAETL** structured on the P0–P5 phasing in §4.1, with §5 as the named risk register.
+bd-pipeline is a mature, well-structured medallion that ports to Cottonwood as a **per-partner instantiation of shared, parameterized code over an isolated data plane** (Model B). Silver and platinum are near-free (firm-agnostic / already env-parameterized); gold ports with a small FIRM_ID de-hardcoding PR plus a firm-specific config rebuild (advisor/office mapping); bronze is the one genuinely new build — the API-first ingest of Brief 1, owned by AE `0.6.2_AE_PartnerETL`. The largest open scope question is whether COT carries a usable advisor dimension at all (§5.1). Recommend the CTO instantiate PRD **ADVI_COTETL** structured on the P0–P5 phasing in §4.1, with §5 as the named risk register.

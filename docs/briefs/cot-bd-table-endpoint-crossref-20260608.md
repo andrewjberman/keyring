@@ -1,6 +1,6 @@
 # COT (Cottonwood) — 49F BD Table ↔ DataMining Endpoint Cross-Reference (interim)
 
-**Author:** 0.4.0_DS_ClientPlatform · **Date:** 2026-06-08 · **Project:** ADVI_CCAETL
+**Author:** 0.4.0_DS_ClientPlatform · **Date:** 2026-06-08 · **Project:** ADVI_COTETL
 **Status:** COMPLETE — all 5 BD query types empirically confirmed. qt=2 from HAR-1; qt=1/3/4/5 from HAR-2 (`bd3.bdreporting.com2.har`, Andrew-captured 2026-06-08, incl. his `CW_Allocation` template build).
 **Companions:** Brief 1 (DataMining API contract), Brief 3 (medallion port).
 
