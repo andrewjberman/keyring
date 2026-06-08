@@ -797,6 +797,7 @@ def derive_edges():
     _res_set |= {x["arn"] for x in live_sns() if x.get("arn")}
     _res_set |= {f"arn:aws:s3:::{x['id']}" for x in live_s3()}
     _res_set |= {x["arn"] for x in live_log_groups() if x.get("arn")}
+    _res_set |= {x["arn"] for x in live_cloudfront() if x.get("arn")}
 
     def _dim_arn(name, val):
         return {
@@ -807,6 +808,7 @@ def derive_edges():
             "TopicName": f"arn:aws:sns:us-east-1:{ACCOUNT}:{val}",
             "BucketName": f"arn:aws:s3:::{val}",
             "LogGroupName": f"arn:aws:logs:us-east-1:{ACCOUNT}:log-group:{val}",
+            "DistributionId": f"arn:aws:cloudfront::{ACCOUNT}:distribution/{val}",
         }.get(name)
 
     for n in live_cloudwatch_alarms():
