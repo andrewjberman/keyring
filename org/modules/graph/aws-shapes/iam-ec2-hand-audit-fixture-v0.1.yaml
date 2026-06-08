@@ -1,0 +1,159 @@
+# ADHC_CMPAWS Phase-1 — IAM/EC2 Hand-Audit Oracle Fixture
+# Author: 3.0.0_SA_CVO
+# Date: 2026-06-08
+# Schema: AE-agreed 2026-06-08T1342Z (CTO-pattern-consistent, extends the certified S3 schema).
+# Status: DRAFT-SCAFFOLD v0.1 — ready for AE live-AWS cross-check (AE fresh 06-08 censuses in
+#         .runtmp/cmpaws_iamec2_xcheck/{iam-axis-census,compute-census}-20260608.json).
+#
+# SCOPE (COO DRIVE 133720Z): inventory catalog + diff certification, NOT security remediation.
+#   Over-perm roles, IMDSv2-optional EC2, unencrypted SNS are CATALOGED-AS-FINDINGS and HELD for
+#   Andrew security steer — the oracle TYPES + RECORDS them; it does not gate or remediate.
+#
+# CERT MODEL (same as the certified S3 oracle, now v1.5): CVO hand-audit (TF/source = DECLARED
+#   baseline) vs AE live-AWS pull (LIVE) -> diff -> drift classes -> adjudicate -> 0-diff -> certify.
+#   IAM per-role STATEMENT BODIES are carried by AE's census (111 roles, comp-iam reconcile-contract
+#   shape); this oracle asserts the role SET + tf-provenance classes + the named exceptions, and the
+#   cross-check diffs statement bodies. EC2 (bounded) is hand-audited in full below.
+
+meta:
+  fixture_version: "0.1"
+  phase: "Phase 1 — IAM/EC2 hand-audit oracle (next class after certified S3 v1.5)"
+  tf_commit_at_audit: "267d5d40e"
+  cvo_author: "3.0.0_SA_CVO"
+  schema_ref: "ADHC_CMPAWS PRD docs/briefs/comp-aws-comprehensive-cloud-compiler-prd-20260601.md"
+  schema_handshake: "AE-agreed 20260608T1342Z"
+  live_feed: ".runtmp/cmpaws_iamec2_xcheck/{iam-axis-census,compute-census}-20260608.json (AE, fresh 06-08; tf-recon to be restored in enriched pull)"
+  prior_census: "docs/briefs/cmpaws-iam-axis-census-20260603.json (de474e6d9) + cmpaws-compute-census-20260603.json (b9d04e3fa) — AE 06-03 enumeration; the 92-managed/19-shadow tf split + 3 overperm baseline stands."
+
+# =============================================================================
+# NODE / EDGE SCHEMA (AE-agreed)
+# =============================================================================
+schema:
+  nodes:
+    - IAM_ROLE          # role_name, role_arn, tf_managed, owner_pipeline, statement_count, overperm_flags
+    - IAM_POLICY        # managed (ARN) | inline (name); attached-to role
+    - INSTANCE_PROFILE  # name; wraps one IAM_ROLE
+    - EC2_INSTANCE      # instance_id, name, instance_type, instance_profile, imdsv2_enforced, ebs_encrypted, public_ip, owner_pipeline, tf_managed
+  edges:
+    - "EC2_INSTANCE -[HAS_PROFILE]-> INSTANCE_PROFILE"
+    - "INSTANCE_PROFILE -[ASSUMES]-> IAM_ROLE"
+    - "IAM_ROLE -[HAS_POLICY]-> IAM_POLICY"
+    - "IAM_POLICY -[GRANTS]-> {resource}"      # S3/Dynamo/Secrets/KMS/ECR/* — the grant set
+    - "{LAMBDA|IAM_ROLE} -[STARTS]-> EC2_INSTANCE"   # compute-lifecycle-control family (CTO-ruled in S3-v1.5 D4); ec2:StartInstances
+  drift_classes: [DECLARED, DECLARED-no-LIVE, LIVE-no-DECLARED, NO-PROVENANCE]
+
+# =============================================================================
+# EC2 — full hand-audit (bounded: 12 TF-declared + the live delta)
+# =============================================================================
+# TF-DECLARED baseline = 12 aws_instance resources (CVO TF grep, tf_commit 267d5d40e). ALL carry an
+# iam_instance_profile; ALL have http_tokens UNSET in TF (=> IMDSv2 not enforced at the TF layer —
+# consistent with AE's live finding that the IMDSv2-optional set is non-empty; cataloged, held).
+
+ec2_declared:   # DECLARED (TF aws_instance)
+  - {name: bd-allocations,            tf: bd-pipeline/ec2.tf,                profile: true, http_tokens_tf: UNSET, owner_pipeline: bd-pipeline}
+  - {name: bd-transactions,           tf: bd-pipeline/ec2.tf,                profile: true, http_tokens_tf: UNSET, owner_pipeline: bd-pipeline}
+  - {name: bd-fees,                   tf: bd-pipeline/ec2.tf,                profile: true, http_tokens_tf: UNSET, owner_pipeline: bd-pipeline}
+  - {name: bd-assets,                 tf: bd-pipeline/ec2.tf,                profile: true, http_tokens_tf: UNSET, owner_pipeline: bd-pipeline}
+  - {name: bd-gold-detail-generator,  tf: bd-pipeline/ec2.tf,                profile: true, http_tokens_tf: UNSET, owner_pipeline: bd-pipeline}
+  - {name: inf-gold-layer-runner,     tf: inf-pipeline/ec2.tf,               profile: true, http_tokens_tf: UNSET, owner_pipeline: inf-pipeline, note: "STARTS-edge target (S3-v1.5 D4): EventBridge inf-assets-trigger Lambda starts this for assets_v2 silver. AE 06-08: went stopped->running today = STARTS edge live-exercised."}
+  - {name: inf-exporter,              tf: inf-pipeline/ec2.tf,               profile: true, http_tokens_tf: UNSET, owner_pipeline: inf-pipeline}
+  - {name: inf-bronze-runner,         tf: inf-pipeline/inf-bronze-runner.tf, profile: true, http_tokens_tf: UNSET, owner_pipeline: inf-pipeline}
+  - {name: inf-gold-qa-runner,        tf: inf-pipeline/inf-gold-qa-runner.tf,profile: true, http_tokens_tf: UNSET, owner_pipeline: inf-pipeline}
+  - {name: mdpf-daily-runner,         tf: mdpf-pipeline/ec2.tf,              profile: true, http_tokens_tf: UNSET, owner_pipeline: mdpf-pipeline}
+  - {name: demo-transform-runner,     tf: shared-infra/demo-transform.tf,    profile: true, http_tokens_tf: UNSET, owner_pipeline: shared-infra, note: "AE 06-08: REMOVED from live (i-03343a60) — EXPECTED per R5 decommission 9bfd1c7b5. Oracle expects DECLARED-no-LIVE drift here; do NOT flag as a regression."}
+  - {name: smartx-exporter,           tf: smartx-pipeline/ec2.tf,            profile: true, http_tokens_tf: UNSET, owner_pipeline: smartx-pipeline}
+
+ec2_live_no_declared:   # LIVE-no-DECLARED candidates (live names absent from the 12 TF aws_instance set) — HIGH-VALUE unmanaged-compute class. AE to confirm none are launch-template/ASG-provenanced before final drift-class.
+  - {name: bd-gold-layer-runner,  note: "HIGH-VALUE: the c6i.16xlarge gold runner (~34% of monthly cloud bill per ops memory). Absent from bd-pipeline/ec2.tf — apparent LIVE-no-DECLARED. AE confirm: launch-template/manual? IMDSv2-optional (cataloged finding)."}
+  - {name: bd-gold-qa-runner,     note: "Absent from TF aws_instance set — apparent LIVE-no-DECLARED. IMDSv2-optional (cataloged finding)."}
+  - {name: seeking-alpha-scraper, note: "x2 live instances; absent from TF — apparent LIVE-no-DECLARED. IMDSv2-optional (cataloged finding). Role seeking-alpha-scraper-role is 1 of the 3 overperm roles."}
+  - {name: moltbot,               note: "AE 06-08: REMOVED from live (i-0b784d49); was the persistent Claude-Code agent host. PROVENANCE UNKNOWN (expected decommission vs drift) — AE to disposition. Absent from TF."}
+  - {name: historical-prices-fetcher, count: 8, note: "8-instance fleet (i-00abf.. i-0416e.. i-094c5.. i-025cb.. i-032fa.. i-0ec91.. i-088e7.. i-03c39..), all absent from TF aws_instance set — apparent LIVE-no-DECLARED fleet. AE confirm launch-template/spot-fleet provenance vs genuine unmanaged."}
+
+ec2_cataloged_findings_HELD:   # security lens — RECORDED not remediated (COO scope; Andrew steer)
+  imdsv2_optional: [seeking-alpha-scraper, bd-gold-layer-runner, bd-gold-qa-runner, smartx-exporter]   # 4 unique (AE 06-08, unchanged from 06-03)
+  ebs_encryption: "100% encrypted (all volumes) — GOOD, no finding"
+  public_ip: [bd-gold-layer-runner, smartx-exporter, demo-transform-runner(removed), inf-exporter]
+
+# =============================================================================
+# IAM — role SET + provenance classes + named exceptions (per-role bodies via census cross-check)
+# =============================================================================
+iam_roles:
+  customer_role_count: 111            # AE census (stable 111/111 across 06-03 -> 06-08)
+  tf_managed_declared: 92             # DECLARED (TF aws_iam_role)
+  live_no_declared_shadow: 19         # LIVE-no-DECLARED (live roles with no TF resource)
+  shadow_roles:                       # the 19 unmanaged — the LIVE-no-DECLARED IAM class (AE 06-03; AE to re-confirm tf-recon in enriched 06-08 pull, which produced null this run)
+    - bd-merge-daily-lambda-role
+    - bd-pipeline-task-role
+    - codebuild-semantic-clustering-role
+    - ecsTaskExecutionRole
+    - finbert-ec2-backfill-role
+    - github-actions-opal-deploy
+    - lambda-access-anomaly-scanner-role
+    - lambda-cost-anomaly-scanner-role
+    - lambda-ec2-runtime-monitor-role
+    - lambda-test-role
+    - opal-smartx-lambda-role
+    - portal-auth-lambda-role
+    - portfolio-management-lambda-role
+    - rds-monitoring-role
+    - schwab-anonymizer-lambda-role
+    - security-sweep-dedicated-role
+    - sentiment_query_api-role
+    - vpc-flow-logs-role
+    - workspace-sync-lambda-role
+
+iam_cataloged_findings_HELD:   # security lens — RECORDED not remediated (COO scope; Andrew steer)
+  overperm_roles:              # 3 over-broad EXECUTION roles (broad-managed + wildcard-action)
+    - {role: market-update-lambda-role, flags: ["broad-managed:AmazonDynamoDBFullAccess,AmazonS3FullAccess", "wildcard-action"], note: "broadest — account-wide S3+Dynamo read/write/DELETE"}
+    - {role: opal-news-lambda-role,      flags: ["broad-managed:AmazonDynamoDBFullAccess", "wildcard-action"]}
+    - {role: seeking-alpha-scraper-role, flags: ["broad-managed:AmazonEC2ContainerRegistryFullAccess", "wildcard-action"]}
+
+iam_statement_drift_watch:   # AE 06-03->06-08 self-diff flagged for statement-level cert (not yet a D-list item)
+  - {role: smartx-ingestion-lambda-role, change: "3 -> 4 statements (+1)", action: "statement-level declared-vs-live diff at cert"}
+  - {role: FredIngestionLambdaRole,      change: "content-changed, same count=5",    action: "statement-level declared-vs-live diff at cert"}
+
+# =============================================================================
+# ORACLE GAPS (for AE live-AWS cross-check — the D-list targets)
+# =============================================================================
+oracle_gaps:
+  - id: "IE-GAP-1"
+    severity: P1
+    owner: AE
+    description: "EC2 live-no-declared confirmation: are bd-gold-layer-runner, bd-gold-qa-runner, seeking-alpha-scraper(x2), the historical-prices-fetcher fleet(8), moltbot launch-template/ASG/spot-fleet-provenanced, or genuine LIVE-no-DECLARED (unmanaged) compute? Sets the drift-class for ~13 live instances. HIGH-VALUE (bd-gold-layer-runner = 34% of cloud bill)."
+  - id: "IE-GAP-2"
+    severity: P1
+    owner: AE
+    description: "EC2 shape enrichment to agreed schema: add instance_type + instance_profile (-> HAS_PROFILE/ASSUMES chain) + owner_pipeline + per-instance tf_managed to the live census."
+  - id: "IE-GAP-3"
+    severity: P1
+    owner: AE
+    description: "IAM tf-recon re-derive: the 06-08 gen produced tf_managed_count=null / roles_not_in_tf empty (TF-recon pass didn't fire). Restore it so DECLARED vs LIVE-no-DECLARED is derivable on the 06-08 set; confirm the 92/19 split holds."
+  - id: "IE-GAP-4"
+    severity: P1
+    owner: AE
+    description: "IAM per-role HAS_POLICY managed-vs-inline breakout: managed-policy ARNs are currently implicit in overperm_flags only; emit explicit attached managed-policy ARN list + inline-policy names per role for the HAS_POLICY edge set."
+  - id: "IE-GAP-5"
+    severity: P2
+    owner: AE
+    description: "INSTANCE_PROFILE -> ASSUMES -> IAM_ROLE edge: enumerate the instance-profile -> role mapping for the 12 declared (+ any live-no-declared) EC2 so the HAS_PROFILE/ASSUMES chain is complete."
+  - id: "IE-GAP-6"
+    severity: P2
+    owner: "AE + CVO"
+    description: "Statement-drift watch (smartx-ingestion 3->4, FredIngestion content-changed): statement-level declared(TF)-vs-live diff at cert to classify as TF-tracked update vs LIVE-no-DECLARED mutation."
+
+# =============================================================================
+# SUMMARY
+# =============================================================================
+summary:
+  ec2_tf_declared: 12
+  ec2_live: 23           # AE 06-08 (was 25 on 06-03; -demo-transform-runner[expected] -moltbot[provenance-pending])
+  ec2_apparent_live_no_declared: 13   # incl bd-gold-layer-runner + bd-gold-qa-runner + hpf fleet(8) + seeking-alpha(2) — AE IE-GAP-1 confirms
+  iam_roles: 111
+  iam_tf_declared: 92
+  iam_live_no_declared_shadow: 19
+  iam_overperm_held: 3
+  oracle_gaps: 6
+  fixture_status: "DRAFT-SCAFFOLD v0.1 — EC2 fully hand-audited (DECLARED set + live-no-declared delta + held findings); IAM asserted at SET + provenance-class + named-exception grain (per-role bodies via AE census cross-check). Ready for AE live diff -> D-list -> CVO adjudicate -> certify. NOT a security-remediation artifact (catalog only, findings held for Andrew)."
+
+# — 3.0.0_SA_CVO
