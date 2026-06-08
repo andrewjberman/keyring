@@ -729,6 +729,110 @@ def derive_edges():
             E(n.get("arn"), n["kms_key_arn"], "ENCRYPTS_WITH")
     return edges
 
+# action-prefix -> (verb, target_node_kind) for the derived data-access edge layer
+# (schema sec3.x: derived from role GRANTS; "intersect actual boto3 calls" is the
+# over-perm refinement, captured as edge provenance, not a gate).
+_ACTION_VERB = [
+    ("s3:get", "READS", "s3"), ("s3:list", "READS", "s3"), ("s3:head", "READS", "s3"),
+    ("s3:put", "WRITES", "s3"), ("s3:delete", "WRITES", "s3"), ("s3:*", "WRITES", "s3"),
+    ("dynamodb:get", "READS", "dynamodb"), ("dynamodb:query", "READS", "dynamodb"),
+    ("dynamodb:scan", "READS", "dynamodb"), ("dynamodb:batchget", "READS", "dynamodb"),
+    ("dynamodb:put", "WRITES", "dynamodb"), ("dynamodb:update", "WRITES", "dynamodb"),
+    ("dynamodb:delete", "WRITES", "dynamodb"), ("dynamodb:batchwrite", "WRITES", "dynamodb"),
+    ("dynamodb:*", "WRITES", "dynamodb"),
+    ("secretsmanager:getsecretvalue", "READS_SECRET", "secret"),
+    ("sns:publish", "PUBLISHES_TO", "sns"),
+    ("sqs:sendmessage", "SENDS_TO", "sqs"),
+    ("kms:decrypt", "ENCRYPTS_WITH", "kms"), ("kms:encrypt", "ENCRYPTS_WITH", "kms"),
+    ("kms:generatedatakey", "ENCRYPTS_WITH", "kms"), ("kms:creategrant", "ENCRYPTS_WITH", "kms"),
+    ("logs:putlogevents", "LOGS_TO", "logs"), ("logs:createlogstream", "LOGS_TO", "logs"),
+]
+
+def _verb_for_action(action):
+    a = action.lower()
+    for pfx, verb, kind in _ACTION_VERB:
+        if a.startswith(pfx):
+            return verb, kind
+    return None, None
+
+def derive_data_access_edges():
+    """sec3.x DERIVED edge layer (EDGE-GAP-DATA): project each IAM role's GRANTS
+    (inline-policy statements) onto typed data-access edges, sourced from the
+    role's compute CONSUMERS (Lambdas + EC2 that ASSUME it). Concrete-ARN targets
+    only; Resource='*' grants are recorded as an edge property (wildcard=True) on a
+    GRANTS-class edge rather than fan-out to every resource. Discovery-based."""
+    iamc = _boto("iam")
+    edges = []
+    # role_arn -> [(verb, target_arn|None, wildcard, action)]
+    grants = {}
+    for n in live_iam_roles():
+        rn = n["id"]
+        rarn = n["arn"]
+        stmts = []
+        try:
+            for pn in iamc.list_role_policies(RoleName=rn).get("PolicyNames", []):
+                doc = iamc.get_role_policy(RoleName=rn, PolicyName=pn).get("PolicyDocument", {})
+                stmts += _norm_statements(doc if isinstance(doc, dict) else {})
+        except Exception:
+            pass
+        glist = []
+        for s in stmts:
+            if s.get("effect") != "Allow":
+                continue
+            for act in s.get("action", []):
+                verb, kind = _verb_for_action(act)
+                if not verb:
+                    continue
+                for res in (s.get("resource") or []):
+                    if res == "*" or "*" == res.strip():
+                        glist.append((verb, None, True, act))
+                    else:
+                        glist.append((verb, res, False, act))
+        if glist:
+            grants[rarn] = glist
+    # consumers: compute nodes that ASSUME each role
+    consumers = {}  # role_arn -> [compute_arn]
+    for ln in live_lambda():
+        if ln.get("role"):
+            consumers.setdefault(f"arn:aws:iam::{ACCOUNT}:role/{ln['role']}", []).append(ln["arn"])
+    prof_role = {}
+    for e in live_ec2():
+        prof = e.get("instance_profile")
+        if not prof:
+            continue
+        if prof not in prof_role:
+            try:
+                r = iamc.get_instance_profile(InstanceProfileName=prof)
+                prof_role[prof] = [x["Arn"] for x in r["InstanceProfile"]["Roles"]]
+            except Exception:
+                prof_role[prof] = []
+        for rarn in prof_role[prof]:
+            consumers.setdefault(rarn, []).append(_node_arn("ec2", e))
+    # emit consumer -[verb]-> target (or GRANTS wildcard) ; dedupe
+    seen = set()
+    for rarn, glist in grants.items():
+        for carn in consumers.get(rarn, []):
+            for verb, target, wild, act in glist:
+                if wild:
+                    key = (carn, verb, "*")
+                    if key in seen:
+                        continue
+                    seen.add(key)
+                    edges.append({"source": carn, "target": f"*:{verb.lower()}", "edge_type": verb,
+                                  "via_role": rarn.split("/")[-1], "wildcard": True})
+                else:
+                    # resolve resource arn -> node arn (strip /key suffix for s3)
+                    tgt = target
+                    if target.startswith("arn:aws:s3:::"):
+                        tgt = "arn:aws:s3:::" + target.split(":::", 1)[1].split("/")[0]
+                    key = (carn, verb, tgt)
+                    if key in seen:
+                        continue
+                    seen.add(key)
+                    edges.append({"source": carn, "target": tgt, "edge_type": verb,
+                                  "via_role": rarn.split("/")[-1]})
+    return edges
+
 def derive_event_sources():
     """EVENT_SOURCE nodes (sec 3.3 EV-SCHEMA-GAP-1) -- one per distinct
     (source_kind, service_or_api) origin that is not a pinned resource."""
@@ -845,7 +949,7 @@ def cmd_derive(args):
         graph["classes_data"]["event_source"] = {"class": "event_source", "nodes": es,
             "declared_no_live": [], "counts": {"live": len(es), "untyped": 0}}
         print(f"  event_source live={len(es):3} (typed EVENT_SOURCE origins, sec 3.3)")
-        graph["edges"] = derive_edges()
+        graph["edges"] = derive_edges() + derive_data_access_edges()
         from collections import Counter
         ec = Counter(e["edge_type"] for e in graph["edges"])
         print(f"  edges        total={len(graph['edges'])}  " +
