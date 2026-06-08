@@ -155,6 +155,44 @@ def live_s3():
         nodes.append(node)
     return nodes
 
+def _norm_statements(policy_doc):
+    """Normalize a policy document to a comparable statement set (§1.5 full set —
+    Sid/Effect/Principal/sorted-Action/sorted-Resource/Condition)."""
+    stmts = policy_doc.get("Statement", [])
+    if isinstance(stmts, dict):
+        stmts = [stmts]
+    out = []
+    for s in stmts:
+        def _l(x):
+            return sorted(x) if isinstance(x, list) else ([x] if x is not None else [])
+        out.append({
+            "sid": s.get("Sid"), "effect": s.get("Effect"),
+            "principal": s.get("Principal"),
+            "action": _l(s.get("Action")), "resource": _l(s.get("Resource")),
+            "condition": s.get("Condition"),
+        })
+    return out
+
+def live_s3_policies():
+    """S3_BUCKET_POLICY nodes (separate node per Q2; full normalized statement set
+    per §1.5 so LIVE-no-DECLARED / removed-statement drift is expressible)."""
+    import json as _j
+    c = _boto("s3")
+    nodes = []
+    for b in c.list_buckets().get("Buckets", []):
+        name = b["Name"]
+        try:
+            pol = c.get_bucket_policy(Bucket=name)["Policy"]
+        except Exception:
+            continue
+        doc = _j.loads(pol)
+        nodes.append({
+            "id": name, "name": name, "type": "S3_BUCKET_POLICY",
+            "bucket": name, "statements": _norm_statements(doc),
+            "statement_count": len(_norm_statements(doc)),
+        })
+    return nodes
+
 def live_iam_roles():
     c = _boto("iam")
     nodes = []
@@ -313,6 +351,7 @@ def live_cloudwatch_alarms():
 # class -> (live_fn, [tf_resource_types that materialize this class's nodes])
 CLASSES = {
     "s3":          (live_s3,                ["aws_s3_bucket"]),
+    "s3_policy":   (live_s3_policies,       ["aws_s3_bucket_policy"]),
     "iam":         (live_iam_roles,         ["aws_iam_role"]),
     "ec2":         (live_ec2,               ["aws_instance"]),
     "lambda":      (live_lambda,            ["aws_lambda_function"]),
@@ -452,6 +491,24 @@ def derive_edges():
                 E(f"arn:aws:s3:::{n['id']}", lf["LambdaFunctionArn"], "TRIGGERS")
         except Exception:
             pass
+    # S3_BUCKET -[HAS_POLICY]-> S3_BUCKET_POLICY -[GRANTS]-> principal
+    for p in live_s3_policies():
+        barn = f"arn:aws:s3:::{p['bucket']}"
+        parn = f"{barn}#policy"
+        E(barn, parn, "HAS_POLICY")
+        seen_pr = set()
+        for st in p["statements"]:
+            pr = st.get("principal")
+            prkeys = []
+            if isinstance(pr, dict):
+                for v in pr.values():
+                    prkeys += v if isinstance(v, list) else [v]
+            elif isinstance(pr, str):
+                prkeys = [pr]
+            for pk in prkeys:
+                if pk and pk not in seen_pr:
+                    seen_pr.add(pk)
+                    E(parn, pk, "GRANTS", effect=st.get("effect"))
     # CLOUDFRONT -[ORIGIN]-> S3
     cf = _boto("cloudfront")
     try:
