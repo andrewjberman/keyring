@@ -51,14 +51,20 @@
 # Tilde-lane suffixes (~B/~C/~D/~E) are stripped for role detection; lane
 # variants share the same role + loop set as the base serial.
 #
-# Per LD-0082 design (Andrew sovereign 2026-05-26):
-#   Q1: separate CronCreate per skill (clean semantics; visible in CronList)
-#   Q2: /watcher separate cron ONLY for MSTR (other primaries fold /watcher inline)
-#   Q3: MSTR /stimulus-scan retired -- worker visibility from /drive + /work
-#   Q4: /verify-channel 2h periodic baseline for both CVOs
-#   Q5: /case-find chain-invokes /case-mgmt at end (single cron for the pair)
-#   Q6: /comp-ferry stays event-triggered (no periodic check)
-#   Q7: /work 20m uniform across all worker tiers
+# SUPERSESSION (LD-0157 2026-06-05 + LD-0164/LD-0166 2026-06-06..08, Andrew direct):
+# the LD-0082 self-tick loop set below is RETIRED. The fabric is now event-driven
+# (persistent inbox Monitor) + ONE centralized standing operational loop (COO /drive,
+# which runs /fabric-check). Per-role posture now:
+#   - /watcher: arm-at-load ONCE, NOT a cron (LD-0166). No serial arms a /watcher cron.
+#   - /work (all workers) + /ws-charter (ws CTO): RETIRED to ad-hoc (LD-0157).
+#   - /mstr-review (MSTR) + /spot-check (both CVOs): RETIRED to ad-hoc (LD-0164).
+#   - Standing crons that REMAIN: COO /drive 20m; CL CTO /cl-charter 30m;
+#     both CVOs /verify-channel 2h baseline; CL CVO /case-find 24h.
+#   - Workers announce blocks via broker STATUS (WORKING:/IDLE:/BLOCKED:), NOT a
+#     [BLOCKED-ASK] polling-announce -- COO /drive is the single tick driver.
+# Original LD-0082 design notes (historical): Q1 per-skill CronCreate; Q2 /watcher
+# cron for MSTR+COO; Q3 /stimulus-scan retired; Q4 /verify-channel 2h; Q5 /case-find
+# chains /case-mgmt; Q6 /comp-ferry event-triggered; Q7 /work 20m uniform.
 function Get-AgentLoopDirective {
     [CmdletBinding()]
     param([Parameter(Mandatory=$true)] [string]$Serial)
@@ -66,44 +72,44 @@ function Get-AgentLoopDirective {
     # Strip tilde-lane suffix for role detection.
     $base = $Serial -replace '~[A-Za-z0-9]+$', ''
 
-    $header = "Loop arming (per LD-0082) after /watcher:"
+    $header = "Loop arming (LD-0157/0164/0166 -- most self-tick loops retired; /watcher arms ONCE at load, NOT a cron):"
 
     switch -Regex ($base) {
         '^0\.0\.0_AB_MSTR$' {
-            return "$header`n  MSTR`n  1. CronCreate /watcher 10m, then /watcher`n  2. CronCreate /mstr-review 12h, then /mstr-review`n  Event-triggered: /mstr-spawn, /mstr-kill, /mstr-charter, /comp-ferry, embedded LD ratification."
+            return "$header`n  MSTR -- arms ZERO crons (LD-0164 + LD-0166).`n  1. Run /watcher ONCE (arm-at-load; no /watcher cron).`n  2. Run /mstr-review ONCE at startup as an ad-hoc pass (LD-0164 -- no 12h cron).`n  Event-triggered: /mstr-spawn, /mstr-kill, /mstr-charter, /comp-ferry, /govern (Andrew-discretion, LD-0147), embedded LD ratification."
         }
         '^1\.0\.0_SA_CTO$' {
-            return "$header`n  ws CTO`n  1. CronCreate /ws-charter 30m, then /ws-charter  (/watcher folds inline)`n  Event-triggered: REPAIR-AMENDMENT scribes (gated on CVO finding)."
+            return "$header`n  ws CTO -- arms ZERO crons (LD-0157).`n  1. Run /watcher ONCE (arm-at-load).`n  /ws-charter is AD-HOC -- run it when you have charter work, not as a loop. Event-driven: Andrew directives + CVO findings via the Monitor; COO /drive is the centralized tick driver. Event-triggered: REPAIR-AMENDMENT scribes (gated on CVO finding)."
         }
         '^1\.1\.0_SA_CTO$' {
-            return "$header`n  CL CTO`n  1. CronCreate /cl-charter 30m, then /cl-charter  (/watcher folds inline)"
+            return "$header`n  CL CTO`n  1. Run /watcher ONCE (arm-at-load).`n  2. CronCreate /cl-charter 30m, then /cl-charter  (the one CL CTO standing loop -- LD-0066 queue-pull)."
         }
         '^2\.[01]\.0_SA_COO$' {
-            return "$header`n  COO`n  1. CronCreate /watcher 10m, then /watcher  (interrupt-recovery backstop for AUTO-RESPAWN-INTERRUPT-LOST on high-volume cycles; symmetric with MSTR pattern)`n  2. CronCreate /drive 20m, then /drive  (/watcher Steps 1-5 still fold inline at cycle start)"
+            return "$header`n  COO`n  1. Run /watcher ONCE (arm-at-load; no /watcher cron -- LD-0166).`n  2. CronCreate /drive 20m, then /drive  (the SOLE standing operational loop + centralized tick driver; /watcher Steps 1-5 still fold inline at cycle start)."
         }
         '^3\.0\.0_SA_CVO$' {
-            return "$header`n  ws CVO`n  1. CronCreate /spot-check 20m, then /spot-check  (/watcher folds inline)`n  2. CronCreate /verify-channel 2h, then /verify-channel  (lightweight baseline; comprehensive event-triggered)"
+            return "$header`n  ws CVO -- /spot-check is AD-HOC (LD-0164 -- no 20m cron).`n  1. Run /watcher ONCE (arm-at-load).`n  2. CronCreate /verify-channel 2h, then /verify-channel  (lightweight baseline; comprehensive event-triggered).`n  /spot-check: run on-demand / at closeout-class signals."
         }
         '^3\.1\.0_SA_CVO$' {
-            return "$header`n  CL CVO`n  1. CronCreate /spot-check 20m, then /spot-check  (/watcher folds inline)`n  2. CronCreate /verify-channel 2h, then /verify-channel  (lightweight baseline; comprehensive event-triggered)`n  3. CronCreate /case-find 24h, then /case-find  (/case-mgmt chain-invokes per LD-0082 Q5)"
+            return "$header`n  CL CVO -- /spot-check is AD-HOC (LD-0164 -- no 20m cron).`n  1. Run /watcher ONCE (arm-at-load).`n  2. CronCreate /verify-channel 2h, then /verify-channel  (lightweight baseline; comprehensive event-triggered).`n  3. CronCreate /case-find 24h, then /case-find  (/case-mgmt chain-invokes per LD-0082 Q5).`n  /spot-check: run on-demand / at closeout-class signals."
         }
         '^0\.[0-9]+\.[0-9]+_AE_CloudOps(~[A-Za-z0-9]+)?$' {
-            return "$header`n  AE_CloudOps lane (ws fabric)`n  0. FIRST after /watcher startup-fold: invoke /cloud-ops once to load operational reference + permissions profile + current CLAUDE.md Rules 1-19 cross-reference + LD-cycle pointers + pipeline/bucket/secrets/KMS inventory (skill at .claude/skills/cloud-ops/SKILL.md). Not a cron loop -- session-orient one-shot.`n  1. CronCreate /work 20m, then /work  (/watcher folds inline)`n  Self-classify blockers + MCP ws COO with [BLOCKED-ASK] per /work."
+            return "$header`n  AE_CloudOps lane (ws fabric) -- arms ZERO crons (LD-0157; event-driven).`n  0. FIRST after /watcher: invoke /cloud-ops once to load operational reference + permissions profile + current CLAUDE.md Rules 1-19 cross-reference + LD-cycle pointers + pipeline/bucket/secrets/KMS inventory (skill at .claude/skills/cloud-ops/SKILL.md). Not a cron -- session-orient one-shot.`n  1. Run /watcher ONCE (arm-at-load).`n  Event-driven: act on Monitor-delivered TOs; keep broker STATUS accurate (WORKING:/IDLE:/BLOCKED:) so COO /drive finds blocks. /work is AD-HOC (off-cycle pass if useful)."
         }
         '^0\.8\.0_AE_CloudComp(~[A-Za-z0-9]+)?$' {
-            return "$header`n  AE_CloudComp lane (ws fabric tester for CL compiler tools)`n  0. FIRST after /watcher startup-fold: invoke /cloud-ops once to load operational reference (you do cloud-ops-class work testing compilers on real ws workload)`n  1. CronCreate /work 20m, then /work  (/watcher folds inline)`n  Self-classify blockers + MCP ws COO with [BLOCKED-ASK] per /work. Read MSTR queue at org/mcp/comp_ferry_queue.json for ferry test scheduling context."
+            return "$header`n  AE_CloudComp lane (ws fabric tester for CL compiler tools) -- arms ZERO crons (LD-0157; event-driven).`n  0. FIRST after /watcher: invoke /cloud-ops once to load operational reference (you do cloud-ops-class work testing compilers on real ws workload).`n  1. Run /watcher ONCE (arm-at-load).`n  Event-driven: act on Monitor-delivered TOs; keep broker STATUS accurate so COO /drive finds blocks. /work is AD-HOC. Read MSTR queue at org/mcp/comp_ferry_queue.json for ferry test scheduling context."
         }
         '^0\.[0-9]+\.[0-9]+_(DS|AE|DE|DT|RD)_' {
-            return "$header`n  Tier-2/3 worker (ws fabric)`n  1. CronCreate /work 20m, then /work  (/watcher folds inline)`n  Self-classify blockers + MCP ws COO with [BLOCKED-ASK] per /work."
+            return "$header`n  Tier-2/3 worker (ws fabric) -- arms ZERO crons (LD-0157; event-driven).`n  1. Run /watcher ONCE (arm-at-load).`n  Event-driven: act on Monitor-delivered dispatches/TOs as they arrive; keep broker STATUS accurate (WORKING:/IDLE:/BLOCKED:) so COO /drive finds blocks. /work is AD-HOC (off-cycle pass if useful)."
         }
         '^1\.[0-9]+\.[0-9]+_DS_CompLearns(~[A-Za-z0-9]+)?$' {
-            return "$header`n  CL Tier-2 DS (CompLearns)`n  1. CronCreate /work 20m, then /work  (/watcher folds inline)`n  Self-classify blockers + MCP CL COO with [BLOCKED-ASK] per /work."
+            return "$header`n  CL Tier-2 DS (CompLearns) -- arms ZERO crons (LD-0157; event-driven).`n  1. Run /watcher ONCE (arm-at-load).`n  Event-driven: act on Monitor-delivered TOs; keep broker STATUS accurate so CL COO finds blocks. /work is AD-HOC."
         }
         '^2\.1\.0_SC_CompLearns(~[A-Za-z0-9]+)?$' {
-            return "$header`n  CL Tier-2 SC (CompLearns)`n  1. CronCreate /work 20m, then /work  (/watcher folds inline)`n  Self-classify blockers + MCP CL COO with [BLOCKED-ASK] per /work."
+            return "$header`n  CL Tier-2 SC (CompLearns) -- arms ZERO crons (LD-0157; event-driven).`n  1. Run /watcher ONCE (arm-at-load).`n  Event-driven: act on Monitor-delivered TOs; keep broker STATUS accurate so CL COO finds blocks. /work is AD-HOC."
         }
         default {
-            return "$header`n  UNRECOGNIZED ('$Serial' matched no role pattern)`n  1. CronCreate /watcher 10m, then /watcher`n  WARN MSTR: 'role-mapping gap for $Serial in ajb.ps1'."
+            return "$header`n  UNRECOGNIZED ('$Serial' matched no role pattern)`n  1. Run /watcher ONCE (arm-at-load).`n  WARN MSTR: 'role-mapping gap for $Serial in ajb.ps1'."
         }
     }
 }
