@@ -699,6 +699,30 @@ def derive_edges():
                 pass
     except Exception:
         pass
+    # Wave-2 edges derivable from enriched node properties (deterministic)
+    # CW_ALARM -[NOTIFIES]-> SNS_TOPIC (alarm actions that are SNS arns)
+    for n in live_cloudwatch_alarms():
+        aarn = n.get("arn")
+        for act in n.get("alarm_actions", []):
+            if ":sns:" in act:
+                E(aarn, act, "NOTIFIES")
+    # SQS -[DEAD_LETTERS_TO]-> SQS ; {class} -[ENCRYPTS_WITH]-> KMS
+    for n in live_sqs():
+        if n.get("redrive_dlq_arn"):
+            E(n.get("arn"), n["redrive_dlq_arn"], "DEAD_LETTERS_TO")
+        if n.get("kms_key_arn"):
+            E(n.get("arn"), n["kms_key_arn"], "ENCRYPTS_WITH")
+    for n in live_sns():
+        if n.get("kms_key_arn"):
+            E(n.get("arn"), n["kms_key_arn"], "ENCRYPTS_WITH")
+        for sub in n.get("subscriptions", []):
+            E(n.get("arn"), sub, "SUBSCRIBES")
+    for n in live_dynamodb():
+        if n.get("kms_key_arn"):
+            E(n.get("arn"), n["kms_key_arn"], "ENCRYPTS_WITH")
+    for n in live_secrets():
+        if n.get("kms_key_arn"):
+            E(n.get("arn"), n["kms_key_arn"], "ENCRYPTS_WITH")
     return edges
 
 def derive_event_sources():
