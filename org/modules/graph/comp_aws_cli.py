@@ -686,8 +686,19 @@ def derive_edges():
             for k, v in env.items():
                 if "INSTANCE_ID" in k and str(v).startswith("i-"):
                     E(farn, f"arn:aws:ec2:us-east-1:{ACCOUNT}:instance/{v}", "STARTS", via=k)
+            dlq = (cfg.get("DeadLetterConfig") or {}).get("TargetArn")
+            if dlq:  # lambda async DLQ (SQS or SNS) -- the producer->dlq linkage (SQS-EDGE-GAP)
+                E(farn, dlq, "DEAD_LETTERS_TO")
         except Exception:
             pass
+    # event-source-mapping OnFailure destinations -> DLQ
+    try:
+        for esm in lc.list_event_source_mappings().get("EventSourceMappings", []):
+            onf = ((esm.get("DestinationConfig") or {}).get("OnFailure") or {}).get("Destination")
+            if onf and esm.get("FunctionArn"):
+                E(esm["FunctionArn"], onf, "DEAD_LETTERS_TO")
+    except Exception:
+        pass
     # S3_BUCKET -[NOTIFIES]-> LAMBDA
     s3c = _boto("s3")
     for n in live_s3():
@@ -747,6 +758,9 @@ def derive_edges():
             try:
                 for t in ev.list_targets_by_rule(Rule=r["id"]).get("Targets", []):
                     E(rarn, t["Arn"], "TRIGGERS")
+                    dlq = (t.get("DeadLetterConfig") or {}).get("Arn")
+                    if dlq:  # EventBridge target failure DLQ
+                        E(rarn, dlq, "DEAD_LETTERS_TO")
             except Exception:
                 pass
     except Exception:
