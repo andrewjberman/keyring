@@ -4370,3 +4370,68 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-06-03 | 0.4.0_DS_ClientPlatform | FE_DEPSWEEP_PLAN | comp-validate | comp-validate D_04 --artifact /tmp/d.json | FAIL |
 | 2026-06-03 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript deployed data/black_diamond/scripts/gold/gold_prof.py | PASS |
 - 2026-06-03 0.4.0_DS_ClientPlatform NFRA.W2b: comp-pipescript deployed gold_prof.py -> 0-matched (profiler utility not in named gold-data registry; MATCH N/A) -> verified via re-pull byte-match (opal-runner-shared == c07c52383, 12 PSS markers). GAP: comp-pipescript deployed-check does not cover shared utility scripts on opal-runner-shared.
+| 2026-06-05 | 0.7.0_AE_CloudOps | NFRA_COSTRED.R2 | comp-iam | comp-iam service fred-data-ingestion | PASS |
+| 2026-06-05 | 0.7.0_AE_CloudOps | NFRA_COSTRED.R2 | comp-routes | comp-routes trace yield_curve_fred | PASS |
+| 2026-06-05 | 0.4.0_DS_ClientPlatform | MDLP_DISTFIX.I3 | comp-pipescript | comp-pipescript io D_01.partner_analytics | PASS |
+| 2026-06-05 | 0.4.0_DS_ClientPlatform | MDLP_DISTFIX.I3 | comp-pipescript | comp-pipescript io D_04.client_portal_summary | PASS |
+| 2026-06-05 | 0.4.0_DS_ClientPlatform | MDPF_COUNTS.AE | comp-pipescript | comp-pipescript deployed D_01.partner_analytics | PASS |
+| 2026-06-05 | 0.4.0_DS_ClientPlatform | MDPF_COUNTS.AE | comp-pipescript | comp-pipescript deployed INF_D_04.client_portal_summary | PASS |
+| 2026-06-05 | 0.4.0_DS_ClientPlatform | MDPF_COUNTS.AE | comp-pipescript | comp-pipescript deployed D_04.client_portal_summary | PASS |
+| 2026-06-05 | 0.4.0_DE_ClientPlatform~A | MDPF_COUNTS.AE | comp-pipescript | comp-pipescript deployed data/mdpf/scripts/backfill/build_aggregate_aua_timeseries.py | PASS |
+| 2026-06-05 | 0.7.0_AE_CloudOps~A | MDPF_COUNTS.AE | comp-pipescript | comp-pipescript deployed data/mdpf/scripts/backfill/build_aggregate_aua_timeseries.py | PASS |
+| 2026-06-05 | 0.7.0_AE_CloudOps~A | MDPF_COUNTS.AE | comp-pipescript | comp-pipescript deployed data/mdpf/scripts/gold/mdpf_aggregate_aua.py | PASS |
+| 2026-06-05 | 0.7.0_AE_CloudOps | MDPF_COUNTS_producer | comp-pipescript | comp-pipescript deployed data/mdpf/scripts/backfill/build_aggregate_aua_timeseries.py | PASS |
+| 2026-06-05 | 0.7.0_AE_CloudOps | MDLP_DISTFIX_I1I2_smartx_deploy | comp-iam | comp-iam service opal-smartx-ingestion-pipeline | PASS |
+| 2026-06-08 | 0.6.0_AE_PartnerETL | ADHC_GLDINC.P1.load-flows-watermark | comp-iam | comp-iam service bd-gold-layer-runner | PASS |
+| 2026-06-08 | 0.6.0_AE_PartnerETL | ADHC_GLDINC.P1.load-flows-watermark | comp-pipescript | comp-pipescript deployed gold_dispatch.sh | PASS |
+| 2026-06-08 | 0.4.0_DE_ClientPlatform | MDPF_CADENCE.FE-label | comp-transform | comp-transform schema-check ModelPortfolios | FAIL |
+| 2026-06-08 | 0.7.0_AE_CloudOps | (no-TO) | comp-aws | comp-aws classes | PASS |
+| 2026-06-08 | 0.7.0_AE_CloudOps | ADHC_CMPAWS.schema-per-class | comp-aws | comp-aws derive --class s3 | PASS |
+| 2026-06-08 | 0.7.0_AE_CloudOps | ADHC_CMPAWS.schema-per-class | comp-aws | comp-aws derive --class ec2 | PASS |
+| 2026-06-08 | 0.7.0_AE_CloudOps | ADHC_CMPAWS.schema-per-class | comp-aws | comp-aws derive | PASS |
+| 2026-06-08 | 0.7.0_AE_CloudOps | ADHC_CMPAWS.schema-per-class | comp-aws | comp-aws score | PASS |
+| 2026-06-08 | 0.7.0_AE_CloudOps | ADHC_CMPAWS.schema-per-class | comp-aws | comp-aws derive | PASS |
+| 2026-06-08 | 0.7.0_AE_CloudOps | ADHC_CMPAWS.schema-per-class | comp-aws | comp-aws derive | PASS |
+| 2026-06-08 | 0.6.0_AE_PartnerETL | ADHC_CMPAWS.schema-per-class | comp-iam | comp-iam service mdpf-daily-trigger | PASS |
+| 2026-06-08 | 0.7.0_AE_CloudOps | ADHC_CMPAWS.schema-per-class | comp-aws | comp-aws derive --out .runtmp/cmpaws/aws-graph-20260608.json | PASS |
+| 2026-06-08 | 0.7.0_AE_CloudOps | ADHC_CMPAWS.schema-per-class | comp-aws | comp-aws derive --class s3 | PASS |
+| 2026-06-08 | 0.7.0_AE_CloudOps | ADHC_CMPAWS.schema-per-class | comp-aws | comp-aws derive --class s3_policy | PASS |
+| 2026-06-08 | 0.7.0_AE_CloudOps | ADHC_CMPAWS.schema-per-class | comp-aws | comp-aws snapshot --stamp 20260608T1528Z | PASS |
+| 2026-06-08 | 3.0.0_SA_CVO | ADHC_CMPAWS.schema-per-class | comp-aws | comp-aws derive --out .runtmp/comp_aws_graph.json | PASS |
+| 2026-06-08 | 3.0.0_SA_CVO | ADHC_CMPAWS.schema-per-class | comp-aws | comp-aws derive --out .runtmp/comp_aws_graph.json | PASS |
+| 2026-06-08 | 0.7.0_AE_CloudOps | ADHC_CMPAWS.schema-per-class | comp-aws | comp-aws derive --out .runtmp/cmpaws/aws-graph-v2.json | PASS |
+| 2026-06-08 | 3.0.0_SA_CVO | ADHC_CMPAWS.schema-per-class | comp-aws | comp-aws derive --class iam | PASS |
+| 2026-06-08 | 3.0.0_SA_CVO | ADHC_CMPAWS.schema-per-class | comp-aws | comp-aws derive --out .runtmp/comp_aws_final.json | PASS |
+| 2026-06-08 | 1.0.0_SA_CTO | ADHC_DEPINT.widen-mdpf | comp-pipescript | comp-pipescript deployed --pipeline mdpf | PASS |
+| 2026-06-08 | 3.0.0_SA_CVO | ADHC_DEPINT.widen-mdpf | comp-aws | comp-aws derive --out .runtmp/comp_iam_recert.json | PASS |
+| 2026-06-08 | 1.0.0_SA_CTO | ADHC_DEPINT.widen-mdpf | comp-pipescript | comp-pipescript deployed --pipeline mdpf aggregate | PASS |
+| 2026-06-08 | 3.0.0_SA_CVO | ADHC_DEPINT.widen-mdpf | comp-aws | comp-aws derive --out .runtmp/comp_recert2.json | PASS |
+| 2026-06-08 | 0.7.0_AE_CloudOps | ADHC_DEPINT.widen-mdpf | comp-aws | comp-aws derive --out .runtmp/cmpaws/aws-graph-final.json | PASS |
+| 2026-06-08 | 0.4.0_DS_ClientPlatform | ADHC_DEPINT.widen-mdpf | comp-pipescript | comp-pipescript deployed --pipeline mdpf | PASS |
+| 2026-06-08 | 0.4.0_DS_ClientPlatform | ADHC_DEPINT.widen-mdpf | comp-pipescript | comp-pipescript deployed --pipeline mdpf | PASS |
+| 2026-06-08 | 0.7.0_AE_CloudOps | ADHC_DEPINT.widen-mdpf | comp-aws | comp-aws derive --class iam | PASS |
+| 2026-06-08 | 0.7.0_AE_CloudOps | ADHC_DEPINT.widen-mdpf | comp-aws | comp-aws derive --class s3 | PASS |
+| 2026-06-08 | 0.7.0_AE_CloudOps | ADHC_DEPINT.widen-mdpf | comp-aws | comp-aws derive --out .runtmp/cmpaws/aws-graph-timed.json | PASS |
+| 2026-06-08 | 0.4.0_DS_ClientPlatform | ADHC_DEPINT.widen-mdpf | comp-pipescript | comp-pipescript deployed --pipeline mdpf | PASS |
+| 2026-06-08 | 0.4.0_DS_ClientPlatform | ADHC_DEPINT.widen-mdpf | comp-pipescript | comp-pipescript deployed --pipeline mdpf | PASS |
+| 2026-06-08 | 3.0.0_SA_CVO | ADHC_DEPINT.widen-mdpf | comp-aws | comp-aws derive --out .runtmp/comp_ev_recert.json | PASS |
+| 2026-06-08 | 0.7.0_AE_CloudOps | (no-TO) | comp-iam | comp-iam gaps | PASS |
+| 2026-06-08 | 3.0.0_SA_CVO | (no-TO) | comp-aws | comp-aws derive --out .runtmp/comp_edge.json | PASS |
+| 2026-06-08 | 3.0.0_SA_CVO | (no-TO) | comp-aws | comp-aws derive --out .runtmp/comp_final.json | PASS |
+| 2026-06-08 | 0.7.0_AE_CloudOps | ADVI_COTETL.prd | comp-aws | comp-aws snapshot --stamp 20260608T1705Z | PASS |
+| 2026-06-08 | 1.0.0_SA_CTO | ADVI_COTETL.prd | comp-pipescript | comp-pipescript io D_01 | PASS |
+| 2026-06-08 | 1.0.0_SA_CTO | ADVI_COTETL.prd | comp-blast | comp-blast bd-portal-publisher | PASS |
+| 2026-06-08 | 0.7.0_AE_CloudOps | FIND_DUALBIZ.P1 | comp-aws | comp-aws derive --out .runtmp/cmpaws/aws-graph-dangle-check.json | PASS |
+| 2026-06-08 | 0.7.0_AE_CloudOps | (no-TO) | comp-aws | comp-aws derive --out .runtmp/cmpaws/aws-graph-dangle2.json | PASS |
+| 2026-06-08 | 0.7.0_AE_CloudOps | (no-TO) | comp-aws | comp-aws derive --out .runtmp/cmpaws/aws-graph-dangle3.json | PASS |
+| 2026-06-08 | 3.0.0_SA_CVO | (no-TO) | comp-aws | comp-aws derive --out .runtmp/comp_v2.json | PASS |
+| 2026-06-08 | 0.6.0_AE_PartnerETL | (no-TO) | comp-pipescript | comp-pipescript deployed gold_dispatch.sh | PASS |
+| 2026-06-08 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript io D_00.portal_aggregates | PASS |
+| 2026-06-08 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript io D_00b.portal_timeseries | PASS |
+| 2026-06-08 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript io D_00c.portal_leaderboard | PASS |
+| 2026-06-08 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript io D_01.partner_analytics | PASS |
+| 2026-06-08 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript io D_02.advisor_client_detail | PASS |
+| 2026-06-08 | 0.7.0_AE_CloudOps | (no-TO) | comp-aws | comp-aws metrics --graph .runtmp/cmpaws/aws-graph-dangle3.json | PASS |
+| 2026-06-08 | 3.0.0_SA_CVO | (no-TO) | comp-aws | comp-aws derive --out .runtmp/comp_v3.json | PASS |
+| 2026-06-08 | 0.7.0_AE_CloudOps | (no-TO) | comp-aws | comp-aws dual-managed | PASS |
+| 2026-06-08 | 3.0.0_SA_CVO | (no-TO) | comp-aws | comp-aws derive --out .runtmp/comp_v4.json | PASS |
