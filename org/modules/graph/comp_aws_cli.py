@@ -523,7 +523,8 @@ def live_cloudwatch_alarms():
                           "metric_namespace": a.get("Namespace"), "metric_name": a.get("MetricName"),
                           "threshold": a.get("Threshold"), "comparison": a.get("ComparisonOperator"),
                           "treat_missing_data": a.get("TreatMissingData"),
-                          "alarm_actions": sorted(a.get("AlarmActions", []))})
+                          "alarm_actions": sorted(a.get("AlarmActions", [])),
+                          "dimensions": {d["Name"]: d["Value"] for d in a.get("Dimensions", [])}})
     return nodes
 
 # class -> (live_fn, [tf_resource_types that materialize this class's nodes])
@@ -766,12 +767,36 @@ def derive_edges():
     except Exception:
         pass
     # Wave-2 edges derivable from enriched node properties (deterministic)
-    # CW_ALARM -[NOTIFIES]-> SNS_TOPIC (alarm actions that are SNS arns)
+    # CW_ALARM -[NOTIFIES]-> SNS_TOPIC + -[MONITORS]-> metric-source resource (from Dimensions)
+    _res_set = set()
+    _res_set |= {f"arn:aws:lambda:us-east-1:{ACCOUNT}:function:{x['id']}" for x in live_lambda()}
+    _res_set |= {x["arn"] for x in live_dynamodb() if x.get("arn")}
+    _res_set |= {_node_arn("ec2", x) for x in live_ec2()}
+    _res_set |= {x["arn"] for x in live_sqs() if x.get("arn")}
+    _res_set |= {x["arn"] for x in live_sns() if x.get("arn")}
+    _res_set |= {f"arn:aws:s3:::{x['id']}" for x in live_s3()}
+    _res_set |= {x["arn"] for x in live_log_groups() if x.get("arn")}
+
+    def _dim_arn(name, val):
+        return {
+            "FunctionName": f"arn:aws:lambda:us-east-1:{ACCOUNT}:function:{val}",
+            "TableName": f"arn:aws:dynamodb:us-east-1:{ACCOUNT}:table/{val}",
+            "InstanceId": f"arn:aws:ec2:us-east-1:{ACCOUNT}:instance/{val}",
+            "QueueName": f"arn:aws:sqs:us-east-1:{ACCOUNT}:{val}",
+            "TopicName": f"arn:aws:sns:us-east-1:{ACCOUNT}:{val}",
+            "BucketName": f"arn:aws:s3:::{val}",
+            "LogGroupName": f"arn:aws:logs:us-east-1:{ACCOUNT}:log-group:{val}",
+        }.get(name)
+
     for n in live_cloudwatch_alarms():
         aarn = n.get("arn")
         for act in n.get("alarm_actions", []):
             if ":sns:" in act:
                 E(aarn, act, "NOTIFIES")
+        for dn, dv in (n.get("dimensions") or {}).items():
+            ra = _dim_arn(dn, dv)
+            if ra and ra in _res_set:  # resolve to a live resource node (custom-metric/deleted -> skip)
+                E(aarn, ra, "MONITORS", dimension=dn)
     # SQS -[DEAD_LETTERS_TO]-> SQS ; {class} -[ENCRYPTS_WITH]-> KMS
     for n in live_sqs():
         if n.get("redrive_dlq_arn"):
