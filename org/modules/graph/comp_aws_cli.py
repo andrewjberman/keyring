@@ -1013,6 +1013,8 @@ def cmd_score(args):
         agg = sum(v for _, v in f1s) / len(f1s)
         print(f"  AGGREGATE F1: {agg:.4f}  ({'PASS >=0.95' if agg >= 0.95 else 'BELOW 0.95'})")
 
+GLOBGRPH_BUCKET = "opal-313476888478-globgrph"   # ADHC_GLOBGRPH P1 snapshot/storage bucket
+
 def cmd_snapshot(args):
     graph = cmd_derive(argparse.Namespace(cls=None, out=None))
     SHAPES.mkdir(parents=True, exist_ok=True)
@@ -1023,7 +1025,21 @@ def cmd_snapshot(args):
         info = tarfile.TarInfo(name=f"aws-shape_{stamp}.json")
         info.size = len(payload)
         tar.addfile(info, io.BytesIO(payload))
-    print(f"snapshot -> {tgz}")
+    print(f"snapshot -> {tgz} ({tgz.stat().st_size} bytes)")
+    # P1: persist to the global-graph S3 archive (the time-travel black-box recorder).
+    if not getattr(args, "no_s3", False):
+        date = stamp[:8] if len(stamp) >= 8 and stamp[:8].isdigit() else "manual"
+        key = f"snapshots/{date}/graph-{stamp}.tar.gz"
+        try:
+            s3 = _boto("s3")
+            body = tgz.read_bytes()
+            s3.put_object(Bucket=GLOBGRPH_BUCKET, Key=key, Body=body,
+                          ContentType="application/gzip")
+            s3.put_object(Bucket=GLOBGRPH_BUCKET, Key="snapshots/latest.txt",
+                          Body=key.encode(), ContentType="text/plain")
+            print(f"archived -> s3://{GLOBGRPH_BUCKET}/{key} (+ latest.txt pointer)")
+        except Exception as e:
+            print(f"WARN: S3 archive failed ({type(e).__name__}: {e}); local snapshot kept")
 
 def main():
     ap = argparse.ArgumentParser(prog="comp-aws")
@@ -1037,6 +1053,7 @@ def main():
     s.set_defaults(fn=cmd_score)
     sn = sub.add_parser("snapshot")
     sn.add_argument("--stamp")
+    sn.add_argument("--no-s3", action="store_true", dest="no_s3")
     sn.set_defaults(fn=cmd_snapshot)
     c = sub.add_parser("classes")
     c.set_defaults(fn=cmd_classes)
