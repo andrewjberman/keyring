@@ -10,13 +10,14 @@
 # Deferred: us-east-2 buckets (provider alias required — explicitly noted in TF comments).
 
 meta:
-  fixture_version: "1.2"
+  fixture_version: "1.3"
   phase: "Phase 1 — S3 hand-audit oracle"
   tf_commit_at_audit: "11d6edaf4"
   cvo_author: "3.0.0_SA_CVO"
   schema_ref: "ADHC_CMPAWS PRD docs/briefs/comp-aws-comprehensive-cloud-compiler-prd-20260601.md"
   iam_stubs: "IAM_PRINCIPAL nodes are provisional stubs; Phase 1 IAM sub-audit will resolve"
   v1_1_changes: "GAP-7 resolved (CTO 204113Z): removed eventbridge_routing flag from direct S3 triggers (inf-portal-publisher + inf-silver-aggregator); added event_rules section with inf-silver-chain EVENT_RULE node; updated GAP-7 status=RESOLVED."
+  v1_3_changes: "CTO D4 + drift-check dispositions folded (CTO 133316Z). D4 EDGE MODEL RULED: EventBridge S3-event fan-out = TWO PAIRWISE EMITS_TO edges (S3 out-degree 2), not a multi-target edge — many-to-many is the baseline EventBridge semantic; pattern/enabled/provenance on the EVENT_RULE node, EMITS_TO generic. Validates GAP-7 first-class-node decision. inf-assets-trigger provenance = LIVE-no-DECLARED pending AE TF re-pull. DRIFT-EDGE HARD SPEC: S3_BUCKET_POLICY drift edge asserts FULL-NORMALIZED-STATEMENT-SET equality (set-diff over all statements), not single-principal presence (the v1.1 portal-auth OAI-presence assertion is a partial proxy blind to OAC/deny/cross-account). Both fold into the S3 sub-compiler edge/drift design. RESIDUALS NOW CLOSED — S3 oracle fully edge-certified."
   v1_2_changes: "AE Step-2 live-AWS cross-check folded + CVO-adjudicated (CVO independently re-confirmed D1/D2/D3 via live aws s3api 2026-06-08). 24/24 versioning+PAB EXACT (zero drift). D1 ACCEPT: opal-data-bd 3rd trigger PortalPublisherTrigger->bd-portal-publisher added (DRIFT-CLASS: oracle grep-miss of a TF-DECLARED edge — bd-pipeline/s3-notifications.tf owns all 3; bucket console-created but notification config TF-managed). D2 ACCEPT: opal-data-portal-v2 policy OAI corrected E139998VWH0PD(WRONG-GUESS)->EU39UXW7CMSI5 + OAC statement added (DRIFT-CLASS: LIVE-no-DECLARED console policy). D3 ACCEPT: bd+inf OAC GRANTS statements added (DRIFT-CLASS: LIVE-no-DECLARED). D4 ACCEPT-NODE: 2nd EventBridge rule inf-assets-trigger added; edge-taxonomy modeling routed to CTO. GAP-1..6 RESOLVED (GAP-4 schwab/market-update us-east-2 versioning=Enabled+PAB-all-true; GAP-5 tf-state versioning=Enabled/MFADelete=Disabled/repl=none; GAP-6 2 CF OAIs + OAC resolved). s3_trigger_edges 6->7; event_rule_nodes 1->2. fixture_status -> CERTIFIED (S3 sub-class 0-diff vs live)."
 
 # =============================================================================
@@ -520,6 +521,17 @@ s3_buckets:
 # Edges:
 #   S3_BUCKET -[HAS_POLICY]-> S3_BUCKET_POLICY
 #   S3_BUCKET_POLICY -[GRANTS]-> IAM_PRINCIPAL  (stubs — Phase 1 IAM co-class resolves)
+#
+# DRIFT-EDGE DESIGN REQUIREMENT (CTO 133316Z, v1.3 — hard spec for the S3 sub-compiler):
+#   The DECLARED<->LIVE drift edge on an S3_BUCKET_POLICY node MUST assert FULL-NORMALIZED-
+#   STATEMENT-SET EQUALITY (a set-diff over every statement: OAI, OAC, cross-account, deny,
+#   condition blocks) — NOT a single-principal presence predicate. The current portal-auth
+#   read-only data.aws_s3_bucket_policy OAI-presence assertion is a PARTIAL PROXY: it cannot
+#   see OAC statements (D3) so an OAC grant console-added/removed is invisible to `terraform
+#   plan` = LIVE-no-DECLARED biting the catch-mechanism itself. Presence-of-X cannot detect
+#   removal-of-Y; only full-set equality catches add/remove/mutate across all statement classes.
+#   Each policy node below therefore carries the FULL `statements:` set as the certified oracle
+#   baseline for that set-diff.
 
 s3_bucket_policies:
 
@@ -723,11 +735,11 @@ event_rules:
       detail:
         bucket.name: ["opal-data-inf"]
         object.key: [{prefix: "bronze/orion-api/"}, {suffix: "_BRONZE_COMPLETE.json"}]
-    tf_managed: "UNKNOWN — AE found it live ENABLED; TF-provenance not yet confirmed (possible LIVE-no-DECLARED)"
+    tf_managed: "UNKNOWN — provenance LIVE-no-DECLARED pending AE TF re-pull (CTO 133316Z: the EMITS_TO edge carries declared-vs-live status like any other)"
     target_lambda: "inf-assets-trigger (per rule name; AE to confirm target on re-pull)"
-    cto_review: "D4: a SECOND ENABLED EventBridge rule matches the same opal-data-inf bronze-complete pattern as inf-silver-chain-rule. Two rules fan a single S3 event to two consumers. Edge-taxonomy modeling of the fan-out (one EMITS_TO with two downstream EVENT_RULEs) is a CTO call — routed. Also: confirm TF-provenance to set drift-class (DECLARED vs LIVE-no-DECLARED)."
-    notes: "Node recorded as factual (AE live-confirmed ENABLED). Edge label + TF-provenance pending CTO + an AE re-pull."
-    # Edges (pending CTO disposition):
+    cto_ruling: "D4 RULED (CTO 133316Z): EventBridge S3-event routing is inherently many-to-many — every enabled rule whose pattern matches fires independently, so two rules on the same _BRONZE_COMPLETE.json pattern is the BASELINE semantic, not an anomaly. Model as TWO PAIRWISE EMITS_TO edges (opal-data-inf out-degree 2), NOT one multi-target edge — fan-out is the source node's out-degree, which makes comp-blast surface BOTH rules+Lambdas automatically. Pattern-specificity + enabled + provenance live on each EVENT_RULE node, EMITS_TO stays generic (the S3->EventBridge bridge). VALIDATES the GAP-7 first-class-node decision (a property-on-direct-edge model could not express two rules matching one pattern)."
+    notes: "Node factual (AE live-confirmed ENABLED). Edge model CTO-RULED (pairwise EMITS_TO); TF-provenance pending AE re-pull."
+    # Edges (CTO-ruled 133316Z — pairwise, source out-degree 2):
     #   opal-data-inf -[EMITS_TO]-> EVENT_RULE:inf-assets-trigger-bronze-complete
     #   EVENT_RULE:inf-assets-trigger-bronze-complete -[TRIGGERS]-> LAMBDA:inf-assets-trigger
 
@@ -804,4 +816,4 @@ summary:
   oracle_gaps_resolved: 7      # v1.2: GAP-1..7 all resolved (GAP-1/2/3=D2/D3, GAP-4/5=us-east-2+tf-state, GAP-6=identity-pin, GAP-7=CTO)
   oracle_gaps_open: 0
   live_cross_check: "versioning + public_access_block = 24/24 EXACT (zero drift); 4 discrepancies (D1-D4) all additive (live richer than oracle), all ACCEPTED + folded"
-  fixture_status: "CERTIFIED v1.2 — S3 sub-class hand-audit reconciled 0-diff vs live AWS (AE Step-2 cross-check, CVO-adjudicated 2026-06-08). Becomes the S3-class regression fixture. RESIDUAL: D4 edge-taxonomy modeling + inf-assets-trigger TF-provenance = CTO/AE follow-up (does not block S3 node/property certification)."
+  fixture_status: "CERTIFIED v1.3 — S3 sub-class hand-audit reconciled 0-diff vs live AWS (AE Step-2 cross-check, CVO-adjudicated 2026-06-08) AND edge/drift taxonomy CTO-ruled (133316Z). Becomes the S3-class regression fixture + the edge/drift design baseline for the S3 sub-compiler. ONLY OPEN ITEM: inf-assets-trigger TF-provenance (AE re-pull when capacity frees) — a single node-property, does not block S3 certification."
