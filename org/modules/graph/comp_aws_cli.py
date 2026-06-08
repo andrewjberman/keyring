@@ -143,6 +143,19 @@ def _hcl_declared(resource_types):
                                  "tf_type": rt, "tf_kind": "hcl-config"}
     return out
 
+def dual_managed():
+    """Resources whose ARN is 'managed' in >1 root-module state -- a DUAL-MANAGEMENT
+    conflict (both modules' applies fight over the same resource; an attribute can
+    ping-pong). The mirror of LIVE-no-DECLARED: not unmanaged, but OVER-managed. A
+    structural config-integrity risk NFRA_COMPAWS surfaces (e.g. opal-users-v2 in
+    portal-auth + shared-infra). Returns {arn: [modules]} for arns in >1 module."""
+    from collections import defaultdict
+    by_arn = defaultdict(set)
+    for r in _load_all_tfstate():
+        if r.get("tf_kind") == "managed" and r.get("arn"):
+            by_arn[r["arn"]].add(r["module"])
+    return {arn: sorted(m) for arn, m in by_arn.items() if len(m) > 1}
+
 def tf_state_index(resource_types):
     """Build lookup indexes for the given TF resource type(s):
     by ARN, by id, by name. PRIMARY = terraform-state union (managed + data);
@@ -1125,6 +1138,12 @@ def compute_diff(ga, gb):
         "class_count_deltas": deltas, "security_finding_deltas": fdeltas,
     }
 
+def cmd_dual_managed(args):
+    dm = dual_managed()
+    print(f"DUAL-MANAGED resources (ARN managed in >1 root-module state): {len(dm)}")
+    for arn, mods in sorted(dm.items()):
+        print(f"  {arn:64} <- {mods}")
+
 def cmd_metrics(args):
     graph = json.load(open(args.graph)) if args.graph else cmd_derive(argparse.Namespace(cls=None, out=None))
     print(json.dumps(compute_metrics(graph), indent=2, default=str))
@@ -1327,6 +1346,8 @@ def main():
     df.add_argument("prior")
     df.add_argument("current")
     df.set_defaults(fn=cmd_diff)
+    dm = sub.add_parser("dual-managed")
+    dm.set_defaults(fn=cmd_dual_managed)
     c = sub.add_parser("classes")
     c.set_defaults(fn=cmd_classes)
     args = ap.parse_args()
