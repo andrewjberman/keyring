@@ -10,7 +10,8 @@
 # Deferred: us-east-2 buckets (provider alias required — explicitly noted in TF comments).
 
 meta:
-  fixture_version: "1.4"
+  fixture_version: "1.5"
+  v1_5_changes: "CORRECTION to v1.4 inf-assets-trigger edge chain (CTO CC/D4-UPDATE 1336xxZ, local-TF-confirmed). v1.4 wrongly collapsed the downstream to EVENT_RULE->EC2-start, dropping the intermediate Lambda. CORRECT full D4 chain = 3 edges, all DECLARED: opal-data-inf -[EMITS_TO]-> EVENT_RULE:inf-assets-trigger-bronze-complete -[TRIGGERS]-> LAMBDA:inf-assets-trigger -[STARTS]-> EC2:i-0ed5afded2ebd4ed4 (inf-gold-layer-runner, via ec2:StartInstances). STARTS = new first-class compute-lifecycle-control edge family (CTO-ruled; distinct from TRIGGERS; IAM-gated) — folds into the EC2 sub-compiler taxonomy. Provenance DECLARED (TF grep-miss, same class as D1). S3 oracle now 0 open items."
   v1_4_changes: "inf-assets-trigger D4 node fully resolved (AE re-pull 2026-06-08): TF-managed (inf-pipeline/inf-assets-trigger.tf, DRIFT-CLASS DECLARED — same as D1, NOT unmanaged); target is an EC2-START (i-0ed5afded2ebd4ed4 inf-gold-layer-runner for assets_v2 silver), NOT a Lambda invoke — so the downstream edge is EVENT_RULE -[STARTS]-> EC2_INSTANCE, a new edge type CTO will confirm. CLOSES the last open node-property; S3 oracle is now 0 open items (modulo CTO's EC2-start edge-label). AD strand RESOLVED-BY-COMMIT (AE 375fa1cb7, enabled by CTO F-003 fix b800d3b99 adding aws-shapes/** to owned-paths) — graph-dir copy is now redundant-with-fixture, AE removing."
   phase: "Phase 1 — S3 hand-audit oracle"
   tf_commit_at_audit: "11d6edaf4"
@@ -736,13 +737,15 @@ event_rules:
       detail:
         bucket.name: ["opal-data-inf"]
         object.key: [{prefix: "bronze/orion-api/"}, {suffix: "_BRONZE_COMPLETE.json"}]
-    tf_managed: true   # v1.4: AE re-pull RESOLVED — TF-declared in inf-pipeline/inf-assets-trigger.tf (DRIFT-CLASS DECLARED, same as D1; NOT unmanaged)
-    target: "EC2-START i-0ed5afded2ebd4ed4 (inf-gold-layer-runner) for assets_v2 silver — NOT a Lambda invoke. Edge is EVENT_RULE -[STARTS]-> EC2_INSTANCE (a new edge type vs the TRIGGERS->LAMBDA case); CTO to confirm the edge label (AE sent full detail to CTO 2026-06-08)."
+    tf_managed: true   # DECLARED — TF grep-miss (CTO local-confirmed inf-pipeline/inf-assets-trigger.tf: aws_cloudwatch_event_rule + event_target); SAME CLASS as D1. All 3 chain edges declared=true, no drift.
+    target_lambda: "inf-assets-trigger"   # v1.5 CORRECTION (CTO 1336xxZ): the EventBridge target IS a Lambda (TRIGGERS), which THEN starts the EC2 (STARTS) — my v1.4 collapse to EVENT_RULE->EC2 dropped the intermediate Lambda.
+    downstream_ec2_start: "inf-assets-trigger (LAMBDA) -[STARTS]-> EC2 i-0ed5afded2ebd4ed4 (inf-gold-layer-runner) via ec2:StartInstances, for assets_v2 silver. STARTS = new first-class compute-lifecycle-control edge family (CTO-ruled): distinct from TRIGGERS (event-source-driven), IAM-gated like the Lambda->S3 data edges. Folds into the EC2 sub-compiler taxonomy."
     cto_ruling: "D4 RULED (CTO 133316Z): EventBridge S3-event routing is inherently many-to-many — every enabled rule whose pattern matches fires independently, so two rules on the same _BRONZE_COMPLETE.json pattern is the BASELINE semantic, not an anomaly. Model as TWO PAIRWISE EMITS_TO edges (opal-data-inf out-degree 2), NOT one multi-target edge — fan-out is the source node's out-degree, which makes comp-blast surface BOTH rules+Lambdas automatically. Pattern-specificity + enabled + provenance live on each EVENT_RULE node, EMITS_TO stays generic (the S3->EventBridge bridge). VALIDATES the GAP-7 first-class-node decision (a property-on-direct-edge model could not express two rules matching one pattern)."
-    notes: "Node factual + fully resolved (v1.4): AE live-confirmed ENABLED + TF-declared + target = EC2-start. Edge model CTO-RULED pairwise EMITS_TO; the downstream edge is EVENT_RULE->EC2-start (not ->Lambda) — CTO to confirm the new edge-type label."
-    # Edges (CTO-ruled 133316Z pairwise EMITS_TO; downstream re-classed v1.4 — target is EC2-start not Lambda):
-    #   opal-data-inf -[EMITS_TO]-> EVENT_RULE:inf-assets-trigger-bronze-complete
-    #   EVENT_RULE:inf-assets-trigger-bronze-complete -[STARTS]-> EC2_INSTANCE:i-0ed5afded2ebd4ed4 (inf-gold-layer-runner)  [edge-label pending CTO]
+    notes: "Node factual + fully resolved (v1.5): ENABLED + TF-DECLARED + 3-edge chain CTO-ruled. Full D4 chain = EMITS_TO -> TRIGGERS -> STARTS (3 edges, all declared=true, no drift)."
+    # Edges (CTO-ruled, full D4 chain, all declared=true):
+    #   opal-data-inf -[EMITS_TO]-> EVENT_RULE:inf-assets-trigger-bronze-complete   (pairwise; opal-data-inf out-degree 2 with inf-silver-chain-rule)
+    #   EVENT_RULE:inf-assets-trigger-bronze-complete -[TRIGGERS]-> LAMBDA:inf-assets-trigger
+    #   LAMBDA:inf-assets-trigger -[STARTS]-> EC2_INSTANCE:i-0ed5afded2ebd4ed4 (inf-gold-layer-runner)   [STARTS = new compute-lifecycle-control edge family, IAM-gated via ec2:StartInstances]
 
 # =============================================================================
 # OPEN QUESTIONS / ORACLE GAPS (for AE live-AWS cross-check)
