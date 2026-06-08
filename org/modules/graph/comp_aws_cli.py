@@ -819,7 +819,8 @@ def derive_data_access_edges():
                         continue
                     seen.add(key)
                     edges.append({"source": carn, "target": f"*:{verb.lower()}", "edge_type": verb,
-                                  "via_role": rarn.split("/")[-1], "wildcard": True})
+                                  "via_role": rarn.split("/")[-1], "wildcard": True,
+                                  "semantic": "capability"})
                 else:
                     # resolve resource arn -> node arn (strip /key suffix for s3)
                     tgt = target
@@ -830,7 +831,7 @@ def derive_data_access_edges():
                         continue
                     seen.add(key)
                     edges.append({"source": carn, "target": tgt, "edge_type": verb,
-                                  "via_role": rarn.split("/")[-1]})
+                                  "via_role": rarn.split("/")[-1], "semantic": "capability"})
     return edges
 
 def derive_event_sources():
