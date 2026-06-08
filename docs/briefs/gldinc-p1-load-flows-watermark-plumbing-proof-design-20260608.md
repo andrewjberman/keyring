@@ -40,6 +40,8 @@ Each night:
 
 This per-event grain is the substantive engineering of the plumbing-proof; the shadow scorecard **empirically confirms** the byte-identity and would catch any miss in this reasoning on night 1.
 
+**Implementation gotcha — dedup order-stability (must handle at build).** Both dedups (`:128-129` transaction_id `keep='last'`; `:145-149` composite `keep='last'`) are **row-order-dependent**. The oracle concatenates partitions in **global sorted-key order** (`:100-105` `sorted(keys)` → `dfs[index]`). A naïve windowed union (cached-block ++ new-block) can present a different row order whenever a new partition's KEY sorts before a cached key (file naming not strictly monotonic with date — e.g. the `bd_transactions` bulk file vs daily partitions), making `keep='last'` retain a different duplicate → divergence. **Fix at build:** persist each cached event's source partition key, and re-sort the union by (source_key, intra-file row index) to reproduce the oracle's exact concat order before the dedups run. To guarantee the shared transform is byte-identical, **refactor the oracle's post-read transform (`:128-293`) into a single pure helper `_transform_events_to_daily(txns)` that BOTH the oracle and windowed paths call** — never duplicate the logic (drift = divergence). The shadow scorecard is the empirical backstop for exactly these order/dedup traps.
+
 ## 4. Watermark object + lifecycle
 
 - **Object:** `s3://opal-data-bd/gold/_state/load_flows/watermark.json` — `{ "max_partition_date": "YYYY-MM-DD", "partition_fingerprint": {<key>: <LastModified ISO>}, "cache_key": "gold/_state/load_flows/preflt_events.parquet", "updated_at": ISO }`.
