@@ -739,7 +739,15 @@ def derive_edges():
                 dn = o.get("DomainName", "")
                 if ".s3" in dn:
                     bucket = dn.split(".s3")[0]
-                    E(darn, f"arn:aws:s3:::{bucket}", "ORIGIN")
+                    barn = f"arn:aws:s3:::{bucket}"
+                    E(darn, barn, "ORIGIN")
+                    # origin-access lockdown (sec1.2: USES_OAC/USES_OAI -> the S3 origin bucket)
+                    oac = o.get("OriginAccessControlId")
+                    if oac:
+                        E(darn, barn, "USES_OAC", oac_id=oac)
+                    oai = (o.get("S3OriginConfig") or {}).get("OriginAccessIdentity")
+                    if oai:
+                        E(darn, barn, "USES_OAI", oai=oai.split("/")[-1])
     except Exception:
         pass
     # EVENT_RULE -[TRIGGERS]-> target  +  {resource|EVENT_SOURCE} -[EMITS_TO]-> EVENT_RULE (sec 3.3)
@@ -807,9 +815,14 @@ def derive_edges():
         if n.get("kms_key_arn"):
             _enc(n.get("arn"), n["kms_key_arn"])
         for sub in n.get("subscriptions", []):
-            # subscription endpoint (email/https/lambda-arn) -- external delivery target,
-            # not an in-graph resource node -> wildcard-exempt.
-            E(n.get("arn"), sub, "SUBSCRIBES", wildcard=True)
+            proto, _, endpoint = sub.partition(":")
+            if proto in ("lambda", "sqs") and endpoint.startswith("arn:"):
+                # intra-account -> resolve to the actual lambda/sqs node (0-dangling)
+                E(n.get("arn"), endpoint, "SUBSCRIBES", protocol=proto)
+            else:
+                # email/https/http/sms -> typed EXTERNAL_ENDPOINT family (CTO sec3.2 spec,
+                # built with EXTERNAL_PRINCIPAL at IAM full-edge cert) -> interim wildcard-exempt.
+                E(n.get("arn"), sub, "SUBSCRIBES", protocol=proto, wildcard=True)
     for n in live_dynamodb():
         if n.get("kms_key_arn"):
             _enc(n.get("arn"), n["kms_key_arn"])
