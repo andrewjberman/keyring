@@ -156,7 +156,7 @@ def live_s3():
     return nodes
 
 def _norm_statements(policy_doc):
-    """Normalize a policy document to a comparable statement set (§1.5 full set —
+    """Normalize a policy document to a comparable statement set (sec 1.5 full set --
     Sid/Effect/Principal/sorted-Action/sorted-Resource/Condition)."""
     stmts = policy_doc.get("Statement", [])
     if isinstance(stmts, dict):
@@ -175,7 +175,7 @@ def _norm_statements(policy_doc):
 
 def live_s3_policies():
     """S3_BUCKET_POLICY nodes (separate node per Q2; full normalized statement set
-    per §1.5 so LIVE-no-DECLARED / removed-statement drift is expressible)."""
+    per sec 1.5 so LIVE-no-DECLARED / removed-statement drift is expressible)."""
     import json as _j
     c = _boto("s3")
     nodes = []
@@ -249,15 +249,52 @@ def live_lambda():
     return nodes
 
 def live_eventbridge():
+    import json as _j
     nodes = []
     c = _boto("events")
     pag = c.get_paginator("list_rules")
     for pg in pag.paginate():
         for r in pg["Rules"]:
-            nodes.append({"id": r["Name"], "type": "EVENT_RULE",
+            pat = r.get("EventPattern")
+            nodes.append({"id": r["Name"], "type": "EVENT_RULE", "arn": r.get("Arn"),
                           "schedule": r.get("ScheduleExpression"),
-                          "state": r.get("State")})
+                          "state": r.get("State"),
+                          "event_pattern": _j.loads(pat) if pat else None,
+                          "event_bus": r.get("EventBusName", "default")})
     return nodes
+
+def classify_event_source(rule):
+    """sec 3.3 determination: return (source_kind, service_or_api, detail_type, pinned_resource_arn|None).
+    Deterministic from the event_pattern; SCHEDULED if no pattern + a schedule."""
+    pat = rule.get("event_pattern")
+    if not pat:
+        return ("SCHEDULED", rule.get("schedule") or "rate", None, None)
+    srcs = pat.get("source") or []
+    dts = pat.get("detail-type") or []
+    detail = pat.get("detail") or {}
+    detail_type = dts[0] if isinstance(dts, list) and dts else (dts if isinstance(dts, str) else None)
+    # CloudTrail API events
+    if any("CloudTrail" in str(d) for d in (dts if isinstance(dts, list) else [dts])):
+        api = None
+        if isinstance(detail, dict):
+            ev = detail.get("eventName") or detail.get("eventSource")
+            api = (ev[0] if isinstance(ev, list) else ev) if ev else None
+        return ("CLOUDTRAIL_API", api or "api", detail_type, None)
+    # resource-pinned (S3 bucket / EC2 instance)
+    if isinstance(detail, dict):
+        bn = (((detail.get("bucket") or {}).get("name")) if isinstance(detail.get("bucket"), dict) else None)
+        if bn:
+            b = bn[0] if isinstance(bn, list) else bn
+            return ("RESOURCE", "aws.s3", detail_type, f"arn:aws:s3:::{b}")
+        iid = detail.get("instance-id")
+        if iid:
+            i = iid[0] if isinstance(iid, list) else iid
+            return ("RESOURCE", "aws.ec2", detail_type, f"arn:aws:ec2:us-east-1:{ACCOUNT}:instance/{i}")
+    # AWS service-scoped (non-pinned) vs CUSTOM
+    src = srcs[0] if isinstance(srcs, list) and srcs else (srcs if isinstance(srcs, str) else None)
+    if src and str(src).startswith("aws."):
+        return ("AWS_SERVICE", src, detail_type, None)
+    return ("CUSTOM", src or "custom", detail_type, None)
 
 def live_sns():
     nodes = []
@@ -366,7 +403,7 @@ CLASSES = {
 }
 
 def _node_arn(cls, node):
-    """Canonical ARN for a live node (the §1 matching key). Prefer an API-given
+    """Canonical ARN for a live node (the sec 1 matching key). Prefer an API-given
     arn; else construct deterministically. Region-aware for EC2/KMS."""
     if node.get("arn"):
         return node["arn"]
@@ -393,7 +430,7 @@ def derive_class(cls):
     for n in live:
         arn = _node_arn(cls, n)
         n["arn"] = arn
-        # ARN-canonical join, with id/name fallback (CVO §1 matching key)
+        # ARN-canonical join, with id/name fallback (CVO sec 1 matching key)
         prov = by_arn.get(arn) or by_id.get(str(n["id"])) or (by_name.get(n.get("name")) if n.get("name") else None)
         if prov:
             n["drift_class"] = "DECLARED"
@@ -406,7 +443,7 @@ def derive_class(cls):
             n["provenance"] = None
             n["tf_managed"] = False
             n["owner_pipeline"] = None
-        # §1.1 universal node properties
+        # sec 1.1 universal node properties
         if "type" not in n:           # 0-untyped invariant
             n["type"] = cls.upper()
         if not n.get("name"):
@@ -427,7 +464,7 @@ def derive_class(cls):
     }
 
 # ---------------------------------------------------------------------------
-# EDGES -- typed relationships (PRD §3 / CVO schema). Derived from live AWS,
+# EDGES -- typed relationships (PRD sec 3 / CVO schema). Derived from live AWS,
 # discovery-based (no hardcoded edge lists). Each edge: (src_arn, dst_arn, type).
 # ---------------------------------------------------------------------------
 def derive_edges():
@@ -521,18 +558,43 @@ def derive_edges():
                     E(darn, f"arn:aws:s3:::{bucket}", "ORIGIN")
     except Exception:
         pass
-    # EVENT_RULE -[TRIGGERS]-> target
+    # EVENT_RULE -[TRIGGERS]-> target  +  {resource|EVENT_SOURCE} -[EMITS_TO]-> EVENT_RULE (sec 3.3)
     ev = _boto("events")
     try:
-        pag = ev.get_paginator("list_rules")
-        for pg in pag.paginate():
-            for r in pg["Rules"]:
-                rarn = r["Arn"]
-                for t in ev.list_targets_by_rule(Rule=r["Name"]).get("Targets", []):
+        for r in live_eventbridge():
+            rarn = r.get("arn")
+            # EMITS_TO (origin)
+            kind, svc, dt, pinned = classify_event_source(r)
+            if pinned:
+                E(pinned, rarn, "EMITS_TO")
+            else:
+                es_arn = f"event-source::{kind}::{svc}"
+                E(es_arn, rarn, "EMITS_TO")
+            # TRIGGERS (targets)
+            try:
+                for t in ev.list_targets_by_rule(Rule=r["id"]).get("Targets", []):
                     E(rarn, t["Arn"], "TRIGGERS")
+            except Exception:
+                pass
     except Exception:
         pass
     return edges
+
+def derive_event_sources():
+    """EVENT_SOURCE nodes (sec 3.3 EV-SCHEMA-GAP-1) -- one per distinct
+    (source_kind, service_or_api) origin that is not a pinned resource."""
+    seen = {}
+    for r in live_eventbridge():
+        kind, svc, dt, pinned = classify_event_source(r)
+        if pinned:
+            continue
+        key = f"event-source::{kind}::{svc}"
+        if key not in seen:
+            seen[key] = {"id": key, "arn": key, "name": svc, "type": "EVENT_SOURCE",
+                         "source_kind": kind, "service_or_api": svc, "detail_type": dt,
+                         "drift_class": "LIVE-no-DECLARED", "tf_managed": False,
+                         "owner_pipeline": None, "provenance": None}
+    return list(seen.values())
 
 # ---------------------------------------------------------------------------
 # SCORE -- P/R/F1 vs certified oracle.  Oracle = ground truth.
@@ -630,6 +692,10 @@ def cmd_derive(args):
             print(f"  {c:12} ERROR: {type(e).__name__}: {e}")
             graph["classes_data"][c] = {"error": str(e)}
     if not args.cls and not getattr(args, "no_edges", False):
+        es = derive_event_sources()
+        graph["classes_data"]["event_source"] = {"class": "event_source", "nodes": es,
+            "declared_no_live": [], "counts": {"live": len(es), "untyped": 0}}
+        print(f"  event_source live={len(es):3} (typed EVENT_SOURCE origins, sec 3.3)")
         graph["edges"] = derive_edges()
         from collections import Counter
         ec = Counter(e["edge_type"] for e in graph["edges"])
