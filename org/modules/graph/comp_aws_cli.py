@@ -112,7 +112,8 @@ def _hcl_declared(resource_types):
     name_attrs = {"aws_iam_role": "name", "aws_s3_bucket": "bucket",
                   "aws_lambda_function": "function_name", "aws_dynamodb_table": "name",
                   "aws_sns_topic": "name", "aws_sqs_queue": "name",
-                  "aws_cloudwatch_metric_alarm": "alarm_name", "aws_secretsmanager_secret": "name"}
+                  "aws_cloudwatch_metric_alarm": "alarm_name", "aws_secretsmanager_secret": "name",
+                  "aws_sfn_state_machine": "name", "aws_sfn_activity": "name"}
     out = {}
     for f in glob.glob(str(TF_ROOT / "**" / "*.tf"), recursive=True):
         try:
@@ -540,6 +541,52 @@ def live_cloudwatch_alarms():
                           "dimensions": {d["Name"]: d["Value"] for d in a.get("Dimensions", [])}})
     return nodes
 
+def live_stepfunctions():
+    import hashlib as _hl
+    nodes = []
+    c = _boto("stepfunctions")
+    pag = c.get_paginator("list_state_machines")
+    for pg in pag.paginate():
+        for sm in pg.get("stateMachines", []):
+            try:
+                d = c.describe_state_machine(stateMachineArn=sm["stateMachineArn"])
+                defn_raw = d.get("definition", "{}")
+                defn_hash = _hl.sha256(
+                    json.dumps(json.loads(defn_raw), sort_keys=True).encode()
+                ).hexdigest()[:16]
+                log_cfg = d.get("loggingConfiguration") or {}
+                nodes.append({
+                    "id": d["name"],
+                    "name": d["name"],
+                    "type": "STATE_MACHINE",
+                    "arn": d["stateMachineArn"],
+                    "machine_type": d.get("type", "STANDARD"),
+                    "status": d.get("status", "ACTIVE"),
+                    "definition_hash": defn_hash,
+                    "role_arn": d.get("roleArn", ""),
+                    "logging_level": log_cfg.get("level", "OFF"),
+                    "tracing_enabled": bool(
+                        (d.get("tracingConfiguration") or {}).get("enabled", False)
+                    ),
+                })
+            except Exception:
+                pass
+    return nodes
+
+def live_sfn_activities():
+    nodes = []
+    c = _boto("stepfunctions")
+    pag = c.get_paginator("list_activities")
+    for pg in pag.paginate():
+        for a in pg.get("activities", []):
+            nodes.append({
+                "id": a["name"],
+                "name": a["name"],
+                "type": "ACTIVITY",
+                "arn": a["activityArn"],
+            })
+    return nodes
+
 # class -> (live_fn, [tf_resource_types that materialize this class's nodes])
 CLASSES = {
     "s3":          (live_s3,                ["aws_s3_bucket"]),
@@ -556,6 +603,8 @@ CLASSES = {
     "kms":         (live_kms,               ["aws_kms_key"]),
     "cloudwatch":  (live_cloudwatch_alarms, ["aws_cloudwatch_metric_alarm"]),
     "logs":        (live_log_groups,        ["aws_cloudwatch_log_group"]),
+    "stepfunctions": (live_stepfunctions,   ["aws_sfn_state_machine"]),
+    "sfn_activity":  (live_sfn_activities,  ["aws_sfn_activity"]),
 }
 
 def _node_arn(cls, node):
@@ -576,6 +625,8 @@ def _node_arn(cls, node):
         "cloudfront":  f"arn:aws:cloudfront::{ACCOUNT}:distribution/{i}",
         "kms":         f"arn:aws:kms:{rg}:{ACCOUNT}:key/{i}",
         "cloudwatch":  f"arn:aws:cloudwatch:us-east-1:{ACCOUNT}:alarm:{i}",
+        "stepfunctions": f"arn:aws:states:us-east-1:{ACCOUNT}:stateMachine:{i}",
+        "sfn_activity":  f"arn:aws:states:us-east-1:{ACCOUNT}:activity:{i}",
     }.get(cls, i)
 
 def derive_class(cls):
@@ -844,6 +895,58 @@ def derive_edges():
     for n in live_secrets():
         if n.get("kms_key_arn"):
             _enc(n.get("arn"), n["kms_key_arn"])
+    # STATE_MACHINE -[ASSUMES]-> IAM_ROLE ; -[INVOKES]-> targets ; -[LOGS_TO]-> LOG_GROUP
+    # {LAMBDA} -[TRIGGERS]-> STATE_MACHINE (env var scan; EB TRIGGERS already derived above)
+    try:
+        sfnc = _boto("stepfunctions")
+        _sfn_nodes = live_stepfunctions()
+        _sm_arns = {sm["arn"] for sm in _sfn_nodes}
+        for sm in _sfn_nodes:
+            smarn = sm["arn"]
+            if sm.get("role_arn"):
+                E(smarn, sm["role_arn"], "ASSUMES")
+            try:
+                detail = sfnc.describe_state_machine(stateMachineArn=smarn)
+                defn = json.loads(detail.get("definition", "{}"))
+                for sname, state in defn.get("States", {}).items():
+                    if state.get("Type") != "Task":
+                        continue
+                    res = state.get("Resource", "")
+                    tgt_arn = None
+                    if res.startswith("arn:aws:states:::"):
+                        # SDK integration: resource ARN in Parameters.FunctionName / FunctionArn etc.
+                        params = state.get("Parameters") or {}
+                        fn = params.get("FunctionName", "") or params.get("FunctionArn", "")
+                        if isinstance(fn, str) and fn.endswith(".$"):
+                            fn = ""  # runtime reference -- not statically resolvable
+                        if fn and fn.startswith("arn:aws:"):
+                            tgt_arn = fn
+                        elif fn:
+                            tgt_arn = f"arn:aws:lambda:us-east-1:{ACCOUNT}:function:{fn}"
+                    elif res.startswith("arn:aws:"):
+                        tgt_arn = res  # direct ARN (Lambda, SNS, SQS, DDB, another SFN, ...)
+                    if tgt_arn:
+                        E(smarn, tgt_arn, "INVOKES", state_name=sname)
+                log_cfg = detail.get("loggingConfiguration") or {}
+                for dest in log_cfg.get("destinations", []):
+                    lg_arn = (dest.get("cloudWatchLogsLogGroup") or {}).get("logGroupArn", "")
+                    if lg_arn:
+                        E(smarn, lg_arn.rstrip(":*"), "LOGS_TO")
+            except Exception:
+                pass
+        if _sm_arns:
+            for n in live_lambda():
+                farn = _node_arn("lambda", n)
+                try:
+                    cfg = lc.get_function_configuration(FunctionName=n["id"])
+                    env = (cfg.get("Environment") or {}).get("Variables", {}) or {}
+                    for k, v in env.items():
+                        if isinstance(v, str) and v in _sm_arns:
+                            E(farn, v, "TRIGGERS", via=k)
+                except Exception:
+                    pass
+    except Exception:
+        pass
     return edges
 
 # action-prefix -> (verb, target_node_kind) for the derived data-access edge layer
@@ -1228,7 +1331,37 @@ def score_iam_ec2():
     }
     return res
 
-SCORERS = {"s3": score_s3, "iam-ec2": score_iam_ec2}
+def score_stepfunctions():
+    oracle = _load_yaml(SHAPES / "stepfunctions-hand-audit-fixture-v0.1.yaml")
+    truth = {sm["name"]: sm for sm in oracle.get("state_machines", [])}
+    derived = {n["id"]: n for n in derive_class("stepfunctions")["nodes"]}
+    tp_nodes = set(truth) & set(derived)
+    fp = len(set(derived) - set(truth))
+    fn = len(set(truth) - set(derived))
+    attr_total = attr_ok = 0
+    for name in tp_nodes:
+        t, d = truth[name], derived[name]
+        for axis in ("machine_type", "definition_hash", "tf_managed"):
+            if axis in t:
+                attr_total += 1
+                if str(d.get(axis, "")) == str(t[axis]):
+                    attr_ok += 1
+    pe, re_, fe = _f1(len(tp_nodes), fp, fn)
+    act_truth_count = oracle.get("activity_count", 0)
+    derived_acts = derive_class("sfn_activity")["nodes"]
+    return {
+        "class": "stepfunctions",
+        "node_tp": len(tp_nodes), "node_fp": fp, "node_fn": fn,
+        "node_precision": round(pe, 4), "node_recall": round(re_, 4), "node_f1": round(fe, 4),
+        "attr_accuracy": round(attr_ok / attr_total, 4) if attr_total else None,
+        "attr_checked": attr_total,
+        "activity_count_match": len(derived_acts) == act_truth_count,
+        "activity_derived": len(derived_acts), "activity_truth": act_truth_count,
+        "missed": sorted(set(truth) - set(derived)),
+        "extra": sorted(set(derived) - set(truth)),
+    }
+
+SCORERS = {"s3": score_s3, "iam-ec2": score_iam_ec2, "stepfunctions": score_stepfunctions}
 
 # ---------------------------------------------------------------------------
 def cmd_classes(args):

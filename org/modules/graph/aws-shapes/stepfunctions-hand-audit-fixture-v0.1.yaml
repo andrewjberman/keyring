@@ -1,0 +1,95 @@
+# NFRA_COMPAWS Phase-1 -- StepFunctions Hand-Audit Oracle Fixture
+# Author: 0.6.0_AE_PartnerETL
+# Date: 2026-06-08
+# Schema: CTO SS 3.12, comp-aws-schema v0.5 (commit a6cbb5a29)
+# Status: DRAFT v0.1 -- ready for CVO live-AWS cross-check.
+#
+# SCOPE: STATE_MACHINE + ACTIVITY node inventory + certified edges.
+#   13th/final NFRA_COMPAWS class. Edge taxonomy: ASSUMES/INVOKES/POLLS/LOGS_TO/TRIGGERS.
+#
+# CERT MODEL: CVO hand-audit (TF = DECLARED baseline) vs AE live-AWS pull (LIVE)
+#   -> diff -> drift classes -> adjudicate -> 0-diff -> certify.
+#   Single state machine in account: YangDataPipeline (yang-pipeline TF module).
+#
+# definition_hash: sha256(json.dumps(json.loads(definition), sort_keys=True).encode())[:16]
+# First-run pre-read value: 5082ce9dba1318fd. Update if definition is redeployed.
+# Hash drift = console-edit detection (DECLARED definition vs LIVE definition).
+
+meta:
+  fixture_version: "0.1"
+  phase: "Phase 1 -- StepFunctions hand-audit oracle (13th/final ADHC_CMPAWS class)"
+  tf_commit_at_audit: "a6cbb5a29"
+  ae_author: "0.6.0_AE_PartnerETL"
+  cvo_author: "3.0.0_SA_CVO"
+  schema_ref: "CTO SS 3.12 comp-aws-schema v0.5 (a6cbb5a29)"
+  live_feed: "boto3 describe_state_machine + list_state_machines 2026-06-08"
+
+schema:
+  nodes:
+    - "STATE_MACHINE: name, arn, machine_type (STANDARD|EXPRESS), status (ACTIVE|DELETING), definition_hash, role_arn, logging_level (OFF|ALL|ERROR|FATAL), tracing_enabled, tf_managed, owner_pipeline"
+    - "ACTIVITY: name, arn  (0 in this account)"
+  edges:
+    - "STATE_MACHINE -[ASSUMES]-> IAM_ROLE (execution role)"
+    - "STATE_MACHINE -[INVOKES]-> {LAMBDA|SNS|SQS|DDB|SFN|APIGW} (from ASL Task Resource ARNs)"
+    - "STATE_MACHINE -[LOGS_TO]-> LOG_GROUP (from loggingConfiguration.destinations; 0 here, logging_level=OFF)"
+    - "STATE_MACHINE -[POLLS]-> ACTIVITY (0 in this account)"
+    - "{EVENT_RULE|LAMBDA} -[TRIGGERS]-> STATE_MACHINE (inbound; EB targets + Lambda env vars; 0 here)"
+
+# =============================================================================
+# HAND-AUDIT GROUND TRUTH
+# =============================================================================
+
+state_machines:
+  - name: YangDataPipeline
+    arn: "arn:aws:states:us-east-1:313476888478:stateMachine:YangDataPipeline"
+    machine_type: STANDARD
+    status: ACTIVE
+    definition_hash: "5082ce9dba1318fd"
+    role_arn: "arn:aws:iam::313476888478:role/yang-pipeline-sfn-role"
+    logging_level: OFF
+    tracing_enabled: false
+    tf_managed: true
+    owner_pipeline: yang-pipeline
+    tf_resource: "aws_sfn_state_machine.yang_pipeline"
+    notes: >
+      9 Task states all invoke yang-* Lambda functions directly via ARN (no
+      states::: SDK integration pattern). No EventBridge rules target this SM.
+      No LOGS_TO (logging_level=OFF). No POLLS (0 activities in account).
+      No inbound TRIGGERS (no Lambda env var or EB rule references found).
+
+# Total activity count (cert: 0-node class -- no activities in this account)
+activity_count: 0
+
+# =============================================================================
+# CERTIFIED EDGES (informational -- scored via derive_edges() output, not scorer)
+# =============================================================================
+
+edges_certified:
+  assumes:
+    - source: "arn:aws:states:us-east-1:313476888478:stateMachine:YangDataPipeline"
+      target: "arn:aws:iam::313476888478:role/yang-pipeline-sfn-role"
+      type: ASSUMES
+
+  invokes:
+    - {source: YangDataPipeline, state_name: ReadManifest,
+       target_arn: "arn:aws:lambda:us-east-1:313476888478:function:yang-validate-files"}
+    - {source: YangDataPipeline, state_name: MoveToProcessed,
+       target_arn: "arn:aws:lambda:us-east-1:313476888478:function:yang-move-to-processed"}
+    - {source: YangDataPipeline, state_name: GetPriorMetadata,
+       target_arn: "arn:aws:lambda:us-east-1:313476888478:function:yang-get-prior-metadata"}
+    - {source: YangDataPipeline, state_name: GenerateLatest,
+       target_arn: "arn:aws:lambda:us-east-1:313476888478:function:yang-generate-latest"}
+    - {source: YangDataPipeline, state_name: IngestDynamoDB,
+       target_arn: "arn:aws:lambda:us-east-1:313476888478:function:yang-ingest-dynamodb"}
+    - {source: YangDataPipeline, state_name: GenerateManifest,
+       target_arn: "arn:aws:lambda:us-east-1:313476888478:function:yang-generate-manifest"}
+    - {source: YangDataPipeline, state_name: CleanupUploads,
+       target_arn: "arn:aws:lambda:us-east-1:313476888478:function:yang-cleanup-uploads"}
+    - {source: YangDataPipeline, state_name: CaptureOutputVersions,
+       target_arn: "arn:aws:lambda:us-east-1:313476888478:function:yang-capture-output-versions"}
+    - {source: YangDataPipeline, state_name: InvalidateCloudFront,
+       target_arn: "arn:aws:lambda:us-east-1:313476888478:function:yang-invalidate-cloudfront"}
+
+  logs_to: []
+  triggers: []
+  polls: []
