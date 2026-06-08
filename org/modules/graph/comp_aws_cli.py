@@ -855,6 +855,11 @@ def derive_edges():
         E(barn, parn, "HAS_POLICY")
         seen_pr = set()
         for st in p["statements"]:
+            # GRANTS = Allow only (IAM-PUBLIC-DENY-FP): a Deny statement is a guardrail, NOT a
+            # grant. Deny+Principal:* (e.g. DenyInsecureTransport) must NOT emit a public-principal
+            # node/finding -- that's the opposite of public exposure.
+            if st.get("effect") != "Allow":
+                continue
             pr = st.get("principal")
             prkeys = []
             if isinstance(pr, dict):
