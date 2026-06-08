@@ -93,6 +93,7 @@ Assign the DE/DS/DT of the primary pod, or the AE for pipeline-only projects.
 | `AUTH` | Portal Authentication, Authorization, and Identity | `0.7.0_AE_CloudOps` (infra) + `0.4.0_DT_ClientPlatform` (app layer) |
 | `CDRS` | Cloud Resources (account-wide AWS inventory + Terraform-import catch-up; CF/Lambda/DynamoDB/S3 gaps) | `0.7.0_AE_CloudOps` (infra) + `0.4.0_DT_ClientPlatform` (lane partner) |
 | `COMP` | Compiler tools — generation, iteration, testing, generalization. Covers the `comp-*` stack plus the autoresearch-style bootstrap pipeline for generating compilers over arbitrary target systems. Root implementation lives under `comp/`. | `1.0.0_SA_CTO` (protocol) + `0.7.0_AE_CloudOps` (tools infra) |
+| `NFRA` | Cloud / shared-resource cost + infrastructure governance (standing). Projects: `NFRA_COSTAWS` (cloud-cost governance — attribution/telemetry/right-sizing/lifecycle/cadence), `NFRA_COMPAWS` (comp-aws comprehensive cloud compiler + certified resource graph + snapshot archive). NFRA is a MACRO, not a project key (registered 2026-06-08 Andrew-direct; both projects moved here from ADHC/bare-NFRA). | `0.7.0_AE_CloudOps` |
 
 ---
 
