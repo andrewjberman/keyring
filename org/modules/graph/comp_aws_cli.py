@@ -587,6 +587,48 @@ def live_sfn_activities():
             })
     return nodes
 
+def _walk_asl_states(states):
+    """Recursively yield (state_name, state_dict) for all ASL states at any nesting depth."""
+    for sname, state in states.items():
+        yield sname, state
+        for branch in state.get("Branches", []):         # Parallel
+            yield from _walk_asl_states(branch.get("States", {}))
+        ip = state.get("ItemProcessor") or {}             # Map (new-style)
+        if ip.get("States"):
+            yield from _walk_asl_states(ip["States"])
+        it = state.get("Iterator") or {}                  # Map (legacy-style)
+        if it.get("States"):
+            yield from _walk_asl_states(it["States"])
+
+def _sfn_task_invokes(definition_str):
+    """Return list of (state_name, target_arn) for every Task state in an ASL JSON string.
+    Handles direct arn:aws: Resource ARNs and arn:aws:states::: SDK integration patterns.
+    Recurses into Parallel.Branches, Map.ItemProcessor, Map.Iterator at all depths."""
+    try:
+        defn = json.loads(definition_str)
+    except Exception:
+        return []
+    result = []
+    for sname, state in _walk_asl_states(defn.get("States", {})):
+        if state.get("Type") != "Task":
+            continue
+        res = state.get("Resource", "")
+        tgt_arn = None
+        if res.startswith("arn:aws:states:::"):
+            params = state.get("Parameters") or {}
+            fn = params.get("FunctionName", "") or params.get("FunctionArn", "")
+            if isinstance(fn, str) and fn.endswith(".$"):
+                fn = ""  # runtime reference -- not statically resolvable
+            if fn and fn.startswith("arn:aws:"):
+                tgt_arn = fn
+            elif fn:
+                tgt_arn = f"arn:aws:lambda:us-east-1:{ACCOUNT}:function:{fn}"
+        elif res.startswith("arn:aws:"):
+            tgt_arn = res
+        if tgt_arn:
+            result.append((sname, tgt_arn))
+    return result
+
 # class -> (live_fn, [tf_resource_types that materialize this class's nodes])
 CLASSES = {
     "s3":          (live_s3,                ["aws_s3_bucket"]),
@@ -907,26 +949,8 @@ def derive_edges():
                 E(smarn, sm["role_arn"], "ASSUMES")
             try:
                 detail = sfnc.describe_state_machine(stateMachineArn=smarn)
-                defn = json.loads(detail.get("definition", "{}"))
-                for sname, state in defn.get("States", {}).items():
-                    if state.get("Type") != "Task":
-                        continue
-                    res = state.get("Resource", "")
-                    tgt_arn = None
-                    if res.startswith("arn:aws:states:::"):
-                        # SDK integration: resource ARN in Parameters.FunctionName / FunctionArn etc.
-                        params = state.get("Parameters") or {}
-                        fn = params.get("FunctionName", "") or params.get("FunctionArn", "")
-                        if isinstance(fn, str) and fn.endswith(".$"):
-                            fn = ""  # runtime reference -- not statically resolvable
-                        if fn and fn.startswith("arn:aws:"):
-                            tgt_arn = fn
-                        elif fn:
-                            tgt_arn = f"arn:aws:lambda:us-east-1:{ACCOUNT}:function:{fn}"
-                    elif res.startswith("arn:aws:"):
-                        tgt_arn = res  # direct ARN (Lambda, SNS, SQS, DDB, another SFN, ...)
-                    if tgt_arn:
-                        E(smarn, tgt_arn, "INVOKES", state_name=sname)
+                for sname, tgt_arn in _sfn_task_invokes(detail.get("definition", "{}")):
+                    E(smarn, tgt_arn, "INVOKES", state_name=sname)
                 log_cfg = detail.get("loggingConfiguration") or {}
                 for dest in log_cfg.get("destinations", []):
                     lg_arn = (dest.get("cloudWatchLogsLogGroup") or {}).get("logGroupArn", "")
@@ -1349,6 +1373,24 @@ def score_stepfunctions():
     pe, re_, fe = _f1(len(tp_nodes), fp, fn)
     act_truth_count = oracle.get("activity_count", 0)
     derived_acts = derive_class("sfn_activity")["nodes"]
+    # INVOKES edge recall (the key graph metric for a state machine -- must pass >=0.95)
+    truth_inv_arns = {
+        e["target_arn"]
+        for e in oracle.get("edges_certified", {}).get("invokes", [])
+    }
+    sfnc = _boto("stepfunctions")
+    derived_inv_arns = set()
+    for node in derived.values():
+        try:
+            detail = sfnc.describe_state_machine(stateMachineArn=node["arn"])
+            for _, tgt in _sfn_task_invokes(detail.get("definition", "{}")):
+                derived_inv_arns.add(tgt)
+        except Exception:
+            pass
+    inv_tp = len(truth_inv_arns & derived_inv_arns)
+    inv_fp = len(derived_inv_arns - truth_inv_arns)
+    inv_fn = len(truth_inv_arns - derived_inv_arns)
+    inv_pe, inv_re, inv_fe = _f1(inv_tp, inv_fp, inv_fn)
     return {
         "class": "stepfunctions",
         "node_tp": len(tp_nodes), "node_fp": fp, "node_fn": fn,
@@ -1357,6 +1399,10 @@ def score_stepfunctions():
         "attr_checked": attr_total,
         "activity_count_match": len(derived_acts) == act_truth_count,
         "activity_derived": len(derived_acts), "activity_truth": act_truth_count,
+        "invokes_tp": inv_tp, "invokes_fp": inv_fp, "invokes_fn": inv_fn,
+        "invokes_precision": round(inv_pe, 4), "invokes_recall": round(inv_re, 4),
+        "invokes_f1": round(inv_fe, 4),
+        "invokes_missed": sorted(truth_inv_arns - derived_inv_arns),
         "missed": sorted(set(truth) - set(derived)),
         "extra": sorted(set(derived) - set(truth)),
     }

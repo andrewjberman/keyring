@@ -1,8 +1,8 @@
 # NFRA_COMPAWS Phase-1 -- StepFunctions Hand-Audit Oracle Fixture
-# Author: 0.6.0_AE_PartnerETL
+# Author: 0.6.0_AE_PartnerETL (build) / 3.0.0_SA_CVO (independent cert pass, INVOKES+TRIGGERS correction)
 # Date: 2026-06-08
 # Schema: CTO SS 3.12, comp-aws-schema v0.5 (commit a6cbb5a29)
-# Status: DRAFT v0.1 -- ready for CVO live-AWS cross-check.
+# Status: CORRECTED v0.2 -- CVO-confirmed 26 INVOKES (recursive ASL walk) + 2 TRIGGERS.
 #
 # SCOPE: STATE_MACHINE + ACTIVITY node inventory + certified edges.
 #   13th/final NFRA_COMPAWS class. Edge taxonomy: ASSUMES/INVOKES/POLLS/LOGS_TO/TRIGGERS.
@@ -12,17 +12,19 @@
 #   Single state machine in account: YangDataPipeline (yang-pipeline TF module).
 #
 # definition_hash: sha256(json.dumps(json.loads(definition), sort_keys=True).encode())[:16]
-# First-run pre-read value: 5082ce9dba1318fd. Update if definition is redeployed.
-# Hash drift = console-edit detection (DECLARED definition vs LIVE definition).
+# INVOKES: 26 distinct Lambda ARNs from RECURSIVE ASL walk (Parallel.Branches + Map.ItemProcessor).
+#   v0.1 had 9 (top-level only) -- CVO-REJECT SFN-INVOKES-NESTED-GAP. v0.2 corrected.
+# TRIGGERS: 2 inbound Lambdas with STATE_MACHINE_ARN env var. v0.1 had 0 -- CVO correction.
 
 meta:
-  fixture_version: "0.1"
+  fixture_version: "0.2"
+  v0_2_changes: "CVO independent cert: INVOKES 9->26 (recursive ASL walk, Parallel branches); TRIGGERS 0->2 (yang-pipeline-trigger + opal-data-refresh-api). Node layer 1.00 unchanged."
   phase: "Phase 1 -- StepFunctions hand-audit oracle (13th/final ADHC_CMPAWS class)"
   tf_commit_at_audit: "a6cbb5a29"
   ae_author: "0.6.0_AE_PartnerETL"
-  cvo_author: "3.0.0_SA_CVO"
+  cvo_independent_cert: "3.0.0_SA_CVO (2026-06-08, boto3 + recursive ASL walk)"
   schema_ref: "CTO SS 3.12 comp-aws-schema v0.5 (a6cbb5a29)"
-  live_feed: "boto3 describe_state_machine + list_state_machines 2026-06-08"
+  live_feed: "boto3 describe_state_machine + list_state_machines 2026-06-08 (CVO independent)"
 
 schema:
   nodes:
@@ -30,10 +32,10 @@ schema:
     - "ACTIVITY: name, arn  (0 in this account)"
   edges:
     - "STATE_MACHINE -[ASSUMES]-> IAM_ROLE (execution role)"
-    - "STATE_MACHINE -[INVOKES]-> {LAMBDA|SNS|SQS|DDB|SFN|APIGW} (from ASL Task Resource ARNs)"
+    - "STATE_MACHINE -[INVOKES]-> {LAMBDA|SNS|SQS|DDB|SFN|APIGW} (from RECURSIVE ASL walk of all Task states)"
     - "STATE_MACHINE -[LOGS_TO]-> LOG_GROUP (from loggingConfiguration.destinations; 0 here, logging_level=OFF)"
     - "STATE_MACHINE -[POLLS]-> ACTIVITY (0 in this account)"
-    - "{EVENT_RULE|LAMBDA} -[TRIGGERS]-> STATE_MACHINE (inbound; EB targets + Lambda env vars; 0 here)"
+    - "{LAMBDA} -[TRIGGERS]-> STATE_MACHINE (Lambda env var STATE_MACHINE_ARN reference)"
 
 # =============================================================================
 # HAND-AUDIT GROUND TRUTH
@@ -52,44 +54,62 @@ state_machines:
     owner_pipeline: yang-pipeline
     tf_resource: "aws_sfn_state_machine.yang_pipeline"
     notes: >
-      9 Task states all invoke yang-* Lambda functions directly via ARN (no
-      states::: SDK integration pattern). No EventBridge rules target this SM.
-      No LOGS_TO (logging_level=OFF). No POLLS (0 activities in account).
-      No inbound TRIGGERS (no Lambda env var or EB rule references found).
+      9 top-level Task states + 17 nested inside 2 Parallel blocks (yang-generate-*
+      analytics fan-out + opal-market-* + yang-canon-interlock) = 26 distinct Lambda
+      invocations total. All direct Lambda ARNs (no states::: SDK integration).
+      Logging OFF (no LOGS_TO). No activities (no POLLS). 2 inbound TRIGGERS via
+      STATE_MACHINE_ARN env var (yang-pipeline-trigger, opal-data-refresh-api).
 
 # Total activity count (cert: 0-node class -- no activities in this account)
 activity_count: 0
 
 # =============================================================================
-# CERTIFIED EDGES (informational -- scored via derive_edges() output, not scorer)
+# CERTIFIED EDGES
 # =============================================================================
 
 edges_certified:
+
   assumes:
     - source: "arn:aws:states:us-east-1:313476888478:stateMachine:YangDataPipeline"
       target: "arn:aws:iam::313476888478:role/yang-pipeline-sfn-role"
       type: ASSUMES
 
+  # 26 distinct Lambda INVOKES (CVO-confirmed recursive walk, sorted)
   invokes:
-    - {source: YangDataPipeline, state_name: ReadManifest,
-       target_arn: "arn:aws:lambda:us-east-1:313476888478:function:yang-validate-files"}
-    - {source: YangDataPipeline, state_name: MoveToProcessed,
-       target_arn: "arn:aws:lambda:us-east-1:313476888478:function:yang-move-to-processed"}
-    - {source: YangDataPipeline, state_name: GetPriorMetadata,
-       target_arn: "arn:aws:lambda:us-east-1:313476888478:function:yang-get-prior-metadata"}
-    - {source: YangDataPipeline, state_name: GenerateLatest,
-       target_arn: "arn:aws:lambda:us-east-1:313476888478:function:yang-generate-latest"}
-    - {source: YangDataPipeline, state_name: IngestDynamoDB,
-       target_arn: "arn:aws:lambda:us-east-1:313476888478:function:yang-ingest-dynamodb"}
-    - {source: YangDataPipeline, state_name: GenerateManifest,
-       target_arn: "arn:aws:lambda:us-east-1:313476888478:function:yang-generate-manifest"}
-    - {source: YangDataPipeline, state_name: CleanupUploads,
-       target_arn: "arn:aws:lambda:us-east-1:313476888478:function:yang-cleanup-uploads"}
-    - {source: YangDataPipeline, state_name: CaptureOutputVersions,
-       target_arn: "arn:aws:lambda:us-east-1:313476888478:function:yang-capture-output-versions"}
-    - {source: YangDataPipeline, state_name: InvalidateCloudFront,
-       target_arn: "arn:aws:lambda:us-east-1:313476888478:function:yang-invalidate-cloudfront"}
+    - {target_arn: "arn:aws:lambda:us-east-1:313476888478:function:opal-market-overview-tiered-generator"}
+    - {target_arn: "arn:aws:lambda:us-east-1:313476888478:function:opal-market-regime-classifier"}
+    - {target_arn: "arn:aws:lambda:us-east-1:313476888478:function:opal-market-rsi-tiered-generator"}
+    - {target_arn: "arn:aws:lambda:us-east-1:313476888478:function:yang-canon-interlock"}
+    - {target_arn: "arn:aws:lambda:us-east-1:313476888478:function:yang-capture-output-versions"}
+    - {target_arn: "arn:aws:lambda:us-east-1:313476888478:function:yang-cleanup-uploads"}
+    - {target_arn: "arn:aws:lambda:us-east-1:313476888478:function:yang-generate-allocation-summary"}
+    - {target_arn: "arn:aws:lambda:us-east-1:313476888478:function:yang-generate-cma"}
+    - {target_arn: "arn:aws:lambda:us-east-1:313476888478:function:yang-generate-correlation"}
+    - {target_arn: "arn:aws:lambda:us-east-1:313476888478:function:yang-generate-etf-returns"}
+    - {target_arn: "arn:aws:lambda:us-east-1:313476888478:function:yang-generate-factor-tilts"}
+    - {target_arn: "arn:aws:lambda:us-east-1:313476888478:function:yang-generate-holdings-attribution"}
+    - {target_arn: "arn:aws:lambda:us-east-1:313476888478:function:yang-generate-latest"}
+    - {target_arn: "arn:aws:lambda:us-east-1:313476888478:function:yang-generate-macro"}
+    - {target_arn: "arn:aws:lambda:us-east-1:313476888478:function:yang-generate-macro-timeseries"}
+    - {target_arn: "arn:aws:lambda:us-east-1:313476888478:function:yang-generate-manifest"}
+    - {target_arn: "arn:aws:lambda:us-east-1:313476888478:function:yang-generate-peer-performance"}
+    - {target_arn: "arn:aws:lambda:us-east-1:313476888478:function:yang-generate-positioning"}
+    - {target_arn: "arn:aws:lambda:us-east-1:313476888478:function:yang-generate-risk-premium"}
+    - {target_arn: "arn:aws:lambda:us-east-1:313476888478:function:yang-generate-valuation"}
+    - {target_arn: "arn:aws:lambda:us-east-1:313476888478:function:yang-get-prior-metadata"}
+    - {target_arn: "arn:aws:lambda:us-east-1:313476888478:function:yang-ingest-dynamodb"}
+    - {target_arn: "arn:aws:lambda:us-east-1:313476888478:function:yang-invalidate-cloudfront"}
+    - {target_arn: "arn:aws:lambda:us-east-1:313476888478:function:yang-model-portfolio-benchmarks"}
+    - {target_arn: "arn:aws:lambda:us-east-1:313476888478:function:yang-move-to-processed"}
+    - {target_arn: "arn:aws:lambda:us-east-1:313476888478:function:yang-validate-files"}
 
   logs_to: []
-  triggers: []
+
+  # 2 inbound TRIGGERS: Lambdas referencing STATE_MACHINE_ARN env var (CVO-confirmed)
+  triggers:
+    - {source_fn: yang-pipeline-trigger, via_env_var: STATE_MACHINE_ARN,
+       target_arn: "arn:aws:states:us-east-1:313476888478:stateMachine:YangDataPipeline"}
+    - {source_fn: opal-data-refresh-api, via_env_var: STATE_MACHINE_ARN,
+       target_arn: "arn:aws:states:us-east-1:313476888478:stateMachine:YangDataPipeline"}
+
   polls: []
