@@ -16,7 +16,8 @@
 #   cross-check diffs statement bodies. EC2 (bounded) is hand-audited in full below.
 
 meta:
-  fixture_version: "0.1"
+  fixture_version: "0.2"
+  v0_2_changes: "AE IE-GAP-1..6 D-list (4a93ea9cc) folded + CVO-adjudicated/spot-confirmed 06-08 -> CERTIFIED. IE-GAP-1: ~13 EC2 GENUINELY LIVE-no-DECLARED (CVO-confirmed 0 ASG + 0 launch templates account-wide; ad-hoc run-instances); hpf = dynamic unmanaged fleet (8-9 volatile), modeled as a set. IE-GAP-2: EC2 type corrected — bd-gold-QA=c6i.16xlarge (the 34%-bill one), bd-gold-layer=r6i.4xlarge, inf-gold-layer=c6a.4xlarge. IE-GAP-3: 92/19 STANDS; naive .tf grep undercounts tf_managed (>=16 false shadows are TF-declared via interpolated/name_prefix names) -> comp-iam needs HCL-aware parser/terraform-state, NOT grep (CTO design req). IE-GAP-4: 3-overperm set complete (no new broad-managed). IE-GAP-5: 9 profiles->roles 1:1 ASSUMES; seeking-alpha 2nd-instance no-profile gap. IE-GAP-6: both statement-drifts are DECLARED TF-tracked (not mutations). Dispositions routed: moltbot orphaned-role + seeking-alpha no-profile -> COO; HCL-aware tf_managed -> CTO; security findings HELD -> Andrew."
   phase: "Phase 1 — IAM/EC2 hand-audit oracle (next class after certified S3 v1.5)"
   tf_commit_at_audit: "267d5d40e"
   cvo_author: "3.0.0_SA_CVO"
@@ -63,12 +64,13 @@ ec2_declared:   # DECLARED (TF aws_instance)
   - {name: demo-transform-runner,     tf: shared-infra/demo-transform.tf,    profile: true, http_tokens_tf: UNSET, owner_pipeline: shared-infra, note: "AE 06-08: REMOVED from live (i-03343a60) — EXPECTED per R5 decommission 9bfd1c7b5. Oracle expects DECLARED-no-LIVE drift here; do NOT flag as a regression."}
   - {name: smartx-exporter,           tf: smartx-pipeline/ec2.tf,            profile: true, http_tokens_tf: UNSET, owner_pipeline: smartx-pipeline}
 
-ec2_live_no_declared:   # LIVE-no-DECLARED candidates (live names absent from the 12 TF aws_instance set) — HIGH-VALUE unmanaged-compute class. AE to confirm none are launch-template/ASG-provenanced before final drift-class.
-  - {name: bd-gold-layer-runner,  note: "HIGH-VALUE: the c6i.16xlarge gold runner (~34% of monthly cloud bill per ops memory). Absent from bd-pipeline/ec2.tf — apparent LIVE-no-DECLARED. AE confirm: launch-template/manual? IMDSv2-optional (cataloged finding)."}
-  - {name: bd-gold-qa-runner,     note: "Absent from TF aws_instance set — apparent LIVE-no-DECLARED. IMDSv2-optional (cataloged finding)."}
-  - {name: seeking-alpha-scraper, note: "x2 live instances; absent from TF — apparent LIVE-no-DECLARED. IMDSv2-optional (cataloged finding). Role seeking-alpha-scraper-role is 1 of the 3 overperm roles."}
-  - {name: moltbot,               note: "AE 06-08: REMOVED from live (i-0b784d49); was the persistent Claude-Code agent host. PROVENANCE UNKNOWN (expected decommission vs drift) — AE to disposition. Absent from TF."}
-  - {name: historical-prices-fetcher, count: 8, note: "8-instance fleet (i-00abf.. i-0416e.. i-094c5.. i-025cb.. i-032fa.. i-0ec91.. i-088e7.. i-03c39..), all absent from TF aws_instance set — apparent LIVE-no-DECLARED fleet. AE confirm launch-template/spot-fleet provenance vs genuine unmanaged."}
+ec2_live_no_declared:   # CONFIRMED LIVE-no-DECLARED (v0.2): AE IE-GAP-1 + CVO spot-confirm 06-08 — 0 ASGs + 0 launch templates ACCOUNT-WIDE, every instance provenance=NONE (ad-hoc run-instances). These are GENUINELY unmanaged compute, not template-managed. HIGH-VALUE class.
+  - {name: bd-gold-layer-runner,  instance_type: r6i.4xlarge, note: "CONFIRMED LIVE-no-DECLARED (0 ASG/0 LT, asg-tag None). r6i.4xlarge (NOT c6i.16xlarge — that's bd-gold-QA). Absent from bd-pipeline/ec2.tf. IMDSv2-optional (held finding)."}
+  - {name: bd-gold-qa-runner,     instance_type: c6i.16xlarge, note: "CONFIRMED LIVE-no-DECLARED (0 ASG/0 LT). c6i.16xlarge = the ~34%-of-monthly-cloud-bill instance (corrects v0.1 mis-attribution to bd-gold-layer). IMDSv2-optional (held finding)."}
+  - {name: seeking-alpha-scraper, note: "x2 live; CONFIRMED LIVE-no-DECLARED. i-07ebae.. assumes seeking-alpha-scraper-role (1 of 3 overperm); i-06376c11d8b3c3443 has NO instance_profile (HAS_PROFILE gap, IE-GAP-5 — intentional-no-role vs config-gap disposition routed)."}
+  - {name: inf-gold-layer-runner-LIVE-TYPE, instance_type: c6a.4xlarge, note: "(this is the TF-DECLARED inf-gold-layer-runner; type c6a.4xlarge recorded here for the IE-GAP-2 enrich — see ec2_declared. Not itself live-no-declared.)"}
+  - {name: historical-prices-fetcher, model: "DYNAMIC UNMANAGED BACKFILL SET (not N pinned nodes)", live_count_observed: "8-9 (VOLATILE — 8 in AE census, 9 minutes later incl i-0f8dd54ec78384c0f)", note: "CONFIRMED LIVE-no-DECLARED (0 ASG/0 LT). Per AE IE-GAP-1 sub-finding, model as a dynamic ad-hoc backfill fleet whose membership churns — the oracle asserts the SET + its unmanaged class, not a fixed node count. Spot-launched run-instances for HPF backfills."}
+  - {name: moltbot, status: REMOVED, note: "AE+CVO: was ALWAYS LIVE-no-DECLARED (Claude-Code agent host, never TF). Removed from live 06-08 (i-0b784d49). RESIDUAL: IAM role MoltbotEC2Role persists ORPHANED — likely intentional teardown; expected-vs-drift + role-cleanup disposition routed to COO/Andrew."}
 
 ec2_cataloged_findings_HELD:   # security lens — RECORDED not remediated (COO scope; Andrew steer)
   imdsv2_optional: [seeking-alpha-scraper, bd-gold-layer-runner, bd-gold-qa-runner, smartx-exporter]   # 4 unique (AE 06-08, unchanged from 06-03)
@@ -116,31 +118,37 @@ iam_statement_drift_watch:   # AE 06-03->06-08 self-diff flagged for statement-l
 # =============================================================================
 # ORACLE GAPS (for AE live-AWS cross-check — the D-list targets)
 # =============================================================================
-oracle_gaps:
+oracle_gaps:   # ALL RESOLVED v0.2 (AE D-list 4a93ea9cc + CVO adjudication/spot-confirm 06-08)
   - id: "IE-GAP-1"
     severity: P1
-    owner: AE
-    description: "EC2 live-no-declared confirmation: are bd-gold-layer-runner, bd-gold-qa-runner, seeking-alpha-scraper(x2), the historical-prices-fetcher fleet(8), moltbot launch-template/ASG/spot-fleet-provenanced, or genuine LIVE-no-DECLARED (unmanaged) compute? Sets the drift-class for ~13 live instances. HIGH-VALUE (bd-gold-layer-runner = 34% of cloud bill)."
+    status: RESOLVED
+    resolution: "GENUINELY LIVE-no-DECLARED. AE + CVO-spot-confirm: 0 ASGs + 0 launch templates ACCOUNT-WIDE; bd-gold-layer/qa-runner asg-tag=None. The ~13 unmanaged instances (incl the expensive bd-gold-qa c6i.16xlarge) are ad-hoc run-instances, not template-managed. HPF fleet = dynamic unmanaged set (8-9 volatile)."
   - id: "IE-GAP-2"
     severity: P1
-    owner: AE
-    description: "EC2 shape enrichment to agreed schema: add instance_type + instance_profile (-> HAS_PROFILE/ASSUMES chain) + owner_pipeline + per-instance tf_managed to the live census."
+    status: RESOLVED
+    resolution: "EC2 enriched. CVO-confirmed types: bd-gold-QA=c6i.16xlarge (the 34%-bill one), bd-gold-layer=r6i.4xlarge, inf-gold-layer=c6a.4xlarge. v0.1 mis-attribution corrected."
   - id: "IE-GAP-3"
     severity: P1
-    owner: AE
-    description: "IAM tf-recon re-derive: the 06-08 gen produced tf_managed_count=null / roles_not_in_tf empty (TF-recon pass didn't fire). Restore it so DECLARED vs LIVE-no-DECLARED is derivable on the 06-08 set; confirm the 92/19 split holds."
+    status: RESOLVED
+    resolution: "92/19 tf-managed split STANDS (role SET stable 111/111). AE proved the 06-08 text-scan 76/35 is an UNDERCOUNT not drift: >=16 'shadow' roles ARE TF-declared (FredIngestion/opal-portal-lambda-role/smartx-exporter-role-*/lambda-causality-* — interpolated/name_prefix/post-nested-brace names a naive .tf grep misses). DESIGN REQUIREMENT (-> CTO): comp-iam tf_managed detection MUST use an HCL-aware parser or `terraform state list`, NOT grep (grep yields false LIVE-no-DECLARED). Same partial-proxy class as the S3 drift-check-completeness finding."
   - id: "IE-GAP-4"
     severity: P1
-    owner: AE
-    description: "IAM per-role HAS_POLICY managed-vs-inline breakout: managed-policy ARNs are currently implicit in overperm_flags only; emit explicit attached managed-policy ARN list + inline-policy names per role for the HAS_POLICY edge set."
+    status: RESOLVED
+    resolution: "111 roles: 83 carry managed policies, 92 managed attachments total, EXACTLY 3 broad-managed (FullAccess) = the overperm set (market-update DDB+S3, opal-news DDB, seeking-alpha ECR). No NEW broad-managed roles. Overperm set is complete + closed."
   - id: "IE-GAP-5"
     severity: P2
-    owner: AE
-    description: "INSTANCE_PROFILE -> ASSUMES -> IAM_ROLE edge: enumerate the instance-profile -> role mapping for the 12 declared (+ any live-no-declared) EC2 so the HAS_PROFILE/ASSUMES chain is complete."
+    status: RESOLVED
+    resolution: "9 instance-profiles -> roles mapped 1:1 (ASSUMES edges complete). FINDING: seeking-alpha 2nd instance i-06376c11d8b3c3443 has NO instance_profile (HAS_PROFILE-edge gap) -> disposition (intentional no-role vs config gap) routed to COO."
   - id: "IE-GAP-6"
     severity: P2
-    owner: "AE + CVO"
-    description: "Statement-drift watch (smartx-ingestion 3->4, FredIngestion content-changed): statement-level declared(TF)-vs-live diff at cert to classify as TF-tracked update vs LIVE-no-DECLARED mutation."
+    status: RESOLVED
+    resolution: "BOTH statement drifts are DECLARED TF-tracked updates, NOT live mutations: smartx-ingestion +opal-data-mdpf read IS in smartx-pipeline/iam.tf; FredIngestion yield-curve GetObject expansion IS in fred-pipeline/iam.tf. No LIVE-no-DECLARED mutation. Closed."
+
+# DISPOSITIONS routed (not CVO calls — expected-vs-drift / intent):
+#   - moltbot teardown + orphaned MoltbotEC2Role -> COO/Andrew (expected-vs-drift confirm + role cleanup)
+#   - seeking-alpha 2nd-instance no-profile -> COO (intentional-no-role vs config-gap)
+#   - comp-iam HCL-aware tf_managed detection (IE-GAP-3) -> CTO (sub-compiler design requirement)
+#   - EC2 cataloged security findings (IMDSv2-optional x4, the unmanaged-compute surface) -> HELD for Andrew steer
 
 # =============================================================================
 # SUMMARY
@@ -148,12 +156,15 @@ oracle_gaps:
 summary:
   ec2_tf_declared: 12
   ec2_live: 23           # AE 06-08 (was 25 on 06-03; -demo-transform-runner[expected] -moltbot[provenance-pending])
-  ec2_apparent_live_no_declared: 13   # incl bd-gold-layer-runner + bd-gold-qa-runner + hpf fleet(8) + seeking-alpha(2) — AE IE-GAP-1 confirms
+  ec2_live_no_declared_confirmed: 13   # CONFIRMED genuinely unmanaged (0 ASG/0 LT account-wide): bd-gold-layer + bd-gold-qa + seeking-alpha(2) + hpf dynamic fleet(8-9) + moltbot(removed)
   iam_roles: 111
-  iam_tf_declared: 92
+  iam_tf_declared: 92                  # split STANDS (IE-GAP-3: text-scan 76/35 was an undercount; >=16 'shadow' proven TF-declared)
   iam_live_no_declared_shadow: 19
-  iam_overperm_held: 3
+  iam_overperm_held: 3                 # complete + closed (IE-GAP-4: no new broad-managed)
   oracle_gaps: 6
-  fixture_status: "DRAFT-SCAFFOLD v0.1 — EC2 fully hand-audited (DECLARED set + live-no-declared delta + held findings); IAM asserted at SET + provenance-class + named-exception grain (per-role bodies via AE census cross-check). Ready for AE live diff -> D-list -> CVO adjudicate -> certify. NOT a security-remediation artifact (catalog only, findings held for Andrew)."
+  oracle_gaps_resolved: 6
+  oracle_gaps_open: 0
+  cross_check: "AE D-list (4a93ea9cc) IE-GAP-1..6 all RESOLVED; CVO adjudicated + spot-confirmed (0 ASG/0 LT, EC2 types). Role SET stable 111/111; EC2 declared 12 / live 23 reconciled."
+  fixture_status: "CERTIFIED v0.2 — IAM/EC2 sub-class reconciled vs live AWS (AE cross-check, CVO-adjudicated 06-08). EC2 fully hand-audited (12 declared + 13 confirmed-unmanaged); IAM 92/19 + 3-overperm at SET+provenance+exception grain. Becomes the IAM/EC2 regression fixture. RESIDUAL (routed, non-cert-blocking): comp-iam HCL-aware tf_managed (CTO design req); moltbot orphaned-role + seeking-alpha no-profile dispositions (COO); security findings HELD (Andrew). Catalog-only — NOT a remediation artifact."
 
 # — 3.0.0_SA_CVO
