@@ -49,6 +49,8 @@ Name = Responsibility scope
    +-----------------+  |       |  |                   |  |                   |
    | 0.5.0_AE_OpalETL|  |       |  |                   |  |                   |
    | 0.6.0_AE_PartnerETL |     |  |                   |  |                   |
+   | 0.6.1_AE_PartnerETL |     |  |                   |  |                   |
+   | 0.6.2_AE_PartnerETL |     |  |                   |  |                   |
    | 0.7.0_AE_CloudOps|  |     |  |                   |  |                   |
    +------------------+  |     |  |                   |  |                   |
                          v     v  v                   v  v                   v
@@ -99,6 +101,8 @@ Name = Responsibility scope
 |-------|-------|
 | 0.5.0_AE_OpalETL | Opal-specific ETL/Pipelines (yang, news, market-overview, smartx, seeking-alpha, causality) |
 | 0.6.0_AE_PartnerETL | Partner-specific ETL (BD pipeline for 49 Financial) |
+| 0.6.1_AE_PartnerETL | Partner-specific ETL (inf-pipeline for Inflection Wealth Management) |
+| 0.6.2_AE_PartnerETL | Partner-specific ETL (cot-pipeline for Cottonwood Capital Advisors) — provisioned 2026-06-08, pre-onboarding |
 | 0.7.0_AE_CloudOps | CloudOps, IAM, networking, security, shared infrastructure |
 
 ---

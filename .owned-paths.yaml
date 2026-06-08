@@ -108,6 +108,7 @@ lanes:
       - 0.5.0_AE_OpalETL
       - 0.6.0_AE_PartnerETL
       - 0.6.1_AE_PartnerETL
+      - 0.6.2_AE_PartnerETL
       - 0.7.0_AE_CloudOps
     description: "news-pipeline + market-overview Lambda source — POD1 (DE/DS/DT) authors Lambda code, AE owns deployment infra; both permitted. Parallels POD4_OR_AE pattern. Added 2026-05-12 (Andrew authorized — news-trending recency/crypto-cut session)."
 
@@ -157,6 +158,7 @@ lanes:
       - 0.5.0_AE_OpalETL
       - 0.6.0_AE_PartnerETL
       - 0.6.1_AE_PartnerETL
+      - 0.6.2_AE_PartnerETL
       - 0.7.0_AE_CloudOps
     description: "inf-pipeline Lambda source — POD4 (DE/DS/DT/RD) authors Lambda code, AE owns deployment infra; both permitted"
 
@@ -220,6 +222,7 @@ lanes:
       - 0.5.0_AE_OpalETL
       - 0.6.0_AE_PartnerETL
       - 0.6.1_AE_PartnerETL
+      - 0.6.2_AE_PartnerETL
     description: "PartnerETL shared service (AE 0.5.0 + 0.6.0 + 0.6.1)"
 
   SHARED_CLOUD_OPS:
@@ -236,6 +239,7 @@ lanes:
       - 0.5.0_AE_OpalETL~B
       - 0.6.0_AE_PartnerETL
       - 0.6.1_AE_PartnerETL
+      - 0.6.2_AE_PartnerETL
       - 0.7.0_AE_CloudOps
       - 0.7.0_AE_CloudOps~A
       - 0.7.0_AE_CloudOps~B
@@ -421,6 +425,7 @@ lanes:
       - 0.5.0_AE_OpalETL
       - 0.6.0_AE_PartnerETL
       - 0.6.1_AE_PartnerETL
+      - 0.6.2_AE_PartnerETL
       - 1.0.0_SA_CTO
       - 2.0.0_SA_COO
       - 1.1.0_SA_CTO
@@ -457,6 +462,7 @@ lanes:
       - 0.5.0_AE_OpalETL~B
       - 0.6.0_AE_PartnerETL
       - 0.6.1_AE_PartnerETL
+      - 0.6.2_AE_PartnerETL
       - 0.7.0_AE_CloudOps
       - 0.7.0_AE_CloudOps~B
       - 0.7.0_AE_CloudOps~C
@@ -532,6 +538,8 @@ paths:
     lane: SHARED_PARTNER_ETL_OR_EXEC
   "org/tier2_senior/0.6.1_*/task_orders/*.md":
     lane: SHARED_PARTNER_ETL_OR_EXEC
+  "org/tier2_senior/0.6.2_*/task_orders/*.md":
+    lane: SHARED_PARTNER_ETL_OR_EXEC
   "org/tier2_senior/0.7.0_*/task_orders/*.md":
     lane: SHARED_CLOUD_OPS_OR_EXEC
 
@@ -596,6 +604,10 @@ paths:
   "org/tier2_senior/0.6.1_*/**":
     lane: SHARED_PARTNER_ETL
     note: "PartnerETL AE 0.6.1 agent folder"
+
+  "org/tier2_senior/0.6.2_*/**":
+    lane: SHARED_PARTNER_ETL
+    note: "PartnerETL AE 0.6.2 agent folder (Cottonwood) — provisioned 2026-06-08 Andrew-direct"
 
   "org/tier2_senior/0.7.0_*/**":
     lane: SHARED_CLOUD_OPS
