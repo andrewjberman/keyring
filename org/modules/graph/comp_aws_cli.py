@@ -726,6 +726,35 @@ def derive_class(cls):
 # EDGES -- typed relationships (PRD sec 3 / CVO schema). Derived from live AWS,
 # discovery-based (no hardcoded edge lists). Each edge: (src_arn, dst_arn, type).
 # ---------------------------------------------------------------------------
+def _classify_principal(p):
+    """sec3.2a: map a policy principal to a typed GRANTS target.
+    Returns (target_id, node_type, sub_type, finding_class|None). Deterministic.
+    our-account role/user -> existing IAM_ROLE / IAM_USER node (real arn);
+    *.amazonaws.com + AWS pseudo-account (cloudfront OAI) -> SERVICE_PRINCIPAL (AWS_MANAGED);
+    other-account -> EXTERNAL_PRINCIPAL{CROSS_ACCOUNT} (finding); SAML/OIDC/Cognito -> {FEDERATED};
+    '*'/anonymous -> {PUBLIC} (finding). PUBLIC + CROSS_ACCOUNT surface, never wildcard-hidden."""
+    if p in ("*", "arn:aws:iam::*:root"):
+        return "external-principal::public", "EXTERNAL_PRINCIPAL", "PUBLIC", "PUBLIC_GRANT"
+    if p.endswith(".amazonaws.com"):
+        return f"service-principal::{p}", "SERVICE_PRINCIPAL", p.split(".")[0], None
+    # AWS-service-owned pseudo-account identities (CloudFront OAI, etc.) -> SERVICE_PRINCIPAL,
+    # NOT a cross-account finding (the OAI is the intended S3-origin lockdown).
+    if p.startswith("arn:aws:iam::cloudfront:") or p.startswith("arn:aws:iam::cloudtrail:"):
+        oid = p.split()[-1] if " " in p else p.split("/")[-1]
+        return f"service-principal::oai::{oid}", "SERVICE_PRINCIPAL", "OAI", None
+    if p.startswith(f"arn:aws:iam::{ACCOUNT}:role/"):
+        return p, "IAM_ROLE", None, None          # our-account role -> existing node
+    if p.startswith(f"arn:aws:iam::{ACCOUNT}:user/"):
+        return p, "IAM_USER", None, None           # our-account user
+    if p.startswith(f"arn:aws:iam::{ACCOUNT}:"):    # our-account root/other -> our principal
+        return f"iam-user::{p.split(':')[-1]}", "IAM_USER", "ACCOUNT", None
+    if ":saml-provider/" in p or ":oidc-provider/" in p or "cognito" in p.lower():
+        return f"external-principal::federated::{p.split('/')[-1]}", "EXTERNAL_PRINCIPAL", "FEDERATED", None
+    if p.startswith("arn:aws:iam::"):              # different real account -> cross-account finding
+        acct = p.split(":")[4] if len(p.split(":")) > 4 else "unknown"
+        return f"external-principal::cross-account::{acct}", "EXTERNAL_PRINCIPAL", "CROSS_ACCOUNT", "CROSS_ACCOUNT_GRANT"
+    return f"external-principal::other::{p}", "EXTERNAL_PRINCIPAL", "OTHER", None
+
 def derive_edges():
     edges = []
     def E(s, d, t, **extra):
@@ -832,10 +861,15 @@ def derive_edges():
             for pk in prkeys:
                 if pk and pk not in seen_pr:
                     seen_pr.add(pk)
-                    # principal is external (service / OAI / cross-account) -- not an
-                    # in-graph resource node -> wildcard-exempt (IAM_PRINCIPAL node class
-                    # is a CTO schema decision; flagged).
-                    E(parn, pk, "GRANTS", effect=st.get("effect"), wildcard=True)
+                    # sec3.2a: GRANTS terminates on a TYPED principal node (IAM_ROLE/USER |
+                    # SERVICE_PRINCIPAL | EXTERNAL_PRINCIPAL). PUBLIC/CROSS_ACCOUNT surface as
+                    # typed finding nodes -- NEVER wildcard-hidden (the grant IS the finding).
+                    tgt, _pt, _sub, _find = _classify_principal(pk)
+                    extra = {"effect": st.get("effect")}
+                    if _find:
+                        extra["finding_class"] = _find
+                        extra["conditioned"] = bool(st.get("condition"))
+                    E(parn, tgt, "GRANTS", **extra)
     # CLOUDFRONT -[ORIGIN]-> S3
     cf = _boto("cloudfront")
     try:
@@ -928,9 +962,8 @@ def derive_edges():
                 # intra-account -> resolve to the actual lambda/sqs node (0-dangling)
                 E(n.get("arn"), endpoint, "SUBSCRIBES", protocol=proto)
             else:
-                # email/https/http/sms -> typed EXTERNAL_ENDPOINT family (CTO sec3.2 spec,
-                # built with EXTERNAL_PRINCIPAL at IAM full-edge cert) -> interim wildcard-exempt.
-                E(n.get("arn"), sub, "SUBSCRIBES", protocol=proto, wildcard=True)
+                # email/https/http/sms -> typed EXTERNAL_ENDPOINT{EMAIL|HTTPS|SMS} node (sec3.2a)
+                E(n.get("arn"), f"external-endpoint::{proto}::{endpoint}", "SUBSCRIBES", protocol=proto)
     for n in live_dynamodb():
         if n.get("kms_key_arn"):
             _enc(n.get("arn"), n["kms_key_arn"])
@@ -1203,6 +1236,33 @@ def derive_aux_nodes(edges):
             "drift_class": "DECLARED", "tf_managed": True,
             "owner_pipeline": None, "provenance": {"tf_kind": "edge-derived"},
         })
+    # sec3.2a typed principal/endpoint nodes (GRANTS/SUBSCRIBES targets) so those edges
+    # terminate (0-dangling) + PUBLIC/CROSS_ACCOUNT grants SURFACE as held findings.
+    find_of = {e["target"]: e.get("finding_class") for e in edges
+               if e["edge_type"] == "GRANTS" and e.get("finding_class")}
+    prin_targets = {e["target"] for e in edges if e["edge_type"] in ("GRANTS", "SUBSCRIBES")}
+    for t in sorted(prin_targets):
+        if t.startswith("service-principal::"):
+            sub = "OAI" if "::oai::" in t else t.split("::")[-1].split(".")[0]
+            nodes.append({"id": t, "arn": t, "name": t.split("::")[-1], "type": "SERVICE_PRINCIPAL",
+                          "sub_type": sub, "drift_class": "AWS_MANAGED", "tf_managed": False,
+                          "owner_pipeline": "aws", "provenance": {"tf_kind": "aws_managed"}})
+        elif t.startswith("external-principal::"):
+            sub = t.split("::")[1].replace("-", "_").upper()
+            node = {"id": t, "arn": t, "name": t.split("::", 1)[1], "type": "EXTERNAL_PRINCIPAL",
+                    "sub_type": sub, "drift_class": "LIVE-no-DECLARED", "tf_managed": False,
+                    "owner_pipeline": None, "provenance": {"tf_kind": "external"}}
+            if find_of.get(t):
+                node["finding"] = {"class": find_of[t], "severity": "held", "surfaced": True}
+            nodes.append(node)
+        elif t.startswith("external-endpoint::"):
+            nodes.append({"id": t, "arn": t, "name": t.split("::", 2)[-1], "type": "EXTERNAL_ENDPOINT",
+                          "sub_type": t.split("::")[1].upper(), "drift_class": "LIVE-no-DECLARED",
+                          "tf_managed": False, "owner_pipeline": None, "provenance": {"tf_kind": "external"}})
+        elif t.startswith("iam-user::") or (t.startswith(f"arn:aws:iam::{ACCOUNT}:user/")):
+            nodes.append({"id": t, "arn": t, "name": t.split("/")[-1].split("::")[-1], "type": "IAM_USER",
+                          "drift_class": "LIVE-no-DECLARED", "tf_managed": False,
+                          "owner_pipeline": None, "provenance": {"tf_kind": "edge-derived"}})
     return nodes
 
 # ---------------------------------------------------------------------------
@@ -1229,6 +1289,8 @@ def compute_metrics(graph):
         "imdsv2_optional_ec2": sum(1 for n in cd.get("ec2", {}).get("nodes", []) if n.get("imdsv2_required") is False),
         "unencrypted_sns": sum(1 for n in cd.get("sns", {}).get("nodes", []) if n.get("kms_encrypted") is False),
         "unmanaged_secrets": sum(1 for n in cd.get("secrets", {}).get("nodes", []) if n.get("drift_class") == "LIVE-no-DECLARED"),
+        "public_grants": sum(1 for n in cd.get("external_principal", {}).get("nodes", []) if (n.get("finding") or {}).get("class") == "PUBLIC_GRANT"),
+        "cross_account_grants": sum(1 for n in cd.get("external_principal", {}).get("nodes", []) if (n.get("finding") or {}).get("class") == "CROSS_ACCOUNT_GRANT"),
         "live_no_declared_total": drift.get("LIVE-no-DECLARED", 0),
     }
     return {
@@ -1436,14 +1498,18 @@ def cmd_derive(args):
         print(f"  event_source live={len(es):3} (typed EVENT_SOURCE origins, sec 3.3)")
         graph["edges"] = derive_edges() + derive_data_access_edges()
         aux = derive_aux_nodes(graph["edges"])
-        graph["classes_data"]["iam_policy"] = {"class": "iam_policy",
-            "nodes": [n for n in aux if n["type"] == "IAM_POLICY"], "declared_no_live": [],
-            "counts": {"live": sum(1 for n in aux if n["type"] == "IAM_POLICY"), "untyped": 0}}
-        graph["classes_data"]["instance_profile"] = {"class": "instance_profile",
-            "nodes": [n for n in aux if n["type"] == "INSTANCE_PROFILE"], "declared_no_live": [],
-            "counts": {"live": sum(1 for n in aux if n["type"] == "INSTANCE_PROFILE"), "untyped": 0}}
-        print(f"  aux nodes    IAM_POLICY={sum(1 for n in aux if n['type']=='IAM_POLICY')} "
-              f"INSTANCE_PROFILE={sum(1 for n in aux if n['type']=='INSTANCE_PROFILE')}")
+        # register every aux node TYPE as its own class so all edges terminate (0-dangling)
+        _aux_types = {"IAM_POLICY": "iam_policy", "INSTANCE_PROFILE": "instance_profile",
+                      "SERVICE_PRINCIPAL": "service_principal", "EXTERNAL_PRINCIPAL": "external_principal",
+                      "EXTERNAL_ENDPOINT": "external_endpoint", "IAM_USER": "iam_user"}
+        _aux_summary = []
+        for _ntype, _cls in _aux_types.items():
+            _ns = [n for n in aux if n["type"] == _ntype]
+            graph["classes_data"][_cls] = {"class": _cls, "nodes": _ns, "declared_no_live": [],
+                                           "counts": {"live": len(_ns), "untyped": 0}}
+            if _ns:
+                _aux_summary.append(f"{_ntype}={len(_ns)}")
+        print("  aux nodes    " + " ".join(_aux_summary))
         from collections import Counter
         ec = Counter(e["edge_type"] for e in graph["edges"])
         print(f"  edges        total={len(graph['edges'])}  " +
