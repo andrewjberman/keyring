@@ -21,6 +21,7 @@ WORKSPACE = pathlib.Path(__file__).parent.parent
 PIPELINE_MAP: dict[str, tuple[str, str]] = {
     "black_diamond": ("opal-data-bd", "bd"),
     "orion": ("opal-data-inf", "inf"),
+    "cot": ("opal-data-cot", "cot"),
 }
 
 BYPASS_AUDIT_LOG = WORKSPACE / "org" / "safe-deploy-bypass-audit.log"
