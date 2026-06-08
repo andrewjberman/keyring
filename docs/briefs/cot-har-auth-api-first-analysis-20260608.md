@@ -109,8 +109,8 @@ Per Andrew's directive (2026-06-08) and the Third-Party Data Integration Standar
 | Element | Inflection | YCharts | **Proposed COT** |
 |---|---|---|---|
 | Secret ID | `orion/jwt/current` | `ycharts/credentials` | **`blackdiamond/cot/session`** (`.bd.identity` cookie bundle) + **`blackdiamond/cot/credentials`** (username/password for LOGIN-mode refresh) |
-| S3 fallback | `opal-data-inf/orion/jwt/current.json` | — | `s3://opal-data-<cw-bucket>/blackdiamond/cot/session.json` |
-| Refresh actor | `inf-jwt-trigger` Lambda + `inf-exporter` EC2 | manual/Playwright | **`cw-bd-session-trigger`** Lambda + a COT exporter VM (or reuse a shared partner-exporter EC2) running the OIDC Playwright login |
+| S3 fallback | `opal-data-inf/orion/jwt/current.json` | — | `s3://opal-data-cot/blackdiamond/cot/session.json` |
+| Refresh actor | `inf-jwt-trigger` Lambda + `inf-exporter` EC2 | manual/Playwright | **`cot-bd-session-trigger`** Lambda + a COT exporter VM (or reuse a shared partner-exporter EC2) running the OIDC Playwright login |
 | Freshness gate | `jwt_freshness.py` (fail-fast) | session test probe | a COT-session freshness check (cookie still authorizes `/datamining/auth/token` → 200, else stale → fail loud) |
 | OTP path | `inf-otp-alert` SNS | — | reuse SNS OTP-alert if BD MFA prompts |
 
