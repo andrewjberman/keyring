@@ -143,23 +143,47 @@ def build_rows():
     return hot, cold, malformed, now
 
 
-def fmt_dt(dt, now):
+def short_owner(owner):
+    """Serial -> role token: 3.0.0_SA_CVO -> CVO, 0.6.0_AE_PartnerETL -> AE."""
+    if not owner or owner == "?":
+        return owner or "?"
+    parts = owner.split("_")
+    if len(parts) >= 3 and parts[1] == "SA":
+        return parts[2]            # SA_CTO -> CTO
+    if len(parts) >= 2:
+        return parts[1]            # 0.6.0_AE_PartnerETL -> AE
+    return owner[:12]
+
+
+def fmt_commit(dt, now):
+    """Short last-commit: today -> 'HH:MM (Xh)', older -> 'M/DD (X.Xd)'. ASCII."""
     if not dt:
         return "no ascribed commit"
     d = datetime.datetime.fromisoformat(dt)
     ah = (now - d).total_seconds() / 3600
-    ago = f"{ah/24:.1f}d ago" if ah >= 24 else f"{ah:.0f}h ago"
-    return d.strftime("%Y-%m-%d %H:%M") + f"  ({ago})"
+    if ah < 24:
+        return f"{d.strftime('%H:%M')} ({ah:.0f}h)"
+    return f"{d.month}/{d.day:02d} ({ah / 24:.1f}d)"
+
+
+SEP = "-" * 56
 
 
 def emit(title, rs, now, start=1):
-    bar = f"{title} ({len(rs)})"
+    # Vertical field-per-line record (Andrew-direct 2026-06-08): each field on its
+    # own labeled line, What/Where/Why never run together, ASCII-only separators.
+    bar = f"Registry -- {title} ({len(rs)})"
     print(f"\n{bar}\n{'=' * len(bar)}")
     for i, r in enumerate(rs, start):
-        print(f"\n{i}. {r['code']}  [{r['status']}]  {fmt_dt(r['dt'], now)}  by {r['owner']}")
-        print(f"   What:  {r['what'] or '-'}")
-        print(f"   Where: {r['where'] or '-'}")
-        print(f"   Why:   {r['why'] or '-'}")
+        if i > start:
+            print(f"\n{SEP}")
+        print(f"\n#: {i}")
+        print(f"Project: {r['code']}")
+        print(f"Status: {r['status']}")
+        print(f"Last commit: {fmt_commit(r['dt'], now)} - {short_owner(r['owner'])}")
+        print(f"What:  {r['what'] or '-'}")
+        print(f"Where: {r['where'] or '-'}")
+        print(f"Why:   {r['why'] or '-'}")
     return start + len(rs)
 
 
@@ -174,8 +198,8 @@ def main():
         print(json.dumps(out, indent=2, default=str))
         return
 
-    scope = "HOT + COLD" if allmode else "HOT only  (run with -all to include cold)"
-    print(f"REGISTRY CHECK  ({now.strftime('%Y-%m-%dT%H:%MZ')})  --  {scope}")
+    cold_hint = "showing HOT + COLD below" if allmode else f"run /registry-check -all for the {len(cold)} cold"
+    print(f"REGISTRY  {now.strftime('%Y-%m-%dT%H:%MZ')}  |  {len(malformed)} malformed  |  {cold_hint}")
     n = emit("HOT  (worked <72h, not closed)", hot, now)
     if allmode:
         emit("COLD  (>72h since work, still not closed)", cold, now, n)
