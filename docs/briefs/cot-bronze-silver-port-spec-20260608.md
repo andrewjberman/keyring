@@ -1,6 +1,6 @@
 # ADVI_COTETL — COT (Cottonwood) Bronze/Silver Port Spec: Recreating the bd-pipeline Tables
 
-**Author:** 0.4.0_DS_ClientPlatform · **Date:** 2026-06-08 · **Project:** ADVI_COTETL (was ADVI_CCAETL)
+**Author:** 0.4.0_DS_ClientPlatform · **Date:** 2026-06-08 · **Project:** ADVI_COTETL
 **Companions:** Brief 1 (DataMining API), table↔endpoint cross-ref (`864419a80`), Brief 3 (medallion).
 **Goal (Andrew-direct):** specify exactly how to structure scripts to recreate each bd-pipeline bronze/silver table for COT, so we **largely port the same scripts**.
 
