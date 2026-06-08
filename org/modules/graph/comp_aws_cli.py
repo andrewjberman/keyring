@@ -26,6 +26,8 @@ import argparse
 import json
 import tarfile
 import io
+import glob
+import re
 from pathlib import Path
 
 WS = Path(__file__).resolve().parents[3]   # ajb_workspace root (org/modules/graph/<file>)
@@ -79,12 +81,18 @@ def _load_all_tfstate():
         except Exception:
             continue
         for r in st.get("resources", []):
-            if r.get("mode") != "managed":
+            mode = r.get("mode")
+            # managed = TF owns lifecycle; data = TF-aware reference (a resource
+            # created out-of-band but referenced via a data block). CVO's state-
+            # union counts BOTH as DECLARED (known to IaC) -- the tf_kind tag
+            # preserves the managed-vs-referenced distinction (IAM 2-FN fix).
+            if mode not in ("managed", "data"):
                 continue
             for inst in r.get("instances", []):
                 a = inst.get("attributes", {}) or {}
                 resources.append({
                     "type": r["type"], "tf_name": r.get("name"), "module": module,
+                    "tf_kind": mode,
                     "arn": a.get("arn"), "id": a.get("id"),
                     "name": a.get("name") or a.get("bucket") or a.get("function_name")
                             or a.get("alarm_name"),
@@ -94,9 +102,52 @@ def _load_all_tfstate():
     _TFSTATE_CACHE["module_count"] = len({k.split("/")[0] for k in keys})
     return resources
 
+def _hcl_declared(resource_types):
+    """sec 1.4 point-3 SECONDARY check: HCL-aware (brace-balanced, NOT line-grep)
+    scan of every *.tf for `resource "<type>" "<label>"` blocks, resolving the
+    name literal. Catches config-declared resources whose root-module state is
+    absent from the bucket (e.g. seeking-alpha) -> would otherwise false-shadow.
+    Returns {resolved_name -> provenance}."""
+    rts = set(resource_types)
+    name_attrs = {"aws_iam_role": "name", "aws_s3_bucket": "bucket",
+                  "aws_lambda_function": "function_name", "aws_dynamodb_table": "name",
+                  "aws_sns_topic": "name", "aws_sqs_queue": "name",
+                  "aws_cloudwatch_metric_alarm": "alarm_name", "aws_secretsmanager_secret": "name"}
+    out = {}
+    for f in glob.glob(str(TF_ROOT / "**" / "*.tf"), recursive=True):
+        try:
+            txt = open(f, encoding="utf-8", errors="ignore").read()
+        except OSError:
+            continue
+        module = Path(f).relative_to(TF_ROOT).parts[0]
+        for rt in rts:
+            for m in re.finditer(r'resource\s+"' + re.escape(rt) + r'"\s+"([^"]+)"\s*\{', txt):
+                label = m.group(1)
+                # brace-balance to read this block's name attr
+                depth = 0
+                j = m.end() - 1
+                n = len(txt)
+                while j < n:
+                    if txt[j] == '{':
+                        depth += 1
+                    elif txt[j] == '}':
+                        depth -= 1
+                        if depth == 0:
+                            break
+                    j += 1
+                body = txt[m.end():j]
+                attr = name_attrs.get(rt, "name")
+                nm = re.search(r'\b' + attr + r'\s*=\s*"([^"]+)"', body)
+                resolved = nm.group(1) if nm else label
+                out[resolved] = {"tf_module": module, "tf_resource": f"{rt}.{label}",
+                                 "tf_type": rt, "tf_kind": "hcl-config"}
+    return out
+
 def tf_state_index(resource_types):
-    """Build lookup indexes for the given TF resource type(s) from state:
-    by ARN, by id, by name. Returns (by_arn, by_id, by_name, declared_list)."""
+    """Build lookup indexes for the given TF resource type(s):
+    by ARN, by id, by name. PRIMARY = terraform-state union (managed + data);
+    SECONDARY = HCL config (sec 1.4 pt3) for state-missing modules.
+    Returns (by_arn, by_id, by_name, declared_managed_list)."""
     if isinstance(resource_types, str):
         resource_types = [resource_types]
     rts = set(resource_types)
@@ -106,15 +157,19 @@ def tf_state_index(resource_types):
         if r["type"] not in rts:
             continue
         prov = {"tf_module": r["module"], "tf_resource": f'{r["type"]}.{r["tf_name"]}',
-                "tf_type": r["type"]}
-        rec = {"arn": r["arn"], "id": r["id"], "name": r["name"], "provenance": prov}
-        declared.append(rec)
+                "tf_type": r["type"], "tf_kind": r.get("tf_kind", "managed")}
+        if prov["tf_kind"] == "managed":
+            declared.append({"arn": r["arn"], "id": r["id"], "name": r["name"], "provenance": prov})
         if r["arn"]:
             by_arn[r["arn"]] = prov
         if r["id"]:
             by_id[str(r["id"])] = prov
         if r["name"]:
             by_name[r["name"]] = prov
+    # SECONDARY: HCL config for resources whose state is absent (state-missing module)
+    for nm, prov in _hcl_declared(rts).items():
+        if nm not in by_name:
+            by_name[nm] = prov
     return by_arn, by_id, by_name, declared
 
 # ---------------------------------------------------------------------------
@@ -430,8 +485,11 @@ def derive_class(cls):
     for n in live:
         arn = _node_arn(cls, n)
         n["arn"] = arn
-        # ARN-canonical join, with id/name fallback (CVO sec 1 matching key)
-        prov = by_arn.get(arn) or by_id.get(str(n["id"])) or (by_name.get(n.get("name")) if n.get("name") else None)
+        # ARN-canonical join, with id/name fallback (CVO sec 1 matching key).
+        # name fallback uses (name or id) because some classes (IAM) set the
+        # universal `name` prop only AFTER the join -- id IS the resolved name there.
+        join_name = n.get("name") or n.get("id")
+        prov = by_arn.get(arn) or by_id.get(str(n["id"])) or (by_name.get(join_name) if join_name else None)
         if prov:
             n["drift_class"] = "DECLARED"
             n["provenance"] = prov
