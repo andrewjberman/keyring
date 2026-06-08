@@ -1,0 +1,7 @@
+#!/bin/bash
+# comp-aws -- comprehensive AWS cloud compiler (ADHC_CMPAWS); per-class derive + F1 score vs certified oracles
+WORKSPACE="$(cd "$(dirname "$0")/.." && pwd)"
+python "$WORKSPACE/org/modules/graph/comp_aws_cli.py" "$@"
+_exit=$?
+python "$WORKSPACE/org/modules/graph/comp_log_auto.py" "comp-aws" "$*" $_exit 2>/dev/null
+exit $_exit
