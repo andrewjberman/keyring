@@ -22,11 +22,18 @@ Mechanically: `python .tools/registry-check.py` (add `-all` / `--json`).
 
 ## The format
 
+Vertical field-per-line record (Andrew-direct 2026-06-08 — every field on its
+own labeled line; What/Where/Why never run together; ASCII-only separators):
+
 ```
-N. PROJECT_CODE  [status]  YYYY-MM-DD HH:MM  (Xh/Xd ago)  by <owner>
-   What:  what the project IS              (one line)
-   Where: where it is at right now         (one line)
-   Why:   why we are / were doing it       (one line)
+#: N
+Project: PROJECT_CODE
+Status: status
+Last commit: HH:MM (Xh) - OWNER        (today; older shows M/DD (X.Xd); OWNER = role token e.g. CTO/COO/AE)
+What:  what the project IS              (one line)
+Where: where it is at right now         (one line)
+Why:   why we are / were doing it       (one line)
+--------------------------------------------------------   (ASCII separator between records)
 ```
 
 - **Ordering:** by most recent **ascribed commit** (a commit whose message
