@@ -625,6 +625,23 @@ def derive_edges():
         if s and d:
             edges.append({"source": s, "target": d, "edge_type": t, **extra})
 
+    # KMS ref resolver: a kms_key_arn property may be a full ARN, a bare key-id (SNS
+    # KmsMasterKeyId), or an alias -> resolve to the KMS_KEY node ARN so ENCRYPTS_WITH
+    # terminates (0-dangling); unresolvable -> wildcard.
+    _kn = live_kms()
+    _kms_arns = {k["arn"] for k in _kn if k.get("arn")}
+    _kms_by_id = {k["id"]: k["arn"] for k in _kn if k.get("arn")}
+    _kms_by_alias = {al: k["arn"] for k in _kn for al in k.get("aliases", []) if k.get("arn")}
+
+    def _enc(src, ref):
+        if not (src and ref):
+            return
+        tgt = (ref if ref in _kms_arns else _kms_by_id.get(ref) or _kms_by_alias.get(ref))
+        if tgt:
+            E(src, tgt, "ENCRYPTS_WITH")
+        else:
+            E(src, ref, "ENCRYPTS_WITH", wildcard=True)
+
     iamc = _boto("iam")
     # EC2 -[HAS_PROFILE]-> INSTANCE_PROFILE -[ASSUMES]-> IAM_ROLE
     prof_role = {}
@@ -746,20 +763,20 @@ def derive_edges():
         if n.get("redrive_dlq_arn"):
             E(n.get("arn"), n["redrive_dlq_arn"], "DEAD_LETTERS_TO")
         if n.get("kms_key_arn"):
-            E(n.get("arn"), n["kms_key_arn"], "ENCRYPTS_WITH")
+            _enc(n.get("arn"), n["kms_key_arn"])
     for n in live_sns():
         if n.get("kms_key_arn"):
-            E(n.get("arn"), n["kms_key_arn"], "ENCRYPTS_WITH")
+            _enc(n.get("arn"), n["kms_key_arn"])
         for sub in n.get("subscriptions", []):
             # subscription endpoint (email/https/lambda-arn) -- external delivery target,
             # not an in-graph resource node -> wildcard-exempt.
             E(n.get("arn"), sub, "SUBSCRIBES", wildcard=True)
     for n in live_dynamodb():
         if n.get("kms_key_arn"):
-            E(n.get("arn"), n["kms_key_arn"], "ENCRYPTS_WITH")
+            _enc(n.get("arn"), n["kms_key_arn"])
     for n in live_secrets():
         if n.get("kms_key_arn"):
-            E(n.get("arn"), n["kms_key_arn"], "ENCRYPTS_WITH")
+            _enc(n.get("arn"), n["kms_key_arn"])
     return edges
 
 # action-prefix -> (verb, target_node_kind) for the derived data-access edge layer
