@@ -65,9 +65,74 @@ Tag: `globgrph-v0.1.4`
 | globgrph-v0.1.3 | d8d0d7d26 | JAVA_OPTS_APPEND JVM system property (env-var ambiguity bypass) |
 | globgrph-v0.1.4 | 42eeb9761 | pyarrow nullable=False for required Iceberg fields |
 
+| globgrph-v0.1.5 | bcdf33ccb | Item-2a derive_runner — requests tag API + catalog session; WARN on 0.96.1 |
+
 ---
 
-### Next: Wave-2 Item-2a
+## Wave-2 Item-2a — Nightly Fargate derive-runner
 
-Nightly Fargate derive-runner (full graph -> iceberg-commit). Awaiting COO GO.
-P2 integration follows Item-2a (P2 extraction folds into derive-runner output).
+**COO GO received**: 20260609T151142Z
+
+### Terraform deploy
+
+- 15 resources created (ECR repo + lifecycle policy + ECS task def + EventBridge rule + target +
+  CW log group + 4 IAM roles + 5 IAM role policies + 1 IAM role policy attachment + SG)
+- 0-diff verified post-apply
+- ECR URI: `313476888478.dkr.ecr.us-east-1.amazonaws.com/opal-globgrph-derive-runner`
+- ECS task def: `globgrph-derive-runner:1`
+- EventBridge: `opal-globgrph-derive-runner-nightly` cron(0 2 * * ? *) ENABLED
+
+### Docker image
+
+- Built from `infra/aws/globgrph/Dockerfile`
+- Deps: `boto3==1.38.0 pyiceberg[s3]==0.9.1 pyarrow==19.0.1`
+- Image: `313476888478.dkr.ecr.us-east-1.amazonaws.com/opal-globgrph-derive-runner:latest`
+- Pushed to ECR successfully
+
+### First nightly run verification (manual trigger, task b51dc662)
+
+| Step | Result |
+|------|--------|
+| DERIVE_COMPLETE | nodes=359 edges=2531 |
+| ICEBERG_NODES_WRITTEN | count=359 |
+| ICEBERG_EDGES_WRITTEN | count=2531 |
+| NESSIE_COMMIT branch=main | OK |
+| Nessie audit-baseline tag | WARN 400 (see below) |
+| SNAPSHOT_ARCHIVED | snapshots/20260609/graph-20260609.tar.gz size=33225 |
+| Exit code | 0 |
+
+**Note on derive AccessDenied errors**: comp_aws_cli reads Terraform state from
+`s3://opal-313476888478-terraform-state`. The derive-runner task role does not have
+`s3:ListBucket` on that bucket. These AccessDenied errors are expected — the TF state
+read is a fallback/enhancement path in comp_aws_cli; the derive completes with live AWS
+API calls (no TF state needed for the baseline graph). Decision: do NOT grant TF state
+access (state bucket should remain tightly scoped). These errors do not affect node/edge
+correctness.
+
+**Nessie audit-baseline tag WARN**: `POST /api/v2/trees` consistently returns 400
+"createReference.name/type: must not be null" despite sending valid JSON body
+`{"type": "TAG", "name": "..."}` with `Content-Type: application/json`. Investigated 5+
+approaches (urllib, requests, sourceRefName query param, reference wrapper body). The
+Nessie 0.96.1 Jackson binding for `POST /api/v2/trees` appears to not deserialize the
+`type`/`name` fields from the bare Reference body format. Follow-up investigation needed
+(check Nessie 0.96.1 Release Notes for API contract changes; test with pynessie client).
+Non-blocking for Item-2a closure — derive + iceberg + snapshot are the core P1 gates.
+
+### Commits
+
+| Hash | Description |
+|------|-------------|
+| 0bdf2700b | feat(GLOBGRPH): Item-2a — ECR+ECS+EventBridge+IAM+Dockerfile+derive_runner.py |
+| bcdf33ccb | fix(GLOBGRPH): derive_runner tag API — requests session, catalog source |
+
+### Tag
+
+`globgrph-v0.1.5` → bcdf33ccb (pushed with --follow-tags)
+
+### P2 sequencing
+
+P2 (portal/pipeline extraction) deferred until Item-2a nightly cron fires and produces
+real graph snapshots. First real nightly run: 2026-06-10 ~02:00 UTC. P2 schema locked
+at commit 82f766166 (NFRA_COMPAWS_SCHEMA.md v2.0). RAVC2 to CTO before first P2 commit.
+
+### RAVC2 sent to COO: 20260609T~1610Z
