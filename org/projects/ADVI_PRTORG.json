@@ -1,0 +1,32 @@
+{
+  "project_code": "ADVI_PRTORG",
+  "macro_code": "ADVI",
+  "name": "Partner-Firm Instantiation & Organization Standard",
+  "description": "Andrew-direct 2026-06-09: formalize how a partner firm is instantiated + kept organized across all planes, with Cottonwood as the driving instance. Three asks: (1) instantiate/organize the Cottonwood TF module; (2) settle where DynamoDB partner identity tables live (answer: dedicated partner-firms/ TF root, NOT the firm-pipeline root and NOT shared-infra); (3) formalize the frontend ADVI organization (the _shared utilities/components vs _partners/{firm} bespoke split + TenantLayoutConfig divergence ledger). Headline finding: Cottonwood is HALF-WIRED — data plane (cot-pipeline opal-data-cot) + identity table (partner-firms/cottonwood.tf) + page-access matrix (firmAccess.ts, minus /advisor-intelligence) are DONE, but the serving route (Lambda@Edge FIRM_CONFIG, CF origin, OAI grant, CI sentinel) and the ADVI frontend firm-module are MISSING. The missing pieces are consistent with COT v1 intentionally having NO ADVI page (COTETL §6.1 OUTCOME B = no usable advisor dimension v1). PRD ratifies the four-plane TF standard + DynamoDB homing + frontend _shared/_partners contract, lays out Cottonwood gap-closure, and surfaces the gating decision (does COT get ADVI in v1? CTO rec: NO for v1 — ship the standard + document the intentional gap, defer the ADVI route+module).",
+  "prds": [
+    {
+      "path": "docs/architecture/ADVI_PRTORG.md",
+      "label": "ADVI_PRTORG PRD v0.1",
+      "date": "2026-06-09"
+    }
+  ],
+  "source_brief": "Andrew-direct 2026-06-09 (CTO session): 'Write a PRD for the instantiation and organization of the cottonwood tf module... understand how we're handling dynamodb partner tables... make sure we are staying organized frontend as each partner firm has a slightly different ADVI page... shared utilities/components versus edited/bespoke.' CTO ground-truth investigation of TF roots (cot-pipeline/partner-firms/portal-auth/shared-infra), modules/partner-firm-table, Lambda@Edge firm-config.mjs + CI sentinel, portal _shared/_partners + TenantLayoutConfig, firmAccess.ts.",
+  "status": "active",
+  "phase": "Phase 0: PRD complete (1.0.0_SA_CTO, docs/architecture/ADVI_PRTORG.md v0.1). GATING DECISION pending Andrew (§5-A: does Cottonwood get an ADVI page in v1? CTO rec NO-for-v1). Standard-codification track (PRTORG.01/02) unblocked NOW regardless; serving-route + frontend-module tracks (PRTORG.03/04) gate on §5-A.",
+  "blocking": "Andrew §5-A decision (COT ADVI page in v1: yes/no) gates PRTORG.03 (serving route / TO-FIRMSEP.10) + PRTORG.04 (frontend firm-module). PRTORG.01 (ratify standard + onboarding checklist) + PRTORG.02 (correct COTETL depends_on_note drift + record COT-ADVI decision) are unblocked. COO decomposition pending.",
+  "depends_on": [
+    "ADVI_FIRMSEP",
+    "ADVI_COTETL"
+  ],
+  "depends_on_note": "ADVI_FIRMSEP owns the serving-route Phase 3 (TO-FIRMSEP.10) that PRTORG.03 executes; ADVI_COTETL owns the COT data plane (done) + the §6.1 advisor-dimension OUTCOME B that informs the §5-A gating decision. PRTORG is the organization-standard wrapper that ties the partner-firm planes together + drives Cottonwood gap-closure.",
+  "created": "2026-06-09",
+  "pods": [
+    "0.7",
+    "0.4",
+    "0.6"
+  ],
+  "pipeline": "portal-auth + cot-pipeline + partner-firms + portal frontend",
+  "coo_lane": "2.0.0_SA_COO",
+  "thread_counter": 0,
+  "threads": []
+}
