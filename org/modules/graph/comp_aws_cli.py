@@ -1487,7 +1487,45 @@ def cmd_classes(args):
         print(f"  {c:12} -> {CLASSES[c][1]}")
     print("\nCertified oracle scorers:", ", ".join(SCORERS))
 
+def _arn_to_cls(arn: str) -> str | None:
+    """Map an ARN to a CLASSES key for bounded derive. Returns None if unknown."""
+    service = arn.split(":")[2] if arn.count(":") >= 2 else ""
+    mapping = {
+        "s3": "s3", "iam": "iam", "ec2": "ec2", "lambda": "lambda",
+        "events": "eventbridge", "sns": "sns", "sqs": "sqs",
+        "dynamodb": "dynamodb", "cloudfront": "cloudfront",
+        "secretsmanager": "secrets", "kms": "kms",
+        "logs": "logs", "cloudwatch": "cloudwatch", "states": "stepfunctions",
+    }
+    return mapping.get(service)
+
+
 def cmd_derive(args):
+    # Bounded derive: --resource <arn> restricts to just that class (NFRA_GLOBGRPH Item-2b)
+    resource_arn = getattr(args, "resource", None)
+    if resource_arn:
+        resource_cls = _arn_to_cls(resource_arn)
+        if not resource_cls:
+            print(f"ERROR: cannot infer class from ARN: {resource_arn}")
+            return {}
+        # Run the single class derive; the full graph context is unavailable in bounded mode
+        try:
+            cd = derive_class(resource_cls)
+            # Filter nodes to only the specific ARN
+            nodes = [n for n in cd.get("nodes", []) if n.get("arn") == resource_arn or n.get("id") == resource_arn.split(":")[-1]]
+            cd["nodes"] = nodes
+            cd["counts"]["live"] = len(nodes)
+        except Exception as e:
+            print(f"ERROR: bounded derive failed: {e}")
+            return {}
+        graph = {"meta": {"account": ACCOUNT, "classes": [resource_cls], "bounded_resource": resource_arn},
+                 "classes_data": {resource_cls: cd}, "edges": []}
+        if args.out:
+            Path(args.out).write_text(json.dumps(graph, indent=2, default=str), encoding="utf-8")
+            print(f"wrote {args.out}")
+        print(f"  {resource_cls:12} bounded_derive arn={resource_arn} nodes={len(nodes)}")
+        return graph
+
     classes = [args.cls] if args.cls else list(CLASSES)
     graph = {"meta": {"account": ACCOUNT, "classes": classes, "tf_root": str(TF_ROOT.relative_to(WS))}, "classes_data": {}}
     for c in classes:
@@ -1581,12 +1619,124 @@ def cmd_snapshot(args):
         except Exception as e:
             print(f"WARN: S3 archive failed ({type(e).__name__}: {e}); local snapshot kept")
 
+def cmd_iceberg_commit(args):
+    """
+    Write a graph JSON to Iceberg tables via pyiceberg + Nessie catalog.
+    NFRA_GLOBGRPH P1: populates graph_nodes / graph_edges for AC2 (atomic versioning).
+    Usage: comp-aws iceberg-commit [--graph FILE] [--nessie-uri URI] [--warehouse URI]
+    If --graph is omitted, derives fresh (full derive then commit).
+    """
+    try:
+        from pyiceberg.catalog.nessie import NessieCatalog  # type: ignore
+        import pyarrow as pa                                  # type: ignore
+    except ImportError as e:
+        print(f"ERROR: pyiceberg not installed: {e}")
+        print("  Install: pip install 'pyiceberg[pyarrow,nessie]'")
+        return
+
+    import time
+    nessie_uri    = args.nessie_uri or "http://nessie.opal-globgrph.local:19120/api/v2"
+    warehouse_uri = args.warehouse  or "s3://opal-313476888478-globgrph/warehouse"
+    branch        = args.branch     or "main"
+    batch_ts      = int(time.time() * 1000)
+
+    # Load or derive graph
+    if args.graph:
+        graph = json.loads(Path(args.graph).read_text(encoding="utf-8"))
+    else:
+        print("No --graph provided; running full derive...")
+        graph = cmd_derive(argparse.Namespace(cls=None, out=None, resource=None))
+
+    # Flatten all nodes
+    all_nodes: list[dict] = []
+    for cls_data in graph.get("classes_data", {}).values():
+        for node in cls_data.get("nodes", []):
+            all_nodes.append(node)
+
+    all_edges: list[dict] = graph.get("edges", [])
+
+    print(f"  iceberg-commit: {len(all_nodes)} nodes, {len(all_edges)} edges -> Nessie {nessie_uri}")
+
+    catalog = NessieCatalog(name="nessie", **{
+        "uri": nessie_uri, "warehouse": warehouse_uri, "ref": branch
+    })
+
+    ns = "globgrph"
+    try:
+        catalog.create_namespace(ns)
+    except Exception:
+        pass
+
+    # Ensure / load graph_nodes table
+    from pyiceberg.schema import Schema
+    from pyiceberg.types import NestedField, StringType, LongType
+    nodes_schema = Schema(
+        NestedField(1, "node_id",     StringType(), required=True),
+        NestedField(2, "arn",         StringType(), required=False),
+        NestedField(3, "node_type",   StringType(), required=True),
+        NestedField(4, "name",        StringType(), required=False),
+        NestedField(5, "layer",       StringType(), required=False),
+        NestedField(6, "drift_class", StringType(), required=False),
+        NestedField(7, "snapshot_ts", LongType(),   required=False),
+    )
+    nodes_id = (ns, "graph_nodes")
+    try:
+        nodes_table = catalog.load_table(nodes_id)
+    except Exception:
+        nodes_table = catalog.create_table(nodes_id, schema=nodes_schema)
+
+    edges_schema = Schema(
+        NestedField(1, "src_id",      StringType(), required=True),
+        NestedField(2, "dst_id",      StringType(), required=True),
+        NestedField(3, "edge_type",   StringType(), required=True),
+        NestedField(4, "layer",       StringType(), required=False),
+        NestedField(5, "snapshot_ts", LongType(),   required=False),
+    )
+    edges_id = (ns, "graph_edges")
+    try:
+        edges_table = catalog.load_table(edges_id)
+    except Exception:
+        edges_table = catalog.create_table(edges_id, schema=edges_schema)
+
+    # Write nodes
+    if all_nodes:
+        nodes_table.overwrite(pa.table({
+            "node_id":     [n.get("id", "")       for n in all_nodes],
+            "arn":         [n.get("arn", "")       for n in all_nodes],
+            "node_type":   [n.get("type", "")      for n in all_nodes],
+            "name":        [n.get("name", "")      for n in all_nodes],
+            "layer":       [n.get("layer", "aws")  for n in all_nodes],
+            "drift_class": [n.get("drift_class","") for n in all_nodes],
+            "snapshot_ts": [batch_ts               for _ in all_nodes],
+        }))
+        print(f"  WRITE OK: {len(all_nodes)} nodes -> graph_nodes")
+
+    # Write edges
+    if all_edges:
+        def _nid(e, k):
+            n = e.get(k, {})
+            if isinstance(n, dict):
+                return n.get("id", "")
+            return str(n)
+        edges_table.overwrite(pa.table({
+            "src_id":      [_nid(e, "src")          for e in all_edges],
+            "dst_id":      [_nid(e, "dst")          for e in all_edges],
+            "edge_type":   [e.get("edge_type", "")  for e in all_edges],
+            "layer":       ["aws"                    for _ in all_edges],
+            "snapshot_ts": [batch_ts                 for _ in all_edges],
+        }))
+        print(f"  WRITE OK: {len(all_edges)} edges -> graph_edges")
+
+    print(f"  Nessie commit on branch={branch} at ts={batch_ts} -- DONE")
+
+
 def main():
     ap = argparse.ArgumentParser(prog="comp-aws")
     sub = ap.add_subparsers(dest="cmd", required=True)
     d = sub.add_parser("derive")
     d.add_argument("--class", dest="cls")
     d.add_argument("--out")
+    d.add_argument("--resource", dest="resource", help="ARN for bounded single-resource derive (NFRA_GLOBGRPH Item-2b)")
     d.set_defaults(fn=cmd_derive)
     s = sub.add_parser("score")
     s.add_argument("--class", dest="cls")
@@ -1606,6 +1756,12 @@ def main():
     dm.set_defaults(fn=cmd_dual_managed)
     c = sub.add_parser("classes")
     c.set_defaults(fn=cmd_classes)
+    ic = sub.add_parser("iceberg-commit")
+    ic.add_argument("--graph",      dest="graph",      help="Path to derived graph JSON (default: run full derive)")
+    ic.add_argument("--nessie-uri", dest="nessie_uri", help="Nessie API URI (default: http://nessie.opal-globgrph.local:19120/api/v2)")
+    ic.add_argument("--warehouse",  dest="warehouse",  help="Iceberg warehouse S3 URI")
+    ic.add_argument("--branch",     dest="branch",     default="main")
+    ic.set_defaults(fn=cmd_iceberg_commit)
     args = ap.parse_args()
     args.fn(args)
 
