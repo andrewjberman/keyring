@@ -204,7 +204,7 @@ def main():
     if allmode:
         emit("COLD  (>72h since work, still not closed)", cold, now, n)
     if malformed:
-        print(f"\n⚠ MALFORMED JSON ({len(malformed)}) -- unparseable, fix these:")
+        print(f"\nWARN: MALFORMED JSON ({len(malformed)}) -- unparseable, fix these:")
         for m in malformed:
             print(f"   {m['code']}.json -> {m['err']}")
     tail = f"\nSUMMARY: {len(hot)} hot | {len(cold)} cold"
