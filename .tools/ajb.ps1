@@ -85,7 +85,7 @@ function Get-AgentLoopDirective {
             return "$header`n  CL CTO`n  1. Run /watcher ONCE (arm-at-load).`n  2. CronCreate /cl-charter 30m, then /cl-charter  (the one CL CTO standing loop -- LD-0066 queue-pull)."
         }
         '^2\.[01]\.0_SA_COO$' {
-            return "$header`n  COO`n  1. Run /watcher ONCE (arm-at-load; no /watcher cron -- LD-0166).`n  2. CronCreate /drive 20m, then /drive  (the SOLE standing operational loop + centralized tick driver; /watcher Steps 1-5 still fold inline at cycle start)."
+            return "$header`n  COO`n  1. Run /watcher ONCE (arm-at-load; no /watcher cron -- LD-0166).`n  /drive is AD-HOC -- Andrew instantiates it when needed. Do NOT arm a /drive cron at startup. If a stale /drive cron exists from a prior session, CronList->CronDelete it."
         }
         '^3\.0\.0_SA_CVO$' {
             return "$header`n  ws CVO -- /spot-check is AD-HOC (LD-0164 -- no 20m cron).`n  1. Run /watcher ONCE (arm-at-load).`n  2. CronCreate /verify-channel 2h, then /verify-channel  (lightweight baseline; comprehensive event-triggered).`n  /spot-check: run on-demand / at closeout-class signals."

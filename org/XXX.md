@@ -6,9 +6,6 @@
 
 **BANNED: Explore agent** — produces fabricated output. Use comp-* tools and Grep/Read instead.
 **BANNED: Task agent** — unreliable. Do the work directly.
-**NO EMOJIS** in any code, log, print statement, or file that runs on AWS. ASCII only.
-**COMP-* TOOLS BEFORE GREP** — run the appropriate comp-* command before manually tracing any dependency. See comp-tools table below.
-**HOT-REGISTRY SCOPE — MANDATORY (Andrew direct 2026-06-09):** Agents MUST NOT self-initiate work on any project that is not `"status": "active"` in `org/projects/*.json`. The hot registry is the ONLY authorized work surface. A TO in your task_orders/ folder for a non-active project is NOT a work authorization — do NOT execute it. Surface it to COO with subject `[SCOPE-VIOLATION]` (project code + TO ref + what you found) and hold. Exceptions: (a) Andrew-direct verbal instruction in the current session authorizes that specific action; (b) an explicit MSTR directive via a Tier-1 dispatch naming the non-hot project with stated justification. Applies equally to /work ticks, /drive ticks, and any autonomous TO queue scan.
 
 ---
 
@@ -289,7 +286,7 @@ Per LD-0062 ratification 2026-05-25T~20:05Z (Andrew sovereign via "go with your 
 | `0.0.0_AB_MSTR` | **NO cron — MSTR arms ZERO crons (LD-0164 + LD-0166, Andrew direct 2026-06-08).** `/watcher` arms the persistent inbox Monitor ONCE at load (no watcher cron — LD-0166). | `/mstr-review` is **ad-hoc** (LD-0164): runs once at MSTR session startup per the deterministic startup directive, then on Andrew call / closeout-class signals / on-demand — NOT a 12h cron. `/govern` is Andrew-discretion only, not auto-armed (LD-0147); LD-0090 ALWAYS-PROCEED discipline still governs `/govern` WHEN Andrew loads it. `/mstr-charter` + `/compiler-ferry` + remaining MSTR skills event-triggered on inbox match. If a stale `/mstr-review` / `/watcher` cron exists from a prior session, `CronList`→`CronDelete` it. |
 | `1.0.0_SA_CTO` (ws) | **NO loop — do NOT arm `/ws-charter` cron (LD-0157, Andrew direct 2026-06-05, supersedes the LD-0062 30m auto-arm).** Reachability = persistent inbox Monitor (`/watcher`, section C). | ws CTO is **event-driven** (Andrew directives + CVO findings arrive via the Monitor) + **ad-hoc** `/ws-charter` when there is charter work. The 30m self-tick wasted ticks; COO `/drive`+`/fabric-check` is the centralized tick driver. If a `/ws-charter` cron is live from a prior session, `CronList`→`CronDelete` it. |
 | `1.x.0_SA_CTO` (CL) | `CronCreate /cl-charter 30m` | LD-0066 3-way split; CL is queue-pull + sequential PRD authoring; consumes Input 1/2/3 cascade |
-| `2.x.0_SA_COO` | `CronCreate /drive 20m` | already operational pattern per LD-0056 |
+| `2.x.0_SA_COO` | **/watcher ONCE at load — no auto-cron.** `/drive` is AD-HOC: Andrew instantiates it when needed. | If a stale `/drive` cron exists from a prior session, `CronList`→`CronDelete` it. |
 | `3.x.0_SA_CVO` | **NO cron — do NOT arm `/spot-check` cron (LD-0164, Andrew direct 2026-06-08, supersedes the LD-0062 20m auto-arm).** `/watcher` arms the persistent inbox Monitor once at load (section C). | CVO is **event-driven** + **ad-hoc**: `/spot-check` (alignment-sweep, 2h scan body) and `/verify-channel` (project-scope verify) both fire on-demand / at closeout-class signals, not on a fixed tick. If a `/spot-check` cron is live from a prior session, `CronList`→`CronDelete` it. |
 | `0.x.0_(DS\|AE\|DE\|DT\|RD)_*` Tier-2/3 worker (+ tilde-lanes) | **NO loop — do NOT arm `/work` cron (LD-0157, Andrew direct 2026-06-05, supersedes LD-0072).** `/watcher` arms the persistent inbox Monitor once at load (section C) — that is the worker's only standing mechanism. | Workers are **event-driven**: act on Monitor-delivered dispatches/TOs as they arrive; keep your broker summary an accurate status (`WORKING: <task>` / `IDLE: available` / `BLOCKED: <what>` / `BLOCKED-SOVEREIGN: <decision>`) so COO's centralized `/drive`+`/fabric-check` finds blocks. No self-ticking, no `[BLOCKED-ASK]` polling-announce — your STATUS carries the block; COO is the single tick driver. If you have a live `/work` cron from a prior session, `CronList`→`CronDelete` it. |
 | `0.x.0` non-worker / unspecified | per-role basis as defined in `prompt.md`; reachability = `/watcher` arms the persistent inbox Monitor once at load (section C) | no primary cron unless prompt.md specifies one |
@@ -302,7 +299,7 @@ CronCreate /<skill> <interval>
 /<skill>   # runs first cycle now; cron picks up at next interval
 ```
 
-**Loop hygiene (LD-0157 + LD-0164 + LD-0166 — self-tick + governance loops retired):** the fabric now runs on **event-driven** work (the persistent inbox Monitor is effective) + **ONE centralized standing operational loop: COO `/drive`** (which runs `/fabric-check` to find blocks across all agents). The retired self-tick loops — **`/work` (workers)** and **`/ws-charter` (ws CTO)** (LD-0157, 2026-06-05) — plus the retired governance loops — **`/mstr-review` (MSTR)** and **`/spot-check` (CVO)** (LD-0164, Andrew direct 2026-06-08) — are **NOT armed at launch**; all four remain **ad-hoc invocable** (governance review fires on Andrew call / closeout-class signals / on-demand). `/watcher` arms the persistent inbox Monitor once at load (not a loop — LD-0166 struck the `/watcher` cron; MSTR + CVO now arm ZERO crons). Rationale: agents do not need to self-tick to announce blocks — their broker STATUS carries the block and COO's centralized `/drive`+`/fabric-check` resolves it; governance review is event-shaped (a window worth reviewing is created by activity, not by the clock). If you find a stale `/watcher` / `/work` / `/ws-charter` / `/mstr-review` / `/spot-check` CronCreate job from a prior session, cancel it (`CronList` → `CronDelete`).
+**Loop hygiene:** The fabric is event-driven. All self-tick loops are retired — **`/work` (workers)**, **`/ws-charter` (ws CTO)**, **`/drive` (COO)**, **`/mstr-review` (MSTR)**, **`/spot-check` (CVO)** — none are armed at launch. All remain ad-hoc invocable when Andrew fires them. `/watcher` arms the persistent inbox Monitor once at load (not a loop). If you find a stale cron for any of these from a prior session, cancel it (`CronList` → `CronDelete`).
 
 **CL fabric inheritance:** CL agents (`feature_clb/`) inherit this convention via cwd=ajb_workspace per LD-0033/0034 unified-broker substrate; org/XXX.md is workspace-canonical (no CL-side mirror needed). The CL CTO `/charter 30m` arming matches ws CTO arming under the LD-0062 symmetric-cadence ruling.
 
@@ -631,16 +628,6 @@ Update your core document when you make a structural change (new resource, contr
 | SA | `architecture_brief.xml` | `{agent_folder}/deliverables/` |
 
 Do not edit another agent's core document. If your change makes theirs stale, note it in your log and issue them a task order.
-
----
-
-## Thread Participation
-
-- Write only your own message file (`messages/{NNN}.md`)
-- Do not modify THREAD.json, TURN.json, or other agents' messages
-- Set signal in YAML frontmatter: `continue` | `converge` | `escalate`
-- Last turn signal MUST be `converge`
-- SA/DE run thread scripts directly via Bash — do not ask Andrew
 
 ---
 
