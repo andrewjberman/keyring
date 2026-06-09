@@ -1627,11 +1627,11 @@ def cmd_iceberg_commit(args):
     If --graph is omitted, derives fresh (full derive then commit).
     """
     try:
-        from pyiceberg.catalog.nessie import NessieCatalog  # type: ignore
-        import pyarrow as pa                                  # type: ignore
+        from pyiceberg.catalog.rest import RestCatalog  # type: ignore
+        import pyarrow as pa                             # type: ignore
     except ImportError as e:
         print(f"ERROR: pyiceberg not installed: {e}")
-        print("  Install: pip install 'pyiceberg[pyarrow,nessie]'")
+        print("  Install: pip install 'pyiceberg[pyarrow]' pyarrow")
         return
 
     import time
@@ -1657,8 +1657,12 @@ def cmd_iceberg_commit(args):
 
     print(f"  iceberg-commit: {len(all_nodes)} nodes, {len(all_edges)} edges -> Nessie {nessie_uri}")
 
-    catalog = NessieCatalog(name="nessie", **{
-        "uri": nessie_uri, "warehouse": warehouse_uri, "ref": branch
+    # Nessie 0.96.x: Iceberg REST endpoint at /iceberg/{branch}; NessieCatalog removed in pyiceberg 0.7+
+    # warehouse="default" matches NESSIE_CATALOG_DEFAULT_WAREHOUSE in ECS task def.
+    # warehouse_uri (S3 URI) is for reference only; catalog lookup uses the name.
+    base = nessie_uri.replace("/api/v2", "")
+    catalog = RestCatalog(name="nessie", **{
+        "uri": f"{base}/iceberg/{branch}", "warehouse": "default"
     })
 
     ns = "globgrph"
