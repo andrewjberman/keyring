@@ -27,7 +27,7 @@
   "depends_on": [
     "ADVI_FIRMSEP"
   ],
-  "depends_on_note": "ADVI_FIRMSEP resolved the Cottonwood firm-routing (firm-id cottonwood, Lambda@Edge FIRM_BUCKET_MAP cottonwood->opal-data-cot, shared OAI E139998VWH0PD + JWT issuer) \u00e2\u20ac\u201d the \u00c2\u00a76.2 bucket-name reconciliation must align with the FIRMSEP-wired routing. FIRMSEP Phase-1 shared-config extraction is the single-edit onboarding path for the firm-bucket map.",
+  "depends_on_note": "CORRECTED 2026-06-09 (PRTORG.02, drift fix): ADVI_FIRMSEP DECIDED the Cottonwood firm-routing VALUES (firm-id cottonwood, bucket opal-data-cot, shared OAI E139998VWH0PD, JWT issuer) but did NOT wire the serving route -- the prior note's 'FIRMSEP-wired routing' claim was inaccurate. As of 2026-06-09 the serving route is NOT yet wired: Lambda@Edge FIRM_CONFIG has no cottonwood entry, opal-data-cot is not a declared CF origin, and the CI sentinel still routes cottonwood to the unmapped opal-data-cottonwood fallback. COT-ADVI = YES (Andrew sovereign 5-A 2026-06-09: Cottonwood gets an in-pattern ADVI page). Serving route pending ADVI_PRTORG PRTORG.03 (= TO-FIRMSEP.10, 0.7.0_AE_CloudOps~B); frontend _partners/cottonwood/ module pending PRTORG.04 (0.4.x_DE, after .03). Org standard: docs/architecture/PARTNER_FIRM_ORGANIZATION_STANDARD.md.",
   "thread_counter": 0,
   "threads": []
 }
