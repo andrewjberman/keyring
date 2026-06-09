@@ -12,6 +12,6 @@
     "3.0"
   ],
   "created": "2026-06-08",
-  "blocking": "None — P1 UNGATED (CTO ruled both forks Nessie-Fargate + Fargate-runner; P1 reuses the certified CMPAWS schema, no cross-layer-schema gate). AE building full P1 parallel to CMPAWS Wave-2. Non-blocking follow-ons: CTO PRD to include a cost-footprint/right-sizing section + flag the Fargate+DynamoDB+S3 footprint to NFRA cost-tracking (MSTR LD-0168 note); GLOBGRPH cross-layer schema = P2/enrich. CLOSEOUT BAR (MSTR LD-0168, /verify-channel): versioning + Cypher-query layer demonstrably WORKING on real unioned graph data, not just infra stood up.",
+  "blocking": "Wave-1 DEPLOYED (c65ad3abf, globgrph-v0.1.0, 33 resources, 0-diff, RAVC2-ACCEPTED 20260609T134527Z): Item-1 Nessie-on-Fargate (ECS opal-globgrph, DynamoDB version store, CloudMap nessie.opal-globgrph.local, S3 warehouse opal-313476888478-globgrph) + Item-2b CloudTrail->EB->SQS->Lambda incremental updater (14-service EB rule, 2-min debounce, Lambda opal-globgrph-incremental-updater, pyiceberg-nessie-deps layer) LIVE. Wave-2 prereq in progress (0.7.0_AE): (1) Nessie health verify + ECS RUNNING, (2) VPC reachability + first iceberg-commit test, (3) AC7 gate -- versioning + Cypher on real data. Wave-2 (Item-2a nightly Fargate derive-runner) GOs on AC7 PASS. Schema P2 routed CTO->Andrew for direction.",
   "prd": "docs/architecture/NFRA_GLOBGRPH_PRD.md (formal, CTO 009b7bde2; origin request docs/briefs/global-opal-graph-versioned-platform-prd-request-20260608.md)"
 }
