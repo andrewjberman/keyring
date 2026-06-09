@@ -106,21 +106,6 @@ Workspace-shared skills propagate ws → CL via `.tools/sync-skills-to-worktree.
 
 ---
 
-## Context Compaction / Session Resume — CRITICAL
-
-If your context was compacted (you see a conversation summary at the start of your session),
-**treat this as a fresh session start.** The summary is a snapshot from BEFORE compaction.
-
-- Inbox state in the summary is STALE. Messages may have arrived during or after compaction that
-  you never saw. "Inbox was empty" in the summary does NOT mean your inbox is empty now.
-- PID changed on resume. Your prior registration is gone — broker shows you as stale/offline.
-- GOs dispatched while you were compacted are sitting in your inbox unread.
-
-**ALWAYS re-run the full Step 1b startup sequence before reading or acting on any summary content.**
-Skipping startup because the summary says "no pending work" is the failure mode. Don't do it.
-
----
-
 ## Step 1b — MCP Startup (MANDATORY, every session, no exceptions)
 
 **A. Register — use your FULL serial, including ~suffix:**
