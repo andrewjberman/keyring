@@ -12,6 +12,6 @@
     "3.0"
   ],
   "created": "2026-06-08",
-  "blocking": "Item-2a IN PROGRESS (0bdf2700b, 20260609T154Xz): nightly Fargate derive-runner committed \u2014 ECR repo + ECS task def + EventBridge cron + IAM role + Dockerfile + derive_runner.py (full comp-aws derive -> Nessie commit on main + audit-baseline-{date} tag). Next: Terraform apply (ECR push -> ECS task register -> EventBridge schedule enable) -> first nightly run -> RAVC2. AC7 PASS banked (globgrph-v0.1.4, 638 nodes, Kuzu Cypher confirmed). P2 schema ready (82f766166) \u2014 0.7.0_AE holding P2 integration until post-first-nightly-run. CVO cert deferred until first real nightly data.",
+  "blocking": "Item-2a COMPLETE (bcdf33ccb, globgrph-v0.1.5, 20260609T160902Z): Terraform deploy 15 resources (ECR+ECS+EventBridge+IAM+SG+CW), 0-diff verified. First manual nightly run PASS: 359 nodes, 2531 edges, Nessie commit main OK, snapshot archived (snapshots/20260609/graph-20260609.tar.gz 33KB). WARN: Nessie audit-baseline tag POST 400 (best-effort non-blocking \u2014 follow-up 0.96.1 API contract). P2 holding until first cron run 2026-06-10 ~02:00Z (P2 schema locked 82f766166, RAVC2-to-CTO before first P2 commit). CVO P1 cert: BLOCKED on MSTR respawn (MSTR not in broker \u2014 Andrew restart advisory before 22:00Z). Wave-2 Item-2a DONE. Wave-3 Item-2b deferred (bounded-derive mode prereq).",
   "prd": "docs/architecture/NFRA_GLOBGRPH_PRD.md (formal, CTO 009b7bde2; origin request docs/briefs/global-opal-graph-versioned-platform-prd-request-20260608.md)"
 }
