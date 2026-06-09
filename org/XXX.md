@@ -8,6 +8,7 @@
 **BANNED: Task agent** — unreliable. Do the work directly.
 **NO EMOJIS** in any code, log, print statement, or file that runs on AWS. ASCII only.
 **COMP-* TOOLS BEFORE GREP** — run the appropriate comp-* command before manually tracing any dependency. See comp-tools table below.
+**HOT-REGISTRY SCOPE — MANDATORY (Andrew direct 2026-06-09):** Agents MUST NOT self-initiate work on any project that is not `"status": "active"` in `org/projects/*.json`. The hot registry is the ONLY authorized work surface. A TO in your task_orders/ folder for a non-active project is NOT a work authorization — do NOT execute it. Surface it to COO with subject `[SCOPE-VIOLATION]` (project code + TO ref + what you found) and hold. Exceptions: (a) Andrew-direct verbal instruction in the current session authorizes that specific action; (b) an explicit MSTR directive via a Tier-1 dispatch naming the non-hot project with stated justification. Applies equally to /work ticks, /drive ticks, and any autonomous TO queue scan.
 
 ---
 
@@ -451,10 +452,11 @@ the agent remembering. (Ported from corporeal's `/loop` v0.2 body, 2026-05-11.)
 
 5. **TO queue scan:**
    Read `{your_agent_folder}/task_orders/`. For each TO:
-   - `<status>pending</status>` + dependencies met → if not already mid-work, start it.
+   - **HOT-REGISTRY SCOPE CHECK (mandatory, per-TO):** Before starting or continuing any TO, verify the parent project is `"status": "active"` in `org/projects/<PROJECT_CODE>.json`. If the project is NOT active (dormant, on-hold, completed, or absent from the registry), do NOT execute the TO — surface to COO as `[SCOPE-VIOLATION]` and skip. This check applies even if the TO itself is `<status>pending</status>` with all deps met.
+   - `<status>pending</status>` + dependencies met + project active in hot registry → if not already mid-work, start it.
    - `<status>staged</status>` → do NOT start; waiting for GO signal (exec dispatch).
    - `<status>complete</status>` → skip.
-   If you're mid-TO, continue it.
+   If you're mid-TO, confirm the project is still active before continuing (projects can be closed mid-TO).
 
 6. **Schedule next wake:**
    - **Active** (mid-TO, expecting near-term reply from another agent, or recent message requires follow-up): `ScheduleWakeup(delaySeconds=60)`.
