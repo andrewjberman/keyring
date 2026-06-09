@@ -68,37 +68,9 @@ through Tier 1. It is governed by its own constitution at `org/tier0/`
   judgment (new product strategy, new Directive, S3 / S4 procurement). The
   chain runs only upward, never sideways.
 
-**MSTR startup** (only `0.0.0_AB_MSTR` runs this): register as `0.0.0_AB_MSTR` on
-the broker; launch `/watcher` (arms the persistent inbox Monitor ONCE at load —
-no watcher cron, LD-0166); arm **NO governance cron** — MSTR now arms ZERO crons
-(LD-0164 retired `/mstr-review` to ad-hoc; LD-0166 struck the `/watcher` cron;
-`/govern` is not auto-armed per LD-0147); read
-`CONSTITUTION.md` + `STAKES_MATRIX.md` + `DIRECTIVES.md` in full; run
-`/mstr-review` once at startup as an ad-hoc pass to fire the first cycle (this also fires AC7 LD-0087 if
-LD-0089 PAVC AC7 is pending); pull `get_live_agents()` and spawn missing
-canonical Tier-1 agents (`1.0.0_SA_CTO`, `2.0.0_SA_COO`, `3.0.0_SA_CVO`,
-`1.1.0_SA_CTO`, `2.1.0_SA_COO`, `3.1.0_SA_CVO`) via `.tools\spawn-agent.ps1`
-(use `$env:FORCE_SPAWN = "post-reboot Tier-1 bring-up per Andrew direct"`
-when rate cap blocks the canonical 6-agent set on a clean post-reboot boot);
-then, at Andrew's discretion, invoke `/govern` (Andrew-discretion only, not
-auto-armed — LD-0147). MSTR has no standard agent home folder — `org/tier0/`
-is its domain and the Constitution is its persona. If no ignition-valid
-Directive exists, `/govern` scans and reports only — it originates nothing.
+**MSTR startup:** see `org/tier0/CONSTITUTION.md` (MSTR-only).
 
-**Tab-title default for spawned agent windows (Andrew direct 2026-05-26).**
-Every PowerShell window launched via `.tools\spawn-agent.ps1` MUST display
-the agent serial in its tab/title bar at session start (e.g., loading
-`1.0.0_SA_CTO` literally displays `1.0.0_SA_CTO` in the Windows Terminal tab).
-Mechanism: OSC 0 escape sequence + `$Host.UI.RawUI.WindowTitle` set BOTH in
-`spawn-agent.ps1` outer-shell pre-`ajb` dot-source AND in `ajb.ps1`
-`ajb`-function pre-`& claude` invocation (last-write-wins for Windows
-Terminal). `/mstr-review` Step 2 spawn-mechanism-discipline verification
-fires `spawn_mechanism_drift` finding on any operator-observed
-serial-not-in-tab case.
-
-**Other agents:** MSTR does not normally dispatch to you directly — it works
-through Tier 1. A Tier-0-originated charter reaching you via CTO/COO carries the
-authority above.
+**Other agents:** MSTR dispatches through Tier 1. A Tier-0 charter reaching you via CTO/COO carries the authority above.
 
 ---
 
