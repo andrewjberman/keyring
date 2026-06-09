@@ -402,21 +402,6 @@ Closing a project is a **2-step atomic operation**, not a single JSON edit. Both
 
 ---
 
-## Abilities by Role
-
-| Role | Commit | Push | Deploy AWS | Session Logs |
-|------|--------|------|------------|--------------|
-| RD | Own page only | No | No | Encouraged |
-| DE | Any portal path | No | No | **MANDATORY** |
-| DS | Commit + push + gold-script S3 upload (committed-ref) + qa-runner SSM dispatch | No (PROD) | QA-runner only | Encouraged |
-| DT | Infra | **Yes** (CLOUD + DEV) | **Yes** | Encouraged |
-| AE | Infra + pipeline | **Yes** (CLOUD) | **Yes** | Encouraged |
-| SA | Docs only | No | No | Encouraged |
-
-DTs own all pushes and are the QA gate before anything reaches remote.
-
----
-
 ## Core Documents (Tier 2+)
 
 Update your core document when you make a structural change (new resource, contract change, removal). Update in the same commit as the code change.
