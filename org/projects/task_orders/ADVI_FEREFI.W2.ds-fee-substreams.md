@@ -6,7 +6,7 @@
   <assigned_to>0.4.0_DS_ClientPlatform</assigned_to>
   <issued_by>2.0.0_SA_COO</issued_by>
   <issued_date>2026-06-03</issued_date>
-  <status>dispatched — GO (feasibility accepted as build plan)</status>
+  <status>closed -- COO verified-done sweep 2026-06-10 (Andrew directive; ground-truth: parent project complete in registry or work landed/superseded per git)</status>
   <dispatch_held>false</dispatch_held>
   <priority>HIGH — gates the ADVI_FEREFI #6 FE tail (W1); Andrew-direct directive.</priority>
   <references>

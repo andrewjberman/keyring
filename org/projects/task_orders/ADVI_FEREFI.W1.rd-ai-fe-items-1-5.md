@@ -6,7 +6,7 @@
   <assigned_to>0.4.2_RD_AdvisorIntelligence</assigned_to>
   <issued_by>2.0.0_SA_COO</issued_by>
   <issued_date>2026-06-03</issued_date>
-  <status>dispatched</status>
+  <status>closed -- COO verified-done sweep 2026-06-10 (Andrew directive; ground-truth: parent project complete in registry or work landed/superseded per git)</status>
   <dispatch_held>false</dispatch_held>
   <priority>HIGH — Andrew-direct live product walk; bundles into next portal promote behind Andrew smoke.</priority>
   <references>

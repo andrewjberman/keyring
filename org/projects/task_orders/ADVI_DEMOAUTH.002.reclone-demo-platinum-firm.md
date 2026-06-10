@@ -6,7 +6,7 @@
   <assigned_to>DS / ADVI_DEMOV1 pseudonymizer owner (data/demo/scripts/transform/) — DS offline at issue-time; spawn-tonight-vs-next-session = Andrew's call</assigned_to>
   <issued_by>2.0.0_SA_COO</issued_by>
   <issued_date>2026-06-03</issued_date>
-  <status>active — pending DS availability (offline EOD); dispatch on DS spawn (Andrew decides tonight vs tomorrow)</status>
+  <status>closed -- COO verified-done sweep 2026-06-10 (Andrew directive; ground-truth: parent project complete in registry or work landed/superseded per git)</status>
   <dispatch_held>true (no live DS; Andrew-decides spawn timing)</dispatch_held>
   <priority>Andrew-wants-demo-back; NOT on-fire (internal/sales tool). But it's the real fix for a user-facing broken surface.</priority>
   <references>

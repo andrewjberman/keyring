@@ -6,7 +6,7 @@
   <assigned_to>0.4.2_RD_AdvisorIntelligence~C</assigned_to>
   <issued_by>2.0.0_SA_COO</issued_by>
   <issued_date>2026-06-02</issued_date>
-  <status>IMPL-COMPLETE — RAVC2-pending (status flipped by COO per RD~C owned-paths request; RD~C blocked from org/projects/task_orders/ ANY_EXEC lane, reverted its own edit rather than --force = correct discipline). Implemented by RD~C 2026-06-02, portal DEV 4b8375ab (2 files: inflection/index.tsx + layout.ts, scoped). Mirrored 49F: (1) layout.ts advisorPublicProfile.enabled false->true (nonAdminTabs=[profile], advisors stays disabled = Profile-ONLY); (2) dropped adminTabs fallback -> tabs = isFirmAdmin ? adminTabs : nonAdminTabs; (3) books branch +isFirmAdmin (49F:279), profile branch !isFirmAdmin (49F:284); NonAdminProfileTab renders own profile/book via W1+W2-FE static adapter. Regression logic-verified: 49F/demo/internal + inflection-admin UNCHANGED; ONLY inflection external non-admin changes (intended); useTabNavigation inits to defaultTab (no URL/restore) so non-admins can't reach distribution/advisors/books = no BI leak. tsc+eslint green. RD~C cycle log dc518e04c / work_1952Z.md. CLOSURE = Andrew pixel-smoke BOTH admin (Peter) + non-admin (Patrick/Joe); promote HELD for coherent joint re-smoke w/ W4a+W4c+FO/book. BUILD-FINDING (acted): Segment :1956 NOT subsumed by W4a -> spun out as W4c (dispatched to RD~C).</status>
+  <status>closed -- COO verified-done sweep 2026-06-10 (Andrew directive; ground-truth: parent project complete in registry or work landed/superseded per git)</status>
   <dispatch_held>false</dispatch_held>
   <priority>HIGH — Andrew-direct access-model. Pairs with W4a (AE provision Peter admin). Together = Andrew's full admin/non-admin intent.</priority>
   <references>

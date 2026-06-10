@@ -6,7 +6,7 @@
   <assigned_to>0.6.0_AE_PartnerETL (a) · 0.4.0_DS_ClientPlatform (b) · 0.7.0_AE_CloudOps (c)(d), NFRA owner</assigned_to>
   <issued_by>2.0.0_SA_COO</issued_by>
   <issued_date>2026-06-03</issued_date>
-  <status>active — (a) GO'd to 0.6.0 [deploy gated on CTO profiler-swap nod, COO routing]; (b) routed DS; (c)(d) queued behind 0.7.0 Andrew-live security</status>
+  <status>closed -- COO verified-done sweep 2026-06-10 (Andrew directive; ground-truth: parent project complete in registry or work landed/superseded per git)</status>
   <dispatch_held>false</dispatch_held>
   <priority>HIGH on (a) — must DEPLOY before tomorrow's nightly bd-gold run so the SCHEDULED run validates it at zero extra compute (Andrew compute-discipline). (b)/(c)/(d) NORMAL.</priority>
   <references>

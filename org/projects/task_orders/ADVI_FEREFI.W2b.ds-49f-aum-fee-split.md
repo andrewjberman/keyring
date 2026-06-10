@@ -6,7 +6,7 @@
   <assigned_to>0.4.0_DS_ClientPlatform</assigned_to>
   <issued_by>2.0.0_SA_COO</issued_by>
   <issued_date>2026-06-03</issued_date>
-  <status>dispatched — GO (CTO ruling ws-charter_1428Z)</status>
+  <status>closed -- COO verified-done sweep 2026-06-10 (Andrew directive; ground-truth: parent project complete in registry or work landed/superseded per git)</status>
   <dispatch_held>false</dispatch_held>
   <priority>MEDIUM-HIGH — completeness/consistency (avoid INF-vs-49F AUM-mode asymmetry); fast-follow, does NOT block INF #6 ship or the promote.</priority>
   <references>

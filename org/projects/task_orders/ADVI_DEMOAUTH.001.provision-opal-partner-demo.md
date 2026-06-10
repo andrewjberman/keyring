@@ -6,7 +6,7 @@
   <assigned_to>0.6.0_AE_PartnerETL (lead, infra + draft contract) · 0.7.0_AE_CloudOps / DE (contract confirm)</assigned_to>
   <issued_by>2.0.0_SA_COO</issued_by>
   <issued_date>2026-06-03</issued_date>
-  <status>active — 0.6.0 GO on the infra half + contract draft NOW; 0.7.0 contract-confirm queued behind Andrew-live security (light review)</status>
+  <status>closed -- COO verified-done sweep 2026-06-10 (Andrew directive; ground-truth: parent project complete in registry or work landed/superseded per git)</status>
   <dispatch_held>false</dispatch_held>
   <priority>NORMAL — Andrew wants the demo back, NOT on-fire. Bounded, in-pattern (identical class to the 6-02 Inflection Peter fix).</priority>
   <references>

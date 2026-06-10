@@ -6,7 +6,7 @@
   <assigned_to>0.7.0_AE_CloudOps</assigned_to>
   <issued_by>2.0.0_SA_COO</issued_by>
   <issued_date>2026-06-03</issued_date>
-  <status>QUEUED behind the Andrew-live Track-2 security walkthrough — do NOT pull 0.7.0 off security; do NOT pull a different lane onto this. Pick up when 0.7.0 surfaces.</status>
+  <status>closed -- COO verified-done sweep 2026-06-10 (Andrew directive; ground-truth: parent project complete in registry or work landed/superseded per git)</status>
   <dispatch_held>true (queued-behind-security; normal-pri, slack exists — render-smoke not needed until v2.1.114 promotes, which is Andrew-GO-gated)</dispatch_held>
   <priority>NORMAL — bounded fix-class; not tonight-urgent. But it killed a CVO session, so it's a real session-stability defect, not cosmetic.</priority>
   <references>
