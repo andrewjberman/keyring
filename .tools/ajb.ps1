@@ -51,17 +51,21 @@
 # Tilde-lane suffixes (~B/~C/~D/~E) are stripped for role detection; lane
 # variants share the same role + loop set as the base serial.
 #
-# SUPERSESSION (LD-0157 2026-06-05 + LD-0164/LD-0166 2026-06-06..08, Andrew direct):
-# the LD-0082 self-tick loop set below is RETIRED. The fabric is now event-driven
-# (persistent inbox Monitor) + ONE centralized standing operational loop (COO /drive,
-# which runs /fabric-check). Per-role posture now:
+# SUPERSESSION (LD-0157 2026-06-05 + LD-0164/LD-0166 2026-06-06..08 + LD-0175 2026-06-10, Andrew direct):
+# the LD-0082 self-tick loop set below is RETIRED. The fabric is now fully event-driven
+# (persistent inbox Monitor) with ZERO loops armed at launch (LD-0175, Andrew direct:
+# "I don't want any loops initiated at launch ... if I want a loop to run, I will
+# initiate the looped skill"). Per-role posture now:
 #   - /watcher: arm-at-load ONCE, NOT a cron (LD-0166). No serial arms a /watcher cron.
 #   - /work (all workers) + /ws-charter (ws CTO): RETIRED to ad-hoc (LD-0157).
+#   - /drive (COO): RETIRED to ad-hoc (LD-0157) -- Andrew instantiates when needed.
 #   - /mstr-review (MSTR) + /spot-check (both CVOs): RETIRED to ad-hoc (LD-0164).
-#   - Standing crons that REMAIN: COO /drive 20m; CL CTO /cl-charter 30m;
-#     both CVOs /verify-channel 2h baseline; CL CVO /case-find 24h.
+#   - /cl-charter (CL CTO) + /verify-channel (both CVOs) + /case-find (CL CVO):
+#     RETIRED to ad-hoc (LD-0175).
+#   - Standing crons armed at launch: NONE. Every loop is Andrew/operator-initiated
+#     on demand; skills retain their loop bodies when invoked.
 #   - Workers announce blocks via broker STATUS (WORKING:/IDLE:/BLOCKED:), NOT a
-#     [BLOCKED-ASK] polling-announce -- COO /drive is the single tick driver.
+#     [BLOCKED-ASK] polling-announce -- COO /drive (when Andrew runs it) is the tick driver.
 # Original LD-0082 design notes (historical): Q1 per-skill CronCreate; Q2 /watcher
 # cron for MSTR+COO; Q3 /stimulus-scan retired; Q4 /verify-channel 2h; Q5 /case-find
 # chains /case-mgmt; Q6 /comp-ferry event-triggered; Q7 /work 20m uniform.
@@ -72,7 +76,7 @@ function Get-AgentLoopDirective {
     # Strip tilde-lane suffix for role detection.
     $base = $Serial -replace '~[A-Za-z0-9]+$', ''
 
-    $header = "Loop arming (LD-0157/0164/0166 -- most self-tick loops retired; /watcher arms ONCE at load, NOT a cron):"
+    $header = "Loop arming (LD-0157/0164/0166/0175 -- ALL self-tick loops retired; ZERO crons armed at launch; /watcher arms ONCE at load, NOT a cron):"
 
     switch -Regex ($base) {
         '^0\.0\.0_AB_MSTR$' {
@@ -82,16 +86,16 @@ function Get-AgentLoopDirective {
             return "$header`n  ws CTO -- arms ZERO crons (LD-0157).`n  1. Run /watcher ONCE (arm-at-load).`n  /ws-charter is AD-HOC -- run it when you have charter work, not as a loop. Event-driven: Andrew directives + CVO findings via the Monitor; COO /drive is the centralized tick driver. Event-triggered: REPAIR-AMENDMENT scribes (gated on CVO finding)."
         }
         '^1\.1\.0_SA_CTO$' {
-            return "$header`n  CL CTO`n  1. Run /watcher ONCE (arm-at-load).`n  2. CronCreate /cl-charter 30m, then /cl-charter  (the one CL CTO standing loop -- LD-0066 queue-pull)."
+            return "$header`n  CL CTO -- arms ZERO crons (LD-0175, Andrew direct 2026-06-10).`n  1. Run /watcher ONCE (arm-at-load).`n  /cl-charter is AD-HOC -- run it when you have CL charter / queue-pull work, not as a launch loop. Event-driven: CL queue items + Andrew directives via the Monitor. If a stale /cl-charter cron exists from a prior session, CronList->CronDelete it."
         }
         '^2\.[01]\.0_SA_COO$' {
             return "$header`n  COO`n  1. Run /watcher ONCE (arm-at-load; no /watcher cron -- LD-0166).`n  /drive is AD-HOC -- Andrew instantiates it when needed. Do NOT arm a /drive cron at startup. If a stale /drive cron exists from a prior session, CronList->CronDelete it."
         }
         '^3\.0\.0_SA_CVO$' {
-            return "$header`n  ws CVO -- /spot-check is AD-HOC (LD-0164 -- no 20m cron).`n  1. Run /watcher ONCE (arm-at-load).`n  2. CronCreate /verify-channel 2h, then /verify-channel  (lightweight baseline; comprehensive event-triggered).`n  /spot-check: run on-demand / at closeout-class signals."
+            return "$header`n  ws CVO -- arms ZERO crons (LD-0175, Andrew direct 2026-06-10; /spot-check + /verify-channel both AD-HOC).`n  1. Run /watcher ONCE (arm-at-load).`n  /verify-channel + /spot-check: run on-demand / at closeout-class signals -- NOT a launch cron. If a stale /verify-channel or /spot-check cron exists from a prior session, CronList->CronDelete it."
         }
         '^3\.1\.0_SA_CVO$' {
-            return "$header`n  CL CVO -- /spot-check is AD-HOC (LD-0164 -- no 20m cron).`n  1. Run /watcher ONCE (arm-at-load).`n  2. CronCreate /verify-channel 2h, then /verify-channel  (lightweight baseline; comprehensive event-triggered).`n  3. CronCreate /case-find 24h, then /case-find  (/case-mgmt chain-invokes per LD-0082 Q5).`n  /spot-check: run on-demand / at closeout-class signals."
+            return "$header`n  CL CVO -- arms ZERO crons (LD-0175, Andrew direct 2026-06-10; /spot-check + /verify-channel + /case-find all AD-HOC).`n  1. Run /watcher ONCE (arm-at-load).`n  /verify-channel + /case-find + /spot-check: run on-demand -- NOT launch crons. If a stale cron for any exists from a prior session, CronList->CronDelete it."
         }
         '^0\.[0-9]+\.[0-9]+_AE_CloudOps(~[A-Za-z0-9]+)?$' {
             return "$header`n  AE_CloudOps lane (ws fabric) -- arms ZERO crons (LD-0157; event-driven).`n  0. FIRST after /watcher: invoke /cloud-ops once to load operational reference + permissions profile + current CLAUDE.md Rules 1-19 cross-reference + LD-cycle pointers + pipeline/bucket/secrets/KMS inventory (skill at .claude/skills/cloud-ops/SKILL.md). Not a cron -- session-orient one-shot.`n  1. Run /watcher ONCE (arm-at-load).`n  Event-driven: act on Monitor-delivered TOs; keep broker STATUS accurate (WORKING:/IDLE:/BLOCKED:) so COO /drive finds blocks. /work is AD-HOC (off-cycle pass if useful)."

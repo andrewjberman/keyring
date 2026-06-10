@@ -234,31 +234,25 @@ printf "SERIAL=%s\nTO_ID=%s\n" "{your_serial}" "{TO_filename_without_.md}" > .co
 # Example: printf "SERIAL=0.4.0_DS_ClientPlatform\nTO_ID=ADVI_OFFICE.W1\n" > .comp-graph/.agent_context
 ```
 
-**F. Arm role-appropriate primary loop (per LD-0062 §materialization-chain step 5):**
+**F. Reachability only — arm ZERO loops at launch (LD-0175, Andrew direct 2026-06-10):**
 
-Per LD-0062 ratification 2026-05-25T~20:05Z (Andrew sovereign via "go with your recommendation"), each agent arms a role-appropriate primary cron loop at session start. Run the matching CronCreate command at the END of Step 1b, AFTER A-E above:
+Andrew direct 2026-06-10 (verbatim): *"I don't want any loops initiated at launch ... if I want a loop to run, I will initiate the looped skill (e.g., drive, work, etc), don't need it at launch."* This supersedes the LD-0062 "each agent arms a role-appropriate primary cron loop at session start" ruling **in full** — no serial arms ANY cron at launch. The only launch mechanism is `/watcher`, which arms the persistent inbox Monitor ONCE at load (a Monitor task, NOT a cron). Every loop is Andrew/operator-initiated on demand; each skill retains its loop body when invoked.
 
-| Serial-class | Primary loop arming | Notes |
+| Serial-class | Launch arming | Notes |
 |---|---|---|
-| `0.0.0_AB_MSTR` | **NO cron — MSTR arms ZERO crons (LD-0164 + LD-0166, Andrew direct 2026-06-08).** `/watcher` arms the persistent inbox Monitor ONCE at load (no watcher cron — LD-0166). | `/mstr-review` is **ad-hoc** (LD-0164): runs once at MSTR session startup per the deterministic startup directive, then on Andrew call / closeout-class signals / on-demand — NOT a 12h cron. `/govern` is Andrew-discretion only, not auto-armed (LD-0147); LD-0090 ALWAYS-PROCEED discipline still governs `/govern` WHEN Andrew loads it. `/mstr-charter` + `/compiler-ferry` + remaining MSTR skills event-triggered on inbox match. If a stale `/mstr-review` / `/watcher` cron exists from a prior session, `CronList`→`CronDelete` it. |
-| `1.0.0_SA_CTO` (ws) | **NO loop — do NOT arm `/ws-charter` cron (LD-0157, Andrew direct 2026-06-05, supersedes the LD-0062 30m auto-arm).** Reachability = persistent inbox Monitor (`/watcher`, section C). | ws CTO is **event-driven** (Andrew directives + CVO findings arrive via the Monitor) + **ad-hoc** `/ws-charter` when there is charter work. The 30m self-tick wasted ticks; COO `/drive`+`/fabric-check` is the centralized tick driver. If a `/ws-charter` cron is live from a prior session, `CronList`→`CronDelete` it. |
-| `1.x.0_SA_CTO` (CL) | `CronCreate /cl-charter 30m` | LD-0066 3-way split; CL is queue-pull + sequential PRD authoring; consumes Input 1/2/3 cascade |
-| `2.x.0_SA_COO` | **/watcher ONCE at load — no auto-cron.** `/drive` is AD-HOC: Andrew instantiates it when needed. | If a stale `/drive` cron exists from a prior session, `CronList`→`CronDelete` it. |
-| `3.x.0_SA_CVO` | **NO cron — do NOT arm `/spot-check` cron (LD-0164, Andrew direct 2026-06-08, supersedes the LD-0062 20m auto-arm).** `/watcher` arms the persistent inbox Monitor once at load (section C). | CVO is **event-driven** + **ad-hoc**: `/spot-check` (alignment-sweep, 2h scan body) and `/verify-channel` (project-scope verify) both fire on-demand / at closeout-class signals, not on a fixed tick. If a `/spot-check` cron is live from a prior session, `CronList`→`CronDelete` it. |
-| `0.x.0_(DS\|AE\|DE\|DT\|RD)_*` Tier-2/3 worker (+ tilde-lanes) | **NO loop — do NOT arm `/work` cron (LD-0157, Andrew direct 2026-06-05, supersedes LD-0072).** `/watcher` arms the persistent inbox Monitor once at load (section C) — that is the worker's only standing mechanism. | Workers are **event-driven**: act on Monitor-delivered dispatches/TOs as they arrive; keep your broker summary an accurate status (`WORKING: <task>` / `IDLE: available` / `BLOCKED: <what>` / `BLOCKED-SOVEREIGN: <decision>`) so COO's centralized `/drive`+`/fabric-check` finds blocks. No self-ticking, no `[BLOCKED-ASK]` polling-announce — your STATUS carries the block; COO is the single tick driver. If you have a live `/work` cron from a prior session, `CronList`→`CronDelete` it. |
-| `0.x.0` non-worker / unspecified | per-role basis as defined in `prompt.md`; reachability = `/watcher` arms the persistent inbox Monitor once at load (section C) | no primary cron unless prompt.md specifies one |
+| `0.0.0_AB_MSTR` | **/watcher ONCE — ZERO crons (LD-0164/0166/0175).** | `/mstr-review` runs once at startup as an ad-hoc pass (LD-0164), then on-demand. `/govern` is Andrew-discretion only (LD-0147). All MSTR skills event-triggered / on-demand. |
+| `1.0.0_SA_CTO` (ws) | **/watcher ONCE — ZERO crons (LD-0157/0175).** | ws CTO is event-driven; `/ws-charter` is ad-hoc when there is charter work. |
+| `1.x.0_SA_CTO` (CL) | **/watcher ONCE — ZERO crons (LD-0175).** | `/cl-charter` is **ad-hoc** — run it for CL charter / queue-pull work, not as a launch loop. (Supersedes the LD-0066 `/cl-charter 30m` launch-arm; the CL pipeline is now manual-init.) |
+| `2.x.0_SA_COO` | **/watcher ONCE — ZERO crons (LD-0157/0175).** | `/drive` is ad-hoc — Andrew instantiates when needed. |
+| `3.x.0_SA_CVO` | **/watcher ONCE — ZERO crons (LD-0164/0175).** | `/spot-check`, `/verify-channel`, and (CL CVO) `/case-find` are all ad-hoc — fire on-demand / at closeout-class signals, NOT a launch cron. (Supersedes the LD-0062 `/verify-channel 2h` + LD-0082 `/case-find 24h` launch-arms.) |
+| `0.x.0_(DS\|AE\|DE\|DT\|RD)_*` Tier-2/3 worker (+ tilde-lanes) | **/watcher ONCE — ZERO crons (LD-0157/0175).** | Workers are event-driven: act on Monitor-delivered dispatches/TOs; keep your broker summary an accurate status (`WORKING: <task>` / `IDLE: available` / `BLOCKED: <what>` / `BLOCKED-SOVEREIGN: <decision>`). `/work` is ad-hoc (off-cycle pass if useful). |
+| `0.x.0` non-worker / unspecified | **/watcher ONCE — no cron.** | reachability = `/watcher` Monitor once at load. |
 
-**Run the skill ONCE immediately after arming** to fire the first cycle (avoids the cron-interval gap before first fire):
+**No CronCreate at launch.** If you find a stale cron from a prior session (`/work`, `/drive`, `/ws-charter`, `/spot-check`, `/mstr-review`, `/watcher`, `/cl-charter`, `/verify-channel`, `/case-find`), cancel it: `CronList` → `CronDelete`.
 
-```
-CronCreate /<skill> <interval>
-# then in same turn:
-/<skill>   # runs first cycle now; cron picks up at next interval
-```
+**Loop hygiene:** The fabric is fully event-driven. ALL self-tick loops are retired from launch — **`/work` (workers)**, **`/ws-charter` (ws CTO)**, **`/drive` (COO)**, **`/mstr-review` (MSTR)**, **`/spot-check` (CVO)**, **`/verify-channel` (CVO)**, **`/cl-charter` (CL CTO)**, **`/case-find` (CL CVO)** — none are armed at launch (LD-0175). All remain ad-hoc invocable when Andrew fires them; invoking a skill with an interval (e.g. `/drive 20m`, `/verify-channel queue 2h`, `/cl-charter 30m`) arms that loop on demand. `/watcher` arms the persistent inbox Monitor once at load (not a loop).
 
-**Loop hygiene:** The fabric is event-driven. All self-tick loops are retired — **`/work` (workers)**, **`/ws-charter` (ws CTO)**, **`/drive` (COO)**, **`/mstr-review` (MSTR)**, **`/spot-check` (CVO)** — none are armed at launch. All remain ad-hoc invocable when Andrew fires them. `/watcher` arms the persistent inbox Monitor once at load (not a loop). If you find a stale cron for any of these from a prior session, cancel it (`CronList` → `CronDelete`).
-
-**CL fabric inheritance:** CL agents (`feature_clb/`) inherit this convention via cwd=ajb_workspace per LD-0033/0034 unified-broker substrate; org/XXX.md is workspace-canonical (no CL-side mirror needed). The CL CTO `/charter 30m` arming matches ws CTO arming under the LD-0062 symmetric-cadence ruling.
+**CL fabric inheritance:** CL agents (`feature_clb/`) inherit this convention via cwd=ajb_workspace per LD-0033/0034 unified-broker substrate; org/XXX.md is workspace-canonical (no CL-side mirror needed). Under LD-0175 the CL fabric arms ZERO launch loops like every other — `/cl-charter` + `/case-find` are manual-init (Andrew kicks the CL pipeline when he wants it running).
 
 ---
 
