@@ -23,7 +23,12 @@
 - MSYS leading-/ log-group arg mangled by Git Bash -> PowerShell per banked memory.
 - tag tail -5 lexicographic trap: shared-infra latest was v1.21.0 not v1.9.0 — use --sort=-v:refname.
 
+## NFRA_GLOBGRPH.ITEM-2B — COMPLETE (added ~1835Z)
+- DISCOVERY: 2b already LIVE since Wave-1 and in a 409 storm: ~8k errors, 298,351 DLQ. Root cause: per-ARN delete loop (N+1 commits/batch) x uncapped ESM concurrency -> executions raced EACH OTHER -> whole-batch SQS retry amplification.
+- FIX 2ce19eaee (globgrph-v0.1.7, 0-diff, live sha verified): single-commit overwrite(In-filter) upsert + reload-per-attempt retry (1s/15s/5) + ESM max_concurrency=2 + source_code_hash (Rule 1). Local zip artifact was STALE (pre-42eeb9761) — rebuilt from repo source.
+- VERIFIED: live batches clean post-deploy; smoke invoke (real-shape S3 event) DERIVED -> ICEBERG_UPSERT nodes_written=1 failed=0. Queue drained. DLQ: recommend natural 24h expiry (nightly 2a re-bases; no replay/purge).
+- ICEBERG-409 RAVC2-ACCEPTED by COO 1803Z (sequencing constraint was already moot — flagged in RAVC2).
+
 ## Next
-- Item-2B (incremental updater) unblocked by ICEBERG-409 — next pull.
-- Tomorrow AM: GLOBGRPH 02:00Z artifact review (LD-0176) + CUR delivery verify + W3/W4/W5 + COMPAWS x3 + DTAFLP TO-3.
+- Tomorrow AM: GLOBGRPH 02:00Z artifact review (LD-0176) — now ALSO check 2a-vs-2b conflict/retry log lines (first real concurrent-409 exercise, both writers retry-capable) + CUR first delivery (s3://opal-cur-313476888478/cur/) + W3/W4/W5 + COMPAWS x3 + DTAFLP TO-3.
 - DTAFLP P1: HELD awaiting COO PROCEED (scope: orion->inf only).
