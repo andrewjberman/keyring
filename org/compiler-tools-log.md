@@ -4435,3 +4435,56 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-06-08 | 3.0.0_SA_CVO | (no-TO) | comp-aws | comp-aws derive --out .runtmp/comp_v3.json | PASS |
 | 2026-06-08 | 0.7.0_AE_CloudOps | (no-TO) | comp-aws | comp-aws dual-managed | PASS |
 | 2026-06-08 | 3.0.0_SA_CVO | (no-TO) | comp-aws | comp-aws derive --out .runtmp/comp_v4.json | PASS |
+| 2026-06-08 | 3.0.0_SA_CVO | ADVI_COTETL.P1-prestage | comp-aws | comp-aws derive --out .runtmp/comp_v5.json | PASS |
+| 2026-06-08 | 0.6.0_AE_PartnerETL | ADVI_COTETL.P1-prestage | comp-kuzu | comp-kuzu MATCH (n:CloudNode) WHERE n.node_type = 'EC2_INSTANCE' RETURN n.id, n.node_ty... | PASS |
+| 2026-06-08 | 0.6.0_AE_PartnerETL | ADVI_COTETL.P1-prestage | comp-kuzu | comp-kuzu --json MATCH (n:CloudNode)-[r:CloudEdge]->(m:CloudNode) WHERE n.node_type='EC... | PASS |
+| 2026-06-08 | 0.6.0_AE_PartnerETL | ADVI_COTETL.P1-prestage | comp-kuzu | comp-kuzu --json MATCH (n:CloudNode) WHERE n.id = 'i-06376c11d8b3c3443' RETURN n.id, n.... | PASS |
+| 2026-06-08 | 0.4.0_DS_ClientPlatform | ADHC_GLDINC.B00-force-recent | comp-pipescript | comp-pipescript io B_00.canonical_holdings | PASS |
+| 2026-06-08 | 0.4.0_DS_ClientPlatform | ADHC_GLDINC.B00-force-recent | comp-pipescript | comp-pipescript deployed B_00.canonical_holdings | PASS |
+| 2026-06-08 | 3.0.0_SA_CVO | ADHC_GLDINC.B00-force-recent | comp-aws | comp-aws derive --out .runtmp/comp_v6.json | PASS |
+| 2026-06-08 | 3.0.0_SA_CVO | ADVI_COTETL.S6.1-probe | comp-aws | comp-aws derive --out .runtmp/comp_v7.json | PASS |
+| 2026-06-08 | 0.7.0_AE_CloudOps | ADVI_COTETL.S6.1-probe | comp-aws | comp-aws derive --out .runtmp/cmpaws/aws-graph-typed-principal.json | PASS |
+| 2026-06-08 | 3.0.0_SA_CVO | ADVI_COTETL.S6.1-probe | comp-aws | comp-aws derive --out .runtmp/comp_v8.json | PASS |
+| 2026-06-08 | 3.0.0_SA_CVO | ADVI_COTETL.S6.1-probe | comp-aws | comp-aws derive --out .runtmp/comp_v8.json | PASS |
+| 2026-06-08 | 3.0.0_SA_CVO | ADVI_COTETL.S6.1-probe | comp-aws | comp-aws derive --out .runtmp/comp_v9.json | PASS |
+| 2026-06-08 | 0.7.0_AE_CloudOps | ADVI_COTETL.S6.1-probe | comp-aws | comp-aws snapshot --stamp 20260608T2028Z-cert13of13-baseline | PASS |
+| 2026-06-09 | 0.6.0_AE_PartnerETL | (no-TO) | comp-pipescript | comp-pipescript deployed gold_dispatch.sh | PASS |
+| 2026-06-09 | 0.6.0_AE_PartnerETL | (no-TO) | comp-pipescript | comp-pipescript deployed B_00.canonical_holdings.py | PASS |
+| 2026-06-09 | 0.6.0_AE_PartnerETL | (no-TO) | comp-pipescript | comp-pipescript io C_01.canonical_nna.py | PASS |
+| 2026-06-09 | 0.6.0_AE_PartnerETL | (no-TO) | comp-blast | comp-blast load_flows_from_transactions | PASS |
+| 2026-06-09 | 0.6.0_AE_PartnerETL | (no-TO) | comp-pipescript | comp-pipescript io C_02.client_performance.py | PASS |
+| 2026-06-09 | 0.6.0_AE_PartnerETL | (no-TO) | comp-pipescript | comp-pipescript io C_03.account_performance.py | PASS |
+| 2026-06-09 | 0.6.0_AE_PartnerETL | (no-TO) | comp-pipescript | comp-pipescript deployed gldinc_p1_shadow.py | PASS |
+| 2026-06-09 | 0.6.0_AE_PartnerETL | (no-TO) | comp-pipescript | comp-pipescript deployed lib/nna_flows.py | PASS |
+| 2026-06-09 | 0.6.0_AE_PartnerETL | (no-TO) | comp-iam | comp-iam service bd-gold-layer-runner | PASS |
+| 2026-06-09 | 0.6.0_AE_PartnerETL | (no-TO) | comp-iam | comp-iam service bd-gold-runner | PASS |
+| 2026-06-09 | 1.0.0_SA_CTO | ADVI_PRTORG.PRD | comp-routes | comp-routes trace getPlatinumPartnerAnalytics | PASS |
+| 2026-06-09 | 1.0.0_SA_CTO | ADVI_PRTORG.PRD | comp-routes | comp-routes behaviors | PASS |
+| 2026-06-09 | 0.7.0_AE_CloudOps | (no-TO) | comp-routes | comp-routes trace getPlatinumPartnerAnalytics | PASS |
+| 2026-06-09 | 0.7.0_AE_CloudOps | (no-TO) | comp-iam | comp-iam service portal-auth | PASS |
+| 2026-06-09 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-transform | comp-transform schema-check AdvisorIntelligence | FAIL |
+| 2026-06-09 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-cache | comp-cache collisions | PASS |
+| 2026-06-09 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-transform | comp-transform schema-check _partners/49financial | FAIL |
+| 2026-06-09 | 0.4.0_DE_ClientPlatform | ADVI_PRTORG.PRTORG03 | comp-transform | comp-transform schema-check ModelPortfolios | FAIL |
+| 2026-06-09 | 0.7.0_AE_CloudOps | ADVI_PRTORG.PRTORG03 | comp-iam | comp-iam gaps | PASS |
+| 2026-06-09 | 0.7.0_AE_CloudOps | ADVI_PRTORG.PRTORG03 | comp-iam | comp-iam service ec2-auto-shutdown-enforcer | PASS |
+| 2026-06-09 | 0.7.0_AE_CloudOps | ADVI_PRTORG.PRTORG03 | comp-iam | comp-iam service inf-gold-trigger | PASS |
+| 2026-06-09 | 0.7.0_AE_CloudOps | ADVI_PRTORG.PRTORG03 | comp-iam | comp-iam service bd-gold-trigger | PASS |
+| 2026-06-09 | 0.4.0_DS_ClientPlatform | MDPF_CADENCE_INF_D_08 | comp-pipescript | comp-pipescript deployed INF_D_08.nmec_nmnc_nna.py | PASS |
+| 2026-06-09 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-transform | comp-transform schema-check ModelPortfolios | FAIL |
+| 2026-06-09 | 0.4.0_DT_ClientPlatform | ADVI_PRTORG.PRTORG03 | VALGATE D-1 | DEV push + PROD push (pre-push hook) | PASS (no-op both) |
+| 2026-06-09 | 0.4.0_DT_ClientPlatform | ADVI_PRTORG.PRTORG03 | tsc (typecheck) | PROD push gate + CI Build job (v2.1.119) | PASS |
+| 2026-06-09 | 0.4.0_DT_ClientPlatform | MDPF_CADENCE | VALGATE D-1 | PROD push (pre-push hook) | PASS (no-op) |
+| 2026-06-09 | 0.4.0_DT_ClientPlatform | MDPF_CADENCE | tsc (typecheck) | PROD push gate + CI Build job (v2.1.120) | PASS |
+| 2026-06-09 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript deployed gold_dispatch.sh | PASS |
+| 2026-06-09 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript deployed B_00.canonical_holdings.py | PASS |
+| 2026-06-09 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript deployed gldinc_p1_shadow.py | PASS |
+| 2026-06-10 | 0.0.0_AB_MSTR | (no-TO) | comp-registry | comp-registry sync --project NFRA_DTAFLP | PASS |
+| 2026-06-10 | 0.0.0_AB_MSTR | (no-TO) | comp-registry | comp-registry sync --project NFRA_DTAFLP --apply | PASS |
+| 2026-06-10 | 0.6.0_AE_PartnerETL | (no-TO) | comp-iam | comp-iam service mdpf-daily-trigger | PASS |
+| 2026-06-10 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript deployed gldinc_p1_shadow.py | PASS |
+| 2026-06-10 | 0.7.0_AE_CloudOps | (no-TO) | comp-pipescript | comp-pipescript deployed C_04 --pipeline cot-gold | PASS |
+| 2026-06-10 | 0.7.0_AE_CloudOps | (no-TO) | comp-pipescript | comp-pipescript deployed C_04 --pipeline bd-gold | PASS |
+| 2026-06-10 | 0.7.0_AE_CloudOps | (no-TO) | comp-pipescript | comp-pipescript deployed --pipeline cot-silver cot_silver_merge | PASS |
+
+| 2026-06-10 | 0.4.0_DS_ClientPlatform | NFRA_DTAFLP.TO-1b/TO-4 | Grep (opal-data-bd / FIRM_ID census), aws s3 ls (read-only ground-truth) | 73 bd-refs classified + 8 FIRM_ID sites enumerated; Schwab/firm_id S3 ground-truthed | comp-pipescript not run (read-only classification, no script edited/run this session) |
