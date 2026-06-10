@@ -17,6 +17,7 @@
   ],
   "status": "complete",
   "phase": "COMPLETE. P1-P5 delivered + deployed. P6a (canon interlock) deployed. P6b-d deprecated.",
+  "current_phase": "ANDREW SOVEREIGN 2026-06-10: feature NOT in active operational use. Verbatim: 'we've actually never implemented the time machine function, it was something we were curious about doing but it's not really practical nor a priority.' Infrastructure was built (yang-v2.3.1 + bd-v2.18.2 deployed) but the feature is not exposed to/used by advisors. NFRA_COSTAWS R2 implication: the 36d NoncurrentVersionExpiration floor on opal-data-bd gold/ protects no active live consumer — noncurrent versions are reclaimable bloat. bd-time-machine Lambda may exist in deployed state but is not being invoked.",
   "blocking": "",
   "deployed_versions": {
     "shared_infra": "shared-infra-v1.4.0",
