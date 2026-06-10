@@ -23,17 +23,29 @@ Mechanically: `python .tools/to-check.py` (add flags as needed).
 TO-CHECK  TIMESTAMP  |  N active TOs  |  N projects  |  scope: ...
 
 Project: CODE  (N ACTIVE, N PENDING, N BLOCKED, N UNKNOWN)
-  #N  [STATUS]  TO_ID  (AGE)
+  #N  [STATUS]  TO_ID  ->  AGENT_TAG  (AGE)
        Title:  title (truncated to 64 chars)
-       To:     assignee serial
+       To:     assignee serial (full)
        By:     issuer serial
        Issued: YYYY-MM-DD
        Status: status text (truncated to 80 chars)
 --------------------------------------------------------
 
+== BY AGENT ==
+AGENT_TAG (full serial) -- N TO(s):
+    [STATUS] TO_ID -- title (48 chars)
+    ...
+
 TO-CHECK-RESULT total=N projects=N blocked=N parse_errors=N
 ```
 
+- **AGENT_TAG (Andrew-direct 2026-06-10 -- TO codes alone mean nothing; every TO
+  must be tagged to its agent):** the headline of EVERY TO carries `-> AGENT_TAG`
+  (serial prefix stripped: `0.7.0_AE_CloudOps` -> `AE_CloudOps`; `~B` lane suffix
+  preserved; joint assignees shown as `+CVO` etc.). The **BY AGENT rollup** at the
+  bottom is the TO->agent roster: one block per agent (grouped by PRIMARY assignee
+  so joint TOs don't split counts), one line per TO. This is the "who owns what"
+  view -- read it first when presenting to Andrew.
 - **AGE:** days since issued_date. `?` if no issued_date in the file.
 - **STATUS labels:** `[ACTIVE]`, `[PENDING]`, `[BLOCKED !!]`, `[DONE]` (shouldn't appear -- filtered), `[??]` (unrecognized status).
 - `[??] UNKNOWN` TOs are older files without a parseable status tag -- surfaced, not dropped.

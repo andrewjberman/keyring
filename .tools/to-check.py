@@ -28,8 +28,8 @@ SEP = "-" * 56
 # ASCII-fold: Windows console cp1252 cannot handle non-ASCII in print output.
 _ASCII = {
     "—": "--", "–": "-", "…": "...", "→": "->",
-    "'": "'", "'": "'", """: '"', """: '"',
-    "✓": "OK", "✗": "x", "×": "x", " ": " ", "•": "*",
+    "‘": "'", "’": "'", "“": '"', "”": '"',
+    "✓": "OK", "✗": "x", "×": "x", " ": " ", "•": "*",
     "�": "?",
 }
 
@@ -249,6 +249,25 @@ def _fmt_issued_by(raw: str) -> str:
     return raw.strip()[:40]
 
 
+def _agent_token(raw: str) -> str:
+    """Short meaningful agent tag for headline display.
+    '0.7.0_AE_CloudOps (+3.0.0_SA_CVO)' -> 'AE_CloudOps +CVO'
+    '0.4.0_DS_ClientPlatform~B' -> 'DS_ClientPlatform~B'
+    no serial -> first 24 chars or (unassigned)."""
+    raw = (raw or "").strip()
+    if not raw or raw == "(unassigned)":
+        return "(unassigned)"
+    serials = re.findall(r"\d+\.\d+\.\d+_([A-Za-z]+_?[A-Za-z]*(?:~[A-Z])?)", raw)
+    if serials:
+        primary = serials[0]
+        extras = ""
+        if len(serials) > 1:
+            # secondary agents shown by role prefix only (e.g. +CVO)
+            extras = " " + " ".join("+" + s.split("_")[0] for s in serials[1:])
+        return primary + extras
+    return raw[:24]
+
+
 def _age(date_str: str, now: datetime) -> str:
     """Return human age string like '7d' or '?' if unparseable."""
     try:
@@ -370,7 +389,8 @@ def main():
             assignee = clean(_fmt_assignee_full(t["assigned_to"]))
             issued_by = clean(_fmt_issued_by(t["issued_by"]))
 
-            print(f"  #{to_num}  [{label}]  {t['to_id']}  ({age_str})")
+            agent_tag = to_ascii(_agent_token(t["assigned_to"]))
+            print(f"  #{to_num}  [{label}]  {t['to_id']}  ->  {agent_tag}  ({age_str})")
             print(f"       Title:  {title_short}")
             print(f"       To:     {assignee}")
             if issued_by:
@@ -386,6 +406,25 @@ def main():
 
     if not active_tos:
         print("(no active TOs in scope)")
+
+    # BY AGENT rollup -- the TO->agent roster view (one line per TO under each agent).
+    # Grouped by PRIMARY agent only so joint-assignee TOs don't split an agent's count.
+    if active_tos:
+        by_agent: dict[str, list[dict]] = {}
+        for t in active_tos:
+            primary = _agent_token(t["assigned_to"]).split(" ")[0]
+            by_agent.setdefault(primary, []).append(t)
+        print("\n== BY AGENT ==")
+        for agent in sorted(by_agent, key=lambda a: (-len(by_agent[a]), a)):
+            tos = by_agent[agent]
+            # recover the full primary serial for precision
+            m = re.search(r"\d+\.\d+\.\d+_\S+", (tos[0]["assigned_to"] or ""))
+            serial = f" ({m.group(0).rstrip(',)')})" if m else ""
+            print(f"{to_ascii(agent)}{serial} -- {len(tos)} TO(s):")
+            for t in tos:
+                label = STATUS_LABELS.get(t["status_class"], t["status_class"])
+                title_short = clean(t["title"])[:48]
+                print(f"    [{label}] {t['to_id']} -- {title_short}")
 
     print(f"\nTO-CHECK-RESULT total={len(active_tos)} projects={len(by_project)} "
           f"blocked={sum(1 for t in active_tos if t['status_class']=='BLOCKED')} "
