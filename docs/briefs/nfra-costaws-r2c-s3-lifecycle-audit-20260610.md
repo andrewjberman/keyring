@@ -61,6 +61,28 @@ Per memory `reference_s3_noncurrent_retention_can_back_live_feature`: verify the
 
 ---
 
+---
+
+## ADDENDUM 2026-06-10T15:1xZ — deployed+INVOKED re-verification (Andrew premise correction)
+
+Andrew sovereign ground-truth (via MSTR 151810Z): the Portal Time Machine was **never operationalized** (frontend scaffolding only). This invalidates the grep-based "load-bearing" call — grep finds code refs, but the code may be dead. Re-verified the 5 by the stricter **deployed + INVOKED** standard (CloudWatch Invocations, 90d):
+
+| Bucket | Noncurrent consumer | Deployed? | Invocations/90d | REVISED verdict |
+|---|---|---|---|---|
+| opal-data-bd | bd-time-machine (restore) | yes | **10** (test-level) | NOT live-load-bearing. portal-time-machine (user entry) = **0**; bd-capture-output-versions writes 447/90d but for a never-wired feature. **36d floor void → Andrew-gated TIGHTEN CANDIDATE** (confirms Andrew + the CTO "waste" framing). Restore works if ever needed (10 test restores). |
+| opal-data-portal-v2 | yang-time-machine | yes | **0** | DEAD scaffolding (yang-capture writes 26/90d, restore never invoked). **TIGHTEN CANDIDATE.** |
+| opal-data-portfolio | opal-portfolio-versions-list | yes | **136** | **GENUINELY LIVE — KEEP noncurrent floor.** (export-download + version-get = 0, dead; but versions-list is an active portal feature serving noncurrent versions.) The ONLY survivor of the stricter test. |
+| opal-data-cot | gldrst restore scripts | scripts (one-time migration tooling) | n/a (not standing) | seed now in git (6b0be4337) = primary backup; versioning secondary. **TIGHTEN CANDIDATE w/ care.** |
+| opal-data-mdpf | count-backfill | one-time MDPF_COUNTS recovery | n/a (not standing) | one-time historical recovery, not a standing consumer. **TIGHTEN CANDIDATE** (note: noncurrent enabled a past recovery). |
+
+**Net:** of the 5 originally flagged, only **opal-data-portfolio** is genuinely live-load-bearing (versions-list 136/90d). The other 4 (bd, portal-v2, cot, mdpf) are Andrew-gated tighten candidates by the deployed+invoked standard.
+
+**portfolio 90d current-expiry — downgraded** (per COO 2026-06-10): versioning=ENABLED, so the 90d Expiration writes a DELETE MARKER (soft-hide, recoverable via noncurrent), NOT permanent deletion. 1 object (PFDE trade export, 8d old). Reclass from "LIVE-data-deletion risk" to "intent-confirm: 90d soft-hide on versioned PFDE exports, recoverable, not urgent."
+
+**Banked rules:** (1) verify deployed+INVOKED (CloudWatch), not just grep, before calling a noncurrent consumer load-bearing — the Time Machine trap. (2) versioned bucket + current-object Expiration = delete-marker (recoverable), not permanent loss — check versioning before flagging Expiration as data-loss.
+
+---
+
 ## ACs
-- AC3 (fabric-wide audit table committed): THIS DOC.
-- AC1/AC2/AC4/AC5: lifecycle CHANGES are a separate (gated) TO — this TO is analysis-only per drive #28.
+- AC3 (fabric-wide audit table committed): THIS DOC (+ addendum).
+- AC1/AC2/AC4/AC5: lifecycle CHANGES are a separate (gated) TO — this TO is analysis-only per drive #28. abort-MPU (non-gated) applied to all 15 lacker buckets (11 zero-rule + 4 merge) 2026-06-10, verified, existing rules preserved.
