@@ -7,6 +7,8 @@
 design+build collaboration, NOT a CVO validation cycle. Logged at Andrew's instruction and
 routed to CTO to spin up a managing macro-project. Artifacts live **outside** the repo (see
 paths); a decision for CTO is whether to bring them in-repo.
+**UPDATE 2052Z: handoff complete — CTO created NFRA_OPLMCP (ac3d90482); rulings + RAVC
+close recorded in "Handoff outcome" below.**
 
 ---
 
@@ -86,6 +88,31 @@ Suggested sub-streams:
 - **Rollout** — GUI users later via the same remote MCP (no per-machine install).
 - **Decision for CTO:** bring `m365-mcp-gateway` into the repo (under safe-deploy/IAM
   governance) vs. manage as a separate property. It currently sits on the Desktop, ungoverned.
+
+## Handoff outcome (RAVC close)
+
+Sent to CTO 204703Z → CTO created **NFRA_OPLMCP** at commit **ac3d90482** (macro JSON +
+100-line PRD + REGISTRY Active row). I **independently verified** the commit + files (not
+the summary). Loop closed (ack 205141Z).
+
+CTO rulings (both accepted — they sharpen the handoff):
+1. **IN-REPO.** Gateway migrates to `infra/aws/ec2/m365-mcp-gateway/` + Terraform +
+   `.tools/m365-mcp-kit/` under Rules 7-12 + Secrets-Manager + audit→lake governance — as
+   sub-stream **OPLMCP.01**, not at macro-creation. (Correct: the box holds per-user refresh
+   tokens + a client secret; ungoverned-on-Desktop is not acceptable for that.)
+2. **AC2 = live per-user-scope PROOF** — a real non-Andrew user reaches their OWN mail and
+   demonstrably CANNOT reach another's; **infra-alone is explicitly NOT close.** My
+   egress flag was lifted to hard **AC5 + sec.6** (Claude for Work/Enterprise data-terms
+   sign-off recorded BEFORE any non-Andrew onboarding; per-user-delegated-identity-as-
+   security-boundary written stop-the-line).
+
+Sub-streams (CTO): OPLMCP.01 in-repo migration · .02 backend integration (first live /me +
+/outlook) · .03 infra/deploy · .04 tool surface · .05 governance · .06 rollout.
+
+**CVO verify-pass ARMED** (event-driven): first target = OPLMCP.02's first live `/me` +
+`/outlook` once IT provisions the 2 app regs — verify (a) AC2 two-user scope proof, (b)
+kill-switch + blocklist deny on the live path, (c) audit.jsonl captures real calls. Backend
+is IT-gated; no rush.
 
 ## Open housekeeping
 - Dev gateway server still running in the background on Andrew's machine (`m365-dev`
