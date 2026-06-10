@@ -51,6 +51,17 @@ _FUTURE_ANNOT_PATTERNS = [
 _SILVER_BUILDER_PATTERNS = ['data/*/scripts/silver/*.py']
 _COERCE_HELPER_NAMES = {'coerce_silver_ids'}
 
+# Cross-firm bucket contamination guard (Andrew sovereign 2026-06-10, NFRA_DTAFLP).
+# bd (49 Financial) and cot (Cottonwood) Black Diamond pipelines must be COMPLETELY
+# separate: a script under one firm's pipeline dir must NEVER reference another firm's
+# S3 bucket. Maps a pipeline dir -> the foreign buckets a script there may NOT reference.
+# cot also bans opal-data-inf (zero legitimate cross-ref). Extensible to inf/orion when
+# that separation lands; today scoped to the Andrew-directed bd<->cot pair.
+_CROSS_FIRM_FOREIGN_BUCKETS = {
+    'data/cot/': ('opal-data-bd', 'opal-data-inf'),
+    'data/black_diamond/': ('opal-data-cot',),
+}
+
 
 def _path_requires_future_annotations(filepath: str) -> bool:
     p = str(filepath).replace('\\', '/')
@@ -454,6 +465,68 @@ def check_silver_id_dtype(
     return checker.blocks, warns
 
 
+def _is_real_bucket_ref(s: str, bucket: str) -> bool:
+    """True when string `s` uses `bucket` as an actual S3 bucket (not prose mention).
+
+    Matches: exact bucket name, an `s3://<bucket>` URI, a `<bucket>/` key prefix, or an
+    `:::<bucket>` ARN fragment. Deliberately does NOT match a bare substring (so a docstring
+    like "default is opal-data-cot (not opal-data-bd)" does not trip the gate).
+    """
+    return (
+        s == bucket
+        or f's3://{bucket}' in s
+        or f'{bucket}/' in s
+        or f':::{bucket}' in s
+    )
+
+
+def _docstring_constant_ids(tree: ast.Module) -> set[int]:
+    """id() of every string-Constant that is a module/func/class docstring (skip these)."""
+    out: set[int] = set()
+    for node in ast.walk(tree):
+        if isinstance(node, (ast.Module, ast.FunctionDef, ast.AsyncFunctionDef, ast.ClassDef)):
+            body = getattr(node, 'body', None)
+            if (body and isinstance(body[0], ast.Expr)
+                    and isinstance(body[0].value, ast.Constant)
+                    and isinstance(body[0].value.value, str)):
+                out.add(id(body[0].value))
+    return out
+
+
+def check_cross_firm_bucket_refs(tree: ast.Module, filepath_hint: str) -> list[str]:
+    """Return BLOCK strings for any cross-firm S3 bucket reference in a pipeline script.
+
+    A script under data/cot/ must never reference opal-data-bd / opal-data-inf; a script
+    under data/black_diamond/ must never reference opal-data-cot. Enforces Andrew's
+    2026-06-10 sovereign directive (NFRA_DTAFLP) that the bd and cot Black Diamond
+    pipelines be COMPLETELY separate -- no shared code path, no cross-bucket reference.
+    Scans string Constants (incl. f-string literal parts); skips docstrings + prose via
+    _is_real_bucket_ref.
+    """
+    p = str(filepath_hint).replace('\\', '/')
+    home_dir = next((d for d in _CROSS_FIRM_FOREIGN_BUCKETS if d in p), None)
+    if home_dir is None:
+        return []
+    foreign = _CROSS_FIRM_FOREIGN_BUCKETS[home_dir]
+    skip = _docstring_constant_ids(tree)
+    blocks: list[str] = []
+    for node in ast.walk(tree):
+        if not (isinstance(node, ast.Constant) and isinstance(node.value, str)):
+            continue
+        if id(node) in skip:
+            continue
+        for fb in foreign:
+            if _is_real_bucket_ref(node.value, fb):
+                blocks.append(
+                    f"{filepath_hint}:{node.lineno}: BLOCKED: cross-firm bucket reference "
+                    f"'{fb}' in a {home_dir.rstrip('/')} script -- the bd and cot pipelines "
+                    f"must be COMPLETELY separate (Andrew sovereign 2026-06-10, NFRA_DTAFLP). "
+                    f"A {home_dir.rstrip('/')} script may reference ONLY its own firm bucket. "
+                    f"Remove the cross-firm reference."
+                )
+    return blocks
+
+
 def _norm(p: str) -> str:
     return os.path.normpath(p).replace(os.sep, '/')
 
@@ -515,6 +588,13 @@ def scan_file(filepath, verbose=False, strict=False):
     for msg in warns:
         print(msg, file=sys.stderr)
     if blocks:
+        rc = 1
+
+    # Cross-firm bucket contamination gate (Andrew sovereign 2026-06-10, NFRA_DTAFLP)
+    xfirm_blocks = check_cross_firm_bucket_refs(tree, str(filepath))
+    for msg in xfirm_blocks:
+        print(msg, file=sys.stderr)
+    if xfirm_blocks:
         rc = 1
 
     has_star = any(
