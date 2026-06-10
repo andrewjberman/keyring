@@ -430,7 +430,9 @@ lanes:
       - 2.0.0_SA_COO
       - 1.1.0_SA_CTO
       - 2.1.0_SA_COO
-    description: "PartnerETL AEs + any exec (task_orders/ authoring)"
+      - 3.0.0_SA_CVO
+      - 3.1.0_SA_CVO
+    description: "PartnerETL AEs + any exec (task_orders/ authoring). CVO (3.0.0/3.1.0) added 2026-06-10 by CVO per MSTR dispatch + COO LANE-GAP 20260610T133546Z: 'any exec' must enumerate CVO — gap blocked a CVO-originator MDPF_CADENCE close TO-flip."
 
   SHARED_CLOUD_OPS_OR_EXEC:
     permitted_agents:
@@ -441,7 +443,9 @@ lanes:
       - 2.0.0_SA_COO
       - 1.1.0_SA_CTO
       - 2.1.0_SA_COO
-    description: "CloudOps AE + any exec (task_orders/ authoring). 0.7.0_AE_CloudOps~A added 2026-05-27 by COO: AE~A spawned per /allocation #4 18:01Z; needs task_orders/ authoring scope for FIND_INSURE Phase 1+2A TO ratify-amend + RAVC2-cycle log writes."
+      - 3.0.0_SA_CVO
+      - 3.1.0_SA_CVO
+    description: "CloudOps AE + any exec (task_orders/ authoring). 0.7.0_AE_CloudOps~A added 2026-05-27 by COO: AE~A spawned per /allocation #4 18:01Z; needs task_orders/ authoring scope for FIND_INSURE Phase 1+2A TO ratify-amend + RAVC2-cycle log writes. CVO (3.0.0/3.1.0) added 2026-06-10 by CVO per MSTR dispatch + COO LANE-GAP 20260610T133546Z ('any exec' must enumerate CVO)."
 
   CLOUD_COMP_TESTER:
     permitted_agents:
