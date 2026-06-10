@@ -25,6 +25,7 @@ import builtins
 import fnmatch
 import os
 import sys
+from datetime import datetime, timezone
 from pathlib import Path
 
 # Byte-identical synced helper GROUPS (MDLP_DISTFIX I3; CTO dual-pipeline-sync ruling
@@ -493,6 +494,29 @@ def _docstring_constant_ids(tree: ast.Module) -> set[int]:
     return out
 
 
+def _audit_seed_import_bypass(filepath_hint: str, foreign: tuple, n_refs: int) -> None:
+    """Append a forensic line to org/dtaflp-seed-import-audit.log for a SEED_IMPORT bypass.
+
+    Audit-write failure is loud (stderr WARN) but never crashes the gate.
+    """
+    try:
+        repo_root = Path(__file__).resolve().parent.parent
+        log_path = repo_root / 'org' / 'dtaflp-seed-import-audit.log'
+        ts = datetime.now(timezone.utc).strftime('%Y-%m-%dT%H:%M:%SZ')
+        actor = (os.environ.get('GIT_COMMIT_AUTHOR_OVERRIDE')
+                 or os.environ.get('USER') or os.environ.get('USERNAME') or 'unknown')
+        reason = os.environ.get('DTAFLP_SEED_IMPORT_REASON', '').replace('\n', ' ').strip()
+        line = (
+            f"{ts} DTAFLP_SEED_IMPORT bypass file={filepath_hint} foreign_refs={n_refs} "
+            f"buckets={','.join(foreign)} actor={actor}"
+            + (f" reason=\"{reason}\"" if reason else "") + "\n"
+        )
+        with open(log_path, 'a', encoding='utf-8') as fh:
+            fh.write(line)
+    except Exception as exc:  # noqa: BLE001 -- audit must not crash the gate
+        print(f"WARN: SEED_IMPORT audit-log write failed: {exc}", file=sys.stderr)
+
+
 def check_cross_firm_bucket_refs(tree: ast.Module, filepath_hint: str) -> list[str]:
     """Return BLOCK strings for any cross-firm S3 bucket reference in a pipeline script.
 
@@ -524,6 +548,23 @@ def check_cross_firm_bucket_refs(tree: ast.Module, filepath_hint: str) -> list[s
                     f"A {home_dir.rstrip('/')} script may reference ONLY its own firm bucket. "
                     f"Remove the cross-firm reference."
                 )
+    # NFRA_DTAFLP seed-import bypass (COO GO 2026-06-10): an AUTHORIZED one-time
+    # preservation commit of a forked-from-bd cot seed legitimately carries cross-firm
+    # refs (the bd-derived code being committed to git for the first time, before the
+    # divergence-phase retarget). DTAFLP_SEED_IMPORT=1 suppresses ONLY this cross-firm
+    # check; every other gate check (py_compile, undefined-name, future-annot, silver-id,
+    # sync-guard) stays live. Each suppression writes a forensic audit line. The runtime
+    # IAM cross-bucket Deny still blocks any actual cross-firm write regardless.
+    if blocks and os.environ.get('DTAFLP_SEED_IMPORT') == '1':
+        _audit_seed_import_bypass(filepath_hint, foreign, len(blocks))
+        print(
+            f"WARN: DTAFLP_SEED_IMPORT=1 -- bypassed {len(blocks)} cross-firm bucket ref(s) "
+            f"in {filepath_hint} (audited to org/dtaflp-seed-import-audit.log). AUTHORIZED "
+            f"preservation-seed commit; retarget in the divergence phase. IAM Deny still "
+            f"blocks runtime cross-firm writes.",
+            file=sys.stderr,
+        )
+        return []
     return blocks
 
 
