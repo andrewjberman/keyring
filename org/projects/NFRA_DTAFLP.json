@@ -21,5 +21,6 @@
   "depends_on": [],
   "depends_on_note": "Aligns with NFRA_COTETL (data/cot/ already abbreviated). NFRA_COMPAWS (the compiler) is the main consumer of the renamed paths -- its dispatch map + extraction regex hardcode black_diamond/orion and must update + comp-build regen. No blocking cross-dependency; the compiler is 13/13 certified so the graph spot-check has a clean baseline.",
   "thread_counter": 0,
-  "threads": []
+  "threads": [],
+  "current_phase": "DECISION-READY 2026-06-10 ~15:16Z: PRD v0.2 complete (P1 rename + P3 bd/cot gold separation fully scoped). AE structural guards LIVE (97e40bd14+20617a347). DS TO-1 git-capture LANDED (6b0be4337). CTO added GO/NO-GO summary to PRD v0.2 §1a (549351bcf) — Andrew can rule from the summary. CTO rec: GO. BLOCKING: Andrew go/no-go on execution (routed MSTR /govern item 5). On GO: COO dispatches P1+P3 execution TOs immediately (AE~B lead P1; DS+AE+CTO+CVO own their surfaces; P3 after P1)."
 }
