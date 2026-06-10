@@ -24,9 +24,14 @@
 #                  is broken, docstring-only changes, multi-agent worktree contention.
 #   Audit log: org/safe-deploy-bypass-audit.log
 #
-# Pipeline->S3 mapping (baked into safe_deploy_core.py):
+# Pipeline->S3 mapping (baked into safe_deploy_core.py PIPELINE_MAP):
 #   data/black_diamond/scripts/{gold,silver,bronze}/*.py  -> opal-data-bd
 #   data/orion/scripts/{gold,silver,bronze}/*.py          -> opal-data-inf
+#   data/cot/scripts/{gold,silver,bronze}/*.py            -> opal-data-cot
+# cot (Cottonwood) is a COMPLETELY separate firm pipeline from bd (Andrew sovereign
+# 2026-06-10, NFRA_DTAFLP): its gold tree lives in git at data/cot/scripts/gold/ and
+# deploys ONLY to opal-data-cot/code/gold/ -- never mirrored/synced from opal-data-bd.
+# Cross-firm bucket refs are blocked at commit (ds-precommit-check.py) + runtime (IAM Deny).
 
 set -euo pipefail
 

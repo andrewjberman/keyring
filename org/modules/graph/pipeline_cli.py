@@ -38,7 +38,7 @@ from org.modules.graph.extract_pipeline import (  # noqa: E402
     _parse_dispatch, _parse_orion_dispatch,
 )
 
-_PIPELINE_CHOICES = ("bd-gold", "inf-gold", "bd-silver", "inf-silver", "inf-manual-api", "mdpf", "all", "bd", "inf")
+_PIPELINE_CHOICES = ("bd-gold", "inf-gold", "bd-silver", "inf-silver", "inf-manual-api", "mdpf", "cot-gold", "cot-silver", "cot", "all", "bd", "inf")
 
 
 def _build_dag(pipeline: str = "bd-gold"):
@@ -1427,6 +1427,11 @@ def cmd_deployed(args):
         "bd-silver": _WORKSPACE / "data" / "black_diamond" / "scripts" / "silver",
         "inf-gold":  _WORKSPACE / "data" / "orion" / "scripts" / "silver",
         "inf-silver": _WORKSPACE / "data" / "orion" / "scripts" / "silver",
+        # cot (Cottonwood) — COMPLETELY separate firm pipeline (NFRA_DTAFLP, Andrew
+        # sovereign 2026-06-10): deploys to opal-data-cot, never opal-data-bd.
+        "cot-gold":  _WORKSPACE / "data" / "cot" / "scripts" / "silver",
+        "cot-silver": _WORKSPACE / "data" / "cot" / "scripts" / "silver",
+        "cot":       _WORKSPACE / "data" / "cot" / "scripts" / "silver",
     }
     SILVER_LOCAL_DIR = _PIPELINE_SILVER_DIRS.get(
         pipeline, _WORKSPACE / "data" / "black_diamond" / "scripts" / "silver"
@@ -1443,6 +1448,13 @@ def cmd_deployed(args):
     # MDPF_COUNTS incident because comp-pipescript deployed was opal-data-bd-only.
     if pipeline == "mdpf":
         S3_BUCKET = "opal-data-mdpf"
+
+    # cot pipeline override (NFRA_DTAFLP, Andrew sovereign 2026-06-10): cot is a
+    # COMPLETELY separate firm pipeline. Its gold/silver/bronze deploy to
+    # opal-data-cot/code/{gold,silver,bronze}/ (standard BD/INF layout, different
+    # bucket) -- NEVER opal-data-bd. Closes the cot deployed-check blind spot.
+    if pipeline in ("cot-gold", "cot-silver", "cot"):
+        S3_BUCKET = "opal-data-cot"
 
     # Resolve aws CLI once, full path -- avoids subprocess PATH-loss on some shells.
     aws_bin = shutil.which("aws") or shutil.which("aws.cmd") or shutil.which("aws.exe")
@@ -1520,8 +1532,11 @@ def cmd_deployed(args):
     elif pipeline == "mdpf":
         print("DEPLOYED STATUS [mdpf]: local repo vs s3://opal-data-mdpf/code/scripts/{gold,backfill,feeders,bronze}/")
         print("  Runner: mdpf-daily-runner")
-    elif pipeline in ("bd-silver", "inf-silver"):
+    elif pipeline in ("bd-silver", "inf-silver", "cot-silver"):
         print(f"DEPLOYED STATUS [{pipeline}]: local repo vs s3://{S3_BUCKET}/code/silver/")
+    elif pipeline in ("cot-gold", "cot"):
+        print(f"DEPLOYED STATUS [{pipeline}]: local repo vs s3://opal-data-cot/code/{{gold,silver,bronze}}/")
+        print("  Runner: cot-exporter (Cottonwood; NFRA_DTAFLP separate firm pipeline)")
     else:
         print("DEPLOYED STATUS: local repo vs s3://opal-data-bd/code/{gold,silver}/")
     print()
@@ -1599,7 +1614,40 @@ def cmd_deployed(args):
                 timed_out.append(label)
             elif status == "AWS_UNREACHABLE":
                 aws_unreach.append(label)
-    elif pipeline not in ("bd-silver", "inf-silver"):
+    elif pipeline in ("cot-gold", "cot"):
+        # cot (Cottonwood): no comp-graph DAG -> direct directory glob (MDPF pattern),
+        # standard code/<layer>/ layout against opal-data-cot. gold + bronze here;
+        # silver handled by the SILVER section below (SILVER_LOCAL_DIR -> cot silver).
+        skip_gold = False
+        _cot_root = _WORKSPACE / "data" / "cot" / "scripts"
+        for _layer in ("gold", "bronze"):
+            _ldir = _cot_root / _layer
+            if not _ldir.is_dir():
+                continue
+            for p in sorted(_ldir.glob("*.py")):
+                if p.name.startswith("__"):
+                    continue
+                if script_filter_lower and script_filter_lower not in p.stem.lower():
+                    continue
+                label = f"[cot:{_layer}] {p.name}"
+                checked_any = True
+                status, extras = _check_one("cot", label, p, f"code/{_layer}/{p.name}")
+                print(f"  [cot:{_layer}] {p.name:<44} {status:<14}")
+                for line in extras:
+                    print(f"             {line}")
+                if status == "MATCH":
+                    matched.append(label)
+                elif status == "STALE":
+                    stale.append(label)
+                elif status == "MISSING_ON_S3":
+                    missing_s3.append(label)
+                elif status == "LOCAL_MISSING":
+                    local_missing.append(label)
+                elif status == "TIMEOUT":
+                    timed_out.append(label)
+                elif status == "AWS_UNREACHABLE":
+                    aws_unreach.append(label)
+    elif pipeline not in ("bd-silver", "inf-silver", "cot-silver"):
         dag = _build_dag("bd-gold")
         gold_candidates = sorted(dag.scripts.items(), key=lambda x: x[1].run_order)
         skip_gold = False
