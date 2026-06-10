@@ -12,5 +12,12 @@
   ],
   "created": "2026-06-10",
   "blocking": "BACKEND LEG gated on IT provisioning 2 Entra app registrations (5 values: Tenant ID + 2x ClientID/Secret + admin consent on both) -- Andrew has the IT call to request exactly this; nothing else blocks the in-repo migration (OPLMCP.01) or Terraform infra authoring (OPLMCP.03 scaffold), which can proceed in parallel. COO to decompose sub-streams into TOs sequenced behind the live NFRA queue (per LD-0177 staffing). Front-end leg already PROVEN; no design gate.",
-  "prd": "docs/architecture/NFRA_OPLMCP_PRD.md (formal, CTO; origin handoff org/tier1_exec/3.0.0_SA_CVO/logs/2026-06-10/session_m365_oplmcp_buildout_handoff.md d2cd1022f)"
+  "prd": "docs/architecture/NFRA_OPLMCP_PRD.md (formal, CTO; origin handoff org/tier1_exec/3.0.0_SA_CVO/logs/2026-06-10/session_m365_oplmcp_buildout_handoff.md d2cd1022f)",
+  "prds": [
+    {
+      "path": "docs/architecture/NFRA_OPLMCP_PRD.md",
+      "label": "NFRA_OPLMCP PRD v0.1",
+      "date": "2026-06-10"
+    }
+  ]
 }
