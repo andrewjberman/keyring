@@ -29,6 +29,14 @@
 - VERIFIED: live batches clean post-deploy; smoke invoke (real-shape S3 event) DERIVED -> ICEBERG_UPSERT nodes_written=1 failed=0. Queue drained. DLQ: recommend natural 24h expiry (nightly 2a re-bases; no replay/purge).
 - ICEBERG-409 RAVC2-ACCEPTED by COO 1803Z (sequencing constraint was already moot — flagged in RAVC2).
 
+## NFRA_GLOBGRPH.ITEM-3 — load-layer COMPLETE (added ~1850Z)
+- 2ND LATENT ITEM-2A BUG: graph_edges committed with EMPTY src/dst since ship (derive_runner read src/dst; comp_aws_cli edges are source/target). Fixed fd62befc1 (globgrph-v0.1.8), image rebuilt 390500b3, ECS verify f3881f4a exit 0 — landed PRE-02:00Z.
+- Shipped kuzu_nessie_load.py (latest-Nessie-commit loader, ARN-canonical keys, hard-fail wipe) + kuzu_ac_traversals.py (fail-honest AC5/8/9 harness). 0a24bebe7 + 935a90874.
+- Verified: 1180 nodes / 2199 of 2541 edges / 0 untyped; 341 of 342 skips = wildcard pseudo-endpoints (by design) + 1 ECS (P4). Sanity 3-hop LAMBDA->IAM_ROLE->IAM_POLICY = 826 paths.
+- AC5/8/9 = SUBSTRATE-MISSING (honest exit-2): AC5 needs P2 stitch (proposed as follow-on TO), AC8 P3-A, AC9 P3-C. CVO pairing note sent.
+- Loader footguns banked: edges key by ARN vs node short-name id (first pass matched 15/2541); rmtree(ignore_errors) survived a Windows lock -> stale+fresh node union (1967 from 1180 rows) -> hard-fail wipe.
+
 ## Next
-- Tomorrow AM: GLOBGRPH 02:00Z artifact review (LD-0176) — now ALSO check 2a-vs-2b conflict/retry log lines (first real concurrent-409 exercise, both writers retry-capable) + CUR first delivery (s3://opal-cur-313476888478/cur/) + W3/W4/W5 + COMPAWS x3 + DTAFLP TO-3.
+- Tomorrow AM: GLOBGRPH 02:00Z artifact review (LD-0176) — THREE fixes ride tonight's nightly (v0.1.6 409-retry, v0.1.7 2b single-commit+cap, v0.1.8 edge endpoints): check conflict/retry lines + edge endpoint integrity + CUR first delivery (s3://opal-cur-313476888478/cur/). Then W3/W4/W5 + COMPAWS x3 + DTAFLP TO-3.
+- P2 cross-layer stitch proposed to COO as follow-on (unlocks AC5; schema 82f766166 ready).
 - DTAFLP P1: HELD awaiting COO PROCEED (scope: orion->inf only).
