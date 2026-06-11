@@ -29,7 +29,7 @@ import boto3
 import pandas as pd
 
 REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-sys.path.insert(0, os.path.join(REPO, "data", "orion", "scripts", "silver"))
+sys.path.insert(0, os.path.join(REPO, "data", "inf", "scripts", "silver"))
 from _orion_api_silver_lib import coerce_silver_ids  # noqa: E402
 
 S3_BUCKET = "opal-data-inf"

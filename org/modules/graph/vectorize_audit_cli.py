@@ -11,7 +11,7 @@ from pathlib import Path
 
 _THIS_DIR = Path(__file__).resolve().parent
 _WORKSPACE = _THIS_DIR.parent.parent.parent
-_GOLD_ROOT = _WORKSPACE / 'data' / 'orion' / 'scripts' / 'gold'
+_GOLD_ROOT = _WORKSPACE / 'data' / 'inf' / 'scripts' / 'gold'
 _VECTORIZE_DIR = _WORKSPACE / 'org' / 'modules' / 'graph' / 'vectorize-audit'
 
 

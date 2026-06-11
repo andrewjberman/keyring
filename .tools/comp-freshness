@@ -53,7 +53,7 @@ except ImportError:
 # ---------------------------------------------------------------------------
 WORKSPACE = Path(__file__).resolve().parent.parent
 BD_CONFIG  = WORKSPACE / "data" / "black_diamond" / "scripts" / "gold" / "gold_freshness_config.yaml"
-INF_CONFIG = WORKSPACE / "data" / "orion" / "scripts" / "gold" / "gold_freshness_config.yaml"
+INF_CONFIG = WORKSPACE / "data" / "inf" / "scripts" / "gold" / "gold_freshness_config.yaml"
 DDB_CONFIG = WORKSPACE / "data" / "ddb_freshness_config.yaml"
 
 CADENCE_LABELS = {
