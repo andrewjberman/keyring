@@ -70,6 +70,8 @@ These rules are non-negotiable. Violating them causes state drift and broken dep
 **You don't need to memorize these. Recognize your situation and run the matching command.**
 All tools are in `.tools/` (in PATH). Full reference: `org/modules/graph/comp-tools.yaml`.
 
+**Querying the dependency graph — use the manifest (NFRA_GRAPHS).** Before writing code (or an agent workflow) that derives, rebuilds, or queries the dependency graph, consult `org/modules/graph/graph-call-manifest.yaml` and use the `canonical` call for your use-case. **Default to QUERY** (`comp-kuzu` Cypher for cloud/cross-layer; cached `comp-trace`/`comp-blast` for repo/trace) — these answer in milliseconds against the persisted graph. **REBUILD** (`comp-build --force`, `comp-aws derive`) **only** to preempt a staleness you just created, or on the scheduled refresh — never rebuild the full graph to answer a traversal a query can answer. The pre-commit gate `comp-manifest-check` flags a deprecated/ad-hoc graph access (advisory→blocking as manifest coverage fills). Why + design: `docs/architecture/NFRA_GRAPHS.md`.
+
 | Situation | Command | Why / what incident it catches |
 |-----------|---------|-------------------------------|
 | About to edit a gold script | `comp-pipescript io [script]` | Shows COLUMN GAPS (columns accessed but not loaded — caught geo_drill + fee_earning_aua = $0 incidents), PORTAL CONSUMERS (platinum downstream), S3-DYNAMIC reads |

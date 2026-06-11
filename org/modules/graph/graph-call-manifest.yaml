@@ -1,0 +1,202 @@
+# graph-call-manifest.yaml — the authoritative catalog of EVERY graph use-case -> its canonical call.
+#
+# NFRA_GRAPHS (PRD: docs/architecture/NFRA_GRAPHS.md). Referenced in CLAUDE.md and MANDATED: any code
+# change or agent workflow that derives/rebuilds/queries the dependency graph MUST use the `canonical`
+# call for its use-case. Default to QUERY (comp-kuzu / cached comp-trace); REBUILD only to preempt a
+# staleness you just created, or on the scheduled refresh. Gate: comp-manifest-check (advisory -> blocking).
+#
+# STATUS: v0.1 SCAFFOLD (1.0.0_SA_CTO 2026-06-11). Seeded with the high-frequency canonical calls; full
+# coverage (one `canonical` per distinct use-case across all ~30 comp-* tools + the Kuzu Cypher surface)
+# is the AC1 close-gate. Cross-layer entries are `planned` until NFRA_GLOBGRPH P2-STITCH lands.
+#
+# Per-entry schema:
+#   id:              stable dotted id (layer.topic.specific)
+#   use_case:        the question this answers, in agent terms
+#   canonical_call:  the exact command / Cypher to run
+#   tool:            comp-kuzu | comp-trace | comp-blast | comp-platinum | comp-pipescript | ...
+#   mode:            query | query-cached | rebuild
+#   layer:           cloud | trace | cross-layer | pipeline
+#   cost:            "~ms" | "~2s" | "~9.8s" | "~8min"
+#   freshness:       how current the answer is + what backs it
+#   rebuild_trigger: when to force a rebuild INSTEAD of querying (staleness-preempt)
+#   anti_pattern:    the slower/ad-hoc thing NOT to do
+#   status:          canonical | deprecated | planned
+#   superseded_by:   (deprecated only) the canonical id that replaces this
+
+contract:
+  default: QUERY        # comp-kuzu (cloud/cross-layer) or cached comp-trace/comp-blast (trace)
+  rebuild_only_when:
+    - "you changed something the graph does not yet reflect AND you need it now (preempt staleness)"
+    - "the scheduled refresh (cloud: nightly 02:00 derive->Nessie->kuzu_nessie_load; trace: comp-build)"
+  rule: "Never rebuild the full graph to answer a traversal a query can answer."
+
+entries:
+
+  # ---- CLOUD GRAPH (Kuzu / comp-kuzu) — the fast query layer ----
+  - id: cloud.lookup.nodes_by_type
+    use_case: "List/inspect cloud resources of a type (all Lambdas, all S3 buckets, all roles)."
+    canonical_call: |
+      comp-kuzu "MATCH (n:CloudNode) WHERE n.node_type='LAMBDA' RETURN n.id, n.name LIMIT 50"
+    tool: comp-kuzu
+    mode: query
+    layer: cloud
+    cost: "~ms"
+    freshness: "kuzu DB <- latest Nessie/Iceberg commit (nightly + intraday)"
+    rebuild_trigger: "resource created/changed since last load -> comp-aws derive --resource <arn> ; kuzu_nessie_load"
+    anti_pattern: "comp-aws derive (8-min full rebuild) to list nodes"
+    status: canonical
+
+  - id: cloud.reachability.transitive
+    use_case: "What can X reach transitively (role->resources, lambda->KMS via role/policy)?"
+    canonical_call: |
+      comp-kuzu "MATCH (a:CloudNode {name:$x})-[*1..3]->(b:CloudNode) RETURN DISTINCT b.node_type, b.id"
+    tool: comp-kuzu
+    mode: query
+    layer: cloud
+    cost: "~ms"
+    freshness: "kuzu DB"
+    rebuild_trigger: "edges changed since last load"
+    anti_pattern: "manual multi-hop tracing or a full re-derive"
+    status: canonical
+
+  - id: cloud.blast.what_breaks
+    use_case: "What breaks if I change/remove this cloud resource (blast radius)?"
+    canonical_call: |
+      comp-kuzu "MATCH (n:CloudNode {id:$arn})<-[e:CloudEdge*1..3]-(dep) RETURN dep.id, dep.node_type, e"
+    tool: comp-kuzu
+    mode: query
+    layer: cloud
+    cost: "~ms"
+    freshness: "kuzu DB"
+    rebuild_trigger: "you just added the dependency you're checking for"
+    anti_pattern: "eyeballing terraform / a full derive"
+    status: canonical
+    notes: "Used as the teardown blast-radius gate (ADHC_CDNCOHT 0-cross-edge confirm, 2026-06-11)."
+
+  - id: cloud.iam.permission_gaps
+    use_case: "Does this Lambda/EC2 call boto3 actions its IAM role doesn't grant (or over-grant)?"
+    canonical_call: "comp-iam gaps   # or: comp-iam service <lambda> | comp-iam role <name>"
+    tool: comp-iam
+    mode: rebuild
+    layer: cloud
+    cost: "~2s"
+    freshness: "live TF state + code scan (no Kuzu dependency)"
+    rebuild_trigger: "n/a — this is the canonical IAM-gap path"
+    anti_pattern: "comp-aws derive to reason about a single role's grants"
+    status: canonical
+
+  - id: cloud.derive.refresh
+    use_case: "Rebuild the cloud graph from live AWS (the WRITE-PATH — scheduled, not agent-default)."
+    canonical_call: "comp-aws derive --out <path>    # full; or --resource <arn> for bounded"
+    tool: comp-aws
+    mode: rebuild
+    layer: cloud
+    cost: "~8min full / seconds bounded"
+    freshness: "live"
+    rebuild_trigger: "scheduled nightly OR a verified change you must reflect before querying"
+    anti_pattern: "running this to answer a traversal -> query comp-kuzu instead"
+    status: canonical
+
+  # ---- TRACE GRAPH (repo/code) — comp-trace / comp-blast (cached) ----
+  - id: trace.blast.what_breaks
+    use_case: "What breaks if I change this function/file/artifact (repo blast radius)?"
+    canonical_call: "comp-blast <fn-or-arn> [--function name] [--check-consumers]"
+    tool: comp-blast
+    mode: query-cached
+    layer: trace
+    cost: "~ms warm (graph.json 5-min cache)"
+    freshness: "graph.json (5-min TTL; rebuilds if stale)"
+    rebuild_trigger: "you added new files since the last build -> comp-build"
+    anti_pattern: "Explore-agent sweep or manual grep for dependents"
+    status: canonical
+
+  - id: trace.walk.dependency_chain
+    use_case: "Full dependency chain to/from any repo node (imports, fetches, reads/writes)."
+    canonical_call: "comp-trace <node> --direction both [--depth N]"
+    tool: comp-trace
+    mode: query-cached
+    layer: trace
+    cost: "~ms warm"
+    freshness: "graph.json (5-min TTL)"
+    rebuild_trigger: "new files -> comp-build"
+    anti_pattern: "manual file-by-file tracing"
+    status: canonical
+
+  - id: trace.fullstack.component_to_gold
+    use_case: "Full-stack trace: portal component -> endpoint -> Lambda/S3 -> gold script, PER FIRM."
+    canonical_call: "comp-platinum page <Component> --firm <bd|inf|cot>   # ADVI is firm-isolated"
+    tool: comp-platinum
+    mode: rebuild       # D2: to become query-cached (NFRA_GRAPHS AC3)
+    layer: trace
+    cost: "seconds/call (NO cache yet — D2 fixes this)"
+    freshness: "rebuilt every call (per-firm DAG)"
+    rebuild_trigger: "n/a yet — always rebuilds; --firm REQUIRED for inf/cot (else defaults bd)"
+    anti_pattern: "omitting --firm for an Inflection/Cottonwood trace (firm-blind -> wrong producer/bucket)"
+    status: canonical
+    notes: "Firm-parameterized 2026-06-11 (NFRA 514d433). Caching = NFRA_GRAPHS D2."
+
+  - id: trace.pipeline.gold_dag
+    use_case: "Gold script I/O, chain membership, deployed-match, overlap."
+    canonical_call: "comp-pipescript <io|dag|chain|feeds|consumers|deployed|overlap> <script>"
+    tool: comp-pipescript
+    mode: rebuild
+    layer: pipeline
+    cost: "~1-2s"
+    freshness: "live repo parse"
+    rebuild_trigger: "n/a — canonical pipeline path"
+    anti_pattern: "manual s3_layout reading"
+    status: canonical
+
+  - id: trace.routes.serving_path
+    use_case: "CloudFront -> behavior -> origin -> Lambda serving path for a URL/endpoint."
+    canonical_call: "comp-routes trace <url|endpoint> | comp-routes behaviors"
+    tool: comp-routes
+    mode: rebuild
+    layer: trace
+    cost: "~1-2s"
+    freshness: "live TF parse"
+    rebuild_trigger: "n/a"
+    anti_pattern: "guessing CF behavior order"
+    status: canonical
+
+  - id: trace.rebuild.refresh
+    use_case: "Rebuild the trace graph cache (WRITE-PATH — after adding files)."
+    canonical_call: "comp-build [--check]"
+    tool: comp-build
+    mode: rebuild
+    layer: trace
+    cost: "~9.8s"
+    freshness: "writes graph.json"
+    rebuild_trigger: "new files / suspected stale cache; or comp-build --check to verify without rebuild"
+    anti_pattern: "rebuilding to answer a query comp-trace would serve from cache"
+    status: canonical
+
+  # ---- FRESHNESS (D3 — planned) ----
+  - id: meta.freshness.status
+    use_case: "Is each graph current? (cloud/trace/kuzu freshness at a glance.)"
+    canonical_call: "comp-graph status"
+    tool: comp-graph
+    mode: query
+    layer: cross-layer
+    cost: "~ms"
+    freshness: "n/a (reports freshness)"
+    rebuild_trigger: "n/a"
+    anti_pattern: "guessing whether the graph reflects your change"
+    status: planned       # NFRA_GRAPHS D3
+
+  # ---- CROSS-LAYER (planned — post P2-STITCH) ----
+  - id: xlayer.fullstack.firm_component_to_bucket
+    use_case: "Frontend component -> API route -> Lambda -> S3 bucket -> IAM role, LIVE-truth, per firm."
+    canonical_call: |
+      comp-kuzu "MATCH (c:PortalComponent {name:$comp})-[:FETCHES]->(:ApiRoute)
+                 -[:ROUTES_TO]->(l:CloudNode {node_type:'LAMBDA'})-[:WRITES]->(b:CloudNode {node_type:'S3_BUCKET'})
+                 RETURN c.name, l.name, b.id"
+    tool: comp-kuzu
+    mode: query
+    layer: cross-layer
+    cost: "~ms"
+    freshness: "kuzu DB (stitched trace+cloud)"
+    rebuild_trigger: "n/a once stitched"
+    anti_pattern: "comp-platinum (static heuristic, inf producer-incomplete) for a question the live stitch answers"
+    status: planned       # gated on NFRA_GLOBGRPH P2-STITCH; supersedes the heuristic inf producer-resolution
+    notes: "The structural fix for comp-platinum's firm producer-resolution residual (live per-bucket truth)."
