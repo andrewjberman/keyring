@@ -166,6 +166,47 @@ function ajb {
         return
     }
 
+    # RELIABLE TAB TITLE for MANUAL launches (Andrew direct 2026-06-11).
+    # Problem: when `ajb <Serial>` is typed in an EXISTING Windows Terminal tab,
+    # the in-tab title set below (OSC 0 + $Host.UI.RawUI.WindowTitle) does NOT
+    # stick -- the user's WT has `suppressApplicationTitle: true`, which makes WT
+    # ignore tab-title writes from the running process (PowerShell's OSC included).
+    # That same setting is WHY spawn-agent.ps1 works: it sets the title via
+    # `wt.exe --title` at tab CREATION (terminal layer), which suppression then
+    # protects from claude.exe's runtime title writes. The only mechanism that
+    # survives is a creation-time `wt --title`, i.e. a NEW tab.
+    #
+    # So: when invoked interactively inside Windows Terminal (NOT the -Headless
+    # spawn-agent path, NOT an already-relaunched inner call), re-launch this same
+    # `ajb <Serial>` in a new titled tab of the CURRENT window (`-w 0`). This
+    # mirrors spawn-agent's proven mechanism for the manual case. Outside WT
+    # (legacy conhost, ssh) the in-tab OSC path below still works, so we skip the
+    # relaunch and fall through. Escape hatch: set $env:AJB_NO_WT_RELAUNCH = '1'
+    # to keep claude in the current tab (accepting that the serial won't show
+    # under suppressApplicationTitle).
+    if (-not $Headless -and $env:WT_SESSION -and $env:AJB_NO_WT_RELAUNCH -ne '1') {
+        $wtCmd = Get-Command wt.exe -ErrorAction SilentlyContinue
+        if ($wtCmd) {
+            $ajbPath = 'C:\Users\AndrewBerman\Desktop\ajb_workspace\.tools\ajb.ps1'
+            # Quote extras as a single-quoted PS literal so metacharacters in the
+            # extra words don't get re-parsed by the inner shell (LD-0078 class).
+            $extraLit = ''
+            if ($Extra) { $extraLit = " '" + (($Extra -join ' ').Replace("'", "''")) + "'" }
+            # Inner command: mark the relaunch so the inner `ajb` doesn't recurse,
+            # dot-source ajb.ps1, then run the same ajb invocation in the new tab.
+            # Backtick-escape $env: + the inner quotes so the OUTER string doesn't
+            # expand them; $Serial + $extraLit DO interpolate (baked in).
+            $inner = "`$env:AJB_NO_WT_RELAUNCH='1'; . `"$ajbPath`"; ajb $Serial$extraLit"
+            # wt parses `;` as its action-separator -> escape every `;` as `\;`
+            # so the whole statement reaches powershell.exe intact.
+            $innerForWt = $inner -replace ';', '\;'
+            & wt.exe -w 0 new-tab --title $Serial powershell.exe -NoProfile -NoExit -Command $innerForWt
+            Write-Host "[ajb] opened $Serial in a new titled Windows Terminal tab (current window)" -ForegroundColor Cyan
+            return
+        }
+        # No wt.exe on PATH -> fall through to the in-tab OSC best-effort below.
+    }
+
     # First message: the bare serial by default. The agent self-identifies from
     # it and runs the org/XXX.md startup protocol (this is exactly how an Opal
     # agent session is opened -- the operator types the serial). Any extra words
