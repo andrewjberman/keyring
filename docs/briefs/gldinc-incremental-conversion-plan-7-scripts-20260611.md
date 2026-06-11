@@ -63,8 +63,8 @@ get hybrid designs and go LAST.
 
 | Script | Incremental shape | Risk | Order |
 |---|---|---|---|
-| **A_02** fee_rate_history | SCD-2; reconstruct change-points from existing history + read only new+window fee files, re-run same builder | LOW — append-natured, immutable closed periods | **1 (DONE, parity proven)** |
-| **A_01** advisor_assignments | SCD-2 from transactions (same pattern as A_02) + latest-allocation fee snapshot leg | LOW-MED | 2 |
+| **A_02** fee_rate_history | SCD-2; reconstruct change-points from existing history + read only new+window fee files, re-run same builder | LOW — append-natured, immutable closed periods; **probe-verified: 0 forward-dated + 0 back-dated-beyond-14d rows in all 1,881 fee files** | **1 (DONE, parity proven)** |
+| **A_01** advisor_assignments | **DAILY-STATE-GRAIN cache** (load_flows preflt pattern), NOT the A_02 trick: (a) output is mutated post-detection (multi-role split averaging) so it can't reconstruct; (b) **probe: 38% of recent txn files carry rows back-dated >14d (worst -519d)** — a change-point cache would fall back nearly every night. Full (account,date) grain + per-row file provenance absorbs back-dated insertions exactly; eviction-by-provenance handles in-window restatement | MED — known residual: cross-boundary txn_id re-post with changed trade_date (shadow-detected) | 2 |
 | **B_02** canonical_lots | per-date transform (BD provides lots, identity source); process only new dates | MED | 3 |
 | **B_03** account_gains | TBD — read structure; watch price/time-dependent fields | MED | 4 |
 | **A_03** positions_cube | forward cumulative by date BUT reconciles vs LATEST Schwab RPS / unrealized / realized — latest-snapshot passes can retroactively touch historical partitions | **HIGH** — needs forward-incremental + bounded re-reconciliation window | 5 |
@@ -103,6 +103,35 @@ periods are immutable; restatement is fingerprint-guarded.
 **Status:** additive code passes `ds-commit-gate` (py_compile + precommit +
 ruff). Pending: DS deploy-cycle coordination → land additive path → nightly
 `--shadow` clean-night accumulation → Andrew nod → flip `INCREMENTAL_CAPABLE`.
+
+## 4b. Measured data-shape probes (2026-06-11) — design inputs, not assumptions
+
+One-off read-only probes of source-file date integrity (trade_date vs file date),
+run locally before finalizing each design:
+
+| Source | Files | Forward-dated (trade>file) | Back-dated >14d | Consequence |
+|---|---|---|---|---|
+| silver/fees/ | 1,881 | **0** | **0** | A_02 change-point reconstruction + 14d window valid as designed |
+| silver/transactions/ | 1,808 | 1 (2026-01-30, +3d) | **39 files, worst -519d; 26/68 (38%) of files since 2026-03** | A_01 change-point cache UNVIABLE (fallback ~every night) → daily-state-grain cache design |
+
+Implication for later scripts: **A_03 and B_01 read silver/transactions too** —
+their incremental designs inherit the back-dated reality and need grain-level
+caches or equivalent, not naive date-partition skipping.
+
+Also fixed from this analysis: A_02 BACK-DATED ROW GUARD (deployed c8ed91949) —
+any window-file row with trade_date <= window_floor → full-rebuild fallback
+(A_00/load_flows "historical backfill → full scan" class). My original 1/3/10-day
+shadows passed because no back-dated fee rows existed — the guard makes it
+structural rather than empirical-luck.
+
+## 4c. Pre-existing full-path nondeterminism (documented, NOT fixed — never-widen)
+
+A_01's full path concats files in thread-completion order; cross-file ties at the
+same (account_id, trade_date) resolve keep='last' = non-deterministic survivor
+when the colliding rows differ. Pre-existing behavior; per the GLDINC Option-A
+doctrine (cache must match oracle; do NOT redesign shared dedup semantics) the
+incremental mirrors the same code and any shadow diff isolated to this class is
+a DATA finding to escalate, not a code bug to "fix" by changing survivor logic.
 
 ## 5. Rollout discipline
 
