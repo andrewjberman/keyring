@@ -385,6 +385,78 @@ entries:
     anti_pattern: "asserting a cert pass without the independent oracle score"
     status: canonical
 
+  - id: cloud.classes.list
+    use_case: "List the supported AWS resource classes the cloud compiler models."
+    canonical_call: "comp-aws classes"
+    tool: comp-aws
+    mode: query
+    layer: cloud
+    cost: "~ms"
+    freshness: "static (the CLASSES registry)"
+    rebuild_trigger: "n/a"
+    anti_pattern: "guessing what's modeled — ask comp-aws classes (and graph-call-manifest tools_index)"
+    status: canonical
+
+  - id: cloud.metrics.summary
+    use_case: "Summary metrics of a derived cloud graph (per-class counts, drift distribution, findings)."
+    canonical_call: "comp-aws metrics [--graph <derived.json>]"
+    tool: comp-aws
+    mode: rebuild
+    layer: cloud
+    cost: "~ms over a derived graph (or rides a derive)"
+    freshness: "as fresh as the graph it reads"
+    rebuild_trigger: "needs a current derive to be meaningful"
+    anti_pattern: "n/a"
+    status: canonical
+
+  - id: cloud.diff.snapshot
+    use_case: "Diff two cloud-graph snapshots (what nodes/edges/findings changed between derives)."
+    canonical_call: "comp-aws diff <graphA.json> <graphB.json>"
+    tool: comp-aws
+    mode: query
+    layer: cloud
+    cost: "~ms (operates on two saved snapshots)"
+    freshness: "as fresh as the snapshots"
+    rebuild_trigger: "n/a — diffs existing snapshots"
+    anti_pattern: "manually eyeballing two derives"
+    status: canonical
+
+  - id: cloud.dual_managed.conflict
+    use_case: "Find resources managed in >1 Terraform root-module state (apply-conflict risk)."
+    canonical_call: "comp-aws dual-managed"
+    tool: comp-aws
+    mode: rebuild
+    layer: cloud
+    cost: "~seconds (TF state union)"
+    freshness: "live TF state"
+    rebuild_trigger: "n/a — the canonical dual-management check"
+    anti_pattern: "shipping a resource into a second state without checking for the conflict"
+    status: canonical
+
+  - id: cloud.snapshot.archive
+    use_case: "Archive the canonical cloud graph (the versioned snapshot the analytics/cert feed)."
+    canonical_call: "comp-aws snapshot"
+    tool: comp-aws
+    mode: rebuild
+    layer: cloud
+    cost: "~8min (full derive + persist)"
+    freshness: "live -> archived"
+    rebuild_trigger: "scheduled / a deliberate cert-baseline snapshot"
+    anti_pattern: "n/a — this IS the write-path archive"
+    status: canonical
+
+  - id: cloud.iceberg.persist
+    use_case: "Persist the derived cloud graph to Iceberg/Nessie (the versioned store Kuzu loads from)."
+    canonical_call: "comp-aws iceberg-commit"
+    tool: comp-aws
+    mode: rebuild
+    layer: cloud
+    cost: "~minutes (write graph_nodes/graph_edges to Nessie)"
+    freshness: "derive -> Nessie commit"
+    rebuild_trigger: "the WRITE-PATH that feeds comp-kuzu; nightly or after a verified change"
+    anti_pattern: "querying a Kuzu DB that predates the iceberg-commit (stale) -> check comp-graph status"
+    status: canonical
+
   # ---- META / governance + hygiene ----
   - id: meta.shell.bare_util_scan
     use_case: "Does a new local-runtime .sh use a util missing from Git Bash 3.6.7 (pgrep/flock/...)?"
@@ -463,3 +535,38 @@ entries:
     anti_pattern: "comp-platinum (static heuristic, inf producer-incomplete) for a question the live stitch answers"
     status: canonical     # LANDED 2026-06-11 (P2-STITCH f754164b4, CTO-certified); supersedes the heuristic inf producer-resolution
     notes: "The structural fix for comp-platinum's firm producer-resolution residual (live per-bucket truth). Cypher uses the CloudNode/CloudEdge schema: -[:CloudEdge {edge_type:'FETCHES'}]->. CTO-verified: 49F+cottonwood ADVI components resolve component->lambda->dynamodb/s3 cross-layer; 15 components reach a bucket."
+
+# ===========================================================================
+# tools_index — per-tool instructional reference (AC1 'instructional for each
+# comp tool'). One block per comp-* tool: what it does, its subcommands, and
+# the canonical entry id(s) that carry the full query/rebuild instruction.
+# Full prose per-tool (when/cost/output history) cross-links to comp-tools.yaml.
+# ===========================================================================
+tools_index:
+  comp-kuzu:     { does: "Cypher query the loaded Kuzu graph (cloud + cross-layer); the FAST default read-path", subcommands: ["<cypher>", "--db-path", "--json", "--limit"], entries: [cloud.lookup.nodes_by_type, cloud.reachability.transitive, cloud.blast.what_breaks, xlayer.fullstack.firm_component_to_bucket] }
+  comp-aws:      { does: "Live-AWS + Terraform-state cloud-graph compiler (the WRITE-PATH + cert)", subcommands: [derive, score, snapshot, metrics, diff, dual-managed, classes, iceberg-commit], entries: [cloud.derive.refresh, cloud.score.cert, cloud.classes.list, cloud.metrics.summary, cloud.diff.snapshot, cloud.dual_managed.conflict, cloud.snapshot.archive, cloud.iceberg.persist] }
+  comp-trace:    { does: "Bidirectional dependency walk from any repo node (cached)", subcommands: ["<node>", "--direction", "--depth", "--json"], entries: [trace.walk.dependency_chain] }
+  comp-blast:    { does: "Downstream blast radius + upstream callers (cached)", subcommands: ["<node|file>", "--function", "--check-consumers"], entries: [trace.blast.what_breaks] }
+  comp-platinum: { does: "Full-stack component->gold trace, FIRM-AWARE (cached, NFRA_GRAPHS D2)", subcommands: [page, reverse, tab-audit, summary, "--firm", "--fresh/--force"], entries: [trace.fullstack.component_to_gold, trace.platinum.reverse] }
+  comp-pipescript: { does: "Gold-script DAG: I/O, chains, deployed-match, overlap", subcommands: [io, dag, chain, feeds, consumers, deployed, overlap, stats], entries: [trace.pipeline.gold_dag, pipeline.pipescript.deployed_match] }
+  comp-routes:   { does: "CloudFront->origin->Lambda serving path", subcommands: [trace, behaviors, origins, rewrites, api-routes, auth-map, edge-versions], entries: [trace.routes.serving_path] }
+  comp-iam:      { does: "IAM permission-gap cross-reference (boto3 calls vs grants)", subcommands: [gaps, roles, services, service, role, stats], entries: [cloud.iam.permission_gaps] }
+  comp-build:    { does: "Rebuild the trace-graph cache (the trace WRITE-PATH)", subcommands: ["--check"], entries: [trace.rebuild.refresh] }
+  comp-diff:     { does: "Map git/uncommitted changes to graph blast radius", subcommands: ["--ref", "--staged"], entries: [trace.diff.staged_blast] }
+  comp-xref:     { does: "Symbol cross-ref (cached) + graph-state drift-vs-baseline", subcommands: ["<symbol>", "--save"], entries: [trace.xref.symbol, trace.xref.graph_drift] }
+  comp-transform: { does: "React component field-render schema-check (MISSING/UNUSED)", subcommands: [schema-check, ternary-audit], entries: [trace.transform.component_fields] }
+  comp-cache:    { does: "React Query cache-key collision detection", subcommands: [map, collisions, key], entries: [trace.cache.key_collisions] }
+  comp-pii:      { does: "PII exposure audit (routes + components)", subcommands: [audit, scan], entries: [trace.pii.exposure] }
+  comp-types:    { does: "TS type consumers (before editing a shared type)", subcommands: [index], entries: [trace.types.type_consumers] }
+  comp-adapter-audit: { does: "Portal adapter field-threading audit", subcommands: ["<adapter-fn>", "--severity"], entries: [trace.adapter.field_threading] }
+  comp-tooltip:  { does: "Tooltip migration/coverage audit", subcommands: ["<args>"], entries: [meta.tooltip.migration] }
+  comp-validate: { does: "Gold artifact invariant validation pre-upload", subcommands: ["<script_id> --artifact", "--list"], entries: [pipeline.validate.artifact] }
+  comp-freshness: { does: "Is upstream S3 data fresh enough to run a gold chain", subcommands: [chain, script, artifact], entries: [pipeline.freshness.chain_ready] }
+  comp-chainrun: { does: "Snapshot/diff gold artifacts around an atomic bundle", subcommands: [snapshot, diff], entries: [pipeline.chainrun.atomic_bundle] }
+  comp-constants: { does: "Marker/firm-constant drift vs canonical config", subcommands: [check, index, new, list], entries: [pipeline.constants.drift] }
+  comp-incrparity: { does: "Incremental BD-pipeline parity (cache vs oracle)", subcommands: ["<args>"], entries: [pipeline.incrparity.bd] }
+  comp-lambdamap: { does: "Lambda deployed-SHA vs live CodeSha256 + runtime enum", subcommands: ["<args>"], entries: [cloud.lambdamap.deployed_sha] }
+  comp-shell:    { does: "Bare Git-Bash-missing-util scan in new .sh (Rule 16)", subcommands: [scan], entries: [meta.shell.bare_util_scan] }
+  comp-registry: { does: "REGISTRY narrative vs project-JSON drift", subcommands: ["sync ROW=N", "--project", "--all"], entries: [meta.registry.drift] }
+  comp-coverage: { does: "Compiler/task-order coverage report", subcommands: ["<args>"], entries: [meta.coverage.report] }
+  comp-graph:    { does: "[PLANNED D3] freshness status across all graphs + uniform --fresh/--force", subcommands: [status], entries: [meta.freshness.status] }
