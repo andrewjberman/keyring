@@ -25,6 +25,8 @@ search_surfaces:
   multifirm:
   - infra/aws/lambda/portal-auth/**/*.py
   - infra/aws/lambda/shared-*/**/*.py
+  cot:
+  - data/cot/scripts/**/*.py
 constants:
 - name: FIRM_ID
   lane: bd
@@ -103,6 +105,59 @@ constants:
     value: os.environ.get('FIRM_NAME', 'Inflection Wealth Management')
     comment: FIRM_NAME = os.environ.get('FIRM_NAME', 'Inflection Wealth Management')
   notes: 'Display name for INF firm used in portal JSON payloads. Sister to BD-lane FIRM_NAME. Single canonical value across inf-portal-* Lambdas. Added 2026-05-13 per DS base RAVC1.
+
+    '
+- name: FIRM_ID
+  lane: cot
+  type: str
+  canonical_value: '''cottonwood'''
+  sites:
+  - file: data/cot/scripts/gold/C_06.client_mix_timeseries.py
+    line: 96
+    value: '''cottonwood'''
+    comment: 'FIRM_ID = ''cottonwood''  # firm-native hardcode (NFRA_DTAFLP TO-4, env-switch dropped)'
+  - file: data/cot/scripts/gold/D_00.portal_aggregates.py
+    line: 77
+    value: '''cottonwood'''
+  - file: data/cot/scripts/gold/D_00b.portal_timeseries.py
+    line: 53
+    value: '''cottonwood'''
+  - file: data/cot/scripts/gold/D_00c.portal_leaderboard.py
+    line: 53
+    value: '''cottonwood'''
+  - file: data/cot/scripts/gold/D_01.partner_analytics.py
+    line: 86
+    value: '''cottonwood'''
+  - file: data/cot/scripts/gold/D_02.advisor_client_detail.py
+    line: 82
+    value: '''cottonwood'''
+  - file: data/cot/scripts/gold/D_03.composition_artifacts.py
+    line: 95
+    value: '''cottonwood'''
+  - file: data/cot/scripts/gold/D_04.client_portal_summary.py
+    line: 132
+    value: '''cottonwood'''
+  notes: 'Cottonwood (cot) firm identifier for the firm-native cot gold fork (NFRA_DTAFLP P3 TO-4). All 8 sites hardcode the canonical literal ''cottonwood'' — the FIRM_ID env-switch was dropped per full bd/cot separation (Andrew sovereign 2026-06-10). Registered by DS to close the comp-constants drift fire that otherwise bites every cot gold commit touching FIRM_ID (same pattern as the inf-lane entry added 2026-05-13). CTO follow-up: add ''cot'' to comp_constants_cli.py --lane choices + comp-build regen.
+
+    '
+- name: FIRM_NAME
+  lane: cot
+  type: str
+  canonical_value: '''Cottonwood Capital Advisors'''
+  sites:
+  - file: data/cot/scripts/gold/D_00.portal_aggregates.py
+    line: 78
+    value: '''Cottonwood Capital Advisors'''
+  - file: data/cot/scripts/gold/D_00b.portal_timeseries.py
+    line: 54
+    value: '''Cottonwood Capital Advisors'''
+  - file: data/cot/scripts/gold/D_01.partner_analytics.py
+    line: 87
+    value: '''Cottonwood Capital Advisors'''
+  - file: data/cot/scripts/gold/D_02.advisor_client_detail.py
+    line: 83
+    value: '''Cottonwood Capital Advisors'''
+  notes: 'Cottonwood display name for portal JSON payloads; sister to cot-lane FIRM_ID. Firm-native hardcode per NFRA_DTAFLP TO-4. Registered by DS to close the drift fire (mirrors inf-lane FIRM_NAME added 2026-05-13).
 
     '
 - name: INVALID_REL_IDS
