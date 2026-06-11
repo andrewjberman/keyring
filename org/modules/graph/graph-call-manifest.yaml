@@ -27,7 +27,7 @@
 #   comp-learns-run / comp-learns-status  -- compiler self-learning/telemetry harness (not a graph query)
 #   comp-perf                             -- tool-perf benchmarking (not a graph query)
 #   comp-v5-composite-test.sh             -- tool regression test
-excluded_not_graph_use_cases: [comp-learns-run, comp-learns-status, comp-perf, comp-v5-composite-test]
+excluded_not_graph_use_cases: [comp-learns-run, comp-learns-status, comp-perf, comp-v5-composite-test, comp-manifest-check]  # comp-manifest-check = the D6 manifest-ENFORCEMENT gate (polices this manifest, not a graph-query use-case)
 
 contract:
   default: QUERY        # comp-kuzu (cloud/cross-layer) or cached comp-trace/comp-blast (trace)
