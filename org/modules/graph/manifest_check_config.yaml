@@ -1,0 +1,48 @@
+# manifest_check_config.yaml — ramp control for the comp-manifest-check pre-commit gate.
+#
+# NFRA_GRAPHS D6 (PRD docs/architecture/NFRA_GRAPHS.md §6 "Enforcement"). The gate scans a
+# changed file's introduced graph access and flags any that (a) call a `deprecated` manifest
+# entry, (b) REBUILD where a cheaper QUERY is canonical, or (c) re-implement / raw-access the
+# graph instead of using the canonical comp-* tool. It mirrors the comp-constants drift gate's
+# advisory->blocking ramp.
+#
+# THE RAMP (single knob: `mode`):
+#   advisory  -- print findings, ALWAYS exit 0 (never blocks a commit). The launch state.
+#   blocking  -- print findings; exit 1 if any ERROR-class finding (deprecated-call / ad-hoc
+#                re-implementation). WARN-class (rebuild-when-query) stays advisory even here.
+#
+# RAMP DISCIPLINE (PRD §8 open-question + CLAUDE.md mandate): stay `advisory` until DS + CTO
+# agree the manifest's `canonical` coverage is high enough that blocking won't false-block a
+# legit graph call. D1 closed at AC1 FULL coverage 2026-06-11 (28d45eb2b: 34 entries / 33
+# canonical / 1 planned / 0 uncataloged), so the catalog is complete -- but the gate's
+# DETECTION precision (the regex/token surface below) should accrue real-commit evidence in
+# advisory mode first. Flip to `blocking` only by a COO/CTO-coordinated edit of this one field.
+
+mode: advisory
+
+# Severity routing (which categories block in `blocking` mode).
+#   A_deprecated_call        -- code invokes a manifest `status: deprecated` entry. ERROR.
+#   C_adhoc_reimplementation -- raw graph access (build_*_dag / raw Cypher / graph.json open /
+#                               kuzu.Connection) bypassing the canonical comp-* tool. ERROR.
+#   B_rebuild_when_query     -- a REBUILD call (comp-aws derive / comp-build / --force) where a
+#                               QUERY is canonical for the same use-case. WARN (advisory always).
+severity:
+  A_deprecated_call: error
+  C_adhoc_reimplementation: error
+  B_rebuild_when_query: warn
+
+# Paths exempt from the gate: the graph-tool internals + the manifest themselves legitimately
+# contain builder calls / raw Cypher / the canonical-call examples. The gate targets CONSUMER
+# code (gold scripts, agent workflows, infra) that should call the tool, not re-implement it.
+exempt_path_substrings:
+  - org/modules/graph/          # comp-* CLI engine internals (this gate, comp-kuzu, comp-aws, ...)
+  - infra/aws/globgrph/         # the cloud-graph derive/stitch write-path internals
+  - infra/aws/lambda/globgrph/  # graph-builder Lambda source
+  - docs/                       # design docs quote the anti-patterns deliberately
+  - graph-call-manifest.yaml    # the manifest's own canonical_call examples
+  - comp-tools.yaml             # tool catalog prose
+
+# Exempt by basename prefix: the comp-* tool wrappers in .tools/ are the canonical entry points.
+exempt_basename_prefixes:
+  - comp-
+  - comp_

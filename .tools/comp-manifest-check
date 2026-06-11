@@ -1,0 +1,17 @@
+#!/bin/bash
+# comp-manifest-check -- enforce the graph-call manifest at commit time (NFRA_GRAPHS D6).
+# Flags non-canonical graph access in changed files: deprecated-entry calls, REBUILD-when-a-
+# QUERY-is-canonical, and ad-hoc re-implementation (build_*_dag / raw Cypher / graph.json open
+# / kuzu.Connection). Advisory->blocking ramp via org/modules/graph/manifest_check_config.yaml.
+#
+# Subcommands:
+#   comp-manifest-check check --file PATH [--file PATH ...] [--mode advisory|blocking]
+#   comp-manifest-check list         # detection surface + manifest state
+#   comp-manifest-check selfcheck    # AC4 synthetic anti-pattern
+#
+# Rule-16 clean: uses only cd / dirname / pwd / python (all present in Git Bash 3.6.7).
+WORKSPACE="$(cd "$(dirname "$0")/.." && pwd)"
+python "$WORKSPACE/org/modules/graph/manifest_check_cli.py" "$@"
+_exit=$?
+python "$WORKSPACE/org/modules/graph/comp_log_auto.py" "comp-manifest-check" "$*" $_exit 2>/dev/null
+exit $_exit
