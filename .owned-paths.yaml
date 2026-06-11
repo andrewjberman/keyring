@@ -714,6 +714,10 @@ paths:
     lane: ANY_EXEC_OR_AE
     note: "Compiler tool engine implementations (extract_validate.py, extract_pipeline.py, etc.) — back-end paired with the *_cli.py entrypoints. AE owns extensions per ADHC_COMPIL_V4 family (009 symbolic-rule resolver in extract_validate.py 2026-05-08)."
 
+  "org/modules/graph/graph_*.py":
+    lane: ANY_EXEC_OR_AE
+    note: "Compiler-tool shared SUPPORT modules (graph_cache.py freshness/query-vs-rebuild contract, etc.) imported by the *_cli.py entrypoints. AE owns per ADHC_COMPIL_V4 / NFRA_GRAPHS D2-D3 (graph_cache.py 2026-06-11). Structural completion of the comp_*/extract_*/cli.py AE-glob set — NOT a new grant; AE authoring comp-graph-tool code is long-established. Excludes graph-call-manifest.yaml (CTO D1 artifact; .yaml, not .py). Added by COO 2026-06-11 unblocking base-AE D2/D3 commit; same gap-class as the prior comp_*/extract_* adds."
+
   "org/modules/graph/comp-tools.yaml":
     lane: ANY_EXEC_OR_AE
     note: "Compiler tool registry. AE adds rows when shipping new compiler tools per ADHC_COMPIL_V4 family. Execs revise wider scope."
