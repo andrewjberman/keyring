@@ -51,6 +51,7 @@ def _boto(svc, region="us-east-1"):
 # ---------------------------------------------------------------------------
 TFSTATE_BUCKET = "opal-313476888478-terraform-state"
 _TFSTATE_CACHE = {}
+_S3_SUBCFG_CACHE = {}   # WAVE-4: per-bucket lifecycle/cors/website cache (live_s3 called repeatedly)
 
 def _load_all_tfstate():
     """Discover + read every root-module state from S3. Returns the union of
@@ -90,12 +91,18 @@ def _load_all_tfstate():
                 continue
             for inst in r.get("instances", []):
                 a = inst.get("attributes", {}) or {}
+                _arn = a.get("arn")
+                # WAVE-4: synthesize an arn for declared types the provider leaves arn-less
+                # (apigatewayv2_route) so the live-node arn join lands (else false 0-match drift).
+                if not _arn and r["type"] == "aws_apigatewayv2_route" and a.get("api_id") and a.get("id"):
+                    _arn = f"arn:aws:apigateway:us-east-1::/apis/{a['api_id']}/routes/{a['id']}"
                 resources.append({
                     "type": r["type"], "tf_name": r.get("name"), "module": module,
                     "tf_kind": mode,
-                    "arn": a.get("arn"), "id": a.get("id"),
+                    "arn": _arn, "id": a.get("id"),
+                    # WAVE-4: + layer_name (aws_lambda_layer_version has no `name`/`arn`-without-version)
                     "name": a.get("name") or a.get("bucket") or a.get("function_name")
-                            or a.get("alarm_name"),
+                            or a.get("alarm_name") or a.get("layer_name"),
                     "attrs": a,
                 })
     _TFSTATE_CACHE["resources"] = resources
@@ -219,8 +226,34 @@ def live_s3():
         try:
             nc = c.get_bucket_notification_configuration(Bucket=name)
             node["event_notifications"] = len(nc.get("LambdaFunctionConfigurations", []))
+            # WAVE-4 node-typing depth: full notification target census (not just Lambda)
+            node["notify_sns"] = len(nc.get("TopicConfigurations", []))
+            node["notify_sqs"] = len(nc.get("QueueConfigurations", []))
         except Exception:
             node["event_notifications"] = 0
+            node["notify_sns"] = 0
+            node["notify_sqs"] = 0
+        # WAVE-4 node-typing depth: lifecycle / CORS / website sub-configs (S3 typing gap),
+        # cached per bucket -- live_s3 is called several times per derive; bound to once/bucket.
+        sub = _S3_SUBCFG_CACHE.get(name)
+        if sub is None:
+            sub = {}
+            try:
+                sub["lifecycle_rules"] = len(c.get_bucket_lifecycle_configuration(Bucket=name).get("Rules", []))
+            except Exception:
+                sub["lifecycle_rules"] = 0
+            try:
+                c.get_bucket_cors(Bucket=name)
+                sub["cors_enabled"] = True
+            except Exception:
+                sub["cors_enabled"] = False
+            try:
+                c.get_bucket_website(Bucket=name)
+                sub["website_enabled"] = True
+            except Exception:
+                sub["website_enabled"] = False
+            _S3_SUBCFG_CACHE[name] = sub
+        node.update(sub)
         nodes.append(node)
     return nodes
 
@@ -630,6 +663,293 @@ def _sfn_task_invokes(definition_str):
     return result
 
 # class -> (live_fn, [tf_resource_types that materialize this class's nodes])
+# ---------------------------------------------------------------------------
+# COVERAGE EXPANSION (NFRA_COMPAWS WAVE-4, 2026-06-11, Andrew /goal): new AWS
+# resource classes closing the adversarial-audit gaps (API Gateway, ECS/Fargate,
+# VPC SG/endpoint, SSM document, EventBridge Scheduler, Lambda layer). ADDITIVE
+# ONLY -- the certified-13 derive paths are untouched. Each live_* returns typed
+# nodes carrying an `arn` (so _node_arn returns it verbatim) for reconciliation.
+# ---------------------------------------------------------------------------
+def live_apigw():
+    """API_GW nodes (aws_apigatewayv2_api). The HTTP/WebSocket serving layer between
+    CloudFront/clients and Lambda that the certified graph dead-ended at."""
+    c = _boto("apigatewayv2")
+    nodes = []
+    try:
+        items = c.get_apis().get("Items", [])
+    except Exception:
+        return nodes
+    for a in items:
+        aid = a["ApiId"]
+        nodes.append({
+            "id": aid, "type": "API_GW",
+            "arn": f"arn:aws:apigateway:us-east-1::/apis/{aid}",
+            "name": a.get("Name"), "protocol": a.get("ProtocolType"),
+            "endpoint": a.get("ApiEndpoint"),
+            "execute_api_disabled": bool(a.get("DisableExecuteApiEndpoint", False)),
+        })
+    return nodes
+
+def live_api_routes():
+    """API_ROUTE nodes (aws_apigatewayv2_route) -- one per route, carrying the resolved
+    integration target (Lambda arn for AWS_PROXY) for the ROUTES_TO edge."""
+    c = _boto("apigatewayv2")
+    nodes = []
+    try:
+        apis = c.get_apis().get("Items", [])
+    except Exception:
+        return nodes
+    for a in apis:
+        aid = a["ApiId"]
+        integ = {}
+        try:
+            for it in c.get_integrations(ApiId=aid).get("Items", []):
+                integ[it["IntegrationId"]] = {"type": it.get("IntegrationType"),
+                                              "uri": it.get("IntegrationUri")}
+        except Exception:
+            pass
+        try:
+            routes = c.get_routes(ApiId=aid).get("Items", [])
+        except Exception:
+            routes = []
+        for r in routes:
+            rid = r["RouteId"]
+            tgt = r.get("Target", "") or ""
+            it = integ.get(tgt.split("/")[-1], {}) if tgt else {}
+            nodes.append({
+                "id": f"{aid}/{rid}", "type": "API_ROUTE",
+                "arn": f"arn:aws:apigateway:us-east-1::/apis/{aid}/routes/{rid}",
+                "name": r.get("RouteKey"), "api_id": aid, "route_key": r.get("RouteKey"),
+                "authorization": r.get("AuthorizationType"),
+                "authorizer_id": r.get("AuthorizerId"),
+                "integration_type": it.get("type"),
+                "integration_uri": it.get("uri"),   # Lambda arn -> ROUTES_TO edge target
+            })
+    return nodes
+
+def live_ecs_tasks():
+    """ECS_TASK_DEFINITION nodes (aws_ecs_task_definition) -- the Fargate/ECS compute
+    surface (incl the GLOBGRPH Nessie task) the certified graph could not see. Indexes
+    the ACTIVE revision per family; carries task/execution role arns for ASSUMES."""
+    c = _boto("ecs")
+    nodes = []
+    try:
+        arns = []
+        tok = None
+        while True:
+            kw = {"status": "ACTIVE", "sort": "DESC"}
+            if tok:
+                kw["nextToken"] = tok
+            resp = c.list_task_definitions(**kw)
+            arns += resp.get("taskDefinitionArns", [])
+            tok = resp.get("nextToken")
+            if not tok:
+                break
+    except Exception:
+        return nodes
+    seen_family = set()
+    for tdarn in arns:
+        try:
+            td = c.describe_task_definition(taskDefinition=tdarn)["taskDefinition"]
+        except Exception:
+            continue
+        fam = td.get("family")
+        if fam in seen_family:   # keep only the latest active revision per family
+            continue
+        seen_family.add(fam)
+        nodes.append({
+            "id": fam, "type": "ECS_TASK_DEFINITION",
+            "arn": td.get("taskDefinitionArn"), "name": fam,
+            "launch_type": (td.get("requiresCompatibilities") or ["EC2"])[0],
+            "is_fargate": "FARGATE" in (td.get("requiresCompatibilities") or []),
+            "network_mode": td.get("networkMode"),
+            "task_role": (td.get("taskRoleArn") or "").split("/")[-1] or None,
+            "execution_role": (td.get("executionRoleArn") or "").split("/")[-1] or None,
+            "task_role_arn": td.get("taskRoleArn"),
+            "execution_role_arn": td.get("executionRoleArn"),
+            "container_count": len(td.get("containerDefinitions") or []),
+            "cpu": td.get("cpu"), "memory": td.get("memory"),
+        })
+    return nodes
+
+def live_ecs_clusters():
+    """ECS_CLUSTER nodes (aws_ecs_cluster) -- the Fargate cluster that EventBridge rules /
+    Scheduler target via RunTask; modeled so rule->cluster TRIGGERS terminates (0-dangling)."""
+    c = _boto("ecs")
+    nodes = []
+    try:
+        arns = c.list_clusters().get("clusterArns", [])
+        for i in range(0, len(arns), 100):
+            for cl in c.describe_clusters(clusters=arns[i:i + 100]).get("clusters", []):
+                nodes.append({
+                    "id": cl["clusterName"], "type": "ECS_CLUSTER",
+                    "arn": cl["clusterArn"], "name": cl["clusterName"],
+                    "status": cl.get("status"),
+                    "running_tasks": cl.get("runningTasksCount"),
+                    "active_services": cl.get("activeServicesCount"),
+                })
+    except Exception:
+        return nodes
+    return nodes
+
+def live_security_groups():
+    """SECURITY_GROUP nodes (aws_security_group) -- the network-boundary surface. ARN is
+    given by the API (SecurityGroupArn). Carries vpc_id + ingress/egress rule counts."""
+    nodes = []
+    for region in REGIONS:
+        c = _boto("ec2", region)
+        try:
+            tok = None
+            while True:
+                kw = {}
+                if tok:
+                    kw["NextToken"] = tok
+                resp = c.describe_security_groups(**kw)
+                for sg in resp.get("SecurityGroups", []):
+                    nodes.append({
+                        "id": sg["GroupId"], "type": "SECURITY_GROUP",
+                        "arn": sg.get("SecurityGroupArn")
+                               or f"arn:aws:ec2:{region}:{ACCOUNT}:security-group/{sg['GroupId']}",
+                        "name": sg.get("GroupName"), "region": region,
+                        "vpc_id": sg.get("VpcId"),
+                        "ingress_rules": len(sg.get("IpPermissions") or []),
+                        "egress_rules": len(sg.get("IpPermissionsEgress") or []),
+                        "open_ingress": any(
+                            any(r.get("CidrIp") == "0.0.0.0/0" for r in p.get("IpRanges", []))
+                            for p in sg.get("IpPermissions") or []),
+                    })
+                tok = resp.get("NextToken")
+                if not tok:
+                    break
+        except Exception:
+            continue
+    return nodes
+
+def live_vpc_endpoints():
+    """VPC_ENDPOINT nodes (aws_vpc_endpoint) -- PrivateLink/gateway endpoints; carries the
+    service name + attached SG ids (for USES_SG) so the private-network path is visible."""
+    nodes = []
+    for region in REGIONS:
+        c = _boto("ec2", region)
+        try:
+            tok = None
+            while True:
+                kw = {}
+                if tok:
+                    kw["NextToken"] = tok
+                resp = c.describe_vpc_endpoints(**kw)
+                for ve in resp.get("VpcEndpoints", []):
+                    nodes.append({
+                        "id": ve["VpcEndpointId"], "type": "VPC_ENDPOINT",
+                        "arn": f"arn:aws:ec2:{region}:{ACCOUNT}:vpc-endpoint/{ve['VpcEndpointId']}",
+                        "name": ve.get("ServiceName"), "region": region,
+                        "service_name": ve.get("ServiceName"),
+                        "endpoint_type": ve.get("VpcEndpointType"),
+                        "vpc_id": ve.get("VpcId"), "state": ve.get("State"),
+                        "sg_ids": sorted(g.get("GroupId") for g in ve.get("Groups", []) if g.get("GroupId")),
+                        "private_dns": bool(ve.get("PrivateDnsEnabled")),
+                    })
+                tok = resp.get("NextToken")
+                if not tok:
+                    break
+        except Exception:
+            continue
+    return nodes
+
+def live_ssm_documents():
+    """SSM_DOCUMENT nodes (aws_ssm_document) -- the EC2 code-deploy mechanism (CLAUDE.md
+    Rule 12); Self-owned only (exclude AWS-public docs). The deploy path the graph missed."""
+    c = _boto("ssm")
+    nodes = []
+    try:
+        tok = None
+        while True:
+            kw = {"Filters": [{"Key": "Owner", "Values": ["Self"]}]}
+            if tok:
+                kw["NextToken"] = tok
+            resp = c.list_documents(**kw)
+            for d in resp.get("DocumentIdentifiers", []):
+                nm = d["Name"]
+                nodes.append({
+                    "id": nm, "type": "SSM_DOCUMENT",
+                    "arn": f"arn:aws:ssm:us-east-1:{ACCOUNT}:document/{nm}",
+                    "name": nm, "doc_type": d.get("DocumentType"),
+                    "doc_format": d.get("DocumentFormat"),
+                    "target_type": d.get("TargetType"),
+                    "platforms": d.get("PlatformTypes") or [],
+                })
+            tok = resp.get("NextToken")
+            if not tok:
+                break
+    except Exception:
+        return nodes
+    return nodes
+
+def live_schedules():
+    """SCHEDULE nodes (aws_scheduler_schedule) -- EventBridge Scheduler, a DISTINCT service
+    from classic Events rules (live_eventbridge); carries the target arn for TRIGGERS."""
+    c = _boto("scheduler")
+    nodes = []
+    try:
+        tok = None
+        schedules = []
+        while True:
+            kw = {}
+            if tok:
+                kw["NextToken"] = tok
+            resp = c.list_schedules(**kw)
+            schedules += resp.get("Schedules", [])
+            tok = resp.get("NextToken")
+            if not tok:
+                break
+    except Exception:
+        return nodes
+    for s in schedules:
+        nm, grp = s["Name"], s.get("GroupName", "default")
+        node = {"id": nm, "type": "SCHEDULE", "arn": s.get("Arn"), "name": nm,
+                "group": grp, "state": s.get("State")}
+        try:
+            d = c.get_schedule(Name=nm, GroupName=grp)
+            node["schedule_expression"] = d.get("ScheduleExpression")
+            tgt = d.get("Target") or {}
+            node["target_arn"] = tgt.get("Arn")            # -> TRIGGERS edge
+            node["target_role_arn"] = tgt.get("RoleArn")
+        except Exception:
+            pass
+        nodes.append(node)
+    return nodes
+
+def live_lambda_layers():
+    """LAMBDA_LAYER nodes (aws_lambda_layer_version) -- a dependency surface the certified
+    graph collected as a Lambda property but never typed. The pyiceberg-nessie-deps /
+    Iceberg dependency enters here (the Nessie blind spot). Keyed on the layer (latest ver)."""
+    c = _boto("lambda")
+    nodes = []
+    try:
+        layers = []
+        marker = None
+        while True:
+            kw = {}
+            if marker:
+                kw["Marker"] = marker
+            resp = c.list_layers(**kw)
+            layers += resp.get("Layers", [])
+            marker = resp.get("NextMarker")
+            if not marker:
+                break
+    except Exception:
+        return nodes
+    for la in layers:
+        lv = la.get("LatestMatchingVersion") or {}
+        nodes.append({
+            "id": la["LayerName"], "type": "LAMBDA_LAYER",
+            "arn": la.get("LayerArn"), "name": la.get("LayerName"),
+            "latest_version": lv.get("Version"),
+            "latest_version_arn": lv.get("LayerVersionArn"),
+            "runtimes": lv.get("CompatibleRuntimes") or [],
+        })
+    return nodes
+
 CLASSES = {
     "s3":          (live_s3,                ["aws_s3_bucket"]),
     "s3_policy":   (live_s3_policies,       ["aws_s3_bucket_policy"]),
@@ -647,6 +967,16 @@ CLASSES = {
     "logs":        (live_log_groups,        ["aws_cloudwatch_log_group"]),
     "stepfunctions": (live_stepfunctions,   ["aws_sfn_state_machine"]),
     "sfn_activity":  (live_sfn_activities,  ["aws_sfn_activity"]),
+    # WAVE-4 coverage expansion (Andrew /goal 2026-06-11) -- additive classes
+    "apigw":         (live_apigw,           ["aws_apigatewayv2_api"]),
+    "api_route":     (live_api_routes,      ["aws_apigatewayv2_route"]),
+    "ecs_task":      (live_ecs_tasks,       ["aws_ecs_task_definition"]),
+    "ecs_cluster":   (live_ecs_clusters,    ["aws_ecs_cluster"]),
+    "security_group":(live_security_groups, ["aws_security_group"]),
+    "vpc_endpoint":  (live_vpc_endpoints,   ["aws_vpc_endpoint"]),
+    "ssm_document":  (live_ssm_documents,   ["aws_ssm_document"]),
+    "scheduler":     (live_schedules,       ["aws_scheduler_schedule"]),
+    "lambda_layer":  (live_lambda_layers,   ["aws_lambda_layer_version"]),
 }
 
 def _node_arn(cls, node):
@@ -1013,6 +1343,148 @@ def derive_edges():
                     pass
     except Exception:
         pass
+
+    # ===================================================================
+    # WAVE-4 COVERAGE-EXPANSION EDGES (Andrew /goal 2026-06-11). Additive;
+    # every edge is guarded to terminate on a typed class node (0-dangling).
+    # ===================================================================
+    _exp_lam = live_lambda()
+    _lambda_arns = {f"arn:aws:lambda:us-east-1:{ACCOUNT}:function:{x['id']}" for x in _exp_lam}
+    _sqs_arns    = {x["arn"] for x in live_sqs() if x.get("arn")}
+    _sns_arns    = {x["arn"] for x in live_sns() if x.get("arn")}
+    _dynamo_arns = {x["arn"] for x in live_dynamodb() if x.get("arn")}
+    _role_arns   = {n["arn"] for n in live_iam_roles()}
+    _sg_by_id    = {x["id"]: x["arn"] for x in live_security_groups()}
+    _layer_arns  = {x["arn"] for x in live_lambda_layers() if x.get("arn")}
+    _sfn_arns    = {x["arn"] for x in live_stepfunctions()}
+
+    # API_GW -[HAS_ROUTE]-> API_ROUTE ; API_ROUTE -[ROUTES_TO]-> LAMBDA
+    # (the #1 audit gap: the HTTP-API serving layer the certified graph dead-ended at)
+    for r in live_api_routes():
+        rarn = r["arn"]
+        E(f"arn:aws:apigateway:us-east-1::/apis/{r['api_id']}", rarn, "HAS_ROUTE")
+        uri = r.get("integration_uri") or ""
+        m = re.search(r"(arn:aws:lambda:[a-z0-9-]+:\d+:function:[A-Za-z0-9_-]+)", uri)
+        if m and m.group(1) in _lambda_arns:
+            E(rarn, m.group(1), "ROUTES_TO", integration=r.get("integration_type"))
+
+    # LAMBDA -[USES_LAYER]-> LAMBDA_LAYER (types the dependency the cert kept as a property;
+    # the pyiceberg-nessie-deps / Iceberg layer becomes a first-class visible node)
+    for n in _exp_lam:
+        farn = f"arn:aws:lambda:us-east-1:{ACCOUNT}:function:{n['id']}"
+        for lyr in n.get("layers", []):     # "name:version" tails (live_lambda strips :layer:)
+            base = lyr.rsplit(":", 1)[0] if ":" in lyr else lyr
+            larn = f"arn:aws:lambda:us-east-1:{ACCOUNT}:layer:{base}"
+            if larn in _layer_arns:
+                E(farn, larn, "USES_LAYER",
+                  version=(lyr.rsplit(":", 1)[-1] if ":" in lyr else None))
+
+    # SCHEDULE -[TRIGGERS]-> target (EventBridge Scheduler -- distinct service from Events rules)
+    _sched_targets = _lambda_arns | _sqs_arns | _sns_arns | _sfn_arns | _dynamo_arns
+    for s in live_schedules():
+        ta = s.get("target_arn")
+        tb = re.sub(r"(:function:[^:]+):.*$", r"\1", ta) if ta else None  # strip lambda alias/ver
+        if tb and tb in _sched_targets:
+            E(s["arn"], tb, "TRIGGERS", via="scheduler")
+
+    # event-source-mapping SOURCE -[TRIGGERS]-> LAMBDA (SQS / DynamoDB-stream -- the cert
+    # modeled only the ESM DLQ/OnFailure side; this adds the actual trigger source)
+    try:
+        for esm in lc.list_event_source_mappings().get("EventSourceMappings", []):
+            src, fn = esm.get("EventSourceArn"), esm.get("FunctionArn")
+            if not (src and fn):
+                continue
+            fnb = re.sub(r"(:function:[^:]+):.*$", r"\1", fn)
+            if fnb not in _lambda_arns:
+                continue
+            if ":sqs:" in src and src in _sqs_arns:
+                E(src, fnb, "TRIGGERS", src_kind="sqs")
+            elif "/stream/" in src and ":dynamodb:" in src:
+                tbl = src.split("/stream/")[0]
+                if tbl in _dynamo_arns:
+                    E(tbl, fnb, "TRIGGERS", src_kind="dynamodb-stream")
+    except Exception:
+        pass
+
+    # S3_BUCKET -[NOTIFIES]-> SNS_TOPIC | SQS_QUEUE (cert modeled only S3->Lambda NOTIFIES)
+    for n in live_s3():
+        try:
+            nc = s3c.get_bucket_notification_configuration(Bucket=n["id"])
+        except Exception:
+            continue
+        barn = f"arn:aws:s3:::{n['id']}"
+        for tc in nc.get("TopicConfigurations", []):
+            if tc.get("TopicArn") in _sns_arns:
+                E(barn, tc["TopicArn"], "NOTIFIES", msg_target="sns")
+        for qc in nc.get("QueueConfigurations", []):
+            if qc.get("QueueArn") in _sqs_arns:
+                E(barn, qc["QueueArn"], "NOTIFIES", msg_target="sqs")
+
+    # LAMBDA -[IN_VPC]-> SECURITY_GROUP (the network attachment the cert omitted).
+    # VpcConfig ships in the list_functions response -> ONE paginated call, no per-fn describe.
+    try:
+        for _pg in lc.get_paginator("list_functions").paginate():
+            for _fn in _pg["Functions"]:
+                vpc = _fn.get("VpcConfig") or {}
+                if not vpc.get("SecurityGroupIds"):
+                    continue
+                farn = re.sub(r"(:function:[^:]+):.*$", r"\1",
+                              _fn.get("FunctionArn") or "")
+                for sg in vpc.get("SecurityGroupIds", []):
+                    if sg in _sg_by_id:
+                        E(farn, _sg_by_id[sg], "IN_VPC", via="security_group")
+    except Exception:
+        pass
+
+    # ECS_TASK_DEFINITION -[ASSUMES]-> IAM_ROLE (Fargate task + execution identity)
+    for t in live_ecs_tasks():
+        for rk in ("task_role_arn", "execution_role_arn"):
+            ra = t.get(rk)
+            if ra and ra in _role_arns:
+                E(t["arn"], ra, "ASSUMES", role_kind=rk.replace("_arn", ""))
+
+    # VPC_ENDPOINT -[USES_SG]-> SECURITY_GROUP
+    for ve in live_vpc_endpoints():
+        for sg in ve.get("sg_ids", []):
+            if sg in _sg_by_id:
+                E(ve["arn"], _sg_by_id[sg], "USES_SG")
+
+    # {SERVICE_PRINCIPAL|EXTERNAL_PRINCIPAL|IAM_*} -[CAN_ASSUME]-> IAM_ROLE
+    # (the trust-policy / assume-role graph -- the IAM typing gap: who-can-assume-what,
+    # surfacing OIDC/SAML federation + cross-account trust as typed principal nodes/findings)
+    try:
+        for _pg in iamc.get_paginator("list_roles").paginate():
+            for _r in _pg["Roles"]:
+                if _r.get("Path", "/").startswith("/aws-service-role/"):
+                    continue
+                _rarn = _r["Arn"]
+                _doc = _r.get("AssumeRolePolicyDocument") or {}
+                _stmts = _doc.get("Statement", [])
+                if isinstance(_stmts, dict):
+                    _stmts = [_stmts]
+                for _st in _stmts:
+                    if _st.get("Effect") != "Allow":
+                        continue
+                    _pr = _st.get("Principal", {})
+                    _vals = []
+                    if isinstance(_pr, dict):
+                        for _v in _pr.values():
+                            _vals += _v if isinstance(_v, list) else [_v]
+                    elif isinstance(_pr, str):
+                        _vals = [_pr]
+                    for _pk in _vals:
+                        if not _pk:
+                            continue
+                        _tgt, _pt, _sub, _find = _classify_principal(_pk)
+                        _ex = {"via": "trust-policy"}
+                        if _find:
+                            _ex["finding_class"] = _find
+                        if _sub:
+                            _ex["principal_sub"] = _sub
+                        E(_tgt, _rarn, "CAN_ASSUME", **_ex)
+    except Exception:
+        pass
+
     return edges
 
 # action-prefix -> (verb, target_node_kind) for the derived data-access edge layer
@@ -1249,7 +1721,12 @@ def derive_aux_nodes(edges):
     # terminate (0-dangling) + PUBLIC/CROSS_ACCOUNT grants SURFACE as held findings.
     find_of = {e["target"]: e.get("finding_class") for e in edges
                if e["edge_type"] == "GRANTS" and e.get("finding_class")}
+    # WAVE-4: CAN_ASSUME principals appear on the SOURCE side (trust-policy graph) -- type
+    # them too so the edge's principal end is a typed node (0-dangling) + findings surface.
+    find_of.update({e["source"]: e.get("finding_class") for e in edges
+                    if e["edge_type"] == "CAN_ASSUME" and e.get("finding_class")})
     prin_targets = {e["target"] for e in edges if e["edge_type"] in ("GRANTS", "SUBSCRIBES")}
+    prin_targets |= {e["source"] for e in edges if e["edge_type"] == "CAN_ASSUME"}
     for t in sorted(prin_targets):
         if t.startswith("service-principal::"):
             sub = "OAI" if "::oai::" in t else t.split("::")[-1].split(".")[0]
@@ -1496,6 +1973,9 @@ def _arn_to_cls(arn: str) -> str | None:
         "dynamodb": "dynamodb", "cloudfront": "cloudfront",
         "secretsmanager": "secrets", "kms": "kms",
         "logs": "logs", "cloudwatch": "cloudwatch", "states": "stepfunctions",
+        # WAVE-4 expansion classes
+        "apigateway": "apigw", "ecs": "ecs_task", "ssm": "ssm_document",
+        "scheduler": "scheduler",
     }
     return mapping.get(service)
 
