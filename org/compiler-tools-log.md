@@ -4580,3 +4580,112 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-06-11 | 0.7.0_AE_CloudOps~C | FIRMSEP-guard | comp-routes | comp-routes trace /api/scoped/.../*.json | PASS — full CF->auth->router->guard->S3 chain (via PowerShell; MSYS mangles leading-/ arg) |
 | 2026-06-11 | 0.7.0_AE_CloudOps~C | FIRMSEP-guard | comp-blast | comp-blast shared-advisor-router-response | PASS — terminal node, no downstream consumers |
 | 2026-06-11 | 0.7.0_AE_CloudOps~C | FIRMSEP-guard | comp-trace | comp-trace shared-advisor-router-response --direction both | PARTIAL — no edges (edge fns are CF associations, not graph nodes) |
+| 2026-06-11 | 0.7.0_AE_CloudOps~B | (no-TO) | comp-kuzu | comp-kuzu --db-path infra/aws/globgrph/kuzu_stitch_db MATCH (c:CloudNode {node_type:'PO... | PASS |
+| 2026-06-11 | 0.7.0_AE_CloudOps~B | (no-TO) | comp-kuzu | comp-kuzu --db-path infra/aws/globgrph/kuzu_stitch_db MATCH (c:CloudNode {node_type:'PO... | PASS |
+| 2026-06-11 | 0.7.0_AE_CloudOps~B | (no-TO) | comp-kuzu | comp-kuzu --db-path infra/aws/globgrph/kuzu_stitch_db MATCH (r:CloudNode {node_type:'AP... | PASS |
+| 2026-06-11 | 0.7.0_AE_CloudOps~B | (no-TO) | comp-kuzu | comp-kuzu --db-path infra/aws/globgrph/kuzu_stitch_db MATCH (k:CloudNode {node_type:'S3... | PASS |
+| 2026-06-11 | 0.7.0_AE_CloudOps~B | (no-TO) | comp-kuzu | comp-kuzu --db-path infra/aws/globgrph/kuzu_stitch_db MATCH (l:CloudNode {node_type:'LA... | PASS |
+| 2026-06-11 | 0.7.0_AE_CloudOps~B | (no-TO) | comp-kuzu | comp-kuzu --db-path infra/aws/globgrph/kuzu_stitch_db MATCH (c:CloudNode {node_type:'PO... | PASS |
+| 2026-06-11 | 0.7.0_AE_CloudOps~B | (no-TO) | comp-kuzu | comp-kuzu --db-path infra/aws/globgrph/kuzu_stitch_db MATCH (c:CloudNode {node_type:'PO... | PASS |
+| 2026-06-11 | 0.7.0_AE_CloudOps~B | (no-TO) | comp-kuzu | comp-kuzu --db-path infra/aws/globgrph/kuzu_stitch_db MATCH ()-[e:CloudEdge]->() RETURN... | PASS |
+| 2026-06-11 | 1.0.0_SA_CTO | (no-TO) | comp-kuzu | comp-kuzu --db-path infra/aws/globgrph/kuzu_stitch_db MATCH (c)-[:FETCHES]->(r)-[:ROUTE... | FAIL |
+| 2026-06-11 | 1.0.0_SA_CTO | (no-TO) | comp-kuzu | comp-kuzu --db-path infra/aws/globgrph/kuzu_stitch_db MATCH (c:CloudNode)-[:CloudEdge {... | PASS |
+| 2026-06-11 | 1.0.0_SA_CTO | (no-TO) | comp-platinum | comp-platinum summary | PASS |
+| 2026-06-11 | 1.0.0_SA_CTO | (no-TO) | comp-platinum | comp-platinum page ModelPortfolios --firm 49financial | PASS |
+| 2026-06-11 | 0.7.0_AE_CloudOps~B | (no-TO) | comp-kuzu | comp-kuzu --db-path infra/aws/globgrph/kuzu_stitch_db MATCH (c:CloudNode {node_type:'PO... | PASS |
+| 2026-06-11 | 0.7.0_AE_CloudOps~B | (no-TO) | comp-kuzu | comp-kuzu --db-path infra/aws/globgrph/kuzu_stitch_db MATCH (c:CloudNode {node_type:'PO... | PASS |
+| 2026-06-11 | 1.0.0_SA_CTO | (no-TO) | comp-platinum | comp-platinum summary | PASS |
+| 2026-06-11 | 0.6.0_AE_PartnerETL | NFRA_GRAPHS.D2 | comp-pipescript | comp-pipescript deployed data/cot/scripts/bronze/cot_bronze.py | PASS |
+| 2026-06-11 | 1.0.0_SA_CTO | NFRA_GRAPHS.D6 | comp-aws | comp-aws | FAIL |
+| 2026-06-11 | 0.7.0_AE_CloudOps~B | NFRA_GRAPHS.D6 | comp-trace | comp-trace ClientDetailPage --direction both | PASS |
+| 2026-06-11 | 3.0.0_SA_CVO | NFRA_GRAPHS.D6 | comp-kuzu | comp-kuzu MATCH (n) RETURN count(n) AS nodes | PASS |
+| 2026-06-11 | 3.0.0_SA_CVO | NFRA_GRAPHS.D6 | comp-kuzu | comp-kuzu MATCH ()-[r]->() RETURN count(r) AS edges | PASS |
+| 2026-06-11 | 3.0.0_SA_CVO | NFRA_GRAPHS.D6 | comp-kuzu | comp-kuzu MATCH (n) RETURN DISTINCT label(n) AS lbl, count(*) AS c ORDER BY c DESC | PASS |
+| 2026-06-11 | 3.0.0_SA_CVO | NFRA_GRAPHS.D6 | comp-kuzu | comp-kuzu --db-path infra/aws/globgrph/kuzu_stitch_db MATCH (n) RETURN count(n) AS n | PASS |
+| 2026-06-11 | 3.0.0_SA_CVO | NFRA_GRAPHS.D6 | comp-kuzu | comp-kuzu --db-path infra/aws/globgrph/kuzu_ac7.db MATCH (n) RETURN count(n) AS n | PASS |
+| 2026-06-11 | 3.0.0_SA_CVO | NFRA_GRAPHS.D6 | comp-kuzu | comp-kuzu --db-path infra/aws/globgrph/kuzu_nessie_db MATCH (n) RETURN count(n) AS n | PASS |
+| 2026-06-11 | 3.0.0_SA_CVO | NFRA_GRAPHS.D6 | comp-kuzu | comp-kuzu --db-path infra/aws/globgrph/kuzu_stitch_db MATCH ()-[r]->() RETURN count(r) ... | PASS |
+| 2026-06-11 | 3.0.0_SA_CVO | NFRA_GRAPHS.D6 | comp-kuzu | comp-kuzu --db-path infra/aws/globgrph/kuzu_stitch_db MATCH (n) RETURN n.layer AS layer... | PASS |
+| 2026-06-11 | 3.0.0_SA_CVO | NFRA_GRAPHS.D6 | comp-kuzu | comp-kuzu --db-path infra/aws/globgrph/kuzu_stitch_db MATCH (n) WHERE n.node_type IS NU... | PASS |
+| 2026-06-11 | 3.0.0_SA_CVO | NFRA_GRAPHS.D6 | comp-kuzu | comp-kuzu --db-path infra/aws/globgrph/kuzu_stitch_db MATCH p=(c:CloudNode {node_type:'... | PASS |
+| 2026-06-11 | 3.0.0_SA_CVO | NFRA_GRAPHS.D6 | comp-kuzu | comp-kuzu --db-path infra/aws/globgrph/kuzu_stitch_db MATCH p=(c:CloudNode {node_type:'... | FAIL |
+| 2026-06-11 | 3.0.0_SA_CVO | NFRA_GRAPHS.D6 | comp-kuzu | comp-kuzu --db-path infra/aws/globgrph/kuzu_stitch_db MATCH (a)-[r]->(b) WHERE a.layer ... | PASS |
+| 2026-06-11 | 3.0.0_SA_CVO | NFRA_GRAPHS.D6 | comp-kuzu | comp-kuzu --db-path infra/aws/globgrph/kuzu_stitch_db MATCH (n) RETURN n LIMIT 1 | PASS |
+| 2026-06-11 | 3.0.0_SA_CVO | NFRA_GRAPHS.D6 | comp-kuzu | comp-kuzu --db-path infra/aws/globgrph/kuzu_stitch_db MATCH p=(c:CloudNode {node_type:'... | FAIL |
+| 2026-06-11 | 0.7.0_AE_CloudOps | DTAFLP-orphan-D_04-removal | comp-graph | comp-graph status | PASS |
+| 2026-06-11 | 0.7.0_AE_CloudOps | DTAFLP-orphan-D_04-removal | comp-graph | comp-graph status --json | PASS |
+| 2026-06-11 | 0.7.0_AE_CloudOps | DTAFLP-orphan-D_04-removal | comp-graph | comp-graph status | PASS |
+| 2026-06-11 | 0.7.0_AE_CloudOps | DTAFLP-orphan-D_04-removal | comp-graph | comp-graph status --json | PASS |
+| 2026-06-11 | 0.7.0_AE_CloudOps | DTAFLP-orphan-D_04-removal | comp-graph | comp-graph clear platinum | PASS |
+| 2026-06-11 | 3.0.0_SA_CVO | DTAFLP-orphan-D_04-removal | comp-kuzu | comp-kuzu --db-path infra/aws/globgrph/kuzu_stitch_db MATCH (n) RETURN n.node_type AS t... | PASS |
+| 2026-06-11 | 0.7.0_AE_CloudOps | DTAFLP-orphan-D_04-removal | comp-platinum | comp-platinum page PartnerAnalytics --firm bd | PASS |
+| 2026-06-11 | 0.7.0_AE_CloudOps | DTAFLP-orphan-D_04-removal | comp-platinum | comp-platinum reverse platinum/firm/partner_analytics_all.json --firm inflection | PASS |
+| 2026-06-11 | 0.7.0_AE_CloudOps | DTAFLP-orphan-D_04-removal | comp-graph | comp-graph status | PASS |
+| 2026-06-11 | 0.7.0_AE_CloudOps | DTAFLP-orphan-D_04-removal | comp-graph | comp-graph clear all | PASS |
+| 2026-06-11 | 3.0.0_SA_CVO | DTAFLP-orphan-D_04-removal | comp-kuzu | comp-kuzu --db-path infra/aws/globgrph/kuzu_nessie_db MATCH (n) WHERE n.node_type='S3_B... | PASS |
+| 2026-06-11 | 3.0.0_SA_CVO | DTAFLP-orphan-D_04-removal | comp-kuzu | comp-kuzu --db-path infra/aws/globgrph/kuzu_nessie_db MATCH (n) WHERE n.node_type='S3_B... | PASS |
+| 2026-06-11 | 0.6.0_AE_PartnerETL | GLDINC_INCR_A03 | comp-pipescript | comp-pipescript io data/black_diamond/scripts/gold/A_03.positions_cube.py | PASS |
+| 2026-06-11 | 0.7.0_AE_CloudOps | GLDINC_INCR_A03 | comp-kuzu | comp-kuzu --json MATCH (n)-[e]->(b:CloudNode) WHERE b.id =~ '.*opal-data-bd.*' AND b.no... | PASS |
+| 2026-06-11 | 0.7.0_AE_CloudOps | GLDINC_INCR_A03 | comp-kuzu | comp-kuzu --json MATCH (n)-[e]->(b:CloudNode) WHERE b.id =~ '.*opal-data-portal-v2.*' A... | PASS |
+| 2026-06-11 | 0.7.0_AE_CloudOps | GLDINC_INCR_A03 | comp-kuzu | comp-kuzu --json MATCH (n)-[e]->(b:CloudNode) WHERE b.id =~ '.*opal-data-cot.*' AND b.n... | PASS |
+| 2026-06-11 | 0.7.0_AE_CloudOps | GLDINC_INCR_A03 | comp-kuzu | comp-kuzu --json MATCH (n)-[e]->(b:CloudNode) WHERE b.id =~ '.*opal-data-mdpf.*' AND b.... | PASS |
+| 2026-06-11 | 0.7.0_AE_CloudOps | GLDINC_INCR_A03 | comp-kuzu | comp-kuzu --json MATCH (n)-[e]->(b:CloudNode) WHERE b.id =~ '.*opal-data-portfolio.*' A... | PASS |
+| 2026-06-11 | 0.7.0_AE_CloudOps | GLDINC_INCR_A03 | comp-kuzu | comp-kuzu --json MATCH (n)-[e]->(b:CloudNode) WHERE b.id =~ '.*opal-data-inf.*' AND b.n... | PASS |
+| 2026-06-11 | 0.6.0_AE_PartnerETL | GLDINC_INCR_A03 | comp-blast | comp-blast positions_cube | PASS |
+| 2026-06-11 | 0.6.0_AE_PartnerETL | GLDINC_INCR_A03 | comp-pipescript | comp-pipescript io data/black_diamond/scripts/gold/A_02.fee_rate_history.py | PASS |
+| 2026-06-11 | 0.6.0_AE_PartnerETL | GLDINC_INCR_A03 | comp-pipescript | comp-pipescript io data/black_diamond/scripts/gold/A_01.advisor_assignments.py | PASS |
+| 2026-06-11 | 0.4.0_DS_ClientPlatform | GLDINC_INCR_A03 | comp-pipescript | comp-pipescript io data/black_diamond/scripts/gold/A_02.fee_rate_history.py | PASS |
+| 2026-06-11 | 3.0.0_SA_CVO | GLDINC_INCR_A01 | comp-build | comp-build | PASS |
+| 2026-06-11 | 0.4.0_DS_ClientPlatform | GLDINC_INCR_A01 | comp-pipescript | comp-pipescript deployed data/black_diamond/scripts/gold/A_02.fee_rate_history.py | PASS |
+| 2026-06-11 | 0.4.0_DS_ClientPlatform | GLDINC_INCR_A01 | comp-pipescript | comp-pipescript deployed data/black_diamond/scripts/gold/lib/s3_layout.py | PASS |
+| 2026-06-11 | 0.4.0_DS_ClientPlatform | GLDINC_INCR_A01 | comp-pipescript | comp-pipescript deployed data/black_diamond/scripts/gold/A_02.fee_rate_history.py | PASS |
+| 2026-06-11 | 0.6.0_AE_PartnerETL | GLDINC_INCR_B02 | comp-pipescript | comp-pipescript io data/black_diamond/scripts/gold/B_02.canonical_lots.py | PASS |
+| 2026-06-11 | 1.0.0_SA_CTO | GLDINC_INCR_B02 | comp-graph | comp-graph status | PASS |
+| 2026-06-11 | 1.0.0_SA_CTO | GLDINC_INCR_B02 | comp-kuzu | comp-kuzu --help | PASS |
+| 2026-06-11 | 1.0.0_SA_CTO | GLDINC_INCR_B02 | comp-kuzu | comp-kuzu MATCH (n:CloudNode) RETURN n.node_type AS t, count(*) AS c ORDER BY c DESC | PASS |
+| 2026-06-11 | 1.0.0_SA_CTO | GLDINC_INCR_B02 | comp-kuzu | comp-kuzu MATCH ()-[e:CloudEdge]->() RETURN e.edge_type AS t, count(*) AS c ORDER BY c ... | PASS |
+| 2026-06-11 | 1.0.0_SA_CTO | GLDINC_INCR_B02 | comp-kuzu | comp-kuzu MATCH (n:CloudNode {node_type:'EVENT_RULE'}) RETURN n.node_id, n.name, n.sche... | FAIL |
+| 2026-06-11 | 1.0.0_SA_CTO | GLDINC_INCR_B02 | comp-kuzu | comp-kuzu MATCH (n:CloudNode {node_type:'LAMBDA'}) RETURN n.node_id, n.name, n.arn LIMIT 3 | FAIL |
+| 2026-06-11 | 1.0.0_SA_CTO | GLDINC_INCR_B02 | comp-kuzu | comp-kuzu CALL TABLE_INFO('CloudNode') RETURN * | PASS |
+| 2026-06-11 | 1.0.0_SA_CTO | GLDINC_INCR_B02 | comp-kuzu | comp-kuzu CALL TABLE_INFO('CloudEdge') RETURN * | PASS |
+| 2026-06-11 | 1.0.0_SA_CTO | GLDINC_INCR_B02 | comp-kuzu | comp-kuzu MATCH (l:CloudNode) WHERE l.node_type='LAMBDA' AND (l.id CONTAINS 'trending' ... | PASS |
+| 2026-06-11 | 1.0.0_SA_CTO | GLDINC_INCR_B02 | comp-kuzu | comp-kuzu MATCH (c:CloudNode) WHERE c.id CONTAINS 'causality' RETURN c.node_type AS typ... | PASS |
+| 2026-06-11 | 1.0.0_SA_CTO | GLDINC_INCR_B02 | comp-kuzu | comp-kuzu MATCH (c:CloudNode)-[e:CloudEdge]-(o:CloudNode) WHERE c.id CONTAINS 'causalit... | PASS |
+| 2026-06-11 | 0.7.0_AE_CloudOps | GLDINC_INCR_B02 | comp-kuzu | comp-kuzu --json MATCH (n:CloudNode) WHERE n.id =~ '.*trade.recon.*' OR n.id =~ '.*trad... | PASS |
+| 2026-06-11 | 0.7.0_AE_CloudOps | GLDINC_INCR_B02 | comp-kuzu | comp-kuzu --json MATCH (n:CloudNode) WHERE n.node_type='S3_BUCKET' AND n.id =~ '.*recon... | PASS |
+| 2026-06-11 | 0.7.0_AE_CloudOps | GLDINC_INCR_B02 | comp-aws | comp-aws --help | PASS |
+| 2026-06-11 | 0.7.0_AE_CloudOps | GLDINC_INCR_B02 | comp-graph | comp-graph status | PASS |
+| 2026-06-11 | 0.7.0_AE_CloudOps | GLDINC_INCR_B02 | comp-aws | comp-aws derive --help | PASS |
+| 2026-06-11 | 0.7.0_AE_CloudOps | (no-TO) | comp-aws | comp-aws derive --out /tmp/fresh-derive.json | PASS |
+| 2026-06-11 | 3.0.0_SA_CVO | (no-TO) | comp-kuzu | comp-kuzu --db-path infra/aws/globgrph/kuzu_stitch_db MATCH p=(c:CloudNode {node_type:'... | PASS |
+| 2026-06-11 | 3.0.0_SA_CVO | (no-TO) | comp-kuzu | comp-kuzu --db-path infra/aws/globgrph/kuzu_stitch_db MATCH (a)-[r]->(b) WHERE a.layer ... | PASS |
+| 2026-06-11 | 0.5.0_AE_OpalETL | (no-TO) | comp-blast | comp-blast causality-market-update-generator | PASS |
+| 2026-06-11 | 0.5.0_AE_OpalETL | (no-TO) | comp-blast | comp-blast causality-thematic-signals-generator | PASS |
+| 2026-06-11 | 0.5.0_AE_OpalETL | (CTO WO causality) | comp-blast | causality-market-update-generator + thematic-signals-generator | no extracted downstream edges (lower-bound; apigw via boto3 census per WO) |
+| 2026-06-11 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript io data/black_diamond/scripts/gold/B_02.canonical_lots.py | PASS |
+| 2026-06-11 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript deployed data/black_diamond/scripts/gold/A_01.advisor_assignments.py | PASS |
+| 2026-06-11 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript deployed data/black_diamond/scripts/gold/B_02.canonical_lots.py | PASS |
+| 2026-06-11 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript io data/black_diamond/scripts/gold/A_01.advisor_assignments.py | PASS |
+| 2026-06-11 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript deployed data/black_diamond/scripts/gold/A_01.advisor_assignments.py | PASS |
+| 2026-06-11 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript deployed data/black_diamond/scripts/gold/A_01.advisor_assignments.py | PASS |
+| 2026-06-11 | 0.4.0_DS_ClientPlatform | GLDINC_INCR_B03 | comp-pipescript | comp-pipescript deployed data/black_diamond/scripts/gold/A_01.advisor_assignments.py | PASS |
+| 2026-06-11 | 0.4.0_DS_ClientPlatform | GLDINC_INCR_A03 | comp-pipescript | comp-pipescript io data/black_diamond/scripts/gold/B_03.account_gains.py | PASS |
+| 2026-06-11 | 0.4.0_DS_ClientPlatform | GLDINC_INCR_A03 | comp-pipescript | comp-pipescript deployed data/black_diamond/scripts/gold/B_03.account_gains.py | PASS |
+| 2026-06-11 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript io data/black_diamond/scripts/gold/A_03.positions_cube.py | PASS |
+| 2026-06-11 | 3.0.0_SA_CVO | GLDINC_INCR_B01 | comp-pipescript | comp-pipescript deployed B_03.account_gains.py | PASS |
+| 2026-06-11 | 3.0.0_SA_CVO | GLDINC_INCR_B01 | comp-kuzu | comp-kuzu MATCH (n:CloudNode) RETURN count(*) | PASS |
+| 2026-06-11 | 3.0.0_SA_CVO | GLDINC_INCR_B01 | comp-kuzu | comp-kuzu MATCH (n:CloudNode) WHERE n.node_id CONTAINS 'trade-recon' OR n.name CONTAINS... | FAIL |
+| 2026-06-11 | 3.0.0_SA_CVO | GLDINC_INCR_A04 | comp-kuzu | comp-kuzu CALL TABLE_INFO('CloudNode') RETURN * | PASS |
+| 2026-06-11 | 3.0.0_SA_CVO | GLDINC_INCR_A04 | comp-kuzu | comp-kuzu MATCH (n:CloudNode) WHERE n.id CONTAINS 'trade-recon' OR n.name CONTAINS 'tra... | FAIL |
+| 2026-06-11 | 3.0.0_SA_CVO | GLDINC_INCR_A04 | comp-kuzu | comp-kuzu MATCH (n:CloudNode) WHERE n.id CONTAINS 'trade-recon' OR n.arn CONTAINS 'trad... | PASS |
+| 2026-06-11 | 3.0.0_SA_CVO | GLDINC_INCR_A04 | comp-kuzu | comp-kuzu --db-path infra/aws/globgrph/kuzu_nessie_db MATCH (n:CloudNode) RETURN count(*) | PASS |
+| 2026-06-11 | 3.0.0_SA_CVO | GLDINC_INCR_A04 | comp-kuzu | comp-kuzu --db-path infra/aws/globgrph/kuzu_nessie_db MATCH (n:CloudNode) WHERE n.node_... | PASS |
+| 2026-06-11 | 3.0.0_SA_CVO | GLDINC_INCR_A04 | comp-kuzu | comp-kuzu --db-path infra/aws/globgrph/kuzu_stitch_db MATCH (n:CloudNode) RETURN count(*) | PASS |
+| 2026-06-11 | 3.0.0_SA_CVO | GLDINC_INCR_A04 | comp-kuzu | comp-kuzu --db-path infra/aws/globgrph/kuzu_stitch_db MATCH (n:CloudNode) WHERE n.node_... | PASS |
+| 2026-06-11 | 3.0.0_SA_CVO | GLDINC_INCR_A04 | comp-kuzu | comp-kuzu --db-path infra/aws/globgrph/kuzu_stitch_db MATCH (n:CloudNode) WHERE n.node_... | PASS |
+| 2026-06-11 | 3.0.0_SA_CVO | GLDINC_INCR_A04 | comp-kuzu | comp-kuzu --db-path infra/aws/globgrph/kuzu_stitch_db MATCH (n:CloudNode) WHERE n.node_... | PASS |
+| 2026-06-11 | 0.4.0_DS_ClientPlatform | GLDINC_INCR_A04 | comp-pipescript | comp-pipescript io data/black_diamond/scripts/gold/B_01.holdings_lots.py | PASS |
+| 2026-06-11 | 0.4.0_DS_ClientPlatform | GLDINC_INCR_A04 | comp-pipescript | comp-pipescript deployed data/black_diamond/scripts/gold/A_03.positions_cube.py | PASS |
+| 2026-06-11 | 0.4.0_DS_ClientPlatform | GLDINC_INCR_A04 | comp-pipescript | comp-pipescript deployed data/black_diamond/scripts/gold/B_01.holdings_lots.py | PASS |
+| 2026-06-11 | 0.4.0_DS_ClientPlatform | GLDINC_INCR_A04 | comp-pipescript | comp-pipescript deployed data/black_diamond/scripts/gold/A_04.client_dimension.py | PASS |
+| 2026-06-11 | 0.6.0_AE_PartnerETL | ADHC_GLDINC (7-script incremental) | comp-pipescript io/deployed, comp-blast, ds-commit-gate x12, s3api list-object-versions | io caught A_03 stale docstring; version-history drove 3 design corrections; deployed-check blind to opal-data-cot (known gap) | session_close_2325Z.md |
