@@ -133,6 +133,49 @@ doctrine (cache must match oracle; do NOT redesign shared dedup semantics) the
 incremental mirrors the same code and any shadow diff isolated to this class is
 a DATA finding to escalate, not a code bug to "fix" by changing survivor logic.
 
+## 4d. A_01 status: BLOCKED-EXTERNAL on oracle stabilization (CTO-ruled fix-oracle-first)
+
+The A_01 offline shadow FAILED parity (61 keys) and root-caused to a PRE-EXISTING
+defect in the full path itself: **the A_01 oracle is non-deterministic** —
+cross-file (account_id, trade_date) ties (back-dated rows colliding with
+original same-day rows) resolve by `drop_duplicates keep='last'` over
+thread-completion-order concat. Evidence: consecutive full builds of identical
+data produced 14,733/14,735/14,740/14,742 records (10-36 key wobble per pair);
+served advisor_assignments_history (→ C_08/D_00c/D_02) flips attribution keys
+night-to-night with no data change. The incremental's diff is the SYSTEMATIC
+variant (union order forces window-row wins vs the oracle's random winner) —
+byte-parity against a random tie-winner is unachievable by construction.
+
+**CTO ruling (2026-06-11 211102Z): fix-oracle-first APPROVED.** DS implements a
+deterministic tiebreak as its own reviewed gold-lane change (sort on
+(account_id, trade_date, _file_date, intra-file position) before dedup —
+removes the completion-order dependency entirely), changed-keys delta
+documented (never-widen-conscious). Then A_01 incremental re-proves parity
+against the stabilized oracle and resumes. Diagnostic artifacts:
+/tmp/a01_diag_{full1,full2,incr}.parquet.
+
+## 4e. B_02 canonical_lots — design (third pattern: PER-DATE INPUT FINGERPRINT)
+
+Empirical S3-version evidence (etag comparison across nightly rebuilds):
+- `lots_realized/{old-date}`: re-uploaded EVERY run, byte-identical content
+  (same etag 6 consecutive runs) — recompute + write waste, plus 2 identical
+  S3 noncurrent versions/day of version bloat.
+- `lots_unrealized/{old-date}`: writes STOP ~7 days after the date (inputs age
+  out → empty → no write) — already self-limiting.
+- BUT naive date-skipping is WRONG and sealed-dates would freeze out late
+  postings: bd_realized is one all-dates file re-read nightly; a late-posted
+  realized row at an old trade_date legitimately CHANGES that date's output.
+
+Design: per-date INPUT fingerprints in `gold/meta/canonical_lots_watermark.json`:
+hash(bd_realized rows per trade_date), hash(canonical_prices rows per date),
+etags of per-date Schwab ULN/ULT/RLD + silver alloc files. Recompute EXACTLY
+{dates whose any input-fingerprint changed} ∪ {new holdings dates}; skip the
+rest (no recompute, no rewrite). Reference-data hash (mappings/cusip-bridge/
+closure_map) change → full fallback. MORE faithful than B_00 sealing (late
+postings propagate); kills both the recompute and the version bloat.
+Semantic note for DS: skipped dates stop getting fresh LastModified stamps —
+anything monitoring old-partition freshness must key on content, not mtime.
+
 ## 5. Rollout discipline
 
 1. AE converts script N (additive) + offline `--shadow` parity proof.
