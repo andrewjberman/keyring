@@ -1,0 +1,8 @@
+#!/bin/bash
+# comp-graph — freshness/status view across every dependency graph (NFRA_GRAPHS D3)
+# Usage: comp-graph status [--json] | comp-graph clear platinum|trace|all
+WORKSPACE="$(cd "$(dirname "$0")/.." && pwd)"
+python "$WORKSPACE/org/modules/graph/graph_status_cli.py" "$@"
+_exit=$?
+python "$WORKSPACE/org/modules/graph/comp_log_auto.py" "comp-graph" "$*" $_exit 2>/dev/null
+exit $_exit

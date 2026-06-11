@@ -30,6 +30,67 @@ from org.modules.graph.extract_transforms import build_component_dataflow, build
 from org.modules.graph.extract_routes import build_routing_table  # noqa: E402
 from org.modules.graph.extract_pipeline import (  # noqa: E402
     build_firm_gold_dag, FIRM_ALIAS, FIRM_BUCKET)
+from org.modules.graph import graph_cache as gc  # noqa: E402
+
+
+# ---------------------------------------------------------------------------
+# Query-vs-rebuild cache (NFRA_GRAPHS D2). comp-platinum was the lone
+# rebuild-every-call trace tool; these accessors bring its expensive builds --
+# the routing table, the (per-firm, NFRA 514d433-heavier) gold DAG, and the
+# all-component dataflow set -- onto the shared .comp-graph cache model under the
+# uniform --fresh/--force freshness contract (graph_cache.py).
+# ---------------------------------------------------------------------------
+
+def _routing_sources():
+    # The routing table is built from portal endpoint/route source + the
+    # Lambda@Edge routers + CloudFront/route Terraform.
+    return [
+        (_WORKSPACE / "portal" / "src", "*.ts*"),
+        (_WORKSPACE / "infra" / "aws" / "lambda-edge", "*.mjs"),
+        (_WORKSPACE / "infra" / "aws", "*.tf"),
+    ]
+
+
+def _dag_sources():
+    # The firm gold DAG is built from the gold/silver pipeline scripts.
+    return [(_WORKSPACE / "data", "*.py")]
+
+
+def _dataflow_sources():
+    # Component dataflows are built from portal page/component TSX.
+    return [(_WORKSPACE / "portal" / "src" / "pages", "*.tsx")]
+
+
+def _get_routing(freshness=gc.Freshness.DEFAULT):
+    """Cached routing table (firm-independent)."""
+    return gc.cached("platinum.routing",
+                     lambda: build_routing_table(_WORKSPACE),
+                     _routing_sources(), freshness)
+
+
+def _build_indexed_dag(firm: str):
+    dag = build_firm_gold_dag(_WORKSPACE, firm)
+    dag.build_index()
+    return dag
+
+
+def _get_dag(firm: str, freshness=gc.Freshness.DEFAULT):
+    """Cached per-firm gold DAG, keyed by --firm. Index is built before caching
+    so a warm load returns an already-indexed DAG."""
+    return gc.cached(f"platinum.dag.{firm}",
+                     lambda: _build_indexed_dag(firm),
+                     _dag_sources(), freshness)
+
+
+def _get_all_dataflows(freshness=gc.Freshness.DEFAULT):
+    """Cached all-component dataflow set (firm-independent; feeds reverse + summary)."""
+    return gc.cached("platinum.dataflows",
+                     lambda: build_all_dataflows(_WORKSPACE),
+                     _dataflow_sources(), freshness)
+
+
+def _freshness(args) -> gc.Freshness:
+    return gc.resolve_freshness(getattr(args, "force", False), getattr(args, "fresh", False))
 
 
 def _firm_origin(route, firm: str):
@@ -83,9 +144,9 @@ def cmd_page(args):
         sys.exit(1)
 
     firm = FIRM_ALIAS.get((getattr(args, "firm", None) or "bd").lower(), "bd")
-    rt = build_routing_table(_WORKSPACE)
-    dag = build_firm_gold_dag(_WORKSPACE, firm)
-    dag.build_index()
+    freshness = _freshness(args)
+    rt = _get_routing(freshness)
+    dag = _get_dag(firm, freshness)
 
     print(f"FULL-STACK TRACE: {flow.component_name}")
     print(f"  File: {flow.file_path}")
@@ -317,11 +378,13 @@ def _looks_like_artifact_query(query: str) -> bool:
     return query.endswith(_FIELD_QUERY_ARTIFACT_SUFFIXES)
 
 
-def _build_field_reverse_index(rt) -> dict[str, list[dict]]:
+def _build_field_reverse_index(rt, dataflows=None) -> dict[str, list[dict]]:
     route_by_endpoint = {r.endpoint_function: r for r in rt.routes}
     index: dict[str, list[dict]] = {}
 
-    for flow in build_all_dataflows(_WORKSPACE):
+    if dataflows is None:
+        dataflows = _get_all_dataflows()
+    for flow in dataflows:
         all_fields = {_normalize_field_path(f) for f in flow.fields_used()}
         all_fields.discard("")
 
@@ -774,9 +837,9 @@ def cmd_reverse(args):
     """
     query = args.s3_key
     strict = getattr(args, 'strict', False)
-    rt = build_routing_table(_WORKSPACE)
-    dag = build_firm_gold_dag(_WORKSPACE, FIRM_ALIAS.get((getattr(args, "firm", None) or "bd").lower(), "bd"))
-    dag.build_index()
+    freshness = _freshness(args)
+    rt = _get_routing(freshness)
+    dag = _get_dag(FIRM_ALIAS.get((getattr(args, "firm", None) or "bd").lower(), "bd"), freshness)
 
     counts = {"authoritative": 0, "speculative": 0}
 
@@ -829,9 +892,9 @@ def cmd_tab_audit(args):
         "FeeSummaryPanel",
     ]
 
-    rt = build_routing_table(_WORKSPACE)
-    dag = build_firm_gold_dag(_WORKSPACE, FIRM_ALIAS.get((getattr(args, "firm", None) or "bd").lower(), "bd"))
-    dag.build_index()
+    freshness = _freshness(args)
+    rt = _get_routing(freshness)
+    dag = _get_dag(FIRM_ALIAS.get((getattr(args, "firm", None) or "bd").lower(), "bd"), freshness)
 
     for comp_name in advi_components:
         path = _find_component(comp_name)
@@ -891,8 +954,9 @@ def cmd_tab_audit(args):
 
 def cmd_summary(args):
     """One-line summary per component."""
-    flows = build_all_dataflows(_WORKSPACE)
-    rt = build_routing_table(_WORKSPACE)
+    freshness = _freshness(args)
+    flows = _get_all_dataflows(freshness)
+    rt = _get_routing(freshness)
 
     print(f"FULL-STACK SUMMARY ({len(flows)} components)")
     print()
@@ -932,6 +996,7 @@ def main():
     p_page.add_argument('--firm', default=None,
                         help='Firm to trace: bd|49financial (default), inf|inflection, cot|cottonwood. '
                              'ADVI is firm-isolated -- each routes to a different bucket + gold tree.')
+    gc.add_freshness_args(p_page)
 
     p_rev = sub.add_parser('reverse', help='S3 key -> routes -> components')
     p_rev.add_argument('s3_key', help='S3 key (e.g., gold/artifacts/employee_leaderboard.json)')
@@ -939,11 +1004,15 @@ def main():
                        help='Firm gold tree: bd|49financial (default), inf|inflection, cot|cottonwood.')
     p_rev.add_argument('--strict', action='store_true',
                        help='Filter speculative results; exit 2 if no authoritative consumers found (ADHC_COMPIL_V4.010)')
+    gc.add_freshness_args(p_rev)
 
     p_tab = sub.add_parser('tab-audit', help='Audit every ADVI tab')
     p_tab.add_argument('--firm', default=None,
                        help='Firm gold tree: bd|49financial (default), inf|inflection, cot|cottonwood.')
-    sub.add_parser('summary', help='One-line summary per component')
+    gc.add_freshness_args(p_tab)
+
+    p_sum = sub.add_parser('summary', help='One-line summary per component')
+    gc.add_freshness_args(p_sum)
 
     args = parser.parse_args()
     if not args.command:
