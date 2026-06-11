@@ -30,6 +30,8 @@ Subcommands:
 from __future__ import annotations
 
 import argparse
+import datetime as _dt
+import json
 import re
 import sys
 import tempfile
@@ -173,7 +175,35 @@ def load_config() -> dict:
     )
     cfg.setdefault("exempt_path_substrings", [])
     cfg.setdefault("exempt_basename_prefixes", [])
+    cfg.setdefault("tally_log", "org/modules/graph/.manifest_check_advisory_tally.jsonl")
     return cfg
+
+
+def append_tally(findings: list[Finding], mode: str, cfg: dict) -> None:
+    """Best-effort: append every finding to the advisory-hit tally (D6 ramp evidence engine).
+
+    The advisory->blocking flip earns its block with empirical evidence, not faith
+    (CTO ramp ruling 2026-06-11): >= ~10 commits flow through advisory with 0 false-positives
+    (an advisory firing on a CORRECT canonical call is a precision bug to fix BEFORE flipping).
+    Each row: ts + file + lineno + category + severity + matched line + mode. NEVER disrupts the
+    gate -- any write error is swallowed.
+    """
+    if not findings:
+        return
+    rel = cfg.get("tally_log") or ""
+    if not rel:
+        return
+    path = rel if Path(rel).is_absolute() else (_WORKSPACE / rel)
+    try:
+        ts = _dt.datetime.now().isoformat(timespec="seconds")
+        with Path(path).open("a", encoding="utf-8") as fh:
+            for f in findings:
+                fh.write(json.dumps({
+                    "ts": ts, "mode": mode, "file": f.file, "lineno": f.lineno,
+                    "category": f.category, "severity": f.severity, "line": f.line,
+                }) + "\n")
+    except (OSError, UnicodeError):
+        pass
 
 
 # ----------------------------------------------------------------------------------- exemptions
@@ -345,6 +375,7 @@ def cmd_check(args: argparse.Namespace) -> int:
         return 0
 
     render(all_findings, mode)
+    append_tally(all_findings, mode, cfg)
     errors = [f for f in all_findings if f.severity == "error"]
     if mode == "advisory":
         print(
@@ -449,6 +480,57 @@ def cmd_selfcheck(args: argparse.Namespace) -> int:
     return 1
 
 
+def cmd_tally(args: argparse.Namespace) -> int:
+    """Summarize the advisory-hit tally -> the D6 advisory->blocking ramp evidence.
+
+    Reads the jsonl tally and reports total hits, by-category, by-file, and the distinct
+    matched lines for human FP review (CTO+DS read whether any hit fired on a CORRECT
+    canonical call = a precision bug to fix before flipping).
+    """
+    cfg = load_config()
+    rel = cfg.get("tally_log") or ""
+    path = rel if Path(rel).is_absolute() else (_WORKSPACE / rel)
+    p = Path(path)
+    if not p.exists():
+        print(f"tally: empty (no findings logged yet) -- {rel}")
+        return 0
+    rows = []
+    for line in p.read_text(encoding="utf-8", errors="replace").splitlines():
+        line = line.strip()
+        if not line:
+            continue
+        try:
+            rows.append(json.loads(line))
+        except json.JSONDecodeError:
+            continue
+    if not rows:
+        print(f"tally: empty -- {rel}")
+        return 0
+    by_cat: dict[str, int] = {}
+    by_file: dict[str, int] = {}
+    for r in rows:
+        by_cat[r.get("category", "?")] = by_cat.get(r.get("category", "?"), 0) + 1
+        by_file[r.get("file", "?")] = by_file.get(r.get("file", "?"), 0) + 1
+    ts_first = min(r.get("ts", "") for r in rows)
+    ts_last = max(r.get("ts", "") for r in rows)
+    print(f"comp-manifest-check advisory-hit tally -- {rel}")
+    print(f"  {len(rows)} finding(s) logged  ({ts_first} -> {ts_last})")
+    print("  by category: " + ", ".join(f"{k}={v}" for k, v in sorted(by_cat.items())))
+    print(f"  by file: {len(by_file)} distinct file(s)")
+    for fpath, n in sorted(by_file.items(), key=lambda kv: -kv[1])[:15]:
+        print(f"    {n:>3}  {fpath}")
+    print("\n  FP review (each line: is this a REAL anti-pattern, or did the gate fire on a CORRECT canonical call?):")
+    seen = set()
+    for r in rows:
+        key = (r.get("file"), r.get("lineno"), r.get("category"))
+        if key in seen:
+            continue
+        seen.add(key)
+        print(f"    [{r.get('category')}] {r.get('file')}:{r.get('lineno')}  > {r.get('line')}")
+    print("\n  RAMP BAR: >= ~10 commits with 0 false-positives + B/C precision agreement -> flip config mode advisory->blocking.")
+    return 0
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(prog="comp-manifest-check")
     sub = parser.add_subparsers(dest="cmd")
@@ -463,6 +545,9 @@ def main() -> int:
 
     p_self = sub.add_parser("selfcheck", help="run on a synthetic anti-pattern (AC4)")
     p_self.set_defaults(func=cmd_selfcheck)
+
+    p_tally = sub.add_parser("tally", help="summarize the advisory-hit tally (D6 ramp evidence)")
+    p_tally.set_defaults(func=cmd_tally)
 
     args = parser.parse_args()
     if not getattr(args, "cmd", None):

@@ -46,3 +46,10 @@ exempt_path_substrings:
 exempt_basename_prefixes:
   - comp-
   - comp_
+
+# Advisory-hit tally (D6 ramp evidence engine, CTO ruling 2026-06-11): every finding is appended
+# here (jsonl) so the advisory->blocking flip earns its block with empirical false-positive data,
+# not faith. `comp-manifest-check tally` summarizes it. Gitignored runtime accumulator (local to
+# the gate's runs); DS reports the rate to CTO at ~10 clean commits. Best-effort write -- a tally
+# failure never disrupts the gate.
+tally_log: org/modules/graph/.manifest_check_advisory_tally.jsonl
