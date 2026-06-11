@@ -119,7 +119,29 @@ path = the LOCAL_MISSING bug). **Verdict: PASS** — correct, beneficial for P1,
 to rename-detection config. AC5 (`comp-pipescript deployed` MATCH) is not at risk from this
 delta; the renamed inf gold scripts land in the deploy set, deleted orion paths are skipped.
 
-## §5 — Status
-PRE-STAGED, awaiting AE P1 RAVC2 (event-driven; AE spawned by MSTR per COO /drive 1302Z).
-Baseline frozen at this commit. When AE files: re-run §1/§4 greps post-mv, diff, sign or block.
-Shared-tooling delta be6e841f0 (§4b) verified PASS — folded into cert awareness.
+## §5 — Status: CERTIFIED (AE P1 leg) 2026-06-11
+
+AE P1 landed d0e2226b8 (190 R100 renames + wiring + Class-B regen). CTO cert pass run
+against the landed commit (independent re-derivation):
+
+- **Gate 1 (0-residual):** AE-owned operational/compiler/config/gate surface = **0** (fwd-slash
+  AND backslash; the 2 backslash matches are prose in THIS doc + COO drive-log, not live refs).
+- **Gate 2 (component refs):** AE retargeted the regex (pipeline_cli.py:138/186) + split-component
+  refs (extract_pipeline/extract_s3/validate_cli/pipeline_cli). **CTO cross-check caught 3 AE MISSES**
+  (not in AE's flagged set, all dangling post-mv): `.tools/comp-freshness:56`,
+  `.tools/silver-dtype-migrate.py:32`, `org/modules/graph/vectorize_audit_cli.py:14` — FIXED in the
+  cert pass (5db1773dd; py_compile PASS, all 3 paths now resolve to data/inf). The cross-check worked.
+- **Gate 3 (comp-build/deploy):** AE comp-build 2080 nodes/2517 edges 0-error; comp-pipescript inf
+  MATCH; test_safe_deploy 6/6; parity rc0. My 3 fixes are tooling-only (comp-build-neutral).
+- **Gate 4 (vendor):** re-anchored to mv-parent e8ea6e6a6: **1621 -> 1621, ZERO delta across the mv**
+  (the +3 vs frozen 1618 = this doc's own watchlist mentions, benign). Watchlist intact; mv-touched
+  vendor-pattern lines are path-prefix edits with vendor names preserved.
+
+**VERDICT: AE P1 LEG CERTIFIED PASS** (with CTO correction 5db1773dd).
+
+**NOT yet 0-residual repo-wide (AC10 CVO close-gate remains):** DS's §8 leg outstanding —
+data/inf/scripts/{gold,silver,bronze} self-refs (~49, still data/orion internally), infra
+inf-pipeline bundled-Lambda copies (~24), ec2 inf-* runner (~7), and the byte-identical-sync-guarded
+libs (floored_percentiles.py + display_label.py across bd/inf/cot/smartx — must sweep together) +
+a few cross-domain refs (data/find/imo/lusha_client.py, smartx). Plus P3 (bd/cot gold separation).
+Class-D (docs ~47, org/projects narrative ~6, org/mcp runtime-state ~2) = NOT cert-gating per §6.
