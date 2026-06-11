@@ -655,10 +655,52 @@ def _extract_hardcoded_paths(content: str) -> tuple[list[str], list[str]]:
         r"^\s*([A-Za-z_][A-Za-z0-9_]*)\s*=\s*f?['\"]"
         r"((?:platinum|gold|silver|bronze)/[^'\"]+\.(?:json|parquet|csv))['\"]")
     _ident_re = re.compile(r'\b([A-Za-z_][A-Za-z0-9_]*)\b')
+    # Pass 2b (prefix-var fix 2026-06-11): the inf D-tier portal scripts compose write keys from a
+    # tier-rooted PREFIX var concatenated to a suffix via f-string -- the prefix itself comes from
+    # `OUTPUT_PREFIX = os.environ.get('OUTPUT_PREFIX', 'platinum/')...` (env-default) or a plain
+    # literal `CANONICAL_NNA_PREFIX = 'gold/canonical/'`, then `KEY = f'{OUTPUT_PREFIX}firm/x.json'`
+    # or a direct `_write_json_s3(o, f'{OUTPUT_PREFIX}firm/x.json')`. The f-string STARTS with the
+    # `{PREFIX_VAR}` interpolation (not a literal tier), so the single-line + Pass-2 literal scans
+    # both miss it. Resolve PREFIX_VAR -> its tier value, substitute, and the full key falls out.
+    # This is what surfaces INF_D_04's platinum/firm/timeseries_overview.json + the gold/artifacts/
+    # summary/header_metrics.json writes (and also closes the comp-platinum --firm inf producer gap).
+    _prefix_env_re = re.compile(
+        r"^\s*([A-Za-z_][A-Za-z0-9_]*)\s*=\s*os\.environ\.get\([^,]+,\s*['\"]"
+        r"((?:platinum|gold|silver|bronze)/[^'\"]*)['\"]")
+    _prefix_lit_re = re.compile(
+        r"^\s*([A-Za-z_][A-Za-z0-9_]*)\s*=\s*['\"]"
+        r"((?:platinum|gold|silver|bronze)/[^'\"]*/)['\"]\s*(?:#.*)?$")
+    _fstr_prefixed_assign_re = re.compile(
+        r"^\s*([A-Za-z_][A-Za-z0-9_]*)\s*=\s*f['\"]\{([A-Za-z_][A-Za-z0-9_]*)\}"
+        r"([^'\"]+\.(?:json|parquet|csv))['\"]")
+    _fstr_prefixed_re = re.compile(
+        r"f['\"]\{([A-Za-z_][A-Za-z0-9_]*)\}([^'\"]+\.(?:json|parquet|csv))['\"]")
     # Sequential walk: track each var's CURRENT path value as assignments happen, so a reused var
     # (e.g. `key` set to book.json then later detail.json) attributes the value live at each use.
     cur: dict[str, str] = {}
+    prefixes: dict[str, str] = {}
+
+    def _resolve_prefixed(pvar: str, suffix: str):
+        base = prefixes.get(pvar)
+        if base is None:
+            return None
+        return re.sub(r'\{[^}]+\}', '{*}', base + suffix)
+
     for line in content_collapsed.splitlines():
+        pe = _prefix_env_re.match(line)
+        if pe:
+            prefixes[pe.group(1)] = pe.group(2).rstrip('/') + '/'
+            continue
+        pl = _prefix_lit_re.match(line)
+        if pl:
+            prefixes[pl.group(1)] = pl.group(2)
+            continue
+        pf = _fstr_prefixed_assign_re.match(line)
+        if pf:
+            resolved = _resolve_prefixed(pf.group(2), pf.group(3))
+            if resolved:
+                cur[pf.group(1)] = resolved
+                continue
         am = _assign_re.match(line)
         if am:
             cur[am.group(1)] = re.sub(r'\{[^}]+\}', '{*}', am.group(2))
@@ -667,6 +709,11 @@ def _extract_hardcoded_paths(content: str) -> tuple[list[str], list[str]]:
         rc = _HARDCODED_READ_CONTEXT.search(line)
         if not (wc or rc):
             continue
+        # direct prefixed f-string on the verb line: _write_json_s3(o, f'{OUTPUT_PREFIX}firm/x.json')
+        for dm in _fstr_prefixed_re.finditer(line):
+            resolved = _resolve_prefixed(dm.group(1), dm.group(2))
+            if resolved:
+                (writes if wc else reads).add(resolved)
         for um in _ident_re.finditer(line):
             p = cur.get(um.group(1))
             if not p:
