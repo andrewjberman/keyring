@@ -23,6 +23,12 @@
 #   status:          canonical | deprecated | planned
 #   superseded_by:   (deprecated only) the canonical id that replaces this
 
+# INTENTIONALLY NOT CATALOGED (not graph-access use-cases -> exempt from the mandate, AC1-complete):
+#   comp-learns-run / comp-learns-status  -- compiler self-learning/telemetry harness (not a graph query)
+#   comp-perf                             -- tool-perf benchmarking (not a graph query)
+#   comp-v5-composite-test.sh             -- tool regression test
+excluded_not_graph_use_cases: [comp-learns-run, comp-learns-status, comp-perf, comp-v5-composite-test]
+
 contract:
   default: QUERY        # comp-kuzu (cloud/cross-layer) or cached comp-trace/comp-blast (trace)
   rebuild_only_when:
@@ -169,6 +175,263 @@ entries:
     freshness: "writes graph.json"
     rebuild_trigger: "new files / suspected stale cache; or comp-build --check to verify without rebuild"
     anti_pattern: "rebuilding to answer a query comp-trace would serve from cache"
+    status: canonical
+
+  - id: trace.diff.staged_blast
+    use_case: "What's the blast radius of my uncommitted/staged changes (before commit)?"
+    canonical_call: "comp-diff [--staged | --ref HEAD~3]"
+    tool: comp-diff
+    mode: rebuild
+    layer: trace
+    cost: "~2s (rebuilds graph + git diff)"
+    freshness: "live repo + git"
+    rebuild_trigger: "n/a — must reflect your uncommitted change, so a rebuild is correct here"
+    anti_pattern: "committing blind then discovering the break"
+    status: canonical
+
+  - id: trace.xref.symbol
+    use_case: "Find every graph node touching a symbol (id/label/file/edge endpoints)."
+    canonical_call: "comp-xref <symbol>"
+    tool: comp-xref
+    mode: query-cached
+    layer: trace
+    cost: "~ms (symbol mode uses cached graph)"
+    freshness: "graph.json (5-min TTL)"
+    rebuild_trigger: "new files -> comp-build"
+    anti_pattern: "manual grep across the repo for a symbol's dependents"
+    status: canonical
+
+  - id: trace.xref.graph_drift
+    use_case: "Did the dependency graph change vs a saved baseline (after a deploy/re-run)?"
+    canonical_call: "comp-xref --save   # snapshot; then comp-xref (no-arg) to diff"
+    tool: comp-xref
+    mode: rebuild
+    layer: trace
+    cost: "~2s (diff mode rebuilds graph)"
+    freshness: "live vs saved baseline"
+    rebuild_trigger: "n/a — drift detection needs the fresh graph"
+    anti_pattern: "assuming the graph is unchanged after a structural edit"
+    status: canonical
+
+  - id: trace.transform.component_fields
+    use_case: "Which response fields does a component actually render? (schema-check / unused-field audit)"
+    canonical_call: "comp-transform schema-check <Component> [--feature <token>] ; comp-transform ternary-audit <Component>"
+    tool: comp-transform
+    mode: rebuild
+    layer: trace
+    cost: "~1s (portal parse)"
+    freshness: "live portal/src"
+    rebuild_trigger: "n/a — fast targeted parse"
+    anti_pattern: "manually reading the TSX to find MISSING/UNUSED fields"
+    status: canonical
+
+  - id: trace.cache.key_collisions
+    use_case: "Do components share a React Query cache key (cache corruption risk)?"
+    canonical_call: "comp-cache collisions ; comp-cache key <substring>"
+    tool: comp-cache
+    mode: rebuild
+    layer: trace
+    cost: "~1s"
+    freshness: "live portal/src"
+    rebuild_trigger: "n/a"
+    anti_pattern: "debugging a stale-data bug without checking key collisions"
+    status: canonical
+
+  - id: trace.pii.exposure
+    use_case: "Does a component/route expose PII to external users (pseudonymized vs cleartext)?"
+    canonical_call: "comp-pii audit ; comp-pii scan <Component>"
+    tool: comp-pii
+    mode: rebuild
+    layer: trace
+    cost: "~2s"
+    freshness: "live routes + registry"
+    rebuild_trigger: "n/a"
+    anti_pattern: "shipping a field without a PII check"
+    status: canonical
+
+  - id: trace.types.type_consumers
+    use_case: "Which components consume this TypeScript type (before editing an interface)?"
+    canonical_call: "comp-types index <TypeName> [--firm-conditional-sites]"
+    tool: comp-types
+    mode: rebuild
+    layer: trace
+    cost: "~5s (regex portal grep)"
+    freshness: "live portal/src"
+    rebuild_trigger: "n/a"
+    anti_pattern: "editing a shared type without enumerating consumers"
+    status: canonical
+
+  - id: trace.adapter.field_threading
+    use_case: "Pre-ship field-threading audit of a portal adapter function."
+    canonical_call: "comp-adapter-audit <adapter-fn> [--severity warn|error]"
+    tool: comp-adapter-audit
+    mode: rebuild
+    layer: trace
+    cost: "~60s (live S3 fetch + regex parse)"
+    freshness: "live S3 + portal"
+    rebuild_trigger: "n/a — needs the live served artifact"
+    anti_pattern: "shipping an adapter without verifying the field threads through"
+    status: canonical
+
+  - id: trace.platinum.reverse
+    use_case: "Which routes + components consume this S3/platinum key (reverse of the page trace)?"
+    canonical_call: "comp-platinum reverse <s3_key> [--firm <bd|inf|cot>]"
+    tool: comp-platinum
+    mode: rebuild
+    layer: trace
+    cost: "seconds/call (no cache yet — D2)"
+    freshness: "rebuilt every call (per-firm)"
+    rebuild_trigger: "n/a yet — see trace.fullstack.component_to_gold"
+    anti_pattern: "guessing which components break if a key changes"
+    status: canonical
+
+  # ---- PIPELINE / DATA ----
+  - id: pipeline.validate.artifact
+    use_case: "Does a gold artifact satisfy its declared invariants BEFORE S3 upload?"
+    canonical_call: "comp-validate <script_id> --artifact <local/path>"
+    tool: comp-validate
+    mode: rebuild
+    layer: pipeline
+    cost: "~1s JSON / ~2s parquet"
+    freshness: "live artifact + config"
+    rebuild_trigger: "n/a — validates a specific artifact"
+    anti_pattern: "uploading a gold artifact unvalidated (signalling SAFE on NO_CONFIG)"
+    status: canonical
+    notes: "Exit-0 PASS/WAIVED = SAFE to signal; NO_CONFIG/ZERO_CHECKS = UNVALIDATED (not a pass). See COMP_VALIDATE_PROTOCOL.md."
+
+  - id: pipeline.pipescript.deployed_match
+    use_case: "Does the runner have my code (before running a gold script ad-hoc)?"
+    canonical_call: "comp-pipescript deployed <script>"
+    tool: comp-pipescript
+    mode: rebuild
+    layer: pipeline
+    cost: "~2-5s (AWS API calls)"
+    freshness: "live S3 deployed code"
+    rebuild_trigger: "n/a — must check live deployed state"
+    anti_pattern: "running a gold script without confirming MATCH (STALE/MISSING runner)"
+    status: canonical
+    notes: "comp-pipescript deployed only checks opal-data-bd; inf/mdpf/backfill paths are blind (verify served S3 directly)."
+
+  - id: pipeline.freshness.chain_ready
+    use_case: "Is the upstream S3 data fresh enough to run a gold chain?"
+    canonical_call: "comp-freshness chain {bd|inf} ; comp-freshness script <id>"
+    tool: comp-freshness
+    mode: rebuild
+    layer: pipeline
+    cost: "~30s full chain (parallel AWS calls)"
+    freshness: "live S3 LastModified"
+    rebuild_trigger: "n/a — live freshness check"
+    anti_pattern: "dispatching a chain on stale upstream"
+    status: canonical
+
+  - id: pipeline.chainrun.atomic_bundle
+    use_case: "Snapshot/diff gold artifacts around an atomic multi-commit producer+consumer refactor."
+    canonical_call: "comp-chainrun snapshot --label <L> ; comp-chainrun diff <A> <B>"
+    tool: comp-chainrun
+    mode: rebuild
+    layer: pipeline
+    cost: "~3-10s/snapshot (reads ~10 S3 artifacts)"
+    freshness: "live S3"
+    rebuild_trigger: "n/a"
+    anti_pattern: "landing an atomic bundle without before/after artifact verification"
+    status: canonical
+
+  - id: pipeline.constants.drift
+    use_case: "Marker/firm constant drift (FIRM_ID, thresholds) vs the canonical config."
+    canonical_call: "comp-constants check [--lane bd|inf|cot|multifirm] ; comp-constants new"
+    tool: comp-constants
+    mode: rebuild
+    layer: pipeline
+    cost: "~1s (AST scan)"
+    freshness: "live code AST vs config"
+    rebuild_trigger: "n/a"
+    anti_pattern: "committing a constant edit that drifts from the registered canonical"
+    status: canonical
+
+  - id: pipeline.incrparity.bd
+    use_case: "Incremental BD-pipeline parity (windowed cache vs oracle full-recompute)."
+    canonical_call: "comp-incrparity <args>"
+    tool: comp-incrparity
+    mode: rebuild
+    layer: pipeline
+    cost: "varies (reads S3 parity artifacts)"
+    freshness: "live S3 _parity"
+    rebuild_trigger: "n/a — parity is a live comparison"
+    anti_pattern: "asserting incremental==oracle without the parity check (the GLDINC class)"
+    status: canonical
+
+  # ---- CLOUD additions ----
+  - id: cloud.lambdamap.deployed_sha
+    use_case: "Lambda deployed-SHA vs live CodeSha256 / multi-runtime enumeration."
+    canonical_call: "comp-lambdamap <args>"
+    tool: comp-lambdamap
+    mode: rebuild
+    layer: cloud
+    cost: "~live AWS"
+    freshness: "live Lambda config"
+    rebuild_trigger: "n/a — live deployed-SHA check"
+    anti_pattern: "assuming a Lambda is deployed without the SHA compare (stale-deploy class)"
+    status: canonical
+
+  - id: cloud.score.cert
+    use_case: "Score the derived cloud graph vs the certified hand-audit oracle (F1)."
+    canonical_call: "comp-aws score [--class C]"
+    tool: comp-aws
+    mode: rebuild
+    layer: cloud
+    cost: "~2min (bounded derive of scored classes)"
+    freshness: "live vs aws-shapes oracle"
+    rebuild_trigger: "n/a — cert scoring re-derives"
+    anti_pattern: "asserting a cert pass without the independent oracle score"
+    status: canonical
+
+  # ---- META / governance + hygiene ----
+  - id: meta.shell.bare_util_scan
+    use_case: "Does a new local-runtime .sh use a util missing from Git Bash 3.6.7 (pgrep/flock/...)?"
+    canonical_call: "comp-shell scan [path ...]"
+    tool: comp-shell
+    mode: rebuild
+    layer: meta
+    cost: "~1s/file"
+    freshness: "live file scan"
+    rebuild_trigger: "n/a"
+    anti_pattern: "committing a .sh with a bare pgrep/pkill/flock (CLAUDE.md Rule 16)"
+    status: canonical
+
+  - id: meta.registry.drift
+    use_case: "REGISTRY narrative vs project-JSON drift (phase/commit-citation/status mismatch)."
+    canonical_call: "comp-registry sync ROW=N | --project CODE | --all"
+    tool: comp-registry
+    mode: rebuild
+    layer: meta
+    cost: "~1-2s"
+    freshness: "live REGISTRY vs JSON vs git"
+    rebuild_trigger: "n/a"
+    anti_pattern: "letting REGISTRY narrative drift from the project JSON"
+    status: canonical
+
+  - id: meta.coverage.report
+    use_case: "Compiler/task-order coverage report (what's covered vs gaps)."
+    canonical_call: "comp-coverage <args>"
+    tool: comp-coverage
+    mode: rebuild
+    layer: meta
+    cost: "~1-2s"
+    freshness: "live"
+    rebuild_trigger: "n/a"
+    anti_pattern: "n/a"
+    status: canonical
+
+  - id: meta.tooltip.migration
+    use_case: "Tooltip migration audit (portal tooltip coverage)."
+    canonical_call: "comp-tooltip <args>"
+    tool: comp-tooltip
+    mode: rebuild
+    layer: trace
+    cost: "~1-2s"
+    freshness: "live portal/src"
+    rebuild_trigger: "n/a"
+    anti_pattern: "n/a"
     status: canonical
 
   # ---- FRESHNESS (D3 — planned) ----
