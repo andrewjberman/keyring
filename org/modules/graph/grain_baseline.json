@@ -37,5 +37,30 @@
     "IAM_ROLE": 119,
     "CLOUDFRONT_DISTRIBUTION": 1,
     "STATE_MACHINE": 1
-  }
+  },
+  "recertifications": [
+    {
+      "date": "2026-06-11",
+      "trigger": "FIRST production AC-GRAIN.2 firing \u2014 derive_stitch refused to emit",
+      "classes": [
+        {
+          "class": "CLOUDFRONT_DISTRIBUTION",
+          "baseline_was": 4,
+          "recertified_to": 1,
+          "ratio": "0.25x",
+          "verified_reason": "REAL infra change \u2014 CDN decom (ADHC_CDNCOHT family, 2026-06-11) destroyed the non-portal distributions; live list-distributions = exactly [EVTSA9VEHNZVH] (the portal dist). Ground-truthed via boto3 cloudfront list-distributions before re-baseline.",
+          "verified_by": "3.0.0_SA_CVO"
+        },
+        {
+          "class": "SERVICE_PRINCIPAL",
+          "baseline_was": 5,
+          "recertified_to": 15,
+          "ratio": "3.0x",
+          "verified_reason": "REAL coverage expansion \u2014 comp-aws WAVE-4 (53816378a) CAN_ASSUME trust-graph typing now derives every IAM-trusted service principal as a typed node. The 15: billingreports.amazonaws.com, cloudfront.amazonaws.com, cloudtrail.amazonaws.com, codebuild.amazonaws.com, ec2.amazonaws.com, ecs-tasks.amazonaws.com, edgelambda.amazonaws.com, events.amazonaws.com, lambda.amazonaws.com, monitoring.rds.amazonaws.com, oai::E139998VWH0PD, oai::EU39UXW7CMSI5, scheduler.amazonaws.com, states.amazonaws.com, vpc-flow-logs.amazonaws.com. Correct grain (one node per principal).",
+          "verified_by": "3.0.0_SA_CVO"
+        }
+      ],
+      "note": "Auditable verified-drift acceptance per COO governance ask 2026-06-11T2152Z \u2014 NOT a band-loosening; bands unchanged at [0.4,2.5]x."
+    }
+  ]
 }
