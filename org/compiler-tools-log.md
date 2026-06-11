@@ -4488,3 +4488,95 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-06-10 | 0.7.0_AE_CloudOps | (no-TO) | comp-pipescript | comp-pipescript deployed --pipeline cot-silver cot_silver_merge | PASS |
 
 | 2026-06-10 | 0.4.0_DS_ClientPlatform | NFRA_DTAFLP.TO-1b/TO-4 | Grep (opal-data-bd / FIRM_ID census), aws s3 ls (read-only ground-truth) | 73 bd-refs classified + 8 FIRM_ID sites enumerated; Schwab/firm_id S3 ground-truthed | comp-pipescript not run (read-only classification, no script edited/run this session) |
+| 2026-06-10 | 1.0.0_SA_CTO | NFRA_DTAFLP.P3-TO-1b | comp-blast | comp-blast D_03 | PASS |
+| 2026-06-10 | 1.0.0_SA_CTO | NFRA_DTAFLP.P3-TO-1b | comp-blast | comp-blast D_04 | PASS |
+| 2026-06-11 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript deployed --pipeline cot-gold | PASS |
+| 2026-06-11 | 0.7.0_AE_CloudOps | (no-TO) | comp-build | comp-build | PASS |
+| 2026-06-11 | 0.7.0_AE_CloudOps | (no-TO) | comp-validate | comp-validate gold-nan | PASS |
+| 2026-06-11 | 0.7.0_AE_CloudOps | (no-TO) | comp-pipescript | comp-pipescript postmerge-cols INF_B_00 | PASS |
+| 2026-06-11 | 0.7.0_AE_CloudOps | (no-TO) | comp-pipescript | comp-pipescript postmerge-cols INF_C_00 | PASS |
+| 2026-06-11 | 0.7.0_AE_CloudOps | (no-TO) | comp-pipescript | comp-pipescript postmerge-cols INF_C_01 | PASS |
+| 2026-06-11 | 0.7.0_AE_CloudOps | (no-TO) | comp-pipescript | comp-pipescript postmerge-cols INF_D_00c | PASS |
+| 2026-06-11 | 0.7.0_AE_CloudOps | (no-TO) | comp-pipescript | comp-pipescript shadow-detect compute_hh_lifecycle | FAIL |
+| 2026-06-11 | 0.7.0_AE_CloudOps | (no-TO) | comp-pipescript | comp-pipescript shadow-detect aggregate_gro_per_advisor_window | FAIL |
+| 2026-06-11 | 0.7.0_AE_CloudOps | (no-TO) | comp-pipescript | comp-pipescript shadow-detect aggregate_tax_status_per_advisor | FAIL |
+| 2026-06-11 | 0.7.0_AE_CloudOps | (no-TO) | comp-build | comp-build | PASS |
+| 2026-06-11 | 0.7.0_AE_CloudOps | (no-TO) | comp-pipescript | comp-pipescript shadow-detect aggregate_gro_per_advisor_window | FAIL |
+| 2026-06-11 | 0.7.0_AE_CloudOps | (no-TO) | comp-perf | comp-perf chain --pipeline inf | PASS |
+| 2026-06-11 | 0.7.0_AE_CloudOps | (no-TO) | comp-build | comp-build | PASS |
+| 2026-06-11 | 0.7.0_AE_CloudOps | (no-TO) | comp-pipescript | comp-pipescript deployed INF_C_01 | PASS |
+| 2026-06-11 | 0.7.0_AE_CloudOps | (no-TO) | comp-pipescript | comp-pipescript deployed B_00 | PASS |
+| 2026-06-11 | 0.7.0_AE_CloudOps | (no-TO) | comp-pipescript | comp-pipescript io INF_B_00 | PASS |
+| 2026-06-11 | 0.7.0_AE_CloudOps | (no-TO) | comp-pipescript | comp-pipescript io INF_D_04 | PASS |
+| 2026-06-11 | 0.7.0_AE_CloudOps | (no-TO) | comp-pipescript | comp-pipescript io INF_B_99 | FAIL |
+| 2026-06-11 | 0.7.0_AE_CloudOps | (no-TO) | comp-pipescript | comp-pipescript io inf-gold-dispatch | PASS |
+| 2026-06-11 | 0.7.0_AE_CloudOps | (no-TO) | comp-pipescript | comp-pipescript io bd-gold-dispatch | PASS |
+| 2026-06-11 | 0.7.0_AE_CloudOps | (no-TO) | comp-pipescript | comp-pipescript io orion-gold-dispatch | PASS |
+| 2026-06-11 | 0.7.0_AE_CloudOps | (no-TO) | comp-pipescript | comp-pipescript io convert_orion_to_silver | PASS |
+| 2026-06-11 | 0.7.0_AE_CloudOps | (no-TO) | comp-pipescript | comp-pipescript io bd_price_update | PASS |
+| 2026-06-11 | 0.7.0_AE_CloudOps | (no-TO) | comp-pipescript | comp-pipescript io B_01 | PASS |
+| 2026-06-11 | 0.7.0_AE_CloudOps | (no-TO) | comp-pipescript | comp-pipescript io D_04 | PASS |
+| 2026-06-11 | 0.7.0_AE_CloudOps | (no-TO) | comp-pipescript | comp-pipescript io C_08 | PASS |
+| 2026-06-11 | 0.7.0_AE_CloudOps | (no-TO) | comp-build | comp-build | PASS |
+| 2026-06-11 | 0.7.0_AE_CloudOps | (no-TO) | comp-pipescript | comp-pipescript io B_00 | FAIL |
+| 2026-06-11 | 0.7.0_AE_CloudOps | (no-TO) | comp-pipescript | comp-pipescript io --pipeline inf B_00 | PASS |
+| 2026-06-11 | 0.7.0_AE_CloudOps | (no-TO) | comp-pipescript | comp-pipescript io --pipeline bd B_00 | PASS |
+| 2026-06-11 | 0.7.0_AE_CloudOps | (no-TO) | comp-pipescript | comp-pipescript io INF_X_99 | FAIL |
+| 2026-06-11 | 0.7.0_AE_CloudOps | (no-TO) | comp-pipescript | comp-pipescript deployed | PASS |
+| 2026-06-11 | 0.7.0_AE_CloudOps | (no-TO) | comp-pipescript | comp-pipescript deployed | PASS |
+| 2026-06-11 | 0.7.0_AE_CloudOps | (no-TO) | comp-pipescript | comp-pipescript deployed canonical_nna | PASS |
+| 2026-06-11 | 0.7.0_AE_CloudOps | (no-TO) | comp-pipescript | comp-pipescript io INF_C_01.canonical_nna | PASS |
+| 2026-06-11 | 0.7.0_AE_CloudOps | (no-TO) | comp-pipescript | comp-pipescript deployed --pipeline inf-gold INF_C_01 | PASS |
+| 2026-06-11 | 0.7.0_AE_CloudOps | (no-TO) | comp-pipescript | comp-pipescript deployed --pipeline inf-gold | PASS |
+| 2026-06-11 | 0.7.0_AE_CloudOps | (no-TO) | comp-pipescript | comp-pipescript deployed --pipeline inf-silver | PASS |
+| 2026-06-11 | 1.0.0_SA_CTO | (no-TO) | comp-build | comp-build | PASS |
+| 2026-06-11 | 0.7.0AE_CloudOps~C | (no-TO) | comp-blast | comp-blast E398SP0DG1ME0Y | PASS |
+| 2026-06-11 | 0.7.0AE_CloudOps~C | (no-TO) | comp-blast | comp-blast EF3ZZO0F4UDHH | PASS |
+| 2026-06-11 | 0.7.0AE_CloudOps~C | (no-TO) | comp-blast | comp-blast d8jjeh41zyz1e.cloudfront.net | PASS |
+| 2026-06-11 | 0.7.0AE_CloudOps~C | (no-TO) | comp-blast | comp-blast d31dsbkhoi4o7c.cloudfront.net | PASS |
+| 2026-06-11 | 0.7.0_AE_CloudOps | (no-TO) | comp-constants | comp-constants --help | PASS |
+| 2026-06-11 | 0.7.0_AE_CloudOps | (no-TO) | comp-build | comp-build | PASS |
+| 2026-06-11 | 0.7.0_AE_CloudOps | (no-TO) | comp-constants | comp-constants check | FAIL |
+| 2026-06-11 | 0.7.0_AE_CloudOps | (no-TO) | comp-aws | comp-aws --help | PASS |
+| 2026-06-11 | 0.7.0_AE_CloudOps | (no-TO) | comp-blast | comp-blast trade-recon-api | PASS |
+| 2026-06-11 | 0.7.0_AE_CloudOps | (no-TO) | comp-aws | comp-aws derive --help | PASS |
+| 2026-06-11 | 1.0.0_SA_CTO | (no-TO) | comp-platinum | comp-platinum | PASS |
+| 2026-06-11 | 1.0.0_SA_CTO | (no-TO) | comp-build | comp-build | PASS |
+| 2026-06-11 | 1.0.0_SA_CTO | (no-TO) | comp-platinum | comp-platinum summary | PASS |
+| 2026-06-11 | 1.0.0_SA_CTO | (no-TO) | comp-platinum | comp-platinum page AdvisorAnalytics | PASS |
+| 2026-06-11 | 0.7.0AE_CloudOps~C | (no-TO) | comp-iam | comp-iam service shared-advisor-router-response | PASS |
+| 2026-06-11 | 0.7.0AE_CloudOps~C | (no-TO) | comp-iam | comp-iam gaps | PASS |
+| 2026-06-11 | 0.7.0AE_CloudOps~C | (no-TO) | comp-iam | comp-iam services | PASS |
+| 2026-06-11 | 0.7.0AE_CloudOps~C | (no-TO) | comp-routes | comp-routes behaviors | PASS |
+| 2026-06-11 | 0.7.0AE_CloudOps~C | (no-TO) | comp-blast | comp-blast shared-advisor-router-response | PASS |
+| 2026-06-11 | 0.7.0AE_CloudOps~C | (no-TO) | comp-routes | comp-routes trace shared-advisor-router-response | PASS |
+| 2026-06-11 | 0.7.0AE_CloudOps~C | (no-TO) | comp-routes | comp-routes trace /api/scoped/advisor-intelligence/artifacts/architect_leaderboard.json | PASS |
+| 2026-06-11 | 0.7.0AE_CloudOps~C | (no-TO) | comp-trace | comp-trace shared-advisor-router-response --direction both | PASS |
+| 2026-06-11 | 0.7.0_AE_CloudOps | (no-TO) | comp-aws | comp-aws derive --resource arn:aws:lambda:us-east-1:313476888478:function:trade-recon-a... | PASS |
+| 2026-06-11 | 0.7.0_AE_CloudOps | (no-TO) | comp-aws | comp-aws derive --out .runtmp/compaws/cloud-graph.json | PASS |
+| 2026-06-11 | 1.0.0_SA_CTO | (no-TO) | comp-pipescript | comp-pipescript stats | PASS |
+| 2026-06-11 | 1.0.0_SA_CTO | (no-TO) | comp-platinum | comp-platinum reverse platinum/advisors/ | PASS |
+| 2026-06-11 | 1.0.0_SA_CTO | (no-TO) | comp-platinum | comp-platinum page --help | PASS |
+| 2026-06-11 | 1.0.0_SA_CTO | (no-TO) | comp-platinum | comp-platinum page AdvisorAnalytics | PASS |
+| 2026-06-11 | 1.0.0_SA_CTO | (no-TO) | comp-platinum | comp-platinum page AdvisorAnalytics | PASS |
+| 2026-06-11 | 1.0.0_SA_CTO | (no-TO) | comp-platinum | comp-platinum page AdvisorAnalytics --firm inflection | FAIL |
+| 2026-06-11 | 1.0.0_SA_CTO | (no-TO) | comp-platinum | comp-platinum page AdvisorAnalytics --firm inflection | PASS |
+| 2026-06-11 | 1.0.0_SA_CTO | (no-TO) | comp-platinum | comp-platinum page AdvisorPublicProfile --firm inflection | PASS |
+| 2026-06-11 | 1.0.0_SA_CTO | (no-TO) | comp-platinum | comp-platinum page AdvisorPublicProfile | PASS |
+| 2026-06-11 | 1.0.0_SA_CTO | (no-TO) | comp-platinum | comp-platinum page AdvisorPublicProfile --firm inflection | PASS |
+| 2026-06-11 | 0.7.0_AE_CloudOps~B | (no-TO) | comp-kuzu | comp-kuzu --db-path infra/aws/globgrph/kuzu_nessie_db MATCH (n:CloudNode) RETURN n.node... | PASS |
+| 2026-06-11 | 0.7.0_AE_CloudOps~B | (no-TO) | comp-kuzu | comp-kuzu --db-path infra/aws/globgrph/kuzu_nessie_db MATCH (n:CloudNode) RETURN n.drif... | PASS |
+| 2026-06-11 | 0.7.0_AE_CloudOps~B | (no-TO) | comp-kuzu | comp-kuzu --db-path infra/aws/globgrph/kuzu_nessie_db MATCH (n:CloudNode) WHERE n.node_... | PASS |
+| 2026-06-11 | 0.7.0_AE_CloudOps~B | (no-TO) | comp-kuzu | comp-kuzu --db-path infra/aws/globgrph/kuzu_nessie_db MATCH (n:CloudNode) WHERE n.node_... | PASS |
+| 2026-06-11 | 0.7.0_AE_CloudOps~B | (no-TO) | comp-kuzu | comp-kuzu --db-path infra/aws/globgrph/kuzu_nessie_db MATCH (l:CloudNode {node_type:'LA... | PASS |
+| 2026-06-11 | 0.7.0_AE_CloudOps~B | (no-TO) | comp-kuzu | comp-kuzu --db-path infra/aws/globgrph/kuzu_nessie_db MATCH (n:CloudNode {node_type:'S3... | PASS |
+| 2026-06-11 | 0.7.0_AE_CloudOps~B | (no-TO) | comp-kuzu | comp-kuzu --db-path infra/aws/globgrph/kuzu_nessie_db MATCH p=(l:CloudNode {node_type:'... | PASS |
+| 2026-06-11 | 1.0.0_SA_CTO | (no-TO) | comp-platinum | comp-platinum page --help | PASS |
+| 2026-06-11 | 1.0.0_SA_CTO | (no-TO) | comp-platinum | comp-platinum reverse --help | PASS |
+| 2026-06-11 | 1.0.0_SA_CTO | (no-TO) | comp-platinum | comp-platinum tab-audit --help | PASS |
+| 2026-06-11 | 1.0.0_SA_CTO | (no-TO) | comp-platinum | comp-platinum summary --help | PASS |
+| 2026-06-11 | 0.7.0_AE_CloudOps~C | FIRMSEP-guard | comp-iam | comp-iam gaps | PASS — 0 missing among modeled services (edge fns not IAM-modeled) |
+| 2026-06-11 | 0.7.0_AE_CloudOps~C | FIRMSEP-guard | comp-routes | comp-routes behaviors | PASS — guard scoped to 4 firm-routed S3 behaviors; no custom_error_response masks the 502 |
+| 2026-06-11 | 0.7.0_AE_CloudOps~C | FIRMSEP-guard | comp-routes | comp-routes trace /api/scoped/.../*.json | PASS — full CF->auth->router->guard->S3 chain (via PowerShell; MSYS mangles leading-/ arg) |
+| 2026-06-11 | 0.7.0_AE_CloudOps~C | FIRMSEP-guard | comp-blast | comp-blast shared-advisor-router-response | PASS — terminal node, no downstream consumers |
+| 2026-06-11 | 0.7.0_AE_CloudOps~C | FIRMSEP-guard | comp-trace | comp-trace shared-advisor-router-response --direction both | PARTIAL — no edges (edge fns are CF associations, not graph nodes) |
