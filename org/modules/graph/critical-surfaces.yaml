@@ -1,0 +1,74 @@
+# critical-surfaces.yaml — the production guardrail registry (NFRA_GRAPHS D8, §10).
+#
+# Named client-facing surfaces whose backend dependency subgraph is MONITORED for any break or
+# unexpected change. Per-firm, severity-tiered. Mechanism: carve the subgraph -> sign a baseline ->
+# (B) commit-time change-gate + (C) scheduled break/change scan + SEV-routed alarm. The risk is the
+# BACKEND (firm-specific AWS/data resources feeding the tab), NOT React -> carve deep on the data chain,
+# light on the frontend. Design: docs/architecture/NFRA_GRAPHS.md §10. STATUS: v0.1 SCAFFOLD.
+#
+# severity: SEV1 (must-always-be-right; block-with-ack on commit-touch; page on break)
+#           SEV2 (lesser; warn on commit-touch; digest on break)
+# carve: how to enumerate the surface's subgraph; backend_depth = how far down the data chain to alarm on
+# firms: all = {49financial/bd, inflection/inf, cottonwood/cot} -- monitored independently per firm
+
+surfaces:
+
+  - id: model_portfolios.benchmark
+    severity: SEV1
+    firms: all
+    carve:
+      frontend_root: "the Benchmark tab component(s) under the ModelPortfolios page (comp-platinum sub-component)"
+      backend_chain: "fetch -> route -> Lambda -> S3 key (benchmark/*) -> gold script -> upstream feed"
+      backend_depth: full     # alarm on ANY change/break in the full data chain
+      frontend_depth: existence  # only flag if the component/fetch wiring itself disappears
+    why: "Andrew: must ALWAYS be right; any logic/resource change or break attached to benchmark/ raises a flag."
+    baseline: { signed: false, ref: null }   # populate via comp-xref --save per surface x firm at carve-time
+
+  - id: advisor_intelligence
+    severity: SEV1
+    firms: all
+    carve:
+      frontend_root: "the Advisor Intelligence page tree (all ADVI components)"
+      backend_chain: "fetch -> route -> Lambda -> S3 platinum/gold -> gold script -> upstream (per firm; 49F=Black Diamond, inf=Orion API)"
+      backend_depth: full
+      frontend_depth: existence
+    why: "Andrew: same severity as the Benchmark tab -- keep an alert on breaking logic on ADVI as a whole."
+    baseline: { signed: false, ref: null }
+
+  - id: model_portfolios.peers
+    severity: SEV2
+    firms: all
+    carve:
+      frontend_root: "the Peers tab component(s) under ModelPortfolios"
+      backend_chain: "fetch -> route -> Lambda -> S3 key (peers/*) -> gold script -> upstream"
+      backend_depth: full
+      frontend_depth: existence
+    why: "Andrew: lesser severity than Benchmark, same monitoring shape."
+    baseline: { signed: false, ref: null }
+
+  - id: model_portfolios.aum
+    severity: SEV2
+    firms: all
+    carve:
+      frontend_root: "the AUM tab component(s) under ModelPortfolios"
+      backend_chain: "fetch -> route -> Lambda -> S3 key (aum/*) -> gold script -> upstream"
+      backend_depth: full
+      frontend_depth: existence
+    why: "Andrew: lesser severity than Benchmark, same monitoring shape."
+    baseline: { signed: false, ref: null }
+    known_findings:
+      - "getAUMMetrics resolves to 'url: (not resolved)' in comp-platinum -- a graph-unresolved fetch (day-0 break candidate to triage)."
+
+monitor:
+  commit_gate:
+    tool: comp-surface-check   # sibling of comp-manifest-check (D6); maps changed files -> critical subgraph nodes via comp-diff
+    SEV1: block-with-ack       # "this change touches the <surface> backend for firm <f> -- confirm + justify"
+    SEV2: warn
+  scheduled_scan:
+    when: "nightly graph refresh (derive -> Nessie -> kuzu_stitch_load)"
+    per: surface_x_firm
+    checks:
+      - "§9 break-scans (scan.wiring.dangling_fetch / scan.firm.asymmetry / scan.orphan.dead_producer) over the carved subgraph"
+      - "diff current subgraph vs the SIGNED baseline (node/edge added|removed|SHA-changed)"
+    alarm: "SNS/EventBridge, reuse the deployed firm_isolation_guard_triggered SEV1 pattern; SEV1 page / SEV2 digest"
+    clear: "a deliberately re-signed baseline clears an EXPECTED change"
