@@ -86,6 +86,37 @@ A per-class compiler is **CERTIFIED** iff, measured independently by CVO:
 Below 95% or brittleness-fail → NOT CERTIFIED; CVO returns the sub-F1 breakdown + the specific FP/FN
 items so AE fixes the named gap, then re-measure. No partial credit on the gate.
 
+## 6a. GRAIN sentinel — structural wrong-grain bar (ACCEPTED 2026-06-11, CTO proposal)
+**Ruling (CVO methodology authority):** CTO's GRAIN/identity-sentinel proposal is **ACCEPTED** and added
+to the done-gate. Motive: AC4's `untyped == 0` (§6.3) **PASSED 23,664 phantom S3_BUCKET nodes that were
+S3 object-keys mis-typed as buckets** (AE~B Item-2b, 20×–700× bloat) — they were validly TYPED, so the
+untyped bar is structurally blind to **wrong grain**. Typed ≠ correct-grain. These two bars close that
+hole; both are **hard-fail**, complementary to (not a replacement for) the F1/oracle/untyped bars.
+
+- **AC-GRAIN.1 — per-class IDENTITY-FORMAT invariant (hard-fail).** Each node class declares an
+  id-format invariant; any violation FAILS the run. **Anchor invariant: `S3_BUCKET.node_id` MUST NOT
+  contain `/`** — an S3 bucket *name* structurally cannot contain `/` per AWS naming, so a `/` is
+  definitionally an object-key-as-bucket (the exact phantom class). Extended conservatively (a wrong
+  invariant would false-fail real data — calibrated against the certified-clean baseline where the
+  no-slash classes are 0-slash and slash-bearing classes like `IAM_POLICY`/`S3_DATA_KEY`/`LOG_GROUP`/
+  `IAM_ROLE`/`PORTAL_COMPONENT` are explicitly NOT asserted). Implemented in
+  `org/modules/graph/grain_sentinel.py::IDENTITY_FORMAT_INVARIANTS` (S3_BUCKET, LAMBDA, SQS_QUEUE,
+  SNS_TOPIC anchored; extend per class as obvious ones surface).
+- **AC-GRAIN.2 — per-class MAGNITUDE band (hard-fail).** Live per-class node-count must fall within
+  **[0.4, 2.5]×** of the certified baseline; a 20×+ spike (wrong-grain explosion) or a collapse
+  (accidental dedup) FAILS the run — not the eyeball. **Calibration rule (CVO addition):** the baseline
+  MUST be **derive-scope-matched** (a cloud-only derive scored against a unioned baseline will
+  false-collapse the portal/pipeline classes — observed live). Baseline persisted at
+  `org/modules/graph/grain_baseline.json` (per-class counts of the certified graph).
+
+**Proof (2026-06-11, real data):** the sentinel PASSES the certified-clean unioned stitch graph
+(`kuzu_stitch_db`, 2901 nodes, 0 violations) and FAILS the phantom graph (`kuzu_nessie_db`, 24,831 nodes)
+on **both** bars — AC-GRAIN.1 flags 23,656/23,690 S3_BUCKET no-`/` violations (the incident), AC-GRAIN.2
+flags the 696.76× S3_BUCKET spike. Enforced-forever, not fixed-once. Regression test:
+`org/modules/graph/test_grain_sentinel.py` (4 cases incl. legit-slash classes NOT flagged). Wired
+additively into the comp-aws run via `compute_metrics(...)["grain"]` with a hard-fail (`sys.exit(3)`) in
+`cmd_metrics`. Same primitive serves NFRA_GRAPHS D5 (comp-graph) and the comp-aws cert path.
+
 ## 7. The cert artifact (what CVO emits per class)
 A CVO-signed scorecard: `{class, compiler_commit, oracle_version, live_pull_timestamp,
 headline_F1, P, R, {enum_F1, typing_acc, edge_F1, provenance_acc}, untyped_count,

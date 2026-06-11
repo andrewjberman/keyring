@@ -1,0 +1,32 @@
+{
+  "certified": "2026-06-11",
+  "source": "kuzu_stitch_db unioned (post-D5-fix bd5a6a82c)",
+  "per_class": {
+    "S3_BUCKET": 34,
+    "S3_BUCKET_POLICY": 11,
+    "IAM_ROLE": 120,
+    "EC2_INSTANCE": 24,
+    "LAMBDA": 173,
+    "EVENT_RULE": 98,
+    "SNS_TOPIC": 8,
+    "SQS_QUEUE": 4,
+    "DYNAMODB_TABLE": 37,
+    "CLOUDFRONT_DISTRIBUTION": 4,
+    "SECRET": 61,
+    "KMS_KEY": 8,
+    "CW_ALARM": 35,
+    "LOG_GROUP": 199,
+    "STATE_MACHINE": 1,
+    "EVENT_SOURCE": 72,
+    "IAM_POLICY": 273,
+    "INSTANCE_PROFILE": 10,
+    "SERVICE_PRINCIPAL": 5,
+    "EXTERNAL_ENDPOINT": 3,
+    "PORTAL_BUNDLE": 1,
+    "PORTAL_COMPONENT": 27,
+    "REACT_QUERY_KEY": 32,
+    "API_ROUTE": 166,
+    "S3_DATA_KEY": 243,
+    "GOLD_SCRIPT": 1252
+  }
+}

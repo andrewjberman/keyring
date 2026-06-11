@@ -23,6 +23,7 @@ Author: 0.7.0_AE_CloudOps. Pattern: extends comp-iam / comp-lambdamap (PRD AC6).
 """
 from __future__ import annotations
 import argparse
+import sys
 import json
 import tarfile
 import io
@@ -1771,6 +1772,7 @@ def compute_metrics(graph):
     cd = graph.get("classes_data", {})
     per_class, drift = {}, Counter()
     untyped = 0
+    flat_nodes = []  # for the grain sentinel (NFRA_GRAPHS D5 / AC-GRAIN)
     for cls, d in cd.items():
         ns = d.get("nodes", [])
         per_class[cls] = len(ns)
@@ -1778,6 +1780,7 @@ def compute_metrics(graph):
             drift[n.get("drift_class", "?")] += 1
             if not n.get("type"):
                 untyped += 1
+            flat_nodes.append(n)
     edges = graph.get("edges", [])
     findings = {
         "overperm_roles": sum(1 for n in cd.get("iam", {}).get("nodes", []) if n.get("broad_managed")),
@@ -1788,11 +1791,24 @@ def compute_metrics(graph):
         "cross_account_grants": sum(1 for n in cd.get("external_principal", {}).get("nodes", []) if (n.get("finding") or {}).get("class") == "CROSS_ACCOUNT_GRANT"),
         "live_no_declared_total": drift.get("LIVE-no-DECLARED", 0),
     }
+    # AC-GRAIN sentinel (NFRA_GRAPHS D5): structural wrong-grain catch (e.g. an
+    # S3 object-key minted as an S3_BUCKET). Additive metric; cmd_metrics hard-fails on it.
+    grain = {"passed": True, "violations": []}
+    try:
+        from grain_sentinel import run_grain_sentinel, IDENTITY_FORMAT_INVARIANTS  # noqa: F401
+        _gr = run_grain_sentinel(flat_nodes)  # AC-GRAIN.1 always; AC-GRAIN.2 when a baseline is supplied
+        grain = {"passed": _gr.passed,
+                 "violations": [{"bar": v.bar, "node_type": v.node_type,
+                                 "detail": v.detail, "samples": v.samples}
+                                for v in _gr.violations]}
+    except Exception as _e:  # sentinel import/runtime issue must not break metrics
+        grain = {"passed": None, "error": str(_e)}
     return {
         "node_total": sum(per_class.values()), "edge_total": len(edges), "untyped": untyped,
         "per_class": per_class, "drift_distribution": dict(drift),
         "edge_types": dict(Counter(e["edge_type"] for e in edges)),
         "security_findings": findings,
+        "grain": grain,
     }
 
 def _node_keys(graph):
@@ -1832,7 +1848,14 @@ def cmd_dual_managed(args):
 
 def cmd_metrics(args):
     graph = json.load(open(args.graph)) if args.graph else cmd_derive(argparse.Namespace(cls=None, out=None))
-    print(json.dumps(compute_metrics(graph), indent=2, default=str))
+    m = compute_metrics(graph)
+    print(json.dumps(m, indent=2, default=str))
+    # AC-GRAIN hard-fail (NFRA_GRAPHS D5): a wrong-grain class fails the run.
+    g = m.get("grain", {})
+    if g.get("passed") is False:
+        print("\nGRAIN-SENTINEL: FAIL — wrong-grain class detected (AC-GRAIN). See grain.violations.",
+              file=sys.stderr)
+        sys.exit(3)
 
 def cmd_diff(args):
     ga = json.load(open(args.prior))
@@ -2125,7 +2148,7 @@ def cmd_iceberg_commit(args):
 
     import time
     nessie_uri    = args.nessie_uri or "http://nessie.opal-globgrph.local:19120/api/v2"
-    warehouse_uri = args.warehouse  or "s3://opal-313476888478-globgrph/warehouse"
+    warehouse_uri = args.warehouse  or "s3://opal-313476888478-globgrph/warehouse"  # noqa: F841  reference-only (catalog uses warehouse name "default"; see comment below)
     branch        = args.branch     or "main"
     batch_ts      = int(time.time() * 1000)
 
