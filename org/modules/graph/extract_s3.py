@@ -243,12 +243,16 @@ def _extract_functions_with_s3(content: str, constants: dict[str, str] = None) -
             for m in pattern.finditer(chunk):
                 key = m.group(1) or (m.group(2) if m.lastindex >= 2 else None)
                 if key and '/' in key and not key.startswith('{'):
-                    keys.add(_clean_s3_key(key))
+                    ck = _clean_s3_key(key)
+                    if _is_valid_s3_key(ck):
+                        keys.add(ck)
 
         for m in _S3_KEY_LITERAL.finditer(chunk):
             raw = m.group(0).strip("'\"")
             if '/' in raw:
-                keys.add(_clean_s3_key(raw))
+                ck = _clean_s3_key(raw)
+                if _is_valid_s3_key(ck):
+                    keys.add(ck)
 
         # Constant-based patterns: _save_json(data, TIMESERIES_CHART, ...)
         for pattern in (_S3_HELPER_CONST, _S3_PUT_CONST):
@@ -272,6 +276,23 @@ def _clean_s3_key(key: str) -> str:
     return key
 
 
+# A real S3 key path: word chars + / _ - . * = : % + only (after _clean_s3_key
+# replaces {...} with *). NFRA_GRAPHS D5: the broad ['"]([^'"]+)['"] capture
+# patterns (re.DOTALL) can pair a quote inside a code expression with the next
+# string literal far below, over-capturing a code fragment + comment as a fake
+# key (e.g. "].read()))\n\n# Transaction types ...") that slips through the bare
+# '/' in key filter when the spanned text contains a slash. This validator
+# rejects any candidate carrying whitespace, quotes, or Python-syntax chars, so
+# only plausible key paths become S3_ARTIFACT nodes (kills the comp-trace
+# junk-node class the GLOBGRPH stitch 0-dangling check surfaced 2026-06-11).
+_VALID_S3_KEY = re.compile(r'[\w/.*=:%+-]+\Z')
+
+
+def _is_valid_s3_key(key: str) -> bool:
+    """True only for plausible S3 key paths (post-_clean_s3_key)."""
+    return bool(key) and '/' in key and bool(_VALID_S3_KEY.match(key))
+
+
 def _extract_s3_reads(content: str, constants: dict[str, str] = None) -> set[str]:
     """Extract all S3 keys read by a file."""
     if constants is None:
@@ -281,12 +302,16 @@ def _extract_s3_reads(content: str, constants: dict[str, str] = None) -> set[str
         for m in pattern.finditer(content):
             key = m.group(1) or (m.group(2) if m.lastindex >= 2 else None)
             if key and '/' in key and not key.startswith('{'):
-                keys.add(_clean_s3_key(key))
+                ck = _clean_s3_key(key)
+                if _is_valid_s3_key(ck):
+                    keys.add(ck)
 
     for m in _S3_READ_PARQUET.finditer(content):
         key = m.group(1)
         if '/' in key:
-            keys.add(_clean_s3_key(key))
+            ck = _clean_s3_key(key)
+            if _is_valid_s3_key(ck):
+                keys.add(ck)
 
     # Constant-based reads: s3.get_object(Key=CONSTANT)
     for m in _S3_GET_CONST.finditer(content):
@@ -622,6 +647,8 @@ def extract_s3_edges(graph: TraceGraph, workspace_root: Path):
                     key = m.group(1) or (m.group(2) if m.lastindex >= 2 else None)
                     if key and '/' in key and not key.startswith('{'):
                         s3_key = _clean_s3_key(key)
+                        if not _is_valid_s3_key(s3_key):
+                            continue
                         s3_node_id = f"s3:{s3_key}"
                         graph.add_node(Node(
                             id=s3_node_id, node_type="S3_ARTIFACT", label=s3_key,
@@ -686,7 +713,7 @@ def extract_s3_edges(graph: TraceGraph, workspace_root: Path):
                         lambda_ids.add(tf_node_id)
 
                     for s3_key in io.get("s3_reads", set()):
-                        if "/" not in s3_key:
+                        if not _is_valid_s3_key(s3_key):
                             continue
                         s3_node_id = f"s3:{s3_key}"
                         graph.add_node(Node(
@@ -698,7 +725,7 @@ def extract_s3_edges(graph: TraceGraph, workspace_root: Path):
                                 edge_type="READS_S3",
                             ))
                     for s3_key in io.get("s3_writes", set()):
-                        if "/" not in s3_key:
+                        if not _is_valid_s3_key(s3_key):
                             continue
                         s3_node_id = f"s3:{s3_key}"
                         graph.add_node(Node(
