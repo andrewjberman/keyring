@@ -399,8 +399,8 @@ def main() -> int:
 
     p_check = sub.add_parser("check", help="drift detection (default)")
     p_check.add_argument("--file", help="only check sites in this file")
-    p_check.add_argument("--lane", choices=["bd", "inf", "multifirm"],
-                         help="filter to one lane (V4.021 Cat 3.4)")
+    p_check.add_argument("--lane", choices=["bd", "inf", "cot", "multifirm"],
+                         help="filter to one lane (V4.021 Cat 3.4; cot added NFRA_DTAFLP TO-4)")
     p_check.set_defaults(func=cmd_check)
 
     p_index = sub.add_parser("index", help="rewrite sites[] in config")
