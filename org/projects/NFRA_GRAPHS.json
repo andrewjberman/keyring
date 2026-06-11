@@ -14,10 +14,16 @@
   "phase": "P0 - PRD AUTHORED 2026-06-11 (1.0.0_SA_CTO, docs/architecture/NFRA_GRAPHS.md v0.1) + manifest scaffold (org/modules/graph/graph-call-manifest.yaml v0.1 seeded with high-frequency canonical entries) + the query-vs-rebuild contract doctrine. Ready for COO decomposition. Deliverables: D1 manifest (headline, full population = AC1 close-gate) + D2 comp-platinum caching + D3 comp-graph status/freshness contract + D4 trace->Kuzu unified query (converge P2-STITCH) + D5 grain sentinel (CVO) + AC5-dangling reconciliation + D6 CLAUDE.md mandate + comp-manifest-check gate. Andrew confirmed all CTO recs correct 2026-06-11.",
   "blocking": "No hard blockers. P0/P1 (manifest, comp-platinum cache, freshness contract, grain sentinel, AC5 reconciliation) have no cross-dependency. P2 (D4 cross-layer unified query) converges with NFRA_GLOBGRPH P2-STITCH (AE~B building). Manifest gate ramps advisory->blocking behind AC1 coverage so it doesn't false-block before the catalog is complete.",
   "created": "2026-06-11",
-  "pods": ["0.7", "0.4"],
-  "depends_on": ["NFRA_GLOBGRPH", "NFRA_COMPAWS"],
+  "pods": [
+    "0.7",
+    "0.4"
+  ],
+  "depends_on": [
+    "NFRA_GLOBGRPH",
+    "NFRA_COMPAWS"
+  ],
   "depends_on_note": "NFRA_GLOBGRPH P2-STITCH provides the trace->Kuzu cross-layer join (D4); NFRA_COMPAWS WAVE-4 provides the cloud graph + the grain-sentinel cert; NFRA_DTAFLP provides build_firm_gold_dag/FIRM_BUCKET (one firm model). No blocking cross-dep for P0/P1.",
   "thread_counter": 0,
   "threads": [],
-  "current_phase": "P0 PRD + manifest scaffold authored 2026-06-11 (Andrew-directed; all CTO architecture recs confirmed correct). Awaiting COO decomposition into TOs (P0 done; P1 parallel; P2 converges P2-STITCH; P3 close-gate = manifest full coverage AC1 + mandate gate live in CLAUDE.md)."
+  "current_phase": "CORE COMPLETE 2026-06-11 ~2015Z \u2014 D1-D6 ALL DELIVERED. D1 manifest full-coverage (CVO D1-AC1 cert 00c5b3b34) + D2 comp-platinum cache (0bc6939cc, 0.18s warm) + D3 comp-graph status/freshness (0bc6939cc) + D4 trace->Kuzu unified query (satisfied by P2-STITCH f754164b4) + D5 grain-sentinel (CVO cert d57900ab7, phantom-node class structural-FAIL enforced-forever; joint AE~B reconcile) + D6 comp-manifest-check advisory-wired (AC4 PASS; ramp->blocking = P3, CTO+DS-coordinated). Close-board cert ACs 4/4 (AC10/AC7-AC5+AC2/D1-AC1/D5) mod AC3 N->N+1 diff-oracle (structurally AM nightly). REMAINING: D7 anomaly-pilot + D8 critical-surface monitoring = scaffolded (d45da13af), Andrew-gated on the combined DE dispatch greenlight (DE not yet spawned). comp-manifest-check advisory->blocking ramp = P3 follow-up."
 }
