@@ -24,6 +24,17 @@ surfaces:
     why: "Andrew: must ALWAYS be right; any logic/resource change or break attached to benchmark/ raises a flag."
     baseline: { signed: false, ref: null }   # populate via comp-xref --save per surface x firm at carve-time
 
+  - id: model_portfolios.headline
+    severity: SEV1
+    firms: all
+    carve:
+      frontend_root: "the 'Portfolio Analytics' headline panel at the top of the ModelPortfolios page (component: PartnerAnalytics per comp-platinum summary -- display label 'Portfolio Analytics'; verify exact component at carve-time)"
+      backend_chain: "fetch -> route -> Lambda (opal-partners-data) -> S3 platinum (partner_analytics_*.json) / dynamodb (etf-classifications, bd-securities) -> gold script -> upstream"
+      backend_depth: full
+      frontend_depth: existence
+    why: "Andrew: the Portfolio Analytics headline panel at the top of the page -- SEV1, must always be right (same tier as benchmark)."
+    baseline: { signed: false, ref: null }
+
   - id: advisor_intelligence
     severity: SEV1
     firms: all
