@@ -26,8 +26,8 @@ meta:
     us-east-2 versioning=Enabled+PAB-all-true; GAP-5 tf-state versioning=Enabled/MFADelete=Disabled/repl=none; GAP-6 2 CF OAIs + OAC resolved). s3_trigger_edges 6->7; event_rule_nodes 1->2. fixture_status
     -> CERTIFIED (S3 sub-class 0-diff vs live).'
   version: v1.1
-  resnapshot: 2026-06-11 CVO — boto3 live enum (30 live, versioning+PAB scored axes) + 4 trade-recon DECLARED-no-LIVE state-orphans (Andrew-directed deletion, routed AE). node_f1=1.0 vs current derive (34);
-    -> 30 post AE state cleanup.
+  resnapshot: 2026-06-11 CVO — boto3 live enum, 30 live buckets; 4 trade-recon DECLARED-no-LIVE state-orphans DELETED (AE terraform state rm landed, Andrew-directed); oracle == live == derive == 30, node_f1
+    1.0
 s3_buckets:
 - bucket_name: opalinvest-portal
   region: us-east-1
@@ -303,72 +303,6 @@ s3_buckets:
     declared_state: Market data v2; FRED yield curve / macro data
   event_notifications: []
   drift_class: LIVE-and-DECLARED
-- bucket_name: opal-trade-recon-ui
-  region: us-east-1
-  tf_managed: true
-  owner_pipeline: trade-pipeline
-  purpose_class: portal
-  versioning_enabled: true
-  public_access_block: true
-  website_hosting: true
-  provenance:
-    tf_module: trade-pipeline
-    tf_resource: aws_s3_bucket.trade_recon_ui
-    declared_state: Trade recon static UI site; CF-fronted; TF bucket policy (OAC)
-  bucket_policy_tf_managed: true
-  bucket_policy_tf_resource: 'trade-pipeline/cloudfront-trade-recon.tf: aws_s3_bucket_policy.trade_recon_ui'
-  event_notifications: []
-  drift_class: DECLARED-no-LIVE (PENDING-DELETION)
-  notes: Live bucket DESTROYED in ADHC_CDNCOHT trade-recon teardown 2026-06-11; .tf already clean (0 refs); ORPHAN persists in trade-pipeline terraform STATE only -> compiler derives DECLARED-no-LIVE. Andrew-directed
-    DELETION 2026-06-11 (terraform state rm on shared trade-pipeline module, routed AE). Oracle drops this entry to reach 30 once AE lands the state cleanup.
-- bucket_name: opal-trade-recon-confirms
-  region: us-east-1
-  tf_managed: true
-  owner_pipeline: trade-pipeline
-  purpose_class: data
-  versioning_enabled: true
-  public_access_block: true
-  website_hosting: false
-  provenance:
-    tf_module: trade-pipeline
-    tf_resource: aws_s3_bucket.trade_recon_confirms
-    declared_state: Trade recon confirms data
-  event_notifications: []
-  drift_class: DECLARED-no-LIVE (PENDING-DELETION)
-  notes: Live bucket DESTROYED in ADHC_CDNCOHT trade-recon teardown 2026-06-11; .tf already clean (0 refs); ORPHAN persists in trade-pipeline terraform STATE only -> compiler derives DECLARED-no-LIVE. Andrew-directed
-    DELETION 2026-06-11 (terraform state rm on shared trade-pipeline module, routed AE). Oracle drops this entry to reach 30 once AE lands the state cleanup.
-- bucket_name: opal-trade-recon-reports
-  region: us-east-1
-  tf_managed: true
-  owner_pipeline: trade-pipeline
-  purpose_class: data
-  versioning_enabled: true
-  public_access_block: true
-  website_hosting: false
-  provenance:
-    tf_module: trade-pipeline
-    tf_resource: aws_s3_bucket.trade_recon_reports
-    declared_state: Trade recon reports output
-  event_notifications: []
-  drift_class: DECLARED-no-LIVE (PENDING-DELETION)
-  notes: Live bucket DESTROYED in ADHC_CDNCOHT trade-recon teardown 2026-06-11; .tf already clean (0 refs); ORPHAN persists in trade-pipeline terraform STATE only -> compiler derives DECLARED-no-LIVE. Andrew-directed
-    DELETION 2026-06-11 (terraform state rm on shared trade-pipeline module, routed AE). Oracle drops this entry to reach 30 once AE lands the state cleanup.
-- bucket_name: opal-trade-recon-requests
-  region: us-east-1
-  tf_managed: true
-  owner_pipeline: trade-pipeline
-  purpose_class: data
-  versioning_enabled: true
-  public_access_block: true
-  website_hosting: false
-  provenance:
-    tf_module: trade-pipeline
-    tf_resource: aws_s3_bucket.trade_recon_requests
-    declared_state: Trade form request inputs
-  event_notifications: []
-  drift_class: DECLARED-no-LIVE (PENDING-DELETION)
-  notes: Live bucket DESTROYED in ADHC_CDNCOHT trade-recon teardown 2026-06-11; .tf already clean (0 refs); ORPHAN persists in trade-pipeline terraform STATE only -> compiler derives DECLARED-no-LIVE. Andrew-directed
-    DELETION 2026-06-11 (terraform state rm on shared trade-pipeline module, routed AE). Oracle drops this entry to reach 30 once AE lands the state cleanup.
 - bucket_name: opal-data-trade-submissions
   region: us-east-1
   tf_managed: true
