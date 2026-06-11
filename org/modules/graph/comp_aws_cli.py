@@ -671,13 +671,25 @@ def _sfn_task_invokes(definition_str):
 # ONLY -- the certified-13 derive paths are untouched. Each live_* returns typed
 # nodes carrying an `arn` (so _node_arn returns it verbatim) for reconciliation.
 # ---------------------------------------------------------------------------
+def _apigw_paged(c, method, **kwargs):
+    """Drain an apigatewayv2 paged call (NextToken protocol). These endpoints default
+    to MaxResults=25 and SILENTLY truncate -- the unpaginated form cost 38/63 routes on
+    opal-portal-data-proxy-api (CVO WAVE-4 cert finding, 2026-06-11)."""
+    items = []
+    resp = getattr(c, method)(**kwargs)
+    items += resp.get("Items", [])
+    while resp.get("NextToken"):
+        resp = getattr(c, method)(NextToken=resp["NextToken"], **kwargs)
+        items += resp.get("Items", [])
+    return items
+
 def live_apigw():
     """API_GW nodes (aws_apigatewayv2_api). The HTTP/WebSocket serving layer between
     CloudFront/clients and Lambda that the certified graph dead-ended at."""
     c = _boto("apigatewayv2")
     nodes = []
     try:
-        items = c.get_apis().get("Items", [])
+        items = _apigw_paged(c, "get_apis")
     except Exception:
         return nodes
     for a in items:
@@ -697,20 +709,20 @@ def live_api_routes():
     c = _boto("apigatewayv2")
     nodes = []
     try:
-        apis = c.get_apis().get("Items", [])
+        apis = _apigw_paged(c, "get_apis")
     except Exception:
         return nodes
     for a in apis:
         aid = a["ApiId"]
         integ = {}
         try:
-            for it in c.get_integrations(ApiId=aid).get("Items", []):
+            for it in _apigw_paged(c, "get_integrations", ApiId=aid):
                 integ[it["IntegrationId"]] = {"type": it.get("IntegrationType"),
                                               "uri": it.get("IntegrationUri")}
         except Exception:
             pass
         try:
-            routes = c.get_routes(ApiId=aid).get("Items", [])
+            routes = _apigw_paged(c, "get_routes", ApiId=aid)
         except Exception:
             routes = []
         for r in routes:
