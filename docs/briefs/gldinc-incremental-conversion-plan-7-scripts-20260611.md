@@ -154,6 +154,24 @@ documented (never-widen-conscious). Then A_01 incremental re-proves parity
 against the stabilized oracle and resumes. Diagnostic artifacts:
 /tmp/a01_diag_{full1,full2,incr}.parquet.
 
+**Oracle-fix ENGINEERED + PROVEN (AE, 2026-06-11 ~2146Z; DS split option-1,
+handed off for DS review/commit/deploy):**
+- Fix: _file_date + _intra_pos provenance in _load_one; total-order sort
+  before BOTH dedups (txn_id and (account_id, trade_date)); survivor =
+  "latest file, last row" everywhere. Plus a LOAD-COMPLETENESS GUARD: a
+  failed file read now raises instead of WARN-and-continue.
+- Determinism proof: 4/4 complete-load builds BYTE-IDENTICAL (14,847 rows,
+  0 sym_diff, 0 cell mismatches). Pre-fix code never matched twice.
+- SECOND pre-existing defect caught live during the proof: one transient S3
+  read failure silently dropped a file (192 raw rows) and shifted 18 SCD keys
+  — the swallowed-exception load path made even a deterministic oracle
+  non-reproducible. Hence the guard (failure-path-only change).
+- Changed-keys delta: 122 keys / 60 accounts vs the pre-fix sample;
+  account-level containment within the enumerated 79-key tie-population =
+  TRUE. txn_id sort is load-bearing (32,277 cross-file txn_ids dataset-wide —
+  the earlier 3-pair disjointness probe undersampled).
+- A_02 confirmed needing no equivalent fix (no cross-file ties in fees).
+
 ## 4e. B_02 canonical_lots — design (third pattern: PER-DATE INPUT FINGERPRINT)
 
 Empirical S3-version evidence (etag comparison across nightly rebuilds):
