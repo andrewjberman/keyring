@@ -35,3 +35,7 @@ comp-pipescript/comp-validate N/A — no gold/silver/bronze or pipeline-script w
 - **[me, on GO]** GO_CAUSALITY_TEARDOWN=1 execute → shared-infra saved-plan apply via safe-apply (HALTGT) → --verify → repo cleanup commit (source-map 8 entries + agreed scope) → RAVC3 evidence to CTO+COO.
 - **[me, ~6/25]** smartx parity-verify + trigger re-enable after base-AE rebuild handoff.
 - **[DE]** portal FE causality dead code (flagged in WO, not mine); market-updates page-section question (brief §7).
+
+## Addendum (22:1xZ) — gate outcomes
+- CTO GO with condition 1 (API-GW rollback capture) -> implemented ba71cb174 (capture both stage deploymentIds pre-delete + inline 38-survivor byte-identical check post-redeploy/pre-lambda-delete w/ AUTO stage rollback + manual --rollback). CTO re-verified -> UNCONDITIONAL GO.
+- COO: APPROVED-IN-PRINCIPLE, operational GO HELD to a calm daytime window tomorrow (timing hold: live portal API + CPU-saturated box tonight + zero urgency). STOOD DOWN; execute only on COO explicit GO post-AM-nightly-review. Note for tomorrow: re-plan the shared-infra saved plan fresh if shared-infra state moved overnight.
