@@ -1,7 +1,7 @@
 script_id: INF_B_00.canonical_holdings
-path: data/orion/scripts/gold/INF_B_00.canonical_holdings.py
+path: data/inf/scripts/gold/INF_B_00.canonical_holdings.py
 merge_sites:
-- line: 287
+- line: 288
   func_name: build_snapshot
   result_var: merged
   left_expr: pos
@@ -11,36 +11,36 @@ merge_sites:
   how: left
   flagged_cols:
   - col: representative_name
-    line: 291
+    line: 292
     pattern: subscript
   - col: representative_name
-    line: 291
+    line: 292
     pattern: subscript
   - col: ticker
-    line: 298
-    pattern: subscript
-  - col: representative_name
-    line: 300
+    line: 299
     pattern: subscript
   - col: representative_name
     line: 301
     pattern: subscript
-  - col: custodian
+  - col: representative_name
     line: 302
     pattern: subscript
-  - col: current_shares
+  - col: custodian
     line: 303
     pattern: subscript
-  - col: current_price
+  - col: current_shares
     line: 304
     pattern: subscript
-  - col: current_value
+  - col: current_price
     line: 305
     pattern: subscript
-  - col: name
-    line: 299
+  - col: current_value
+    line: 306
     pattern: subscript
-- line: 392
+  - col: name
+    line: 300
+    pattern: subscript
+- line: 393
   func_name: build_snapshot_reconciled
   result_var: merged
   left_expr: pmv_out
@@ -51,16 +51,13 @@ merge_sites:
   how: outer
   flagged_cols:
   - col: source
-    line: 400
+    line: 401
     pattern: subscript
   - col: pmv_market_value
-    line: 401
+    line: 402
     pattern: subscript
   - col: market_value
-    line: 401
-    pattern: subscript
-  - col: _merge
-    line: 403
+    line: 402
     pattern: subscript
   - col: _merge
     line: 404
@@ -68,9 +65,12 @@ merge_sites:
   - col: _merge
     line: 405
     pattern: subscript
+  - col: _merge
+    line: 406
+    pattern: subscript
   - col: _bronze_mv
-    line: 408
+    line: 409
     pattern: subscript
   - col: market_value
-    line: 408
+    line: 409
     pattern: subscript

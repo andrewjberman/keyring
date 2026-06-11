@@ -3,7 +3,7 @@
   "scan_root_paths": [
     "infra/aws/lambda/",
     "infra/aws/lambda-edge/",
-    "data/orion/scripts/",
+    "data/inf/scripts/",
     "data/black_diamond/scripts/"
   ],
   "notes": "Post-FIRMSEP.05 cleanup baseline. Primary dup-source candidate (lambda/shared-advisor-router/ v1 stale copy) has been removed — Glob infra/aws/lambda/shared-advisor-router/ returns no files. One needs_investigation entry found (public-data-router). tier_policy.mjs duplication is intentional (bun-bundle constraint, identical SHA). Lambda-bundled silver scripts are expected pattern for inf-pipeline Lambdas; all entries flagged for TO-1 drift-check scope.",
@@ -68,10 +68,10 @@
         "build_tax_dim.py"
       ],
       "canonical_paths": [
-        "data/orion/scripts/silver/convert_orion_api_to_silver.py",
-        "data/orion/scripts/silver/_orion_api_silver_lib.py",
-        "data/orion/scripts/silver/build_billing_dim.py",
-        "data/orion/scripts/silver/build_tax_dim.py"
+        "data/inf/scripts/silver/convert_orion_api_to_silver.py",
+        "data/inf/scripts/silver/_orion_api_silver_lib.py",
+        "data/inf/scripts/silver/build_billing_dim.py",
+        "data/inf/scripts/silver/build_tax_dim.py"
       ],
       "drift_check": "out of scope for this baseline (TO-1 territory)"
     },
@@ -85,11 +85,11 @@
         "rate_limiter.py"
       ],
       "canonical_paths": [
-        "data/orion/scripts/silver/convert_orion_api_to_silver.py",
-        "data/orion/scripts/silver/_orion_api_silver_lib.py",
-        "data/orion/manual_api/pull_inflection_transactions_v2.py",
-        "data/orion/scripts/silver/jwt_freshness.py",
-        "data/orion/scripts/silver/rate_limiter.py"
+        "data/inf/scripts/silver/convert_orion_api_to_silver.py",
+        "data/inf/scripts/silver/_orion_api_silver_lib.py",
+        "data/inf/manual_api/pull_inflection_transactions_v2.py",
+        "data/inf/scripts/silver/jwt_freshness.py",
+        "data/inf/scripts/silver/rate_limiter.py"
       ],
       "drift_check": "out of scope for this baseline (TO-1 territory)"
     },
@@ -103,11 +103,11 @@
         "rate_limiter.py"
       ],
       "canonical_paths": [
-        "data/orion/scripts/silver/convert_orion_api_to_silver.py",
-        "data/orion/scripts/silver/_orion_api_silver_lib.py",
-        "data/orion/manual_api/pull_inflection_representatives.py",
-        "data/orion/scripts/silver/jwt_freshness.py",
-        "data/orion/scripts/silver/rate_limiter.py"
+        "data/inf/scripts/silver/convert_orion_api_to_silver.py",
+        "data/inf/scripts/silver/_orion_api_silver_lib.py",
+        "data/inf/manual_api/pull_inflection_representatives.py",
+        "data/inf/scripts/silver/jwt_freshness.py",
+        "data/inf/scripts/silver/rate_limiter.py"
       ],
       "drift_check": "out of scope for this baseline (TO-1 territory)"
     },
@@ -121,11 +121,11 @@
         "rate_limiter.py"
       ],
       "canonical_paths": [
-        "data/orion/scripts/silver/convert_orion_api_to_silver.py",
-        "data/orion/scripts/silver/_orion_api_silver_lib.py",
-        "data/orion/manual_api/pull_inflection_positions_daily.py",
-        "data/orion/scripts/silver/jwt_freshness.py",
-        "data/orion/scripts/silver/rate_limiter.py"
+        "data/inf/scripts/silver/convert_orion_api_to_silver.py",
+        "data/inf/scripts/silver/_orion_api_silver_lib.py",
+        "data/inf/manual_api/pull_inflection_positions_daily.py",
+        "data/inf/scripts/silver/jwt_freshness.py",
+        "data/inf/scripts/silver/rate_limiter.py"
       ],
       "drift_check": "out of scope for this baseline (TO-1 territory)"
     },
@@ -139,11 +139,11 @@
         "rate_limiter.py"
       ],
       "canonical_paths": [
-        "data/orion/scripts/silver/convert_orion_api_to_silver.py",
-        "data/orion/scripts/silver/_orion_api_silver_lib.py",
-        "data/orion/manual_api/pull_inflection_new_portfolio.py",
-        "data/orion/scripts/silver/jwt_freshness.py",
-        "data/orion/scripts/silver/rate_limiter.py"
+        "data/inf/scripts/silver/convert_orion_api_to_silver.py",
+        "data/inf/scripts/silver/_orion_api_silver_lib.py",
+        "data/inf/manual_api/pull_inflection_new_portfolio.py",
+        "data/inf/scripts/silver/jwt_freshness.py",
+        "data/inf/scripts/silver/rate_limiter.py"
       ],
       "drift_check": "out of scope for this baseline (TO-1 territory)"
     },
@@ -154,8 +154,8 @@
         "jwt_freshness.py"
       ],
       "canonical_paths": [
-        "data/orion/scripts/silver/orion_billing_dim.py",
-        "data/orion/scripts/silver/jwt_freshness.py"
+        "data/inf/scripts/silver/orion_billing_dim.py",
+        "data/inf/scripts/silver/jwt_freshness.py"
       ],
       "drift_check": "out of scope for this baseline (TO-1 territory)"
     },
@@ -166,8 +166,8 @@
         "jwt_freshness.py"
       ],
       "canonical_paths": [
-        "data/orion/manual_api/pull_inflection_performance_dim.py",
-        "data/orion/scripts/silver/jwt_freshness.py"
+        "data/inf/manual_api/pull_inflection_performance_dim.py",
+        "data/inf/scripts/silver/jwt_freshness.py"
       ],
       "drift_check": "out of scope for this baseline (TO-1 territory)"
     },
@@ -178,8 +178,8 @@
         "jwt_freshness.py"
       ],
       "canonical_paths": [
-        "data/orion/scripts/silver/orion_tax_dim.py",
-        "data/orion/scripts/silver/jwt_freshness.py"
+        "data/inf/scripts/silver/orion_tax_dim.py",
+        "data/inf/scripts/silver/jwt_freshness.py"
       ],
       "drift_check": "out of scope for this baseline (TO-1 territory)"
     }

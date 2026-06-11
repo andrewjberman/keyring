@@ -1,5 +1,5 @@
 script_id: INF_D_02.advisor_client_detail
-path: data/orion/scripts/gold/INF_D_02.advisor_client_detail.py
+path: data/inf/scripts/gold/INF_D_02.advisor_client_detail.py
 classification: NEITHER
 emit_sites:
 - line 156

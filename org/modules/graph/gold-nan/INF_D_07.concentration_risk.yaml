@@ -1,5 +1,5 @@
 script_id: INF_D_07.concentration_risk
-path: data/orion/scripts/gold/INF_D_07.concentration_risk.py
+path: data/inf/scripts/gold/INF_D_07.concentration_risk.py
 classification: NEITHER
 emit_sites:
 - line 207

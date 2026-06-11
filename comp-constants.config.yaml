@@ -18,8 +18,8 @@ search_surfaces:
   - data/black_diamond/scripts/**/*.py
   - infra/aws/lambda/bd-pipeline/**/*.py
   inf:
-  - data/orion/scripts/**/*.py
-  - data/orion/manual_api/**/*.py
+  - data/inf/scripts/**/*.py
+  - data/inf/manual_api/**/*.py
   - infra/aws/lambda/inf-pipeline/**/*.py
   - infra/aws/lambda/inf-portal-*/**/*.py
   multifirm:
@@ -238,31 +238,31 @@ constants:
   type: set
   canonical_value: '{3, 6, 11, 12}'
   sites:
-  - file: data/orion/scripts/silver/_orion_api_silver_lib.py
+  - file: data/inf/scripts/silver/_orion_api_silver_lib.py
     line: 36
     value: '{3, 6, 11, 12}'
     comment: 'INFLECTION_REP_IDS = {3, 6, 11, 12}  # authoritative silver-lib definition'
-  - file: data/orion/scripts/silver/convert_orion_api_to_silver.py
+  - file: data/inf/scripts/silver/convert_orion_api_to_silver.py
     line: 501
     value: '{3, 6, 11, 12}'
     comment: 'INFLECTION_REP_IDS = {3, 6, 11, 12}  # inline copy in convert script'
-  - file: data/orion/scripts/gold/INF_D_08.nmec_nmnc_nna.py
+  - file: data/inf/scripts/gold/INF_D_08.nmec_nmnc_nna.py
     line: 17
     value: frozenset({3, 6, 11, 12})
     comment: 'INFLECTION_REP_IDS: frozenset[int] = frozenset({3, 6, 11, 12})  # ADVI_INFGRD.001 + joe_brandenburg rep_id=6'
-  - file: data/orion/scripts/gold/INF_D_04.client_portal_summary.py
+  - file: data/inf/scripts/gold/INF_D_04.client_portal_summary.py
     line: 102
     value: '{''3'', ''6'', ''11'', ''12''}'
     comment: 'INFLECTION_REP_IDS = {''3'', ''6'', ''11'', ''12''}  # str-set form for string-typed rep_id column'
-  - file: data/orion/manual_api/pull_inflection_transactions_v2.py
+  - file: data/inf/manual_api/pull_inflection_transactions_v2.py
     line: 71
     value: '"3,6,11,12"'
     comment: 'INFLECTION_REP_IDS = "3,6,11,12"  # Joe Brandenburg rep_id=6 added 2026-05-07 (INFNNA.001 root cause)'
-  - file: data/orion/manual_api/probe_inflec_household_rep_mapping.py
+  - file: data/inf/manual_api/probe_inflec_household_rep_mapping.py
     line: 44
     value: '[3, 6, 11, 12]'
     comment: 'INFLECTION_REP_IDS = [3, 6, 11, 12]  # IWM, Brandenburg, Scanlan, Lee (core 4)'
-  - file: data/orion/manual_api/create_unified_account_dim_query.py
+  - file: data/inf/manual_api/create_unified_account_dim_query.py
     line: 45
     value: '[3, 6, 11, 12]'
     comment: INFLECTION_REP_IDS = [3, 6, 11, 12]
@@ -274,24 +274,24 @@ constants:
     line: 36
     value: '{3, 6, 11, 12}'
     comment: 'INFLECTION_REP_IDS = {3, 6, 11, 12}  # Lambda-bundled copy of silver lib'
-  - file: data/orion/manual_api/pull_inflection_assets.py
+  - file: data/inf/manual_api/pull_inflection_assets.py
     line: 53
     value: '[3, 11, 12]'
     comment: 'INFLECTION_REP_IDS = [3, 11, 12]  # OLD — missing rep_id=6 (Joe Brandenburg)'
     drift: true
-  - file: data/orion/manual_api/create_tax_dim_queries.py
+  - file: data/inf/manual_api/create_tax_dim_queries.py
     line: 45
     value: '[3, 11, 12]'
     comment: 'INFLECTION_REP_IDS = [3, 11, 12]  # OLD — missing rep_id=6 (Joe Brandenburg)'
     drift: true
-  - file: data/orion/manual_api/pull_inflection_transactions.py
+  - file: data/inf/manual_api/pull_inflection_transactions.py
     line: 49
     value: '"3,11,12"'
     comment: 'INFLECTION_REP_IDS = "3,11,12"  # OLD v1 script — missing rep_id=6; superseded by pull_inflection_transactions_v2.py'
     drift: true
   notes: 'rep_id=6 (Joe Brandenburg, IWM catch-all) added 2026-05-07 as INFNNA.001 root cause fix. 3 drift sites confirmed: pull_inflection_assets.py, create_tax_dim_queries.py, pull_inflection_transactions.py
-    (v1). pull_inflection_transactions.py (v1) is superseded by v2 but still present in codebase. data/orion/scripts/silver/build_assets_dim.py:66 comment also shows old {3, 11, 12} — cosmetic drift in
-    comment only. data/orion/manual_api/pull_inflection_representatives.py:65 has [3, 6, 7, 8, 10, 11, 12] — extended discovery scope, different purpose (not cohort filter). infra/aws/lambda/inf-portal-publisher/lambda_function.py:71
+    (v1). pull_inflection_transactions.py (v1) is superseded by v2 but still present in codebase. data/inf/scripts/silver/build_assets_dim.py:66 comment also shows old {3, 11, 12} — cosmetic drift in
+    comment only. data/inf/manual_api/pull_inflection_representatives.py:65 has [3, 6, 7, 8, 10, 11, 12] — extended discovery scope, different purpose (not cohort filter). infra/aws/lambda/inf-portal-publisher/lambda_function.py:71
     uses private alias _INFLECTION_REP_IDS = frozenset({''3'', ''6'', ''11'', ''12''}) — str-typed, correct.
 
     '
@@ -300,11 +300,11 @@ constants:
   type: str
   canonical_value: '''inflection_wealth_management'''
   sites:
-  - file: data/orion/scripts/gold/INF_D_04b.client_publishers.py
+  - file: data/inf/scripts/gold/INF_D_04b.client_publishers.py
     line: 64
     value: '''inflection_wealth_management'''
     comment: 'INFLECTION_FIRM_TAG = ''inflection_wealth_management''  # used to filter advisor_firm column'
-  - file: data/orion/scripts/gold/INF_D_00d.cumulative_chart.py
+  - file: data/inf/scripts/gold/INF_D_00d.cumulative_chart.py
     line: 69
     value: '''inflection_wealth_management'''
     comment: 'INFLECTION_FIRM_TAG = ''inflection_wealth_management''  # used to filter advisor_firm column'
@@ -317,11 +317,11 @@ constants:
   type: str
   canonical_value: 'PARTNER_FIRM_TAGS[''inflection'']  # => ''inflection_wealth_management'''
   sites:
-  - file: data/orion/scripts/silver/_orion_api_silver_lib.py
+  - file: data/inf/scripts/silver/_orion_api_silver_lib.py
     line: 35
     value: PARTNER_FIRM_TAGS['inflection']
     comment: 'INFLECTION_ADVISOR_FIRM_TAG = PARTNER_FIRM_TAGS[''inflection'']  # silver-lib backwards-compat alias'
-  - file: data/orion/scripts/silver/convert_orion_to_silver.py
+  - file: data/inf/scripts/silver/convert_orion_to_silver.py
     line: 116
     value: PARTNER_FIRM_TAGS['inflection']
     comment: 'INFLECTION_ADVISOR_FIRM_TAG = PARTNER_FIRM_TAGS[''inflection'']  # backwards-compat alias'
@@ -354,11 +354,11 @@ constants:
   type: dict
   canonical_value: '{''inflection'': ''inflection_wealth_management''}'
   sites:
-  - file: data/orion/scripts/silver/_orion_api_silver_lib.py
+  - file: data/inf/scripts/silver/_orion_api_silver_lib.py
     line: 32
     value: '{''inflection'': ''inflection_wealth_management''}'
     comment: 'PARTNER_FIRM_TAGS = {''inflection'': ''inflection_wealth_management''}  # INFGRD registry'
-  - file: data/orion/scripts/silver/convert_orion_to_silver.py
+  - file: data/inf/scripts/silver/convert_orion_to_silver.py
     line: 98
     value: '{''inflection'': ''inflection_wealth_management''}'
     comment: 'PARTNER_FIRM_TAGS = {''inflection'': ''inflection_wealth_management'', # Future: ''keil'': ...}'
@@ -375,7 +375,7 @@ constants:
   type: dict
   canonical_value: '{''inflection'': {3, 6, 11, 12}}'
   sites:
-  - file: data/orion/scripts/silver/convert_orion_to_silver.py
+  - file: data/inf/scripts/silver/convert_orion_to_silver.py
     line: 104
     value: '{''inflection'': {3, 6, 11, 12}}'
     comment: 'PARTNER_REP_IDS: dict[str, set[int]] = {''inflection'': {3, 6, 11, 12}, # Future: ''keil'': {...}}'
@@ -388,7 +388,7 @@ constants:
   type: dict
   canonical_value: '{''inflection'': (150_000_000, 300_000_000)}'
   sites:
-  - file: data/orion/scripts/silver/convert_orion_to_silver.py
+  - file: data/inf/scripts/silver/convert_orion_to_silver.py
     line: 110
     value: '{''inflection'': (150_000_000, 300_000_000)}'
     comment: 'PARTNER_AUA_BOUNDS: dict[str, tuple[float, float]] = {''inflection'': (150_000_000, 300_000_000)  # $150M-$300M}'
@@ -400,7 +400,7 @@ constants:
   type: int
   canonical_value: '150_000_000'
   sites:
-  - file: data/orion/scripts/silver/_orion_api_silver_lib.py
+  - file: data/inf/scripts/silver/_orion_api_silver_lib.py
     line: 38
     value: '150_000_000'
     comment: 'GUARD_B_AUA_LOWER = 150_000_000  # $150M Guard B lower bound (ADVI_INFGRD.002)'
@@ -408,7 +408,7 @@ constants:
     line: 38
     value: '150_000_000'
     comment: 'GUARD_B_AUA_LOWER = 150_000_000  # Lambda-bundled copy'
-  - file: data/orion/scripts/verify/shape_check.py
+  - file: data/inf/scripts/verify/shape_check.py
     line: 47
     value: '150_000_000'
     comment: 'GUARD_B_LOWER = 150_000_000  # verify-only alias (different name: GUARD_B_LOWER)'
@@ -421,7 +421,7 @@ constants:
   type: int
   canonical_value: '300_000_000'
   sites:
-  - file: data/orion/scripts/silver/_orion_api_silver_lib.py
+  - file: data/inf/scripts/silver/_orion_api_silver_lib.py
     line: 39
     value: '300_000_000'
     comment: 'GUARD_B_AUA_UPPER = 300_000_000  # $300M Guard B upper bound (ADVI_INFGRD.002)'
@@ -429,7 +429,7 @@ constants:
     line: 39
     value: '300_000_000'
     comment: 'GUARD_B_AUA_UPPER = 300_000_000  # Lambda-bundled copy'
-  - file: data/orion/scripts/verify/shape_check.py
+  - file: data/inf/scripts/verify/shape_check.py
     line: 48
     value: '300_000_000'
     comment: 'GUARD_B_UPPER = 300_000_000  # verify-only alias (different name: GUARD_B_UPPER)'
@@ -441,7 +441,7 @@ constants:
   type: set
   canonical_value: '{3, 6, 11, 12}'
   sites:
-  - file: data/orion/scripts/verify/shape_check.py
+  - file: data/inf/scripts/verify/shape_check.py
     line: 46
     value: '{3, 6, 11, 12}'
     comment: 'INFLECTION_EXTENDED = {3, 6, 11, 12}  # verify-script alias for canonical rep_ids'

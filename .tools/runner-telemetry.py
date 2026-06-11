@@ -9,7 +9,7 @@ USAGE:
     python .tools/runner-telemetry.py \\
         --runner inf-gold-layer-runner \\
         --script INF_C_01.canonical_nna \\
-        -- python data/orion/scripts/gold/INF_C_01.canonical_nna.py --upload
+        -- python data/inf/scripts/gold/INF_C_01.canonical_nna.py --upload
 
 OUTPUT:
     {base-dir}/{runner}/{script}/{run_id}.jsonl

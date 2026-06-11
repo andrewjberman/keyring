@@ -1,5 +1,6 @@
 script_id: INF_B_00.canonical_holdings
-path: data/orion/scripts/gold/INF_B_00.canonical_holdings.py
+path: data/inf/scripts/gold/INF_B_00.canonical_holdings.py
 classification: NEITHER
 emit_sites:
-- line 497
+- line 501
+- line 578

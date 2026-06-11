@@ -426,9 +426,9 @@ def extract_s3_edges(graph: TraceGraph, workspace_root: Path):
     # --- INF gold scripts (writers) ---
     # ADHC_COMPIL_V4.020: extends comp-trace + comp-blast to Tier A by
     # registering INF gold function-level nodes alongside BD. INF gold lives
-    # at data/orion/scripts/gold/INF_*.py and uses hardcoded path strings
+    # at data/inf/scripts/gold/INF_*.py and uses hardcoded path strings
     # (no s3_layout.py constants), so we run the same loop with constants={}.
-    inf_gold_dir = workspace_root / "data" / "orion" / "scripts" / "gold"
+    inf_gold_dir = workspace_root / "data" / "inf" / "scripts" / "gold"
     if inf_gold_dir.exists():
         inf_constants: dict[str, str] = {}
         for py_file in sorted(inf_gold_dir.glob("INF_*.py")):

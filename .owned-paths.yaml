@@ -817,36 +817,36 @@ paths:
   # Specific override (longest-match-wins): dispatch orchestrator is AE-maintained ops
   # infra, not a DS data script. Reclassified 2026-04-30 per COO lane-violation flag
   # from AE 0.7.0 during --run-date flag work (COO 2026-04-30 redirect authorized).
-  "data/orion/scripts/gold/orion-gold-dispatch.sh":
+  "data/inf/scripts/gold/orion-gold-dispatch.sh":
     lane: CLOUD_OPS_OR_ETL
     note: "Orion gold dispatch orchestrator — AE-maintained, not a DS data script"
 
   # Specific overrides: manual_api ops infrastructure — AE-maintained, not DS data scripts.
   # jwt_freshness.py + run_backfill_orchestrator.py reclassified 2026-05-01 (CTO ruling,
   # ADVI_JWTRES.002 — AE 0.7.0 adds recover_or_exit() + backfill startup wiring).
-  "data/orion/manual_api/jwt_freshness.py":
+  "data/inf/manual_api/jwt_freshness.py":
     lane: CLOUD_OPS_OR_ETL
     note: "JWT token freshness utility — AE-maintained ops infra; originally DS Phase 1, AE owns Phase 2 recovery logic"
 
-  "data/orion/manual_api/run_backfill_orchestrator.py":
+  "data/inf/manual_api/run_backfill_orchestrator.py":
     lane: CLOUD_OPS_OR_ETL
     note: "Bronze backfill orchestrator — AE-maintained ops infra"
 
-  "data/orion/manual_api/pull_inflection_assets.py":
+  "data/inf/manual_api/pull_inflection_assets.py":
     lane: CLOUD_OPS_OR_ETL
     note: "Inflection assets puller — AE-maintained ops infra (HISTBF Wave B IAM gap fix flagged 2026-05-04 in ADHC_OWNPTH 48h scan FP-3)"
 
-  "data/orion/scripts/gold/**":
+  "data/inf/scripts/gold/**":
     lane: POD4
     note: "Orion/Inflection gold scripts — DS 0.4.0 primary author"
 
-  "data/orion/scripts/silver/**":
+  "data/inf/scripts/silver/**":
     lane: POD4
 
-  "data/orion/scripts/**":
+  "data/inf/scripts/**":
     lane: POD4
 
-  "data/orion/**":
+  "data/inf/**":
     lane: POD4
 
   # Schwab scripts — Pod 4 DS owns (NNA enrichment work)

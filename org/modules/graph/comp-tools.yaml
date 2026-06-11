@@ -296,7 +296,7 @@ tools:
       threshold_pct  -- >= min_pct% of entries satisfy a condition
     exit_codes: "0 = all ERROR checks pass; 1 = any ERROR check fails (WARN does not block)"
     cost: "<1s (JSON); ~2s (parquet, uses pyarrow)"
-    config: "BD: data/black_diamond/scripts/gold/gold_validate_config.yaml | INF: data/orion/scripts/gold/gold_validate_config.yaml. Pipeline auto-detected from script_id prefix (INF_* -> INF; others -> BD)."
+    config: "BD: data/black_diamond/scripts/gold/gold_validate_config.yaml | INF: data/inf/scripts/gold/gold_validate_config.yaml. Pipeline auto-detected from script_id prefix (INF_* -> INF; others -> BD)."
     data_sources: "gold artifact JSON/parquet (local file, use aws s3 cp first)"
     replaces: "Manual spot-checks (Travis Penfield fee_earning_aua sanity check), S3 key presence inspection"
     note: "MANDATORY gate: run before any S3 upload of a gold artifact that has a validate config. Catches 'no crash but wrong output' class of bugs. DS writes invariants once; tool enforces them forever. INF example: comp-validate INF_D_08 --artifact /tmp/nmec_nmnc_nna.json"
@@ -380,7 +380,7 @@ tools:
     output_format: "artifact_id | s3_key_or_ddb_target | last_modified_iso8601 | age_h | fail_at_h | STATUS (PASS/WARN/FAIL/SKIP)"
     exit_codes: "0=PASS/WARN (WARN does not block), 1=any FAIL (ERROR-severity beyond fail_age_hours or table MISSING), 2=config error or AWS unreachable"
     cost: "<30s for full chain (32 BD or 31 INF artifacts; parallel 8-thread AWS calls). DDB scan: <5s per table."
-    config: "S3: data/black_diamond/scripts/gold/gold_freshness_config.yaml (32 BD) | data/orion/scripts/gold/gold_freshness_config.yaml (31 INF) | DDB: data/ddb_freshness_config.yaml (2 tables: opal-users-v2, opal-routing-config)"
+    config: "S3: data/black_diamond/scripts/gold/gold_freshness_config.yaml (32 BD) | data/inf/scripts/gold/gold_freshness_config.yaml (31 INF) | DDB: data/ddb_freshness_config.yaml (2 tables: opal-users-v2, opal-routing-config)"
     ddb_schema_convention: "DDB items must have 'updatedAt' or 'createdAt' string attribute (ISO-8601). comp-freshness checks timestamp_attr first (config), falls back to fallback_timestamp_attr. Items without either attribute surface as WARN."
     incidents_caught: |
       2026-04-17: Schwab RPS (opal-data-schwab/silver/RPS/) 10-day stale -> $130M linear_interpolation overshoot

@@ -20,7 +20,7 @@ WORKSPACE = pathlib.Path(__file__).parent.parent
 # Pipeline detection table: data_dir_name -> (s3_bucket, pipeline_label)
 PIPELINE_MAP: dict[str, tuple[str, str]] = {
     "black_diamond": ("opal-data-bd", "bd"),
-    "orion": ("opal-data-inf", "inf"),
+    "inf": ("opal-data-inf", "inf"),
     "cot": ("opal-data-cot", "cot"),
 }
 

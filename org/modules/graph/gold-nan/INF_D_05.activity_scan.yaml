@@ -1,6 +1,5 @@
 script_id: INF_D_05.activity_scan
-path: data/orion/scripts/gold/INF_D_05.activity_scan.py
+path: data/inf/scripts/gold/INF_D_05.activity_scan.py
 classification: NEITHER
 emit_sites:
-- line 353
-- line 346
+- line 376

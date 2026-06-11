@@ -15,7 +15,7 @@ Exits 1 if any ERROR-severity check FAILS.
 Exits 0 if only WARN checks fail (prints warnings but does not block).
 
 Config (BD):  data/black_diamond/scripts/gold/gold_validate_config.yaml
-Config (INF): data/orion/scripts/gold/gold_validate_config.yaml
+Config (INF): data/inf/scripts/gold/gold_validate_config.yaml
 Pipeline is auto-detected from script_id prefix: INF_* -> INF config; others -> BD config.
 
 Standalone validators: data/black_diamond/scripts/validators/validate_{script_id}.py
@@ -43,7 +43,7 @@ from org.modules.graph.extract_validate import load_validate_config, run_validat
 STANDALONE_VALIDATORS_DIR = _WORKSPACE / "data" / "black_diamond" / "scripts" / "validators"
 
 _BD_VALIDATE_CONFIG = _WORKSPACE / "data" / "black_diamond" / "scripts" / "gold" / "gold_validate_config.yaml"
-_INF_VALIDATE_CONFIG = _WORKSPACE / "data" / "orion" / "scripts" / "gold" / "gold_validate_config.yaml"
+_INF_VALIDATE_CONFIG = _WORKSPACE / "data" / "inf" / "scripts" / "gold" / "gold_validate_config.yaml"
 
 
 def _translate_artifact_path(raw: str) -> Path:
@@ -223,7 +223,7 @@ def cmd_list(args):
     if not configs:
         print("No validate config found.")
         print("  Expected: data/black_diamond/scripts/gold/gold_validate_config.yaml")
-        print("         or data/orion/scripts/gold/gold_validate_config.yaml")
+        print("         or data/inf/scripts/gold/gold_validate_config.yaml")
         return
 
     script_filter = args.script_id or ""
@@ -231,7 +231,7 @@ def cmd_list(args):
 
     print(f"VALIDATE CONFIG ({len(configs)} scripts)")
     print("  Config (BD):  data/black_diamond/scripts/gold/gold_validate_config.yaml")
-    print("  Config (INF): data/orion/scripts/gold/gold_validate_config.yaml")
+    print("  Config (INF): data/inf/scripts/gold/gold_validate_config.yaml")
     print()
 
     # ADHC_COMPIL_V4.021 Cat 5.2: tighten matcher to exact-or-prefix-with-underscore-boundary
@@ -515,7 +515,7 @@ def _ast_classify_gold_script(path: Path) -> tuple[str, list[int]]:
 def cmd_gold_nan(args: argparse.Namespace) -> None:
     """gold-nan subcommand: audit all gold scripts for NaN-safe JSON-emit compliance.
 
-    Walks data/orion/scripts/gold/*.py (top-level only; lib/ and tests/ excluded).
+    Walks data/inf/scripts/gold/*.py (top-level only; lib/ and tests/ excluded).
     Classifies each script as PASS / INLINE / NEITHER / N/A.
     Writes per-script YAML manifests + chain-wide REPORT.md to
     org/modules/graph/gold-nan/.
@@ -525,7 +525,7 @@ def cmd_gold_nan(args: argparse.Namespace) -> None:
     import yaml as _yaml
 
     strict = getattr(args, 'strict', False)
-    gold_dir = _WORKSPACE / 'data' / 'orion' / 'scripts' / 'gold'
+    gold_dir = _WORKSPACE / 'data' / 'inf' / 'scripts' / 'gold'
     output_dir = _WORKSPACE / 'org' / 'modules' / 'graph' / 'gold-nan'
     output_dir.mkdir(parents=True, exist_ok=True)
 
@@ -538,7 +538,7 @@ def cmd_gold_nan(args: argparse.Namespace) -> None:
     na_list: list[tuple[str, Path]] = []
 
     print('COMP-VALIDATE gold-nan: NaN-safe JSON-emit compliance audit')
-    print(f'  Lane: data/orion/scripts/gold/ ({len(scripts)} top-level scripts)')
+    print(f'  Lane: data/inf/scripts/gold/ ({len(scripts)} top-level scripts)')
     print()
 
     for script_path in scripts:
@@ -582,7 +582,7 @@ def cmd_gold_nan(args: argparse.Namespace) -> None:
         '# gold-nan NaN-Compliance Audit Report',
         '',
         '**Generated:** 2026-05-14 (ADHC_COMPIL_V4.029b)',
-        '**Lane:** `data/orion/scripts/gold/` (top-level scripts only; lib/ and tests/ excluded)',
+        '**Lane:** `data/inf/scripts/gold/` (top-level scripts only; lib/ and tests/ excluded)',
         '',
         '## Summary',
         '',
@@ -636,7 +636,7 @@ def cmd_gold_nan(args: argparse.Namespace) -> None:
         '# after:  body = safe_json_dumps(obj, default=str, separators=(",", ":"))',
         '```',
         '',
-        'Shared lib: `data/orion/scripts/gold/lib/safe_json_serialize.py`',
+        'Shared lib: `data/inf/scripts/gold/lib/safe_json_serialize.py`',
         'S3 mirror: `s3://opal-data-inf/code/gold/lib/safe_json_serialize.py`',
         '',
         '## Ruling',

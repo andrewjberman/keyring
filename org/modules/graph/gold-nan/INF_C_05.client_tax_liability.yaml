@@ -1,5 +1,5 @@
 script_id: INF_C_05.client_tax_liability
-path: data/orion/scripts/gold/INF_C_05.client_tax_liability.py
+path: data/inf/scripts/gold/INF_C_05.client_tax_liability.py
 classification: NEITHER
 emit_sites:
 - line 222

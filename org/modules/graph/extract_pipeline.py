@@ -1090,7 +1090,7 @@ def build_inf_gold_dag(workspace_root: Path) -> PipelineDAG:
     The dispatch catalog (orion-gold-dispatch.sh) is the authoritative source for script IDs.
     Hardcoded path detection (_extract_hardcoded_paths) covers all S3 I/O.
     """
-    gold_dir = workspace_root / "data" / "orion" / "scripts" / "gold"
+    gold_dir = workspace_root / "data" / "inf" / "scripts" / "gold"
     if not gold_dir.exists():
         return PipelineDAG()
 
@@ -1166,7 +1166,7 @@ def build_silver_dag(
 def build_inf_manual_api_dag(workspace_root: Path) -> PipelineDAG:
     """Build a DAG for Inflection manual_api scripts (Orion REST pull scripts).
 
-    Path: data/orion/manual_api/*.py (non-recursive)
+    Path: data/inf/manual_api/*.py (non-recursive)
     These scripts pull from Orion REST API and write to S3 bronze; classified as
     pipeline label "inf-manual-api". I/O detection via _extract_hardcoded_paths
     (same pattern as silver scripts; no dispatch catalog).
@@ -1175,7 +1175,7 @@ def build_inf_manual_api_dag(workspace_root: Path) -> PipelineDAG:
     NOT-INDEXED FAILs in 2-week compiler-tools-log including pull_inflection_billing_dim,
     orion_billing_dim, pull_inflection_performance_dim).
     """
-    return build_silver_dag(workspace_root, "inf-manual-api", "data/orion/manual_api")
+    return build_silver_dag(workspace_root, "inf-manual-api", "data/inf/manual_api")
 
 
 def build_multi_pipeline_dag(workspace_root: Path) -> PipelineDAG:
@@ -1196,7 +1196,7 @@ def build_multi_pipeline_dag(workspace_root: Path) -> PipelineDAG:
     bd_gold = build_pipeline_dag(workspace_root)
     inf_gold = build_inf_gold_dag(workspace_root)
     bd_silver = build_silver_dag(workspace_root, "bd-silver", "data/black_diamond/scripts/silver")
-    inf_silver = build_silver_dag(workspace_root, "inf-silver", "data/orion/scripts/silver")
+    inf_silver = build_silver_dag(workspace_root, "inf-silver", "data/inf/scripts/silver")
     inf_manual_api = build_inf_manual_api_dag(workspace_root)
 
     merged = PipelineDAG()

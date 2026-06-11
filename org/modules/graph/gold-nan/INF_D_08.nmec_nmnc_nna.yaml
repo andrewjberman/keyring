@@ -1,6 +1,6 @@
 script_id: INF_D_08.nmec_nmnc_nna
-path: data/orion/scripts/gold/INF_D_08.nmec_nmnc_nna.py
+path: data/inf/scripts/gold/INF_D_08.nmec_nmnc_nna.py
 classification: NEITHER
 emit_sites:
-- line 434
-- line 438
+- line 471
+- line 475

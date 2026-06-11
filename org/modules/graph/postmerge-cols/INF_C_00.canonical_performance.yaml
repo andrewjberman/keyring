@@ -1,5 +1,5 @@
 script_id: INF_C_00.canonical_performance
-path: data/orion/scripts/gold/INF_C_00.canonical_performance.py
+path: data/inf/scripts/gold/INF_C_00.canonical_performance.py
 merge_sites:
 - line: 137
   func_name: process_date

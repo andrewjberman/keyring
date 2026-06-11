@@ -17,7 +17,7 @@ _COVERAGE_DIR = _WORKSPACE / 'org' / 'modules' / 'graph' / 'coverage-report'
 # Each entry: (class_name, list of path fragment patterns)
 _CLASSIFIERS = [
     ('FRONTEND', ['portal/', '.tsx', '.ts', 'frontend', 'component', 'portal/src']),
-    ('GOLD',     ['scripts/gold/', 'scripts/silver/', 'scripts/bronze/', 'data/orion/', 'data/black_diamond/']),
+    ('GOLD',     ['scripts/gold/', 'scripts/silver/', 'scripts/bronze/', 'data/inf/', 'data/black_diamond/']),
     ('API',      ['infra/aws/lambda/', 'infra/aws/terraform/', 'lambda_function.py', '.tf']),
     ('DOC',      ['docs/', 'org/modules/', 'org/tier', 'org/threads/', '.md', 'CLAUDE.md']),
 ]

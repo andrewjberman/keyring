@@ -155,7 +155,7 @@ def load_validate_config(
     """Load gold_validate_config.yaml for BD (default) or INF pipeline.
 
     Pass config_file explicitly to load the INF config:
-        load_validate_config(ws, ws / "data/orion/scripts/gold/gold_validate_config.yaml")
+        load_validate_config(ws, ws / "data/inf/scripts/gold/gold_validate_config.yaml")
     Omit or pass None to load the BD config (backward-compatible default).
     """
     if config_file is None:

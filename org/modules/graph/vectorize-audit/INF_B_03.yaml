@@ -1,5 +1,5 @@
 script_id: INF_B_03
-script_path: data\orion\scripts\gold\INF_B_03.account_gains.py
+script_path: data\inf\scripts\gold\INF_B_03.account_gains.py
 total_findings: 0
 warn_count: 0
 findings:

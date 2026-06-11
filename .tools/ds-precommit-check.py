@@ -36,7 +36,7 @@ from pathlib import Path
 _SYNCED_HELPER_GROUPS = [
     [
         'data/black_diamond/scripts/gold/lib/floored_percentiles.py',
-        'data/orion/scripts/gold/lib/floored_percentiles.py',
+        'data/inf/scripts/gold/lib/floored_percentiles.py',
         'data/smartx/scripts/floored_percentiles.py',
     ],
 ]

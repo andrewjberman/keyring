@@ -7,7 +7,7 @@ Tests (no real AWS required -- subprocess mocked):
   3. FAIL-PARTIAL  -- first file OK, second upload fails -> gate errors, partial state logged
   4. FAIL-MISMATCH -- upload OK but ETag mismatches local MD5 -> SHA guard fires
   5. BYPASS        -- --allow-stale -> audit log entry written, exit 0
-  6. INF-PATH      -- data/orion/* maps to opal-data-inf, not opal-data-bd
+  6. INF-PATH      -- data/inf/* maps to opal-data-inf, not opal-data-bd
 
 Exit 0 if all 6 assertions hold; exit 1 with details on any failure.
 """
@@ -183,7 +183,7 @@ def test_bypass_allow_stale():
         with patch.object(_core, "BYPASS_AUDIT_LOG", audit_log):
             write_bypass_audit(
                 author="0.4.0_DS_ClientPlatform",
-                files=["data/orion/scripts/gold/INF_D_04.py"],
+                files=["data/inf/scripts/gold/INF_D_04.py"],
                 commit_sha="abc1234",
                 reason="docstring-only change",
             )
@@ -197,19 +197,19 @@ def test_bypass_allow_stale():
 
 
 # ---------------------------------------------------------------------------
-# Case 6: INF-PATH — orion files map to opal-data-inf, not opal-data-bd
+# Case 6: INF-PATH — data/inf files map to opal-data-inf, not opal-data-bd
 # ---------------------------------------------------------------------------
 def test_inf_path_resolution():
     cases = [
-        ("data/orion/scripts/gold/INF_D_01.py", "opal-data-inf", "code/gold/INF_D_01.py", "inf"),
-        ("data/orion/scripts/silver/silver_accounts.py", "opal-data-inf", "code/silver/silver_accounts.py", "inf"),
-        ("data/orion/scripts/gold/lib/dtype_coerce.py", "opal-data-inf", "code/gold/lib/dtype_coerce.py", "inf"),
+        ("data/inf/scripts/gold/INF_D_01.py", "opal-data-inf", "code/gold/INF_D_01.py", "inf"),
+        ("data/inf/scripts/silver/silver_accounts.py", "opal-data-inf", "code/silver/silver_accounts.py", "inf"),
+        ("data/inf/scripts/gold/lib/dtype_coerce.py", "opal-data-inf", "code/gold/lib/dtype_coerce.py", "inf"),
         ("data/black_diamond/scripts/gold/B_00.py", "opal-data-bd", "code/gold/B_00.py", "bd"),
         ("data/black_diamond/scripts/silver/lib/dtype_coerce.py", "opal-data-bd", "code/silver/lib/dtype_coerce.py", "bd"),
         # Out-of-scope paths -> None
         ("data/seeking-alpha/scripts/fetch.py", None, None, None),
         ("infra/aws/terraform/main.tf", None, None, None),
-        ("data/orion/scripts/archive/old.py", None, None, None),  # not gold/silver/bronze
+        ("data/inf/scripts/archive/old.py", None, None, None),  # not gold/silver/bronze
     ]
     for path, exp_bucket, exp_key, exp_label in cases:
         result = file_to_s3_target(path)
@@ -238,7 +238,7 @@ CASES = [
     ("FAIL-PARTIAL second upload fails", test_fail_partial),
     ("FAIL-MISMATCH corrupt ETag SHA guard", test_fail_sha_mismatch),
     ("BYPASS --allow-stale writes audit entry", test_bypass_allow_stale),
-    ("INF-PATH orion->opal-data-inf routing", test_inf_path_resolution),
+    ("INF-PATH data/inf->opal-data-inf routing", test_inf_path_resolution),
 ]
 
 

@@ -1,7 +1,7 @@
 script_id: INF_D_00c.portal_leaderboard
-path: data/orion/scripts/gold/INF_D_00c.portal_leaderboard.py
+path: data/inf/scripts/gold/INF_D_00c.portal_leaderboard.py
 merge_sites:
-- line: 377
+- line: 409
   func_name: _aua_at_start
   result_var: agg
   left_expr: agg
@@ -11,15 +11,15 @@ merge_sites:
   how: left
   flagged_cols:
   - col: account_ids_start
-    line: 378
+    line: 410
     pattern: subscript
   - col: account_ids_start
-    line: 381
+    line: 413
     pattern: subscript
   - col: account_ids_start
-    line: 378
+    line: 410
     pattern: subscript
-- line: 480
+- line: 512
   func_name: _compute_new_clients_per_advisor
   result_var: merged
   left_expr: team
@@ -29,12 +29,27 @@ merge_sites:
   how: inner
   flagged_cols:
   - col: advisor_key
-    line: 483
+    line: 515
     pattern: groupby
   - col: household_id
-    line: 483
+    line: 515
     pattern: groupby
-- line: 524
+- line: 543
+  func_name: _compute_new_client_hhs_per_advisor
+  result_var: merged
+  left_expr: team
+  right_expr: adim
+  on_cols:
+  - account_id
+  how: inner
+  flagged_cols:
+  - col: advisor_key
+    line: 544
+    pattern: groupby
+  - col: household_id
+    line: 544
+    pattern: groupby
+- line: 586
   func_name: _aggregate_perf_per_advisor
   result_var: joined
   left_expr: p
@@ -44,9 +59,9 @@ merge_sites:
   how: inner
   flagged_cols:
   - col: advisor_key
-    line: 530
+    line: 592
     pattern: subscript
-- line: 643
+- line: 745
   func_name: _aggregate_gro_per_advisor_window
   result_var: joined
   left_expr: iw
@@ -56,12 +71,12 @@ merge_sites:
   how: left
   flagged_cols:
   - col: advisor_key
-    line: 644
+    line: 746
     pattern: dropna_subset
   - col: advisor_key
-    line: 650
+    line: 752
     pattern: subscript
-- line: 795
+- line: 891
   func_name: _compute_hh_lifecycle
   result_var: merged
   left_expr: adim
@@ -71,15 +86,15 @@ merge_sites:
   how: left
   flagged_cols:
   - col: aua
-    line: 796
+    line: 892
     pattern: subscript
   - col: aua
-    line: 796
+    line: 892
     pattern: subscript
   - col: household_id
-    line: 819
+    line: 915
     pattern: groupby
-- line: 813
+- line: 909
   func_name: _compute_hh_lifecycle
   result_var: acct_window
   left_expr: acct_window
@@ -89,9 +104,9 @@ merge_sites:
   how: left
   flagged_cols:
   - col: household_id
-    line: 814
+    line: 910
     pattern: groupby
-- line: 834
+- line: 930
   func_name: _compute_hh_lifecycle
   result_var: hh
   left_expr: hh
@@ -101,45 +116,45 @@ merge_sites:
   how: left
   flagged_cols:
   - col: window_inflows
-    line: 835
+    line: 931
     pattern: subscript
   - col: window_net_nna
-    line: 836
+    line: 932
     pattern: subscript
   - col: lifecycle
-    line: 840
+    line: 936
     pattern: subscript
   - col: attributed_aua
-    line: 844
+    line: 940
     pattern: subscript
   - col: aua
-    line: 844
+    line: 940
     pattern: subscript
   - col: inception_source
-    line: 826
+    line: 922
     pattern: subscript
   - col: first_trade_date
-    line: 829
+    line: 925
     pattern: subscript
   - col: inception_source
-    line: 833
+    line: 929
     pattern: subscript
   - col: first_trade_date
-    line: 838
+    line: 934
     pattern: subscript
   - col: first_trade_date
-    line: 831
+    line: 927
     pattern: subscript
   - col: window_inflows
-    line: 835
+    line: 931
     pattern: subscript
   - col: window_net_nna
-    line: 836
+    line: 932
     pattern: subscript
   - col: window_inflows
-    line: 839
+    line: 935
     pattern: subscript
-- line: 377
+- line: 409
   func_name: _filter_partition
   result_var: agg
   left_expr: agg
@@ -149,11 +164,11 @@ merge_sites:
   how: left
   flagged_cols:
   - col: account_ids_start
-    line: 378
+    line: 410
     pattern: subscript
   - col: account_ids_start
-    line: 381
+    line: 413
     pattern: subscript
   - col: account_ids_start
-    line: 378
+    line: 410
     pattern: subscript

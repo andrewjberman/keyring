@@ -60,7 +60,7 @@ def bd_silver_dag():
 
 @pytest.fixture(scope="module")
 def inf_silver_dag():
-    return build_silver_dag(_WORKSPACE, "inf-silver", "data/orion/scripts/silver")
+    return build_silver_dag(_WORKSPACE, "inf-silver", "data/inf/scripts/silver")
 
 
 @pytest.fixture(scope="module")

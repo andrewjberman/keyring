@@ -50,7 +50,7 @@
 #
 # P8 -- repo-HEAD vs S3-deployed sweep across the INF chain
 #   Trigger    : on demand / pre-chain-dispatch / scheduled
-#   Input      : local INF gold + silver scripts (data/orion/scripts/{gold,silver})
+#   Input      : local INF gold + silver scripts (data/inf/scripts/{gold,silver})
 #   Reference  : s3://opal-data-inf/code/{gold,silver}/ object ETags
 #   Comparison : thin wrapper over `comp-pipescript deployed --pipeline inf-{gold,silver}`
 #                which already sweeps the chain (MD5 vs S3 ETag, per script)

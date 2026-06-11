@@ -1,5 +1,5 @@
 script_id: INF_B_01b.classify_new_securities
-path: data/orion/scripts/gold/INF_B_01b.classify_new_securities.py
+path: data/inf/scripts/gold/INF_B_01b.classify_new_securities.py
 classification: NEITHER
 emit_sites:
 - line 183

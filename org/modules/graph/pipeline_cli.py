@@ -60,7 +60,7 @@ def _build_dag(pipeline: str = "bd-gold"):
     if pipeline == "bd-silver":
         return build_silver_dag(_WORKSPACE, "bd-silver", "data/black_diamond/scripts/silver")
     if pipeline == "inf-silver":
-        return build_silver_dag(_WORKSPACE, "inf-silver", "data/orion/scripts/silver")
+        return build_silver_dag(_WORKSPACE, "inf-silver", "data/inf/scripts/silver")
     if pipeline == "inf-manual-api":
         return build_inf_manual_api_dag(_WORKSPACE)
     if pipeline == "all":
@@ -75,9 +75,9 @@ def _build_dag(pipeline: str = "bd-gold"):
 # Dispatcher names: maps CLI name -> (pipeline_label, dispatch_filename, gold_dir_rel)
 _DISPATCHER_NODES = {
     "inf-gold-dispatch": ("inf-gold", "orion-gold-dispatch.sh",
-                          "data/orion/scripts/gold"),
+                          "data/inf/scripts/gold"),
     "orion-gold-dispatch": ("inf-gold", "orion-gold-dispatch.sh",
-                             "data/orion/scripts/gold"),
+                             "data/inf/scripts/gold"),
     "bd-gold-dispatch": ("bd-gold", "gold_dispatch.sh",
                           "data/black_diamond/scripts/gold"),
 }
@@ -135,7 +135,7 @@ def _canonicalize_script_id(raw: str) -> str:
     s = raw.strip().replace('\\', '/')
     # Rule 2: extract filename from full data/ path
     m = re.search(
-        r'data/(?:black_diamond|orion|schwab)/scripts/(?:gold|silver|bronze)/(.+)', s
+        r'data/(?:black_diamond|inf|schwab)/scripts/(?:gold|silver|bronze)/(.+)', s
     )
     if m:
         s = m.group(1)
@@ -183,7 +183,7 @@ def _auto_resolve_script_id(raw_id, pipeline_hint=None):
     # Step 1: strip data/ path prefix and .py suffix only — no .<name> stripping yet.
     _norm = raw_id.strip().replace('\\', '/')
     _pm = re.search(
-        r'data/(?:black_diamond|orion|schwab)/scripts/(?:gold|silver|bronze)/(.+)', _norm
+        r'data/(?:black_diamond|inf|schwab)/scripts/(?:gold|silver|bronze)/(.+)', _norm
     )
     if _pm:
         _norm = _pm.group(1)
@@ -1425,8 +1425,8 @@ def cmd_deployed(args):
     _PIPELINE_SILVER_DIRS = {
         "bd-gold":   _WORKSPACE / "data" / "black_diamond" / "scripts" / "silver",
         "bd-silver": _WORKSPACE / "data" / "black_diamond" / "scripts" / "silver",
-        "inf-gold":  _WORKSPACE / "data" / "orion" / "scripts" / "silver",
-        "inf-silver": _WORKSPACE / "data" / "orion" / "scripts" / "silver",
+        "inf-gold":  _WORKSPACE / "data" / "inf" / "scripts" / "silver",
+        "inf-silver": _WORKSPACE / "data" / "inf" / "scripts" / "silver",
         # cot (Cottonwood) — COMPLETELY separate firm pipeline (NFRA_DTAFLP, Andrew
         # sovereign 2026-06-10): deploys to opal-data-cot, never opal-data-bd.
         "cot-gold":  _WORKSPACE / "data" / "cot" / "scripts" / "silver",
@@ -1747,11 +1747,11 @@ def cmd_deployed(args):
 def _resolve_gold_script(script_id: str) -> 'tuple[Path | None, str]':
     """Find a gold script file by ID prefix.
 
-    Checks data/orion/scripts/gold/ first, then data/black_diamond/scripts/gold/.
+    Checks data/inf/scripts/gold/ first, then data/black_diamond/scripts/gold/.
     Returns (path, normalized_stem) or (None, '').
     """
     gold_dirs = [
-        _WORKSPACE / 'data' / 'orion' / 'scripts' / 'gold',
+        _WORKSPACE / 'data' / 'inf' / 'scripts' / 'gold',
         _WORKSPACE / 'data' / 'black_diamond' / 'scripts' / 'gold',
     ]
     for gd in gold_dirs:
@@ -1889,7 +1889,7 @@ def cmd_postmerge_cols(args: 'argparse.Namespace') -> None:
     script_path, normalized_id = _resolve_gold_script(script_id)
     if script_path is None:
         print(f'ERROR: gold script not found for {script_id!r}', file=sys.stderr)
-        print('  Checked: data/orion/scripts/gold/ + data/black_diamond/scripts/gold/', file=sys.stderr)
+        print('  Checked: data/inf/scripts/gold/ + data/black_diamond/scripts/gold/', file=sys.stderr)
         sys.exit(1)
 
     rel_path = script_path.relative_to(_WORKSPACE).as_posix()
@@ -2107,7 +2107,7 @@ def cmd_shadow_detect(args: 'argparse.Namespace') -> None:
     recent_failures = getattr(args, 'recent_failures', None)
 
     gold_dirs = [
-        _WORKSPACE / 'data' / 'orion' / 'scripts' / 'gold',
+        _WORKSPACE / 'data' / 'inf' / 'scripts' / 'gold',
         _WORKSPACE / 'data' / 'black_diamond' / 'scripts' / 'gold',
     ]
 
