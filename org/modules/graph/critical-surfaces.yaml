@@ -4,69 +4,67 @@
 # unexpected change. Per-firm, severity-tiered. Mechanism: carve the subgraph -> sign a baseline ->
 # (B) commit-time change-gate + (C) scheduled break/change scan + SEV-routed alarm. The risk is the
 # BACKEND (firm-specific AWS/data resources feeding the tab), NOT React -> carve deep on the data chain,
-# light on the frontend. Design: docs/architecture/NFRA_GRAPHS.md §10. STATUS: v0.1 SCAFFOLD.
+# light on the frontend. Design: docs/architecture/NFRA_GRAPHS.md §10. STATUS: v0.2 (paths VERIFIED
+# against the live portal submodule 2026-06-11).
 #
 # severity: SEV1 (must-always-be-right; block-with-ack on commit-touch; page on break)
 #           SEV2 (lesser; warn on commit-touch; digest on break)
-# carve: how to enumerate the surface's subgraph; backend_depth = how far down the data chain to alarm on
 # firms: all = {49financial/bd, inflection/inf, cottonwood/cot} -- monitored independently per firm
+# NOTE: portal/ is a submodule -- the component paths below are submodule-relative (portal/src/...).
 
 surfaces:
+
+  # ---- SEV1: must always be right ----
+  - id: model_portfolios.headline
+    severity: SEV1
+    firms: all
+    carve:
+      frontend_root: "the 'Portfolio Analytics' top panel of the Model Portfolios page -- portal/src/pages/ModelPortfolios.tsx (<Panel> PanelHeader title='Portfolio Analytics', ~L941-946; the first panel after the page header)"
+      backend_chain: "the page-level headline fetches -> route -> Lambda -> S3/dynamodb -> gold (the top-panel metrics; overlaps the AUM/growth data)"
+      backend_depth: full
+      frontend_depth: existence
+    why: "Andrew: the 'Portfolio Analytics' panel at the top of the Model Portfolios page -- SEV1, must always be right."
 
   - id: model_portfolios.benchmark
     severity: SEV1
     firms: all
     carve:
-      frontend_root: "the Benchmark tab component(s) under the ModelPortfolios page (comp-platinum sub-component)"
-      backend_chain: "fetch -> route -> Lambda -> S3 key (benchmark/*) -> gold script -> upstream feed"
-      backend_depth: full     # alarm on ANY change/break in the full data chain
-      frontend_depth: existence  # only flag if the component/fetch wiring itself disappears
-    why: "Andrew: must ALWAYS be right; any logic/resource change or break attached to benchmark/ raises a flag."
-    baseline: { signed: false, ref: null }   # populate via comp-xref --save per surface x firm at carve-time
-
-  - id: model_portfolios.headline
-    severity: SEV1
-    firms: all
-    carve:
-      frontend_root: "the 'Portfolio Analytics' headline panel at the top of the ModelPortfolios page (component: PartnerAnalytics per comp-platinum summary -- display label 'Portfolio Analytics'; verify exact component at carve-time)"
-      backend_chain: "fetch -> route -> Lambda (opal-partners-data) -> S3 platinum (partner_analytics_*.json) / dynamodb (etf-classifications, bd-securities) -> gold script -> upstream"
+      frontend_root: "the 'Benchmark Comparison' panel + BenchmarkHeatmap (performance tab) -- portal/src/components/BenchmarkHeatmap.tsx, rendered in ModelPortfolios.tsx ~L1857-1937 (activeTab=='performance')"
+      backend_chain: "getModelPortfolioBenchmarks + getETFBenchmarkReturns (portal/src/api/portal-proxy.ts L806/L867) -> route -> Lambda -> S3 -> gold"
       backend_depth: full
       frontend_depth: existence
-    why: "Andrew: the Portfolio Analytics headline panel at the top of the page -- SEV1, must always be right (same tier as benchmark)."
-    baseline: { signed: false, ref: null }
+    why: "Andrew: the Benchmark tab must ALWAYS be right; any logic/resource change or break raises a flag."
 
   - id: advisor_intelligence
     severity: SEV1
     firms: all
     carve:
-      frontend_root: "the Advisor Intelligence page tree (all ADVI components)"
-      backend_chain: "fetch -> route -> Lambda -> S3 platinum/gold -> gold script -> upstream (per firm; 49F=Black Diamond, inf=Orion API)"
+      frontend_root: "the Advisor Intelligence page (whole) -- portal/src/pages/AdvisorIntelligence/index.tsx; top panel = PartnerAnalytics (portal/src/pages/AdvisorIntelligence/_shared/components/PartnerAnalytics.tsx)"
+      backend_chain: "all ADVI fetches -> route -> Lambda -> S3 platinum/gold -> gold script -> upstream (per firm; 49F=Black Diamond, inf=Orion API)"
       backend_depth: full
       frontend_depth: existence
     why: "Andrew: same severity as the Benchmark tab -- keep an alert on breaking logic on ADVI as a whole."
-    baseline: { signed: false, ref: null }
 
+  # ---- SEV2: lesser ----
   - id: model_portfolios.peers
     severity: SEV2
     firms: all
     carve:
-      frontend_root: "the Peers tab component(s) under ModelPortfolios"
-      backend_chain: "fetch -> route -> Lambda -> S3 key (peers/*) -> gold script -> upstream"
+      frontend_root: "the Peers tab -- portal/src/pages/ModelPortfolios/tabs/PeersTab.tsx (ModelPortfolios.tsx ~L1960-1961, activeTab=='peers')"
+      backend_chain: "getPeerPerformance (portal/src/api/portal-proxy.ts L912) -> route -> Lambda -> S3 -> gold"
       backend_depth: full
       frontend_depth: existence
     why: "Andrew: lesser severity than Benchmark, same monitoring shape."
-    baseline: { signed: false, ref: null }
 
   - id: model_portfolios.aum
     severity: SEV2
     firms: all
     carve:
-      frontend_root: "the AUM tab component(s) under ModelPortfolios"
-      backend_chain: "fetch -> route -> Lambda -> S3 key (aum/*) -> gold script -> upstream"
+      frontend_root: "the AUM/growth panels -- portal/src/components/AUMGrowthMetrics.tsx (ModelPortfolios.tsx growth tab ~L1191/L1210 + the top panel)"
+      backend_chain: "getAUMMetrics + getAUMTimeSeries + getMdpfAggregateAUATimeSeriesByFirm + getAccountDistribution[ByFirm] (portal/src/api/endpoints/aum.ts) -> route -> Lambda (mdpf / portfolios) -> S3 -> gold"
       backend_depth: full
       frontend_depth: existence
     why: "Andrew: lesser severity than Benchmark, same monitoring shape."
-    baseline: { signed: false, ref: null }
     known_findings:
       - "getAUMMetrics resolves to 'url: (not resolved)' in comp-platinum -- a graph-unresolved fetch (day-0 break candidate to triage)."
 
@@ -83,3 +81,6 @@ monitor:
       - "diff current subgraph vs the SIGNED baseline (node/edge added|removed|SHA-changed)"
     alarm: "SNS/EventBridge, reuse the deployed firm_isolation_guard_triggered SEV1 pattern; SEV1 page / SEV2 digest"
     clear: "a deliberately re-signed baseline clears an EXPECTED change"
+  baseline:
+    method: "comp-xref --save per surface x firm at carve-time"
+    signed: false   # populate at D8 build-time
