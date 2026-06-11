@@ -132,14 +132,14 @@ entries:
     use_case: "Full-stack trace: portal component -> endpoint -> Lambda/S3 -> gold script, PER FIRM."
     canonical_call: "comp-platinum page <Component> --firm <bd|inf|cot>   # ADVI is firm-isolated"
     tool: comp-platinum
-    mode: rebuild       # D2: to become query-cached (NFRA_GRAPHS AC3)
+    mode: query-cached  # NFRA_GRAPHS D2 — LANDED 2026-06-11
     layer: trace
-    cost: "seconds/call (NO cache yet — D2 fixes this)"
-    freshness: "rebuilt every call (per-firm DAG)"
-    rebuild_trigger: "n/a yet — always rebuilds; --firm REQUIRED for inf/cot (else defaults bd)"
-    anti_pattern: "omitting --firm for an Inflection/Cottonwood trace (firm-blind -> wrong producer/bucket)"
+    cost: "~0.2s warm (cache read); ~5s cold/--force rebuild"
+    freshness: "per-firm cache (.comp-graph/platinum.*), 5-min TTL — same model as the trace graph.json"
+    rebuild_trigger: "TTL expiry, --force (always), or --fresh (re-derive if source files changed); --firm REQUIRED for inf/cot (else defaults bd)"
+    anti_pattern: "omitting --firm for an Inflection/Cottonwood trace (firm-blind -> wrong producer/bucket); --force on a warm trace that the cache would serve"
     status: canonical
-    notes: "Firm-parameterized 2026-06-11 (NFRA 514d433). Caching = NFRA_GRAPHS D2."
+    notes: "Firm-parameterized 2026-06-11 (NFRA 514d433). Caching LANDED via NFRA_GRAPHS D2 (graph_cache.py): routing table + per-firm gold DAG + dataflows cached, keyed by --firm; warm page is a cache read, bd cold==warm regression-clean."
 
   - id: trace.pipeline.gold_dag
     use_case: "Gold script I/O, chain membership, deployed-match, overlap."
@@ -275,13 +275,13 @@ entries:
 
   - id: trace.platinum.reverse
     use_case: "Which routes + components consume this S3/platinum key (reverse of the page trace)?"
-    canonical_call: "comp-platinum reverse <s3_key> [--firm <bd|inf|cot>]"
+    canonical_call: "comp-platinum reverse <s3_key> [--firm <bd|inf|cot>] [--fresh|--force]"
     tool: comp-platinum
-    mode: rebuild
+    mode: query-cached  # NFRA_GRAPHS D2 — LANDED 2026-06-11
     layer: trace
-    cost: "seconds/call (no cache yet — D2)"
-    freshness: "rebuilt every call (per-firm)"
-    rebuild_trigger: "n/a yet — see trace.fullstack.component_to_gold"
+    cost: "~0.2s warm (cache read); ~5s cold/--force"
+    freshness: "per-firm cache (.comp-graph/platinum.*), 5-min TTL"
+    rebuild_trigger: "TTL expiry / --force / --fresh (source drift) — see trace.fullstack.component_to_gold"
     anti_pattern: "guessing which components break if a key changes"
     status: canonical
 
@@ -509,7 +509,7 @@ entries:
   # ---- FRESHNESS (D3 — planned) ----
   - id: meta.freshness.status
     use_case: "Is each graph current? (cloud/trace/kuzu freshness at a glance.)"
-    canonical_call: "comp-graph status"
+    canonical_call: "comp-graph status [--json]   # comp-graph clear <platinum|trace|all> drops a cache"
     tool: comp-graph
     mode: query
     layer: cross-layer
@@ -517,7 +517,8 @@ entries:
     freshness: "n/a (reports freshness)"
     rebuild_trigger: "n/a"
     anti_pattern: "guessing whether the graph reflects your change"
-    status: planned       # NFRA_GRAPHS D3
+    status: canonical     # NFRA_GRAPHS D3 — LANDED 2026-06-11
+    notes: "Reports every graph's freshness verdict (FRESH/STALE/MISSING/PRESENT) + age + TTL: local trace caches (graph.json, baseline, per-firm platinum.*) and cloud artifacts (kuzu_db, stitch_graph). Executable freshness contract = graph_cache.py (the uniform --fresh/--force semantics shared by the rebuild-capable trace tools)."
 
   # ---- CROSS-LAYER (planned — post P2-STITCH) ----
   - id: xlayer.fullstack.firm_component_to_bucket
@@ -569,4 +570,4 @@ tools_index:
   comp-shell:    { does: "Bare Git-Bash-missing-util scan in new .sh (Rule 16)", subcommands: [scan], entries: [meta.shell.bare_util_scan] }
   comp-registry: { does: "REGISTRY narrative vs project-JSON drift", subcommands: ["sync ROW=N", "--project", "--all"], entries: [meta.registry.drift] }
   comp-coverage: { does: "Compiler/task-order coverage report", subcommands: ["<args>"], entries: [meta.coverage.report] }
-  comp-graph:    { does: "[PLANNED D3] freshness status across all graphs + uniform --fresh/--force", subcommands: [status], entries: [meta.freshness.status] }
+  comp-graph:    { does: "Freshness status across all graphs (local trace caches + cloud artifacts) + clear; uniform --fresh/--force contract (graph_cache.py)", subcommands: [status, clear, "--json"], entries: [meta.freshness.status] }
