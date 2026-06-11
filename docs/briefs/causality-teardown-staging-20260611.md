@@ -29,7 +29,7 @@
 
 Import-to-destroy was considered and rejected: authoring + importing ~30 resources including method/integration resources **on the live production REST API** is more state-surgery risk than a scoped, reviewable deletion script.
 
-**Order:** rule (targets→rule) → `/causality` resource tree → **immediate create_deployment to BOTH stages `prod` + `production`** → 8 lambdas → 8 roles (inline deleted, AWSLambdaBasicExecutionRole **detached not deleted**, role deleted) → thematic-signals table → shared-infra saved plan apply → post-verify.
+**Order:** rule (targets→rule) → **API-GW rollback capture** (CTO GO condition 1: persist both stages' current deployment ids to `apigw-stage-rollback.json`; dry-run 2026-06-11 captured prod→`3weiq0`, production→`rx10dt`) → `/causality` resource tree → **immediate create_deployment to BOTH stages `prod` + `production`** → **inline survivor-route check** (38-path snapshot byte-identical; mismatch ⇒ auto `update_stage` rollback of both stages to the captured deployments + abort with lambdas/roles/tables untouched) → 8 lambdas → 8 roles (inline deleted, AWSLambdaBasicExecutionRole **detached not deleted**, role deleted) → thematic-signals table → shared-infra saved plan apply → post-verify. Manual `--rollback` mode also available.
 
 ## 4. Protect list (structurally absent from both artifacts)
 
@@ -43,7 +43,7 @@ All 25 AWS-side targets GONE; `/causality*` resource count 0; opal-portal-api no
 
 - `infra/aws/lambda/ci/lambda-source-map.json`: remove 8 causality entries (Rule 4)
 - `infra/aws/terraform/causality/`: remove root config (main.tf + lock; teardown/ artifacts retained for audit) — prevents future re-apply of a deleted feature
-- `infra/aws/lambda/causality_*` (8 source dirs): propose removal — CTO call at review
+- `infra/aws/lambda/causality_*` (8 source dirs): removal **CTO-APPROVED** (GO ruling (b), 2026-06-11) — in the apply-window cleanup commit
 - Empty S3 state key `causality/tfstate`: nothing to clean (no object exists)
 
 ## 7. Adjacent facts surfaced (no action in this teardown)
