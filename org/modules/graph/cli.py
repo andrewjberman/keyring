@@ -61,6 +61,21 @@ def _get_graph(force_rebuild: bool = False, check_freshness: bool = True) -> Tra
     g.save(_CACHE_FILE)
     elapsed = time.time() - t0
     print(f"Graph built: {len(g.nodes)} nodes, {len(g.edges)} edges ({elapsed:.1f}s)", file=sys.stderr)
+    # AC-GRAIN sentinel (NFRA_GRAPHS D5) — WARN-level on the trace graph. The cloud
+    # identity-format invariants (S3_BUCKET no-'/' etc.) don't map to trace node
+    # types (FUNCTION/SCRIPT/MODULE), so this is a no-op today; present so the bar
+    # fires if the trace graph ever gains a cloud-class node. Never blocks comp-build.
+    try:
+        import sys as _sys
+        import os as _os
+        _sys.path.insert(0, _os.path.dirname(__file__))
+        from grain_sentinel import run_grain_sentinel
+        _gr = run_grain_sentinel([{"node_type": n.node_type, "node_id": n.id}
+                                  for n in g.nodes.values()])
+        if not _gr.passed:
+            print("WARN: " + _gr.render(), file=_sys.stderr)
+    except Exception:
+        pass
     return g
 
 
