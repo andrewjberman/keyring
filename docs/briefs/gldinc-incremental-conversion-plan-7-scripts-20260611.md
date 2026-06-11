@@ -194,6 +194,40 @@ postings propagate); kills both the recompute and the version bloat.
 Semantic note for DS: skipped dates stop getting fresh LastModified stamps —
 anything monitoring old-partition freshness must key on content, not mtime.
 
+## 4g. Late-session corrections (2026-06-11 evening, measured > assumed)
+
+**A_03 + B_01: pattern #4 (WHOLE-RUN INPUT-FINGERPRINT GATE) — both hybrid
+designs in §3 are RETIRED.** S3-version evidence:
+- A_03: old partitions change EVERY data-night (retroactive reconciliation is
+  load-bearing; per-date narrowing would mean reimplementing it) BUT
+  no-input-change runs are byte-identical → gate the whole 563s run on one
+  2,520-component input digest.
+- B_01: history is APPEND-ONLY (old partitions never rewritten); reruns
+  byte-identical incl. a midnight-straddling pair (snapshot_date anchors to
+  the latest alloc partition, not wall clock) → gate the whole 731s FIFO
+  replay (2,658-component digest). The "lot-state + daily revaluation" hybrid
+  was unnecessary.
+Combined: ~1,294s of the ~1,734s no-change-night waste.
+
+**CLASS-N census (the A_01 defect as a class):** DS's proactive scan found the
+dedup signature in 10 more scripts; my assembly-pattern census + CTO's
+independent code-read CONVERGED: the discriminator is the CONCAT ASSEMBLY —
+index-slot (dfs[i]=result; deterministic): A_00, A_03, B_01,
+build_canonical_prices_v2, E_02/03/04/09/10. Completion-order append
+(nondeterministic): **A_04 only** (+E_13 unverified, diagnostic). CTO class
+ruling 230339Z: fix A_04 (A_01 remedy verbatim); index-slot ratified as the
+convention for new parallel loads; ds-precommit AST-rule candidate routed to
+COO. A_03's hold/un-hold round-trip took ~15 min and validated the
+fix-oracle-first sequencing.
+
+**A_04 (7/7): ORACLE-FIX ONLY; KEEP-FULL recommendation for the conversion.**
+The 90-day window anchors to max(trade_date) (input-driven, fine), but
+created_date/updated_date are now()-stamped — every run drifts those bytes by
+design, so a gate needs a timestamp-semantics ruling… for a 31s script. Not
+worth the review surface. The CLASS-N oracle-fix (provenance + total-order +
+index-slot assembly) is mandatory regardless and shipped with materiality +
+determinism + delta proofs.
+
 ## 5. Rollout discipline
 
 1. AE converts script N (additive) + offline `--shadow` parity proof.
