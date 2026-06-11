@@ -2073,6 +2073,22 @@ def cmd_derive(args):
         ec = Counter(e["edge_type"] for e in graph["edges"])
         print(f"  edges        total={len(graph['edges'])}  " +
               " ".join(f"{k}={v}" for k, v in sorted(ec.items())))
+    # AC-GRAIN refuse-to-emit (NFRA_GRAPHS D5): a full derive must not emit a
+    # wrong-grain graph (e.g. an S3 object-key minted as an S3_BUCKET). Identity-
+    # format bar only (no baseline here -> no magnitude false-fire); structurally
+    # safe (an S3 bucket name cannot contain '/'). Mirrors derive_stitch's producer guard.
+    try:
+        from grain_sentinel import run_grain_sentinel
+        _flat = [n for d in graph.get("classes_data", {}).values() for n in d.get("nodes", [])]
+        _gr = run_grain_sentinel(_flat)
+        if not _gr.passed:
+            print("\n" + _gr.render(), file=sys.stderr)
+            print("comp-aws derive: REFUSING to emit a wrong-grain graph (AC-GRAIN).", file=sys.stderr)
+            sys.exit(2)
+    except SystemExit:
+        raise
+    except Exception:
+        pass  # sentinel import/runtime issue must not break a clean derive
     if args.out:
         Path(args.out).write_text(json.dumps(graph, indent=2, default=str), encoding="utf-8")
         print(f"\nwrote {args.out}")
