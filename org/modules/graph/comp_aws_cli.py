@@ -1420,19 +1420,28 @@ def derive_edges():
             if qc.get("QueueArn") in _sqs_arns:
                 E(barn, qc["QueueArn"], "NOTIFIES", msg_target="sqs")
 
-    # LAMBDA -[IN_VPC]-> SECURITY_GROUP (the network attachment the cert omitted).
-    # VpcConfig ships in the list_functions response -> ONE paginated call, no per-fn describe.
+    # LAMBDA -[IN_VPC]-> SECURITY_GROUP + LAMBDA -[INVOKES]-> LAMBDA. VpcConfig AND env
+    # Variables both ship in the list_functions response -> ONE paginated call, no per-fn describe.
+    _lam_name_arn = {x["id"]: f"arn:aws:lambda:us-east-1:{ACCOUNT}:function:{x['id']}" for x in _exp_lam}
     try:
         for _pg in lc.get_paginator("list_functions").paginate():
             for _fn in _pg["Functions"]:
-                vpc = _fn.get("VpcConfig") or {}
-                if not vpc.get("SecurityGroupIds"):
-                    continue
-                farn = re.sub(r"(:function:[^:]+):.*$", r"\1",
-                              _fn.get("FunctionArn") or "")
-                for sg in vpc.get("SecurityGroupIds", []):
+                farn = re.sub(r"(:function:[^:]+):.*$", r"\1", _fn.get("FunctionArn") or "")
+                for sg in (_fn.get("VpcConfig") or {}).get("SecurityGroupIds", []):
                     if sg in _sg_by_id:
                         E(farn, _sg_by_id[sg], "IN_VPC", via="security_group")
+                # LAMBDA -[INVOKES]-> LAMBDA: an env value naming another live function = a
+                # configured invoke target (same signal-class as the existing SM-arn->TRIGGERS scan)
+                for _k, _v in ((_fn.get("Environment") or {}).get("Variables", {}) or {}).items():
+                    if not isinstance(_v, str):
+                        continue
+                    tgt = None
+                    if _v in _lambda_arns:
+                        tgt = re.sub(r"(:function:[^:]+):.*$", r"\1", _v)
+                    elif _v in _lam_name_arn:
+                        tgt = _lam_name_arn[_v]
+                    if tgt and tgt != farn:
+                        E(farn, tgt, "INVOKES", via_env=_k)
     except Exception:
         pass
 
