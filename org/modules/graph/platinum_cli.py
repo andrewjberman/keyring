@@ -28,7 +28,17 @@ sys.path.insert(0, str(_WORKSPACE))
 
 from org.modules.graph.extract_transforms import build_component_dataflow, build_all_dataflows  # noqa: E402
 from org.modules.graph.extract_routes import build_routing_table  # noqa: E402
-from org.modules.graph.extract_pipeline import build_pipeline_dag  # noqa: E402
+from org.modules.graph.extract_pipeline import (  # noqa: E402
+    build_firm_gold_dag, FIRM_ALIAS, FIRM_BUCKET)
+
+
+def _firm_origin(route, firm: str):
+    """The EFFECTIVE serving bucket for an S3-origin ADVI route under a given firm. The static
+    CloudFront origin is the bd default; at runtime shared-advisor-router rewrites it to the firm
+    bucket by X-Firm-Id (FIRM_BUCKET_MAP). For non-S3 origins (API GW) the static origin stands."""
+    if getattr(route, "cf_origin_type", None) == "s3" and firm in FIRM_BUCKET:
+        return f"S3-{FIRM_BUCKET[firm]} (firm-routed via X-Firm-Id)"
+    return f"{route.cf_origin} ({route.cf_origin_type})"
 
 _FIELD_QUERY_ARTIFACT_SUFFIXES = ('.json', '.parquet', '.csv')
 _FIELD_QUERY_SKIP_PARTS = {
@@ -72,12 +82,19 @@ def cmd_page(args):
         print(f"Could not parse: {path}")
         sys.exit(1)
 
+    firm = FIRM_ALIAS.get((getattr(args, "firm", None) or "bd").lower(), "bd")
     rt = build_routing_table(_WORKSPACE)
-    dag = build_pipeline_dag(_WORKSPACE)
+    dag = build_firm_gold_dag(_WORKSPACE, firm)
     dag.build_index()
 
     print(f"FULL-STACK TRACE: {flow.component_name}")
     print(f"  File: {flow.file_path}")
+    print(f"  FIRM: {firm} -> bucket {FIRM_BUCKET.get(firm, '?')} "
+          f"(gold tree: {dag.pipeline})")
+    if not getattr(args, "firm", None):
+        print("  NOTE: no --firm given -> defaulting to bd (49 Financial). Inflection (inf) and "
+              "Cottonwood (cot) route to opal-data-inf/opal-data-cot via DIFFERENT gold scripts "
+              "(different data providers) -- pass --firm inflection|cottonwood for those traces.")
     print()
 
     if not flow.fetches:
@@ -96,7 +113,7 @@ def cmd_page(args):
         route = next((r for r in rt.routes if r.endpoint_function == fb.fetch_function), None)
         if route:
             print(f"    url: {route.url_pattern}")
-            print(f"    cloudfront: {route.cf_behavior} -> {route.cf_origin} ({route.cf_origin_type})")
+            print(f"    cloudfront: {route.cf_behavior} -> {_firm_origin(route, firm)}")
             auth_parts = []
             if route.auth_edge:
                 auth_parts.append("edge JWT")
@@ -758,7 +775,7 @@ def cmd_reverse(args):
     query = args.s3_key
     strict = getattr(args, 'strict', False)
     rt = build_routing_table(_WORKSPACE)
-    dag = build_pipeline_dag(_WORKSPACE)
+    dag = build_firm_gold_dag(_WORKSPACE, FIRM_ALIAS.get((getattr(args, "firm", None) or "bd").lower(), "bd"))
     dag.build_index()
 
     counts = {"authoritative": 0, "speculative": 0}
@@ -813,7 +830,7 @@ def cmd_tab_audit(args):
     ]
 
     rt = build_routing_table(_WORKSPACE)
-    dag = build_pipeline_dag(_WORKSPACE)
+    dag = build_firm_gold_dag(_WORKSPACE, FIRM_ALIAS.get((getattr(args, "firm", None) or "bd").lower(), "bd"))
     dag.build_index()
 
     for comp_name in advi_components:
@@ -912,13 +929,20 @@ def main():
     p_page = sub.add_parser('page', help='Full-stack trace for one component')
     p_page.add_argument('component', help='Component name')
     p_page.add_argument('--json', action='store_true')
+    p_page.add_argument('--firm', default=None,
+                        help='Firm to trace: bd|49financial (default), inf|inflection, cot|cottonwood. '
+                             'ADVI is firm-isolated -- each routes to a different bucket + gold tree.')
 
     p_rev = sub.add_parser('reverse', help='S3 key -> routes -> components')
     p_rev.add_argument('s3_key', help='S3 key (e.g., gold/artifacts/employee_leaderboard.json)')
+    p_rev.add_argument('--firm', default=None,
+                       help='Firm gold tree: bd|49financial (default), inf|inflection, cot|cottonwood.')
     p_rev.add_argument('--strict', action='store_true',
                        help='Filter speculative results; exit 2 if no authoritative consumers found (ADHC_COMPIL_V4.010)')
 
-    sub.add_parser('tab-audit', help='Audit every ADVI tab')
+    p_tab = sub.add_parser('tab-audit', help='Audit every ADVI tab')
+    p_tab.add_argument('--firm', default=None,
+                       help='Firm gold tree: bd|49financial (default), inf|inflection, cot|cottonwood.')
     sub.add_parser('summary', help='One-line summary per component')
 
     args = parser.parse_args()

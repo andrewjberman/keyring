@@ -58,6 +58,7 @@ class ScriptIO:
 @dataclass
 class PipelineDAG:
     """The complete pipeline dependency graph."""
+    pipeline: str = "bd-gold"                                     # which firm/tier this DAG is
     scripts: dict[str, ScriptIO] = field(default_factory=dict)    # script_id -> ScriptIO
     s3_keys: dict[str, S3Key] = field(default_factory=dict)       # constant_name -> S3Key
     chains: dict[str, list[str]] = field(default_factory=dict)    # chain_name -> [script_ids]
@@ -644,6 +645,37 @@ def _extract_hardcoded_paths(content: str) -> tuple[list[str], list[str]]:
             elif _HARDCODED_READ_CONTEXT.search(line):
                 reads.add(normalized)
 
+    # Pass 2 (firm-trace fix 2026-06-11): VARIABLE-mediated writes/reads. The inf D-tier
+    # portal scripts assign a path literal to a var (`KEY = 'platinum/...'` / `key = f'platinum/
+    # advisors/{id}/book.json'`) then write it via a helper on a LATER line (`_write_json_s3(obj,
+    # KEY)`) -- literal and verb on different lines, so the single-line check above misses them.
+    # Build var->path, then attribute by where the var is used in a write/read context. Additive
+    # only (never removes); bd is unaffected (it resolves via s3_layout imports, not this path).
+    _assign_re = re.compile(
+        r"^\s*([A-Za-z_][A-Za-z0-9_]*)\s*=\s*f?['\"]"
+        r"((?:platinum|gold|silver|bronze)/[^'\"]+\.(?:json|parquet|csv))['\"]")
+    _ident_re = re.compile(r'\b([A-Za-z_][A-Za-z0-9_]*)\b')
+    # Sequential walk: track each var's CURRENT path value as assignments happen, so a reused var
+    # (e.g. `key` set to book.json then later detail.json) attributes the value live at each use.
+    cur: dict[str, str] = {}
+    for line in content_collapsed.splitlines():
+        am = _assign_re.match(line)
+        if am:
+            cur[am.group(1)] = re.sub(r'\{[^}]+\}', '{*}', am.group(2))
+            continue
+        wc = _HARDCODED_WRITE_CONTEXT.search(line)
+        rc = _HARDCODED_READ_CONTEXT.search(line)
+        if not (wc or rc):
+            continue
+        for um in _ident_re.finditer(line):
+            p = cur.get(um.group(1))
+            if not p:
+                continue
+            if wc:
+                writes.add(p)
+            elif rc:
+                reads.add(p)
+
     # Deduplicate: if we have both 'platinum/clients/{*}/summary.json' (from f-string)
     # and the same path from a plain string, keep only the {*} version.
     # Also remove any path that is a subset of a {*} parameterized path.
@@ -1007,13 +1039,18 @@ def _extract_column_gaps(py_file: Path) -> list[dict]:
 # Main: build the full pipeline DAG
 # ---------------------------------------------------------------------------
 
-def build_pipeline_dag(workspace_root: Path) -> PipelineDAG:
-    """Build the BD-gold pipeline DAG from authoritative sources (backward-compatible)."""
-    gold_dir = workspace_root / "data" / "black_diamond" / "scripts" / "gold"
+def build_pipeline_dag(workspace_root: Path, gold_dir: Path = None,
+                       pipeline: str = "bd-gold") -> PipelineDAG:
+    """Build a gold pipeline DAG from authoritative sources (s3_layout.py + gold_dispatch.sh).
+    Defaults to the BD-gold tree (backward-compatible). `gold_dir` override lets the same
+    parser serve any firm tree that uses the s3_layout.py + gold_dispatch.sh shape (bd, cot)."""
+    if gold_dir is None:
+        gold_dir = workspace_root / "data" / "black_diamond" / "scripts" / "gold"
     if not gold_dir.exists():
         return PipelineDAG()
 
     dag = PipelineDAG()
+    dag.pipeline = pipeline
 
     # Step 1: Parse s3_layout.py
     dag.s3_keys = _parse_s3_layout(gold_dir)
@@ -1025,7 +1062,7 @@ def build_pipeline_dag(workspace_root: Path) -> PipelineDAG:
     for py_file in sorted(gold_dir.glob("[A-D]_*.py")):
         if py_file.name.startswith("__"):
             continue
-        sio = _extract_script_io(py_file, workspace_root, dag.s3_keys)
+        sio = _extract_script_io(py_file, workspace_root, dag.s3_keys, pipeline=pipeline)
         if sio:
             dag.scripts[sio.script_id] = sio
 
@@ -1033,6 +1070,28 @@ def build_pipeline_dag(workspace_root: Path) -> PipelineDAG:
     dag.build_index()
 
     return dag
+
+
+# Firm <-> gold-tree map. Source of truth for the firm->bucket leg is the Lambda@Edge
+# firm-config.mjs (FIRM_BUCKET_MAP); mirrored here for the static trace graph. Accepts both
+# firm-id aliases (49financial/inflection/cottonwood) and pipeline slugs (bd/inf/cot).
+FIRM_ALIAS = {"49financial": "bd", "bd": "bd", "inflection": "inf", "inf": "inf",
+              "cottonwood": "cot", "cot": "cot"}
+FIRM_BUCKET = {"bd": "opal-data-bd", "inf": "opal-data-inf", "cot": "opal-data-cot"}
+
+def build_firm_gold_dag(workspace_root: Path, firm: str = "bd") -> PipelineDAG:
+    """Build the gold DAG for ONE firm. The ADVI serving tree is firm-isolated: 49F->bd
+    (Black Diamond), Inflection->inf (Orion API), Cottonwood->cot -- DIFFERENT gold scripts +
+    buckets per firm. comp-platinum historically built only bd, silently mis-attributing inf/cot
+    ADVI traces to the bd tree (firm-blind). This routes to the correct per-firm tree."""
+    f = FIRM_ALIAS.get((firm or "bd").lower(), "bd")
+    if f == "inf":
+        return build_inf_gold_dag(workspace_root)
+    if f == "cot":
+        return build_pipeline_dag(workspace_root,
+                                  workspace_root / "data" / "cot" / "scripts" / "gold",
+                                  pipeline="cot-gold")
+    return build_pipeline_dag(workspace_root)   # bd (default)
 
 
 # ---------------------------------------------------------------------------
@@ -1095,6 +1154,7 @@ def build_inf_gold_dag(workspace_root: Path) -> PipelineDAG:
         return PipelineDAG()
 
     dag = PipelineDAG()
+    dag.pipeline = "inf-gold"
     # No s3_layout.py for INF -- hardcoded paths only
     dag.s3_keys = {}
 
