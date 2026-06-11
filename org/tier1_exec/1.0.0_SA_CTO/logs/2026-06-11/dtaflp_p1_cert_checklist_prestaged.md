@@ -104,6 +104,22 @@ A naive sed leaves these stale → broken paths. CTO owns these in the cert pass
 
 ---
 
+## §4b — Shared-tooling delta in-window (cert-accounted, INDEPENDENTLY VERIFIED)
+`be6e841f0` (DS, TO-1c) added `--diff-filter=ACMRT` to all 3 `git diff --name-only`
+calls in `.tools/safe_deploy_core.py:detect_script_files` — excludes Deleted paths so a
+prune commit doesn't try to deploy git-rm'd files (LOCAL_MISSING). **Directly affects
+P1's deploy step** (the `git mv data/orion → data/inf` is delete-old + add/rename-new).
+
+CTO independent verification (isolated scratch-repo probe, git 2.54.0): a `git mv
+data/orion data/inf` under `--diff-filter=ACMRT` on a commit range emits **only the new
+`data/inf/...` path**, skips the deleted `data/orion/...`, in ALL THREE rename modes —
+default (repo `diff.renames` unset → git default), `-M` forced-on, and `--no-renames`
+(D+A split; ACMRT keeps A, drops D). Old unfiltered behavior emitted BOTH (the deleted
+path = the LOCAL_MISSING bug). **Verdict: PASS** — correct, beneficial for P1, and robust
+to rename-detection config. AC5 (`comp-pipescript deployed` MATCH) is not at risk from this
+delta; the renamed inf gold scripts land in the deploy set, deleted orion paths are skipped.
+
 ## §5 — Status
 PRE-STAGED, awaiting AE P1 RAVC2 (event-driven; AE spawned by MSTR per COO /drive 1302Z).
 Baseline frozen at this commit. When AE files: re-run §1/§4 greps post-mv, diff, sign or block.
+Shared-tooling delta be6e841f0 (§4b) verified PASS — folded into cert awareness.
