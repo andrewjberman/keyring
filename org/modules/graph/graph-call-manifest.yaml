@@ -458,8 +458,8 @@ entries:
     mode: query
     layer: cross-layer
     cost: "~ms"
-    freshness: "kuzu DB (stitched trace+cloud)"
-    rebuild_trigger: "n/a once stitched"
+    freshness: "kuzu stitch DB (stitched trace+cloud); db-path infra/aws/globgrph/kuzu_stitch_db"
+    rebuild_trigger: "n/a once stitched; reload on the nightly comp-aws derive->Nessie->kuzu cycle"
     anti_pattern: "comp-platinum (static heuristic, inf producer-incomplete) for a question the live stitch answers"
-    status: planned       # gated on NFRA_GLOBGRPH P2-STITCH; supersedes the heuristic inf producer-resolution
-    notes: "The structural fix for comp-platinum's firm producer-resolution residual (live per-bucket truth)."
+    status: canonical     # LANDED 2026-06-11 (P2-STITCH f754164b4, CTO-certified); supersedes the heuristic inf producer-resolution
+    notes: "The structural fix for comp-platinum's firm producer-resolution residual (live per-bucket truth). Cypher uses the CloudNode/CloudEdge schema: -[:CloudEdge {edge_type:'FETCHES'}]->. CTO-verified: 49F+cottonwood ADVI components resolve component->lambda->dynamodb/s3 cross-layer; 15 components reach a bucket."
