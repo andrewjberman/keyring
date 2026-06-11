@@ -73,11 +73,11 @@ def detect_script_files(
         old_sha = commit_range.split("..")[0] if ".." in commit_range else ""
         if old_sha.startswith("0000000"):
             # New branch: diff against main
-            cmd = ["git", "diff", "--name-only", "origin/main...HEAD"]
+            cmd = ["git", "diff", "--name-only", "--diff-filter=ACMRT", "origin/main...HEAD"]
         else:
-            cmd = ["git", "diff", "--name-only", commit_range]
+            cmd = ["git", "diff", "--name-only", "--diff-filter=ACMRT", commit_range]
     else:
-        cmd = ["git", "diff", "--name-only", "HEAD~1..HEAD"]
+        cmd = ["git", "diff", "--name-only", "--diff-filter=ACMRT", "HEAD~1..HEAD"]
 
     try:
         result = subprocess.run(
