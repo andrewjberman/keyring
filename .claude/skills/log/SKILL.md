@@ -19,8 +19,18 @@ standard wins on any divergence. Archetype-tag requirement: `org/XXX.md` § "Arc
 | `/log 90m` / `/log [90m]` / `30m` / `2h` / `45m` | Arm a recurring **CronCreate** loop at that cadence (for long-running processes), then run one tick now. Operator/Andrew-initiated only — NEVER auto-arm at launch (LD-0175). |
 | `/log off` | `CronList` → `CronDelete` any `/log` cron. No log written. |
 
-## Step 0 — Identify yourself + scope the window
+## Step 0 — ANCHOR to the workspace root, identify yourself, scope the window
 
+- **ANCHOR FIRST (mechanical, every invocation):**
+  ```bash
+  cd /c/Users/AndrewBerman/Desktop/ajb_workspace && git rev-parse --show-toplevel
+  ```
+  `/log` operates ENTIRELY in the parent workspace repo — the log file, `org/compiler-tools-log.md`,
+  and `safe-commit.sh` all live there — even when your session's work was in `portal/`. A CWD left
+  in `portal/` (the dual-repo footgun: portal is its OWN git repo) makes the wrapper error at best,
+  and at worst silently feeds you the WRONG repo's history: a bare `git log` inside `portal/`
+  returns portal commits only, so your evidence pull under-reports without any error. Anchor, then
+  reference portal explicitly as `git -C portal log ...` when your window includes portal commits.
 - **Serial:** your full registered serial INCLUDING any `~B`/`~C` lane suffix.
 - **Log dir:** `org/{tier_folder}/{your_serial}/logs/{YYYY-MM-DD}/` (tier folders: `tier0/`,
   `tier1_exec/`, `tier2_senior/`, `tier3_junior/`). Lane agents: use the folder matching your
@@ -30,17 +40,20 @@ standard wins on any divergence. Archetype-tag requirement: `org/XXX.md` § "Arc
 - **Filename:** `{scope}_{action}.md` per convention (e.g. `gldinc_battery_results.md`,
   `session_close_HHMM-HHMMZ.md`); loop ticks use `work_{HHMM}Z.md`.
 
-## Step 1 — Gather the material (evidence, not memory)
+## Step 1 — Gather the material (verify if uncertain, SKIP if certain)
 
-Pull the window's ground truth before writing — the log cites evidence, not recollection:
+The log cites evidence, not recollection — but **hot context IS evidence**. If the window's
+work is in your working context (the normal session-close case), write from it directly and
+skip these pulls. They are the SAFETY NET for compacted sessions, long windows, or anything
+you're not certain of:
 
 ```bash
 git log --oneline --author="{your_serial}" --since="<window start>"   # your commits
 cat .comp-graph/.agent_context                                         # current TO context
-ls -t org/mcp/inbox/{your_serial}/read/ | head                        # MCP traffic handled
+ls -t org/mcp/inbox/{your_serial}/read/ | head                        # only if MCP recall is fuzzy
 ```
-Plus: deploys/tags you produced, artifacts you verified, RAVC loops you opened/closed,
-rulings/findings you issued or received.
+Plus (cite from context, verify only the uncertain ones): deploys/tags, artifacts verified,
+RAVC loops opened/closed, rulings/findings issued or received.
 
 ## Step 2 — Write the log (the canonical format)
 
@@ -62,12 +75,26 @@ Follow `org/ref/SESSION_LOG_STANDARD.md` **base template** exactly, with these n
 6. **Next Steps** — cross-agent handoffs name the receiving agent's FULL serial in brackets.
 7. **Plain ASCII** — no emojis (CLAUDE.md Code Quality rule applies to logs).
 
+**Speed contract (0.4.0_DE telemetry 2026-06-12 — keep routine logs ≤90s; density may scale
+COMPOSITION, never PROCESS):**
+- **MCP traffic:** total count + the SIGNIFICANT dispatches only (GOs, rulings, findings,
+  RAVC opens/closes). Do NOT enumerate every message; do NOT count broker re-surfaces of
+  already-handled messages; do NOT re-read message files to build a table.
+- **Compiler Tools rows:** cite runs from working context — NEVER re-run a tool for the table,
+  and don't agonize over result classification (a fast PASS/PARTIAL/FAIL/WARN call with a
+  one-line note beats a deliberated one; the standard's definitions are the tiebreak).
+- **Files Modified:** when your commit messages already carry per-file summaries, the table may
+  be `see commit messages: <hash>, <hash>` plus only the rows needing extra context.
+- The log is a RECORD of work done, not new work. If a section is costing minutes, you are
+  re-deriving — stop and cite.
+
 ## Step 3 — Compiler-tools log line + commit
 
 1. Append ONE line to `org/compiler-tools-log.md` summarizing the window's tool runs (or the
    one-sentence why-none).
 2. Commit BOTH files via the wrapper, under YOUR author line, pathspec-scoped — do NOT
-   pre-`git add` (the wrapper stages your pathspec itself, CLAUDE.md Rule 14a):
+   pre-`git add` (the wrapper stages your pathspec itself, CLAUDE.md Rule 14a). **Run from the
+   workspace root** — a CWD left in `portal/` (or any subdir) errors the wrapper:
 
 ```bash
 .tools/safe-commit.sh --author "{serial} <{serial}@opal.agent>" \
