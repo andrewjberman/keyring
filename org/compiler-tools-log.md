@@ -5521,3 +5521,7 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-06-12 | 3.0.0_SA_CVO | page-inventory-full-reaudit | comp-pipescript | comp-pipescript deployed data/inf/scripts/bronze/orchestrator.py | PASS |
 | 2026-06-12 | 0.4.2_RD_AdvisorIntelligence | session-close | (none this window) | Delta since last log = one RAVC2 send; session tool runs tabled in the 3 segment logs (tsc/VALGATE/ls-files/ET.parse/57-fn census) | N/A |
 | 2026-06-12 | 0.4.2_RD_AdvisorIntelligence | page-inventory-full-reaudit | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-06-12 | 2.0.0_SA_COO | page-inventory-full-reaudit | comp-surface-check | comp-surface-check check --mode advisory --file org/mcp/.last-drive-2.0.0_SA_COO --file... | PASS |
+| 2026-06-12 | 0.4.0_DS_ClientPlatform | page-inventory-full-reaudit | comp-surface-check | comp-surface-check check --mode advisory --file docs/briefs/inf-advi-staleness-p0-recov... | PASS |
+| 2026-06-12 | 0.4.0_DS_ClientPlatform | P0 inf ADVI recovery | (none — live-AWS incident forensics; Rule-20 trace was CTO's comp-kuzu x2; F5 own-change verification against live S3/SSM/Lambda/CW throughout; follow-up (c) extends deployed-checks to bronze-runner prefixes) | DIAGNOSE |
+| 2026-06-12 | 0.4.0_DS_ClientPlatform | page-inventory-full-reaudit | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
