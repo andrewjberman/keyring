@@ -58,7 +58,7 @@ entries:
     mode: query
     layer: cloud
     cost: "~ms"
-    freshness: "kuzu DB <- latest Nessie/Iceberg commit (nightly + intraday); every call prints a provenance header (built-when + source vintage + counts), WARNs past 26h, reports BEHIND-Nessie-HEAD-by-N for nessie DBs, UNKNOWN VINTAGE if unstamped (TO-F1 contract above); DEFAULT surface (no --db-path) = canonical Nessie kuzu_nessie_db; auto-refreshes on Nessie-HEAD-advance ENGINE-INTERNALLY (Rule 20 QUERY-default posture UNCHANGED -- agents never run rebuilds to answer traversals; engine rebuilds exactly when pin trails HEAD); explicit --db-path for scratch DBs (kuzu_db tarball/stitch/ac7) (TO-F2)"
+    freshness: "kuzu DB <- latest Nessie/Iceberg commit (nightly + intraday); every call prints a provenance header (built-when + source vintage + counts), WARNs past 26h, reports BEHIND-Nessie-HEAD-by-N for nessie DBs, UNKNOWN VINTAGE if unstamped (TO-F1 contract above); DEFAULT surface (no --db-path) = canonical Nessie kuzu_nessie_db; auto-refreshes on Nessie-HEAD-advance ENGINE-INTERNALLY (Rule 20 QUERY-default posture UNCHANGED -- agents never run rebuilds to answer traversals; engine rebuilds exactly when pin trails HEAD); explicit --db-path for scratch DBs (kuzu_db tarball/stitch/ac7) (TO-F2); HEAD oracle = writer-stamped s3://warehouse/_branch_head.main.json marker (mtime-scan RETIRED, CVO dc06744c6); header prints current/BEHIND+writer+ts/HEAD-ORACLE-UNKNOWN per marker (TO-F6)"
     rebuild_trigger: "resource created/changed since last load -> comp-aws derive --resource <arn> ; kuzu_nessie_load"
     anti_pattern: "comp-aws derive (8-min full rebuild) to list nodes"
     status: canonical
@@ -71,7 +71,7 @@ entries:
     mode: query
     layer: cloud
     cost: "~ms"
-    freshness: "kuzu DB (provenance header on every call -- see contract above); DEFAULT surface = canonical Nessie kuzu_nessie_db; auto-refreshes ENGINE-INTERNALLY on Nessie-HEAD-advance; explicit --db-path for scratch DBs (TO-F2)"
+    freshness: "kuzu DB (provenance header on every call -- see contract above); DEFAULT surface = canonical Nessie kuzu_nessie_db; auto-refreshes ENGINE-INTERNALLY on Nessie-HEAD-advance; explicit --db-path for scratch DBs (TO-F2); HEAD oracle = writer-stamped _branch_head.main.json marker (mtime-scan RETIRED, CVO dc06744c6); header prints current/BEHIND+writer+ts/HEAD-ORACLE-UNKNOWN per marker (TO-F6)"
     rebuild_trigger: "edges changed since last load"
     anti_pattern: "manual multi-hop tracing or a full re-derive"
     status: canonical
@@ -84,7 +84,7 @@ entries:
     mode: query
     layer: cloud
     cost: "~ms"
-    freshness: "kuzu DB (provenance header on every call -- see contract above); DEFAULT surface = canonical Nessie kuzu_nessie_db; auto-refreshes ENGINE-INTERNALLY on Nessie-HEAD-advance; explicit --db-path for scratch DBs (TO-F2)"
+    freshness: "kuzu DB (provenance header on every call -- see contract above); DEFAULT surface = canonical Nessie kuzu_nessie_db; auto-refreshes ENGINE-INTERNALLY on Nessie-HEAD-advance; explicit --db-path for scratch DBs (TO-F2); HEAD oracle = writer-stamped _branch_head.main.json marker (mtime-scan RETIRED, CVO dc06744c6); header prints current/BEHIND+writer+ts/HEAD-ORACLE-UNKNOWN per marker (TO-F6)"
     rebuild_trigger: "you just added the dependency you're checking for"
     anti_pattern: "eyeballing terraform / a full derive"
     status: canonical
