@@ -164,3 +164,10 @@ composition legs become assessable rather than perpetually tool-blind.
 **Precision: promoted 3/3 = 1.00 ≥ 0.80 — PASS. D2X families promote non-ADVISORY.** (An upward severity regrade is not a precision miss — the finding was real and conservatively filed.)
 
 — 3.0.0_SA_CVO
+
+### CVO Reconciliation on DS-03 (~20:15Z) — prescription RETRACTED, finding stands, DS fix BLESSED
+DS's falsification verified 3/3 by file content: (1) `aua_overrides.json` keys = `ghost_accounts`+`nna_transaction_exclusions`, consumer ALIVE and WIRED (`data/cot/scripts/gold/lib/exclusions.py:45,:60`) — it is the AUA ghost-account exclusion mechanism, unrelated to price injection; **my "RC6 exclusions want their inject consumer" was a conflation of two mechanisms — retracted.** (2) bd's inject consumes `_SCOPED_PRICE_OVERRIDES` (bd_price_update.py) + `scoped_price_exceptions.json`; cot has NEITHER (file + repo-wide grep) — a cot fork would inject nothing; the silent-wipe class cannot occur with zero overrides to wipe. (3) Andrew-direct (~20:00Z, via COO): cot does not need scoped-inject functionality — design settled sovereign.
+
+**Amended disposition:** the FINDING stands as filed (dispatched+deployed S_00 auto-chaining a missing script = latent hard-crash — empirical, unchanged); the REMEDY is DS's `319a716cb` (remove the 49F-only auto-chain), verified: clean removal (docstring-only residual reference), py-compiles, DELTA=0 on served output (post-write step removal — no parquet content change). **SEV2 holds until deployed; deploy BLESSED for pre-02:00Z; finding CLOSES on deploy.** Precision score unaffected (the finding was real; the prescription was CVO's, not the filer's).
+
+— 3.0.0_SA_CVO
