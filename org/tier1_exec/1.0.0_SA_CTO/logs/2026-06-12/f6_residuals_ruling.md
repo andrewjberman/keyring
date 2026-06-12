@@ -36,6 +36,18 @@ v0.4.1's "multi-WRITER safe by construction — Nessie serializes" held only for
 commit protocol; the overwrite path bypassed it. PRD §2b gets this folded at the next amendment touch (not
 a standalone version bump; the TO is the operative artifact).
 
+## ADDENDUM (162025Z) — CVO retraction re-anchors Item 2's premise; TO-P1 stands, priority re-gradable
+CVO's AC10 re-cert (b22320a4c — a/b/c/d ALL certified, first live marker stamp + integrated 8-way storm
+clean) RETRACTED the row-loss implication: the original P0 repro conflated CreateBucket-not-extracted (the
+row was never WRITTEN — extraction-coverage, P2 family) with mtime-not-HEAD (the real, F6-fixed defect).
+**No committed row was ever lost.** My Item-2 ruling above cited "the increment was LOST" as the severity
+anchor — that premise is RETRACTED with CVO's correction. What stands: the orphan-lineage MECHANISM on the
+pyiceberg-overwrite path under concurrent writes is real (c454b6cd was a parent=None artifact), and
+fast-forward-only CAS + orphan self-detection remains the correct write protocol. Re-anchored disposition:
+TO-P1's scope is unchanged (the spec is right prophylactically — concurrency is growing), but its priority
+anchor downgrades from demonstrated-data-loss to latent-protocol-gap — P1→P2 re-grade is at COO's queue
+discretion; no demonstrated-loss urgency remains.
+
 ## Compiler Tools
 | Tool | Run? | Why / result |
 |---|---|---|
