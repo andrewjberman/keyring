@@ -1,6 +1,6 @@
 # Deploy Completion Record
 **Date opened:** 2026-06-12T21:45Z (deploy start)
-**Status:** OPEN
+**Status:** CLOSED 2026-06-12T21:48Z -- nothing stranded
 **Deploy:** NFRA_GLOBGRPH TO-MAINT -- nightly Iceberg maintenance (mark+sweep, dry-run first)
 **Authored by:** 0.7.0_AE_CloudOps
 **Class:** deploy-completion (NEVER-rule gate, e38cc2b16)
@@ -11,11 +11,11 @@
 
 | leg | kind | target | proof required | state |
 |---|---|---|---|---|
-| L1 commit | git | derive_runner.py + item2a.tf on CLOUD | commit hash pushed | pending |
-| L2 tf-apply | activation | ECS task def env GLOBGRPH_MAINT_MODE=dry-run (new revision) | safe-apply + 0-diff plan | pending |
-| L3 container | activation | ECR opal-globgrph-derive-runner:latest carries new derive_runner.py | CodeBuild SUCCEEDED + ECR imageDigest newer than build start | pending |
-| L4 tag | git | globgrph-v0.1.15 | tag pushed --follow-tags | pending |
-| L5 wiring | verify | EventBridge nightly (02:00Z) -> task def revision targeting :latest | describe task def + rule state ENABLED | pending |
+| L1 commit | git | derive_runner.py + item2a.tf on CLOUD | commit hash pushed | CLOSED -- `e3d806c2d` pushed |
+| L2 tf-apply | activation | ECS task def env GLOBGRPH_MAINT_MODE=dry-run (new revision) | safe-apply + 0-diff plan | CLOSED -- task def `:3`, plan exitcode 0 |
+| L3 container | activation | ECR opal-globgrph-derive-runner:latest carries new derive_runner.py | CodeBuild SUCCEEDED + ECR imageDigest newer than build start | CLOSED -- `c4ec13ed` SUCCEEDED, `:latest`=`20260612-214406` |
+| L4 tag | git | globgrph-v0.1.15 | tag pushed --follow-tags | CLOSED -- tag pushed |
+| L5 wiring | verify | EventBridge nightly (02:00Z) -> task def revision targeting :latest | describe task def + rule state ENABLED | CLOSED -- rule ENABLED cron(0 2 * * ? *), env GLOBGRPH_MAINT_MODE=dry-run confirmed on `:3` |
 
 ## Activation note
 
