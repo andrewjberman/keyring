@@ -245,3 +245,39 @@ suppression_classes:
       - effect: Deny
     confirmed_fp_count: 198
     evidence: TO-D2 AE lane comp-iam gaps sweep 2026-06-12 (07848c565); NFRA_DTAFLP cross-firm isolation
+
+  # ---------- Reachability family (TO-D1 iteration, CVO adjudication 0.70) ----------
+
+  - id: FP_INF_DISPATCHER_CATALOG
+    reason: >
+      A gold script whose ONLY connection is inf dispatcher-catalog membership (orion-gold-dispatch.sh
+      pipe-delimited catalog + CHAIN_* sets) read as 0-edge orphaned because the catalog was not parsed
+      into graph edges. CVO TO-D1 adjudication FPs #7/#8 (INF_A_-1.materialize_txn_cache,
+      INF_A_02.fee_rate_history — both dispatched live in CHAIN_FULL nightly). DURABLE FIX LANDED
+      2026-06-12 (TO-D1 iteration): inject_pipeline_edges now emits dispatcher -[TRIGGERS]-> script
+      for every chain member (bd + inf; 73 edges on first rebuild). This suppression covers the window
+      until the nightly stitch rebuild carries the fix, then RETIRES — a 0-edge INF_* gold script
+      after that is a REAL orphan again.
+    affected_types: [GOLD_SCRIPT]
+    name_patterns:
+      - "INF_*"
+    retire_when: "nightly stitch graph carries dispatch_catalog TRIGGERS edges (check meta/source=dispatch_catalog)"
+    evidence: CVO adjudication 2026-06-12 (7/10, FPs one mechanism); fix commit TO-D1-iteration; 03ea4aed1 ledger
+
+  - id: FP_MDPF_UNSTITCHED
+    reason: >
+      The mdpf tree was not stitched into the graph at all, so a live mdpf script's bucket reads were
+      invisible — an S3 bucket whose only consumer is an mdpf script read as ORPHANED_S3 (CVO TO-D1
+      FP #5: opal-data-etfs, read live by build_mdpf_wsd2_etf_netassets_feeder.py). PARTIAL DURABLE FIX
+      LANDED 2026-06-12 (TO-D1 iteration): build_mdpf_dag (TOOL-02) is now injected into the trace-graph
+      build (mdpf scripts + key-grain S3 I/O visible). REMAINING GAP this suppression still covers:
+      key nodes are bare (no bucket attribution), so BUCKET-grain reachability for non-firm buckets
+      (opal-data-etfs, opal-data-aaii-v2, opal-data-mdpf itself) still cannot see mdpf consumers.
+      Retires when the bucket-qualified extractor leg (TOOL-02 follow-on) lands.
+    affected_types: [S3_BUCKET]
+    name_patterns:
+      - "opal-data-etfs"
+      - "opal-data-aaii-v2"
+      - "opal-data-mdpf"
+    retire_when: "extractor records bucket-qualified keys for mdpf reads (TOOL-02 follow-on)"
+    evidence: CVO adjudication 2026-06-12 FP #5; mdpf DAG injection landed TO-D1-iteration
