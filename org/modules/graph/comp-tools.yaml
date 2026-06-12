@@ -48,6 +48,25 @@ tools:
     usage_guide: "org/modules/graph/comp-aws-agent-usage.yaml"
     project: "NFRA_COMPAWS"
 
+  comp-kuzu:
+    command: 'comp-kuzu [--json] [--limit N] [--db-path PATH] "<Cypher>"'
+    segment_scope: aws-cloud
+    when: |
+      - "List/inspect cloud resources of a type, transitive reachability, or blast radius" (the fast ~ms query layer over the comp-aws cloud graph)
+      - Querying CloudNode/CloudEdge in kuzu_db (tarball nightly) / kuzu_nessie_db (Iceberg commit) / kuzu_stitch_db (cross-layer union)
+    cost: "~ms"
+    output: "Cypher result (table, or --json array on stdout)"
+    freshness: |
+      TO-F1 provenance contract: every invocation prints a provenance header to STDERR from the DB's
+      `<db>._build_manifest.json` sibling — DB, built-when, source vintage (tarball key / Nessie dual
+      snapshot-id pin / stitch file+mtime), node/edge counts. Build age >26h (missed-nightly) => WARN: STALE.
+      Nessie-sourced DBs print live commit-distance "BEHIND Nessie HEAD by N commits". Manifest-less DB =>
+      loud UNKNOWN VINTAGE. Header is stderr-only so --json/table stdout stays parseable. Stamped by the
+      three loaders (kuzu_load / kuzu_nessie_load / kuzu_stitch_load). The graph is a minutes-stale-and-LABELED
+      traversal surface, NOT a read-your-own-writes verification substitute (verify vs served artifact / live AWS).
+    rebuild_trigger: "DB stale/UNKNOWN/BEHIND -> rerun the matching loader (kuzu_nessie_load default --force; kuzu_load --force; kuzu_stitch_load --force)"
+    project: "NFRA_GLOBGRPH"
+
   comp-trace:
     command: "comp-trace <query> [--direction up|down|both] [--depth N] [--json]"
     segment_scope: cross-segment
