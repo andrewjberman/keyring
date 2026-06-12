@@ -5047,3 +5047,9 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-06-12 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
 2026-06-12T18:54:35Z | 0.4.0_DS_ClientPlatform | NFRA_DEBTSCAN.TO-D2 | comp-pipescript deployed (bd 43/43 MATCH) + io x160 gold (0 col-gaps) + comp-cache collisions (5/5 same-type FP) + postdeps (5 guards, $22M class protected) | estate composition-debt CLEAN; 1 REAL D2-DS-01 (deployed bd-only enumeration); precision 1.00 gate PASS
 | 2026-06-12 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-06-12 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/mcp/.last-drive-2.0.0_SA_COO --file... | PASS |
+| 2026-06-12 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/globgrph/Dockerfile | PASS |
+| 2026-06-12 | 0.7.0_AE_CloudOps | (no-TO) | comp-iam | comp-iam service incremental_updater | PASS |
+| 2026-06-12 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .owned-paths.yaml | PASS |
+| 2026-06-12 | 0.7.0_AE_CloudOps | NFRA_GRAPHS.D8-AE | comp-blast (opal-critical-surface-alerts: 0 nodes, safe) + comp-iam (incremental_updater: sns:Publish gap found+filled) + ds-commit-gate x2 (B1+B4 PASS) + comp-surface-check B5 self-test (advisory hook live on first commit) + terraform 0-diff post-apply (globgrph-v0.1.13) | ALL PASS |
+| 2026-06-12 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
