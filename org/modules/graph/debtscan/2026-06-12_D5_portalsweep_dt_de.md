@@ -1,6 +1,6 @@
 # NFRA_DEBTSCAN TO-D5: PORTALSWEEP — Joint Ledger
 **DT author:** 0.4.0_DT_ClientPlatform  
-**DE co-sign:** 0.4.0_DE_ClientPlatform (pending DE findings merge)  
+**DE co-sign:** 0.4.0_DE_ClientPlatform (AC4/AC5/AC6 findings merged into §4, 20260612T~1945Z)  
 **Sweep date:** 2026-06-12  
 **TO ref:** org/tier2_senior/0.4.0_DT_ClientPlatform/task_orders/NFRA_DEBTSCAN.TO-D5.portalsweep.md  
 **Zero-mutation confirmed:** all work was read-only (tsc, eslint, grep, comp-* queries)
@@ -82,9 +82,75 @@ All 23 behaviors accounted for. 22 of 23 map cleanly to endpoint URL patterns.
 
 ---
 
-## §4 AC4–AC6 — DE findings (PENDING)
+## §4 AC4–AC6 — DE findings
 
-DE lane (AC4 dead data channels, AC5 unused imports, AC6 dead exports/components) in progress. DE to supply §4 findings in per-finding format; DT will merge and co-sign before RAVC2.
+**DE author:** 0.4.0_DE_ClientPlatform. Methodology: ESLint JSON (`unused-imports` rule, scoped to real `portal/src/` — `.runtmp/` worktrees excluded per TOOLCHAIN-01); file-level import-graph orphan detector (resolves `@/`→`src/` + relative, **append-suffix** resolution so dotted names like `*.context.ts` are not mis-resolved); `comp-cache collisions`; targeted consumer-traces. All read-only.
+
+### §4a AC4 — Dead data channels
+
+Whole-file dead API/data modules (0 importers anywhere in `src/`). These are file-level dead channels DT's §6 export-grep did not surface (it grepped exports *within* each endpoint file; these are entire orphaned files):
+
+| ID | File | LOC | Evidence | Severity | Triage |
+|----|------|-----|----------|----------|--------|
+| DC-01 | `api/endpoints/benchmarks.ts` | 105 | 8 exports (`getModelBenchmarkReturns`, `formatBenchmarkReturn`, `MODEL_NAMES`…), 0 importers. Live benchmark data flows via `@/api/portal-proxy` (`BenchmarkHeatmap.tsx:21`) — this is a **dead shadow** of the portal-proxy benchmark path. | MEDIUM | Remove or reconcile with portal-proxy |
+| DC-02 | `api/endpoints/market-update.ts` | 201 | `marketUpdateApi` + all interfaces, 0 importers | MEDIUM | Remove or confirm planned feature |
+| DC-03 | `api/endpoint-mapping.ts` | 286 | `ENDPOINT_MAPPING` / `getEndpointPath` / `requiresAuth` / `isFirmScoped`, 0 importers — abandoned routing-abstraction layer | MEDIUM | Remove (superseded by direct endpoint files) |
+| DC-04 | `api/sentiment-backend.ts` | 43 | `queryArticlesByDateViaBackend`, 0 importers | LOW | Remove or confirm |
+| DC-05 | `api/client/axios.ts` | 88 | Orphaned axios client, 0 importers — live client is `api/api-client.ts` | LOW | Remove dead client |
+| DC-06 | `lib/rsiCalculator.ts` | 151 | 5 RSI fns, 0 importers. `RSIBars.tsx` does NOT import it (verified) | LOW | Remove |
+| DC-07 | `lib/colorTokens.ts` | 172 | `COLOR_TOKEN_MAP`/`getSentimentColor`/`getModelPortfolioColor` unused **AND** `getSentimentColor` is independently **re-defined locally** in `ExecutiveSummary.tsx:672`, `KeywordSentimentModal.tsx:39`, `TopicCloud.tsx:43` → 3 divergent copies of a color fn where a shared util already exists (family 2c drift) | MEDIUM | Consolidate to one shared util or delete the orphan |
+
+**DC-08 (RQ key safety):** `comp-cache collisions` → 5 shared keys, **all type-consistent** (same key + same response type + same fn across consumers, e.g. `['advisor-book-view',...]` returns `PlatinumAdvisorSummary` in both sites). These are **safe deliberate cache-sharing**, NOT collisions. **0 real RQ key corruption.** No fetch-no-consumer or unread-key defects in graph-indexed RQ usage.
+
+**DE concurrence on ROUTE-01 (`searchSecurities`):** independently verified **0 callers** of `searchSecurities()` — the broken `/api/trades/` URL is **dead code, dormant** (no user can trigger it). Recommend DT's ROUTE-01 sit at MEDIUM (latent), not HIGH, until/unless wired up.
+
+**ROUTE-02 (`getAccountDistribution`) — RESOLVED, FALSE ALARM (DE-assigned):** the **live** call (`aum.ts:552`) is `/api/general/portfolios/account-distribution.json` → general portal Lambda (correct). The `/api/private/portfolios/...` DT flagged is a **commented-out line (`aum.ts:549`) + doc-comment text only (`:517`)**, not the active path. `getAccountDistribution` is a live channel (`ModelPortfolios.tsx:432`). No routing bug. Recommend closing ROUTE-02.
+
+### §4b AC5 — Unused imports census
+
+ESLint `unused-imports/no-unused-imports` (error-level), scoped to real `portal/src/`: **0 unused imports.** The 5 `unused-imports/no-unused-vars` (warn) are unused *variables*, already captured in §2/ESLINT-02 (`PerformanceHeatMap:207`, `RSIBars:55`, `ClientListPanel:57+58`, `ModelPortfolios:76`). **AC5 = clean on imports; the 5 unused-vars stand as the only finding.**
+
+### §4c AC6 — Dead exports / components census (file-level orphans)
+
+File-level import-graph: **72 orphan files** (no other file imports them by path; static/default/named/lazy all traced). Entry points (`main.tsx`, `App.tsx`) excluded. Verified against FP traps — `contexts/*.context.ts` (ALIVE, dotted-name resolver fix), the Attribution-vs-Positioning `HoldingsTab` name-collision (Attribution copy genuinely dead, Positioning copy live), and the AdvisorIntelligence orphans (0 `import` references each, confirmed). Tiered:
+
+| ID | Cluster | Files | Severity | Notes |
+|----|---------|-------|----------|-------|
+| ORPHAN-PM | `pages/PortfolioManagement/{components,hooks,utils,panels}/*` | 19 | HIGH | Largest cluster. PM page IS routed (`App.tsx:29` lazy) but the live `PortfolioManagement.tsx` imports a *different* set (`OptimizationSummaryHeader`, `usePortfolioStore`, `usePortfolioApi`…). The 19 orphans (`ActionBadge`, `FileUpload`, `TradeTable`(407L), `RiskVisualization`(253L), `usePortfolioManagementState`(271L), `exportToCSV`, `mockData`…) are a **dead refactor sub-tree** left behind. |
+| ORPHAN-AI | `pages/AdvisorIntelligence/_shared/*` (Phase 1) | 11 | MEDIUM | Dead components: `AUACompositionChart`(238L), `DimensionSelector`, `HeaderMetrics`, `MetricSelector`, `ClientsTable`, `AssetIntelligenceTab`(279L), `FeeRoleBreakdownPanel`, `AdvisorBookAccountDetail`(305L) + 3 dead barrels (`ClientDetail/index.ts`, `ClientDetail/panels/index.ts`, `inflection/overrides/index.ts`). None dynamically resolved via partner-override (verified). |
+| ORPHAN-MISC | misc pages/components | 8 | MEDIUM | `components/ModelPortfolioCard.tsx`(93L), `components/TrendingTopicImage.tsx`(235L, has README — confirm not dynamic), `Attribution/{AllocationHeatmap(696L), tabs/HoldingsTab(1185L!), utils/buildAttributionData(253L)}`, `CausalityEngine/{mockData, tabs/Tab2_Generate, tabs/Tab2_History}`. Attribution page IS routed — these are dead tabs/panels within it. |
+| ORPHAN-UI | `ui/components/{Card,Stat,panels/PanelExamples}.tsx` | 3 | LOW | Non-catalyst UI orphans; `PanelExamples`(188L) is a demo/example file. |
+| ORPHAN-BARREL | `CapitalMarketAssumptions/index.ts`, `CausalityEngine/index.ts`, `ui/styles/index.ts` | 3 | LOW | Dead barrels (contents may be imported directly). |
+| ORPHAN-CATALYST | `ui/components/catalyst/*` | 21 | **ADVISORY** | Vendored Tailwind **Catalyst** UI kit — 21 of ~25 components unconsumed. Vendored design-system; partial usage is expected. **Do NOT action without a product call** — tree-shaking removes them from the bundle anyway. Listed for completeness, not as actionable debt. |
+
+(ORPHAN-API/LIB overlaps DC-01..06 above — the 7 api/lib orphans are counted as AC4 dead channels, not double-filed here. 72 = 19+11+8+3+3+21+7.)
+
+**Out-of-pattern (AC4 family 2c) — supplementary:**
+- `colorTokens` triple-redefinition (DC-07) — primary out-of-pattern finding.
+- Two context dirs: `src/context/` (TimeMachine provider, live) + `src/contexts/` (Auth/DataSource/PageTheme/YangData providers, live). NOT duplicates (verified) but the singular/plural split is a naming footgun (it produced a transient FP in this very sweep). NOTE-only.
+- Inflection partner: only partner with an `overrides/` dir + `InflectionInsightsPanel` + `firmAccountName` prop — intentional partner-override architecture, LOW/expected (not debt).
+
+### §4d DE per-finding rows (AC7 format, for §7 merge)
+
+| ID | Family | Severity | Firm-scope | Description | Owner lane | Triage |
+|----|--------|----------|-----------|-------------|-----------|--------|
+| DC-01 | 2a/2b | MEDIUM | all | `endpoints/benchmarks.ts` whole-file dead; shadow of portal-proxy benchmark path | DE | Remove/reconcile |
+| DC-02 | 2a | MEDIUM | all | `endpoints/market-update.ts` whole-file dead | DE | Remove/confirm |
+| DC-03 | 2a | MEDIUM | all | `endpoint-mapping.ts` dead routing-abstraction (286L) | DE | Remove |
+| DC-04 | 2a | LOW | all | `sentiment-backend.ts` dead | DE | Remove |
+| DC-05 | 2a | LOW | all | `client/axios.ts` orphaned (live client = api-client.ts) | DE | Remove |
+| DC-06 | 2a | LOW | all | `lib/rsiCalculator.ts` dead | DE | Remove |
+| DC-07 | 2c | MEDIUM | all | `lib/colorTokens.ts` dead + `getSentimentColor` re-defined 3× locally | DE | Consolidate |
+| ROUTE-02 | 2a | RESOLVED | all | FALSE ALARM — live path is `/api/general/`; `/api/private/` is dead comment | DE | Close |
+| ORPHAN-PM | 2b | HIGH | all | 19-file dead PortfolioManagement refactor sub-tree under a live page | DE | Remove after product confirm |
+| ORPHAN-AI | 2b | MEDIUM | all | 11 dead AdvisorIntelligence components/barrels (Phase 1) | DE | Remove after confirm |
+| ORPHAN-MISC | 2b | MEDIUM | all | 8 dead misc components incl. Attribution dead tabs (1185L HoldingsTab) | DE | Remove after confirm |
+| ORPHAN-UI | 2b | LOW | all | 3 non-catalyst UI orphans (incl. PanelExamples demo) | DE | Remove |
+| ORPHAN-BARREL | 2b | LOW | all | 3 dead barrels | DE | Remove |
+| ORPHAN-CATALYST | 2b | ADVISORY | all | 21 unconsumed vendored Catalyst kit components — tree-shaken, do not action | — | No-op (informational) |
+| OOP-CTXDIR | 2c | NOTE | all | `context/` vs `contexts/` singular/plural naming footgun (both live) | DE | Optional rename |
+
+**Precision note (§3 gate):** all orphan claims are file-level import-graph + spot-trace verified; FP-trap items (contexts, HoldingsTab collision, benchmarks-vs-portal-proxy, rsiCalculator-vs-RSIBars) independently cleared. ORPHAN-CATALYST held at ADVISORY (vendored). Recommend CVO adjudication before any cluster is promoted to a fix-TO; ORPHAN-PM (HIGH, 19 files) is the highest-value removal candidate.
 
 ---
 
@@ -158,4 +224,4 @@ All sweep operations were read-only:
 
 ---
 
-*DT findings complete as of 20260612T~1940Z. Awaiting DE AC4/AC5/AC6 merge before RAVC2.*
+*DT findings complete 20260612T~1940Z. DE AC4/AC5/AC6 merged into §4 ~1945Z (7 dead channels, 0 unused imports, 72 orphan files / 5 actionable clusters + catalyst ADVISORY, ROUTE-02 resolved as false alarm). DT to merge §4d rows into §7 + send joint RAVC2 to COO CC CVO.*
