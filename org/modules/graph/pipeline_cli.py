@@ -37,7 +37,7 @@ sys.path.insert(0, str(_WORKSPACE / ".tools"))  # safe_deploy_core lives in .too
 from org.modules.graph.extract_pipeline import (  # noqa: E402
     build_pipeline_dag, inject_pipeline_edges,
     build_inf_gold_dag, build_silver_dag, build_multi_pipeline_dag,
-    build_inf_manual_api_dag,
+    build_inf_manual_api_dag, build_mdpf_dag,
     _parse_dispatch, _parse_orion_dispatch,
 )
 
@@ -162,9 +162,32 @@ def _build_dag(pipeline: str = "bd-gold"):
         return build_silver_dag(_WORKSPACE, "inf-silver", "data/inf/scripts/silver")
     if pipeline == "inf-manual-api":
         return build_inf_manual_api_dag(_WORKSPACE)
+    # NFRA_DEBTSCAN.TOOL-02: cot + mdpf get their OWN graphs. Before this, any
+    # unmapped key fell through to the bd graph SILENTLY -- `io --pipeline
+    # cot-gold` analyzed bd scripts under a [bd-gold] header and reported
+    # Unknown for every real cot id, which a coverage grep miscounted as clean
+    # (the D2X false-clean class).
+    if pipeline in ("cot-gold", "cot"):
+        return build_pipeline_dag(_WORKSPACE,
+                                  _WORKSPACE / "data" / "cot" / "scripts" / "gold",
+                                  pipeline="cot-gold")
+    if pipeline == "cot-silver":
+        return build_silver_dag(_WORKSPACE, "cot-silver", "data/cot/scripts/silver")
+    if pipeline == "mdpf":
+        return build_mdpf_dag(_WORKSPACE)
+    if pipeline == "bd-bronze":
+        return build_silver_dag(_WORKSPACE, "bd-bronze", "data/black_diamond/scripts/bronze")
+    if pipeline == "inf-bronze":
+        return build_silver_dag(_WORKSPACE, "inf-bronze", "data/inf/scripts/bronze")
+    if pipeline == "cot-bronze":
+        return build_silver_dag(_WORKSPACE, "cot-bronze", "data/cot/scripts/bronze")
     if pipeline == "all":
         return build_multi_pipeline_dag(_WORKSPACE)
-    return build_pipeline_dag(_WORKSPACE)
+    # FALSE-CLEAN GUARD (TOOL-02): an unknown key must NEVER silently become
+    # the bd graph -- that is tool-blindness masquerading as an answer.
+    print(f"UNCOVERED: no graph builder for pipeline {pipeline!r} -- "
+          f"this tree is NOT analyzed (not clean, not dirty, UNVERIFIED).")
+    sys.exit(2)
 
 
 # ---------------------------------------------------------------------------
@@ -1080,11 +1103,31 @@ def cmd_io(args):
 
     pipeline = getattr(args, 'pipeline', 'bd-gold') or 'bd-gold'
 
+    # NFRA_DEBTSCAN.TOOL-02 scope resolution (mirrors `deployed`): --firm beats
+    # path auto-detect beats the bd-gold default. A data/<dir>/scripts/... path
+    # routes to that tree's OWN graph -- never the bd fallback.
+    _firm = getattr(args, 'firm', None)
+    if _firm:
+        pipeline = _FIRM_TO_PIPELINE[_firm]
+    elif getattr(args, 'pipeline', None) in (None, 'bd-gold'):
+        _np = (args.script_id or '').replace('\\', '/')
+        for _dir, _pk in _DATADIR_TO_PIPELINE.items():
+            if f"data/{_dir}/scripts/" in _np or _np.startswith(f"data/{_dir}/"):
+                pipeline = _pk
+                break
+
     if pipeline not in ('bd-gold', 'bd', 'inf'):
         # Explicit specific pipeline: direct DAG lookup (no cross-pipeline disambiguation needed)
         dag = _build_dag(pipeline)
-        script_id = args.script_id.upper()
+        # Canonicalize so path/filename forms match graph ids (TOOL-02; ADHC_COMPIL.008)
+        script_id = _canonicalize_script_id(args.script_id).upper()
         sio = dag.scripts.get(script_id)
+        if not sio:
+            # mdpf/silver-style graphs key by exact stem (case-sensitive)
+            _stem = _canonicalize_script_id(args.script_id)
+            sio = dag.scripts.get(_stem)
+            if sio:
+                script_id = _stem
         if not sio:
             matches = [s for s in dag.scripts if script_id in s.upper()]
             if len(matches) == 1:
@@ -1094,7 +1137,8 @@ def cmd_io(args):
                 print(f"Multiple matches: {', '.join(matches)}")
                 sys.exit(1)
             else:
-                print(f"Unknown script: {script_id}")
+                print(f"Unknown script in tree [{pipeline}]: {script_id}")
+                print(f"  (this is the {pipeline} graph -- NOT a bd fallback; TOOL-02 provenance)")
                 print(f"Valid IDs: {', '.join(sorted(dag.scripts.keys()))}")
                 sys.exit(1)
     else:
@@ -2544,14 +2588,48 @@ def cmd_shadow_detect(args: 'argparse.Namespace') -> None:
     print('PASS: shadow-detect analysis complete')
 
 
+# NFRA_DEBTSCAN.TOOL-02: per-tree postdeps config registry. Before this,
+# cmd_postdeps hardcoded the bd yaml -- a cot/inf/mdpf query silently answered
+# from bd's config (or printed bd's "no dependencies declared"), which a
+# coverage grep miscounted as clean. None = the tree has NO deps config ->
+# UNCOVERED, never silent-0-deps.
+_POSTDEPS_CONFIGS: 'dict[str, str | None]' = {
+    "bd": "data/black_diamond/scripts/gold/gold_pipeline_deps.yaml",
+    "inf": "data/inf/scripts/gold/orion_pipeline_deps.yaml",
+    "cot": "data/cot/scripts/gold/gold_pipeline_deps.yaml",
+    "mdpf": None,
+}
+
+
 def cmd_postdeps(args):
     """Show and validate post-step dependencies and preconditions for gold scripts."""
+    # TOOL-02 scope resolution: --firm beats path auto-detect beats bd default.
+    firm = getattr(args, 'firm', None)
+    if not firm:
+        _np = (getattr(args, 'script_name', '') or '').replace('\\', '/')
+        for _dir, _pk in _DATADIR_TO_PIPELINE.items():
+            if f"data/{_dir}/scripts/" in _np or _np.startswith(f"data/{_dir}/"):
+                firm = _pk.split('-')[0]
+                break
+    firm = firm or "bd"
+
+    deps_rel = _POSTDEPS_CONFIGS.get(firm)
+    if deps_rel is None:
+        # FALSE-CLEAN GUARD: no config for this tree means postdeps coverage
+        # DOES NOT EXIST here -- which is not the same as "no dependencies".
+        print(f"PIPELINE DEPENDENCIES [{firm}]")
+        print(f"  UNCOVERED: tree {firm!r} has no postdeps config registered -- "
+              f"post-step dependencies are UNVERIFIED for this tree (not 0-deps).")
+        print("  Do not count tool-blindness as cleanliness (TOOL-02 false-clean guard).")
+        sys.exit(2)
+
     # Try PyYAML first; fall back to a minimal inline parser for our specific YAML shape
-    deps_file = _WORKSPACE / "data" / "black_diamond" / "scripts" / "gold" / "gold_pipeline_deps.yaml"
+    deps_file = _WORKSPACE / Path(deps_rel)
     if not deps_file.exists():
-        print("No gold_pipeline_deps.yaml found.")
-        print(f"  Expected at: {deps_file}")
-        sys.exit(1)
+        print(f"PIPELINE DEPENDENCIES [{firm}]")
+        print(f"  UNCOVERED: registered config missing on disk: {deps_rel}")
+        print("  Post-step dependencies are UNVERIFIED for this tree (not 0-deps).")
+        sys.exit(2)
 
     raw = deps_file.read_text(encoding="utf-8")
 
@@ -2565,7 +2643,7 @@ def cmd_postdeps(args):
         deps = _parse_deps_yaml_fallback(raw)
 
     if not isinstance(deps, dict):
-        print("Failed to parse gold_pipeline_deps.yaml: unexpected structure.")
+        print(f"Failed to parse {deps_file.name}: unexpected structure.")
         sys.exit(1)
 
     post_steps = deps.get('post_steps') or {}
@@ -2577,8 +2655,9 @@ def cmd_postdeps(args):
     else:
         script_filter = None
 
-    print("PIPELINE DEPENDENCIES")
-    print("  Config: data/black_diamond/scripts/gold/gold_pipeline_deps.yaml")
+    # Provenance header (TOOL-02): name the tree + the exact config answering.
+    print(f"PIPELINE DEPENDENCIES [{firm}]")
+    print(f"  Config: {deps_rel}")
     print()
 
     has_output = False
@@ -2907,6 +2986,9 @@ def main():
     p_io.add_argument('--no-portal', action='store_true', dest='no_portal',
                       help='Skip routing table lookup for portal consumer resolution')
     p_io.add_argument('--pipeline', '-p', default='bd-gold', choices=_PIPELINE_CHOICES, help=_pipeline_help)
+    p_io.add_argument('--firm', default=None, choices=('bd', 'inf', 'cot', 'mdpf'),
+                      help='NFRA_DEBTSCAN.TOOL-02: route to this tree\'s OWN graph '
+                           '(a data/<tree>/scripts/... path auto-detects; never a bd fallback).')
 
     # chain
     p_chain = sub.add_parser('chain', help='Show chain membership and order')
@@ -2954,7 +3036,11 @@ def main():
     # postdeps
     p_postdeps = sub.add_parser('postdeps', help='Show post-step and precondition dependencies for gold scripts')
     p_postdeps.add_argument('script_name', nargs='?', default='',
-                            help='Optional: filter to this script name (e.g. D_01 or build_canonical_prices_v2.py)')
+                            help='Optional: filter to this script name (e.g. D_01 or build_canonical_prices_v2.py). '
+                                 'A data/<tree>/scripts/... path auto-detects the tree (TOOL-02).')
+    p_postdeps.add_argument('--firm', default=None, choices=('bd', 'inf', 'cot', 'mdpf'),
+                            help='NFRA_DEBTSCAN.TOOL-02: read this tree\'s OWN deps config '
+                                 '(bd/inf/cot yaml; mdpf = UNCOVERED, no config exists).')
 
     # postmerge-cols (ADHC_COMPIL_V4.027)
     p_postmerge = sub.add_parser(

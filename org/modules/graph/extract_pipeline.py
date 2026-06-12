@@ -1113,6 +1113,22 @@ def build_pipeline_dag(workspace_root: Path, gold_dir: Path = None,
         if sio:
             dag.scripts[sio.script_id] = sio
 
+    # Step 3b (NFRA_DEBTSCAN.TOOL-02): the dispatch CATALOG is authoritative and
+    # carries non-[A-D] ids the glob misses (S_00 silver-prep, E_* diagnostics).
+    # Fold them in catalog-driven so io/dag coverage matches what dispatch can
+    # actually run -- a catalog id absent from the graph reads as Unknown, which
+    # a coverage grep miscounts as clean (the D2X false-clean class).
+    for script_id, filename in dag.catalog.items():
+        if script_id in dag.scripts:
+            continue
+        py_file = gold_dir / filename
+        if not py_file.exists() or py_file.name.startswith("__"):
+            continue
+        sio = _extract_script_io(py_file, workspace_root, dag.s3_keys,
+                                 script_id_override=script_id, pipeline=pipeline)
+        if sio:
+            dag.scripts[script_id] = sio
+
     # Step 4: Build indexes
     dag.build_index()
 
@@ -1266,6 +1282,42 @@ def build_silver_dag(
             dag.scripts[script_id] = sio
             dag.catalog[script_id] = py_file.name
 
+    dag.build_index()
+    return dag
+
+
+def build_mdpf_dag(workspace_root: Path) -> PipelineDAG:
+    """Build the MDPF DAG across its four script layers (NFRA_DEBTSCAN.TOOL-02).
+
+    MDPF has no dispatch catalog and no s3_layout.py; script IDs are filename
+    stems and S3 I/O is detected via _extract_hardcoded_paths (the silver-DAG
+    model). Closes the D2X gap where `io`/`postdeps` on an mdpf script silently
+    fell back to the bd graph and reported Unknown -- which a coverage grep
+    miscounted as clean.
+    """
+    dag = PipelineDAG()
+    dag.pipeline = "mdpf"
+    dag.s3_keys = {}
+    idx = 0
+    for layer in ("gold", "backfill", "feeders", "bronze"):
+        layer_dir = workspace_root / "data" / "mdpf" / "scripts" / layer
+        if not layer_dir.is_dir():
+            continue
+        for py_file in sorted(layer_dir.glob("*.py")):
+            if py_file.name.startswith("__") or py_file.name.endswith("_fixtures.py"):
+                continue
+            script_id = py_file.stem
+            sio = _extract_script_io(
+                py_file, workspace_root, dag.s3_keys,
+                script_id_override=script_id,
+                pipeline="mdpf",
+                run_order_override=idx * 10,
+            )
+            if sio:
+                sio.group = layer
+                dag.scripts[script_id] = sio
+                dag.catalog[script_id] = f"{layer}/{py_file.name}"
+            idx += 1
     dag.build_index()
     return dag
 
