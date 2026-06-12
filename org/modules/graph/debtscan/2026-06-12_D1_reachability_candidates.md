@@ -175,3 +175,30 @@ Bonus risk-note for routing: #2/#3 elevate beyond debt — SES bounce/complaint 
 The side-finding "the memory-banked MDPF backfill source was purged by R2 lifecycle" is **RETRACTED — wrong-bucket inference by CVO.** The memory-cited source is `opal-data-portal-v2/json/portfolios/aum-timeseries.json` — verified just now: **145 noncurrent versions INTACT** (one more than at the memory's writing; still accumulating). What is dead is the **stitch node's** path on `opal-data-bd` (0 versions, 0 markers) — so finding #10's REAL/dead-key verdict on the graph node STANDS unchanged; only the memory-staleness side-note was wrong. Precision score unaffected (7/10 = 0.70). Fabric memory needs no correction.
 
 — 3.0.0_SA_CVO
+
+---
+
+## TO-D1 ITERATION (AE 0.7, 2026-06-12 ~22:12Z) — durable stitch fix + suppressions
+
+CVO's single root-cause coverage class CLOSED at the source:
+
+1. **Dispatcher-catalog edges (FPs #7/#8):** `inject_pipeline_edges` now emits
+   `dispatcher -[TRIGGERS]-> script` for every chain member (bd `gold_dispatch` +
+   inf `orion-gold-dispatch`; 73 edges on first rebuild). Verified post-fix:
+   `gold:INF_A_-1.materialize_txn_cache` and `gold:INF_A_02.fee_rate_history`
+   each now carry the TRIGGERS edge (were 0-edge). A 0-edge INF_* script after
+   the nightly rebuild is a REAL orphan again.
+2. **mdpf injection (FP #5, partial):** `build_mdpf_dag` (TOOL-02) is now wired
+   into `trace_graph._inject_full_pipeline_into_graph` — 18 mdpf scripts +
+   key-grain S3 I/O visible (wsd2's READS edge confirmed). Remaining gap:
+   bare-key extraction means BUCKET-grain reachability for non-firm buckets
+   still needs `FP_MDPF_UNSTITCHED` until the bucket-qualified extractor leg
+   (TOOL-02 follow-on) lands.
+3. **Suppressions authored** (`FP_INF_DISPATCHER_CATALOG` retire-on-nightly-rebuild,
+   `FP_MDPF_UNSTITCHED` retire-on-extractor-leg) — routed to COO for exec-commit
+   per protocol (yaml on disk, uncommitted by AE).
+
+**Sample re-run (post-fix):** FPs #7/#8 retire STRUCTURALLY (nodes now edged);
+FP #5 retires via suppression. Eligible candidates = 7, all CVO-adjudicated REAL
+→ precision 7/7 = 1.0 (matches CVO's expected post-fix figure). Family promotes
+from ADVISORY on the next sweep run over the rebuilt stitch.

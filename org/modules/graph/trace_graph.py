@@ -299,7 +299,8 @@ def _inject_full_pipeline_into_graph(g: "TraceGraph", workspace_root: Path) -> N
       - s3:platinum/* nodes promoted (D_04 + INF_D_04 hardcoded platinum writes)
       - s3:gold/canonical/holdings, etc., named-prefix nodes baked-in for both pipelines
     """
-    from .extract_pipeline import build_pipeline_dag, build_inf_gold_dag, inject_pipeline_edges
+    from .extract_pipeline import (build_pipeline_dag, build_inf_gold_dag,
+                                   build_mdpf_dag, inject_pipeline_edges)
 
     # BD gold (idempotent if already populated by extract_s3_edges; injects platinum
     # write nodes that extract_s3_edges' regex misses).
@@ -309,6 +310,18 @@ def _inject_full_pipeline_into_graph(g: "TraceGraph", workspace_root: Path) -> N
     # INF gold (new; previously absent from cross-layer graph).
     inf_dag = build_inf_gold_dag(workspace_root)
     inject_pipeline_edges(inf_dag, workspace_root, _graph=g)
+
+    # MDPF (NFRA_DEBTSCAN TO-D1 iteration, CVO FP #5): the mdpf tree was not
+    # stitched at all, so its bucket reads were invisible to the reachability
+    # sweep (a live mdpf gold script's read of opal-data-etfs read as an
+    # orphaned bucket). build_mdpf_dag already exists (TOOL-02); injecting it
+    # here puts mdpf scripts + their key-grain S3 I/O into the cross-layer
+    # graph. NOTE: keys are bare (no bucket attribution -- the extractor
+    # records key constants only), so BUCKET-grain reachability for non-firm
+    # buckets still rides the FP_MDPF_UNSTITCHED suppression until the
+    # bucket-qualified extractor leg (TOOL-02 follow-on) lands.
+    mdpf_dag = build_mdpf_dag(workspace_root)
+    inject_pipeline_edges(mdpf_dag, workspace_root, _graph=g)
 
 
 # ---------------------------------------------------------------------------

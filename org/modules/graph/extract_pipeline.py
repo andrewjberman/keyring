@@ -1478,6 +1478,50 @@ def inject_pipeline_edges(dag: PipelineDAG, workspace_root: Path, _graph=None):
                 ))
                 edges_added += 1
 
+    # NFRA_DEBTSCAN TO-D1 iteration (CVO adjudication 2026-06-12, FPs #7/#8):
+    # dispatch-catalog membership IS a reachability edge. A cataloged script
+    # with no detectable S3 I/O (INF_A_-1 cache materialize, INF_A_02
+    # fee_rate_history) previously had ZERO edges and read as orphaned in the
+    # DEBTSCAN reachability sweep, even though the dispatcher runs it in
+    # CHAIN_FULL every night. Emit dispatcher -[TRIGGERS]-> script for every
+    # chain member (closed-vocabulary verb; survives the portal-stitch
+    # EDGE_TYPE_MAP into the stitched graph). Works for any DAG carrying a
+    # parsed chains map (bd-gold: gold_dispatch.sh; inf-gold:
+    # orion-gold-dispatch.sh); DAGs without chains (silver/mdpf) no-op.
+    chains = getattr(dag, "chains", None) or {}
+    if chains:
+        dispatcher_name = ("orion-gold-dispatch"
+                           if getattr(dag, "pipeline", "") == "inf-gold"
+                           else "gold_dispatch")
+        dispatcher_id = f"gold:{dispatcher_name}"
+        if dispatcher_id not in g.nodes:
+            g.add_node(Node(
+                id=dispatcher_id, node_type="GOLD_SCRIPT",
+                label=dispatcher_name,
+            ))
+        chain_members: set = set()
+        for members in chains.values():
+            chain_members.update(members)
+        for sid in chain_members:
+            sio = dag.scripts.get(sid)
+            if sio is None:
+                continue
+            script_node_id = f"gold:{sio.filename.replace('.py', '')}"
+            if script_node_id not in g.nodes:
+                continue  # node creation is the per-script loop's job
+            edge_exists = any(
+                e.source == dispatcher_id and e.target == script_node_id
+                and e.edge_type == "TRIGGERS"
+                for e in g.edges
+            )
+            if not edge_exists:
+                g.add_edge(Edge(
+                    source=dispatcher_id, target=script_node_id,
+                    edge_type="TRIGGERS",
+                    metadata={"source": "dispatch_catalog"},
+                ))
+                edges_added += 1
+
     if cache_file is not None:
         g.save(cache_file)
     return edges_added
