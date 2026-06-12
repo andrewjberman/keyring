@@ -49,6 +49,30 @@ emergency deploy).** Remedy spec:
   or it is unmonitored. Routed to COO to re-mark the monitoring path real (per /drive attestation
   discipline) — cheap probe candidate for the COT-FIX wave since DS is already in that data.
 
+## ADDENDUM (135846Z–14xxZ) — consumer-set correction + deploy ACK
+My consumer claim ("only non-diagnostic consumer is A_03 via agg") was INCOMPLETE — my artifact grep was
+silently truncated at `head -15` and B_00.canonical_holdings (reads bd_realized_COMPACT at L72/L282-295,
+CUSIP→asset_name bridge for sold/vanished positions) sat below the cutoff. DS's Phase-1 consumer check
+caught it and held the irreversible deploy for ack — exactly the surface-before-ship discipline working.
+Lesson re-banked: no silent caps on consumer enumeration (count the grep hits before trimming).
+
+DS's survivor-independence analysis VERIFIED at code level this session: B_00 consumes only (cusip,
+asset_name); asset_name is inside the dedup key (constant within group); DS empirical: 0 dedup-key groups
+with >1 distinct cusip → the distinct (cusip, asset_name) pair-set is invariant to survivor selection.
+Residual: 1 cusip → 2 asset_names in DIFFERENT groups, picked by B_00's keep-first row order. My two
+refinements: (1) between --upload runs the artifact is static, so the current pick is stable-but-arbitrary
+(set by thread timing at last compaction); the post-fix --upload may flip it ONCE, then deterministic
+forever — a potential 1-row served movement, not zero. (2) B_00's realized bridge only GAP-FILLS cusips not
+already in the unrealized bridge (`if cusip not in cusip_to_name`, L293-295) — if the residual cusip is
+covered by unrealized, B_00 output delta is structurally 0.
+
+DEPLOY ACK GRANTED with conditions: first post-fix --upload's recorded diff must (a) confirm agg
+byte-identical, (b) isolate the compact survivor-payload movement (the correction), (c) resolve the
+residual cusip — covered-by-unrealized (B_00 delta 0) or flipped (1-row bridge movement). CTO never-widen
+sign-off granted NOW conditional on any served B_00 delta being confined to that single cusip bridge entry
+(deterministic latest-file-wins = the semantically correct value; pre-fix value was timing-arbitrary); COO
+completes the sign-off pair if a flip materializes. Anything beyond that 1 cusip → STOP + re-adjudicate.
+
 ## Compiler Tools
 | Tool | Run? | Why / result |
 |---|---|---|
