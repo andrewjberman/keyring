@@ -531,6 +531,79 @@ entries:
     status: canonical     # NFRA_GRAPHS D3 — LANDED 2026-06-11
     notes: "Reports every graph's freshness verdict (FRESH/STALE/MISSING/PRESENT) + age + TTL: local trace caches (graph.json, baseline, per-firm platinum.*) and cloud artifacts (kuzu_db, stitch_graph). Executable freshness contract = graph_cache.py (the uniform --fresh/--force semantics shared by the rebuild-capable trace tools)."
 
+  # ---- ANOMALY SCAN (D7 pilot — NFRA_GRAPHS.D7 2026-06-12) ----
+  - id: anomaly.wiring.dangling_fetch
+    use_case: "Does a portal component fetch data with no resolvable CloudFront route or gold script? Catches broken URL patterns (double-wrap indirection, dynamic-key non-resolution) and stale code comments."
+    canonical_call: "comp-platinum page <Component> --firm <bd|inf|cot>  # check url:(not resolved) lines"
+    tool: comp-platinum
+    mode: query-cached
+    layer: trace
+    cost: "~0.2s warm / ~5s cold"
+    freshness: "per-firm cache (.comp-graph/platinum.*), 5-min TTL"
+    rebuild_trigger: "n/a (cache auto-refreshes; --force to bust)"
+    anti_pattern: "assuming url:(not resolved) = broken auth; always check whether the function double-wraps apiRequest (FP class: dynamic-URL comp-platinum static analysis failure)"
+    status: canonical    # NFRA_GRAPHS D7 2026-06-12
+
+  - id: anomaly.firm.asymmetry
+    use_case: "Do both firms resolve the same fetch to a gold script? Structural diff between --firm 49financial and --firm inflection per component to catch one-firm-only gaps."
+    canonical_call: "comp-platinum page <Component> --firm 49financial  &&  comp-platinum page <Component> --firm inflection  # diff gold_script lines"
+    tool: comp-platinum
+    mode: query-cached
+    layer: trace
+    cost: "~0.4s warm (2 cache reads) / ~10s cold"
+    freshness: "per-firm cache, 5-min TTL"
+    rebuild_trigger: "n/a"
+    anti_pattern: "checking only one firm and assuming parity (INF+BD gold trees diverge by design; look for fetches with a resolved gold script on one firm and prefix-match/unresolved on the other)"
+    status: canonical    # NFRA_GRAPHS D7 2026-06-12
+
+  - id: anomaly.orphan.dead_producer
+    use_case: "Is a gold script producing an artifact no portal component consumes? Pre-stitch: comp-platinum reverse + comp-pipescript consumers. Post-stitch (D4): comp-kuzu Cypher traversal."
+    canonical_call: "comp-platinum reverse <s3_key> [--firm <bd|inf|cot>]  # then comp-pipescript consumers <script> for each producer"
+    tool: comp-platinum
+    mode: query-cached
+    layer: trace
+    cost: "~0.2s warm / ~5s cold"
+    freshness: "per-firm cache, 5-min TTL"
+    rebuild_trigger: "n/a"
+    anti_pattern: "prefix-match gold script attribution as proof of the correct producer (FP class: D_04::build_firm_mix_summary prefix-matches nna_clients artifacts — name mismatch, DS must verify)"
+    status: canonical    # NFRA_GRAPHS D7 2026-06-12
+
+  - id: anomaly.field.contract_break
+    use_case: "Are the portal response types out of sync with the S3 artifact shape? typed_field_count=0 means all fields are silently any. Run comp-adapter-audit for a live S3 diff; comp-transform for rendered-field coverage."
+    canonical_call: "comp-adapter-audit <adapter-fn> --severity warn  &&  comp-transform schema-check <Component>"
+    tool: comp-adapter-audit
+    mode: rebuild
+    layer: trace
+    cost: "~60s (live S3 fetch) + ~1s (comp-transform)"
+    freshness: "live S3 artifact + portal/src"
+    rebuild_trigger: "n/a — always live"
+    anti_pattern: "treating UNUSED fields as bugs without checking if they're passed wholesale to a sub-component (comp-platinum whole-object-pass FP); also: ADAPTER type mismatch in comp-transform (fetch return type != state var type) is a real bug even when comp-transform reports no MISSING fields"
+    status: canonical    # NFRA_GRAPHS D7 2026-06-12; highest-signal template this pilot
+
+  - id: anomaly.cardinality.fanout_outlier
+    use_case: "Is a component's fetch count or chain-resolution rate an outlier? 0 resolved chains on a high-fetch component = prod visibility gap (comp-platinum can't verify any gold->portal chain). Use comp-platinum summary for the distribution view."
+    canonical_call: "comp-platinum summary  # check 'Chains' column; 0 chains on >3 fetches = flag"
+    tool: comp-platinum
+    mode: query-cached
+    layer: trace
+    cost: "~0.2s warm / ~5s cold"
+    freshness: "per-firm cache, 5-min TTL"
+    rebuild_trigger: "n/a"
+    anti_pattern: "treating 0-chain-resolution as a wiring bug (pre-stitch limitation for dynamic-key artifacts; verify with D4 post-stitch comp-kuzu before filing TO)"
+    status: canonical    # NFRA_GRAPHS D7 2026-06-12
+
+  - id: anomaly.auth.missing_edge
+    use_case: "Does every fetch for platinum data hit an auth-gated CloudFront behavior? comp-pii for cleartext PII; comp-routes behaviors for the full behavior list with [AUTH] tags."
+    canonical_call: "comp-pii audit  &&  comp-routes behaviors  # verify [AUTH] on every /api/scoped/* behavior serving platinum artifacts"
+    tool: comp-pii
+    mode: rebuild
+    layer: trace
+    cost: "~2-3s (comp-pii) + ~0.5s (comp-routes)"
+    freshness: "live portal/src (comp-pii) + live TF state (comp-routes)"
+    rebuild_trigger: "n/a"
+    anti_pattern: "escalating comp-platinum auth:NONE as a live auth gap without cross-checking comp-routes (FP class: dynamic URL comp-platinum can't resolve -> shows NONE even when CF behavior covers the path; always confirm against comp-routes behaviors [AUTH] column)"
+    status: canonical    # NFRA_GRAPHS D7 2026-06-12; all 8 auth:NONE hits this pilot were FP
+
   # ---- CROSS-LAYER (planned — post P2-STITCH) ----
   - id: xlayer.fullstack.firm_component_to_bucket
     use_case: "Frontend component -> API route -> Lambda -> S3 bucket -> IAM role, LIVE-truth, per firm."
