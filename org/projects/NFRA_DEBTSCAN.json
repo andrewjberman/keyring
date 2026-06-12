@@ -63,6 +63,11 @@
       "date": "2026-06-12T20:41Z",
       "agent": "2.0.0_SA_COO",
       "event": "D5-FIX DC-01..07 + ROUTE-01 CLOSED (73d2436a): 7 dead modules deleted (verify-before-delete, all symbol-mentions confirmed independent dup-defs not imports) + searchSecurities endpoint fix. tsc+vite green, comp-routes Rule-20 PASS, VALGATE PASS. DE sharp D8 catch: benchmarks.ts removal correctly did NOT fire D8 (it is the dead SHADOW; live surface @/api/portal-proxy untouched) \u2014 refines the benchmark-adjacent-fires-D8 prediction. LAST D5 clusters dispatched: ORPHAN-AI(11)+ORPHAN-MISC(8) combined analysis, staged+product-confirm-gated, ONE batched Andrew decision. After that PORTALSWEEP fix-phase complete."
+    },
+    {
+      "date": "2026-06-12T20:48Z",
+      "agent": "2.0.0_SA_COO",
+      "event": "LIVE 2a STRANDED-DEPLOY INSTANCE (Andrew P0 4:37p ET): inf ADVI $202M vs Orion $204.6M \u2014 yesterday 8-dim orchestrator uploaded code/bronze/ but runner syncs code/bronze-runner/ (May-8 orchestrator missing transactions dim); _BRONZE_COMPLETE false-success, platinum froze 06-11, MDPF stamped fresh 7:30a over stale. CTO root-caused ~25min; DS on R1-R5 recovery (Andrew-timed). DEBTSCAN first wild catch of 2a+census class. Structural remediation: TOOL-03 (bronze coverage, authored) + 3 structural TOs authored (BRONZE-FIX dual-prefix-collapse #1 + bronze-complete-dim-contract #2 [AE 0.6] + mdpf-source-vintage-stamping #4 [AE 0.7]). ANDREW NO-SLOWDOWN: AE 0.6+0.7 respawn requested NOW (full active queues, deferred-respawn superseded). Ledger entry to file on recovery-land."
     }
   ]
 }
