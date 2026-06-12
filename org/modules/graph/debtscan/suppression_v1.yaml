@@ -229,3 +229,19 @@ suppression_classes:
       - BenchmarkHeatmap
       - PeersTab
     evidence: CTO D8-AE finding; TO-D1 Day-0 backlog
+
+  # ---------- IAM family (TO-D2 AE lane, comp-iam gaps) ----------
+
+  - id: FP_CROSS_FIRM_DENY_GUARDRAIL
+    reason: >
+      comp-iam gaps reports DENY-PRESENT instances as if they were findings, but an explicit
+      Deny is a SECURITY CONTROL, not a missing permission. All 198 instances (2026-06-12 TO-D2
+      AE sweep) are identical: bd-exporter-ec2-role has an explicit Deny on opal-data-cot and
+      opal-data-cot/* — the intentional cross-firm isolation guardrail per NFRA_DTAFLP. Same FP
+      class as the reference_deny_principal_star_is_guardrail_not_public_grant.md memory: gate any
+      public-exposure / missing-permission finding on effect==Allow; a Deny+resource is a guardrail.
+    affected_types: [IAM_ROLE, IAM_POLICY_STATEMENT]
+    edge_conditions:
+      - effect: Deny
+    confirmed_fp_count: 198
+    evidence: TO-D2 AE lane comp-iam gaps sweep 2026-06-12 (07848c565); NFRA_DTAFLP cross-firm isolation
