@@ -5495,3 +5495,26 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-06-12 | 0.4.2_RD_AdvisorIntelligence | ADVI_INFETL.BRONZE-FIX | comp-surface-check | comp-surface-check check --mode advisory --file portal/src/pages/AdvisorIntelligence/_s... | PASS |
 | 2026-06-12 | 0.4.2_RD_AdvisorIntelligence | D5 ORPHAN-AI GO | tsc+VALGATE | Portal 61e1677f: tsc -b --force exit 0 on deletion HEAD ab1c11b0; VALGATE D-1 PASS; comment-only edits so no schema-check | PASS |
 | 2026-06-12 | 0.4.2_RD_AdvisorIntelligence | ADVI_INFETL.BRONZE-FIX | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-06-12 | 0.6.0_AE_PartnerETL | ADVI_INFETL.BRONZE-FIX | comp-pipescript | comp-pipescript deployed --firm inf | PASS |
+| 2026-06-12 | 0.7.0_AE_CloudOps | ADVI_INFETL.BRONZE-FIX | comp-pipescript | comp-pipescript io mdpf_aggregate_aua | FAIL |
+| 2026-06-12 | 0.7.0_AE_CloudOps | ADVI_INFETL.BRONZE-FIX | comp-pipescript | comp-pipescript deployed mdpf_aggregate_aua | PASS |
+| 2026-06-12 | 0.7.0_AE_CloudOps | ADVI_INFETL.BRONZE-FIX | comp-surface-check | comp-surface-check check --mode advisory --file data/mdpf/scripts/backfill/build_aggreg... | PASS |
+| 2026-06-12 | 0.4.0_DT_ClientPlatform | ADVI_INFETL.BRONZE-FIX | comp-surface-check | comp-surface-check check --mode advisory --file portal/eslint.config.js --file portal/s... | PASS |
+| 2026-06-12 | 0.4.2_RD_AdvisorIntelligence | ADVI_INFETL.BRONZE-FIX | comp-surface-check | comp-surface-check check --mode advisory --file org/tier3_junior/0.4.2_RD_AdvisorIntell... | PASS |
+| 2026-06-12 | 2.0.0_SA_COO | page-inventory-full-reaudit | comp-surface-check | comp-surface-check check --mode advisory --file org/mcp/.last-drive-2.0.0_SA_COO --file... | PASS |
+| 2026-06-12 | 0.7.0_AE_CloudOps | page-inventory-full-reaudit | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/change_management/20... | PASS |
+| 2026-06-12 | 1.0.0_SA_CTO | page-inventory-full-reaudit | comp-kuzu | comp-kuzu MATCH (n:CloudNode) WHERE n.name CONTAINS 'mdpf' OR n.name CONTAINS 'eclipse'... | PASS |
+| 2026-06-12 | 0.4.0_DT_ClientPlatform | page-inventory-full-reaudit | comp-surface-check | comp-surface-check check --mode advisory --file portal/eslint.config.js --file portal/s... | PASS |
+| 2026-06-12 | 0.6.0_AE_PartnerETL | page-inventory-full-reaudit | comp-pipescript | comp-pipescript deployed --firm inf | PASS |
+| 2026-06-12 | 0.7.0_AE_CloudOps | page-inventory-full-reaudit | comp-blast | comp-blast opal-313476888478-globgrph | PASS |
+| 2026-06-12 | 0.6.0_AE_PartnerETL | page-inventory-full-reaudit | comp-pipescript | comp-pipescript deployed D_00 | PASS |
+| 2026-06-12 | 0.6.0_AE_PartnerETL | page-inventory-full-reaudit | comp-pipescript | comp-pipescript deployed data/cot/scripts/bronze/cot_bronze_ingest.py | PASS |
+| 2026-06-12 | 0.7.0_AE_CloudOps | page-inventory-full-reaudit | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/terraform/globgrph/d4f1_reque... | PASS |
+| 2026-06-12 | 0.6.0_AE_PartnerETL | page-inventory-full-reaudit | comp-pipescript | comp-pipescript deployed D_00 | PASS |
+| 2026-06-12 | 1.0.0_SA_CTO | page-inventory-full-reaudit | comp-surface-check | comp-surface-check check --mode advisory --file CLAUDE.md | PASS |
+| 2026-06-12 | 0.6.0_AE_PartnerETL | page-inventory-full-reaudit | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/comp-tools.yaml --fil... | PASS |
+| 2026-06-12 | 0.4.0_DE_ClientPlatform | page-inventory-full-reaudit | comp-transform | comp-transform schema-check AdvisorBookView | PASS |
+| 2026-06-12 | 0.6.0_AE_PartnerETL | page-inventory-full-reaudit | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/comp-tools.yaml --fil... | PASS |
+| 2026-06-12 | 0.7.0_AE_CloudOps | page-inventory-full-reaudit | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/change_management/20... | PASS |
+| 2026-06-12 | 0.4.2_RD_AdvisorIntelligence | page-inventory-full-reaudit | ls-files census + ET.parse cross-check | 50-file enum at portal 61e1677f; 57-fn endpoint census (26 live/31 dead); XML parse OK; 50/50 path match 0 missing/0 phantom | PASS |
+| 2026-06-12 | 0.4.2_RD_AdvisorIntelligence | page-inventory-full-reaudit | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
