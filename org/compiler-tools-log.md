@@ -5430,3 +5430,25 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-06-12 | 2.0.0_SA_COO | NFRA_DEBTSCAN.TO-D5.portalsweep | comp-surface-check | comp-surface-check check --mode advisory --file org/mcp/.last-drive-2.0.0_SA_COO --file... | PASS |
 2026-06-12 ~1957Z | 0.4.0_DE_ClientPlatform | TO-D5 PORTALSWEEP DE lane | comp-cache collisions (PASS, 5 shared keys all type-consistent = 0 real RQ collisions). AC4/5/6 file-level orphan + ESLint census = read-only sweep (not graph-indexed; portal dead-component census per D8 Layer-2 file-level approach); Rule-20 graph checks ride the fix-TOs.
 | 2026-06-12 | 0.4.0_DE_ClientPlatform | NFRA_DEBTSCAN.TO-D5.portalsweep | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-06-12 | 0.4.0_DT_ClientPlatform | NFRA_DEBTSCAN.TO-D5.portalsweep | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/debtscan/2026-06-12_D... | PASS |
+| 2026-06-12 | 2.0.0_SA_COO | NFRA_DEBTSCAN.TO-D5.portalsweep | comp-surface-check | comp-surface-check check --mode advisory --file org/mcp/.last-drive-2.0.0_SA_COO --file... | PASS |
+| 2026-06-12 | 3.0.0_SA_CVO | NFRA_DEBTSCAN.TO-D5.portalsweep | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/debtscan/2026-06-12_D... | PASS |
+| 2026-06-12 | 0.4.0_DS_ClientPlatform | NFRA_DEBTSCAN.TO-D5.portalsweep | comp-surface-check | comp-surface-check check --mode advisory --file data/cot/scripts/gold/build_canonical_p... | PASS |
+| 2026-06-12 | 2.0.0_SA_COO | NFRA_DEBTSCAN.TO-D5.portalsweep | comp-surface-check | comp-surface-check check --mode advisory --file org/mcp/.last-drive-2.0.0_SA_COO --file... | PASS |
+| 2026-06-12 | 0.4.0_DT_ClientPlatform | NFRA_DEBTSCAN.TO-D5.portalsweep | comp-surface-check | comp-surface-check check --mode advisory --file eslint.config.js | PASS |
+| 2026-06-12 | 0.4.0_DT_ClientPlatform | NFRA_DEBTSCAN.TO-D5.portalsweep | comp-surface-check | comp-surface-check check --mode advisory --file portal/eslint.config.js | PASS |
+| 2026-06-12 | 0.4.0_DT_ClientPlatform | NFRA_DEBTSCAN.TO-D5.portalsweep | comp-surface-check | comp-surface-check check --mode advisory --file portal | PASS |
+| 2026-06-12 | 2.0.0_SA_COO | NFRA_DEBTSCAN.TO-D5.portalsweep | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DE_ClientPlatfor... | PASS |
+| 2026-06-12 | 0.0.0_AB_MSTR | NFRA_DEBTSCAN.TO-D5.portalsweep | comp-surface-check | comp-surface-check check --mode advisory --file org/mcp/live_agents_by_marker.json --fi... | PASS |
+| 2026-06-12 | 0.4.0_DE_ClientPlatform | NFRA_DEBTSCAN.TO-D5.portalsweep | comp-transform | comp-transform schema-check PortfolioManagement | PASS |
+| 2026-06-12 | 0.4.0_DE_ClientPlatform | NFRA_DEBTSCAN.TO-D5.portalsweep | comp-blast | comp-blast TradeTable | PASS |
+| 2026-06-12 | 3.0.0_SA_CVO | NFRA_DEBTSCAN.TO-D5.portalsweep | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/debtscan/2026-06-12_D... | PASS |
+| 2026-06-12 | 2.0.0_SA_COO | NFRA_DEBTSCAN.TO-D5.portalsweep | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/NFRA_DEBTSCAN.json | PASS |
+| 2026-06-12 | 0.4.0_DS_ClientPlatform | NFRA_DEBTSCAN.TO-D5.portalsweep | comp-pipescript | comp-pipescript deployed --firm cot | PASS |
+| 2026-06-12 | 2.0.0_SA_COO | NFRA_DEBTSCAN.TO-D5.portalsweep | comp-surface-check | comp-surface-check check --mode advisory --file org/mcp/.last-drive-2.0.0_SA_COO --file... | PASS |
+| 2026-06-12 | 2.0.0_SA_COO | NFRA_DEBTSCAN.TO-D5.portalsweep | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/NFRA_DEBTSCAN.json | PASS |
+| 2026-06-12 | 0.4.0_DT_ClientPlatform | NFRA_DEBTSCAN.TO-D5.portalsweep | comp-surface-check | comp-surface-check check --mode advisory --file src/api/endpoints/portfolio.ts --file s... | PASS |
+| 2026-06-12 | 0.4.0_DT_ClientPlatform | NFRA_DEBTSCAN.TO-D5.portalsweep | comp-surface-check | comp-surface-check check --mode advisory --file portal/src/api/endpoints/portfolio.ts -... | PASS |
+| 2026-06-12 | 0.4.0_DT_ClientPlatform | NFRA_DEBTSCAN.TO-D5.portalsweep | comp-surface-check | comp-surface-check check --mode advisory --file portal | PASS |
+2026-06-12 ~2022Z | 0.4.0_DE_ClientPlatform | D5-FIX.ORPHAN-PM verify+characterize | comp-transform schema-check PortfolioManagement (PASS) + comp-blast TradeTable (graph-blind, no nodes = orphan-consistent). Deletion safety proven in ephemeral worktree (tsc --force + vite build EXIT 0); main-tree tsc error was concurrent-agent contamination not the deletion. Rule20 frontend-change graph check satisfied (analysis only; no commit, product-confirm gated).
+| 2026-06-12 | 0.4.0_DE_ClientPlatform | NFRA_DEBTSCAN.TO-D5.portalsweep | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
