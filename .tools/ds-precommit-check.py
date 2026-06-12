@@ -63,6 +63,31 @@ _CROSS_FIRM_FOREIGN_BUCKETS = {
     'data/black_diamond/': ('opal-data-cot',),
 }
 
+# AST-DEDUP: completion-order build feeding an order-sensitive dedup = CLASS-N
+# nondeterministic survivor (ADHC_GLDINC.AST-DEDUP; CTO arch-ruling 2026-06-11 230400Z).
+# A list built by `.append()` inside a `for x in as_completed(...)` (or imap_unordered)
+# loop, concatenated, then `.drop_duplicates(keep='last'|'first')` WITHOUT a preceding
+# total-order sort, yields a survivor that depends on thread-completion order -> served
+# values flip run-to-run on identical data. The class discriminator is the parallel-load
+# ASSEMBLY shape, not the dedup itself: index-slot assembly (`results[i] = ...`) and a
+# dedup chained off `.sort_values(...)` are deterministic and stay silent. Caught A_01
+# (73ec87a84) + A_04 (9a89926fd) pre-fix; would have blocked both at commit time.
+#
+# SEVERITY = WARN-first (advisory, rc-neutral). Rationale: the checker is fabric-shared
+# (every DS commit runs it) and this is a new heuristic; a too-loose ERROR rule would
+# block the whole DS lane. The detector is 0-FP on the live bd gold tree but surfaces
+# GENUINE unfixed CLASS-N findings elsewhere (cot A_01/A_04 firm-twins + bd silver
+# compact-realized as of 2026-06-12) -- those are FINDINGS to route + fix, not FPs, so
+# hard-blocking now would freeze those lanes before adjudication. Flip to 'error' once
+# the live findings are fixed and a cross-tree (bd/cot/inf) sweep re-confirms 0-FP.
+# History: docs/architecture/ADHC_DSFLOW.md.
+_ASTDEDUP_SEVERITY = 'warn'  # 'warn' (advisory) | 'error' (blocking)
+_ASTDEDUP_PATTERNS = [
+    'data/*/scripts/gold/*.py',
+    'data/*/scripts/silver/*.py',
+    'data/*/scripts/bronze/*.py',
+]
+
 
 def _path_requires_future_annotations(filepath: str) -> bool:
     p = str(filepath).replace('\\', '/')
@@ -568,6 +593,146 @@ def check_cross_firm_bucket_refs(tree: ast.Module, filepath_hint: str) -> list[s
     return blocks
 
 
+def _path_is_astdedup_scope(filepath: str) -> bool:
+    p = str(filepath).replace('\\', '/')
+    return any(fnmatch.fnmatch(p, pat) for pat in _ASTDEDUP_PATTERNS)
+
+
+def _astdedup_call_name(node: ast.expr) -> str | None:
+    """Bare callable name for as_completed(...)/pool.imap_unordered(...) detection."""
+    if isinstance(node, ast.Call):
+        if isinstance(node.func, ast.Name):
+            return node.func.id
+        if isinstance(node.func, ast.Attribute):
+            return node.func.attr
+    return None
+
+
+def _astdedup_scope_nodes(fn):
+    """Yield every node inside fn's own scope, not crossing into a nested def/lambda."""
+    stack = list(fn.body)
+    while stack:
+        n = stack.pop()
+        yield n
+        for child in ast.iter_child_nodes(n):
+            if isinstance(child, (ast.FunctionDef, ast.AsyncFunctionDef, ast.Lambda)):
+                continue
+            stack.append(child)
+
+
+def _astdedup_root_name(node: ast.expr) -> str | None:
+    """Walk a receiver chain (Subscript/Attribute/Call) down to its base Name id."""
+    cur = node
+    while True:
+        if isinstance(cur, ast.Name):
+            return cur.id
+        if isinstance(cur, ast.Subscript):
+            cur = cur.value
+        elif isinstance(cur, ast.Attribute):
+            cur = cur.value
+        elif isinstance(cur, ast.Call):
+            cur = cur.func
+        else:
+            return None
+
+
+def _astdedup_containers(fn) -> tuple[set, int]:
+    """Names .append()/.extend()'d (a Name receiver) inside a completion-order loop body.
+
+    Index-slot assembly (`results[i] = ...`, a Subscript target) is deterministic and is
+    deliberately NOT collected -- that is the CLASS-I shape that must stay silent.
+    """
+    containers = set()
+    first_ln = 0
+    for n in _astdedup_scope_nodes(fn):
+        if isinstance(n, (ast.For, ast.AsyncFor)) and \
+                _astdedup_call_name(n.iter) in ('as_completed', 'imap_unordered'):
+            for inner in ast.walk(n):
+                if (isinstance(inner, ast.Call)
+                        and isinstance(inner.func, ast.Attribute)
+                        and inner.func.attr in ('append', 'extend')
+                        and isinstance(inner.func.value, ast.Name)):
+                    containers.add(inner.func.value.id)
+                    first_ln = first_ln or n.lineno
+    return containers, first_ln
+
+
+def _astdedup_concat_frames(fn, containers: set) -> set:
+    """Names assigned from a pd.concat(...)/pd.DataFrame(...) whose args reference a
+    completion-order container -- the frame that carries the random ordering."""
+    frames = set()
+    for n in _astdedup_scope_nodes(fn):
+        if not isinstance(n, ast.Assign):
+            continue
+        val = n.value
+        if not (isinstance(val, ast.Call)
+                and _astdedup_call_name(val) in ('concat', 'DataFrame')):
+            continue
+        refs = {c.id for c in ast.walk(val) if isinstance(c, ast.Name)}
+        if not (refs & containers):
+            continue
+        for tgt in n.targets:
+            if isinstance(tgt, ast.Name):
+                frames.add(tgt.id)
+    return frames
+
+
+def _astdedup_keep_is_order_sensitive(call: ast.Call) -> bool:
+    """drop_duplicates is order-sensitive when keep is 'last'/'first' or omitted (default 'first')."""
+    for kw in call.keywords:
+        if kw.arg == 'keep':
+            return isinstance(kw.value, ast.Constant) and kw.value.value in ('last', 'first')
+    return True  # keep omitted -> default 'first' -> order-sensitive
+
+
+def _astdedup_is_sort_guarded(call: ast.Call) -> bool:
+    """True if the drop_duplicates receiver is itself a `.sort_values(...)` call (a total-order
+    sort immediately before the dedup makes the survivor deterministic)."""
+    recv = call.func.value if isinstance(call.func, ast.Attribute) else None
+    return (isinstance(recv, ast.Call)
+            and isinstance(recv.func, ast.Attribute)
+            and recv.func.attr == 'sort_values')
+
+
+def check_completion_order_dedup(tree: ast.Module, filepath_hint: str) -> list:
+    """Return WARN/ERROR strings for the CLASS-N completion-order-build -> order-sensitive-dedup
+    conjunction (ADHC_GLDINC.AST-DEDUP). Fires per function scope ONLY when all three hold:
+    (1) a list is .append()/.extend()'d inside a `for x in as_completed(...)`/imap_unordered loop;
+    (2) that container is pd.concat(...)'d into a frame; (3) that frame is .drop_duplicates()'d
+    order-sensitively (keep last/first or default) WITHOUT a chained .sort_values(). Severity is
+    governed by _ASTDEDUP_SEVERITY. Only scans paths in _ASTDEDUP_PATTERNS."""
+    if not _path_is_astdedup_scope(filepath_hint):
+        return []
+    label = 'BLOCKED' if _ASTDEDUP_SEVERITY == 'error' else 'WARN'
+    findings = []
+    for node in ast.walk(tree):
+        if not isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef)):
+            continue
+        containers, build_ln = _astdedup_containers(node)
+        if not containers:
+            continue
+        frames = _astdedup_concat_frames(node, containers)
+        if not frames:
+            continue
+        for n in _astdedup_scope_nodes(node):
+            if (isinstance(n, ast.Call)
+                    and isinstance(n.func, ast.Attribute)
+                    and n.func.attr == 'drop_duplicates'
+                    and _astdedup_keep_is_order_sensitive(n)
+                    and not _astdedup_is_sort_guarded(n)
+                    and _astdedup_root_name(n.func.value) in frames):
+                findings.append(
+                    f"{filepath_hint}:{n.lineno}: {label}: function '{node.name}' "
+                    f"completion-order build (append under as_completed @L{build_ln}) feeds an "
+                    f"order-sensitive drop_duplicates @L{n.lineno} not preceded by a total-order "
+                    f"sort_values -- CLASS-N nondeterministic survivor (survivor depends on thread "
+                    f"completion order; served values flip run-to-run on identical data). Fix: "
+                    f"index-slot assembly (results[i]=...) OR a total-order .sort_values(...) "
+                    f"before .drop_duplicates() (ADHC_GLDINC.AST-DEDUP)."
+                )
+    return findings
+
+
 def _norm(p: str) -> str:
     return os.path.normpath(p).replace(os.sep, '/')
 
@@ -636,6 +801,13 @@ def scan_file(filepath, verbose=False, strict=False):
     for msg in xfirm_blocks:
         print(msg, file=sys.stderr)
     if xfirm_blocks:
+        rc = 1
+
+    # Completion-order build -> order-sensitive dedup CLASS-N gate (ADHC_GLDINC.AST-DEDUP)
+    astdedup_msgs = check_completion_order_dedup(tree, str(filepath))
+    for msg in astdedup_msgs:
+        print(msg, file=sys.stderr)
+    if astdedup_msgs and _ASTDEDUP_SEVERITY == 'error':
         rc = 1
 
     has_star = any(
