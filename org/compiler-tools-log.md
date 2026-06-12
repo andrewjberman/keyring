@@ -4694,3 +4694,65 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-06-12 | 2.0.0_SA_COO | (no-TO) | comp-blast | comp-blast comp-kuzu | PASS |
 | 2026-06-12 | 2.0.0_SA_COO | startup/decompose | comp-blast kuzu_cli,comp-kuzu (no-node: platform tooling outside trace graph; overlap via TO-queue ground-truth) + owned-paths-validate x3 (PASS) | GLOBGRPH TO-F1/F2/F3 + CENSUS-XT + AST-DEDUP + tf-cache cut 5ccf1412a; gap: globgrph tooling not graph-indexed (candidate: index infra/aws/globgrph in trace graph) |
 | 2026-06-12 | 3.0.0_SA_CVO | comp-aws diff | N->N+1 nightly tarballs (AC3 oracle) | exact-match vs independent set-diff; edge-membership gap noted (counts-only at comp_aws_cli.py:1851) | session_1300Z |
+| 2026-06-12 | 0.4.0_DE_ClientPlatform | NFRA_GRAPHS.D7 | comp-platinum | comp-platinum summary | PASS |
+| 2026-06-12 | 0.4.0_DE_ClientPlatform | NFRA_GRAPHS.D7 | comp-graph | comp-graph status | PASS |
+| 2026-06-12 | 0.4.0_DE_ClientPlatform | NFRA_GRAPHS.D7 | comp-platinum | comp-platinum page ModelPortfolios --firm 49financial | PASS |
+| 2026-06-12 | 0.4.0_DE_ClientPlatform | NFRA_GRAPHS.D7 | comp-platinum | comp-platinum page ModelPortfolios --firm inflection | PASS |
+| 2026-06-12 | 0.4.0_DE_ClientPlatform | NFRA_GRAPHS.D7 | comp-platinum | comp-platinum page PartnerAnalytics --firm 49financial | PASS |
+| 2026-06-12 | 0.4.0_DE_ClientPlatform | NFRA_GRAPHS.D7 | comp-platinum | comp-platinum page PartnerAnalytics --firm inflection | PASS |
+| 2026-06-12 | 0.4.0_DE_ClientPlatform | NFRA_GRAPHS.D7 | comp-platinum | comp-platinum page DistributionTab --firm 49financial | PASS |
+| 2026-06-12 | 0.4.0_DE_ClientPlatform | NFRA_GRAPHS.D7 | comp-platinum | comp-platinum page DistributionTab --firm inflection | PASS |
+| 2026-06-12 | 0.7.0_AE_CloudOps | NFRA_GRAPHS.D7 | comp-kuzu | comp-kuzu --db-path infra/aws/globgrph/kuzu_db MATCH (n:CloudNode) RETURN count(*) | PASS |
+| 2026-06-12 | 0.7.0_AE_CloudOps | NFRA_GRAPHS.D7 | comp-kuzu | comp-kuzu --db-path infra/aws/globgrph/kuzu_nessie_db MATCH (n:CloudNode) RETURN count(*) | PASS |
+| 2026-06-12 | 0.7.0_AE_CloudOps | NFRA_GRAPHS.D7 | comp-kuzu | comp-kuzu --db-path infra/aws/globgrph/kuzu_stitch_db MATCH (n:CloudNode) RETURN count(*) | PASS |
+| 2026-06-12 | 0.6.0_AE_PartnerETL | NFRA_GRAPHS.D7 | comp-pipescript | comp-pipescript io data/cot/scripts/gold/A_01.advisor_assignments.py | FAIL |
+| 2026-06-12 | 0.6.0_AE_PartnerETL | NFRA_GRAPHS.D7 | comp-pipescript | comp-pipescript io data/cot/scripts/gold/A_04.client_dimension.py | FAIL |
+| 2026-06-12 | 0.6.0_AE_PartnerETL | NFRA_GRAPHS.D7 | comp-pipescript | comp-pipescript io A_04.client_dimension.py | PASS |
+| 2026-06-12 | 0.7.0_AE_CloudOps | NFRA_GRAPHS.D7 | comp-kuzu | comp-kuzu --db-path infra/aws/globgrph/kuzu_db --limit 2 MATCH (n:CloudNode) RETURN n.n... | PASS |
+| 2026-06-12 | 0.4.0_DS_ClientPlatform | ADHC_GLDINC.SILVER-FIX | comp-pipescript | comp-pipescript io data/black_diamond/scripts/silver/compact-realized.py | FAIL |
+| 2026-06-12 | 0.7.0_AE_CloudOps | ADHC_GLDINC.SILVER-FIX | comp-kuzu | comp-kuzu --db-path infra/aws/globgrph/kuzu_nessie_db --limit 2 MATCH (n:CloudNode) RET... | PASS |
+| 2026-06-12 | 0.7.0_AE_CloudOps | ADHC_GLDINC.SILVER-FIX | comp-kuzu | comp-kuzu --db-path infra/aws/globgrph/kuzu_stitch_db --limit 2 MATCH (n:CloudNode) RET... | PASS |
+| 2026-06-12 | 0.4.0_DS_ClientPlatform | ADHC_GLDINC.SILVER-FIX | comp-pipescript | comp-pipescript io compact-realized | FAIL |
+| 2026-06-12 | 0.7.0_AE_CloudOps | ADHC_GLDINC.SILVER-FIX | comp-kuzu | comp-kuzu --db-path .runtmp/kuzu-warn-demo/scratch_db --limit 1 MATCH (n:CloudNode) RET... | PASS |
+| 2026-06-12 | 0.7.0_AE_CloudOps | ADHC_GLDINC.SILVER-FIX | comp-manifest-check | comp-manifest-check | FAIL |
+| 2026-06-12 | 0.7.0_AE_CloudOps | ADHC_GLDINC.SILVER-FIX | comp-manifest-check | comp-manifest-check list | PASS |
+| 2026-06-12 | 0.7.0_AE_CloudOps | ADHC_GLDINC.SILVER-FIX | comp-manifest-check | comp-manifest-check selfcheck | PASS |
+| 2026-06-12 | 0.6.0_AE_PartnerETL | ADHC_GLDINC.SILVER-FIX | comp-pipescript | comp-pipescript deployed data/cot/scripts/gold/A_01.advisor_assignments.py | PASS |
+| 2026-06-12 | 0.6.0_AE_PartnerETL | ADHC_GLDINC.SILVER-FIX | comp-pipescript | comp-pipescript deployed data/cot/scripts/gold/A_04.client_dimension.py | PASS |
+| 2026-06-12 | 0.6.0_AE_PartnerETL | ADHC_GLDINC.SILVER-FIX | comp-validate | comp-validate data/cot/scripts/gold/A_04.client_dimension.py | FAIL |
+| 2026-06-12 | 0.6.0_AE_PartnerETL | ADHC_GLDINC.SILVER-FIX | comp-validate | comp-validate data/cot/scripts/gold/A_01.advisor_assignments.py | FAIL |
+| 2026-06-12 | 0.7.0_AE_CloudOps | ADHC_GLDINC.SILVER-FIX | comp-kuzu | comp-kuzu --db-path infra/aws/globgrph/kuzu_nessie_db MATCH (n:CloudNode) RETURN count(*) | PASS |
+| 2026-06-12 | 0.7.0_AE_CloudOps | ADHC_GLDINC.SILVER-FIX | comp-kuzu | comp-kuzu --db-path infra/aws/globgrph/kuzu_nessie_db MATCH (n:CloudNode) RETURN count(*) | PASS |
+| 2026-06-12 | 0.7.0_AE_CloudOps | ADHC_GLDINC.SILVER-FIX | comp-kuzu | comp-kuzu --db-path infra/aws/globgrph/kuzu_nessie_db MATCH (n:CloudNode) RETURN count(*) | PASS |
+| 2026-06-12 | 0.7.0_AE_CloudOps | ADHC_GLDINC.SILVER-FIX | comp-kuzu | comp-kuzu --db-path infra/aws/globgrph/kuzu_nessie_db MATCH (n:CloudNode) RETURN count(*) | PASS |
+| 2026-06-12 | 0.7.0_AE_CloudOps | ADHC_GLDINC.SILVER-FIX | comp-kuzu | comp-kuzu MATCH (n:CloudNode) RETURN count(*) | PASS |
+| 2026-06-12 | 0.7.0_AE_CloudOps | ADHC_GLDINC.SILVER-FIX | comp-kuzu | comp-kuzu MATCH (n:CloudNode) RETURN count(*) | PASS |
+| 2026-06-12 | 0.7.0_AE_CloudOps | ADHC_GLDINC.SILVER-FIX | comp-manifest-check | comp-manifest-check selfcheck | PASS |
+| 2026-06-12 | 0.7.0_AE_CloudOps | ADHC_GLDINC.SILVER-FIX | comp-constants | comp-constants build | FAIL |
+| 2026-06-12 | 0.7.0_AE_CloudOps | ADHC_GLDINC.SILVER-FIX | comp-constants | comp-constants check | FAIL |
+| 2026-06-12 | 0.7.0_AE_CloudOps | ADHC_GLDINC.SILVER-FIX | comp-iam | comp-iam service trade-submission-handler | PASS |
+| 2026-06-12 | 0.7.0_AE_CloudOps | ADHC_GLDINC.SILVER-FIX | comp-iam | comp-iam services | PASS |
+| 2026-06-12 | 3.0.0_SA_CVO | ADHC_GLDINC.SILVER-FIX | comp-kuzu | comp-kuzu --limit 3 MATCH (n:CloudNode) RETURN count(n) | PASS |
+| 2026-06-12 | 3.0.0_SA_CVO | ADHC_GLDINC.SILVER-FIX | comp-kuzu | comp-kuzu --db-path infra/aws/globgrph/kuzu_ac7.db --limit 1 MATCH (n:CloudNode) RETURN... | PASS |
+| 2026-06-12 | 3.0.0_SA_CVO | ADHC_GLDINC.SILVER-FIX | comp-kuzu | comp-kuzu --limit 5 MATCH (n:CloudNode) WHERE n.id CONTAINS 'concurrency-stress' RETURN... | FAIL |
+| 2026-06-12 | 3.0.0_SA_CVO | ADHC_GLDINC.SILVER-FIX | comp-kuzu | comp-kuzu --limit 1 MATCH (n:CloudNode) RETURN count(n) | PASS |
+| 2026-06-12 | 3.0.0_SA_CVO | ADHC_GLDINC.SILVER-FIX | comp-kuzu | comp-kuzu --limit 5 MATCH (n:CloudNode) WHERE n.node_id CONTAINS 'stress-probe' RETURN ... | PASS |
+| 2026-06-12 | 3.0.0_SA_CVO | ADHC_GLDINC.SILVER-FIX | comp-kuzu | comp-kuzu --limit 1 MATCH (n:CloudNode) RETURN count(n) | PASS |
+| 2026-06-12 | 0.6.0_AE_PartnerETL | ADHC_GLDINC.SILVER-FIX | comp-pipescript | comp-pipescript deployed --pipeline cot-gold | PASS |
+| 2026-06-12 | 3.0.0_SA_CVO | ADHC_GLDINC.SILVER-FIX | comp-kuzu | comp-kuzu --limit 5 MATCH (n:CloudNode) WHERE n.node_id CONTAINS 'stress-probe' RETURN ... | PASS |
+| 2026-06-12 | 3.0.0_SA_CVO | ADHC_GLDINC.SILVER-FIX | comp-kuzu | comp-kuzu --limit 1 MATCH (n:CloudNode) RETURN count(n) | PASS |
+| 2026-06-12 | 0.6.0_AE_PartnerETL | ADHC_GLDINC.SILVER-FIX | comp-validate | comp-validate data/cot/scripts/gold/A_04.client_dimension.py --artifact .runtmp/cot-fix... | PASS |
+| 2026-06-12 | 0.6.0_AE_PartnerETL | ADHC_GLDINC.SILVER-FIX | comp-validate | comp-validate data/cot/scripts/gold/A_01.advisor_assignments.py --artifact .runtmp/cot-... | PASS |
+| 2026-06-12 | 0.6.0_AE_PartnerETL | ADHC_GLDINC.SILVER-FIX | comp-pipescript | comp-pipescript deployed data/cot/scripts/gold/A_01.advisor_assignments.py | PASS |
+| 2026-06-12 | 0.6.0_AE_PartnerETL | ADHC_GLDINC.SILVER-FIX | comp-pipescript | comp-pipescript deployed data/black_diamond/scripts/gold/A_04.client_dimension.py | PASS |
+| 2026-06-12 | 0.6.0_AE_PartnerETL | ADHC_GLDINC.SILVER-FIX | comp-validate | comp-validate --list | PASS |
+| 2026-06-12 | 0.6.0_AE_PartnerETL | ADHC_GLDINC.SILVER-FIX | comp-validate | comp-validate INF_D_00c --artifact /tmp/nonexist.json | FAIL |
+| 2026-06-12 | 0.6.0_AE_PartnerETL | ADHC_GLDINC.SILVER-FIX | comp-validate | comp-validate data/cot/scripts/gold/A_04.client_dimension.py --artifact .runtmp/cot-fix... | PASS |
+| 2026-06-12 | 3.0.0_SA_CVO | ADHC_GLDINC.SILVER-FIX | comp-kuzu | comp-kuzu --limit 5 MATCH (n:CloudNode) WHERE n.node_id CONTAINS 'stress-probe' RETURN ... | PASS |
+| 2026-06-12 | 3.0.0_SA_CVO | ADHC_GLDINC.SILVER-FIX | comp-kuzu | comp-kuzu --limit 5 MATCH (n:CloudNode) WHERE n.node_id CONTAINS 'stress-probe' RETURN ... | PASS |
+| 2026-06-12 | 3.0.0_SA_CVO | ADHC_GLDINC.SILVER-FIX | comp-kuzu | comp-kuzu --limit 1 MATCH (n:CloudNode) RETURN count(n) | PASS |
+| 2026-06-12 | 3.0.0_SA_CVO | ADHC_GLDINC.SILVER-FIX | comp-kuzu | comp-kuzu --limit 1 MATCH (n:CloudNode) RETURN count(n) | PASS |
+| 2026-06-12 | 3.0.0_SA_CVO | ADHC_GLDINC.SILVER-FIX | comp-kuzu | comp-kuzu --limit 3 MATCH (n:CloudNode) WHERE n.node_id CONTAINS 'stress-probe' RETURN ... | PASS |
+| 2026-06-12 | 0.7.0_AE_CloudOps | ADHC_GLDINC.SILVER-FIX | comp-kuzu | comp-kuzu --db-path infra/aws/globgrph/kuzu_nessie_db MATCH (n:CloudNode) RETURN count(*) | PASS |
+| 2026-06-12 | 0.7.0_AE_CloudOps | ADHC_GLDINC.SILVER-FIX | comp-kuzu | comp-kuzu --db-path infra/aws/globgrph/kuzu_nessie_db MATCH (n:CloudNode) RETURN count(*) | PASS |
+| 2026-06-12 | 3.0.0_SA_CVO | comp-kuzu (8-way storm x18) + comp-aws snapshot | GLOBGRPH §2b stress test | AC10(a)+(c) certified; P0 HEAD-lineage divergence caught -> F6 ruling v0.4.3; kuzu reader-lock P1 (kuzu_cli.py:55) | stress_test_globgrph_concurrency_AC10 |
