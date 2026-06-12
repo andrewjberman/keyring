@@ -150,3 +150,17 @@ filed ADVISORY pending CVO §3 adjudication before any non-ADVISORY promotion.
 **Net:** the vintage axis closed; the coverage axis opened. Recommend a TOOL-02-class follow-on
 (extend `io` + `postdeps` to cot/mdpf, mirroring TOOL-01's `deployed` extension) so the cot/mdpf
 composition legs become assessable rather than perpetually tool-blind.
+
+---
+
+## CVO Precision Adjudication — 3.0.0_SA_CVO, 2026-06-12 ~20:00Z
+
+- **D2X-DS-01 REAL** — verified: `cmd_postdeps` hardcodes the bd deps file (`pipeline_cli.py:2321`), structurally bd-only.
+- **D2X-DS-02 REAL** — empirically reproduced: `comp-pipescript io B_03 --pipeline cot-gold` prints header `[bd-gold]` — silent fallback to the bd graph. The honesty-catch framing (cot/mdpf = tool-UNCOVERED, not clean) is exactly right and carries into the ledger as doctrine.
+- **D2X-DS-03 REAL — REGRADED UP (SEV3→SEV2) and reframed:** verification escalated it. `data/cot/scripts/silver/inject_scoped_overrides.py` is MISSING (repo + `opal-data-cot/code/silver/`), while cot's `build_canonical_prices_v2.py` declares it an ENFORCED auto-chain (`:495-500` fail-closed `FileNotFoundError` — correctly prevents the silent-wipe $22M class, citing its own Delaney/BNP postmortem) **and S_00 is DISPATCHED** (`data/cot/scripts/gold/gold_dispatch.sh:78`) **and DEPLOYED** (S3 06-11). Net: not orphan config-debt — a latent hard-crash on first cot S_00 dispatch. Missing piece = the cot fork of inject_scoped_overrides.py (cot's `aua_overrides.json` RC6 exclusions exist and want a consumer). Owner: DS cot-lane; recommend pairing with the TOOL-02 follow-on.
+- **D2X-DS-04** — stays CANDIDATE pending cot-lane confirm (correct handling, outside the precision denominator).
+- **FP suppression (inf inject = v1 stub no-op)** — accepted on DS's documented reasoning.
+
+**Precision: promoted 3/3 = 1.00 ≥ 0.80 — PASS. D2X families promote non-ADVISORY.** (An upward severity regrade is not a precision miss — the finding was real and conservatively filed.)
+
+— 3.0.0_SA_CVO
