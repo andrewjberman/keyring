@@ -94,11 +94,38 @@ None. Remaining work is event-gated (chain completion ~23:08Z), not blocked.
   self-stops via watchdog.
 - DEFERRED EXPLICITLY: tonight's 02:00Z cot baseline untouched by all of this (inf-side only).
 
+## AMENDMENT (~21:35-21:45Z) — BRONZE-FIX #7 + #6 TOs cut in-window; CTO's #6 TRAP ruling
+
+COO cut both detection-fix TOs off follow-ups (f)/(e) while the chain runs; both ACK'd, QUEUED
+post-recovery (R4/R5 first):
+
+- **#7 (follow-up f) — collision-guard FATAL loud channel**
+  (`ADVI_INFETL.BRONZE-FIX.collision-guard-fatal-loud-channel.md`): FATAL -> CW metric + SNS
+  (opal-critical-surface-alerts) from the dispatch script's OWN trap path, pre-log-upload /
+  survives instance death; dead-lock-holder detection; eclipse+mdpf consistency (Andrew mandate);
+  AC4 = replay the 13:00Z scenario and it BLARES instead of 7.5h silence.
+
+- **#6 (follow-up e) — inf-api-txn sentinel RE-KEY, with CTO's TRAP ruling (1a1d555f2):**
+  **The fix is NOT flipping the date default to same-day. The D-1 pull is CORRECT** — day-D
+  transactions are not complete until D ends; a same-day flip would pull PARTIAL days (wrong data
+  in exchange for freshness). **The real defect is KEYING:** the day-D 13:00Z run pulls
+  D-1-complete transactions but writes its sentinel under D-1's quorum key — so day-D's quorum
+  waits for D+1's run, and gold fires ~20h late, every day. **FIX = re-key the sentinel to
+  SERVING-DAY D; pull window + data semantics UNTOUCHED.** Gold then fires fresh every morning
+  ~13:05Z. Vintage-shift discipline: the re-key moves served output a day earlier (toward
+  already-available truth — fresher, NOT a never-widen widen); first re-keyed morning ships with
+  a before/after artifact pair + CTO+COO sign-off note, not silent (CTO §3).
+  Interplay banked: post-#6, a quorum stuck at 8/9 can ONLY be a real failure (the benign D-1 lag
+  class is gone) -> TO #5's quorum-deadline RED needs no false-positive tuning; flagged to
+  [0.7.0_AE_CloudOps] so the TO #5 contract assumes post-#6 semantics.
+
 ## Next Steps
 
 1. ON MONITOR FIRE: R4 both-pages served-verify + R5 timestamps -> CTO/COO ([1.0.0_SA_CTO],
    [2.0.0_SA_COO]); close the P0.
-2. Structural follow-ups a-h -> [2.0.0_SA_COO] TO cuts (interface constraints already with
+2. BRONZE-FIX #7 (FATAL loud-channel) -> then BRONZE-FIX #6 (sentinel re-key + vintage-shift
+   sign-off). Both TOs in my queue, ACK'd.
+3. Remaining structural follow-ups -> [2.0.0_SA_COO] TO cuts (interface constraints already with
    [0.7.0_AE_CloudOps] for TO #5).
-3. Tomorrow AM (unchanged): ADVI_COTSNP.P0 (qt3/qt4 review -> TABLE_CONFIG deploy -> holdings.json
+4. Tomorrow AM (unchanged): ADVI_COTSNP.P0 (qt3/qt4 review -> TABLE_CONFIG deploy -> holdings.json
    parity) + NFRA_COT_RULE15 pending COO drive.
