@@ -135,7 +135,7 @@ def _canonicalize_script_id(raw: str) -> str:
     s = raw.strip().replace('\\', '/')
     # Rule 2: extract filename from full data/ path
     m = re.search(
-        r'data/(?:black_diamond|inf|schwab)/scripts/(?:gold|silver|bronze)/(.+)', s
+        r'data/(?:black_diamond|inf|schwab|cot)/scripts/(?:gold|silver|bronze)/(.+)', s
     )
     if m:
         s = m.group(1)
@@ -183,7 +183,7 @@ def _auto_resolve_script_id(raw_id, pipeline_hint=None):
     # Step 1: strip data/ path prefix and .py suffix only — no .<name> stripping yet.
     _norm = raw_id.strip().replace('\\', '/')
     _pm = re.search(
-        r'data/(?:black_diamond|inf|schwab)/scripts/(?:gold|silver|bronze)/(.+)', _norm
+        r'data/(?:black_diamond|inf|schwab|cot)/scripts/(?:gold|silver|bronze)/(.+)', _norm
     )
     if _pm:
         _norm = _pm.group(1)
@@ -1416,6 +1416,14 @@ def cmd_deployed(args):
     import subprocess
 
     pipeline = getattr(args, 'pipeline', 'bd-gold') or 'bd-gold'
+
+    # NFRA_COT_TOOLING: auto-route a cot path filter to the cot pipeline (firm separation:
+    # opal-data-cot ONLY, never bd). Fires only when the pipeline is the default bd-gold AND the
+    # filter argument is a data/cot/ path; bare ids and bd/inf/mdpf paths are unchanged. The cot
+    # pipeline branch below already sets S3_BUCKET=opal-data-cot. Closes the bare-path blind spot
+    # (deployed cot scripts previously fell through to the bd default and showed "no scripts matched").
+    if pipeline == 'bd-gold' and 'data/cot/scripts/' in (getattr(args, 'script_id', '') or '').replace('\\', '/'):
+        pipeline = 'cot-gold'
 
     S3_BUCKET = "opal-data-bd"
     S3_GOLD_PREFIX = "code/gold/"

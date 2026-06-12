@@ -29,6 +29,7 @@ from __future__ import annotations
 
 import argparse
 import platform
+import re
 import subprocess
 import sys
 from pathlib import Path
@@ -44,6 +45,30 @@ STANDALONE_VALIDATORS_DIR = _WORKSPACE / "data" / "black_diamond" / "scripts" / 
 
 _BD_VALIDATE_CONFIG = _WORKSPACE / "data" / "black_diamond" / "scripts" / "gold" / "gold_validate_config.yaml"
 _INF_VALIDATE_CONFIG = _WORKSPACE / "data" / "inf" / "scripts" / "gold" / "gold_validate_config.yaml"
+# cot (Cottonwood) -- COMPLETELY separate firm pipeline (NFRA_DTAFLP, Andrew sovereign 2026-06-10).
+# cot gold script-ids COLLIDE with bd's (A_01, C_02, D_04 ...), so cot is routed strictly by PATH
+# (data/cot/scripts/...) and loaded in ISOLATION -- NEVER merged into the bd+inf alias map (a merge
+# would let cot D_00/D_04 shadow bd's). Firm separation applies to tooling reads. NFRA_COT_TOOLING.
+_COT_VALIDATE_CONFIG = _WORKSPACE / "data" / "cot" / "scripts" / "gold" / "gold_validate_config.yaml"
+
+
+def _is_cot_path(s: str) -> bool:
+    """True if the script_id argument is a path under the cot gold/silver/bronze tree."""
+    return "data/cot/scripts/" in (s or "").replace("\\", "/")
+
+
+def _canonicalize_cot_script_id(raw: str) -> str:
+    """data/cot/scripts/gold/A_01.advisor_assignments.py -> A_01 (bare id for resolution)."""
+    s = (raw or "").strip().replace("\\", "/")
+    m = re.search(r"data/cot/scripts/(?:gold|silver|bronze)/(.+)", s)
+    if m:
+        s = m.group(1)
+    if s.lower().endswith(".py"):
+        s = s[:-3]
+    m2 = re.match(r"^([A-Za-z0-9_]+)\..+$", s)
+    if m2:
+        s = m2.group(1)
+    return s
 
 
 def _translate_artifact_path(raw: str) -> Path:
@@ -83,6 +108,24 @@ def _load_raw_validate_configs() -> dict:
             result.update((raw.get("scripts") or {}))
         except Exception:
             pass
+    return result
+
+
+def _load_raw_cot_configs() -> dict:
+    """Load the cot gold_validate_config.yaml as a raw dict (for the cot-isolated alias map).
+
+    cot is loaded SEPARATELY from bd+inf -- never merged -- because cot script-ids collide
+    with bd's (A_01, C_02, D_04 ...). Firm separation. NFRA_COT_TOOLING.
+    """
+    result: dict = {}
+    if not _COT_VALIDATE_CONFIG.exists():
+        return result
+    try:
+        import yaml
+        raw = yaml.safe_load(_COT_VALIDATE_CONFIG.read_text(encoding="utf-8"))
+        result.update((raw.get("scripts") or {}))
+    except Exception:
+        pass
     return result
 
 
@@ -217,6 +260,20 @@ def _dispatch_standalone(validator_path: Path, passthrough_args: list[str]) -> i
 
 
 def cmd_list(args):
+    # NFRA_COT_TOOLING: a cot path lists the cot config in ISOLATION (never merged with
+    # bd+inf -- cot D_00/D_04 would collide). Firm separation.
+    if _is_cot_path(getattr(args, "script_id", "")):
+        cot_configs = load_validate_config(_WORKSPACE, _COT_VALIDATE_CONFIG)
+        print(f"VALIDATE CONFIG [cot] ({len(cot_configs)} scripts)")
+        print("  Config (COT): data/cot/scripts/gold/gold_validate_config.yaml")
+        print()
+        if not cot_configs:
+            print("  (no cot stanzas registered -- all cot gold scripts are NO_CONFIG/fail-closed)")
+            return
+        for sid in sorted(cot_configs):
+            print(f"  {sid}")
+        return
+
     bd_configs = load_validate_config(_WORKSPACE)
     inf_configs = load_validate_config(_WORKSPACE, _INF_VALIDATE_CONFIG)
     configs = {**bd_configs, **inf_configs}
@@ -293,6 +350,13 @@ def cmd_validate(args):
     #   1. Explicit --config <path> (TO-9 AC1) — overrides everything
     #   2. Auto-detect from script_id prefix: INF_* -> INF config (TO-9 AC2)
     #   3. Default: BD config
+    # NFRA_COT_TOOLING: detect a cot path FIRST (cot ids collide with bd, so route by PATH
+    # never by id-prefix). A cot path canonicalizes to its bare id and loads the cot config
+    # in ISOLATION (not merged into the bd+inf alias map).
+    _is_cot = _is_cot_path(args.script_id)
+    if _is_cot:
+        args.script_id = _canonicalize_cot_script_id(args.script_id)
+
     explicit_config = getattr(args, 'config', None)
     if explicit_config:
         cfg_path = Path(explicit_config)
@@ -302,6 +366,8 @@ def cmd_validate(args):
             print(f"ERROR: --config path not found: {cfg_path}", file=sys.stderr)
             sys.exit(2)
         _config_file = cfg_path
+    elif _is_cot:
+        _config_file = _COT_VALIDATE_CONFIG
     else:
         # Auto-detect pipeline from script_id prefix: INF_* -> INF config; others -> BD.
         _sid_upper = (args.script_id or "").upper()
@@ -310,8 +376,12 @@ def cmd_validate(args):
     # --strict is now a no-op alias: NO_CONFIG fails closed (exit 2) by DEFAULT
     # post-flip (LD-0148). Kept as a flag for back-compat; --lenient is the bypass.
 
-    # Build alias map for script-id -> artifact-id resolution (ADHC_COMPIL.015)
-    raw_configs = _load_raw_validate_configs()
+    # Build alias map for script-id -> artifact-id resolution (ADHC_COMPIL.015).
+    # cot loads its OWN raw config in isolation (firm separation -- never the bd+inf merge).
+    if _is_cot:
+        raw_configs = _load_raw_cot_configs()
+    else:
+        raw_configs = _load_raw_validate_configs()
     alias_map = _build_script_alias_map(raw_configs)
 
     # Translate artifact path (Windows POSIX path fix, ADHC_COMPIL.009)
