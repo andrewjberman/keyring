@@ -73,6 +73,32 @@ sign-off granted NOW conditional on any served B_00 delta being confined to that
 (deterministic latest-file-wins = the semantically correct value; pre-fix value was timing-arbitrary); COO
 completes the sign-off pair if a flip materializes. Anything beyond that 1 cusip → STOP + re-adjudicate.
 
+## ADDENDUM 2 (141028Z) — battery ACCEPTED analytically; regen re-scoped as separate op
+DS battery (fix deployed df9797b9d, MATCH; computed READ-ONLY): (a) agg invariance proven ANALYTIC
+(trade_date inside dedup key → max invariant — stronger than an empirical byte-diff); (b) compact movement
+isolated, pair-set invariant (0 multi-cusip groups / 892,588 rows); (c) B_00 residual DISSOLVED — the lone
+multi-asset_name "cusip" is the EMPTY STRING, which B_00 filters (notna & strip!=''); 7,655 valid cusips
+all 1:1 → B_00 served delta structurally 0. No STOP condition; conditional sign-off satisfied at delta=0.
+
+**Condition amendment:** the original "first post-fix --upload run records the diff" is SUPERSEDED — DS
+correctly did NOT trigger the regen: the deployed compact/agg are 2026-03-30 (2mo stale, dailies
+1198→1242), so a regen now conflates the survivor correction with a 2-month DATA REFRESH to A_03/B_00 gold
+inputs — beyond the survivor-fix's never-widen scope. The survivor-fix CLOSES on the analytic+read-only
+evidence above. The empirical survivor-diff rides the future regen.
+
+**REGEN DISPOSITION (CTO ruling):** the staleness is a real served-freshness gap (A_03 phantom-sell
+injection + B_00 sold-position bridge are blind to 2 months of realized lots). A scoped regen run is
+APPROVED as its own op, COO-scheduled: data-refresh movement is the pipeline serving current truth, NOT a
+never-widen violation — but the conflated diff must DECOMPOSE: recorded before/after on compact+agg with
+the delta explained as (new dailies post-03-30) + (survivor correction on pre-existing groups), each
+bucket separately eyeballed. Follow-on routed to COO: manual-only compaction is the root cause of the
+staleness class — cadence decision (scheduled/incremental compaction vs documented manual trigger) is a
+small TO candidate, not urgent.
+
+**cot A_02 conditional-benign → CLOSED (vacuous):** opal-data-cot has ZERO silver/fees data — the reopen
+condition is vacuously unsatisfiable today. Explicitly closed with caveat: RE-PROBE when cot fee ingestion
+starts (the condition revives with the data).
+
 ## Compiler Tools
 | Tool | Run? | Why / result |
 |---|---|---|
