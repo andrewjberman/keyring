@@ -5525,3 +5525,34 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-06-12 | 0.4.0_DS_ClientPlatform | page-inventory-full-reaudit | comp-surface-check | comp-surface-check check --mode advisory --file docs/briefs/inf-advi-staleness-p0-recov... | PASS |
 | 2026-06-12 | 0.4.0_DS_ClientPlatform | P0 inf ADVI recovery | (none — live-AWS incident forensics; Rule-20 trace was CTO's comp-kuzu x2; F5 own-change verification against live S3/SSM/Lambda/CW throughout; follow-up (c) extends deployed-checks to bronze-runner prefixes) | DIAGNOSE |
 | 2026-06-12 | 0.4.0_DS_ClientPlatform | page-inventory-full-reaudit | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-06-12 | 0.6.0_AE_PartnerETL | page-inventory-full-reaudit | comp-pipescript | comp-pipescript deployed --pipeline inf-bronze | PASS |
+| 2026-06-12 | 0.6.0_AE_PartnerETL | page-inventory-full-reaudit | comp-pipescript | comp-pipescript deployed data/inf/scripts/bronze/orchestrator.py | PASS |
+| 2026-06-12 | 0.6.0_AE_PartnerETL | page-inventory-full-reaudit | comp-surface-check | comp-surface-check check --mode advisory --file .tools/safe_deploy_core.py --file infra... | PASS |
+| 2026-06-12 | 2.0.0_SA_COO | page-inventory-full-reaudit | comp-surface-check | comp-surface-check check --mode advisory --file org/mcp/.last-drive-2.0.0_SA_COO --file... | PASS |
+| 2026-06-12 | 3.0.0_SA_CVO | page-inventory-full-reaudit | comp-pipescript | comp-pipescript deployed data/inf/scripts/bronze/orchestrator.py | PASS |
+| 2026-06-12 | 0.7.0_AE_CloudOps | page-inventory-full-reaudit | comp-kuzu | comp-kuzu MATCH (n) RETURN count(n) | PASS |
+| 2026-06-12 | 1.0.0_SA_CTO | page-inventory-full-reaudit | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/1.0.0_SA_CTO/logs/2026-0... | PASS |
+| 2026-06-12 | 0.7.0_AE_CloudOps | page-inventory-full-reaudit | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/globgrph/derive_runner.py --f... | PASS |
+| 2026-06-12 | 2.0.0_SA_COO | page-inventory-full-reaudit | comp-surface-check | comp-surface-check check --mode advisory --file org/mcp/.last-drive-2.0.0_SA_COO --file... | PASS |
+| 2026-06-12 | 2.0.0_SA_COO | page-inventory-full-reaudit | comp-surface-check | comp-surface-check check --mode advisory --file org/mcp/.last-drive-2.0.0_SA_COO --file... | PASS |
+| 2026-06-12 | 0.7.0_AE_CloudOps | page-inventory-full-reaudit | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/change_management/20... | PASS |
+| 2026-06-12 | 0.4.0_DS_ClientPlatform | page-inventory-full-reaudit | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-06-12 | 0.6.0_AE_PartnerETL | page-inventory-full-reaudit | comp-surface-check | comp-surface-check check --mode advisory --file .tools/test_bronze_contract.py --file d... | PASS |
+| 2026-06-12 | 0.6.0_AE_PartnerETL | page-inventory-full-reaudit | comp-surface-check | comp-surface-check check --mode advisory --file .tools/test_bronze_contract.py --file i... | PASS |
+| 2026-06-12 | 0.4.0_DE_ClientPlatform | page-inventory-full-reaudit | comp-surface-check | comp-surface-check check --mode advisory --file portal/src/api/endpoints/advisor-intell... | PASS |
+| 2026-06-12 | 0.7.0_AE_CloudOps | page-inventory-full-reaudit | comp-surface-check | comp-surface-check check --mode advisory --file .tools/deploy_ledger.py --file .tools/f... | PASS |
+| 2026-06-12 | 0.4.0_DE_ClientPlatform | page-inventory-full-reaudit | comp-transform | comp-transform schema-check ClientsTab | PASS |
+| 2026-06-12 | 0.4.0_DE_ClientPlatform | page-inventory-full-reaudit | comp-transform | comp-transform schema-check AdvisorBookView | PASS |
+| 2026-06-12 | 0.4.0_DE_ClientPlatform | page-inventory-full-reaudit | comp-adapter-audit | comp-adapter-audit getPlatinumClientDetailStatic | FAIL |
+| 2026-06-12 | 0.6.0_AE_PartnerETL | page-inventory-full-reaudit | comp-pipescript | comp-pipescript io D_00 --firm cot | PASS |
+| 2026-06-12 | 0.6.0_AE_PartnerETL | page-inventory-full-reaudit | comp-pipescript | comp-pipescript io S_00 --pipeline cot-gold | PASS |
+| 2026-06-12 | 0.6.0_AE_PartnerETL | page-inventory-full-reaudit | comp-pipescript | comp-pipescript postdeps --firm inf | PASS |
+| 2026-06-12 | 0.6.0_AE_PartnerETL | page-inventory-full-reaudit | comp-pipescript | comp-pipescript postdeps --firm mdpf | FAIL |
+| 2026-06-12 | 2.0.0_SA_COO | page-inventory-full-reaudit | comp-surface-check | comp-surface-check check --mode advisory --file .owned-paths.yaml | PASS |
+| 2026-06-12 | 0.6.0_AE_PartnerETL | page-inventory-full-reaudit | comp-pipescript | comp-pipescript io mdpf_aggregate_aua --firm mdpf | PASS |
+| 2026-06-12 | 0.6.0_AE_PartnerETL | page-inventory-full-reaudit | comp-pipescript | comp-pipescript io D_00 | PASS |
+| 2026-06-12 | 0.6.0_AE_PartnerETL | page-inventory-full-reaudit | comp-pipescript | comp-pipescript postdeps D_00 | PASS |
+| 2026-06-12 | 2.0.0_SA_COO | page-inventory-full-reaudit | comp-surface-check | comp-surface-check check --mode advisory --file .claude/skills/drive/SKILL.md --file or... | PASS |
+| 2026-06-12 | 0.6.0_AE_PartnerETL | page-inventory-full-reaudit | comp-surface-check | comp-surface-check check --mode advisory --file data/inf/scripts/bronze/bronze_required... | PASS |
+2026-06-12 ~2155Z | 0.4.0_DE_ClientPlatform | DC-round-2 (29 dead advisor-intelligence.ts fns) + T1b | comp-transform schema-check AdvisorBookView/ClientsTab (PASS); comp-adapter-audit getPlatinumClientDetailStatic (FALSE-POSITIVE root-caused — hardcoded advisors/ S3 prefix vs clients/ fn path, portal type verified correct vs real S3 8/8). DC-round-2 reachability census + tsc-net (caught 3 live DIMENSIONS consts); DEV 0ac642ad.
+| 2026-06-12 | 0.4.0_DE_ClientPlatform | page-inventory-full-reaudit | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
