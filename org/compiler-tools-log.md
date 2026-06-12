@@ -5399,3 +5399,29 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-06-12 | 0.4.0_DS_ClientPlatform | NFRA_DEBTSCAN.TO-D5.portalsweep | comp-pipescript | comp-pipescript io --pipeline cot-gold D_00c | PASS |
 | 2026-06-12 | 0.4.0_DS_ClientPlatform | NFRA_DEBTSCAN.TO-D5.portalsweep | comp-pipescript | comp-pipescript io --pipeline cot-gold D_01 | PASS |
 | 2026-06-12 | 0.7.0_AE_CloudOps | NFRA_DEBTSCAN.TO-D5.portalsweep | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/globgrph/kuzu_cost_enrich.py ... | PASS |
+| 2026-06-12 | 0.4.0_DS_ClientPlatform | NFRA_DEBTSCAN.TO-D5.portalsweep | comp-pipescript | comp-pipescript io --pipeline cot-gold D_02 | PASS |
+| 2026-06-12 | 0.4.0_DS_ClientPlatform | NFRA_DEBTSCAN.TO-D5.portalsweep | comp-pipescript | comp-pipescript io --pipeline cot-gold D_03 | PASS |
+| 2026-06-12 | 0.4.0_DS_ClientPlatform | NFRA_DEBTSCAN.TO-D5.portalsweep | comp-pipescript | comp-pipescript io --pipeline cot-gold D_04 | PASS |
+| 2026-06-12 | 0.4.0_DS_ClientPlatform | NFRA_DEBTSCAN.TO-D5.portalsweep | comp-pipescript | comp-pipescript io --pipeline cot-gold diag_gold_silver_recon | FAIL |
+| 2026-06-12 | 0.4.0_DS_ClientPlatform | NFRA_DEBTSCAN.TO-D5.portalsweep | comp-pipescript | comp-pipescript io --pipeline cot-gold E_00 | FAIL |
+| 2026-06-12 | 0.4.0_DS_ClientPlatform | NFRA_DEBTSCAN.TO-D5.portalsweep | comp-pipescript | comp-pipescript io --pipeline cot-gold E_01 | FAIL |
+| 2026-06-12 | 0.4.0_DS_ClientPlatform | NFRA_DEBTSCAN.TO-D5.portalsweep | comp-pipescript | comp-pipescript io --pipeline cot-gold E_18 | FAIL |
+| 2026-06-12 | 0.4.0_DS_ClientPlatform | NFRA_DEBTSCAN.TO-D5.portalsweep | comp-pipescript | comp-pipescript io --pipeline cot-gold E_20 | FAIL |
+| 2026-06-12 | 0.4.0_DS_ClientPlatform | NFRA_DEBTSCAN.TO-D5.portalsweep | comp-pipescript | comp-pipescript io --pipeline cot-gold E_21 | FAIL |
+| 2026-06-12 | 0.4.0_DS_ClientPlatform | NFRA_DEBTSCAN.TO-D5.portalsweep | comp-pipescript | comp-pipescript io --pipeline cot-gold E_22 | FAIL |
+| 2026-06-12 | 0.4.0_DS_ClientPlatform | NFRA_DEBTSCAN.TO-D5.portalsweep | comp-pipescript | comp-pipescript io --pipeline cot-gold E_23 | FAIL |
+| 2026-06-12 | 0.4.0_DS_ClientPlatform | NFRA_DEBTSCAN.TO-D5.portalsweep | comp-pipescript | comp-pipescript io --pipeline cot-gold E_24 | FAIL |
+| 2026-06-12 | 0.4.0_DS_ClientPlatform | NFRA_DEBTSCAN.TO-D5.portalsweep | comp-pipescript | comp-pipescript io --pipeline cot-gold gldinc_p1_shadow | FAIL |
+| 2026-06-12 | 0.4.0_DS_ClientPlatform | NFRA_DEBTSCAN.TO-D5.portalsweep | comp-pipescript | comp-pipescript io --pipeline cot-gold gold_prof | FAIL |
+| 2026-06-12 | 0.4.0_DS_ClientPlatform | NFRA_DEBTSCAN.TO-D5.portalsweep | comp-pipescript | comp-pipescript io --pipeline cot-gold runner | FAIL |
+| 2026-06-12 | 0.4.0_DS_ClientPlatform | NFRA_DEBTSCAN.TO-D5.portalsweep | comp-pipescript | comp-pipescript io --pipeline cot-gold validate_platinum_consistency | FAIL |
+| 2026-06-12 | 0.4.0_DS_ClientPlatform | NFRA_DEBTSCAN.TO-D5.portalsweep | comp-pipescript | comp-pipescript io --pipeline cot-gold validate_sl_nightly_gate | FAIL |
+| 2026-06-12 | 2.0.0_SA_COO | NFRA_DEBTSCAN.TO-D5.portalsweep | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/NFRA_COSTAWS.json --file o... | PASS |
+| 2026-06-12 | 0.4.0_DE_ClientPlatform | NFRA_DEBTSCAN.TO-D5.portalsweep | comp-cache | comp-cache collisions | PASS |
+| 2026-06-12 | 0.7.0_AE_CloudOps | NFRA_DEBTSCAN.TO-D5.portalsweep | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.7.0_AE_CloudOps/logs... | PASS |
+| 2026-06-12 | 0.4.0_DS_ClientPlatform | NFRA_DEBTSCAN.TO-D5.portalsweep | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/debtscan/2026-06-12_D... | PASS |
+| 2026-06-12 | 3.0.0_SA_CVO | NFRA_DEBTSCAN.TO-D5.portalsweep | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/debtscan/2026-06-12_D... | PASS |
+| 2026-06-12 | 3.0.0_SA_CVO | NFRA_DEBTSCAN.TO-D5.portalsweep | comp-pipescript | comp-pipescript io --pipeline cot-gold | FAIL |
+| 2026-06-12 | 3.0.0_SA_CVO | NFRA_DEBTSCAN.TO-D5.portalsweep | comp-pipescript | comp-pipescript io B_03 --pipeline cot-gold | PASS |
+| 2026-06-12 | 0.7.0_AE_CloudOps | session-close | /log one-shot | session_close_1310-2001Z.md — D8-AE B1-B5 + TO-D1/D2/D4 all RAVC3-accepted; kuzu enriched 206 nodes | PASS |
+| 2026-06-12 | 0.7.0_AE_CloudOps | NFRA_DEBTSCAN.TO-D5.portalsweep | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
