@@ -859,13 +859,20 @@ paths:
   "data/black_diamond/**":
     lane: POD4
 
-  # Orion (Inflection) scripts — Pod 4 DS owns, except dispatch orchestrator (AE-infra)
-  # Specific override (longest-match-wins): dispatch orchestrator is AE-maintained ops
-  # infra, not a DS data script. Reclassified 2026-04-30 per COO lane-violation flag
-  # from AE 0.7.0 during --run-date flag work (COO 2026-04-30 redirect authorized).
+  # Orion (Inflection) gold dispatch orchestrator — SHARED DS+AE seam (POD4_OR_AE).
+  # History: AE-reclassified 2026-04-30 (orchestration plumbing = AE, --run-date flag work).
+  # Re-SHARED 2026-06-12 (2.0.0_SA_COO, ADVI_INFETL P0 BRONZE-FIX): tonight proved this file
+  # is a genuine recurring data/infra seam — AE shipped #9 (runner shutdown, 555ea1e44) AND DS
+  # ships #7 (ChainFailed FATAL emitter — data-chain failure SIGNAL) AND #6 (sentinel re-key)
+  # touches it too. The AE-only split would re-block DS's TO-assigned data-chain-observability
+  # work every time. Same POD4_OR_AE consolidation as data/inf/scripts/bronze/** (line ~900) =
+  # the divergence-resolving pattern. PENDING CTO RATIFICATION + AE review (inverts a deliberate
+  # AE-reclassification while AE is session-closed; CC CTO 230904Z; reversible — if CTO/AE rule
+  # dispatcher-observability is AE-lane, revert + reassign #6). AE retains orchestration-plumbing
+  # primacy; DS permitted for data-chain-signal/sentinel work the TOs assign.
   "data/inf/scripts/gold/orion-gold-dispatch.sh":
-    lane: CLOUD_OPS_OR_ETL
-    note: "Orion gold dispatch orchestrator — AE-maintained, not a DS data script"
+    lane: POD4_OR_AE
+    note: "Orion gold dispatcher — SHARED DS+AE seam (data-chain signal/sentinel = DS; orchestration plumbing = AE). Re-shared 2026-06-12, pending CTO ratification"
 
   # Specific overrides: manual_api ops infrastructure — AE-maintained, not DS data scripts.
   # jwt_freshness.py + run_backfill_orchestrator.py reclassified 2026-05-01 (CTO ruling,
