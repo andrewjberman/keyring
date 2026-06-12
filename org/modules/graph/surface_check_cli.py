@@ -36,7 +36,8 @@ import subprocess
 import sys
 
 _HERE = os.path.dirname(os.path.abspath(__file__))
-_WS = os.path.dirname(os.path.dirname(_HERE))  # org/modules/graph -> workspace
+# org/modules/graph -> modules -> org -> workspace root (3 levels up)
+_WS = os.path.dirname(os.path.dirname(os.path.dirname(_HERE)))
 SURFACES_YAML = os.path.join(_HERE, "critical-surfaces.yaml")
 ACK_AUDIT = os.path.join(_WS, "org", "surface-check-ack-audit.log")
 
@@ -186,6 +187,182 @@ def _audit(reason: str, sev1_touches: list[tuple]) -> None:
         pass
 
 
+def _load_graph(path: str) -> dict:
+    import json
+    with open(path, encoding="utf-8") as f:
+        return json.load(f)
+
+
+# Layer-2 (D8-AE Part B, CTO Q1; format LOCKED by COO 180558Z): the signed
+# watched-file-SHA baseline lives IN critical-surfaces.yaml under
+#   baseline.portal_commit_at_sign + baseline.watched_file_shas.{surface}[{path, sha}]
+# DE writes it at re-sign (capture-at-re-sign-only); the scan only READS it. SHAs
+# are `git hash-object` blob SHA-1s.
+
+
+def _git_hash_object(path: str) -> str | None:
+    """`git hash-object <file>` blob SHA-1 -- via git so line-ending normalization
+    (.gitattributes / autocrlf) matches DE's signed SHA exactly (a raw-bytes hash
+    diverges on Windows CRLF). Portal files run in the portal submodule."""
+    p = path.replace("\\", "/")
+    if p.startswith("portal/"):
+        cwd, rel = os.path.join(_WS, "portal"), p[len("portal/"):]
+    else:
+        cwd, rel = _WS, p
+    try:
+        r = subprocess.run(["git", "hash-object", rel], cwd=cwd,
+                           capture_output=True, text=True, check=True)
+        return r.stdout.strip()
+    except Exception:
+        return None
+
+
+def _watched_sha_baseline() -> dict | None:
+    """Read the signed watched-file-SHA baseline from critical-surfaces.yaml."""
+    try:
+        import yaml
+        with open(SURFACES_YAML, encoding="utf-8") as f:
+            doc = yaml.safe_load(f) or {}
+        b = ((doc.get("monitor") or {}).get("baseline") or {})
+        if b.get("watched_file_shas"):
+            return {"portal_commit": b.get("portal_commit_at_sign", ""),
+                    "shas": b["watched_file_shas"]}
+    except Exception:
+        pass
+    return None
+
+
+def cmd_list_watched(args) -> int:
+    """The DE handoff (CTO Q1): the exact full-path watched-file list per surface
+    that DE SHA-captures + anchors to the portal submodule commit at re-sign."""
+    import json
+    wm = {}
+    for s in load_surfaces():
+        for w in s["watched"]:
+            if "/" in w:
+                wm.setdefault(w, []).append(f"{s['id']}({s['severity']})")
+    if args.json:
+        print(json.dumps({"watched_files": {k: sorted(v) for k, v in sorted(wm.items())},
+                          "note": "DE: capture sha256 of each + the portal submodule commit at re-sign -> "
+                                  "org/modules/graph/baseline_watched_files.yaml"}, indent=2))
+    else:
+        print("Watched files for DE SHA-capture (single source of truth = critical-surfaces.yaml):\n")
+        for f, surfs in sorted(wm.items()):
+            print(f"  {f}")
+            print(f"      surfaces: {', '.join(sorted(surfs))}")
+        print("\nDE: capture sha256(each) + the portal submodule commit at re-sign -> "
+              "baseline_watched_files.yaml (CTO Q1 conditions 2+3).")
+    return 0
+
+
+def cmd_scan(args) -> int:
+    """D8-AE Part B Layer-1 (graph-diff): diff the current graph vs the signed
+    baseline and attribute each change to the critical surface(s) whose carve
+    names the changed node's file -> SEV-routed findings (SEV1=page / SEV2=digest).
+
+    LAYER-1 ONLY: this sees nodes that ARE in the graph (frontend/API/backend
+    Lambda+S3+gold). The 3 coverage-gap surfaces (BenchmarkHeatmap / portal-proxy /
+    PeersTab) are NOT graph nodes -> a Layer-2 watched-file-SHA diff (CTO baseline-
+    extension ruling pending) is required to cover them; flagged loud below.
+    Best-effort: missing snapshots -> ADVISORY, never crash a nightly scan.
+    """
+    import json
+    base_p = args.baseline or os.path.join(_WS, ".comp-graph", "baseline.json")
+    cur_p = args.current or os.path.join(_WS, ".comp-graph", "graph.json")
+    try:
+        surfaces = load_surfaces()
+        base = _load_graph(base_p)
+        cur = _load_graph(cur_p)
+    except Exception as e:
+        print(f"ADVISORY: comp-surface-check scan could not load inputs "
+              f"({type(e).__name__}: {e}) -- skipping (never crash the nightly).")
+        return 0
+
+    bn, cn = base.get("nodes", {}), cur.get("nodes", {})
+    # node-level diff
+    added = [k for k in cn if k not in bn]
+    removed = [k for k in bn if k not in cn]
+    changed = [k for k in cn if k in bn
+               and (cn[k] or {}).get("source_sha") != (bn[k] or {}).get("source_sha")]
+
+    def _node_file(graph_nodes, k):
+        return str((graph_nodes.get(k) or {}).get("file_path") or "")
+
+    findings = []   # (severity, kind, surface_id, node)
+    for kind, keys, src in [("ADDED", added, cn), ("REMOVED", removed, bn),
+                            ("CHANGED", changed, cn)]:
+        for k in keys:
+            fp = _node_file(src, k)
+            if not fp:
+                continue
+            for s in surfaces:
+                if _file_touches(fp, s["watched"]):
+                    findings.append((s["severity"], kind, s["id"], k))
+
+    sev2 = [f for f in findings if f[0] == "SEV2"]
+
+    print("comp-surface-check scan (Layer-1 graph-diff)")
+    print(f"  baseline: {os.path.relpath(base_p, _WS)}  ({len(bn)} nodes)")
+    print(f"  current:  {os.path.relpath(cur_p, _WS)}  ({len(cn)} nodes)")
+    print(f"  node delta: +{len(added)} / -{len(removed)} / ~{len(changed)}")
+    if not findings:
+        print("  OK: no critical-surface graph node changed since baseline (Day-0 clean).")
+    else:
+        for sev, kind, sid, node in sorted(set(findings)):
+            route = "PAGE" if sev == "SEV1" else "digest"
+            print(f"  {sev} [{route}]: {kind} node in {sid} -> {node}")
+    # ---- Layer-2: watched-file-SHA diff (per-surface; covers non-graph surfaces) ----
+    l2_findings = []   # (severity, file, surface_id, kind)
+    l2_status = "unknown"
+    wb = _watched_sha_baseline()
+    if not wb:
+        print("  Layer-2 (file-SHA-watch): HEAD-ORACLE UNKNOWN -- no signed "
+              "baseline.watched_file_shas in critical-surfaces.yaml yet (DE re-sign pending; "
+              "`comp-surface-check list-watched-files` is the DE handoff).")
+    else:
+        l2_status = "active"
+        sev_by_id = {s["id"]: s["severity"] for s in load_surfaces()}
+        nfiles = 0
+        for sid, entries in (wb["shas"] or {}).items():
+            sev = sev_by_id.get(sid, "SEV2")
+            for ent in (entries or []):
+                nfiles += 1
+                fpath, base_sha = ent.get("path"), ent.get("sha")
+                cur = _git_hash_object(fpath) if fpath else None
+                if cur is None:
+                    l2_findings.append(("SEV1", fpath, sid, "MISSING"))
+                elif cur != base_sha:
+                    l2_findings.append((sev, fpath, sid, "CHANGED"))
+        print(f"  Layer-2 (file-SHA-watch): baseline portal@{str(wb['portal_commit'])[:12]} "
+              f"-- {nfiles} watched (surface,file) pair(s)")
+        if not l2_findings:
+            print("    OK: no watched-file SHA changed since the signed baseline.")
+        for sev, fpath, sid, kind in sorted(set(l2_findings)):
+            route = "PAGE" if sev == "SEV1" else "digest"
+            print(f"    {sev} [{route}] [file-SHA-watch]: {kind} {fpath} ({sid})")
+
+    if args.json:
+        print(json.dumps({
+            "layer1_graph_drift": {
+                "node_delta": {"added": len(added), "removed": len(removed), "changed": len(changed)},
+                "findings": [{"severity": s, "kind": k, "surface": sid, "node": n, "coverage": "graph-drift"}
+                             for s, k, sid, n in sorted(set(findings))],
+            },
+            "layer2_file_sha_watch": {
+                "status": l2_status,
+                "findings": [{"severity": s, "file": fp, "surface": sid, "kind": k,
+                              "coverage": "file-SHA-watch"}
+                             for s, fp, sid, k in sorted(set(l2_findings))],
+            },
+            "sev1_total": len({(k, sid, n) for s, k, sid, n in findings if s == "SEV1"})
+                          + len({fp for sev, fp, _sid, _k in l2_findings if sev == "SEV1"}),
+            "sev2_total": len(set(sev2)) + len({fp for sev, fp, _sid, _k in l2_findings if sev == "SEV2"}),
+        }, indent=2))
+    # scan is a REPORT (the nightly publishes/alarms); exit 0 always (advisory),
+    # SEV-routing is in the payload, not the exit code.
+    return 0
+
+
 def cmd_list(args) -> int:
     surfaces = load_surfaces()
     print(f"comp-surface-check -- {len(surfaces)} critical surface(s) "
@@ -239,6 +416,14 @@ def main() -> int:
     c.add_argument("--file", action="append", default=[])
     c.add_argument("--mode", choices=["blocking", "advisory"], default="blocking")
     c.set_defaults(fn=cmd_check)
+    sc = sub.add_parser("scan")
+    sc.add_argument("--baseline", default=None, help="baseline graph snapshot (default .comp-graph/baseline.json)")
+    sc.add_argument("--current", default=None, help="current graph snapshot (default .comp-graph/graph.json)")
+    sc.add_argument("--json", action="store_true")
+    sc.set_defaults(fn=cmd_scan)
+    lw = sub.add_parser("list-watched-files")
+    lw.add_argument("--json", action="store_true")
+    lw.set_defaults(fn=cmd_list_watched)
     sub.add_parser("list").set_defaults(fn=cmd_list)
     sub.add_parser("selfcheck").set_defaults(fn=cmd_selfcheck)
     args = ap.parse_args()
