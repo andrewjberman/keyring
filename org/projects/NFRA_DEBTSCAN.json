@@ -2,7 +2,7 @@
   "project_code": "NFRA_DEBTSCAN",
   "macro_code": "NFRA",
   "name": "Graph-driven estate-wide debt/dead-path/canon-deviation/latent-risk scanning",
-  "description": "Andrew-direct 2026-06-12 (~17:55Z, via CVO brief 2a30d65f3): put the graph system to the test against the whole estate \u2014 find tech debt, dead paths, out-of-pattern routes (canon-breaks), and latent bugs/risk factors systematically FROM THE GRAPH, not ad-hoc greps. Four scan families (reachability dead-paths / structural-debt census / canon-deviation motif mining / compositional risk analytics), each anchored to a real past incident; D7's scan engine generalized from 5 critical surfaces to the unioned stitch (3,088 nodes). FP-suppression + CVO-adjudicated >=0.8 sampled-precision gates before non-ADVISORY filing; verify-before-delete doctrine binding; outputs = graded findings ledger (org/modules/graph/debtscan/) + graph_metrics burn-down trend + critical-paths cross-filing.",
+  "description": "Andrew-direct 2026-06-12 (~17:55Z, via CVO brief 2a30d65f3): put the graph system to the test against the whole estate — find tech debt, dead paths, out-of-pattern routes (canon-breaks), and latent bugs/risk factors systematically FROM THE GRAPH, not ad-hoc greps. Four scan families (reachability dead-paths / structural-debt census / canon-deviation motif mining / compositional risk analytics), each anchored to a real past incident; D7's scan engine generalized from 5 critical surfaces to the unioned stitch (3,088 nodes). FP-suppression + CVO-adjudicated >=0.8 sampled-precision gates before non-ADVISORY filing; verify-before-delete doctrine binding; outputs = graded findings ledger (org/modules/graph/debtscan/) + graph_metrics burn-down trend + critical-paths cross-filing.",
   "prds": [
     {
       "path": "docs/architecture/NFRA_DEBTSCAN_PRD.md",
@@ -11,8 +11,8 @@
     }
   ],
   "status": "active",
-  "phase": "P1: PRD v0.1 authored 2026-06-12 (CTO 7caee952a, ws-charter cycle 0011). COO decomposition DONE (c2aebe4ed, 180800Z 2026-06-12): TO-D1 (AE 0.7.0, P1 reachability sweeps \u2014 queued after D8-AE Part B) + TO-D2 (DS pipescript + AE IAM, P1 composition battery \u2014 DS lane queued pending allocation, AE lane queued after Part B) + TO-D3 GATED on CTO canon-patterns.yaml. All 4 non-negotiables (zero-mutations, CVO >=0.8 precision gate, freshness-bound filing, verify-before-delete chains) in both TOs. AE design finding from Part B (BenchmarkHeatmap/portal-proxy/PeersTab 0 stitch nodes) seeded as TO-D1 Day-0 backlog instance. Critical-paths \u00a710.6 cross-filing wired into both TOs. Remaining: AE + DS TO execution per priority order.",
-  "blocking": "COO task order issuance (TO-D1/TO-D2). P2 additionally gated on the CTO-authored canon pattern library (org/modules/graph/canon-patterns.yaml).",
+  "phase": "P1: TO-D2 DS LANE COMPLETE (b354eaea3, 185306Z 2026-06-12). DS composition battery PASS: 0 column gaps estate-wide (160 gold scripts); 0 cache corruption (5 FP-suppressed-with-reason); 0 missing postdeps (5 guards incl $22M BNP-override). REAL FINDING D2-DS-01: comp-pipescript deployed bd-only enumeration -> inf/cot/mdpf gold freshness UNVERIFIABLE. CVO-acked (184549Z); fix = NFRA_DEBTSCAN.TOOL-01 dispatched to AE 0.6 (CTO CLEARED 184705Z). Precision sample: 1/1 = 1.00 (PASS >=0.80). AC1/AC2/AC6 all MET. Ledger committed exec-lane (ANY_EXEC guard): org/modules/graph/debtscan/2026-06-12_D2_composition_ds.md. LANE-GAP routing: CTO asked about debtscan/ carve-out for DS+AE (else exec commits all staged). REMAINING: TO-D2 AE lane (IAM + D8 integration, AE 0.7 after Part B RAVC2) + TO-D1 (reachability sweeps, AE 0.7 after Part B) + TOOL-01 RAVC2 (AE 0.6, firm-scoped comp-pipescript) + TO-D3 gated on CTO canon-patterns.yaml.",
+  "blocking": "TO-D2 AE lane: queued after D8-AE Part B RAVC2. TO-D1: queued after Part B RAVC2. TO-D3: gated on CTO canon-patterns.yaml. TOOL-01: AE 0.6 in-progress.",
   "created": "2026-06-12",
   "pods": [
     "0.7",
@@ -21,5 +21,6 @@
   ],
   "pipeline": "globgrph",
   "thread_counter": 0,
-  "threads": []
+  "threads": [],
+  "current_phase": "P1: PRD v0.1 authored 2026-06-12 (CTO 7caee952a, ws-charter cycle 0011). COO decomposition DONE (c2aebe4ed, 180800Z 2026-06-12): TO-D1 (AE 0.7.0, P1 reachability sweeps — queued after D8-AE Part B) + TO-D2 (DS pipescript + AE IAM, P1 composition battery — DS lane queued pending allocation, AE lane queued after Part B) + TO-D3 GATED on CTO canon-patterns.yaml. All 4 non-negotiables (zero-mutations, CVO >=0.8 precision gate, freshness-bound filing, verify-before-delete chains) in both TOs. AE design finding from Part B (BenchmarkHeatmap/portal-proxy/PeersTab 0 stitch nodes) seeded as TO-D1 Day-0 backlog instance. Critical-paths §10.6 cross-filing wired into both TOs. Remaining: AE + DS TO execution per priority order."
 }
