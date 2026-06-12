@@ -5476,3 +5476,6 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-06-12 | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/mcp/live_agents_by_marker.json --fi... | PASS |
 | 2026-06-12 | 0.4.0_DT_ClientPlatform | NFRA_DEBTSCAN.TO-D5 + D5-FIX | tsc + ESLint + comp-routes + VALGATE | Sweep: tsc EXIT 0 / eslint 53->17->0 (TOOLCHAIN-01+ESLINT-02) / comp-routes 23 behaviors mapped (ROUTE-01 found) / VALGATE PASS x2 | PASS |
 | 2026-06-12 | 0.4.0_DT_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-06-12 | 2.0.0_SA_COO | ADVI_INFETL.BRONZE-FIX | comp-surface-check | comp-surface-check check --mode advisory --file org/mcp/.last-drive-2.0.0_SA_COO --file... | PASS |
+| 2026-06-12 | 0.4.2_RD_AdvisorIntelligence | D5 ORPHAN-AI (joint) | (none) | Domain-call session: per-file git archaeology + import-trace greps over DE AC6 census; no comp-* run (no component modified; DE owned mechanical census) | N/A |
+| 2026-06-12 | 0.4.2_RD_AdvisorIntelligence | ADVI_INFETL.BRONZE-FIX | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
