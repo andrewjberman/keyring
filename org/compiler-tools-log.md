@@ -5570,3 +5570,21 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-06-12 | 0.4.0_DT_ClientPlatform | v2.1.122 promote | VALGATE D-1 + tsc | PROD push gate (after bun install in worktree) | PASS (ADVISORY SEV1 surface-check) |
 | 2026-06-12 | 0.4.0_DT_ClientPlatform | v2.1.122 promote | CI deploy.yml | gh run view 27443763847 --json conclusion | conclusion: success |
 | 2026-06-12 | 0.4.0_DT_ClientPlatform | page-inventory-full-reaudit | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-06-12 | 2.0.0_SA_COO | page-inventory-full-reaudit | comp-surface-check | comp-surface-check check --mode advisory --file org/mcp/.last-drive-2.0.0_SA_COO --file... | PASS |
+| 2026-06-12 | 0.4.0_DE_ClientPlatform | page-inventory-full-reaudit | comp-surface-check | comp-surface-check check --mode advisory --file docs/briefs/advi-49nnafix-project-reque... | PASS |
+| 2026-06-12 | 3.0.0_SA_CVO | page-inventory-full-reaudit | comp-surface-check | comp-surface-check check --mode advisory --file CLAUDE.md | PASS |
+| 2026-06-12 | 1.0.0_SA_CTO | page-inventory-full-reaudit | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/ADVI_49NNAFIX.json --file ... | PASS |
+| 2026-06-12 | 0.7.0_AE_CloudOps | page-inventory-full-reaudit | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/debtscan/2026-06-12_D... | PASS |
+| 2026-06-12 | 3.0.0_SA_CVO | page-inventory-full-reaudit | comp-kuzu | comp-kuzu --db-path infra/aws/globgrph/kuzu_stitch_db --limit 4 MATCH (n)-[r]->(m) WHER... | FAIL |
+| 2026-06-12 | 0.4.0_DE_ClientPlatform | page-inventory-full-reaudit | comp-adapter-audit | comp-adapter-audit getPlatinumClientDetailStatic | PASS |
+| 2026-06-12 | 0.4.0_DE_ClientPlatform | page-inventory-full-reaudit | comp-adapter-audit | comp-adapter-audit getPlatinumAdvisorSummary | PASS |
+| 2026-06-12 | 0.7.0_AE_CloudOps | page-inventory-full-reaudit | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/terraform/inf-pipeline/alarms... | PASS |
+| 2026-06-12 | 0.4.0_DE_ClientPlatform | page-inventory-full-reaudit | comp-adapter-audit | comp-adapter-audit getPlatinumAdvisorTimeseries | PASS |
+| 2026-06-12 | 0.4.0_DE_ClientPlatform | page-inventory-full-reaudit | comp-adapter-audit | comp-adapter-audit getPlatinumAdvisorSummaryStaticInflection | PASS |
+| 2026-06-12 | 0.7.0_AE_CloudOps | page-inventory-full-reaudit | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/change_management/20... | PASS |
+| 2026-06-12 | 0.4.0_DE_ClientPlatform | page-inventory-full-reaudit | comp-adapter-audit | comp-adapter-audit getPlatinumClientSummary | PASS |
+| 2026-06-12 | 0.4.0_DE_ClientPlatform | page-inventory-full-reaudit | comp-adapter-audit | comp-adapter-audit getPlatinumFirmDashboard | PASS |
+| 2026-06-12 | 2.0.0_SA_COO | page-inventory-full-reaudit | comp-surface-check | comp-surface-check check --mode advisory --file org/mcp/.last-drive-2.0.0_SA_COO --file... | PASS |
+| 2026-06-12 | 0.4.0_DE_ClientPlatform | page-inventory-full-reaudit | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/adapter-audit/getAdvi... | PASS |
+0.7.0_AE_CloudOps -- 2026-06-12 20:52-22:20Z: comp-kuzu pre-smoke (current, 1157n) + comp-blast globgrph (no node) + comp-pipescript mdpf (Unknown, TOOL-02 gap -> manual sha256 x4 MATCH) + comp-surface-check x10 auto-PASS + ds-commit-gate x9 + trace_graph local rebuild (73 TRIGGERS edges verified). 8 deliverables: BRONZE-FIX #4/#9/#10A, D4-F1, TO-MAINT, TO #5 (deploy_ledger.py), TO-D1 iter.
+| 2026-06-12 | 0.7.0_AE_CloudOps | page-inventory-full-reaudit | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
