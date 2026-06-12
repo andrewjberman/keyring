@@ -5479,3 +5479,15 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-06-12 | 2.0.0_SA_COO | ADVI_INFETL.BRONZE-FIX | comp-surface-check | comp-surface-check check --mode advisory --file org/mcp/.last-drive-2.0.0_SA_COO --file... | PASS |
 | 2026-06-12 | 0.4.2_RD_AdvisorIntelligence | D5 ORPHAN-AI (joint) | (none) | Domain-call session: per-file git archaeology + import-trace greps over DE AC6 census; no comp-* run (no component modified; DE owned mechanical census) | N/A |
 | 2026-06-12 | 0.4.2_RD_AdvisorIntelligence | ADVI_INFETL.BRONZE-FIX | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-06-12 | 0.6.0_AE_PartnerETL | ADVI_INFETL.BRONZE-FIX | comp-pipescript | comp-pipescript deployed data/inf/scripts/bronze/orchestrator.py | PASS |
+| 2026-06-12 | 0.6.0_AE_PartnerETL | ADVI_INFETL.BRONZE-FIX | comp-pipescript | comp-pipescript deployed --firm cot | PASS |
+| 2026-06-12 | 2.0.0_SA_COO | ADVI_INFETL.BRONZE-FIX | comp-surface-check | comp-surface-check check --mode advisory --file org/mcp/.last-drive-2.0.0_SA_COO --file... | PASS |
+| 2026-06-12 | 0.6.0_AE_PartnerETL | ADVI_INFETL.BRONZE-FIX | comp-pipescript | comp-pipescript deployed --firm cot | PASS |
+| 2026-06-12 | 0.6.0_AE_PartnerETL | ADVI_INFETL.BRONZE-FIX | comp-pipescript | comp-pipescript deployed --pipeline inf-bronze | PASS |
+| 2026-06-12 | 0.4.0_DE_ClientPlatform | ADVI_INFETL.BRONZE-FIX | comp-transform | comp-transform schema-check AdvisorBookView | PASS |
+| 2026-06-12 | 0.4.0_DE_ClientPlatform | ADVI_INFETL.BRONZE-FIX | comp-transform | comp-transform schema-check ModelPortfolios | FAIL |
+| 2026-06-12 | 0.4.0_DE_ClientPlatform | ADVI_INFETL.BRONZE-FIX | comp-surface-check | comp-surface-check check --mode advisory --file portal/src/components/ModelPortfolioCar... | PASS |
+| 2026-06-12 | 0.6.0_AE_PartnerETL | ADVI_INFETL.BRONZE-FIX | comp-pipescript | comp-pipescript deployed --firm bd | PASS |
+| 2026-06-12 | 0.6.0_AE_PartnerETL | ADVI_INFETL.BRONZE-FIX | comp-pipescript | comp-pipescript deployed --firm mdpf | PASS |
+2026-06-12 ~2109Z | 0.4.0_DE_ClientPlatform | D5-FIX ORPHAN-AI+MISC (27) LANDED | comp-transform schema-check AdvisorBookView (PASS — live AI surface unaffected, Rule20 pre-commit). Joint DE+RD verify-before-delete; resolved-path detector caught ClientDetail stem-grep FP + AUATrendChart orphan->orphan; portal DEV ab1c11b0; VALGATE D-1 PASS + D8 surface-check OK (27 files no critical surface). Closes PORTALSWEEP fix-phase.
+| 2026-06-12 | 0.4.0_DE_ClientPlatform | ADVI_INFETL.BRONZE-FIX | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
