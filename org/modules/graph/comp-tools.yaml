@@ -160,7 +160,7 @@ tools:
   comp-pipescript:
     command: "comp-pipescript <subcommand> [args]"
     segment_scope: segment-aware
-    segment_scope_note: "Auto-detects pipeline by script-id prefix (INF_* -> inf-gold; D_*/C_*/B_*/A_* -> bd-gold; pull_inflection_* / orion_* -> inf-manual-api). Explicit --pipeline {bd-gold,bd-silver,inf-gold,inf-silver,inf-manual-api}. Known issues: chain --pipeline inf-gold returns BD chain (bug); deployed --pipeline inf-gold crashes after 2 INF_D scripts (UnboundLocalError, see ADHC_COMPIL_V4_OPS_TEST_MATRIX triage)."
+    segment_scope_note: "Auto-detects pipeline by script-id prefix (INF_* -> inf-gold; D_*/C_*/B_*/A_* -> bd-gold; pull_inflection_* / orion_* -> inf-manual-api). For `deployed`, a data/cot/ PATH arg auto-routes to cot-gold/opal-data-cot (NFRA_COT_TOOLING 2026-06-12; firm separation -- never bd). Explicit --pipeline {bd-gold,bd-silver,inf-gold,inf-silver,inf-manual-api,cot-gold,cot-silver,mdpf}. Known issues: chain --pipeline inf-gold returns BD chain (bug); deployed --pipeline inf-gold crashes after 2 INF_D scripts (UnboundLocalError, see ADHC_COMPIL_V4_OPS_TEST_MATRIX triage)."
     when: |
       - "What does gold script X read and write?" -> comp-pipescript io X
       - "What feeds script X?" -> comp-pipescript feeds X
@@ -178,7 +178,7 @@ tools:
       overlap: "comp-pipescript overlap D_00 D_03 -- shared S3 artifacts between two scripts. COO MANDATE: run this on every pair of scripts before authoring cross-domain coordination blocks."
       inject: "Inject pipeline edges into comp-trace graph cache (run after comp-build)"
       stats: "Graph stats + warnings for scripts with missing reads/writes"
-      deployed: "comp-pipescript deployed [filter] -- compare local gold + silver scripts against s3://opal-data-bd/code/{gold,silver}/ ETags (BD default). For INF scripts: comp-pipescript deployed --pipeline inf-gold [filter] checks INF gold vs s3://opal-data-inf/code/gold/. NOTE: --pipeline inf-silver currently shows all MISSING_ON_S3 because INF silver code is not deployed to opal-data-inf (V4.OPS Cat 5.5 finding); INF silver lives in alternate locations. Use bd-silver for verified silver deployment status. Output prefixed [GOLD] / [SILVER]. MATCH/STALE/MISSING_ON_S3/LOCAL_MISSING/TIMEOUT per script. Filter is substring/filename: gold IDs (D_04, C_08 for BD; INF_D_08, INF_C_01 for INF) match gold only; silver filenames match silver only; omit for full sweep. Run before any gold or silver run to confirm runner has latest code."
+      deployed: "comp-pipescript deployed [filter] -- compare local gold + silver scripts against s3://opal-data-bd/code/{gold,silver}/ ETags (BD default). For INF scripts: comp-pipescript deployed --pipeline inf-gold [filter] checks INF gold vs s3://opal-data-inf/code/gold/. For COT scripts: comp-pipescript deployed data/cot/scripts/gold/<script>.py auto-routes to cot-gold vs s3://opal-data-cot/code/gold/ (NFRA_COT_TOOLING 2026-06-12; or explicit --pipeline cot-gold; firm separation -- never opal-data-bd). NOTE: --pipeline inf-silver currently shows all MISSING_ON_S3 because INF silver code is not deployed to opal-data-inf (V4.OPS Cat 5.5 finding); INF silver lives in alternate locations. Use bd-silver for verified silver deployment status. Output prefixed [GOLD] / [SILVER]. MATCH/STALE/MISSING_ON_S3/LOCAL_MISSING/TIMEOUT per script. Filter is substring/filename: gold IDs (D_04, C_08 for BD; INF_D_08, INF_C_01 for INF) match gold only; silver filenames match silver only; omit for full sweep. Run before any gold or silver run to confirm runner has latest code."
     cost: "<1s (io/feeds/consumers/overlap); ~2-5s (deployed, makes AWS API calls)"
     data_sources: "lib/s3_layout.py (AST-parsed), gold_dispatch.sh (chain/catalog), each script's imports"
     replaces: "Manual import tracing, grepping s3_layout constants, reading gold_pipeline_script_file_flow.md; manual aws s3 ls + sha256sum for deployment verification"
@@ -298,7 +298,7 @@ tools:
   comp-validate:
     command: "comp-validate <script_id> --artifact <local/path/to/artifact.json>"
     segment_scope: segment-aware
-    segment_scope_note: "Auto-resolver per script_id prefix (INF_* -> INF config; others -> BD config). Explicit --config <path> override (V4.009)."
+    segment_scope_note: "Auto-resolver per script_id prefix (INF_* -> INF config; others -> BD config). A data/cot/ PATH arg routes to the COT config in ISOLATION (cot ids collide with bd, so PATH not prefix; never merged into the bd+inf alias map -- NFRA_COT_TOOLING 2026-06-12, firm separation). Explicit --config <path> override (V4.009)."
     when: |
       - Before uploading any gold artifact to S3: verify output invariants hold
       - After a gold run, before signaling downstream agents: confirm correctness
@@ -317,7 +317,7 @@ tools:
       threshold_pct  -- >= min_pct% of entries satisfy a condition
     exit_codes: "0 = all ERROR checks pass; 1 = any ERROR check fails (WARN does not block)"
     cost: "<1s (JSON); ~2s (parquet, uses pyarrow)"
-    config: "BD: data/black_diamond/scripts/gold/gold_validate_config.yaml | INF: data/inf/scripts/gold/gold_validate_config.yaml. Pipeline auto-detected from script_id prefix (INF_* -> INF; others -> BD)."
+    config: "BD: data/black_diamond/scripts/gold/gold_validate_config.yaml | INF: data/inf/scripts/gold/gold_validate_config.yaml | COT: data/cot/scripts/gold/gold_validate_config.yaml. Pipeline auto-detected from script_id prefix (INF_* -> INF; others -> BD); a data/cot/ PATH routes to COT in isolation (NFRA_COT_TOOLING 2026-06-12)."
     data_sources: "gold artifact JSON/parquet (local file, use aws s3 cp first)"
     replaces: "Manual spot-checks (Travis Penfield fee_earning_aua sanity check), S3 key presence inspection"
     note: "MANDATORY gate: run before any S3 upload of a gold artifact that has a validate config. Catches 'no crash but wrong output' class of bugs. DS writes invariants once; tool enforces them forever. INF example: comp-validate INF_D_08 --artifact /tmp/nmec_nmnc_nna.json"

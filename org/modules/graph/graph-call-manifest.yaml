@@ -321,7 +321,7 @@ entries:
     rebuild_trigger: "n/a — must check live deployed state"
     anti_pattern: "running a gold script without confirming MATCH (STALE/MISSING runner)"
     status: canonical
-    notes: "comp-pipescript deployed only checks opal-data-bd; inf/mdpf/backfill paths are blind (verify served S3 directly)."
+    notes: "comp-pipescript deployed covers opal-data-bd (default), inf (--pipeline inf-gold), mdpf (--pipeline mdpf), and cot (--pipeline cot-gold, OR a data/cot/ path auto-routes -- NFRA_COT_TOOLING 2026-06-12). Paths in no mapped pipeline (e.g. backfill/feeders) remain blind -- verify served S3 directly."
 
   - id: pipeline.freshness.chain_ready
     use_case: "Is the upstream S3 data fresh enough to run a gold chain?"
