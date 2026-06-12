@@ -45,6 +45,7 @@ import subprocess
 import sys
 import time
 from collections import Counter
+from pathlib import Path
 
 # Canonical thresholds (LD-0070 TELEMETRY_LIVENESS_FRAMEWORK §1.1)
 LIVE_WORK_S = 120      # last kind:work within this -> LIVE (dispatch-grade)
@@ -505,6 +506,31 @@ def render_agents(rows: list[dict]) -> str:
     return "\n".join(out)
 
 
+def render_open_deploys() -> str:
+    """TO #5 (deploy-completion ledger contract): surface OPEN deploy ledgers
+    in every fabric-check pass so a half-landed deploy cannot slip past a COO
+    /drive tick (NEVER-law e38cc2b16). Read-only here -- the RED alert itself
+    is fired by `deploy_ledger.py check --red` (chained in /drive)."""
+    state_dir = Path(__file__).resolve().parent.parent / "org" / "critical_paths" / ".open_deploys"
+    sentinels = sorted(state_dir.glob("*.json")) if state_dir.exists() else []
+    if not sentinels:
+        return "OPEN-DEPLOYS: none -- nothing half-landed"
+    from datetime import datetime, timezone
+    out = [f"OPEN-DEPLOYS: {len(sentinels)} deploy ledger(s) OPEN (half-landed risk):"]
+    for sp in sentinels:
+        try:
+            st = json.loads(sp.read_text(encoding="utf-8"))
+            opened = datetime.fromisoformat(st["opened_at"])
+            age_h = (datetime.now(timezone.utc) - opened).total_seconds() / 3600.0
+            stranded = [leg["id"] for leg in st["legs"] if not leg.get("proof")]
+            flag = "PAST-WINDOW" if age_h > st.get("window_hours", 4) else "in-window"
+            out.append(f"  [{flag}] {st['slug']} age={age_h:.1f}h "
+                       f"stranded={stranded} author={st['author']}")
+        except Exception as e:  # never let a corrupt sentinel kill the check
+            out.append(f"  [UNREADABLE] {sp.name} err={e}")
+    return "\n".join(out)
+
+
 def main():
     args = sys.argv[1:]
     rows = gather()
@@ -531,10 +557,13 @@ def main():
             print(f"  [{tag}] {r['serial']} [{r['live']}]{extra} :: {s[:150]}")
         print(f"FABRIC-CHECK-RESULT deaf={len(b['DEAF'])} blocked={len(b['BLOCKED'])} "
               f"sovereign={len(b['SOVEREIGN'])} stale_verify={len(b['STALE_VERIFY'])}")
+        print(render_open_deploys())
         return
     print(render(rows))
     print("")
     print(render_agents(rows))
+    print("")
+    print(render_open_deploys())
 
 
 if __name__ == "__main__":
