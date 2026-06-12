@@ -4,6 +4,13 @@
 # Commit authority: ANY_EXEC (COO or CTO)
 
 # Format: each class has an id, reason, affected_types, and name_patterns or edge_conditions
+#
+# ACTIVE-FLAG CONTRACT (CVO ruling 2026-06-12, relayed COO 221932Z): any consumer
+# (human sweep or future engine) applies ONLY entries under `suppression_classes`
+# whose `active` field is absent or true. `active: false` = inert. Classes whose
+# adjudication is PENDING live under `pending_review_classes` -- structurally
+# outside the applied list, inert regardless of any engine's flag handling.
+# NOTHING suppresses a finding CVO has not ruled.
 
 suppression_classes:
 
@@ -219,16 +226,10 @@ suppression_classes:
       - advisor_intelligence
     evidence: NFRA_GRAPHS D8-AE Part A; known portal auth pattern
 
-  - id: DAY0_BENCHMARK_HEATMAP_2A_CLASS
-    reason: >
-      BenchmarkHeatmap/portal-proxy/PeersTab 2a-class instance — Day-0 backlog finding
-      identified by CTO in D8-AE review. Tracked in TO-D1 Day-0 material. Not yet suppressed
-      (pending further review); included here as a placeholder.
-    affected_types: [PORTAL_COMPONENT, API_ROUTE]
-    name_patterns:
-      - BenchmarkHeatmap
-      - PeersTab
-    evidence: CTO D8-AE finding; TO-D1 Day-0 backlog
+  # DAY0_BENCHMARK_HEATMAP_2A_CLASS moved to pending_review_classes (CVO ruling
+  # 2026-06-12: its reason-text said "not yet suppressed, placeholder" while its
+  # structural position made it live -- the tool-blindness-reads-as-cleanliness
+  # class applied to the gate itself; nothing suppresses an un-adjudicated finding).
 
   # ---------- IAM family (TO-D2 AE lane, comp-iam gaps) ----------
 
@@ -281,3 +282,23 @@ suppression_classes:
       - "opal-data-mdpf"
     retire_when: "extractor records bucket-qualified keys for mdpf reads (TOOL-02 follow-on)"
     evidence: CVO adjudication 2026-06-12 FP #5; mdpf DAG injection landed TO-D1-iteration
+
+# ---------------------------------------------------------------------------
+# PENDING CVO ADJUDICATION -- NOT APPLIED. Entries here are drafts awaiting a
+# CVO ruling; a consumer must NEVER treat them as suppressions. Promote to
+# suppression_classes only on an explicit CVO verdict (exec-committed).
+# ---------------------------------------------------------------------------
+pending_review_classes:
+
+  - id: DAY0_BENCHMARK_HEATMAP_2A_CLASS
+    active: false
+    reason: >
+      BenchmarkHeatmap/portal-proxy/PeersTab 2a-class instance — Day-0 backlog finding
+      identified by CTO in D8-AE review. Tracked in TO-D1 Day-0 material. NOT yet
+      adjudicated by CVO; moved here from suppression_classes 2026-06-12 (CVO ruling:
+      placeholder text contradicted live structural position).
+    affected_types: [PORTAL_COMPONENT, API_ROUTE]
+    name_patterns:
+      - BenchmarkHeatmap
+      - PeersTab
+    evidence: CTO D8-AE finding; TO-D1 Day-0 backlog; CVO inert ruling 2026-06-12
