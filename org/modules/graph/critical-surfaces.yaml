@@ -85,4 +85,12 @@ monitor:
   baseline:
     method: "comp-xref --save per surface x firm at carve-time"
     provenance: "each signed baseline RECORDS the F6 branch-head marker state at sign-time (warehouse/_branch_head.main.json: nessie_commit_hash + per-table snapshot_ids) so baseline-vs-current diffs are vintage-anchored -- a diff across un-anchored graph vintages is ambiguous (PRD NFRA_GLOBGRPH v0.4.3 F6). [v0.3 CTO carve-review]"
-    signed: false   # populate at D8 build-time
+    signed: true    # D8 DE baseline generated 2026-06-12T~1815Z by 0.4.0_DE_ClientPlatform
+    baseline_generated: "2026-06-12T~1815Z"
+    baseline_artifact: ".comp-graph/baseline.json"   # global graph snapshot (comp-xref --save); 2139 nodes, 2691 edges
+    baseline_vintage_anchor: "CLOUD b879522196e35943149e517826fad070cfe73314 (F6 warehouse/_branch_head.main.json not yet present -- NFRA_GLOBGRPH F6 pending; re-sign when F6 ships)"
+    baseline_findings: "org/modules/graph/D8-findings.md"
+    # NOTE: comp-xref --save saves a GLOBAL graph snapshot (no per-surface/per-firm save mode).
+    # Per-surface carving is done via comp-platinum page scans (see D8-findings.md).
+    # comp-platinum scan coverage gaps documented in D8-findings.md (BenchmarkHeatmap not registered;
+    # PeersTab no direct fetches; getAUMTimeSeries/getMdpfAggregateAUATimeSeriesByFirm not detected).
