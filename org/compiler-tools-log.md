@@ -5053,3 +5053,94 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-06-12 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .owned-paths.yaml | PASS |
 | 2026-06-12 | 0.7.0_AE_CloudOps | NFRA_GRAPHS.D8-AE | comp-blast (opal-critical-surface-alerts: 0 nodes, safe) + comp-iam (incremental_updater: sns:Publish gap found+filled) + ds-commit-gate x2 (B1+B4 PASS) + comp-surface-check B5 self-test (advisory hook live on first commit) + terraform 0-diff post-apply (globgrph-v0.1.13) | ALL PASS |
 | 2026-06-12 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-06-12 | 0.4.0_DT_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file portal | PASS |
+| 2026-06-12 | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/mcp/live_agents_by_marker.json --fi... | PASS |
+| 2026-06-12 | 0.6.0_AE_PartnerETL | (no-TO) | comp-pipescript | comp-pipescript deployed --firm cot | PASS |
+| 2026-06-12 | 0.6.0_AE_PartnerETL | (no-TO) | comp-pipescript | comp-pipescript deployed data/inf/scripts/gold/INF_A_01.advisor_assignments.py | PASS |
+| 2026-06-12 | 0.6.0_AE_PartnerETL | (no-TO) | comp-pipescript | comp-pipescript deployed data/black_diamond/scripts/gold/A_01.advisor_assignments.py | PASS |
+| 2026-06-12 | 0.6.0_AE_PartnerETL | (no-TO) | comp-pipescript | comp-pipescript deployed data/mdpf/scripts/gold/mdpf_aggregate_aua.py | PASS |
+| 2026-06-12 | 0.7.0_AE_CloudOps | (no-TO) | comp-kuzu | comp-kuzu MATCH (n) RETURN n.header LIMIT 1 | FAIL |
+| 2026-06-12 | 0.7.0_AE_CloudOps | (no-TO) | comp-kuzu | comp-kuzu CALL db_version() RETURN * | FAIL |
+| 2026-06-12 | 0.7.0_AE_CloudOps | (no-TO) | comp-kuzu | comp-kuzu --db kuzu_stitch_db MATCH (n) RETURN count(n) | FAIL |
+| 2026-06-12 | 0.6.0_AE_PartnerETL | (no-TO) | comp-pipescript | comp-pipescript deployed data/mdpf/scripts/gold/mdpf_aggregate_aua.py | PASS |
+| 2026-06-12 | 0.7.0_AE_CloudOps | (no-TO) | comp-kuzu | comp-kuzu --db infra/aws/globgrph/kuzu_stitch_db MATCH (n) RETURN count(n) | FAIL |
+| 2026-06-12 | 0.7.0_AE_CloudOps | (no-TO) | comp-kuzu | comp-kuzu --db infra/aws/globgrph/kuzu_stitch_db CALL db_version() RETURN * | PASS |
+| 2026-06-12 | 0.7.0_AE_CloudOps | (no-TO) | comp-kuzu | comp-kuzu MATCH (n) RETURN DISTINCT n.node_type, count(*) as cnt ORDER BY cnt DESC LIMI... | PASS |
+| 2026-06-12 | 0.7.0_AE_CloudOps | (no-TO) | comp-kuzu | comp-kuzu --db infra/aws/globgrph/kuzu_stitch_db MATCH (n) RETURN DISTINCT n.node_type,... | PASS |
+| 2026-06-12 | 0.7.0_AE_CloudOps | (no-TO) | comp-kuzu | comp-kuzu MATCH (n) WHERE n.node_type IN ['LAMBDA','S3_BUCKET','EVENT_RULE','EC2_INSTAN... | FAIL |
+| 2026-06-12 | 0.7.0_AE_CloudOps | (no-TO) | comp-kuzu | comp-kuzu --db infra/aws/globgrph/kuzu_stitch_db MATCH (n) WHERE n.node_type IN ['LAMBD... | FAIL |
+| 2026-06-12 | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier0/ledger/LD-0187.md | PASS |
+| 2026-06-12 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .claude/skills/prod-deploy/SKILL.md | PASS |
+| 2026-06-12 | 0.7.0_AE_CloudOps | (no-TO) | comp-kuzu | comp-kuzu CALL table_info('Node') RETURN * | FAIL |
+| 2026-06-12 | 0.7.0_AE_CloudOps | (no-TO) | comp-kuzu | comp-kuzu --db infra/aws/globgrph/kuzu_stitch_db CALL table_info('Node') RETURN * | FAIL |
+| 2026-06-12 | 0.7.0_AE_CloudOps | (no-TO) | comp-kuzu | comp-kuzu CALL show_tables() RETURN * | PASS |
+| 2026-06-12 | 0.7.0_AE_CloudOps | (no-TO) | comp-kuzu | comp-kuzu --db infra/aws/globgrph/kuzu_stitch_db CALL show_tables() RETURN * | PASS |
+| 2026-06-12 | 0.7.0_AE_CloudOps | (no-TO) | comp-kuzu | comp-kuzu CALL table_info('CloudNode') RETURN * | PASS |
+| 2026-06-12 | 0.7.0_AE_CloudOps | (no-TO) | comp-kuzu | comp-kuzu MATCH (n:CloudNode) WHERE n.node_type IN ['EVENT_RULE','SCHEDULE','CLOUDFRONT... | PASS |
+| 2026-06-12 | 0.7.0_AE_CloudOps | (no-TO) | comp-kuzu | comp-kuzu --db infra/aws/globgrph/kuzu_stitch_db MATCH (n:CloudNode) WHERE n.node_type ... | PASS |
+| 2026-06-12 | 0.7.0_AE_CloudOps | (no-TO) | comp-kuzu | comp-kuzu MATCH (n:CloudNode) WHERE n.node_type IN ['EVENT_RULE','SCHEDULE','CLOUDFRONT... | PASS |
+| 2026-06-12 | 0.7.0_AE_CloudOps | (no-TO) | comp-kuzu | comp-kuzu MATCH (n:CloudNode) WHERE n.node_type = 'LAMBDA' AND NOT EXISTS { MATCH (:Clo... | PASS |
+| 2026-06-12 | 0.6.0_AE_PartnerETL | (no-TO) | comp-pipescript | comp-pipescript deployed | PASS |
+| 2026-06-12 | 0.7.0_AE_CloudOps | (no-TO) | comp-kuzu | comp-kuzu CALL table_info('CloudEdge') RETURN * | PASS |
+| 2026-06-12 | 0.7.0_AE_CloudOps | (no-TO) | comp-kuzu | comp-kuzu MATCH (r:CloudNode)-[e:CloudEdge]->(t:CloudNode) WHERE r.node_type = 'EVENT_R... | FAIL |
+| 2026-06-12 | 0.7.0_AE_CloudOps | (no-TO) | comp-kuzu | comp-kuzu MATCH (r:CloudNode)-[e:CloudEdge]->(t:CloudNode) WHERE r.node_type = 'EVENT_R... | PASS |
+| 2026-06-12 | 0.7.0_AE_CloudOps | (no-TO) | comp-kuzu | comp-kuzu MATCH ()-[e:CloudEdge]->() RETURN e.edge_type, count(*) AS cnt ORDER BY cnt D... | PASS |
+| 2026-06-12 | 0.7.0_AE_CloudOps | (no-TO) | comp-kuzu | comp-kuzu MATCH (a:CloudNode)-[e:CloudEdge]->(t:CloudNode) WHERE a.node_type = 'API_GW'... | PASS |
+| 2026-06-12 | 0.7.0_AE_CloudOps | (no-TO) | comp-kuzu | comp-kuzu MATCH (r:CloudNode) WHERE r.node_type = 'EVENT_RULE' AND NOT EXISTS { MATCH (... | PASS |
+| 2026-06-12 | 0.7.0_AE_CloudOps | (no-TO) | comp-kuzu | comp-kuzu MATCH (r:CloudNode)-[e:CloudEdge]->(t:CloudNode) WHERE r.name = 'opal-globgrp... | PASS |
+| 2026-06-12 | 0.7.0_AE_CloudOps | (no-TO) | comp-kuzu | comp-kuzu MATCH (n:CloudNode) WHERE n.node_type = 'ECS_TASK_DEFINITION' RETURN n.node_i... | PASS |
+| 2026-06-12 | 0.7.0_AE_CloudOps | (no-TO) | comp-kuzu | comp-kuzu MATCH (n:CloudNode) WHERE n.node_type = 'LAMBDA' AND NOT EXISTS { MATCH (:Clo... | PASS |
+| 2026-06-12 | 0.7.0_AE_CloudOps | (no-TO) | comp-kuzu | comp-kuzu MATCH (:CloudNode)-[e:CloudEdge {edge_type: 'TRIGGERS'}]->(n:CloudNode) WHERE... | PASS |
+| 2026-06-12 | 0.7.0_AE_CloudOps | (no-TO) | comp-kuzu | comp-kuzu MATCH (s:CloudNode)-[e:CloudEdge]->(n:CloudNode) WHERE s.node_type = 'SQS_QUE... | PASS |
+| 2026-06-12 | 0.7.0_AE_CloudOps | (no-TO) | comp-kuzu | comp-kuzu MATCH (n:CloudNode)-[e:CloudEdge]-(m:CloudNode) WHERE n.name = 'bd-time-machi... | PASS |
+| 2026-06-12 | 0.7.0_AE_CloudOps | (no-TO) | comp-kuzu | comp-kuzu MATCH (n:CloudNode)-[e:CloudEdge]-(m:CloudNode) WHERE n.name = 'portal-time-m... | PASS |
+| 2026-06-12 | 0.7.0_AE_CloudOps | (no-TO) | comp-kuzu | comp-kuzu MATCH (n:CloudNode) WHERE n.node_type = 'LAMBDA' AND NOT EXISTS { MATCH (n)-[... | PASS |
+| 2026-06-12 | 0.7.0_AE_CloudOps | (no-TO) | comp-kuzu | comp-kuzu MATCH (s:CloudNode) WHERE s.node_type = 'S3_BUCKET' AND EXISTS { MATCH ()-[e:... | PASS |
+| 2026-06-12 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/mcp/.last-drive-2.0.0_SA_COO --file... | PASS |
+| 2026-06-12 | 0.7.0_AE_CloudOps | (no-TO) | comp-kuzu | comp-kuzu MATCH (n:CloudNode)-[e:CloudEdge {edge_type: 'WRITES'}]->(s:CloudNode) WHERE ... | PASS |
+| 2026-06-12 | 0.7.0_AE_CloudOps | (no-TO) | comp-kuzu | comp-kuzu MATCH (n:CloudNode)-[e:CloudEdge]-(s:CloudNode) WHERE s.name = 'opal-data-cot... | PASS |
+| 2026-06-12 | 0.7.0_AE_CloudOps | (no-TO) | comp-kuzu | comp-kuzu --db infra/aws/globgrph/kuzu_stitch_db MATCH (n:CloudNode) WHERE n.node_type ... | PASS |
+| 2026-06-12 | 0.7.0_AE_CloudOps | (no-TO) | comp-kuzu | comp-kuzu --db infra/aws/globgrph/kuzu_stitch_db MATCH (n:CloudNode) WHERE n.node_type ... | PASS |
+| 2026-06-12 | 0.7.0_AE_CloudOps | (no-TO) | comp-kuzu | comp-kuzu --db infra/aws/globgrph/kuzu_stitch_db MATCH (n:CloudNode) WHERE n.node_type ... | PASS |
+| 2026-06-12 | 0.7.0_AE_CloudOps | (no-TO) | comp-kuzu | comp-kuzu --db infra/aws/globgrph/kuzu_stitch_db MATCH (n:CloudNode)-[e:CloudEdge]->(m:... | PASS |
+| 2026-06-12 | 0.7.0_AE_CloudOps | (no-TO) | comp-kuzu | comp-kuzu --db infra/aws/globgrph/kuzu_stitch_db MATCH (n:CloudNode)-[e:CloudEdge]->(m:... | PASS |
+| 2026-06-12 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/briefs/allo... | PASS |
+| 2026-06-12 | 0.7.0_AE_CloudOps | (no-TO) | comp-kuzu | comp-kuzu --db infra/aws/globgrph/kuzu_stitch_db MATCH (n:CloudNode) WHERE n.node_type ... | PASS |
+| 2026-06-12 | 0.7.0_AE_CloudOps | (no-TO) | comp-kuzu | comp-kuzu --db infra/aws/globgrph/kuzu_stitch_db MATCH (n:CloudNode) WHERE n.node_type ... | PASS |
+| 2026-06-12 | 0.7.0_AE_CloudOps | (no-TO) | comp-kuzu | comp-kuzu --db infra/aws/globgrph/kuzu_stitch_db MATCH (n:CloudNode)-[e:CloudEdge]->(m:... | PASS |
+| 2026-06-12 | 0.7.0_AE_CloudOps | (no-TO) | comp-kuzu | comp-kuzu --db infra/aws/globgrph/kuzu_stitch_db MATCH (n:CloudNode) WHERE n.node_type ... | PASS |
+| 2026-06-12 | 0.4.0_DT_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .claude/skills/prod-deploy/SKILL.md | PASS |
+| 2026-06-12 | 0.7.0_AE_CloudOps | (no-TO) | comp-kuzu | comp-kuzu --db infra/aws/globgrph/kuzu_stitch_db MATCH (n:CloudNode) WHERE n.node_type ... | FAIL |
+| 2026-06-12 | 0.7.0_AE_CloudOps | (no-TO) | comp-kuzu | comp-kuzu --db infra/aws/globgrph/kuzu_stitch_db MATCH (n:CloudNode) WHERE n.node_type ... | FAIL |
+| 2026-06-12 | 0.7.0_AE_CloudOps | (no-TO) | comp-kuzu | comp-kuzu --db infra/aws/globgrph/kuzu_stitch_db MATCH (n:CloudNode) WHERE n.node_type ... | PASS |
+| 2026-06-12 | 0.7.0_AE_CloudOps | (no-TO) | comp-kuzu | comp-kuzu --db infra/aws/globgrph/kuzu_stitch_db MATCH (n:CloudNode) WHERE n.node_type ... | PASS |
+| 2026-06-12 | 0.7.0_AE_CloudOps | (no-TO) | comp-kuzu | comp-kuzu --db infra/aws/globgrph/kuzu_stitch_db MATCH (n:CloudNode)-[e:CloudEdge]-(m:C... | PASS |
+| 2026-06-12 | 0.7.0_AE_CloudOps | (no-TO) | comp-kuzu | comp-kuzu --db infra/aws/globgrph/kuzu_stitch_db MATCH (n:CloudNode)-[e:CloudEdge]-(m:C... | PASS |
+| 2026-06-12 | 0.7.0_AE_CloudOps | (no-TO) | comp-kuzu | comp-kuzu --db infra/aws/globgrph/kuzu_stitch_db MATCH (n:CloudNode) WHERE n.node_type ... | PASS |
+| 2026-06-12 | 0.6.0_AE_PartnerETL | (no-TO) | comp-pipescript | comp-pipescript deployed --firm cot | PASS |
+| 2026-06-12 | 0.7.0_AE_CloudOps | (no-TO) | comp-kuzu | comp-kuzu --db infra/aws/globgrph/kuzu_stitch_db MATCH (n:CloudNode) WHERE n.name CONTA... | PASS |
+| 2026-06-12 | 0.6.0_AE_PartnerETL | (no-TO) | comp-pipescript | comp-pipescript deployed data/black_diamond/scripts/gold/A_01.advisor_assignments.py | PASS |
+| 2026-06-12 | 0.7.0_AE_CloudOps | (no-TO) | comp-kuzu | comp-kuzu MATCH (n:CloudNode) WHERE NOT EXISTS { MATCH (n)-[:CloudEdge]-(:CloudNode) } ... | PASS |
+| 2026-06-12 | 0.7.0_AE_CloudOps | (no-TO) | comp-kuzu | comp-kuzu MATCH (n:CloudNode) WHERE n.node_type = 'S3_BUCKET' AND NOT EXISTS { MATCH (n... | PASS |
+| 2026-06-12 | 0.7.0_AE_CloudOps | (no-TO) | comp-kuzu | comp-kuzu MATCH (n:CloudNode) WHERE n.node_type = 'DYNAMODB_TABLE' AND NOT EXISTS { MAT... | PASS |
+| 2026-06-12 | 0.7.0_AE_CloudOps | (no-TO) | comp-kuzu | comp-kuzu MATCH (n:CloudNode) WHERE n.node_type IN ['SNS_TOPIC','EC2_INSTANCE','CW_ALAR... | PASS |
+| 2026-06-12 | 0.7.0_AE_CloudOps | (no-TO) | comp-kuzu | comp-kuzu MATCH (n:CloudNode)-[e:CloudEdge]-(s:CloudNode) WHERE s.name IN ['opal-data-a... | PASS |
+| 2026-06-12 | 0.7.0_AE_CloudOps | (no-TO) | comp-kuzu | comp-kuzu MATCH (n:CloudNode) WHERE n.name CONTAINS 'aaii' OR n.name CONTAINS 'etf' RET... | PASS |
+| 2026-06-12 | 0.7.0_AE_CloudOps | (no-TO) | comp-kuzu | comp-kuzu --db infra/aws/globgrph/kuzu_stitch_db MATCH (n:CloudNode) WHERE n.name CONTA... | PASS |
+| 2026-06-12 | 0.6.0_AE_PartnerETL | (no-TO) | comp-pipescript | comp-pipescript deployed --firm cot | PASS |
+| 2026-06-12 | 0.6.0_AE_PartnerETL | (no-TO) | comp-pipescript | comp-pipescript deployed data/inf/scripts/gold/INF_A_01.advisor_assignments.py | PASS |
+| 2026-06-12 | 0.7.0_AE_CloudOps | (no-TO) | comp-kuzu | comp-kuzu MATCH (n:CloudNode)-[e:CloudEdge]->(m:CloudNode) WHERE n.name = 'yang-generat... | PASS |
+| 2026-06-12 | 0.7.0_AE_CloudOps | (no-TO) | comp-kuzu | comp-kuzu MATCH (n:CloudNode)-[e:CloudEdge]->(s:CloudNode) WHERE s.name IN ['trade-pipe... | PASS |
+| 2026-06-12 | 0.7.0_AE_CloudOps | (no-TO) | comp-kuzu | comp-kuzu MATCH (n:CloudNode)-[e:CloudEdge {edge_type: 'SUBSCRIBES'}]->(m:CloudNode) RE... | PASS |
+| 2026-06-12 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/mcp/.last-drive-2.0.0_SA_COO --file... | PASS |
+| 2026-06-12 | 0.6.0_AE_PartnerETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/pipeline_cli.py | PASS |
+| 2026-06-12 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/NFRA_DEBTSCAN_PRD.md ... | PASS |
+| 2026-06-12 | 0.6.0_AE_PartnerETL | (no-TO) | comp-pipescript | comp-pipescript deployed --firm cot | PASS |
+| 2026-06-12 | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier0/ledger/LD-0188.md | PASS |
+| 2026-06-12 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/debtscan/2026-06-12_D... | PASS |
+| 2026-06-12 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/debtscan/2026-06-12_D... | PASS |
+| 2026-06-12 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file CLAUDE.md | PASS |
+
+| 2026-06-12 | 0.7.0_AE_CloudOps | TO-D1 Phase 1+2+3 | comp-kuzu (nessie): entry-point 99 nodes + 259 isolated sweep; comp-kuzu (stitch): 36 script-level orphans + 6 isolated S3_DATA_KEY + GOLD_SCRIPT edge semantics; 14 suppression classes authored; 10-finding CVO sample filed | PASS both surfaces
+| 2026-06-12 | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier0/ledger/LD-0188.md | PASS |
+| 2026-06-12 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
