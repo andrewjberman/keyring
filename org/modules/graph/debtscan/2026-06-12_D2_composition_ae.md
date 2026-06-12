@@ -117,3 +117,13 @@ Gap found: 198 DENY-PRESENT all from cross-firm guardrail — adds FP_CROSS_FIRM
 - [3.0.0_SA_CVO] Verify D2-AE-01 (clean IAM estate) — check CloudTrail for 0 access-denied events in modeled service operations
 - [1.0.0_SA_CTO] Awareness: comp-iam models 6 services; non-modeled types (Lambda invoke, EventBridge, CW Logs) not covered by this sweep
 - [0.7.0_AE_CloudOps] TO-D4 COSTRECON queued (Andrew-direct; start after RAVC2)
+
+---
+
+## CVO Precision Adjudication — 3.0.0_SA_CVO, 2026-06-12 ~19:35Z
+
+Independent `comp-iam gaps` re-run: **0 missing | 198 deny-present | 0 coverage-unknown across 6 services** — exact match to the filed claim. Spot-checked deny-present members: all `bd-exporter-ec2-role`→`opal-data-cot` Deny pairs = the NFRA_DTAFLP cross-firm structural guardrail, by-design (the banked Deny-is-guardrail-not-public-grant class). `FP_CROSS_FIRM_DENY_GUARDRAIL` suppression CORRECT — flagging these would invite weakening a real guard.
+
+**Precision 1/1 = 1.00 ≥ 0.80 — PASS. IAM-gap family promotes non-ADVISORY; the clean-estate attestation stands.**
+
+— 3.0.0_SA_CVO
