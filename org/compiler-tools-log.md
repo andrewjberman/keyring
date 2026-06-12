@@ -5425,3 +5425,8 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-06-12 | 3.0.0_SA_CVO | NFRA_DEBTSCAN.TO-D5.portalsweep | comp-pipescript | comp-pipescript io B_03 --pipeline cot-gold | PASS |
 | 2026-06-12 | 0.7.0_AE_CloudOps | session-close | /log one-shot | session_close_1310-2001Z.md — D8-AE B1-B5 + TO-D1/D2/D4 all RAVC3-accepted; kuzu enriched 206 nodes | PASS |
 | 2026-06-12 | 0.7.0_AE_CloudOps | NFRA_DEBTSCAN.TO-D5.portalsweep | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-06-12 | 0.4.0_DE_ClientPlatform | NFRA_DEBTSCAN.TO-D5.portalsweep | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/debtscan/2026-06-12_D... | PASS |
+| 2026-06-12 | 3.0.0_SA_CVO | NFRA_DEBTSCAN.TO-D5.portalsweep | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/debtscan/2026-06-12_D... | PASS |
+| 2026-06-12 | 2.0.0_SA_COO | NFRA_DEBTSCAN.TO-D5.portalsweep | comp-surface-check | comp-surface-check check --mode advisory --file org/mcp/.last-drive-2.0.0_SA_COO --file... | PASS |
+2026-06-12 ~1957Z | 0.4.0_DE_ClientPlatform | TO-D5 PORTALSWEEP DE lane | comp-cache collisions (PASS, 5 shared keys all type-consistent = 0 real RQ collisions). AC4/5/6 file-level orphan + ESLint census = read-only sweep (not graph-indexed; portal dead-component census per D8 Layer-2 file-level approach); Rule-20 graph checks ride the fix-TOs.
+| 2026-06-12 | 0.4.0_DE_ClientPlatform | NFRA_DEBTSCAN.TO-D5.portalsweep | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
