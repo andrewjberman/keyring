@@ -4866,3 +4866,184 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-06-12 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-transform | comp-transform schema-check ClientsTab | PASS |
 | 2026-06-12 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-transform | comp-transform schema-check AdvisorBookView | PASS |
 | 2026-06-12 | 0.7.0_AE_CloudOps | D8-AE Part B | (none this tick) | — startup + pre-implementation reading/planning | SKIPPED | comp-blast + comp-iam to run before TF changes next tick |
+| 2026-06-12 | 0.4.0_DS_ClientPlatform | NFRA_GRAPHS.D8-AE | comp-pipescript | comp-pipescript --help | PASS |
+| 2026-06-12 | 0.4.0_DS_ClientPlatform | NFRA_GRAPHS.D8-AE | comp-pipescript | comp-pipescript io --help | PASS |
+| 2026-06-12 | 0.4.0_DS_ClientPlatform | NFRA_GRAPHS.D8-AE | comp-pipescript | comp-pipescript postdeps --help | PASS |
+| 2026-06-12 | 0.4.0_DS_ClientPlatform | NFRA_GRAPHS.D8-AE | comp-cache | comp-cache --help | PASS |
+| 2026-06-12 | 0.7.0_AE_CloudOps | NFRA_GRAPHS.D8-AE | comp-blast | comp-blast opal-critical-surface-alerts | PASS |
+| 2026-06-12 | 0.7.0_AE_CloudOps | NFRA_GRAPHS.D8-AE | comp-iam | comp-iam service incremental_updater | PASS |
+| 2026-06-12 | 0.7.0_AE_CloudOps | NFRA_GRAPHS.D8-AE | comp-iam | comp-iam service derive_runner | PASS |
+| 2026-06-12 | 0.4.0_DS_ClientPlatform | NFRA_GRAPHS.D8-AE | comp-pipescript | comp-pipescript deployed | PASS |
+| 2026-06-12 | 0.4.0_DS_ClientPlatform | NFRA_GRAPHS.D8-AE | comp-pipescript | comp-pipescript deployed A_00 | PASS |
+| 2026-06-12 | 0.4.0_DS_ClientPlatform | NFRA_GRAPHS.D8-AE | comp-cache | comp-cache collisions | PASS |
+| 2026-06-12 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript postdeps | PASS |
+| 2026-06-12 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript io D_04 --json | PASS |
+| 2026-06-12 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript io D_04 | PASS |
+| 2026-06-12 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript io A_00 -p bd-gold | PASS |
+| 2026-06-12 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript io A_01 -p bd-gold | PASS |
+| 2026-06-12 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript io A_02 -p bd-gold | PASS |
+| 2026-06-12 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript io A_03 -p bd-gold | PASS |
+| 2026-06-12 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript io A_04 -p bd-gold | PASS |
+| 2026-06-12 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript io B_00 -p bd-gold | PASS |
+| 2026-06-12 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript io B_01 -p bd-gold | PASS |
+| 2026-06-12 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript io B_01b -p bd-gold | PASS |
+| 2026-06-12 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript io B_02 -p bd-gold | PASS |
+| 2026-06-12 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript io B_03 -p bd-gold | PASS |
+| 2026-06-12 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript io build_canonical_prices_v2 -p bd-gold | FAIL |
+| 2026-06-12 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript io C_00 -p bd-gold | PASS |
+| 2026-06-12 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript io C_01 -p bd-gold | PASS |
+| 2026-06-12 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript io C_01b -p bd-gold | PASS |
+| 2026-06-12 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript io C_01c -p bd-gold | PASS |
+| 2026-06-12 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript io C_02 -p bd-gold | PASS |
+| 2026-06-12 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript io C_03 -p bd-gold | PASS |
+| 2026-06-12 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript io C_04 -p bd-gold | PASS |
+| 2026-06-12 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript io C_05 -p bd-gold | PASS |
+| 2026-06-12 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript io C_06 -p bd-gold | PASS |
+| 2026-06-12 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript io C_07 -p bd-gold | PASS |
+| 2026-06-12 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript io C_08 -p bd-gold | PASS |
+| 2026-06-12 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript io D_00 -p bd-gold | PASS |
+| 2026-06-12 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript io D_00b -p bd-gold | PASS |
+| 2026-06-12 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript io D_00c -p bd-gold | PASS |
+| 2026-06-12 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript io D_01 -p bd-gold | PASS |
+| 2026-06-12 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript io D_02 -p bd-gold | PASS |
+| 2026-06-12 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript io D_03 -p bd-gold | PASS |
+| 2026-06-12 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript io D_04 -p bd-gold | PASS |
+| 2026-06-12 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript io diag_sleeve_fix -p bd-gold | FAIL |
+| 2026-06-12 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript io E_00 -p bd-gold | FAIL |
+| 2026-06-12 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript io E_01 -p bd-gold | FAIL |
+| 2026-06-12 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript io E_02 -p bd-gold | FAIL |
+| 2026-06-12 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript io E_03 -p bd-gold | FAIL |
+| 2026-06-12 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript io E_04 -p bd-gold | FAIL |
+| 2026-06-12 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript io E_05 -p bd-gold | FAIL |
+| 2026-06-12 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript io E_06 -p bd-gold | FAIL |
+| 2026-06-12 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript io E_07 -p bd-gold | FAIL |
+| 2026-06-12 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript io E_08 -p bd-gold | FAIL |
+| 2026-06-12 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .tools/safe-commit.sh --file org/module... | PASS |
+| 2026-06-12 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript io E_09 -p bd-gold | FAIL |
+| 2026-06-12 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript io E_10 -p bd-gold | FAIL |
+| 2026-06-12 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript io E_11 -p bd-gold | FAIL |
+| 2026-06-12 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript io E_12 -p bd-gold | FAIL |
+| 2026-06-12 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript io E_13 -p bd-gold | FAIL |
+| 2026-06-12 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript io E_14 -p bd-gold | FAIL |
+| 2026-06-12 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript io E_15 -p bd-gold | FAIL |
+| 2026-06-12 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript io E_16 -p bd-gold | FAIL |
+| 2026-06-12 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript io E_17 -p bd-gold | FAIL |
+| 2026-06-12 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript io E_18 -p bd-gold | FAIL |
+| 2026-06-12 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript io E_19 -p bd-gold | FAIL |
+| 2026-06-12 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript io E_20 -p bd-gold | FAIL |
+| 2026-06-12 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript io E_21 -p bd-gold | FAIL |
+| 2026-06-12 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript io E_22 -p bd-gold | FAIL |
+| 2026-06-12 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript io E_23 -p bd-gold | FAIL |
+| 2026-06-12 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript io E_24 -p bd-gold | FAIL |
+| 2026-06-12 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript io E_25 -p bd-gold | FAIL |
+| 2026-06-12 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript io gldinc_p1_shadow -p bd-gold | FAIL |
+| 2026-06-12 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript io gold_prof -p bd-gold | FAIL |
+| 2026-06-12 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript io run_b00_auagap002 -p bd-gold | FAIL |
+| 2026-06-12 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript io run_b03_auagap002 -p bd-gold | FAIL |
+| 2026-06-12 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript io run_c00_auagap002 -p bd-gold | FAIL |
+| 2026-06-12 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript io run_c01c_rap1c -p bd-gold | FAIL |
+| 2026-06-12 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript io run_c02_auagap002 -p bd-gold | FAIL |
+| 2026-06-12 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript io run_c03_auagap002 -p bd-gold | FAIL |
+| 2026-06-12 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript io test_gldinc_cache_roundtrip -p bd-gold | FAIL |
+| 2026-06-12 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript io validate_platinum_consistency -p bd-gold | FAIL |
+| 2026-06-12 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript io validate_sl_nightly_gate -p bd-gold | FAIL |
+| 2026-06-12 | 0.4.0_DT_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file portal/src/api/endpoints/advisor-intell... | PASS |
+| 2026-06-12 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript io INF_09 -p inf-gold | PASS |
+| 2026-06-12 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript io INF_A_00.accounts_dimension -p inf-gold | FAIL |
+| 2026-06-12 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript io INF_A_01.advisor_assignments -p inf-gold | FAIL |
+| 2026-06-12 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript io INF_A_02.fee_rate_history -p inf-gold | FAIL |
+| 2026-06-12 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript io INF_A_03.positions_cube -p inf-gold | FAIL |
+| 2026-06-12 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript io INF_A_04.client_dimension -p inf-gold | FAIL |
+| 2026-06-12 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript io INF_A_-1.materialize_txn_cache -p inf-gold | FAIL |
+| 2026-06-12 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript io INF_B_00.canonical_holdings -p inf-gold | FAIL |
+| 2026-06-12 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript io INF_B_01.holdings_lots -p inf-gold | FAIL |
+| 2026-06-12 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript io INF_B_01b.classify_new_securities -p inf-gold | FAIL |
+| 2026-06-12 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript io INF_B_02.canonical_lots -p inf-gold | FAIL |
+| 2026-06-12 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript io INF_B_03.account_gains -p inf-gold | FAIL |
+| 2026-06-12 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript io INF_build_canonical_prices -p inf-gold | FAIL |
+| 2026-06-12 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript io INF_C_00.canonical_performance -p inf-gold | FAIL |
+| 2026-06-12 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript io INF_C_01.canonical_nna -p inf-gold | FAIL |
+| 2026-06-12 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript io INF_C_01b.role_aua_backfill -p inf-gold | FAIL |
+| 2026-06-12 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript io INF_C_02.client_performance -p inf-gold | FAIL |
+| 2026-06-12 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript io INF_C_03.account_performance -p inf-gold | FAIL |
+| 2026-06-12 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript io INF_C_04.validate_aua -p inf-gold | FAIL |
+| 2026-06-12 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript io INF_C_05.client_tax_liability -p inf-gold | FAIL |
+| 2026-06-12 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript io INF_C_06.client_mix_timeseries -p inf-gold | FAIL |
+| 2026-06-12 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript io INF_C_07.advisor_attribution -p inf-gold | FAIL |
+| 2026-06-12 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript io INF_C_08.advisor_fee_efficiency -p inf-gold | FAIL |
+| 2026-06-12 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript io INF_C_09.fee_status_audit -p inf-gold | FAIL |
+| 2026-06-12 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript io INF_D_00.portal_aggregates -p inf-gold | FAIL |
+| 2026-06-12 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript io INF_D_00b.portal_timeseries -p inf-gold | FAIL |
+| 2026-06-12 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript io INF_D_00c.portal_leaderboard -p inf-gold | FAIL |
+| 2026-06-12 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript io INF_D_00d.cumulative_chart -p inf-gold | FAIL |
+| 2026-06-12 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript io INF_D_00e.fresh_header_supplement -p inf-gold | FAIL |
+| 2026-06-12 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript io INF_D_00f.advisor_nna_canonical -p inf-gold | FAIL |
+| 2026-06-12 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript io INF_D_02.advisor_client_detail -p inf-gold | FAIL |
+| 2026-06-12 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript io INF_D_02b.top_holdings -p inf-gold | FAIL |
+| 2026-06-12 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript io INF_D_02c.client_directory -p inf-gold | FAIL |
+| 2026-06-12 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript io INF_D_02d.firm_mix_summary -p inf-gold | FAIL |
+| 2026-06-12 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript io INF_D_03.composition_artifacts -p inf-gold | FAIL |
+| 2026-06-12 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript io INF_D_04.client_portal_summary -p inf-gold | FAIL |
+| 2026-06-12 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript io INF_D_04b.client_publishers -p inf-gold | FAIL |
+| 2026-06-12 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript io INF_D_05.activity_scan -p inf-gold | FAIL |
+| 2026-06-12 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript io INF_D_05.client_top_holdings -p inf-gold | FAIL |
+| 2026-06-12 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript io INF_D_06.cash_drag -p inf-gold | FAIL |
+| 2026-06-12 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript io INF_D_06.client_timeseries -p inf-gold | FAIL |
+| 2026-06-12 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript io INF_D_07.concentration_risk -p inf-gold | FAIL |
+| 2026-06-12 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript io INF_D_07a.firm_concentrations -p inf-gold | FAIL |
+| 2026-06-12 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript io INF_D_08.nmec_nmnc_nna -p inf-gold | FAIL |
+| 2026-06-12 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript io INF_D_09.account_timeseries -p inf-gold | FAIL |
+| 2026-06-12 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript io INF_E_00.eclipse_model_portfolios -p inf-gold | FAIL |
+| 2026-06-12 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript io INF_run_c_chain -p inf-gold | FAIL |
+| 2026-06-12 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript io valgate_baseline -p inf-gold | FAIL |
+| 2026-06-12 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript io valgate_gate -p inf-gold | FAIL |
+| 2026-06-12 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript io valgate_gate_fixtures -p inf-gold | FAIL |
+| 2026-06-12 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript io A_00 -p cot-gold | PASS |
+| 2026-06-12 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript io A_01 -p cot-gold | PASS |
+| 2026-06-12 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript io A_02 -p cot-gold | PASS |
+| 2026-06-12 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript io A_03 -p cot-gold | PASS |
+| 2026-06-12 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript io A_04 -p cot-gold | PASS |
+| 2026-06-12 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript io B_00 -p cot-gold | PASS |
+| 2026-06-12 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript io B_01 -p cot-gold | PASS |
+| 2026-06-12 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript io B_01b -p cot-gold | PASS |
+| 2026-06-12 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript io B_02 -p cot-gold | PASS |
+| 2026-06-12 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript io B_03 -p cot-gold | PASS |
+| 2026-06-12 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript io build_canonical_prices_v2 -p cot-gold | FAIL |
+| 2026-06-12 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript io C_00 -p cot-gold | PASS |
+| 2026-06-12 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript io C_01 -p cot-gold | PASS |
+| 2026-06-12 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript io C_01b -p cot-gold | PASS |
+| 2026-06-12 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript io C_01c -p cot-gold | PASS |
+| 2026-06-12 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript io C_02 -p cot-gold | PASS |
+| 2026-06-12 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript io C_03 -p cot-gold | PASS |
+| 2026-06-12 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript io C_04 -p cot-gold | PASS |
+| 2026-06-12 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript io C_05 -p cot-gold | PASS |
+| 2026-06-12 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript io C_06 -p cot-gold | PASS |
+| 2026-06-12 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript io C_07 -p cot-gold | PASS |
+| 2026-06-12 | 0.6.0_AE_PartnerETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file data/cot/scripts/bronze/templates/reali... | PASS |
+| 2026-06-12 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript io C_08 -p cot-gold | PASS |
+| 2026-06-12 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript io D_00 -p cot-gold | PASS |
+| 2026-06-12 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript io D_00b -p cot-gold | PASS |
+| 2026-06-12 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript io D_00c -p cot-gold | PASS |
+| 2026-06-12 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript io D_01 -p cot-gold | PASS |
+| 2026-06-12 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript io D_02 -p cot-gold | PASS |
+| 2026-06-12 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript io D_03 -p cot-gold | PASS |
+| 2026-06-12 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript io D_04 -p cot-gold | PASS |
+| 2026-06-12 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript io diag_gold_silver_recon -p cot-gold | FAIL |
+| 2026-06-12 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript io E_00 -p cot-gold | FAIL |
+| 2026-06-12 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript io E_01 -p cot-gold | FAIL |
+| 2026-06-12 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript io E_18 -p cot-gold | FAIL |
+| 2026-06-12 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript io E_20 -p cot-gold | FAIL |
+| 2026-06-12 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript io E_21 -p cot-gold | FAIL |
+| 2026-06-12 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript io E_22 -p cot-gold | FAIL |
+| 2026-06-12 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript io E_23 -p cot-gold | FAIL |
+| 2026-06-12 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript io E_24 -p cot-gold | FAIL |
+| 2026-06-12 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript io gldinc_p1_shadow -p cot-gold | FAIL |
+| 2026-06-12 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript io gold_prof -p cot-gold | FAIL |
+| 2026-06-12 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript io runner-telemetry -p cot-gold | FAIL |
+| 2026-06-12 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript io validate_platinum_consistency -p cot-gold | FAIL |
+| 2026-06-12 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript io validate_sl_nightly_gate -p cot-gold | FAIL |
+| 2026-06-12 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/globgrph/derive_runner.py --f... | PASS |
+| 2026-06-12 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/debtscan/2026-06-12_D... | PASS |
+| 2026-06-12 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+2026-06-12T18:54:35Z | 0.4.0_DS_ClientPlatform | NFRA_DEBTSCAN.TO-D2 | comp-pipescript deployed (bd 43/43 MATCH) + io x160 gold (0 col-gaps) + comp-cache collisions (5/5 same-type FP) + postdeps (5 guards, $22M class protected) | estate composition-debt CLEAN; 1 REAL D2-DS-01 (deployed bd-only enumeration); precision 1.00 gate PASS
+| 2026-06-12 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
