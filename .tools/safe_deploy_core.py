@@ -27,6 +27,45 @@ PIPELINE_MAP: dict[str, tuple[str, str]] = {
 BYPASS_AUDIT_LOG = WORKSPACE / "org" / "safe-deploy-bypass-audit.log"
 VALID_LAYERS = {"gold", "silver", "bronze"}
 
+# ---------------------------------------------------------------------------
+# Canonical code-prefix registry (ADVI_INFETL.BRONZE-FIX #1 + NFRA_DEBTSCAN
+# TOOL-03; machine-readable surface for the deploy-completion ledger, TO #5).
+#
+# The COMPLETE canonical map of every code location on a firm bucket is:
+#   standard layers: PIPELINE_MAP x VALID_LAYERS
+#       repo data/<dir>/scripts/<layer>/*.py -> s3://<bucket>/code/<layer>/
+#       (file_to_s3_target -- the Rule-13 deploy gate; ONE prefix per layer,
+#       upload target == every consumer's sync source. The 2026-06-12 inf-ADVI
+#       P0 was a violation of this invariant: orchestrator deploys landed at
+#       code/bronze/ while the runner synced code/bronze-runner/.)
+#   auxiliary prefixes: AUX_CODE_PREFIXES below
+#       CHECK-ONLY locations outside the deploy gate. Value = repo-home dir for
+#       same-basename comparison (comp-pipescript deployed [aux:<prefix>] rows);
+#       None = no unambiguous repo home -> the tool reports UNCOVERED, never
+#       silent-clean. Consumers: comp-pipescript (pipeline_cli imports this),
+#       deploy-ledger leg enumeration (TO #5).
+#
+#   inf bronze-runner/ -- runner-OPS assets ONLY post-collapse (fetch script,
+#     watchdog, backfill helpers; repo home infra/aws/ec2/inf-bronze-runner)
+#     + the manual_api mirror sub-prefix (remaining consolidation leg).
+#     PIPELINE code no longer lives here -- the runner syncs orchestrator.py
+#     from code/bronze/ (BRONZE-FIX #1).
+#   inf manual_api/ -- Orion REST dim-pull scripts, consumed by the inf GOLD
+#     runner's 4-prefix flat sync (collision-guarded); repo home
+#     data/inf/manual_api.
+# ---------------------------------------------------------------------------
+AUX_CODE_PREFIXES: dict[str, dict[str, Optional[str]]] = {
+    "bd": {},
+    "inf": {
+        "bronze-runner": "infra/aws/ec2/inf-bronze-runner",
+        "manual_api": "data/inf/manual_api",
+        "runner": None,
+        "exporter": None,
+        "cleanup": None,
+    },
+    "cot": {},
+}
+
 
 def file_to_s3_target(rel_path: str) -> Optional[tuple[str, str, str]]:
     """Map a repo-relative file path to (bucket, s3_key, pipeline_label).

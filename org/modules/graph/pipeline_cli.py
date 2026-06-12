@@ -106,25 +106,34 @@ _ALL_DEPLOYED_TREES = [
 # emits an explicit UNCOVERED row (NEVER silent-clean: tool-blindness must not
 # be countable as cleanliness -- the TOOL-02 false-clean discipline).
 #
-#   inf bronze-runner/ -- THE 2026-06-12 P0 dual-prefix: the inf bronze runner
-#     syncs THIS prefix, while the deploy cycle uploads code/bronze/. A STALE
-#     row here is a live stranded-deploy until ADVI_INFETL.BRONZE-FIX collapses
-#     the dual prefix. Repo home = the same bronze tree.
+#   inf bronze-runner/ -- post-BRONZE-FIX#1 this is the runner-OPS assets
+#     prefix only (fetch script, watchdog, backfill helpers; repo home
+#     infra/aws/ec2/inf-bronze-runner) + the manual_api mirror sub-prefix
+#     (remaining consolidation leg). The runner's PIPELINE code
+#     (orchestrator.py) now syncs from canonical code/bronze/ -- the
+#     2026-06-12 P0 dual-prefix is collapsed.
 #   inf manual_api/ -- Orion REST pull scripts, repo home data/inf/manual_api
-#     (ADHC_COMPIL_V4.008 graph anchor).
+#     (ADHC_COMPIL_V4.008 graph anchor); consumed by the inf GOLD runner's
+#     collision-guarded 4-prefix flat sync.
 #   inf runner/ exporter/ cleanup/ -- EC2 service/dispatch assets with no
 #     single repo-home mapping -> UNCOVERED.
-_AUX_CHECK_ONLY_PREFIXES: 'dict[str, dict[str, str | None]]' = {
-    "inf": {
-        "bronze-runner": "data/inf/scripts/bronze",
-        "manual_api": "data/inf/manual_api",
-        "runner": None,
-        "exporter": None,
-        "cleanup": None,
-    },
-    "bd": {},
-    "cot": {},
-}
+#
+# Single-sourced from safe_deploy_core.AUX_CODE_PREFIXES (BRONZE-FIX #1 +
+# deploy-ledger TO #5 machine surface); fallback MUST stay byte-equal.
+try:
+    from safe_deploy_core import AUX_CODE_PREFIXES as _AUX_CHECK_ONLY_PREFIXES  # noqa: E402
+except Exception:
+    _AUX_CHECK_ONLY_PREFIXES = {
+        "bd": {},
+        "inf": {
+            "bronze-runner": "infra/aws/ec2/inf-bronze-runner",
+            "manual_api": "data/inf/manual_api",
+            "runner": None,
+            "exporter": None,
+            "cleanup": None,
+        },
+        "cot": {},
+    }
 
 # Standard deploy-layout prefixes under code/ (everything else found live on a
 # firm bucket that is not in _AUX_CHECK_ONLY_PREFIXES surfaces as UNCOVERED).
