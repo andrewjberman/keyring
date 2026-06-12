@@ -10,6 +10,7 @@ Rules below are law for every agent, every session. Format: imperative + enforci
 - **NEVER** run bare `terraform apply` (use `safe-apply`), bare `git commit` (use `safe-commit.sh`), or `aws lambda update-function-code` (Terraform only).
 - **NEVER** trigger ad-hoc gold runs to validate work — validate on the scheduled nightly's artifacts.
 - **NEVER** trust a producer's self-report or rc=0 — verify against the SERVED artifact / live state.
+- **NEVER** leave a confirmed deploy half-landed — a begun deploy FINISHES in-session (every prefix, leg, activation step) or rolls back + escalates loud to COO; a stranded leg is RED-ALERT material, not a follow-up. Gate: deploy-completion ledger entry in `org/critical_paths/change_management/` opened at deploy-start, closed at completion — unclosed at session end = COO alarm. (Andrew-direct 2026-06-12; the 06-11 half-landed cutover bundle → 3 stranded layers + invisible FATAL → the inf/mdpf staleness P0.)
 
 ## Deployment Rules
 
