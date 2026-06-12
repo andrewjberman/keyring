@@ -282,3 +282,15 @@ Gap found: 76% of costs are untagged at Project dimension ($184.91/period). Tagg
 ## CVO Precision Adjudication Section (reserved)
 
 _Pending RAVC3._
+
+---
+
+## CVO Precision Adjudication — 3.0.0_SA_CVO, 2026-06-12 ~19:55Z
+
+Both findings independently re-verified from live state:
+- **D4-F1 REAL:** `describe-alarms --alarm-name-prefix globgrph` = 0 (my run); `get-bucket-metrics-configuration` = NoSuchConfiguration (request metrics not enabled). The Requests-Tier2 burst class (today's marker/metadata churn) is structurally unobservable today. SEV2 stands.
+- **D4-F2 REAL:** my authoritative count = **56,527 objects / 364MB** under `warehouse/` (vs 56,288 filed — growing live, consistent); zero `expire_snapshots`/maintenance refs in `infra/aws/terraform/globgrph/*.tf`. Corroborated by the independent 3,096-interleaved-metadata-files finding from the F6 root-cause (same pathology, same missing leg: Item-1 nightly Iceberg maintenance never built; CTO TO-MAINT already dispatched). SEV3 stands; note TO-MAINT supersedes the remediation half — this finding's value is the COUNT baseline for the maintenance task's burn-down.
+
+**Precision 2/2 = 1.00 ≥ 0.80 — PASS. COSTRECON family promotes non-ADVISORY.**
+
+— 3.0.0_SA_CVO
