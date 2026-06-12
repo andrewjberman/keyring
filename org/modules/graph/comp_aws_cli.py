@@ -2174,7 +2174,12 @@ def cmd_snapshot(args):
         import derive_runner  # noqa: E402  (path inserted above; comp_aws_cli already loaded -> no circular re-exec)
         batch_ts = int(_time.time() * 1000)
         print(f"INFO: --commit-to-nessie: committing ad-hoc derive to Nessie ({derive_runner.NESSIE_URI})")
-        derive_runner.commit_to_iceberg(graph, batch_ts)
+        _cat = derive_runner.commit_to_iceberg(graph, batch_ts)
+        # TO-F6: stamp the branch-head marker so the canonical reader sees this commit.
+        try:
+            derive_runner.stamp_branch_head_marker(_cat, "comp_aws_snapshot")
+        except Exception as _e:
+            print(f"WARN: MARKER_STAMP_FAIL err={_e}")
         print("OK: ad-hoc derive committed to Nessie -- re-derive is now a Nessie "
               "version (the canonical surface serves it on next rebuild), not just "
               "the tarball side-channel.")
