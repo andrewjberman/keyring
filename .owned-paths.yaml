@@ -694,6 +694,10 @@ paths:
   "org/projects/**":
     lane: ANY_EXEC
 
+  "org/critical_paths/**":
+    lane: ANY
+    note: "Critical-surfaces ledger (NFRA_GRAPHS §10.6, Andrew-direct 2026-06-12) — entries are written STRUCTURALLY by the mechanism that fires under the committing agent's author (SURFACE_ACK approval / comp-xref resign / scan finding / staleness), so any agent's legitimate ack or scan must not be lane-blocked. Append-only event files; README/skeleton CTO-authored."
+
   "org/compiler-tools-log.md":
     lane: ANY
     note: "Append-only compiler tools log — any agent appends after each session"
