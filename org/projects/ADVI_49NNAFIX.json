@@ -1,0 +1,17 @@
+{
+  "project_code": "ADVI_49NNAFIX",
+  "macro_code": "ADVI",
+  "name": "49F Continuous-NNA GEO/ADV publisher gap + FIPS state-code rectification",
+  "description": "Andrew-direct 2026-06-12 (ASAP, via 0.4.0_DE diagnosis brief): 49F ADVI Segment Analytics Continuous-NNA shows only OFC; GEO+ADV empty because advisor_nna_canonical.json is NEVER PUBLISHED for 49F/bd (present for inflection; 49F cumulative_chart.json HAS the upstream nna_geo/nna_adv inputs -> publisher-coverage gap, not missing data; FE correctly wired). D1: publish advisor_nna_canonical.json for 49F/bd, schema-parity with inflection (firm/geo/advisor series weekly/monthly/quarterly + window_bounds). D2 (Andrew-elevated): FIPS leak — inflection geo.states carries literal '34' (FIPS NJ) instead of 'NJ'; DS ASSESSES whether Orion-input error or our-pipeline-introduced (lineage trace bronze->silver->canonical) and RECTIFIES either way: canonical geo.states = uniform USPS abbrev, 0 FIPS leaks BOTH firms.",
+  "prds": [
+    {"path": "docs/briefs/advi-49nnafix-project-request-20260612.md", "label": "DE diagnosis brief (FE control-trace + live-S3 ground truth) — the design doc", "date": "2026-06-12"}
+  ],
+  "status": "active",
+  "phase": "Phase 0: registered 2026-06-12 (CTO, Andrew-direct ASAP). COO TO cut pending for DS 0.4.0 (sequenced vs DS's live P0 recovery + ADVI_COTSNP.P0 queue — ASAP = next slot after P0 closes). NEVER-WIDEN NOTE: D1 = empty->populated NEW surface for 49F (not movement; standard verify); D2 MOVES served inflection geo.states ('34'->'NJ') = small justified drift-acceptance, before/after captured. DEFERRED-IN-PROJECT: annual NNA series (Year interval dead) — DS emits annual OR FE hides Year, executor's choice, non-blocking. OUT OF SCOPE (separate DE/RD lane, COO tracks): advisor-drill Continuous-ADV-AUM interval/window toggle regression in the relationship-stacked path.",
+  "blocking": "COO TO issuance. DS 0.4.0 currently on the live inf-ADVI P0 recovery (R4 pending) — ASAP means next-in-queue, not preempting the P0.",
+  "created": "2026-06-12",
+  "pods": ["0.4"],
+  "pipeline": "bd + inf platinum publishers",
+  "thread_counter": 0,
+  "threads": []
+}
