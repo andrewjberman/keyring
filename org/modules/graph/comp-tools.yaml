@@ -62,8 +62,13 @@ tools:
       mutex + atomic swap; readers never see a half-built DB) BEFORE serving. Rule 20's QUERY-default posture is
       UNCHANGED: agents never run rebuilds to answer a traversal; the engine does it for them exactly when needed.
       TO-F1 provenance contract (still prints on every call, STDERR): DB, built-when, source vintage (tarball key /
-      Nessie dual snapshot-id pin / stitch file+mtime), node/edge counts; age >26h => WARN: STALE; Nessie DBs print
-      "BEHIND Nessie HEAD by N commits"; manifest-less => loud UNKNOWN VINTAGE; stderr-only so stdout stays parseable.
+      Nessie dual snapshot-id pin / stitch file+mtime), node/edge counts; age >26h => WARN: STALE; manifest-less =>
+      loud UNKNOWN VINTAGE; stderr-only so stdout stays parseable.
+      TO-F6 HEAD oracle: the Nessie HEAD comparison keys off the writer-stamped branch-head marker
+      (s3://<warehouse>/_branch_head.main.json), NOT newest-metadata-by-mtime (RETIRED -- CVO dc06744c6 proved mtime
+      newest can be an orphaned-commit artifact). Header prints "Nessie HEAD: current (pin==marker)" /
+      "WARN: BEHIND Nessie HEAD -- pin X != HEAD Y" / loud "HEAD-ORACLE UNKNOWN (no branch-head marker)". The marker is
+      stamped post-commit by the 2a derive_runner, the 2b incremental Lambda, and the F3 snapshot --commit-to-nessie path.
       The graph is a minutes-stale-and-LABELED traversal surface, NOT a read-your-own-writes verification substitute
       (verify vs served artifact / live AWS).
     rebuild_trigger: "DEFAULT surface auto-rebuilds on BEHIND/stale (no manual step). Scratch DBs: rerun the matching loader (kuzu_nessie_load / kuzu_load / kuzu_stitch_load, force default)."
