@@ -698,6 +698,16 @@ paths:
     lane: ANY
     note: "Critical-surfaces ledger (NFRA_GRAPHS §10.6, Andrew-direct 2026-06-12) — entries are written STRUCTURALLY by the mechanism that fires under the committing agent's author (SURFACE_ACK approval / comp-xref resign / scan finding / staleness), so any agent's legitimate ack or scan must not be lane-blocked. Append-only event files; README/skeleton CTO-authored."
 
+  # debtscan: findings .md = scan-runner-committable; EVERYTHING ELSE (suppression config,
+  # canon-patterns, yaml) stays exec-locked. Specific .md rule BEFORE the ** rule (longest-match-wins).
+  "org/modules/graph/debtscan/*.md":
+    lane: ANY
+    note: "NFRA_DEBTSCAN findings ledgers (CTO ruling 2026-06-12, COO route 185544Z) — per-sweep dated findings files are append-only records written by the scan-runner (DS/AE) under their own author; exec batch-committing each one is friction without governance value. GOVERNANCE BOUNDARY: only the findings .md files — suppression configs / canon-patterns / any .yaml stay ANY_EXEC below, because a scan-runner who can edit suppressions can silently hide their own finding class."
+
+  "org/modules/graph/debtscan/**":
+    lane: ANY_EXEC
+    note: "debtscan config surface (suppressions, scan config, any non-.md) — exec-locked per the governance boundary above; canon-patterns.yaml is CTO-authored (lives at org/modules/graph/, not here)."
+
   "org/compiler-tools-log.md":
     lane: ANY
     note: "Append-only compiler tools log — any agent appends after each session"
