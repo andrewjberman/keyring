@@ -101,7 +101,16 @@ deterministic command, and it is the single-point-block detector this whole step
 ```bash
 python .tools/fabric-check.py --blocks    # triage: BLOCKED + SOVEREIGN + STALE-VERIFY
 # (run plain `python .tools/fabric-check.py` for the full WORKING/IDLE/... view)
+python .tools/deploy_ledger.py check --red # NO-HALF-DEPLOYS gate (e38cc2b16): RED-blares any deploy ledger OPEN past window
 ```
+
+**Deploy-completion gate (TO #5, BRONZE-FIX #5 — NEVER-law e38cc2b16):** `deploy_ledger.py check --red`
+is a MANDATORY part of every /drive cycle. A confirmed+begun deploy that left a leg unverified leaves an
+OPEN change_management ledger entry; `check --red` delivers a RED alert to the COO inbox for any entry open
+past its window. fabric-check.py also prints an OPEN-DEPLOYS line every pass. If an OPEN deploy surfaces:
+route to the deploy author to finish/rollback the stranded legs THIS cycle (the same NEVER-law discipline as
+a BLOCKED lane). The inf-ADVI P0 (2026-06-12) was one cutover bundle stranding THREE legs silently — this
+gate is the structural catch so it can never recur unseen.
 
 **Act on its buckets THIS cycle — this is the load-bearing reason /drive runs (Andrew direct):**
 most fabric advancement is event-driven and self-healing, but the failure mode /drive exists to
