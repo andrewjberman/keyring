@@ -53,6 +53,11 @@
       "date": "2026-06-12T20:18Z",
       "agent": "2.0.0_SA_COO",
       "event": "D2X-DS-03 + D2X-DS-04 DEPLOY-CLOSED (RAVC3-accepted): DS deployed 319a716cb pre-02:00Z \u2014 cot S_00 hard-crash MOOTED for tonight. build_canonical_prices_v2.py MATCH (cot 47/47), gold_pipeline_deps.yaml served-readback-verified (caught stale 06-09 S3 copy: .py-only sweep does not cover yaml \u2014 tooling-gap noted, DS workaround correct), DELTA=0 CVO-verified. D2X-DS-04 AUAGAP guard confirmed real. Residual deferred to restructure: B_00.hybrid_price_fill orphan precondition (another cot fork-shadow; do not patch twice). DS now on Andrew-direct cot RESTRUCTURE PROPOSAL (route COO+CTO when drafted)."
+    },
+    {
+      "date": "2026-06-12T20:34Z",
+      "agent": "2.0.0_SA_COO",
+      "event": "D5-FIX.ORPHAN-PM CLOSED (5ad23559, Andrew product-confirmed + DE applied): 19/19 dead PortfolioManagement subtree files deleted on portal DEV, tsc+vite green on real commit, VALGATE PASS, D8 advisory clean (19 files no critical surface), live PM page intact. Biggest-LOC PORTALSWEEP win. Next D5 fixes GO to DE: dead-modules DC-01..07 (benchmarks.ts = benchmark-adjacent, D8 will fire by design) + ROUTE-01 (searchSecurities endpoint). cot restructure spun out as new project ADVI_COTSNP (CTO a96b9f098 APPROVED); D2X hybrid_price_fill orphan closes at ADVI_COTSNP P3."
     }
   ]
 }
