@@ -2,7 +2,7 @@
   "project_code": "NFRA_DEBTSCAN",
   "macro_code": "NFRA",
   "name": "Graph-driven estate-wide debt/dead-path/canon-deviation/latent-risk scanning",
-  "description": "Andrew-direct 2026-06-12 (~17:55Z, via CVO brief 2a30d65f3): put the graph system to the test against the whole estate — find tech debt, dead paths, out-of-pattern routes (canon-breaks), and latent bugs/risk factors systematically FROM THE GRAPH, not ad-hoc greps. Four scan families (reachability dead-paths / structural-debt census / canon-deviation motif mining / compositional risk analytics), each anchored to a real past incident; D7's scan engine generalized from 5 critical surfaces to the unioned stitch (3,088 nodes). FP-suppression + CVO-adjudicated >=0.8 sampled-precision gates before non-ADVISORY filing; verify-before-delete doctrine binding; outputs = graded findings ledger (org/modules/graph/debtscan/) + graph_metrics burn-down trend + critical-paths cross-filing.",
+  "description": "Andrew-direct 2026-06-12 (~17:55Z, via CVO brief 2a30d65f3): put the graph system to the test against the whole estate \u2014 find tech debt, dead paths, out-of-pattern routes (canon-breaks), and latent bugs/risk factors systematically FROM THE GRAPH, not ad-hoc greps. Four scan families (reachability dead-paths / structural-debt census / canon-deviation motif mining / compositional risk analytics), each anchored to a real past incident; D7's scan engine generalized from 5 critical surfaces to the unioned stitch (3,088 nodes). FP-suppression + CVO-adjudicated >=0.8 sampled-precision gates before non-ADVISORY filing; verify-before-delete doctrine binding; outputs = graded findings ledger (org/modules/graph/debtscan/) + graph_metrics burn-down trend + critical-paths cross-filing.",
   "prds": [
     {
       "path": "docs/architecture/NFRA_DEBTSCAN_PRD.md",
@@ -22,5 +22,12 @@
   "pipeline": "globgrph",
   "thread_counter": 0,
   "threads": [],
-  "current_phase": "P1: PRD v0.1 authored 2026-06-12 (CTO 7caee952a, ws-charter cycle 0011). COO decomposition DONE (c2aebe4ed, 180800Z 2026-06-12): TO-D1 (AE 0.7.0, P1 reachability sweeps — queued after D8-AE Part B) + TO-D2 (DS pipescript + AE IAM, P1 composition battery — DS lane queued pending allocation, AE lane queued after Part B) + TO-D3 GATED on CTO canon-patterns.yaml. All 4 non-negotiables (zero-mutations, CVO >=0.8 precision gate, freshness-bound filing, verify-before-delete chains) in both TOs. AE design finding from Part B (BenchmarkHeatmap/portal-proxy/PeersTab 0 stitch nodes) seeded as TO-D1 Day-0 backlog instance. Critical-paths §10.6 cross-filing wired into both TOs. Remaining: AE + DS TO execution per priority order."
+  "current_phase": "P1: PRD v0.2 (a5e58490e, Andrew-direct 2026-06-12 ~19:15Z) + v0.1 (7caee952a). COO decomp extended: TO-D1 (AE 0.7 IN-PROGRESS kuzu), TO-D2 AE (GO after D1, comp-iam), TO-D4 (AE 0.7 QUEUED, COSTRECON), TO-D5 (DT GO + DE GATED-spawn, PORTALSWEEP); TOOL-01 COMPLETE b5050f6b2 (comp-pipescript all-trees, mdpf check-only, 1 finding TOOL-01-F01 mdpf MISSING_ON_S3); D2-DS-01 CLOSED (inf/cot/mdpf UNKNOWN-VINTAGE caveat lifted). Spawn channel GATED (LD-0188) pending CVO CLAUDE.md pass.",
+  "history": [
+    {
+      "date": "2026-06-12T19:23Z",
+      "agent": "2.0.0_SA_COO",
+      "event": "TOOL-01 RAVC3-ACCEPTED (b5050f6b2); 2 yaml exec-committed COO lane; D2-DS-01 CLOSED; TOOL-01-F01 filed (mdpf MISSING_ON_S3); PRD v0.2 absorbed; TO-D4 COSTRECON cut (AE 0.7 queued D1+D2); TO-D5 PORTALSWEEP cut (DT GO + DE GATED LD-0188); spawn-channel GATED pending CVO CLAUDE.md pass"
+    }
+  ]
 }

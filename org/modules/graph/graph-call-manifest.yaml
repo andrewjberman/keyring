@@ -318,16 +318,16 @@ entries:
 
   - id: pipeline.pipescript.deployed_match
     use_case: "Does the runner have my code (before running a gold script ad-hoc)?"
-    canonical_call: "comp-pipescript deployed <script>"
+    canonical_call: "comp-pipescript deployed [<script>] [--firm bd|inf|cot|mdpf | --pipeline <key>]   # no arg = sweep ALL trees"
     tool: comp-pipescript
     mode: rebuild
     layer: pipeline
-    cost: "~2-5s (AWS API calls)"
+    cost: "~2-5s single tree; ~15-30s no-arg all-trees sweep (AWS API calls)"
     freshness: "live S3 deployed code"
     rebuild_trigger: "n/a — must check live deployed state"
-    anti_pattern: "running a gold script without confirming MATCH (STALE/MISSING runner)"
+    anti_pattern: "running a gold script without confirming MATCH (STALE/MISSING runner); reading a sweep MATCH without noting which bucket it checked"
     status: canonical
-    notes: "comp-pipescript deployed covers opal-data-bd (default), inf (--pipeline inf-gold), mdpf (--pipeline mdpf), and cot (--pipeline cot-gold, OR a data/cot/ path auto-routes -- NFRA_COT_TOOLING 2026-06-12). Paths in no mapped pipeline (e.g. backfill/feeders) remain blind -- verify served S3 directly."
+    notes: "comp-pipescript deployed covers ALL PIPELINE_MAP trees (NFRA_DEBTSCAN.TOOL-01 2026-06-12): bd+inf+cot firm-bucket mapping derives from safe_deploy_core.PIPELINE_MAP (single source, no drift); mdpf appended check-only (NOT in the deploy-gate map -- non-standard code/scripts/<layer>/ layout, deploys via its own mechanism -- but still checked because MDPF_COUNTS proved it strands). Scope resolution: --firm {bd,inf,cot,mdpf} or --pipeline <key> = single tree; a data/<tree>/scripts/... path AUTO-DETECTS the tree (generalizes the cot-only auto-route); NO arg = sweep EVERY tree. Firm separation: each tree reads ONLY its own bucket (no cross-bucket fallback). Sweep prints a per-tree banner naming the bucket so every MATCH/STALE/MISSING row is bucket-attributed (an un-attributed row is how a stranded-deploy blind spot hides). backfill/feeders now covered via the mdpf branch + canonicalize regex. Closes the inf/cot/mdpf DEBTSCAN UNKNOWN-VINTAGE caveat."
 
   - id: pipeline.freshness.chain_ready
     use_case: "Is the upstream S3 data fresh enough to run a gold chain?"

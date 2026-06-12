@@ -1,0 +1,231 @@
+# NFRA_DEBTSCAN suppression config v1
+# Authored: 0.7.0_AE_CloudOps 2026-06-12 (TO-D1 Phase 2)
+# Status: DRAFT — exec-route for commit (governance surface per CTO ruling; AE authored, needs exec sign-off)
+# Commit authority: ANY_EXEC (COO or CTO)
+
+# Format: each class has an id, reason, affected_types, and name_patterns or edge_conditions
+
+suppression_classes:
+
+  # ---------- AWS-layer coverage gaps (graph does not model these edges) ----------
+
+  - id: FP_LOG_GROUP_IMPLICIT_LOGS
+    reason: >
+      CloudWatch Log Groups are created per-Lambda/EC2 but LOGS_TO edges are sparsely modeled.
+      Lambda implicit logging does not produce a LOGS_TO graph edge for every function. 190 Log
+      Groups isolated on Nessie surface (2026-06-12 sweep). Do not file as dead.
+    affected_types: [LOG_GROUP]
+    filter: isolated_only  # no in AND no out edges
+    confirmed_fp_count: 190
+    evidence: TO-D1 Phase 1 sweep 2026-06-12
+
+  - id: FP_SECRET_RUNTIME_ACCESS
+    reason: >
+      Secrets Manager secrets are accessed via boto3 SDK calls at runtime. These calls are not
+      modeled as READS_SECRET graph edges for every Lambda that uses them. 40 secrets isolated
+      on Nessie surface. Do not file as dead unless cross-confirmed by IAM + CloudTrail gap.
+    affected_types: [SECRET]
+    filter: isolated_only
+    confirmed_fp_count: 40
+    evidence: TO-D1 Phase 1 sweep 2026-06-12
+
+  - id: FP_API_LAMBDA
+    reason: >
+      Lambda functions triggered by API Gateway appear untriggered in the graph because
+      API_GW -> Lambda INVOKES edges are absent: all 6 API_GW nodes have 0 outbound edges.
+      API-invoked Lambdas (data-proxy, authorizer, client-detail, session-analytics, etc.)
+      are LIVE serving portal requests. Do not file orphaned-Lambda based solely on missing
+      TRIGGERS edge when the Lambda pattern matches an API-handler.
+    affected_types: [LAMBDA]
+    name_patterns:
+      - opal-portal-data-proxy
+      - opal-portal-authorizer
+      - opalinvest-auth-handler
+      - causality-ai-query-handler
+      - causality-analysis-generator
+      - causality-data-enrichment
+      - causality-history-manager
+      - causality-market-update-generator
+      - causality-themes-fetcher
+      - causality-trade-idea-generator
+      - inf-client-detail
+      - bd-client-detail
+      - opal-data-refresh-api
+      - opal-session-analytics
+      - opal-partners-data
+      - deck-generation
+      - schwab-anonymizer
+      - opal-portfolio-*
+      - opal-pm-*
+      - find-insure-*
+      - market-update-*
+      - public-data-router
+    edge_condition: api_gw_invoked  # Lambda reachable via API_GW but edge absent from graph
+    evidence: TO-D1 Phase 1 sweep 2026-06-12; 0 API_GW outbound edges confirmed
+
+  - id: FP_LEDGE
+    reason: >
+      Lambda@Edge functions are triggered by CloudFront viewer/origin events, not EventBridge
+      TRIGGERS. They appear untriggered in the graph. These are LIVE on every portal request.
+    affected_types: [LAMBDA]
+    name_patterns:
+      - auth-validator-edge
+      - cache-control-injector
+      - opalinvest-auth-handler
+      - public-data-router
+    evidence: D8-AE Part A critical-surface carve; TO-D1 2026-06-12
+
+  - id: FP_ECS_TRIGGER
+    reason: >
+      EVENT_RULE nodes targeting ECS Fargate tasks appear to have no outbound edges because
+      ECS_TASK_DEFINITION -> EVENT_RULE TRIGGERS edges are not modeled. The rule
+      opal-globgrph-derive-runner-nightly targets globgrph-derive-runner ECS task, not a Lambda.
+    affected_types: [EVENT_RULE]
+    name_patterns:
+      - opal-globgrph-derive-runner-nightly
+    evidence: TO-D1 Phase 1 sweep; confirmed ECS_TASK_DEFINITION exists but edge absent
+
+  - id: FP_S3_CF_ORIGIN
+    reason: >
+      S3 buckets with a CloudFront ORIGIN edge are served by CloudFront and are NOT dead even
+      if no Lambda READS from them. opal-data-cot has CloudFront ORIGIN + USES_OAI from
+      EVTSA9VEHNZVH. A backward-sweep finding of "written-not-read" is a false alarm when
+      ORIGIN edge exists.
+    affected_types: [S3_BUCKET]
+    edge_condition: has_cf_origin  # ORIGIN edge from any CLOUDFRONT_DISTRIBUTION
+    examples:
+      - opal-data-cot
+    evidence: TO-D1 Phase 1 sweep; opal-data-cot confirmed CF-served 2026-06-12
+
+  # ---------- Script / gold pipeline FP classes ----------
+
+  - id: FP_DIAG_ADHOC
+    reason: >
+      GOLD_SCRIPT nodes with E_* prefix (E_00 through E_25+) are ad-hoc diagnostic tools
+      that produce no scheduled S3 pipeline output. They are run on-demand by DE/DS engineers
+      for analysis. Absence of S3 data-key edges is expected and correct.
+    affected_types: [GOLD_SCRIPT]
+    name_patterns:
+      - "E_\\d+\\..*"  # regex: E_ followed by digits
+      - diag_sleeve_fix
+      - gold_prof
+    evidence: TO-D1 Phase 1 sweep; 21 E_* scripts confirmed diagnostic via name survey
+
+  - id: FP_TEST_SCRIPT
+    reason: >
+      Test and shadow scripts (test_*, *_shadow) are not pipeline entries. They exist for
+      validation/testing during development.
+    affected_types: [GOLD_SCRIPT]
+    name_patterns:
+      - test_gldinc_cache_roundtrip
+      - gldinc_p1_shadow
+    evidence: ADHC_GLDINC context; TO-D1 2026-06-12
+
+  - id: FP_RUN_SCRIPT_SUBPUBLISHER
+    reason: >
+      GOLD_SCRIPT nodes named run_*_auagap002, INF_D_04b.*, and similar patterns are likely
+      sub-publishers invoked via dispatcher _run_script() calls, not direct dispatch entries.
+      The graph does not model _run_script invocation chains. Do NOT delete without running the
+      full verify-before-delete 4-layer gate: name-target-list -> comp-aws graph blast-radius ->
+      tf plan -> post-verify (per memory: reference_gold_orphan_delete_trace_run_script_subpublishers).
+    affected_types: [GOLD_SCRIPT]
+    name_patterns:
+      - "run_.*_auagap002"
+      - "run_c01c_rap1c"
+      - INF_D_04b.client_publishers
+      - INF_D_02c.client_directory
+    evidence: NFRA_DTAFLP memory; verify-before-delete doctrine; TO-D1 2026-06-12
+
+  # ---------- Infrastructure FP classes ----------
+
+  - id: FP_INFRA_BUCKET
+    reason: >
+      Infrastructure S3 buckets are used by Terraform, CI/CD, Lambda layer storage, and
+      CloudFront logging. They have no tracked Lambda READS/WRITES edges because they are
+      consumed by the build/deploy system, not the data pipeline. Not dead.
+    affected_types: [S3_BUCKET]
+    name_patterns:
+      - opal-313476888478-lambda-layers
+      - opal-313476888478-terraform-state
+      - opal-ci-staging
+      - opal-cloudfront-logs-313476888478
+      - opal-runner-shared
+      - ajb-workflow
+    evidence: TO-D1 Phase 1 sweep; infra bucket names identified 2026-06-12
+
+  - id: FP_NESSIE_INTERNAL_DDB
+    reason: >
+      DynamoDB tables backing the Iceberg/Nessie catalog (opal-globgrph-nessie-_objs and
+      opal-globgrph-nessie-_refs) are accessed directly by the Nessie catalog layer, not via
+      tracked Lambda READS/WRITES edges. They are essential infrastructure. Not dead.
+    affected_types: [DYNAMODB_TABLE]
+    name_patterns:
+      - opal-globgrph-nessie-_objs
+      - opal-globgrph-nessie-_refs
+    evidence: TO-D1 Phase 1 sweep; Nessie architecture known 2026-06-12
+
+  - id: FP_EC2_SSM_INVOKED
+    reason: >
+      EC2 instances invoked via Lambda -> SSM SendCommand do not have direct TRIGGERS or INVOKES
+      edges in the graph. An isolated EC2_INSTANCE node is NOT evidence of dead infrastructure
+      when an SSM-dispatch Lambda exists in the same pipeline. seeking-alpha-scraper example:
+      seeking-alpha-analysis-coordinator Lambda exists and likely invokes EC2 via SSM.
+      Verify via CloudTrail / comp-iam service <lambda> before filing.
+    affected_types: [EC2_INSTANCE]
+    name_patterns:
+      - seeking-alpha-scraper
+    evidence: TO-D1 Phase 1 sweep; EC2-SSM pattern knowledge; 2026-06-12
+
+  - id: FP_CW_ALARM_IMPLICIT_MONITOR
+    reason: >
+      CloudWatch Alarms that monitor Lambda/EC2 metric dimensions do not have explicit MONITORS
+      graph edges to their monitored resource. Alarms checking invocation count, error rate,
+      or duration appear isolated. exec-summary-advisors-processed-ceiling and
+      exec-summary-tokens-in-anomaly are monitoring Lambda metrics implicitly.
+    affected_types: [CW_ALARM]
+    name_patterns:
+      - exec-summary-advisors-processed-ceiling
+      - exec-summary-tokens-in-anomaly
+    evidence: TO-D1 Phase 1 sweep; 0 MONITORS edges from these alarms 2026-06-12
+
+  - id: FP_BUCKET_POLICY_NO_RESOURCE_EDGE
+    reason: >
+      S3_BUCKET_POLICY nodes are attached to their bucket via HAS_POLICY edges but have no
+      outbound edges themselves. A bucket policy having 0 outbound edges is expected and correct.
+      All 7 isolated S3_BUCKET_POLICY nodes are suppressed.
+    affected_types: [S3_BUCKET_POLICY]
+    filter: isolated_only
+    confirmed_fp_count: 7
+    evidence: TO-D1 Phase 1 sweep 2026-06-12
+
+  # ---------- Day-0 known findings (NFRA_GRAPHS Phase 1 carryover) ----------
+
+  - id: DAY0_GETAUMMETRICS_URL_UNRESOLVED
+    reason: >
+      getAUMMetrics portal route URL not resolved — D8-AE Phase 1 Day-0 SEV1 candidate.
+      Suppressed pending CVO cert + DE re-sign with tonight's F6 marker.
+    affected_types: [API_ROUTE]
+    name_patterns:
+      - getAUMMetrics
+    evidence: NFRA_GRAPHS D8-AE Part A; advisory mode pending blocking-flip 2026-06-13
+
+  - id: DAY0_ADVISOR_INTELLIGENCE_AUTH_NONE
+    reason: >
+      advisor_intelligence auth:NONE — confirmed FP. CloudFront handles auth upstream;
+      the portal-data-proxy route's apparent auth:NONE is the expected pattern for CF-authed
+      endpoints. Not an open endpoint.
+    affected_types: [API_ROUTE]
+    name_patterns:
+      - advisor_intelligence
+    evidence: NFRA_GRAPHS D8-AE Part A; known portal auth pattern
+
+  - id: DAY0_BENCHMARK_HEATMAP_2A_CLASS
+    reason: >
+      BenchmarkHeatmap/portal-proxy/PeersTab 2a-class instance — Day-0 backlog finding
+      identified by CTO in D8-AE review. Tracked in TO-D1 Day-0 material. Not yet suppressed
+      (pending further review); included here as a placeholder.
+    affected_types: [PORTAL_COMPONENT, API_ROUTE]
+    name_patterns:
+      - BenchmarkHeatmap
+      - PeersTab
+    evidence: CTO D8-AE finding; TO-D1 Day-0 backlog
