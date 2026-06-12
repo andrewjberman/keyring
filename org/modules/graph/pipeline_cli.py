@@ -41,7 +41,7 @@ from org.modules.graph.extract_pipeline import (  # noqa: E402
     _parse_dispatch, _parse_orion_dispatch,
 )
 
-_PIPELINE_CHOICES = ("bd-gold", "inf-gold", "bd-silver", "inf-silver", "inf-manual-api", "mdpf", "cot-gold", "cot-silver", "cot", "all", "bd", "inf")
+_PIPELINE_CHOICES = ("bd-gold", "inf-gold", "bd-silver", "inf-silver", "bd-bronze", "inf-bronze", "cot-bronze", "inf-manual-api", "mdpf", "cot-gold", "cot-silver", "cot", "all", "bd", "inf")
 
 # ---------------------------------------------------------------------------
 # NFRA_DEBTSCAN.TOOL-01: single-source tree registry for the all-trees deployed
@@ -89,6 +89,46 @@ _ALL_DEPLOYED_TREES = [
     for dirname, (bucket, label) in _DEPLOY_PIPELINE_MAP.items()
     if label in _LABEL_TO_DEPLOYED_PIPELINE
 ] + [("mdpf", "opal-data-mdpf")]
+
+# ---------------------------------------------------------------------------
+# NFRA_DEBTSCAN.TOOL-03: bronze + auxiliary-prefix coverage.
+#
+# BRONZE is a first-class deploy layer (safe_deploy_core.VALID_LAYERS) but the
+# pre-TOOL-03 deployed check enumerated only gold+silver for bd/inf -- so the
+# Rule-13 cycle was UNVERIFIABLE for every bd/inf bronze deploy (the 2026-06-12
+# inf-ADVI stranded-deploy class). Bronze repo dirs derive from the same
+# canonical PIPELINE_MAP (data/<dir>/scripts/bronze -> code/bronze/).
+#
+# AUXILIARY prefixes are S3 code locations OUTSIDE the standard code/<layer>/
+# deploy layout (mdpf precedent: CHECK-ONLY -- swept for staleness, never part
+# of the deploy gate's upload derivation). Mapping value = repo-home dir for
+# same-basename MD5 comparison; None = no unambiguous repo home -> every sweep
+# emits an explicit UNCOVERED row (NEVER silent-clean: tool-blindness must not
+# be countable as cleanliness -- the TOOL-02 false-clean discipline).
+#
+#   inf bronze-runner/ -- THE 2026-06-12 P0 dual-prefix: the inf bronze runner
+#     syncs THIS prefix, while the deploy cycle uploads code/bronze/. A STALE
+#     row here is a live stranded-deploy until ADVI_INFETL.BRONZE-FIX collapses
+#     the dual prefix. Repo home = the same bronze tree.
+#   inf manual_api/ -- Orion REST pull scripts, repo home data/inf/manual_api
+#     (ADHC_COMPIL_V4.008 graph anchor).
+#   inf runner/ exporter/ cleanup/ -- EC2 service/dispatch assets with no
+#     single repo-home mapping -> UNCOVERED.
+_AUX_CHECK_ONLY_PREFIXES: 'dict[str, dict[str, str | None]]' = {
+    "inf": {
+        "bronze-runner": "data/inf/scripts/bronze",
+        "manual_api": "data/inf/manual_api",
+        "runner": None,
+        "exporter": None,
+        "cleanup": None,
+    },
+    "bd": {},
+    "cot": {},
+}
+
+# Standard deploy-layout prefixes under code/ (everything else found live on a
+# firm bucket that is not in _AUX_CHECK_ONLY_PREFIXES surfaces as UNCOVERED).
+_STANDARD_CODE_PREFIXES = {"gold", "silver", "bronze"}
 
 
 def _build_dag(pipeline: str = "bd-gold"):
@@ -1479,8 +1519,14 @@ def cmd_deployed(args):
       closes the opal-data-bd-only blind spot that hid the stale MDPF rollup
       behind the MDPF_COUNTS incident). MDPF preserves scripts/<layer>/ under
       code/, a different layout than BD/INF; enumerated by directory glob (no DAG).
+    --pipeline {bd,inf,cot}-bronze: bronze tree only (NFRA_DEBTSCAN.TOOL-03).
+      Bronze is also folded into the full-tree views (bd-gold/inf-gold/cot)
+      and the all-trees sweep. Aux prefixes (bronze-runner/runner/exporter/
+      cleanup/manual_api) ride along as CHECK-ONLY rows; an unmapped prefix
+      emits UNCOVERED, never silent-clean.
 
-    Output is prefixed [bd-gold] / [inf-gold] / [bd-silver] / [inf-silver] / [mdpf:<layer>].
+    Output is prefixed [bd-gold] / [inf-gold] / [bd-silver] / [inf-silver] /
+    [BRONZE] / [aux:<prefix>] / [mdpf:<layer>].
     Uses S3 ETag (MD5) comparison."""
     import hashlib
     import shutil
@@ -1533,7 +1579,7 @@ def cmd_deployed(args):
     )
 
     # INF pipeline overrides
-    if pipeline in ("inf-gold", "inf-silver"):
+    if pipeline in ("inf-gold", "inf-silver", "inf-bronze"):
         S3_BUCKET = "opal-data-inf"
 
     # MDPF pipeline override (ADHC_DEPINT widen 2026-06-08): MDPF deploys to a
@@ -1548,7 +1594,7 @@ def cmd_deployed(args):
     # COMPLETELY separate firm pipeline. Its gold/silver/bronze deploy to
     # opal-data-cot/code/{gold,silver,bronze}/ (standard BD/INF layout, different
     # bucket) -- NEVER opal-data-bd. Closes the cot deployed-check blind spot.
-    if pipeline in ("cot-gold", "cot-silver", "cot"):
+    if pipeline in ("cot-gold", "cot-silver", "cot-bronze", "cot"):
         S3_BUCKET = "opal-data-cot"
 
     # Resolve aws CLI once, full path -- avoids subprocess PATH-loss on some shells.
@@ -1622,21 +1668,25 @@ def cmd_deployed(args):
     if pipeline == "inf-gold":
         inf_svc = _get_ec2_manifest_service("inf-gold-layer-runner")
         inf_instance = inf_svc.get("instance_id", "unknown")
-        print("DEPLOYED STATUS [inf-gold]: local repo vs s3://opal-data-inf/code/gold/")
+        print("DEPLOYED STATUS [inf-gold]: local repo vs s3://opal-data-inf/code/{gold,silver,bronze}/")
         print(f"  Runner: inf-gold-layer-runner ({inf_instance})")
     elif pipeline == "mdpf":
         print("DEPLOYED STATUS [mdpf]: local repo vs s3://opal-data-mdpf/code/scripts/{gold,backfill,feeders,bronze}/")
         print("  Runner: mdpf-daily-runner")
     elif pipeline in ("bd-silver", "inf-silver", "cot-silver"):
         print(f"DEPLOYED STATUS [{pipeline}]: local repo vs s3://{S3_BUCKET}/code/silver/")
+    elif pipeline in ("bd-bronze", "inf-bronze", "cot-bronze"):
+        print(f"DEPLOYED STATUS [{pipeline}]: local repo vs s3://{S3_BUCKET}/code/bronze/ (NFRA_DEBTSCAN.TOOL-03)")
     elif pipeline in ("cot-gold", "cot"):
         print(f"DEPLOYED STATUS [{pipeline}]: local repo vs s3://opal-data-cot/code/{{gold,silver,bronze}}/")
         print("  Runner: cot-exporter (Cottonwood; NFRA_DTAFLP separate firm pipeline)")
     else:
-        print("DEPLOYED STATUS: local repo vs s3://opal-data-bd/code/{gold,silver}/")
+        print("DEPLOYED STATUS: local repo vs s3://opal-data-bd/code/{gold,silver,bronze}/")
     print()
 
     matched, stale, missing_s3, local_missing, timed_out, aws_unreach = [], [], [], [], [], []
+    uncovered = []  # TOOL-03 false-clean guard: tool-blindness, named -- NEVER silent
+    aux_drift = []  # TOOL-03 aux CHECK-ONLY drift: visible but NEVER the deploy-gate token
     checked_any = False
 
     # ADHC_COMPIL_V4.019 Bug 1.1 fix: initialize skip_gold so silver-section gating
@@ -1711,11 +1761,12 @@ def cmd_deployed(args):
                 aws_unreach.append(label)
     elif pipeline in ("cot-gold", "cot"):
         # cot (Cottonwood): no comp-graph DAG -> direct directory glob (MDPF pattern),
-        # standard code/<layer>/ layout against opal-data-cot. gold + bronze here;
-        # silver handled by the SILVER section below (SILVER_LOCAL_DIR -> cot silver).
+        # standard code/<layer>/ layout against opal-data-cot. gold here; silver by
+        # the SILVER section below; bronze by the generic BRONZE section (TOOL-03 --
+        # was a cot-branch special case, now uniform across firms).
         skip_gold = False
         _cot_root = _WORKSPACE / "data" / "cot" / "scripts"
-        for _layer in ("gold", "bronze"):
+        for _layer in ("gold",):
             _ldir = _cot_root / _layer
             if not _ldir.is_dir():
                 continue
@@ -1742,7 +1793,8 @@ def cmd_deployed(args):
                     timed_out.append(label)
                 elif status == "AWS_UNREACHABLE":
                     aws_unreach.append(label)
-    elif pipeline not in ("bd-silver", "inf-silver", "cot-silver"):
+    elif pipeline not in ("bd-silver", "inf-silver", "cot-silver",
+                          "bd-bronze", "inf-bronze", "cot-bronze"):
         dag = _build_dag("bd-gold")
         gold_candidates = sorted(dag.scripts.items(), key=lambda x: x[1].run_order)
         skip_gold = False
@@ -1780,7 +1832,8 @@ def cmd_deployed(args):
     # branch above; it has no separate silver dir, and SILVER_LOCAL_DIR would wrongly
     # point at BD silver for the mdpf pipeline -- so skip the silver section for mdpf.
     silver_files = []
-    if pipeline != "mdpf" and SILVER_LOCAL_DIR.is_dir():
+    if (pipeline != "mdpf" and not pipeline.endswith("-bronze")
+            and SILVER_LOCAL_DIR.is_dir()):
         for p in sorted(SILVER_LOCAL_DIR.glob("*.py")):
             if p.name.startswith("__"):
                 continue
@@ -1818,10 +1871,173 @@ def cmd_deployed(args):
             elif status == "AWS_UNREACHABLE":
                 aws_unreach.append(label)
 
+    # ---- BRONZE layer (NFRA_DEBTSCAN.TOOL-03; directory-walk like silver) ----
+    # First-class deploy layer: data/<dir>/scripts/bronze/*.py -> code/bronze/.
+    # Closes the Rule-13 bronze-verifiability gap (2026-06-12 inf-ADVI incident:
+    # the inf bronze orchestrator could only be verified by hand-diff).
+    _BRONZE_ELIGIBLE = {
+        "bd-gold", "bd", "bd-bronze",
+        "inf-gold", "inf", "inf-bronze",
+        "cot-gold", "cot", "cot-bronze",
+    }
+    _LABEL_TO_DATADIR = {label: dirname
+                         for dirname, (_b, label) in _DEPLOY_PIPELINE_MAP.items()}
+    _firm_label = pipeline.split("-")[0] if pipeline in _BRONZE_ELIGIBLE else None
+
+    if _firm_label:
+        _bronze_dir = _WORKSPACE / "data" / _LABEL_TO_DATADIR[_firm_label] / "scripts" / "bronze"
+        if _bronze_dir.is_dir():
+            for p in sorted(_bronze_dir.glob("*.py")):
+                if p.name.startswith("__"):
+                    continue
+                if silver_filter_stem and silver_filter_stem not in p.stem.lower():
+                    continue
+                label = f"[BRONZE] {p.name}"
+                checked_any = True
+                status, extras = _check_one("BRONZE", label, p, f"code/bronze/{p.name}")
+                print(f"  [BRONZE] {p.name:<48} {status:<14}")
+                for line in extras:
+                    print(f"           {line}")
+                if status == "MATCH":
+                    matched.append(label)
+                elif status == "STALE":
+                    stale.append(label)
+                elif status == "MISSING_ON_S3":
+                    missing_s3.append(label)
+                elif status == "LOCAL_MISSING":
+                    local_missing.append(label)
+                elif status == "TIMEOUT":
+                    timed_out.append(label)
+                elif status == "AWS_UNREACHABLE":
+                    aws_unreach.append(label)
+
+    # ---- AUXILIARY prefixes (NFRA_DEBTSCAN.TOOL-03; CHECK-ONLY, mdpf pattern) ----
+    # S3-driven: enumerate what is actually AT the aux prefix and compare each
+    # object against its same-basename repo counterpart in the mapped repo-home.
+    # No repo counterpart / no mapped home -> explicit UNCOVERED (never silent).
+    # Layer-scoped *-bronze keys check ONLY bronze-homed aux prefixes (e.g. inf
+    # bronze-runner -- the 2026-06-12 dual-prefix) so an unrelated aux staleness
+    # cannot fail a bronze deploy's safe-deploy verify phase.
+    if _firm_label:
+        _aux_table = _AUX_CHECK_ONLY_PREFIXES.get(_firm_label, {})
+        _bronze_only_view = pipeline.endswith("-bronze")
+        for _aux_prefix, _aux_home in sorted(_aux_table.items()):
+            if _bronze_only_view and _aux_home != f"data/{_LABEL_TO_DATADIR[_firm_label]}/scripts/bronze":
+                continue
+            if _aux_home is None:
+                if not silver_filter_stem:
+                    row = (f"[aux:{_aux_prefix}] s3://{S3_BUCKET}/code/{_aux_prefix}/ "
+                           f"(no repo-home mapping)")
+                    uncovered.append(row)
+                    print(f"  [aux:{_aux_prefix}] {'(whole prefix)':<44} UNCOVERED      s3://{S3_BUCKET}/code/{_aux_prefix}/")
+                continue
+            try:
+                _ls = subprocess.run(
+                    [aws_bin, "s3", "ls", f"s3://{S3_BUCKET}/code/{_aux_prefix}/"],
+                    capture_output=True, text=True, timeout=20, env=aws_env,
+                )
+            except subprocess.TimeoutExpired:
+                timed_out.append(f"[aux:{_aux_prefix}] (listing)")
+                print(f"  [aux:{_aux_prefix}] {'(listing)':<44} TIMEOUT")
+                continue
+            if _ls.returncode != 0:
+                aws_unreach.append(f"[aux:{_aux_prefix}] (listing)")
+                print(f"  [aux:{_aux_prefix}] {'(listing)':<44} AWS_UNREACHABLE")
+                continue
+            _home_dir = _WORKSPACE / _aux_home.replace("/", os.sep)
+            for _ls_line in _ls.stdout.splitlines():
+                _parts = _ls_line.split()
+                if not _parts:
+                    continue
+                if _parts[0] == "PRE":
+                    if not silver_filter_stem:
+                        row = (f"[aux:{_aux_prefix}] s3://{S3_BUCKET}/code/{_aux_prefix}/{_parts[1]} "
+                               f"(sub-prefix, not swept)")
+                        uncovered.append(row)
+                    continue
+                if len(_parts) < 4:
+                    continue
+                _fname = _parts[3]
+                if not (_fname.endswith(".py") or _fname.endswith(".sh")):
+                    continue
+                _stem = _fname.rsplit(".", 1)[0]
+                if silver_filter_stem and silver_filter_stem not in _stem.lower():
+                    continue
+                _repo_file = _home_dir / _fname
+                _row_label = f"[aux:{_aux_prefix}] {_fname}"
+                if not _repo_file.exists():
+                    uncovered.append(f"{_row_label} (no repo counterpart in {_aux_home})")
+                    print(f"  [aux:{_aux_prefix}] {_fname:<44} UNCOVERED      no repo counterpart in {_aux_home}")
+                    continue
+                checked_any = True
+                status, extras = _check_one("aux", _row_label, _repo_file,
+                                            f"code/{_aux_prefix}/{_fname}")
+                # CHECK-ONLY contract (TOOL-03): aux drift must be VISIBLE but must
+                # not corrupt the deploy gate -- safe-deploy's verify phase greps
+                # the literal token STALE, so full-tree views report aux drift as
+                # DRIFT. Exception: in the layer-scoped *-bronze view the
+                # bronze-homed aux (inf bronze-runner) IS the deploy gate -- the
+                # runner syncs that prefix, so drift there is a live stranded
+                # bronze deploy and reports real STALE (fails the bronze verify).
+                if status == "STALE" and not _bronze_only_view:
+                    status = "DRIFT"
+                print(f"  [aux:{_aux_prefix}] {_fname:<44} {status:<14} CHECK-ONLY vs {_aux_home}")
+                for line in extras:
+                    print(f"           {line}")
+                if status == "MATCH":
+                    matched.append(_row_label)
+                elif status == "STALE":
+                    stale.append(_row_label)
+                elif status == "DRIFT":
+                    aux_drift.append(_row_label)
+                elif status == "MISSING_ON_S3":
+                    missing_s3.append(_row_label)
+                elif status == "LOCAL_MISSING":
+                    local_missing.append(_row_label)
+                elif status == "TIMEOUT":
+                    timed_out.append(_row_label)
+                elif status == "AWS_UNREACHABLE":
+                    aws_unreach.append(_row_label)
+
+        # Unmapped-prefix enumeration (false-clean guard): any live code/ prefix
+        # that is neither a standard deploy layer nor in the aux registry is
+        # UNCOVERED -- a NEW prefix appearing on a firm bucket self-surfaces.
+        # Skipped on filtered runs (focused view) and bronze-only views.
+        if not silver_filter_stem and not _bronze_only_view:
+            try:
+                _ls_root = subprocess.run(
+                    [aws_bin, "s3", "ls", f"s3://{S3_BUCKET}/code/"],
+                    capture_output=True, text=True, timeout=20, env=aws_env,
+                )
+                if _ls_root.returncode == 0:
+                    for _ls_line in _ls_root.stdout.splitlines():
+                        _parts = _ls_line.split()
+                        if len(_parts) == 2 and _parts[0] == "PRE":
+                            _pname = _parts[1].rstrip("/")
+                            if (_pname not in _STANDARD_CODE_PREFIXES
+                                    and _pname not in _aux_table):
+                                row = (f"[aux:{_pname}] s3://{S3_BUCKET}/code/{_pname}/ "
+                                       f"(prefix not in tool registry)")
+                                uncovered.append(row)
+                                print(f"  [aux:{_pname}] {'(whole prefix)':<44} UNCOVERED      not in tool registry")
+            except subprocess.TimeoutExpired:
+                timed_out.append("[aux] (code/ prefix enumeration)")
+
     print()
     print(f"  Summary: {len(matched)} MATCH, {len(stale)} STALE, "
           f"{len(missing_s3)} MISSING_ON_S3, {len(local_missing)} LOCAL_MISSING, "
-          f"{len(timed_out)} TIMEOUT, {len(aws_unreach)} AWS_UNREACHABLE")
+          f"{len(timed_out)} TIMEOUT, {len(aws_unreach)} AWS_UNREACHABLE, "
+          f"{len(uncovered)} UNCOVERED, {len(aux_drift)} AUX-DRIFT")
+    if uncovered:
+        print(f"  UNCOVERED ({len(uncovered)}) -- the tool CANNOT verify these; not clean, not dirty, UNVERIFIED:")
+        for u in uncovered:
+            print(f"    {u}")
+        print("  Do not count tool-blindness as cleanliness (TOOL-02/03 false-clean guard).")
+    if aux_drift:
+        print(f"  AUX-DRIFT ({len(aux_drift)}) -- CHECK-ONLY prefix differs from its repo home (informational; not the deploy gate):")
+        for d in aux_drift:
+            print(f"    {d}")
+        print("  Investigate whether the aux prefix or the repo copy is the stale side before syncing.")
     if aws_unreach:
         print(f"  AWS_UNREACHABLE: {', '.join(aws_unreach)}")
         print("  AWS credentials/network could not reach S3; MATCH/MISSING is NOT verified.")
@@ -1834,8 +2050,12 @@ def cmd_deployed(args):
         print("  AWS CLI resolution works, but head-object did not return before timeout.")
         print("  Check caller credentials/network, or rerun with AWS_EC2_METADATA_DISABLED=true in the invoking shell.")
     elif not stale and not missing_s3 and (matched or local_missing):
-        print("  All checked scripts are up-to-date on S3.")
-    elif not checked_any:
+        if uncovered or aux_drift:
+            print("  All deploy-gate scripts are up-to-date on S3 "
+                  "(UNCOVERED = unverified / AUX-DRIFT = check-only divergence -- see above).")
+        else:
+            print("  All checked scripts are up-to-date on S3.")
+    elif not checked_any and not uncovered:
         print(f"  No scripts matched filter: {raw_filter!r}")
 
 
@@ -2712,7 +2932,8 @@ def main():
     p_deployed = sub.add_parser('deployed', help='Compare local scripts against S3-uploaded versions')
     p_deployed.add_argument('script_id', nargs='?', default='',
                             help='Optional: check only this script (e.g. D_00, or a '
-                                 'data/<tree>/scripts/... path which auto-detects the tree). '
+                                 'data/<tree>/scripts/... path which auto-detects the tree, '
+                                 'incl. bronze paths per NFRA_DEBTSCAN.TOOL-03). '
                                  'Omit (with no --firm/--pipeline) to SWEEP ALL trees.')
     # NFRA_DEBTSCAN.TOOL-01: default None so a bare `deployed` sweeps every tree
     # (bd+inf+cot+mdpf). An explicit --pipeline/--firm/path scopes to one tree.
