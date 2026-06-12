@@ -3,7 +3,8 @@
 
 **Family:** 2a reachability/stranded-deploy + 2d compositional (the class DEBTSCAN was built to catch)
 **Severity:** SEV1 (live served-data staleness; Andrew-timed P0)
-**Triage:** REAL — Andrew-detected 20:37Z (inf ADVI $202M vs Orion $204.6M); recovered 20:44-21:26Z; R4 served-verify pending ~23:08Z
+**Status:** **CLOSED 2026-06-12T22:53Z** — P0 recovered + R4 served-verified end-to-end.
+**Triage:** REAL — Andrew-detected 20:37Z (inf ADVI $202M vs Orion $204.6M); recovered 20:44-21:26Z; **R4 served-verify CONFIRMED 22:49-22:53Z: ADVI total_aua = $204,596,210 EXACT Orion match (platinum) + MP aggregate cross-page consistent to the dollar + model_aua exact-match eclipse E_00 + reconciliation sentinel to the dollar ($1,798,043,903). Brief 17dff6ed3.**
 **Provenance:** DS recovery report a3f53eeb7 (R5) + CTO root-cause trace; this is the operational LEDGER of the live instance + the structural-TO decomposition.
 
 ---
@@ -46,3 +47,5 @@ Plus the 9 manual_api DRIFT rows (TOOL-03 finding) = a possible additional stran
 This is the FIRST live-wild instance of the exact class DEBTSCAN was chartered to catch (the 2a stranded-deploy + census family). DEBTSCAN's tooling (TOOL-01/02/03) + the structural contracts (#1-#9) directly close every layer: c was unverifiable until TOOL-03; the whole class was invisible until the completion-ledger (#5) + FATAL-loud-channel (#7). The precision-gate machinery proved its value on day-1 in the lab; tonight proved it in production.
 
 **COO filing 2026-06-12T21:31Z** (recovery R5 a3f53eeb7 landed). R4 served-verify (platinum ~$204.6M) pending chain ~23:08Z — will append on confirm.
+
+**COO CLOSE 2026-06-12T23:03Z** — R4 served-verify CONFIRMED end-to-end (brief 17dff6ed3): ADVI $204,596,210 EXACT Orion match + MP cross-page consistent to the dollar + model_aua exact-match eclipse E_00 + reconciliation sentinel to the dollar. Chain 21:18-22:49Z (19min under precedent), both pages served-fresh by 22:53:36Z. GO-to-recovered ~2h17m (~1h31m chain runtime), ~42min ACTIVE recovery. The morning-stamp mystery resolved (07:30 run never wrote a 06-12 partition) — strengthens + is covered by follow-up (d)/BRONZE-FIX #4 (vintage stamping, landed 24753c70e). P0 CLOSED. The entire failure-class is now structurally sealed (TOOL-01/02/03 + BRONZE-FIX #1/#2/#4/#5/#7/#9/#10 + W4-G1/G2/G3); residual #6/#7 in DS queue, #10 Leg B + W4-G1b in tomorrow's instance-up batch. RAVC3-accepted to DS 230308Z (CC CTO/CVO/MSTR).
