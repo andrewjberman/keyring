@@ -2,13 +2,19 @@
 
 **Generated:** 2026-06-12T~1815Z  
 **Author:** 0.4.0_DE_ClientPlatform  
-**Branch-head (vintage anchor):** `b879522196e35943149e517826fad070cfe73314` (CLOUD)  
 **Carve authority:** critical-surfaces.yaml v0.3 (CTO carve-ACK bf3d019dc, 2026-06-12)  
 **Global graph baseline:** `.comp-graph/baseline.json` — 2139 nodes, 2691 edges (comp-xref --save)
 
-> **Vintage anchor note:** `warehouse/_branch_head.main.json` (NFRA_GLOBGRPH F6) is not yet
-> present — the F6 warehouse is not deployed. Baselines are recorded against the CLOUD branch-head
-> commit above. Re-sign baselines when NFRA_GLOBGRPH F6 ships and `warehouse/` is populated.
+**Vintage anchor (F6 — NFRA_GLOBGRPH, live since 2026-06-12T16:15:51Z):**  
+- S3 marker: `s3://opal-313476888478-globgrph/warehouse/_branch_head.main.json`  
+- nessie_commit_hash: `59b0a6a9a98d7d2ed03e5e8f7123f331e20cbac8063b9e8c7c6970a10f8dd3f5`  
+- writer_id: `incremental_updater`  
+- graph_nodes snapshot_id: `2373504567134934158`  
+- graph_edges snapshot_id: `6719449234129434488`
+
+> **Correction (CVO P2, 175033Z):** Initial D8 draft erroneously stated F6 marker was not present.
+> The marker was live at 16:15:51Z (certified b22320a4c); baselines are now re-anchored to the F6
+> nessie vintage above. The prior CLOUD branch-head ref (`b879522196e3`) is superseded by this anchor.
 
 ---
 

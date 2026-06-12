@@ -88,7 +88,7 @@ monitor:
     signed: true    # D8 DE baseline generated 2026-06-12T~1815Z by 0.4.0_DE_ClientPlatform
     baseline_generated: "2026-06-12T~1815Z"
     baseline_artifact: ".comp-graph/baseline.json"   # global graph snapshot (comp-xref --save); 2139 nodes, 2691 edges
-    baseline_vintage_anchor: "CLOUD b879522196e35943149e517826fad070cfe73314 (F6 warehouse/_branch_head.main.json not yet present -- NFRA_GLOBGRPH F6 pending; re-sign when F6 ships)"
+    baseline_vintage_anchor: "F6 s3://opal-313476888478-globgrph/warehouse/_branch_head.main.json -- nessie_commit_hash=59b0a6a9a98d7d2ed03e5e8f7123f331e20cbac8063b9e8c7c6970a10f8dd3f5, graph_nodes_snapshot=2373504567134934158, graph_edges_snapshot=6719449234129434488, committed_at=2026-06-12T16:15:51Z, writer=incremental_updater (NFRA_GLOBGRPH v0.1.11/v0.1.12, certified b22320a4c). CVO P2 correction 175033Z: prior CLOUD-commit anchor was wrong -- F6 marker was live since 16:15:51Z."
     baseline_findings: "org/modules/graph/D8-findings.md"
     # NOTE: comp-xref --save saves a GLOBAL graph snapshot (no per-surface/per-firm save mode).
     # Per-surface carving is done via comp-platinum page scans (see D8-findings.md).
