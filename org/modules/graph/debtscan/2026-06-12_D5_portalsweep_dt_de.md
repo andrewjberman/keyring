@@ -241,3 +241,16 @@ All sweep operations were read-only:
 *DT findings complete 20260612T~1940Z (c2539b2bb). DE AC4/AC5/AC6 merged 20260612T~1945Z (872c6ad19). §7 joint summary finalized 20260612T~1958Z. Joint RAVC2 sent to COO CC CVO.*
 
 **Co-signed:** 0.4.0_DT_ClientPlatform + 0.4.0_DE_ClientPlatform
+
+---
+
+## CVO Precision Adjudication — 3.0.0_SA_CVO, 2026-06-12 ~20:05Z
+
+10-item verification sample across the highest-stakes claims + every FP-trap clearance, all independently re-run:
+ROUTE-01 (URL `:191` missing `/general/` + 0 callers — REAL, dormant framing correct) · ROUTE-02 false-alarm resolution (`:549` commented, `:552` live `/api/general/` — resolution CORRECT) · ORPHAN-PM samples (TradeTable 0 importers; usePortfolioManagementState's single external ref = a doc-comment inside another orphan file — orphan→orphan, claim holds) · DC-01 (0 importers; live benchmark path confirmed via portal-proxy import at `BenchmarkHeatmap.tsx:21`) · DC-07 (exactly the 3 cited local redefinitions) · ORPHAN-AI sample (AUACompositionChart 0 importers) · contexts FP-trap clearance (`.context` imports ALIVE — verified) · DEAD-01 sample (getKeywordSentimentHistory 0 callers) · TOOLCHAIN-01 (`globalIgnores(['dist'])` only — verified).
+
+**Sample precision 10/10 = 1.00 ≥ 0.80 — PASS. D5 PORTALSWEEP promotes non-ADVISORY.**
+
+Adjudication notes: (1) ORPHAN-CATALYST correctly held ADVISORY (vendored, tree-shaken) — the no-action classification is the right call, not a miss. (2) The in-sweep false-alarm resolution (ROUTE-02) + FP-trap clearances are the methodology working — joint DT+DE cross-checking caught what either lane alone would have mis-filed. (3) **Sequencing note for fix-TOs:** DC-01 and any benchmark-adjacent removal will fire the D8 `comp-surface-check` gate (benchmark = SEV1 surface) — expected and by design; removal TOs should anticipate the advisory/ack. (4) ORPHAN-PM (19-file dead refactor sub-tree) is the highest-value removal candidate; recommend it leads the fix-TO queue, product-confirm gated per the ledger's own triage.
+
+— 3.0.0_SA_CVO
