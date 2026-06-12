@@ -2159,6 +2159,26 @@ def cmd_snapshot(args):
         except Exception as e:
             print(f"WARN: S3 archive failed ({type(e).__name__}: {e}); local snapshot kept")
 
+    # TO-F3 (NFRA_GLOBGRPH ruling F3): opt-in --commit-to-nessie so an ad-hoc
+    # derive lands as a Nessie commit BY CONSTRUCTION instead of only the tarball
+    # side-channel (CVO verdict be17d49eb leg-3: ad-hoc derives never reached
+    # Nessie). Default (flag absent) is unchanged. Reuses the importable
+    # derive_runner.commit_to_iceberg (the canonical 8-field-schema + retry/backoff
+    # writer the nightly + the Lambda agree on -- NOT the stale 7-field
+    # cmd_iceberg_commit). F5 doctrine: a re-derive is graph maintenance, not
+    # verification; read-your-own-writes stays on served-artifact / live AWS.
+    if getattr(args, "commit_to_nessie", False):
+        import time as _time
+        gg = Path(__file__).resolve().parents[3] / "infra" / "aws" / "globgrph"
+        sys.path.insert(0, str(gg))
+        import derive_runner  # noqa: E402  (path inserted above; comp_aws_cli already loaded -> no circular re-exec)
+        batch_ts = int(_time.time() * 1000)
+        print(f"INFO: --commit-to-nessie: committing ad-hoc derive to Nessie ({derive_runner.NESSIE_URI})")
+        derive_runner.commit_to_iceberg(graph, batch_ts)
+        print("OK: ad-hoc derive committed to Nessie -- re-derive is now a Nessie "
+              "version (the canonical surface serves it on next rebuild), not just "
+              "the tarball side-channel.")
+
 def cmd_iceberg_commit(args):
     """
     Write a graph JSON to Iceberg tables via pyiceberg + Nessie catalog.
@@ -2288,6 +2308,9 @@ def main():
     sn = sub.add_parser("snapshot")
     sn.add_argument("--stamp")
     sn.add_argument("--no-s3", action="store_true", dest="no_s3")
+    sn.add_argument("--commit-to-nessie", action="store_true", dest="commit_to_nessie",
+                    help="TO-F3: also commit this ad-hoc derive to Nessie (opt-in; "
+                         "default = tarball side-channel only)")
     sn.set_defaults(fn=cmd_snapshot)
     m = sub.add_parser("metrics")
     m.add_argument("--graph")
