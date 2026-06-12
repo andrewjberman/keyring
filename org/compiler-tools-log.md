@@ -4843,3 +4843,22 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-06-12 | 0.7.0_AE_CloudOps | NFRA_GRAPHS.D7-FIX.T4 | comp-surface-check | comp-surface-check scan --current .runtmp/graph_synth.json --json | PASS |
 
 | 2026-06-12 | 1.0.0_SA_CTO | NFRA_DEBTSCAN PRD v0.1 | comp-kuzu x5 (QUERY-class: censuses + stitch probe) | All clean; F6 marker-current header verified in anger; grounded 259-isolated/319-undeclared/3088-stitch Day-0 numbers | none |
+| 2026-06-12 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check scan | PASS |
+| 2026-06-12 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check scan --current .runtmp/gs.json | PASS |
+| 2026-06-12 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check scan --current .runtmp/gs2.json | PASS |
+| 2026-06-12 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check --list-watched-files | FAIL |
+| 2026-06-12 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check list --help | PASS |
+| 2026-06-12 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check list | PASS |
+| 2026-06-12 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check list-watched-files | PASS |
+| 2026-06-12 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check scan | PASS |
+| 2026-06-12 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check scan | PASS |
+| 2026-06-12 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check scan --json | PASS |
+| 2026-06-12 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check scan | PASS |
+| 2026-06-12 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check scan | PASS |
+| 2026-06-12 | 0.4.0_DE_ClientPlatform | NFRA_GRAPHS.D7 | comp-platinum | page DistributionTab/ClientsTab/AdvisorsTab --firm 49financial/inflection | PASS | D7 pilot auth FP triage + T2 type-fix verification; ADVI auth:NONE confirmed FP (dynamic URL, CF behavior 21) |
+| 2026-06-12 | 0.4.0_DE_ClientPlatform | NFRA_GRAPHS.D7 | comp-transform | schema-check ClientsTab | PASS | Post-T2 verify: all rendered fields match response types |
+| 2026-06-12 | 0.4.0_DE_ClientPlatform | NFRA_GRAPHS.D7 | comp-routes | behaviors | PASS | Auth triage + benchmark/peers route verification (CF behavior 16 [AUTH]) |
+| 2026-06-12 | 0.4.0_DE_ClientPlatform | NFRA_GRAPHS.D8 | comp-platinum | page ModelPortfolios/AdvisorsTab/PartnerAnalytics/etc --firm bd/inf/cot | PARTIAL | D8 15-pair surface scan; BenchmarkHeatmap not found, PeersTab WARN (no fetches), 2 fetches missed in ModelPortfolios — coverage gaps documented in D8-findings.md |
+| 2026-06-12 | 0.4.0_DE_ClientPlatform | NFRA_GRAPHS.D8 | comp-xref | --save (x2) | PASS | Global baseline 2139n/2691e; confirmed identical on re-sign verification |
+| 2026-06-12 | 0.4.0_DE_ClientPlatform | NFRA_GRAPHS.D8 | comp-xref | getModelPortfolioBenchmarks, getPeerPerformance (symbol lookup) | FAIL | 0 nodes matched — portal-proxy.ts JS functions not indexed in trace graph |
+| 2026-06-12 | 0.4.0_DE_ClientPlatform | NFRA_GRAPHS.D8 | comp-surface-check | list | PASS | 8 unique watched files across 5 surfaces; used for watched_file_shas re-sign block (c2aebe4ed) |
