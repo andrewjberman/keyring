@@ -28,20 +28,34 @@ incident anchors are cited inline. Design history: `docs/briefs/portal-main-tree
   silently rides into the promote as an unverified passenger
   (`feedback_portal_promote_remerges_live_dev_at_go_not_frozen_snapshot`). COO holds portal/DEV
   pushes until the promote lands.
+- **If COO dispatched this promote via GO message:** the freeze is already active — skip the MCP
+  notify, just confirm the GO is current (same session, no STOP received since) before proceeding.
 
 ## Step 1 — Clean up the DEV tree
 
 ```bash
-cd portal
-git branch --show-current        # MUST print DEV — if PROD: git checkout DEV first (Rule 19)
-git status --porcelain           # working tree must be CLEAN
-git pull origin DEV              # the promote ships origin/DEV; local must match
+git -C portal branch --show-current   # MUST print DEV — if PROD: git -C portal checkout DEV first (Rule 19)
+git -C portal status --porcelain      # working tree must be CLEAN
+git -C portal fetch origin
+# Two cases — check which applies:
+#   Local DEV has new commits not yet pushed (common: the commit you're about to promote):
+#     → push DEV first (Step 1a below); do NOT pull (would discard the local commit)
+#   Local DEV is behind origin/DEV:
+#     → git -C portal pull origin DEV
+git -C portal log --oneline origin/DEV..HEAD  # non-empty = local ahead → push case
 ```
 - Stray uncommitted files: commit them properly (own lane) or clear them — never promote around a
   dirty tree.
-- If dependencies changed: `bun install` **FOREGROUND** — a backgrounded install silently stalls
-  the promote mid-flight (`reference_portal_promote_backgrounded_bun_install_idle_stall`,
-  v2.1.116: ~26min alive-but-idle).
+- **`bun install` belongs in Step 4 (the worktree), not here.** Running it in the main tree is
+  wasted work — the worktree gets its own node_modules. See Step 4.
+
+### Step 1a — Push DEV if local is ahead
+
+```bash
+git -C portal push origin DEV   # NO MSYS_NO_PATHCONV — see Step 2
+```
+VALGATE D-1 runs on DEV push. PASS or PASS/WARN proceed; a hard BLOCK means fix the adapter gap
+before promoting.
 
 ## Step 2 — Zero TypeScript errors
 
@@ -66,14 +80,29 @@ v2.1.114 stale 47b3d5d7). Step 3 is mandatory on EVERY promote, not just after k
 ## Step 4 — Merge forward to PROD in an EPHEMERAL worktree
 
 ```bash
-cd /c/Users/AndrewBerman/Desktop/ajb_workspace/portal
-git worktree add ../.runtmp/portal-promote-$(date -u +%Y%m%dT%H%M%SZ) PROD
-cd ../.runtmp/portal-promote-*/
-git merge origin/DEV --no-edit   # the forward-merge: DEV -> PROD
-git push origin PROD             # plain push; no MSYS_NO_PATHCONV; VALGATE gate runs here
+WORKTREE=/c/Users/AndrewBerman/Desktop/ajb_workspace/.runtmp/portal-promote-$(date -u +%Y%m%dT%H%M%SZ)
+git -C /c/Users/AndrewBerman/Desktop/ajb_workspace/portal worktree add "$WORKTREE" PROD
+cd "$WORKTREE"
+
+# bun install FOREGROUND — node_modules required for the pre-push tsc gate
+/c/Users/AndrewBerman/.bun/bin/bun install
+
+# Explicit --no-ff with a descriptive message encoding rollback SHA
+PROD_BASE=$(git rev-parse origin/PROD)
+git merge --no-ff origin/DEV \
+  -m "merge DEV->PROD: vX.Y.Z — <description> @ DEV $(git rev-parse origin/DEV). Base $PROD_BASE. Rollback: $PROD_BASE. Authored <serial>."
+
+# Parity gate — MUST be empty; non-empty = something is wrong with the merge
+git diff origin/DEV HEAD   # empty = OK; any output = ABORT
+
+git push origin PROD       # plain push; no MSYS_NO_PATHCONV; VALGATE + tsc gate runs here
 ```
 The main `portal/` tree stays on DEV throughout — never run the merge there, and never run
 `bun run dev` from the `.runtmp` worktree (it hides a stranded main tree).
+
+`bun install` must be **FOREGROUND** — a backgrounded install silently stalls the promote
+mid-flight (`reference_portal_promote_backgrounded_bun_install_idle_stall`, v2.1.116: ~26min
+alive-but-idle). Without it the pre-push hook fails with `tsc: command not found`.
 
 ## Step 5 — Deploy verification (CI does the server deploy + tag)
 
@@ -98,21 +127,33 @@ gh run view <run-id> --json conclusion,status       # THE verification
 
 ```bash
 cd /c/Users/AndrewBerman/Desktop/ajb_workspace
-git -C portal fetch && git -C portal checkout DEV && git -C portal pull origin DEV
+# Main tree should still be on DEV — verify, do NOT checkout (it never left)
+git -C portal branch --show-current   # expect: DEV
 .tools/safe-commit.sh --author "{serial} <{serial}@opal.agent>" \
-  -m "portal(promote): submodule pointer -> portal-vX.Y.Z (PROD <commit>)" -- portal
+  -m "bump portal pointer -> <DEV-HEAD>; live PROD=<merge-sha> (tag portal-vX.Y.Z), <description>; CI run <id> SUCCESS" \
+  -- portal
 git push origin CLOUD
 ```
 (The pointer commit records which portal state the workspace pairs with; push goes through the
-pre-push safe-deploy/HALTGT net normally.)
+pre-push safe-deploy/HALTGT net normally. Commit message should encode the PROD merge SHA + tag
+for traceability — see session logs for examples.)
 
 ## Step 7 — Teardown + flip back to DEV (the conclusion Andrew named)
 
 ```bash
-git worktree remove .runtmp/portal-promote-*        # ephemeral worktree gone
-git -C portal branch --show-current                  # MUST print DEV
-pwd                                                  # MUST be the workspace root (base doctrine)
+cd /c/Users/AndrewBerman/Desktop/ajb_workspace
+git -C portal worktree remove "$WORKTREE" 2>/dev/null || true
+git -C portal worktree prune   # cleans git's internal tracking regardless of physical outcome
+git -C portal branch --show-current   # MUST print DEV
+pwd                                    # MUST be the workspace root (base doctrine)
 ```
+**Windows long-path note:** `worktree remove` frequently fails with "Filename too long" on this
+host — the physical `.runtmp/portal-promote-*` directory persists. That is acceptable: it is
+gitignored and operationally inert. `worktree prune` cleans git's internal worktree tracking
+even when the physical remove fails — run it every time. Do not leave a second `git worktree
+add` attempt for the same PROD branch without pruning first (the "PROD is already used by
+worktree" error class).
+
 If the main tree is on PROD here, that IS a strand incident — `git -C portal checkout DEV` now
 and note it in the log; do not leave it for the missing-DEV-feature symptom to reveal.
 
