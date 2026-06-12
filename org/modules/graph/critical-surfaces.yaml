@@ -85,12 +85,47 @@ monitor:
   baseline:
     method: "comp-xref --save per surface x firm at carve-time"
     provenance: "each signed baseline RECORDS the F6 branch-head marker state at sign-time (warehouse/_branch_head.main.json: nessie_commit_hash + per-table snapshot_ids) so baseline-vs-current diffs are vintage-anchored -- a diff across un-anchored graph vintages is ambiguous (PRD NFRA_GLOBGRPH v0.4.3 F6). [v0.3 CTO carve-review]"
-    signed: true    # D8 DE baseline generated 2026-06-12T~1815Z by 0.4.0_DE_ClientPlatform
-    baseline_generated: "2026-06-12T~1815Z"
+    signed: true    # D8 DE baseline generated 2026-06-12T~1815Z; re-signed 2026-06-12T~1805Z (watched_file_shas added, CTO Q1 approved)
+    baseline_generated: "2026-06-12T~1805Z"
     baseline_artifact: ".comp-graph/baseline.json"   # global graph snapshot (comp-xref --save); 2139 nodes, 2691 edges
     baseline_vintage_anchor: "F6 s3://opal-313476888478-globgrph/warehouse/_branch_head.main.json -- nessie_commit_hash=59b0a6a9a98d7d2ed03e5e8f7123f331e20cbac8063b9e8c7c6970a10f8dd3f5, graph_nodes_snapshot=2373504567134934158, graph_edges_snapshot=6719449234129434488, committed_at=2026-06-12T16:15:51Z, writer=incremental_updater (NFRA_GLOBGRPH v0.1.11/v0.1.12, certified b22320a4c). CVO P2 correction 175033Z: prior CLOUD-commit anchor was wrong -- F6 marker was live since 16:15:51Z."
     baseline_findings: "org/modules/graph/D8-findings.md"
+    portal_commit_at_sign: "8b6a64666ce1a672337a4a66de2db23fe35e16b7"
+    # Layer-2 file-SHA watch: for surfaces where the graph snapshot has 0 nodes (BenchmarkHeatmap,
+    # PeersTab prop-drill), a SHA change on a watched file fires the surface's alarm tier.
+    # SHAs are git hash-object (content hash) of portal submodule files at portal_commit_at_sign.
+    # Severity rule: a file shared across surfaces alarms at MAX severity (SEV1 wins).
+    watched_file_shas:
+      model_portfolios.headline:
+        - path: portal/src/pages/ModelPortfolios.tsx
+          sha: fece39168bc6bfedf2a31a74c5d1df189a03fd56
+        - path: portal/src/api/endpoints/aum.ts
+          sha: e1628d56bed9e35d8a0c2e1287e37e7f5d12a9a8
+      model_portfolios.benchmark:
+        - path: portal/src/pages/ModelPortfolios.tsx
+          sha: fece39168bc6bfedf2a31a74c5d1df189a03fd56
+        - path: portal/src/api/portal-proxy.ts
+          sha: b338013868ab89a47ab4ebfa9e86628a66b09127
+        - path: portal/src/components/BenchmarkHeatmap.tsx
+          sha: 820694b17c1e06f2d2e2f5a643f78e5db6667ab3
+      advisor_intelligence:
+        - path: portal/src/pages/AdvisorIntelligence/_shared/components/PartnerAnalytics.tsx
+          sha: 2dfc533e30d2d0c863e9d9f61a21316ebfe8ab29
+        - path: portal/src/pages/AdvisorIntelligence/index.tsx
+          sha: 9955e50181b43639aa897d274702d318175cac97
+      model_portfolios.peers:
+        - path: portal/src/pages/ModelPortfolios.tsx
+          sha: fece39168bc6bfedf2a31a74c5d1df189a03fd56
+        - path: portal/src/api/portal-proxy.ts
+          sha: b338013868ab89a47ab4ebfa9e86628a66b09127
+        - path: portal/src/pages/ModelPortfolios/tabs/PeersTab.tsx
+          sha: f1f4b4fa07ba0f541f0b7aaea19abad51caadaf8
+      model_portfolios.aum:
+        - path: portal/src/pages/ModelPortfolios.tsx
+          sha: fece39168bc6bfedf2a31a74c5d1df189a03fd56
+        - path: portal/src/api/endpoints/aum.ts
+          sha: e1628d56bed9e35d8a0c2e1287e37e7f5d12a9a8
+        - path: portal/src/components/AUMGrowthMetrics.tsx
+          sha: f73f5ee788dea78cb21da66402516d748d21884b
     # NOTE: comp-xref --save saves a GLOBAL graph snapshot (no per-surface/per-firm save mode).
     # Per-surface carving is done via comp-platinum page scans (see D8-findings.md).
-    # comp-platinum scan coverage gaps documented in D8-findings.md (BenchmarkHeatmap not registered;
-    # PeersTab no direct fetches; getAUMTimeSeries/getMdpfAggregateAUATimeSeriesByFirm not detected).
