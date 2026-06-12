@@ -21,12 +21,13 @@ HARD INVARIANT until close: nobody refreshes code/bronze-runner/orchestrator.py.
 
 | leg | kind | state | evidence / close condition |
 |---|---|---|---|
-| #2 orchestrator + contract -> s3://opal-data-inf/code/bronze/ | s3-prefix | pending push (auto via safe-deploy pre-push hook) | comp-pipescript deployed --pipeline inf-bronze = all MATCH. INERT until fetch leg (runner reads bronze-runner/ till then) |
+| #2 orchestrator + contract -> s3://opal-data-inf/code/bronze/ | s3-prefix | CLOSED 2026-06-12T21:58Z (push 5ba07e0b6, safe-deploy PASS) | `[BRONZE] orchestrator.py MATCH` + `[BRONZE] bronze_required_dims.py MATCH` (inf-bronze 4/4 MATCH); bronze-runner/orchestrator.py untouched (16:49 R1 timestamp) -- INERT until fetch leg |
 | fetch script -> s3://opal-data-inf/code/bronze-runner/inf-bronze-fetch.sh | s3-prefix | OPEN | upload + TOOL-03 [aux:bronze-runner] inf-bronze-fetch.sh MATCH (currently DRIFT = repo ahead, tool-watched) |
 | on-instance /usr/local/bin/inf-bronze-fetch.sh refresh | ec2-baked-asset | OPEN | SSM cp from S3 + on-instance md5 == repo md5 (2026-06-13 ~13:05Z, mid-run window is safe — running procs hold their own copies) |
 | code/bronze-runner/orchestrator.py DELETE (stale pipeline-code slot) | s3-delete | OPEN (COO-authorized conditional, RAVC3 213944Z) | gated on fetch-leg verify; per-object verify-before-delete |
 | manual_api collision-safe consolidation (code/manual_api refresh + code/bronze twins, cross-prefix md5 pre-check) | s3-prefix | OPEN (Finding 2; DEBTSCAN 2a ledger files with the bundle) | TOOL-03 [aux:manual_api] 9 DRIFT -> 0; no basename-collision across the gold runner's 4 flat-synced prefixes |
 | contract ACTIVATION (runner executes contract-enforcing orchestrator) | activation | OPEN | first post-bundle scheduled run's _BRONZE_COMPLETE.json carries the "contract" block (validate on the scheduled run, not a manufactured one) |
+| BRONZE-FIX #9 AC5 concurrency-aware self-shutdown (folded into the fetch-script legs by AE 0.7 handoff 220430Z -- same baked asset, no double-deploy) | rides fetch-script legs | OPEN | ShutdownArmed/ShutdownDeferred CW metrics present in the next run's log; bronze-runner keeps its watchdog timer (deferral safe; gold-runner asymmetry = #9-F1, AE 0.7 lane) |
 
 ## Sequencing (tomorrow AM bundle, in order)
 1. ~13:00Z instance self-starts for the daily pull (runs OLD fetch + OLD orchestrator — proven path, unaffected).
