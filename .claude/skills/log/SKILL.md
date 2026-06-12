@@ -25,12 +25,15 @@ standard wins on any divergence. Archetype-tag requirement: `org/XXX.md` § "Arc
   ```bash
   cd /c/Users/AndrewBerman/Desktop/ajb_workspace && git rev-parse --show-toplevel
   ```
-  `/log` operates ENTIRELY in the parent workspace repo — the log file, `org/compiler-tools-log.md`,
-  and `safe-commit.sh` all live there — even when your session's work was in `portal/`. A CWD left
-  in `portal/` (the dual-repo footgun: portal is its OWN git repo) makes the wrapper error at best,
-  and at worst silently feeds you the WRONG repo's history: a bare `git log` inside `portal/`
-  returns portal commits only, so your evidence pull under-reports without any error. Anchor, then
-  reference portal explicitly as `git -C portal log ...` when your window includes portal commits.
+  **Doctrine (Andrew-direct 2026-06-12): the workspace root IS every agent's base — your files,
+  logs, task orders, and identity all live under `org/` in ajb_workspace. No agent is ever BASED
+  in `portal/`.** Portal is a WORK-SITE you visit for portal tasks — address it explicitly
+  (`git -C portal log ...`, scoped `cd portal && ... && cd -`) and return to base; a CWD that
+  LINGERS in `portal/` after the portal task is itself the defect, not a normal state. Why it
+  bites here: portal is its own git repo, so a lingering portal CWD errors `safe-commit.sh` at
+  best and at worst silently feeds you the WRONG repo's history (a bare `git log` inside
+  `portal/` returns portal commits only — evidence under-reports with no error). The anchor
+  above is simply RETURNING TO BASE; it is not a /log-specific quirk.
 - **Serial:** your full registered serial INCLUDING any `~B`/`~C` lane suffix.
 - **Log dir:** `org/{tier_folder}/{your_serial}/logs/{YYYY-MM-DD}/` (tier folders: `tier0/`,
   `tier1_exec/`, `tier2_senior/`, `tier3_junior/`). Lane agents: use the folder matching your
