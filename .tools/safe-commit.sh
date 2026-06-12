@@ -199,20 +199,27 @@ fi
 # (the caller listed it explicitly = intent). Idempotent for already-tracked/staged.
 git add -f -- "${PATHSPEC[@]}" 2>/dev/null || true
 
-# Build pathspec lookup
-declare -A PATHSPEC_SET=()
-for p in "${PATHSPEC[@]}"; do
-  PATHSPEC_SET["$p"]=1
-done
+# (3) IN_SCOPE: git-expanded files matching our declared pathspec. Use git's own
+# pathspec expansion so directories and globs work uniformly — `git diff --cached
+# --name-only -- <dir>` expands dir → dir/file1, dir/file2,... matching the names
+# returned by git diff --cached. A literal-string PATHSPEC_SET would miss every
+# expanded filename under a directory pathspec (dir != dir/file.json).
+IN_SCOPE="$(git diff --cached --name-only -- "${PATHSPEC[@]}" 2>/dev/null || true)"
+declare -A IN_SCOPE_SET=()
+if [ -n "$IN_SCOPE" ]; then
+  while IFS= read -r f; do
+    [ -z "$f" ] && continue
+    IN_SCOPE_SET["$f"]=1
+  done <<< "$IN_SCOPE"
+fi
 
-# (3) Contamination = staged-now files that are NEITHER in the declared pathspec
-# NOR in the baseline (= files THIS run staged beyond its own scope).
+# Contamination = staged-now files NEITHER in the in-scope set NOR in the baseline.
 STAGED="$(git diff --cached --name-only 2>/dev/null || true)"
 EXTRA=()
 if [ -n "$STAGED" ]; then
   while IFS= read -r f; do
     [ -z "$f" ] && continue
-    if [ -z "${PATHSPEC_SET[$f]+x}" ] && [ -z "${BASELINE_SET[$f]+x}" ]; then
+    if [ -z "${IN_SCOPE_SET[$f]+x}" ] && [ -z "${BASELINE_SET[$f]+x}" ]; then
       EXTRA+=("$f")
     fi
   done <<< "$STAGED"
@@ -257,6 +264,21 @@ if [ "$N_EXTRA" -gt 0 ]; then
     echo "  - git reset HEAD -- <extras>     # unstage extras, commit yours cleanly" >&2
     echo "  - rerun with --force             # log bypass to audit and proceed" >&2
     exit 1
+  fi
+fi
+
+# B5 D8-AE Part B: advisory surface-check gate (QUERY-only, ms; never blocks the commit).
+# Runs comp-surface-check in advisory mode so any SEV1/SEV2 touch surfaces visibly
+# without stopping the commit. SURFACE_ACK is not required in advisory mode.
+if command -v comp-surface-check >/dev/null 2>&1 && [ -n "$IN_SCOPE" ]; then
+  _sc_args=()
+  while IFS= read -r _f; do
+    [ -z "$_f" ] && continue
+    _sc_args+=("--file" "$_f")
+  done <<< "$IN_SCOPE"
+  if [ ${#_sc_args[@]} -gt 0 ]; then
+    comp-surface-check check --mode advisory "${_sc_args[@]}" 2>&1 \
+      | sed 's/^/  [surface-check] /' || true
   fi
 fi
 

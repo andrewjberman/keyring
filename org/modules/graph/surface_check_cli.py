@@ -183,6 +183,43 @@ def _audit(reason: str, sev1_touches: list[tuple]) -> None:
         os.makedirs(os.path.dirname(ACK_AUDIT), exist_ok=True)
         with open(ACK_AUDIT, "a", encoding="utf-8") as f:
             f.write(f"{ts} SURFACE_ACK surfaces={ids} reason={reason!r}\n")
+        # B1 D8-AE Part B: durable ledger entry in org/critical_paths/change_management/
+        _write_ledger_approval(ts, ids, reason, sev1_touches)
+    except Exception:
+        pass
+
+
+def _write_ledger_approval(ts: str, ids: str, reason: str,
+                            sev1_touches: list[tuple]) -> None:
+    """B1: write a durable .md approval entry to org/critical_paths/change_management/.
+    Best-effort -- never raises (called from inside except-swallowed _audit)."""
+    try:
+        commit = ""
+        try:
+            r = subprocess.run(["git", "rev-parse", "HEAD"], cwd=_WS,
+                               capture_output=True, text=True, check=True)
+            commit = r.stdout.strip()[:12]
+        except Exception:
+            pass
+        first_surface = sorted({t[1] for t in sev1_touches})[0].replace(".", "-")
+        ledger_dir = os.path.join(_WS, "org", "critical_paths", "change_management")
+        os.makedirs(ledger_dir, exist_ok=True)
+        fname = os.path.join(ledger_dir, f"{ts}_{first_surface}_all_approval.md")
+        touched = "\n".join(
+            f"- `{f}` ({sid}, {sev})" for f, sid, sev in sorted(set(sev1_touches))
+        )
+        with open(fname, "w", encoding="utf-8") as fh:
+            fh.write(
+                f"# SURFACE_ACK approval -- {ts}\n\n"
+                f"**class:** approval\n"
+                f"**surfaces:** {ids}\n"
+                f"**firm:** all\n"
+                f"**commit:** {commit or '(unknown)'}\n"
+                f"**reason:** {reason}\n\n"
+                f"## Touched surfaces\n\n{touched}\n\n"
+                f"Durable record (D8-AE B1, NFRA_GRAPHS). "
+                f"See org/surface-check-ack-audit.log for the one-line summary.\n"
+            )
     except Exception:
         pass
 
