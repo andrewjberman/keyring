@@ -80,6 +80,17 @@ _CROSS_FIRM_FOREIGN_BUCKETS = {
 # compact-realized as of 2026-06-12) -- those are FINDINGS to route + fix, not FPs, so
 # hard-blocking now would freeze those lanes before adjudication. Flip to 'error' once
 # the live findings are fixed and a cross-tree (bd/cot/inf) sweep re-confirms 0-FP.
+# KNOWN BOUNDED GAP (CTO ruling 2026-06-12, BOUNDED-DOCUMENTED-GAP / defer-extension):
+# callback-driven completion-order append -- `fut.add_done_callback(lambda f: results.append(...))`
+# or `pool.apply_async(..., callback=results.append)` assembling results OUTSIDE an
+# as_completed/imap_unordered loop -- is the same CLASS-N risk but has no loop to anchor on,
+# so this rule is silent on it. Sweep datum: 0 live instances across 211 bd/cot/inf
+# gold+silver+bronze files (2026-06-12) -- every parallel-load site uses as_completed or
+# pool.map. Prophylactic extension buys no current coverage + adds FP risk on an unused shape,
+# so it is DEFERRED; revisit trigger = first live instance. DOUBLE-NETTED: the standing
+# convention (index-slot or A_01-provenance for new gold parallel loads, ratified 2026-06-11)
+# governs callback-style assembly the same as loop-style, so a future live instance is a
+# CONVENTION VIOLATION at review time, not merely an AST blind spot.
 # History: docs/architecture/ADHC_DSFLOW.md.
 _ASTDEDUP_SEVERITY = 'warn'  # 'warn' (advisory) | 'error' (blocking)
 _ASTDEDUP_PATTERNS = [
