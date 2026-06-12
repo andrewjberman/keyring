@@ -889,6 +889,18 @@ paths:
   "data/inf/scripts/silver/**":
     lane: POD4
 
+  # inf bronze orchestration + deploy-contract — POD4 (DS) authors data + owns the deploy
+  # cycle; AE 0.6 owns the bronze structural/hardening work (TOOL-03, BRONZE-FIX #1/#2, the
+  # orchestrator hardening port + bronze_required_dims contract). Both permitted — same
+  # POD4_OR_AE pattern as the inf-pipeline Lambda lane. Added 2026-06-12 (2.0.0_SA_COO,
+  # ADVI_INFETL P0 BRONZE-FIX): the AE-infra-copy vs POD4-data-copy lane SPLIT is what created
+  # the orchestrator twin divergence (FINDING 1 hardening regression) — consolidating AE onto
+  # the CANONICAL data/inf bronze copy (infra twin retiring per CTO 1a1d555f2) structurally
+  # prevents recurrence. CC CTO. DS retains deploy-cycle ownership (fires on push).
+  "data/inf/scripts/bronze/**":
+    lane: POD4_OR_AE
+    note: "inf bronze — DS (data+deploy) + AE 0.6 (structural/hardening) both permitted; twin-consolidation"
+
   "data/inf/scripts/**":
     lane: POD4
 
