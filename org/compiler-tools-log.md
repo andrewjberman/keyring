@@ -5340,3 +5340,62 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-06-12 | 0.4.0_DS_ClientPlatform | NFRA_DEBTSCAN.TO-D5.portalsweep | comp-pipescript | comp-pipescript io --pipeline inf-gold INF_C_06 | PASS |
 | 2026-06-12 | 0.4.0_DS_ClientPlatform | NFRA_DEBTSCAN.TO-D5.portalsweep | comp-pipescript | comp-pipescript io --pipeline inf-gold INF_C_07 | PASS |
 | 2026-06-12 | 3.0.0_SA_CVO | NFRA_DEBTSCAN.TO-D5.portalsweep | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-06-12 | 0.4.0_DS_ClientPlatform | NFRA_DEBTSCAN.TO-D5.portalsweep | comp-pipescript | comp-pipescript io --pipeline inf-gold INF_C_08 | PASS |
+| 2026-06-12 | 0.4.0_DS_ClientPlatform | NFRA_DEBTSCAN.TO-D5.portalsweep | comp-pipescript | comp-pipescript io --pipeline inf-gold INF_C_09 | PASS |
+| 2026-06-12 | 0.4.0_DS_ClientPlatform | NFRA_DEBTSCAN.TO-D5.portalsweep | comp-pipescript | comp-pipescript io --pipeline inf-gold INF_D_00 | PASS |
+| 2026-06-12 | 0.4.0_DS_ClientPlatform | NFRA_DEBTSCAN.TO-D5.portalsweep | comp-pipescript | comp-pipescript io --pipeline inf-gold INF_D_00b | PASS |
+| 2026-06-12 | 0.4.0_DS_ClientPlatform | NFRA_DEBTSCAN.TO-D5.portalsweep | comp-pipescript | comp-pipescript io --pipeline inf-gold INF_D_00c | PASS |
+| 2026-06-12 | 0.4.0_DS_ClientPlatform | NFRA_DEBTSCAN.TO-D5.portalsweep | comp-pipescript | comp-pipescript io --pipeline inf-gold INF_D_00d | PASS |
+| 2026-06-12 | 0.4.0_DS_ClientPlatform | NFRA_DEBTSCAN.TO-D5.portalsweep | comp-pipescript | comp-pipescript io --pipeline inf-gold INF_D_00e | PASS |
+| 2026-06-12 | 0.4.0_DS_ClientPlatform | NFRA_DEBTSCAN.TO-D5.portalsweep | comp-pipescript | comp-pipescript io --pipeline inf-gold INF_D_00f | PASS |
+| 2026-06-12 | 0.4.0_DS_ClientPlatform | NFRA_DEBTSCAN.TO-D5.portalsweep | comp-pipescript | comp-pipescript io --pipeline inf-gold INF_D_02 | PASS |
+| 2026-06-12 | 0.4.0_DS_ClientPlatform | NFRA_DEBTSCAN.TO-D5.portalsweep | comp-pipescript | comp-pipescript io --pipeline inf-gold INF_D_02b | PASS |
+| 2026-06-12 | 0.4.0_DS_ClientPlatform | NFRA_DEBTSCAN.TO-D5.portalsweep | comp-pipescript | comp-pipescript io --pipeline inf-gold INF_D_02c | PASS |
+| 2026-06-12 | 0.4.0_DS_ClientPlatform | NFRA_DEBTSCAN.TO-D5.portalsweep | comp-pipescript | comp-pipescript io --pipeline inf-gold INF_D_02d | PASS |
+| 2026-06-12 | 0.4.0_DS_ClientPlatform | NFRA_DEBTSCAN.TO-D5.portalsweep | comp-pipescript | comp-pipescript io --pipeline inf-gold INF_D_03 | PASS |
+| 2026-06-12 | 0.4.0_DS_ClientPlatform | NFRA_DEBTSCAN.TO-D5.portalsweep | comp-pipescript | comp-pipescript io --pipeline inf-gold INF_D_04 | PASS |
+| 2026-06-12 | 0.4.0_DS_ClientPlatform | NFRA_DEBTSCAN.TO-D5.portalsweep | comp-pipescript | comp-pipescript io --pipeline inf-gold INF_D_04b | PASS |
+| 2026-06-12 | 0.4.0_DS_ClientPlatform | NFRA_DEBTSCAN.TO-D5.portalsweep | comp-pipescript | comp-pipescript io --pipeline inf-gold INF_D_05 | PASS |
+| 2026-06-12 | 0.4.0_DS_ClientPlatform | NFRA_DEBTSCAN.TO-D5.portalsweep | comp-pipescript | comp-pipescript io --pipeline inf-gold INF_D_05a | PASS |
+| 2026-06-12 | 0.4.0_DS_ClientPlatform | NFRA_DEBTSCAN.TO-D5.portalsweep | comp-pipescript | comp-pipescript io --pipeline inf-gold INF_D_06 | PASS |
+| 2026-06-12 | 0.4.0_DS_ClientPlatform | NFRA_DEBTSCAN.TO-D5.portalsweep | comp-pipescript | comp-pipescript io --pipeline inf-gold INF_D_06a | PASS |
+| 2026-06-12 | 0.4.0_DS_ClientPlatform | NFRA_DEBTSCAN.TO-D5.portalsweep | comp-pipescript | comp-pipescript io --pipeline inf-gold INF_D_07 | PASS |
+| 2026-06-12 | 0.4.0_DS_ClientPlatform | NFRA_DEBTSCAN.TO-D5.portalsweep | comp-pipescript | comp-pipescript io --pipeline inf-gold INF_D_07a | PASS |
+| 2026-06-12 | 0.4.0_DS_ClientPlatform | NFRA_DEBTSCAN.TO-D5.portalsweep | comp-pipescript | comp-pipescript io --pipeline inf-gold INF_D_08 | PASS |
+| 2026-06-12 | 0.4.0_DS_ClientPlatform | NFRA_DEBTSCAN.TO-D5.portalsweep | comp-pipescript | comp-pipescript io --pipeline inf-gold INF_D_09 | PASS |
+| 2026-06-12 | 0.4.0_DS_ClientPlatform | NFRA_DEBTSCAN.TO-D5.portalsweep | comp-pipescript | comp-pipescript io --pipeline inf-gold INF_E_00 | PASS |
+| 2026-06-12 | 0.4.0_DS_ClientPlatform | NFRA_DEBTSCAN.TO-D5.portalsweep | comp-pipescript | comp-pipescript io --pipeline inf-gold INF_S_00 | PASS |
+| 2026-06-12 | 0.4.0_DS_ClientPlatform | NFRA_DEBTSCAN.TO-D5.portalsweep | comp-pipescript | comp-pipescript io --pipeline cot-gold A_00 | PASS |
+| 2026-06-12 | 0.4.0_DS_ClientPlatform | NFRA_DEBTSCAN.TO-D5.portalsweep | comp-pipescript | comp-pipescript io --pipeline cot-gold A_01 | PASS |
+| 2026-06-12 | 0.4.0_DS_ClientPlatform | NFRA_DEBTSCAN.TO-D5.portalsweep | comp-pipescript | comp-pipescript io --pipeline cot-gold A_02 | PASS |
+| 2026-06-12 | 0.4.0_DS_ClientPlatform | NFRA_DEBTSCAN.TO-D5.portalsweep | comp-pipescript | comp-pipescript io --pipeline cot-gold A_03 | PASS |
+| 2026-06-12 | 0.4.0_DS_ClientPlatform | NFRA_DEBTSCAN.TO-D5.portalsweep | comp-pipescript | comp-pipescript io --pipeline cot-gold A_04 | PASS |
+| 2026-06-12 | 0.4.0_DS_ClientPlatform | NFRA_DEBTSCAN.TO-D5.portalsweep | comp-pipescript | comp-pipescript io --pipeline cot-gold B_00 | PASS |
+| 2026-06-12 | 0.4.0_DS_ClientPlatform | NFRA_DEBTSCAN.TO-D5.portalsweep | comp-pipescript | comp-pipescript io --pipeline cot-gold B_01 | PASS |
+| 2026-06-12 | 0.4.0_DS_ClientPlatform | NFRA_DEBTSCAN.TO-D5.portalsweep | comp-pipescript | comp-pipescript io --pipeline cot-gold B_01b | PASS |
+| 2026-06-12 | 0.4.0_DS_ClientPlatform | NFRA_DEBTSCAN.TO-D5.portalsweep | comp-pipescript | comp-pipescript io --pipeline cot-gold B_02 | PASS |
+| 2026-06-12 | 0.4.0_DS_ClientPlatform | NFRA_DEBTSCAN.TO-D5.portalsweep | comp-pipescript | comp-pipescript io --pipeline cot-gold B_03 | PASS |
+| 2026-06-12 | 0.4.0_DS_ClientPlatform | NFRA_DEBTSCAN.TO-D5.portalsweep | comp-pipescript | comp-pipescript io --pipeline cot-gold build_canonical_prices_v2 | FAIL |
+| 2026-06-12 | 0.4.0_DS_ClientPlatform | NFRA_DEBTSCAN.TO-D5.portalsweep | comp-pipescript | comp-pipescript io --pipeline cot-gold C_00 | PASS |
+| 2026-06-12 | 0.4.0_DS_ClientPlatform | NFRA_DEBTSCAN.TO-D5.portalsweep | comp-pipescript | comp-pipescript io --pipeline cot-gold C_01 | PASS |
+| 2026-06-12 | 0.4.0_DS_ClientPlatform | NFRA_DEBTSCAN.TO-D5.portalsweep | comp-pipescript | comp-pipescript io --pipeline cot-gold C_01b | PASS |
+| 2026-06-12 | 0.4.0_DS_ClientPlatform | NFRA_DEBTSCAN.TO-D5.portalsweep | comp-pipescript | comp-pipescript io --pipeline cot-gold C_01c | PASS |
+| 2026-06-12 | 0.4.0_DS_ClientPlatform | NFRA_DEBTSCAN.TO-D5.portalsweep | comp-pipescript | comp-pipescript io --pipeline cot-gold C_02 | PASS |
+| 2026-06-12 | 0.4.0_DS_ClientPlatform | NFRA_DEBTSCAN.TO-D5.portalsweep | comp-pipescript | comp-pipescript io --pipeline cot-gold C_03 | PASS |
+| 2026-06-12 | 0.4.0_DS_ClientPlatform | NFRA_DEBTSCAN.TO-D5.portalsweep | comp-pipescript | comp-pipescript io --pipeline cot-gold C_04 | PASS |
+| 2026-06-12 | 0.4.0_DS_ClientPlatform | NFRA_DEBTSCAN.TO-D5.portalsweep | comp-pipescript | comp-pipescript io --pipeline cot-gold C_05 | PASS |
+| 2026-06-12 | 0.4.0_DS_ClientPlatform | NFRA_DEBTSCAN.TO-D5.portalsweep | comp-pipescript | comp-pipescript io --pipeline cot-gold C_06 | PASS |
+| 2026-06-12 | 0.4.0_DS_ClientPlatform | NFRA_DEBTSCAN.TO-D5.portalsweep | comp-pipescript | comp-pipescript io --pipeline cot-gold C_07 | PASS |
+| 2026-06-12 | 0.4.0_DS_ClientPlatform | NFRA_DEBTSCAN.TO-D5.portalsweep | comp-pipescript | comp-pipescript io --pipeline cot-gold C_08 | PASS |
+| 2026-06-12 | 0.4.0_DS_ClientPlatform | NFRA_DEBTSCAN.TO-D5.portalsweep | comp-pipescript | comp-pipescript io --pipeline cot-gold D_00 | PASS |
+| 2026-06-12 | 0.7.0_AE_CloudOps | NFRA_DEBTSCAN.TO-D4.costrecon | aws ce get-cost-and-usage | service/usage-type/tag group-bys (5 API calls) June MTD | PASS |
+| 2026-06-12 | 0.7.0_AE_CloudOps | NFRA_DEBTSCAN.TO-D4.costrecon | aws lambda list-functions | 169 functions, memory-proportional attribution | PASS |
+| 2026-06-12 | 0.7.0_AE_CloudOps | NFRA_DEBTSCAN.TO-D4.costrecon | aws ec2 describe-instances | 24 instances, type-to-pipeline mapping | PASS |
+| 2026-06-12 | 0.7.0_AE_CloudOps | NFRA_DEBTSCAN.TO-D4.costrecon | aws secretsmanager list-secrets | 61 secrets census, 5 decommissioned candidates | PASS |
+| 2026-06-12 | 0.7.0_AE_CloudOps | NFRA_DEBTSCAN.TO-D4.costrecon | aws cloudwatch describe-alarms | globgrph bucket: 0 alarms confirmed (finding D4-F1) | PASS |
+| 2026-06-12 | 0.7.0_AE_CloudOps | NFRA_DEBTSCAN.TO-D4.costrecon | aws s3api list-objects-v2 | warehouse/: 56288 objects, maintenance gap confirmed (D4-F2) | PASS |
+| 2026-06-12 | 0.7.0_AE_CloudOps | NFRA_DEBTSCAN.TO-D4.costrecon | kuzu_cost_enrich.py | 206 CloudNode enriched cost_mtd_usd (nessie + stitch) | PASS |
+| 2026-06-12 | 0.4.0_DS_ClientPlatform | NFRA_DEBTSCAN.TO-D5.portalsweep | comp-pipescript | comp-pipescript io --pipeline cot-gold D_00b | PASS |
+| 2026-06-12 | 0.4.0_DS_ClientPlatform | NFRA_DEBTSCAN.TO-D5.portalsweep | comp-pipescript | comp-pipescript io --pipeline cot-gold D_00c | PASS |
+| 2026-06-12 | 0.4.0_DS_ClientPlatform | NFRA_DEBTSCAN.TO-D5.portalsweep | comp-pipescript | comp-pipescript io --pipeline cot-gold D_01 | PASS |
+| 2026-06-12 | 0.7.0_AE_CloudOps | NFRA_DEBTSCAN.TO-D5.portalsweep | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/globgrph/kuzu_cost_enrich.py ... | PASS |
