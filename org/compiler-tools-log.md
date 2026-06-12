@@ -4756,3 +4756,90 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-06-12 | 0.7.0_AE_CloudOps | ADHC_GLDINC.SILVER-FIX | comp-kuzu | comp-kuzu --db-path infra/aws/globgrph/kuzu_nessie_db MATCH (n:CloudNode) RETURN count(*) | PASS |
 | 2026-06-12 | 0.7.0_AE_CloudOps | ADHC_GLDINC.SILVER-FIX | comp-kuzu | comp-kuzu --db-path infra/aws/globgrph/kuzu_nessie_db MATCH (n:CloudNode) RETURN count(*) | PASS |
 | 2026-06-12 | 3.0.0_SA_CVO | comp-kuzu (8-way storm x18) + comp-aws snapshot | GLOBGRPH §2b stress test | AC10(a)+(c) certified; P0 HEAD-lineage divergence caught -> F6 ruling v0.4.3; kuzu reader-lock P1 (kuzu_cli.py:55) | stress_test_globgrph_concurrency_AC10 |
+| 2026-06-12 | 0.7.0_AE_CloudOps | ADHC_GLDINC.SILVER-FIX | comp-kuzu | comp-kuzu MATCH (n:CloudNode) RETURN count(*) | PASS |
+| 2026-06-12 | 0.7.0_AE_CloudOps | ADHC_GLDINC.SILVER-FIX | comp-iam | comp-iam service incremental_updater | PASS |
+| 2026-06-12 | 0.7.0_AE_CloudOps | ADHC_GLDINC.SILVER-FIX | comp-kuzu | comp-kuzu --db-path infra/aws/globgrph/kuzu_nessie_db MATCH (n:CloudNode) RETURN count(*) | PASS |
+| 2026-06-12 | 0.7.0_AE_CloudOps | ADHC_GLDINC.SILVER-FIX | comp-kuzu | comp-kuzu --db-path infra/aws/globgrph/kuzu_nessie_db MATCH (n:CloudNode) RETURN count(*) | PASS |
+| 2026-06-12 | 0.7.0_AE_CloudOps | ADHC_GLDINC.SILVER-FIX | comp-pipescript | comp-pipescript deployed infra/aws/lambda/globgrph/incremental_updater/lambda_function.py | PASS |
+| 2026-06-12 | 3.0.0_SA_CVO | ADHC_GLDINC.SILVER-FIX | comp-kuzu | comp-kuzu --limit 1 MATCH (n:CloudNode) RETURN count(n) | PASS |
+| 2026-06-12 | 3.0.0_SA_CVO | ADHC_GLDINC.SILVER-FIX | comp-kuzu | comp-kuzu --limit 1 MATCH (n:CloudNode) RETURN count(n) | PASS |
+| 2026-06-12 | 3.0.0_SA_CVO | ADHC_GLDINC.SILVER-FIX | comp-kuzu | comp-kuzu --limit 5 MATCH (n:CloudNode) WHERE n.source = 'incremental' RETURN n.node_id... | PASS |
+| 2026-06-12 | 3.0.0_SA_CVO | ADHC_GLDINC.SILVER-FIX | comp-kuzu | comp-kuzu --limit 1 MATCH (n:CloudNode) RETURN count(n) | PASS |
+| 2026-06-12 | 3.0.0_SA_CVO | ADHC_GLDINC.SILVER-FIX | comp-kuzu | comp-kuzu --limit 5 MATCH (n:CloudNode) WHERE n.node_id CONTAINS 'stress-probe' RETURN ... | PASS |
+| 2026-06-12 | 3.0.0_SA_CVO | ADHC_GLDINC.SILVER-FIX | comp-kuzu | comp-kuzu --limit 1 MATCH (n:CloudNode) RETURN count(n) | PASS |
+| 2026-06-12 | 0.4.0_DE_ClientPlatform | ADHC_GLDINC.SILVER-FIX | comp-pii | comp-pii audit | PASS |
+| 2026-06-12 | 0.4.0_DE_ClientPlatform | ADHC_GLDINC.SILVER-FIX | comp-routes | comp-routes behaviors | PASS |
+| 2026-06-12 | 0.4.0_DE_ClientPlatform | ADHC_GLDINC.SILVER-FIX | comp-platinum | comp-platinum page AdvisorIntelligence --firm 49financial | FAIL |
+| 2026-06-12 | 0.4.0_DE_ClientPlatform | ADHC_GLDINC.SILVER-FIX | comp-platinum | comp-platinum page AdvisorIntelligence --firm inflection | FAIL |
+| 2026-06-12 | 0.4.0_DE_ClientPlatform | ADHC_GLDINC.SILVER-FIX | comp-routes | comp-routes behaviors | PASS |
+| 2026-06-12 | 0.4.0_DE_ClientPlatform | ADHC_GLDINC.SILVER-FIX | comp-platinum | comp-platinum summary --firm 49financial | FAIL |
+| 2026-06-12 | 0.4.0_DE_ClientPlatform | ADHC_GLDINC.SILVER-FIX | comp-transform | comp-transform schema-check ModelPortfolios | FAIL |
+| 2026-06-12 | 0.4.0_DE_ClientPlatform | ADHC_GLDINC.SILVER-FIX | comp-platinum | comp-platinum summary | PASS |
+| 2026-06-12 | 0.4.0_DE_ClientPlatform | ADHC_GLDINC.SILVER-FIX | comp-transform | comp-transform schema-check AdvisorsTab | PASS |
+| 2026-06-12 | 0.4.0_DE_ClientPlatform | ADHC_GLDINC.SILVER-FIX | comp-platinum | comp-platinum page AdvisorBookView --firm 49financial | PASS |
+| 2026-06-12 | 0.4.0_DE_ClientPlatform | ADHC_GLDINC.SILVER-FIX | comp-platinum | comp-platinum page AdvisorBookView --firm inflection | PASS |
+| 2026-06-12 | 0.4.0_DE_ClientPlatform | ADHC_GLDINC.SILVER-FIX | comp-platinum | comp-platinum page ClientsTab --firm 49financial | PASS |
+| 2026-06-12 | 0.4.0_DE_ClientPlatform | ADHC_GLDINC.SILVER-FIX | comp-platinum | comp-platinum page AdvisorPublicProfile --firm 49financial | PASS |
+| 2026-06-12 | 0.4.0_DE_ClientPlatform | ADHC_GLDINC.SILVER-FIX | comp-platinum | comp-platinum page AdvisorsTab --firm 49financial | PASS |
+| 2026-06-12 | 0.4.0_DE_ClientPlatform | ADHC_GLDINC.SILVER-FIX | comp-platinum | comp-platinum page AdvisorsTab --firm inflection | PASS |
+| 2026-06-12 | 0.4.0_DE_ClientPlatform | ADHC_GLDINC.SILVER-FIX | comp-platinum | comp-platinum page ModelPortfolios --firm 49financial | PASS |
+| 2026-06-12 | 0.4.0_DE_ClientPlatform | ADHC_GLDINC.SILVER-FIX | comp-platinum | comp-platinum page DistributionTab --firm 49financial | PASS |
+| 2026-06-12 | 0.4.0_DE_ClientPlatform | ADHC_GLDINC.SILVER-FIX | comp-platinum | comp-platinum page DistributionTab --firm inflection | PASS |
+| 2026-06-12 | 0.4.0_DE_ClientPlatform | ADHC_GLDINC.SILVER-FIX | comp-platinum | comp-platinum page AdvisorPublicProfile --firm inflection | PASS |
+| 2026-06-12 | 0.4.0_DE_ClientPlatform | ADHC_GLDINC.SILVER-FIX | comp-platinum | comp-platinum page ClientsTab --firm inflection | PASS |
+| 2026-06-12 | 0.4.0_DE_ClientPlatform | ADHC_GLDINC.SILVER-FIX | comp-transform | comp-transform schema-check DistributionTab | PASS |
+| 2026-06-12 | 0.4.0_DE_ClientPlatform | ADHC_GLDINC.SILVER-FIX | comp-transform | comp-transform schema-check AdvisorBookView | PASS |
+| 2026-06-12 | 0.4.0_DE_ClientPlatform | ADHC_GLDINC.SILVER-FIX | comp-transform | comp-transform schema-check ClientsTab | PASS |
+| 2026-06-12 | 0.4.0_DE_ClientPlatform | NFRA_GRAPHS.D7-FIX.T4 | comp-transform | comp-transform schema-check ClientsTab | PASS |
+| 2026-06-12 | 0.7.0_AE_CloudOps | NFRA_GRAPHS.D7-FIX.T4 | comp-kuzu | comp-kuzu MATCH (n:CloudNode) RETURN count(*) | PASS |
+| 2026-06-12 | 0.4.0_DE_ClientPlatform | NFRA_GRAPHS.D7-FIX.T4 | comp-xref | comp-xref --help | PASS |
+| 2026-06-12 | 0.4.0_DE_ClientPlatform | NFRA_GRAPHS.D7-FIX.T4 | comp-xref | comp-xref --save --json | PASS |
+| 2026-06-12 | 0.4.0_DE_ClientPlatform | NFRA_GRAPHS.D7-FIX.T4 | comp-platinum | comp-platinum summary | PASS |
+| 2026-06-12 | 0.4.0_DE_ClientPlatform | NFRA_GRAPHS.D7-FIX.T4 | comp-platinum | comp-platinum page ModelPortfolios --firm 49financial | PASS |
+| 2026-06-12 | 0.4.0_DE_ClientPlatform | NFRA_GRAPHS.D7-FIX.T4 | comp-platinum | comp-platinum page ModelPortfolios --firm inflection | PASS |
+| 2026-06-12 | 0.4.0_DE_ClientPlatform | NFRA_GRAPHS.D7-FIX.T4 | comp-platinum | comp-platinum page ModelPortfolios --firm cottonwood | PASS |
+| 2026-06-12 | 0.4.0_DE_ClientPlatform | NFRA_GRAPHS.D7-FIX.T4 | comp-platinum | comp-platinum page PartnerAnalytics --firm cottonwood | PASS |
+| 2026-06-12 | 0.4.0_DE_ClientPlatform | NFRA_GRAPHS.D7-FIX.T4 | comp-platinum | comp-platinum page BenchmarkHeatmap --firm 49financial | FAIL |
+| 2026-06-12 | 0.4.0_DE_ClientPlatform | NFRA_GRAPHS.D7-FIX.T4 | comp-platinum | comp-platinum page PeersTab --firm 49financial | PASS |
+| 2026-06-12 | 0.4.0_DE_ClientPlatform | NFRA_GRAPHS.D7-FIX.T4 | comp-platinum | comp-platinum page PeersTab --firm inflection | PASS |
+| 2026-06-12 | 0.4.0_DE_ClientPlatform | NFRA_GRAPHS.D7-FIX.T4 | comp-platinum | comp-platinum page PeersTab --firm cottonwood | PASS |
+| 2026-06-12 | 0.4.0_DE_ClientPlatform | NFRA_GRAPHS.D7-FIX.T4 | comp-platinum | comp-platinum page AdvisorsTab --firm cottonwood | PASS |
+| 2026-06-12 | 0.4.0_DE_ClientPlatform | NFRA_GRAPHS.D7-FIX.T4 | comp-platinum | comp-platinum page AdvisorBookView --firm cottonwood | PASS |
+| 2026-06-12 | 0.4.0_DE_ClientPlatform | NFRA_GRAPHS.D7-FIX.T4 | comp-platinum | comp-platinum page ClientsTab --firm cottonwood | PASS |
+| 2026-06-12 | 0.4.0_DE_ClientPlatform | NFRA_GRAPHS.D7-FIX.T4 | comp-platinum | comp-platinum page AdvisorsTab --firm 49financial | PASS |
+| 2026-06-12 | 0.4.0_DE_ClientPlatform | NFRA_GRAPHS.D7-FIX.T4 | comp-platinum | comp-platinum page AdvisorsTab --firm inflection | PASS |
+| 2026-06-12 | 0.4.0_DE_ClientPlatform | NFRA_GRAPHS.D7-FIX.T4 | comp-xref | comp-xref getModelPortfolioBenchmarks | PASS |
+| 2026-06-12 | 0.4.0_DE_ClientPlatform | NFRA_GRAPHS.D7-FIX.T4 | comp-xref | comp-xref getETFBenchmarkReturns | PASS |
+| 2026-06-12 | 0.4.0_DE_ClientPlatform | NFRA_GRAPHS.D7-FIX.T4 | comp-xref | comp-xref getPeerPerformance | PASS |
+| 2026-06-12 | 0.4.0_DE_ClientPlatform | NFRA_GRAPHS.D7-FIX.T4 | comp-routes | comp-routes behaviors | PASS |
+| 2026-06-12 | 0.4.0_DE_ClientPlatform | NFRA_GRAPHS.D7-FIX.T4 | comp-platinum | comp-platinum page PartnerAnalytics --firm 49financial | PASS |
+| 2026-06-12 | 0.7.0_AE_CloudOps | NFRA_GRAPHS.D7-FIX.T4 | comp-surface-check | comp-surface-check list | PASS |
+| 2026-06-12 | 0.7.0_AE_CloudOps | NFRA_GRAPHS.D7-FIX.T4 | comp-surface-check | comp-surface-check selfcheck | FAIL |
+| 2026-06-12 | 0.7.0_AE_CloudOps | NFRA_GRAPHS.D7-FIX.T4 | comp-surface-check | comp-surface-check check --file portal/src/api/endpoints/aum.ts | FAIL |
+| 2026-06-12 | 0.7.0_AE_CloudOps | NFRA_GRAPHS.D7-FIX.T4 | comp-surface-check | comp-surface-check check --file src/components/BenchmarkHeatmap.tsx | FAIL |
+| 2026-06-12 | 0.7.0_AE_CloudOps | NFRA_GRAPHS.D7-FIX.T4 | comp-surface-check | comp-surface-check check --file portal/src/components/BenchmarkHeatmap.tsx | PASS |
+| 2026-06-12 | 0.7.0_AE_CloudOps | NFRA_GRAPHS.D7-FIX.T4 | comp-surface-check | comp-surface-check check --file data/cot/scripts/gold/D_00.portal_aggregates.py | PASS |
+| 2026-06-12 | 0.7.0_AE_CloudOps | NFRA_GRAPHS.D7-FIX.T4 | comp-surface-check | comp-surface-check selfcheck | PASS |
+| 2026-06-12 | 0.7.0_AE_CloudOps | NFRA_GRAPHS.D7-FIX.T4 | comp-surface-check | comp-surface-check check --file portal/src/pages/ModelPortfolios/tabs/PeersTab.tsx | PASS |
+| 2026-06-12 | 0.7.0_AE_CloudOps | NFRA_GRAPHS.D7-FIX.T4 | comp-surface-check | comp-surface-check selfcheck | PASS |
+| 2026-06-12 | 0.4.0_DE_ClientPlatform | NFRA_GRAPHS.D7-FIX.T4 | comp-xref | comp-xref --save | PASS |
+| 2026-06-12 | 0.7.0_AE_CloudOps | NFRA_GRAPHS.D7-FIX.T4 | comp-xref | comp-xref --help | PASS |
+| 2026-06-12 | 0.7.0_AE_CloudOps | NFRA_GRAPHS.D7-FIX.T4 | comp-platinum | comp-platinum --help | PASS |
+| 2026-06-12 | 0.7.0_AE_CloudOps | NFRA_GRAPHS.D7-FIX.T4 | comp-xref | comp-xref --json | PASS |
+| 2026-06-12 | 0.7.0_AE_CloudOps | NFRA_GRAPHS.D7-FIX.T4 | comp-xref | comp-xref | PASS |
+| 2026-06-12 | 1.0.0_SA_CTO | NFRA_GRAPHS.D7-FIX.T4 | comp-kuzu | comp-kuzu --help | PASS |
+| 2026-06-12 | 1.0.0_SA_CTO | NFRA_GRAPHS.D7-FIX.T4 | comp-kuzu | comp-kuzu MATCH (n:GraphNode) RETURN n.node_class AS class, count(*) AS n ORDER BY n DE... | FAIL |
+| 2026-06-12 | 1.0.0_SA_CTO | NFRA_GRAPHS.D7-FIX.T4 | comp-kuzu | comp-kuzu CALL show_tables() RETURN * | PASS |
+| 2026-06-12 | 1.0.0_SA_CTO | NFRA_GRAPHS.D7-FIX.T4 | comp-kuzu | comp-kuzu MATCH (n:CloudNode) RETURN n.node_class AS class, count(*) AS cnt ORDER BY cn... | FAIL |
+| 2026-06-12 | 1.0.0_SA_CTO | NFRA_GRAPHS.D7-FIX.T4 | comp-kuzu | comp-kuzu MATCH (n:CloudNode) RETURN n.tf_managed AS tf, count(*) AS cnt | FAIL |
+| 2026-06-12 | 1.0.0_SA_CTO | NFRA_GRAPHS.D7-FIX.T4 | comp-kuzu | comp-kuzu CALL table_info('CloudNode') RETURN * | PASS |
+| 2026-06-12 | 1.0.0_SA_CTO | NFRA_GRAPHS.D7-FIX.T4 | comp-kuzu | comp-kuzu MATCH (n:CloudNode) RETURN n.node_type AS type, count(*) AS cnt ORDER BY cnt ... | PASS |
+| 2026-06-12 | 1.0.0_SA_CTO | NFRA_GRAPHS.D7-FIX.T4 | comp-kuzu | comp-kuzu MATCH (n:CloudNode) RETURN n.drift_class AS drift, count(*) AS cnt ORDER BY c... | PASS |
+| 2026-06-12 | 1.0.0_SA_CTO | NFRA_GRAPHS.D7-FIX.T4 | comp-kuzu | comp-kuzu MATCH (n:CloudNode) WHERE NOT EXISTS { MATCH ()-[:CloudEdge]->(n) } AND NOT E... | PASS |
+| 2026-06-12 | 1.0.0_SA_CTO | NFRA_GRAPHS.D7-FIX.T4 | comp-kuzu | comp-kuzu --db-path infra/aws/globgrph/kuzu_stitch_db CALL show_tables() RETURN * | PASS |
+| 2026-06-12 | 1.0.0_SA_CTO | NFRA_GRAPHS.D7-FIX.T4 | comp-kuzu | comp-kuzu --db-path infra/aws/globgrph/kuzu_stitch_db MATCH (n) RETURN count(*) AS nodes | PASS |
+| 2026-06-12 | 0.7.0_AE_CloudOps | NFRA_GRAPHS.D7-FIX.T4 | comp-surface-check | comp-surface-check scan | PASS |
+| 2026-06-12 | 0.7.0_AE_CloudOps | NFRA_GRAPHS.D7-FIX.T4 | comp-surface-check | comp-surface-check scan --current .runtmp/graph_synth.json | PASS |
+| 2026-06-12 | 0.7.0_AE_CloudOps | NFRA_GRAPHS.D7-FIX.T4 | comp-surface-check | comp-surface-check scan --current .runtmp/graph_synth.json --json | PASS |
+
+| 2026-06-12 | 1.0.0_SA_CTO | NFRA_DEBTSCAN PRD v0.1 | comp-kuzu x5 (QUERY-class: censuses + stitch probe) | All clean; F6 marker-current header verified in anger; grounded 259-isolated/319-undeclared/3088-stitch Day-0 numbers | none |
