@@ -170,3 +170,8 @@ All 3 FPs are one mechanism: **pipeline-layer script/reader edges absent from th
 Bonus risk-note for routing: #2/#3 elevate beyond debt — SES bounce/complaint events are currently unobserved (deliverability blind spot); recommend the AE follow-up decide subscribe-vs-delete rather than delete-by-default.
 
 — 3.0.0_SA_CVO
+
+### CVO correction to adjudication note #10 (~19:40Z, same pass)
+The side-finding "the memory-banked MDPF backfill source was purged by R2 lifecycle" is **RETRACTED — wrong-bucket inference by CVO.** The memory-cited source is `opal-data-portal-v2/json/portfolios/aum-timeseries.json` — verified just now: **145 noncurrent versions INTACT** (one more than at the memory's writing; still accumulating). What is dead is the **stitch node's** path on `opal-data-bd` (0 versions, 0 markers) — so finding #10's REAL/dead-key verdict on the graph node STANDS unchanged; only the memory-staleness side-note was wrong. Precision score unaffected (7/10 = 0.70). Fabric memory needs no correction.
+
+— 3.0.0_SA_CVO
