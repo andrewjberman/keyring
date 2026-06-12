@@ -141,3 +141,32 @@ No findings in this batch touch a critical-surface carve (per `critical-surfaces
 - [3.0.0_SA_CVO] Adjudicate precision sample findings 1-10 — RAVC2 sent to 2.0.0_SA_COO
 - [2.0.0_SA_COO] Commit `suppression_v1.yaml` draft (exec-route; AE authored, routed for exec sign-off)
 - [0.7.0_AE_CloudOps] TO-D2 AE lane: comp-iam gaps estate sweep (queued; start after RAVC2 lands)
+
+---
+
+## CVO Precision Adjudication — 3.0.0_SA_CVO, 2026-06-12 ~19:35Z
+
+Every finding independently verified against live AWS / repo / dispatcher state (not the graph, not the triage notes):
+
+| # | Verdict | Independent evidence |
+|---|---|---|
+| 1 | **REAL** | Last invocation 2026-03-26T17:37Z (CW logs, ~11wk dead) + Andrew ground-truth memory: feature never built |
+| 2 | **REAL** | `sns list-subscriptions-by-topic` = 0 subscriptions, live |
+| 3 | **REAL** | Same — 0 subscriptions, live. SES bounce/complaint notifications currently go NOWHERE (risk note: not just debt — a deliverability blind spot) |
+| 4 | **REAL** | Newest object `sentiment.json` 2025-12-23 (~6mo stale); zero code refs repo-wide (only graph artifacts); lifecycle-archival posture |
+| 5 | **FP** | `data/mdpf/scripts/gold/build_mdpf_wsd2_etf_netassets_feeder.py` READS the bucket — live mdpf gold script; mdpf pipeline layer is not stitched into the graph |
+| 6 | **REAL** | ItemCount=1 / 208 bytes (placeholder), zero code refs, zero consumers |
+| 7 | **FP** | `orion-gold-dispatch.sh:142` catalog line + `CHAIN_FULL` + `CHAIN_GOLD_A` membership — dispatched live; inf dispatcher catalog not parsed into the stitch |
+| 8 | **FP** | `orion-gold-dispatch.sh:145` + both chains — same coverage class as #7 |
+| 9 | **REAL** (reclass: PHANTOM_S3_KEY) | Key does not exist on opal-data-bd at all (`views/` prefix empty) — the graph carries a node for a nonexistent artifact; dead path confirmed, family label should be phantom-key not stale-key |
+| 10 | **REAL** (reclass: DEAD_S3_KEY) | Key fully absent — 0 current versions AND 0 delete-markers/noncurrent. Side-finding: the historical noncurrent versions banked in fabric memory as an MDPF backfill source were purged by the COSTAWS R2 14-day noncurrent lifecycle (correct per policy; memory now stale — CVO will correct the memory record) |
+
+### Verdict
+
+**Precision = 7/10 = 0.70 — BELOW the ≥0.80 gate. Findings file as ADVISORY; do NOT bulk-file. Family is NOT dead — the gate caught a single root-cause coverage class.**
+
+All 3 FPs are one mechanism: **pipeline-layer script/reader edges absent from the stitch for non-bd trees** — (a) the inf dispatcher catalog (`orion-gold-dispatch.sh` pipe-delimited lines + CHAIN_* sets) is not parsed into graph edges, so every dispatched INF_* script reads as orphaned; (b) the mdpf tree is not stitched at all, so its bucket reads are invisible. Iteration path (AE, small): add `FP_INF_DISPATCHER_CATALOG` + `FP_MDPF_UNSTITCHED` suppressions now (cheap), then the durable fix = parse orion-gold-dispatch + mdpf reader edges into the stitch — at which point this family re-runs and the suppressions retire. Expected post-fix precision on this sample: 7/7 eligible = 1.0.
+
+Bonus risk-note for routing: #2/#3 elevate beyond debt — SES bounce/complaint events are currently unobserved (deliverability blind spot); recommend the AE follow-up decide subscribe-vs-delete rather than delete-by-default.
+
+— 3.0.0_SA_CVO
