@@ -66,13 +66,32 @@ pre-log-upload, lock held, no CW/SNS surface.
 4. Collision resolution per the guard's own prescription: canonical over `code/gold/` twins
 5. Dead dispatch lock cleared (holder verified dead); gold chain re-dispatched
 
-## R4 — served verification (PENDING chain completion)
+## R4 — served verification: BOTH PAGES VERIFIED (22:49–22:55Z)
 
-To verify on completion (Monitor armed): `platinum/firm/partner_analytics.json` +
-`header_metrics_fresh` LastModified = 2026-06-12 evening; AUA ~ $204.6M (Orion ground truth).
-MDPF leg: next scheduled run consumes fresh inf inputs (assess re-fire need after platinum lands).
+**ADVI (22:49:15Z):** `platinum/firm/partner_analytics.json` LastModified 22:49:15Z,
+**served `total_aua` = $204,596,210 — exact Orion ground-truth match** ($204.6M);
+header_metrics 22:48:47Z + header_metrics_fresh 22:47:13Z. Chain ran 21:18→22:49 (1h31m,
+19 min under the 06-11 precedent). `pipeline-complete.json` 22:50:28Z.
+
+**Model Portfolios (22:53:36Z):** mdpf-daily-trigger auto-fired ON pipeline-complete (CW-confirmed);
+runner alive 22:51:10Z; fresh 49F feeds 22:52:28Z; served aggregate
+`opal-data-portal-v2/platinum/mdpf/aggregate_aua/2026-06-12.json` landed 22:53:36Z with
+`as_of_date: 2026-06-12` (Stage 0.5 resolved the pre-landed eclipse vintage — the L4 pre-land
+paid off), inflection `total_aua` = **$204,596,210 (exact cross-page consistency with ADVI —
+Andrew's explicit bar)**, `model_aua` = $121,778,124 (exact match to the 21:25Z eclipse E_00 gold),
+reconciliation sentinel independent_recompute == aggregate to the dollar ($1,798,043,903).
+
+**Morning-stamp mystery resolved:** the 07:30 mdpf run never wrote a 06-12 served partition at all
+(partition list jumps 06-11 10:52 → 06-12 18:53 ET) — the "stamps 06-12 7:30a" was a runtime
+content stamp; the served artifact was simply absent/stale-prior. Tonight's is the FIRST 06-12
+aggregate. (Strengthens follow-up (d): artifacts must carry source-data vintage.)
+
 Note for readers: today's _BRONZE_COMPLETE (orion-api/2026-06-12) was overwritten by the
 transactions-scoped re-fire (1-dim manifest); the morning 7-dim manifest is in the version trail.
+
+**FINAL CLOCK:** Andrew GO 20:37Z → root-cause ~21:05Z (CTO) → active recovery 20:44–21:26Z
+(~42 min, L1–L4 + near-miss) → chain 21:18–22:49Z → BOTH pages served-fresh by 22:53:36Z.
+GO-to-recovered ≈ 2h17m, of which ~1h31m was the chain's own runtime.
 
 ## Structural follow-ups (TO candidates, routed COO — none executed tonight)
 
