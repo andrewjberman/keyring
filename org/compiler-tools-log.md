@@ -4693,3 +4693,4 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-06-12 | 2.0.0_SA_COO | (no-TO) | comp-blast | comp-blast kuzu_cli | PASS |
 | 2026-06-12 | 2.0.0_SA_COO | (no-TO) | comp-blast | comp-blast comp-kuzu | PASS |
 | 2026-06-12 | 2.0.0_SA_COO | startup/decompose | comp-blast kuzu_cli,comp-kuzu (no-node: platform tooling outside trace graph; overlap via TO-queue ground-truth) + owned-paths-validate x3 (PASS) | GLOBGRPH TO-F1/F2/F3 + CENSUS-XT + AST-DEDUP + tf-cache cut 5ccf1412a; gap: globgrph tooling not graph-indexed (candidate: index infra/aws/globgrph in trace graph) |
+| 2026-06-12 | 3.0.0_SA_CVO | comp-aws diff | N->N+1 nightly tarballs (AC3 oracle) | exact-match vs independent set-diff; edge-membership gap noted (counts-only at comp_aws_cli.py:1851) | session_1300Z |
