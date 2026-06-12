@@ -18,8 +18,10 @@ Data sources (authoritative, not heuristic):
     gold_dispatch.sh      -- execution order, chains, groups, catalog
     each script's AST     -- from lib.s3_layout import (...) block
 """
+from __future__ import annotations  # lazy annotations: quoted 'list[dict]' hints resolve on py39 (FA100)
 
 import argparse
+import ast  # module-scope so quoted 'ast.FunctionDef' forward-ref annotations resolve (bodies use local `import ast as _ast`)
 import json
 import os
 import re
@@ -30,6 +32,7 @@ _THIS_DIR = Path(__file__).resolve().parent
 _WORKSPACE = _THIS_DIR.parent.parent.parent
 
 sys.path.insert(0, str(_WORKSPACE))
+sys.path.insert(0, str(_WORKSPACE / ".tools"))  # safe_deploy_core lives in .tools/
 
 from org.modules.graph.extract_pipeline import (  # noqa: E402
     build_pipeline_dag, inject_pipeline_edges,
@@ -39,6 +42,53 @@ from org.modules.graph.extract_pipeline import (  # noqa: E402
 )
 
 _PIPELINE_CHOICES = ("bd-gold", "inf-gold", "bd-silver", "inf-silver", "inf-manual-api", "mdpf", "cot-gold", "cot-silver", "cot", "all", "bd", "inf")
+
+# ---------------------------------------------------------------------------
+# NFRA_DEBTSCAN.TOOL-01: single-source tree registry for the all-trees deployed
+# sweep + --firm/path-autodetect scope resolution.
+#
+# Firm trees (bd/inf/cot) derive bucket+label from safe_deploy_core.PIPELINE_MAP --
+# the canonical deploy map (CLAUDE.md Rule 13) -- so the firm-bucket mapping can never
+# drift from the deploy gate. mdpf is appended as a CHECK-ONLY tree: it is deliberately
+# NOT in the deploy-gate PIPELINE_MAP (Rule 13 = bd/inf/cot; mdpf deploys via its own
+# mechanism and uses a non-standard, internally-INCONSISTENT S3 layout -- both
+# code/<layer>/ and code/scripts/<layer>/ exist on opal-data-mdpf, so it cannot live in
+# file_to_s3_target's single-layout derivation). comp-pipescript STILL checks its
+# deployed status because MDPF_COUNTS (2026-06-05) proved an mdpf script can strand stale
+# on S3 -- the exact blind spot this TO closes.
+try:
+    from safe_deploy_core import PIPELINE_MAP as _DEPLOY_PIPELINE_MAP  # noqa: E402
+except Exception:  # defensive: .tools/ unimportable in some invocation contexts
+    # Fallback MUST stay byte-equal to safe_deploy_core.PIPELINE_MAP (Rule 13).
+    _DEPLOY_PIPELINE_MAP = {
+        "black_diamond": ("opal-data-bd", "bd"),
+        "inf": ("opal-data-inf", "inf"),
+        "cot": ("opal-data-cot", "cot"),
+    }
+
+# firm label -> the cmd_deployed pipeline-key whose branch enumerates that tree
+# (gold + silver for the firm; mdpf covers its 4 layers in its own branch).
+_LABEL_TO_DEPLOYED_PIPELINE = {"bd": "bd-gold", "inf": "inf-gold", "cot": "cot-gold"}
+
+# data-dir name -> pipeline-key (generalizes the former cot-only path auto-detect to
+# every tree). Built from the canonical map; mdpf appended (check-only).
+_DATADIR_TO_PIPELINE = {
+    dirname: _LABEL_TO_DEPLOYED_PIPELINE[label]
+    for dirname, (_bucket, label) in _DEPLOY_PIPELINE_MAP.items()
+    if label in _LABEL_TO_DEPLOYED_PIPELINE
+}
+_DATADIR_TO_PIPELINE["mdpf"] = "mdpf"
+
+# --firm flag value -> pipeline-key.
+_FIRM_TO_PIPELINE = {"bd": "bd-gold", "inf": "inf-gold", "cot": "cot-gold", "mdpf": "mdpf"}
+
+# Ordered (pipeline-key, bucket) the no-arg sweep iterates. Firm trees from the canonical
+# map (each reads ONLY its own bucket -- firm separation); mdpf appended check-only.
+_ALL_DEPLOYED_TREES = [
+    (_LABEL_TO_DEPLOYED_PIPELINE[label], bucket)
+    for dirname, (bucket, label) in _DEPLOY_PIPELINE_MAP.items()
+    if label in _LABEL_TO_DEPLOYED_PIPELINE
+] + [("mdpf", "opal-data-mdpf")]
 
 
 def _build_dag(pipeline: str = "bd-gold"):
@@ -135,7 +185,7 @@ def _canonicalize_script_id(raw: str) -> str:
     s = raw.strip().replace('\\', '/')
     # Rule 2: extract filename from full data/ path
     m = re.search(
-        r'data/(?:black_diamond|inf|schwab|cot)/scripts/(?:gold|silver|bronze)/(.+)', s
+        r'data/(?:black_diamond|inf|schwab|cot|mdpf)/scripts/(?:gold|silver|bronze|backfill|feeders)/(.+)', s
     )
     if m:
         s = m.group(1)
@@ -183,7 +233,7 @@ def _auto_resolve_script_id(raw_id, pipeline_hint=None):
     # Step 1: strip data/ path prefix and .py suffix only — no .<name> stripping yet.
     _norm = raw_id.strip().replace('\\', '/')
     _pm = re.search(
-        r'data/(?:black_diamond|inf|schwab|cot)/scripts/(?:gold|silver|bronze)/(.+)', _norm
+        r'data/(?:black_diamond|inf|schwab|cot|mdpf)/scripts/(?:gold|silver|bronze|backfill|feeders)/(.+)', _norm
     )
     if _pm:
         _norm = _pm.group(1)
@@ -921,7 +971,7 @@ def _lambda_pipescript_io(script_path_arg: str) -> bool:
     function_name = abs_path.parent.name
 
     print(f"I/O MANIFEST: {function_name} ({rel_path}) [lambda_pipeline_script]")
-    print(f"  Source: infra/aws/lambda/...; node-class: lambda_pipeline_script (ADHC_COMPIL_V5.002)")
+    print("  Source: infra/aws/lambda/...; node-class: lambda_pipeline_script (ADHC_COMPIL_V5.002)")
     print()
 
     if s3_reads or s3_prefix_reads:
@@ -1395,6 +1445,27 @@ def _get_ec2_manifest_service(service_key: str) -> dict:
         return {}
 
 
+def _deployed_sweep_all(args):
+    """NFRA_DEBTSCAN.TOOL-01: sweep EVERY tree (bd + inf + cot from PIPELINE_MAP, + mdpf
+    check-only). Each tree runs its own single-tree deployed check against ONLY its own
+    bucket (firm separation -- no cross-bucket read). A per-tree banner names the bucket
+    so every MATCH/STALE/MISSING row is bucket-attributed (an un-attributed row is how a
+    stranded-deploy blind spot hides -- the MDPF_COUNTS class)."""
+    import copy
+    print("DEPLOYED SWEEP: all trees -- firm-separated, each reads ONLY its own bucket")
+    print(f"  Trees: {', '.join(f'{pk} -> s3://{b}' for pk, b in _ALL_DEPLOYED_TREES)}")
+    print()
+    for pk, bucket in _ALL_DEPLOYED_TREES:
+        print(f"=== TREE {pk}  ->  s3://{bucket} ===")
+        _a = copy.copy(args)
+        _a.pipeline = pk
+        _a.script_id = ''
+        _a.firm = None
+        cmd_deployed(_a)
+        print()
+    return 0
+
+
 def cmd_deployed(args):
     """Compare local gold + silver script files against their S3-uploaded code versions.
 
@@ -1415,15 +1486,31 @@ def cmd_deployed(args):
     import shutil
     import subprocess
 
-    pipeline = getattr(args, 'pipeline', 'bd-gold') or 'bd-gold'
+    # --- NFRA_DEBTSCAN.TOOL-01: scope resolution (--firm / path-autodetect / all-trees sweep) ---
+    # --pipeline default is None (argparse) so we can tell "user chose a tree" from "no scope given".
+    pipeline = getattr(args, 'pipeline', None)
+    firm = getattr(args, 'firm', None)
+    _raw_script = (getattr(args, 'script_id', '') or '')
 
-    # NFRA_COT_TOOLING: auto-route a cot path filter to the cot pipeline (firm separation:
-    # opal-data-cot ONLY, never bd). Fires only when the pipeline is the default bd-gold AND the
-    # filter argument is a data/cot/ path; bare ids and bd/inf/mdpf paths are unchanged. The cot
-    # pipeline branch below already sets S3_BUCKET=opal-data-cot. Closes the bare-path blind spot
-    # (deployed cot scripts previously fell through to the bd default and showed "no scripts matched").
-    if pipeline == 'bd-gold' and 'data/cot/scripts/' in (getattr(args, 'script_id', '') or '').replace('\\', '/'):
-        pipeline = 'cot-gold'
+    if firm:
+        # Explicit single-tree scope by firm/tree (sweeps that tree, its bucket only).
+        pipeline = _FIRM_TO_PIPELINE[firm]
+    elif _raw_script:
+        # Path auto-detect: a data/<dir>/scripts/... filter routes to that tree's pipeline.
+        # Generalizes the former cot-only auto-route to every PIPELINE_MAP tree + mdpf
+        # (firm separation: each tree's branch reads ONLY its own bucket). A bare id
+        # (e.g. D_00) matches no dir -> falls through to bd-gold (backward compatible).
+        if not pipeline:
+            _np = _raw_script.replace('\\', '/')
+            for _dir, _pk in _DATADIR_TO_PIPELINE.items():
+                if f"data/{_dir}/scripts/" in _np or _np.startswith(f"data/{_dir}/"):
+                    pipeline = _pk
+                    break
+        if not pipeline:
+            pipeline = 'bd-gold'
+    elif not pipeline:
+        # No filter, no firm, no explicit --pipeline -> SWEEP ALL TREES (bd+inf+cot+mdpf).
+        return _deployed_sweep_all(args)
 
     S3_BUCKET = "opal-data-bd"
     S3_GOLD_PREFIX = "code/gold/"
@@ -1941,7 +2028,7 @@ def cmd_postmerge_cols(args: 'argparse.Namespace') -> None:
                   f' — NOT in on=[{on_str}]; may become {fc["col"]!r}_x/{fc["col"]!r}_y after merge')
             flag_count += 1
         if not site['flagged_cols']:
-            print(f'         No unguarded post-merge column accesses detected')
+            print('         No unguarded post-merge column accesses detected')
         print()
 
     output_dir = _WORKSPACE / 'org' / 'modules' / 'graph' / 'postmerge-cols'
@@ -2200,7 +2287,7 @@ def cmd_shadow_detect(args: 'argparse.Namespace') -> None:
                 elif len(commits) == 2:
                     print(f'  WATCH: 2 commits in {recent_failures} window — potential bug-shadows developing')
                 else:
-                    print(f'  OK: 1 commit; no cascade pattern')
+                    print('  OK: 1 commit; no cascade pattern')
             else:
                 print(f'  No commits found touching {func_name!r} in last {recent_failures}')
         except Exception as e:
@@ -2448,7 +2535,8 @@ def _skipgate_list_s3_dates(script_id: str) -> list[str]:
 
 def _skipgate_check_provenance(script_id: str, date: str) -> dict | None:
     """Check partition_provenance manifest for (script_id, date). Returns None if missing."""
-    import subprocess, json as _json
+    import subprocess
+    import json as _json
     s3_key = f'{_SKIPGATE_META_BASE}partition_provenance/{script_id}/{date}.json'
     result = subprocess.run(
         [sys.executable, '-m', 'awscli', 's3', 'cp', s3_key, '-'],
@@ -2488,7 +2576,6 @@ def _skipgate_decide(script_id: str, date: str, manifest: dict | None,
 
 
 def cmd_skipgate(args) -> None:
-    import subprocess, json as _json
     script_id = args.skipgate_script_id.upper().replace('-', '_')
 
     rebuild_start = rebuild_end = None
@@ -2504,7 +2591,7 @@ def cmd_skipgate(args) -> None:
     if not dates:
         # Fallback: generic canonical listing
         print(f'  WARN: no date partitions found for {script_id} via known prefix mapping')
-        print(f'  Hint: add script to _SKIPGATE_INPUT_PREFIXES or verify S3 canonical path')
+        print('  Hint: add script to _SKIPGATE_INPUT_PREFIXES or verify S3 canonical path')
         return
 
     print(f'  Input partitions: {len(dates):,} dates ({dates[0]} to {dates[-1]})')
@@ -2624,8 +2711,15 @@ def main():
     # deployed
     p_deployed = sub.add_parser('deployed', help='Compare local scripts against S3-uploaded versions')
     p_deployed.add_argument('script_id', nargs='?', default='',
-                            help='Optional: check only this script (e.g. D_00). Omit for all.')
-    p_deployed.add_argument('--pipeline', '-p', default='bd-gold', choices=_PIPELINE_CHOICES, help=_pipeline_help)
+                            help='Optional: check only this script (e.g. D_00, or a '
+                                 'data/<tree>/scripts/... path which auto-detects the tree). '
+                                 'Omit (with no --firm/--pipeline) to SWEEP ALL trees.')
+    # NFRA_DEBTSCAN.TOOL-01: default None so a bare `deployed` sweeps every tree
+    # (bd+inf+cot+mdpf). An explicit --pipeline/--firm/path scopes to one tree.
+    p_deployed.add_argument('--pipeline', '-p', default=None, choices=_PIPELINE_CHOICES, help=_pipeline_help)
+    p_deployed.add_argument('--firm', default=None, choices=('bd', 'inf', 'cot', 'mdpf'),
+                            help='NFRA_DEBTSCAN.TOOL-01: single-tree scope by firm/tree. '
+                                 'Sweeps that tree against ONLY its own bucket (firm separation).')
 
     # postdeps
     p_postdeps = sub.add_parser('postdeps', help='Show post-step and precondition dependencies for gold scripts')
