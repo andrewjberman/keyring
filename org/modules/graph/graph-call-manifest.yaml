@@ -50,6 +50,12 @@ entries:
   # parseable. The graph is a minutes-stale-and-LABELED traversal surface,
   # never a read-your-own-writes verification substitute (verify vs served
   # artifact / live AWS). Stamped by kuzu_load / kuzu_nessie_load / kuzu_stitch_load.
+  # TO-Q1 (2026-06-12): Nessie-sourced headers also add a PENDING line when
+  # opal-globgrph-incremental-events has uncommitted events in the SQS debounce
+  # window: "PENDING: ~N event(s) in flight (<=2min debounce, not yet committed)".
+  # Absent when queue is empty or sqs:GetQueueAttributes unreachable (best-effort).
+  # COMMITTED HEAD = marker; IN-FLIGHT delta = PENDING. Both together = full
+  # freshness picture at query time.
   - id: cloud.lookup.nodes_by_type
     use_case: "List/inspect cloud resources of a type (all Lambdas, all S3 buckets, all roles)."
     canonical_call: |
