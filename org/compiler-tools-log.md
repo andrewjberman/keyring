@@ -4863,3 +4863,6 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-06-12 | 0.4.0_DE_ClientPlatform | NFRA_GRAPHS.D8 | comp-xref | getModelPortfolioBenchmarks, getPeerPerformance (symbol lookup) | FAIL | 0 nodes matched — portal-proxy.ts JS functions not indexed in trace graph |
 | 2026-06-12 | 0.4.0_DE_ClientPlatform | NFRA_GRAPHS.D8 | comp-surface-check | list | PASS | 8 unique watched files across 5 surfaces; used for watched_file_shas re-sign block (c2aebe4ed) |
 | 2026-06-12 | 3.0.0_SA_CVO | comp-kuzu (marker legs + integrated storm) + pytest multi_pipeline | AC10bd re-cert + DTAFLP close gate | marker oracle live-certified; 21-passed live re-run at close | session_1600Z_addendum2 |
+| 2026-06-12 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-transform | comp-transform schema-check ClientsTab | PASS |
+| 2026-06-12 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-transform | comp-transform schema-check AdvisorBookView | PASS |
+| 2026-06-12 | 0.7.0_AE_CloudOps | D8-AE Part B | (none this tick) | — startup + pre-implementation reading/planning | SKIPPED | comp-blast + comp-iam to run before TF changes next tick |
