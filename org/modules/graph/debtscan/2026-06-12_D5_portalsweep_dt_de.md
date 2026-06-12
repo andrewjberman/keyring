@@ -196,18 +196,32 @@ Methodology: grep all named exports from `src/api/endpoints/*.ts`; for each, cou
 
 ---
 
-## §7 Per-finding summary (DT lane, AC7 format)
+## §7 Per-finding summary (joint DT+DE, AC7 format)
 
 | ID | Family | Severity | Firm-scope | Description | Owner lane | Triage |
 |----|--------|----------|-----------|-------------|-----------|--------|
 | TOOLCHAIN-01 | 4 (toolchain) | LOW | all | ESLint `globalIgnores` only excludes `dist/` — `.runtmp/**` + `.frontend-dev/**` scanned, 3× warning inflation | DT | Fix: add to globalIgnores in eslint.config.js |
-| ESLINT-01 | 4 (code quality) | LOW | all | 7× `no-explicit-any` in `portfolio.ts:433–439` | DT/DE | Triage: add types or suppress with comment if any is intentional |
-| ESLINT-02 | 4 (code quality) | LOW | all | 4× unused vars: `periodIndex`, `changeColor`, `bookGrowth`, `bookGrowthLabel`, `MODEL_ORDER_WITH_NONMODEL` | DT/DE | Fix: remove dead vars or prefix with `_` |
-| ESLINT-03 | 4 (code quality) | LOW | all | 3× `exhaustive-deps` (AdvisorPublicProfile, AdvisorAnalytics, DistributionTab) | DE | Fix: add stable deps or add eslint-disable with explanation |
-| ESLINT-04 | 4 (code quality) | LOW | all | 2× `preserve-manual-memoization` (AdvisorAnalytics, PartnerAnalytics) | DE | Investigate if manual memo is intentional |
-| ROUTE-01 | 2a (dead route) | HIGH | all | `searchSecurities` at `portfolio-optimization.ts:191` uses wrong CF path `/api/trades/` (should be `/api/general/trades/`) — dead at runtime | DT | Fix: correct URL prefix; note 0 callers so dormant |
-| ROUTE-02 | 2a (investigate) | ADVISORY | all | `getAccountDistribution` routes via CF behavior 17 to APIGateway-portfolio — verify intended Lambda backend | DE | Investigate: check if aum-distribution data served by portfolio Lambda or main portal Lambda |
-| DEAD-01 | 2b (dead export) | LOW | all | 13 endpoint exports with 0 callers (see §6) — includes 3 keyword-history family, 3 books/relationship family, portfolio-optimization scaffold | DT/DE | Triage per family: confirm intentional vs removal |
+| ESLINT-01 | 4 (code quality) | LOW | all | 7× `no-explicit-any` in `portfolio.ts:433–439` | DT/DE | Triage: add types or suppress with comment if intentional |
+| ESLINT-02 | 4 (code quality) | LOW | all | 5× unused vars: `periodIndex`, `changeColor`, `bookGrowth`, `bookGrowthLabel`, `MODEL_ORDER_WITH_NONMODEL` | DT/DE | Fix: remove or prefix `_` |
+| ESLINT-03 | 4 (code quality) | LOW | all | 3× `exhaustive-deps` (AdvisorPublicProfile, AdvisorAnalytics, DistributionTab) | DE | Fix: add stable deps or suppress with explanation |
+| ESLINT-04 | 4 (code quality) | LOW | all | 2× `preserve-manual-memoization` (AdvisorAnalytics, PartnerAnalytics) | DE | Investigate if intentional |
+| ROUTE-01 | 2a (dead route) | HIGH-if-called / dormant-today | all | `searchSecurities` at `portfolio-optimization.ts:191` uses wrong CF path `/api/trades/` (should be `/api/general/trades/`) — dead at runtime; 0 callers so dormant; would break immediately if wired | DT | Fix URL before wiring up; latent debt |
+| ROUTE-02 | 2a | RESOLVED | all | FALSE ALARM — `getAccountDistribution` live path is `/api/general/`; `/api/private/` was a dead comment (`aum.ts:549`) | DE | Closed |
+| DEAD-01 | 2b (dead export) | LOW | all | 13 endpoint exports with 0 callers (see §6): keyword-history family ×3, books/relationship family ×3, portfolio-optimization scaffold ×2, others ×5 | DT/DE | Triage per family |
+| DC-01 | 2a/2b | MEDIUM | all | `endpoints/benchmarks.ts` (105L) whole-file dead — shadow of portal-proxy benchmark path | DE | Remove or reconcile with portal-proxy |
+| DC-02 | 2a | MEDIUM | all | `endpoints/market-update.ts` (201L) whole-file dead | DE | Remove or confirm planned feature |
+| DC-03 | 2a | MEDIUM | all | `endpoint-mapping.ts` (286L) dead routing-abstraction layer | DE | Remove (superseded) |
+| DC-04 | 2a | LOW | all | `sentiment-backend.ts` (43L) dead | DE | Remove |
+| DC-05 | 2a | LOW | all | `client/axios.ts` (88L) orphaned; live client = `api-client.ts` | DE | Remove |
+| DC-06 | 2a | LOW | all | `lib/rsiCalculator.ts` (151L) dead; `RSIBars.tsx` does not import it | DE | Remove |
+| DC-07 | 2c | MEDIUM | all | `lib/colorTokens.ts` (172L) dead + `getSentimentColor` re-defined 3× locally (ExecutiveSummary, KeywordSentimentModal, TopicCloud) | DE | Consolidate to one shared util |
+| ORPHAN-PM | 2b | HIGH | all | 19-file dead PortfolioManagement refactor sub-tree under a live page (`ActionBadge`, `FileUpload`, `TradeTable`(407L), `RiskVisualization`(253L), `usePortfolioManagementState`(271L), etc.) | DE | Remove after product confirm |
+| ORPHAN-AI | 2b | MEDIUM | all | 11 dead AdvisorIntelligence components/barrels (`AUACompositionChart`, `HeaderMetrics`, `AssetIntelligenceTab`(279L), `AdvisorBookAccountDetail`(305L), 3 dead barrels, etc.) | DE | Remove after confirm |
+| ORPHAN-MISC | 2b | MEDIUM | all | 8 dead misc incl. Attribution dead tabs (`HoldingsTab` 1185L), `ModelPortfolioCard`, `TrendingTopicImage`, CausalityEngine dead tabs | DE | Remove after confirm |
+| ORPHAN-UI | 2b | LOW | all | 3 non-catalyst UI orphans incl. `PanelExamples` demo (188L) | DE | Remove |
+| ORPHAN-BARREL | 2b | LOW | all | 3 dead barrels (`CapitalMarketAssumptions/index.ts`, `CausalityEngine/index.ts`, `ui/styles/index.ts`) | DE | Remove |
+| ORPHAN-CATALYST | 2b | ADVISORY | all | 21 unconsumed vendored Catalyst kit components — tree-shaken, informational only | — | No-op |
+| OOP-CTXDIR | 2c | NOTE | all | `context/` vs `contexts/` singular/plural naming footgun (both live) | DE | Optional rename |
 
 ---
 
@@ -224,4 +238,6 @@ All sweep operations were read-only:
 
 ---
 
-*DT findings complete 20260612T~1940Z. DE AC4/AC5/AC6 merged into §4 ~1945Z (7 dead channels, 0 unused imports, 72 orphan files / 5 actionable clusters + catalyst ADVISORY, ROUTE-02 resolved as false alarm). DT to merge §4d rows into §7 + send joint RAVC2 to COO CC CVO.*
+*DT findings complete 20260612T~1940Z (c2539b2bb). DE AC4/AC5/AC6 merged 20260612T~1945Z (872c6ad19). §7 joint summary finalized 20260612T~1958Z. Joint RAVC2 sent to COO CC CVO.*
+
+**Co-signed:** 0.4.0_DT_ClientPlatform + 0.4.0_DE_ClientPlatform
