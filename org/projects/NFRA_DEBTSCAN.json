@@ -1,0 +1,17 @@
+{
+  "project_code": "NFRA_DEBTSCAN",
+  "macro_code": "NFRA",
+  "name": "Graph-driven estate-wide debt/dead-path/canon-deviation/latent-risk scanning",
+  "description": "Andrew-direct 2026-06-12 (~17:55Z, via CVO brief 2a30d65f3): put the graph system to the test against the whole estate — find tech debt, dead paths, out-of-pattern routes (canon-breaks), and latent bugs/risk factors systematically FROM THE GRAPH, not ad-hoc greps. Four scan families (reachability dead-paths / structural-debt census / canon-deviation motif mining / compositional risk analytics), each anchored to a real past incident; D7's scan engine generalized from 5 critical surfaces to the unioned stitch (3,088 nodes). FP-suppression + CVO-adjudicated >=0.8 sampled-precision gates before non-ADVISORY filing; verify-before-delete doctrine binding; outputs = graded findings ledger (org/modules/graph/debtscan/) + graph_metrics burn-down trend + critical-paths cross-filing.",
+  "prds": [
+    {"path": "docs/architecture/NFRA_DEBTSCAN_PRD.md", "label": "DEBTSCAN PRD v0.1 (4 families, 3 phases, precision gates)", "date": "2026-06-12"}
+  ],
+  "status": "active",
+  "phase": "Phase 0: PRD v0.1 authored 2026-06-12 (CTO, ws-charter cycle 0011) on CVO's Andrew-direct brief (docs/briefs/nfra-debtscan-prd-request-20260612.md, 2a30d65f3). All 4 brief §6 open questions answered in-PRD. COO decomposition pending: TO-D1 (P1 reachability sweep) + TO-D2 (P1 composition battery) cut first; TO-D3 (P2 canon library) gated on CTO pattern-library authoring.",
+  "blocking": "COO task order issuance (TO-D1/TO-D2). P2 additionally gated on the CTO-authored canon pattern library (org/modules/graph/canon-patterns.yaml).",
+  "created": "2026-06-12",
+  "pods": ["0.7", "0.4", "0.6"],
+  "pipeline": "globgrph",
+  "thread_counter": 0,
+  "threads": []
+}
