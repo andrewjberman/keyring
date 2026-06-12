@@ -11,6 +11,7 @@ Rules below are law for every agent, every session. Format: imperative + enforci
 - **NEVER** trigger ad-hoc gold runs to validate work — validate on the scheduled nightly's artifacts.
 - **NEVER** trust a producer's self-report or rc=0 — verify against the SERVED artifact / live state.
 - **NEVER** leave a confirmed deploy half-landed — a begun deploy FINISHES in-session (every prefix, leg, activation step) or rolls back + escalates loud to COO; a stranded leg is RED-ALERT material, not a follow-up. Gate: deploy-completion ledger entry in `org/critical_paths/change_management/` opened at deploy-start, closed at completion — unclosed at session end = COO alarm. (Andrew-direct 2026-06-12; the 06-11 half-landed cutover bundle → 3 stranded layers + invisible FATAL → the inf/mdpf staleness P0.)
+- **NEVER** rebase — not `git rebase`, not `git pull --rebase` — on any shared branch (CLOUD/DEV/PROD): it rewrites multi-agent history; a non-conflicting result is luck, not correctness. Rejected push = `git pull` (merge) then re-push. Gate: headmove guard (ADHC_OWNPTH.010; `pull --rebase` extension pending). (Andrew-direct 2026-06-12, DT incident — rebase "succeeded" only because the commits happened not to overlap.)
 
 ## Deployment Rules
 
