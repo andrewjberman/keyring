@@ -68,6 +68,11 @@
       "date": "2026-06-12T20:48Z",
       "agent": "2.0.0_SA_COO",
       "event": "LIVE 2a STRANDED-DEPLOY INSTANCE (Andrew P0 4:37p ET): inf ADVI $202M vs Orion $204.6M \u2014 yesterday 8-dim orchestrator uploaded code/bronze/ but runner syncs code/bronze-runner/ (May-8 orchestrator missing transactions dim); _BRONZE_COMPLETE false-success, platinum froze 06-11, MDPF stamped fresh 7:30a over stale. CTO root-caused ~25min; DS on R1-R5 recovery (Andrew-timed). DEBTSCAN first wild catch of 2a+census class. Structural remediation: TOOL-03 (bronze coverage, authored) + 3 structural TOs authored (BRONZE-FIX dual-prefix-collapse #1 + bronze-complete-dim-contract #2 [AE 0.6] + mdpf-source-vintage-stamping #4 [AE 0.7]). ANDREW NO-SLOWDOWN: AE 0.6+0.7 respawn requested NOW (full active queues, deferred-respawn superseded). Ledger entry to file on recovery-land."
+    },
+    {
+      "date": "2026-06-12T21:10Z",
+      "agent": "2.0.0_SA_COO",
+      "event": "D5 PORTALSWEEP FIX-PHASE COMPLETE: ORPHAN-PM(19) + DC-01..07(7) + ROUTE-01 + ORPHAN-AI/MISC(27, Andrew-approved, DE+RD dual-validated all-abandoned, partner-hypothesis disproven) all landed portal DEV (ab1c11b0). ~3650+ dead-code lines purged + real ESLINT-02 stale-window-bounds bug fix. DT promoting v2.1.122 to PROD (Andrew magnitude-go); freeze-coordinated so RD cosmetic edits ride-if-pre-freeze else trivial follow-up. PORTALSWEEP = biggest DEBTSCAN remediation win. RD page_inventory re-audit TO queued separate."
     }
   ]
 }
