@@ -34,6 +34,20 @@ Usage:
   deploy_ledger.py close     --slug mdpf-vintage        # refuses if any leg unproven
   deploy_ledger.py check [--red] [--window-hours N]     # exit 1 if any entry OPEN
   deploy_ledger.py list
+
+CORRELATION-ID TOKEN FORMAT (pinned with DS for BRONZE-FIX #7 interop,
+2026-06-12): embed `ssm:<command_id>` and `lock:<run_id>` tokens in --proof
+strings when they exist. The #7 FATAL SNS payload carries the SAME tokens, so
+a FATAL alert grep-joins to its open ledger entry mechanically.
+
+v1.1 RATCHET LIST (DS contract review 225806Z, non-blocking):
+  R1. per-kind proof-shape validation -- s3-prefix proof must match a TOOL-03
+      MATCH-line regex; ec2-baked-asset proof must carry an ssm:/md5 token
+      (proof quality must not ride culture; this tool exists because culture
+      fails).
+  R2. AUX['inf'] None-home prefixes (runner/exporter/cleanup) render
+      UNCOVERED -- the residual stranded-deploy surface; map repo homes or
+      retire the prefixes (small follow-on, AE 0.6 lane interface).
 """
 from __future__ import annotations
 
