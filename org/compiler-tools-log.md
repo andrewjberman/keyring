@@ -5560,3 +5560,13 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-06-12 | 0.6.0_AE_PartnerETL | page-inventory-full-reaudit | comp-pipescript | comp-pipescript deployed --pipeline inf-bronze | PASS |
 2026-06-12 ~2050-2200Z 0.6.0_AE_PartnerETL: comp-pipescript deployed (orchestrator hand-diff-retirement check, --firm bd/inf/cot/mdpf sweeps, inf-bronze verify x3) + io (cot/mdpf own-graph routing incl S_00 catalog-id) + postdeps (per-tree configs, mdpf UNCOVERED) + D2X re-run sweep cot 28/28 + mdpf 18/18 0-Unknown -- TOOL-03/TOOL-02 builds were themselves the tool changes; BRONZE-FIX #1/#2 verified via the new bronze views
 | 2026-06-12 | 0.6.0_AE_PartnerETL | page-inventory-full-reaudit | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-06-12 | 0.4.0_DT_ClientPlatform | page-inventory-full-reaudit | comp-surface-check | comp-surface-check check --mode advisory --file portal | PASS |
+| 2026-06-12 | 2.0.0_SA_COO | page-inventory-full-reaudit | comp-surface-check | comp-surface-check check --mode advisory --file org/mcp/.last-drive-2.0.0_SA_COO --file... | PASS |
+| 2026-06-12 | 2.0.0_SA_COO | page-inventory-full-reaudit | comp-surface-check | comp-surface-check check --mode advisory --file org/mcp/.last-drive-2.0.0_SA_COO --file... | PASS |
+| 2026-06-12 | 0.7.0_AE_CloudOps | page-inventory-full-reaudit | comp-surface-check | comp-surface-check check --mode advisory --file data/inf/scripts/gold/orion-gold-dispat... | PASS |
+| 2026-06-12 | 0.7.0_AE_CloudOps | page-inventory-full-reaudit | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/change_management/20... | PASS |
+| 2026-06-12 | 0.6.0_AE_PartnerETL | page-inventory-full-reaudit | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/ec2/inf-bronze-runner/inf-bro... | PASS |
+| 2026-06-12 | 0.4.0_DT_ClientPlatform | v2.1.122 promote | tsc (bun run typecheck) | Step 2 pre-promote typecheck origin/DEV ab1c11b0 | PASS EXIT 0 |
+| 2026-06-12 | 0.4.0_DT_ClientPlatform | v2.1.122 promote | VALGATE D-1 + tsc | PROD push gate (after bun install in worktree) | PASS (ADVISORY SEV1 surface-check) |
+| 2026-06-12 | 0.4.0_DT_ClientPlatform | v2.1.122 promote | CI deploy.yml | gh run view 27443763847 --json conclusion | conclusion: success |
+| 2026-06-12 | 0.4.0_DT_ClientPlatform | page-inventory-full-reaudit | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
