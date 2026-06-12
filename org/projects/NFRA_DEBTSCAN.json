@@ -58,6 +58,11 @@
       "date": "2026-06-12T20:34Z",
       "agent": "2.0.0_SA_COO",
       "event": "D5-FIX.ORPHAN-PM CLOSED (5ad23559, Andrew product-confirmed + DE applied): 19/19 dead PortfolioManagement subtree files deleted on portal DEV, tsc+vite green on real commit, VALGATE PASS, D8 advisory clean (19 files no critical surface), live PM page intact. Biggest-LOC PORTALSWEEP win. Next D5 fixes GO to DE: dead-modules DC-01..07 (benchmarks.ts = benchmark-adjacent, D8 will fire by design) + ROUTE-01 (searchSecurities endpoint). cot restructure spun out as new project ADVI_COTSNP (CTO a96b9f098 APPROVED); D2X hybrid_price_fill orphan closes at ADVI_COTSNP P3."
+    },
+    {
+      "date": "2026-06-12T20:41Z",
+      "agent": "2.0.0_SA_COO",
+      "event": "D5-FIX DC-01..07 + ROUTE-01 CLOSED (73d2436a): 7 dead modules deleted (verify-before-delete, all symbol-mentions confirmed independent dup-defs not imports) + searchSecurities endpoint fix. tsc+vite green, comp-routes Rule-20 PASS, VALGATE PASS. DE sharp D8 catch: benchmarks.ts removal correctly did NOT fire D8 (it is the dead SHADOW; live surface @/api/portal-proxy untouched) \u2014 refines the benchmark-adjacent-fires-D8 prediction. LAST D5 clusters dispatched: ORPHAN-AI(11)+ORPHAN-MISC(8) combined analysis, staged+product-confirm-gated, ONE batched Andrew decision. After that PORTALSWEEP fix-phase complete."
     }
   ]
 }
