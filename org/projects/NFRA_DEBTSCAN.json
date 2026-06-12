@@ -43,6 +43,11 @@
       "date": "2026-06-12T20:00Z",
       "agent": "2.0.0_SA_COO",
       "event": "TO-D5 PORTALSWEEP JOINT RAVC2 received (35b02dc05, DT+DE co-signed) \u2014 pending CVO \u00a73 adjudication; fix-TOs gated on CVO pass. Findings: tsc clean, 17 ESLint real (TOOLCHAIN-01 globalIgnores gap), ROUTE-01 HIGH-if-called/dormant, ROUTE-02 closed-FP, 7 dead modules, 13 dead exports, 72 orphans/5 clusters (ORPHAN-PM 19-file HIGH dead PortfolioManagement subtree). CRITICAL: CVO regraded D2X-DS-03 SEV3->SEV2 latent HARD-CRASH (cot S_00 dispatched+deployed but inject_scoped_overrides.py MISSING repo+S3; fail-closed guard CORRECT, fix=BUILD cot fork not remove guard); COO sent DS correction + AE 0.6 tonight-COTETL-risk FYI. CVO day-1 scoreboard: IAM/COSTRECON/D2X all 1.00 PROMOTED, reachability 0.70 ADVISORY."
+    },
+    {
+      "date": "2026-06-12T20:11Z",
+      "agent": "2.0.0_SA_COO",
+      "event": "D2X-DS-03 PREMISE REVERSED (3rd reframe): DS pushed back on CVO SEV2-build-fork regrade w/ file ground-truth \u2014 aua_overrides.json=AUA exclusions via gold/lib/exclusions.py NOT inject input (CVO conflation); cot has no scoped_price_exceptions.json (zero overrides, no wipe possible); Andrew-direct sovereign: cot does NOT need scoped inject overrides (only 49F did, for fucked txn history). DS local commit 319a716cb (remove 49F-only inject chain + add real B_03->C_00 AUAGAP guard, DELTA=0) is Andrew-aligned fix. COO routed premise-correction to CVO for FAST reconcile of its regrade (201127Z); DS HOLDS 319a716cb deploy until CVO reconciles (no unreconciled gold-chain change pre-02:00Z; loud S_00 crash safer than blind deploy). NEW Andrew-direct workstream: cot RESTRUCTURE PROPOSAL (DS, supersedes queue \u2014 cot fully forked, data back 2026-04-22 snapshot-complete, bd txn-reverse-eng unnecessary). Lesson banked: verification regrade can rest on wrong premise."
     }
   ]
 }
