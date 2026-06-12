@@ -1,0 +1,110 @@
+---
+name: log
+description: Universal session-log writer — EVERY agent, every tier (lanes included). Writes your canonically-formatted session log per org/ref/SESSION_LOG_STANDARD.md (base template + your role's additions + the archetype tag) for the work since your last log, and commits it under your own author line via safe-commit.sh. Bare `/log` = AD-HOC one-shot, log now. `/log 90m` / `/log [90m]` / `/log 30m` / `/log 2h` = arm a recurring CronCreate loop at that cadence for long-running processes (operator-initiated only — NEVER auto-armed at launch per LD-0175); each tick logs the delta since the previous tick and SKIPS silently (heartbeat only, no noise file) when there is no substantive delta. `/log once` = same as bare. `/log off` = cancel the running /log cron. Compiler Tools section is mandatory in every log (one-sentence why if none were run — blank is not acceptable); append the org/compiler-tools-log.md line in the same pass.
+---
+
+# /log — canonical session log (ad-hoc or looped)
+
+Write YOUR session log, the canonical way, right now — or on a cadence for long-running work.
+**Authority for format:** `org/ref/SESSION_LOG_STANDARD.md` (the full template + role-specific
+additions + blocker-verification protocol). This skill is the executable entry point; the
+standard wins on any divergence. Archetype-tag requirement: `org/XXX.md` § "Archetype tag".
+
+## Invocation forms
+
+| Form | Behavior |
+|---|---|
+| `/log` | AD-HOC one-shot: write the session log NOW covering work since your last log. No cron. |
+| `/log once` | Same as bare `/log`. |
+| `/log 90m` / `/log [90m]` / `30m` / `2h` / `45m` | Arm a recurring **CronCreate** loop at that cadence (for long-running processes), then run one tick now. Operator/Andrew-initiated only — NEVER auto-arm at launch (LD-0175). |
+| `/log off` | `CronList` → `CronDelete` any `/log` cron. No log written. |
+
+## Step 0 — Identify yourself + scope the window
+
+- **Serial:** your full registered serial INCLUDING any `~B`/`~C` lane suffix.
+- **Log dir:** `org/{tier_folder}/{your_serial}/logs/{YYYY-MM-DD}/` (tier folders: `tier0/`,
+  `tier1_exec/`, `tier2_senior/`, `tier3_junior/`). Lane agents: use the folder matching your
+  registered serial if it exists; else the base-serial folder with the lane named in the title.
+- **Window:** everything since your LAST log entry (find it: newest file across your last two
+  `logs/{date}/` dirs). First log of a session with no prior = the whole session.
+- **Filename:** `{scope}_{action}.md` per convention (e.g. `gldinc_battery_results.md`,
+  `session_close_HHMM-HHMMZ.md`); loop ticks use `work_{HHMM}Z.md`.
+
+## Step 1 — Gather the material (evidence, not memory)
+
+Pull the window's ground truth before writing — the log cites evidence, not recollection:
+
+```bash
+git log --oneline --author="{your_serial}" --since="<window start>"   # your commits
+cat .comp-graph/.agent_context                                         # current TO context
+ls -t org/mcp/inbox/{your_serial}/read/ | head                        # MCP traffic handled
+```
+Plus: deploys/tags you produced, artifacts you verified, RAVC loops you opened/closed,
+rulings/findings you issued or received.
+
+## Step 2 — Write the log (the canonical format)
+
+Follow `org/ref/SESSION_LOG_STANDARD.md` **base template** exactly, with these non-negotiables:
+
+1. **Archetype tag** — single line immediately after the title: `**archetype:** TAG`
+   (one of EXPLORE / TRACE / DIAGNOSE / VALIDATE / DEPLOY / IMPLEMENT / COORDINATE / SCRIBE,
+   or MIXED; optional `**secondary_archetypes:**` line). Required on every substantive entry.
+2. **Compiler Tools section** — the table + What worked / What failed / Gap found. If you ran
+   none, ONE SENTENCE explaining why (e.g. "doc-only amendment, no code/infra change — Rule-20
+   checks ride the implementing TOs"). Blank / "N/A" is NOT acceptable. Role minimums are in
+   the standard §"Compiler Tools — Role Minimums".
+3. **Role-specific additions** — DE/RD header commit lines; DS Briefs-Written table; DT/AE
+   Deployment Sequence + Verification (paste ACTUAL output) — per the standard.
+4. **Blockers** — only per the Blocker Verification Protocol (evidence-cited BLOCKED, or
+   AMBIGUOUS routed to DE/COO; never assumption-BLOCKED).
+5. **Current State** — written for a reader with ZERO prior context: files, functions, AWS
+   resources, commit hashes, S3 paths. This is the primary handoff surface.
+6. **Next Steps** — cross-agent handoffs name the receiving agent's FULL serial in brackets.
+7. **Plain ASCII** — no emojis (CLAUDE.md Code Quality rule applies to logs).
+
+## Step 3 — Compiler-tools log line + commit
+
+1. Append ONE line to `org/compiler-tools-log.md` summarizing the window's tool runs (or the
+   one-sentence why-none).
+2. Commit BOTH files via the wrapper, under YOUR author line, pathspec-scoped — do NOT
+   pre-`git add` (the wrapper stages your pathspec itself, CLAUDE.md Rule 14a):
+
+```bash
+.tools/safe-commit.sh --author "{serial} <{serial}@opal.agent>" \
+  -m "log({serial}): <one-line summary of the window>" \
+  -- org/{tier_folder}/{serial}/logs/{date}/{file}.md org/compiler-tools-log.md
+```
+
+3. `heartbeat("{serial}", summary="<current state one-liner>")`.
+
+## Step 4 — Loop handling
+
+- **Bare `/log` / `once`:** done after Step 3. No cron, no ScheduleWakeup.
+- **Interval form:** after the Step-3 commit, `CronCreate` a job that re-invokes `/log` at the
+  given cadence (one `/log` cron max — `CronList` first; if one exists, replace it). Each tick
+  repeats Steps 0-3 for the delta since the previous tick.
+- **No-delta tick (loop mode only):** if the window contains NO substantive work (no commits,
+  no MCP traffic handled, no deploys/rulings/verifications), write NOTHING — heartbeat with
+  `log-tick: no delta` and end the tick. Heartbeat-only noise files dilute the log signal
+  (org/XXX.md: heartbeat-only entries don't even take archetype tags).
+- **`/log off`:** `CronList` → `CronDelete` the `/log` job; confirm in one line.
+
+## Report (end of every invocation)
+
+```
+/log {serial}
+  MODE:    ad-hoc | loop tick (cron <id>, every <interval>) | armed <interval> (cron <id>) | off (cancelled <id>) | no-delta skip
+  LOG:     <path committed> @ <commit hash> | none (no delta)
+  WINDOW:  <since> -> <now>; <N> commits, <M> MCP messages, <K> deploys/rulings covered
+```
+
+## Notes
+
+- **Self-scoped.** You write YOUR log only — never another agent's (their folder is their lane;
+  the owned-paths hook enforces it).
+- **This skill does not replace event-driven logging.** Logging at natural boundaries (TO
+  completion, session close, ruling issued) remains the norm; `/log` standardizes the ad-hoc
+  ask and gives long-running processes a cadence.
+- **Session-close logs:** a bare `/log` at session end IS the session-close log — name it
+  `session_close_{HHMM}-{HHMM}Z.md` and make Current State the handoff.
+- **CL fabric:** propagates ws → CL via `.tools/sync-skills-to-worktree.sh` per LD-0089 A.4-EXT.
