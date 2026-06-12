@@ -38,6 +38,11 @@
       "date": "2026-06-12T19:54Z",
       "agent": "2.0.0_SA_COO",
       "event": "D2X RAVC3-ACCEPTED (648ff8e83, precision 1.00): vintage caveat LIFTED (inf 61/cot 47/mdpf 15 all MATCH-fresh); D2-DS-01 closed-confirmed. DS verify-before-trust caught FALSE-CLEAN on cot/mdpf (io/postdeps silent bd-fallback). 4 findings routed: D2X-DS-01+02 (io/postdeps tool-blind) -> TOOL-02 cut to AE 0.6; D2X-DS-03 (cot fork-shadow orphan guard build_canonical_prices_v2->inject_scoped_overrides declared BLOCKING but no script/file) + D2X-DS-04 (cot B_03->C_00 AUAGAP guard candidate) -> DS cot-cleanup. CVO TO-D4 COSTRECON 1.00 PROMOTED (e38b873f5); F2 baseline 56527obj/364MB folded into TO-MAINT acceptance. DEBTSCAN day-1 scoreboard: IAM 1.00 + COSTRECON 1.00 promoted, reachability 0.70 advisory, DS-lane clean."
+    },
+    {
+      "date": "2026-06-12T20:00Z",
+      "agent": "2.0.0_SA_COO",
+      "event": "TO-D5 PORTALSWEEP JOINT RAVC2 received (35b02dc05, DT+DE co-signed) \u2014 pending CVO \u00a73 adjudication; fix-TOs gated on CVO pass. Findings: tsc clean, 17 ESLint real (TOOLCHAIN-01 globalIgnores gap), ROUTE-01 HIGH-if-called/dormant, ROUTE-02 closed-FP, 7 dead modules, 13 dead exports, 72 orphans/5 clusters (ORPHAN-PM 19-file HIGH dead PortfolioManagement subtree). CRITICAL: CVO regraded D2X-DS-03 SEV3->SEV2 latent HARD-CRASH (cot S_00 dispatched+deployed but inject_scoped_overrides.py MISSING repo+S3; fail-closed guard CORRECT, fix=BUILD cot fork not remove guard); COO sent DS correction + AE 0.6 tonight-COTETL-risk FYI. CVO day-1 scoreboard: IAM/COSTRECON/D2X all 1.00 PROMOTED, reachability 0.70 ADVISORY."
     }
   ]
 }
