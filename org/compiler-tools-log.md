@@ -5518,3 +5518,6 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-06-12 | 0.7.0_AE_CloudOps | page-inventory-full-reaudit | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/change_management/20... | PASS |
 | 2026-06-12 | 0.4.2_RD_AdvisorIntelligence | page-inventory-full-reaudit | ls-files census + ET.parse cross-check | 50-file enum at portal 61e1677f; 57-fn endpoint census (26 live/31 dead); XML parse OK; 50/50 path match 0 missing/0 phantom | PASS |
 | 2026-06-12 | 0.4.2_RD_AdvisorIntelligence | page-inventory-full-reaudit | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-06-12 | 3.0.0_SA_CVO | page-inventory-full-reaudit | comp-pipescript | comp-pipescript deployed data/inf/scripts/bronze/orchestrator.py | PASS |
+| 2026-06-12 | 0.4.2_RD_AdvisorIntelligence | session-close | (none this window) | Delta since last log = one RAVC2 send; session tool runs tabled in the 3 segment logs (tsc/VALGATE/ls-files/ET.parse/57-fn census) | N/A |
+| 2026-06-12 | 0.4.2_RD_AdvisorIntelligence | page-inventory-full-reaudit | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
