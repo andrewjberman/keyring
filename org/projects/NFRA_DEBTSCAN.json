@@ -48,6 +48,11 @@
       "date": "2026-06-12T20:11Z",
       "agent": "2.0.0_SA_COO",
       "event": "D2X-DS-03 PREMISE REVERSED (3rd reframe): DS pushed back on CVO SEV2-build-fork regrade w/ file ground-truth \u2014 aua_overrides.json=AUA exclusions via gold/lib/exclusions.py NOT inject input (CVO conflation); cot has no scoped_price_exceptions.json (zero overrides, no wipe possible); Andrew-direct sovereign: cot does NOT need scoped inject overrides (only 49F did, for fucked txn history). DS local commit 319a716cb (remove 49F-only inject chain + add real B_03->C_00 AUAGAP guard, DELTA=0) is Andrew-aligned fix. COO routed premise-correction to CVO for FAST reconcile of its regrade (201127Z); DS HOLDS 319a716cb deploy until CVO reconciles (no unreconciled gold-chain change pre-02:00Z; loud S_00 crash safer than blind deploy). NEW Andrew-direct workstream: cot RESTRUCTURE PROPOSAL (DS, supersedes queue \u2014 cot fully forked, data back 2026-04-22 snapshot-complete, bd txn-reverse-eng unnecessary). Lesson banked: verification regrade can rest on wrong premise."
+    },
+    {
+      "date": "2026-06-12T20:18Z",
+      "agent": "2.0.0_SA_COO",
+      "event": "D2X-DS-03 + D2X-DS-04 DEPLOY-CLOSED (RAVC3-accepted): DS deployed 319a716cb pre-02:00Z \u2014 cot S_00 hard-crash MOOTED for tonight. build_canonical_prices_v2.py MATCH (cot 47/47), gold_pipeline_deps.yaml served-readback-verified (caught stale 06-09 S3 copy: .py-only sweep does not cover yaml \u2014 tooling-gap noted, DS workaround correct), DELTA=0 CVO-verified. D2X-DS-04 AUAGAP guard confirmed real. Residual deferred to restructure: B_00.hybrid_price_fill orphan precondition (another cot fork-shadow; do not patch twice). DS now on Andrew-direct cot RESTRUCTURE PROPOSAL (route COO+CTO when drafted)."
     }
   ]
 }
