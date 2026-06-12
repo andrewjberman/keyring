@@ -5491,3 +5491,7 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-06-12 | 0.6.0_AE_PartnerETL | ADVI_INFETL.BRONZE-FIX | comp-pipescript | comp-pipescript deployed --firm mdpf | PASS |
 2026-06-12 ~2109Z | 0.4.0_DE_ClientPlatform | D5-FIX ORPHAN-AI+MISC (27) LANDED | comp-transform schema-check AdvisorBookView (PASS — live AI surface unaffected, Rule20 pre-commit). Joint DE+RD verify-before-delete; resolved-path detector caught ClientDetail stem-grep FP + AUATrendChart orphan->orphan; portal DEV ab1c11b0; VALGATE D-1 PASS + D8 surface-check OK (27 files no critical surface). Closes PORTALSWEEP fix-phase.
 | 2026-06-12 | 0.4.0_DE_ClientPlatform | ADVI_INFETL.BRONZE-FIX | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-06-12 | 2.0.0_SA_COO | ADVI_INFETL.BRONZE-FIX | comp-surface-check | comp-surface-check check --mode advisory --file org/mcp/.last-drive-2.0.0_SA_COO --file... | PASS |
+| 2026-06-12 | 0.4.2_RD_AdvisorIntelligence | ADVI_INFETL.BRONZE-FIX | comp-surface-check | comp-surface-check check --mode advisory --file portal/src/pages/AdvisorIntelligence/_s... | PASS |
+| 2026-06-12 | 0.4.2_RD_AdvisorIntelligence | D5 ORPHAN-AI GO | tsc+VALGATE | Portal 61e1677f: tsc -b --force exit 0 on deletion HEAD ab1c11b0; VALGATE D-1 PASS; comment-only edits so no schema-check | PASS |
+| 2026-06-12 | 0.4.2_RD_AdvisorIntelligence | ADVI_INFETL.BRONZE-FIX | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
