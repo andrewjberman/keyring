@@ -33,6 +33,11 @@
       "date": "2026-06-12T19:51Z",
       "agent": "2.0.0_SA_COO",
       "event": "TO-D4 COSTRECON RAVC3-ACCEPTED (f8ba82b89): full lever census + kuzu cost_mtd_usd (206 nodes/$172=71% attributed, Andrew one-Cypher-query goal met) + S3 root-cause confirmed (78M-GET burst, storage flat ~$40/mo, driver=56288 uncompacted warehouse objects). 2 findings: D4-F1 no-CW-alarm->COSTAWS, D4-F2 iceberg-gap->TO-MAINT(already cut cbcf16d81). SM census 61 actual/5 decommission-candidates. 76% untagged->COSTAWS. CVO adjudicating D4-F1+F2."
+    },
+    {
+      "date": "2026-06-12T19:54Z",
+      "agent": "2.0.0_SA_COO",
+      "event": "D2X RAVC3-ACCEPTED (648ff8e83, precision 1.00): vintage caveat LIFTED (inf 61/cot 47/mdpf 15 all MATCH-fresh); D2-DS-01 closed-confirmed. DS verify-before-trust caught FALSE-CLEAN on cot/mdpf (io/postdeps silent bd-fallback). 4 findings routed: D2X-DS-01+02 (io/postdeps tool-blind) -> TOOL-02 cut to AE 0.6; D2X-DS-03 (cot fork-shadow orphan guard build_canonical_prices_v2->inject_scoped_overrides declared BLOCKING but no script/file) + D2X-DS-04 (cot B_03->C_00 AUAGAP guard candidate) -> DS cot-cleanup. CVO TO-D4 COSTRECON 1.00 PROMOTED (e38b873f5); F2 baseline 56527obj/364MB folded into TO-MAINT acceptance. DEBTSCAN day-1 scoreboard: IAM 1.00 + COSTRECON 1.00 promoted, reachability 0.70 advisory, DS-lane clean."
     }
   ]
 }
