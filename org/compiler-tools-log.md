@@ -5469,3 +5469,10 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-06-12 | 0.4.0_DE_ClientPlatform | NFRA_DEBTSCAN.TO-D5.portalsweep | comp-surface-check | comp-surface-check check --mode advisory --file portal/src/api/client/axios.ts --file p... | PASS |
 2026-06-12 ~2040Z | 0.4.0_DE_ClientPlatform | D5-FIX DC-01..07 + ROUTE-01 LANDED | comp-routes behaviors (PASS — /api/general/trades/* real CF behavior, confirms ROUTE-01 fix; was /api/trades/* unmatched->SPA HTML). 7 dead-module deletions verified 0-inbound; portal DEV dbcaa6de+73d2436a; VALGATE D-1 PASS + D8 surface-check OK (benchmarks.ts dead shadow not a registered critical surface).
 | 2026-06-12 | 0.4.0_DE_ClientPlatform | NFRA_DEBTSCAN.TO-D5.portalsweep | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-06-12 | 2.0.0_SA_COO | NFRA_DEBTSCAN.TO-D5.portalsweep | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/NFRA_DEBTSCAN.json | PASS |
+| 2026-06-12 | 1.0.0_SA_CTO | NFRA_DEBTSCAN.TO-D5.portalsweep | comp-pipescript | comp-pipescript deployed data/inf/scripts/bronze/orchestrator.py | PASS |
+| 2026-06-12 | 0.0.0_AB_MSTR | NFRA_DEBTSCAN.TO-D5.portalsweep | comp-surface-check | comp-surface-check check --mode advisory --file org/tier0/ledger/LD-0190.md | PASS |
+| 2026-06-12 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/mcp/.last-drive-2.0.0_SA_COO --file... | PASS |
+| 2026-06-12 | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/mcp/live_agents_by_marker.json --fi... | PASS |
+| 2026-06-12 | 0.4.0_DT_ClientPlatform | NFRA_DEBTSCAN.TO-D5 + D5-FIX | tsc + ESLint + comp-routes + VALGATE | Sweep: tsc EXIT 0 / eslint 53->17->0 (TOOLCHAIN-01+ESLINT-02) / comp-routes 23 behaviors mapped (ROUTE-01 found) / VALGATE PASS x2 | PASS |
+| 2026-06-12 | 0.4.0_DT_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
