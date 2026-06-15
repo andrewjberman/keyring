@@ -47,6 +47,7 @@ All in `.tools/` (PATH). Full catalog + tools_index: `org/modules/graph/graph-ca
 
 | Situation | Command | Note |
 |---|---|---|
+| "What's in the news/advi/market/... pipeline?" | `pipescript <name>` | named-thread estate traversal: every resource + producers→served→frontend + owning tool + debt/reachability flags, whole estate, NO silent Unknown (`pipescript --list` for names). NFRA_PIPESCRIPT |
 | Editing a gold script | `comp-pipescript io [script]` | COLUMN GAPS + portal consumers |
 | Running a gold script | `comp-pipescript deployed [script]` | MATCH/STALE/MISSING; no-arg = all-trees firm-separated sweep |
 | Ad-hoc (non-dispatch) run | `comp-pipescript postdeps [script]` | required post-steps ($22M class) |

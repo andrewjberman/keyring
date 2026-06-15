@@ -166,6 +166,30 @@ tools:
     replaces: "Manual before/after comparison of file trees (diff mode); manual grep across graph nodes (symbol mode)"
     note: "Dual-purpose tool. No-arg = graph state diff vs baseline. Positional arg = symbol cross-reference lookup. Disambiguation by argparse positional optionality (nargs='?')."
 
+  pipescript:
+    command: "pipescript <name>   |   pipescript --list | --resource <substr> | --tool <name> <tool> | --debt | --fe-reachability | --validate | --gate-b"
+    segment_scope: estate-wide
+    segment_scope_note: "NFRA_PIPESCRIPT (Andrew-direct, COMPLETE 2026-06-15). The HUMAN ENTRY POINT over the whole estate: 'what am I looking for -- the news scanner? -> pipescript news'. 25 named threads / 134 sub-threads / 169 lambdas (CVO census 2d9a0a2a1). Reads the prebuilt estate-coverage-resolver.json (gen-estate-resolver.py joins the CVO manifest 61e91d334 + census). Read-only, ~0.3s, no AWS calls."
+    when: |
+      - "What's in the news / advi / market-overview / model-portfolios / trade-submission / <portal-page> pipeline?" -> pipescript <name>
+      - "What named threads exist?" -> pipescript --list
+      - "Which thread owns resource X (a lambda / S3 key / table)?" -> pipescript --resource <substr>
+      - "What debt (orphan/dormant/stranded/freshness/frontend-orphan) is in thread X?" -> pipescript --debt (or pipescript <name>, flags inline)
+      - "Does this backend thread reach a MOUNTED rendering component, or is it a frontend-orphan/phantom?" -> pipescript --fe-reachability
+      - Starting any cross-layer investigation: pipescript <name> FIRST to see every resource + its owning tool, THEN drill via the named sub-resolver.
+    subcommands:
+      "<name>": "Full traversal of a named thread: every sub-thread -> producers (lambdas/EC2/StepFn + triggers) -> served artifacts (S3/DDB) -> frontend consumers (portal components) -> owning_tool + coverage status + debt flags + FE-reachability. NO silent Unknown."
+      list: "pipescript --list -- all 25 named thread names + per-thread IN-SCOPE/OUT/UNREVIEWED counts + owning tools."
+      resource: "pipescript --resource <substr> -- reverse lookup: which named thread(s) + sub-thread own a resource matching the substring."
+      tool: "pipescript --tool <name> <tool> -- only the sub-threads of <name> owned by <tool>; the drill POINTER surfaces the canonical sub-resolver call (read-only; does NOT live-invoke, F5)."
+      debt: "pipescript --debt -- estate debtscan-flag view across all threads (P3.1)."
+      fe-reachability: "pipescript --fe-reachability -- FE-reachability status per backend thread (mounted-reachable / frontend-orphan / phantom / unreviewed-LOUD) from CVO GROUND-TRUTH, NOT a live portal grep (scaffolding-fooled: bd-time-machine's provider exists in code) (P3.2)."
+      validate: "pipescript --validate / --gate-b -- self-validation + the standing regression oracle (gate-b 25/25 named-thread reproduction + gate-c every-resource->exactly-one-thread)."
+    cost: "~0.3s (reads prebuilt estate-coverage-resolver.json; no AWS calls)"
+    data_sources: "estate-coverage-resolver.json <- gen-estate-resolver.py joins the CVO estate-coverage manifest (61e91d334) + the 2026-06-15 estate census (2d9a0a2a1). Rebuild: re-run org/modules/graph/gen-estate-resolver.py after the manifest/census changes."
+    replaces: "Grepping across single-slice tools (comp-pipescript/globgrph/stitch/portal-tools) for a thread one of them doesn't own (silent Unknown); a manual census of 'what's in pipeline X'. An unknown name OR an unowned-tool query is ALWAYS LOUD (exit 2) -- the generalized TOOL-02 false-clean guard."
+    note: "comp-pipescript (medallion) is ONE of pipescript's sub-resolvers (cp=13 of the 134 threads); pipescript is the estate-wide named-thread SUPERSET that ROUTES to it + globgrph (AWS-resource) / stitch (cross-layer) / portal-consumer-tools (frontend) / none (ops-local). Owner: DS (pipescript_cli.py = DS lane); cross-tool comp-pipescript guard edits route owner-review (AE) per the two-rule lane convention."
+
   comp-pipescript:
     command: "comp-pipescript <subcommand> [args]"
     segment_scope: segment-aware

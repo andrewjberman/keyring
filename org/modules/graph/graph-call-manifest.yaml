@@ -27,7 +27,7 @@
 #   comp-learns-run / comp-learns-status  -- compiler self-learning/telemetry harness (not a graph query)
 #   comp-perf                             -- tool-perf benchmarking (not a graph query)
 #   comp-v5-composite-test.sh             -- tool regression test
-excluded_not_graph_use_cases: [comp-learns-run, comp-learns-status, comp-perf, comp-v5-composite-test, comp-manifest-check]  # comp-manifest-check = the D6 manifest-ENFORCEMENT gate (polices this manifest, not a graph-query use-case)
+excluded_not_graph_use_cases: [comp-learns-run, comp-learns-status, comp-perf, comp-v5-composite-test, comp-manifest-check, comp-surface-check]  # comp-manifest-check = D6 manifest-ENFORCEMENT gate; comp-surface-check = D8 critical-surface commit-gate (polices critical-surfaces.yaml at commit, auto in safe-commit) -- both ENFORCEMENT gates, not graph-query use-cases (so excluded here; they're in CLAUDE.md's invoke-table)
 
 contract:
   default: QUERY        # comp-kuzu (cloud/cross-layer) or cached comp-trace/comp-blast (trace)
@@ -331,16 +331,16 @@ entries:
 
   - id: estate.pipescript.named_thread
     use_case: "What am I looking for -- the news scanner? -> pipescript news -> EVERY resource in that named thread + producers->served->frontend + owning tool + coverage + debt flags, over the whole estate, no silent Unknown."
-    canonical_call: "pipescript <name>   # e.g. pipescript news ; pipescript --list ; pipescript --resource <substr> ; pipescript --tool <name> <tool> ; pipescript --validate"
+    canonical_call: "pipescript <name>   # e.g. pipescript news ; --list ; --resource <substr> ; --tool <name> <tool> ; --debt (debtscan flags inline) ; --fe-reachability (mounted/orphan/phantom/unreviewed) ; --validate ; --gate-b (standing regression oracle)"
     tool: pipescript
     mode: query-cached
     layer: estate
     cost: "~0.3s (reads prebuilt estate-coverage-resolver.json; no AWS calls)"
     freshness: "estate-coverage-resolver.json (gen-estate-resolver.py joins CVO manifest 61e91d334 + census 2d9a0a2a1)"
     rebuild_trigger: "re-run org/modules/graph/gen-estate-resolver.py after the manifest/census changes (resolver is a generated join)"
-    anti_pattern: "grepping across single-slice tools for a thread one of them doesn't own (silent Unknown); treating an unowned-tool query as clean instead of the LOUD OUT-OF-SCOPE pointer"
+    anti_pattern: "grepping across single-slice tools for a thread one of them doesn't own (silent Unknown); treating an unowned-tool query as clean instead of the LOUD OUT-OF-SCOPE pointer; live-grepping the portal for FE-reachability (scaffolding-fooled -- bd-time-machine's provider exists in code; use --fe-reachability's CVO ground-truth)"
     status: canonical
-    notes: "NFRA_PIPESCRIPT P1: named-thread estate traversal. 16 named threads / 134 sub-threads (CVO census). Routes each thread to its owning_tool (comp-pipescript=medallion / globgrph=AWS-resource / stitch=cross-layer / portal-consumer-tools=frontend / none=ops-local); the per-tool sub-resolver DISPATCH is P1b. An unknown name OR an unowned-tool query is ALWAYS LOUD (exit 2) -- the generalized TOOL-02 false-clean guard. Read-only; ASCII-only stdout."
+    notes: "NFRA_PIPESCRIPT COMPLETE 2026-06-15 (full PRD: a+b+c+P1b+P3, CVO final attestation bce23d613). Named-thread estate traversal: 25 named threads (per-page refined: advi-bd/inf/cot + market-overview/factor-tilts/valuation/correlation/positioning/cma/attribution/macroeconomics/model-portfolios/portfolio-management/trade-submission/news/causality/security-scanner/smartx/mdpf/partners/graph-platform/insurance/portal-infra/ops-internal) / 134 sub-threads over the 169-lambda census. Routes each thread to its owning_tool (comp-pipescript=medallion=13 / globgrph=AWS-resource / stitch=cross-layer / portal-consumer-tools=frontend / none=ops-local). P1b.2 = read-only drill POINTER (surfaces the canonical sub-resolver call per thread; does NOT live-invoke -- F5). P3.1 = inline debtscan flags (--debt). P3.2 = FE-reachability status (--fe-reachability) surfacing CVO GROUND-TRUTH (mounted-reachable/frontend-orphan/phantom/unreviewed-LOUD) -- NOT a live portal grep (scaffolding-fooled). Unknown name OR unowned-tool query ALWAYS LOUD (exit 2) -- generalized TOOL-02 false-clean guard. Standing regression oracle: pipescript --gate-b + --fe-reachability. Read-only; ASCII-only stdout. Owner: DS (pipescript_cli.py = DS lane); cross-tool comp-pipescript guard edits route owner-review (AE) per the two-rule lane convention."
 
   - id: pipeline.freshness.chain_ready
     use_case: "Is the upstream S3 data fresh enough to run a gold chain?"
