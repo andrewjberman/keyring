@@ -6019,3 +6019,11 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-06-15 | 0.4.0_DS_ClientPlatform~A | (no-TO) | pipescript | pipescript --resource opal-news-articles | PASS |
 | 2026-06-15 | 0.4.0_DT_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .claude/skills/comp-loop/SKILL.md --fil... | PASS |
 | 2026-06-15 | 0.4.0_DT_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .claude/skills/comp-loop/SKILL.md --fil... | PASS |
+| 2026-06-15 | 0.4.0_DT_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DT_ClientPlatfor... | PASS |
+| 2026-06-15 | 0.4.0_DS_ClientPlatform~A | (no-TO) | pipescript | pipescript model-portfolios | PASS |
+| 2026-06-15 | 0.4.0_DS_ClientPlatform~A | (no-TO) | pipescript | pipescript --resource benchmark | PASS |
+| 2026-06-15 | 0.4.0_DS_ClientPlatform~A | (no-TO) | pipescript | pipescript --resource smartx-model-monthly | PASS |
+| 2026-06-15 | 0.4.0_DS_ClientPlatform~A | (no-TO) | comp-kuzu | comp-kuzu MATCH (n:CloudNode) WHERE n.name CONTAINS 'benchmark' RETURN n.node_type, n.n... | PASS |
+| 2026-06-15 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .claude/settings.json --file .tools/hoo... | PASS |
+2026-06-15T22:15Z | 3.0.0_SA_CVO | HUD-3 | transcript-scan classifier (425 sessions, arg-level) + telemetry/comp-tools-log cross-ref | blind-grep-where-tool-exists baseline ~20% TIER-1 (15-18% high-conf), buried-tool ranking, #1 patterns + #2 question->tool seed | data arm for CTO comp-tool HUD
+| 2026-06-15 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
