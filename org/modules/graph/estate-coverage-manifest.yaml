@@ -29,286 +29,548 @@ last_full_review: 2026-06-15   # the CVO census 2d9a0a2a1
 
 # ---- FULL POPULATION (COO-generated from CVO census 2d9a0a2a1 + NAMED_THREAD_CATALOG d33fe4aab; CVO verifies determinations) ----
 threads:
-  # ====================================================================
-  # FULL SEED — 142 census threads (CVO 2026-06-15; census 2d9a0a2a1 + gap-closure).
-  # owning_tool per CTO-ratified tool-boundary (comp-pipescript = MEDALLION ONLY).
-  # status per CVO classification; UNREVIEWED = NOT inherit-clean (owning-lane confirms).
-  # Grouped by the 15 named pipescript threads (catalog d33fe4aab).
-  # ====================================================================
+  # P2 per-page named_thread set (CVO reclassification 2026-06-15, post yang per-page census wuyv5ldtq)
 
-  # ---- pipescript advi  (32 threads) ----
-  - family: FRED-06-exec-summary-generator
-    named_thread: advi
-    owning_tool: portal-consumer-tools
-    status: in-scope
-    tool_pointer: null
-    last_reviewed: '2026-06-15'
-    debtscan_flags: []
-  - family: PPI-04-opal-partners-data
-    named_thread: advi
-    owning_tool: portal-consumer-tools
-    status: in-scope
-    tool_pointer: null
-    last_reviewed: '2026-06-15'
-    debtscan_flags: []
-  - family: PPI-08-shared-advisor-router
-    named_thread: advi
-    owning_tool: portal-consumer-tools
-    status: in-scope
-    tool_pointer: null
-    last_reviewed: '2026-06-15'
-    debtscan_flags: []
-  - family: PPI-09-shared-advisor-router-response
-    named_thread: advi
-    owning_tool: globgrph
-    status: in-scope
-    tool_pointer: null
-    last_reviewed: '2026-06-15'
-    debtscan_flags: []
+  # ---- pipescript advi-bd (19) ----
   - family: bd-allocation-file-watchdog
-    named_thread: advi
+    named_thread: advi-bd
     owning_tool: none
     status: explicit-out
+    reason: Ops-only SNS file-presence watchdog, no served data artifact, no consumer
     tool_pointer: null
     last_reviewed: '2026-06-15'
     debtscan_flags: []
-    reason: Ops-only SNS file-presence watchdog, no served data artifact, no consumer
   - family: bd-allocations
-    named_thread: advi
+    named_thread: advi-bd
     owning_tool: comp-pipescript
     status: in-scope
     tool_pointer: null
     last_reviewed: '2026-06-15'
     debtscan_flags: []
   - family: bd-asset-dim
-    named_thread: advi
+    named_thread: advi-bd
     owning_tool: comp-pipescript
     status: in-scope
     tool_pointer: null
     last_reviewed: '2026-06-15'
     debtscan_flags: []
   - family: bd-bronze-transactions
-    named_thread: advi
+    named_thread: advi-bd
     owning_tool: comp-pipescript
     status: in-scope
     tool_pointer: null
     last_reviewed: '2026-06-15'
     debtscan_flags: []
   - family: bd-canonical-prices
-    named_thread: advi
+    named_thread: advi-bd
     owning_tool: comp-pipescript
     status: in-scope
     tool_pointer: null
     last_reviewed: '2026-06-15'
     debtscan_flags: []
+  - family: bd-capture-output-versions
+    named_thread: advi-bd
+    owning_tool: globgrph
+    status: in-scope
+    tool_pointer: null
+    last_reviewed: '2026-06-15'
+    debtscan_flags: []
   - family: bd-client-detail-api
-    named_thread: advi
+    named_thread: advi-bd
     owning_tool: portal-consumer-tools
     status: in-scope
     tool_pointer: null
     last_reviewed: '2026-06-15'
     debtscan_flags: []
   - family: bd-fees
-    named_thread: advi
+    named_thread: advi-bd
     owning_tool: comp-pipescript
     status: in-scope
     tool_pointer: null
     last_reviewed: '2026-06-15'
     debtscan_flags: []
   - family: bd-gold-detail-checker
-    named_thread: advi
+    named_thread: advi-bd
     owning_tool: globgrph
     status: in-scope
     tool_pointer: null
     last_reviewed: '2026-06-15'
     debtscan_flags: []
   - family: bd-gold-foundation
-    named_thread: advi
+    named_thread: advi-bd
     owning_tool: comp-pipescript
     status: in-scope
     tool_pointer: null
     last_reviewed: '2026-06-15'
     debtscan_flags: []
   - family: bd-gold-layer-legacy
-    named_thread: advi
+    named_thread: advi-bd
     owning_tool: none
     status: explicit-out
+    reason: Orphaned legacy in-Lambda gold generator, no trigger/policy, superseded by EC2 runner; no live consumer
     tool_pointer: null
     last_reviewed: '2026-06-15'
     debtscan_flags: []
-    reason: Orphaned legacy in-Lambda gold generator, no trigger/policy, superseded by EC2 runner; no live consumer
   - family: bd-gold-layer-pipeline
-    named_thread: advi
+    named_thread: advi-bd
     owning_tool: stitch
     status: in-scope
     tool_pointer: null
     last_reviewed: '2026-06-15'
     debtscan_flags: []
   - family: bd-historical-prices
-    named_thread: advi
+    named_thread: advi-bd
     owning_tool: comp-pipescript
     status: in-scope
     tool_pointer: null
     last_reviewed: '2026-06-15'
     debtscan_flags: []
   - family: bd-incrparity
-    named_thread: advi
+    named_thread: advi-bd
     owning_tool: none
     status: explicit-out
+    reason: Weekly QA/parity smoke (incrparity), no served data artifact, no frontend consumer
     tool_pointer: null
     last_reviewed: '2026-06-15'
     debtscan_flags: []
-    reason: Weekly QA/parity smoke (incrparity), no served data artifact, no frontend consumer
   - family: bd-portal-publisher
-    named_thread: advi
+    named_thread: advi-bd
     owning_tool: portal-consumer-tools
     status: in-scope
     tool_pointer: null
     last_reviewed: '2026-06-15'
     debtscan_flags: []
   - family: bd-realized-gains
-    named_thread: advi
+    named_thread: advi-bd
+    owning_tool: comp-pipescript
+    status: in-scope
+    tool_pointer: null
+    last_reviewed: '2026-06-15'
+    debtscan_flags: []
+  - family: bd-time-machine
+    named_thread: advi-bd
+    owning_tool: globgrph
+    status: unreviewed
+    tool_pointer: null
+    last_reviewed: '2026-06-15'
+    debtscan_flags: []
+  - family: bd-txn-consolidator
+    named_thread: advi-bd
     owning_tool: comp-pipescript
     status: in-scope
     tool_pointer: null
     last_reviewed: '2026-06-15'
     debtscan_flags: []
   - family: bd-unrealized-gains
-    named_thread: advi
-    owning_tool: comp-pipescript
-    status: in-scope
-    tool_pointer: null
-    last_reviewed: '2026-06-15'
-    debtscan_flags: []
-  - family: cot-pipeline
-    named_thread: advi
-    owning_tool: stitch
-    status: in-scope
-    tool_pointer: null
-    last_reviewed: '2026-06-15'
-    debtscan_flags: []
-  - family: inf-bronze-api-pull
-    named_thread: advi
-    owning_tool: comp-pipescript
-    status: in-scope
-    tool_pointer: null
-    last_reviewed: '2026-06-15'
-    debtscan_flags: []
-  - family: inf-bronze-runner-ec2
-    named_thread: advi
-    owning_tool: comp-pipescript
-    status: in-scope
-    tool_pointer: null
-    last_reviewed: '2026-06-15'
-    debtscan_flags: []
-  - family: inf-client-detail
-    named_thread: advi
-    owning_tool: globgrph
-    status: unreviewed
-    tool_pointer: null
-    last_reviewed: '2026-06-15'
-    debtscan_flags: []
-  - family: inf-ec2-launch-resilience
-    named_thread: advi
-    owning_tool: none
-    status: explicit-out
-    tool_pointer: null
-    last_reviewed: '2026-06-15'
-    debtscan_flags: []
-    reason: Ops-only EC2 launch monitor + retry (SNS + DDB lock), no data artifact/consumer
-  - family: inf-gold-qa-runner
-    named_thread: advi
-    owning_tool: none
-    status: explicit-out
-    tool_pointer: null
-    last_reviewed: '2026-06-15'
-    debtscan_flags: []
-    reason: Manual QA EC2, no scheduled trigger, writes non-prod QA prefix; no live consumer
-  - family: inf-jwt-exporter
-    named_thread: advi
-    owning_tool: globgrph
-    status: in-scope
-    tool_pointer: null
-    last_reviewed: '2026-06-15'
-    debtscan_flags: []
-  - family: inf-nna-partition-checker
-    named_thread: advi
-    owning_tool: none
-    status: explicit-out
-    tool_pointer: null
-    last_reviewed: '2026-06-15'
-    debtscan_flags: []
-    reason: Observability-only freshness watchdog emitting CW metric ADVI/NNA, no consumer-facing data
-  - family: inf-portal-advisor-publisher
-    named_thread: advi
-    owning_tool: portal-consumer-tools
-    status: in-scope
-    tool_pointer: null
-    last_reviewed: '2026-06-15'
-    debtscan_flags: []
-  - family: inf-portal-publisher
-    named_thread: advi
-    owning_tool: portal-consumer-tools
-    status: in-scope
-    tool_pointer: null
-    last_reviewed: '2026-06-15'
-    debtscan_flags: []
-  - family: inf-silver-aggregator-quorum
-    named_thread: advi
-    owning_tool: globgrph
-    status: in-scope
-    tool_pointer: null
-    last_reviewed: '2026-06-15'
-    debtscan_flags: []
-  - family: inf-silver-chain
-    named_thread: advi
+    named_thread: advi-bd
     owning_tool: comp-pipescript
     status: in-scope
     tool_pointer: null
     last_reviewed: '2026-06-15'
     debtscan_flags: []
 
-  # ---- pipescript model-portfolios  (20 threads) ----
+  # ---- pipescript advi-cot (1) ----
+  - family: cot-pipeline
+    named_thread: advi-cot
+    owning_tool: stitch
+    status: in-scope
+    tool_pointer: null
+    last_reviewed: '2026-06-15'
+    debtscan_flags: []
+
+  # ---- pipescript advi-inf (14) ----
+  - family: PPI-08-shared-advisor-router
+    named_thread: advi-inf
+    owning_tool: portal-consumer-tools
+    status: in-scope
+    tool_pointer: null
+    last_reviewed: '2026-06-15'
+    debtscan_flags: []
+  - family: PPI-09-shared-advisor-router-response
+    named_thread: advi-inf
+    owning_tool: globgrph
+    status: in-scope
+    tool_pointer: null
+    last_reviewed: '2026-06-15'
+    debtscan_flags: []
+  - family: inf-bronze-api-pull
+    named_thread: advi-inf
+    owning_tool: comp-pipescript
+    status: in-scope
+    tool_pointer: null
+    last_reviewed: '2026-06-15'
+    debtscan_flags: []
+  - family: inf-bronze-runner-ec2
+    named_thread: advi-inf
+    owning_tool: comp-pipescript
+    status: in-scope
+    tool_pointer: null
+    last_reviewed: '2026-06-15'
+    debtscan_flags: []
+  - family: inf-client-detail
+    named_thread: advi-inf
+    owning_tool: globgrph
+    status: unreviewed
+    tool_pointer: null
+    last_reviewed: '2026-06-15'
+    debtscan_flags: []
+  - family: inf-ec2-launch-resilience
+    named_thread: advi-inf
+    owning_tool: none
+    status: explicit-out
+    reason: Ops-only EC2 launch monitor + retry (SNS + DDB lock), no data artifact/consumer
+    tool_pointer: null
+    last_reviewed: '2026-06-15'
+    debtscan_flags: []
+  - family: inf-gold-dispatch-ec2
+    named_thread: advi-inf
+    owning_tool: stitch
+    status: in-scope
+    tool_pointer: null
+    last_reviewed: '2026-06-15'
+    debtscan_flags: []
+  - family: inf-gold-qa-runner
+    named_thread: advi-inf
+    owning_tool: none
+    status: explicit-out
+    reason: Manual QA EC2, no scheduled trigger, writes non-prod QA prefix; no live consumer
+    tool_pointer: null
+    last_reviewed: '2026-06-15'
+    debtscan_flags: []
+  - family: inf-jwt-exporter
+    named_thread: advi-inf
+    owning_tool: globgrph
+    status: in-scope
+    tool_pointer: null
+    last_reviewed: '2026-06-15'
+    debtscan_flags: []
+  - family: inf-nna-partition-checker
+    named_thread: advi-inf
+    owning_tool: none
+    status: explicit-out
+    reason: Observability-only freshness watchdog emitting CW metric ADVI/NNA, no consumer-facing data
+    tool_pointer: null
+    last_reviewed: '2026-06-15'
+    debtscan_flags: []
+  - family: inf-portal-advisor-publisher
+    named_thread: advi-inf
+    owning_tool: portal-consumer-tools
+    status: in-scope
+    tool_pointer: null
+    last_reviewed: '2026-06-15'
+    debtscan_flags: []
+  - family: inf-portal-publisher
+    named_thread: advi-inf
+    owning_tool: portal-consumer-tools
+    status: in-scope
+    tool_pointer: null
+    last_reviewed: '2026-06-15'
+    debtscan_flags: []
+  - family: inf-silver-aggregator-quorum
+    named_thread: advi-inf
+    owning_tool: globgrph
+    status: in-scope
+    tool_pointer: null
+    last_reviewed: '2026-06-15'
+    debtscan_flags: []
+  - family: inf-silver-chain
+    named_thread: advi-inf
+    owning_tool: comp-pipescript
+    status: in-scope
+    tool_pointer: null
+    last_reviewed: '2026-06-15'
+    debtscan_flags: []
+
+  # ---- pipescript causality (5) ----
+  - family: causality-ai-query
+    named_thread: causality
+    owning_tool: none
+    status: explicit-out
+    reason: Live API route but ZERO consumer (absent from causality-endpoints.ts and built page); on deprecation list
+    tool_pointer: null
+    last_reviewed: '2026-06-15'
+    debtscan_flags: []
+  - family: causality-data-enrichment-movements
+    named_thread: causality
+    owning_tool: none
+    status: explicit-out
+    reason: 2 live API routes but ZERO consumer; on deprecation list
+    tool_pointer: null
+    last_reviewed: '2026-06-15'
+    debtscan_flags: []
+  - family: causality-generate-analysis
+    named_thread: causality
+    owning_tool: portal-consumer-tools
+    status: unreviewed
+    tool_pointer: null
+    last_reviewed: '2026-06-15'
+    debtscan_flags: []
+  - family: causality-thematic-signals-daily
+    named_thread: causality
+    owning_tool: globgrph
+    status: unreviewed
+    tool_pointer: null
+    last_reviewed: '2026-06-15'
+    debtscan_flags: []
+  - family: causality-themes-fetch
+    named_thread: causality
+    owning_tool: portal-consumer-tools
+    status: unreviewed
+    tool_pointer: null
+    last_reviewed: '2026-06-15'
+    debtscan_flags: []
+
+  # ---- pipescript cma (1) ----
+  - family: yang-cma
+    named_thread: cma
+    owning_tool: globgrph
+    status: in-scope
+    tool_pointer: null
+    last_reviewed: '2026-06-15'
+    debtscan_flags: []
+
+  # ---- pipescript correlation (1) ----
+  - family: yang-correlation
+    named_thread: correlation
+    owning_tool: globgrph
+    status: in-scope
+    tool_pointer: null
+    last_reviewed: '2026-06-15'
+    debtscan_flags: []
+
+  # ---- pipescript data-refresh (1) ----
+  - family: PPI-10-opal-data-refresh-api
+    named_thread: data-refresh
+    owning_tool: portal-consumer-tools
+    status: in-scope
+    tool_pointer: null
+    last_reviewed: '2026-06-15'
+    debtscan_flags: []
+
+  # ---- pipescript factor-tilts (1) ----
+  - family: yang-factor-tilts
+    named_thread: factor-tilts
+    owning_tool: globgrph
+    status: in-scope
+    tool_pointer: null
+    last_reviewed: '2026-06-15'
+    debtscan_flags: []
+
+  # ---- pipescript graph-platform (4) ----
+  - family: globgrph-derive-runner-fargate
+    named_thread: graph-platform
+    owning_tool: globgrph
+    status: in-scope
+    tool_pointer: null
+    last_reviewed: '2026-06-15'
+    debtscan_flags: []
+  - family: globgrph-incremental-updater
+    named_thread: graph-platform
+    owning_tool: globgrph
+    status: in-scope
+    tool_pointer: null
+    last_reviewed: '2026-06-15'
+    debtscan_flags: []
+  - family: globgrph-nessie-fargate-service
+    named_thread: graph-platform
+    owning_tool: globgrph
+    status: in-scope
+    tool_pointer: null
+    last_reviewed: '2026-06-15'
+    debtscan_flags: []
+  - family: kuzu-stitch-surface
+    named_thread: graph-platform
+    owning_tool: stitch
+    status: in-scope
+    tool_pointer: null
+    last_reviewed: '2026-06-15'
+    debtscan_flags: []
+
+  # ---- pipescript insurance (2) ----
+  - family: dualbiz-casefind-local
+    named_thread: insurance
+    owning_tool: none
+    status: explicit-out
+    reason: Local dev-box research scripts, no S3/Lambda/portal consumer
+    tool_pointer: null
+    last_reviewed: '2026-06-15'
+    debtscan_flags: []
+  - family: find-insure-casefind-pipeline
+    named_thread: insurance
+    owning_tool: none
+    status: explicit-out
+    reason: 4 Lambdas + S3 opal-data-imo but analyst-facing JSON, manual/orchestrator trigger (no live schedule), not portal/pipeline wired
+    tool_pointer: null
+    last_reviewed: '2026-06-15'
+    debtscan_flags: []
+
+  # ---- pipescript macroeconomics (9) ----
+  - family: FRED-01-yield-curve-daily-ingest
+    named_thread: macroeconomics
+    owning_tool: portal-consumer-tools
+    status: in-scope
+    tool_pointer: null
+    last_reviewed: '2026-06-15'
+    debtscan_flags: []
+  - family: FRED-02-macro-fred-parallel-artifact
+    named_thread: macroeconomics
+    owning_tool: none
+    status: unreviewed
+    tool_pointer: null
+    last_reviewed: '2026-06-15'
+    debtscan_flags: []
   - family: FRED-03-credit-spread-cache
-    named_thread: model-portfolios
+    named_thread: macroeconomics
     owning_tool: stitch
     status: in-scope
     tool_pointer: null
     last_reviewed: '2026-06-15'
     debtscan_flags: []
   - family: FRED-04-yang-macro-canonical
-    named_thread: model-portfolios
+    named_thread: macroeconomics
     owning_tool: stitch
     status: in-scope
     tool_pointer: null
     last_reviewed: '2026-06-15'
     debtscan_flags: []
   - family: FRED-05-yang-macro-timeseries
-    named_thread: model-portfolios
+    named_thread: macroeconomics
     owning_tool: stitch
     status: in-scope
     tool_pointer: null
     last_reviewed: '2026-06-15'
     debtscan_flags: []
+  - family: FRED-06-exec-summary-generator
+    named_thread: macroeconomics
+    owning_tool: portal-consumer-tools
+    status: in-scope
+    tool_pointer: null
+    last_reviewed: '2026-06-15'
+    debtscan_flags: []
+  - family: FRED-07-deck-generation
+    named_thread: macroeconomics
+    owning_tool: none
+    status: unreviewed
+    tool_pointer: null
+    last_reviewed: '2026-06-15'
+    debtscan_flags: []
+  - family: FRED-08-daily-agenda-generator
+    named_thread: macroeconomics
+    owning_tool: none
+    status: explicit-out
+    reason: Lambda + S3 but internal GitHub-commit dev digest, no frontend/pipeline consumer
+    tool_pointer: null
+    last_reviewed: '2026-06-15'
+    debtscan_flags: []
+  - family: yang-macro-and-timeseries
+    named_thread: macroeconomics
+    owning_tool: globgrph
+    status: in-scope
+    tool_pointer: null
+    last_reviewed: '2026-06-15'
+    debtscan_flags: []
+
+  # ---- pipescript market-overview (11) ----
+  - family: MA-01-market-overview-tiered
+    named_thread: market-overview
+    owning_tool: portal-consumer-tools
+    status: in-scope
+    tool_pointer: null
+    last_reviewed: '2026-06-15'
+    debtscan_flags: []
+  - family: MA-02-market-rsi-tiered
+    named_thread: market-overview
+    owning_tool: portal-consumer-tools
+    status: in-scope
+    tool_pointer: null
+    last_reviewed: '2026-06-15'
+    debtscan_flags: []
+  - family: MA-03-market-regime-classifier
+    named_thread: market-overview
+    owning_tool: portal-consumer-tools
+    status: in-scope
+    tool_pointer: null
+    last_reviewed: '2026-06-15'
+    debtscan_flags: []
+  - family: MA-05-volatility-fetcher
+    named_thread: market-overview
+    owning_tool: portal-consumer-tools
+    status: in-scope
+    tool_pointer: null
+    last_reviewed: '2026-06-15'
+    debtscan_flags: []
+  - family: MA-06-market-update-authoring-toolchain
+    named_thread: market-overview
+    owning_tool: portal-consumer-tools
+    status: in-scope
+    tool_pointer: null
+    last_reviewed: '2026-06-15'
+    debtscan_flags: []
+  - family: MA-07-causality-market-update-generator
+    named_thread: market-overview
+    owning_tool: portal-consumer-tools
+    status: in-scope
+    tool_pointer: null
+    last_reviewed: '2026-06-15'
+    debtscan_flags: []
+  - family: causality-history-manager
+    named_thread: market-overview
+    owning_tool: portal-consumer-tools
+    status: unreviewed
+    tool_pointer: null
+    last_reviewed: '2026-06-15'
+    debtscan_flags: []
+  - family: causality-market-update
+    named_thread: market-overview
+    owning_tool: portal-consumer-tools
+    status: unreviewed
+    tool_pointer: null
+    last_reviewed: '2026-06-15'
+    debtscan_flags: []
+  - family: portfolio-version-get
+    named_thread: market-overview
+    owning_tool: portal-consumer-tools
+    status: in-scope
+    tool_pointer: null
+    last_reviewed: '2026-06-15'
+    debtscan_flags: []
+  - family: portfolio-versions-list
+    named_thread: market-overview
+    owning_tool: portal-consumer-tools
+    status: in-scope
+    tool_pointer: null
+    last_reviewed: '2026-06-15'
+    debtscan_flags: []
+  - family: yang-portal-market-overview-tiered
+    named_thread: market-overview
+    owning_tool: globgrph
+    status: unreviewed
+    tool_pointer: null
+    last_reviewed: '2026-06-15'
+    debtscan_flags: []
+
+  # ---- pipescript mdpf (2) ----
+  - family: PPI-05-opal-portal-data-proxy
+    named_thread: mdpf
+    owning_tool: portal-consumer-tools
+    status: in-scope
+    tool_pointer: null
+    last_reviewed: '2026-06-15'
+    debtscan_flags: []
+  - family: mdpf-global-view
+    named_thread: mdpf
+    owning_tool: stitch
+    status: in-scope
+    tool_pointer: null
+    last_reviewed: '2026-06-15'
+    debtscan_flags: []
+
+  # ---- pipescript model-portfolios (8) ----
   - family: MA-08-yang-generate-volatility
     named_thread: model-portfolios
     owning_tool: none
     status: explicit-out
-    tool_pointer: null
-    last_reviewed: '2026-06-15'
-    debtscan_flags: []
     reason: Lambda but artifact frozen 2026-01-14, superseded by opal-portal-volatility-fetcher; no consumer reads json/yang/volatility_data.json
-  - family: PPI-10-opal-data-refresh-api
-    named_thread: model-portfolios
-    owning_tool: portal-consumer-tools
-    status: in-scope
-    tool_pointer: null
-    last_reviewed: '2026-06-15'
-    debtscan_flags: []
-  - family: opal-security-scanner-processor
-    named_thread: model-portfolios
-    owning_tool: portal-consumer-tools
-    status: in-scope
     tool_pointer: null
     last_reviewed: '2026-06-15'
     debtscan_flags: []
@@ -323,39 +585,11 @@ threads:
     named_thread: model-portfolios
     owning_tool: globgrph
     status: explicit-out
-    tool_pointer: null
-    last_reviewed: '2026-06-15'
-    debtscan_flags: []
     reason: Live cloud Lambda but a passive observability/drift-check leg with no served artifact and no frontend/pipeline consumer; explicitly designed to never block or feed the served set.
-  - family: yang-cma
-    named_thread: model-portfolios
-    owning_tool: globgrph
-    status: in-scope
-    tool_pointer: null
-    last_reviewed: '2026-06-15'
-    debtscan_flags: []
-  - family: yang-correlation
-    named_thread: model-portfolios
-    owning_tool: globgrph
-    status: in-scope
-    tool_pointer: null
-    last_reviewed: '2026-06-15'
-    debtscan_flags: []
-  - family: yang-factor-tilts
-    named_thread: model-portfolios
-    owning_tool: globgrph
-    status: in-scope
     tool_pointer: null
     last_reviewed: '2026-06-15'
     debtscan_flags: []
   - family: yang-ingest-dynamodb-market-data
-    named_thread: model-portfolios
-    owning_tool: globgrph
-    status: in-scope
-    tool_pointer: null
-    last_reviewed: '2026-06-15'
-    debtscan_flags: []
-  - family: yang-macro-and-timeseries
     named_thread: model-portfolios
     owning_tool: globgrph
     status: in-scope
@@ -376,32 +610,11 @@ threads:
     tool_pointer: null
     last_reviewed: '2026-06-15'
     debtscan_flags: []
-  - family: yang-portal-market-overview-tiered
-    named_thread: model-portfolios
-    owning_tool: globgrph
-    status: unreviewed
-    tool_pointer: null
-    last_reviewed: '2026-06-15'
-    debtscan_flags: []
-  - family: yang-positioning-attribution-allocation
-    named_thread: model-portfolios
-    owning_tool: globgrph
-    status: in-scope
-    tool_pointer: null
-    last_reviewed: '2026-06-15'
-    debtscan_flags: []
   - family: yang-time-machine-rollback
     named_thread: model-portfolios
     owning_tool: globgrph
     status: explicit-out
-    tool_pointer: null
-    last_reviewed: '2026-06-15'
-    debtscan_flags: []
     reason: Live cloud Lambda but an operational rollback tool with no scheduled trigger and no dedicated served artifact/consumer; it acts on artifacts other legs own.
-  - family: yang-valuation-risk-premium
-    named_thread: model-portfolios
-    owning_tool: globgrph
-    status: in-scope
     tool_pointer: null
     last_reviewed: '2026-06-15'
     debtscan_flags: []
@@ -409,157 +622,12 @@ threads:
     named_thread: model-portfolios
     owning_tool: globgrph
     status: explicit-out
-    tool_pointer: null
-    last_reviewed: '2026-06-15'
-    debtscan_flags: []
     reason: 'Live Lambda but a confirmed ORPHAN: not in the DAG, no trigger, output stale 5 months, and the path it writes has no portal consumer (the portal reads a different key from a different family''s producer). No live frontend/pipeline consumer ='
-
-  # ---- pipescript market  (11 threads) ----
-  - family: MA-01-market-overview-tiered
-    named_thread: market
-    owning_tool: portal-consumer-tools
-    status: in-scope
-    tool_pointer: null
-    last_reviewed: '2026-06-15'
-    debtscan_flags: []
-  - family: MA-02-market-rsi-tiered
-    named_thread: market
-    owning_tool: portal-consumer-tools
-    status: in-scope
-    tool_pointer: null
-    last_reviewed: '2026-06-15'
-    debtscan_flags: []
-  - family: MA-03-market-regime-classifier
-    named_thread: market
-    owning_tool: portal-consumer-tools
-    status: in-scope
-    tool_pointer: null
-    last_reviewed: '2026-06-15'
-    debtscan_flags: []
-  - family: MA-05-volatility-fetcher
-    named_thread: market
-    owning_tool: portal-consumer-tools
-    status: in-scope
-    tool_pointer: null
-    last_reviewed: '2026-06-15'
-    debtscan_flags: []
-  - family: MA-06-market-update-authoring-toolchain
-    named_thread: market
-    owning_tool: portal-consumer-tools
-    status: in-scope
-    tool_pointer: null
-    last_reviewed: '2026-06-15'
-    debtscan_flags: []
-  - family: MA-07-causality-market-update-generator
-    named_thread: market
-    owning_tool: portal-consumer-tools
-    status: in-scope
-    tool_pointer: null
-    last_reviewed: '2026-06-15'
-    debtscan_flags: []
-  - family: bd-capture-output-versions
-    named_thread: market
-    owning_tool: globgrph
-    status: in-scope
-    tool_pointer: null
-    last_reviewed: '2026-06-15'
-    debtscan_flags: []
-  - family: causality-history-manager
-    named_thread: market
-    owning_tool: portal-consumer-tools
-    status: unreviewed
-    tool_pointer: null
-    last_reviewed: '2026-06-15'
-    debtscan_flags: []
-  - family: causality-market-update
-    named_thread: market
-    owning_tool: portal-consumer-tools
-    status: unreviewed
-    tool_pointer: null
-    last_reviewed: '2026-06-15'
-    debtscan_flags: []
-  - family: portfolio-version-get
-    named_thread: market
-    owning_tool: portal-consumer-tools
-    status: in-scope
-    tool_pointer: null
-    last_reviewed: '2026-06-15'
-    debtscan_flags: []
-  - family: portfolio-versions-list
-    named_thread: market
-    owning_tool: portal-consumer-tools
-    status: in-scope
     tool_pointer: null
     last_reviewed: '2026-06-15'
     debtscan_flags: []
 
-  # ---- pipescript pm-optimizer  (9 threads) ----
-  - family: ops-infrastructure-monitors
-    named_thread: pm-optimizer
-    owning_tool: none
-    status: explicit-out
-    tool_pointer: null
-    last_reviewed: '2026-06-15'
-    debtscan_flags: []
-    reason: infrastructure-daily-snapshot + opal-infrastructure-monitor, ops alerts/snapshots, no consumer
-  - family: pm-optimization-autosave-put
-    named_thread: pm-optimizer
-    owning_tool: portal-consumer-tools
-    status: in-scope
-    tool_pointer: null
-    last_reviewed: '2026-06-15'
-    debtscan_flags: []
-  - family: pm-optimization-loader
-    named_thread: pm-optimizer
-    owning_tool: portal-consumer-tools
-    status: in-scope
-    tool_pointer: null
-    last_reviewed: '2026-06-15'
-    debtscan_flags: []
-  - family: pm-snapshot-handler
-    named_thread: pm-optimizer
-    owning_tool: portal-consumer-tools
-    status: in-scope
-    tool_pointer: null
-    last_reviewed: '2026-06-15'
-    debtscan_flags: []
-  - family: pm-upload-urls
-    named_thread: pm-optimizer
-    owning_tool: portal-consumer-tools
-    status: in-scope
-    tool_pointer: null
-    last_reviewed: '2026-06-15'
-    debtscan_flags: []
-  - family: portfolio-autosave-get
-    named_thread: pm-optimizer
-    owning_tool: portal-consumer-tools
-    status: in-scope
-    tool_pointer: null
-    last_reviewed: '2026-06-15'
-    debtscan_flags: []
-  - family: portfolio-export-download
-    named_thread: pm-optimizer
-    owning_tool: portal-consumer-tools
-    status: in-scope
-    tool_pointer: null
-    last_reviewed: '2026-06-15'
-    debtscan_flags: []
-  - family: portfolio-funds-list
-    named_thread: pm-optimizer
-    owning_tool: portal-consumer-tools
-    status: in-scope
-    tool_pointer: null
-    last_reviewed: '2026-06-15'
-    debtscan_flags: []
-  - family: portfolio-pickle-parser
-    named_thread: pm-optimizer
-    owning_tool: portal-consumer-tools
-    status: in-scope
-    tool_pointer: null
-    last_reviewed: '2026-06-15'
-    debtscan_flags: []
-
-  # ---- pipescript news  (13 threads) ----
+  # ---- pipescript news (13) ----
   - family: MA-04-fear-greed-fetcher
     named_thread: news
     owning_tool: portal-consumer-tools
@@ -620,10 +688,10 @@ threads:
     named_thread: news
     owning_tool: none
     status: explicit-out
+    reason: Local operator/backfill scripts + STOPPED EC2 bundle; drives in-scope cloud lambdas, not a cloud-served producer
     tool_pointer: null
     last_reviewed: '2026-06-15'
     debtscan_flags: []
-    reason: Local operator/backfill scripts + STOPPED EC2 bundle; drives in-scope cloud lambdas, not a cloud-served producer
   - family: seeking-alpha-news-scrape
     named_thread: news
     owning_tool: globgrph
@@ -642,10 +710,10 @@ threads:
     named_thread: news
     owning_tool: none
     status: explicit-out
+    reason: test/diagnostic Lambda, no trigger, no artifact, no consumer
     tool_pointer: null
     last_reviewed: '2026-06-15'
     debtscan_flags: []
-    reason: test/diagnostic Lambda, no trigger, no artifact, no consumer
   - family: trending-image-and-portal-publisher
     named_thread: news
     owning_tool: portal-consumer-tools
@@ -654,15 +722,240 @@ threads:
     last_reviewed: '2026-06-15'
     debtscan_flags: []
 
-  # ---- pipescript trade-submission  (13 threads) ----
+  # ---- pipescript ops-internal (6) ----
+  - family: PPI-13-schwab-anonymizer
+    named_thread: ops-internal
+    owning_tool: none
+    status: explicit-out
+    reason: Manual-invoke PII anonymizer feeding raw-data ingest, no portal/pipeline consumer; 0 invokes/14d; FLAG non-ASCII emoji in source
+    tool_pointer: null
+    last_reviewed: '2026-06-15'
+    debtscan_flags: []
+  - family: m365-mcp-gateway-ec2
+    named_thread: ops-internal
+    owning_tool: none
+    status: explicit-out
+    reason: NOT PROVISIONED (instance_id=null), scaffold-only, no live resource/consumer
+    tool_pointer: null
+    last_reviewed: '2026-06-15'
+    debtscan_flags: []
+  - family: ops-ec2-governance-lambdas
+    named_thread: ops-internal
+    owning_tool: none
+    status: explicit-out
+    reason: ec2-auto-shutdown-enforcer + ec2-runtime-monitor, SNS alerts + enforcement only, no data consumer
+    tool_pointer: null
+    last_reviewed: '2026-06-15'
+    debtscan_flags: []
+  - family: semantic-pipeline-parallel-set
+    named_thread: ops-internal
+    owning_tool: none
+    status: explicit-out
+    reason: 3 Lambdas with NO EventBridge trigger; semantic_clusters/latest.json stale ~4mo; no portal consumer; superseded
+    tool_pointer: null
+    last_reviewed: '2026-06-15'
+    debtscan_flags: []
+  - family: test-yfinance-simple
+    named_thread: ops-internal
+    owning_tool: none
+    status: explicit-out
+    reason: test/diagnostic lambda, no consumer; teardown candidate
+    tool_pointer: null
+    last_reviewed: '2026-06-15'
+    debtscan_flags: []
+  - family: yfinance-aapl-test
+    named_thread: ops-internal
+    owning_tool: none
+    status: explicit-out
+    reason: test/diagnostic lambda, no consumer; teardown candidate
+    tool_pointer: null
+    last_reviewed: '2026-06-15'
+    debtscan_flags: []
+
+  # ---- pipescript partners (2) ----
+  - family: PPI-02-opal-portal-authorizer
+    named_thread: partners
+    owning_tool: globgrph
+    status: in-scope
+    tool_pointer: null
+    last_reviewed: '2026-06-15'
+    debtscan_flags: []
+  - family: PPI-04-opal-partners-data
+    named_thread: partners
+    owning_tool: portal-consumer-tools
+    status: in-scope
+    tool_pointer: null
+    last_reviewed: '2026-06-15'
+    debtscan_flags: []
+
+  # ---- pipescript portal-infra (6) ----
+  - family: PPI-01-auth-validator-edge
+    named_thread: portal-infra
+    owning_tool: portal-consumer-tools
+    status: in-scope
+    tool_pointer: null
+    last_reviewed: '2026-06-15'
+    debtscan_flags: []
+  - family: PPI-03-opalinvest-auth-handler
+    named_thread: portal-infra
+    owning_tool: portal-consumer-tools
+    status: in-scope
+    tool_pointer: null
+    last_reviewed: '2026-06-15'
+    debtscan_flags: []
+  - family: PPI-06-public-data-router
+    named_thread: portal-infra
+    owning_tool: portal-consumer-tools
+    status: in-scope
+    tool_pointer: null
+    last_reviewed: '2026-06-15'
+    debtscan_flags: []
+  - family: PPI-07-cache-control-injector
+    named_thread: portal-infra
+    owning_tool: portal-consumer-tools
+    status: in-scope
+    tool_pointer: null
+    last_reviewed: '2026-06-15'
+    debtscan_flags: []
+  - family: PPI-11-portal-time-machine
+    named_thread: portal-infra
+    owning_tool: portal-consumer-tools
+    status: in-scope
+    tool_pointer: null
+    last_reviewed: '2026-06-15'
+    debtscan_flags: []
+  - family: PPI-12-opal-session-analytics
+    named_thread: portal-infra
+    owning_tool: globgrph
+    status: in-scope
+    tool_pointer: null
+    last_reviewed: '2026-06-15'
+    debtscan_flags: []
+
+  # ---- pipescript portfolio-management (9) ----
+  - family: ops-infrastructure-monitors
+    named_thread: portfolio-management
+    owning_tool: none
+    status: explicit-out
+    reason: infrastructure-daily-snapshot + opal-infrastructure-monitor, ops alerts/snapshots, no consumer
+    tool_pointer: null
+    last_reviewed: '2026-06-15'
+    debtscan_flags: []
+  - family: pm-optimization-autosave-put
+    named_thread: portfolio-management
+    owning_tool: portal-consumer-tools
+    status: in-scope
+    tool_pointer: null
+    last_reviewed: '2026-06-15'
+    debtscan_flags: []
+  - family: pm-optimization-loader
+    named_thread: portfolio-management
+    owning_tool: portal-consumer-tools
+    status: in-scope
+    tool_pointer: null
+    last_reviewed: '2026-06-15'
+    debtscan_flags: []
+  - family: pm-snapshot-handler
+    named_thread: portfolio-management
+    owning_tool: portal-consumer-tools
+    status: in-scope
+    tool_pointer: null
+    last_reviewed: '2026-06-15'
+    debtscan_flags: []
+  - family: pm-upload-urls
+    named_thread: portfolio-management
+    owning_tool: portal-consumer-tools
+    status: in-scope
+    tool_pointer: null
+    last_reviewed: '2026-06-15'
+    debtscan_flags: []
+  - family: portfolio-autosave-get
+    named_thread: portfolio-management
+    owning_tool: portal-consumer-tools
+    status: in-scope
+    tool_pointer: null
+    last_reviewed: '2026-06-15'
+    debtscan_flags: []
+  - family: portfolio-export-download
+    named_thread: portfolio-management
+    owning_tool: portal-consumer-tools
+    status: in-scope
+    tool_pointer: null
+    last_reviewed: '2026-06-15'
+    debtscan_flags: []
+  - family: portfolio-funds-list
+    named_thread: portfolio-management
+    owning_tool: portal-consumer-tools
+    status: in-scope
+    tool_pointer: null
+    last_reviewed: '2026-06-15'
+    debtscan_flags: []
+  - family: portfolio-pickle-parser
+    named_thread: portfolio-management
+    owning_tool: portal-consumer-tools
+    status: in-scope
+    tool_pointer: null
+    last_reviewed: '2026-06-15'
+    debtscan_flags: []
+
+  # ---- pipescript positioning (1) ----
+  - family: yang-positioning-attribution-allocation
+    named_thread: positioning
+    owning_tool: globgrph
+    status: in-scope
+    tool_pointer: null
+    last_reviewed: '2026-06-15'
+    debtscan_flags: []
+
+  # ---- pipescript security-scanner (2) ----
+  - family: opal-security-scanner-processor
+    named_thread: security-scanner
+    owning_tool: portal-consumer-tools
+    status: in-scope
+    tool_pointer: null
+    last_reviewed: '2026-06-15'
+    debtscan_flags: []
+  - family: ops-anomaly-scanners
+    named_thread: security-scanner
+    owning_tool: none
+    status: explicit-out
+    reason: access/cost/security scanners, SNS/CW findings only, no consumer
+    tool_pointer: null
+    last_reviewed: '2026-06-15'
+    debtscan_flags: []
+
+  # ---- pipescript smartx (3) ----
+  - family: smartx-ec2-csv-exporter
+    named_thread: smartx
+    owning_tool: globgrph
+    status: in-scope
+    tool_pointer: null
+    last_reviewed: '2026-06-15'
+    debtscan_flags: []
+  - family: smartx-model-monthly-benchmarks
+    named_thread: smartx
+    owning_tool: portal-consumer-tools
+    status: in-scope
+    tool_pointer: null
+    last_reviewed: '2026-06-15'
+    debtscan_flags: []
+  - family: smartx-rest-daily-ingest
+    named_thread: smartx
+    owning_tool: globgrph
+    status: in-scope
+    tool_pointer: null
+    last_reviewed: '2026-06-15'
+    debtscan_flags: []
+
+  # ---- pipescript trade-submission (12) ----
   - family: MA-09-ycharts-market-data-pull
     named_thread: trade-submission
     owning_tool: none
     status: explicit-out
+    reason: Deployed DORMANT by design (freeze-aware validate-only), no live served artifact, no current consumer
     tool_pointer: null
     last_reviewed: '2026-06-15'
     debtscan_flags: []
-    reason: Deployed DORMANT by design (freeze-aware validate-only), no live served artifact, no current consumer
   - family: TS-1-submit
     named_thread: trade-submission
     owning_tool: portal-consumer-tools
@@ -716,14 +1009,7 @@ threads:
     named_thread: trade-submission
     owning_tool: none
     status: explicit-out
-    tool_pointer: null
-    last_reviewed: '2026-06-15'
-    debtscan_flags: []
     reason: Live API route but ZERO consumer; on deprecation list
-  - family: inf-gold-dispatch-ec2
-    named_thread: trade-submission
-    owning_tool: stitch
-    status: in-scope
     tool_pointer: null
     last_reviewed: '2026-06-15'
     debtscan_flags: []
@@ -749,286 +1035,11 @@ threads:
     last_reviewed: '2026-06-15'
     debtscan_flags: []
 
-  # ---- pipescript partners  (2 threads) ----
-  - family: PPI-02-opal-portal-authorizer
-    named_thread: partners
+  # ---- pipescript valuation (1) ----
+  - family: yang-valuation-risk-premium
+    named_thread: valuation
     owning_tool: globgrph
     status: in-scope
     tool_pointer: null
     last_reviewed: '2026-06-15'
     debtscan_flags: []
-  - family: bd-txn-consolidator
-    named_thread: partners
-    owning_tool: comp-pipescript
-    status: in-scope
-    tool_pointer: null
-    last_reviewed: '2026-06-15'
-    debtscan_flags: []
-
-  # ---- pipescript graph-platform  (4 threads) ----
-  - family: globgrph-derive-runner-fargate
-    named_thread: graph-platform
-    owning_tool: globgrph
-    status: in-scope
-    tool_pointer: null
-    last_reviewed: '2026-06-15'
-    debtscan_flags: []
-  - family: globgrph-incremental-updater
-    named_thread: graph-platform
-    owning_tool: globgrph
-    status: in-scope
-    tool_pointer: null
-    last_reviewed: '2026-06-15'
-    debtscan_flags: []
-  - family: globgrph-nessie-fargate-service
-    named_thread: graph-platform
-    owning_tool: globgrph
-    status: in-scope
-    tool_pointer: null
-    last_reviewed: '2026-06-15'
-    debtscan_flags: []
-  - family: kuzu-stitch-surface
-    named_thread: graph-platform
-    owning_tool: stitch
-    status: in-scope
-    tool_pointer: null
-    last_reviewed: '2026-06-15'
-    debtscan_flags: []
-
-  # ---- pipescript causality  (5 threads) ----
-  - family: causality-ai-query
-    named_thread: causality
-    owning_tool: none
-    status: explicit-out
-    tool_pointer: null
-    last_reviewed: '2026-06-15'
-    debtscan_flags: []
-    reason: Live API route but ZERO consumer (absent from causality-endpoints.ts and built page); on deprecation list
-  - family: causality-data-enrichment-movements
-    named_thread: causality
-    owning_tool: none
-    status: explicit-out
-    tool_pointer: null
-    last_reviewed: '2026-06-15'
-    debtscan_flags: []
-    reason: 2 live API routes but ZERO consumer; on deprecation list
-  - family: causality-generate-analysis
-    named_thread: causality
-    owning_tool: portal-consumer-tools
-    status: unreviewed
-    tool_pointer: null
-    last_reviewed: '2026-06-15'
-    debtscan_flags: []
-  - family: causality-thematic-signals-daily
-    named_thread: causality
-    owning_tool: globgrph
-    status: unreviewed
-    tool_pointer: null
-    last_reviewed: '2026-06-15'
-    debtscan_flags: []
-  - family: causality-themes-fetch
-    named_thread: causality
-    owning_tool: portal-consumer-tools
-    status: unreviewed
-    tool_pointer: null
-    last_reviewed: '2026-06-15'
-    debtscan_flags: []
-
-  # ---- pipescript smartx  (3 threads) ----
-  - family: smartx-ec2-csv-exporter
-    named_thread: smartx
-    owning_tool: globgrph
-    status: in-scope
-    tool_pointer: null
-    last_reviewed: '2026-06-15'
-    debtscan_flags: []
-  - family: smartx-model-monthly-benchmarks
-    named_thread: smartx
-    owning_tool: portal-consumer-tools
-    status: in-scope
-    tool_pointer: null
-    last_reviewed: '2026-06-15'
-    debtscan_flags: []
-  - family: smartx-rest-daily-ingest
-    named_thread: smartx
-    owning_tool: globgrph
-    status: in-scope
-    tool_pointer: null
-    last_reviewed: '2026-06-15'
-    debtscan_flags: []
-
-  # ---- pipescript mdpf  (2 threads) ----
-  - family: PPI-05-opal-portal-data-proxy
-    named_thread: mdpf
-    owning_tool: portal-consumer-tools
-    status: in-scope
-    tool_pointer: null
-    last_reviewed: '2026-06-15'
-    debtscan_flags: []
-  - family: mdpf-global-view
-    named_thread: mdpf
-    owning_tool: stitch
-    status: in-scope
-    tool_pointer: null
-    last_reviewed: '2026-06-15'
-    debtscan_flags: []
-
-  # ---- pipescript fred-macro  (4 threads) ----
-  - family: FRED-01-yield-curve-daily-ingest
-    named_thread: fred-macro
-    owning_tool: portal-consumer-tools
-    status: in-scope
-    tool_pointer: null
-    last_reviewed: '2026-06-15'
-    debtscan_flags: []
-  - family: FRED-02-macro-fred-parallel-artifact
-    named_thread: fred-macro
-    owning_tool: none
-    status: unreviewed
-    tool_pointer: null
-    last_reviewed: '2026-06-15'
-    debtscan_flags: []
-  - family: FRED-07-deck-generation
-    named_thread: fred-macro
-    owning_tool: none
-    status: unreviewed
-    tool_pointer: null
-    last_reviewed: '2026-06-15'
-    debtscan_flags: []
-  - family: FRED-08-daily-agenda-generator
-    named_thread: fred-macro
-    owning_tool: none
-    status: explicit-out
-    tool_pointer: null
-    last_reviewed: '2026-06-15'
-    debtscan_flags: []
-    reason: Lambda + S3 but internal GitHub-commit dev digest, no frontend/pipeline consumer
-
-  # ---- pipescript security-scanner  (1 threads) ----
-  - family: ops-anomaly-scanners
-    named_thread: security-scanner
-    owning_tool: none
-    status: explicit-out
-    tool_pointer: null
-    last_reviewed: '2026-06-15'
-    debtscan_flags: []
-    reason: access/cost/security scanners, SNS/CW findings only, no consumer
-
-  # ---- pipescript insurance  (2 threads) ----
-  - family: dualbiz-casefind-local
-    named_thread: insurance
-    owning_tool: none
-    status: explicit-out
-    tool_pointer: null
-    last_reviewed: '2026-06-15'
-    debtscan_flags: []
-    reason: Local dev-box research scripts, no S3/Lambda/portal consumer
-  - family: find-insure-casefind-pipeline
-    named_thread: insurance
-    owning_tool: none
-    status: explicit-out
-    tool_pointer: null
-    last_reviewed: '2026-06-15'
-    debtscan_flags: []
-    reason: 4 Lambdas + S3 opal-data-imo but analyst-facing JSON, manual/orchestrator trigger (no live schedule), not portal/pipeline wired
-
-  # ---- pipescript portal-infra  (7 threads) ----
-  - family: PPI-01-auth-validator-edge
-    named_thread: portal-infra
-    owning_tool: portal-consumer-tools
-    status: in-scope
-    tool_pointer: null
-    last_reviewed: '2026-06-15'
-    debtscan_flags: []
-  - family: PPI-03-opalinvest-auth-handler
-    named_thread: portal-infra
-    owning_tool: portal-consumer-tools
-    status: in-scope
-    tool_pointer: null
-    last_reviewed: '2026-06-15'
-    debtscan_flags: []
-  - family: PPI-06-public-data-router
-    named_thread: portal-infra
-    owning_tool: portal-consumer-tools
-    status: in-scope
-    tool_pointer: null
-    last_reviewed: '2026-06-15'
-    debtscan_flags: []
-  - family: PPI-07-cache-control-injector
-    named_thread: portal-infra
-    owning_tool: portal-consumer-tools
-    status: in-scope
-    tool_pointer: null
-    last_reviewed: '2026-06-15'
-    debtscan_flags: []
-  - family: PPI-11-portal-time-machine
-    named_thread: portal-infra
-    owning_tool: portal-consumer-tools
-    status: in-scope
-    tool_pointer: null
-    last_reviewed: '2026-06-15'
-    debtscan_flags: []
-  - family: PPI-12-opal-session-analytics
-    named_thread: portal-infra
-    owning_tool: globgrph
-    status: in-scope
-    tool_pointer: null
-    last_reviewed: '2026-06-15'
-    debtscan_flags: []
-  - family: bd-time-machine
-    named_thread: portal-infra
-    owning_tool: globgrph
-    status: unreviewed
-    tool_pointer: null
-    last_reviewed: '2026-06-15'
-    debtscan_flags: []
-
-  # ---- pipescript ops-internal  (6 threads) ----
-  - family: PPI-13-schwab-anonymizer
-    named_thread: ops-internal
-    owning_tool: none
-    status: explicit-out
-    tool_pointer: null
-    last_reviewed: '2026-06-15'
-    debtscan_flags: []
-    reason: Manual-invoke PII anonymizer feeding raw-data ingest, no portal/pipeline consumer; 0 invokes/14d; FLAG non-ASCII emoji in source
-  - family: m365-mcp-gateway-ec2
-    named_thread: ops-internal
-    owning_tool: none
-    status: explicit-out
-    tool_pointer: null
-    last_reviewed: '2026-06-15'
-    debtscan_flags: []
-    reason: NOT PROVISIONED (instance_id=null), scaffold-only, no live resource/consumer
-  - family: ops-ec2-governance-lambdas
-    named_thread: ops-internal
-    owning_tool: none
-    status: explicit-out
-    tool_pointer: null
-    last_reviewed: '2026-06-15'
-    debtscan_flags: []
-    reason: ec2-auto-shutdown-enforcer + ec2-runtime-monitor, SNS alerts + enforcement only, no data consumer
-  - family: semantic-pipeline-parallel-set
-    named_thread: ops-internal
-    owning_tool: none
-    status: explicit-out
-    tool_pointer: null
-    last_reviewed: '2026-06-15'
-    debtscan_flags: []
-    reason: 3 Lambdas with NO EventBridge trigger; semantic_clusters/latest.json stale ~4mo; no portal consumer; superseded
-  - family: test-yfinance-simple
-    named_thread: ops-internal
-    owning_tool: none
-    status: explicit-out
-    tool_pointer: null
-    last_reviewed: '2026-06-15'
-    debtscan_flags: []
-    reason: test/diagnostic lambda, no consumer; teardown candidate
-  - family: yfinance-aapl-test
-    named_thread: ops-internal
-    owning_tool: none
-    status: explicit-out
-    tool_pointer: null
-    last_reviewed: '2026-06-15'
-    debtscan_flags: []
-    reason: test/diagnostic lambda, no consumer; teardown candidate
