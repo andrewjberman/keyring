@@ -1,76 +1,48 @@
-# NFRA_PIPESCRIPT — Gate b (golden fixtures) + Gate c (§7.3 completeness) — CVO oracle
+# NFRA_PIPESCRIPT — Gate b (golden fixtures) + Gate c (§7.3 completeness) — CVO oracle [v2: all per-page EXACT]
 
 **archetype:** VALIDATE
 
-Andrew /goal NFRA_PIPESCRIPT, CTO 3-gate testing bar (COO 182953Z). Source = CVO census 2d9a0a2a1 (pass1+pass2). CVO is the test oracle.
+Andrew /goal NFRA_PIPESCRIPT, CTO 3-gate bar. CVO is the test oracle. Source: census 2d9a0a2a1 + yang per-page census (wuyv5ldtq, StepFn ground-truthed).
 
-## GATE c — estate-wide §7.3 completeness: **PASS**
+## GATE c — §7.3 completeness: **PASS** (169 lambdas -> EXACTLY ONE named thread; 0 orphan, 0 double-claim)
 
-- **169 live lambdas -> EXACTLY ONE named thread each. 0 orphan, 0 double-claim** (after CVO resource-level resolution below).
-- EC2 (18, EC2_MANIFEST): bd runners->advi-bd, inf runners->advi-inf, mdpf-daily-runner->mdpf, smartx-exporter->portfolio-management/smartx, seeking-alpha-scraper->news, m365-mcp-gateway->EXPLICIT-OUT(unprovisioned), bd-exporter->advi-bd (instance_id=null, AE-verify flagged).
-- StepFn YangDataPipeline -> model-portfolios (full DAG, one owner per CTO FRED/yang ruling).
-- The CLI `--validate` does the STRUCTURAL check (rows/dup/orphan); this is the RESOURCE-level census-vs-catalog reconciliation COO assigned to CVO.
+Resource-level reconciliation (CVO): 10 double-claims + 3 orphans resolved to single owners; + 6 yang page-producers split to their pages + 3 census corrections (ycharts->market-overview, yang-risk-premium->macroeconomics, yang-allocation-summary->model-portfolios shared). EC2(18)+StepFn(YangDataPipeline->model-portfolios) mapped. bd-exporter instance_id=null = AE-verify.
 
-### Resource-level reconciliation (10 double-claims + 3 orphans-from-catalog, each -> exactly one owner):
+## GATE b — golden fixtures (oracle `pipescript <name>` must reproduce EXACTLY)
 
-- `bd-time-machine` -> **advi-bd**
-- `cot-bd-session-trigger` -> **advi-cot**
-- `historical-prices-scheduler` -> **advi-bd**
-- `opal-market-regime-classifier` -> **market-overview**
-- `opal-portal-data-proxy` -> **portal-infra**
-- `opal-portfolio-funds-list` -> **portfolio-management**
-- `semantic-trending-topics-portal-publisher` -> **news**
-- `shared-advisor-router` -> **advi-inf**
-- `yang-pipeline-trigger` -> **model-portfolios**
-- `yang-refresh-fred-cache` -> **macroeconomics**
-- `sentiment_query_api` -> **news**
-- `test-yfinance-simple` -> **ops-internal**
-- `yfinance-aapl-test` -> **ops-internal**
+**ALL CTO-pinned per-page threads now RESOURCE-EXACT** (the 6 provisional are closed via the yang per-page census — each a single dedicated producer ground-truthed lambda->S3-key->portal-component):
 
-(Rationale: bd-time-machine=bd phantom; cot-bd-session=cot per CTO firm-sep; historical-prices=bd per CTO; market-regime=market view; data-proxy=shared portal-infra; funds-list=pm per CTO; trending-topics=news; shared-advisor-router=advisor; yang-pipeline-trigger+yang-refresh-fred-cache=yang DAG per CTO. Orphans sentiment->news, test-lambdas->ops-internal.)
+- factor-tilts <- yang-generate-factor-tilts (json/factor-tilts/tier{1,2,3} -> FactorTilts.tsx)
+- valuation <- yang-generate-valuation (json/valuation/valuation_data.json -> Valuation.tsx)
+- correlation <- yang-generate-correlation (json/correlations/correlation_data.json -> Correlation.tsx)
+- positioning <- yang-generate-positioning (json/positioning/positioning_data.json -> Positioning.tsx; also bundles json/portfolios/aum-* model-portfolio surfaces)
+- cma <- yang-generate-cma (json/capital-markets/{assumptions,views}.json -> CapitalMarketAssumptions.tsx)
+- attribution <- yang-generate-holdings-attribution (json/positioning/holdings_attribution_data.json -> Attribution.tsx)
 
-## GATE b — per-named-thread GOLDEN FIXTURES (the oracle `pipescript <name>` must reproduce EXACTLY)
+Full per-named-thread resource sets + the 169-resource res2nt map: golden_fixtures.json. yang DAG detail: yang_perpage_census.json.
 
-Resource-exact set per named thread (deps/data-flow detail joins from census pass1/pass2 JSON, keyed by thread_id). Full artifact: `golden_fixtures.json`.
+### All named-thread fixtures (resource-exact):
+- pipescript advi-inf (34): auth-validator-edge, cache-control-injector, inf-accounts-v2-daily, inf-api-assets-v2, inf-api-positions, inf-api-reps, inf-api-txn, inf-assets-trigger, inf-billing-daily, inf-bronze-trigger, inf-client-detail, inf-ec2-launch-monitor, inf-ec2-retry-launch, inf-gold-trigger, inf-jwt-trigger, inf-nna-partition-checker, inf-otp-relay, inf-performance-daily, inf-portal-advisor-publisher, inf-portal-publisher, inf-silver-aggregator, inf-silver-chain, inf-tax-daily, inf-unified-account-dim-daily, opal-data-refresh-api, opal-partners-data, opal-portal-authorizer, opal-session-analytics, opalinvest-auth-handler, portal-time-machine, public-data-router, schwab-anonymizer, shared-advisor-router, shared-advisor-router-response
+- pipescript model-portfolios (21): opal-smartx-ingestion-pipeline, smartx-ec2-autostart, smartx-jwt-refresher, smartx-model-monthly-pull, smartx-rest-pull, yang-canon-interlock, yang-capture-output-versions, yang-cleanup-uploads, yang-generate-allocation-summary, yang-generate-etf-returns, yang-generate-latest, yang-generate-manifest, yang-generate-peer-performance, yang-get-prior-metadata, yang-ingest-dynamodb, yang-invalidate-cloudfront, yang-model-portfolio-benchmarks, yang-move-to-processed, yang-pipeline-trigger, yang-time-machine, yang-validate-files
+- pipescript advi-bd (20): bd-allocation-file-checker, bd-allocation-processor, bd-allocation-trigger, bd-asset-dim-trigger, bd-capture-output-versions, bd-client-detail, bd-fees-trigger, bd-gold-detail-checker, bd-gold-foundation, bd-gold-layer, bd-gold-trigger, bd-incrparity-trigger, bd-portal-publisher, bd-price-update, bd-realized-trigger, bd-time-machine, bd-transactions-trigger, bd-unrealized-trigger, historical-prices-scheduler, opal-bd-transaction-consolidator
+- pipescript news (19): finbert-batch-processor, keyword-intelligence-generator, news-ingestion-scheduler, news-semantic-clustering, opal-keyword-drilldown-generator, opal-news-ai-sentiment, opal-trending-image-generator, opal-trending-topics-portal-publisher, seeking-alpha-analysis-coordinator, seeking-alpha-analysis-dedup, seeking-alpha-analysis-listing-parser, seeking-alpha-analysis-scraper, seeking-alpha-news-coordinator, seeking-alpha-news-dedup, seeking-alpha-news-scraper, semantic-news-layer3-curation, semantic-trending-topics-portal-publisher, sentiment_query_api, test-seeking-alpha-unauth-simple
+- pipescript market-overview (18): causality-data-enrichment, causality-history-manager, causality-market-update-generator, market-update-data-aggregator, market-update-exporter, market-update-generator, news-trending-analysis, opal-market-overview-tiered-generator, opal-market-regime-classifier, opal-market-rsi-tiered-generator, opal-news-layer3-curation, opal-portal-fear-greed-fetcher, opal-portfolio-export-download, opal-portfolio-version-get, opal-portfolio-versions-list, ycharts-market-data-pull, ycharts-session-capture, ycharts-session-probe
+- pipescript macroeconomics (15): daily-agenda-generator, deck-generation, exec-summary-generator, find-insure-crawl-web, find-insure-crawl-web-scraping-browser, find-insure-parse-web, find-insure-score-web, fred-data-ingestion, fred-macro-ingestion, opal-portal-volatility-fetcher, yang-generate-macro, yang-generate-macro-timeseries, yang-generate-risk-premium, yang-generate-volatility, yang-refresh-fred-cache
+- pipescript portfolio-management (14): infrastructure-daily-snapshot, opal-infrastructure-monitor, opal-pm-optimization-autosave-put, opal-pm-optimization-loader, opal-pm-snapshot-handler, opal-pm-upload-urls, opal-portfolio-autosave-get, opal-portfolio-autosave-put, opal-portfolio-excel-generator, opal-portfolio-funds-list, opal-portfolio-pickle-parser, trade-dashboard-api, trade-submission-handler, trade-workflow-handler
+- pipescript causality (5): causality-ai-query-handler, causality-analysis-generator, causality-thematic-signals-generator, causality-themes-fetcher, causality-trade-idea-generator
+- pipescript security-scanner (5): access-anomaly-scanner, cost-anomaly-scanner, opal-security-scanner-processor, security-sweep-comprehensive, trade-identifier-cache
+- pipescript ops-internal (4): ec2-auto-shutdown-enforcer, ec2-runtime-monitor, test-yfinance-simple, yfinance-aapl-test
+- pipescript advi-cot (3): cot-bd-session-trigger, mdpf-daily-trigger, mdpf-freshness-checker
+- pipescript trade-submission (3): trade-auth-handler, trade-authorizer, trade-parquet-batch-export
+- pipescript portal-infra (1): opal-portal-data-proxy
+- pipescript graph-platform (1): opal-globgrph-incremental-updater
+- pipescript attribution (1): yang-generate-holdings-attribution
+- pipescript positioning (1): yang-generate-positioning
+- pipescript valuation (1): yang-generate-valuation
+- pipescript correlation (1): yang-generate-correlation
+- pipescript factor-tilts (1): yang-generate-factor-tilts
+- pipescript cma (1): yang-generate-cma
 
-### pipescript advi-inf — 35 resources
-  auth-validator-edge, cache-control-injector, inf-accounts-v2-daily, inf-api-assets-v2, inf-api-positions, inf-api-reps, inf-api-txn, inf-assets-trigger, inf-billing-daily, inf-bronze-trigger, inf-client-detail, inf-ec2-launch-monitor, inf-ec2-retry-launch, inf-gold-trigger, inf-jwt-trigger, inf-nna-partition-checker, inf-otp-relay, inf-performance-daily, inf-portal-advisor-publisher, inf-portal-publisher, inf-silver-aggregator, inf-silver-chain, inf-tax-daily, inf-unified-account-dim-daily, opal-data-refresh-api, opal-partners-data, opal-portal-authorizer, opal-session-analytics, opalinvest-auth-handler, portal-time-machine, public-data-router, schwab-anonymizer, shared-advisor-router, shared-advisor-router-response, yang-time-machine
-### pipescript advi-bd — 20 resources
-  bd-allocation-file-checker, bd-allocation-processor, bd-allocation-trigger, bd-asset-dim-trigger, bd-capture-output-versions, bd-client-detail, bd-fees-trigger, bd-gold-detail-checker, bd-gold-foundation, bd-gold-layer, bd-gold-trigger, bd-incrparity-trigger, bd-portal-publisher, bd-price-update, bd-realized-trigger, bd-time-machine, bd-transactions-trigger, bd-unrealized-trigger, historical-prices-scheduler, opal-bd-transaction-consolidator
-### pipescript model-portfolios — 20 resources
-  opal-smartx-ingestion-pipeline, smartx-ec2-autostart, smartx-jwt-refresher, smartx-model-monthly-pull, smartx-rest-pull, yang-canon-interlock, yang-capture-output-versions, yang-cleanup-uploads, yang-generate-cma, yang-generate-etf-returns, yang-generate-latest, yang-generate-manifest, yang-generate-peer-performance, yang-get-prior-metadata, yang-ingest-dynamodb, yang-invalidate-cloudfront, yang-model-portfolio-benchmarks, yang-move-to-processed, yang-pipeline-trigger, yang-validate-files
-### pipescript news — 19 resources
-  finbert-batch-processor, keyword-intelligence-generator, news-ingestion-scheduler, news-semantic-clustering, opal-keyword-drilldown-generator, opal-news-ai-sentiment, opal-trending-image-generator, opal-trending-topics-portal-publisher, seeking-alpha-analysis-coordinator, seeking-alpha-analysis-dedup, seeking-alpha-analysis-listing-parser, seeking-alpha-analysis-scraper, seeking-alpha-news-coordinator, seeking-alpha-news-dedup, seeking-alpha-news-scraper, semantic-news-layer3-curation, semantic-trending-topics-portal-publisher, sentiment_query_api, test-seeking-alpha-unauth-simple
-### pipescript market-overview — 15 resources
-  causality-data-enrichment, causality-history-manager, causality-market-update-generator, market-update-data-aggregator, market-update-exporter, market-update-generator, news-trending-analysis, opal-market-overview-tiered-generator, opal-market-regime-classifier, opal-market-rsi-tiered-generator, opal-news-layer3-curation, opal-portal-fear-greed-fetcher, opal-portfolio-export-download, opal-portfolio-version-get, opal-portfolio-versions-list
-### pipescript macroeconomics — 14 resources
-  daily-agenda-generator, deck-generation, exec-summary-generator, find-insure-crawl-web, find-insure-crawl-web-scraping-browser, find-insure-parse-web, find-insure-score-web, fred-data-ingestion, fred-macro-ingestion, opal-portal-volatility-fetcher, yang-generate-macro, yang-generate-macro-timeseries, yang-generate-volatility, yang-refresh-fred-cache
-### pipescript portfolio-management — 14 resources
-  infrastructure-daily-snapshot, opal-infrastructure-monitor, opal-pm-optimization-autosave-put, opal-pm-optimization-loader, opal-pm-snapshot-handler, opal-pm-upload-urls, opal-portfolio-autosave-get, opal-portfolio-autosave-put, opal-portfolio-excel-generator, opal-portfolio-funds-list, opal-portfolio-pickle-parser, trade-dashboard-api, trade-submission-handler, trade-workflow-handler
-### pipescript causality — 5 resources
-  causality-ai-query-handler, causality-analysis-generator, causality-thematic-signals-generator, causality-themes-fetcher, causality-trade-idea-generator
-### pipescript security-scanner — 5 resources
-  access-anomaly-scanner, cost-anomaly-scanner, opal-security-scanner-processor, security-sweep-comprehensive, trade-identifier-cache
-### pipescript factor-tilts — 4 resources
-  yang-generate-factor-tilts, ycharts-market-data-pull, ycharts-session-capture, ycharts-session-probe
-### pipescript ops-internal — 4 resources
-  ec2-auto-shutdown-enforcer, ec2-runtime-monitor, test-yfinance-simple, yfinance-aapl-test
-### pipescript advi-cot — 3 resources
-  cot-bd-session-trigger, mdpf-daily-trigger, mdpf-freshness-checker
-### pipescript trade-submission — 3 resources
-  trade-auth-handler, trade-authorizer, trade-parquet-batch-export
-### pipescript positioning — 3 resources
-  yang-generate-allocation-summary, yang-generate-holdings-attribution, yang-generate-positioning
-### pipescript valuation — 2 resources
-  yang-generate-risk-premium, yang-generate-valuation
-### pipescript portal-infra — 1 resources
-  opal-portal-data-proxy
-### pipescript graph-platform — 1 resources
-  opal-globgrph-incremental-updater
-### pipescript correlation — 1 resources
-  yang-generate-correlation
+## Status: gate b FULLY EXACT (0 provisional), gate c PASS. Remaining: validate the builder's `pipescript <name>` reproduces each fixture + false-clean guard fires LOUD (exit 2) when the hardened CLI commits.
 
-## Granularity flag (honest)
-The CTO-pinned per-PAGE yang threads (factor-tilts/valuation/correlation/positioning/cma/attribution) are APPROXIMATE: my census captured the yang DAG at a coarser grain (some lambdas bundle multiple pages, e.g. positioning-attribution-allocation). The `model-portfolios` fixture (20 resources) holds the full yang DAG authoritatively; the per-page splits need either the builder's StepFn-state-level attribution or a finer yang census pass before those per-page fixtures are resource-EXACT. Flagged so the builder's per-page tests treat factor-tilts/valuation/correlation/positioning/cma/attribution as PROVISIONAL until refined; advi-bd/advi-inf/advi-cot/news/market-overview/trade-submission/portfolio-management/causality/security-scanner/partners are resource-exact now.
-
-— 3.0.0_SA_CVO, 2026-06-15 NFRA_PIPESCRIPT gates b+c
+— 3.0.0_SA_CVO, 2026-06-15 NFRA_PIPESCRIPT gates b+c v2
