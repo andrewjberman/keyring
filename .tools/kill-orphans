@@ -9,9 +9,15 @@
 # Usage:
 #   kill-orphans              dry-run: list ALL matching processes
 #   kill-orphans --stale      dry-run: only watchers whose agent is NOT live in liveness.json
-#   kill-orphans --force      kill all matches (dangerous -- kills active watchers too)
-#   kill-orphans --stale --force    kill only stale matches (safe routine cleanup)
+#   kill-orphans --serial <S> dry-run: only watchers whose serial EXACTLY = S (tilde-specific;
+#                             ...~A matches only ...~A, never base or ...~B). The register-hook's
+#                             scoped self-cleanup -- an agent's registration only reaps ITS OWN
+#                             serial's watchers, never another agent's (Andrew-direct 2026-06-15).
+#   kill-orphans --force      kill matches (with --serial = scoped; ALONE = ALL, incl. live -- danger)
+#   kill-orphans --serial <S> --force   kill ONLY S's watchers (the safe scoped reap)
+#   kill-orphans --stale --force    kill only stale matches (legacy routine cleanup)
 #   kill-orphans --global     widen scope beyond this workspace (use with care)
+#   Every reap is AUDITED to org/mcp/agent-spawn-audit.log (KILL-ORPHAN lines).
 #
 # Exit codes:
 #   0  success (may have killed 0 processes)
@@ -29,16 +35,25 @@ WORKSPACE="$(cd "$(dirname "$0")/.." && pwd)"
 FORCE=0
 GLOBAL=0
 STALE_ONLY=0
-for arg in "$@"; do
-    case "$arg" in
+SERIAL_FILTER=""
+while [ $# -gt 0 ]; do
+    case "$1" in
         --force) FORCE=1 ;;
         --global) GLOBAL=1 ;;
         --stale) STALE_ONLY=1 ;;
+        --serial)
+            shift
+            SERIAL_FILTER="${1:-}"
+            if [ -z "$SERIAL_FILTER" ]; then
+                echo "--serial requires an EXACT agent serial (tilde-specific)" >&2; exit 2
+            fi
+            ;;
         -h|--help)
             sed -n '2,19p' "$0"; exit 0 ;;
         *)
-            echo "unknown flag: $arg" >&2; exit 2 ;;
+            echo "unknown flag: $1" >&2; exit 2 ;;
     esac
+    shift
 done
 
 # Build set of LIVE agent serials from liveness.json (used by --stale filter).
@@ -114,18 +129,31 @@ while IFS= read -r line; do
         esac
     fi
 
-    # --stale filter: extract the agent serial from the cmdline and skip if it's
-    # currently live in liveness.json. Extract the token IMMEDIATELY AFTER the
-    # script name (the serial is always the first positional arg to inbox-watch.sh
-    # / check-inbox.sh / agent-poller.py) -- NOT by field position. Field position
-    # is fragile: a persistent-Monitor stream watcher (LD-0146) has a trailing
-    # `stream` arg, AND the Monitor's launcher wraps the command as
+    # Extract the agent serial from the cmdline -- the token IMMEDIATELY AFTER the
+    # script name (the serial is always the first positional arg). NOT by field
+    # position: a persistent-Monitor stream watcher (LD-0146) has a trailing
+    # `stream` arg, AND the Monitor wraps the command as
     # `... eval 'bash .../inbox-watch.sh <serial> stream' && pwd -P >| '<tmp>/...cwd'`
-    # so $NF is a temp-path redirect target, not the serial. Reading the wrong
-    # token made every live stream watcher read as stale -> reaped on any peer's
-    # register_agent (the exit-143 incident that broke the LD-0146 rollout).
+    # so $NF is a temp-path redirect, not the serial. Reading the wrong token made
+    # every live stream watcher read as stale -> reaped on a peer's register_agent
+    # (the exit-143 incident, 2026-06-15). --serial below scopes this tilde-exactly.
+    serial=""
+    if [ "$STALE_ONLY" -eq 1 ] || [ -n "$SERIAL_FILTER" ]; then
+        # `|| true`: a no-match grep returns non-zero; under `set -euo pipefail`
+        # the assignment would then trip set -e and kill the script silently.
+        serial=$(echo "$cmd" | grep -oE "($PATTERNS)[[:space:]]+[^[:space:]']+" | head -1 | sed -E 's/^.*[[:space:]]+//' || true)
+    fi
+
+    # --serial filter: tilde-SPECIFIC EXACT match. `...~A` reaps only `...~A`, never
+    # the base serial or `...~B`. The register-hook's scoped self-cleanup -- an
+    # agent's registration must NEVER touch another serial's watcher (the root fix
+    # for the fabric-wide collateral reaping, Andrew-direct 2026-06-15).
+    if [ -n "$SERIAL_FILTER" ]; then
+        [ "$serial" = "$SERIAL_FILTER" ] || continue
+    fi
+
+    # --stale filter: skip serials currently live (<600s) in liveness.json.
     if [ "$STALE_ONLY" -eq 1 ]; then
-        serial=$(echo "$cmd" | grep -oE "($PATTERNS)[[:space:]]+[^[:space:]']+" | head -1 | sed -E 's/^.*[[:space:]]+//')
         if [ -n "$serial" ] && is_live_serial "$serial"; then
             continue
         fi
@@ -154,12 +182,21 @@ fi
 
 echo ""
 echo "[kill-orphans] Killing..."
+# Audit every reap. Was SILENT before 2026-06-15 -- exactly why exit-143 watcher
+# reaps stayed "undetermined". One line per kill: ts, killer, pid, cmd-serial, flags.
+AUDIT_LOG="$WORKSPACE/org/mcp/agent-spawn-audit.log"
+_audit_ts=$(date -u +%Y-%m-%dT%H:%M:%SZ 2>/dev/null || echo "unknown-ts")
+_audit_flags="force=$FORCE stale=$STALE_ONLY global=$GLOBAL serial=${SERIAL_FILTER:-ALL}"
+_audit_by="${OPAL_AGENT_SERIAL:-unknown}"
 killed=0
 for entry in "${matches[@]}"; do
     pid="${entry%%|*}"
+    cmd="${entry#*|}"
+    _cmd_serial=$(echo "$cmd" | grep -oE "($PATTERNS)[[:space:]]+[^[:space:]']+" | head -1 | sed -E 's/^.*[[:space:]]+//' || true)
     if kill "$pid" 2>/dev/null; then
         killed=$((killed + 1))
         echo "  killed PID $pid"
+        echo "$_audit_ts  KILL-ORPHAN  by $_audit_by  pid=$pid  cmd-serial=${_cmd_serial:-?}  $_audit_flags" >> "$AUDIT_LOG" 2>/dev/null || true
     else
         echo "  FAILED to kill PID $pid (already gone or permission denied)"
     fi

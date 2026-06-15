@@ -137,6 +137,11 @@
             "type": "command",
             "command": "python \"$CLAUDE_PROJECT_DIR/org/mcp/hook_launch_poller.py\"",
             "timeout": 15
+          },
+          {
+            "type": "command",
+            "command": "python \"$CLAUDE_PROJECT_DIR/org/mcp/hook_register_orphan_cleanup.py\"",
+            "timeout": 15
           }
         ]
       },
