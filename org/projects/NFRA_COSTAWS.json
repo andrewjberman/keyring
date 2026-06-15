@@ -34,6 +34,11 @@
       "date": "2026-06-12T19:51Z",
       "agent": "2.0.0_SA_COO",
       "event": "DEBTSCAN TO-D4 COSTRECON handed off 3 COSTAWS-scope items (f8ba82b89): (1) D4-F1 request-amplification guard = add CW NumberOfRequests alarm + enable S3 request metrics on opal-313476888478-globgrph (June 9-10 $31/2-day burst ran with ZERO alerting; ~$15/day exposure if recurs); (2) tagging gap = 76% of costs ($184.91) untagged at Project dim, tag all EC2/Lambda Project+Pipeline (reinforces W3 attribution); (3) SM census = 61 secrets actual, 5 decommission candidates (find-insure/job-board/placeholder + 3 root keys + aaii-creds + brightdata), $2/mo LOW. All AE 0.7 lane, ride COSTAWS queue. D4-F1 pending CVO precision adjudication."
+    },
+    {
+      "date": "2026-06-15T15:06Z",
+      "agent": "0.7.0_AE_CloudOps",
+      "event": "GOVERNANCE / Andrew-direct ruling (relayed COO 145613Z) -- bd-gold-qa-runner i-0090b823a4a0997e3 (c6i.16xlarge) is PURPOSE-KEPT, NOT decommissionable. It is the deliberately PROD-ISOLATED 49 Financial ad-hoc QA box: heavy QA tests on 49F logic updates run here, kept SEPARATE from the PROD nightly runner bd-gold-layer-runner i-01003b035d2988dfb so QA never disrupts the PROD nightly schedule. Correct posture = STOPPED + start-on-demand; its 0 run-hours/30d is INTENTIONAL idle, NOT dead infra. This SUPERSEDES the prior 'dormant cleanup candidate / Andrew-gated terminate' disposition in the 06-09 phase narrative -- the 'is it dead?' question is answered NO. DEBTSCAN / cost-sweep MUST NOT re-flag it as reclaimable. Verified-against-served this session: STOPPED 'User initiated', 0 CPU datapoints + 0 StartInstances events in 30d, 8GB gp2 root (~$0.80/mo EBS, $0 compute). The bd-gold cost lever was ALREADY CAPTURED at the May->06-09 PROD right-size (c6i.16xlarge -> r6i.4xlarge on bd-gold-layer-runner, 96.9% peak CPU = already right-sized); the CE 30d c6i.16xlarge $98.11 is that pre-right-size tail. Incremental-cutover residual savings ~$15-20/mo (the 2 largest scripts A_03/B_01 are keep-full, no savings, per Andrew D3). Source: AE bd-gold-runner parity/cost/cutover assessment RAVC2 143243Z + Andrew 3-decision ruling 145613Z."
     }
   ]
 }
