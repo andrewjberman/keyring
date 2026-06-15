@@ -1,0 +1,2416 @@
+{
+ "schema_version": 1,
+ "generated_from": "CVO census 2d9a0a2a1 + NAMED_THREAD_CATALOG d33fe4aab",
+ "last_review": "2026-06-15",
+ "named_threads": [
+  "advi",
+  "model-portfolios",
+  "news",
+  "market",
+  "pm-optimizer",
+  "partners",
+  "trade-submission",
+  "graph-platform",
+  "causality",
+  "ops-internal",
+  "mdpf",
+  "fred-macro",
+  "security-scanner",
+  "insurance",
+  "portal-infra"
+ ],
+ "threads": [
+  {
+   "thread_id": "FRED-06-exec-summary-generator",
+   "named_thread": "advi",
+   "family": "fred-and-generated-outputs",
+   "owning_tool": "comp-pipescript",
+   "status": "in-scope",
+   "debtscan_flags": [],
+   "description": "exec-summary-generator generates a per-advisor AI executive summary (Anthropic claude-sonnet-4-6 via secret anthropic-api-key) on bd gold-chain completion, writing platinum/advisors/{id}/exec_summary.json consumed by the AdvisorIntelligence public profile.",
+   "producers": [
+    "exec-summary-generator (lambda, py3.12, 1024MB/900s, handler lambda_function.lambda_handler; env DATA_BUCKET=opal-data-bd, MODEL=claude-sonnet-4-6, ANTHROPIC_SECRET_NAME=anthropic-api-key, MAX_ADVISORS_HARD_CAP=5000)",
+    "EventBridge rule exec-summary-trigger (event-pattern detail-type chain-complete, source bd-pipeline.gold-chain) ENABLED -- fires on bd gold-chain completion, no schedule"
+   ],
+   "served_artifacts": [
+    "s3://opal-data-bd/platinum/advisors/{advisor_id}/exec_summary.json (present; a sampled key was stale: abby_horton/exec_summary.json LastModified 2026-05-04 -- freshness flag, not scope)"
+   ],
+   "frontend_resolution": "portal/src/api/endpoints/advisor-intelligence.ts reads platinum/advisors/{id}/exec_summary.json (nightly batch artifact); AdvisorIntelligence/_shared/AdvisorPublicProfile.tsx renders it (exec-summary-skeleton)."
+  },
+  {
+   "thread_id": "PPI-02-opal-portal-authorizer",
+   "named_thread": "advi",
+   "family": "partners-portal-infra",
+   "owning_tool": "comp-pipescript",
+   "status": "in-scope",
+   "debtscan_flags": [],
+   "description": "API Gateway Lambda authorizer that verifies the portal JWT and attaches user context + allowedFirmIds (scanned from opal-users-v2 DDB) to the API GW request context for backend data Lambdas.",
+   "producers": [
+    "opal-portal-authorizer (nodejs22.x, role opal-portal-lambda-role) invoked by API Gateway as custom authorizer; reads Secrets Manager opal/auth/jwt-public-key + Scans DDB opal-users-v2"
+   ],
+   "served_artifacts": [
+    "No data artifact; returns IAM policy + authorizer context (firmId, allowedFirmIds, role) consumed by opal-partners-data via event.requestContext.authorizer"
+   ],
+   "frontend_resolution": "none directly; gates the /api/scoped/partners/* requests AdvisorIntelligence pages make."
+  },
+  {
+   "thread_id": "PPI-04-opal-partners-data",
+   "named_thread": "advi",
+   "family": "partners-portal-infra",
+   "owning_tool": "comp-pipescript",
+   "status": "in-scope",
+   "debtscan_flags": [],
+   "description": "API-GW-backed scoped partners API (/api/scoped/partners/books/*). Serves per-advisor/relationship/account/firm AUA/NNA timeseries, composition, mix-timeseries, concentration from the firm gold/platinum S3, pseudonymizes PII labels, book-scopes via opal-users-v2 DDB + authorizer allowedFirmIds.",
+   "producers": [
+    "opal-partners-data (python3.12, 2048MB, role partners-lambda-role) invoked by API Gateway behind opal-portal-authorizer; reads s3://opal-data-{bd|inf}/gold/{timeseries,artifacts}/* and platinum/*, opal-users-v2 DDB"
+   ],
+   "served_artifacts": [
+    "JSON API responses from s3://opal-data-{bd|inf}/gold/timeseries/nna_by_*.json, gold/artifacts/snapshots/aua_by_*.json, gold/artifacts/clients/*.json, gold/artifacts/filters/dimensions.json, platinum/* book summaries"
+   ],
+   "frontend_resolution": "src/api/endpoints/advisor-intelligence.ts -> AdvisorIntelligence partner pages (e.g. _partners/49financial); FE keep-warm target (useLambdaKeepWarm.ts)."
+  },
+  {
+   "thread_id": "PPI-08-shared-advisor-router",
+   "named_thread": "advi",
+   "family": "partners-portal-infra",
+   "owning_tool": "comp-pipescript",
+   "status": "in-scope",
+   "debtscan_flags": [],
+   "description": "Lambda@Edge origin-request routing /api/scoped/advisor-intelligence/* to the firm-specific S3 bucket (opal-data-{firm} via X-Firm-Id / ?firm= for opal-capital staff) and rewriting to the categorized gold/platinum key layout (GLDRST v8), with defense-in-depth tier+scope gating and PII-summary 401 blocks.",
+   "producers": [
+    "shared-advisor-router (nodejs20.x, role lambda-edge-execution-role) on CloudFront origin-request; mutates request.origin.s3.domainName to opal-data-{firm} via FIRM_BUCKET_MAP, OAI auth model"
+   ],
+   "served_artifacts": [
+    "No artifact; rewrites to s3://opal-data-{firm}/gold/* + /platinum/* keys (advisor entities, timeseries, views, artifacts)"
+   ],
+   "frontend_resolution": "src/api/endpoints/advisor-intelligence.ts -> AdvisorIntelligence S3-direct artifact reads (platinum/firm/*, entities/advisors/*)."
+  },
+  {
+   "thread_id": "PPI-09-shared-advisor-router-response",
+   "named_thread": "advi",
+   "family": "partners-portal-infra",
+   "owning_tool": "comp-pipescript",
+   "status": "in-scope",
+   "debtscan_flags": [],
+   "description": "Lambda@Edge origin-response paired with shared-advisor-router on advisor-intelligence artifact behaviors: on 2xx injects Cache-Control max-age=60 must-revalidate (CDNCOHT, kills 18hr platinum-staleness class); on 4xx replaces S3 NoSuchKey/Forbidden with a structured JSON error envelope (LEDGEH, prevents SPA-HTML-at-200 React Query cache poisoning).",
+   "producers": [
+    "shared-advisor-router-response (nodejs20.x, role lambda-edge-execution-role) on CloudFront origin-response for /api/scoped/.../*.json artifact-class paths"
+   ],
+   "served_artifacts": [
+    "No artifact; mutates response headers (Cache-Control) + rewrites error bodies on advisor-intelligence S3 artifacts"
+   ],
+   "frontend_resolution": "Implicit on the same AdvisorIntelligence artifact responses (src/api/endpoints/advisor-intelligence.ts) - coherence/error-shape layer, not a distinct route."
+  },
+  {
+   "thread_id": "bd-allocation-file-watchdog",
+   "named_thread": "advi",
+   "family": "bd-medallion",
+   "owning_tool": "globgrph",
+   "status": "explicit-out",
+   "debtscan_flags": [],
+   "description": "Daily ops watchdog: verifies the point-in-time allocation file landed; SNS alert if missing (snapshots are unrecoverable).",
+   "producers": [
+    "bd-allocation-file-checker (lambda, EventBridge bd-allocation-file-check-daily cron(30 22 ? * MON-FRI))"
+   ],
+   "served_artifacts": [
+    "SNS arn:aws:sns:us-east-1:313476888478:bd-allocation-file-missing (alert only, no data artifact)"
+   ],
+   "frontend_resolution": "none (ops alerting)"
+  },
+  {
+   "thread_id": "bd-allocations",
+   "named_thread": "advi",
+   "family": "bd-medallion",
+   "owning_tool": "comp-pipescript",
+   "status": "in-scope",
+   "debtscan_flags": [],
+   "description": "Daily allocation snapshot download -> parquet -> if txn ready, fires price-update. EventBridge starts bd-allocations EC2 via SSM; processor converts XLSX landing in forwardfill_v2/allocations/.",
+   "producers": [
+    "bd-allocation-trigger (lambda, EventBridge bd-allocation-pipeline-trigger cron(0 22 ? * MON-FRI)) -> SSM opal-bd-allocation-download on EC2 bd-allocations (i-0800437d1dbb0b5cc)",
+    "bd-allocation-processor (lambda, S3 trigger forwardfill_v2/allocations/*.xlsx)"
+   ],
+   "served_artifacts": [
+    "s3://opal-data-bd/forwardfill_v2/allocations/*.xlsx",
+    "s3://opal-data-bd/silver/daily_allocations/YYYY-MM/ALLOC_DAILY_DATE.parquet"
+   ],
+   "frontend_resolution": "none directly; allocation silver feeds gold positions/holdings -> AdvisorIntelligence"
+  },
+  {
+   "thread_id": "bd-asset-dim",
+   "named_thread": "advi",
+   "family": "bd-medallion",
+   "owning_tool": "comp-pipescript",
+   "status": "in-scope",
+   "debtscan_flags": [],
+   "description": "Daily asset/security dimension download to silver. EventBridge starts an EC2 (bd-assets) via SSM opal-bd-asset-dim-download; does NOT chain to price/gold.",
+   "producers": [
+    "bd-asset-dim-trigger (lambda, EventBridge bd-asset-dim-pipeline-trigger cron(10 22 ? * MON-FRI)) -> SSM opal-bd-asset-dim-download on EC2 bd-assets (i-0e6f6dc014fdcf1cd)",
+    "data/black_diamond/scripts/silver/build_bd_assets_dim.py / convert_assets_to_silver.py"
+   ],
+   "served_artifacts": [
+    "s3://opal-data-bd/silver/ (bd assets dimension parquet)"
+   ],
+   "frontend_resolution": "none directly; asset dim feeds gold positions_cube/pricing -> AdvisorIntelligence"
+  },
+  {
+   "thread_id": "bd-bronze-transactions",
+   "named_thread": "advi",
+   "family": "bd-medallion",
+   "owning_tool": "comp-pipescript",
+   "status": "in-scope",
+   "debtscan_flags": [],
+   "description": "Daily BD transaction download to bronze + silver parquet: EventBridge starts bd-transactions EC2 via SSM, EC2 downloads BD DataMining txn extract and writes silver/transactions/DATE.parquet.",
+   "producers": [
+    "bd-transactions-trigger (lambda, EventBridge bd-transaction-pipeline-trigger cron(53 21 ? * MON-FRI)) -> SSM doc opal-bd-transaction-download on EC2 bd-transactions (i-00c7568bc510f7423)",
+    "data/black_diamond/scripts/bronze/convert_daily_transaction_to_parquet.py + convert_schwab_trn_*.py"
+   ],
+   "served_artifacts": [
+    "s3://opal-data-bd/silver/transactions/DATE.parquet",
+    "s3://opal-data-bd/silver/bd_transactions.parquet"
+   ],
+   "frontend_resolution": "none directly (silver feed); surfaces downstream via gold->portal AdvisorIntelligence"
+  },
+  {
+   "thread_id": "bd-canonical-prices",
+   "named_thread": "advi",
+   "family": "bd-medallion",
+   "owning_tool": "comp-pipescript",
+   "status": "in-scope",
+   "debtscan_flags": [],
+   "description": "Daily incremental canonical_prices maintainer: reads silver prices + today txn (T1) + historical_prices (T2), upserts canonical_prices.parquet; chained after allocation+txn silver ready.",
+   "producers": [
+    "bd-price-update (lambda, invoked by SSM opal-bd-allocation-download / bd-allocation-processor after silver ready; also EventBridge bd-canonical-prices-daily routed via bd-gold-trigger chain)",
+    "data/black_diamond/scripts/gold/build_canonical_prices_v2.py (emergency full rebuild)"
+   ],
+   "served_artifacts": [
+    "s3://opal-data-bd/silver/prices/canonical_prices.parquet",
+    "s3://opal-data-bd/silver/prices/DATE.parquet",
+    "s3://opal-data-bd/silver/interpolated_prices.parquet"
+   ],
+   "frontend_resolution": "none directly; silver/prices/DATE.parquet write is the S3 trigger that fires bd-gold-trigger -> gold rebuild -> AdvisorIntelligence"
+  },
+  {
+   "thread_id": "bd-client-detail-api",
+   "named_thread": "advi",
+   "family": "bd-medallion",
+   "owning_tool": "portal-consumer-tools",
+   "status": "in-scope",
+   "debtscan_flags": [],
+   "description": "On-demand API: API Gateway GET /api/scoped/advisor-intelligence/clients/{clientKey} -> bd-client-detail lambda returns pre-generated per-client detail JSON from S3 (written at pipeline time by the gold detail generator).",
+   "producers": [
+    "bd-client-detail (lambda, API Gateway 7k3ed8px20 GET clients/{clientKey}, on-demand)",
+    "EC2 bd-gold-detail-generator (i-074bfc40ee049dc62) writes the per-client detail JSON; completion polled by bd-gold-detail-checker"
+   ],
+   "served_artifacts": [
+    "s3://opal-data-bd/gold/clients/{relationship_id}.json (served by the lambda proxy)",
+    "s3://opal-data-bd/status/gold-detail-completion.json (completion marker)"
+   ],
+   "frontend_resolution": "AdvisorIntelligence client-detail drill: portal/src/pages/AdvisorIntelligence/_shared/AdvisorBookClientDetail.tsx via /api/scoped/advisor-intelligence/clients/{clientKey}"
+  },
+  {
+   "thread_id": "bd-fees",
+   "named_thread": "advi",
+   "family": "bd-medallion",
+   "owning_tool": "comp-pipescript",
+   "status": "in-scope",
+   "debtscan_flags": [],
+   "description": "Daily fees download to silver. EventBridge starts bd-fees EC2 via SSM opal-bd-fees-download; standalone (does not feed gold/price chain).",
+   "producers": [
+    "bd-fees-trigger (lambda, EventBridge bd-fees-pipeline-trigger cron(15 22 ? * MON-FRI)) -> SSM opal-bd-fees-download on EC2 bd-fees (i-0868fc7e7ebec26f2)",
+    "data/black_diamond/scripts/silver/convert_fees_to_silver.py"
+   ],
+   "served_artifacts": [
+    "s3://opal-data-bd/silver/ (bd fees parquet)"
+   ],
+   "frontend_resolution": "none directly; fees feed gold A_02 fee_rate_history / C_08 advisor_fee_efficiency -> AdvisorIntelligence fee tabs"
+  },
+  {
+   "thread_id": "bd-gold-detail-checker",
+   "named_thread": "advi",
+   "family": "bd-medallion",
+   "owning_tool": "globgrph",
+   "status": "in-scope",
+   "debtscan_flags": [],
+   "description": "Step Functions helper: polls S3 for gold-detail-completion marker to detect when EC2 detail generation (Stage 4) finished; deletes marker after read.",
+   "producers": [
+    "bd-gold-detail-checker (lambda, invoked by Step Functions / poll)"
+   ],
+   "served_artifacts": [
+    "reads/deletes s3://opal-data-bd/status/gold-detail-completion.json (no data artifact produced)"
+   ],
+   "frontend_resolution": "none (orchestration helper)"
+  },
+  {
+   "thread_id": "bd-gold-foundation",
+   "named_thread": "advi",
+   "family": "bd-medallion",
+   "owning_tool": "comp-pipescript",
+   "status": "in-scope",
+   "debtscan_flags": [],
+   "description": "Maintains canonical client-first-seen timeline (NNA classification basis) incrementally from silver transactions.",
+   "producers": [
+    "bd-gold-foundation (lambda; invoked in gold chain / on-demand)",
+    "silver source: silver/transactions/, silver/bd_canonical_timeline.parquet"
+   ],
+   "served_artifacts": [
+    "s3://opal-data-bd/silver/bd_canonical_timeline.parquet"
+   ],
+   "frontend_resolution": "none directly; timeline feeds NNA gold C_01 -> AdvisorIntelligence flows"
+  },
+  {
+   "thread_id": "bd-gold-layer-legacy",
+   "named_thread": "advi",
+   "family": "bd-medallion",
+   "owning_tool": "comp-pipescript",
+   "status": "explicit-out",
+   "debtscan_flags": [
+    "orphan-candidate"
+   ],
+   "description": "Superseded Lambda gold generator (pre-EC2-runner architecture): generated gold timeseries/snapshots/clients/filters/summary JSON in-Lambda. No trigger policy, last modified 2026-04-06; gold is now produced by bd-gold-layer-runner EC2 + gold_dispatch.sh.",
+   "producers": [
+    "bd-gold-layer (lambda; NO event source / NO resource policy -- orphaned, not invoked)"
+   ],
+   "served_artifacts": [
+    "historically gold/* JSON (now produced by the EC2 gold pipeline instead)"
+   ],
+   "frontend_resolution": "none (superseded; live gold->portal path is via EC2 runner + bd-portal-publisher)"
+  },
+  {
+   "thread_id": "bd-gold-layer-pipeline",
+   "named_thread": "advi",
+   "family": "bd-medallion",
+   "owning_tool": "comp-pipescript",
+   "status": "in-scope",
+   "debtscan_flags": [],
+   "description": "Core gold medallion build: silver/prices/DATE.parquet S3 write fires bd-gold-trigger which starts bd-gold-layer-runner EC2; EC2 runs gold_dispatch.sh (A_00..D_04: dimensions, holdings/lots, canonical perf/NNA, client/advisor analytics, portal aggregates, platinum/firm artifacts) and writes gold/pipeline-complete.json sentinel.",
+   "producers": [
+    "bd-gold-trigger (lambda; S3 trigger silver/prices/20*.parquet + EventBridge bd-gold-nightly-fallback cron(0 23 ? * MON-SAT) + bd-gold-layer-monthly-trigger[DISABLED]) -> EC2 bd-gold-layer-runner (i-01003b035d2988dfb, systemd on boot)",
+    "gold_dispatch.sh + data/black_diamond/scripts/gold/A_00..D_04 (~24 scripts)",
+    "bd-gold-qa-runner EC2 (i-0090b823a4a0997e3, QA/full rebuild)"
+   ],
+   "served_artifacts": [
+    "s3://opal-data-bd/gold/ (parquets: positions_cube, holdings_lots, account_gains, canonical_nna, etc.)",
+    "s3://opal-data-bd/gold/timeseries/, gold/snapshots/, gold/clients/",
+    "s3://opal-data-bd/platinum/firm/ (timeseries_overview, partner_analytics, cumulative_chart, header_metrics_fresh, leaderboard)",
+    "s3://opal-data-bd/gold/pipeline-complete.json (sentinel)"
+   ],
+   "frontend_resolution": "AdvisorIntelligence 49financial partner (portal/src/pages/AdvisorIntelligence/_partners/49financial) via /api/scoped/advisor-intelligence/* (timeseries, snapshots, clients-tab, platinum/firm/*) -- endpoints in portal/src/api/endpoints/advisor-intelligence.ts"
+  },
+  {
+   "thread_id": "bd-historical-prices",
+   "named_thread": "advi",
+   "family": "bd-medallion",
+   "owning_tool": "comp-pipescript",
+   "status": "in-scope",
+   "debtscan_flags": [],
+   "description": "Daily yfinance historical-price fetch (T2 source). EventBridge -> scheduler lambda starts historical-prices-fetcher EC2 (t3.xlarge pool) -> writes silver/historical_prices.parquet, read by bd-price-update.",
+   "producers": [
+    "historical-prices-scheduler (lambda, EventBridge historical-prices-daily cron(0 14 * * ?)) -> EC2 historical-prices-fetcher (i-00abf626b065373bc + scaling pool)",
+    "data/black_diamond/scripts/silver/fetch_historical_prices_yfinance.py"
+   ],
+   "served_artifacts": [
+    "s3://opal-data-bd/silver/historical_prices.parquet"
+   ],
+   "frontend_resolution": "none directly; T2 price source for canonical_prices -> gold valuation -> AdvisorIntelligence AUA"
+  },
+  {
+   "thread_id": "bd-incrparity",
+   "named_thread": "advi",
+   "family": "bd-medallion",
+   "owning_tool": "globgrph",
+   "status": "explicit-out",
+   "debtscan_flags": [],
+   "description": "Weekly incremental-vs-full parity smoke: EventBridge fires bd-incrparity-trigger which runs bundled comp-incrparity ALL --mode quick inline (pure S3 reads, no EC2), diffs incremental vs full gold outputs.",
+   "producers": [
+    "bd-incrparity-trigger (lambda, EventBridge incrparity-weekly cron(0 6 ? * SUN), bundles incrparity_cli/core)"
+   ],
+   "served_artifacts": [
+    "S3 diff report on mismatch (stderr + S3); exit 0 parity / 1 mismatch (no data artifact)"
+   ],
+   "frontend_resolution": "none (QA/parity tooling)"
+  },
+  {
+   "thread_id": "bd-portal-publisher",
+   "named_thread": "advi",
+   "family": "bd-medallion",
+   "owning_tool": "comp-pipescript",
+   "status": "in-scope",
+   "debtscan_flags": [],
+   "description": "gold/pipeline-complete.json S3 write fires bd-portal-publisher which reads gold parquets and generates all aggregate static JSON consumed by the AdvisorIntelligence portal (leaderboard, clients tab, header metrics, filters, snapshots); fans out to bd-capture-output-versions.",
+   "producers": [
+    "bd-portal-publisher (lambda, S3 trigger gold/pipeline-complete*.json on opal-data-bd, 4096MB/900s)"
+   ],
+   "served_artifacts": [
+    "s3://opal-data-bd/gold/artifacts/timeseries_chart.json",
+    "gold/artifacts/architect_leaderboard.json",
+    "gold/artifacts/clients_tab.json",
+    "gold/artifacts/summary/header_metrics.json",
+    "gold/artifacts/filters/dimensions.json",
+    "gold/artifacts/snapshots/aua_by_{architect,state,tax_status,region}.json (+ legacy dual-write at gold/*.json)"
+   ],
+   "frontend_resolution": "AdvisorIntelligence Leaderboard + Clients + Distribution tabs (portal/src/pages/AdvisorIntelligence/_shared/tabs/*) via /api/scoped/advisor-intelligence/artifacts/* and /snapshots /timeseries /filters"
+  },
+  {
+   "thread_id": "bd-realized-gains",
+   "named_thread": "advi",
+   "family": "bd-medallion",
+   "owning_tool": "comp-pipescript",
+   "status": "in-scope",
+   "debtscan_flags": [],
+   "description": "Daily realized capital gains download to silver, reusing the bd-allocations EC2 via SSM opal-bd-realized-download.",
+   "producers": [
+    "bd-realized-trigger (lambda, EventBridge bd-realized-pipeline-trigger cron(45 21 ? * MON-FRI)) -> SSM opal-bd-realized-download on EC2 bd-allocations (i-0800437d1dbb0b5cc)",
+    "data/black_diamond/scripts/silver/merge-capital-gains.py / compact-realized.py"
+   ],
+   "served_artifacts": [
+    "s3://opal-data-bd/silver/ (realized gains parquet)"
+   ],
+   "frontend_resolution": "none directly; feeds gold B_03 account_gains / C_05 client_tax_liability -> AdvisorIntelligence Clients tax fields"
+  },
+  {
+   "thread_id": "bd-unrealized-gains",
+   "named_thread": "advi",
+   "family": "bd-medallion",
+   "owning_tool": "comp-pipescript",
+   "status": "in-scope",
+   "debtscan_flags": [],
+   "description": "Daily unrealized gains download to silver, reusing bd-allocations EC2 via SSM opal-bd-unrealized-download.",
+   "producers": [
+    "bd-unrealized-trigger (lambda, EventBridge bd-unrealized-pipeline-trigger cron(38 21 ? * MON-FRI)) -> SSM opal-bd-unrealized-download on EC2 bd-allocations (i-0800437d1dbb0b5cc)",
+    "data/black_diamond/scripts/bronze/convert_schwab_uln_to_silver.py"
+   ],
+   "served_artifacts": [
+    "s3://opal-data-bd/silver/ (unrealized gains parquet)"
+   ],
+   "frontend_resolution": "none directly; feeds gold gains/tax -> AdvisorIntelligence tax section (top unrealized-gain positions)"
+  },
+  {
+   "thread_id": "cot-bd-session-trigger",
+   "named_thread": "advi",
+   "family": "bd-medallion",
+   "owning_tool": "comp-pipescript",
+   "status": "explicit-out",
+   "debtscan_flags": [],
+   "description": "COT (Cottonwood) firm session/bronze/silver/gold dispatcher reusing the BD DataMining session -- EventBridge cot-bd-session-daily cron(0 2 *) starts cot-exporter EC2 via SSM (session-fetch, bronze-run, silver-run, gold-run docs). Lands the COT firm pipeline, NOT BD.",
+   "producers": [
+    "cot-bd-session-trigger (lambda, EventBridge cot-bd-session-daily cron(0 2 * * ?)) -> SSM opal-cot-bd-session-fetch / opal-cot-bronze-run / silver-run / gold-run on cot-exporter EC2 (i-0643a5bee8a8feabf)"
+   ],
+   "served_artifacts": [
+    "s3://opal-data-cot/* (COT firm tree -- separate firm, never mirrored to bd)"
+   ],
+   "frontend_resolution": "AdvisorIntelligence cottonwood partner (portal/src/pages/AdvisorIntelligence/_partners/cottonwood) -- but this is the COT family, not bd-medallion"
+  },
+  {
+   "thread_id": "inf-bronze-api-pull",
+   "named_thread": "advi",
+   "family": "inf-medallion",
+   "owning_tool": "comp-pipescript",
+   "status": "in-scope",
+   "debtscan_flags": [],
+   "description": "Daily Orion REST API bronze pulls: 9 dimension lambdas fetch from Orion and write bronze CSV/JSON to s3://opal-data-inf/bronze/orion-api(-v2)/{date}/* plus silver-complete sentinels.",
+   "producers": [
+    "inf-api-reps (EventBridge cron 30 12 UTC -> representatives.json + household_rep_mapping.json)",
+    "inf-accounts-v2-daily (cron 35 12; reads v2 hhmap -> new_portfolio_accounts.json)",
+    "inf-unified-account-dim-daily (cron 40 12 -> unified_account_dim.csv)",
+    "inf-api-assets-v2 (cron 45 12 -> assets bronze)",
+    "inf-api-positions (cron 50 12 -> positions bronze)",
+    "inf-tax-daily (cron 55 12 -> tax_unrealized.csv + tax_realized.csv)",
+    "inf-billing-daily (cron 35 13 -> billing.csv)",
+    "inf-performance-daily (cron 40 13 -> performance_dim.csv or performance_dim_SKIP.json)",
+    "inf-api-txn (cron 0 13, INF_PREFER_S3=true -> transactions.csv)"
+   ],
+   "served_artifacts": [
+    "s3://opal-data-inf/bronze/orion-api/{date}/{transactions.csv,billing.csv,tax_*.csv,performance_dim.csv,unified_account_dim.csv,new_portfolio_accounts.json}",
+    "s3://opal-data-inf/bronze/orion-api-v2/{date}/{representatives.json,household_rep_mapping.json}",
+    "s3://opal-data-inf/silver/_silver_complete/*.json"
+   ],
+   "frontend_resolution": "none (internal/ops) - bronze feeds silver->gold->platinum consumed by Inflection portal"
+  },
+  {
+   "thread_id": "inf-bronze-runner-ec2",
+   "named_thread": "advi",
+   "family": "inf-medallion",
+   "owning_tool": "comp-pipescript",
+   "status": "in-scope",
+   "debtscan_flags": [],
+   "description": "EC2 bronze runner (Orion Eclipse portfolio bulk pull) started on daily cron + on bronze-complete; emits _BRONZE_COMPLETE.json that fans out to silver-chain + assets-trigger.",
+   "producers": [
+    "inf-bronze-trigger Lambda (EventBridge opal-inf-bronze-runner-cron 43 12 UTC -> ec2.start_instances i-083ad9ae297f88e9f)",
+    "inf-bronze-runner EC2 t3.small (data/inf/scripts/bronze/orchestrator.py + pull_eclipse_portfolios.py)"
+   ],
+   "served_artifacts": [
+    "s3://opal-data-inf/bronze/orion-api/{date}/_BRONZE_COMPLETE.json",
+    "s3://opal-data-inf/bronze/eclipse/*"
+   ],
+   "frontend_resolution": "none (internal) - drives downstream silver/gold"
+  },
+  {
+   "thread_id": "inf-client-detail",
+   "named_thread": "advi",
+   "family": "inf-medallion",
+   "owning_tool": "comp-pipescript",
+   "status": "unreviewed",
+   "debtscan_flags": [
+    "needs-consumer-trace"
+   ],
+   "description": "On-demand per-client API Lambda intended for API Gateway (ADVI_INFLEC W2.3). Deployed STUB returning {status:STUB - W4.6 not yet implemented}; no resource policy (no API Gateway integration wired), no S3 output.",
+   "producers": [
+    "inf-client-detail Lambda (10240MB, FIRM_ID=inflection, INPUT_BUCKET=opal-data-inf; stub handler; aws lambda get-policy = ResourceNotFoundException => no API Gateway/event trigger attached)"
+   ],
+   "served_artifacts": [],
+   "frontend_resolution": "none (stub; no API Gateway integration; client directory/detail currently served via platinum/firm/client_directory.json from the publishers)"
+  },
+  {
+   "thread_id": "inf-ec2-launch-resilience",
+   "named_thread": "advi",
+   "family": "inf-medallion",
+   "owning_tool": "comp-pipescript",
+   "status": "explicit-out",
+   "debtscan_flags": [],
+   "description": "EC2 launch monitoring + auto-retry: inf-ec2-launch-monitor watches the 4 inf instances' stopped/launch-failure events and alerts via SNS inf-otp-alert; inf-ec2-retry-launch subscribes to that SNS and does exponential-backoff restarts with a DDB idempotency lock.",
+   "producers": [
+    "inf-ec2-launch-monitor Lambda (EventBridge opal-inf-ec2-state-change-monitor: aws.ec2 State-change [stopped] on the 4 inf instances; SNS_TOPIC_ARN inf-otp-alert)",
+    "inf-ec2-retry-launch Lambda (SNS subscription on inf-otp-alert, filters 'EC2 launch failure'; LAUNCH_LOCKS_TABLE=opal-inf-launch-locks; ec2.start_instances)"
+   ],
+   "served_artifacts": [
+    "SNS inf-otp-alert notifications",
+    "DynamoDB opal-inf-launch-locks (idempotency)"
+   ],
+   "frontend_resolution": "none (ops/reliability automation)"
+  },
+  {
+   "thread_id": "inf-gold-dispatch-ec2",
+   "named_thread": "advi",
+   "family": "inf-medallion",
+   "owning_tool": "comp-pipescript",
+   "status": "in-scope",
+   "debtscan_flags": [],
+   "description": "Gold layer: inf-gold-trigger starts inf-gold-layer-runner EC2 which runs orion-gold-dispatch.sh (A/B/C chain + INF_09 + D_* publishers); writes gold parquets, platinum/* and gold/meta/pipeline-complete.json. Also fired by canonical-prices cron and assets-trigger.",
+   "producers": [
+    "inf-gold-trigger Lambda (invoked by inf-silver-aggregator; also EventBridge inf-canonical-prices-daily cron 0 14 UTC; GOLD_INSTANCE_ID=i-0ed5afded2ebd4ed4 -> ec2.start_instances)",
+    "inf-assets-trigger Lambda (EventBridge inf-assets-trigger-bronze-complete: aws.s3 on _BRONZE_COMPLETE -> starts gold runner i-0ed5afded2ebd4ed4)",
+    "inf-gold-layer-runner EC2 c6a.4xlarge (orion-gold-dispatch.sh ~40 INF_* gold scripts incl INF_09 --skip-sub-scripts)"
+   ],
+   "served_artifacts": [
+    "s3://opal-data-inf/gold/canonical/canonical_nna_{date}.parquet",
+    "s3://opal-data-inf/gold/timeseries/client_performance.parquet",
+    "s3://opal-data-inf/gold/views/account_team.parquet",
+    "s3://opal-data-inf/gold/dimensions/advisor_assignments.parquet",
+    "s3://opal-data-inf/platinum/advisors/{key}/{book,summary,top_holdings,timeseries,composition,mix}.json",
+    "s3://opal-data-inf/platinum/firm/*",
+    "s3://opal-data-inf/gold/meta/pipeline-complete.json (triggers inf-portal-publisher)"
+   ],
+   "frontend_resolution": "Inflection AdvisorIntelligence portal (/api/scoped/advisor-intelligence/platinum/firm/* + /platinum/advisors/{id}/*) via shared-advisor-router + CloudFront EVTSA9VEHNZVH; portal/src/pages/AdvisorIntelligence/_partners/inflection"
+  },
+  {
+   "thread_id": "inf-gold-qa-runner",
+   "named_thread": "advi",
+   "family": "inf-medallion",
+   "owning_tool": "comp-pipescript",
+   "status": "explicit-out",
+   "debtscan_flags": [],
+   "description": "Manual QA dispatch EC2 (c6a.2xlarge) running the gold scripts under an OUTPUT_PREFIX honoring INFSHIP.B3 (QA prefix, not platinum/ in QA mode); monitored by inf-ec2-launch-monitor but no scheduled production-serving trigger.",
+   "producers": [
+    "inf-gold-qa-runner EC2 i-04373615f03fbf9a9 (manual QA dispatch per inf-ec2-launch-monitor docstring; OUTPUT_PREFIX-gated gold scripts)"
+   ],
+   "served_artifacts": [
+    "s3://opal-data-inf/{QA OUTPUT_PREFIX}/* (non-production QA outputs)"
+   ],
+   "frontend_resolution": "none (QA/validation runner; PROD platinum is served from inf-gold-layer-runner)"
+  },
+  {
+   "thread_id": "inf-nna-partition-checker",
+   "named_thread": "advi",
+   "family": "inf-medallion",
+   "owning_tool": "comp-pipescript",
+   "status": "explicit-out",
+   "debtscan_flags": [],
+   "description": "Freshness watchdog: reads platinum/firm/advisor_nna_canonical.json and emits CloudWatch metric ADVI/NNA on partition staleness (alarm backing for the NNA serving surface).",
+   "producers": [
+    "inf-nna-partition-checker Lambda (EventBridge inf-nna-partition-check-trigger cron 30 19 UTC; CANONICAL_KEY=platinum/firm/advisor_nna_canonical.json, METRIC_NAMESPACE=ADVI/NNA, FIRM=inflection; cw.put_metric_data)"
+   ],
+   "served_artifacts": [
+    "CloudWatch metric ADVI/NNA (no data artifact)"
+   ],
+   "frontend_resolution": "none (monitors the NNA artifact the portal reads, but emits only a CW metric)"
+  },
+  {
+   "thread_id": "inf-portal-advisor-publisher",
+   "named_thread": "advi",
+   "family": "inf-medallion",
+   "owning_tool": "portal-consumer-tools",
+   "status": "in-scope",
+   "debtscan_flags": [],
+   "description": "Per-advisor drill-down publisher: invoked async by inf-portal-publisher; iterates advisors from gold/dimensions/advisor_assignments.parquet and emits platinum/advisors/{advisor_key}/* with billing/perf aggregates.",
+   "producers": [
+    "inf-portal-advisor-publisher Lambda (async invoke from inf-portal-publisher; 6144MB; OUTPUT/INPUT_BUCKET=opal-data-inf, FIRM_ID=inflection)"
+   ],
+   "served_artifacts": [
+    "s3://opal-data-inf/platinum/advisors/{advisor_key}/{book,summary,top_holdings,timeseries}.json"
+   ],
+   "frontend_resolution": "Inflection AdvisorIntelligence per-advisor views (AdvisorBookView, AdvisorPublicProfile) via /api/scoped/advisor-intelligence/platinum/advisors/{id}/* + /advisors/{id}/mix-views"
+  },
+  {
+   "thread_id": "inf-portal-publisher",
+   "named_thread": "advi",
+   "family": "inf-medallion",
+   "owning_tool": "comp-pipescript",
+   "status": "in-scope",
+   "debtscan_flags": [],
+   "description": "Platinum firm publisher: fires on gold/meta/pipeline-complete.json, reads gold parquets + silver dims, generates platinum/firm/*.json and CloudFront-invalidates /api/scoped/advisor-intelligence/platinum/firm/*; fan-out invokes inf-portal-advisor-publisher.",
+   "producers": [
+    "inf-portal-publisher Lambda (S3 notification opal-data-inf gold/meta/ suffix pipeline-complete.json; OUTPUT/INPUT_BUCKET=opal-data-inf; CF_DISTRIBUTION_ID=EVTSA9VEHNZVH; ADVISOR_PUBLISHER_FUNCTION=inf-portal-advisor-publisher)"
+   ],
+   "served_artifacts": [
+    "s3://opal-data-inf/platinum/firm/snapshots/{aua_by_architect,aua_by_state,aua_by_region,aua_by_tax_status}.json",
+    "s3://opal-data-inf/platinum/firm/{dashboard,timeseries_overview,cumulative_chart,header_metrics_fresh,timeseries_chart,mix_summary,client_directory,fee_efficiency,partner_analytics_*}.json"
+   ],
+   "frontend_resolution": "Inflection AdvisorIntelligence portal: portal/src/api/endpoints/advisor-intelligence.ts maps these to /api/scoped/advisor-intelligence/platinum/firm/* consumed by _partners/inflection + _shared tabs (Distribution/Clients/Advisors/PartnerAnalytics)"
+  },
+  {
+   "thread_id": "inf-silver-aggregator-quorum",
+   "named_thread": "advi",
+   "family": "inf-medallion",
+   "owning_tool": "comp-pipescript",
+   "status": "in-scope",
+   "debtscan_flags": [],
+   "description": "Quorum gate: fires on each silver/_silver_complete write, checks all 7 INF_DIM_LIST dims status=ok, writes a fired marker and invokes inf-gold-trigger {mode:full,source:aggregator}.",
+   "producers": [
+    "inf-silver-aggregator Lambda (S3 notification opal-data-inf silver/_silver_complete/ suffix .json; INF_DIM_LIST=accounts_v2,assets_v2,positions_daily,representatives,tax,transactions,unified_account_dim; invokes inf-gold-trigger)"
+   ],
+   "served_artifacts": [
+    "s3://opal-data-inf/silver/_silver_complete/_fired_{date} (idempotency marker)"
+   ],
+   "frontend_resolution": "none (orchestration glue)"
+  },
+  {
+   "thread_id": "causality-ai-query",
+   "named_thread": "causality",
+   "family": "causality-ai",
+   "owning_tool": "comp-pipescript",
+   "status": "explicit-out",
+   "debtscan_flags": [],
+   "description": "Synchronous API handler POST /causality/query free-form AI Q&A over causality data.",
+   "producers": [
+    "causality-ai-query-handler (Lambda python3.12 512MB/60s)",
+    "API GW /causality/query (id o081u0) POST -> causality-ai-query-handler; via CloudFront /causality/*"
+   ],
+   "served_artifacts": [
+    "HTTP JSON response only; no persisted artifact"
+   ],
+   "frontend_resolution": "none -- /causality/query absent from portal causality-endpoints.ts and no call site; even the unmounted page does not consume it."
+  },
+  {
+   "thread_id": "causality-generate-analysis",
+   "named_thread": "causality",
+   "family": "causality-ai",
+   "owning_tool": "comp-pipescript",
+   "status": "unreviewed",
+   "debtscan_flags": [
+    "needs-consumer-trace"
+   ],
+   "description": "Synchronous API handler POST /causality/generate-analysis runs GPT-4 analysis over 1-3 themes (summary/catalysts/technical/price-impact).",
+   "producers": [
+    "causality-analysis-generator (Lambda python3.12 512MB/60s)",
+    "API GW /causality/generate-analysis (id hithsk) POST -> causality-analysis-generator; via CloudFront /causality/*"
+   ],
+   "served_artifacts": [
+    "HTTP JSON Analysis object; uses secret opal/external-apis (openai_api_key); no persisted artifact"
+   ],
+   "frontend_resolution": "Built consumer useGenerateAnalysis -> generateAnalysis; page unmounted => not live-consumed."
+  },
+  {
+   "thread_id": "causality-trade-idea",
+   "named_thread": "causality",
+   "family": "causality-ai",
+   "owning_tool": "comp-pipescript",
+   "status": "explicit-out",
+   "debtscan_flags": [],
+   "description": "Synchronous API handler POST /causality/generate/trade-idea AI trade-idea generation.",
+   "producers": [
+    "causality-trade-idea-generator (Lambda python3.12 512MB/60s)",
+    "API GW /causality/generate/trade-idea (id 0wld02) POST -> causality-trade-idea-generator; via CloudFront /causality/*"
+   ],
+   "served_artifacts": [
+    "HTTP JSON response only; no persisted artifact"
+   ],
+   "frontend_resolution": "none -- /causality/generate/trade-idea absent from portal causality-endpoints.ts and no call site."
+  },
+  {
+   "thread_id": "FRED-07-deck-generation",
+   "named_thread": "fred-macro",
+   "family": "fred-and-generated-outputs",
+   "owning_tool": "globgrph",
+   "status": "unreviewed",
+   "debtscan_flags": [
+    "needs-consumer-trace"
+   ],
+   "description": "deck-generation assembles a PPTX from a slide-library template + computed slides and writes the output deck to the lambda-artifacts bucket, returning a presigned URL. Invoked directly via a Lambda Function URL (AWS_IAM auth), not via the portal SPA.",
+   "producers": [
+    "deck-generation (lambda, py3.12, 1024MB/120s, handler lambda_function.lambda_handler -> lambda_api.handler; env SLIDE_LIBRARY_S3_URI, OUTPUT_S3_BUCKET=opal-313476888478-lambda-artifacts, OUTPUT_S3_PREFIX=deck-generation-pipeline/output, PRESIGNED_URL_EXPIRY=900)",
+    "trigger: Lambda Function URL https://7dvozvbxxblaicvzkdqrkrp7640zxeta.lambda-url.us-east-1.on.aws/ (AuthType AWS_IAM); NO EventBridge rule, NO events resource policy"
+   ],
+   "served_artifacts": [
+    "s3://opal-313476888478-lambda-artifacts/deck-generation-pipeline/output/{timestamp}/ (fresh output dirs exist, e.g. 20260615-165855, 20260615-170319)"
+   ],
+   "frontend_resolution": "none found in portal/src (the 'deck' portal grep hits are unrelated UI components/dividers). Invoked out-of-band via the IAM-auth Function URL -- internal/tooling caller, no SPA route resolves it."
+  },
+  {
+   "thread_id": "FRED-08-daily-agenda-generator",
+   "named_thread": "fred-macro",
+   "family": "fred-and-generated-outputs",
+   "owning_tool": "none",
+   "status": "explicit-out",
+   "debtscan_flags": [],
+   "description": "daily-agenda-generator runs daily at 8pm ET, pulls commits from the ajb_workspace and portal GitHub repos for the target day (GitHub token from Secrets Manager), and writes a per-day agenda JSON under agendas/. If no commits that day, no agenda is written.",
+   "producers": [
+    "daily-agenda-generator (lambda, py3.12, 512MB/900s, handler lambda_function.lambda_handler; env S3_BUCKET=opal-data-portal-v2 default, AGENDAS_PREFIX=agendas/, GITHUB_SECRET=github-token)",
+    "EventBridge rule daily-agenda-generator cron(0 1 * * ? *) ENABLED"
+   ],
+   "served_artifacts": [
+    "s3://opal-data-portal-v2/agendas/ (per-day agenda JSON)"
+   ],
+   "frontend_resolution": "none found -- no portal/src consumer of agendas/. Internal/ops dev-activity digest."
+  },
+  {
+   "thread_id": "globgrph-derive-runner-fargate",
+   "named_thread": "graph-platform",
+   "family": "graph-and-ops-and-casefind",
+   "owning_tool": "globgrph",
+   "status": "in-scope",
+   "debtscan_flags": [],
+   "description": "Nightly full re-derive of the entire AWS estate graph (comp_aws_cli-class extraction) into Nessie/Iceberg graph_nodes+graph_edges -- the authoritative full-overwrite that reconciles drift from the incremental updater.",
+   "producers": [
+    "globgrph-derive-runner (Fargate task def globgrph-derive-runner:3 on ECS cluster opal-globgrph, FARGATE, public IP, subnet-023db8cbfd99ffff2/sg-0f6cedf53107c6f8c)",
+    "trigger: EventBridge rule opal-globgrph-derive-runner-nightly cron(0 2 * * ? *) -> RunTask on cluster opal-globgrph"
+   ],
+   "served_artifacts": [
+    "Iceberg globgrph.graph_nodes + globgrph.graph_edges via Nessie on s3://opal-313476888478-globgrph/warehouse",
+    "_branch_head.main.json marker"
+   ],
+   "frontend_resolution": "none (graph-platform internal; queried via comp-kuzu)"
+  },
+  {
+   "thread_id": "globgrph-incremental-updater",
+   "named_thread": "graph-platform",
+   "family": "graph-and-ops-and-casefind",
+   "owning_tool": "globgrph",
+   "status": "in-scope",
+   "debtscan_flags": [],
+   "description": "SQS-batched CloudTrail mgmt events -> bounded live re-derive of changed ARNs -> one atomic Nessie/Iceberg commit into globgrph.graph_nodes + branch-head marker stamp on opal-313476888478-globgrph.",
+   "producers": [
+    "opal-globgrph-incremental-updater (Lambda, py3.12, 512MB/180s; modified 2026-06-15T16:51Z)",
+    "trigger: SQS opal-globgrph-incremental-events fed by EventBridge rule opal-globgrph-cloudtrail-mgmt (CloudTrail mgmt events); event-source-mapping currently DISABLED (~2078 events in flight per comp-kuzu provenance)"
+   ],
+   "served_artifacts": [
+    "Iceberg table globgrph.graph_nodes (+graph_edges) via Nessie on s3://opal-313476888478-globgrph/warehouse",
+    "s3://opal-313476888478-globgrph/warehouse/_branch_head.main.json (F6 HEAD marker)",
+    "SNS opal-infrastructure-alerts (best-effort, unroutable in-VPC)"
+   ],
+   "frontend_resolution": "none (internal graph-platform; consumed by comp-kuzu/comp-aws tooling, not the portal)"
+  },
+  {
+   "thread_id": "inf-jwt-exporter",
+   "named_thread": "graph-platform",
+   "family": "inf-medallion",
+   "owning_tool": "comp-pipescript",
+   "status": "in-scope",
+   "debtscan_flags": [],
+   "description": "Orion/Eclipse JWT refresh + nightly export: inf-jwt-trigger starts inf-exporter EC2 via SSM, captures Orion JWT to SM orion/jwt/current and derives Eclipse JWT to orion/eclipse_jwt/current; mobile-web OTP flow served by inf-otp-relay.",
+   "producers": [
+    "inf-jwt-trigger Lambda (EventBridge opal-inf-jwt-fetch cron 13 12 UTC AND opal-inf-export-schedule cron 0 21 UTC; EXPORTER_INSTANCE_ID=i-081ae6aafb394fb1a; ssm.send_command + SM poll)",
+    "inf-exporter EC2 t3.medium (Orion session capture/export)",
+    "inf-otp-relay Lambda (Function-URL HTML OTP form, token-gated via SM inf/otp-relay/token; EventBridge inf-otp-state-change on opal-data-inf otp/state.json -> CW log)"
+   ],
+   "served_artifacts": [
+    "SecretsManager orion/jwt/current, orion/eclipse_jwt/current",
+    "s3://opal-data-inf/otp/state.json",
+    "SecretsManager inf/otp-relay/token"
+   ],
+   "frontend_resolution": "none (auth/session infra; OTP relay is an operator mobile-web form, not a portal route)"
+  },
+  {
+   "thread_id": "kuzu-stitch-surface",
+   "named_thread": "graph-platform",
+   "family": "graph-and-ops-and-casefind",
+   "owning_tool": "stitch",
+   "status": "in-scope",
+   "debtscan_flags": [],
+   "description": "Local build/query surface (infra/aws/globgrph): kuzu_nessie_load/kuzu_load build the Kuzu DB from the Nessie Iceberg tables; derive_stitch/extract_portal_stitch build the stitch graph (stitch_graph.json) joining AWS-resource layer to portal/medallion layers; comp-kuzu queries it.",
+   "producers": [
+    "local scripts kuzu_nessie_load.py / kuzu_load.py / kuzu_stitch_load.py / derive_stitch.py / extract_portal_stitch.py (run on dev-box / in derive-runner image)",
+    "trigger: comp-kuzu invocation auto-refresh on HEAD-advance (marker oracle) + derive-runner buildspec"
+   ],
+   "served_artifacts": [
+    "kuzu_nessie_db / kuzu_db / kuzu_stitch_db (local Kuzu DBs)",
+    "stitch_graph.json",
+    "_build_manifest.json vintage markers"
+   ],
+   "frontend_resolution": "none (tooling surface)"
+  },
+  {
+   "thread_id": "dualbiz-casefind-local",
+   "named_thread": "insurance",
+   "family": "graph-and-ops-and-casefind",
+   "owning_tool": "none",
+   "status": "explicit-out",
+   "debtscan_flags": [],
+   "description": "data/find/dualbiz local case-find research pipeline (discover/harvest/serp/broaden/fingerprint) producing analyst CSV/JSON locally; uses Bright Data SERP zone for queries.",
+   "producers": [
+    "local python scripts data/find/dualbiz/scripts/*.py (pipeline.py, discover.py, harvest.py, serp.py) -- run on dev-box; no boto3/Lambda/S3 in pipeline.py"
+   ],
+   "served_artifacts": [
+    "local .runtmp medallion + analyst CSV (no S3 bucket, no DDB)"
+   ],
+   "frontend_resolution": "none (local analyst output)"
+  },
+  {
+   "thread_id": "find-insure-casefind-pipeline",
+   "named_thread": "insurance",
+   "family": "graph-and-ops-and-casefind",
+   "owning_tool": "comp-pipescript",
+   "status": "explicit-out",
+   "debtscan_flags": [],
+   "description": "Case-find IMO/insurance prospecting medallion pipeline: crawl-web (Bright Data) -> parse-web (silver) -> score-web (gold) producing analyst-facing target/scoring JSON in opal-data-imo; scraping-browser is an escape-valve crawler.",
+   "producers": [
+    "find-insure-crawl-web (Lambda py3.9, 1024MB/600s)",
+    "find-insure-crawl-web-scraping-browser (Lambda py3.12, escape-valve)",
+    "find-insure-parse-web (Lambda py3.9, silver)",
+    "find-insure-score-web (Lambda py3.9, gold)",
+    "trigger: orchestrator/manual direct-invoke (TF grants EventBridge rule/find-insure-* invoke permission but NO live EventBridge rule exists; no event-source mapping; no schedule)"
+   ],
+   "served_artifacts": [
+    "s3://opal-data-imo/serving/ (contacts-target-*.json, reveal-top25-*.json, scoring.json)",
+    "DynamoDB find-insure-cost-state (cost-throttle state)"
+   ],
+   "frontend_resolution": "none (analyst-facing S3 JSON; no portal route -- portal 'insurance' hit is only a jobless-claims macro tooltip in Macroeconomics/indicators.ts)"
+  },
+  {
+   "thread_id": "FRED-01-yield-curve-daily-ingest",
+   "named_thread": "market",
+   "family": "fred-and-generated-outputs",
+   "owning_tool": "comp-pipescript",
+   "status": "in-scope",
+   "debtscan_flags": [],
+   "description": "fred-data-ingestion pulls daily/weekly/monthly FRED series (oil/SP500/VIX/CPI/jobs/etc) to opal-market-update CSVs, and on the daily run also refreshes the 10-tenor Treasury yield curve to yield_curve_fred.json on the portal bucket; consumed by the Macroeconomics Yield Curve tab for the 1Y-ago comparison.",
+   "producers": [
+    "fred-data-ingestion (lambda, py3.11, 512MB/900s, handler lambda_fred_ingestion.lambda_handler; embeds ingest_yield_curve_fred.FREDYieldCurveIngestion on the daily path)",
+    "EventBridge rules: fred-ingestion-daily cron(0 23 * * ? *) ENABLED, fred-ingestion-weekly cron(0 14 ? * THU *), fred-ingestion-monthly-{early,mid,late} all ENABLED"
+   ],
+   "served_artifacts": [
+    "s3://opal-market-update/fred/raw/{daily,weekly,monthly}/{SERIES}.csv",
+    "s3://opal-market-update/fred/metadata/{SERIES}_metadata.json",
+    "s3://opal-data-portal-v2/json/macro/yield_curve_fred.json (live, LastModified 2026-06-14 19:01)"
+   ],
+   "frontend_resolution": "portal/src/pages/Macroeconomics/tabs/YieldCurveTab.tsx + portal/src/api/endpoints/yield-curve.ts consume /api/general/macro/yield_curve_fred.json. NOTE: the opal-market-update/fred/raw CSVs have NO traced downstream consumer."
+  },
+  {
+   "thread_id": "MA-01-market-overview-tiered",
+   "named_thread": "market",
+   "family": "market-analytics",
+   "owning_tool": "comp-pipescript",
+   "status": "in-scope",
+   "debtscan_flags": [],
+   "description": "Daily market-overview returns feed: reads ticker price history from DynamoDB opal-portal-market-data and emits tiered summary + per-ticker detail/timeseries JSON for the portal Market Performance overview cards.",
+   "producers": [
+    "opal-market-overview-tiered-generator (python3.11, 512MB/300s; NO resource policy + NO EventBridge rule targets it -> direct lambda invoke from infra/aws/lambda/v2_portal/01_market_overview orchestrator/deploy.sh; ran today 2026-06-15 ~09:22Z per CloudWatch + S3 LastModified)"
+   ],
+   "served_artifacts": [
+    "s3://opal-data-portal-v2/json-tiered/market-overview/summary/all-returns.json (48696B, fresh 2026-06-15 09:22:03)",
+    "s3://opal-data-portal-v2/json-tiered/market-overview/details/{ticker}.json",
+    "reads DynamoDB opal-portal-market-data"
+   ],
+   "frontend_resolution": "portal/src/api/endpoints/market.ts (getMarketOverviewSummary -> /api/general/json-tiered/market-overview/summary/all-returns.json; getMarketOverviewDetails -> details/{ticker}.json) consumed by market-performance components"
+  },
+  {
+   "thread_id": "MA-02-market-rsi-tiered",
+   "named_thread": "market",
+   "family": "market-analytics",
+   "owning_tool": "comp-pipescript",
+   "status": "in-scope",
+   "debtscan_flags": [],
+   "description": "Daily RSI tiered feed: reads from DynamoDB opal-portal-market-data and emits RSI summary (tier1) + per-asset-class detail (equities/fixed-income/commodities) + per-ticker timeseries JSON for the portal RSI modal.",
+   "producers": [
+    "opal-market-rsi-tiered-generator (python3.12, 512MB/180s; EventBridge rule market-rsi-tiered-daily cron(30 21 * * ? *) ENABLED -> targets it; ran today)"
+   ],
+   "served_artifacts": [
+    "s3://opal-data-portal-v2/json-tiered/market-overview/rsi-summary.json (604B, fresh 2026-06-15 09:21:59)",
+    "rsi-details-{equities,fixed-income,commodities}.json",
+    "json-tiered/market-overview/timeseries/{ticker}.json",
+    "reads DynamoDB opal-portal-market-data"
+   ],
+   "frontend_resolution": "portal/src/api/endpoints/market.ts (rsi-summary + rsi-details-${assetClass}); portal/src/components/market-performance/RSIModal.tsx (queryKeys rsi-details-equities/fixedIncome/commodities)"
+  },
+  {
+   "thread_id": "MA-03-market-regime-classifier",
+   "named_thread": "market",
+   "family": "market-analytics",
+   "owning_tool": "comp-pipescript",
+   "status": "in-scope",
+   "debtscan_flags": [],
+   "description": "Market regime classification: reads per-ticker timeseries (json-tiered) + macro 2y/10y yield timeseries, classifies the market regime, and writes current + history JSON for the portal regime indicator/modal.",
+   "producers": [
+    "opal-market-regime-classifier (python3.12, 512MB/120s; NO resource policy + NO EventBridge rule -> direct lambda invoke from 01_market_overview orchestrator; ran today 2026-06-15 ~09:22Z)"
+   ],
+   "served_artifacts": [
+    "s3://opal-data-portal-v2/json/market/market-regime.json (13474B, fresh 2026-06-15 09:22:13)",
+    "s3://opal-data-portal-v2/json/market/market-regime-history.json"
+   ],
+   "frontend_resolution": "portal/src/hooks/useMarketMetrics.ts + portal/src/api/endpoints/market.ts (getMarketRegime/getMarketRegimeHistory) -> portal/src/components/market-performance/MarketRegimeIndicator.tsx + MarketRegimeModal.tsx"
+  },
+  {
+   "thread_id": "MA-05-volatility-fetcher",
+   "named_thread": "market",
+   "family": "market-analytics",
+   "owning_tool": "comp-pipescript",
+   "status": "in-scope",
+   "debtscan_flags": [],
+   "description": "Fetches VIX/volatility data on weekdays and writes the primary volatility JSON (plus legacy vix_data.json) for the portal macroeconomics volatility view.",
+   "producers": [
+    "opal-portal-volatility-fetcher (python3.11, 512MB/120s; EventBridge volatility-daily-update cron(30 12 ? * MON-FRI *) ENABLED; S3_BUCKET opal-data-portal-v2)"
+   ],
+   "served_artifacts": [
+    "s3://opal-data-portal-v2/json/macro/volatility_data.json (1454188B, fresh 2026-06-15 08:30:34)",
+    "s3://opal-data-portal-v2/json/macro/vix_data.json (legacy backward-compat key)"
+   ],
+   "frontend_resolution": "portal/src/api/portal-proxy.ts (getVolatilityData -> /api/general/macro/volatility_data.json, S3 noted) consumed by macroeconomics view"
+  },
+  {
+   "thread_id": "MA-07-causality-market-update-generator",
+   "named_thread": "market",
+   "family": "market-analytics",
+   "owning_tool": "comp-pipescript",
+   "status": "in-scope",
+   "debtscan_flags": [],
+   "description": "Causality Engine variant of the market-update generator: GPT-driven market-update bullets with integrated price-movement data, persisted to DDB causality-generations; consumed by the portal Causality Engine page.",
+   "producers": [
+    "causality-market-update-generator (python3.12, 512MB/60s; API GW POST /generate/market-update; OpenAI; reads/writes DDB causality-generations)"
+   ],
+   "served_artifacts": [
+    "DynamoDB causality-generations"
+   ],
+   "frontend_resolution": "portal/src/pages/CausalityEngine/* (useCausalityApi.ts, Tab1_Discovery.tsx, causality-endpoints.ts) via API Gateway"
+  },
+  {
+   "thread_id": "MA-09-ycharts-market-data-pull",
+   "named_thread": "market",
+   "family": "market-analytics",
+   "owning_tool": "globgrph",
+   "status": "explicit-out",
+   "debtscan_flags": [],
+   "description": "YCharts market-data pull Lambda (WS-1 market-overview surfaces + WS-2 hybrid correlation/regime-ERP/factor-tilt/MP-benchmark legs). Deployed DORMANT behind an execution freeze: handler default mode is freeze-aware structural validation (no network); the live pull path fail-fasts until the dedicated YCharts seat lands.",
+   "producers": [
+    "ycharts-market-data-pull (512MB/300s, LastMod 2026-05-22; NO ESM; modes validate(default,no-network)/pull(frozen). Sibling ycharts-session-probe is the only ENABLED ycharts rule (probe cron 6h); ycharts-session-capture rule DISABLED)"
+   ],
+   "served_artifacts": [
+    "intended charts/general_data.json + charts/fund_data.json YCharts leg outputs - NOT written in dormant/validate mode (no live served artifact)"
+   ],
+   "frontend_resolution": "none currently - pull path frozen; would feed MP benchmarks / market-overview legs once the YCharts seat activates"
+  },
+  {
+   "thread_id": "PPI-12-opal-session-analytics",
+   "named_thread": "market",
+   "family": "partners-portal-infra",
+   "owning_tool": "comp-pipescript",
+   "status": "in-scope",
+   "debtscan_flags": [],
+   "description": "Client-side session/event telemetry sink for the portal Analytics SDK (api.opalinvest.dev/analytics) - batched page/session/click events from authenticated portal users, persisted to a session-analytics DDB store for usage analytics.",
+   "producers": [
+    "opal-session-analytics (nodejs20.x, role opal-portal-lambda-role) API-GW backed at /analytics; source EXTERNAL (not in lambda-source-map); writes session/event records to DynamoDB"
+   ],
+   "served_artifacts": [
+    "Session/event records in a session-analytics DynamoDB table (ingest sink; no read-back artifact found in portal)"
+   ],
+   "frontend_resolution": "src/services/analytics.ts (OpalAnalytics SDK init/track/endSession; apiEndpoint https://api.opalinvest.dev/analytics)."
+  },
+  {
+   "thread_id": "bd-capture-output-versions",
+   "named_thread": "market",
+   "family": "bd-medallion",
+   "owning_tool": "comp-pipescript",
+   "status": "in-scope",
+   "debtscan_flags": [],
+   "description": "Invoked async by bd-portal-publisher after gold writes; records VersionId of every gold/ object into a timestamped manifest for fast time-machine restore lookups.",
+   "producers": [
+    "bd-capture-output-versions (lambda, async invoke from bd-portal-publisher, CAPTURE_VERSIONS_FUNCTION env)"
+   ],
+   "served_artifacts": [
+    "s3://opal-data-bd/snapshots/manifests/<timestamp>.json"
+   ],
+   "frontend_resolution": "none directly; manifests consumed by bd-time-machine restore"
+  },
+  {
+   "thread_id": "bd-time-machine",
+   "named_thread": "market",
+   "family": "bd-medallion",
+   "owning_tool": "comp-pipescript",
+   "status": "unreviewed",
+   "debtscan_flags": [
+    "needs-consumer-trace"
+   ],
+   "description": "On-demand: restores opal-data-bd/gold/ to a target_date's 5PM-ET state via CopyObject of recorded VersionIds (from capture manifests), writes pipeline-complete sentinel to re-publish, invalidates CloudFront.",
+   "producers": [
+    "bd-time-machine (lambda, manual/on-demand invoke; no EventBridge/API trigger live)"
+   ],
+   "served_artifacts": [
+    "restores s3://opal-data-bd/gold/* prior versions; writes gold/pipeline-complete.json sentinel"
+   ],
+   "frontend_resolution": "portal scaffolding exists (TimeMachineProvider, DataRefresh HistoryTab, data-refresh.ts) but per workspace memory the restore feature was NEVER fully implemented/wired live (scaffolding only)"
+  },
+  {
+   "thread_id": "causality-history-manager",
+   "named_thread": "market",
+   "family": "causality-ai",
+   "owning_tool": "comp-pipescript",
+   "status": "unreviewed",
+   "debtscan_flags": [
+    "needs-consumer-trace"
+   ],
+   "description": "History-tab handler: POST /causality/save-analysis persists analyses, GET /causality/history lists them, plus delete/update-notes; backed by DDB causality-saved-analyses + causality-generations.",
+   "producers": [
+    "causality-history-manager (Lambda python3.12 512MB/60s)",
+    "API GW /causality/save-analysis (id rz623e POST) + /causality/history (id ypreo4 GET) -> causality-history-manager; via CloudFront /causality/*"
+   ],
+   "served_artifacts": [
+    "DDB causality-saved-analyses (analyses+notes/tags)",
+    "DDB causality-generations"
+   ],
+   "frontend_resolution": "Built consumers useSaveAnalysis/useHistory/useDeleteAnalysis/useUpdateNotes; page unmounted => not live-consumed."
+  },
+  {
+   "thread_id": "causality-market-update",
+   "named_thread": "market",
+   "family": "causality-ai",
+   "owning_tool": "comp-pipescript",
+   "status": "unreviewed",
+   "debtscan_flags": [
+    "needs-consumer-trace"
+   ],
+   "description": "Synchronous API handler POST /causality/generate/market-update builds a market-update deck (PPTX/PDF) over 3 themes, returns an S3 download URL.",
+   "producers": [
+    "causality-market-update-generator (Lambda python3.12 512MB/60s)",
+    "API GW /causality/generate/market-update (id qou4e5) POST -> causality-market-update-generator; via CloudFront /causality/*"
+   ],
+   "served_artifacts": [
+    "S3 download URL for generated deck (PPTX/PDF) in response; HTTP JSON"
+   ],
+   "frontend_resolution": "Built consumer useGenerateMarketUpdate (FE calls /market-update; live route is /generate/market-update); page unmounted => not live-consumed."
+  },
+  {
+   "thread_id": "globgrph-nessie-fargate-service",
+   "named_thread": "market",
+   "family": "graph-and-ops-and-casefind",
+   "owning_tool": "globgrph",
+   "status": "in-scope",
+   "debtscan_flags": [],
+   "description": "Long-lived Nessie catalog server (Iceberg REST + branch-ref CAS) backing the versioned global graph; serves the Iceberg REST endpoint that both the updater Lambda and derive-runner commit through, and that dev-box readers resolve via the S3 HEAD marker.",
+   "producers": [
+    "globgrph-nessie (ECS service on cluster opal-globgrph, FARGATE; long-running, reachable in-VPC at nessie.opal-globgrph.local:19120)",
+    "trigger: persistent service (no schedule); managed by ECS desiredCount"
+   ],
+   "served_artifacts": [
+    "Nessie main-branch ref + Iceberg REST catalog (warehouse=default -> s3://opal-313476888478-globgrph/warehouse)"
+   ],
+   "frontend_resolution": "none (infra service)"
+  },
+  {
+   "thread_id": "inf-silver-chain",
+   "named_thread": "market",
+   "family": "inf-medallion",
+   "owning_tool": "comp-pipescript",
+   "status": "in-scope",
+   "debtscan_flags": [],
+   "description": "Bronze->silver conversion Lambda fires on _BRONZE_COMPLETE S3 event; builds silver dims (dedup+dtype) and writes silver/_silver_complete/*.json sentinels.",
+   "producers": [
+    "inf-silver-chain Lambda (EventBridge inf-silver-chain-bronze-complete: aws.s3 ObjectCreated bronze/orion-api/*/_BRONZE_COMPLETE.json; INF_S3_BUCKET=opal-data-inf, INF_PREFER_S3=true)"
+   ],
+   "served_artifacts": [
+    "s3://opal-data-inf/silver/* (per-dim parquet/dims)",
+    "s3://opal-data-inf/silver/_silver_complete/{dim}.json"
+   ],
+   "frontend_resolution": "none (internal medallion leg)"
+  },
+  {
+   "thread_id": "m365-mcp-gateway-ec2",
+   "named_thread": "market",
+   "family": "graph-and-ops-and-casefind",
+   "owning_tool": "globgrph",
+   "status": "explicit-out",
+   "debtscan_flags": [],
+   "description": "Microsoft 365 MCP gateway service (per-user delegated identity) planned as a persistent nano EC2 + ALB+OIDC -- code migrated in-repo (infra/aws/ec2/m365-mcp-gateway) but NOT provisioned.",
+   "producers": [
+    "m365-mcp-gateway (EC2, registered in EC2_MANIFEST.json) -- instance_id=null, _status=NOT PROVISIONED (terraform scaffold at infra/aws/terraform/m365-mcp-gateway not applied; OPLMCP.02/03 IT-gated)"
+   ],
+   "served_artifacts": [
+    "none yet (no live instance; no served artifact)"
+   ],
+   "frontend_resolution": "none (not provisioned; MCP tool gateway, not a portal route)"
+  },
+  {
+   "thread_id": "portfolio-export-download",
+   "named_thread": "market",
+   "family": "pm-tool",
+   "owning_tool": "globgrph",
+   "status": "in-scope",
+   "debtscan_flags": [],
+   "description": "Resolves a stored export/trade CSV via the sessions table and returns a presigned S3 GET URL for download.",
+   "producers": [
+    "opal-portfolio-export-download (python3.12, 256MB/15s, S3_BUCKET=opal-data-portal-v2, SESSIONS_TABLE=opal-portfolio-sessions) <- API Gateway REST GET /api/private/portfolio/exports/{fund}/{account}/{versionId}/download (path-scoped permission)"
+   ],
+   "served_artifacts": [
+    "presigned GET to s3://opal-data-portal-v2/{trade_csv_key} resolved from opal-portfolio-sessions item"
+   ],
+   "frontend_resolution": "portal/src/api/endpoints/portfolio.ts download -> /api/private/portfolio/exports/{fund}/{account}/{versionId}/download (line 479); PortfolioManagement page"
+  },
+  {
+   "thread_id": "portfolio-version-get",
+   "named_thread": "market",
+   "family": "pm-tool",
+   "owning_tool": "globgrph",
+   "status": "in-scope",
+   "debtscan_flags": [],
+   "description": "Retrieves a specific saved portfolio version's content (S3-backed JSON referenced by the version row).",
+   "producers": [
+    "opal-portfolio-version-get (python3.11, 256MB/30s, BUCKET=opal-data-portal-v2) <- API Gateway REST GET /api/private/portfolio/versions/{fund}/{account}/{versionId} (wildcard)"
+   ],
+   "served_artifacts": [
+    "reads s3://opal-data-portal-v2/portfolio-management/versions/{fund}/{versionId}.json (key from opal-portfolio-sessions)"
+   ],
+   "frontend_resolution": "portal/src/api/endpoints/portfolio.ts getVersion -> /api/private/portfolio/versions/{fund}/{account}/{versionId} (line 507); PortfolioManagement page"
+  },
+  {
+   "thread_id": "portfolio-versions-list",
+   "named_thread": "market",
+   "family": "pm-tool",
+   "owning_tool": "globgrph",
+   "status": "in-scope",
+   "debtscan_flags": [],
+   "description": "Lists saved portfolio versions for a fund/account from the sessions table (version history panel).",
+   "producers": [
+    "opal-portfolio-versions-list (python3.11, 256MB/30s, table opal-portfolio-sessions) <- API Gateway REST GET /api/private/portfolio/versions/{fund}/{account} (wildcard)"
+   ],
+   "served_artifacts": [
+    "reads DynamoDB opal-portfolio-sessions (version metadata incl s3Key under portfolio-management/versions/{fund}/...)"
+   ],
+   "frontend_resolution": "portal/src/api/endpoints/portfolio.ts listVersions -> /api/private/portfolio/versions/{fund}/{account} (line 493); PortfolioManagement page"
+  },
+  {
+   "thread_id": "cot-pipeline",
+   "named_thread": "mdpf",
+   "family": "cot-and-mdpf",
+   "owning_tool": "comp-pipescript",
+   "status": "in-scope",
+   "debtscan_flags": [],
+   "description": "Cottonwood Capital Advisors (COT) full Black-Diamond-native medallion pipeline: snapshot-first bronze ingest -> silver dedup/dtype -> gold (A-dimensions/B-holdings/C-canonical-perf-nna/D-portal-platinum) serving the AdvisorIntelligence Cottonwood tenant.",
+   "producers": [
+    "cot-bd-session-trigger (Lambda, python3.11, 128MB/600s) \u2014 4-phase EventBridge state machine: (1) cot-bd-session-daily cron(0 2 * * ?) fires SSM doc opal-cot-bd-session-fetch on cot-exporter EC2; (2) rule cot-session-complete (aws.ssm 'EC2 Command Status-change Notification' status=Success, document-name opal-cot-bd-session-fetch) -> mode=bronze-run; (3) rule cot-bronze-complete (S3 ObjectCreated opal-data-cot suffix _BRONZE_COMPLETE.json) -> mode=silver-run; (4) rule cot-silver-complete (S3 ObjectCreated opal-data-cot suffix silver_complete.json) -> mode=gold-run",
+    "cot-exporter EC2 (i-0643a5bee8a8feabf, t3.small, start-on-demand, currently stopped) \u2014 runs BD DataMining session fetch + bronze ingest + silver merge + gold_dispatch.sh --chain full (data/cot/scripts/{bronze,silver,gold})"
+   ],
+   "served_artifacts": [
+    "s3://opal-data-cot/gold/platinum/firm/* (cohort_a_summary.json, cash_coverage_summary.json \u2014 D_04, live 2026-06-09)",
+    "s3://opal-data-cot/platinum/firm/* (header_metrics.json, timeseries_chart.json, employee_leaderboard.json, leaderboard.json, dashboard.json, mix_summary.json, partner_analytics_{gran}.json, cumulative_chart.json, timeseries_overview.json \u2014 D_00/D_00b/D_00c/D_01)",
+    "s3://opal-data-cot/platinum/advisors/{id}/{summary,mix,composition}.json (D_02/D_04)",
+    "s3://opal-data-cot/platinum/clients/{rel_id}/{summary,views,composition,mix_timeseries,concentration}.json (D_04)",
+    "s3://opal-data-cot/platinum/accounts/{acct_id}/summary.json (D_04)",
+    "s3://opal-data-cot/platinum/cottonwood/ownership_map.json (D_00 platinum_advisor_ownership_key)",
+    "s3://opal-data-cot/gold/{dimensions,canonical,timeseries,views,artifacts}/* (parquet intermediates A_00-E_24)",
+    "S3 chain sentinels: _BRONZE_COMPLETE.json, silver_complete.json"
+   ],
+   "frontend_resolution": "portal AdvisorIntelligence Cottonwood tenant \u2014 portal/src/pages/AdvisorIntelligence/_partners/cottonwood/ (index.tsx, layout.ts firmId='cottonwood', lambdaScopeKey='cottonwood'), routed via _shared/hooks/useTenantLayout.ts (cottonwood: COTTONWOOD_LAYOUT) and gated by portal/src/lib/firmAccess.ts ('cottonwood' set + domain cottonwood.com). Backend advisor-intelligence Lambda resolves FIRM_CONFIG cottonwood -> opal-data-cot/platinum (firm-config companion gate per ADVI_PRTORG.04). PartnerAnalytics.tsx renders the Distribution/AC8 graceful-degrade."
+  },
+  {
+   "thread_id": "mdpf-global-view",
+   "named_thread": "mdpf",
+   "family": "cot-and-mdpf",
+   "owning_tool": "comp-pipescript",
+   "status": "in-scope",
+   "debtscan_flags": [],
+   "description": "MDPF (Multi-partner Decomposed-Portfolio / Model-Portfolio Decomposition) Global view: convergence-gated daily aggregation of per-partner model-AUA feeders (49F WS-B, Inflection WS-C, WS-D2 ETF netassets, WS-E 49F non-model) into the partner-decomposed aggregate-AUA timeseries served to the ModelPortfolios portal page.",
+   "producers": [
+    "mdpf-daily-trigger (Lambda, python3.12, 256MB/360s) \u2014 EVENT-DRIVEN CONVERGENCE GATE (not a cron): rule mdpf-daily-refresh-trigger fires on S3 ObjectCreated opal-data-inf/gold/meta/pipeline-complete.json (INF spine sentinel); verifies INF spine + BD silver (opal-data-bd silver/{allocations,fees}, BD_MAX_LAG_TRADING_DAYS=2) freshness vs each source's own calendar, then SSM-dispatches mdpf-daily-dispatch.sh on the runner (GATE_ENFORCE=1 defers on BD-stale)",
+    "mdpf-daily-runner EC2 (i-02448edb624a7a7cf, t3.medium, start-on-demand, currently stopped) \u2014 pulls s3://opal-data-mdpf/code/mdpf-daily-dispatch.sh + runs the feeder scripts (data/mdpf/scripts/{feeders,gold}: wsb_49f_smartx_model_aua, build_mdpf_wsc_inflection_feeder, build_mdpf_wsd2_etf_netassets_feeder, build_mdpf_wse_49f_non_model_aua) then mdpf_aggregate_aua.py",
+    "mdpf-freshness-checker (Lambda, python3.12, 128MB/60s) \u2014 rule mdpf-freshness-check-trigger cron(45 16 * * ?); reads served timeseries, emits MDPF/DailyChain.TimeseriesStalenessDays (alarm mdpf-daily-freshness-stale catches started-then-hung runs the failure alarms miss)",
+    "bronze/backfill: data/mdpf/scripts/bronze/pull_orion_model_composition.py + backfill/* (one-shot historical builders, ops-only)"
+   ],
+   "served_artifacts": [
+    "s3://opal-data-portal-v2/platinum/mdpf/aggregate_aua_timeseries.json (CloudFront-served, LIVE fresh 2026-06-15 10:41, 445KB \u2014 the primary served rollup; mdpf_aggregate_aua.py PLATINUM_BUCKET)",
+    "s3://opal-data-portal-v2/platinum/mdpf/aggregate_aua/{date}.json (per-date partition)",
+    "s3://opal-data-portal-v2/json/mdpf/{firmId}/account-distribution.json (MDPF_SCOPED Path B per-firm)",
+    "s3://opal-data-mdpf/mdpf/feeds/{artifact}/*/{date}.parquet (non-portal intermediate feeder parquet \u2014 model_aua_positions, model_composition)"
+   ],
+   "frontend_resolution": "portal ModelPortfolios page \u2014 portal/src/pages/ModelPortfolios.tsx via getMdpfAggregateAUATimeSeriesByFirm(effectiveFirmId) and ('global') (portal/src/api/endpoints/aum.ts -> portal-proxy.ts -> portal_data_proxy Lambda /aum/aggregate-mdpf endpoint). Types MdpfAggregateAUATimeSeries/MdpfPerFirmTimeSeries/MdpfPartnerSeries/MdpfEtfSeries."
+  },
+  {
+   "thread_id": "FRED-02-macro-fred-parallel-artifact",
+   "named_thread": "model-portfolios",
+   "family": "fred-and-generated-outputs",
+   "owning_tool": "globgrph",
+   "status": "unreviewed",
+   "debtscan_flags": [
+    "needs-consumer-trace"
+   ],
+   "description": "fred-macro-ingestion pulls the 51-series F1 FRED-replaceable macro set (FRED-DIRECT + FRED-TRANSFORM + computed WALCL/GDP) and writes a SEPARATE grouped artifact macro_data_fred.json in the identical shape to macro_data.json -- explicitly a parallel/staging artifact, NOT a co-writer of macro_data.json.",
+   "producers": [
+    "fred-macro-ingestion (lambda, py3.11, 256MB/120s, handler ingest_fred_macro.lambda_handler)",
+    "EventBridge rule fred-macro-ingestion-daily cron(30 23 * * ? *) ENABLED"
+   ],
+   "served_artifacts": [
+    "s3://opal-data-portal-v2/json/macro/macro_data_fred.json (live, LastModified 2026-06-14 19:30, 76KB)"
+   ],
+   "frontend_resolution": "none (internal/staging) -- NO portal consumer found for macro_data_fred.json; source docstring states it does NOT replace macro_data.json and the FRED-vs-Bloomberg-residue MERGE is a pending v0.4/AE-deploy integration decision. macro_data.json is still served by the Bloomberg-pkl yang-generate-macro (FRED-04)."
+  },
+  {
+   "thread_id": "FRED-03-credit-spread-cache",
+   "named_thread": "model-portfolios",
+   "family": "fred-and-generated-outputs",
+   "owning_tool": "comp-pipescript",
+   "status": "in-scope",
+   "debtscan_flags": [],
+   "description": "yang-refresh-fred-cache downloads ICE BofA IG (BAMLC0A0CM) and HY (BAMLH0A0HYM2) credit-spread OAS series weekly from FRED and caches them as CSV; these feed the yang-generate-risk-premium Lambda's credit-risk-premium computation.",
+   "producers": [
+    "yang-refresh-fred-cache (lambda, py3.12, 256MB/120s, handler lambda_function.lambda_handler; source infra/aws/lambda/v2_portal/yang_pipeline/outputs/refresh-fred-cache/)",
+    "EventBridge rule yang-refresh-fred-cache-weekly cron(0 6 ? * SUN *) ENABLED"
+   ],
+   "served_artifacts": [
+    "s3://opal-data-portal-v2/cache/fred/BAMLC0A0CM.csv",
+    "s3://opal-data-portal-v2/cache/fred/BAMLH0A0HYM2.csv"
+   ],
+   "frontend_resolution": "indirect: cache consumed by yang-generate-risk-premium -> json/valuation/risk_premium_data.json (live, LastModified 2026-06-15 09:20) -> portal/src/api/portal-proxy.ts /api/general/valuation/risk_premium_data.json -> Macroeconomics/Valuation Risk Premium view."
+  },
+  {
+   "thread_id": "FRED-04-yang-macro-canonical",
+   "named_thread": "model-portfolios",
+   "family": "fred-and-generated-outputs",
+   "owning_tool": "comp-pipescript",
+   "status": "in-scope",
+   "debtscan_flags": [],
+   "description": "yang-generate-macro reads the Bloomberg data.pkl from opal-data-portal-v2, builds the canonical grouped macro_data.json (Leading/Lagging/Inflation/Labor/Consumer/Housing/Treasury/Market/Currency) + a separate vix_data.json, and invalidates the portal CloudFront distribution. This is the macro key the portal actually consumes (NOT the FRED-02 parallel artifact).",
+   "producers": [
+    "yang-generate-macro (lambda, py3.11, 512MB/240s, handler lambda_function.lambda_handler; source infra/aws/lambda/v2_portal/yang_pipeline/macroeconomics/yang-generate-macro/)",
+    "invoked by the yang pipeline orchestrator chain (no direct EventBridge/policy); entry trigger is yang-pipeline-trigger (S3 ObjectCreated on opal-data-portal-v2, the data.pkl upload)"
+   ],
+   "served_artifacts": [
+    "s3://opal-data-portal-v2/json/macro/macro_data.json (live, 2026-06-15 09:20, 197KB)",
+    "s3://opal-data-portal-v2/json/macro/vix_data.json (live, 2026-06-15 09:20)"
+   ],
+   "frontend_resolution": "portal/src/api/portal-proxy.ts /api/general/macro/macro_data.json -> Macroeconomics page (the main heatmap)."
+  },
+  {
+   "thread_id": "FRED-05-yang-macro-timeseries",
+   "named_thread": "model-portfolios",
+   "family": "fred-and-generated-outputs",
+   "owning_tool": "globgrph",
+   "status": "in-scope",
+   "debtscan_flags": [],
+   "description": "yang-generate-macro-timeseries reads the data.pkl and emits per-tenor/per-slug macro history JSONs under json/macro/timeseries/ (1m,3m,1y,2y,3y,5y,7y,10y,20y,30y etc.) for the Macroeconomics timeseries/history charts.",
+   "producers": [
+    "yang-generate-macro-timeseries (lambda, py3.11, 512MB/360s, handler lambda_function.lambda_handler)",
+    "invoked within the yang pipeline orchestrator chain (no direct policy; S3-driven via yang-pipeline-trigger)"
+   ],
+   "served_artifacts": [
+    "s3://opal-data-portal-v2/json/macro/timeseries/{slug}.json (live, all 2026-06-15 09:20)"
+   ],
+   "frontend_resolution": "portal/src/api/endpoints/macro.ts -> /api/general/macro/timeseries/{slug}.json -> Macroeconomics timeseries charts."
+  },
+  {
+   "thread_id": "MA-08-yang-generate-volatility",
+   "named_thread": "model-portfolios",
+   "family": "market-analytics",
+   "owning_tool": "comp-pipescript",
+   "status": "explicit-out",
+   "debtscan_flags": [
+    "orphan-candidate"
+   ],
+   "description": "Yang-pipeline volatility generator that writes json/yang/volatility_data.json from external APIs. Superseded by the live opal-portal-volatility-fetcher (MA-05); its served artifact is stale and has no portal consumer.",
+   "producers": [
+    "yang-generate-volatility (256MB/120s; LastMod 2026-05-04; NO event source mapping; part of yang_pipeline outputs module)"
+   ],
+   "served_artifacts": [
+    "s3://opal-data-portal-v2/json/yang/volatility_data.json (STALE 180B, LastModified 2026-01-14 17:56:01 - not refreshed)"
+   ],
+   "frontend_resolution": "none - no portal/src ref to json/yang/volatility_data.json; the live volatility surface is MA-05 json/macro/volatility_data.json"
+  },
+  {
+   "thread_id": "PPI-10-opal-data-refresh-api",
+   "named_thread": "model-portfolios",
+   "family": "partners-portal-infra",
+   "owning_tool": "comp-pipescript",
+   "status": "in-scope",
+   "debtscan_flags": [],
+   "description": "DataRefresh + SecurityScanner backend API (/data-refresh/*, /security-scanner/*). Issues presigned S3 upload URLs for optimizer-output uploads, triggers/monitors the Yang Pipeline Step Functions, lists history, supports rollback, serves FactSet security-scanner factor/universe data. Dev-only (JWT userType=Dev).",
+   "producers": [
+    "opal-data-refresh-api (python3.11, 256MB, role opal-data-refresh-lambda-role) API-GW backed; clients: S3 (presigned PUT staging->uploads/), Step Functions (Yang pipeline), CloudFront (invalidation), DDB (execution history)"
+   ],
+   "served_artifacts": [
+    "Presigned S3 PUT URLs; Step Functions executions; DDB execution-history records; security-scanner JSON from json/security_scanner/latest/factor_metadata.json + universe data"
+   ],
+   "frontend_resolution": "src/api/endpoints/data-refresh.ts + security-scanner.ts -> src/pages/DataRefresh/* (HistoryTab) + src/pages/SecurityScanner/*."
+  },
+  {
+   "thread_id": "smartx-ec2-csv-exporter",
+   "named_thread": "model-portfolios",
+   "family": "smartx",
+   "owning_tool": "comp-pipescript",
+   "status": "in-scope",
+   "debtscan_flags": [],
+   "description": "Legacy CSV-export consolidation path: ec2-autostart starts the smartx-exporter EC2 which runs run_smartx_pipeline.py (organize CSVs -> consolidate to parquet -> aggregate to daily timeseries -> upload DDB+S3 -> generate JSON views). Superseded by the REST-lambda path; currently dormant.",
+   "producers": [
+    "smartx-daily-export-trigger (EventBridge RULE, cron(0 14 ? * MON-FRI)) -> smartx-ec2-autostart -- RULE is DISABLED",
+    "smartx-ec2-autostart (lambda, python3.11, 128MB/900s, handler lambda_autostart_v2.handler, INSTANCE_ID=i-06ebcb27395eb3f49) - 0 invokes/14d (dormant)",
+    "smartx-exporter EC2 (i-06ebcb27395eb3f49, t3.small) - state STOPPED; runs data/smartx/scripts/run_smartx_pipeline.py (run_smartx_pipeline.bat / update_smartx_data.bat) on start"
+   ],
+   "served_artifacts": [
+    "s3://opal-data-smartx-v2/views/by_period/*.json (STALE: last 2026-02-20)",
+    "s3://opal-data-smartx-v2/views/by_assetclass/*.json (STALE: last 2026-02-20)",
+    "s3://opal-data-smartx-v2/timeseries/*.json (STALE: 2025-12-26)",
+    "s3://opal-data-smartx-v2/views/latest.json|summary.json|manifest.json (2026-02-20)"
+   ],
+   "frontend_resolution": "historically fed ModelPortfolios model values/holdings via the same views/DDB surface, but the views/by_period + by_assetclass + timeseries artifacts are STALE (Feb 2026); the live ModelPortfolios data now comes from the REST/DDB path. EC2 path is the dormant legacy producer of those view files."
+  },
+  {
+   "thread_id": "smartx-model-monthly-benchmarks",
+   "named_thread": "model-portfolios",
+   "family": "smartx",
+   "owning_tool": "comp-pipescript",
+   "status": "in-scope",
+   "debtscan_flags": [],
+   "description": "SmartX-realized model-portfolio monthly+daily benchmark returns: model-monthly-pull pulls 1M/MTD/QTD/1Q/YTD/etc + per-trading-day flow-adjusted returns and writes the _smartx_model_* benchmark sidecars consumed by the model_portfolio_benchmarks surface.",
+   "producers": [
+    "smartx-model-monthly-pull (lambda, python3.11, 256MB/300s, handler pull_smartx_model_monthly_performance.lambda_handler) - EventBridge Scheduler smartx-model-monthly-pull-daily cron(35 9 * * ?) DISABLED; 0 invokes/14d but ran daily through ~2026-06-01 (last log 2026-06-01); also a comp-kuzu invoke-smartx-model-monthly-pull edge"
+   ],
+   "served_artifacts": [
+    "s3://opal-data-portal-v2/json/benchmarks/_smartx_model_monthly.json (FRESH 2026-06-01)",
+    "s3://opal-data-portal-v2/json/benchmarks/_smartx_model_daily.json (FRESH 2026-06-01)"
+   ],
+   "frontend_resolution": "feeds model_portfolio_benchmarks.json (the model return leg) consumed by portal benchmark/model-performance surfaces (ModelPortfolios performance + benchmarks). Artifacts present and consumed; producer currently DISABLED."
+  },
+  {
+   "thread_id": "smartx-rest-daily-ingest",
+   "named_thread": "model-portfolios",
+   "family": "smartx",
+   "owning_tool": "comp-pipescript",
+   "status": "in-scope",
+   "debtscan_flags": [],
+   "description": "Daily REST-API SmartX pull: jwt-refresher mints/refreshes the SmartX JWT (Secrets Manager smartx/jwt/current) -> rest-pull pulls allocations via SmartX REST into raw/parquet on opal-data-smartx-v2 -> ingestion-pipeline computes account_distribution + loads into DynamoDB opal-data-smartx; served to the portal AUM/ModelPortfolios surface via the opal-portal-data-proxy lambda.",
+   "producers": [
+    "smartx-jwt-refresher (lambda, python3.11, 128MB/120s) - EventBridge Scheduler smartx-jwt-refresher-daily cron(0 9 * * ?) ENABLED; 14 invokes/14d; last log ~2026-06 (live)",
+    "smartx-rest-pull (lambda, python3.11, 512MB/300s) - EventBridge Scheduler smartx-rest-pull-daily cron(15 9 * * ?) ENABLED; 14 invokes/14d (live). Source .py removed from repo (deployed-only; .pyc smartx_rest_pull_lambda remains)",
+    "opal-smartx-ingestion-pipeline (lambda, python3.11, 2048MB/600s) - EventBridge RULE smartx-account-distribution-daily cron(30 11 * * ?) ENABLED; 13 invokes/14d; reads consolidated/smartx_allocations.parquet -> DDB opal-data-smartx + views/account_distribution.json (live)"
+   ],
+   "served_artifacts": [
+    "DynamoDB opal-data-smartx (3204 items, 635KB, ACTIVE)",
+    "s3://opal-data-smartx-v2/views/account_distribution.json (FRESH 2026-06-15, today)",
+    "s3://opal-data-smartx-v2/consolidated/smartx_allocations.parquet (2026-06-01)",
+    "s3://opal-data-smartx-v2/raw/ (rest-pull landing)"
+   ],
+   "frontend_resolution": "portal ModelPortfolios.tsx (model values/holdings, model AUM) via portal/src/api/endpoints/aum.ts -> portal-proxy.ts (getAUMSummary/getAUMTimeSeries/getAUMMetrics) -> opal-portal-data-proxy lambda reading DDB opal-data-smartx; account-distribution view consumed by AUM distribution UI."
+  },
+  {
+   "thread_id": "yang-benchmarks-etf-returns",
+   "named_thread": "model-portfolios",
+   "family": "yang-datapipeline",
+   "owning_tool": "globgrph",
+   "status": "in-scope",
+   "debtscan_flags": [],
+   "description": "Portfolios/benchmarks. yang-model-portfolio-benchmarks (needs both PKLs) writes benchmark_returns.json + model_portfolio_benchmarks.json + model_portfolio_timeseries.json; yang-generate-etf-returns (model_pkl-only) writes etf_returns.json.",
+   "producers": [
+    "yang-model-portfolio-benchmarks (ProcessBothPKLs branch)",
+    "yang-generate-etf-returns (ProcessModelPKLOnly branch)"
+   ],
+   "served_artifacts": [
+    "s3://opal-data-portal-v2/json/benchmarks/model_portfolio_benchmarks.json (LastMod 2026-06-15 13:20Z)",
+    "s3://opal-data-portal-v2/json/benchmarks/benchmark_returns.json",
+    "s3://opal-data-portal-v2/json/benchmarks/model_portfolio_timeseries.json",
+    "s3://opal-data-portal-v2/json/benchmarks/etf_returns.json"
+   ],
+   "frontend_resolution": "portal/src/api/portal-proxy.ts getModelPortfolioBenchmarks -> /api/general/benchmarks/model_portfolio_benchmarks.json; getBenchmarkReturns -> benchmark_returns.json; getETFBenchmarkReturns -> etf_returns.json. Consumed by ModelPortfolios.tsx (named in charter)."
+  },
+  {
+   "thread_id": "yang-canon-interlock",
+   "named_thread": "model-portfolios",
+   "family": "yang-datapipeline",
+   "owning_tool": "globgrph",
+   "status": "explicit-out",
+   "debtscan_flags": [],
+   "description": "Branch E of ProcessFileTypes - a passive observer that NEVER blocks generators (TimeoutSeconds 180, Catch -> InterlockFallback Pass). yang-canon-interlock (1024MB) compares pipeline outputs against a canon/reference for drift detection.",
+   "producers": [
+    "yang-canon-interlock (RunInterlock state, passive)"
+   ],
+   "served_artifacts": [
+    "Interlock result is captured in the execution state ($.interlockResult); no portal-served artifact (observability/drift-check leg)"
+   ],
+   "frontend_resolution": "No frontend consumer - this is an internal canon/drift interlock that emits a status into the execution, not a portal artifact."
+  },
+  {
+   "thread_id": "yang-cma",
+   "named_thread": "model-portfolios",
+   "family": "yang-datapipeline",
+   "owning_tool": "globgrph",
+   "status": "in-scope",
+   "debtscan_flags": [],
+   "description": "Capital markets assumptions branch (cma_excel-gated). yang-generate-cma writes assumptions.json + views.json under json/capital-markets/. data/yang_pkl/scripts is the CMA/pkl pre-processing leg referenced in the charter.",
+   "producers": [
+    "yang-generate-cma (cma_excel branch, bucket=opal-data-portal-v2)",
+    "data/yang_pkl/scripts (CMA/pkl local pre-processing leg)"
+   ],
+   "served_artifacts": [
+    "s3://opal-data-portal-v2/json/capital-markets/assumptions.json (LastMod 2026-03-11 - intermittent, gated on CMA Excel upload)",
+    "s3://opal-data-portal-v2/json/capital-markets/views.json"
+   ],
+   "frontend_resolution": "portal/src/api/portal-proxy.ts getCMAAssumptions -> /api/general/capital-markets/assumptions.json."
+  },
+  {
+   "thread_id": "yang-correlation",
+   "named_thread": "model-portfolios",
+   "family": "yang-datapipeline",
+   "owning_tool": "globgrph",
+   "status": "in-scope",
+   "debtscan_flags": [],
+   "description": "Correlation branch (data_pkl-only). yang-generate-correlation writes correlation_data.json.",
+   "producers": [
+    "yang-generate-correlation (ProcessDataPKLOnly branch)"
+   ],
+   "served_artifacts": [
+    "s3://opal-data-portal-v2/json/correlations/correlation_data.json (LastMod 2026-06-15 13:20Z)"
+   ],
+   "frontend_resolution": "portal/src/api/portal-proxy.ts getCorrelationData -> /api/general/correlations/correlation_data.json (S3 source documented inline)."
+  },
+  {
+   "thread_id": "yang-factor-tilts",
+   "named_thread": "model-portfolios",
+   "family": "yang-datapipeline",
+   "owning_tool": "globgrph",
+   "status": "in-scope",
+   "debtscan_flags": [],
+   "description": "Factor tilts (model_pkl-only). yang-generate-factor-tilts writes a 3-tier output set: tier1-snapshot.json (page mount ~46KB), tier2-spreads.json (Factor Spreads tab), tier3-timeseries.json (Time Series toggle ~2.1MB) under json/factor-tilts/.",
+   "producers": [
+    "yang-generate-factor-tilts (ProcessModelPKLOnly branch)"
+   ],
+   "served_artifacts": [
+    "s3://opal-data-portal-v2/json/factor-tilts/tier1-snapshot.json (LastMod 2026-06-15 13:20Z)",
+    "s3://opal-data-portal-v2/json/factor-tilts/tier2-spreads.json",
+    "s3://opal-data-portal-v2/json/factor-tilts/tier3-timeseries.json"
+   ],
+   "frontend_resolution": "portal/src/api/portal-proxy.ts getFactorTiltsSnapshot/Spreads/TimeSeries -> /api/general/factor-tilts/tier{1,2,3}-*.json; consumed by FactorTilts.tsx (named in charter)."
+  },
+  {
+   "thread_id": "yang-ingest-dynamodb-market-data",
+   "named_thread": "model-portfolios",
+   "family": "yang-datapipeline",
+   "owning_tool": "globgrph",
+   "status": "in-scope",
+   "debtscan_flags": [],
+   "description": "yang-ingest-dynamodb runs FIRST when data_pkl is present, batch-writing into DynamoDB table opal-portal-market-data and writing json/latest/data_pkl.json signature for downstream legs. This DDB table is the source for the GeneratePortalDataParallel tiered generators.",
+   "producers": [
+    "yang-ingest-dynamodb (IngestDynamoDB state, runs before ProcessFileTypes)"
+   ],
+   "served_artifacts": [
+    "DynamoDB table opal-portal-market-data",
+    "s3://opal-data-portal-v2/json/latest/data_pkl.json (signature)"
+   ],
+   "frontend_resolution": "Indirect: DDB feeds the opal-market-* tiered generators (next thread) which write the Market Overview JSON the portal consumes; data_pkl.json signature gates downstream generation."
+  },
+  {
+   "thread_id": "yang-macro-and-timeseries",
+   "named_thread": "model-portfolios",
+   "family": "yang-datapipeline",
+   "owning_tool": "globgrph",
+   "status": "in-scope",
+   "debtscan_flags": [],
+   "description": "Macroeconomics branch (data_pkl-only). yang-generate-macro writes macro_data.json + vix_data.json; yang-generate-macro-timeseries writes per-series json/macro/timeseries/{slug}.json. NOTE: the portal-consumed json/macro/volatility_data.json is NOT produced here (see yang-volatility-orphan thread) - it comes from a separate opal-portal-volatility-fetcher family.",
+   "producers": [
+    "yang-generate-macro (ProcessDataPKLOnly branch)",
+    "yang-generate-macro-timeseries (ProcessDataPKLOnly branch)",
+    "yang-refresh-fred-cache (weekly cron(0 6 ? * SUN *) - refreshes FRED cache feeding macro legs)"
+   ],
+   "served_artifacts": [
+    "s3://opal-data-portal-v2/json/macro/macro_data.json (LastMod 2026-06-15 13:20Z)",
+    "s3://opal-data-portal-v2/json/macro/vix_data.json",
+    "s3://opal-data-portal-v2/json/macro/timeseries/{slug}.json"
+   ],
+   "frontend_resolution": "portal/src/api/portal-proxy.ts getMacroData -> /api/general/macro/macro_data.json; getVIXData -> /api/general/macro/vix_data.json; portal/src/api/endpoints/macro.ts -> /api/general/macro/timeseries/{slug}.json."
+  },
+  {
+   "thread_id": "yang-peer-performance",
+   "named_thread": "model-portfolios",
+   "family": "yang-datapipeline",
+   "owning_tool": "globgrph",
+   "status": "in-scope",
+   "debtscan_flags": [],
+   "description": "Peer performance branch (peer_excel-gated). yang-generate-peer-performance writes peer_performance.json. Runs only when a peer Excel is in the upload manifest.",
+   "producers": [
+    "yang-generate-peer-performance (peer_excel branch)"
+   ],
+   "served_artifacts": [
+    "s3://opal-data-portal-v2/json/peers/peer_performance.json (LastMod 2026-05-31 22:03Z - intermittent, gated on peer Excel upload)"
+   ],
+   "frontend_resolution": "portal/src/api/portal-proxy.ts getPeerPerformance -> /api/general/peers/peer_performance.json."
+  },
+  {
+   "thread_id": "yang-pipeline-orchestration",
+   "named_thread": "model-portfolios",
+   "family": "yang-datapipeline",
+   "owning_tool": "globgrph",
+   "status": "in-scope",
+   "debtscan_flags": [],
+   "description": "The YangDataPipeline Step Functions state machine and its trigger/orchestration scaffolding. Entry: S3 ObjectCreated on opal-data-portal-v2/uploads/**manifest.json -> yang-pipeline-trigger Lambda (env STATE_MACHINE_ARN) -> StartExecution. DAG: ReadManifest(yang-validate-files) -> MoveToProcessed -> GetPriorMetadata -> GenerateLatest -> Choice(data_pkl?) -> IngestDynamoDB -> ProcessFileTypes(7 parallel branches) -> CheckNeedsPortalData -> GeneratePortalDataParallel -> GenerateManifest -> CleanupUploads -> CaptureOutputVersions -> InvalidateCloudFront -> Succeed.",
+   "producers": [
+    "S3 notification yang-pipeline-manifest-trigger (opal-data-portal-v2 uploads/ + suffix manifest.json) -> yang-pipeline-trigger Lambda -> StepFunctions StartExecution",
+    "yang-validate-files",
+    "yang-move-to-processed",
+    "yang-get-prior-metadata",
+    "yang-generate-latest",
+    "yang-generate-manifest",
+    "yang-cleanup-uploads",
+    "yang-capture-output-versions",
+    "yang-invalidate-cloudfront"
+   ],
+   "served_artifacts": [
+    "s3://opal-data-portal-v2/json/latest/manifest.json (aggregated manifest)",
+    "s3://opal-data-portal-v2/json/latest/*.json (per-file-type signatures, e.g. data_pkl.json)",
+    "CloudFront invalidation of the portal distribution"
+   ],
+   "frontend_resolution": "Orchestration tier has no direct portal component; it sequences the generator legs and flushes CloudFront so the portal's per-tab JSON reads (via portal data proxy /api/general/**) reflect the freshly-written outputs. generate-manifest output is the freshness/version index."
+  },
+  {
+   "thread_id": "yang-portal-market-overview-tiered",
+   "named_thread": "model-portfolios",
+   "family": "yang-datapipeline",
+   "owning_tool": "globgrph",
+   "status": "unreviewed",
+   "debtscan_flags": [
+    "needs-consumer-trace"
+   ],
+   "description": "GeneratePortalDataParallel branch (runs only if data_pkl processed). Invokes THREE Lambdas that are NOT in the yang-* naming family but are orchestrated by this DAG: opal-market-overview-tiered-generator, opal-market-rsi-tiered-generator (must complete before) -> opal-market-regime-classifier. They read the opal-portal-market-data DDB / RSI timeseries files and produce Market Overview portal data.",
+   "producers": [
+    "opal-market-overview-tiered-generator (Active, LastMod 2026-03-24)",
+    "opal-market-rsi-tiered-generator (Active, LastMod 2026-03-24)",
+    "opal-market-regime-classifier (Active, LastMod 2026-04-05)"
+   ],
+   "served_artifacts": [
+    "Market Overview tiered JSON under opal-data-portal-v2 (overview/RSI/regime timeseries; exact keys owned by the opal-market-* family source, not yang_pipeline tree)"
+   ],
+   "frontend_resolution": "Portal Market Overview tab (consumed via portal data proxy). Exact component mapping belongs to the opal-market-* family, not the yang tree."
+  },
+  {
+   "thread_id": "yang-positioning-attribution-allocation",
+   "named_thread": "model-portfolios",
+   "family": "yang-datapipeline",
+   "owning_tool": "globgrph",
+   "status": "in-scope",
+   "debtscan_flags": [],
+   "description": "Positioning branch (needs data_pkl+model_pkl) plus the attribution/allocation Excel branch. yang-generate-positioning writes positioning_data.json (current holdings/style) plus aum-metrics.json + aum-timeseries.json; yang-generate-holdings-attribution writes holdings_attribution_data.json then chains yang-generate-allocation-summary (allocation_summary.json).",
+   "producers": [
+    "yang-generate-positioning (ProcessBothPKLs branch)",
+    "yang-generate-holdings-attribution (attribution_excel branch)",
+    "yang-generate-allocation-summary (model_pkl branch AND after-attribution chain)"
+   ],
+   "served_artifacts": [
+    "s3://opal-data-portal-v2/json/positioning/positioning_data.json (LastMod 2026-06-15 13:20Z)",
+    "s3://opal-data-portal-v2/json/positioning/holdings_attribution_data.json",
+    "s3://opal-data-portal-v2/json/positioning/allocation_summary.json",
+    "s3://opal-data-portal-v2/json/portfolios/aum-metrics.json",
+    "s3://opal-data-portal-v2/json/portfolios/aum-timeseries.json"
+   ],
+   "frontend_resolution": "portal/src/api/portal-proxy.ts getPositioningData -> /api/general/positioning/positioning_data.json; getAllocationSummary -> /api/general/positioning/allocation_summary.json; getHoldingsAttribution -> /api/general/positioning/holdings_attribution_data.json; aum-metrics/aum-timeseries -> /api/general/portfolios/*. Components: portal/src/pages/Positioning/* and portal/src/pages/Attribution/* (StylePolicyComparison.tsx, AssetAllocationSummary.tsx)."
+  },
+  {
+   "thread_id": "yang-time-machine-rollback",
+   "named_thread": "model-portfolios",
+   "family": "yang-datapipeline",
+   "owning_tool": "globgrph",
+   "status": "explicit-out",
+   "debtscan_flags": [],
+   "description": "yang-time-machine (512MB, 300s) is a rollback utility (NOT in the DAG): restores portal JSON to a historical date via S3 CopyObject with CopySourceVersionId from yang-capture-output-versions records, plus DynamoDB Market Overview restore, with append-only timeseries files excluded from restore. Operator/COO-invoked.",
+   "producers": [
+    "yang-time-machine (ad-hoc / operator-invoked, not a DAG state)"
+   ],
+   "served_artifacts": [
+    "Restores existing opal-data-portal-v2 JSON objects + opal-portal-market-data DDB to a prior version (no new artifact type)"
+   ],
+   "frontend_resolution": "No direct frontend consumer - it restores the SAME served artifacts the normal legs produce, so the portal benefits indirectly after a rollback. Pairs with yang-capture-output-versions (version capture) in the DAG."
+  },
+  {
+   "thread_id": "yang-valuation-risk-premium",
+   "named_thread": "model-portfolios",
+   "family": "yang-datapipeline",
+   "owning_tool": "globgrph",
+   "status": "in-scope",
+   "debtscan_flags": [],
+   "description": "Valuation branch (data_pkl-only). yang-generate-valuation writes valuation_data.json; yang-generate-risk-premium writes risk_premium_data.json.",
+   "producers": [
+    "yang-generate-valuation (ProcessDataPKLOnly branch)",
+    "yang-generate-risk-premium (ProcessDataPKLOnly branch)"
+   ],
+   "served_artifacts": [
+    "s3://opal-data-portal-v2/json/valuation/valuation_data.json (LastMod 2026-06-15 13:21Z)",
+    "s3://opal-data-portal-v2/json/valuation/risk_premium_data.json"
+   ],
+   "frontend_resolution": "portal/src/api/endpoints/valuation.ts (CANONICAL source comment) + portal-proxy getValuationData -> /api/general/valuation/valuation_data.json; getRiskPremiumData -> /api/general/valuation/risk_premium_data.json consumed by portal/src/pages/Valuation/tabs/RiskPremiumTab.tsx."
+  },
+  {
+   "thread_id": "yang-volatility-orphan",
+   "named_thread": "model-portfolios",
+   "family": "yang-datapipeline",
+   "owning_tool": "globgrph",
+   "status": "explicit-out",
+   "debtscan_flags": [
+    "orphan-candidate"
+   ],
+   "description": "yang-generate-volatility (256MB, Active) writes json/yang/volatility_data.json from FRED VIXCLS. It is NOT wired into the YangDataPipeline DAG (no state references it) and its output is STALE: json/yang/volatility_data.json LastModified 2026-01-14. The portal's getVolatilityData reads a DIFFERENT key, json/macro/volatility_data.json (LastMod 2026-06-15 12:30Z), produced by opal-portal-volatility-fetcher (separate family) served via portal data proxy.",
+   "producers": [
+    "yang-generate-volatility (frozen - no DAG edge, no schedule)"
+   ],
+   "served_artifacts": [
+    "s3://opal-data-portal-v2/json/yang/volatility_data.json (STALE 2026-01-14, no live consumer)"
+   ],
+   "frontend_resolution": "NONE for json/yang/volatility_data.json. The portal volatility surface (portal-proxy getVolatilityData -> /api/general/macro/volatility_data.json) is served from json/macro/volatility_data.json, written by opal-portal-volatility-fetcher, NOT by yang-generate-volatility."
+  },
+  {
+   "thread_id": "MA-04-fear-greed-fetcher",
+   "named_thread": "news",
+   "family": "market-analytics",
+   "owning_tool": "comp-pipescript",
+   "status": "in-scope",
+   "debtscan_flags": [],
+   "description": "Fetches CNN Fear & Greed sentiment index daily (2x), keeps up to 365d history, and writes the sentiment JSON for the portal sentiment gauge + fear-greed modal.",
+   "producers": [
+    "opal-portal-fear-greed-fetcher (python3.11, 256MB/900s; env S3_BUCKET=opal-data-portal-v2 S3_KEY=json/sentiment/fear-greed-index.json MAX_HISTORY_DAYS=365; EventBridge fear-greed-daily-update cron(30 14,21 * * ? *) ENABLED)"
+   ],
+   "served_artifacts": [
+    "s3://opal-data-portal-v2/json/sentiment/fear-greed-index.json (243783B, fresh 2026-06-15 10:30:42)"
+   ],
+   "frontend_resolution": "portal/src/api/endpoints/sentiment.ts + portal/src/api/portal-proxy.ts (/api/general/sentiment/fear-greed-index.json) -> portal/src/components/market-performance/SentimentGauge.tsx + FearGreedModal.tsx; DataSourceContext fear-greed-index queryKey"
+  },
+  {
+   "thread_id": "MA-06-market-update-authoring-toolchain",
+   "named_thread": "news",
+   "family": "market-analytics",
+   "owning_tool": "comp-pipescript",
+   "status": "in-scope",
+   "debtscan_flags": [],
+   "description": "Request-driven Market Update authoring toolchain: aggregator pulls trending topics (DDB opal-news-trending-daily), generator drafts the 3 market-update sections via GPT-4, exporter persists to DDB market-updates and renders a PowerPoint (pptx) to S3. Invoked on demand from the portal authoring UI via API Gateway, not a scheduled pipeline.",
+   "producers": [
+    "market-update-data-aggregator (python3.12, 512MB/30s; API GW; reads DDB opal-news-trending-daily)",
+    "market-update-generator (python3.12, 1024MB/60s; API GW; OpenAI GPT-4, POST /api/public/market-update/generate|regenerate)",
+    "market-update-exporter (python3.12, 1024MB/60s; API GW; DDB market-updates + pptx -> S3)"
+   ],
+   "served_artifacts": [
+    "DynamoDB market-updates",
+    "DynamoDB opal-news-trending-daily (read)",
+    "s3://opal-data-portal-s3/<market-update pptx export key>"
+   ],
+   "frontend_resolution": "Market Update authoring UI via API Gateway POST endpoints (/api/public/market-update/generate|regenerate|save|export); request-response, not an S3-feed page"
+  },
+  {
+   "thread_id": "PPI-05-opal-portal-data-proxy",
+   "named_thread": "news",
+   "family": "partners-portal-infra",
+   "owning_tool": "comp-pipescript",
+   "status": "in-scope",
+   "debtscan_flags": [],
+   "description": "Unified /v1/* data proxy for the main (non-advisor) portal dashboard - market, AUM, benchmarks, positioning/model, valuation, correlations, macro, factor-tilts, CMA, returns. Reads precomputed pipeline artifacts from opal-data-portal-v2 (+ DDB) so the browser never holds AWS creds; emits session-tracked reads.",
+   "producers": [
+    "opal-portal-data-proxy (python3.11, 512MB, role opal-portal-lambda-role) API-GW/CloudFront /v1/* origin; reads s3://opal-data-portal-v2/* (market-metrics.json.gz, aum, positioning pickle, valuation, macro) + DynamoDB market/AUM tables"
+   ],
+   "served_artifacts": [
+    "JSON API responses from s3://opal-data-portal-v2/* (medallion/yang/mdpf pipeline outputs) and Market Overview / AUM DDB tables"
+   ],
+   "frontend_resolution": "src/api/portal-proxy.ts + endpoints/sentiment.ts, Valuation/Correlation/Positioning/Attribution hooks (/v1/* routes)."
+  },
+  {
+   "thread_id": "PPI-06-public-data-router",
+   "named_thread": "news",
+   "family": "partners-portal-infra",
+   "owning_tool": "comp-pipescript",
+   "status": "in-scope",
+   "debtscan_flags": [],
+   "description": "Lambda@Edge origin-request router rewriting public/general data paths /api/general/* -> S3 /json/* (and /json-tiered/*) so unauthenticated public-dashboard data is served from S3 via CloudFront without API GW.",
+   "producers": [
+    "public-data-router (nodejs20.x, role lambda-edge-execution-role) on CloudFront origin-request; pure path rewrite to the public S3 json origin"
+   ],
+   "served_artifacts": [
+    "No artifact produced; rewrites to S3 /json/* + /json-tiered/* keys on the public data bucket served by CloudFront"
+   ],
+   "frontend_resolution": "src/api/api-client.ts + endpoints/{aum,macro,market,sentiment,yield-curve,portfolio-optimization}.ts (/api/general/* public reads)."
+  },
+  {
+   "thread_id": "PPI-11-portal-time-machine",
+   "named_thread": "news",
+   "family": "partners-portal-infra",
+   "owning_tool": "comp-pipescript",
+   "status": "in-scope",
+   "debtscan_flags": [],
+   "description": "Orchestrator Lambda that, given {target_date}, fans out async (Event) invocations to yang-time-machine (S3 version restore + Market Overview DDB + CF invalidation), bd-time-machine, and semantic-trending-topics-portal-publisher to roll the portal back to a prior date; returns immediately, frontend polls.",
+   "producers": [
+    "portal-time-machine (python3.11, 128MB, role opal-data-refresh-lambda-role) API-GW backed (DataRefresh trigger); async-invokes yang-time-machine + bd-time-machine + semantic-trending-topics-portal-publisher (LAYER_MAP env)"
+   ],
+   "served_artifacts": [
+    "No data artifact; dispatches restore jobs. Downstream restore layers rewrite S3 versions / Market Overview DDB / news artifacts"
+   ],
+   "frontend_resolution": "src/api/endpoints/data-refresh.ts (triggerTimeMachine/getArchiveRestorePoints) -> src/context/TimeMachineProvider.tsx + DataRefresh HistoryTab restore UI (mounted in App.tsx)."
+  },
+  {
+   "thread_id": "causality-data-enrichment-movements",
+   "named_thread": "news",
+   "family": "causality-ai",
+   "owning_tool": "comp-pipescript",
+   "status": "explicit-out",
+   "debtscan_flags": [],
+   "description": "Synchronous API handler GET /causality/movements + /causality/movements/{movement_id}: fetch+enrich top market movements (news + Alpha Vantage price).",
+   "producers": [
+    "causality-data-enrichment (Lambda python3.12 512MB/60s, env NEWS_SCANNER_BUCKET=opal-data-news-av)",
+    "API GW /causality/movements (id 9ce9gn GET) + /causality/movements/{movement_id} (id nea7x9 GET) -> causality-data-enrichment; via CloudFront /causality/*"
+   ],
+   "served_artifacts": [
+    "HTTP JSON enriched movements; reads s3://opal-data-news-av + Alpha Vantage; no persisted artifact"
+   ],
+   "frontend_resolution": "none -- /causality/movements absent from portal causality-endpoints.ts and no call site; the built page consumes themes/analysis/history/market-update, not movements."
+  },
+  {
+   "thread_id": "causality-thematic-signals-daily",
+   "named_thread": "news",
+   "family": "causality-ai",
+   "owning_tool": "comp-pipescript",
+   "status": "unreviewed",
+   "debtscan_flags": [
+    "needs-consumer-trace"
+   ],
+   "description": "Daily 6am-ET pipeline: reads News Scanner summaries from opal-data-news-av, enriches top topics with Alpha Vantage quotes, scores relevance, writes top-3 thematic signals to DDB causality-thematic-signals.",
+   "producers": [
+    "causality-thematic-signals-generator (Lambda python3.12 512MB/60s)",
+    "EventBridge rule causality-daily-signals-6am-et ENABLED cron(0 6 * * ? *) -> ONLY EventBridge target in the family"
+   ],
+   "served_artifacts": [
+    "DDB causality-thematic-signals (date pk, rank sk, 30d TTL)",
+    "reads s3://opal-data-news-av daily_summaries/*",
+    "Alpha Vantage GLOBAL_QUOTE",
+    "secret opal/external-apis"
+   ],
+   "frontend_resolution": "Built consumer exists (useCausalityApi.useThematicSignals -> getThematicSignals) but the CausalityEngine page is NOT mounted in any router/nav (only self-exports via index.ts; nothing imports it). The FE read GET /causality/thematic-signals also has NO matching live API route (generator is EventBridge-only). => no live frontend resolution."
+  },
+  {
+   "thread_id": "causality-themes-fetch",
+   "named_thread": "news",
+   "family": "causality-ai",
+   "owning_tool": "comp-pipescript",
+   "status": "unreviewed",
+   "debtscan_flags": [
+    "needs-consumer-trace"
+   ],
+   "description": "Synchronous API handler GET /causality/themes returns trending themes (filter days/sentiment/sector/limit) for the Causality Discovery tab.",
+   "producers": [
+    "causality-themes-fetcher (Lambda python3.12 512MB/60s)",
+    "API GW opal-portal-api f61h681z9g /causality/themes (id 3ykanj) GET -> AWS_PROXY; reachable via CloudFront /causality/*"
+   ],
+   "served_artifacts": [
+    "HTTP JSON themes list; reads opal-data-news-av/DDB; no own persisted artifact"
+   ],
+   "frontend_resolution": "Built consumer useCausalityApi.useThemes -> getThemes (GET /causality/themes), but the CausalityEngine page is unmounted (no router/nav) => not live-consumed."
+  },
+  {
+   "thread_id": "finbert-sentiment-scoring",
+   "named_thread": "news",
+   "family": "news-seeking-alpha",
+   "owning_tool": "comp-pipescript",
+   "status": "in-scope",
+   "debtscan_flags": [],
+   "description": "Batch FinBERT scoring: scans opal-news-articles for rows missing sentiment_finbert, invokes the FinBERT inference lambda per article, writes sentiment fields back onto each row.",
+   "producers": [
+    "finbert-batch-processor (lambda python3.11, 256MB/900s) orchestrator; FINBERT_LAMBDA='opal-news-ai-sentiment' hardcoded",
+    "opal-news-ai-sentiment (lambda, ECR image finbert-lambda:latest, Env=null) per-article FinBERT inference",
+    "EventBridge crons finbert-scoring-post-ingestion + finbert-scoring-post-ingestion-45min (ENABLED) target finbert-batch-processor"
+   ],
+   "served_artifacts": [
+    "DDB opal-news-articles (sentiment_finbert + related fields written back in-place)"
+   ],
+   "frontend_resolution": "none directly; scored fields are aggregated by the trending/keyword threads into portal sentiment artifacts"
+  },
+  {
+   "thread_id": "keyword-drilldown-history",
+   "named_thread": "news",
+   "family": "news-seeking-alpha",
+   "owning_tool": "comp-pipescript",
+   "status": "in-scope",
+   "debtscan_flags": [],
+   "description": "Daily per-keyword sentiment history generator: reads keyword-sentiments.json, queries opal-news-articles per keyword (14-day window), writes tiered per-keyword history artifacts (Tier-1 summary chart, Tier-2 article list) to S3.",
+   "producers": [
+    "opal-keyword-drilldown-generator (lambda python3.12, 1024MB/300s; Env S3_BUCKET_PORTAL=opal-data-portal-v2, DYNAMODB_TABLE=opal-news-articles, DAYS_BACK=14)",
+    "EventBridge cron keyword-drilldown-generator-daily cron(25 12,21 * * ? *) -- DISABLED (likely chained async from trending-analysis)"
+   ],
+   "served_artifacts": [
+    "S3 opal-data-portal-v2/json/sentiment/keyword-history-summary/{keyword}.json (Tier-1)",
+    "S3 opal-data-portal-v2/json/sentiment/keyword-history-articles/{keyword}.json (Tier-2) -- both prefixes present in S3"
+   ],
+   "frontend_resolution": "portal/src/api/endpoints/sentiment.ts getKeywordSentimentHistorySummary/Articles -> /api/general/sentiment/keyword-history-summary|articles/{keyword}.json; consumed by KeywordSentimentModal.tsx"
+  },
+  {
+   "thread_id": "keyword-intelligence-gpt",
+   "named_thread": "news",
+   "family": "news-seeking-alpha",
+   "owning_tool": "comp-pipescript",
+   "status": "in-scope",
+   "debtscan_flags": [],
+   "description": "GPT per-keyword intelligence: reads keyword-sentiments.json, runs GPT analysis (drivers, counterarguments, signal-conflict, optional web enrichment) per keyword, writes to opal-keyword-intelligence DDB; served on-demand to portal via an API Gateway POST route.",
+   "producers": [
+    "keyword-intelligence-generator (lambda python3.12, 2048MB/780s; Env INTELLIGENCE_TABLE=opal-keyword-intelligence, ARTICLES_TABLE=opal-news-articles, S3_BUCKET_PORTAL=opal-data-portal-v2, OPENAI_SECRET=opal/openai/news-trending, MAX_KEYWORDS=20; LastMod 2026-06-10)",
+    "EventBridge cron keyword-intelligence-generator-daily cron(0 8,20 * * ? *) -- DISABLED (chained ~10min after drilldown)"
+   ],
+   "served_artifacts": [
+    "DDB opal-keyword-intelligence (1,772 items, ACTIVE, keyed keyword+generated_date)"
+   ],
+   "frontend_resolution": "portal/src/api/endpoints/sentiment.ts getKeywordIntelligence -> POST /v1/sentiment/keyword-intelligence (API Gateway -> backend reads opal-keyword-intelligence); consumed by KeywordSentimentModal.tsx"
+  },
+  {
+   "thread_id": "layer3-gpt-curation",
+   "named_thread": "news",
+   "family": "news-seeking-alpha",
+   "owning_tool": "comp-pipescript",
+   "status": "in-scope",
+   "debtscan_flags": [],
+   "description": "Layer-3 GPT-4o curation: reads Layer-2 trending_reports/latest.json, FinBERT-prefilters, GPT-curates ~20 enriched bull/bear topic rows, writes them to opal-news-trending-daily DDB (the portal trending source).",
+   "producers": [
+    "opal-news-layer3-curation (lambda python3.12, 10240MB/900s; Env TARGET_TABLE=opal-news-trending-daily, SOURCE_TABLE=opal-news-articles, GPT_MODEL=gpt-4o, OPENAI_SECRET_NAME=opal/openai/layer3-curation, ENABLE_WEB_ENRICHMENT=false)",
+    "EventBridge cron layer3-gpt-curation-daily cron(55 21 * * ? *) -- DISABLED (likely chained from trending-analysis instead)"
+   ],
+   "served_artifacts": [
+    "DDB opal-news-trending-daily (3,428 items, ACTIVE) -- ~20 enriched topic rows/day"
+   ],
+   "frontend_resolution": "portal/src/api/endpoints/trending.ts getTrendingTopics/getLatestTrendingTopics -> opal-portal-data-proxy lambda -> opal-news-trending-daily DDB; consumed by market-performance trending/TopicCloud UI"
+  },
+  {
+   "thread_id": "news-ingestion",
+   "named_thread": "news",
+   "family": "news-seeking-alpha",
+   "owning_tool": "comp-pipescript",
+   "status": "in-scope",
+   "debtscan_flags": [],
+   "description": "Scheduled NewsAPI + RSS ingestion: pulls financial news every few hours and writes deduped articles into opal-news-articles DDB, with per-run log objects to S3.",
+   "producers": [
+    "news-ingestion-scheduler (lambda python3.12, 512MB/900s; Env S3_BUCKET=opal-data-news-v2, DYNAMODB_TABLE=opal-news-articles, NEWS_API_SECRET=opal/external-apis)",
+    "EventBridge crons news-api-* (ENABLED) + news-rss-* (ENABLED) all targeting news-ingestion-scheduler"
+   ],
+   "served_artifacts": [
+    "DDB opal-news-articles (233,159 items, ACTIVE)",
+    "S3 opal-data-news-v2 (ingestion log keys)"
+   ],
+   "frontend_resolution": "none directly (feeds the DDB that downstream sentiment/trending threads consume)"
+  },
+  {
+   "thread_id": "news-trending-analysis-gpt",
+   "named_thread": "news",
+   "family": "news-seeking-alpha",
+   "owning_tool": "comp-pipescript",
+   "status": "in-scope",
+   "debtscan_flags": [],
+   "description": "Daily GPT-4o trending analysis: reads scored articles from opal-news-articles (7-day window), writes a Layer-2 trending report to S3, computes per-keyword FinBERT aggregates, and writes the portal-served keyword-sentiments.json.",
+   "producers": [
+    "news-trending-analysis (lambda python3.12, 10240MB/900s; Env S3_BUCKET=opal-data-portal-v2, TRENDING_TABLE=opal-news-trending-daily, SOURCE_TABLE=opal-news-articles, OPENAI_SECRET=opal/openai/news-trending; in-code S3_BUCKET=opal-data-news-v2 for trending_reports)",
+    "EventBridge cron news-trending-analysis-daily cron(15 11,21 * * ? *) ENABLED"
+   ],
+   "served_artifacts": [
+    "S3 opal-data-news-v2/trending_reports/latest.json (Layer-2 report) + dated archive",
+    "S3 opal-data-portal-v2/json/sentiment/keyword-sentiments.json (PORTAL-served; verified FRESH 2026-06-15 07:16Z, 143KB)"
+   ],
+   "frontend_resolution": "portal/src/api/endpoints/sentiment.ts getKeywordFinBERTSentiments -> /api/general/sentiment/keyword-sentiments.json; consumed by SentimentGauge.tsx, ExecutiveSummary.tsx, KeywordSentimentModal.tsx (market-performance)"
+  },
+  {
+   "thread_id": "seeking-alpha-analysis-scrape",
+   "named_thread": "news",
+   "family": "news-seeking-alpha",
+   "owning_tool": "comp-pipescript",
+   "status": "in-scope",
+   "debtscan_flags": [],
+   "description": "Daily Seeking Alpha ANALYSIS-article scrape: coordinator -> listing-parser -> dedup -> scraper; parses SA analysis listings, dedups, scrapes analysis articles to opal-news-articles DDB + opal-data-news-av/analysis S3.",
+   "producers": [
+    "seeking-alpha-analysis-coordinator (lambda 512MB/300s; LAYER2_FUNCTION=seeking-alpha-analysis-listing-parser, DEDUP_FUNCTION=seeking-alpha-analysis-dedup, OUTPUT_BUCKET=opal-data-news-av)",
+    "seeking-alpha-analysis-listing-parser (lambda 512MB/300s; references LAYER25_FUNCTION=seeking-alpha-dedup-coordinator -- a source dir exists but no live lambda by that name found, possible orphan link)",
+    "seeking-alpha-analysis-dedup (lambda 512MB/300s; WORKER_FUNCTION=seeking-alpha-analysis-scraper)",
+    "seeking-alpha-analysis-scraper (lambda 1024MB/900s; DYNAMODB_TABLE=opal-news-articles)",
+    "EventBridge cron seeking-alpha-analysis-daily cron(0 21 * * ? *) ENABLED -> analysis-coordinator"
+   ],
+   "served_artifacts": [
+    "DDB opal-news-articles",
+    "DDB seeking-alpha-article-urls (shared dedup ledger)",
+    "S3 opal-data-news-av/analysis/"
+   ],
+   "frontend_resolution": "none directly; same as SA-news -- feeds opal-news-articles into the portal sentiment/trending chain"
+  },
+  {
+   "thread_id": "seeking-alpha-local-scraper-scripts",
+   "named_thread": "news",
+   "family": "news-seeking-alpha",
+   "owning_tool": "globgrph",
+   "status": "explicit-out",
+   "debtscan_flags": [],
+   "description": "Local/Windows browser-driven Seeking Alpha scraper toolkit under data/seeking-alpha/scripts (edge_scraper_enhanced*.py, parallel_scraper_coordinator*.py, master_scraper.ps1, backfill coordinators, login helper) plus the EC2 seeking-alpha-scraper deploy bundle.",
+   "producers": [
+    "Local Python/PowerShell scripts in data/seeking-alpha/scripts (run manually on operator box / Edge browser)",
+    "invoke_lambdas_from_urls.py / lambda_backfill_coordinator.py -- local drivers that invoke the cloud SA scraper lambdas for backfill",
+    "EC2 seeking-alpha-scraper deploy bundle (infra/aws/ec2/seeking_alpha_scraper/deploy_hybrid.sh) -- instances STOPPED"
+   ],
+   "served_artifacts": [
+    "Writes ultimately land in opal-news-articles / opal-data-news-av when used to drive the cloud scrapers; local edge scrapers stage HTML locally"
+   ],
+   "frontend_resolution": "none directly (operator backfill tooling; the cloud lambda chain is the served path)"
+  },
+  {
+   "thread_id": "seeking-alpha-news-scrape",
+   "named_thread": "news",
+   "family": "news-seeking-alpha",
+   "owning_tool": "comp-pipescript",
+   "status": "in-scope",
+   "debtscan_flags": [],
+   "description": "Daily Seeking Alpha NEWS scrape: coordinator -> dedup -> wave of scrapers; scrapes SA news, dedups URLs against seeking-alpha-article-urls DDB, writes article content to opal-news-articles DDB + opal-data-news-av/news S3.",
+   "producers": [
+    "seeking-alpha-news-coordinator (lambda 512MB/300s; DEDUP_TABLE=seeking-alpha-article-urls, OUTPUT_BUCKET=opal-data-news-av)",
+    "seeking-alpha-news-dedup (lambda 512MB/300s)",
+    "seeking-alpha-news-scraper (lambda 1024MB/600s; DYNAMODB_TABLE=opal-news-articles)",
+    "EventBridge cron seeking-alpha-news-daily cron(0 14 * * ? *) ENABLED -> coordinator",
+    "EC2 seeking-alpha-scraper (i-06376c11d8b3c3443 + i-07ebae29a16e43ed1, t3.medium, both STOPPED) heavier/auth scrape path"
+   ],
+   "served_artifacts": [
+    "DDB opal-news-articles (article content)",
+    "DDB seeking-alpha-article-urls (50,648 items, ACTIVE) URL dedup ledger",
+    "S3 opal-data-news-av/news/"
+   ],
+   "frontend_resolution": "none directly; feeds opal-news-articles which the FinBERT + trending + keyword threads aggregate into portal sentiment artifacts"
+  },
+  {
+   "thread_id": "semantic-pipeline-parallel-set",
+   "named_thread": "news",
+   "family": "news-seeking-alpha",
+   "owning_tool": "comp-pipescript",
+   "status": "explicit-out",
+   "debtscan_flags": [
+    "orphan-candidate"
+   ],
+   "description": "A parallel 'semantic' news pipeline (HDBSCAN sentence-transformer clustering + semantic layer3 curation + semantic portal publisher) intended to produce semantic_clusters/latest.json. Appears superseded/abandoned vs the GPT trending path.",
+   "producers": [
+    "news-semantic-clustering (lambda, ECR image news-semantic-clustering:latest, 3008MB/300s; Env ARTICLES_TABLE=opal-news-articles, OUTPUT_BUCKET=opal-data-news-v2, OUTPUT_KEY=semantic_clusters/latest.json)",
+    "semantic-news-layer3-curation (lambda python3.12, 1024MB/300s, Env=null)",
+    "semantic-trending-topics-portal-publisher (lambda python3.12, 512MB/60s, Env=null)",
+    "NO EventBridge rule found targeting any of these (no live trigger)"
+   ],
+   "served_artifacts": [
+    "S3 opal-data-news-v2/semantic_clusters/latest.json (present but LastModified 2026-02-24 -- STALE ~4 months)"
+   ],
+   "frontend_resolution": "none -- grep of portal/src found NO consumer of semantic_clusters or any semantic-* output"
+  },
+  {
+   "thread_id": "test-seeking-alpha-unauth-simple",
+   "named_thread": "news",
+   "family": "news-seeking-alpha",
+   "owning_tool": "globgrph",
+   "status": "explicit-out",
+   "debtscan_flags": [],
+   "description": "A test/diagnostic lambda for unauthenticated Seeking Alpha scraping experiments.",
+   "producers": [
+    "test-seeking-alpha-unauth-simple (lambda python3.11, 128MB/30s, Env=null)",
+    "no EventBridge trigger"
+   ],
+   "served_artifacts": [],
+   "frontend_resolution": "none"
+  },
+  {
+   "thread_id": "trending-image-and-portal-publisher",
+   "named_thread": "news",
+   "family": "news-seeking-alpha",
+   "owning_tool": "comp-pipescript",
+   "status": "in-scope",
+   "debtscan_flags": [
+    "orphan-candidate"
+   ],
+   "description": "Trending-topic image selection/generation + an opal-* portal-publisher that materialized trending topics. Image generator picks/creates topic imagery; the portal-publisher path is superseded by the layer3->DDB path.",
+   "producers": [
+    "opal-trending-image-generator (lambda python3.11, 1024MB/900s, Env=null)",
+    "EventBridge cron trending-image-selector-daily cron(52 21 * * ? *) ENABLED -> image-generator",
+    "opal-trending-topics-portal-publisher (lambda python3.11, 10240MB/900s, Env=null)",
+    "EventBridge crons trending-topics-portal-publisher-daily/morning/afternoon -- ALL DISABLED"
+   ],
+   "served_artifacts": [
+    "S3 imagery under opal-data-portal-v2 / opal-data-news-v2 (image assets for topic cards)",
+    "trending topics published artifact (publisher superseded by layer3 -> opal-news-trending-daily DDB path)"
+   ],
+   "frontend_resolution": "image assets surface on portal trending/TopicCloud cards; the portal-publisher path is superseded by the DDB-via-proxy path (trending.ts reads opal-news-trending-daily, not the publisher output)"
+  },
+  {
+   "thread_id": "historical-prices-scheduler",
+   "named_thread": "ops-internal",
+   "family": "graph-and-ops-and-casefind",
+   "owning_tool": "comp-pipescript",
+   "status": "explicit-out",
+   "debtscan_flags": [],
+   "description": "Daily 09:00 ET scheduler Lambda that spawns an ephemeral t3.xlarge EC2 (yfinance fetch, self-terminating) to pull historical prices into the BD price store.",
+   "producers": [
+    "historical-prices-scheduler (Lambda py3.11, EventBridge historical-prices-daily cron(0 14 * * ? *))",
+    "spawns ephemeral EC2 historical-prices-fetcher fleet (bd-exporter-profile, self-terminate)"
+   ],
+   "served_artifacts": [
+    "s3://opal-data-bd/logs/historical-prices/* + BD price parquet outputs (feeds bd canonical prices)"
+   ],
+   "frontend_resolution": "none directly (feeds bd price pipeline, which downstream serves the portal via bd gold/platinum)"
+  },
+  {
+   "thread_id": "ops-ec2-governance-lambdas",
+   "named_thread": "ops-internal",
+   "family": "graph-and-ops-and-casefind",
+   "owning_tool": "comp-pipescript",
+   "status": "explicit-out",
+   "debtscan_flags": [],
+   "description": "EC2 cost/runtime governance: auto-shutdown-enforcer kills idle/over-runtime instances; runtime-monitor flags long-running instances -- both emit SNS alerts only.",
+   "producers": [
+    "ec2-auto-shutdown-enforcer (Lambda py3.11, EventBridge rate(5 minutes))",
+    "ec2-runtime-monitor (Lambda py3.11, EventBridge rate(15 minutes))"
+   ],
+   "served_artifacts": [
+    "SNS ec2-auto-shutdown-alerts",
+    "SNS ec2-long-running-alerts",
+    "EC2 stop/terminate actions"
+   ],
+   "frontend_resolution": "none (ops alerting / enforcement; no portal)"
+  },
+  {
+   "thread_id": "ops-infrastructure-monitors",
+   "named_thread": "ops-internal",
+   "family": "graph-and-ops-and-casefind",
+   "owning_tool": "none",
+   "status": "explicit-out",
+   "debtscan_flags": [],
+   "description": "Infrastructure observability: infrastructure-daily-snapshot (07:00Z daily estate snapshot), opal-infrastructure-monitor (MON-FRI 14:00Z health monitor) -> infra alerts.",
+   "producers": [
+    "infrastructure-daily-snapshot (Lambda py3.11 512MB/300s, cron(0 7 * * ? *))",
+    "opal-infrastructure-monitor (Lambda py3.11 512MB/120s, cron MON-FRI 14:00Z)",
+    "moltbot-ssm-sendcommand-alert EventBridge rule -> SNS opal-infrastructure-alerts (SSM RunCommand audit alert)"
+   ],
+   "served_artifacts": [
+    "S3 infra snapshots + SNS opal-infrastructure-alerts (ops)"
+   ],
+   "frontend_resolution": "none (ops observability; no portal consumer)"
+  },
+  {
+   "thread_id": "PPI-01-auth-validator-edge",
+   "named_thread": "partners",
+   "family": "partners-portal-infra",
+   "owning_tool": "comp-pipescript",
+   "status": "in-scope",
+   "debtscan_flags": [],
+   "description": "Centralized JWT auth gate on every CloudFront viewer-request (opalinvest.dev EVTSA9VEHNZVH) except /auth/* and OPTIONS; verifies RS256 token, injects X-User-*/X-Firm-Id/X-Advisor-* headers, enforces advisor/account/relationship scoping + advisorRole tier gates against per-firm ownership_map.json.",
+   "producers": [
+    "auth-validator-edge (Lambda@Edge nodejs20.x, role lambda-edge-execution-role) on CloudFront viewer-request for opalinvest.dev; reads Secrets Manager opal/auth/jwt-public-key + s3://opal-data-{bd|inf}/platinum/{firmId}/ownership_map.json"
+   ],
+   "served_artifacts": [
+    "No artifact produced; mutates request headers in-flight. Reads ownership_map.json from per-firm opal-data buckets"
+   ],
+   "frontend_resolution": "Implicit for every authenticated portal request; portal sends Authorization Bearer (src/contexts/AuthContext.tsx, src/api/api-client.ts). Gate in front of all /api/scoped/* and protected paths."
+  },
+  {
+   "thread_id": "PPI-03-opalinvest-auth-handler",
+   "named_thread": "partners",
+   "family": "partners-portal-infra",
+   "owning_tool": "comp-pipescript",
+   "status": "in-scope",
+   "debtscan_flags": [],
+   "description": "The /auth/* identity backend: login, refresh, getCurrentUser, change/forgot/reset password, admin user CRUD. Mints the RS256 JWTs that auth-validator-edge + opal-portal-authorizer verify; reads/writes the users DDB.",
+   "producers": [
+    "opalinvest-auth-handler (nodejs22.x, dist/index.handler, role opalinvest-auth-lambda-role) fronted by API GW (api.opalinvest.dev /auth/*); signs JWTs, persists to opal-users DDB"
+   ],
+   "served_artifacts": [
+    "JWT access/refresh tokens (set-cookie + body); user records in opal-users / opal-users-v2 DDB"
+   ],
+   "frontend_resolution": "src/pages/auth/LoginPage.tsx + src/contexts/AuthContext.tsx (login/refresh/getCurrentUser)."
+  },
+  {
+   "thread_id": "PPI-07-cache-control-injector",
+   "named_thread": "partners",
+   "family": "partners-portal-infra",
+   "owning_tool": "comp-pipescript",
+   "status": "in-scope",
+   "debtscan_flags": [],
+   "description": "Lambda@Edge origin-response injecting Cache-Control (public, max-age=300) + Vary + CORS headers on /json/* public-data responses so CloudFront edge-caches public dashboard JSON.",
+   "producers": [
+    "cache-control-injector (nodejs20.x, role lambda-edge-execution-role) on CloudFront origin-response for /json/* paths"
+   ],
+   "served_artifacts": [
+    "No artifact; mutates response cache/CORS headers on public /json/* objects"
+   ],
+   "frontend_resolution": "Implicit - the same public /api/general -> /json/* responses consumed by api-client.ts public endpoints (caching behavior, not a distinct route)."
+  },
+  {
+   "thread_id": "PPI-13-schwab-anonymizer",
+   "named_thread": "partners",
+   "family": "partners-portal-infra",
+   "owning_tool": "comp-pipescript",
+   "status": "explicit-out",
+   "debtscan_flags": [],
+   "description": "Standalone PII anonymizer for Schwab RPS/CRS pipe-delimited files: HMAC-SHA256 deterministic account hashing (key from Secrets Manager schwab/anonymization-key) + AES-256 encryption, optional reverse mapping for compliance. Operates on us-east-2 S3 raw files; invoked manually (aws lambda invoke {key}).",
+   "producers": [
+    "schwab-anonymizer (python3.11, 512MB/900s, role schwab-anonymizer-lambda-role) - NO event-source mapping, NO function URL, NO EventBridge rule; manual aws lambda invoke with {\"key\":\"01_raw/CRS....RPS\"}; reads/writes us-east-2 S3 + Secrets Manager"
+   ],
+   "served_artifacts": [
+    "Anonymized + AES-256-encrypted Schwab files written back to us-east-2 S3 (ingest staging), reverse-mapping file (compliance)"
+   ],
+   "frontend_resolution": "none (internal/ops - no portal route consumes anonymizer output; feeds an upstream raw-data ingest, not the portal serving layer)"
+  },
+  {
+   "thread_id": "bd-txn-consolidator",
+   "named_thread": "partners",
+   "family": "bd-medallion",
+   "owning_tool": "comp-pipescript",
+   "status": "in-scope",
+   "debtscan_flags": [],
+   "description": "Backfill txn ingest: S3 PutObject on backfill_v2/*.xlsx triggers consolidator to dedup/append into silver transactions + NNA parquets.",
+   "producers": [
+    "opal-bd-transaction-consolidator (lambda, S3 trigger backfill_v2/*.xlsx on opal-data-bd)"
+   ],
+   "served_artifacts": [
+    "s3://opal-data-bd/silver/bd_transactions.parquet",
+    "s3://opal-data-bd/silver/bd_nna_daily.parquet",
+    "s3://opal-data-bd/silver/bd_nna_by_architect.parquet"
+   ],
+   "frontend_resolution": "none directly; NNA/txn silver feeds gold C_01 canonical_nna -> portal partner_analytics / leaderboard"
+  },
+  {
+   "thread_id": "FRED-09-portfolio-funds-list",
+   "named_thread": "pm-optimizer",
+   "family": "fred-and-generated-outputs",
+   "owning_tool": "portal-consumer-tools",
+   "status": "explicit-out",
+   "debtscan_flags": [],
+   "description": "opal-portfolio-funds-list returns the available funds + sub-accounts (currently a hardcoded MVP list) over API Gateway GET /api/private/portfolio/funds for the PM optimization UI's fund picker.",
+   "producers": [
+    "opal-portfolio-funds-list (lambda, py3.11, 256MB/30s, handler lambda_function.lambda_handler)",
+    "trigger: API Gateway (execute-api f61h681z9g, Cognito bearer auth) GET /api/private/portfolio/funds"
+   ],
+   "served_artifacts": [
+    "API JSON response only (no S3/DDB artifact; funds list is in-code)"
+   ],
+   "frontend_resolution": "PM optimization fund-picker UI (private portfolio API). This is a PM-family resource, not FRED/generated-outputs -- included here only because it was on the seed list with the 'if not pm' caveat."
+  },
+  {
+   "thread_id": "opal-pm-snapshot-handler",
+   "named_thread": "pm-optimizer",
+   "family": "graph-and-ops-and-casefind",
+   "owning_tool": "portal-consumer-tools",
+   "status": "in-scope",
+   "debtscan_flags": [],
+   "description": "Portfolio-management snapshot handler (DynamoDB opal-pm-snapshots) backing the portal PortfolioManagement optimization API -- belongs to the PM family, not graph/ops.",
+   "producers": [
+    "opal-pm-snapshot-handler (Lambda py3.11, DYNAMODB_TABLE=opal-pm-snapshots; request-driven, no schedule/mapping)"
+   ],
+   "served_artifacts": [
+    "DynamoDB opal-pm-snapshots"
+   ],
+   "frontend_resolution": "portal/src/pages/PortfolioManagement/hooks/usePortfolioOptimizationApi.ts"
+  },
+  {
+   "thread_id": "pm-optimization-autosave-put",
+   "named_thread": "pm-optimizer",
+   "family": "pm-tool",
+   "owning_tool": "globgrph",
+   "status": "in-scope",
+   "debtscan_flags": [],
+   "description": "Autosaves the in-progress optimizer state for a fund/account to S3 (and session metadata), separate from the trade-grid autosave.",
+   "producers": [
+    "opal-pm-optimization-autosave-put (python3.11, 512MB/30s) <- API Gateway REST opal-portal-api PUT /api/private/portfolio/optimization-autosave/{fund}/{account} (wildcard exec-api permission)"
+   ],
+   "served_artifacts": [
+    "s3://opal-data-portal-v2 (portfolio-management autosave key)",
+    "DynamoDB opal-portfolio-sessions (session row)"
+   ],
+   "frontend_resolution": "portal/src/api/endpoints/portfolio.ts -> /api/private/portfolio/optimization-autosave/{fund}/{account} (line 445); PortfolioManagement page"
+  },
+  {
+   "thread_id": "pm-optimization-loader",
+   "named_thread": "pm-optimizer",
+   "family": "pm-tool",
+   "owning_tool": "globgrph",
+   "status": "in-scope",
+   "debtscan_flags": [],
+   "description": "Loads a fund's optimizer working set (alpha.pkl + optimization.xlsx) from S3, combines/parses into JSON for the optimizer grid, with an S3 cache layer.",
+   "producers": [
+    "opal-pm-optimization-loader (python3.11, 3008MB/60s, AWSSDKPandas layer) <- API Gateway REST opal-portal-api f61h681z9g GET /api/private/portfolio-management/load (wildcard exec-api permission)"
+   ],
+   "served_artifacts": [
+    "reads s3://opal-data-pm/{fund}/alpha/{date}.pkl",
+    "reads s3://opal-data-pm/{fund}/optimization/{date}.xlsx",
+    "writes/reads cache key under s3://opal-data-pm"
+   ],
+   "frontend_resolution": "portal/src/api/endpoints/portfolio-optimization.ts loadOptimizationData() -> /api/private/portfolio-management/load; consumed by portal/src/pages/PortfolioManagement (route /portfolio-management)"
+  },
+  {
+   "thread_id": "pm-snapshot-handler",
+   "named_thread": "pm-optimizer",
+   "family": "pm-tool",
+   "owning_tool": "globgrph",
+   "status": "in-scope",
+   "debtscan_flags": [],
+   "description": "CRUD for optimizer snapshots (DRAFT/SUBMITTED) in DynamoDB, including a pm-drafts feed into Trade Submission; internal-tier JWT gated.",
+   "producers": [
+    "opal-pm-snapshot-handler (python3.11, 512MB/30s, DYNAMODB_TABLE=opal-pm-snapshots) <- intended API Gateway routes /api/private/portfolio-management/snapshot|snapshots/{fund}|snapshot/{id} + /api/private/trade-submission/pm-drafts/{fund}"
+   ],
+   "served_artifacts": [
+    "DynamoDB opal-pm-snapshots (GSI fund-created-index)"
+   ],
+   "frontend_resolution": "portal/src/api/endpoints/portfolio-optimization.ts saveOptimizationSnapshot/listOptimizationSnapshots/get/delete -> BASE_PATH /api/private/portfolio-management/snapshot*; PortfolioManagement page (consumer code present)"
+  },
+  {
+   "thread_id": "pm-upload-urls",
+   "named_thread": "pm-optimizer",
+   "family": "pm-tool",
+   "owning_tool": "globgrph",
+   "status": "in-scope",
+   "debtscan_flags": [],
+   "description": "Issues presigned S3 PUT URLs so the optimizer UI can upload a fund's alpha.pkl and optimization.xlsx directly to S3.",
+   "producers": [
+    "opal-pm-upload-urls (python3.11, 128MB/10s) <- API Gateway REST opal-portal-api GET /api/private/portfolio-management/upload-urls (path-scoped exec-api permission)"
+   ],
+   "served_artifacts": [
+    "generates presigned PUT to s3://opal-data-pm/{fund}/alpha/{date}.pkl",
+    "generates presigned PUT to s3://opal-data-pm/{fund}/optimization/{date}.xlsx"
+   ],
+   "frontend_resolution": "portal/src/api/endpoints/portfolio-optimization.ts getUploadUrls()/uploadToS3() -> /api/private/portfolio-management/upload-urls; PortfolioManagement UploadPortfolioModal"
+  },
+  {
+   "thread_id": "portfolio-autosave-get",
+   "named_thread": "pm-optimizer",
+   "family": "pm-tool",
+   "owning_tool": "globgrph",
+   "status": "in-scope",
+   "debtscan_flags": [],
+   "description": "Reads back the autosaved trade-grid state for a fund/account from S3 to rehydrate the PM editor on load.",
+   "producers": [
+    "opal-portfolio-autosave-get (python3.11, 256MB/30s, BUCKET=opal-data-portal-v2) <- API Gateway REST GET /api/private/portfolio/autosave/{fund}/{account} (wildcard)"
+   ],
+   "served_artifacts": [
+    "reads s3://opal-data-portal-v2/portfolio-management/autosaves/{fund}/current.json"
+   ],
+   "frontend_resolution": "portal/src/api/endpoints/portfolio.ts get autosave -> /api/private/portfolio/autosave/{fund}/{account} (line 396); PortfolioManagement page"
+  },
+  {
+   "thread_id": "portfolio-autosave-put",
+   "named_thread": "pm-optimizer",
+   "family": "pm-tool",
+   "owning_tool": "globgrph",
+   "status": "in-scope",
+   "debtscan_flags": [],
+   "description": "Autosaves edited trades for a fund/account: fetches existing trades, merges changed rows, writes back to S3 + records a session row.",
+   "producers": [
+    "opal-portfolio-autosave-put (python3.11, 256MB/30s, BUCKET=opal-data-portal-v2, table opal-portfolio-sessions) <- API Gateway REST PUT /api/private/portfolio/autosave/{fund}/{account} (wildcard)"
+   ],
+   "served_artifacts": [
+    "s3://opal-data-portal-v2/portfolio-management/autosaves/{fund}/current.json",
+    "DynamoDB opal-portfolio-sessions"
+   ],
+   "frontend_resolution": "portal/src/api/endpoints/portfolio.ts autosave PUT -> /api/private/portfolio/autosave/{fund}/{account} (line 414); PortfolioManagement page"
+  },
+  {
+   "thread_id": "portfolio-excel-generator",
+   "named_thread": "pm-optimizer",
+   "family": "pm-tool",
+   "owning_tool": "globgrph",
+   "status": "in-scope",
+   "debtscan_flags": [],
+   "description": "Two flows: legacy Excel export (xlsx only) and export-and-submit (CSV+Excel to S3 plus a PENDING_APPROVAL trade submission), bridging PM to Trade Submission.",
+   "producers": [
+    "opal-portfolio-excel-generator (python3.12, 512MB/60s, openpyxl-layer; S3_BUCKET=opal-data-portfolio, DYNAMODB_TABLE=opal-portfolio-exports, SUBMISSIONS_TABLE=opal-trade-submissions) <- API Gateway REST POST /api/portfolio/export (public) + POST /api/private/portfolio/export-and-submit"
+   ],
+   "served_artifacts": [
+    "s3://opal-data-portfolio (legacy export xlsx)",
+    "s3://opal-data-portal-v2/portfolio-management/exports/{fund}/...csv and ...xlsx",
+    "DynamoDB opal-portfolio-exports",
+    "DynamoDB opal-trade-submissions (PENDING_APPROVAL row)"
+   ],
+   "frontend_resolution": "portal/src/api/endpoints/portfolio.ts export()/export-and-submit -> /api/portfolio/export & /api/private/portfolio/export-and-submit (lines 296,461); PortfolioManagement page"
+  },
+  {
+   "thread_id": "portfolio-funds-list",
+   "named_thread": "pm-optimizer",
+   "family": "pm-tool",
+   "owning_tool": "globgrph",
+   "status": "in-scope",
+   "debtscan_flags": [],
+   "description": "Returns the available funds/sub-accounts list that seeds the PM fund picker (currently a hardcoded MVP list, no data backend).",
+   "producers": [
+    "opal-portfolio-funds-list (python3.11, 256MB/30s) <- API Gateway REST GET /api/private/portfolio/funds (wildcard)"
+   ],
+   "served_artifacts": [
+    "none persistent -- returns a hardcoded funds[] array (MVP)"
+   ],
+   "frontend_resolution": "portal/src/api/endpoints/portfolio.ts getFunds -> /api/private/portfolio/funds (line 515); PortfolioManagement fund picker"
+  },
+  {
+   "thread_id": "portfolio-pickle-parser",
+   "named_thread": "pm-optimizer",
+   "family": "pm-tool",
+   "owning_tool": "globgrph",
+   "status": "in-scope",
+   "debtscan_flags": [],
+   "description": "Parses an uploaded portfolio pickle (.pkl) into import-ready JSON for the PM import/upload flow.",
+   "producers": [
+    "opal-portfolio-pickle-parser (python3.11, 256MB/30s, AWSSDKPandas layer) <- API Gateway REST POST /api/private/portfolio/parse-pickle (path-scoped exec-api permission)"
+   ],
+   "served_artifacts": [
+    "returns parsed ImportData JSON inline (no persistent artifact; reads uploaded pickle)"
+   ],
+   "frontend_resolution": "portal/src/api/endpoints/portfolio.ts importFromPickle/uploadPortfolio -> /api/private/portfolio/parse-pickle (lines 281,378); PortfolioManagement UploadPortfolioModal"
+  },
+  {
+   "thread_id": "TS-6-trade-auth-handler",
+   "named_thread": "portal-infra",
+   "family": "trade-submission",
+   "owning_tool": "globgrph",
+   "status": "unreviewed",
+   "debtscan_flags": [
+    "needs-consumer-trace"
+   ],
+   "description": "Standalone trade-dashboard auth (login/JWT issue). trade-auth-handler (python3.11, auth_handler.lambda_handler, 256MB/30s, JWT_SECRET env, USERS_TABLE opal-users-v2) handles POST /auth on the DEDICATED trade-submission-api (w8jnzvs21g) \u2014 issues JWTs against opal-users-v2 for the standalone trades dashboard (DASHBOARD_URL https://opalinvest.dev).",
+   "producers": [
+    "trade-auth-handler [lambda; trigger=dedicated trade-submission-api w8jnzvs21g route POST /auth (Auth NONE) integration av8jz0l]"
+   ],
+   "served_artifacts": [
+    "HTTP JSON (JWT); reads DDB opal-users-v2"
+   ],
+   "frontend_resolution": "NOT used by the mounted portal page. The portal's own login (AuthContext /auth/login, /auth/me, /auth/refresh) routes through proxy API 7k3ed8px20 to opalinvest-auth-handler (platform auth, integration 576amr1), NOT trade-auth-handler. trade-auth-handler serves only the standalone w8jnzvs21g trade-submission-api whose UI (the separate opalinvest.dev trades dashboard) is not in portal/src."
+  },
+  {
+   "thread_id": "TS-7-trade-authorizer",
+   "named_thread": "portal-infra",
+   "family": "trade-submission",
+   "owning_tool": "globgrph",
+   "status": "unreviewed",
+   "debtscan_flags": [
+    "needs-consumer-trace"
+   ],
+   "description": "REQUEST authorizer for the dedicated trade-submission-api. trade-authorizer (python3.11, authorizer.lambda_handler, 128MB/10s, JWT_SECRET env) validates JWTs and returns an IAM allow/deny policy. Wired as the CUSTOM REQUEST authorizer 'trade-auth' (nfa51m) protecting w8jnzvs21g routes POST /submit, POST /workflow, GET /submissions*, GET /users.",
+   "producers": [
+    "trade-authorizer [lambda; trigger=dedicated trade-submission-api w8jnzvs21g REQUEST authorizer nfa51m on routes /submit,/workflow,/submissions,/submissions/{proxy+},/submissions/{id}/excel,/users]"
+   ],
+   "served_artifacts": [
+    "API GW authorizer IAM policy (no persisted artifact)"
+   ],
+   "frontend_resolution": "Indirect \u2014 gates the dedicated w8jnzvs21g API only. The mounted portal page reaches trades through proxy API 7k3ed8px20 (no trade-authorizer in that path; auth handled upstream). No direct portal consumer found."
+  },
+  {
+   "thread_id": "opal-security-scanner-processor",
+   "named_thread": "security-scanner",
+   "family": "graph-and-ops-and-casefind",
+   "owning_tool": "comp-pipescript",
+   "status": "in-scope",
+   "debtscan_flags": [],
+   "description": "Equity/securities factor-scanner backend (NOT a security/ops scanner) -- computes factor metadata and serves it as a Lambda proxy to the portal SecurityScanner page.",
+   "producers": [
+    "opal-security-scanner-processor (Lambda, py3.12, 2048MB/300s)",
+    "trigger: portal API proxy via CloudFront /api/scoped/security-scanner/factors (no EventBridge schedule, no event-source mapping; invoked on request)"
+   ],
+   "served_artifacts": [
+    "Lambda-proxied JSON factor metadata (~68KB) at GET /api/scoped/security-scanner/factors"
+   ],
+   "frontend_resolution": "portal/src/pages/SecurityScanner (SecurityScanner.tsx, useScannerApi.ts, getSecurityScannerFactors in portal/src/api/endpoints/security-scanner.ts); App.tsx lazy route"
+  },
+  {
+   "thread_id": "ops-anomaly-scanners",
+   "named_thread": "security-scanner",
+   "family": "graph-and-ops-and-casefind",
+   "owning_tool": "none",
+   "status": "explicit-out",
+   "debtscan_flags": [],
+   "description": "Scheduled security/cost posture scanners: access-anomaly-scanner (hourly IAM/access anomaly), cost-anomaly-scanner (6h cost anomaly), security-sweep-comprehensive (daily full security sweep).",
+   "producers": [
+    "access-anomaly-scanner (Lambda py3.11, cron(0 * * * ? *))",
+    "cost-anomaly-scanner (Lambda py3.11, cron(0 */6 * * ? *))",
+    "security-sweep-comprehensive (Lambda py3.11 1024MB/300s, cron(0 12 * * ? *))"
+   ],
+   "served_artifacts": [
+    "SNS/CloudWatch alerts + findings (ops reports; no portal-served artifact)"
+   ],
+   "frontend_resolution": "none (security/cost ops; no portal consumer found)"
+  },
+  {
+   "thread_id": "TS-1-submit",
+   "named_thread": "trade-submission",
+   "family": "trade-submission",
+   "owning_tool": "portal-consumer-tools",
+   "status": "in-scope",
+   "debtscan_flags": [],
+   "description": "Trade submission INGEST. trade-submission-handler (python3.11, submission_handler.lambda_handler, 256MB/30s, role trade-submission-lambda-role) creates a new trade. Writes the submission item to DDB opal-trade-submissions (HASH submission_id, GSIs by-date/by-initiator/by-approver-decided/by-status), generates excel/json artifacts to S3 opal-data-trade-submissions, sends brokerage/notification email via SES (EMAIL_FROM trades@opalinvest.dev). config S3_BUCKET env null so default opal-data-trade-submissions is used at runtime.",
+   "producers": [
+    "trade-submission-handler [lambda; trigger=apigatewayv2 7k3ed8px20 (opal-portal-data-proxy-api) route POST /api/general/trades/submit integration ehdnz7g; also dedicated trade-submission-api w8jnzvs21g route POST /submit (CUSTOM auth) integration kk7culu]"
+   ],
+   "served_artifacts": [
+    "DDB opal-trade-submissions (item write)",
+    "S3 opal-data-trade-submissions/submissions/* (json)",
+    "S3 opal-data-trade-submissions/* (excel via excel_generator)"
+   ],
+   "frontend_resolution": "portal/src/api/endpoints/trade-submission.ts submitTrade() -> publicApiRequest POST /api/general/trades/submit (CloudFront -> proxy API 7k3ed8px20). Consumed by portal/src/pages/TradeSubmission/tabs/SubmitTab.tsx; page mounted at /trade-submission in App.tsx (lazy TradeSubmission)."
+  },
+  {
+   "thread_id": "TS-2-workflow",
+   "named_thread": "trade-submission",
+   "family": "trade-submission",
+   "owning_tool": "portal-consumer-tools",
+   "status": "in-scope",
+   "debtscan_flags": [],
+   "description": "Trade workflow state machine (approve/reject/execute). trade-workflow-handler (python3.11, workflow_handler.lambda_handler, 1024MB/120s) mutates a submission's status in DDB opal-trade-submissions (PENDING_APPROVAL->APPROVED->EXECUTED, or REJECTED), records actor identity/timestamps, enforces segregation-of-duties/group auth, on execute sends brokerage email + may generate excel. EXECUTED is the durable terminal state (COMPLETE retired, Andrew Q2 2026-05-18).",
+   "producers": [
+    "trade-workflow-handler [lambda; trigger=proxy API 7k3ed8px20 route POST /api/general/trades/workflow integration xkuchu9; also dedicated trade-submission-api w8jnzvs21g route POST /workflow (CUSTOM auth) integration h6tmpgd]"
+   ],
+   "served_artifacts": [
+    "DDB opal-trade-submissions (status/actor/timestamp updates)",
+    "S3 opal-data-trade-submissions/* (excel on execute)"
+   ],
+   "frontend_resolution": "trade-submission.ts approveSubmission/rejectSubmission/executeSubmission -> POST /api/general/trades/workflow. Consumed by portal/src/pages/TradeSubmission/tabs/ApprovalsTab.tsx and ExecutionTab.tsx; mounted /trade-submission."
+  },
+  {
+   "thread_id": "TS-3-dashboard-read",
+   "named_thread": "trade-submission",
+   "family": "trade-submission",
+   "owning_tool": "portal-consumer-tools",
+   "status": "in-scope",
+   "debtscan_flags": [],
+   "description": "Trade dashboard READ API. trade-dashboard-api (python3.11, dashboard_api.lambda_handler, 512MB/60s) serves all GET reads: list submissions, by-status/by-initiator/by-approver/by-date (via DDB GSIs), single submission by id, pending approvals, trade users list, users/me (caller's groups from JWT), and presigned S3 excel download URL. Reads DDB opal-trade-submissions + opal-users-v2 and presigns S3 opal-data-trade-submissions excel objects.",
+   "producers": [
+    "trade-dashboard-api [lambda; trigger=proxy API 7k3ed8px20 routes GET /api/general/trades/submissions, /submissions/pending, /submissions/{id}, /submissions/{id}/excel, /submissions/by-status|by-initiator|by-approver, /users, /users/me integration x3p4wrq; also dedicated trade-submission-api w8jnzvs21g routes GET /submissions, /submissions/{proxy+}, /submissions/{id}/excel, /users (CUSTOM auth) integration wi9jm3c]"
+   ],
+   "served_artifacts": [
+    "HTTP JSON (reads DDB opal-trade-submissions + GSIs)",
+    "presigned S3 URL for opal-data-trade-submissions excel"
+   ],
+   "frontend_resolution": "trade-submission.ts getAllSubmissions/getPendingApprovals/getMySubmissions/getSubmissionsApprovedBy/getSubmissionsByStatus/getSubmission/downloadExcelFile/getTradeUsers/getTradeUserMe. Consumed by HistoryTab.tsx, ApprovalsTab.tsx, ExecutionTab.tsx, TradeDetailsModal.tsx, TradeCard.tsx; getTradeUserMe drives role-aware tab gating in TradeSubmission.tsx."
+  },
+  {
+   "thread_id": "TS-4-identifier-cache",
+   "named_thread": "trade-submission",
+   "family": "trade-submission",
+   "owning_tool": "portal-consumer-tools",
+   "status": "in-scope",
+   "debtscan_flags": [],
+   "description": "Security identifier autocomplete cache. trade-identifier-cache (python3.11, identifier_cache.lambda_handler, 256MB/30s) serves ticker->sedol/isin/figi lookups: GET search (prefix match, top-10 by frequency) and POST batch save/upsert (increments occurrence count). Backed by a DDB identifier-cache table.",
+   "producers": [
+    "trade-identifier-cache [lambda; trigger=proxy API 7k3ed8px20 routes GET /api/general/trades/identifiers/search + POST /api/general/trades/identifiers/batch integration mvrx5ci; invoke policy GeneralTradesPermission scoped to 7k3ed8px20 /api/general/trades/*]"
+   ],
+   "served_artifacts": [
+    "HTTP JSON identifiers list",
+    "DDB identifier-cache table (upsert on batch)"
+   ],
+   "frontend_resolution": "trade-submission.ts searchIdentifierCache()/batchSaveIdentifiers(). Consumed by portal/src/pages/TradeSubmission/tabs/SubmitTab.tsx (ticker autocomplete during entry). Mounted /trade-submission."
+  },
+  {
+   "thread_id": "TS-5-parquet-batch-export",
+   "named_thread": "trade-submission",
+   "family": "trade-submission",
+   "owning_tool": "globgrph",
+   "status": "in-scope",
+   "debtscan_flags": [],
+   "description": "Analytics parquet export. trade-parquet-batch-export (python3.11, parquet_exporter.lambda_handler, 1024MB/300s) reads DDB opal-trade-submissions (by-date GSI) and writes partitioned snappy Parquet to S3 opal-data-trade-submissions under parquet/trades/year=/month=/day= and parquet/securities/. Two modes: nightly batch (consolidated daily files) and single-submission. Live S3 prefixes parquet/trades/ and parquet/securities/ confirmed present.",
+   "producers": [
+    "trade-parquet-batch-export [lambda; trigger=EventBridge rule trade-parquet-nightly-export cron(0 2 * * ? *) ENABLED -> batch mode; invoke policy eventbridge-nightly. Single-submission mode invocable but no live producer wiring observed (no ESM, no DDB-stream trigger)]"
+   ],
+   "served_artifacts": [
+    "S3 opal-data-trade-submissions/parquet/trades/year=/month=/day=/*.parquet (+ consolidated trades_<date>.parquet)",
+    "S3 opal-data-trade-submissions/parquet/securities/*"
+   ],
+   "frontend_resolution": "No portal frontend consumer found (grep portal/src: no reads of parquet/ trade artifacts). Offline analytics/pipeline-tier parquet store, not a portal-rendered surface."
+  }
+ ]
+}

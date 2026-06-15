@@ -24,74 +24,812 @@
 schema_version: 1
 last_full_review: 2026-06-15   # the CVO census 2d9a0a2a1
 
-threads:
-  # ---- illustrative seed entries (one per owning_tool/status pattern); CVO seeds all ~134 ----
 
-  - family: inf-gold-medallion
+# ---- FULL POPULATION (COO-generated from CVO census 2d9a0a2a1 + NAMED_THREAD_CATALOG d33fe4aab; CVO verifies determinations) ----
+
+# ---- FULL POPULATION (COO-generated from CVO census 2d9a0a2a1 + NAMED_THREAD_CATALOG d33fe4aab; CVO verifies determinations) ----
+threads:
+  - thread_id: FRED-06-exec-summary-generator
+    named_thread: advi
+    family: 'fred-and-generated-outputs'
     owning_tool: comp-pipescript
     status: in-scope
-    tool_pointer: null            # owned here; no cross-tool redirect
-    last_reviewed: 2026-06-15
     debtscan_flags: []
-
-  - family: find-dualbiz
+  - thread_id: PPI-02-opal-portal-authorizer
+    named_thread: advi
+    family: 'partners-portal-infra'
+    owning_tool: comp-pipescript
+    status: in-scope
+    debtscan_flags: []
+  - thread_id: PPI-04-opal-partners-data
+    named_thread: advi
+    family: 'partners-portal-infra'
+    owning_tool: comp-pipescript
+    status: in-scope
+    debtscan_flags: []
+  - thread_id: PPI-08-shared-advisor-router
+    named_thread: advi
+    family: 'partners-portal-infra'
+    owning_tool: comp-pipescript
+    status: in-scope
+    debtscan_flags: []
+  - thread_id: PPI-09-shared-advisor-router-response
+    named_thread: advi
+    family: 'partners-portal-infra'
+    owning_tool: comp-pipescript
+    status: in-scope
+    debtscan_flags: []
+  - thread_id: bd-allocation-file-watchdog
+    named_thread: advi
+    family: 'bd-medallion'
+    owning_tool: globgrph
+    status: explicit-out
+    debtscan_flags: []
+  - thread_id: bd-allocations
+    named_thread: advi
+    family: 'bd-medallion'
+    owning_tool: comp-pipescript
+    status: in-scope
+    debtscan_flags: []
+  - thread_id: bd-asset-dim
+    named_thread: advi
+    family: 'bd-medallion'
+    owning_tool: comp-pipescript
+    status: in-scope
+    debtscan_flags: []
+  - thread_id: bd-bronze-transactions
+    named_thread: advi
+    family: 'bd-medallion'
+    owning_tool: comp-pipescript
+    status: in-scope
+    debtscan_flags: []
+  - thread_id: bd-canonical-prices
+    named_thread: advi
+    family: 'bd-medallion'
+    owning_tool: comp-pipescript
+    status: in-scope
+    debtscan_flags: []
+  - thread_id: bd-client-detail-api
+    named_thread: advi
+    family: 'bd-medallion'
+    owning_tool: portal-consumer-tools
+    status: in-scope
+    debtscan_flags: []
+  - thread_id: bd-fees
+    named_thread: advi
+    family: 'bd-medallion'
+    owning_tool: comp-pipescript
+    status: in-scope
+    debtscan_flags: []
+  - thread_id: bd-gold-detail-checker
+    named_thread: advi
+    family: 'bd-medallion'
+    owning_tool: globgrph
+    status: in-scope
+    debtscan_flags: []
+  - thread_id: bd-gold-foundation
+    named_thread: advi
+    family: 'bd-medallion'
+    owning_tool: comp-pipescript
+    status: in-scope
+    debtscan_flags: []
+  - thread_id: bd-gold-layer-legacy
+    named_thread: advi
+    family: 'bd-medallion'
+    owning_tool: comp-pipescript
+    status: explicit-out
+    debtscan_flags: [orphan-candidate]
+  - thread_id: bd-gold-layer-pipeline
+    named_thread: advi
+    family: 'bd-medallion'
+    owning_tool: comp-pipescript
+    status: in-scope
+    debtscan_flags: []
+  - thread_id: bd-historical-prices
+    named_thread: advi
+    family: 'bd-medallion'
+    owning_tool: comp-pipescript
+    status: in-scope
+    debtscan_flags: []
+  - thread_id: bd-incrparity
+    named_thread: advi
+    family: 'bd-medallion'
+    owning_tool: globgrph
+    status: explicit-out
+    debtscan_flags: []
+  - thread_id: bd-portal-publisher
+    named_thread: advi
+    family: 'bd-medallion'
+    owning_tool: comp-pipescript
+    status: in-scope
+    debtscan_flags: []
+  - thread_id: bd-realized-gains
+    named_thread: advi
+    family: 'bd-medallion'
+    owning_tool: comp-pipescript
+    status: in-scope
+    debtscan_flags: []
+  - thread_id: bd-unrealized-gains
+    named_thread: advi
+    family: 'bd-medallion'
+    owning_tool: comp-pipescript
+    status: in-scope
+    debtscan_flags: []
+  - thread_id: cot-bd-session-trigger
+    named_thread: advi
+    family: 'bd-medallion'
+    owning_tool: comp-pipescript
+    status: explicit-out
+    debtscan_flags: []
+  - thread_id: inf-bronze-api-pull
+    named_thread: advi
+    family: 'inf-medallion'
+    owning_tool: comp-pipescript
+    status: in-scope
+    debtscan_flags: []
+  - thread_id: inf-bronze-runner-ec2
+    named_thread: advi
+    family: 'inf-medallion'
+    owning_tool: comp-pipescript
+    status: in-scope
+    debtscan_flags: []
+  - thread_id: inf-client-detail
+    named_thread: advi
+    family: 'inf-medallion'
+    owning_tool: comp-pipescript
+    status: unreviewed
+    debtscan_flags: [needs-consumer-trace]
+  - thread_id: inf-ec2-launch-resilience
+    named_thread: advi
+    family: 'inf-medallion'
+    owning_tool: comp-pipescript
+    status: explicit-out
+    debtscan_flags: []
+  - thread_id: inf-gold-dispatch-ec2
+    named_thread: advi
+    family: 'inf-medallion'
+    owning_tool: comp-pipescript
+    status: in-scope
+    debtscan_flags: []
+  - thread_id: inf-gold-qa-runner
+    named_thread: advi
+    family: 'inf-medallion'
+    owning_tool: comp-pipescript
+    status: explicit-out
+    debtscan_flags: []
+  - thread_id: inf-nna-partition-checker
+    named_thread: advi
+    family: 'inf-medallion'
+    owning_tool: comp-pipescript
+    status: explicit-out
+    debtscan_flags: []
+  - thread_id: inf-portal-advisor-publisher
+    named_thread: advi
+    family: 'inf-medallion'
+    owning_tool: portal-consumer-tools
+    status: in-scope
+    debtscan_flags: []
+  - thread_id: inf-portal-publisher
+    named_thread: advi
+    family: 'inf-medallion'
+    owning_tool: comp-pipescript
+    status: in-scope
+    debtscan_flags: []
+  - thread_id: inf-silver-aggregator-quorum
+    named_thread: advi
+    family: 'inf-medallion'
+    owning_tool: comp-pipescript
+    status: in-scope
+    debtscan_flags: []
+  - thread_id: causality-ai-query
+    named_thread: causality
+    family: 'causality-ai'
+    owning_tool: comp-pipescript
+    status: explicit-out
+    debtscan_flags: []
+  - thread_id: causality-generate-analysis
+    named_thread: causality
+    family: 'causality-ai'
+    owning_tool: comp-pipescript
+    status: unreviewed
+    debtscan_flags: [needs-consumer-trace]
+  - thread_id: causality-trade-idea
+    named_thread: causality
+    family: 'causality-ai'
+    owning_tool: comp-pipescript
+    status: explicit-out
+    debtscan_flags: []
+  - thread_id: FRED-07-deck-generation
+    named_thread: fred-macro
+    family: 'fred-and-generated-outputs'
+    owning_tool: globgrph
+    status: unreviewed
+    debtscan_flags: [needs-consumer-trace]
+  - thread_id: FRED-08-daily-agenda-generator
+    named_thread: fred-macro
+    family: 'fred-and-generated-outputs'
     owning_tool: none
     status: explicit-out
-    tool_pointer: null
-    reason: "local-runnable medallion (.runtmp), analyst CSV to Andrew, no S3/Lambda gold-deploy, no portal/pipeline consumer. NOTE: the gold/ path is the LOCAL medallion convention, NOT an S3 served-gold deploy — do not re-flag on the gold/-string."
-    last_reviewed: 2026-06-15
     debtscan_flags: []
-
-  - family: smartx-pipeline
-    owning_tool: comp-pipescript
-    status: in-scope               # the deliberate "extend" follow-on (register its chain)
-    tool_pointer: null
-    note: "5 deployed lambdas + portal consumers (smartxData, SMARTX_RECONCILE). Register the ingestion->aggregate->precompute chain."
-    last_reviewed: 2026-06-15
-    debtscan_flags: []
-
-  - family: trade-submission
-    owning_tool: comp-pipescript   # 7 lambdas + DDB; medallion/backend-shaped — confirm at registration
+  - thread_id: globgrph-derive-runner-fargate
+    named_thread: graph-platform
+    family: 'graph-and-ops-and-casefind'
+    owning_tool: globgrph
     status: in-scope
-    tool_pointer: null
-    macro: TRSB                     # existing macro; TRSB_LEDGER is active context (authz/audit hardening)
-    note: "MOUNTED /trade-submission product. Parquet-export LEG is a SEPARATE entry below (unreviewed-consumer)."
-    last_reviewed: 2026-06-15
     debtscan_flags: []
-
-  - family: trade-submission-parquet-export
-    owning_tool: comp-pipescript
-    status: unreviewed              # no FE consumer found; trace before classifying IN/OUT
-    tool_pointer: null
-    last_reviewed: 2026-06-15
-    debtscan_flags: [needs-consumer-trace]   # live pipeline-leg -> IN; no consumer -> orphan-candidate
-
-  - family: yang-data-pipeline
-    owning_tool: comp-pipescript   # StepFn + ~20 yang-* lambdas; ONE coherent DAG = ONE owner
+  - thread_id: globgrph-incremental-updater
+    named_thread: graph-platform
+    family: 'graph-and-ops-and-casefind'
+    owning_tool: globgrph
     status: in-scope
-    tool_pointer: null
-    macro: YALP                     # feeds ModelPortfolios/FactorTilts (YALP pages); = the YALP_YCUTVR migration SOURCE
-    note: "FRED census claimed a SUBSET of yang-* lambdas — twin/fork mis-attribution. Default: yang owns the full DAG; FRED owns only provably-FRED-dedicated transform code. Trace each claimed lambda; correct FRED."
-    last_reviewed: 2026-06-15
     debtscan_flags: []
-
-  - family: bd-time-machine
+  - thread_id: inf-jwt-exporter
+    named_thread: graph-platform
+    family: 'inf-medallion'
+    owning_tool: comp-pipescript
+    status: in-scope
+    debtscan_flags: []
+  - thread_id: kuzu-stitch-surface
+    named_thread: graph-platform
+    family: 'graph-and-ops-and-casefind'
+    owning_tool: stitch
+    status: in-scope
+    debtscan_flags: []
+  - thread_id: dualbiz-casefind-local
+    named_thread: insurance
+    family: 'graph-and-ops-and-casefind'
+    owning_tool: none
+    status: explicit-out
+    debtscan_flags: []
+  - thread_id: find-insure-casefind-pipeline
+    named_thread: insurance
+    family: 'graph-and-ops-and-casefind'
+    owning_tool: comp-pipescript
+    status: explicit-out
+    debtscan_flags: []
+  - thread_id: FRED-01-yield-curve-daily-ingest
+    named_thread: market
+    family: 'fred-and-generated-outputs'
+    owning_tool: comp-pipescript
+    status: in-scope
+    debtscan_flags: []
+  - thread_id: MA-01-market-overview-tiered
+    named_thread: market
+    family: 'market-analytics'
+    owning_tool: comp-pipescript
+    status: in-scope
+    debtscan_flags: []
+  - thread_id: MA-02-market-rsi-tiered
+    named_thread: market
+    family: 'market-analytics'
+    owning_tool: comp-pipescript
+    status: in-scope
+    debtscan_flags: []
+  - thread_id: MA-03-market-regime-classifier
+    named_thread: market
+    family: 'market-analytics'
+    owning_tool: comp-pipescript
+    status: in-scope
+    debtscan_flags: []
+  - thread_id: MA-05-volatility-fetcher
+    named_thread: market
+    family: 'market-analytics'
+    owning_tool: comp-pipescript
+    status: in-scope
+    debtscan_flags: []
+  - thread_id: MA-07-causality-market-update-generator
+    named_thread: market
+    family: 'market-analytics'
+    owning_tool: comp-pipescript
+    status: in-scope
+    debtscan_flags: []
+  - thread_id: MA-09-ycharts-market-data-pull
+    named_thread: market
+    family: 'market-analytics'
+    owning_tool: globgrph
+    status: explicit-out
+    debtscan_flags: []
+  - thread_id: PPI-12-opal-session-analytics
+    named_thread: market
+    family: 'partners-portal-infra'
+    owning_tool: comp-pipescript
+    status: in-scope
+    debtscan_flags: []
+  - thread_id: bd-capture-output-versions
+    named_thread: market
+    family: 'bd-medallion'
+    owning_tool: comp-pipescript
+    status: in-scope
+    debtscan_flags: []
+  - thread_id: bd-time-machine
+    named_thread: market
+    family: 'bd-medallion'
+    owning_tool: comp-pipescript
+    status: unreviewed
+    debtscan_flags: [needs-consumer-trace]
+  - thread_id: causality-history-manager
+    named_thread: market
+    family: 'causality-ai'
+    owning_tool: comp-pipescript
+    status: unreviewed
+    debtscan_flags: [needs-consumer-trace]
+  - thread_id: causality-market-update
+    named_thread: market
+    family: 'causality-ai'
+    owning_tool: comp-pipescript
+    status: unreviewed
+    debtscan_flags: [needs-consumer-trace]
+  - thread_id: globgrph-nessie-fargate-service
+    named_thread: market
+    family: 'graph-and-ops-and-casefind'
+    owning_tool: globgrph
+    status: in-scope
+    debtscan_flags: []
+  - thread_id: inf-silver-chain
+    named_thread: market
+    family: 'inf-medallion'
+    owning_tool: comp-pipescript
+    status: in-scope
+    debtscan_flags: []
+  - thread_id: m365-mcp-gateway-ec2
+    named_thread: market
+    family: 'graph-and-ops-and-casefind'
+    owning_tool: globgrph
+    status: explicit-out
+    debtscan_flags: []
+  - thread_id: portfolio-export-download
+    named_thread: market
+    family: 'pm-tool'
+    owning_tool: globgrph
+    status: in-scope
+    debtscan_flags: []
+  - thread_id: portfolio-version-get
+    named_thread: market
+    family: 'pm-tool'
+    owning_tool: globgrph
+    status: in-scope
+    debtscan_flags: []
+  - thread_id: portfolio-versions-list
+    named_thread: market
+    family: 'pm-tool'
+    owning_tool: globgrph
+    status: in-scope
+    debtscan_flags: []
+  - thread_id: cot-pipeline
+    named_thread: mdpf
+    family: 'cot-and-mdpf'
+    owning_tool: comp-pipescript
+    status: in-scope
+    debtscan_flags: []
+  - thread_id: mdpf-global-view
+    named_thread: mdpf
+    family: 'cot-and-mdpf'
+    owning_tool: comp-pipescript
+    status: in-scope
+    debtscan_flags: []
+  - thread_id: FRED-02-macro-fred-parallel-artifact
+    named_thread: model-portfolios
+    family: 'fred-and-generated-outputs'
+    owning_tool: globgrph
+    status: unreviewed
+    debtscan_flags: [needs-consumer-trace]
+  - thread_id: FRED-03-credit-spread-cache
+    named_thread: model-portfolios
+    family: 'fred-and-generated-outputs'
+    owning_tool: comp-pipescript
+    status: in-scope
+    debtscan_flags: []
+  - thread_id: FRED-04-yang-macro-canonical
+    named_thread: model-portfolios
+    family: 'fred-and-generated-outputs'
+    owning_tool: comp-pipescript
+    status: in-scope
+    debtscan_flags: []
+  - thread_id: FRED-05-yang-macro-timeseries
+    named_thread: model-portfolios
+    family: 'fred-and-generated-outputs'
+    owning_tool: globgrph
+    status: in-scope
+    debtscan_flags: []
+  - thread_id: MA-08-yang-generate-volatility
+    named_thread: model-portfolios
+    family: 'market-analytics'
+    owning_tool: comp-pipescript
+    status: explicit-out
+    debtscan_flags: [orphan-candidate]
+  - thread_id: PPI-10-opal-data-refresh-api
+    named_thread: model-portfolios
+    family: 'partners-portal-infra'
+    owning_tool: comp-pipescript
+    status: in-scope
+    debtscan_flags: []
+  - thread_id: smartx-ec2-csv-exporter
+    named_thread: model-portfolios
+    family: 'smartx'
+    owning_tool: comp-pipescript
+    status: in-scope
+    debtscan_flags: []
+  - thread_id: smartx-model-monthly-benchmarks
+    named_thread: model-portfolios
+    family: 'smartx'
+    owning_tool: comp-pipescript
+    status: in-scope
+    debtscan_flags: []
+  - thread_id: smartx-rest-daily-ingest
+    named_thread: model-portfolios
+    family: 'smartx'
+    owning_tool: comp-pipescript
+    status: in-scope
+    debtscan_flags: []
+  - thread_id: yang-benchmarks-etf-returns
+    named_thread: model-portfolios
+    family: 'yang-datapipeline'
+    owning_tool: globgrph
+    status: in-scope
+    debtscan_flags: []
+  - thread_id: yang-canon-interlock
+    named_thread: model-portfolios
+    family: 'yang-datapipeline'
+    owning_tool: globgrph
+    status: explicit-out
+    debtscan_flags: []
+  - thread_id: yang-cma
+    named_thread: model-portfolios
+    family: 'yang-datapipeline'
+    owning_tool: globgrph
+    status: in-scope
+    debtscan_flags: []
+  - thread_id: yang-correlation
+    named_thread: model-portfolios
+    family: 'yang-datapipeline'
+    owning_tool: globgrph
+    status: in-scope
+    debtscan_flags: []
+  - thread_id: yang-factor-tilts
+    named_thread: model-portfolios
+    family: 'yang-datapipeline'
+    owning_tool: globgrph
+    status: in-scope
+    debtscan_flags: []
+  - thread_id: yang-ingest-dynamodb-market-data
+    named_thread: model-portfolios
+    family: 'yang-datapipeline'
+    owning_tool: globgrph
+    status: in-scope
+    debtscan_flags: []
+  - thread_id: yang-macro-and-timeseries
+    named_thread: model-portfolios
+    family: 'yang-datapipeline'
+    owning_tool: globgrph
+    status: in-scope
+    debtscan_flags: []
+  - thread_id: yang-peer-performance
+    named_thread: model-portfolios
+    family: 'yang-datapipeline'
+    owning_tool: globgrph
+    status: in-scope
+    debtscan_flags: []
+  - thread_id: yang-pipeline-orchestration
+    named_thread: model-portfolios
+    family: 'yang-datapipeline'
+    owning_tool: globgrph
+    status: in-scope
+    debtscan_flags: []
+  - thread_id: yang-portal-market-overview-tiered
+    named_thread: model-portfolios
+    family: 'yang-datapipeline'
+    owning_tool: globgrph
+    status: unreviewed
+    debtscan_flags: [needs-consumer-trace]
+  - thread_id: yang-positioning-attribution-allocation
+    named_thread: model-portfolios
+    family: 'yang-datapipeline'
+    owning_tool: globgrph
+    status: in-scope
+    debtscan_flags: []
+  - thread_id: yang-time-machine-rollback
+    named_thread: model-portfolios
+    family: 'yang-datapipeline'
+    owning_tool: globgrph
+    status: explicit-out
+    debtscan_flags: []
+  - thread_id: yang-valuation-risk-premium
+    named_thread: model-portfolios
+    family: 'yang-datapipeline'
+    owning_tool: globgrph
+    status: in-scope
+    debtscan_flags: []
+  - thread_id: yang-volatility-orphan
+    named_thread: model-portfolios
+    family: 'yang-datapipeline'
+    owning_tool: globgrph
+    status: explicit-out
+    debtscan_flags: [orphan-candidate]
+  - thread_id: MA-04-fear-greed-fetcher
+    named_thread: news
+    family: 'market-analytics'
+    owning_tool: comp-pipescript
+    status: in-scope
+    debtscan_flags: []
+  - thread_id: MA-06-market-update-authoring-toolchain
+    named_thread: news
+    family: 'market-analytics'
+    owning_tool: comp-pipescript
+    status: in-scope
+    debtscan_flags: []
+  - thread_id: PPI-05-opal-portal-data-proxy
+    named_thread: news
+    family: 'partners-portal-infra'
+    owning_tool: comp-pipescript
+    status: in-scope
+    debtscan_flags: []
+  - thread_id: PPI-06-public-data-router
+    named_thread: news
+    family: 'partners-portal-infra'
+    owning_tool: comp-pipescript
+    status: in-scope
+    debtscan_flags: []
+  - thread_id: PPI-11-portal-time-machine
+    named_thread: news
+    family: 'partners-portal-infra'
+    owning_tool: comp-pipescript
+    status: in-scope
+    debtscan_flags: []
+  - thread_id: causality-data-enrichment-movements
+    named_thread: news
+    family: 'causality-ai'
+    owning_tool: comp-pipescript
+    status: explicit-out
+    debtscan_flags: []
+  - thread_id: causality-thematic-signals-daily
+    named_thread: news
+    family: 'causality-ai'
+    owning_tool: comp-pipescript
+    status: unreviewed
+    debtscan_flags: [needs-consumer-trace]
+  - thread_id: causality-themes-fetch
+    named_thread: news
+    family: 'causality-ai'
+    owning_tool: comp-pipescript
+    status: unreviewed
+    debtscan_flags: [needs-consumer-trace]
+  - thread_id: finbert-sentiment-scoring
+    named_thread: news
+    family: 'news-seeking-alpha'
+    owning_tool: comp-pipescript
+    status: in-scope
+    debtscan_flags: []
+  - thread_id: keyword-drilldown-history
+    named_thread: news
+    family: 'news-seeking-alpha'
+    owning_tool: comp-pipescript
+    status: in-scope
+    debtscan_flags: []
+  - thread_id: keyword-intelligence-gpt
+    named_thread: news
+    family: 'news-seeking-alpha'
+    owning_tool: comp-pipescript
+    status: in-scope
+    debtscan_flags: []
+  - thread_id: layer3-gpt-curation
+    named_thread: news
+    family: 'news-seeking-alpha'
+    owning_tool: comp-pipescript
+    status: in-scope
+    debtscan_flags: []
+  - thread_id: news-ingestion
+    named_thread: news
+    family: 'news-seeking-alpha'
+    owning_tool: comp-pipescript
+    status: in-scope
+    debtscan_flags: []
+  - thread_id: news-trending-analysis-gpt
+    named_thread: news
+    family: 'news-seeking-alpha'
+    owning_tool: comp-pipescript
+    status: in-scope
+    debtscan_flags: []
+  - thread_id: seeking-alpha-analysis-scrape
+    named_thread: news
+    family: 'news-seeking-alpha'
+    owning_tool: comp-pipescript
+    status: in-scope
+    debtscan_flags: []
+  - thread_id: seeking-alpha-local-scraper-scripts
+    named_thread: news
+    family: 'news-seeking-alpha'
+    owning_tool: globgrph
+    status: explicit-out
+    debtscan_flags: []
+  - thread_id: seeking-alpha-news-scrape
+    named_thread: news
+    family: 'news-seeking-alpha'
+    owning_tool: comp-pipescript
+    status: in-scope
+    debtscan_flags: []
+  - thread_id: semantic-pipeline-parallel-set
+    named_thread: news
+    family: 'news-seeking-alpha'
+    owning_tool: comp-pipescript
+    status: explicit-out
+    debtscan_flags: [orphan-candidate]
+  - thread_id: test-seeking-alpha-unauth-simple
+    named_thread: news
+    family: 'news-seeking-alpha'
+    owning_tool: globgrph
+    status: explicit-out
+    debtscan_flags: []
+  - thread_id: trending-image-and-portal-publisher
+    named_thread: news
+    family: 'news-seeking-alpha'
+    owning_tool: comp-pipescript
+    status: in-scope
+    debtscan_flags: [orphan-candidate]
+  - thread_id: historical-prices-scheduler
+    named_thread: ops-internal
+    family: 'graph-and-ops-and-casefind'
+    owning_tool: comp-pipescript
+    status: explicit-out
+    debtscan_flags: []
+  - thread_id: ops-ec2-governance-lambdas
+    named_thread: ops-internal
+    family: 'graph-and-ops-and-casefind'
+    owning_tool: comp-pipescript
+    status: explicit-out
+    debtscan_flags: []
+  - thread_id: ops-infrastructure-monitors
+    named_thread: ops-internal
+    family: 'graph-and-ops-and-casefind'
+    owning_tool: none
+    status: explicit-out
+    debtscan_flags: []
+  - thread_id: PPI-01-auth-validator-edge
+    named_thread: partners
+    family: 'partners-portal-infra'
+    owning_tool: comp-pipescript
+    status: in-scope
+    debtscan_flags: []
+  - thread_id: PPI-03-opalinvest-auth-handler
+    named_thread: partners
+    family: 'partners-portal-infra'
+    owning_tool: comp-pipescript
+    status: in-scope
+    debtscan_flags: []
+  - thread_id: PPI-07-cache-control-injector
+    named_thread: partners
+    family: 'partners-portal-infra'
+    owning_tool: comp-pipescript
+    status: in-scope
+    debtscan_flags: []
+  - thread_id: PPI-13-schwab-anonymizer
+    named_thread: partners
+    family: 'partners-portal-infra'
+    owning_tool: comp-pipescript
+    status: explicit-out
+    debtscan_flags: []
+  - thread_id: bd-txn-consolidator
+    named_thread: partners
+    family: 'bd-medallion'
+    owning_tool: comp-pipescript
+    status: in-scope
+    debtscan_flags: []
+  - thread_id: FRED-09-portfolio-funds-list
+    named_thread: pm-optimizer
+    family: 'fred-and-generated-outputs'
     owning_tool: portal-consumer-tools
     status: explicit-out
-    tool_pointer: null
-    reason: "KNOWN PHANTOM — Andrew-confirmed Time Machine was NEVER implemented (frontend TimeMachineProvider scaffolding only, no live restore). Backend-live-renders-nowhere."
-    last_reviewed: 2026-06-15
-    debtscan_flags: [frontend-orphan]
-
-  - family: sentiment_query_api
-    owning_tool: globgrph           # AWS-resource shaped; owner unknown
+    debtscan_flags: []
+  - thread_id: opal-pm-snapshot-handler
+    named_thread: pm-optimizer
+    family: 'graph-and-ops-and-casefind'
+    owning_tool: portal-consumer-tools
+    status: in-scope
+    debtscan_flags: []
+  - thread_id: pm-optimization-autosave-put
+    named_thread: pm-optimizer
+    family: 'pm-tool'
+    owning_tool: globgrph
+    status: in-scope
+    debtscan_flags: []
+  - thread_id: pm-optimization-loader
+    named_thread: pm-optimizer
+    family: 'pm-tool'
+    owning_tool: globgrph
+    status: in-scope
+    debtscan_flags: []
+  - thread_id: pm-snapshot-handler
+    named_thread: pm-optimizer
+    family: 'pm-tool'
+    owning_tool: globgrph
+    status: in-scope
+    debtscan_flags: []
+  - thread_id: pm-upload-urls
+    named_thread: pm-optimizer
+    family: 'pm-tool'
+    owning_tool: globgrph
+    status: in-scope
+    debtscan_flags: []
+  - thread_id: portfolio-autosave-get
+    named_thread: pm-optimizer
+    family: 'pm-tool'
+    owning_tool: globgrph
+    status: in-scope
+    debtscan_flags: []
+  - thread_id: portfolio-autosave-put
+    named_thread: pm-optimizer
+    family: 'pm-tool'
+    owning_tool: globgrph
+    status: in-scope
+    debtscan_flags: []
+  - thread_id: portfolio-excel-generator
+    named_thread: pm-optimizer
+    family: 'pm-tool'
+    owning_tool: globgrph
+    status: in-scope
+    debtscan_flags: []
+  - thread_id: portfolio-funds-list
+    named_thread: pm-optimizer
+    family: 'pm-tool'
+    owning_tool: globgrph
+    status: in-scope
+    debtscan_flags: []
+  - thread_id: portfolio-pickle-parser
+    named_thread: pm-optimizer
+    family: 'pm-tool'
+    owning_tool: globgrph
+    status: in-scope
+    debtscan_flags: []
+  - thread_id: TS-6-trade-auth-handler
+    named_thread: portal-infra
+    family: 'trade-submission'
+    owning_tool: globgrph
     status: unreviewed
-    tool_pointer: null
-    last_reviewed: 2026-06-15
-    debtscan_flags: [needs-owner]
-
-# CVO seeds the remaining ~134-13 entries from estate_census/pass1_inventory.json +
-# pass2_gapfamilies.json, one per thread, each owning_tool-routed. CVO verifies each
-# determination + that the guard fires LOUD on an unowned-tool query. DS wires the guard
-# read into comp-pipescript/globgrph/stitch. Per-family >=0.8 precision (CVO) before any
-# non-ADVISORY debtscan filing off these flags.
+    debtscan_flags: [needs-consumer-trace]
+  - thread_id: TS-7-trade-authorizer
+    named_thread: portal-infra
+    family: 'trade-submission'
+    owning_tool: globgrph
+    status: unreviewed
+    debtscan_flags: [needs-consumer-trace]
+  - thread_id: opal-security-scanner-processor
+    named_thread: security-scanner
+    family: 'graph-and-ops-and-casefind'
+    owning_tool: comp-pipescript
+    status: in-scope
+    debtscan_flags: []
+  - thread_id: ops-anomaly-scanners
+    named_thread: security-scanner
+    family: 'graph-and-ops-and-casefind'
+    owning_tool: none
+    status: explicit-out
+    debtscan_flags: []
+  - thread_id: TS-1-submit
+    named_thread: trade-submission
+    family: 'trade-submission'
+    owning_tool: portal-consumer-tools
+    status: in-scope
+    debtscan_flags: []
+  - thread_id: TS-2-workflow
+    named_thread: trade-submission
+    family: 'trade-submission'
+    owning_tool: portal-consumer-tools
+    status: in-scope
+    debtscan_flags: []
+  - thread_id: TS-3-dashboard-read
+    named_thread: trade-submission
+    family: 'trade-submission'
+    owning_tool: portal-consumer-tools
+    status: in-scope
+    debtscan_flags: []
+  - thread_id: TS-4-identifier-cache
+    named_thread: trade-submission
+    family: 'trade-submission'
+    owning_tool: portal-consumer-tools
+    status: in-scope
+    debtscan_flags: []
+  - thread_id: TS-5-parquet-batch-export
+    named_thread: trade-submission
+    family: 'trade-submission'
+    owning_tool: globgrph
+    status: in-scope
+    debtscan_flags: []
