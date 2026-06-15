@@ -22,4 +22,15 @@ Session start 2026-06-15 (fresh — fabric quiet since 06-12 19:13Z, HEAD==origi
 | comp-* | NO | This was a LIVE-state verification (deployed S3 code byte-diff + CloudWatch metric query + git HEAD diff). Per F5, own/recent changes are verified against live AWS/served artifacts, NOT the graph (comp-kuzu would be a frozen-vintage read, not live truth). Direct `aws s3 cp`/`diff`/`get-metric-statistics` were the correct channel. |
 
 ## Follow-on
-COO to reconcile their CloudWatch query to the same 4 datapoints, then close L3 citing the 6/14 heartbeat. No reopen, no spawn, no Andrew escalation.
+COO reconciled their CloudWatch query to the same 4 datapoints (their "zero" dropped the Service dim), accepted the ruling in full; DS independently concurred. L3 closes on the 6/14 heartbeat (+ AE's optional confirmatory synthetic fatal-path test, non-gating). No reopen, no spawn, no Andrew escalation.
+
+## SECOND finding — SNS zero-subscriber gap (COO follow-up, VERIFIED REAL this time)
+COO + DS + AE flagged opal-infrastructure-alerts has zero subscribers. Verified against live state:
+- Alarm inf-gold-chain-failed correctly wired (State OK; AlarmActions+OKActions -> opal-infrastructure-alerts; ns Inflection/GoldChain metric ChainFailed dim Service=inf-gold-layer-runner). Alarm leg sound.
+- **opal-infrastructure-alerts: 0 subscribers** + opal-critical-surface-alerts (#7 best-effort target): 0 subscribers. So #7's loud channel has a CW-metric/alarm floor but NO human egress — a real ChainFailed=1 pages nobody (the exact 7h-silent failure #7 exists to kill). REAL gap.
+- Egress precedent on-account: bd-allocation-file-missing -> email andrew@opalinvest.com; ec2-long-running -> SMS +17862617679; inf-otp-alert -> SMS +13052010419 (SMS already works on this account, no sandbox blocker).
+- **Andrew-direct (AskUserQuestion 1422Z): egress = SMS ONLY** (email-lag would repeat the 7h-silent failure mode; SMS is the page).
+- Disposition handed to COO (142230Z) for an AE TF TO: aws_sns_topic_subscription SMS on opal-infrastructure-alerts -> +13052010419 (inf-otp sibling number, Andrew to confirm/swap); same TF module as the alarm; scoped to the live alarm path only (opal-critical-surface-alerts needs a sns:Publish grant first = separate lower-pri item). Closes the "topic disposition = AE/CTO per TO" deferral #7 left open.
+
+## Compiler Tools (addendum)
+Same as above — SNS finding verified via `aws cloudwatch describe-alarms` + `aws sns list-subscriptions-by-topic` (live-state, the correct channel for an infra-config audit; comp-* graph would be frozen-vintage). The forthcoming AE TF TO carries comp-iam/comp-blast mandates.
