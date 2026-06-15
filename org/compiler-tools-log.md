@@ -5607,3 +5607,19 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-06-12 | 2.0.0_SA_COO | page-inventory-full-reaudit | comp-surface-check | comp-surface-check check --mode advisory --file org/mcp/.last-drive-2.0.0_SA_COO --file... | PASS |
 0.7.0_AE_CloudOps -- 2026-06-12 22:20-22:45Z: comp-surface-check x8 PASS, ds-commit-gate (gateway 13 files + 2 ruff rounds), terraform plan/apply x2 0-diff (provider re-inits expected), deploy_ledger x3 real deploys tracked. Window: suppression governance seal + COSTAWS W3/W4/W5 + OPLMCP.01 + W4-G1/G2/G3.
 | 2026-06-12 | 0.7.0_AE_CloudOps | page-inventory-full-reaudit | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-06-12 | 2.0.0_SA_COO | page-inventory-full-reaudit | comp-surface-check | comp-surface-check check --mode advisory --file org/mcp/.last-drive-2.0.0_SA_COO --file... | PASS |
+| 2026-06-12 | 2.0.0_SA_COO | page-inventory-full-reaudit | comp-surface-check | comp-surface-check check --mode advisory --file org/mcp/.last-drive-2.0.0_SA_COO --file... | PASS |
+| 2026-06-12 | 2.0.0_SA_COO | page-inventory-full-reaudit | comp-surface-check | comp-surface-check check --mode advisory --file org/mcp/.last-drive-2.0.0_SA_COO --file... | PASS |
+| 2026-06-12 | 0.4.0_DS_ClientPlatform | page-inventory-full-reaudit | comp-surface-check | comp-surface-check check --mode advisory --file docs/briefs/inf-advi-staleness-p0-recov... | PASS |
+| 2026-06-12 | 0.7.0_AE_CloudOps | page-inventory-full-reaudit | comp-surface-check | comp-surface-check check --mode advisory --file .tools/deploy_ledger.py | PASS |
+| 2026-06-12 | 0.4.0_DS_ClientPlatform | page-inventory-full-reaudit | comp-blast | comp-blast orion-gold-dispatch.sh | PASS |
+| 2026-06-12 | 0.4.0_DS_ClientPlatform | page-inventory-full-reaudit | comp-iam | comp-iam service inf-gold-layer | PASS |
+| 2026-06-12 | 2.0.0_SA_COO | page-inventory-full-reaudit | comp-surface-check | comp-surface-check check --mode advisory --file org/mcp/.last-drive-2.0.0_SA_COO --file... | PASS |
+| 2026-06-12 | 0.4.0_DS_ClientPlatform | page-inventory-full-reaudit | comp-surface-check | comp-surface-check check --mode advisory --file data/inf/scripts/gold/orion-gold-dispat... | PASS |
+| 2026-06-12 | 2.0.0_SA_COO | page-inventory-full-reaudit | comp-surface-check | comp-surface-check check --mode advisory --file .owned-paths.yaml | PASS |
+| 2026-06-12 | 0.4.0_DS_ClientPlatform | page-inventory-full-reaudit | comp-surface-check | comp-surface-check check --mode advisory --file data/inf/scripts/gold/orion-gold-dispat... | PASS |
+| 2026-06-15 | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier0/reviews/RV-0034.md | PASS |
+| 2026-06-15 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+| 2026-06-15 | 3.0.0_SA_CVO | RV-0034 | comp-surface-check | comp-surface-check check --mode advisory --file org/tier0/reviews/RV-0034.md | PASS |
+2026-06-15T13:17Z | 3.0.0_SA_CVO | RV-0034 | comp-surface-check (auto, OK 0-surface) + git window-walk + awk audit-log timestamp-filter | RV-0034 ACCEPTED-CVO independent re-derive; all hard counts exact; F-003 reclass S1->S4-op | git-archaeology adjudication, no pipeline tools applicable
+| 2026-06-15 | 3.0.0_SA_CVO | RV-0034 | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
