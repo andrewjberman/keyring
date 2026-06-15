@@ -6037,3 +6037,8 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-06-15 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/NFRA_GCONTR.json --file or... | PASS |
 | 2026-06-15 | 1.0.0_SA_CTO | NFRA_TOOLHUD | comp-which | comp-which (BUILT+tested, new #2 router) -- routes all 6 CVO question-classes + gold-id substitution; comp-manifest-check list = manifest loads clean (47 canonical) after pipescript+comp-surface-check catalog edits; catalog accounting audit = every comp-*/pipescript accounted (caught comp-surface-check unaccounted) | PASS | NFRA_TOOLHUD #2 ship + catalog/registry hygiene pass |
 | 2026-06-15 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-06-15 | 1.0.0_SA_CTO | (no-TO) | pipescript | pipescript --contract | FAIL |
+| 2026-06-15 | 1.0.0_SA_CTO | (no-TO) | pipescript | pipescript --flipped | FAIL |
+| 2026-06-15 | 0.4.0_DS_ClientPlatform~A | (Andrew-direct) | pipescript | model-portfolios / --resource benchmark (BMKAUD postmortem grounding) | PASS |
+| 2026-06-15 | 0.4.0_DS_ClientPlatform~A | (Andrew-direct) | comp-kuzu | MATCH benchmark nodes (live, BEHIND->auto-refresh; dual-writer confirmed) | PASS |
+| 2026-06-15 | 0.4.0_DS_ClientPlatform~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
