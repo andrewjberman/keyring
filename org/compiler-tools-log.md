@@ -6003,3 +6003,6 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-06-15 | 1.0.0_SA_CTO | 49NNAFIX.D1-dispatcher-wire | comp-manifest-check | comp-manifest-check list | PASS |
 | 2026-06-15 | 0.6.0_AE_PartnerETL | 49NNAFIX.D1-dispatcher-wire | (session-close summary) | deploy_ledger.py close-leg L2(v2)/L3(v2)/L4 + close (all 5 proven, --red GREEN) + independent gunzip/head-object v2 verify | PASS |
 | 2026-06-15 | 0.6.0_AE_PartnerETL | 49NNAFIX.D1-dispatcher-wire | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-06-15 | 0.4.0_DS_ClientPlatform~A | 49NNAFIX.D1-dispatcher-wire | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-06-15 | 0.4.0_DS_ClientPlatform | ADVI_49NNAFIX.D1-D2 + BRONZE-FIX#7.L3 | ds-commit-gate.sh x4 + D_00f --dry-run (reconciliation invariants) + deploy_ledger.py close/--red | PASS — dry-run caught 3 impl C-errors (string-IDs/flag-vs-value/rounding) pre-deploy + parity exact; L3 ledger CLOSED --red GREEN. Gap: comp-pipescript io D_00f not run (DS-min, follow-up) | PASS |
+| 2026-06-15 | 0.4.0_DS_ClientPlatform | 49NNAFIX.D1-dispatcher-wire | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
