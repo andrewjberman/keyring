@@ -5702,3 +5702,280 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-06-15 | 3.0.0_SA_CVO | YALP_YCUTVR.PRD | comp-kuzu | comp-kuzu MATCH (n) WHERE n.name CONTAINS 'yang-generate-positioning' RETURN n.name LIM... | PASS |
 2026-06-15T18:00Z | 3.0.0_SA_CVO | ESTATE-THREAD-CENSUS-0615 | orchestrated multi-agent census (Workflow wk26i786c+w7vgvpbwr, 13 agents) + live AWS (lambda/ec2/sqs/stepfn/ddb/apigw) + comp-kuzu/portal grep | 13 families/~134 threads; 166/169 lambdas accounted (3 documented residual); 2 IN-SCOPE families (trade-submission+yang) caught by completeness-gate; tool-boundary = comp-pipescript ~13 only, rest graph/stitch/portal-tools | total-accounting verify, no thread silently unknown
 | 2026-06-15 | 3.0.0_SA_CVO | YALP_YCUTVR.PRD | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-06-15 | 1.0.0_SA_CTO | YALP_YCUTVR.PRD | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/estate-coverage-manif... | PASS |
+| 2026-06-15 | 3.0.0_SA_CVO | YALP_YCUTVR.PRD | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/logs/2026-0... | PASS |
+| 2026-06-15 | 1.0.0_SA_CTO | YALP_YCUTVR.PRD | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/NFRA_PIPESCRIPT_PRD.m... | PASS |
+| 2026-06-15 | 1.0.0_SA_CTO | YALP_YCUTVR.PRD | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/1.0.0_SA_CTO/logs/2026-0... | PASS |
+| 2026-06-15 | 2.0.0_SA_COO | YALP_YCUTVR.PRD | comp-surface-check | comp-surface-check check --mode advisory --file .tools/pipescript --file org/modules/gr... | PASS |
+| 2026-06-15 | 3.0.0_SA_CVO | YALP_YCUTVR.PRD | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/estate-coverage-manif... | PASS |
+| 2026-06-15 | 3.0.0_SA_CVO | NFRA_GLOBGRPH.P0-derive-rebuild-L4 | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/estate-coverage-manif... | PASS |
+| 2026-06-15 | 2.0.0_SA_COO | NFRA_GLOBGRPH.P0-derive-rebuild-L4 | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/estate-coverage-resol... | PASS |
+| 2026-06-15 | 3.0.0_SA_CVO | NFRA_GLOBGRPH.P0-derive-rebuild-L4 | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/logs/2026-0... | PASS |
+| 2026-06-15 | 0.4.0_DS_ClientPlatform~A | NFRA_GLOBGRPH.P0-derive-rebuild-L4 | pipescript | pipescript --list | PASS |
+| 2026-06-15 | 0.4.0_DS_ClientPlatform~A | NFRA_GLOBGRPH.P0-derive-rebuild-L4 | pipescript | pipescript mdpf | PASS |
+| 2026-06-15 | 0.4.0_DS_ClientPlatform~A | NFRA_GLOBGRPH.P0-derive-rebuild-L4 | pipescript | pipescript bogus-thread | FAIL |
+| 2026-06-15 | 0.4.0_DS_ClientPlatform~A | NFRA_GLOBGRPH.P0-derive-rebuild-L4 | pipescript | pipescript --tool news comp-pipescript | FAIL |
+| 2026-06-15 | 0.4.0_DS_ClientPlatform~A | NFRA_GLOBGRPH.P0-derive-rebuild-L4 | pipescript | pipescript --tool advi comp-pipescript | PASS |
+| 2026-06-15 | 0.4.0_DS_ClientPlatform~A | NFRA_GLOBGRPH.P0-derive-rebuild-L4 | pipescript | pipescript --validate | PASS |
+| 2026-06-15 | 2.0.0_SA_COO | NFRA_GLOBGRPH.P0-derive-rebuild-L4 | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/estate-coverage-resol... | PASS |
+| 2026-06-15 | 0.4.0_DS_ClientPlatform~A | NFRA_GLOBGRPH.P0-derive-rebuild-L4 | pipescript | pipescript mdpf | PASS |
+| 2026-06-15 | 0.4.0_DS_ClientPlatform~A | NFRA_GLOBGRPH.P0-derive-rebuild-L4 | pipescript | pipescript advi | PASS |
+| 2026-06-15 | 0.4.0_DS_ClientPlatform~A | NFRA_GLOBGRPH.P0-derive-rebuild-L4 | pipescript | pipescript model-portfolios | PASS |
+| 2026-06-15 | 0.4.0_DS_ClientPlatform~A | NFRA_GLOBGRPH.P0-derive-rebuild-L4 | pipescript | pipescript news | PASS |
+| 2026-06-15 | 0.4.0_DS_ClientPlatform~A | NFRA_GLOBGRPH.P0-derive-rebuild-L4 | pipescript | pipescript market | PASS |
+| 2026-06-15 | 0.4.0_DS_ClientPlatform~A | NFRA_GLOBGRPH.P0-derive-rebuild-L4 | pipescript | pipescript pm-optimizer | PASS |
+| 2026-06-15 | 0.4.0_DS_ClientPlatform~A | NFRA_GLOBGRPH.P0-derive-rebuild-L4 | pipescript | pipescript partners | PASS |
+| 2026-06-15 | 0.4.0_DS_ClientPlatform~A | NFRA_GLOBGRPH.P0-derive-rebuild-L4 | pipescript | pipescript trade-submission | PASS |
+| 2026-06-15 | 0.4.0_DS_ClientPlatform~A | NFRA_GLOBGRPH.P0-derive-rebuild-L4 | pipescript | pipescript graph-platform | PASS |
+| 2026-06-15 | 0.4.0_DS_ClientPlatform~A | NFRA_GLOBGRPH.P0-derive-rebuild-L4 | pipescript | pipescript causality | PASS |
+| 2026-06-15 | 2.0.0_SA_COO | NFRA_GLOBGRPH.P0-derive-rebuild-L4 | pipescript | pipescript --list | PASS |
+| 2026-06-15 | 0.4.0_DS_ClientPlatform~A | NFRA_GLOBGRPH.P0-derive-rebuild-L4 | pipescript | pipescript ops-internal | PASS |
+| 2026-06-15 | 0.4.0_DS_ClientPlatform~A | NFRA_GLOBGRPH.P0-derive-rebuild-L4 | pipescript | pipescript fred-macro | PASS |
+| 2026-06-15 | 0.4.0_DS_ClientPlatform~A | NFRA_GLOBGRPH.P0-derive-rebuild-L4 | pipescript | pipescript security-scanner | PASS |
+| 2026-06-15 | 0.4.0_DS_ClientPlatform~A | NFRA_GLOBGRPH.P0-derive-rebuild-L4 | pipescript | pipescript insurance | PASS |
+| 2026-06-15 | 0.4.0_DS_ClientPlatform~A | NFRA_GLOBGRPH.P0-derive-rebuild-L4 | pipescript | pipescript portal-infra | PASS |
+| 2026-06-15 | 0.4.0_DS_ClientPlatform~A | NFRA_GLOBGRPH.P0-derive-rebuild-L4 | pipescript | pipescript smartx | PASS |
+| 2026-06-15 | 0.4.0_DS_ClientPlatform~A | NFRA_GLOBGRPH.P0-derive-rebuild-L4 | pipescript | pipescript --tool news comp-pipescript | FAIL |
+| 2026-06-15 | 0.4.0_DS_ClientPlatform~A | NFRA_GLOBGRPH.P0-derive-rebuild-L4 | pipescript | pipescript --list | PASS |
+| 2026-06-15 | 0.4.0_DS_ClientPlatform~A | NFRA_GLOBGRPH.P0-derive-rebuild-L4 | comp-manifest-check | comp-manifest-check | FAIL |
+| 2026-06-15 | 3.0.0_SA_CVO | NFRA_GLOBGRPH.P0-derive-rebuild-L4 | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/logs/2026-0... | PASS |
+| 2026-06-15 | 0.4.0_DS_ClientPlatform~A | NFRA_GLOBGRPH.P0-derive-rebuild-L4 | comp-surface-check | comp-surface-check check --mode advisory --file .tools/pipescript --file org/modules/gr... | PASS |
+| 2026-06-15 | 2.0.0_SA_COO | NFRA_GLOBGRPH.P0-derive-rebuild-L4 | pipescript | pipescript --tool mdpf globgrph | FAIL |
+| 2026-06-15 | 2.0.0_SA_COO | NFRA_GLOBGRPH.P0-derive-rebuild-L4 | pipescript | pipescript --tool mdpf globgrph | FAIL |
+| 2026-06-15 | 2.0.0_SA_COO | NFRA_GLOBGRPH.P0-derive-rebuild-L4 | pipescript | pipescript bogus | FAIL |
+| 2026-06-15 | 2.0.0_SA_COO | NFRA_GLOBGRPH.P0-derive-rebuild-L4 | pipescript | pipescript news | PASS |
+| 2026-06-15 | 0.4.0_DS_ClientPlatform~A | NFRA_GLOBGRPH.P0-derive-rebuild-L4 | pipescript | pipescript --validate | PASS |
+| 2026-06-15 | 0.0.0_AB_MSTR | NFRA_GLOBGRPH.P0-derive-rebuild-L4 | comp-surface-check | comp-surface-check check --mode advisory --file org/mcp/live_agents_by_marker.json --fi... | PASS |
+| 2026-06-15 | 2.0.0_SA_COO | NFRA_GLOBGRPH.P0-derive-rebuild-L4 | comp-surface-check | comp-surface-check check --mode advisory --file .tools/pipescript --file org/modules/gr... | PASS |
+| 2026-06-15 | 3.0.0_SA_CVO | NFRA_GLOBGRPH.P0-derive-rebuild-L4 | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/estate-coverage-manif... | PASS |
+| 2026-06-15 | 2.0.0_SA_COO | NFRA_GLOBGRPH.P0-derive-rebuild-L4 | pipescript | pipescript --list | PASS |
+| 2026-06-15 | 0.7.0_AE_CloudOps | NFRA_GLOBGRPH.P0-derive-rebuild-L4 | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/terraform/globgrph/derive-bui... | PASS |
+| 2026-06-15 | 1.0.0_SA_CTO | NFRA_GLOBGRPH.P0-derive-rebuild-L4 | comp-surface-check | comp-surface-check check --mode advisory --file .claude/settings.json | PASS |
+| 2026-06-15 | 2.0.0_SA_COO | NFRA_GLOBGRPH.P0-derive-rebuild-L4 | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/estate-coverage-resol... | PASS |
+| 2026-06-15 | 3.0.0_SA_CVO | NFRA_GLOBGRPH.P0-derive-rebuild-L4 | pipescript | pipescript --help | PASS |
+| 2026-06-15 | 3.0.0_SA_CVO | NFRA_GLOBGRPH.P0-derive-rebuild-L4 | pipescript | pipescript factor-tilts | PASS |
+| 2026-06-15 | 3.0.0_SA_CVO | NFRA_GLOBGRPH.P0-derive-rebuild-L4 | pipescript | pipescript no-such-thread | FAIL |
+| 2026-06-15 | 0.4.0_DS_ClientPlatform~A | NFRA_GLOBGRPH.P0-derive-rebuild-L4 | pipescript | pipescript factor-tilts | PASS |
+| 2026-06-15 | 3.0.0_SA_CVO | NFRA_GLOBGRPH.P0-derive-rebuild-L4 | pipescript | pipescript advi-bd | PASS |
+| 2026-06-15 | 3.0.0_SA_CVO | NFRA_GLOBGRPH.P0-derive-rebuild-L4 | pipescript | pipescript advi-cot | PASS |
+| 2026-06-15 | 3.0.0_SA_CVO | NFRA_GLOBGRPH.P0-derive-rebuild-L4 | pipescript | pipescript advi-inf | PASS |
+| 2026-06-15 | 3.0.0_SA_CVO | NFRA_GLOBGRPH.P0-derive-rebuild-L4 | pipescript | pipescript attribution | FAIL |
+| 2026-06-15 | 3.0.0_SA_CVO | NFRA_GLOBGRPH.P0-derive-rebuild-L4 | pipescript | pipescript causality | PASS |
+| 2026-06-15 | 3.0.0_SA_CVO | NFRA_GLOBGRPH.P0-derive-rebuild-L4 | pipescript | pipescript cma | PASS |
+| 2026-06-15 | 3.0.0_SA_CVO | NFRA_GLOBGRPH.P0-derive-rebuild-L4 | pipescript | pipescript correlation | PASS |
+| 2026-06-15 | 3.0.0_SA_CVO | NFRA_GLOBGRPH.P0-derive-rebuild-L4 | pipescript | pipescript factor-tilts | PASS |
+| 2026-06-15 | 3.0.0_SA_CVO | NFRA_GLOBGRPH.P0-derive-rebuild-L4 | pipescript | pipescript graph-platform | PASS |
+| 2026-06-15 | 3.0.0_SA_CVO | NFRA_GLOBGRPH.P0-derive-rebuild-L4 | pipescript | pipescript macroeconomics | PASS |
+| 2026-06-15 | 3.0.0_SA_CVO | NFRA_GLOBGRPH.P0-derive-rebuild-L4 | pipescript | pipescript market-overview | PASS |
+| 2026-06-15 | 3.0.0_SA_CVO | NFRA_GLOBGRPH.P0-derive-rebuild-L4 | pipescript | pipescript model-portfolios | PASS |
+| 2026-06-15 | 3.0.0_SA_CVO | NFRA_GLOBGRPH.P0-derive-rebuild-L4 | pipescript | pipescript news | PASS |
+| 2026-06-15 | 3.0.0_SA_CVO | NFRA_GLOBGRPH.P0-derive-rebuild-L4 | pipescript | pipescript ops-internal | PASS |
+| 2026-06-15 | 3.0.0_SA_CVO | NFRA_GLOBGRPH.P0-derive-rebuild-L4 | pipescript | pipescript portal-infra | PASS |
+| 2026-06-15 | 3.0.0_SA_CVO | NFRA_GLOBGRPH.P0-derive-rebuild-L4 | pipescript | pipescript portfolio-management | PASS |
+| 2026-06-15 | 3.0.0_SA_CVO | NFRA_GLOBGRPH.P0-derive-rebuild-L4 | pipescript | pipescript positioning | PASS |
+| 2026-06-15 | 3.0.0_SA_CVO | NFRA_GLOBGRPH.P0-derive-rebuild-L4 | pipescript | pipescript security-scanner | PASS |
+| 2026-06-15 | 3.0.0_SA_CVO | NFRA_GLOBGRPH.P0-derive-rebuild-L4 | pipescript | pipescript trade-submission | PASS |
+| 2026-06-15 | 3.0.0_SA_CVO | NFRA_GLOBGRPH.P0-derive-rebuild-L4 | pipescript | pipescript valuation | PASS |
+| 2026-06-15 | 3.0.0_SA_CVO | NFRA_GLOBGRPH.P0-derive-rebuild-L4 | pipescript | pipescript --tool factor-tilts comp-pipescript | FAIL |
+| 2026-06-15 | 2.0.0_SA_COO | NFRA_GLOBGRPH.ingest-filter | pipescript | pipescript advi-bd | PASS |
+| 2026-06-15 | 3.0.0_SA_CVO | NFRA_GLOBGRPH.ingest-filter | pipescript | pipescript advi-bd | PASS |
+| 2026-06-15 | 3.0.0_SA_CVO | NFRA_GLOBGRPH.ingest-filter | pipescript | pipescript advi-cot | PASS |
+| 2026-06-15 | 3.0.0_SA_CVO | NFRA_GLOBGRPH.ingest-filter | pipescript | pipescript advi-inf | PASS |
+| 2026-06-15 | 3.0.0_SA_CVO | NFRA_GLOBGRPH.ingest-filter | pipescript | pipescript causality | PASS |
+| 2026-06-15 | 3.0.0_SA_CVO | NFRA_GLOBGRPH.ingest-filter | pipescript | pipescript cma | PASS |
+| 2026-06-15 | 3.0.0_SA_CVO | NFRA_GLOBGRPH.ingest-filter | pipescript | pipescript correlation | PASS |
+| 2026-06-15 | 3.0.0_SA_CVO | NFRA_GLOBGRPH.ingest-filter | pipescript | pipescript data-refresh | PASS |
+| 2026-06-15 | 3.0.0_SA_CVO | NFRA_GLOBGRPH.ingest-filter | pipescript | pipescript factor-tilts | PASS |
+| 2026-06-15 | 3.0.0_SA_CVO | NFRA_GLOBGRPH.ingest-filter | pipescript | pipescript graph-platform | PASS |
+| 2026-06-15 | 3.0.0_SA_CVO | NFRA_GLOBGRPH.ingest-filter | pipescript | pipescript insurance | PASS |
+| 2026-06-15 | 3.0.0_SA_CVO | NFRA_GLOBGRPH.ingest-filter | pipescript | pipescript macroeconomics | PASS |
+| 2026-06-15 | 3.0.0_SA_CVO | NFRA_GLOBGRPH.ingest-filter | pipescript | pipescript market-overview | PASS |
+| 2026-06-15 | 3.0.0_SA_CVO | NFRA_GLOBGRPH.ingest-filter | pipescript | pipescript mdpf | PASS |
+| 2026-06-15 | 3.0.0_SA_CVO | NFRA_GLOBGRPH.ingest-filter | pipescript | pipescript model-portfolios | PASS |
+| 2026-06-15 | 3.0.0_SA_CVO | NFRA_GLOBGRPH.ingest-filter | pipescript | pipescript news | PASS |
+| 2026-06-15 | 3.0.0_SA_CVO | NFRA_GLOBGRPH.ingest-filter | pipescript | pipescript ops-internal | PASS |
+| 2026-06-15 | 3.0.0_SA_CVO | NFRA_GLOBGRPH.ingest-filter | pipescript | pipescript partners | PASS |
+| 2026-06-15 | 3.0.0_SA_CVO | NFRA_GLOBGRPH.ingest-filter | pipescript | pipescript portal-infra | PASS |
+| 2026-06-15 | 3.0.0_SA_CVO | NFRA_GLOBGRPH.ingest-filter | pipescript | pipescript portfolio-management | PASS |
+| 2026-06-15 | 3.0.0_SA_CVO | NFRA_GLOBGRPH.ingest-filter | pipescript | pipescript positioning | PASS |
+| 2026-06-15 | 3.0.0_SA_CVO | NFRA_GLOBGRPH.ingest-filter | pipescript | pipescript security-scanner | PASS |
+| 2026-06-15 | 3.0.0_SA_CVO | NFRA_GLOBGRPH.ingest-filter | pipescript | pipescript smartx | PASS |
+| 2026-06-15 | 3.0.0_SA_CVO | NFRA_GLOBGRPH.ingest-filter | pipescript | pipescript trade-submission | PASS |
+| 2026-06-15 | 3.0.0_SA_CVO | NFRA_GLOBGRPH.ingest-filter | pipescript | pipescript valuation | PASS |
+| 2026-06-15 | 0.7.0_AE_CloudOps | NFRA_GLOBGRPH.ingest-filter | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/terraform/globgrph/item2b.tf | PASS |
+| 2026-06-15 | 2.0.0_SA_COO | NFRA_GLOBGRPH.ingest-filter | comp-surface-check | comp-surface-check check --mode advisory --file .owned-paths.yaml | PASS |
+| 2026-06-15 | 3.0.0_SA_CVO | NFRA_GLOBGRPH.ingest-filter | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/logs/2026-0... | PASS |
+| 2026-06-15 | 0.4.0_DS_ClientPlatform~A | NFRA_GLOBGRPH.ingest-filter | pipescript | pipescript --resource find-insure-crawl-web | PASS |
+| 2026-06-15 | 0.4.0_DS_ClientPlatform~A | NFRA_GLOBGRPH.ingest-filter | pipescript | pipescript --resource ycharts-market-data-pull | PASS |
+| 2026-06-15 | 0.4.0_DS_ClientPlatform~A | NFRA_GLOBGRPH.ingest-filter | pipescript | pipescript --resource news-semantic-clustering | PASS |
+| 2026-06-15 | 0.4.0_DS_ClientPlatform~A | NFRA_GLOBGRPH.ingest-filter | pipescript | pipescript --resource opal-portal-data-proxy | PASS |
+| 2026-06-15 | 0.4.0_DS_ClientPlatform~A | NFRA_GLOBGRPH.ingest-filter | pipescript | pipescript --resource yang-generate-holdings-attribution | PASS |
+| 2026-06-15 | 0.4.0_DS_ClientPlatform~A | NFRA_GLOBGRPH.ingest-filter | pipescript | pipescript --resource schwab-anonymizer | PASS |
+| 2026-06-15 | 0.4.0_DS_ClientPlatform~A | NFRA_GLOBGRPH.ingest-filter | pipescript | pipescript insurance | PASS |
+| 2026-06-15 | 0.7.0_AE_CloudOps | NFRA_GLOBGRPH.ingest-filter | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/terraform/globgrph/item2b.tf | PASS |
+| 2026-06-15 | 3.0.0_SA_CVO | (no-TO) | pipescript | pipescript attribution | FAIL |
+| 2026-06-15 | 3.0.0_SA_CVO | (no-TO) | pipescript | pipescript advi-bd | PASS |
+| 2026-06-15 | 3.0.0_SA_CVO | (no-TO) | pipescript | pipescript advi-cot | PASS |
+| 2026-06-15 | 3.0.0_SA_CVO | (no-TO) | pipescript | pipescript advi-inf | PASS |
+| 2026-06-15 | 3.0.0_SA_CVO | (no-TO) | pipescript | pipescript causality | PASS |
+| 2026-06-15 | 3.0.0_SA_CVO | (no-TO) | pipescript | pipescript cma | PASS |
+| 2026-06-15 | 3.0.0_SA_CVO | (no-TO) | pipescript | pipescript correlation | PASS |
+| 2026-06-15 | 3.0.0_SA_CVO | (no-TO) | pipescript | pipescript data-refresh | PASS |
+| 2026-06-15 | 3.0.0_SA_CVO | (no-TO) | pipescript | pipescript factor-tilts | PASS |
+| 2026-06-15 | 3.0.0_SA_CVO | (no-TO) | pipescript | pipescript graph-platform | PASS |
+| 2026-06-15 | 3.0.0_SA_CVO | (no-TO) | pipescript | pipescript insurance | PASS |
+| 2026-06-15 | 3.0.0_SA_CVO | (no-TO) | pipescript | pipescript macroeconomics | PASS |
+| 2026-06-15 | 3.0.0_SA_CVO | (no-TO) | pipescript | pipescript market-overview | PASS |
+| 2026-06-15 | 3.0.0_SA_CVO | (no-TO) | pipescript | pipescript mdpf | PASS |
+| 2026-06-15 | 3.0.0_SA_CVO | (no-TO) | pipescript | pipescript model-portfolios | PASS |
+| 2026-06-15 | 3.0.0_SA_CVO | (no-TO) | pipescript | pipescript news | PASS |
+| 2026-06-15 | 3.0.0_SA_CVO | (no-TO) | pipescript | pipescript ops-internal | PASS |
+| 2026-06-15 | 3.0.0_SA_CVO | (no-TO) | pipescript | pipescript partners | PASS |
+| 2026-06-15 | 3.0.0_SA_CVO | (no-TO) | pipescript | pipescript portal-infra | PASS |
+| 2026-06-15 | 3.0.0_SA_CVO | (no-TO) | pipescript | pipescript portfolio-management | PASS |
+| 2026-06-15 | 3.0.0_SA_CVO | (no-TO) | pipescript | pipescript positioning | PASS |
+| 2026-06-15 | 3.0.0_SA_CVO | (no-TO) | pipescript | pipescript security-scanner | PASS |
+| 2026-06-15 | 3.0.0_SA_CVO | (no-TO) | pipescript | pipescript smartx | PASS |
+| 2026-06-15 | 3.0.0_SA_CVO | (no-TO) | pipescript | pipescript trade-submission | PASS |
+| 2026-06-15 | 3.0.0_SA_CVO | (no-TO) | pipescript | pipescript valuation | PASS |
+| 2026-06-15 | 2.0.0_SA_COO | (no-TO) | pipescript | pipescript bogus | FAIL |
+| 2026-06-15 | 2.0.0_SA_COO | (no-TO) | pipescript | pipescript --tool mdpf globgrph | FAIL |
+| 2026-06-15 | 2.0.0_SA_COO | (no-TO) | pipescript | pipescript attribution | PASS |
+| 2026-06-15 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/estate-coverage-resol... | PASS |
+| 2026-06-15 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .claude/settings.json --file .tools/kil... | PASS |
+| 2026-06-15 | 3.0.0_SA_CVO | (no-TO) | pipescript | pipescript factor-tilts | PASS |
+| 2026-06-15 | 3.0.0_SA_CVO | (no-TO) | pipescript | pipescript attribution | PASS |
+| 2026-06-15 | 3.0.0_SA_CVO | (no-TO) | pipescript | pipescript advi-bd | PASS |
+| 2026-06-15 | 3.0.0_SA_CVO | (no-TO) | pipescript | pipescript advi-cot | PASS |
+| 2026-06-15 | 3.0.0_SA_CVO | (no-TO) | pipescript | pipescript advi-inf | PASS |
+| 2026-06-15 | 3.0.0_SA_CVO | (no-TO) | pipescript | pipescript causality | PASS |
+| 2026-06-15 | 3.0.0_SA_CVO | (no-TO) | pipescript | pipescript cma | PASS |
+| 2026-06-15 | 3.0.0_SA_CVO | (no-TO) | pipescript | pipescript correlation | PASS |
+| 2026-06-15 | 3.0.0_SA_CVO | (no-TO) | pipescript | pipescript data-refresh | PASS |
+| 2026-06-15 | 3.0.0_SA_CVO | (no-TO) | pipescript | pipescript graph-platform | PASS |
+| 2026-06-15 | 3.0.0_SA_CVO | (no-TO) | pipescript | pipescript insurance | PASS |
+| 2026-06-15 | 3.0.0_SA_CVO | (no-TO) | pipescript | pipescript macroeconomics | PASS |
+| 2026-06-15 | 3.0.0_SA_CVO | (no-TO) | pipescript | pipescript market-overview | PASS |
+| 2026-06-15 | 3.0.0_SA_CVO | (no-TO) | pipescript | pipescript mdpf | PASS |
+| 2026-06-15 | 3.0.0_SA_CVO | (no-TO) | pipescript | pipescript model-portfolios | PASS |
+| 2026-06-15 | 3.0.0_SA_CVO | (no-TO) | pipescript | pipescript news | PASS |
+| 2026-06-15 | 3.0.0_SA_CVO | (no-TO) | pipescript | pipescript ops-internal | PASS |
+| 2026-06-15 | 3.0.0_SA_CVO | (no-TO) | pipescript | pipescript partners | PASS |
+| 2026-06-15 | 3.0.0_SA_CVO | (no-TO) | pipescript | pipescript portal-infra | PASS |
+| 2026-06-15 | 3.0.0_SA_CVO | (no-TO) | pipescript | pipescript portfolio-management | PASS |
+| 2026-06-15 | 3.0.0_SA_CVO | (no-TO) | pipescript | pipescript positioning | PASS |
+| 2026-06-15 | 3.0.0_SA_CVO | (no-TO) | pipescript | pipescript security-scanner | PASS |
+| 2026-06-15 | 3.0.0_SA_CVO | (no-TO) | pipescript | pipescript smartx | PASS |
+| 2026-06-15 | 3.0.0_SA_CVO | (no-TO) | pipescript | pipescript trade-submission | PASS |
+| 2026-06-15 | 3.0.0_SA_CVO | (no-TO) | pipescript | pipescript valuation | PASS |
+| 2026-06-15 | 3.0.0_SA_CVO | (no-TO) | pipescript | pipescript --tool factor-tilts comp-pipescript | FAIL |
+| 2026-06-15 | 0.4.0_DS_ClientPlatform~A | (no-TO) | pipescript | pipescript attribution | PASS |
+| 2026-06-15 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/logs/2026-0... | PASS |
+| 2026-06-15 | 2.0.0_SA_COO | (no-TO) | pipescript | pipescript advi-bd | PASS |
+| 2026-06-15 | 2.0.0_SA_COO | (no-TO) | pipescript | pipescript --list | PASS |
+| 2026-06-15 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-06-15 | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier0/ledger/LD-0193.md | PASS |
+| 2026-06-15 | 0.4.0_DS_ClientPlatform~A | (no-TO) | pipescript | pipescript --gate-b | PASS |
+| 2026-06-15 | 0.4.0_DS_ClientPlatform~A | (no-TO) | pipescript | pipescript --validate | PASS |
+| 2026-06-15 | 0.4.0_DS_ClientPlatform~A | (no-TO) | pipescript | pipescript --tool news comp-pipescript | FAIL |
+| 2026-06-15 | 0.4.0_DS_ClientPlatform~A | (no-TO) | pipescript | pipescript --gate-b | PASS |
+| 2026-06-15 | 0.4.0_DS_ClientPlatform~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/pipescript_cli.py | PASS |
+| 2026-06-15 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-06-15 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-06-15 | 0.4.0_DS_ClientPlatform~A | (no-TO) | comp-pipescript | comp-pipescript io yang-generate-factor-tilts | FAIL |
+| 2026-06-15 | 0.4.0_DS_ClientPlatform~A | (no-TO) | comp-pipescript | comp-pipescript postdeps news-ingestion-scheduler | FAIL |
+| 2026-06-15 | 0.4.0_DS_ClientPlatform~A | (no-TO) | comp-pipescript | comp-pipescript io find-insure-casefind-pipeline | FAIL |
+| 2026-06-15 | 0.4.0_DS_ClientPlatform~A | (no-TO) | comp-pipescript | comp-pipescript io C_01 | PASS |
+| 2026-06-15 | 0.4.0_DS_ClientPlatform~A | (no-TO) | comp-pipescript | comp-pipescript io zzz-not-a-real-thing | FAIL |
+| 2026-06-15 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-06-15 | 0.4.0_DS_ClientPlatform~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/pipeline_cli.py | PASS |
+| 2026-06-15 | 0.6.0_AE_PartnerETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/change_management/20... | PASS |
+| 2026-06-15 | 3.0.0_SA_CVO | (no-TO) | pipescript | pipescript --gate-b | PASS |
+| 2026-06-15 | 3.0.0_SA_CVO | (no-TO) | pipescript | pipescript advi-bd | PASS |
+| 2026-06-15 | 3.0.0_SA_CVO | (no-TO) | pipescript | pipescript advi-cot | PASS |
+| 2026-06-15 | 3.0.0_SA_CVO | (no-TO) | pipescript | pipescript advi-inf | PASS |
+| 2026-06-15 | 3.0.0_SA_CVO | (no-TO) | pipescript | pipescript attribution | PASS |
+| 2026-06-15 | 3.0.0_SA_CVO | (no-TO) | pipescript | pipescript causality | PASS |
+| 2026-06-15 | 3.0.0_SA_CVO | (no-TO) | pipescript | pipescript cma | PASS |
+| 2026-06-15 | 3.0.0_SA_CVO | (no-TO) | pipescript | pipescript correlation | PASS |
+| 2026-06-15 | 3.0.0_SA_CVO | (no-TO) | pipescript | pipescript data-refresh | PASS |
+| 2026-06-15 | 3.0.0_SA_CVO | (no-TO) | pipescript | pipescript factor-tilts | PASS |
+| 2026-06-15 | 3.0.0_SA_CVO | (no-TO) | pipescript | pipescript graph-platform | PASS |
+| 2026-06-15 | 3.0.0_SA_CVO | (no-TO) | pipescript | pipescript insurance | PASS |
+| 2026-06-15 | 3.0.0_SA_CVO | (no-TO) | pipescript | pipescript macroeconomics | PASS |
+| 2026-06-15 | 3.0.0_SA_CVO | (no-TO) | pipescript | pipescript market-overview | PASS |
+| 2026-06-15 | 3.0.0_SA_CVO | (no-TO) | pipescript | pipescript mdpf | PASS |
+| 2026-06-15 | 3.0.0_SA_CVO | (no-TO) | pipescript | pipescript model-portfolios | PASS |
+| 2026-06-15 | 3.0.0_SA_CVO | (no-TO) | pipescript | pipescript news | PASS |
+| 2026-06-15 | 3.0.0_SA_CVO | (no-TO) | pipescript | pipescript ops-internal | PASS |
+| 2026-06-15 | 3.0.0_SA_CVO | (no-TO) | pipescript | pipescript partners | PASS |
+| 2026-06-15 | 3.0.0_SA_CVO | (no-TO) | pipescript | pipescript portal-infra | PASS |
+| 2026-06-15 | 3.0.0_SA_CVO | (no-TO) | pipescript | pipescript portfolio-management | PASS |
+| 2026-06-15 | 3.0.0_SA_CVO | (no-TO) | pipescript | pipescript positioning | PASS |
+| 2026-06-15 | 3.0.0_SA_CVO | (no-TO) | pipescript | pipescript security-scanner | PASS |
+| 2026-06-15 | 3.0.0_SA_CVO | (no-TO) | pipescript | pipescript smartx | PASS |
+| 2026-06-15 | 3.0.0_SA_CVO | (no-TO) | pipescript | pipescript trade-submission | PASS |
+| 2026-06-15 | 3.0.0_SA_CVO | (no-TO) | pipescript | pipescript valuation | PASS |
+| 2026-06-15 | 2.0.0_SA_COO | (no-TO) | comp-pipescript | comp-pipescript io yang-generate-factor-tilts | FAIL |
+| 2026-06-15 | 0.4.0_DS_ClientPlatform~A | (no-TO) | pipescript | pipescript market-overview | PASS |
+| 2026-06-15 | 0.4.0_DS_ClientPlatform~A | (no-TO) | pipescript | pipescript --gate-b | PASS |
+| 2026-06-15 | 2.0.0_SA_COO | (no-TO) | comp-pipescript | comp-pipescript io news-ingestion-scheduler | FAIL |
+| 2026-06-15 | 2.0.0_SA_COO | (no-TO) | comp-pipescript | comp-pipescript io C_01 | PASS |
+| 2026-06-15 | 0.4.0_DS_ClientPlatform~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/pipescript_cli.py | PASS |
+| 2026-06-15 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/pipeline_cli.py | PASS |
+| 2026-06-15 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-06-15 | 0.4.0_DS_ClientPlatform~A | (no-TO) | pipescript | pipescript --debt | PASS |
+| 2026-06-15 | 0.4.0_DS_ClientPlatform~A | (no-TO) | pipescript | pipescript causality | PASS |
+| 2026-06-15 | 0.4.0_DS_ClientPlatform~A | (no-TO) | pipescript | pipescript --gate-b | PASS |
+| 2026-06-15 | 0.4.0_DS_ClientPlatform~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/pipescript_cli.py | PASS |
+| 2026-06-15 | 0.4.0_DS_ClientPlatform~A | (no-TO) | pipescript | pipescript --fe-reachability | PASS |
+| 2026-06-15 | 0.4.0_DS_ClientPlatform~A | (no-TO) | pipescript | pipescript --fe-reachability market-overview | PASS |
+| 2026-06-15 | 0.4.0_DS_ClientPlatform~A | (no-TO) | pipescript | pipescript --gate-b | PASS |
+| 2026-06-15 | 2.0.0_SA_COO | (no-TO) | pipescript | pipescript factor-tilts | PASS |
+| 2026-06-15 | 2.0.0_SA_COO | (no-TO) | pipescript | pipescript --debt | PASS |
+| 2026-06-15 | 2.0.0_SA_COO | (no-TO) | pipescript | pipescript --gate-b | PASS |
+| 2026-06-15 | 0.4.0_DS_ClientPlatform~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/pipescript_cli.py | PASS |
+| 2026-06-15 | 3.0.0_SA_CVO | (no-TO) | comp-pipescript | comp-pipescript io yang-generate-factor-tilts | FAIL |
+| 2026-06-15 | 3.0.0_SA_CVO | (no-TO) | comp-pipescript | comp-pipescript postdeps news-ingestion-scheduler | FAIL |
+| 2026-06-15 | 3.0.0_SA_CVO | (no-TO) | comp-pipescript | comp-pipescript io find-insure-casefind-pipeline | FAIL |
+| 2026-06-15 | 3.0.0_SA_CVO | (no-TO) | comp-pipescript | comp-pipescript io C_01 | PASS |
+| 2026-06-15 | 3.0.0_SA_CVO | (no-TO) | comp-pipescript | comp-pipescript io zzz-not-real | FAIL |
+| 2026-06-15 | 3.0.0_SA_CVO | (no-TO) | pipescript | pipescript --fe-reachability | PASS |
+| 2026-06-15 | 3.0.0_SA_CVO | (no-TO) | pipescript | pipescript --fe-reachability | PASS |
+| 2026-06-15 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/estate-coverage-manif... | PASS |
+| 2026-06-15 | 0.4.0_DS_ClientPlatform~A | (no-TO) | pipescript | pipescript --fe-reachability | PASS |
+| 2026-06-15 | 0.4.0_DS_ClientPlatform~A | (no-TO) | pipescript | pipescript --gate-b | PASS |
+| 2026-06-15 | 0.4.0_DS_ClientPlatform~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/pipescript_cli.py | PASS |
+| 2026-06-15 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/estate-coverage-resol... | PASS |
+| 2026-06-15 | 2.0.0_SA_COO | (no-TO) | pipescript | pipescript --fe-reachability | PASS |
+| 2026-06-15 | 2.0.0_SA_COO | (no-TO) | pipescript | pipescript advi-inf | PASS |
+| 2026-06-15 | 0.4.0_DS_ClientPlatform~A | (no-TO) | pipescript | pipescript --fe-reachability | PASS |
+| 2026-06-15 | 0.4.0_DS_ClientPlatform~A | (no-TO) | pipescript | pipescript advi-bd | PASS |
+| 2026-06-15 | 0.4.0_DS_ClientPlatform~A | (no-TO) | pipescript | pipescript --gate-b | PASS |
+| 2026-06-15 | 2.0.0_SA_COO | (no-TO) | pipescript | pipescript --fe-reachability | PASS |
+| 2026-06-15 | 2.0.0_SA_COO | (no-TO) | comp-pipescript | comp-pipescript io yang-generate-factor-tilts | FAIL |
+| 2026-06-15 | 0.4.0_DS_ClientPlatform~A | (no-TO) | pipescript | pipescript --orphans | PASS |
+| 2026-06-15 | 0.4.0_DS_ClientPlatform~A | (no-TO) | pipescript | pipescript --fe-reachability | PASS |
+| 2026-06-15 | 0.4.0_DS_ClientPlatform~A | (no-TO) | pipescript | pipescript --gate-b | PASS |
+| 2026-06-15 | 3.0.0_SA_CVO | (no-TO) | pipescript | pipescript --fe-reachability | PASS |
+| 2026-06-15 | 3.0.0_SA_CVO | (no-TO) | comp-pipescript | comp-pipescript io yang-generate-factor-tilts | FAIL |
+| 2026-06-15 | 3.0.0_SA_CVO | (no-TO) | comp-pipescript | comp-pipescript io C_01 | PASS |
+| 2026-06-15 | 3.0.0_SA_CVO | (no-TO) | pipescript | pipescript --gate-b | PASS |
+| 2026-06-15 | 0.4.0_DS_ClientPlatform~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/pipescript_cli.py | PASS |
+| 2026-06-15 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/logs/2026-0... | PASS |
+| 2026-06-15 | 0.4.0_DS_ClientPlatform~A | (no-TO) | pipescript | pipescript --fe-reachability | PASS |
+| 2026-06-15 | 0.4.0_DS_ClientPlatform~A | (no-TO) | pipescript | pipescript --gate-b | PASS |
+| 2026-06-15 | 0.4.0_DS_ClientPlatform~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/pipescript_cli.py | PASS |
+| 2026-06-15 | 3.0.0_SA_CVO | (no-TO) | pipescript | pipescript --fe-reachability | PASS |
+| 2026-06-15 | 3.0.0_SA_CVO | (no-TO) | pipescript | pipescript --orphans | PASS |
+| 2026-06-15 | 3.0.0_SA_CVO | (no-TO) | pipescript | pipescript advi-bd | PASS |
+| 2026-06-15 | 3.0.0_SA_CVO | (no-TO) | pipescript | pipescript news | PASS |
+| 2026-06-15 | 3.0.0_SA_CVO | (no-TO) | pipescript | pipescript factor-tilts | PASS |
+| 2026-06-15 | 3.0.0_SA_CVO | (no-TO) | pipescript | pipescript --gate-b | PASS |
+| 2026-06-15 | 3.0.0_SA_CVO | (no-TO) | comp-pipescript | comp-pipescript io yang-generate-factor-tilts | FAIL |
+| 2026-06-15 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/NFRA_PIPESCRIPT.json --fil... | PASS |
+| 2026-06-15 | 0.4.0_DS_ClientPlatform~A | NFRA_PIPESCRIPT | ds-commit-gate | ds-commit-gate.sh on pipescript_cli.py + pipeline_cli.py (each commit, P1a..P3.2) | PASS |
+| 2026-06-15 | 0.4.0_DS_ClientPlatform~A | NFRA_PIPESCRIPT | pipescript | pipescript --gate-b (standing oracle I built) | PASS |
+| 2026-06-15 | 0.4.0_DS_ClientPlatform~A | NFRA_PIPESCRIPT | pipescript | pipescript --fe-reachability / --orphans / --debt (P3 gates) | PASS |
+| 2026-06-15 | 0.4.0_DS_ClientPlatform~A | NFRA_PIPESCRIPT | comp-pipescript | comp-pipescript io/postdeps non-medallion -> OUT-OF-SCOPE exit2 (P1b.1 guard) | PASS |
+| 2026-06-15 | 0.4.0_DS_ClientPlatform~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
