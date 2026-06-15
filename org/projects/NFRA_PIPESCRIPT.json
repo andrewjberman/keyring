@@ -1,0 +1,15 @@
+{
+  "project_code": "NFRA_PIPESCRIPT",
+  "macro_code": "NFRA",
+  "name": "Pipescript — Named-Thread Estate Traversal",
+  "description": "Andrew-direct 2026-06-15 (2 direct messages, overriding the DEBTSCAN homing): a STANDALONE capability whose deliverable is a named-thread traversal over the whole estate. `pipescript <name>` (pipescript news / insurance / mdpf / advi / model-portfolios / trade-submission / <portal-page>) returns EVERY resource in that thread + its dependencies + data-flow + frontend consumers. Single human-friendly entry point: 'what am I looking for? the news scanner? -> pipescript news -> see every resource in that pipeline'. The estate-coverage-manifest (6bea1582a) is the name->threads->owning_tool RESOLVER behind it; comp-pipescript (medallion) is demoted to ONE sub-resolver of several (globgrph AWS-resource / stitch cross-layer / portal-consumer-tools frontend / none ops-local). NOT folded under NFRA_DEBTSCAN — DEBTSCAN's orphan/dormant/stranded/freshness flags still flow to the debtscan ledger and are SURFACED in the traversal, but the thread-enumeration + named-traversal is its own project. Seed: CVO's NAMED_THREAD_CATALOG (d33fe4aab) pivoted the 2026-06-15 134-thread estate census (2d9a0a2a1) into 15 named threads at product/surface granularity.",
+  "prds": [{"path": "docs/architecture/NFRA_PIPESCRIPT_PRD.md", "label": "Named-thread estate traversal capability (PRD v0.1)", "date": "2026-06-15"}],
+  "status": "active",
+  "phase": "Phase 0: PRD v0.1 authored (CTO, Andrew-direct). Seed = the 15-named-thread catalog over the 134-thread census; resolver = estate-coverage-manifest; comp-pipescript = one sub-resolver. COO decomposition pending.",
+  "blocking": "COO decomposition. Refinement of the 15 named threads (collapse advi firm-scoped bd/inf/cot; split per-portal-page per Andrew's 'each of the portal pages') is a P2 step in the PRD.",
+  "created": "2026-06-15",
+  "pods": ["1.0", "3.0", "0.4", "0.7"],
+  "pipeline": "tooling (compiler / estate-traversal)",
+  "thread_counter": 0,
+  "threads": []
+}
