@@ -36,7 +36,7 @@ threads:
   # Grouped by the 15 named pipescript threads (catalog d33fe4aab).
   # ====================================================================
 
-  # ---- pipescript advi  (33 threads) ----
+  # ---- pipescript advi  (32 threads) ----
   - family: FRED-06-exec-summary-generator
     named_thread: advi
     owning_tool: portal-consumer-tools
@@ -187,14 +187,6 @@ threads:
     tool_pointer: null
     last_reviewed: '2026-06-15'
     debtscan_flags: []
-  - family: historical-prices-scheduler(graph-seed)
-    named_thread: advi
-    owning_tool: none
-    status: explicit-out
-    tool_pointer: null
-    last_reviewed: '2026-06-15'
-    debtscan_flags: []
-    reason: Carved out of graph/ops family to avoid double-count; owned by bd-medallion bd-historical-prices (IN_SCOPE there)
   - family: inf-bronze-api-pull
     named_thread: advi
     owning_tool: comp-pipescript
@@ -276,7 +268,7 @@ threads:
     last_reviewed: '2026-06-15'
     debtscan_flags: []
 
-  # ---- pipescript model-portfolios  (21 threads) ----
+  # ---- pipescript model-portfolios  (20 threads) ----
   - family: FRED-03-credit-spread-cache
     named_thread: model-portfolios
     owning_tool: stitch
@@ -292,13 +284,6 @@ threads:
     last_reviewed: '2026-06-15'
     debtscan_flags: []
   - family: FRED-05-yang-macro-timeseries
-    named_thread: model-portfolios
-    owning_tool: stitch
-    status: in-scope
-    tool_pointer: null
-    last_reviewed: '2026-06-15'
-    debtscan_flags: []
-  - family: GAP-yang-datapipeline-family
     named_thread: model-portfolios
     owning_tool: stitch
     status: in-scope
@@ -508,22 +493,7 @@ threads:
     last_reviewed: '2026-06-15'
     debtscan_flags: []
 
-  # ---- pipescript pm-optimizer  (11 threads) ----
-  - family: FRED-09-portfolio-funds-list(fred-seed)
-    named_thread: pm-optimizer
-    owning_tool: none
-    status: explicit-out
-    tool_pointer: null
-    last_reviewed: '2026-06-15'
-    debtscan_flags: []
-    reason: PM-family resource carved out of FRED family to avoid double-count; owned by pm-tool portfolio-funds-list (IN_SCOPE there)
-  - family: opal-pm-snapshot-handler(graph-seed)
-    named_thread: pm-optimizer
-    owning_tool: portal-consumer-tools
-    status: in-scope
-    tool_pointer: null
-    last_reviewed: '2026-06-15'
-    debtscan_flags: []
+  # ---- pipescript pm-optimizer  (9 threads) ----
   - family: ops-infrastructure-monitors
     named_thread: pm-optimizer
     owning_tool: none
@@ -589,14 +559,7 @@ threads:
     last_reviewed: '2026-06-15'
     debtscan_flags: []
 
-  # ---- pipescript news  (14 threads) ----
-  - family: GAP-sentiment_query_api
-    named_thread: news
-    owning_tool: globgrph
-    status: unreviewed
-    tool_pointer: null
-    last_reviewed: '2026-06-15'
-    debtscan_flags: []
+  # ---- pipescript news  (13 threads) ----
   - family: MA-04-fear-greed-fetcher
     named_thread: news
     owning_tool: portal-consumer-tools
@@ -691,21 +654,7 @@ threads:
     last_reviewed: '2026-06-15'
     debtscan_flags: []
 
-  # ---- pipescript trade-submission  (14 threads) ----
-  - family: GAP-trade-submission-family
-    named_thread: trade-submission
-    owning_tool: portal-consumer-tools
-    status: in-scope
-    tool_pointer: null
-    last_reviewed: '2026-06-15'
-    debtscan_flags: []
-  - family: GAP-ycharts-session
-    named_thread: trade-submission
-    owning_tool: globgrph
-    status: unreviewed
-    tool_pointer: null
-    last_reviewed: '2026-06-15'
-    debtscan_flags: []
+  # ---- pipescript trade-submission  (13 threads) ----
   - family: MA-09-ycharts-market-data-pull
     named_thread: trade-submission
     owning_tool: none
@@ -789,6 +738,13 @@ threads:
     named_thread: trade-submission
     owning_tool: portal-consumer-tools
     status: in-scope
+    tool_pointer: null
+    last_reviewed: '2026-06-15'
+    debtscan_flags: []
+  - family: ycharts-session
+    named_thread: trade-submission
+    owning_tool: globgrph
+    status: unreviewed
     tool_pointer: null
     last_reviewed: '2026-06-15'
     debtscan_flags: []
@@ -1027,15 +983,7 @@ threads:
     last_reviewed: '2026-06-15'
     debtscan_flags: []
 
-  # ---- pipescript ops-internal  (8 threads) ----
-  - family: GAP-test-yfinance-lambdas
-    named_thread: ops-internal
-    owning_tool: none
-    status: explicit-out
-    tool_pointer: null
-    last_reviewed: '2026-06-15'
-    debtscan_flags: []
-    reason: 'UNACCOUNTED but test/diagnostic: test-yfinance-simple + yfinance-aapl-test, LastMod 2026-02-13, no consumer; teardown candidates'
+  # ---- pipescript ops-internal  (6 threads) ----
   - family: PPI-13-schwab-anonymizer
     named_thread: ops-internal
     owning_tool: none
@@ -1044,14 +992,6 @@ threads:
     last_reviewed: '2026-06-15'
     debtscan_flags: []
     reason: Manual-invoke PII anonymizer feeding raw-data ingest, no portal/pipeline consumer; 0 invokes/14d; FLAG non-ASCII emoji in source
-  - family: cot-bd-session-trigger(bd-seed)
-    named_thread: ops-internal
-    owning_tool: none
-    status: explicit-out
-    tool_pointer: null
-    last_reviewed: '2026-06-15'
-    debtscan_flags: []
-    reason: Named in bd seed but is the COT firm pipeline (opal-data-cot); belongs to cot family - cross-family dedup, owned by cot-pipeline
   - family: m365-mcp-gateway-ec2
     named_thread: ops-internal
     owning_tool: none
