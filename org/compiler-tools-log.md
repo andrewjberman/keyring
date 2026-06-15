@@ -5993,3 +5993,13 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-06-15 | 0.6.0_AE_PartnerETL | 49NNAFIX.D1-dispatcher-wire | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/.open_deploys/gldinc... | PASS |
 | 2026-06-15 | 0.6.0_AE_PartnerETL | 49NNAFIX.D1-dispatcher-wire | (session summary) | comp-pipescript io+deployed D_00f (MATCH) + deploy_ledger.py open/close-leg + iam role-policy verify -- D1 D_00f dispatcher activated, inf-ledger closed; 4 commits | PASS |
 | 2026-06-15 | 0.6.0_AE_PartnerETL | 49NNAFIX.D1-dispatcher-wire | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-06-15 | 0.4.0_DS_ClientPlatform | 49NNAFIX.D1-dispatcher-wire | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-06-15 | 0.6.0_AE_PartnerETL | 49NNAFIX.D1-dispatcher-wire | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/.open_deploys/gldinc... | PASS |
+| 2026-06-15 | 0.4.0_DS_ClientPlatform | 49NNAFIX.D1-dispatcher-wire | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-06-15 | 0.6.0_AE_PartnerETL | 49NNAFIX.D1-dispatcher-wire | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/.open_deploys/gldinc... | PASS |
+| 2026-06-15 | 1.0.0_SA_CTO | 49NNAFIX.D1-dispatcher-wire | pipescript | pipescript --help | PASS |
+| 2026-06-15 | 1.0.0_SA_CTO | 49NNAFIX.D1-dispatcher-wire | comp-surface-check | comp-surface-check check --mode advisory --file CLAUDE.md --file org/modules/graph/comp... | PASS |
+| 2026-06-15 | 1.0.0_SA_CTO | 49NNAFIX.D1-dispatcher-wire | comp-manifest-check | comp-manifest-check | FAIL |
+| 2026-06-15 | 1.0.0_SA_CTO | 49NNAFIX.D1-dispatcher-wire | comp-manifest-check | comp-manifest-check list | PASS |
+| 2026-06-15 | 0.6.0_AE_PartnerETL | 49NNAFIX.D1-dispatcher-wire | (session-close summary) | deploy_ledger.py close-leg L2(v2)/L3(v2)/L4 + close (all 5 proven, --red GREEN) + independent gunzip/head-object v2 verify | PASS |
+| 2026-06-15 | 0.6.0_AE_PartnerETL | 49NNAFIX.D1-dispatcher-wire | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
