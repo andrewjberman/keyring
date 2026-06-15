@@ -1096,10 +1096,79 @@ def _lambda_pipescript_io(script_path_arg: str) -> bool:
     return True
 
 
+# ---------------------------------------------------------------------------
+# NFRA_PIPESCRIPT P1b.1: generalize the TOOL-02 false-clean guard INTO comp-pipescript.
+# When io/postdeps is queried about a NON-medallion estate thread/resource (owned by
+# globgrph/stitch/portal-consumer-tools/none per the estate-coverage resolver), emit the
+# LOUD canonical "OUT-OF-SCOPE for comp-pipescript -> see {owning_tool}" + exit 2 -- never a
+# silent "Unknown" a coverage grep miscounts as clean (the find-dualbiz io=Unknown trigger;
+# folds the G3 ruling + the io/postdeps bd-only silent-Unknown class). comp-pipescript-owned
+# (medallion) args and genuinely-unknown args fall through to the existing handling.
+# (deployed already emits explicit per-tree UNCOVERED rows by TOOL-01/03 design -- non-silent.)
+# ---------------------------------------------------------------------------
+_ESTATE_RESOLVER = Path(__file__).resolve().parent / "estate-coverage-resolver.json"
+_ESTATE_OWNER_CACHE = None
+
+
+def _load_estate_owner_map():
+    global _ESTATE_OWNER_CACHE
+    if _ESTATE_OWNER_CACHE is not None:
+        return _ESTATE_OWNER_CACHE
+    m = {"thread": {}, "resource": {}, "nt_owners": {}}
+    try:
+        data = json.loads(_ESTATE_RESOLVER.read_text(encoding="utf-8"))
+    except (OSError, ValueError):
+        _ESTATE_OWNER_CACHE = m
+        return m
+    for t in data.get("threads", []):
+        m["thread"][t.get("thread_id", "")] = (t.get("named_thread", ""), t.get("owning_tool", ""))
+        m["nt_owners"].setdefault(t.get("named_thread", ""), set()).add(t.get("owning_tool", ""))
+    for nt, rs in data.get("resources_by_named_thread", {}).items():
+        for r in rs:
+            m["resource"][r] = nt
+    _ESTATE_OWNER_CACHE = m
+    return m
+
+
+def _emit_oos(raw, nt, tool):
+    sys.stderr.write(
+        f"OUT-OF-SCOPE for comp-pipescript -> see {tool} "
+        f"(estate thread '{nt}' / '{raw}' is {tool}-owned, NOT medallion; comp-pipescript "
+        f"models only the medallion data-pipeline). Run `pipescript {nt}` for its traversal.\n"
+    )
+    sys.exit(2)
+
+
+def _estate_oos_guard(raw):
+    """LOUD OUT-OF-SCOPE + exit 2 if `raw` names a non-medallion estate thread/resource.
+
+    No-op (returns) for comp-pipescript-owned (medallion) args + genuinely-unknown args
+    (those fall through to the caller's existing Unknown handling). Fail-open if the resolver
+    is unreadable -- never block on missing data, and the caller's Unknown path is still LOUD.
+    """
+    if not raw:
+        return
+    m = _load_estate_owner_map()
+    if not m["thread"]:
+        return
+    key = re.sub(r"\.(py|json|ya?ml)$", "", str(raw).replace("\\", "/").split("/")[-1])
+    hit = m["thread"].get(raw) or m["thread"].get(key)
+    if hit and hit[1] and hit[1] != "comp-pipescript":
+        _emit_oos(raw, hit[0], hit[1])
+    nt = m["resource"].get(raw) or m["resource"].get(key)
+    if nt and "comp-pipescript" not in m["nt_owners"].get(nt, set()):
+        owners = "/".join(sorted(o for o in m["nt_owners"].get(nt, set()) if o))
+        _emit_oos(raw, nt, owners or "globgrph")
+
+
 def cmd_io(args):
     # ADHC_COMPIL_V5.002 -- Lambda-path-mode short-circuit (AC1+AC2+AC3+AC4)
     if _lambda_pipescript_io(args.script_id):
         return
+
+    # NFRA_PIPESCRIPT P1b.1: LOUD OUT-OF-SCOPE (exit 2) for a non-medallion estate thread/
+    # resource -- never a silent Unknown counted as clean (the find-dualbiz io=Unknown class).
+    _estate_oos_guard(args.script_id)
 
     pipeline = getattr(args, 'pipeline', 'bd-gold') or 'bd-gold'
 
@@ -2603,6 +2672,10 @@ _POSTDEPS_CONFIGS: 'dict[str, str | None]' = {
 
 def cmd_postdeps(args):
     """Show and validate post-step dependencies and preconditions for gold scripts."""
+    # NFRA_PIPESCRIPT P1b.1: LOUD OUT-OF-SCOPE (exit 2) for a non-medallion estate thread/
+    # resource before the medallion config lookup -- closes the io/postdeps silent-Unknown class.
+    _estate_oos_guard(getattr(args, 'script_name', ''))
+
     # TOOL-02 scope resolution: --firm beats path auto-detect beats bd default.
     firm = getattr(args, 'firm', None)
     if not firm:
