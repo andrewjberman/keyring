@@ -1,0 +1,161 @@
+#!/usr/bin/env python3
+"""comp-which "<question>" -- the comp-tool ROUTER (NFRA_TOOLHUD #2, Andrew-direct 2026-06-15).
+
+THE PROBLEM (the HUD #2 arm): the 41KB graph-call-manifest catalog is too big to
+hold in an agent's head, so even with every tool documented, "which tool answers
+this?" is friction the blind-grep reflex skips. comp-which makes the catalog
+QUERYABLE: type your actual question, get the canonical comp call -- without
+knowing the catalog.
+
+  comp-which "what produces canonical_prices.parquet?"
+  comp-which "which lambda serves /api/scoped/advisor-intelligence?"
+  comp-which "what breaks if I change build_dashboard?"
+
+Two layers:
+ 1. CURATED high-confidence rules = CVO #3 baseline's ranked question->tool map
+    (bdf7a0a9a) -- the high-traffic question classes get the exact, vetted call.
+ 2. MANIFEST-FUZZY backstop = keyword-overlap score over graph-call-manifest.yaml's
+    use_case entries -> comprehensive + auto-updates as tools are added.
+
+Read-only, deterministic, ASCII-only. Tune the curated rules to CVO's post-hook
+re-measure (which redirects agents accept vs ignore).
+"""
+from __future__ import annotations
+
+import os
+import re
+import sys
+
+WS = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+MANIFEST = os.path.join(WS, "org", "modules", "graph", "graph-call-manifest.yaml")
+
+# Curated rules: (any-keyword list, label, [calls], why). Order = CVO bypass-volume rank.
+RULES = [
+    (["produce", "produces", "consume", "consumes", "who reads", "who writes", "what writes",
+      "what reads", "artifact", "s3 key", "s3://", "parquet", "platinum/", "/gold/", "/silver/"],
+     "S3 artifact / who-reads-writes",
+     ["comp-pipescript io <script>", "pipescript --resource <key>"],
+     "what produces/consumes an S3 key + who reads an artifact"),
+    (["portal", "component", "endpoint", "scoped route", "scoped", "/api/", ".tsx", "tsx",
+      "frontend", "renders", "rendering", "getadvisor", "which lambda serves", "serves /api"],
+     "portal component / route",
+     ["comp-transform schema-check <Component>", "comp-routes behaviors", "pipescript <thread>"],
+     "which producer/endpoint feeds a portal component + the serving/CF route"),
+    (["lambda", "function", "handler", "what does this lambda", "what does the lambda"],
+     "lambda",
+     ["comp-iam service <fn>", "comp-aws", "pipescript --resource <fn>"],
+     "what a lambda does + its IAM + its named thread"),
+    (["iam", "role", "perm", "permission", "policy", "grant", "allow", "deny", "principal"],
+     "IAM role/policy",
+     ["comp-iam service <lambda>", "comp-iam gaps"],
+     "perms before deploy (note: a Principal:* on Effect=Deny is a GUARDRAIL, not a public grant)"),
+    (["what resources", "aws resource", "which thread owns", "estate", "cloud graph", "blast radius of"],
+     "AWS resources / thread ownership",
+     ["comp-aws", "pipescript <name>", "comp-pipescript deployed"],
+     "what AWS resources exist + which named thread owns them"),
+    (["breaks", "blast", "what depends", "if i change", "impact of changing", "downstream of"],
+     "blast radius",
+     ["comp-blast <fn-or-artifact>"],
+     "what breaks if you change X (pass a function name, not a script name)"),
+    (["cache", "collision", "query key", "react query"],
+     "cache collisions",
+     ["comp-cache collisions"],
+     "cache-key collisions / shared keys"),
+    (["what's in", "whats in", "everything in", "whole pipeline", "the scanner", "named thread", "what is in the"],
+     "named-thread traversal",
+     ["pipescript <name>", "pipescript --list"],
+     "every resource + deps + data-flow in a named pipeline/thread (no silent Unknown)"),
+    (["deployed", "stale", "latest code", "s3 etag", "runner has", "is the runner on"],
+     "deploy freshness",
+     ["comp-pipescript deployed [script]"],
+     "is the deployed runner on the latest code (MATCH/STALE/MISSING)"),
+    (["4xx", "html response", "error response", "cloudfront error", "cf error", "auth fail"],
+     "route/CF debugging",
+     ["comp-routes behaviors"],
+     "CF error rules masking JSON errors / 4xx debugging"),
+]
+
+GOLD_ID = re.compile(r"(?<![\w])(INF_)?[A-DIS]_-?\d{1,2}[a-z]?(?![\w])")
+
+
+def _tokens(s: str):
+    return set(re.findall(r"[a-z0-9_]+", s.lower()))
+
+
+def _score_rule(q: str, qtok: set, keywords) -> int:
+    score = 0
+    ql = q.lower()
+    for kw in keywords:
+        if " " in kw or "/" in kw or "." in kw or ":" in kw:
+            if kw in ql:
+                score += 3  # phrase / path match = strong
+        elif kw in qtok:
+            score += 2
+    return score
+
+
+def _manifest_matches(q: str, qtok: set, top: int = 3):
+    """Keyword-overlap backstop over the manifest use_case entries."""
+    out = []
+    if not os.path.exists(MANIFEST):
+        return out
+    try:
+        import yaml
+        with open(MANIFEST, encoding="utf-8") as f:
+            data = yaml.safe_load(f)
+    except Exception:
+        return out
+    for e in (data or {}).get("use_cases", []) if isinstance(data, dict) else []:
+        text = " ".join(str(e.get(k, "")) for k in ("use_case", "id", "tool"))
+        overlap = len(qtok & _tokens(text))
+        if overlap >= 2:
+            out.append((overlap, e.get("tool", "?"), e.get("canonical_call", ""), e.get("use_case", "")[:90]))
+    out.sort(key=lambda x: -x[0])
+    return out[:top]
+
+
+def main() -> int:
+    if len(sys.argv) < 2 or not sys.argv[1].strip():
+        print('comp-which "<your question>"  -- maps a natural-language question to the canonical comp-* call.')
+        print('  e.g. comp-which "what produces canonical_prices.parquet?"')
+        print('  Browse: pipescript --list   |   full catalog: org/modules/graph/graph-call-manifest.yaml')
+        return 0
+    q = " ".join(sys.argv[1:]).strip()
+    qtok = _tokens(q)
+
+    hits = []  # (score, label, calls, why)
+    gid = GOLD_ID.search(q)
+    if gid:
+        hits.append((6, "gold-script id " + gid.group(0),
+                     ["comp-pipescript io %s" % gid.group(0), "comp-pipescript feeds/consumers %s" % gid.group(0),
+                      "pipescript --resource %s" % gid.group(0)],
+                     "what a gold script reads/writes + who feeds/consumes it"))
+    for keywords, label, calls, why in RULES:
+        s = _score_rule(q, qtok, keywords)
+        if s > 0:
+            hits.append((s, label, calls, why))
+    hits.sort(key=lambda x: -x[0])
+
+    print('comp-which -- best match for: "%s"\n' % q)
+    if hits:
+        for s, label, calls, why in hits[:3]:
+            print("  -> %s" % "   |   ".join(calls))
+            print("     [%s] %s" % (label, why))
+            print("")
+    else:
+        # fuzzy backstop over the manifest
+        mf = _manifest_matches(q, qtok)
+        if mf:
+            print("  (no high-confidence rule; closest catalog entries:)")
+            for overlap, tool, call, uc in mf:
+                print("  -> %s   (%s)" % (call or tool, uc))
+            print("")
+        else:
+            print("  No specific tool matched. Browse named threads: pipescript --list")
+            print("  Or the full catalog: org/modules/graph/graph-call-manifest.yaml\n")
+    print("  (comp-which is a router -- it points; run the call yourself. Tune: CVO NFRA_TOOLHUD #3.)")
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

@@ -342,6 +342,19 @@ entries:
     status: canonical
     notes: "NFRA_PIPESCRIPT COMPLETE 2026-06-15 (full PRD: a+b+c+P1b+P3, CVO final attestation bce23d613). Named-thread estate traversal: 25 named threads (per-page refined: advi-bd/inf/cot + market-overview/factor-tilts/valuation/correlation/positioning/cma/attribution/macroeconomics/model-portfolios/portfolio-management/trade-submission/news/causality/security-scanner/smartx/mdpf/partners/graph-platform/insurance/portal-infra/ops-internal) / 134 sub-threads over the 169-lambda census. Routes each thread to its owning_tool (comp-pipescript=medallion=13 / globgrph=AWS-resource / stitch=cross-layer / portal-consumer-tools=frontend / none=ops-local). P1b.2 = read-only drill POINTER (surfaces the canonical sub-resolver call per thread; does NOT live-invoke -- F5). P3.1 = inline debtscan flags (--debt). P3.2 = FE-reachability status (--fe-reachability) surfacing CVO GROUND-TRUTH (mounted-reachable/frontend-orphan/phantom/unreviewed-LOUD) -- NOT a live portal grep (scaffolding-fooled). Unknown name OR unowned-tool query ALWAYS LOUD (exit 2) -- generalized TOOL-02 false-clean guard. Standing regression oracle: pipescript --gate-b + --fe-reachability. Read-only; ASCII-only stdout. Owner: DS (pipescript_cli.py = DS lane); cross-tool comp-pipescript guard edits route owner-review (AE) per the two-rule lane convention."
 
+  - id: meta.comp_which.router
+    use_case: "I don't know WHICH comp tool answers my question -- I'm about to blind-grep. (the entry-point router; makes this whole catalog queryable)"
+    canonical_call: "comp-which \"<your natural-language question>\"   # e.g. comp-which \"what produces canonical_prices.parquet?\""
+    tool: comp-which
+    mode: query-cached
+    layer: meta
+    cost: "<0.2s (reads this manifest + curated rules; no AWS)"
+    freshness: "reads graph-call-manifest.yaml + curated CVO-#3 question->tool rules (no rebuild)"
+    rebuild_trigger: "none -- auto-includes new tools as they're added to this manifest (fuzzy backstop)"
+    anti_pattern: "blind-grepping for a repo relationship instead of asking comp-which (or heeding the PreToolUse comp-tool-hud advisory) -- the exact gap NFRA_TOOLHUD closes"
+    status: canonical
+    notes: "NFRA_TOOLHUD #2 (Andrew-direct 2026-06-15). The HUD router: a natural-language question -> the canonical comp call, so an agent never has to KNOW the catalog. Curated high-confidence rules = CVO #3 baseline's ranked question->tool map (bdf7a0a9a: S3-key->comp-pipescript io/pipescript --resource; portal->comp-transform/comp-routes; gold-id->comp-pipescript io/feeds/consumers; lambda->comp-iam service/comp-aws; iam-role->comp-iam; blast->comp-blast; named-thread->pipescript) + a keyword-fuzzy backstop over this manifest. Sibling of the PreToolUse comp-tool-hud.sh intercept hook (#1, fires on the grep reflex). Read-only; points, doesn't run."
+
   - id: pipeline.freshness.chain_ready
     use_case: "Is the upstream S3 data fresh enough to run a gold chain?"
     canonical_call: "comp-freshness chain {bd|inf} ; comp-freshness script <id>"

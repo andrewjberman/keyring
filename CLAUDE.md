@@ -45,8 +45,11 @@ Rules below are law for every agent, every session. Format: imperative + enforci
 
 All in `.tools/` (PATH). Full catalog + tools_index: `org/modules/graph/graph-call-manifest.yaml`; reference: `org/modules/graph/comp-tools.yaml`.
 
+**Don't know which tool? `comp-which "<your question>"`** maps a natural-language question to the canonical comp call (the catalog, made queryable — you don't need to know all ~30 tools). And a PreToolUse HUD hook nudges you in-line when a `Grep`/`Glob` would answer a repo-relationship question a comp tool already answers — **reach for the tool, not the blind grep** (it's stronger + repo-scoped + faster). NFRA_TOOLHUD.
+
 | Situation | Command | Note |
 |---|---|---|
+| Don't know which comp tool? | `comp-which "<question>"` | natural-language question → the canonical call (the queryable catalog). NFRA_TOOLHUD |
 | "What's in the news/advi/market/... pipeline?" | `pipescript <name>` | named-thread estate traversal: every resource + producers→served→frontend + owning tool + debt/reachability flags, whole estate, NO silent Unknown (`pipescript --list` for names). NFRA_PIPESCRIPT |
 | Editing a gold script | `comp-pipescript io [script]` | COLUMN GAPS + portal consumers |
 | Running a gold script | `comp-pipescript deployed [script]` | MATCH/STALE/MISSING; no-arg = all-trees firm-separated sweep |
