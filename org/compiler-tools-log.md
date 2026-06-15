@@ -5979,3 +5979,17 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-06-15 | 0.4.0_DS_ClientPlatform~A | NFRA_PIPESCRIPT | pipescript | pipescript --fe-reachability / --orphans / --debt (P3 gates) | PASS |
 | 2026-06-15 | 0.4.0_DS_ClientPlatform~A | NFRA_PIPESCRIPT | comp-pipescript | comp-pipescript io/postdeps non-medallion -> OUT-OF-SCOPE exit2 (P1b.1 guard) | PASS |
 | 2026-06-15 | 0.4.0_DS_ClientPlatform~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-06-15 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file data/black_diamond/scripts/gold/D_00f.a... | PASS |
+| 2026-06-15 | 0.4.0_DS_ClientPlatform | 49NNAFIX.D1-dispatcher-wire | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-06-15 | 3.0.0_SA_CVO | 49NNAFIX.D1-dispatcher-wire | comp-routes | comp-routes behaviors | PASS |
+| 2026-06-15 | 0.6.0_AE_PartnerETL | 49NNAFIX.D1-dispatcher-wire | comp-pipescript | comp-pipescript io D_00f | PASS |
+| 2026-06-15 | 3.0.0_SA_CVO | 49NNAFIX.D1-dispatcher-wire | comp-routes | comp-routes behaviors | PASS |
+| 2026-06-15 | 0.6.0_AE_PartnerETL | 49NNAFIX.D1-dispatcher-wire | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.6.0_AE_PartnerETL/st... | PASS |
+| 2026-06-15 | 0.4.0_DS_ClientPlatform | 49NNAFIX.D1-dispatcher-wire | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-06-15 | 0.6.0_AE_PartnerETL | 49NNAFIX.D1-dispatcher-wire | comp-pipescript | comp-pipescript io D_00f | PASS |
+| 2026-06-15 | 0.6.0_AE_PartnerETL | 49NNAFIX.D1-dispatcher-wire | comp-pipescript | comp-pipescript deployed D_00f | PASS |
+| 2026-06-15 | 0.6.0_AE_PartnerETL | 49NNAFIX.D1-dispatcher-wire | comp-surface-check | comp-surface-check check --mode advisory --file data/black_diamond/scripts/gold/gold_di... | PASS |
+| 2026-06-15 | 0.4.0_DS_ClientPlatform | 49NNAFIX.D1-dispatcher-wire | comp-surface-check | comp-surface-check check --mode advisory --file data/black_diamond/scripts/gold/D_00f.a... | PASS |
+| 2026-06-15 | 0.6.0_AE_PartnerETL | 49NNAFIX.D1-dispatcher-wire | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/.open_deploys/gldinc... | PASS |
+| 2026-06-15 | 0.6.0_AE_PartnerETL | 49NNAFIX.D1-dispatcher-wire | (session summary) | comp-pipescript io+deployed D_00f (MATCH) + deploy_ledger.py open/close-leg + iam role-policy verify -- D1 D_00f dispatcher activated, inf-ledger closed; 4 commits | PASS |
+| 2026-06-15 | 0.6.0_AE_PartnerETL | 49NNAFIX.D1-dispatcher-wire | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
