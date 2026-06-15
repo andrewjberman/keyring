@@ -496,6 +496,30 @@ lanes:
       - 0.4.0_DS_ClientPlatform~E
     description: "ANY_EXEC_OR_AE + DS 0.4.0 (incl. tilde lanes) for the comp-manifest-check tool family. DS owns the NFRA_GRAPHS.D6 deliverable per CTO dispatch, but manifest_check_cli.py resolved to *_cli.py (ANY_EXEC_OR_AE) and manifest_check_config.yaml fell through to org/modules/** (ANY_EXEC) — neither includes DS, forcing 2 audited ANY_EXEC overrides 2026-06-11 (27e5fe7c5, 98d3c4fe9). Same gap class as the 6ce03b7f7 graph_*.py base-AE add, one file-set over. Added 2026-06-12 by 2.0.0_SA_COO per MSTR RV-0033 F-002 corrective."
 
+  NFRA_PIPESCRIPT_TOOL:
+    permitted_agents:
+      - 1.0.0_SA_CTO
+      - 2.0.0_SA_COO
+      - 3.0.0_SA_CVO
+      - 1.1.0_SA_CTO
+      - 2.1.0_SA_COO
+      - 3.1.0_SA_CVO
+      - 0.5.0_AE_OpalETL
+      - 0.5.0_AE_OpalETL~B
+      - 0.6.0_AE_PartnerETL
+      - 0.6.1_AE_PartnerETL
+      - 0.6.2_AE_PartnerETL
+      - 0.7.0_AE_CloudOps
+      - 0.7.0_AE_CloudOps~B
+      - 0.7.0_AE_CloudOps~C
+      - 0.4.0_DS_ClientPlatform
+      - 0.4.0_DS_ClientPlatform~A
+      - 0.4.0_DS_ClientPlatform~B
+      - 0.4.0_DS_ClientPlatform~C
+      - 0.4.0_DS_ClientPlatform~D
+      - 0.4.0_DS_ClientPlatform~E
+    description: "ANY_EXEC_OR_AE + DS 0.4.0 (incl. tilde lanes) for the NFRA_PIPESCRIPT CLI tool (pipescript_cli.py). The PRD assigns the pipescript CLI to DS/tooling, but pipescript_cli.py resolved to *_cli.py (ANY_EXEC_OR_AE) which excludes DS, blocking the DS~A builder's P1a commit (committed by COO 73b72471c as stopgap). SECOND occurrence of this gap class (manifest_check RV-0033 was first) -> CONVENTION going forward: when a PRD assigns a graph-module tool to DS, COO adds the DS-inclusive lane rule at DECOMPOSITION-time, proactively. Added 2026-06-15 by 2.0.0_SA_COO per CTO concur (185517Z) + MSTR RV-0034 corrective; Andrew /goal NFRA_PIPESCRIPT."
+
 # =========================================================================
 # PATHS
 # Listed roughly from most-specific to most-general within each top-level group.
@@ -755,6 +779,10 @@ paths:
   "org/modules/graph/manifest_check_*":
     lane: COMPILER_MANIFEST_CHECK
     note: "comp-manifest-check tool family (manifest_check_cli.py, manifest_check_config.yaml, manifest_check tests). DS 0.4.0 owns the NFRA_GRAPHS.D6 deliverable per CTO dispatch; AE retains compiler-ecosystem access. Longest-match overrides *_cli.py (ANY_EXEC_OR_AE) + org/modules/** (ANY_EXEC). Added 2026-06-12 by COO per MSTR RV-0033 F-002."
+
+  "org/modules/graph/pipescript_cli.py":
+    lane: NFRA_PIPESCRIPT_TOOL
+    note: "NFRA_PIPESCRIPT CLI engine (the `pipescript <name>` named-thread resolver). DS owns it per the PRD (DS/tooling = CLI + resolver wiring). Longest-match overrides *_cli.py (ANY_EXEC_OR_AE). Added 2026-06-15 by COO per CTO concur + RV-0034; Andrew /goal."
 
   "org/modules/graph/graph_*.py":
     lane: ANY_EXEC_OR_AE
