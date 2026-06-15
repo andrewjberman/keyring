@@ -24,6 +24,7 @@ def load_routing():
     for e in m.get("threads", []):
         out.append({"family": e.get("family"), "named_thread": e.get("named_thread"),
                     "owning_tool": e.get("owning_tool"), "status": e.get("status"),
+                    "reachability_status": e.get("reachability_status"),  # P3.2 CVO ground-truth
                     "reason": e.get("reason")})
     return out
 
@@ -59,6 +60,7 @@ def main():
         threads.append({
             "thread_id": tid, "named_thread": r["named_thread"],
             "family": d.get("family"), "owning_tool": r["owning_tool"], "status": r["status"],
+            "reachability_status": r.get("reachability_status"),  # P3.2 CVO ground-truth FE-reachability
             "reason": r.get("reason"), "debtscan_flags": flags,
             "description": d.get("description", ""),
             "producers": d.get("producers", []),
