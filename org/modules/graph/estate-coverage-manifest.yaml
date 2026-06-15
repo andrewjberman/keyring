@@ -29,13 +29,14 @@ last_full_review: 2026-06-15   # the CVO census 2d9a0a2a1
 
 # ---- FULL POPULATION (COO-generated from CVO census 2d9a0a2a1 + NAMED_THREAD_CATALOG d33fe4aab; CVO verifies determinations) ----
 threads:
-  # P2 per-page named_thread set (CVO reclassification 2026-06-15, post yang per-page census wuyv5ldtq)
+  # + reachability_status {mounted-reachable|frontend-orphan|phantom|unreviewed} (CVO P3.2 ground-truth determination 2026-06-15; grep INPUT + CVO overrides: both Time Machine=phantom per Andrew; NAMED-UNVERIFIED=LOUD unreviewed)
 
   # ---- pipescript advi-bd (19) ----
   - family: bd-allocation-file-watchdog
     named_thread: advi-bd
     owning_tool: none
     status: explicit-out
+    reachability_status: frontend-orphan
     reason: Ops-only SNS file-presence watchdog, no served data artifact, no consumer
     tool_pointer: null
     last_reviewed: '2026-06-15'
@@ -44,6 +45,7 @@ threads:
     named_thread: advi-bd
     owning_tool: comp-pipescript
     status: in-scope
+    reachability_status: frontend-orphan
     tool_pointer: null
     last_reviewed: '2026-06-15'
     debtscan_flags: []
@@ -51,6 +53,7 @@ threads:
     named_thread: advi-bd
     owning_tool: comp-pipescript
     status: in-scope
+    reachability_status: frontend-orphan
     tool_pointer: null
     last_reviewed: '2026-06-15'
     debtscan_flags: []
@@ -58,6 +61,7 @@ threads:
     named_thread: advi-bd
     owning_tool: comp-pipescript
     status: in-scope
+    reachability_status: frontend-orphan
     tool_pointer: null
     last_reviewed: '2026-06-15'
     debtscan_flags: []
@@ -65,6 +69,7 @@ threads:
     named_thread: advi-bd
     owning_tool: comp-pipescript
     status: in-scope
+    reachability_status: frontend-orphan
     tool_pointer: null
     last_reviewed: '2026-06-15'
     debtscan_flags: []
@@ -72,6 +77,7 @@ threads:
     named_thread: advi-bd
     owning_tool: globgrph
     status: in-scope
+    reachability_status: frontend-orphan
     tool_pointer: null
     last_reviewed: '2026-06-15'
     debtscan_flags: []
@@ -79,6 +85,7 @@ threads:
     named_thread: advi-bd
     owning_tool: portal-consumer-tools
     status: in-scope
+    reachability_status: mounted-reachable
     tool_pointer: null
     last_reviewed: '2026-06-15'
     debtscan_flags: []
@@ -86,6 +93,7 @@ threads:
     named_thread: advi-bd
     owning_tool: comp-pipescript
     status: in-scope
+    reachability_status: frontend-orphan
     tool_pointer: null
     last_reviewed: '2026-06-15'
     debtscan_flags: []
@@ -93,6 +101,7 @@ threads:
     named_thread: advi-bd
     owning_tool: globgrph
     status: in-scope
+    reachability_status: frontend-orphan
     tool_pointer: null
     last_reviewed: '2026-06-15'
     debtscan_flags: []
@@ -100,6 +109,7 @@ threads:
     named_thread: advi-bd
     owning_tool: comp-pipescript
     status: in-scope
+    reachability_status: frontend-orphan
     tool_pointer: null
     last_reviewed: '2026-06-15'
     debtscan_flags: []
@@ -107,6 +117,7 @@ threads:
     named_thread: advi-bd
     owning_tool: none
     status: explicit-out
+    reachability_status: frontend-orphan
     reason: Orphaned legacy in-Lambda gold generator, no trigger/policy, superseded by EC2 runner; no live consumer
     tool_pointer: null
     last_reviewed: '2026-06-15'
@@ -115,6 +126,7 @@ threads:
     named_thread: advi-bd
     owning_tool: stitch
     status: in-scope
+    reachability_status: mounted-reachable
     tool_pointer: null
     last_reviewed: '2026-06-15'
     debtscan_flags: []
@@ -122,6 +134,7 @@ threads:
     named_thread: advi-bd
     owning_tool: comp-pipescript
     status: in-scope
+    reachability_status: frontend-orphan
     tool_pointer: null
     last_reviewed: '2026-06-15'
     debtscan_flags: []
@@ -129,6 +142,7 @@ threads:
     named_thread: advi-bd
     owning_tool: none
     status: explicit-out
+    reachability_status: frontend-orphan
     reason: Weekly QA/parity smoke (incrparity), no served data artifact, no frontend consumer
     tool_pointer: null
     last_reviewed: '2026-06-15'
@@ -137,6 +151,7 @@ threads:
     named_thread: advi-bd
     owning_tool: portal-consumer-tools
     status: in-scope
+    reachability_status: mounted-reachable
     tool_pointer: null
     last_reviewed: '2026-06-15'
     debtscan_flags: []
@@ -144,6 +159,7 @@ threads:
     named_thread: advi-bd
     owning_tool: comp-pipescript
     status: in-scope
+    reachability_status: frontend-orphan
     tool_pointer: null
     last_reviewed: '2026-06-15'
     debtscan_flags: []
@@ -151,6 +167,7 @@ threads:
     named_thread: advi-bd
     owning_tool: globgrph
     status: unreviewed
+    reachability_status: phantom
     tool_pointer: null
     last_reviewed: '2026-06-15'
     debtscan_flags: []
@@ -158,6 +175,7 @@ threads:
     named_thread: advi-bd
     owning_tool: comp-pipescript
     status: in-scope
+    reachability_status: frontend-orphan
     tool_pointer: null
     last_reviewed: '2026-06-15'
     debtscan_flags: []
@@ -165,6 +183,7 @@ threads:
     named_thread: advi-bd
     owning_tool: comp-pipescript
     status: in-scope
+    reachability_status: frontend-orphan
     tool_pointer: null
     last_reviewed: '2026-06-15'
     debtscan_flags: []
@@ -174,6 +193,7 @@ threads:
     named_thread: advi-cot
     owning_tool: stitch
     status: in-scope
+    reachability_status: mounted-reachable
     tool_pointer: null
     last_reviewed: '2026-06-15'
     debtscan_flags: []
@@ -183,6 +203,7 @@ threads:
     named_thread: advi-inf
     owning_tool: portal-consumer-tools
     status: in-scope
+    reachability_status: unreviewed
     tool_pointer: null
     last_reviewed: '2026-06-15'
     debtscan_flags: []
@@ -190,6 +211,7 @@ threads:
     named_thread: advi-inf
     owning_tool: globgrph
     status: in-scope
+    reachability_status: unreviewed
     tool_pointer: null
     last_reviewed: '2026-06-15'
     debtscan_flags: []
@@ -197,6 +219,7 @@ threads:
     named_thread: advi-inf
     owning_tool: comp-pipescript
     status: in-scope
+    reachability_status: frontend-orphan
     tool_pointer: null
     last_reviewed: '2026-06-15'
     debtscan_flags: []
@@ -204,6 +227,7 @@ threads:
     named_thread: advi-inf
     owning_tool: comp-pipescript
     status: in-scope
+    reachability_status: frontend-orphan
     tool_pointer: null
     last_reviewed: '2026-06-15'
     debtscan_flags: []
@@ -211,6 +235,7 @@ threads:
     named_thread: advi-inf
     owning_tool: globgrph
     status: unreviewed
+    reachability_status: frontend-orphan
     tool_pointer: null
     last_reviewed: '2026-06-15'
     debtscan_flags: []
@@ -218,6 +243,7 @@ threads:
     named_thread: advi-inf
     owning_tool: none
     status: explicit-out
+    reachability_status: frontend-orphan
     reason: Ops-only EC2 launch monitor + retry (SNS + DDB lock), no data artifact/consumer
     tool_pointer: null
     last_reviewed: '2026-06-15'
@@ -226,6 +252,7 @@ threads:
     named_thread: advi-inf
     owning_tool: stitch
     status: in-scope
+    reachability_status: mounted-reachable
     tool_pointer: null
     last_reviewed: '2026-06-15'
     debtscan_flags: []
@@ -233,6 +260,7 @@ threads:
     named_thread: advi-inf
     owning_tool: none
     status: explicit-out
+    reachability_status: frontend-orphan
     reason: Manual QA EC2, no scheduled trigger, writes non-prod QA prefix; no live consumer
     tool_pointer: null
     last_reviewed: '2026-06-15'
@@ -241,6 +269,7 @@ threads:
     named_thread: advi-inf
     owning_tool: globgrph
     status: in-scope
+    reachability_status: frontend-orphan
     tool_pointer: null
     last_reviewed: '2026-06-15'
     debtscan_flags: []
@@ -248,6 +277,7 @@ threads:
     named_thread: advi-inf
     owning_tool: none
     status: explicit-out
+    reachability_status: frontend-orphan
     reason: Observability-only freshness watchdog emitting CW metric ADVI/NNA, no consumer-facing data
     tool_pointer: null
     last_reviewed: '2026-06-15'
@@ -256,6 +286,7 @@ threads:
     named_thread: advi-inf
     owning_tool: portal-consumer-tools
     status: in-scope
+    reachability_status: unreviewed
     tool_pointer: null
     last_reviewed: '2026-06-15'
     debtscan_flags: []
@@ -263,6 +294,7 @@ threads:
     named_thread: advi-inf
     owning_tool: portal-consumer-tools
     status: in-scope
+    reachability_status: mounted-reachable
     tool_pointer: null
     last_reviewed: '2026-06-15'
     debtscan_flags: []
@@ -270,6 +302,7 @@ threads:
     named_thread: advi-inf
     owning_tool: globgrph
     status: in-scope
+    reachability_status: frontend-orphan
     tool_pointer: null
     last_reviewed: '2026-06-15'
     debtscan_flags: []
@@ -277,6 +310,7 @@ threads:
     named_thread: advi-inf
     owning_tool: comp-pipescript
     status: in-scope
+    reachability_status: frontend-orphan
     tool_pointer: null
     last_reviewed: '2026-06-15'
     debtscan_flags: []
@@ -286,6 +320,7 @@ threads:
     named_thread: causality
     owning_tool: none
     status: explicit-out
+    reachability_status: frontend-orphan
     reason: Live API route but ZERO consumer (absent from causality-endpoints.ts and built page); on deprecation list
     tool_pointer: null
     last_reviewed: '2026-06-15'
@@ -294,6 +329,7 @@ threads:
     named_thread: causality
     owning_tool: none
     status: explicit-out
+    reachability_status: frontend-orphan
     reason: 2 live API routes but ZERO consumer; on deprecation list
     tool_pointer: null
     last_reviewed: '2026-06-15'
@@ -302,6 +338,7 @@ threads:
     named_thread: causality
     owning_tool: portal-consumer-tools
     status: unreviewed
+    reachability_status: unreviewed
     tool_pointer: null
     last_reviewed: '2026-06-15'
     debtscan_flags: []
@@ -309,6 +346,7 @@ threads:
     named_thread: causality
     owning_tool: globgrph
     status: unreviewed
+    reachability_status: unreviewed
     tool_pointer: null
     last_reviewed: '2026-06-15'
     debtscan_flags: []
@@ -316,6 +354,7 @@ threads:
     named_thread: causality
     owning_tool: portal-consumer-tools
     status: unreviewed
+    reachability_status: unreviewed
     tool_pointer: null
     last_reviewed: '2026-06-15'
     debtscan_flags: []
@@ -325,6 +364,7 @@ threads:
     named_thread: cma
     owning_tool: globgrph
     status: in-scope
+    reachability_status: mounted-reachable
     tool_pointer: null
     last_reviewed: '2026-06-15'
     debtscan_flags: []
@@ -334,6 +374,7 @@ threads:
     named_thread: correlation
     owning_tool: globgrph
     status: in-scope
+    reachability_status: mounted-reachable
     tool_pointer: null
     last_reviewed: '2026-06-15'
     debtscan_flags: []
@@ -343,6 +384,7 @@ threads:
     named_thread: data-refresh
     owning_tool: portal-consumer-tools
     status: in-scope
+    reachability_status: unreviewed
     tool_pointer: null
     last_reviewed: '2026-06-15'
     debtscan_flags: []
@@ -352,6 +394,7 @@ threads:
     named_thread: factor-tilts
     owning_tool: globgrph
     status: in-scope
+    reachability_status: mounted-reachable
     tool_pointer: null
     last_reviewed: '2026-06-15'
     debtscan_flags: []
@@ -361,6 +404,7 @@ threads:
     named_thread: graph-platform
     owning_tool: globgrph
     status: in-scope
+    reachability_status: frontend-orphan
     tool_pointer: null
     last_reviewed: '2026-06-15'
     debtscan_flags: []
@@ -368,6 +412,7 @@ threads:
     named_thread: graph-platform
     owning_tool: globgrph
     status: in-scope
+    reachability_status: frontend-orphan
     tool_pointer: null
     last_reviewed: '2026-06-15'
     debtscan_flags: []
@@ -375,6 +420,7 @@ threads:
     named_thread: graph-platform
     owning_tool: globgrph
     status: in-scope
+    reachability_status: frontend-orphan
     tool_pointer: null
     last_reviewed: '2026-06-15'
     debtscan_flags: []
@@ -382,6 +428,7 @@ threads:
     named_thread: graph-platform
     owning_tool: stitch
     status: in-scope
+    reachability_status: frontend-orphan
     tool_pointer: null
     last_reviewed: '2026-06-15'
     debtscan_flags: []
@@ -391,6 +438,7 @@ threads:
     named_thread: insurance
     owning_tool: none
     status: explicit-out
+    reachability_status: frontend-orphan
     reason: Local dev-box research scripts, no S3/Lambda/portal consumer
     tool_pointer: null
     last_reviewed: '2026-06-15'
@@ -399,6 +447,7 @@ threads:
     named_thread: insurance
     owning_tool: none
     status: explicit-out
+    reachability_status: frontend-orphan
     reason: 4 Lambdas + S3 opal-data-imo but analyst-facing JSON, manual/orchestrator trigger (no live schedule), not portal/pipeline wired
     tool_pointer: null
     last_reviewed: '2026-06-15'
@@ -409,6 +458,7 @@ threads:
     named_thread: macroeconomics
     owning_tool: portal-consumer-tools
     status: in-scope
+    reachability_status: mounted-reachable
     tool_pointer: null
     last_reviewed: '2026-06-15'
     debtscan_flags: []
@@ -416,6 +466,7 @@ threads:
     named_thread: macroeconomics
     owning_tool: none
     status: unreviewed
+    reachability_status: frontend-orphan
     tool_pointer: null
     last_reviewed: '2026-06-15'
     debtscan_flags: []
@@ -423,6 +474,7 @@ threads:
     named_thread: macroeconomics
     owning_tool: stitch
     status: in-scope
+    reachability_status: mounted-reachable
     tool_pointer: null
     last_reviewed: '2026-06-15'
     debtscan_flags: []
@@ -430,6 +482,7 @@ threads:
     named_thread: macroeconomics
     owning_tool: stitch
     status: in-scope
+    reachability_status: mounted-reachable
     tool_pointer: null
     last_reviewed: '2026-06-15'
     debtscan_flags: []
@@ -437,6 +490,7 @@ threads:
     named_thread: macroeconomics
     owning_tool: stitch
     status: in-scope
+    reachability_status: mounted-reachable
     tool_pointer: null
     last_reviewed: '2026-06-15'
     debtscan_flags: []
@@ -444,6 +498,7 @@ threads:
     named_thread: macroeconomics
     owning_tool: portal-consumer-tools
     status: in-scope
+    reachability_status: mounted-reachable
     tool_pointer: null
     last_reviewed: '2026-06-15'
     debtscan_flags: []
@@ -451,6 +506,7 @@ threads:
     named_thread: macroeconomics
     owning_tool: none
     status: unreviewed
+    reachability_status: frontend-orphan
     tool_pointer: null
     last_reviewed: '2026-06-15'
     debtscan_flags: []
@@ -458,6 +514,7 @@ threads:
     named_thread: macroeconomics
     owning_tool: none
     status: explicit-out
+    reachability_status: frontend-orphan
     reason: Lambda + S3 but internal GitHub-commit dev digest, no frontend/pipeline consumer
     tool_pointer: null
     last_reviewed: '2026-06-15'
@@ -466,6 +523,7 @@ threads:
     named_thread: macroeconomics
     owning_tool: globgrph
     status: in-scope
+    reachability_status: mounted-reachable
     tool_pointer: null
     last_reviewed: '2026-06-15'
     debtscan_flags: []
@@ -475,6 +533,7 @@ threads:
     named_thread: market-overview
     owning_tool: portal-consumer-tools
     status: in-scope
+    reachability_status: mounted-reachable
     tool_pointer: null
     last_reviewed: '2026-06-15'
     debtscan_flags: []
@@ -482,6 +541,7 @@ threads:
     named_thread: market-overview
     owning_tool: portal-consumer-tools
     status: in-scope
+    reachability_status: mounted-reachable
     tool_pointer: null
     last_reviewed: '2026-06-15'
     debtscan_flags: []
@@ -489,6 +549,7 @@ threads:
     named_thread: market-overview
     owning_tool: portal-consumer-tools
     status: in-scope
+    reachability_status: mounted-reachable
     tool_pointer: null
     last_reviewed: '2026-06-15'
     debtscan_flags: []
@@ -496,6 +557,7 @@ threads:
     named_thread: market-overview
     owning_tool: portal-consumer-tools
     status: in-scope
+    reachability_status: mounted-reachable
     tool_pointer: null
     last_reviewed: '2026-06-15'
     debtscan_flags: []
@@ -503,6 +565,7 @@ threads:
     named_thread: market-overview
     owning_tool: portal-consumer-tools
     status: in-scope
+    reachability_status: unreviewed
     tool_pointer: null
     last_reviewed: '2026-06-15'
     debtscan_flags: []
@@ -510,6 +573,7 @@ threads:
     named_thread: market-overview
     owning_tool: portal-consumer-tools
     status: in-scope
+    reachability_status: mounted-reachable
     tool_pointer: null
     last_reviewed: '2026-06-15'
     debtscan_flags: []
@@ -517,6 +581,7 @@ threads:
     named_thread: market-overview
     owning_tool: portal-consumer-tools
     status: unreviewed
+    reachability_status: unreviewed
     tool_pointer: null
     last_reviewed: '2026-06-15'
     debtscan_flags: []
@@ -524,6 +589,7 @@ threads:
     named_thread: market-overview
     owning_tool: portal-consumer-tools
     status: unreviewed
+    reachability_status: unreviewed
     tool_pointer: null
     last_reviewed: '2026-06-15'
     debtscan_flags: []
@@ -531,6 +597,7 @@ threads:
     named_thread: market-overview
     owning_tool: portal-consumer-tools
     status: in-scope
+    reachability_status: mounted-reachable
     tool_pointer: null
     last_reviewed: '2026-06-15'
     debtscan_flags: []
@@ -538,6 +605,7 @@ threads:
     named_thread: market-overview
     owning_tool: portal-consumer-tools
     status: in-scope
+    reachability_status: mounted-reachable
     tool_pointer: null
     last_reviewed: '2026-06-15'
     debtscan_flags: []
@@ -545,6 +613,7 @@ threads:
     named_thread: market-overview
     owning_tool: globgrph
     status: unreviewed
+    reachability_status: unreviewed
     tool_pointer: null
     last_reviewed: '2026-06-15'
     debtscan_flags: []
@@ -554,6 +623,7 @@ threads:
     named_thread: mdpf
     owning_tool: portal-consumer-tools
     status: in-scope
+    reachability_status: unreviewed
     tool_pointer: null
     last_reviewed: '2026-06-15'
     debtscan_flags: []
@@ -561,6 +631,7 @@ threads:
     named_thread: mdpf
     owning_tool: stitch
     status: in-scope
+    reachability_status: mounted-reachable
     tool_pointer: null
     last_reviewed: '2026-06-15'
     debtscan_flags: []
@@ -570,6 +641,7 @@ threads:
     named_thread: model-portfolios
     owning_tool: none
     status: explicit-out
+    reachability_status: frontend-orphan
     reason: Lambda but artifact frozen 2026-01-14, superseded by opal-portal-volatility-fetcher; no consumer reads json/yang/volatility_data.json
     tool_pointer: null
     last_reviewed: '2026-06-15'
@@ -578,6 +650,7 @@ threads:
     named_thread: model-portfolios
     owning_tool: globgrph
     status: in-scope
+    reachability_status: mounted-reachable
     tool_pointer: null
     last_reviewed: '2026-06-15'
     debtscan_flags: []
@@ -585,6 +658,7 @@ threads:
     named_thread: model-portfolios
     owning_tool: globgrph
     status: explicit-out
+    reachability_status: unreviewed
     reason: Live cloud Lambda but a passive observability/drift-check leg with no served artifact and no frontend/pipeline consumer; explicitly designed to never block or feed the served set.
     tool_pointer: null
     last_reviewed: '2026-06-15'
@@ -593,6 +667,7 @@ threads:
     named_thread: model-portfolios
     owning_tool: globgrph
     status: in-scope
+    reachability_status: unreviewed
     tool_pointer: null
     last_reviewed: '2026-06-15'
     debtscan_flags: []
@@ -600,6 +675,7 @@ threads:
     named_thread: model-portfolios
     owning_tool: globgrph
     status: in-scope
+    reachability_status: mounted-reachable
     tool_pointer: null
     last_reviewed: '2026-06-15'
     debtscan_flags: []
@@ -607,6 +683,7 @@ threads:
     named_thread: model-portfolios
     owning_tool: globgrph
     status: in-scope
+    reachability_status: unreviewed
     tool_pointer: null
     last_reviewed: '2026-06-15'
     debtscan_flags: []
@@ -614,6 +691,7 @@ threads:
     named_thread: model-portfolios
     owning_tool: globgrph
     status: explicit-out
+    reachability_status: unreviewed
     reason: Live cloud Lambda but an operational rollback tool with no scheduled trigger and no dedicated served artifact/consumer; it acts on artifacts other legs own.
     tool_pointer: null
     last_reviewed: '2026-06-15'
@@ -622,6 +700,7 @@ threads:
     named_thread: model-portfolios
     owning_tool: globgrph
     status: explicit-out
+    reachability_status: frontend-orphan
     reason: 'Live Lambda but a confirmed ORPHAN: not in the DAG, no trigger, output stale 5 months, and the path it writes has no portal consumer (the portal reads a different key from a different family''s producer). No live frontend/pipeline consumer ='
     tool_pointer: null
     last_reviewed: '2026-06-15'
@@ -632,6 +711,7 @@ threads:
     named_thread: news
     owning_tool: portal-consumer-tools
     status: in-scope
+    reachability_status: mounted-reachable
     tool_pointer: null
     last_reviewed: '2026-06-15'
     debtscan_flags: []
@@ -639,6 +719,7 @@ threads:
     named_thread: news
     owning_tool: globgrph
     status: in-scope
+    reachability_status: frontend-orphan
     tool_pointer: null
     last_reviewed: '2026-06-15'
     debtscan_flags: []
@@ -646,6 +727,7 @@ threads:
     named_thread: news
     owning_tool: portal-consumer-tools
     status: in-scope
+    reachability_status: mounted-reachable
     tool_pointer: null
     last_reviewed: '2026-06-15'
     debtscan_flags: []
@@ -653,6 +735,7 @@ threads:
     named_thread: news
     owning_tool: portal-consumer-tools
     status: in-scope
+    reachability_status: mounted-reachable
     tool_pointer: null
     last_reviewed: '2026-06-15'
     debtscan_flags: []
@@ -660,6 +743,7 @@ threads:
     named_thread: news
     owning_tool: portal-consumer-tools
     status: in-scope
+    reachability_status: mounted-reachable
     tool_pointer: null
     last_reviewed: '2026-06-15'
     debtscan_flags: []
@@ -667,6 +751,7 @@ threads:
     named_thread: news
     owning_tool: globgrph
     status: in-scope
+    reachability_status: frontend-orphan
     tool_pointer: null
     last_reviewed: '2026-06-15'
     debtscan_flags: []
@@ -674,6 +759,7 @@ threads:
     named_thread: news
     owning_tool: portal-consumer-tools
     status: in-scope
+    reachability_status: mounted-reachable
     tool_pointer: null
     last_reviewed: '2026-06-15'
     debtscan_flags: []
@@ -681,6 +767,7 @@ threads:
     named_thread: news
     owning_tool: globgrph
     status: in-scope
+    reachability_status: frontend-orphan
     tool_pointer: null
     last_reviewed: '2026-06-15'
     debtscan_flags: []
@@ -688,6 +775,7 @@ threads:
     named_thread: news
     owning_tool: none
     status: explicit-out
+    reachability_status: frontend-orphan
     reason: Local operator/backfill scripts + STOPPED EC2 bundle; drives in-scope cloud lambdas, not a cloud-served producer
     tool_pointer: null
     last_reviewed: '2026-06-15'
@@ -696,6 +784,7 @@ threads:
     named_thread: news
     owning_tool: globgrph
     status: in-scope
+    reachability_status: frontend-orphan
     tool_pointer: null
     last_reviewed: '2026-06-15'
     debtscan_flags: []
@@ -703,6 +792,7 @@ threads:
     named_thread: news
     owning_tool: portal-consumer-tools
     status: unreviewed
+    reachability_status: frontend-orphan
     tool_pointer: null
     last_reviewed: '2026-06-15'
     debtscan_flags: []
@@ -710,6 +800,7 @@ threads:
     named_thread: news
     owning_tool: none
     status: explicit-out
+    reachability_status: frontend-orphan
     reason: test/diagnostic Lambda, no trigger, no artifact, no consumer
     tool_pointer: null
     last_reviewed: '2026-06-15'
@@ -718,6 +809,7 @@ threads:
     named_thread: news
     owning_tool: portal-consumer-tools
     status: in-scope
+    reachability_status: unreviewed
     tool_pointer: null
     last_reviewed: '2026-06-15'
     debtscan_flags: []
@@ -727,6 +819,7 @@ threads:
     named_thread: ops-internal
     owning_tool: none
     status: explicit-out
+    reachability_status: frontend-orphan
     reason: Manual-invoke PII anonymizer feeding raw-data ingest, no portal/pipeline consumer; 0 invokes/14d; FLAG non-ASCII emoji in source
     tool_pointer: null
     last_reviewed: '2026-06-15'
@@ -735,6 +828,7 @@ threads:
     named_thread: ops-internal
     owning_tool: none
     status: explicit-out
+    reachability_status: frontend-orphan
     reason: NOT PROVISIONED (instance_id=null), scaffold-only, no live resource/consumer
     tool_pointer: null
     last_reviewed: '2026-06-15'
@@ -743,6 +837,7 @@ threads:
     named_thread: ops-internal
     owning_tool: none
     status: explicit-out
+    reachability_status: frontend-orphan
     reason: ec2-auto-shutdown-enforcer + ec2-runtime-monitor, SNS alerts + enforcement only, no data consumer
     tool_pointer: null
     last_reviewed: '2026-06-15'
@@ -751,6 +846,7 @@ threads:
     named_thread: ops-internal
     owning_tool: none
     status: explicit-out
+    reachability_status: frontend-orphan
     reason: 3 Lambdas with NO EventBridge trigger; semantic_clusters/latest.json stale ~4mo; no portal consumer; superseded
     tool_pointer: null
     last_reviewed: '2026-06-15'
@@ -759,6 +855,7 @@ threads:
     named_thread: ops-internal
     owning_tool: none
     status: explicit-out
+    reachability_status: frontend-orphan
     reason: test/diagnostic lambda, no consumer; teardown candidate
     tool_pointer: null
     last_reviewed: '2026-06-15'
@@ -767,6 +864,7 @@ threads:
     named_thread: ops-internal
     owning_tool: none
     status: explicit-out
+    reachability_status: frontend-orphan
     reason: test/diagnostic lambda, no consumer; teardown candidate
     tool_pointer: null
     last_reviewed: '2026-06-15'
@@ -777,6 +875,7 @@ threads:
     named_thread: partners
     owning_tool: globgrph
     status: in-scope
+    reachability_status: frontend-orphan
     tool_pointer: null
     last_reviewed: '2026-06-15'
     debtscan_flags: []
@@ -784,6 +883,7 @@ threads:
     named_thread: partners
     owning_tool: portal-consumer-tools
     status: in-scope
+    reachability_status: unreviewed
     tool_pointer: null
     last_reviewed: '2026-06-15'
     debtscan_flags: []
@@ -793,6 +893,7 @@ threads:
     named_thread: portal-infra
     owning_tool: portal-consumer-tools
     status: in-scope
+    reachability_status: unreviewed
     tool_pointer: null
     last_reviewed: '2026-06-15'
     debtscan_flags: []
@@ -800,6 +901,7 @@ threads:
     named_thread: portal-infra
     owning_tool: portal-consumer-tools
     status: in-scope
+    reachability_status: unreviewed
     tool_pointer: null
     last_reviewed: '2026-06-15'
     debtscan_flags: []
@@ -807,6 +909,7 @@ threads:
     named_thread: portal-infra
     owning_tool: portal-consumer-tools
     status: in-scope
+    reachability_status: unreviewed
     tool_pointer: null
     last_reviewed: '2026-06-15'
     debtscan_flags: []
@@ -814,6 +917,7 @@ threads:
     named_thread: portal-infra
     owning_tool: portal-consumer-tools
     status: in-scope
+    reachability_status: unreviewed
     tool_pointer: null
     last_reviewed: '2026-06-15'
     debtscan_flags: []
@@ -821,6 +925,7 @@ threads:
     named_thread: portal-infra
     owning_tool: portal-consumer-tools
     status: in-scope
+    reachability_status: phantom
     tool_pointer: null
     last_reviewed: '2026-06-15'
     debtscan_flags: []
@@ -828,6 +933,7 @@ threads:
     named_thread: portal-infra
     owning_tool: globgrph
     status: in-scope
+    reachability_status: unreviewed
     tool_pointer: null
     last_reviewed: '2026-06-15'
     debtscan_flags: []
@@ -837,6 +943,7 @@ threads:
     named_thread: portfolio-management
     owning_tool: none
     status: explicit-out
+    reachability_status: frontend-orphan
     reason: infrastructure-daily-snapshot + opal-infrastructure-monitor, ops alerts/snapshots, no consumer
     tool_pointer: null
     last_reviewed: '2026-06-15'
@@ -845,6 +952,7 @@ threads:
     named_thread: portfolio-management
     owning_tool: portal-consumer-tools
     status: in-scope
+    reachability_status: mounted-reachable
     tool_pointer: null
     last_reviewed: '2026-06-15'
     debtscan_flags: []
@@ -852,6 +960,7 @@ threads:
     named_thread: portfolio-management
     owning_tool: portal-consumer-tools
     status: in-scope
+    reachability_status: mounted-reachable
     tool_pointer: null
     last_reviewed: '2026-06-15'
     debtscan_flags: []
@@ -859,6 +968,7 @@ threads:
     named_thread: portfolio-management
     owning_tool: portal-consumer-tools
     status: in-scope
+    reachability_status: mounted-reachable
     tool_pointer: null
     last_reviewed: '2026-06-15'
     debtscan_flags: []
@@ -866,6 +976,7 @@ threads:
     named_thread: portfolio-management
     owning_tool: portal-consumer-tools
     status: in-scope
+    reachability_status: mounted-reachable
     tool_pointer: null
     last_reviewed: '2026-06-15'
     debtscan_flags: []
@@ -873,6 +984,7 @@ threads:
     named_thread: portfolio-management
     owning_tool: portal-consumer-tools
     status: in-scope
+    reachability_status: mounted-reachable
     tool_pointer: null
     last_reviewed: '2026-06-15'
     debtscan_flags: []
@@ -880,6 +992,7 @@ threads:
     named_thread: portfolio-management
     owning_tool: portal-consumer-tools
     status: in-scope
+    reachability_status: mounted-reachable
     tool_pointer: null
     last_reviewed: '2026-06-15'
     debtscan_flags: []
@@ -887,6 +1000,7 @@ threads:
     named_thread: portfolio-management
     owning_tool: portal-consumer-tools
     status: in-scope
+    reachability_status: mounted-reachable
     tool_pointer: null
     last_reviewed: '2026-06-15'
     debtscan_flags: []
@@ -894,6 +1008,7 @@ threads:
     named_thread: portfolio-management
     owning_tool: portal-consumer-tools
     status: in-scope
+    reachability_status: mounted-reachable
     tool_pointer: null
     last_reviewed: '2026-06-15'
     debtscan_flags: []
@@ -903,6 +1018,7 @@ threads:
     named_thread: positioning
     owning_tool: globgrph
     status: in-scope
+    reachability_status: mounted-reachable
     tool_pointer: null
     last_reviewed: '2026-06-15'
     debtscan_flags: []
@@ -912,6 +1028,7 @@ threads:
     named_thread: security-scanner
     owning_tool: portal-consumer-tools
     status: in-scope
+    reachability_status: mounted-reachable
     tool_pointer: null
     last_reviewed: '2026-06-15'
     debtscan_flags: []
@@ -919,6 +1036,7 @@ threads:
     named_thread: security-scanner
     owning_tool: none
     status: explicit-out
+    reachability_status: frontend-orphan
     reason: access/cost/security scanners, SNS/CW findings only, no consumer
     tool_pointer: null
     last_reviewed: '2026-06-15'
@@ -929,6 +1047,7 @@ threads:
     named_thread: smartx
     owning_tool: globgrph
     status: in-scope
+    reachability_status: unreviewed
     tool_pointer: null
     last_reviewed: '2026-06-15'
     debtscan_flags: []
@@ -936,6 +1055,7 @@ threads:
     named_thread: smartx
     owning_tool: portal-consumer-tools
     status: in-scope
+    reachability_status: unreviewed
     tool_pointer: null
     last_reviewed: '2026-06-15'
     debtscan_flags: []
@@ -943,6 +1063,7 @@ threads:
     named_thread: smartx
     owning_tool: globgrph
     status: in-scope
+    reachability_status: mounted-reachable
     tool_pointer: null
     last_reviewed: '2026-06-15'
     debtscan_flags: []
@@ -952,6 +1073,7 @@ threads:
     named_thread: trade-submission
     owning_tool: none
     status: explicit-out
+    reachability_status: frontend-orphan
     reason: Deployed DORMANT by design (freeze-aware validate-only), no live served artifact, no current consumer
     tool_pointer: null
     last_reviewed: '2026-06-15'
@@ -960,6 +1082,7 @@ threads:
     named_thread: trade-submission
     owning_tool: portal-consumer-tools
     status: in-scope
+    reachability_status: mounted-reachable
     tool_pointer: null
     last_reviewed: '2026-06-15'
     debtscan_flags: []
@@ -967,6 +1090,7 @@ threads:
     named_thread: trade-submission
     owning_tool: portal-consumer-tools
     status: in-scope
+    reachability_status: mounted-reachable
     tool_pointer: null
     last_reviewed: '2026-06-15'
     debtscan_flags: []
@@ -974,6 +1098,7 @@ threads:
     named_thread: trade-submission
     owning_tool: portal-consumer-tools
     status: in-scope
+    reachability_status: unreviewed
     tool_pointer: null
     last_reviewed: '2026-06-15'
     debtscan_flags: []
@@ -981,6 +1106,7 @@ threads:
     named_thread: trade-submission
     owning_tool: portal-consumer-tools
     status: in-scope
+    reachability_status: mounted-reachable
     tool_pointer: null
     last_reviewed: '2026-06-15'
     debtscan_flags: []
@@ -988,6 +1114,7 @@ threads:
     named_thread: trade-submission
     owning_tool: none
     status: in-scope
+    reachability_status: unreviewed
     tool_pointer: null
     last_reviewed: '2026-06-15'
     debtscan_flags: []
@@ -995,6 +1122,7 @@ threads:
     named_thread: trade-submission
     owning_tool: none
     status: unreviewed
+    reachability_status: unreviewed
     tool_pointer: null
     last_reviewed: '2026-06-15'
     debtscan_flags: []
@@ -1002,6 +1130,7 @@ threads:
     named_thread: trade-submission
     owning_tool: none
     status: unreviewed
+    reachability_status: unreviewed
     tool_pointer: null
     last_reviewed: '2026-06-15'
     debtscan_flags: []
@@ -1009,6 +1138,7 @@ threads:
     named_thread: trade-submission
     owning_tool: none
     status: explicit-out
+    reachability_status: frontend-orphan
     reason: Live API route but ZERO consumer; on deprecation list
     tool_pointer: null
     last_reviewed: '2026-06-15'
@@ -1017,6 +1147,7 @@ threads:
     named_thread: trade-submission
     owning_tool: portal-consumer-tools
     status: in-scope
+    reachability_status: mounted-reachable
     tool_pointer: null
     last_reviewed: '2026-06-15'
     debtscan_flags: []
@@ -1024,6 +1155,7 @@ threads:
     named_thread: trade-submission
     owning_tool: portal-consumer-tools
     status: in-scope
+    reachability_status: mounted-reachable
     tool_pointer: null
     last_reviewed: '2026-06-15'
     debtscan_flags: []
@@ -1031,6 +1163,7 @@ threads:
     named_thread: trade-submission
     owning_tool: globgrph
     status: unreviewed
+    reachability_status: frontend-orphan
     tool_pointer: null
     last_reviewed: '2026-06-15'
     debtscan_flags: []
@@ -1040,6 +1173,7 @@ threads:
     named_thread: valuation
     owning_tool: globgrph
     status: in-scope
+    reachability_status: mounted-reachable
     tool_pointer: null
     last_reviewed: '2026-06-15'
     debtscan_flags: []
