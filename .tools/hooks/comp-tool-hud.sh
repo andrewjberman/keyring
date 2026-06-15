@@ -31,10 +31,16 @@ if [ -x "$SCRIPT_DIR/../jq.exe" ]; then JQ="$SCRIPT_DIR/../jq.exe"
 elif command -v jq >/dev/null 2>&1; then JQ="jq"
 else exit 0; fi
 
-# ONE jq pass: tool_name, session_id, query (Grep/Glob pattern), path (Grep scope).
-parsed=$(printf '%s' "$INPUT" | "$JQ" -r '[(.tool_name // ""), (.session_id // ""), (.tool_input.pattern // .tool_input.file_path // ""), (.tool_input.path // "")] | @tsv' 2>/dev/null) || exit 0
-IFS=$'\t' read -r tool sid query gpath <<< "$parsed"
+# Extract fields with SEPARATE jq calls -- NOT one @tsv + IFS read. A single
+# IFS-whitespace (tab) read COLLAPSES consecutive empty fields and shifts left, so
+# an absent session_id would SILENTLY no-op the whole hook (CVO catch -- the
+# silent-dead-hook failure class). Separate calls can't collapse. Check tool first
+# and exit early (saves the other calls on the common non-search path).
+tool=$(printf '%s' "$INPUT" | "$JQ" -r '.tool_name // ""' 2>/dev/null) || exit 0
 case "$tool" in Grep|Glob) : ;; *) exit 0 ;; esac
+sid=$(printf '%s' "$INPUT" | "$JQ" -r '.session_id // ""' 2>/dev/null || true)
+query=$(printf '%s' "$INPUT" | "$JQ" -r '.tool_input.pattern // .tool_input.file_path // ""' 2>/dev/null || true)
+gpath=$(printf '%s' "$INPUT" | "$JQ" -r '.tool_input.path // ""' 2>/dev/null || true)
 [ -z "$query" ] && exit 0
 
 # --- NEGATIVE FILTER (CVO #3: the non-noise guarantee). Suppress when: ---
