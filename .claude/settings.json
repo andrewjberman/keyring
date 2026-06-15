@@ -123,7 +123,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "bash .tools/hooks/block-bare-inbox-watch.sh",
+            "command": "bash \"$CLAUDE_PROJECT_DIR/.tools/hooks/block-bare-inbox-watch.sh\"",
             "timeout": 5
           }
         ]
@@ -135,12 +135,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "python org/mcp/hook_launch_poller.py",
-            "timeout": 15
-          },
-          {
-            "type": "command",
-            "command": "bash .tools/kill-orphans --stale --force",
+            "command": "python \"$CLAUDE_PROJECT_DIR/org/mcp/hook_launch_poller.py\"",
             "timeout": 15
           }
         ]
@@ -150,7 +145,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "bash .tools/hooks/post-tool-telemetry.sh",
+            "command": "bash \"$CLAUDE_PROJECT_DIR/.tools/hooks/post-tool-telemetry.sh\"",
             "timeout": 10
           },
           {
