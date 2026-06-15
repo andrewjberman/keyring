@@ -6027,3 +6027,10 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-06-15 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .claude/settings.json --file .tools/hoo... | PASS |
 2026-06-15T22:15Z | 3.0.0_SA_CVO | HUD-3 | transcript-scan classifier (425 sessions, arg-level) + telemetry/comp-tools-log cross-ref | blind-grep-where-tool-exists baseline ~20% TIER-1 (15-18% high-conf), buried-tool ranking, #1 patterns + #2 question->tool seed | data arm for CTO comp-tool HUD
 | 2026-06-15 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-06-15 | 0.4.0_DT_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .gitignore | PASS |
+| 2026-06-15 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .tools/hooks/comp-tool-hud.sh | PASS |
+| 2026-06-15 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .tools/comp-which --file CLAUDE.md --fi... | PASS |
+| 2026-06-15 | 0.4.0_DS_ClientPlatform~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/briefs/period-contracts-seed-bench... | PASS |
+| 2026-06-15 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .tools/hooks/comp-tool-hud.sh | PASS |
+2026-06-15T22:30Z | 3.0.0_SA_CVO | (session-close) | comp-kuzu + comp-pipescript/pipescript + comp-iam + comp-routes + aws-cli(F5) + hud3 transcript-classifier | session-close log: 5 threads (RV-0034, graph-RED, NFRA_PIPESCRIPT close, 49NNAFIX D1, HUD#3) all verify-against-live | see session_close_1300-2230Z.md
+| 2026-06-15 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
