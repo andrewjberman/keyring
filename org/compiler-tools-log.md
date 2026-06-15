@@ -5623,3 +5623,19 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-06-15 | 3.0.0_SA_CVO | RV-0034 | comp-surface-check | comp-surface-check check --mode advisory --file org/tier0/reviews/RV-0034.md | PASS |
 2026-06-15T13:17Z | 3.0.0_SA_CVO | RV-0034 | comp-surface-check (auto, OK 0-surface) + git window-walk + awk audit-log timestamp-filter | RV-0034 ACCEPTED-CVO independent re-derive; all hard counts exact; F-003 reclass S1->S4-op | git-archaeology adjudication, no pipeline tools applicable
 | 2026-06-15 | 3.0.0_SA_CVO | RV-0034 | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-06-15 | 1.0.0_SA_CTO | RV-0034 | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/1.0.0_SA_CTO/logs/2026-0... | PASS |
+| 2026-06-15 | 0.0.0_AB_MSTR | BRONZE-FIX-7.L3-replay-emitter-verify | comp-surface-check | comp-surface-check check --mode advisory --file org/mcp/live_agents_by_marker.json --fi... | PASS |
+| 2026-06-15 | 0.0.0_AB_MSTR | BRONZE-FIX-7.L3-replay-emitter-verify | comp-surface-check | comp-surface-check check --mode advisory --file org/mcp/live_agents_by_marker.json --fi... | PASS |
+| 2026-06-15 | 0.4.0_DS_ClientPlatform | ADVI_49NNAFIX.D1-D2.canonical-nna-publish-and-fips-rectify | comp-surface-check | comp-surface-check check --mode advisory --file data/inf/scripts/silver/convert_orion_a... | PASS |
+| 2026-06-15 | 1.0.0_SA_CTO | ADVI_49NNAFIX.D1-D2.canonical-nna-publish-and-fips-rectify | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/1.0.0_SA_CTO/logs/2026-0... | PASS |
+| 2026-06-15 | 3.0.0_SA_CVO | GRAPHS-STATUS-ASSESS-0615 | comp-kuzu | comp-kuzu MATCH (n) RETURN count(n) AS total_nodes | PASS |
+| 2026-06-15 | 1.0.0_SA_CTO | GRAPHS-STATUS-ASSESS-0615 | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/REGISTRY.md --file org/pro... | PASS |
+| 2026-06-15 | 3.0.0_SA_CVO | GRAPHS-STATUS-ASSESS-0615 | comp-kuzu | comp-kuzu --surface stitch MATCH (n) RETURN count(n) AS stitch_nodes | FAIL |
+| 2026-06-15 | 3.0.0_SA_CVO | GRAPHS-STATUS-ASSESS-0615 | comp-kuzu | comp-kuzu --db-path infra/aws/globgrph/kuzu_stitch_db MATCH (n) RETURN count(n) AS stit... | PASS |
+| 2026-06-15 | 2.0.0_SA_COO | GRAPHS-STATUS-ASSESS-0615 | comp-blast | comp-blast stage_serving | PASS |
+| 2026-06-15 | 2.0.0_SA_COO | GRAPHS-STATUS-ASSESS-0615 | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.1.0_DS_MarketIntelli... | PASS |
+| 2026-06-15 | 0.7.0_AE_CloudOps | GRAPHS-STATUS-ASSESS-0615 | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/NFRA_COSTAWS.json --file o... | PASS |
+| 2026-06-15 | 0.4.0_DS_ClientPlatform | GRAPHS-STATUS-ASSESS-0615 | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/change_management/20... | PASS |
+| 2026-06-15 | 0.7.0_AE_CloudOps | GRAPHS-STATUS-ASSESS-0615 | comp-pipescript | comp-pipescript deployed A_02.fee_rate_history.py | PASS |
+2026-06-15T15:25Z | 3.0.0_SA_CVO | GRAPHS-STATUS-ASSESS-0615 | comp-kuzu (provenance header, canonical + stitch --db-path) + live AWS (sqs get-queue-attributes, lambda metrics/ESM/logs, s3 marker, cloudwatch alarms) | RED: globgrph HEAD frozen 06-12T16:15:51Z, orphan-writer + silent monitoring; comp-kuzu 'current' masks frozen marker (F5 trap caught) | health read, ground-truth not self-report
+| 2026-06-15 | 3.0.0_SA_CVO | GRAPHS-STATUS-ASSESS-0615 | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
