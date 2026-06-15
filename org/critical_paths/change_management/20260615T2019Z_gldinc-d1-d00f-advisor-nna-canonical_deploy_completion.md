@@ -12,12 +12,16 @@
 
 | leg | kind | target | proof required | proof | state |
 |---|---|---|---|---|---|
-| L1 | git | DS D_00f.advisor_nna_canonical.py commit 89d4ac6a7 | commit hash pushed |  | OPEN |
-| L2 | s3-prefix | D_00f.py to opal-data-bd/code/gold/ | comp-pipescript deployed D_00f MATCH row |  | OPEN |
-| L3 | verify | first served publish platinum/firm/advisor_nna_canonical.json | served object Size+LastModified+reconciliation.all_pass independently verified |  | OPEN |
+| L1 | git | DS D_00f.advisor_nna_canonical.py commit 89d4ac6a7 | commit hash pushed | commit 89d4ac6a7 pushed (DS D_00f.advisor_nna_canonical.py) | CLOSED 20260615T202055Z |
+| L2 | s3-prefix | D_00f.py to opal-data-bd/code/gold/ | comp-pipescript deployed D_00f MATCH row | comp-pipescript deployed D_00f -> [bd-gold] D_00f MATCH (1 MATCH 0 STALE 0 MISSING); .py md5==ETag 4eab7327 | CLOSED 20260615T202055Z |
+| L3 | verify | first served publish platinum/firm/advisor_nna_canonical.json | served object Size+LastModified+reconciliation.all_pass independently verified | served object independently verified: platinum/firm/advisor_nna_canonical.json Size=34019956 LastModified=2026-06-15T20:15:26Z ETag=cd9d4e33 reconciliation.all_pass=True parity==cumulative_chart(1373359476.76) | CLOSED 20260615T202055Z |
 | L4 | verify | CVO gate-4 DistributionTab live render-no-freeze on the 34MB json | CVO served-render verdict |  | OPEN |
-| L5 | activation | PHASE_D5 wiring live in gold_dispatch.sh + runner-IAM PutObject | bash-n clean + D_00f at PHASE_D5 + deployed s3 md5==ETag + bd-exporter-ec2-role PutObject opal-data-bd/* confirmed |  | OPEN |
+| L5 | activation | PHASE_D5 wiring live in gold_dispatch.sh + runner-IAM PutObject | bash-n clean + D_00f at PHASE_D5 + deployed s3 md5==ETag + bd-exporter-ec2-role PutObject opal-data-bd/* confirmed | gold_dispatch.sh deployed code/gold/ md5==ETag c91a133579516d8706fed9d53162705c (commit 0f62f6720); PHASE_D5 (run_background D_00f + wait_phase) present in DEPLOYED copy; bash -n clean; runner-IAM bd-exporter-ec2-role s3:PutObject on opal-data-bd/* confirmed (cross-firm-deny=cot-only) | CLOSED 20260615T202055Z |
 
 ## Log
 
 - 20260615T201928Z OPENED by 0.6.0_AE_PartnerETL with 5 leg(s)
+- 20260615T202055Z LEG L1 closed: commit 89d4ac6a7 pushed (DS D_00f.advisor_nna_canonical.py)
+- 20260615T202055Z LEG L2 closed: comp-pipescript deployed D_00f -> [bd-gold] D_00f MATCH (1 MATCH 0 STALE 0 MISSING); .py md5==ETag 4eab7327
+- 20260615T202055Z LEG L3 closed: served object independently verified: platinum/firm/advisor_nna_canonical.json Size=34019956 LastModified=2026-06-15T20:
+- 20260615T202055Z LEG L5 closed: gold_dispatch.sh deployed code/gold/ md5==ETag c91a133579516d8706fed9d53162705c (commit 0f62f6720); PHASE_D5 (run_backgr
