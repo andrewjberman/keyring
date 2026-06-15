@@ -1,0 +1,404 @@
+[
+ {
+  "family": "trade-submission",
+  "threads": [
+   {
+    "thread_id": "TS-1-submit",
+    "description": "Trade submission INGEST. trade-submission-handler (python3.11, submission_handler.lambda_handler, 256MB/30s, role trade-submission-lambda-role) creates a new trade. Writes the submission item to DDB opal-trade-submissions (HASH submission_id, GSIs by-date/by-initiator/by-approver-decided/by-status), generates excel/json artifacts to S3 opal-data-trade-submissions, sends brokerage/notification email via SES (EMAIL_FROM trades@opalinvest.dev). config S3_BUCKET env null so default opal-data-trade-submissions is used at runtime.",
+    "producers": [
+     "trade-submission-handler [lambda; trigger=apigatewayv2 7k3ed8px20 (opal-portal-data-proxy-api) route POST /api/general/trades/submit integration ehdnz7g; also dedicated trade-submission-api w8jnzvs21g route POST /submit (CUSTOM auth) integration kk7culu]"
+    ],
+    "served_artifacts": [
+     "DDB opal-trade-submissions (item write)",
+     "S3 opal-data-trade-submissions/submissions/* (json)",
+     "S3 opal-data-trade-submissions/* (excel via excel_generator)"
+    ],
+    "frontend_resolution": "portal/src/api/endpoints/trade-submission.ts submitTrade() -> publicApiRequest POST /api/general/trades/submit (CloudFront -> proxy API 7k3ed8px20). Consumed by portal/src/pages/TradeSubmission/tabs/SubmitTab.tsx; page mounted at /trade-submission in App.tsx (lazy TradeSubmission).",
+    "classification": "IN_SCOPE",
+    "classification_reason": "Cloud-deployed Lambda + DDB + S3 outputs AND a mounted portal frontend consumer (SubmitTab via proxy API). Meets CTO IN_SCOPE criterion (cloud-deploy + frontend consumer).",
+    "current_coverage": "portal-consumer-tools",
+    "enrichment": "Generates Vident excel + json S3 artifacts; SES brokerage email; sets brokerage_email_sent. UNIT contract (PMTRDX.001): weights are decimal fractions."
+   },
+   {
+    "thread_id": "TS-2-workflow",
+    "description": "Trade workflow state machine (approve/reject/execute). trade-workflow-handler (python3.11, workflow_handler.lambda_handler, 1024MB/120s) mutates a submission's status in DDB opal-trade-submissions (PENDING_APPROVAL->APPROVED->EXECUTED, or REJECTED), records actor identity/timestamps, enforces segregation-of-duties/group auth, on execute sends brokerage email + may generate excel. EXECUTED is the durable terminal state (COMPLETE retired, Andrew Q2 2026-05-18).",
+    "producers": [
+     "trade-workflow-handler [lambda; trigger=proxy API 7k3ed8px20 route POST /api/general/trades/workflow integration xkuchu9; also dedicated trade-submission-api w8jnzvs21g route POST /workflow (CUSTOM auth) integration h6tmpgd]"
+    ],
+    "served_artifacts": [
+     "DDB opal-trade-submissions (status/actor/timestamp updates)",
+     "S3 opal-data-trade-submissions/* (excel on execute)"
+    ],
+    "frontend_resolution": "trade-submission.ts approveSubmission/rejectSubmission/executeSubmission -> POST /api/general/trades/workflow. Consumed by portal/src/pages/TradeSubmission/tabs/ApprovalsTab.tsx and ExecutionTab.tsx; mounted /trade-submission.",
+    "classification": "IN_SCOPE",
+    "classification_reason": "Cloud Lambda mutating DDB + S3 AND mounted portal consumers (Approvals/Execution tabs). IN_SCOPE.",
+    "current_coverage": "portal-consumer-tools",
+    "enrichment": "Group-based auth + segregation-of-duties; actor identity; audit events (see test_audit_events/test_group_auth/test_actor_identity)."
+   },
+   {
+    "thread_id": "TS-3-dashboard-read",
+    "description": "Trade dashboard READ API. trade-dashboard-api (python3.11, dashboard_api.lambda_handler, 512MB/60s) serves all GET reads: list submissions, by-status/by-initiator/by-approver/by-date (via DDB GSIs), single submission by id, pending approvals, trade users list, users/me (caller's groups from JWT), and presigned S3 excel download URL. Reads DDB opal-trade-submissions + opal-users-v2 and presigns S3 opal-data-trade-submissions excel objects.",
+    "producers": [
+     "trade-dashboard-api [lambda; trigger=proxy API 7k3ed8px20 routes GET /api/general/trades/submissions, /submissions/pending, /submissions/{id}, /submissions/{id}/excel, /submissions/by-status|by-initiator|by-approver, /users, /users/me integration x3p4wrq; also dedicated trade-submission-api w8jnzvs21g routes GET /submissions, /submissions/{proxy+}, /submissions/{id}/excel, /users (CUSTOM auth) integration wi9jm3c]"
+    ],
+    "served_artifacts": [
+     "HTTP JSON (reads DDB opal-trade-submissions + GSIs)",
+     "presigned S3 URL for opal-data-trade-submissions excel"
+    ],
+    "frontend_resolution": "trade-submission.ts getAllSubmissions/getPendingApprovals/getMySubmissions/getSubmissionsApprovedBy/getSubmissionsByStatus/getSubmission/downloadExcelFile/getTradeUsers/getTradeUserMe. Consumed by HistoryTab.tsx, ApprovalsTab.tsx, ExecutionTab.tsx, TradeDetailsModal.tsx, TradeCard.tsx; getTradeUserMe drives role-aware tab gating in TradeSubmission.tsx.",
+    "classification": "IN_SCOPE",
+    "classification_reason": "Cloud Lambda reading DDB/S3 AND every mounted TradeSubmission tab/component consumes it via the proxy API. IN_SCOPE.",
+    "current_coverage": "portal-consumer-tools",
+    "enrichment": "users/me resolves groups server-side from JWT principal (TRSB_LEDGER.008); excel via excel_generator + presigned URL."
+   },
+   {
+    "thread_id": "TS-4-identifier-cache",
+    "description": "Security identifier autocomplete cache. trade-identifier-cache (python3.11, identifier_cache.lambda_handler, 256MB/30s) serves ticker->sedol/isin/figi lookups: GET search (prefix match, top-10 by frequency) and POST batch save/upsert (increments occurrence count). Backed by a DDB identifier-cache table.",
+    "producers": [
+     "trade-identifier-cache [lambda; trigger=proxy API 7k3ed8px20 routes GET /api/general/trades/identifiers/search + POST /api/general/trades/identifiers/batch integration mvrx5ci; invoke policy GeneralTradesPermission scoped to 7k3ed8px20 /api/general/trades/*]"
+    ],
+    "served_artifacts": [
+     "HTTP JSON identifiers list",
+     "DDB identifier-cache table (upsert on batch)"
+    ],
+    "frontend_resolution": "trade-submission.ts searchIdentifierCache()/batchSaveIdentifiers(). Consumed by portal/src/pages/TradeSubmission/tabs/SubmitTab.tsx (ticker autocomplete during entry). Mounted /trade-submission.",
+    "classification": "IN_SCOPE",
+    "classification_reason": "Cloud Lambda + DDB cache AND a mounted portal consumer (SubmitTab autocomplete) via the proxy API. IN_SCOPE.",
+    "current_coverage": "portal-consumer-tools",
+    "enrichment": "Frequency-ranked autocomplete; source tagged 'upload' on FE batch save."
+   },
+   {
+    "thread_id": "TS-5-parquet-batch-export",
+    "description": "Analytics parquet export. trade-parquet-batch-export (python3.11, parquet_exporter.lambda_handler, 1024MB/300s) reads DDB opal-trade-submissions (by-date GSI) and writes partitioned snappy Parquet to S3 opal-data-trade-submissions under parquet/trades/year=/month=/day= and parquet/securities/. Two modes: nightly batch (consolidated daily files) and single-submission. Live S3 prefixes parquet/trades/ and parquet/securities/ confirmed present.",
+    "producers": [
+     "trade-parquet-batch-export [lambda; trigger=EventBridge rule trade-parquet-nightly-export cron(0 2 * * ? *) ENABLED -> batch mode; invoke policy eventbridge-nightly. Single-submission mode invocable but no live producer wiring observed (no ESM, no DDB-stream trigger)]"
+    ],
+    "served_artifacts": [
+     "S3 opal-data-trade-submissions/parquet/trades/year=/month=/day=/*.parquet (+ consolidated trades_<date>.parquet)",
+     "S3 opal-data-trade-submissions/parquet/securities/*"
+    ],
+    "frontend_resolution": "No portal frontend consumer found (grep portal/src: no reads of parquet/ trade artifacts). Offline analytics/pipeline-tier parquet store, not a portal-rendered surface.",
+    "classification": "IN_SCOPE",
+    "classification_reason": "Cloud-deployed Lambda + scheduled producer writing S3 parquet (the analytics leg of the trade product per the prompt). CTO criterion is frontend OR pipeline consumer; treated as a pipeline-consumer artifact store. NOTE: no live FRONTEND consumer found \u2014 if the criterion is read strictly as frontend-only, this leg currently has no FE resolution and would be EXPLICITLY_OUT.",
+    "current_coverage": "NONE",
+    "enrichment": "Real-time single-submission mode references the retired COMPLETE status; only the nightly batch path has a live trigger. Field-name drift to flag: submission_to_trade_row/security_rows read s.get('delta_weight')/'trade_instructions' but the submit+DDB+portal schema uses 'delta'/'trade_instruction' \u2014 likely silent null in the parquet export."
+   },
+   {
+    "thread_id": "TS-6-trade-auth-handler",
+    "description": "Standalone trade-dashboard auth (login/JWT issue). trade-auth-handler (python3.11, auth_handler.lambda_handler, 256MB/30s, JWT_SECRET env, USERS_TABLE opal-users-v2) handles POST /auth on the DEDICATED trade-submission-api (w8jnzvs21g) \u2014 issues JWTs against opal-users-v2 for the standalone trades dashboard (DASHBOARD_URL https://opalinvest.dev).",
+    "producers": [
+     "trade-auth-handler [lambda; trigger=dedicated trade-submission-api w8jnzvs21g route POST /auth (Auth NONE) integration av8jz0l]"
+    ],
+    "served_artifacts": [
+     "HTTP JSON (JWT); reads DDB opal-users-v2"
+    ],
+    "frontend_resolution": "NOT used by the mounted portal page. The portal's own login (AuthContext /auth/login, /auth/me, /auth/refresh) routes through proxy API 7k3ed8px20 to opalinvest-auth-handler (platform auth, integration 576amr1), NOT trade-auth-handler. trade-auth-handler serves only the standalone w8jnzvs21g trade-submission-api whose UI (the separate opalinvest.dev trades dashboard) is not in portal/src.",
+    "classification": "UNREVIEWED",
+    "classification_reason": "Live Lambda + dedicated API GW route, but I could not locate its frontend consumer within portal/src (the mounted portal uses opalinvest-auth-handler for login). It may back a separate/legacy standalone trades dashboard at opalinvest.dev (outside this repo) or be dormant \u2014 cannot confirm a live consumer, so not classifying clean. Needs owner/CVO confirmation of whether the w8jnzvs21g API is still fronted by a live UI.",
+    "current_coverage": "NONE",
+    "enrichment": "Shares JWT_SECRET value with trade-authorizer (38d02f77...). Reads opal-users-v2."
+   },
+   {
+    "thread_id": "TS-7-trade-authorizer",
+    "description": "REQUEST authorizer for the dedicated trade-submission-api. trade-authorizer (python3.11, authorizer.lambda_handler, 128MB/10s, JWT_SECRET env) validates JWTs and returns an IAM allow/deny policy. Wired as the CUSTOM REQUEST authorizer 'trade-auth' (nfa51m) protecting w8jnzvs21g routes POST /submit, POST /workflow, GET /submissions*, GET /users.",
+    "producers": [
+     "trade-authorizer [lambda; trigger=dedicated trade-submission-api w8jnzvs21g REQUEST authorizer nfa51m on routes /submit,/workflow,/submissions,/submissions/{proxy+},/submissions/{id}/excel,/users]"
+    ],
+    "served_artifacts": [
+     "API GW authorizer IAM policy (no persisted artifact)"
+    ],
+    "frontend_resolution": "Indirect \u2014 gates the dedicated w8jnzvs21g API only. The mounted portal page reaches trades through proxy API 7k3ed8px20 (no trade-authorizer in that path; auth handled upstream). No direct portal consumer found.",
+    "classification": "UNREVIEWED",
+    "classification_reason": "Live Lambda actively wired as the CUSTOM authorizer on the dedicated w8jnzvs21g API, but that API's frontend consumer is not the mounted portal page and was not found in portal/src. Live-but-consumer-unconfirmed (parallel/legacy standalone trades dashboard). Same review need as trade-auth-handler \u2014 not classifying clean.",
+    "current_coverage": "NONE",
+    "enrichment": "Pairs with trade-auth-handler; the dedicated w8jnzvs21g trade-submission-api is a parallel auth-gated surface distinct from the proxy-API path the mounted portal uses."
+   }
+  ],
+  "resources_accounted": [
+   "trade-submission-handler",
+   "trade-workflow-handler",
+   "trade-dashboard-api",
+   "trade-authorizer",
+   "trade-auth-handler",
+   "trade-identifier-cache",
+   "trade-parquet-batch-export",
+   "DDB opal-trade-submissions (GSIs by-date/by-initiator/by-approver-decided/by-status, 21 items, ACTIVE)",
+   "DDB opal-users-v2 (auth read)",
+   "DDB identifier-cache table (trade-identifier-cache backing)",
+   "S3 opal-data-trade-submissions (submissions/, parquet/trades/, parquet/securities/, excel)",
+   "apigatewayv2 trade-submission-api w8jnzvs21g (dedicated, CUSTOM auth, prod stage autodeploy)",
+   "apigatewayv2 opal-portal-data-proxy-api 7k3ed8px20 (proxy path /api/general/trades/* the mounted portal uses)",
+   "EventBridge rule trade-parquet-nightly-export cron(0 2 * * ? *) ENABLED"
+  ]
+ },
+ {
+  "family": "yang-datapipeline",
+  "resources_accounted": [
+   "StepFunctions:YangDataPipeline (arn:aws:states:us-east-1:313476888478:stateMachine:YangDataPipeline)",
+   "yang-pipeline-trigger",
+   "yang-validate-files",
+   "yang-move-to-processed",
+   "yang-get-prior-metadata",
+   "yang-generate-latest",
+   "yang-ingest-dynamodb",
+   "yang-generate-valuation",
+   "yang-generate-risk-premium",
+   "yang-generate-correlation",
+   "yang-generate-macro",
+   "yang-generate-macro-timeseries",
+   "yang-generate-factor-tilts",
+   "yang-generate-etf-returns",
+   "yang-generate-allocation-summary",
+   "yang-model-portfolio-benchmarks",
+   "yang-generate-positioning",
+   "yang-generate-cma",
+   "yang-generate-peer-performance",
+   "yang-generate-holdings-attribution",
+   "yang-canon-interlock",
+   "yang-generate-manifest",
+   "yang-cleanup-uploads",
+   "yang-capture-output-versions",
+   "yang-invalidate-cloudfront",
+   "yang-generate-volatility (ORPHAN - not in DAG, output stale)",
+   "yang-time-machine (rollback util, not in DAG)",
+   "yang-refresh-fred-cache (weekly EventBridge cron, not in DAG)",
+   "opal-market-overview-tiered-generator (invoked by DAG; separate naming family)",
+   "opal-market-rsi-tiered-generator (invoked by DAG; separate naming family)",
+   "opal-market-regime-classifier (invoked by DAG; separate naming family)",
+   "DynamoDB:opal-portal-market-data",
+   "S3:opal-data-portal-v2"
+  ],
+  "threads": [
+   {
+    "thread_id": "yang-pipeline-orchestration",
+    "description": "The YangDataPipeline Step Functions state machine and its trigger/orchestration scaffolding. Entry: S3 ObjectCreated on opal-data-portal-v2/uploads/**manifest.json -> yang-pipeline-trigger Lambda (env STATE_MACHINE_ARN) -> StartExecution. DAG: ReadManifest(yang-validate-files) -> MoveToProcessed -> GetPriorMetadata -> GenerateLatest -> Choice(data_pkl?) -> IngestDynamoDB -> ProcessFileTypes(7 parallel branches) -> CheckNeedsPortalData -> GeneratePortalDataParallel -> GenerateManifest -> CleanupUploads -> CaptureOutputVersions -> InvalidateCloudFront -> Succeed.",
+    "producers": [
+     "S3 notification yang-pipeline-manifest-trigger (opal-data-portal-v2 uploads/ + suffix manifest.json) -> yang-pipeline-trigger Lambda -> StepFunctions StartExecution",
+     "yang-validate-files",
+     "yang-move-to-processed",
+     "yang-get-prior-metadata",
+     "yang-generate-latest",
+     "yang-generate-manifest",
+     "yang-cleanup-uploads",
+     "yang-capture-output-versions",
+     "yang-invalidate-cloudfront"
+    ],
+    "served_artifacts": [
+     "s3://opal-data-portal-v2/json/latest/manifest.json (aggregated manifest)",
+     "s3://opal-data-portal-v2/json/latest/*.json (per-file-type signatures, e.g. data_pkl.json)",
+     "CloudFront invalidation of the portal distribution"
+    ],
+    "frontend_resolution": "Orchestration tier has no direct portal component; it sequences the generator legs and flushes CloudFront so the portal's per-tab JSON reads (via portal data proxy /api/general/**) reflect the freshly-written outputs. generate-manifest output is the freshness/version index.",
+    "classification": "IN_SCOPE",
+    "classification_reason": "Cloud-deployed StepFn + Lambdas (S3/DDB) whose entire purpose is to produce the opal-data-portal-v2 JSON consumed by the portal; the orchestration is the spine of every consumer leg.",
+    "current_coverage": "globgrph-graph(comp-kuzu)"
+   },
+   {
+    "thread_id": "yang-positioning-attribution-allocation",
+    "description": "Positioning branch (needs data_pkl+model_pkl) plus the attribution/allocation Excel branch. yang-generate-positioning writes positioning_data.json (current holdings/style) plus aum-metrics.json + aum-timeseries.json; yang-generate-holdings-attribution writes holdings_attribution_data.json then chains yang-generate-allocation-summary (allocation_summary.json).",
+    "producers": [
+     "yang-generate-positioning (ProcessBothPKLs branch)",
+     "yang-generate-holdings-attribution (attribution_excel branch)",
+     "yang-generate-allocation-summary (model_pkl branch AND after-attribution chain)"
+    ],
+    "served_artifacts": [
+     "s3://opal-data-portal-v2/json/positioning/positioning_data.json (LastMod 2026-06-15 13:20Z)",
+     "s3://opal-data-portal-v2/json/positioning/holdings_attribution_data.json",
+     "s3://opal-data-portal-v2/json/positioning/allocation_summary.json",
+     "s3://opal-data-portal-v2/json/portfolios/aum-metrics.json",
+     "s3://opal-data-portal-v2/json/portfolios/aum-timeseries.json"
+    ],
+    "frontend_resolution": "portal/src/api/portal-proxy.ts getPositioningData -> /api/general/positioning/positioning_data.json; getAllocationSummary -> /api/general/positioning/allocation_summary.json; getHoldingsAttribution -> /api/general/positioning/holdings_attribution_data.json; aum-metrics/aum-timeseries -> /api/general/portfolios/*. Components: portal/src/pages/Positioning/* and portal/src/pages/Attribution/* (StylePolicyComparison.tsx, AssetAllocationSummary.tsx).",
+    "classification": "IN_SCOPE",
+    "classification_reason": "Cloud Lambdas write S3 JSON consumed by Positioning + Attribution portal pages; served artifacts fresh today.",
+    "current_coverage": "globgrph-graph(comp-kuzu)"
+   },
+   {
+    "thread_id": "yang-valuation-risk-premium",
+    "description": "Valuation branch (data_pkl-only). yang-generate-valuation writes valuation_data.json; yang-generate-risk-premium writes risk_premium_data.json.",
+    "producers": [
+     "yang-generate-valuation (ProcessDataPKLOnly branch)",
+     "yang-generate-risk-premium (ProcessDataPKLOnly branch)"
+    ],
+    "served_artifacts": [
+     "s3://opal-data-portal-v2/json/valuation/valuation_data.json (LastMod 2026-06-15 13:21Z)",
+     "s3://opal-data-portal-v2/json/valuation/risk_premium_data.json"
+    ],
+    "frontend_resolution": "portal/src/api/endpoints/valuation.ts (CANONICAL source comment) + portal-proxy getValuationData -> /api/general/valuation/valuation_data.json; getRiskPremiumData -> /api/general/valuation/risk_premium_data.json consumed by portal/src/pages/Valuation/tabs/RiskPremiumTab.tsx.",
+    "classification": "IN_SCOPE",
+    "classification_reason": "S3 JSON producers with explicit Valuation page consumers; fresh today.",
+    "current_coverage": "globgrph-graph(comp-kuzu)"
+   },
+   {
+    "thread_id": "yang-correlation",
+    "description": "Correlation branch (data_pkl-only). yang-generate-correlation writes correlation_data.json.",
+    "producers": [
+     "yang-generate-correlation (ProcessDataPKLOnly branch)"
+    ],
+    "served_artifacts": [
+     "s3://opal-data-portal-v2/json/correlations/correlation_data.json (LastMod 2026-06-15 13:20Z)"
+    ],
+    "frontend_resolution": "portal/src/api/portal-proxy.ts getCorrelationData -> /api/general/correlations/correlation_data.json (S3 source documented inline).",
+    "classification": "IN_SCOPE",
+    "classification_reason": "Cloud Lambda -> S3 JSON -> documented portal proxy consumer; fresh today.",
+    "current_coverage": "globgrph-graph(comp-kuzu)"
+   },
+   {
+    "thread_id": "yang-macro-and-timeseries",
+    "description": "Macroeconomics branch (data_pkl-only). yang-generate-macro writes macro_data.json + vix_data.json; yang-generate-macro-timeseries writes per-series json/macro/timeseries/{slug}.json. NOTE: the portal-consumed json/macro/volatility_data.json is NOT produced here (see yang-volatility-orphan thread) - it comes from a separate opal-portal-volatility-fetcher family.",
+    "producers": [
+     "yang-generate-macro (ProcessDataPKLOnly branch)",
+     "yang-generate-macro-timeseries (ProcessDataPKLOnly branch)",
+     "yang-refresh-fred-cache (weekly cron(0 6 ? * SUN *) - refreshes FRED cache feeding macro legs)"
+    ],
+    "served_artifacts": [
+     "s3://opal-data-portal-v2/json/macro/macro_data.json (LastMod 2026-06-15 13:20Z)",
+     "s3://opal-data-portal-v2/json/macro/vix_data.json",
+     "s3://opal-data-portal-v2/json/macro/timeseries/{slug}.json"
+    ],
+    "frontend_resolution": "portal/src/api/portal-proxy.ts getMacroData -> /api/general/macro/macro_data.json; getVIXData -> /api/general/macro/vix_data.json; portal/src/api/endpoints/macro.ts -> /api/general/macro/timeseries/{slug}.json.",
+    "classification": "IN_SCOPE",
+    "classification_reason": "Cloud Lambdas -> S3 JSON consumed by macro endpoints; macro_data fresh today. yang-refresh-fred-cache is the upstream FRED cache cron feeding this leg.",
+    "current_coverage": "globgrph-graph(comp-kuzu)"
+   },
+   {
+    "thread_id": "yang-factor-tilts",
+    "description": "Factor tilts (model_pkl-only). yang-generate-factor-tilts writes a 3-tier output set: tier1-snapshot.json (page mount ~46KB), tier2-spreads.json (Factor Spreads tab), tier3-timeseries.json (Time Series toggle ~2.1MB) under json/factor-tilts/.",
+    "producers": [
+     "yang-generate-factor-tilts (ProcessModelPKLOnly branch)"
+    ],
+    "served_artifacts": [
+     "s3://opal-data-portal-v2/json/factor-tilts/tier1-snapshot.json (LastMod 2026-06-15 13:20Z)",
+     "s3://opal-data-portal-v2/json/factor-tilts/tier2-spreads.json",
+     "s3://opal-data-portal-v2/json/factor-tilts/tier3-timeseries.json"
+    ],
+    "frontend_resolution": "portal/src/api/portal-proxy.ts getFactorTiltsSnapshot/Spreads/TimeSeries -> /api/general/factor-tilts/tier{1,2,3}-*.json; consumed by FactorTilts.tsx (named in charter).",
+    "classification": "IN_SCOPE",
+    "classification_reason": "Cloud Lambda -> tiered S3 JSON consumed by the FactorTilts portal page; tier1 fresh today.",
+    "current_coverage": "globgrph-graph(comp-kuzu)"
+   },
+   {
+    "thread_id": "yang-benchmarks-etf-returns",
+    "description": "Portfolios/benchmarks. yang-model-portfolio-benchmarks (needs both PKLs) writes benchmark_returns.json + model_portfolio_benchmarks.json + model_portfolio_timeseries.json; yang-generate-etf-returns (model_pkl-only) writes etf_returns.json.",
+    "producers": [
+     "yang-model-portfolio-benchmarks (ProcessBothPKLs branch)",
+     "yang-generate-etf-returns (ProcessModelPKLOnly branch)"
+    ],
+    "served_artifacts": [
+     "s3://opal-data-portal-v2/json/benchmarks/model_portfolio_benchmarks.json (LastMod 2026-06-15 13:20Z)",
+     "s3://opal-data-portal-v2/json/benchmarks/benchmark_returns.json",
+     "s3://opal-data-portal-v2/json/benchmarks/model_portfolio_timeseries.json",
+     "s3://opal-data-portal-v2/json/benchmarks/etf_returns.json"
+    ],
+    "frontend_resolution": "portal/src/api/portal-proxy.ts getModelPortfolioBenchmarks -> /api/general/benchmarks/model_portfolio_benchmarks.json; getBenchmarkReturns -> benchmark_returns.json; getETFBenchmarkReturns -> etf_returns.json. Consumed by ModelPortfolios.tsx (named in charter).",
+    "classification": "IN_SCOPE",
+    "classification_reason": "Cloud Lambdas -> S3 JSON consumed by ModelPortfolios portal page; benchmarks fresh today.",
+    "current_coverage": "globgrph-graph(comp-kuzu)"
+   },
+   {
+    "thread_id": "yang-peer-performance",
+    "description": "Peer performance branch (peer_excel-gated). yang-generate-peer-performance writes peer_performance.json. Runs only when a peer Excel is in the upload manifest.",
+    "producers": [
+     "yang-generate-peer-performance (peer_excel branch)"
+    ],
+    "served_artifacts": [
+     "s3://opal-data-portal-v2/json/peers/peer_performance.json (LastMod 2026-05-31 22:03Z - intermittent, gated on peer Excel upload)"
+    ],
+    "frontend_resolution": "portal/src/api/portal-proxy.ts getPeerPerformance -> /api/general/peers/peer_performance.json.",
+    "classification": "IN_SCOPE",
+    "classification_reason": "Cloud Lambda -> S3 JSON with portal proxy consumer. Older LastMod is expected (Excel-gated leg, not run every pipeline), not a staleness defect.",
+    "current_coverage": "globgrph-graph(comp-kuzu)"
+   },
+   {
+    "thread_id": "yang-cma",
+    "description": "Capital markets assumptions branch (cma_excel-gated). yang-generate-cma writes assumptions.json + views.json under json/capital-markets/. data/yang_pkl/scripts is the CMA/pkl pre-processing leg referenced in the charter.",
+    "producers": [
+     "yang-generate-cma (cma_excel branch, bucket=opal-data-portal-v2)",
+     "data/yang_pkl/scripts (CMA/pkl local pre-processing leg)"
+    ],
+    "served_artifacts": [
+     "s3://opal-data-portal-v2/json/capital-markets/assumptions.json (LastMod 2026-03-11 - intermittent, gated on CMA Excel upload)",
+     "s3://opal-data-portal-v2/json/capital-markets/views.json"
+    ],
+    "frontend_resolution": "portal/src/api/portal-proxy.ts getCMAAssumptions -> /api/general/capital-markets/assumptions.json.",
+    "classification": "IN_SCOPE",
+    "classification_reason": "Cloud Lambda -> S3 JSON with portal proxy consumer. Old LastMod expected (CMA Excel uploaded rarely); the data/yang_pkl/scripts pre-processing leg feeds it.",
+    "current_coverage": "globgrph-graph(comp-kuzu)"
+   },
+   {
+    "thread_id": "yang-ingest-dynamodb-market-data",
+    "description": "yang-ingest-dynamodb runs FIRST when data_pkl is present, batch-writing into DynamoDB table opal-portal-market-data and writing json/latest/data_pkl.json signature for downstream legs. This DDB table is the source for the GeneratePortalDataParallel tiered generators.",
+    "producers": [
+     "yang-ingest-dynamodb (IngestDynamoDB state, runs before ProcessFileTypes)"
+    ],
+    "served_artifacts": [
+     "DynamoDB table opal-portal-market-data",
+     "s3://opal-data-portal-v2/json/latest/data_pkl.json (signature)"
+    ],
+    "frontend_resolution": "Indirect: DDB feeds the opal-market-* tiered generators (next thread) which write the Market Overview JSON the portal consumes; data_pkl.json signature gates downstream generation.",
+    "classification": "IN_SCOPE",
+    "classification_reason": "Cloud Lambda writing DynamoDB + S3 signature that is the upstream of multiple portal-served legs.",
+    "current_coverage": "globgrph-graph(comp-kuzu)"
+   },
+   {
+    "thread_id": "yang-portal-market-overview-tiered",
+    "description": "GeneratePortalDataParallel branch (runs only if data_pkl processed). Invokes THREE Lambdas that are NOT in the yang-* naming family but are orchestrated by this DAG: opal-market-overview-tiered-generator, opal-market-rsi-tiered-generator (must complete before) -> opal-market-regime-classifier. They read the opal-portal-market-data DDB / RSI timeseries files and produce Market Overview portal data.",
+    "producers": [
+     "opal-market-overview-tiered-generator (Active, LastMod 2026-03-24)",
+     "opal-market-rsi-tiered-generator (Active, LastMod 2026-03-24)",
+     "opal-market-regime-classifier (Active, LastMod 2026-04-05)"
+    ],
+    "served_artifacts": [
+     "Market Overview tiered JSON under opal-data-portal-v2 (overview/RSI/regime timeseries; exact keys owned by the opal-market-* family source, not yang_pipeline tree)"
+    ],
+    "frontend_resolution": "Portal Market Overview tab (consumed via portal data proxy). Exact component mapping belongs to the opal-market-* family, not the yang tree.",
+    "classification": "UNREVIEWED",
+    "classification_reason": "These Lambdas are LIVE and invoked by the YangDataPipeline DAG, but their source/served-key/frontend mapping lives in a separate opal-market-* family (not infra/aws/lambda/v2_portal/yang_pipeline). Flagging so the owning family census resolves the served key + portal component rather than guessing clean. Cross-family seam.",
+    "current_coverage": "globgrph-graph(comp-kuzu)"
+   },
+   {
+    "thread_id": "yang-canon-interlock",
+    "description": "Branch E of ProcessFileTypes - a passive observer that NEVER blocks generators (TimeoutSeconds 180, Catch -> InterlockFallback Pass). yang-canon-interlock (1024MB) compares pipeline outputs against a canon/reference for drift detection.",
+    "producers": [
+     "yang-canon-interlock (RunInterlock state, passive)"
+    ],
+    "served_artifacts": [
+     "Interlock result is captured in the execution state ($.interlockResult); no portal-served artifact (observability/drift-check leg)"
+    ],
+    "frontend_resolution": "No frontend consumer - this is an internal canon/drift interlock that emits a status into the execution, not a portal artifact.",
+    "classification": "EXPLICITLY_OUT",
+    "classification_reason": "Live cloud Lambda but a passive observability/drift-check leg with no served artifact and no frontend/pipeline consumer; explicitly designed to never block or feed the served set.",
+    "current_coverage": "globgrph-graph(comp-kuzu)"
+   },
+   {
+    "thread_id": "yang-time-machine-rollback",
+    "description": "yang-time-machine (512MB, 300s) is a rollback utility (NOT in the DAG): restores portal JSON to a historical date via S3 CopyObject with CopySourceVersionId from yang-capture-output-versions records, plus DynamoDB Market Overview restore, with append-only timeseries files excluded from restore. Operator/COO-invoked.",
+    "producers": [
+     "yang-time-machine (ad-hoc / operator-invoked, not a DAG state)"
+    ],
+    "served_artifacts": [
+     "Restores existing opal-data-portal-v2 JSON objects + opal-portal-market-data DDB to a prior version (no new artifact type)"
+    ],
+    "frontend_resolution": "No direct frontend consumer - it restores the SAME served artifacts the normal legs produce, so the portal benefits indirectly after a rollback. Pairs with yang-capture-output-versions (version capture) in the DAG.",
+    "classification": "EXPLICITLY_OUT",
+    "classification_reason": "Live cloud Lambda but an operational rollback tool with no scheduled trigger and no dedicated served artifact/consumer; it acts on artifacts other legs own.",
+    "current_coverage": "globgrph-graph(comp-kuzu)",
+    "enrichment": "Depends on yang-capture-output-versions (CaptureOutputVersions DAG state) which records S3 version IDs enabling the version-pinned restore."
+   },
+   {
+    "thread_id": "yang-volatility-orphan",
+    "description": "yang-generate-volatility (256MB, Active) writes json/yang/volatility_data.json from FRED VIXCLS. It is NOT wired into the YangDataPipeline DAG (no state references it) and its output is STALE: json/yang/volatility_data.json LastModified 2026-01-14. The portal's getVolatilityData reads a DIFFERENT key, json/macro/volatility_data.json (LastMod 2026-06-15 12:30Z), produced by opal-portal-volatility-fetcher (separate family) served via portal data proxy.",
+    "producers": [
+     "yang-generate-volatility (frozen - no DAG edge, no schedule)"
+    ],
+    "served_artifacts": [
+     "s3://opal-data-portal-v2/json/yang/volatility_data.json (STALE 2026-01-14, no live consumer)"
+    ],
+    "frontend_resolution": "NONE for json/yang/volatility_data.json. The portal volatility surface (portal-proxy getVolatilityData -> /api/general/macro/volatility_data.json) is served from json/macro/volatility_data.json, written by opal-portal-volatility-fetcher, NOT by yang-generate-volatility.",
+    "classification": "EXPLICITLY_OUT",
+    "classification_reason": "Live Lambda but a confirmed ORPHAN: not in the DAG, no trigger, output stale 5 months, and the path it writes has no portal consumer (the portal reads a different key from a different family's producer). No live frontend/pipeline consumer => out of scope as a dead/frozen leg. Flagged as a decommission candidate.",
+    "current_coverage": "globgrph-graph(comp-kuzu)"
+   }
+  ]
+ }
+]

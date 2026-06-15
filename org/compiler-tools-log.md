@@ -5679,3 +5679,26 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-06-15 | 0.7.0_AE_CloudOps | FIND_DUALBIZ.001.ds-serving-state-column-and-csv-writer | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/globgrph/incremental_u... | PASS |
 2026-06-15T15:45Z | 3.0.0_SA_CVO | COMP-PIPESCRIPT-COVERAGE-AUDIT-0615 | comp-pipescript dag/io/postdeps per-tree (bd/inf/cot/mdpf + find-dualbiz) + pipeline_cli.py coverage-source read | firm-pipeline coverage near-complete post-TOOL-01/02/03+io-fix; gaps = mdpf postdeps config (guarded), flag inconsistency, non-pipeline-tree scoping (G3 CTO) | ground-truth per-tree, caught + corrected own --pipeline-vs-firm flag error
 | 2026-06-15 | 3.0.0_SA_CVO | COMP-PIPESCRIPT-COVERAGE-AUDIT-0615 | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-06-15 | 1.0.0_SA_CTO | COMP-PIPESCRIPT-COVERAGE-AUDIT-0615 | comp-surface-check | comp-surface-check check --mode advisory --file docs/briefs/alert-egress-absence-monito... | PASS |
+| 2026-06-15 | 3.0.0_SA_CVO | YALP_YCUTVR.PRD | comp-kuzu | comp-kuzu MATCH (n) RETURN labels(n) AS label, count(*) AS n ORDER BY n DESC | PASS |
+| 2026-06-15 | 3.0.0_SA_CVO | YALP_YCUTVR.PRD | comp-kuzu | comp-kuzu MATCH (n) RETURN n.type AS rtype, count(*) AS n ORDER BY n DESC LIMIT 20 | FAIL |
+| 2026-06-15 | 2.0.0_SA_COO | YALP_YCUTVR.PRD | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/NFRA_GLOBGRPH.json | PASS |
+| 2026-06-15 | 0.7.0_AE_CloudOps | YALP_YCUTVR.PRD | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/change_management/20... | PASS |
+| 2026-06-15 | 3.0.0_SA_CVO | YALP_YCUTVR.PRD | comp-kuzu | comp-kuzu MATCH (n) WHERE n.name CONTAINS 'causality' RETURN n.name LIMIT 25 | PASS |
+| 2026-06-15 | 3.0.0_SA_CVO | YALP_YCUTVR.PRD | comp-kuzu | comp-kuzu MATCH (n) WHERE n.name CONTAINS 'cot' OR n.name CONTAINS 'mdpf' RETURN labels... | PASS |
+| 2026-06-15 | 3.0.0_SA_CVO | YALP_YCUTVR.PRD | comp-kuzu | comp-kuzu MATCH (n) WHERE toLower(n.name) CONTAINS 'smartx' RETURN labels(n)[0] AS type... | PASS |
+| 2026-06-15 | 3.0.0_SA_CVO | YALP_YCUTVR.PRD | comp-pipescript | comp-pipescript deployed | PASS |
+| 2026-06-15 | 3.0.0_SA_CVO | YALP_YCUTVR.PRD | comp-pipescript | comp-pipescript deployed | PASS |
+| 2026-06-15 | 3.0.0_SA_CVO | YALP_YCUTVR.PRD | comp-pipescript | comp-pipescript io news-trending-analysis | FAIL |
+| 2026-06-15 | 3.0.0_SA_CVO | YALP_YCUTVR.PRD | comp-kuzu | comp-kuzu MATCH (n) WHERE n.name STARTS WITH 'inf-' RETURN n.name, label(n) LIMIT 60 | PASS |
+| 2026-06-15 | 3.0.0_SA_CVO | YALP_YCUTVR.PRD | comp-kuzu | comp-kuzu MATCH (n) WHERE n.name CONTAINS 'news' OR n.name CONTAINS 'seeking' OR n.name... | PASS |
+| 2026-06-15 | 3.0.0_SA_CVO | YALP_YCUTVR.PRD | comp-kuzu | comp-kuzu MATCH (n) WHERE n.name CONTAINS 'pm-' OR n.name CONTAINS 'portfolio' RETURN n... | PASS |
+| 2026-06-15 | 3.0.0_SA_CVO | YALP_YCUTVR.PRD | comp-pipescript | comp-pipescript deployed | PASS |
+| 2026-06-15 | 3.0.0_SA_CVO | YALP_YCUTVR.PRD | comp-kuzu | comp-kuzu MATCH (n) WHERE n.name CONTAINS 'market-overview' OR n.name CONTAINS 'regime-... | PASS |
+| 2026-06-15 | 3.0.0_SA_CVO | YALP_YCUTVR.PRD | comp-kuzu | comp-kuzu MATCH (n) WHERE n.name IN ['opal-partners-data','opal-portal-data-proxy','opa... | PASS |
+| 2026-06-15 | 3.0.0_SA_CVO | YALP_YCUTVR.PRD | comp-kuzu | comp-kuzu MATCH (n) WHERE n.node_id IN ['opal-globgrph-incremental-updater','access-ano... | PASS |
+| 2026-06-15 | 3.0.0_SA_CVO | YALP_YCUTVR.PRD | comp-kuzu | comp-kuzu MATCH (n) RETURN DISTINCT n.node_type, n.layer LIMIT 40 | PASS |
+| 2026-06-15 | 3.0.0_SA_CVO | YALP_YCUTVR.PRD | comp-kuzu | comp-kuzu MATCH (n:LAMBDA) WHERE n.name CONTAINS 'globgrph' OR n.name CONTAINS 'anomaly... | FAIL |
+| 2026-06-15 | 3.0.0_SA_CVO | YALP_YCUTVR.PRD | comp-kuzu | comp-kuzu MATCH (n) WHERE n.name CONTAINS 'yang-generate-positioning' RETURN n.name LIM... | PASS |
+2026-06-15T18:00Z | 3.0.0_SA_CVO | ESTATE-THREAD-CENSUS-0615 | orchestrated multi-agent census (Workflow wk26i786c+w7vgvpbwr, 13 agents) + live AWS (lambda/ec2/sqs/stepfn/ddb/apigw) + comp-kuzu/portal grep | 13 families/~134 threads; 166/169 lambdas accounted (3 documented residual); 2 IN-SCOPE families (trade-submission+yang) caught by completeness-gate; tool-boundary = comp-pipescript ~13 only, rest graph/stitch/portal-tools | total-accounting verify, no thread silently unknown
+| 2026-06-15 | 3.0.0_SA_CVO | YALP_YCUTVR.PRD | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
