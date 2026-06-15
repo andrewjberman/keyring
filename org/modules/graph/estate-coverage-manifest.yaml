@@ -1,0 +1,97 @@
+# Estate Coverage Manifest — single source of truth for "which tool owns which estate thread"
+# Author: 1.0.0_SA_CTO (schema) · 2026-06-15 · ratifies CVO estate-thread inventory 2d9a0a2a1
+#
+# PURPOSE: make "Unknown" structurally impossible to mistake for "clean". Every estate
+# thread (a coherent lambda/StepFn/EC2 + data + consumer chain) is routed to its OWNING
+# tool with an explicit coverage status. Generalizes the TOOL-02 false-clean guard across
+# ALL coverage tools (was postdeps-only).
+#
+# RENAMED from the earlier comp-pipescript-coverage.yaml (CTO 16:56Z): the manifest is
+# MULTI-TOOL, not comp-pipescript-specific — comp-pipescript is one specialist of several.
+#
+# GUARD CONTRACT (every coverage tool reads this): when a tool is queried about a thread it
+# does NOT own, it returns LOUD "OUT-OF-SCOPE for {tool} -> see {owning_tool}" + exit 2,
+# NEVER a silent Unknown counted as clean. An UNREVIEWED thread returns LOUD "UNREVIEWED —
+# not yet adjudicated". Only an explicit determination is a clean answer.
+
+# --- enums ---
+# owning_tool: comp-pipescript (medallion data-pipeline) | globgrph (AWS-resource graph)
+#            | stitch (cross-layer) | portal-consumer-tools (frontend) | none (ops/local)
+# status:     in-scope (owned + modeled) | explicit-out (reason required) | unreviewed
+# debtscan_flags: [] or any of: orphan-candidate, dormant, stranded, freshness-risk,
+#            frontend-orphan, needs-consumer-trace, needs-owner
+
+schema_version: 1
+last_full_review: 2026-06-15   # the CVO census 2d9a0a2a1
+
+threads:
+  # ---- illustrative seed entries (one per owning_tool/status pattern); CVO seeds all ~134 ----
+
+  - family: inf-gold-medallion
+    owning_tool: comp-pipescript
+    status: in-scope
+    tool_pointer: null            # owned here; no cross-tool redirect
+    last_reviewed: 2026-06-15
+    debtscan_flags: []
+
+  - family: find-dualbiz
+    owning_tool: none
+    status: explicit-out
+    tool_pointer: null
+    reason: "local-runnable medallion (.runtmp), analyst CSV to Andrew, no S3/Lambda gold-deploy, no portal/pipeline consumer. NOTE: the gold/ path is the LOCAL medallion convention, NOT an S3 served-gold deploy — do not re-flag on the gold/-string."
+    last_reviewed: 2026-06-15
+    debtscan_flags: []
+
+  - family: smartx-pipeline
+    owning_tool: comp-pipescript
+    status: in-scope               # the deliberate "extend" follow-on (register its chain)
+    tool_pointer: null
+    note: "5 deployed lambdas + portal consumers (smartxData, SMARTX_RECONCILE). Register the ingestion->aggregate->precompute chain."
+    last_reviewed: 2026-06-15
+    debtscan_flags: []
+
+  - family: trade-submission
+    owning_tool: comp-pipescript   # 7 lambdas + DDB; medallion/backend-shaped — confirm at registration
+    status: in-scope
+    tool_pointer: null
+    macro: TRSB                     # existing macro; TRSB_LEDGER is active context (authz/audit hardening)
+    note: "MOUNTED /trade-submission product. Parquet-export LEG is a SEPARATE entry below (unreviewed-consumer)."
+    last_reviewed: 2026-06-15
+    debtscan_flags: []
+
+  - family: trade-submission-parquet-export
+    owning_tool: comp-pipescript
+    status: unreviewed              # no FE consumer found; trace before classifying IN/OUT
+    tool_pointer: null
+    last_reviewed: 2026-06-15
+    debtscan_flags: [needs-consumer-trace]   # live pipeline-leg -> IN; no consumer -> orphan-candidate
+
+  - family: yang-data-pipeline
+    owning_tool: comp-pipescript   # StepFn + ~20 yang-* lambdas; ONE coherent DAG = ONE owner
+    status: in-scope
+    tool_pointer: null
+    macro: YALP                     # feeds ModelPortfolios/FactorTilts (YALP pages); = the YALP_YCUTVR migration SOURCE
+    note: "FRED census claimed a SUBSET of yang-* lambdas — twin/fork mis-attribution. Default: yang owns the full DAG; FRED owns only provably-FRED-dedicated transform code. Trace each claimed lambda; correct FRED."
+    last_reviewed: 2026-06-15
+    debtscan_flags: []
+
+  - family: bd-time-machine
+    owning_tool: portal-consumer-tools
+    status: explicit-out
+    tool_pointer: null
+    reason: "KNOWN PHANTOM — Andrew-confirmed Time Machine was NEVER implemented (frontend TimeMachineProvider scaffolding only, no live restore). Backend-live-renders-nowhere."
+    last_reviewed: 2026-06-15
+    debtscan_flags: [frontend-orphan]
+
+  - family: sentiment_query_api
+    owning_tool: globgrph           # AWS-resource shaped; owner unknown
+    status: unreviewed
+    tool_pointer: null
+    last_reviewed: 2026-06-15
+    debtscan_flags: [needs-owner]
+
+# CVO seeds the remaining ~134-13 entries from estate_census/pass1_inventory.json +
+# pass2_gapfamilies.json, one per thread, each owning_tool-routed. CVO verifies each
+# determination + that the guard fires LOUD on an unowned-tool query. DS wires the guard
+# read into comp-pipescript/globgrph/stitch. Per-family >=0.8 precision (CVO) before any
+# non-ADVISORY debtscan filing off these flags.
