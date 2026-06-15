@@ -5639,3 +5639,43 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-06-15 | 0.7.0_AE_CloudOps | GRAPHS-STATUS-ASSESS-0615 | comp-pipescript | comp-pipescript deployed A_02.fee_rate_history.py | PASS |
 2026-06-15T15:25Z | 3.0.0_SA_CVO | GRAPHS-STATUS-ASSESS-0615 | comp-kuzu (provenance header, canonical + stitch --db-path) + live AWS (sqs get-queue-attributes, lambda metrics/ESM/logs, s3 marker, cloudwatch alarms) | RED: globgrph HEAD frozen 06-12T16:15:51Z, orphan-writer + silent monitoring; comp-kuzu 'current' masks frozen marker (F5 trap caught) | health read, ground-truth not self-report
 | 2026-06-15 | 3.0.0_SA_CVO | GRAPHS-STATUS-ASSESS-0615 | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-06-15 | 0.7.0_AE_CloudOps | ADVI_INFETL.BRONZE-FIX.deferred-disposition-sns-sms-subscriber | comp-blast | comp-blast opal-infrastructure-alerts | PASS |
+| 2026-06-15 | 0.7.0_AE_CloudOps | ADVI_INFETL.BRONZE-FIX.deferred-disposition-sns-sms-subscriber | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/terraform/inf-pipeline/inf-op... | PASS |
+| 2026-06-15 | 0.7.0_AE_CloudOps | ADHC_GLDINC.A_02-cutover | comp-surface-check | comp-surface-check check --mode advisory --file data/black_diamond/scripts/gold/gold_di... | PASS |
+| 2026-06-15 | 0.7.0_AE_CloudOps | ADHC_GLDINC.A_02-cutover | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/change_management/20... | PASS |
+| 2026-06-15 | 1.0.0_SA_CTO | ADHC_GLDINC.A_02-cutover | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/1.0.0_SA_CTO/logs/2026-0... | PASS |
+| 2026-06-15 | 1.0.0_SA_CTO | NFRA_GLOBGRPH.P0-writer-fix-rebuild | comp-surface-check | comp-surface-check check --mode advisory --file docs/briefs/alert-egress-absence-monito... | PASS |
+| 2026-06-15 | 0.7.0_AE_CloudOps | NFRA_GLOBGRPH.P0-writer-fix-rebuild | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/globgrph/incremental_u... | PASS |
+| 2026-06-15 | 0.7.0_AE_CloudOps | NFRA_GLOBGRPH.P0-writer-fix-rebuild | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/globgrph/incremental_u... | PASS |
+| 2026-06-15 | 0.7.0_AE_CloudOps | NFRA_GLOBGRPH.P0-writer-fix-rebuild | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/globgrph/derive_runner.py --f... | PASS |
+| 2026-06-15 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/terraform/globgrph/item2b.tf | PASS |
+| 2026-06-15 | 0.1.0_DS_MarketIntelligence | FIND_DUALBIZ.001.ds-serving-state-column-and-csv-writer | comp-surface-check | comp-surface-check check --mode advisory --file data/find/dualbiz/scripts/pipeline.py | PASS |
+| 2026-06-15 | 0.1.0_DS_MarketIntelligence | FIND_DUALBIZ.001.ds-serving-state-column-and-csv-writer | comp-pipescript | comp-pipescript io data/find/dualbiz/scripts/pipeline.py | FAIL |
+| 2026-06-15 | 0.1.0_DS_MarketIntelligence | FIND_DUALBIZ.001.ds-serving-state-column-and-csv-writer | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.1.0_DS_MarketIntelli... | PASS |
+| 2026-06-15 | 1.0.0_SA_CTO | FIND_DUALBIZ.001.ds-serving-state-column-and-csv-writer | comp-surface-check | comp-surface-check check --mode advisory --file docs/briefs/alert-egress-absence-monito... | PASS |
+| 2026-06-15 | 3.0.0_SA_CVO | FIND_DUALBIZ.001.ds-serving-state-column-and-csv-writer | comp-pipescript | comp-pipescript dag --pipeline bd-gold | PASS |
+| 2026-06-15 | 3.0.0_SA_CVO | FIND_DUALBIZ.001.ds-serving-state-column-and-csv-writer | comp-pipescript | comp-pipescript dag --pipeline inf-gold | PASS |
+| 2026-06-15 | 3.0.0_SA_CVO | FIND_DUALBIZ.001.ds-serving-state-column-and-csv-writer | comp-pipescript | comp-pipescript dag --pipeline cot-gold | PASS |
+| 2026-06-15 | 3.0.0_SA_CVO | FIND_DUALBIZ.001.ds-serving-state-column-and-csv-writer | comp-pipescript | comp-pipescript dag --pipeline cot-silver | PASS |
+| 2026-06-15 | 3.0.0_SA_CVO | FIND_DUALBIZ.001.ds-serving-state-column-and-csv-writer | comp-pipescript | comp-pipescript dag --pipeline cot-bronze | PASS |
+| 2026-06-15 | 3.0.0_SA_CVO | FIND_DUALBIZ.001.ds-serving-state-column-and-csv-writer | comp-pipescript | comp-pipescript dag --pipeline mdpf | PASS |
+| 2026-06-15 | 3.0.0_SA_CVO | FIND_DUALBIZ.001.ds-serving-state-column-and-csv-writer | comp-pipescript | comp-pipescript dag --pipeline bd-silver | PASS |
+| 2026-06-15 | 3.0.0_SA_CVO | FIND_DUALBIZ.001.ds-serving-state-column-and-csv-writer | comp-pipescript | comp-pipescript dag --pipeline inf-silver | PASS |
+| 2026-06-15 | 3.0.0_SA_CVO | FIND_DUALBIZ.001.ds-serving-state-column-and-csv-writer | comp-pipescript | comp-pipescript dag --pipeline bd-bronze | PASS |
+| 2026-06-15 | 3.0.0_SA_CVO | FIND_DUALBIZ.001.ds-serving-state-column-and-csv-writer | comp-pipescript | comp-pipescript dag --pipeline inf-bronze | PASS |
+| 2026-06-15 | 3.0.0_SA_CVO | FIND_DUALBIZ.001.ds-serving-state-column-and-csv-writer | comp-pipescript | comp-pipescript dag --pipeline bd-gold | PASS |
+| 2026-06-15 | 3.0.0_SA_CVO | FIND_DUALBIZ.001.ds-serving-state-column-and-csv-writer | comp-pipescript | comp-pipescript dag --pipeline cot-gold | PASS |
+| 2026-06-15 | 3.0.0_SA_CVO | FIND_DUALBIZ.001.ds-serving-state-column-and-csv-writer | comp-pipescript | comp-pipescript io A_03 --pipeline cot-gold | PASS |
+| 2026-06-15 | 3.0.0_SA_CVO | FIND_DUALBIZ.001.ds-serving-state-column-and-csv-writer | comp-pipescript | comp-pipescript io A_03 | PASS |
+| 2026-06-15 | 3.0.0_SA_CVO | FIND_DUALBIZ.001.ds-serving-state-column-and-csv-writer | comp-pipescript | comp-pipescript postdeps A_03 --pipeline cot-gold | FAIL |
+| 2026-06-15 | 3.0.0_SA_CVO | FIND_DUALBIZ.001.ds-serving-state-column-and-csv-writer | comp-pipescript | comp-pipescript postdeps F_00 --pipeline mdpf | FAIL |
+| 2026-06-15 | 3.0.0_SA_CVO | FIND_DUALBIZ.001.ds-serving-state-column-and-csv-writer | comp-pipescript | comp-pipescript io A_03 --pipeline inf-gold | PASS |
+| 2026-06-15 | 3.0.0_SA_CVO | FIND_DUALBIZ.001.ds-serving-state-column-and-csv-writer | comp-pipescript | comp-pipescript dag --pipeline mdpf | PASS |
+| 2026-06-15 | 3.0.0_SA_CVO | FIND_DUALBIZ.001.ds-serving-state-column-and-csv-writer | comp-pipescript | comp-pipescript io discover | FAIL |
+| 2026-06-15 | 3.0.0_SA_CVO | FIND_DUALBIZ.001.ds-serving-state-column-and-csv-writer | comp-pipescript | comp-pipescript postdeps A_03 --firm bd | PASS |
+| 2026-06-15 | 3.0.0_SA_CVO | FIND_DUALBIZ.001.ds-serving-state-column-and-csv-writer | comp-pipescript | comp-pipescript postdeps A_03 --firm inf | PASS |
+| 2026-06-15 | 3.0.0_SA_CVO | FIND_DUALBIZ.001.ds-serving-state-column-and-csv-writer | comp-pipescript | comp-pipescript postdeps A_03 --firm cot | PASS |
+| 2026-06-15 | 3.0.0_SA_CVO | FIND_DUALBIZ.001.ds-serving-state-column-and-csv-writer | comp-pipescript | comp-pipescript postdeps A_03 --firm mdpf | FAIL |
+| 2026-06-15 | 0.7.0_AE_CloudOps | FIND_DUALBIZ.001.ds-serving-state-column-and-csv-writer | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/globgrph/incremental_u... | PASS |
+2026-06-15T15:45Z | 3.0.0_SA_CVO | COMP-PIPESCRIPT-COVERAGE-AUDIT-0615 | comp-pipescript dag/io/postdeps per-tree (bd/inf/cot/mdpf + find-dualbiz) + pipeline_cli.py coverage-source read | firm-pipeline coverage near-complete post-TOOL-01/02/03+io-fix; gaps = mdpf postdeps config (guarded), flag inconsistency, non-pipeline-tree scoping (G3 CTO) | ground-truth per-tree, caught + corrected own --pipeline-vs-firm flag error
+| 2026-06-15 | 3.0.0_SA_CVO | COMP-PIPESCRIPT-COVERAGE-AUDIT-0615 | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
