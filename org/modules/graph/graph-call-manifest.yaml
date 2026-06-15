@@ -329,6 +329,19 @@ entries:
     status: canonical
     notes: "comp-pipescript deployed covers ALL PIPELINE_MAP trees (NFRA_DEBTSCAN.TOOL-01 2026-06-12): bd+inf+cot firm-bucket mapping derives from safe_deploy_core.PIPELINE_MAP (single source, no drift); mdpf appended check-only (NOT in the deploy-gate map -- non-standard code/scripts/<layer>/ layout, deploys via its own mechanism -- but still checked because MDPF_COUNTS proved it strands). Scope resolution: --firm {bd,inf,cot,mdpf} or --pipeline <key> = single tree; a data/<tree>/scripts/... path AUTO-DETECTS the tree (generalizes the cot-only auto-route); NO arg = sweep EVERY tree. Firm separation: each tree reads ONLY its own bucket (no cross-bucket fallback). Sweep prints a per-tree banner naming the bucket so every MATCH/STALE/MISSING row is bucket-attributed (an un-attributed row is how a stranded-deploy blind spot hides). backfill/feeders now covered via the mdpf branch + canonicalize regex. Closes the inf/cot/mdpf DEBTSCAN UNKNOWN-VINTAGE caveat. BRONZE first-class (NFRA_DEBTSCAN.TOOL-03 2026-06-12): data/<dir>/scripts/bronze -> code/bronze/ swept for bd+inf+cot ([BRONZE] rows) -- closes the Rule-13 bronze-verifiability gap (2026-06-12 inf-ADVI stranded-deploy hand-diff). New layer-scoped keys bd-bronze/inf-bronze/cot-bronze make safe-deploy's '{firm}-{layer}' verify call work for bronze. AUX prefixes CHECK-ONLY ([aux:<prefix>] rows): inf bronze-runner (the dual-prefix the runner ACTUALLY syncs -- divergence there is a live stranded-deploy until ADVI_INFETL.BRONZE-FIX collapses it) + inf manual_api mapped to repo homes; aux divergence prints DRIFT in full-tree views (never the deploy-gate STALE token; only the *-bronze view reports bronze-homed aux as real STALE); runner/exporter/cleanup + any prefix NOT in the tool registry emit explicit UNCOVERED rows (live code/ enumeration) -- tool-blindness is NEVER countable as cleanliness (false-clean guard)."
 
+  - id: estate.pipescript.named_thread
+    use_case: "What am I looking for -- the news scanner? -> pipescript news -> EVERY resource in that named thread + producers->served->frontend + owning tool + coverage + debt flags, over the whole estate, no silent Unknown."
+    canonical_call: "pipescript <name>   # e.g. pipescript news ; pipescript --list ; pipescript --resource <substr> ; pipescript --tool <name> <tool> ; pipescript --validate"
+    tool: pipescript
+    mode: query-cached
+    layer: estate
+    cost: "~0.3s (reads prebuilt estate-coverage-resolver.json; no AWS calls)"
+    freshness: "estate-coverage-resolver.json (gen-estate-resolver.py joins CVO manifest 61e91d334 + census 2d9a0a2a1)"
+    rebuild_trigger: "re-run org/modules/graph/gen-estate-resolver.py after the manifest/census changes (resolver is a generated join)"
+    anti_pattern: "grepping across single-slice tools for a thread one of them doesn't own (silent Unknown); treating an unowned-tool query as clean instead of the LOUD OUT-OF-SCOPE pointer"
+    status: canonical
+    notes: "NFRA_PIPESCRIPT P1: named-thread estate traversal. 16 named threads / 134 sub-threads (CVO census). Routes each thread to its owning_tool (comp-pipescript=medallion / globgrph=AWS-resource / stitch=cross-layer / portal-consumer-tools=frontend / none=ops-local); the per-tool sub-resolver DISPATCH is P1b. An unknown name OR an unowned-tool query is ALWAYS LOUD (exit 2) -- the generalized TOOL-02 false-clean guard. Read-only; ASCII-only stdout."
+
   - id: pipeline.freshness.chain_ready
     use_case: "Is the upstream S3 data fresh enough to run a gold chain?"
     canonical_call: "comp-freshness chain {bd|inf} ; comp-freshness script <id>"
@@ -640,6 +653,7 @@ tools_index:
   comp-blast:    { does: "Downstream blast radius + upstream callers (cached)", subcommands: ["<node|file>", "--function", "--check-consumers"], entries: [trace.blast.what_breaks] }
   comp-platinum: { does: "Full-stack component->gold trace, FIRM-AWARE (cached, NFRA_GRAPHS D2)", subcommands: [page, reverse, tab-audit, summary, "--firm", "--fresh/--force"], entries: [trace.fullstack.component_to_gold, trace.platinum.reverse] }
   comp-pipescript: { does: "Gold-script DAG: I/O, chains, deployed-match, overlap", subcommands: [io, dag, chain, feeds, consumers, deployed, overlap, stats], entries: [trace.pipeline.gold_dag, pipeline.pipescript.deployed_match] }
+  pipescript:    { does: "Named-thread estate traversal: `pipescript <name>` -> every resource + producers->served->frontend + owning tool + coverage, no silent Unknown (the human entry point over the whole estate)", subcommands: ["<name>", "--list", "--resource", "--tool", "--validate"], entries: [estate.pipescript.named_thread] }
   comp-routes:   { does: "CloudFront->origin->Lambda serving path", subcommands: [trace, behaviors, origins, rewrites, api-routes, auth-map, edge-versions], entries: [trace.routes.serving_path] }
   comp-iam:      { does: "IAM permission-gap cross-reference (boto3 calls vs grants)", subcommands: [gaps, roles, services, service, role, stats], entries: [cloud.iam.permission_gaps] }
   comp-build:    { does: "Rebuild the trace-graph cache (the trace WRITE-PATH)", subcommands: ["--check"], entries: [trace.rebuild.refresh] }
