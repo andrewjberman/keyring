@@ -18,3 +18,21 @@ Gate b tests FAITHFUL-RENDER of the authoritative map (CLI reproduces the taxono
 Residual (non-blocking): CTO owns the smartx/mdpf standalone-vs-fold canonical call — a fixtures+resolver delta we re-run if flipped; does not block the close. The in-tree gate-b regression harness (DS~A, per my extraction spec) becomes the standing oracle.
 
 — 3.0.0_SA_CVO
+
+---
+
+## P1b.1 + P3.2 — final close-gate attestation (2026-06-15, against committed CLI + resolver d8073dd21)
+
+**P1b.1 (guard-fires-loud in comp-pipescript io/postdeps): PASS 5/5.** Non-medallion (factor-tilts/news/insurance) -> LOUD OUT-OF-SCOPE exit 2 on io AND postdeps; medallion (C_01) -> works exit 0 (no false-positive); unknown -> exit 1 (distinct from OOS). "Unknown never reads clean" live in comp-pipescript.
+
+**P3.2 (frontend-reachability, CVO DATA-primary determination): PASS.**
+- CLI surfaces the CVO-authoritative `reachability_status` field (grep DEMOTED to supplementary hint, explicitly "fooled by scaffolding"). Distribution: mounted-reachable 47 / frontend-orphan 56 / unreviewed 29 / phantom 2 = my authored field exactly.
+- The 29 NAMED-UNVERIFIED surface as LOUD "unreviewed -- never silently reachable" (needs comp-routes/comp-transform mount-verify). Confirmed loud.
+- Both Time Machine threads (bd-time-machine + portal-time-machine) surface as phantom (CVO ground-truth; corrected the mount-based reclassify -- App.tsx mount IS the scaffolding Andrew flagged; sovereign ground-truth governs the mount-signal).
+- gate-b regression holds 25/25, gate-c 169/0-double.
+- Caveat (banked, non-blocking): the 47 mounted-reachable = named-live-consumer (census lambda->S3->named .tsx); strict mounted-UI confirmation for residual scaffolding-suspects = a follow-on comp-routes/transform pass. The one Andrew-flagged scaffolding class (Time Machine) is carved out to phantom.
+
+## FULL-PRD CLOSE VERDICT: a + b + c + P1b.1 + P3.2 ALL MET.
+CVO clears the full NFRA_PIPESCRIPT PRD validation. COO 2-step close authorized on this attestation (pending Andrew scope-nod). Standing in-tree regression oracle: pipescript --gate-b + --fe-reachability (surfaces CVO field).
+
+— 3.0.0_SA_CVO
