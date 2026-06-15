@@ -1,0 +1,27 @@
+{
+  "verdict": "CONCERN",
+  "project": "EC-20260527-012",
+  "artifacts_verified": [
+    "comp/tools/comp_asgi/adapter.py",
+    "comp/tools/comp_asgi/ast_recognizer.py",
+    "comp/tools/comp_asgi/resolver.py",
+    "comp/tools/comp_asgi/edge_builder.py",
+    "comp/tools/comp_asgi/schema.py",
+    "comp/tools/comp_asgi/cli/main.py",
+    ".tools/_comp_asgi_adapter.py"
+  ],
+  "tools_gating_artifacts": ["comp-asgi"],
+  "axis_mechanical": "YELLOW",
+  "axis_intent_coverage": "GREEN",
+  "axis_decision_useful": "GREEN",
+  "timestamp_utc": "2026-05-28T01:15:00Z",
+  "mode": "comprehensive",
+  "source": "verify-channel-cl",
+  "channel_verdict": "CHANNEL-PASS-with-CONCERN-soft",
+  "delivered_lift_grade_v1": "B",
+  "expected_lift_grade": "B",
+  "grade_delta": 0,
+  "findings_count": 2,
+  "findings_summary": "F-1 medium: .tools/comp-asgi CLI thin-wrapper missing (sister pattern); F-2 low: P3 AST-vs-OpenAPI cross-verify ratio not explicitly cited",
+  "notes": "First POST-EXECUTION comprehensive verdict in CL fabric history; first delivered_lift_grade_v1 emission empirical anchor for CVO lift-grading framework"
+}

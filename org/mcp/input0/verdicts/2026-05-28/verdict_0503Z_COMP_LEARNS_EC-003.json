@@ -1,0 +1,20 @@
+{
+  "verdict": "CLEAN",
+  "project": "COMP_LEARNS",
+  "case_id": "EC-20260527-003",
+  "prd_path": "prds/EXPLORE/EXT-DOCSTRING_SIGNATURE_INTEGRITY.md",
+  "prd_commit": "e391d3e46",
+  "artifacts_verified": ["prds/EXPLORE/EXT-DOCSTRING_SIGNATURE_INTEGRITY.md", "prds/EXPLORE/REGISTRY.yaml", "org/tier1_exec/3.1.0_SA_CVO/cases_queue/external/EC-20260527-003.md"],
+  "tools_gating_artifacts": [],
+  "axis_mechanical": "GREEN",
+  "axis_intent_coverage": "GREEN",
+  "axis_decision_useful": "GREEN",
+  "timestamp_utc": "2026-05-28T05:03:00Z",
+  "mode": "pre-execution",
+  "source": "verify-channel-cl",
+  "template_class_consecutive": 11,
+  "archetype": "EXPLORE-primary-standard-shape",
+  "cross_archetype_generalization": "CONFIRMED-TRACE+VALIDATE+EXPLORE-all-covered",
+  "m1_count_verify_habit": "WORKED-closed-loop-11-claimed-11-actual",
+  "verify_channel_log_path": "feature_clb/org/tier1_exec/3.1.0_SA_CVO/logs/2026-05-28/verify_channel_0503Z_EC-20260527-003.md"
+}

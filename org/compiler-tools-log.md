@@ -6012,3 +6012,10 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-06-15 | 0.7.0_AE_CloudOps | 49NNAFIX.D1-dispatcher-wire | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
 | 2026-06-15 | 0.1.0_DS_MarketIntelligence | FIND_DUALBIZ.001 state-column+CSV writer | ds-commit-gate.sh (pipeline.py PASS) + comp-pipescript io (Unknown-accounted) | state heuristic from harvested silver text, no re-fetch; --reserve regen; io Unknown = find-dualbiz not in bd/inf graph (AC7, flagged not miscounted) | PASS |
 | 2026-06-15 | 0.1.0_DS_MarketIntelligence | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-06-15 | 0.4.0_DS_ClientPlatform~A | (no-TO) | pipescript | pipescript advi-inf | PASS |
+| 2026-06-15 | 0.4.0_DS_ClientPlatform~A | (no-TO) | pipescript | pipescript news | PASS |
+| 2026-06-15 | 0.4.0_DS_ClientPlatform~A | (no-TO) | pipescript | pipescript factor-tilts | PASS |
+| 2026-06-15 | 0.4.0_DS_ClientPlatform~A | (no-TO) | comp-pipescript | comp-pipescript io finbert-batch-processor | FAIL |
+| 2026-06-15 | 0.4.0_DS_ClientPlatform~A | (no-TO) | pipescript | pipescript --resource opal-news-articles | PASS |
+| 2026-06-15 | 0.4.0_DT_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .claude/skills/comp-loop/SKILL.md --fil... | PASS |
+| 2026-06-15 | 0.4.0_DT_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .claude/skills/comp-loop/SKILL.md --fil... | PASS |

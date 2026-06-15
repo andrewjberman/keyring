@@ -1,0 +1,11 @@
+{
+  "verdict": "CLEAN", "project": "COMP_LEARNS", "case_id": "EC-20260527-013",
+  "prd_path": "prds/VALIDATE/EXT-JSON_SCHEMA_TYPE_INTEGRITY.md", "prd_commit": "f72ba77d9",
+  "axis_mechanical": "GREEN", "axis_intent_coverage": "GREEN", "axis_decision_useful": "GREEN",
+  "timestamp_utc": "2026-05-28T05:25:00Z", "mode": "pre-execution", "source": "verify-channel-cl",
+  "template_class_consecutive": 14,
+  "double_deviation": "VALIDATE-primary-§2.3-co-primary + cert_surface-delta",
+  "cert_surface_assessment": "CORROBORATE-annotation-absorbs-structurally + additive-broaden-trigger-to-integrity_check-OR-cert_surface-OR-trust_contract",
+  "m1_count_slip": "4th-claimed-10-actual-11-2nd-consecutive-asserted-escalate-grep-count",
+  "verify_channel_log_path": "feature_clb/org/tier1_exec/3.1.0_SA_CVO/logs/2026-05-28/verify_channel_0525Z_EC-20260527-013.md"
+}

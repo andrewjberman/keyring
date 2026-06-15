@@ -177,7 +177,7 @@ STRATEGIC=0
 while IFS= read -r path; do
   [ -z "$path" ] && continue
   case "$path" in
-    org/tier0/ledger/*|org/tier0/cycles/*|org/tier0/reviews/*|org/tier0/ratifications/*) : ;;
+    org/tier0/ledger/*|org/tier0/cycles/*|org/tier0/reviews/*|org/tier0/ratifications/*|org/tier0/sessions/*) : ;;
     *) STRATEGIC=1 ;;
   esac
 done <<EOF

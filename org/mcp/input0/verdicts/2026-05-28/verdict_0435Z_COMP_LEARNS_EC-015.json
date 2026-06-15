@@ -1,0 +1,21 @@
+{
+  "verdict": "CLEAN",
+  "project": "COMP_LEARNS",
+  "case_id": "EC-20260527-015",
+  "prd_path": "prds/VALIDATE/EXT-AI_SDK_CREDENTIAL_SOURCE.md",
+  "prd_commit": "ba02dc997",
+  "artifacts_verified": ["prds/VALIDATE/EXT-AI_SDK_CREDENTIAL_SOURCE.md", "prds/VALIDATE/REGISTRY.yaml", "org/tier1_exec/3.1.0_SA_CVO/cases_queue/external/EC-20260527-015.md"],
+  "tools_gating_artifacts": [],
+  "axis_mechanical": "GREEN",
+  "axis_intent_coverage": "GREEN",
+  "axis_decision_useful": "GREEN",
+  "timestamp_utc": "2026-05-28T04:35:00Z",
+  "mode": "pre-execution",
+  "source": "verify-channel-cl",
+  "template_class_consecutive": 10,
+  "fn1_watch_item": "RESOLVED-v07-generalizes-to-validate-primary",
+  "fn1_recommendation": "one-line-integrity-check-co-primary-annotation-not-skeleton-variant",
+  "first_validate_primary": true,
+  "highest_empirical_grounding": "4-real-bridge-scan-reports + genuine-measured-P4-metric",
+  "verify_channel_log_path": "feature_clb/org/tier1_exec/3.1.0_SA_CVO/logs/2026-05-28/verify_channel_0435Z_EC-20260527-015.md"
+}

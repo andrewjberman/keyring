@@ -1,0 +1,5 @@
+script_id: valgate_gate
+path: data/inf/scripts/gold/valgate_gate.py
+classification: NEITHER
+emit_sites:
+- line 584

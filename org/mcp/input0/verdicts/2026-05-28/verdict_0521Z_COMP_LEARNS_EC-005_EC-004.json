@@ -1,0 +1,20 @@
+[
+  {
+    "verdict": "CLEAN", "project": "COMP_LEARNS", "case_id": "EC-20260527-005",
+    "prd_path": "prds/TRACE/EXT-SSH_CREDENTIAL_FLOW.md", "prd_commit": "eb8bd8a56",
+    "axis_mechanical": "GREEN", "axis_intent_coverage": "GREEN", "axis_decision_useful": "GREEN",
+    "timestamp_utc": "2026-05-28T05:21:00Z", "mode": "pre-execution", "source": "verify-channel-cl",
+    "template_class_consecutive": 12, "archetype": "TRACE-primary-standard",
+    "defensive_security": "cleared-no-offensive-surface-no-secret-materialization",
+    "verify_channel_log_path": "feature_clb/org/tier1_exec/3.1.0_SA_CVO/logs/2026-05-28/verify_channel_0521Z_EC-005_EC-004_burst.md"
+  },
+  {
+    "verdict": "CLEAN", "project": "COMP_LEARNS", "case_id": "EC-20260527-004",
+    "prd_path": "prds/TRACE/EXT-CLI_COMMAND_SUBCOMMAND.md", "prd_commit": "eb8bd8a56",
+    "axis_mechanical": "GREEN", "axis_intent_coverage": "GREEN", "axis_decision_useful": "GREEN",
+    "timestamp_utc": "2026-05-28T05:21:00Z", "mode": "pre-execution", "source": "verify-channel-cl",
+    "template_class_consecutive": 13, "archetype": "TRACE-primary-standard",
+    "m1_count_slip": "claimed-10-actual-11-recommend-grep-count-deterministic",
+    "verify_channel_log_path": "feature_clb/org/tier1_exec/3.1.0_SA_CVO/logs/2026-05-28/verify_channel_0521Z_EC-005_EC-004_burst.md"
+  }
+]

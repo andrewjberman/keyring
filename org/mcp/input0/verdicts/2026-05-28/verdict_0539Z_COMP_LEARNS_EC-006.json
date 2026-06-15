@@ -1,0 +1,12 @@
+{
+  "verdict": "CLEAN", "project": "COMP_LEARNS", "case_id": "EC-20260527-006",
+  "prd_path": "prds/DIAGNOSE/EXT-HTTP_CACHE_COMPLIANCE.md", "prd_commit": "09ec7b39c",
+  "axis_mechanical": "GREEN", "axis_intent_coverage": "GREEN", "axis_decision_useful": "GREEN",
+  "timestamp_utc": "2026-05-28T05:39:00Z", "mode": "pre-execution", "source": "verify-channel-cl",
+  "template_class_consecutive": 15, "first_diagnose_primary": true,
+  "archetype_coverage": "4-of-5-TRACE+EXPLORE+VALIDATE+DIAGNOSE",
+  "diagnose_widening_assessment": "CORROBORATE-wait-for-recurrence-diagnose-not-validate-structurally",
+  "expected_lift_grade": "C-affirmed-narrow-domain-prd-pass-independent-of-magnitude",
+  "m1_tool_check": "WORKING-grep-verified-accurate-closure-holding",
+  "verify_channel_log_path": "feature_clb/org/tier1_exec/3.1.0_SA_CVO/logs/2026-05-28/verify_channel_0539Z_EC-20260527-006.md"
+}

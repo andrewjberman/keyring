@@ -1,0 +1,6 @@
+script_id: INF_E_00.eclipse_model_portfolios
+path: data/inf/scripts/gold/INF_E_00.eclipse_model_portfolios.py
+classification: NEITHER
+emit_sites:
+- line 381
+- line 389

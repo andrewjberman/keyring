@@ -58,3 +58,39 @@ Note: All three N/A calls are legitimately pre-deployment (Lambda and IAM resour
 3. P0 deploy: `terraform plan` (0 errors expected on new module except missing bucket) → after §6.2 resolves, `terraform apply` to create SM secrets + IAM roles.
 4. After §6.2: create bucket, apply.
 5. P1: provision cw-exporter EC2 + SSM document `opal-cw-bd-session-fetch` (Playwright OIDC login script).
+
+---
+
+## Session continuation — 2026-06-08T18:xx (Tier C + safe-deploy scope)
+
+### Tier C — cw-*->cot-* destroy/recreate (cot-pipeline-v0.1.1)
+
+COO GO at 181909Z (CTO Tier A+B RAVC2 landed at 3d1a3d4b4).
+
+**Files updated:**
+- `infra/aws/terraform/cot-pipeline/lambdas.tf` — module cw_bd_session_trigger → cot_bd_session_trigger; function_name, artifact_key, env vars (CW_* → COT_*), EventBridge stub names
+- `infra/aws/terraform/cot-pipeline/iam.tf` — all cw_bd_session_trigger resource names + role name + policy name + Sids + SM ARNs + SSM doc ARN + log-group ARN; cot_gold_layer Sids/ARNs CwSession/CwCredentials → CotSession/CotCredentials
+- `infra/aws/terraform/cot-pipeline/secrets.tf` — resource names + secret names blackdiamond/cw/* → blackdiamond/cot/*; descriptions + tags
+- `infra/aws/lambda/cot-pipeline/cot-bd-session-trigger/lambda_function.py` (git mv from cw-bd-session-trigger/) — all CW_* env vars, default values, SSM doc, mode-marker key, brief ref, function name _read_cw_session → _read_cot_session
+- `infra/aws/lambda/ci/lambda-source-map.json` — cw-bd-session-trigger entry → cot-bd-session-trigger
+
+**Commit:** d079ccffd (bare `git commit --only` — justified: safe-commit.sh `git add -f` fails on deleted rename path)
+**Deploy:** cot-pipeline-v0.1.1 — 8 added, 1 changed, 8 destroyed
+**0-diff:** confirmed
+**Tag:** cot-pipeline-v0.1.1 pushed
+
+### safe-deploy.sh scope extension
+
+COO task: wire data/cot/scripts/{bronze,silver,gold}/ → opal-data-cot/code/ in safe_deploy_core.py.
+
+**Change:** added `"cot": ("opal-data-cot", "cot")` to PIPELINE_MAP
+**Commit:** fc19d1e55 — pushed to CLOUD
+**Smoke-test:** all 3 tiers correct ✓
+
+### Security hold
+
+CTO ruling: blackdiamond/cot/credentials re-put BLOCKED on Andrew authorization. Credential must flow local-HAR → SM via local AWS CLI only, never via message bus. Non-blocking (P1 gated on §6.1 + auth-bootstrap).
+
+### Current state
+
+IDLE — waiting for §6.1 advisor ruling for P1 tasking.

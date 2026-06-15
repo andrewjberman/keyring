@@ -1,0 +1,7 @@
+script_id: INF_D_00f.advisor_nna_canonical
+path: data/inf/scripts/gold/INF_D_00f.advisor_nna_canonical.py
+classification: NEITHER
+emit_sites:
+- line 745
+- line 908
+- line 913

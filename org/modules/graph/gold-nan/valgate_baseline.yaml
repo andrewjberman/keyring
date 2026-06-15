@@ -1,0 +1,5 @@
+script_id: valgate_baseline
+path: data/inf/scripts/gold/valgate_baseline.py
+classification: NEITHER
+emit_sites:
+- line 321

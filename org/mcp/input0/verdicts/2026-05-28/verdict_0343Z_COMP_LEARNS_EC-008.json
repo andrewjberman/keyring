@@ -1,0 +1,19 @@
+{
+  "verdict": "CLEAN",
+  "project": "COMP_LEARNS",
+  "case_id": "EC-20260527-008",
+  "prd_path": "prds/TRACE/EXT-SPHINX_XREF_RESOLUTION.md",
+  "prd_commit": "39dc189cd",
+  "artifacts_verified": ["prds/TRACE/EXT-SPHINX_XREF_RESOLUTION.md", "prds/TRACE/REGISTRY.yaml", "org/tier1_exec/3.1.0_SA_CVO/cases_queue/external/EC-20260527-008.md"],
+  "tools_gating_artifacts": [],
+  "axis_mechanical": "GREEN",
+  "axis_intent_coverage": "GREEN",
+  "axis_decision_useful": "GREEN",
+  "timestamp_utc": "2026-05-28T03:43:00Z",
+  "mode": "pre-execution",
+  "source": "verify-channel-cl",
+  "template_class_consecutive": 8,
+  "template_class_signature": "EC-009+EC-012+EC-002+EC-016+EC-011+EC-007+EC-014+EC-008",
+  "v07_codification_mass_status": "strongly-anchored-critical-mass-codification-warranted-now",
+  "verify_channel_log_path": "feature_clb/org/tier1_exec/3.1.0_SA_CVO/logs/2026-05-28/verify_channel_0343Z_EC-20260527-008.md"
+}

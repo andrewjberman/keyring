@@ -1,0 +1,20 @@
+{
+  "verdict": "CLEAN",
+  "project": "COMP_LEARNS",
+  "case_id": "EC-20260527-001",
+  "prd_path": "prds/TRACE/EXT-ANYIO_ASYNC_CONCURRENCY.md",
+  "prd_commit": "ad48d77b4",
+  "artifacts_verified": ["prds/TRACE/EXT-ANYIO_ASYNC_CONCURRENCY.md", "prds/TRACE/REGISTRY.yaml", "org/tier1_exec/3.1.0_SA_CVO/cases_queue/external/EC-20260527-001.md"],
+  "tools_gating_artifacts": [],
+  "axis_mechanical": "GREEN",
+  "axis_intent_coverage": "GREEN",
+  "axis_decision_useful": "GREEN",
+  "timestamp_utc": "2026-05-28T04:04:00Z",
+  "mode": "pre-execution",
+  "source": "verify-channel-cl",
+  "template_class_consecutive": 9,
+  "v07_template_first_fire": true,
+  "v07_first_fire_signal": "SUCCESS-descriptive-accuracy-confirmed-not-rigidity",
+  "structured_concurrency_pair_complete": "EC-014-trio + EC-001-anyio",
+  "verify_channel_log_path": "feature_clb/org/tier1_exec/3.1.0_SA_CVO/logs/2026-05-28/verify_channel_0404Z_EC-20260527-001.md"
+}

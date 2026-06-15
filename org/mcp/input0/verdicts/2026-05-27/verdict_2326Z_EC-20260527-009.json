@@ -1,0 +1,13 @@
+{
+  "verdict": "CLEAN",
+  "project": "EC-20260527-009",
+  "artifacts_verified": ["docs/architecture/TRACE_EXT-PYCURL_LIBSSH2_CEXT_BINDING.md"],
+  "tools_gating_artifacts": [],
+  "axis_mechanical": "GREEN",
+  "axis_intent_coverage": "GREEN",
+  "axis_decision_useful": "GREEN",
+  "timestamp_utc": "2026-05-27T23:26:00Z",
+  "mode": "pre-execution",
+  "source": "verify-channel-cl",
+  "notes": "First EC-side PRD under /cl-charter consumer-pull; bridge-anchored Case Path-1 substrate validated end-to-end"
+}
