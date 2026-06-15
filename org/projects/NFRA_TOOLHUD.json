@@ -1,0 +1,15 @@
+{
+  "project_code": "NFRA_TOOLHUD",
+  "macro_code": "NFRA",
+  "name": "Comp-Tool HUD — make compiler tools salient at decision-time",
+  "description": "Andrew-direct 2026-06-15 (the 'agent HUD' question): catalog updates (CLAUDE.md / graph-call-manifest / comp-tools.yaml) are the discoverability FLOOR, but the real problem is SALIENCE-AT-DECISION-TIME -- agents blind-grep instead of reaching for the stronger repo-scoped comp-* tool, because grep is the zero-friction default reflex and the catalog is periphery the agent must choose to consult. Three arms (Andrew: do all three): #1 PreToolUse INTERCEPT HOOK (CTO) -- surface the right comp call via additionalContext the moment an agent Grep/Globs for a comp-answerable signature; ADVISORY (search still runs) + once-per-class-per-session dedupe (anti-noise) + logged; #2 `comp-which \"<question>\"` ROUTER (CTO) -- lower the which-tool friction so the agent asks its question and gets the canonical call without knowing the 41KB catalog; #3 MEASUREMENT (CVO) -- baseline the blind-grep-where-a-tool-exists rate + rank the buried tools + extract the high-confidence target patterns. Andrew's sequencing: CVO's #3 data tells CTO how to optimize #2 (build the router's question->tool map on what agents ACTUALLY ask, not a-priori guesses) + tunes #1's pattern set.",
+  "prds": [],
+  "status": "active",
+  "phase": "Phase 1: #1 INTERCEPT HOOK SHIPPED + tested (.tools/hooks/comp-tool-hud.sh + settings.json PreToolUse Grep|Glob matcher; Tier-1 high-confidence patterns = gold-script-id -> comp-pipescript io, S3-artifact -> pipescript --resource/comp-pipescript io; advisory via additionalContext, per-class-per-session dedupe, hits logged to org/mcp/comp-tool-hud.log). #3 DELEGATED to CVO (analysis-paced; KEY finding: comp-tools-log 6026 arg-level records = EXACT comp-demand + question->tool map; agent telemetry args-free so the where-a-tool-exists RATE = session-log-sampled estimate, honestly labeled; first-cut demand: comp-pipescript 4165 dominant). #2 ROUTER gated on CVO's ranked question->tool map.",
+  "blocking": "#2 comp-which router gated on CVO #3 question->tool map (Andrew: #3 tells CTO how to optimize #2); #1 Tier-2 pattern expansion (lambda->comp-iam, endpoint->comp-routes, portal->comp-transform, IAM-role->comp-iam) gated on CVO #3 frequency+precision data; post-deploy effectiveness re-measure (CVO) validates #1 vs the baseline.",
+  "created": "2026-06-15",
+  "pods": ["1.0", "3.0"],
+  "pipeline": "tooling (compiler-tool adoption / agent-HUD)",
+  "thread_counter": 0,
+  "threads": []
+}
