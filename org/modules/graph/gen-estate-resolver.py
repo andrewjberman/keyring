@@ -7,12 +7,25 @@ owning_tool/status/named_thread come from CVO (the census + tool-boundary author
 NOT a heuristic. An earlier heuristic over-assigned comp-pipescript (79 vs correct 13);
 CVO caught it (seed-of-record 61e91d334). This regenerates the resolver from CVO's rows."""
 from __future__ import annotations
-import json, os
+import json, os, yaml
 
 ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
 CENSUS = os.path.join(ROOT, "org", "tier1_exec", "3.0.0_SA_CVO", "logs", "2026-06-15", "estate_census")
-ROUTING = os.path.join(ROOT, ".runtmp", "manifest_rows.json")   # CVO authoritative routing rows
+# Routing source = the COMMITTED canonical manifest (CVO-authoritative, reproducible from a
+# fresh checkout). Each manifest entry: {family(=thread_id), named_thread, owning_tool, status,
+# tool_pointer, reason?, last_reviewed, debtscan_flags}.
+MANIFEST = os.path.join(ROOT, "org", "modules", "graph", "estate-coverage-manifest.yaml")
 RESOLVER = os.path.join(ROOT, "org", "modules", "graph", "estate-coverage-resolver.json")
+
+
+def load_routing():
+    m = yaml.safe_load(open(MANIFEST, encoding="utf-8"))
+    out = []
+    for e in m.get("threads", []):
+        out.append({"family": e.get("family"), "named_thread": e.get("named_thread"),
+                    "owning_tool": e.get("owning_tool"), "status": e.get("status"),
+                    "reason": e.get("reason")})
+    return out
 
 
 def load_census_detail():
@@ -28,7 +41,7 @@ def load_census_detail():
 
 
 def main():
-    rows = json.load(open(ROUTING, encoding="utf-8"))   # CVO authoritative
+    rows = load_routing()   # CVO authoritative, from the committed manifest
     detail = load_census_detail()
     seen, threads, no_detail = set(), [], []
     for r in rows:
