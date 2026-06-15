@@ -1,33 +1,255 @@
 {
  "schema_version": 1,
- "generated_from": "CVO census 2d9a0a2a1 + authoritative manifest 61e91d334 (owning_tool per CTO ratified medallion-only boundary)",
+ "generated_from": "CVO census 2d9a0a2a1 + manifest (named_thread) + AUTHORITATIVE_lambda_taxonomy 26b32687a (resource-level, single source w/ fixtures)",
  "last_review": "2026-06-15",
  "named_threads": [
+  "advi-bd",
+  "advi-inf",
+  "advi-cot",
   "model-portfolios",
   "news",
-  "partners",
+  "market-overview",
+  "macroeconomics",
+  "factor-tilts",
+  "valuation",
+  "correlation",
+  "positioning",
+  "cma",
+  "attribution",
+  "portfolio-management",
   "trade-submission",
-  "graph-platform",
   "causality",
-  "ops-internal",
-  "mdpf",
   "security-scanner",
+  "smartx",
+  "mdpf",
+  "partners",
+  "graph-platform",
   "insurance",
   "portal-infra",
-  "advi-bd",
-  "advi-cot",
-  "advi-inf",
-  "cma",
-  "correlation",
-  "data-refresh",
-  "factor-tilts",
-  "macroeconomics",
-  "market-overview",
-  "portfolio-management",
-  "positioning",
-  "smartx",
-  "valuation"
+  "ops-internal",
+  "data-refresh"
  ],
+ "resources_by_named_thread": {
+  "security-scanner": [
+   "access-anomaly-scanner",
+   "cost-anomaly-scanner",
+   "opal-security-scanner-processor",
+   "security-sweep-comprehensive"
+  ],
+  "portal-infra": [
+   "auth-validator-edge",
+   "cache-control-injector",
+   "opal-portal-authorizer",
+   "opal-portal-data-proxy",
+   "opal-session-analytics",
+   "opalinvest-auth-handler",
+   "portal-time-machine",
+   "public-data-router"
+  ],
+  "advi-bd": [
+   "bd-allocation-file-checker",
+   "bd-allocation-processor",
+   "bd-allocation-trigger",
+   "bd-asset-dim-trigger",
+   "bd-capture-output-versions",
+   "bd-client-detail",
+   "bd-fees-trigger",
+   "bd-gold-detail-checker",
+   "bd-gold-foundation",
+   "bd-gold-layer",
+   "bd-gold-trigger",
+   "bd-incrparity-trigger",
+   "bd-portal-publisher",
+   "bd-price-update",
+   "bd-realized-trigger",
+   "bd-time-machine",
+   "bd-transactions-trigger",
+   "bd-unrealized-trigger",
+   "historical-prices-scheduler",
+   "opal-bd-transaction-consolidator"
+  ],
+  "causality": [
+   "causality-ai-query-handler",
+   "causality-analysis-generator",
+   "causality-data-enrichment",
+   "causality-thematic-signals-generator",
+   "causality-themes-fetcher",
+   "causality-trade-idea-generator"
+  ],
+  "market-overview": [
+   "causality-history-manager",
+   "causality-market-update-generator",
+   "market-update-data-aggregator",
+   "market-update-exporter",
+   "market-update-generator",
+   "opal-market-overview-tiered-generator",
+   "opal-market-regime-classifier",
+   "opal-market-rsi-tiered-generator",
+   "opal-portal-fear-greed-fetcher",
+   "opal-portal-volatility-fetcher",
+   "opal-portfolio-version-get",
+   "opal-portfolio-versions-list",
+   "ycharts-market-data-pull",
+   "ycharts-session-capture",
+   "ycharts-session-probe"
+  ],
+  "advi-cot": [
+   "cot-bd-session-trigger"
+  ],
+  "macroeconomics": [
+   "daily-agenda-generator",
+   "deck-generation",
+   "exec-summary-generator",
+   "fred-data-ingestion",
+   "fred-macro-ingestion",
+   "yang-generate-macro",
+   "yang-generate-macro-timeseries",
+   "yang-generate-risk-premium",
+   "yang-refresh-fred-cache"
+  ],
+  "ops-internal": [
+   "ec2-auto-shutdown-enforcer",
+   "ec2-runtime-monitor",
+   "schwab-anonymizer",
+   "test-yfinance-simple",
+   "yfinance-aapl-test"
+  ],
+  "news": [
+   "finbert-batch-processor",
+   "keyword-intelligence-generator",
+   "news-ingestion-scheduler",
+   "news-semantic-clustering",
+   "news-trending-analysis",
+   "opal-keyword-drilldown-generator",
+   "opal-news-ai-sentiment",
+   "opal-news-layer3-curation",
+   "opal-trending-image-generator",
+   "opal-trending-topics-portal-publisher",
+   "seeking-alpha-analysis-coordinator",
+   "seeking-alpha-analysis-dedup",
+   "seeking-alpha-analysis-listing-parser",
+   "seeking-alpha-analysis-scraper",
+   "seeking-alpha-news-coordinator",
+   "seeking-alpha-news-dedup",
+   "seeking-alpha-news-scraper",
+   "semantic-news-layer3-curation",
+   "semantic-trending-topics-portal-publisher",
+   "sentiment_query_api",
+   "test-seeking-alpha-unauth-simple"
+  ],
+  "insurance": [
+   "find-insure-crawl-web",
+   "find-insure-crawl-web-scraping-browser",
+   "find-insure-parse-web",
+   "find-insure-score-web"
+  ],
+  "advi-inf": [
+   "inf-accounts-v2-daily",
+   "inf-api-assets-v2",
+   "inf-api-positions",
+   "inf-api-reps",
+   "inf-api-txn",
+   "inf-assets-trigger",
+   "inf-billing-daily",
+   "inf-bronze-trigger",
+   "inf-client-detail",
+   "inf-ec2-launch-monitor",
+   "inf-ec2-retry-launch",
+   "inf-gold-trigger",
+   "inf-jwt-trigger",
+   "inf-nna-partition-checker",
+   "inf-otp-relay",
+   "inf-performance-daily",
+   "inf-portal-advisor-publisher",
+   "inf-portal-publisher",
+   "inf-silver-aggregator",
+   "inf-silver-chain",
+   "inf-tax-daily",
+   "inf-unified-account-dim-daily",
+   "shared-advisor-router",
+   "shared-advisor-router-response"
+  ],
+  "portfolio-management": [
+   "infrastructure-daily-snapshot",
+   "opal-infrastructure-monitor",
+   "opal-pm-optimization-autosave-put",
+   "opal-pm-optimization-loader",
+   "opal-pm-snapshot-handler",
+   "opal-pm-upload-urls",
+   "opal-portfolio-autosave-get",
+   "opal-portfolio-autosave-put",
+   "opal-portfolio-excel-generator",
+   "opal-portfolio-export-download",
+   "opal-portfolio-funds-list",
+   "opal-portfolio-pickle-parser"
+  ],
+  "mdpf": [
+   "mdpf-daily-trigger",
+   "mdpf-freshness-checker"
+  ],
+  "data-refresh": [
+   "opal-data-refresh-api"
+  ],
+  "graph-platform": [
+   "opal-globgrph-incremental-updater"
+  ],
+  "partners": [
+   "opal-partners-data"
+  ],
+  "smartx": [
+   "opal-smartx-ingestion-pipeline",
+   "smartx-ec2-autostart",
+   "smartx-jwt-refresher",
+   "smartx-model-monthly-pull",
+   "smartx-rest-pull"
+  ],
+  "trade-submission": [
+   "trade-auth-handler",
+   "trade-authorizer",
+   "trade-dashboard-api",
+   "trade-identifier-cache",
+   "trade-parquet-batch-export",
+   "trade-submission-handler",
+   "trade-workflow-handler"
+  ],
+  "model-portfolios": [
+   "yang-canon-interlock",
+   "yang-capture-output-versions",
+   "yang-cleanup-uploads",
+   "yang-generate-allocation-summary",
+   "yang-generate-etf-returns",
+   "yang-generate-latest",
+   "yang-generate-manifest",
+   "yang-generate-peer-performance",
+   "yang-generate-volatility",
+   "yang-get-prior-metadata",
+   "yang-ingest-dynamodb",
+   "yang-invalidate-cloudfront",
+   "yang-model-portfolio-benchmarks",
+   "yang-move-to-processed",
+   "yang-pipeline-trigger",
+   "yang-time-machine",
+   "yang-validate-files"
+  ],
+  "cma": [
+   "yang-generate-cma"
+  ],
+  "correlation": [
+   "yang-generate-correlation"
+  ],
+  "factor-tilts": [
+   "yang-generate-factor-tilts"
+  ],
+  "attribution": [
+   "yang-generate-holdings-attribution"
+  ],
+  "positioning": [
+   "yang-generate-positioning"
+  ],
+  "valuation": [
+   "yang-generate-valuation"
+  ]
+ },
  "threads": [
   {
    "thread_id": "bd-allocation-file-watchdog",

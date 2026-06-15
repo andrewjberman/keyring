@@ -65,14 +65,31 @@ def main():
             "served_artifacts": d.get("served_artifacts", []),
             "frontend_resolution": d.get("frontend_resolution", ""),
         })
-    CATALOG_ORDER = ["advi", "model-portfolios", "news", "market", "pm-optimizer", "partners",
-                     "trade-submission", "graph-platform", "causality", "ops-internal", "mdpf",
-                     "fred-macro", "security-scanner", "insurance", "portal-infra"]
-    named_order = [n for n in CATALOG_ORDER if n in seen] + sorted(n for n in seen if n not in CATALOG_ORDER)
+    # AUTHORITATIVE resource-level taxonomy (CVO 26b32687a): lambda -> named_thread, single source
+    # the fixtures are also derived from. This is the resource enumeration `pipescript <name>` surfaces
+    # (Andrew's "every resource in that thread") + what gate-b reproduces resource-exact.
+    from collections import Counter, defaultdict
+    taxo = json.load(open(os.path.join(CENSUS, "AUTHORITATIVE_lambda_taxonomy.json"), encoding="utf-8"))
+    l2nt = taxo["lambda_to_named_thread"]
+    resources_by_named_thread = defaultdict(list)
+    for lam, nt in l2nt.items():
+        resources_by_named_thread[nt].append(lam)
+    for nt in resources_by_named_thread:
+        resources_by_named_thread[nt] = sorted(resources_by_named_thread[nt])
+
+    all_names = set(seen) | set(resources_by_named_thread)
+    CATALOG_ORDER = ["advi-bd", "advi-inf", "advi-cot", "model-portfolios", "news", "market-overview",
+                     "macroeconomics", "factor-tilts", "valuation", "correlation", "positioning", "cma",
+                     "attribution", "portfolio-management", "trade-submission", "causality",
+                     "security-scanner", "smartx", "mdpf", "partners", "graph-platform", "insurance",
+                     "portal-infra", "ops-internal", "data-refresh"]
+    named_order = [n for n in CATALOG_ORDER if n in all_names] + sorted(n for n in all_names if n not in CATALOG_ORDER)
     resolver = {"schema_version": 1,
-                "generated_from": "CVO census 2d9a0a2a1 + authoritative manifest 61e91d334 (owning_tool per CTO ratified medallion-only boundary)",
-                "last_review": "2026-06-15", "named_threads": named_order, "threads": threads}
+                "generated_from": "CVO census 2d9a0a2a1 + manifest (named_thread) + AUTHORITATIVE_lambda_taxonomy 26b32687a (resource-level, single source w/ fixtures)",
+                "last_review": "2026-06-15", "named_threads": named_order,
+                "resources_by_named_thread": dict(resources_by_named_thread), "threads": threads}
     json.dump(resolver, open(RESOLVER, "w", encoding="utf-8"), indent=1)
+    print("resource-level named threads:", len(resources_by_named_thread), "| total lambdas mapped:", len(l2nt))
 
     from collections import Counter
     print(f"rows (CVO authoritative): {len(rows)} | resolver threads: {len(threads)} | named: {len(named_order)}")
