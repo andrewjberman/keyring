@@ -85,6 +85,7 @@ Assign the DE/DS/DT of the primary pod, or the AE for pipeline-only projects.
 | Code | Surface Area | Primary Owner |
 |------|-------------|---------------|
 | `YALP` | Yang pipeline (cross-pod) | `0.5.0_AE_OpalETL` |
+| `YANG` | Yang ad-hoc portal/feature requests (distinct from YALP = the Yang data pipeline) | `1.0.0_SA_CTO` intake -> pods |
 | `BDPL` | BD pipeline | `0.6.0_AE_PartnerETL` |
 | `NPPL` | News pipeline | `0.5.0_AE_OpalETL` |
 | `SXPL` | SmartX pipeline | `0.6.0_AE_PartnerETL` |

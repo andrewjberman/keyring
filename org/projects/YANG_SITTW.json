@@ -1,0 +1,15 @@
+{
+  "project_code": "YANG_SITTW",
+  "macro_code": "YANG",
+  "name": "Yang SI+TTW -- Global MP since-inception timeseries + trailing-two-weeks performance period",
+  "description": "Andrew-direct from a Yang chat 2026-06-16. NEW macro YANG (Yang ad-hoc portal/feature requests; distinct from YALP = the Yang YCharts/data pipeline). Two independent workstreams. WS-1 (SI, since-inception): push the Model Portfolios Global-view time series back to the earliest FULL model-portfolio daily data. Data path = getMdpfAggregateAUATimeSeriesByFirm('global') -> json/mdpf/global/aggregate-aua-timeseries.json (opal-data-portal-v2), producer build_aggregate_aua_timeseries.py reads platinum/mdpf/{date}.json to ~2024-04-22 with an interpolated/estimated early tail; the real-data floor (Andrew: ~Nov-2024, maybe Sep) is a Phase-0 confirm; expected FE-only (uncap the Global-view window). WS-2 (TTW, trailing-two-weeks): add a 2W period across 4 surfaces -- Market Overview Top/Bottom Performers + the 4 tab-group heatmaps (multi-asset/equities/fixed-income/commodities, Pod 1), and Model Portfolios 'Performance' tab return-vs-volatility toggle + BenchmarkHeatmap model/benchmark/spread (Pod 4). BenchmarkHeatmap ALL_PERIODS today = 1D/WTD/MTD/1M/QTD/1Q/YTD/1Y/SI (no 2W); 2W is an additive period; per-surface Phase-0 decides data-provided vs FE-computed. DECISION pending (Andrew/Yang): TTW = 10 trading days (rec) vs 14 calendar -- one shared definition across all surfaces.",
+  "prds": [{"path": "docs/architecture/YANG_SITTW.md", "label": "YANG_SITTW PRD v0.1", "date": "2026-06-16"}],
+  "status": "active",
+  "phase": "Phase 0 -- PRD COMPLETE 2026-06-16 (1.0.0_SA_CTO, Andrew-direct). Cross-pod portal feature (Pod 4 Model Portfolios + Pod 1 Market Overview); FE-heavy, DS only where a producer must emit a 2W period-return. WS-1 likely FE-only (Global-view window uncap) pending Phase-0 real-data-floor confirm. WS-2 = additive 2W period across 4 surfaces. COO decomposes 3 TOs (TO-1 WS-1 Pod4 / TO-2 WS-2a Market-Overview Pod1 / TO-3 WS-2b Model-Portfolios Pod4).",
+  "blocking": "COO decomposition (TO-1/2/3 per PRD §7). Andrew/Yang to confirm the TTW definition (PRD §5: 10 trading days rec vs 14 calendar). No hard blocker; portal-FE-heavy. Cross-domain: WS-2's 2W definition must be shared across Pod 1 + Pod 4 surfaces.",
+  "created": "2026-06-16",
+  "pods": ["0.4", "0.1"],
+  "pipeline": "portal (Model Portfolios + Market Overview) + mdpf (global aggregate timeseries)",
+  "thread_counter": 0,
+  "threads": []
+}
