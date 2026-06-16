@@ -6042,3 +6042,14 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-06-15 | 0.4.0_DS_ClientPlatform~A | (Andrew-direct) | pipescript | model-portfolios / --resource benchmark (BMKAUD postmortem grounding) | PASS |
 | 2026-06-15 | 0.4.0_DS_ClientPlatform~A | (Andrew-direct) | comp-kuzu | MATCH benchmark nodes (live, BEHIND->auto-refresh; dual-writer confirmed) | PASS |
 | 2026-06-15 | 0.4.0_DS_ClientPlatform~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-06-15 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check list | PASS |
+| 2026-06-15 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/NFRA_GCONTR_PRD.md --... | PASS |
+| 2026-06-15 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/1.0.0_SA_CTO/logs/2026-0... | PASS |
+| 2026-06-16 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript io D_00f | PASS |
+| 2026-06-16 | 0.6.0_AE_PartnerETL | (no-TO) | comp-pipescript | comp-pipescript deployed D_00f | PASS |
+| 2026-06-16 | 0.6.0_AE_PartnerETL | (no-TO) | comp-pipescript | comp-pipescript deployed A_02 | PASS |
+| 2026-06-16 | 0.4.0_DS_ClientPlatform | ADHC_GLDINC.P1-load_flows-alpha2 | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-06-16 | 3.0.0_SA_CVO | ADHC_GLDINC.P1-load_flows-alpha2 | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/.spot-check... | PASS |
+| 2026-06-16 | 2.0.0_SA_COO | ADHC_GLDINC.P1-load_flows-alpha2 | comp-pipescript | comp-pipescript deployed | PASS |
+| 2026-06-16 | 2.0.0_SA_COO | ADHC_GLDINC.P1-load_flows-alpha2 | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/ADVI_49NNAFIX.json --file ... | PASS |
+| 2026-06-16 | 0.6.0_AE_PartnetETL | ADHC_GLDINC.P1-load_flows-alpha2 | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
