@@ -1,9 +1,16 @@
 # Deploy-completion ledger -- NFRA_INFRPT.P0 leg-c (Claude re-home, Anthropic SDK)
 
 **class:** deploy_completion
-**status:** OPEN (deploy-start; small safe-apply pending -- monitor already in TF, no re-import)
+**status:** CLOSED -- COMPLETE + VERIFIED. safe-apply 1/1/0 (HALTGT clear; runtime->python3.12, layer
+anthropic-sdk-deps:1 attached, code sha->Chkm1OdB..., MonitorAnthropicSecretRead added). Controlled-invoke
+verify (emitted report, not rc=0; status=success/FunctionError=null): **§6 ai_analysis = Claude-generated**
+real triage (per-error root-cause+severity -- and it immediately caught a real signal: the monitor role
+lacks logs:DescribeLogGroups on some groups, limiting fetch_error_logs -> pre-existing, surfaced by the
+restored triage); **§5 ai_summary = Claude-generated** security briefing (specific+actionable -- flagged a
+217-day-old IAM key, SOC2 CC6.1). Report archived clean (21-46-11.json/21-47-11.json, ~117KB). comp-iam
+gaps clean. **P0 COMPLETE (a+b+c all live).**
 **opened:** 20260616T2140Z
-**closed:** --
+**closed:** 20260616T2149Z
 **owner:** 0.7.0_AE_CloudOps~B
 **project / TO:** NFRA_INFRPT / P0 leg-c (re-home §6 error-triage + §5 security-briefing to Claude)
 **authorization:** Andrew-picked mechanism = Claude via Anthropic SDK (AskUserQuestion 2026-06-16, NOT Bedrock -- he ground-truthed the firm doesn't use Bedrock). COO re-GO 213433Z (leg-c NEXT, then DR2). CTO Bedrock ruling falsified + superseded.
