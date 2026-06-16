@@ -6273,3 +6273,20 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-06-16 | 2.0.0_SA_COO | YANG_SITTW.TO-3.ws2b-ttw-model-portfolios | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
 2026-06-16 | 0.4.0_DE_ClientPlatform | YANG_SITTW TO-3 COMPLETE: TTW FE shipped (portal DEV 700ec9b4; tsc -b --noEmit --force PASS) + Phase-3 independent tail(10) verify (aws s3 + python, served==recompute 0.004pp) + §5 basis gate closed (AE total-return confirm). comp-transform schema-check/ternary-audit N/A (presentational components not in graph; tsc binding). | refs: 700ec9b4(portal DEV)
 | 2026-06-16 | 0.4.0_DE_ClientPlatform | YANG_SITTW.TO-3.ws2b-ttw-model-portfolios | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-06-16 | 2.0.0_SA_COO | YANG_SITTW.TO-3.ws2b-ttw-model-portfolios | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/YANG_SITTW.json | PASS |
+| 2026-06-16 | 2.0.0_SA_COO | YANG_SITTW.TO-3.ws2b-ttw-model-portfolios | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/YANG_SITTW.json | PASS |
+| 2026-06-16 | 0.7.0_AE_CloudOps~B | YANG_SITTW.TO-3.ws2b-ttw-model-portfolios | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/terraform/shared-infra/main.t... | PASS |
+| 2026-06-16 | 2.0.0_SA_COO | YANG_SITTW.TO-3.ws2b-ttw-model-portfolios | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+| 2026-06-16 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/NFRA_INFRPT.json --file or... | PASS |
+| 2026-06-16 | 0.7.0_AE_CloudOps~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/change_management/20... | PASS |
+| 2026-06-16 | 0.7.0_AE_CloudOps~B | NFRA_INFRPT.P0 | comp-iam | comp-iam service opal-infrastructure-monitor | PASS |
+| 2026-06-16 | 0.7.0_AE_CloudOps~B | NFRA_INFRPT.P0 | comp-blast | comp-blast opal-infrastructure-monitor | PASS |
+| 2026-06-16 | 2.0.0_SA_COO | NFRA_INFRPT.P0 | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/NFRA_INFRPT.json --file or... | PASS |
+| 2026-06-16 | 2.0.0_SA_COO | NFRA_INFRPT.P0 | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.7.0_AE_CloudOps/task... | PASS |
+| 2026-06-16 | 2.0.0_SA_COO | NFRA_INFRPT.P0 | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+| 2026-06-16 | 2.0.0_SA_COO | NFRA_INFRPT.P0 | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.7.0_AE_CloudOps/task... | PASS |
+| 2026-06-16 | 0.4.0_DE_ClientPlatform | NFRA_INFRPT.P0 | comp-surface-check | comp-surface-check check --mode advisory --file src/pages/AdvisorIntelligence/index.tsx | PASS |
+| 2026-06-16 | 0.4.0_DE_ClientPlatform | NFRA_INFRPT.P0 | comp-surface-check | comp-surface-check check --mode advisory --file portal/src/pages/AdvisorIntelligence/in... | PASS |
+| 2026-06-16 | 0.7.0_AE_CloudOps~B | NFRA_INFRPT.P0 | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/change_management/20... | PASS |
+| 2026-06-16 | 0.4.0_DS_ClientPlatform | YANG_SITTW.TO-1 | (none) | leg(b) seam validation = code-read + value-preservation analysis vs deployed shape; /seams + /molecule per Andrew directive (this+next turn) | N/A |
+| 2026-06-16 | 0.4.0_DS_ClientPlatform~A | NFRA_INFRPT.P0 | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
