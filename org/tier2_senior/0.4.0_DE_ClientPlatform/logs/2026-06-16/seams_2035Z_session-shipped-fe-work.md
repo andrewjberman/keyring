@@ -3,7 +3,7 @@
 **by:** 0.4.0_DE_ClientPlatform · **2026-06-16 ~2035Z** · scope: TO-3 TTW (700ec9b4), TO-1 Global-SI (a447712b), ADVI Demo-default (8f564d42), + type-parity repair (a344b2bd)
 **Grounding:** origin/DEV (pushed/shipped state, fetched + read via `git show origin/DEV:`) + the SERVED S3 artifacts (mpb_ttw.json 19:14Z, agg.json 18:37Z) + the deployed auth-gate mechanism. NOT local working tree, not self-report.
 
-## OVERALL VERDICT: SOUND (all seams PASS on all 3 axes) — with one render residual + one parity gap FOUND & FIXED.
+## OVERALL VERDICT: SOUND (decision-honest) — 1 type-parity gap FOUND & FIXED (a344b2bd); 1 deep-tail reconciliation residual FOUND (by DS~A's independent /seams, I CONFIRMED) — demarcation-mitigated, REFINE routed to COO; render residual deferred to promote smoke. See ADDENDUM.
 
 ---
 
@@ -30,7 +30,7 @@
 |---|---|---|
 | MECHANICAL | PASS | origin/DEV has isGlobalSI gate; Global value path uses globalMdpfData (verified agg.json = 413 dates from 2024-11-01); rolling-1y filter gated OFF for Global -> full SI range; per-firm filter retained. |
 | DECLARATIVE | PASS | sma_aua?: optional matches served-absent field; non_model_aua carries the fold. |
-| SEMANTIC | PASS | per-firm UNCHANGED (value-preserving fold, Global-gated extension); Global extends to floor; DS never-widen $0 total/band 413 dates. |
+| SEMANTIC | PASS (demarcation-mitigated) + DEEP-TAIL RESIDUAL | per-firm UNCHANGED; Global extends to floor; DS never-widen $0. **BUT** the Global Non-Model BAND sources from non_model_assets.json (enterprise_total basis), NOT globalMdpfData.non_model_aua — so in the deep tail the band (old basis) + model bars (new .031 basis) overshoot opal_aggregate_aua by +22.38M/+2.88% @ 2024-11-01, -> $0 from 2026-01-14. Decision-HONEST (entirely inside the estimate-basis demarcation) but a real mixed-basis imperfection. See ADDENDUM. |
 
 ### Seam 2b: estimate demarcation ReferenceArea (boundary MDPF_ESTIMATE_BASIS_END='2026-01-16') vs served provenance
 | Axis | Verdict | Evidence |
@@ -79,3 +79,20 @@ Everything else: believed == true (committed==pushed across all 4 commits; data 
 | safe-commit surface-check (ADVI + type-repair commits) | SEV1 advisory (advisor_intelligence / model_portfolios.benchmark) — value-safe |
 | aws s3 (mpb_ttw / agg) + python parity (prior turns) | served TTW present + Phase-3 0.004pp; aggregate sma_aua-free + 2024-11-01 floor |
 | read ProtectedRoute.tsx + AuthContext.context.ts | auth-gate holds children behind isLoading+isAuthenticated; user/User.email on the type |
+| aws s3 cp non_model_assets.json + python reconcile (ADDENDUM) | CONFIRMED DS deep-tail finding to the dollar |
+
+---
+
+## ADDENDUM (post-report) — deep-tail Non-Model band reconciliation (Seam 2a SEMANTIC)
+
+**Source:** DS~A's independent /seams on the TO-1 chain (logs/2026-06-16/seams_1905Z...) caught a semantic seam MY pass missed — I verified the band's presence/shape but did NOT reconcile model+band vs total in the deep tail. The value of an independent second pass.
+
+**Independently CONFIRMED** (agg.json globalMdpfData + non_model_assets.json, served): the Global stacked-chart Non-Model band reads `non_model_assets.json` `non_model_aum` (enterprise_total basis), while the model bars read globalMdpfData `model_aua` (opal_aggregate_aua / .031 re-derive basis). Deep-tail mixed-basis overshoot:
+- 2024-11-01: model 353.80M + band 444.74M = 798.54M vs total 776.17M -> **+22.38M (+2.88%)**
+- ~+23M (2.3-2.9%) through the deep tail; **EXACTLY $0.00 from 2026-01-14** on (the calibration boundary).
+- Cause: non_model_assets' deep-tail enterprise_total (798.54M) was not re-derived to the .031 basis; converges with opal_aggregate_aua at calibration.
+
+**Disposition:** DECISION-HONEST — sits entirely inside the shipped estimate-basis demarcation (<2026-01-16 shaded + "not calibrated" footnote), so it does not mislead. NOT a correctness bug. It IS a real mixed-basis imperfection my SI extension exposed (the 1y cap previously hid it).
+- **REFINE option (routed to COO 204927Z, my rec):** in the <2026-01-16 region, re-source the band from globalMdpfData (`opal_aggregate_aua[i] - model_aua[i]`) -> deep-tail stack reconciles to total by construction + shares the model-bar basis. Keep non_model_assets for >=2026-01-16 (already reconciles to $0). Value-affecting on the model_portfolios SEV1 surface -> COO accept/refine call; I implement same-turn on GO (DS supplies field path). NON-GATING for TO-1/TO-3 (both accepted; this is deep-tail-band polish).
+
+**Verdict impact:** overall stays SOUND (decision-honest via demarcation); Seam 2a SEMANTIC carries this documented deep-tail residual pending COO's accept/refine.
