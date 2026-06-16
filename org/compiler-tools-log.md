@@ -6236,3 +6236,5 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-06-16 | 0.7.0_AE_CloudOps | YANG_SITTW.TO-1.ws1-si-mdpf-simplify-and-global-extend | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/v2_portal/01_market_ov... | PASS |
 | 2026-06-16 | 0.1.0_DE_MarketIntelligence | YANG_SITTW.TO-2 | /seams session-log (no new tool runs) | session log for the /seams TTW-chain verification window; tool runs cited from the seam report (aws s3, grep blast, tsc) | PASS |
 | 2026-06-16 | 0.1.0_DE_MarketIntelligence | YANG_SITTW.TO-1.ws1-si-mdpf-simplify-and-global-extend | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-06-16 | 0.4.0_DS_ClientPlatform | YANG_SITTW.TO-1 | (none) | RAVC-closure-only window (leg-a ACCEPTED by CTO+COO); no new code/infra -- leg-a compiler reproduction in prior log yang_sittw_to1_mdpf_1c_sma_collapse_deploy.md | N/A |
+| 2026-06-16 | 0.4.0_DS_ClientPlatform~A | YANG_SITTW.TO-1.ws1-si-mdpf-simplify-and-global-extend | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
