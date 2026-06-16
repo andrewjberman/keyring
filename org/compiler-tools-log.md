@@ -6148,3 +6148,64 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-06-16 | 3.0.0_SA_CVO | YANG_SITTW.PRD | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/logs/2026-0... | PASS |
 2026-06-16 | 0.7.0_AE_CloudOps | NFRA_GCONTR.TO-2b+EC2WRITES | comp-aws contract-diff (live benchmark row -> WATCH), comp-iam gaps (Lambda-scoped, MISSED the ECS derive GetInstanceProfile gap -> tooling gap), ds-commit-gate (loader+fix), StaticTable verify (caught period_defs=[] post-load, re-verified =11 post-fix). EC2-WRITES root-caused to derive_runner_task missing iam:GetInstanceProfile (RAVC1 filed).
 | 2026-06-16 | 0.7.0_AE_CloudOps | YANG_SITTW.PRD | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-06-16 | 0.7.0_AE_CloudOps | YANG_SITTW.PRD | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/terraform/globgrph/item2a.tf ... | PASS |
+| 2026-06-16 | 0.7.0_AE_CloudOps | YANG_SITTW.PRD | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/change_management/20... | PASS |
+| 2026-06-16 | 0.7.0_AE_CloudOps | YANG_SITTW.PRD | comp-iam | comp-iam gaps | PASS |
+| 2026-06-16 | 0.7.0_AE_CloudOps | YANG_SITTW.PRD | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/change_management/20... | PASS |
+| 2026-06-16 | 1.0.0_SA_CTo | YANG_SITTW.PRD | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/YANG_SITTW.md --file ... | PASS |
+| 2026-06-16 | 1.0.0_SA_CTo | YANG_SITTW.PRD | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/YANG_SITTW.md --file ... | PASS |
+| 2026-06-16 | 2.0.0_SA_COO | YANG_SITTW.PRD | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.1.0_DE_MarketIntelli... | PASS |
+| 2026-06-16 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/REGISTRY.md --file org/pro... | PASS |
+| 2026-06-16 | 3.0.0_SA_CVO | NFRA_GCONTR.TO-3 | comp-surface-check | comp-surface-check list | PASS |
+| 2026-06-16 | 3.0.0_SA_CVO | NFRA_GCONTR.TO-3 | pipescript | pipescript --list | PASS |
+| 2026-06-16 | 3.0.0_SA_CVO | NFRA_GCONTR.TO-3 | pipescript | pipescript model-portfolios | PASS |
+| 2026-06-16 | 0.7.0_AE_CloudOps~B | NFRA_GCONTR.TO-3 | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.7.0_AE_CloudOps/logs... | PASS |
+| 2026-06-16 | 0.6.0_AE_PartnetETL | NFRA_GCONTR.TO-3 | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.6.0_AE_PartnerETL/lo... | PASS |
+| 2026-06-16 | 2.0.0_SA_COO | NFRA_GCONTR.TO-3 | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/YANG_SITTW.json --file org... | PASS |
+| 2026-06-16 | 3.0.0_SA_CVO | NFRA_GCONTR.TO-3 | comp-kuzu | comp-kuzu MATCH (p)-[r:WRITES]->(a) WHERE a.name CONTAINS 'peer_performance' OR a.name ... | FAIL |
+| 2026-06-16 | 3.0.0_SA_CVO | NFRA_GCONTR.TO-3 | comp-kuzu | comp-kuzu CALL show_tables() RETURN * | PASS |
+| 2026-06-16 | 3.0.0_SA_CVO | NFRA_GCONTR.TO-3 | comp-kuzu | comp-kuzu MATCH (a)-[r:CloudEdge]->(b) RETURN r.* LIMIT 3 | PASS |
+| 2026-06-16 | 3.0.0_SA_CVO | NFRA_GCONTR.TO-3 | comp-kuzu | comp-kuzu MATCH ()-[r:CloudEdge]->() RETURN DISTINCT r.rel_type LIMIT 30 | FAIL |
+| 2026-06-16 | 3.0.0_SA_CVO | NFRA_GCONTR.TO-3 | comp-kuzu | comp-kuzu CALL TABLE_INFO('CloudEdge') RETURN * | PASS |
+| 2026-06-16 | 3.0.0_SA_CVO | NFRA_GCONTR.TO-3 | comp-kuzu | comp-kuzu CALL TABLE_INFO('CloudNode') RETURN * | PASS |
+| 2026-06-16 | 3.0.0_SA_CVO | NFRA_GCONTR.TO-3 | comp-kuzu | comp-kuzu MATCH (a:CloudNode) WHERE a.name CONTAINS 'peer' OR a.name CONTAINS 'portal-v... | PASS |
+| 2026-06-16 | 2.0.0_SA_COO | NFRA_GCONTR.TO-3 | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/briefs/allo... | PASS |
+| 2026-06-16 | 3.0.0_SA_CVO | NFRA_GCONTR.TO-3 | comp-kuzu | comp-kuzu MATCH (p)-[r:CloudEdge {edge_type:'WRITES'}]->(a:CloudNode) WHERE a.name = 'o... | PASS |
+| 2026-06-16 | 3.0.0_SA_CVO | YANG_SITTW.TO-1.ws1-si-mdpf-simplify-and-global-extend | comp-kuzu | comp-kuzu MATCH (l:CloudNode)-[r:CloudEdge]->(m) WHERE l.name IN ['yang-generate-peer-p... | PASS |
+| 2026-06-16 | 3.0.0_SA_CVO | (no-TO) | comp-kuzu | comp-kuzu MATCH (e:CloudNode)-[r:CloudEdge]-(m) WHERE e.name='smartx-account-distributi... | PASS |
+| 2026-06-16 | 3.0.0_SA_CVO | (no-TO) | comp-kuzu | comp-kuzu MATCH (l:CloudNode) WHERE l.name CONTAINS 'smartx' AND l.node_type='LAMBDA' R... | PASS |
+| 2026-06-16 | 3.0.0_SA_CVO | (no-TO) | comp-kuzu | comp-kuzu MATCH (l:CloudNode)-[r:CloudEdge]->(m) WHERE l.name='opal-smartx-ingestion-pi... | PASS |
+| 2026-06-16 | 0.4.0_DE_ClientPlatform | YANG_SITTW.TO-2 | comp-transform | comp-transform schema-check BenchmarkHeatmap | FAIL |
+| 2026-06-16 | 0.4.0_DE_ClientPlatform | YANG_SITTW.TO-2 | comp-transform | comp-transform schema-check ReturnVolatilityScatter | FAIL |
+| 2026-06-16 | 0.4.0_DE_ClientPlatform | YANG_SITTW.TO-2 | comp-transform | comp-transform | PASS |
+| 2026-06-16 | 0.4.0_DE_ClientPlatform | YANG_SITTW.TO-2 | comp-transform | comp-transform schema-check | FAIL |
+| 2026-06-16 | 2.0.0_SA_COO | YANG_SITTW.TO-2 | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/YANG_SITTW.json --file org... | PASS |
+| 2026-06-16 | 0.4.0_DE_ClientPlatform | YANG_SITTW.TO-2 | comp-transform | comp-transform all | PASS |
+| 2026-06-16 | 0.4.0_DE_ClientPlatform | YANG_SITTW.TO-2 | comp-transform | comp-transform stats | PASS |
+| 2026-06-16 | 0.4.0_DE_ClientPlatform | YANG_SITTW.TO-2 | comp-transform | comp-transform schema-check ModelPortfolios | FAIL |
+| 2026-06-16 | 0.4.0_DE_ClientPlatform | YANG_SITTW.TO-2 | comp-transform | comp-transform ternary-audit ModelPortfolios | PASS |
+| 2026-06-16 | 0.1.0_DE_MarketIntelligence | YANG_SITTW.TO-2 | pipescript | pipescript market-overview | PASS |
+| 2026-06-16 | 0.4.0_DS_ClientPlatform~A | YANG_SITTW.TO-2 | comp-pipescript | comp-pipescript io build_aggregate_aua_timeseries | FAIL |
+| 2026-06-16 | 2.0.0_SA_COO | YANG_SITTW.TO-2 | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.1.0_DE_MarketIntelli... | PASS |
+| 2026-06-16 | 3.0.0_SA_CVO | YANG_SITTW.TO-2 | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/contracts/g... | PASS |
+| 2026-06-16 | 0.4.0_DE_ClientPlatform | YANG_SITTW.TO-2 | comp-pipescript | comp-pipescript io yang-model-portfolio-benchmarks | FAIL |
+| 2026-06-16 | 0.4.0_DE_ClientPlatform | YANG_SITTW.TO-2 | pipescript | pipescript model-portfolios | PASS |
+| 2026-06-16 | 3.0.0_SA_CVO | YANG_SITTW.TO-2 | comp-kuzu | comp-kuzu MATCH (p)-[r:CloudEdge {edge_type:'WRITES'}]->(a:CloudNode) WHERE a.name='opa... | PASS |
+| 2026-06-16 | 0.1.0_DE_MarketIntelligence | YANG_SITTW.TO-2 | comp-transform | comp-transform schema-check PerformanceHeatMap | FAIL |
+| 2026-06-16 | 0.1.0_DE_MarketIntelligence | YANG_SITTW.TO-2 | comp-transform | comp-transform schema-check ExecutiveSummary | PASS |
+| 2026-06-16 | 0.1.0_DE_MarketIntelligence | YANG_SITTW.TO-2 | comp-transform | comp-transform | PASS |
+| 2026-06-16 | 0.1.0_DE_MarketIntelligence | YANG_SITTW.TO-2 | comp-transform | comp-transform ternary-audit PerformanceHeatMap | FAIL |
+| 2026-06-16 | 3.0.0_SA_CVO | YANG_SITTW.TO-2 | comp-kuzu | comp-kuzu MATCH (p)-[r:CloudEdge]->(m) WHERE p.name IN ['opal-smartx-ingestion-pipeline... | PASS |
+| 2026-06-16 | 0.1.0_DE_MarketIntelligence | YANG_SITTW.TO-2 | comp-transform | comp-transform ternary-audit ExecutiveSummary | PASS |
+| 2026-06-16 | 0.1.0_DE_MarketIntelligence | YANG_SITTW.TO-2 | comp-transform | comp-transform all | PASS |
+| 2026-06-16 | 0.1.0_DE_MarketIntelligence | YANG_SITTW.TO-2 | comp-transform | comp-transform schema-check MarketPerformance | PASS |
+| 2026-06-16 | 3.0.0_SA_CVO | YANG_SITTW.TO-2 | comp-kuzu | comp-kuzu MATCH (n:CloudNode) WHERE n.name CONTAINS '06ebcb27395eb3f49' OR n.name CONTA... | PASS |
+| 2026-06-16 | 3.0.0_SA_CVO | YANG_SITTW.TO-2 | comp-kuzu | comp-kuzu MATCH (p:CloudNode)-[r:CloudEdge {edge_type:'WRITES'}]->(m) WHERE p.node_type... | PASS |
+| 2026-06-16 | 3.0.0_SA_CVO | YANG_SITTW.TO-2 | comp-kuzu | comp-kuzu MATCH (e)-[r:CloudEdge {edge_type:'TRIGGERS'}]->(l:CloudNode) WHERE l.name='s... | PASS |
+| 2026-06-16 | 2.0.0_SA_COO | YANG_SITTW.TO-2 | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+| 2026-06-16 | 3.0.0_SA_CVO | YANG_SITTW.TO-2 | comp-kuzu | comp-kuzu MATCH (l:CloudNode)-[r:CloudEdge]->(m) WHERE l.name='opal-smartx-ingestion-pi... | PASS |
+| 2026-06-16 | 0.7.0_AE_CloudOps | YANG_SITTW.TO-2 | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/globgrph/derive_runner.py | PASS |
+| 2026-06-16 | 2.0.0_SA_COO | YANG_SITTW.TO-2 | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/YANG_SITTW.json --file org... | PASS |
+| 2026-06-16 | 0.4.0_DS_ClientPlatform~A | YANG_SITTW.TO-2 | comp-transform | comp-transform schema-check ModelPortfolios | FAIL |
+| 2026-06-16 | 0.7.0_AE_CloudOps | YANG_SITTW.TO-3 | ds-commit-gate + safe-deploy | ds-commit-gate.sh derive_runner.py (PENDING-gate prefix fix) PASS; push safe-deploy no-op (infra path, not deploy-scope) | PASS |
+| 2026-06-16 | 0.7.0_AE_CloudOps | YANG_SITTW.TO-2 | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
