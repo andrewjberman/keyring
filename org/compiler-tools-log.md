@@ -6209,3 +6209,8 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-06-16 | 0.4.0_DS_ClientPlatform~A | YANG_SITTW.TO-2 | comp-transform | comp-transform schema-check ModelPortfolios | FAIL |
 | 2026-06-16 | 0.7.0_AE_CloudOps | YANG_SITTW.TO-3 | ds-commit-gate + safe-deploy | ds-commit-gate.sh derive_runner.py (PENDING-gate prefix fix) PASS; push safe-deploy no-op (infra path, not deploy-scope) | PASS |
 | 2026-06-16 | 0.7.0_AE_CloudOps | YANG_SITTW.TO-2 | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-06-16 | 0.4.0_DS_ClientPlatform~A | YANG_SITTW.TO-2 | comp-surface-check | comp-surface-check check --mode advisory --file data/mdpf/scripts/backfill/build_aggreg... | PASS |
+| 2026-06-16 | 2.0.0_SA_COO | YANG_SITTW.TO-2 | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+| 2026-06-16 | 0.1.0_DE_MarketIntelligence | YANG_SITTW.TO-2 | pipescript + comp-transform + tsc/eslint | Phase-0: pipescript market-overview ID'd AE Lambda producer (PASS); schema-check ExecutiveSummary/MarketPerformance PASS, PerformanceHeatMap N/A (shared comp not in page registry); ternary-audit clean; tsc -b --noEmit --force + eslint PASS on TTW FE leg (DEV 27299745) | PASS |
+| 2026-06-16 | 0.4.0_DE_ClientPlatform | YANG_SITTW.TO-2 | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DE_ClientPlatfor... | PASS |
+| 2026-06-16 | 0.1.0_DE_MarketIntelligence | YANG_SITTW.TO-2 | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
