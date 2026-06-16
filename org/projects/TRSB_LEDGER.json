@@ -18,6 +18,7 @@
   "depends_on_note": "No blocking dependencies. Same trade-pipeline surface as completed TRSB_PATHFIX + TRSB_TFIMPT (both Phase-1 COMPLETE) -- no overlap with any active TO. The trade pipeline is uninstrumented in the compiler graph (comp-blast/comp-iam/comp-routes do not model trade-* Lambdas) -- PRD section 5 recommends a separate out-of-scope ADHC follow-up to register it; not part of TRSB_LEDGER.",
   "absorbs": [],
   "created": "2026-05-18",
+  "auto_close_trigger": "CTO closeout-sweep 2026-06-16 (not CVO-gated; CTO folds the one-action close into his Andrew report). AUTO-CLOSE on TO-012 (TradeSubmission portal PROD promotion) verified at :5175 -- the only remaining open item; 11/12 TOs shipped + §11 fully discharged. Registered org/projects/BACKLOG.md.",
   "pods": [
     "0.3",
     "0.4",

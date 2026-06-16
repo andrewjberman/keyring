@@ -20,6 +20,7 @@
   ],
   "depends_on_note": "ADVI_FIRMSEP owns the serving-route Phase 3 (TO-FIRMSEP.10) that PRTORG.03 executes; ADVI_COTETL owns the COT data plane (done) + the §6.1 advisor-dimension OUTCOME B that informs the §5-A gating decision. PRTORG is the organization-standard wrapper that ties the partner-firm planes together + drives Cottonwood gap-closure.",
   "created": "2026-06-09",
+  "auto_close_trigger": "CTO closeout-sweep 2026-06-16 (not CVO-gated). AUTO-CLOSE when AC1/AC4 smoke PASS (COT JWT + platinum via AE_PartnerETL chain) AND AC7 ownership_map.json published to platinum/cottonwood/. Phase 3 + portal promote already LIVE (v2.1.119/120); remaining gates are COT-chain-dependent. Registered org/projects/BACKLOG.md.",
   "pods": [
     "0.7",
     "0.4",
