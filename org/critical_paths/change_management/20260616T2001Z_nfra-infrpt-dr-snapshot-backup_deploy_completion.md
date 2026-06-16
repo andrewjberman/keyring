@@ -74,6 +74,18 @@ on this DR's restore-point RAVC2. Owner to confirm removal of these two inline p
   Sequencing conflict surfaced to COO/CTO in the restore-point RAVC2; resolution TBD (fold EBS code fix into
   DR2 + land complete manifest there). The TF DEPLOY itself is COMPLETE + verified (no stranded leg).
 
+- VOLUME-COVERAGE (CTO false-clean condition, answered 202526Z): **0 detached/standalone volumes** (25 total,
+  0 available) -> CTO's literal standalone axis is CLEAN. HONEST RESIDUAL: the skipped snapshot_ebs_volumes
+  step also covered **16 of 25 volumes attached to 16 NON-critical instances** (the dead SmartX EC2
+  i-06ebcb27395eb3f49 / the OPLMCP gw i-01d75141177c88b96 / ~14 agent-service EC2s) that the 9 AMIs do NOT
+  cover (AMIs = the 9 critical bd-/moltbot/seeking-alpha instances + their attached vols only). So the (a)
+  close stands on the 9 AMIs as PRIMARY restore (9 critical instances restorable NOW), but those 16
+  non-critical-instance volumes are a **KNOWN DR2-PENDING coverage item** (NOT a silent omission). They had
+  0 coverage for the entire ~4-mo outage anyway (DR-fix = 0 -> 9-critical-now, full on DR2). DR2 is LOCKED as
+  the SCOPED FIX (COO 202656Z): (1) skip AMI'd-instance volumes (kills the double-snapshot rate-limit + cost)
+  + (2) snapshot the remaining 16 + any future detached NON-FATALLY -> restores full volume coverage + lands
+  the complete manifest. NOT a remove (remove would silently drop the 16).
+
 ## Close criteria
 - safe-apply 6/1/0 (HALTGT clear) + 0-diff re-plan; bucket exists.
 - Controlled invoke SUCCEEDS + writes a FRESH restore point -- verify the ARTIFACTS land in
