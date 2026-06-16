@@ -6218,3 +6218,15 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-06-16 | 1.0.0_SA_CTo | YANG_SITTW.TO-2 | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/NFRA_GCONTR_PRD.md | PASS |
 | 2026-06-16 | 0.1.0_DE_MarketIntelligence | YANG_SITTW.TO-2 | /seams (aws s3 + grep blast + tsc) | TTW seam deep-dive: FE chain S2-S5 SOUND (mech/decl/semantic); S1 producer leg UNVERIFIED-by-design (AE TO-4); 1 semantic residual @Top/Bottom 0.00%-not-N/A in missequenced window | PASS |
 | 2026-06-16 | 0.1.0_DE_MarketIntelligence | YANG_SITTW.TO-2 | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-06-16 | 0.7.0_AE_CloudOps | YANG_SITTW.TO-2 | comp-iam | comp-iam service market-overview-tiered-generator | PASS |
+| 2026-06-16 | 0.7.0_AE_CloudOps | YANG_SITTW.TO-2 | comp-iam | comp-iam service yang-model-portfolio-benchmarks | PASS |
+| 2026-06-16 | 0.7.0_AE_CloudOps | YANG_SITTW.TO-2 | comp-blast | comp-blast all-returns.json | PASS |
+| 2026-06-16 | 0.7.0_AE_CloudOps | YANG_SITTW.TO-2 | comp-blast | comp-blast model_portfolio_benchmarks.json | PASS |
+| 2026-06-16 | 2.0.0_SA_COO | YANG_SITTW.TO-2 | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+| 2026-06-16 | 0.4.0_DS_ClientPlatform | YANG_SITTW.TO-1 | comp-pipescript io | comp-pipescript io build_aggregate_aua_timeseries -> 'Script not found' (io bd/inf-only; mdpf unsupported) -- did consumer enum via precise grep instead | GAP |
+| 2026-06-16 | 0.4.0_DS_ClientPlatform | YANG_SITTW.TO-1 | comp-transform schema-check | comp-transform schema-check ModelPortfolios -> WARN no co-located types.ts (types in portal-proxy.ts) -- manual MdpfPerFirmTimeSeries reconcile, handed to FE leg | TOOL-LIMIT |
+| 2026-06-16 | 0.4.0_DS_ClientPlatform | YANG_SITTW.TO-1 | never-widen before/after (custom diff) | served BEFORE vs re-derived AFTER: TOTAL/model/combined-Non-Model-band = $0.0000 all 413d x3 slices, sma_aua dropped, by_model identical | PASS |
+| 2026-06-16 | 0.4.0_DS_ClientPlatform | YANG_SITTW.TO-1 | Phase-3 served-verify (custom diff) | DEPLOYED vs BEFORE: $0.0000 all 3 slices, sma_aua absent, mtime>commit (CTO+COO never-widen binding AC on deployed result) | PASS |
+| 2026-06-16 | 0.4.0_DS_ClientPlatform | YANG_SITTW.TO-1 | ds-commit-gate.sh | ds-commit-gate build_aggregate_aua_timeseries.py -> py_compile+AST+ruff clean | PASS |
+| 2026-06-16 | 0.4.0_DS_ClientPlatform | YANG_SITTW.TO-1 | deploy_ledger.py | yang-sittw-to1-mdpf-1c-collapse open->4 legs proven->CLOSED (no stranded leg) | PASS |
+| 2026-06-16 | 0.4.0_DS_ClientPlatform~A | YANG_SITTW.TO-2 | comp-surface-check | comp-surface-check check --mode advisory --file docs/briefs/ds-brief-yang-sittw-to1-fe-... | PASS |
