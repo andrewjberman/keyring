@@ -1,13 +1,13 @@
 # Deploy-completion ledger -- NFRA_INFRPT.DR infrastructure-daily-snapshot fix
 
 **class:** deploy_completion
-**status:** OPEN (deploy-start; targeted safe-apply pending)
+**status:** CLOSED -- TF DEPLOY COMPLETE + VERIFIED (infra root cause RESOLVED). DR capability SUBSTANTIALLY restored (9 instance AMIs + ec2-instances.json now land where 0 restore points existed for ~4mo). COMPLETE manifest still gated by a SECOND, DISTINCT pre-existing CODE bug (EBS per-volume rate limit) -> tracked under the CTO-gated repoint/import follow-up. NOT a stranded deploy leg (the TF apply finished cleanly).
 **opened:** 20260616T2001Z
-**closed:** --
+**closed:** 20260616T2012Z
 **owner:** 0.7.0_AE_CloudOps~B
 **project / TO:** NFRA_INFRPT / DR (fix the failing 2AM DR backup -- ACTIVE failure)
-**authorization:** COO GO 191458Z (Andrew-direct, CTO-signed; doc-of-record docs/briefs/infra-report-revamp-proposal-20260616.md). DR-first fast-track.
-**code commit:** (filled at commit -- shared-infra TF only; the Lambda code is UNCHANGED + already tracked)
+**authorization:** COO GO 191458Z (Andrew-direct, CTO-signed; doc-of-record docs/briefs/infra-report-revamp-proposal-20260616.md) + COO PROCEED 200756Z (no STOP; minimal pure-TF fix endorsed; shared-role grant accepted as EXPLICITLY TEMPORARY pending the priority repoint). DR-first fast-track.
+**code commit:** f6c905fdb (shared-infra TF only; the Lambda code is UNCHANGED + already tracked at infra/aws/lambda/infrastructure-daily-snapshot/). Pushed origin/CLOUD.
 
 ## Root cause (from live CloudWatch logs + IAM policy simulation -- NOT guessed)
 The `infrastructure-daily-snapshot` Lambda (EventBridge `infrastructure-snapshot-daily`, cron(0 7 * * ? *))
@@ -46,6 +46,33 @@ shared-infra TF, targeted apply:
 - **No AMI / EBS-snapshot reaper:** once working, the Lambda creates an AMI + EBS snapshots DAILY for bd-/
   moltbot/seeking-alpha instances with NO cleanup (the 30-day S3 lifecycle governs only the manifests). This
   is a cost leak the moment DR starts working -> fast-follow (candidate P2 cost).
+
+## Time-boxed least-privilege exception (CTO 201006Z condition 1)
+The EC2-snapshot + IAM/events/dynamodb/s3-config-read grant added to the SHARED opal-portal-lambda-role
+(EC2SnapshotPermissions widened + new InfraSnapshotIO) is an EXPLICIT, TRACKED, TIME-BOXED least-privilege
+exception -- NOT a quiet permanent state. It modestly widens the portal-serving role's blast radius
+(notably iam:ListRoles/GetRolePolicy). It is UNWOUND by DR2 (repoint the Lambda to the dedicated
+infrastructure-snapshot-role + bring the orphan Lambda into TF), which COO is authoring now and which GOes
+on this DR's restore-point RAVC2. Owner to confirm removal of these two inline policies at DR2 close.
+
+## Apply + smoke-test evidence (20260616T2007Z)
+- safe-apply: **6 added, 1 changed, 0 destroyed** (HALTGT clear). Targeted 0-diff re-plan = "No changes."
+- IAM policy-sim post-apply: all 16 previously-denied actions now ALLOWED; s3:PutObject to the bucket ALLOWED.
+- Controlled DR smoke (CTO-authorized one-time manual invoke -- backup-verification, not a gold run):
+  - INFRA ROOT CAUSE RESOLVED + PROVEN: the run got PAST the original blocker (CreateImage) into the EBS step.
+    **9 instance AMIs created** (ami-097c50029d3db668c etc.; bd-/moltbot/seeking-alpha; state pending) +
+    **s3://opal-infrastructure-snapshots/2026-06-16/ec2-instances.json (27594 B, fresh mtime) LANDED.**
+    This is REAL restore capability where there were ZERO restore points for ~4 months.
+  - **BUT the COMPLETE manifest did NOT land** -- a SECOND, DISTINCT, pre-existing CODE bug surfaced (latent
+    until now because the Lambda never got past step 1): `snapshot_ebs_volumes` (lambda_function.py:206)
+    calls `ec2.create_snapshot` on volumes that step-1's `create_image` JUST snapshotted (AMI backing snaps),
+    with NO backoff -> `SnapshotCreationPerVolumeRateExceeded` -> the handler RE-RAISES on any component
+    error -> manifest.json + the remaining 7 component JSONs never written. STRUCTURAL (recurs every run, not
+    transient -- did NOT burn more AMIs re-confirming). This is the false-clean class CTO condition 2 guards.
+- DR close-gate status: PARTIAL. AMIs (the primary rollback artifact) + ec2-instances.json landed; the
+  COMPLETE manifest is gated on the EBS code fix, which is Rule-1-coupled to the DR2 import (same operation).
+  Sequencing conflict surfaced to COO/CTO in the restore-point RAVC2; resolution TBD (fold EBS code fix into
+  DR2 + land complete manifest there). The TF DEPLOY itself is COMPLETE + verified (no stranded leg).
 
 ## Close criteria
 - safe-apply 6/1/0 (HALTGT clear) + 0-diff re-plan; bucket exists.
