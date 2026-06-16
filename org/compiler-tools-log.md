@@ -6261,3 +6261,9 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-06-16 | 2.0.0_SA_COO | YANG_SITTW.TO-3.ws2b-ttw-model-portfolios | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.7.0_AE_CloudOps/task... | PASS |
 | 2026-06-16 | 0.7.0_AE_CloudOps | YANG_SITTW.TO-4 | comp-iam + comp-blast + build-and-upload + safe-apply | comp-iam service (0 new perm) + comp-blast both artifacts + build-and-upload market-overview/yang-pipeline + safe-apply 0/1/0 x2 (TTW producer) | PASS |
 | 2026-06-16 | 0.7.0_AE_CloudOps | YANG_SITTW.TO-3.ws2b-ttw-model-portfolios | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/cr... | PASS |
+| 2026-06-16 | 0.4.0_DE_ClientPlatform | YANG_SITTW.TO-3.ws2b-ttw-model-portfolios | comp-transform | comp-transform schema-check BenchmarkHeatmap | FAIL |
+| 2026-06-16 | 0.4.0_DE_ClientPlatform | YANG_SITTW.TO-3.ws2b-ttw-model-portfolios | comp-transform | comp-transform ternary-audit BenchmarkHeatmap | FAIL |
+| 2026-06-16 | 0.4.0_DE_ClientPlatform | YANG_SITTW.TO-3.ws2b-ttw-model-portfolios | comp-transform | comp-transform ternary-audit ReturnVolatilityScatter | FAIL |
+| 2026-06-16 | 0.4.0_DE_ClientPlatform | YANG_SITTW.TO-3.ws2b-ttw-model-portfolios | comp-surface-check | comp-surface-check check --mode advisory --file src/components/BenchmarkHeatmap.tsx --f... | PASS |
+| 2026-06-16 | 0.1.0_DE_MarketIntelligence | YANG_SITTW.TO-2 | Phase-3 verify (aws s3 + indep calc + deployed-code read) | TTW VERIFIED: mechanism trading-day-counted (time_series[-10:], not PERIOD_CALENDAR_DAYS); values non-div EXACT <5e-5, div-payers = total-return basis; additive 71/71 | PASS |
+| 2026-06-16 | 0.1.0_DE_MarketIntelligence | YANG_SITTW.TO-3.ws2b-ttw-model-portfolios | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
