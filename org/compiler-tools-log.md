@@ -6350,3 +6350,6 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-06-16 | 0.5.0_AE_OpalETL | NFRA_INFRPT.DR2 | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/change_management/20... | PASS |
 2026-06-16 | 0.7.0_AE_CloudOps~B | NFRA_INFRPT DR+P0(a+b+c)+DR2 | comp-iam service x2, comp-iam gaps x2 (clean), comp-blast x2, comp-manifest-check (clean), ds-commit-gate x2 + repeated IAM policy-sim | root-caused the 4-mo DR outage + verified every fix via live-state, not rc=0
 | 2026-06-16 | 0.7.0_AE_CloudOps~B | NFRA_INFRPT.DR2 | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-06-16 | 2.0.0_SA_COO | NFRA_INFRPT.DR2 | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/NFRA_INFRPT.json | PASS |
+2026-06-16 | 0.5.0_AE_OpalETL | CAUSALITY teardown + Patricia user | comp-blast x2 (causality lambdas; 0 graph cross-edges, lower-bound) + comp-surface-check (safe-commit auto, PASS) | comp-blast is lower-bound -> authoritative blast-radius was the live cross-invoker check (lambda get-policy); 39 resources destroyed, portal 38-path byte-identical verified intact
+| 2026-06-16 | 0.5.0_AE_OpalETL | NFRA_INFRPT.DR2 | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
