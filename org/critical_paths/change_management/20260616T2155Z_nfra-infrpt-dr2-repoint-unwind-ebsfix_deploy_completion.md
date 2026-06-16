@@ -1,9 +1,20 @@
 # Deploy-completion ledger -- NFRA_INFRPT.DR2 (repoint + unwind + EBS scoped-fix)
 
 **class:** deploy_completion
-**status:** OPEN (deploy-start; import + targeted safe-apply pending)
+**status:** CLOSED -- COMPLETE + VERIFIED. import + safe-apply 0/1/2 (HALTGT clear): Lambda REPOINTED to
+infrastructure-snapshot-role (confirmed live) + EBS-fixed code + GIT_COMMIT=nfra-infrpt-dr2; the 2 temp
+grants (EC2SnapshotPermissions + InfraSnapshotIO) DESTROYED from opal-portal-lambda-role (confirmed gone;
+leg-c MonitorAnthropicSecretRead correctly stays). 0-diff re-plan; comp-manifest-check clean (orphan
+resolved). Controlled-invoke close-gate (0-loss): the COMPLETE manifest LANDED on the dedicated role --
+all 10 artifacts fresh (manifest.json + restore.sh + ec2/ebs/lambda/iam/eventbridge/security-groups/s3/
+dynamodb JSONs); 25 EBS snapshots created (non-fatal, 0 failed). EC2 AMI step returned InvalidAMIName.
+Duplicate (today's 9 AMIs already exist from the earlier DR invoke -- a same-day date-stamped-name collision,
+NOT a perms/repoint failure: CreateImage WAS attempted on the dedicated role -> its perms work; handled
+non-fatally). Today's complete restore point = the 9 existing AMIs + 25 EBS snapshots + full manifest. The
+skip-AMI'd EBS logic exercises on tomorrow's fresh-date scheduled run (no name collision -> 9 AMIs ->
+ami_instance_ids skips them -> snapshots only the ~16 non-critical). DR2 acceptance MET.
 **opened:** 20260616T2155Z
-**closed:** --
+**closed:** 20260616T2202Z
 **owner:** 0.7.0_AE_CloudOps~B
 **project / TO:** NFRA_INFRPT / DR2 (clean end-state for the DR fix; CTO-binding 201006Z)
 **authorization:** COO GO 2121Z (re-confirmed 2132Z) + leg-c-first re-sequence 213433Z (DR2 after leg-c, now). CTO 201006Z (import approach + binding). DR restore-point already verified (the 9 AMIs) -> repoint onto a verified base.
