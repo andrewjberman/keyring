@@ -9,7 +9,7 @@ A seam is a **joint**: the boundary where one thing hands off to another — a f
 
 The unit of analysis is the **seam itself**, never either side alone. Two correct components can still have a broken seam between them (the bug is in the joint), and a seam can "look connected" while carrying nothing, the wrong thing, or a thing nobody remembers correctly. This skill exists to catch exactly that.
 
-Sister skill: **`/verify-channel`** verifies an artifact/pipeline *delivers fresh usable data* (the freshness/delivery lens). `/seams` verifies the *connection* is sound across mechanical/declarative/semantic axes (the integration lens). They share the grounding discipline below and compose — a macro `/seams` over a pipeline calls `/verify-channel` for the data-delivery legs.
+Family (each its own thing): **`/molecule`** deep-analyzes a **node** (one unit — what it is, where it sits, does it smell); **`/seams`** (this) pass/fails an **edge** (the bond between two units, on three axes); **`/verify-channel`** runs the delivery/closeout verification *process* (does it deliver fresh usable data; is the project closeable). `/molecule` and `/seams` compose directly — a molecule's chain-position map names the seams to run here; node + edges = the whole graph. All share the grounding discipline below.
 
 ---
 
