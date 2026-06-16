@@ -1,0 +1,17 @@
+{
+  "project_code": "NFRA_INFRPT",
+  "macro_code": "NFRA",
+  "name": "Daily Infrastructure Report revamp -- action-first monitoring (freshness / cost / drift / contract-integrity)",
+  "description": "Andrew-direct 2026-06-16 (routed via CVO 'front the analysis and revitalization'). The daily OPAL INFRASTRUCTURE REPORT (opal-infrastructure-monitor Lambda -> SES email to andrew@opalinvest.com + S3 archive s3://opal-data-portal-v2/infrastructure/reports/) has drifted from an AI-triaged action-first brief into raw-counts-of-everything: (1) its triage layer broke SILENTLY (AI error-triage + security briefing depend on an OpenAI key the Lambda can no longer fetch from opal/external-apis -> 'AI summary unavailable'); (2) it still monitors a 6-month-old architecture (SmartX section watches the dead EC2 export path stopped 06-01 -> FALSE 'STALE' while the live opal-smartx-ingestion-pipeline Lambda runs fresh); (3) AI/OpenAI-calls section emits a meaningless 0/0/100%. Missing the signals the fabric keeps getting bitten by: served-artifact staleness, silent producer freezes, deploy/drift, per-pipeline cost. Disposition: KEEP+ENHANCE cost (the section Andrew values + biggest lever) / KILL dead AI-calls / REPLACE false-STALE SmartX with real served-freshness / FIX triage (re-home to Claude, firm-default model, removes the broken-secret dep) / ADD freshness + drift + graph-HEAD + contract-integrity. ALL FOUR new signal-classes in scope (Andrew selected all): data-freshness, cost-depth, drift-detection, contract-integrity. Active operational finding folded in: infrastructure-daily-snapshot (2AM DR backup, 30-day rollback) failing 3/3 -- fast-tracked.",
+  "prds": [
+    {"path": "docs/briefs/infra-report-revamp-proposal-20260616.md", "label": "CVO ground-truthed proposal v1 (6d5954360) -- the decomposition basis; CTO architecture sign-off pending (thin PRD optional, CTO call)", "date": "2026-06-16"}
+  ],
+  "status": "active",
+  "phase": "Phase 0 -- REGISTERED 2026-06-16 (2.0.0_SA_COO, Andrew-direct via CVO). Proposal ground-truthed section-by-section (CVO 6d5954360). COO compiler study done (comp-iam service opal-infrastructure-monitor: 12 ops; already holds ce:GetCostAndUsage + S3 + CloudWatch + EC2 + SES + secretsmanager + logs; role not comp-iam-mapped -> per-TO comp-iam gaps gate; main NEW IAM = the Claude re-home access mechanism, Bedrock-invoke vs alt-secret). Decomposition P0-P3 IN FLIGHT (P0 quick-wins land-first; P1 freshness+drift; P2 cost-depth+security; P3 contract-integrity gated on NFRA_GCONTR live + delivery upgrade). Build = AE (Lambda/AWS planes) + DS (freshness/pipescript wiring); CTO architecture sign-off; CVO verifies each phase against live state (a monitor that false-alarms STALE is the exact false-clean class CVO guards).",
+  "blocking": "COO decomposition of P0-P3 TOs (IN FLIGHT) + CTO architecture sign-off (proposal routed as basis). EXECUTION gated on AE capacity -- 0.7.0_AE_CloudOps is on YANG TO-4 + NFRA_GCONTR load; allocation TBD (sequence behind live work OR request a 2nd AE spawn). DR finding (infrastructure-daily-snapshot failing 3/3) fast-tracked as a distinct operational fix. P3 contract-integrity section gated on NFRA_GCONTR going live (Q2/value-check).",
+  "created": "2026-06-16",
+  "pods": ["0.7", "0.4"],
+  "pipeline": "infrastructure monitoring (opal-infrastructure-monitor Lambda + SES email + S3 archive opal-data-portal-v2/infrastructure/reports/)",
+  "thread_counter": 0,
+  "threads": []
+}
