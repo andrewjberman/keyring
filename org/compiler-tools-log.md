@@ -6067,3 +6067,55 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-06-16 | 0.4.0_DS_ClientPlatform | NFRA_GCONTR.decomp | comp-surface-check | comp-surface-check check --mode advisory --file data/black_diamond/scripts/gold/lib/nna... | PASS |
 | 2026-06-16 | 0.4.0_DS_ClientPlatform | ADHC_GLDINC.P1-load_flows-alpha2 | comp-pipescript/ds-commit-gate/deploy_ledger | io D_00f (PARTIAL: underdetects gzip-write+glob-read) + deployed nna_flows (no-row, dispatch-scoped lib) + ds-commit-gate nna_flows x2 (PASS) + deploy_ledger open/close-leg L1/L2 | PASS |
 | 2026-06-16 | 0.4.0_DS_ClientPlatform | NFRA_GCONTR.TO-2 | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-06-16 | 1.0.0_SA_CTo | NFRA_GCONTR.TO-2 | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/ADHC_GLDINC_PRD.md | PASS |
+| 2026-06-16 | 3.0.0_SA_CVO | NFRA_GCONTR.TO-2 | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/logs/2026-0... | PASS |
+| 2026-06-16 | 1.0.0_SA_CTo | NFRA_GCONTR.TO-2 | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/ADHC_GLDINC_PRD.md | PASS |
+| 2026-06-16 | 0.7.0_AE_CloudOps | NFRA_GCONTR.TO-2 | comp-aws | comp-aws contract-diff | PASS |
+| 2026-06-16 | 0.7.0_AE_CloudOps | NFRA_GCONTR.TO-2 | comp-aws | comp-aws contract-diff --json | PASS |
+| 2026-06-16 | 0.7.0_AE_CloudOps | NFRA_GCONTR.TO-2 | comp-surface-check | comp-surface-check selfcheck | PASS |
+| 2026-06-16 | 0.7.0_AE_CloudOps | NFRA_GCONTR.TO-2 | comp-surface-check | comp-surface-check contract-selfcheck | PASS |
+| 2026-06-16 | 0.7.0_AE_CloudOps | NFRA_GCONTR.TO-2 | comp-surface-check | comp-surface-check contract-selfcheck | PASS |
+| 2026-06-16 | 0.7.0_AE_CloudOps | NFRA_GCONTR.TO-2 | comp-surface-check | comp-surface-check selfcheck | PASS |
+| 2026-06-16 | 0.7.0_AE_CloudOps | NFRA_GCONTR.TO-2 | comp-surface-check | comp-surface-check contract-selfcheck | PASS |
+| 2026-06-16 | 0.7.0_AE_CloudOps | NFRA_GCONTR.TO-2 | comp-aws | comp-aws contract-diff | PASS |
+| 2026-06-16 | 0.7.0_AE_CloudOps | NFRA_OPLMCP.STATUS-CENSUS | comp-surface-check | comp-surface-check check --file portal/src/api/endpoints/aum.ts --mode blocking | FAIL |
+| 2026-06-16 | 1.0.0_SA_CTo | NFRA_OPLMCP.STATUS-CENSUS | comp-aws | comp-aws --help | PASS |
+| 2026-06-16 | 0.7.0_AE_CloudOps | NFRA_OPLMCP.STATUS-CENSUS | comp-surface-check | comp-surface-check check --file portal/src/api/endpoints/aum.ts --mode blocking | FAIL |
+| 2026-06-16 | 0.7.0_AE_CloudOps | NFRA_OPLMCP.STATUS-CENSUS | comp-surface-check | comp-surface-check check --file portal/src/api/endpoints/aum.ts --mode advisory | PASS |
+| 2026-06-16 | 0.7.0_AE_CloudOps | NFRA_OPLMCP.STATUS-CENSUS | comp-aws | comp-aws contract-diff | PASS |
+| 2026-06-16 | 0.7.0_AE_CloudOps | NFRA_OPLMCP.STATUS-CENSUS | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/globgrph/derive_runner.py --f... | PASS |
+| 2026-06-16 | 1.0.0_SA_CTo | NFRA_OPLMCP.STATUS-CENSUS | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/NFRA_OPLMCP_PRD.md --... | PASS |
+| 2026-06-16 | 1.0.0_SA_CTo | NFRA_OPLMCP.STATUS-CENSUS | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/NFRA_GCONTR_PRD.md | PASS |
+| 2026-06-16 | 1.0.0_SA_CTo | NFRA_OPLMCP.STATUS-CENSUS | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/NFRA_OPLMCP_PRD.md | PASS |
+| 2026-06-16 | 0.7.0_AE_CloudOps~B | NFRA_OPLMCP | comp-kuzu | comp-kuzu MATCH (n) WHERE toLower(n.name) CONTAINS 'm365' OR toLower(n.name) CONTAINS '... | PASS |
+| 2026-06-16 | 0.7.0_AE_CloudOps~B | NFRA_OPLMCP | comp-iam | comp-iam service m365-mcp-gateway | PASS |
+| 2026-06-16 | 0.7.0_AE_CloudOps~B | NFRA_OPLMCP | comp-blast | comp-blast m365-mcp-gateway | PASS |
+| 2026-06-16 | 3.0.0_SA_CVO | NFRA_OPLMCP | comp-kuzu | comp-kuzu MATCH (n) WHERE n.id CONTAINS 'trade-recon' OR n.id CONTAINS 'trade_recon' OR... | FAIL |
+| 2026-06-16 | 0.7.0_AE_CloudOps~B | NFRA_OPLMCP | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/ec2/m365-mcp-gateway/IT_REQUE... | PASS |
+| 2026-06-16 | 3.0.0_SA_CVO | NFRA_OPLMCP | comp-kuzu | comp-kuzu CALL show_tables() RETURN * | PASS |
+| 2026-06-16 | 3.0.0_SA_CVO | NFRA_OPLMCP | comp-kuzu | comp-kuzu MATCH (n) RETURN n LIMIT 1 | PASS |
+| 2026-06-16 | 3.0.0_SA_CVO | NFRA_OPLMCP | comp-kuzu | comp-kuzu MATCH (n) WHERE n.node_id CONTAINS 'trade-recon' OR n.node_id CONTAINS 'trade... | PASS |
+| 2026-06-16 | 3.0.0_SA_CVO | NFRA_OPLMCP | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/logs/2026-0... | PASS |
+| 2026-06-16 | 0.7.0_AE_CloudOps~B | NFRA_OPLMCP | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/ec2/m365-mcp-gateway/deploy/m... | PASS |
+| 2026-06-16 | 0.7.0_AE_CloudOps~B | NFRA_OPLMCP | comp-iam | comp-iam gaps | PASS |
+| 2026-06-16 | 0.7.0_AE_CloudOps~B | NFRA_OPLMCP | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/terraform/m365-mcp-gateway/.t... | PASS |
+| 2026-06-16 | 3.0.0_SA_CVO | NFRA_OPLMCP | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/logs/2026-0... | PASS |
+| 2026-06-16 | 1.0.0_SA_CTo | NFRA_OPLMCP | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/NFRA_OPLMCP_PRD.md | PASS |
+| 2026-06-16 | 0.7.0_AE_CloudOps~B | NFRA_OPLMCP | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/ec2/EC2_MANIFEST.json --file ... | PASS |
+| 2026-06-16 | 3.0.0_SA_CVO | NFRA_OPLMCP | comp-surface-check | comp-surface-check check --mode advisory --file .claude/skills/seams/SKILL.md | PASS |
+| 2026-06-16 | 1.0.0_SA_CTo | NFRA_OPLMCP | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/NFRA_OPLMCP_PRD.md | PASS |
+| 2026-06-16 | 3.0.0_SA_CVO | NFRA_OPLMCP | comp-surface-check | comp-surface-check check --mode advisory --file .claude/skills/molecule/SKILL.md --file... | PASS |
+| 2026-06-16 | 0.7.0_AE_CloudOps~B | NFRA_OPLMCP | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/ec2/m365-mcp-gateway/IT_REQUE... | PASS |
+| 2026-06-16 | 0.6.0_AE_PartnetETL | NFRA_OPLMCP | comp-surface-check | comp-surface-check check --mode advisory --file data/black_diamond/scripts/gold/gold_di... | PASS |
+| 2026-06-16 | 2.0.0_SA_COO | NFRA_OPLMCP | comp-surface-check | comp-surface-check check --mode advisory --file .owned-paths.yaml --file org/tier2_seni... | PASS |
+| 2026-06-16 | 0.6.0_AE_PartnetETL | NFRA_OPLMCP | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/change_management/20... | PASS |
+| 2026-06-16 | 0.7.0_AE_CloudOps | NFRA_OPLMCP | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/globgrph/derive_runner.py --f... | PASS |
+| 2026-06-16 | 0.6.0_AE_PartnetETL | NFRA_OPLMCP | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.6.0_AE_PartnerETL/lo... | PASS |
+| 2026-06-16 | 0.7.0_AE_CloudOps | NFRA_OPLMCP | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/change_management/20... | PASS |
+| 2026-06-16 | 2.0.0_SA_COO | NFRA_OPLMCP | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/ADHC_GLDINC.json | PASS |
+| 2026-06-16 | 0.7.0_AE_CloudOps~B | NFRA_OPLMCP | comp-iam | comp-iam service m365-mcp-gateway | PASS |
+| 2026-06-16 | 0.7.0_AE_CloudOps~B | NFRA_OPLMCP | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/ec2/EC2_MANIFEST.json | PASS |
+| 2026-06-16 | 0.7.0_AE_CloudOps | NFRA_OPLMCP | comp-aws | comp-aws contract-diff | PASS |
+| 2026-06-16 | 0.7.0_AE_CloudOps | NFRA_OPLMCP | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/change_management/20... | PASS |
+| 2026-06-16 | 0.7.0_AE_CloudOps | NFRA_OPLMCP | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.7.0_AE_CloudOps/task... | PASS |
+| 2026-06-16 | 0.7.0_AE_CloudOps~B | NFRA_OPLMCP | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
