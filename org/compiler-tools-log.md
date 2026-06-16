@@ -6053,3 +6053,17 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-06-16 | 2.0.0_SA_COO | ADHC_GLDINC.P1-load_flows-alpha2 | comp-pipescript | comp-pipescript deployed | PASS |
 | 2026-06-16 | 2.0.0_SA_COO | ADHC_GLDINC.P1-load_flows-alpha2 | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/ADVI_49NNAFIX.json --file ... | PASS |
 | 2026-06-16 | 0.6.0_AE_PartnetETL | ADHC_GLDINC.P1-load_flows-alpha2 | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-06-16 | 3.0.0_SA_CVO | ADHC_GLDINC.P1-load_flows-alpha2 | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/logs/2026-0... | PASS |
+| 2026-06-16 | 1.0.0_SA_CTo | ADHC_GLDINC.P1-load_flows-alpha2 | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/NFRA_GCONTR_PRD.md --... | PASS |
+| 2026-06-16 | 0.4.0_DS_ClientPlatform | ADHC_GLDINC.P1-load_flows-alpha2 | comp-surface-check | comp-surface-check check --mode advisory --file data/black_diamond/scripts/gold/lib/nna... | PASS |
+| 2026-06-16 | 2.0.0_SA_COO | ADHC_GLDINC.P1-load_flows-alpha2 | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/NFRA_COT_RULE15.json --fil... | PASS |
+| 2026-06-16 | 2.0.0_SA_COO | NFRA_GCONTR.decomp | comp-surface-check | comp-surface-check list | PASS |
+| 2026-06-16 | 0.4.0_DS_ClientPlatform | NFRA_GCONTR.decomp | comp-pipescript | comp-pipescript deployed data/black_diamond/scripts/gold/lib/nna_flows.py | PASS |
+| 2026-06-16 | 0.4.0_DS_ClientPlatform | NFRA_GCONTR.decomp | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/change_management/20... | PASS |
+| 2026-06-16 | 0.6.0_AE_PartnetETL | NFRA_GCONTR.decomp | comp-pipescript | comp-pipescript io gldinc_p1_shadow | FAIL |
+| 2026-06-16 | 2.0.0_SA_COO | NFRA_GCONTR.decomp | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/task_orders... | PASS |
+| 2026-06-16 | 3.0.0_SA_CVO | NFRA_GCONTR.decomp | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/logs/2026-0... | PASS |
+| 2026-06-16 | 3.0.0_SA_CVO | NFRA_GCONTR.decomp | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/logs/2026-0... | PASS |
+| 2026-06-16 | 0.4.0_DS_ClientPlatform | NFRA_GCONTR.decomp | comp-surface-check | comp-surface-check check --mode advisory --file data/black_diamond/scripts/gold/lib/nna... | PASS |
+| 2026-06-16 | 0.4.0_DS_ClientPlatform | ADHC_GLDINC.P1-load_flows-alpha2 | comp-pipescript/ds-commit-gate/deploy_ledger | io D_00f (PARTIAL: underdetects gzip-write+glob-read) + deployed nna_flows (no-row, dispatch-scoped lib) + ds-commit-gate nna_flows x2 (PASS) + deploy_ledger open/close-leg L1/L2 | PASS |
+| 2026-06-16 | 0.4.0_DS_ClientPlatform | NFRA_GCONTR.TO-2 | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
