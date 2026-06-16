@@ -3,6 +3,8 @@
 **archetype:** DIAGNOSE
 **secondary_archetypes:** TRACE, VALIDATE
 
+> **CORRECTION (~16:17Z, AE ground-truthed the mechanism).** The CONCLUSION below stands — EC2 producers contribute 0 WRITES edges → NNA's EC2 canonical_writer is invisible to Q2 → policy limb can't fire. But the MECHANISM is corrected: it is NOT a liveness/start-on-demand completeness limit (I corroborated AE's "stopped EC2 → live_ec2() misses it" hypothesis with the operationally-true fact that the bd-gold runner is start-on-demand — but live_ec2() INCLUDES stopped instances; the runner IS in the graph w/ bd-exporter-profile + bd-exporter-ec2-role has s3-access, yet 0 EC2 WRITES edges anywhere). It is a **derive code bug in the EC2 instance-profile→role→WRITES crossing** (non-emitting), fixed targeted, not a liveness redesign. **My corroboration was a verifier-failure**: I supplied a fitting-but-unverified operational fact that reinforced a wrong root-cause instead of testing the mechanism against the code. Lesson banked: [[feedback_corroboration_must_verify_mechanism_not_supply_a_fitting_fact]]. AE caught it ground-truthing before designing the fix.
+
 Authoring NFRA_GCONTR TO-3 next-wave: the `advisor_intelligence`/NNA (SEV1) contract row. The per-surface producer + forbidden_writers census (CTO condition (a): completeness = catch-power) surfaced a real blocker on the **policy limb** before I authored a broken row.
 
 ## Census result
