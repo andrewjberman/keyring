@@ -14,7 +14,7 @@
 |---|---|---|---|---|---|
 | L1 | git | CLOUD commit+push data/black_diamond/scripts/gold/lib/nna_flows.py alpha2 | commit hash pushed | commit d4ec0dbd9 pushed to origin/CLOUD (3b1e57bd9..d4ec0dbd9); ds-commit-gate clean (py_compile+AST+ruff) | CLOSED 20260616T130610Z |
 | L2 | s3-prefix | opal-data-bd code/gold/lib/nna_flows.py | md5==ETag readback (lib file -- NOT in comp-pipescript dispatch catalog, deployed-tool returns no row by design) | safe-deploy pre-push hook deployed code/gold/lib/nna_flows.py; verified md5==ETag d3a40eb061bed36bad223ea85a793986 (LastModified 2026-06-16T13:00:57Z, 33244B); comp-pipescript deployed returns no row (lib file not in dispatch catalog -- expected) | CLOSED 20260616T130610Z |
-| L3 | activation | AE removes gldinc_p1_shadow.py post-chain invocation from gold_dispatch.sh (dispatcher shadow-removal leg) | deployed gold_dispatch.sh md5==ETag + bash -n clean + shadow-invocation line absent |  | OPEN |
+| L3 | activation | AE removes gldinc_p1_shadow.py post-chain invocation from gold_dispatch.sh (dispatcher shadow-removal leg) | deployed gold_dispatch.sh md5==ETag + bash -n clean + shadow-invocation line absent | shadow-removal deployed: gold_dispatch.sh repo md5==S3 ETag e643bc51025d5e791e52ba5f25ec891b (LM 2026-06-16T15:31:42Z); deployed copy has 0 gldinc_p1_shadow refs (invocation removed, lines 1314-1334) + 4 GLDINC_SHADOW_SET refs intact; bash -n clean; commit 9c47528b3 pushed CLOUD. Resolves ungated-cache/vacuous-shadow P0. SKIP Option-B per Andrew/CTO. §4b daily-watch CLOSED COMPLETE by COO (acceptance >=5 nights MET at 9 real full-scan-vs-windowed clean nights pre-cutover; vacuous post-cutover). L4=CVO 06-17 AM independent windowed-vs-full_scan. | CLOSED 20260616T153209Z |
 | L4 | verify | CVO cert BOTH legs + 06-17 nightly DELTA=0 (served load_flows daily == oracle) | CVO both-legs verdict + 06-17 scorecard.json max_abs_diff==0 / served morning-review |  | OPEN |
 
 ## Log
@@ -22,3 +22,4 @@
 - 20260616T130558Z OPENED by 0.4.0_DS_ClientPlatform with 4 leg(s)
 - 20260616T130610Z LEG L1 closed: commit d4ec0dbd9 pushed to origin/CLOUD (3b1e57bd9..d4ec0dbd9); ds-commit-gate clean (py_compile+AST+ruff)
 - 20260616T130610Z LEG L2 closed: safe-deploy pre-push hook deployed code/gold/lib/nna_flows.py; verified md5==ETag d3a40eb061bed36bad223ea85a793986 (Last
+- 20260616T153209Z LEG L3 closed: shadow-removal deployed: gold_dispatch.sh repo md5==S3 ETag e643bc51025d5e791e52ba5f25ec891b (LM 2026-06-16T15:31:42Z); 
