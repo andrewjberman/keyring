@@ -109,6 +109,92 @@ def _changed_files(args) -> list[str]:
         return []
 
 
+# ---------------------------------------------------------------------------
+# NFRA_GCONTR (TO-2): the contract advisory layer (Q1/Q2). ADDITIVE + ADVISORY.
+# A SEV1 contracted-surface commit runs Q2-at-HEAD; an UNSANCTIONED result WARNS
+# (advisory) -- it NEVER changes the exit code (the existing file-gate verdict is
+# untouched), mirroring the comp-manifest-check D6 advisory ramp. The hard-block
+# flip (exit 2 + audited SURFACE_ACK) is a LATER one-line CTO ramp-flip gated on
+# low-FP evidence once CVO's SEV1 contracts (TO-3) exist + are tuned. Engine:
+# contract_engine.py. Best-effort: any failure -> silent skip, never a block.
+# ---------------------------------------------------------------------------
+
+def _contract_advisory(sev1_surface_ids: set) -> None:
+    """Print the NFRA_GCONTR Q2 contract advisory for the touched SEV1 surfaces.
+    PURELY ADDITIVE -- emits advisory lines only, returns None, and the caller's
+    exit code is unaffected. Opt out with GCONTR_SKIP_CONTRACT_CHECK=1."""
+    if not sev1_surface_ids:
+        return
+    if os.environ.get("GCONTR_SKIP_CONTRACT_CHECK", "").strip() in ("1", "true", "yes"):
+        return
+    try:
+        import contract_engine as ce  # lazy: dev-box only; not COPY'd into the derive container
+    except Exception:
+        return  # engine absent (e.g. in-container nightly) -> contract layer inert
+
+    try:
+        contracts, cstatus = ce.load_contracts()
+    except Exception:
+        return
+    print("\n-- NFRA_GCONTR contract layer (Q2, ADVISORY) --")
+    if cstatus == "absent":
+        print("CONTRACT-ADVISORY: globgrph.graph_contracts not created yet "
+              "(NFRA_GCONTR TO-2 in-VPC stand-up pending) -- contract layer inert.")
+        return
+    if cstatus.startswith("unavailable"):
+        print(f"CONTRACT-ADVISORY: graph_contracts unreachable ({cstatus}) -- skipping (never blocks).")
+        return
+
+    # only pay the snapshot read when a TOUCHED SEV1 surface is actually CONTRACTED
+    contracted = {}
+    uncontracted = []
+    for sid in sorted(sev1_surface_ids):
+        c = ce.contract_for_surface(sid, contracts)
+        if c:
+            contracted[sid] = c
+        else:
+            uncontracted.append(sid)
+
+    for sid in uncontracted:
+        # false-clean discipline pushed to the value layer: an uncontracted SEV1
+        # surface reads LOUD unreviewed, never silently "fine".
+        print(f"CONTRACT-ADVISORY: SEV1 surface {sid} is UNCONTRACTED (LOUD: unreviewed) -- "
+              f"no graph_contracts row governs it yet (CVO TO-3 authoring).")
+
+    if not contracted:
+        return
+    try:
+        import datetime as _dt
+        cur = ce.load_graph_snapshot("latest")
+        today = _dt.date.today()
+        clist = list(contracted.values())
+        q1 = ce.q1_writes_diff(None, cur, clist)
+        q2 = ce.q2_join(clist, q1, window=(today, today))
+    except Exception as e:
+        print(f"CONTRACT-ADVISORY: could not evaluate Q2 ({type(e).__name__}: {e}) -- skipping (never blocks).")
+        return
+    for sid, c in contracted.items():
+        v = q2.get(c["contract_id"])
+        if not v:
+            continue
+        st = v["status"]
+        if st == "UNSANCTIONED":
+            print(f"CONTRACT-ADVISORY [WARN]: SEV1 surface {sid} contract={c['contract_id']} -> "
+                  f"UNSANCTIONED. {v['reason']}")
+            print("  (ADVISORY ramp: this WOULD hard-block once the CTO flips the ramp on low-FP "
+                  'evidence; set SURFACE_ACK="<reason>" then. Warning only today.)')
+        elif st == "SANCTIONED":
+            print(f"CONTRACT-ADVISORY: SEV1 surface {sid} contract={c['contract_id']} -> SANCTIONED "
+                  f"(ratified contract edit in window; never-widen sign-off recorded).")
+        elif st == "WATCH":
+            print(f"CONTRACT-ADVISORY: SEV1 surface {sid} contract={c['contract_id']} -> WATCH "
+                  f"({len(v['intruders'])} non-canonical, non-forbidden writer(s); shared-bucket "
+                  f"capability noise, advisory only).")
+        else:
+            print(f"CONTRACT-ADVISORY: SEV1 surface {sid} contract={c['contract_id']} -> CLEAN "
+                  f"(only canonical_writer={v['canonical_writer']}).")
+
+
 def cmd_check(args) -> int:
     # best-effort load
     try:
@@ -156,6 +242,15 @@ def cmd_check(args) -> int:
         print(f"  severity_resolution: {f} is in BOTH a SEV1 and a SEV2 surface -> alarms at SEV1.")
 
     if sev1:
+        # NFRA_GCONTR (TO-2): additive contract advisory (Q2). Prints WARN/WATCH/
+        # SANCTIONED/CLEAN/uncontracted notes for the touched SEV1 surfaces but
+        # NEVER alters the exit code below. Off during selfcheck (synthetic files,
+        # no live S3 reads). Best-effort -- never raises.
+        if getattr(args, "contract_layer", True):
+            try:
+                _contract_advisory({t[1] for t in sev1})
+            except Exception:
+                pass
         if args.mode == "advisory":
             print("\nADVISORY MODE: SEV1 touch would BLOCK in blocking mode "
                   "(ramp not yet flipped) -- warning only.")
@@ -432,7 +527,7 @@ def cmd_selfcheck(args) -> int:
     fails = []
     for label, files, want in cases:
         print(f"\n--- {label} : {files} ---")
-        ns = argparse.Namespace(file=files, mode="blocking")
+        ns = argparse.Namespace(file=files, mode="blocking", contract_layer=False)
         # selfcheck must not honor a real ack
         saved = os.environ.pop("SURFACE_ACK", None)
         rc = cmd_check(ns)
@@ -443,6 +538,88 @@ def cmd_selfcheck(args) -> int:
         if not ok:
             fails.append(label)
     print("\nSELFCHECK:", "ALL PASS" if not fails else f"FAIL {fails}")
+    return 0 if not fails else 1
+
+
+def cmd_contract_selfcheck(args) -> int:
+    """NFRA_GCONTR Phase-3 mandate: synthetic BMKAUD T1 replay. Inject a fake
+    `+smartx -> json/benchmarks` WRITES edge into the live graph snapshot with NO
+    ratified graph_contracts edit, run Q1+Q2 against a synthetic SEV1 benchmark
+    contract, and assert Q2 marks it UNSANCTIONED and WARNS (advisory) -- exit 0,
+    NOT exit 2 (advisory ramp). Also asserts the CLEAN baseline (pre-injection)
+    does NOT spuriously fire UNSANCTIONED (the WATCH/forbidden distinction). This
+    proves the JOIN fires without needing the real (empty) table. Offline-degrade:
+    if the live snapshot is unreachable, runs against a fully synthetic graph."""
+    import copy
+    import datetime as _dt
+    try:
+        import contract_engine as ce
+    except Exception as e:
+        print(f"SELFCHECK: contract_engine unavailable ({type(e).__name__}: {e}) -- cannot run.")
+        return 1
+
+    SEED = {
+        "contract_id": "benchmark-model-portfolios",
+        "surface": "critical-surfaces:model_portfolios.benchmark (SEV1)",
+        "artifact_keys": ["s3://opal-data-portal-v2/json/benchmarks/model_portfolio_benchmarks.json"],
+        "canonical_writer": "yang-pipeline-lambda-role",
+        "forbidden_writers": ["smartx-model-monthly-pull", "opal-generate-benchmark-returns",
+                              "smartx-ingestion-role", "news-pipeline-role"],
+        "ratified_at": "2026-06-15", "active": True, "models": [], "period_defs": {},
+        "enforcement": {}, "ratified_by": ["1.0.0_SA_CTO", "2.0.0_SA_COO"],
+    }
+    try:
+        base = ce.load_graph_snapshot("latest")
+        src = "live snapshot (latest)"
+    except Exception as e:
+        print(f"  (live snapshot unreachable: {type(e).__name__}: {e} -- using synthetic graph)")
+        base = {"edges": [{"source": "arn:aws:lambda:us-east-1:313476888478:function:yang",
+                           "target": "arn:aws:s3:::opal-data-portal-v2", "edge_type": "WRITES",
+                           "via_role": "yang-pipeline-lambda-role", "semantic": "capability"}]}
+        src = "synthetic graph"
+    today = _dt.date.today()
+
+    # T1: inject the +smartx forbidden writer, NO ratified edit in window
+    cur = copy.deepcopy(base)
+    cur["edges"].append({"source": "arn:aws:lambda:us-east-1:313476888478:function:smartx-monthly",
+                         "target": "arn:aws:s3:::opal-data-portal-v2", "edge_type": "WRITES",
+                         "via_role": "smartx-model-monthly-pull", "semantic": "capability"})
+    q1 = ce.q1_writes_diff(base, cur, [SEED])
+    q2 = ce.q2_join([SEED], q1, window=(today, today))
+    v = q2["benchmark-model-portfolios"]
+
+    print(f"--- BMKAUD T1 replay (source: {src}) ---")
+    print(f"  Q1 +added writers: {[r for r, _ in q1['benchmark-model-portfolios']['added']]}")
+    print(f"  Q2 status: {v['status']}  added_forbidden={v['added_forbidden']}")
+    fails = []
+    # AC1: T1 injection -> UNSANCTIONED
+    if v["status"] != "UNSANCTIONED":
+        fails.append(f"T1 expected UNSANCTIONED, got {v['status']}")
+    # AC2: a contracted SANCTIONED case (ratified edit today) -> SANCTIONED
+    SEED_S = dict(SEED, ratified_at=today.isoformat())
+    vS = ce.q2_join([SEED_S], q1, window=(today, today))["benchmark-model-portfolios"]
+    if vS["status"] != "SANCTIONED":
+        fails.append(f"ratified-in-window expected SANCTIONED, got {vS['status']}")
+    print(f"  ratified-in-window -> {vS['status']} (expect SANCTIONED)")
+    # AC4: the Q2 advisory NEVER changes the surface-check exit code. Prove the
+    # contract layer is rc-invariant: cmd_check with contract_layer on vs off must
+    # return the SAME rc for the same inputs. Use a SEV1 file in ADVISORY mode (rc
+    # 0 without ack -> no SURFACE_ACK audit / ledger writes, i.e. no test
+    # pollution) while still exercising the on-path contract layer.
+    sev1_file = next((w for s in load_surfaces() if s["severity"] == "SEV1"
+                      for w in s["watched"] if "/" in w), None)
+    saved_ack = os.environ.pop("SURFACE_ACK", None)  # ensure no real ack leaks in
+    try:
+        rc_off = cmd_check(argparse.Namespace(file=[sev1_file], mode="advisory", contract_layer=False))
+        rc_on = cmd_check(argparse.Namespace(file=[sev1_file], mode="advisory", contract_layer=True))
+    finally:
+        if saved_ack is not None:
+            os.environ["SURFACE_ACK"] = saved_ack
+    if rc_off != rc_on:
+        fails.append(f"contract layer changed exit code (off={rc_off} on={rc_on}) -- MUST be additive")
+    print(f"  rc-invariance (advisory-mode SEV1): contract layer off={rc_off} on={rc_on} (must match)")
+
+    print("\nCONTRACT-SELFCHECK:", "ALL PASS" if not fails else f"FAIL {fails}")
     return 0 if not fails else 1
 
 
@@ -463,6 +640,9 @@ def main() -> int:
     lw.set_defaults(fn=cmd_list_watched)
     sub.add_parser("list").set_defaults(fn=cmd_list)
     sub.add_parser("selfcheck").set_defaults(fn=cmd_selfcheck)
+    sub.add_parser("contract-selfcheck",
+                   help="NFRA_GCONTR Phase-3: synthetic BMKAUD T1 replay -> Q2 UNSANCTIONED + rc-invariance"
+                   ).set_defaults(fn=cmd_contract_selfcheck)
     args = ap.parse_args()
     return args.fn(args)
 

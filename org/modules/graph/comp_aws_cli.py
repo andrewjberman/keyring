@@ -1874,6 +1874,95 @@ def cmd_diff(args):
     gb = json.load(open(args.current))
     print(json.dumps(compute_diff(ga, gb), indent=2, default=str))
 
+
+def cmd_contract_diff(args):
+    """NFRA_GCONTR Q1+Q2: the value-layer never-widen diff. Q1 snapshot-diffs the
+    WRITES edges into each contracted artifact's bucket(s); Q2 JOINs the delta +
+    observed-at-HEAD writers against globgrph.graph_contracts and classifies
+    CLEAN / WATCH / SANCTIONED / UNSANCTIONED. ADVISORY (exit 0) by default --
+    the comp-surface-check commit-time gate is the warn surface; the hard-block
+    ramp-flip is a later one-line CTO call. Engine: contract_engine.py."""
+    import datetime as _dt
+    try:
+        import contract_engine as ce
+    except Exception as e:  # pragma: no cover
+        print(f"ADVISORY: contract_engine unavailable ({type(e).__name__}: {e}) -- skipping.")
+        return 0
+
+    contracts, cstatus = ce.load_contracts()
+    if cstatus == "absent":
+        print("comp-aws contract-diff: globgrph.graph_contracts NOT created yet "
+              "(NFRA_GCONTR TO-2 table stand-up pending / in-VPC create). Nothing to diff. "
+              "(advisory, exit 0)")
+        return 0
+    if cstatus.startswith("unavailable"):
+        print(f"ADVISORY: graph_contracts unreachable ({cstatus}) -- skipping (never block).")
+        return 0
+    if not contracts:
+        print("comp-aws contract-diff: graph_contracts table EXISTS but holds 0 active rows "
+              "(CVO TO-3 authoring pending). No contracted surfaces to evaluate. (advisory)")
+        return 0
+
+    base_ref = getattr(args, "since", None)
+    cur_ref = getattr(args, "current_ref", None) or "latest"
+    try:
+        cur = ce.load_graph_snapshot(cur_ref)
+        base = ce.load_graph_snapshot(base_ref) if base_ref else None
+    except Exception as e:
+        print(f"ADVISORY: could not load graph snapshot(s) ({type(e).__name__}: {e}) -- skipping.")
+        return 0
+
+    # window: [baseline date .. today] when --since given, else today only.
+    today = _dt.date.today()
+    if base_ref and len(str(base_ref)) >= 8 and str(base_ref)[:8].isdigit():
+        try:
+            start = _dt.date(int(base_ref[:4]), int(base_ref[4:6]), int(base_ref[6:8]))
+        except Exception:
+            start = today
+    else:
+        start = today
+    window = (start, today)
+
+    q1 = ce.q1_writes_diff(base, cur, contracts)
+    q2 = ce.q2_join(contracts, q1, window=window)
+
+    if getattr(args, "json", False):
+        merged = {cid: {**q1.get(cid, {}), **q2.get(cid, {})} for cid in q1}
+        print(json.dumps({"window": [str(window[0]), str(window[1])],
+                          "baseline": base_ref or None, "current": cur_ref,
+                          "contracts": merged}, indent=2, default=str))
+        return 0
+
+    print(f"comp-aws contract-diff  (window {window[0]}..{window[1]}; "
+          f"baseline={base_ref or '(none -- observed-at-HEAD only)'}; current={cur_ref})\n")
+    order = {"UNSANCTIONED": 0, "SANCTIONED": 1, "WATCH": 2, "CLEAN": 3}
+    for cid in sorted(q2, key=lambda k: (order.get(q2[k]["status"], 9), k)):
+        v = q2[cid]
+        d = q1.get(cid, {})
+        tag = {"UNSANCTIONED": "UNSANCTIONED", "SANCTIONED": "SANCTIONED",
+               "WATCH": "WATCH", "CLEAN": "OK"}[v["status"]]
+        print(f"{tag}: {cid}  [canonical_writer={v['canonical_writer']}]")
+        print(f"    buckets: {', '.join(d.get('buckets', []))}")
+        if d.get("added"):
+            print(f"    +added writers: {[r for r, _ in d['added']]}")
+        if d.get("removed"):
+            print(f"    -removed writers: {[r for r, _ in d['removed']]}")
+        if v["forbidden_hits"] or v["added_forbidden"]:
+            print(f"    FORBIDDEN present: observed={v['forbidden_hits']} added={v['added_forbidden']}")
+        if v["status"] == "WATCH":
+            print(f"    non-canonical (advisory): {len(v['intruders'])} role(s) hold s3:put "
+                  f"(shared-bucket noise)")
+        print(f"    -> {v['reason']}")
+        print()
+
+    uns = [cid for cid in q2 if q2[cid]["status"] == "UNSANCTIONED"]
+    print(f"summary: {len(uns)} UNSANCTIONED, "
+          f"{sum(1 for c in q2 if q2[c]['status']=='SANCTIONED')} SANCTIONED, "
+          f"{sum(1 for c in q2 if q2[c]['status']=='WATCH')} WATCH, "
+          f"{sum(1 for c in q2 if q2[c]['status']=='CLEAN')} CLEAN  "
+          f"(ADVISORY -- exit 0; hard-block flip deferred to CTO ramp)")
+    return 0
+
 # ---------------------------------------------------------------------------
 # SCORE -- P/R/F1 vs certified oracle.  Oracle = ground truth.
 # ---------------------------------------------------------------------------
@@ -2324,6 +2413,15 @@ def main():
     df.add_argument("prior")
     df.add_argument("current")
     df.set_defaults(fn=cmd_diff)
+    cd = sub.add_parser("contract-diff",
+                        help="NFRA_GCONTR Q1+Q2: value-layer never-widen diff vs graph_contracts (ADVISORY)")
+    cd.add_argument("--since", dest="since", default=None,
+                    help="baseline snapshot ref for the Q1 delta (YYYYMMDD / local path / s3 key); "
+                         "omit = observed-at-HEAD only")
+    cd.add_argument("--current", dest="current_ref", default="latest",
+                    help="current snapshot ref (default: latest)")
+    cd.add_argument("--json", action="store_true")
+    cd.set_defaults(fn=cmd_contract_diff)
     dm = sub.add_parser("dual-managed")
     dm.set_defaults(fn=cmd_dual_managed)
     c = sub.add_parser("classes")
