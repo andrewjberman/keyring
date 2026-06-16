@@ -6332,3 +6332,5 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-06-16 | 2.0.0_SA_COO | NFRA_INFRPT.DR2 | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/NFRA_INFRPT.json | PASS |
 | 2026-06-16 | 0.4.0_DS_ClientPlatform | YANG_SITTW.TO-1 | (session-close) | synthesis + COO-release receipt; no new tool runs this window -- full session compiler reproduction in the 5 per-phase logs (deploy/ravc-close/legb/seams/molecule) | N/A |
 | 2026-06-16 | 0.4.0_DS_ClientPlatform~A | NFRA_INFRPT.DR2 | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-06-16 | 0.7.0_AE_CloudOps | session verify (/seams + /molecule) | none | no comp-* -- node/edge ground-truth analysis vs DEPLOYED/SERVED/LIVE (StaticTable/contract_engine + boto3 get-object/get-function-config/describe-rule/ecr + portal grep + code-read); comp-* answers repo-graph Qs not live-artifact reads | N/A |
+| 2026-06-16 | 0.7.0_AE_CloudOps | NFRA_INFRPT.DR2 | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
