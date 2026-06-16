@@ -6290,3 +6290,6 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-06-16 | 0.7.0_AE_CloudOps~B | NFRA_INFRPT.P0 | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/change_management/20... | PASS |
 | 2026-06-16 | 0.4.0_DS_ClientPlatform | YANG_SITTW.TO-1 | (none) | leg(b) seam validation = code-read + value-preservation analysis vs deployed shape; /seams + /molecule per Andrew directive (this+next turn) | N/A |
 | 2026-06-16 | 0.4.0_DS_ClientPlatform~A | NFRA_INFRPT.P0 | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-06-16 | 2.0.0_SA_COO | NFRA_INFRPT.P0 | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+| 2026-06-16 | 0.7.0_AE_CloudOps | YANG_SITTW.TO-4 (§5 gate) | none | no comp-* -- return-BASIS data-content verification (return vs price_return cols + constituent TR-vs-price blend test on served data.pkl via pyiceberg/pandas); comp tools answer repo-graph Qs, not return-basis math | N/A |
+| 2026-06-16 | 0.7.0_AE_CloudOps | NFRA_INFRPT.P0 | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
