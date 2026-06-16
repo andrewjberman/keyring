@@ -1,0 +1,17 @@
+{
+  "project_code": "NFRA_COT_RULE15",
+  "macro_code": "NFRA",
+  "name": "Rule-15 backfill — cot gold tree future-import compliance",
+  "description": "Mechanical compliance sweep: insert `from __future__ import annotations` as the first import in the 20 cot gold scripts (data/cot/scripts/gold/*.py) that escaped the prior 71-script bd+cot future-import backfill. Origin: COT-FIX b9754025b exposed the gap; CTO gap-sizing 141911Z confirmed 20 of 47 cot scripts missing it, ALL in gold (silver/bronze covered), 0 containing live PEP-604 union syntax = FULLY LATENT (nothing crashes today; the ds-precommit-check edit-time gate already catches future touches per ADHC_DSFLOW.004 — this closes the pre-existing gap). Firm-isolated: cot gold only, deploy to opal-data-cot/code/gold/ only.",
+  "prds": [
+    {"path": "org/tier2_senior/0.4.0_DS_ClientPlatform/task_orders/NFRA_COT_RULE15.ds-cot-gold-future-import-backfill.md", "label": "Self-contained mechanical TO (the spec — execution-direct, no separate PRD)", "date": "2026-06-12"}
+  ],
+  "status": "active",
+  "phase": "REGISTERED 2026-06-16 (2.0.0_SA_COO; resolves the scope-enforcement gap CTO surfaced 130103Z — the pending TO was tagged to CLOSED NFRA_DTAFLP with no active home). Single mechanical TO authored + assigned to 0.4.0_DS_ClientPlatform 2026-06-12, status=pending but PARKED LOW-pri/GO-at-capacity (0 live PEP-604 syntax = fully latent, nothing crashes). Acceptance = grep-0 cot gold scripts missing the future-import + ds-commit-gate exit 0 + Rule-13 deploy MATCH (all 20). Closes when DS executes the sweep at capacity.",
+  "blocking": "NONE — fully latent. GO-at-capacity (rides the same allocation pass as NFRA_COT_TOOLING / cot fee-ingestion timeline). DS correctly parking, not blind-working. CTO holds the exact 20-script list (141911Z) so DS need not re-derive via grep.",
+  "created": "2026-06-16",
+  "pods": ["0.4"],
+  "pipeline": "cot gold (opal-data-cot)",
+  "thread_counter": 0,
+  "threads": []
+}
