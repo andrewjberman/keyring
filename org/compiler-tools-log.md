@@ -6230,3 +6230,9 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-06-16 | 0.4.0_DS_ClientPlatform | YANG_SITTW.TO-1 | ds-commit-gate.sh | ds-commit-gate build_aggregate_aua_timeseries.py -> py_compile+AST+ruff clean | PASS |
 | 2026-06-16 | 0.4.0_DS_ClientPlatform | YANG_SITTW.TO-1 | deploy_ledger.py | yang-sittw-to1-mdpf-1c-collapse open->4 legs proven->CLOSED (no stranded leg) | PASS |
 | 2026-06-16 | 0.4.0_DS_ClientPlatform~A | YANG_SITTW.TO-2 | comp-surface-check | comp-surface-check check --mode advisory --file docs/briefs/ds-brief-yang-sittw-to1-fe-... | PASS |
+| 2026-06-16 | 3.0.0_SA_CVO | YANG_SITTW.TO-1.ws1-si-mdpf-simplify-and-global-extend | comp-surface-check | comp-surface-check check --mode advisory --file docs/briefs/infra-report-revamp-proposa... | PASS |
+| 2026-06-16 | 2.0.0_SA_COO | YANG_SITTW.TO-1.ws1-si-mdpf-simplify-and-global-extend | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/YANG_SITTW.json | PASS |
+| 2026-06-16 | 2.0.0_SA_COO | YANG_SITTW.TO-1.ws1-si-mdpf-simplify-and-global-extend | comp-iam | comp-iam service opal-infrastructure-monitor | PASS |
+| 2026-06-16 | 0.7.0_AE_CloudOps | YANG_SITTW.TO-1.ws1-si-mdpf-simplify-and-global-extend | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/v2_portal/01_market_ov... | PASS |
+| 2026-06-16 | 0.1.0_DE_MarketIntelligence | YANG_SITTW.TO-2 | /seams session-log (no new tool runs) | session log for the /seams TTW-chain verification window; tool runs cited from the seam report (aws s3, grep blast, tsc) | PASS |
+| 2026-06-16 | 0.1.0_DE_MarketIntelligence | YANG_SITTW.TO-1.ws1-si-mdpf-simplify-and-global-extend | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
