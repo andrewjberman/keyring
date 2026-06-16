@@ -6315,3 +6315,20 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-06-16 | 2.0.0_SA_COO | NFRA_INFRPT.P0 | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
 | 2026-06-16 | 0.1.0_DE_MarketIntelligence | YANG_SITTW.TO-2 | none (closure/coordination only) | session-close: §5 basis AE-confirmed TR both pages; promote=ride-normal-cycle; git-push broadcast resolved. All TO-2 tool runs in prior logs | N/A |
 | 2026-06-16 | 0.1.0_DE_MarketIntelligence | NFRA_INFRPT.P0 | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-06-16 | 0.7.0_AE_CloudOps | NFRA_INFRPT.P0 | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.7.0_AE_CloudOps/logs... | PASS |
+| 2026-06-16 | 0.7.0_AE_CloudOps~B | NFRA_INFRPT.P0 | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/change_management/20... | PASS |
+| 2026-06-16 | 2.0.0_SA_COO | NFRA_INFRPT.P0 | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/NFRA_INFRPT.json --file or... | PASS |
+| 2026-06-16 | 3.0.0_SA_CVO | NFRA_INFRPT.P0 | comp-kuzu | comp-kuzu MATCH (n) RETURN count(n) | PASS |
+| 2026-06-16 | 0.7.0_AE_CloudOps~B | NFRA_INFRPT.DR2 | comp-blast | comp-blast opal-portal-lambda-role | PASS |
+| 2026-06-16 | 3.0.0_SA_CVO | NFRA_INFRPT.DR2 | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/logs/2026-0... | PASS |
+| 2026-06-16 | 0.4.0_DE_ClientPlatform | NFRA_INFRPT.DR2 | comp-surface-check | comp-surface-check check --mode advisory --file src/api/portal-proxy.ts --file src/page... | PASS |
+| 2026-06-16 | 0.4.0_DE_ClientPlatform | NFRA_INFRPT.DR2 | comp-surface-check | comp-surface-check check --mode advisory --file portal/src/api/portal-proxy.ts --file p... | PASS |
+| 2026-06-16 | 0.4.0_DS_ClientPlatform~A | NFRA_INFRPT.DR2 | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-06-16 | 0.7.0_AE_CloudOps~B | NFRA_INFRPT.DR2 | comp-iam | comp-iam gaps | PASS |
+| 2026-06-16 | 0.7.0_AE_CloudOps~B | NFRA_INFRPT.DR2 | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/infrastructure_monitor... | PASS |
+| 2026-06-16 | 2.0.0_SA_COO | NFRA_INFRPT.DR2 | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/ADVI_49NNAFIX.json --file ... | PASS |
+| 2026-06-16 | 0.7.0_AE_CloudOps~B | NFRA_INFRPT.DR2 | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/change_management/20... | PASS |
+| 2026-06-16 | 1.0.0_SA_CTo | NFRA_INFRPT.DR2 | comp-kuzu | comp-kuzu MATCH (n) RETURN count(n) AS nodes | PASS |
+| 2026-06-16 | 2.0.0_SA_COO | NFRA_INFRPT.DR2 | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/NFRA_INFRPT.json | PASS |
+| 2026-06-16 | 0.4.0_DS_ClientPlatform | YANG_SITTW.TO-1 | (session-close) | synthesis + COO-release receipt; no new tool runs this window -- full session compiler reproduction in the 5 per-phase logs (deploy/ravc-close/legb/seams/molecule) | N/A |
+| 2026-06-16 | 0.4.0_DS_ClientPlatform~A | NFRA_INFRPT.DR2 | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
