@@ -1635,7 +1635,18 @@ def derive_data_access_edges():
             try:
                 r = iamc.get_instance_profile(InstanceProfileName=prof)
                 prof_role[prof] = [x["Arn"] for x in r["InstanceProfile"]["Roles"]]
-            except Exception:
+            except Exception as _e:
+                # LOUD, not silent (NFRA_GCONTR EC2-WRITES root-cause 2026-06-16):
+                # a perm gap here (e.g. iam:GetInstanceProfile denied on the Fargate
+                # derive role) silently yields 0 roles -> 0 EC2 consumers -> 0
+                # EC2-WRITES edges ESTATE-WIDE with NO error -- the exact silent-
+                # failure class that hid the EC2-producer blind spot for months. Log
+                # which profile + the error so a future derive perm-gap is VISIBLE,
+                # never a silent graph-completeness hole.
+                print(f"WARN: EC2_WRITES_PROFILE_RESOLVE_FAIL profile={prof} "
+                      f"err={type(_e).__name__}: {_e} -- EC2 consumers of this profile's "
+                      f"role(s) get 0 WRITES edges (check iam:GetInstanceProfile on the derive role)",
+                      file=sys.stderr)
                 prof_role[prof] = []
         for rarn in prof_role[prof]:
             consumers.setdefault(rarn, []).append(_node_arn("ec2", e))
