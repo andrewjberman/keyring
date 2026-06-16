@@ -1,9 +1,15 @@
 # Deploy-completion ledger -- NFRA_INFRPT.P0 (a+b) opal-infrastructure-monitor
 
 **class:** deploy_completion
-**status:** OPEN (deploy-start; orphan-import + a/b code deploy via safe-apply pending)
+**status:** CLOSED -- COMPLETE + VERIFIED. Orphan Lambda onboarded to TF (import successful) + a/b code
+deployed (safe-apply 0/1/0, HALTGT clear; live CodeSha256=HT8mqqk... matches artifact; 0-diff re-plan).
+Controlled-invoke VERIFY (the EMITTED report, not rc=0): status=success/FunctionError=null; **§3 ai_tracking
+ABSENT** (leg-a); **§2 smartx = real served-freshness, status "ok" (9.8h), NOT the dead-EC2 false-STALE**
+(leg-b); §7 openai_cost present (stranded ADHC_GPTCST commit now live); report ARCHIVED to
+opal-data-portal-v2/infrastructure/reports/2026-06-16/21-16-54.json (111KB fresh). §6/§5 unchanged (leg-c
+held, no regression). Next scheduled 13:00 UTC report emits the corrected version.
 **opened:** 20260616T2110Z
-**closed:** --
+**closed:** 20260616T2118Z
 **owner:** 0.7.0_AE_CloudOps~B
 **project / TO:** NFRA_INFRPT / P0 legs a+b (stop the misleading report output)
 **authorization:** COO GO 205358Z (SHIP a+b now, don't hold for leg-c) + 210901Z (proceed as planned). Andrew-direct project; CTO-ruled 201006Z orphan-import approach.
