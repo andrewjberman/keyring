@@ -6119,3 +6119,6 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-06-16 | 0.7.0_AE_CloudOps | NFRA_OPLMCP | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/change_management/20... | PASS |
 | 2026-06-16 | 0.7.0_AE_CloudOps | NFRA_OPLMCP | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.7.0_AE_CloudOps/task... | PASS |
 | 2026-06-16 | 0.7.0_AE_CloudOps~B | NFRA_OPLMCP | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-06-16 | 3.0.0_SA_CVO | NFRA_GCONTR.TO-3 | comp-surface-check | comp-surface-check list | PASS |
+2026-06-16 | 0.7.0_AE_CloudOps | NFRA_GCONTR.TO-2 | comp-aws contract-diff (NEW; absent->EXISTS-0-rows), comp-surface-check selfcheck (file-gate non-regressed ALL-PASS) + contract-selfcheck (NEW; BMKAUD T1->UNSANCTIONED, rc-invariant), ds-commit-gate (4 files clean), Phase-1 S3 warehouse table-list (net-new) + IAM direct-read (no new perms). Gap: comp-iam has no ECS-task-role mode (lambda-only); fixed a 56k-object full-warehouse-scan hang in contract_engine via scoped S3 prefix + boto timeouts.
+| 2026-06-16 | 0.7.0_AE_CloudOps | NFRA_GCONTR.TO-3 | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
