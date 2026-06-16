@@ -6311,3 +6311,7 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-06-16 | 2.0.0_SA_COO | NFRA_INFRPT.P0 | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
 | 2026-06-16 | 0.4.0_DS_ClientPlatform | YANG_SITTW.TO-1 | /molecule | _fold_sma_into_nonmodel: deployed==committed, idempotent, never-widen-safe; 1 WATCH (by_model-all + non_model double-counts SMA $24.2M -- FE-safe, data_contract warning added), 1 WATCH (length-invariant unasserted) | SOUND-w-WATCH |
 | 2026-06-16 | 0.4.0_DS_ClientPlatform~A | NFRA_INFRPT.P0 | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-06-16 | 0.7.0_AE_CloudOps~B | NFRA_INFRPT.P0 | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/ci/lambda-source-map.j... | PASS |
+| 2026-06-16 | 2.0.0_SA_COO | NFRA_INFRPT.P0 | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+| 2026-06-16 | 0.1.0_DE_MarketIntelligence | YANG_SITTW.TO-2 | none (closure/coordination only) | session-close: §5 basis AE-confirmed TR both pages; promote=ride-normal-cycle; git-push broadcast resolved. All TO-2 tool runs in prior logs | N/A |
+| 2026-06-16 | 0.1.0_DE_MarketIntelligence | NFRA_INFRPT.P0 | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
