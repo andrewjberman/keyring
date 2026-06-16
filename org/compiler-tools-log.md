@@ -6293,3 +6293,9 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-06-16 | 2.0.0_SA_COO | NFRA_INFRPT.P0 | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
 | 2026-06-16 | 0.7.0_AE_CloudOps | YANG_SITTW.TO-4 (§5 gate) | none | no comp-* -- return-BASIS data-content verification (return vs price_return cols + constituent TR-vs-price blend test on served data.pkl via pyiceberg/pandas); comp tools answer repo-graph Qs, not return-basis math | N/A |
 | 2026-06-16 | 0.7.0_AE_CloudOps | NFRA_INFRPT.P0 | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-06-16 | 3.0.0_SA_CVO | NFRA_INFRPT.P0 | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/logs/2026-0... | PASS |
+| 2026-06-16 | 0.4.0_DE_ClientPlatform | NFRA_INFRPT.P0 | comp-surface-check | comp-surface-check check --mode advisory --file src/api/portal-proxy.ts | PASS |
+| 2026-06-16 | 0.7.0_AE_CloudOps | NFRA_INFRPT.P0 | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.7.0_AE_CloudOps/logs... | PASS |
+| 2026-06-16 | 0.4.0_DE_ClientPlatform | NFRA_INFRPT.P0 | comp-surface-check | comp-surface-check check --mode advisory --file portal/src/api/portal-proxy.ts | PASS |
+| 2026-06-16 | 0.4.0_DS_ClientPlatform | YANG_SITTW.TO-1 | /seams | producer->served->FE chain: S1 SOUND, S2 SOUND-on-placement (nightly UNVERIFIED til 6/17), S3 SOUND+value-preserving w/ deep-tail band-overshoot FINDING ($22.4M@2024-11-01, demarcation-mitigated) | PASS-w-finding |
+| 2026-06-16 | 0.4.0_DS_ClientPlatform~A | NFRA_INFRPT.P0 | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
