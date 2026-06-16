@@ -6122,3 +6122,29 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-06-16 | 3.0.0_SA_CVO | NFRA_GCONTR.TO-3 | comp-surface-check | comp-surface-check list | PASS |
 2026-06-16 | 0.7.0_AE_CloudOps | NFRA_GCONTR.TO-2 | comp-aws contract-diff (NEW; absent->EXISTS-0-rows), comp-surface-check selfcheck (file-gate non-regressed ALL-PASS) + contract-selfcheck (NEW; BMKAUD T1->UNSANCTIONED, rc-invariant), ds-commit-gate (4 files clean), Phase-1 S3 warehouse table-list (net-new) + IAM direct-read (no new perms). Gap: comp-iam has no ECS-task-role mode (lambda-only); fixed a 56k-object full-warehouse-scan hang in contract_engine via scoped S3 prefix + boto timeouts.
 | 2026-06-16 | 0.7.0_AE_CloudOps | NFRA_GCONTR.TO-3 | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-06-16 | 3.0.0_SA_CVO | NFRA_GCONTR.TO-3 | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/contracts/g... | PASS |
+| 2026-06-16 | 3.0.0_SA_CVO | NFRA_GCONTR.TO-3 | pipescript | pipescript advisor_nna | FAIL |
+| 2026-06-16 | 3.0.0_SA_CVO | NFRA_GCONTR.TO-3 | comp-kuzu | comp-kuzu MATCH (w)-[r:WRITES]->(n) WHERE n.node_id CONTAINS 'opal-data-bd' OR n.name C... | FAIL |
+| 2026-06-16 | 3.0.0_SA_CVO | NFRA_GCONTR.TO-3 | comp-kuzu | comp-kuzu MATCH (a)-[r]->(b) RETURN r LIMIT 1 | PASS |
+| 2026-06-16 | 3.0.0_SA_CVO | NFRA_GCONTR.TO-3 | comp-kuzu | comp-kuzu MATCH ()-[r]->() RETURN r.edge_type AS et, count(*) AS n ORDER BY n DESC | PASS |
+| 2026-06-16 | 3.0.0_SA_CVO | NFRA_GCONTR.TO-3 | pipescript | pipescript advi-bd | PASS |
+| 2026-06-16 | 0.7.0_AE_CloudOps | NFRA_GCONTR.TO-3 | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/globgrph/derive_runner.py | PASS |
+| 2026-06-16 | 3.0.0_SA_CVO | NFRA_GCONTR.TO-3 | comp-kuzu | comp-kuzu MATCH (w)-[r]->(n) WHERE r.edge_type='WRITES' AND (n.name CONTAINS 'opal-data... | PASS |
+| 2026-06-16 | 3.0.0_SA_CVO | NFRA_GCONTR.TO-3 | comp-kuzu | comp-kuzu MATCH (w)-[r]->(n) WHERE r.edge_type='WRITES' AND n.name CONTAINS 'platinum' ... | PASS |
+| 2026-06-16 | 0.7.0_AE_CloudOps | NFRA_GCONTR.TO-3 | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/change_management/20... | PASS |
+| 2026-06-16 | 3.0.0_SA_CVO | NFRA_GCONTR.TO-3 | comp-kuzu | comp-kuzu MATCH (w)-[r]->(n) WHERE r.edge_type='WRITES' AND (n.name CONTAINS 'opal-data... | PASS |
+| 2026-06-16 | 3.0.0_SA_CVO | NFRA_GCONTR.TO-3 | comp-kuzu | comp-kuzu MATCH (n) WHERE n.name CONTAINS 'gold-layer' OR n.name CONTAINS 'gold-runner'... | PASS |
+| 2026-06-16 | 3.0.0_SA_CVO | NFRA_GCONTR.TO-3 | comp-kuzu | comp-kuzu MATCH (e)-[r]->(role) WHERE e.name='bd-gold-layer-runner' AND r.edge_type IN ... | PASS |
+| 2026-06-16 | 3.0.0_SA_CVO | NFRA_GCONTR.TO-3 | comp-kuzu | comp-kuzu MATCH (e {name:'bd-gold-layer-runner'})-[r1]->(role) WHERE r1.edge_type IN ['... | PASS |
+| 2026-06-16 | 3.0.0_SA_CVO | NFRA_GCONTR.TO-3 | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/logs/2026-0... | PASS |
+| 2026-06-16 | 3.0.0_SA_CVO | NFRA_GCONTR.TO-3 | pipescript | pipescript model-portfolios | PASS |
+| 2026-06-16 | 0.7.0_AE_CloudOps | NFRA_GCONTR.TO-3 | comp-aws | comp-aws contract-diff | PASS |
+| 2026-06-16 | 1.0.0_SA_CTo | YANG_SITTW.PRD | pipescript | pipescript --list | PASS |
+| 2026-06-16 | 0.7.0_AE_CloudOps | YANG_SITTW.PRD | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/globgrph/derive_runner.py | PASS |
+| 2026-06-16 | 0.7.0_AE_CloudOps | YANG_SITTW.PRD | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/change_management/20... | PASS |
+| 2026-06-16 | 1.0.0_SA_CTo | YANG_SITTW.PRD | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/YANG_SITTW.md --file ... | PASS |
+| 2026-06-16 | 2.0.0_SA_COO | YANG_SITTW.PRD | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DE_ClientPlatfor... | PASS |
+| 2026-06-16 | 0.7.0_AE_CloudOps | YANG_SITTW.PRD | comp-iam | comp-iam gaps | PASS |
+| 2026-06-16 | 3.0.0_SA_CVO | YANG_SITTW.PRD | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/logs/2026-0... | PASS |
+2026-06-16 | 0.7.0_AE_CloudOps | NFRA_GCONTR.TO-2b+EC2WRITES | comp-aws contract-diff (live benchmark row -> WATCH), comp-iam gaps (Lambda-scoped, MISSED the ECS derive GetInstanceProfile gap -> tooling gap), ds-commit-gate (loader+fix), StaticTable verify (caught period_defs=[] post-load, re-verified =11 post-fix). EC2-WRITES root-caused to derive_runner_task missing iam:GetInstanceProfile (RAVC1 filed).
+| 2026-06-16 | 0.7.0_AE_CloudOps | YANG_SITTW.PRD | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
