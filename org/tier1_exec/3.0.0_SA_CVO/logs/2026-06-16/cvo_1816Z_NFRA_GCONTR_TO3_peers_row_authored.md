@@ -69,7 +69,40 @@ Phase-3 (BMKAUD replay) for peers: deferred to the joint replay with AE's Q2 onc
 AE writes it in-VPC (peers is intermittent/peer_excel-gated; the policy-limb mirrors the already-proven benchmark
 Q2 path — same canonical_writer, same bucket). Recorded as a TO-3 acceptance hook, not skipped.
 
+## UPDATE (~18:30Z) — aum (SEV2) AUTHORED + the loader bug the peers row surfaced
+### aum-model-portfolios (SEV2) — authored, pending CTO+COO (SEV2 ceiling now COMPLETE)
+- **Live canonical writer DISAMBIGUATED via CloudWatch** (verify-the-mechanism, not the fitting timestamp): at
+  2026-06-16T11:30:35Z `opal-smartx-ingestion-pipeline` (smartx-ingestion-lambda-role) logged "MDLP daily
+  re-source job ... all MDPF-feed-sourced; dead-source pipeline skipped" + uploaded account-distribution.json +
+  aum-metrics.json + aum-timeseries.json + per-firm mdpf/{49financial,inflection}/account-distribution.json.
+- **smartx-exporter EC2 (i-06ebcb27395eb3f49) = DORMANT dual-writer** — ai-supervisor-v2.py writes the SAME keys
+  but the EC2 is STOPPED since 2026-06-01 (the "dead-source" path) -> did NOT write today's files. canonical_writer
+  = smartx-ingestion-lambda-role (Q2-VISIBLE -> aum authorable now, unlike NNA).
+- **HONEST CAVEAT in the row:** the EC2 dual-writer is Q2-INVISIBLE (0 EC2 WRITES edges, NNA-class gap) -> its
+  forbidden_writers tripwire is DECLARATIVE until the 06-17 EC2-WRITES-derive fix; today's containment =
+  EC2-stopped + IAM + value-limb. source_of_truth = MDPF feed; period_defs point-in-time (as_of latest-complete-day,
+  total_aum=FUNDED only, aum-timeseries append-only). Phase-2 re-run: 3/3 rows PASS.
+
+### AE seam-CLOSE (fe645e103) — my peers row surfaced a real latent loader defect
+- IDEMPOTENCY: benchmark row double-protected (already-present guard derive_runner.py:1030 fires before any
+  ratified_at logic + never --overwrite benchmark) -> per-row scoped load structurally guaranteed; stale benchmark
+  PENDING placeholder cannot regress live ratified_at=6f21c75ca.
+- **DEFECT my peers row exposed (now fixed):** loader PENDING-detection was an EXACT-match tuple knowing only
+  `PENDING-ANDREW-SIGNOFF`. peers is the FIRST `PENDING-CTO-COO-SIGNOFF` row -> it would have been (a) SAFETY-GATE-
+  BLIND (could land BEFORE CTO+COO sign-off — the exact failure the gate prevents) and (b) ratified_at mis-stamped
+  with the literal placeholder. AE fixed both via prefix-aware `_is_pending_ratified()`, proven 10/10, gate PASS.
+  CVO value-add: authoring with the correct SEV2-tier placeholder exposed a gate that only knew the SEV1 one.
+- GO-TIME (CTO+COO sign): upload signed 3-row YAML to s3://...globgrph/contracts/, AE dry-runs (benchmark SKIP,
+  peers/aum gate), --stamp-ratified per-row (no --overwrite), WRITE_VERIFY, then I byte-verify value-limbs. ACKed.
+
 ## RAVC
-RAVC2 -> COO (CC CTO): peers SEV2 row authored, request CTO+COO sign-off (SEV2 tier) + AE load-only-peers-row.
+- RAVC2 -> COO (CC CTO): peers + aum SEV2 rows authored (SEV2 v1 ceiling COMPLETE), request CTO+COO sign-off.
+- RAVC close <- AE: seam flag answered + loader defect fixed (fe645e103). ACKed; will byte-verify value-limbs at load.
+
+## Net session outcome
+peers + aum SEV2 rows authored + 3/3 schema-conformant (SEV2 v1 ceiling COMPLETE); benchmark SEV1 live+ratified.
+Two de-risking census findings (aum=smartx-Lambda-canonical NOT yang; EC2 dormant dual-writer) + one real infra
+fix surfaced (loader PENDING-gate was SEV1-only). Remaining TO-3: headline (SEV1/Andrew), NNA (policy-limb 06-17),
+the period_defs value-check assertion. Grounded vs live graph + served artifacts + CloudWatch throughout.
 
 — 3.0.0_SA_CVO
