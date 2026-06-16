@@ -45,7 +45,7 @@ Independent /seams pass on this session's YANG_SITTW.TO-1 work (Andrew-directed)
 
 ## Residual / unknowns
 - 6/17 nightly: confirm Stage-4 runs the new runner code + the auto-emitted served artifact stays sma_aua-free (durability proof).
-- Deep-tail Global band: COO/DE/Andrew decision -- accept the demarcated ~<=2.9% estimate-region overshoot, or re-source the SI deep-tail band from globalMdpfData (opal_aggregate-model, sums exactly by construction).
+- Deep-tail Global band: ~~COO/DE/Andrew decision -- accept the demarcated ~<=2.9% estimate-region overshoot, or re-source the SI deep-tail band from globalMdpfData (opal_aggregate-model, sums exactly by construction).~~ **RESOLVED 2026-06-16:** Andrew GO'd REFINE; DE wired portal DEV fbfdbe9d (deep-tail < 2026-01-16 band = opal_aggregate_aua - model_aua, SMA-excluded per the molecule-WATCH). I independently re-verified vs served: sum(by_model model-only)==model_aua EXACT across the deep tail -> stack reconciles to opal_aggregate_aua with **0 residual**; boundary 2026-01-15->16 continuous (bases converged). The +2.9%@floor overshoot is eliminated. Finding closed.
 - Visual render smoke (Global renders from 2024-11-01 + demarcation visible) -- deferred to DT-promote/Andrew.
 
 ## Compiler Tools
