@@ -6339,3 +6339,14 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-06-16 | 0.7.0_AE_CloudOps~B | NFRA_INFRPT.DR2 | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/ci/lambda-source-map.j... | PASS |
 2026-06-16 | 0.4.0_DE_ClientPlatform | /molecule globalDeepTailNonModelByPeriod (YANG TO-1 refine fbfdbe9d): SOUND. Full-range probe over served agg.json (309 deep-tail dates): sum(!=sma)==model_aua + refined-stack==opal_aggregate_aua max gap $0.01; 0 null gaps; seamless 2026-01-16 boundary. 1 WATCH (silent fallback to old overshoot if producer drops opal_aggregate_aua). | refs: fbfdbe9d
 | 2026-06-16 | 0.4.0_DE_ClientPlatform | NFRA_INFRPT.DR2 | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-06-16 | 2.0.0_SA_COO | NFRA_INFRPT.DR2 | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+| 2026-06-16 | 0.7.0_AE_CloudOps~B | NFRA_INFRPT.DR2 | comp-manifest-check | comp-manifest-check | FAIL |
+| 2026-06-16 | 0.7.0_AE_CloudOps~B | NFRA_INFRPT.DR2 | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/change_management/20... | PASS |
+| 2026-06-16 | 0.7.0_AE_CloudOps~B | NFRA_INFRPT.DR2 | comp-iam | comp-iam gaps | PASS |
+| 2026-06-16 | 0.7.0_AE_CloudOps~B | NFRA_INFRPT.DR2 | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/terraform/shared-infra/infra-... | PASS |
+| 2026-06-16 | 2.0.0_SA_COO | NFRA_INFRPT.DR2 | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/NFRA_INFRPT.json | PASS |
+| 2026-06-16 | 0.7.0_AE_CloudOps~B | NFRA_INFRPT.DR2 | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/terraform/shared-infra/infra-... | PASS |
+| 2026-06-16 | 0.5.0_AE_OpalETL | NFRA_INFRPT.DR2 | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/causality_ai_query_han... | PASS |
+| 2026-06-16 | 0.5.0_AE_OpalETL | NFRA_INFRPT.DR2 | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/change_management/20... | PASS |
+2026-06-16 | 0.7.0_AE_CloudOps~B | NFRA_INFRPT DR+P0(a+b+c)+DR2 | comp-iam service x2, comp-iam gaps x2 (clean), comp-blast x2, comp-manifest-check (clean), ds-commit-gate x2 + repeated IAM policy-sim | root-caused the 4-mo DR outage + verified every fix via live-state, not rc=0
+| 2026-06-16 | 0.7.0_AE_CloudOps~B | NFRA_INFRPT.DR2 | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
