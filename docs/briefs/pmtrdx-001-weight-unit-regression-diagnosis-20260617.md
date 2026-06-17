@@ -63,11 +63,13 @@ unit assumptions across consumers:
 `trade-dashboard-api/src/excel_generator.py` is byte-identical to the workflow-handler copy (same bug).
 
 Because the display and the Excel are inverted, you cannot fix one producer in isolation — the
-producer and the Excel generators must move together to the canonical FRACTION unit.
+producer and the Excel generators must move together. Per the CTO ruling (2026-06-17): the
+**record/portal become fraction**, while the **broker Excel + Vident CSV stay percent (byte-identical
+to today)** via per-output conversion — see PATCH 2.
 
 ---
 
-## Fix spec (canonical = FRACTION; align everything to it)
+## Fix spec (record/portal = FRACTION canonical; broker outputs stay percent via per-output conversion)
 
 ### PATCH 1 — Producer: `infra/aws/lambda/portfolio_excel_generator/lambda_function.py`
 In `build_trade_securities()` divide the three stored weights by 100:
@@ -84,17 +86,30 @@ Leave `generate_trade_csv` (Vident broker CSV) and `generate_vident_excel` **unc
 Vident broker template is intentionally percent-numbers (contract note, `trade-submission.ts:44`).
 The filter/`derive_instruction` thresholds stay in percent-number space (sign-only) — do not touch.
 
-### PATCH 2 — Realign BOTH Excel generators to fraction
-`trade-workflow-handler/src/excel_generator.py` **and** `trade-dashboard-api/src/excel_generator.py`
-(identical). For the three weight columns, treat stored as a fraction and let Excel's `%` format do
-the ×100 — one consistent convention:
+### PATCH 2 — Per-OUTPUT conversion (CTO ruling 2026-06-17): broker Excel stays BYTE-IDENTICAL
+**Supersedes the earlier "realign to fraction" idea.** CTO ruled Vident **auto-ingests the RAW cell
+value (percent-numbers)**, and the workflow-handler excel_generator output IS the broker email
+attachment (verified `workflow_handler.py:392-409`: `generate_vident_excel` -> `send_brokerage_email`
+on EXECUTE). So an all-fraction flip would push col-6 raw `5.05 -> 0.0505` = 100x-wrong proposed
+weight to the broker on a real executed trade. Ruling: **record/portal = fraction; broker Excel +
+Vident CSV = byte-identical to today (percent-numbers)**, via per-output conversion.
+
+`trade-workflow-handler/src/excel_generator.py` (broker + download) and the byte-identical
+`trade-dashboard-api/src/excel_generator.py` (download-only): the stored record is now a FRACTION, so
+recover the percent-number on read (`×100`) and leave ALL existing cell logic UNCHANGED — reproduces
+today's output by construction:
 ```python
-# col 5 current:  value=current_wt      number_format='0.00%'   (remove the /100)
-# col 6 proposed: value=proposed_wt     number_format='0.00%'   (was raw value + '0.00')
-# col 7 delta:    value=delta_wt        number_format='0.00%'   (remove the /100; '0%'->'0.00%')
+current_wt  = to_float(sec.get('current_weight', 0))  * 100   # fraction -> percent-number (per-output)
+proposed_wt = to_float(sec.get('proposed_weight', 0)) * 100
+delta_wt    = to_float(sec.get('delta_weight', proposed_wt - current_wt))  # already percent after the *100
+# ... existing cells UNCHANGED: col5 value=current_wt/100 '0.00%'; col6 value=proposed_wt '0.00';
+#     col7 value=delta_wt/100 '0%'   -> byte-identical to today's percent-record output
 ```
-(The `delta_weight` vs `delta` field-name mismatch is harmless — the fallback
-`proposed_wt - current_wt` is correct in fraction space.)
+Field-name note: producer writes `delta`, both generators read `delta_weight` -> the delta column
+ALWAYS uses the `(proposed_wt - current_wt)` fallback today; unchanged. Do NOT "improve" the broker
+format here (col-6 stays plain `'0.00'`) — any broker-format change is a separate broker-coordinated
+effort. **ACCEPTANCE:** AE proves broker Excel + Vident CSV byte-identical (raw + display, every cell)
+on a test fraction record before any `--apply`.
 
 ### PATCH 3 — Remediate existing records (CTO-gated)
 `python infra/aws/lambda/portfolio_excel_generator/remediate_weight_unit_pmtrdx001.py --apply`
