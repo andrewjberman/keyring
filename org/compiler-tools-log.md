@@ -6767,3 +6767,8 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-06-17 | 0.7.0_AE_CloudOps~B | DECK_CLAUDE.FANOUT-A | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
 | 2026-06-17 | 0.4.2_RD_AdvisorIntelligence~B | DECK_CLAUDE.FANOUT-B | none (standalone deck tooling) | n/a -- no data/cloud/frontend change; verified via design_lint [AUTO] gate + fidelity coverage + PowerPoint-COM visual-QA + ruff 0.15.11 (0 viol) | PASS |
 | 2026-06-17 | 0.4.2_RD_AdvisorIntelligence~B | DECK_CLAUDE.FANOUT-A | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-06-17 | 2.0.0_SA_COO | DECK_CLAUDE.FANOUT-A | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DE_ClientPlatfor... | PASS |
+| 2026-06-17 | 0.4.2_RD_AdvisorIntelligence~D | DECK_CLAUDE.FANOUT-A | comp-surface-check | comp-surface-check check --mode advisory --file deck_generation/dev/scripts/showcase_co... | PASS |
+| 2026-06-17 | 0.4.2_RD_AdvisorIntelligence | DECK_CLAUDE.FANOUT-A | comp-surface-check | comp-surface-check check --mode advisory --file deck_generation/engine/compose.py | PASS |
+| 2026-06-17 | 0.4.2_RD_AdvisorIntelligence~D | DECK_CLAUDE.FANOUT-D | design_lint+coverage+COM-QA | showcase_{compare,flow,list} gate 0-lint/full-coverage + COM visual-QA read every slide (1 venn defect fixed); comp-* N/A standalone deck tooling | PASS |
+| 2026-06-17 | 0.4.2_RD_AdvisorIntelligence~D | DECK_CLAUDE.FANOUT-A | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
