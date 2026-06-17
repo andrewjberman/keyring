@@ -6515,3 +6515,19 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-06-17 | 0.7.0_AE_CloudOps~B | NFRA_GRAPHS.D8-FP | comp-surface-check | comp-surface-check check --mode advisory --file .tools/drift_producer.py --file infra/a... | PASS |
 | 2026-06-17 | 0.7.0_AE_CloudOps | PMTRDX.001 + NFRA_GRAPHS.D8-FP | summary | PMTRDX financial deploy: safe-apply x2 (repoint-only 0/1/0 + 0/2/0), deploy_ledger 3-leg open->close + check --red, CodeSha256 x3 + live-DDB x2 egress-verify, ds-commit-gate (caught F401/E402); D8-FP comp-kuzu producer-membership carve (per-surface/firm) | PASS |
 | 2026-06-17 | 0.7.0_AE_CloudOps | NFRA_GRAPHS.D8-FP | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-06-17 | 0.7.0_AE_CloudOps~B | NFRA_GRAPHS.D8-FP | comp-iam | comp-iam gaps | PASS |
+| 2026-06-17 | 0.7.0_AE_CloudOps~B | NFRA_GRAPHS.D8-FP | comp-surface-check | comp-surface-check check --mode advisory --file .github/workflows/drift-producer-push.y... | PASS |
+| 2026-06-17 | 0.7.0_AE_CloudOps~B | NFRA_GRAPHS.D8-FP | comp-surface-check | comp-surface-check check --mode advisory --file .tools/drift_producer.py --file infra/a... | PASS |
+| 2026-06-17 | 1.0.0_SA_CTO | NFRA_GRAPHS.D8-FP | comp-surface-check | comp-surface-check check --mode advisory --file .github/workflows/drift-producer-push.yml | PASS |
+| 2026-06-17 | 0.0.0_AB_MSTR | PMTRDX_FILEPARSER_HARDEN | comp-surface-check | comp-surface-check check --mode advisory --file org/mcp/live_agents_by_marker.json --fi... | PASS |
+| 2026-06-17 | 0.7.0_AE_CloudOps~B | PMTRDX_FILEPARSER_HARDEN | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/terraform/shared-infra/drift-... | PASS |
+| 2026-06-17 | 0.7.0_AE_CloudOps~B | PMTRDX_FILEPARSER_HARDEN | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/ci/lambda-source-map.json | PASS |
+| 2026-06-17 | 0.0.0_AB_MSTR | PMTRDX_FILEPARSER_HARDEN | comp-surface-check | comp-surface-check check --mode advisory --file org/mcp/live_agents_by_marker.json --fi... | PASS |
+| 2026-06-17 | 0.3.0_DE_TradingOperations | PMTRDX_FILEPARSER_HARDEN | comp-blast | comp-blast parseWeight | PASS |
+| 2026-06-17 | 0.3.0_DE_TradingOperations | PMTRDX_FILEPARSER_HARDEN | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.3.0_DE_TradingOperat... | PASS |
+| 2026-06-17 | 3.0.0_SA_CVO | PMTRDX_FILEPARSER_HARDEN | pipescript | pipescript advi-bd | PASS |
+| 2026-06-17 | 3.0.0_SA_CVO | PMTRDX_FILEPARSER_HARDEN | comp-blast | comp-blast advisor_nna_canonical | PASS |
+| 2026-06-17 | 0.7.0_AE_CloudOps~B | PMTRDX_FILEPARSER_HARDEN | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/terraform/shared-infra/drift-... | PASS |
+| 2026-06-17 | 0.4.0_T_ClientPlatform | PMTRDX_FILEPARSER_HARDEN | comp-surface-check | comp-surface-check check --mode advisory --file portal | PASS |
+| 2026-06-17 | 0.4.0_DT_ClientPlatform | PMTRDX.001_PROMOTE | (none) | portal DEV->PROD promote v2.1.124 (PMTRDX.001 fileParser hardening) -- pure single-commit git promote; gates = COO delta-review + VALGATE D-1 + pre-push tsc + --no-ff parity gate + CI deploy.yml + peeled-tag verify (all PASS); frontend-change comp checks are DE-author Phase-1, not DT-promoter scope | PASS |
+| 2026-06-17 | 0.4.0_T_ClientPlatform | PMTRDX_FILEPARSER_HARDEN | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
