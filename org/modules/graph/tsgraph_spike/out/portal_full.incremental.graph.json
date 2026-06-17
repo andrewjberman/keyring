@@ -1,0 +1,725 @@
+{
+  "meta": {
+    "project": "NFRA_TSGRAPH.P1 Leg A",
+    "mode": "incremental(1 files: changed+dependents)",
+    "extractor": "ts-morph @28 / TS Compiler API",
+    "deferred": "full-depth PROP_PASSES/RENDERS across all components + AC5 NNA forked-FLOWS_TO stress-test (next iteration -- NOT silently capped)",
+    "note": "SPIKE/P1 output -- scratch graph; verify against built artifact/running portal (F5), never the graph."
+  },
+  "metrics": {
+    "portal_files_total": 374,
+    "work_set_files": 1,
+    "program_load_ms": 3402,
+    "extract_ms": 533,
+    "node_count": 37,
+    "edge_count": 39,
+    "nodes_by_label": {
+      "Module": 1,
+      "TypeDecl": 2,
+      "Field": 12,
+      "ReactComponent": 1,
+      "Component": 1,
+      "Hook": 10,
+      "ReactQueryKey": 10
+    },
+    "edges_by_label": {
+      "DECLARES": 3,
+      "HAS_FIELD": 7,
+      "PROJECTS_TO": 1,
+      "HAS_KEY": 10,
+      "FETCHES": 10,
+      "FLOWS_TO": 8
+    },
+    "flowsto_by_kind": {
+      "passthrough": 4,
+      "recompute/guarded": 4
+    },
+    "coverage": {
+      "component_props": {
+        "attempted": 1,
+        "resolved": 0
+      },
+      "hook_fetch": {
+        "attempted": 10,
+        "resolved": 10
+      },
+      "flowsto": {
+        "attempted": 45,
+        "resolved": 8
+      }
+    },
+    "unresolved_count": 1
+  },
+  "unresolved": [
+    {
+      "cat": "component_props",
+      "what": "props of ModelPortfolios",
+      "where": "portal/src/pages/ModelPortfolios.tsx",
+      "reason": "no props param"
+    }
+  ],
+  "nodes": [
+    {
+      "id": "module:portal/src/pages/ModelPortfolios.tsx",
+      "label": "Module",
+      "attrs": {
+        "path": "portal/src/pages/ModelPortfolios.tsx",
+        "kind": "tsx"
+      }
+    },
+    {
+      "id": "type:portal/src/pages/ModelPortfolios.tsx#ModelPortfolio",
+      "label": "TypeDecl",
+      "attrs": {
+        "name": "ModelPortfolio",
+        "path": "portal/src/pages/ModelPortfolios.tsx",
+        "line": 48
+      }
+    },
+    {
+      "id": "type:portal/src/pages/ModelPortfolios.tsx#ModelPortfolio#modelName",
+      "label": "Field",
+      "attrs": {
+        "name": "modelName",
+        "ownerType": "ModelPortfolio",
+        "tsType": "string",
+        "optional": false,
+        "path": "portal/src/pages/ModelPortfolios.tsx",
+        "line": 49
+      }
+    },
+    {
+      "id": "type:portal/src/pages/ModelPortfolios.tsx#ModelPortfolio#currentAUM",
+      "label": "Field",
+      "attrs": {
+        "name": "currentAUM",
+        "ownerType": "ModelPortfolio",
+        "tsType": "number",
+        "optional": false,
+        "path": "portal/src/pages/ModelPortfolios.tsx",
+        "line": 50
+      }
+    },
+    {
+      "id": "type:portal/src/pages/ModelPortfolios.tsx#ModelPortfolio#accountCount",
+      "label": "Field",
+      "attrs": {
+        "name": "accountCount",
+        "ownerType": "ModelPortfolio",
+        "tsType": "number",
+        "optional": false,
+        "path": "portal/src/pages/ModelPortfolios.tsx",
+        "line": 51
+      }
+    },
+    {
+      "id": "type:portal/src/pages/ModelPortfolios.tsx#ModelPortfolio#metrics",
+      "label": "Field",
+      "attrs": {
+        "name": "metrics",
+        "ownerType": "ModelPortfolio",
+        "tsType": "import(\"C:/Users/AndrewBerman/Desktop/ajb_workspace/portal/src/components/MetricsRow\").MetricsPeriod[]",
+        "optional": false,
+        "path": "portal/src/pages/ModelPortfolios.tsx",
+        "line": 52
+      }
+    },
+    {
+      "id": "type:portal/src/pages/ModelPortfolios.tsx#TimeSeriesDataPoint",
+      "label": "TypeDecl",
+      "attrs": {
+        "name": "TimeSeriesDataPoint",
+        "path": "portal/src/pages/ModelPortfolios.tsx",
+        "line": 55
+      }
+    },
+    {
+      "id": "type:portal/src/pages/ModelPortfolios.tsx#TimeSeriesDataPoint#period",
+      "label": "Field",
+      "attrs": {
+        "name": "period",
+        "ownerType": "TimeSeriesDataPoint",
+        "tsType": "string",
+        "optional": false,
+        "path": "portal/src/pages/ModelPortfolios.tsx",
+        "line": 56
+      }
+    },
+    {
+      "id": "type:portal/src/pages/ModelPortfolios.tsx#TimeSeriesDataPoint#aum",
+      "label": "Field",
+      "attrs": {
+        "name": "aum",
+        "ownerType": "TimeSeriesDataPoint",
+        "tsType": "number",
+        "optional": false,
+        "path": "portal/src/pages/ModelPortfolios.tsx",
+        "line": 57
+      }
+    },
+    {
+      "id": "type:portal/src/pages/ModelPortfolios.tsx#TimeSeriesDataPoint#account_count",
+      "label": "Field",
+      "attrs": {
+        "name": "account_count",
+        "ownerType": "TimeSeriesDataPoint",
+        "tsType": "number | undefined",
+        "optional": true,
+        "path": "portal/src/pages/ModelPortfolios.tsx",
+        "line": 58
+      }
+    },
+    {
+      "id": "rc:portal/src/pages/ModelPortfolios.tsx#ModelPortfolios",
+      "label": "ReactComponent",
+      "attrs": {
+        "name": "ModelPortfolios",
+        "path": "portal/src/pages/ModelPortfolios.tsx",
+        "coarseKey": "component:portal/src/pages/ModelPortfolios.tsx"
+      }
+    },
+    {
+      "id": "component:portal/src/pages/ModelPortfolios.tsx",
+      "label": "Component",
+      "attrs": {
+        "path": "portal/src/pages/ModelPortfolios.tsx",
+        "coarse": true
+      }
+    },
+    {
+      "id": "hook:portal/src/pages/ModelPortfolios.tsx:365:useQuery",
+      "label": "Hook",
+      "attrs": {
+        "hook": "useQuery",
+        "path": "portal/src/pages/ModelPortfolios.tsx",
+        "line": 365
+      }
+    },
+    {
+      "id": "rqk:mdpf-per-firm-timeseries",
+      "label": "ReactQueryKey",
+      "attrs": {
+        "key": "mdpf-per-firm-timeseries"
+      }
+    },
+    {
+      "id": "hook:portal/src/pages/ModelPortfolios.tsx:378:useQuery",
+      "label": "Hook",
+      "attrs": {
+        "hook": "useQuery",
+        "path": "portal/src/pages/ModelPortfolios.tsx",
+        "line": 378
+      }
+    },
+    {
+      "id": "rqk:mdpf-aggregate-timeseries",
+      "label": "ReactQueryKey",
+      "attrs": {
+        "key": "mdpf-aggregate-timeseries"
+      }
+    },
+    {
+      "id": "hook:portal/src/pages/ModelPortfolios.tsx:389:useQuery",
+      "label": "Hook",
+      "attrs": {
+        "hook": "useQuery",
+        "path": "portal/src/pages/ModelPortfolios.tsx",
+        "line": 389
+      }
+    },
+    {
+      "id": "rqk:mdpf-per-firm-distribution",
+      "label": "ReactQueryKey",
+      "attrs": {
+        "key": "mdpf-per-firm-distribution"
+      }
+    },
+    {
+      "id": "hook:portal/src/pages/ModelPortfolios.tsx:423:useQuery",
+      "label": "Hook",
+      "attrs": {
+        "hook": "useQuery",
+        "path": "portal/src/pages/ModelPortfolios.tsx",
+        "line": 423
+      }
+    },
+    {
+      "id": "rqk:aum-metrics",
+      "label": "ReactQueryKey",
+      "attrs": {
+        "key": "aum-metrics"
+      }
+    },
+    {
+      "id": "hook:portal/src/pages/ModelPortfolios.tsx:428:useQuery",
+      "label": "Hook",
+      "attrs": {
+        "hook": "useQuery",
+        "path": "portal/src/pages/ModelPortfolios.tsx",
+        "line": 428
+      }
+    },
+    {
+      "id": "rqk:aum-timeseries",
+      "label": "ReactQueryKey",
+      "attrs": {
+        "key": "aum-timeseries"
+      }
+    },
+    {
+      "id": "hook:portal/src/pages/ModelPortfolios.tsx:433:useQuery",
+      "label": "Hook",
+      "attrs": {
+        "hook": "useQuery",
+        "path": "portal/src/pages/ModelPortfolios.tsx",
+        "line": 433
+      }
+    },
+    {
+      "id": "rqk:account-distribution",
+      "label": "ReactQueryKey",
+      "attrs": {
+        "key": "account-distribution"
+      }
+    },
+    {
+      "id": "hook:portal/src/pages/ModelPortfolios.tsx:438:useQuery",
+      "label": "Hook",
+      "attrs": {
+        "hook": "useQuery",
+        "path": "portal/src/pages/ModelPortfolios.tsx",
+        "line": 438
+      }
+    },
+    {
+      "id": "rqk:non-model-assets",
+      "label": "ReactQueryKey",
+      "attrs": {
+        "key": "non-model-assets"
+      }
+    },
+    {
+      "id": "hook:portal/src/pages/ModelPortfolios.tsx:444:useQuery",
+      "label": "Hook",
+      "attrs": {
+        "hook": "useQuery",
+        "path": "portal/src/pages/ModelPortfolios.tsx",
+        "line": 444
+      }
+    },
+    {
+      "id": "rqk:model-portfolio-benchmarks",
+      "label": "ReactQueryKey",
+      "attrs": {
+        "key": "model-portfolio-benchmarks"
+      }
+    },
+    {
+      "id": "hook:portal/src/pages/ModelPortfolios.tsx:452:useQuery",
+      "label": "Hook",
+      "attrs": {
+        "hook": "useQuery",
+        "path": "portal/src/pages/ModelPortfolios.tsx",
+        "line": 452
+      }
+    },
+    {
+      "id": "rqk:etf-benchmark-returns",
+      "label": "ReactQueryKey",
+      "attrs": {
+        "key": "etf-benchmark-returns"
+      }
+    },
+    {
+      "id": "hook:portal/src/pages/ModelPortfolios.tsx:459:useQuery",
+      "label": "Hook",
+      "attrs": {
+        "hook": "useQuery",
+        "path": "portal/src/pages/ModelPortfolios.tsx",
+        "line": 459
+      }
+    },
+    {
+      "id": "rqk:peer-performance",
+      "label": "ReactQueryKey",
+      "attrs": {
+        "key": "peer-performance"
+      }
+    },
+    {
+      "id": "out:portal/src/pages/ModelPortfolios.tsx:172#period",
+      "label": "Field",
+      "attrs": {
+        "name": "period",
+        "ownerType": "(local/unresolved-output)",
+        "local": true,
+        "path": "portal/src/pages/ModelPortfolios.tsx",
+        "line": 172
+      }
+    },
+    {
+      "id": "out:portal/src/pages/ModelPortfolios.tsx:173#aum",
+      "label": "Field",
+      "attrs": {
+        "name": "aum",
+        "ownerType": "(local/unresolved-output)",
+        "local": true,
+        "path": "portal/src/pages/ModelPortfolios.tsx",
+        "line": 173
+      }
+    },
+    {
+      "id": "out:portal/src/pages/ModelPortfolios.tsx:174#account_count",
+      "label": "Field",
+      "attrs": {
+        "name": "account_count",
+        "ownerType": "(local/unresolved-output)",
+        "local": true,
+        "path": "portal/src/pages/ModelPortfolios.tsx",
+        "line": 174
+      }
+    },
+    {
+      "id": "out:portal/src/pages/ModelPortfolios.tsx:634#period",
+      "label": "Field",
+      "attrs": {
+        "name": "period",
+        "ownerType": "(local/unresolved-output)",
+        "local": true,
+        "path": "portal/src/pages/ModelPortfolios.tsx",
+        "line": 634
+      }
+    },
+    {
+      "id": "out:portal/src/pages/ModelPortfolios.tsx:635#aum",
+      "label": "Field",
+      "attrs": {
+        "name": "aum",
+        "ownerType": "(local/unresolved-output)",
+        "local": true,
+        "path": "portal/src/pages/ModelPortfolios.tsx",
+        "line": 635
+      }
+    }
+  ],
+  "edges": [
+    {
+      "src": "module:portal/src/pages/ModelPortfolios.tsx",
+      "dst": "type:portal/src/pages/ModelPortfolios.tsx#ModelPortfolio",
+      "label": "DECLARES",
+      "attrs": {}
+    },
+    {
+      "src": "type:portal/src/pages/ModelPortfolios.tsx#ModelPortfolio",
+      "dst": "type:portal/src/pages/ModelPortfolios.tsx#ModelPortfolio#modelName",
+      "label": "HAS_FIELD",
+      "attrs": {}
+    },
+    {
+      "src": "type:portal/src/pages/ModelPortfolios.tsx#ModelPortfolio",
+      "dst": "type:portal/src/pages/ModelPortfolios.tsx#ModelPortfolio#currentAUM",
+      "label": "HAS_FIELD",
+      "attrs": {}
+    },
+    {
+      "src": "type:portal/src/pages/ModelPortfolios.tsx#ModelPortfolio",
+      "dst": "type:portal/src/pages/ModelPortfolios.tsx#ModelPortfolio#accountCount",
+      "label": "HAS_FIELD",
+      "attrs": {}
+    },
+    {
+      "src": "type:portal/src/pages/ModelPortfolios.tsx#ModelPortfolio",
+      "dst": "type:portal/src/pages/ModelPortfolios.tsx#ModelPortfolio#metrics",
+      "label": "HAS_FIELD",
+      "attrs": {}
+    },
+    {
+      "src": "module:portal/src/pages/ModelPortfolios.tsx",
+      "dst": "type:portal/src/pages/ModelPortfolios.tsx#TimeSeriesDataPoint",
+      "label": "DECLARES",
+      "attrs": {}
+    },
+    {
+      "src": "type:portal/src/pages/ModelPortfolios.tsx#TimeSeriesDataPoint",
+      "dst": "type:portal/src/pages/ModelPortfolios.tsx#TimeSeriesDataPoint#period",
+      "label": "HAS_FIELD",
+      "attrs": {}
+    },
+    {
+      "src": "type:portal/src/pages/ModelPortfolios.tsx#TimeSeriesDataPoint",
+      "dst": "type:portal/src/pages/ModelPortfolios.tsx#TimeSeriesDataPoint#aum",
+      "label": "HAS_FIELD",
+      "attrs": {}
+    },
+    {
+      "src": "type:portal/src/pages/ModelPortfolios.tsx#TimeSeriesDataPoint",
+      "dst": "type:portal/src/pages/ModelPortfolios.tsx#TimeSeriesDataPoint#account_count",
+      "label": "HAS_FIELD",
+      "attrs": {}
+    },
+    {
+      "src": "module:portal/src/pages/ModelPortfolios.tsx",
+      "dst": "rc:portal/src/pages/ModelPortfolios.tsx#ModelPortfolios",
+      "label": "DECLARES",
+      "attrs": {}
+    },
+    {
+      "src": "rc:portal/src/pages/ModelPortfolios.tsx#ModelPortfolios",
+      "dst": "component:portal/src/pages/ModelPortfolios.tsx",
+      "label": "PROJECTS_TO",
+      "attrs": {}
+    },
+    {
+      "src": "hook:portal/src/pages/ModelPortfolios.tsx:365:useQuery",
+      "dst": "rqk:mdpf-per-firm-timeseries",
+      "label": "HAS_KEY",
+      "attrs": {}
+    },
+    {
+      "src": "hook:portal/src/pages/ModelPortfolios.tsx:365:useQuery",
+      "dst": "endpoint:getMdpfAggregateAUATimeSeriesByFirm",
+      "label": "FETCHES",
+      "attrs": {
+        "resolution": "queryFn symbol resolved"
+      }
+    },
+    {
+      "src": "hook:portal/src/pages/ModelPortfolios.tsx:378:useQuery",
+      "dst": "rqk:mdpf-aggregate-timeseries",
+      "label": "HAS_KEY",
+      "attrs": {}
+    },
+    {
+      "src": "hook:portal/src/pages/ModelPortfolios.tsx:378:useQuery",
+      "dst": "endpoint:getMdpfAggregateAUATimeSeriesByFirm",
+      "label": "FETCHES",
+      "attrs": {
+        "resolution": "queryFn symbol resolved"
+      }
+    },
+    {
+      "src": "hook:portal/src/pages/ModelPortfolios.tsx:389:useQuery",
+      "dst": "rqk:mdpf-per-firm-distribution",
+      "label": "HAS_KEY",
+      "attrs": {}
+    },
+    {
+      "src": "hook:portal/src/pages/ModelPortfolios.tsx:389:useQuery",
+      "dst": "endpoint:getAccountDistributionByFirm",
+      "label": "FETCHES",
+      "attrs": {
+        "resolution": "queryFn symbol resolved"
+      }
+    },
+    {
+      "src": "hook:portal/src/pages/ModelPortfolios.tsx:423:useQuery",
+      "dst": "rqk:aum-metrics",
+      "label": "HAS_KEY",
+      "attrs": {}
+    },
+    {
+      "src": "hook:portal/src/pages/ModelPortfolios.tsx:423:useQuery",
+      "dst": "endpoint:getAUMMetrics",
+      "label": "FETCHES",
+      "attrs": {
+        "resolution": "queryFn symbol resolved"
+      }
+    },
+    {
+      "src": "hook:portal/src/pages/ModelPortfolios.tsx:428:useQuery",
+      "dst": "rqk:aum-timeseries",
+      "label": "HAS_KEY",
+      "attrs": {}
+    },
+    {
+      "src": "hook:portal/src/pages/ModelPortfolios.tsx:428:useQuery",
+      "dst": "endpoint:getAUMTimeSeries",
+      "label": "FETCHES",
+      "attrs": {
+        "resolution": "queryFn symbol resolved"
+      }
+    },
+    {
+      "src": "hook:portal/src/pages/ModelPortfolios.tsx:433:useQuery",
+      "dst": "rqk:account-distribution",
+      "label": "HAS_KEY",
+      "attrs": {}
+    },
+    {
+      "src": "hook:portal/src/pages/ModelPortfolios.tsx:433:useQuery",
+      "dst": "endpoint:getAccountDistribution",
+      "label": "FETCHES",
+      "attrs": {
+        "resolution": "queryFn symbol resolved"
+      }
+    },
+    {
+      "src": "hook:portal/src/pages/ModelPortfolios.tsx:438:useQuery",
+      "dst": "rqk:non-model-assets",
+      "label": "HAS_KEY",
+      "attrs": {}
+    },
+    {
+      "src": "hook:portal/src/pages/ModelPortfolios.tsx:438:useQuery",
+      "dst": "endpoint:getNonModelAssets",
+      "label": "FETCHES",
+      "attrs": {
+        "resolution": "queryFn symbol resolved"
+      }
+    },
+    {
+      "src": "hook:portal/src/pages/ModelPortfolios.tsx:444:useQuery",
+      "dst": "rqk:model-portfolio-benchmarks",
+      "label": "HAS_KEY",
+      "attrs": {}
+    },
+    {
+      "src": "hook:portal/src/pages/ModelPortfolios.tsx:444:useQuery",
+      "dst": "endpoint:getModelPortfolioBenchmarks",
+      "label": "FETCHES",
+      "attrs": {
+        "resolution": "queryFn symbol resolved"
+      }
+    },
+    {
+      "src": "hook:portal/src/pages/ModelPortfolios.tsx:452:useQuery",
+      "dst": "rqk:etf-benchmark-returns",
+      "label": "HAS_KEY",
+      "attrs": {}
+    },
+    {
+      "src": "hook:portal/src/pages/ModelPortfolios.tsx:452:useQuery",
+      "dst": "endpoint:getETFBenchmarkReturns",
+      "label": "FETCHES",
+      "attrs": {
+        "resolution": "queryFn symbol resolved"
+      }
+    },
+    {
+      "src": "hook:portal/src/pages/ModelPortfolios.tsx:459:useQuery",
+      "dst": "rqk:peer-performance",
+      "label": "HAS_KEY",
+      "attrs": {}
+    },
+    {
+      "src": "hook:portal/src/pages/ModelPortfolios.tsx:459:useQuery",
+      "dst": "endpoint:getPeerPerformance",
+      "label": "FETCHES",
+      "attrs": {
+        "resolution": "queryFn symbol resolved"
+      }
+    },
+    {
+      "src": "type:portal/src/pages/ModelPortfolios.tsx#TimeSeriesDataPoint#period",
+      "dst": "out:portal/src/pages/ModelPortfolios.tsx:172#period",
+      "label": "FLOWS_TO",
+      "attrs": {
+        "kind": "passthrough",
+        "condition": null,
+        "srcField": "TimeSeriesDataPoint.period",
+        "dstField": "period",
+        "rename": false,
+        "resolution": "getSymbol on source prop access -> declaring type (TypeChecker)",
+        "via": "mapping portal/src/pages/ModelPortfolios.tsx:172"
+      }
+    },
+    {
+      "src": "type:portal/src/pages/ModelPortfolios.tsx#TimeSeriesDataPoint#aum",
+      "dst": "out:portal/src/pages/ModelPortfolios.tsx:173#aum",
+      "label": "FLOWS_TO",
+      "attrs": {
+        "kind": "recompute/guarded",
+        "condition": null,
+        "srcField": "TimeSeriesDataPoint.aum",
+        "dstField": "aum",
+        "rename": false,
+        "resolution": "getSymbol on source prop access -> declaring type (TypeChecker)",
+        "via": "mapping portal/src/pages/ModelPortfolios.tsx:173"
+      }
+    },
+    {
+      "src": "type:portal/src/pages/ModelPortfolios.tsx#TimeSeriesDataPoint#account_count",
+      "dst": "out:portal/src/pages/ModelPortfolios.tsx:174#account_count",
+      "label": "FLOWS_TO",
+      "attrs": {
+        "kind": "recompute/guarded",
+        "condition": null,
+        "srcField": "TimeSeriesDataPoint.account_count",
+        "dstField": "account_count",
+        "rename": false,
+        "resolution": "getSymbol on source prop access -> declaring type (TypeChecker)",
+        "via": "mapping portal/src/pages/ModelPortfolios.tsx:174"
+      }
+    },
+    {
+      "src": "type:portal/src/pages/ModelPortfolios.tsx#TimeSeriesDataPoint#period",
+      "dst": "type:portal/src/pages/ModelPortfolios.tsx#TimeSeriesDataPoint#period",
+      "label": "FLOWS_TO",
+      "attrs": {
+        "kind": "passthrough",
+        "condition": null,
+        "srcField": "TimeSeriesDataPoint.period",
+        "dstField": "period",
+        "rename": false,
+        "resolution": "getSymbol on source prop access -> declaring type (TypeChecker)",
+        "via": "mapping portal/src/pages/ModelPortfolios.tsx:182"
+      }
+    },
+    {
+      "src": "type:portal/src/pages/ModelPortfolios.tsx#TimeSeriesDataPoint#aum",
+      "dst": "type:portal/src/pages/ModelPortfolios.tsx#TimeSeriesDataPoint#aum",
+      "label": "FLOWS_TO",
+      "attrs": {
+        "kind": "recompute/guarded",
+        "condition": null,
+        "srcField": "TimeSeriesDataPoint.aum",
+        "dstField": "aum",
+        "rename": false,
+        "resolution": "getSymbol on source prop access -> declaring type (TypeChecker)",
+        "via": "mapping portal/src/pages/ModelPortfolios.tsx:182"
+      }
+    },
+    {
+      "src": "type:portal/src/pages/ModelPortfolios.tsx#TimeSeriesDataPoint#account_count",
+      "dst": "type:portal/src/pages/ModelPortfolios.tsx#TimeSeriesDataPoint#account_count",
+      "label": "FLOWS_TO",
+      "attrs": {
+        "kind": "recompute/guarded",
+        "condition": null,
+        "srcField": "TimeSeriesDataPoint.account_count",
+        "dstField": "account_count",
+        "rename": false,
+        "resolution": "getSymbol on source prop access -> declaring type (TypeChecker)",
+        "via": "mapping portal/src/pages/ModelPortfolios.tsx:182"
+      }
+    },
+    {
+      "src": "type:portal/src/pages/ModelPortfolios.tsx#TimeSeriesDataPoint#period",
+      "dst": "out:portal/src/pages/ModelPortfolios.tsx:634#period",
+      "label": "FLOWS_TO",
+      "attrs": {
+        "kind": "passthrough",
+        "condition": null,
+        "srcField": "TimeSeriesDataPoint.period",
+        "dstField": "period",
+        "rename": false,
+        "resolution": "getSymbol on source prop access -> declaring type (TypeChecker)",
+        "via": "mapping portal/src/pages/ModelPortfolios.tsx:634"
+      }
+    },
+    {
+      "src": "type:portal/src/pages/ModelPortfolios.tsx#TimeSeriesDataPoint#aum",
+      "dst": "out:portal/src/pages/ModelPortfolios.tsx:635#aum",
+      "label": "FLOWS_TO",
+      "attrs": {
+        "kind": "passthrough",
+        "condition": null,
+        "srcField": "TimeSeriesDataPoint.aum",
+        "dstField": "aum",
+        "rename": false,
+        "resolution": "getSymbol on source prop access -> declaring type (TypeChecker)",
+        "via": "mapping portal/src/pages/ModelPortfolios.tsx:635"
+      }
+    }
+  ]
+}

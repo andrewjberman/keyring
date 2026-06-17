@@ -1,0 +1,163 @@
+{
+  "meta": {
+    "project": "NFRA_TSGRAPH.P1 Leg A",
+    "mode": "full-portal",
+    "extractor": "ts-morph @28 / TS Compiler API",
+    "deferred": "full-depth PROP_PASSES/RENDERS across all components + AC5 NNA forked-FLOWS_TO stress-test (next iteration -- NOT silently capped)",
+    "note": "SPIKE/P1 output -- scratch graph; verify against built artifact/running portal (F5), never the graph."
+  },
+  "metrics": {
+    "portal_files_total": 374,
+    "work_set_files": 374,
+    "program_load_ms": 2817,
+    "extract_ms": 4443,
+    "node_count": 7470,
+    "edge_count": 7786,
+    "nodes_by_label": {
+      "Module": 374,
+      "TypeDecl": 803,
+      "Field": 4870,
+      "ReactComponent": 442,
+      "Component": 199,
+      "Prop": 359,
+      "DataFetch": 106,
+      "Endpoint": 104,
+      "ServedURL": 45,
+      "Hook": 111,
+      "ReactQueryKey": 57
+    },
+    "edges_by_label": {
+      "DECLARES": 1344,
+      "HAS_FIELD": 4269,
+      "PROJECTS_TO": 442,
+      "HAS_PROP": 359,
+      "HAS_PROPS_TYPE": 208,
+      "IS_ENDPOINT": 106,
+      "HAS_TYPE": 100,
+      "READS_URL": 48,
+      "HAS_KEY": 85,
+      "FETCHES": 111,
+      "FLOWS_TO": 714
+    },
+    "flowsto_by_kind": {
+      "passthrough": 339,
+      "recompute/guarded": 231,
+      "rename": 144
+    },
+    "coverage": {
+      "component_props": {
+        "attempted": 442,
+        "resolved": 324
+      },
+      "fetch_returntype": {
+        "attempted": 106,
+        "resolved": 100
+      },
+      "fetch_url": {
+        "attempted": 106,
+        "resolved": 50
+      },
+      "hook_fetch": {
+        "attempted": 111,
+        "resolved": 111
+      },
+      "flowsto": {
+        "attempted": 1578,
+        "resolved": 957
+      }
+    },
+    "unresolved_count": 180
+  },
+  "unresolved_sample": [
+    {
+      "cat": "component_props",
+      "what": "props of DashboardLayout",
+      "where": "portal/src/App.tsx",
+      "reason": "no props param"
+    },
+    {
+      "cat": "component_props",
+      "what": "props of App",
+      "where": "portal/src/App.tsx",
+      "reason": "no props param"
+    },
+    {
+      "cat": "component_props",
+      "what": "props of BenchmarkHeatmap",
+      "where": "portal/src/components/BenchmarkHeatmap.tsx",
+      "reason": "param type not a named/inline type (untyped or destructured-no-annotation)"
+    },
+    {
+      "cat": "component_props",
+      "what": "props of DataAsOfCompact",
+      "where": "portal/src/components/DataAsOf.tsx",
+      "reason": "param type not a named/inline type (untyped or destructured-no-annotation)"
+    },
+    {
+      "cat": "component_props",
+      "what": "props of ErrorMessage",
+      "where": "portal/src/components/ErrorMessage.tsx",
+      "reason": "param type not a named/inline type (untyped or destructured-no-annotation)"
+    },
+    {
+      "cat": "component_props",
+      "what": "props of LoadingSpinner",
+      "where": "portal/src/components/LoadingSpinner.tsx",
+      "reason": "param type not a named/inline type (untyped or destructured-no-annotation)"
+    },
+    {
+      "cat": "component_props",
+      "what": "props of LoadingOverlay",
+      "where": "portal/src/components/LoadingSpinner.tsx",
+      "reason": "no props param"
+    },
+    {
+      "cat": "component_props",
+      "what": "props of LoadingContent",
+      "where": "portal/src/components/LoadingSpinner.tsx",
+      "reason": "param type not a named/inline type (untyped or destructured-no-annotation)"
+    },
+    {
+      "cat": "component_props",
+      "what": "props of LoadingInline",
+      "where": "portal/src/components/LoadingSpinner.tsx",
+      "reason": "param type not a named/inline type (untyped or destructured-no-annotation)"
+    },
+    {
+      "cat": "component_props",
+      "what": "props of LoadingContainer",
+      "where": "portal/src/components/LoadingSpinner.tsx",
+      "reason": "param type not a named/inline type (untyped or destructured-no-annotation)"
+    },
+    {
+      "cat": "component_props",
+      "what": "props of LoadingModal",
+      "where": "portal/src/components/LoadingSpinner.tsx",
+      "reason": "no props param"
+    },
+    {
+      "cat": "component_props",
+      "what": "props of MetricsRow",
+      "where": "portal/src/components/MetricsRow.tsx",
+      "reason": "param type not a named/inline type (untyped or destructured-no-annotation)"
+    },
+    {
+      "cat": "component_props",
+      "what": "props of PageHeaderCleanBadge",
+      "where": "portal/src/components/PageHeaderVariants.tsx",
+      "reason": "param type not a named/inline type (untyped or destructured-no-annotation)"
+    },
+    {
+      "cat": "component_props",
+      "what": "props of PerformanceHeatMap",
+      "where": "portal/src/components/PerformanceHeatMap.tsx",
+      "reason": "param type not a named/inline type (untyped or destructured-no-annotation)"
+    },
+    {
+      "cat": "component_props",
+      "what": "props of TabNavigation",
+      "where": "portal/src/components/TabNavigation.tsx",
+      "reason": "param type not a named/inline type (untyped or destructured-no-annotation)"
+    }
+  ]
+}
