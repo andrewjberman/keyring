@@ -11,9 +11,12 @@
  * Incremental mode (--changed <fileA,fileB,...>): re-extract only the named files + their importing
  * dependents (mirrors the trace 5-min cache + nightly derive). Default = full portal.
  *
- * EXPLICITLY DEFERRED (no silent cap -- next Leg-A iteration): full-depth PROP_PASSES/RENDERS across all
- * components, and the AC5 NNA-attribution stress-test (forked FLOWS_TO). This pass establishes the
- * backbone + the field-grain FLOWS_TO with kind + coverage; logged below as deferred=...
+ * Passes: 1 Modules / 2 Types+Fields / 3 ReactComponents+Props / 4 DataFetch+Endpoint / 5 Hooks /
+ * 6 FLOWS_TO(+kind) / 7 PROP_PASSES+INSTANTIATES / 8 RENDERS -- the complete §3 fine-lineage backbone.
+ * EXPLICITLY DEFERRED (no silent cap): the AC5 NNA-attribution stress-test (forked FLOWS_TO demo) is a
+ * separate targeted Leg-C pass; PROP_PASSES single-hop edges compose into multi-hop prop-drilling chains
+ * by graph traversal (no transitive edge needed). Refinements queued: RENDERS getSymbol caching (perf),
+ * transitive dependent-closure for incremental. Logged at runtime as meta.deferred + per-category coverage.
  *
  * Run: bun run extractor_full.ts            (full portal)
  *      bun run extractor_full.ts --changed src/pages/ModelPortfolios.tsx,src/api/portal-proxy.ts
