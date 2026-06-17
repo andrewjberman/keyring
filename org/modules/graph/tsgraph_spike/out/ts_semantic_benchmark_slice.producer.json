@@ -1,0 +1,1079 @@
+{
+  "producer": "ts-semantic",
+  "generated_at": "2026-06-17T19:00:00Z",
+  "slice": "model-portfolios benchmark surface",
+  "nodes": [
+    {
+      "id": "module:portal/src/api/portal-proxy.ts",
+      "type": "Module",
+      "path": "portal/src/api/portal-proxy.ts",
+      "kind": "ts"
+    },
+    {
+      "id": "module:portal/src/pages/ModelPortfolios.tsx",
+      "type": "Module",
+      "path": "portal/src/pages/ModelPortfolios.tsx",
+      "kind": "tsx"
+    },
+    {
+      "id": "module:portal/src/components/BenchmarkHeatmap.tsx",
+      "type": "Module",
+      "path": "portal/src/components/BenchmarkHeatmap.tsx",
+      "kind": "tsx"
+    },
+    {
+      "id": "type:portal/src/api/portal-proxy.ts#ModelPortfolioBenchmarksResponse",
+      "type": "TypeDecl",
+      "name": "ModelPortfolioBenchmarksResponse",
+      "path": "portal/src/api/portal-proxy.ts",
+      "line": 778
+    },
+    {
+      "id": "type:portal/src/api/portal-proxy.ts#ModelPortfolioBenchmarksResponse#generated_at",
+      "type": "Field",
+      "name": "generated_at",
+      "ownerType": "ModelPortfolioBenchmarksResponse",
+      "tsType": "string",
+      "optional": false,
+      "path": "portal/src/api/portal-proxy.ts",
+      "line": 779
+    },
+    {
+      "id": "type:portal/src/api/portal-proxy.ts#ModelPortfolioBenchmarksResponse#data_as_of",
+      "type": "Field",
+      "name": "data_as_of",
+      "ownerType": "ModelPortfolioBenchmarksResponse",
+      "tsType": "string",
+      "optional": false,
+      "path": "portal/src/api/portal-proxy.ts",
+      "line": 780
+    },
+    {
+      "id": "type:portal/src/api/portal-proxy.ts#ModelPortfolioBenchmarksResponse#periods",
+      "type": "Field",
+      "name": "periods",
+      "ownerType": "ModelPortfolioBenchmarksResponse",
+      "tsType": "string[]",
+      "optional": false,
+      "path": "portal/src/api/portal-proxy.ts",
+      "line": 781
+    },
+    {
+      "id": "type:portal/src/api/portal-proxy.ts#ModelPortfolioBenchmarksResponse#models",
+      "type": "Field",
+      "name": "models",
+      "ownerType": "ModelPortfolioBenchmarksResponse",
+      "tsType": "ModelPortfolioData[]",
+      "optional": false,
+      "path": "portal/src/api/portal-proxy.ts",
+      "line": 782
+    },
+    {
+      "id": "type:portal/src/api/portal-proxy.ts#ModelPortfolioBenchmarksResponse#index_compositions",
+      "type": "Field",
+      "name": "index_compositions",
+      "ownerType": "ModelPortfolioBenchmarksResponse",
+      "tsType": "Record<string, string>",
+      "optional": false,
+      "path": "portal/src/api/portal-proxy.ts",
+      "line": 783
+    },
+    {
+      "id": "type:portal/src/api/portal-proxy.ts#ModelPortfolioBenchmarksResponse#etf_compositions",
+      "type": "Field",
+      "name": "etf_compositions",
+      "ownerType": "ModelPortfolioBenchmarksResponse",
+      "tsType": "Record<string, string>",
+      "optional": false,
+      "path": "portal/src/api/portal-proxy.ts",
+      "line": 784
+    },
+    {
+      "id": "type:portal/src/api/portal-proxy.ts#ModelPortfolioBenchmarksResponse#model_names",
+      "type": "Field",
+      "name": "model_names",
+      "ownerType": "ModelPortfolioBenchmarksResponse",
+      "tsType": "Record<string, string>",
+      "optional": false,
+      "path": "portal/src/api/portal-proxy.ts",
+      "line": 785
+    },
+    {
+      "id": "type:portal/src/api/portal-proxy.ts#ModelPortfolioBenchmarksResponse#inception_date",
+      "type": "Field",
+      "name": "inception_date",
+      "ownerType": "ModelPortfolioBenchmarksResponse",
+      "tsType": "string",
+      "optional": false,
+      "path": "portal/src/api/portal-proxy.ts",
+      "line": 786
+    },
+    {
+      "id": "type:portal/src/api/portal-proxy.ts#ModelPortfolioBenchmarksResponse#source",
+      "type": "Field",
+      "name": "source",
+      "ownerType": "ModelPortfolioBenchmarksResponse",
+      "tsType": "string",
+      "optional": false,
+      "path": "portal/src/api/portal-proxy.ts",
+      "line": 787
+    },
+    {
+      "id": "type:portal/src/api/portal-proxy.ts#ModelPortfolioBenchmarksResponse#notes",
+      "type": "Field",
+      "name": "notes",
+      "ownerType": "ModelPortfolioBenchmarksResponse",
+      "tsType": "{ index_benchmark: string; etf_benchmark: string; volatility: string; }",
+      "optional": false,
+      "path": "portal/src/api/portal-proxy.ts",
+      "line": 788
+    },
+    {
+      "id": "type:portal/src/api/portal-proxy.ts#ModelPortfolioData",
+      "type": "TypeDecl",
+      "name": "ModelPortfolioData",
+      "path": "portal/src/api/portal-proxy.ts",
+      "line": 761
+    },
+    {
+      "id": "type:portal/src/api/portal-proxy.ts#ModelPortfolioData#code",
+      "type": "Field",
+      "name": "code",
+      "ownerType": "ModelPortfolioData",
+      "tsType": "string",
+      "optional": false,
+      "path": "portal/src/api/portal-proxy.ts",
+      "line": 762
+    },
+    {
+      "id": "type:portal/src/api/portal-proxy.ts#ModelPortfolioData#name",
+      "type": "Field",
+      "name": "name",
+      "ownerType": "ModelPortfolioData",
+      "tsType": "string",
+      "optional": false,
+      "path": "portal/src/api/portal-proxy.ts",
+      "line": 763
+    },
+    {
+      "id": "type:portal/src/api/portal-proxy.ts#ModelPortfolioData#returns",
+      "type": "Field",
+      "name": "returns",
+      "ownerType": "ModelPortfolioData",
+      "tsType": "{ '1D'?: ModelPortfolioPeriodReturn | null; WTD?: ModelPortfolioPeriodReturn | null; MTD?: ModelPortfolioPeriodReturn | null; '1M'?: ModelPortfolioPeriodReturn | null; QTD?: ModelPortfolioPeriodReturn | null; '1Q'?: ModelPortfolioPeriodReturn | null; YTD?: ModelPortfolioPeriodReturn | null; '1Y'?: ModelPortfolioPeriodReturn | null; 'Since Inception'?: ModelPortfolioPeriodReturn | null; TTW?: ModelPortfolioPeriodReturn | null; }",
+      "optional": false,
+      "path": "portal/src/api/portal-proxy.ts",
+      "line": 764
+    },
+    {
+      "id": "type:portal/src/api/portal-proxy.ts#ModelPortfolioPeriodReturn",
+      "type": "TypeDecl",
+      "name": "ModelPortfolioPeriodReturn",
+      "path": "portal/src/api/portal-proxy.ts",
+      "line": 750
+    },
+    {
+      "id": "type:portal/src/api/portal-proxy.ts#ModelPortfolioPeriodReturn#model",
+      "type": "Field",
+      "name": "model",
+      "ownerType": "ModelPortfolioPeriodReturn",
+      "tsType": "number | null",
+      "optional": false,
+      "path": "portal/src/api/portal-proxy.ts",
+      "line": 751
+    },
+    {
+      "id": "type:portal/src/api/portal-proxy.ts#ModelPortfolioPeriodReturn#index_benchmark",
+      "type": "Field",
+      "name": "index_benchmark",
+      "ownerType": "ModelPortfolioPeriodReturn",
+      "tsType": "number | null",
+      "optional": false,
+      "path": "portal/src/api/portal-proxy.ts",
+      "line": 752
+    },
+    {
+      "id": "type:portal/src/api/portal-proxy.ts#ModelPortfolioPeriodReturn#etf_benchmark",
+      "type": "Field",
+      "name": "etf_benchmark",
+      "ownerType": "ModelPortfolioPeriodReturn",
+      "tsType": "number | null",
+      "optional": false,
+      "path": "portal/src/api/portal-proxy.ts",
+      "line": 753
+    },
+    {
+      "id": "type:portal/src/api/portal-proxy.ts#ModelPortfolioPeriodReturn#index_spread",
+      "type": "Field",
+      "name": "index_spread",
+      "ownerType": "ModelPortfolioPeriodReturn",
+      "tsType": "number | null",
+      "optional": false,
+      "path": "portal/src/api/portal-proxy.ts",
+      "line": 754
+    },
+    {
+      "id": "type:portal/src/api/portal-proxy.ts#ModelPortfolioPeriodReturn#etf_spread",
+      "type": "Field",
+      "name": "etf_spread",
+      "ownerType": "ModelPortfolioPeriodReturn",
+      "tsType": "number | null",
+      "optional": false,
+      "path": "portal/src/api/portal-proxy.ts",
+      "line": 755
+    },
+    {
+      "id": "type:portal/src/api/portal-proxy.ts#ModelPortfolioPeriodReturn#model_volatility",
+      "type": "Field",
+      "name": "model_volatility",
+      "ownerType": "ModelPortfolioPeriodReturn",
+      "tsType": "number | null",
+      "optional": false,
+      "path": "portal/src/api/portal-proxy.ts",
+      "line": 756
+    },
+    {
+      "id": "type:portal/src/api/portal-proxy.ts#ModelPortfolioPeriodReturn#index_benchmark_volatility",
+      "type": "Field",
+      "name": "index_benchmark_volatility",
+      "ownerType": "ModelPortfolioPeriodReturn",
+      "tsType": "number | null",
+      "optional": false,
+      "path": "portal/src/api/portal-proxy.ts",
+      "line": 757
+    },
+    {
+      "id": "type:portal/src/api/portal-proxy.ts#ModelPortfolioPeriodReturn#etf_benchmark_volatility",
+      "type": "Field",
+      "name": "etf_benchmark_volatility",
+      "ownerType": "ModelPortfolioPeriodReturn",
+      "tsType": "number | null",
+      "optional": false,
+      "path": "portal/src/api/portal-proxy.ts",
+      "line": 758
+    },
+    {
+      "id": "type:portal/src/api/portal-proxy.ts#BenchmarkModelData",
+      "type": "TypeDecl",
+      "name": "BenchmarkModelData",
+      "path": "portal/src/api/portal-proxy.ts",
+      "line": 707
+    },
+    {
+      "id": "type:portal/src/api/portal-proxy.ts#BenchmarkModelData#code",
+      "type": "Field",
+      "name": "code",
+      "ownerType": "BenchmarkModelData",
+      "tsType": "string",
+      "optional": false,
+      "path": "portal/src/api/portal-proxy.ts",
+      "line": 708
+    },
+    {
+      "id": "type:portal/src/api/portal-proxy.ts#BenchmarkModelData#name",
+      "type": "Field",
+      "name": "name",
+      "ownerType": "BenchmarkModelData",
+      "tsType": "string",
+      "optional": false,
+      "path": "portal/src/api/portal-proxy.ts",
+      "line": 709
+    },
+    {
+      "id": "type:portal/src/api/portal-proxy.ts#BenchmarkModelData#returns",
+      "type": "Field",
+      "name": "returns",
+      "ownerType": "BenchmarkModelData",
+      "tsType": "{ '1D'?: BenchmarkPeriodReturn | null; WTD?: BenchmarkPeriodReturn | null; MTD?: BenchmarkPeriodReturn | null; '1M'?: BenchmarkPeriodReturn | null; QTD?: BenchmarkPeriodReturn | null; '1Q'?: BenchmarkPeriodReturn | null; YTD?: BenchmarkPeriodReturn | null; '1Y'?: BenchmarkPeriodReturn | null; 'Since Inception'?: BenchmarkPeriodReturn | null; TTW?: BenchmarkPeriodReturn | null; }",
+      "optional": false,
+      "path": "portal/src/api/portal-proxy.ts",
+      "line": 710
+    },
+    {
+      "id": "type:portal/src/api/portal-proxy.ts#BenchmarkPeriodReturn",
+      "type": "TypeDecl",
+      "name": "BenchmarkPeriodReturn",
+      "path": "portal/src/api/portal-proxy.ts",
+      "line": 699
+    },
+    {
+      "id": "type:portal/src/api/portal-proxy.ts#BenchmarkPeriodReturn#model",
+      "type": "Field",
+      "name": "model",
+      "ownerType": "BenchmarkPeriodReturn",
+      "tsType": "number",
+      "optional": false,
+      "path": "portal/src/api/portal-proxy.ts",
+      "line": 700
+    },
+    {
+      "id": "type:portal/src/api/portal-proxy.ts#BenchmarkPeriodReturn#benchmark",
+      "type": "Field",
+      "name": "benchmark",
+      "ownerType": "BenchmarkPeriodReturn",
+      "tsType": "number",
+      "optional": false,
+      "path": "portal/src/api/portal-proxy.ts",
+      "line": 701
+    },
+    {
+      "id": "type:portal/src/api/portal-proxy.ts#BenchmarkPeriodReturn#spread",
+      "type": "Field",
+      "name": "spread",
+      "ownerType": "BenchmarkPeriodReturn",
+      "tsType": "number",
+      "optional": false,
+      "path": "portal/src/api/portal-proxy.ts",
+      "line": 702
+    },
+    {
+      "id": "type:portal/src/api/portal-proxy.ts#BenchmarkPeriodReturn#model_volatility",
+      "type": "Field",
+      "name": "model_volatility",
+      "ownerType": "BenchmarkPeriodReturn",
+      "tsType": "number | null | undefined",
+      "optional": true,
+      "path": "portal/src/api/portal-proxy.ts",
+      "line": 703
+    },
+    {
+      "id": "type:portal/src/api/portal-proxy.ts#BenchmarkPeriodReturn#benchmark_volatility",
+      "type": "Field",
+      "name": "benchmark_volatility",
+      "ownerType": "BenchmarkPeriodReturn",
+      "tsType": "number | null | undefined",
+      "optional": true,
+      "path": "portal/src/api/portal-proxy.ts",
+      "line": 704
+    },
+    {
+      "id": "type:portal/src/components/BenchmarkHeatmap.tsx#BenchmarkHeatmapProps",
+      "type": "TypeDecl",
+      "name": "BenchmarkHeatmapProps",
+      "path": "portal/src/components/BenchmarkHeatmap.tsx",
+      "line": 43
+    },
+    {
+      "id": "type:portal/src/components/BenchmarkHeatmap.tsx#BenchmarkHeatmapProps#data",
+      "type": "Field",
+      "name": "data",
+      "ownerType": "BenchmarkHeatmapProps",
+      "tsType": "BenchmarkModelData[]",
+      "optional": false,
+      "path": "portal/src/components/BenchmarkHeatmap.tsx",
+      "line": 44
+    },
+    {
+      "id": "type:portal/src/components/BenchmarkHeatmap.tsx#BenchmarkHeatmapProps#benchmarkCompositions",
+      "type": "Field",
+      "name": "benchmarkCompositions",
+      "ownerType": "BenchmarkHeatmapProps",
+      "tsType": "Record<string, string> | undefined",
+      "optional": true,
+      "path": "portal/src/components/BenchmarkHeatmap.tsx",
+      "line": 45
+    },
+    {
+      "id": "type:portal/src/components/BenchmarkHeatmap.tsx#BenchmarkHeatmapProps#returnType",
+      "type": "Field",
+      "name": "returnType",
+      "ownerType": "BenchmarkHeatmapProps",
+      "tsType": "\"gross\" | \"net\" | undefined",
+      "optional": true,
+      "path": "portal/src/components/BenchmarkHeatmap.tsx",
+      "line": 46
+    },
+    {
+      "id": "type:portal/src/components/BenchmarkHeatmap.tsx#BenchmarkHeatmapProps#benchmarkType",
+      "type": "Field",
+      "name": "benchmarkType",
+      "ownerType": "BenchmarkHeatmapProps",
+      "tsType": "\"index\" | \"etf\" | undefined",
+      "optional": true,
+      "path": "portal/src/components/BenchmarkHeatmap.tsx",
+      "line": 47
+    },
+    {
+      "id": "type:portal/src/components/BenchmarkHeatmap.tsx#BenchmarkHeatmapProps#etfBenchmarkData",
+      "type": "Field",
+      "name": "etfBenchmarkData",
+      "ownerType": "BenchmarkHeatmapProps",
+      "tsType": "ETFBenchmarkReturnsResponse | null | undefined",
+      "optional": true,
+      "path": "portal/src/components/BenchmarkHeatmap.tsx",
+      "line": 48
+    },
+    {
+      "id": "type:portal/src/components/BenchmarkHeatmap.tsx#BenchmarkHeatmapProps#asOfDate",
+      "type": "Field",
+      "name": "asOfDate",
+      "ownerType": "BenchmarkHeatmapProps",
+      "tsType": "AsOfDateInput | undefined",
+      "optional": true,
+      "path": "portal/src/components/BenchmarkHeatmap.tsx",
+      "line": 49
+    },
+    {
+      "id": "type:portal/src/components/BenchmarkHeatmap.tsx#BenchmarkHeatmapProps#className",
+      "type": "Field",
+      "name": "className",
+      "ownerType": "BenchmarkHeatmapProps",
+      "tsType": "string | undefined",
+      "optional": true,
+      "path": "portal/src/components/BenchmarkHeatmap.tsx",
+      "line": 50
+    },
+    {
+      "id": "fetch:portal/src/api/portal-proxy.ts:807:getModelPortfolioBenchmarks",
+      "type": "DataFetch",
+      "fn": "getModelPortfolioBenchmarks",
+      "path": "portal/src/api/portal-proxy.ts",
+      "line": 807,
+      "returnType": "Promise<ModelPortfolioBenchmarksResponse>"
+    },
+    {
+      "id": "endpoint:getModelPortfolioBenchmarks",
+      "type": "Endpoint",
+      "fn": "getModelPortfolioBenchmarks",
+      "coarseKey": "endpoint:getModelPortfolioBenchmarks"
+    },
+    {
+      "id": "s3:json/benchmarks/model_portfolio_benchmarks.json",
+      "type": "S3Artifact",
+      "key": "json/benchmarks/model_portfolio_benchmarks.json",
+      "bucket": "opal-data-portal-v2",
+      "servedUrl": "/api/general/benchmarks/model_portfolio_benchmarks.json",
+      "provenance": "external:D8-FP-backend-map"
+    },
+    {
+      "id": "gold:yang-model-portfolio-benchmarks",
+      "type": "GoldScript",
+      "script": "yang-model-portfolio-benchmarks",
+      "provenance": "external:D8-FP-backend-map"
+    },
+    {
+      "id": "hook:portal/src/pages/ModelPortfolios.tsx:444:useQuery",
+      "type": "Hook",
+      "hook": "useQuery",
+      "path": "portal/src/pages/ModelPortfolios.tsx",
+      "line": 444
+    },
+    {
+      "id": "rqk:model-portfolio-benchmarks",
+      "type": "ReactQueryKey",
+      "key": "model-portfolio-benchmarks"
+    },
+    {
+      "id": "rc:portal/src/pages/ModelPortfolios.tsx#ModelPortfolios",
+      "type": "ReactComponent",
+      "name": "ModelPortfolios",
+      "path": "portal/src/pages/ModelPortfolios.tsx",
+      "coarseKey": "component:portal/src/pages/ModelPortfolios.tsx"
+    },
+    {
+      "id": "component:portal/src/pages/ModelPortfolios.tsx",
+      "type": "Component",
+      "path": "portal/src/pages/ModelPortfolios.tsx",
+      "coarse": true
+    },
+    {
+      "id": "rc:portal/src/components/BenchmarkHeatmap.tsx#BenchmarkHeatmap",
+      "type": "ReactComponent",
+      "name": "BenchmarkHeatmap",
+      "path": "portal/src/components/BenchmarkHeatmap.tsx",
+      "coarseKey": "component:portal/src/components/BenchmarkHeatmap.tsx"
+    },
+    {
+      "id": "component:portal/src/components/BenchmarkHeatmap.tsx",
+      "type": "Component",
+      "path": "portal/src/components/BenchmarkHeatmap.tsx",
+      "coarse": true
+    },
+    {
+      "id": "prop:rc:portal/src/components/BenchmarkHeatmap.tsx#BenchmarkHeatmap#data",
+      "type": "Prop",
+      "name": "data",
+      "component": "BenchmarkHeatmap",
+      "tsType": "BenchmarkModelData[]",
+      "optional": false
+    },
+    {
+      "id": "prop:rc:portal/src/components/BenchmarkHeatmap.tsx#BenchmarkHeatmap#benchmarkCompositions",
+      "type": "Prop",
+      "name": "benchmarkCompositions",
+      "component": "BenchmarkHeatmap",
+      "tsType": "Record<string, string> | undefined",
+      "optional": true
+    },
+    {
+      "id": "prop:rc:portal/src/components/BenchmarkHeatmap.tsx#BenchmarkHeatmap#returnType",
+      "type": "Prop",
+      "name": "returnType",
+      "component": "BenchmarkHeatmap",
+      "tsType": "\"gross\" | \"net\" | undefined",
+      "optional": true
+    },
+    {
+      "id": "prop:rc:portal/src/components/BenchmarkHeatmap.tsx#BenchmarkHeatmap#benchmarkType",
+      "type": "Prop",
+      "name": "benchmarkType",
+      "component": "BenchmarkHeatmap",
+      "tsType": "\"index\" | \"etf\" | undefined",
+      "optional": true
+    },
+    {
+      "id": "prop:rc:portal/src/components/BenchmarkHeatmap.tsx#BenchmarkHeatmap#etfBenchmarkData",
+      "type": "Prop",
+      "name": "etfBenchmarkData",
+      "component": "BenchmarkHeatmap",
+      "tsType": "ETFBenchmarkReturnsResponse | null | undefined",
+      "optional": true
+    },
+    {
+      "id": "prop:rc:portal/src/components/BenchmarkHeatmap.tsx#BenchmarkHeatmap#asOfDate",
+      "type": "Prop",
+      "name": "asOfDate",
+      "component": "BenchmarkHeatmap",
+      "tsType": "AsOfDateInput | undefined",
+      "optional": true
+    },
+    {
+      "id": "prop:rc:portal/src/components/BenchmarkHeatmap.tsx#BenchmarkHeatmap#className",
+      "type": "Prop",
+      "name": "className",
+      "component": "BenchmarkHeatmap",
+      "tsType": "string | undefined",
+      "optional": true
+    },
+    {
+      "id": "jsx:portal/src/pages/ModelPortfolios.tsx:2034:BenchmarkHeatmap",
+      "type": "JSXElement",
+      "tag": "BenchmarkHeatmap",
+      "path": "portal/src/pages/ModelPortfolios.tsx",
+      "line": 2034
+    },
+    {
+      "id": "expr:portal/src/components/BenchmarkHeatmap.tsx:580:periodData",
+      "type": "Expr",
+      "kind": "indexed-access",
+      "expr": "model.returns[dataKey]",
+      "resolvedType": "import(\"@/api/portal-proxy\").BenchmarkPeriodReturn | null | undefined",
+      "note": "computed-key access model.returns[dataKey] -> resolved via indexed-access type (regex cannot type this)"
+    },
+    {
+      "id": "expr:portal/src/components/BenchmarkHeatmap.tsx:586:periodData.model",
+      "type": "Expr",
+      "kind": "prop-access",
+      "expr": "periodData?.model",
+      "resolvedType": "number | undefined"
+    },
+    {
+      "id": "jsx:portal/src/components/BenchmarkHeatmap.tsx:620:renderDataCell",
+      "type": "JSXElement",
+      "kind": "render-cell",
+      "via": "renderDataCell(value, ...)",
+      "path": "portal/src/components/BenchmarkHeatmap.tsx",
+      "line": 620
+    },
+    {
+      "id": "arn:aws:s3:::opal-data-portal-v2",
+      "type": "S3_BUCKET",
+      "name": "opal-data-portal-v2",
+      "layer": "aws",
+      "provenance": "canonical-Nessie (verified present)"
+    },
+    {
+      "id": "arn:aws:lambda:us-east-1:313476888478:function:opal-portal-data-proxy",
+      "type": "LAMBDA",
+      "name": "opal-portal-data-proxy",
+      "layer": "aws",
+      "provenance": "canonical-Nessie (verified present)"
+    }
+  ],
+  "edges": [
+    {
+      "source": "module:portal/src/api/portal-proxy.ts",
+      "target": "type:portal/src/api/portal-proxy.ts#ModelPortfolioBenchmarksResponse",
+      "edge_type": "DECLARES"
+    },
+    {
+      "source": "type:portal/src/api/portal-proxy.ts#ModelPortfolioBenchmarksResponse",
+      "target": "type:portal/src/api/portal-proxy.ts#ModelPortfolioBenchmarksResponse#generated_at",
+      "edge_type": "HAS_FIELD"
+    },
+    {
+      "source": "type:portal/src/api/portal-proxy.ts#ModelPortfolioBenchmarksResponse",
+      "target": "type:portal/src/api/portal-proxy.ts#ModelPortfolioBenchmarksResponse#data_as_of",
+      "edge_type": "HAS_FIELD"
+    },
+    {
+      "source": "type:portal/src/api/portal-proxy.ts#ModelPortfolioBenchmarksResponse",
+      "target": "type:portal/src/api/portal-proxy.ts#ModelPortfolioBenchmarksResponse#periods",
+      "edge_type": "HAS_FIELD"
+    },
+    {
+      "source": "type:portal/src/api/portal-proxy.ts#ModelPortfolioBenchmarksResponse",
+      "target": "type:portal/src/api/portal-proxy.ts#ModelPortfolioBenchmarksResponse#models",
+      "edge_type": "HAS_FIELD"
+    },
+    {
+      "source": "type:portal/src/api/portal-proxy.ts#ModelPortfolioBenchmarksResponse",
+      "target": "type:portal/src/api/portal-proxy.ts#ModelPortfolioBenchmarksResponse#index_compositions",
+      "edge_type": "HAS_FIELD"
+    },
+    {
+      "source": "type:portal/src/api/portal-proxy.ts#ModelPortfolioBenchmarksResponse",
+      "target": "type:portal/src/api/portal-proxy.ts#ModelPortfolioBenchmarksResponse#etf_compositions",
+      "edge_type": "HAS_FIELD"
+    },
+    {
+      "source": "type:portal/src/api/portal-proxy.ts#ModelPortfolioBenchmarksResponse",
+      "target": "type:portal/src/api/portal-proxy.ts#ModelPortfolioBenchmarksResponse#model_names",
+      "edge_type": "HAS_FIELD"
+    },
+    {
+      "source": "type:portal/src/api/portal-proxy.ts#ModelPortfolioBenchmarksResponse",
+      "target": "type:portal/src/api/portal-proxy.ts#ModelPortfolioBenchmarksResponse#inception_date",
+      "edge_type": "HAS_FIELD"
+    },
+    {
+      "source": "type:portal/src/api/portal-proxy.ts#ModelPortfolioBenchmarksResponse",
+      "target": "type:portal/src/api/portal-proxy.ts#ModelPortfolioBenchmarksResponse#source",
+      "edge_type": "HAS_FIELD"
+    },
+    {
+      "source": "type:portal/src/api/portal-proxy.ts#ModelPortfolioBenchmarksResponse",
+      "target": "type:portal/src/api/portal-proxy.ts#ModelPortfolioBenchmarksResponse#notes",
+      "edge_type": "HAS_FIELD"
+    },
+    {
+      "source": "module:portal/src/api/portal-proxy.ts",
+      "target": "type:portal/src/api/portal-proxy.ts#ModelPortfolioData",
+      "edge_type": "DECLARES"
+    },
+    {
+      "source": "type:portal/src/api/portal-proxy.ts#ModelPortfolioData",
+      "target": "type:portal/src/api/portal-proxy.ts#ModelPortfolioData#code",
+      "edge_type": "HAS_FIELD"
+    },
+    {
+      "source": "type:portal/src/api/portal-proxy.ts#ModelPortfolioData",
+      "target": "type:portal/src/api/portal-proxy.ts#ModelPortfolioData#name",
+      "edge_type": "HAS_FIELD"
+    },
+    {
+      "source": "type:portal/src/api/portal-proxy.ts#ModelPortfolioData",
+      "target": "type:portal/src/api/portal-proxy.ts#ModelPortfolioData#returns",
+      "edge_type": "HAS_FIELD"
+    },
+    {
+      "source": "module:portal/src/api/portal-proxy.ts",
+      "target": "type:portal/src/api/portal-proxy.ts#ModelPortfolioPeriodReturn",
+      "edge_type": "DECLARES"
+    },
+    {
+      "source": "type:portal/src/api/portal-proxy.ts#ModelPortfolioPeriodReturn",
+      "target": "type:portal/src/api/portal-proxy.ts#ModelPortfolioPeriodReturn#model",
+      "edge_type": "HAS_FIELD"
+    },
+    {
+      "source": "type:portal/src/api/portal-proxy.ts#ModelPortfolioPeriodReturn",
+      "target": "type:portal/src/api/portal-proxy.ts#ModelPortfolioPeriodReturn#index_benchmark",
+      "edge_type": "HAS_FIELD"
+    },
+    {
+      "source": "type:portal/src/api/portal-proxy.ts#ModelPortfolioPeriodReturn",
+      "target": "type:portal/src/api/portal-proxy.ts#ModelPortfolioPeriodReturn#etf_benchmark",
+      "edge_type": "HAS_FIELD"
+    },
+    {
+      "source": "type:portal/src/api/portal-proxy.ts#ModelPortfolioPeriodReturn",
+      "target": "type:portal/src/api/portal-proxy.ts#ModelPortfolioPeriodReturn#index_spread",
+      "edge_type": "HAS_FIELD"
+    },
+    {
+      "source": "type:portal/src/api/portal-proxy.ts#ModelPortfolioPeriodReturn",
+      "target": "type:portal/src/api/portal-proxy.ts#ModelPortfolioPeriodReturn#etf_spread",
+      "edge_type": "HAS_FIELD"
+    },
+    {
+      "source": "type:portal/src/api/portal-proxy.ts#ModelPortfolioPeriodReturn",
+      "target": "type:portal/src/api/portal-proxy.ts#ModelPortfolioPeriodReturn#model_volatility",
+      "edge_type": "HAS_FIELD"
+    },
+    {
+      "source": "type:portal/src/api/portal-proxy.ts#ModelPortfolioPeriodReturn",
+      "target": "type:portal/src/api/portal-proxy.ts#ModelPortfolioPeriodReturn#index_benchmark_volatility",
+      "edge_type": "HAS_FIELD"
+    },
+    {
+      "source": "type:portal/src/api/portal-proxy.ts#ModelPortfolioPeriodReturn",
+      "target": "type:portal/src/api/portal-proxy.ts#ModelPortfolioPeriodReturn#etf_benchmark_volatility",
+      "edge_type": "HAS_FIELD"
+    },
+    {
+      "source": "module:portal/src/api/portal-proxy.ts",
+      "target": "type:portal/src/api/portal-proxy.ts#BenchmarkModelData",
+      "edge_type": "DECLARES"
+    },
+    {
+      "source": "type:portal/src/api/portal-proxy.ts#BenchmarkModelData",
+      "target": "type:portal/src/api/portal-proxy.ts#BenchmarkModelData#code",
+      "edge_type": "HAS_FIELD"
+    },
+    {
+      "source": "type:portal/src/api/portal-proxy.ts#BenchmarkModelData",
+      "target": "type:portal/src/api/portal-proxy.ts#BenchmarkModelData#name",
+      "edge_type": "HAS_FIELD"
+    },
+    {
+      "source": "type:portal/src/api/portal-proxy.ts#BenchmarkModelData",
+      "target": "type:portal/src/api/portal-proxy.ts#BenchmarkModelData#returns",
+      "edge_type": "HAS_FIELD"
+    },
+    {
+      "source": "module:portal/src/api/portal-proxy.ts",
+      "target": "type:portal/src/api/portal-proxy.ts#BenchmarkPeriodReturn",
+      "edge_type": "DECLARES"
+    },
+    {
+      "source": "type:portal/src/api/portal-proxy.ts#BenchmarkPeriodReturn",
+      "target": "type:portal/src/api/portal-proxy.ts#BenchmarkPeriodReturn#model",
+      "edge_type": "HAS_FIELD"
+    },
+    {
+      "source": "type:portal/src/api/portal-proxy.ts#BenchmarkPeriodReturn",
+      "target": "type:portal/src/api/portal-proxy.ts#BenchmarkPeriodReturn#benchmark",
+      "edge_type": "HAS_FIELD"
+    },
+    {
+      "source": "type:portal/src/api/portal-proxy.ts#BenchmarkPeriodReturn",
+      "target": "type:portal/src/api/portal-proxy.ts#BenchmarkPeriodReturn#spread",
+      "edge_type": "HAS_FIELD"
+    },
+    {
+      "source": "type:portal/src/api/portal-proxy.ts#BenchmarkPeriodReturn",
+      "target": "type:portal/src/api/portal-proxy.ts#BenchmarkPeriodReturn#model_volatility",
+      "edge_type": "HAS_FIELD"
+    },
+    {
+      "source": "type:portal/src/api/portal-proxy.ts#BenchmarkPeriodReturn",
+      "target": "type:portal/src/api/portal-proxy.ts#BenchmarkPeriodReturn#benchmark_volatility",
+      "edge_type": "HAS_FIELD"
+    },
+    {
+      "source": "module:portal/src/components/BenchmarkHeatmap.tsx",
+      "target": "type:portal/src/components/BenchmarkHeatmap.tsx#BenchmarkHeatmapProps",
+      "edge_type": "DECLARES"
+    },
+    {
+      "source": "type:portal/src/components/BenchmarkHeatmap.tsx#BenchmarkHeatmapProps",
+      "target": "type:portal/src/components/BenchmarkHeatmap.tsx#BenchmarkHeatmapProps#data",
+      "edge_type": "HAS_FIELD"
+    },
+    {
+      "source": "type:portal/src/components/BenchmarkHeatmap.tsx#BenchmarkHeatmapProps",
+      "target": "type:portal/src/components/BenchmarkHeatmap.tsx#BenchmarkHeatmapProps#benchmarkCompositions",
+      "edge_type": "HAS_FIELD"
+    },
+    {
+      "source": "type:portal/src/components/BenchmarkHeatmap.tsx#BenchmarkHeatmapProps",
+      "target": "type:portal/src/components/BenchmarkHeatmap.tsx#BenchmarkHeatmapProps#returnType",
+      "edge_type": "HAS_FIELD"
+    },
+    {
+      "source": "type:portal/src/components/BenchmarkHeatmap.tsx#BenchmarkHeatmapProps",
+      "target": "type:portal/src/components/BenchmarkHeatmap.tsx#BenchmarkHeatmapProps#benchmarkType",
+      "edge_type": "HAS_FIELD"
+    },
+    {
+      "source": "type:portal/src/components/BenchmarkHeatmap.tsx#BenchmarkHeatmapProps",
+      "target": "type:portal/src/components/BenchmarkHeatmap.tsx#BenchmarkHeatmapProps#etfBenchmarkData",
+      "edge_type": "HAS_FIELD"
+    },
+    {
+      "source": "type:portal/src/components/BenchmarkHeatmap.tsx#BenchmarkHeatmapProps",
+      "target": "type:portal/src/components/BenchmarkHeatmap.tsx#BenchmarkHeatmapProps#asOfDate",
+      "edge_type": "HAS_FIELD"
+    },
+    {
+      "source": "type:portal/src/components/BenchmarkHeatmap.tsx#BenchmarkHeatmapProps",
+      "target": "type:portal/src/components/BenchmarkHeatmap.tsx#BenchmarkHeatmapProps#className",
+      "edge_type": "HAS_FIELD"
+    },
+    {
+      "source": "module:portal/src/api/portal-proxy.ts",
+      "target": "fetch:portal/src/api/portal-proxy.ts:807:getModelPortfolioBenchmarks",
+      "edge_type": "DECLARES"
+    },
+    {
+      "source": "fetch:portal/src/api/portal-proxy.ts:807:getModelPortfolioBenchmarks",
+      "target": "endpoint:getModelPortfolioBenchmarks",
+      "edge_type": "IS_ENDPOINT"
+    },
+    {
+      "source": "fetch:portal/src/api/portal-proxy.ts:807:getModelPortfolioBenchmarks",
+      "target": "type:portal/src/api/portal-proxy.ts#ModelPortfolioBenchmarksResponse",
+      "edge_type": "HAS_TYPE",
+      "resolution": "getReturnType+typeArg (TypeChecker)"
+    },
+    {
+      "source": "fetch:portal/src/api/portal-proxy.ts:807:getModelPortfolioBenchmarks",
+      "target": "type:portal/src/api/portal-proxy.ts#ModelPortfolioBenchmarksResponse",
+      "edge_type": "ASSERTS_TYPE",
+      "typeArg": "ModelPortfolioBenchmarksResponse",
+      "resolution": "apiRequest<T> type argument"
+    },
+    {
+      "source": "endpoint:getModelPortfolioBenchmarks",
+      "target": "s3:json/benchmarks/model_portfolio_benchmarks.json",
+      "edge_type": "READS_S3",
+      "servedUrl": "/api/general/benchmarks/model_portfolio_benchmarks.json",
+      "resolution": "URL literal RESOLVED; URL->S3-key mapping EXTERNAL (proxy routing, not in TS)"
+    },
+    {
+      "source": "s3:json/benchmarks/model_portfolio_benchmarks.json",
+      "target": "gold:yang-model-portfolio-benchmarks",
+      "edge_type": "DERIVES_FROM",
+      "provenance": "external:D8-FP-backend-map"
+    },
+    {
+      "source": "hook:portal/src/pages/ModelPortfolios.tsx:444:useQuery",
+      "target": "rqk:model-portfolio-benchmarks",
+      "edge_type": "HAS_KEY"
+    },
+    {
+      "source": "hook:portal/src/pages/ModelPortfolios.tsx:444:useQuery",
+      "target": "endpoint:getModelPortfolioBenchmarks",
+      "edge_type": "FETCHES",
+      "resolution": "queryFn symbol resolved (getAliasedSymbol)"
+    },
+    {
+      "source": "hook:portal/src/pages/ModelPortfolios.tsx:444:useQuery",
+      "target": "fetch:portal/src/api/portal-proxy.ts:807:getModelPortfolioBenchmarks",
+      "edge_type": "CALLS",
+      "resolution": "queryFn symbol"
+    },
+    {
+      "source": "hook:portal/src/pages/ModelPortfolios.tsx:444:useQuery",
+      "target": "type:portal/src/api/portal-proxy.ts#ModelPortfolioBenchmarksResponse",
+      "edge_type": "HAS_TYPE",
+      "resolution": "useQuery<T> inferred from queryFn return"
+    },
+    {
+      "source": "rc:portal/src/pages/ModelPortfolios.tsx#ModelPortfolios",
+      "target": "component:portal/src/pages/ModelPortfolios.tsx",
+      "edge_type": "PROJECTS_TO"
+    },
+    {
+      "source": "module:portal/src/pages/ModelPortfolios.tsx",
+      "target": "rc:portal/src/pages/ModelPortfolios.tsx#ModelPortfolios",
+      "edge_type": "DECLARES"
+    },
+    {
+      "source": "rc:portal/src/components/BenchmarkHeatmap.tsx#BenchmarkHeatmap",
+      "target": "component:portal/src/components/BenchmarkHeatmap.tsx",
+      "edge_type": "PROJECTS_TO"
+    },
+    {
+      "source": "module:portal/src/components/BenchmarkHeatmap.tsx",
+      "target": "rc:portal/src/components/BenchmarkHeatmap.tsx#BenchmarkHeatmap",
+      "edge_type": "DECLARES"
+    },
+    {
+      "source": "rc:portal/src/components/BenchmarkHeatmap.tsx#BenchmarkHeatmap",
+      "target": "prop:rc:portal/src/components/BenchmarkHeatmap.tsx#BenchmarkHeatmap#data",
+      "edge_type": "HAS_PROP"
+    },
+    {
+      "source": "prop:rc:portal/src/components/BenchmarkHeatmap.tsx#BenchmarkHeatmap#data",
+      "target": "type:portal/src/api/portal-proxy.ts#BenchmarkModelData",
+      "edge_type": "HAS_TYPE",
+      "resolution": "prop type element (BenchmarkModelData[])"
+    },
+    {
+      "source": "rc:portal/src/components/BenchmarkHeatmap.tsx#BenchmarkHeatmap",
+      "target": "prop:rc:portal/src/components/BenchmarkHeatmap.tsx#BenchmarkHeatmap#benchmarkCompositions",
+      "edge_type": "HAS_PROP"
+    },
+    {
+      "source": "rc:portal/src/components/BenchmarkHeatmap.tsx#BenchmarkHeatmap",
+      "target": "prop:rc:portal/src/components/BenchmarkHeatmap.tsx#BenchmarkHeatmap#returnType",
+      "edge_type": "HAS_PROP"
+    },
+    {
+      "source": "rc:portal/src/components/BenchmarkHeatmap.tsx#BenchmarkHeatmap",
+      "target": "prop:rc:portal/src/components/BenchmarkHeatmap.tsx#BenchmarkHeatmap#benchmarkType",
+      "edge_type": "HAS_PROP"
+    },
+    {
+      "source": "rc:portal/src/components/BenchmarkHeatmap.tsx#BenchmarkHeatmap",
+      "target": "prop:rc:portal/src/components/BenchmarkHeatmap.tsx#BenchmarkHeatmap#etfBenchmarkData",
+      "edge_type": "HAS_PROP"
+    },
+    {
+      "source": "rc:portal/src/components/BenchmarkHeatmap.tsx#BenchmarkHeatmap",
+      "target": "prop:rc:portal/src/components/BenchmarkHeatmap.tsx#BenchmarkHeatmap#asOfDate",
+      "edge_type": "HAS_PROP"
+    },
+    {
+      "source": "rc:portal/src/components/BenchmarkHeatmap.tsx#BenchmarkHeatmap",
+      "target": "prop:rc:portal/src/components/BenchmarkHeatmap.tsx#BenchmarkHeatmap#className",
+      "edge_type": "HAS_PROP"
+    },
+    {
+      "source": "type:portal/src/api/portal-proxy.ts#ModelPortfolioPeriodReturn#model",
+      "target": "type:portal/src/api/portal-proxy.ts#BenchmarkPeriodReturn#model",
+      "edge_type": "FLOWS_TO",
+      "via": "adapter useMemo portal/src/pages/ModelPortfolios.tsx:722",
+      "condition": null,
+      "resolution": "getSymbolAtLocation on source prop access -> declaring interface (TypeChecker)",
+      "srcField": "ModelPortfolioPeriodReturn.model",
+      "dstField": "BenchmarkPeriodReturn.model",
+      "rename": false,
+      "srcType": "number | null"
+    },
+    {
+      "source": "type:portal/src/api/portal-proxy.ts#ModelPortfolioPeriodReturn#index_benchmark",
+      "target": "type:portal/src/api/portal-proxy.ts#BenchmarkPeriodReturn#benchmark",
+      "edge_type": "FLOWS_TO",
+      "via": "adapter useMemo portal/src/pages/ModelPortfolios.tsx:724",
+      "condition": "benchmarkType === 'index' == true",
+      "resolution": "getSymbolAtLocation on source prop access -> declaring interface (TypeChecker)",
+      "srcField": "ModelPortfolioPeriodReturn.index_benchmark",
+      "dstField": "BenchmarkPeriodReturn.benchmark",
+      "rename": true,
+      "srcType": "number | null"
+    },
+    {
+      "source": "type:portal/src/api/portal-proxy.ts#ModelPortfolioPeriodReturn#etf_benchmark",
+      "target": "type:portal/src/api/portal-proxy.ts#BenchmarkPeriodReturn#benchmark",
+      "edge_type": "FLOWS_TO",
+      "via": "adapter useMemo portal/src/pages/ModelPortfolios.tsx:724",
+      "condition": "benchmarkType === 'index' == false",
+      "resolution": "getSymbolAtLocation on source prop access -> declaring interface (TypeChecker)",
+      "srcField": "ModelPortfolioPeriodReturn.etf_benchmark",
+      "dstField": "BenchmarkPeriodReturn.benchmark",
+      "rename": true,
+      "srcType": "number | null"
+    },
+    {
+      "source": "type:portal/src/api/portal-proxy.ts#ModelPortfolioPeriodReturn#index_spread",
+      "target": "type:portal/src/api/portal-proxy.ts#BenchmarkPeriodReturn#spread",
+      "edge_type": "FLOWS_TO",
+      "via": "adapter useMemo portal/src/pages/ModelPortfolios.tsx:725",
+      "condition": "benchmarkType === 'index' == true",
+      "resolution": "getSymbolAtLocation on source prop access -> declaring interface (TypeChecker)",
+      "srcField": "ModelPortfolioPeriodReturn.index_spread",
+      "dstField": "BenchmarkPeriodReturn.spread",
+      "rename": true,
+      "srcType": "number | null"
+    },
+    {
+      "source": "type:portal/src/api/portal-proxy.ts#ModelPortfolioPeriodReturn#etf_spread",
+      "target": "type:portal/src/api/portal-proxy.ts#BenchmarkPeriodReturn#spread",
+      "edge_type": "FLOWS_TO",
+      "via": "adapter useMemo portal/src/pages/ModelPortfolios.tsx:725",
+      "condition": "benchmarkType === 'index' == false",
+      "resolution": "getSymbolAtLocation on source prop access -> declaring interface (TypeChecker)",
+      "srcField": "ModelPortfolioPeriodReturn.etf_spread",
+      "dstField": "BenchmarkPeriodReturn.spread",
+      "rename": true,
+      "srcType": "number | null"
+    },
+    {
+      "source": "type:portal/src/api/portal-proxy.ts#ModelPortfolioPeriodReturn#model_volatility",
+      "target": "type:portal/src/api/portal-proxy.ts#BenchmarkPeriodReturn#model_volatility",
+      "edge_type": "FLOWS_TO",
+      "via": "adapter useMemo portal/src/pages/ModelPortfolios.tsx:726",
+      "condition": null,
+      "resolution": "getSymbolAtLocation on source prop access -> declaring interface (TypeChecker)",
+      "srcField": "ModelPortfolioPeriodReturn.model_volatility",
+      "dstField": "BenchmarkPeriodReturn.model_volatility",
+      "rename": false,
+      "srcType": "number | null"
+    },
+    {
+      "source": "type:portal/src/api/portal-proxy.ts#ModelPortfolioPeriodReturn#index_benchmark_volatility",
+      "target": "type:portal/src/api/portal-proxy.ts#BenchmarkPeriodReturn#benchmark_volatility",
+      "edge_type": "FLOWS_TO",
+      "via": "adapter useMemo portal/src/pages/ModelPortfolios.tsx:727",
+      "condition": "benchmarkType === 'index' == true",
+      "resolution": "getSymbolAtLocation on source prop access -> declaring interface (TypeChecker)",
+      "srcField": "ModelPortfolioPeriodReturn.index_benchmark_volatility",
+      "dstField": "BenchmarkPeriodReturn.benchmark_volatility",
+      "rename": true,
+      "srcType": "number | null"
+    },
+    {
+      "source": "type:portal/src/api/portal-proxy.ts#ModelPortfolioPeriodReturn#etf_benchmark_volatility",
+      "target": "type:portal/src/api/portal-proxy.ts#BenchmarkPeriodReturn#benchmark_volatility",
+      "edge_type": "FLOWS_TO",
+      "via": "adapter useMemo portal/src/pages/ModelPortfolios.tsx:727",
+      "condition": "benchmarkType === 'index' == false",
+      "resolution": "getSymbolAtLocation on source prop access -> declaring interface (TypeChecker)",
+      "srcField": "ModelPortfolioPeriodReturn.etf_benchmark_volatility",
+      "dstField": "BenchmarkPeriodReturn.benchmark_volatility",
+      "rename": true,
+      "srcType": "number | null"
+    },
+    {
+      "source": "jsx:portal/src/pages/ModelPortfolios.tsx:2034:BenchmarkHeatmap",
+      "target": "rc:portal/src/components/BenchmarkHeatmap.tsx#BenchmarkHeatmap",
+      "edge_type": "INSTANTIATES",
+      "resolution": "JSX tag symbol resolved"
+    },
+    {
+      "source": "jsx:portal/src/pages/ModelPortfolios.tsx:2034:BenchmarkHeatmap",
+      "target": "prop:rc:portal/src/components/BenchmarkHeatmap.tsx#BenchmarkHeatmap#data",
+      "edge_type": "PROP_PASSES",
+      "attr": "data",
+      "valueSymbol": "benchmarkData",
+      "resolution": "JSX attribute value symbol resolved (benchmarkData = adapter useMemo result)"
+    },
+    {
+      "source": "expr:portal/src/components/BenchmarkHeatmap.tsx:586:periodData.model",
+      "target": "type:portal/src/api/portal-proxy.ts#BenchmarkPeriodReturn#model",
+      "edge_type": "REFERENCES",
+      "resolution": "getSymbolAtLocation -> BenchmarkPeriodReturn.model",
+      "type": "number | undefined"
+    },
+    {
+      "source": "jsx:portal/src/components/BenchmarkHeatmap.tsx:620:renderDataCell",
+      "target": "type:portal/src/api/portal-proxy.ts#BenchmarkPeriodReturn#model",
+      "edge_type": "RENDERS",
+      "resolution": "value <- periodData?.model (rowType==='model'); renderDataCell renders value",
+      "note": "model row at BenchmarkHeatmap.tsx:614"
+    },
+    {
+      "source": "expr:portal/src/components/BenchmarkHeatmap.tsx:586:periodData.model",
+      "target": "jsx:portal/src/components/BenchmarkHeatmap.tsx:620:renderDataCell",
+      "edge_type": "FLOWS_TO",
+      "via": "value = periodData?.model -> renderDataCell(value)"
+    },
+    {
+      "source": "s3:json/benchmarks/model_portfolio_benchmarks.json",
+      "target": "arn:aws:s3:::opal-data-portal-v2",
+      "edge_type": "STORED_IN",
+      "resolution": "s3:key name->bucket ARN (derive_stitch convention)"
+    },
+    {
+      "source": "endpoint:getModelPortfolioBenchmarks",
+      "target": "arn:aws:lambda:us-east-1:313476888478:function:opal-portal-data-proxy",
+      "edge_type": "ROUTES_TO",
+      "resolution": "endpoint name->Lambda ARN (derive_stitch name lookup)"
+    }
+  ],
+  "coverage": {
+    "slices_scanned": 1,
+    "node_count": 68,
+    "edge_count": 79,
+    "unresolved": [
+      {
+        "what": "URL->S3-key + S3->gold mapping",
+        "where": "endpoint:getModelPortfolioBenchmarks",
+        "reason": "proxy/CloudFront routing + producer are not expressible in TS; carried from the cloud/trace graph (consistent keys) -- VISIBLE, not silent"
+      }
+    ]
+  }
+}

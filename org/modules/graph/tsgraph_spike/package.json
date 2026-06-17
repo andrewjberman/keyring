@@ -1,0 +1,14 @@
+{
+  "name": "tsgraph-spike",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "NFRA_TSGRAPH.P0 spike -- ts-morph / TS Compiler API semantic extractor over the model-portfolios benchmark slice. Proves the compiler-grade TS substrate + the field-grain stitch (one gold field -> one JSX-rendered field) end-to-end. Authoring surface per TO; runs locally (bun + ts-morph) for the spike, CodeBuild-equivalent only if GO.",
+  "scripts": {
+    "smoke": "bun run smoke.ts",
+    "extract": "bun run extractor.ts"
+  },
+  "dependencies": {
+    "ts-morph": "^28.0.0"
+  }
+}
