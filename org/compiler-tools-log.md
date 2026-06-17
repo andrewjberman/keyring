@@ -6632,3 +6632,9 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-06-17 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file data/black_diamond/scripts/gold/D_00f.a... | PASS |
 | 2026-06-17 | 0.6.0_AE_PartnerETL | ADHC_GLDINC.SS4c | (none) | pure MCP-coordination window (RAVC2 accept + RAVC1 caveat confirm + drift heads-up); 0 code/infra change | N/A |
 | 2026-06-17 | 0.6.0_AE_PartnerETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-06-17 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/globgrph/derive_runner.py | PASS |
+| 2026-06-17 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/tsgraph_spike/.gitign... | PASS |
+| 2026-06-17 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-06-17 | 0.4.2_RD_AdvisorIntelligence | (no-TO) | none (N/A) | deck_generation tooling: no data/cloud/frontend change; verified via design_lint+fidelity+COM-render | N/A |
+| 2026-06-17 ~2015Z | 0.6.2_AE_PartnerETL | ADVI_COTETL.chain-state-verify | comp-pipescript deployed (all-trees + cot-scoped) | PASS — all 43 cot-gold scripts MATCH (git==s3://opal-data-cot/code/), 0 STALE/0 MISSING; code-MATCH clean -> cot freeze is data/chain not code; DTAFLP mirror-only concern resolved |
+| 2026-06-17 | 0.6.2_AE_PartnerETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
