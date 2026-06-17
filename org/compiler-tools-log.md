@@ -6660,3 +6660,16 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-06-17 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
 2026-06-17 | 0.7.0_AE_CloudOps~B | DRIVE floor-semantics classification | terraform plan (local per-module), ds-commit-gate, comp-iam, safe-apply x3, build-and-upload, record v1.27.0 | CTO floor-semantics ruling IMPLEMENTED: cause-classify cannot-assess (deny-blocked grounded on AccessDenied / gated allowlist / error fail-toward-gap); floor RED on error-class only, deny-blocked/gated excused+enumerated. VERIFIED in-Lambda (20-52-42.json): 22/26 assessable=85%, RED on 4 ERROR gaps not least-priv. + ssm-scope/cur Deny refinements (unblocked m365/shared-infra).
 | 2026-06-17 | 0.7.0_AE_CloudOps~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-06-17 | 0.7.0_AE_CloudOps~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/terraform/shared-infra/infra-... | PASS |
+| 2026-06-17 | 0.7.0_AE_CloudOps~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/ci/shared-infra-resour... | PASS |
+| 2026-06-17 | 0.7.0_AE_CloudOps | (no-TO) | comp-kuzu | comp-kuzu --json MATCH (h:CloudNode)-[r:CloudEdge]->(e:CloudNode) WHERE r.edge_type='FE... | PASS |
+| 2026-06-17 | 0.7.0_AE_CloudOps | (no-TO) | comp-kuzu | comp-kuzu --json MATCH (e:CloudNode)-[r:CloudEdge]->(x:CloudNode) WHERE e.node_type='En... | PASS |
+| 2026-06-17 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .github/workflows/drift-producer-push.yml | PASS |
+| 2026-06-17 | 0.7.0_AE_CloudOps | (no-TO) | comp-kuzu | comp-kuzu --json MATCH (n:CloudNode) WHERE n.node_type='Endpoint' RETURN count(n) AS en... | PASS |
+| 2026-06-17 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/change_management/20... | PASS |
+| 2026-06-17 | 0.4.2_RD_AdvisorIntelligence | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file deck_generation/dev/scripts/opal_firm_o... | PASS |
+| 2026-06-17 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-kuzu | comp-kuzu --json MATCH (n:CloudNode) WHERE n.node_type IN ['Field','ReactComponent','Da... | PASS |
+| 2026-06-17 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-kuzu | comp-kuzu --json MATCH ()-[e:CloudEdge]->() WHERE e.edge_type IN ['FLOWS_TO','RENDERS',... | PASS |
+2026-06-17 | 0.7.0_AE_CloudOps~B | DRIFT convergence close | terraform plan (globgrph inspect), safe-apply (timeout bump), gh workflow run + codebuild (convergence verify), record v1.28.0 | DRIFT iterate CONVERGED + CTO-CLOSED: leg 23/25=92% assessable, ERROR 4->2 (globgrph cleared via CTO zip-add e1e49fde1 + imo reclassified deny-blocked via 403 role-structure grounding), RED on 2 owner-config gaps (seeking-alpha/trade). Timeout 120->180s (v1.28.0). IDLE/available.
+| 2026-06-17 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-kuzu | comp-kuzu MATCH (n:CloudNode) WHERE n.node_type='DataFetch' RETURN count(*) | PASS |
+| 2026-06-17 | 0.7.0_AE_CloudOps~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
