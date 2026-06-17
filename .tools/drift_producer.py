@@ -94,45 +94,70 @@ _SURFACE_RE = re.compile(r"(SEV\d)\b.*?\bCHANGED\b\s+(.*)")
 
 def run_comp_leg() -> dict:
     findings = []
+    tools_run = 0
+    tools_failed = 0
 
     # comp-manifest-check check -- non-canonical graph-access drift (advisory). Output lines
     # (when present) name the offending file; clean = no output. Identity-only -> no-secret-safe.
-    rc, out, _ = _run(["bash", ".tools/comp-manifest-check", "check"])
-    for line in out.splitlines():
-        s = line.strip()
-        if not s or s.startswith("comp-manifest-check"):
-            continue
-        if any(a in s for a in TF_ONBOARDED_ALLOWLIST):
-            continue
+    rc, out, err = _run(["bash", ".tools/comp-manifest-check", "check"])
+    tools_run += 1
+    if rc != 0:
+        # could-not-assess: NEVER silent-clean -- a tool that can't RUN is a VISIBLE gap.
+        tools_failed += 1
         findings.append({
             "source": "manifest", "status": "watch",
-            "reason": f"non-canonical graph-access pattern (advisory): {s[:160]}",
+            "reason": f"comp-manifest-check could not run (cannot assess): rc={rc} {err.strip()[:120]}",
             "pointer": "org/modules/graph/graph-call-manifest.yaml",
         })
+    else:
+        for line in out.splitlines():
+            s = line.strip()
+            if not s or s.startswith("comp-manifest-check"):
+                continue
+            if any(a in s for a in TF_ONBOARDED_ALLOWLIST):
+                continue
+            findings.append({
+                "source": "manifest", "status": "watch",
+                "reason": f"non-canonical graph-access pattern (advisory): {s[:160]}",
+                "pointer": "org/modules/graph/graph-call-manifest.yaml",
+            })
 
     # comp-surface-check scan -- critical-surface drift (SEV1/SEV2 CHANGED). Identity-only.
-    rc, out, _ = _run(["bash", ".tools/comp-surface-check", "scan"])
-    for line in out.splitlines():
-        m = _SURFACE_RE.search(line)
-        if not m:
-            continue
-        sev, what = m.group(1), m.group(2).strip()
-        if any(a in what for a in TF_ONBOARDED_ALLOWLIST):
-            continue
-        # SEV1 critical-surface change = ACT/RED-tier; SEV2 = WATCH. (The Lambda applies the
-        # state-change-since-last-report filter; here we report the current scan.)
+    # NB: scan reads the .comp-graph baseline; if absent (fresh CI checkout) it cannot assess ->
+    # surfaces a could-not-assess WATCH (VISIBLE, not a silent 0-findings clean).
+    rc, out, err = _run(["bash", ".tools/comp-surface-check", "scan"])
+    tools_run += 1
+    if rc != 0:
+        tools_failed += 1
         findings.append({
-            "source": "surface", "status": "red" if sev == "SEV1" else "watch",
-            "reason": f"{sev} critical-surface CHANGED: {what[:200]}",
+            "source": "surface", "status": "watch",
+            "reason": f"comp-surface-check could not run (cannot assess -- baseline missing?): rc={rc} {err.strip()[:120]}",
             "pointer": "org/modules/graph/critical-surfaces.yaml",
         })
+    else:
+        for line in out.splitlines():
+            m = _SURFACE_RE.search(line)
+            if not m:
+                continue
+            sev, what = m.group(1), m.group(2).strip()
+            if any(a in what for a in TF_ONBOARDED_ALLOWLIST):
+                continue
+            # SEV1 critical-surface change = RED-tier; SEV2 = WATCH. (The Lambda applies the
+            # state-change-since-last-report filter; here we report the current scan.)
+            findings.append({
+                "source": "surface", "status": "red" if sev == "SEV1" else "watch",
+                "reason": f"{sev} critical-surface CHANGED: {what[:200]}",
+                "pointer": "org/modules/graph/critical-surfaces.yaml",
+            })
 
     return {
         "leg": "comp",
         "generated_at": _now(),
         "source_commit": _git_head(),
+        "tools_run": tools_run,
+        "tools_failed": tools_failed,
         "findings": findings,
-        "note": None if findings else "no comp-manifest/comp-surface drift this run",
+        "note": None if findings else f"no comp drift ({tools_run} tools ran clean)",
     }
 
 
