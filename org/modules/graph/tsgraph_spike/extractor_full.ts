@@ -106,6 +106,8 @@ if (CHANGED) {
 const typeNameToId = new Map<string, string>();
 // index of ReactComponent ids by component name (for PROP_PASSES/INSTANTIATES later)
 const componentNameToId = new Map<string, string>();
+// index of a ReactComponent id -> its declared props TypeDecl id (for PROP_PASSES targets)
+const propsTypeByRc = new Map<string, string>();
 
 const tEx0 = performance.now();
 
@@ -174,9 +176,11 @@ function emitComponentProps(name: string, host: string, rcNode: string, firstPar
   const tn = firstParam.getTypeNode();
   if (tn && Node.isTypeReference(tn)) {
     const pname = tn.getTypeName().getText().replace(/<.*$/, "");
-    if (typeNameToId.has(pname)) { addEdge(rcNode, typeNameToId.get(pname)!, "HAS_PROPS_TYPE", { resolution: "param annotation -> named TypeDecl (declared props)" }); bump("component_props", true); return; }
-    addNode(typeDeclId(pname, "external"), "TypeDecl", { name: pname, external: true });
-    addEdge(rcNode, typeDeclId(pname, "external"), "HAS_PROPS_TYPE", { resolution: "props type declared outside work-set" });
+    if (typeNameToId.has(pname)) { const pid = typeNameToId.get(pname)!; addEdge(rcNode, pid, "HAS_PROPS_TYPE", { resolution: "param annotation -> named TypeDecl (declared props)" }); propsTypeByRc.set(rcNode, pid); bump("component_props", true); return; }
+    const ext = typeDeclId(pname, "external");
+    addNode(ext, "TypeDecl", { name: pname, external: true });
+    addEdge(rcNode, ext, "HAS_PROPS_TYPE", { resolution: "props type declared outside work-set" });
+    propsTypeByRc.set(rcNode, ext);
     bump("component_props", true); return;
   }
   if (tn && Node.isTypeLiteral(tn)) {
@@ -347,6 +351,84 @@ for (const sf of workSet) {
   }
 }
 
+// light owner/field resolver (no getType -- keeps the high-volume render pass fast)
+function ownerField(pacc: Node): { owner: string | null; field: string | null } {
+  if (!Node.isPropertyAccessExpression(pacc)) return { owner: null, field: null };
+  const field = pacc.getName();
+  const decl = pacc.getNameNode().getSymbol()?.getDeclarations()?.[0];
+  const iface = decl?.getFirstAncestorByKind(SyntaxKind.InterfaceDeclaration);
+  return { owner: iface?.getName() ?? null, field };
+}
+function childPropTarget(childRc: string, attr: string): string | null {
+  const direct = `prop:${childRc}#${attr}`;
+  if (nodes.has(direct)) return direct;
+  const pt = propsTypeByRc.get(childRc);
+  if (pt) { const fid = `${pt}#${attr}`; if (nodes.has(fid)) return fid; }
+  return null;
+}
+
+// ============================ PASS 7: PROP_PASSES + INSTANTIATES ============================
+for (const sf of workSet) {
+  const host = rel(sf);
+  const jsxEls = [
+    ...sf.getDescendantsOfKind(SyntaxKind.JsxOpeningElement),
+    ...sf.getDescendantsOfKind(SyntaxKind.JsxSelfClosingElement),
+  ];
+  for (const j of jsxEls) {
+    const tagNode = (j as any).getTagNameNode();
+    const tag = tagNode.getText();
+    if (!isPascal(tag.split(".")[0])) continue; // custom components only (skip lowercase html)
+    let childRc: string | null = componentNameToId.get(tag) ?? null;
+    if (!childRc) {
+      const sym = tagNode.getSymbol()?.getAliasedSymbol() ?? tagNode.getSymbol();
+      const d = sym?.getDeclarations()?.[0];
+      if (d && sym) { const cand = rcId(rel(d), sym.getName()); if (nodes.has(cand)) childRc = cand; }
+    }
+    const jsxId = `jsx:${host}:${j.getStartLineNumber()}:${tag}`;
+    addNode(jsxId, "JSXElement", { tag, path: host, line: j.getStartLineNumber() });
+    if (childRc) addEdge(jsxId, childRc, "INSTANTIATES", { resolution: "JSX tag symbol resolved" });
+    const attrs = (j as any).getAttributes?.() ?? [];
+    for (const a of attrs) {
+      if (!Node.isJsxAttribute(a)) continue;
+      const an = a.getNameNode().getText();
+      const init = a.getInitializer();
+      const expr = Node.isJsxExpression(init) ? init.getExpression() : undefined;
+      if (!expr) continue; // string-literal attrs (className="...") are not data-flow
+      const target = childRc ? childPropTarget(childRc, an) : null;
+      bump("prop_pass", !!target);
+      if (target) {
+        let vs = ""; try { vs = expr.getSymbol()?.getName() ?? expr.getText().slice(0, 40); } catch { /* visible */ }
+        addEdge(jsxId, target, "PROP_PASSES", { attr: an, value: vs, resolution: "JSX attr value -> child prop/field" });
+      } else if (childRc) {
+        note("prop_pass", `${tag}.${an}`, jsxId, "child prop node not found (untyped/external props)");
+      }
+    }
+  }
+}
+
+// ============================ PASS 8: RENDERS (field rendered in JSX) ============================
+for (const sf of workSet) {
+  const host = rel(sf);
+  for (const ec of sf.getDescendantsOfKind(SyntaxKind.JsxExpression)) {
+    const accesses = ec.getDescendantsOfKind(SyntaxKind.PropertyAccessExpression);
+    if (accesses.length === 0) continue;
+    let emitted = false;
+    for (const pacc of accesses) {
+      const r = ownerField(pacc);
+      const ok = !!(r.owner && r.field && typeNameToId.has(r.owner));
+      if (ok) {
+        const fid = fieldId(typeNameToId.get(r.owner!)!, r.field!);
+        if (!nodes.has(fid)) continue;
+        const renderId = `render:${host}:${ec.getStartLineNumber()}`;
+        addNode(renderId, "JSXRender", { path: host, line: ec.getStartLineNumber(), expr: ec.getText().replace(/\s+/g, " ").slice(0, 60) });
+        addEdge(renderId, fid, "RENDERS", { resolution: "JSX {expr} prop-access -> declared field (TypeChecker)" });
+        emitted = true;
+      }
+    }
+    bump("renders", emitted);
+  }
+}
+
 const tEx = performance.now() - tEx0;
 
 // ============================ emit ============================
@@ -362,7 +444,7 @@ const out = {
     project: "NFRA_TSGRAPH.P1 Leg A",
     mode: CHANGED ? `incremental(${workSet.length} files: changed+dependents)` : "full-portal",
     extractor: "ts-morph @28 / TS Compiler API",
-    deferred: "full-depth PROP_PASSES/RENDERS across all components + AC5 NNA forked-FLOWS_TO stress-test (next iteration -- NOT silently capped)",
+    deferred: "AC5 NNA forked-FLOWS_TO stress-test = a separate targeted pass (NOT silently capped). PROP_PASSES/RENDERS now emitted (this pass).",
     note: "SPIKE/P1 output -- scratch graph; verify against built artifact/running portal (F5), never the graph.",
   },
   metrics: {

@@ -6,3 +6,4 @@ __pycache__/
 # misrouted PostToolUse telemetry (hook writes relative to cwd; real root is workspace root)
 org/
 out/portal_full.graph.json
+out/portal_full.producer.json

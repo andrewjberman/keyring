@@ -1,0 +1,45 @@
+{
+  "manifest_head": {
+    "producer": "ts-semantic",
+    "generated_at": "2026-06-17T20:00:00Z",
+    "slice": "full-portal",
+    "extractor": "ts-morph @28 / TS Compiler API"
+  },
+  "coverage_summary": {
+    "node_count": 11108,
+    "edge_count": 12913,
+    "flowsto_by_kind": {
+      "passthrough": 339,
+      "recompute/guarded": 231,
+      "rename": 144
+    }
+  },
+  "node_examples": [
+    {
+      "id": "module:portal/src/App.tsx",
+      "type": "Module",
+      "path": "portal/src/App.tsx",
+      "kind": "tsx"
+    },
+    {
+      "id": "module:portal/src/main.tsx",
+      "type": "Module",
+      "path": "portal/src/main.tsx",
+      "kind": "tsx"
+    }
+  ],
+  "edge_examples": [
+    {
+      "source": "hook:portal/src/components/ReturnVolatilityScatter.tsx:327:useQuery",
+      "target": "endpoint:getModelPortfolioTimeseries",
+      "edge_type": "FETCHES",
+      "resolution": "queryFn symbol resolved"
+    },
+    {
+      "source": "hook:portal/src/contexts/DataSourceContext.tsx:83:useQuery",
+      "target": "endpoint:getLatestTrendingTopics",
+      "edge_type": "FETCHES",
+      "resolution": "queryFn symbol resolved"
+    }
+  ]
+}

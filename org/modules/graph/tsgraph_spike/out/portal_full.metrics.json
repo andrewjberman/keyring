@@ -3,16 +3,16 @@
     "project": "NFRA_TSGRAPH.P1 Leg A",
     "mode": "full-portal",
     "extractor": "ts-morph @28 / TS Compiler API",
-    "deferred": "full-depth PROP_PASSES/RENDERS across all components + AC5 NNA forked-FLOWS_TO stress-test (next iteration -- NOT silently capped)",
+    "deferred": "AC5 NNA forked-FLOWS_TO stress-test = a separate targeted pass (NOT silently capped). PROP_PASSES/RENDERS now emitted (this pass).",
     "note": "SPIKE/P1 output -- scratch graph; verify against built artifact/running portal (F5), never the graph."
   },
   "metrics": {
     "portal_files_total": 374,
     "work_set_files": 374,
-    "program_load_ms": 2817,
-    "extract_ms": 4443,
-    "node_count": 7470,
-    "edge_count": 7786,
+    "program_load_ms": 5691,
+    "extract_ms": 9667,
+    "node_count": 11108,
+    "edge_count": 12913,
     "nodes_by_label": {
       "Module": 374,
       "TypeDecl": 803,
@@ -24,7 +24,9 @@
       "Endpoint": 104,
       "ServedURL": 45,
       "Hook": 111,
-      "ReactQueryKey": 57
+      "ReactQueryKey": 57,
+      "JSXElement": 2205,
+      "JSXRender": 1433
     },
     "edges_by_label": {
       "DECLARES": 1344,
@@ -37,7 +39,10 @@
       "READS_URL": 48,
       "HAS_KEY": 85,
       "FETCHES": 111,
-      "FLOWS_TO": 714
+      "FLOWS_TO": 714,
+      "INSTANTIATES": 1298,
+      "PROP_PASSES": 1382,
+      "RENDERS": 2447
     },
     "flowsto_by_kind": {
       "passthrough": 339,
@@ -64,9 +69,17 @@
       "flowsto": {
         "attempted": 1578,
         "resolved": 957
+      },
+      "prop_pass": {
+        "attempted": 3472,
+        "resolved": 1382
+      },
+      "renders": {
+        "attempted": 3264,
+        "resolved": 1530
       }
     },
-    "unresolved_count": 180
+    "unresolved_count": 615
   },
   "unresolved_sample": [
     {
