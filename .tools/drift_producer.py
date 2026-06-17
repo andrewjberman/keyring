@@ -40,6 +40,51 @@ TF_ONBOARDED_ALLOWLIST = {"infrastructure-daily-snapshot", "opal-infrastructure-
 # Modules to skip in the terraform leg (non-deployable scaffolding / decom holding).
 TF_MODULE_SKIP = {"modules", "_decom-snapshots"}
 
+# GATED (CTO floor-semantics ruling 202255Z): cannot-assess because the deploy is in a KNOWN
+# in-flight gated state (committed-before-apply, artifact uploads at apply) -- transient, not a gap.
+# EXPLICIT allowlist = operator-vouched grounding (never inferred). Remove an entry when its gate
+# clears (re-includes it in the floor). A gated-allowlisted module whose error is NOT the expected
+# missing-artifact falls through to ERROR (fail-toward-gap; a NEW error cannot hide behind the gate).
+GATED_ALLOWLIST = {
+    "bd-pipeline": "SS4c TIER-1 canary apply gated on RAVC1 chain (0.6.0_AE; gldinc-ss4c-canary.zip uploads at apply)",
+}
+
+# DENY-BLOCKED grounding (CTO Guard 2): a cannot-assess counts as deny-blocked ONLY when the error
+# is an ACTUAL AccessDenied for a Deny'd action (drift-producer.tf least-priv Denies) -- never
+# inferred. A denial we cannot attribute to a Deny'd action = ERROR (a missing Allow / real perm gap).
+_DENY_GROUND = [
+    ("secretsmanager:getsecretvalue", "secretsmanager:GetSecretValue (module reads a secret VERSION at plan time)"),
+    ("ssm:getparameter", "ssm:GetParameter (account param)"),
+    ("kms:decrypt", "kms:Decrypt"),
+    ("dynamodb:getitem", "dynamodb:GetItem (item read at plan time)"),
+    ("dynamodb:batchgetitem", "dynamodb:BatchGetItem (item read at plan time)"),
+    ("dynamodb:query", "dynamodb:Query (item read at plan time)"),
+    ("dynamodb:scan", "dynamodb:Scan (item read at plan time)"),
+]
+_MISSING_ARTIFACT = re.compile(r"couldn't find resource|reading s3 bucket.*object", re.I)
+
+
+def _classify_cannot_assess(name: str, err: str):
+    """(cls, cause): classify a cannot-assess by CAUSE, grounded on the actual error text.
+    deny-blocked = the least-priv Deny correctly refused a secret/firm-data read (EXCLUDED from the
+    floor); gated = a known in-flight gated deploy (EXCLUDED-but-tracked); error = a real gap (floor
+    RED). Fails TOWARD error: anything not POSITIVELY grounded as deny-blocked/gated = error, so a
+    real gap can never masquerade as excused (CTO Guard 2)."""
+    low = err.lower()
+    denied = "accessdenied" in low or "explicit deny" in low or "not authorized to perform" in low
+    if denied:
+        for needle, cause in _DENY_GROUND:
+            if needle in low:
+                return "deny-blocked", cause
+        # firm-data S3: my Deny blocks s3:GetObject ONLY on opal-data-*/* -> a denied s3:GetObject is
+        # necessarily the firm-data Deny (ReadOnly allows GetObject elsewhere).
+        if "s3:getobject" in low or ("opal-data-" in low and ("reading s3" in low or "headobject" in low)):
+            return "deny-blocked", "s3:GetObject on opal-data-* (firm-data read at plan time)"
+        return "error", "AccessDenied on a non-Deny'd action (missing Allow / real perm gap -- add the read perm)"
+    if name in GATED_ALLOWLIST and _MISSING_ARTIFACT.search(err):
+        return "gated", GATED_ALLOWLIST[name]
+    return "error", err.strip()[:140]
+
 
 def _now() -> str:
     return datetime.now(timezone.utc).isoformat()
@@ -197,16 +242,20 @@ def _plan_module(name: str, d: str, terraform: str):
     rc, _, err = _run([terraform, f"-chdir={d}", "init", "-input=false", "-no-color",
                        "-lock=false", "-upgrade=false"], timeout=600)
     if rc != 0:
-        return False, {"source": "terraform", "module": name, "status": "watch",
-                       "reason": f"terraform init failed (cannot assess drift): {err.strip()[:160]}",
+        cls, cause = _classify_cannot_assess(name, err)
+        return False, {"source": "terraform", "module": name, "status": "watch", "class": cls,
+                       "cause": cause,
+                       "reason": f"terraform init failed [{cls}]: {cause}",
                        "pointer": f"{TF_ROOT}/{name}/"}
     rc, _, err = _run([terraform, f"-chdir={d}", "plan", "-input=false", "-no-color",
                        "-lock=false", "-detailed-exitcode", "-out=/tmp/tfplan.bin"], timeout=900)
     if rc == 0:
         return True, None  # assessed, no drift
     if rc == 1:
-        return False, {"source": "terraform", "module": name, "status": "watch",
-                       "reason": f"terraform plan errored (cannot assess drift): {err.strip()[:160]}",
+        cls, cause = _classify_cannot_assess(name, err)
+        return False, {"source": "terraform", "module": name, "status": "watch", "class": cls,
+                       "cause": cause,
+                       "reason": f"terraform plan cannot-assess [{cls}]: {cause}",
                        "pointer": f"{TF_ROOT}/{name}/"}
     # rc == 2 -> assessed + drift. Read addresses + actions ONLY (no-secret-echo: never values).
     addrs = []
@@ -264,6 +313,14 @@ def run_terraform_leg() -> dict:
             src_age_h = round((datetime.now(timezone.utc).timestamp() - float(src_mtime)) / 3600, 1)
         except ValueError:
             src_age_h = None
+    # Cause-classification of cannot-assess (CTO floor-semantics ruling). assessable = checked minus
+    # the EXCLUDED-from-floor classes (deny-blocked-by-design + gated-transient). The Lambda floor
+    # reads RED on ERROR-class >=1 OR assessable-coverage < 0.8; deny-blocked/gated are honest +
+    # ENUMERATED (never silently dropped) but excused. assessed/deny/gated/error sum to checked.
+    deny_blocked = sum(1 for f in findings if f.get("class") == "deny-blocked")
+    gated = sum(1 for f in findings if f.get("class") == "gated")
+    errored = sum(1 for f in findings if f.get("class") == "error")
+    assessable = checked - deny_blocked - gated
     return {
         "leg": "terraform",
         "generated_at": _now(),
@@ -272,6 +329,10 @@ def run_terraform_leg() -> dict:
         "source_zip_age_hours": src_age_h,
         "modules_checked": checked,
         "modules_assessed": assessed,
+        "modules_assessable": assessable,
+        "modules_deny_blocked": deny_blocked,
+        "modules_gated": gated,
+        "modules_error": errored,
         "findings": findings,
         "note": None if findings else f"no terraform drift across {assessed}/{checked} assessed module(s)",
     }
