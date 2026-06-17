@@ -123,15 +123,25 @@ def run_comp_leg() -> dict:
             })
 
     # comp-surface-check scan -- critical-surface drift (SEV1/SEV2 CHANGED). Identity-only.
-    # NB: scan reads the .comp-graph baseline; if absent (fresh CI checkout) it cannot assess ->
-    # surfaces a could-not-assess WATCH (VISIBLE, not a silent 0-findings clean).
+    # NB: scan reads the .comp-graph baseline; if absent (fresh CI checkout -- .comp-graph is
+    # gitignored) it exits rc=0 but NO-OPS (0 findings). rc=0 != actually-assessed -> a no-op scan
+    # MUST NOT read clean (the false-clean class we kill). Require a loaded baseline (>0 nodes);
+    # else could-not-assess WATCH (VISIBLE, not a silent 0-findings clean).
     rc, out, err = _run(["bash", ".tools/comp-surface-check", "scan"])
     tools_run += 1
+    baseline_ok = bool(re.search(r"baseline:.*\(\s*([1-9]\d*)\s*nodes?\)", out))
     if rc != 0:
         tools_failed += 1
         findings.append({
             "source": "surface", "status": "watch",
-            "reason": f"comp-surface-check could not run (cannot assess -- baseline missing?): rc={rc} {err.strip()[:120]}",
+            "reason": f"comp-surface-check could not run (cannot assess): rc={rc} {err.strip()[:120]}",
+            "pointer": "org/modules/graph/critical-surfaces.yaml",
+        })
+    elif not baseline_ok:
+        tools_failed += 1
+        findings.append({
+            "source": "surface", "status": "watch",
+            "reason": "comp-surface-check scan loaded NO baseline (.comp-graph absent in CI?) -> NO-OP; cannot assess critical-surface drift (no silent-clean)",
             "pointer": "org/modules/graph/critical-surfaces.yaml",
         })
     else:
