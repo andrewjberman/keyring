@@ -1086,7 +1086,16 @@ async def send_message(
             if "channel push" not in delivery_methods:
                 delivery_methods.append("channel push")
 
-    return f"Message delivered to {to_folder.name} inbox: {filename} ({' + '.join(delivery_methods)})"
+    # Report the ACTUAL delivery target, not the base folder name. A ~suffix send
+    # routes correctly above (nested inbox/{base}/~{suffix}/ + broker to_serial keeps
+    # the suffix + channel push filtered to the matching instance), but reporting
+    # `to_folder.name` (the BASE) made every ~B send LOOK like a wrong-channel
+    # suffix-drop -> recurring false alarms + verification scrambles. Report the full
+    # suffixed serial + the true nested inbox path so the receipt matches reality.
+    # Andrew-direct 2026-06-17 (LD-0195).
+    delivered_to = to_agent if to_suffix else to_folder.name
+    inbox_label = f"{to_folder.name}/~{to_suffix}" if to_suffix else to_folder.name
+    return f"Message delivered to {delivered_to} (inbox {inbox_label}): {filename} ({' + '.join(delivery_methods)})"
 
 
 @mcp.tool()
