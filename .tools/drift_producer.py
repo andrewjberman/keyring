@@ -81,6 +81,14 @@ def _classify_cannot_assess(name: str, err: str):
         if "s3:getobject" in low or ("opal-data-" in low and ("reading s3" in low or "headobject" in low)):
             return "deny-blocked", "s3:GetObject on opal-data-* (firm-data read at plan time)"
         return "error", "AccessDenied on a non-Deny'd action (missing Allow / real perm gap -- add the read perm)"
+    # S3 HeadObject 403: S3 returns a BODYLESS 403 'Forbidden' for HeadObject -> the SDK error names
+    # NO action (unlike GetObject's detailed AccessDenied), so the action-grounded branch above misses
+    # it. The drift role's ONLY S3-read Deny is firm-data (opal-data-*/*) and ReadOnly allows
+    # s3:GetObject everywhere else -> a 403 on an S3 read is NECESSARILY that firm-data Deny (grounded
+    # on the role's policy STRUCTURE, not a loose inference). data.aws_s3_object reads do HeadObject.
+    if ("statuscode: 403" in low or "api error forbidden" in low or "403 forbidden" in low) and \
+            ("headobject" in low or "getobject" in low or "reading s3 object" in low):
+        return "deny-blocked", "s3 403 on read (firm-data Deny; HeadObject masks the action -- role's only S3-read Deny is opal-data-*/*)"
     if name in GATED_ALLOWLIST and _MISSING_ARTIFACT.search(err):
         return "gated", GATED_ALLOWLIST[name]
     return "error", err.strip()[:140]
