@@ -438,6 +438,41 @@ for (const sf of workSet) {
   }
 }
 
+// ============================ PASS 9: REFERENCES_TYPE (precise type-consumer sites via findReferences) ============================
+// Closes the comp-types `index` recall gap AND kills the regex substring false-positives in one pass:
+// the TS language service's findReferences resolves EVERY real reference to a type symbol (imports,
+// type-annotations, nested uses) and nothing spurious. Emits module -[REFERENCES_TYPE]-> type.
+const tRef0 = performance.now();
+let refTypesScanned = 0;
+for (const sf of workSet) {
+  const declsForRefs: { name: string; node: any }[] = [];
+  for (const iface of sf.getInterfaces()) declsForRefs.push({ name: iface.getName(), node: iface });
+  for (const ta of sf.getTypeAliases()) {
+    const tl = ta.getTypeNode();
+    if (tl && Node.isTypeLiteral(tl)) declsForRefs.push({ name: ta.getName(), node: ta });
+  }
+  for (const d of declsForRefs) {
+    const tId = typeNameToId.get(d.name);
+    if (!tId || !nodes.has(tId)) continue;
+    refTypesScanned++;
+    let refs: Node[] = [];
+    try { refs = d.node.findReferencesAsNodes(); } catch { note("references_type", d.name, rel(sf), "findReferences threw"); continue; }
+    const declFile = d.node.getSourceFile();
+    const declLine = d.node.getNameNode?.()?.getStartLineNumber?.();
+    const consumerModules = new Set<string>();
+    for (const r of refs) {
+      if (r.getSourceFile() === declFile && r.getStartLineNumber() === declLine) continue; // skip the declaration site
+      consumerModules.add(rel(r));
+    }
+    for (const m of consumerModules) {
+      bump("references_type", true);
+      addEdge(moduleId(m), tId, "REFERENCES_TYPE", { resolution: "TS findReferences (precise consumer site)" });
+    }
+  }
+}
+const tRef = performance.now() - tRef0;
+console.log(`     PASS 9 REFERENCES_TYPE: ${refTypesScanned} types scanned in ${Math.round(tRef)}ms`);
+
 // ============================ FINALIZE: no dangling edges (stub missing endpoints, VISIBLE) ============================
 // An edge to a node not emitted in the work-set (e.g. a useQuery whose fetch fn lives outside
 // api/endpoints/, or an external type) must NOT dangle as a false edge -- materialize a stub node
