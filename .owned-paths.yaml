@@ -520,6 +520,27 @@ lanes:
       - 0.4.0_DS_ClientPlatform~E
     description: "ANY_EXEC_OR_AE + DS 0.4.0 (incl. tilde lanes) for the NFRA_PIPESCRIPT CLI tool (pipescript_cli.py). The PRD assigns the pipescript CLI to DS/tooling, but pipescript_cli.py resolved to *_cli.py (ANY_EXEC_OR_AE) which excludes DS, blocking the DS~A builder's P1a commit (committed by COO 73b72471c as stopgap). SECOND occurrence of this gap class (manifest_check RV-0033 was first) -> CONVENTION going forward: when a PRD assigns a graph-module tool to DS, COO adds the DS-inclusive lane rule at DECOMPOSITION-time, proactively. Added 2026-06-15 by 2.0.0_SA_COO per CTO concur (185517Z) + MSTR RV-0034 corrective; Andrew /goal NFRA_PIPESCRIPT."
 
+  NFRA_TSGRAPH_SPIKE:
+    permitted_agents:
+      - 1.0.0_SA_CTO
+      - 2.0.0_SA_COO
+      - 3.0.0_SA_CVO
+      - 1.1.0_SA_CTO
+      - 2.1.0_SA_COO
+      - 3.1.0_SA_CVO
+      - 0.5.0_AE_OpalETL
+      - 0.5.0_AE_OpalETL~B
+      - 0.6.0_AE_PartnerETL
+      - 0.6.1_AE_PartnerETL
+      - 0.6.2_AE_PartnerETL
+      - 0.7.0_AE_CloudOps
+      - 0.7.0_AE_CloudOps~B
+      - 0.7.0_AE_CloudOps~C
+      - 0.4.0_DE_ClientPlatform
+      - 0.4.0_DE_ClientPlatform~A
+      - 0.4.0_DE_ClientPlatform~B
+    description: "ANY_EXEC_OR_AE + DE 0.4.0 (incl. tilde lanes) for the NFRA_TSGRAPH.P0 spike tool (org/modules/graph/tsgraph_spike/** -- ts-morph TS-semantic extractor/loader). The DE's TO designated org/modules/graph/* extractor code as its authoring surface; same-tool grant per the COMPILER_MANIFEST_CHECK / NFRA_PIPESCRIPT_TOOL convention (CTO-ratified 2026-06-15). AE retained for the P1 derive ingestion-leg co-wiring. Added 2026-06-17 by 0.7.0_AE_CloudOps (owned-paths config executor) per COO 193527Z same-tool grant; CC CTO."
+
 # =========================================================================
 # PATHS
 # Listed roughly from most-specific to most-general within each top-level group.
@@ -775,6 +796,10 @@ paths:
   "org/modules/graph/extract_*.py":
     lane: ANY_EXEC_OR_AE
     note: "Compiler tool engine implementations (extract_validate.py, extract_pipeline.py, etc.) — back-end paired with the *_cli.py entrypoints. AE owns extensions per ADHC_COMPIL_V4 family (009 symbolic-rule resolver in extract_validate.py 2026-05-08)."
+
+  "org/modules/graph/tsgraph_spike/**":
+    lane: NFRA_TSGRAPH_SPIKE
+    note: "NFRA_TSGRAPH.P0 ts-morph TS-semantic extractor/loader spike (the DE's PRD-designated authoring surface). Same-tool grant -> DE 0.4.0 self-commits its verified P0 code; AE retained for the P1 derive ingestion-leg co-wiring. Added 2026-06-17 by 0.7.0_AE_CloudOps per COO 193527Z. Longest-match overrides org/modules/** ANY_EXEC."
 
   "org/modules/graph/manifest_check_*":
     lane: COMPILER_MANIFEST_CHECK
