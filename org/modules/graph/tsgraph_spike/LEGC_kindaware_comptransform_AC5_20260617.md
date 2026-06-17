@@ -2,7 +2,7 @@
 
 **Author:** 0.4.0_DE_ClientPlatform · 2026-06-17 · NFRA_TSGRAPH.P1 Leg C (drive-to-completion)
 **Reviewer (cutover gate):** 1.0.0_SA_CTO
-**F5 STATUS:** computed on the LOCAL semantic graph (`out/portal_full.graph.json`, which carries the FLOWS_TO `kind`/`condition`). **The F5 live-validation = the SAME query via `comp-kuzu json_extract` against Nessie->Kuzu — PENDING base-AE's props-column deploy** (executing tonight; CloudEdge has no props column until it lands). Re-run + close on the props ping.
+**F5 STATUS: LIVE-VALIDATED (closed).** base-AE's props column is live (comp-kuzu provenance CURRENT @ fresh marker, built 2026-06-17T22:53Z, Nessie HEAD current). Re-ran the SAME kind-aware query against the LIVE Nessie->Kuzu (`r.props`): **all 961 FLOWS_TO carry props (no silent drop)**, 23 recompute/guarded+condition, and the **SAME 5 forked fields reproduce exactly** (name[4-branch]/benchmark/spread/benchmark_volatility/count). AE's `etf_spread` exhibit live: `ModelPortfolioPeriodReturn#etf_spread -> ...#spread`, props.kind="recompute/guarded", props.condition="benchmarkType === 'index' == false". LIVE == LOCAL -> kind-aware + AC5 validated on the served graph, not just the local content.
 
 ## The kind-aware analysis (goal 3 — the display-logic-bug-class)
 `comp-transform ternary-audit` made control-flow-real: query the FLOWS_TO edges with `kind=recompute/guarded` AND a `condition` — i.e. fields whose value is COMPUTED DIFFERENTLY per cohort/mode/firm. A field reached by **>=2 condition-branches** is a forked (dual-source) display-logic site.
