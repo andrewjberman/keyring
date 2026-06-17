@@ -6739,3 +6739,25 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-06-17 | 2.0.0_SA_COO | DECK_CLAUDE.FANOUT-D.compare-flow-list-archetypes | comp-surface-check | comp-surface-check check --mode advisory --file org/mcp/.last-drive-2.0.0_SA_COO --file... | PASS |
 | 2026-06-17 | 0.4.0_DE_ClientPlatform | NFRA_TSGRAPH.P1 | comp-kuzu | live Nessie->Kuzu F5 kind-aware/AC5 validation + provenance/props verify (also comp-types/comp-transform regex baselines, /seams) | PASS |
 | 2026-06-17 | 0.4.0_DE_ClientPlatform | DECK_CLAUDE.FANOUT-A | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-06-17 | 0.7.0_AE_CloudOps | DECK_CLAUDE.FANOUT-A | comp-kuzu | comp-kuzu --db-path .runtmp/kuzu_verify_db --json MATCH (a:CloudNode)-[r:CloudEdge]->(b... | PASS |
+| 2026-06-17 | 0.7.0_AE_CloudOps | DECK_CLAUDE.FANOUT-A | comp-kuzu | comp-kuzu --db-path .runtmp/kuzu_verify_db --json MATCH (a:CloudNode)-[r:CloudEdge]->(b... | PASS |
+| 2026-06-17 | 0.7.0_AE_CloudOps~B | DECK_CLAUDE.FANOUT-A | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/infrastructure_monitor... | PASS |
+| 2026-06-17 | 0.7.0_AE_CloudOps~B | DECK_CLAUDE.FANOUT-A | comp-iam | comp-iam gaps | PASS |
+| 2026-06-17 | 0.4.0_DE_ClientPlatform | DECK_CLAUDE.FANOUT-A | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/tsgraph_spike/emit_pr... | PASS |
+| 2026-06-17 | 0.7.0_AE_CloudOps | DECK_CLAUDE.FANOUT-A | comp-kuzu | comp-kuzu --json MATCH (a:CloudNode)-[r:CloudEdge]->(b:CloudNode) WHERE r.edge_type='RE... | PASS |
+| 2026-06-17 | 0.7.0_AE_CloudOps | DECK_CLAUDE.FANOUT-A | comp-kuzu | comp-kuzu --json MATCH (n:CloudNode) WHERE n.node_type='ServedURL' OR n.node_id =~ 'url... | PASS |
+| 2026-06-17 | 0.7.0_AE_CloudOps | DECK_CLAUDE.FANOUT-A | comp-routes | comp-routes behaviors | PASS |
+| 2026-06-17 | 0.7.0_AE_CloudOps~B | DECK_CLAUDE.FANOUT-A | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/ci/shared-infra-resour... | PASS |
+| 2026-06-17 | 0.7.0_AE_CloudOps | DECK_CLAUDE.FANOUT-A | comp-routes | comp-routes behaviors | PASS |
+| 2026-06-17 | 0.7.0_AE_CloudOps | DECK_CLAUDE.FANOUT-A | pipescript | pipescript --resource architect_leaderboard.json | PASS |
+| 2026-06-17 | 2.0.0_SA_COO | DECK_CLAUDE.FANOUT-A | comp-surface-check | comp-surface-check check --mode advisory --file org/mcp/.last-drive-2.0.0_SA_COO --file... | PASS |
+| 2026-06-17 | 0.7.0_AE_CloudOps | DECK_CLAUDE.FANOUT-A | comp-routes | comp-routes | PASS |
+| 2026-06-17 | 0.4.2_RD_AdvisorIntelligence~C | DECK_CLAUDE.FANOUT-A | comp-surface-check | comp-surface-check check --mode advisory --file deck_generation/dev/scripts/showcase_st... | PASS |
+| 2026-06-17 | 0.7.0_AE_CloudOps | DECK_CLAUDE.FANOUT-A | comp-routes | comp-routes trace /api/general/portfolios/aum-metrics.json | PASS |
+| 2026-06-17 | 0.7.0_AE_CloudOps | DECK_CLAUDE.FANOUT-A | comp-routes | comp-routes rewrites | PASS |
+| 2026-06-17 | 2.0.0_SA_COO | DECK_CLAUDE.FANOUT-A | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.7.0_AE_CloudOps/task... | PASS |
+| 2026-06-17 | 0.7.0_AE_CloudOps | DECK_CLAUDE.FANOUT-A | comp-routes | comp-routes behaviors | PASS |
+| 2026-06-17 | 0.4.2_RD_AdvisorIntelligence~A | DECK_CLAUDE.FANOUT-A | comp-surface-check | comp-surface-check check --mode advisory --file deck_generation/dev/scripts/render_png.... | PASS |
+| 2026-06-17 | 0.4.2_RD_AdvisorIntelligence~B | DECK_CLAUDE.FANOUT-A | comp-surface-check | comp-surface-check check --mode advisory --file deck_generation/dev/scripts/showcase_gr... | PASS |
+| 2026-06-17 | 0.4.2_RD_AdvisorIntelligence~C | DECK_CLAUDE.FANOUT-C | (none) | standalone deck tooling -- verify via design_lint [AUTO] gate + finalize() coverage + PowerPoint-COM visual-QA + ds-commit-gate (all clean); comp-* N/A | N/A |
+| 2026-06-17 | 0.4.2_RD_AdvisorIntelligence~C | DECK_CLAUDE.FANOUT-A | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
