@@ -154,23 +154,26 @@ def _module_dirs() -> list:
     return out
 
 
-def _plan_module(name: str, d: str, terraform: str) -> dict:
-    """init + plan -detailed-exitcode -lock=false (READ-ONLY). Returns a finding dict or None."""
+def _plan_module(name: str, d: str, terraform: str):
+    """init + plan -detailed-exitcode -lock=false (READ-ONLY).
+    Returns (assessed: bool, finding: dict|None). assessed=False means init/plan could not
+    run (systemic-blind input -- feeds the leg-level coverage guard); assessed=True means the
+    module was actually evaluated (clean OR drift)."""
     rc, _, err = _run([terraform, f"-chdir={d}", "init", "-input=false", "-no-color",
                        "-lock=false", "-upgrade=false"], timeout=600)
     if rc != 0:
-        return {"source": "terraform", "module": name, "status": "watch",
-                "reason": f"terraform init failed (cannot assess drift): {err.strip()[:160]}",
-                "pointer": f"{TF_ROOT}/{name}/"}
+        return False, {"source": "terraform", "module": name, "status": "watch",
+                       "reason": f"terraform init failed (cannot assess drift): {err.strip()[:160]}",
+                       "pointer": f"{TF_ROOT}/{name}/"}
     rc, _, err = _run([terraform, f"-chdir={d}", "plan", "-input=false", "-no-color",
                        "-lock=false", "-detailed-exitcode", "-out=/tmp/tfplan.bin"], timeout=900)
     if rc == 0:
-        return None  # no drift
+        return True, None  # assessed, no drift
     if rc == 1:
-        return {"source": "terraform", "module": name, "status": "watch",
-                "reason": f"terraform plan errored (cannot assess drift): {err.strip()[:160]}",
-                "pointer": f"{TF_ROOT}/{name}/"}
-    # rc == 2 -> drift. Read addresses + actions ONLY (no-secret-echo: never .before/.after values).
+        return False, {"source": "terraform", "module": name, "status": "watch",
+                       "reason": f"terraform plan errored (cannot assess drift): {err.strip()[:160]}",
+                       "pointer": f"{TF_ROOT}/{name}/"}
+    # rc == 2 -> assessed + drift. Read addresses + actions ONLY (no-secret-echo: never values).
     addrs = []
     sc, sout, _ = _run([terraform, f"-chdir={d}", "show", "-json", "/tmp/tfplan.bin"], timeout=120)
     if sc == 0:
@@ -187,19 +190,22 @@ def _plan_module(name: str, d: str, terraform: str) -> dict:
         except Exception:
             addrs = ["<plan parse failed -- drift present, detail unavailable>"]
     if not addrs:
-        return None  # only allowlisted/no-op changes
-    return {"source": "terraform", "module": name, "status": "red",
-            "reason": f"infra drift -- {len(addrs)} resource(s) differ from code: " + "; ".join(addrs[:12]),
-            "pointer": f"{TF_ROOT}/{name}/"}
+        return True, None  # assessed; only allowlisted/no-op changes
+    return True, {"source": "terraform", "module": name, "status": "red",
+                  "reason": f"infra drift -- {len(addrs)} resource(s) differ from code: " + "; ".join(addrs[:12]),
+                  "pointer": f"{TF_ROOT}/{name}/"}
 
 
 def run_terraform_leg() -> dict:
     terraform = os.environ.get("TERRAFORM_BIN", "terraform")
     findings = []
     checked = 0
+    assessed = 0
     for name, d in _module_dirs():
         checked += 1
-        f = _plan_module(name, d, terraform)
+        was_assessed, f = _plan_module(name, d, terraform)
+        if was_assessed:
+            assessed += 1
         if f:
             findings.append(f)
     # source_zip_age: how stale is the build source (the globgrph footgun guard). The build env
@@ -218,8 +224,9 @@ def run_terraform_leg() -> dict:
         "source_commit": _git_head(),
         "source_zip_age_hours": src_age_h,
         "modules_checked": checked,
+        "modules_assessed": assessed,
         "findings": findings,
-        "note": None if findings else f"no terraform drift across {checked} module(s)",
+        "note": None if findings else f"no terraform drift across {assessed}/{checked} assessed module(s)",
     }
 
 
