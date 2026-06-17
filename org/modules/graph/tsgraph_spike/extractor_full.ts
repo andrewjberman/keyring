@@ -285,10 +285,16 @@ for (const sf of workSet) {
     let fetchResolved = false;
     const init = fnProp?.getInitializer();
     if (init) {
-      const ident = init.getFirstDescendantByKind(SyntaxKind.Identifier) ?? (Node.isIdentifier(init) ? init : undefined);
-      const tgt = ident?.getSymbol()?.getAliasedSymbol() ?? ident?.getSymbol();
+      // resolve the CALLED function (the body's first call's callee), not the first identifier --
+      // a `queryFn: () => FEATURES.x ? fetchA() : fetchB()` must resolve to fetchA, never FEATURES.
+      const call = init.getFirstDescendantByKind(SyntaxKind.CallExpression);
+      const callee = call ? call.getExpression() : (Node.isIdentifier(init) ? init : undefined);
+      const nameNode = callee && Node.isPropertyAccessExpression(callee) ? callee.getNameNode()
+        : callee && Node.isIdentifier(callee) ? callee
+        : callee?.getFirstDescendantByKind(SyntaxKind.Identifier);
+      const tgt = nameNode?.getSymbol()?.getAliasedSymbol() ?? nameNode?.getSymbol();
       const nm = tgt?.getName();
-      if (nm) { addEdge(hookId, endpointId(nm), "FETCHES", { resolution: "queryFn symbol resolved" }); fetchResolved = true; }
+      if (nm) { addEdge(hookId, endpointId(nm), "FETCHES", { resolution: "queryFn called-fn symbol resolved" }); fetchResolved = true; }
     }
     bump("hook_fetch", fetchResolved);
     if (!fetchResolved) note("hook_fetch", `${callee} queryFn`, hookId, "queryFn did not resolve to a named endpoint");
@@ -432,6 +438,29 @@ for (const sf of workSet) {
   }
 }
 
+// ============================ FINALIZE: no dangling edges (stub missing endpoints, VISIBLE) ============================
+// An edge to a node not emitted in the work-set (e.g. a useQuery whose fetch fn lives outside
+// api/endpoints/, or an external type) must NOT dangle as a false edge -- materialize a stub node
+// marked stub:true so it is queryable + honest (no-silent-Unknown). /seams MECHANICAL hardening.
+const LABEL_BY_PREFIX: Record<string, string> = {
+  endpoint: "Endpoint", type: "TypeDecl", module: "Module", rc: "ReactComponent", component: "Component",
+  fetch: "DataFetch", hook: "Hook", rqk: "ReactQueryKey", prop: "Prop", jsx: "JSXElement",
+  render: "JSXRender", s3: "S3Artifact", gold: "GoldScript", out: "Field", endpointurl: "ServedURL",
+};
+let stubbed = 0;
+for (const e of edges) {
+  for (const end of [e.src, e.dst]) {
+    if (!nodes.has(end)) {
+      addNode(end, LABEL_BY_PREFIX[end.split(":")[0]] ?? "Unknown", {
+        stub: true,
+        reason: "edge endpoint not emitted in work-set (fetch fn outside api/endpoints, or external/out-of-scope type)",
+      });
+      stubbed++;
+      note("stub", end, "finalize", "endpoint stubbed to avoid a dangling/false edge -- VISIBLE");
+    }
+  }
+}
+
 const tEx = performance.now() - tEx0;
 
 // ============================ emit ============================
@@ -449,6 +478,7 @@ const out = {
     extractor: "ts-morph @28 / TS Compiler API",
     deferred: "AC5 NNA forked-FLOWS_TO stress-test = a separate targeted pass (NOT silently capped). PROP_PASSES/RENDERS now emitted (this pass).",
     note: "SPIKE/P1 output -- scratch graph; verify against built artifact/running portal (F5), never the graph.",
+    coverage_note: "per-category attempted/resolved counts an attempt for EVERY candidate site, including not-applicable ones (a JSX {localVar} render, a prop on a library component) -- so attempted-minus-resolved is NOT the silent-Unknown gap. Genuine unknowns/stubs are enumerated in unresolved[] (cat=stub for endpoints stubbed to avoid dangling edges).",
   },
   metrics: {
     portal_files_total: allPortal.length,
@@ -457,6 +487,7 @@ const out = {
     extract_ms: Math.round(tEx),
     node_count: nodes.size,
     edge_count: edges.length,
+    stub_count: stubbed,
     nodes_by_label: byLabel,
     edges_by_label: edgeByLabel,
     flowsto_by_kind: flowsByKind,

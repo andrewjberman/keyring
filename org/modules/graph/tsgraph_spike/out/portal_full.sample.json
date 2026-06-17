@@ -6,8 +6,8 @@
     "extractor": "ts-morph @28 / TS Compiler API"
   },
   "coverage_summary": {
-    "node_count": 11108,
-    "edge_count": 12913,
+    "node_count": 11130,
+    "edge_count": 12911,
     "flowsto_by_kind": {
       "passthrough": 339,
       "recompute/guarded": 231,
@@ -33,13 +33,13 @@
       "source": "hook:portal/src/components/ReturnVolatilityScatter.tsx:327:useQuery",
       "target": "endpoint:getModelPortfolioTimeseries",
       "edge_type": "FETCHES",
-      "resolution": "queryFn symbol resolved"
+      "resolution": "queryFn called-fn symbol resolved"
     },
     {
       "source": "hook:portal/src/contexts/DataSourceContext.tsx:83:useQuery",
       "target": "endpoint:getLatestTrendingTopics",
       "edge_type": "FETCHES",
-      "resolution": "queryFn symbol resolved"
+      "resolution": "queryFn called-fn symbol resolved"
     }
   ]
 }

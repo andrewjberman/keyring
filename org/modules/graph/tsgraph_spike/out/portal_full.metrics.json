@@ -4,24 +4,26 @@
     "mode": "full-portal",
     "extractor": "ts-morph @28 / TS Compiler API",
     "deferred": "AC5 NNA forked-FLOWS_TO stress-test = a separate targeted pass (NOT silently capped). PROP_PASSES/RENDERS now emitted (this pass).",
-    "note": "SPIKE/P1 output -- scratch graph; verify against built artifact/running portal (F5), never the graph."
+    "note": "SPIKE/P1 output -- scratch graph; verify against built artifact/running portal (F5), never the graph.",
+    "coverage_note": "per-category attempted/resolved counts an attempt for EVERY candidate site, including not-applicable ones (a JSX {localVar} render, a prop on a library component) -- so attempted-minus-resolved is NOT the silent-Unknown gap. Genuine unknowns/stubs are enumerated in unresolved[] (cat=stub for endpoints stubbed to avoid dangling edges)."
   },
   "metrics": {
     "portal_files_total": 374,
     "work_set_files": 374,
-    "program_load_ms": 5691,
-    "extract_ms": 9667,
-    "node_count": 11108,
-    "edge_count": 12913,
+    "program_load_ms": 2647,
+    "extract_ms": 8126,
+    "node_count": 11130,
+    "edge_count": 12911,
+    "stub_count": 22,
     "nodes_by_label": {
       "Module": 374,
-      "TypeDecl": 803,
+      "TypeDecl": 804,
       "Field": 4870,
       "ReactComponent": 442,
       "Component": 199,
       "Prop": 359,
       "DataFetch": 106,
-      "Endpoint": 104,
+      "Endpoint": 125,
       "ServedURL": 45,
       "Hook": 111,
       "ReactQueryKey": 57,
@@ -38,7 +40,7 @@
       "HAS_TYPE": 100,
       "READS_URL": 48,
       "HAS_KEY": 85,
-      "FETCHES": 111,
+      "FETCHES": 109,
       "FLOWS_TO": 714,
       "INSTANTIATES": 1298,
       "PROP_PASSES": 1382,
@@ -64,7 +66,7 @@
       },
       "hook_fetch": {
         "attempted": 111,
-        "resolved": 111
+        "resolved": 109
       },
       "flowsto": {
         "attempted": 1578,
@@ -79,7 +81,7 @@
         "resolved": 1530
       }
     },
-    "unresolved_count": 615
+    "unresolved_count": 639
   },
   "unresolved_sample": [
     {
