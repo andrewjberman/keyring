@@ -6638,3 +6638,6 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-06-17 | 0.4.2_RD_AdvisorIntelligence | (no-TO) | none (N/A) | deck_generation tooling: no data/cloud/frontend change; verified via design_lint+fidelity+COM-render | N/A |
 | 2026-06-17 ~2015Z | 0.6.2_AE_PartnerETL | ADVI_COTETL.chain-state-verify | comp-pipescript deployed (all-trees + cot-scoped) | PASS — all 43 cot-gold scripts MATCH (git==s3://opal-data-cot/code/), 0 STALE/0 MISSING; code-MATCH clean -> cot freeze is data/chain not code; DTAFLP mirror-only concern resolved |
 | 2026-06-17 | 0.6.2_AE_PartnerETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-06-17 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/tsgraph_spike/extract... | PASS |
+| 2026-06-17 | 0.4.0_DS_ClientPlatform | ADVI_NNAATTR.TO-1 / SS4c | ds-commit-gate + md5-verify + deploy_ledger | bucket-fallback re-gate (PASS) + 6-file S3 byte-MATCH + ledger CLOSED + SS4c gate clean | PASS |
+| 2026-06-17 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
