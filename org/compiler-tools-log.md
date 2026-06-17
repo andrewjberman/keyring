@@ -6549,3 +6549,17 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-06-17 | 3.0.0_SA_CVO | NFRA_GCONTR.TO-3 | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/se... | PASS |
 | 2026-06-17 | 0.7.0_AE_CloudOps | NFRA_GCONTR.TO-3 | comp-kuzu | comp-kuzu MATCH (n:CloudNode) WHERE n.name IN ['mdpf-daily-runner', 'opal-data-bd', 'ya... | PASS |
 | 2026-06-17 | 3.0.0_SA_CVO | ADVI_COTETL.chain-state-verify | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-06-17 | 2.0.0_SA_COO | ADVI_COTETL.chain-state-verify | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/briefs/allo... | PASS |
+| 2026-06-17 | 0.7.0_AE_CloudOps | ADVI_COTETL.chain-state-verify | comp-kuzu | comp-kuzu --json MATCH (n:CloudNode) WHERE n.name IN ['mdpf-daily-runner','opal-data-bd... | PASS |
+| 2026-06-17 | 0.7.0_AE_CloudOps | ADVI_COTETL.chain-state-verify | comp-kuzu | comp-kuzu --json MATCH (n:CloudNode) RETURN n.name AS name, n.node_id AS node_id, n.nod... | PASS |
+| 2026-06-17 | 3.0.0_SA_CVO | ADVI_COTETL.chain-state-verify | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/contracts/g... | PASS |
+| 2026-06-17 | 0.6.2_AE_PartnerETL | ADVI_COTETL.chain-state-verify | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.6.2_AE_PartnerETL/lo... | PASS |
+| 2026-06-17 | 0.6.2_AE_PartnerETL | ADVI_COTETL.chain-state-verify | comp-pipescript | comp-pipescript deployed | PASS |
+| 2026-06-17 | 0.7.0_AE_CloudOps | ADVI_COTETL.chain-state-verify | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/globgrph/derive_runner.py --f... | PASS |
+| 2026-06-17 | 1.0.0_SA_CTO | ADVI_COTETL.chain-state-verify | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/NFRA_TSGRAPH.json --file o... | PASS |
+| 2026-06-17 | 0.7.0_AE_CloudOps | ADVI_COTETL.chain-state-verify | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/globgrph/derive_runner.py --f... | PASS |
+| 2026-06-17 | 0.0.0_AB_MSTR | ADVI_COTETL.chain-state-verify | comp-surface-check | comp-surface-check check --mode advisory --file org/mcp/live_agents_by_marker.json --fi... | PASS |
+| 2026-06-17 | 1.0.0_SA_CTO | ADVI_COTETL.chain-state-verify | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/critical-surfaces.yam... | PASS |
+| 2026-06-17 | 0.6.2_AE_PartnerETL | ADVI_COTETL.chain-state-verify | comp-pipescript | comp-pipescript deployed | PASS |
+2026-06-17T18:19Z | 2.0.0_SA_COO | /drive cycle-2 (cron) | fabric-check.py --blocks (deaf0/blk0/sov0/sv2-benign) + deploy_ledger.py check --red (clean) | WORKED: clean fabric; key delta 0.4.0_DS died-clean (LD-0198, 0 strand) -> ADVI_COTETL owner-dead respawn-at-GO on CTO cot-cluster seq; D8-FP AC2 built; NFRA_TSGRAPH new | NOTE: 0 new dispatch, fabric genuinely advancing, gate PASS via attestation
+| 2026-06-17 | 2.0.0_SA_COO | ADVI_COTETL.chain-state-verify | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/mc... | PASS |
