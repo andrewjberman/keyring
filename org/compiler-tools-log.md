@@ -6448,3 +6448,24 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-06-17 | 1.0.0_SA_CTO | NFRA_GRAPHS.D8-FP | comp-surface-check | comp-surface-check check --mode advisory --file org/mcp/server.py | PASS |
 | 2026-06-17 | 3.0.0_SA_CVO | RV-0035+nightly-verifies | comp-kuzu/git-audit/aws/python | RV-0035 audit-walk re-derive (all EXACT) + GCONTR EC2-WRITES re-verify (0->66) + GLDINC 66MB cache-canary + COTETL bronze content-check | PASS |
 | 2026-06-17 | 3.0.0_SA_CVO | NFRA_GCONTR.TO-3 | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-06-17 | 0.7.0_AE_CloudOps | NFRA_GCONTR.TO-3 | comp-kuzu | comp-kuzu MATCH (a:CloudNode)-[e:CloudEdge]->(b:CloudNode) WHERE e.edge_type='WRITES' A... | PASS |
+| 2026-06-17 | 0.4.0_DS_ClientPlatform | NFRA_GCONTR.TO-3 | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/change_management/20... | PASS |
+| 2026-06-17 | 0.7.0_AE_CloudOps~B | NFRA_GCONTR.TO-3 | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/infrastructure_monitor... | PASS |
+| 2026-06-17 | 0.7.0_AE_CloudOps | NFRA_GCONTR.TO-3 | comp-kuzu | comp-kuzu MATCH (a:CloudNode)-[e:CloudEdge]->(b:CloudNode) WHERE e.edge_type='WRITES' A... | PASS |
+| 2026-06-17 | 0.7.0_AE_CloudOps | NFRA_GCONTR.TO-3 | comp-kuzu | comp-kuzu MATCH (n:CloudNode) WHERE n.node_type IN ['LAMBDA','EC2_INSTANCE'] AND (toLow... | PASS |
+| 2026-06-17 | 0.7.0_AE_CloudOps | NFRA_GCONTR.TO-3 | comp-kuzu | comp-kuzu MATCH (n:CloudNode) WHERE n.node_type IN ['LAMBDA','EC2_INSTANCE'] AND (toLow... | PASS |
+| 2026-06-17 | 0.7.0_AE_CloudOps | NFRA_GCONTR.TO-3 | comp-kuzu | comp-kuzu MATCH (a:CloudNode)-[e:CloudEdge]->(b:CloudNode) WHERE e.edge_type='WRITES' A... | FAIL |
+| 2026-06-17 | 0.7.0_AE_CloudOps~B | NFRA_GCONTR.TO-3 | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/infrastructure_monitor... | PASS |
+| 2026-06-17 | 0.7.0_AE_CloudOps | NFRA_GCONTR.TO-3 | comp-kuzu | comp-kuzu MATCH (a:CloudNode)-[e:CloudEdge]->(b:CloudNode) WHERE e.edge_type='WRITES' A... | PASS |
+| 2026-06-17 | 0.4.0_DS_ClientPlatform | NFRA_GCONTR.TO-3 | comp-surface-check | comp-surface-check check --mode advisory --file .tools/freshness_manifest_gen.py --file... | PASS |
+| 2026-06-17 | 0.7.0_AE_CloudOps~B | NFRA_GCONTR.TO-3 | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/ci/lambda-source-map.json | PASS |
+| 2026-06-17 | 2.0.0_SA_COO | PORTAL_PROMOTE_20260617 | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.6.0_AE_PartnerETL/ta... | PASS |
+| 2026-06-17 | 0.6.0_AE_PartnerETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.6.0_AE_PartnerETL/lo... | PASS |
+| 2026-06-17 | 0.4.0_T_ClientPlatform | ADHC_GLDINC.SS4c | comp-surface-check | comp-surface-check check --mode advisory --file portal | PASS |
+| 2026-06-17 | 0.6.0_AE_PartnerETL | ADHC_GLDINC.SS4c | comp-pipescript | comp-pipescript io load_flows | FAIL |
+| 2026-06-17 | 0.7.0_AE_CloudOps~B | ADHC_GLDINC.SS4c | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/infrastructure_monitor... | PASS |
+| 2026-06-17 | 0.7.0_AE_CloudOps~B | ADHC_GLDINC.SS4c | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/ci/lambda-source-map.json | PASS |
+| 2026-06-17 | 0.6.0_AE_PartnerETL | ADHC_GLDINC.SS4c | comp-blast | comp-blast load_flows | PASS |
+| 2026-06-17 | 0.6.0_AE_PartnerETL | PMTRDX_UNITFIX | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.6.0_AE_PartnerETL/de... | PASS |
+2026-06-17 | 0.4.0_DS_ClientPlatform | NFRA_INFRPT.P1 + COT_RULE15 | comp-freshness --list (coverage ground-truth bd/inf only), pipescript --list/advi-cot (served lists), freshness_manifest_gen.py (new), ds-commit-gate (generator clean; 20 cot scripts BLOCKED on 92 pre-existing bd-fork ruff E/F), ruff FA 20/20 pass, deploy_ledger.py close | freshness producer 1a+1b shipped; COT_RULE15 gate-blocked routed to CTO
+| 2026-06-17 | 0.4.0_DS_ClientPlatform | PMTRDX_UNITFIX | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
