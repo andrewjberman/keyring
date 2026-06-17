@@ -6616,3 +6616,14 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-06-17 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/tsgraph_spike/.gitign... | PASS |
 2026-06-17 | 0.7.0_AE_CloudOps~B | DRIVE DRIFT-precision | terraform plan (local, per-module), ds-commit-gate, gh workflow run, codebuild start-build | DRIFT over-report 10->5 real via 2 accuracy fixes (CTO lock-fix 19ccf2e37 + my version-churn suppression b2d98f10b); local plan = the real-vs-noise oracle; 3 real routed (news/ycharts/exec-summary), smartx held (default_tags-intent), yang low-conf. Coverage 66% (cannot-assess = real config/var errors).
 | 2026-06-17 | 0.7.0_AE_CloudOps~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-06-17 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DE_ClientPlatfor... | PASS |
+| 2026-06-17 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript io C_07.advisor_attribution | PASS |
+| 2026-06-17 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript io D_00.portal_aggregates | PASS |
+| 2026-06-17 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript io D_00c.portal_leaderboard | PASS |
+| 2026-06-17 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript io D_02.advisor_client_detail | PASS |
+| 2026-06-17 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file data/black_diamond/scripts/gold/C_07.ad... | PASS |
+| 2026-06-17 | 0.7.0_AE_CloudOps~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/terraform/shared-infra/drift-... | PASS |
+| 2026-06-17 | 0.7.0_AE_CloudOps~B | (no-TO) | comp-iam | comp-iam gaps | PASS |
+| 2026-06-17 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .github/workflows/drift-producer-push.yml | PASS |
+| 2026-06-17 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript deployed | PASS |
+| 2026-06-17 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/cr... | PASS |
