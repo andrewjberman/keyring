@@ -12,7 +12,20 @@
 | `name` consumers | **203, "READ-EVERYWHERE"** | **~4 real** — `FLOWS_TO -> ScatterPoint#name` (adapter) + 3 `RENDERS` (ReturnVolatilityScatter.tsx:485/558/583) |
 | failure mode | substring-matches every `.name` in the portal | resolved field-grain readers only |
 
-The regex `203` is a substring artifact (`name` is one of the commonest identifiers). The semantic version returns the **actual** readers of `BenchmarkModelData.name`. This is a large precision win and exactly the goal-1 fine-lineage payoff. **Verdict: BETTER** — pending a recall sweep (confirm every real reader is captured across all fields/types before cutover).
+The regex `203` is a substring artifact (`name` is one of the commonest identifiers). The semantic version returns the **actual** readers of `BenchmarkModelData.name`. This is a large precision win and exactly the goal-1 fine-lineage payoff. **Verdict (precision): BETTER** — but the recall sweep (below) found gaps, so `fields` is NOT yet cutover-ready.
+
+### comp-types `fields` RECALL SWEEP (result #4) — semantic precise but RECALL-INCOMPLETE
+Semantic per-field reader count (RENDERS->field + FLOWS_TO-from-field) vs regex:
+| field | regex | semantic | 
+|---|---|---|
+| BenchmarkModelData.name | 203 | 5 | BenchmarkModelData.code | 67 | 8 | BenchmarkModelData.returns | 27 | **0** |
+| BenchmarkPeriodReturn.model | 28 | 1 | …spread | 16 | **0** | ModelPortfolioData.code/name/returns | 67/203/27 | **0/0/0** |
+
+Precision: semantic kills the regex substring overcount (good). But the **0/low counts are a RECALL GAP**, confirmed against source:
+- `ModelPortfolioData.*` = 0 FLOWS_TO — the OUTER benchmark adapter `{code: model.code, name: getCanonicalModelName(model.name), returns: Object.fromEntries(...)}` (ModelPortfolios.tsx:708) is **skipped by the FLOWS_TO ">=2-mappingish-props" heuristic** (only `code` is a property-access; `name`/`returns` are CallExpressions). A real, fixable extractor bug.
+- `*.returns` / `*.spread` low — indexed-access reads (`model.returns[k]`) + computed reads aren't captured as field-readers.
+- arbitrary `const x = obj.field` reads outside JSX/adapter need a field-level findReferences.
+- **Verdict: NOT parity (recall-incomplete).** Path to fields parity: (1) fix the FLOWS_TO mappingish heuristic to include CallExpression-initialized props; (2) capture indexed-access field reads; (3) a `REFERENCES_FIELD` pass (findReferences per field — HEAVY, ~minutes over 4870 fields) for full read-recall. Deferred to the Leg-C resume (with the kind-aware work).
 
 ### comp-types `index` (type consumer SITES) — SEMANTIC **EQUIVALENCE-OR-BETTER** (gap closed, result #2)
 - Regex: 44 sites — but ~37 are false (`tenantLayout.dataSources`, `layout.tabs.advisors.enabled`, `DEFAULT_LAYOUT` — unrelated substring hits). ~7 real (3 files: BenchmarkHeatmap, ReturnVolatilityScatter, ModelPortfolios).
@@ -38,7 +51,7 @@ The regex `203` is a substring artifact (`name` is one of the commonest identifi
 
 ## Cutover decision (this increment)
 - `comp-types index`: **PARITY MET (better) — recall-complete + precision-perfect across a 6-type ground-truthed sweep.** Recommend cutover pending CTO sign (the broader sweep is done; CTO can widen further if desired).
-- `comp-types fields`: semantic better on precision; **stay on regex until a recall sweep** confirms no true-positive is missed across the field set, then cut over (CTO sign).
+- `comp-types fields`: **NOT cutover-ready** — recall sweep (result #4) found confirmed recall gaps (FLOWS_TO mappingish-heuristic miss + indexed-access + arbitrary reads). Stays on regex; needs the 3 fixes above on the Leg-C resume. So the comp-types cutover this increment is **INDEX-only** (not the full-tool single sign COO hoped for — `fields` honestly isn't there yet).
 
 ## AC4 scale-watch (cost of the precision)
 `REFERENCES_TYPE` (findReferences on 796 types) = ~21s; total cold full-portal ~54s (was ~15s). findReferences (language-service) is the cost driver. Acceptable for the nightly derive; CHEAP on incremental (changed-files only re-resolve their types). Queued refinements: scope findReferences to changed types on incremental; the RENDERS getSymbol caching.
