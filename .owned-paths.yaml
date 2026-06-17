@@ -246,6 +246,25 @@ lanes:
       - 0.7.0_AE_CloudOps~C
     description: "Any AE agent — infra/aws, pipeline Terraform, hook wiring. 0.7.0_AE_CloudOps~A added 2026-05-21 by COO: the lane is literally 'any AE agent' and ~A is one — the ~A suffix simply was not enumerated (tilde-lane owned-paths gap). A correct permanent add, not an exception. 0.7.0_AE_CloudOps~C added 2026-05-22 by COO~C: same gap — ~C is the ADVI_DEMOV1 AE lane running ADVI_DEMOV1.001 (infra/aws shared-infra TF + lambda-edge) under COO~C GO."
 
+  DECK:
+    permitted_agents:
+      - 0.4.2_RD_AdvisorIntelligence
+      - 0.4.2_RD_AdvisorIntelligence~B
+      - 0.4.2_RD_AdvisorIntelligence~C
+      - 1.0.0_SA_CTO
+      - 1.1.0_SA_CTO
+      - 0.4.0_DT_ClientPlatform
+      - 0.5.0_AE_OpalETL
+      - 0.5.0_AE_OpalETL~B
+      - 0.6.0_AE_PartnerETL
+      - 0.6.1_AE_PartnerETL
+      - 0.6.2_AE_PartnerETL
+      - 0.7.0_AE_CloudOps
+      - 0.7.0_AE_CloudOps~A
+      - 0.7.0_AE_CloudOps~B
+      - 0.7.0_AE_CloudOps~C
+    description: "DECK macro-owned tooling -- the deck_generation/ from-primitives composer + DESIGN_BIBLE + the /deck-prompt + /deck-gen Claude skills. 0.4.2_RD (composer/skills author, +~B/~C tilde lanes proactive per the recurring tilde-gap), 1.0.0_SA_CTO (+1.1.0 ~B; tooling/protocol), 0.4.0_DT (deploy), + any AE agent (the live Lambda/TF infra leg stays AE-reachable). DECK macro registered 2026-06-17 (86606a545, Andrew-direct); deck_generation re-laned off CLOUD_OPS_OR_ETL which predated the macro. Added 2026-06-17 by 0.7.0_AE_CloudOps per CTO 203617Z; CC COO."
+
   TRADE_PIPELINE_INFRA:
     permitted_agents:
       - 0.3.0_DT_TradingOperations
@@ -1148,9 +1167,17 @@ paths:
   # -----------------------------------------------------------------------
   # deck_generation/ — DeckGeneration pipeline
   # -----------------------------------------------------------------------
+  ".claude/skills/deck-prompt/**":
+    lane: DECK
+    note: "DECK /deck-prompt Claude skill (RD/CTO-authored). DECK macro re-lane 2026-06-17 (CTO 203617Z)."
+
+  ".claude/skills/deck-gen/**":
+    lane: DECK
+    note: "DECK /deck-gen Claude skill (RD/CTO-authored). DECK macro re-lane 2026-06-17 (CTO 203617Z)."
+
   "deck_generation/**":
-    lane: CLOUD_OPS_OR_ETL
-    note: "DeckGeneration pipeline — AE-managed (deck-generation-v1.0.0)"
+    lane: DECK
+    note: "DECK macro-owned tooling (from-primitives composer + DESIGN_BIBLE). Re-laned off CLOUD_OPS_OR_ETL 2026-06-17 (CTO 203617Z); the DECK macro 86606a545 postdates the old AE-only lane. 0.4.2_RD composer-author self-commits; live Lambda/TF infra leg stays AE-reachable via DECK AE members."
 
   # -----------------------------------------------------------------------
   # projects/ — workspace-infra projects (LD-0067 family + future siblings).
