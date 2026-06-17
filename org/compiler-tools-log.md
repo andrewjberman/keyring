@@ -6577,3 +6577,42 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-06-17 | 0.0.0_AB_MSTR | ADVI_PRTORG.AC-CLOSEOUT | comp-surface-check | comp-surface-check check --mode advisory --file org/mcp/live_agents_by_marker.json --fi... | PASS |
 | 2026-06-17 | 0.4.0_DT_ClientPlatform | (cleanup) | (none) | stale promote-worktree residue sweep (7 portal-promote-* dirs, Andrew-OK recursive delete) -- filesystem housekeeping of gitignored .runtmp, no code/infra/commit; checks = git worktree list/prune + human-confirm gate. GAP: harness destructive-guard false-positives on Remove-Item + robocopy /MIR in one cmd | N/A |
 | 2026-06-17 | 0.4.0_T_ClientPlatform | ADVI_PRTORG.AC-CLOSEOUT | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-06-17 | 3.0.0_SA_CVO | ADVI_PRTORG.AC-CLOSEOUT | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/contracts/g... | PASS |
+| 2026-06-17 | 2.0.0_SA_COO | ADVI_PRTORG.AC-CLOSEOUT | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/ADVI_NNAATTR.json --file o... | PASS |
+| 2026-06-17 | 0.6.0_AE_PartnerETL | ADVI_PRTORG.AC-CLOSEOUT | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.6.0_AE_PartnerETL/lo... | PASS |
+| 2026-06-17 | 2.0.0_SA_COO | ADVI_PRTORG.AC-CLOSEOUT | comp-surface-check | comp-surface-check check --mode advisory --file org/mcp/.last-drive-2.0.0_SA_COO --file... | PASS |
+| 2026-06-17 | 0.0.0_AB_MSTR | ADVI_NNAATTR.TO-1.ds-nna-attribution-unify-buckets-preserved | comp-surface-check | comp-surface-check check --mode advisory --file org/mcp/live_agents_by_marker.json --fi... | PASS |
+| 2026-06-17 | 0.4.0_DS_ClientPlatform | ADVI_NNAATTR.TO-1.ds-nna-attribution-unify-buckets-preserved | comp-pipescript | comp-pipescript io D_00f.advisor_nna_canonical | PASS |
+| 2026-06-17 | 0.7.0_AE_CloudOps | ADVI_NNAATTR.TO-1.ds-nna-attribution-unify-buckets-preserved | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/ci/lambda-source-map.json | PASS |
+| 2026-06-17 | 3.0.0_SA_CVO | ADVI_NNAATTR.TO-1.ds-nna-attribution-unify-buckets-preserved | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/contracts/g... | PASS |
+| 2026-06-17 | 0.4.0_DS_ClientPlatform | ADVI_NNAATTR.TO-1.ds-nna-attribution-unify-buckets-preserved | comp-blast | comp-blast account_team | PASS |
+| 2026-06-17 | 1.0.0_SA_CTO | ADVI_NNAATTR.TO-1.ds-nna-attribution-unify-buckets-preserved | comp-surface-check | comp-surface-check check --mode advisory --file .github/workflows/drift-producer-push.yml | PASS |
+| 2026-06-17 | 0.4.0_DE_ClientPlatform | ADVI_NNAATTR.TO-1.ds-nna-attribution-unify-buckets-preserved | comp-transform | comp-transform schema-check BenchmarkHeatmap | FAIL |
+| 2026-06-17 | 0.4.0_DE_ClientPlatform | ADVI_NNAATTR.TO-1.ds-nna-attribution-unify-buckets-preserved | comp-kuzu | comp-kuzu --help | PASS |
+| 2026-06-17 | 0.7.0_AE_CloudOps | ADVI_NNAATTR.TO-1.ds-nna-attribution-unify-buckets-preserved | comp-iam | comp-iam role github-actions-opal-deploy | PASS |
+| 2026-06-17 | 0.4.0_DE_ClientPlatform | ADVI_NNAATTR.TO-1.ds-nna-attribution-unify-buckets-preserved | comp-transform | comp-transform --help | PASS |
+| 2026-06-17 | 0.4.0_DE_ClientPlatform | ADVI_NNAATTR.TO-1.ds-nna-attribution-unify-buckets-preserved | comp-platinum | comp-platinum ModelPortfolios | FAIL |
+| 2026-06-17 | 0.4.0_DE_ClientPlatform | ADVI_NNAATTR.TO-1.ds-nna-attribution-unify-buckets-preserved | comp-kuzu | comp-kuzu CALL show_tables() RETURN * | PASS |
+| 2026-06-17 | 0.4.0_DE_ClientPlatform | ADVI_NNAATTR.TO-1.ds-nna-attribution-unify-buckets-preserved | comp-kuzu | comp-kuzu --json MATCH (n) WHERE n.id CONTAINS 'model_portfolio_benchmarks' RETURN n.id... | FAIL |
+| 2026-06-17 | 0.7.0_AE_CloudOps | ADVI_NNAATTR.TO-1.ds-nna-attribution-unify-buckets-preserved | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/terraform/shared-infra/github... | PASS |
+| 2026-06-17 | 2.0.0_SA_COO | ADVI_NNAATTR.TO-1.ds-nna-attribution-unify-buckets-preserved | comp-surface-check | comp-surface-check check --mode advisory --file org/mcp/.last-drive-2.0.0_SA_COO --file... | PASS |
+| 2026-06-17 | 0.4.0_DE_ClientPlatform | ADVI_NNAATTR.TO-1.ds-nna-attribution-unify-buckets-preserved | comp-kuzu | comp-kuzu CALL TABLE_INFO('CloudNode') RETURN * | PASS |
+| 2026-06-17 | 0.4.0_DE_ClientPlatform | ADVI_NNAATTR.TO-1.ds-nna-attribution-unify-buckets-preserved | comp-kuzu | comp-kuzu --json MATCH (n:CloudNode) RETURN n LIMIT 1 | PASS |
+| 2026-06-17 | 0.4.0_DE_ClientPlatform | ADVI_NNAATTR.TO-1.ds-nna-attribution-unify-buckets-preserved | comp-transform | comp-transform schema-check ModelPortfolios | FAIL |
+| 2026-06-17 | 0.4.0_DE_ClientPlatform | ADVI_NNAATTR.TO-1.ds-nna-attribution-unify-buckets-preserved | comp-transform | comp-transform ternary-audit ModelPortfolios | PASS |
+| 2026-06-17 | 0.4.0_DE_ClientPlatform | ADVI_NNAATTR.TO-1.ds-nna-attribution-unify-buckets-preserved | comp-kuzu | comp-kuzu --json MATCH (n:CloudNode) WHERE n.name CONTAINS 'portal-data' OR n.name CONT... | PASS |
+| 2026-06-17 | 0.4.0_DE_ClientPlatform | ADVI_NNAATTR.TO-1.ds-nna-attribution-unify-buckets-preserved | comp-kuzu | comp-kuzu --db-path org/modules/graph/tsgraph_spike/out/scratch_kuzu_db --json MATCH (a... | PASS |
+| 2026-06-17 | 0.4.0_DE_ClientPlatform | ADVI_NNAATTR.TO-1.ds-nna-attribution-unify-buckets-preserved | comp-kuzu | comp-kuzu --db-path org/modules/graph/tsgraph_spike/out/scratch_kuzu_db --json MATCH (d... | PASS |
+| 2026-06-17 | 0.4.0_DE_ClientPlatform | ADVI_NNAATTR.TO-1.ds-nna-attribution-unify-buckets-preserved | comp-kuzu | comp-kuzu --db-path org/modules/graph/tsgraph_spike/out/scratch_kuzu_db --json MATCH (a... | PASS |
+| 2026-06-17 | 0.7.0_AE_CloudOps~B | ADVI_NNAATTR.TO-1.ds-nna-attribution-unify-buckets-preserved | comp-surface-check | comp-surface-check check --mode advisory --file .tools/drift_producer.py | PASS |
+| 2026-06-17 | 0.4.0_DE_ClientPlatform | ADVI_NNAATTR.TO-1.ds-nna-attribution-unify-buckets-preserved | comp-surface-check | comp-surface-check check --mode advisory --file docs/briefs/nfra-tsgraph-p0-spike-repor... | PASS |
+| 2026-06-17 | 0.4.0_DE_ClientPlatform | ADVI_NNAATTR.TO-1.ds-nna-attribution-unify-buckets-preserved | comp-surface-check | comp-surface-check check --mode advisory --file docs/briefs/nfra-tsgraph-p0-spike-repor... | PASS |
+| 2026-06-17 | 2.0.0_SA_COO | ADVI_NNAATTR.TO-1.ds-nna-attribution-unify-buckets-preserved | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.7.0_AE_CloudOps/task... | PASS |
+| 2026-06-17 | 0.7.0_AE_CloudOps | ADVI_NNAATTR.TO-1.ds-nna-attribution-unify-buckets-preserved | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/infrastructure_monitor... | PASS |
+| 2026-06-17 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/mcp/.last-drive-2.0.0_SA_COO --file... | PASS |
+| 2026-06-17 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .owned-paths.yaml | PASS |
+| 2026-06-17 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/NFRA_TSGRAPH_PRD.md -... | PASS |
+| 2026-06-17 | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/mcp/live_agents_by_marker.json --fi... | PASS |
+| 2026-06-17 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/tsgraph_spike/.gitign... | PASS |
+2026-06-17 | 0.7.0_AE_CloudOps~B | DRIVE DRIFT-precision | terraform plan (local, per-module), ds-commit-gate, gh workflow run, codebuild start-build | DRIFT over-report 10->5 real via 2 accuracy fixes (CTO lock-fix 19ccf2e37 + my version-churn suppression b2d98f10b); local plan = the real-vs-noise oracle; 3 real routed (news/ycharts/exec-summary), smartx held (default_tags-intent), yang low-conf. Coverage 66% (cannot-assess = real config/var errors).
+| 2026-06-17 | 0.7.0_AE_CloudOps~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
