@@ -14,9 +14,11 @@ from __future__ import annotations
 import json
 import os
 import sys
+from datetime import datetime, timezone
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-GENERATED_AT = "2026-06-17T20:00:00Z"  # deterministic (Date.now() avoided); stamp at stage-time if needed
+# fresh vintage stamp at stage-time (AE's re-derive reads this) -- a plain script, real time is fine here
+GENERATED_AT = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
 
 
 def main() -> int:

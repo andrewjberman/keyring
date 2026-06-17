@@ -302,59 +302,68 @@ for (const sf of workSet) {
 }
 
 // ============================ PASS 6: FLOWS_TO with KIND discriminator ============================
-// detect "mapping" object literals: >=2 property initializers that reference a resolvable source field.
+// adapter object literals: >=2 props whose initializer READS a known-type field -- directly OR wrapped
+// in a call/conditional/binary (e.g. getCanonicalModelName(model.name)). Emits FLOWS_TO per field-read
+// with kind {passthrough|rename|recompute/guarded} + the ternary condition. A field-read "belongs" to a
+// prop only if no nested object-literal / function lies between it and the prop's initializer -- so the
+// outer `returns: Object.fromEntries(...{model: data.model}...)` does NOT pull the inner adapter's reads.
+function belongsDirectly(pacc: Node, init: Node): boolean {
+  if (pacc === init) return true;
+  let n: Node | undefined = pacc.getParent();
+  while (n && n !== init) {
+    if (Node.isArrowFunction(n) || Node.isFunctionExpression(n) || Node.isObjectLiteralExpression(n)) return false;
+    n = n.getParent();
+  }
+  return n === init;
+}
 for (const sf of workSet) {
   for (const obj of sf.getDescendantsOfKind(SyntaxKind.ObjectLiteralExpression)) {
     const pas = obj.getProperties().filter(Node.isPropertyAssignment);
     if (pas.length < 2) continue;
-    // is this a mapping literal? >=2 initializers reference a property access on some identifier
-    const mappingish = pas.filter((p) => {
-      const i = p.getInitializer();
-      return i && (Node.isPropertyAccessExpression(i) || Node.isConditionalExpression(i) || Node.isBinaryExpression(i));
-    });
-    if (mappingish.length < 2) continue;
-    for (const pa of pas) {
-      const outField = pa.getName();
+    const propReads = pas.map((pa) => {
       const init = pa.getInitializer();
-      if (!init) continue;
-      const branches: { node: Node; cond: string | null; kindHint: "direct" | "guarded" }[] = [];
-      if (Node.isConditionalExpression(init)) {
-        const cnd = init.getCondition().getText();
-        branches.push({ node: init.getWhenTrue(), cond: `${cnd} == true`, kindHint: "guarded" });
-        branches.push({ node: init.getWhenFalse(), cond: `${cnd} == false`, kindHint: "guarded" });
-      } else if (Node.isBinaryExpression(init) || Node.isCallExpression(init)) {
-        branches.push({ node: init, cond: null, kindHint: "guarded" });
-      } else if (Node.isPropertyAccessExpression(init)) {
-        branches.push({ node: init, cond: null, kindHint: "direct" });
-      } else continue;
-      for (const b of branches) {
-        const pacc = Node.isPropertyAccessExpression(b.node) ? b.node : b.node.getFirstDescendantByKind(SyntaxKind.PropertyAccessExpression);
-        if (!pacc) { continue; }
-        const r = resolveProp(pacc);
-        bump("flowsto", !!(r.owner && r.field && typeNameToId.has(r.owner)));
-        if (r.owner && r.field && typeNameToId.has(r.owner)) {
-          const srcFieldId = fieldId(typeNameToId.get(r.owner)!, r.field);
-          if (!nodes.has(srcFieldId)) continue;
-          const kind = b.kindHint === "guarded" ? "recompute/guarded" : r.field === outField ? "passthrough" : "rename";
-          // destination: try the object literal's contextual type field; else a local out node (VISIBLE)
-          let dstId: string | null = null;
-          try {
-            const ctx = obj.getContextualType();
-            const ctxSym = ctx?.getProperty(outField);
-            const ctxDecl = ctxSym?.getDeclarations?.()?.[0];
-            const ctxIface = ctxDecl?.getFirstAncestorByKind(SyntaxKind.InterfaceDeclaration);
-            const ctxName = ctxIface?.getName();
-            if (ctxName && typeNameToId.has(ctxName)) dstId = fieldId(typeNameToId.get(ctxName)!, outField);
-          } catch { /* visible */ }
-          if (!dstId) { dstId = `out:${loc(pa)}#${outField}`; addNode(dstId, "Field", { name: outField, ownerType: "(local/unresolved-output)", local: true, path: rel(pa), line: pa.getStartLineNumber() }); }
-          addEdge(srcFieldId, dstId, "FLOWS_TO", {
-            kind, condition: b.cond,
-            srcField: `${r.owner}.${r.field}`, dstField: outField,
-            rename: kind === "rename",
-            resolution: "getSymbol on source prop access -> declaring type (TypeChecker)",
-            via: `mapping ${loc(pa)}`,
-          });
+      const reads: { pacc: Node; owner: string; field: string }[] = [];
+      if (init) {
+        const accs = Node.isPropertyAccessExpression(init)
+          ? [init]
+          : init.getDescendantsOfKind(SyntaxKind.PropertyAccessExpression).filter((p) => belongsDirectly(p, init));
+        for (const pacc of accs) {
+          const r = resolveProp(pacc);
+          if (r.owner && r.field && typeNameToId.has(r.owner) && nodes.has(fieldId(typeNameToId.get(r.owner)!, r.field))) {
+            reads.push({ pacc, owner: r.owner, field: r.field });
+          }
         }
+      }
+      return { pa, init, reads };
+    });
+    if (propReads.filter((p) => p.reads.length > 0).length < 2) continue; // not an adapter
+    for (const { pa, init, reads } of propReads) {
+      if (!init || reads.length === 0) continue;
+      const outField = pa.getName();
+      let dstId: string | null = null;
+      try {
+        const ctxDecl = obj.getContextualType()?.getProperty(outField)?.getDeclarations?.()?.[0];
+        const ctxName = ctxDecl?.getFirstAncestorByKind(SyntaxKind.InterfaceDeclaration)?.getName();
+        if (ctxName && typeNameToId.has(ctxName)) dstId = fieldId(typeNameToId.get(ctxName)!, outField);
+      } catch { /* visible */ }
+      if (!dstId) { dstId = `out:${loc(pa)}#${outField}`; addNode(dstId, "Field", { name: outField, ownerType: "(local/unresolved-output)", local: true, path: rel(pa), line: pa.getStartLineNumber() }); }
+      for (const { pacc, owner, field } of reads) {
+        bump("flowsto", true);
+        const direct = pacc === init;
+        let cond: string | null = null;
+        const condExpr = pacc.getFirstAncestorByKind(SyntaxKind.ConditionalExpression);
+        if (condExpr && belongsDirectly(condExpr, init)) {
+          const inTrue = condExpr.getWhenTrue() === pacc || condExpr.getWhenTrue().getDescendants().includes(pacc);
+          cond = `${condExpr.getCondition().getText()} == ${inTrue}`;
+        }
+        const kind = direct ? (field === outField ? "passthrough" : "rename") : "recompute/guarded";
+        addEdge(fieldId(typeNameToId.get(owner)!, field), dstId, "FLOWS_TO", {
+          kind, condition: cond,
+          srcField: `${owner}.${field}`, dstField: outField,
+          rename: kind === "rename",
+          resolution: "getSymbol on field-read prop access -> declaring type (TypeChecker)",
+          via: `mapping ${loc(pa)}`,
+        });
       }
     }
   }

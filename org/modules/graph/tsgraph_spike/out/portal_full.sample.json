@@ -1,17 +1,17 @@
 {
   "manifest_head": {
     "producer": "ts-semantic",
-    "generated_at": "2026-06-17T20:00:00Z",
+    "generated_at": "2026-06-17T22:45:01Z",
     "slice": "full-portal",
     "extractor": "ts-morph @28 / TS Compiler API"
   },
   "coverage_summary": {
-    "node_count": 11130,
-    "edge_count": 12911,
+    "node_count": 11232,
+    "edge_count": 16397,
     "flowsto_by_kind": {
-      "passthrough": 339,
-      "recompute/guarded": 231,
-      "rename": 144
+      "passthrough": 337,
+      "recompute/guarded": 482,
+      "rename": 142
     }
   },
   "node_examples": [

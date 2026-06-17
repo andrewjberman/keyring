@@ -10,15 +10,15 @@
   "metrics": {
     "portal_files_total": 374,
     "work_set_files": 374,
-    "program_load_ms": 2528,
-    "extract_ms": 15771,
-    "node_count": 11130,
-    "edge_count": 16150,
-    "stub_count": 22,
+    "program_load_ms": 3536,
+    "extract_ms": 28522,
+    "node_count": 11232,
+    "edge_count": 16397,
+    "stub_count": 25,
     "nodes_by_label": {
       "Module": 374,
-      "TypeDecl": 804,
-      "Field": 4870,
+      "TypeDecl": 807,
+      "Field": 4969,
       "ReactComponent": 442,
       "Component": 199,
       "Prop": 359,
@@ -41,7 +41,7 @@
       "READS_URL": 48,
       "HAS_KEY": 85,
       "FETCHES": 109,
-      "FLOWS_TO": 714,
+      "FLOWS_TO": 961,
       "INSTANTIATES": 1298,
       "PROP_PASSES": 1382,
       "RENDERS": 2447,
@@ -49,9 +49,9 @@
       "REFERENCES_TYPE": 1129
     },
     "flowsto_by_kind": {
-      "passthrough": 339,
-      "recompute/guarded": 231,
-      "rename": 144
+      "passthrough": 337,
+      "recompute/guarded": 482,
+      "rename": 142
     },
     "coverage": {
       "component_props": {
@@ -71,8 +71,8 @@
         "resolved": 109
       },
       "flowsto": {
-        "attempted": 1578,
-        "resolved": 957
+        "attempted": 1024,
+        "resolved": 1024
       },
       "prop_pass": {
         "attempted": 3472,
@@ -91,7 +91,7 @@
         "resolved": 1129
       }
     },
-    "unresolved_count": 639
+    "unresolved_count": 642
   },
   "unresolved_sample": [
     {
