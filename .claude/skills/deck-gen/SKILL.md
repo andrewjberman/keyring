@@ -31,7 +31,12 @@ are law.
    ...
    report = d.finalize(out_path)                      # raises on any gate failure
    ```
-   - **Map archetype → primitive:** cover→`set_cover`; panels→`C.panels`; flow→`C.flow`;
+   - **The archetype catalog is `engine/registry.py`** — run `python -m engine.compose --catalog`
+     to see every archetype, its content-contract, item range, and example. That registry is the
+     single source of truth (it drives `archetype → C.<method>`); the quick-map below is a convenience.
+   - **Map archetype → primitive:** cover→`set_cover`; panels→`C.panels`; grid→`C.grid`;
+     statcards→`C.statcards`; table→`C.table`; list-sidebar→`C.list_sidebar`; list→`C.list_accent`;
+     flow→`C.flow`;
      compare→`C.compare`; fork→ two tiles + an OR `C.circle`; vsteps→`C.vsteps`;
      formula→`C.formula`; statement→`C.statement` (dark slide); stat-row→`C.stat` ×N;
      thesis-stat→ text + `C.stat`; rows→ labelled rows. Use `C.eyebrow` on every content
