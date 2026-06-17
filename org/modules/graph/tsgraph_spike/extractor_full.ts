@@ -438,6 +438,25 @@ for (const sf of workSet) {
   }
 }
 
+// ============================ PASS 10: READS_FIELD (every resolved field read -> comp-types `fields` consumer index) ============================
+// Closes the comp-types `fields` recall gap: ONE getSymbol walk over EVERY property-access resolves
+// each to its declaring field -- captures CallExpression-wrapped reads (getCanonicalModelName(model.name)),
+// indexed-access (model.returns[k]) and arbitrary `x = obj.field` reads that the FLOWS_TO adapter
+// heuristic + the JSX-only RENDERS pass miss. Cheaper than findReferences-per-field (one walk, not 4870).
+// Edge grain = module -[READS_FIELD]-> field (the consumer FILE set; site count tracked in coverage).
+for (const sf of workSet) {
+  const host = rel(sf);
+  for (const pacc of sf.getDescendantsOfKind(SyntaxKind.PropertyAccessExpression)) {
+    const r = ownerField(pacc);
+    const ok = !!(r.owner && r.field && typeNameToId.has(r.owner));
+    bump("reads_field", ok);
+    if (ok) {
+      const fId = fieldId(typeNameToId.get(r.owner!)!, r.field!);
+      if (nodes.has(fId)) addEdge(moduleId(host), fId, "READS_FIELD", { resolution: "prop-access -> declared field (TypeChecker getSymbol)" });
+    }
+  }
+}
+
 // ============================ PASS 9: REFERENCES_TYPE (precise type-consumer sites via findReferences) ============================
 // Closes the comp-types `index` recall gap AND kills the regex substring false-positives in one pass:
 // the TS language service's findReferences resolves EVERY real reference to a type symbol (imports,

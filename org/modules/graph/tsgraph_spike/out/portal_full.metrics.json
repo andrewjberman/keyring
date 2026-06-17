@@ -10,10 +10,10 @@
   "metrics": {
     "portal_files_total": 374,
     "work_set_files": 374,
-    "program_load_ms": 7259,
-    "extract_ms": 46418,
+    "program_load_ms": 2528,
+    "extract_ms": 15771,
     "node_count": 11130,
-    "edge_count": 14040,
+    "edge_count": 16150,
     "stub_count": 22,
     "nodes_by_label": {
       "Module": 374,
@@ -45,6 +45,7 @@
       "INSTANTIATES": 1298,
       "PROP_PASSES": 1382,
       "RENDERS": 2447,
+      "READS_FIELD": 2110,
       "REFERENCES_TYPE": 1129
     },
     "flowsto_by_kind": {
@@ -80,6 +81,10 @@
       "renders": {
         "attempted": 3264,
         "resolved": 1530
+      },
+      "reads_field": {
+        "attempted": 16793,
+        "resolved": 6319
       },
       "references_type": {
         "attempted": 1129,
