@@ -6508,3 +6508,10 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-06-17 | 0.7.0_AE_CloudOps | PORTAL_PROMOTE_20260617 | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/change_management/20... | PASS |
 2026-06-17 | 0.4.0_DS_ClientPlatform | COT_RULE15 close + INFRPT P1 inc-1 close + CHAINFIX Phase-1 | ds-commit-gate (FA 20/20 pass, full gate 92 pre-existing -> CTO ruled A), safe-deploy hook (20/20 DEPLOYED+verified), md5 spot-check 3/3 MATCH, deploy_ledger.py open/close (b83adde29, check --red clean) | COT_RULE15 deployed+CLOSED 013096c68; inc-1 joint RAVC2 closed; CHAINFIX Phase-1 banked + clean-boundary checkpoint
 | 2026-06-17 | 0.4.0_DS_ClientPlatform | PORTAL_PROMOTE_20260617 | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-06-17 | 0.7.0_AE_CloudOps~B | NFRA_GRAPHS.D8-FP | comp-manifest-check | comp-manifest-check check | PASS |
+| 2026-06-17 | 0.7.0_AE_CloudOps~B | NFRA_GRAPHS.D8-FP | comp-surface-check | comp-surface-check scan | PASS |
+| 2026-06-17 | 0.7.0_AE_CloudOps~B | NFRA_GRAPHS.D8-FP | comp-surface-check | comp-surface-check check | PASS |
+| 2026-06-17 | 0.7.0_AE_CloudOps~B | NFRA_GRAPHS.D8-FP | comp-surface-check | comp-surface-check check --mode advisory --file .tools/drift_producer.py --file infra/a... | PASS |
+| 2026-06-17 | 0.7.0_AE_CloudOps~B | NFRA_GRAPHS.D8-FP | comp-surface-check | comp-surface-check check --mode advisory --file .tools/drift_producer.py --file infra/a... | PASS |
+| 2026-06-17 | 0.7.0_AE_CloudOps | PMTRDX.001 + NFRA_GRAPHS.D8-FP | summary | PMTRDX financial deploy: safe-apply x2 (repoint-only 0/1/0 + 0/2/0), deploy_ledger 3-leg open->close + check --red, CodeSha256 x3 + live-DDB x2 egress-verify, ds-commit-gate (caught F401/E402); D8-FP comp-kuzu producer-membership carve (per-surface/firm) | PASS |
+| 2026-06-17 | 0.7.0_AE_CloudOps | NFRA_GRAPHS.D8-FP | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
