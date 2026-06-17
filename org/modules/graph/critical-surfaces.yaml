@@ -24,6 +24,12 @@ surfaces:
       backend_depth: full
       frontend_depth: existence
     why: "Andrew: the 'Portfolio Analytics' panel at the top of the Model Portfolios page -- SEV1, must always be right."
+    aws_backend:   # NFRA_GRAPHS.D8-FP (2026-06-17): AWS-backend node membership for the in-derive scan (Option A). Names resolved to node_id at re-sign; a removed/changed member fires this surface. Producer-identity anchored (NOT bucket-writers).
+      firm_scope: shared   # AUA aggregate is firm-split IN-DATA, single producer
+      producers: ["mdpf-daily-runner"]
+      served_buckets: ["opal-data-mdpf", "opal-data-portal-v2"]
+      serving_lambdas: ["opal-portal-data-proxy"]
+      coverage_note: "C2 (CTO-ruled): the getAUMMetrics portfolio-metrics leg is a PORTAL endpoint (portal/src/api/endpoints/aum.ts) -> dev-box B5 / comp-surface-check (commit-time) domain, NOT an AWS-scan node. Recorded DIVISION, not a gap. AWS scan covers the mdpf AUA leg."
 
   - id: model_portfolios.benchmark
     severity: SEV1
@@ -34,6 +40,11 @@ surfaces:
       backend_depth: full
       frontend_depth: existence
     why: "Andrew: the Benchmark tab must ALWAYS be right; any logic/resource change or break raises a flag."
+    aws_backend:   # NFRA_GRAPHS.D8-FP: producer-identity-anchored AWS-backend membership.
+      firm_scope: shared   # Opal model-portfolio benchmark data, firm-agnostic
+      producers: ["yang-model-portfolio-benchmarks"]
+      served_buckets: ["opal-data-portal-v2", "opal-portal-market-data"]
+      serving_lambdas: ["opal-portal-data-proxy"]
 
   - id: advisor_intelligence
     severity: SEV1
@@ -44,6 +55,19 @@ surfaces:
       backend_depth: full
       frontend_depth: existence
     why: "Andrew: same severity as the Benchmark tab -- keep an alert on breaking logic on ADVI as a whole."
+    aws_backend:   # NFRA_GRAPHS.D8-FP: ADVI forks PER FIRM (no cross-firm bleed -- a firm's alarm fires only on ITS backend removal).
+      firm_scope: per_firm
+      per_firm:
+        bd:
+          producers: ["bd-gold-layer-runner", "bd-gold-foundation", "bd-gold-layer", "bd-gold-trigger", "bd-gold-detail-generator", "bd-gold-detail-checker"]
+          served_buckets: ["opal-data-bd"]
+          serving_lambdas: ["shared-advisor-router", "shared-advisor-router-response"]
+        inf:
+          producers: ["inf-gold-layer-runner", "inf-portal-advisor-publisher", "inf-portal-publisher", "inf-gold-trigger"]
+          served_buckets: ["opal-data-inf"]
+          serving_lambdas: ["shared-advisor-router", "shared-advisor-router-response"]
+        cot:
+          status: no-op   # C3 (CTO-ruled): cot ADVI not confirmed live-served (cot snapshot-first, newer firm). DOCUMENTED no-op -- NOT armed; arm when cot-portal-partner-live confirms (CTO pending w/ Andrew). Recorded gap, not silent.
 
   # ---- SEV2: lesser ----
   - id: model_portfolios.peers
@@ -55,6 +79,11 @@ surfaces:
       backend_depth: full
       frontend_depth: existence
     why: "Andrew: lesser severity than Benchmark, same monitoring shape."
+    aws_backend:   # NFRA_GRAPHS.D8-FP: producer-identity-anchored AWS-backend membership.
+      firm_scope: shared
+      producers: ["yang-generate-peer-performance"]
+      served_buckets: ["opal-data-portal-v2", "opal-portal-market-data"]
+      serving_lambdas: ["opal-portal-data-proxy"]
 
   - id: model_portfolios.aum
     severity: SEV2
@@ -67,6 +96,11 @@ surfaces:
     why: "Andrew: lesser severity than Benchmark, same monitoring shape."
     known_findings:
       - "getAUMMetrics resolves to 'url: (not resolved)' in comp-platinum -- a graph-unresolved fetch (day-0 break candidate to triage)."
+    aws_backend:   # NFRA_GRAPHS.D8-FP: shares the headline mdpf chain (severity_resolution MAX -> SEV1 on shared nodes). Same C2 division (getAUMMetrics = portal endpoint).
+      firm_scope: shared
+      producers: ["mdpf-daily-runner"]
+      served_buckets: ["opal-data-mdpf", "opal-data-portal-v2"]
+      serving_lambdas: ["opal-portal-data-proxy"]
 
 monitor:
   severity_resolution: "a node carved into MULTIPLE surfaces takes the MAX severity of its containing surfaces (block-with-ack wins over warn). LOAD-BEARING, not theoretical: model_portfolios.headline (SEV1) and model_portfolios.aum (SEV2) share substantially the same aum.ts backend chain -- without this rule comp-surface-check behavior on those shared nodes is ambiguous. [v0.3 CTO carve-review]"
