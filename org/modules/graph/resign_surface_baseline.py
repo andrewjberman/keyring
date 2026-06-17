@@ -1,5 +1,16 @@
 #!/usr/bin/env python3
-"""Re-sign the critical-surface scan baseline as PER-SURFACE AWS-BACKEND MEMBERSHIP
+"""DEPRECATED -- DO NOT USE for the surface-scan baseline (NFRA_GRAPHS.D8-FP, CTO 204916Z).
+
+This DEV-BOX signer reads a comp-kuzu/snapshot INDIRECTION whose keys can DIVERGE from the live
+derive's scan cn -- the dump-vs-derive divergence behind the 3 D8 key-space mismatches. The baseline
+is now signed BY CONSTRUCTION by `derive_runner.py --sign-baseline` (same _graph_to_scan_nodes on the
+same in-VPC graph the scan diffs) -> baseline-keys == scan-cn-keys is the same code on the same data,
+impossible to diverge. Re-running THIS tool re-opens that divergence class = a footgun. Kept as the
+historical record + membership-parse reference only; never (re)sign the critical-surface baseline with
+it. (Hard-gated below: needs ALLOW_DEPRECATED_RESIGN=1 to run at all.)
+
+--- original (superseded) ---
+Re-sign the critical-surface scan baseline as PER-SURFACE AWS-BACKEND MEMBERSHIP
 (NFRA_GRAPHS.D8-FP, Option A).
 
 The in-derive surface scan (derive_runner.run_critical_surface_scan) diffs the AWS-only
@@ -27,6 +38,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
 import sys
 import time
 
@@ -130,6 +142,12 @@ def build_baseline(nodes_json: str) -> dict:
 
 
 def main() -> int:
+    if os.environ.get("ALLOW_DEPRECATED_RESIGN") != "1":
+        print("ERROR: resign_surface_baseline.py is DEPRECATED (NFRA_GRAPHS.D8-FP, CTO 204916Z) -- it\n"
+              "       signs from a dump/snapshot INDIRECTION that can DIVERGE from the live scan cn (the\n"
+              "       3-mismatch class). Sign BY CONSTRUCTION instead: derive_runner.py --sign-baseline.\n"
+              "       (forensic override only: ALLOW_DEPRECATED_RESIGN=1)", file=sys.stderr)
+        return 2
     ap = argparse.ArgumentParser(description="Re-sign critical-surface baseline (D8-FP membership)")
     ap.add_argument("--dry-run", action="store_true", help="build + print, do NOT upload")
     ap.add_argument("--nodes-json", default=".runtmp/d8fp_allnodes.json",
