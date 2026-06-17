@@ -6489,3 +6489,18 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-06-17 | 0.3.0_DE_TradingOperations | PORTAL_PROMOTE_20260617 | comp-surface-check | comp-surface-check check --mode advisory --file docs/briefs/pmtrdx-001-weight-unit-regr... | PASS |
 2026-06-17 | 0.7.0_AE_CloudOps~B | NFRA_INFRPT.P1 inc-1 | pipescript --list, comp-freshness --list, comp-iam service+gaps, ds-commit-gate(x3), build-and-upload, safe-apply, record-terraform-deploy | DATA FRESHNESS section B + sec-F dogfood + cot non-advancement deployed (shared-infra-v1.23.0). comp-freshness --list exposed bd/inf-only coverage gap (drove the manifest design); comp-iam gaps 0 missing after inf+cot grant; ds-commit-gate clean each edit; safe-apply 1add/1change/0destroy.
 | 2026-06-17 | 0.7.0_AE_CloudOps~B | PORTAL_PROMOTE_20260617 | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-06-17 | 1.0.0_SA_CTO | PORTAL_PROMOTE_20260617 | comp-surface-check | comp-surface-check check --mode advisory --file .tools/deploy_ledger.py --file .tools/s... | PASS |
+| 2026-06-17 | 2.0.0_SA_COO | PORTAL_PROMOTE_20260617 | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/NFRA_COT_RULE15.json --fil... | PASS |
+| 2026-06-17 | 0.7.0_AE_CloudOps~B | PORTAL_PROMOTE_20260617 | comp-manifest-check | comp-manifest-check | FAIL |
+| 2026-06-17 | 0.7.0_AE_CloudOps~B | PORTAL_PROMOTE_20260617 | comp-surface-check | comp-surface-check | FAIL |
+| 2026-06-17 | 0.7.0_AE_CloudOps~B | PORTAL_PROMOTE_20260617 | comp-manifest-check | comp-manifest-check list | PASS |
+| 2026-06-17 | 0.7.0_AE_CloudOps~B | PORTAL_PROMOTE_20260617 | comp-surface-check | comp-surface-check list | PASS |
+| 2026-06-17 | 0.3.0_DE_TradingOperations | PORTAL_PROMOTE_20260617 | comp-surface-check | comp-surface-check check --mode advisory --file docs/briefs/pmtrdx-001-weight-unit-regr... | PASS |
+| 2026-06-17 | 0.7.0_AE_CloudOps~B | PORTAL_PROMOTE_20260617 | comp-iam | comp-iam gaps | PASS |
+| 2026-06-17 | 0.7.0_AE_CloudOps | PORTAL_PROMOTE_20260617 | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/portfolio_excel_genera... | PASS |
+| 2026-06-17 | 0.7.0_AE_CloudOps~B | PORTAL_PROMOTE_20260617 | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/infrastructure_monitor... | PASS |
+| 2026-06-17 | 0.7.0_AE_CloudOps~B | PORTAL_PROMOTE_20260617 | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/ci/lambda-source-map.json | PASS |
+| 2026-06-17 | 0.7.0_AE_CloudOps~B | PORTAL_PROMOTE_20260617 | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/ci/shared-infra-resour... | PASS |
+| 2026-06-17 | 0.7.0_AE_CloudOps | PORTAL_PROMOTE_20260617 | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.7.0_AE_CloudOps/deli... | PASS |
+2026-06-17 | 0.7.0_AE_CloudOps~B | NFRA_INFRPT.P1 inc-2a | comp-manifest-check list, comp-surface-check list, comp-iam gaps, ds-commit-gate(x3), build-and-upload, safe-apply, record-terraform-deploy | DEPLOY DRIFT section (in-Lambda half-landed-deploy detection) deployed shared-infra-v1.24.0. comp-manifest-check list clarified it's graph-CALL-manifest not lambda-source-map (TO naming); comp-iam gaps 0 missing; binding-pair proven (127/129 match, no SHA false-positive) incl in-Lambda; caught a real 85d-stranded artifact (volatility-fetcher).
+| 2026-06-17 | 0.7.0_AE_CloudOps~B | PORTAL_PROMOTE_20260617 | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
