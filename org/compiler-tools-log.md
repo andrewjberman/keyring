@@ -6373,3 +6373,74 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-06-17 | 3.0.0_SA_CVO | NFRA_INFRPT.DR2 | comp-kuzu | comp-kuzu MATCH (w:CloudNode)-[r:CloudEdge {edge_type:'WRITES'}]->(b:CloudNode {name:'o... | PASS |
 2026-06-17T13:06Z | 0.6.0_AE_PartnerETL | (none — read-only served-artifact morning review) | 06-17 AM GLDINC P1 nightly review: aws s3 head-object/cp + chain-log grep verified shadow-free (dispatch ETag e643bc51) + D_00f served fresh; no code/infra change so no comp-pipescript/comp-blast trigger
 | 2026-06-17 | 0.6.0_AE_PartnerETL | NFRA_INFRPT.DR2 | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-06-17 | 0.7.0_AE_CloudOps | NFRA_INFRPT.DR2 | comp-kuzu | comp-kuzu MATCH (a)-[w:WRITES]->(b) WHERE toLower(a.name) CONTAINS 'ec2' OR toLower(a.n... | FAIL |
+| 2026-06-17 | 2.0.0_SA_COO | NFRA_INFRPT.DR2 | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.7.0_AE_CloudOps/task... | PASS |
+| 2026-06-17 | 3.0.0_SA_CVO | NFRA_INFRPT.DR2 | comp-kuzu | comp-kuzu MATCH (e:CloudNode {name:'bd-gold-layer-runner'})-[r:CloudEdge]->(t:CloudNode... | PASS |
+| 2026-06-17 | 3.0.0_SA_CVO | NFRA_INFRPT.DR2 | comp-kuzu | comp-kuzu MATCH (p:CloudNode {node_type:'INSTANCE_PROFILE'})-[r:CloudEdge]->(role:Cloud... | FAIL |
+| 2026-06-17 | 0.7.0_AE_CloudOps | NFRA_INFRPT.DR2 | comp-kuzu | comp-kuzu CALL show_tables() RETURN name, type | PASS |
+| 2026-06-17 | 0.7.0_AE_CloudOps | NFRA_INFRPT.DR2 | comp-kuzu | comp-kuzu CALL table_info('CloudEdge') RETURN * | PASS |
+| 2026-06-17 | 0.7.0_AE_CloudOps | NFRA_INFRPT.DR2 | comp-kuzu | comp-kuzu MATCH ()-[e:CloudEdge]->() RETURN DISTINCT e.edge_type AS et ORDER BY et | PASS |
+| 2026-06-17 | 0.7.0_AE_CloudOps | NFRA_INFRPT.DR2 | comp-kuzu | comp-kuzu MATCH ()-[e:CloudEdge]->() WHERE e.edge_type = 'WRITES' RETURN count(*) AS wr... | PASS |
+| 2026-06-17 | 0.7.0_AE_CloudOps | NFRA_INFRPT.DR2 | comp-kuzu | comp-kuzu MATCH (a:CloudNode)-[e:CloudEdge]->(b:CloudNode) WHERE e.edge_type = 'WRITES'... | PASS |
+| 2026-06-17 | 0.0.0_AB_MSTR | NFRA_INFRPT.DR2 | comp-surface-check | comp-surface-check check --mode advisory --file org/tier0/reviews/RV-0035.md | PASS |
+| 2026-06-17 | 0.7.0_AE_CloudOps | NFRA_INFRPT.DR2 | comp-kuzu | comp-kuzu MATCH (a:CloudNode)-[e:CloudEdge]->(b:CloudNode) WHERE e.edge_type='WRITES' A... | PASS |
+| 2026-06-17 | 0.7.0_AE_CloudOps | NFRA_INFRPT.DR2 | comp-kuzu | comp-kuzu MATCH (a:CloudNode) WHERE toLower(a.name) CONTAINS 'exporter' RETURN a.name A... | PASS |
+| 2026-06-17 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-06-17 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/briefs/allo... | PASS |
+| 2026-06-17 | 0.0.0_AB_MSTR | NFRA_GCONTR.TO-2.ae-graph-contracts-table-q1q2-advisory | comp-surface-check | comp-surface-check check --mode advisory --file org/mcp/live_agents_by_marker.json | PASS |
+| 2026-06-17 | 3.0.0_SA_CVO | NFRA_GCONTR.TO-2.ae-graph-contracts-table-q1q2-advisory | comp-surface-check | comp-surface-check check --mode advisory --file org/tier0/reviews/RV-0035.md | PASS |
+| 2026-06-17 | 0.7.0_AE_CloudOps | NFRA_GCONTR.TO-2.ae-graph-contracts-table-q1q2-advisory | comp-kuzu | comp-kuzu MATCH (a)-[w:WRITES]->(b) RETURN a.id AS src, b.id AS dst LIMIT 8 | FAIL |
+| 2026-06-17 | 0.7.0_AE_CloudOps | NFRA_GCONTR.TO-2.ae-graph-contracts-table-q1q2-advisory | comp-kuzu | comp-kuzu CALL show_tables() RETURN name, type | PASS |
+| 2026-06-17 | 0.0.0_AB_MSTR | NFRA_GCONTR.TO-2.ae-graph-contracts-table-q1q2-advisory | comp-surface-check | comp-surface-check check --mode advisory --file org/mcp/live_agents_by_marker.json --fi... | PASS |
+| 2026-06-17 | 0.7.0_AE_CloudOps | NFRA_GCONTR.TO-2.ae-graph-contracts-table-q1q2-advisory | comp-kuzu | comp-kuzu MATCH (a:CloudNode)-[e:CloudEdge]->(b:CloudNode) WHERE e.type='WRITES' RETURN... | FAIL |
+| 2026-06-17 | 0.7.0_AE_CloudOps | NFRA_GCONTR.TO-2.ae-graph-contracts-table-q1q2-advisory | comp-kuzu | comp-kuzu MATCH (a:CloudNode)-[e:CloudEdge]->(b:CloudNode) WHERE e.type='WRITES' AND (t... | FAIL |
+| 2026-06-17 | 0.7.0_AE_CloudOps | NFRA_GCONTR.TO-2.ae-graph-contracts-table-q1q2-advisory | comp-kuzu | comp-kuzu CALL table_info('CloudEdge') RETURN * | PASS |
+| 2026-06-17 | 0.7.0_AE_CloudOps | NFRA_GCONTR.TO-2.ae-graph-contracts-table-q1q2-advisory | comp-kuzu | comp-kuzu CALL table_info('CloudNode') RETURN * | PASS |
+| 2026-06-17 | 0.7.0_AE_CloudOps | NFRA_GCONTR.TO-2.ae-graph-contracts-table-q1q2-advisory | comp-kuzu | comp-kuzu MATCH (a:CloudNode)-[e:CloudEdge]->(b:CloudNode) WHERE e.edge_type='WRITES' R... | PASS |
+| 2026-06-17 | 0.7.0_AE_CloudOps | NFRA_GCONTR.TO-2.ae-graph-contracts-table-q1q2-advisory | comp-kuzu | comp-kuzu MATCH (a:CloudNode)-[e:CloudEdge]->(b:CloudNode) WHERE e.edge_type='WRITES' A... | PASS |
+| 2026-06-17 | 0.4.0_DS_ClientPlatform | NFRA_INFRPT.P1.data-freshness-and-drift-sections | pipescript | pipescript --list | PASS |
+| 2026-06-17 | 0.7.0_AE_CloudOps | NFRA_INFRPT.P1.data-freshness-and-drift-sections | comp-kuzu | comp-kuzu MATCH (a:CloudNode)-[e:CloudEdge]->(b:CloudNode) WHERE e.edge_type='WRITES' A... | FAIL |
+| 2026-06-17 | 0.7.0_AE_CloudOps | NFRA_INFRPT.P1.data-freshness-and-drift-sections | comp-kuzu | comp-kuzu MATCH (n:CloudNode) WHERE toLower(n.node_id) CONTAINS 'nna' OR toLower(n.name... | PASS |
+| 2026-06-17 | 0.7.0_AE_CloudOps~B | NFRA_INFRPT.P1.data-freshness-and-drift-sections | pipescript | pipescript --list | PASS |
+| 2026-06-17 | 0.7.0_AE_CloudOps | NFRA_INFRPT.P1.data-freshness-and-drift-sections | comp-kuzu | comp-kuzu MATCH (a:CloudNode)-[e:CloudEdge]->(b:CloudNode) WHERE e.edge_type='WRITES' A... | PASS |
+| 2026-06-17 | 0.7.0_AE_CloudOps | NFRA_INFRPT.P1.data-freshness-and-drift-sections | comp-kuzu | comp-kuzu MATCH (a:CloudNode)-[e:CloudEdge]->(b:CloudNode) WHERE a.node_type='EC2_INSTA... | PASS |
+| 2026-06-17 | 0.7.0_AE_CloudOps | NFRA_INFRPT.P1.data-freshness-and-drift-sections | comp-kuzu | comp-kuzu MATCH (a:CloudNode)-[e:CloudEdge]->(p:CloudNode) WHERE a.node_type='EC2_INSTA... | FAIL |
+| 2026-06-17 | 0.7.0_AE_CloudOps | NFRA_INFRPT.P1.data-freshness-and-drift-sections | comp-kuzu | comp-kuzu MATCH (a:CloudNode)-[e:CloudEdge]->(p:CloudNode) WHERE a.node_type='EC2_INSTA... | PASS |
+| 2026-06-17 | 0.7.0_AE_CloudOps | NFRA_INFRPT.P1.data-freshness-and-drift-sections | comp-kuzu | comp-kuzu MATCH (n:CloudNode) WHERE toLower(n.node_id) CONTAINS 'portal/src' OR toLower... | PASS |
+| 2026-06-17 | 0.7.0_AE_CloudOps | NFRA_INFRPT.P1.data-freshness-and-drift-sections | comp-kuzu | comp-kuzu MATCH (n:CloudNode) RETURN n.node_type AS t, count(*) AS n ORDER BY n DESC LI... | PASS |
+| 2026-06-17 | 0.4.0_DS_ClientPlatform | NFRA_INFRPT.P1.data-freshness-and-drift-sections | pipescript | pipescript advi-cot | PASS |
+| 2026-06-17 | 0.4.0_DS_ClientPlatform | NFRA_INFRPT.P1.data-freshness-and-drift-sections | pipescript | pipescript model-portfolios | PASS |
+| 2026-06-17 | 0.4.0_DS_ClientPlatform | NFRA_INFRPT.P1.data-freshness-and-drift-sections | pipescript | pipescript mdpf | PASS |
+| 2026-06-17 | 0.4.0_DS_ClientPlatform | NFRA_INFRPT.P1.data-freshness-and-drift-sections | pipescript | pipescript news | PASS |
+| 2026-06-17 | 3.0.0_SA_CVO | NFRA_INFRPT.P1.data-freshness-and-drift-sections | comp-kuzu | comp-kuzu MATCH (e)-[w:WRITES]->(b) WHERE e.kind = 'ec2_instance' OR e.type = 'ec2' RET... | FAIL |
+| 2026-06-17 | 3.0.0_SA_CVO | NFRA_INFRPT.P1.data-freshness-and-drift-sections | comp-kuzu | comp-kuzu CALL show_tables() RETURN name, type | PASS |
+| 2026-06-17 | 3.0.0_SA_CVO | NFRA_INFRPT.P1.data-freshness-and-drift-sections | comp-kuzu | comp-kuzu MATCH ()-[e:CloudEdge]->() RETURN e LIMIT 1 | PASS |
+| 2026-06-17 | 3.0.0_SA_CVO | NFRA_INFRPT.P1.data-freshness-and-drift-sections | comp-kuzu | comp-kuzu MATCH ()-[e:CloudEdge]->() RETURN e.type AS etype, count(*) AS n ORDER BY n DESC | FAIL |
+| 2026-06-17 | 1.0.0_SA_CTO | NFRA_INFRPT.P1.data-freshness-and-drift-sections | comp-surface-check | comp-surface-check | FAIL |
+| 2026-06-17 | 3.0.0_SA_CVO | NFRA_INFRPT.P1.data-freshness-and-drift-sections | comp-kuzu | comp-kuzu MATCH ()-[e:CloudEdge]->() RETURN e.edge_type AS etype, count(*) AS n ORDER B... | PASS |
+| 2026-06-17 | 3.0.0_SA_CVO | NFRA_INFRPT.P1.data-freshness-and-drift-sections | comp-kuzu | comp-kuzu MATCH (n:CloudNode) RETURN n LIMIT 1 | PASS |
+| 2026-06-17 | 1.0.0_SA_CTO | NFRA_INFRPT.P1.data-freshness-and-drift-sections | comp-surface-check | comp-surface-check check | PASS |
+| 2026-06-17 | 3.0.0_SA_CVO | NFRA_INFRPT.P1.data-freshness-and-drift-sections | comp-kuzu | comp-kuzu MATCH (n:CloudNode) RETURN n.node_type AS t, count(*) AS c ORDER BY c DESC | PASS |
+| 2026-06-17 | 3.0.0_SA_CVO | NFRA_INFRPT.P1.data-freshness-and-drift-sections | comp-kuzu | comp-kuzu MATCH (e:CloudNode)-[w:CloudEdge]->(t:CloudNode) WHERE e.node_type='EC2_INSTA... | PASS |
+| 2026-06-17 | 0.6.0_AE_PartnerETL | NFRA_INFRPT.P1.data-freshness-and-drift-sections | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.6.0_AE_PartnerETL/lo... | PASS |
+| 2026-06-17 | 3.0.0_SA_CVO | NFRA_INFRPT.P1.data-freshness-and-drift-sections | comp-kuzu | comp-kuzu MATCH (ec2:CloudNode)-[h:CloudEdge]->(p:CloudNode)-[a:CloudEdge]->(r:CloudNod... | FAIL |
+| 2026-06-17 | 3.0.0_SA_CVO | NFRA_INFRPT.P1.data-freshness-and-drift-sections | comp-kuzu | comp-kuzu MATCH (r:CloudNode)-[w:CloudEdge]->(b:CloudNode) WHERE r.name='bd-exporter-ec... | PASS |
+| 2026-06-17 | 3.0.0_SA_CVO | NFRA_INFRPT.P1.data-freshness-and-drift-sections | comp-kuzu | comp-kuzu MATCH (n:CloudNode) WHERE n.node_type='IAM_ROLE' AND (n.name CONTAINS 'export... | PASS |
+| 2026-06-17 | 3.0.0_SA_CVO | (no-TO) | comp-kuzu | comp-kuzu MATCH (ec2:CloudNode)-[h:CloudEdge]->(pf:CloudNode)-[a:CloudEdge]->(rl:CloudN... | PASS |
+| 2026-06-17 | 3.0.0_SA_CVO | (no-TO) | comp-kuzu | comp-kuzu MATCH (s:CloudNode)-[w:CloudEdge]->(b:CloudNode) WHERE w.edge_type='WRITES' A... | PASS |
+| 2026-06-17 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-transform | comp-transform schema-check AdvisorIntelligence | FAIL |
+| 2026-06-17 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-transform | comp-transform schema-check | FAIL |
+| 2026-06-17 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-transform | comp-transform schema-check DemoAdvisorIntelligence | FAIL |
+| 2026-06-17 | 0.6.0_AE_PartnerETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.6.0_AE_PartnerETL/lo... | PASS |
+| 2026-06-17 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.7.0_AE_CloudOps/task... | PASS |
+| 2026-06-17 | 0.7.0_AE_CloudOps~B | (no-TO) | comp-iam | comp-iam service opal-infrastructure-monitor | PASS |
+| 2026-06-17 | 2.0.0_SA_COO | NFRA_GRAPHS.D8-FP | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/NFRA_COT_RULE15.json --fil... | PASS |
+| 2026-06-17 | 0.4.0_DS_ClientPlatform | NFRA_GRAPHS.D8-FP | comp-surface-check | comp-surface-check check --mode advisory --file .tools/freshness_manifest_gen.py | PASS |
+| 2026-06-17 | 0.4.0_DE_ClientPlatform | NFRA_GRAPHS.D8-FP | comp-surface-check | comp-surface-check check --mode advisory --file src/pages/AdvisorIntelligence/index.tsx | PASS |
+| 2026-06-17 | 0.7.0_AE_CloudOps~B | NFRA_GRAPHS.D8-FP | comp-iam | comp-iam gaps | PASS |
+| 2026-06-17 | 0.7.0_AE_CloudOps | NFRA_GRAPHS.D8-FP | comp-kuzu | comp-kuzu MATCH (n:CloudNode) RETURN n.source AS source, count(*) AS n ORDER BY n DESC ... | PASS |
+| 2026-06-17 | 0.7.0_AE_CloudOps | NFRA_GRAPHS.D8-FP | comp-kuzu | comp-kuzu MATCH (n:CloudNode) WHERE toLower(n.node_id) CONTAINS 'mdpf' OR toLower(n.nod... | PASS |
+| 2026-06-17 | 0.0.0_AB_MSTR | NFRA_GRAPHS.D8-FP | comp-surface-check | comp-surface-check check --mode advisory --file org/mcp/server.py --file org/tier0/ledg... | PASS |
+| 2026-06-17 | 0.7.0_AE_CloudOps | NFRA_GRAPHS.D8-FP | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/change_management/20... | PASS |
+| 2026-06-17 | 0.0.0_AB_MSTR | NFRA_GRAPHS.D8-FP | comp-surface-check | comp-surface-check check --mode advisory --file org/tier0/ledger/LD-0195.md | PASS |
+| 2026-06-17 | 0.7.0_AE_CloudOps | NFRA_GRAPHS.D8-FP | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
