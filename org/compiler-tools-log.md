@@ -6540,3 +6540,6 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-06-17 | 1.0.0_SA_CTO | PMTRDX_FILEPARSER_HARDEN | comp-surface-check | comp-surface-check check --mode advisory --file .github/workflows/drift-producer-push.yml | PASS |
 | 2026-06-17 | 0.6.0_AE_PartnerETL | ADHC_GLDINC.SS4c | comp-pipescript/comp-blast | io+blast load_flows (Phase-1 oracle grounding) | N/A — lib FUNCTION not script/graph-indexed; grounded via Read/Grep |
 | 2026-06-17 | 0.6.0_AE_PartnerETL | PMTRDX_FILEPARSER_HARDEN | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-06-17 | 1.0.0_SA_CTO | NFRA_GCONTR.TO-3 | comp-surface-check | comp-surface-check check --mode advisory --file docs/briefs/intra-typescript-semantic-g... | PASS |
+2026-06-17T18:05Z | 2.0.0_SA_COO | /drive cycle (Andrew-instantiated) | fabric-check.py --blocks (deaf0/blk0/sov0/sv1-benign) + deploy_ledger.py check --red (clean) | WORKED: fabric-block + half-deploy gates both clean; 13 HOT classified (6 ADVANCING / 3 STUCK-RESOLVABLE routed / 1 near-complete / 1 standing / 1 inactive) | NOTE: cot-cluster sequencing (COTSNP decomp + PRTORG close-gate) routed CTO
+| 2026-06-17 | 2.0.0_SA_COO | NFRA_GCONTR.TO-3 | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/mc... | PASS |
