@@ -6652,3 +6652,9 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-06-17 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/globgrph/derive_runner.py | PASS |
 | 2026-06-17 | 0.4.2_RD_AdvisorIntelligence | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .claude/skills/deck-gen/SKILL.md --file... | PASS |
 | 2026-06-17 | 0.4.2_RD_AdvisorIntelligence | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-06-17 | 0.7.0_AE_CloudOps~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .tools/drift_producer.py | PASS |
+| 2026-06-17 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/globgrph/derive_runner.py | PASS |
+| 2026-06-17 | 0.7.0_AE_CloudOps~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/ci/shared-infra-resour... | PASS |
+| 2026-06-17 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/resign_surface_baseli... | PASS |
+| 2026-06-17 | 3.0.0_SA_CVO | ADVI_NNAATTR.close-gate | molecule/seams/read/grep/python | F-0/F-1a deployed-code validation: helper + C_07 column SOUND; DIG = D_00c re-implements melt inline (not the shared helper), narrower null-set, identity rests on 2 parallel melts (0 divergence today, latent); served close-gate pending nightly | VALIDATE |
+| 2026-06-17 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
