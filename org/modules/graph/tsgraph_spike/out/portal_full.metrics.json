@@ -10,11 +10,224 @@
   "metrics": {
     "portal_files_total": 374,
     "work_set_files": 374,
-    "program_load_ms": 3536,
-    "extract_ms": 28522,
+    "program_load_ms": 3824,
+    "extract_ms": 21478,
     "node_count": 11232,
     "edge_count": 16397,
     "stub_count": 25,
+    "collapse_exposed_count": 10,
+    "collapse_exposed": [
+      {
+        "key": "type:portal/src/api/portal-proxy.ts#BenchmarkModelData#name|FLOWS_TO|type:portal/src/components/ReturnVolatilityScatter.tsx#ScatterPoint#name",
+        "kept": {
+          "kind": "passthrough",
+          "condition": null,
+          "srcField": "BenchmarkModelData.name",
+          "dstField": "name",
+          "rename": false,
+          "resolution": "getSymbol on field-read prop access -> declaring type (TypeChecker)",
+          "via": "mapping portal/src/components/ReturnVolatilityScatter.tsx:354"
+        },
+        "dropped": {
+          "kind": "recompute/guarded",
+          "condition": null,
+          "srcField": "BenchmarkModelData.name",
+          "dstField": "name",
+          "rename": false,
+          "resolution": "getSymbol on field-read prop access -> declaring type (TypeChecker)",
+          "via": "mapping portal/src/components/ReturnVolatilityScatter.tsx:372"
+        }
+      },
+      {
+        "key": "type:portal/src/pages/Positioning/tabs/HoldingsTab.tsx#HoldingData#ticker|FLOWS_TO|out:portal/src/pages/Attribution/tabs/SelectionTab.tsx:325#performance",
+        "kept": {
+          "kind": "recompute/guarded",
+          "condition": "fundReturnsMap.has(holding.ticker) == false",
+          "srcField": "HoldingData.ticker",
+          "dstField": "performance",
+          "rename": false,
+          "resolution": "getSymbol on field-read prop access -> declaring type (TypeChecker)",
+          "via": "mapping portal/src/pages/Attribution/tabs/SelectionTab.tsx:325"
+        },
+        "dropped": {
+          "kind": "recompute/guarded",
+          "condition": "fundReturnsMap.has(holding.ticker) == true",
+          "srcField": "HoldingData.ticker",
+          "dstField": "performance",
+          "rename": false,
+          "resolution": "getSymbol on field-read prop access -> declaring type (TypeChecker)",
+          "via": "mapping portal/src/pages/Attribution/tabs/SelectionTab.tsx:325"
+        }
+      },
+      {
+        "key": "type:portal/src/api/portal-proxy.ts#DataRefreshStepStatus#status|FLOWS_TO|out:portal/src/pages/DataRefresh/hooks/useDataRefreshState.ts:80#status",
+        "kept": {
+          "kind": "recompute/guarded",
+          "condition": "step.status === 'SUCCEEDED' == false",
+          "srcField": "DataRefreshStepStatus.status",
+          "dstField": "status",
+          "rename": false,
+          "resolution": "getSymbol on field-read prop access -> declaring type (TypeChecker)",
+          "via": "mapping portal/src/pages/DataRefresh/hooks/useDataRefreshState.ts:80"
+        },
+        "dropped": {
+          "kind": "recompute/guarded",
+          "condition": "step.status === 'RUNNING' == false",
+          "srcField": "DataRefreshStepStatus.status",
+          "dstField": "status",
+          "rename": false,
+          "resolution": "getSymbol on field-read prop access -> declaring type (TypeChecker)",
+          "via": "mapping portal/src/pages/DataRefresh/hooks/useDataRefreshState.ts:80"
+        }
+      },
+      {
+        "key": "type:portal/src/api/portal-proxy.ts#DataRefreshStepStatus#status|FLOWS_TO|out:portal/src/pages/DataRefresh/hooks/useDataRefreshState.ts:80#status",
+        "kept": {
+          "kind": "recompute/guarded",
+          "condition": "step.status === 'SUCCEEDED' == false",
+          "srcField": "DataRefreshStepStatus.status",
+          "dstField": "status",
+          "rename": false,
+          "resolution": "getSymbol on field-read prop access -> declaring type (TypeChecker)",
+          "via": "mapping portal/src/pages/DataRefresh/hooks/useDataRefreshState.ts:80"
+        },
+        "dropped": {
+          "kind": "recompute/guarded",
+          "condition": "step.status === 'FAILED' == false",
+          "srcField": "DataRefreshStepStatus.status",
+          "dstField": "status",
+          "rename": false,
+          "resolution": "getSymbol on field-read prop access -> declaring type (TypeChecker)",
+          "via": "mapping portal/src/pages/DataRefresh/hooks/useDataRefreshState.ts:80"
+        }
+      },
+      {
+        "key": "type:portal/src/api/portal-proxy.ts#DataRefreshStepStatus#status|FLOWS_TO|out:portal/src/pages/DataRefresh/hooks/useDataRefreshState.ts:80#status",
+        "kept": {
+          "kind": "recompute/guarded",
+          "condition": "step.status === 'SUCCEEDED' == false",
+          "srcField": "DataRefreshStepStatus.status",
+          "dstField": "status",
+          "rename": false,
+          "resolution": "getSymbol on field-read prop access -> declaring type (TypeChecker)",
+          "via": "mapping portal/src/pages/DataRefresh/hooks/useDataRefreshState.ts:80"
+        },
+        "dropped": {
+          "kind": "recompute/guarded",
+          "condition": "step.status === 'SKIPPED' == false",
+          "srcField": "DataRefreshStepStatus.status",
+          "dstField": "status",
+          "rename": false,
+          "resolution": "getSymbol on field-read prop access -> declaring type (TypeChecker)",
+          "via": "mapping portal/src/pages/DataRefresh/hooks/useDataRefreshState.ts:80"
+        }
+      },
+      {
+        "key": "type:portal/src/pages/Positioning/tabs/HoldingsTab.tsx#HoldingData#ticker|FLOWS_TO|out:portal/src/pages/Positioning/tabs/HoldingsTab.tsx:802#performance",
+        "kept": {
+          "kind": "recompute/guarded",
+          "condition": "fundReturnsMap.has(holding.ticker) == false",
+          "srcField": "HoldingData.ticker",
+          "dstField": "performance",
+          "rename": false,
+          "resolution": "getSymbol on field-read prop access -> declaring type (TypeChecker)",
+          "via": "mapping portal/src/pages/Positioning/tabs/HoldingsTab.tsx:802"
+        },
+        "dropped": {
+          "kind": "recompute/guarded",
+          "condition": "fundReturnsMap.has(holding.ticker) == true",
+          "srcField": "HoldingData.ticker",
+          "dstField": "performance",
+          "rename": false,
+          "resolution": "getSymbol on field-read prop access -> declaring type (TypeChecker)",
+          "via": "mapping portal/src/pages/Positioning/tabs/HoldingsTab.tsx:802"
+        }
+      },
+      {
+        "key": "type:portal/src/pages/TradeSubmission/components/SecuritiesTable.tsx#Security#delta_weight|FLOWS_TO|out:portal/src/pages/TradeSubmission/tabs/SubmitTab.tsx:175#trade_instruction",
+        "kept": {
+          "kind": "recompute/guarded",
+          "condition": "sec.delta_weight > 0 == false",
+          "srcField": "Security.delta_weight",
+          "dstField": "trade_instruction",
+          "rename": false,
+          "resolution": "getSymbol on field-read prop access -> declaring type (TypeChecker)",
+          "via": "mapping portal/src/pages/TradeSubmission/tabs/SubmitTab.tsx:175"
+        },
+        "dropped": {
+          "kind": "recompute/guarded",
+          "condition": "sec.delta_weight < 0 == false",
+          "srcField": "Security.delta_weight",
+          "dstField": "trade_instruction",
+          "rename": false,
+          "resolution": "getSymbol on field-read prop access -> declaring type (TypeChecker)",
+          "via": "mapping portal/src/pages/TradeSubmission/tabs/SubmitTab.tsx:175"
+        }
+      },
+      {
+        "key": "type:portal/src/pages/AdvisorIntelligence/_shared/types.ts#PlatinumLeaderboardEntry#aua_growth_pct|FLOWS_TO|type:portal/src/pages/AdvisorIntelligence/_shared/types.ts#LeaderboardEntry#aua_growth_pct",
+        "kept": {
+          "kind": "passthrough",
+          "condition": null,
+          "srcField": "PlatinumLeaderboardEntry.aua_growth_pct",
+          "dstField": "aua_growth_pct",
+          "rename": false,
+          "resolution": "getSymbol on field-read prop access -> declaring type (TypeChecker)",
+          "via": "mapping portal/src/pages/AdvisorIntelligence/_shared/tabs/AdvisorsTab.tsx:381"
+        },
+        "dropped": {
+          "kind": "recompute/guarded",
+          "condition": "aua > 0 == true",
+          "srcField": "PlatinumLeaderboardEntry.aua_growth_pct",
+          "dstField": "aua_growth_pct",
+          "rename": false,
+          "resolution": "getSymbol on field-read prop access -> declaring type (TypeChecker)",
+          "via": "mapping portal/src/pages/AdvisorIntelligence/_shared/tabs/AdvisorsTab.tsx:427"
+        }
+      },
+      {
+        "key": "type:portal/src/pages/AdvisorIntelligence/_shared/types.ts#HistogramData#counts|FLOWS_TO|out:portal/src/pages/AdvisorIntelligence/_shared/tabs/DistributionTab.tsx:3901#count",
+        "kept": {
+          "kind": "recompute/guarded",
+          "condition": "useLogScale == true",
+          "srcField": "HistogramData.counts",
+          "dstField": "count",
+          "rename": false,
+          "resolution": "getSymbol on field-read prop access -> declaring type (TypeChecker)",
+          "via": "mapping portal/src/pages/AdvisorIntelligence/_shared/tabs/DistributionTab.tsx:3901"
+        },
+        "dropped": {
+          "kind": "recompute/guarded",
+          "condition": "useLogScale == false",
+          "srcField": "HistogramData.counts",
+          "dstField": "count",
+          "rename": false,
+          "resolution": "getSymbol on field-read prop access -> declaring type (TypeChecker)",
+          "via": "mapping portal/src/pages/AdvisorIntelligence/_shared/tabs/DistributionTab.tsx:3901"
+        }
+      },
+      {
+        "key": "type:portal/src/pages/AdvisorIntelligence/_shared/types.ts#DistributionStats#histogram|FLOWS_TO|out:portal/src/pages/AdvisorIntelligence/_shared/tabs/DistributionTab.tsx:3901#count",
+        "kept": {
+          "kind": "recompute/guarded",
+          "condition": "useLogScale == true",
+          "srcField": "DistributionStats.histogram",
+          "dstField": "count",
+          "rename": false,
+          "resolution": "getSymbol on field-read prop access -> declaring type (TypeChecker)",
+          "via": "mapping portal/src/pages/AdvisorIntelligence/_shared/tabs/DistributionTab.tsx:3901"
+        },
+        "dropped": {
+          "kind": "recompute/guarded",
+          "condition": "useLogScale == false",
+          "srcField": "DistributionStats.histogram",
+          "dstField": "count",
+          "rename": false,
+          "resolution": "getSymbol on field-read prop access -> declaring type (TypeChecker)",
+          "via": "mapping portal/src/pages/AdvisorIntelligence/_shared/tabs/DistributionTab.tsx:3901"
+        }
+      }
+    ],
     "nodes_by_label": {
       "Module": 374,
       "TypeDecl": 807,

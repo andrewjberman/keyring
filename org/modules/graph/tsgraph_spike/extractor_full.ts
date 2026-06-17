@@ -41,8 +41,17 @@ type Attrs = Record<string, unknown>;
 const nodes = new Map<string, { id: string; label: string; attrs: Attrs }>();
 const edges: { src: string; dst: string; label: string; attrs: Attrs }[] = [];
 const edgeKeys = new Set<string>();
+const edgeAttrsByKey = new Map<string, Attrs>();
+// COLLAPSE-DETECTOR (pre-cutover guard, COO/CTO): a same-(src,dst,label) edge re-added with DIFFERING
+// collapse-relevant props (kind/condition/srcField) would be SILENTLY last-wins-collapsed -- both by this
+// producer's dedup AND the old edge_type-only Kuzu MERGE. Detect + raise LOUD, never silent. (AE landed
+// the {edge_type,props} richer MERGE key 23ee1786f as the load-side enrichment; this is the producer guard.)
+const collapseExposed: { key: string; kept: Attrs; dropped: Attrs }[] = [];
 const unresolved: { cat: string; what: string; where: string; reason: string }[] = [];
 const cov: Record<string, { attempted: number; resolved: number }> = {};
+function collapseSig(a: Attrs): string {
+  return JSON.stringify({ kind: a.kind ?? null, condition: a.condition ?? null, srcField: a.srcField ?? null, dstField: a.dstField ?? null });
+}
 
 function bump(cat: string, ok: boolean) {
   cov[cat] ??= { attempted: 0, resolved: 0 };
@@ -57,8 +66,13 @@ function addNode(id: string, label: string, attrs: Attrs = {}) {
 }
 function addEdge(src: string, dst: string, label: string, attrs: Attrs = {}) {
   const k = `${src}|${label}|${dst}`;
-  if (edgeKeys.has(k)) return;
+  if (edgeKeys.has(k)) {
+    const kept = edgeAttrsByKey.get(k);
+    if (kept && collapseSig(kept) !== collapseSig(attrs)) collapseExposed.push({ key: k, kept, dropped: attrs });
+    return;
+  }
   edgeKeys.add(k);
+  edgeAttrsByKey.set(k, attrs);
   edges.push({ src, dst, label, attrs });
 }
 function note(cat: string, what: string, where: string, reason: string) {
@@ -551,6 +565,8 @@ const out = {
     node_count: nodes.size,
     edge_count: edges.length,
     stub_count: stubbed,
+    collapse_exposed_count: collapseExposed.length,
+    collapse_exposed: collapseExposed.slice(0, 20),
     nodes_by_label: byLabel,
     edges_by_label: edgeByLabel,
     flowsto_by_kind: flowsByKind,
@@ -572,4 +588,10 @@ console.log(`     edges_by_label: ${JSON.stringify(edgeByLabel)}`);
 console.log(`     FLOWS_TO by kind: ${JSON.stringify(flowsByKind)}`);
 console.log(`     coverage (resolved/attempted): ${Object.entries(cov).map(([k, v]) => `${k} ${v.resolved}/${v.attempted}`).join(", ")}`);
 console.log(`     ${unresolved.length} VISIBLE unresolved (no silent Unknown)`);
+if (collapseExposed.length > 0) {
+  console.log(`  !! COLLAPSE-EXPOSED: ${collapseExposed.length} same-(src,dst,label) edge(s) with DIFFERING collapse-props -- LOUD, not silent`);
+  for (const c of collapseExposed.slice(0, 5)) console.log(`     COLLAPSE: ${c.key}  kept=${collapseSig(c.kept)}  dropped=${collapseSig(c.dropped)}`);
+} else {
+  console.log(`  OK: collapse-detector -- 0 same-(src,dst,label) differing-props edges (no silent collapse)`);
+}
 console.log(`OK: wrote out/${outName}`);

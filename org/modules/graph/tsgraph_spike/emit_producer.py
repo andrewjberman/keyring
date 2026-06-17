@@ -44,6 +44,10 @@ def main() -> int:
             "by_edge_type": g.get("metrics", {}).get("edges_by_label"),
             "flowsto_by_kind": g.get("metrics", {}).get("flowsto_by_kind"),
             "per_category": g.get("metrics", {}).get("coverage"),
+            # collapse-detector (pre-cutover guard): same-(src,dst,label) edges with differing collapse-props
+            # that the producer dedup / old edge_type-only Kuzu MERGE would last-wins-collapse -- VISIBLE, LOUD.
+            "collapse_exposed_count": g.get("metrics", {}).get("collapse_exposed_count", 0),
+            "collapse_exposed": g.get("metrics", {}).get("collapse_exposed", []),
             "unresolved": g.get("unresolved", []),
         },
     }
