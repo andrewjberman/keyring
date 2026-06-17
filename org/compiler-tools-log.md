@@ -6359,3 +6359,17 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-06-16 | 2.0.0_SA_COO | NFRA_INFRPT.DR2 | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
 | 2026-06-16 | 1.0.0_SA_CTO | portfolio closeout-sweep | registry-check.py [-all], comp-kuzu | registry-check 25->22 open (reconciled -3 closed/+2 cold->hot from trigger-commit age refresh); comp-kuzu MATCH count = GLOBGRPH live close-confirm (header current, HEAD advancing 21:37Z); deploy_ledger.py --red false-clean root-caused (sentinel-only enum, blind to hand-authored ledgers) -> CTO/AE harden | PASS (gate-gap routed) |
 | 2026-06-16 | 1.0.0_SA_CTo | NFRA_INFRPT.DR2 | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-06-17 | 3.0.0_SA_CVO | (no-TO) | comp-kuzu | comp-kuzu MATCH (n) RETURN count(n) AS node_count | PASS |
+| 2026-06-17 | 3.0.0_SA_CVO | (no-TO) | comp-kuzu | comp-kuzu CALL show_tables() RETURN * | PASS |
+| 2026-06-17 | 3.0.0_SA_CVO | (no-TO) | comp-kuzu | comp-kuzu MATCH (n:CloudNode) RETURN DISTINCT n.type AS type, count(*) AS cnt ORDER BY ... | FAIL |
+| 2026-06-17 | 3.0.0_SA_CVO | (no-TO) | comp-kuzu | comp-kuzu MATCH ()-[e:CloudEdge]->() RETURN DISTINCT e.type AS etype, count(*) AS cnt O... | FAIL |
+| 2026-06-17 | 3.0.0_SA_CVO | (no-TO) | comp-kuzu | comp-kuzu MATCH (n:CloudNode) RETURN n LIMIT 2 | PASS |
+| 2026-06-17 | 3.0.0_SA_CVO | (no-TO) | comp-kuzu | comp-kuzu MATCH (a)-[e:CloudEdge]->(b) RETURN e LIMIT 2 | PASS |
+| 2026-06-17 | 3.0.0_SA_CVO | (no-TO) | comp-kuzu | comp-kuzu MATCH (n:CloudNode) RETURN DISTINCT n.node_type AS t, count(*) AS c ORDER BY ... | PASS |
+| 2026-06-17 | 3.0.0_SA_CVO | (no-TO) | comp-kuzu | comp-kuzu MATCH ()-[e:CloudEdge]->() RETURN DISTINCT e.edge_type AS t, count(*) AS c OR... | PASS |
+| 2026-06-17 | 3.0.0_SA_CVO | (no-TO) | comp-kuzu | comp-kuzu MATCH (e:CloudNode {node_type:'EC2_INSTANCE'})-[w:CloudEdge {edge_type:'WRITE... | PASS |
+| 2026-06-17 | 3.0.0_SA_CVO | (no-TO) | comp-kuzu | comp-kuzu MATCH (n:CloudNode) WHERE n.name =~ '.*smartx.*' OR n.node_id =~ '.*smartx.*'... | PASS |
+| 2026-06-17 | 3.0.0_SA_CVO | NFRA_INFRPT.DR2 | comp-kuzu | comp-kuzu MATCH (e:CloudNode {name:'smartx-exporter'})-[r:CloudEdge]->(t:CloudNode) RET... | PASS |
+| 2026-06-17 | 3.0.0_SA_CVO | NFRA_INFRPT.DR2 | comp-kuzu | comp-kuzu MATCH (w:CloudNode)-[r:CloudEdge {edge_type:'WRITES'}]->(b:CloudNode {name:'o... | PASS |
+2026-06-17T13:06Z | 0.6.0_AE_PartnerETL | (none — read-only served-artifact morning review) | 06-17 AM GLDINC P1 nightly review: aws s3 head-object/cp + chain-log grep verified shadow-free (dispatch ETag e643bc51) + D_00f served fresh; no code/infra change so no comp-pipescript/comp-blast trigger
+| 2026-06-17 | 0.6.0_AE_PartnerETL | NFRA_INFRPT.DR2 | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
