@@ -6563,3 +6563,12 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-06-17 | 0.6.2_AE_PartnerETL | ADVI_COTETL.chain-state-verify | comp-pipescript | comp-pipescript deployed | PASS |
 2026-06-17T18:19Z | 2.0.0_SA_COO | /drive cycle-2 (cron) | fabric-check.py --blocks (deaf0/blk0/sov0/sv2-benign) + deploy_ledger.py check --red (clean) | WORKED: clean fabric; key delta 0.4.0_DS died-clean (LD-0198, 0 strand) -> ADVI_COTETL owner-dead respawn-at-GO on CTO cot-cluster seq; D8-FP AC2 built; NFRA_TSGRAPH new | NOTE: 0 new dispatch, fabric genuinely advancing, gate PASS via attestation
 | 2026-06-17 | 2.0.0_SA_COO | ADVI_COTETL.chain-state-verify | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/mc... | PASS |
+| 2026-06-17 | 2.0.0_SA_COO | ADVI_COTETL.chain-state-verify | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-06-17 | 0.7.0_AE_CloudOps | ADVI_COTETL.chain-state-verify | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/change_management/20... | PASS |
+| 2026-06-17 | 0.7.0_AE_CloudOps | ADVI_PRTORG.AC-CLOSEOUT | comp-surface-check | comp-surface-check check --mode advisory --file .owned-paths.yaml | PASS |
+| 2026-06-17 | 3.0.0_SA_CVO | ADVI_PRTORG.AC-CLOSEOUT | comp-surface-check | comp-surface-check check --mode advisory --file org/seams/advi-bd-nna-attribution.md | PASS |
+| 2026-06-17 | 0.7.0_AE_CloudOps | ADVI_PRTORG.AC-CLOSEOUT | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/portfolio_excel_genera... | PASS |
+| 2026-06-17 | 0.6.0_AE_PartnerETL | ADVI_PRTORG.AC-CLOSEOUT | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.6.0_AE_PartnerETL/lo... | PASS |
+| 2026-06-17 | 2.0.0_SA_COO | ADVI_PRTORG.AC-CLOSEOUT | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/ADVI_PRTORG.json --file or... | PASS |
+2026-06-17T18:42Z | 2.0.0_SA_COO | /drive cycle-3 (cron) | fabric-check.py --blocks (0 block/sv2-benign) + deploy_ledger.py check --red (clean) | WORKED: clean fabric; PRTORG closed (3rd completion) + INFRPT P1 complete + hygiene (deploy.sh/owned-paths/seams); 5 ADVANCING / Andrew-gated cluster declared | NOTE: 0 dispatch, /allocation NO-DELTA, gate PASS
+| 2026-06-17 | 2.0.0_SA_COO | ADVI_PRTORG.AC-CLOSEOUT | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/mc... | PASS |
