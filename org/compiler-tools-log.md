@@ -6691,3 +6691,51 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-06-17 | 0.4.2_RD_AdvisorIntelligence | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file deck_generation/engine/registry.py | PASS |
 | 2026-06-17 | 3.0.0_SA_CVO | session-close | seams/molecule/aws/python/git | session-close synthesis of the NNA arc (audit->remediation launch->validation); detail in cvo_1804Z + cvo_2030Z; no NEW tool runs this entry (record of work done) | SCRIBE |
 | 2026-06-17 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-06-17 | 0.7.0_AE_CloudOps | (no-TO) | comp-kuzu | comp-kuzu --json CALL TABLE_INFO('CloudEdge') RETURN * | PASS |
+| 2026-06-17 | 0.7.0_AE_CloudOps | (no-TO) | comp-kuzu | comp-kuzu --json CALL TABLE_INFO('CloudNode') RETURN * | PASS |
+| 2026-06-17 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/seams/ts-semantic-producer-to-globg... | PASS |
+| 2026-06-17 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .owned-paths.yaml --file org/seams/ts-s... | PASS |
+| 2026-06-17 | 0.4.2_RD_AdvisorIntelligence | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file deck_generation/dev/scripts/archetype_s... | PASS |
+| 2026-06-17 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/mcp/.last-drive-2.0.0_SA_COO --file... | PASS |
+| 2026-06-17 | 0.7.0_AE_CloudOps~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/terraform/globgrph/item2c_sur... | PASS |
+| 2026-06-17 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/globgrph/derive_runner.py | PASS |
+| 2026-06-17 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/tsgraph_spike/LEGC_pa... | PASS |
+| 2026-06-17 | 0.7.0_AE_CloudOps~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/infrastructure_monitor... | PASS |
+| 2026-06-17 | 0.7.0_AE_CloudOps~B | (no-TO) | comp-iam | comp-iam gaps | PASS |
+| 2026-06-17 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/mcp/.last-drive-2.0.0_SA_COO --file... | PASS |
+| 2026-06-17 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-types | comp-types index BenchmarkModelData | PASS |
+| 2026-06-17 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-types | comp-types index ModelPortfolioBenchmarksResponse | PASS |
+| 2026-06-17 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-types | comp-types index BenchmarkPeriodReturn | PASS |
+| 2026-06-17 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-types | comp-types index ModelPortfolioData | PASS |
+| 2026-06-17 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-types | comp-types index BenchmarkHeatmapProps | PASS |
+| 2026-06-17 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-types | comp-types index ModelPortfolioPeriodReturn | PASS |
+| 2026-06-17 | 0.7.0_AE_CloudOps~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/ci/shared-infra-resour... | PASS |
+| 2026-06-17 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/tsgraph_spike/.gitign... | PASS |
+| 2026-06-17 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .owned-paths.yaml | PASS |
+| 2026-06-17 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-types | comp-types fields BenchmarkModelData | PASS |
+| 2026-06-17 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-types | comp-types fields BenchmarkPeriodReturn | PASS |
+| 2026-06-17 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-types | comp-types fields ModelPortfolioData | PASS |
+| 2026-06-17 | 0.7.0_AE_CloudOps~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/terraform/smartx-pipeline/ec2.tf | PASS |
+| 2026-06-17 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/tsgraph_spike/.gitign... | PASS |
+| 2026-06-17 | 0.4.2_RD_AdvisorIntelligence | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file deck_generation/engine/arch_compare.py ... | PASS |
+| 2026-06-17 | 0.4.2_RD_AdvisorIntelligence | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file deck_generation/dev/docs/master-slide-a... | PASS |
+| 2026-06-17 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/globgrph/kuzu_nessie_load.py ... | PASS |
+| 2026-06-17 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/tsgraph_spike/LEGC_pa... | PASS |
+| 2026-06-17 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-kuzu | comp-kuzu CALL TABLE_INFO('CloudEdge') RETURN * | PASS |
+| 2026-06-17 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/mcp/.last-drive-2.0.0_SA_COO --file... | PASS |
+| 2026-06-17 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/globgrph/incremental_u... | PASS |
+| 2026-06-17 | 0.7.0_AE_CloudOps~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/terraform/imo-pipeline/sns.tf | PASS |
+| 2026-06-17 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/tsgraph_spike/emit_pr... | PASS |
+| 2026-06-17 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-transform | comp-transform ternary-audit ModelPortfolios | PASS |
+| 2026-06-17 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/tsgraph_spike/LEGC_ki... | PASS |
+| 2026-06-17 | 0.7.0_AE_CloudOps~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/terraform/imo-pipeline/kms.tf | PASS |
+| 2026-06-17 | 0.7.0_AE_CloudOps | (no-TO) | comp-kuzu | comp-kuzu --json MATCH (a:CloudNode)-[r:CloudEdge]->(b:CloudNode) WHERE r.edge_type='FL... | PASS |
+| 2026-06-17 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/change_management/20... | PASS |
+| 2026-06-17 | 0.7.0_AE_CloudOps~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/terraform/imo-pipeline/kms.tf | PASS |
+| 2026-06-17 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-kuzu | comp-kuzu --json MATCH (a:CloudNode)-[r:CloudEdge {edge_type:'FLOWS_TO'}]->(b:CloudNode... | PASS |
+| 2026-06-17 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/tsgraph_spike/.gitign... | PASS |
+| 2026-06-17 | 0.4.2_RD_AdvisorIntelligence | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file deck_generation/dev/docs/master-slide-a... | PASS |
+| 2026-06-17 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/globgrph/kuzu_nessie_load.py | PASS |
+| 2026-06-17 | 2.0.0_SA_COO | DECK_CLAUDE.FANOUT-D.compare-flow-list-archetypes | comp-surface-check | comp-surface-check check --mode advisory --file org/mcp/.last-drive-2.0.0_SA_COO --file... | PASS |
+| 2026-06-17 | 0.4.0_DE_ClientPlatform | NFRA_TSGRAPH.P1 | comp-kuzu | live Nessie->Kuzu F5 kind-aware/AC5 validation + provenance/props verify (also comp-types/comp-transform regex baselines, /seams) | PASS |
+| 2026-06-17 | 0.4.0_DE_ClientPlatform | DECK_CLAUDE.FANOUT-A | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
