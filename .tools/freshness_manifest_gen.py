@@ -56,7 +56,12 @@ RESOLVER = os.path.join(ROOT, "org", "modules", "graph", "estate-coverage-resolv
 CONFIG_FILES = {
     "bd-gold": "data/black_diamond/scripts/gold/gold_freshness_config.yaml",
     "inf": "data/inf/scripts/gold/gold_freshness_config.yaml",
+    "cot": "data/cot/scripts/gold/gold_freshness_config.yaml",
 }
+
+# Consolidated served-layer config for pipelines without a per-pipeline gold tree.
+# Each entry carries a `pipeline:` field; the generator groups by it.
+SERVED_CONFIG = "data/served_freshness_config.yaml"
 
 # pipeline -> estate-resolver named_thread(s) (the pipescript served-list source).
 PIPELINE_THREADS = {
@@ -127,6 +132,12 @@ def _config_record(entry: dict, pointer: str) -> dict:
     note = (entry.get("notes", "") or "").strip().replace("\n", " ")
     if cadence in ("on-demand", "deprecated"):
         note = f"[{cadence}] {note}".strip()
+    # explicit freshness_basis (e.g. BD-source-bound) overrides the cadence-derived default
+    basis = entry.get("freshness_basis") or _basis(cadence)
+    # YAML auto-parses an unquoted ISO date to a datetime.date -> coerce to str for JSON
+    baseline = entry.get("baseline_as_of")
+    if isinstance(baseline, (datetime.date, datetime.datetime)):
+        baseline = baseline.isoformat()
     return {
         "bucket": bucket,
         "key": key,
@@ -135,7 +146,9 @@ def _config_record(entry: dict, pointer: str) -> dict:
         "warn_age_hours": entry.get("warn_age_hours"),
         "fail_age_hours": entry.get("fail_age_hours"),
         "severity": (entry.get("severity") or "ERROR").upper(),
-        "freshness_basis": _basis(cadence),
+        "freshness_basis": basis,
+        "as_of_source": entry.get("as_of_source"),
+        "baseline_as_of": baseline,
         "coverage": "comp-freshness",
         "note": note,
         "pointer": pointer,
@@ -180,6 +193,8 @@ def _gap_records(threads: list, pipeline: str) -> list:
                     "fail_age_hours": None,
                     "severity": None,
                     "freshness_basis": None,
+                    "as_of_source": None,
+                    "baseline_as_of": None,
                     "coverage": "GAP-no-config",
                     "note": _extract_note(s),
                     "pointer": f"pipescript {','.join(PIPELINE_THREADS[pipeline])} (no freshness config -- INCREMENT-1b)",
@@ -193,11 +208,19 @@ def build_manifest() -> dict:
     for t in resolver_threads:
         by_nt.setdefault(t.get("named_thread"), []).append(t)
 
+    # consolidated served config -> entries grouped by their `pipeline:` field
+    served_by_pipeline: dict = {}
+    for e in _load_yaml_list(SERVED_CONFIG):
+        served_by_pipeline.setdefault(e.get("pipeline"), []).append(e)
+
     pipelines = []
     for pipeline, nts in PIPELINE_THREADS.items():
         if pipeline in CONFIG_FILES:
             pointer = CONFIG_FILES[pipeline]
             records = [_config_record(e, pointer) for e in _load_yaml_list(pointer)
+                       if e.get("s3_key_prefix")]
+        elif pipeline in served_by_pipeline:
+            records = [_config_record(e, SERVED_CONFIG) for e in served_by_pipeline[pipeline]
                        if e.get("s3_key_prefix")]
         else:
             threads = [t for nt in nts for t in by_nt.get(nt, [])]
