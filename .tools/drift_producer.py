@@ -215,12 +215,24 @@ def _plan_module(name: str, d: str, terraform: str):
         try:
             plan = json.loads(sout)
             for ch in plan.get("resource_changes", []):
-                acts = [a for a in ch.get("change", {}).get("actions", []) if a != "no-op"]
+                chg = ch.get("change", {})
+                acts = [a for a in chg.get("actions", []) if a != "no-op"]
                 if not acts:
                     continue
                 addr = ch.get("address", "?")
                 if any(a in addr for a in TF_ONBOARDED_ALLOWLIST):
                     continue  # the 2-in-TF Lambdas caveat
+                # Suppress benign aws_lambda_function s3_object_version churn: when an artifact is
+                # re-uploaded with IDENTICAL content (build-and-upload makes a new S3 version even
+                # for byte-identical code), terraform sees a version-id diff but source_code_hash is
+                # UNCHANGED -> the deployed code == the artifact (the deploy-drift sha-check confirms
+                # current). That is cosmetic version-pointer churn, not a real config-drift -> skip.
+                if ch.get("type") == "aws_lambda_function" and acts == ["update"]:
+                    before = chg.get("before") or {}
+                    after = chg.get("after") or {}
+                    bsh = before.get("source_code_hash")
+                    if bsh and bsh == after.get("source_code_hash"):
+                        continue  # identical code -> benign s3_object_version churn
                 addrs.append(f"{addr} [{'/'.join(acts)}]")
         except Exception:
             addrs = ["<plan parse failed -- drift present, detail unavailable>"]
