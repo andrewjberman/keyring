@@ -7,3 +7,5 @@ __pycache__/
 org/
 out/portal_full.graph.json
 out/portal_full.producer.json
+out/regex_*.txt
+out/grep_*.txt

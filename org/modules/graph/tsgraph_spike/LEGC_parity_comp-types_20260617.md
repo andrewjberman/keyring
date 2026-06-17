@@ -22,8 +22,22 @@ The regex `203` is a substring artifact (`name` is one of the commonest identifi
   - **PRECISION: perfect** — **0** of the regex's ~37 false positives (no AdvisorIntelligence noise).
 - **Verdict: EQUIVALENCE-OR-BETTER.** Recall == regex true-positives; precision strictly better (kills the substring false-positive flood). Cutover-ready pending CTO's broader-sample confirmation.
 
+## Broader recall sweep (result #3) — 6 types, vs GREP ground truth (not the noisy regex)
+`parity_sweep.py` compares the semantic `REFERENCES_TYPE` consumer-file set against `grep -rlwE "<type>" portal/src` (the authoritative by-name reference set — more reliable than parsing comp-types' noisy output). NOTE: a first pass mis-reported a delta because a Windows python-subprocess `grep` returned empty; re-run via the working Bash grep gave the real result below.
+
+| type | grep (real by-name refs) | semantic REFERENCES_TYPE | recall | precision |
+|---|---|---|---|---|
+| BenchmarkModelData | 4 | 4 | PASS | PASS |
+| ModelPortfolioBenchmarksResponse | 1 | 1 | PASS | PASS |
+| BenchmarkPeriodReturn | 1 | 1 | PASS | PASS |
+| ModelPortfolioData | 1 | 1 | PASS | PASS |
+| BenchmarkHeatmapProps | 1 | 1 | PASS | PASS |
+| ModelPortfolioPeriodReturn | 1 | 1 | PASS | PASS |
+
+**EXACT PARITY on every sampled type** — semantic == the real by-name reference set (recall complete, precision perfect). Meanwhile the regex `comp-types index` reports 37–44 "consumer sites" per type (e.g. ModelPortfolioBenchmarksResponse: 37 = 1 import + 33 reference + 4 default-fallback; the real answer is 1 file). The semantic re-back is **exactly correct AND 4–37x less noisy**.
+
 ## Cutover decision (this increment)
-- `comp-types index`: **PARITY MET (better)** on the probe — recall-complete + precision-perfect via `REFERENCES_TYPE`. Recommend cutover after a broader-sample recall sweep + CTO sign.
+- `comp-types index`: **PARITY MET (better) — recall-complete + precision-perfect across a 6-type ground-truthed sweep.** Recommend cutover pending CTO sign (the broader sweep is done; CTO can widen further if desired).
 - `comp-types fields`: semantic better on precision; **stay on regex until a recall sweep** confirms no true-positive is missed across the field set, then cut over (CTO sign).
 
 ## AC4 scale-watch (cost of the precision)
