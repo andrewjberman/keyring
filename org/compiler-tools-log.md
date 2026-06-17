@@ -6473,3 +6473,19 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-06-17 | 0.4.0_T_ClientPlatform | PORTAL_PROMOTE_20260617 | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
 | 2026-06-17 | 0.4.0_DE_ClientPlatform | ADVI_PATRICIA (Andrew-direct) | comp-transform schema-check / comp-which / safe-commit surface-check | schema-check AdvisorIntelligence (NOT FOUND, n/a-prop-gating); comp-which (no match); safe-commit [surface-check] advisor_intelligence SEV1 | ADVISORY-PASS (SEV1 ADVI touch, justified one-off, no data-contract change) |
 | 2026-06-17 | 0.4.0_DE_ClientPlatform | PORTAL_PROMOTE_20260617 | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DE_ClientPlatfor... | PASS |
+| 2026-06-17 | 3.0.0_SA_CVO | PORTAL_PROMOTE_20260617 | comp-surface-check | comp-surface-check list | PASS |
+| 2026-06-17 | 0.7.0_AE_CloudOps | PORTAL_PROMOTE_20260617 | comp-kuzu | comp-kuzu MATCH (a:CloudNode)-[e:CloudEdge]->(b:CloudNode) WHERE e.edge_type='WRITES' A... | PASS |
+| 2026-06-17 | 0.7.0_AE_CloudOps | PORTAL_PROMOTE_20260617 | comp-kuzu | comp-kuzu MATCH (a:CloudNode)-[e:CloudEdge]->(b:CloudNode) WHERE e.edge_type='WRITES' A... | PASS |
+| 2026-06-17 | 2.0.0_SA_COO | PORTAL_PROMOTE_20260617 | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/REGISTRY.md --file org/pro... | PASS |
+| 2026-06-17 | 0.4.0_DS_ClientPlatform | PORTAL_PROMOTE_20260617 | comp-surface-check | comp-surface-check check --mode advisory --file data/cot/scripts/gold/A_00.accounts_dim... | PASS |
+| 2026-06-17 | 0.7.0_AE_CloudOps | PORTAL_PROMOTE_20260617 | comp-kuzu | comp-kuzu MATCH (n:CloudNode) WHERE n.name IN ['opal-portal-data-proxy','shared-advisor... | PASS |
+| 2026-06-17 | 0.7.0_AE_CloudOps | PORTAL_PROMOTE_20260617 | comp-kuzu | comp-kuzu MATCH (a:CloudNode)-[e:CloudEdge]->(b:CloudNode) WHERE e.edge_type='WRITES' A... | PASS |
+| 2026-06-17 | 0.7.0_AE_CloudOps | PORTAL_PROMOTE_20260617 | comp-kuzu | comp-kuzu MATCH (a:CloudNode)-[e:CloudEdge]->(b:CloudNode) WHERE e.edge_type='WRITES' A... | PASS |
+| 2026-06-17 | 0.6.0_AE_PartnerETL | PORTAL_PROMOTE_20260617 | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/bd-pipeline/gldinc-ss4... | PASS |
+| 2026-06-17 | 0.7.0_AE_CloudOps | PORTAL_PROMOTE_20260617 | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.7.0_AE_CloudOps/deli... | PASS |
+| 2026-06-17 | 2.0.0_SA_COO | PORTAL_PROMOTE_20260617 | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-06-17 | 0.4.0_DS_ClientPlatform | PORTAL_PROMOTE_20260617 | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/change_management/20... | PASS |
+| 2026-06-17 | 0.7.0_AE_CloudOps~B | PORTAL_PROMOTE_20260617 | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/ci/shared-infra-resour... | PASS |
+| 2026-06-17 | 0.3.0_DE_TradingOperations | PORTAL_PROMOTE_20260617 | comp-surface-check | comp-surface-check check --mode advisory --file docs/briefs/pmtrdx-001-weight-unit-regr... | PASS |
+2026-06-17 | 0.7.0_AE_CloudOps~B | NFRA_INFRPT.P1 inc-1 | pipescript --list, comp-freshness --list, comp-iam service+gaps, ds-commit-gate(x3), build-and-upload, safe-apply, record-terraform-deploy | DATA FRESHNESS section B + sec-F dogfood + cot non-advancement deployed (shared-infra-v1.23.0). comp-freshness --list exposed bd/inf-only coverage gap (drove the manifest design); comp-iam gaps 0 missing after inf+cot grant; ds-commit-gate clean each edit; safe-apply 1add/1change/0destroy.
+| 2026-06-17 | 0.7.0_AE_CloudOps~B | PORTAL_PROMOTE_20260617 | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
