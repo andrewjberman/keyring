@@ -6673,3 +6673,21 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 2026-06-17 | 0.7.0_AE_CloudOps~B | DRIFT convergence close | terraform plan (globgrph inspect), safe-apply (timeout bump), gh workflow run + codebuild (convergence verify), record v1.28.0 | DRIFT iterate CONVERGED + CTO-CLOSED: leg 23/25=92% assessable, ERROR 4->2 (globgrph cleared via CTO zip-add e1e49fde1 + imo reclassified deny-blocked via 403 role-structure grounding), RED on 2 owner-config gaps (seeking-alpha/trade). Timeout 120->180s (v1.28.0). IDLE/available.
 | 2026-06-17 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-kuzu | comp-kuzu MATCH (n:CloudNode) WHERE n.node_type='DataFetch' RETURN count(*) | PASS |
 | 2026-06-17 | 0.7.0_AE_CloudOps~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-06-17 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-kuzu | comp-kuzu --json MATCH (df:CloudNode {node_type:'DataFetch'})-[:CloudEdge]->(e:CloudNod... | PASS |
+| 2026-06-17 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-kuzu | comp-kuzu --json MATCH (a:CloudNode)-[e:CloudEdge {edge_type:'FLOWS_TO'}]->(b:CloudNode... | FAIL |
+| 2026-06-17 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-kuzu | comp-kuzu CALL TABLE_INFO('CloudEdge') RETURN * | PASS |
+| 2026-06-17 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-kuzu | comp-kuzu --json MATCH (a:CloudNode)-[e:CloudEdge {edge_type:'FLOWS_TO'}]->(b:CloudNode... | PASS |
+| 2026-06-17 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-kuzu | comp-kuzu --json MATCH (n:CloudNode {node_type:'Field'}) RETURN n LIMIT 1 | PASS |
+| 2026-06-17 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-types | comp-types --help | PASS |
+| 2026-06-17 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-types | comp-types BenchmarkModelData | FAIL |
+| 2026-06-17 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-types | comp-types index BenchmarkModelData | PASS |
+| 2026-06-17 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-types | comp-types fields BenchmarkModelData | PASS |
+| 2026-06-17 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-kuzu | comp-kuzu --json MATCH (c:CloudNode)-[e:CloudEdge]->(t:CloudNode) WHERE t.node_id = 'ty... | PASS |
+| 2026-06-17 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-kuzu | comp-kuzu --json MATCH (f:CloudNode)-[e:CloudEdge]->(x:CloudNode) WHERE f.node_id CONTA... | PASS |
+| 2026-06-17 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-kuzu | comp-kuzu --json MATCH (x:CloudNode)-[e:CloudEdge]->(f:CloudNode) WHERE f.node_id CONTA... | PASS |
+| 2026-06-17 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/tsgraph_spike/LEGC_pa... | PASS |
+| 2026-06-17 | 0.7.0_AE_CloudOps | (no-TO) | comp-kuzu | comp-kuzu --help | PASS |
+| 2026-06-17 | 0.4.2_RD_AdvisorIntelligence | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .claude/skills/deck-gen/SKILL.md --file... | PASS |
+| 2026-06-17 | 0.4.2_RD_AdvisorIntelligence | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file deck_generation/engine/registry.py | PASS |
+| 2026-06-17 | 3.0.0_SA_CVO | session-close | seams/molecule/aws/python/git | session-close synthesis of the NNA arc (audit->remediation launch->validation); detail in cvo_1804Z + cvo_2030Z; no NEW tool runs this entry (record of work done) | SCRIBE |
+| 2026-06-17 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
