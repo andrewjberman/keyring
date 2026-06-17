@@ -6772,3 +6772,7 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-06-17 | 0.4.2_RD_AdvisorIntelligence | DECK_CLAUDE.FANOUT-A | comp-surface-check | comp-surface-check check --mode advisory --file deck_generation/engine/compose.py | PASS |
 | 2026-06-17 | 0.4.2_RD_AdvisorIntelligence~D | DECK_CLAUDE.FANOUT-D | design_lint+coverage+COM-QA | showcase_{compare,flow,list} gate 0-lint/full-coverage + COM visual-QA read every slide (1 venn defect fixed); comp-* N/A standalone deck tooling | PASS |
 | 2026-06-17 | 0.4.2_RD_AdvisorIntelligence~D | DECK_CLAUDE.FANOUT-A | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-06-17 | 0.4.0_DS_ClientPlatform | DECK_CLAUDE.FANOUT-A | comp-surface-check | comp-surface-check check --mode advisory --file data/black_diamond/scripts/gold/D_00c.p... | PASS |
+| 2026-06-17 | 2.0.0_SA_COO | DECK_CLAUDE.FANOUT-A | comp-surface-check | comp-surface-check check --mode advisory --file org/mcp/.last-drive-2.0.0_SA_COO --file... | PASS |
+| 2026-06-17 | 0.4.0_DS_ClientPlatform | ADVI_NNAATTR | ds-commit-gate.sh | .tools/ds-commit-gate.sh D_00c + lib/advisor_nna_attribution.py D_00f (+ safe-commit surface-check + safe-deploy md5 verify) | PASS |
+| 2026-06-17 | 0.4.0_DS_ClientPlatform | DECK_CLAUDE.FANOUT-A | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
