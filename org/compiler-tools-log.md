@@ -6444,3 +6444,7 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-06-17 | 0.7.0_AE_CloudOps | NFRA_GRAPHS.D8-FP | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/change_management/20... | PASS |
 | 2026-06-17 | 0.0.0_AB_MSTR | NFRA_GRAPHS.D8-FP | comp-surface-check | comp-surface-check check --mode advisory --file org/tier0/ledger/LD-0195.md | PASS |
 | 2026-06-17 | 0.7.0_AE_CloudOps | NFRA_GRAPHS.D8-FP | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-06-17 | 2.0.0_SA_COO | NFRA_GRAPHS.D8-FP | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.7.0_AE_CloudOps/task... | PASS |
+| 2026-06-17 | 1.0.0_SA_CTO | NFRA_GRAPHS.D8-FP | comp-surface-check | comp-surface-check check --mode advisory --file org/mcp/server.py | PASS |
+| 2026-06-17 | 3.0.0_SA_CVO | RV-0035+nightly-verifies | comp-kuzu/git-audit/aws/python | RV-0035 audit-walk re-derive (all EXACT) + GCONTR EC2-WRITES re-verify (0->66) + GLDINC 66MB cache-canary + COTETL bronze content-check | PASS |
+| 2026-06-17 | 3.0.0_SA_CVO | NFRA_GCONTR.TO-3 | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
