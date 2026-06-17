@@ -37,6 +37,17 @@ are law.
      thesis-stat→ text + `C.stat`; rows→ labelled rows. Use `C.eyebrow` on every content
      slide. Compose custom layouts from primitives when an archetype doesn't fit — but
      keep it bible-clean.
+   - **Harvested case-study primitives (2026-06-17, from the Cottonwood-vs-Goldman deck):**
+     KPI/comparison row→`C.statcards([(big,label,vs,takeaway), …])` (vs/takeaway optional;
+     uniform navy top-band + one big-number size; pass `x0,x1` to span a half-slide for a
+     2-up); list + filled panel→`C.list_accent([(label,desc), …])` on the left **paired with**
+     `C.sidebar(eyebrow,head,body)` on the right (`list_accent(panel=True)` draws row cards
+     and stands alone — use it when there is no sidebar, e.g. a full-width concern list);
+     feature grid→`C.grid([(head,desc), …], cols=2)` (partial last row auto-fills its width —
+     no dead cell); comparison/holdings table→`C.table(headers, rows, first_col_w=…)` (navy
+     header, zebra body, navy-bold first column; A1-palette fills only). Reference build that
+     exercises all five: `deck_generation/dev/scripts/cw_goldman_build.py` (11 slides, 0
+     violations, 10/10 coverage).
    - **Charts only from supplied data (F2).** If the slide has no `data:` line, render
      its figures as `C.stat` (stat-as-type), never a chart.
    - **Cover the lines (F3).** Put every content line on its slide and register it via
