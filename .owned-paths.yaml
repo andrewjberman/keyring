@@ -867,8 +867,8 @@ paths:
     lane: ANY_EXEC
 
   "org/seams/**":
-    lane: ANY_EXEC
-    note: "Durable /seams verified-knowledge records -- knowledge-accrual path (same posture as logs/memory): any exec writes its own seam record, no exclusive lane. CTO/CVO request 2026-06-17 (CVO flagged 2x -- the gate correctly blocked an unruled write); unblocks the /seams durable path."
+    lane: ANY
+    note: "Durable /seams verified-knowledge records -- knowledge-accrual path (same posture as logs/memory + org/threads + org/daily_log): ANY agent writes its own seam record, no exclusive lane. CTO/CVO request 2026-06-17. CORRECTED 2026-06-17 ANY_EXEC -> ANY by 0.7.0_AE_CloudOps: ANY_EXEC is exec-tier-only and excluded AEs/pods, contradicting the 'any agent writes its own' intent + the /seams skill ('any agent may run it'); caught when 0.7.0_AE (an AE) ran /seams on its own work and the gate blocked its OWN seam record. org/threads + org/daily_log use ANY for the same all-agents reason."
 
   # Startup-protocol class ref docs (Andrew direct 2026-05-26 via MSTR ASK 1 cluster):
   # widen to TIER0_TIER1_STARTUP_DOCS so MSTR + both fabrics' CTO/COO/CVO can author.
