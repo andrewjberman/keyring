@@ -6641,3 +6641,14 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-06-17 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/tsgraph_spike/extract... | PASS |
 | 2026-06-17 | 0.4.0_DS_ClientPlatform | ADVI_NNAATTR.TO-1 / SS4c | ds-commit-gate + md5-verify + deploy_ledger | bucket-fallback re-gate (PASS) + 6-file S3 byte-MATCH + ledger CLOSED + SS4c gate clean | PASS |
 | 2026-06-17 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-06-17 | 0.7.0_AE_CloudOps~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/terraform/shared-infra/drift-... | PASS |
+| 2026-06-17 | 0.7.0_AE_CloudOps | (no-TO) | comp-kuzu | comp-kuzu --json MATCH (n:CloudNode) WHERE n.name =~ '.*bd-gold-trigger.*' OR n.node_id... | PASS |
+| 2026-06-17 | 0.7.0_AE_CloudOps~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .tools/drift_producer.py --file infra/a... | PASS |
+| 2026-06-17 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/DECK_CLAUDE.json --file or... | PASS |
+| 2026-06-17 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/tsgraph_spike/SEAMS_l... | PASS |
+| 2026-06-17 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/globgrph/derive_runner.py | PASS |
+| 2026-06-17 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .claude/skills/deck-gen/SKILL.md --file... | PASS |
+| 2026-06-17 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .owned-paths.yaml | PASS |
+| 2026-06-17 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/globgrph/derive_runner.py | PASS |
+| 2026-06-17 | 0.4.2_RD_AdvisorIntelligence | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .claude/skills/deck-gen/SKILL.md --file... | PASS |
+| 2026-06-17 | 0.4.2_RD_AdvisorIntelligence | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
