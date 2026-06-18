@@ -16,12 +16,12 @@
     },
     {
       "path": "deck_generation/BRIEFING.md",
-      "label": "BRIEFING — composer system briefing (Path B)",
+      "label": "BRIEFING -- STALE (describes the older Path-A orchestrator/assembler pipeline, not the composer; ground-truthed 0.4.2_RD fan-out + COO 2026-06-18: 26 old-pipeline refs, 0 composer terms). Pending the 4-file doc-refresh.",
       "date": "2026-06-15"
     },
     {
       "path": "deck_generation/RUNTIME.md",
-      "label": "RUNTIME — composer runtime/render notes (Path B)",
+      "label": "RUNTIME -- STALE (describes the older Path-A orchestrator/assembler pipeline the /deck-gen skill does not use; ground-truthed 0.4.2_RD fan-out + COO 2026-06-18: 12 old-pipeline refs, 0 composer terms). Pending the 4-file doc-refresh.",
       "date": "2026-06-15"
     },
     {
@@ -32,7 +32,7 @@
   ],
   "status": "active",
   "phase": "ACTIVE (retroactive registration 2026-06-17, Andrew-direct via 0.4.2_RD). TWO PATHS, ONE PROJECT: Path A = the original library-CLONE Lambda 'deck-generation' (CTO-built 2026-03/04: commits 439297bc1/389ce4743/efcd687de/f29cdc24a/52bd21a2e/0ca26e971/1f69d98f2/c62ff998f/bdf62ba1f/83628a09a) -- LIVE but NOT re-pointed at the composer (deferred DT deploy); it produced FABRICATED charts on novel content -> Andrew-direct re-architecture 2026-06-15. Path B = the from-primitives brand-derivative COMPOSER + DESIGN_BIBLE + /deck-prompt + /deck-gen skills (DT custodial-save d17d45be0 2026-06-15; today's 2026-06-17 harvest: 5 new primitives [statcards/list_accent+sidebar/grid/table] from a naive-prompted analyst deck, proof-rebuilt at 0-lint / 10-10 coverage / clean visual-QA -- landed under this project, CTO custodial-save attributed to 0.4.2_RD). Path B is the GO-FORWARD. KNOWN DEBT: ARCHITECTURE.md + README describe the Path-A clone era -> STALE re the composer -> refresh-TO (route via COO). NEXT: COO decomposition if Andrew greenlights further composer work; the Path-A->Path-B Lambda re-point is a deferred DT-deploy decision.",
-  "blocking": "No hard blockers. The composer (Path B) is validated + in-repo. Open items (non-blocking): (a) doc refresh-TO -- ARCHITECTURE.md/README are stale Path-A; (b) the deferred DT deploy to re-point the live deck-generation Lambda at the composer (Path A -> Path B cutover, a separate downstream decision); (c) a durable DECK owned-paths lane (deck_generation/** + .claude/skills/deck-*/**) so 0.4.2_RD self-commits deck work (routed to AE -- ends the recurring custodial-save).",
+  "blocking": "No hard blockers. The composer (Path B) is validated + in-repo. Open items (non-blocking): (a) doc refresh-TO (4 FILES) -- ARCHITECTURE.md/README/RUNTIME.md/BRIEFING.md all stale Path-A (RUNTIME+BRIEFING added 2026-06-18 per 0.4.2_RD fan-out + COO ground-truth; route refresh to base 0.4.2_RD who owns the deck system); (b) the deferred DT deploy to re-point the live deck-generation Lambda at the composer (Path A -> Path B cutover, a separate downstream decision); (c) a durable DECK owned-paths lane (deck_generation/** + .claude/skills/deck-*/**) so 0.4.2_RD self-commits deck work (routed to AE -- ends the recurring custodial-save).",
   "created": "2026-06-15",
   "pods": [
     "0.4",
@@ -42,5 +42,5 @@
   "depends_on_note": "Sibling cross-cutting tooling to COMP (deck-gen is its own surface). Path A Lambda uses shared deck-generation-pipeline TF + the lambda-artifacts S3 store; no blocking cross-dep.",
   "thread_counter": 0,
   "threads": [],
-  "current_phase": "ACTIVE 2026-06-17 (Andrew-direct registration). Path B composer is the go-forward (validated; today's 5-primitive harvest landed CTO-custodial-attributed-to-0.4.2_RD); Path A clone-Lambda is legacy-live-not-repointed. Open non-blocking: ARCHITECTURE/README refresh-TO (stale Path-A), the durable DECK owned-paths lane (routed AE), the deferred Lambda re-point (DT). COO decomposes further composer work on Andrew greenlight."
+  "current_phase": "ACTIVE 2026-06-17 (Andrew-direct registration). Path B composer is the go-forward (validated; today's 5-primitive harvest landed CTO-custodial-attributed-to-0.4.2_RD); Path A clone-Lambda is legacy-live-not-repointed. Open non-blocking: 4-file doc refresh-TO (ARCHITECTURE/README/RUNTIME/BRIEFING all stale Path-A, RUNTIME+BRIEFING added 06-18), the durable DECK owned-paths lane (routed AE), the deferred Lambda re-point (DT). COO decomposes further composer work on Andrew greenlight."
 }
