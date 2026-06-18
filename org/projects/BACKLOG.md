@@ -19,6 +19,9 @@ Authoritative per-item state lives in each `org/projects/{CODE}.json`; this file
 | `NFRA_GLOBGRPH` | ICEBERG-409 — backlog hardening item carried from the 409-commit-storm work. | AE (0.7) | Opportunistic. |
 | `NFRA_GLOBGRPH` | L4 — derive-rebuild to full current-state marker (TF-managed standing `globgrph-derive` CodeBuild project; none exists yet). | AE (0.7) | Non-urgent. |
 | `NFRA_GLOBGRPH` | L5 — purge stale ~99%-readOnly SQS(37.5k)/DLQ(15.2k) + RE-ENABLE incremental ESM (codified `enabled=false` meanwhile). | AE (0.7) | Gated on ingest-filter LIVE + backlog purged. |
+| `NFRA_GLOBGRPH` | TO-Q1 — comp-queue in-flight (uncommitted) event visibility in the comp-kuzu provenance header (P3 enhancement; re-homed 2026-06-18 from AE TO-recon zombie-sweep, TO closed-superseded 14d2f7177). | AE (0.7) | Non-urgent enhancement; opportunistic. |
+| `ADHC_GLDINC` | 6-script SHADOW_SET cutovers (B_01/A_03/B_02/B_03/A_01/A_02 -> INCREMENTAL_CAPABLE) -- THE compute capture (the project's economic point; not abandoned, re-homed). The BINDING daily-parity watch (>=5 clean nights, `daily_watch_until` 2026-07-05) RIDES this tail -- NOT dropped at close. | AE (0.6) exec + Andrew per-script nod | Per-script: parity-gate met + Andrew nod -> flip INCREMENTAL_CAPABLE + SHADOW_SET removal. Tail done when all 6 cut over. |
+| `ADHC_GLDINC` | SS4c periodic-oracle re-validation APPLY (TIER-1 canary Lambda + 4 egress alarms + weekly-diff) -- build RAVC2-accepted, CloudOps gate-1 closed, DS gold-lib review CLEAN. The standing verifier binding every phase cutover. | AE (0.6) | CVO re-cert + synthetic test -> `safe-apply`. |
 
 ---
 
