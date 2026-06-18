@@ -7034,3 +7034,21 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-06-18 | 3.0.0_SA_CVO | GRAPHOPS-AUDIT-20260618 | comp-kuzu | comp-kuzu MATCH (n) RETURN count(n) AS nodes | PASS |
 | 2026-06-18 | 0.4.2_RD_AdvisorIntelligence~c | (no-TO) | deck-tooling | prompt_view.py --pass2 --json (x6 families) + PowerPoint COM render (area-stacked ground-truth) + engine.compose --catalog | PASS -- 21 data-viz preview cards verified aligned+filled; comp-* N/A (deck ASCII work, not portal/data/infra) |
 | 2026-06-18 | 0.4.2_RD_AdvisorIntelligence~c | GRAPHOPS-AUDIT-20260618 | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-06-18 | 1.0.0_SA_CTO | GRAPHOPS-AUDIT-20260618 | comp-surface-check | comp-surface-check check --mode advisory --file .tools/hooks/comp-tool-hud.sh | PASS |
+| 2026-06-18 | 1.0.0_SA_CTO | GRAPHOPS-AUDIT-20260618 | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/NFRA_COMPRAIL_PRD.md | PASS |
+| 2026-06-18 | 3.0.0_SA_CVO | GRAPHOPS-AUDIT-20260618 | comp-kuzu | comp-kuzu MATCH (n:CloudNode) RETURN n.node_type AS t, count(*) AS c ORDER BY c DESC --... | PASS |
+| 2026-06-18 | 3.0.0_SA_CVO | GRAPHOPS-AUDIT-20260618 | comp-kuzu | comp-kuzu MATCH ()-[e:CloudEdge]->() RETURN e.edge_type AS t, count(*) AS c ORDER BY c ... | PASS |
+| 2026-06-18 | 0.4.0_DE_ClientPlatform | GRAPHOPS-AUDIT-20260618 | pipescript | pipescript --list | PASS |
+| 2026-06-18 | 0.4.0_DE_ClientPlatform | GRAPHOPS-AUDIT-20260618 | pipescript | pipescript advi-bd | PASS |
+| 2026-06-18 | 3.0.0_SA_CVO | GRAPHOPS-AUDIT-20260618 | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/logs/2026-0... | PASS |
+| 2026-06-18 | 1.0.0_SA_CTO | GRAPHOPS-AUDIT-20260618 | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/NFRA_COMPRAIL_PRD.md | PASS |
+| 2026-06-18 | 0.4.0_DE_ClientPlatform | GRAPHOPS-AUDIT-20260618 | comp-routes | comp-routes behaviors | PASS |
+| 2026-06-18 | 2.0.0_SA_COO | GRAPHOPS-AUDIT-20260618 | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/NFRA_COMPRAIL.json --file ... | PASS |
+| 2026-06-18 | 1.0.0_SA_CTO | NFRA_COMPRAIL.TO-5 | comp-surface-check | comp-surface-check check --mode advisory --file .claude/skills/freeform/SKILL.md --file... | PASS |
+| 2026-06-18 | 0.4.2_RD_AdvisorIntelligence~d | NFRA_COMPRAIL.TO-5 | comp-surface-check | comp-surface-check check --mode advisory --file deck_generation/archetype_previews/tabl... | PASS |
+| 2026-06-18 | 1.0.0_SA_CTO | NFRA_COMPRAIL.TO-5 | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/NFRA_COMPRAIL_PRD.md | PASS |
+| 2026-06-18 | 2.0.0_SA_COO | NFRA_COMPRAIL.TO-5 | comp-surface-check | comp-surface-check check --mode advisory --file org/mcp/.last-drive-2.0.0_SA_COO --file... | PASS |
+| 2026-06-18 | 2.0.0_SA_COO | NFRA_COMPRAIL.TO-5 | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/briefs/allo... | PASS |
+| 2026-06-18 | 0.7.0_AE_CloudOps | NFRA_COMPRAIL.TO-5 | comp-surface-check | comp-surface-check check --mode advisory --file org/seams/cottonwood-bronze-silver-gold... | PASS |
+| 2026-06-18 | 0.4.2_RD_AdvisorIntelligence~D | DECK_CLAUDE | deck-rail (prompt_view --pass2 / engine.compose --catalog / showcase_table+design_lint / render_png.ps1) | LAYOUT card set + Table engine family validation | PASS (no comp-* — deck_generation lane, own validation rail) |
+| 2026-06-18 | 0.4.2_RD_AdvisorIntelligence~d | NFRA_COMPRAIL.TO-5 | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
