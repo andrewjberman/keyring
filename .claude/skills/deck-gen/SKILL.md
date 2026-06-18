@@ -21,7 +21,12 @@ are law.
    footer, quote) — these are the **fidelity tokens** the output must cover.
 
 2. **Compose.** Write a short build script that imports the library and lays out the
-   deck. Work in `cd deck_generation` with `export SLIDE_LIBRARY_PATH=...` set.
+   deck. **Run it from `deck_generation/` with the package on the path** —
+   `cd deck_generation && PYTHONPATH=. python <build_script>.py`
+   (PowerShell: `$env:PYTHONPATH='.'; python <build_script>.py`). Without the path set,
+   the import dies with `ModuleNotFoundError: No module named 'engine'`. There is **no
+   `SLIDE_LIBRARY_PATH` to export** — compose.py loads the Slide Library from a fixed
+   path. Keep build scripts beside the references in `dev/scripts/`.
    ```python
    from engine.compose import Deck, C, NAVY, PURPLE   # etc.
    d = Deck()
