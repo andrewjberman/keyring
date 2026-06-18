@@ -6811,3 +6811,7 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-06-17 | 0.4.2_RD_AdvisorIntelligence~B | DECK_CLAUDE.CHARTS-D.line-area-matrix-charts | comp-surface-check | comp-surface-check check --mode advisory --file deck_generation/dev/scripts/showcase_ch... | PASS |
 | 2026-06-18 | 0.4.2_RD_AdvisorIntelligence~B | DECK_CLAUDE.CHARTS-B | none (standalone deck tooling) | n/a -- mandate = /seams 3-axis pass per chart + design_lint [AUTO] gate (0 lint) + PowerPoint-COM visual-QA; ruff 0.15.11 clean | PASS |
 | 2026-06-17 | 0.4.2_RD_AdvisorIntelligence~B | DECK_CLAUDE.CHARTS-D.line-area-matrix-charts | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-06-17 | 2.0.0_SA_COO | DECK_CLAUDE.CHARTS-D.line-area-matrix-charts | comp-surface-check | comp-surface-check check --mode advisory --file org/mcp/.last-drive-2.0.0_SA_COO --file... | PASS |
+| 2026-06-17 | 2.0.0_SA_COO | DECK_CLAUDE.CHARTS-D.line-area-matrix-charts | comp-surface-check | comp-surface-check check --mode advisory --file org/mcp/.last-drive-2.0.0_SA_COO --file... | PASS |
+| 2026-06-17 | 0.4.0_DS_ClientPlatform | SESSION-CLOSE | (none -- acceptance window) | session-close consolidation; full tool record in f24d20c08 + 864139e7a deliverable logs | N/A |
+| 2026-06-17 | 0.4.0_DS_ClientPlatform | DECK_CLAUDE.CHARTS-D.line-area-matrix-charts | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
