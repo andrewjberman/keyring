@@ -6845,3 +6845,6 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-06-18 | 0.4.0_DS_ClientPlatform | DECK_CLAUDE.LANE-C-general-archetypes | comp-surface-check | comp-surface-check check --mode advisory --file data/black_diamond/scripts/gold/D_00f.a... | PASS |
 | 2026-06-18 | 0.4.0_DS_ClientPlatform | ADVI_COTETL.CHAINFIX | comp-surface-check | comp-surface-check check --mode advisory --file data/cot/scripts/silver/cot_silver_merg... | PASS |
 | 2026-06-18 | 1.0.0_SA_CTO | NFRA_TILDEFIX | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-06-18 | 0.0.0_AB_MSTR | NFRA_TILDEFIX | comp-surface-check | comp-surface-check check --mode advisory --file org/tier0/ledger/LD-0202.md | PASS |
+| 2026-06-18 | 0.4.0_DS_ClientPlatform | ADVI_NNAATTR.TO-1 + ADVI_COTETL.CHAINFIX | comp-pipescript io / ds-commit-gate / safe-deploy | io D_00f (PARTIAL: WRITES none-detected, gzip put_object missed); ds-commit-gate PASS x2 (D_00f, cot_silver_merge); safe-deploy DEPLOYED [bd]+[cot], md5 local==S3 byte-verified both | PASS |
+| 2026-06-18 | 0.4.0_DS_ClientPlatform | NFRA_TILDEFIX | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
