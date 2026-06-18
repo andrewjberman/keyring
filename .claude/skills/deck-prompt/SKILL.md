@@ -1,92 +1,79 @@
 ---
 name: deck-prompt
-description: Author a deck-prompt (`*.deck.md`) for `/deck-gen`, shown in the chat as boxed slide cards. Two passes — (1) FLOW & LAYOUT: interview or synthesize, lay out the slides, and display them as boxed cards (slide #, title, text-format, content) for approval; (2) VARIANT: per slide, offer the archetype's design variants (A/B/C/D) so the user picks the card design. Output always renders in-chat via a deterministic renderer (byte-identical every session) and saves to deck_generation/prompts/. Use when the user says `/deck-prompt`, "make a deck prompt", "turn this doc into a deck", or "start a new deck". Pair skill: `/deck-gen` consumes the saved file.
+description: Author a deck-prompt (`*.deck.md`) for `/deck-gen` and render it IN THE SESSION as boxed slide cards. The rendered cards (slide #, title, text-format, content) — printed in the chat by the deterministic tool `prompt_view.py` — are the deliverable; the `.deck.md` is just persistence. Two passes — (1) FLOW & LAYOUT: lay out the slides + copy, render the cards, approve; (2) VARIANT: per slide pick the card design (A/B/C/D). Use when the user says `/deck-prompt`, "make a deck prompt", "turn this doc into a deck", or "start a new deck". Pair skill: `/deck-gen` consumes the saved file.
 ---
 
-# /deck-prompt — author a deck-prompt, shown in the chat
+# /deck-prompt — author a deck-prompt, rendered in the session
 
-Produces a `*.deck.md` (schema: `deck_generation/PROMPT_SPEC.md`) — the input `/deck-gen`
-builds from — and **always displays it in the chat as boxed slide cards**. You write content
-+ structure only; never colors/fonts/layout (the bible owns those, enforced at generation).
+## THE CONTRACT — read this first; it is the whole skill
 
-## Non-negotiable: the prompt is shown IN THE CHAT
+Your deliverable is the **deterministically-rendered slide cards, printed in the session** —
+produced by the renderer, never by you. Every time, the loop is:
 
-Every time you produce or change the prompt, render it in the chat with the deterministic
-view tool — **never** just "saved to `<path>`, go look." The tool guarantees byte-identical
-formatting across every session and machine (that consistency is the whole point). Run it
-with the Bash tool and **paste its output verbatim into the chat inside a code block**:
+1. **You write/edit** `deck_generation/prompts/<slug>.deck.md`. This is your ONLY creative
+   output: slide copy + the archetype per slide. You decide nothing about formatting.
+2. **You run the renderer:**
+   ```
+   cd deck_generation
+   PYTHONUTF8=1 PYTHONPATH=. python prompt_view.py prompts/<slug>.deck.md
+   ```
+   (PowerShell: `$env:PYTHONUTF8='1'; $env:PYTHONPATH='.'; python prompt_view.py prompts\<slug>.deck.md`)
+3. **You present the renderer's stdout VERBATIM, in a fenced code block, as the first thing in
+   your reply** — the full deck, every slide — then at most ONE line asking to approve or edit.
 
-```
-cd deck_generation
-PYTHONUTF8=1 PYTHONPATH=. python prompt_view.py prompts/<slug>.deck.md            # Pass 1 — boxed cards
-PYTHONUTF8=1 PYTHONPATH=. python prompt_view.py prompts/<slug>.deck.md --pass2    # Pass 2 — variant menus, all slides
-PYTHONUTF8=1 PYTHONPATH=. python prompt_view.py --variants <archetype>            # one slide's family variants
-```
-Add `--ascii` to any call for a pure-ASCII frame (guaranteed alignment on any terminal/locale;
-the default is box-drawing). `prompt_view.py` reads the saved `.deck.md` and renders it — so
-the file and the on-screen cards are always the same thing.
+`prompt_view.py` is a pure function — it reads the `.deck.md` + the archetype registry and has no
+randomness, clock, or network — so the **same `.deck.md` renders byte-identical cards on every
+machine and every session.** That is the entire source of consistency: the formatting must come
+from the tool, not from you. Add `--ascii` for a pure-ASCII frame (guaranteed alignment anywhere).
 
-## The two passes
+### NEVER (each of these breaks the determinism — and each has happened)
+- **NEVER** hand-format, redraw, or re-type a slide card yourself. Copy the tool's stdout exactly.
+- **NEVER** summarize, describe, paraphrase, or analyze the deck *instead of showing it*.
+- **NEVER** say "rendered above" / "see the output" / point back at a tool result — paste the cards
+  into your reply as the content.
+- **NEVER** lead with commentary. The cards come first; any commentary is one line, after them.
+- **NEVER** show a partial or "representative" subset — always the full deck, every slide.
+- **NEVER** edit, tighten, re-wrap, or "clean up" the tool's output. It is the product as-is.
 
-**Pass 1 — Flow & layout.** Decide the slide sequence and the *content* of each slide. The
-archetype FAMILY for each slide falls out of the narrative implicitly (a title → cover; peer
-concepts → panels/grid; a sequence → flow/vsteps; a head-to-head → compare; KPIs → statcards;
-a close → statement; real numbers → a chart/table). The user reads copy, not archetypes — but
-each card labels its archetype upper-right. Write the `.deck.md`, render the cards, get approval
-on copy + flow. Adjust = edit the `.md` and re-render.
-
-**Pass 2 — Variant (the card's design).** Only after Pass 1 is approved. For each slide, show
-the variants WITHIN its family as A/B/C/D and let the user pick the visual treatment. On each
-pick, change that slide's `archetype:` in the `.md` to the chosen variant and re-render. Then
-hand off to `/deck-gen`.
+### The markdown file is SECONDARY
+The `.deck.md` is persistence + the `/deck-gen` build input. The PRIMARY output is the rendered
+cards in the session. Saving the file does NOT satisfy the skill — showing the cards does.
 
 ## Step 0 — pick the mode
-- A path / file(s) given, or "turn this into a deck" → **SYNTHESIZE**: read every source
-  (`.docx`/`.pdf`/`.md`/`.txt`), reconcile into one narrative; if it's already slide-structured,
-  keep its slide count + per-slide content (fidelity); if prose, segment into a sensible sequence.
-- "new deck" / "from scratch" / no source → **INTERVIEW**: topic, audience, goal enum
-  (prospect_pitch / client_recommendation / partner_intro / strategy_update / custom), topical
-  flow, length, key points per beat, data, must-includes. Use `AskUserQuestion` for the discrete
-  choices; keep it to a few rounds — don't over-interview. (A bare "make me a sample" → pick
-  sensible defaults and proceed; don't interrogate.)
+- A path / file(s), or "turn this into a deck" → **SYNTHESIZE**: read every source; if it is already
+  slide-structured, keep its slide count + per-slide content (fidelity); if prose, segment sensibly.
+- "new deck" / no source → **INTERVIEW**: topic, audience, goal enum (prospect_pitch /
+  client_recommendation / partner_intro / strategy_update / custom), flow, length, key points, data,
+  must-includes. `AskUserQuestion` for discrete choices; don't over-interview ("make a sample" → just proceed).
 
 ## Archetypes — the live catalog is the source of truth
-Run `python -m engine.compose --catalog` (from `deck_generation/`). It prints every archetype
-`/deck-gen` can render, grouped by family, with the content each `takes` + its item range. In
-**Pass 1** pick the family's *primary* archetype (`cover`, `panels`, `grid`, `compare`, `list`,
-`vsteps`/`flow`, `statcards`, `stat`, `statement`, `table`, or a `chart-*`); **Pass 2** swaps in
-a variant. Only a name the catalog prints is valid. Vary structure — never the same family on two
-consecutive slides (D10). Match the item count to the archetype's range.
+Run `python -m engine.compose --catalog` (from `deck_generation/`). In **Pass 1** pick each slide's
+FAMILY primary (`cover`, `panels`, `grid`, `compare`, `list`, `vsteps`/`flow`, `statcards`, `stat`,
+`statement`, `table`, or a `chart-*`); **Pass 2** swaps in a variant. Only a name the catalog prints
+is valid. Vary families — never the same family on two consecutive slides (D10). Charts only with real numbers.
 
-## Pass 1 — build & display
-1. Lay out the slides (slide 1 = a cover; vary families across the deck). Per slide capture a
-   short `title:` and the content lines.
-2. Write `deck_generation/prompts/<slug>.deck.md` per `PROMPT_SPEC.md`: frontmatter, one
-   `## Slide N — Name` block per slide, `archetype:` = the family primary, content as `- bullets`
-   (use ` | ` to split into header | body for cards/compare/stats/steps), `subtitle:`/`tag:`/
-   `footer:` fields where relevant, and a `data:` line for charts/tables — **only with real
-   numbers** (no data → render figures as a stat archetype instead).
-3. **Run the renderer (Pass 1) and paste the boxed cards into the chat.**
-4. Ask the user to approve copy + flow, or adjust. Apply edits to the `.md`, then re-render.
+## The two passes — each pass IS the contract loop (write/edit → render → paste cards → ask)
+- **Pass 1 — flow & layout:** lay out the slides + copy; the family falls out of the narrative
+  (labeled upper-right on each card). Render, paste the full deck, ask to approve copy + flow. Edits =
+  edit the `.md`, re-render, re-paste the full deck.
+- **Pass 2 — variant (card design):** only after Pass 1 is approved. Show each slide's family
+  variants — run `... prompt_view.py prompts/<slug>.deck.md --pass2` (all slides) or
+  `... prompt_view.py --variants <archetype>` (one). User picks a letter per slide; **Edit** that
+  slide's `archetype:` to the chosen variant; re-render + re-paste the full deck. Charts: offer the
+  chart types whose data shape matches; Table: one variant — confirm.
 
-## Pass 2 — variant selection
-1. Run `--pass2` (every slide's menu) or `--variants <archetype>` (one slide) and present each
-   slide's options as A/B/C/D in the chat. The variant list comes straight from the registry, so
-   it is always complete and current.
-2. The user types a letter per slide; defaults stand if they "approve all." On each pick, **Edit**
-   that slide's `archetype:` in the `.md` to the chosen variant name.
-3. **Charts:** a chart slide's "variants" are the chart types whose `takes` matches the data shape
-   (e.g. allocation → `chart-donut`/`chart-pie`; a metric over categories → `chart-column`) — offer
-   those. **Table:** one variant — confirm it.
-4. Re-render the Pass 1 cards so the user sees the final lineup, then hand off.
+## Writing the .deck.md (the renderer parses it — keep to PROMPT_SPEC.md)
+- Frontmatter: `deck_title`, `audience`, `goal`, `source`, `slide_count`.
+- One `## Slide N — Name` block per slide; `archetype:` = the family primary; short `title:`;
+  content as `- bullets` (use ` | ` to split a bullet into header | body for cards / compare /
+  stats / steps; a plain `- text` bullet is fine — **mixed paired + plain in one slide is OK and all
+  render**); `subtitle:`/`tag:` (cover, statement), `footer:`/`quote:` (takeaway, pull-quote), and a
+  `data:` line for charts/tables (real numbers only).
 
-## Hand off
-> Prompt: `deck_generation/prompts/<slug>.deck.md` (shown above).
+## Hand off (after Pass 2 is approved)
+> Prompt saved: `deck_generation/prompts/<slug>.deck.md`
 > Run **`/deck-gen deck_generation/prompts/<slug>.deck.md`** to build the deck.
 
-## Rules
-- **Always render in the chat** (Pass 1 cards). Never hand back only a file path.
-- **Content + structure only** — no design directives; the bible owns colors/fonts/layout.
-- **Be faithful to sources**; **vary structure**; **never request a chart without real numbers**.
-- Keep the `.deck.md` to the `PROMPT_SPEC.md` schema — `prompt_view.py` parses it, so writer and
-  reader must agree.
+## Process note
+This process is **NOT commit-gated** (Andrew-direct). Iterate fast and show the rendered cards;
+commit the `.deck.md` and any renderer change for persistence when convenient — never block a pass on it.
