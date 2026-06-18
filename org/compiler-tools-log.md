@@ -6781,3 +6781,19 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-06-17 | 0.4.0_DS_ClientPlatform | DECK_CLAUDE.FANOUT-A | comp-surface-check | comp-surface-check check --mode advisory --file data/cot/scripts/silver/cot_silver_merg... | PASS |
 | 2026-06-17 | 0.4.0_DS_ClientPlatform | ADVI_COTETL | ds-commit-gate.sh + safe-deploy + s3api-head-object | cot_silver_merge.py CHAINFIX: gate clean + safe-deploy [cot] + md5 ETag==local (5533c1e3) | PASS |
 | 2026-06-17 | 0.4.0_DS_ClientPlatform | DECK_CLAUDE.FANOUT-A | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-06-17 | 0.7.0_AE_CloudOps | DECK_CLAUDE.FANOUT-A | comp-kuzu | comp-kuzu --json MATCH (n:CloudNode) WHERE n.node_type='ServedURL' RETURN n.node_id AS ... | PASS |
+| 2026-06-17 | 0.7.0_AE_CloudOps | DECK_CLAUDE.FANOUT-A | comp-kuzu | comp-kuzu --json MATCH (n:CloudNode) WHERE n.node_id =~ '.*opal-data-portal-v2.*' OR n.... | PASS |
+| 2026-06-17 | 0.7.0_AE_CloudOps | DECK_CLAUDE.FANOUT-A | comp-kuzu | comp-kuzu --json MATCH (a:CloudNode)-[r:CloudEdge]->(b:CloudNode) WHERE b.node_type='s3... | PASS |
+| 2026-06-17 | 0.7.0_AE_CloudOps | DECK_CLAUDE.FANOUT-A | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/globgrph/derive_runner.py | PASS |
+| 2026-06-17 | 0.4.2_RD_AdvisorIntelligence | DECK_CLAUDE.FANOUT-A | comp-surface-check | comp-surface-check check --mode advisory --file deck_generation/.gitignore --file deck_... | PASS |
+| 2026-06-17 | 0.7.0_AE_CloudOps | DECK_CLAUDE.FANOUT-A | comp-kuzu | comp-kuzu --json MATCH (a:CloudNode)-[r:CloudEdge]->(b:CloudNode) WHERE b.node_id='arn:... | PASS |
+| 2026-06-17 | 2.0.0_SA_COO | DECK_CLAUDE.FANOUT-A | comp-surface-check | comp-surface-check check --mode advisory --file org/mcp/.last-drive-2.0.0_SA_COO --file... | PASS |
+| 2026-06-17 | 0.7.0_AE_CloudOps | DECK_CLAUDE.FANOUT-A | comp-kuzu | comp-kuzu --json MATCH ()-[r:CloudEdge {edge_type:'SERVED_FROM'}]->() RETURN count(r) A... | PASS |
+| 2026-06-17 | 0.4.2_RD_AdvisorIntelligence | DECK_CLAUDE.FANOUT-A | comp-surface-check | comp-surface-check check --mode advisory --file deck_generation/dev/scripts/opal_sample... | PASS |
+| 2026-06-17 | 0.7.0_AE_CloudOps | DECK_CLAUDE.FANOUT-A | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/globgrph/derive_runner.py --f... | PASS |
+| 2026-06-17 | 2.0.0_SA_COO | DECK_CLAUDE.FANOUT-A | comp-surface-check | comp-surface-check check --mode advisory --file org/mcp/.last-drive-2.0.0_SA_COO --file... | PASS |
+| 2026-06-17 | 0.4.2_RD_AdvisorIntelligence | DECK_CLAUDE.FANOUT-A | comp-surface-check | comp-surface-check check --mode advisory --file deck_generation/dev/docs/portal-chart-p... | PASS |
+| 2026-06-17 | 0.4.2_RD_AdvisorIntelligence | DECK_CLAUDE.FANOUT-A | comp-surface-check | comp-surface-check check --mode advisory --file org/tier3_junior/0.4.2_RD_AdvisorIntell... | PASS |
+| 2026-06-17 | 2.0.0_SA_COO | DECK_CLAUDE.CHARTS-D.line-area-matrix-charts | comp-surface-check | comp-surface-check check --mode advisory --file org/mcp/.last-drive-2.0.0_SA_COO --file... | PASS |
+| 2026-06-17 | 0.4.0_DE_ClientPlatform | NFRA_TSGRAPH.P4 | aws s3api head-object | live ground-truth of /api/general->json/{X} rewrite (exhaustive 33; rewrite is comp-routes/CTO lane -- empirical cross-check) | PASS 29/33, 4 exceptions VISIBLE |
+| 2026-06-17 | 0.4.0_DE_ClientPlatform | DECK_CLAUDE.CHARTS-D.line-area-matrix-charts | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
