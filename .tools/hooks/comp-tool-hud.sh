@@ -39,6 +39,17 @@ else exit 0; fi
 tool=$(printf '%s' "$INPUT" | "$JQ" -r '.tool_name // ""' 2>/dev/null) || exit 0
 case "$tool" in Grep|Glob|Bash) : ;; *) exit 0 ;; esac
 sid=$(printf '%s' "$INPUT" | "$JQ" -r '.session_id // ""' 2>/dev/null || true)
+# --- FREEFORM escape (Andrew-invoked speed mode, /freeform skill) -----------------------------
+# If this session has a LIVE (unexpired) freeform marker, STAND DOWN -- the agent is explicitly
+# off the comp-tool rail for a speed push, so no nudge/gate. FAIL-CLOSED: any parse weirdness
+# (non-numeric, empty, clock issue) -> fall through to ENFORCE. Safety gates are elsewhere + UNAFFECTED.
+if [ -n "$sid" ]; then
+  _ff="$SCRIPT_DIR/../../org/mcp/sessions/${sid}.freeform"
+  if [ -f "$_ff" ]; then
+    _exp=$(tr -dc '0-9' < "$_ff" 2>/dev/null); _now=$(date +%s 2>/dev/null | tr -dc '0-9')
+    if [ -n "$_exp" ] && [ -n "$_now" ] && [ "$_now" -lt "$_exp" ] 2>/dev/null; then exit 0; fi
+  fi
+fi
 # Bash -> .command ; Grep/Glob -> .pattern/.file_path. The command-first chain means
 # a Bash raw-aws/infra-grep gets matched against the aws-inspection classes below
 # (NFRA_TOOLHUD ext 2026-06-18, Andrew-direct: agents reaching for raw aws/grep where
