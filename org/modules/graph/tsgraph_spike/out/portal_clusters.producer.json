@@ -1,0 +1,4264 @@
+{
+  "producer": "ts-semantic-clusters",
+  "generated_at": "STAMP_AT_STAGE",
+  "slice": "portal-clusters-p2-1",
+  "nodes": [
+    {
+      "id": "page:AdvisorIntelligence",
+      "type": "Page",
+      "name": "AdvisorIntelligence",
+      "featureDir": "portal/src/pages/AdvisorIntelligence",
+      "rootFile": "portal/src/pages/AdvisorIntelligence/index.tsx",
+      "pageFileCount": 26,
+      "clusterCount": 11
+    },
+    {
+      "id": "page:Attribution",
+      "type": "Page",
+      "name": "Attribution",
+      "featureDir": "portal/src/pages/Attribution",
+      "rootFile": "portal/src/pages/Attribution/Attribution.tsx",
+      "pageFileCount": 5,
+      "clusterCount": 4
+    },
+    {
+      "id": "page:CapitalMarketAssumptions",
+      "type": "Page",
+      "name": "CapitalMarketAssumptions",
+      "featureDir": "portal/src/pages/CapitalMarketAssumptions",
+      "rootFile": "portal/src/pages/CapitalMarketAssumptions/CapitalMarketAssumptions.tsx",
+      "pageFileCount": 6,
+      "clusterCount": 1
+    },
+    {
+      "id": "page:Correlation",
+      "type": "Page",
+      "name": "Correlation",
+      "featureDir": "portal/src/pages/Correlation",
+      "rootFile": "portal/src/pages/Correlation/Correlation.tsx",
+      "pageFileCount": 3,
+      "clusterCount": 3
+    },
+    {
+      "id": "page:DataRefresh",
+      "type": "Page",
+      "name": "DataRefresh",
+      "featureDir": "portal/src/pages/DataRefresh",
+      "rootFile": "portal/src/pages/DataRefresh/DataRefresh.tsx",
+      "pageFileCount": 8,
+      "clusterCount": 8
+    },
+    {
+      "id": "page:FactorTilts",
+      "type": "Page",
+      "name": "FactorTilts",
+      "featureDir": "portal/src/pages/FactorTilts",
+      "rootFile": "portal/src/pages/FactorTilts/FactorTilts.tsx",
+      "pageFileCount": 6,
+      "clusterCount": 6
+    },
+    {
+      "id": "page:Macroeconomics",
+      "type": "Page",
+      "name": "Macroeconomics",
+      "featureDir": "portal/src/pages/Macroeconomics",
+      "rootFile": "portal/src/pages/Macroeconomics/Macroeconomics.tsx",
+      "pageFileCount": 5,
+      "clusterCount": 1
+    },
+    {
+      "id": "page:MarketPerformance",
+      "type": "Page",
+      "name": "MarketPerformance",
+      "featureDir": "portal/src/pages/MarketPerformance",
+      "rootFile": "portal/src/pages/MarketPerformance/MarketPerformance.tsx",
+      "pageFileCount": 7,
+      "clusterCount": 7
+    },
+    {
+      "id": "page:ModelPortfolios",
+      "type": "Page",
+      "name": "ModelPortfolios",
+      "featureDir": "portal/src/pages/ModelPortfolios",
+      "rootFile": "portal/src/pages/ModelPortfolios.tsx",
+      "pageFileCount": 2,
+      "clusterCount": 1
+    },
+    {
+      "id": "page:PortfolioManagement",
+      "type": "Page",
+      "name": "PortfolioManagement",
+      "featureDir": "portal/src/pages/PortfolioManagement",
+      "rootFile": "portal/src/pages/PortfolioManagement/PortfolioManagement.tsx",
+      "pageFileCount": 18,
+      "clusterCount": 18
+    },
+    {
+      "id": "page:Positioning",
+      "type": "Page",
+      "name": "Positioning",
+      "featureDir": "portal/src/pages/Positioning",
+      "rootFile": "portal/src/pages/Positioning/Positioning.tsx",
+      "pageFileCount": 3,
+      "clusterCount": 2
+    },
+    {
+      "id": "page:SecurityScanner",
+      "type": "Page",
+      "name": "SecurityScanner",
+      "featureDir": "portal/src/pages/SecurityScanner",
+      "rootFile": "portal/src/pages/SecurityScanner/SecurityScanner.tsx",
+      "pageFileCount": 7,
+      "clusterCount": 7
+    },
+    {
+      "id": "page:TradeSubmission",
+      "type": "Page",
+      "name": "TradeSubmission",
+      "featureDir": "portal/src/pages/TradeSubmission",
+      "rootFile": "portal/src/pages/TradeSubmission/TradeSubmission.tsx",
+      "pageFileCount": 13,
+      "clusterCount": 13
+    },
+    {
+      "id": "page:Valuation",
+      "type": "Page",
+      "name": "Valuation",
+      "featureDir": "portal/src/pages/Valuation",
+      "rootFile": "portal/src/pages/Valuation/Valuation.tsx",
+      "pageFileCount": 5,
+      "clusterCount": 5
+    },
+    {
+      "id": "page:auth",
+      "type": "Page",
+      "name": "auth",
+      "featureDir": "portal/src/pages/auth",
+      "rootFile": "portal/src/pages/auth/ChangePasswordPage.tsx",
+      "pageFileCount": 4,
+      "clusterCount": 4
+    },
+    {
+      "id": "cluster:AdvisorIntelligence:0",
+      "type": "PanelCluster",
+      "page": "AdvisorIntelligence",
+      "index": 0,
+      "label": "platinum-firm-mix-summary",
+      "memberFileCount": 8,
+      "sources": [
+        "advisor-book-account",
+        "advisor-book-client",
+        "firm-leaderboard",
+        "getClientDirectory",
+        "getFirmLeaderboard",
+        "getHeaderMetrics",
+        "getPlatinumAccountSummary",
+        "getPlatinumAccountTimeseriesStatic",
+        "getPlatinumFirmDashboard",
+        "getPlatinumFirmMixSummary",
+        "header-metrics",
+        "inflec-account-timeseries",
+        "inflection-client-directory",
+        "platinum-firm-dashboard",
+        "platinum-firm-mix-summary"
+      ],
+      "sourceCount": 15
+    },
+    {
+      "id": "cluster:AdvisorIntelligence:1",
+      "type": "PanelCluster",
+      "page": "AdvisorIntelligence",
+      "index": 1,
+      "label": "firm-leaderboard",
+      "memberFileCount": 3,
+      "sources": [
+        "firm-leaderboard",
+        "getFirmLeaderboard",
+        "getPlatinumPartnerAnalytics",
+        "partner-analytics"
+      ],
+      "sourceCount": 4
+    },
+    {
+      "id": "cluster:AdvisorIntelligence:10",
+      "type": "PanelCluster",
+      "page": "AdvisorIntelligence",
+      "index": 10,
+      "label": "index.tsx",
+      "memberFileCount": 1,
+      "sources": [],
+      "sourceCount": 0
+    },
+    {
+      "id": "cluster:AdvisorIntelligence:2",
+      "type": "PanelCluster",
+      "page": "AdvisorIntelligence",
+      "index": 2,
+      "label": "inflec-account-timeseries",
+      "memberFileCount": 3,
+      "sources": [
+        "advisor-book-account",
+        "advisor-book-client",
+        "advisor-book-view",
+        "getPlatinumAccountSummary",
+        "getPlatinumAccountTimeseriesStatic",
+        "getPlatinumClientDetailStatic",
+        "inflec-account-timeseries"
+      ],
+      "sourceCount": 7
+    },
+    {
+      "id": "cluster:AdvisorIntelligence:3",
+      "type": "PanelCluster",
+      "page": "AdvisorIntelligence",
+      "index": 3,
+      "label": "advisor-timeseries",
+      "memberFileCount": 3,
+      "sources": [
+        "advisor-intelligence",
+        "advisor-mix-views",
+        "advisor-timeseries",
+        "getAdvisorMixViews",
+        "getAdvisorNnaCanonical",
+        "getPlatinumAdvisorTimeseries"
+      ],
+      "sourceCount": 6
+    },
+    {
+      "id": "cluster:AdvisorIntelligence:4",
+      "type": "PanelCluster",
+      "page": "AdvisorIntelligence",
+      "index": 4,
+      "label": "partner-analytics",
+      "memberFileCount": 2,
+      "sources": [
+        "cohort-a-summary",
+        "firm-leaderboard",
+        "getCohortASummary",
+        "getFirmLeaderboard",
+        "getPlatinumPartnerAnalytics",
+        "partner-analytics"
+      ],
+      "sourceCount": 6
+    },
+    {
+      "id": "cluster:AdvisorIntelligence:5",
+      "type": "PanelCluster",
+      "page": "AdvisorIntelligence",
+      "index": 5,
+      "label": "inflection-firm-concentrations",
+      "memberFileCount": 2,
+      "sources": [
+        "inflection-activity-scan",
+        "inflection-cash-drag",
+        "inflection-firm-concentrations"
+      ],
+      "sourceCount": 3
+    },
+    {
+      "id": "cluster:AdvisorIntelligence:6",
+      "type": "PanelCluster",
+      "page": "AdvisorIntelligence",
+      "index": 6,
+      "label": "partner-analytics",
+      "memberFileCount": 1,
+      "sources": [
+        "getPlatinumPartnerAnalytics",
+        "partner-analytics"
+      ],
+      "sourceCount": 2
+    },
+    {
+      "id": "cluster:AdvisorIntelligence:7",
+      "type": "PanelCluster",
+      "page": "AdvisorIntelligence",
+      "index": 7,
+      "label": "advisor-intelligence",
+      "memberFileCount": 1,
+      "sources": [
+        "advisor-book-view",
+        "advisor-drilldown-summary",
+        "advisor-drilldown-timeseries",
+        "advisor-exec-summary",
+        "advisor-intelligence",
+        "getAdvisorExecSummary",
+        "getAdvisorNnaCanonical",
+        "getPlatinumAdvisorDrilldownSummary",
+        "getPlatinumAdvisorSummary",
+        "getPlatinumAdvisorTimeseries"
+      ],
+      "sourceCount": 10
+    },
+    {
+      "id": "cluster:AdvisorIntelligence:8",
+      "type": "PanelCluster",
+      "page": "AdvisorIntelligence",
+      "index": 8,
+      "label": "partner-analytics",
+      "memberFileCount": 1,
+      "sources": [
+        "advisor-intelligence",
+        "getHeaderMetricsFresh",
+        "getPlatinumInflecTimeseriesChart",
+        "getPlatinumPartnerAnalytics",
+        "getTimeseriesOverview",
+        "header-metrics-fresh",
+        "inflec-timeseries-chart",
+        "partner-analytics"
+      ],
+      "sourceCount": 8
+    },
+    {
+      "id": "cluster:AdvisorIntelligence:9",
+      "type": "PanelCluster",
+      "page": "AdvisorIntelligence",
+      "index": 9,
+      "label": "partner-analytics",
+      "memberFileCount": 1,
+      "sources": [
+        "advisor-book-relationship-stacks",
+        "advisor-intelligence",
+        "getAdvisorNnaCanonical",
+        "getPlatinumAdvisorNnaClients",
+        "getPlatinumAdvisorSummary",
+        "getPlatinumCumulativeChart",
+        "getPlatinumPartnerAnalytics",
+        "getTimeseriesOverview",
+        "partner-analytics"
+      ],
+      "sourceCount": 9
+    },
+    {
+      "id": "cluster:Attribution:0",
+      "type": "PanelCluster",
+      "page": "Attribution",
+      "index": 0,
+      "label": "positioning-data",
+      "memberFileCount": 2,
+      "sources": [
+        "/api/general/positioning/positioning_data.json",
+        "getPositioningData",
+        "positioning-data"
+      ],
+      "sourceCount": 3
+    },
+    {
+      "id": "cluster:Attribution:1",
+      "type": "PanelCluster",
+      "page": "Attribution",
+      "index": 1,
+      "label": "holdings-attribution",
+      "memberFileCount": 1,
+      "sources": [
+        "/api/general/positioning/holdings_attribution_data.json",
+        "allocation-summary",
+        "getAllocationSummary",
+        "getHoldingsAttribution",
+        "holdings-attribution"
+      ],
+      "sourceCount": 5
+    },
+    {
+      "id": "cluster:Attribution:2",
+      "type": "PanelCluster",
+      "page": "Attribution",
+      "index": 2,
+      "label": "HoldingsCustomTreemapContent.tsx",
+      "memberFileCount": 1,
+      "sources": [],
+      "sourceCount": 0
+    },
+    {
+      "id": "cluster:Attribution:3",
+      "type": "PanelCluster",
+      "page": "Attribution",
+      "index": 3,
+      "label": "allocation-summary",
+      "memberFileCount": 1,
+      "sources": [
+        "allocation-summary",
+        "getAllocationSummary"
+      ],
+      "sourceCount": 2
+    },
+    {
+      "id": "cluster:CapitalMarketAssumptions:0",
+      "type": "PanelCluster",
+      "page": "CapitalMarketAssumptions",
+      "index": 0,
+      "label": "opal-views",
+      "memberFileCount": 6,
+      "sources": [
+        "/api/general/capital-markets/assumptions.json",
+        "/api/general/capital-markets/views.json",
+        "cma-assumptions",
+        "getCMAAssumptions",
+        "getOpalViews",
+        "opal-views"
+      ],
+      "sourceCount": 6
+    },
+    {
+      "id": "cluster:Correlation:0",
+      "type": "PanelCluster",
+      "page": "Correlation",
+      "index": 0,
+      "label": "Correlation.tsx",
+      "memberFileCount": 1,
+      "sources": [],
+      "sourceCount": 0
+    },
+    {
+      "id": "cluster:Correlation:1",
+      "type": "PanelCluster",
+      "page": "Correlation",
+      "index": 1,
+      "label": "CorrelationMatrix.tsx",
+      "memberFileCount": 1,
+      "sources": [],
+      "sourceCount": 0
+    },
+    {
+      "id": "cluster:Correlation:2",
+      "type": "PanelCluster",
+      "page": "Correlation",
+      "index": 2,
+      "label": "TickerSelector.tsx",
+      "memberFileCount": 1,
+      "sources": [],
+      "sourceCount": 0
+    },
+    {
+      "id": "cluster:DataRefresh:0",
+      "type": "PanelCluster",
+      "page": "DataRefresh",
+      "index": 0,
+      "label": "DataRefresh.tsx",
+      "memberFileCount": 1,
+      "sources": [],
+      "sourceCount": 0
+    },
+    {
+      "id": "cluster:DataRefresh:1",
+      "type": "PanelCluster",
+      "page": "DataRefresh",
+      "index": 1,
+      "label": "portal-manifest",
+      "memberFileCount": 1,
+      "sources": [
+        "fetchPortalManifest",
+        "portal-manifest"
+      ],
+      "sourceCount": 2
+    },
+    {
+      "id": "cluster:DataRefresh:2",
+      "type": "PanelCluster",
+      "page": "DataRefresh",
+      "index": 2,
+      "label": "FileDropZone.tsx",
+      "memberFileCount": 1,
+      "sources": [],
+      "sourceCount": 0
+    },
+    {
+      "id": "cluster:DataRefresh:3",
+      "type": "PanelCluster",
+      "page": "DataRefresh",
+      "index": 3,
+      "label": "ManifestPreview.tsx",
+      "memberFileCount": 1,
+      "sources": [],
+      "sourceCount": 0
+    },
+    {
+      "id": "cluster:DataRefresh:4",
+      "type": "PanelCluster",
+      "page": "DataRefresh",
+      "index": 4,
+      "label": "PipelineProgress.tsx",
+      "memberFileCount": 1,
+      "sources": [],
+      "sourceCount": 0
+    },
+    {
+      "id": "cluster:DataRefresh:5",
+      "type": "PanelCluster",
+      "page": "DataRefresh",
+      "index": 5,
+      "label": "UploadProgress.tsx",
+      "memberFileCount": 1,
+      "sources": [],
+      "sourceCount": 0
+    },
+    {
+      "id": "cluster:DataRefresh:6",
+      "type": "PanelCluster",
+      "page": "DataRefresh",
+      "index": 6,
+      "label": "HistoryTab.tsx",
+      "memberFileCount": 1,
+      "sources": [],
+      "sourceCount": 0
+    },
+    {
+      "id": "cluster:DataRefresh:7",
+      "type": "PanelCluster",
+      "page": "DataRefresh",
+      "index": 7,
+      "label": "UploadTab.tsx",
+      "memberFileCount": 1,
+      "sources": [],
+      "sourceCount": 0
+    },
+    {
+      "id": "cluster:FactorTilts:0",
+      "type": "PanelCluster",
+      "page": "FactorTilts",
+      "index": 0,
+      "label": "FactorTilts.tsx",
+      "memberFileCount": 1,
+      "sources": [],
+      "sourceCount": 0
+    },
+    {
+      "id": "cluster:FactorTilts:1",
+      "type": "PanelCluster",
+      "page": "FactorTilts",
+      "index": 1,
+      "label": "ModelTiltTimeSeriesView.tsx",
+      "memberFileCount": 1,
+      "sources": [],
+      "sourceCount": 0
+    },
+    {
+      "id": "cluster:FactorTilts:2",
+      "type": "PanelCluster",
+      "page": "FactorTilts",
+      "index": 2,
+      "label": "FactorTiltOverviewPanel.tsx",
+      "memberFileCount": 1,
+      "sources": [],
+      "sourceCount": 0
+    },
+    {
+      "id": "cluster:FactorTilts:3",
+      "type": "PanelCluster",
+      "page": "FactorTilts",
+      "index": 3,
+      "label": "SummaryMetricsTable.tsx",
+      "memberFileCount": 1,
+      "sources": [],
+      "sourceCount": 0
+    },
+    {
+      "id": "cluster:FactorTilts:4",
+      "type": "PanelCluster",
+      "page": "FactorTilts",
+      "index": 4,
+      "label": "FactorTiltBarsTab.tsx",
+      "memberFileCount": 1,
+      "sources": [],
+      "sourceCount": 0
+    },
+    {
+      "id": "cluster:FactorTilts:5",
+      "type": "PanelCluster",
+      "page": "FactorTilts",
+      "index": 5,
+      "label": "FactorTiltTimeSeriesTab.tsx",
+      "memberFileCount": 1,
+      "sources": [],
+      "sourceCount": 0
+    },
+    {
+      "id": "cluster:Macroeconomics:0",
+      "type": "PanelCluster",
+      "page": "Macroeconomics",
+      "index": 0,
+      "label": "volatility-data",
+      "memberFileCount": 5,
+      "sources": [
+        "/api/general/macro/volatility_data.json",
+        "getVolatilityData",
+        "volatility-data"
+      ],
+      "sourceCount": 3
+    },
+    {
+      "id": "cluster:MarketPerformance:0",
+      "type": "PanelCluster",
+      "page": "MarketPerformance",
+      "index": 0,
+      "label": "MarketPerformance.tsx",
+      "memberFileCount": 1,
+      "sources": [],
+      "sourceCount": 0
+    },
+    {
+      "id": "cluster:MarketPerformance:1",
+      "type": "PanelCluster",
+      "page": "MarketPerformance",
+      "index": 1,
+      "label": "ExecutiveSummaryPanel.tsx",
+      "memberFileCount": 1,
+      "sources": [],
+      "sourceCount": 0
+    },
+    {
+      "id": "cluster:MarketPerformance:2",
+      "type": "PanelCluster",
+      "page": "MarketPerformance",
+      "index": 2,
+      "label": "SentimentPanel.tsx",
+      "memberFileCount": 1,
+      "sources": [],
+      "sourceCount": 0
+    },
+    {
+      "id": "cluster:MarketPerformance:3",
+      "type": "PanelCluster",
+      "page": "MarketPerformance",
+      "index": 3,
+      "label": "CommoditiesTab.tsx",
+      "memberFileCount": 1,
+      "sources": [],
+      "sourceCount": 0
+    },
+    {
+      "id": "cluster:MarketPerformance:4",
+      "type": "PanelCluster",
+      "page": "MarketPerformance",
+      "index": 4,
+      "label": "EquitiesTab.tsx",
+      "memberFileCount": 1,
+      "sources": [],
+      "sourceCount": 0
+    },
+    {
+      "id": "cluster:MarketPerformance:5",
+      "type": "PanelCluster",
+      "page": "MarketPerformance",
+      "index": 5,
+      "label": "FixedIncomeTab.tsx",
+      "memberFileCount": 1,
+      "sources": [],
+      "sourceCount": 0
+    },
+    {
+      "id": "cluster:MarketPerformance:6",
+      "type": "PanelCluster",
+      "page": "MarketPerformance",
+      "index": 6,
+      "label": "MultiAssetTab.tsx",
+      "memberFileCount": 1,
+      "sources": [],
+      "sourceCount": 0
+    },
+    {
+      "id": "cluster:ModelPortfolios:0",
+      "type": "PanelCluster",
+      "page": "ModelPortfolios",
+      "index": 0,
+      "label": "peer-performance",
+      "memberFileCount": 2,
+      "sources": [
+        "/api/general/benchmarks/etf_returns.json",
+        "/api/general/benchmarks/model_portfolio_benchmarks.json",
+        "/api/general/peers/peer_performance.json",
+        "/api/general/portfolios/account-distribution.json",
+        "/api/general/portfolios/aum-timeseries.json",
+        "/api/general/portfolios/non_model_assets.json",
+        "account-distribution",
+        "aum-metrics",
+        "aum-timeseries",
+        "etf-benchmark-returns",
+        "getAUMMetrics",
+        "getAUMTimeSeries",
+        "getAccountDistribution",
+        "getAccountDistributionByFirm",
+        "getETFBenchmarkReturns",
+        "getMdpfAggregateAUATimeSeriesByFirm",
+        "getModelPortfolioBenchmarks",
+        "getNonModelAssets",
+        "getPeerPerformance",
+        "mdpf-aggregate-timeseries",
+        "mdpf-per-firm-distribution",
+        "mdpf-per-firm-timeseries",
+        "model-portfolio-benchmarks",
+        "non-model-assets",
+        "peer-performance"
+      ],
+      "sourceCount": 25
+    },
+    {
+      "id": "cluster:PortfolioManagement:0",
+      "type": "PanelCluster",
+      "page": "PortfolioManagement",
+      "index": 0,
+      "label": "PortfolioManagement.tsx",
+      "memberFileCount": 1,
+      "sources": [],
+      "sourceCount": 0
+    },
+    {
+      "id": "cluster:PortfolioManagement:1",
+      "type": "PanelCluster",
+      "page": "PortfolioManagement",
+      "index": 1,
+      "label": "AutoSaveIndicator.tsx",
+      "memberFileCount": 1,
+      "sources": [],
+      "sourceCount": 0
+    },
+    {
+      "id": "cluster:PortfolioManagement:10",
+      "type": "PanelCluster",
+      "page": "PortfolioManagement",
+      "index": 10,
+      "label": "UploadConfirmationModal.tsx",
+      "memberFileCount": 1,
+      "sources": [],
+      "sourceCount": 0
+    },
+    {
+      "id": "cluster:PortfolioManagement:11",
+      "type": "PanelCluster",
+      "page": "PortfolioManagement",
+      "index": 11,
+      "label": "UploadPortfolioModal.tsx",
+      "memberFileCount": 1,
+      "sources": [],
+      "sourceCount": 0
+    },
+    {
+      "id": "cluster:PortfolioManagement:12",
+      "type": "PanelCluster",
+      "page": "PortfolioManagement",
+      "index": 12,
+      "label": "VersionHistoryModal.tsx",
+      "memberFileCount": 1,
+      "sources": [],
+      "sourceCount": 0
+    },
+    {
+      "id": "cluster:PortfolioManagement:13",
+      "type": "PanelCluster",
+      "page": "PortfolioManagement",
+      "index": 13,
+      "label": "AlphaTab.tsx",
+      "memberFileCount": 1,
+      "sources": [],
+      "sourceCount": 0
+    },
+    {
+      "id": "cluster:PortfolioManagement:14",
+      "type": "PanelCluster",
+      "page": "PortfolioManagement",
+      "index": 14,
+      "label": "HistoryTab.tsx",
+      "memberFileCount": 1,
+      "sources": [],
+      "sourceCount": 0
+    },
+    {
+      "id": "cluster:PortfolioManagement:15",
+      "type": "PanelCluster",
+      "page": "PortfolioManagement",
+      "index": 15,
+      "label": "ModelTab.tsx",
+      "memberFileCount": 1,
+      "sources": [],
+      "sourceCount": 0
+    },
+    {
+      "id": "cluster:PortfolioManagement:16",
+      "type": "PanelCluster",
+      "page": "PortfolioManagement",
+      "index": 16,
+      "label": "SectorTab.tsx",
+      "memberFileCount": 1,
+      "sources": [],
+      "sourceCount": 0
+    },
+    {
+      "id": "cluster:PortfolioManagement:17",
+      "type": "PanelCluster",
+      "page": "PortfolioManagement",
+      "index": 17,
+      "label": "TradeTab.tsx",
+      "memberFileCount": 1,
+      "sources": [],
+      "sourceCount": 0
+    },
+    {
+      "id": "cluster:PortfolioManagement:2",
+      "type": "PanelCluster",
+      "page": "PortfolioManagement",
+      "index": 2,
+      "label": "BulkEditModal.tsx",
+      "memberFileCount": 1,
+      "sources": [],
+      "sourceCount": 0
+    },
+    {
+      "id": "cluster:PortfolioManagement:3",
+      "type": "PanelCluster",
+      "page": "PortfolioManagement",
+      "index": 3,
+      "label": "ExportModal.tsx",
+      "memberFileCount": 1,
+      "sources": [],
+      "sourceCount": 0
+    },
+    {
+      "id": "cluster:PortfolioManagement:4",
+      "type": "PanelCluster",
+      "page": "PortfolioManagement",
+      "index": 4,
+      "label": "LoadingOverlay.tsx",
+      "memberFileCount": 1,
+      "sources": [],
+      "sourceCount": 0
+    },
+    {
+      "id": "cluster:PortfolioManagement:5",
+      "type": "PanelCluster",
+      "page": "PortfolioManagement",
+      "index": 5,
+      "label": "OptimizationSummaryHeader.tsx",
+      "memberFileCount": 1,
+      "sources": [],
+      "sourceCount": 0
+    },
+    {
+      "id": "cluster:PortfolioManagement:6",
+      "type": "PanelCluster",
+      "page": "PortfolioManagement",
+      "index": 6,
+      "label": "PortfolioGrid.tsx",
+      "memberFileCount": 1,
+      "sources": [],
+      "sourceCount": 0
+    },
+    {
+      "id": "cluster:PortfolioManagement:7",
+      "type": "PanelCluster",
+      "page": "PortfolioManagement",
+      "index": 7,
+      "label": "RemoveConfirmationModal.tsx",
+      "memberFileCount": 1,
+      "sources": [],
+      "sourceCount": 0
+    },
+    {
+      "id": "cluster:PortfolioManagement:8",
+      "type": "PanelCluster",
+      "page": "PortfolioManagement",
+      "index": 8,
+      "label": "SecurityDetailModal.tsx",
+      "memberFileCount": 1,
+      "sources": [],
+      "sourceCount": 0
+    },
+    {
+      "id": "cluster:PortfolioManagement:9",
+      "type": "PanelCluster",
+      "page": "PortfolioManagement",
+      "index": 9,
+      "label": "SecurityLookupModal.tsx",
+      "memberFileCount": 1,
+      "sources": [],
+      "sourceCount": 0
+    },
+    {
+      "id": "cluster:Positioning:0",
+      "type": "PanelCluster",
+      "page": "Positioning",
+      "index": 0,
+      "label": "positioning-data",
+      "memberFileCount": 2,
+      "sources": [
+        "/api/general/positioning/positioning_data.json",
+        "getPositioningData",
+        "positioning-data"
+      ],
+      "sourceCount": 3
+    },
+    {
+      "id": "cluster:Positioning:1",
+      "type": "PanelCluster",
+      "page": "Positioning",
+      "index": 1,
+      "label": "holdings-attribution",
+      "memberFileCount": 1,
+      "sources": [
+        "/api/general/positioning/holdings_attribution_data.json",
+        "getHoldingsAttribution",
+        "holdings-attribution"
+      ],
+      "sourceCount": 3
+    },
+    {
+      "id": "cluster:SecurityScanner:0",
+      "type": "PanelCluster",
+      "page": "SecurityScanner",
+      "index": 0,
+      "label": "SecurityScanner.tsx",
+      "memberFileCount": 1,
+      "sources": [],
+      "sourceCount": 0
+    },
+    {
+      "id": "cluster:SecurityScanner:1",
+      "type": "PanelCluster",
+      "page": "SecurityScanner",
+      "index": 1,
+      "label": "FactorChip.tsx",
+      "memberFileCount": 1,
+      "sources": [],
+      "sourceCount": 0
+    },
+    {
+      "id": "cluster:SecurityScanner:2",
+      "type": "PanelCluster",
+      "page": "SecurityScanner",
+      "index": 2,
+      "label": "ScannerFilterToolbar.tsx",
+      "memberFileCount": 1,
+      "sources": [],
+      "sourceCount": 0
+    },
+    {
+      "id": "cluster:SecurityScanner:3",
+      "type": "PanelCluster",
+      "page": "SecurityScanner",
+      "index": 3,
+      "label": "ScannerHeaderPanel.tsx",
+      "memberFileCount": 1,
+      "sources": [],
+      "sourceCount": 0
+    },
+    {
+      "id": "cluster:SecurityScanner:4",
+      "type": "PanelCluster",
+      "page": "SecurityScanner",
+      "index": 4,
+      "label": "FactorBankTab.tsx",
+      "memberFileCount": 1,
+      "sources": [],
+      "sourceCount": 0
+    },
+    {
+      "id": "cluster:SecurityScanner:5",
+      "type": "PanelCluster",
+      "page": "SecurityScanner",
+      "index": 5,
+      "label": "UniverseDataTab.tsx",
+      "memberFileCount": 1,
+      "sources": [],
+      "sourceCount": 0
+    },
+    {
+      "id": "cluster:SecurityScanner:6",
+      "type": "PanelCluster",
+      "page": "SecurityScanner",
+      "index": 6,
+      "label": "UniverseScannerTab.tsx",
+      "memberFileCount": 1,
+      "sources": [],
+      "sourceCount": 0
+    },
+    {
+      "id": "cluster:TradeSubmission:0",
+      "type": "PanelCluster",
+      "page": "TradeSubmission",
+      "index": 0,
+      "label": "TradeSubmission.tsx",
+      "memberFileCount": 1,
+      "sources": [],
+      "sourceCount": 0
+    },
+    {
+      "id": "cluster:TradeSubmission:1",
+      "type": "PanelCluster",
+      "page": "TradeSubmission",
+      "index": 1,
+      "label": "ApproveModal.tsx",
+      "memberFileCount": 1,
+      "sources": [],
+      "sourceCount": 0
+    },
+    {
+      "id": "cluster:TradeSubmission:10",
+      "type": "PanelCluster",
+      "page": "TradeSubmission",
+      "index": 10,
+      "label": "ExecutionTab.tsx",
+      "memberFileCount": 1,
+      "sources": [],
+      "sourceCount": 0
+    },
+    {
+      "id": "cluster:TradeSubmission:11",
+      "type": "PanelCluster",
+      "page": "TradeSubmission",
+      "index": 11,
+      "label": "HistoryTab.tsx",
+      "memberFileCount": 1,
+      "sources": [],
+      "sourceCount": 0
+    },
+    {
+      "id": "cluster:TradeSubmission:12",
+      "type": "PanelCluster",
+      "page": "TradeSubmission",
+      "index": 12,
+      "label": "SubmitTab.tsx",
+      "memberFileCount": 1,
+      "sources": [],
+      "sourceCount": 0
+    },
+    {
+      "id": "cluster:TradeSubmission:2",
+      "type": "PanelCluster",
+      "page": "TradeSubmission",
+      "index": 2,
+      "label": "ExecuteModal.tsx",
+      "memberFileCount": 1,
+      "sources": [],
+      "sourceCount": 0
+    },
+    {
+      "id": "cluster:TradeSubmission:3",
+      "type": "PanelCluster",
+      "page": "TradeSubmission",
+      "index": 3,
+      "label": "FileUploadZone.tsx",
+      "memberFileCount": 1,
+      "sources": [],
+      "sourceCount": 0
+    },
+    {
+      "id": "cluster:TradeSubmission:4",
+      "type": "PanelCluster",
+      "page": "TradeSubmission",
+      "index": 4,
+      "label": "RejectModal.tsx",
+      "memberFileCount": 1,
+      "sources": [],
+      "sourceCount": 0
+    },
+    {
+      "id": "cluster:TradeSubmission:5",
+      "type": "PanelCluster",
+      "page": "TradeSubmission",
+      "index": 5,
+      "label": "SecuritiesTable.tsx",
+      "memberFileCount": 1,
+      "sources": [],
+      "sourceCount": 0
+    },
+    {
+      "id": "cluster:TradeSubmission:6",
+      "type": "PanelCluster",
+      "page": "TradeSubmission",
+      "index": 6,
+      "label": "TickerAutocompleteInput.tsx",
+      "memberFileCount": 1,
+      "sources": [],
+      "sourceCount": 0
+    },
+    {
+      "id": "cluster:TradeSubmission:7",
+      "type": "PanelCluster",
+      "page": "TradeSubmission",
+      "index": 7,
+      "label": "TradeCard.tsx",
+      "memberFileCount": 1,
+      "sources": [],
+      "sourceCount": 0
+    },
+    {
+      "id": "cluster:TradeSubmission:8",
+      "type": "PanelCluster",
+      "page": "TradeSubmission",
+      "index": 8,
+      "label": "TradeDetailsModal.tsx",
+      "memberFileCount": 1,
+      "sources": [],
+      "sourceCount": 0
+    },
+    {
+      "id": "cluster:TradeSubmission:9",
+      "type": "PanelCluster",
+      "page": "TradeSubmission",
+      "index": 9,
+      "label": "ApprovalsTab.tsx",
+      "memberFileCount": 1,
+      "sources": [],
+      "sourceCount": 0
+    },
+    {
+      "id": "cluster:Valuation:0",
+      "type": "PanelCluster",
+      "page": "Valuation",
+      "index": 0,
+      "label": "Valuation.tsx",
+      "memberFileCount": 1,
+      "sources": [],
+      "sourceCount": 0
+    },
+    {
+      "id": "cluster:Valuation:1",
+      "type": "PanelCluster",
+      "page": "Valuation",
+      "index": 1,
+      "label": "ValuationRangePanel.tsx",
+      "memberFileCount": 1,
+      "sources": [],
+      "sourceCount": 0
+    },
+    {
+      "id": "cluster:Valuation:2",
+      "type": "PanelCluster",
+      "page": "Valuation",
+      "index": 2,
+      "label": "ValuationSummaryPanel.tsx",
+      "memberFileCount": 1,
+      "sources": [],
+      "sourceCount": 0
+    },
+    {
+      "id": "cluster:Valuation:3",
+      "type": "PanelCluster",
+      "page": "Valuation",
+      "index": 3,
+      "label": "risk-premium-data",
+      "memberFileCount": 1,
+      "sources": [
+        "/api/general/valuation/risk_premium_data.json",
+        "getRiskPremiumData",
+        "risk-premium-data"
+      ],
+      "sourceCount": 3
+    },
+    {
+      "id": "cluster:Valuation:4",
+      "type": "PanelCluster",
+      "page": "Valuation",
+      "index": 4,
+      "label": "ValuationTimeSeriesTab.tsx",
+      "memberFileCount": 1,
+      "sources": [],
+      "sourceCount": 0
+    },
+    {
+      "id": "cluster:auth:0",
+      "type": "PanelCluster",
+      "page": "auth",
+      "index": 0,
+      "label": "ChangePasswordPage.tsx",
+      "memberFileCount": 1,
+      "sources": [],
+      "sourceCount": 0
+    },
+    {
+      "id": "cluster:auth:1",
+      "type": "PanelCluster",
+      "page": "auth",
+      "index": 1,
+      "label": "ForgotPasswordPage.tsx",
+      "memberFileCount": 1,
+      "sources": [],
+      "sourceCount": 0
+    },
+    {
+      "id": "cluster:auth:2",
+      "type": "PanelCluster",
+      "page": "auth",
+      "index": 2,
+      "label": "LoginPage.tsx",
+      "memberFileCount": 1,
+      "sources": [],
+      "sourceCount": 0
+    },
+    {
+      "id": "cluster:auth:3",
+      "type": "PanelCluster",
+      "page": "auth",
+      "index": 3,
+      "label": "ResetPasswordPage.tsx",
+      "memberFileCount": 1,
+      "sources": [],
+      "sourceCount": 0
+    }
+  ],
+  "edges": [
+    {
+      "source": "page:AdvisorIntelligence",
+      "target": "cluster:AdvisorIntelligence:0",
+      "edge_type": "CLUSTERS"
+    },
+    {
+      "source": "page:AdvisorIntelligence",
+      "target": "cluster:AdvisorIntelligence:1",
+      "edge_type": "CLUSTERS"
+    },
+    {
+      "source": "page:AdvisorIntelligence",
+      "target": "cluster:AdvisorIntelligence:10",
+      "edge_type": "CLUSTERS"
+    },
+    {
+      "source": "page:AdvisorIntelligence",
+      "target": "cluster:AdvisorIntelligence:2",
+      "edge_type": "CLUSTERS"
+    },
+    {
+      "source": "page:AdvisorIntelligence",
+      "target": "cluster:AdvisorIntelligence:3",
+      "edge_type": "CLUSTERS"
+    },
+    {
+      "source": "page:AdvisorIntelligence",
+      "target": "cluster:AdvisorIntelligence:4",
+      "edge_type": "CLUSTERS"
+    },
+    {
+      "source": "page:AdvisorIntelligence",
+      "target": "cluster:AdvisorIntelligence:5",
+      "edge_type": "CLUSTERS"
+    },
+    {
+      "source": "page:AdvisorIntelligence",
+      "target": "cluster:AdvisorIntelligence:6",
+      "edge_type": "CLUSTERS"
+    },
+    {
+      "source": "page:AdvisorIntelligence",
+      "target": "cluster:AdvisorIntelligence:7",
+      "edge_type": "CLUSTERS"
+    },
+    {
+      "source": "page:AdvisorIntelligence",
+      "target": "cluster:AdvisorIntelligence:8",
+      "edge_type": "CLUSTERS"
+    },
+    {
+      "source": "page:AdvisorIntelligence",
+      "target": "cluster:AdvisorIntelligence:9",
+      "edge_type": "CLUSTERS"
+    },
+    {
+      "source": "page:Attribution",
+      "target": "cluster:Attribution:0",
+      "edge_type": "CLUSTERS"
+    },
+    {
+      "source": "page:Attribution",
+      "target": "cluster:Attribution:1",
+      "edge_type": "CLUSTERS"
+    },
+    {
+      "source": "page:Attribution",
+      "target": "cluster:Attribution:2",
+      "edge_type": "CLUSTERS"
+    },
+    {
+      "source": "page:Attribution",
+      "target": "cluster:Attribution:3",
+      "edge_type": "CLUSTERS"
+    },
+    {
+      "source": "page:CapitalMarketAssumptions",
+      "target": "cluster:CapitalMarketAssumptions:0",
+      "edge_type": "CLUSTERS"
+    },
+    {
+      "source": "page:Correlation",
+      "target": "cluster:Correlation:0",
+      "edge_type": "CLUSTERS"
+    },
+    {
+      "source": "page:Correlation",
+      "target": "cluster:Correlation:1",
+      "edge_type": "CLUSTERS"
+    },
+    {
+      "source": "page:Correlation",
+      "target": "cluster:Correlation:2",
+      "edge_type": "CLUSTERS"
+    },
+    {
+      "source": "page:DataRefresh",
+      "target": "cluster:DataRefresh:0",
+      "edge_type": "CLUSTERS"
+    },
+    {
+      "source": "page:DataRefresh",
+      "target": "cluster:DataRefresh:1",
+      "edge_type": "CLUSTERS"
+    },
+    {
+      "source": "page:DataRefresh",
+      "target": "cluster:DataRefresh:2",
+      "edge_type": "CLUSTERS"
+    },
+    {
+      "source": "page:DataRefresh",
+      "target": "cluster:DataRefresh:3",
+      "edge_type": "CLUSTERS"
+    },
+    {
+      "source": "page:DataRefresh",
+      "target": "cluster:DataRefresh:4",
+      "edge_type": "CLUSTERS"
+    },
+    {
+      "source": "page:DataRefresh",
+      "target": "cluster:DataRefresh:5",
+      "edge_type": "CLUSTERS"
+    },
+    {
+      "source": "page:DataRefresh",
+      "target": "cluster:DataRefresh:6",
+      "edge_type": "CLUSTERS"
+    },
+    {
+      "source": "page:DataRefresh",
+      "target": "cluster:DataRefresh:7",
+      "edge_type": "CLUSTERS"
+    },
+    {
+      "source": "page:FactorTilts",
+      "target": "cluster:FactorTilts:0",
+      "edge_type": "CLUSTERS"
+    },
+    {
+      "source": "page:FactorTilts",
+      "target": "cluster:FactorTilts:1",
+      "edge_type": "CLUSTERS"
+    },
+    {
+      "source": "page:FactorTilts",
+      "target": "cluster:FactorTilts:2",
+      "edge_type": "CLUSTERS"
+    },
+    {
+      "source": "page:FactorTilts",
+      "target": "cluster:FactorTilts:3",
+      "edge_type": "CLUSTERS"
+    },
+    {
+      "source": "page:FactorTilts",
+      "target": "cluster:FactorTilts:4",
+      "edge_type": "CLUSTERS"
+    },
+    {
+      "source": "page:FactorTilts",
+      "target": "cluster:FactorTilts:5",
+      "edge_type": "CLUSTERS"
+    },
+    {
+      "source": "page:Macroeconomics",
+      "target": "cluster:Macroeconomics:0",
+      "edge_type": "CLUSTERS"
+    },
+    {
+      "source": "page:MarketPerformance",
+      "target": "cluster:MarketPerformance:0",
+      "edge_type": "CLUSTERS"
+    },
+    {
+      "source": "page:MarketPerformance",
+      "target": "cluster:MarketPerformance:1",
+      "edge_type": "CLUSTERS"
+    },
+    {
+      "source": "page:MarketPerformance",
+      "target": "cluster:MarketPerformance:2",
+      "edge_type": "CLUSTERS"
+    },
+    {
+      "source": "page:MarketPerformance",
+      "target": "cluster:MarketPerformance:3",
+      "edge_type": "CLUSTERS"
+    },
+    {
+      "source": "page:MarketPerformance",
+      "target": "cluster:MarketPerformance:4",
+      "edge_type": "CLUSTERS"
+    },
+    {
+      "source": "page:MarketPerformance",
+      "target": "cluster:MarketPerformance:5",
+      "edge_type": "CLUSTERS"
+    },
+    {
+      "source": "page:MarketPerformance",
+      "target": "cluster:MarketPerformance:6",
+      "edge_type": "CLUSTERS"
+    },
+    {
+      "source": "page:ModelPortfolios",
+      "target": "cluster:ModelPortfolios:0",
+      "edge_type": "CLUSTERS"
+    },
+    {
+      "source": "page:PortfolioManagement",
+      "target": "cluster:PortfolioManagement:0",
+      "edge_type": "CLUSTERS"
+    },
+    {
+      "source": "page:PortfolioManagement",
+      "target": "cluster:PortfolioManagement:1",
+      "edge_type": "CLUSTERS"
+    },
+    {
+      "source": "page:PortfolioManagement",
+      "target": "cluster:PortfolioManagement:10",
+      "edge_type": "CLUSTERS"
+    },
+    {
+      "source": "page:PortfolioManagement",
+      "target": "cluster:PortfolioManagement:11",
+      "edge_type": "CLUSTERS"
+    },
+    {
+      "source": "page:PortfolioManagement",
+      "target": "cluster:PortfolioManagement:12",
+      "edge_type": "CLUSTERS"
+    },
+    {
+      "source": "page:PortfolioManagement",
+      "target": "cluster:PortfolioManagement:13",
+      "edge_type": "CLUSTERS"
+    },
+    {
+      "source": "page:PortfolioManagement",
+      "target": "cluster:PortfolioManagement:14",
+      "edge_type": "CLUSTERS"
+    },
+    {
+      "source": "page:PortfolioManagement",
+      "target": "cluster:PortfolioManagement:15",
+      "edge_type": "CLUSTERS"
+    },
+    {
+      "source": "page:PortfolioManagement",
+      "target": "cluster:PortfolioManagement:16",
+      "edge_type": "CLUSTERS"
+    },
+    {
+      "source": "page:PortfolioManagement",
+      "target": "cluster:PortfolioManagement:17",
+      "edge_type": "CLUSTERS"
+    },
+    {
+      "source": "page:PortfolioManagement",
+      "target": "cluster:PortfolioManagement:2",
+      "edge_type": "CLUSTERS"
+    },
+    {
+      "source": "page:PortfolioManagement",
+      "target": "cluster:PortfolioManagement:3",
+      "edge_type": "CLUSTERS"
+    },
+    {
+      "source": "page:PortfolioManagement",
+      "target": "cluster:PortfolioManagement:4",
+      "edge_type": "CLUSTERS"
+    },
+    {
+      "source": "page:PortfolioManagement",
+      "target": "cluster:PortfolioManagement:5",
+      "edge_type": "CLUSTERS"
+    },
+    {
+      "source": "page:PortfolioManagement",
+      "target": "cluster:PortfolioManagement:6",
+      "edge_type": "CLUSTERS"
+    },
+    {
+      "source": "page:PortfolioManagement",
+      "target": "cluster:PortfolioManagement:7",
+      "edge_type": "CLUSTERS"
+    },
+    {
+      "source": "page:PortfolioManagement",
+      "target": "cluster:PortfolioManagement:8",
+      "edge_type": "CLUSTERS"
+    },
+    {
+      "source": "page:PortfolioManagement",
+      "target": "cluster:PortfolioManagement:9",
+      "edge_type": "CLUSTERS"
+    },
+    {
+      "source": "page:Positioning",
+      "target": "cluster:Positioning:0",
+      "edge_type": "CLUSTERS"
+    },
+    {
+      "source": "page:Positioning",
+      "target": "cluster:Positioning:1",
+      "edge_type": "CLUSTERS"
+    },
+    {
+      "source": "page:SecurityScanner",
+      "target": "cluster:SecurityScanner:0",
+      "edge_type": "CLUSTERS"
+    },
+    {
+      "source": "page:SecurityScanner",
+      "target": "cluster:SecurityScanner:1",
+      "edge_type": "CLUSTERS"
+    },
+    {
+      "source": "page:SecurityScanner",
+      "target": "cluster:SecurityScanner:2",
+      "edge_type": "CLUSTERS"
+    },
+    {
+      "source": "page:SecurityScanner",
+      "target": "cluster:SecurityScanner:3",
+      "edge_type": "CLUSTERS"
+    },
+    {
+      "source": "page:SecurityScanner",
+      "target": "cluster:SecurityScanner:4",
+      "edge_type": "CLUSTERS"
+    },
+    {
+      "source": "page:SecurityScanner",
+      "target": "cluster:SecurityScanner:5",
+      "edge_type": "CLUSTERS"
+    },
+    {
+      "source": "page:SecurityScanner",
+      "target": "cluster:SecurityScanner:6",
+      "edge_type": "CLUSTERS"
+    },
+    {
+      "source": "page:TradeSubmission",
+      "target": "cluster:TradeSubmission:0",
+      "edge_type": "CLUSTERS"
+    },
+    {
+      "source": "page:TradeSubmission",
+      "target": "cluster:TradeSubmission:1",
+      "edge_type": "CLUSTERS"
+    },
+    {
+      "source": "page:TradeSubmission",
+      "target": "cluster:TradeSubmission:10",
+      "edge_type": "CLUSTERS"
+    },
+    {
+      "source": "page:TradeSubmission",
+      "target": "cluster:TradeSubmission:11",
+      "edge_type": "CLUSTERS"
+    },
+    {
+      "source": "page:TradeSubmission",
+      "target": "cluster:TradeSubmission:12",
+      "edge_type": "CLUSTERS"
+    },
+    {
+      "source": "page:TradeSubmission",
+      "target": "cluster:TradeSubmission:2",
+      "edge_type": "CLUSTERS"
+    },
+    {
+      "source": "page:TradeSubmission",
+      "target": "cluster:TradeSubmission:3",
+      "edge_type": "CLUSTERS"
+    },
+    {
+      "source": "page:TradeSubmission",
+      "target": "cluster:TradeSubmission:4",
+      "edge_type": "CLUSTERS"
+    },
+    {
+      "source": "page:TradeSubmission",
+      "target": "cluster:TradeSubmission:5",
+      "edge_type": "CLUSTERS"
+    },
+    {
+      "source": "page:TradeSubmission",
+      "target": "cluster:TradeSubmission:6",
+      "edge_type": "CLUSTERS"
+    },
+    {
+      "source": "page:TradeSubmission",
+      "target": "cluster:TradeSubmission:7",
+      "edge_type": "CLUSTERS"
+    },
+    {
+      "source": "page:TradeSubmission",
+      "target": "cluster:TradeSubmission:8",
+      "edge_type": "CLUSTERS"
+    },
+    {
+      "source": "page:TradeSubmission",
+      "target": "cluster:TradeSubmission:9",
+      "edge_type": "CLUSTERS"
+    },
+    {
+      "source": "page:Valuation",
+      "target": "cluster:Valuation:0",
+      "edge_type": "CLUSTERS"
+    },
+    {
+      "source": "page:Valuation",
+      "target": "cluster:Valuation:1",
+      "edge_type": "CLUSTERS"
+    },
+    {
+      "source": "page:Valuation",
+      "target": "cluster:Valuation:2",
+      "edge_type": "CLUSTERS"
+    },
+    {
+      "source": "page:Valuation",
+      "target": "cluster:Valuation:3",
+      "edge_type": "CLUSTERS"
+    },
+    {
+      "source": "page:Valuation",
+      "target": "cluster:Valuation:4",
+      "edge_type": "CLUSTERS"
+    },
+    {
+      "source": "page:auth",
+      "target": "cluster:auth:0",
+      "edge_type": "CLUSTERS"
+    },
+    {
+      "source": "page:auth",
+      "target": "cluster:auth:1",
+      "edge_type": "CLUSTERS"
+    },
+    {
+      "source": "page:auth",
+      "target": "cluster:auth:2",
+      "edge_type": "CLUSTERS"
+    },
+    {
+      "source": "page:auth",
+      "target": "cluster:auth:3",
+      "edge_type": "CLUSTERS"
+    },
+    {
+      "source": "cluster:AdvisorIntelligence:0",
+      "target": "rc:portal/src/pages/AdvisorIntelligence/_shared/AdvisorBookAccountModal.tsx#ChartTooltip",
+      "edge_type": "CONTAINS_DRILLDOWN",
+      "depth": 1,
+      "kind": "modal",
+      "cohort": null
+    },
+    {
+      "source": "cluster:AdvisorIntelligence:0",
+      "target": "rc:portal/src/pages/AdvisorIntelligence/_shared/tabs/ClientsTab.tsx#BooksTab",
+      "edge_type": "CONTAINS_DRILLDOWN",
+      "depth": 1,
+      "kind": "panel",
+      "cohort": null
+    },
+    {
+      "source": "cluster:AdvisorIntelligence:1",
+      "target": "rc:portal/src/pages/AdvisorIntelligence/_partners/inflection/index.tsx#InflectionAdvisorIntelligence",
+      "edge_type": "CONTAINS_DRILLDOWN",
+      "depth": 1,
+      "kind": "cohort",
+      "cohort": "inflection"
+    },
+    {
+      "source": "cluster:AdvisorIntelligence:1",
+      "target": "rc:portal/src/pages/AdvisorIntelligence/_shared/tabs/AdvisorsTab.tsx#ToggleGroup",
+      "edge_type": "CONTAINS_DRILLDOWN",
+      "depth": 1,
+      "kind": "panel",
+      "cohort": null
+    },
+    {
+      "source": "cluster:AdvisorIntelligence:10",
+      "target": "rc:portal/src/pages/AdvisorIntelligence/index.tsx#AdvisorIntelligence",
+      "edge_type": "CONTAINS_DRILLDOWN",
+      "depth": 1,
+      "kind": "panel",
+      "cohort": null
+    },
+    {
+      "source": "cluster:AdvisorIntelligence:2",
+      "target": "rc:portal/src/pages/AdvisorIntelligence/_shared/AdvisorBookView.tsx#AdvisorBookView",
+      "edge_type": "CONTAINS_DRILLDOWN",
+      "depth": 1,
+      "kind": "panel",
+      "cohort": null
+    },
+    {
+      "source": "cluster:AdvisorIntelligence:3",
+      "target": "rc:portal/src/pages/AdvisorIntelligence/_shared/charts/ChartTooltip.tsx#ChartTooltipSubsection",
+      "edge_type": "CONTAINS_DRILLDOWN",
+      "depth": 1,
+      "kind": "panel",
+      "cohort": null
+    },
+    {
+      "source": "cluster:AdvisorIntelligence:3",
+      "target": "rc:portal/src/pages/AdvisorIntelligence/_shared/components/AdvisorAnalytics.tsx#AdvisorAnalytics",
+      "edge_type": "CONTAINS_DRILLDOWN",
+      "depth": 1,
+      "kind": "panel",
+      "cohort": null
+    },
+    {
+      "source": "cluster:AdvisorIntelligence:3",
+      "target": "rc:portal/src/pages/AdvisorIntelligence/_shared/components/AdvisorAnalytics.tsx#ToggleGroup",
+      "edge_type": "CONTAINS_DRILLDOWN",
+      "depth": 1,
+      "kind": "panel",
+      "cohort": null
+    },
+    {
+      "source": "cluster:AdvisorIntelligence:4",
+      "target": "rc:portal/src/pages/AdvisorIntelligence/_partners/49financial/index.tsx#AdvisorIntelligence",
+      "edge_type": "CONTAINS_DRILLDOWN",
+      "depth": 1,
+      "kind": "cohort",
+      "cohort": "49financial"
+    },
+    {
+      "source": "cluster:AdvisorIntelligence:4",
+      "target": "rc:portal/src/pages/AdvisorIntelligence/_partners/49financial/index.tsx#NonAdminProfileTab",
+      "edge_type": "CONTAINS_DRILLDOWN",
+      "depth": 1,
+      "kind": "cohort",
+      "cohort": "49financial"
+    },
+    {
+      "source": "cluster:AdvisorIntelligence:4",
+      "target": "rc:portal/src/pages/AdvisorIntelligence/_partners/49financial/index.tsx#TabErrorFallback",
+      "edge_type": "CONTAINS_DRILLDOWN",
+      "depth": 1,
+      "kind": "cohort",
+      "cohort": "49financial"
+    },
+    {
+      "source": "cluster:AdvisorIntelligence:4",
+      "target": "rc:portal/src/pages/AdvisorIntelligence/_partners/demo/index.tsx#DemoAdvisorIntelligence",
+      "edge_type": "CONTAINS_DRILLDOWN",
+      "depth": 1,
+      "kind": "cohort",
+      "cohort": "demo"
+    },
+    {
+      "source": "cluster:AdvisorIntelligence:4",
+      "target": "rc:portal/src/pages/AdvisorIntelligence/_partners/demo/index.tsx#NonAdminProfileTab",
+      "edge_type": "CONTAINS_DRILLDOWN",
+      "depth": 1,
+      "kind": "cohort",
+      "cohort": "demo"
+    },
+    {
+      "source": "cluster:AdvisorIntelligence:4",
+      "target": "rc:portal/src/pages/AdvisorIntelligence/_partners/demo/index.tsx#TabErrorFallback",
+      "edge_type": "CONTAINS_DRILLDOWN",
+      "depth": 1,
+      "kind": "cohort",
+      "cohort": "demo"
+    },
+    {
+      "source": "cluster:AdvisorIntelligence:5",
+      "target": "rc:portal/src/pages/AdvisorIntelligence/_partners/inflection/InflectionInsightsPanel.tsx#InflectionInsightsPanel",
+      "edge_type": "CONTAINS_DRILLDOWN",
+      "depth": 1,
+      "kind": "cohort",
+      "cohort": "inflection"
+    },
+    {
+      "source": "cluster:AdvisorIntelligence:5",
+      "target": "rc:portal/src/pages/AdvisorIntelligence/_partners/inflection/InflectionInsightsPanel.tsx#ToggleGroup",
+      "edge_type": "CONTAINS_DRILLDOWN",
+      "depth": 1,
+      "kind": "cohort",
+      "cohort": "inflection"
+    },
+    {
+      "source": "cluster:AdvisorIntelligence:5",
+      "target": "rc:portal/src/pages/AdvisorIntelligence/_shared/tabs/FeeEfficiencyPanel.tsx#FeeEfficiencyPanel",
+      "edge_type": "CONTAINS_DRILLDOWN",
+      "depth": 1,
+      "kind": "panel",
+      "cohort": null
+    },
+    {
+      "source": "cluster:AdvisorIntelligence:6",
+      "target": "rc:portal/src/pages/AdvisorIntelligence/_partners/cottonwood/index.tsx#CottonwoodAdvisorIntelligence",
+      "edge_type": "CONTAINS_DRILLDOWN",
+      "depth": 1,
+      "kind": "cohort",
+      "cohort": "cottonwood"
+    },
+    {
+      "source": "cluster:AdvisorIntelligence:6",
+      "target": "rc:portal/src/pages/AdvisorIntelligence/_partners/cottonwood/index.tsx#TabErrorFallback",
+      "edge_type": "CONTAINS_DRILLDOWN",
+      "depth": 1,
+      "kind": "cohort",
+      "cohort": "cottonwood"
+    },
+    {
+      "source": "cluster:AdvisorIntelligence:7",
+      "target": "rc:portal/src/pages/AdvisorIntelligence/_shared/AdvisorPublicProfile.tsx#AdvisorPublicProfile",
+      "edge_type": "CONTAINS_DRILLDOWN",
+      "depth": 1,
+      "kind": "panel",
+      "cohort": null
+    },
+    {
+      "source": "cluster:AdvisorIntelligence:7",
+      "target": "rc:portal/src/pages/AdvisorIntelligence/_shared/AdvisorPublicProfile.tsx#ToggleGroup",
+      "edge_type": "CONTAINS_DRILLDOWN",
+      "depth": 1,
+      "kind": "panel",
+      "cohort": null
+    },
+    {
+      "source": "cluster:AdvisorIntelligence:8",
+      "target": "rc:portal/src/pages/AdvisorIntelligence/_shared/components/PartnerAnalytics.tsx#PartnerAnalytics",
+      "edge_type": "CONTAINS_DRILLDOWN",
+      "depth": 1,
+      "kind": "panel",
+      "cohort": null
+    },
+    {
+      "source": "cluster:AdvisorIntelligence:9",
+      "target": "rc:portal/src/pages/AdvisorIntelligence/_shared/tabs/DistributionTab.tsx#DistributionTab",
+      "edge_type": "CONTAINS_DRILLDOWN",
+      "depth": 1,
+      "kind": "panel",
+      "cohort": null
+    },
+    {
+      "source": "cluster:Attribution:0",
+      "target": "rc:portal/src/pages/Attribution/Attribution.tsx#Attribution",
+      "edge_type": "CONTAINS_DRILLDOWN",
+      "depth": 1,
+      "kind": "panel",
+      "cohort": null
+    },
+    {
+      "source": "cluster:Attribution:1",
+      "target": "rc:portal/src/pages/Attribution/components/AssetAllocationSummary.tsx#AssetAllocationSummary",
+      "edge_type": "CONTAINS_DRILLDOWN",
+      "depth": 1,
+      "kind": "panel",
+      "cohort": null
+    },
+    {
+      "source": "cluster:Attribution:2",
+      "target": "rc:portal/src/pages/Attribution/components/HoldingsCustomTreemapContent.tsx#HoldingsCustomTreemapContent",
+      "edge_type": "CONTAINS_DRILLDOWN",
+      "depth": 1,
+      "kind": "panel",
+      "cohort": null
+    },
+    {
+      "source": "cluster:Attribution:3",
+      "target": "rc:portal/src/pages/Attribution/components/StylePolicyComparison.tsx#StylePolicyComparison",
+      "edge_type": "CONTAINS_DRILLDOWN",
+      "depth": 1,
+      "kind": "panel",
+      "cohort": null
+    },
+    {
+      "source": "cluster:CapitalMarketAssumptions:0",
+      "target": "rc:portal/src/pages/CapitalMarketAssumptions/CapitalMarketAssumptions.tsx#CapitalMarketAssumptions",
+      "edge_type": "CONTAINS_DRILLDOWN",
+      "depth": 1,
+      "kind": "panel",
+      "cohort": null
+    },
+    {
+      "source": "cluster:CapitalMarketAssumptions:0",
+      "target": "rc:portal/src/pages/CapitalMarketAssumptions/tabs/ExpectationsTab.tsx#CustomTooltip",
+      "edge_type": "CONTAINS_DRILLDOWN",
+      "depth": 1,
+      "kind": "panel",
+      "cohort": null
+    },
+    {
+      "source": "cluster:Correlation:0",
+      "target": "rc:portal/src/pages/Correlation/Correlation.tsx#Correlation",
+      "edge_type": "CONTAINS_DRILLDOWN",
+      "depth": 1,
+      "kind": "panel",
+      "cohort": null
+    },
+    {
+      "source": "cluster:Correlation:1",
+      "target": "rc:portal/src/pages/Correlation/components/CorrelationMatrix.tsx#CorrelationMatrix",
+      "edge_type": "CONTAINS_DRILLDOWN",
+      "depth": 1,
+      "kind": "panel",
+      "cohort": null
+    },
+    {
+      "source": "cluster:Correlation:2",
+      "target": "rc:portal/src/pages/Correlation/components/TickerSelector.tsx#TickerSelector",
+      "edge_type": "CONTAINS_DRILLDOWN",
+      "depth": 1,
+      "kind": "panel",
+      "cohort": null
+    },
+    {
+      "source": "cluster:DataRefresh:0",
+      "target": "rc:portal/src/pages/DataRefresh/DataRefresh.tsx#DataRefresh",
+      "edge_type": "CONTAINS_DRILLDOWN",
+      "depth": 1,
+      "kind": "panel",
+      "cohort": null
+    },
+    {
+      "source": "cluster:DataRefresh:1",
+      "target": "rc:portal/src/pages/DataRefresh/components/CurrentStatePanel.tsx#CurrentStatePanel",
+      "edge_type": "CONTAINS_DRILLDOWN",
+      "depth": 1,
+      "kind": "panel",
+      "cohort": null
+    },
+    {
+      "source": "cluster:DataRefresh:2",
+      "target": "rc:portal/src/pages/DataRefresh/components/FileDropZone.tsx#FileDropZone",
+      "edge_type": "CONTAINS_DRILLDOWN",
+      "depth": 1,
+      "kind": "panel",
+      "cohort": null
+    },
+    {
+      "source": "cluster:DataRefresh:3",
+      "target": "rc:portal/src/pages/DataRefresh/components/ManifestPreview.tsx#ManifestPreview",
+      "edge_type": "CONTAINS_DRILLDOWN",
+      "depth": 1,
+      "kind": "panel",
+      "cohort": null
+    },
+    {
+      "source": "cluster:DataRefresh:4",
+      "target": "rc:portal/src/pages/DataRefresh/components/PipelineProgress.tsx#PipelineProgress",
+      "edge_type": "CONTAINS_DRILLDOWN",
+      "depth": 1,
+      "kind": "panel",
+      "cohort": null
+    },
+    {
+      "source": "cluster:DataRefresh:5",
+      "target": "rc:portal/src/pages/DataRefresh/components/UploadProgress.tsx#UploadProgress",
+      "edge_type": "CONTAINS_DRILLDOWN",
+      "depth": 1,
+      "kind": "panel",
+      "cohort": null
+    },
+    {
+      "source": "cluster:DataRefresh:6",
+      "target": "rc:portal/src/pages/DataRefresh/tabs/HistoryTab.tsx#HistoryTab",
+      "edge_type": "CONTAINS_DRILLDOWN",
+      "depth": 1,
+      "kind": "panel",
+      "cohort": null
+    },
+    {
+      "source": "cluster:DataRefresh:7",
+      "target": "rc:portal/src/pages/DataRefresh/tabs/UploadTab.tsx#UploadTab",
+      "edge_type": "CONTAINS_DRILLDOWN",
+      "depth": 1,
+      "kind": "panel",
+      "cohort": null
+    },
+    {
+      "source": "cluster:FactorTilts:0",
+      "target": "rc:portal/src/pages/FactorTilts/FactorTilts.tsx#FactorTilts",
+      "edge_type": "CONTAINS_DRILLDOWN",
+      "depth": 1,
+      "kind": "panel",
+      "cohort": null
+    },
+    {
+      "source": "cluster:FactorTilts:1",
+      "target": "rc:portal/src/pages/FactorTilts/components/ModelTiltTimeSeriesView.tsx#ChartTooltip",
+      "edge_type": "CONTAINS_DRILLDOWN",
+      "depth": 1,
+      "kind": "panel",
+      "cohort": null
+    },
+    {
+      "source": "cluster:FactorTilts:1",
+      "target": "rc:portal/src/pages/FactorTilts/components/ModelTiltTimeSeriesView.tsx#ModelTiltTimeSeriesView",
+      "edge_type": "CONTAINS_DRILLDOWN",
+      "depth": 1,
+      "kind": "panel",
+      "cohort": null
+    },
+    {
+      "source": "cluster:FactorTilts:2",
+      "target": "rc:portal/src/pages/FactorTilts/panels/FactorTiltOverviewPanel.tsx#FactorTiltOverviewPanel",
+      "edge_type": "CONTAINS_DRILLDOWN",
+      "depth": 1,
+      "kind": "panel",
+      "cohort": null
+    },
+    {
+      "source": "cluster:FactorTilts:3",
+      "target": "rc:portal/src/pages/FactorTilts/panels/SummaryMetricsTable.tsx#SummaryMetricsTable",
+      "edge_type": "CONTAINS_DRILLDOWN",
+      "depth": 1,
+      "kind": "panel",
+      "cohort": null
+    },
+    {
+      "source": "cluster:FactorTilts:4",
+      "target": "rc:portal/src/pages/FactorTilts/tabs/FactorTiltBarsTab.tsx#FactorTiltBarsTab",
+      "edge_type": "CONTAINS_DRILLDOWN",
+      "depth": 1,
+      "kind": "panel",
+      "cohort": null
+    },
+    {
+      "source": "cluster:FactorTilts:5",
+      "target": "rc:portal/src/pages/FactorTilts/tabs/FactorTiltTimeSeriesTab.tsx#FactorTiltTimeSeriesTab",
+      "edge_type": "CONTAINS_DRILLDOWN",
+      "depth": 1,
+      "kind": "panel",
+      "cohort": null
+    },
+    {
+      "source": "cluster:Macroeconomics:0",
+      "target": "rc:portal/src/pages/Macroeconomics/Macroeconomics.tsx#Macroeconomics",
+      "edge_type": "CONTAINS_DRILLDOWN",
+      "depth": 1,
+      "kind": "panel",
+      "cohort": null
+    },
+    {
+      "source": "cluster:Macroeconomics:0",
+      "target": "rc:portal/src/pages/Macroeconomics/components/MacroTimeSeriesModal.tsx#ChartTooltip",
+      "edge_type": "CONTAINS_DRILLDOWN",
+      "depth": 1,
+      "kind": "modal",
+      "cohort": null
+    },
+    {
+      "source": "cluster:Macroeconomics:0",
+      "target": "rc:portal/src/pages/Macroeconomics/tabs/YieldCurveTab.tsx#CustomTooltip",
+      "edge_type": "CONTAINS_DRILLDOWN",
+      "depth": 1,
+      "kind": "panel",
+      "cohort": null
+    },
+    {
+      "source": "cluster:Macroeconomics:0",
+      "target": "rc:portal/src/pages/Macroeconomics/tabs/YieldCurveTab.tsx#StatCard",
+      "edge_type": "CONTAINS_DRILLDOWN",
+      "depth": 1,
+      "kind": "panel",
+      "cohort": null
+    },
+    {
+      "source": "cluster:MarketPerformance:0",
+      "target": "rc:portal/src/pages/MarketPerformance/MarketPerformance.tsx#MarketPerformance",
+      "edge_type": "CONTAINS_DRILLDOWN",
+      "depth": 1,
+      "kind": "panel",
+      "cohort": null
+    },
+    {
+      "source": "cluster:MarketPerformance:1",
+      "target": "rc:portal/src/pages/MarketPerformance/panels/ExecutiveSummaryPanel/ExecutiveSummaryPanel.tsx#ExecutiveSummaryPanel",
+      "edge_type": "CONTAINS_DRILLDOWN",
+      "depth": 1,
+      "kind": "panel",
+      "cohort": null
+    },
+    {
+      "source": "cluster:MarketPerformance:2",
+      "target": "rc:portal/src/pages/MarketPerformance/panels/SentimentPanel/SentimentPanel.tsx#SentimentPanel",
+      "edge_type": "CONTAINS_DRILLDOWN",
+      "depth": 1,
+      "kind": "panel",
+      "cohort": null
+    },
+    {
+      "source": "cluster:MarketPerformance:3",
+      "target": "rc:portal/src/pages/MarketPerformance/tabs/CommoditiesTab/CommoditiesTab.tsx#CommoditiesTab",
+      "edge_type": "CONTAINS_DRILLDOWN",
+      "depth": 1,
+      "kind": "panel",
+      "cohort": null
+    },
+    {
+      "source": "cluster:MarketPerformance:4",
+      "target": "rc:portal/src/pages/MarketPerformance/tabs/EquitiesTab/EquitiesTab.tsx#EquitiesTab",
+      "edge_type": "CONTAINS_DRILLDOWN",
+      "depth": 1,
+      "kind": "panel",
+      "cohort": null
+    },
+    {
+      "source": "cluster:MarketPerformance:5",
+      "target": "rc:portal/src/pages/MarketPerformance/tabs/FixedIncomeTab/FixedIncomeTab.tsx#FixedIncomeTab",
+      "edge_type": "CONTAINS_DRILLDOWN",
+      "depth": 1,
+      "kind": "panel",
+      "cohort": null
+    },
+    {
+      "source": "cluster:MarketPerformance:6",
+      "target": "rc:portal/src/pages/MarketPerformance/tabs/MultiAssetTab/MultiAssetTab.tsx#MultiAssetTab",
+      "edge_type": "CONTAINS_DRILLDOWN",
+      "depth": 1,
+      "kind": "panel",
+      "cohort": null
+    },
+    {
+      "source": "cluster:ModelPortfolios:0",
+      "target": "rc:portal/src/pages/ModelPortfolios.tsx#ModelPortfolios",
+      "edge_type": "CONTAINS_DRILLDOWN",
+      "depth": 1,
+      "kind": "panel",
+      "cohort": null
+    },
+    {
+      "source": "cluster:PortfolioManagement:0",
+      "target": "rc:portal/src/pages/PortfolioManagement/PortfolioManagement.tsx#PortfolioManagement",
+      "edge_type": "CONTAINS_DRILLDOWN",
+      "depth": 1,
+      "kind": "panel",
+      "cohort": null
+    },
+    {
+      "source": "cluster:PortfolioManagement:1",
+      "target": "rc:portal/src/pages/PortfolioManagement/components/AutoSaveIndicator.tsx#AutoSaveIndicator",
+      "edge_type": "CONTAINS_DRILLDOWN",
+      "depth": 1,
+      "kind": "panel",
+      "cohort": null
+    },
+    {
+      "source": "cluster:PortfolioManagement:10",
+      "target": "rc:portal/src/pages/PortfolioManagement/components/UploadConfirmationModal.tsx#UploadConfirmationModal",
+      "edge_type": "CONTAINS_DRILLDOWN",
+      "depth": 1,
+      "kind": "modal",
+      "cohort": null
+    },
+    {
+      "source": "cluster:PortfolioManagement:11",
+      "target": "rc:portal/src/pages/PortfolioManagement/components/UploadPortfolioModal.tsx#UploadPortfolioModal",
+      "edge_type": "CONTAINS_DRILLDOWN",
+      "depth": 1,
+      "kind": "modal",
+      "cohort": null
+    },
+    {
+      "source": "cluster:PortfolioManagement:12",
+      "target": "rc:portal/src/pages/PortfolioManagement/components/VersionHistoryModal.tsx#VersionHistoryModal",
+      "edge_type": "CONTAINS_DRILLDOWN",
+      "depth": 1,
+      "kind": "modal",
+      "cohort": null
+    },
+    {
+      "source": "cluster:PortfolioManagement:13",
+      "target": "rc:portal/src/pages/PortfolioManagement/tabs/AlphaTab.tsx#AlphaTab",
+      "edge_type": "CONTAINS_DRILLDOWN",
+      "depth": 1,
+      "kind": "panel",
+      "cohort": null
+    },
+    {
+      "source": "cluster:PortfolioManagement:13",
+      "target": "rc:portal/src/pages/PortfolioManagement/tabs/AlphaTab.tsx#SortableHeader",
+      "edge_type": "CONTAINS_DRILLDOWN",
+      "depth": 1,
+      "kind": "panel",
+      "cohort": null
+    },
+    {
+      "source": "cluster:PortfolioManagement:14",
+      "target": "rc:portal/src/pages/PortfolioManagement/tabs/HistoryTab.tsx#HistoryTab",
+      "edge_type": "CONTAINS_DRILLDOWN",
+      "depth": 1,
+      "kind": "panel",
+      "cohort": null
+    },
+    {
+      "source": "cluster:PortfolioManagement:15",
+      "target": "rc:portal/src/pages/PortfolioManagement/tabs/ModelTab.tsx#ModelTab",
+      "edge_type": "CONTAINS_DRILLDOWN",
+      "depth": 1,
+      "kind": "panel",
+      "cohort": null
+    },
+    {
+      "source": "cluster:PortfolioManagement:15",
+      "target": "rc:portal/src/pages/PortfolioManagement/tabs/ModelTab.tsx#SortableHeader",
+      "edge_type": "CONTAINS_DRILLDOWN",
+      "depth": 1,
+      "kind": "panel",
+      "cohort": null
+    },
+    {
+      "source": "cluster:PortfolioManagement:16",
+      "target": "rc:portal/src/pages/PortfolioManagement/tabs/SectorTab.tsx#SectorTab",
+      "edge_type": "CONTAINS_DRILLDOWN",
+      "depth": 1,
+      "kind": "panel",
+      "cohort": null
+    },
+    {
+      "source": "cluster:PortfolioManagement:17",
+      "target": "rc:portal/src/pages/PortfolioManagement/tabs/TradeTab.tsx#TradeTab",
+      "edge_type": "CONTAINS_DRILLDOWN",
+      "depth": 1,
+      "kind": "panel",
+      "cohort": null
+    },
+    {
+      "source": "cluster:PortfolioManagement:2",
+      "target": "rc:portal/src/pages/PortfolioManagement/components/BulkEditModal.tsx#BulkEditModal",
+      "edge_type": "CONTAINS_DRILLDOWN",
+      "depth": 1,
+      "kind": "modal",
+      "cohort": null
+    },
+    {
+      "source": "cluster:PortfolioManagement:3",
+      "target": "rc:portal/src/pages/PortfolioManagement/components/ExportModal.tsx#ExportModal",
+      "edge_type": "CONTAINS_DRILLDOWN",
+      "depth": 1,
+      "kind": "modal",
+      "cohort": null
+    },
+    {
+      "source": "cluster:PortfolioManagement:4",
+      "target": "rc:portal/src/pages/PortfolioManagement/components/LoadingOverlay.tsx#LoadingOverlay",
+      "edge_type": "CONTAINS_DRILLDOWN",
+      "depth": 1,
+      "kind": "panel",
+      "cohort": null
+    },
+    {
+      "source": "cluster:PortfolioManagement:5",
+      "target": "rc:portal/src/pages/PortfolioManagement/components/OptimizationSummaryHeader.tsx#OptimizationSummaryHeader",
+      "edge_type": "CONTAINS_DRILLDOWN",
+      "depth": 1,
+      "kind": "panel",
+      "cohort": null
+    },
+    {
+      "source": "cluster:PortfolioManagement:6",
+      "target": "rc:portal/src/pages/PortfolioManagement/components/PortfolioGrid.tsx#PortfolioGrid",
+      "edge_type": "CONTAINS_DRILLDOWN",
+      "depth": 1,
+      "kind": "panel",
+      "cohort": null
+    },
+    {
+      "source": "cluster:PortfolioManagement:7",
+      "target": "rc:portal/src/pages/PortfolioManagement/components/RemoveConfirmationModal.tsx#RemoveConfirmationModal",
+      "edge_type": "CONTAINS_DRILLDOWN",
+      "depth": 1,
+      "kind": "modal",
+      "cohort": null
+    },
+    {
+      "source": "cluster:PortfolioManagement:8",
+      "target": "rc:portal/src/pages/PortfolioManagement/components/SecurityDetailModal.tsx#SecurityDetailModal",
+      "edge_type": "CONTAINS_DRILLDOWN",
+      "depth": 1,
+      "kind": "modal",
+      "cohort": null
+    },
+    {
+      "source": "cluster:PortfolioManagement:9",
+      "target": "rc:portal/src/pages/PortfolioManagement/components/SecurityLookupModal.tsx#SecurityLookupModal",
+      "edge_type": "CONTAINS_DRILLDOWN",
+      "depth": 1,
+      "kind": "modal",
+      "cohort": null
+    },
+    {
+      "source": "cluster:Positioning:0",
+      "target": "rc:portal/src/pages/Positioning/Positioning.tsx#Positioning",
+      "edge_type": "CONTAINS_DRILLDOWN",
+      "depth": 1,
+      "kind": "panel",
+      "cohort": null
+    },
+    {
+      "source": "cluster:Positioning:1",
+      "target": "rc:portal/src/pages/Positioning/panels/PositioningSummary.tsx#PositioningSummary",
+      "edge_type": "CONTAINS_DRILLDOWN",
+      "depth": 1,
+      "kind": "panel",
+      "cohort": null
+    },
+    {
+      "source": "cluster:SecurityScanner:0",
+      "target": "rc:portal/src/pages/SecurityScanner/SecurityScanner.tsx#SecurityScanner",
+      "edge_type": "CONTAINS_DRILLDOWN",
+      "depth": 1,
+      "kind": "panel",
+      "cohort": null
+    },
+    {
+      "source": "cluster:SecurityScanner:1",
+      "target": "rc:portal/src/pages/SecurityScanner/components/FactorChip.tsx#FactorChip",
+      "edge_type": "CONTAINS_DRILLDOWN",
+      "depth": 1,
+      "kind": "panel",
+      "cohort": null
+    },
+    {
+      "source": "cluster:SecurityScanner:2",
+      "target": "rc:portal/src/pages/SecurityScanner/components/ScannerFilterToolbar.tsx#ScannerFilterToolbar",
+      "edge_type": "CONTAINS_DRILLDOWN",
+      "depth": 1,
+      "kind": "panel",
+      "cohort": null
+    },
+    {
+      "source": "cluster:SecurityScanner:3",
+      "target": "rc:portal/src/pages/SecurityScanner/components/ScannerHeaderPanel.tsx#ScannerHeaderPanel",
+      "edge_type": "CONTAINS_DRILLDOWN",
+      "depth": 1,
+      "kind": "panel",
+      "cohort": null
+    },
+    {
+      "source": "cluster:SecurityScanner:4",
+      "target": "rc:portal/src/pages/SecurityScanner/tabs/FactorBankTab.tsx#FactorBankTab",
+      "edge_type": "CONTAINS_DRILLDOWN",
+      "depth": 1,
+      "kind": "panel",
+      "cohort": null
+    },
+    {
+      "source": "cluster:SecurityScanner:5",
+      "target": "rc:portal/src/pages/SecurityScanner/tabs/UniverseDataTab.tsx#UniverseDataTab",
+      "edge_type": "CONTAINS_DRILLDOWN",
+      "depth": 1,
+      "kind": "panel",
+      "cohort": null
+    },
+    {
+      "source": "cluster:SecurityScanner:6",
+      "target": "rc:portal/src/pages/SecurityScanner/tabs/UniverseScannerTab.tsx#UniverseScannerTab",
+      "edge_type": "CONTAINS_DRILLDOWN",
+      "depth": 1,
+      "kind": "panel",
+      "cohort": null
+    },
+    {
+      "source": "cluster:TradeSubmission:0",
+      "target": "rc:portal/src/pages/TradeSubmission/TradeSubmission.tsx#TradeSubmission",
+      "edge_type": "CONTAINS_DRILLDOWN",
+      "depth": 1,
+      "kind": "panel",
+      "cohort": null
+    },
+    {
+      "source": "cluster:TradeSubmission:1",
+      "target": "rc:portal/src/pages/TradeSubmission/components/ApproveModal.tsx#ApproveModal",
+      "edge_type": "CONTAINS_DRILLDOWN",
+      "depth": 1,
+      "kind": "modal",
+      "cohort": null
+    },
+    {
+      "source": "cluster:TradeSubmission:10",
+      "target": "rc:portal/src/pages/TradeSubmission/tabs/ExecutionTab.tsx#ExecutionTab",
+      "edge_type": "CONTAINS_DRILLDOWN",
+      "depth": 1,
+      "kind": "panel",
+      "cohort": null
+    },
+    {
+      "source": "cluster:TradeSubmission:11",
+      "target": "rc:portal/src/pages/TradeSubmission/tabs/HistoryTab.tsx#HistoryTab",
+      "edge_type": "CONTAINS_DRILLDOWN",
+      "depth": 1,
+      "kind": "panel",
+      "cohort": null
+    },
+    {
+      "source": "cluster:TradeSubmission:12",
+      "target": "rc:portal/src/pages/TradeSubmission/tabs/SubmitTab.tsx#SubmitTab",
+      "edge_type": "CONTAINS_DRILLDOWN",
+      "depth": 1,
+      "kind": "panel",
+      "cohort": null
+    },
+    {
+      "source": "cluster:TradeSubmission:2",
+      "target": "rc:portal/src/pages/TradeSubmission/components/ExecuteModal.tsx#ExecuteModal",
+      "edge_type": "CONTAINS_DRILLDOWN",
+      "depth": 1,
+      "kind": "modal",
+      "cohort": null
+    },
+    {
+      "source": "cluster:TradeSubmission:3",
+      "target": "rc:portal/src/pages/TradeSubmission/components/FileUploadZone.tsx#FileUploadZone",
+      "edge_type": "CONTAINS_DRILLDOWN",
+      "depth": 1,
+      "kind": "panel",
+      "cohort": null
+    },
+    {
+      "source": "cluster:TradeSubmission:4",
+      "target": "rc:portal/src/pages/TradeSubmission/components/RejectModal.tsx#RejectModal",
+      "edge_type": "CONTAINS_DRILLDOWN",
+      "depth": 1,
+      "kind": "modal",
+      "cohort": null
+    },
+    {
+      "source": "cluster:TradeSubmission:5",
+      "target": "rc:portal/src/pages/TradeSubmission/components/SecuritiesTable.tsx#SecuritiesTable",
+      "edge_type": "CONTAINS_DRILLDOWN",
+      "depth": 1,
+      "kind": "panel",
+      "cohort": null
+    },
+    {
+      "source": "cluster:TradeSubmission:6",
+      "target": "rc:portal/src/pages/TradeSubmission/components/TickerAutocompleteInput.tsx#TickerAutocompleteInput",
+      "edge_type": "CONTAINS_DRILLDOWN",
+      "depth": 1,
+      "kind": "panel",
+      "cohort": null
+    },
+    {
+      "source": "cluster:TradeSubmission:7",
+      "target": "rc:portal/src/pages/TradeSubmission/components/TradeCard.tsx#TradeCard",
+      "edge_type": "CONTAINS_DRILLDOWN",
+      "depth": 1,
+      "kind": "panel",
+      "cohort": null
+    },
+    {
+      "source": "cluster:TradeSubmission:8",
+      "target": "rc:portal/src/pages/TradeSubmission/components/TradeDetailsModal.tsx#TradeDetailsModal",
+      "edge_type": "CONTAINS_DRILLDOWN",
+      "depth": 1,
+      "kind": "modal",
+      "cohort": null
+    },
+    {
+      "source": "cluster:TradeSubmission:9",
+      "target": "rc:portal/src/pages/TradeSubmission/tabs/ApprovalsTab.tsx#ApprovalsTab",
+      "edge_type": "CONTAINS_DRILLDOWN",
+      "depth": 1,
+      "kind": "panel",
+      "cohort": null
+    },
+    {
+      "source": "cluster:Valuation:0",
+      "target": "rc:portal/src/pages/Valuation/Valuation.tsx#Valuation",
+      "edge_type": "CONTAINS_DRILLDOWN",
+      "depth": 1,
+      "kind": "panel",
+      "cohort": null
+    },
+    {
+      "source": "cluster:Valuation:1",
+      "target": "rc:portal/src/pages/Valuation/panels/ValuationRangePanel.tsx#ValuationRangePanel",
+      "edge_type": "CONTAINS_DRILLDOWN",
+      "depth": 1,
+      "kind": "panel",
+      "cohort": null
+    },
+    {
+      "source": "cluster:Valuation:2",
+      "target": "rc:portal/src/pages/Valuation/panels/ValuationSummaryPanel.tsx#ValuationSummaryPanel",
+      "edge_type": "CONTAINS_DRILLDOWN",
+      "depth": 1,
+      "kind": "panel",
+      "cohort": null
+    },
+    {
+      "source": "cluster:Valuation:3",
+      "target": "rc:portal/src/pages/Valuation/tabs/RiskPremiumTab.tsx#RiskPremiumTab",
+      "edge_type": "CONTAINS_DRILLDOWN",
+      "depth": 1,
+      "kind": "panel",
+      "cohort": null
+    },
+    {
+      "source": "cluster:Valuation:4",
+      "target": "rc:portal/src/pages/Valuation/tabs/ValuationTimeSeriesTab.tsx#ValuationTimeSeriesTab",
+      "edge_type": "CONTAINS_DRILLDOWN",
+      "depth": 1,
+      "kind": "panel",
+      "cohort": null
+    },
+    {
+      "source": "cluster:auth:0",
+      "target": "rc:portal/src/pages/auth/ChangePasswordPage.tsx#ChangePasswordPage",
+      "edge_type": "CONTAINS_DRILLDOWN",
+      "depth": 1,
+      "kind": "panel",
+      "cohort": null
+    },
+    {
+      "source": "cluster:auth:1",
+      "target": "rc:portal/src/pages/auth/ForgotPasswordPage.tsx#ForgotPasswordPage",
+      "edge_type": "CONTAINS_DRILLDOWN",
+      "depth": 1,
+      "kind": "panel",
+      "cohort": null
+    },
+    {
+      "source": "cluster:auth:2",
+      "target": "rc:portal/src/pages/auth/LoginPage.tsx#LoginPage",
+      "edge_type": "CONTAINS_DRILLDOWN",
+      "depth": 1,
+      "kind": "panel",
+      "cohort": null
+    },
+    {
+      "source": "cluster:auth:3",
+      "target": "rc:portal/src/pages/auth/ResetPasswordPage.tsx#ResetPasswordPage",
+      "edge_type": "CONTAINS_DRILLDOWN",
+      "depth": 1,
+      "kind": "panel",
+      "cohort": null
+    },
+    {
+      "source": "rc:portal/src/pages/AdvisorIntelligence/_partners/inflection/InflectionInsightsPanel.tsx#ToggleGroup",
+      "target": "rc:portal/src/pages/AdvisorIntelligence/_partners/inflection/InflectionInsightsPanel.tsx#ActivityScanChart",
+      "edge_type": "CONTAINS_DRILLDOWN",
+      "depth": 2,
+      "kind": "cohort",
+      "cohort": "inflection"
+    },
+    {
+      "source": "rc:portal/src/pages/AdvisorIntelligence/_partners/inflection/InflectionInsightsPanel.tsx#ToggleGroup",
+      "target": "rc:portal/src/pages/AdvisorIntelligence/_partners/inflection/InflectionInsightsPanel.tsx#ActivityScanTable",
+      "edge_type": "CONTAINS_DRILLDOWN",
+      "depth": 2,
+      "kind": "cohort",
+      "cohort": "inflection"
+    },
+    {
+      "source": "rc:portal/src/pages/AdvisorIntelligence/_partners/inflection/InflectionInsightsPanel.tsx#ToggleGroup",
+      "target": "rc:portal/src/pages/AdvisorIntelligence/_partners/inflection/InflectionInsightsPanel.tsx#ActivityTooltip",
+      "edge_type": "CONTAINS_DRILLDOWN",
+      "depth": 2,
+      "kind": "cohort",
+      "cohort": "inflection"
+    },
+    {
+      "source": "rc:portal/src/pages/AdvisorIntelligence/_partners/inflection/InflectionInsightsPanel.tsx#ToggleGroup",
+      "target": "rc:portal/src/pages/AdvisorIntelligence/_partners/inflection/InflectionInsightsPanel.tsx#CashDragChart",
+      "edge_type": "CONTAINS_DRILLDOWN",
+      "depth": 2,
+      "kind": "cohort",
+      "cohort": "inflection"
+    },
+    {
+      "source": "rc:portal/src/pages/AdvisorIntelligence/_partners/inflection/InflectionInsightsPanel.tsx#ToggleGroup",
+      "target": "rc:portal/src/pages/AdvisorIntelligence/_partners/inflection/InflectionInsightsPanel.tsx#CashDragTable",
+      "edge_type": "CONTAINS_DRILLDOWN",
+      "depth": 2,
+      "kind": "cohort",
+      "cohort": "inflection"
+    },
+    {
+      "source": "rc:portal/src/pages/AdvisorIntelligence/_partners/inflection/InflectionInsightsPanel.tsx#ToggleGroup",
+      "target": "rc:portal/src/pages/AdvisorIntelligence/_partners/inflection/InflectionInsightsPanel.tsx#CashDragTooltip",
+      "edge_type": "CONTAINS_DRILLDOWN",
+      "depth": 2,
+      "kind": "cohort",
+      "cohort": "inflection"
+    },
+    {
+      "source": "rc:portal/src/pages/AdvisorIntelligence/_partners/inflection/InflectionInsightsPanel.tsx#ToggleGroup",
+      "target": "rc:portal/src/pages/AdvisorIntelligence/_partners/inflection/InflectionInsightsPanel.tsx#CenterShell",
+      "edge_type": "CONTAINS_DRILLDOWN",
+      "depth": 2,
+      "kind": "cohort",
+      "cohort": "inflection"
+    },
+    {
+      "source": "rc:portal/src/pages/AdvisorIntelligence/_partners/inflection/InflectionInsightsPanel.tsx#ToggleGroup",
+      "target": "rc:portal/src/pages/AdvisorIntelligence/_partners/inflection/InflectionInsightsPanel.tsx#ConcentrationDrillTooltip",
+      "edge_type": "CONTAINS_DRILLDOWN",
+      "depth": 2,
+      "kind": "cohort",
+      "cohort": "inflection"
+    },
+    {
+      "source": "rc:portal/src/pages/AdvisorIntelligence/_partners/inflection/InflectionInsightsPanel.tsx#ToggleGroup",
+      "target": "rc:portal/src/pages/AdvisorIntelligence/_partners/inflection/InflectionInsightsPanel.tsx#ConcentrationRiskChart",
+      "edge_type": "CONTAINS_DRILLDOWN",
+      "depth": 2,
+      "kind": "cohort",
+      "cohort": "inflection"
+    },
+    {
+      "source": "rc:portal/src/pages/AdvisorIntelligence/_partners/inflection/InflectionInsightsPanel.tsx#ToggleGroup",
+      "target": "rc:portal/src/pages/AdvisorIntelligence/_partners/inflection/InflectionInsightsPanel.tsx#ConcentrationRiskTable",
+      "edge_type": "CONTAINS_DRILLDOWN",
+      "depth": 2,
+      "kind": "cohort",
+      "cohort": "inflection"
+    },
+    {
+      "source": "rc:portal/src/pages/AdvisorIntelligence/_partners/inflection/InflectionInsightsPanel.tsx#ToggleGroup",
+      "target": "rc:portal/src/pages/AdvisorIntelligence/_partners/inflection/InflectionInsightsPanel.tsx#ConcentrationSecurityDrill",
+      "edge_type": "CONTAINS_DRILLDOWN",
+      "depth": 2,
+      "kind": "cohort",
+      "cohort": "inflection"
+    },
+    {
+      "source": "rc:portal/src/pages/AdvisorIntelligence/_partners/inflection/InflectionInsightsPanel.tsx#ToggleGroup",
+      "target": "rc:portal/src/pages/AdvisorIntelligence/_partners/inflection/InflectionInsightsPanel.tsx#ConcentrationTopLevelTreemap",
+      "edge_type": "CONTAINS_DRILLDOWN",
+      "depth": 2,
+      "kind": "cohort",
+      "cohort": "inflection"
+    },
+    {
+      "source": "rc:portal/src/pages/AdvisorIntelligence/_partners/inflection/InflectionInsightsPanel.tsx#ToggleGroup",
+      "target": "rc:portal/src/pages/AdvisorIntelligence/_partners/inflection/InflectionInsightsPanel.tsx#EmptyState",
+      "edge_type": "CONTAINS_DRILLDOWN",
+      "depth": 2,
+      "kind": "cohort",
+      "cohort": "inflection"
+    },
+    {
+      "source": "rc:portal/src/pages/AdvisorIntelligence/_partners/inflection/InflectionInsightsPanel.tsx#ToggleGroup",
+      "target": "rc:portal/src/pages/AdvisorIntelligence/_partners/inflection/InflectionInsightsPanel.tsx#FirmTreemapCell",
+      "edge_type": "CONTAINS_DRILLDOWN",
+      "depth": 2,
+      "kind": "cohort",
+      "cohort": "inflection"
+    },
+    {
+      "source": "rc:portal/src/pages/AdvisorIntelligence/_partners/inflection/InflectionInsightsPanel.tsx#ToggleGroup",
+      "target": "rc:portal/src/pages/AdvisorIntelligence/_partners/inflection/InflectionInsightsPanel.tsx#TableShell",
+      "edge_type": "CONTAINS_DRILLDOWN",
+      "depth": 2,
+      "kind": "cohort",
+      "cohort": "inflection"
+    },
+    {
+      "source": "rc:portal/src/pages/AdvisorIntelligence/_partners/inflection/InflectionInsightsPanel.tsx#ToggleGroup",
+      "target": "rc:portal/src/pages/AdvisorIntelligence/_partners/inflection/InflectionInsightsPanel.tsx#Th",
+      "edge_type": "CONTAINS_DRILLDOWN",
+      "depth": 2,
+      "kind": "cohort",
+      "cohort": "inflection"
+    },
+    {
+      "source": "rc:portal/src/pages/AdvisorIntelligence/_partners/inflection/InflectionInsightsPanel.tsx#ToggleGroup",
+      "target": "rc:portal/src/pages/AdvisorIntelligence/_partners/inflection/InflectionInsightsPanel.tsx#TooltipShell",
+      "edge_type": "CONTAINS_DRILLDOWN",
+      "depth": 2,
+      "kind": "cohort",
+      "cohort": "inflection"
+    },
+    {
+      "source": "rc:portal/src/pages/AdvisorIntelligence/_partners/inflection/InflectionInsightsPanel.tsx#ToggleGroup",
+      "target": "rc:portal/src/pages/AdvisorIntelligence/_shared/tabs/FeeEfficiencyPanel.tsx#ToggleGroup",
+      "edge_type": "CONTAINS_DRILLDOWN",
+      "depth": 2,
+      "kind": "nested",
+      "cohort": null
+    },
+    {
+      "source": "rc:portal/src/pages/AdvisorIntelligence/_partners/inflection/index.tsx#InflectionAdvisorIntelligence",
+      "target": "rc:portal/src/pages/AdvisorIntelligence/_partners/inflection/index.tsx#NonAdminProfileTab",
+      "edge_type": "CONTAINS_DRILLDOWN",
+      "depth": 2,
+      "kind": "cohort",
+      "cohort": "inflection"
+    },
+    {
+      "source": "rc:portal/src/pages/AdvisorIntelligence/_partners/inflection/index.tsx#InflectionAdvisorIntelligence",
+      "target": "rc:portal/src/pages/AdvisorIntelligence/_partners/inflection/index.tsx#TabErrorFallback",
+      "edge_type": "CONTAINS_DRILLDOWN",
+      "depth": 2,
+      "kind": "cohort",
+      "cohort": "inflection"
+    },
+    {
+      "source": "rc:portal/src/pages/AdvisorIntelligence/_partners/inflection/index.tsx#InflectionAdvisorIntelligence",
+      "target": "rc:portal/src/pages/AdvisorIntelligence/_partners/inflection/overrides/FidelityCustodianBar.tsx#FidelityCustodianBar",
+      "edge_type": "CONTAINS_DRILLDOWN",
+      "depth": 2,
+      "kind": "cohort",
+      "cohort": "inflection"
+    },
+    {
+      "source": "rc:portal/src/pages/AdvisorIntelligence/_partners/inflection/index.tsx#InflectionAdvisorIntelligence",
+      "target": "rc:portal/src/pages/AdvisorIntelligence/_shared/tabs/AdvisorsTab.tsx#AdvisorsTab",
+      "edge_type": "CONTAINS_DRILLDOWN",
+      "depth": 2,
+      "kind": "nested",
+      "cohort": null
+    },
+    {
+      "source": "rc:portal/src/pages/AdvisorIntelligence/_shared/AdvisorBookAccountModal.tsx#ChartTooltip",
+      "target": "rc:portal/src/pages/AdvisorIntelligence/_shared/AdvisorBookAccountModal.tsx#FlowBarTooltip",
+      "edge_type": "CONTAINS_DRILLDOWN",
+      "depth": 2,
+      "kind": "modal",
+      "cohort": null
+    },
+    {
+      "source": "rc:portal/src/pages/AdvisorIntelligence/_shared/AdvisorBookAccountModal.tsx#ChartTooltip",
+      "target": "rc:portal/src/pages/AdvisorIntelligence/_shared/AdvisorBookAccountModal.tsx#PeriodToggles",
+      "edge_type": "CONTAINS_DRILLDOWN",
+      "depth": 2,
+      "kind": "modal",
+      "cohort": null
+    },
+    {
+      "source": "rc:portal/src/pages/AdvisorIntelligence/_shared/AdvisorBookClientDetail.tsx#AdvisorBookClientDetail",
+      "target": "rc:portal/src/pages/AdvisorIntelligence/_shared/tabs/FeeSummaryPanel.tsx#FeeSummaryPanel",
+      "edge_type": "CONTAINS_DRILLDOWN",
+      "depth": 3,
+      "kind": "nested",
+      "cohort": null
+    },
+    {
+      "source": "rc:portal/src/pages/AdvisorIntelligence/_shared/AdvisorBookView.tsx#AdvisorBookView",
+      "target": "rc:portal/src/pages/AdvisorIntelligence/_shared/SmallAccountsByRoleModal.tsx#SmallAccountsByRoleModal",
+      "edge_type": "CONTAINS_DRILLDOWN",
+      "depth": 2,
+      "kind": "modal",
+      "cohort": null
+    },
+    {
+      "source": "rc:portal/src/pages/AdvisorIntelligence/_shared/AdvisorBookView.tsx#AdvisorBookView",
+      "target": "rc:portal/src/pages/AdvisorIntelligence/_shared/panels/ClientListPanel.tsx#ClientListPanel",
+      "edge_type": "CONTAINS_DRILLDOWN",
+      "depth": 2,
+      "kind": "nested",
+      "cohort": null
+    },
+    {
+      "source": "rc:portal/src/pages/AdvisorIntelligence/_shared/AdvisorPublicProfile.tsx#ToggleGroup",
+      "target": "rc:portal/src/pages/AdvisorIntelligence/_shared/AdvisorPublicProfile.tsx#ExecutiveSummaryBulletRow",
+      "edge_type": "CONTAINS_DRILLDOWN",
+      "depth": 2,
+      "kind": "nested",
+      "cohort": null
+    },
+    {
+      "source": "rc:portal/src/pages/AdvisorIntelligence/_shared/AdvisorPublicProfile.tsx#ToggleGroup",
+      "target": "rc:portal/src/pages/AdvisorIntelligence/_shared/AdvisorPublicProfile.tsx#ExecutiveSummaryBullets",
+      "edge_type": "CONTAINS_DRILLDOWN",
+      "depth": 2,
+      "kind": "nested",
+      "cohort": null
+    },
+    {
+      "source": "rc:portal/src/pages/AdvisorIntelligence/_shared/AdvisorPublicProfile.tsx#ToggleGroup",
+      "target": "rc:portal/src/pages/AdvisorIntelligence/_shared/AdvisorPublicProfile.tsx#ProfileHeaderEvent",
+      "edge_type": "CONTAINS_DRILLDOWN",
+      "depth": 2,
+      "kind": "nested",
+      "cohort": null
+    },
+    {
+      "source": "rc:portal/src/pages/AdvisorIntelligence/_shared/AdvisorPublicProfile.tsx#ToggleGroup",
+      "target": "rc:portal/src/pages/AdvisorIntelligence/_shared/AdvisorPublicProfile.tsx#RoleDonut",
+      "edge_type": "CONTAINS_DRILLDOWN",
+      "depth": 2,
+      "kind": "nested",
+      "cohort": null
+    },
+    {
+      "source": "rc:portal/src/pages/AdvisorIntelligence/_shared/AdvisorPublicProfile.tsx#ToggleGroup",
+      "target": "rc:portal/src/pages/AdvisorIntelligence/_shared/AdvisorPublicProfile.tsx#SummaryCard",
+      "edge_type": "CONTAINS_DRILLDOWN",
+      "depth": 2,
+      "kind": "nested",
+      "cohort": null
+    },
+    {
+      "source": "rc:portal/src/pages/AdvisorIntelligence/_shared/AdvisorPublicProfile.tsx#ToggleGroup",
+      "target": "rc:portal/src/pages/AdvisorIntelligence/_shared/AdvisorPublicProfile.tsx#Tip",
+      "edge_type": "CONTAINS_DRILLDOWN",
+      "depth": 2,
+      "kind": "nested",
+      "cohort": null
+    },
+    {
+      "source": "rc:portal/src/pages/AdvisorIntelligence/_shared/AdvisorPublicProfile.tsx#ToggleGroup",
+      "target": "rc:portal/src/pages/AdvisorIntelligence/_shared/AdvisorPublicProfile.tsx#ToggleLabel",
+      "edge_type": "CONTAINS_DRILLDOWN",
+      "depth": 2,
+      "kind": "nested",
+      "cohort": null
+    },
+    {
+      "source": "rc:portal/src/pages/AdvisorIntelligence/_shared/SmallAccountsByRoleModal.tsx#SmallAccountsByRoleModal",
+      "target": "rc:portal/src/pages/AdvisorIntelligence/_shared/SmallAccountsByRoleModal.tsx#SummaryStat",
+      "edge_type": "CONTAINS_DRILLDOWN",
+      "depth": 3,
+      "kind": "modal",
+      "cohort": null
+    },
+    {
+      "source": "rc:portal/src/pages/AdvisorIntelligence/_shared/charts/NnaBarLineChart.tsx#NnaBarLineChart",
+      "target": "rc:portal/src/pages/AdvisorIntelligence/_shared/charts/NnaBarLineChart.tsx#NnaTooltipBody",
+      "edge_type": "CONTAINS_DRILLDOWN",
+      "depth": 3,
+      "kind": "nested",
+      "cohort": null
+    },
+    {
+      "source": "rc:portal/src/pages/AdvisorIntelligence/_shared/components/AdvisorAnalytics.tsx#AdvisorAnalytics",
+      "target": "rc:portal/src/pages/AdvisorIntelligence/_shared/charts/ChartTooltip.tsx#ChartTooltip",
+      "edge_type": "CONTAINS_DRILLDOWN",
+      "depth": 2,
+      "kind": "nested",
+      "cohort": null
+    },
+    {
+      "source": "rc:portal/src/pages/AdvisorIntelligence/_shared/components/AdvisorAnalytics.tsx#AdvisorAnalytics",
+      "target": "rc:portal/src/pages/AdvisorIntelligence/_shared/charts/ChartTooltip.tsx#ChartTooltipDivider",
+      "edge_type": "CONTAINS_DRILLDOWN",
+      "depth": 2,
+      "kind": "nested",
+      "cohort": null
+    },
+    {
+      "source": "rc:portal/src/pages/AdvisorIntelligence/_shared/components/AdvisorAnalytics.tsx#AdvisorAnalytics",
+      "target": "rc:portal/src/pages/AdvisorIntelligence/_shared/charts/ChartTooltip.tsx#ChartTooltipRow",
+      "edge_type": "CONTAINS_DRILLDOWN",
+      "depth": 2,
+      "kind": "nested",
+      "cohort": null
+    },
+    {
+      "source": "rc:portal/src/pages/AdvisorIntelligence/_shared/components/AdvisorAnalytics.tsx#AdvisorAnalytics",
+      "target": "rc:portal/src/pages/AdvisorIntelligence/_shared/charts/NnaBarLineChart.tsx#NnaBarLineChart",
+      "edge_type": "CONTAINS_DRILLDOWN",
+      "depth": 2,
+      "kind": "nested",
+      "cohort": null
+    },
+    {
+      "source": "rc:portal/src/pages/AdvisorIntelligence/_shared/components/AdvisorAnalytics.tsx#AdvisorAnalytics",
+      "target": "rc:portal/src/pages/AdvisorIntelligence/_shared/components/AdvisorAnalytics.tsx#AuaChart",
+      "edge_type": "CONTAINS_DRILLDOWN",
+      "depth": 2,
+      "kind": "nested",
+      "cohort": null
+    },
+    {
+      "source": "rc:portal/src/pages/AdvisorIntelligence/_shared/components/AdvisorAnalytics.tsx#AdvisorAnalytics",
+      "target": "rc:portal/src/pages/AdvisorIntelligence/_shared/components/AdvisorAnalytics.tsx#AuaClientsChart",
+      "edge_type": "CONTAINS_DRILLDOWN",
+      "depth": 2,
+      "kind": "nested",
+      "cohort": null
+    },
+    {
+      "source": "rc:portal/src/pages/AdvisorIntelligence/_shared/components/AdvisorAnalytics.tsx#AdvisorAnalytics",
+      "target": "rc:portal/src/pages/AdvisorIntelligence/_shared/components/AdvisorAnalytics.tsx#AuaMixChart",
+      "edge_type": "CONTAINS_DRILLDOWN",
+      "depth": 2,
+      "kind": "nested",
+      "cohort": null
+    },
+    {
+      "source": "rc:portal/src/pages/AdvisorIntelligence/_shared/components/AdvisorAnalytics.tsx#AdvisorAnalytics",
+      "target": "rc:portal/src/pages/AdvisorIntelligence/_shared/components/AdvisorAnalytics.tsx#GroEmpty",
+      "edge_type": "CONTAINS_DRILLDOWN",
+      "depth": 2,
+      "kind": "nested",
+      "cohort": null
+    },
+    {
+      "source": "rc:portal/src/pages/AdvisorIntelligence/_shared/components/AdvisorAnalytics.tsx#AdvisorAnalytics",
+      "target": "rc:portal/src/pages/AdvisorIntelligence/_shared/components/AdvisorAnalytics.tsx#NnaChart",
+      "edge_type": "CONTAINS_DRILLDOWN",
+      "depth": 2,
+      "kind": "nested",
+      "cohort": null
+    },
+    {
+      "source": "rc:portal/src/pages/AdvisorIntelligence/_shared/panels/CanonicalBookView.tsx#CanonicalBookView",
+      "target": "rc:portal/src/pages/AdvisorIntelligence/_shared/panels/ConsolidatedOverviewPanel.tsx#ConsolidatedOverviewPanel",
+      "edge_type": "CONTAINS_DRILLDOWN",
+      "depth": 3,
+      "kind": "nested",
+      "cohort": null
+    },
+    {
+      "source": "rc:portal/src/pages/AdvisorIntelligence/_shared/panels/CanonicalBookView.tsx#CanonicalBookView",
+      "target": "rc:portal/src/pages/AdvisorIntelligence/_shared/panels/SyncedHeightProvider.tsx#SyncedHeightProvider",
+      "edge_type": "CONTAINS_DRILLDOWN",
+      "depth": 3,
+      "kind": "nested",
+      "cohort": null
+    },
+    {
+      "source": "rc:portal/src/pages/AdvisorIntelligence/_shared/panels/CanonicalBookView.tsx#CanonicalBookView",
+      "target": "rc:portal/src/pages/AdvisorIntelligence/_shared/panels/TaxCostBasisPanel.tsx#TaxCostBasisPanel",
+      "edge_type": "CONTAINS_DRILLDOWN",
+      "depth": 3,
+      "kind": "nested",
+      "cohort": null
+    },
+    {
+      "source": "rc:portal/src/pages/AdvisorIntelligence/_shared/panels/ConsolidatedOverviewPanel.tsx#ConsolidatedOverviewPanel",
+      "target": "rc:portal/src/pages/AdvisorIntelligence/_shared/panels/ConsolidatedOverviewPanel.tsx#QuarterlyMetricsBar",
+      "edge_type": "CONTAINS_DRILLDOWN",
+      "depth": 4,
+      "kind": "nested",
+      "cohort": null
+    },
+    {
+      "source": "rc:portal/src/pages/AdvisorIntelligence/_shared/panels/TaxCostBasisPanel.tsx#TaxCostBasisPanel",
+      "target": "rc:portal/src/pages/AdvisorIntelligence/_shared/panels/TaxCostBasisPanel.tsx#CostBasisByYearTable",
+      "edge_type": "CONTAINS_DRILLDOWN",
+      "depth": 4,
+      "kind": "nested",
+      "cohort": null
+    },
+    {
+      "source": "rc:portal/src/pages/AdvisorIntelligence/_shared/tabs/AdvisorsTab.tsx#ToggleGroup",
+      "target": "rc:portal/src/pages/AdvisorIntelligence/_shared/tabs/AdvisorsTab.tsx#GroHeroCards",
+      "edge_type": "CONTAINS_DRILLDOWN",
+      "depth": 2,
+      "kind": "nested",
+      "cohort": null
+    },
+    {
+      "source": "rc:portal/src/pages/AdvisorIntelligence/_shared/tabs/AdvisorsTab.tsx#ToggleGroup",
+      "target": "rc:portal/src/pages/AdvisorIntelligence/_shared/tabs/AdvisorsTab.tsx#HeroCard",
+      "edge_type": "CONTAINS_DRILLDOWN",
+      "depth": 2,
+      "kind": "nested",
+      "cohort": null
+    },
+    {
+      "source": "rc:portal/src/pages/AdvisorIntelligence/_shared/tabs/AdvisorsTab.tsx#ToggleGroup",
+      "target": "rc:portal/src/pages/AdvisorIntelligence/_shared/tabs/AdvisorsTab.tsx#LeaderboardAuaView",
+      "edge_type": "CONTAINS_DRILLDOWN",
+      "depth": 2,
+      "kind": "nested",
+      "cohort": null
+    },
+    {
+      "source": "rc:portal/src/pages/AdvisorIntelligence/_shared/tabs/AdvisorsTab.tsx#ToggleGroup",
+      "target": "rc:portal/src/pages/AdvisorIntelligence/_shared/tabs/AdvisorsTab.tsx#LeaderboardCards",
+      "edge_type": "CONTAINS_DRILLDOWN",
+      "depth": 2,
+      "kind": "nested",
+      "cohort": null
+    },
+    {
+      "source": "rc:portal/src/pages/AdvisorIntelligence/_shared/tabs/AdvisorsTab.tsx#ToggleGroup",
+      "target": "rc:portal/src/pages/AdvisorIntelligence/_shared/tabs/AdvisorsTab.tsx#LeaderboardGrowthView",
+      "edge_type": "CONTAINS_DRILLDOWN",
+      "depth": 2,
+      "kind": "nested",
+      "cohort": null
+    },
+    {
+      "source": "rc:portal/src/pages/AdvisorIntelligence/_shared/tabs/AdvisorsTab.tsx#ToggleGroup",
+      "target": "rc:portal/src/pages/AdvisorIntelligence/_shared/tabs/AdvisorsTab.tsx#LeaderboardNnaBar",
+      "edge_type": "CONTAINS_DRILLDOWN",
+      "depth": 2,
+      "kind": "nested",
+      "cohort": null
+    },
+    {
+      "source": "rc:portal/src/pages/AdvisorIntelligence/_shared/tabs/AdvisorsTab.tsx#ToggleGroup",
+      "target": "rc:portal/src/pages/AdvisorIntelligence/_shared/tabs/AdvisorsTab.tsx#LeaderboardNnaCards",
+      "edge_type": "CONTAINS_DRILLDOWN",
+      "depth": 2,
+      "kind": "nested",
+      "cohort": null
+    },
+    {
+      "source": "rc:portal/src/pages/AdvisorIntelligence/_shared/tabs/AdvisorsTab.tsx#ToggleGroup",
+      "target": "rc:portal/src/pages/AdvisorIntelligence/_shared/tabs/AdvisorsTab.tsx#LeaderboardPinnedRow",
+      "edge_type": "CONTAINS_DRILLDOWN",
+      "depth": 2,
+      "kind": "nested",
+      "cohort": null
+    },
+    {
+      "source": "rc:portal/src/pages/AdvisorIntelligence/_shared/tabs/AdvisorsTab.tsx#ToggleGroup",
+      "target": "rc:portal/src/pages/AdvisorIntelligence/_shared/tabs/AdvisorsTab.tsx#LeaderboardRow",
+      "edge_type": "CONTAINS_DRILLDOWN",
+      "depth": 2,
+      "kind": "nested",
+      "cohort": null
+    },
+    {
+      "source": "rc:portal/src/pages/AdvisorIntelligence/_shared/tabs/AdvisorsTab.tsx#ToggleGroup",
+      "target": "rc:portal/src/pages/AdvisorIntelligence/_shared/tabs/AdvisorsTab.tsx#PrimaryTypeBadge",
+      "edge_type": "CONTAINS_DRILLDOWN",
+      "depth": 2,
+      "kind": "nested",
+      "cohort": null
+    },
+    {
+      "source": "rc:portal/src/pages/AdvisorIntelligence/_shared/tabs/AdvisorsTab.tsx#ToggleGroup",
+      "target": "rc:portal/src/pages/AdvisorIntelligence/_shared/tabs/AdvisorsTab.tsx#RankBadge",
+      "edge_type": "CONTAINS_DRILLDOWN",
+      "depth": 2,
+      "kind": "nested",
+      "cohort": null
+    },
+    {
+      "source": "rc:portal/src/pages/AdvisorIntelligence/_shared/tabs/AdvisorsTab.tsx#ToggleGroup",
+      "target": "rc:portal/src/pages/AdvisorIntelligence/_shared/tabs/AdvisorsTab.tsx#Top3Highlights",
+      "edge_type": "CONTAINS_DRILLDOWN",
+      "depth": 2,
+      "kind": "nested",
+      "cohort": null
+    },
+    {
+      "source": "rc:portal/src/pages/AdvisorIntelligence/_shared/tabs/ClientsTab.tsx#BooksTab",
+      "target": "rc:portal/src/pages/AdvisorIntelligence/_shared/AdvisorBookAccountModal.tsx#AdvisorBookAccountModal",
+      "edge_type": "CONTAINS_DRILLDOWN",
+      "depth": 2,
+      "kind": "modal",
+      "cohort": null
+    },
+    {
+      "source": "rc:portal/src/pages/AdvisorIntelligence/_shared/tabs/ClientsTab.tsx#BooksTab",
+      "target": "rc:portal/src/pages/AdvisorIntelligence/_shared/AdvisorBookClientDetail.tsx#AdvisorBookClientDetail",
+      "edge_type": "CONTAINS_DRILLDOWN",
+      "depth": 2,
+      "kind": "detail",
+      "cohort": null
+    },
+    {
+      "source": "rc:portal/src/pages/AdvisorIntelligence/_shared/tabs/ClientsTab.tsx#BooksTab",
+      "target": "rc:portal/src/pages/AdvisorIntelligence/_shared/panels/CanonicalBookView.tsx#CanonicalBookView",
+      "edge_type": "CONTAINS_DRILLDOWN",
+      "depth": 2,
+      "kind": "nested",
+      "cohort": null
+    },
+    {
+      "source": "rc:portal/src/pages/AdvisorIntelligence/_shared/tabs/ClientsTab.tsx#BooksTab",
+      "target": "rc:portal/src/pages/AdvisorIntelligence/_shared/tabs/ClientsTab.tsx#AdvisorSummaryTable",
+      "edge_type": "CONTAINS_DRILLDOWN",
+      "depth": 2,
+      "kind": "nested",
+      "cohort": null
+    },
+    {
+      "source": "rc:portal/src/pages/AdvisorIntelligence/_shared/tabs/ClientsTab.tsx#BooksTab",
+      "target": "rc:portal/src/pages/AdvisorIntelligence/_shared/tabs/ClientsTab.tsx#BackButton",
+      "edge_type": "CONTAINS_DRILLDOWN",
+      "depth": 2,
+      "kind": "nested",
+      "cohort": null
+    },
+    {
+      "source": "rc:portal/src/pages/AdvisorIntelligence/_shared/tabs/ClientsTab.tsx#BooksTab",
+      "target": "rc:portal/src/pages/AdvisorIntelligence/_shared/tabs/ClientsTab.tsx#Breadcrumb",
+      "edge_type": "CONTAINS_DRILLDOWN",
+      "depth": 2,
+      "kind": "nested",
+      "cohort": null
+    },
+    {
+      "source": "rc:portal/src/pages/AdvisorIntelligence/_shared/tabs/ClientsTab.tsx#BooksTab",
+      "target": "rc:portal/src/pages/AdvisorIntelligence/_shared/tabs/ClientsTab.tsx#OpenLotsTable",
+      "edge_type": "CONTAINS_DRILLDOWN",
+      "depth": 2,
+      "kind": "nested",
+      "cohort": null
+    },
+    {
+      "source": "rc:portal/src/pages/AdvisorIntelligence/_shared/tabs/ClientsTab.tsx#BooksTab",
+      "target": "rc:portal/src/pages/AdvisorIntelligence/_shared/tabs/ClientsTab.tsx#OpenLotsWithFilters",
+      "edge_type": "CONTAINS_DRILLDOWN",
+      "depth": 2,
+      "kind": "nested",
+      "cohort": null
+    },
+    {
+      "source": "rc:portal/src/pages/AdvisorIntelligence/_shared/tabs/DistributionTab.tsx#DistributionTab",
+      "target": "rc:portal/src/pages/AdvisorIntelligence/_shared/tabs/DistributionTab.tsx#ContinuousChartView",
+      "edge_type": "CONTAINS_DRILLDOWN",
+      "depth": 2,
+      "kind": "nested",
+      "cohort": null
+    },
+    {
+      "source": "rc:portal/src/pages/AdvisorIntelligence/_shared/tabs/DistributionTab.tsx#DistributionTab",
+      "target": "rc:portal/src/pages/AdvisorIntelligence/_shared/tabs/DistributionTab.tsx#ContinuousMetricBox",
+      "edge_type": "CONTAINS_DRILLDOWN",
+      "depth": 2,
+      "kind": "nested",
+      "cohort": null
+    },
+    {
+      "source": "rc:portal/src/pages/AdvisorIntelligence/_shared/tabs/DistributionTab.tsx#DistributionTab",
+      "target": "rc:portal/src/pages/AdvisorIntelligence/_shared/tabs/DistributionTab.tsx#ContinuousNnaDivergingView",
+      "edge_type": "CONTAINS_DRILLDOWN",
+      "depth": 2,
+      "kind": "nested",
+      "cohort": null
+    },
+    {
+      "source": "rc:portal/src/pages/AdvisorIntelligence/_shared/tabs/DistributionTab.tsx#DistributionTab",
+      "target": "rc:portal/src/pages/AdvisorIntelligence/_shared/tabs/DistributionTab.tsx#DistributionQuarterlyStrip",
+      "edge_type": "CONTAINS_DRILLDOWN",
+      "depth": 2,
+      "kind": "nested",
+      "cohort": null
+    },
+    {
+      "source": "rc:portal/src/pages/AdvisorIntelligence/_shared/tabs/DistributionTab.tsx#DistributionTab",
+      "target": "rc:portal/src/pages/AdvisorIntelligence/_shared/tabs/DistributionTab.tsx#NnaQuarterlyStrip",
+      "edge_type": "CONTAINS_DRILLDOWN",
+      "depth": 2,
+      "kind": "nested",
+      "cohort": null
+    },
+    {
+      "source": "rc:portal/src/pages/AdvisorIntelligence/_shared/tabs/DistributionTab.tsx#DistributionTab",
+      "target": "rc:portal/src/pages/AdvisorIntelligence/_shared/tabs/DistributionTab.tsx#NnaSplitMetricsStrip",
+      "edge_type": "CONTAINS_DRILLDOWN",
+      "depth": 2,
+      "kind": "nested",
+      "cohort": null
+    },
+    {
+      "source": "rc:portal/src/pages/AdvisorIntelligence/_shared/tabs/DistributionTab.tsx#DistributionTab",
+      "target": "rc:portal/src/pages/AdvisorIntelligence/_shared/tabs/DistributionTab.tsx#OfcAdvisorListPanel",
+      "edge_type": "CONTAINS_DRILLDOWN",
+      "depth": 2,
+      "kind": "nested",
+      "cohort": null
+    },
+    {
+      "source": "rc:portal/src/pages/AdvisorIntelligence/_shared/tabs/DistributionTab.tsx#DistributionTab",
+      "target": "rc:portal/src/pages/AdvisorIntelligence/_shared/tabs/DistributionTab.tsx#SnapshotDistributionChart",
+      "edge_type": "CONTAINS_DRILLDOWN",
+      "depth": 2,
+      "kind": "nested",
+      "cohort": null
+    },
+    {
+      "source": "rc:portal/src/pages/AdvisorIntelligence/_shared/tabs/DistributionTab.tsx#DistributionTab",
+      "target": "rc:portal/src/pages/AdvisorIntelligence/_shared/tabs/DistributionTab.tsx#SnapshotDistributionMetrics",
+      "edge_type": "CONTAINS_DRILLDOWN",
+      "depth": 2,
+      "kind": "nested",
+      "cohort": null
+    },
+    {
+      "source": "rc:portal/src/pages/AdvisorIntelligence/_shared/tabs/DistributionTab.tsx#DistributionTab",
+      "target": "rc:portal/src/pages/AdvisorIntelligence/_shared/tabs/DistributionTab.tsx#SnapshotDistributionView",
+      "edge_type": "CONTAINS_DRILLDOWN",
+      "depth": 2,
+      "kind": "nested",
+      "cohort": null
+    },
+    {
+      "source": "rc:portal/src/pages/AdvisorIntelligence/_shared/tabs/FeeSummaryPanel.tsx#FeeSummaryPanel",
+      "target": "rc:portal/src/pages/AdvisorIntelligence/_shared/tabs/FeeSummaryPanel.tsx#SortIcon",
+      "edge_type": "CONTAINS_DRILLDOWN",
+      "depth": 4,
+      "kind": "nested",
+      "cohort": null
+    },
+    {
+      "source": "rc:portal/src/pages/AdvisorIntelligence/_shared/tabs/FeeSummaryPanel.tsx#FeeSummaryPanel",
+      "target": "rc:portal/src/pages/AdvisorIntelligence/_shared/tabs/FeeSummaryPanel.tsx#WindowToggle",
+      "edge_type": "CONTAINS_DRILLDOWN",
+      "depth": 4,
+      "kind": "nested",
+      "cohort": null
+    },
+    {
+      "source": "rc:portal/src/pages/Attribution/Attribution.tsx#Attribution",
+      "target": "rc:portal/src/pages/Attribution/tabs/SelectionTab.tsx#SelectionTab",
+      "edge_type": "CONTAINS_DRILLDOWN",
+      "depth": 2,
+      "kind": "nested",
+      "cohort": null
+    },
+    {
+      "source": "rc:portal/src/pages/CapitalMarketAssumptions/CapitalMarketAssumptions.tsx#CapitalMarketAssumptions",
+      "target": "rc:portal/src/pages/CapitalMarketAssumptions/components/AssumptionsTable.tsx#AssumptionsTable",
+      "edge_type": "CONTAINS_DRILLDOWN",
+      "depth": 2,
+      "kind": "nested",
+      "cohort": null
+    },
+    {
+      "source": "rc:portal/src/pages/CapitalMarketAssumptions/CapitalMarketAssumptions.tsx#CapitalMarketAssumptions",
+      "target": "rc:portal/src/pages/CapitalMarketAssumptions/tabs/ExpectationsTab.tsx#ExpectationsTab",
+      "edge_type": "CONTAINS_DRILLDOWN",
+      "depth": 2,
+      "kind": "nested",
+      "cohort": null
+    },
+    {
+      "source": "rc:portal/src/pages/CapitalMarketAssumptions/CapitalMarketAssumptions.tsx#CapitalMarketAssumptions",
+      "target": "rc:portal/src/pages/CapitalMarketAssumptions/tabs/OpalViewsTab.tsx#OpalViewsTab",
+      "edge_type": "CONTAINS_DRILLDOWN",
+      "depth": 2,
+      "kind": "nested",
+      "cohort": null
+    },
+    {
+      "source": "rc:portal/src/pages/CapitalMarketAssumptions/tabs/ExpectationsTab.tsx#CustomTooltip",
+      "target": "rc:portal/src/pages/CapitalMarketAssumptions/tabs/ExpectationsTab.tsx#CustomBar",
+      "edge_type": "CONTAINS_DRILLDOWN",
+      "depth": 2,
+      "kind": "nested",
+      "cohort": null
+    },
+    {
+      "source": "rc:portal/src/pages/CapitalMarketAssumptions/tabs/ExpectationsTab.tsx#CustomTooltip",
+      "target": "rc:portal/src/pages/CapitalMarketAssumptions/tabs/ExpectationsTab.tsx#CustomDiamond",
+      "edge_type": "CONTAINS_DRILLDOWN",
+      "depth": 2,
+      "kind": "nested",
+      "cohort": null
+    },
+    {
+      "source": "rc:portal/src/pages/CapitalMarketAssumptions/tabs/OpalViewsTab.tsx#OpalViewsTab",
+      "target": "rc:portal/src/pages/CapitalMarketAssumptions/components/ConvergingSlider.tsx#ConvergingSlider",
+      "edge_type": "CONTAINS_DRILLDOWN",
+      "depth": 3,
+      "kind": "nested",
+      "cohort": null
+    },
+    {
+      "source": "rc:portal/src/pages/CapitalMarketAssumptions/tabs/OpalViewsTab.tsx#OpalViewsTab",
+      "target": "rc:portal/src/pages/CapitalMarketAssumptions/components/GradientSlider.tsx#GradientSlider",
+      "edge_type": "CONTAINS_DRILLDOWN",
+      "depth": 3,
+      "kind": "nested",
+      "cohort": null
+    },
+    {
+      "source": "rc:portal/src/pages/Correlation/components/CorrelationMatrix.tsx#CorrelationMatrix",
+      "target": "rc:portal/src/pages/Correlation/components/CorrelationMatrix.tsx#CorrelationLegend",
+      "edge_type": "CONTAINS_DRILLDOWN",
+      "depth": 2,
+      "kind": "nested",
+      "cohort": null
+    },
+    {
+      "source": "rc:portal/src/pages/DataRefresh/components/PipelineProgress.tsx#PipelineProgress",
+      "target": "rc:portal/src/pages/DataRefresh/components/PipelineProgress.tsx#StepGroupRow",
+      "edge_type": "CONTAINS_DRILLDOWN",
+      "depth": 2,
+      "kind": "nested",
+      "cohort": null
+    },
+    {
+      "source": "rc:portal/src/pages/DataRefresh/tabs/HistoryTab.tsx#HistoryTab",
+      "target": "rc:portal/src/pages/DataRefresh/tabs/HistoryTab.tsx#HistoryRow",
+      "edge_type": "CONTAINS_DRILLDOWN",
+      "depth": 2,
+      "kind": "nested",
+      "cohort": null
+    },
+    {
+      "source": "rc:portal/src/pages/FactorTilts/panels/FactorTiltOverviewPanel.tsx#FactorTiltOverviewPanel",
+      "target": "rc:portal/src/pages/FactorTilts/panels/FactorTiltOverviewPanel.tsx#TiltGradientBar",
+      "edge_type": "CONTAINS_DRILLDOWN",
+      "depth": 2,
+      "kind": "nested",
+      "cohort": null
+    },
+    {
+      "source": "rc:portal/src/pages/FactorTilts/tabs/FactorTiltBarsTab.tsx#FactorTiltBarsTab",
+      "target": "rc:portal/src/pages/FactorTilts/tabs/FactorTiltBarsTab.tsx#BarsChartTooltip",
+      "edge_type": "CONTAINS_DRILLDOWN",
+      "depth": 2,
+      "kind": "nested",
+      "cohort": null
+    },
+    {
+      "source": "rc:portal/src/pages/FactorTilts/tabs/FactorTiltTimeSeriesTab.tsx#FactorTiltTimeSeriesTab",
+      "target": "rc:portal/src/pages/FactorTilts/tabs/FactorTiltTimeSeriesTab.tsx#TimeSeriesChartTooltip",
+      "edge_type": "CONTAINS_DRILLDOWN",
+      "depth": 2,
+      "kind": "nested",
+      "cohort": null
+    },
+    {
+      "source": "rc:portal/src/pages/Macroeconomics/Macroeconomics.tsx#Macroeconomics",
+      "target": "rc:portal/src/pages/Macroeconomics/panels/MacroHeatmap.tsx#MacroHeatmap",
+      "edge_type": "CONTAINS_DRILLDOWN",
+      "depth": 2,
+      "kind": "nested",
+      "cohort": null
+    },
+    {
+      "source": "rc:portal/src/pages/Macroeconomics/Macroeconomics.tsx#Macroeconomics",
+      "target": "rc:portal/src/pages/Macroeconomics/tabs/VolatilityTab.tsx#VolatilityTab",
+      "edge_type": "CONTAINS_DRILLDOWN",
+      "depth": 2,
+      "kind": "nested",
+      "cohort": null
+    },
+    {
+      "source": "rc:portal/src/pages/Macroeconomics/Macroeconomics.tsx#Macroeconomics",
+      "target": "rc:portal/src/pages/Macroeconomics/tabs/YieldCurveTab.tsx#YieldCurveTab",
+      "edge_type": "CONTAINS_DRILLDOWN",
+      "depth": 2,
+      "kind": "nested",
+      "cohort": null
+    },
+    {
+      "source": "rc:portal/src/pages/Macroeconomics/panels/MacroHeatmap.tsx#MacroHeatmap",
+      "target": "rc:portal/src/pages/Macroeconomics/components/MacroTimeSeriesModal.tsx#MacroTimeSeriesModal",
+      "edge_type": "CONTAINS_DRILLDOWN",
+      "depth": 3,
+      "kind": "modal",
+      "cohort": null
+    },
+    {
+      "source": "rc:portal/src/pages/Macroeconomics/panels/MacroHeatmap.tsx#MacroHeatmap",
+      "target": "rc:portal/src/pages/Macroeconomics/panels/MacroHeatmap.tsx#GroupSectionPosition",
+      "edge_type": "CONTAINS_DRILLDOWN",
+      "depth": 3,
+      "kind": "nested",
+      "cohort": null
+    },
+    {
+      "source": "rc:portal/src/pages/Macroeconomics/panels/MacroHeatmap.tsx#MacroHeatmap",
+      "target": "rc:portal/src/pages/Macroeconomics/panels/MacroHeatmap.tsx#GroupSectionValue",
+      "edge_type": "CONTAINS_DRILLDOWN",
+      "depth": 3,
+      "kind": "nested",
+      "cohort": null
+    },
+    {
+      "source": "rc:portal/src/pages/Macroeconomics/panels/MacroHeatmap.tsx#MacroHeatmap",
+      "target": "rc:portal/src/pages/Macroeconomics/panels/MacroHeatmap.tsx#IndicatorRowPosition",
+      "edge_type": "CONTAINS_DRILLDOWN",
+      "depth": 3,
+      "kind": "nested",
+      "cohort": null
+    },
+    {
+      "source": "rc:portal/src/pages/Macroeconomics/panels/MacroHeatmap.tsx#MacroHeatmap",
+      "target": "rc:portal/src/pages/Macroeconomics/panels/MacroHeatmap.tsx#IndicatorRowValue",
+      "edge_type": "CONTAINS_DRILLDOWN",
+      "depth": 3,
+      "kind": "nested",
+      "cohort": null
+    },
+    {
+      "source": "rc:portal/src/pages/Macroeconomics/panels/MacroHeatmap.tsx#MacroHeatmap",
+      "target": "rc:portal/src/pages/Macroeconomics/panels/MacroHeatmap.tsx#MonthCellValue",
+      "edge_type": "CONTAINS_DRILLDOWN",
+      "depth": 3,
+      "kind": "nested",
+      "cohort": null
+    },
+    {
+      "source": "rc:portal/src/pages/Macroeconomics/tabs/VolatilityTab.tsx#VolatilityTab",
+      "target": "rc:portal/src/pages/Macroeconomics/tabs/VolatilityTab.tsx#AISummaryContent",
+      "edge_type": "CONTAINS_DRILLDOWN",
+      "depth": 3,
+      "kind": "nested",
+      "cohort": null
+    },
+    {
+      "source": "rc:portal/src/pages/Macroeconomics/tabs/VolatilityTab.tsx#VolatilityTab",
+      "target": "rc:portal/src/pages/Macroeconomics/tabs/VolatilityTab.tsx#HistoricalChart",
+      "edge_type": "CONTAINS_DRILLDOWN",
+      "depth": 3,
+      "kind": "nested",
+      "cohort": null
+    },
+    {
+      "source": "rc:portal/src/pages/Macroeconomics/tabs/VolatilityTab.tsx#VolatilityTab",
+      "target": "rc:portal/src/pages/Macroeconomics/tabs/VolatilityTab.tsx#HistoricalChartTooltip",
+      "edge_type": "CONTAINS_DRILLDOWN",
+      "depth": 3,
+      "kind": "nested",
+      "cohort": null
+    },
+    {
+      "source": "rc:portal/src/pages/Macroeconomics/tabs/VolatilityTab.tsx#VolatilityTab",
+      "target": "rc:portal/src/pages/Macroeconomics/tabs/VolatilityTab.tsx#IndexToggle",
+      "edge_type": "CONTAINS_DRILLDOWN",
+      "depth": 3,
+      "kind": "nested",
+      "cohort": null
+    },
+    {
+      "source": "rc:portal/src/pages/Macroeconomics/tabs/VolatilityTab.tsx#VolatilityTab",
+      "target": "rc:portal/src/pages/Macroeconomics/tabs/VolatilityTab.tsx#LoadingSkeleton",
+      "edge_type": "CONTAINS_DRILLDOWN",
+      "depth": 3,
+      "kind": "nested",
+      "cohort": null
+    },
+    {
+      "source": "rc:portal/src/pages/Macroeconomics/tabs/VolatilityTab.tsx#VolatilityTab",
+      "target": "rc:portal/src/pages/Macroeconomics/tabs/VolatilityTab.tsx#VolatilitySpeedometer",
+      "edge_type": "CONTAINS_DRILLDOWN",
+      "depth": 3,
+      "kind": "nested",
+      "cohort": null
+    },
+    {
+      "source": "rc:portal/src/pages/ModelPortfolios.tsx#ModelPortfolios",
+      "target": "rc:portal/src/pages/ModelPortfolios/tabs/PeersTab.tsx#PeersTab",
+      "edge_type": "CONTAINS_DRILLDOWN",
+      "depth": 2,
+      "kind": "nested",
+      "cohort": null
+    },
+    {
+      "source": "rc:portal/src/pages/ModelPortfolios/tabs/PeersTab.tsx#PeersTab",
+      "target": "rc:portal/src/pages/ModelPortfolios/tabs/PeersTab.tsx#QuartileChart",
+      "edge_type": "CONTAINS_DRILLDOWN",
+      "depth": 3,
+      "kind": "nested",
+      "cohort": null
+    },
+    {
+      "source": "rc:portal/src/pages/PortfolioManagement/components/OptimizationSummaryHeader.tsx#OptimizationSummaryHeader",
+      "target": "rc:portal/src/pages/PortfolioManagement/components/OptimizationSummaryHeader.tsx#SummaryRow",
+      "edge_type": "CONTAINS_DRILLDOWN",
+      "depth": 2,
+      "kind": "nested",
+      "cohort": null
+    },
+    {
+      "source": "rc:portal/src/pages/PortfolioManagement/components/OptimizationSummaryHeader.tsx#OptimizationSummaryHeader",
+      "target": "rc:portal/src/pages/PortfolioManagement/components/OptimizationSummaryHeader.tsx#SummaryTable",
+      "edge_type": "CONTAINS_DRILLDOWN",
+      "depth": 2,
+      "kind": "nested",
+      "cohort": null
+    },
+    {
+      "source": "rc:portal/src/pages/PortfolioManagement/components/OptimizationSummaryHeader.tsx#OptimizationSummaryHeader",
+      "target": "rc:portal/src/pages/PortfolioManagement/components/OptimizationSummaryHeader.tsx#TipTh",
+      "edge_type": "CONTAINS_DRILLDOWN",
+      "depth": 2,
+      "kind": "nested",
+      "cohort": null
+    },
+    {
+      "source": "rc:portal/src/pages/PortfolioManagement/components/SecurityDetailModal.tsx#SecurityDetailModal",
+      "target": "rc:portal/src/pages/PortfolioManagement/components/SecurityDetailModal.tsx#StatCard",
+      "edge_type": "CONTAINS_DRILLDOWN",
+      "depth": 2,
+      "kind": "modal",
+      "cohort": null
+    },
+    {
+      "source": "rc:portal/src/pages/PortfolioManagement/tabs/HistoryTab.tsx#HistoryTab",
+      "target": "rc:portal/src/pages/PortfolioManagement/tabs/HistoryTab.tsx#VersionRow",
+      "edge_type": "CONTAINS_DRILLDOWN",
+      "depth": 2,
+      "kind": "nested",
+      "cohort": null
+    },
+    {
+      "source": "rc:portal/src/pages/PortfolioManagement/tabs/SectorTab.tsx#SectorTab",
+      "target": "rc:portal/src/pages/PortfolioManagement/tabs/SectorTab.tsx#SortableHeader",
+      "edge_type": "CONTAINS_DRILLDOWN",
+      "depth": 2,
+      "kind": "nested",
+      "cohort": null
+    },
+    {
+      "source": "rc:portal/src/pages/Positioning/Positioning.tsx#Positioning",
+      "target": "rc:portal/src/pages/Positioning/tabs/HoldingsTab.tsx#HoldingsTab",
+      "edge_type": "CONTAINS_DRILLDOWN",
+      "depth": 2,
+      "kind": "nested",
+      "cohort": null
+    },
+    {
+      "source": "rc:portal/src/pages/Positioning/tabs/HoldingsTab.tsx#HoldingsTab",
+      "target": "rc:portal/src/pages/Positioning/tabs/HoldingsTab.tsx#HoldingsCustomTreemapContent",
+      "edge_type": "CONTAINS_DRILLDOWN",
+      "depth": 3,
+      "kind": "nested",
+      "cohort": null
+    },
+    {
+      "source": "rc:portal/src/pages/Positioning/tabs/HoldingsTab.tsx#HoldingsTab",
+      "target": "rc:portal/src/pages/Positioning/tabs/HoldingsTab.tsx#HoldingsTreemapTooltip",
+      "edge_type": "CONTAINS_DRILLDOWN",
+      "depth": 3,
+      "kind": "nested",
+      "cohort": null
+    },
+    {
+      "source": "rc:portal/src/pages/SecurityScanner/tabs/FactorBankTab.tsx#FactorBankTab",
+      "target": "rc:portal/src/pages/SecurityScanner/tabs/FactorBankTab.tsx#FactorTable",
+      "edge_type": "CONTAINS_DRILLDOWN",
+      "depth": 2,
+      "kind": "nested",
+      "cohort": null
+    },
+    {
+      "source": "rc:portal/src/pages/SecurityScanner/tabs/FactorBankTab.tsx#FactorBankTab",
+      "target": "rc:portal/src/pages/SecurityScanner/tabs/FactorBankTab.tsx#SortableTh",
+      "edge_type": "CONTAINS_DRILLDOWN",
+      "depth": 2,
+      "kind": "nested",
+      "cohort": null
+    },
+    {
+      "source": "rc:portal/src/pages/TradeSubmission/tabs/SubmitTab.tsx#SubmitTab",
+      "target": "rc:portal/src/pages/TradeSubmission/tabs/SubmitTab.tsx#AttestationsCard",
+      "edge_type": "CONTAINS_DRILLDOWN",
+      "depth": 2,
+      "kind": "nested",
+      "cohort": null
+    },
+    {
+      "source": "rc:portal/src/pages/TradeSubmission/tabs/SubmitTab.tsx#SubmitTab",
+      "target": "rc:portal/src/pages/TradeSubmission/tabs/SubmitTab.tsx#ConsolidatedTradePanel",
+      "edge_type": "CONTAINS_DRILLDOWN",
+      "depth": 2,
+      "kind": "nested",
+      "cohort": null
+    },
+    {
+      "source": "rc:portal/src/pages/TradeSubmission/tabs/SubmitTab.tsx#SubmitTab",
+      "target": "rc:portal/src/pages/TradeSubmission/tabs/SubmitTab.tsx#SubmitButtonRow",
+      "edge_type": "CONTAINS_DRILLDOWN",
+      "depth": 2,
+      "kind": "nested",
+      "cohort": null
+    },
+    {
+      "source": "rc:portal/src/pages/Valuation/tabs/RiskPremiumTab.tsx#RiskPremiumTab",
+      "target": "rc:portal/src/pages/Valuation/tabs/RiskPremiumTab.tsx#CreditTooltip",
+      "edge_type": "CONTAINS_DRILLDOWN",
+      "depth": 2,
+      "kind": "nested",
+      "cohort": null
+    },
+    {
+      "source": "rc:portal/src/pages/Valuation/tabs/RiskPremiumTab.tsx#RiskPremiumTab",
+      "target": "rc:portal/src/pages/Valuation/tabs/RiskPremiumTab.tsx#ERPTooltip",
+      "edge_type": "CONTAINS_DRILLDOWN",
+      "depth": 2,
+      "kind": "nested",
+      "cohort": null
+    },
+    {
+      "source": "rc:portal/src/pages/Valuation/tabs/ValuationTimeSeriesTab.tsx#ValuationTimeSeriesTab",
+      "target": "rc:portal/src/pages/Valuation/tabs/ValuationTimeSeriesTab.tsx#CustomTooltip",
+      "edge_type": "CONTAINS_DRILLDOWN",
+      "depth": 2,
+      "kind": "nested",
+      "cohort": null
+    },
+    {
+      "source": "cluster:AdvisorIntelligence:0",
+      "target": "cluster:AdvisorIntelligence:5",
+      "edge_type": "SHARES_SOURCE",
+      "sharedSources": [],
+      "sharedTypes": [
+        "portal/src/pages/AdvisorIntelligence/_shared/types.ts#FeeEfficiencyResponse"
+      ],
+      "sharedCount": 1,
+      "sourceType": "type"
+    },
+    {
+      "source": "cluster:AdvisorIntelligence:1",
+      "target": "cluster:AdvisorIntelligence:0",
+      "edge_type": "SHARES_SOURCE",
+      "sharedSources": [
+        "firm-leaderboard",
+        "getFirmLeaderboard"
+      ],
+      "sharedTypes": [
+        "portal/src/pages/AdvisorIntelligence/_shared/types.ts#LeaderboardEntry",
+        "portal/src/pages/AdvisorIntelligence/_shared/types.ts#PlatinumLeaderboardResponse"
+      ],
+      "sharedCount": 4,
+      "sourceType": "data+type"
+    },
+    {
+      "source": "cluster:AdvisorIntelligence:1",
+      "target": "cluster:AdvisorIntelligence:6",
+      "edge_type": "SHARES_SOURCE",
+      "sharedSources": [
+        "getPlatinumPartnerAnalytics",
+        "partner-analytics"
+      ],
+      "sharedTypes": [],
+      "sharedCount": 2,
+      "sourceType": "data"
+    },
+    {
+      "source": "cluster:AdvisorIntelligence:1",
+      "target": "cluster:AdvisorIntelligence:8",
+      "edge_type": "SHARES_SOURCE",
+      "sharedSources": [
+        "getPlatinumPartnerAnalytics",
+        "partner-analytics"
+      ],
+      "sharedTypes": [],
+      "sharedCount": 2,
+      "sourceType": "data"
+    },
+    {
+      "source": "cluster:AdvisorIntelligence:2",
+      "target": "cluster:AdvisorIntelligence:0",
+      "edge_type": "SHARES_SOURCE",
+      "sharedSources": [
+        "advisor-book-account",
+        "advisor-book-client",
+        "getPlatinumAccountSummary",
+        "getPlatinumAccountTimeseriesStatic",
+        "inflec-account-timeseries"
+      ],
+      "sharedTypes": [
+        "portal/src/pages/AdvisorIntelligence/_shared/types.ts#AccountTimeseriesPoint",
+        "portal/src/pages/AdvisorIntelligence/_shared/types.ts#BooksClientDetailResponse",
+        "portal/src/pages/AdvisorIntelligence/_shared/types.ts#PlatinumAccountSummary",
+        "portal/src/pages/AdvisorIntelligence/_shared/types.ts#PlatinumAdvisorSummary",
+        "portal/src/pages/AdvisorIntelligence/_shared/types.ts#PlatinumClientSummary"
+      ],
+      "sharedCount": 10,
+      "sourceType": "data+type"
+    },
+    {
+      "source": "cluster:AdvisorIntelligence:2",
+      "target": "cluster:AdvisorIntelligence:7",
+      "edge_type": "SHARES_SOURCE",
+      "sharedSources": [
+        "advisor-book-view"
+      ],
+      "sharedTypes": [
+        "portal/src/pages/AdvisorIntelligence/_shared/AdvisorBookView.tsx#AdvisorBookDrillState",
+        "portal/src/pages/AdvisorIntelligence/_shared/types.ts#PlatinumAdvisorSummary"
+      ],
+      "sharedCount": 3,
+      "sourceType": "data+type"
+    },
+    {
+      "source": "cluster:AdvisorIntelligence:3",
+      "target": "cluster:AdvisorIntelligence:8",
+      "edge_type": "SHARES_SOURCE",
+      "sharedSources": [
+        "advisor-intelligence"
+      ],
+      "sharedTypes": [],
+      "sharedCount": 1,
+      "sourceType": "data"
+    },
+    {
+      "source": "cluster:AdvisorIntelligence:4",
+      "target": "cluster:AdvisorIntelligence:0",
+      "edge_type": "SHARES_SOURCE",
+      "sharedSources": [
+        "firm-leaderboard",
+        "getFirmLeaderboard"
+      ],
+      "sharedTypes": [
+        "portal/src/pages/AdvisorIntelligence/_shared/types.ts#PlatinumLeaderboardResponse"
+      ],
+      "sharedCount": 3,
+      "sourceType": "data+type"
+    },
+    {
+      "source": "cluster:AdvisorIntelligence:4",
+      "target": "cluster:AdvisorIntelligence:1",
+      "edge_type": "SHARES_SOURCE",
+      "sharedSources": [
+        "firm-leaderboard",
+        "getFirmLeaderboard",
+        "getPlatinumPartnerAnalytics",
+        "partner-analytics"
+      ],
+      "sharedTypes": [
+        "portal/src/pages/AdvisorIntelligence/_shared/types.ts#PlatinumLeaderboardResponse"
+      ],
+      "sharedCount": 5,
+      "sourceType": "data+type"
+    },
+    {
+      "source": "cluster:AdvisorIntelligence:4",
+      "target": "cluster:AdvisorIntelligence:6",
+      "edge_type": "SHARES_SOURCE",
+      "sharedSources": [
+        "getPlatinumPartnerAnalytics",
+        "partner-analytics"
+      ],
+      "sharedTypes": [],
+      "sharedCount": 2,
+      "sourceType": "data"
+    },
+    {
+      "source": "cluster:AdvisorIntelligence:4",
+      "target": "cluster:AdvisorIntelligence:8",
+      "edge_type": "SHARES_SOURCE",
+      "sharedSources": [
+        "getPlatinumPartnerAnalytics",
+        "partner-analytics"
+      ],
+      "sharedTypes": [],
+      "sharedCount": 2,
+      "sourceType": "data"
+    },
+    {
+      "source": "cluster:AdvisorIntelligence:7",
+      "target": "cluster:AdvisorIntelligence:0",
+      "edge_type": "SHARES_SOURCE",
+      "sharedSources": [],
+      "sharedTypes": [
+        "portal/src/pages/AdvisorIntelligence/_shared/types.ts#PlatinumAdvisorSummary",
+        "portal/src/pages/AdvisorIntelligence/_shared/types.ts#PlatinumLeaderboardResponse"
+      ],
+      "sharedCount": 2,
+      "sourceType": "type"
+    },
+    {
+      "source": "cluster:AdvisorIntelligence:7",
+      "target": "cluster:AdvisorIntelligence:1",
+      "edge_type": "SHARES_SOURCE",
+      "sharedSources": [],
+      "sharedTypes": [
+        "portal/src/pages/AdvisorIntelligence/_shared/types.ts#AdvisorRoleMeta",
+        "portal/src/pages/AdvisorIntelligence/_shared/types.ts#PlatinumLeaderboardEntry",
+        "portal/src/pages/AdvisorIntelligence/_shared/types.ts#PlatinumLeaderboardResponse"
+      ],
+      "sharedCount": 3,
+      "sourceType": "type"
+    },
+    {
+      "source": "cluster:AdvisorIntelligence:7",
+      "target": "cluster:AdvisorIntelligence:3",
+      "edge_type": "SHARES_SOURCE",
+      "sharedSources": [
+        "advisor-intelligence",
+        "getAdvisorNnaCanonical",
+        "getPlatinumAdvisorTimeseries"
+      ],
+      "sharedTypes": [
+        "portal/src/pages/AdvisorIntelligence/_shared/types.ts#AdvisorNnaCanonicalResponse",
+        "portal/src/pages/AdvisorIntelligence/_shared/types.ts#AdvisorTimeseriesPoint"
+      ],
+      "sharedCount": 5,
+      "sourceType": "data+type"
+    },
+    {
+      "source": "cluster:AdvisorIntelligence:7",
+      "target": "cluster:AdvisorIntelligence:4",
+      "edge_type": "SHARES_SOURCE",
+      "sharedSources": [],
+      "sharedTypes": [
+        "portal/src/pages/AdvisorIntelligence/_shared/types.ts#PlatinumLeaderboardResponse"
+      ],
+      "sharedCount": 1,
+      "sourceType": "type"
+    },
+    {
+      "source": "cluster:AdvisorIntelligence:7",
+      "target": "cluster:AdvisorIntelligence:8",
+      "edge_type": "SHARES_SOURCE",
+      "sharedSources": [
+        "advisor-intelligence"
+      ],
+      "sharedTypes": [],
+      "sharedCount": 1,
+      "sourceType": "data"
+    },
+    {
+      "source": "cluster:AdvisorIntelligence:8",
+      "target": "cluster:AdvisorIntelligence:6",
+      "edge_type": "SHARES_SOURCE",
+      "sharedSources": [
+        "getPlatinumPartnerAnalytics",
+        "partner-analytics"
+      ],
+      "sharedTypes": [],
+      "sharedCount": 2,
+      "sourceType": "data"
+    },
+    {
+      "source": "cluster:AdvisorIntelligence:9",
+      "target": "cluster:AdvisorIntelligence:1",
+      "edge_type": "SHARES_SOURCE",
+      "sharedSources": [
+        "getPlatinumPartnerAnalytics",
+        "partner-analytics"
+      ],
+      "sharedTypes": [],
+      "sharedCount": 2,
+      "sourceType": "data"
+    },
+    {
+      "source": "cluster:AdvisorIntelligence:9",
+      "target": "cluster:AdvisorIntelligence:3",
+      "edge_type": "SHARES_SOURCE",
+      "sharedSources": [
+        "advisor-intelligence",
+        "getAdvisorNnaCanonical"
+      ],
+      "sharedTypes": [
+        "portal/src/pages/AdvisorIntelligence/_shared/types.ts#AdvisorNnaCanonicalResponse"
+      ],
+      "sharedCount": 3,
+      "sourceType": "data+type"
+    },
+    {
+      "source": "cluster:AdvisorIntelligence:9",
+      "target": "cluster:AdvisorIntelligence:4",
+      "edge_type": "SHARES_SOURCE",
+      "sharedSources": [
+        "getPlatinumPartnerAnalytics",
+        "partner-analytics"
+      ],
+      "sharedTypes": [],
+      "sharedCount": 2,
+      "sourceType": "data"
+    },
+    {
+      "source": "cluster:AdvisorIntelligence:9",
+      "target": "cluster:AdvisorIntelligence:6",
+      "edge_type": "SHARES_SOURCE",
+      "sharedSources": [
+        "getPlatinumPartnerAnalytics",
+        "partner-analytics"
+      ],
+      "sharedTypes": [],
+      "sharedCount": 2,
+      "sourceType": "data"
+    },
+    {
+      "source": "cluster:AdvisorIntelligence:9",
+      "target": "cluster:AdvisorIntelligence:7",
+      "edge_type": "SHARES_SOURCE",
+      "sharedSources": [
+        "advisor-intelligence",
+        "getAdvisorNnaCanonical",
+        "getPlatinumAdvisorSummary"
+      ],
+      "sharedTypes": [
+        "portal/src/pages/AdvisorIntelligence/_shared/types.ts#AdvisorNnaCanonicalResponse"
+      ],
+      "sharedCount": 4,
+      "sourceType": "data+type"
+    },
+    {
+      "source": "cluster:AdvisorIntelligence:9",
+      "target": "cluster:AdvisorIntelligence:8",
+      "edge_type": "SHARES_SOURCE",
+      "sharedSources": [
+        "advisor-intelligence",
+        "getPlatinumPartnerAnalytics",
+        "getTimeseriesOverview",
+        "partner-analytics"
+      ],
+      "sharedTypes": [
+        "portal/src/pages/AdvisorIntelligence/_shared/types.ts#DistributionStats",
+        "portal/src/pages/AdvisorIntelligence/_shared/types.ts#DonutSegment",
+        "portal/src/pages/AdvisorIntelligence/_shared/types.ts#PartnerAnalyticsView",
+        "portal/src/pages/AdvisorIntelligence/_shared/types.ts#PartnerAnalyticsViewWithPeriods",
+        "portal/src/pages/AdvisorIntelligence/_shared/types.ts#PeriodSnapshot",
+        "portal/src/pages/AdvisorIntelligence/_shared/types.ts#TimeseriesOverviewNnaPeriod",
+        "portal/src/pages/AdvisorIntelligence/_shared/types.ts#TimeseriesOverviewResponse"
+      ],
+      "sharedCount": 11,
+      "sourceType": "data+type"
+    },
+    {
+      "source": "cluster:Attribution:3",
+      "target": "cluster:Attribution:1",
+      "edge_type": "SHARES_SOURCE",
+      "sharedSources": [
+        "allocation-summary",
+        "getAllocationSummary"
+      ],
+      "sharedTypes": [],
+      "sharedCount": 2,
+      "sourceType": "data"
+    },
+    {
+      "source": "cluster:Correlation:0",
+      "target": "cluster:Correlation:1",
+      "edge_type": "SHARES_SOURCE",
+      "sharedSources": [],
+      "sharedTypes": [
+        "portal/src/pages/Correlation/types.ts#CorrelationMatrixData"
+      ],
+      "sharedCount": 1,
+      "sourceType": "type"
+    },
+    {
+      "source": "cluster:DataRefresh:2",
+      "target": "cluster:DataRefresh:3",
+      "edge_type": "SHARES_SOURCE",
+      "sharedSources": [],
+      "sharedTypes": [
+        "portal/src/pages/DataRefresh/types.ts#ManifestFile"
+      ],
+      "sharedCount": 1,
+      "sourceType": "type"
+    },
+    {
+      "source": "cluster:DataRefresh:6",
+      "target": "cluster:DataRefresh:7",
+      "edge_type": "SHARES_SOURCE",
+      "sharedSources": [],
+      "sharedTypes": [
+        "portal/src/pages/DataRefresh/types.ts#DataRefreshActions",
+        "portal/src/pages/DataRefresh/types.ts#DataRefreshState"
+      ],
+      "sharedCount": 2,
+      "sourceType": "type"
+    },
+    {
+      "source": "cluster:FactorTilts:0",
+      "target": "cluster:FactorTilts:1",
+      "edge_type": "SHARES_SOURCE",
+      "sharedSources": [],
+      "sharedTypes": [
+        "portal/src/pages/FactorTilts/types.ts#FactorTiltsDataset"
+      ],
+      "sharedCount": 1,
+      "sourceType": "type"
+    },
+    {
+      "source": "cluster:FactorTilts:0",
+      "target": "cluster:FactorTilts:2",
+      "edge_type": "SHARES_SOURCE",
+      "sharedSources": [],
+      "sharedTypes": [
+        "portal/src/pages/FactorTilts/types.ts#FactorTiltsDataset"
+      ],
+      "sharedCount": 1,
+      "sourceType": "type"
+    },
+    {
+      "source": "cluster:FactorTilts:0",
+      "target": "cluster:FactorTilts:4",
+      "edge_type": "SHARES_SOURCE",
+      "sharedSources": [],
+      "sharedTypes": [
+        "portal/src/pages/FactorTilts/types.ts#FactorTiltsDataset"
+      ],
+      "sharedCount": 1,
+      "sourceType": "type"
+    },
+    {
+      "source": "cluster:FactorTilts:0",
+      "target": "cluster:FactorTilts:5",
+      "edge_type": "SHARES_SOURCE",
+      "sharedSources": [],
+      "sharedTypes": [
+        "portal/src/pages/FactorTilts/types.ts#FactorTiltsDataset"
+      ],
+      "sharedCount": 1,
+      "sourceType": "type"
+    },
+    {
+      "source": "cluster:FactorTilts:1",
+      "target": "cluster:FactorTilts:2",
+      "edge_type": "SHARES_SOURCE",
+      "sharedSources": [],
+      "sharedTypes": [
+        "portal/src/pages/FactorTilts/types.ts#FactorTiltsDataset"
+      ],
+      "sharedCount": 1,
+      "sourceType": "type"
+    },
+    {
+      "source": "cluster:FactorTilts:1",
+      "target": "cluster:FactorTilts:4",
+      "edge_type": "SHARES_SOURCE",
+      "sharedSources": [],
+      "sharedTypes": [
+        "portal/src/pages/FactorTilts/types.ts#FactorTiltsDataset"
+      ],
+      "sharedCount": 1,
+      "sourceType": "type"
+    },
+    {
+      "source": "cluster:FactorTilts:1",
+      "target": "cluster:FactorTilts:5",
+      "edge_type": "SHARES_SOURCE",
+      "sharedSources": [],
+      "sharedTypes": [
+        "portal/src/pages/FactorTilts/tabs/FactorTiltTimeSeriesTab.tsx#TimeSeriesDataPoint",
+        "portal/src/pages/FactorTilts/types.ts#FactorTiltsDataset"
+      ],
+      "sharedCount": 2,
+      "sourceType": "type"
+    },
+    {
+      "source": "cluster:FactorTilts:2",
+      "target": "cluster:FactorTilts:4",
+      "edge_type": "SHARES_SOURCE",
+      "sharedSources": [],
+      "sharedTypes": [
+        "portal/src/pages/FactorTilts/types.ts#FactorTiltsDataset"
+      ],
+      "sharedCount": 1,
+      "sourceType": "type"
+    },
+    {
+      "source": "cluster:FactorTilts:2",
+      "target": "cluster:FactorTilts:5",
+      "edge_type": "SHARES_SOURCE",
+      "sharedSources": [],
+      "sharedTypes": [
+        "portal/src/pages/FactorTilts/types.ts#FactorTiltsDataset"
+      ],
+      "sharedCount": 1,
+      "sourceType": "type"
+    },
+    {
+      "source": "cluster:FactorTilts:4",
+      "target": "cluster:FactorTilts:5",
+      "edge_type": "SHARES_SOURCE",
+      "sharedSources": [],
+      "sharedTypes": [
+        "portal/src/pages/FactorTilts/types.ts#FactorTiltsDataset"
+      ],
+      "sharedCount": 1,
+      "sourceType": "type"
+    },
+    {
+      "source": "cluster:MarketPerformance:3",
+      "target": "cluster:MarketPerformance:5",
+      "edge_type": "SHARES_SOURCE",
+      "sharedSources": [],
+      "sharedTypes": [
+        "portal/src/pages/MarketPerformance/tabs/types.ts#AssetTabProps"
+      ],
+      "sharedCount": 1,
+      "sourceType": "type"
+    },
+    {
+      "source": "cluster:PortfolioManagement:0",
+      "target": "cluster:PortfolioManagement:11",
+      "edge_type": "SHARES_SOURCE",
+      "sharedSources": [],
+      "sharedTypes": [
+        "portal/src/types/portfolio-optimization.ts#OptimizationSnapshot"
+      ],
+      "sharedCount": 1,
+      "sourceType": "type"
+    },
+    {
+      "source": "cluster:PortfolioManagement:12",
+      "target": "cluster:PortfolioManagement:14",
+      "edge_type": "SHARES_SOURCE",
+      "sharedSources": [],
+      "sharedTypes": [
+        "portal/src/pages/PortfolioManagement/components/VersionHistoryModal.tsx#VersionMetadata"
+      ],
+      "sharedCount": 1,
+      "sourceType": "type"
+    },
+    {
+      "source": "cluster:PortfolioManagement:13",
+      "target": "cluster:PortfolioManagement:15",
+      "edge_type": "SHARES_SOURCE",
+      "sharedSources": [],
+      "sharedTypes": [
+        "portal/src/pages/PortfolioManagement/tabs/SectorTab.tsx#SortableHeaderProps"
+      ],
+      "sharedCount": 1,
+      "sourceType": "type"
+    },
+    {
+      "source": "cluster:PortfolioManagement:13",
+      "target": "cluster:PortfolioManagement:16",
+      "edge_type": "SHARES_SOURCE",
+      "sharedSources": [],
+      "sharedTypes": [
+        "portal/src/pages/PortfolioManagement/tabs/SectorTab.tsx#SortableHeaderProps"
+      ],
+      "sharedCount": 1,
+      "sourceType": "type"
+    },
+    {
+      "source": "cluster:PortfolioManagement:15",
+      "target": "cluster:PortfolioManagement:16",
+      "edge_type": "SHARES_SOURCE",
+      "sharedSources": [],
+      "sharedTypes": [
+        "portal/src/pages/PortfolioManagement/tabs/SectorTab.tsx#SortableHeaderProps"
+      ],
+      "sharedCount": 1,
+      "sourceType": "type"
+    },
+    {
+      "source": "cluster:Positioning:1",
+      "target": "cluster:Positioning:0",
+      "edge_type": "SHARES_SOURCE",
+      "sharedSources": [],
+      "sharedTypes": [
+        "portal/src/api/portal-proxy.ts#HoldingsAttributionResponse",
+        "portal/src/api/portal-proxy.ts#PositioningDataResponse"
+      ],
+      "sharedCount": 2,
+      "sourceType": "type"
+    },
+    {
+      "source": "cluster:SecurityScanner:3",
+      "target": "cluster:SecurityScanner:4",
+      "edge_type": "SHARES_SOURCE",
+      "sharedSources": [],
+      "sharedTypes": [
+        "portal/src/pages/SecurityScanner/types.ts#FactorDefinition"
+      ],
+      "sharedCount": 1,
+      "sourceType": "type"
+    },
+    {
+      "source": "cluster:SecurityScanner:3",
+      "target": "cluster:SecurityScanner:5",
+      "edge_type": "SHARES_SOURCE",
+      "sharedSources": [],
+      "sharedTypes": [
+        "portal/src/pages/SecurityScanner/types.ts#FactorDefinition"
+      ],
+      "sharedCount": 1,
+      "sourceType": "type"
+    },
+    {
+      "source": "cluster:SecurityScanner:3",
+      "target": "cluster:SecurityScanner:6",
+      "edge_type": "SHARES_SOURCE",
+      "sharedSources": [],
+      "sharedTypes": [
+        "portal/src/pages/SecurityScanner/types.ts#FactorDefinition"
+      ],
+      "sharedCount": 1,
+      "sourceType": "type"
+    },
+    {
+      "source": "cluster:SecurityScanner:4",
+      "target": "cluster:SecurityScanner:5",
+      "edge_type": "SHARES_SOURCE",
+      "sharedSources": [],
+      "sharedTypes": [
+        "portal/src/pages/SecurityScanner/types.ts#FactorDefinition"
+      ],
+      "sharedCount": 1,
+      "sourceType": "type"
+    },
+    {
+      "source": "cluster:SecurityScanner:4",
+      "target": "cluster:SecurityScanner:6",
+      "edge_type": "SHARES_SOURCE",
+      "sharedSources": [],
+      "sharedTypes": [
+        "portal/src/pages/SecurityScanner/types.ts#FactorDefinition"
+      ],
+      "sharedCount": 1,
+      "sourceType": "type"
+    },
+    {
+      "source": "cluster:SecurityScanner:5",
+      "target": "cluster:SecurityScanner:6",
+      "edge_type": "SHARES_SOURCE",
+      "sharedSources": [],
+      "sharedTypes": [
+        "portal/src/pages/SecurityScanner/types.ts#FactorDefinition"
+      ],
+      "sharedCount": 1,
+      "sourceType": "type"
+    },
+    {
+      "source": "cluster:TradeSubmission:3",
+      "target": "cluster:TradeSubmission:12",
+      "edge_type": "SHARES_SOURCE",
+      "sharedSources": [],
+      "sharedTypes": [
+        "portal/src/pages/TradeSubmission/components/FileUploadZone.tsx#ParsedTradeData"
+      ],
+      "sharedCount": 1,
+      "sourceType": "type"
+    },
+    {
+      "source": "cluster:TradeSubmission:5",
+      "target": "cluster:TradeSubmission:12",
+      "edge_type": "SHARES_SOURCE",
+      "sharedSources": [],
+      "sharedTypes": [
+        "portal/src/pages/TradeSubmission/components/TickerAutocompleteInput.tsx#SecurityIdentifiers"
+      ],
+      "sharedCount": 1,
+      "sourceType": "type"
+    },
+    {
+      "source": "cluster:TradeSubmission:5",
+      "target": "cluster:TradeSubmission:6",
+      "edge_type": "SHARES_SOURCE",
+      "sharedSources": [],
+      "sharedTypes": [
+        "portal/src/pages/TradeSubmission/components/TickerAutocompleteInput.tsx#SecurityIdentifiers"
+      ],
+      "sharedCount": 1,
+      "sourceType": "type"
+    },
+    {
+      "source": "cluster:TradeSubmission:6",
+      "target": "cluster:TradeSubmission:12",
+      "edge_type": "SHARES_SOURCE",
+      "sharedSources": [],
+      "sharedTypes": [
+        "portal/src/pages/TradeSubmission/components/TickerAutocompleteInput.tsx#SecurityIdentifiers"
+      ],
+      "sharedCount": 1,
+      "sourceType": "type"
+    },
+    {
+      "source": "cluster:TradeSubmission:7",
+      "target": "cluster:TradeSubmission:8",
+      "edge_type": "SHARES_SOURCE",
+      "sharedSources": [],
+      "sharedTypes": [
+        "portal/src/api/endpoints/trade-submission.ts#TradeSubmission"
+      ],
+      "sharedCount": 1,
+      "sourceType": "type"
+    }
+  ],
+  "coverage": {
+    "node_count": 106,
+    "edge_count": 387,
+    "page_tsx_total": 119,
+    "page_tsx_assigned": 118,
+    "unresolved": [
+      {
+        "cat": "cluster_assign",
+        "what": "portal/src/pages/Attribution/constants/holdings-shared.tsx",
+        "where": "Attribution",
+        "reason": "page .tsx declares no extracted ReactComponent (barrel/re-export/constants .tsx -- no JSX-returning PascalCase symbol)"
+      }
+    ]
+  }
+}
