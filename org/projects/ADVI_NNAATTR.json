@@ -4,15 +4,31 @@
   "name": "bd NNA per-advisor attribution remediation",
   "description": "Andrew-direct (via CVO NNA estate audit 9543c4392, approved 2026-06-17). Fix the SILENT route-dependent per-advisor NNA divergence: D_00f (Distribution surface, via C_01 acct_dim SCD) parks 34.5%/$35.3M QTD in Unassigned + 49F-House placeholders; D_00c (profile card, via C_07 account_team Layer-3) RESOLVES those placeholders by inferring an architect -> over-credits individuals. Same advisor (Travis) reads $4.14M on Distribution vs $6.95M on the profile card, silent. CTO non-negotiable: unify to ONE canonical per-advisor attribution path (D_00f==D_00c). ANDREW DECISIONS (2026-06-17, all baked): F-0 = per-advisor NNA ALL-ROLES, ONE source + ONE tenure rule, with 49F House + Unassigned KEPT as their own canonical buckets (NOT resolved into individuals) -> REMOVE D_00c's C_07 Layer-3 inference (it over-credits individuals with the $357.6M house book + transient Unassigned); individuals' per-advisor NNA EXCLUDES house/unassigned. CVO research: Unassigned is TRANSIENT (purely 2026 arrivals, self-clearing ~1-2 quarters); 49F House is the code-confirmed CANONICAL house book ($357.6M, continuous), keep as '49F House'. F-1 = cross-route identity on individuals + within-surface nna==inflows-outflows (drop ADVI_INFMVP.F5 architect override). F-2 = MAX=2021-Q1 everywhere. F-4 = headline firm NNA = canonical ADDITIVE account-once (MAX=2021-Q1), retire D_00 cum-diff + dashboard.json zeroing. Gate-of-record = the NFRA_GCONTR NNA value-limb (advisory v1, attribution-completeness invariant: 49F House recognized-canonical, Unassigned bounded-transient). Distinct from ADVI_49NNAFIX (closed; publisher/serving layer) + NFRA_GCONTR (the contract/gate). This is the attribution-methodology code remediation.",
   "prds": [
-    {"path": "org/tier1_exec/3.0.0_SA_CVO/logs/2026-06-17/cvo_1804Z_nna_estate_audit_seams_verdict.md", "label": "CVO NNA estate audit + /seams root-cause + approved F-0..F-5 plan (PRD-equivalent)", "date": "2026-06-17"},
-    {"path": "org/seams/advi-bd-nna-attribution.md", "label": "Durable seam record (dual-source attribution divergence)", "date": "2026-06-17"}
+    {
+      "path": "org/tier1_exec/3.0.0_SA_CVO/logs/2026-06-17/cvo_1804Z_nna_estate_audit_seams_verdict.md",
+      "label": "CVO NNA estate audit + /seams root-cause + approved F-0..F-5 plan (PRD-equivalent)",
+      "date": "2026-06-17"
+    },
+    {
+      "path": "org/seams/advi-bd-nna-attribution.md",
+      "label": "Durable seam record (dual-source attribution divergence)",
+      "date": "2026-06-17"
+    }
   ],
-  "related": ["ADVI_COTETL", "NFRA_GCONTR", "ADVI_49NNAFIX"],
+  "related": [
+    "ADVI_COTETL",
+    "NFRA_GCONTR",
+    "ADVI_49NNAFIX"
+  ],
   "status": "active",
-  "phase": "P0 DECOMPOSITION 2026-06-17 (2.0.0_SA_COO). Andrew settled the 2 gating decisions (F-0 bucket-preservation + F-4 headline-additive) in-session -> dispatch gate CLEARED. TO-1 (DS battery: F-0 unify-attribution-remove-inference + F-1a all-roles-emit-buckets-preserved + F-2 MAX=2021-Q1 + F-4 headline-additive + F-5 D_02 logging) authored. TO-2 (DE/RD: F-1b/F-1c repoint-to-all-roles + drop-INFMVP.F5 + F-3 Inflection fee-split) sequences after F-1a (the all-roles number existing). DS lane respawn-requested (0.4.0_DS died; NNA work = its GO-ready trigger). CVO updates the value-limb invariant (49F House canonical / Unassigned transient) + authors the headline SEV1 row -> completes the GCONTR TO-3 SEV1 set -> joint Andrew §9 ratify. CVO post-fix re-verification (cross-route identity + attribution-completeness + headline reconciliation) = close-gate.",
-  "blocking": "TO-1 DS-spawn-gated (respawn requested, MSTR). TO-2 (DE/RD) gated on F-1a landing (the all-roles per-advisor number). The SEV1 value-limb ratify rides the GCONTR TO-3 batch to Andrew §9. No design gate remaining (Andrew decided all 4).",
+  "phase": "TO-1 DEPLOYED 2026-06-18 (DS battery: F-0 unify-attribution-remove-inference + F-1a all-roles-emit-buckets-preserved + F-2 MAX=2021-Q1 series-tie + F-4 headline-additive + F-5 D_02 logging; commits 0bca5a46a / f24d20c08 / 708773e27; CVO /molecule+/seams-validated the F-0/F-1a deployed code). CLOSE-GATE = the 06-18 NIGHTLY served re-verify (DS tomorrow-AM: served advisor_nna_canonical fresh + sum(series)==MAX + cross-route identity) + CVO re-cert. TO-2 (DE/RD: F-1b/F-1c repoint-to-all-roles + drop-INFMVP.F5 + F-3 Inflection fee-split) gated on DE being ONLINE (0.4.0_DE offline; NOT on F-1a -- that landed). OPEN CVO DIG: D_00c re-implements the per-advisor melt INLINE (0 phantom-divergence today, latent fragility). CVO authored the headline SEV1 row -> GCONTR TO-3 SEV1 set; joint Andrew section-9 ratify pending. (Andrew settled all 4 design decisions in-session; no design gate remaining.)",
+  "blocking": "CLOSE-GATE = served re-verify on the 06-18 nightly (DS tomorrow-AM) + CVO re-cert. TO-2 gated on DE ONLINE (0.4.0_DE offline). SEV1 value-limb ratify rides GCONTR TO-3 to Andrew section-9. Open: D_00c inline-melt latent-fragility DIG (CVO, non-blocking). No design gate (Andrew decided all 4).",
   "created": "2026-06-17",
-  "pods": ["0.4", "0.4.2", "3.0"],
+  "pods": [
+    "0.4",
+    "0.4.2",
+    "3.0"
+  ],
   "pipeline": "bd gold (D_00/D_00c/D_00f/D_02) + inf (fee-split) + portal ADVI (Distribution/Continuous/profile/Exec-flows)",
   "coo_lane": "2.0.0_SA_COO",
   "thread_counter": 0,
