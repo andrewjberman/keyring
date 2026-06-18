@@ -64,15 +64,17 @@ The deliverable enumerates the candidate list with COO reasoning per agent; MSTR
 
 Before publishing the /allocation deliverable with SPAWN-NEEDED entries, MCP MSTR with subject `[ALLOCATION-PRECHECK]` listing proposed spawn-target serials. MSTR responds within ~30s with per-serial classification:
 
-- **ALREADY-LIVE** — existing marker found via `org/mcp/live_agents_by_marker.json` ground-truth artifact OR live-marker scan. Redirect work to existing serial OR use `FORCE_SPAWN=1 reason="intentional-duplicate <reason>"` if a fresh spawn is genuinely required.
+- **ALREADY-LIVE** — the serial is present in the suffix-clean BROKER live-set (broker `/status`, exact-keyed by full serial incl any `~suffix`) OR a live per-agent marker/PID scan (the distinct per-spawn marker mechanism, which survives the retired aggregate). Redirect work to existing serial OR use `FORCE_SPAWN=1 reason="intentional-duplicate <reason>"` if a fresh spawn is genuinely required.
 - **NOT-LIVE** — no marker found; safe to spawn. Promote to SPAWN-NEEDED in deliverable.
 
-**Why this step exists:** broker `get_live_agents()` has a suffix-strip gap that can drop tilde-suffixed serials from the visible-LIVE-set. Empirical anchor: /allocation #12 ~21:38Z proposed SPAWN-NEEDED for DS 0.1.0~D while DS 0.4.0~D was already LIVE on a different scope — visual-collision-class slip that MSTR marker-scan ground-truth artifact catches. LD-0105 Fix 3 (Andrew sovereign 2026-05-26T~22:00Z "Lets do all three yes" + MSTR `5174e6b01`).
+**Why this step exists:** a spawn-time population gate prevents a duplicate spawn of an already-LIVE serial. Empirical anchor: /allocation #12 ~21:38Z proposed SPAWN-NEEDED for DS 0.1.0~D while DS 0.4.0~D was already LIVE on a different scope — a visual-collision-class slip the population gate catches. LD-0105 Fix 3 (Andrew sovereign 2026-05-26T~22:00Z "Lets do all three yes" + MSTR `5174e6b01`).
+
+**Source update (LD-0202):** the gate originally read the `live_agents_by_marker.json` artifact — the LD-0105 workaround for a suffix-strip in the `get_live_agents` *tool* (the json-store query layer, NOT the broker DB). LD-0202 root-fixed that layer (A1/B1/B2 in `server.py`, activating at the held LD-0202 fabric restart) AND established that the BROKER DB is canonically suffix-clean (`broker.py` keys by full serial, exact-match, no strip — clean NOW, restart-independent). So the gate now reads the broker live-set directly (safe today, since it does not depend on the restart-gated `server.py` fixes); the marker artifact is RETIRED (LD-0202 D1). The responsibility split below is unchanged — only the source moves marker -> broker.
 
 **Responsibility split codified in LD-0105:**
 - **COO** = workload-state planning ("what work needs an agent")
 - **MSTR** = spawn-time population gate ("is this serial already alive")
-- **MSTR exposes** `org/mcp/live_agents_by_marker.json` ground-truth artifact; COO consumes for /allocation classification
+- **Population source** = the suffix-clean broker live-set (broker `/status`, exact-keyed by full serial); MSTR's spawn-time gate reads it and COO consumes the per-serial ALREADY-LIVE / NOT-LIVE classification. (Was the `live_agents_by_marker.json` artifact — RETIRED per LD-0202 D1.)
 
 **Cost:** ~10-30s wall MCP round-trip per cycle when SPAWN-NEEDED list is non-empty. Empty SPAWN-NEEDED skips the precheck (no spawns to verify). Cheap structural insurance.
 

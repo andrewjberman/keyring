@@ -155,9 +155,12 @@ structural fix for the `get_live_agents` false-death incident (2026-06-05, Andre
 - `get_live_agents` prunes any serial whose **heartbeat** `last_seen_epoch` exceeds 600s
   (`_clean_stale`), so a tilde lane that is actively working (fresh telemetry) but has not
   heartbeated in >10min **vanishes from the live-set** — read as dead when it is alive.
-- `get_agent_status("...~A")` then **falls back to the base serial** when `~A` is absent, so it
-  reports the base lane's status — which *looks* like a suffix-strip but is really the masked
-  false-death. The stale `live_agents_by_marker.json` is not a reliable backstop either.
+- `get_agent_status("...~A")` for an absent `~A` **currently still falls back to the base serial**
+  (masking the false-death as base state). The LD-0202 A1 fix replaces this with an explicit
+  "NOT REGISTERED (lane ~A)", but it is a `server.py` change that activates ONLY at the **held
+  LD-0202 fabric restart** — until then, verify an absent `~A` via telemetry, not `get_agent_status`.
+  The residual false-death is the `_clean_stale` heartbeat-pruning above, which `/fabric-check` covers.
+  (`live_agents_by_marker.json` was never a reliable backstop — RETIRED per LD-0202 D1.)
 - **Telemetry is the only reliable tilde-lane liveness signal**, and that is what `/fabric-check`
   reads (per-serial `…~A.jsonl`, suffix preserved). It cannot false-death an active lane.
 
