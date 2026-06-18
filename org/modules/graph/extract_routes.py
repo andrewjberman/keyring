@@ -498,19 +498,40 @@ def _parse_rewrite_rules(workspace_root: Path) -> list[RewriteRule]:
             condition="default (legacy flat paths)",
         ))
 
-    # public-data-router (for /api/general/ paths)
+    # public-data-router (for /api/general/ paths). Mirrors the Lambda@Edge router
+    # infra/aws/lambda-edge/public-data-router/index.mjs L17-34, order-sensitive
+    # (most-specific-first; resolve_s3_key returns on the FIRST prefix match).
     public_router = workspace_root / "infra" / "aws" / "lambda-edge" / "public-data-router" / "index.mjs"
     if public_router.exists():
-        # /api/general/json/... -> /json/...
+        # 1. /api/general/json-tiered/* -> /json-tiered/* (router special-case 1)
+        rules.append(RewriteRule(
+            url_prefix="/api/general/json-tiered/",
+            s3_prefix="json-tiered/",
+            condition="general json-tiered passthrough",
+        ))
+        # 2. /api/general/json/* -> /json/* (router special-case 2; avoids double /json/)
         rules.append(RewriteRule(
             url_prefix="/api/general/json/",
             s3_prefix="json/",
             condition="general json passthrough",
         ))
+        # 3. /api/general/* -> /json/* (router DEFAULT fallback, index.mjs L29-34 --
+        #    covers benchmarks/, positioning/, cma/, sentiment/, etc.). MUST be LAST:
+        #    "/api/general/" is a prefix of the two above, so an earlier position would
+        #    shadow them. This was the missing rule -- /api/general/{X} with X not under
+        #    json/ or json-tiered/ previously resolved to "" (the comp-routes gap from
+        #    NFRA_TSGRAPH P4: DE head-object grounding 29/33).
+        #    NOTE: this encodes the router's URL->key REWRITE (a pure function of the
+        #    router), NOT object existence. A resolved key is not a guarantee the S3
+        #    object is live -- the SERVED_FROM both-ends head_object check (P4
+        #    stitch_served_from: 403=LOUD iam-deny, 404=VISIBLE-unresolved) is what gates
+        #    a real edge. The 4 known positioning/ + sentiment/ head_object-MISS paths
+        #    stay VISIBLE-unresolved THERE, not here (avoids the D8 false-key trap by
+        #    moving existence to the edge layer, keeping the resolver router-faithful).
         rules.append(RewriteRule(
-            url_prefix="/api/general/json-tiered/",
-            s3_prefix="json-tiered/",
-            condition="general json-tiered passthrough",
+            url_prefix="/api/general/",
+            s3_prefix="json/",
+            condition="general default fallback (router L29-34)",
         ))
 
     return rules
