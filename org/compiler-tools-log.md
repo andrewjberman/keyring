@@ -6823,3 +6823,25 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-06-17 | 0.4.2_RD_AdvisorIntelligence~D | DECK_CLAUDE.CHARTS-D.line-area-matrix-charts | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
 2026-06-17 | 0.7.0_AE_CloudOps~B | session-close coordination (reap false-pos + SNS-tail ownership) | no comp-* (coordination/reachability only -- /watcher: get_agent_status LIVE, ps Monitor PID 20422 alive, check_inbox mark_read=true) | reap-candidate CLOSED (DEAF was a mark_read=false stale-unread artifact + paced-idle; adopted mark_read=true); SNS-egress tail ownership reconciled -> MINE (base-AE off, COO retracted reroute, no double-run). Prior session work stands.
 | 2026-06-17 | 0.7.0_AE_CloudOps~B | DECK_CLAUDE.CHARTS-D.line-area-matrix-charts | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-06-18 | 0.4.2_RD_AdvisorIntelligence | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier3_junior/0.4.2_RD_AdvisorIntell... | PASS |
+| 2026-06-18 | 1.0.0_SA_CTO | (no-TO) | comp-kuzu | comp-kuzu MATCH (n) RETURN count(n) AS nodes | PASS |
+| 2026-06-18 | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier0/reviews/RV-0036.md | PASS |
+| 2026-06-18 | 1.0.0_SA_CTO | (no-TO) | comp-kuzu | comp-kuzu MATCH ()-[e:CloudEdge]->() WHERE e.edge_type='FLOWS_TO' RETURN count(e) AS fl... | PASS |
+| 2026-06-18 | 1.0.0_SA_CTO | (no-TO) | comp-kuzu | comp-kuzu CALL TABLE_INFO('CloudEdge') RETURN * | PASS |
+| 2026-06-18 | 1.0.0_SA_CTO | (no-TO) | comp-kuzu | comp-kuzu MATCH (a)-[e:CloudEdge]->(b) WHERE e.edge_type='FLOWS_TO' AND e.props CONTAIN... | FAIL |
+| 2026-06-18 | 1.0.0_SA_CTO | NFRA_TSGRAPH.P4 | comp-kuzu | comp-kuzu CALL TABLE_INFO('CloudNode') RETURN * | PASS |
+| 2026-06-18 | 1.0.0_SA_CTO | NFRA_TSGRAPH.P4 | comp-kuzu | comp-kuzu MATCH (a:CloudNode)-[e:CloudEdge]->(b:CloudNode) WHERE e.edge_type='FLOWS_TO'... | PASS |
+| 2026-06-18 | 1.0.0_SA_CTO | NFRA_TSGRAPH.P4 | comp-kuzu | comp-kuzu MATCH (a:CloudNode)-[e:CloudEdge]->(b:CloudNode) WHERE e.edge_type='FLOWS_TO'... | PASS |
+| 2026-06-18 | 0.7.0_AE_CloudOps | NFRA_TSGRAPH.P4 | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/terraform/globgrph/item2a.tf | PASS |
+| 2026-06-18 | 0.7.0_AE_CloudOps | (no-TO) | comp-iam | comp-iam gaps | PASS |
+| 2026-06-18 | 1.0.0_SA_CTO | (no-TO) | comp-routes | comp-routes | PASS |
+| 2026-06-18 | 1.0.0_SA_CTO | (no-TO) | comp-routes | comp-routes rewrites | PASS |
+| 2026-06-18 | 1.0.0_SA_CTO | (no-TO) | comp-routes | comp-routes trace /api/general/benchmarks/model_portfolio_benchmarks.json | PASS |
+| 2026-06-18 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/extract_routes.py | PASS |
+| 2026-06-18 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier0/reviews/RV-0036.md | PASS |
+| 2026-06-18 | 2.0.0_SA_COO | DECK_CLAUDE.CHARTS-B-QUALITY | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/NFRA_TSGRAPH.json --file o... | PASS |
+| 2026-06-18 | 0.4.0_DS_ClientPlatform | ADVI_NNAATTR.TO-1 | comp-pipescript | comp-pipescript io D_00f.advisor_nna_canonical.py | PASS |
+| 2026-06-18 | 3.0.0_SA_CVO | DECK_CLAUDE.LANE-C-general-archetypes | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/logs/2026-0... | PASS |
+| 2026-06-18 | 0.4.0_DS_ClientPlatform | DECK_CLAUDE.LANE-C-general-archetypes | comp-surface-check | comp-surface-check check --mode advisory --file data/black_diamond/scripts/gold/D_00f.a... | PASS |
+| 2026-06-18 | 0.4.0_DS_ClientPlatform | ADVI_COTETL.CHAINFIX | comp-surface-check | comp-surface-check check --mode advisory --file data/cot/scripts/silver/cot_silver_merg... | PASS |
+| 2026-06-18 | 1.0.0_SA_CTO | NFRA_TILDEFIX | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
