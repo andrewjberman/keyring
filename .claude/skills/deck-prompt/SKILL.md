@@ -34,6 +34,8 @@ from the tool, not from you. Add `--ascii` for a pure-ASCII frame (guaranteed al
 - **NEVER** lead with commentary. The cards come first; any commentary is one line, after them.
 - **NEVER** show a partial or "representative" subset — always the full deck, every slide.
 - **NEVER** edit, tighten, re-wrap, or "clean up" the tool's output. It is the product as-is.
+- **NEVER** make the user run a command, see a file path, or type a raw letter/archetype name.
+  You run all python / PowerShell; the user sees only the rendered cards and a clickable picker.
 
 ### The markdown file is SECONDARY
 The `.deck.md` is persistence + the `/deck-gen` build input. The PRIMARY output is the rendered
@@ -56,15 +58,25 @@ is valid. Vary families — never the same family on two consecutive slides (D10
 - **Pass 1 — flow & layout:** lay out the slides + copy; the family falls out of the narrative
   (labeled upper-right on each card). Render, paste the full deck, ask to approve copy + flow. Edits =
   edit the `.md`, re-render, re-paste the full deck.
-- **Pass 2 — variant (card design):** only after Pass 1 is approved. Show each slide's family
-  variants as **VISUAL layout mocks** — the renderer draws each variant's treatment (e.g. compare =
-  two columns vs compare-venn = overlapping circles vs compare-balance = beam/fulcrum), so the user
-  picks between *pictures* labeled A/B/C/D, not a list of names. Run
-  `... prompt_view.py prompts/<slug>.deck.md --pass2` (all slides) or
-  `... prompt_view.py --variants <archetype>` (one); paste its output verbatim, same contract as Pass 1.
-  User picks a letter per slide; **Edit** that slide's `archetype:` to the chosen variant; re-render +
-  re-paste the full deck. Charts: the variants ARE the chart types — offer those matching the data
-  shape; Table: one variant — confirm.
+- **Pass 2 — variant (the card design), via a CLICKABLE picker (mandated standard):** only after
+  Pass 1 is approved. The user picks the visual treatment of each card by *clicking between pictures*
+  — never by typing. You run all python; surface only the cards + the picker.
+  1. **Get the variant data:** run `... prompt_view.py prompts/<slug>.deck.md --pass2 --json` — every
+     slide's family variants, each with a deterministic `preview` mock (the renderer's ASCII layout
+     for that treatment: compare = two columns, compare-venn = overlapping circles, panels-formula =
+     A + B = C, the chart types as icons, …).
+  2. **Offer the one-click path FIRST:** a single `AskUserQuestion` — "Use the recommended design for
+     every slide, or choose per slide?" with **"Accept all recommended" (Recommended, first)** and
+     "Choose per slide." Accept-all → apply the recommended variant to every slide and skip to step 5.
+  3. **Per slide (one `AskUserQuestion` each):** build the options from the `--json` data — each
+     option's **`preview` = that variant's renderer mock pasted verbatim** (never hand-drawn), `label`
+     = a plain-language name, `description` = its use-line. Put the **best-fit variant FIRST, marked
+     "(Recommended)"** — it is the default, so a non-technical user can click straight through.
+  4. **>4-variant families** (Cover, Statement = 5) exceed the picker's 4-option cap: present the **4
+     best-fit** variants; the auto-"Other" covers the 5th. **Charts:** the variants ARE chart types —
+     offer those matching the data shape. **Table:** one variant — no picker, just confirm.
+  5. On each pick, **Edit** that slide's `archetype:` to the chosen variant. When all slides are set,
+     **re-render and paste the full deck** (the contract), then hand off.
 
 ## Writing the .deck.md (the renderer parses it — keep to PROMPT_SPEC.md)
 - Frontmatter: `deck_title`, `audience`, `goal`, `source`, `slide_count`.
