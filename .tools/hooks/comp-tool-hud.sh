@@ -55,7 +55,11 @@ gpath=$(printf '%s' "$INPUT" | "$JQ" -r '.tool_input.path // ""' 2>/dev/null || 
 #      query -> never nudge it (only raw-aws INSPECTION + infra-grep are comp-answerable).
 if printf '%s' "$gpath" | grep -qE '\.[A-Za-z0-9]+$'; then exit 0; fi      # path ends in a file extension = single file
 if printf '%s' "$query" | grep -qE 'comp-|pipescript'; then exit 0; fi      # already a comp-tool reference
-if [ "$tool" = Bash ] && printf '%s' "$query" | grep -qE 'lambda invoke|s3(api)? (cp|sync|put-object|mv)|get-function-configuration|safe-apply|safe-ec2-deploy|safe-commit|terraform |update-function-code|start-build|run-task'; then exit 0; fi
+if [ "$tool" = Bash ] && printf '%s' "$query" | grep -qE 'lambda invoke|s3(api)? (cp|sync|put-object|mv)|get-function-configuration|safe-apply|safe-ec2-deploy|safe-commit|terraform |update-function-code|start-build|run-task|dynamodb (put-item|update-item|delete-item|batch-write-item)'; then exit 0; fi
+# a bare `aws s3 ls`/`list-objects` with NO code/ or gold|platinum|silver|json prefix = a generic
+# listing (no targeted comp answer) -> stay silent; do NOT fall through to the s3_artifact grep-class
+# on the bucket-name alone. (The targeted code//gold/ s3-ls classes below carry code//gold/ so this skips THEM out.)
+if [ "$tool" = Bash ] && printf '%s' "$query" | grep -qE 'aws s3(api)? (ls|list-objects)' && ! printf '%s' "$query" | grep -qE 'code/|(^|/)(gold|platinum|silver|json)/'; then exit 0; fi
 
 WS="$(cd "$SCRIPT_DIR/../.." 2>/dev/null && pwd)" || WS="."
 
@@ -69,6 +73,15 @@ if printf '%s' "$query" | grep -qE 'aws iam (get|list|simulate)|aws s3api get-bu
 elif printf '%s' "$query" | grep -qE 'aws cloudfront|aws apigateway'; then
   class=aws_route
   msg="comp-tool on the HUD: raw \`aws\` CloudFront/API-GW inspection. \`comp-routes behaviors\`/\`trace\` gives the full serving path + the CF custom-error-rule masking (4xx->HTML) a raw get-distribution won't surface. (advisory -- your command still runs.)"
+elif printf '%s' "$query" | grep -qE 'aws s3(api)? (ls|list-objects)[^|]*code/'; then
+  class=aws_deploy_verify
+  msg="comp-tool on the HUD: raw \`aws s3 ls\` of a code/ prefix = deploy-verify. \`comp-pipescript deployed [<script>|--firm bd|inf|cot|mdpf]\` = MATCH/STALE/MISSING per script WITH bucket-attribution + firm-separation -- catches a stranded/half-landed deploy a raw ls won't frame. Run before any gold/silver run. (advisory -- your command still runs.)"
+elif printf '%s' "$query" | grep -qE 'aws s3(api)? (ls|list-objects)[^|]*(^|/)(gold|platinum|silver|json)/'; then
+  class=aws_freshness
+  msg="comp-tool on the HUD: raw \`aws s3 ls\` + timestamp for artifact freshness. \`comp-freshness <artifact>\` = EXISTS/FRESH/SCALED/NOT-FROZEN (the validate-on-served check), not just a listing + mtime eyeball. (advisory -- your command still runs.)"
+elif printf '%s' "$query" | grep -qE 'aws dynamodb (scan|get-item|query|describe-table|list-tables)'; then
+  class=aws_dynamodb
+  msg="comp-tool on the HUD: raw \`aws dynamodb\` inspection. \`comp-freshness <table> --ddb\` = firm-config drift framing; \`comp-aws\` = the table's edges/consumers. Higher-context than a raw scan. (advisory -- your command still runs.)"
 elif [ "$tool" = Bash ] && printf '%s' "$query" | grep -qE '(grep|rg|findstr)([^|;]*)(infra/aws/|\.tf([^A-Za-z0-9]|$))'; then
   class=infra_grep
   msg="comp-tool on the HUD: grepping infra/.tf. \`comp-aws\` = the resource edges/blast-radius (relationship-aware, not text -- the destructive-op pre-gate basis); \`comp-iam\` = the perms; \`comp-routes\` = the serving path. Repo-scoped + edge-aware vs a blind .tf grep. (advisory -- your command still runs.)"
@@ -79,6 +92,9 @@ elif printf '%s' "$query" | grep -qE '(^|[^A-Za-z0-9_])(INF_)?[A-DIS]_-?[0-9]{1,
 elif printf '%s' "$query" | grep -qE 's3://opal-|opal-data-[A-Za-z0-9_]+|(^|/)(gold|platinum|silver)/|\.parquet([^A-Za-z0-9]|$)'; then
   class=s3_artifact
   msg="comp-tool on the HUD: searching for an S3 artifact/key. \`pipescript --resource <substr>\` = which named thread + producer owns it; \`comp-pipescript io <script>\` = a gold script's reads/writes incl. portal consumers. Deterministic. (advisory -- your search still runs.)"
+elif printf '%s' "$query" | grep -qE 'useQuery|useMutation|useInfiniteQuery|queryKey'; then
+  class=react_query
+  msg="comp-tool on the HUD: searching React Query keys/hooks. \`comp-cache collisions\` = shared/colliding query keys across components (the stale-cache + cross-cohort key-bleed class) -- deterministic vs grepping useQuery across .tsx. (advisory -- your search still runs.)"
 elif printf '%s' "$query" | grep -qE 'portal/src/|\.tsx([^A-Za-z0-9]|$)|/api/(scoped|general|private|public)/|getAdvisor[A-Za-z]*'; then
   class=portal
   msg="comp-tool on the HUD: searching a portal component/route. \`comp-transform schema-check <Component>\` = its data-prop type contract (MISSING = runtime undefined); \`comp-routes behaviors\` = the serving/CF path (4xx/HTML masking). \`pipescript <thread>\` shows the backend that feeds it. (advisory -- your search still runs.)"
