@@ -37,9 +37,13 @@ else exit 0; fi
 # silent-dead-hook failure class). Separate calls can't collapse. Check tool first
 # and exit early (saves the other calls on the common non-search path).
 tool=$(printf '%s' "$INPUT" | "$JQ" -r '.tool_name // ""' 2>/dev/null) || exit 0
-case "$tool" in Grep|Glob) : ;; *) exit 0 ;; esac
+case "$tool" in Grep|Glob|Bash) : ;; *) exit 0 ;; esac
 sid=$(printf '%s' "$INPUT" | "$JQ" -r '.session_id // ""' 2>/dev/null || true)
-query=$(printf '%s' "$INPUT" | "$JQ" -r '.tool_input.pattern // .tool_input.file_path // ""' 2>/dev/null || true)
+# Bash -> .command ; Grep/Glob -> .pattern/.file_path. The command-first chain means
+# a Bash raw-aws/infra-grep gets matched against the aws-inspection classes below
+# (NFRA_TOOLHUD ext 2026-06-18, Andrew-direct: agents reaching for raw aws/grep where
+# comp-aws/comp-iam/comp-routes give higher-context answers = the low-context-shoddy risk).
+query=$(printf '%s' "$INPUT" | "$JQ" -r '.tool_input.command // .tool_input.pattern // .tool_input.file_path // ""' 2>/dev/null || true)
 gpath=$(printf '%s' "$INPUT" | "$JQ" -r '.tool_input.path // ""' 2>/dev/null || true)
 [ -z "$query" ] && exit 0
 
@@ -47,15 +51,28 @@ gpath=$(printf '%s' "$INPUT" | "$JQ" -r '.tool_input.path // ""' 2>/dev/null || 
 #  (a) the search is scoped to a SINGLE FILE -> grepping a file's internals, NOT a
 #      relationship search (comp-pipescript io gives the I/O contract, not internals).
 #  (b) the query already references a comp tool -> tool-use / archaeology, not a bypass.
-#  ((c) aws-against-live is inherently excluded: this hook matches Grep|Glob only, not Bash.)
+#  (c) Bash OPERATIONAL aws (invoke/deploy/verify/TF) is NOT a relationship/inspection
+#      query -> never nudge it (only raw-aws INSPECTION + infra-grep are comp-answerable).
 if printf '%s' "$gpath" | grep -qE '\.[A-Za-z0-9]+$'; then exit 0; fi      # path ends in a file extension = single file
 if printf '%s' "$query" | grep -qE 'comp-|pipescript'; then exit 0; fi      # already a comp-tool reference
+if [ "$tool" = Bash ] && printf '%s' "$query" | grep -qE 'lambda invoke|s3(api)? (cp|sync|put-object|mv)|get-function-configuration|safe-apply|safe-ec2-deploy|safe-commit|terraform |update-function-code|start-build|run-task'; then exit 0; fi
 
 WS="$(cd "$SCRIPT_DIR/../.." 2>/dev/null && pwd)" || WS="."
 
 # --- CLASS MATCH (first-match-wins, priority = CVO bypass-volume ranking) ---
 class=""; msg=""
-if printf '%s' "$query" | grep -qE '(^|[^A-Za-z0-9_])(INF_)?[A-DIS]_-?[0-9]{1,2}[a-z]?([^A-Za-z0-9_]|$)'; then
+# Bash raw-aws / infra-grep INSPECTION classes (NFRA_TOOLHUD ext 2026-06-18) -- highest
+# priority so a raw-aws inspection gets the aws-framed comp nudge, not the grep-framed one.
+if printf '%s' "$query" | grep -qE 'aws iam (get|list|simulate)|aws s3api get-bucket-(policy|acl)|aws lambda get-policy|get-resource-policy'; then
+  class=aws_iam_inspect
+  msg="comp-tool on the HUD: raw \`aws\` IAM/policy inspection. \`comp-iam service <fn>\` / \`comp-iam gaps\` gives the perms WITH the TF-vs-live reconcile -- it catches a DECLARED-but-unapplied control (the phantom-backstop class: a contract/doc citing a Deny that was planned, never applied) that a single live get-policy will not -- plus the Deny=guardrail-not-public-grant context. Higher-context than raw aws. (advisory -- your command still runs.)"
+elif printf '%s' "$query" | grep -qE 'aws cloudfront|aws apigateway'; then
+  class=aws_route
+  msg="comp-tool on the HUD: raw \`aws\` CloudFront/API-GW inspection. \`comp-routes behaviors\`/\`trace\` gives the full serving path + the CF custom-error-rule masking (4xx->HTML) a raw get-distribution won't surface. (advisory -- your command still runs.)"
+elif [ "$tool" = Bash ] && printf '%s' "$query" | grep -qE '(grep|rg|findstr)([^|;]*)(infra/aws/|\.tf([^A-Za-z0-9]|$))'; then
+  class=infra_grep
+  msg="comp-tool on the HUD: grepping infra/.tf. \`comp-aws\` = the resource edges/blast-radius (relationship-aware, not text -- the destructive-op pre-gate basis); \`comp-iam\` = the perms; \`comp-routes\` = the serving path. Repo-scoped + edge-aware vs a blind .tf grep. (advisory -- your command still runs.)"
+elif printf '%s' "$query" | grep -qE '(^|[^A-Za-z0-9_])(INF_)?[A-DIS]_-?[0-9]{1,2}[a-z]?([^A-Za-z0-9_]|$)'; then
   _id=$(printf '%s' "$query" | grep -oE '(INF_)?[A-DIS]_-?[0-9]{1,2}[a-z]?' | head -1)
   class=script_id
   msg="comp-tool on the HUD: searching for gold-script id '${_id}'. \`comp-pipescript io ${_id}\` = its inputs/outputs + upstream writers + downstream consumers (or \`feeds\`/\`consumers\` for one direction); \`pipescript --resource ${_id}\` = its whole named thread. Deterministic, no tree-grep. (advisory -- your search still runs.)"

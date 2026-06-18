@@ -45,7 +45,7 @@ Rules below are law for every agent, every session. Format: imperative + enforci
 
 All in `.tools/` (PATH). Full catalog + tools_index: `org/modules/graph/graph-call-manifest.yaml`; reference: `org/modules/graph/comp-tools.yaml`.
 
-**Don't know which tool? `comp-which "<your question>"`** maps a natural-language question to the canonical comp call (the catalog, made queryable — you don't need to know all ~30 tools). And a PreToolUse HUD hook nudges you in-line when a `Grep`/`Glob` would answer a repo-relationship question a comp tool already answers — **reach for the tool, not the blind grep** (it's stronger + repo-scoped + faster). NFRA_TOOLHUD.
+**Don't know which tool? `comp-which "<your question>"`** maps a natural-language question to the canonical comp call (the catalog, made queryable — you don't need to know all ~30 tools). And a PreToolUse HUD hook nudges you in-line when a `Grep`/`Glob` — **or a raw `aws` IAM/policy/route inspection or an `infra/.tf` grep (Bash)** — would answer a question a comp tool answers with HIGHER CONTEXT (`comp-aws` edges/blast, `comp-iam` perms WITH the TF-vs-live reconcile that catches a declared-but-unapplied control, `comp-routes` serving path + CF error-masking) — **reach for the tool, not raw aws/grep** (stronger + repo-scoped + relationship-aware; raw aws/grep is the low-context-shoddy-answer risk Andrew named 2026-06-18). Operational aws (invoke/deploy/verify/TF) is NOT nudged. NFRA_TOOLHUD (Bash-aws/infra-grep ext 2026-06-18).
 
 | Situation | Command | Note |
 |---|---|---|
