@@ -6930,3 +6930,60 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-06-18 | 0.7.0_AE_CloudOps | NFRA_DEBTSCAN.TO-D3 | comp-kuzu | comp-kuzu MATCH ()-[e:CloudEdge]->() RETURN e.edge_type AS t, count(*) AS c ORDER BY c ... | PASS |
 | 2026-06-18 | 0.4.0_DS_ClientPlatform | NFRA_GCONTR.TO-4 | pipescript (--list/--gate-b/--contract/--flipped) + ds-commit-gate | gate-b 25/25 PASS pre+post (additive, non-regressed); --contract benchmark exit0 (declared+observed) / headline exit2 (uncontracted-LOUD); --flipped --since 20260617 exit2 (WATCH x3 + 2 uncontracted-LOUD); ds-commit-gate clean. FINDING: benchmark forbidden_writers name-mismatch -> WATCH not UNSANCTIONED (routed CVO) | PASS |
 | 2026-06-18 | 0.4.0_DS_ClientPlatform | NFRA_DEBTSCAN.TO-D3 | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-06-18 | 0.7.0_AE_CloudOps | NFRA_DEBTSCAN.TO-D3 | comp-kuzu | comp-kuzu MATCH (s:CloudNode) WHERE s.node_type='ServedURL' RETURN count(s) AS total_se... | PASS |
+| 2026-06-18 | 0.7.0_AE_CloudOps | NFRA_DEBTSCAN.TO-D3 | comp-kuzu | comp-kuzu MATCH (s:CloudNode)-[e:CloudEdge]->(b) WHERE s.node_type='ServedURL' AND e.ed... | PASS |
+| 2026-06-18 | 0.7.0_AE_CloudOps | NFRA_DEBTSCAN.TO-D3 | comp-kuzu | comp-kuzu MATCH (s:CloudNode) WHERE s.node_type='ServedURL' AND NOT EXISTS { MATCH (s)-... | PASS |
+| 2026-06-18 | 0.4.2_RD_AdvisorIntelligence~A | NFRA_DEBTSCAN.TO-D3 | comp-surface-check | comp-surface-check check --mode advisory --file deck_generation/archetype_previews/char... | PASS |
+| 2026-06-18 | 0.7.0_AE_CloudOps | NFRA_DEBTSCAN.TO-D3 | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.7.0_AE_CloudOps/task... | PASS |
+| 2026-06-18 | 3.0.0_SA_CVO | NFRA_DEBTSCAN.TO-D3 | pipescript | pipescript --contract benchmark-model-portfolios | FAIL |
+| 2026-06-18 | 3.0.0_SA_CVO | NFRA_DEBTSCAN.TO-D3 | pipescript | pipescript --flipped --since 20260617 | FAIL |
+| 2026-06-18 | 2.0.0_SA_COO | NFRA_DEBTSCAN.TO-D3 | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-06-18 | 2.0.0_SA_COO | NFRA_DEBTSCAN.TO-D3 | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+| 2026-06-18 | 0.7.0_AE_CloudOps | NFRA_DEBTSCAN.TO-D3 | comp-kuzu | comp-kuzu MATCH (s:CloudNode)<-[e:CloudEdge]-(r:CloudNode) WHERE s.node_type='S3_BUCKET... | PASS |
+| 2026-06-18 | 0.7.0_AE_CloudOps | NFRA_DEBTSCAN.TO-D3 | comp-kuzu | comp-kuzu MATCH (a:CloudNode) WHERE a.node_type IN ['API_ROUTE','ServedURL'] RETURN a.n... | PASS |
+| 2026-06-18 | 0.7.0_AE_CloudOps | NFRA_GCONTR.TO-5 | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/debtscan/canon-motif-... | PASS |
+| 2026-06-18 | 1.0.0_SA_CTO | NFRA_GCONTR.TO-5 | comp-kuzu | comp-kuzu MATCH (r:CloudNode)-[e:CloudEdge]->(t:CloudNode) WHERE r.node_id CONTAINS 'sm... | PASS |
+| 2026-06-18 | 0.4.0_DS_ClientPlatform | NFRA_GCONTR.TO-5 | pipescript | pipescript --flipped --since 20260617 | FAIL |
+| 2026-06-18 | 0.4.0_DS_ClientPlatform | NFRA_GCONTR.TO-5 | pipescript | pipescript --contract model_portfolios.benchmark | FAIL |
+| 2026-06-18 | 0.4.0_DS_ClientPlatform | NFRA_GCONTR.TO-5 | comp-surface-check | comp-surface-check contract-selfcheck | PASS |
+| 2026-06-18 | 0.4.0_DS_ClientPlatform | NFRA_GCONTR.TO-5 | pipescript | pipescript --gate-b | PASS |
+| 2026-06-18 | 0.4.0_DE_ClientPlatform | NFRA_GCONTR.TO-5 | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/tsgraph_spike/cluster... | PASS |
+| 2026-06-18 | 0.7.0_AE_CloudOps | (no-TO) | comp-kuzu | comp-kuzu MATCH (n:CloudNode) WHERE n.node_type='ReactComponent' RETURN n.node_id AS id | PASS |
+| 2026-06-18 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DE_ClientPlatfor... | PASS |
+| 2026-06-18 | 0.4.2_RD_AdvisorIntelligence~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file deck_generation/archetype_previews/char... | PASS |
+| 2026-06-18 | 0.4.0_DS_ClientPlatform | (no-TO) | pipescript | pipescript --contract benchmark-model-portfolios | FAIL |
+| 2026-06-18 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DE_ClientPlatfor... | PASS |
+| 2026-06-18 | 3.0.0_SA_CVO | ADVI_NNAATTR.TO-2 | comp-iam | comp-iam --help | PASS |
+| 2026-06-18 | 0.4.0_DE_ClientPlatform | ADVI_NNAATTR.TO-2 | comp-transform | comp-transform schema-check DistributionTab | PASS |
+| 2026-06-18 | 0.4.0_DE_ClientPlatform | ADVI_NNAATTR.TO-2 | comp-transform | comp-transform schema-check AdvisorAnalytics | PASS |
+| 2026-06-18 | 0.4.0_DE_ClientPlatform | ADVI_NNAATTR.TO-2 | comp-transform | comp-transform schema-check AdvisorPublicProfile | PASS |
+| 2026-06-18 | 3.0.0_SA_CVO | ADVI_NNAATTR.TO-2 | comp-iam | comp-iam role smartx-model-monthly-pull-role | PASS |
+| 2026-06-18 | 3.0.0_SA_CVO | ADVI_NNAATTR.TO-2 | comp-iam | comp-iam role smartx-ingestion-lambda-role | PASS |
+| 2026-06-18 | 3.0.0_SA_CVO | ADVI_NNAATTR.TO-2 | comp-iam | comp-iam role smartx-exporter-role-20251218220948293500000001 | PASS |
+| 2026-06-18 | 0.4.0_DS_ClientPlatform | ADVI_NNAATTR.TO-2 | comp-surface-check | comp-surface-check contract-selfcheck | PASS |
+| 2026-06-18 | 0.4.0_DS_ClientPlatform | ADVI_NNAATTR.TO-2 | pipescript | pipescript --gate-b | PASS |
+| 2026-06-18 | 3.0.0_SA_CVO | ADVI_NNAATTR.TO-2 | comp-iam | comp-iam reconcile | FAIL |
+| 2026-06-18 | 3.0.0_SA_CVO | ADVI_NNAATTR.TO-2 | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/contracts/g... | PASS |
+| 2026-06-18 | 0.4.0_DS_ClientPlatform | ADVI_NNAATTR.TO-2 | comp-surface-check | comp-surface-check contract-selfcheck | PASS |
+| 2026-06-18 | 0.4.0_DS_ClientPlatform | ADVI_NNAATTR.TO-2 | pipescript | pipescript --flipped --since 20260617 | FAIL |
+| 2026-06-18 | 0.4.0_DS_ClientPlatform | ADVI_NNAATTR.TO-2 | pipescript | pipescript --gate-b | PASS |
+| 2026-06-18 | 1.0.0_SA_CTO | ADVI_NNAATTR.TO-2 | comp-surface-check | comp-surface-check check --mode advisory --file .tools/hooks/comp-tool-hud.sh --file CL... | PASS |
+| 2026-06-18 | 1.0.0_SA_CTO | ADVI_NNAATTR.TO-2 | comp-surface-check | comp-surface-check check --mode advisory --file .tools/hooks/comp-tool-hud.sh --file CL... | PASS |
+| 2026-06-18 | 3.0.0_SA_CVO | ADVI_NNAATTR.TO-2 | comp-kuzu | comp-kuzu MATCH ()-[e:CloudEdge]->() WHERE e.edge_type='SERVED_FROM' RETURN count(e) AS... | PASS |
+| 2026-06-18 | 3.0.0_SA_CVO | ADVI_NNAATTR.TO-2 | comp-kuzu | comp-kuzu MATCH ()-[e:CloudEdge]->() WHERE e.edge_type='FLOWS_TO' RETURN count(e) AS fl... | PASS |
+| 2026-06-18 | 0.4.2_RD_AdvisorIntelligence~A | ADVI_NNAATTR.TO-2 | comp-surface-check | comp-surface-check check --mode advisory --file deck_generation/archetype_previews/char... | PASS |
+| 2026-06-18 | 0.4.2_RD_AdvisorIntelligence~d | ADVI_NNAATTR.TO-2 | comp-surface-check | comp-surface-check check --mode advisory --file deck_generation/archetype_previews/comp... | PASS |
+| 2026-06-18 | 3.0.0_SA_CVO | ADVI_NNAATTR.TO-2 | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/logs/2026-0... | PASS |
+| 2026-06-18 | 0.4.0_DS_ClientPlatform | ADVI_NNAATTR.TO-2 | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/contract_engine.py --... | PASS |
+| 2026-06-18 | 2.0.0_SA_COO | ADVI_NNAATTR.TO-2 | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+| 2026-06-18 | 0.7.0_AE_CloudOps | ADVI_NNAATTR.TO-2 | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.7.0_AE_CloudOps/task... | PASS |
+| 2026-06-18 | 0.4.2_RD_AdvisorIntelligence~d | ADVI_NNAATTR.TO-2 | comp-surface-check | comp-surface-check check --mode advisory --file deck_generation/archetype_previews/pane... | PASS |
+| 2026-06-18 | 1.0.0_SA_CTO | ADVI_NNAATTR.TO-2 | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/contract_engine.py --... | PASS |
+| 2026-06-18 | 1.0.0_SA_CTO | ADVI_NNAATTR.TO-2 | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/contract_engine.py --... | PASS |
+| 2026-06-18 | 0.4.0_DS_ClientPlatform | ADVI_NNAATTR.TO-2 | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/pipescript_cli.py | PASS |
+| 2026-06-18 | 0.4.0_DS_ClientPlatform | ADVI_NNAATTR.TO-2 | pipescript | pipescript --flipped --since 20260617 | FAIL |
+| 2026-06-18 | 0.4.0_DS_ClientPlatform | ADVI_NNAATTR.TO-2 | comp-surface-check | comp-surface-check contract-selfcheck | PASS |
+| 2026-06-18 | 0.4.0_DS_ClientPlatform | ADVI_NNAATTR.TO-2 | pipescript | pipescript --gate-b | PASS |
+| 2026-06-18 | 0.4.0_DS_ClientPlatform | ADVI_NNAATTR.TO-2 | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-06-18 | 0.4.0_DS_ClientPlatform | NFRA_GCONTR.TO-5 | pipescript(--flipped/--contract/--gate-b) + comp-surface-check contract-selfcheck + ds-commit-gate + comp-iam(graph iam.nodes) | engine fail-loud-on-unresolved + grain-annotation (default=bucket); live: benchmark/aum/peers WATCH-declarative 0 UNRESOLVED; contract-selfcheck ALL PASS (incl IAM-rename regression + declarative); gate-b 25/25 non-regressed; iam.nodes=116 (all 4 benchmark forbidden_writers resolve to 0=phantom). Cross-tool: CTO owner-committed engine (92733a2e5), DS committed CLI (bfd89480a) | PASS |
+| 2026-06-18 | 0.4.0_DS_ClientPlatform | ADVI_NNAATTR.TO-2 | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
