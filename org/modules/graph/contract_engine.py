@@ -236,6 +236,37 @@ def load_graph_snapshot(ref: str = "latest") -> dict:
 
 
 # ---------------------------------------------------------------------------
+# NFRA_GCONTR.TO-5 -- live IAM-role resolution (fail-loud on an inert tripwire)
+# ---------------------------------------------------------------------------
+
+def live_iam_roles(graph: dict) -> set:
+    """The set of EXTANT IAM role identifiers in the live graph
+    (classes_data.iam.nodes -- each an IAM_ROLE node). Returns the id / name / arn
+    forms so an EXACT match on any canonical role identity resolves.
+
+    Used by q2_join (TO-5) to detect an INERT forbidden_writer: a forbidden_writers
+    entry that resolves to 0 live IAM roles can NEVER fire (the exact-match never
+    hits a non-existent principal), so a 'clean' verdict there is a FALSE NEGATIVE on
+    a never-widen guard -- an IAM rename / authoring typo silently disarms it. We
+    surface that LOUD rather than silently clean (no-silent-Unknown platform law)."""
+    out: set = set()
+    nodes = (graph.get("classes_data", {}).get("iam", {}) or {}).get("nodes", []) or []
+    for n in nodes:
+        if not isinstance(n, dict):
+            if n:
+                out.add(str(n))
+            continue
+        # the iam class is IAM_ROLE nodes; tolerate a missing/!=IAM_ROLE type defensively
+        if n.get("type") and n.get("type") != "IAM_ROLE":
+            continue
+        for k in ("id", "name", "arn"):
+            v = n.get(k)
+            if v:
+                out.add(str(v))
+    return out
+
+
+# ---------------------------------------------------------------------------
 # Q1 -- WRITES-edge snapshot diff (structure)
 # ---------------------------------------------------------------------------
 
@@ -339,19 +370,30 @@ def ratified_in_window(contract: dict, window: tuple | None) -> bool:
     return start <= d <= end
 
 
-def q2_join(contracts: list, q1_delta: dict, window: tuple | None = None):
-    """Classify each contract: CLEAN / WATCH / SANCTIONED / UNSANCTIONED.
+def q2_join(contracts: list, q1_delta: dict, window: tuple | None = None,
+            live_roles: set | None = None):
+    """Classify each contract: CLEAN / WATCH / SANCTIONED / UNSANCTIONED /
+    UNRESOLVED_FORBIDDEN_WRITER.
     Returns {contract_id: verdict} where verdict = {
-        "status": "CLEAN"|"WATCH"|"SANCTIONED"|"UNSANCTIONED",
+        "status": "CLEAN"|"WATCH"|"SANCTIONED"|"UNSANCTIONED"|"UNRESOLVED_FORBIDDEN_WRITER",
         "canonical_writer": str,
         "observed_writers": [via_role...],
         "intruders": [via_role...],          # observed - {canonical_writer} (FULL set)
         "forbidden_hits": [via_role...],     # observed & forbidden_writers
         "added_forbidden": [via_role...],    # forbidden writer in the Q1 ADDED delta
+        "unresolved_forbidden": [name...],   # forbidden entries naming 0 live IAM role (TO-5)
         "wildcard_roles": [via_role...],     # broad *:writes capability (advisory-soft)
         "ratified_in_window": bool,
         "reason": str,
     }.
+
+    UNRESOLVED_FORBIDDEN_WRITER (TO-5): emitted when a forbidden_writers entry resolves
+    to NO live IAM role (passed via `live_roles`) and is not itself observed -- the
+    tripwire is INERT (an exact-match can never hit a non-existent principal), so a clean
+    verdict would be a FALSE NEGATIVE on a never-widen guard. Ranked ABOVE WATCH (an inert
+    guard is louder than shared-bucket capability noise) but BELOW a real forbidden hit. The
+    match stays EXACT (no fuzzy-stem; the fix is to NAME forbidden_writers verbatim). When
+    `live_roles is None` the check is skipped (back-compat).
 
     Trigger model (the LOW-FP refinement over the seed's literal "any intruder
     -> UNSANCTIONED"): on a SHARED bucket many roles legitimately hold s3:put
@@ -386,8 +428,55 @@ def q2_join(contracts: list, q1_delta: dict, window: tuple | None = None):
         wildcard_roles = sorted(d.get("observed_wildcard_roles", []))
         ratified = ratified_in_window(c, window)
         trigger = sorted(set(forbidden_hits) | set(added_forbidden))
+        # TO-5 fail-loud-on-unresolved: a forbidden_writers entry that resolves to NO
+        # live IAM role can never fire (exact-match vs a non-existent principal) -> the
+        # tripwire is INERT. Only checked when the caller supplies the live-role set
+        # (back-compat: live_roles=None -> [] -> behaviour unchanged). An OBSERVED
+        # forbidden writer is resolved-by-writing, so it is excluded from `unresolved`
+        # (it already counts as a real hit via forbidden_hits/trigger above).
+        observed_set = set(observed)
+        unresolved = sorted(
+            fw for fw in forbidden
+            if live_roles is not None and fw not in live_roles and fw not in observed_set
+        )
 
-        if trigger and ratified:
+        # TO-5 part-3 (CTO call 165140Z): forbidden_writers enforceability depends on GRAIN.
+        # The derive's WRITES edges are BUCKET-grain (no key/prefix), so on a SHARED-BUCKET
+        # surface a bucket-grain forbidden match cannot distinguish a real value-key breach
+        # from a benign co-tenant write in the same bucket (CVO proved benchmark is exactly
+        # this: smartx writes _smartx_-namespaced co-tenant keys, NOT yang's benchmark value
+        # keys). Hard-flipping there is a FALSE POSITIVE on a never-widen guard. So a contract
+        # whose forbidden_writers are only bucket-grain-checkable declares
+        # enforcement.forbidden_writer_grain="bucket" (DECLARATIVE): the forbidden axis becomes
+        # ADVISORY (annotated coarse), NEVER a hard UNSANCTIONED/UNRESOLVED -- enforcement is
+        # canonical_writer + the value-limb (served-value provenance) + bucket policy.
+        # DEFAULT = "bucket" (CTO 170120Z, fail-safe): WRITE data is bucket-grain today (no
+        # key-grain derive yet), so a "key"-default would FALSE-POSITIVE on every shared bucket
+        # (flag a benign co-tenant UNSANCTIONED) -- NOISY-by-default, not secure, and it stalls
+        # the section-9 advisory->hard-block ramp by keeping the FP-rate high. It forfeits ZERO
+        # real-breach coverage (canonical_writer + value-limb fire regardless; the forbidden axis
+        # is defense-in-depth). A contract asserts grain="key" ONLY when the surface is genuinely
+        # key-grain-enforceable (single-tenant bucket today, or ANY surface once the deferred
+        # Option-A key-grain derive lands -> promote per-surface via the hook).
+        fw_grain = str((c.get("enforcement") or {}).get("forbidden_writer_grain") or "bucket").lower()
+        declarative = fw_grain == "bucket"
+        declared_fb = sorted(set(forbidden_hits) | set(unresolved)) if declarative else []
+
+        if declarative:
+            # Advisory-only forbidden axis: never hard-flip. Status from the canonical/intruder
+            # axis; the forbidden observations + unresolved names are carried as a coarse note.
+            note = ("forbidden_writers DECLARATIVE (grain=bucket, coarse / possible "
+                    "over-attribution on a shared bucket) -- enforced via canonical_writer + "
+                    "value-limb, NOT the writer-axis; not hard-flipped [TO-5 part-3]")
+            if intruders:
+                status = "WATCH"
+                reason = (f"{len(intruders)} non-canonical writer(s) hold s3:put on the shared "
+                          f"bucket(s); {note}"
+                          + (f"; declared-forbidden seen/unresolved: {declared_fb}" if declared_fb else ""))
+            else:
+                status = "CLEAN"
+                reason = f"only canonical_writer={canonical!r} observed; {note}"
+        elif trigger and ratified:
             status = "SANCTIONED"
             reason = (f"forbidden writer(s) {trigger} present BUT a ratified contract edit "
                       f"(ratified_at={c.get('ratified_at')!r}) lands in the window -- the "
@@ -398,6 +487,14 @@ def q2_join(contracts: list, q1_delta: dict, window: tuple | None = None):
             reason = (f"FORBIDDEN writer(s) {how} into a contracted bucket; NO ratified contract "
                       f"edit in the window (ratified_at={c.get('ratified_at')!r}) -- a forbidden "
                       f"writer appeared and nobody re-drew the line (the BMKAUD class)")
+        elif unresolved:
+            # An inert never-widen guard is LOUDER than shared-bucket noise: rank above WATCH.
+            status = "UNRESOLVED_FORBIDDEN_WRITER"
+            reason = (f"forbidden_writer(s) {unresolved} resolve to 0 live IAM roles -- the "
+                      f"never-widen tripwire is INERT (can never fire: exact-match vs a "
+                      f"non-existent principal; an IAM rename or authoring typo silently disarmed "
+                      f"it). FAIL-LOUD, NOT 0-hits-clean -- name forbidden_writers with verbatim "
+                      f"live IAM role-ids (exact-match is correct; the NAMES are wrong). [TO-5]")
         elif intruders:
             status = "WATCH"
             reason = (f"{len(intruders)} non-canonical, non-forbidden writer(s) hold s3:put on the "
@@ -412,6 +509,9 @@ def q2_join(contracts: list, q1_delta: dict, window: tuple | None = None):
             "intruders": intruders,
             "forbidden_hits": forbidden_hits,
             "added_forbidden": added_forbidden,
+            "unresolved_forbidden": unresolved,  # TO-5: inert (0-live-resolution) forbidden entries
+            "forbidden_grain": fw_grain,         # TO-5 part-3: "key" (enforced) | "bucket" (declarative)
+            "forbidden_declarative": declared_fb,  # forbidden seen/unresolved on a declarative surface (advisory)
             "wildcard_roles": wildcard_roles,
             "ratified_in_window": ratified,
             "reason": reason,
@@ -472,7 +572,9 @@ def run_contract_check(base_ref: str | None = None,
         today = _dt.date.today()
         window = (today, today)
     q1 = q1_writes_diff(base, cur, contracts)
-    q2 = q2_join(contracts, q1, window)
+    # TO-5: resolve forbidden_writers against the live IAM-role set from the current
+    # snapshot -> an inert (0-live-resolution) tripwire reads LOUD, not silently clean.
+    q2 = q2_join(contracts, q1, window, live_roles=live_iam_roles(cur))
     result = {}
     for cid, dd in q1.items():
         result[cid] = {**dd, **q2.get(cid, {})}

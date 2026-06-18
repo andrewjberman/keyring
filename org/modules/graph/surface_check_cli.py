@@ -169,7 +169,9 @@ def _contract_advisory(sev1_surface_ids: set) -> None:
         today = _dt.date.today()
         clist = list(contracted.values())
         q1 = ce.q1_writes_diff(None, cur, clist)
-        q2 = ce.q2_join(clist, q1, window=(today, today))
+        # TO-5: pass the live IAM-role set so an INERT forbidden_writer (naming a role
+        # that resolves to 0 live IAM roles) reads LOUD UNRESOLVED, not silently clean.
+        q2 = ce.q2_join(clist, q1, window=(today, today), live_roles=ce.live_iam_roles(cur))
     except Exception as e:
         print(f"CONTRACT-ADVISORY: could not evaluate Q2 ({type(e).__name__}: {e}) -- skipping (never blocks).")
         return
@@ -186,6 +188,11 @@ def _contract_advisory(sev1_surface_ids: set) -> None:
         elif st == "SANCTIONED":
             print(f"CONTRACT-ADVISORY: SEV1 surface {sid} contract={c['contract_id']} -> SANCTIONED "
                   f"(ratified contract edit in window; never-widen sign-off recorded).")
+        elif st == "UNRESOLVED_FORBIDDEN_WRITER":
+            print(f"CONTRACT-ADVISORY [WARN]: SEV1 surface {sid} contract={c['contract_id']} -> "
+                  f"UNRESOLVED_FORBIDDEN_WRITER. {v['reason']}")
+            print("  (ADVISORY ramp: a never-widen guard naming forbidden_writers that resolve to no "
+                  "live IAM role is INERT -- fix the names to verbatim live role-ids. Warning only today.)")
         elif st == "WATCH":
             print(f"CONTRACT-ADVISORY: SEV1 surface {sid} contract={c['contract_id']} -> WATCH "
                   f"({len(v['intruders'])} non-canonical, non-forbidden writer(s); shared-bucket "
@@ -566,7 +573,10 @@ def cmd_contract_selfcheck(args) -> int:
         "forbidden_writers": ["smartx-model-monthly-pull", "opal-generate-benchmark-returns",
                               "smartx-ingestion-role", "news-pipeline-role"],
         "ratified_at": "2026-06-15", "active": True, "models": [], "period_defs": {},
-        "enforcement": {}, "ratified_by": ["1.0.0_SA_CTO", "2.0.0_SA_COO"],
+        # grain="key" -> exercise the ENFORCED path (T1 UNSANCTIONED / AC2 SANCTIONED / the TO-5
+        # phantom->UNRESOLVED + resolved-no-FP tests). The engine DEFAULT is "bucket"
+        # (declarative, CTO 170120Z); the SEED_DECL case below tests that default/declarative path.
+        "enforcement": {"forbidden_writer_grain": "key"}, "ratified_by": ["1.0.0_SA_CTO", "2.0.0_SA_COO"],
     }
     try:
         base = ce.load_graph_snapshot("latest")
@@ -601,6 +611,47 @@ def cmd_contract_selfcheck(args) -> int:
     if vS["status"] != "SANCTIONED":
         fails.append(f"ratified-in-window expected SANCTIONED, got {vS['status']}")
     print(f"  ratified-in-window -> {vS['status']} (expect SANCTIONED)")
+
+    # TO-5 IAM-RENAME regression: a forbidden_writer naming a role that resolves to NO live
+    # IAM role -> UNRESOLVED_FORBIDDEN_WRITER (fail-loud), NOT 0-hits-clean. Proves an IAM
+    # rename / authoring typo can't silently inert the never-widen guard. Plus the inverse:
+    # a forbidden_writer that IS a live role must NOT false-positive as UNRESOLVED (exact-match
+    # preserved). Uses the REAL live IAM-role set from the snapshot.
+    live = ce.live_iam_roles(base)
+    SEED_PHANTOM = dict(SEED, contract_id="phantom-fw-test",
+                        surface="critical-surfaces:test.phantom (SEV1)",
+                        forbidden_writers=["this-role-does-not-exist-after-an-iam-rename"])
+    q1p = ce.q1_writes_diff(None, cur, [SEED_PHANTOM])
+    vP = ce.q2_join([SEED_PHANTOM], q1p, window=(today, today), live_roles=live)["phantom-fw-test"]
+    print(f"  TO-5 unresolved-phantom -> {vP['status']} (expect UNRESOLVED_FORBIDDEN_WRITER) "
+          f"unresolved={vP.get('unresolved_forbidden')}")
+    if vP["status"] != "UNRESOLVED_FORBIDDEN_WRITER":
+        fails.append(f"TO-5 expected UNRESOLVED_FORBIDDEN_WRITER, got {vP['status']}")
+    if live:
+        real_role = sorted(live)[0]
+        SEED_REAL = dict(SEED, contract_id="real-fw-test",
+                         surface="critical-surfaces:test.real (SEV1)",
+                         forbidden_writers=[real_role])
+        q1r = ce.q1_writes_diff(None, cur, [SEED_REAL])
+        vR = ce.q2_join([SEED_REAL], q1r, window=(today, today), live_roles=live)["real-fw-test"]
+        print(f"  TO-5 resolved-live-role -> {vR['status']} (expect NOT UNRESOLVED)")
+        if vR["status"] == "UNRESOLVED_FORBIDDEN_WRITER":
+            fails.append(f"TO-5 false-positive: resolved live role {real_role!r} flagged UNRESOLVED")
+
+    # TO-5 part-3 DECLARATIVE (grain-annotation): a SHARED-BUCKET contract declaring
+    # enforcement.forbidden_writer_grain="bucket" must NOT hard-flip on a phantom/forbidden
+    # writer -- bucket-grain can't tell a real value-key breach from a benign co-tenant, so
+    # the forbidden axis is advisory; never-widen is enforced via canonical_writer + value-limb.
+    SEED_DECL = dict(SEED, contract_id="declarative-test",
+                     surface="critical-surfaces:test.declarative (SEV1)",
+                     enforcement={"forbidden_writer_grain": "bucket"},
+                     forbidden_writers=["this-role-does-not-exist-after-an-iam-rename"])
+    q1d = ce.q1_writes_diff(None, cur, [SEED_DECL])
+    vD2 = ce.q2_join([SEED_DECL], q1d, window=(today, today), live_roles=live)["declarative-test"]
+    print(f"  TO-5 declarative grain=bucket -> {vD2['status']} grain={vD2.get('forbidden_grain')} "
+          f"(expect advisory, NOT UNRESOLVED/UNSANCTIONED)")
+    if vD2["status"] in ("UNRESOLVED_FORBIDDEN_WRITER", "UNSANCTIONED"):
+        fails.append(f"TO-5 declarative HARD-FLIPPED ({vD2['status']}) -- shared-bucket forbidden axis must be advisory")
     # AC4: the Q2 advisory NEVER changes the surface-check exit code. Prove the
     # contract layer is rc-invariant: cmd_check with contract_layer on vs off must
     # return the SAME rc for the same inputs. Use a SEV1 file in ADVISORY mode (rc
