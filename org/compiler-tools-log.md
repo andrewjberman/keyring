@@ -7002,3 +7002,35 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-06-18 | 0.4.2_RD_AdvisorIntelligence~d | ADVI_NNAATTR.TO-2 | comp-surface-check | comp-surface-check check --mode advisory --file deck_generation/archetype_previews/tabl... | PASS |
 | 2026-06-18 | 0.4.0_DS_ClientPlatform | session-close | (session-close consolidation; per-thread tool rows already logged) | summary: ds-commit-gate PASS all .py; pipescript --flipped/--contract/--gate-b PASS (gate-b 25/25 non-regressed); comp-surface-check contract-selfcheck ALL PASS; comp-iam graph iam.nodes; comp-pipescript io/deployed. Full detail in the 3 thread-logs | PASS |
 | 2026-06-18 | 0.4.0_DS_ClientPlatform | NFRA_DEBTSCAN.TO-D3 | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-06-18 | 0.7.0_AE_CloudOps | NFRA_DEBTSCAN.TO-D3 | comp-kuzu | comp-kuzu MATCH ()-[e:CloudEdge]->() WHERE e.edge_type='FLOWS_TO' RETURN count(*) AS to... | PASS |
+| 2026-06-18 | 0.7.0_AE_CloudOps | NFRA_DEBTSCAN.TO-D3 | comp-kuzu | comp-kuzu MATCH ()-[e:CloudEdge]->() WHERE e.edge_type='FLOWS_TO' AND e.props IS NOT NU... | PASS |
+| 2026-06-18 | 0.7.0_AE_CloudOps | NFRA_DEBTSCAN.TO-D3 | comp-kuzu | comp-kuzu MATCH (a:CloudNode)-[e:CloudEdge]->(b:CloudNode) WHERE e.edge_type='FLOWS_TO'... | FAIL |
+| 2026-06-18 | 0.7.0_AE_CloudOps | NFRA_DEBTSCAN.TO-D3 | comp-kuzu | comp-kuzu MATCH ()-[e:CloudEdge]->() WHERE e.edge_type='FLOWS_TO' AND json_extract(e.pr... | FAIL |
+| 2026-06-18 | 0.7.0_AE_CloudOps | NFRA_DEBTSCAN.TO-D3 | comp-kuzu | comp-kuzu MATCH (a:CloudNode)-[e:CloudEdge]->(b:CloudNode) WHERE e.edge_type='FLOWS_TO'... | PASS |
+| 2026-06-18 | 0.7.0_AE_CloudOps | NFRA_DEBTSCAN.TO-D3 | comp-kuzu | comp-kuzu MATCH (a:CloudNode)-[e:CloudEdge]->(b:CloudNode) WHERE e.edge_type='FLOWS_TO'... | PASS |
+| 2026-06-18 | 0.7.0_AE_CloudOps | NFRA_DEBTSCAN.TO-D3 | comp-kuzu | comp-kuzu MATCH (a:CloudNode)-[e:CloudEdge]->(b:CloudNode) WHERE e.edge_type='FLOWS_TO'... | PASS |
+| 2026-06-18 | 0.7.0_AE_CloudOps | NFRA_DEBTSCAN.TO-D3 | comp-kuzu | comp-kuzu MATCH ()-[e:CloudEdge]->() WHERE e.edge_type='FLOWS_TO' AND e.props CONTAINS ... | PASS |
+| 2026-06-18 | 0.7.0_AE_CloudOps | NFRA_DEBTSCAN.TO-D3 | comp-kuzu | comp-kuzu MATCH ()-[e:CloudEdge]->() WHERE e.edge_type='FLOWS_TO' AND e.props CONTAINS ... | PASS |
+| 2026-06-18 | 0.7.0_AE_CloudOps | NFRA_DEBTSCAN.TO-D3 | comp-kuzu | comp-kuzu MATCH ()-[e:CloudEdge]->() WHERE e.edge_type='FLOWS_TO' AND e.props CONTAINS ... | PASS |
+| 2026-06-18 | 0.7.0_AE_CloudOps | NFRA_DEBTSCAN.TO-D3 | comp-kuzu | comp-kuzu MATCH ()-[e:CloudEdge]->() WHERE e.edge_type='FLOWS_TO' AND e.props CONTAINS ... | PASS |
+| 2026-06-18 | 0.7.0_AE_CloudOps | NFRA_DEBTSCAN.TO-D3 | comp-kuzu | comp-kuzu MATCH ()-[e:CloudEdge]->() WHERE e.edge_type='FLOWS_TO' AND e.props CONTAINS ... | PASS |
+| 2026-06-18 | 0.7.0_AE_CloudOps | NFRA_DEBTSCAN.TO-D3 | comp-kuzu | comp-kuzu MATCH ()-[e:CloudEdge]->() WHERE e.edge_type='FLOWS_TO' AND e.props CONTAINS ... | PASS |
+| 2026-06-18 | 0.7.0_AE_CloudOps | NFRA_DEBTSCAN.TO-D3 | comp-kuzu | comp-kuzu MATCH (a:CloudNode)-[e:CloudEdge]->(b:CloudNode) WHERE e.edge_type='FLOWS_TO'... | PASS |
+| 2026-06-18 | 2.0.0_SA_COO | NFRA_DEBTSCAN.TO-D3 | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+| 2026-06-18 | 0.7.0_AE_CloudOps | NFRA_DEBTSCAN.TO-D3 | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/debtscan/canon-motif-... | PASS |
+| 2026-06-18 | 0.7.0_AE_CloudOps | NFRA_DEBTSCAN.TO-D3 | pipescript | pipescript --list | PASS |
+| 2026-06-18 | 0.7.0_AE_CloudOps | (no-TO) | pipescript | pipescript model-portfolios | PASS |
+| 2026-06-18 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/debtscan/canon-motif-... | PASS |
+| 2026-06-18 | 0.4.2_RD_AdvisorIntelligence~c | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file deck_generation/archetype_previews/stat... | PASS |
+| 2026-06-18 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/mcp/.last-drive-2.0.0_SA_COO --file... | PASS |
+| 2026-06-18 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/briefs/allo... | PASS |
+| 2026-06-18 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript io INF_D_00f.advisor_nna_canonical.py | PASS |
+| 2026-06-18 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript io D_00f.advisor_nna_canonical.py | PASS |
+| 2026-06-18 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/mcp/.last-drive-2.0.0_SA_COO --file... | PASS |
+| 2026-06-18 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/briefs/allo... | PASS |
+| 2026-06-18 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DE_ClientPlatfor... | PASS |
+| 2026-06-18 | 0.4.2_RD_AdvisorIntelligence~d | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file deck_generation/dev/scripts/showcase_ta... | PASS |
+| 2026-06-18 | 0.4.2_RD_AdvisorIntelligence~c | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file deck_generation/archetype_previews/stat... | PASS |
+| 2026-06-18 | 3.0.0_SA_CVO | GRAPHOPS-AUDIT-20260618 | comp-kuzu | comp-kuzu MATCH (n) RETURN count(n) AS nodes | PASS |
+| 2026-06-18 | 0.4.2_RD_AdvisorIntelligence~c | (no-TO) | deck-tooling | prompt_view.py --pass2 --json (x6 families) + PowerPoint COM render (area-stacked ground-truth) + engine.compose --catalog | PASS -- 21 data-viz preview cards verified aligned+filled; comp-* N/A (deck ASCII work, not portal/data/infra) |
+| 2026-06-18 | 0.4.2_RD_AdvisorIntelligence~c | GRAPHOPS-AUDIT-20260618 | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
