@@ -80,7 +80,7 @@ function Get-AgentLoopDirective {
     # Strip tilde-lane suffix for role detection.
     $base = $Serial -replace '~[A-Za-z0-9]+$', ''
 
-    $header = "Loop arming (LD-0157/0164/0166/0175 -- ALL self-tick loops retired; ZERO crons armed at launch; /watcher arms ONCE at load, NOT a cron):"
+    $header = "Loop arming (LD-0157/0164/0166/0175 -- ALL self-tick loops retired; ZERO crons armed at launch, SOLE EXCEPTION = the COO /drive carve-out (LD-0204, Andrew-direct 2026-06-18); /watcher arms ONCE at load, NOT a cron):"
 
     switch -Regex ($base) {
         '^0\.0\.0_AB_MSTR$' {
