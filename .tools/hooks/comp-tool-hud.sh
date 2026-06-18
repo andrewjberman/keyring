@@ -105,15 +105,40 @@ elif printf '%s' "$query" | grep -qE 'iam[_-]?role|:role/|aws_iam_policy'; then
   class=iam_role
   msg="comp-tool on the HUD: searching for an IAM role/policy. \`comp-iam service <lambda>\` / \`comp-iam gaps\` = perms before deploy (mind: a Principal:* on Effect=Deny is a GUARDRAIL, not a public grant). (advisory -- your search still runs.)"
 fi
+
+# --- comp-which FALLBACK (Andrew-direct 2026-06-18: DEFAULT TO THE RAIL) ------------------------
+# A SEARCH that matched no specific class still gets the ROUTER on the HUD: comp-which maps a
+# plain-English question to the canonical comp-call, so an UNCLASSIFIED grep is no longer a silent
+# bypass -- the agent checks the rail first, defers to raw grep only if comp-which says no tool fits.
+# Fires on SEARCH intent only (Grep/Glob, or a Bash grep/rg/find family) -- a non-search Bash
+# (ls/git/npm/operational) is NOT a search, no nudge. Throttled to RECUR every COMPWHICH_EVERY-th
+# unclassified search (persistent rail-pressure WITHOUT per-grep banner-blindness; tunable below).
+if [ -z "$class" ]; then
+  _search=0
+  case "$tool" in Grep|Glob) _search=1 ;; esac
+  if [ "$tool" = Bash ] && printf '%s' "$query" | grep -qE '(^|[^-A-Za-z])(grep|rg|egrep|fgrep|findstr|ack|ag|find)([^A-Za-z]|$)'; then _search=1; fi
+  [ "$_search" = 0 ] && exit 0
+  class=comp_which
+  msg="comp-tool on the HUD: comp-which is the RAIL -- use it FIRST. \`comp-which \"<your question in plain English>\"\` maps any search to the canonical comp-call (we built ~30 comp-tools across graph/IAM/routes/freshness/pipeline/cache -- you don't memorize them). RULE (Andrew-direct 2026-06-18): comp-which/comp-tool is the DEFAULT for every search + inspection; raw grep/aws is the EXCEPTION, used ONLY when comp-which confirms no tool fits the exact use. (native-tool nudge; raw aws/grep-in-Bash is being hard-gated to the rail.)"
+fi
 [ -z "$class" ] && exit 0
 
-# log every hit (CVO's before/after measurement), then advise ONCE per class per session
+# log every hit (CVO's before/after measurement), then advise per the class's throttle
 echo "$(date -u +%Y-%m-%dT%H:%M:%SZ 2>/dev/null || echo '?')  HUD-HIT  tool=$tool  class=$class  q=$(printf '%s' "$query" | head -c 80)" >> "$WS/org/mcp/comp-tool-hud.log" 2>/dev/null || true
 if [ -n "$sid" ]; then
   d="$WS/org/mcp/sessions"; mkdir -p "$d" 2>/dev/null || true
-  m="$d/${sid}.comphud.${class}.seen"
-  [ -f "$m" ] && exit 0          # already advised this class this session -> silent (logged above)
-  : > "$m" 2>/dev/null || true
+  if [ "$class" = comp_which ]; then
+    # EVERY-TIME mandate (Andrew-direct: hard-nudge the native tools). COMPWHICH_EVERY=1 = fire on
+    # every unclassified native search; raise it later if CVO hud-telemetry shows banner-blindness.
+    COMPWHICH_EVERY=1
+    cf="$d/${sid}.compwhich.count"
+    n=$(cat "$cf" 2>/dev/null || echo 0); n=$(( n + 1 )); printf '%s' "$n" > "$cf" 2>/dev/null || true
+    [ $(( (n - 1) % COMPWHICH_EVERY )) -ne 0 ] && exit 0
+  else
+    m="$d/${sid}.comphud.${class}.seen"
+    [ -f "$m" ] && exit 0          # specific class: advise ONCE per class per session
+    : > "$m" 2>/dev/null || true
+  fi
 fi
 enc=$(printf '%s' "$msg" | "$JQ" -Rs . 2>/dev/null) || exit 0
 printf '{"hookSpecificOutput":{"hookEventName":"PreToolUse","additionalContext":%s}}' "$enc"
