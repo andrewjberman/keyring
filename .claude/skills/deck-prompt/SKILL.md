@@ -16,6 +16,17 @@ You write content + structure only — **never** colors/fonts/layout (those live
 - **"new deck", "from scratch", or no source** → **INTERVIEW** (Step B).
 - Ambiguous → ask which.
 
+## Archetypes — the live catalog is the source of truth
+
+**Before picking any `archetype:`, run `python -m engine.compose --catalog` (from
+`deck_generation/`).** It is the single source of truth (`engine/registry.py`) and prints
+every archetype `/deck-gen` can render — name, one-line purpose, the content it `takes`,
+its item-count range, and an example — grouped by family (~50 across Cover · Panels · Grid ·
+List · Compare · Flow · Statcards · Stat · Statement · Table · Charts). **Never work from a
+remembered list** — the set grows, and only a name the catalog prints is valid (an unlisted
+archetype is rejected by `/deck-gen`). Choose the archetype whose `takes` contract matches
+the slide's content and keep the item count inside its printed range.
+
 ## Step A — Synthesize from material
 
 1. **Read every source** (`.docx` via python-docx, `.pdf` via the pdf path, `.md`/`.txt`
@@ -27,10 +38,12 @@ You write content + structure only — **never** colors/fonts/layout (those live
 3. **Per slide, capture** a short `title`, the content lines (bullets / quotes / key
    messages — everything that must appear), and the author's **visual intent** if stated
    ("3-column visual", "big arrow", "large centered graphic") → map to an `archetype:`.
-4. **Choose archetypes** from the allowed set (cover, panels, flow, compare, fork,
-   vsteps, formula, statement, stat-row, thesis-stat, rows). **Vary them** — never the
-   same archetype on two consecutive slides (D10). Match structure to subject (growth→
-   flow/ascending, platform→panels/hub, merger→formula/fork, comparison→compare).
+4. **Choose archetypes** from the live catalog (see the box above — `--catalog`). **Vary
+   them** — never the same archetype on two consecutive slides (D10). Match structure to
+   subject: process/sequence → `flow` or `vsteps`; peer concepts/features → `panels` or
+   `grid`; a head-to-head → `compare` (or a `compare-*` variant); KPIs/metrics →
+   `statcards`; a section break or close → `statement`; real numbers → the `chart-*`
+   family. If no archetype fits, give `intent:` prose and let `/deck-gen` pick the form.
 5. **Charts:** only emit a `data:` chart line if the source gives real, representative
    numbers. Otherwise leave figures as content (they'll render as stat-as-type).
 6. Write the `*.deck.md` per the spec.

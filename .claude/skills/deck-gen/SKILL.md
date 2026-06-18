@@ -31,17 +31,23 @@ are law.
    ...
    report = d.finalize(out_path)                      # raises on any gate failure
    ```
-   - **The archetype catalog is `engine/registry.py`** — run `python -m engine.compose --catalog`
-     to see every archetype, its content-contract, item range, and example. That registry is the
-     single source of truth (it drives `archetype → C.<method>`); the quick-map below is a convenience.
-   - **Map archetype → primitive:** cover→`set_cover`; panels→`C.panels`; grid→`C.grid`;
-     statcards→`C.statcards`; table→`C.table`; list-sidebar→`C.list_sidebar`; list→`C.list_accent`;
-     flow→`C.flow`;
-     compare→`C.compare`; fork→ two tiles + an OR `C.circle`; vsteps→`C.vsteps`;
-     formula→`C.formula`; statement→`C.statement` (dark slide); stat-row→`C.stat` ×N;
-     thesis-stat→ text + `C.stat`; rows→ labelled rows. Use `C.eyebrow` on every content
-     slide. Compose custom layouts from primitives when an archetype doesn't fit — but
-     keep it bible-clean.
+   - **The archetype catalog is the single source of truth (`engine/registry.py`)** — run
+     `python -m engine.compose --catalog`. For every archetype it prints the name, what it
+     `takes`, the item range, the **call** (the method), and an example. Build straight from
+     that — do **not** work from a remembered archetype list.
+   - **Two calling conventions — the catalog's `call` column tells you which:**
+     - **Core** (call shown as `C.<m>` or `d.set_cover`) → `from engine.compose import Deck, C`,
+       then `C.<m>(s, ...)` (e.g. `C.panels`, `C.grid`, `C.compare`, `C.table`, `C.statcards`,
+       `C.vsteps`, `C.flow`, `C.list_accent`, `C.list_sidebar`, `C.statement`, `C.stat`), or
+       `d.set_cover(...)` for the cover.
+     - **Family** (call shown as `archetypes.<family>.<func>`) → `from engine.archetypes.<family>
+       import <func>`, then `<func>(s, ...)` — or `<func>(d, ...)` for `cover-*` variants. The
+       one multi-module family is **charts**: import from its submodule, e.g.
+       `from engine.archetypes.charts.scatter import chart_scatter_riskreturn`. If an import
+       errors, `grep -rln "def <func>" engine/archetypes/` locates its exact module; the
+       per-family `dev/scripts/showcase_<family>.py` builds are working references.
+   - Use `C.eyebrow(s, "HEADER")` on every content slide. Compose a custom layout from the
+     `C` primitives only when no archetype fits — keep it bible-clean.
    - **Harvested case-study primitives (2026-06-17, from the Cottonwood-vs-Goldman deck):**
      KPI/comparison row→`C.statcards([(big,label,vs,takeaway), …])` (vs/takeaway optional;
      uniform navy top-band + one big-number size; pass `x0,x1` to span a half-slide for a
