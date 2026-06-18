@@ -55,17 +55,21 @@
 # the LD-0082 self-tick loop set below is RETIRED. The fabric is now fully event-driven
 # (persistent inbox Monitor) with ZERO loops armed at launch (LD-0175, Andrew direct:
 # "I don't want any loops initiated at launch ... if I want a loop to run, I will
-# initiate the looped skill"). Per-role posture now:
+# initiate the looped skill"). EXCEPTION (Andrew-direct 2026-06-18): the COO
+# AUTO-ARMS /drive at launch -- the COO is the primary operational driver, so the
+# ZERO-loops rule does NOT apply to the COO's /drive. Per-role posture now:
 #   - /watcher: arm-at-load ONCE, NOT a cron (LD-0166). No serial arms a /watcher cron.
 #   - /work (all workers) + /ws-charter (ws CTO): RETIRED to ad-hoc (LD-0157).
-#   - /drive (COO): RETIRED to ad-hoc (LD-0157) -- Andrew instantiates when needed.
+#   - /drive (COO): AUTO-ARMED at launch (Andrew-direct 2026-06-18, carve-out to
+#     LD-0175 -- the COO is the primary operational driver; /drive runs by default,
+#     20m cron). All OTHER loops remain ad-hoc; only the COO's /drive is exempt.
 #   - /mstr-review (MSTR) + /spot-check (both CVOs): RETIRED to ad-hoc (LD-0164).
 #   - /cl-charter (CL CTO) + /verify-channel (both CVOs) + /case-find (CL CVO):
 #     RETIRED to ad-hoc (LD-0175).
 #   - Standing crons armed at launch: NONE. Every loop is Andrew/operator-initiated
 #     on demand; skills retain their loop bodies when invoked.
 #   - Workers announce blocks via broker STATUS (WORKING:/IDLE:/BLOCKED:), NOT a
-#     [BLOCKED-ASK] polling-announce -- COO /drive (when Andrew runs it) is the tick driver.
+#     [BLOCKED-ASK] polling-announce -- COO /drive (AUTO-ARMED at launch) is the tick driver.
 # Original LD-0082 design notes (historical): Q1 per-skill CronCreate; Q2 /watcher
 # cron for MSTR+COO; Q3 /stimulus-scan retired; Q4 /verify-channel 2h; Q5 /case-find
 # chains /case-mgmt; Q6 /comp-ferry event-triggered; Q7 /work 20m uniform.
@@ -89,7 +93,7 @@ function Get-AgentLoopDirective {
             return "$header`n  CL CTO -- arms ZERO crons (LD-0175, Andrew direct 2026-06-10).`n  1. Run /watcher ONCE (arm-at-load).`n  /cl-charter is AD-HOC -- run it when you have CL charter / queue-pull work, not as a launch loop. Event-driven: CL queue items + Andrew directives via the Monitor. If a stale /cl-charter cron exists from a prior session, CronList->CronDelete it."
         }
         '^2\.[01]\.0_SA_COO$' {
-            return "$header`n  COO`n  1. Run /watcher ONCE (arm-at-load; no /watcher cron -- LD-0166).`n  /drive is AD-HOC -- Andrew instantiates it when needed. Do NOT arm a /drive cron at startup. If a stale /drive cron exists from a prior session, CronList->CronDelete it."
+            return "$header`n  COO -- EXCEPTION to the ZERO-crons header: the COO is the PRIMARY OPERATIONAL DRIVER and ARMS /drive at launch (Andrew-direct 2026-06-18, carve-out to LD-0175). Reactive-only (just answering the inbox) is the failure this fixes.`n  1. Run /watcher ONCE (arm-at-load; no /watcher cron -- LD-0166).`n  2. Run /drive -- arms the 20m recurring cron + runs one cycle NOW. /drive is the proactive driver: each cycle runs fabric-check + the embedded agent-state/stimulus scan, dispatches EVERY idle agent, SPAWNS agents we need via respawn-request to MSTR (do NOT defer the spawn to Andrew), tracks TO completion + RAVC2, and polices the registry for zombies. 'All standing by' is a /drive GATE FAILURE, never a valid terminal state. Stop only on an explicit Andrew /drive off."
         }
         '^3\.0\.0_SA_CVO$' {
             return "$header`n  ws CVO -- arms ZERO crons (LD-0175, Andrew direct 2026-06-10; /spot-check + /verify-channel both AD-HOC).`n  1. Run /watcher ONCE (arm-at-load).`n  /verify-channel + /spot-check: run on-demand / at closeout-class signals -- NOT a launch cron. If a stale /verify-channel or /spot-check cron exists from a prior session, CronList->CronDelete it."
