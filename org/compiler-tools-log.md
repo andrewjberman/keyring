@@ -6815,3 +6815,5 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-06-17 | 2.0.0_SA_COO | DECK_CLAUDE.CHARTS-D.line-area-matrix-charts | comp-surface-check | comp-surface-check check --mode advisory --file org/mcp/.last-drive-2.0.0_SA_COO --file... | PASS |
 | 2026-06-17 | 0.4.0_DS_ClientPlatform | SESSION-CLOSE | (none -- acceptance window) | session-close consolidation; full tool record in f24d20c08 + 864139e7a deliverable logs | N/A |
 | 2026-06-17 | 0.4.0_DS_ClientPlatform | DECK_CLAUDE.CHARTS-D.line-area-matrix-charts | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-06-18 | 0.4.2_RD_AdvisorIntelligence~C | SESSION-CLOSE | (none) | session-close, FANOUT-C + CHARTS-C both RAVC-closed; full tool record in 4d33f0811 + 11358e779 deliverable logs (standalone deck tooling, comp-* N/A) | N/A |
+| 2026-06-17 | 0.4.2_RD_AdvisorIntelligence~C | DECK_CLAUDE.CHARTS-D.line-area-matrix-charts | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
