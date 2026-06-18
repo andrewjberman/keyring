@@ -7052,3 +7052,11 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-06-18 | 0.7.0_AE_CloudOps | NFRA_COMPRAIL.TO-5 | comp-surface-check | comp-surface-check check --mode advisory --file org/seams/cottonwood-bronze-silver-gold... | PASS |
 | 2026-06-18 | 0.4.2_RD_AdvisorIntelligence~D | DECK_CLAUDE | deck-rail (prompt_view --pass2 / engine.compose --catalog / showcase_table+design_lint / render_png.ps1) | LAYOUT card set + Table engine family validation | PASS (no comp-* — deck_generation lane, own validation rail) |
 | 2026-06-18 | 0.4.2_RD_AdvisorIntelligence~d | NFRA_COMPRAIL.TO-5 | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-06-18 | 2.0.0_SA_COO | NFRA_COMPRAIL.TO-5 | comp-surface-check | comp-surface-check check --mode advisory --file org/mcp/.last-drive-2.0.0_SA_COO --file... | PASS |
+| 2026-06-18 | 2.0.0_SA_COO | NFRA_COMPRAIL.TO-5 | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/briefs/allo... | PASS |
+| 2026-06-18 | 1.0.0_SA_CTO | NFRA_COMPRAIL.TO-5 | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/ADVI_COTETL_AUAFIX_PR... | PASS |
+| 2026-06-18 | 0.4.0_DE_ClientPlatform | NFRA_COMPRAIL.TO-5 | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DE_ClientPlatfor... | PASS |
+| 2026-06-18 | 2.0.0_SA_COO | NFRA_COMPRAIL.TO-5 | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/ADVI_COTETL.json --file or... | PASS |
+| 2026-06-18 | 0.4.2_RD_AdvisorIntelligence~d | NFRA_COMPRAIL.TO-5 | comp-surface-check | comp-surface-check check --mode advisory --file deck_generation/archetype_previews/cove... | PASS |
+| 2026-06-18 | 0.4.0_DE_ClientPlatform | ADVI_NNAATTR.TO-2 | (none) | session-close coordination window -- no code/infra change; this session's grounding logged in c66b01c24 + ea604c7f1 | N/A |
+| 2026-06-18 | 0.4.0_DE_ClientPlatform | NFRA_COMPRAIL.TO-5 | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
