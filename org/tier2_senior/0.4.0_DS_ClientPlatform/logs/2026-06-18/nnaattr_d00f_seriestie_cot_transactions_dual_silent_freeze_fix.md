@@ -52,7 +52,9 @@ byte-verified today, both validate on TONIGHT's scheduled nightly (no ad-hoc gol
   'tax_status' label -> `df[col].dtype` raises AttributeError -> `process_xlsx_to_parquet` returns
   None -> failures>0 every run from 6/12 (7 files 06-12..06-18 unprocessed; processed_files stops
   at 2026-06-09). allocations/realized/unrealized are dup-free so they kept processing.
-- FIX (commit **db9521f3c**, pushed in **0d1c8e16f**): `_mangle_dupe_headers()` restores
+- FIX (commit **db9521f3c** -- NOTE: my first RAVC msgs + the /log commit msg said "0d1c8e16f";
+  that is CTO's unrelated NFRA_TSGRAPH log commit which was the push-range tip, NOT this fix.
+  Canonical fix hash = **db9521f3c**; corrected per COO+CTO): `_mangle_dupe_headers()` restores
   pd.read_excel's .1 behavior. Replayed the failing 06-18 file end-to-end -> 3823 rows/71 cols,
   schema BYTE-IDENTICAL to existing compacted silver (tax_status + tax_status_1, 0 missing/0 extra)
   -> compaction-safe. Rule 17 preserved (read-correctness/column-name disambiguation only; the file
@@ -61,7 +63,24 @@ byte-verified today, both validate on TONIGHT's scheduled nightly (no ad-hoc gol
   (md5 d8bd6ec363f995815f9f73ef8f04b968, local==S3).
 
 ## Files Modified
-See commit messages: 708773e27 (D_00f), db9521f3c/0d1c8e16f (cot_silver_merge.py).
+See commit messages: 708773e27 (D_00f), **db9521f3c** (cot_silver_merge.py). [0d1c8e16f = CTO's
+NFRA_TSGRAPH log commit, push-range tip only -- NOT this fix.]
+
+## 3rd divergence surface (CTO bounded-blast-radius Q -- FLAGGED, cosmetic)
+58b27ad43's pd.read_excel->openpyxl swap has a 3rd divergence beyond formula-cells(intended)+
+dup-headers(fixed): openpyxl returns None for blank cells, so a numeric/bool column WITH blanks
+reads as object -> the blanket object->str coercion (process_xlsx_to_parquet:291-293) stringifies it,
+where pd.read_excel kept float/bool+NaN. On the real 06-18 transactions file, 4 columns diverge this
+way: contra_account_number (f64->obj), original_account_number (i64->obj), has_contra_account +
+cash_equivalent (bool->obj); plus 5 benign (transaction_fee i64->f64, 4 dates us->ns).
+SEVERITY = COSMETIC: grep-confirmed ZERO of the 4 divergent cols are read by ANY cot gold script;
+every gold-consumed transactions col (market_value/units/income/quantity/amount/trade_date/account_id/
+asset_name) is dtype-stable; compaction (pd.concat, silver_merge:490) tolerates float+string (upcasts
+to an unused messy object col, no crash). NOT a blocker for tomorrow's gold verify. Residual caveat:
+a FUTURE blank in a gold-consumed measure col would string-coerce it (today's data clean). Recommended
+to CTO (read-engine owner) a dtype-parity pass (restore pd.read_excel numeric/bool inference) as a
+NON-URGENT fast-follow (Rule-17 dtype-standardization, my silver lane) -- NOT a rushed tonight change.
+CTO's call on timing.
 
 ## Compiler Tools
 | Tool | Target | Result | Note |
@@ -108,4 +127,9 @@ targeted D_00f-only re-run IF authorized, but will NOT initiate (cost-governance
 2. **[2.0.0_SA_COO]** Fast-follow TO: dispatch-level rc!=0 / artifact-landed alarm (the silent-freeze
    structural class) -- AE dispatch leg + the D_00f write-sentinel I shipped.
 3. **[2.0.0_SA_COO]** Optional: distinct ADVI_COTETL TO retro-covering the transactions dup-header
-   fix (beyond the gate-semantics TO scope, but it was the blocker + my silver lane).
+   fix (beyond the gate-semantics TO scope, but it was the blocker + my silver lane). COO: no
+   separate TO needed, tracking as a line-item under ADVI_COTETL for tomorrow's RAVC.
+4. **[self, gated on 1.0.0_SA_CTO timing call]** dtype-parity fast-follow for the 3rd surface above
+   (restore pd.read_excel numeric/bool inference in the openpyxl read path; validate column-for-column
+   parity vs pd.read_excel across all 4 cot tables). Non-urgent; recommended AFTER tomorrow's chain
+   is confirmed green. Execute on CTO's go.
