@@ -7060,3 +7060,18 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-06-18 | 0.4.2_RD_AdvisorIntelligence~d | NFRA_COMPRAIL.TO-5 | comp-surface-check | comp-surface-check check --mode advisory --file deck_generation/archetype_previews/cove... | PASS |
 | 2026-06-18 | 0.4.0_DE_ClientPlatform | ADVI_NNAATTR.TO-2 | (none) | session-close coordination window -- no code/infra change; this session's grounding logged in c66b01c24 + ea604c7f1 | N/A |
 | 2026-06-18 | 0.4.0_DE_ClientPlatform | NFRA_COMPRAIL.TO-5 | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-06-18 | 2.0.0_SA_COO | NFRA_COMPRAIL.TO-5 | comp-surface-check | comp-surface-check check --mode advisory --file org/mcp/.last-drive-2.0.0_SA_COO --file... | PASS |
+| 2026-06-18 | 2.0.0_SA_COO | NFRA_COMPRAIL.TO-5 | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/briefs/allo... | PASS |
+| 2026-06-18 | 0.4.0_DE_ClientPlatform | NFRA_COMPRAIL.TO-5 | comp-transform | comp-transform schema-check ClientsTab | PASS |
+| 2026-06-18 | 0.4.0_DE_ClientPlatform | NFRA_COMPRAIL.TO-5 | comp-transform | comp-transform ternary-audit ClientsTab | PASS |
+| 2026-06-18 | 2.0.0_SA_COO | NFRA_COMPRAIL.TO-5 | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/ADVI_COTETL.json --file or... | PASS |
+| 2026-06-18 | 1.0.0_SA_CTO | NFRA_COMPRAIL.TO-5 | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/ADVI_COTETL_AUAFIX_PR... | PASS |
+| 2026-06-18 | 2.0.0_SA_COO | NFRA_COMPRAIL.TO-5 | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-06-18 | 2.0.0_SA_COO | NFRA_COMPRAIL.TO-5 | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/DECK_CLAUDE.json --file or... | PASS |
+| 2026-06-18 | 2.0.0_SA_COO | NFRA_COMPRAIL.TO-5 | comp-surface-check | comp-surface-check check --mode advisory --file org/mcp/.last-drive-2.0.0_SA_COO --file... | PASS |
+| 2026-06-18 | 2.0.0_SA_COO | NFRA_COMPRAIL.TO-5 | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/briefs/allo... | PASS |
+| 2026-06-18 | 2.0.0_SA_COO | NFRA_COMPRAIL.TO-5 | comp-surface-check | comp-surface-check check --mode advisory --file org/mcp/.last-drive-2.0.0_SA_COO --file... | PASS |
+| 2026-06-18 | 2.0.0_SA_COO | NFRA_COMPRAIL.TO-5 | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/briefs/allo... | PASS |
+| 2026-06-18 | 2.0.0_SA_COO | NFRA_COMPRAIL.TO-5 | comp-surface-check | comp-surface-check check --mode advisory --file org/mcp/.last-drive-2.0.0_SA_COO --file... | PASS |
+| 2026-06-18T2113Z | 2.0.0_SA_COO | session 1857-2113Z (drive cycles 7-14 + COMPRAIL/COTETL decomp + DECK close) | fabric-check.py --blocks x8 (PASS, STALE-VERIFY all broker-LIVE FP), deploy_ledger.py check --red x8 (PASS clean), telemetry-jsonl+nested-inbox read (ground-truthed RD~c OFFLINE) | comp-blast/routes/cache not run -- per-leg comp-mandates baked into the COMPRAIL+COTETL TOs for assignees at fix-time; F-1 cross-domain tracked in L4 block |
+| 2026-06-18 | 2.0.0_SA_COO | NFRA_COMPRAIL.TO-5 | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
