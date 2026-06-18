@@ -134,13 +134,9 @@ If `deregister_agent` returns an error (broker doesn't have the serial), that
 is fine — the agent was already deregistered or never registered. Note in the
 report; do not retry.
 
-## Step 4b — Remove from `live_agents_by_marker.json` ground-truth artifact (LD-0105 Fix 2)
+## Step 4b — RETIRED (LD-0202 D1)
 
-Post-deregister, remove the entry for `{serial}` from `org/mcp/live_agents_by_marker.json` `live_agents[]` array. Bump `last_updated` to current ISO timestamp.
-
-This keeps the MSTR-published ground-truth artifact accurate for downstream consumers (ws COO `/allocation`, /govern reconciliation, /mstr-review surface). If `{serial}` was not present in the artifact (e.g., killed agent was spawned pre-LD-0105 or by an Andrew direct path that didn't go through `/mstr-spawn`), no-op silently — `/govern` Step 1 reconciliation will catch any out-of-band drift.
-
-Tilde-suffix-sensitive: remove the entry matching the FULL tilde-suffixed serial verbatim. Do not strip-and-match the base serial — that would remove the wrong entry.
+The `live_agents_by_marker.json` artifact is **retired** (LD-0202 D1) — **no post-deregister artifact removal.** The broker live-set is suffix-clean and is the population source of record; the Step 4 broker deregister + the broker's own PID-death cleanup are sufficient. COO `/allocation` consumes the broker live-set directly (repointed by COO `b93c4f193`).
 
 ## Step 5 — Verify-after
 

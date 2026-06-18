@@ -165,25 +165,11 @@ mcp__opal-agent-comms__get_live_agents()
 
 Expected: `{serial}` appears in `get_live_agents` output, broker `liveness=LIVE`, last_seen < 60s. If `--say` was sent, the message should be in the agent's read or unread inbox depending on whether the watcher fired.
 
-(Caveat: broker `get_live_agents()` is suffix-strip; tilde-lane LIVE state is not reliably surfaced. The marker scan in Step 1b is the authoritative tilde-disambiguating check. Step 5 broker verify is for base-serial confirmation + freshness ack only.)
+(Note: the broker DB is suffix-clean — it keys every entry by the FULL serial, tilde lanes included. LD-0202 confirmed the "suffix-strip" was a `server.py` query/write-layer bug (now fixed), NOT a broker-DB property. The Step 1b process-marker scan remains the authoritative pre-spawn duplicate check because it reads live process command-lines — process-truth, independent of broker registration timing. Step 5 broker verify is base-serial confirmation + freshness ack.)
 
-## Step 5b — Update `live_agents_by_marker.json` ground-truth artifact (LD-0105 Fix 2)
+## Step 5b — RETIRED (LD-0202 D1)
 
-Post-spawn confirm-LIVE, append entry to `org/mcp/live_agents_by_marker.json`:
-
-```json
-{
-  "serial": "{full-tilde-suffixed-serial}",
-  "pid": {register-returned-PID},
-  "spawn_timestamp": "{ISO-8601-UTC}",
-  "spawn_authority": "{spawn-request-source — e.g., 'ws COO /allocation #N' or 'Andrew direct'}",
-  "marker": "# OPAL_SPAWN_MARKER_v1: {full-tilde-suffixed-serial}"
-}
-```
-
-Bump `last_updated` to current ISO timestamp. This artifact is the marker-based LIVE-set source-of-truth consumed by ws COO `/allocation` (per LD-0105 Fix 3) + read-only by other Tier-1 + MSTR own scans. Bypasses the broker suffix-strip semantic that caused the empirical anchor failure.
-
-Reconciliation (out-of-band): `/govern` Step 1 sub-check + `/mstr-review` Step 2 sweep should reconcile artifact against current marker scan to catch crashed/exited PIDs that didn't trigger Step 5b removal.
+The `live_agents_by_marker.json` artifact is **retired** (LD-0202 D1). Its only justification was papering over a "broker suffix-strip" that never existed in the broker DB — LD-0202 ground-truthed the broker as suffix-clean and root-fixed the real `server.py` query/write conflation. So: **no post-spawn artifact write.** The Step 1b process-marker scan remains the authoritative pre-spawn duplicate check; COO `/allocation` consumes the suffix-clean broker live-set directly (repointed by COO `b93c4f193`).
 
 ## Step 6 — Report
 
