@@ -51,27 +51,11 @@ BROKER_URL = f"http://127.0.0.1:{BROKER_PORT}"
 LOCK_FILE = LIVENESS_FILE.with_suffix(".lock")
 
 
-# CL channel routing (ADHC_CLCOMM): COMP_LEARNS agents register on a
-# physically-separate MCP channel (complearns-agent-comms) with its own
-# liveness file (cl_liveness.json) and broker port (7801). hook_launch_poller
-# spawns this same poller for both channels, so the poller routes itself by
-# serial prefix at startup. Non-CL serials keep the existing opal-channel
-# defaults (liveness.json + port 7800) — no behavior change for them.
-CL_SERIAL_PREFIXES = ("1.1.0_", "2.1.0_")
-CL_SERIAL_SUBSTRING = "_CompLearns"
-
-
-def _is_cl_serial(serial: str) -> bool:
-    base = serial.split("~", 1)[0]
-    return base.startswith(CL_SERIAL_PREFIXES) or CL_SERIAL_SUBSTRING in base
-
-
-def _switch_to_cl_channel() -> None:
-    global LIVENESS_FILE, LOCK_FILE, BROKER_PORT, BROKER_URL
-    LIVENESS_FILE = SCRIPT_DIR / "cl_liveness.json"
-    LOCK_FILE = LIVENESS_FILE.with_suffix(".lock")
-    BROKER_PORT = int(os.environ.get("CL_BROKER_PORT", "7801"))
-    BROKER_URL = f"http://127.0.0.1:{BROKER_PORT}"
+# CL channel routing RETIRED (LD-0202 E2). Since LD-0034 ALL serials (ws + CL)
+# use the unified opal-agent-comms broker (liveness.json, port 7800). The legacy
+# per-CL-channel switch (_is_cl_serial / _switch_to_cl_channel -> complearns-
+# agent-comms / cl_liveness.json / port 7801) routed CL serials to a broker that
+# no longer runs -- dead routing. Removed.
 
 
 @contextmanager
@@ -219,12 +203,9 @@ def main():
         sys.exit(1)
 
     serial = sys.argv[1]
-    # Route to CL channel BEFORE any helper touches LIVENESS_FILE / BROKER_URL.
-    # Helpers resolve module globals at call time, so mutating here is enough.
+    # All serials (ws + CL) use the unified opal-agent-comms broker since LD-0034.
+    # The per-CL-channel switch is RETIRED (LD-0202 E2) -- see note above.
     channel = "opal-agent-comms"
-    if _is_cl_serial(serial):
-        _switch_to_cl_channel()
-        channel = "complearns-agent-comms"
     # Strip instance suffix (e.g. "~A") before folder lookup -- org folders
     # never include the suffix. Keep the original serial for liveness.json ops
     # so ~A and ~B remain distinct entries.

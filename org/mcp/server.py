@@ -78,11 +78,19 @@ log = logging.getLogger("opal-agent-comms")
 # Liveness registry (JSON file, atomic read/write)
 # ---------------------------------------------------------------------------
 
-def _safe_json_loads(raw: str) -> dict:
+def _safe_json_loads(raw: str, backup_path: Path | None = None) -> dict:
     """Parse JSON with fallback for trailing-garbage corruption.
     When concurrent writers race on liveness.json, the file can end up with
     extra trailing characters (e.g., '}}' instead of '}'). This tries the
-    fast path first, then progressively strips trailing bytes."""
+    fast path first, then progressively strips trailing bytes.
+
+    F2 (LD-0202): when a NON-empty file is corrupt beyond repair this returns
+    {}, and a subsequent write=True would then OVERWRITE the file with {},
+    SILENTLY + UNRECOVERABLY wiping every live agent. If backup_path is given,
+    preserve the corrupt bytes to a `.corrupt` sidecar first so the entries are
+    recoverable. (The freeze-vs-reset write policy on a detected-corrupt file is
+    flagged as a follow-on; this change is pure data-preservation, no behavior
+    change to the normal or write path.)"""
     raw = raw.strip()
     if not raw:
         return {}
@@ -95,7 +103,16 @@ def _safe_json_loads(raw: str) -> dict:
                 return json.loads(raw[:-i])
             except (json.JSONDecodeError, ValueError):
                 continue
-        log.warning("liveness.json is corrupted beyond repair, resetting to {}")
+        if backup_path is not None:
+            try:
+                corrupt_sidecar = backup_path.parent / (backup_path.name + ".corrupt")
+                corrupt_sidecar.write_text(raw, encoding="utf-8")
+                log.warning("liveness.json corrupt beyond repair -- preserved bytes to %s "
+                            "before {} fallback (recovery source)", corrupt_sidecar.name)
+            except OSError:
+                log.warning("liveness.json corrupt beyond repair AND .corrupt backup failed")
+        else:
+            log.warning("liveness.json is corrupted beyond repair, resetting to {}")
         return {}
 
 
@@ -126,7 +143,7 @@ def _locked_liveness(write=False):
             fcntl.flock(lock_fh.fileno(), fcntl.LOCK_EX)
 
         raw = LIVENESS_FILE.read_text(encoding="utf-8").strip()
-        data = _safe_json_loads(raw)
+        data = _safe_json_loads(raw, backup_path=LIVENESS_FILE)
         yield data
         if write:
             tmp = LIVENESS_FILE.with_suffix(".json.tmp")
@@ -543,8 +560,12 @@ async def heartbeat(
     with _locked_liveness(write=True) as data:
         _clean_stale(data)
         if live_serial not in data:
-            # Try base serial for backward compat
-            if folder.name in data:
+            # Backward-compat base fallback ONLY for an UNSUFFIXED caller (genuine
+            # pre-tilde registration). A SUFFIXED caller (~X) whose own entry was
+            # pruned by _clean_stale (quiet >DEAD_THRESHOLD) or never created must NOT
+            # fall back to the base entry -- doing so CLOBBERS the base agent's summary
+            # with the lane's (LD-0202 B1, the root clobber). Re-register the lane.
+            if _instance_suffix(agent_serial) is None and folder.name in data:
                 live_serial = folder.name
             else:
                 return f"{live_serial} is not registered. Call register_agent first."
@@ -584,9 +605,14 @@ async def set_summary(
         return f"Agent '{agent_serial}' not found."
 
     with _locked_liveness(write=True) as data:
-        # Prefer full serial (with ~suffix); fall back to base for backward compat
-        live_serial = agent_serial if agent_serial in data else folder.name
-        if live_serial not in data:
+        # Prefer the full serial (with ~suffix). Base fallback ONLY for an UNSUFFIXED
+        # caller -- a SUFFIXED caller must never write its summary onto the base entry
+        # (LD-0202 B2 clobber, same class as B1).
+        if agent_serial in data:
+            live_serial = agent_serial
+        elif _instance_suffix(agent_serial) is None and folder.name in data:
+            live_serial = folder.name
+        else:
             return f"{agent_serial} is not registered. Call register_agent first."
         data[live_serial]["summary"] = summary
 
@@ -807,10 +833,15 @@ async def get_agent_status(agent_serial: str, ctx: Context = None) -> str:
         parts.append(urgent)
     parts.append(f"# Status: {agent_serial}\n")
 
-    # Liveness info — look up by full serial (with ~suffix) first; fall back to
-    # base serial for backward compat with pre-tilde registrations.
+    # Liveness lookup. A SUFFIXED query (~X) resolves to its EXACT lane key ONLY --
+    # NO base fallback, or an absent/dead lane silently renders the BASE agent's
+    # state under the "# Status: ...~X" header (LD-0202 A1). Base fallback is kept
+    # for an unsuffixed query (genuine pre-tilde backward-compat).
     with _locked_liveness() as data:
-        info = data.get(agent_serial) or data.get(folder.name)
+        if _instance_suffix(agent_serial) is not None:
+            info = data.get(agent_serial)
+        else:
+            info = data.get(agent_serial) or data.get(folder.name)
     if info:
         status = _liveness_status(info)
         elapsed = int(time.time() - info.get("last_seen_epoch", 0))
@@ -820,7 +851,12 @@ async def get_agent_status(agent_serial: str, ctx: Context = None) -> str:
             parts.append(f"**Working on:** {info['summary']}")
         parts.append("")
     else:
-        parts.append("**Liveness:** NOT REGISTERED (agent has not called register_agent)\n")
+        _q_suffix = _instance_suffix(agent_serial)
+        if _q_suffix is not None:
+            parts.append(f"**Liveness:** NOT REGISTERED (lane ~{_q_suffix} has not registered; "
+                         "base state NOT shown -- query the base serial explicitly for base)\n")
+        else:
+            parts.append("**Liveness:** NOT REGISTERED (agent has not called register_agent)\n")
 
     # Latest log
     log_folder = _latest_log_folder(folder)
@@ -1067,8 +1103,13 @@ async def send_message(
         live_targets = []
         for serial, info in data.items():
             if _base_serial(serial) == base and _liveness_status(info) == "live":
-                # If caller specified an instance, only push to that one
-                if target_suffix and _instance_suffix(serial) != target_suffix:
+                # Channel-push must match broker/fs routing EXACTLY (LD-0202 C1):
+                # a base-addressed send (target_suffix=None) pushes to the BASE
+                # instance ONLY; a suffixed send to the exact instance. (Was
+                # `if target_suffix and ...` -- the short-circuit on a base send
+                # fanned the push out to base + EVERY ~lane while broker/fs reached
+                # base only -> spurious cross-lane session interrupts.)
+                if _instance_suffix(serial) != target_suffix:
                     continue
                 live_targets.append(serial)
 
