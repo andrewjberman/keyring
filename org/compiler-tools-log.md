@@ -6867,3 +6867,66 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-06-18 | 1.0.0_SA_CTO | LD-0202 | comp-surface-check | comp-surface-check check --mode advisory --file org/mcp/complearns_server.py | PASS |
 | 2026-06-18 | 1.0.0_SA_CTO | LD-0202 | comp-surface-check | comp-surface-check check --mode advisory --file org/mcp/agent-poller.py --file org/mcp/... | PASS |
 | 2026-06-18 | 1.0.0_SA_CTO | LD-0202 | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-06-18 | 2.0.0_SA_COO | LD-0202 | comp-surface-check | comp-surface-check check --mode advisory --file .claude/skills/allocation/SKILL.md --fi... | PASS |
+| 2026-06-18 | 0.0.0_AB_MSTR | LD-0202 | comp-surface-check | comp-surface-check check --mode advisory --file org/mcp/live_agents_by_marker.json | PASS |
+| 2026-06-18 | 0.0.0_AB_MSTR | LD-0202 | comp-surface-check | comp-surface-check check --mode advisory --file org/mcp/live_agents_by_marker.json | PASS |
+| 2026-06-18 | 0.0.0_AB_MSTR | LD-0202 | comp-surface-check | comp-surface-check check --mode advisory --file .claude/skills/mstr-kill/SKILL.md --fil... | PASS |
+| 2026-06-18 | 2.0.0_SA_COO | LD-0202 | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.7.0_AE_CloudOps/task... | PASS |
+| 2026-06-18 | 1.0.0_SA_CTO | LD-0202 | comp-kuzu | comp-kuzu MATCH (n:CloudNode) WHERE n.node_id STARTS WITH 'type:' OR n.node_id STARTS W... | PASS |
+| 2026-06-18 | 1.0.0_SA_CTO | LD-0202 | comp-kuzu | comp-kuzu MATCH ()-[e:CloudEdge]->() RETURN e.edge_type AS edge_type, count(*) AS n ORD... | PASS |
+| 2026-06-18 | 1.0.0_SA_CTO | LD-0202 | comp-kuzu | comp-kuzu MATCH (n:CloudNode) WHERE n.node_id STARTS WITH 'out:portal/' RETURN count(DI... | FAIL |
+| 2026-06-18 | 1.0.0_SA_CTO | LD-0202 | comp-kuzu | comp-kuzu MATCH (n:CloudNode) WHERE n.node_id CONTAINS 'portal/src/pages/' RETURN DISTI... | FAIL |
+| 2026-06-18 | 1.0.0_SA_CTO | LD-0202 | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/NFRA_TSGRAPH_PRD.md | PASS |
+| 2026-06-18 | 2.0.0_SA_COO | LD-0202 | comp-kuzu | comp-kuzu MATCH (n) RETURN count(n) AS nodes | PASS |
+| 2026-06-18 | 2.0.0_SA_COO | LD-0202 | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/NFRA_TSGRAPH.json --file o... | PASS |
+| 2026-06-18 | 0.4.2_RD_AdvisorIntelligence~A | LD-0202 | comp-surface-check | comp-surface-check check --mode advisory --file .claude/skills/deck-prompt/SKILL.md --f... | PASS |
+| 2026-06-18 | 2.0.0_SA_COO | LD-0202 | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/task_orders... | PASS |
+| 2026-06-18 | 0.7.0_AE_CloudOps | LD-0202 | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.7.0_AE_CloudOps/task... | PASS |
+| 2026-06-18 | 1.0.0_SA_CTO | LD-0202 | comp-kuzu | comp-kuzu MATCH (n:CloudNode) RETURN n.node_type AS node_type, count(*) AS n ORDER BY n... | PASS |
+| 2026-06-18 | 0.4.2_RD_AdvisorIntelligence~A | NFRA_TSGRAPH.P3-1 | comp-surface-check | comp-surface-check check --mode advisory --file deck_generation/prompt_view.py | PASS |
+| 2026-06-18 | 1.0.0_SA_CTO | NFRA_TSGRAPH.P3-1 | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/canon-patterns.yaml | PASS |
+| 2026-06-18 | 2.0.0_SA_COO | NFRA_TSGRAPH.P3-1 | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/ADVI_NNAATTR.json | PASS |
+| 2026-06-18 | 3.0.0_SA_CVO | NFRA_TSGRAPH.P3-1 | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/deliverable... | PASS |
+| 2026-06-18 | 0.7.0_AE_CloudOps | NFRA_TSGRAPH.P3-1 | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.7.0_AE_CloudOps/task... | PASS |
+| 2026-06-18 | 2.0.0_SA_COO | NFRA_TSGRAPH.P3-1 | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/BACKLOG.md | PASS |
+| 2026-06-18 | 1.0.0_SA_CTO | NFRA_TSGRAPH.P3-1 | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/ADHC_GLDINC.json --file or... | PASS |
+| 2026-06-18 | 2.0.0_SA_COO | NFRA_TSGRAPH.P3-1 | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/NFRA_COMPAWS.json | PASS |
+| 2026-06-18 | 1.0.0_SA_CTO | NFRA_TSGRAPH.P3-1 | comp-kuzu | comp-kuzu MATCH (n:CloudNode) WHERE n.node_type CONTAINS 'STATE' OR n.node_type CONTAIN... | PASS |
+| 2026-06-18 | 3.0.0_SA_CVO | NFRA_TSGRAPH.P3-1 | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/deliverable... | PASS |
+| 2026-06-18 | 2.0.0_SA_COO | NFRA_TSGRAPH.P3-1 | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.7.0_AE_CloudOps/task... | PASS |
+| 2026-06-18 | 0.4.2_RD_AdvisorIntelligence~A | NFRA_TSGRAPH.P3-1 | comp-surface-check | comp-surface-check check --mode advisory --file .claude/skills/deck-prompt/SKILL.md --f... | PASS |
+| 2026-06-18 | 2.0.0_SA_COO | NFRA_TSGRAPH.P3-1 | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.7.0_AE_CloudOps/task... | PASS |
+| 2026-06-18 | 0.4.2_RD_AdvisorIntelligence~A | NFRA_TSGRAPH.P3-1 | comp-surface-check | comp-surface-check check --mode advisory --file .claude/skills/deck-prompt/SKILL.md --f... | PASS |
+| 2026-06-18 | 2.0.0_SA_COO | NFRA_TSGRAPH.P3-1 | comp-surface-check | comp-surface-check check --mode advisory --file .tools/ajb.ps1 --file org/XXX.md | PASS |
+| 2026-06-18 | 0.4.2_RD_AdvisorIntelligence~A | NFRA_TSGRAPH.P3-1 | comp-surface-check | comp-surface-check check --mode advisory --file .claude/skills/deck-prompt/SKILL.md --f... | PASS |
+| 2026-06-18 | 2.0.0_SA_COO | NFRA_GRAPHS.D8-AE | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+| 2026-06-18 | 0.4.0_DS_ClientPlatform | NFRA_GCONTR.TO-4 | pipescript | pipescript --list | PASS |
+| 2026-06-18 | 0.4.0_DS_ClientPlatform | NFRA_GCONTR.TO-4 | pipescript | pipescript --help | PASS |
+| 2026-06-18 | 2.0.0_SA_COO | NFRA_GCONTR.TO-4 | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DE_ClientPlatfor... | PASS |
+| 2026-06-18 | 0.4.0_DS_ClientPlatform | NFRA_GCONTR.TO-4 | pipescript | pipescript --gate-b | PASS |
+| 2026-06-18 | 0.4.0_DE_ClientPlatform | NFRA_TSGRAPH.P2-1 | comp-kuzu | comp-kuzu MATCH (n) RETURN labels(n)[0] AS kind, count(*) AS c ORDER BY c DESC | PASS |
+| 2026-06-18 | 0.0.0_AB_MSTR | NFRA_TSGRAPH.P2-1 | comp-surface-check | comp-surface-check check --mode advisory --file org/tier0/ledger/LD-0175.md --file org/... | PASS |
+| 2026-06-18 | 0.4.0_DE_ClientPlatform | NFRA_TSGRAPH.P2-1 | comp-kuzu | comp-kuzu CALL show_tables() RETURN * | PASS |
+| 2026-06-18 | 0.4.0_DE_ClientPlatform | NFRA_TSGRAPH.P2-1 | comp-kuzu | comp-kuzu MATCH (n) RETURN properties(n) AS p LIMIT 1 | FAIL |
+| 2026-06-18 | 0.4.0_DE_ClientPlatform | NFRA_TSGRAPH.P2-1 | comp-kuzu | comp-kuzu CALL table_info('CloudNode') RETURN * | PASS |
+| 2026-06-18 | 0.4.0_DE_ClientPlatform | NFRA_TSGRAPH.P2-1 | comp-kuzu | comp-kuzu CALL table_info('CloudEdge') RETURN * | PASS |
+| 2026-06-18 | 0.4.0_DE_ClientPlatform | NFRA_TSGRAPH.P2-1 | comp-kuzu | comp-kuzu MATCH (n) RETURN n.node_type AS kind, count(*) AS c ORDER BY c DESC | PASS |
+| 2026-06-18 | 0.4.0_DE_ClientPlatform | NFRA_TSGRAPH.P2-1 | comp-kuzu | comp-kuzu MATCH ()-[e]->() RETURN e.edge_type AS etype, count(*) AS c ORDER BY c DESC | PASS |
+| 2026-06-18 | 0.4.0_DE_ClientPlatform | NFRA_TSGRAPH.P2-1 | comp-cache | comp-cache collisions | PASS |
+| 2026-06-18 | 0.4.0_DE_ClientPlatform | NFRA_TSGRAPH.P2-1 | comp-kuzu | comp-kuzu MATCH (n:CloudNode) WHERE n.node_type='Component' RETURN n.name AS name, n.la... | PASS |
+| 2026-06-18 | 0.4.0_DE_ClientPlatform | NFRA_TSGRAPH.P2-1 | comp-kuzu | comp-kuzu MATCH (n:CloudNode) WHERE n.node_type='ReactComponent' RETURN n.name AS name,... | PASS |
+| 2026-06-18 | 1.0.0_SA_CTO | NFRA_TSGRAPH.P2-1 | comp-surface-check | comp-surface-check check --mode advisory --file .tools/ajb.ps1 | PASS |
+| 2026-06-18 | 0.7.0_AE_CloudOps | NFRA_TSGRAPH.P2-1 | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.7.0_AE_CloudOps/task... | PASS |
+| 2026-06-18 | 0.4.0_DS_ClientPlatform | NFRA_TSGRAPH.P2-1 | pipescript | pipescript --contract model_portfolios.benchmark | PASS |
+| 2026-06-18 | 0.4.0_DS_ClientPlatform | NFRA_TSGRAPH.P2-1 | pipescript | pipescript --contract model_portfolios.headline | FAIL |
+| 2026-06-18 | 2.0.0_SA_COO | NFRA_TSGRAPH.P2-1 | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.7.0_AE_CloudOps/task... | PASS |
+| 2026-06-18 | 0.4.0_DS_ClientPlatform | NFRA_TSGRAPH.P2-1 | pipescript | pipescript --flipped --since 20260617 | FAIL |
+| 2026-06-18 | 0.7.0_AE_CloudOps | NFRA_DEBTSCAN.TO-D3 | comp-kuzu | comp-kuzu MATCH (n:CloudNode) RETURN count(n) AS nodes | PASS |
+| 2026-06-18 | 0.4.0_DS_ClientPlatform | NFRA_DEBTSCAN.TO-D3 | pipescript | pipescript --gate-b | PASS |
+| 2026-06-18 | 0.4.0_DS_ClientPlatform | NFRA_DEBTSCAN.TO-D3 | pipescript | pipescript portfolio-management | PASS |
+| 2026-06-18 | 0.4.0_DS_ClientPlatform | NFRA_DEBTSCAN.TO-D3 | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/pipescript_cli.py | PASS |
+| 2026-06-18 | 0.4.0_DS_ClientPlatform | NFRA_DEBTSCAN.TO-D3 | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-06-18 | 0.7.0_AE_CloudOps | NFRA_DEBTSCAN.TO-D3 | comp-kuzu | comp-kuzu MATCH (n:CloudNode) RETURN n.node_type AS t, count(*) AS c ORDER BY c DESC | PASS |
+| 2026-06-18 | 0.7.0_AE_CloudOps | NFRA_DEBTSCAN.TO-D3 | comp-kuzu | comp-kuzu MATCH ()-[e:CloudEdge]->() RETURN e.edge_type AS t, count(*) AS c ORDER BY c ... | PASS |
+| 2026-06-18 | 0.4.0_DS_ClientPlatform | NFRA_GCONTR.TO-4 | pipescript (--list/--gate-b/--contract/--flipped) + ds-commit-gate | gate-b 25/25 PASS pre+post (additive, non-regressed); --contract benchmark exit0 (declared+observed) / headline exit2 (uncontracted-LOUD); --flipped --since 20260617 exit2 (WATCH x3 + 2 uncontracted-LOUD); ds-commit-gate clean. FINDING: benchmark forbidden_writers name-mismatch -> WATCH not UNSANCTIONED (routed CVO) | PASS |
+| 2026-06-18 | 0.4.0_DS_ClientPlatform | NFRA_DEBTSCAN.TO-D3 | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
