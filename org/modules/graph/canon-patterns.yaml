@@ -1,0 +1,114 @@
+# canon-patterns.yaml -- NFRA_DEBTSCAN P2 canon-deviation pattern library
+#
+# CTO-authored architecture artifact (TO-D3, NFRA_DEBTSCAN PRD section 2c + AC4). Defines the
+# CANONICAL path-motifs of the estate so the DE/AE scorer can (a) enumerate every concrete instance
+# per pattern-class and (b) flag motif-frequency OUTLIERS -- a path-shape occurring 1-2x where the
+# dominant motif occurs N-x is "unusual-by-construction" and routes to CVO adjudication.
+#
+# This is the CANON (what SHOULD be); deviation = a live path that does not match it. It is NOT a
+# blocklist and NOT a deny rule -- it is the reference frame the motif-miner diffs against. Extends
+# the graph-call-manifest.yaml vocabulary; deviation findings pass through suppression_v1.yaml (the
+# 20 CVO-adjudicated FP classes) before filing. ASCII-only (CLAUDE.md).
+#
+# Authority: 1.0.0_SA_CTO. Status: v0.1 CTO-RATIFIED 2026-06-18 (AC4 "canon-patterns.yaml ratified (CTO)").
+# Consumers: TO-D3 scorer (DE/AE build) + the motif-outlier census. Freshness: scored against the
+# marker-CURRENT canonical surface ONLY (a finding off a stale vintage is invalid -- PRD freshness-bound).
+
+meta:
+  version: "0.1"
+  ratified_by: "1.0.0_SA_CTO"
+  ratified_at: "2026-06-18"
+  pairs_with:
+    - org/modules/graph/graph-call-manifest.yaml   # the node/edge vocabulary this extends
+    - org/modules/graph/debtscan/suppression_v1.yaml # the FP gate every deviation passes through
+  scored_against: "canonical Nessie surface (comp-kuzu default) + comp-pipescript flow graph; HEAD must be CURRENT (pin==marker)"
+
+# --- Graph-source vocabulary (grounded in the live node/edge census 2026-06-18) -------------------
+# A motif names WHICH graph it scores against -- the canonical Nessie stitch carries cloud-infra +
+# TS-frontend; the bronze/silver/gold/platinum pipeline INTERIOR lives in the comp-pipescript flow
+# graph (not as typed nodes in the canonical DB). A cross-graph motif (pipeline) names both ends.
+vocabulary:
+  graphs:
+    canonical: "Nessie CloudNode/CloudEdge (comp-kuzu) -- cloud-infra + TS-frontend stitch"
+    pipescript: "comp-pipescript data-flow graph -- bronze/silver/gold/platinum script lineage"
+  node_types_canonical: [S3_BUCKET, S3_BUCKET_POLICY, LAMBDA, API_ROUTE, API_GW, Endpoint, ServedURL,
+    EVENT_RULE, EVENT_SOURCE, EC2_INSTANCE, ECS_TASK_DEFINITION, DYNAMODB_TABLE, SECRET, IAM_ROLE,
+    IAM_POLICY, SNS_TOPIC, SQS_QUEUE, ReactComponent, Component, DataFetch, ReactQueryKey, JSXRender, Field]
+  edge_types: [READS, WRITES, EMITS_TO, TRIGGERS, IS_ENDPOINT, FETCHES, SERVED_FROM, FLOWS_TO, RENDERS,
+    HAS_POLICY, READS_SECRET, ASSUMES, CAN_ASSUME, PROJECTS_TO, READS_FIELD, HAS_KEY]
+
+# --- The canonical pattern-classes ----------------------------------------------------------------
+patterns:
+
+  - id: PIPELINE_CANON
+    canon: "bronze -> silver -> gold -> platinum -> S3 -> route -> component"
+    graph_source: "pipescript (interior bronze..gold..platinum) + canonical (tail S3 -> ServedURL/API_ROUTE -> ReactComponent)"
+    motif:
+      interior: "(bronze)-[FEEDS]->(silver)-[FEEDS]->(gold)-[WRITES]->(S3 prefix)"   # pipescript lineage
+      tail: "(S3_BUCKET)-[SERVED_FROM|IS_ENDPOINT]->(ServedURL|API_ROUTE)-[FETCHES]->(DataFetch)-[FLOWS_TO]->(JSXRender)"
+    dominant_expectation: "every served gold artifact traces UP to a gold writer and DOWN to >=1 render; the full chain resolves or is VISIBLE-unresolved (never silently absent)"
+    deviation_classes:
+      - layer_skip: "gold reads bronze PAST silver (Rule-17 violation), or component FETCHES S3 past the route"
+      - orphan_stage: "a gold/silver artifact with no downstream consumer (served-no-render) or no upstream writer (render-no-source)"
+      - dual_writer: "two producers writing the same S3 key with split consumers (ADVI_DWSPLT class)"
+    twin_shadow_guard: "bd / cot / inf parallel pipeline instances are DESIGNED firm-separated TWINS -- NOT deviations. Key motif-identity on (firm, layer, logical-stage); a parallel firm path matching the SAME motif is canonical. Only a fork-SHADOW (a partial copy that DIVERGED from its twin -- the 9-RED / bd-cot-fork lesson) is debt."
+    incident_anchors: ["inf bare-vs-INF_ 29-file shadow", "orphan D_04", "INFLECTION_REP_IDS x5 config drift"]
+
+  - id: AUTH_CANON
+    canon: "route -> Lambda@Edge (auth) -> S3   |   route -> API_GW -> Lambda"
+    graph_source: canonical
+    motif:
+      served: "(API_ROUTE|ServedURL)-[TRIGGERS]->(LAMBDA edge-fn: auth-validator-edge / router)-[READS]->(S3_BUCKET)"
+      api: "(API_ROUTE)-[*]->(API_GW)-[TRIGGERS]->(LAMBDA)"
+    dominant_expectation: "every served route passes the auth-validator-edge gate before the origin S3 read; every /api/general|/api/scoped route resolves through its router rewrite to a real S3 key (the extract_routes rule set)"
+    deviation_classes:
+      - missing_auth_edge: "a served route reaching S3 with NO auth-validator-edge on the behavior (auth-bypass)"
+      - silent_rewrite_noop: "a Lambda@Edge router whose rewrite rule matches nothing -> request falls through (the pre-rewrite-URI silent no-op)"
+      - past_route_fetch: "a component FETCHES an S3 object directly, bypassing the route/auth layer"
+    twin_shadow_guard: "per-firm auth paths (49financial/cottonwood/inflection FIRM_CONFIG) are DESIGNED parallels -- not deviations"
+    incident_anchors: ["pre-rewrite-URI Lambda@Edge silent no-op", "auth-validator-edge blacklist-model coverage gap"]
+
+  - id: DEPLOY_CANON
+    canon: "repo -> S3-code -> runner"
+    graph_source: "canonical (S3_BUCKET code-prefix -> EC2/Lambda/ECS) + deploy-ledger cross-ref"
+    motif: "(S3_BUCKET 'code/' prefix)-[READS]->(EC2_INSTANCE|LAMBDA|ECS_TASK_DEFINITION runner)"
+    dominant_expectation: "every runner sources its code from an S3 code-prefix that a repo deploy writes; every code-prefix has >=1 runner consumer"
+    deviation_classes:
+      - orphan_code_prefix: "an S3 code-prefix with NO runner reading it (dead deploy target)"
+      - runnerless: "a runner with no traceable S3 code source (console/inline deploy -- NEVER-rule violation)"
+      - stale_baked_asset: "an EC2 baked copy diverged from the S3 code (the ec2-baked-asset proof class)"
+    twin_shadow_guard: "per-firm runners (bd-gold / cot-gold / inf) are DESIGNED parallels; the PURPOSE-KEPT start-on-demand boxes (bd-gold-qa-runner) are intentional 0-run-hour, NOT orphans -- cross-ref NFRA_COSTAWS D1"
+    incident_anchors: ["globgrph derive CodeBuild-from-S3-zip stale-image", "3-stranded-layer half-landed cutover"]
+
+  - id: SERVED_LINEAGE_CANON
+    canon: "gold-field -> ServedURL -> DataFetch -> FLOWS_TO -> JSXRender (the P4 SERVED_FROM-backed fine lineage)"
+    graph_source: canonical
+    motif: "(Field gold)-[SERVED_FROM]->(ServedURL)-[FETCHES]->(DataFetch)-[FLOWS_TO*]->(JSXRender)"
+    dominant_expectation: "a served field that a component renders traces to a gold producer; FLOWS_TO carries its KIND (passthrough|rename|recompute/guarded)"
+    deviation_classes:
+      - recompute_fork: "a recompute/guarded FLOWS_TO rendering differently per cohort/firm (the OFC / NFRA_TSGRAPH P3 class) -- canon-deviation when the fork is undeclared"
+      - dangling_served: "a ServedURL with no backing object (the 4 positioning/sentiment stale-FE URLs) -- VISIBLE-unresolved, not a false edge"
+    twin_shadow_guard: "per-firm rendered cohorts are designed; flag only an ASYMMETRIC fork (one firm's path diverges from the others without a declared reason)"
+    incident_anchors: ["OFC cohort/ternary display-fork", "cross-firm conditional asymmetry"]
+
+# --- Motif-outlier semantics (how the scorer flags) -----------------------------------------------
+motif_outlier_semantics:
+  rule: "per pattern-class, enumerate concrete instances grouped by motif-shape (the ordered node_type/edge_type sequence). The DOMINANT motif = the modal shape (N instances). A shape occurring 1-2x (or <= outlier_frac of the dominant) is UNUSUAL-BY-CONSTRUCTION -> candidate finding."
+  dominant_threshold: "a motif is 'dominant' if it covers >= 60% of the class instances OR occurs >= 5x; outliers are the long tail below outlier_frac."
+  outlier_frac: 0.10
+  binding: "every outlier candidate is ADVISORY until CVO-adjudicated; the scorer files 0 mutations (verify-before-act is BINDING, PRD). A 1-2x shape that is DESIGNED (twin/per-firm/purpose-kept) is NOT a finding -- the twin_shadow_guard + suppression gate must clear it first."
+
+# --- Suppression interplay (do not double-fire the known FPs) -------------------------------------
+suppression_interplay:
+  gate: "org/modules/graph/debtscan/suppression_v1.yaml"
+  rule: "every canon-deviation candidate passes through suppression_v1 BEFORE filing; the 20 CVO-adjudicated FP classes (CROSS_FIRM_DENY guardrail, FP_INF_DISPATCHER_CATALOG, FP_MDPF_UNSTITCHED, etc.) pre-clear their motif-outliers. A deviation that matches a live suppression entry is recorded suppressed-with-reason, never filed RED."
+  twin_shadow_is_not_suppression: "twin/per-firm canonical parallels are cleared by the per-pattern twin_shadow_guard (a CANON fact), distinct from suppression (an adjudicated FP). Keep the two separate in the scorecard."
+
+# --- Scorer contract (what TO-D3 DE/AE build from this) -------------------------------------------
+scorer_contract:
+  inputs: ["this file (canon)", "the marker-CURRENT canonical + pipescript graphs", "suppression_v1.yaml"]
+  outputs:
+    - "per-pattern instance census (every concrete path matched to its motif-shape)"
+    - "motif-outlier candidate list (shape, frequency, the dominant it deviates from, twin/suppression-clearance status)"
+    - "AC4 demonstrable: >= 1 true canon-deviation finding (CVO-verified) + the census runs clean against suppression"
+  non_goals: ["NO mutations (scanner executes 0 deletes/edits)", "NO finding off a stale vintage (HEAD must be CURRENT)", "twin-vs-shadow is a REQUIRED discrimination, not optional"]
