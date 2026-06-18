@@ -57,10 +57,14 @@ is valid. Vary families — never the same family on two consecutive slides (D10
   (labeled upper-right on each card). Render, paste the full deck, ask to approve copy + flow. Edits =
   edit the `.md`, re-render, re-paste the full deck.
 - **Pass 2 — variant (card design):** only after Pass 1 is approved. Show each slide's family
-  variants — run `... prompt_view.py prompts/<slug>.deck.md --pass2` (all slides) or
-  `... prompt_view.py --variants <archetype>` (one). User picks a letter per slide; **Edit** that
-  slide's `archetype:` to the chosen variant; re-render + re-paste the full deck. Charts: offer the
-  chart types whose data shape matches; Table: one variant — confirm.
+  variants as **VISUAL layout mocks** — the renderer draws each variant's treatment (e.g. compare =
+  two columns vs compare-venn = overlapping circles vs compare-balance = beam/fulcrum), so the user
+  picks between *pictures* labeled A/B/C/D, not a list of names. Run
+  `... prompt_view.py prompts/<slug>.deck.md --pass2` (all slides) or
+  `... prompt_view.py --variants <archetype>` (one); paste its output verbatim, same contract as Pass 1.
+  User picks a letter per slide; **Edit** that slide's `archetype:` to the chosen variant; re-render +
+  re-paste the full deck. Charts: the variants ARE the chart types — offer those matching the data
+  shape; Table: one variant — confirm.
 
 ## Writing the .deck.md (the renderer parses it — keep to PROMPT_SPEC.md)
 - Frontmatter: `deck_title`, `audience`, `goal`, `source`, `slide_count`.
