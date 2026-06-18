@@ -81,4 +81,39 @@ Every row cites ≥1 real log/LD/commit exemplar (the empirical anchor P3-2's va
 5. **Partition completeness audit** (Phase-3 mandate): 0 untagged rows, 0 exemplar-less rows.
 6. **Hand-off at close:** frontend partition → P3-2 (DE); cross-domain partition → NFRA_DEBTSCAN (COO). RAVC2 to COO + CC CTO + DEBTSCAN owner.
 
-— 3.0.0_SA_CVO (WIP — first cut)
+---
+
+## v2 additions — deep pass 1 (LD records + POSTMORTEM_SHARED006)
+
+**Frontend partition — new + sharpened:**
+
+| # | class | signature | exemplar | 
+|---|---|---|---|
+| A2 [sharpened] | cross-firm-conditional-asymmetry | canonical exemplar pinned: `AuthContext.tsx:35` hardcoded raw `'bd'` literal (firm not parameterized) | POSTMORTEM_SHARED006_CANONICALIZATION_20260514 |
+| A9 | hardcoded-firm/env-literal | a firm/env value hardcoded as a string literal instead of read from context/config → breaks the moment a 2nd firm/env appears | POSTMORTEM_SHARED006 (`'bd'` literal) |
+| A10 | audit-scope-miss | a verification's grep/search scope is too narrow → the bug sits outside the scanned subtree and the audit passes false-clean | POSTMORTEM_SHARED006 (§G grep scope = `pages/AdvisorIntelligence/` only, missed AuthContext) |
+
+**Cross-domain partition — the `stale-*` family (parallel to `silent-*`) + self-reference:**
+
+| # | class | signature | exemplar |
+|---|---|---|---|
+| B19 | stale-verify | a verification verdict trusted past its vintage; re-run not gated to current state | LD-0155 |
+| B20 | stale-cache | a cache/derived value served without a freshness gate (the gldinc ungated-cache P0 class) | ADHC_GLDINC P1 shadow-removal; reference_d1_pipeline_freshness |
+| B21 | stale-graph-phantom | a scratch/frozen-vintage graph DB quoted as live → phantom nodes/edges (trade-recon phantoms) | NFRA_COMPAWS Wave-4 cert f9a92fcec (trade-recon 0-live phantoms); comp-kuzu UNKNOWN-VINTAGE |
+| B22 | stale-sub/aggregate | a subscription/rollup not recomputed on source change → drifted aggregate | LD-mine (stale-sub/stale-aggregate); reference_sns_confirmed_sub |
+| B23 | scanner-self-false-positive | a scanner/checker flags its OWN footprint/artifact as a finding (Deny+`*` guardrail; derive-artifact self-flag) | LD-0100; reference_deny_principal_star_is_guardrail (NFRA_COMPAWS IAM-PUBLIC-DENY-FP) |
+
+**FABRIC/agent-process cluster — PARTITION NUANCE (flag to COO):** these fit NEITHER the frontend-detector partition NOR the estate-pipeline DEBTSCAN partition cleanly — they're agent-fabric *reliability* classes. The Andrew-locked boundary is frontend-vs-cross-domain; this cluster is a gray zone. **Recommend COO/CTO rule whether fabric-reliability classes are in P3/DEBTSCAN scope or a separate concern** (do not silently fold them into either partition).
+
+| # | class | signature | exemplar |
+|---|---|---|---|
+| F1 | marker-artifact-false-positive | marker/telemetry-tracking artifact misreads liveness → false reap/DEAF on a live agent | LD-0197; LD-0193; reference_false_deaf_reap_candidate |
+| F2 | shared-resource-contention | multi-agent shared index/worktree/repo contention (observed live this session: COO commit 1c744a4b0 rode my push on the shared repo) | LD-0127; reference_safe_commit_force_adds_pathspec |
+| F3 | race-class | concurrency race (registration/spawn/hook ordering) | LD-0140 |
+| F4 | iteration-debt | repeated re-derivation / high-archetype-cost loops (the COST signal, not bugs) | LD-0029 |
+
+## Status after deep pass 1
+- Frontend partition: A1-A10 (10 classes). Cross-domain: B1-B23 (23). Fabric-cluster: F1-F4 (4, partition-pending COO rule). Total seeded: 37 classes, all exemplar-anchored.
+- REMAINING for close: exhaustive 204-LD read + 900 root-cause-section semantic pass; sharpen all `[sharpen]` rows to canonical exemplars; per-class semantic frequency; Phase-3 partition-completeness audit (0 untagged / 0 exemplar-less); the fabric-cluster partition ruling; then RAVC2 (COO + CC CTO + DEBTSCAN owner).
+
+— 3.0.0_SA_CVO (WIP — through deep pass 1)
