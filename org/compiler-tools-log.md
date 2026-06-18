@@ -6861,3 +6861,9 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-06-18 | 1.0.0_SA_CTO | LD-0202 | comp-kuzu | comp-kuzu MATCH (a:CloudNode)-[e:CloudEdge]->(b:CloudNode) WHERE e.edge_type='SERVED_FR... | PASS |
 | 2026-06-18 | 0.7.0_AE_CloudOps | NFRA_TSGRAPH.P4 | SUMMARY | P4 SERVED_FROM atomic deploy: comp-iam gaps(0 missing) + comp-kuzu(29 both-ends LIVE under real task-role) + deploy_ledger(5 legs CLOSED) + safe-apply(0/1/0) + terraform plan + safe-commit | PASS |
 | 2026-06-18 | 0.7.0_AE_CloudOps | LD-0202 | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-06-18 | 1.0.0_SA_CTO | LD-0202 | comp-kuzu | comp-kuzu MATCH (a:CloudNode)-[e:CloudEdge]->(b:CloudNode) WHERE e.edge_type='SERVED_FR... | PASS |
+| 2026-06-18 | 1.0.0_SA_CTO | LD-0202 | comp-kuzu | comp-kuzu MATCH (a:CloudNode)-[e:CloudEdge]->(b:CloudNode) WHERE e.edge_type='SERVED_FR... | PASS |
+| 2026-06-18 | 1.0.0_SA_CTO | LD-0202 | comp-surface-check | comp-surface-check check --mode advisory --file org/mcp/complearns_server.py | PASS |
+| 2026-06-18 | 1.0.0_SA_CTO | LD-0202 | comp-surface-check | comp-surface-check check --mode advisory --file org/mcp/complearns_server.py | PASS |
+| 2026-06-18 | 1.0.0_SA_CTO | LD-0202 | comp-surface-check | comp-surface-check check --mode advisory --file org/mcp/agent-poller.py --file org/mcp/... | PASS |
+| 2026-06-18 | 1.0.0_SA_CTO | LD-0202 | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
