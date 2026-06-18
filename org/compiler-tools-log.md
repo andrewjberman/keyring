@@ -6848,3 +6848,16 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-06-18 | 0.0.0_AB_MSTR | NFRA_TILDEFIX | comp-surface-check | comp-surface-check check --mode advisory --file org/tier0/ledger/LD-0202.md | PASS |
 | 2026-06-18 | 0.4.0_DS_ClientPlatform | ADVI_NNAATTR.TO-1 + ADVI_COTETL.CHAINFIX | comp-pipescript io / ds-commit-gate / safe-deploy | io D_00f (PARTIAL: WRITES none-detected, gzip put_object missed); ds-commit-gate PASS x2 (D_00f, cot_silver_merge); safe-deploy DEPLOYED [bd]+[cot], md5 local==S3 byte-verified both | PASS |
 | 2026-06-18 | 0.4.0_DS_ClientPlatform | NFRA_TILDEFIX | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-06-18 | 0.4.2_RD_AdvisorIntelligence~A | LD-0202 | comp-surface-check | comp-surface-check check --mode advisory --file .claude/skills/deck-gen/SKILL.md --file... | PASS |
+| 2026-06-18 | 0.7.0_AE_CloudOps | LD-0202 | comp-kuzu | comp-kuzu MATCH ()-[e]->() WHERE e.edge_type = 'SERVED_FROM' RETURN count(e) AS served_... | PASS |
+| 2026-06-18 | 0.7.0_AE_CloudOps | LD-0202 | comp-kuzu | comp-kuzu MATCH (a)-[e]->(b) WHERE e.edge_type='SERVED_FROM' RETURN a.id AS source_serv... | FAIL |
+| 2026-06-18 | 0.7.0_AE_CloudOps | LD-0202 | comp-kuzu | comp-kuzu MATCH (a:CloudNode)-[e:CloudEdge]->(b:CloudNode) WHERE e.edge_type='SERVED_FR... | PASS |
+| 2026-06-18 | 0.7.0_AE_CloudOps | LD-0202 | comp-kuzu | comp-kuzu MATCH (a:CloudNode)-[e:CloudEdge]->(b:CloudNode) WHERE e.edge_type='SERVED_FR... | PASS |
+| 2026-06-18 | 0.7.0_AE_CloudOps | LD-0202 | comp-kuzu | comp-kuzu MATCH (a:CloudNode)-[e:CloudEdge]->(b:CloudNode) WHERE e.edge_type='SERVED_FR... | PASS |
+| 2026-06-18 | 0.7.0_AE_CloudOps | LD-0202 | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/change_management/20... | PASS |
+| 2026-06-18 | 0.4.2_RD_AdvisorIntelligence~A | LD-0202 | comp-surface-check | comp-surface-check check --mode advisory --file .claude/skills/deck-gen/SKILL.md --file... | PASS |
+| 2026-06-18 | 2.0.0_SA_COO | LD-0202 | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/DECK_CLAUDE.json | PASS |
+| 2026-06-18 | 0.4.0_DS_ClientPlatform | LD-0202 | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-06-18 | 1.0.0_SA_CTO | LD-0202 | comp-kuzu | comp-kuzu MATCH (a:CloudNode)-[e:CloudEdge]->(b:CloudNode) WHERE e.edge_type='SERVED_FR... | PASS |
+| 2026-06-18 | 0.7.0_AE_CloudOps | NFRA_TSGRAPH.P4 | SUMMARY | P4 SERVED_FROM atomic deploy: comp-iam gaps(0 missing) + comp-kuzu(29 both-ends LIVE under real task-role) + deploy_ledger(5 legs CLOSED) + safe-apply(0/1/0) + terraform plan + safe-commit | PASS |
+| 2026-06-18 | 0.7.0_AE_CloudOps | LD-0202 | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
