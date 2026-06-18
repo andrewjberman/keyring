@@ -6776,3 +6776,8 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-06-17 | 2.0.0_SA_COO | DECK_CLAUDE.FANOUT-A | comp-surface-check | comp-surface-check check --mode advisory --file org/mcp/.last-drive-2.0.0_SA_COO --file... | PASS |
 | 2026-06-17 | 0.4.0_DS_ClientPlatform | ADVI_NNAATTR | ds-commit-gate.sh | .tools/ds-commit-gate.sh D_00c + lib/advisor_nna_attribution.py D_00f (+ safe-commit surface-check + safe-deploy md5 verify) | PASS |
 | 2026-06-17 | 0.4.0_DS_ClientPlatform | DECK_CLAUDE.FANOUT-A | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-06-17 | 2.0.0_SA_COO | DECK_CLAUDE.FANOUT-A | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+| 2026-06-17 | 2.0.0_SA_COO | DECK_CLAUDE.FANOUT-A | comp-surface-check | comp-surface-check check --mode advisory --file org/mcp/.last-drive-2.0.0_SA_COO --file... | PASS |
+| 2026-06-17 | 0.4.0_DS_ClientPlatform | DECK_CLAUDE.FANOUT-A | comp-surface-check | comp-surface-check check --mode advisory --file data/cot/scripts/silver/cot_silver_merg... | PASS |
+| 2026-06-17 | 0.4.0_DS_ClientPlatform | ADVI_COTETL | ds-commit-gate.sh + safe-deploy + s3api-head-object | cot_silver_merge.py CHAINFIX: gate clean + safe-deploy [cot] + md5 ETag==local (5533c1e3) | PASS |
+| 2026-06-17 | 0.4.0_DS_ClientPlatform | DECK_CLAUDE.FANOUT-A | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
