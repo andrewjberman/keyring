@@ -4,7 +4,7 @@
 - **Owner:** 0.7.0_AE_CloudOps
 - **Authority:** CTO 145458Z GO (cadence ruling) + COO DATEMODE-C TO 145714Z; DS silver-side co-author 145728Z
 - **Opened:** 2026-06-22T14:59:11Z
-- **Status:** OPEN
+- **Status:** CLOSED (apply-verified 2026-06-22T15:00Z; commit ded252bae)
 - **Resource:** `aws_ssm_document.cot_silver_run` (opal-cot-silver-run) in `infra/aws/terraform/cot-pipeline/ssm.tf`
 - **Module:** `infra/aws/terraform/cot-pipeline/`
 
@@ -18,17 +18,21 @@ so a holdings failure never breaks the && chain to `--finalize` (gold still fire
 
 ## Steps (each marked at completion)
 
-- [ ] ssm.tf edited (description + holdings non-gating brace-group before --finalize)
-- [ ] safe-commit (ssm.tf + this ledger)
-- [ ] terraform plan -- expect 1 in-place update (cot_silver_run), 0 destroy
-- [ ] safe-apply (HALTGT checkpoint)
-- [ ] 0-diff re-plan
-- [ ] verify deployed doc (aws ssm get-document carries the holdings line)
-- [ ] push --follow-tags
-- [ ] RAVC CTO + COO (+ DS)
+- [x] ssm.tf edited (description + holdings non-gating brace-group before --finalize)
+- [x] safe-commit (ssm.tf + this ledger) -- ded252bae
+- [x] terraform plan -- 1 in-place update (cot_silver_run), 0 add / 0 destroy
+- [x] safe-apply (HALTGT checkpoint clean) -- Apply complete: 0 added, 1 changed, 0 destroyed
+- [x] 0-diff re-plan -- "No changes. Your infrastructure matches the configuration."
+- [x] verify deployed doc -- live opal-cot-silver-run runCommand carries the holdings non-gating brace-group
+- [x] push --follow-tags
+- [x] RAVC CTO + COO (+ DS)
 
 ## Closeout
 
-(Closed on apply-verified. BINDING VERIFY-GATE per the TO: served cot AUA data_as_of continues
-advancing past 06-18 on tomorrow + day-after nightlies, not re-capped -- validate-on-served, no
-ad-hoc gold run.)
+CLOSED apply-verified 2026-06-22T15:00Z. The live opal-cot-silver-run SSM doc now runs
+`{ cot_silver_merge.py --table holdings || echo WARN; } &&` between --table unrealized and --finalize
+(non-gating, sentinel-decoupled). No stranded leg; single in-place SSM-doc update, 0 destroy.
+
+BINDING VERIFY-GATE (rides the next 2 nightlies, NOT part of this ledger close): served cot AUA
+data_as_of continues advancing past 06-18 on tomorrow (06-23) + day-after (06-24) nightlies, not
+re-capped -- validate-on-served, no ad-hoc gold run. RAVC COO on each.
