@@ -24,6 +24,7 @@ from __future__ import annotations
 
 import os
 import re
+import subprocess
 import sys
 
 WS = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -73,7 +74,40 @@ RULES = [
      "route/CF debugging",
      ["comp-routes behaviors"],
      "CF error rules masking JSON errors / 4xx debugging"),
+    (["gold scripts", "silver scripts", "bronze scripts", "scripts in", "what scripts",
+      "list the gold", "list gold", "pipeline scripts", "scripts in the"],
+     "list pipeline scripts",
+     ["pipescript --list", "comp-pipescript deployed --firm <bd|inf|cot|mdpf>",
+      "comp-ls data/<firm>/scripts/gold/"],
+     "the scripts in a named pipeline/firm (+ deployed MATCH/STALE state)"),
 ]
+
+# Function-relationship intents that ARE a rich-tool job (route, do NOT run-the-primitive):
+# "call sites / callers of X" is comp-blast's exact semantic traversal, not a text grep.
+CALLSITE_RX = re.compile(r"\b(call ?sites?|callers?|callees?|who calls)\b", re.IGNORECASE)
+
+# Text-search intent: a verb that means "find this string/symbol in the repo" -- the cases
+# with NO rich tool, where comp-which must RUN the on-rails primitive instead of dead-ending.
+SEARCHVERB_RX = re.compile(
+    r"\b(where (is|are)|defined|definition of|declared|declaration of|references? to|"
+    r"refer(s|red)? to|usages? of|occurrences? of|find (the |every |all )?|grep|"
+    r"search (for|the)|show me (the |where )|locate|which files? (reference|contain|have|use|mention)|"
+    r"what files?)\b", re.IGNORECASE)
+
+# List-files intent -> run comp-ls (not comp-grep).
+LISTVERB_RX = re.compile(
+    r"\b(list (the )?files|what files|files (in|under|matching|named)|"
+    r"ls |show (me )?(the )?files|directory listing|dir listing)\b", re.IGNORECASE)
+
+_STOP = {
+    "the", "a", "an", "is", "are", "was", "were", "what", "which", "who", "where", "when",
+    "how", "why", "does", "do", "did", "of", "in", "on", "to", "for", "and", "or", "with",
+    "from", "this", "that", "these", "those", "find", "show", "me", "list", "all", "every",
+    "reference", "references", "defined", "definition", "declared", "search", "grep", "file",
+    "files", "portal", "lambda", "script", "scripts", "pipeline", "gold", "code", "have",
+    "has", "had", "get", "got", "it", "its", "their", "there", "here", "by", "at", "as",
+    "be", "been", "being", "into", "out", "up", "down", "off", "over", "under", "about",
+}
 
 GOLD_ID = re.compile(r"(?<![\w])(INF_)?[A-DIS]_-?\d{1,2}[a-z]?(?![\w])")
 
@@ -114,7 +148,73 @@ def _manifest_matches(q: str, qtok: set, top: int = 3):
     return out[:top]
 
 
+RAIL_LOG = os.path.join(WS, "org", "mcp", "comp-which-rail.log")
+
+# identifier-ish token patterns, in extraction-priority order (most specific first)
+_TERM_PATS = [
+    re.compile(r"[A-Za-z_][\w./-]*\.(?:parquet|tsx|ts|py|json|md|yaml|yml|sh|hcl|tf)\b"),  # filenames
+    re.compile(r"\b[a-z][a-z0-9]+(?:[A-Z][a-z0-9]+)+\b"),                                   # camelCase
+    re.compile(r"\b[A-Z][a-z0-9]+(?:[A-Z][a-z0-9]+)+\b"),                                   # PascalCase
+    re.compile(r"\b\w+_\w[\w_]*\b"),                                                          # snake_case
+    re.compile(r"\b[a-z0-9]+(?:-[a-z0-9]+){2,}\b"),                                           # hyphenated-names (opal-...)
+    re.compile(r"\b[A-Z][A-Z0-9_]{3,}\b"),                                                    # ALL_CAPS
+]
+
+
+def _extract_term(q: str):
+    """Pick the most likely search target from a NL question. Quoted text wins; else the
+    most specific identifier-ish token; else the longest non-stopword word (>=4 chars)."""
+    m = re.search(r'"([^"]{2,})"|\'([^\']{2,})\'', q)
+    if m:
+        return (m.group(1) or m.group(2)).strip()
+    for pat in _TERM_PATS:
+        found = pat.findall(q)
+        if found:
+            return max(found, key=len)
+    words = [w for w in re.findall(r"[A-Za-z0-9_]+", q) if w.lower() not in _STOP and len(w) >= 4]
+    return max(words, key=len) if words else None
+
+
+def _log_rail(decision: str, intent: str, term, q: str) -> None:
+    try:
+        import datetime
+        ts = datetime.datetime.now(datetime.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+    except Exception:
+        ts = "?"
+    line = '%s  %s  tool=comp-which  intent=%s  term=%s  q="%s"\n' % (
+        ts, decision, intent, (term or "-"), q.replace("\n", " ")[:120])
+    try:
+        os.makedirs(os.path.dirname(RAIL_LOG), exist_ok=True)
+        with open(RAIL_LOG, "a", encoding="utf-8") as f:
+            f.write(line)
+    except Exception:
+        pass
+
+
+def _run_primitive(kind: str, term: str) -> int:
+    """RUN the on-rails primitive (the never-dead-end). kind in {grep, ls}. Invokes the
+    sibling comp-grep/comp-ls via sys.executable (NOT a bash launcher -> Windows-safe)."""
+    script = os.path.join(WS, ".tools", "comp-grep" if kind == "grep" else "comp-ls")
+    call = "comp-%s %s" % (kind, term)
+    print('comp-which -- no rich comp-tool fits this exact search; running the ON-RAILS primitive:')
+    print("  $ %s" % call)
+    print("  (on the rail: repo-scoped + .gitignore-aware + logged. If a rich tool SHOULD")
+    print("   exist for this recurring intent, that is a TO-5 coverage-gap -> build it.)\n")
+    try:
+        rc = subprocess.call([sys.executable, script, term], cwd=WS)
+        return rc
+    except Exception as e:
+        # absolute last resort -- still NOT a dead-end: hand the agent the exact on-rail call
+        print("comp-which: WARN: could not auto-run (%s). Run it yourself: %s" % (e, call))
+        return 0
+
+
 def main() -> int:
+    for _s in (sys.stdout, sys.stderr):  # uncrashable output on a cp1252 console
+        try:
+            _s.reconfigure(errors="replace")
+        except Exception:
+            pass
     if len(sys.argv) < 2 or not sys.argv[1].strip():
         print('comp-which "<your question>"  -- maps a natural-language question to the canonical comp-* call.')
         print('  e.g. comp-which "what produces canonical_prices.parquet?"')
@@ -130,31 +230,74 @@ def main() -> int:
                      ["comp-pipescript io %s" % gid.group(0), "comp-pipescript feeds/consumers %s" % gid.group(0),
                       "pipescript --resource %s" % gid.group(0)],
                      "what a gold script reads/writes + who feeds/consumes it"))
+    # "call sites / callers of X" -> comp-blast is the rich semantic answer (strong route,
+    # NOT a text grep): force a high score so it routes even though it reads like a search.
+    if CALLSITE_RX.search(q):
+        hits.append((6, "call sites / callers",
+                     ["comp-blast <fn-name>"],
+                     "the call sites / callers of a function (semantic traversal -- pass the function name, not a script)"))
     for keywords, label, calls, why in RULES:
         s = _score_rule(q, qtok, keywords)
         if s > 0:
             hits.append((s, label, calls, why))
     hits.sort(key=lambda x: -x[0])
+    best_score = hits[0][0] if hits else 0
+
+    search_intent = bool(SEARCHVERB_RX.search(q))
+    list_intent = bool(LISTVERB_RX.search(q))
+    term = _extract_term(q)
 
     print('comp-which -- best match for: "%s"\n' % q)
+
+    # --- DECISION (never dead-ends, NFRA_COMPRAIL TO-2 AC1) -----------------------------------
+    # 1) STRONG rich-tool route (>=4 == a phrase match or 2+ keyword tokens) -> point.
+    # 2) WEAK/zero route BUT a text-search intent + an extractable term -> RUN the primitive
+    #    (the case native grep used to be the only answer for -> now it's on the rail).
+    # 3) Some route but no search intent -> point (a weak match is still a rich-tool pointer).
+    # 4) Nothing -> still RUN the primitive (or print the on-rail call) -- never "browse the catalog".
+    STRONG = 4
+    if best_score >= STRONG:
+        _route_print(hits)
+        _log_rail("ROUTE", hits[0][1], term, q)
+        return 0
+
+    if (search_intent or best_score == 0) and term:
+        kind = "ls" if list_intent else "grep"
+        if hits:
+            print("  (a rich tool MIGHT fit -- consider first:)")
+            _route_print(hits[:1])
+        _log_rail("RUN-%s" % kind.upper(), (hits[0][1] if hits else "no-rich-tool"), term, q)
+        return _run_primitive(kind, term)
+
     if hits:
-        for s, label, calls, why in hits[:3]:
-            print("  -> %s" % "   |   ".join(calls))
-            print("     [%s] %s" % (label, why))
-            print("")
-    else:
-        # fuzzy backstop over the manifest
-        mf = _manifest_matches(q, qtok)
-        if mf:
-            print("  (no high-confidence rule; closest catalog entries:)")
-            for overlap, tool, call, uc in mf:
-                print("  -> %s   (%s)" % (call or tool, uc))
-            print("")
-        else:
-            print("  No specific tool matched. Browse named threads: pipescript --list")
-            print("  Or the full catalog: org/modules/graph/graph-call-manifest.yaml\n")
-    print("  (comp-which is a router -- it points; run the call yourself. Tune: CVO NFRA_TOOLHUD #3.)")
+        _route_print(hits)
+        _log_rail("ROUTE", hits[0][1], term, q)
+        return 0
+
+    # nothing matched and no extractable term: still on-rail, never the 41KB-catalog dead-end
+    mf = _manifest_matches(q, qtok)
+    if mf:
+        print("  (no high-confidence rule; closest catalog entries:)")
+        for overlap, tool, call, uc in mf:
+            print("  -> %s   (%s)" % (call or tool, uc))
+        print("")
+    if list_intent:
+        _log_rail("RUN-LS", "no-rich-tool", ".", q)
+        return _run_primitive("ls", ".")
+    print("  No rich tool fit and no clear search term. The on-rails primitives (never a bare grep):")
+    print("    comp-grep <pattern> [pathspec]   -- .gitignore-aware, logged repo search")
+    print("    comp-ls [pathspec] [--glob ...]  -- .gitignore-aware file list")
+    print("  Browse named threads: pipescript --list")
+    _log_rail("NO-TERM", "none", term, q)
     return 0
+
+
+def _route_print(hits):
+    for s, label, calls, why in hits[:3]:
+        print("  -> %s" % "   |   ".join(calls))
+        print("     [%s] %s" % (label, why))
+        print("")
+    print("  (comp-which routed -- run the call yourself. No tool fit? it would have RUN comp-grep/comp-ls.)")
 
 
 if __name__ == "__main__":

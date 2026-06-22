@@ -1,0 +1,150 @@
+#!/usr/bin/env python3
+"""_comprail.py -- shared helpers for the NFRA_COMPRAIL on-rails primitives (comp-grep,
+comp-ls). Single-sources the tricky bits so the two CLIs can't drift:
+
+  * repo_root()            -- the workspace root (git toplevel, .tools/.. fallback)
+  * gitignore_aware_files  -- the .gitignore-aware working set, RECURSING nested git repos
+                              (portal is a tracked gitlink, NOT a .gitmodules submodule;
+                              git ls-files in the parent sees only the pointer, so a naive
+                              enumeration silently misses all 1000+ portal files -- the bug
+                              this module exists to prevent).
+  * log_rail               -- best-effort parseable telemetry to org/mcp/comp-which-rail.log
+                              (the TO-5 coverage-audit feed).
+
+NOTE on Windows safety: only ever shells out to git.exe (a native exe -- safe via subprocess);
+never `bash -c` (which can silently return empty rc0 on this box). ASCII-only.
+"""
+from __future__ import annotations
+
+import datetime
+import os
+import subprocess
+import sys
+
+_HERE = os.path.dirname(os.path.abspath(__file__))
+
+
+def harden_stdout() -> None:
+    """Make stdout/stderr UNCRASHABLE on this Windows box. We print content read from
+    arbitrary repo files; a cp1252 console crashes on the first non-ASCII byte
+    (UnicodeEncodeError -- the charmap class CLAUDE.md warns about). errors='replace'
+    means an unencodable char becomes '?' instead of killing the whole search."""
+    for stream in (sys.stdout, sys.stderr):
+        try:
+            stream.reconfigure(errors="replace")  # py3.7+
+        except Exception:
+            pass
+
+
+def ascii_safe(s: str) -> str:
+    """Force a string to ASCII (CLAUDE.md: no non-ASCII in tool stdout). Belt to the
+    harden_stdout suspenders -- keeps output grep/CloudWatch-clean regardless of codepage."""
+    try:
+        return s.encode("ascii", "replace").decode("ascii")
+    except Exception:
+        return s
+
+
+def repo_root() -> str:
+    try:
+        out = subprocess.run(["git", "rev-parse", "--show-toplevel"],
+                             cwd=_HERE, capture_output=True, text=True, timeout=15)
+        if out.returncode == 0 and out.stdout.strip():
+            return out.stdout.strip()
+    except Exception:
+        pass
+    return os.path.dirname(_HERE)
+
+
+def _utc_ts() -> str:
+    try:
+        return datetime.datetime.now(datetime.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+    except Exception:
+        return "?"
+
+
+def log_rail(rail_log: str, decision: str, tool: str, term: str, extra: str = "") -> None:
+    term1 = (term or "-").replace("\n", " ")[:120]
+    line = "%s  %s  tool=%s  term=%s  %s\n" % (_utc_ts(), decision, tool, term1, extra)
+    try:
+        os.makedirs(os.path.dirname(rail_log), exist_ok=True)
+        with open(rail_log, "a", encoding="utf-8") as f:
+            f.write(line)
+    except Exception:
+        pass  # best-effort; never break a search on a log failure
+
+
+def _ls_files(cwd: str, prefix: str = ""):
+    """tracked + untracked-not-ignored, NUL-safe. Returns (list, err)."""
+    cmd = ["git", "ls-files", "-z", "--cached", "--others", "--exclude-standard"]
+    try:
+        out = subprocess.run(cmd, cwd=cwd, capture_output=True, text=True, timeout=60)
+    except Exception as e:
+        return None, "git ls-files failed in %s: %s" % (cwd, e)
+    if out.returncode != 0:
+        return None, "git ls-files rc=%d in %s: %s" % (out.returncode, cwd, (out.stderr or "").strip()[:160])
+    return [prefix + p for p in out.stdout.split("\0") if p], None
+
+
+def _gitlinks(cwd: str):
+    """nested-repo paths (mode 160000 in the index) -- catches portal + every gitlink,
+    independent of .gitmodules registration."""
+    try:
+        out = subprocess.run(["git", "ls-files", "--stage"], cwd=cwd,
+                             capture_output=True, text=True, timeout=30)
+    except Exception:
+        return []
+    if out.returncode != 0:
+        return []
+    paths = []
+    for line in out.stdout.splitlines():
+        # format: "<mode> <sha> <stage>\t<path>"
+        if line.startswith("160000 "):
+            tab = line.find("\t")
+            if tab != -1:
+                paths.append(line[tab + 1:])
+    return paths
+
+
+def _norm(p: str) -> str:
+    return p.replace("\\", "/").strip("/")
+
+
+def _touches(repo: str, ps: str) -> bool:
+    """does pathspec ps intersect nested repo path? (repo under ps, or ps into repo, or '.')"""
+    r, s = _norm(repo), _norm(ps)
+    if s in ("", "."):
+        return True
+    return r == s or r.startswith(s + "/") or s.startswith(r + "/")
+
+
+def _under(f: str, ps: str) -> bool:
+    f, s = _norm(f), _norm(ps)
+    if s in ("", "."):
+        return True
+    return f == s or f.startswith(s + "/")
+
+
+def gitignore_aware_files(ws: str, pathspec):
+    """The .gitignore-aware working set across the parent repo AND nested git repos
+    (portal etc.), pathspec-filtered. Returns (list, err). err is non-None ONLY on a hard
+    git failure -> callers must surface it LOUD (never read absence as 'no matches')."""
+    parent, err = _ls_files(ws)
+    if parent is None:
+        return None, err
+    nested = _gitlinks(ws)
+    nested_set = set(_norm(n) for n in nested)
+    # drop the bare gitlink pointer entries from the parent set (they are not files)
+    files = [f for f in parent if _norm(f) not in nested_set]
+    for r in nested:
+        if pathspec and not any(_touches(r, ps) for ps in pathspec):
+            continue
+        rdir = os.path.join(ws, r)
+        if not os.path.exists(os.path.join(rdir, ".git")):
+            continue  # gitlink whose worktree is absent/uninitialized -> skip quietly
+        sub, _serr = _ls_files(rdir, _norm(r) + "/")
+        if sub:
+            files += sub
+    if pathspec:
+        files = [f for f in files if any(_under(f, ps) for ps in pathspec)]
+    return files, None
