@@ -1,0 +1,32 @@
+{
+  "project_code": "ETFS_AVGCAP",
+  "macro_code": "ETFS",
+  "name": "Per-Opal-ETF, per-partner, monthly AVERAGE ownership value (partner AUM in Opal funds)",
+  "description": "Andrew-direct. Track, per Opal ETF (DIVZ/IDVZ/PFDE/PFOE), per partner (49 Financial / Inflection Wealth Mgmt / Cottonwood Capital Advisors), per month, the monthly AVERAGE ownership VALUE = sum of position market_value across the partner's accounts holding the ETF, per day, averaged over the month (= the AUM each partner has placed in Opal's funds). THREE deliverables in order: (1) AVERAGING METHODOLOGY, (2) MAY numbers, (3) JUNE-MTD numbers. Authoritative per-partner sources (CVO-verified live, all daily at ticker+market_value+date+account grain): 49F = Schwab RPS/BDRECPOS full-positions ($529.9M @05-08; opal-data-schwab; raw bronze/rps -> silver/RPS [silver/RPS EMPTY, B1]); Inflection = Orion gold/holdings ($82.1M @06-18; opal-data-inf; clock pinned 2026-05-15 Eclipse-onboarding); Cottonwood = BD gold/canonical/holdings ($0.19M @06-09; opal-data-cot; was COTETL-frozen, fix DEPLOYED 06-22). Architecture: NEVER-cross-firm-bucket (CLAUDE.md #1) -> per-partner monthly-avg computed WITHIN each firm bucket -> published to a NEW deliberately-IAM'd opal-data-etfs aggregation bucket (the one audited cross-firm-read exception). Distinct from sibling ETFS_NETAST/ETFS_SECIDX (both complete).",
+  "prds": [
+    {
+      "path": "org/tier1_exec/3.0.0_SA_CVO/ETFS_AVGCAP_cto_research_brief_20260622.md",
+      "label": "CVO PRD-enabling research brief v2 (canonical source map; verified live numbers; v1 ULN->RPS correction Andrew-caught) -- PRD-equivalent until CTO authors the formal PRD",
+      "date": "2026-06-22"
+    }
+  ],
+  "related": [
+    "ETFS_NETAST",
+    "ETFS_SECIDX",
+    "ADVI_COTETL"
+  ],
+  "status": "active",
+  "phase": "PHASE 0 -- REGISTERED 2026-06-22 (2.0.0_SA_COO; Andrew-direct origin; CVO research brief v2 6d4441c00 shipped to CTO). SEQUENCE: CVO research (DONE) -> CTO PRD (NEXT, CTO lane) -> COO decompose. Metric is FULLY SUPPORTED (CVO: all 4 ETFs present in all 3 partners' authoritative sources at the right grain, all daily, true monthly-avg feasible). CVO-recommended phasing: P1 = methodology + ETFS aggregation skeleton + Inflection leg (provable NOW) + the bd<->Schwab-RPS account-level reconciliation -> P2 = 49F via silver/RPS (run the AE /49-schwab-conv RPS converter) -> P3 = Cottonwood post-COTETL-fix. May + June-MTD = the P2/P3 acceptance artifacts; a full 3-partner June view is an ~early-July artifact (49F next monthly Schwab download + Cottonwood unfreeze converge ~July-1).",
+  "blocking": "DECOMPOSITION GATED on the CTO PRD (CVO research brief shipped 6d4441c00; CTO authors the PRD next per the brief's explicit lane-split 'CTO architects; COO decomposes'). 3 structural blockers the PRD must absorb: B1 -- 49F silver/RPS is EMPTY (the canonical full-positions table); the AE-owned /49-schwab-conv RPS converter must build+register it from bronze/rps (raw exists thru 06-09); this is the real '49F silver gap' (v1 mis-named it ULN). B2 -- 49F Schwab ingest is a MANUAL monthly batch (latest 06-09; next ~early July). B3 -- Cottonwood COTETL freeze: the CurrentDay->Custom fix is DEPLOYED 2026-06-22 (a7a4d974c), verifies tonight's nightly -> the cot June leg RIDES it (now ~unblocked). 8 open PRD decisions (D1 day-basis, D2 partial-month, D3 Inflection-clock=05-15, D4 rollups, D5 ETFS-agg-home+IAM, D6 49F-RPS-productionize+Schwab-SLA, D7 bd<->RPS-recon-as-separate-TO?, D8 output data-only-vs-portal). COO will confirm scope/priority with Andrew before dispatching GOs.",
+  "created": "2026-06-22",
+  "pods": [
+    "0.4",
+    "0.6",
+    "0.7",
+    "3.0"
+  ],
+  "pipeline": "cross-firm ETF-ownership aggregation: 49F Schwab RPS (opal-data-schwab, silver/RPS via /49-schwab-conv) + Inflection Orion (opal-data-inf gold/holdings) + Cottonwood BD (opal-data-cot gold/canonical/holdings) -> per-partner monthly-avg WITHIN each bucket -> NEW opal-data-etfs aggregation bucket (audited cross-firm reader)",
+  "coo_lane": "2.0.0_SA_COO",
+  "thread_counter": 0,
+  "threads": []
+}
