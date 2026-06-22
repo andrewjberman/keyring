@@ -7204,3 +7204,55 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-06-22 | 2.0.0_SA_COO | ADVI_COTETL.E2E-RERUN (shared) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
 | 2026-06-22 | 0.7.0_AE_CloudOps | ADVI_COTETL.E2E-RERUN | parity(rail-checked) / SSM gold-run / served ground-truth | deployed==5c80bf6ca verified; gold re-run 62baea04; SERVED ground-truthed 06-18/$395.3M/contiguous (not rc=0); freeze BROKEN | VALIDATE |
 | 2026-06-22 | 0.7.0_AE_CloudOps | ADVI_COTETL.E2E-RERUN (shared) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-06-22 | 0.4.0_DS_ClientPlatform | ADVI_COTETL.E2E-RERUN (shared) | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/change_management/20... | PASS |
+| 2026-06-22 | 0.4.0_DS_ClientPlatform | ADVI_COTETL.E2E-RERUN (shared) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-06-22 | 3.0.0_SA_CVO | ADVI_COTETL.E2E-RERUN (shared) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/logs/2026-0... | PASS |
+| 2026-06-22 | 3.0.0_SA_CVO | ADVI_COTETL.E2E-RERUN (shared) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/GROUNDING_F... | PASS |
+| 2026-06-22 | 2.0.0_SA_COO | ADVI_COTETL.E2E-RERUN (shared) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/ADVI_COTETL.json --file or... | PASS |
+| 2026-06-22 | 0.7.0_AE_CloudOps | NFRA_DEBTSCAN.TO-D3 (shared) | comp-kuzu | comp-kuzu MATCH (n) RETURN count(n) AS node_count | PASS |
+| 2026-06-22 | 0.7.0_AE_CloudOps | NFRA_DEBTSCAN.TO-D3 (shared) | comp-kuzu | comp-kuzu MATCH (s:S3_BUCKET)-[r:READS]->(n) WHERE n.node_type IN ['EC2_INSTANCE','LAMB... | FAIL |
+| 2026-06-22 | 0.7.0_AE_CloudOps | NFRA_DEBTSCAN.TO-D3 (shared) | comp-kuzu | comp-kuzu MATCH (n) RETURN label(n) AS node_table, count(*) AS n ORDER BY n DESC LIMIT 35 | PASS |
+| 2026-06-22 | 3.0.0_SA_CVO | NFRA_DEBTSCAN.TO-D3 (shared) | comp-surface-check | comp-surface-check check --mode advisory --file .claude/skills/molecule/SKILL.md --file... | PASS |
+| 2026-06-22 | 2.0.0_SA_COO | NFRA_DEBTSCAN.TO-D3 (shared) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+| 2026-06-22 | 2.0.0_SA_COO | NFRA_DEBTSCAN.TO-D3 (shared) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-06-22 | 0.4.0_DS_ClientPlatform | ADVI_COTETL.CLEANUP (shared) | comp-blast | comp-blast C_00 | PASS |
+| 2026-06-22 | 0.4.0_DS_ClientPlatform | ADVI_COTETL.CLEANUP (shared) | comp-blast | comp-blast C_02 | PASS |
+| 2026-06-22 | 0.4.0_DS_ClientPlatform | ADVI_COTETL.CLEANUP (shared) | comp-surface-check | comp-surface-check check --mode advisory --file data/cot/scripts/gold/C_01.canonical_nn... | PASS |
+| 2026-06-22 | 2.0.0_SA_COO | ADVI_COTETL.CLEANUP (shared) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-06-22 | 0.4.0_DS_ClientPlatform | ADVI_COTETL.CLEANUP (shared) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-06-22 | 2.0.0_SA_COO | ADVI_COTETL.CLEANUP (shared) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+| 2026-06-22 | 0.4.0_DS_ClientPlatform | ADVI_COTETL.CLEANUP (shared) | comp-surface-check | comp-surface-check check --mode advisory --file data/cot/scripts/gold/D_00.portal_aggre... | PASS |
+| 2026-06-22 | 0.4.0_DS_ClientPlatform | ADVI_COTETL.CLEANUP (shared) | comp-surface-check | comp-surface-check check --mode advisory --file data/cot/scripts/gold/C_00.canonical_pe... | PASS |
+| 2026-06-22 | 0.4.0_DS_ClientPlatform | ADVI_COTETL.CLEANUP (shared) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-06-22 | 3.0.0_SA_CVO | ADHC_COTAUDIT | pipescript | pipescript advi-cot | PASS |
+| 2026-06-22 | 3.0.0_SA_CVO | ADHC_COTAUDIT | comp-blast | comp-blast canonical_prices | PASS |
+| 2026-06-22 | 3.0.0_SA_CVO | ADHC_COTAUDIT | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/ADVI_COT_BA... | PASS |
+| 2026-06-22 | 2.0.0_SA_COO | ADVI_COTETL.CLEANUP (shared) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+| 2026-06-22 | 0.4.0_DE_ClientPlatform | ADVI_COTETL.CLEANUP (shared) | comp-routes | comp-routes behaviors | PASS |
+| 2026-06-22 | 3.0.0_SA_CVO | ADHC_COTAUDIT | comp-iam | comp-iam gaps | PASS |
+| 2026-06-22 | 0.4.0_DE_ClientPlatform | ADVI_COTETL.CLEANUP (shared) | comp-transform | comp-transform schema-check PartnerAnalytics | PASS |
+| 2026-06-22 | 0.4.0_DE_ClientPlatform | ADVI_COTETL.CLEANUP (shared) | comp-transform | comp-transform schema-check DistributionTab | PASS |
+| 2026-06-22 | 0.4.0_DE_ClientPlatform | ADVI_COTETL.CLEANUP (shared) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DE_ClientPlatfor... | PASS |
+| 2026-06-22 | 0.0.0_AB_MSTR | ADVI_COTETL.CLEANUP (shared) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier0/ledger/LD-0206.md | PASS |
+| 2026-06-22 | 1.0.0_SA_CTO | NFRA_COMPRAIL.TO-3.cto-claudemd-rule20-amend | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/NFRA_COMPRAIL_GROUNDI... | PASS |
+| 2026-06-22 | 2.0.0_SA_COO | ADVI_COTETL.CLEANUP (shared) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+| 2026-06-22 | 3.0.0_SA_CVO | ADHC_COTAUDIT | comp-routes | comp-routes | PASS |
+| 2026-06-22 | 0.4.0_DE_ClientPlatform | ADVI_COTETL.CLEANUP (shared) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DE_ClientPlatfor... | PASS |
+| 2026-06-22 | 2.0.0_SA_COO | ADVI_COTETL.CLEANUP (shared) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+| 2026-06-22 | 0.7.0_AE_CloudOps | ADVI_COTETL.CLEANUP (shared) | comp-routes | comp-routes behaviors | PASS |
+| 2026-06-22 | 0.4.0_DS_ClientPlatform | ADVI_COTETL.CLEANUP (shared) | comp-surface-check | comp-surface-check check --mode advisory --file data/cot/scripts/gold/D_01.partner_anal... | PASS |
+| 2026-06-22 | 0.4.0_DS_ClientPlatform | ADVI_COTETL.CLEANUP (shared) | comp-surface-check | comp-surface-check check --mode advisory --file data/cot/scripts/gold/D_01.partner_anal... | PASS |
+| 2026-06-22 | 2.0.0_SA_COO | ADVI_COTETL.CLEANUP (shared) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+| 2026-06-22 | 0.4.0_DS_ClientPlatform | ADVI_COTETL.CLEANUP (shared) | comp-surface-check | comp-surface-check check --mode advisory --file data/cot/scripts/gold/D_01.partner_anal... | PASS |
+| 2026-06-22 | 2.0.0_SA_COO | ADVI_COTETL.CLEANUP (shared) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+| 2026-06-22 | 0.4.0_DE_ClientPlatform | ADVI_COTETL.CLEANUP (shared) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DE_ClientPlatfor... | PASS |
+| 2026-06-22 | 3.0.0_SA_CVO | ADHC_COTAUDIT | comp-transform | comp-transform schema-check DistributionTab | PASS |
+| 2026-06-22 | 0.4.0_DS_ClientPlatform | ADVI_COTETL.CLEANUP (shared) | comp-surface-check | comp-surface-check check --mode advisory --file data/cot/scripts/gold/D_01.partner_anal... | PASS |
+| 2026-06-22 | 0.0.0_AB_MSTR | ADVI_COTETL.CLEANUP (shared) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier0/ledger/LD-0207.md | PASS |
+| 2026-06-22 | 0.4.0_DE_ClientPlatform | ADVI_COTETL.CLEANUP (shared) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DE_ClientPlatfor... | PASS |
+| 2026-06-22 | 0.4.0_DS_ClientPlatform | ADVI_COTETL.CLEANUP (shared) | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/change_management/20... | PASS |
+| 2026-06-22 | 1.0.0_SA_CTO | NFRA_COMPRAIL.TO-3.cto-claudemd-rule20-amend | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/NFRA_COMPRAIL_HARDENI... | PASS |
+| 2026-06-22 | 2.0.0_SA_COO | ADVI_COTETL.CLEANUP (shared) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+| 2026-06-22 | 0.0.0_AB_MSTR | ADVI_COTETL.CLEANUP (shared) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier0/ledger/LD-0207.md | PASS |
+| 2026-06-22 | 0.6.0_AE_PartnerETL | COORD | (none) | Pure MCP-coordination window (ETFS standing-bar ACK + 4 governance broadcasts + task_orders scope ground-truth); 0 code/infra/data change -> no comp trigger; ETFS reflexes bind when the W2 49F leg lands | N/A |
+| 2026-06-22 | 0.6.0_AE_PartnerETL | ADVI_COTETL.CLEANUP (shared) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
