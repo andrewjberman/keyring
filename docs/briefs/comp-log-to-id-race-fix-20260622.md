@@ -10,10 +10,11 @@
 
 > **STATUS (2026-06-22): the fix ALREADY LANDED in `294c4335c`** (base CTO, honest
 > crossing on a valid prior grant — see LD-0205 reconciliation). Andrew elected
-> leave-in-place. **CTO~B's job is therefore INDEPENDENT VERIFICATION + formal
-> closeout of `294c4335c` against §4 — NOT re-implementation.** Sections 3a–3d below
-> are the spec the landed commit must satisfy (use them as the verification
-> checklist); §4 is the acceptance bar; §5 stays out of scope.
+> leave-in-place and routed validation to **3.0.0_SA_CVO** (not CTO~B — Andrew
+> clarified the ~B spawn was focus-protection, not required). **This brief is now the
+> VALIDATION SPEC for CVO:** §3a–3d are what the landed `294c4335c` must satisfy (the
+> verification checklist), §4 is the acceptance bar, §5 stays out of scope. Base CTO
+> has forwarded the commit to CVO. No re-implementation; no CTO~B execution.
 
 ---
 
@@ -187,6 +188,6 @@ gitignore the rolling log + reconstruct from per-session telemetry) are Andrew's
   `_read_context` tier + remove `comp-to` to restore prior behavior. No data
   migration. The shared-file fallback means a partial rollback degrades gracefully to
   the (old, racy-but-functional) behavior, never to a crash.
-- **Close:** CTO~B RAVCs to MSTR (CC COO) — verify `294c4335c` against the §4
-  concurrent test, NOT the author's self-report. Cite LD-0205 + this brief in the
-  closeout.
+- **Close:** CVO validates `294c4335c` against the §4 concurrent test (NOT the
+  author's self-report) and issues the validation verdict; cite LD-0205 + this brief.
+  MSTR records the verdict against LD-0205 for the formal closeout.
