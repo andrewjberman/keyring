@@ -7139,3 +7139,21 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-06-22 | 0.4.0_DS_ClientPlatform | ADVI_COTETL.AUAFIX-DATEMODE-A.ds-bronze-currentday-to-custom | comp-pipescript | comp-pipescript io cot_bronze_ingest | FAIL |
 | 2026-06-22 | 0.6.0_AE_PartnerETL | ADHC_GLDINC.SS4c | comp-iam + comp-pipescript + ds-commit-gate + terraform | SS4c TIER-1 canary deploy: comp-iam service gldinc-ss4c-canary (3/3 GRANTED), comp-pipescript deployed (no-match=new verification harness, accounted Unknown), ds-commit-gate x3 PASS, tf plan SS4c-only + 0-diff + safe-apply | PASS |
 | 2026-06-22 | 0.6.0_AE_PartnerETL | ADVI_COTETL.AUAFIX-DATEMODE-A.ds-bronze-currentday-to-custom | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-06-22 | 1.0.0_SA_CTO | NFRA_COMPRAIL.TO-3.cto-claudemd-rule20-amend | comp-surface-check | comp-surface-check check --mode advisory --file CLAUDE.md --file docs/architecture/NFRA... | PASS |
+| 2026-06-22 | 3.0.0_SA_CVO | ADVI_COTETL.AUAFIX-DATEMODE-B | pipescript | pipescript --list | PASS |
+| 2026-06-22 | 3.0.0_SA_CVO | ADVI_COTETL.AUAFIX-DATEMODE-B | pipescript | pipescript advi-inf | PASS |
+| 2026-06-22 | 0.4.0_DS_ClientPlatform | ADVI_COTETL.AUAFIX-DATEMODE-B | comp-surface-check | comp-surface-check check --mode advisory --file data/cot/scripts/bronze/cot_bronze_inge... | PASS |
+| 2026-06-22 | 0.6.0_AE_PartnerETL | ADVI_COTETL.AUAFIX-DATEMODE-B (shared) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.6.0_AE_PartnerETL/de... | PASS |
+| 2026-06-22 | 2.0.0_SA_COO | ADVI_COTETL.AUAFIX-DATEMODE-B (shared) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+| 2026-06-22 | 1.0.0_SA_CTO | NFRA_COMPRAIL.TO-3.cto-claudemd-rule20-amend | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/comp_log_auto.py | PASS |
+| 2026-06-22 | 0.4.0_DS_ClientPlatform | ADVI_COTETL.AUAFIX-DATEMODE-B (shared) | comp-pipescript | comp-pipescript io gldinc_ss4c_weekly | FAIL |
+| 2026-06-22 | 0.4.0_DS_ClientPlatform | ADVI_COTETL.AUAFIX-DATEMODE-B (shared) | comp-surface-check | comp-surface-check check --mode advisory --file data/black_diamond/scripts/gold/gldinc_... | PASS |
+| 2026-06-22 | 0.4.0_DS_ClientPlatform | ADVI_COTETL.AUAFIX-DATEMODE-B (shared) | comp-surface-check | comp-surface-check check --mode advisory --file data/black_diamond/scripts/gold/gldinc_... | PASS |
+| 2026-06-22 | 0.4.0_DS_ClientPlatform | ADVI_COTETL.AUAFIX-DATEMODE-B (shared) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-06-22 | 0.6.0_AE_PartnerETL | ADVI_COTETL.AUAFIX-DATEMODE-B (shared) | comp-surface-check | comp-surface-check check --mode advisory --file data/black_diamond/scripts/gold/gold_di... | PASS |
+| 2026-06-22 | 1.0.0_SA_CTO | NFRA_COMPRAIL.TO-3.cto-claudemd-rule20-amend | comp-surface-check | comp-surface-check check --mode advisory --file .tools/hooks/comp-tool-hud.sh | PASS |
+| 2026-06-22 | 2.0.0_SA_COO | ADVI_COTETL.AUAFIX-DATEMODE-B (shared) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+| 2026-06-22 | 0.6.0_AE_PartnerETL | ADVI_COTETL.AUAFIX-DATEMODE-B (shared) | comp-surface-check | comp-surface-check check --mode advisory --file .claude/skills/49-schwab-conv/SKILL.md | PASS |
+| 2026-06-22 | 1.0.0_SA_CTO | NFRA_COMPRAIL.TO-3.cto-claudemd-rule20-amend | comp-surface-check | comp-surface-check check --mode advisory --file .claude/settings.json | PASS |
+| 2026-06-22 | 0.6.0_AE_PartnerETL | SCHWAB_INGEST | comp-freshness + comp-which | Schwab June ingest Step-7 verify: comp-freshness artifact on 5 silver partitions (acc/rps/trn/uln/rld date=20260618) = PASS all; comp-which routed it (rail Rule 21) | PASS |
+| 2026-06-22 | 0.6.0_AE_PartnerETL | ADVI_COTETL.AUAFIX-DATEMODE-B (shared) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
