@@ -134,6 +134,42 @@ if [ -z "$class" ]; then
 fi
 [ -z "$class" ] && exit 0
 
+# === TO-4 GATE (NFRA_COMPRAIL: gated-not-banned; hardness-order ramp; announce-then-enforce -- COO
+#     broadcast 2026-06-22; CLAUDE.md Rule 21) =====================================================
+# HARD-DENY surfaces (Bash only): raw-aws-INSPECTION (tier 1) + infra/.tf grep (tier 2a). Everything
+# else -- native Grep/Glob tools, the other Bash search classes, broad repo-file-grep, the comp-which
+# fallback -- stays ADVISORY (the existing additionalContext nudge below). "native escape is fine"
+# (Andrew 2026-06-22): native Grep/Glob NEVER deny. OVERRIDE = a trailing `# rail-checked: <why>` on
+# the Bash command -> allow + audit (no deny, no nudge). FAIL-SAFE: deny only on the enumerated tiers;
+# any doubt falls through to advisory -- never a spurious wall. /freeform already stood the whole rail
+# down above (exits before here). RAMP NOTE: broad repo-file-grep (grep -r / rg over repo source) is
+# STAGED as nudge -- it is the friction-sensitive tier (PRD §6 "native/broad LAST"), enables only after
+# its dedicated FP-test pass; today it routes to the comp-which advisory nudge, not a deny.
+_gate=0
+if [ "$tool" = Bash ]; then
+  case "$class" in
+    aws_iam_inspect|aws_route|aws_deploy_verify|aws_freshness|aws_dynamodb) _gate=1 ;;  # tier 1: raw-aws-INSPECTION
+    infra_grep) _gate=1 ;;                                                              # tier 2a: infra/.tf grep
+  esac
+fi
+if [ "$_gate" = 1 ]; then
+  RAIL_LOG="$WS/org/mcp/comp-which-rail.log"
+  _ts="$(date -u +%Y-%m-%dT%H:%M:%SZ 2>/dev/null || echo '?')"
+  _q80="$(printf '%s' "$query" | head -c 100)"
+  # OVERRIDE: an explicit, auditable `# rail-checked: <why>` marker -> authorized one-off; allow.
+  if printf '%s' "$query" | grep -qE '#[[:space:]]*rail-checked:'; then
+    echo "$_ts  RUN-OVERRIDE  tool=$tool  class=$class  q=$_q80" >> "$RAIL_LOG" 2>/dev/null || true
+    exit 0
+  fi
+  echo "$_ts  DENY  tool=$tool  class=$class  q=$_q80" >> "$RAIL_LOG" 2>/dev/null || true
+  # deny reason = the class's comp-tool guidance (strip the advisory tail) + the gate + the override.
+  _reason="$(printf '%s' "$msg" | sed -E 's/[[:space:]]*\(advisory -- your [a-z]+ still runs\.\)//')"
+  _reason="${_reason} -- GATED per CLAUDE.md Rule 21 (comp-which-first). Run the comp-tool above instead. If NO comp-tool truly fits this exact search, re-run the command with a trailing '# rail-checked: <why no comp-tool fits>' marker (auditable, logged). For a time-boxed speed push, /freeform stands the whole rail down."
+  _enc=$(printf '%s' "$_reason" | "$JQ" -Rs . 2>/dev/null) || exit 0
+  printf '{"hookSpecificOutput":{"hookEventName":"PreToolUse","permissionDecision":"deny","permissionDecisionReason":%s}}' "$_enc"
+  exit 0
+fi
+
 # log every hit (CVO's before/after measurement), then advise per the class's throttle
 echo "$(date -u +%Y-%m-%dT%H:%M:%SZ 2>/dev/null || echo '?')  HUD-HIT  tool=$tool  class=$class  q=$(printf '%s' "$query" | head -c 80)" >> "$WS/org/mcp/comp-tool-hud.log" 2>/dev/null || true
 if [ -n "$sid" ]; then
