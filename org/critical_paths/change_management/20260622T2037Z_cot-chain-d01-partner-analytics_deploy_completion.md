@@ -12,9 +12,10 @@
 
 | leg | kind | target | proof required | proof | state |
 |---|---|---|---|---|---|
-| ae-chain-add | activation | opal-cot-gold-run | D_01-before-D_04-in-chain |  | OPEN |
+| ae-chain-add | activation | opal-cot-gold-run | D_01-before-D_04-in-chain | opal-cot-gold-run LIVE: D_01 chained at idx14 BEFORE D_04 idx17 (order D_00/D_00b/D_01/D_02/D_03/D_04); safe-apply 0/1/0; 0-diff re-plan clean; D_01 deployed==c5bc7ba49 parity-verified | CLOSED 20260622T203959Z |
 | nightly-verify | verify | served-partner-analytics | reconciles-fresh-date-ties-395.30M-DS-confirms |  | OPEN |
 
 ## Log
 
 - 20260622T203753Z OPENED by 0.7.0_AE_CloudOps with 2 leg(s)
+- 20260622T203959Z LEG ae-chain-add closed: opal-cot-gold-run LIVE: D_01 chained at idx14 BEFORE D_04 idx17 (order D_00/D_00b/D_01/D_02/D_03/D_04); safe-apply 0/1/0
