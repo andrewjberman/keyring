@@ -7261,3 +7261,5 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 
 - 2026-06-22 ~1700-2035Z 0.4.0_DS_ClientPlatform: COTETL cleanup + 13-unmapped (CVO-verified) + P1 partner_analytics launch-blocker. comp-blast(Leg-1 pre-gate, PARTIAL->census-lesson), ds-commit-gate(C_01/D_00/D_00b/D_01 PASS), deploy_ledger.py(launch-emit CLOSED), safe-deploy(D_01 MATCH), md5/etag(deployed==c5bc7ba49), Grep/Read source-grounding(A_00 txn-dim / D_04 publisher / index.mjs S3-403).
 | 2026-06-22 | 0.4.0_DS_ClientPlatform | ADVI_COTETL.CLEANUP (shared) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-06-22 | 0.4.0_DE_ClientPlatform | session_close | (summary) | TO-2 ternary-audit+schema-check+tsc; COT comp-routes+boto3x3+playwrightx3+tsc; P2-1 comp-kuzu | PASS -- caught COT P1-gap+geo-reconcile via render-verify; AE0.7 shared-ctx TO-misattribution noted |
+| 2026-06-22 | 0.4.0_DE_ClientPlatform | ADVI_COTETL.CLEANUP (shared) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
