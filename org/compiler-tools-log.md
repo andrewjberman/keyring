@@ -7079,3 +7079,57 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-06-18 | 3.0.0_SA_CVO | NFRA_COMPRAIL.TO-5 | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
 | 2026-06-18 | 1.0.0_SA_CTO | NFRA_COMPRAIL / COTETL.AUAFIX | comp-which + comp-freshness + claude-code-guide | dogfooded comp-which/comp-freshness per the rule being enforced (found NO registered cot AUA chain -> AUAFIX L4 oracle-gap); claude-code-guide verified the PreToolUse deny contract (grounded the COMPRAIL block, not assumed); comp-iam (CVO) TF-vs-live caught the phantom-Deny + F-1 = the directive's live exemplar | PASS (+1 GAP: no cot AUA freshness chain) |
 | 2026-06-18 | 1.0.0_SA_CTO | NFRA_COMPRAIL.TO-5 | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-06-22 | 2.0.0_SA_COO | NFRA_COMPRAIL.TO-2.cto-comp-which-never-dead-ends | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+| 2026-06-22 | 3.0.0_SA_CVO | NFRA_COMPRAIL.TO-2.cto-comp-which-never-dead-ends | pipescript | pipescript --list | PASS |
+| 2026-06-22 | 3.0.0_SA_CVO | NFRA_COMPRAIL.TO-2.cto-comp-which-never-dead-ends | pipescript | pipescript --resource nna | PASS |
+| 2026-06-22 | 1.0.0_SA_CTO | NFRA_TSGRAPH.P3-1.cvo-log-mined-bugclass-catalog | comp-surface-check | comp-surface-check check --mode advisory --file .tools/_comprail.py --file .tools/comp-... | PASS |
+| 2026-06-22 | 2.0.0_SA_COO | NFRA_TSGRAPH.P3-1.cvo-log-mined-bugclass-catalog | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+| 2026-06-22 | 0.7.0_AE_CloudOps | NFRA_TSGRAPH.P3-1.cvo-log-mined-bugclass-catalog | comp-pipescript | comp-pipescript io data/black_diamond/scripts/gold/A_00.accounts_dimension.py | PASS |
+| 2026-06-22 | 2.0.0_SA_COO | ADHC_GLDINC.SS4c | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+| 2026-06-22 | 1.0.0_SA_CTO | ADVI_NNAATTR.TO-2.de-frontend-repoint-all-roles-canonical | comp-surface-check | comp-surface-check check --mode advisory --file .tools/comp-glob | PASS |
+| 2026-06-22 | 0.4.0_DS_ClientPlatform | ADVI_NNAATTR.TO-2.de-frontend-repoint-all-roles-canonical | pipescript | pipescript --resource silver/cot_transactions.parquet | FAIL |
+| 2026-06-22 | 0.4.0_DE_ClientPlatform | ADVI_COTETL.AUAFIX-L1 | comp-transform | comp-transform --help | PASS |
+| 2026-06-22 | 0.4.0_DE_ClientPlatform | ADVI_COTETL.AUAFIX-L1 | comp-transform | comp-transform ternary-audit AdvisorPublicProfile | PASS |
+| 2026-06-22 | 0.4.0_DE_ClientPlatform | ADVI_COTETL.AUAFIX-L1 | comp-transform | comp-transform ternary-audit DistributionTab | PASS |
+| 2026-06-22 | 0.4.0_DE_ClientPlatform | ADVI_COTETL.AUAFIX-L1 | comp-transform | comp-transform ternary-audit AdvisorAnalytics | PASS |
+| 2026-06-22 | 0.4.0_DE_ClientPlatform | ADVI_COTETL.AUAFIX-L1 | comp-transform | comp-transform schema-check AdvisorPublicProfile | PASS |
+| 2026-06-22 | 0.4.0_DE_ClientPlatform | ADVI_COTETL.AUAFIX-L1 | comp-transform | comp-transform schema-check AdvisorPublicProfile --feature fee_paying | PASS |
+| 2026-06-22 | 0.6.0_AE_PartnerETL | ADVI_COTETL.AUAFIX-L1 | comp-pipescript | comp-pipescript deployed data/black_diamond/scripts/gold/gldinc_ss4c_weekly.py | PASS |
+| 2026-06-22 | 0.6.0_AE_PartnerETL | ADVI_COTETL.AUAFIX-L1 | comp-pipescript | comp-pipescript io load_flows | FAIL |
+| 2026-06-22 | 2.0.0_SA_COO | ADVI_COTETL.AUAFIX-L1 | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/ADVI_NNAATTR.json | PASS |
+| 2026-06-22 | 0.4.0_DE_ClientPlatform | ADVI_COTETL.AUAFIX-L1 | comp-kuzu | comp-kuzu MATCH (n:CloudNode) WHERE n.kind IN ['Page','PanelCluster'] RETURN n.kind AS ... | FAIL |
+| 2026-06-22 | 0.4.0_DE_ClientPlatform | ADVI_COTETL.AUAFIX-L1 | comp-kuzu | comp-kuzu MATCH ()-[e:CloudEdge]->() WHERE e.kind IN ['CLUSTERS','CONTAINS_DRILLDOWN','... | FAIL |
+| 2026-06-22 | 0.4.0_DE_ClientPlatform | ADVI_COTETL.AUAFIX-L1 | comp-kuzu | comp-kuzu MATCH (n:CloudNode) RETURN n LIMIT 1 | PASS |
+| 2026-06-22 | 0.4.0_DE_ClientPlatform | ADVI_COTETL.AUAFIX-L1 | comp-kuzu | comp-kuzu MATCH (n:CloudNode) WHERE n.label IN ['Page','PanelCluster'] RETURN n.label A... | FAIL |
+| 2026-06-22 | 0.4.0_DE_ClientPlatform | ADVI_COTETL.AUAFIX-L1 | comp-kuzu | comp-kuzu MATCH ()-[e:CloudEdge]->() WHERE e.label IN ['CLUSTERS','CONTAINS_DRILLDOWN',... | FAIL |
+| 2026-06-22 | 0.4.0_DE_ClientPlatform | ADVI_COTETL.AUAFIX-L1 | comp-kuzu | comp-kuzu CALL TABLE_INFO('CloudNode') RETURN * | PASS |
+| 2026-06-22 | 0.4.0_DE_ClientPlatform | ADVI_COTETL.AUAFIX-L1 | comp-kuzu | comp-kuzu MATCH (n:CloudNode) WHERE n.node_type IN ['Page','PanelCluster'] RETURN n.nod... | PASS |
+| 2026-06-22 | 0.4.0_DE_ClientPlatform | ADVI_COTETL.AUAFIX-L1 | comp-kuzu | comp-kuzu MATCH (n:CloudNode) RETURN DISTINCT n.node_type AS node_type ORDER BY node_type | PASS |
+| 2026-06-22 | 0.4.0_DE_ClientPlatform | ADVI_COTETL.AUAFIX-L1 | comp-kuzu | comp-kuzu CALL TABLE_INFO('CloudEdge') RETURN * | PASS |
+| 2026-06-22 | 0.4.0_DE_ClientPlatform | ADVI_COTETL.AUAFIX-L1 | comp-kuzu | comp-kuzu MATCH ()-[e:CloudEdge]->() WHERE e.edge_type IN ['CLUSTERS','CONTAINS_DRILLDO... | PASS |
+| 2026-06-22 | 0.7.0_AE_CloudOps | ADVI_COTETL.AUAFIX-L1 | comp-pipescript | comp-pipescript deployed cot | PASS |
+| 2026-06-22 | 3.0.0_SA_CVO | ADVI_COTETL.AUAFIX-L1 | comp-surface-check | comp-surface-check check --mode advisory --file org/tier0/reviews/RV-0037.md | PASS |
+| 2026-06-22 | 0.4.0_DE_ClientPlatform | ADVI_COTETL.AUAFIX-L1 | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DE_ClientPlatfor... | PASS |
+| 2026-06-22 | 0.6.0_AE_PartnerETL | ADVI_NNAATTR.TO-1.ds-nna-attribution-unify-buckets-preserved | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/ci/lambda-source-map.json | PASS |
+| 2026-06-22 | 3.0.0_SA_CVO | ADVI_NNAATTR.TO-1.ds-nna-attribution-unify-buckets-preserved | pipescript | pipescript advi-bd | PASS |
+| 2026-06-22 | 2.0.0_SA_COO | ADVI_NNAATTR.TO-1.ds-nna-attribution-unify-buckets-preserved | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/ADVI_COTETL.json --file or... | PASS |
+| 2026-06-22 | 0.6.0_AE_PartnerETL | ADVI_NNAATTR.TO-1.ds-nna-attribution-unify-buckets-preserved | comp-iam | comp-iam service gldinc-ss4c-canary | PASS |
+| 2026-06-22 | 0.6.0_AE_PartnerETL | ADVI_NNAATTR.TO-1.ds-nna-attribution-unify-buckets-preserved | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/terraform/bd-pipeline/gldinc-... | PASS |
+| 2026-06-22 | 3.0.0_SA_CVO | ADVI_NNAATTR.TO-1.ds-nna-attribution-unify-buckets-preserved | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/logs/2026-0... | PASS |
+| 2026-06-22 | 0.6.0_AE_PartnerETL | ADVI_NNAATTR.TO-1.ds-nna-attribution-unify-buckets-preserved | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/terraform/bd-pipeline/gldinc-... | PASS |
+| 2026-06-22 | 0.4.0_DE_ClientPlatform | ADVI_NNAATTR.TO-1.ds-nna-attribution-unify-buckets-preserved | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DE_ClientPlatfor... | PASS |
+| 2026-06-22 | 2.0.0_SA_COO | NFRA_COMPRAIL.TO-2.cto-comp-which-never-dead-ends | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/ADVI_COTETL.json | PASS |
+| 2026-06-22 | 0.6.0_AE_PartnerETL | NFRA_COMPRAIL.TO-2.cto-comp-which-never-dead-ends | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/bd-pipeline/gldinc-ss4... | PASS |
+| 2026-06-22 | 1.0.0_SA_CTO | NFRA_COMPRAIL.TO-2.cto-comp-which-never-dead-ends | comp-surface-check | comp-surface-check check --mode advisory --file .tools/comp-to --file org/XXX.md --file... | PASS |
+| 2026-06-22 | 0.6.0_AE_PartnerETL | NFRA_COMPRAIL.TO-2.cto-comp-which-never-dead-ends | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/ci/lambda-source-map.json | PASS |
+| 2026-06-22 | 0.4.0_DS_ClientPlatform | NFRA_COMPRAIL.TO-2.cto-comp-which-never-dead-ends | comp-blast | comp-blast silver/cot_transactions.parquet | PASS |
+| 2026-06-22 | 0.4.0_DS_ClientPlatform | NFRA_COMPRAIL.TO-2.cto-comp-which-never-dead-ends | comp-blast | comp-blast cot_transactions.parquet | PASS |
+| 2026-06-22 | 0.4.0_DS_ClientPlatform | NFRA_COMPRAIL.TO-2.cto-comp-which-never-dead-ends | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-06-22 | 0.6.0_AE_PartnerETL | NFRA_COMPRAIL.TO-2.cto-comp-which-never-dead-ends | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/bd-pipeline/gldinc-ss4... | PASS |
+| 2026-06-22 | 0.6.0_AE_PartnerETL | NFRA_COMPRAIL.TO-2.cto-comp-which-never-dead-ends | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/ci/lambda-source-map.json | PASS |
+| 2026-06-22 | 0.0.0_AB_MSTR | NFRA_COMPRAIL.TO-2.cto-comp-which-never-dead-ends | comp-surface-check | comp-surface-check check --mode advisory --file docs/briefs/comp-log-to-id-race-fix-202... | PASS |
+| 2026-06-22 | 0.0.0_AB_MSTR | NFRA_COMPRAIL.TO-2.cto-comp-which-never-dead-ends | comp-surface-check | comp-surface-check check --mode advisory --file docs/briefs/comp-log-to-id-race-fix-202... | PASS |
+| 2026-06-22 | 2.0.0_SA_COO | NFRA_COMPRAIL.TO-2.cto-comp-which-never-dead-ends | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/ADVI_NNAATTR.json --file o... | PASS |
+| 2026-06-22 | 0.6.0_AE_PartnerETL | NFRA_COMPRAIL.TO-2.cto-comp-which-never-dead-ends | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/ci/lambda-source-map.j... | PASS |
+| 2026-06-22 | 0.7.0_AE_CloudOps | ADVI_COTETL.AUAFIX-L1 | comp-pipescript io / comp-which / comp-freshness / comp-pipescript deployed | A_00 io (PASS); comp-which SNS (GAP no tool); comp-freshness cot + deployed cot (GAP bd-oriented) -- cot ground-truth via raw aws + parquet/xlsx content + decisive BD Custom probe | MIXED |
+| 2026-06-22 | 0.7.0_AE_CloudOps | NFRA_COMPRAIL.TO-2.cto-comp-which-never-dead-ends | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
