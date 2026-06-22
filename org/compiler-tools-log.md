@@ -7195,3 +7195,12 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-06-22 | 2.0.0_SA_COO | ADVI_COTETL.AUAFIX-C00SNAPSHOT (shared) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
 | 2026-06-22 | 0.7.0_AE_CloudOps | ADVI_COTETL.E2E-SAMEDAY | comp-which / deploy_ledger.py / SSM+aws | e2e cascade fired+caught false-success via SERVED ground-truth (not rc=0); deploy_ledger open/close honest; rail-checked cot s3-reads | VALIDATE |
 | 2026-06-22 | 0.7.0_AE_CloudOps | ADVI_COTETL.AUAFIX-C00SNAPSHOT (shared) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-06-22 | 2.0.0_SA_COO | ADVI_COTETL.AUAFIX-C00SNAPSHOT (shared) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+| 2026-06-22 | 0.4.0_DS_ClientPlatform | ADVI_COTETL.AUAFIX-C00SNAPSHOT (shared) | comp-surface-check | comp-surface-check check --mode advisory --file data/cot/scripts/gold/C_01.canonical_nn... | PASS |
+| 2026-06-22 | 0.4.0_DS_ClientPlatform | ADVI_COTETL.AUAFIX-C00SNAPSHOT (shared) | comp-pipescript | comp-pipescript deployed C_03 | PASS |
+| 2026-06-22 | 0.4.0_DS_ClientPlatform | ADVI_COTETL.AUAFIX-C00SNAPSHOT (shared) | comp-pipescript | comp-pipescript deployed C_01 | PASS |
+| 2026-06-22 | 3.0.0_SA_CVO | ADVI_COTETL.E2E-RERUN (shared) | comp-blast | comp-blast account_gains | PASS |
+| 2026-06-22 | 0.4.0_DS_ClientPlatform | ADVI_COTETL.E2E-RERUN (shared) | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/change_management/20... | PASS |
+| 2026-06-22 | 2.0.0_SA_COO | ADVI_COTETL.E2E-RERUN (shared) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+| 2026-06-22 | 0.7.0_AE_CloudOps | ADVI_COTETL.E2E-RERUN | parity(rail-checked) / SSM gold-run / served ground-truth | deployed==5c80bf6ca verified; gold re-run 62baea04; SERVED ground-truthed 06-18/$395.3M/contiguous (not rc=0); freeze BROKEN | VALIDATE |
+| 2026-06-22 | 0.7.0_AE_CloudOps | ADVI_COTETL.E2E-RERUN (shared) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
