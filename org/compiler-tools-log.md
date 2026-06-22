@@ -7269,3 +7269,30 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-06-22 | 0.7.0_AE_CloudOps | NFRA_DEBTSCAN.TO-D3 (shared) | comp-kuzu | comp-kuzu MATCH ()-[r:CloudEdge]->() RETURN r.edge_type AS t, count(*) AS c ORDER BY c ... | PASS |
 | 2026-06-22 | 0.7.0_AE_CloudOps | COT-LAUNCH + ADVI_COTETL fast-follow | comp-routes / comp-kuzu / comp-grep / deploy_ledger / authed-curl | gate#1 runtime-confirm (opalinvest.dev domain-catch + zero-leak + pinning nuance); D_01 chain-add before D_04; DEBTSCAN vocab census | DEPLOY |
 | 2026-06-22 | 0.7.0_AE_CloudOps | NFRA_DEBTSCAN.TO-D3 (shared) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-06-22 | 2.0.0_SA_COO | NFRA_DEBTSCAN.TO-D3 (shared) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+| 2026-06-22 | 3.0.0_SA_CVO | ADHC_COTAUDIT | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/ADVI_COTETL... | PASS |
+| 2026-06-22 | 2.0.0_SA_COO | NFRA_DEBTSCAN.TO-D3 (shared) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-06-22 | 0.4.0_DS_ClientPlatform | ADVI_COTETL.BACKFILL.ae-session (shared) | comp-surface-check | comp-surface-check check --mode advisory --file data/cot/scripts/bronze/cot_backfill_da... | PASS |
+| 2026-06-22 | 2.0.0_SA_COO | ADVI_COTETL.BACKFILL.ae-session (shared) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/briefs/allo... | PASS |
+| 2026-06-22 | 0.4.0_DS_ClientPlatform | ADVI_COTETL.BACKFILL.ae-session (shared) | pipescript | pipescript advi-cot | PASS |
+| 2026-06-22 | 0.4.0_DS_ClientPlatform | ADVI_COTETL.BACKFILL.ae-session (shared) | pipescript | pipescript --list | PASS |
+| 2026-06-22 | 0.7.0_AE_CloudOps | ADVI_COTETL.BACKFILL.ae-session (shared) | comp-routes | comp-routes behaviors | PASS |
+| 2026-06-22 | 0.4.0_DE_ClientPlatform | ADVI_COTETL.BACKFILL.ae-session (shared) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DE_ClientPlatfor... | PASS |
+| 2026-06-22 | 3.0.0_SA_CVO | ADHC_COTAUDIT | comp-surface-check | comp-surface-check check --mode advisory --file .claude/skills/verify-channel/SKILL.md | PASS |
+| 2026-06-22 | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/briefs/comp-which-routing-audit-20... | PASS |
+| 2026-06-22 | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/briefs/comp-which-routing-audit-20... | PASS |
+| 2026-06-22 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/1.0.0_SA_CTO/task_orders... | PASS |
+| 2026-06-22 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+| 2026-06-22 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DE_ClientPlatfor... | PASS |
+| 2026-06-22 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file data/cot/scripts/bronze/cot_backfill_da... | PASS |
+| 2026-06-22 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file data/cot/scripts/bronze/cot_backfill_da... | PASS |
+| 2026-06-22 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file data/cot/scripts/bronze/cot_backfill_da... | PASS |
+| 2026-06-22 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+| 2026-06-22 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file data/cot/scripts/bronze/cot_backfill_da... | PASS |
+| 2026-06-22 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+| 2026-06-22 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file data/cot/scripts/silver/cot_silver_merg... | PASS |
+| 2026-06-22 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file data/cot/scripts/gold/A_05.assets_dimen... | PASS |
+| 2026-06-22 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+| 2026-06-22 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file data/cot/scripts/gold/A_05.assets_dimen... | PASS |
+| 2026-06-22 | 0.7.0_AE_CloudOps | ADVI_COTETL.BACKFILL + A_05-chain | SSM exporter pulls / deploy_ledger / comp-routes / rail-checked parity | session-refresh + iterative WORK B backfill (form-bugs caught pre-silver) + A_05 chain-add; additive $395.30M frozen | MIXED |
+| 2026-06-22 | 0.7.0_AE_CloudOps | ADVI_COTETL.BACKFILL.a05-chain (shared) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
