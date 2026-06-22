@@ -12,9 +12,10 @@
 
 | leg | kind | target | proof required | proof | state |
 |---|---|---|---|---|---|
-| ae-chain-add | activation | opal-cot-gold-run | A_05-after-B_00-in-chain |  | OPEN |
+| ae-chain-add | activation | opal-cot-gold-run | A_05-after-B_00-in-chain | opal-cot-gold-run live: A_05 chained after B_00 (order verified); safe-apply 0/1/0; 0-diff clean; A_05 deployed==cbbbefb01 parity; DS owner-review PASS | CLOSED 20260622T233004Z |
 | nightly-verify | verify | gold-dimensions-assets-dim | first-nightly-A_05-reconciles-DS-confirms |  | OPEN |
 
 ## Log
 
 - 20260622T232934Z OPENED by 0.7.0_AE_CloudOps with 2 leg(s)
+- 20260622T233004Z LEG ae-chain-add closed: opal-cot-gold-run live: A_05 chained after B_00 (order verified); safe-apply 0/1/0; 0-diff clean; A_05 deployed==cbbbefb
