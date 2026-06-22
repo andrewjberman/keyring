@@ -61,6 +61,7 @@ def _read_context(workspace: Path) -> tuple[str, str]:
     """
     serial = os.environ.get("OPAL_AGENT_SERIAL", "")
     to_id = os.environ.get("OPAL_TO_ID", "")
+    to_id_source = "env" if to_id else None
 
     # session-keyed tier (race-free per-session source)
     sid = os.environ.get("CLAUDE_CODE_SESSION_ID", "")
@@ -70,6 +71,8 @@ def _read_context(workspace: Path) -> tuple[str, str]:
             serial = _read_session_file(sess_dir / f"{sid}.serial")
         if not to_id:
             to_id = _read_session_file(sess_dir / f"{sid}.to_id")
+            if to_id:
+                to_id_source = "session"
 
     context_file = workspace / ".comp-graph" / ".agent_context"
     if context_file.exists():
@@ -85,8 +88,16 @@ def _read_context(workspace: Path) -> tuple[str, str]:
                     serial = val
                 elif key == "TO_ID" and not to_id:
                     to_id = val
+                    to_id_source = "shared"
         except Exception:
             pass
+
+    # RACE-EXPOSED MARKER (CVO TO-5 spec 2026-06-22): a sid-having session that fell through to the
+    # raceable shared .agent_context for TO_ID (didn't run comp-to) gets a "(shared)" tag, so TO-5
+    # coverage analysis can filter/down-weight cross-attribution-prone rows. A clean TO_ID under a
+    # set sid == race-safe (env/session-sourced). No sid (non-Claude-Code shell) -> plain, no marker.
+    if sid and to_id and to_id_source == "shared":
+        to_id = to_id + " (shared)"
 
     return (serial or "(unknown)", to_id or "(no-TO)")
 
@@ -174,9 +185,11 @@ def main():
         workspace = _workspace()
         serial, to_id = _read_context(workspace)
 
-        # Dedup key: serial + tool + args (normalized)
+        # Dedup key: serial + to_id + tool + args (normalized). to_id is in the key (CVO TO-5 spec
+        # 2026-06-22) so the SAME command run under TWO different TOs inside the 30s window both log
+        # -- without it, a rapid comp-to switch + repeated command dedups away the new TO's first row.
         args_normalized = " ".join(args.split())  # collapse whitespace
-        dedup_key = f"{serial}|{tool}|{args_normalized}"
+        dedup_key = f"{serial}|{to_id}|{tool}|{args_normalized}"
 
         if _is_duplicate(workspace, dedup_key, window_secs=30):
             return  # Same agent ran same command within 30s -- skip
