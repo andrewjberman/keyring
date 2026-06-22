@@ -111,6 +111,9 @@ Write it so the analysis is **citable** and the smells + chain-map are preserved
 ## Assessment
 A plain-language read of what this unit IS and how it's doing — and, for any DIG smell, the explicit route (a /seams pass / a /verify-channel verdict / an owner finding). NOT a formal pass/fail gate — that's /verify-channel's function; molecule's output is the characterization + the smells.
 
+## grounding: field (Rule 22 — per CAUSAL claim)
+Pure characterization (Dimensions 1–2: what the unit IS + its live state) is STATE — grounded vs the live snapshot, no field. But any MECHANISM/causal claim — a smell "why", a chain-position causal ("X feeds Y because"), an Assessment "this is off because Z" — carries `grounding: SOURCE-CONFIRMED <file:line | comp-tool+output>` or `grounding: INFERRED (live-state-only)`. An INFERRED mechanism may PROMPT a /seams or source-check (its value) but is non-actionable and may NOT use the reserved words (proof / provably / root cause / definitively); absent field on a causal claim = not-accepted. Spec: `org/tier1_exec/3.0.0_SA_CVO/GROUNDING_FIELD_EMISSION_FORMAT.md` (Rule 22 / 53919cb32).
+
 ## Knowledge-parity delta + residual
 Believed-vs-true; what record was corrected (commit) / routed to owner; what was NOT exercised.
 

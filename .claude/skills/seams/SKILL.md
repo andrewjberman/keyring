@@ -127,6 +127,9 @@ What we BELIEVED about this seam vs what is TRUE. What record was corrected (com
 ## Verdict
 SOUND (all 3 PASS) | BROKEN@<axis> | UNVERIFIED@<axis> (why).
 
+## grounding: field (Rule 22 — per CAUSAL claim)
+A payload/state finding (the value crossing the seam, the live evidence on any axis) is STATE — grounded vs the deployed/served artifact, no field. But any MECHANISM/causal claim — a "the seam carries the wrong thing / doesn't connect BECAUSE X" on any axis, a root-cause for a FAIL — carries `grounding: SOURCE-CONFIRMED <file:line | comp-tool+output>` or `grounding: INFERRED (live-state-only)`. An INFERRED mechanism may PROMPT a source-check but is non-actionable and may NOT use the reserved words (proof / provably / root cause / definitively); absent field on a causal claim = not-accepted. Spec: `org/tier1_exec/3.0.0_SA_CVO/GROUNDING_FIELD_EMISSION_FORMAT.md` (Rule 22 / 53919cb32).
+
 ## Residual / unknowns
 What was NOT exercised (e.g., "code deployed but not proven on a live event"), what's still owed.
 
