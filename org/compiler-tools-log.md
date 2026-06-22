@@ -7256,3 +7256,8 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-06-22 | 0.0.0_AB_MSTR | ADVI_COTETL.CLEANUP (shared) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier0/ledger/LD-0207.md | PASS |
 | 2026-06-22 | 0.6.0_AE_PartnerETL | COORD | (none) | Pure MCP-coordination window (ETFS standing-bar ACK + 4 governance broadcasts + task_orders scope ground-truth); 0 code/infra/data change -> no comp trigger; ETFS reflexes bind when the W2 49F leg lands | N/A |
 | 2026-06-22 | 0.6.0_AE_PartnerETL | ADVI_COTETL.CLEANUP (shared) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-06-22 | 2.0.0_SA_COO | ADVI_COTETL.CLEANUP (shared) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/1.0.0_SA_CTO/task_orders... | PASS |
+| 2026-06-22 | 1.0.0_SA_CTO | NFRA_COMPRAIL.TO-3.cto-claudemd-rule20-amend | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/NFRA_COMPRAIL_HARDENI... | PASS |
+
+- 2026-06-22 ~1700-2035Z 0.4.0_DS_ClientPlatform: COTETL cleanup + 13-unmapped (CVO-verified) + P1 partner_analytics launch-blocker. comp-blast(Leg-1 pre-gate, PARTIAL->census-lesson), ds-commit-gate(C_01/D_00/D_00b/D_01 PASS), deploy_ledger.py(launch-emit CLOSED), safe-deploy(D_01 MATCH), md5/etag(deployed==c5bc7ba49), Grep/Read source-grounding(A_00 txn-dim / D_04 publisher / index.mjs S3-403).
+| 2026-06-22 | 0.4.0_DS_ClientPlatform | ADVI_COTETL.CLEANUP (shared) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
