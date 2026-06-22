@@ -154,6 +154,16 @@ def main() -> int:
     if not matches:
         print("  0 matches is a real result here -- the .gitignore-aware working set was searched, not a stale index.")
 
+    # SYSTEMS UNDERSTANDING (the interplay): every matched file arrives WITH the comp-tool that
+    # explains its dependencies -- so the agent cannot skim-via-grep without understanding what
+    # feeds/consumes it (Andrew-direct 2026-06-22 failure-mode #2).
+    matched_files = []
+    for rel, _n, _t in matches:
+        if rel not in matched_files:
+            matched_files.append(rel)
+    for line in _comprail.systems_context(matched_files):
+        print(line)
+
     _comprail.log_rail(RAIL_LOG, "RUN-GREP", "comp-grep", used_pattern,
                        "matches=%d files=%d scanned=%d path=%s" % (
                            len(matches), hit_files, scanned, ",".join(pathspec) or "."))

@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """_comprail.py -- shared helpers for the NFRA_COMPRAIL on-rails primitives (comp-grep,
-comp-ls). Single-sources the tricky bits so the two CLIs can't drift:
+comp-glob). Single-sources the tricky bits so the two CLIs can't drift:
 
   * repo_root()            -- the workspace root (git toplevel, .tools/.. fallback)
   * gitignore_aware_files  -- the .gitignore-aware working set, RECURSING nested git repos
@@ -18,10 +18,72 @@ from __future__ import annotations
 
 import datetime
 import os
+import re
 import subprocess
 import sys
 
 _HERE = os.path.dirname(os.path.abspath(__file__))
+
+
+# ---- SYSTEMS-UNDERSTANDING classifier (the interplay, Andrew-direct 2026-06-22) -------------
+# A grep match read as isolated text is failure-mode #2: skimming a file without understanding
+# its dependencies. classify_path maps a matched FILE to the comp-tool that explains ITS place
+# in the Opal dependency graph -- so every comp-grep hit arrives WITH the "and here is how this
+# file connects" hook. grep stays fully flexible; the systems-understanding rides alongside.
+def classify_path(p: str):
+    """-> (role_label, [comp-tool hooks]) for a system-significant file, else None."""
+    pl = p.replace("\\", "/").lower()
+    base = os.path.basename(p.replace("\\", "/"))
+    stem = re.sub(r"\.[A-Za-z0-9]+$", "", base)
+    if re.search(r"/scripts/gold/[^/]+\.py$", pl):
+        return ("gold producer script",
+                ["comp-pipescript io %s" % base, "comp-blast <fn-in-this-file>"])
+    if re.search(r"/scripts/(silver|bronze)/[^/]+\.py$", pl):
+        tier = "silver" if "/silver/" in pl else "bronze"
+        return ("%s producer script" % tier,
+                ["comp-pipescript io %s" % base, "comp-pipescript postdeps %s" % base])
+    if "/lambda/" in pl and pl.endswith(".py"):
+        return ("lambda source", ["comp-iam service <fn>", "comp-aws", "pipescript --resource <fn>"])
+    if pl.endswith(".tsx") or "/portal/src/" in pl:
+        comp = stem
+        if stem.lower() in ("index", "main"):  # index.tsx -> the parent dir is the real component
+            parent = os.path.basename(os.path.dirname(p.replace("\\", "/")))
+            comp = parent or stem
+        return ("portal component", ["comp-transform schema-check %s" % comp, "comp-routes behaviors"])
+    if pl.endswith(".tf") or "/infra/aws/" in pl:
+        return ("infra / terraform", ["comp-aws", "comp-iam gaps"])
+    if re.search(r"/(gold|platinum|silver)/[^/]*\.(json|parquet)$", pl):
+        return ("served artifact", ["pipescript --resource %s" % base, "comp-freshness %s" % base])
+    return None
+
+
+def systems_context(paths, limit: int = 12):
+    """Render the SYSTEMS CONTEXT block for a set of matched/listed files. Returns a list of
+    ASCII lines (empty if nothing system-significant). This is what turns a flat grep result
+    into a dependency-aware one."""
+    seen = []
+    roles = {}
+    for p in paths:
+        c = classify_path(p)
+        if not c:
+            continue
+        role, hooks = c
+        roles.setdefault(role, 0)
+        roles[role] += 1
+        if len(seen) < limit and p not in [s[0] for s in seen]:
+            seen.append((p, role, hooks))
+    if not seen:
+        return []
+    out = ["", "SYSTEMS CONTEXT -- these matches sit in the Opal dependency graph; do NOT read them",
+           "as isolated text. Per file, the comp-tool that explains what feeds/consumes it:"]
+    for p, role, hooks in seen:
+        out.append("  %s  [%s]" % (p, role))
+        out.append("     -> %s" % "   |   ".join(hooks))
+    extra = sum(roles.values()) - len(seen)
+    if extra > 0:
+        out.append("  (+%d more system-significant file(s); roles: %s)" % (
+            extra, ", ".join("%s x%d" % (r, n) for r, n in sorted(roles.items()))))
+    return out
 
 
 def harden_stdout() -> None:

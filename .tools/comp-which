@@ -78,7 +78,7 @@ RULES = [
       "list the gold", "list gold", "pipeline scripts", "scripts in the"],
      "list pipeline scripts",
      ["pipescript --list", "comp-pipescript deployed --firm <bd|inf|cot|mdpf>",
-      "comp-ls data/<firm>/scripts/gold/"],
+      "comp-glob data/<firm>/scripts/gold/"],
      "the scripts in a named pipeline/firm (+ deployed MATCH/STALE state)"),
 ]
 
@@ -94,7 +94,7 @@ SEARCHVERB_RX = re.compile(
     r"search (for|the)|show me (the |where )|locate|which files? (reference|contain|have|use|mention)|"
     r"what files?)\b", re.IGNORECASE)
 
-# List-files intent -> run comp-ls (not comp-grep).
+# List-files intent -> run comp-glob (not comp-grep).
 LISTVERB_RX = re.compile(
     r"\b(list (the )?files|what files|files (in|under|matching|named)|"
     r"ls |show (me )?(the )?files|directory listing|dir listing)\b", re.IGNORECASE)
@@ -175,6 +175,15 @@ def _extract_term(q: str):
     return max(words, key=len) if words else None
 
 
+_PATH_RX = re.compile(r"(?<![\w/])([A-Za-z0-9_.-]+/[A-Za-z0-9_./-]+)")
+
+
+def _extract_path(q: str):
+    """A slash-containing path token (for list/find intents -> pass as pathspec, not a pattern)."""
+    m = _PATH_RX.search(q)
+    return m.group(1).rstrip("/.") if m else None
+
+
 def _log_rail(decision: str, intent: str, term, q: str) -> None:
     try:
         import datetime
@@ -192,9 +201,9 @@ def _log_rail(decision: str, intent: str, term, q: str) -> None:
 
 
 def _run_primitive(kind: str, term: str) -> int:
-    """RUN the on-rails primitive (the never-dead-end). kind in {grep, ls}. Invokes the
-    sibling comp-grep/comp-ls via sys.executable (NOT a bash launcher -> Windows-safe)."""
-    script = os.path.join(WS, ".tools", "comp-grep" if kind == "grep" else "comp-ls")
+    """RUN the on-rails primitive (the never-dead-end). kind in {grep, glob}. Invokes the
+    sibling comp-grep/comp-glob via sys.executable (NOT a bash launcher -> Windows-safe)."""
+    script = os.path.join(WS, ".tools", "comp-grep" if kind == "grep" else "comp-glob")
     call = "comp-%s %s" % (kind, term)
     print('comp-which -- no rich comp-tool fits this exact search; running the ON-RAILS primitive:')
     print("  $ %s" % call)
@@ -262,12 +271,15 @@ def main() -> int:
         return 0
 
     if (search_intent or best_score == 0) and term:
-        kind = "ls" if list_intent else "grep"
+        if list_intent:
+            kind, target = "glob", (_extract_path(q) or term)  # a path -> pathspec, not a pattern
+        else:
+            kind, target = "grep", term
         if hits:
             print("  (a rich tool MIGHT fit -- consider first:)")
             _route_print(hits[:1])
-        _log_rail("RUN-%s" % kind.upper(), (hits[0][1] if hits else "no-rich-tool"), term, q)
-        return _run_primitive(kind, term)
+        _log_rail("RUN-%s" % kind.upper(), (hits[0][1] if hits else "no-rich-tool"), target, q)
+        return _run_primitive(kind, target)
 
     if hits:
         _route_print(hits)
@@ -282,11 +294,11 @@ def main() -> int:
             print("  -> %s   (%s)" % (call or tool, uc))
         print("")
     if list_intent:
-        _log_rail("RUN-LS", "no-rich-tool", ".", q)
-        return _run_primitive("ls", ".")
+        _log_rail("RUN-GLOB", "no-rich-tool", ".", q)
+        return _run_primitive("glob", ".")
     print("  No rich tool fit and no clear search term. The on-rails primitives (never a bare grep):")
-    print("    comp-grep <pattern> [pathspec]   -- .gitignore-aware, logged repo search")
-    print("    comp-ls [pathspec] [--glob ...]  -- .gitignore-aware file list")
+    print("    comp-grep <pattern> [pathspec]   -- .gitignore-aware, logged repo search + dependency context")
+    print("    comp-glob <pattern> [pathspec]   -- .gitignore-aware file find + dependency context")
     print("  Browse named threads: pipescript --list")
     _log_rail("NO-TERM", "none", term, q)
     return 0
@@ -297,7 +309,7 @@ def _route_print(hits):
         print("  -> %s" % "   |   ".join(calls))
         print("     [%s] %s" % (label, why))
         print("")
-    print("  (comp-which routed -- run the call yourself. No tool fit? it would have RUN comp-grep/comp-ls.)")
+    print("  (comp-which routed -- run the call yourself. No tool fit? it would have RUN comp-grep/comp-glob.)")
 
 
 if __name__ == "__main__":

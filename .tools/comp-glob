@@ -1,0 +1,108 @@
+#!/usr/bin/env python3
+"""comp-glob [glob-pattern] [pathspec ...] -- the ON-RAILS .gitignore-aware file finder
+(NFRA_COMPRAIL TO-2, Andrew-direct: "build comp-grep and comp-glob" 2026-06-22).
+
+THE ROLE: the never-dead-end primitive for "find/list files" intents -- the on-rails
+counterpart to the native Glob tool. Same .gitignore-aware working set as comp-grep
+(shared _comprail.gitignore_aware_files, which RECURSES nested git repos like portal),
+so it NEVER lists node_modules/.terraform/build artifacts and is repo-scoped by construction.
+
+THE INTERPLAY (Andrew-direct 2026-06-22 -- grep/glob flexibility + systems understanding):
+glob stays fully flexible (any pattern, any pathspec), but the result arrives WITH a
+SYSTEMS CONTEXT block mapping the system-significant files found to the comp-tool that
+explains their dependencies -- so an agent finding e.g. a gold script also sees
+`comp-pipescript io <it>`, and doesn't treat the file as isolated text. Every run logs a
+parseable line to org/mcp/comp-which-rail.log (the TO-5 coverage-audit feed).
+
+HONEST TRADEOFF: for a quick known-dir listing, native Glob is faster and fine (unguarded).
+comp-glob is the rail for the gated case + comp-which's run-the-primitive branch + when you
+want the dependency context alongside the file list.
+
+Read-only, deterministic, ASCII-only.
+"""
+from __future__ import annotations
+
+import fnmatch
+import os
+import sys
+
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import _comprail  # noqa: E402
+
+WS = _comprail.repo_root()
+RAIL_LOG = os.path.join(WS, "org", "mcp", "comp-which-rail.log")
+MAX_LIST_DEFAULT = 500
+
+
+def _looks_glob(s: str) -> bool:
+    return any(ch in s for ch in "*?[")
+
+
+def main() -> int:
+    _comprail.harden_stdout()
+    argv = sys.argv[1:]
+    if argv and argv[0] in ("-h", "--help"):
+        print('comp-glob [glob-pattern] [pathspec ...] [--max N]  -- on-rails, .gitignore-aware file find.')
+        print('  e.g. comp-glob "*.deck.md"')
+        print('       comp-glob "*Advisor*.tsx" portal/src')
+        print('       comp-glob data/cot/scripts/gold        (no pattern = list everything under the pathspec)')
+        return 0
+
+    glob_pat = None
+    max_list = MAX_LIST_DEFAULT
+    pathspec = []
+    i = 0
+    while i < len(argv):
+        a = argv[i]
+        if a == "--glob":
+            i += 1
+            glob_pat = argv[i] if i < len(argv) else None
+        elif a == "--max":
+            i += 1
+            try:
+                max_list = int(argv[i])
+            except Exception:
+                max_list = MAX_LIST_DEFAULT
+        elif glob_pat is None and _looks_glob(a):
+            glob_pat = a  # first glob-looking positional = the pattern (native-Glob ergonomics)
+        else:
+            pathspec.append(a)
+        i += 1
+
+    files, err = _comprail.gitignore_aware_files(WS, pathspec)
+    if files is None:
+        print("comp-glob: BLOCKED: %s" % err)
+        _comprail.log_rail(RAIL_LOG, "RUN-GLOB-ERR", "comp-glob", glob_pat or (",".join(pathspec) or "."),
+                           'q="%s"' % err)
+        return 2
+
+    if glob_pat:
+        files = [f for f in files
+                 if fnmatch.fnmatch(f, glob_pat) or fnmatch.fnmatch(os.path.basename(f), glob_pat)]
+
+    files.sort()
+    total = len(files)
+    truncated = total > max_list
+    shown = files[:max_list]
+    for f in shown:
+        print(_comprail.ascii_safe(f))
+
+    print("")
+    foot = "OK: comp-glob -- %d file(s)" % total
+    if truncated:
+        foot += " [showing first %d; --max to raise or narrow the pathspec/pattern]" % max_list
+    print(foot)
+    print("  (on-rails: repo-scoped + .gitignore-aware [incl. nested repos] + logged to org/mcp/comp-which-rail.log)")
+
+    # SYSTEMS UNDERSTANDING (the interplay): annotate the system-significant files found with the
+    # comp-tool that explains their dependencies -- so a file-find is dependency-aware, not flat.
+    for line in _comprail.systems_context(shown):
+        print(line)
+
+    _comprail.log_rail(RAIL_LOG, "RUN-GLOB", "comp-glob", glob_pat or (",".join(pathspec) or "."),
+                       "count=%d path=%s pattern=%s" % (total, ",".join(pathspec) or ".", glob_pat or "-"))
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
