@@ -230,11 +230,18 @@ Installs a `git()` shell-shadow function that gates destructive `git reset` / `g
 mkdir -p .comp-graph && printf "SERIAL=%s\nTO_ID=\n" "{your_serial}" > .comp-graph/.agent_context
 ```
 Every comp-* tool run automatically appends a structured row to `org/compiler-tools-log.md`.
-No manual logging needed. When you start a new TO, update the context:
+No manual logging needed. **When you start a new TO, set it with `comp-to` (NOT `printf > .agent_context`):**
 ```bash
-printf "SERIAL=%s\nTO_ID=%s\n" "{your_serial}" "{TO_filename_without_.md}" > .comp-graph/.agent_context
-# Example: printf "SERIAL=0.4.0_DS_ClientPlatform\nTO_ID=ADVI_OFFICE.W1\n" > .comp-graph/.agent_context
+comp-to {TO_filename_without_.md}
+# Example: comp-to ADVI_OFFICE.W1
 ```
+`comp-to` writes a RACE-FREE per-session file (`org/mcp/sessions/<CLAUDE_CODE_SESSION_ID>.to_id`)
+that the auto-logger reads with precedence env -> session-file -> shared `.agent_context`. The old
+`printf "...TO_ID=.." > .comp-graph/.agent_context` muscle-memory is RETIRED for TO_ID: that shared
+file is one global last-writer-wins across all concurrent agents, so it cross-attributed every
+comp run to whatever TO_ID the most-recent writer left (MSTR-FINDING 2026-06-22; corrupted the
+NFRA_COMPRAIL TO-5 per-TO coverage attribution). The `.serial` line in `.agent_context` is still
+fine to write (SERIAL is per-process); only TO_ID needed the race-free per-session source.
 
 **F. Reachability + the COO driver — arm ZERO loops at launch EXCEPT the COO auto-arms `/drive` (LD-0175 Andrew-direct 2026-06-10; COO carve-out Andrew-direct 2026-06-18):**
 

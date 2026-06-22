@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+# comp-to <TO_ID> -- set THIS session's current TO for comp-tool auto-logging attribution.
+#
+# Writes a RACE-FREE per-session file org/mcp/sessions/<CLAUDE_CODE_SESSION_ID>.to_id, which
+# comp_log_auto.py reads with precedence (env -> session file -> shared .agent_context).
+# Fixes the MSTR-FINDING (2026-06-22) TO_ID race: the shared .comp-graph/.agent_context is one
+# global file every agent overwrites (`printf > .agent_context`), so it was last-writer-wins
+# across concurrent agents -- every comp run got tagged with whatever TO_ID the most-recent
+# writer left, corrupting the NFRA_COMPRAIL TO-5 per-TO coverage attribution. Mirrors the proven
+# LD-0070 session-keyed .serial mechanism (the .serial half already solved this for SERIAL).
+#
+# Usage: comp-to NFRA_COMPRAIL.TO-2        (call when you START a TO; reaps with the session)
+#        comp-to ""                         (clear -- back to no-TO)
+set -uo pipefail
+WS="$(cd "$(dirname "$0")/.." 2>/dev/null && pwd)" || WS="."
+TO_ID="${1:-}"
+sid="${CLAUDE_CODE_SESSION_ID:-}"
+if [ -n "$sid" ]; then
+  mkdir -p "$WS/org/mcp/sessions" 2>/dev/null || true
+  printf '%s\n' "$TO_ID" > "$WS/org/mcp/sessions/${sid}.to_id"
+  echo "OK: comp-to -- session TO_ID = '${TO_ID}' (org/mcp/sessions/${sid}.to_id; race-free per-session)"
+else
+  # No session id (non-Claude-Code shell): fall back to the legacy shared-file TO_ID line.
+  echo "WARN: comp-to -- CLAUDE_CODE_SESSION_ID unset; cannot write session-keyed .to_id."
+  echo "      Legacy fallback: edit .comp-graph/.agent_context TO_ID= line manually (shared, not race-free)."
+fi

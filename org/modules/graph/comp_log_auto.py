@@ -33,13 +33,43 @@ def _workspace() -> Path:
     return Path(__file__).resolve().parent.parent.parent.parent
 
 
+def _read_session_file(path: Path) -> str:
+    """Read a single-value session-keyed file (org/mcp/sessions/<sid>.serial|.to_id).
+    Returns the stripped first non-empty line, or '' on any error/absence."""
+    try:
+        if path.exists():
+            for line in path.read_text(encoding="utf-8").splitlines():
+                line = line.strip()
+                if line:
+                    return line
+    except Exception:
+        pass
+    return ""
+
+
 def _read_context(workspace: Path) -> tuple[str, str]:
-    """Read SERIAL and TO_ID from .comp-graph/.agent_context.
-    Env vars OPAL_AGENT_SERIAL and OPAL_TO_ID take precedence.
-    Returns (serial, to_id).
+    """Resolve SERIAL and TO_ID with precedence: env -> session-keyed file -> shared file.
+
+    Precedence (MSTR-FINDING fix 2026-06-22, mirrors the LD-0070 session-keyed .serial
+    mechanism): the shared .comp-graph/.agent_context is a SINGLE global file overwritten by
+    every agent ("printf > .agent_context"), so it is last-writer-wins across concurrent
+    agents -- TO_ID (assigned post-spawn, never an env var) got cross-attributed to whichever
+    agent wrote .agent_context most recently, corrupting the per-TO coverage attribution.
+    The fix: a per-session file org/mcp/sessions/<CLAUDE_CODE_SESSION_ID>.{serial,to_id}
+    (race-free; the .serial half is already the canonical LD-0070 source). Shared file stays
+    as a legacy last-resort so pre-fix launches still log.
     """
     serial = os.environ.get("OPAL_AGENT_SERIAL", "")
     to_id = os.environ.get("OPAL_TO_ID", "")
+
+    # session-keyed tier (race-free per-session source)
+    sid = os.environ.get("CLAUDE_CODE_SESSION_ID", "")
+    if sid:
+        sess_dir = workspace / "org" / "mcp" / "sessions"
+        if not serial:
+            serial = _read_session_file(sess_dir / f"{sid}.serial")
+        if not to_id:
+            to_id = _read_session_file(sess_dir / f"{sid}.to_id")
 
     context_file = workspace / ".comp-graph" / ".agent_context"
     if context_file.exists():
