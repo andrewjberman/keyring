@@ -1,5 +1,7 @@
 # Deploy-completion ledger — ADVI_COTETL.AUAFIX-C00SNAPSHOT (cot served-AUA snapshot-perf fix)
 
+> **SUPERSEDED (gate-tracking) by the deploy_ledger.py tool-ledger** `20260622T1650Z_cotetl-c00snapshot-servedaua_deploy_completion.md` (slug `cotetl-c00snapshot-servedaua`), registered per COO so the `--red` gate sees it (a hand-written markdown is gate-invisible). The tool-ledger is authoritative: 4 legs proven (deploy/firmsep/rerun/servedverify), `cvocert` open -> closes on CVO firm-AUA cert. This file remains the human-readable narrative.
+
 **Opened:** 2026-06-22 ~1630Z (deploy-start)
 **Owner:** 0.4.0_DS_ClientPlatform
 **Authority:** CTO-ruled FIX (A) + branch-confirmed (162916Z); Andrew-direct same-day P0; COO GO (160525Z)
