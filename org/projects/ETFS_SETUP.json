@@ -1,0 +1,38 @@
+{
+  "project_code": "ETFS_SETUP",
+  "macro_code": "ETFS",
+  "name": "ETF-ownership tracking infrastructure -- opal-data-etfs bucket, per-partner daily-ownership producers, IAM, ETF-universe config, 49F silver/RPS build",
+  "description": "Andrew-direct 2026-06-22 ('the SETUP PRD is putting together any necessary infrastructure/AWS resources to facilitate this process, including the bucket, any lambdas that track daily average ownership per partner, etc.'). The INFRA FOUNDATION under ETFS_AVGCAP. Stands up: (1) opal-data-etfs aggregation bucket; (2) IAM on the WRITE-OUT model -- each partner's daily-producer role WRITEs only its own opal-data-etfs/daily/{partner}/* prefix + READs only its own firm bucket; the AVGCAP reader READs opal-data-etfs ONLY with ZERO firm-bucket grants (clean NEVER#1: no cross-firm READ ever, so the firm-bucket Deny statements are never fought -- comp-iam gaps confirmed firm buckets carry Deny on their own ARN); (3) three per-partner DAILY ETF-ownership producer lambdas (Inflection reads opal-data-inf gold/holdings; Cottonwood reads opal-data-cot gold/canonical/holdings post-COTETL-fix; 49F reads opal-data-schwab silver/RPS) that filter to the 4 Opal ETFs (DIVZ/IDVZ/PFDE/PFOE), sum market_value per ETF, and write the daily artifact; (4) the 49F silver/RPS build -- productionize the AE-owned /49-schwab-conv RPS converter (silver/RPS is currently EMPTY) + register it as the canonical 49F positions producer->served thread (currently ungraphed); (5) a shared ETF-universe config (not hardcoded x3); (6) the daily-artifact schema contract {partner,date,etf,ownership_value,account_count,source_artifact,source_as_of} that ETFS_AVGCAP consumes (source_as_of carries true vintage for honest staleness -- the COTETL serve-time-vintage lesson).",
+  "prds": [
+    {
+      "path": "docs/architecture/ETFS_SETUP.md",
+      "label": "CTO PRD v0.1 -- ETF-ownership infra: opal-data-etfs bucket + write-out IAM model + 3 per-partner daily producers + 49F silver/RPS build + shared ETF-universe config + daily-artifact contract",
+      "date": "2026-06-22"
+    },
+    {
+      "path": "org/tier1_exec/3.0.0_SA_CVO/ETFS_AVGCAP_cto_research_brief_20260622.md",
+      "label": "CVO research brief v2 (shared with ETFS_AVGCAP) -- the live source map + firm-bucket-separation constraint this infra is designed around",
+      "date": "2026-06-22"
+    }
+  ],
+  "related": [
+    "ETFS_AVGCAP",
+    "ADVI_COTETL",
+    "ETFS_NETAST",
+    "ETFS_SECIDX"
+  ],
+  "status": "active",
+  "phase": "PHASE 0 -- PRD AUTHORED 2026-06-22 (1.0.0_SA_CTO; docs/architecture/ETFS_SETUP.md). Andrew-direct, split from ETFS_AVGCAP (the metric) as the infra foundation. SEQUENCE: CTO PRD (DONE) -> COO decompose (NEXT). Waves: W1 = opal-data-etfs bucket + write-out IAM + ETF-universe config + daily-artifact contract + Inflection daily producer (provable now, live daily source); W2 = 49F silver/RPS build (/49-schwab-conv RPS converter) + register canonical thread + 49F daily producer; W3 = Cottonwood daily producer (gated on ADVI_COTETL CurrentDay fix, DEPLOYED a7a4d974c 2026-06-22). Architecture decided (compiler-grounded): WRITE-OUT model (per-firm producer writes the small ownership slice to opal-data-etfs; AVGCAP reads only etfs) -- NOT a cross-firm reader (would fight the firm-bucket Deny statements).",
+  "blocking": "CTO PRD LANDED (gate cleared) -> ready for COO decomposition. W3 (Cottonwood producer) gated on the ADVI_COTETL CurrentDay fix (DEPLOYED 2026-06-22 a7a4d974c; verifies on tonight's nightly -> cot holdings past 06-09). W2 (49F) depends on the manual Schwab monthly batch (latest raw 06-09; next ~early July) for fresh silver/RPS. W1 (Inflection + bucket + IAM) is unblocked NOW. Open infra decisions: S-D2 Schwab download SLA (Andrew/ops), S-D3 config home, S-D4 producer trigger (event-chain vs cron).",
+  "created": "2026-06-22",
+  "pods": [
+    "0.6",
+    "0.7",
+    "0.4",
+    "3.0"
+  ],
+  "pipeline": "ETF-ownership infra: opal-data-etfs (NEW aggregation bucket) <- per-partner daily producers [Inflection: opal-data-inf gold/holdings | Cottonwood: opal-data-cot gold/canonical/holdings | 49F: opal-data-schwab silver/RPS via /49-schwab-conv]; write-out IAM (per-firm write own prefix, AVGCAP reads etfs only)",
+  "coo_lane": "2.0.0_SA_COO",
+  "thread_counter": 0,
+  "threads": []
+}

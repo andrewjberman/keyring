@@ -47,7 +47,7 @@ Responsible pod: `0.2.0_DE` / `0.2.0_DS` / `0.2.0_DT`
 | `VALU` | Valuation | `portal/src/pages/Valuation/` | `0.2.4_RD_Valuation` | yang-pipeline |
 | `MACR` | Macroeconomics | `portal/src/pages/Macroeconomics/` | `0.2.5_RD_Macroeconomics` | yang-pipeline |
 | `CORR` | Correlation | `portal/src/pages/Correlation/` | `0.2.6_RD_Correlation` | yang-pipeline |
-| `ETFS` | ETF Operations (DIVZ, IDVZ, PFOE, PFDE) | TBD | TBD | TBD |
+| `ETFS` | ETF Operations / ownership tracking (DIVZ, IDVZ, PFOE, PFDE) -- per-partner AUM-in-Opal-funds metrics | (data/pipeline; no single page -- surfaces via MDPF if portal'd) | — | etfs (`opal-data-etfs` aggregation + per-partner daily-ownership producers) |
 
 ---
 
