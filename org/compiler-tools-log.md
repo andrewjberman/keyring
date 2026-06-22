@@ -7178,3 +7178,20 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-06-22 | 0.7.0_AE_CloudOps | ADVI_COTETL.AUAFIX-DATEMODE-C (shared) | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/change_management/20... | PASS |
 | 2026-06-22 | 0.7.0_AE_CloudOps | ADVI_COTETL.AUAFIX-DATEMODE-C | safe-apply / safe-commit / SSM | safe-apply cot_silver_run 0add/1change/0destroy (PASS); SSM silver reprocess 85884ad3 (operational); rail-checked s3-ls partition enum | DEPLOY |
 | 2026-06-22 | 0.7.0_AE_CloudOps | ADVI_COTETL.AUAFIX-DATEMODE-C (shared) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-06-22 | 1.0.0_SA_CTO | NFRA_COMPRAIL.TO-3.cto-claudemd-rule20-amend | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/ETFS_AVGCAP.md --file... | PASS |
+| 2026-06-22 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.7.0_AE_CloudOps/task... | PASS |
+| 2026-06-22 | 2.0.0_SA_COO | ADVI_COTETL.E2E-SAMEDAY (shared) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/ADVI_COTETL.json | PASS |
+| 2026-06-22 | 3.0.0_SA_CVO | ADVI_COTETL.E2E-SAMEDAY (shared) | comp-surface-check | comp-surface-check | FAIL |
+| 2026-06-22 | 2.0.0_SA_COO | ADVI_COTETL.E2E-SAMEDAY (shared) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+| 2026-06-22 | 0.7.0_AE_CloudOps | ADVI_COTETL.E2E-SAMEDAY (shared) | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/change_management/20... | PASS |
+| 2026-06-22 | 0.7.0_AE_CloudOps | ADVI_COTETL.E2E-SAMEDAY (shared) | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/change_management/20... | PASS |
+| 2026-06-22 | 0.7.0_AE_CloudOps | ADVI_COTETL.E2E-SAMEDAY (shared) | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/change_management/20... | PASS |
+| 2026-06-22 | 0.7.0_AE_CloudOps | ADVI_COTETL.E2E-SAMEDAY (shared) | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/change_management/20... | PASS |
+| 2026-06-22 | 1.0.0_SA_CTO | NFRA_COMPRAIL.TO-3.cto-claudemd-rule20-amend | comp-surface-check | comp-surface-check check --mode advisory --file CLAUDE.md --file docs/architecture/NFRA... | PASS |
+| 2026-06-22 | 2.0.0_SA_COO | ADVI_COTETL.E2E-SAMEDAY (shared) | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/change_management/20... | PASS |
+| 2026-06-22 | 0.4.0_DS_ClientPlatform | ADVI_COTETL.AUAFIX-PERFCHAIN (shared) | comp-pipescript | comp-pipescript io B_03 | PASS |
+| 2026-06-22 | 2.0.0_SA_COO | ADVI_COTETL.AUAFIX-C00SNAPSHOT (shared) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+| 2026-06-22 | 1.0.0_SA_CTO | NFRA_COMPRAIL.TO-3.cto-claudemd-rule20-amend | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/COTETL_METHODOLOGY_TH... | PASS |
+| 2026-06-22 | 2.0.0_SA_COO | ADVI_COTETL.AUAFIX-C00SNAPSHOT (shared) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+| 2026-06-22 | 0.7.0_AE_CloudOps | ADVI_COTETL.E2E-SAMEDAY | comp-which / deploy_ledger.py / SSM+aws | e2e cascade fired+caught false-success via SERVED ground-truth (not rc=0); deploy_ledger open/close honest; rail-checked cot s3-reads | VALIDATE |
+| 2026-06-22 | 0.7.0_AE_CloudOps | ADVI_COTETL.AUAFIX-C00SNAPSHOT (shared) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
