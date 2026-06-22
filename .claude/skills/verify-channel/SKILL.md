@@ -52,6 +52,7 @@ For the target surface, establish from code/config (not assumption):
 - The cadence + expected landing time, in **UTC** (crons + SSM are UTC).
 - The expected scale (rows / bytes) from recent good runs.
 - For a repair re-verify: the commit, what it claims to change, and whether its output was actually **run to the consumer path**. A committed fix not executed to S3 is NOT deployed; a script pushed to CLOUD but not `aws s3 cp`'d to the runner's code path is NOT what runs (`[[feedback-s3-pull-dispatcher-no-auto-propagate]]`). `comp-pipescript deployed <script>` gives MATCH/STALE/MISSING.
+- **For a RENDER / user-facing-display surface, the delivery contract is the ACTUAL USER'S LIVE WIRE-PROTOCOL PATH** — the deployed, role-and-firm-scoped render the real user hits, end-to-end to the pixel. The proxy classes — a data-injected local render, a *differently-scoped* session (external when the user is internal), a hand-built right-path API call — are necessary but **INSUFFICIENT**: each bypasses the exact path that can break. Walk the real path: the user's ROLE (internal/external) + their FIRM-SCOPE, on the DEPLOYED build. (COT go-live P0 2026-06-22: an external-scoped session + a data-injected render + a right-path API call ALL passed — yet the one path none exercised, the INTERNAL firm-override suffix-map (`bucketSuffix` missing `cottonwood→cot` → fetched `opal-data-COTTONWOOD` → empty), was exactly what the user hit. "Display-ready" != the-user-sees-it.)
 
 ## Step 2 — The 4-check method (run all four; existence alone is never sufficient)
 
