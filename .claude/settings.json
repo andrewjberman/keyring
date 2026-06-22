@@ -129,7 +129,7 @@
         ]
       },
       {
-        "matcher": "Grep|Glob",
+        "matcher": "Bash|Grep|Glob",
         "hooks": [
           {
             "type": "command",
