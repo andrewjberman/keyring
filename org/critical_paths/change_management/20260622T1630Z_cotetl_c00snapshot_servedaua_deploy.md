@@ -15,12 +15,12 @@ account_performance (C_03) + nna (C_01) derive total_aua/date from canonical_hol
 06-18 BD snapshot), NOT the dead account_gains chain.
 
 ## Legs
-- [ ] DS commit: data/cot/scripts/gold/C_03.account_performance.py + C_01.canonical_nna.py
-- [ ] DS deploy: aws s3 cp -> s3://opal-data-cot/code/gold/ (Rule 13); md5/etag MATCH
-- [ ] comp-pipescript deployed (firm-separated): ONLY cot tree changed, 49F (opal-data-bd) zero-touch
-- [ ] AE: synced-sha==commit proven + full-chain gold re-run (cot-exporter)
-- [ ] BINDING VERIFY (CVO certs all-5): served firm-AUA data_as_of 06-18 + total_aua ~$397.7M;
-      account_performance + nna contiguous to 06-18; market_growth meaningful (=aua_change-NNA)
+- [x] DS commit: C_03.account_performance.py + C_01.canonical_nna.py (5c80bf6ca)
+- [x] DS deploy: aws s3 cp -> s3://opal-data-cot/code/gold/ (Rule 13); md5/etag MATCH (both)
+- [x] comp-pipescript deployed (firm-separated): ONLY cot tree changed; 49F (opal-data-bd) C_03/C_01/C_01b/C_01c MATCH = zero-touch
+- [x] AE: synced-sha==5c80bf6ca proven + full-chain gold re-run (cot-exporter, gold 62baea04 Success)
+- [x] DS SERVED-VERIFY (independent ground-truth): clients_tab/header_metrics data_as_of=06-18 + total_aua=$395,300,238 (off $373M/06-09); account_performance contiguous 04-22->06-18 (707 accts/56 dates); nna 06-18. THE FREEZE IS BROKEN.
+- [ ] CLOSE-CONDITION: CVO firm-AUA cert (RAVC 164631Z). Anomalies grounded: #1 D_00 707->694 filter (pre-existing, CVO-confirm 13-excl); #2 nna-identical = EXPECTED (cot 04-22 onboarding); #3 fee_count/707-vs-694 = OUT-OF-SCOPE fee-side (AUAFIX-L6).
 
 ## Notes
 - C_03 ds-commit-gate CLEAN (removed 1 pre-existing unused import). C_01 ds-commit-gate: py_compile
