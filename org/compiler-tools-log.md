@@ -7157,3 +7157,5 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-06-22 | 1.0.0_SA_CTO | NFRA_COMPRAIL.TO-3.cto-claudemd-rule20-amend | comp-surface-check | comp-surface-check check --mode advisory --file .claude/settings.json | PASS |
 | 2026-06-22 | 0.6.0_AE_PartnerETL | SCHWAB_INGEST | comp-freshness + comp-which | Schwab June ingest Step-7 verify: comp-freshness artifact on 5 silver partitions (acc/rps/trn/uln/rld date=20260618) = PASS all; comp-which routed it (rail Rule 21) | PASS |
 | 2026-06-22 | 0.6.0_AE_PartnerETL | ADVI_COTETL.AUAFIX-DATEMODE-B (shared) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-06-22 | 0.7.0_AE_CloudOps | ADVI_COTETL.AUAFIX-DATEMODE-B | safe-apply / comp-which / SSM | safe-apply globgrph email-sub re-create (PASS); comp-which SNS (GAP); deployed-ingest backfill via SSM (operational, Rule 21 free) | DEPLOY |
+| 2026-06-22 | 0.7.0_AE_CloudOps | ADVI_COTETL.AUAFIX-DATEMODE-B (shared) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
