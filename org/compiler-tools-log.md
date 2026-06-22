@@ -7159,3 +7159,22 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-06-22 | 0.6.0_AE_PartnerETL | ADVI_COTETL.AUAFIX-DATEMODE-B (shared) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
 | 2026-06-22 | 0.7.0_AE_CloudOps | ADVI_COTETL.AUAFIX-DATEMODE-B | safe-apply / comp-which / SSM | safe-apply globgrph email-sub re-create (PASS); comp-which SNS (GAP); deployed-ingest backfill via SSM (operational, Rule 21 free) | DEPLOY |
 | 2026-06-22 | 0.7.0_AE_CloudOps | ADVI_COTETL.AUAFIX-DATEMODE-B (shared) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-06-22 | 3.0.0_SA_CVO | ADVI_COTETL.AUAFIX-DATEMODE-B (shared) | pipescript | pipescript advi-inf | PASS |
+| 2026-06-22 | 3.0.0_SA_CVO | ADVI_COTETL.AUAFIX-DATEMODE-B (shared) | pipescript | pipescript advi-cot | PASS |
+| 2026-06-22 | 3.0.0_SA_CVO | ADVI_COTETL.AUAFIX-DATEMODE-B (shared) | pipescript | pipescript --resource rps | PASS |
+| 2026-06-22 | 3.0.0_SA_CVO | ADVI_COTETL.AUAFIX-DATEMODE-B (shared) | pipescript | pipescript --resource schwab | PASS |
+| 2026-06-22 | 3.0.0_SA_CVO | ADVI_COTETL.AUAFIX-DATEMODE-B (shared) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/ETFS_AVGCAP... | PASS |
+| 2026-06-22 | 1.0.0_SA_CTO | NFRA_COMPRAIL.TO-3.cto-claudemd-rule20-amend | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/NFRA_COMPRAIL.json --file ... | PASS |
+| 2026-06-22 | 2.0.0_SA_COO | ADVI_COTETL.AUAFIX-DATEMODE-B (shared) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/1.0.0_SA_CTO/task_orders... | PASS |
+| 2026-06-22 | 1.0.0_SA_CTO | NFRA_COMPRAIL.TO-3.cto-claudemd-rule20-amend | pipescript | pipescript --list | PASS |
+| 2026-06-22 | 1.0.0_SA_CTO | NFRA_COMPRAIL.TO-3.cto-claudemd-rule20-amend | pipescript | pipescript advi-inf | PASS |
+| 2026-06-22 | 1.0.0_SA_CTO | NFRA_COMPRAIL.TO-3.cto-claudemd-rule20-amend | pipescript | pipescript advi-cot | PASS |
+| 2026-06-22 | 1.0.0_SA_CTO | NFRA_COMPRAIL.TO-3.cto-claudemd-rule20-amend | comp-iam | comp-iam gaps | PASS |
+| 2026-06-22 | 2.0.0_SA_COO | ADVI_COTETL.AUAFIX-DATEMODE-B (shared) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/ETFS_AVGCAP.json --file or... | PASS |
+| 2026-06-22 | 2.0.0_SA_COO | ADVI_COTETL.AUAFIX-DATEMODE-B (shared) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+| 2026-06-22 | 1.0.0_SA_CTO | NFRA_COMPRAIL.TO-3.cto-claudemd-rule20-amend | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/ETFS_AVGCAP.md --file... | PASS |
+| 2026-06-22 | 2.0.0_SA_COO | ADVI_COTETL.AUAFIX-DATEMODE-B (shared) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.7.0_AE_CloudOps/task... | PASS |
+| 2026-06-22 | 0.7.0_AE_CloudOps | ADVI_COTETL.AUAFIX-DATEMODE-C (shared) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/terraform/cot-pipeline/ssm.tf... | PASS |
+| 2026-06-22 | 0.7.0_AE_CloudOps | ADVI_COTETL.AUAFIX-DATEMODE-C (shared) | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/change_management/20... | PASS |
+| 2026-06-22 | 0.7.0_AE_CloudOps | ADVI_COTETL.AUAFIX-DATEMODE-C | safe-apply / safe-commit / SSM | safe-apply cot_silver_run 0add/1change/0destroy (PASS); SSM silver reprocess 85884ad3 (operational); rail-checked s3-ls partition enum | DEPLOY |
+| 2026-06-22 | 0.7.0_AE_CloudOps | ADVI_COTETL.AUAFIX-DATEMODE-C (shared) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
