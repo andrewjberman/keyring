@@ -7323,3 +7323,35 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-06-23 | 0.4.0_DE_ClientPlatform | ADVI_COTETL.BACKFILL.a05-chain (shared) | comp-transform | comp-transform schema-check ModelPortfolios | FAIL |
 - 0.7.0_AE_CloudOps 2026-06-23 AM (session_close_0845-1400Z): cot served-zero-AUA P0 -> (a) completeness-guard restore -> 06-22 currency-advance -> go-live provision (jane/john) -> render-skew polish (all 5 surfaces 06-22). Tools: SSM/aws verify-on-served (caught the zero-AUA, the dedup-skip non-advance, the 3-of-5 partial-advance, the wrong-route-403); comp-freshness --list (L4 cot-absent); comp-grep (skew producers); deploy_ledger x3 close.
 | 2026-06-23 | 0.7.0_AE_CloudOps | ADVI_COTETL.BACKFILL.a05-chain (shared) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-06-23 | 1.0.0_SA_CTO | NFRA_COMPRAIL.TO-3.cto-claudemd-rule20-amend | comp-surface-check | comp-surface-check check --mode advisory --file .claude/settings.json | PASS |
+| 2026-06-23 | 1.0.0_SA_CTO | NFRA_COMPRAIL.TO-3.cto-claudemd-rule20-amend | comp-surface-check | comp-surface-check check --mode advisory --file .claude/settings.json --file .tools/hoo... | PASS |
+| 2026-06-23 | 2.0.0_SA_COO | ADVI_COTETL.BACKFILL.a05-chain (shared) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.7.0_AE_CloudOps/task... | PASS |
+| 2026-06-23 | 2.0.0_SA_COO | ADVI_COTETL.BACKFILL.a05-chain (shared) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/briefs/allo... | PASS |
+| 2026-06-23 | 2.0.0_SA_COO | ADVI_COTETL.BACKFILL.a05-chain (shared) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+| 2026-06-23 | 2.0.0_SA_COO | ADVI_COTETL.BACKFILL.a05-chain (shared) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.7.0_AE_CloudOps/task... | PASS |
+| 2026-06-23 | 2.0.0_SA_COO | ADVI_COTETL.BACKFILL.a05-chain (shared) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+| 2026-06-23 | 0.7.0_AE_CloudOps | ADVI_COTETL.BACKFILL.a05-chain (shared) | comp-aws | comp-aws opal-data-etfs | FAIL |
+| 2026-06-23 | 2.0.0_SA_COO | ADVI_COTETL.BACKFILL.a05-chain (shared) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+| 2026-06-23 | 2.0.0_SA_COO | ADVI_COTETL.BACKFILL.a05-chain (shared) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+| 2026-06-23 | 2.0.0_SA_COO | ADVI_COTETL.BACKFILL.a05-chain (shared) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+| 2026-06-23 | 2.0.0_SA_COO | ADVI_COTETL.BACKFILL.a05-chain (shared) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+| 2026-06-23 | 2.0.0_SA_COO | ADVI_COTETL.BACKFILL.a05-chain (shared) | comp-surface-check | comp-surface-check check --mode advisory --file .claude/skills/drive/SKILL.md | PASS |
+| 2026-06-23 | 1.0.0_SA_CTO | NFRA_COMPRAIL.TO-3.cto-claudemd-rule20-amend | comp-surface-check | comp-surface-check check --mode advisory --file .tools/hooks/comp-tool-hud.sh --file do... | PASS |
+| 2026-06-23 | 2.0.0_SA_COO | ADVI_COTETL.BACKFILL.a05-chain (shared) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+| 2026-06-23 | 1.0.0_SA_CTO | NFRA_COMPRAIL.TO-3.cto-claudemd-rule20-amend | comp-surface-check | comp-surface-check check --mode advisory --file .tools/hooks/comp-tool-hud.sh --file do... | PASS |
+| 2026-06-23 | 0.7.0_AE_CloudOps | ADVI_COTETL.BACKFILL.a05-chain (shared) | comp-iam | comp-iam gaps | PASS |
+| 2026-06-23 | 0.7.0_AE_CloudOps | ADVI_COTETL.BACKFILL.a05-chain (shared) | comp-iam | comp-iam service inf-etf-ownership-daily | PASS |
+| 2026-06-23 | 0.7.0_AE_CloudOps | ADVI_COTETL.BACKFILL.a05-chain (shared) | comp-iam | comp-iam service inf-etf-ownership-daily | PASS |
+| 2026-06-23 | 0.7.0_AE_CloudOps | ADVI_COTETL.BACKFILL.a05-chain (shared) | comp-iam | comp-iam gaps | PASS |
+| 2026-06-23 | 0.7.0_AE_CloudOps | ADVI_COTETL.BACKFILL.a05-chain (shared) | comp-iam | comp-iam service etfs-avgcap-reader | PASS |
+| 2026-06-23 | 0.4.0_DS_ClientPlatform | ADVI_COTETL.BACKFILL.a05-chain (shared) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/inf-pipeline/inf-etf-o... | PASS |
+| 2026-06-23 | 2.0.0_SA_COO | ADVI_COTETL.BACKFILL.a05-chain (shared) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+| 2026-06-23 | 0.7.0_AE_CloudOps | ADVI_COTETL.BACKFILL.a05-chain (shared) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/ci/lambda-source-map.j... | PASS |
+| 2026-06-23 | 2.0.0_SA_COO | ADVI_COTETL.BACKFILL.a05-chain (shared) | comp-surface-check | comp-surface-check check --mode advisory --file .claude/skills/drive/SKILL.md | PASS |
+| 2026-06-23 | 0.7.0_AE_CloudOps | ADVI_COTETL.BACKFILL.a05-chain (shared) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/ci/lambda-source-map.json | PASS |
+| 2026-06-23 | 1.0.0_SA_CTO | NFRA_COMPRAIL.TO-3.cto-claudemd-rule20-amend | comp-surface-check | comp-surface-check check --mode advisory --file .tools/hooks/comp-tool-hud.sh --file CL... | PASS |
+| 2026-06-23 | 2.0.0_SA_COO | ADVI_COTETL.BACKFILL.a05-chain (shared) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+| 2026-06-23 | 0.7.0_AE_CloudOps | ADVI_COTETL.BACKFILL.a05-chain (shared) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/ci/lambda-source-map.j... | PASS |
+| 2026-06-23 | 2.0.0_SA_COO | ADVI_COTETL.BACKFILL.a05-chain (shared) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+- 0.7.0_AE_CloudOps 2026-06-23 PM (session_close_1400-1552Z): ETFS_SETUP W1 LANDED -- un-pace recovery -> producer+write-out-IAM+AVGCAP-reader build -> comp-iam-clean (NEVER#1) -> plan-diff RAVC -> deploy-completion-hold-for-outage -> 2-root apply finished-in-one-go (13-add/0-change/0-destroy, ledger open->close). Tools: comp-iam service+gaps (the apply-GO Rule-22 grounding); deploy_ledger open/close-leg/close/check; terraform init/plan/safe-apply/0-diff x2 roots.
+| 2026-06-23 | 0.7.0_AE_CloudOps | ADVI_COTETL.BACKFILL.a05-chain (shared) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
