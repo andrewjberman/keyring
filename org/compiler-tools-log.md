@@ -7355,3 +7355,31 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-06-23 | 2.0.0_SA_COO | ADVI_COTETL.BACKFILL.a05-chain (shared) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
 - 0.7.0_AE_CloudOps 2026-06-23 PM (session_close_1400-1552Z): ETFS_SETUP W1 LANDED -- un-pace recovery -> producer+write-out-IAM+AVGCAP-reader build -> comp-iam-clean (NEVER#1) -> plan-diff RAVC -> deploy-completion-hold-for-outage -> 2-root apply finished-in-one-go (13-add/0-change/0-destroy, ledger open->close). Tools: comp-iam service+gaps (the apply-GO Rule-22 grounding); deploy_ledger open/close-leg/close/check; terraform init/plan/safe-apply/0-diff x2 roots.
 | 2026-06-23 | 0.7.0_AE_CloudOps | ADVI_COTETL.BACKFILL.a05-chain (shared) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-06-23 | 0.4.0_DS_ClientPlatform | ADVI_COTETL.BACKFILL.a05-chain (shared) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/etfs/config/etf_universe.json | PASS |
+| 2026-06-23 | 0.4.0_DS_ClientPlatform | ADVI_COTETL.BACKFILL.a05-chain (shared) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/etfs/config/etf_universe.json | PASS |
+| 2026-06-23 | 2.0.0_SA_COO | ADVI_COTETL.BACKFILL.a05-chain (shared) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+| 2026-06-23 | 0.7.0_AE_CloudOps | ADVI_COTETL.BACKFILL.a05-chain (shared) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/etfs/config/etf_universe.json | PASS |
+| 2026-06-23 | 1.0.0_SA_CTO | NFRA_COMPRAIL.TO-3.cto-claudemd-rule20-amend | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/NFRA_OPLMCP_PRD.md | PASS |
+| 2026-06-23 | 3.0.0_SA_CVO | ADHC_COTAUDIT | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/OPLMCP_cert... | PASS |
+| 2026-06-23 | 3.0.0_SA_CVO | ADHC_COTAUDIT | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/OPLMCP_cert... | PASS |
+| 2026-06-23 | 0.7.0_AE_CloudOps | ADVI_COTETL.BACKFILL.a05-chain (shared) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.7.0_AE_CloudOps/oplm... | PASS |
+| 2026-06-23 | 2.0.0_SA_COO | ADVI_COTETL.BACKFILL.a05-chain (shared) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+| 2026-06-23 | 0.7.0_AE_CloudOps | ADVI_COTETL.BACKFILL.a05-chain (shared) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.7.0_AE_CloudOps/oplm... | PASS |
+| 2026-06-23 | 2.0.0_SA_COO | ADVI_COTETL.BACKFILL.a05-chain (shared) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+| 2026-06-23 | 2.0.0_SA_COO | ADVI_COTETL.BACKFILL.a05-chain (shared) | comp-surface-check | comp-surface-check check --mode advisory --file .claude/skills/drive/SKILL.md | PASS |
+| 2026-06-23 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+| 2026-06-23 | 0.7.0_AE_CloudOps~B | NFRA_OPLMCP.02.ae-backend-integration | comp-iam | comp-iam service m365-mcp-gateway | PASS |
+| 2026-06-23 | 0.7.0_AE_CloudOps~B | NFRA_OPLMCP.02.ae-backend-integration | comp-iam | comp-iam gaps | PASS |
+| 2026-06-23 | 0.7.0_AE_CloudOps~B | NFRA_OPLMCP.02.ae-backend-integration | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/terraform/m365-mcp-gateway/se... | PASS |
+| 2026-06-23 | 0.7.0_AE_CloudOps~B | NFRA_OPLMCP.02.ae-backend-integration | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/ec2/EC2_MANIFEST.json | PASS |
+| 2026-06-23 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.7.0_AE_CloudOps/task... | PASS |
+| 2026-06-23 | 1.0.0_SA_CTO | NFRA_COMPRAIL.TO-3.cto-claudemd-rule20-amend | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/NFRA_OPLMCP_PRD.md | PASS |
+| 2026-06-23 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.7.0_AE_CloudOps/task... | PASS |
+| 2026-06-23 | 0.7.0_AE_CloudOps~B | NFRA_OPLMCP.02.ae-backend-integration | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/ec2/m365-mcp-gateway/deploy-t... | PASS |
+| 2026-06-23 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+| 2026-06-23 | 0.7.0_AE_CloudOps~B | NFRA_OPLMCP.02.ae-backend-integration | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/ec2/m365-mcp-gateway/deploy-t... | PASS |
+| 2026-06-23 | 0.7.0_AE_CloudOps~B | NFRA_OPLMCP.02.ae-backend-integration | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/ec2/EC2_MANIFEST.json | PASS |
+| 2026-06-23 | 0.7.0_AE_CloudOps~B | NFRA_OPLMCP.02.ae-backend-integration | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/terraform/m365-mcp-gateway/al... | PASS |
+| 2026-06-23 | 0.7.0_AE_CloudOps~B | NFRA_OPLMCP.02.ae-backend-integration | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.7.0_AE_CloudOps/task... | PASS |
+| 2026-06-23 | 0.7.0_AE_CloudOps~B | NFRA_OPLMCP.02 | comp-iam (summary) | OPLMCP.02 go-live: comp-iam service=COVERAGE-GAP (gateway unmodeled -> manual IAM review, CTO-confirmed) + comp-iam gaps=PASS; comp-pipescript/blast N/A (EC2 MCP svc, not a data pipeline) | DEPLOY |
+| 2026-06-23 | 0.7.0_AE_CloudOps~B | NFRA_OPLMCP.02.ae-backend-integration | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
