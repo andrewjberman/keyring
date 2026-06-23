@@ -125,6 +125,14 @@ finds those. For each item in the triage:
   time-sensitive work it was holding to a reachable lane (e.g. the base lane) meanwhile. Most common
   on `~A` lanes (broker can't push to them). This is the reachability failure mode the retired
   self-tick used to mask — DEAF detection is now how it surfaces.
+  **GROUND THE CAUSE before reaping (Andrew-direct 2026-06-23):** a DEAF reading can be an
+  infra-transient LOAD-FAILURE, not agent-death. If MULTIPLE lanes read DEAF/stale at once, OR
+  MSTR / a Tier-0/1 is also unreachable, OR the lane is a FRESH spawn that never loaded (no-summary),
+  suspect a **fabric-wide server-side outage (Anthropic-side)** → do NOT reap during it; wait for
+  recovery + re-check (the agent returns when the outage abates). Reap ONLY an isolated, agent-specific
+  DEAF that is confirmed NOT coincident with an outage AND has no live pending work. Anchor: 2026-06-23
+  — COO reap-nominated a fresh `0.7.0_AE_CloudOps~B` reading DEAF; it was Andrew's INTENTIONAL spawn
+  that failed to load on an Anthropic outage (the same outage had MSTR deaf). Retracted before MSTR acted.
 - **BLOCKED** → resolve it (dispatch the unblocking move via Step 5) OR escalate it (`[STUCK]` to
   MSTR per the LD-0026 chain) — this cycle. Never leave a block un-acted.
 - **SOVEREIGN-DECISION REQUEST** → **declare it**: route the decision to Andrew, CC MSTR. If the
