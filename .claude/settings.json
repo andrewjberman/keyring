@@ -165,7 +165,7 @@
           },
           {
             "type": "command",
-            "command": "bash .tools/hooks/post-send-commitment.sh",
+            "command": "bash \"$CLAUDE_PROJECT_DIR/.tools/hooks/post-send-commitment.sh\"",
             "timeout": 10
           }
         ]
