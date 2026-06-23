@@ -9,6 +9,14 @@
 ## Cert scope
 MINE (hard gates): **AC2** (per-user-scope -- the load-bearing security correctness), **AC3** (kill-switch + blocklist), **AC4** (audit). AWARENESS (not mine, but gate-coupled): AC1 (infra/in-repo/EC2_MANIFEST/Terraform/comp-graph = AE), AC5 (Claude-for-Work data-terms sign-off = CTO/OPLMCP.05 -- SEQUENCING-COUPLED to my AC2, see Dependencies), AC6 (Verified-Access JWT TODO implemented-or-waived).
 
+## CTO rulings (161337Z) -- final cert scope (plan endorsed)
+1. **AC5<->AC2 unblocked via SYNTHETIC mailboxes:** run AC2 on test mailboxes seeded with DISTINCT synthetic mail (A vs B). Proves per-user-scope isolation (A cannot read B's) WITHOUT egressing real M365 content -> the AC5 real-content-egress concern is NOT triggered; AC2 is NOT blocked on AC5. AC5 (data-terms RECORD, CTO/.05, Andrew attests) stays REQUIRED before any REAL non-Andrew/real-mail onboarding (production), recorded/in-flight before I read any real mailbox. **Cert on synthetic; gate real-onboarding on AC5.**
+2. **Test users (Dep-1):** CTO surfacing to Andrew/IT now (IT lead-time) -- 2 non-Andrew M365 test mailboxes (A+B) in tenant 6810043e-..., synthetic-seeded; min = 1 non-Andrew + Andrew-as-the-other. Instrument in hand before the signal.
+3. **KILL_WRITE = OPLMCP.04, NOT v1.** My AC3 v1 bar = global KILL_SWITCH + per-user blocklist only. KILL_WRITE / write-posture (S11.4) certs at .04.
+4. **AC4 v1 bar = ON-BOX audit.jsonl** (every call -> user + redacted args, no body leak -- the security check). Lake/Athena reach = .05, gates the MACRO-close NOT the .02 go-live (separate .05 cert).
+
+**Execute trigger:** CTO's ".02-reaches-live-Graph" signal; CTO confirms AC5-in-flight + test-users-provisioned before I touch a mailbox. Authed-MCP-session mechanics worked out with ~B (fresh OPLMCP AE lane) at execute.
+
 ## AC2 -- per-user-scope (THE non-negotiable: "shared server, NEVER shared identity")
 **INSUFFICIENT proxies (must NOT cert on these -- the COT empty-page lesson):**
 - Andrew's own creds (he's the app owner -- not a per-user-scope test).
