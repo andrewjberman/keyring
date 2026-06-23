@@ -11,6 +11,20 @@ The project-axis analogue to `/spot-check`'s agent-commit-grain alignment-sweep 
 
 ---
 
+## THE DRIVE IMPERATIVE — resolve gates, don't attest them (Andrew-direct 2026-06-23; the load-bearing thesis)
+
+**A gated / blocked / parked TO is NOT a valid resting state — it is the thing to go BREAK this cycle. /drive drives tasks to COMPLETION, not to a tidy waypoint.** Three rules that OVERRIDE any "honestly gated" comfort:
+
+1. **RESOLVE, don't attest.** For every gated TO ask: *is this gate COO-resolvable RIGHT NOW?* — respawn a dead/unloaded lane (or pull a pre-agreed contingency), reroute to a live lane, escalate a sovereign call to Andrew/MSTR, fire the unblocking dispatch. If yes → **DO IT this cycle.** `"awaits-X"` is legitimate ONLY if X is genuinely outside COO power (an external scheduled nightly, a human/sovereign gate, a real multi-hour in-flight compute) AND you've re-verified it's still moving. A **self-inflicted wait** — a dead lane you could respawn, a contingency you set but never pulled, an escalation you could fire — is NOT a gate; it's coasting.
+
+2. **ALLOCATION = guarantee the completing-worker is ALIVE + producing — not "signal who's needed."** If the agent that completes a hot task is dead / DEAF / not-loaded, allocation's job is to **make it alive** (spawn/respawn/contingency via MSTR) so the task completes — not to note it's not-alive and wait. A required-but-absent worker is an UNRESOLVED allocation action every cycle until it is alive AND working the task.
+
+3. **Drive to COMPLETION, not to a comfortable waypoint.** "Plan done / staged / durable / handoff committed / one-gate-away / nothing pending" are NOT done — they are mid-points you may state ONLY while you keep closing the gap to the ACTUAL completion (deployed + verified + RAVC/cert-PASS). Reaching a defensible resting state and reporting it IS the failure this skill exists to prevent.
+
+**Anchor (2026-06-23):** OPLMCP.02 sat "gated on ~B-load (outage)" for ~5 consecutive cycles while the outage was demonstrably clear (W1 safe-applied on it; MSTR/CTO/CVO/AE all working through it) and MSTR's fresh-respawn contingency sat un-pulled — COO attested "awaits-outage-clear" instead of respawning the lane. The gate was COO-resolvable the whole time. Cousin lessons: `feedback_drive_read_agent_activity_not_project_paths` (read activity not paths) + 2b.2a (verify movement) — this is the conclusion-layer: *having verified the block, GO BREAK IT.*
+
+---
+
 ## Invocation forms
 
 | Form | Behavior |
@@ -282,10 +296,12 @@ Fire every classified action via `mcp__opal-agent-comms__send_message` in this s
 
 Before exiting the cycle, verify:
 
-**Per /drive invocation: ≥1 project-advancement action fired OR per-project explicit attestation that monitoring path is real + ETA holds.**
+**Per /drive invocation: ≥1 project-advancement action fired OR per-project explicit attestation that monitoring path is real + ETA holds — AND, for EVERY gated/blocked TO, proof you RESOLVED the gate or that it is genuinely outside COO power (per THE DRIVE IMPERATIVE).** Attestation is NOT a free pass: `"gated + ETA-holds"` is valid ONLY after you've confirmed the gate is not COO-resolvable this cycle (no lane to respawn, no contingency to pull, no escalation to fire, no live lane to reroute to). If it IS resolvable, the PASS requires you to have RESOLVED it — attesting it instead = `gate_status: FAILED`.
 
 **FORBIDDEN terminal states:**
 - "All projects standing by" — projects don't stand by; they advance, stick, or get resolved. If they're standing by, the owner is mid-RAVC2 (verify) OR there's an unfired NEXT-ACTION (dispatch) OR the project is actually `dormant` not `active` (queue-hygiene to MSTR).
+- **"Gated on X / awaits X" where X is COO-resolvable** — a dead/unloaded lane you could respawn, a contingency you set but never pulled, a sovereign call you could escalate, a live lane you could reroute to. That's a self-inflicted wait, not a gate → RESOLVE it this cycle. **Re-attesting the same self-resolvable gate across ≥2 cycles is THE coast-failure** (the OPLMCP.02/~B anchor).
+- **Narrating a tidy waypoint as the destination** — "plan staged / durable / one-gate-away / nothing pending" is NOT completion; keep driving to deployed+verified+cert-PASS.
 - "Lower-touch window holds" — that was the CY-0099/0100/0101 failure-mode framing per LD-0056. NOT a valid /drive verdict.
 - Receipt-acks of prior /drive findings without new project-advancement action — receipt-acks are bookkeeping, not driving.
 
