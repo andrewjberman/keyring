@@ -67,6 +67,16 @@ gpath=$(printf '%s' "$INPUT" | "$JQ" -r '.tool_input.path // ""' 2>/dev/null || 
 if printf '%s' "$gpath" | grep -qE '\.[A-Za-z0-9]+$'; then exit 0; fi      # path ends in a file extension = single file
 if printf '%s' "$query" | grep -qE 'comp-|pipescript'; then exit 0; fi      # already a comp-tool reference
 if [ "$tool" = Bash ] && printf '%s' "$query" | grep -qE 'lambda invoke|s3(api)? (cp|sync|put-object|mv)|get-function-configuration|safe-apply|safe-ec2-deploy|safe-commit|terraform |update-function-code|start-build|run-task|dynamodb (put-item|update-item|delete-item|batch-write-item)'; then exit 0; fi
+# (d) NON-ESTATE LOCAL CODE LIBRARY (the deck-generation engine deck_generation/) -- a symbol/def/
+#     signature/arg-shape lookup INSIDE a self-contained local code library has NO cross-system
+#     coupling for a comp-tool to illuminate (comp-tools answer estate/pipeline/IAM/graph/component
+#     coupling, NOT intra-library symbol shapes) -> grep/Read is the CORRECT tool, not a bypass.
+#     Estate code (data/*/scripts/{gold,silver,bronze}, portal/src, infra, .tf, lambda src) is
+#     EXCLUDED -> it stays on the rail. Exiting here means no nudge AND no future broad-grep DENY.
+#     (RD deck-engine case 2026-06-23; NFRA_COMPRAIL/LD-0207 Gate-1 carve-out. Allowlist extends as
+#     more non-estate libraries surface via the override-telemetry.)
+if printf '%s' "$query $gpath" | grep -qE 'deck_generation/' \
+   && ! printf '%s' "$query $gpath" | grep -qE 'data/[A-Za-z0-9_]+/scripts/(gold|silver|bronze)|portal/src|infra/aws/|\.tf([^A-Za-z0-9]|$)|(^|[^a-z])lambda'; then exit 0; fi
 # a bare `aws s3 ls`/`list-objects` with NO code/ or gold|platinum|silver|json prefix = a generic
 # listing (no targeted comp answer) -> stay silent; do NOT fall through to the s3_artifact grep-class
 # on the bucket-name alone. (The targeted code//gold/ s3-ls classes below carry code//gold/ so this skips THEM out.)
