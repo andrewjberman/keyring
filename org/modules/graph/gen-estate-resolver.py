@@ -7,7 +7,11 @@ owning_tool/status/named_thread come from CVO (the census + tool-boundary author
 NOT a heuristic. An earlier heuristic over-assigned comp-pipescript (79 vs correct 13);
 CVO caught it (seed-of-record 61e91d334). This regenerates the resolver from CVO's rows."""
 from __future__ import annotations
-import json, os, yaml
+
+import json
+import os
+
+import yaml
 
 ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
 CENSUS = os.path.join(ROOT, "org", "tier1_exec", "3.0.0_SA_CVO", "logs", "2026-06-15", "estate_census")
@@ -25,7 +29,12 @@ def load_routing():
         out.append({"family": e.get("family"), "named_thread": e.get("named_thread"),
                     "owning_tool": e.get("owning_tool"), "status": e.get("status"),
                     "reachability_status": e.get("reachability_status"),  # P3.2 CVO ground-truth
-                    "reason": e.get("reason")})
+                    "reason": e.get("reason"),
+                    # Optional self-contained detail for estate threads NOT in the lambda census
+                    # (e.g. an EC2/ALB service like m365-mcp-gateway). Falls back to census when absent.
+                    "description": e.get("description"), "producers": e.get("producers"),
+                    "served_artifacts": e.get("served_artifacts"),
+                    "frontend_resolution": e.get("frontend_resolution")})
     return out
 
 
@@ -36,7 +45,8 @@ def load_census_detail():
         detail[t["thread_id"]] = t
     for fam in json.load(open(os.path.join(CENSUS, "pass2_gapfamilies.json"), encoding="utf-8")):
         for t in fam.get("threads", []):
-            t = dict(t); t.setdefault("family", fam.get("family"))
+            t = dict(t)
+            t.setdefault("family", fam.get("family"))
             detail[t["thread_id"]] = t
     return detail
 
@@ -62,10 +72,11 @@ def main():
             "family": d.get("family"), "owning_tool": r["owning_tool"], "status": r["status"],
             "reachability_status": r.get("reachability_status"),  # P3.2 CVO ground-truth FE-reachability
             "reason": r.get("reason"), "debtscan_flags": flags,
-            "description": d.get("description", ""),
-            "producers": d.get("producers", []),
-            "served_artifacts": d.get("served_artifacts", []),
-            "frontend_resolution": d.get("frontend_resolution", ""),
+            # manifest-provided detail wins (self-contained non-census threads); else census.
+            "description": r.get("description") or d.get("description", ""),
+            "producers": r.get("producers") or d.get("producers", []),
+            "served_artifacts": r.get("served_artifacts") or d.get("served_artifacts", []),
+            "frontend_resolution": r.get("frontend_resolution") or d.get("frontend_resolution", ""),
         })
     # AUTHORITATIVE resource-level taxonomy (CVO 26b32687a): lambda -> named_thread, single source
     # the fixtures are also derived from. This is the resource enumeration `pipescript <name>` surfaces
@@ -93,7 +104,6 @@ def main():
     json.dump(resolver, open(RESOLVER, "w", encoding="utf-8"), indent=1)
     print("resource-level named threads:", len(resources_by_named_thread), "| total lambdas mapped:", len(l2nt))
 
-    from collections import Counter
     print(f"rows (CVO authoritative): {len(rows)} | resolver threads: {len(threads)} | named: {len(named_order)}")
     print("owning_tool:", dict(Counter(t["owning_tool"] for t in threads)))
     print("status:", dict(Counter(t["status"] for t in threads)))

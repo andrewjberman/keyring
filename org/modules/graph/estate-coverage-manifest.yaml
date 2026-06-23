@@ -825,13 +825,20 @@ threads:
     last_reviewed: '2026-06-15'
     debtscan_flags: []
   - family: m365-mcp-gateway-ec2
-    named_thread: ops-internal
-    owning_tool: none
-    status: explicit-out
-    reachability_status: frontend-orphan
-    reason: NOT PROVISIONED (instance_id=null), scaffold-only, no live resource/consumer
+    named_thread: m365-mcp
+    owning_tool: globgrph
+    status: in-scope
+    reachability_status: null
+    reason: 'M365 MCP gateway (NFRA_OPLMCP): internet-facing ALB (authenticate-oidc against Entra App-1) -> nano EC2 gateway -> per-user delegated Microsoft Graph. Onboarded to the estate graph at the .02 go-live per OPLMCP.07 (was the scaffold-only NOT-PROVISIONED census entry; now live). owning_tool=globgrph (AWS-resource graph: ALB/TG/listener/EC2/SG/Route53/secrets).'
+    description: 'Internal MCP access layer fronting Microsoft 365 for Claude (Code/Desktop): per-user delegated Graph token brokered on-box; central kill-switch + per-user blocklist + tool-level audit; runs on Opal AWS.'
+    producers:
+      - 'm365-mcp-gateway EC2 i-07dccb1615503ac99 (app/server.py uvicorn 0.0.0.0:8080; infra/aws/ec2/m365-mcp-gateway)'
+      - 'ALB m365-mcp-gateway + HTTPS listener (authenticate-oidc App-1 -> forward) + target group (infra/aws/terraform/m365-mcp-gateway)'
+    served_artifacts:
+      - 'https://mcp.opalinvest.dev/mcp (MCP Streamable-HTTP endpoint; Route53 ALIAS -> ALB; ALB OIDC-gated)'
+    frontend_resolution: 'Claude Code/Desktop remote MCP clients (claude mcp add --transport http m365 https://mcp.opalinvest.dev/mcp); not a portal-served thread.'
     tool_pointer: null
-    last_reviewed: '2026-06-15'
+    last_reviewed: '2026-06-23'
     debtscan_flags: []
   - family: ops-ec2-governance-lambdas
     named_thread: ops-internal
