@@ -49,15 +49,21 @@ cards in the session. Saving the file does NOT satisfy the skill — showing the
   must-includes. `AskUserQuestion` for discrete choices; don't over-interview ("make a sample" → just proceed).
 
 ## Archetypes — the live catalog is the source of truth
-Run `python -m engine.compose --catalog` (from `deck_generation/`). In **Pass 1** pick each slide's
-FAMILY primary (`cover`, `panels`, `grid`, `compare`, `list`, `vsteps`/`flow`, `statcards`, `stat`,
-`statement`, `table`, or a `chart-*`); **Pass 2** swaps in a variant. Only a name the catalog prints
-is valid. Vary families — never the same family on two consecutive slides (D10). Charts only with real numbers.
+Run `python -m engine.compose --catalog` (from `deck_generation/`). **Default to VARIETY, not the bare
+family primary (D11).** In **Pass 1** pick each slide's best-*fitting* layout — and when a family repeats
+across the deck, use a *different* variant each time (4 `compare` slides → `compare` / `compare-balance` /
+`compare-venn` / `compare-convergence`; 3 `statcards` → `statcards-clean` / `statcards-delta` /
+`statcards-strip`), so even a deck that never reaches Pass 2 is already varied. The **cover defaults to the
+master** (`cover` — the photo cover, the best cover; D11-exempt). **Pass 2** is the per-slide refinement
+picker. Only a name the catalog prints is valid. Two rules bind: never the same family on two consecutive
+slides (D10), and a family repeated ≥3× must use ≥`ceil(k/2)` distinct variants (D11) — `/deck-gen` rejects
+both. Charts only with real numbers.
 
 ## The two passes — each pass IS the contract loop (write/edit → render → paste cards → ask)
-- **Pass 1 — flow & layout:** lay out the slides + copy; the family falls out of the narrative
-  (labeled upper-right on each card). Render, paste the full deck, ask to approve copy + flow. Edits =
-  edit the `.md`, re-render, re-paste the full deck.
+- **Pass 1 — flow & layout:** lay out the slides + copy; the layout falls out of the narrative
+  (labeled upper-right on each card). Pick the best-fit *variant* per slide — **default to variety**:
+  vary the variant on any family that repeats (D11), cover = master. Render, paste the full deck, ask to
+  approve copy + flow. Edits = edit the `.md`, re-render, re-paste the full deck.
 - **Pass 2 — variant (the card design), via a CLICKABLE picker (mandated standard):** only after
   Pass 1 is approved. The user picks the visual treatment of each card by *clicking between pictures*
   — never by typing. You run all python; surface only the cards + the picker.
@@ -80,7 +86,8 @@ is valid. Vary families — never the same family on two consecutive slides (D10
 
 ## Writing the .deck.md (the renderer parses it — keep to PROMPT_SPEC.md)
 - Frontmatter: `deck_title`, `audience`, `goal`, `source`, `slide_count`.
-- One `## Slide N — Name` block per slide; `archetype:` = the family primary; short `title:`;
+- One `## Slide N — Name` block per slide; `archetype:` = the chosen best-fit variant (default to
+  variety, not the bare primary; vary it on repeated families; cover = `cover`); short `title:`;
   content as `- bullets` (use ` | ` to split a bullet into header | body for cards / compare /
   stats / steps; a plain `- text` bullet is fine — **mixed paired + plain in one slide is OK and all
   render**); `subtitle:`/`tag:` (cover, statement), `footer:`/`quote:` (takeaway, pull-quote), and a

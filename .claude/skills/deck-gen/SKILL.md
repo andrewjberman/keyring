@@ -64,15 +64,25 @@ are law.
      header, zebra body, navy-bold first column; A1-palette fills only). Reference build that
      exercises all five: `deck_generation/dev/scripts/cw_goldman_build.py` (11 slides, 0
      violations, 10/10 coverage).
+   - **Variety by default (D11).** Do NOT render the bare family primary across the deck — pick
+     the best-*fitting* variant per slide, and when a family repeats, use a *different* variant each
+     time (4 compares → `compare` / `compare-balance` / `compare-venn` / …; 3 statcards →
+     `statcards-clean` / `statcards-delta` / `statcards-strip`). The **cover stays the master**
+     (`set_cover`, the photo cover — the recommended default; it is D11-exempt). `finalize` FAILS a
+     deck that uses one variant for a family it repeats ≥3× — variety is the default, not a Pass-2
+     afterthought. If the `.deck.md` hands you bare primaries on a repeated family, upgrade them to
+     varied best-fit variants as you build.
    - **Charts only from supplied data (F2).** If the slide has no `data:` line, render
      its figures as `C.stat` (stat-as-type), never a chart.
    - **Cover the lines (F3).** Put every content line on its slide and register it via
      `d.need(...)`. Tighten/rephrase is fine; dropping or inventing is not.
 
 3. **Gate (automatic in `finalize`).** `finalize()` runs the [AUTO] `design_lint`
-   (D1–D10, A/B/C rules) + the fidelity coverage check and **raises** on any violation
-   or uncovered line. Read the message, fix the build script, re-run until it returns
-   a clean report (0 violations, full coverage, slide count == prompt).
+   (D1–D11, A/B/C rules — incl. D11 variant-variety) + the fidelity coverage check and
+   **raises** on any violation or uncovered line. Read the message, fix the build script,
+   re-run until it returns a clean report (0 violations, full coverage, slide count == prompt).
+   A D11 failure means a repeated family is using one variant — swap some occurrences to
+   different best-fit variants.
 
 4. **Render + visual QA (the [QA] gate).** Render every slide to PNG via PowerPoint COM
    and inspect each against the bible's [QA] rules (60-30-10, white-on-white, body
