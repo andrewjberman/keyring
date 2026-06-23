@@ -1,6 +1,6 @@
 # Deploy Completion Record
 **Date opened:** 2026-06-22T23:29:34.312391+00:00
-**Status:** OPEN
+**Status:** CLOSED -- nothing stranded -- closed 20260623T093357Z
 **Deploy:** COTETL WORK A: chain A_05 assets_dimension after B_00 in opal-cot-gold-run
 **Authored by:** 0.7.0_AE_CloudOps
 **Class:** deploy-completion (NEVER-law gate e38cc2b16; contract tool .tools/deploy_ledger.py, TO #5)
@@ -13,9 +13,11 @@
 | leg | kind | target | proof required | proof | state |
 |---|---|---|---|---|---|
 | ae-chain-add | activation | opal-cot-gold-run | A_05-after-B_00-in-chain | opal-cot-gold-run live: A_05 chained after B_00 (order verified); safe-apply 0/1/0; 0-diff clean; A_05 deployed==cbbbefb01 parity; DS owner-review PASS | CLOSED 20260622T233004Z |
-| nightly-verify | verify | gold-dimensions-assets-dim | first-nightly-A_05-reconciles-DS-confirms |  | OPEN |
+| nightly-verify | verify | gold-dimensions-assets-dim | first-nightly-A_05-reconciles-DS-confirms | A_05 chained + ran first nightly (gold/dimensions/assets_dim produced, reconcile-guard passed); served firm-AUA restored 06-18/$397.3M; DS data-layer confirm (close-the-3). completeness-guard caps the date going-forward. | CLOSED 20260623T093357Z |
 
 ## Log
 
 - 20260622T232934Z OPENED by 0.7.0_AE_CloudOps with 2 leg(s)
 - 20260622T233004Z LEG ae-chain-add closed: opal-cot-gold-run live: A_05 chained after B_00 (order verified); safe-apply 0/1/0; 0-diff clean; A_05 deployed==cbbbefb
+- 20260623T093357Z LEG nightly-verify closed: A_05 chained + ran first nightly (gold/dimensions/assets_dim produced, reconcile-guard passed); served firm-AUA restored
+- 20260623T093357Z CLOSED -- all 2 legs proven
