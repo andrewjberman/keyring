@@ -155,6 +155,11 @@ fi
 # down above (exits before here). RAMP NOTE: broad repo-file-grep (grep -r / rg over repo source) is
 # STAGED as nudge -- it is the friction-sensitive tier (PRD §6 "native/broad LAST"), enables only after
 # its dedicated FP-test pass; today it routes to the comp-which advisory nudge, not a deny.
+# GOVERNING PRINCIPLE (Andrew-direct 2026-06-23): comp-tools mandatory IFF the target has an
+# ASSOCIATED GRAPH. DENY fires ONLY on graph-backed classes (aws/infra here; the ramp adds more
+# graph-backed tiers). The unclassified comp_which catch-all = the NO-GRAPH bucket (new project /
+# web search / local FS / self-contained library not in any comp-graph) -> NEVER deny it; off-the-
+# rails is correct there, not a wall. A gate class exists IFF a graph backs it.
 _gate=0
 if [ "$tool" = Bash ]; then
   case "$class" in
