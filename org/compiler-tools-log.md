@@ -7432,3 +7432,14 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-06-23 | 1.0.0_SA_CTO | NFRA_COMPRAIL.TO-3.cto-claudemd-rule20-amend | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/1.0.0_SA_CTO/OPLMCP_AC6_... | PASS |
 - 2026-06-23 0.4.0_DS_ClientPlatform: served-$0 P0 harden + cot-ADVI go-live reconcile + ETFS_SETUP W1 producer + WORK-A defect dx -- served-artifact boto3 verify (off-rail data-access per Rule-21 governing principle) + native Read source-mechanism grounding (Rule 22, caught unpopulated-prices root cause + generated_at-vs-skew + A_05 max-date targeting); WORK-A fix (pending) will run comp-pipescript io/comp-blast pre-edit.
 | 2026-06-23 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-06-23 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+| 2026-06-23 | 3.0.0_SA_CVO | ADHC_COTAUDIT | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/OPLMCP_deli... | PASS |
+| 2026-06-23 | 3.0.0_SA_CVO | ADHC_COTAUDIT | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/OPLMCP_deli... | PASS |
+| 2026-06-23 | 0.7.0_AE_CloudOps~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/ec2/m365-mcp-gateway/.gitigno... | PASS |
+| 2026-06-23 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+| 2026-06-23 | 0.7.0_AE_CloudOps~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/ec2/m365-mcp-gateway/deploy-t... | PASS |
+| 2026-06-23 | 3.0.0_SA_CVO | ADHC_COTAUDIT | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/OPLMCP_port... | PASS |
+| 2026-06-23 | 0.7.0_AE_CloudOps~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/ec2/EC2_MANIFEST.json | PASS |
+| 2026-06-23 | 0.7.0_AE_CloudOps~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/change_management/20... | PASS |
+| 2026-06-23 | 0.7.0_AE_CloudOps~B | NFRA_OPLMCP.06 | comp-which | comp-which "what is the m365-mcp-gateway ALB listener doing" | ROUTED->comp-grep (gateway not graph-modeled until .07; raw-aws inspections rail-checked) |
+| 2026-06-23 | 0.7.0_AE_CloudOps~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
