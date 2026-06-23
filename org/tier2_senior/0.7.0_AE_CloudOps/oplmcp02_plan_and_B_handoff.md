@@ -49,12 +49,24 @@ CRITICAL SEQUENCING (the can't-strand insight): the listener OIDC swap is the GO
 ## ~B HANDOFF -- running-start checklist
 - [ ] Confirm outage cleared + you're fresh-focus.
 - [ ] Read this plan + PRD S10.8 + AC2.
-- [ ] RAVC CTO the plan (he GOs -- same gate as W1); flag the C2 TF-state choice for his ruling.
+- [ ] Plan is CTO-GO'd (2026-06-23 -- see CTO RULINGS below); ~B's ONLY CTO checkpoint = RAVC the STEP-A comp-iam service+gaps + plan-diff BEFORE the STEP-A apply.
 - [ ] Execute STEP A->B->C->D in order; STEP C (the swap) ONLY after STEP B /health green.
 - [ ] deploy-ledger open->close; comp-iam pre-apply; HALTGT; finish-in-one-go; outage-window mind.
 - [ ] RAVC CTO+COO at go-live + AC2 result; signal CVO for the cert.
 - Secrets ARNs: login `arn:aws:secretsmanager:us-east-1:313476888478:secret:opal/mcp/m365-login-0yALU6`, graph `...:secret:opal/mcp/m365-graph-WS5Dui`, fernet (you create). Tenant `6810043e-d171-4adc-9975-068b35e179da`. EC2 `i-01d75141177c88b96`. Listener `aws_lb_listener.https` (alb.tf:89-106). Role `m365-mcp-gateway-role`. TG `aws_lb_target_group.gw` (/health).
 
-## OPEN for CTO ruling
-1. The C2 TF-state-secret choice (AE recommends (a) placeholder+ignore_changes+CLI-set).
-2. Whether STEP A + STEP C are ONE ledger (recommended) and whether the listener-swap-last sequencing is approved (it is the can't-strand-safe order).
+## CTO RULINGS + EXECUTION GATING -- PLAN GO'd 2026-06-23 (CTO)
+
+CTO-GO on the full plan; A->B->C->D + listener-swap-LAST endorsed (the can't-strand design). Rulings folded so ~B inherits the GO'd plan -- ~B does NOT re-RAVC the whole plan; its only CTO checkpoint is the STEP-A comp-iam (below).
+
+**RULING 1 (TF-state-secret) = (a):** placeholder client_secret in the TF authenticate-oidc block + `lifecycle { ignore_changes = [...authenticate_oidc...client_secret] }` + CLI-set the REAL secret post-apply via `aws elbv2 modify-listener` (value from opal/mcp/m365-login). The real OIDC client_secret NEVER enters TF state (matches PRD S6 strict secret-footprint; (b) data-source-into-state was REJECTED -- copies the secret into a 2nd store + widens read-surface). DOCUMENT the CLI-set as a RUNBOOK step -- **re-run it on ANY listener recreate** (ignore_changes means TF won't re-apply it). apply-placeholder -> immediate-CLI-set-real is ONE atomic STEP C (the brief dummy-secret window = the cutover seconds only).
+
+**RULING 2 (ledger) = APPROVED:** ONE deploy-ledger wrapping STEP A (IAM+secrets apply) + STEP B (code-deploy leg, noted) + STEP C (listener swap = go-live); opened at A-start, **CLOSED at STEP C GO-LIVE-VERIFIED** (curl through the OIDC flow returns the gateway, NOT the 503). Finish A->C in the ONE fresh ~B session, or roll back (revert listener->503; gateway code stays) + escalate loud.
+
+**EXECUTION GATING (~B, the fresh lane):**
+- Triple-gate holds: outage-cleared + this plan-GO + fresh ~B driver.
+- ~B RAVCs CTO the STEP-A comp-iam service+gaps + plan-diff BEFORE the STEP-A apply (the IAM = the security gate; CTO confirms no firm/Deny loosened + scoped to the 3 ARNs only, like W1). **This is ~B's last checkpoint to the CTO.**
+- ~B owns the B->C gate: STEP B /health GREEN is the HARD precondition for STEP C swap (NEVER swap into an unhealthy TG).
+- ~B RAVCs CTO + CVO at STEP C go-live-complete -> CVO runs AC2 (STEP D) on the SYNTHETIC test mailboxes.
+
+**GO-LIVE EXPOSURE (note, not a blocker):** STEP C makes the infra LIVE (tenant users CAN auth at the ALB). Broad EMPLOYEE rollout (broadcasting the URL + onboarding) is GATED on AC2-pass + AC5 (PRD: no non-Andrew onboarding before AC5). The C->AC2 window has ONLY Andrew + the synthetic test users; the global KILL_SWITCH is the backstop. **DO NOT broadcast the URL until AC2+AC5 clear.**
