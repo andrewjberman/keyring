@@ -173,6 +173,34 @@ Cross-check with `get_live_agents()` + `get_org_summary()` for broker-side regis
 
 **Cross-check before classifying STALE/IDLE:** broker summary is aspirational (heartbeat-lagged); git is ground truth. A "heads-down" agent in a long generation looks STALE but is working — verify via `git log --all --oneline --since="30 minutes ago"` + recent inbox traffic.
 
+### 2b.2a — Movement check + dependency-liveness gate (per tick — the anti-coast core; Andrew-direct 2026-06-23)
+
+**The load-bearing reason /drive exists. Two non-negotiables every tick:**
+
+**(A) MOVEMENT check — never attest a hot TO ADVANCING off the owner's WORD; verify it actually MOVED since the last tick.** For each owner of a hot/active TO, compare against the *prior* tick (the last `drive_log` + `org/mcp/.last-drive-{coo_serial}`):
+
+```bash
+SINCE=$(date -u -d @"$(cat org/mcp/.last-drive-{coo_serial})" +%Y-%m-%dT%H:%M:%SZ 2>/dev/null)   # prior tick boundary
+jq -r --arg s "$SINCE" 'select((.kind//"work")=="work")|select(.ts>$s)|.ts' org/mcp/agent_telemetry/{owner}.jsonl | wc -l  # work-calls this window
+git log --all --oneline --since="$SINCE" --author="{owner-tag}" | wc -l                            # commits this window
+```
+
+- **MOVED** (≥1 work-call OR commit on this TO's surface since the last tick) → ADVANCING; attest with the REAL `last-work-call`/`last-commit` ts, not the self-report.
+- **NO MOVEMENT** (0 work-calls + 0 commits since the last tick — *regardless* of a "building"/"in-progress" summary or a dispatch you fired) → the TO is **PARKED/STALLED, not advancing.** Run the nudge ladder:
+  - **tick 1:** NUDGE the owner — cite the ground-truth (last-work-call ts, 0 commits, summary token) + ask `(a) in-progress-but-quiet / (b) parked / (c) blocked?` + name the next checkpoint + a within-cycle RAVC ask.
+  - **tick 2 (still no movement):** re-dispatch harder (explicitly un-pace; name the gated downstream it holds) OR trace the blocker → STUCK-RESOLVABLE.
+  - **tick 3 (no movement across 3 ticks):** `[STUCK]` to MSTR (single-point stall on a hot TO).
+- **Long-generation caveat (don't false-nudge):** a genuinely heads-down owner still emits *some* work-calls — **0 work-calls across a whole tick** is the tell, NOT "no commit yet." Work-calls flowing + no commit = MOVING (attest), not parked.
+
+**(B) DEPENDENCY-LIVENESS gate — before you STACK a dependency or fire a dispatch on an owner, verify that owner is LIVE + reachable FIRST.** A dependency stacked on a dead/DEAF/idle lane is dead-on-arrival — and you won't notice until the downstream silently never moves. So, BEFORE relying on / dispatching to any owner (especially a *downstream gated* owner whose timeline now blocks others):
+
+- Confirm **LIVE** in `get_live_agents()` (fresh last-seen) AND **not DEAF** in `fabric-check --blocks` (unread-inbox + quiet-telemetry = its Monitor isn't delivering → it CANNOT be tasked).
+- If **LIVE + reachable** → stack/dispatch; then movement-check it next tick (A).
+- If **DEAF / not-registered / dead** → do NOT stack the dependency and assume it'll happen. Respawn-request to MSTR (if it has live pending work) OR reroute the dependency to a live lane FIRST — *this* tick. Re-pointing a critical path at a dead lane is the silent-stall trap.
+- **Verify BEFORE firing, not after** — a dispatch into an unverified lane is not a driving action, it's a hope.
+
+**Incident anchors (why this sub-step exists):** (1) 2026-06-23 ETFS_SETUP W1 — COO attested "W1 ADVANCING" for 6 consecutive 10m ticks off AE's "I'm building"; ground-truth was a 3-min work-call burst then 25min/0-work-calls/0-commits, W1 "paced" in AE's summary = parked. The telemetry-cited nudge un-stuck it in one tick. (2) Same session — COO fired a critical-path producer-compute dispatch at DS *before* verifying DS was live (it was, by luck of timing). Both: `feedback_drive_read_agent_activity_not_project_paths` + this gate.
+
 ### 2b.3 — Classify cause for each STALE/IDLE agent
 
 | Class | Detection | Resolving dispatch |
@@ -203,7 +231,7 @@ For each project on the hot list, classify into one of 5 states:
 
 | Class | Detection | Action |
 |---|---|---|
-| **ADVANCING** | Commit / RAVC2 / dispatch in trailing N hours touching this project AND named owner is alive + active (cross-check broker LIVE + recent commit-by-serial). **Verify the monitoring path is real** — agent isn't monitoring a dead SSM (CY-0102 anchor: DS~D was "monitoring" SSM `5b18ffe4` that SIGKILL'd ~24h prior). | No new dispatch; record "ADVANCING owner={serial}, last-commit={ts}, next-RAVC2-ETA={time}" attestation. **Re-verify next /drive tick** — phantom monitoring detected here re-classifies to STUCK. |
+| **ADVANCING** | **Fresh OWNER MOVEMENT since the last tick** — a `kind:work` telemetry call OR a commit by the owner-serial touching THIS TO's surface within the trailing tick-window (verify per 2b.2a). A dispatch you fired + a self-reported "I'm building"/"in-progress" is **NOT** movement. Also **verify the monitoring path is real** — owner isn't watching a dead SSM (CY-0102: DS~D "monitoring" a SIGKILL'd SSM). | No new dispatch; record "ADVANCING owner={serial}, **last-work-call={ts}**, last-commit={ts}, next-RAVC2-ETA={time}" attestation. **Re-verify next tick** — if the next tick shows NO new movement, re-classify **PARKED/STALLED** and run the 2b.2a nudge ladder; phantom monitoring re-classifies to STUCK. |
 | **NEXT-ACTION-READY** | Phase gate met (prior phase RAVC2-Accepted OR upstream artifact landed) AND next TO not yet dispatched AND named owner alive | **Author + dispatch the next-phase TO this turn** through normal COO `/charter` integration. Record TO ref + recipient + RAVC2-expected. |
 | **STUCK-RESOLVABLE** | Blocker identified with named resolver path (peer can absorb, CTO can rule, MSTR can spawn, Andrew gate can clear). | **Route the resolving move this turn**: MCP to resolver with specific resolving ask + cite project + cite blocker + expected response window. |
 | **STUCK-UNRESOLVED** | Blocker present + no clear resolver in chain OR resolver tried + non-responsive >1 /drive cycle | **Surface to MSTR via `[STUCK]` subject** with: project code, blocker description, prior-resolution attempts, COO recommendation. MSTR routes per LD-0026 backstop chain. |
@@ -217,6 +245,7 @@ For each project on the hot list, classify into one of 5 states:
 
 For each NEXT-ACTION-READY or STUCK-RESOLVABLE dispatch, verify quality before firing:
 
+0. **Owner verified LIVE + reachable (2b.2a-B) — FIRST, before firing.** Never stack a dependency/dispatch on a dead/DEAF/unverified lane; a dispatch into an unverified lane is a hope, not a drive. If not LIVE → respawn-request or reroute to a live lane this tick instead.
 1. **Does the dispatch advance THIS project's critical path** — not generic backlog-chew?
 2. **RAVC2 deliverable bounded** — returnable in defined window with clear acceptance criteria?
 3. **Owner role-fit** — recipient is the right hands for this surface (DS for data, AE for cloud, DE for portal, DT for trading)?
