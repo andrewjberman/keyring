@@ -66,7 +66,7 @@ gpath=$(printf '%s' "$INPUT" | "$JQ" -r '.tool_input.path // ""' 2>/dev/null || 
 #      query -> never nudge it (only raw-aws INSPECTION + infra-grep are comp-answerable).
 if printf '%s' "$gpath" | grep -qE '\.[A-Za-z0-9]+$'; then exit 0; fi      # path ends in a file extension = single file
 if printf '%s' "$query" | grep -qE 'comp-|pipescript'; then exit 0; fi      # already a comp-tool reference
-if [ "$tool" = Bash ] && printf '%s' "$query" | grep -qE 'lambda invoke|s3(api)? (cp|sync|put-object|mv)|get-function-configuration|safe-apply|safe-ec2-deploy|safe-commit|terraform |update-function-code|start-build|run-task|dynamodb (put-item|update-item|delete-item|batch-write-item)'; then exit 0; fi
+if [ "$tool" = Bash ] && printf '%s' "$query" | grep -qE 'lambda invoke|s3(api)? (cp|sync|put-object|mv)|get-function-configuration|safe-apply|safe-ec2-deploy|safe-commit|terraform |update-function-code|start-build|run-task|dynamodb (put-item|update-item|delete-item|batch-write-item|get-item|scan|query|batch-get-item)'; then exit 0; fi
 # (d) NON-ESTATE LOCAL CODE LIBRARY (the deck-generation engine deck_generation/) -- a symbol/def/
 #     signature/arg-shape lookup INSIDE a self-contained local code library has NO cross-system
 #     coupling for a comp-tool to illuminate (comp-tools answer estate/pipeline/IAM/graph/component
@@ -100,9 +100,9 @@ elif printf '%s' "$query" | grep -qE 'aws s3(api)? (ls|list-objects)[^|]*code/';
 elif printf '%s' "$query" | grep -qE 'aws s3(api)? (ls|list-objects)[^|]*(^|/)(gold|platinum|silver|json)/'; then
   class=aws_freshness
   msg="comp-tool on the HUD: raw \`aws s3 ls\` + timestamp for artifact freshness. \`comp-freshness <artifact>\` = EXISTS/FRESH/SCALED/NOT-FROZEN (the validate-on-served check), not just a listing + mtime eyeball. (advisory -- your command still runs.)"
-elif printf '%s' "$query" | grep -qE 'aws dynamodb (scan|get-item|query|describe-table|list-tables)'; then
+elif printf '%s' "$query" | grep -qE 'aws dynamodb (describe-table|list-tables)'; then
   class=aws_dynamodb
-  msg="comp-tool on the HUD: raw \`aws dynamodb\` inspection. \`comp-freshness <table> --ddb\` = firm-config drift framing; \`comp-aws\` = the table's edges/consumers. Higher-context than a raw scan. (advisory -- your command still runs.)"
+  msg="comp-tool on the HUD: \`aws dynamodb describe-table/list-tables\`. For the table AS A GRAPH NODE: \`comp-aws\` = its edges/consumers; \`comp-freshness <table> --ddb\` = firm-config drift. (Row DATA-ACCESS -- get-item/scan/query -- is operational/no-graph, off the rail.) (advisory -- your command still runs.)"
 elif [ "$tool" = Bash ] && printf '%s' "$query" | grep -qE '(grep|rg|findstr)([^|;]*)(infra/aws/|\.tf([^A-Za-z0-9]|$))'; then
   class=infra_grep
   msg="comp-tool on the HUD: grepping infra/.tf. \`comp-aws\` = the resource edges/blast-radius (relationship-aware, not text -- the destructive-op pre-gate basis); \`comp-iam\` = the perms; \`comp-routes\` = the serving path. Repo-scoped + edge-aware vs a blind .tf grep. (advisory -- your command still runs.)"
@@ -163,7 +163,7 @@ fi
 _gate=0
 if [ "$tool" = Bash ]; then
   case "$class" in
-    aws_iam_inspect|aws_route|aws_deploy_verify|aws_freshness|aws_dynamodb) _gate=1 ;;  # tier 1: raw-aws-INSPECTION
+    aws_iam_inspect|aws_route|aws_deploy_verify|aws_freshness) _gate=1 ;;  # tier 1: raw-aws-INSPECTION (DDB data-plane reads = operational/no-graph, exempted above; describe/list = nudge-not-deny -- operational-vs-structural split, CVO TO-5 2026-06-23)
     infra_grep) _gate=1 ;;                                                              # tier 2a: infra/.tf grep
   esac
 fi
