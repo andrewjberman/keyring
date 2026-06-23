@@ -160,12 +160,12 @@
         "hooks": [
           {
             "type": "command",
-            "command": "bash \"$CLAUDE_PROJECT_DIR/.tools/hooks/post-tool-telemetry.sh\"",
+            "command": "bash \"$CLAUDE_PROJECT_DIR/.tools/hooks/post-tool-telemetry.sh\" || true",
             "timeout": 10
           },
           {
             "type": "command",
-            "command": "bash \"$CLAUDE_PROJECT_DIR/.tools/hooks/post-send-commitment.sh\"",
+            "command": "bash \"$CLAUDE_PROJECT_DIR/.tools/hooks/post-send-commitment.sh\" || true",
             "timeout": 10
           }
         ]

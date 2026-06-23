@@ -6,8 +6,9 @@
 # install pattern matching .tools/git-hooks/install-mstr-ledger-check.sh precedent.
 #
 # Bootstraps:
-#   org/mcp/hooks/post-tool-telemetry.sh -> .tools/hooks/post-tool-telemetry.sh
-#   org/mcp/hooks/classify-tool-kind.sh  -> .tools/hooks/classify-tool-kind.sh
+#   org/mcp/hooks/post-tool-telemetry.sh  -> .tools/hooks/post-tool-telemetry.sh
+#   org/mcp/hooks/classify-tool-kind.sh   -> .tools/hooks/classify-tool-kind.sh
+#   org/mcp/hooks/post-send-commitment.sh -> .tools/hooks/post-send-commitment.sh
 #
 # Marker: TELEMETRY_HOOK_INSTALL_V1 (idempotency check on installed copy).
 #
@@ -29,11 +30,13 @@ REPO_ROOT="$(git rev-parse --show-toplevel 2>/dev/null || pwd)"
 # Canonical sources
 CANONICAL_HOOK="$REPO_ROOT/org/mcp/hooks/post-tool-telemetry.sh"
 CANONICAL_CLASSIFIER="$REPO_ROOT/org/mcp/hooks/classify-tool-kind.sh"
+CANONICAL_COMMITMENT="$REPO_ROOT/org/mcp/hooks/post-send-commitment.sh"
 
 # Install targets (gitignored per .gitignore:175)
 INSTALL_DIR="$REPO_ROOT/.tools/hooks"
 INSTALL_HOOK="$INSTALL_DIR/post-tool-telemetry.sh"
 INSTALL_CLASSIFIER="$INSTALL_DIR/classify-tool-kind.sh"
+INSTALL_COMMITMENT="$INSTALL_DIR/post-send-commitment.sh"
 
 # Gate: canonical sources must exist
 if [ ! -f "$CANONICAL_HOOK" ]; then
@@ -42,6 +45,10 @@ if [ ! -f "$CANONICAL_HOOK" ]; then
 fi
 if [ ! -f "$CANONICAL_CLASSIFIER" ]; then
     echo "ERROR: $CANONICAL_CLASSIFIER not found -- canonical source missing." >&2
+    exit 1
+fi
+if [ ! -f "$CANONICAL_COMMITMENT" ]; then
+    echo "ERROR: $CANONICAL_COMMITMENT not found -- canonical source missing." >&2
     exit 1
 fi
 
@@ -69,5 +76,6 @@ install_with_drift_check() {
 
 install_with_drift_check "$CANONICAL_HOOK" "$INSTALL_HOOK" "post-tool-telemetry.sh"
 install_with_drift_check "$CANONICAL_CLASSIFIER" "$INSTALL_CLASSIFIER" "classify-tool-kind.sh"
+install_with_drift_check "$CANONICAL_COMMITMENT" "$INSTALL_COMMITMENT" "post-send-commitment.sh"
 
-echo "OK: telemetry hook installed -- $INSTALL_HOOK + $INSTALL_CLASSIFIER (canonical sources at $REPO_ROOT/org/mcp/hooks/; marker TELEMETRY_HOOK_INSTALL_V1)"
+echo "OK: hooks installed -- $INSTALL_HOOK + $INSTALL_CLASSIFIER + $INSTALL_COMMITMENT (canonical sources at $REPO_ROOT/org/mcp/hooks/; marker TELEMETRY_HOOK_INSTALL_V1)"

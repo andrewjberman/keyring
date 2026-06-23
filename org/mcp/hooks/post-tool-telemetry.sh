@@ -43,6 +43,22 @@ SESSION_ID="$(echo "${HOOK_INPUT}" | "$JQ" -r '.session_id // empty')"
 if [[ -z "${SESSION_ID}" && -n "${CLAUDE_CODE_SESSION_ID:-}" ]]; then
     SESSION_ID="${CLAUDE_CODE_SESSION_ID}"
 fi
+# --- FREEFORM standdown (shared /freeform marker with the comp-rail comp-tool-hud.sh) -----------
+# If this session has a LIVE (unexpired) freeform marker, telemetry is a friction TAX -- NOT a
+# safety guard -- so stand down: a freestyling agent runs unhampered + un-instrumented for the
+# speed push. Mirrors comp-tool-hud.sh's freeform block (same marker, same expiry parse).
+# SCRIPT_DIR/../../ = repo root (robust regardless of agent cwd). Best-effort: any ambiguity just
+# records telemetry as normal (telemetry is non-critical -- fail-open is correct here).
+if [[ -n "${SESSION_ID}" ]]; then
+    _FF="${SCRIPT_DIR}/../../org/mcp/sessions/${SESSION_ID}.freeform"
+    if [[ -f "${_FF}" ]]; then
+        _FF_EXP="$(tr -dc '0-9' < "${_FF}" 2>/dev/null || true)"
+        _FF_NOW="$(date +%s 2>/dev/null | tr -dc '0-9' || true)"
+        if [[ -n "${_FF_EXP}" && -n "${_FF_NOW}" && "${_FF_NOW}" -lt "${_FF_EXP}" ]]; then
+            exit 0
+        fi
+    fi
+fi
 if [[ -n "${SESSION_ID}" ]]; then
     AGENT="$(cat "org/mcp/sessions/${SESSION_ID}.serial" 2>/dev/null || echo "")"
 fi
