@@ -7398,3 +7398,34 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-06-23 | 0.7.0_AE_CloudOps~B | NFRA_OPLMCP.07 | pipescript | pipescript m365-mcp-gateway | FAIL |
 | 2026-06-23 | 0.7.0_AE_CloudOps~B | NFRA_OPLMCP.07 | comp-iam/comp-aws/pipescript/ds-commit-gate | AC1 DONE: comp-iam service+role m365-mcp-gateway RESOLVE (gw_golive+SSM-core), gaps regression 0-missing/0-unknown CLEAN, ds-gate clean; comp-aws classes (no aws_lb/listener/TG/r53 = AC2 scope), pipescript (gateway not a thread = AC3) | IMPLEMENT |
 | 2026-06-23 | 0.7.0_AE_CloudOps~B | NFRA_OPLMCP.07 | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-06-23 | 1.0.0_SA_CTO | NFRA_COMPRAIL.TO-3.cto-claudemd-rule20-amend | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/graph-call-manifest.yaml | PASS |
+| 2026-06-23 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+| 2026-06-23 | 0.7.0_AE_CloudOps~B | NFRA_OPLMCP.07 | pipescript | pipescript --list | PASS |
+| 2026-06-23 | 0.7.0_AE_CloudOps~B | NFRA_OPLMCP.07 | pipescript | pipescript m365-mcp | PASS |
+| 2026-06-23 | 0.7.0_AE_CloudOps~B | NFRA_OPLMCP.07 | pipescript | pipescript --validate | PASS |
+| 2026-06-23 | 0.7.0_AE_CloudOps~B | NFRA_OPLMCP.07 | pipescript | pipescript --resource m365-mcp-gateway | PASS |
+| 2026-06-23 | 1.0.0_SA_CTO | NFRA_COMPRAIL.TO-3.cto-claudemd-rule20-amend | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/1.0.0_SA_CTO/OPLMCP_AC5_... | PASS |
+| 2026-06-23 | 0.7.0_AE_CloudOps~B | NFRA_OPLMCP.07 | pipescript | pipescript --resource m365-mcp-gateway | PASS |
+| 2026-06-23 | 0.7.0_AE_CloudOps~B | NFRA_OPLMCP.07 | pipescript | pipescript --validate | PASS |
+| 2026-06-23 | 0.7.0_AE_CloudOps~B | NFRA_OPLMCP.07 | pipescript | pipescript m365-mcp | PASS |
+| 2026-06-23 | 0.7.0_AE_CloudOps | (no-TO) | comp-aws | comp-aws classes | PASS |
+| 2026-06-23 | 0.7.0_AE_CloudOps~B | NFRA_OPLMCP.07 | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/estate-coverage-manif... | PASS |
+| 2026-06-23 | 0.7.0_AE_CloudOps | (no-TO) | comp-aws | comp-aws derive --resource arn:aws:elasticloadbalancing:us-east-1:313476888478:loadbala... | PASS |
+| 2026-06-23 | 0.7.0_AE_CloudOps | (no-TO) | comp-aws | comp-aws score | PASS |
+| 2026-06-23 | 0.4.2_RD_AdvisorIntelligence | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .claude/skills/deck-gen/SKILL.md --file... | PASS |
+| 2026-06-23 | 0.7.0_AE_CloudOps | (no-TO) | comp-aws | comp-aws score | PASS |
+| 2026-06-23 | 0.4.2_RD_AdvisorIntelligence | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file deck_generation/dev/scripts/four_eras_b... | PASS |
+| 2026-06-23 | 2.0.0_SA_COO | (no-TO) | pipescript | pipescript m365-mcp | PASS |
+| 2026-06-23 | 2.0.0_SA_COO | (no-TO) | pipescript | pipescript --validate | PASS |
+| 2026-06-23 | 0.7.0_AE_CloudOps | (no-TO) | comp-aws | comp-aws score | PASS |
+| 2026-06-23 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/estate-coverage-manif... | PASS |
+| 2026-06-23 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+| 2026-06-23 | 0.7.0_AE_CloudOps | (no-TO) | comp-aws | comp-aws score | FAIL |
+| 2026-06-23 | 3.0.0_SA_CVO | ADHC_COTAUDIT | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/OPLMCP_peru... | PASS |
+| 2026-06-23 | 0.7.0_AE_CloudOps | (no-TO) | comp-aws | comp-aws score | PASS |
+| 2026-06-23 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+| 2026-06-23 | 0.7.0_AE_CloudOps~B | NFRA_OPLMCP.07 | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.7.0_AE_CloudOps/oplm... | PASS |
+| 2026-06-23 | 1.0.0_SA_CTO | NFRA_COMPRAIL.TO-3.cto-claudemd-rule20-amend | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/NFRA_OPLMCP_PRD.md | PASS |
+| 2026-06-23 | 0.7.0_AE_CloudOps | (no-TO) | comp-aws | comp-aws score | PASS |
+| 2026-06-23 | 0.7.0_AE_CloudOps~B | NFRA_OPLMCP.07/.06 | pipescript/comp-aws/ds-commit-gate | AC3: pipescript m365-mcp resolves+--validate PASS (gen-estate-resolver extended, 3 ruff fixed, ds-gate clean); comp-aws classes=ALB-stack-gap (AC2 base-AE); .06 connect-path grounded (curl 302-not-401 + claude-code-guide DCR/redirect walls) -> Model-B design | DIAGNOSE |
+| 2026-06-23 | 0.7.0_AE_CloudOps~B | NFRA_OPLMCP.07 | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
