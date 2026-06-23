@@ -7383,3 +7383,18 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-06-23 | 0.7.0_AE_CloudOps~B | NFRA_OPLMCP.02.ae-backend-integration | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.7.0_AE_CloudOps/task... | PASS |
 | 2026-06-23 | 0.7.0_AE_CloudOps~B | NFRA_OPLMCP.02 | comp-iam (summary) | OPLMCP.02 go-live: comp-iam service=COVERAGE-GAP (gateway unmodeled -> manual IAM review, CTO-confirmed) + comp-iam gaps=PASS; comp-pipescript/blast N/A (EC2 MCP svc, not a data pipeline) | DEPLOY |
 | 2026-06-23 | 0.7.0_AE_CloudOps~B | NFRA_OPLMCP.02.ae-backend-integration | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-06-23 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+| 2026-06-23 | 0.7.0_AE_CloudOps~B | NFRA_OPLMCP.07 | comp-iam | comp-iam service m365-mcp-gateway | PASS |
+| 2026-06-23 | 0.7.0_AE_CloudOps~B | NFRA_OPLMCP.07 | comp-iam | comp-iam roles | PASS |
+| 2026-06-23 | 0.7.0_AE_CloudOps~B | NFRA_OPLMCP.07 | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/ec2/EC2_MANIFEST.json | PASS |
+| 2026-06-23 | 0.7.0_AE_CloudOps~B | NFRA_OPLMCP.07 | comp-aws | comp-aws | FAIL |
+| 2026-06-23 | 0.7.0_AE_CloudOps~B | NFRA_OPLMCP.07 | comp-aws | comp-aws classes | PASS |
+| 2026-06-23 | 0.7.0_AE_CloudOps~B | NFRA_OPLMCP.07 | comp-iam | comp-iam roles | PASS |
+| 2026-06-23 | 0.7.0_AE_CloudOps~B | NFRA_OPLMCP.07 | comp-iam | comp-iam service m365-mcp-gateway | PASS |
+| 2026-06-23 | 0.7.0_AE_CloudOps~B | NFRA_OPLMCP.07 | comp-iam | comp-iam gaps | PASS |
+| 2026-06-23 | 0.7.0_AE_CloudOps~B | NFRA_OPLMCP.07 | comp-iam | comp-iam role m365-mcp-gateway-role | PASS |
+| 2026-06-23 | 0.7.0_AE_CloudOps~B | NFRA_OPLMCP.07 | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/extract_iam.py | PASS |
+| 2026-06-23 | 0.7.0_AE_CloudOps~B | NFRA_OPLMCP.07 | pipescript | pipescript --list | PASS |
+| 2026-06-23 | 0.7.0_AE_CloudOps~B | NFRA_OPLMCP.07 | pipescript | pipescript m365-mcp-gateway | FAIL |
+| 2026-06-23 | 0.7.0_AE_CloudOps~B | NFRA_OPLMCP.07 | comp-iam/comp-aws/pipescript/ds-commit-gate | AC1 DONE: comp-iam service+role m365-mcp-gateway RESOLVE (gw_golive+SSM-core), gaps regression 0-missing/0-unknown CLEAN, ds-gate clean; comp-aws classes (no aws_lb/listener/TG/r53 = AC2 scope), pipescript (gateway not a thread = AC3) | IMPLEMENT |
+| 2026-06-23 | 0.7.0_AE_CloudOps~B | NFRA_OPLMCP.07 | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
