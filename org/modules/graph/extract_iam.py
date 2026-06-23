@@ -638,6 +638,40 @@ def _extract_tf_block(content: str, start: int) -> str:
     return content[brace_pos:i]
 
 
+# ${var.X} resolution for resource names (e.g. name = "${var.name}-role"). TF variables are
+# module-scoped, so resolution is same-module-dir ONLY -- a generic var name like "name" can be
+# defined differently in two modules, so resolving cross-module would mis-key roles.
+_TF_VARIABLE = re.compile(r'variable\s+"(\w+)"\s*\{')
+_TF_VAR_DEFAULT = re.compile(r'default\s*=\s*"([^"]*)"')
+_TF_VAR_INTERP = re.compile(r'\$\{var\.(\w+)\}')
+
+
+def _collect_module_var_defaults(module_dir: Path) -> dict[str, str]:
+    """Collect `variable "X" { default = "Y" }` string-defaults from every .tf in ONE module
+    directory, for resolving ${var.X} in resource names. Same-module scope only."""
+    out: dict[str, str] = {}
+    try:
+        tf_files = sorted(module_dir.glob("*.tf"))
+    except Exception:
+        return out
+    for f in tf_files:
+        try:
+            content = f.read_text(encoding="utf-8", errors="replace")
+        except Exception:
+            continue
+        for m in _TF_VARIABLE.finditer(content):
+            block = _extract_tf_block(content, m.start())
+            dm = _TF_VAR_DEFAULT.search(block)
+            if dm:
+                out[m.group(1)] = dm.group(1)
+    return out
+
+
+def _resolve_tf_vars(value: str, var_defaults: dict[str, str]) -> str:
+    """Substitute ${var.X} with its module default; leave any unresolved ref literal."""
+    return _TF_VAR_INTERP.sub(lambda m: var_defaults.get(m.group(1), m.group(0)), value)
+
+
 def _parse_iam_statements(policy_text: str, source_file: str) -> list[IamStatement]:
     """Parse IAM statements from a jsonencode() block.
 
@@ -756,6 +790,7 @@ def _parse_terraform_iam(workspace_root: Path) -> dict[str, IamRole]:
 
     # First pass: collect all role definitions
     role_tf_to_name: dict[str, str] = {}  # tf_resource_name -> role_name
+    module_var_cache: dict[Path, dict[str, str]] = {}  # module dir -> {var: default} (lazy)
     for tf_file in all_tf_files:
         try:
             content = tf_file.read_text(encoding="utf-8", errors="replace")
@@ -769,6 +804,14 @@ def _parse_terraform_iam(workspace_root: Path) -> dict[str, IamRole]:
             name_m = _TF_ROLE_NAME.search(block)
             if name_m:
                 role_name = name_m.group(1)
+                # Resolve ${var.X} against the module's variable defaults so e.g.
+                # name = "${var.name}-role" keys as "m365-mcp-gateway-role" (and links to its
+                # inline policies + the EC2_MANIFEST service iam_role), not the literal string.
+                if "${var." in role_name:
+                    mod_dir = tf_file.parent
+                    if mod_dir not in module_var_cache:
+                        module_var_cache[mod_dir] = _collect_module_var_defaults(mod_dir)
+                    role_name = _resolve_tf_vars(role_name, module_var_cache[mod_dir])
                 role_tf_to_name[tf_res] = role_name
                 if role_name not in roles:
                     roles[role_name] = IamRole(
