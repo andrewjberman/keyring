@@ -4,7 +4,7 @@
 - **Owner:** 0.7.0_AE_CloudOps (commit+deploy lane; gold_dispatch.sh = CLOUD_OPS_OR_ETL)
 - **Authored by:** 0.4.0_DS_ClientPlatform (DS A1 layer-walk finding; owned-paths blocked DS commit -> AE commit+deploy)
 - **Authority:** Andrew-direct (routed to 0.7.0_AE base 20260624T2040Z), ready-to-execute
-- **Status:** IN-PROGRESS
+- **Status:** DEPLOY LANDED (closed 2026-06-24T20:38Z) -- served-SCD verification pending next nightly (DS)
 
 ## Change
 `data/black_diamond/scripts/gold/gold_dispatch.sh` CATALOG line 80:
@@ -20,11 +20,11 @@ Stops a nightly 1,815-file FULL rebuild of the 15,292-row SCD; the proven increm
 
 ## Deploy sequence
 1. [x] edit line 80
-2. [ ] safe-commit (AE author) + push CLOUD
-3. [ ] aws s3 cp gold_dispatch.sh -> s3://opal-data-bd/code/gold/ (EC2-runner pull path)
-4. [ ] verify: re-pull from S3 + grep A_01 line carries --incremental
-5. [ ] RAVC DS -> DS deploy-verifies the served SCD unchanged on the next nightly
-6. [ ] close this ledger
+2. [x] safe-commit (AE author 316202d69) + push CLOUD
+3. [x] aws s3 cp gold_dispatch.sh -> s3://opal-data-bd/code/gold/ (EC2-runner pull path)
+4. [x] verify: re-pull from S3 -> line 80 = `--upload --incremental`; deployed S3 == local committed (byte-identical)
+5. [x] RAVC DS (2026-06-24T20:38Z) -> DS deploy-verifies the served SCD unchanged on the next nightly
+6. [x] close this ledger (AE side complete; DS owns the next-nightly served-SCD verify)
 
 ## Validation posture
 NO ad-hoc gold run (CLAUDE.md). The next SCHEDULED nightly uses incremental; DS deploy-verifies the served
