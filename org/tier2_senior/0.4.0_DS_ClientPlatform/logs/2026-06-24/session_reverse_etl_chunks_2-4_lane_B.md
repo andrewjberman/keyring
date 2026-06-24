@@ -67,6 +67,16 @@ After chunks 2-4 closed, base-DS directed the two no-crawl residuals I'd surface
 
 NET: BD/49F supplant surface = raw-data-delivery (Schwab-direct held) + firm-config-host (T2-HOST migrate-SoR). Decision-grade reinforced. Compiler tools this delta: comp-which (route), pipescript advi-bd (the census), boto3 estate scan (perf-artifact existence). cot/inf projection HELD per Andrew risk-gate.
 
+## Addendum 2 — DC-CHAR own-account API-quality characterization (BD + Orion)
+
+After residuals closed, COO released DC-CHAR-supplant as the ready next unit; base-DS confirmed the split (BD + Orion to me, sequential; Eclipse gated; base-DS integrates -> Part-5). ROE Option-B (own-account, our-data, read-not-scan, polite); applied the RECON-RIGOR evidence-schema (Observation/Evidence/Inference/CONFIDENCE/ALTERNATIVE/Business-significance) -> 6-dim partner-scoring (API-maturity + operational-maturity -> supplant cost-to-work-around).
+
+- **BD-char** (db14f253e, base-DS-validated+folded, CTO-accepted): interface = batch FILE-EXPORT (no query API). Schema STABLE but denormalized (~10 dup-suffixed col-pairs); freshness predictable T+1; the STANDOUT = IRREGULAR txn-export window (span 2-78d / 5K-128K rows -> forces defensive dedup, retro-grounds chunk-3); proprietary z-id-space needing the schwab_bd mapping (85.7%). => cost-to-work-around LOW-MODERATE; BD's own unsophisticated/irregular profile is itself a supplant argument (CTO: "the supplanted version is BETTER"). ROE: ZERO vendor traffic.
+- **Orion-char** (8a689e7a8, used base-DS's D3 context — no re-derivation): a full maturity tier ABOVE BD — real REST query-API, broad typed surface + observed-but-unused frontier, Session-JWT/2FA/CSRF auth, async Generate->poll, top-N pagination. Real DINGS: silent server-side-$filter-ignore (correctness trap), Verbose!=runtime gotcha, non-standard Session header, daily JWT-harvest fragility; rate-limits-at-scale INFERRED. Op-maturity MODERATE-HIGH (same-day serve-freshness, deep 2020+ history, reliable Assets-snapshot pass-through). DECISIVE Dim-7: Orion EXPOSES computed performance_dim + tax (BD exposes zero) = the genuine T2-COMPUTE frontier, BELOW our reach (no Fidelity-raw) -> Orion supplant cost HIGHER + GATED, prerequisite = the Fidelity-direct feed (census inf-supplant lever). This IS CTO's OPEN inf/Orion IP-frontier, now characterized. inf=INFERRED tier (not projected). Attribution discipline: the _BRONZE_COMPLETE/_markers are OUR pipeline, not Orion's API.
+- **Eclipse-char**: GATED (DC2 crawl, Andrew risk-call) — held.
+
+Compiler tools this delta: comp-which (route) + pipescript advi-bd (BD interface) + boto3 own-data probes (BD schema-stability/freshness/window; orion-api existence/freshness 15,219 objs 2020-2026). ROE Option-B clean (zero new vendor traffic).
+
 ## Blockers
 
-None. All chunks (2-4) + both no-crawl residuals (#1/#3) delivered + RAVC'd. Remaining legs event-gated on base-DS (chunk-1 lots + unified proof-of-method close) / CVO (independent verify) / CTO (PRD/D5 fold) / Andrew (cot/inf risk-gate). ~B idle/available, not blocked.
+None. All un-gated DS-deep work delivered + RAVC'd: reverse-ETL chunks 2-4 + residuals #1/#3 + DC-CHAR BD+Orion (all CVO-PASS / CTO-accepted / base-DS-folded). Remaining legs are GATED/event: base-DS chunk-1 lots + unified proof-of-method close (-> my B_02 co-verify); Eclipse-char (DC2 crawl, Andrew risk-call); cot/inf reverse-ETL projection (Andrew risk-call). ~B in event-driven standby (gated, not idle), not blocked.

@@ -7612,3 +7612,39 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-06-24 | 3.0.0_SA_CVO | NFRA_COMPRAIL.TO-5 | comp-pipescript | comp-pipescript io B_03 | PASS |
 2026-06-24 | 0.4.0_DS_ClientPlatform~B | DATA_PLATFORM_reverseETL.chunk2-4 | comp-which, comp-pipescript io (B_00/A_03/C_00/C_01/C_02/C_03/B_03), comp-to, boto3 live-diffs, safe-commit | reverse-ETL chunks 2-4 data-calibration: allocations(T1 value/T2-HOST dim), txn-NNA(T1), T2-residual(perf self-owned/grouping T2-HOST); T2-COMPUTE residual near-empty for 49F/Schwab
 | 2026-06-24 | 0.4.0_DS_ClientPlatform~B | DATA_PLATFORM_reverseETL.chunk4-t2-residual | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-06-24 | 0.0.0_AB_MSTR | (no-TO) | comp-kuzu | comp-kuzu MATCH (n)-[r]-(m) WHERE n.name CONTAINS 'm365-mcp-gateway' RETURN n.name, typ... | FAIL |
+| 2026-06-24 | 0.0.0_AB_MSTR | (no-TO) | comp-kuzu | comp-kuzu MATCH (n) WHERE n.name CONTAINS 'm365' OR n.name CONTAINS 'mcp-gateway' OR (n... | FAIL |
+| 2026-06-24 | 0.0.0_AB_MSTR | (no-TO) | comp-kuzu | comp-kuzu MATCH (n) WHERE n.name CONTAINS 'm365' OR (n.name CONTAINS 'mcp' AND n.name C... | PASS |
+| 2026-06-24 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/ec2/crawl-harness/src/gold.te... | PASS |
+| 2026-06-24 | 0.0.0_AB_MSTR | (no-TO) | comp-kuzu | comp-kuzu MATCH (n)-[r]->(m) WHERE n.name CONTAINS 'm365-mcp-gateway' RETURN n.name, m.... | PASS |
+| 2026-06-24 | 0.0.0_AB_MSTR | (no-TO) | comp-kuzu | comp-kuzu MATCH (n)-[r]->(m) WHERE m.name CONTAINS 'opal-mcp-audit' OR m.name CONTAINS ... | PASS |
+| 2026-06-24 | 0.5.0_AE_OpalETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/ec2/crawl-harness/src/crawl.t... | PASS |
+| 2026-06-24 | 0.0.0_AB_MSTR | (no-TO) | comp-kuzu | comp-kuzu MATCH (n)-[r]-(m) WHERE n.name CONTAINS 'opal-mcp-audit' OR n.name CONTAINS '... | PASS |
+| 2026-06-24 | 0.0.0_AB_MSTR | (no-TO) | comp-kuzu | comp-kuzu MATCH (n)-[r]-(m) WHERE n.name = 'm365-mcp-gateway-golive' RETURN n.name, m.n... | PASS |
+| 2026-06-24 | 0.4.0_DS_ClientPlatform~B | DATA_PLATFORM_reverseETL.chunk4-t2-residual | pipescript | pipescript --list | PASS |
+| 2026-06-24 | 0.4.0_DS_ClientPlatform~B | DATA_PLATFORM_reverseETL.chunk4-t2-residual | pipescript | pipescript advi-bd | PASS |
+| 2026-06-24 | 0.4.0_DS_ClientPlatform | DATA_PLATFORM.D3 | comp-surface-check | comp-surface-check check --mode advisory --file docs/briefs/DATA_PLATFORM_reverse_etl_c... | PASS |
+| 2026-06-24 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.7.0_AE_CloudOps/task... | PASS |
+| 2026-06-24 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+| 2026-06-24 | 0.4.0_DS_ClientPlatform~B | DATA_PLATFORM_reverseETL.chunk4-t2-residual | comp-surface-check | comp-surface-check check --mode advisory --file docs/briefs/DATA_PLATFORM_reverse_etl_c... | PASS |
+| 2026-06-24 | 0.5.0_AE_OpalETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.5.0_AE_OpalETL/logs/... | PASS |
+| 2026-06-24 | 0.0.0_AB_MSTR | (no-TO) | comp-iam | comp-iam service m365-mcp-gateway | PASS |
+| 2026-06-24 | 0.0.0_AB_MSTR | (no-TO) | comp-iam | comp-iam m365-mcp-gateway-role | FAIL |
+| 2026-06-24 | 0.0.0_AB_MSTR | (no-TO) | comp-aws | comp-aws --help | PASS |
+| 2026-06-24 | 0.0.0_AB_MSTR | (no-TO) | comp-aws | comp-aws m365-mcp-gateway | FAIL |
+| 2026-06-24 | 0.4.0_DS_ClientPlatform~B | DATA_PLATFORM_reverseETL.chunk4-t2-residual | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-06-24 | 0.4.0_DS_ClientPlatform | DATA_PLATFORM.D3 | comp-surface-check | comp-surface-check check --mode advisory --file docs/briefs/DATA_PLATFORM_reverse_etl_c... | PASS |
+| 2026-06-24 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.7.0_AE_CloudOps/task... | PASS |
+| 2026-06-24 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/ec2/crawl-harness/src/guarded... | PASS |
+| 2026-06-24 | 0.0.0_AB_MSTR | (no-TO) | comp-blast | comp-blast log_call | PASS |
+| 2026-06-24 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/terraform/crawl-harness/main.tf | PASS |
+| 2026-06-24 | 0.4.0_DS_ClientPlatform | DATA_PLATFORM.D3 | comp-surface-check | comp-surface-check check --mode advisory --file docs/briefs/DATA_PLATFORM_reverse_etl_c... | PASS |
+| 2026-06-24 | 0.5.0_AE_OpalETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/ec2/crawl-harness/src/crawl.t... | PASS |
+| 2026-06-24 | 0.4.0_DS_ClientPlatform~B | DATA_PLATFORM.DC-CHAR | comp-surface-check | comp-surface-check check --mode advisory --file docs/briefs/DATA_PLATFORM_DC_CHAR_bd_ow... | PASS |
+| 2026-06-24 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/ec2/crawl-harness/src/integra... | PASS |
+| 2026-06-24 | 0.5.0_AE_OpalETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.5.0_AE_OpalETL/logs/... | PASS |
+| 2026-06-24 | 0.4.0_DS_ClientPlatform | DATA_PLATFORM.D3 | comp-surface-check | comp-surface-check check --mode advisory --file docs/briefs/DATA_PLATFORM_reverse_etl_c... | PASS |
+| 2026-06-24 | 0.4.0_DS_ClientPlatform~B | DATA_PLATFORM.DC-CHAR | comp-surface-check | comp-surface-check check --mode advisory --file docs/briefs/DATA_PLATFORM_DC_CHAR_orion... | PASS |
+| 2026-06-24 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+2026-06-24 | 0.4.0_DS_ClientPlatform~B | DATA_PLATFORM.DC-CHAR | comp-which, pipescript advi-bd, boto3 own-data probes (BD schema/freshness/window + orion-api existence/freshness) | DC-CHAR own-account API-quality char: BD (file-export, LOW-MOD, irregular-window standout) + Orion (real REST, MOD-HIGH, exposes computed perf = the gated inf T2-COMPUTE frontier); ROE Option-B zero-traffic
+| 2026-06-24 | 0.4.0_DS_ClientPlatform~B | DATA_PLATFORM.DC-CHAR | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
