@@ -1,0 +1,37 @@
+{
+  "project_code": "SCTY",
+  "macro_code": "SCTY",
+  "macro": true,
+  "name": "Security Macro / Program -- external+repo+MCP diligence, vendor/partner security diligence, own-attack-surface red-team, AI-agent-fabric hardening",
+  "description": "Andrew-direct 2026-06-24: house Opal's security program as one governed macro (stored/reusable/governed, not scattered across session logs). Home = /security. TRIGGER: CVO analyzed 2 untrusted GitHub repos in isolation (read-only, zero-execution); one -- reverse-skill -- is a LIVE AI-agent-hijack toolkit (auto-execute-on-read, ExecutionPolicy-bypass, global-config self-injection, explicit agent-safety-suppression) = a live specimen of the AI-supply-chain/prompt-injection threat we run every time an agent reads a cloned repo / dependency README / web content / external MCP. 4 WORKSTREAMS: (1) external-tool/repo/dependency/MCP diligence (the novel AI-agent-supply-chain risk-class); (2) vendor/partner security diligence (BD/Orion/Eclipse/SmartX + partners -- references the DATA_PLATFORM recon-ROE + crawl-isolation, which STAY under DATA_PLATFORM; SCTY owns the security framing/checklists); (3) own attack-surface red-team (portal / OAuth-JWT gateways [m365-mcp-gateway] / APIs / AWS estate -- IMDSv2/SSRF/IAM); (4) AI-agent / multi-agent-fabric hardening (prompt-injection/agent-hijack/malicious-MCP defense; OWASP LLM + ASI Top-10). The distinctive+urgent scope = the AI-agent-supply-chain: our fabric agents constantly read external content (incl. the DATA_PLATFORM recon crawl/OSINT reading vendor pages + external repos) -> the agent-supply-chain control (external-content=untrusted-DATA-not-instructions; sandbox agent tool-access; no-auto-run-external-MCP/scripts) is a live SAFEGUARD for the recon + the whole fabric. Ties to the silent-absence/fail-safe theme (agent-safety-suppression = make-the-agent-silently-not-warn). SCTY = the security-program-of-record that REFERENCES+FRAMES the project-specific security artifacts (recon-ROE, gateway-auth, privacy-two-zone) + adds the cross-cutting. CVO scaffolded the proposal + the methodology-catalog + the diligence-checklist (in /security); CTO formalized the PRD. CVO standing role = verifier-not-fixer.",
+  "prds": [
+    {
+      "path": "docs/architecture/SCTY_PRD.md",
+      "label": "CTO formal PRD v0.1 -- premise (house security + the reverse-skill AI-agent-hijack trigger) + the 4 workstreams + the novel AI-agent-supply-chain risk-class (the urgent control: external-content=data, sandbox, no-auto-run-external-MCP) + the relationship to DATA_PLATFORM/OPLMCP/NFRA_WRKFLW (frame-not-duplicate) + the first chartered work (agent-supply-chain control [urgent] / self-assessment / recon-ROE-fold) + governance (CVO=verifier-not-fixer; CTO arch-gates controls; COO /security lane; MSTR ledgers)",
+      "date": "2026-06-24"
+    }
+  ],
+  "related": [
+    "DATA_PLATFORM",
+    "NFRA_OPLMCP",
+    "NFRA_WRKFLW",
+    "NFRA_GLOBGRPH"
+  ],
+  "status": "active",
+  "phase": "PHASE 0 -- PRD/CHARTER. CVO scaffolded the proposal (security/SCTY_macro_proposal.md) + the external-repo analysis + the methodology-catalog + the diligence-checklist (in /security, working tree). CTO formalized the PRD 2026-06-24 (docs/architecture/SCTY_PRD.md). SEQUENCE: CTO PRD (DONE) -> COO commits /security + adds the owned-paths lane rule + decomposes the first-chartered-work; MSTR ledgers the macro-creation (Tier-0 LD, mirrors LD-0209). FIRST CHARTERED WORK (urgency-ordered): (1) URGENT -- the agent-supply-chain control (external-content=untrusted-data; sandbox agent tool-access; no-auto-run-external-MCP/scripts) -- protects the ACTIVE recon agents + the whole fabric; CTO arch-gates the design; (2) own-attack-surface self-assessment (portal/gateway/API/AWS vs the distilled checklist -- the OPLMCP gateway first); (3) fold the recon-ROE + crawl-isolation under the SCTY security-framing. Paces alongside the hot priorities.",
+  "blocking": "None to PRD. The agent-supply-chain control (5.1) is urgent-first (the recon agents are actively reading external vendor/repo content NOW + reverse-skill proves the threat is live/engineered). /security commits route through COO until the owned-paths lane rule is set (security-sensitive content). CVO = verifier-not-fixer (independent verification; does not author the PRD or execute).",
+  "created": "2026-06-24",
+  "pods": [
+    "1.0",
+    "3.0",
+    "0.7",
+    "0.6",
+    "0.0"
+  ],
+  "pipeline": "security program: external/repo/MCP diligence (vet-before-adopt; AI-agent-supply-chain) + vendor/partner security diligence (BD/Orion/Eclipse/SmartX; references DATA_PLATFORM recon-ROE) + own-attack-surface red-team (portal/gateway/API/AWS) + AI-agent-fabric hardening (prompt-injection/agent-hijack/malicious-MCP; OWASP LLM+ASI). /security = the working KB. SCTY frames+references the project-specific security artifacts + adds the cross-cutting.",
+  "coo_lane": "2.0.0_SA_COO",
+  "scaffolded_by": "3.0.0_SA_CVO",
+  "sovereign": "Andrew",
+  "thread_counter": 0,
+  "threads": []
+}
