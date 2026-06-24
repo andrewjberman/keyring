@@ -1,0 +1,36 @@
+{
+  "project_code": "DATA_ANALYTICS",
+  "macro_code": "DATA",
+  "name": "Gold-Analytics Clean-Rebuild -- thread gold-runners->ADVI/MDPF script-for-script, separate essential-vs-agnostic, rebuild lean",
+  "description": "Andrew-direct 2026-06-24: the 49F gold analytics is an absolute mess (edge cases / patches / detours / accreted reconciliation debt), bulky + expensive (r6i.xlarge gold-runner, 17+ scripts incl. 26 E_* diagnostics). GOAL: a DEEP pipescript thread-analysis of EVERY path from the gold runners down to ADVI (+ MDPF) components, script-for-script, end-to-end -- identify what transformations ACTUALLY need to happen vs what's AGNOSTIC, and what's 49F-SPECIFIC overfit (the advisor ecosystem: architects/implementors/House/leaderboards/Lusha; the lots-FIFO reconstruction; the E_* diagnostic tail) -- then rebuild the analytics layer CLEAN against a canonical archetype, once and for all. Enabled by becoming-Black-Diamond (DATA_PLATFORM: we own the Schwab/custodian input). Archetype seed = Inflection (inf): snapshot-native, no advisor-overfit, the structurally-cleanest shape -- BUT Orion-sourced (different fields/layout), so the archetype is field-layout-AGNOSTIC (same analytics SHAPE, fed from whatever the custodian provides via the unified silver), with the advisor-ecosystem as a capability-declared EXTENSION not baked-in. Deliverables: A1 the end-to-end transformation ledger (every gold script -> output -> ADVI/MDPF consumer, tagged essential/agnostic/firm-specific/dead -- the thing nobody has ever had); A2 the essential-transformation spec; A3 the canonical firm-parameterized analytics archetype; A4 the clean rebuild (parity-gated firm-by-firm cutover). SIBLING of DATA_PLATFORM (one DATA macro): DATA_PLATFORM owns ingest/supplant -> clean unified SILVER; DATA_ANALYTICS owns gold-analytics -> served (off that silver). The seam = silver. DATA_PLATFORM's nascent D5 (unified gold engine) + D6 (MDPF/ADVI archetype) RE-HOME here (the dedicated analytics project operationalizes them as A3/A4); DATA_PLATFORM's reverse-ETL findings (BD-gold=mostly-repackaging; lots-FIFO=overfit; perf=self-owned-standard) are direct inputs to A1/A2.",
+  "prds": [
+    {
+      "path": "docs/architecture/DATA_ANALYTICS_PRD.md",
+      "label": "CTO formal PRD v0.1 -- premise (kill the 49-overfit, once-and-for-all) + the goal (deep end-to-end script-for-script thread-analysis -> essential-vs-agnostic -> clean rebuild) + the method (deep pipescript + comp-blast/comp-transform/graph) + the 49-overfit-vs-agnostic-core preliminary read + the inf-seeded field-layout-agnostic archetype + A1-A4 deliverables + the seam with DATA_PLATFORM (silver) + the D5/D6 re-home",
+      "date": "2026-06-24"
+    }
+  ],
+  "related": [
+    "DATA_PLATFORM",
+    "ADVI_COTETL",
+    "NFRA_DTAFLP",
+    "MDPF_ASSETS",
+    "ADVI_ORIAPI"
+  ],
+  "status": "active",
+  "phase": "PHASE 0 -- PRD/DESIGN. PRD authored 2026-06-24 (1.0.0_SA_CTO; docs/architecture/DATA_ANALYTICS_PRD.md). SEQUENCE: CTO PRD (DONE) -> COO decomposes A1-A4 -> A1 (the deep pipescript end-to-end transformation ledger: every gold script -> output -> ADVI/MDPF consumer, tagged essential/agnostic/firm-specific/dead) CAN BEGIN NOW (analysis of the existing trees, no DATA_PLATFORM-ingest dependency; the foundational + highest-value first step) -> A2 essential-spec -> A3 canonical archetype (CTO arch-gate) -> A4 clean rebuild (parity-gated firm-by-firm cutover, sequences with the DATA_PLATFORM unified silver). Paces alongside DATA_PLATFORM + the hot priorities (COO sequences capacity); A1 is cheap to start + immediately valuable.",
+  "blocking": "None to PRD/A1 (A1 analyzes existing trees, no ingest dependency). A4 (rebuild) wants the DATA_PLATFORM unified silver + is parity-gated (cut over firm-by-firm only when the new engine's served output reconciles to the old -- never-half-land; the served surface is LIVE). Coordination: D5/D6 re-home from DATA_PLATFORM (not yet started, low-cost); CTO+COO sort the exact boundary at decomposition. Risk discipline: A1's consumer-census is load-bearing (don't drop a served surface a firm depends on -- full-census, same class as the destructive-removal discipline).",
+  "created": "2026-06-24",
+  "pods": [
+    "0.4",
+    "0.6",
+    "0.7",
+    "3.0",
+    "1.0"
+  ],
+  "pipeline": "gold-analytics clean-rebuild: A1 deep pipescript thread-analysis (gold-runners -> silver/platinum artifacts -> ADVI/MDPF components, script-for-script, tagged essential/agnostic/firm-specific/dead) -> A2 essential-transformation spec -> A3 canonical firm-parameterized archetype (agnostic core + capability-declared extensions, inf-seeded, field-layout-agnostic) -> A4 clean lean engine (replaces the 3 forked overfit trees bd/cot/inf; parity-gated firm-by-firm cutover) serving the existing platinum/firm + ADVI + MDPF contracts. Consumes the DATA_PLATFORM unified silver (the seam).",
+  "coo_lane": "2.0.0_SA_COO",
+  "sibling": "DATA_PLATFORM",
+  "thread_counter": 0,
+  "threads": []
+}
