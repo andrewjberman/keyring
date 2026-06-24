@@ -90,3 +90,32 @@ after iam.tf, `comp-blast` before infra deletion) did not apply: this is a green
 harness build -- no gold run, no iam.tf change, no infra deletion, no existing pipeline-graph nodes
 touched. Grounding was source-read (D3/ADVI_ORIAPI/orion_export.ts) + one rail-checked read-only AWS
 describe. comp-which/comp-aws auto-logged to org/compiler-tools-log.md.
+
+---
+
+## Addendum -- post-RAVC integration close (same session)
+
+All RAVC loops closed; DC0 OFFLINE build DONE + integrated BOTH sides (full suite 55/55).
+
+- **CTO egress RULING 151638Z** (folded, commit `1a3efd1a4`): ephemeral-ok APPROVED, NO NAT. My
+  live-describe grounding FLIPPED the CTO's earlier same-egress-IP requirement -> the refined
+  principle is "match the existing exporter's egress pattern" (ephemeral blend-in > stable
+  stand-out for a reverse-engineered supplant vendor). assertEgress WARN stays as the per-vendor
+  guard (it forced the decision = working as designed).
+- **base-AE integration** (his 5b2f7d431, 54/54): wired MY HumanizerStrategy contract into
+  GuardedNavigator (optional, invoked only AFTER guardAction -> non-bypassable proven). Confirmed:
+  gold enriches INSIDE the capture spine (orchestrator stays at cap.catalog(), no double-own);
+  opal-crawl-catalog bucket PROVISIONED+LIVE (s3CatalogWriter targets it). Pulled + re-ran 55/55 ->
+  my code + his new GuardedNavigator integrate clean (4-arg construction vs optional 5th param).
+- **DC1-readiness** (commit `1a3efd1a4`): grounded the storage_state READ-ONLY RIDE in
+  runOrionCrawlLive (loadParkedSessionReadOnly -> opal-data-inf/orion/browser-profile/state.json,
+  from orion_export.ts) -- the live crawl rides the existing auth, never logs in, NEVER saves back.
+  This is the #1 mechanism DC1 needs to fire fast at the gate.
+
+**Queued (my next, DC0.4-hardening):** the page-coupled OrionHumanizerStrategy (the stealth impl
+base-AE's hook calls). One package-structure fork open to base-AE (compose the smartx Humanizer:
+vendor-into-src vs cross-dir import vs shared module) -- teed up, author on his call. The exact UI
+selectors/routes stay the live-HAR discovery frontier (TBD even in the inf-exporter producer).
+
+**Commits this session:** `74fc3ec5b` orion-config | `1723b5c8b` nav-walker | `d39301362` crawl |
+`1a3efd1a4` egress-ruling+storage_state | `86eb9e974` log. All on origin/CLOUD.
