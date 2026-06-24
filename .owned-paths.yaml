@@ -572,6 +572,8 @@ lanes:
       - 1.0.0_SA_CTO
       - 2.0.0_SA_COO
       - 0.0.0_AB_MSTR
+      - 0.7.0_AE_CloudOps
+      - 0.7.0_AE_CloudOps~B
     description: "SCTY security macro (Andrew-direct 2026-06-24; CTO brief 79b03e8e0) -- the /security root program (external-repo analysis, untrusted-repo sandbox process, per-repo security verdicts, macro charter). CVO authors the analysis/verdicts; CTO frames the PRD + arch-gates; COO commits/coordinates + decomposes; MSTR governance. Security-WORKER lanes added at SCTY-decompose-time (when the security work is laned). Added 2026-06-24 by 2.0.0_SA_COO per CVO [ACTION] 175444Z (the /security new-root was UNDEFINED -> any commit blocked)."
 
 # =========================================================================
