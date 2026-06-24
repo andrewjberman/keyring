@@ -1,12 +1,12 @@
 ---
 name: 49-schwab-conv
-description: AE-owned recurring 49F (account 08242234) Schwab ingest — sync the newly-delivered Schwab CRS files from the OneDrive delivery folder to S3 and roll all five silver tables forward. The canonical 6-step process, in order — (1) sync OneDrive -> s3://opal-data-schwab/01_raw/ (all extensions) + mirror *.RPS to bronze/rps/, then the five idempotent silver converters (2) ACC (3) RPS (4) TRN (5) ULN (6) RLD — followed by an S3 verification of the latest partition per table and a notify to Andrew + DS. Folds every banked gotcha: the opal-data-schwab PutObject AES256-SSE deny (DS is blocked here, which is why this is AE-owned), RLD is NON-OPTIONAL (B_02 canonical_lots primary realized-lot tax source — omitting it silently degrades gold), all converters idempotent (skip converted dates, --force rewrites, --since scopes), and the ACC triple-`state`-column header dup. Use when new Schwab files have landed locally (Andrew says "we downloaded the new Schwab data" / "convert the Schwab files" / "update the Schwab data") or DS reports stale silver/{ACC,RPS,TRN,ULN,RLD} partitions. "Convert the Schwab files" = ALL SIX STEPS, every time. AE-only (0.x.0_AE_*); other serials route to the pod AE.
+description: AE-owned recurring 49F (account 08242234) Schwab ingest — sync the newly-delivered Schwab CRS files from the OneDrive delivery folder to S3 and roll all six silver tables forward. The canonical 7-step process, in order — (1) sync OneDrive -> s3://opal-data-schwab/01_raw/ (all extensions) + mirror *.RPS to bronze/rps/, then the idempotent silver converters (2) ACC (3) RPS (4) TRN-Layer-A (5) TRN-NNA-Layer-B (6) ULN-canonical-via-lots_to_silver (7) RLD — followed by an S3 verification of the latest partition per table and a notify to Andrew + DS. Folds every banked gotcha: the opal-data-schwab PutObject AES256-SSE deny (DS is blocked here, which is why this is AE-owned), RLD is NON-OPTIONAL (B_02 canonical_lots primary realized-lot tax source — omitting it silently degrades gold), all converters idempotent (skip converted dates, --force rewrites, --since scopes), and the ACC triple-`state`-column header dup. Use when new Schwab files have landed locally (Andrew says "we downloaded the new Schwab data" / "convert the Schwab files" / "update the Schwab data") or DS reports stale silver/{ACC,RPS,TRN,TRN_NNA,ULN,RLD} partitions. "Convert the Schwab files" = ALL SEVEN STEPS, every time. AE-only (0.x.0_AE_*); other serials route to the pod AE.
 ---
 
 # /49-schwab-conv — 49F Schwab ingest (AE-owned recurring task)
 
 Sync the newly-delivered Schwab `CRS{YYYYMMDD}.{ext}` files from the OneDrive delivery folder to
-S3, then roll all five silver tables forward. **The authority for this process is your
+S3, then roll all six silver tables forward. **The authority for this process is your
 `prompt.md` § "Schwab Ingest"** (the persona spec); this skill is the executable entry point and
 folds the dry-run-first + verify-after discipline. The standard wins on any divergence.
 
@@ -14,8 +14,10 @@ folds the dry-run-first + verify-after discipline. The standard wins on any dive
 `PutObject` for the `Andrew_Berman` IAM user without SSE — DS cannot upload directly. AE runs the
 full ingest. (AE = `0.x.0_AE_*`; any other serial halts at Step 0 and routes to the pod AE.)
 
-**"Convert the Schwab files" = ALL SIX STEPS, every time.** The five converters are independent
-tables; skipping any (especially RLD) silently degrades a downstream gold consumer.
+**"Convert the Schwab files" = ALL SEVEN STEPS, every time.** The converters produce independent
+silver tables; skipping any (especially RLD, or the trn_nna Layer-B) silently degrades a downstream
+gold consumer. **trn_nna (TRN Layer B) is the NNA-classified flows the gold C_01.canonical_nna reads**
+— it MUST run after trn (Layer A) every time, else canonical_nna silently gets zero Schwab flow.
 
 ## Fixed facts (49F, account 08242234)
 
@@ -24,7 +26,7 @@ tables; skipping any (especially RLD) silently degrades a downstream gold consum
 | Source (local) | `C:\Users\AndrewBerman\OneDrive - Opal Capital\Documents\Schwab Data Delivery\08242234\` |
 | File pattern | `CRS{YYYYMMDD}.{ACC,RPS,TRN,ULN,RLD,SEC,UPN,UPT,...}` (Schwab SI2 Desktop delivers per-account) |
 | Raw S3 dest | `s3://opal-data-schwab/01_raw/` (all ext) + `*.RPS` mirror to `s3://opal-data-schwab/bronze/rps/` |
-| Silver S3 dest | `s3://opal-data-bd/schwab/silver/{acc,rps,trn,uln,rld}/date=YYYYMMDD/data.parquet` |
+| Silver S3 dest | `s3://opal-data-bd/schwab/silver/{acc,rps,trn,trn_nna,uln,rld}/date=YYYYMMDD/data.parquet` (ULT is NOT from this skill — BD-side `B_03`-sourced, by design) |
 | Last-known state | as of 2026-06-22, silver complete through **20260618** (update this line each run) |
 
 **SSE gotcha:** `opal-data-schwab` DENIES `PutObject` without `x-amz-server-side-encryption:
@@ -60,18 +62,19 @@ The sync is idempotent (compares filenames to existing S3 keys, uploads only mis
 just scopes the scan; omit it to scan the whole folder (slower, same result). Run **1b in the
 background** (`run_in_background`) and proceed to verify once it exits 0.
 
-## Steps 2-6 — Roll the five silver tables forward (after Step 1 completes)
+## Steps 2-7 — Roll the silver tables forward (after Step 1 completes)
 
 All idempotent (skip already-converted dates; `--force` rewrites; `--date YYYYMMDD` single date).
 Can run in parallel after Step 1, but SEQUENTIAL is cleaner on this box (per-table output + error
 isolation; each only processes the new dates). Run them and capture each rc:
 
 ```bash
-python data/black_diamond/scripts/bronze/convert_schwab_acc_to_parquet.py   # -> schwab/silver/acc/  (account xref)
-python data/black_diamond/scripts/bronze/convert_schwab_rps_to_parquet.py   # -> schwab/silver/rps/  (position snapshots)
-python data/black_diamond/scripts/bronze/convert_schwab_trn_to_parquet.py   # -> schwab/silver/trn/  (NNA enrichment)
-python data/black_diamond/scripts/bronze/convert_schwab_uln_to_silver.py    # -> schwab/silver/uln/  (B_01 Rule-3 cross-ref)
-python data/black_diamond/scripts/bronze/convert_schwab_lots_to_silver.py rld  # -> schwab/silver/rld/  (B_02 canonical lots — PRIMARY realized tax detail)
+python data/black_diamond/scripts/bronze/convert_schwab_acc_to_parquet.py        # -> schwab/silver/acc/      (account xref)
+python data/black_diamond/scripts/bronze/convert_schwab_rps_to_parquet.py        # -> schwab/silver/rps/      (position snapshots)
+python data/black_diamond/scripts/bronze/convert_schwab_trn_to_parquet.py        # -> schwab/silver/trn/      (TRN Layer A: raw transactions — INTERMEDIATE, not the NNA layer)
+python data/black_diamond/scripts/bronze/convert_schwab_trn_to_nna_silver.py     # -> schwab/silver/trn_nna/  (TRN Layer B: NNA-classified flows — the GOLD-CONSUMED table; reads trn/; feeds C_01.canonical_nna. MUST run AFTER trn Layer A)
+python data/black_diamond/scripts/bronze/convert_schwab_lots_to_silver.py uln     # -> schwab/silver/uln/      (B_02 unrealized lots, long+short — CANONICAL; replaces the retired convert_schwab_uln_to_silver.py long-only Rule-17-violating filter)
+python data/black_diamond/scripts/bronze/convert_schwab_lots_to_silver.py rld     # -> schwab/silver/rld/      (B_02 canonical lots — PRIMARY realized tax detail)
 ```
 
 Expect `OK=N SKIP=0 ERR=0` per converter (N = new dates). A `SKIP` on an old historical date with
@@ -85,17 +88,17 @@ time.
 
 ## Step 7 — Verify the served artifacts (never trust rc=0)
 
-Confirm the latest partition exists + is non-zero for ALL FIVE tables:
+Confirm the latest partition exists + is non-zero for ALL SIX tables:
 
 ```bash
 LATEST={new_latest_date}   # e.g. 20260618
-for t in acc rps trn uln rld; do
+for t in acc rps trn trn_nna uln rld; do
   aws s3 ls "s3://opal-data-bd/schwab/silver/$t/date=$LATEST/data.parquet"
 done
 ```
 
-All five must return a non-zero-byte `data.parquet` dated today. RLD especially — it's the one that
-silently no-ops downstream if missing.
+All six must return a non-zero-byte `data.parquet` dated today. RLD especially — it's the one that
+silently no-ops downstream if missing; and trn_nna — the gold C_01.canonical_nna reads it.
 
 ## Step 8 — Notify + log
 
