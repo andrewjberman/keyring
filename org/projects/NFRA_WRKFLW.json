@@ -1,0 +1,36 @@
+{
+  "project_code": "NFRA_WRKFLW",
+  "macro_code": "NFRA",
+  "name": "Workflow-Mining over OPLMCP Traffic -- meter employee M365-MCP patterns into scoped, verified workflows",
+  "description": "Andrew-direct 2026-06-24: meter the M365-MCP gateway traffic patterns Opal employees already perform, render them into candidate WORKFLOWS (multi-step procedures), human-interview-scope them, then deterministically synthesize/verify/deploy via the rail. Premise: the procedural-authoring gap is real (too hard for users to author the workflows they'd want); far easier to meter the patterns they already perform. The system proposes; humans dispose. A 6-layer pipeline (L0 capture+distill / L1 sessionize / L2 mine / L3 classify+rank / L4 interview+scope / L5 synth+verify+adopt). Offline-mining + live-routing = ONE recognition engine, two time-horizons (also offers a known workflow at moment-of-need). Privacy = the two-zone model (Andrew rulings): an ephemeral HOT zone (short-TTL, identity-bearing for sessionID-stitch + k-anon distinct-actor counting + interview-targeting) + a durable COLD zone (de-identified k-anonymized signatures ONLY); de-identify-NOT-coarsen; no-identity-persisted; identity dropped at the distillation boundary. Largely an EXTENSION of OPLMCP (not greenfield): rides the gateway's 100%-coverage audit chokepoint (app/tools.py -> audit.log_call -> _emit), the R8 audit-lake (.05, LANDED = the L0 substrate), the per-user in-process identity (ALB-OIDC = the ephemeral hot-zone identity), and the kill-switch+blocklist (mutating-workflow safety, partly built). Net-new = the token-level semantic-signature distill (L0) + result-shape capture + sessionID-stitch + mining/ranking (L2/L3) + the interview/scope UX (L4) + synth/verify (L5). PRIVACY GAP to close first: the .05 lake currently persists user:email (contradicts no-identity-persisted) -> the scoping L0 de-identifies at the distillation boundary (scoping-lake holds zero identity). Scoping-of-record: docs/briefs/oplmcp-workflow-scoping-20260624.md (MSTR, Andrew-sovereign).",
+  "prds": [
+    {
+      "path": "docs/architecture/NFRA_WRKFLW_PRD.md",
+      "label": "CTO formal PRD v0.1 -- premise (meter-don't-ask) + the capability (offline-mine + live-route, one engine) + the L0-L5 pipeline + the two-zone privacy model (CTO arch-gate) + the OPLMCP-extension technical grounding + the de-identification privacy-gap-closure + the P1-P5 phased build + the arch-gates (privacy/mutation/verification) + sequencing against .05/R8",
+      "date": "2026-06-24"
+    }
+  ],
+  "related": [
+    "NFRA_OPLMCP",
+    "NFRA_GLOBGRPH",
+    "NFRA_DEBTSCAN"
+  ],
+  "status": "active",
+  "phase": "PHASE 0 -- PRD/DESIGN. PRD authored 2026-06-24 (1.0.0_SA_CTO; docs/architecture/NFRA_WRKFLW_PRD.md) formalizing the MSTR scoping-of-record (docs/briefs/oplmcp-workflow-scoping-20260624.md, Andrew-sovereign) into a buildable phased program. SEQUENCE: CTO PRD (DONE) -> COO decomposes the P1-P5 phases -> P1 (L0 foundation: the privacy-critical de-identification gap-closure + the two-zone hot/cold split + the token-level semantic-signature distill + result-shape-capture + sessionID-stitch + the separate least-privilege READ role) is the first leg + the first arch-gate (the two-zone privacy design is the security/privacy crux). The build PACES against the OPLMCP-completion + DATA_PLATFORM hot priorities (COO sequences capacity). Substrate ready: OPLMCP .05/R8 audit-lake LANDED 2026-06-24.",
+  "blocking": "None to PRD; the build paces against hot priorities (OPLMCP-completion + DATA_PLATFORM). Critical-path discipline: P1 (L0) is the privacy-critical foundation -- the de-identification-at-distillation gap-closure (the .05 lake currently persists user:email, contradicting the no-identity-persisted ruling) is the FIRST arch-gated leg; nothing mines until the scoping-lake holds zero identity. Mutating-workflow legs (L5) governed like deploys (staged rollout + kill-switch + audit-ledger + human-auth gate).",
+  "created": "2026-06-24",
+  "pods": [
+    "0.4",
+    "0.6",
+    "0.7",
+    "3.0",
+    "1.0",
+    "0.0"
+  ],
+  "pipeline": "workflow-mining over OPLMCP traffic: L0 capture+distill (de-identified semantic-signature on the gateway's 100%-coverage audit hook -> R8 lake) -> L1 sessionize (units-of-work, cross-session stitch) -> L2 mine (semantic+chronological candidates + the reusable signature substrate: archetyping + analyses) -> L3 classify+rank (triage + mutation-gate + trained artifact-rejection) -> L4 interview+scope (react-don't-author + the 5-slot extraction; the labeling engine) -> L5 synth+verify+adopt (compiler-synth + tiered-mutation verify + rail-deploy + route-at-moment-of-need + lifecycle). Two-zone privacy (ephemeral hot + de-identified cold).",
+  "coo_lane": "2.0.0_SA_COO",
+  "scoping_owner": "0.0.0_AB_MSTR",
+  "sovereign": "Andrew",
+  "thread_counter": 0,
+  "threads": []
+}
