@@ -39,7 +39,9 @@ Live `s3://opal-data-schwab/01_raw/` carries **17 SI2 extensions:** `ACC, RPS, T
 |---|---|---|
 | **CAPTURED to silver (6)** | ACC, RPS, TRN(→`trn_nna`), ULN, ULT, RLD | the `/49-schwab-conv` 6-step rolls these (ACC/RPS/TRN/ULN/RLD per the skill; **ULT is also a live silver table** per gold_freshness_config + lib/s3_layout — correct the "5 tables" framing to 6) |
 | **UNCAPTURED (11)** | SEC, TCF, TCFX, TNN, UPN, UPT, RLU, RLW, RLY, RTU, RTY | the full-feed richness we do NOT ingest |
-| of which, HIGH-VALUE uncaptured | **SEC** (securities-master: CUSIP/ISIN/SEDOL, ratings, FI/option detail), **TCF/TCFX** (tax/cash-flow: tax-lots, distributions, withholding) | SEC is the security dimension that would let us join positions→security-master ourselves instead of relying on BD; TCF is the tax-lot/distribution detail |
+| of which, HIGH-VALUE uncaptured | **SEC** (securities-master: CUSIP/ISIN/SEDOL, ratings, FI/option detail) | SEC is the security dimension that would let us join positions→security-master ourselves instead of relying on BD |
+
+> **CORRECTION (0.6.0 raw-header ground-truth, 2026-06-24):** TCF/TCFX are **trade confirmations** (raw H1 feed-ids `CONFIRM`/`CONFRMX`: trade/settle/action/qty/price + full commission+fee breakdown), **NOT tax/cash-flow** — the Nov-2025 DATA_DICTIONARY.md mislabeled TCF and this consult initially inherited that label. Grounding-vs-raw-header beats grounding-vs-doc. SEC=securities-master stands. (Tax-lot/distribution detail lives in ULN/ULT/RLD + the BD tax templates, not TCF.)
 
 **DATA_DICTIONARY.md v1.0 is incomplete on BOTH axes** (a D1 doc-gap to close): it documents `ACC/RPS/TRN/SEC/TCF` — i.e. it documents SEC+TCF (which we DON'T capture) but **omits ULN/ULT/RLD (which we DO capture)** and the other 6 uncaptured extensions (RLU/RLW/RLY/RTU/RTY/TNN/UPN/UPT/TCFX). D1's field-spec should document all 17 at field-grain, tagged captured/uncaptured.
 
