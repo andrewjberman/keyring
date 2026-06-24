@@ -130,4 +130,32 @@ stay the live-HAR discovery frontier (TBD even in the inf-exporter producer).
 
 **Commits this session:** `74fc3ec5b` orion-config | `1723b5c8b` nav-walker | `d39301362` crawl |
 `1a3efd1a4` egress-ruling+storage_state | `924122566` OrionHumanizerStrategy+vendored-stealth |
-`86eb9e974`/`31710a396` log+addendum. All on origin/CLOUD. Full suite 62/62.
+`86eb9e974`/`31710a396` log+addendum. (DC0 set) Full suite 62/62.
+
+---
+
+## Addendum 2 -- DC1-Orion GO + DC2-Eclipse config prep (same session)
+
+- **DC1-Orion is GO** (Andrew-cleared "push it through"; COO 163232Z). base-AE runs the live Orion
+  crawl off-peak (~02-06 UTC); I co-run on his lead -- will NOT self-initiate.
+- **New standing rule grounded:** `docs/architecture/DATA_PLATFORM_RECON_ROE.md` (RATIFIED
+  Andrew-direct 2026-06-24) -- the mandatory compliance gate for every recon leg. 4 constraints
+  (our-data/account only; ordinary use of available endpoints; read-what's-available; polite). The
+  Eclipse trade/rebalance WRITE surface = OBSERVE-ONLY (actively invoking it = the forbidden
+  "mutating vendor state" tier). base-AE folded the discovery!=authorization `_provenance` field
+  into my crawl.ts s3CatalogWriter (CVO/CTO 162205Z) -- kept + extended to Eclipse.
+- **DC2-Eclipse config PREPPED** (commit `a780344cf`, suite 71/71): `eclipse-config.ts` --
+  grounded same-as-orion (D3 S3/S5 + pull_eclipse_portfolios.py + RECON_ROE). www.orioneclipse.com;
+  Session header; serving schedule-only + the inf footprint (Eclipse pull = inf-bronze-runner cron
+  43 12); egress ephemeral-ok (CTO match-the-baseline generalizes); 9 Opal model IDs + 4 read
+  endpoints + classifier. The trade/rebalance write frontier is a curated screen ENTERED for
+  observe-only capture, never write-invoked.
+- **3 forks raised to base-AE** (NOT guessed -- load-bearing isolation inputs, same discipline as
+  the Orion Q1): FORK-A extend the `Vendor` union to 'eclipse' (his types.ts; bun test runs
+  type-stripped 71/71, tsc needs the one-liner); FORK-B Eclipse is REST-only today so there is NO
+  parked browser session -- Orion storage_state via SSO vs a new Eclipse browser-profile (THE big
+  DC2 design Q + live-HAR); FORK-C the Eclipse JWT is SM-only not S3 (PassiveAuth source). All
+  overridable -> resolution slots in without rework.
+
+**Commits this addendum:** `a780344cf` eclipse-config. Suite 71/71. DC2 fires fast post-DC1 once
+base-AE resolves the 3 forks.
