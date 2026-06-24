@@ -7648,3 +7648,24 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-06-24 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
 2026-06-24 | 0.4.0_DS_ClientPlatform~B | DATA_PLATFORM.DC-CHAR | comp-which, pipescript advi-bd, boto3 own-data probes (BD schema/freshness/window + orion-api existence/freshness) | DC-CHAR own-account API-quality char: BD (file-export, LOW-MOD, irregular-window standout) + Orion (real REST, MOD-HIGH, exposes computed perf = the gated inf T2-COMPUTE frontier); ROE Option-B zero-traffic
 | 2026-06-24 | 0.4.0_DS_ClientPlatform~B | DATA_PLATFORM.DC-CHAR | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-06-24 | 0.4.0_DS_ClientPlatform | DATA_PLATFORM.D3 | comp-surface-check | comp-surface-check check --mode advisory --file docs/briefs/DATA_PLATFORM_reverse_etl_c... | PASS |
+| 2026-06-24 | 0.5.0_AE_OpalETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/ec2/crawl-harness/src/crawl.t... | PASS |
+| 2026-06-24 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/ec2/m365-mcp-gateway/app/serv... | PASS |
+| 2026-06-24 | 0.5.0_AE_OpalETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.5.0_AE_OpalETL/logs/... | PASS |
+| 2026-06-24 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/ec2/EC2_MANIFEST.json | PASS |
+| 2026-06-24 | 0.6.0_AE_PartnerETL | DATA_PLATFORM.D4 | comp-surface-check | comp-surface-check check --mode advisory --file .claude/skills/49-schwab-conv/SKILL.md ... | PASS |
+| 2026-06-24 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/ec2/m365-mcp-gateway/IT_REQUE... | PASS |
+| 2026-06-24 | 0.4.0_DS_ClientPlatform | DATA_PLATFORM.D3 | comp-surface-check | comp-surface-check check --mode advisory --file data/black_diamond/scripts/bronze/conve... | PASS |
+| 2026-06-24 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/ec2/m365-mcp-gateway/IT_REQUE... | PASS |
+| 2026-06-24 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/ec2/EC2_MANIFEST.json | PASS |
+| 2026-06-24 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+| 2026-06-24 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/ec2/m365-mcp-gateway/.env.exa... | PASS |
+| 2026-06-24 | 0.4.0_DS_ClientPlatform | DATA_PLATFORM.D3 | comp-surface-check | comp-surface-check check --mode advisory --file docs/briefs/DATA_PLATFORM_reverse_etl_c... | PASS |
+| 2026-06-24 | 1.0.0_SA_CTO | NFRA_COMPRAIL.TO-3.cto-claudemd-rule20-amend | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/NFRA_WRKFLW_PRD.md --... | PASS |
+| 2026-06-24 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.7.0_AE_CloudOps/task... | PASS |
+| 2026-06-24 | 0.4.0_DS_ClientPlatform | DATA_PLATFORM.D3 | comp-surface-check | comp-surface-check check --mode advisory --file docs/briefs/DATA_PLATFORM_reverse_etl_c... | PASS |
+| 2026-06-24 | 1.0.0_SA_CTO | NFRA_COMPRAIL.TO-3.cto-claudemd-rule20-amend | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/NFRA_WRKFLW_PRD.md | PASS |
+| 2026-06-24 | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier0/ledger/LD-0210.md | PASS |
+| 2026-06-24 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+- 2026-06-24 0.6.0_AE_PartnerETL | DC-LEV staging + ULN cutover-2a | native Grep on the live SmartX pull source (Rule-22 consumed-today key grounding -- no comp-tool enumerates a script outbound API calls); ULN cutover = SKILL.md repoint + ledger (.md, no .py/data/infra change -> no comp trigger; SS4c-IAM comp-iam deferred to its fresh block).
+| 2026-06-24 | 0.6.0_AE_PartnerETL | DATA_PLATFORM.D4 | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
