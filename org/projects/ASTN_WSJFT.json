@@ -1,0 +1,35 @@
+{
+  "project_code": "ASTN_WSJFT",
+  "macro_code": "ASTN",
+  "macro": true,
+  "name": "CEO Daily WSJ & FT News Digest -- 3am-ET one-shot, Bright Data pull + GPT-5.4 cited-bullet summary, SES email to Austin",
+  "description": "Andrew-direct 2026-06-24: new ASTN macro (CEO-facing tools for Austin) + first project ASTN_WSJFT (path-safe for 'WSJ & FT'). A daily one-shot: at 3am ET, hit WSJ + FT via Bright Data, pull the top ~15-20 stories from each, run each through GPT-5.4 for a tight summary (1-line subtext of the 2-3 central points + 2-3 DIRECTLY-CITED bullet quotes), organize by section (Macroeconomics/Geopolitical/Equities/Debt/Corporate -- tune with Austin), and email the CEO via Amazon SES (Austin opted-in). Email format per article: \"Headline\" - 1-line subtext - 2-3 cited bullet quotes (actual article text) - article link; grouped by section header. THE FIDELITY GATE (Andrew hard-req: all directly citable, no inference/misquoting) = a MACHINE-VERIFIABLE verbatim-substring check (each bullet must be an exact normalized substring of the fetched article text; non-verbatim rejected/regenerated) -- provably-from-the-article, NOT trust-the-LLM (the session's grounding-discipline applied; CTO arch-gates it). One-shot (Andrew's lean), not a crawler: fixed section-listing URLs -> top-N article URLs -> article text. KEY OPEN ITEM: the Bright Data paywall-access method (subscription-entitled [preferred] vs Web-Unlocker) -- WSJ/FT are paywalled/anti-bot. LEGAL/ToS/copyright posture = Andrew-owned, SCTY-framed; design-mitigants baked in (verbatim-cited-quotes-only + headline+few-bullets-not-full-reproduction + link-back-attribution + single-internal-recipient = a personal executive clipping/brief, fair-use-leaning; fetch->summarize->email->discard, no content-lake). Tools: Bright Data (fetch) + GPT-5.4 (summarize+verbatim-gate) + Amazon SES (send) + EventBridge 3am-ET cron + a one-shot Lambda/Fargate; secrets in Secrets Manager, Terraform-managed.",
+  "prds": [
+    {
+      "path": "docs/architecture/ASTN_WSJFT_PRD.md",
+      "label": "CTO formal PRD v0.1 -- premise (CEO daily WSJ/FT digest) + the one-shot pipeline (Bright-Data fetch -> GPT-5.4 summarize -> section-classify -> SES email) + the email format + the MACHINE-VERIFIABLE verbatim-fidelity gate (CTO arch-gate) + the paywall-access open-item + the legal/ToS posture (Andrew-owned, SCTY-framed) + B1-B4 build-phases (discovery / extract+summarize+verbatim-gate / email+SES / schedule+deploy)",
+      "date": "2026-06-24"
+    }
+  ],
+  "related": [
+    "SCTY",
+    "NFRA_OPLMCP"
+  ],
+  "status": "active",
+  "phase": "PHASE 0 -- PRD/DESIGN. PRD authored 2026-06-24 (1.0.0_SA_CTO; docs/architecture/ASTN_WSJFT_PRD.md). SEQUENCE: CTO PRD (DONE) -> COO decomposes B1-B4 -> B1 (DISCOVERY: the WSJ/FT key section-URLs + the Bright-Data access-method [the paywall-access path: subscription-entitled vs Web-Unlocker] + confirm the integration prerequisites [Bright-Data key / GPT-5.4 key / SES verified-from-address]) FIRST (the load-bearing open item = paywall-access; shapes the ToS posture) -> B2 (extract + GPT-summarize + the verbatim-fidelity gate, CTO arch-gate) -> B3 (email format + SES-send to Austin) -> B4 (3am-ET EventBridge cron + one-shot Lambda/Fargate + secrets + Terraform + fail-loud). AE/cloud-ops lead; CTO arch-gates the verbatim-gate + the legal-posture; DS/DE consult on summarization/classification.",
+  "blocking": "None to PRD. B1 paywall-access (subscription-entitled vs Web-Unlocker) is the load-bearing open item -- shapes the ToS/copyright posture (Andrew-owned, SCTY-framed). Bright-Data setup may be a new integration (confirm at B1). The verbatim-fidelity gate (machine substring-check) is the CTO arch-gated quality requirement (no paraphrase/misquote passes). Fail-loud on a broken run (don't silently send garbage or silently not-send -- the silent-absence theme).",
+  "created": "2026-06-24",
+  "pods": [
+    "0.7",
+    "0.5",
+    "0.6",
+    "1.0",
+    "0.0"
+  ],
+  "pipeline": "CEO daily news digest: EventBridge 3am-ET cron -> one-shot Lambda/Fargate -> Bright Data (WSJ+FT section-URLs -> top ~15-20 article-URLs/source -> article text) -> GPT-5.4 (1-line subtext + 2-3 cited bullets + the verbatim-substring fidelity gate + section-classify) -> email-construct (per-article: headline / subtext / cited-bullets / link; grouped by section) -> Amazon SES -> Austin (opted-in). Secrets Manager (Bright-Data/GPT/SES); Terraform-managed.",
+  "coo_lane": "2.0.0_SA_COO",
+  "recipient": "Austin (CEO)",
+  "sovereign": "Andrew",
+  "thread_counter": 0,
+  "threads": []
+}
