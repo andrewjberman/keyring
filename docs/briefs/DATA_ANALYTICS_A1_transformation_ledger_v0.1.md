@@ -58,6 +58,21 @@
    - **cot: 11 orphans** = 8 E_* + 3 SUSPICIOUS: `A_05.assets_dimension.py`, `C_01b`, `C_01c`.
    - The tool not only confirmed the E_* drop-set but surfaced UNKNOWN orphans — now CHARACTERIZED (docstring-read): `C_01b.role_aua_backfill` + `C_01c.role_aua_flow_join` = legit ONE-TIME BACKFILLS (run manually, correctly not-dispatched — NOT dead); cot `A_05.assets_dimension` = the known PARKED WORK-A item (Andrew-gated; its docstring notes B_00 already carries units+MV → possible redundancy). So the SUSPICIOUS bucket = 2 legit backfills + 1 parked-item, no surprise-dead-cruft. **Q2 FLAG surfaced:** is `gold/canonical/role_aua/` maintained NIGHTLY by any dispatched script, or ONLY ever backfilled (C_01b/c)? If only-backfilled → role_aua is a stale/one-shot artifact (a real consumer-freshness question for the Q2 census). CTO canonicalizes the tool (fix inf INF_ regex + CASE-parse + register + a docstring-classify for the suspicious bucket).
 
+## 4c. THE ESSENTIAL FRAMEWORK (Andrew-direct 2026-06-24) + the Group-D backward-closure
+
+**Definition (Andrew):** a script is ESSENTIAL iff it **connects to the ADVI/MDPF portal components via Group D, OR feeds one of the Group D scripts** (directly or transitively). Anything that does not reach Group D is NOT essential. This makes the essential set a deterministic **backward-closure from Group D** — not a judgment call.
+
+**Applied (bd, traced via comp-pipescript io on D_* + transitive B/C):**
+
+| Bucket | Scripts | Basis |
+|---|---|---|
+| **ESSENTIAL** (in the Group-D closure) | A_00, A_01, A_02, A_03, A_04 · B_00, B_01, B_02, B_03 · C_00, C_01, C_01b, C_02, C_03, C_05, C_06, C_07, C_08 · D_00, D_00b, D_00c, D_00f, D_01, D_02, D_03, D_04 | each feeds a D_* (D-reads + transitive: C_02←B_03,C_00; C_03←B_03; C_05←B_01,B_02; role_aua/C_01b→D_00b/c,D_01,D_02) |
+| **ESSENTIAL via DYNAMIC edge** | B_01b (classify_new_securities) | no static parquet edge to D, but seeds DynamoDB `bd-securities` → consumed by A_03/B_00 classification (dynamic; the graph can't see it) → essential. The dynamic-consumer nuance. |
+| **NOT ESSENTIAL** (dispatched but feeds no D) | **C_04 (validate_aua)** | a QA validation GATE — reads A_03, validates AUA, feeds no Group-D script. Essential-for-QA, NOT portal-data-essential. Belongs in a QA lane, not the data pipeline. |
+| **DEAD** (not dispatched, doesn't reach D) | all 26 bd E_* (8 cot) | undispatched (gold_dispatch invokes 0 E_*, deployed-confirmed) → never reach D → the 49F-overfit drop-set. |
+
+**Headline for DATA_ANALYTICS:** at the DISPATCHED level the bd gold chain is already LEAN — virtually all of A/B/C/D is in the Group-D essential closure; the only dispatched non-portal-script is C_04 (a validator). The cruft to shed is the **E_* diagnostic block (26 scripts, dead)**, not the core chain. So A2's drop-list = the E_* (+ C_04 → QA-relocate); the core A/B/C/D = the essential engine to keep + parameterize (A3). NOTE the deployed-grounding caveat (4b): "essential/dead" verdicts are grounded against the DEPLOYED tree + the dispatcher, never local-git-presence alone.
+
 ## 5. Build-out (the deep deliverable)
 1. **Full bd-tree ledger** — every script comp-pipescript io'd + comp-blast'd; the DEAD-candidates (B_01, C_02, the 26 E_*) get the LOAD-BEARING full-consumer-census (dormant + cross-val + dynamic) before any A2 drop authorization.
 2. **cot + inf + mdpf trees** — same ledger (cot is snapshot-native = inherently leaner; inf is the best-shape reference; mdpf the feeder).
