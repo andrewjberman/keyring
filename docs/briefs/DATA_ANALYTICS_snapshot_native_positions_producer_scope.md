@@ -13,8 +13,13 @@ A daily (account_id, asset_id)-keyed holdings snapshot for Schwab-custodied acco
 ## Output
 (account_id, asset_id)-keyed daily holdings: account_id (bd), asset_id, asset_name, ticker, cusip, units (quantity_settled), market_value, source='schwab_snapshot'. Matches the cot canonical_holdings contract so B_00/downstream consume it unchanged.
 
-## KEY ARCHITECTURAL FINDING TO VERIFY FIRST (Rule-22 hypothesis)
-**A_03's RPS injection appears REDUNDANT with B_00's RPS reconciliation.** A_03 injects RPS into the FIFO cube (`_load_rps_injection_events`, the gap-closing); then **B_00.canonical_holdings ALSO reconciles the cube against RPS** (`source='schwab_override'`, "Schwab wins -- custodian authoritative", per B_00 docstring L10-14). So RPS is applied TWICE. If confirmed, the clean design is: **A_03 stops doing the RPS injection entirely** (and most of the ~500-line injection block) — B_00 is already the RPS-reconciliation point — OR a snapshot producer feeds B_00's Schwab side directly. **First build step: trace A_03-injection vs B_00-reconciliation to confirm the redundancy + the safe removal.** (Hypothesis — not yet source-traced end-to-end.)
+## KEY ARCHITECTURAL FINDING — CONFIRMED (source-traced 2026-06-24)
+**A_03's RPS injection is REDUNDANT with B_00's RPS reconciliation on the canonical-holdings path.** Traced B_00.reconcile_date (L502-559): full-outer-join cube vs RPS, then for any Schwab-covered account B_00 **uses Schwab/RPS units in EVERY case** — `schwab` (cube missed it), `reconciled` (agree), `schwab_override` (disagree) all take Schwab units; `bd_stale` zeroes FIFO ghosts. The cube's (FIFO + A_03-injected) units survive **only** for cash, unresolvable-CUSIP assets, and non-Schwab accounts. So A_03 injects RPS into the cube → **B_00 throws those units away and uses raw RPS** for exactly the Schwab-covered positions the injection targets (and the injection already excludes cash). **The RPS injection's effect on served holdings is discarded.**
+
+Consequences:
+- **The Schwab book is ALREADY effectively snapshot-native at B_00** (B_00 overwrites FIFO with RPS). A_03's FIFO + RPS-injection for Schwab accounts is wasted compute B_00 discards.
+- **Immediate cleanup (independent of the full rebuild):** remove A_03's `_load_rps_injection_events` (a big chunk of the ~500 lines) — B_00 is already the RPS reconciliation point. The synthetic sell/buy injection is more nuanced (may still aid NON-Schwab accounts where B_00 keeps 'bd' units) — trace separately.
+- **CAVEAT before removal (Rule-22):** B_00 is the primary cube consumer, but trace OTHER raw-`positions_cube` consumers (B_01 holdings_lots, C_* etc.) to confirm none depend on the injected units. Full consumer census before deleting the injection.
 
 ## Build plan (additive + shadow-proven, the A_01/A_02 lifecycle)
 1. **Confirm the B_00-redundancy** (above) — determines whether the fix is "remove A_03 injection + let B_00 reconcile" (simplest) vs "new snapshot producer."
