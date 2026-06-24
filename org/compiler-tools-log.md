@@ -7443,3 +7443,45 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-06-23 | 0.7.0_AE_CloudOps~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/change_management/20... | PASS |
 | 2026-06-23 | 0.7.0_AE_CloudOps~B | NFRA_OPLMCP.06 | comp-which | comp-which "what is the m365-mcp-gateway ALB listener doing" | ROUTED->comp-grep (gateway not graph-modeled until .07; raw-aws inspections rail-checked) |
 | 2026-06-23 | 0.7.0_AE_CloudOps~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-06-23 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+| 2026-06-23 | 1.0.0_SA_CTO | NFRA_COMPRAIL.TO-3.cto-claudemd-rule20-amend | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/DATA_PLATFORM_PRD.md ... | PASS |
+| 2026-06-23 | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier0/ledger/LD-0209.md | PASS |
+| 2026-06-23 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+| 2026-06-23 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+| 2026-06-23 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+| 2026-06-24 | 0.7.0_AE_CloudOps | (no-TO) | comp-aws | comp-aws --help | PASS |
+| 2026-06-24 | 0.7.0_AE_CloudOps | (no-TO) | comp-aws | comp-aws --list | FAIL |
+| 2026-06-24 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-06-24 | 0.7.0_AE_CloudOps | (no-TO) | comp-aws | comp-aws classes | PASS |
+| 2026-06-24 | 0.7.0_AE_CloudOps | (no-TO) | comp-aws | comp-aws derive lb | FAIL |
+| 2026-06-24 | 0.7.0_AE_CloudOps | (no-TO) | comp-aws | comp-aws derive --help | PASS |
+| 2026-06-24 | 0.7.0_AE_CloudOps | (no-TO) | comp-aws | comp-aws derive --class lb | PASS |
+| 2026-06-24 | 0.7.0_AE_CloudOps | (no-TO) | comp-aws | comp-aws derive --class lb_listener | PASS |
+| 2026-06-24 | 0.7.0_AE_CloudOps | (no-TO) | comp-aws | comp-aws derive --class lb_target_group | PASS |
+| 2026-06-24 | 0.7.0_AE_CloudOps | (no-TO) | comp-aws | comp-aws derive --class route53_record | PASS |
+| 2026-06-24 | 0.7.0_AE_CloudOps | (no-TO) | comp-aws | comp-aws derive --class lb --out /c/Users/ANDREW~1/AppData/Local/Temp/claude/C--Users-A... | PASS |
+| 2026-06-24 | 0.7.0_AE_CloudOps | (no-TO) | comp-aws | comp-aws derive --class lb_listener --out /c/Users/ANDREW~1/AppData/Local/Temp/claude/C... | PASS |
+| 2026-06-24 | 0.7.0_AE_CloudOps | (no-TO) | comp-aws | comp-aws derive --class lb_target_group --out /c/Users/ANDREW~1/AppData/Local/Temp/clau... | PASS |
+| 2026-06-24 | 0.7.0_AE_CloudOps | (no-TO) | comp-aws | comp-aws derive --class route53_record --out /c/Users/ANDREW~1/AppData/Local/Temp/claud... | PASS |
+| 2026-06-24 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-06-24 | 0.4.0_DS_ClientPlatform | DATA_PLATFORM.D2 | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-06-24 | 0.7.0_AE_CloudOps | (no-TO) | comp-aws | comp-aws score --help | PASS |
+| 2026-06-24 | 0.4.0_DS_ClientPlatform | DATA_PLATFORM.D2 | pipescript | pipescript --list | PASS |
+| 2026-06-24 | 0.4.0_DS_ClientPlatform | DATA_PLATFORM.D2 | pipescript | pipescript advi-cot | PASS |
+| 2026-06-24 | 0.7.0_AE_CloudOps | (no-TO) | comp-aws | comp-aws metrics --help | PASS |
+| 2026-06-24 | 0.7.0_AE_CloudOps | (no-TO) | comp-coverage | comp-coverage --help | PASS |
+| 2026-06-24 | 0.7.0_AE_CloudOps | (no-TO) | comp-aws | comp-aws score | PASS |
+| 2026-06-24 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-06-24 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+| 2026-06-24 | 0.4.0_DS_ClientPlatform | DATA_PLATFORM.D2 | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/DATA_PLATFORM_D2_BLAC... | PASS |
+| 2026-06-24 | 0.4.0_DS_ClientPlatform | DATA_PLATFORM.D2 | comp-surface-check | comp-surface-check check --mode advisory --file docs/briefs/DATA_PLATFORM_D2_black_diam... | PASS |
+| 2026-06-24 | 0.4.0_DS_ClientPlatform | DATA_PLATFORM.D3 | pipescript | pipescript advi-inf | PASS |
+| 2026-06-24 | 0.7.0_AE_CloudOps | (no-TO) | comp-aws | comp-aws derive --out /c/Users/ANDREW~1/AppData/Local/Temp/claude/C--Users-AndrewBerman... | PASS |
+| 2026-06-24 | 0.4.0_DS_ClientPlatform | DATA_PLATFORM.D3 | comp-surface-check | comp-surface-check check --mode advisory --file data/cot/scripts/bronze/dump_enriched_t... | PASS |
+| 2026-06-24 | 0.7.0_AE_CloudOps | (no-TO) | comp-iam | comp-iam service m365-mcp-gateway | PASS |
+| 2026-06-24 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.7.0_AE_CloudOps/task... | PASS |
+| 2026-06-24 | 0.4.0_DS_ClientPlatform | DATA_PLATFORM.D3 | comp-surface-check | comp-surface-check check --mode advisory --file docs/briefs/DATA_PLATFORM_D3_orion_ecli... | PASS |
+| 2026-06-24 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/comp_aws_cli.py | PASS |
+| 2026-06-24 | 0.7.0_AE_CloudOps | (no-TO) | comp-aws | comp-aws classes | PASS |
+| 2026-06-24 | 0.4.0_DS_ClientPlatform | DATA_PLATFORM.D2/D3 | comp-which, pipescript --list/advi-cot/advi-inf, comp-to, ds-commit-gate, safe-commit/safe-deploy | D2+D3 arch-specs authored (spec/audit, no gold run); pipescript estate traversals + native source reads grounded both; ds-commit-gate caught F401 on dump_enriched_templates.py (fixed); comp-which curated-router miss on cot-pipeline q (known gap) |
+| 2026-06-24 | 0.4.0_DS_ClientPlatform | DATA_PLATFORM.D3 | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
