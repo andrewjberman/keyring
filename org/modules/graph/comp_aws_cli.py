@@ -963,6 +963,146 @@ def live_lambda_layers():
         })
     return nodes
 
+# ---------------------------------------------------------------------------
+# OPLMCP.07 AC2 -- ALB-stack derive-classes (aws_lb / aws_lb_listener /
+# aws_lb_target_group / aws_route53_record). Additive (outside the certified-13
+# + WAVE-4 score baseline; no per-class scorer -- the aws-shapes oracle is CVO's
+# independent-cert follow-on, per NFRA_COMPAWS_SCHEMA + PRD Addendum A). Edges in
+# derive_edges() resolve the blast-radius chain Route53->ALB->listener->TG->EC2.
+# ---------------------------------------------------------------------------
+def live_lb():
+    """LOAD_BALANCER nodes (aws_lb) -- ALB/NLB. ARN given by the API (LoadBalancerArn).
+    Carries SGs + subnets + dns_name/zone_id (for USES_SG / IN_SUBNET / Route53 ALIAS_TO)."""
+    nodes = []
+    for region in REGIONS:
+        c = _boto("elbv2", region)
+        try:
+            for page in c.get_paginator("describe_load_balancers").paginate():
+                for lb in page.get("LoadBalancers", []):
+                    nodes.append({
+                        "id": lb["LoadBalancerName"], "type": "LOAD_BALANCER",
+                        "arn": lb["LoadBalancerArn"], "name": lb["LoadBalancerName"],
+                        "region": region,
+                        "lb_type": lb.get("Type"), "scheme": lb.get("Scheme"),
+                        "vpc_id": lb.get("VpcId"),
+                        "dns_name": lb.get("DNSName"),
+                        "canonical_zone_id": lb.get("CanonicalHostedZoneId"),
+                        "security_groups": lb.get("SecurityGroups") or [],
+                        "subnets": [az.get("SubnetId") for az in lb.get("AvailabilityZones") or [] if az.get("SubnetId")],
+                    })
+        except Exception:
+            continue
+    return nodes
+
+
+def live_lb_target_groups():
+    """TARGET_GROUP nodes (aws_lb_target_group). ARN given (TargetGroupArn). Carries the
+    parent LB arns (ON_LB) + the registered instance target ids (TARGETS -> EC2) + health path."""
+    nodes = []
+    for region in REGIONS:
+        c = _boto("elbv2", region)
+        try:
+            for page in c.get_paginator("describe_target_groups").paginate():
+                for tg in page.get("TargetGroups", []):
+                    targets = []
+                    try:
+                        th = c.describe_target_health(TargetGroupArn=tg["TargetGroupArn"])
+                        for d in th.get("TargetHealthDescriptions", []):
+                            tid = (d.get("Target") or {}).get("Id")
+                            if tid:
+                                targets.append(tid)
+                    except Exception:
+                        pass
+                    nodes.append({
+                        "id": tg["TargetGroupName"], "type": "TARGET_GROUP",
+                        "arn": tg["TargetGroupArn"], "name": tg["TargetGroupName"],
+                        "region": region,
+                        "port": tg.get("Port"), "protocol": tg.get("Protocol"),
+                        "vpc_id": tg.get("VpcId"), "target_type": tg.get("TargetType"),
+                        "health_check_path": tg.get("HealthCheckPath"),
+                        "load_balancer_arns": tg.get("LoadBalancerArns") or [],
+                        "targets": targets,
+                    })
+        except Exception:
+            continue
+    return nodes
+
+
+def live_lb_listeners():
+    """LB_LISTENER nodes (aws_lb_listener). ARN given (ListenerArn). Carries the parent LB
+    (ON_LB), the forward TG arns (FORWARDS_TO), the cert arns (USES_CERT), + an authenticate_oidc
+    flag so the OPLMCP.02 OIDC default-action surfaces as a graph property."""
+    nodes = []
+    for region in REGIONS:
+        c = _boto("elbv2", region)
+        try:
+            lb_arns = []
+            for page in c.get_paginator("describe_load_balancers").paginate():
+                lb_arns += [lb["LoadBalancerArn"] for lb in page.get("LoadBalancers", [])]
+            for lb_arn in lb_arns:
+                for page in c.get_paginator("describe_listeners").paginate(LoadBalancerArn=lb_arn):
+                    for ls in page.get("Listeners", []):
+                        fwd, has_oidc = [], False
+                        for act in ls.get("DefaultActions", []):
+                            if act.get("Type") == "authenticate-oidc":
+                                has_oidc = True
+                            if act.get("Type") == "forward":
+                                if act.get("TargetGroupArn"):
+                                    fwd.append(act["TargetGroupArn"])
+                                for t in ((act.get("ForwardConfig") or {}).get("TargetGroups") or []):
+                                    if t.get("TargetGroupArn"):
+                                        fwd.append(t["TargetGroupArn"])
+                        nodes.append({
+                            "id": ls["ListenerArn"].rsplit("/", 1)[-1], "type": "LB_LISTENER",
+                            "arn": ls["ListenerArn"],
+                            "name": f"{lb_arn.rsplit('/', 1)[-1]}:{ls.get('Port')}",
+                            "region": region,
+                            "load_balancer_arn": lb_arn,
+                            "port": ls.get("Port"), "protocol": ls.get("Protocol"),
+                            "certificate_arns": [x.get("CertificateArn") for x in ls.get("Certificates") or [] if x.get("CertificateArn")],
+                            # AWS returns a single-TG forward action's target both as TargetGroupArn
+                            # (legacy shorthand) AND in ForwardConfig.TargetGroups -> dedup so the
+                            # FORWARDS_TO edge fires once per (listener, TG), not twice.
+                            "forward_target_group_arns": list(dict.fromkeys(fwd)),
+                            "authenticate_oidc": has_oidc,
+                        })
+        except Exception:
+            continue
+    return nodes
+
+
+def live_route53_records():
+    """ROUTE53_RECORD nodes (aws_route53_record) -- A/AAAA ALIAS records (the DNS entry to the
+    ALB). Route53 is GLOBAL (no region). The provider leaves these arn-less -> synthesize a
+    deterministic arn (mirror the apigatewayv2_route precedent); the TF-state join lands by_name
+    (the record name, e.g. mcp.opalinvest.dev). Carries the alias target dns (ALIAS_TO -> LB)."""
+    nodes = []
+    try:
+        c = _boto("route53")
+        for zpage in c.get_paginator("list_hosted_zones").paginate():
+            for z in zpage.get("HostedZones", []):
+                zid = z["Id"].rsplit("/", 1)[-1]
+                for rpage in c.get_paginator("list_resource_record_sets").paginate(HostedZoneId=z["Id"]):
+                    for rs in rpage.get("ResourceRecordSets", []):
+                        if rs.get("Type") not in ("A", "AAAA"):
+                            continue
+                        alias = rs.get("AliasTarget") or {}
+                        if not alias.get("DNSName"):
+                            continue
+                        name = rs["Name"].rstrip(".")
+                        rtype = rs["Type"]
+                        nodes.append({
+                            "id": f"{zid}_{name}_{rtype}", "type": "ROUTE53_RECORD",
+                            "arn": f"arn:aws:route53:::hostedzone/{zid}/record/{name}/{rtype}",
+                            "name": name, "region": "global",
+                            "record_type": rtype, "zone_id": zid,
+                            "alias_target_dns": (alias.get("DNSName") or "").rstrip("."),
+                            "alias_target_zone": alias.get("HostedZoneId"),
+                        })
+    except Exception:
+        pass
+    return nodes
+
 CLASSES = {
     "s3":          (live_s3,                ["aws_s3_bucket"]),
     "s3_policy":   (live_s3_policies,       ["aws_s3_bucket_policy"]),
@@ -990,6 +1130,11 @@ CLASSES = {
     "ssm_document":  (live_ssm_documents,   ["aws_ssm_document"]),
     "scheduler":     (live_schedules,       ["aws_scheduler_schedule"]),
     "lambda_layer":  (live_lambda_layers,   ["aws_lambda_layer_version"]),
+    # OPLMCP.07 AC2 -- ALB-stack (additive; outside the certified-13 + WAVE-4 score baseline)
+    "lb":             (live_lb,               ["aws_lb"]),
+    "lb_target_group":(live_lb_target_groups, ["aws_lb_target_group"]),
+    "lb_listener":    (live_lb_listeners,     ["aws_lb_listener"]),
+    "route53_record": (live_route53_records,  ["aws_route53_record"]),
 }
 
 def _node_arn(cls, node):
@@ -1470,6 +1615,46 @@ def derive_edges():
         for sg in ve.get("sg_ids", []):
             if sg in _sg_by_id:
                 E(ve["arn"], _sg_by_id[sg], "USES_SG")
+
+    # OPLMCP.07 AC2 -- ALB-STACK edges (closes the blast-radius chain
+    # Route53 -> LB -> listener -> TG -> EC2; EC2 already -> profile -> role above).
+    # ROUTE53 -[ALIAS_TO]-> LB ; LISTENER -[ON_LB]-> LB + -[FORWARDS_TO]-> TG + -[USES_CERT]-> ACM(wild) ;
+    # TG -[ON_LB]-> LB + -[TARGETS]-> EC2 ; LB -[USES_SG]-> SG + -[IN_SUBNET]-> subnet(wild).
+    _lbs = live_lb()
+    _lb_arns = {x["arn"] for x in _lbs if x.get("arn")}
+    _lb_by_dns = {x["dns_name"].rstrip(".").lower(): x["arn"]
+                  for x in _lbs if x.get("dns_name") and x.get("arn")}
+    _tg_arns = {x["arn"] for x in live_lb_target_groups() if x.get("arn")}
+    _ec2_by_id = {x["id"]: _node_arn("ec2", x) for x in live_ec2()}
+    for lb in _lbs:
+        for sg in lb.get("security_groups", []):
+            if sg in _sg_by_id:
+                E(lb["arn"], _sg_by_id[sg], "USES_SG")
+        for sn in lb.get("subnets", []):
+            E(lb["arn"], f"arn:aws:ec2:{lb.get('region', 'us-east-1')}:{ACCOUNT}:subnet/{sn}",
+              "IN_SUBNET", wildcard=True)
+    for ls in live_lb_listeners():
+        if ls.get("load_balancer_arn") in _lb_arns:
+            E(ls["arn"], ls["load_balancer_arn"], "ON_LB")
+        for _tg in ls.get("forward_target_group_arns", []):
+            if _tg in _tg_arns:
+                E(ls["arn"], _tg, "FORWARDS_TO")
+        for _cert in ls.get("certificate_arns", []):
+            E(ls["arn"], _cert, "USES_CERT", wildcard=True)
+    for tg in live_lb_target_groups():
+        for lbarn in tg.get("load_balancer_arns", []):
+            if lbarn in _lb_arns:
+                E(tg["arn"], lbarn, "ON_LB")
+        for tid in tg.get("targets", []):
+            if tid in _ec2_by_id:
+                E(tg["arn"], _ec2_by_id[tid], "TARGETS")
+    for rr in live_route53_records():
+        # EXACT alias-target dns match only: an alias target IS an exact dns-name, so a
+        # fuzzy endswith is a latent mis-alias FP (CTO arch-gate hardening). The live mcp
+        # record exact-matches the ALB dns_name (no dualstack. prefix here).
+        _tgt = _lb_by_dns.get(rr.get("alias_target_dns", "").lower())
+        if _tgt:
+            E(rr["arn"], _tgt, "ALIAS_TO")
 
     # {SERVICE_PRINCIPAL|EXTERNAL_PRINCIPAL|IAM_*} -[CAN_ASSUME]-> IAM_ROLE
     # (the trust-policy / assume-role graph -- the IAM typing gap: who-can-assume-what,
@@ -2111,6 +2296,19 @@ def cmd_classes(args):
 def _arn_to_cls(arn: str) -> str | None:
     """Map an ARN to a CLASSES key for bounded derive. Returns None if unknown."""
     service = arn.split(":")[2] if arn.count(":") >= 2 else ""
+    # OPLMCP.07 AC2: the 3 ELB classes share the 'elasticloadbalancing' service ->
+    # distinguish by the resource-path so --resource on a TG/listener arn is exact.
+    if service == "elasticloadbalancing":
+        res = arn.split(":")[5] if arn.count(":") >= 5 else ""
+        if res.startswith("targetgroup/"):
+            return "lb_target_group"
+        if res.startswith("listener/"):
+            return "lb_listener"
+        if res.startswith("loadbalancer/"):
+            return "lb"
+        # listener-rule/ (e.g. the .06 OIDC-bypass rules) + any future ELBv2 sub-type
+        # are UNMODELED -> return None, NEVER phantom-classify as lb under a catch-all.
+        return None
     mapping = {
         "s3": "s3", "iam": "iam", "ec2": "ec2", "lambda": "lambda",
         "events": "eventbridge", "sns": "sns", "sqs": "sqs",
@@ -2120,6 +2318,8 @@ def _arn_to_cls(arn: str) -> str | None:
         # WAVE-4 expansion classes
         "apigateway": "apigw", "ecs": "ecs_task", "ssm": "ssm_document",
         "scheduler": "scheduler",
+        # OPLMCP.07 AC2 -- ALB-stack
+        "route53": "route53_record",
     }
     return mapping.get(service)
 
