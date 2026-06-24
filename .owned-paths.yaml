@@ -566,6 +566,14 @@ lanes:
       - 0.4.0_DE_ClientPlatform~B
     description: "ANY_EXEC_OR_AE + DE 0.4.0 (incl. tilde lanes) for the NFRA_TSGRAPH.P0 spike tool (org/modules/graph/tsgraph_spike/** -- ts-morph TS-semantic extractor/loader). The DE's TO designated org/modules/graph/* extractor code as its authoring surface; same-tool grant per the COMPILER_MANIFEST_CHECK / NFRA_PIPESCRIPT_TOOL convention (CTO-ratified 2026-06-15). AE retained for the P1 derive ingestion-leg co-wiring. Added 2026-06-17 by 0.7.0_AE_CloudOps (owned-paths config executor) per COO 193527Z same-tool grant; CC CTO."
 
+  SCTY:
+    permitted_agents:
+      - 3.0.0_SA_CVO
+      - 1.0.0_SA_CTO
+      - 2.0.0_SA_COO
+      - 0.0.0_AB_MSTR
+    description: "SCTY security macro (Andrew-direct 2026-06-24; CTO brief 79b03e8e0) -- the /security root program (external-repo analysis, untrusted-repo sandbox process, per-repo security verdicts, macro charter). CVO authors the analysis/verdicts; CTO frames the PRD + arch-gates; COO commits/coordinates + decomposes; MSTR governance. Security-WORKER lanes added at SCTY-decompose-time (when the security work is laned). Added 2026-06-24 by 2.0.0_SA_COO per CVO [ACTION] 175444Z (the /security new-root was UNDEFINED -> any commit blocked)."
+
 # =========================================================================
 # PATHS
 # Listed roughly from most-specific to most-general within each top-level group.
@@ -605,6 +613,14 @@ paths:
   "org/tier0_exec/**":
     lane: TIER0_EXEC
     note: "MSTR agent home folder -- the broker-resolvable directory (org/mcp/server.py TIER_DIRS). Holds ONLY 0.0.0_AB_MSTR/; deliberately separate from org/tier0/ so the law + control-plane subdirs are never scanned as agent folders."
+
+  # -----------------------------------------------------------------------
+  # SCTY security macro -- the /security root program (Andrew-direct 2026-06-24,
+  # CTO brief 79b03e8e0). New repo-root was UNDEFINED -> any commit blocked.
+  # -----------------------------------------------------------------------
+  "security/**":
+    lane: SCTY
+    note: "SCTY security program root (external-repo analysis + untrusted-repo sandbox process + per-repo security verdicts + macro charter). CVO authors analysis/verdicts; CTO PRD/arch-gate; COO commit/coordinate/decompose; MSTR governance. Worker lanes added at SCTY-decompose. Added 2026-06-24 by 2.0.0_SA_COO per CVO [ACTION] 175444Z."
 
   "org/ws-charter-hard-block-audit.log":
     lane: WS_CHARTER_AUDIT
