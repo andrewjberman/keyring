@@ -7669,3 +7669,16 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-06-24 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
 - 2026-06-24 0.6.0_AE_PartnerETL | DC-LEV staging + ULN cutover-2a | native Grep on the live SmartX pull source (Rule-22 consumed-today key grounding -- no comp-tool enumerates a script outbound API calls); ULN cutover = SKILL.md repoint + ledger (.md, no .py/data/infra change -> no comp trigger; SS4c-IAM comp-iam deferred to its fresh block).
 | 2026-06-24 | 0.6.0_AE_PartnerETL | DATA_PLATFORM.D4 | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-06-24 | 0.4.0_DS_ClientPlatform | DATA_PLATFORM.D3 | comp-surface-check | comp-surface-check check --mode advisory --file docs/briefs/DATA_PLATFORM_reverse_etl_c... | PASS |
+| 2026-06-24 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/ec2/crawl-harness/src/crawl.ts | PASS |
+| 2026-06-24 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/terraform/crawl-harness/crawl... | PASS |
+| 2026-06-24 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+| 2026-06-24 | 0.4.0_DS_ClientPlatform | DATA_PLATFORM.D3 | comp-pipescript | comp-pipescript io B_01.holdings_lots | PASS |
+| 2026-06-24 | 0.4.0_DS_ClientPlatform | DATA_PLATFORM.D3 | comp-pipescript | comp-pipescript io B_02.canonical_lots | PASS |
+| 2026-06-24 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/ec2/crawl-harness/src/crawl.t... | PASS |
+| 2026-06-24 | 0.4.0_DS_ClientPlatform | DATA_PLATFORM.D3 | comp-surface-check | comp-surface-check check --mode advisory --file docs/briefs/DATA_PLATFORM_reverse_etl_c... | PASS |
+| 2026-06-24 | 1.0.0_SA_CTO | NFRA_COMPRAIL.TO-3.cto-claudemd-rule20-amend | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/DATA_ANALYTICS_PRD.md... | PASS |
+| 2026-06-24 | 0.5.0_AE_OpalETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/ec2/crawl-harness/src/eclipse... | PASS |
+| 2026-06-24 | 0.5.0_AE_OpalETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.5.0_AE_OpalETL/logs/... | PASS |
+| 2026-06-24 | 0.4.0_DS_ClientPlatform | DATA_PLATFORM reverse-ETL/supplant + chunk-1 | comp-pipescript io, comp-grep, boto3-validate-on-served, ds-commit-gate, safe-deploy | proof-of-method COMPLETE: chunk-1 lots resolved via B_02 structure (Schwab-primary/BD-fallback) + served lot source-split (realized 100% schwab=T1 passthrough); ULN cutover (lots_to_silver widen + uln deprecate); rail gated raw multi-s3-ls -> comp-routed | reverse-ETL: supplant-BD-for-Schwab data-confirmed-feasible
+| 2026-06-24 | 0.4.0_DS_ClientPlatform | DATA_PLATFORM.D3 | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
