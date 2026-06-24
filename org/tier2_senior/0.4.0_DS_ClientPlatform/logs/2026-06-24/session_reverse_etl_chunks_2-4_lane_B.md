@@ -59,6 +59,14 @@ See commit messages: 19648fd8c (chunk-2), 235736f3f (chunk-3), 9ef997a95 (chunk-
 - **[1.0.0_SA_CTO]** carry T2-HOST/T2-COMPUTE + snapshot-vs-flow into the DC-REV PRD gradient.
 - **[0.4.0_DS_ClientPlatform~B]** (me) available -- candidate next units: the fresh-diff hardening follow (assemble BD full-month window + normalize amount semantics + matched-accts for a clean NNA reconciliation); the cot/inf INFERRED projection (apply the 49F-calibrated gradient, flag INFERRED); or a new dispatch.
 
+## Addendum — chunk-4 residuals #1 + #3 CLOSED no-crawl (commit c0c67e5c8)
+
+After chunks 2-4 closed, base-DS directed the two no-crawl residuals I'd surfaced; both grounded + RAVC'd (brief: docs/briefs/DATA_PLATFORM_reverse_etl_chunk4_residuals_perf_parity_and_consumer_census.md):
+- **#1 PERF-PARITY -> RESOLVED feasibility-positive.** BD delivers ZERO computed performance — DataMining = exactly 5 raw prefixes (assets/txns/realized/unrealized/allocations); no perf file OR column; estate holds 0 perf-keys (scanned opal-data-bd 8,065 + opal-data-cot 447 objs). So the parity-diff is un-runnable no-crawl (no BD-perf artifact exists) — which RESOLVES the 4A INFERRED: supply-side (BD delivers none) confirms chunk-4's demand-side (C_00 ingests none). Full close would need a BD-platform crawl/statement-pull = Andrew-gated; NOT needed for feasibility.
+- **#3 CONSUMER CENSUS -> NOTHING consumes a BD-computed analytic directly.** Full advi-bd thread traced (pipescript, 19 threads): BD inputs all RAW (custodian feeds + fee config); all analytics computed in OUR gold C-chain (A_00..D_04); all frontend served via OUR Lambdas (bd-gold-layer-pipeline/bd-portal-publisher/bd-client-detail-api -> gold/* + platinum/firm/*); even pricing self-owned (yfinance + our canonical_prices). Hardens chunk-4 "no BD ingest" TRANSITIVELY. The one BD-compute residual = lots passthrough-vs-reconstruct = base-DS chunk-1 (cross-ref, not re-done).
+
+NET: BD/49F supplant surface = raw-data-delivery (Schwab-direct held) + firm-config-host (T2-HOST migrate-SoR). Decision-grade reinforced. Compiler tools this delta: comp-which (route), pipescript advi-bd (the census), boto3 estate scan (perf-artifact existence). cot/inf projection HELD per Andrew risk-gate.
+
 ## Blockers
 
-None. All chunks delivered; remaining legs are event-gated on base-DS (fold + next-unit call) / CVO (verify) / CTO (PRD fold). ~B idle/available, not blocked.
+None. All chunks (2-4) + both no-crawl residuals (#1/#3) delivered + RAVC'd. Remaining legs event-gated on base-DS (chunk-1 lots + unified proof-of-method close) / CVO (independent verify) / CTO (PRD/D5 fold) / Andrew (cot/inf risk-gate). ~B idle/available, not blocked.
