@@ -7485,3 +7485,70 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-06-24 | 0.7.0_AE_CloudOps | (no-TO) | comp-aws | comp-aws classes | PASS |
 | 2026-06-24 | 0.4.0_DS_ClientPlatform | DATA_PLATFORM.D2/D3 | comp-which, pipescript --list/advi-cot/advi-inf, comp-to, ds-commit-gate, safe-commit/safe-deploy | D2+D3 arch-specs authored (spec/audit, no gold run); pipescript estate traversals + native source reads grounded both; ds-commit-gate caught F401 on dump_enriched_templates.py (fixed); comp-which curated-router miss on cot-pipeline q (known gap) |
 | 2026-06-24 | 0.4.0_DS_ClientPlatform | DATA_PLATFORM.D3 | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-06-24 | 3.0.0_SA_CVO | NFRA_COMPRAIL.TO-5 | comp-iam | comp-iam service m365-mcp-gateway | PASS |
+| 2026-06-24 | 3.0.0_SA_CVO | NFRA_COMPRAIL.TO-5 | comp-aws | comp-aws | FAIL |
+| 2026-06-24 | 3.0.0_SA_CVO | NFRA_COMPRAIL.TO-5 | comp-aws | comp-aws classes | PASS |
+| 2026-06-24 | 3.0.0_SA_CVO | NFRA_COMPRAIL.TO-5 | comp-aws | comp-aws derive lb | FAIL |
+| 2026-06-24 | 3.0.0_SA_CVO | NFRA_COMPRAIL.TO-5 | comp-aws | comp-aws derive lb_listener | FAIL |
+| 2026-06-24 | 3.0.0_SA_CVO | NFRA_COMPRAIL.TO-5 | comp-aws | comp-aws derive lb_target_group | FAIL |
+| 2026-06-24 | 3.0.0_SA_CVO | NFRA_COMPRAIL.TO-5 | comp-aws | comp-aws derive route53_record | FAIL |
+| 2026-06-24 | 3.0.0_SA_CVO | NFRA_COMPRAIL.TO-5 | comp-aws | comp-aws derive -h | PASS |
+| 2026-06-24 | 3.0.0_SA_CVO | NFRA_COMPRAIL.TO-5 | comp-aws | comp-aws derive --class lb | PASS |
+| 2026-06-24 | 3.0.0_SA_CVO | NFRA_COMPRAIL.TO-5 | comp-aws | comp-aws derive --class lb_listener | PASS |
+| 2026-06-24 | 3.0.0_SA_CVO | NFRA_COMPRAIL.TO-5 | comp-aws | comp-aws derive --class lb_target_group | PASS |
+| 2026-06-24 | 3.0.0_SA_CVO | NFRA_COMPRAIL.TO-5 | comp-aws | comp-aws derive --class route53_record | PASS |
+| 2026-06-24 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+| 2026-06-24 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/comp_aws_cli.py | PASS |
+| 2026-06-24 | 3.0.0_SA_CVO | NFRA_COMPRAIL.TO-5 | comp-aws | comp-aws derive --class lb --out /c/Users/ANDREW~1/AppData/Local/Temp/claude/C--Users-A... | PASS |
+| 2026-06-24 | 3.0.0_SA_CVO | NFRA_COMPRAIL.TO-5 | comp-aws | comp-aws derive --class lb_listener --out /c/Users/ANDREW~1/AppData/Local/Temp/claude/C... | PASS |
+| 2026-06-24 | 3.0.0_SA_CVO | NFRA_COMPRAIL.TO-5 | comp-aws | comp-aws derive --class lb_target_group --out /c/Users/ANDREW~1/AppData/Local/Temp/clau... | PASS |
+| 2026-06-24 | 3.0.0_SA_CVO | NFRA_COMPRAIL.TO-5 | comp-aws | comp-aws derive --class route53_record --out /c/Users/ANDREW~1/AppData/Local/Temp/claud... | PASS |
+| 2026-06-24 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.7.0_AE_CloudOps/task... | PASS |
+| 2026-06-24 | 3.0.0_SA_CVO | NFRA_COMPRAIL.TO-5 | comp-aws | comp-aws derive --class lb | PASS |
+| 2026-06-24 | 0.7.0_AE_CloudOps | (no-TO) | comp-aws | comp-aws score --class s3 | FAIL |
+| 2026-06-24 | 3.0.0_SA_CVO | NFRA_COMPRAIL.TO-5 | comp-aws | comp-aws derive --class lb_listener | PASS |
+| 2026-06-24 | 3.0.0_SA_CVO | NFRA_COMPRAIL.TO-5 | comp-aws | comp-aws derive --class lb_target_group | PASS |
+| 2026-06-24 | 3.0.0_SA_CVO | NFRA_COMPRAIL.TO-5 | comp-aws | comp-aws derive --class route53_record | PASS |
+| 2026-06-24 | 3.0.0_SA_CVO | NFRA_COMPRAIL.TO-5 | comp-aws | comp-aws derive --class lb --out /c/Users/AndrewBerman/AppData/Local/Temp/claude/C--Use... | PASS |
+| 2026-06-24 | 3.0.0_SA_CVO | NFRA_COMPRAIL.TO-5 | comp-aws | comp-aws derive --class lb_listener --out /c/Users/AndrewBerman/AppData/Local/Temp/clau... | PASS |
+| 2026-06-24 | 3.0.0_SA_CVO | NFRA_COMPRAIL.TO-5 | comp-aws | comp-aws derive --class lb_target_group --out /c/Users/AndrewBerman/AppData/Local/Temp/... | PASS |
+| 2026-06-24 | 3.0.0_SA_CVO | NFRA_COMPRAIL.TO-5 | comp-aws | comp-aws derive --class route53_record --out /c/Users/AndrewBerman/AppData/Local/Temp/c... | PASS |
+| 2026-06-24 | 3.0.0_SA_CVO | NFRA_COMPRAIL.TO-5 | comp-blast | comp-blast -h | PASS |
+| 2026-06-24 | 3.0.0_SA_CVO | NFRA_COMPRAIL.TO-5 | comp-aws | comp-aws derive --class lb --out _acv_lb.json | PASS |
+| 2026-06-24 | 0.7.0_AE_CloudOps | (no-TO) | comp-aws | comp-aws score --class s3 | PASS |
+| 2026-06-24 | 3.0.0_SA_CVO | NFRA_COMPRAIL.TO-5 | comp-aws | comp-aws derive --class lb_listener --out _acv_lb_listener.json | PASS |
+| 2026-06-24 | 3.0.0_SA_CVO | NFRA_COMPRAIL.TO-5 | comp-aws | comp-aws derive --class lb_target_group --out _acv_lb_target_group.json | PASS |
+| 2026-06-24 | 3.0.0_SA_CVO | NFRA_COMPRAIL.TO-5 | comp-aws | comp-aws derive --class route53_record --out _acv_route53_record.json | PASS |
+| 2026-06-24 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/aws-shapes/s3-hand-au... | PASS |
+| 2026-06-24 | 3.0.0_SA_CVO | NFRA_COMPRAIL.TO-5 | comp-aws | comp-aws derive --class route53_record --out _acv_r53.json | PASS |
+| 2026-06-24 | 3.0.0_SA_CVO | NFRA_COMPRAIL.TO-5 | comp-aws | comp-aws derive --class lb --out _acv_lb.json | PASS |
+| 2026-06-24 | 0.4.0_DS_ClientPlatform | DATA_PLATFORM.D3 | comp-surface-check | comp-surface-check check --mode advisory --file docs/briefs/DATA_PLATFORM_D1_ds_field_m... | PASS |
+| 2026-06-24 | 3.0.0_SA_CVO | NFRA_COMPRAIL.TO-5 | comp-aws | comp-aws derive --class route53_record --out _acv_r53.json | PASS |
+| 2026-06-24 | 3.0.0_SA_CVO | NFRA_COMPRAIL.TO-5 | comp-aws | comp-aws score --class s3 | PASS |
+| 2026-06-24 | 3.0.0_SA_CVO | NFRA_COMPRAIL.TO-5 | comp-aws | comp-aws derive --class s3 --out _acv_s3.json | PASS |
+| 2026-06-24 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.7.0_AE_CloudOps/task... | PASS |
+| 2026-06-24 | 0.6.0_AE_PartnerETL | DATA_PLATFORM.D1 | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.6.0_AE_PartnerETL/ta... | PASS |
+| 2026-06-24 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+| 2026-06-24 | 0.7.0_AE_CloudOps | (no-TO) | comp-iam | comp-iam service m365-mcp-gateway | PASS |
+| 2026-06-24 | 0.6.0_AE_PartnerETL | DATA_PLATFORM.D1 | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/DATA_PLATFORM_D1_SCHW... | PASS |
+| 2026-06-24 | 0.6.0_AE_PartnerETL | DATA_PLATFORM.D1 | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.6.0_AE_PartnerETL/ta... | PASS |
+| 2026-06-24 | 0.7.0_AE_CloudOps | (no-TO) | comp-iam | comp-iam service m365-mcp-gateway | PASS |
+| 2026-06-24 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/ec2/m365-mcp-gateway/app/audi... | PASS |
+| 2026-06-24 | 0.6.0_AE_PartnerETL | DATA_PLATFORM.D1 | comp-surface-check | comp-surface-check check --mode advisory --file docs/briefs/DATA_PLATFORM_D1_SCHWAB_FIE... | PASS |
+| 2026-06-24 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/change_management/20... | PASS |
+| 2026-06-24 | 0.4.0_DS_ClientPlatform | DATA_PLATFORM.D3 | comp-surface-check | comp-surface-check check --mode advisory --file docs/briefs/DATA_PLATFORM_D3_orion_ecli... | PASS |
+| 2026-06-24 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/ec2/m365-mcp-gateway/deploy-t... | PASS |
+| 2026-06-24 | 0.6.0_AE_PartnerETL | DATA_PLATFORM.D4 | comp-surface-check | comp-surface-check check --mode advisory --file docs/briefs/DATA_PLATFORM_D4_SMARTX_END... | PASS |
+| 2026-06-24 | 1.0.0_SA_CTO | NFRA_COMPRAIL.TO-3.cto-claudemd-rule20-amend | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/DATA_PLATFORM_D3_orio... | PASS |
+| 2026-06-24 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/ec2/EC2_MANIFEST.json | PASS |
+| 2026-06-24 | 0.4.0_DS_ClientPlatform | DATA_PLATFORM.D3 | comp-surface-check | comp-surface-check check --mode advisory --file docs/briefs/DATA_PLATFORM_D1_ds_field_m... | PASS |
+| 2026-06-24 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/ec2/m365-mcp-gateway/requirem... | PASS |
+| 2026-06-24 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+| 2026-06-24 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/ec2/EC2_MANIFEST.json | PASS |
+| 2026-06-24 | 0.4.0_DS_ClientPlatform | DATA_PLATFORM.D3 | comp-surface-check | comp-surface-check check --mode advisory --file docs/briefs/DATA_PLATFORM_D1_SCHWAB_FIE... | PASS |
+| 2026-06-24 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/change_management/20... | PASS |
+| 2026-06-24 | 0.4.0_DS_ClientPlatform | DATA_PLATFORM.D3 | comp-surface-check | comp-surface-check check --mode advisory --file data/black_diamond/scripts/bronze/conve... | PASS |
+| 2026-06-24 | 3.0.0_SA_CVO | NFRA_COMPRAIL.TO-5 | comp-pipescript | comp-pipescript io C_01.canonical_nna | PASS |
+| 2026-06-24 | 3.0.0_SA_CVO | NFRA_COMPRAIL.TO-5 | comp-pipescript | comp-pipescript deployed C_01.canonical_nna | PASS |
+2026-06-24 0.7.0_AE_CloudOps | OPLMCP.07 AC2 + .05 R8 | comp-aws derive(4 ALB classes)+score(F1=1.0)+grain-sentinel PASS, comp-iam service(s3:PutObject DETECTED+GRANTED), comp-glob(deploy script), deploy_ledger open/close 3/3; comp-which backstop fell back to literal grep (LD-0208), one Bash grep rail-gated->native Read/Glob.
+| 2026-06-24 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
