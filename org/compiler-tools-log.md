@@ -7871,3 +7871,17 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-06-24 | 0.7.0_AE_CloudOps~C | ASTN_WSJFT.B | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/ec2/astn-wsjft/run_discard.py | PASS |
 - 2026-06-24 (0.7.0_AE_CloudOps session-close): comp-iam source-trace (IAM-CONDITIONS FP root-caused -- static census omits Condition); built the structural no-arbitrary-JS guard (caught humanize.ts evaluate hole); safe-apply x4 (IMDS-1 7-bd, PORTAL-1 WAF, ASTN IAM, Eclipse/crawl IAM, all in-place 0-recreate); Rule-22 TF-source grounding caught comp-iam condition-blind FP before a wrong scope-down.
 | 2026-06-24 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-06-24 | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier0/reviews/RV-0038.md | PASS |
+| 2026-06-24 | 0.7.0_AE_CloudOps~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/terraform/cot-pipeline/ec2.tf | PASS |
+| 2026-06-24 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+| 2026-06-24 | 0.7.0_AE_CloudOps~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/terraform/mdpf-pipeline/ec2.tf | PASS |
+| 2026-06-24 | 0.7.0_AE_CloudOps~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/terraform/smartx-pipeline/ec2.tf | PASS |
+| 2026-06-24 | 0.7.0_AE_CloudOps~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/terraform/inf-pipeline/ec2.tf... | PASS |
+| 2026-06-24 | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .claude/skills/teams-assist/SKILL.md --... | PASS |
+| 2026-06-24 | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .claude/skills/teams-assist/SKILL.md --... | PASS |
+| 2026-06-24 | 0.7.0_AE_CloudOps~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/change_management/20... | PASS |
+| 2026-06-24 | 0.7.0_AE_CloudOps~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file security/own-attack-surface/SCTY.W2_rem... | PASS |
+| 2026-06-24 | 0.7.0_AE_CloudOps~C | ASTN_WSJFT.B | comp-surface-check | comp-surface-check check --mode advisory --file tools/astn_wsjft/scripts/compile_email.py | PASS |
+| 2026-06-24 | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier0/reviews/RV-0038.md | PASS |
+| 2026-06-24 | 0.7.0_AE_CloudOps~B | SCTY.W2 | comp-which,comp-iam,comp-grep,comp-aws | SCTY.W2 assess+remediate: comp-which routing, comp-iam service (W1-producer/bd-exporter/m365), comp-grep (moltbot census caught CodeBuild log-group + aws_instance enum); GAP: comp-iam CONDITION-BLINDNESS (bd-role TerminateInstances FP) | MIXED/GAP |
+| 2026-06-24 | 0.7.0_AE_CloudOps~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
