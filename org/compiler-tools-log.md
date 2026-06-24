@@ -7682,3 +7682,186 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-06-24 | 0.5.0_AE_OpalETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.5.0_AE_OpalETL/logs/... | PASS |
 | 2026-06-24 | 0.4.0_DS_ClientPlatform | DATA_PLATFORM reverse-ETL/supplant + chunk-1 | comp-pipescript io, comp-grep, boto3-validate-on-served, ds-commit-gate, safe-deploy | proof-of-method COMPLETE: chunk-1 lots resolved via B_02 structure (Schwab-primary/BD-fallback) + served lot source-split (realized 100% schwab=T1 passthrough); ULN cutover (lots_to_silver widen + uln deprecate); rail gated raw multi-s3-ls -> comp-routed | reverse-ETL: supplant-BD-for-Schwab data-confirmed-feasible
 | 2026-06-24 | 0.4.0_DS_ClientPlatform | DATA_PLATFORM.D3 | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-06-24 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-06-24 | 0.4.0_DS_ClientPlatform | DATA_PLATFORM.D3 | comp-surface-check | comp-surface-check check --mode advisory --file docs/briefs/DATA_PLATFORM_reverse_etl_c... | PASS |
+| 2026-06-24 | 1.0.0_SA_CTO | NFRA_COMPRAIL.TO-3.cto-claudemd-rule20-amend | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/DATA_PLATFORM_reverse... | PASS |
+| 2026-06-24 | 0.4.0_DS_ClientPlatform | DATA_ANALYTICS.A1 | comp-surface-check | comp-surface-check check --mode advisory --file docs/briefs/DATA_ANALYTICS_A1_transform... | PASS |
+| 2026-06-24 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/DATA_PLATFORM.json | PASS |
+| 2026-06-24 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+| 2026-06-24 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/ec2/crawl-harness/src/crawl.t... | PASS |
+| 2026-06-24 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/ec2/EC2_MANIFEST.json | PASS |
+| 2026-06-24 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+| 2026-06-24 | 0.5.0_AE_OpalETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/ec2/crawl-harness/src/crawl.t... | PASS |
+| 2026-06-24 | 0.5.0_AE_OpalETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/ec2/crawl-harness/src/bounded... | PASS |
+| 2026-06-24 | 0.5.0_AE_OpalETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.5.0_AE_OpalETL/logs/... | PASS |
+| 2026-06-24 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/ec2/crawl-harness/src/isolati... | PASS |
+| 2026-06-24 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/ec2/crawl-harness/src/crawl.t... | PASS |
+| 2026-06-24 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+| 2026-06-24 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/ec2/crawl-harness/src/run-ori... | PASS |
+| 2026-06-24 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+| 2026-06-24 | 3.0.0_SA_CVO | NFRA_COMPRAIL.TO-5 | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/briefs/2026... | PASS |
+| 2026-06-24 | 3.0.0_SA_CVO | NFRA_COMPRAIL.TO-5 | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/briefs/2026... | PASS |
+| 2026-06-24 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .owned-paths.yaml --file security/READM... | PASS |
+| 2026-06-24 | 1.0.0_SA_CTO | NFRA_COMPRAIL.TO-3.cto-claudemd-rule20-amend | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/SCTY_PRD.md --file or... | PASS |
+| 2026-06-24 | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier0/ledger/LD-0211.md | PASS |
+| 2026-06-24 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/REGISTRY.md --file org/tie... | PASS |
+| 2026-06-24 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+| 2026-06-24 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/ec2/crawl-harness/src/crawl.t... | PASS |
+| 2026-06-24 | 0.5.0_AE_OpalETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/ec2/crawl-harness/src/stealth... | PASS |
+| 2026-06-24 | 3.0.0_SA_CVO | NFRA_COMPRAIL.TO-5 | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/findings/20... | PASS |
+| 2026-06-24 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+| 2026-06-24 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/ec2/crawl-harness/src/no-arbi... | PASS |
+| 2026-06-24 | 0.5.0_AE_OpalETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.5.0_AE_OpalETL/logs/... | PASS |
+| 2026-06-24 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/ec2/crawl-harness/src/check-a... | PASS |
+| 2026-06-24 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/ec2/crawl-harness/src/run-ori... | PASS |
+| 2026-06-24 | 1.0.0_SA_CTO | NFRA_COMPRAIL.TO-3.cto-claudemd-rule20-amend | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/ASTN_WSJFT_PRD.md --f... | PASS |
+| 2026-06-24 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/REGISTRY.md --file org/tie... | PASS |
+| 2026-06-24 | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier0/ledger/LD-0212.md | PASS |
+| 2026-06-24 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+| 2026-06-24 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/ec2/crawl-harness/src/types.ts | PASS |
+| 2026-06-24 | 0.4.0_DS_ClientPlatform | DATA_ANALYTICS.A1 | comp-blast | comp-blast holdings_lots | PASS |
+| 2026-06-24 | 0.4.0_DS_ClientPlatform | DATA_ANALYTICS.A1 | comp-surface-check | comp-surface-check check --mode advisory --file docs/briefs/DATA_ANALYTICS_A1_transform... | PASS |
+| 2026-06-24 | 3.0.0_SA_CVO | NFRA_COMPRAIL.TO-5 | comp-surface-check | comp-surface-check check --mode advisory --file security/external-repo-analysis/repo-se... | PASS |
+| 2026-06-24 | 0.4.0_DS_ClientPlatform | DATA_ANALYTICS.A1 | pipescript | pipescript --list | PASS |
+| 2026-06-24 | 0.4.0_DS_ClientPlatform | DATA_ANALYTICS.A1 | pipescript | pipescript advi-bd | PASS |
+| 2026-06-24 | 0.4.0_DS_ClientPlatform | DATA_ANALYTICS.A1 | pipescript | pipescript --resource holdings_lots | PASS |
+| 2026-06-24 | 0.4.0_DS_ClientPlatform | DATA_ANALYTICS.A1 | pipescript | pipescript --resource client_performance | PASS |
+| 2026-06-24 | 0.4.0_DS_ClientPlatform | DATA_ANALYTICS.A1 | pipescript | pipescript --resource aua_decomposition | FAIL |
+| 2026-06-24 | 0.4.0_DS_ClientPlatform | DATA_ANALYTICS.A1 | pipescript | pipescript --resource new_securities | FAIL |
+| 2026-06-24 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.7.0_AE_CloudOps/task... | PASS |
+| 2026-06-24 | 0.4.0_DS_ClientPlatform | DATA_ANALYTICS.A1 | comp-surface-check | comp-surface-check check --mode advisory --file docs/briefs/DATA_ANALYTICS_A1_transform... | PASS |
+| 2026-06-24 | 0.4.0_DS_ClientPlatform | DATA_ANALYTICS.A1 | comp-pipescript | comp-pipescript io bd-portal-publisher | FAIL |
+| 2026-06-24 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/ec2/crawl-harness/package.jso... | PASS |
+| 2026-06-24 | 0.4.0_DS_ClientPlatform | DATA_ANALYTICS.A1 | comp-surface-check | comp-surface-check check --mode advisory --file docs/briefs/DATA_ANALYTICS_A1_transform... | PASS |
+| 2026-06-24 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+| 2026-06-24 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/terraform/crawl-harness/crawl... | PASS |
+| 2026-06-24 | 0.4.0_DS_ClientPlatform | DATA_ANALYTICS.A1 | comp-surface-check | comp-surface-check check --mode advisory --file docs/briefs/DATA_ANALYTICS_A1_comp_orph... | PASS |
+| 2026-06-24 | 0.4.0_DS_ClientPlatform | DATA_ANALYTICS.A1 | comp-surface-check | comp-surface-check check --mode advisory --file docs/briefs/DATA_ANALYTICS_A1_transform... | PASS |
+| 2026-06-24 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/ec2/crawl-harness/src/crawl.t... | PASS |
+| 2026-06-24 | 0.4.0_DS_ClientPlatform | DATA_ANALYTICS.A1 | comp-surface-check | comp-surface-check check --mode advisory --file docs/briefs/DATA_ANALYTICS_A1_comp_orph... | PASS |
+| 2026-06-24 | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .claude/skills/goal-set/SKILL.md --file... | PASS |
+| 2026-06-24 | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .claude/skills/goal-set/SKILL.md --file... | PASS |
+| 2026-06-24 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+| 2026-06-24 | 0.4.0_DS_ClientPlatform | DATA_ANALYTICS.A1 | comp-surface-check | comp-surface-check check --mode advisory --file docs/briefs/cot_vs_inf_platinum_parity_... | PASS |
+| 2026-06-24 | 3.0.0_SA_CVO | NFRA_COMPRAIL.TO-5 | comp-aws | comp-aws m365-mcp-gateway | FAIL |
+| 2026-06-24 | 3.0.0_SA_CVO | NFRA_COMPRAIL.TO-5 | comp-routes | comp-routes behaviors | PASS |
+| 2026-06-24 | 3.0.0_SA_CVO | NFRA_COMPRAIL.TO-5 | comp-iam | comp-iam gaps | PASS |
+| 2026-06-24 | 3.0.0_SA_CVO | NFRA_COMPRAIL.TO-5 | comp-kuzu | comp-kuzu MATCH (n) WHERE toLower(n.id) CONTAINS 'm365' OR toLower(n.id) CONTAINS 'gw' ... | FAIL |
+| 2026-06-24 | 3.0.0_SA_CVO | NFRA_COMPRAIL.TO-5 | comp-routes | comp-routes | PASS |
+| 2026-06-24 | 3.0.0_SA_CVO | NFRA_COMPRAIL.TO-5 | comp-routes | comp-routes errors | FAIL |
+| 2026-06-24 | 3.0.0_SA_CVO | NFRA_COMPRAIL.TO-5 | comp-routes | comp-routes auth-map | PASS |
+| 2026-06-24 | 3.0.0_SA_CVO | NFRA_COMPRAIL.TO-5 | comp-routes | comp-routes edge-versions | PASS |
+| 2026-06-24 | 0.4.0_DS_ClientPlatform | DATA_ANALYTICS.A1 | comp-surface-check | comp-surface-check check --mode advisory --file docs/briefs/DATA_ANALYTICS_A1_comp_orph... | PASS |
+| 2026-06-24 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .owned-paths.yaml --file org/tier2_seni... | PASS |
+| 2026-06-24 | 0.4.0_DS_ClientPlatform | DATA_ANALYTICS.A1 | comp-pipescript | comp-pipescript io D_00 | PASS |
+| 2026-06-24 | 0.4.0_DS_ClientPlatform | DATA_ANALYTICS.A1 | comp-pipescript | comp-pipescript io D_00b | PASS |
+| 2026-06-24 | 0.4.0_DS_ClientPlatform | DATA_ANALYTICS.A1 | comp-pipescript | comp-pipescript io D_00c | PASS |
+| 2026-06-24 | 0.4.0_DS_ClientPlatform | DATA_ANALYTICS.A1 | comp-pipescript | comp-pipescript io D_00f | PASS |
+| 2026-06-24 | 0.4.0_DS_ClientPlatform | DATA_ANALYTICS.A1 | comp-pipescript | comp-pipescript io D_01 | PASS |
+| 2026-06-24 | 0.4.0_DS_ClientPlatform | DATA_ANALYTICS.A1 | comp-pipescript | comp-pipescript io D_02 | PASS |
+| 2026-06-24 | 0.4.0_DS_ClientPlatform | DATA_ANALYTICS.A1 | comp-pipescript | comp-pipescript io D_03 | PASS |
+| 2026-06-24 | 0.4.0_DS_ClientPlatform | DATA_ANALYTICS.A1 | comp-pipescript | comp-pipescript io D_04 | PASS |
+| 2026-06-24 | 0.4.0_DS_ClientPlatform | DATA_ANALYTICS.A1 | comp-pipescript | comp-pipescript io B_01 | PASS |
+| 2026-06-24 | 0.4.0_DS_ClientPlatform | DATA_ANALYTICS.A1 | comp-blast | comp-blast B_01 | PASS |
+| 2026-06-24 | 0.4.0_DS_ClientPlatform | DATA_ANALYTICS.A1 | comp-pipescript | comp-pipescript io C_05 | PASS |
+| 2026-06-24 | 0.4.0_DS_ClientPlatform | DATA_ANALYTICS.A1 | comp-blast | comp-blast C_05 | PASS |
+| 2026-06-24 | 0.4.0_DS_ClientPlatform | DATA_ANALYTICS.A1 | comp-pipescript | comp-pipescript io C_02 | PASS |
+| 2026-06-24 | 0.4.0_DS_ClientPlatform | DATA_ANALYTICS.A1 | comp-blast | comp-blast C_02 | PASS |
+| 2026-06-24 | 0.4.0_DS_ClientPlatform | DATA_ANALYTICS.A1 | comp-pipescript | comp-pipescript io C_03 | PASS |
+| 2026-06-24 | 0.4.0_DS_ClientPlatform | DATA_ANALYTICS.A1 | comp-blast | comp-blast C_03 | PASS |
+| 2026-06-24 | 0.4.0_DS_ClientPlatform | DATA_ANALYTICS.A1 | comp-pipescript | comp-pipescript io C_04 | PASS |
+| 2026-06-24 | 0.4.0_DS_ClientPlatform | DATA_ANALYTICS.A1 | comp-blast | comp-blast C_04 | PASS |
+| 2026-06-24 | 0.7.0_AE_CloudOps~B | (no-TO) | comp-iam | comp-iam service inf-etf-ownership-daily | PASS |
+| 2026-06-24 | 0.4.0_DS_ClientPlatform | DATA_ANALYTICS.A1 | comp-surface-check | comp-surface-check check --mode advisory --file docs/briefs/DATA_ANALYTICS_A1_transform... | PASS |
+| 2026-06-24 | 3.0.0_SA_CVO | NFRA_COMPRAIL.TO-5 | comp-iam | comp-iam service bd-exporter-ec2-role | PASS |
+| 2026-06-24 | 0.7.0_AE_CloudOps~B | (no-TO) | comp-routes | comp-routes behaviors | PASS |
+| 2026-06-24 | 0.7.0_AE_CloudOps~B | (no-TO) | comp-iam | comp-iam service m365-mcp-gateway | PASS |
+| 2026-06-24 | 0.7.0_AE_CloudOps~B | (no-TO) | comp-routes | comp-routes behaviors | PASS |
+| 2026-06-24 | 0.4.0_DS_ClientPlatform | DATA_ANALYTICS.A1 | comp-surface-check | comp-surface-check check --mode advisory --file docs/briefs/DATA_ANALYTICS_A1_layer_ana... | PASS |
+| 2026-06-24 | 0.7.0_AE_CloudOps~B | (no-TO) | comp-iam | comp-iam gaps | PASS |
+| 2026-06-24 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+| 2026-06-24 | 0.7.0_AE_CloudOps~B | (no-TO) | comp-routes | comp-routes behaviors | PASS |
+| 2026-06-24 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/ec2/crawl-harness/src/eclipse... | PASS |
+| 2026-06-24 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.7.0_AE_CloudOps/task... | PASS |
+| 2026-06-24 | 3.0.0_SA_CVO | NFRA_COMPRAIL.TO-5 | comp-surface-check | comp-surface-check check --mode advisory --file security/self-assessment/2026-06-24_W2-... | PASS |
+| 2026-06-24 | 0.5.0_AE_OpalETL | ETFS_SETUP.W2 | pipescript | pipescript --resource schwab/silver/rps | FAIL |
+| 2026-06-24 | 0.5.0_AE_OpalETL | ETFS_SETUP.W2 | pipescript | pipescript --list | PASS |
+| 2026-06-24 | 3.0.0_SA_CVO | NFRA_COMPRAIL.TO-5 | comp-aws | comp-aws classes | PASS |
+| 2026-06-24 | 3.0.0_SA_CVO | NFRA_COMPRAIL.TO-5 | comp-aws | comp-aws score | PASS |
+| 2026-06-24 | 0.7.0_AE_CloudOps~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file security/own-attack-surface/SCTY.W2_own... | PASS |
+| 2026-06-24 | 0.4.0_DS_ClientPlatform | DATA_ANALYTICS.A1 | comp-surface-check | comp-surface-check check --mode advisory --file docs/briefs/DATA_ANALYTICS_A1_layer_ana... | PASS |
+| 2026-06-24 | 3.0.0_SA_CVO | NFRA_COMPRAIL.TO-5 | comp-iam | comp-iam --help | PASS |
+| 2026-06-24 | 3.0.0_SA_CVO | NFRA_COMPRAIL.TO-5 | comp-aws | comp-aws --help | PASS |
+| 2026-06-24 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+| 2026-06-24 | 0.7.0_AE_CloudOps~B | (no-TO) | comp-iam | comp-iam service bd-exporter | PASS |
+| 2026-06-24 | 1.0.0_SA_CTO | NFRA_COMPRAIL.TO-3.cto-claudemd-rule20-amend | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/ASTN_WSJFT_PRD.md | PASS |
+| 2026-06-24 | 0.7.0_AE_CloudOps~B | (no-TO) | comp-aws | comp-aws bd-exporter | FAIL |
+| 2026-06-24 | 0.7.0_AE_CloudOps~B | (no-TO) | comp-aws | comp-aws bd-exporter-sg | FAIL |
+| 2026-06-24 | 0.5.0_AE_OpalETL | ETFS_SETUP.W2 | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/ec2/m365-mcp-gateway/.env.exa... | PASS |
+| 2026-06-24 | 0.4.0_DS_ClientPlatform | DATA_ANALYTICS.A1 | comp-pipescript | comp-pipescript deployed A_01.advisor_assignments.py | PASS |
+| 2026-06-24 | 0.4.0_DS_ClientPlatform | DATA_ANALYTICS.A1 | comp-surface-check | comp-surface-check check --mode advisory --file data/black_diamond/scripts/gold/gold_di... | PASS |
+| 2026-06-24 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/ec2/EC2_MANIFEST.json | PASS |
+| 2026-06-24 | 1.0.0_SA_CTO | NFRA_COMPRAIL.TO-3.cto-claudemd-rule20-amend | pipescript | pipescript --list | PASS |
+| 2026-06-24 | 1.0.0_SA_CTO | NFRA_COMPRAIL.TO-3.cto-claudemd-rule20-amend | pipescript | pipescript news | PASS |
+| 2026-06-24 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file CLAUDE.md | PASS |
+| 2026-06-24 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.7.0_AE_CloudOps/task... | PASS |
+| 2026-06-24 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+| 2026-06-24 | 0.4.0_DS_ClientPlatform | DATA_ANALYTICS.A1 | comp-surface-check | comp-surface-check check --mode advisory --file docs/briefs/DATA_ANALYTICS_A1_A_01_advi... | PASS |
+| 2026-06-24 | 0.4.0_DS_ClientPlatform | DATA_ANALYTICS.A1 | comp-pipescript | comp-pipescript deployed A_02.fee_rate_history.py | PASS |
+| 2026-06-24 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file data/black_diamond/scripts/gold/gold_di... | PASS |
+| 2026-06-24 | 0.4.0_DS_ClientPlatform | DATA_ANALYTICS.A1 | comp-surface-check | comp-surface-check check --mode advisory --file docs/briefs/DATA_ANALYTICS_A1_A_02_fee_... | PASS |
+| 2026-06-24 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/change_management/20... | PASS |
+| 2026-06-24 | 0.7.0_AE_CloudOps~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .claude/settings.local.json --file infr... | PASS |
+| 2026-06-24 | 1.0.0_SA_CTO | NFRA_COMPRAIL.TO-3.cto-claudemd-rule20-amend | comp-surface-check | comp-surface-check check --mode advisory --file tools/astn_wsjft/.gitignore --file tool... | PASS |
+| 2026-06-24 | 1.0.0_SA_CTO | NFRA_COMPRAIL.TO-3.cto-claudemd-rule20-amend | comp-surface-check | comp-surface-check check --mode advisory --file tools/astn_wsjft/.gitignore | PASS |
+| 2026-06-24 | 0.5.0_AE_OpalETL | ETFS_SETUP.W2 | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/ec2/m365-mcp-gateway/app/serv... | PASS |
+| 2026-06-24 | 1.0.0_SA_CTO | NFRA_COMPRAIL.TO-3.cto-claudemd-rule20-amend | comp-surface-check | comp-surface-check check --mode advisory --file tools/astn_wsjft/scripts/org/mcp/agent_... | PASS |
+| 2026-06-24 | 1.0.0_SA_CTO | NFRA_COMPRAIL.TO-3.cto-claudemd-rule20-amend | comp-surface-check | comp-surface-check check --mode advisory --file tools/astn_wsjft/scripts/config.py | PASS |
+| 2026-06-24 | 0.7.0_AE_CloudOps~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/ec2/m365-mcp-gateway/app/conf... | PASS |
+| 2026-06-24 | 0.4.0_DS_ClientPlatform | DATA_ANALYTICS.A1 | comp-surface-check | comp-surface-check check --mode advisory --file docs/briefs/DATA_ANALYTICS_A1_A_03_posi... | PASS |
+| 2026-06-24 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+| 2026-06-24 | 0.5.0_AE_OpalETL | ETFS_SETUP.W2 | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/ec2/m365-mcp-gateway/app/tool... | PASS |
+| 2026-06-24 | 1.0.0_SA_CTO | NFRA_COMPRAIL.TO-3.cto-claudemd-rule20-amend | comp-surface-check | comp-surface-check check --mode advisory --file tools/astn_wsjft/scripts/fetch_ft.js --... | PASS |
+| 2026-06-24 | 0.7.0_AE_CloudOps~C | ASTN_WSJFT.B | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/terraform/astn-pipeline/.terr... | PASS |
+| 2026-06-24 | 0.7.0_AE_CloudOps~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/terraform/portal-auth/cloudfr... | PASS |
+| 2026-06-24 | 0.4.0_DS_ClientPlatform | DATA_ANALYTICS.A1 | comp-surface-check | comp-surface-check check --mode advisory --file docs/briefs/DATA_ANALYTICS_A1_A_03_posi... | PASS |
+| 2026-06-24 | 1.0.0_SA_CTO | NFRA_COMPRAIL.TO-3.cto-claudemd-rule20-amend | comp-surface-check | comp-surface-check check --mode advisory --file tools/astn_wsjft/scripts/test_e2e_s3.py | PASS |
+| 2026-06-24 | 0.7.0_AE_CloudOps~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/change_management/20... | PASS |
+| 2026-06-24 | 0.7.0_AE_CloudOps~C | ASTN_WSJFT.B | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/change_management/20... | PASS |
+| 2026-06-24 | 0.7.0_AE_CloudOps~C | ASTN_WSJFT.B | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/terraform/astn-pipeline/insta... | PASS |
+| 2026-06-24 | 0.5.0_AE_OpalETL | ETFS_SETUP.W2 | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/ec2/m365-mcp-gateway/.env.exa... | PASS |
+| 2026-06-24 | 3.0.0_SA_CVO | NFRA_COMPRAIL.TO-5 | comp-iam | comp-iam service astn-wsjft-scraper-role | PASS |
+| 2026-06-24 | 0.7.0_AE_CloudOps~C | ASTN_WSJFT.B | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/ec2/EC2_MANIFEST.json | PASS |
+| 2026-06-24 | 0.7.0_AE_CloudOps~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file scripts/register_demo_tenant.py | PASS |
+| 2026-06-24 | 0.7.0_AE_CloudOps~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/ec2/m365-mcp-gateway/app/oaut... | PASS |
+| 2026-06-24 | 0.7.0_AE_CloudOps~C | ASTN_WSJFT.B | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/change_management/20... | PASS |
+| 2026-06-24 | 0.4.0_DS_ClientPlatform | DATA_ANALYTICS.A1 | comp-surface-check | comp-surface-check check --mode advisory --file data/black_diamond/scripts/gold/A_03.po... | PASS |
+| 2026-06-24 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+| 2026-06-24 | 1.0.0_SA_CTO | NFRA_COMPRAIL.TO-3.cto-claudemd-rule20-amend | comp-surface-check | comp-surface-check check --mode advisory --file tools/astn_wsjft/configs/sources.json -... | PASS |
+| 2026-06-24 | 1.0.0_SA_CTO | NFRA_COMPRAIL.TO-3.cto-claudemd-rule20-amend | comp-surface-check | comp-surface-check check --mode advisory --file tools/astn_wsjft/scripts/run.py --file ... | PASS |
+| 2026-06-24 | 0.5.0_AE_OpalETL | ETFS_SETUP.W2 | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/ec2/m365-mcp-gateway/app/tool... | PASS |
+| 2026-06-24 | 0.7.0_AE_CloudOps~C | ASTN_WSJFT.B | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/terraform/astn-pipeline/iam.tf | PASS |
+| 2026-06-24 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.7.0_AE_CloudOps/task... | PASS |
+| 2026-06-24 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/ec2/crawl-harness/src/eclipse... | PASS |
+| 2026-06-24 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+| 2026-06-24 | 0.7.0_AE_CloudOps~C | ASTN_WSJFT.B | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/ec2/astn-wsjft/deploy.sh --fi... | PASS |
+| 2026-06-24 | 0.7.0_AE_CloudOps~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .github/workflows/ec2-deploy.yml | PASS |
+| 2026-06-24 | 1.0.0_SA_CTO | NFRA_COMPRAIL.TO-3.cto-claudemd-rule20-amend | comp-surface-check | comp-surface-check check --mode advisory --file tools/astn_wsjft/scripts/fetch_ft.js --... | PASS |
+| 2026-06-24 | 0.7.0_AE_CloudOps~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file security/own-attack-surface/SCTY.W2_rem... | PASS |
+| 2026-06-24 | 0.5.0_AE_OpalETL | ETFS_SETUP.W2 | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/ec2/m365-mcp-gateway/app/tool... | PASS |
+| 2026-06-24 | 1.0.0_SA_CTO | NFRA_COMPRAIL.TO-3.cto-claudemd-rule20-amend | comp-surface-check | comp-surface-check check --mode advisory --file tools/astn_wsjft/scripts/test_run_orche... | PASS |
+| 2026-06-24 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/ec2/crawl-harness/src/crawl.t... | PASS |
+| 2026-06-24 | 0.7.0_AE_CloudOps~C | ASTN_WSJFT.B | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/ec2/astn-wsjft/dryrun.sh --fi... | PASS |
+| 2026-06-24 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .github/workflows/ec2-deploy.yml | PASS |
+| 2026-06-24 | 0.7.0_AE_CloudOps~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file security/own-attack-surface/SCTY.W2_rem... | PASS |
+| 2026-06-24 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+| 2026-06-24 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/ec2/crawl-harness/src/eclipse... | PASS |
+| 2026-06-24 | 0.4.0_DS_ClientPlatform | DATA_ANALYTICS.A1 | comp-surface-check | comp-surface-check check --mode advisory --file docs/briefs/DATA_ANALYTICS_A_03_snapsho... | PASS |
+| 2026-06-24 | 3.0.0_SA_CVO | NFRA_COMPRAIL.TO-5 | comp-surface-check | comp-surface-check check --mode advisory --file security/self-assessment/2026-06-24_W2-... | PASS |
+| 2026-06-24 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.7.0_AE_CloudOps/task... | PASS |
+| 2026-06-24 | 0.4.0_DS_ClientPlatform | DATA_ANALYTICS.A1 | comp-surface-check | comp-surface-check check --mode advisory --file docs/briefs/DATA_ANALYTICS_snapshot_nat... | PASS |
+| 2026-06-24 | 0.7.0_AE_CloudOps~C | ASTN_WSJFT.B | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/terraform/astn-pipeline/iam.t... | PASS |
+| 2026-06-24 | 0.4.0_DS_ClientPlatform | DATA_ANALYTICS.A1 | comp-surface-check | comp-surface-check check --mode advisory --file docs/briefs/DATA_ANALYTICS_snapshot_nat... | PASS |
+| 2026-06-24 | 0.7.0_AE_CloudOps~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/terraform/bd-pipeline/ec2.tf | PASS |
+| 2026-06-24 | 0.4.0_DS_ClientPlatform | DATA_ANALYTICS A1 layer-walk + A_03 snapshot-native | comp-grep, comp-which, comp-pipescript io/deployed, pipescript/--resource, comp-blast, ds-commit-gate, BUILT comp-orphans, boto3-validate-on-served | A1 ledger + A_00..A_03 briefings; E_* group DEAD (dispatcher-invocation test); comp-orphans built+CTO-gated (deployed-tree fix pending); A_01 full->incremental flip deployed (AE); A_03 snapshot-native feasibility proven + B_00-RPS-injection redundancy confirmed | DATA_ANALYTICS A1 = chronological gold-script audit + the snapshot-native rebuild case
+| 2026-06-24 | 0.4.0_DS_ClientPlatform | DATA_ANALYTICS.A1 | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
