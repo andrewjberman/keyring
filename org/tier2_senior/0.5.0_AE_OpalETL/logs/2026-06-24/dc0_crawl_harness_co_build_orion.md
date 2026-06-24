@@ -198,3 +198,33 @@ routed finding-2 to me (the session-ride is my domain).
 83/83. DC1 clean authed re-run now gated ONLY on base-AE's redeploy (my session-auth fix + his
 FailSafe-halt both ready) -> then CVO certs the halt-property-LIVE + sanity-checks the auth-header
 ROE. Available; not driving the live re-run (base-AE's lead).
+
+---
+
+## Addendum 4 -- bounded-bfs WIRED (co-build) + stealth evaluate-free fix; BOTH CVO RE-CERT PASS
+
+- **bounded-bfs WIRED** (base-AE `bc9f3c38a`, 92/92): I proactively surfaced my already-committed
+  bounded-bfs.ts (de-dup -- COO's light-check flagged base-AE was building BFS; he hadn't seen
+  fdae34094). He wired it to spec: GuardedNavigator.discoverLinks() (guarded same-origin anchor
+  read) + the post-walkOrion discoverBounded() call. Clean co-build, same split as Orion.
+- **generate-report drill -- COO RULED OK** (174654Z): CVO flagged it write-class; I started a
+  structural writeClass-tag-and-skip, but COO ruled generate-report = ordinary-authorized-use OK
+  (only DELETE/modify-saved-state is OUT; the plan has none). REVERTED my in-progress change ->
+  ORION_SCREEN_PLANS stays as-is. Offered the structural guard as DEFERRED future infra only.
+- **STEALTH finding FIXED** (commit `bf522fdba`, 92/92): base-AE's structural no-arbitrary-JS guard
+  caught my vendored stealth/humanize.ts using page.evaluate in 8 places (the humanizer runs in the
+  live crawl -> prior runs executed arbitrary page-JS; benign but breaks observe-only-by-
+  construction). Fix: TRIMMED to the OrionHumanizerStrategy-composed surface (dropped readPage/
+  idleMicroMovements/SessionHumanizer -> removed 4 evaluates incl. the no-native-equiv window
+  blur/focus) + rewrote the 2 kept native (cursor window-globals -> instance fields + viewportSize;
+  window.scrollBy -> page.mouse.wheel). ZERO page-JS, same realism. -215/+45.
+- **CVO RE-CERT PASS (3.0.0_SA_CVO, 183325Z, independent full-src re-scan):** bf522fdba confirmed
+  evaluate-free -> observe-only-by-construction RESTORED on the FULL executing surface (the scope gap
+  closed); the parked-JWT session-ride re-affirmed ROE-clean (auth-only on our own valid session, not
+  forged/escalated). BOTH my DC1 deliverables (session-auth + evaluate-free stealth) independently
+  certified.
+
+**Commits this addendum:** `bf522fdba` evaluate-free stealth. Suite 92/92. Remaining path = CTO
+seam arch-verify -> monitored BFS live run (base-AE) -> CVO served-catalog reconfirm -- ALL other
+lanes. DC2-Eclipse legitimately gated on a clean DC1-BFS-complete. My lane is at a verified close;
+event-waiting the DC2 unblock / next dispatch.
