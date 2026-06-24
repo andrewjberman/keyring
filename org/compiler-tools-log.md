@@ -7571,3 +7571,44 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-06-24 | 0.4.0_DS_ClientPlatform | DATA_PLATFORM.D3 | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
 - 2026-06-24 0.6.0_AE_PartnerETL | DATA_PLATFORM.D1/.D4 + SS4c | comp-to (D1/D4 ctx), comp-freshness (SS4c parity PASS / schwab-rps WARN), rail-checked aws-s3-inventory (17-ext enum + silver-vestige compare) + aws-iam (gold-runner cw:PutMetricData gap). Live SmartX enumeration = curl (external partner API, not comp-tools).
 | 2026-06-24 | 0.6.0_AE_PartnerETL | DATA_PLATFORM.D4 | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-06-24 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/DATA_PLATFORM_DC0_cra... | PASS |
+| 2026-06-24 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/briefs/DATA_PLATFORM_DC0_crawl_har... | PASS |
+| 2026-06-24 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+| 2026-06-24 | 0.4.0_DS_ClientPlatform | DATA_PLATFORM.D3 | comp-pipescript | comp-pipescript io B_00.canonical_holdings | PASS |
+| 2026-06-24 | 0.6.0_AE_PartnerETL | DATA_PLATFORM.D4 | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.6.0_AE_PartnerETL/ta... | PASS |
+| 2026-06-24 | 0.4.0_DS_ClientPlatform | DATA_PLATFORM.D3 | comp-surface-check | comp-surface-check check --mode advisory --file docs/briefs/DATA_PLATFORM_reverse_etl_c... | PASS |
+| 2026-06-24 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+| 2026-06-24 | 1.0.0_SA_CTO | NFRA_COMPRAIL.TO-3.cto-claudemd-rule20-amend | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/DATA_PLATFORM_D1_schw... | PASS |
+| 2026-06-24 | 1.0.0_SA_CTO | NFRA_COMPRAIL.TO-3.cto-claudemd-rule20-amend | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/DATA_PLATFORM_PRD.md | PASS |
+| 2026-06-24 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/ec2/crawl-harness/README.md -... | PASS |
+| 2026-06-24 | 0.4.0_DS_ClientPlatform~B | DATA_PLATFORM_reverseETL.chunk2-allocations | comp-pipescript | comp-pipescript io B_00 | PASS |
+| 2026-06-24 | 0.4.0_DS_ClientPlatform~B | DATA_PLATFORM_reverseETL.chunk2-allocations | comp-pipescript | comp-pipescript io A_03 | PASS |
+| 2026-06-24 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/ec2/crawl-harness/src/xhr-cap... | PASS |
+| 2026-06-24 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/ec2/crawl-harness/src/guarded... | PASS |
+| 2026-06-24 | 0.4.0_DS_ClientPlatform~B | DATA_PLATFORM_reverseETL.chunk2-allocations | comp-surface-check | comp-surface-check check --mode advisory --file docs/briefs/DATA_PLATFORM_reverse_etl_c... | PASS |
+| 2026-06-24 | 0.4.0_DS_ClientPlatform~B | DATA_PLATFORM_reverseETL.chunk3-txn-nna | comp-pipescript | comp-pipescript io C_01 | PASS |
+| 2026-06-24 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+| 2026-06-24 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/ec2/crawl-harness/src/guarded... | PASS |
+| 2026-06-24 | 0.4.0_DS_ClientPlatform | DATA_PLATFORM.D3 | comp-surface-check | comp-surface-check check --mode advisory --file docs/briefs/DATA_PLATFORM_reverse_etl_c... | PASS |
+| 2026-06-24 | 1.0.0_SA_CTO | NFRA_COMPRAIL.TO-3.cto-claudemd-rule20-amend | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/DATA_PLATFORM_RECON_R... | PASS |
+| 2026-06-24 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.6.0_AE_PartnerETL/ta... | PASS |
+| 2026-06-24 | 0.5.0_AE_OpalETL | (no-TO) | comp-aws | comp-aws inf-exporter | FAIL |
+| 2026-06-24 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/ec2/crawl-harness/src/gold.te... | PASS |
+| 2026-06-24 | 0.4.0_DS_ClientPlatform~B | DATA_PLATFORM_reverseETL.chunk3-txn-nna | comp-surface-check | comp-surface-check check --mode advisory --file docs/briefs/DATA_PLATFORM_reverse_etl_c... | PASS |
+| 2026-06-24 | 0.4.0_DS_ClientPlatform~B | DATA_PLATFORM_reverseETL.chunk4-t2-residual | comp-pipescript | comp-pipescript io C_03 | PASS |
+| 2026-06-24 | 0.4.0_DS_ClientPlatform~B | DATA_PLATFORM_reverseETL.chunk4-t2-residual | comp-pipescript | comp-pipescript io C_02 | PASS |
+| 2026-06-24 | 0.4.0_DS_ClientPlatform~B | DATA_PLATFORM_reverseETL.chunk4-t2-residual | comp-pipescript | comp-pipescript io C_00 | PASS |
+| 2026-06-24 | 0.4.0_DS_ClientPlatform~B | DATA_PLATFORM_reverseETL.chunk4-t2-residual | comp-pipescript | comp-pipescript io B_03 | PASS |
+| 2026-06-24 | 0.5.0_AE_OpalETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/ec2/crawl-harness/src/orion-c... | PASS |
+| 2026-06-24 | 0.4.0_DS_ClientPlatform | DATA_PLATFORM.D3 | comp-surface-check | comp-surface-check check --mode advisory --file docs/briefs/DATA_PLATFORM_reverse_etl_c... | PASS |
+| 2026-06-24 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-06-24 | 0.4.0_DS_ClientPlatform~B | DATA_PLATFORM_reverseETL.chunk4-t2-residual | comp-surface-check | comp-surface-check check --mode advisory --file docs/briefs/DATA_PLATFORM_reverse_etl_c... | PASS |
+| 2026-06-24 | 0.0.0_AB_MSTR | (no-TO) | pipescript | pipescript --list | PASS |
+| 2026-06-24 | 0.0.0_AB_MSTR | (no-TO) | pipescript | pipescript m365-mcp | PASS |
+| 2026-06-24 | 0.5.0_AE_OpalETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/ec2/crawl-harness/src/nav-wal... | PASS |
+| 2026-06-24 | 3.0.0_SA_CVO | NFRA_COMPRAIL.TO-5 | comp-pipescript | comp-pipescript io C_00 | PASS |
+| 2026-06-24 | 0.4.0_DS_ClientPlatform | DATA_PLATFORM.D3 | comp-surface-check | comp-surface-check check --mode advisory --file docs/briefs/DATA_PLATFORM_reverse_etl_c... | PASS |
+| 2026-06-24 | 3.0.0_SA_CVO | NFRA_COMPRAIL.TO-5 | comp-pipescript | comp-pipescript io C_02 | PASS |
+| 2026-06-24 | 3.0.0_SA_CVO | NFRA_COMPRAIL.TO-5 | comp-pipescript | comp-pipescript io B_03 | PASS |
+2026-06-24 | 0.4.0_DS_ClientPlatform~B | DATA_PLATFORM_reverseETL.chunk2-4 | comp-which, comp-pipescript io (B_00/A_03/C_00/C_01/C_02/C_03/B_03), comp-to, boto3 live-diffs, safe-commit | reverse-ETL chunks 2-4 data-calibration: allocations(T1 value/T2-HOST dim), txn-NNA(T1), T2-residual(perf self-owned/grouping T2-HOST); T2-COMPUTE residual near-empty for 49F/Schwab
+| 2026-06-24 | 0.4.0_DS_ClientPlatform~B | DATA_PLATFORM_reverseETL.chunk4-t2-residual | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
