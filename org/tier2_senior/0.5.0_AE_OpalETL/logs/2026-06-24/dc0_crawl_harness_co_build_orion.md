@@ -159,3 +159,42 @@ stay the live-HAR discovery frontier (TBD even in the inf-exporter producer).
 
 **Commits this addendum:** `a780344cf` eclipse-config. Suite 71/71. DC2 fires fast post-DC1 once
 base-AE resolves the 3 forks.
+
+---
+
+## Addendum 3 -- DC1 first-crawl ran; finding-2 (parked-session 401) root-caused + fixed; BFS phase-2 prep
+
+base-AE ran the FIRST live Orion crawl (DC1): isolation HELD, harness works end-to-end, but the SPA
+backend calls 401'd -> the catalog was SPA-shell/identity discovery, not authed data. COO + base-AE
+routed finding-2 to me (the session-ride is my domain).
+
+- **ROOT CAUSE (SOURCE-CONFIRMED, orion_export.ts:437-481 -- not inferred):** the exporter ALWAYS
+  runs the SPA login() flow; the parked storage_state (orion/browser-profile/state.json) only
+  carries the Remember-this-device COOKIE that SKIPS OTP -- NOT an active authed API session. The
+  SPA auths with `Authorization: Session <jwt>` minted DURING login into in-session state Playwright
+  storageState() does NOT persist (cookies + localStorage only, never sessionStorage / in-memory).
+  My runOrionCrawlLive loaded storage_state + navigated straight to screens (no login) -> device
+  cookie present (no OTP bounce) but NO Session-jwt on the API calls -> 401.
+- **FIX (commit `84ccecc8d`, suite 76/76):** `session-ride.ts` -- ride the VALID parked JWT directly:
+  force-attach `Authorization: Session <jwt>` on the vendor BACKEND-host requests via context.route
+  (override stale). getBearer = PassiveAuth.bearer (per-request validity + halt-on-expiry; on throw
+  -> ride unmodified so the natural 401 trips FailSafe, never hangs). No login-replay (auth is the
+  exporter's job; PassiveAuth = ride-parked-never-reauth). Wired into runOrionCrawlLive.
+- **RECON_ROE call (CVO sanity-checks on the re-run, COO concurred):** the route header-attach is the
+  ONE active element -- AUTH-ONLY, our own valid parked token on our own session's GET requests =
+  ordinary-authorized-use within our valid session (constraint 2); DATA plane stays observe-only.
+- **Two-for-one:** the SAME root RESOLVES the DC2-Eclipse FORK-B -- ride the parked Eclipse JWT as
+  the Session header (NOT a browser-session carry). Handed base-AE the re-run move (pull -> redeploy
+  i-010f195f1798b40ad -> restart -> re-run) + one context-consistency add in his newContext domain
+  (match the exporter's exact viewport/locale/tz/UA, orion_export.ts:440-453).
+- **BFS phase-2 prep (commit `fdae34094`, suite 83/83):** `bounded-bfs.ts` -- the nav-walker's
+  phase-2 (COO alt ready-prep). Bounded breadth-first discovery beyond the curated screens, every
+  entry guard-fronted; RECON_ROE encoded in the bounds (maxNewScreens/maxDepth/same-host) + the
+  write-affordance EXCLUSION (observe-only: never follow logout/new/edit/delete/rebalance/trade/...).
+  Specifies the one base-AE primitive it needs (GuardedNavigator.discoverLinks() = guarded read-only
+  anchor read); inert until that lands + a phase-2 enable. Offline-tested (fake nav, 7/7).
+
+**Commits this addendum:** `84ccecc8d` session-ride fix | `fdae34094` bounded-bfs phase-2. Suite
+83/83. DC1 clean authed re-run now gated ONLY on base-AE's redeploy (my session-auth fix + his
+FailSafe-halt both ready) -> then CVO certs the halt-property-LIVE + sanity-checks the auth-header
+ROE. Available; not driving the live re-run (base-AE's lead).
