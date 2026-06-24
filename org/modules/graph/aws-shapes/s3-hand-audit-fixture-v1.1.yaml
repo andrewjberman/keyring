@@ -2,31 +2,31 @@ meta:
   fixture_version: '1.5'
   v1_5_changes: 'CORRECTION to v1.4 inf-assets-trigger edge chain (CTO CC/D4-UPDATE 1336xxZ, local-TF-confirmed). v1.4 wrongly collapsed the downstream to EVENT_RULE->EC2-start, dropping the intermediate
     Lambda. CORRECT full D4 chain = 3 edges, all DECLARED: opal-data-inf -[EMITS_TO]-> EVENT_RULE:inf-assets-trigger-bronze-complete -[TRIGGERS]-> LAMBDA:inf-assets-trigger -[STARTS]-> EC2:i-0ed5afded2ebd4ed4
-    (inf-gold-layer-runner, via ec2:StartInstances). STARTS = new first-class compute-lifecycle-control edge family (CTO-ruled; distinct from TRIGGERS; IAM-gated) — folds into the EC2 sub-compiler taxonomy.
+    (inf-gold-layer-runner, via ec2:StartInstances). STARTS = new first-class compute-lifecycle-control edge family (CTO-ruled; distinct from TRIGGERS; IAM-gated) -- folds into the EC2 sub-compiler taxonomy.
     Provenance DECLARED (TF grep-miss, same class as D1). S3 oracle now 0 open items.'
-  v1_4_changes: 'inf-assets-trigger D4 node fully resolved (AE re-pull 2026-06-08): TF-managed (inf-pipeline/inf-assets-trigger.tf, DRIFT-CLASS DECLARED — same as D1, NOT unmanaged); target is an EC2-START
-    (i-0ed5afded2ebd4ed4 inf-gold-layer-runner for assets_v2 silver), NOT a Lambda invoke — so the downstream edge is EVENT_RULE -[STARTS]-> EC2_INSTANCE, a new edge type CTO will confirm. CLOSES the
+  v1_4_changes: 'inf-assets-trigger D4 node fully resolved (AE re-pull 2026-06-08): TF-managed (inf-pipeline/inf-assets-trigger.tf, DRIFT-CLASS DECLARED -- same as D1, NOT unmanaged); target is an EC2-START
+    (i-0ed5afded2ebd4ed4 inf-gold-layer-runner for assets_v2 silver), NOT a Lambda invoke -- so the downstream edge is EVENT_RULE -[STARTS]-> EC2_INSTANCE, a new edge type CTO will confirm. CLOSES the
     last open node-property; S3 oracle is now 0 open items (modulo CTO''s EC2-start edge-label). AD strand RESOLVED-BY-COMMIT (AE 375fa1cb7, enabled by CTO F-003 fix b800d3b99 adding aws-shapes/** to owned-paths)
-    — graph-dir copy is now redundant-with-fixture, AE removing.'
-  phase: Phase 1 — S3 hand-audit oracle
+    -- graph-dir copy is now redundant-with-fixture, AE removing.'
+  phase: Phase 1 -- S3 hand-audit oracle
   tf_commit_at_audit: 11d6edaf4
   cvo_author: 3.0.0_SA_CVO
   schema_ref: ADHC_CMPAWS PRD docs/briefs/comp-aws-comprehensive-cloud-compiler-prd-20260601.md
   iam_stubs: IAM_PRINCIPAL nodes are provisional stubs; Phase 1 IAM sub-audit will resolve
   v1_1_changes: 'GAP-7 resolved (CTO 204113Z): removed eventbridge_routing flag from direct S3 triggers (inf-portal-publisher + inf-silver-aggregator); added event_rules section with inf-silver-chain EVENT_RULE
     node; updated GAP-7 status=RESOLVED.'
-  v1_3_changes: 'CTO D4 + drift-check dispositions folded (CTO 133316Z). D4 EDGE MODEL RULED: EventBridge S3-event fan-out = TWO PAIRWISE EMITS_TO edges (S3 out-degree 2), not a multi-target edge — many-to-many
+  v1_3_changes: 'CTO D4 + drift-check dispositions folded (CTO 133316Z). D4 EDGE MODEL RULED: EventBridge S3-event fan-out = TWO PAIRWISE EMITS_TO edges (S3 out-degree 2), not a multi-target edge -- many-to-many
     is the baseline EventBridge semantic; pattern/enabled/provenance on the EVENT_RULE node, EMITS_TO generic. Validates GAP-7 first-class-node decision. inf-assets-trigger provenance = LIVE-no-DECLARED
     pending AE TF re-pull. DRIFT-EDGE HARD SPEC: S3_BUCKET_POLICY drift edge asserts FULL-NORMALIZED-STATEMENT-SET equality (set-diff over all statements), not single-principal presence (the v1.1 portal-auth
-    OAI-presence assertion is a partial proxy blind to OAC/deny/cross-account). Both fold into the S3 sub-compiler edge/drift design. RESIDUALS NOW CLOSED — S3 oracle fully edge-certified.'
+    OAI-presence assertion is a partial proxy blind to OAC/deny/cross-account). Both fold into the S3 sub-compiler edge/drift design. RESIDUALS NOW CLOSED -- S3 oracle fully edge-certified.'
   v1_2_changes: 'AE Step-2 live-AWS cross-check folded + CVO-adjudicated (CVO independently re-confirmed D1/D2/D3 via live aws s3api 2026-06-08). 24/24 versioning+PAB EXACT (zero drift). D1 ACCEPT: opal-data-bd
-    3rd trigger PortalPublisherTrigger->bd-portal-publisher added (DRIFT-CLASS: oracle grep-miss of a TF-DECLARED edge — bd-pipeline/s3-notifications.tf owns all 3; bucket console-created but notification
+    3rd trigger PortalPublisherTrigger->bd-portal-publisher added (DRIFT-CLASS: oracle grep-miss of a TF-DECLARED edge -- bd-pipeline/s3-notifications.tf owns all 3; bucket console-created but notification
     config TF-managed). D2 ACCEPT: opal-data-portal-v2 policy OAI corrected E139998VWH0PD(WRONG-GUESS)->EU39UXW7CMSI5 + OAC statement added (DRIFT-CLASS: LIVE-no-DECLARED console policy). D3 ACCEPT: bd+inf
     OAC GRANTS statements added (DRIFT-CLASS: LIVE-no-DECLARED). D4 ACCEPT-NODE: 2nd EventBridge rule inf-assets-trigger added; edge-taxonomy modeling routed to CTO. GAP-1..6 RESOLVED (GAP-4 schwab/market-update
     us-east-2 versioning=Enabled+PAB-all-true; GAP-5 tf-state versioning=Enabled/MFADelete=Disabled/repl=none; GAP-6 2 CF OAIs + OAC resolved). s3_trigger_edges 6->7; event_rule_nodes 1->2. fixture_status
     -> CERTIFIED (S3 sub-class 0-diff vs live).'
   version: v1.1
-  resnapshot: 2026-06-11 CVO � boto3 live enum, 30 live buckets; 4 trade-recon DECLARED-no-LIVE state-orphans DELETED (AE terraform state rm landed, Andrew-directed); oracle == live == derive == 30, node_f1
+  resnapshot: 2026-06-11 CVO -- boto3 live enum, 30 live buckets; 4 trade-recon DECLARED-no-LIVE state-orphans DELETED (AE terraform state rm landed, Andrew-directed); oracle == live == derive == 30, node_f1
     1.0
 s3_buckets:
 - bucket_name: opalinvest-portal
@@ -41,7 +41,7 @@ s3_buckets:
     tf_module: shared-infra
     tf_resource: aws_s3_bucket.opalinvest_portal
     declared_state: portal-v1 static hosting origin (CloudFront)
-  notes: Portal v1 origin — superseded by opal-data-portal-v2 for v2; v1 still declared.
+  notes: Portal v1 origin -- superseded by opal-data-portal-v2 for v2; v1 still declared.
   event_notifications: []
   drift_class: LIVE-and-DECLARED
 - bucket_name: opal-cloudfront-logs-313476888478
@@ -327,8 +327,8 @@ s3_buckets:
   website_hosting: false
   provenance:
     tf_module: bd-pipeline (NO aws_s3_bucket resource declared)
-    declared_state: 'CONSOLE-MANAGED; bd-pipeline s3.tf: opal-data-schwab deferred — s3.tf is placeholder only'
-    drift_note: LIVE-no-DECLARED class — highest-value drift signal per CTO Q2 rationale
+    declared_state: 'CONSOLE-MANAGED; bd-pipeline s3.tf: opal-data-schwab deferred -- s3.tf is placeholder only'
+    drift_note: LIVE-no-DECLARED class -- highest-value drift signal per CTO Q2 rationale
   lifecycle_rules_tf_managed: true
   lifecycle_tf_resource: 'shared-infra/main.tf: aws_s3_bucket_lifecycle_configuration.bd_versions (noncurrent 90d + MPU 7d)'
   bucket_policy_tf_managed: false
@@ -356,7 +356,7 @@ s3_buckets:
     filter_suffix: .json
     tf_resource: 'bd-pipeline/s3-notifications.tf: aws_s3_bucket_notification.bd_data_bucket'
   notes: 'Primary BD pipeline data store; gold/platinum/silver/bronze/snapshots layout. Time Machine source (noncurrent versions + NFRA_COSTRED R2 lifecycle). D1: 3 TF-managed notification triggers (not
-    2) — notification config is TF-owned even though the bucket resource is console-managed.'
+    2) -- notification config is TF-owned even though the bucket resource is console-managed.'
   drift_class: LIVE-no-DECLARED
 - bucket_name: opal-data-portal-v2
   region: us-east-1
@@ -398,7 +398,7 @@ s3_buckets:
   public_access_block: true
   website_hosting: false
   provenance:
-    tf_module: N/A — S3 backend; referenced as backend config in all terraform {} blocks
+    tf_module: N/A -- S3 backend; referenced as backend config in all terraform {} blocks
     declared_state: CONSOLE-MANAGED; TF backend state bucket; not a TF-managed resource (bootstrap)
   mfa_delete: false
   replication: none
@@ -415,7 +415,7 @@ s3_buckets:
   website_hosting: false
   provenance:
     tf_module: bd-pipeline/s3.tf (DEFERRED COMMENT ONLY)
-    declared_state: DEFERRED — us-east-2, provider alias required; Schwab RPS/ACC/TRN files
+    declared_state: DEFERRED -- us-east-2, provider alias required; Schwab RPS/ACC/TRN files
   deferred: true
   event_notifications: []
   drift_class: LIVE-no-DECLARED
@@ -429,7 +429,7 @@ s3_buckets:
   website_hosting: false
   provenance:
     tf_module: market-overview/s3.tf (DEFERRED COMMENT ONLY)
-    declared_state: DEFERRED — us-east-2, provider alias required
+    declared_state: DEFERRED -- us-east-2, provider alias required
   deferred: true
   event_notifications: []
   drift_class: LIVE-no-DECLARED
@@ -497,7 +497,7 @@ s3_buckets:
   region: us-east-1
   tf_managed: null
   owner_pipeline: cot-pipeline
-  purpose_class: Cottonwood (cot) firm data lake � bd/cot separation target
+  purpose_class: Cottonwood (cot) firm data lake -- bd/cot separation target
   versioning_enabled: true
   public_access_block: true
   website_hosting: false
@@ -583,6 +583,21 @@ s3_buckets:
     declared_state: re-snapshot 2026-06-11
   notes: ADDED v1.1 re-snapshot 2026-06-11 (CVO; boto3 versioning+PAB live; tf_managed/provenance pending terraform-state verify)
   event_notifications: []
+- bucket_name: opal-infrastructure-snapshots
+  region: us-east-1
+  tf_managed: true
+  owner_pipeline: shared-infra
+  purpose_class: infrastructure/resource-graph snapshot store
+  versioning_enabled: true
+  public_access_block: true
+  website_hosting: false
+  drift_class: DECLARED
+  provenance:
+    tf_module: shared-infra
+    tf_resource: aws_s3_bucket.infrastructure_snapshots
+    declared_state: re-snapshot 2026-06-23 (OPLMCP.07 oracle refresh); tf-state-verified 2026-06-24
+  notes: ADDED 2026-06-23 (0.7.0_AE_CloudOps OPLMCP.07 oracle refresh; live derive versioning=true + PAB-all-true + 1 lifecycle-rule; created since the v1.1 06-11 snapshot). PROVENANCE CLOSED 2026-06-24 (0.7.0_AE_CloudOps, CVO commit-through) -- live derive tf_managed=True, drift=DECLARED, shared-infra/aws_s3_bucket.infrastructure_snapshots.
+  event_notifications: []
 s3_bucket_policies:
 - policy_id: opal-analytics-dashboard-policy
   bucket_name: opal-analytics-dashboard
@@ -656,7 +671,7 @@ s3_bucket_policies:
   grants_iam_principals:
   - IAM_PRINCIPAL:cloudfront-oai-E139998VWH0PD
   - IAM_PRINCIPAL:cloudfront-oac-EVTSA9VEHNZVH
-  notes: 'LIVE-no-DECLARED policy. Path A TF import deferred per FIRMSEP ruling. CVO verifies drift-check TF assertion fires on plan. D3: OAC statement (AllowCFDistributionGold) added v1.2 — drift-check
+  notes: 'LIVE-no-DECLARED policy. Path A TF import deferred per FIRMSEP ruling. CVO verifies drift-check TF assertion fires on plan. D3: OAC statement (AllowCFDistributionGold) added v1.2 -- drift-check
     asserts only OAI presence, so the OAC grant is an untracked-by-TF-assertion surface.'
 - policy_id: opal-data-bd-policy
   bucket_name: opal-data-bd
@@ -684,7 +699,7 @@ s3_bucket_policies:
   grants_iam_principals:
   - IAM_PRINCIPAL:cloudfront-oac-EVTSA9VEHNZVH
   - IAM_PRINCIPAL:cloudfront-oai-E139998VWH0PD
-  notes: 'LIVE-no-DECLARED policy (canonical motivating case per CTO Q2). Path A TF import is the long-term cert goal. D3: OAC statement (AllowCloudFrontOACReadGold) added v1.2 — drift-check asserts only
+  notes: 'LIVE-no-DECLARED policy (canonical motivating case per CTO Q2). Path A TF import is the long-term cert goal. D3: OAC statement (AllowCloudFrontOACReadGold) added v1.2 -- drift-check asserts only
     OAI presence, OAC grant untracked-by-TF-assertion.'
 - policy_id: opal-data-portal-v2-policy
   bucket_name: opal-data-portal-v2
@@ -697,7 +712,7 @@ s3_bucket_policies:
     principal:
       AWS: arn:aws:iam::cloudfront:user/CloudFront Origin Access Identity EU39UXW7CMSI5
     action: s3:GetObject
-    note: OAI for opalinvest.dev S3 bucket — NOT the v1.1-guessed E139998VWH0PD
+    note: OAI for opalinvest.dev S3 bucket -- NOT the v1.1-guessed E139998VWH0PD
   - sid: AllowCloudFrontOACPublicData
     principal:
       Service: cloudfront.amazonaws.com
@@ -713,7 +728,7 @@ s3_bucket_policies:
   grants_iam_principals:
   - IAM_PRINCIPAL:cloudfront-oai-EU39UXW7CMSI5
   - IAM_PRINCIPAL:cloudfront-oac-EVTSA9VEHNZVH
-  notes: 'D2 RESOLVED (v1.2): the v1.1 provisional guess (OAI E139998VWH0PD) was WRONG — actual OAI is EU39UXW7CMSI5 (opalinvest.dev), plus an OAC public-data statement. LIVE-no-DECLARED console policy.'
+  notes: 'D2 RESOLVED (v1.2): the v1.1 provisional guess (OAI E139998VWH0PD) was WRONG -- actual OAI is EU39UXW7CMSI5 (opalinvest.dev), plus an OAC public-data statement. LIVE-no-DECLARED console policy.'
 s3_triggers:
 - source_bucket: opal-data-bd
   target_lambda: bd-allocation-processor
@@ -792,30 +807,30 @@ event_rules:
   target_lambda: inf-assets-trigger
   downstream_ec2_start: 'inf-assets-trigger (LAMBDA) -[STARTS]-> EC2 i-0ed5afded2ebd4ed4 (inf-gold-layer-runner) via ec2:StartInstances, for assets_v2 silver. STARTS = new first-class compute-lifecycle-control
     edge family (CTO-ruled): distinct from TRIGGERS (event-source-driven), IAM-gated like the Lambda->S3 data edges. Folds into the EC2 sub-compiler taxonomy.'
-  cto_ruling: 'D4 RULED (CTO 133316Z): EventBridge S3-event routing is inherently many-to-many — every enabled rule whose pattern matches fires independently, so two rules on the same _BRONZE_COMPLETE.json
-    pattern is the BASELINE semantic, not an anomaly. Model as TWO PAIRWISE EMITS_TO edges (opal-data-inf out-degree 2), NOT one multi-target edge — fan-out is the source node''s out-degree, which makes
+  cto_ruling: 'D4 RULED (CTO 133316Z): EventBridge S3-event routing is inherently many-to-many -- every enabled rule whose pattern matches fires independently, so two rules on the same _BRONZE_COMPLETE.json
+    pattern is the BASELINE semantic, not an anomaly. Model as TWO PAIRWISE EMITS_TO edges (opal-data-inf out-degree 2), NOT one multi-target edge -- fan-out is the source node''s out-degree, which makes
     comp-blast surface BOTH rules+Lambdas automatically. Pattern-specificity + enabled + provenance live on each EVENT_RULE node, EMITS_TO stays generic (the S3->EventBridge bridge). VALIDATES the GAP-7
     first-class-node decision (a property-on-direct-edge model could not express two rules matching one pattern).'
   notes: 'Node factual + fully resolved (v1.5): ENABLED + TF-DECLARED + 3-edge chain CTO-ruled. Full D4 chain = EMITS_TO -> TRIGGERS -> STARTS (3 edges, all declared=true, no drift).'
 oracle_gaps:
 - id: GAP-1
-  description: opal-data-portal-v2 bucket policy actual content — no TF data source; AE should aws s3api get-bucket-policy + compare against expected OAI principal
+  description: opal-data-portal-v2 bucket policy actual content -- no TF data source; AE should aws s3api get-bucket-policy + compare against expected OAI principal
   severity: P1
   owner: AE
   status: RESOLVED
   resolution: 'D2 (AE live + CVO-confirmed 2026-06-08): OAI = EU39UXW7CMSI5 (NOT v1.1-guessed E139998VWH0PD) + OAC statement (SourceArn EVTSA9VEHNZVH). Folded into opal-data-portal-v2-policy node.'
 - id: GAP-2
-  description: opal-data-bd bucket policy full statement list — TF drift-check only asserts OAI principal presence; full statement inventory needed for GRANTS-edge completeness
+  description: opal-data-bd bucket policy full statement list -- TF drift-check only asserts OAI principal presence; full statement inventory needed for GRANTS-edge completeness
   severity: P1
   owner: AE
   status: RESOLVED
-  resolution: 'D3 (AE live + CVO-confirmed 2026-06-08): 2 statements — AllowCloudFrontOACReadGold (OAC EVTSA9VEHNZVH) + AllowScopedAdvisorOAI (OAI E139998VWH0PD). Folded into opal-data-bd-policy node.'
+  resolution: 'D3 (AE live + CVO-confirmed 2026-06-08): 2 statements -- AllowCloudFrontOACReadGold (OAC EVTSA9VEHNZVH) + AllowScopedAdvisorOAI (OAI E139998VWH0PD). Folded into opal-data-bd-policy node.'
 - id: GAP-3
-  description: opal-data-inf bucket policy full statement list — same as GAP-2
+  description: opal-data-inf bucket policy full statement list -- same as GAP-2
   severity: P1
   owner: AE
   status: RESOLVED
-  resolution: 'D3 (AE live + CVO-confirmed 2026-06-08): 2 statements — AllowScopedAdvisorOAI (OAI E139998VWH0PD) + AllowCFDistributionGold (OAC EVTSA9VEHNZVH). Folded into opal-data-inf-policy node.'
+  resolution: 'D3 (AE live + CVO-confirmed 2026-06-08): 2 statements -- AllowScopedAdvisorOAI (OAI E139998VWH0PD) + AllowCFDistributionGold (OAC EVTSA9VEHNZVH). Folded into opal-data-inf-policy node.'
 - id: GAP-4
   description: 'opal-data-schwab + opal-market-update (us-east-2): versioning_enabled + public_access_block actual state unknown; AE must check via aws s3api'
   severity: P2
@@ -830,13 +845,13 @@ oracle_gaps:
   resolution: 'AE live 2026-06-05: versioning=Enabled, MFADelete=Disabled, replication=none. Folded into terraform-state node.'
 - id: GAP-6
   description: 'IAM_PRINCIPAL stub resolution: all grants_iam_principals stubs need mapping to real IAM entities (CF OAI = E139998VWH0PD IAM user; CF distribution = service principal with SourceArn condition)
-    — Phase 1 IAM sub-audit'
+    -- Phase 1 IAM sub-audit'
   severity: P1
   owner: AE + CVO
   status: RESOLVED-FOR-S3-CLASS
-  resolution: 'AE live 2026-06-05 + CVO 2026-06-08: 2 CF OAIs resolved — EU39UXW7CMSI5 (opalinvest.dev; canonical 7579b8...) + E139998VWH0PD (opal-scoped-advisor-oai; canonical d4ad9d...); OAC = cloudfront.amazonaws.com
+  resolution: 'AE live 2026-06-05 + CVO 2026-06-08: 2 CF OAIs resolved -- EU39UXW7CMSI5 (opalinvest.dev; canonical 7579b8...) + E139998VWH0PD (opal-scoped-advisor-oai; canonical d4ad9d...); OAC = cloudfront.amazonaws.com
     service-principal gated by SourceArn distribution/EVTSA9VEHNZVH. S3-class stubs now carry real OAI/OAC identities (cloudfront-oai-EU39UXW7CMSI5, cloudfront-oai-E139998VWH0PD, cloudfront-oac-EVTSA9VEHNZVH).
-    NOTE: the formal IAM_PRINCIPAL node TYPING remains the Phase-1 IAM sub-audit''s deliverable — these are now real-identity-pinned stubs, not provisional guesses.'
+    NOTE: the formal IAM_PRINCIPAL node TYPING remains the Phase-1 IAM sub-audit''s deliverable -- these are now real-identity-pinned stubs, not provisional guesses.'
 - id: GAP-7
   description: inf-silver-chain EventBridge rule (inf-pipeline/inf-silver-chain.tf) routes opal-data-inf bronze/orion-api/*/_BRONZE_COMPLETE.json to inf-silver-chain Lambda via EventBridge (not direct S3
     notification). This is an S3 -[TRIGGERS via EventBridge]-> LAMBDA edge variant. Confirm node type and edge label.
@@ -859,6 +874,6 @@ summary:
   oracle_gaps_resolved: 7
   oracle_gaps_open: 0
   live_cross_check: versioning + public_access_block = 24/24 EXACT (zero drift); 4 discrepancies (D1-D4) all additive (live richer than oracle), all ACCEPTED + folded
-  fixture_status: 'CERTIFIED v1.3 — S3 sub-class hand-audit reconciled 0-diff vs live AWS (AE Step-2 cross-check, CVO-adjudicated 2026-06-08) AND edge/drift taxonomy CTO-ruled (133316Z). Becomes the S3-class
-    regression fixture + the edge/drift design baseline for the S3 sub-compiler. ONLY OPEN ITEM: inf-assets-trigger TF-provenance (AE re-pull when capacity frees) — a single node-property, does not block
+  fixture_status: 'CERTIFIED v1.3 -- S3 sub-class hand-audit reconciled 0-diff vs live AWS (AE Step-2 cross-check, CVO-adjudicated 2026-06-08) AND edge/drift taxonomy CTO-ruled (133316Z). Becomes the S3-class
+    regression fixture + the edge/drift design baseline for the S3 sub-compiler. ONLY OPEN ITEM: inf-assets-trigger TF-provenance (AE re-pull when capacity frees) -- a single node-property, does not block
     S3 certification.'

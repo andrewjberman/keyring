@@ -2179,7 +2179,7 @@ def _f1(tp, fp, fn):
 
 def score_s3():
     """Node-enumeration + key-attr F1 vs s3 oracle."""
-    oracle = _load_yaml(SHAPES / "s3-hand-audit-fixture-v1.0.yaml")
+    oracle = _load_yaml(SHAPES / "s3-hand-audit-fixture-v1.1.yaml")
     truth = {b["bucket_name"]: b for b in oracle["s3_buckets"]}
     derived = {n["id"]: n for n in derive_class("s3")["nodes"]}
     tset, dset = set(truth), set(derived)
