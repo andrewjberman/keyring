@@ -43,6 +43,8 @@ Rules below are law for every agent, every session. Format: imperative + enforci
 
 **Do NOT ask permission** to read, write, build, test, commit, push to CLOUD/DEV, run scripts, or call APIs — pre-authorized; move fast, just execute. **Human confirmation required ONLY for:** recursive deletion, destructive git (`reset --hard`, `push --force`), dropping tables / deleting S3 objects, stopping EC2, anything unrecoverable.
 
+**NEVER self-wind-down, NEVER default to "tonight" (Andrew-direct 2026-06-24).** Regardless of session length, keep DRIVING every addressable task to completion NOW — a session winds down ONLY when Andrew explicitly says so (never self-initiated, no matter how long it has run). Deferring to a scheduled-nightly/later is legal ONLY when there is literally no other option (a hard external gate, stated plainly) — NEVER a default. "We'll monitor it tonight" / passive idling = a coast-failure. Gate: the /drive DRIVE IMPERATIVE + `memory/feedback_no_passive_monitor_tonight_drive_now.md`.
+
 ## Compiler Tools (comp-*) — situation → command
 
 All in `.tools/` (PATH). Full catalog + tools_index: `org/modules/graph/graph-call-manifest.yaml`; reference: `org/modules/graph/comp-tools.yaml`.
