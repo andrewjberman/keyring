@@ -51,4 +51,20 @@ Walking the dispatched bd gold chain A_00→D_04 in execution order (Andrew-dire
 **Verdict:** essential (A_01 -> D_00c/D_02 -> portal). Highest-ROI fix in the chain so far = flip to `--incremental` (proven). A2/A3: flip incremental + retire shadow; vectorize multi-role norm; move sentinels to silver; fix the stale docstring; drop legacy dual-write.
 
 ---
+
+## A_02 — fee_rate_history  (`A_02.fee_rate_history.py`)  · full briefing: DATA_ANALYTICS_A1_A_02_fee_rate_history_briefing.md
+
+**Function:** `gold/dimensions/fee_rate_history.parquet` -- per-account SCD Type 2 fee-rate (fee_bps + fee_schedule) history from silver/fees/; cross-validates vs silver/allocations. The FEE counterpart to A_01 (A_01=WHO+splits).
+
+**Recompute posture: HEALTHY -- already incremental.** Catalog line 81 = `--upload --incremental`. A_02 was shadow-proven (06-12..06-15, identical/0-mismatch/10,782 rows) THEN flipped + shadow retired = the correct lifecycle (the model A_01's flip completes). Avoids a 1,890-file (2020-2026) full read; change-point-as-cache design + back-dated-row guard; graceful logged fallback to full. **Group-A: A_00 + A_02 incremental; A_01 was the lone straggler.**
+
+**Tech debt:** DEAD CODE (~65 lines) -- `build_fee_history_for_account` (L198-241) + `_make_fee_record` (L244-261), a per-account iterrows builder NEVER called (superseded by the vectorized `build_fee_rate_history`). BD-denorm resolved at gold (`COLUMN_CANDIDATES` maps dup-suffixed `basis_points_1`) -- belongs in silver.
+
+**Bullshit/overfit:** none egregious (no single-entity hacks; the column resolver is defensive).
+
+**Good:** NO legacy dual-write (cleaner than A_00/A_01); cross-validation vs allocations is a real data-quality control; well-engineered incremental.
+
+**Verdict:** essential (Group-D closure). Healthiest Group-A script so far. A2: delete the dead per-account builder; move the denorm resolver to silver. Recompute = no action (already incremental).
+
+---
 *(B_00, B_01, ... appended as the walk continues.)*
