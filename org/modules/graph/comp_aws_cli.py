@@ -1650,9 +1650,14 @@ def derive_edges():
                 E(tg["arn"], _ec2_by_id[tid], "TARGETS")
     for rr in live_route53_records():
         # EXACT alias-target dns match only: an alias target IS an exact dns-name, so a
-        # fuzzy endswith is a latent mis-alias FP (CTO arch-gate hardening). The live mcp
-        # record exact-matches the ALB dns_name (no dualstack. prefix here).
-        _tgt = _lb_by_dns.get(rr.get("alias_target_dns", "").lower())
+        # fuzzy endswith is a latent mis-alias FP (CTO arch-gate hardening). Normalize the
+        # one AWS-injected prefix -- an IPv6/dualstack alias target to an ALB carries a
+        # leading "dualstack." -- so the resolver stays EXACT/deterministic (never fuzzy)
+        # and doesn't false-NEGATIVE-miss a dualstack alias edge (CTO-endorsed robustness).
+        _dns = rr.get("alias_target_dns", "").lower()
+        if _dns.startswith("dualstack."):
+            _dns = _dns[len("dualstack."):]
+        _tgt = _lb_by_dns.get(_dns)
         if _tgt:
             E(rr["arn"], _tgt, "ALIAS_TO")
 
