@@ -112,10 +112,22 @@ All RAVC loops closed; DC0 OFFLINE build DONE + integrated BOTH sides (full suit
   from orion_export.ts) -- the live crawl rides the existing auth, never logs in, NEVER saves back.
   This is the #1 mechanism DC1 needs to fire fast at the gate.
 
-**Queued (my next, DC0.4-hardening):** the page-coupled OrionHumanizerStrategy (the stealth impl
-base-AE's hook calls). One package-structure fork open to base-AE (compose the smartx Humanizer:
-vendor-into-src vs cross-dir import vs shared module) -- teed up, author on his call. The exact UI
-selectors/routes stay the live-HAR discovery frontier (TBD even in the inf-exporter producer).
+**DC0.4-hardening DONE (commit `924122566`):** the page-coupled OrionHumanizerStrategy. base-AE
+resolved the structure fork = option A (vendor, the harness is a separate deployable). Vendored the
+smartx Humanizer -> src/stealth/humanize.ts (provenance header; only adaptation = a local logger
+interface), authored OrionHumanizerStrategy (humanClick = bezier-move+dwell+click; settleOnScreen =
+scroll+dwell) against it, wired into runOrionCrawlLive ONLY (the gated live path). Selector-agnostic
+(no UI knowledge); inert until DC0.4; GuardedNavigator invokes it only AFTER guardAction (guard
+stays non-bypassable). Suite 62/62.
+- **Completeness flag (raised to base-AE):** this is the per-ACTION stealth (mouse/dwell/click). The
+  CONTEXT-level fingerprint evasion (smartx fingerprint.ts -- navigator/canvas/webgl at context
+  creation) is a SEPARATE layer, NOT yet vendored/wired -- pending base-AE's call (vendor+wire at
+  DC0.4 context-creation if we want full stealth). Not over-claiming stealth coverage.
+
+**Remaining path (gated, not mine):** DC0.4 = CTO isolation-verify (the 62-test suite is the
+evidence) + Andrew per-vendor ToS -> DC1 Orion live (with base-AE). The exact UI selectors/routes
+stay the live-HAR discovery frontier (TBD even in the inf-exporter producer).
 
 **Commits this session:** `74fc3ec5b` orion-config | `1723b5c8b` nav-walker | `d39301362` crawl |
-`1a3efd1a4` egress-ruling+storage_state | `86eb9e974` log. All on origin/CLOUD.
+`1a3efd1a4` egress-ruling+storage_state | `924122566` OrionHumanizerStrategy+vendored-stealth |
+`86eb9e974`/`31710a396` log+addendum. All on origin/CLOUD. Full suite 62/62.
