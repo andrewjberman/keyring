@@ -67,4 +67,20 @@ Walking the dispatched bd gold chain A_00→D_04 in execution order (Andrew-dire
 **Verdict:** essential (Group-D closure). Healthiest Group-A script so far. A2: delete the dead per-account builder; move the denorm resolver to silver. Recompute = no action (already incremental).
 
 ---
+
+## A_03 — positions_cube  (`A_03.positions_cube.py`, 1,928 lines) ★ crux  · full briefing: DATA_ANALYTICS_A1_A_03_positions_cube_briefing.md
+
+**Function:** `gold/positions_cube/YYYY-MM-DD.parquet` (2,361 partitions, 2020..present) -- daily holdings FIFO-reconstructed from silver/transactions/. The positions FACT -> B_00 -> all B/C/D -> portal.
+
+**Recompute: FULL nightly, INHERENTLY (NOT a flip like A_01).** Catalog line 82 = `--upload`. A_03's `--incremental` is a whole-run input-fingerprint SKIP-GATE, NOT a narrowing -- it can't narrow per-date because the latest-snapshot reconciliation rewrites history every night. Gate-evidence = INPUTS-CHANGED EVERY night (06-20..24) -> the gate would run full anyway -> **NOT routed for a flip (~zero value here).** The real fix is ARCHITECTURAL: snapshot-native positions (cot model) eliminate the FIFO + nightly rewrite + injection. **A_03 is the single biggest argument for the clean rebuild.**
+
+**Bullshit/overfit -- WORST in Group A:** ~500 lines of synthetic injection (L359-866: phantom-sell closure, Schwab-RPS two-sided ground-truth, synthetic-buy back-solve for ~$177M vanished positions) repairing BD's incomplete feed -- ALL vanish under snapshot-native. + hardcoded NAME_ALIASES (OPAL/EVENTIDE->POLEN), _CASH/_PAR patterns (SHIELD/BUFFER/DELPHI), maturity-year regex-on-name, sentinel-date clamps. Belongs in silver security-master.
+
+**Tech debt:** DEAD CODE (L254-262 unreachable ghost-suppression fragment after a return); 3 overlapping allocation loaders; 3 legacy dual-writes; rows/partitions stat mislabel (L1317).
+
+**Good:** the fingerprint-gate + gate-evidence shadow (correct for an inherently-full fact); memory strategy; deterministic compute; careful txn taxonomy.
+
+**Verdict:** essential. THE poster child for the DATA_ANALYTICS rebuild -- ~500 injection lines + inherent full-recompute, all because positions are FIFO-reconstructed from an incomplete feed. A3 = snapshot-native positions (architecture, not a flag). A2 = delete dead code/consolidate loaders/drop dual-writes/move overfit to silver.
+
+---
 *(B_00, B_01, ... appended as the walk continues.)*
