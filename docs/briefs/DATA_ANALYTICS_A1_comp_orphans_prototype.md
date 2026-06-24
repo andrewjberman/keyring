@@ -60,5 +60,21 @@ if __name__ == '__main__':
     sys.exit(main())
 ```
 
+## REFINED RUN (all 5 CTO reqs met) + NEW findings from no-silent-unknown
+
+Refined per CTO arch-gate (INF_ regex fixed; no-silent-unknown loud-flags; comment-stripped parse; per-tree; rc 0/1/2). The no-silent-unknown axis (CTO's sharp meta-req) immediately caught what the prototype silently dropped:
+
+| Tree | present | dispatched | ORPHAN | NEW loud-flags |
+|---|---|---|---|---|
+| bd | 55 | 27 | 28 (26 E_* + C_01b/C_01c) | **14 unmatched-name** (ad-hoc run_*, validators, gldinc_*, test_, build_canonical_prices_v2) -- were silently dropped, now visible |
+| cot | 35 | 24 | 11 (8 E_* + A_05 + C_01b/C_01c) | **2 dispatched-but-absent: `C_00.canonical_performance.py` + `C_02.client_performance.py`** + 7 unmatched-name |
+| inf | **44** (regex FIXED; was 1) | 44 | **0** | 6 unmatched-name (INF_A_-1 cache, INF_build_canonical_prices, INF_run_c_chain, valgate_*) |
+
+**REAL FINDING (grounded) -- cot dispatcher STALE-REF:** cot `gold_dispatch.sh:89/91` registers `C_00|C_00.canonical_performance.py` + `C_02|C_02.client_performance.py`, but **neither file exists in `data/cot/scripts/gold/`** (cot has C_01/C_01b/C_01c/C_03..C_08, no C_00/C_02). = stale bd-fork dispatch refs (the bd->cot fork-shadow class). cot is erroring or silently-skipping canonical_performance + client_performance nightly -> a genuine cot-pipeline integrity gap. Routed for cot-pipeline owner / COTETL follow-up. **This is the no-silent-unknown value: an anomaly nothing else flagged.** (Distinct from the bd-tree C_00/C_02 which DO exist + dispatch.)
+
+**inf clean** (0 orphans, 44/44 dispatched) -- the inf tree has no undispatched gold scripts; its E-equivalent (INF_E_00 etc.) IS dispatched (real stages, not bd-style diagnostics). The unmatched-name flags are helpers/valgate (expected non-stage), now visible not silent.
+
+Refined code = `scratchpad/comp_orphans.py` (FA-import, py_compile-clean; ready for the .tools/ canonical commit through the comp-tool-owner process). Key changes vs prototype: GOLD_RE `^[A-Z]+(?:_[A-Z]+)?_[0-9]+[a-z]?\.` (INF_ fix); comment-tail-stripped token parse; loud flags for unmatched-name / dispatched-but-absent / missing-dir / missing-dispatcher (rc=2 parse-gap); never silent-drop.
+
 ## Canonicalization ask (CTO)
 Wrap as `.tools/comp-orphans` (bash launcher → this python), fix the INF_ regex + CASE-aware parse, register in `org/modules/graph/graph-call-manifest.yaml` + `comp-which` routing ("which gold scripts are dead / not dispatched"). Banks into the silent-absence invariant (make the undispatched signal LOUD, not silently-missed).
