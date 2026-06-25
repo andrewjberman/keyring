@@ -9,7 +9,7 @@ OBJECTS (repo/estate files) and PROCESSES (OPLMCP UoW traffic). Strand-C of NFRA
 | **O1** | `object_freshness.py` | write-freshness engine (OBJECT half): git-history (tracked) + mtime (untracked) -> per-path hot/warm/cold; cold-subtree detection. Derived from git, NOT a new store. |
 | **O2** | `object_locality.py` | filesystem-locality clustering -- rolls O1 heat up the dir hierarchy; finds MAXIMAL cold subtrees (highest dir whose whole subtree is >=90% cold). Native tree-rollup. 20k files -> 223 maximal cold subtrees. |
 | **O3** | `object_recommend.py` | archive RECOMMENDATION layer (the GUARDRAIL) -- **ADVISORY-ONLY**. verify-BEFORE-recommend: name-vs-edge git-grep inbound-ref check (auto) + comp-blast graph-dependents gate (cited mandatory). Conservative: any ref -> HOLD. NEVER acts. Live: top-12 cold subtrees = 0 recommend / 12 HOLD (all referenced). |
-| O4 | (next) | hygiene report/surface (ranked recs + evidence; human-reviewed). |
+| **O4** | `object_report.py` | hygiene report surface -- renders O3 into a human-facing report (markdown), splitting RECOMMENDs into ORPHANED-archive vs AUDIT-TRAIL (logs; retention=policy call) vs HELD(ref'd). `--from-json` renders a prior O3 scan fast. ADVISORY-ONLY. |
 
 ## Usage
 
