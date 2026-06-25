@@ -566,6 +566,24 @@ lanes:
       - 0.4.0_DE_ClientPlatform~B
     description: "ANY_EXEC_OR_AE + DE 0.4.0 (incl. tilde lanes) for the NFRA_TSGRAPH.P0 spike tool (org/modules/graph/tsgraph_spike/** -- ts-morph TS-semantic extractor/loader). The DE's TO designated org/modules/graph/* extractor code as its authoring surface; same-tool grant per the COMPILER_MANIFEST_CHECK / NFRA_PIPESCRIPT_TOOL convention (CTO-ratified 2026-06-15). AE retained for the P1 derive ingestion-leg co-wiring. Added 2026-06-17 by 0.7.0_AE_CloudOps (owned-paths config executor) per COO 193527Z same-tool grant; CC CTO."
 
+  NFRA_HEATMAP:
+    permitted_agents:
+      - 1.0.0_SA_CTO
+      - 2.0.0_SA_COO
+      - 3.0.0_SA_CVO
+      - 1.1.0_SA_CTO
+      - 2.1.0_SA_COO
+      - 3.1.0_SA_CVO
+      - 0.4.0_DS_ClientPlatform
+      - 0.4.0_DS_ClientPlatform~A
+      - 0.4.0_DS_ClientPlatform~B
+      - 0.4.0_DS_ClientPlatform~C
+      - 0.4.0_DS_ClientPlatform~D
+      - 0.4.0_DS_ClientPlatform~E
+      - 0.5.0_AE_OpalETL
+      - 0.5.0_AE_OpalETL~B
+    description: "NFRA_HEATMAP macro home (org/modules/heatmap/** -- the heat-map estate-hygiene module, canonically sited next to org/modules/graph/). Strand-C build lane = 0.4.0_DS (scoring/DEBTSCAN-derived freshness) + 0.5.0_AE (producer/infra), per COO lanes-free GO 2026-06-25T212340Z. Same-tool grant per the NFRA_TSGRAPH_SPIKE / NFRA_PIPESCRIPT_TOOL convention (CTO-ratified 2026-06-15: when a build assigns a graph-module-adjacent surface to DS/AE, COO adds the inclusive lane rule at decompose-time). DS placed S0 (heat_map.py) + O1 (object_freshness.py) here; org/modules/heatmap/** resolved to org/modules/** (ANY_EXEC) excluding DS -> commit-blocked (0.4.0 RAVC 213807Z). Added 2026-06-25 by 2.0.0_SA_COO. Longest-match overrides org/modules/** ANY_EXEC."
+
   SCTY:
     permitted_agents:
       - 3.0.0_SA_CVO
@@ -883,6 +901,10 @@ paths:
   "org/modules/graph/aws-shapes/**":
     lane: ANY_EXEC_OR_AE
     note: "ADHC_CMPAWS AWS-shape hand-audit fixtures + live-AWS cross-check records (s3-hand-audit-fixture-*.yaml, s3-live-aws-crosscheck-*.md). Co-owned: ws CTO design/schema, 0.7.0_AE live-AWS cross-check (the *-AE.md records), 3.0.0_SA_CVO hand-audit/certify. Was falling through to org/modules/** ANY_EXEC (which excludes AE), stranding AE's crosscheck record (RV-0030 F-003 — exec-record-path enumeration gap; AE base not in ANY_EXEC at all, so the tilde base-fallback can't reach it). Added 2026-06-08 by ws CTO. Longest-match overrides org/modules/** ANY_EXEC."
+
+  "org/modules/heatmap/**":
+    lane: NFRA_HEATMAP
+    note: "NFRA_HEATMAP module surface (heat_map.py S0 primitive, object_freshness.py O1 engine, README, tests). Strand-C build lane (DS 0.4.0 + AE 0.5.0) self-commits its gated-clean code; the canonical home next to org/modules/graph/. Added 2026-06-25 by 2.0.0_SA_COO per 0.4.0 RAVC 213807Z (the lanes-free GO build hit org/modules/** ANY_EXEC). Longest-match overrides org/modules/** ANY_EXEC."
 
   "org/modules/**":
     lane: ANY_EXEC
