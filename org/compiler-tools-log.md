@@ -8336,3 +8336,6 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-06-25 | 0.7.0_AE_CloudOps | NFRA_DEBTSCAN.TO-D3 | comp-iam | comp-iam service bd-49f-auto-login-role | PASS |
 | 2026-06-25 | 0.5.0_AE_OpalETL | P0-inf-canonical-repoint | comp-iam/comp-freshness/ds-commit-gate | inf producer canonical repoint (env+IAM+code) firm-sep + value verify + canonical priced-fraction grounding | PASS |
 | 2026-06-25 | 0.5.0_AE_OpalETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/cr... | PASS |
+| 2026-06-25 | 0.7.0_AE_CloudOps | NFRA_DEBTSCAN.TO-D3 | comp-iam | comp-iam service bd-49f-auto-login-role | PASS |
+| 2026-06-25 | 0.5.0_AE_OpalETL | session-log | (log) | ETFS_CANON skeleton + inf-P0 + m365-help -- see per-tool rows above | PASS |
+| 2026-06-25 | 0.5.0_AE_OpalETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
