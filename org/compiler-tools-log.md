@@ -8037,3 +8037,15 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-06-25 | 0.4.0_DS_ClientPlatform | DATA_ANALYTICS.A1 | comp-surface-check | comp-surface-check check --mode advisory --file data/canonical/scripts/silver/build_fac... | PASS |
 20260625T1531Z | 0.4.0_DE_ClientPlatform | DATA_ANALYTICS.FE1 | pipescript(advi-bd/inf/cot) + comp-pipescript io + comp-platinum reverse + comp-transform schema-check(PartnerAnalytics/DistributionTab) + comp-to | PASS -- threaded ADVI panel->component->platinum->Group-D manifest per partner; D_04 sole bd/cot publisher vs INF fan-out; gap: comp-platinum reverse BD-indexed (INF/COT need per-tree gold dir)
 | 2026-06-25 | 0.4.0_DE_ClientPlatform | DATA_ANALYTICS.FE1 | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-06-25 | 0.6.0_AE_PartnerETL | ADVI_BDAPIMIG.P1 | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/bd-pipeline/bd-49f-fre... | PASS |
+| 2026-06-25 | 0.6.0_AE_PartnerETL | ADVI_BDAPIMIG.P1 | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/ci/lambda-source-map.json | PASS |
+| 2026-06-25 | 0.4.0_DE_ClientPlatform | DATA_ANALYTICS.FE1 | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DE_ClientPlatfor... | PASS |
+| 2026-06-25 | 0.7.0_AE_CloudOps | DATA_PLATFORM.DC2 | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/ec2/crawl-harness/src/dc2-tes... | PASS |
+| 2026-06-25 | 0.6.0_AE_PartnerETL | ADVI_BDAPIMIG.P1 | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/ci/lambda-source-map.j... | PASS |
+| 2026-06-25 | 0.4.0_DE_ClientPlatform | DATA_ANALYTICS.FE1 | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DE_ClientPlatfor... | PASS |
+| 2026-06-25 | 0.6.0_AE_PartnerETL | ADVI_BDAPIMIG.P1 | comp-iam | comp-iam gaps | PASS |
+| 2026-06-25 | 0.6.0_AE_PartnerETL | ADVI_BDAPIMIG.P1 | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/change_management/20... | PASS |
+| 2026-06-25 | 0.4.0_DS_ClientPlatform | DATA_ANALYTICS.A1 | comp-surface-check | comp-surface-check check --mode advisory --file data/canonical/scripts/silver/build_fac... | PASS |
+| 2026-06-25 | 0.4.0_DE_ClientPlatform | DATA_ANALYTICS.FE1 | comp-surface-check | comp-surface-check check --mode advisory --file docs/briefs/DATA_ANALYTICS_unified_port... | PASS |
+20260625T1537Z | 0.4.0_DE_ClientPlatform | DATA_ANALYTICS.FE1 | (none -- COORDINATE delta: reconcile+contract synthesis over rail-grounded FE1 evidence 98764fb65 + DS A1 briefs read natively) | unified portal contract v1.0 authored+co-signing
+| 2026-06-25 | 0.4.0_DE_ClientPlatform | DATA_ANALYTICS.FE1 | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
