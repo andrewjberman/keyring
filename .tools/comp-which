@@ -37,7 +37,7 @@ RULES = [
      "S3 artifact / who-reads-writes",
      ["comp-pipescript io <script>", "pipescript --resource <key>"],
      "what produces/consumes an S3 key + who reads an artifact"),
-    (["portal", "component", "endpoint", "scoped route", "scoped", "/api/", ".tsx", "tsx",
+    (["portal", "component", "endpoint", "scoped route", "/api/", ".tsx", "tsx",
       "frontend", "renders", "rendering", "getadvisor", "which lambda serves", "serves /api"],
      "portal component / route",
      ["comp-transform schema-check <Component>", "comp-routes behaviors", "pipescript <thread>"],
@@ -80,6 +80,24 @@ RULES = [
      ["pipescript --list", "comp-pipescript deployed --firm <bd|inf|cot|mdpf>",
       "comp-glob data/<firm>/scripts/gold/"],
      "the scripts in a named pipeline/firm (+ deployed MATCH/STALE state)"),
+    # LD-0208 fix (C): vetted routes for the high-value long tail the audit named as
+    # misrouted (freshness/validate/pii). Tight keyword lists -> no over-match; the
+    # manifest backstop covers the rest of the catalog now that its key is fixed.
+    (["fresh", "freshness", "fresh enough", "up to date", "up-to-date", "data current",
+      "how old is the data", "last updated", "upstream data"],
+     "data freshness (upstream ready to run a chain)",
+     ["comp-freshness chain <bd|inf>", "comp-freshness script <id>"],
+     "is the upstream S3 data fresh enough to run a gold chain (chain_ready)"),
+    (["invariant", "invariants", "validate artifact", "satisfy invariants", "before upload",
+      "before s3 upload", "artifact valid", "passes validation"],
+     "artifact validation (declared invariants pre-upload)",
+     ["comp-validate <script_id> --artifact <local/path>"],
+     "does a gold artifact satisfy its declared invariants BEFORE the S3 upload"),
+    (["pii", "personal data", "expose pii", "cleartext", "pseudonym", "pseudonymized",
+      "sensitive data exposed", "leak personal"],
+     "PII exposure (component/route to external users)",
+     ["comp-pii audit", "comp-pii scan <Component>"],
+     "does a component/route expose PII to external users (cleartext vs pseudonymized)"),
 ]
 
 # Function-relationship intents that ARE a rich-tool job (route, do NOT run-the-primitive):
@@ -139,7 +157,10 @@ def _manifest_matches(q: str, qtok: set, top: int = 3):
             data = yaml.safe_load(f)
     except Exception:
         return out
-    for e in (data or {}).get("use_cases", []) if isinstance(data, dict) else []:
+    # LD-0208 fix (A): the manifest stores rows under `entries:`, not `use_cases:`.
+    # Reading the wrong key iterated [] and matched NOTHING -> the whole fuzzy backstop
+    # was dead, leaving ~28 long-tail tools unreachable via the router.
+    for e in (data or {}).get("entries", []) if isinstance(data, dict) else []:
         text = " ".join(str(e.get(k, "")) for k in ("use_case", "id", "tool"))
         overlap = len(qtok & _tokens(text))
         if overlap >= 2:
@@ -258,21 +279,48 @@ def main() -> int:
 
     print('comp-which -- best match for: "%s"\n' % q)
 
-    # --- DECISION (never dead-ends, NFRA_COMPRAIL TO-2 AC1) -----------------------------------
-    # 1) STRONG rich-tool route (>=4 == a phrase match or 2+ keyword tokens) -> point.
-    # 2) WEAK/zero route BUT a text-search intent + an extractable term -> RUN the primitive
-    #    (the case native grep used to be the only answer for -> now it's on the rail).
-    # 3) Some route but no search intent -> point (a weak match is still a rich-tool pointer).
-    # 4) Nothing -> still RUN the primitive (or print the on-rail call) -- never "browse the catalog".
+    # --- DECISION (never dead-ends, NFRA_COMPRAIL TO-2 AC1; LD-0208 backstop-reorder) ----------
+    # 1) STRONG curated route (>=4 == a phrase match or 2+ keyword tokens) -> the vetted answer.
+    # 2) EXPLICIT search/list verb ("where is X", "find Y", "list files") -> RUN the primitive
+    #    (the literal-find case native grep used to own -> now on the rail).
+    # 3) LD-0208 (B): no search verb + weak/zero curated -> consult the manifest-fuzzy BACKSTOP
+    #    BEFORE any grep. A confident backstop hit (overlap >= MF_STRONG, strictly beating the
+    #    weak curated score) ROUTES -> this is what makes the ~28 long-tail tools reachable.
+    # 4) Still no route but an extractable term -> RUN the primitive (never a catalog dead-end).
+    # 5) A weak curated hit is still a rich-tool pointer -> point.
+    # 6) Nothing -> backstop suggestions / on-rail primitive -- never "browse the 41KB catalog".
     STRONG = 4
+    MF_STRONG = 3  # LD-0208: manifest-backstop overlap that earns a ROUTE (not a grep fallback)
+    mf = _manifest_matches(q, qtok)  # computed once; key fixed (entries) so it actually matches now
+
     if best_score >= STRONG:
         _route_print(hits)
         _log_rail("ROUTE", hits[0][1], term, q)
         return 0
 
-    if (search_intent or best_score == 0) and term:
+    if search_intent and term:
         if list_intent:
             kind, target = "glob", (_extract_path(q) or term)  # a path -> pathspec, not a pattern
+        else:
+            kind, target = "grep", term
+        if hits:
+            print("  (a rich tool MIGHT fit -- consider first:)")
+            _route_print(hits[:1])
+        _log_rail("RUN-%s" % kind.upper(), (hits[0][1] if hits else "no-rich-tool"), target, q)
+        return _run_primitive(kind, target)
+
+    if mf and mf[0][0] >= MF_STRONG and mf[0][0] > best_score:
+        print("  (matched the catalog backstop -- closest rich tool(s):)")
+        for overlap, tool, call, uc in mf:
+            print("  -> %s   (%s)" % (call or tool, uc))
+        print("")
+        print("  (comp-which routed via the manifest backstop -- run the call yourself.)")
+        _log_rail("ROUTE", "manifest:%s" % (mf[0][1] or "?"), term, q)
+        return 0
+
+    if best_score == 0 and term:
+        if list_intent:
+            kind, target = "glob", (_extract_path(q) or term)
         else:
             kind, target = "grep", term
         if hits:
@@ -287,7 +335,6 @@ def main() -> int:
         return 0
 
     # nothing matched and no extractable term: still on-rail, never the 41KB-catalog dead-end
-    mf = _manifest_matches(q, qtok)
     if mf:
         print("  (no high-confidence rule; closest catalog entries:)")
         for overlap, tool, call, uc in mf:
