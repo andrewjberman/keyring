@@ -8180,3 +8180,7 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-06-25 | 0.6.0_AE_PartnerETL | ADHC_GLDINC.SS4c.ae-periodic-oracle-revalidation | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.6.0_AE_PartnerETL/ha... | PASS |
 | 2026-06-25 | 0.5.0_AE_OpalETL | MDPF-schwab-repoint-prestage | comp-pipescript io | gold/mdpf_aggregate_aua.py + feeder input mapping (Grep/Read fallback) | PARTIAL (MDPF not in io registry) |
 | 2026-06-25 | 0.5.0_AE_OpalETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-06-25 | 0.6.0_AE_PartnerETL | ADHC_GLDINC.SS4c.ae-periodic-oracle-revalidation | comp-iam | comp-iam gaps | PASS |
+| 2026-06-25 | 0.4.0_DE_ClientPlatform | DATA_ANALYTICS.FE1 | comp-surface-check | comp-surface-check check --mode advisory --file docs/briefs/DATA_ANALYTICS_fe_migration... | PASS |
+2026-06-25 | 0.6.0_AE_PartnerETL | ADHC_GLDINC.SS4c | comp-iam gaps, comp-glob, ds-commit-gate, Read(cvo_1330Z/gold_dispatch/nna_flows/iam.tf) | root-caused the SS4c oracle BLIND (no runner PutMetricData + _emit float(None)); fixed IAM (live), handed _emit to DS | rail: diagnostic s3/cw/iam reads carried # rail-checked markers
+| 2026-06-25 | 0.6.0_AE_PartnerETL | ADHC_GLDINC.SS4c.ae-periodic-oracle-revalidation | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
