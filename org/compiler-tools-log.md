@@ -8259,3 +8259,14 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-06-25 | 0.4.0_DE_ClientPlatform | DATA_ANALYTICS.FE1 | comp-surface-check | comp-surface-check check --mode advisory --file docs/briefs/ETFS_presentation_layer_pre... | PASS |
 2026-06-25 | 0.6.0_AE_PartnerETL | /49-schwab-conv | operational aws/python (skill sync+converters+S3-verify); 2x rail-checked s3 ls (delta-scope + Step-7 byte-verify) | 49F Schwab silver rolled thru 20260624 all 6 tables ERR=0; trn_nna rebuilt from empty | skill steps are Rule-21-free operational
 | 2026-06-25 | 0.6.0_AE_PartnerETL | ADHC_GLDINC.SS4c.ae-periodic-oracle-revalidation | comp-surface-check | comp-surface-check check --mode advisory --file .claude/skills/49-schwab-conv/SKILL.md ... | PASS |
+| 2026-06-25 | 1.0.0_SA_CTO | NFRA_COMPRAIL.TO-6.cto-cvo-ld0207-hardening | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/comp_api.py | PASS |
+| 2026-06-25 | 1.0.0_SA_CTO | NFRA_COMPRAIL.TO-6.cto-cvo-ld0207-hardening | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/NFRA_COMPTOOL_USEPATH... | PASS |
+| 2026-06-25 | 0.4.0_DS_ClientPlatform | DATA_ANALYTICS.A1 | comp-surface-check | comp-surface-check check --mode advisory --file data/canonical/schwab/silver/build_dim_... | PASS |
+| 2026-06-25 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/briefs/bd-49f-durable-auto-auth-cv... | PASS |
+| 2026-06-25 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+| 2026-06-25 | 0.7.0_AE_CloudOps | NFRA_DEBTSCAN.TO-D3 | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/globgrph/debtscan_canon_score... | PASS |
+| 2026-06-25 | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/briefs/oplmcp-workflow-scoping-202... | PASS |
+| 2026-06-25 | 3.0.0_SA_CVO | (no-TO) | comp-routes | comp-routes behaviors | PASS |
+| 2026-06-25 | 0.5.0_AE_OpalETL | ETFS-W2-refresh + RPS-cadence | comp-freshness (RPS source) + live invoke/verify | W2 fresh slices 06-22/23/24 + RPS daily-granularity grounding (distinct daily snapshots) | PASS |
+| 2026-06-25 | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/briefs/oplmcp-workflow-scoping-202... | PASS |
+| 2026-06-25 | 0.5.0_AE_OpalETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
