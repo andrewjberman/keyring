@@ -59,15 +59,24 @@ cold_subtrees:[{dir, n, n_cold, cold_frac, oldest_age_days, items}]}`.
 ## Canonical estate universe (GROUNDED, COO-pinned 2026-06-25)
 
 The hygiene universe is **git-respecting**: tracked (`git ls-files`) + untracked-not-ignored
-(`--others --exclude-standard`) = **~20,085 files**. This is deliberate, not a gap:
-- Full filesystem = ~226,623 files; the ~206K difference is **GITIGNORED + regenerable** --
-  `.runtmp/*/node_modules` (~136K), build artifacts, caches. `.gitignore` already governs these;
-  they are NOT authored estate and MUST be excluded (including them would swamp the cold-subtree
-  archive signal with node_modules noise). A larger raw filesystem count is LESS correct for
-  hygiene, not more.
-- **Submodules** (`portal/`) are the one legitimate extension: `git ls-files` lists the submodule
-  pointer, not its contents. Submodules are separate sub-estates (own lifecycle); a future opt-in
-  `--include-submodules` can fold a submodule's own git-walk in if full-estate hygiene wants it.
+(`--others --exclude-standard`) = **~20,085 files** (CURRENT tree). This is deliberate, not a gap.
+Two distinct over-count mechanisms were ruled out (grounded; do not conflate -- Rule 22):
+
+- **DELETED-HISTORICAL ghosts (the actual parallel-walk overcount, 0.5.0-authoritative):** a
+  `git log --name-only` walk lists EVERY path ever committed -- 20,030 current + 28,721 deleted =
+  ~48.8k. That is git-LOG history, not the filesystem. `build()` excludes these by filtering
+  `line in (git ls-files)` and now asserts it (the ghost-guard). This was the real source of the
+  20k-vs-48.8k delta.
+- **Gitignored filesystem slop (a separate true fact, NOT the parallel overcount):** the full
+  on-disk tree is ~226,623 files; the bulk over git-tracked is gitignored + regenerable
+  (`.runtmp/*/node_modules` ~136K, build artifacts, caches). `.gitignore` governs these; they are
+  not authored estate. This is a REASON the hygiene universe is git-respecting (a raw filesystem
+  walk would swamp the cold-subtree signal) -- but it was not what inflated the parallel walk.
+- **Submodules** (`portal/`): `git ls-files` lists the submodule POINTER, not its contents -- so
+  portal's files are excluded. A `git log` of the superproject does NOT descend into a submodule
+  either, so this reach was in NEITHER engine. It is a genuine FRESH enhancement on its own merit
+  (portal = real authored estate): a future opt-in `--include-submodules` folds a submodule's own
+  git-walk in (its `.gitignore` honored) as a separate sub-estate. (COO GO 2026-06-25, post-converge.)
 
 ## Guardrails
 
