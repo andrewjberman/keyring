@@ -82,6 +82,33 @@ _DATADIR_TO_PIPELINE["mdpf"] = "mdpf"
 # --firm flag value -> pipeline-key.
 _FIRM_TO_PIPELINE = {"bd": "bd-gold", "inf": "inf-gold", "cot": "cot-gold", "mdpf": "mdpf"}
 
+
+def _autowalk_pipeline_for_script(raw_id):
+    """F2 (NFRA_COMPTOOL_USEPATHS, Andrew-direct 2026-06-25): resolve a BARE gold-script id
+    (no path, no --firm) to its OWNING pipeline by walking the gold trees -- so a non-bd id
+    like `mdpf_aggregate_aua` routes to its real pipeline instead of falling to the bd-gold
+    default -> 'Unknown script' (the bd-only-id-convention gap COO/AE surfaced for MDPF).
+    Registry-primary + auto-walk-fallback: this is the auto-walk fallback (the explicit
+    registry layers on top later). Precise match only (exact stem / id-prefix-before-dot);
+    ambiguous (id in >1 tree) -> None so the caller's normal disambiguation handles it."""
+    import os as _os
+    stem = _os.path.basename(str(raw_id or "")).replace(".py", "").strip()
+    if not stem:
+        return None
+    su = stem.upper()
+    hits = []
+    for _dir, _pk in _DATADIR_TO_PIPELINE.items():
+        gold = _WORKSPACE / "data" / _dir / "scripts" / "gold"
+        if not gold.is_dir():
+            continue
+        for f in gold.glob("*.py"):
+            fu = f.stem.upper()
+            if su == fu or fu.startswith(su + ".") or fu.split(".")[0] == su:
+                hits.append(_pk)
+                break
+    uniq = sorted(set(hits))
+    return uniq[0] if len(uniq) == 1 else None
+
 # Ordered (pipeline-key, bucket) the no-arg sweep iterates. Firm trees from the canonical
 # map (each reads ONLY its own bucket -- firm separation); mdpf appended check-only.
 _ALL_DEPLOYED_TREES = [
@@ -1180,10 +1207,19 @@ def cmd_io(args):
         pipeline = _FIRM_TO_PIPELINE[_firm]
     elif getattr(args, 'pipeline', None) in (None, 'bd-gold'):
         _np = (args.script_id or '').replace('\\', '/')
+        _matched = False
         for _dir, _pk in _DATADIR_TO_PIPELINE.items():
             if f"data/{_dir}/scripts/" in _np or _np.startswith(f"data/{_dir}/"):
                 pipeline = _pk
+                _matched = True
                 break
+        if not _matched:
+            # F2 (NFRA_COMPTOOL_USEPATHS): no path hint -> AUTO-WALK the gold trees so a bare
+            # non-bd id (mdpf_aggregate_aua, a cot/canonical stem) resolves to its OWN pipeline
+            # instead of the bd-gold default -> Unknown. Precise/unique match only (else fall through).
+            _aw = _autowalk_pipeline_for_script(args.script_id)
+            if _aw:
+                pipeline = _aw
 
     if pipeline not in ('bd-gold', 'bd', 'inf'):
         # Explicit specific pipeline: direct DAG lookup (no cross-pipeline disambiguation needed)
