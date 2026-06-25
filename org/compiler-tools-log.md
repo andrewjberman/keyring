@@ -8158,3 +8158,6 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-06-25 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/mcp/.last-drive-2.0.0_SA_COO --file... | PASS |
 2026-06-25 | 0.6.0_AE_PartnerETL | ADVI_BDAPIMIG bd-fees + MDPF cross-link | pipescript mdpf/--resource fees, comp-freshness chain bd, comp-which, comp-glob, comp-iam gaps x2, ds-commit-gate | grounded the MDPF gate->silver/fees blocker + restored fees REST end-to-end (zero-code); no IAM gap | rail: diagnostic s3/ssm/ec2 calls carried # rail-checked markers
 | 2026-06-25 | 0.6.0_AE_PartnerETL | ADVI_BDAPIMIG.P1 | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-06-25 | 0.7.0_AE_CloudOps | NFRA_DEBTSCAN.TO-D3 | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/change_management/20... | PASS |
+| 2026-06-25 | 0.5.0_AE_OpalETL | MDPF_ASSETS.FREEZE-DX | comp-freshness | artifact aggregate_aua_timeseries.json (served un-freeze verify post-recovery) | PASS |
+| 2026-06-25 | 0.5.0_AE_OpalETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
