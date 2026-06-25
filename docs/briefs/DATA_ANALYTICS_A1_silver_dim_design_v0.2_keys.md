@@ -46,3 +46,13 @@ Andrew-direct: do NOT fully retire FIFO reconstruction. We have no visibility in
 **Honest cost (it is slightly more than "just a hash"):** = the `lot_lineage_id` hash (trivial) + RETAINING the FIFO reconstruction compute (the B_01 logic) + RUNNING it to compare. Mitigation: run the FIFO check **sampled / periodic** (e.g. a daily sample of accounts, or a full weekly pass), NOT a nightly full-recompute -- so it's a cheap watchdog, not a return to the heavy nightly FIFO. The transactions raw material (`fact_transaction`) is already required, so the marginal cost is the retained logic + a bounded check run.
 
 **Patch-register update:** B_01 / `is_ghost` move from "EXCISE (retire)" to "REPOSITION (validation lane)". The bd_stale/is_ghost flag becomes meaningful again ONLY inside the validation lane (a FIFO-reconstructed position the custodian doesn't confirm = a divergence signal), not in the served path.
+
+## v0.4 amendment -- PARTITIONING + incremental model = a 30-DAY restatement window (Andrew-direct 2026-06-25)
+
+Andrew-direct operational parameter: **revisions / custodian lag are not expected beyond 30 days.** That is the basis for partitioning + the whole incremental model:
+- **Partition grain:** all silver facts (fact_position, fact_lot_unrealized, fact_lot_realized, fact_transaction) date-partitioned daily (by file_date for snapshots, event_date for events).
+- **Hot (mutable) window = trailing 30 days:** the daily-incremental gold REPROCESSES the last 30 partitions each run (catches any revision/back-dated correction/late lot). Partitions older than 30 days are treated **IMMUTABLE** -- never reprocessed. This is what makes gold "daily-incremental, not recompute": only ~30 days are ever hot.
+- **account_gains note:** because gains are day-over-day (position@D vs @D-1), a back-dated change inside the window recomputes gains across the affected window days -- the 30-day reprocess covers it; a >30-day change is assumed not to occur (Andrew's basis).
+- **FIFO validation-lane window = same 30 days:** the FIFO-vs-custodian sanity check only needs to cover the mutable window (divergence from a revision lands within 30 days); the sampled/periodic FIFO run is bounded to the trailing 30 days, not all-history -- keeping the watchdog cheap.
+- **Watermark/manifest:** tracks the 30-day mutable tail (advance the immutability boundary as days settle past 30).
+- This supersedes B_00's legacy `--force-recent-days 14` precedent (14->30 per Andrew's stated lag ceiling).
