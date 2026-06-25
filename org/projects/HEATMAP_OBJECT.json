@@ -15,16 +15,17 @@
     "NFRA_DEBTSCAN",
     "NFRA_TSGRAPH"
   ],
-  "status": "scoping",
-  "phase": "NFRA_EXPAND Strand C (object hygiene) -- re-homed from NFRA_HEATMAP (Andrew consolidation 2026-06-25). PHASE 0 -- DECOMPOSED (COO 2026-06-25, MSTR decompose-handoff 183744Z). TO set: S0 (shared heat_map primitive -- write/activity-recency scoring + decay + clustering, domain-parameterized) + O1 (write-freshness engine: git-history-authoritative + mtime-for-untracked -> per-path hot/warm/cold, hourly-snapshot heat time-series) + O2 (filesystem-locality clustering -- cold-subtree detection, reuse comp-cluster/TSGRAPH) + O3 (archive/delete RECOMMENDATION layer -- ADVISORY-ONLY, inherit DEBTSCAN never-auto-delete + orphan-invocation/name-vs-edge blast-radius verify-before-RECOMMEND) + O4 (hygiene report/surface -- ranked recs + evidence, human-reviewed, never auto-acts). COO SCOPING-ANSWERS: Q1 = shared heat_map core is a genuinely SHARED LIBRARY both projects import (S0; the unification is the point); Q2 = hourly-snapshot = a DERIVED view from git-history (NOT a new store -- git IS the write-history; mtime supplements untracked/generated); Q3 = OBJECT-first YES. LANE: single dedicated AE build-lane (DEBTSCAN/TSGRAPH/comp-tool reuse = CloudOps/0.7-shape) pipelining S0->O1/O2->O3->O4; named to MSTR for spawn. Awaiting MSTR spawn.",
+  "status": "active",
+  "phase": "NFRA_EXPAND Strand C (object hygiene) -- re-homed from NFRA_HEATMAP (Andrew consolidation 2026-06-25). PHASE 0 -- DECOMPOSED (COO 2026-06-25, MSTR decompose-handoff 183744Z). TO set: S0 (shared heat_map primitive -- write/activity-recency scoring + decay + clustering, domain-parameterized) + O1 (write-freshness engine: git-history-authoritative + mtime-for-untracked -> per-path hot/warm/cold, hourly-snapshot heat time-series) + O2 (filesystem-locality clustering -- cold-subtree detection, reuse comp-cluster/TSGRAPH) + O3 (archive/delete RECOMMENDATION layer -- ADVISORY-ONLY, inherit DEBTSCAN never-auto-delete + orphan-invocation/name-vs-edge blast-radius verify-before-RECOMMEND) + O4 (hygiene report/surface -- ranked recs + evidence, human-reviewed, never auto-acts). COO SCOPING-ANSWERS: Q1 = shared heat_map core is a genuinely SHARED LIBRARY both projects import (S0; the unification is the point); Q2 = hourly-snapshot = a DERIVED view from git-history (NOT a new store -- git IS the write-history; mtime supplements untracked/generated); Q3 = OBJECT-first YES. LANE (reconciled 2026-06-25T2142Z -- supersedes the stale 'single dedicated AE build-lane'): 2-lane Strand-C build per COO lanes-free GO 212340Z -- 0.4.0_DS = scoring/freshness (S0 heat_map primitive math + O1 write-freshness engine, DEBTSCAN-derived, DS wheelhouse) + 0.5.0_AE = producer/infra (write-freshness wiring + the eventual scheduled emitter). PHASE 1 IN-FLIGHT: S0 (heat_map.py) + O1 (object_freshness.py) BUILT by DS (gated-clean + self-tested: half-life=0.5@30d, cold-subtree detection; ran on repo = 20,079 files / 966 cold subtrees) + a DRIFT mode bonus (untracked+modified working-tree freshest-first, caught 58 live) -- commit was OWNPTH-blocked (org/modules/heatmap/** -> ANY_EXEC excluded DS), RESOLVED by COO 1f06e030a (new NFRA_HEATMAP lane grant); DS committing + RAVC-ing now. Next: O2 (locality cluster) -> O3 (advisory recs) -> O4 (report surface).",
   "blocking": "No external/data gate -- BUILDABLE NOW (git/mtime + DEBTSCAN + comp-cluster/TSGRAPH all exist). Gated ONLY on MSTR spawn of the build lane (COO lane-set + cap flagged to MSTR 2026-06-25). NOT time-urgent (durable-hygiene value, no deadline) -> spawn-when-capacity-frees (post-ETFS-wrap / when the CloudOps-AE clears TO-D3 + DC2); legitimately-paced, not a coast-stall.",
   "created": "2026-06-25",
   "pods": [
-    "0.7"
+    "0.4",
+    "0.5"
   ],
   "sovereign": "Andrew",
   "coo_lane": "2.0.0_SA_COO",
   "thread_counter": 0,
   "threads": [],
-  "lane": "0.4.0_DE + DS + 0.5.0_AE"
+  "lane": "0.4.0_DS_ClientPlatform (scoring/freshness) + 0.5.0_AE_OpalETL (producer/infra) -- Strand-C 2-lane"
 }
