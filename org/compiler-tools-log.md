@@ -8430,3 +8430,18 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-06-25 | 0.7.0_AE_CloudOps | NFRA_DEBTSCAN.TO-D3 | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/change_management/20... | PASS |
 20260625T2134Z | 0.4.0_DE_ClientPlatform | ETFS_presentation/cloud-run | comp-grep/comp-glob(chromium+ETFS-infra precedent) + ds-commit-gate + playwright(PDF QA) + aws-dynamodb/s3(daily-store confirm) | PDF output + cloud-run entrypoint (Pattern-A transient-EC2, --month/--s3-out) coordinated w/ 0.5.0; gap: fan-in date-key guard (stray row leaked to Dynamo) routed to 0.5.0
 | 2026-06-25 | 0.4.0_DE_ClientPlatform | DATA_ANALYTICS.FE1 | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-06-25 | 0.5.0_AE_OpalETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/etfs-pipeline/etfs-can... | PASS |
+| 2026-06-25 | 0.5.0_AE_OpalETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/ci/lambda-source-map.json | PASS |
+| 2026-06-25 | 0.4.0_DS_ClientPlatform | DATA_ANALYTICS.A1 | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/heatmap/README.md --file or... | PASS |
+| 2026-06-25 | 0.5.0_AE_OpalETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/etfs-pipeline/etfs-can... | PASS |
+| 2026-06-25 | 0.5.0_AE_OpalETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/ci/lambda-source-map.json | PASS |
+| 2026-06-25 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .owned-paths.yaml | PASS |
+| 2026-06-25 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-kuzu | comp-kuzu MATCH (n) WHERE n.node_type IN ['Page','PanelCluster'] RETURN n.node_type AS ... | PASS |
+| 2026-06-25 | 0.4.0_DS_ClientPlatform | DATA_ANALYTICS.A1 | comp-surface-check | comp-surface-check check --mode advisory --file docs/briefs/comp-heat-tool-spec-for-cto... | PASS |
+| 2026-06-25 | 0.7.0_AE_CloudOps | NFRA_DEBTSCAN.TO-D3 | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/terraform/cot-pipeline/iam.tf | PASS |
+| 2026-06-25 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/HEATMAP_OBJECT.json | PASS |
+| 2026-06-25 | 0.4.0_DS_ClientPlatform | DATA_ANALYTICS.A1 | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/heatmap/README.md --file or... | PASS |
+| 2026-06-25 | 0.5.0_AE_OpalETL | HEATMAP-O1 | comp-glob (debtscan substrate locate) + ds-commit-gate | O1 write-freshness producer built+proven (48803 paths banded) | PASS |
+| 2026-06-25 | 0.5.0_AE_OpalETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/mo... | PASS |
+| 2026-06-25 | 3.0.0_SA_CVO | (no-TO) | comp-kuzu | comp-kuzu MATCH (n) RETURN count(n) AS nodes | PASS |
+| 2026-06-25 | 0.5.0_AE_OpalETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
