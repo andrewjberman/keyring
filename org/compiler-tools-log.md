@@ -8251,3 +8251,7 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-06-25 | 1.0.0_SA_CTO | NFRA_COMPRAIL.TO-6.cto-cvo-ld0207-hardening | pipescript | pipescript --list | PASS |
 | 2026-06-25 | 0.5.0_AE_OpalETL | ETFS_SETUP.W2 + DIVZ-dx | comp-iam/comp-freshness/comp-glob/ds-commit-gate | W2 producer deploy (firm-sep verify) + DIVZ/IDVZ cadence dx -- see per-tool rows in session log | PASS |
 | 2026-06-25 | 0.5.0_AE_OpalETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-06-25 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+| 2026-06-25 | 0.7.0_AE_CloudOps | NFRA_DEBTSCAN.TO-D3 | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.7.0_AE_CloudOps/task... | PASS |
+| 2026-06-25 | 0.5.0_AE_OpalETL | ETFS-49f-daily-prestage | comp-freshness/ds-commit-gate | bd canonical/holdings source verify + producer gate + RPS-vs-canonical basis-delta grounding | PASS |
+| 2026-06-25 | 0.5.0_AE_OpalETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/bd-pipeline/bd-49f-etf... | PASS |
