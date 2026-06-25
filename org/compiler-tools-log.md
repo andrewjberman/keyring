@@ -8223,3 +8223,25 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-06-25 | 0.5.0_AE_OpalETL | ETFS_SETUP.W2 | comp-freshness | schwab/silver/rps path-resolution + etfs paths (substrate locate) | PASS |
 | 2026-06-25 | 0.5.0_AE_OpalETL | ETFS_SETUP.W2 | ds-commit-gate | bd-49f-etf-ownership-daily/lambda_function.py | PASS |
 | 2026-06-25 | 0.5.0_AE_OpalETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/bd-pipeline/bd-49f-etf... | PASS |
+| 2026-06-25 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+| 2026-06-25 | 0.5.0_AE_OpalETL | (no-TO) | comp-iam | comp-iam service inf-etf-ownership-daily | PASS |
+| 2026-06-25 | 0.5.0_AE_OpalETL | (no-TO) | comp-iam | comp-iam gaps | PASS |
+| 2026-06-25 | 0.6.0_AE_PartnerETL | ADHC_GLDINC.SS4c.ae-periodic-oracle-revalidation | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.6.0_AE_PartnerETL/ha... | PASS |
+| 2026-06-25 | 0.7.0_AE_CloudOps | NFRA_DEBTSCAN.TO-D3 | comp-kuzu | comp-kuzu MATCH (a:CloudNode)-[e:CloudEdge]->(b:CloudNode) WHERE e.edge_type IN ['SERVE... | PASS |
+| 2026-06-25 | 0.7.0_AE_CloudOps | NFRA_DEBTSCAN.TO-D3 | comp-kuzu | comp-kuzu MATCH (s:CloudNode) WHERE s.node_type='ServedURL' AND NOT EXISTS { MATCH (s)-... | PASS |
+| 2026-06-25 | 0.7.0_AE_CloudOps | NFRA_DEBTSCAN.TO-D3 | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/globgrph/debtscan_canon_score... | PASS |
+| 2026-06-25 | 0.6.0_AE_PartnerETL | ADHC_GLDINC.SS4c.ae-periodic-oracle-revalidation | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.6.0_AE_PartnerETL/ha... | PASS |
+| 2026-06-25 | 0.5.0_AE_OpalETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/ci/lambda-source-map.j... | PASS |
+| 2026-06-25 | 0.7.0_AE_CloudOps | NFRA_DEBTSCAN.TO-D3 | comp-manifest-check | comp-manifest-check | FAIL |
+| 2026-06-25 | 0.7.0_AE_CloudOps | NFRA_DEBTSCAN.TO-D3 | comp-manifest-check | comp-manifest-check check infra/aws/globgrph/debtscan_canon_scorer.py | FAIL |
+| 2026-06-25 | 0.5.0_AE_OpalETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/ci/lambda-source-map.json | PASS |
+| 2026-06-25 | 0.7.0_AE_CloudOps | NFRA_DEBTSCAN.TO-D3 | comp-manifest-check | comp-manifest-check check -h | PASS |
+| 2026-06-25 | 0.7.0_AE_CloudOps | NFRA_DEBTSCAN.TO-D3 | comp-manifest-check | comp-manifest-check check --file infra/aws/globgrph/debtscan_canon_scorer.py | PASS |
+| 2026-06-25 | 0.7.0_AE_CloudOps | NFRA_DEBTSCAN.TO-D3 | comp-manifest-check | comp-manifest-check list | PASS |
+| 2026-06-25 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/ETFS_AVGCAP.json --file or... | PASS |
+| 2026-06-25 | 0.7.0_AE_CloudOps | NFRA_DEBTSCAN.TO-D3 | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/globgrph/debtscan_canon_score... | PASS |
+| 2026-06-25 | 0.4.0_DS_ClientPlatform | DATA_ANALYTICS.A1 | comp-surface-check | comp-surface-check check --mode advisory --file data/canonical/schwab/silver/build_dim_... | PASS |
+| 2026-06-25 | 0.7.0_AE_CloudOps | NFRA_DEBTSCAN.TO-D3 | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/globgrph/debtscan_canon_score... | PASS |
+| 2026-06-25 | 0.5.0_AE_OpalETL | (no-TO) | comp-iam | comp-iam service bd-49f-etf-ownership-daily | PASS |
+20260625T1756Z | 0.4.0_DE_ClientPlatform | ETFS_presentation | aws s3 ls/cp opal-data-etfs (operational, ground live contract+servability) + comp-glob etfs | presentation-layer pre-stage scope (both forms + contract + served-path + granularity)
+| 2026-06-25 | 0.4.0_DE_ClientPlatform | DATA_ANALYTICS.FE1 | comp-surface-check | comp-surface-check check --mode advisory --file docs/briefs/ETFS_presentation_layer_pre... | PASS |
