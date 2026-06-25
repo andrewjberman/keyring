@@ -8245,3 +8245,9 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-06-25 | 0.5.0_AE_OpalETL | (no-TO) | comp-iam | comp-iam service bd-49f-etf-ownership-daily | PASS |
 20260625T1756Z | 0.4.0_DE_ClientPlatform | ETFS_presentation | aws s3 ls/cp opal-data-etfs (operational, ground live contract+servability) + comp-glob etfs | presentation-layer pre-stage scope (both forms + contract + served-path + granularity)
 | 2026-06-25 | 0.4.0_DE_ClientPlatform | DATA_ANALYTICS.FE1 | comp-surface-check | comp-surface-check check --mode advisory --file docs/briefs/ETFS_presentation_layer_pre... | PASS |
+| 2026-06-25 | 0.5.0_AE_OpalETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/ci/lambda-source-map.j... | PASS |
+| 2026-06-25 | 0.5.0_AE_OpalETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/change_management/20... | PASS |
+| 2026-06-25 | 0.4.0_DS_ClientPlatform | DATA_ANALYTICS.A1 | comp-surface-check | comp-surface-check check --mode advisory --file data/canonical/schwab/silver/build_dim_... | PASS |
+| 2026-06-25 | 1.0.0_SA_CTO | NFRA_COMPRAIL.TO-6.cto-cvo-ld0207-hardening | pipescript | pipescript --list | PASS |
+| 2026-06-25 | 0.5.0_AE_OpalETL | ETFS_SETUP.W2 + DIVZ-dx | comp-iam/comp-freshness/comp-glob/ds-commit-gate | W2 producer deploy (firm-sep verify) + DIVZ/IDVZ cadence dx -- see per-tool rows in session log | PASS |
+| 2026-06-25 | 0.5.0_AE_OpalETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
