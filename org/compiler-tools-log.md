@@ -8292,3 +8292,5 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-06-25 | 0.7.0_AE_CloudOps | NFRA_DEBTSCAN.TO-D3 | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/globgrph/debtscan_canon_score... | PASS |
 | 2026-06-25 | 0.5.0_AE_OpalETL | ETFS-presentation-deploy | comp-iam/comp-freshness | etf-ownership-dashboard reader-IAM firm-sep verify + platinum write verify | PASS |
 | 2026-06-25 | 0.5.0_AE_OpalETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/cr... | PASS |
+| 2026-06-25 | 0.5.0_AE_OpalETL | ETFS-presentation+basis | comp-freshness/comp-iam/ds-commit-gate | presentation Lambda deploy firm-sep verify + RPS-daily basis grounding + canonical fallback prestage | PASS |
+| 2026-06-25 | 0.5.0_AE_OpalETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
