@@ -1,7 +1,7 @@
 # Deploy-Completion Ledger -- ETFS_SETUP W2: bd-49f-etf-ownership-daily Lambda
 
 **Opened:** 2026-06-25T17:47Z | **Agent:** 0.5.0_AE_OpalETL | **Authority:** COO GO (174526Z, with self-proposed guardrails)
-**Status:** OPEN -> (in progress)
+**Status:** CLOSED -- COMPLETE + live-verified 2026-06-25T17:55Z. Tag bd-v2.39.0.
 **Change:** Deploy the 49F daily ETF-ownership producer Lambda (`bd-49f-etf-ownership-daily`) + its least-priv write-out IAM role, via Terraform. NEVER#1 write-out model (read own-firm opal-data-bd/schwab/silver/rps + write opal-data-etfs/daily/49financial only; no cross-firm read).
 
 ## Plan (COO-sequenced)
@@ -18,3 +18,8 @@ If apply partially lands or live-verify fails: `terraform destroy -target` the n
 
 ## Log
 - 17:47Z opened. comp-iam scoped clean. Authoring TF next.
+- 17:50Z TF + source-map committed (349c91e35); build-and-upload OK (sha mkSBC9...), committed (cc5471620).
+- 17:52Z plan: 6 to add / 0 change / 0 destroy. safe-apply (HALTGT pass) -> Apply complete 6 added. 0-diff plan: "No changes".
+- 17:54Z LIVE verify: deployed-Lambda invoke StatusCode 200 -> wrote daily/49financial/2026-06-18.json total $519.49M (== local-prove to the cent). Live get-role-policy: READ opal-data-bd/schwab/silver/rps/* + opal-data-etfs/config/* + WRITE opal-data-etfs/daily/49financial/* + scoped List; ZERO opal-data-inf/opal-data-cot grants (no cross-firm read, no Deny-widen; NEVER#1 intact). comp-iam service: all 4 ops GRANTED clean.
+- 17:55Z record-terraform-deploy (a071e2e85) + tag bd-v2.39.0 + push --follow-tags. CLOSED.
+- REMAINING (not deploy-scope; routed): Sec-8 canonical-thread registration -> CTO (flagged); AVGCAP 49F leg -> DS folded + shipped (3-partner monthly live).
