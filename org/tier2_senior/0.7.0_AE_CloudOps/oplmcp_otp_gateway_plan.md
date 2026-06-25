@@ -54,7 +54,17 @@ the gateway's already-held Andrew-delegated Graph token, returning ONLY the code
 - Reuses the watch-the-watcher pattern (critical-alarm-egress.yaml / comp-surface-check egress-check).
 
 ## CTO coordination questions (the arch-GO gate -- CTO owns this design)
-1. Auth model OK as a static shared bearer (vs a dedicated OAuth client-credentials for the box)?
+1. **AUTH MODEL = the pivotal decision** (CVO 205801Z + 0.5.0 grounding sharpened it). Two models:
+   (A) STATIC shared bearer (blackdiamond/49f/otp-gateway-token), validated in-handler -- simple, but a
+       new bespoke auth path on the gateway.
+   (B) GATEWAY OAUTH CLIENT: the box is a registered client holding a gateway REFRESH-TOKEN (stateless
+       RS256 JWT, sub=andrew@opalinvest.com, per 0.5.0's grounding). It exchanges it at /token for a
+       gateway access token, then calls /otp/fetch with the EXISTING per-user Bearer guard (_bearer_email
+       -> email=andrew -> get_token(andrew)). Reuses ALL the existing auth + no static-bearer code; the
+       "fixed mailbox" becomes the token's own sub. Cleaner -- BUT a sub=andrew token can hit /mcp +
+       /teams/poll too, so it needs SCOPE/audience restriction to OTP-only (a gateway scope the box's
+       token carries + /otp/fetch requires). CVO/0.5.0 lean (B). CTO: which model, and if (B) the scoping?
+   (Everything below assumes the model you pick; the rest of the design is model-agnostic.)
 2. OTP_MAILBOX = andrew@opalinvest.com? (The BD OTP lands in Andrew's mailbox -- you proved it.) Confirm
    his delegated cache is the one on the gateway box.
 3. Liveness design: concur with /otp/health + EventBridge + SNS(opal-critical-surface-alerts)? Or a
