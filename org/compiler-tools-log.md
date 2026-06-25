@@ -8072,3 +8072,49 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 
 | 2026-06-25 | 0.7.0_AE_CloudOps | DATA_PLATFORM.DC2 + deploy_ledger | ds-commit-gate, comp-grep/glob, terraform validate (x3), comp-iam(pending pre-apply) | deploy_ledger --lambda/tf-lambda fix (c66b397d1, tested no-regression); DC2 harness arch-gate cycle + ~80% built+TF-validated (premise-falsified, dedicated docs + doc-scoped IAM); BD-cross routed to 0.6.0 |
 | 2026-06-25 | 0.7.0_AE_CloudOps | DATA_PLATFORM.DC2 | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-06-25 | 0.4.0_DS_ClientPlatform | DATA_ANALYTICS.A1 | comp-surface-check | comp-surface-check check --mode advisory --file .tools/ds-precommit-check.py --file dat... | PASS |
+| 2026-06-25 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/MDPF_ASSETS.json --file or... | PASS |
+| 2026-06-25 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/briefs/allo... | PASS |
+| 2026-06-25 | 0.4.0_DS_ClientPlatform | DATA_ANALYTICS.A1 | comp-surface-check | comp-surface-check check --mode advisory --file data/canonical/scripts/silver/build_fac... | PASS |
+| 2026-06-25 | 0.5.0_AE_OpalETL | (no-TO) | pipescript | pipescript --list | PASS |
+| 2026-06-25 | 0.5.0_AE_OpalETL | (no-TO) | pipescript | pipescript mdpf | PASS |
+| 2026-06-25 | 0.5.0_AE_OpalETL | (no-TO) | comp-pipescript | comp-pipescript io mdpf_aggregate_aua.py | FAIL |
+| 2026-06-25 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/mcp/.last-drive-2.0.0_SA_COO --file... | PASS |
+| 2026-06-25 | 0.4.0_DS_ClientPlatform | DATA_ANALYTICS.A1 | comp-surface-check | comp-surface-check check --mode advisory --file data/canonical/scripts/silver/build_fac... | PASS |
+| 2026-06-25 | 0.6.0_AE_PartnerETL | ADVI_BDAPIMIG.P1 | pipescript | pipescript mdpf | PASS |
+| 2026-06-25 | 0.6.0_AE_PartnerETL | ADVI_BDAPIMIG.P1 | pipescript | pipescript --list | PASS |
+| 2026-06-25 | 0.4.0_DS_ClientPlatform | DATA_ANALYTICS.A1 | comp-surface-check | comp-surface-check check --mode advisory --file data/canonical/scripts/silver/build_dim... | PASS |
+| 2026-06-25 | 0.4.0_DE_ClientPlatform | DATA_ANALYTICS.FE1 | comp-pipescript | comp-pipescript io data/black_diamond/scripts/gold/D_00.portal_aggregates.py | PASS |
+| 2026-06-25 | 0.4.0_DE_ClientPlatform | DATA_ANALYTICS.FE1 | comp-pipescript | comp-pipescript io data/black_diamond/scripts/gold/D_00b.portal_timeseries.py | PASS |
+| 2026-06-25 | 0.4.0_DE_ClientPlatform | DATA_ANALYTICS.FE1 | comp-pipescript | comp-pipescript io data/black_diamond/scripts/gold/D_00c.portal_leaderboard.py | PASS |
+| 2026-06-25 | 0.4.0_DE_ClientPlatform | DATA_ANALYTICS.FE1 | comp-pipescript | comp-pipescript io data/black_diamond/scripts/gold/D_00f.advisor_nna_canonical.py | PASS |
+| 2026-06-25 | 0.4.0_DE_ClientPlatform | DATA_ANALYTICS.FE1 | comp-pipescript | comp-pipescript io data/black_diamond/scripts/gold/D_01.partner_analytics.py | PASS |
+| 2026-06-25 | 0.4.0_DE_ClientPlatform | DATA_ANALYTICS.FE1 | comp-pipescript | comp-pipescript io data/black_diamond/scripts/gold/D_02.advisor_client_detail.py | PASS |
+| 2026-06-25 | 0.4.0_DE_ClientPlatform | DATA_ANALYTICS.FE1 | comp-pipescript | comp-pipescript io data/black_diamond/scripts/gold/D_03.composition_artifacts.py | PASS |
+| 2026-06-25 | 0.6.0_AE_PartnerETL | ADVI_BDAPIMIG.P1 | pipescript | pipescript --resource fees | PASS |
+| 2026-06-25 | 0.4.0_DE_ClientPlatform | DATA_ANALYTICS.FE1 | comp-pipescript | comp-pipescript io data/black_diamond/scripts/gold/C_00.canonical_performance.py | PASS |
+| 2026-06-25 | 0.6.0_AE_PartnerETL | ADVI_BDAPIMIG.P1 | pipescript | pipescript bd-fees | FAIL |
+| 2026-06-25 | 0.4.0_DE_ClientPlatform | DATA_ANALYTICS.FE1 | comp-pipescript | comp-pipescript io data/black_diamond/scripts/gold/C_01.canonical_nna.py | PASS |
+| 2026-06-25 | 0.4.0_DE_ClientPlatform | DATA_ANALYTICS.FE1 | comp-pipescript | comp-pipescript io data/black_diamond/scripts/gold/C_02.client_performance.py | PASS |
+| 2026-06-25 | 0.4.0_DE_ClientPlatform | DATA_ANALYTICS.FE1 | comp-pipescript | comp-pipescript io data/black_diamond/scripts/gold/C_03.account_performance.py | PASS |
+| 2026-06-25 | 0.4.0_DE_ClientPlatform | DATA_ANALYTICS.FE1 | comp-pipescript | comp-pipescript io data/black_diamond/scripts/gold/C_05.client_tax_liability.py | PASS |
+| 2026-06-25 | 0.4.0_DE_ClientPlatform | DATA_ANALYTICS.FE1 | comp-pipescript | comp-pipescript io data/black_diamond/scripts/gold/C_06.client_mix_timeseries.py | PASS |
+| 2026-06-25 | 0.4.0_DE_ClientPlatform | DATA_ANALYTICS.FE1 | comp-pipescript | comp-pipescript io data/black_diamond/scripts/gold/C_07.advisor_attribution.py | PASS |
+| 2026-06-25 | 0.4.0_DE_ClientPlatform | DATA_ANALYTICS.FE1 | comp-pipescript | comp-pipescript io data/black_diamond/scripts/gold/C_08.advisor_fee_efficiency.py | PASS |
+| 2026-06-25 | 0.4.0_DE_ClientPlatform | DATA_ANALYTICS.FE1 | comp-pipescript | comp-pipescript io data/black_diamond/scripts/gold/B_00.canonical_holdings.py | PASS |
+| 2026-06-25 | 0.4.0_DE_ClientPlatform | DATA_ANALYTICS.FE1 | comp-pipescript | comp-pipescript io data/black_diamond/scripts/gold/B_01.holdings_lots.py | PASS |
+| 2026-06-25 | 0.4.0_DE_ClientPlatform | DATA_ANALYTICS.FE1 | comp-pipescript | comp-pipescript io data/black_diamond/scripts/gold/B_02.canonical_lots.py | PASS |
+| 2026-06-25 | 0.4.0_DE_ClientPlatform | DATA_ANALYTICS.FE1 | comp-pipescript | comp-pipescript io data/black_diamond/scripts/gold/B_03.account_gains.py | PASS |
+| 2026-06-25 | 0.4.0_DE_ClientPlatform | DATA_ANALYTICS.FE1 | comp-pipescript | comp-pipescript io data/black_diamond/scripts/gold/A_00.accounts_dimension.py | PASS |
+| 2026-06-25 | 0.4.0_DE_ClientPlatform | DATA_ANALYTICS.FE1 | comp-pipescript | comp-pipescript io data/black_diamond/scripts/gold/A_02.fee_rate_history.py | PASS |
+| 2026-06-25 | 0.4.0_DE_ClientPlatform | DATA_ANALYTICS.FE1 | comp-pipescript | comp-pipescript io data/black_diamond/scripts/gold/A_03.positions_cube.py | PASS |
+| 2026-06-25 | 0.4.0_DE_ClientPlatform | DATA_ANALYTICS.FE1 | comp-pipescript | comp-pipescript io data/black_diamond/scripts/gold/A_04.client_dimension.py | PASS |
+| 2026-06-25 | 0.4.0_DE_ClientPlatform | DATA_ANALYTICS.FE1 | comp-pipescript | comp-pipescript io data/black_diamond/scripts/gold/A_01.advisor_assignments.py | PASS |
+| 2026-06-25 | 0.4.0_DE_ClientPlatform | DATA_ANALYTICS.FE1 | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DE_ClientPlatfor... | PASS |
+| 2026-06-25 | 0.5.0_AE_OpalETL | MDPF_ASSETS.FREEZE-DX | comp-which | comp-which "which MDPF served artifact opal_aggregate_aua is stale" | PASS |
+| 2026-06-25 | 0.5.0_AE_OpalETL | MDPF_ASSETS.FREEZE-DX | comp-glob | comp-glob mdpf_aggregate_aua.py + mdpf-daily trigger/dispatch | PASS |
+| 2026-06-25 | 0.5.0_AE_OpalETL | MDPF_ASSETS.FREEZE-DX | pipescript | pipescript mdpf (convergence-gate estate trace) | PASS |
+| 2026-06-25 | 0.5.0_AE_OpalETL | MDPF_ASSETS.FREEZE-DX | comp-freshness | comp-freshness artifact served + INF sentinel + BD allocations/fees (per-stage localization) | PASS |
+| 2026-06-25 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/mcp/.last-drive-2.0.0_SA_COO --file... | PASS |
+| 2026-06-25 | 0.4.0_DE_ClientPlatform | DATA_ANALYTICS.FE1 | comp-pipescript | comp-pipescript io data/cot/scripts/gold/D_04.client_portal_summary.py | PASS |
+| 2026-06-25 | 0.5.0_AE_OpalETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
