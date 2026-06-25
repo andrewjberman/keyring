@@ -399,9 +399,22 @@ class Scanner(ast.NodeVisitor):
 class _SilverIdCoerceChecker(ast.NodeVisitor):
     """Detect build_* functions in silver scripts that return DataFrame without coerce_silver_ids."""
 
-    def __init__(self, filepath: str):
+    def __init__(self, filepath: str, source_lines: list[str] | None = None):
         self.filepath = filepath
+        self.source_lines = source_lines or []
         self.blocks: list[str] = []
+
+    def _has_padded_string_marker(self, node: ast.FunctionDef | ast.AsyncFunctionDef) -> bool:
+        # A `# silver-id: padded-string (custodian)` marker on a build_* fn declares its
+        # join-key is a zero-padded custodian string -- Int64 coercion would strip the
+        # significant leading zeros and CORRUPT the key. CTO ruling 2026-06-25: per-build
+        # marker is the sanctioned bridge for the declared-dtype generalization (the marker
+        # mirrors the # rail-checked pattern; the proper fix generalizes coerce_silver_ids
+        # to declared-dtype mode). Per-function span scan (AST strips comments).
+        start = max(0, node.lineno - 1)
+        end = getattr(node, 'end_lineno', node.lineno) or node.lineno
+        return any('silver-id: padded-string' in ln.lower()
+                   for ln in self.source_lines[start:end])
 
     def visit_FunctionDef(self, node: ast.FunctionDef) -> None:
         if node.name.startswith('build_'):
@@ -419,6 +432,11 @@ class _SilverIdCoerceChecker(ast.NodeVisitor):
             return
         # Skip unannotated functions that appear void (no non-None return expr).
         if not _annotation_is_dataframe(node.returns) and not self._has_df_return(node):
+            return
+        # CTO 2026-06-25 bridge: a declared padded-string join key is exempt from the
+        # Int64 coercion (coercion would corrupt leading zeros). The marker is auditable +
+        # scoped per build_*; the proper fix generalizes coerce_silver_ids to declared-dtype.
+        if self._has_padded_string_marker(node):
             return
         if not self._calls_coerce(node):
             self.blocks.append(
@@ -496,9 +514,15 @@ def check_silver_id_dtype(
     """
     if not _path_is_silver_builder(filepath_hint):
         return [], []
-    checker = _SilverIdCoerceChecker(filepath_hint)
+    checker = _SilverIdCoerceChecker(filepath_hint, source.splitlines())
     checker.visit(tree)
-    warns = _check_silver_id_astype_regression(source, filepath_hint)
+    # The padded-string marker also suppresses the .astype(str) WARN (the cast is the
+    # CORRECT handling for a custodian padded id, not a regression). File-level for the
+    # bridge; the declared-dtype generalization makes it per-column-precise.
+    if 'silver-id: padded-string' in source.lower():
+        warns = []
+    else:
+        warns = _check_silver_id_astype_regression(source, filepath_hint)
     return checker.blocks, warns
 
 
