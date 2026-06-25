@@ -7938,3 +7938,27 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-06-25 | 0.4.0_DS_ClientPlatform | DATA_ANALYTICS.A1 | comp-surface-check | comp-surface-check check --mode advisory --file data/etfs/scripts/gold/avgcap_monthly_a... | PASS |
 2026-06-25 | 1.0.0_SA_CTO | NFRA_COMPRAIL.TO-6 + ADVI_BDAPIMIG | comp-which (dogfood routing spot-checks PASS), comp-which-routing-test.py (BUILT the LD-0208 regression guard: 28/28 end-to-end self-routing + 3/3 audit reproduction PASS), comp-freshness (CVO-cited: 4 bd silver FAIL@06-19 grounds the BDAPIMIG P0). Built+committed a new comp-tool (the routing guard); BDAPIMIG PRD doc-authoring rides AE TO Rule-20 checks.
 | 2026-06-25 | 1.0.0_SA_CTO | NFRA_COMPRAIL.TO-6.cto-cvo-ld0207-hardening | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-06-25 | 0.7.0_AE_CloudOps | ETFS_SETUP.W1 | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/ci/lambda-source-map.j... | PASS |
+| 2026-06-25 | 1.0.0_SA_CTO | NFRA_COMPRAIL.TO-6.cto-cvo-ld0207-hardening | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.6.0_AE_PartnerETL/ta... | PASS |
+| 2026-06-25 | 0.4.0_DS_ClientPlatform | DATA_ANALYTICS.A1 | comp-surface-check | comp-surface-check check --mode advisory --file data/etfs/scripts/gold/avgcap_bd_rps_re... | PASS |
+| 2026-06-25 | 0.4.0_DS_ClientPlatform | DATA_ANALYTICS.A1 | comp-pipescript | comp-pipescript io data/black_diamond/scripts/gold/B_00.canonical_holdings.py | PASS |
+| 2026-06-25 | 0.7.0_AE_CloudOps | ETFS_SETUP.W1 | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/change_management/20... | PASS |
+| 2026-06-25 | 1.0.0_SA_CTO | NFRA_COMPRAIL.TO-6.cto-cvo-ld0207-hardening | comp-surface-check | comp-surface-check check --mode advisory --file .tools/comprail-gate1-fptest.sh --file ... | PASS |
+| 2026-06-25 | 0.4.0_DS_ClientPlatform | DATA_ANALYTICS.A1 | comp-surface-check | comp-surface-check check --mode advisory --file docs/briefs/ETFS_AVGCAP_W1_AC2_inflecti... | PASS |
+| 2026-06-25 | 0.4.0_DS_ClientPlatform | DATA_ANALYTICS.A1 | comp-surface-check | comp-surface-check check --mode advisory --file docs/briefs/DATA_ANALYTICS_A1_B_00_cano... | PASS |
+| 2026-06-25 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/briefs/COMP... | PASS |
+| 2026-06-25 | 0.4.0_DS_ClientPlatform | DATA_ANALYTICS.A1 | comp-pipescript | comp-pipescript io data/black_diamond/scripts/gold/B_02.canonical_lots.py | PASS |
+| 2026-06-25 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/mcp/.last-drive-2.0.0_SA_COO --file... | PASS |
+| 2026-06-25 | 0.7.0_AE_CloudOps | ETFS_SETUP.W3 | comp-iam | comp-iam service cot-etf-ownership-daily | PASS |
+| 2026-06-25 | 0.7.0_AE_CloudOps | ETFS_SETUP.W3 | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/cot-pipeline/cot-etf-o... | PASS |
+| 2026-06-25 | 0.4.0_DS_ClientPlatform | DATA_ANALYTICS.A1 | comp-surface-check | comp-surface-check check --mode advisory --file docs/briefs/DATA_ANALYTICS_A1_B_02_cano... | PASS |
+| 2026-06-25 | 0.7.0_AE_CloudOps | ETFS_SETUP.W3 | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/ci/lambda-source-map.json | PASS |
+| 2026-06-25 | 0.7.0_AE_CloudOps | ETFS_SETUP.W3 | comp-iam | comp-iam gaps cot-etf-ownership-daily | FAIL |
+| 2026-06-25 | 1.0.0_SA_CTO | NFRA_COMPRAIL.TO-6.cto-cvo-ld0207-hardening | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.6.0_AE_PartnerETL/ta... | PASS |
+| 2026-06-25 | 0.7.0_AE_CloudOps | ETFS_SETUP.W3 | comp-iam | comp-iam service cot-etf-ownership-daily | PASS |
+| 2026-06-25 | 0.7.0_AE_CloudOps | ETFS_SETUP.W3 | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/ci/lambda-source-map.j... | PASS |
+| 2026-06-25 | 0.7.0_AE_CloudOps | ETFS_SETUP.W3 | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/change_management/20... | PASS |
+| 2026-06-25 | 0.7.0_AE_CloudOps | ETFS_SETUP.W3 | comp-surface-check | comp-surface-check check --mode advisory --file docs/briefs/deploy-ledger-phantom-leg-g... | PASS |
+
+| 2026-06-25 | 0.7.0_AE_CloudOps | ETFS_SETUP.W1/W3 | comp-freshness(x3), comp-iam service, comp-which, comp-grep, ds-commit-gate, safe-apply | inf-backfill 40d + cot W3 producer deployed+verified; obs#2 price-staleness traced (INF_build_canonical_prices.py, owner DS); deploy_ledger phantom-leg gap filed |
+| 2026-06-25 | 0.7.0_AE_CloudOps | ETFS_SETUP.W3 | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
