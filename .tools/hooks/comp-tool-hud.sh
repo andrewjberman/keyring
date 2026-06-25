@@ -188,7 +188,11 @@ if [ "$_gate" = 1 ]; then
   _q80="$(printf '%s' "$query" | head -c 100)"
   # OVERRIDE: an explicit, auditable `# rail-checked: <why>` marker -> authorized one-off; allow.
   if printf '%s' "$query" | grep -qE '#[[:space:]]*rail-checked:'; then
-    echo "$_ts  RUN-OVERRIDE  tool=$tool  class=$class  q=$_q80" >> "$RAIL_LOG" 2>/dev/null || true
+    # Log the override REASON in its own field (the TO-5 "repeat override = coverage gap" signal).
+    # It lives at the END of the command, so the q-at-100-chars truncation drops it on compound
+    # `cd ... && aws ... # rail-checked: <why>` lines -- capture it separately so the WHY survives.
+    _why="$(printf '%s' "$query" | sed -E 's/.*#[[:space:]]*rail-checked:[[:space:]]*//' | tr '\n' ' ' | head -c 200)"
+    echo "$_ts  RUN-OVERRIDE  tool=$tool  class=$class  reason=$_why  q=$_q80" >> "$RAIL_LOG" 2>/dev/null || true
     exit 0
   fi
   echo "$_ts  DENY  tool=$tool  class=$class  q=$_q80" >> "$RAIL_LOG" 2>/dev/null || true
