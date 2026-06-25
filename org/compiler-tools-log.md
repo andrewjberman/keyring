@@ -8445,3 +8445,29 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-06-25 | 0.5.0_AE_OpalETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/mo... | PASS |
 | 2026-06-25 | 3.0.0_SA_CVO | (no-TO) | comp-kuzu | comp-kuzu MATCH (n) RETURN count(n) AS nodes | PASS |
 | 2026-06-25 | 0.5.0_AE_OpalETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-06-25 | 3.0.0_SA_CVO | (no-TO) | comp-graph | comp-graph status | PASS |
+| 2026-06-25 | 0.7.0_AE_CloudOps | NFRA_DEBTSCAN.TO-D3 | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/change_management/20... | PASS |
+| 2026-06-25 | 0.5.0_AE_OpalETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.5.0_AE_OpalETL/heatm... | PASS |
+| 2026-06-25 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/HEATMAP_OBJECT.json | PASS |
+| 2026-06-25 | 0.7.0_AE_CloudOps | NFRA_DEBTSCAN.TO-D3 | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/terraform/m365-mcp-gateway/al... | PASS |
+| 2026-06-25 | 0.4.0_DS_ClientPlatform | DATA_ANALYTICS.A1 | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/heatmap/README.md | PASS |
+| 2026-06-25 | 0.7.0_AE_CloudOps | NFRA_DEBTSCAN.TO-D3 | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/ec2/m365-mcp-gateway/deploy-t... | PASS |
+| 2026-06-25 | 0.4.0_DS_ClientPlatform | DATA_ANALYTICS.A1 | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/heatmap/object_freshness.py | PASS |
+| 2026-06-25 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+| 2026-06-25 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/briefs/allo... | PASS |
+| 2026-06-25 | 0.7.0_AE_CloudOps | NFRA_DEBTSCAN.TO-D3 | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/ec2/EC2_MANIFEST.json | PASS |
+| 2026-06-25 | 0.4.0_DS_ClientPlatform | DATA_ANALYTICS.A1 | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/heatmap/README.md | PASS |
+| 2026-06-25 | 0.7.0_AE_CloudOps | NFRA_DEBTSCAN.TO-D3 | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/change_management/20... | PASS |
+| 2026-06-25 | 0.5.0_AE_OpalETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/heatmap/heatmap_object_emit... | PASS |
+| 2026-06-25 | 0.4.0_DS_ClientPlatform | DATA_ANALYTICS.A1 | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/heatmap/object_locality.py | PASS |
+| 2026-06-25 | 1.0.0_SA_CTO | NFRA_COMPRAIL.TO-6.cto-cvo-ld0207-hardening | comp-manifest-check | comp-manifest-check | FAIL |
+| 2026-06-25 | 1.0.0_SA_CTO | NFRA_COMPRAIL.TO-6.cto-cvo-ld0207-hardening | comp-manifest-check | comp-manifest-check selfcheck | PASS |
+| 2026-06-25 | 1.0.0_SA_CTO | NFRA_COMPRAIL.TO-6.cto-cvo-ld0207-hardening | comp-manifest-check | comp-manifest-check list | PASS |
+| 2026-06-25 | 0.4.0_DS_ClientPlatform | DATA_ANALYTICS.A1 | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/heatmap/README.md | PASS |
+| 2026-06-25 | 1.0.0_SA_CTO | NFRA_COMPRAIL.TO-6.cto-cvo-ld0207-hardening | comp-surface-check | comp-surface-check check --mode advisory --file .tools/comp-heat --file .tools/comp-whi... | PASS |
+| 2026-06-25 | 0.6.0_AE_PartnerETL | ADVI_BDAPIMIG.P1 | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/ec2/bd-49f-auto-login/bd_49f_... | PASS |
+| 2026-06-25 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+| 2026-06-25 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/briefs/allo... | PASS |
+- 2026-06-25 22:05Z 0.5.0_AE_OpalETL HEATMAP O1 converge/close + month-end EC2 ground: ds-commit-gate (emitter PASS), safe-commit surface-check (8d6ce2a90 PASS, no critical surface), comp-which (astn infra location -> routed comp-iam, native Read used). (c) derived emit confirmed working 20089 paths ghost-free.
+| 2026-06-25 | 0.4.0_DS_ClientPlatform | DATA_ANALYTICS.A1 | comp-blast | comp-blast --help | PASS |
+| 2026-06-25 | 0.5.0_AE_OpalETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
