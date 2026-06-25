@@ -13,10 +13,20 @@ first cut, sufficient to inform the gate.)
 
 ## Finding: the rail is "complete-enough" to gate — no recurring no-tool intent
 
-**Usage vs escape (the headline):**
-- 211 on-rails primitive runs: `comp-grep` 148 · `comp-which` 46 · `comp-glob` 17.
-- 3 `rail-checked` overrides total → **~1.4% override rate.** The rail is heavily used
-  and rarely escaped — agents are reaching the tool, not bypassing it.
+**Usage vs escape (the headline) — corrected per CTO RAVC 2026-06-25:**
+- 382 on-rails primitive runs: RUN-GREP 192 · ROUTE 171 · RUN-GLOB 19.
+- **11 raw RUN-OVERRIDE events → ~2.80% override rate** (raw-event lens). The 3 in the
+  first cut were a distinct-INTENT dedup (a defensible lens, but it under-reads the raw
+  rate). The rail is still heavily used and rarely escaped — but see the recurring
+  override below; it is NOT "none recurring."
+- **Two telemetry-fidelity caveats (CTO) that bound this number for LEG-B:** (B, FIXED
+  c1790819c) the rail-log truncated `q` at 100 chars, dropping the `# rail-checked:`
+  reason on compound `cd && aws … # rail-checked: X` lines — a dedicated `reason=` field
+  now captures it, so pre-06-25 overrides are reason-blind but post-flip ones are not;
+  (C, flagged not-fixed pre-flip) the `comp-|pipescript` negative filter exits before the
+  override-log when the reason cites a comp-tool, so those (correctly-allowed) overrides
+  go UNLOGGED → the true count is an UNDERCOUNT (likely >11). Fix = filter reorder, a
+  LEG-B post-flip item (deliberately not touched on the eve of the flip).
 
 **DENY classes (raw call gated → routed to a tool) — ALL covered:**
 
@@ -40,21 +50,36 @@ first cut, sufficient to inform the gate.)
    generic `aws s3 ls` is NOT gated (operational, per the rail); comp-freshness/pipescript
    answer freshness/io, not a raw key-tree, and that's by design.
 
-## Build-list (prioritized) — currently EMPTY of urgent items
-No recurring intent surfaced with NO tool. The three observed escapes are
-covered-by-comp-grep / onboarding-lag / operational-free respectively. **Watch-items**
-to confirm post-enforce (LEG B), not build-now:
-- (low) "raw literal-token search in TF" — confirm agents accept `comp-grep` as the
-  answer rather than override; if override recurs, the gap is UX (comp-grep discoverability),
-  not a missing tool.
-- (low) DDB inspect (4 DENY) — confirm the data-plane-vs-schema split is clean post-enforce
-  (schema/edges → comp-aws; get/scan/query → operational). If schema-inspect overrides
-  recur, consider a comp-ddb schema surface.
+## Build-list (prioritized) — corrected: ONE real candidate (CTO RAVC)
+
+**P1 candidate — comp-freshness coverage gap for arbitrary/unregistered gold-prefix
+listing.** The `aws_freshness` override is **RECURRING — 7× across 06-23/24/25** (the
+single biggest repeat-override intent; per the NFRA_COMPRAIL "repeat override = coverage
+gap" principle, that is a signal, not noise). Mechanism: `comp-freshness` answers a
+freshness VERDICT for REGISTERED cadence artifacts only; an agent wanting to list/inventory
+an arbitrary or unregistered gold/bronze S3 prefix (raw `aws s3 ls .../gold/`) has no tool,
+so falls back to raw aws. **Corroborated first-hand this session (CVO):** verifying the BD
+bronze recovery, `comp-freshness` did not cover `forwardfill_v2/`/bronze prefixes (only
+registered silver) → I used raw boto3 head/list. So this gap is real and I hit it myself.
+Build options: extend `comp-freshness` to a raw-prefix listing/inventory mode, or a thin
+`comp-ls`-style on-rails prefix-tree with freshness annotation. CONFIRM exact need from the
+post-flip `reason=` field (gap B) before building — but it's no longer "empty build-list."
+
+**Low watch-items (confirm post-enforce, not build-now):**
+- "raw literal-token search in TF" — confirm agents accept `comp-grep` rather than override;
+  if it recurs, the gap is UX (comp-grep discoverability), not a missing tool.
+- DDB inspect (4 DENY) — confirm the data-plane-vs-schema split is clean (schema/edges →
+  comp-aws; get/scan/query → operational); if schema-inspect overrides recur, consider a
+  comp-ddb schema surface.
 
 ## Bottom line for the gate (TO-2 / TO-4)
-The pre-enforcement evidence supports flipping Gate-1 on 2026-06-26: coverage is
-complete-enough (every gated DENY class has a tool; ~1.4% override; zero recurring
-no-tool intent). LEG B re-measures the AFTER (override rate, repeat-override intents,
-any legit-work breakage) over the post-enforce window and tunes to the data.
+The pre-enforcement evidence supports flipping Gate-1 on 2026-06-26 (CTO-validated): every
+gated DENY class has a tool and the override rate is low (~2.80% raw / 11 events; an
+undercount pending gap-C). Coverage is complete-enough to gate — with ONE known build
+candidate (the recurring aws_freshness override, P1 above) that is a refinement, not a
+flip-blocker (the raw-prefix-listing fallback is operational-free today, so no legit work
+is denied). LEG B re-measures the AFTER (override rate via the new reason= field, the
+aws_freshness repeat-intent specifically, gap-C true-count fix, any legit-work breakage)
+over the post-enforce window and tunes to the data.
 
 — 3.0.0_SA_CVO
