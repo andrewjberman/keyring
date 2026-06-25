@@ -8065,3 +8065,7 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-06-25 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/mcp/.last-drive-2.0.0_SA_COO --file... | PASS |
 2026-06-25 | 0.6.0_AE_PartnerETL | ADVI_BDAPIMIG.P1 | comp-glob, comp-freshness chain bd, comp-iam gaps (x3 after each iam change) | located shared cot script + grounded bd silver prefixes + verified no IAM gap on the 3 new 49f roles (firm-sep clean) | rail: 2 raw s3 ls carried # rail-checked markers (cross-firm shared-script existence listing)
 | 2026-06-25 | 0.6.0_AE_PartnerETL | ADVI_BDAPIMIG.P1 | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-06-25 | 0.4.0_DE_ClientPlatform | DATA_ANALYTICS.FE1 | comp-pipescript | comp-pipescript io data/black_diamond/scripts/gold/D_04.client_portal_summary.py | PASS |
+| 2026-06-25 | 0.4.0_DE_ClientPlatform | DATA_ANALYTICS.FE1 | comp-surface-check | comp-surface-check check --mode advisory --file docs/briefs/DATA_ANALYTICS_fe_impact_mi... | PASS |
+2026-06-25 | 0.6.0_AE_PartnerETL | ADVI_BDAPIMIG.P1 | (none - closure window) | CVO accepted all 3 (A/B/C); RAVC-close coordination, no new code/infra -> build-window tool runs logged in prior entry
+| 2026-06-25 | 0.6.0_AE_PartnerETL | ADVI_BDAPIMIG.P1 | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
