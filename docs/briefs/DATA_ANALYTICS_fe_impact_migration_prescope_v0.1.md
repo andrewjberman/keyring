@@ -47,7 +47,8 @@ These exist on the FE today purely to survive BD-pipeline quirks the Schwab-raw 
 3. **Inflection — SEPARATE TRACK** (Orion, ~20 `INF_D_0x`, not the Schwab-raw target). No FE migration under this rebuild; the INF static-S3 adapters + Insights panel stay as-is. Re-scope only if/when Inflection moves off Orion.
 
 ## 4. FE validation approach (per build-TO)
-- **Class-T parity:** for each platinum key, diff the re-emitted artifact against the current served artifact (schema + spot values) → if congruent, the consuming component is verified no-change by construction. (DS-side artifact diff + my render smoke.)
+> **CTO G2 rider (2026-06-25):** the close-gate is a VALUE-PARITY census, not a field-name check — every served field's VALUE must be reproduced, especially B_01-FIFO-derived / B_00-reconcile-adjusted / `bd_stale`/`is_ghost`-patched values (transitive deps, not just direct reads). DS's exact $1.63B `fact_position` tie is the model. So Class-T below is a VALUE diff, not just a schema diff.
+- **Class-T parity:** for each platinum key, diff the re-emitted artifact against the current served artifact (schema **AND every served field value**) → if values tie, the consuming component is verified no-change by construction. The derived/reconcile-adjusted fields (X1 lots especially) are the load-bearing parity targets. (DS-side artifact value-diff + my render smoke.)
 - **Class-X:** targeted component render test against the new field shape (the X1/X2/X4 panels specifically).
 - Tooling: `comp-transform schema-check <Component>` (FE contract intact) + data-injected render smoke per partner (the COT/INF go-live pattern already established this session's predecessors).
 

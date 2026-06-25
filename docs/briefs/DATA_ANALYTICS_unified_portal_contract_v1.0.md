@@ -76,5 +76,15 @@ A Schwab-raw-ONLY rebuild silently drops `client_count` correctness (N2) + all f
 
 ---
 
+## 4b. ARCH-GATE DISPOSITION (1.0.0_SA_CTO, 2026-06-25 — GO on G1–G3 + N1 scoped)
+
+- **G1 (D-tier-waist + bronze-raw/silver-dim/gold-incremental):** ACCEPT. Lock-gate = CVO FE1-completeness cert.
+- **G2 (excise B_01-FIFO + B_00-reconcile + flags):** ACCEPT **with VALUE-PARITY rider.** Excising B_01/B_00 is destructive removal of *derived* layers, so the close-gate is a value-parity census, not a field-name check: the CVO cert must verify the Schwab-native chain reproduces **every SERVED FIELD'S VALUE** — especially any B_01-FIFO-derived or B_00-reconcile-adjusted/`bd_stale`/`is_ghost`-patched value. DS's exact $1.63B `fact_position` tie is the model. **Rule: no excise silently drops or changes a served-consumed value; the census covers transitive/derived deps, not just direct reads.**
+- **G3 (49F-first / COT-follows / INF-separate):** ACCEPT. **COT is BD-native not Schwab-native** → its rebuild is gated on the BD leaner-snapshot/custodian-direct methodology proving out (ADVI_COTETL + ADVI_BDAPIMIG REST ingest) AND on BD-native lots being stable — sequence COT after 49F proves the pattern. COT panel-drop set consistent with the COTETL advisor-thinness ruling.
+- **N1 (FEES):** SCOPED — **RETAIN the BD-fees feed** as interim fee source (→ A_02/C_08, unchanged). **Cross-link: this EXEMPTS `bd-fees` (i-0868fc7e7ebec26f2) from the ADVI_BDAPIMIG Phase-2 scrape-box decommission** — bd-fees is the live fee dependency, not a dead scrape. + OPEN discovery (DS/AE): does Schwab billing/RPS carry `fee_bps`/schedule? Yes → migrate fees Schwab-native later; No → BD-fees-retained is durable. Fees NOT dropped.
+- **N2 (HOUSEHOLD):** CONFIRMED sovereign (Andrew's; **Andrew DEFERRED — "hold, return to it"**). Does NOT block the arch-gate. **PARTIAL-LOCK:** contract LOCKS for non-household panels; household-dependent panels (`client_count` headline / `client_directory` / L3 client-drill) stay PENDING-N2.
+
+**LOCK condition:** arch-gate (DONE) + CVO FE1-completeness & **excise-value-parity** cert + DS co-sign → contract LOCKS (partial: non-household panels) → COO decomposes the build-TO set. N2 resolves in parallel.
+
 ## 5. Contract status
 **CLOSED invariant:** every FE panel field resolves to a named producer (gaps 4a/4b ruled intended-absent); every produced-but-unconsumed output is confirmed agnostic-drop. Demand (FE1 §2) and supply (A1 silver-dim) are CONGRUENT. The 2 non-custodian inputs (N1/N2) are flagged for explicit provisioning. Co-signed DE+DS; awaiting CVO cert (FE1 completeness + gap-4a ruling) + CTO arch-gate (fold into the rebuild). **Open external:** Andrew's N2 household-grouping source ruling.
