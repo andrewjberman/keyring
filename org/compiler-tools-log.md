@@ -8118,3 +8118,13 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-06-25 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/mcp/.last-drive-2.0.0_SA_COO --file... | PASS |
 | 2026-06-25 | 0.4.0_DE_ClientPlatform | DATA_ANALYTICS.FE1 | comp-pipescript | comp-pipescript io data/cot/scripts/gold/D_04.client_portal_summary.py | PASS |
 | 2026-06-25 | 0.5.0_AE_OpalETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-06-25 | 0.4.0_DE_ClientPlatform | DATA_ANALYTICS.FE1 | comp-pipescript | comp-pipescript io data/cot/scripts/gold/B_02.canonical_lots.py | PASS |
+| 2026-06-25 | 0.4.0_DE_ClientPlatform | DATA_ANALYTICS.FE1 | comp-pipescript | comp-pipescript io data/cot/scripts/gold/A_03.positions_cube.py | PASS |
+| 2026-06-25 | 0.4.0_DE_ClientPlatform | DATA_ANALYTICS.FE1 | comp-pipescript | comp-pipescript io data/cot/scripts/gold/A_05.assets_dimension.py | PASS |
+| 2026-06-25 | 0.4.0_DE_ClientPlatform | DATA_ANALYTICS.FE1 | comp-pipescript | comp-pipescript io data/cot/scripts/gold/D_00.portal_aggregates.py | PASS |
+| 2026-06-25 | 0.4.0_DE_ClientPlatform | DATA_ANALYTICS.FE1 | comp-pipescript | comp-pipescript io data/cot/scripts/gold/D_00b.portal_timeseries.py | PASS |
+| 2026-06-25 | 0.4.0_DE_ClientPlatform | DATA_ANALYTICS.FE1 | comp-pipescript | comp-pipescript io data/cot/scripts/gold/D_01.partner_analytics.py | PASS |
+| 2026-06-25 | 0.4.0_DS_ClientPlatform | DATA_ANALYTICS.A1 | comp-surface-check | comp-surface-check check --mode advisory --file data/canonical/scripts/gold/build_gold_... | PASS |
+| 2026-06-25 | 0.4.0_DS_ClientPlatform | DATA_ANALYTICS.A1 | comp-surface-check | comp-surface-check check --mode advisory --file data/canonical/scripts/silver/build_rel... | PASS |
+| 2026-06-25 | 0.5.0_AE_OpalETL | MDPF_ASSETS.FREEZE-DX | (session-log line) | dx complete: comp-which/comp-glob/pipescript/comp-freshness used -- see per-tool rows above | PASS |
+| 2026-06-25 | 0.5.0_AE_OpalETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
