@@ -116,6 +116,9 @@ deterministic command, and it is the single-point-block detector this whole step
 python .tools/fabric-check.py --blocks    # triage: BLOCKED + SOVEREIGN + STALE-VERIFY
 # (run plain `python .tools/fabric-check.py` for the full WORKING/IDLE/... view)
 python .tools/deploy_ledger.py check --red # NO-HALF-DEPLOYS gate (e38cc2b16): RED-blares any deploy ledger OPEN past window
+# CRITICAL-SURFACE ALERT POLL (the silent-freeze structural catch -- see below). ws COO only.
+aws sqs receive-message --queue-url "https://sqs.us-east-1.amazonaws.com/313476888478/opal-critical-surface-alerts-coo" \
+  --max-number-of-messages 10 --wait-time-seconds 3 --region us-east-1   # empty = clean; any Message = ACT then delete
 ```
 
 **Deploy-completion gate (TO #5, BRONZE-FIX #5 — NEVER-law e38cc2b16):** `deploy_ledger.py check --red`
@@ -125,6 +128,18 @@ past its window. fabric-check.py also prints an OPEN-DEPLOYS line every pass. If
 route to the deploy author to finish/rollback the stranded legs THIS cycle (the same NEVER-law discipline as
 a BLOCKED lane). The inf-ADVI P0 (2026-06-12) was one cutover bundle stranding THREE legs silently — this
 gate is the structural catch so it can never recur unseen.
+
+**Critical-surface alert poll (the silent-freeze structural catch — Andrew-relevant, 2026-06-25):** the
+`opal-critical-surface-alerts-coo` SQS is the COO loop's window into the whole `opal-critical-surface-alerts`
+SNS topic (the OTP-gateway liveness rider, egress-check/D8 surfaces, etc. all publish there). It is the
+app-level, token-lapse-robust, zero-Andrew-dependency channel built after the cot pipeline sat SILENTLY
+frozen for 2 days with no alarm (the worst part of that incident was the silence, not the freeze). Poll it
+EVERY cycle: empty = clean; **any Message = a critical surface is failing → ACT this cycle** (the body carries
+remediation, e.g. "Andrew delegated-token refresh may have lapsed → have Andrew re-auth the gateway at
+https://mcp.opalinvest.dev/login"), then `sqs delete-message` the ReceiptHandle so it's not re-handled.
+14d retention means a non-ok survives a long idle gap with no silent drop. Treat a liveness FAIL like a
+BLOCKED lane: resolve or escalate-to-Andrew the same cycle. (Channel: m365-mcp-gateway-v1.5.0 / 8503b17e6;
+SES-to-Andrew is the best-effort human-facing secondary; SES prod-access is the click-free durable fix, dual-use with the ETFS email.)
 
 **Act on its buckets THIS cycle — this is the load-bearing reason /drive runs (Andrew direct):**
 most fabric advancement is event-driven and self-healing, but the failure mode /drive exists to
