@@ -103,6 +103,14 @@ def build(root: str, p: HeatParams, now_ts: float) -> tuple[list, dict]:
     untracked = untracked_mtime(root)
     src = {**{k: "git" for k in tracked}, **{k: "mtime" for k in untracked}}
     items = [(path, ts) for path, ts in {**tracked, **untracked}.items()]
+    # ghost-guard (defensive, 0.5.0-suggested 2026-06-25): the scored universe MUST be the
+    # CURRENT tree only. tracked_last_write already filters `line in current`, but assert it
+    # structurally so a future refactor can't reintroduce DELETED-historical ghost paths (the
+    # `git log --name-only` over-count that inflated a parallel walk 20k->48k). Hygiene universe
+    # = git-respecting current tree (see README "Canonical estate universe").
+    current = set(_git(root, "ls-files").splitlines()) | set(untracked)
+    ghosts = [pth for pth, _ in items if pth not in current]
+    assert not ghosts, f"ghost paths not in current tree: {len(ghosts)} (e.g. {ghosts[:3]})"
     scores = score_items(items, now_ts, p)
     return scores, src
 
