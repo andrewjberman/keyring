@@ -7962,3 +7962,16 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 
 | 2026-06-25 | 0.7.0_AE_CloudOps | ETFS_SETUP.W1/W3 | comp-freshness(x3), comp-iam service, comp-which, comp-grep, ds-commit-gate, safe-apply | inf-backfill 40d + cot W3 producer deployed+verified; obs#2 price-staleness traced (INF_build_canonical_prices.py, owner DS); deploy_ledger phantom-leg gap filed |
 | 2026-06-25 | 0.7.0_AE_CloudOps | ETFS_SETUP.W3 | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-06-25 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/mcp/.last-drive-2.0.0_SA_COO --file... | PASS |
+| 2026-06-25 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/NFRA_COMPRA... | PASS |
+| 2026-06-25 | 0.7.0_AE_CloudOps | ETFS_SETUP.W3 | comp-surface-check | comp-surface-check check --mode advisory --file .tools/deploy_ledger.py --file docs/bri... | PASS |
+| 2026-06-25 | 0.4.0_DS_ClientPlatform | DATA_ANALYTICS.A1 | comp-pipescript | comp-pipescript io data/black_diamond/scripts/gold/B_03.account_gains.py | PASS |
+| 2026-06-25 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-06-25 | 0.4.0_DS_ClientPlatform | DATA_ANALYTICS.A1 | comp-surface-check | comp-surface-check check --mode advisory --file docs/briefs/DATA_ANALYTICS_A1_B_03_acco... | PASS |
+| 2026-06-25 | 1.0.0_SA_CTO | NFRA_COMPRAIL.TO-6.cto-cvo-ld0207-hardening | comp-surface-check | comp-surface-check check --mode advisory --file .tools/hooks/comp-tool-hud.sh | PASS |
+| 2026-06-25 | 0.7.0_AE_CloudOps | DATA_PLATFORM.DC2 | comp-surface-check | comp-surface-check check --mode advisory --file docs/briefs/dc2-eclipse-authed-capture-... | PASS |
+| 2026-06-25 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/NFRA_COMPRA... | PASS |
+| 2026-06-25 | 0.4.0_DS_ClientPlatform | DATA_ANALYTICS.A1 | comp-pipescript | comp-pipescript deployed data/black_diamond/scripts/silver/merge-daily-incremental.py | PASS |
+| 2026-06-25 | 0.4.0_DS_ClientPlatform | DATA_ANALYTICS.A1 | comp-pipescript | comp-pipescript io data/black_diamond/scripts/gold/C_00.canonical_performance.py | PASS |
+2026-06-25 | 1.0.0_SA_CTO | TO-6/TO-5 + ADVI_BDAPIMIG + DC2 | comp-which-rail.log validation (caught 11-not-3 overrides + recurring aws_freshness coverage gap + reason-truncation), comprail-gate1-fptest.sh BUILT (14/14 PASS, AC#5). Validated artifact not self-report; fixed reason= fidelity.
+| 2026-06-25 | 1.0.0_SA_CTO | NFRA_COMPRAIL.TO-6.cto-cvo-ld0207-hardening | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
