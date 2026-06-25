@@ -167,6 +167,21 @@ if [ "$tool" = Bash ]; then
     infra_grep) _gate=1 ;;                                                              # tier 2a: infra/.tf grep
   esac
 fi
+# GATE-1 (LD-0207 LEG-A, option-a conservative scope, CTO 2026-06-25) -- estate-scoped broad-repo-grep
+# DENY, enforced ONLY when the marker org/mcp/comprail-gate1.enforce is present (announce-then-enforce:
+# ABSENT = advisory default = ZERO behavior change; COO flips it ON post-announce+grace via LEG-C). Scope:
+# the comp_which catch-all (UNCLASSIFIED broad search -- the specific classes keep their own advisory tier)
+# that is a STANDALONE recursive repo search (grep -r/-R / rg / find -- NOT a pipe-grep) over an ESTATE/
+# graph-backed path. No-graph (new project / non-estate lib [exited above via the deck_generation carve-out]
+# / generic / pathless) stays advisory, NEVER denied (governing principle + AC#5 over-gate guard). The
+# #rail-checked override + /freeform are honored by the shared deny path below. FP-test: comprail-gate1-fptest.sh.
+if [ "$tool" = Bash ] && [ "$class" = comp_which ] && [ -f "$WS/org/mcp/comprail-gate1.enforce" ]; then
+  if ! printf '%s' "$query" | grep -qE '\|' \
+     && printf '%s' "$query" | grep -qE '(grep[[:space:]]+-[A-Za-z]*[rR]|(^|[^A-Za-z])rg[[:space:]]|(^|[^A-Za-z])find[[:space:]])' \
+     && printf '%s' "$query $gpath" | grep -qE 'data/[A-Za-z0-9_]+/scripts|portal/src|infra/aws|\.tf([^A-Za-z0-9]|$)'; then
+    _gate=1
+  fi
+fi
 if [ "$_gate" = 1 ]; then
   RAIL_LOG="$WS/org/mcp/comp-which-rail.log"
   _ts="$(date -u +%Y-%m-%dT%H:%M:%SZ 2>/dev/null || echo '?')"
