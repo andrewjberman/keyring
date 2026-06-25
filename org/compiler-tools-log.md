@@ -8399,3 +8399,5 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 
 - 2026-06-25 0.4.0_DS_ClientPlatform [VALIDATE]: canonical cadence Step-7.5 owner-verify + orchestrator hardened (monthly-batch catch-up, holdings@t1, RLD lot_seq tiebreaker); live-proved to 06-24 (surfaced+fixed 2 bugs). ds-commit-gate PASS x2; no comp-which (cadence/data-build = direct runs, off-rail).
 | 2026-06-25 | 0.4.0_DS_ClientPlatform | DATA_ANALYTICS.A1 | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+- 2026-06-25 (1.0.0_SA_CTO, comptool-f1f3+nfra_expand+bd-otp window): BUILT comp_api.py (F1 L3 facade), comp-pipescript-io auto-walk (F2), comp-freshness --raw/--max-age (F3), comp-surface-check egress limb; comp-surface-check PASS on the SVG commit; grounded BD OTP read live via m365 MCP gateway (whoami+list_recent_email) -> ruled app-reg OFF. Raw aws secretsmanager list + token-curl = off-graph operational discovery (no comp surface).
+| 2026-06-25 | 1.0.0_SA_CTO | NFRA_COMPRAIL.TO-6.cto-cvo-ld0207-hardening | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
