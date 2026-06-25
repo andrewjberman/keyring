@@ -1,6 +1,6 @@
 {
   "project_code": "NFRA_GLOBGRPH",
-  "macro": "NFRA",
+  "macro_code": "NFRA",
   "name": "Global Opal Graph â€” versioned, analyzable, agent-queryable platform",
   "renamed_note": "RENAMED 2026-06-08 (Andrew-direct 'go on'): project key ADHC_GLOBGRPH -> NFRA_GLOBGRPH (the comp-aws expansion is an NFRA-macro project, sibling of NFRA_COMPAWS + NFRA_COSTAWS). PRD -> docs/architecture/NFRA_GLOBGRPH_PRD.md.",
   "description": "Expand the CMPAWS comp-aws compiler into a VERSIONED, diffable, agent-queryable GLOBAL Opal graph: the comp-aws AWS-resource layer UNION the existing comp-graph portal/pipeline layer, stitched by inter-system edges (CMPAWS-PRD sec6 at full scope). Andrew-direct sovereign expansion 2026-06-08 â€” gives the fabric a single queryable source-of-truth for the whole system's structure, versioned over time (daily commits + diffs + metrics deltas + audit timeline) so changes/drift are analyzable and agents can Cypher-traverse it.",

@@ -1,4 +1,6 @@
 {
+  "project_code": "MDLP_DISTFIX",
+  "macro_code": "MDLP",
   "status": "complete",
   "completed": "2026-06-08",
   "current_phase": "COMPLETE 2026-06-08 (2.0.0_SA_COO 2-step close; CVO close-adequacy GREEN independently-verified 141417Z). GOAL ACHIEVED: all 3 Model-Portfolios/ADVI distribution data-integrity issues fixed + validated on real served artifacts. I1 (Global not a true cross-partner aggregate): re-sourced compute_account_distribution.py onto the live partner-dimensioned MDPF feed (model_aua_positions) -> Global = honest 49F+INF union, reconciles to the cent (7,301 / $1,491,982,925.05, delta $0.00). I2 (timestamp staleness): resolved by the per-account MDPF re-source (regenerates DAILY -> not exposed to the separate MDPF Inflection-aggregate cadence issue, which is tracked under MDPF_CADENCE). I3 (dust contamination): >=$1K floor via shared floored-percentile helper across bd D_01/D_04 + orion INF -> min $1,037.34/$1,150.67 both >=$1K, no $8.42 dust, no negative. EVIDENCE CHAIN: DS first-unattended parity GREEN (c9487f3e8, 3 consecutive unattended fires 6/6-6/8) + DE visual-smoke GREEN (bell-curve all 3 firms, log c09a95c50) + CVO independent close-adequacy GREEN (re-derived parity from served artifacts to the cent, 141417Z) + ADVI percentile half CVO-PASS 6/05 (2a8fb300b) + Andrew eyeball (ebadb5f58). INF reconciliation closed: origin 449 + 164 blend-fold = DE's 613, all artifacts mutually consistent. DEFERRED (not close-blockers): (a) smartx-exporter R5 decommission = Andrew-HELD (keep stopped as fallback; no-consumer proof banked; decommission whenever Andrew GOs — standalone trivial AE task, i-06ebcb27395eb3f49 + EIP retained). (b) ADJACENT FINDING (out-of-scope, surfaced to Andrew for disposition): Global VALUE trend (rawTimeSeriesData) ends 2026-05-29 — was explicitly separated from I1/I2/I3 scope; awaits Andrew disposition, NOT part of this close. (c) Test-harness finding: no agent-reachable cred reaches ADVI Distribution-tab data (banked, COO lane, non-blocking). PRD docs/architecture/MDLP_DISTFIX_PRD.md (authored-once, not bumped per close discipline).",
@@ -8,6 +10,5 @@
     "0.7.0",
     "1.0"
   ],
-  "macro": "MDLP",
   "prd": "docs/architecture/MDLP_DISTFIX_PRD.md"
 }

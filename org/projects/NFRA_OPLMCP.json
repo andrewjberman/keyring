@@ -1,6 +1,6 @@
 {
   "project_code": "NFRA_OPLMCP",
-  "macro": "NFRA",
+  "macro_code": "NFRA",
   "name": "Opal M365 MCP - per-user delegated Microsoft 365 gateway for Claude",
   "description": "Stand up and govern a shared property that lets Opal employees reach their own Microsoft 365 (email, OneDrive, SharePoint, calendar) from Claude. Architecture: a remote MCP gateway (Python, FastMCP Streamable HTTP, stateless) running on a nano EC2 behind an AWS-native access layer (ALB + per-user delegated OAuth via the gateway's own MCP-OAuth Authorization-Server facade [Model-B, .06] bridging to Entra via App-2 delegated MSAL; per-user Fernet-encrypted refresh token) so Graph enforces each user sees only their own data -- shared server, NEVER shared identity / never app-only. Guard middleware (pure-ASGI) enforces a global KILL_SWITCH + hot-reload per-user blocklist before any tool runs; every call audits (user/tool/redacted-args/outcome/ts) on-box AND to the S3/Athena lake (.05, redaction-proven, WORM-ready). Most users connect via Claude Code (PowerShell). Andrew-direct build session origin 2026-06-10; origin handoff: org/tier1_exec/3.0.0_SA_CVO/logs/2026-06-10/session_m365_oplmcp_buildout_handoff.md (d2cd1022f).",
   "status": "build-complete",

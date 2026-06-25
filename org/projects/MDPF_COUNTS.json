@@ -1,4 +1,6 @@
 {
+  "project_code": "MDPF_COUNTS",
+  "macro_code": "MDPF",
   "status": "complete",
   "completed": "2026-06-08",
   "current_phase": "COMPLETE 2026-06-08 (2.0.0_SA_COO 2-step close; ANDREW SOVEREIGN DIRECT 'close it now' via CTO 153825Z — 15:55Z scheduled-cadence gate WAIVED as belt-and-suspenders). GOAL ACHIEVED: Model Portfolios Account-Trend account-COUNT time-series (lost at aggregate level post the 5/15 firm-split) fully restored + validated. ROOT CAUSE was a Rule-12 S3-runner-sync gap (the nightly rollup ran the RIGHT script but the deployed S3 copy of build_aggregate_aua_timeseries.py was stale 6/01, 0 account_count refs); FIX = redeploy the account_count-carrying rollup + Global cross-partner-union by_model emission + backfill pre-5/18 49F daily per-model count from the legacy noncurrent version. ALL GATES MET: (1) nightly-validation PASS (0.7.0_AE 131739Z — 49F 405/405, INF 14, Global 9-model union sums verify, all 3 FE artifacts correct); (2) CVO independent data-layer PASS (132017Z — cross-partner union account_count==49F+Inflection, 3645/3645 checks 0-mismatch across 405 dates x 9 models); (3) DE FE visual gate GREEN (135026Z — all 3 firms' Count toggles populated, reconcile exact 6,852+613=7,465, donut $1.81B, FE re-point confirmed live-PROD v2.1.115/116); (4) Andrew sovereign visual+substance confirm x2 ('correct on dev build' 6/05 + 'COUNTs is done, the counts all display fine' + 'close it now' 6/08). FE stack PROD-live (v2.1.115 + v2.1.116). DEFERRED (not blockers): AUA-split (FULL-vs-50/50) = explicitly separate scope (interim FULL per DS, aggregate card unaffected); MDPF refresh-cadence sync = tracked under MDPF_CADENCE (FE-label served v2.1.117, backend ready-to-apply). Govern note banked: comp-pipescript-deployed opal-data-mdpf coverage gap (let the stale-deploy hide) -> ADHC_DEPINT widen (CTO co-owns). PRD docs/architecture/MDPF_COUNTS_PRD.md (authored-once, not bumped per close discipline).",
@@ -8,6 +10,5 @@
     "0.7.0",
     "1.0"
   ],
-  "macro": "MDPF",
   "prd": "docs/architecture/MDPF_COUNTS_PRD.md"
 }

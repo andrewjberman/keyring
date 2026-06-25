@@ -1,5 +1,6 @@
 {
   "project_code": "MDPF_CADENCE",
+  "macro_code": "MDPF",
   "name": "MDPF refresh-cadence sync to spine/ADVI ~10a timeline",
   "description": "Sync the Model Portfolios (MDPF) data-refresh cadence to the spine/ADVI ~10a timeline so the Inflection MDPF-vs-ADVI gap (and its weekend/weekday-morning recurrence) is structurally eliminated. Andrew-sovereign 2026-06-08 (CVO diagnosed the $206m-vs-$203m ingestion-cadence bug; same spine, MDPF weekday-only cron lagged the T+1 reconciled close).",
   "status": "complete",
@@ -10,7 +11,6 @@
     "0.7.0",
     "0.4.0"
   ],
-  "macro": "MDPF",
   "created": "2026-06-08",
   "prd": "None yet (CVO investigation log org/tier1_exec/3.0.0_SA_CVO/logs/2026-06-08/; CTO trigger-design spec pending)"
 }
