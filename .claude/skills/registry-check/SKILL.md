@@ -67,9 +67,31 @@ Why:   why we are / were doing it       (one line)
    text are folded to ASCII so the Windows console charmap codec never mangles a
    line to `?`/U+FFFD or truncates it (CLAUDE.md Code Quality).
 
+## Branded SVG board (poster view)
+
+For a visual, shareable rendering of the HOT portfolio (vs. the text lens), use the
+companion renderer **`render_board_svg.py`** (lives in this skill dir). It emits a
+single Opal-branded SVG poster -- navy header + KO-white interlock logo, cluster
+sections, one card per project (status pill + a one-line WHAT + a one-line NOW +
+owner/last-commit footer), brand palette + Lato pulled from
+`deck_generation/brand_spec/brand.json` and the logo package.
+
+```bash
+python .claude/skills/registry-check/render_board_svg.py [OUTPUT.svg]   # default: ./opal_project_board.svg
+```
+
+**Snapshot, not live:** the per-project WHAT/NOW one-liners and the cluster grouping
+are HAND-CURATED inside the script's `clusters` list (richer than `--json` carries).
+To refresh: run `/registry-check` for the current status/owner/age, edit `clusters`,
+re-run. The styling layer (palette/logo/Lato/card layout) is reusable as-is; only the
+data list is the curated snapshot (last: 2026-06-25, 22 HOT projects). Born from
+Andrew's 2026-06-25 ask to render the board "/draw style" as a branded SVG.
+
 ## Notes
 
 - **Read-only.** Never writes, never dispatches. A lens, like `/fabric-check`.
+  (The SVG renderer above WRITES one file -- the board image -- on explicit ask; the
+  registry lens itself stays read-only.)
 - **Schema-tolerant.** Handles the rich JSON schema (`name`/`description`/`phase`)
   AND the thin one (`status`/`current_phase`/`macro`). Thin JSONs produce thinner
   Why/What lines (they lack a `name`/`description`) -- that is a data-hygiene
