@@ -37,6 +37,23 @@ RULES = [
      "S3 artifact / who-reads-writes",
      ["comp-pipescript io <script>", "pipescript --resource <key>"],
      "what produces/consumes an S3 key + who reads an artifact"),
+    # LD-0208 fix (C, residual): comp-platinum is the per-firm FULL-STACK tracer
+    # (component -> endpoint -> Lambda/S3 -> gold). It collides with the portal/component rule
+    # on bare "component/endpoint" -> placed FIRST with distinctive phrases so a full-stack /
+    # platinum query wins the tie. (MSTR coverage-probe miss 2026-06-25.)
+    (["platinum", "platinum key", "platinum layer", "platinum artifact", "full-stack trace",
+      "full stack trace", "full-stack", "per firm", "per-firm", "component to endpoint"],
+     "full-stack per-firm trace (platinum)",
+     ["comp-platinum page <Component> --firm <bd|inf|cot>", "comp-platinum reverse <s3_key>"],
+     "the per-firm full-stack trace component->endpoint->Lambda/S3->gold (and its reverse)"),
+    # comp-xref is the GRAPH-aware "every node touching a symbol" -- the rich answer to a query
+    # that reads like a text search ('find every...'). Forced STRONG so it routes BEFORE the
+    # search-verb grep primitive (mirrors the call-sites->comp-blast special-case).
+    (["xref", "graph node", "graph nodes", "node touching", "nodes touching", "touching a symbol",
+      "every graph node", "graph symbol", "symbol across"],
+     "graph nodes touching a symbol (xref)",
+     ["comp-xref <symbol>", "comp-xref --save  # snapshot, then comp-xref to diff"],
+     "every graph node (id/label/file/edge) touching a symbol -- graph traversal, not a text grep"),
     (["portal", "component", "endpoint", "scoped route", "/api/", ".tsx", "tsx",
       "frontend", "renders", "rendering", "getadvisor", "which lambda serves", "serves /api"],
      "portal component / route",

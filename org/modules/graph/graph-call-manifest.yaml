@@ -27,7 +27,7 @@
 #   comp-learns-run / comp-learns-status  -- compiler self-learning/telemetry harness (not a graph query)
 #   comp-perf                             -- tool-perf benchmarking (not a graph query)
 #   comp-v5-composite-test.sh             -- tool regression test
-excluded_not_graph_use_cases: [comp-learns-run, comp-learns-status, comp-perf, comp-v5-composite-test, comp-manifest-check, comp-surface-check]  # comp-manifest-check = D6 manifest-ENFORCEMENT gate; comp-surface-check = D8 critical-surface commit-gate (polices critical-surfaces.yaml at commit, auto in safe-commit) -- both ENFORCEMENT gates, not graph-query use-cases (so excluded here; they're in CLAUDE.md's invoke-table)
+excluded_not_graph_use_cases: [comp-learns-run, comp-learns-status, comp-perf, comp-v5-composite-test, comp-manifest-check, comp-surface-check, comp-to]  # comp-manifest-check = D6 manifest-ENFORCEMENT gate; comp-surface-check = D8 critical-surface commit-gate (polices critical-surfaces.yaml at commit, auto in safe-commit) -- both ENFORCEMENT gates, not graph-query use-cases (so excluded here; they're in CLAUDE.md's invoke-table). comp-to = session-context setter (writes the race-free per-session TO_ID for the comp auto-logger); a startup/context primitive like comp-which/comp-grep/comp-glob, not a graph-query use-case (LD-0208 coverage reconcile 2026-06-25, CTO)
 
 contract:
   default: QUERY        # comp-kuzu (cloud/cross-layer) or cached comp-trace/comp-blast (trace)
