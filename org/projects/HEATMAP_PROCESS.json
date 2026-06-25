@@ -21,7 +21,7 @@
   ],
   "status": "scoping",
   "phase": "NFRA_EXPAND Strand C (process audit/mining) -- re-homed from NFRA_HEATMAP (Andrew consolidation 2026-06-25). SCOPING -- part of NFRA_HEATMAP (LD-0215). TO candidates P0(L0 distill+de-identify)+P1(sessionize)+P2(mine/classify/rank)+P3(interview UX)+P4(synth/verify/adopt+live-router). SEQUENCES against OPLMCP .05 (R8 lake) landing -- decompose after OBJECT.",
-  "blocking": "Sequencing: PROCESS sequences against OPLMCP .05 (R8 audit-lake) landing -- the L0 capture substrate. Not a hard block (the lake is in flight), a sequencing dependency.",
+  "blocking": "*** DECOMPOSE-HOLD (CTO flag 2026-06-25 205707Z, Andrew-gated): HEATMAP_PROCESS (OPLMCP-traffic L0-L5 workflow-mining) is the SAME DOMAIN as NFRA_WRKFLW (also OPLMCP-traffic workflow-mining). CTO recommended to Andrew that they FOLD -- supersede HEATMAP_PROCESS, make NFRA_WRKFLW the Strand-C process arm. Andrew has NOT yet ruled. DO NOT decompose HEATMAP_PROCESS standalone until Andrew rules the dedup (else double-build, the MSTR-warned duplication). CTO pings COO when Andrew rules. *** Strand B (auth-edge/0.7.0) + Strand C-OBJECT (HEATMAP_OBJECT) proceed independently. Secondary sequencing: PROCESS also sequences against OPLMCP .05 (R8 audit-lake) landing.",
   "created": "2026-06-25",
   "sovereign": "Andrew",
   "coo_lane": "2.0.0_SA_COO",
