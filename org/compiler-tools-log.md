@@ -8374,3 +8374,28 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-06-25 | 0.5.0_AE_OpalETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .claude/skills/49-schwab-conv/SKILL.md | PASS |
 | 2026-06-25 | 0.5.0_AE_OpalETL | session-log-close | (log) | inf-P0-complete + ETFS_CANON deploy + value-floor uniformity -- see per-tool rows | PASS |
 | 2026-06-25 | 0.5.0_AE_OpalETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-06-25 | 1.0.0_SA_CTO | NFRA_COMPRAIL.TO-6.cto-cvo-ld0207-hardening | comp-surface-check | comp-surface-check check --mode advisory --file .claude/skills/registry-check/SKILL.md ... | PASS |
+| 2026-06-25 | 0.4.0_DS_ClientPlatform | DATA_ANALYTICS.A1 | comp-surface-check | comp-surface-check check --mode advisory --file data/canonical/schwab/build_canonical_d... | PASS |
+| 2026-06-25 | 0.4.0_DT_ClientPlatform | (no-TO) | comp-transform | comp-transform schema-check DistributionTab | PASS |
+| 2026-06-25 | 0.4.0_DE_ClientPlatform | DATA_ANALYTICS.FE1 | comp-surface-check | comp-surface-check check --mode advisory --file data/etfs/scripts/presentation/render_m... | PASS |
+| 2026-06-25 | 0.4.0_DE_ClientPlatform | DATA_ANALYTICS.FE1 | comp-surface-check | comp-surface-check check --mode advisory --file data/etfs/ETFS_ARCHITECTURE_AND_MECHANI... | PASS |
+| 2026-06-25 | 0.6.0_AE_PartnerETL | ADVI_BDAPIMIG.P1 | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/ec2/bd-49f-auto-login/bd_49f_... | PASS |
+| 2026-06-25 | 0.7.0_AE_CloudOps | NFRA_DEBTSCAN.TO-D3 | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/terraform/bd-49f-auto-login/i... | PASS |
+| 2026-06-25 | 0.7.0_AE_CloudOps | NFRA_DEBTSCAN.TO-D3 | comp-iam | comp-iam service bd-49f-auto-login-role | PASS |
+| 2026-06-25 | 0.7.0_AE_CloudOps | NFRA_DEBTSCAN.TO-D3 | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/change_management/20... | PASS |
+| 2026-06-25 | 0.6.0_AE_PartnerETL | ADVI_BDAPIMIG.P1 | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/ec2/bd-49f-auto-login/bd_49f_... | PASS |
+| 2026-06-25 | 0.4.0_DS_ClientPlatform | DATA_ANALYTICS.A1 | comp-surface-check | comp-surface-check check --mode advisory --file data/canonical/schwab/build_canonical_d... | PASS |
+| 2026-06-25 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+| 2026-06-25 | 0.4.0_DT_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file portal | PASS |
+| 2026-06-25 | 0.4.0_DT_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/change_management/20... | PASS |
+| 2026-06-25 | 0.6.0_AE_PartnerETL | ADVI_BDAPIMIG.P1 | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/ec2/bd-49f-auto-login/bd_49f_... | PASS |
+| 2026-06-25 | 0.6.0_AE_PartnerETL | ADVI_BDAPIMIG.P1 | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/ec2/bd-49f-auto-login/bd_49f_... | PASS |
+| 2026-06-25 | 0.7.0_AE_CloudOps | NFRA_DEBTSCAN.TO-D3 | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/terraform/bd-49f-auto-login/i... | PASS |
+| 2026-06-25 | 0.7.0_AE_CloudOps | NFRA_DEBTSCAN.TO-D3 | comp-iam | comp-iam service bd-49f-auto-login-role | PASS |
+| 2026-06-25 | 0.6.0_AE_PartnerETL | ADVI_BDAPIMIG.P1 | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/ec2/bd-49f-auto-login/bd_49f_... | PASS |
+| 2026-06-25 | 0.7.0_AE_CloudOps | NFRA_DEBTSCAN.TO-D3 | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/change_management/20... | PASS |
+| 2026-06-25 | 0.6.0_AE_PartnerETL | ADVI_BDAPIMIG.P1 | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/ec2/bd-49f-auto-login/bd_49f_... | PASS |
+| 2026-06-25 | 0.6.0_AE_PartnerETL | ADVI_BDAPIMIG.P1 | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/ec2/bd-49f-auto-login/bd_49f_... | PASS |
+
+- 2026-06-25 0.4.0_DS_ClientPlatform [VALIDATE]: canonical cadence Step-7.5 owner-verify + orchestrator hardened (monthly-batch catch-up, holdings@t1, RLD lot_seq tiebreaker); live-proved to 06-24 (surfaced+fixed 2 bugs). ds-commit-gate PASS x2; no comp-which (cadence/data-build = direct runs, off-rail).
+| 2026-06-25 | 0.4.0_DS_ClientPlatform | DATA_ANALYTICS.A1 | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
