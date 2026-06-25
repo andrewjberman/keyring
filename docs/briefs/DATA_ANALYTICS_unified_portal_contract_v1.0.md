@@ -1,5 +1,14 @@
 # DATA_ANALYTICS — UNIFIED PORTAL CONTRACT v1.0 (FE-down ⇄ gold-up, co-signed)
 
+> **STATUS REFRAME (Andrew-direct via DS, 2026-06-25; CTO `172040Z`):** The Schwab-raw-native canonical is a **PARALLEL R&D
+> build that COEXISTS with BD** — **NO excise of B_00/B_01, NO cutover, NO contract-LOCK, NO decommission.** The live 49F
+> pipeline + served $1.83B are UNTOUCHED. This doc is the **PARALLEL R&D FOUNDATION DESIGN**, not a locked production-rebuild
+> contract. The DESIGN content below (D-tier-waist closed-vertical, the per-partner platinum demand map, strict-form/silver-dim
+> supply) STAYS and is the prospective foundation. The production-cutover framing — "contract LOCKS", the §4b excise/value-parity
+> arch-gate disposition, N1-decommission-exempt, N2-partial-lock — **is STOOD DOWN** (Tier-1 was over-applying cutover machinery
+> to R&D). CVO involvement = light validation (is the parallel build correct + isolated), NOT a lock-gate. COO authors NO
+> cutover build-TOs. Read the tables below as the R&D target shape, not a staged migration.
+
 **Authors:** 0.4.0_DE_ClientPlatform (FE-down / demand) + 0.4.0_DS_ClientPlatform (gold-up / supply, co-sign)
 **Date:** 2026-06-25 | **archetype:** COORDINATE
 **For:** 1.0.0_SA_CTO (arch-gate → Schwab-raw-native canonize-gold rebuild) · 3.0.0_SA_CVO (cert) | **cc:** 2.0.0_SA_COO
@@ -76,7 +85,12 @@ A Schwab-raw-ONLY rebuild silently drops `client_count` correctness (N2) + all f
 
 ---
 
-## 4b. ARCH-GATE DISPOSITION (1.0.0_SA_CTO, 2026-06-25 — GO on G1–G3 + N1 scoped)
+## 4b. R&D DESIGN NOTES (formerly "arch-gate disposition" — STOOD DOWN to parallel-R&D framing per CTO `172040Z`)
+
+> The items below were CTO rulings under a production-cutover premise that Andrew reset to parallel-R&D. They are retained
+> as DESIGN RATIONALE (how the parallel build should be shaped), NOT as production gates: there is **no excise, no LOCK,
+> no decommission, no partial-lock.** Read "excise" as "the parallel build's strict-form omits the BD-reconcile layer by
+> design" and "value-parity" as "the R&D characterization check that the parallel build's values are sane vs the live BD book."
 
 - **G1 (D-tier-waist + bronze-raw/silver-dim/gold-incremental):** ACCEPT. Lock-gate = CVO FE1-completeness cert.
 - **G2 (excise B_01-FIFO + B_00-reconcile + flags):** ACCEPT **with VALUE-PARITY rider.** Excising B_01/B_00 is destructive removal of *derived* layers, so the close-gate is a value-parity census, not a field-name check: the CVO cert must verify the Schwab-native chain reproduces **every SERVED FIELD'S VALUE** — especially any B_01-FIFO-derived or B_00-reconcile-adjusted/`bd_stale`/`is_ghost`-patched value. DS's exact $1.63B `fact_position` tie is the model. **Rule: no excise silently drops or changes a served-consumed value; the census covers transitive/derived deps, not just direct reads.**
@@ -84,7 +98,7 @@ A Schwab-raw-ONLY rebuild silently drops `client_count` correctness (N2) + all f
 - **N1 (FEES):** SCOPED — **RETAIN the BD-fees feed** as interim fee source (→ A_02/C_08, unchanged). **Cross-link: this EXEMPTS `bd-fees` (i-0868fc7e7ebec26f2) from the ADVI_BDAPIMIG Phase-2 scrape-box decommission** — bd-fees is the live fee dependency, not a dead scrape. + OPEN discovery (DS/AE): does Schwab billing/RPS carry `fee_bps`/schedule? Yes → migrate fees Schwab-native later; No → BD-fees-retained is durable. Fees NOT dropped.
 - **N2 (HOUSEHOLD):** CONFIRMED sovereign (Andrew's; **Andrew DEFERRED — "hold, return to it"**). Does NOT block the arch-gate. **PARTIAL-LOCK:** contract LOCKS for non-household panels; household-dependent panels (`client_count` headline / `client_directory` / L3 client-drill) stay PENDING-N2.
 
-**LOCK condition:** arch-gate (DONE) + CVO FE1-completeness & **excise-value-parity** cert + DS co-sign → contract LOCKS (partial: non-household panels) → COO decomposes the build-TO set. N2 resolves in parallel.
+**~~LOCK condition~~ — STOOD DOWN:** there is no contract-LOCK and no cutover build-TO decomposition. The parallel R&D build proceeds prospectively; CVO does light correctness/isolation validation (not a lock-gate); BD + the served $1.83B stay live and untouched. N1 fees / N2 household / N3 AUA-completeness remain DESIGN considerations for the parallel build, not production gates.
 
 ## 5. Contract status
 **CLOSED invariant:** every FE panel field resolves to a named producer (gaps 4a/4b ruled intended-absent); every produced-but-unconsumed output is confirmed agnostic-drop. Demand (FE1 §2) and supply (A1 silver-dim) are CONGRUENT. The 2 non-custodian inputs (N1/N2) are flagged for explicit provisioning. Co-signed DE+DS; awaiting CVO cert (FE1 completeness + gap-4a ruling) + CTO arch-gate (fold into the rebuild). **Open external:** Andrew's N2 household-grouping source ruling.

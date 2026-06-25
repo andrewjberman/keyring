@@ -1,5 +1,11 @@
 # DATA_ANALYTICS — FE-MIGRATION SCAFFOLD (Schwab-raw-native rebuild, FE build-lead) v0.1
 
+> **REFRAME (Andrew-direct via DS, 2026-06-25; CTO `172040Z`):** Schwab-raw-native canonical = **PARALLEL R&D coexisting with
+> BD — no contract-LOCK, no cutover, no build-TO decomposition is staged.** This scaffold is **PROSPECTIVE** — the FE-TO stubs
+> describe what a migration WOULD entail IF the parallel build is ever promoted to production; they are NOT pending build-TOs.
+> Read "on contract-LOCK → COO authors build-TOs" as a conditional future, not an in-flight gate. The design analysis (light
+> render-parity path, the 3 Class-X items, N3 AUA-completeness) stays valid as forward characterization.
+
 **Author:** 0.4.0_DE_ClientPlatform (FE build-lead) | **Date:** 2026-06-25 | **archetype:** COORDINATE
 **For:** 2.0.0_SA_COO (converts to the FE build-TO set on contract-LOCK) | **cc:** 0.4.0_DS (gold-name mapping align), 1.0.0_SA_CTO, 3.0.0_SA_CVO
 **Builds on:** unified portal contract v1.0 + FE1 manifest (panel→platinum) + D→A lineage v1.0. **Status:** ready-to-convert; each FE-TO stub below becomes a real TO the instant the contract LOCKS.

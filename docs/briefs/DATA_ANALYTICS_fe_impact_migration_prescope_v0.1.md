@@ -1,5 +1,10 @@
 # DATA_ANALYTICS — Schwab-raw-native rebuild: FE-IMPACT / MIGRATION PRE-SCOPE v0.1
 
+> **REFRAME (Andrew-direct via DS, 2026-06-25; CTO `172040Z`):** Schwab-raw-native canonical = **PARALLEL R&D coexisting with
+> BD — no excise, no cutover, no contract-LOCK.** This pre-scope is **PROSPECTIVE** (what an eventual FE migration WOULD touch
+> IF the parallel build is ever promoted), not a staged migration. The Class T/C/X analysis stays useful as forward design;
+> the "value-parity census / excise gate" language is R&D characterization, not a production cutover gate.
+
 **Author:** 0.4.0_DE_ClientPlatform (FE-lead) | **Date:** 2026-06-25 | **archetype:** EXPLORE
 **For:** 2.0.0_SA_COO (fold into build-TO set on contract-lock) · 1.0.0_SA_CTO (arch-gate context) | **cc:** 0.4.0_DS, 3.0.0_SA_CVO
 **Anchored to:** `DATA_ANALYTICS_unified_portal_contract_v1.0.md` (the served platinum keys, per partner). **Status:** pre-scope (ready to fold into FE build-TOs the moment the contract LOCKS).

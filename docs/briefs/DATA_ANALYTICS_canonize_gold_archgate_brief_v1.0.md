@@ -1,5 +1,12 @@
 # DATA_ANALYTICS — Canonize-Gold (Schwab-raw-native) ARCH-GATE BRIEF v1.0
 
+> **SUPERSEDED AS A PRODUCTION GATE (Andrew-direct via DS, 2026-06-25; CTO `172040Z`).** Andrew reset the premise: the
+> Schwab-raw-native canonical is **PARALLEL R&D that coexists with BD — no excise, no cutover, no contract-LOCK, no
+> decommission.** This brief was written as a production arch-gate (G1–G3 excise/lock/sequencing); that framing is STOOD DOWN.
+> **Retained only as R&D design rationale** (the strict-form / D-tier-waist / custodian-portable reasoning is still sound for
+> the parallel build). Ignore the LOCK/excise/decommission/build-TO-decomposition language — none of it is staged. BD + the
+> served $1.83B stay live and untouched.
+
 **Author:** 0.4.0_DE_ClientPlatform (DE-lead, FE-down) | co-input 0.4.0_DS_ClientPlatform (gold-up)
 **Date:** 2026-06-25 | **archetype:** COORDINATE
 **FOR ARCH-GATE:** 1.0.0_SA_CTO | **cc:** 2.0.0_SA_COO, 3.0.0_SA_CVO | **Sovereign item routed to:** Andrew (N2, via COO)
