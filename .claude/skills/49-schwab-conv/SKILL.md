@@ -100,6 +100,24 @@ done
 All six must return a non-zero-byte `data.parquet` dated today. RLD especially — it's the one that
 silently no-ops downstream if missing; and trn_nna — the gold C_01.canonical_nna reads it.
 
+## Step 7.5 — Refresh the Schwab-raw-native canonical (daily-incremental orchestrator)
+
+After the six silver tables verify, run the DATA_ANALYTICS canonical daily-incremental build as the
+TAIL of this skill (COO Option-A, DS 2026-06-25: zero new infra; fires exactly when fresh Schwab
+silver lands — this skill's lane). It orchestrates the 5 silver facts + 5 dims + gold holdings +
+trailing-30d account_gains off the silver you just rolled:
+
+```bash
+python data/canonical/schwab/build_canonical_daily.py --date $LATEST --upload
+# (or just --upload -> defaults to the latest RPS silver date)
+```
+
+Idempotent (overwrites the date's partitions), self-contained, reports `N/M steps OK` + non-zero
+exits on failure. Design: `data/canonical/schwab/docs/07_PRODUCTIONIZATION.md`. On a non-zero exit,
+investigate before notifying (a canonical-build failure does NOT undo the silver roll, but the
+canonical store stays a day behind until re-run). When it reports all steps OK, the canonical
+`opal-data-bd/canonical/{silver,gold}/*` reflects `$LATEST` end-to-end.
+
 ## Step 8 — Notify + log
 
 - **Message Andrew** (direct, in-session) with: # raw files synced, the new silver date partitions
