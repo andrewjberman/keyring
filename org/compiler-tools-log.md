@@ -8294,3 +8294,19 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-06-25 | 0.5.0_AE_OpalETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/cr... | PASS |
 | 2026-06-25 | 0.5.0_AE_OpalETL | ETFS-presentation+basis | comp-freshness/comp-iam/ds-commit-gate | presentation Lambda deploy firm-sep verify + RPS-daily basis grounding + canonical fallback prestage | PASS |
 | 2026-06-25 | 0.5.0_AE_OpalETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-06-25 | 3.0.0_SA_CVO | (no-TO) | comp-routes | comp-routes behaviors | PASS |
+| 2026-06-25 | 3.0.0_SA_CVO | (no-TO) | comp-iam | comp-iam service etf-ownership-dashboard | PASS |
+| 2026-06-25 | 0.4.0_DE_ClientPlatform | DATA_ANALYTICS.FE1 | comp-surface-check | comp-surface-check check --mode advisory --file docs/briefs/ETFS_canonical_output_and_c... | PASS |
+| 2026-06-25 | 1.0.0_SA_CTO | NFRA_COMPRAIL.TO-6.cto-cvo-ld0207-hardening | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/NFRA_EXPAND_SCOPING.m... | PASS |
+| 2026-06-25 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/ETFS_CANON.json | PASS |
+| 2026-06-25 | 0.4.0_DS_ClientPlatform | DATA_ANALYTICS.A1 | comp-surface-check | comp-surface-check check --mode advisory --file data/canonical/schwab/gold/build_gold_a... | PASS |
+| 2026-06-25 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+| 2026-06-25 | 1.0.0_SA_CTO | NFRA_COMPRAIL.TO-6.cto-cvo-ld0207-hardening | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/critical-alarm-egress... | PASS |
+| 2026-06-25 | 1.0.0_SA_CTO | NFRA_COMPRAIL.TO-6.cto-cvo-ld0207-hardening | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/NFRA_EXPAND_PRD.md --... | PASS |
+| 2026-06-25 | 0.4.0_DE_ClientPlatform | DATA_ANALYTICS.FE1 | comp-surface-check | comp-surface-check check --mode advisory --file data/etfs/scripts/presentation/render_m... | PASS |
+| 2026-06-25 | 0.4.0_DE_ClientPlatform | DATA_ANALYTICS.FE1 | comp-surface-check | comp-surface-check check --mode advisory --file data/etfs/scripts/presentation/render_m... | PASS |
+| 2026-06-25 | 1.0.0_SA_CTO | NFRA_COMPRAIL.TO-6.cto-cvo-ld0207-hardening | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/NFRA_EXPAND_PRD.md --... | PASS |
+| 2026-06-25 | 0.4.0_DS_ClientPlatform | DATA_ANALYTICS.A1 | comp-surface-check | comp-surface-check check --mode advisory --file data/canonical/README.md --file data/ca... | PASS |
+| 2026-06-25 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+2026-06-25 | 0.6.0_AE_PartnerETL | SS4c-coord/egress/Phase-2/verify | comp-iam gaps, comp-glob, comp-surface-check selfcheck/scan, comp-freshness chain bd, rail-checked aws live reads | authored TO#2 limb+TO#3 cost-line+Phase-2 scope, restored SEV1 egress, live-verified BD recovery (caught dead cookie) | live-state verify (rail-checked aws) the comp-tools don't emit
+| 2026-06-25 | 0.6.0_AE_PartnerETL | ADHC_GLDINC.SS4c.ae-periodic-oracle-revalidation | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
