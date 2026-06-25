@@ -1,18 +1,32 @@
 {
   "project_code": "EXPAND_MSCLOUD",
   "macro_code": "NFRA",
-  "name": "MS-Cloud graph ingestion -- graph the entire Microsoft cloud via the m365 server / Graph API",
-  "description": "NFRA_EXPAND Strand A (Andrew-direct 2026-06-25, the big expansion). Use the m365 MCP gateway's live delegated Graph API access to ingest the MS cloud into the globgrph graph as nodes/edges: users/groups/mailboxes/SharePoint/OneDrive/Teams/calendars/files + relationships (owns/has-access/member-of/shared-with/located-in) + activity/freshness metadata. Graph grows from Opal-AWS+repo to + the entire MS cloud = SSOT for all Opal properties. HARD PRIVACY: model STRUCTURE+METADATA+ACTIVITY only, NEVER content; the sensitive sub-graph is access-controlled (least-priv read role, not the open comp-kuzu surface); de-identify person-data.",
+  "name": "SharePoint+OneDrive document-cloud graph ingestion (Outlook + personal/P2P comms STRICTLY off-graph)",
+  "description": "NFRA_EXPAND Strand A (Andrew-direct 2026-06-25). Graph the SharePoint sites/libraries + OneDrive trees (the document/file clouds) into globgrph via the m365 gateway's delegated Graph API -- nodes (site/library/folder/file) + edges (contains/owned-by/has-access/shared-with) + activity metadata (lastModified/lastAccessed). HARD SCOPE BOUNDARY (Andrew, load-bearing, enforced IN CODE not by convention): OUTLOOK (email+calendar) + ALL personal/peer-to-peer comms (Teams chats/DMs) are STRICTLY OFF-GRAPH -- the ingestion never calls the mail/calendar/chat Graph surfaces. STRUCTURE/METADATA/ACTIVITY ONLY, never CONTENT (file bodies never graphed). Access-controlled sensitive sub-graph (least-priv read, not the open comp-kuzu surface). The major build; prereq for the GLOBAL heat_map (Strand C-global). Open design Q's: cadence/delta-sync, access-edge person-identity privacy, scale/granularity, same-graph-vs-federated, activity source -- in the PRD.",
   "prds": [
-    {"path": "docs/architecture/NFRA_EXPAND_SCOPING.md", "label": "Strand A scope: MS-cloud Graph-API ingestion + the structure-not-content privacy guardrail", "date": "2026-06-25"}
+    {
+      "path": "docs/architecture/NFRA_EXPAND_PRD.md",
+      "label": "Strand A: the SP/OneDrive-only scope boundary + the HOW + the 5 open design questions",
+      "date": "2026-06-25"
+    },
+    {
+      "path": "docs/architecture/NFRA_EXPAND_SCOPING.md",
+      "label": "Strand A scope: MS-cloud Graph-API ingestion + the structure-not-content privacy guardrail",
+      "date": "2026-06-25"
+    }
   ],
-  "related": ["NFRA_EXPAND", "NFRA_GLOBGRPH", "NFRA_OPLMCP"],
+  "related": [
+    "NFRA_EXPAND",
+    "NFRA_GLOBGRPH",
+    "NFRA_OPLMCP"
+  ],
   "status": "scoping",
-  "phase": "SCOPING -- NFRA_EXPAND Strand A. The major new build: m365 Graph-API -> globgrph node/edge ingestion. Prerequisite for the GLOBAL heat_map (Strand C). COO decomposes after the auth-edge + local-heat_map quick wins.",
+  "phase": "SCOPING (PRD drafted) -- NFRA_EXPAND Strand A, PHASE 2 (the major expansion). SCOPE: SharePoint+OneDrive ONLY; Outlook+personal-comms OFF-graph. Resolve the 5 PRD design Q's before build. Prereq for Strand C-global.",
   "blocking": "None hard -- scoping. The big build; sequences as the major expansion. Depends on the m365 gateway Graph API (live) + the globgrph derive pipeline.",
   "created": "2026-06-25",
   "sovereign": "Andrew",
   "coo_lane": "2.0.0_SA_COO",
   "thread_counter": 0,
-  "threads": []
+  "threads": [],
+  "lane": "AE-cloud + m365-gateway owner"
 }

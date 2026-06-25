@@ -5,11 +5,33 @@
   "name": "Graph as SSOT for ALL Opal properties (incl. the entire MS cloud), then global activity/hygiene analytics",
   "description": "Andrew-direct 2026-06-25: make the globgrph graph the single source of truth for EVERY Opal property -- expand it beyond the AWS estate+repo to the ENTIRE Microsoft cloud (mailboxes/SharePoint/OneDrive/Teams/users/files via the m365 server's Graph API), THEN run ONE write-activity/freshness heat_map analytic GLOBALLY (hot/cold object clusters + traffic patterns across the whole estate). Consolidates F4(auth-edge) + NFRA_HEATMAP(object+process heat_map) + MS-Cloud/GraphAPI ingestion into one macro. 3 strands: A EXPAND_MSCLOUD (the big Graph-API ingestion), B EXPAND_AUTHEDGE (F4b auth-edge enrichment; F4a prefix-grain DROPPED -- grain explosion, source-map is deploy authority), C the heat_map (HEATMAP_OBJECT+PROCESS, re-homed, now global over the expanded graph). HARD GUARDRAILS: MS-cloud graph = STRUCTURE/metadata/activity ONLY never content + access-controlled; object hygiene advisory-only never-auto-delete; process two-zone privacy.",
   "prds": [
-    {"path": "docs/architecture/NFRA_EXPAND_SCOPING.md", "label": "CTO scoping: the 3 strands (MS-cloud ingestion / auth-edge / global heat_map) + the graph-SSOT vision + guardrails + sequencing", "date": "2026-06-25"},
-    {"path": "docs/architecture/NFRA_HEATMAP_SCOPING.md", "label": "the heat_map analytics detail (Strand C; absorbed from NFRA_HEATMAP)", "date": "2026-06-25"},
-    {"path": "docs/briefs/oplmcp-workflow-scoping-20260624.md", "label": "the process-side L0-L5 workflow-mining + two-zone privacy (Strand C process)", "date": "2026-06-24"}
+    {
+      "path": "docs/architecture/NFRA_EXPAND_PRD.md",
+      "label": "CTO PRD: hard scope boundary (SharePoint+OneDrive ONLY; Outlook+personal-comms OFF-graph) + lanes + 3-phase sequencing + Strand-A design questions",
+      "date": "2026-06-25"
+    },
+    {
+      "path": "docs/architecture/NFRA_EXPAND_SCOPING.md",
+      "label": "CTO scoping: the 3 strands (MS-cloud ingestion / auth-edge / global heat_map) + the graph-SSOT vision + guardrails + sequencing",
+      "date": "2026-06-25"
+    },
+    {
+      "path": "docs/architecture/NFRA_HEATMAP_SCOPING.md",
+      "label": "the heat_map analytics detail (Strand C; absorbed from NFRA_HEATMAP)",
+      "date": "2026-06-25"
+    },
+    {
+      "path": "docs/briefs/oplmcp-workflow-scoping-20260624.md",
+      "label": "the process-side L0-L5 workflow-mining + two-zone privacy (Strand C process)",
+      "date": "2026-06-24"
+    }
   ],
-  "related": ["NFRA_GLOBGRPH", "NFRA_OPLMCP", "NFRA_DEBTSCAN", "NFRA_TSGRAPH"],
+  "related": [
+    "NFRA_GLOBGRPH",
+    "NFRA_OPLMCP",
+    "NFRA_DEBTSCAN",
+    "NFRA_TSGRAPH"
+  ],
   "status": "scoping",
   "phase": "SCOPING -- CTO consolidation scoping landed 2026-06-25 (NFRA_EXPAND_SCOPING.md). Absorbs NFRA_HEATMAP (-> Strand C). Build order: B auth-edge (cheap enrichment) + C-local repo/MCP heat_map (buildable now) in parallel; A MS-cloud ingestion (the major expansion, prereq for global analytics); C-global once A lands. COO decomposes; MSTR spawns.",
   "blocking": "None -- scoping. Strand B (auth-edge) + Strand C-local (repo-file + MCP heat_map) buildable now. Strand A (MS-cloud ingestion) is the major new build (Graph-API -> globgrph). Strand C-global gated on A.",
@@ -17,5 +39,10 @@
   "sovereign": "Andrew",
   "coo_lane": "2.0.0_SA_COO",
   "thread_counter": 0,
-  "threads": []
+  "threads": [],
+  "lanes": {
+    "Strand-B (auth-edge)": "0.7.0_AE_CloudOps",
+    "Strand-C (heat_map)": "0.4.0_DE + DS + 0.5.0_AE",
+    "Strand-A (SP/OneDrive ingestion)": "AE-cloud + m365-gateway owner"
+  }
 }
