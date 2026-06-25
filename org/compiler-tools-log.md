@@ -7975,3 +7975,65 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-06-25 | 0.4.0_DS_ClientPlatform | DATA_ANALYTICS.A1 | comp-pipescript | comp-pipescript io data/black_diamond/scripts/gold/C_00.canonical_performance.py | PASS |
 2026-06-25 | 1.0.0_SA_CTO | TO-6/TO-5 + ADVI_BDAPIMIG + DC2 | comp-which-rail.log validation (caught 11-not-3 overrides + recurring aws_freshness coverage gap + reason-truncation), comprail-gate1-fptest.sh BUILT (14/14 PASS, AC#5). Validated artifact not self-report; fixed reason= fidelity.
 | 2026-06-25 | 1.0.0_SA_CTO | NFRA_COMPRAIL.TO-6.cto-cvo-ld0207-hardening | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-06-25 | 0.4.0_DS_ClientPlatform | DATA_ANALYTICS.A1 | comp-surface-check | comp-surface-check check --mode advisory --file docs/briefs/DATA_ANALYTICS_A1_C_00_cano... | PASS |
+| 2026-06-25 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/mcp/.last-drive-2.0.0_SA_COO --file... | PASS |
+| 2026-06-25 | 0.7.0_AE_CloudOps | DATA_PLATFORM.DC2 | comp-surface-check | comp-surface-check check --mode advisory --file docs/briefs/dc2-eclipse-offpeak-test1-h... | PASS |
+| 2026-06-25 | 0.4.0_DS_ClientPlatform | DATA_ANALYTICS.A1 | comp-pipescript | comp-pipescript io data/black_diamond/scripts/gold/C_01.canonical_nna.py | PASS |
+| 2026-06-25 | 0.4.0_DS_ClientPlatform | DATA_ANALYTICS.A1 | comp-surface-check | comp-surface-check check --mode advisory --file docs/briefs/DATA_ANALYTICS_A1_C_01_cano... | PASS |
+| 2026-06-25 | 0.4.0_DS_ClientPlatform | DATA_ANALYTICS.A1 | comp-surface-check | comp-surface-check check --mode advisory --file docs/briefs/DATA_ANALYTICS_A1_patch_ove... | PASS |
+| 2026-06-25 | 0.7.0_AE_CloudOps | DATA_PLATFORM.DC2 | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/terraform/crawl-harness/dc2-t... | PASS |
+| 2026-06-25 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/mcp/.last-drive-2.0.0_SA_COO --file... | PASS |
+| 2026-06-25 | 0.4.0_DS_ClientPlatform | DATA_ANALYTICS.A1 | comp-pipescript | comp-pipescript io data/black_diamond/scripts/gold/D_00.firm_analytics.py | FAIL |
+| 2026-06-25 | 0.4.0_DS_ClientPlatform | DATA_ANALYTICS.A1 | comp-pipescript | comp-pipescript io data/black_diamond/scripts/gold/D_00.portal_aggregates.py | PASS |
+| 2026-06-25 | 0.4.0_DS_ClientPlatform | DATA_ANALYTICS.A1 | comp-pipescript | comp-pipescript io data/black_diamond/scripts/gold/D_01.partner_analytics.py | PASS |
+| 2026-06-25 | 0.4.0_DS_ClientPlatform | DATA_ANALYTICS.A1 | comp-pipescript | comp-pipescript io data/black_diamond/scripts/gold/D_04.client_portal_summary.py | PASS |
+| 2026-06-25 | 0.4.0_DS_ClientPlatform | DATA_ANALYTICS.A1 | comp-surface-check | comp-surface-check check --mode advisory --file docs/briefs/DATA_ANALYTICS_A1_portal_fi... | PASS |
+| 2026-06-25 | 0.4.0_DS_ClientPlatform | DATA_ANALYTICS.A1 | comp-pipescript | comp-pipescript io data/black_diamond/scripts/gold/C_02.client_performance.py | PASS |
+| 2026-06-25 | 0.4.0_DS_ClientPlatform | DATA_ANALYTICS.A1 | comp-pipescript | comp-pipescript io data/black_diamond/scripts/gold/C_03.account_performance.py | PASS |
+| 2026-06-25 | 0.4.0_DS_ClientPlatform | DATA_ANALYTICS.A1 | comp-pipescript | comp-pipescript io data/black_diamond/scripts/gold/C_05.client_tax_liability.py | PASS |
+| 2026-06-25 | 0.4.0_DS_ClientPlatform | DATA_ANALYTICS.A1 | comp-pipescript | comp-pipescript io data/black_diamond/scripts/gold/C_06.client_mix_timeseries.py | PASS |
+| 2026-06-25 | 0.4.0_DS_ClientPlatform | DATA_ANALYTICS.A1 | comp-pipescript | comp-pipescript io data/black_diamond/scripts/gold/C_07.advisor_attribution.py | PASS |
+| 2026-06-25 | 0.4.0_DS_ClientPlatform | DATA_ANALYTICS.A1 | comp-pipescript | comp-pipescript io data/black_diamond/scripts/gold/C_08.advisor_fee_efficiency.py | PASS |
+| 2026-06-25 | 0.4.0_DS_ClientPlatform | DATA_ANALYTICS.A1 | comp-pipescript | comp-pipescript io data/black_diamond/scripts/gold/C_01b.role_aua_backfill.py | PASS |
+| 2026-06-25 | 0.4.0_DS_ClientPlatform | DATA_ANALYTICS.A1 | comp-pipescript | comp-pipescript io data/black_diamond/scripts/gold/C_01c.role_aua_flow_join.py | PASS |
+| 2026-06-25 | 0.4.0_DS_ClientPlatform | DATA_ANALYTICS.A1 | comp-surface-check | comp-surface-check check --mode advisory --file docs/briefs/DATA_ANALYTICS_A1_full_flow... | PASS |
+| 2026-06-25 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/briefs/bd-49f-interim-cookie-solut... | PASS |
+| 2026-06-25 | 1.0.0_SA_CTO | NFRA_COMPRAIL.TO-6.cto-cvo-ld0207-hardening | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.6.0_AE_PartnerETL/ta... | PASS |
+| 2026-06-25 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/mcp/.last-drive-2.0.0_SA_COO --file... | PASS |
+| 2026-06-25 | 0.4.0_DS_ClientPlatform | DATA_ANALYTICS.A1 | comp-surface-check | comp-surface-check check --mode advisory --file docs/briefs/DATA_ANALYTICS_A1_silver_di... | PASS |
+| 2026-06-25 | 0.6.0_AE_PartnerETL | ADVI_BDAPIMIG.P1 | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/bd-pipeline/bd-49f-kee... | PASS |
+| 2026-06-25 | 0.6.0_AE_PartnerETL | ADVI_BDAPIMIG.P1 | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/ci/lambda-source-map.json | PASS |
+| 2026-06-25 | 0.6.0_AE_PartnerETL | ADVI_BDAPIMIG.P1 | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/ci/lambda-source-map.j... | PASS |
+| 2026-06-25 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DE_ClientPlatfor... | PASS |
+| 2026-06-25 | 0.6.0_AE_PartnerETL | ADVI_BDAPIMIG.P1 | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/change_management/20... | PASS |
+| 2026-06-25 | 0.6.0_AE_PartnerETL | ADVI_BDAPIMIG.P1 | comp-iam | comp-iam gaps | PASS |
+| 2026-06-25 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/briefs/allo... | PASS |
+| 2026-06-25 | 0.4.0_DS_ClientPlatform | DATA_ANALYTICS.A1 | comp-surface-check | comp-surface-check check --mode advisory --file docs/briefs/DATA_ANALYTICS_A1_silver_di... | PASS |
+| 2026-06-25 | 0.4.0_DE_ClientPlatform | DATA_ANALYTICS.FE1 | pipescript | pipescript --list | PASS |
+| 2026-06-25 | 0.4.0_DE_ClientPlatform | DATA_ANALYTICS.FE1 | pipescript | pipescript advi-bd | PASS |
+| 2026-06-25 | 0.4.0_DE_ClientPlatform | DATA_ANALYTICS.FE1 | pipescript | pipescript advi-cot | PASS |
+| 2026-06-25 | 0.4.0_DE_ClientPlatform | DATA_ANALYTICS.FE1 | pipescript | pipescript advi-inf | PASS |
+| 2026-06-25 | 3.0.0_SA_CVO | (no-TO) | comp-iam | comp-iam service bd-49f-keepalive | PASS |
+| 2026-06-25 | 0.4.0_DE_ClientPlatform | DATA_ANALYTICS.FE1 | comp-pipescript | comp-pipescript io data/black_diamond/scripts/gold/D_00.portal_aggregates.py | PASS |
+| 2026-06-25 | 0.4.0_DE_ClientPlatform | DATA_ANALYTICS.FE1 | comp-pipescript | comp-pipescript io data/black_diamond/scripts/gold/D_00b.portal_timeseries.py | PASS |
+| 2026-06-25 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/mcp/.last-drive-2.0.0_SA_COO --file... | PASS |
+| 2026-06-25 | 0.4.0_DE_ClientPlatform | DATA_ANALYTICS.FE1 | comp-pipescript | comp-pipescript io data/black_diamond/scripts/gold/D_01.partner_analytics.py | PASS |
+| 2026-06-25 | 0.4.0_DE_ClientPlatform | DATA_ANALYTICS.FE1 | comp-pipescript | comp-pipescript io data/black_diamond/scripts/gold/D_04.client_portal_summary.py | PASS |
+| 2026-06-25 | 0.4.0_DE_ClientPlatform | DATA_ANALYTICS.FE1 | comp-platinum | comp-platinum reverse partner_analytics_quarterly | PASS |
+| 2026-06-25 | 0.4.0_DE_ClientPlatform | DATA_ANALYTICS.FE1 | comp-platinum | comp-platinum reverse timeseries_overview | PASS |
+| 2026-06-25 | 0.4.0_DE_ClientPlatform | DATA_ANALYTICS.FE1 | comp-platinum | comp-platinum reverse cumulative_chart | PASS |
+| 2026-06-25 | 0.4.0_DE_ClientPlatform | DATA_ANALYTICS.FE1 | comp-platinum | comp-platinum reverse header_metrics | PASS |
+| 2026-06-25 | 0.4.0_DE_ClientPlatform | DATA_ANALYTICS.FE1 | comp-platinum | comp-platinum reverse leaderboard | PASS |
+| 2026-06-25 | 0.4.0_DE_ClientPlatform | DATA_ANALYTICS.FE1 | comp-platinum | comp-platinum reverse dashboard | PASS |
+| 2026-06-25 | 0.4.0_DE_ClientPlatform | DATA_ANALYTICS.FE1 | comp-platinum | comp-platinum reverse advisor_nna_canonical | PASS |
+| 2026-06-25 | 0.4.0_DE_ClientPlatform | DATA_ANALYTICS.FE1 | comp-platinum | comp-platinum reverse partner_analytics_quarterly.json | PASS |
+| 2026-06-25 | 0.4.0_DE_ClientPlatform | DATA_ANALYTICS.FE1 | comp-pipescript | comp-pipescript io data/cot/scripts/gold/D_04.client_portal_summary.py | PASS |
+| 2026-06-25 | 0.4.0_DE_ClientPlatform | DATA_ANALYTICS.FE1 | comp-transform | comp-transform schema-check PartnerAnalytics | PASS |
+| 2026-06-25 | 0.4.0_DE_ClientPlatform | DATA_ANALYTICS.FE1 | comp-transform | comp-transform schema-check DistributionTab | PASS |
+| 2026-06-25 | 0.4.0_DS_ClientPlatform | DATA_ANALYTICS.A1 | comp-surface-check | comp-surface-check check --mode advisory --file docs/briefs/DATA_ANALYTICS_A1_silver_di... | PASS |
+| 2026-06-25 | 0.4.0_DE_ClientPlatform | DATA_ANALYTICS.FE1 | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DE_ClientPlatfor... | PASS |
+| 2026-06-25 | 0.4.0_DE_ClientPlatform | DATA_ANALYTICS.FE1 | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DE_ClientPlatfor... | PASS |
+| 2026-06-25 | 0.7.0_AE_CloudOps | DATA_PLATFORM.DC2 | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/terraform/crawl-harness/dc2-t... | PASS |
+| 2026-06-25 | 0.4.0_DS_ClientPlatform | DATA_ANALYTICS.A1 | comp-surface-check | comp-surface-check check --mode advisory --file data/canonical/scripts/silver/build_fac... | PASS |
+20260625T1531Z | 0.4.0_DE_ClientPlatform | DATA_ANALYTICS.FE1 | pipescript(advi-bd/inf/cot) + comp-pipescript io + comp-platinum reverse + comp-transform schema-check(PartnerAnalytics/DistributionTab) + comp-to | PASS -- threaded ADVI panel->component->platinum->Group-D manifest per partner; D_04 sole bd/cot publisher vs INF fan-out; gap: comp-platinum reverse BD-indexed (INF/COT need per-tree gold dir)
+| 2026-06-25 | 0.4.0_DE_ClientPlatform | DATA_ANALYTICS.FE1 | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
