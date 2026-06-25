@@ -8523,3 +8523,5 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 
 - 2026-06-25 0.4.0_DS_ClientPlatform [IMPLEMENT]: built NFRA_HEATMAP_OBJECT S0->O4 (org/modules/heatmap/) -- comp-which (grounded no comp-cluster/TSGRAPH -> native tree-rollup), comp-blast (O3 gate interface), comp-heat (verified the NEW tool end-to-end), ds-commit-gate x11 PASS. O3 --all perf: 225-greps 92s -> 1-pass index 3.1s.
 | 2026-06-25 | 0.4.0_DS_ClientPlatform | DATA_ANALYTICS.A1 | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+- 2026-06-25 (1.0.0_SA_CTO, session-close window): comp-heat BUILT+verified (freshness/drift/score + 4 registry surfaces); comp-which routing+HEAT_RX tested (no comp-freshness collision); comp-manifest-check selfcheck PASS; comp-surface-check rode 4 commits (SCTY_PREMCP, registry-hygiene, comp-heat, HEATMAP-L2-spec) all clean. SCTY_PREMCP + HEATMAP-L2 grounded via Explore (live gateway + pyiceberg pattern).
+| 2026-06-25 | 1.0.0_SA_CTO | NFRA_COMPRAIL.TO-6.cto-cvo-ld0207-hardening | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
