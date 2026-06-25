@@ -8049,3 +8049,8 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-06-25 | 0.4.0_DE_ClientPlatform | DATA_ANALYTICS.FE1 | comp-surface-check | comp-surface-check check --mode advisory --file docs/briefs/DATA_ANALYTICS_unified_port... | PASS |
 20260625T1537Z | 0.4.0_DE_ClientPlatform | DATA_ANALYTICS.FE1 | (none -- COORDINATE delta: reconcile+contract synthesis over rail-grounded FE1 evidence 98764fb65 + DS A1 briefs read natively) | unified portal contract v1.0 authored+co-signing
 | 2026-06-25 | 0.4.0_DE_ClientPlatform | DATA_ANALYTICS.FE1 | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-06-25 | 0.4.0_DE_ClientPlatform | DATA_ANALYTICS.FE1 | comp-surface-check | comp-surface-check check --mode advisory --file docs/briefs/DATA_ANALYTICS_canonize_gol... | PASS |
+| 2026-06-25 | 0.4.0_DE_ClientPlatform | DATA_ANALYTICS.FE1 | comp-transform | comp-transform schema-check DistributionTab | PASS |
+| 2026-06-25 | 0.6.0_AE_PartnerETL | ADVI_BDAPIMIG.P1 | comp-surface-check | comp-surface-check check --mode advisory --file data/cot/scripts/bronze/cot_bronze_inge... | PASS |
+20260625T1542Z | 0.4.0_DE_ClientPlatform | DATA_ANALYTICS.FE1 | comp-transform schema-check DistributionTab (clean) + bun tsc --noEmit (exit 0) | CTO arch-gate brief authored + CVO-4a 404 hardening shipped portal DEV 757f4d99
+| 2026-06-25 | 0.4.0_DE_ClientPlatform | DATA_ANALYTICS.FE1 | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
