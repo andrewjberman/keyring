@@ -596,8 +596,13 @@ def cmd_script(script_id: str) -> int:
     return print_results(results, label=f"script {script_id}")
 
 
-def cmd_artifact(s3_prefix: str) -> int:
-    """Check freshness for a single S3 prefix."""
+def cmd_artifact(s3_prefix: str, raw: bool = False, max_age=None) -> int:
+    """Check freshness for a single S3 prefix.
+
+    raw=True (F3 / NFRA_COMPTOOL_USEPATHS): for an UNREGISTERED prefix, report the newest-object
+    age WITHOUT a FRESH/STALE verdict (no guessed cadence). max_age (hours): an ad-hoc threshold
+    for an unregistered prefix instead of the default-daily guess. Both are no-ops when the prefix
+    HAS a registered cadence entry (the real config wins)."""
     # Find matching entry in either config for thresholds
     entry = None
     for path in (BD_CONFIG, INF_CONFIG):
@@ -611,25 +616,43 @@ def cmd_artifact(s3_prefix: str) -> int:
         if entry:
             break
 
+    _registered = entry is not None
     if entry is None:
-        # No config entry: use permissive defaults (daily, 48h fail)
-        entry = {
-            "artifact_id": s3_prefix,
-            "s3_key_prefix": s3_prefix,
-            "cadence": "daily",
-            "warn_age_hours": 30,
-            "fail_age_hours": 48,
-            "severity": "ERROR",
-            "notes": "No cadence config entry — using default daily thresholds",
-        }
+        if max_age is not None:
+            # Ad-hoc threshold: a real verdict against the caller-supplied max-age.
+            entry = {
+                "artifact_id": s3_prefix, "s3_key_prefix": s3_prefix, "cadence": "custom",
+                "warn_age_hours": float(max_age) * 0.75, "fail_age_hours": float(max_age),
+                "severity": "ERROR",
+                "notes": f"ad-hoc --max-age {max_age}h (no registered cadence)",
+            }
+        else:
+            # No config entry: permissive defaults (daily, 48h fail) -- a GUESS.
+            entry = {
+                "artifact_id": s3_prefix, "s3_key_prefix": s3_prefix, "cadence": "daily",
+                "warn_age_hours": 30, "fail_age_hours": 48, "severity": "ERROR",
+                "notes": "No cadence config entry — using default daily thresholds",
+            }
 
     now = datetime.datetime.now(tz=datetime.timezone.utc)
     result = _check_artifact(entry, now)
+
+    # F3 RAW: an unregistered prefix has no cadence baseline, so a FRESH/STALE verdict is a guess.
+    # Report the age, suppress the verdict -> 'RAW'. Genuine states (MISSING/ERROR) are preserved.
+    if raw and not _registered and max_age is None and result.get("status") not in ("MISSING", "ERROR"):
+        result["status"] = "RAW"
+        result["severity"] = "INFO"
+        result["notes"] = ("RAW: no registered cadence -- newest-object age reported, NO FRESH/STALE "
+                           "verdict (a guessed-daily verdict would mislead; pass --max-age <h> for an "
+                           "ad-hoc threshold, or register a cadence entry).")
+
     print(_fmt_header())
     print("-" * 120)
     print(_fmt_row(result))
     if result.get("notes"):
         print(f"  NOTE: {result['notes']}")
+    if result["status"] == "RAW":
+        return 0
     return 1 if result["status"] == "FAIL" else 0
 
 
@@ -802,6 +825,13 @@ Examples:
 
     p_artifact = sub.add_parser("artifact", help="Check a single S3 prefix")
     p_artifact.add_argument("s3_prefix")
+    p_artifact.add_argument("--raw", action="store_true",
+                            help="RAW mode (F3): for an UNREGISTERED prefix, report the newest-object "
+                                 "age with NO FRESH/STALE verdict (no guessed cadence -- a guessed-daily "
+                                 "verdict misleads on a legitimately-weekly/ad-hoc prefix).")
+    p_artifact.add_argument("--max-age", type=float, default=None, dest="max_age",
+                            help="Ad-hoc freshness threshold in HOURS for an unregistered prefix "
+                                 "(verdict against this, instead of the default-daily guess).")
 
     p_ddb = sub.add_parser("ddb", help="Check DynamoDB table freshness")
     p_ddb.add_argument("table", help="DynamoDB table name (e.g. opal-users-v2)")
@@ -822,7 +852,8 @@ Examples:
         if args.command == "script":
             return cmd_script(args.script_id)
         if args.command == "artifact":
-            return cmd_artifact(args.s3_prefix)
+            return cmd_artifact(args.s3_prefix, raw=getattr(args, "raw", False),
+                                max_age=getattr(args, "max_age", None))
         if args.command == "ddb":
             return cmd_ddb(args.table, getattr(args, "pattern", None))
         if args.command == "all":
