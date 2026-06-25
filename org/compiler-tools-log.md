@@ -8358,3 +8358,8 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-06-25 | 0.6.0_AE_PartnerETL | ADVI_BDAPIMIG.P1 | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
 - 2026-06-25 2005Z 0.7.0_AE_CloudOps: comp-iam service bd-49f-auto-login-role (pre-apply declared-check + post-apply realized reconcile, no-drift -- the firm-sep verifier on both my check + CVO cert); terraform plan x2 (shared-infra SES + bd-49f root, only-my-diffs); comp-which dead-routed on SES-IaC (fell back to typed Grep) -- noting git-log-vs-inspection rail false-trigger for COMPRAIL backlog.
 | 2026-06-25 | 0.7.0_AE_CloudOps | NFRA_DEBTSCAN.TO-D3 | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-06-25 | 0.5.0_AE_OpalETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/ci/lambda-source-map.j... | PASS |
+| 2026-06-25 | 0.5.0_AE_OpalETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/ci/lambda-source-map.json | PASS |
+
+- 2026-06-25 0.4.0_DS_ClientPlatform [MIXED]: comp-which x1 (routed->comp-grep, found etf_ownership_dashboard.py allowlist to mirror); ds-commit-gate PASS on every .py commit (caught F401/E731); rest = direct boto3 parquet inspection (data-plane, off-rail per graph-presence). Canonize-gold A->C + ETFS AVGCAP correction.
+| 2026-06-25 | 0.4.0_DS_ClientPlatform | DATA_ANALYTICS.A1 | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
