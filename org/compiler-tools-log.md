@@ -8471,3 +8471,7 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 - 2026-06-25 22:05Z 0.5.0_AE_OpalETL HEATMAP O1 converge/close + month-end EC2 ground: ds-commit-gate (emitter PASS), safe-commit surface-check (8d6ce2a90 PASS, no critical surface), comp-which (astn infra location -> routed comp-iam, native Read used). (c) derived emit confirmed working 20089 paths ghost-free.
 | 2026-06-25 | 0.4.0_DS_ClientPlatform | DATA_ANALYTICS.A1 | comp-blast | comp-blast --help | PASS |
 | 2026-06-25 | 0.5.0_AE_OpalETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-06-25 | 0.6.0_AE_PartnerETL | ADVI_BDAPIMIG.P1 | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/ec2/bd-49f-auto-login/bd_49f_... | PASS |
+
+- 2026-06-25 ~2013-2213Z (0.6.0_AE_PartnerETL, ADVI_BDAPIMIG): BD durable auto-auth PROVEN end-to-end + 49F reseed solved live (keepalive 204); ONE firm-parameterized process refactor (BD_FIRM_ID, 157a6fbb0); cot root-caused (same MFA wall, frozen 06-23) + unfreeze staged; durable OTP gateway live-verified; cot cookie-capture fix (a77d58e45). Tools: rail-checked aws (sts/sm/lambda-invoke/ssm/ec2/s3/curl) for live ground-truth; comp-which ownership lookup; comp-freshness (no cot rows); no comp-graph (new EC2 auth script, not a pipeline node).
+| 2026-06-25 | 0.6.0_AE_PartnerETL | ADVI_BDAPIMIG.P1 | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
