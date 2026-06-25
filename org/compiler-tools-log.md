@@ -8520,3 +8520,6 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 
 - 2026-06-25 ~2213-2350Z (0.6.0_AE_PartnerETL, ADVI_BDAPIMIG close): verified one-script firm-interchangeability + perms (rail-checked aws iam on both box roles -> firm-sep confirmed) -> found+fixed S3 script-pull firm-sep gap (dual-prefix deploy); cot RESEEDED+RAVC fresh; device-trust root-caused via evidence (checkbox never toggled) -> 3-strategy fix (28c929c52). Tools: rail-checked aws iam/sm/s3/ec2 for live ground-truth; comp-iam Lambda-only (routed to iam dump); no comp-graph (EC2 auth script).
 | 2026-06-25 | 0.6.0_AE_PartnerETL | ADVI_BDAPIMIG.P1 | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+
+- 2026-06-25 0.4.0_DS_ClientPlatform [IMPLEMENT]: built NFRA_HEATMAP_OBJECT S0->O4 (org/modules/heatmap/) -- comp-which (grounded no comp-cluster/TSGRAPH -> native tree-rollup), comp-blast (O3 gate interface), comp-heat (verified the NEW tool end-to-end), ds-commit-gate x11 PASS. O3 --all perf: 225-greps 92s -> 1-pass index 3.1s.
+| 2026-06-25 | 0.4.0_DS_ClientPlatform | DATA_ANALYTICS.A1 | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
