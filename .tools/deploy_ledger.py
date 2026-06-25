@@ -66,7 +66,7 @@ WORKSPACE = Path(__file__).resolve().parent.parent
 CM_DIR = WORKSPACE / "org" / "critical_paths" / "change_management"
 STATE_DIR = WORKSPACE / "org" / "critical_paths" / ".open_deploys"
 COO_INBOX = WORKSPACE / "org" / "mcp" / "inbox" / "2.0.0_SA_COO"
-LEG_KINDS = {"git", "s3-prefix", "activation", "ec2-baked-asset", "verify"}
+LEG_KINDS = {"git", "s3-prefix", "activation", "ec2-baked-asset", "verify", "tf-lambda"}
 DEFAULT_WINDOW_HOURS = 4.0
 
 # Gate-bypass scan (false-clean hardening 2026-06-17, CTO-author / AE-review /
@@ -179,6 +179,33 @@ def _canonical_pipeline_legs(pipeline_dir: str) -> list[dict]:
     return legs
 
 
+def _lambda_leg(function_name: str) -> dict:
+    """A single first-class leg for a single-Lambda TF deploy. THE FIX for the
+    --pipeline phantom-leg expansion: a single-lambda TF apply must NOT open the
+    full PIPELINE_MAP x VALID_LAYERS S3-code legs (none of which it touches ->
+    false 'unproven leg / half-landed' on close). Resolves the function's
+    tf_resource from lambda-source-map.json for the leg target."""
+    smap = WORKSPACE / "infra" / "aws" / "lambda" / "ci" / "lambda-source-map.json"
+    target = function_name
+    try:
+        data = json.loads(smap.read_text(encoding="utf-8", errors="replace"))
+        entry = (data.get(function_name)
+                 or (data.get("functions") or {}).get(function_name)
+                 or (data.get("lambdas") or {}).get(function_name))
+        if entry and entry.get("tf_resource"):
+            target = entry["tf_resource"]
+    except (OSError, ValueError, AttributeError):
+        pass  # source-map unreadable -> fall back to the bare function name as target
+    return {
+        "id": function_name,
+        "kind": "tf-lambda",
+        "target": target,
+        "proof_required": ("TF apply (0 destroy) + 0-diff replan + deployed "
+                           "source_code_hash matches uploaded sha + verify-on-served"),
+        "proof": None, "closed_at": None,
+    }
+
+
 def cmd_open(args) -> int:
     if _state_path(args.slug).exists():
         sys.exit(f"ERROR: deploy ledger '{args.slug}' is already OPEN -- "
@@ -193,11 +220,13 @@ def cmd_open(args) -> int:
             sys.exit(f"ERROR: leg kind '{kind}' not in {sorted(LEG_KINDS)}")
         legs.append({"id": lid, "kind": kind, "target": target,
                      "proof_required": proof_req, "proof": None, "closed_at": None})
+    for fn in (getattr(args, "lambda_fn", None) or []):
+        legs.append(_lambda_leg(fn))
     if args.pipeline:
         legs.extend(_canonical_pipeline_legs(args.pipeline))
     if not legs:
         sys.exit("ERROR: a deploy ledger needs at least one leg "
-                 "(--leg and/or --pipeline)")
+                 "(--leg, --lambda, and/or --pipeline)")
     ids = [leg["id"] for leg in legs]
     if len(ids) != len(set(ids)):
         sys.exit(f"ERROR: duplicate leg ids: {ids}")
@@ -483,8 +512,15 @@ def main() -> int:
     p.add_argument("--author", required=True)
     p.add_argument("--leg", action="append",
                    help="'id|kind|target|proof_required' (repeatable)")
+    p.add_argument("--lambda", dest="lambda_fn", action="append",
+                   help="single-Lambda TF deploy: add ONE 'tf-lambda' leg for this "
+                        "function (tf_resource from lambda-source-map) INSTEAD of the "
+                        "--pipeline S3-code expansion. Use this (not --pipeline) for a "
+                        "single-function TF apply so close() does not blare on phantom "
+                        "S3-code legs the deploy never touched. (repeatable)")
     p.add_argument("--pipeline", help="add canonical legs for this pipeline dir "
-                                      "(PIPELINE_MAP x VALID_LAYERS + AUX_CODE_PREFIXES)")
+                                      "(PIPELINE_MAP x VALID_LAYERS + AUX_CODE_PREFIXES). "
+                                      "For a single-lambda TF deploy use --lambda instead.")
     p.add_argument("--window-hours", type=float, default=DEFAULT_WINDOW_HOURS)
     p.set_defaults(fn=cmd_open)
 

@@ -2,6 +2,13 @@
 
 **Filed:** 2026-06-25 by 0.7.0_AE_CloudOps (COO-requested, post-ETFS-W3).
 **Severity:** LOW. **Tracked:** COO backlog item (2.0.0_SA_COO).
+**STATUS: FIXED 2026-06-25** (COO GO). Implemented the `--lambda <fn>` flag + a first-class
+`tf-lambda` leg kind: a single-Lambda TF deploy now opens EXACTLY one real leg (tf_resource
+resolved from lambda-source-map) instead of the 8-phantom S3-code expansion. `--pipeline`
+behavior unchanged (verified: still expands the canonical multi-leg set, no regression).
+Test proof: `--lambda cot-etf-ownership-daily` -> 1 leg `module.cot_etf_ownership_daily...`,
+closes clean; `--pipeline inf` -> still 8 legs. ds-commit-gate clean. See `.tools/deploy_ledger.py`
+(`_lambda_leg`, `LEG_KINDS += tf-lambda`, `cmd_open` --lambda handling, open-subparser --lambda arg).
 **Tool:** `.tools/deploy_ledger.py` (deploy-completion ledger; NEVER-law gate per CLAUDE.md "never leave a confirmed deploy half-landed").
 
 ## Problem
