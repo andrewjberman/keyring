@@ -83,6 +83,21 @@ The **$82.2M** total matches the PRD's `~$82M` Inflection anchor and AE's live-s
 - **49F (AC#3):** bd is the cross-check vs Schwab RPS (the number-of-record). A bd<->Schwab-RPS account-level reconciliation over `account_xref` (in-both / BD-only / Schwab-only) explains the ~4% net gap (bd lags RPS; e.g. RPS $529.9M vs bd $508.6M @ 05-08). COO GO'd a **read-only raw-`.RPS` parse** (`opal-data-schwab/bronze/rps/CRS2026*.RPS`) for this cycle -- no write to opal-data-schwab (avoids the AES256-PutObject-deny); the W2 silver/RPS build is the durable re-run home (~early-July).
 - **Inflection:** cross-reference via Eclipse model-data (`silver/eclipse/{date}/portfolios_simple.parquet` account->model + the model->target-holdings artifact) -- which Eclipse models hold the Opal ETFs -> which accounts -> reconcile expected vs actual Orion positions. (A small W1 discovery: pin the model->target-holdings artifact.)
 
+### 6a. AC#3 recon -- RESULTS (engine: `data/etfs/scripts/gold/avgcap_bd_rps_recon.py`, read-only)
+
+Inputs (all read-only): Schwab-RPS = the ALREADY-BUILT silver `opal-data-bd/schwab/silver/rps/date=YYYYMMDD/` (610 partitions, latest 06-18 -- note this lives in **opal-data-bd**, NOT the empty `opal-data-schwab/03_silver/`; the B1 "silver/RPS empty" referred to the schwab-bucket location); bd = `opal-data-bd/gold/canonical/holdings/{date}.parquet`; id-map = `opal-data-schwab/03_silver/account_xref/`. RPS ticker carries trailing padding -- stripped.
+
+| Date | RPS total (NoR) | bd total (x-check) | net gap | gap % (bd vs RPS) |
+|---|---|---|---|---|
+| **2026-05-08** (PRD anchor) | **$529,918,895.55** | **$508,596,999.35** | -$21.32M | **-4.02%** |
+| 2026-06-18 (latest common) | $519,489,634.72 | $499,096,267.95 | -$20.39M | -3.93% |
+
+The 05-08 row **reproduces the PRD/CVO-brief anchor EXACTLY** (PRD cited RPS $529.9M / bd $508.6M) -- the recon is grounded. The **bd ~4% LOW** finding (PRD: "bd lags") holds at both dates, uniformly per-ETF (DIVZ/IDVZ/PFDE/PFOE all -3.5% to -4.2%).
+
+Account classification @06-18: RPS 5,465 accounts; in-both-49F 4,980; schwab-only 485 ($45.2M); bd-only 331 ($24.3M). The bd-LOW is explained by schwab-only ETF MV (accounts RPS holds that the bd book lacks/lags) net of bd-only.
+
+**Caveat (documented in the artifact):** the `account_xref` is a static mapping (vintage 2026-04-21); accounts onboarded/changed after that misclassify in the in-both/only split. The **net-gap headline (-4%) is robust** (it is sum-RPS vs sum-bd over the ETF scope, independent of the xref); only the per-account in-both/only counts carry the xref-vintage caveat. The durable re-run home is the W2 silver/RPS build + a refreshed xref (~early-July).
+
 ## 7. Open items / not-yet-in-this-deliverable
 
 - **AC#2 numbers** (May-partial + true June-MTD): gated on AE's Inflection backfill (05-15.., ETA ~1h, schema-identical, written-vs-skipped list incoming). Engine ready; run on landing.
