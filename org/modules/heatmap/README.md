@@ -30,6 +30,45 @@ A WRITE with no downstream event is a hygiene/risk signal -- the inverse of cold
 2. **GIT -> DEPLOY** (composes, not duplicated): a committed code change whose served artifact is
    older = an undeployed change. Use `comp-pipescript deployed` (MATCH/STALE/MISSING) + `comp-freshness`.
 
+## Public API contract (the single surface; 3 consumers)
+
+`object_freshness.py` is THE canonical O1 engine (COO-ruled, dac519c88). Three consumers build
+against this stable surface -- NO re-implementation / parallel git-walk:
+0.5.0_AE's producer/emitter - `comp-heat` (CTO) - my own O2/O3.
+
+```
+# S0  (heat_map.py) -- the scoring primitive
+HeatParams(half_life_days=30.0, hot_days=7.0, warm_days=30.0, freq_weight=0.0)
+score_items(items: Iterable[(id, last_ts_epoch[, freq])], now_ts: float, p=HeatParams) -> [HeatScore]
+score_item(item_id, age_days, frequency=1, p=HeatParams) -> HeatScore
+cluster_by_locality(scores, locality_fn) -> {key: {n, n_cold, cold_frac, mean_score, oldest_age_days, items}}
+summarize(scores) -> {n, bands{hot,warm,cold}, cold_frac, mean_score}
+HeatScore = {item_id, age_days, recency_score, frequency, score, band}
+
+# O1  (object_freshness.py) -- the engine
+tracked_last_write(root) -> {path: last_commit_epoch}    # one `git log --name-only --no-renames` pass
+untracked_mtime(root)    -> {path: mtime_epoch}           # `git ls-files --others --exclude-standard`
+uncommitted_writes(root, now_ts) -> [{path, class(untracked|modified), status, mtime_age_days}]
+build(root, p: HeatParams, now_ts) -> (scores: [HeatScore], src: {path: 'git'|'mtime'})
+```
+
+**Snapshot schema** (the `--json` emit; what producers/consumers read):
+`{generated_ts, root, half_life_days, summary, paths:[{path, age_days, score, band, source}],
+cold_subtrees:[{dir, n, n_cold, cold_frac, oldest_age_days, items}]}`.
+
+## Canonical estate universe (GROUNDED, COO-pinned 2026-06-25)
+
+The hygiene universe is **git-respecting**: tracked (`git ls-files`) + untracked-not-ignored
+(`--others --exclude-standard`) = **~20,085 files**. This is deliberate, not a gap:
+- Full filesystem = ~226,623 files; the ~206K difference is **GITIGNORED + regenerable** --
+  `.runtmp/*/node_modules` (~136K), build artifacts, caches. `.gitignore` already governs these;
+  they are NOT authored estate and MUST be excluded (including them would swamp the cold-subtree
+  archive signal with node_modules noise). A larger raw filesystem count is LESS correct for
+  hygiene, not more.
+- **Submodules** (`portal/`) are the one legitimate extension: `git ls-files` lists the submodule
+  pointer, not its contents. Submodules are separate sub-estates (own lifecycle); a future opt-in
+  `--include-submodules` can fold a submodule's own git-walk in if full-estate hygiene wants it.
+
 ## Guardrails
 
 - **ADVISORY-ONLY.** This module SCORES, CLUSTERS, and FLAGS. It never recommends-to-delete (that
