@@ -8312,3 +8312,6 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-06-25 | 0.6.0_AE_PartnerETL | ADHC_GLDINC.SS4c.ae-periodic-oracle-revalidation | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
 | 2026-06-25 | 0.5.0_AE_OpalETL | ETFS_CANON-skeleton | ds-commit-gate + terraform fmt | etfs-canon-fanin lambda gate + dynamo/fanin TF fmt (SKELETON, not deployed) | PASS |
 | 2026-06-25 | 0.5.0_AE_OpalETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/etfs-pipeline/etfs-can... | PASS |
+| 2026-06-25 | 0.4.0_DE_ClientPlatform | DATA_ANALYTICS.FE1 | pipescript | pipescript advi-inf | PASS |
+- 2026-06-25 1930Z 0.7.0_AE_CloudOps: comp_api.pipescript_deployed/threads + routes_behaviors (TO-D3 scorer 4/4 classes, in-process F1 facade); comp-surface-check egress-check (NEW limb, live-verified -- flagged the real opal-critical-surface-alerts 0-deliverable SEV1); _canonical.ensure_fresh + read_only kuzu (scorer freshness-gate).
+| 2026-06-25 | 0.7.0_AE_CloudOps | NFRA_DEBTSCAN.TO-D3 | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
