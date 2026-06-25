@@ -1,0 +1,37 @@
+# critical-alarm-egress.yaml -- watch-the-watcher: SNS subscriber-DELIVERABILITY registry.
+#
+# Authored: 0.7.0_AE_CloudOps 2026-06-25 (LD-0193 commit-through-owner; limb 0.6.0 8aab6c567,
+# ADHC_GLDINC.SS4c TO 4c #2 cvo_1330Z). Consumed by `comp-surface-check egress-check`.
+#
+# THE CLASS THIS CATCHES (live SEV1, 2026-06-25): opal-critical-surface-alerts had ZERO DELIVERABLE
+# subscribers -- a CONFIRMED SMS sub silently dropped by the SMS sandbox + an email sub that lapsed
+# unconfirmed (SNS 3-day auto-delete of PendingConfirmation, 06-17). So every critical-surface alarm
+# fired into the void, undetected for days. DELIVERABILITY (not mere presence) is the invariant:
+# a PendingConfirmation email OR a sandbox SMS = present-but-NON-delivering = a blind alarm topic.
+#
+# requires: deliverable_subscriber = >=1 CONFIRMED email sub OR an SMS sub when the account is NOT in
+# the SMS sandbox. A miss on a critical-surface topic = SEV1 (it blinds the whole surface set).
+
+alarm_egress:
+  - topic: opal-critical-surface-alerts
+    sev: SEV1
+    requires: deliverable_subscriber
+    why: >
+      The egress for the critical-surface CloudWatch alarms -- the portal SEV1 surfaces
+      (model_portfolios.headline/.benchmark, advisor_intelligence per critical-surfaces.yaml)
+      AND the SS4c re-validation set. A 0-deliverable-subscriber here blinds every critical surface.
+    alarms:                       # each must exist + ActionsEnabled=true + route to this topic
+      - gldinc-ss4c-weekly-absence
+      - gldinc-ss4c-weekly-divergence
+      - gldinc-ss4c-canary-absence
+      - gldinc-ss4c-canary-break
+      # NOTE: the portal SEV1-surface alarms also route here -- confirm/extend the list with the live
+      # describe-alarms AlarmActions->this-topic membership at first egress-check run (seed is the SS4c set).
+
+  - topic: opal-bd-49f-cookie-alerts
+    sev: SEV1
+    requires: deliverable_subscriber
+    why: >
+      The bd-49f interim-cookie 401 freshness-alert egress (0.6.0). A 0-deliverable here = Andrew never
+      hears "re-capture the cookie" -> silent BD-data staleness (the 06-19-class incident's egress leg).
+    alarms: []                    # the freshness-probe publishes here directly (no named CW alarm yet)

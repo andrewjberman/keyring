@@ -674,6 +674,80 @@ def cmd_contract_selfcheck(args) -> int:
     return 0 if not fails else 1
 
 
+# ---- egress-check: SNS subscriber-DELIVERABILITY watch-the-watcher (LD-0193; limb 8aab6c567) ----
+# The structural catch for the 0-deliverable-subscriber SEV1 class (live 2026-06-25:
+# opal-critical-surface-alerts had 0 deliverable subs -> every critical alarm fired into the void).
+# DELIVERABILITY (not presence): a CONFIRMED email OR a non-sandbox SMS. Observe-only (read SNS/CW),
+# 0 mutations, no secret/token values. Registry: critical-alarm-egress.yaml.
+EGRESS_YAML = os.path.join(_HERE, "critical-alarm-egress.yaml")
+_EGRESS_ACCOUNT = "313476888478"
+_EGRESS_REGION = "us-east-1"
+
+
+def cmd_egress_check(args) -> int:
+    import yaml
+    try:
+        with open(EGRESS_YAML, encoding="utf-8") as f:
+            reg = yaml.safe_load(f) or {}
+    except OSError:
+        print("ADVISORY: egress-check could not load critical-alarm-egress.yaml -- skipping")
+        return 0
+    try:
+        import boto3
+    except ImportError:
+        print("ADVISORY: boto3 unavailable -- egress-check skipped (deliverability not verified)")
+        return 0
+    sns = boto3.client("sns", region_name=_EGRESS_REGION)
+    cw = boto3.client("cloudwatch", region_name=_EGRESS_REGION)
+    try:  # SMS sandbox -> SMS subs are NON-deliverable (the banked sns_sms_sandbox lesson)
+        in_sandbox = sns.get_sms_sandbox_account_status().get("IsInSandbox", True)
+    except Exception:
+        in_sandbox = True  # fail-closed: assume sandbox (SMS non-deliverable) if unknowable
+    findings: list[str] = []
+    for entry in reg.get("alarm_egress", []):
+        topic = entry["topic"]
+        sev = entry.get("sev", "SEV1")
+        arn = f"arn:aws:sns:{_EGRESS_REGION}:{_EGRESS_ACCOUNT}:{topic}"
+        try:
+            subs = sns.list_subscriptions_by_topic(TopicArn=arn).get("Subscriptions", [])
+        except Exception as e:
+            findings.append(f"{sev} {topic}: cannot list subscriptions ({str(e)[:80]})")
+            continue
+        deliverable = False
+        for s in subs:
+            proto, sarn = s.get("Protocol"), s.get("SubscriptionArn", "")
+            confirmed = sarn not in ("PendingConfirmation", "Deleted", "")
+            if proto == "email" and confirmed:
+                deliverable = True
+            elif proto == "sms" and confirmed and not in_sandbox:
+                deliverable = True
+        if not deliverable:
+            findings.append(f"{sev} {topic}: NO DELIVERABLE subscriber ({len(subs)} sub(s); none "
+                            "confirmed-email or non-sandbox-sms) -> alarms fire into the void")
+        names = entry.get("alarms") or []
+        if names:
+            try:
+                got = {a["AlarmName"]: a for a in cw.describe_alarms(AlarmNames=names).get("MetricAlarms", [])}
+            except Exception:
+                got = {}
+            for n in names:
+                a = got.get(n)
+                if not a:
+                    findings.append(f"{sev} {topic}: alarm {n} MISSING")
+                elif not a.get("ActionsEnabled"):
+                    findings.append(f"{sev} {topic}: alarm {n} ActionsEnabled=false (won't notify)")
+                elif arn not in (a.get("AlarmActions") or []):
+                    findings.append(f"{sev} {topic}: alarm {n} does NOT route to this topic")
+    if findings:
+        print("EGRESS-CHECK: deliverability/routing findings (the watch-the-watcher):")
+        for fnd in findings:
+            print(f"  {fnd}")
+        return 1 if getattr(args, "mode", "advisory") == "blocking" else 0
+    print("EGRESS-CHECK: OK -- every watched critical-alarm topic has >=1 DELIVERABLE subscriber "
+          "+ its alarms exist/ActionsEnabled/route correctly")
+    return 0
+
+
 def main() -> int:
     ap = argparse.ArgumentParser(prog="comp-surface-check")
     sub = ap.add_subparsers(dest="cmd", required=True)
@@ -689,6 +763,11 @@ def main() -> int:
     lw = sub.add_parser("list-watched-files")
     lw.add_argument("--json", action="store_true")
     lw.set_defaults(fn=cmd_list_watched)
+    eg = sub.add_parser("egress-check",
+                        help="watch-the-watcher: assert each critical-alarm topic has >=1 DELIVERABLE "
+                             "subscriber (confirmed-email/non-sandbox-sms) + alarms route correctly")
+    eg.add_argument("--mode", choices=["blocking", "advisory"], default="advisory")
+    eg.set_defaults(fn=cmd_egress_check)
     sub.add_parser("list").set_defaults(fn=cmd_list)
     sub.add_parser("selfcheck").set_defaults(fn=cmd_selfcheck)
     sub.add_parser("contract-selfcheck",
