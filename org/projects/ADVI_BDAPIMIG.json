@@ -1,0 +1,36 @@
+{
+  "project_code": "ADVI_BDAPIMIG",
+  "macro_code": "ADVI",
+  "name": "49F Black Diamond: migrate EC2 browser-scrape -> DataMining REST API (resolves the 06-19 MFA P0)",
+  "description": "Andrew-direct 2026-06-25: 49F BD bronze dark since 2026-06-19 (SS&C enabled email-OTP MFA, headless Playwright scrape can't pass it) -> all 4 bd-scraped silver tables frozen, served 49F AUA stale+degrading silently 6 days. Migrate the per-table browser-scrape fleet to the PROVEN cot DataMining REST flow (cot_bronze_ingest.py, Model-B firm-parameterized) -- lands at the identical forwardfill_v2/{table}/*.xlsx seam so silver+gold need ZERO change. The data pull (Option D) is solved+proven; the sole hard problem is seeding/refreshing the post-MFA .bd.identity session cookie. CTO ruling: D + Phase-0 manual-cookie (Option B) + a device-trust (bd_DeviceRegistration) probe that decides steady-state (B if device-trust durably skips MFA, else Option-A vendor-exempt primary / Option-C OTP-automation fallback); Option A pursued in parallel. Firm-separation guardrail: bd and cot share CODE, never the data plane (gate+IAM enforced).",
+  "prds": [
+    {
+      "path": "docs/architecture/ADVI_BDAPIMIG_PRD.md",
+      "label": "CTO PRD -- the scrape->REST migration architecture + the Section-7 auth-strategy ruling (D + B-Phase0 + device-trust-probe-decides-steady-state, A in parallel) + Phase-0/1/2 decomposition + the firm-separation port guardrail + the absence-alarm + scrape-box decommission",
+      "date": "2026-06-25"
+    }
+  ],
+  "intake_brief": "docs/briefs/bd-49f-ec2-scrape-to-datamining-api-migration-20260625.md",
+  "related": [
+    "ADVI_COTETL",
+    "SCTY"
+  ],
+  "status": "active",
+  "phase": "PHASE 0 -- P0 UNBLOCK. PRD + auth-strategy ruling authored 2026-06-25 (1.0.0_SA_CTO; docs/architecture/ADVI_BDAPIMIG_PRD.md) off CVO's intake brief (7f62e24d8). NEXT: COO decomposes Phase-0 TOs; gated on the Andrew Phase-0 cookie capture (.bd.identity + bd_DeviceRegistration from a live 49F session). On the cookie: AE stands up blackdiamond/49f/session + 4 env vars + 49F templates + runs the ported cot_bronze_ingest.py + backfills 06-19..today (Custom date-window, complete-days-only) -> 4 silver un-freeze -> served AUA recovers. DS confirms silver zero-change; CVO co-verifies first restored run. Phase 1 = device-trust probe + durable runner + per-table absence alarm; Phase 2 = parity + decommission the 4 scrape boxes.",
+  "blocking": "Phase 0 (the P0 restore) is gated on an ANDREW action: capturing a fresh post-MFA .bd.identity (+ bd_DeviceRegistration) from his authenticated 49F session (his account/egress proved the REST chain HTTP-200). Everything downstream is a port of proven cot code -- no new code for Phase 0. The Option-A vendor MFA-exemption ask (Andrew->SS&C) is parallel + non-blocking. Mechanism (MFA cause) is INFERRED-but-strong (date+selectivity+live login screenshot); AE confirms the exact authn failure at fix time -- the fix is well-defined regardless.",
+  "created": "2026-06-25",
+  "pods": [
+    "0.7",
+    "0.6",
+    "0.4",
+    "1.0",
+    "3.0",
+    "0.0"
+  ],
+  "pipeline": "49F BD bronze: (Phase 0) manual .bd.identity -> blackdiamond/49f/session -> cot_bronze_ingest.py (BD_S3_BUCKET=opal-data-bd, BD_FIRM_ID=49f, 49F templates) DataMining REST pull -> forwardfill_v2/{table}/*.xlsx (identical scraper seam) -> bd silver merge (zero-change) -> bd gold lots chain -> served 49F AUA. (Phase 1) bd-exporter API runner (EventBridge->SSM, cot-exporter model) + headless session-fetch refresh + per-table absence alarm. (Phase 2) decommission the 4 Playwright scrape boxes.",
+  "coo_lane": "2.0.0_SA_COO",
+  "cvo_lane": "3.0.0_SA_CVO",
+  "sovereign": "Andrew",
+  "thread_counter": 0,
+  "threads": []
+}
