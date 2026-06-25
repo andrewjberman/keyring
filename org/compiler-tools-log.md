@@ -8169,3 +8169,14 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-06-25 | 0.4.0_DS_ClientPlatform | DATA_ANALYTICS.A1 | comp-surface-check | comp-surface-check check --mode advisory --file data/canonical/scripts/gold/build_gold_... | PASS |
 2026-06-25 | 0.6.0_AE_PartnerETL | ADVI_BDAPIMIG trading-day alarms | ds-commit-gate; read mdpf-daily-trigger source to mirror trading-day logic | repointed 5 silver-stale alarms to TradingDayLag>2 (FP-free); MDPF un-froze ($1.77B, 0.5.0 confirmed) | metric/alarm refinement, no new comp-graph traversal
 | 2026-06-25 | 0.6.0_AE_PartnerETL | ADVI_BDAPIMIG.P1 | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-06-25 | 0.6.0_AE_PartnerETL | ADVI_BDAPIMIG.P1 | comp-iam | comp-iam gaps | PASS |
+| 2026-06-25 | 0.4.0_DS_ClientPlatform | DATA_ANALYTICS.A1 | comp-surface-check | comp-surface-check check --mode advisory --file data/canonical/scripts/silver/build_fac... | PASS |
+| 2026-06-25 | 0.6.0_AE_PartnerETL | ADHC_GLDINC.SS4c.ae-periodic-oracle-revalidation | comp-iam | comp-iam service | FAIL |
+| 2026-06-25 | 0.6.0_AE_PartnerETL | ADHC_GLDINC.SS4c.ae-periodic-oracle-revalidation | comp-iam | comp-iam gaps | PASS |
+| 2026-06-25 | 0.5.0_AE_OpalETL | (no-TO) | comp-pipescript | comp-pipescript io gold/mdpf_aggregate_aua.py | FAIL |
+| 2026-06-25 | 0.4.0_DE_ClientPlatform | DATA_ANALYTICS.FE1 | comp-surface-check | comp-surface-check check --mode advisory --file docs/briefs/DATA_ANALYTICS_fe_migration... | PASS |
+| 2026-06-25 | 0.6.0_AE_PartnerETL | ADHC_GLDINC.SS4c.ae-periodic-oracle-revalidation | comp-surface-check | comp-surface-check check --mode advisory --file data/black_diamond/scripts/gold/gldinc_... | PASS |
+| 2026-06-25 | 0.6.0_AE_PartnerETL | ADHC_GLDINC.SS4c.ae-periodic-oracle-revalidation | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/terraform/bd-pipeline/iam.tf ... | PASS |
+| 2026-06-25 | 0.6.0_AE_PartnerETL | ADHC_GLDINC.SS4c.ae-periodic-oracle-revalidation | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.6.0_AE_PartnerETL/ha... | PASS |
+| 2026-06-25 | 0.5.0_AE_OpalETL | MDPF-schwab-repoint-prestage | comp-pipescript io | gold/mdpf_aggregate_aua.py + feeder input mapping (Grep/Read fallback) | PARTIAL (MDPF not in io registry) |
+| 2026-06-25 | 0.5.0_AE_OpalETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
