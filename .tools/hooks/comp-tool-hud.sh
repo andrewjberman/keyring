@@ -125,6 +125,12 @@ elif printf '%s' "$query" | grep -qE 'opal-[a-z][a-z-]+|(inf|bd)-[a-z-]+-(trigge
 elif printf '%s' "$query" | grep -qE 'iam[_-]?role|:role/|aws_iam_policy'; then
   class=iam_role
   msg="comp-tool on the HUD: searching for an IAM role/policy. \`comp-iam service <lambda>\` / \`comp-iam gaps\` = perms before deploy (mind: a Principal:* on Effect=Deny is a GUARDRAIL, not a public grant). (advisory -- your search still runs.)"
+elif [ "$tool" = Bash ] && printf '%s' "$query" | grep -qE 'find[^|]*-(mtime|mmin|newer|atime)|git log[^|]*--name-only'; then
+  # estate write-freshness / hygiene intent (NFRA_TOOLHUD ext 2026-06-25). Conservative: only
+  # time-based `find` + `git log --name-only` (clear staleness/change-history signals). Bare
+  # `git status` / `ls -t` deliberately NOT matched -- too operationally common (FP-noise).
+  class=object_heat
+  msg="comp-tool on the HUD: time-based file-staleness search. \`comp-heat freshness [path]\` = per-path hot/warm/cold + ranked COLD SUBTREES (archive candidates) from git WRITE-history (not just fs mtime, + the locality signal a flat find misses); \`comp-heat drift\` = writes-not-in-a-commit. ADVISORY-ONLY estate hygiene; distinct from comp-freshness (data-pipeline). (advisory -- your command still runs.)"
 fi
 
 # --- comp-which FALLBACK (Andrew-direct 2026-06-18: DEFAULT TO THE RAIL) ------------------------

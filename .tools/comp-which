@@ -115,11 +115,30 @@ RULES = [
      "PII exposure (component/route to external users)",
      ["comp-pii audit", "comp-pii scan <Component>"],
      "does a component/route expose PII to external users (cleartext vs pseudonymized)"),
+    # comp-heat = REPO/ESTATE object write-freshness + hygiene. Distinct keywords (NOT bare
+    # "stale"/"fresh") so it does NOT collide with comp-pipescript-deployed ("stale runner") or
+    # comp-freshness ("data freshness"): file/dir staleness, archive candidates, uncommitted drift.
+    (["stale files", "stale dir", "dead directories", "dead dirs", "dead code", "archive candidate",
+      "archive candidates", "safe to archive", "what's cold", "whats cold", "cold subtrees",
+      "repo hygiene", "estate hygiene", "uncommitted", "uncommitted changes", "writes not committed",
+      "not committed", "what have i written", "written but not committed", "unsaved work"],
+     "estate object write-freshness / hygiene (comp-heat)",
+     ["comp-heat freshness [path]", "comp-heat drift"],
+     "what's stale/dead/safe-to-archive (cold subtrees) or written-but-not-committed (drift) -- repo/estate OBJECT hygiene; DISTINCT from comp-freshness (data-pipeline S3/DDB)"),
 ]
 
 # Function-relationship intents that ARE a rich-tool job (route, do NOT run-the-primitive):
 # "call sites / callers of X" is comp-blast's exact semantic traversal, not a text grep.
 CALLSITE_RX = re.compile(r"\b(call ?sites?|callers?|callees?|who calls)\b", re.IGNORECASE)
+
+# Estate write-freshness / hygiene intent is comp-heat's analytic (cold-subtree clustering +
+# git write-history), NOT a text find -- force it above a co-occurring search/list verb so
+# "FIND dead directories" / "WHAT FILES are stale + safe to archive" route to comp-heat, not grep.
+HEAT_RX = re.compile(
+    r"\b(safe to archive|archive candidates?|cold subtrees?|dead director(y|ies)|"
+    r"stale (files?|dirs?|directories)|repo hygiene|estate hygiene|"
+    r"writes? not (in a |)commit(ted)?|uncommitted (writes?|changes?|work)|"
+    r"what have i written|written but not committed)\b", re.IGNORECASE)
 
 # Text-search intent: a verb that means "find this string/symbol in the repo" -- the cases
 # with NO rich tool, where comp-which must RUN the on-rails primitive instead of dead-ending.
@@ -283,6 +302,12 @@ def main() -> int:
         hits.append((6, "call sites / callers",
                      ["comp-blast <fn-name>"],
                      "the call sites / callers of a function (semantic traversal -- pass the function name, not a script)"))
+    # estate hygiene intent -> comp-heat (force above a co-occurring find/list verb)
+    if HEAT_RX.search(q):
+        hits.append((6, "estate object write-freshness / hygiene (comp-heat)",
+                     ["comp-heat freshness [path]", "comp-heat drift"],
+                     "what's stale/dead/safe-to-archive (cold subtrees) or written-but-not-committed "
+                     "(drift); DISTINCT from comp-freshness (data-pipeline S3/DDB)"))
     for keywords, label, calls, why in RULES:
         s = _score_rule(q, qtok, keywords)
         if s > 0:

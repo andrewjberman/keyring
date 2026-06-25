@@ -653,6 +653,30 @@ entries:
     status: canonical     # LANDED 2026-06-11 (P2-STITCH f754164b4, CTO-certified); supersedes the heuristic inf producer-resolution
     notes: "The structural fix for comp-platinum's firm producer-resolution residual (live per-bucket truth). Cypher uses the CloudNode/CloudEdge schema: -[:CloudEdge {edge_type:'FETCHES'}]->. CTO-verified: 49F+cottonwood ADVI components resolve component->lambda->dynamodb/s3 cross-layer; 15 components reach a bucket."
 
+  # ---- ESTATE OBJECT HYGIENE (comp-heat / NFRA_HEATMAP_OBJECT) ----
+  - id: estate.heat.object_freshness
+    use_case: "What repo/estate files are stale / dead / safe to archive? (per-path hot/warm/cold + ranked COLD SUBTREES = archive candidates)"
+    canonical_call: "comp-heat freshness [path] [--half-life N] [--top N] [--json]"
+    tool: comp-heat
+    mode: query
+    layer: pipeline
+    cost: "~seconds (one git-history pass, derived-on-demand)"
+    freshness: "derived-on-demand from git write-history (tracked) + mtime (untracked); no persisted store"
+    rebuild_trigger: "n/a (always derived live from git)"
+    anti_pattern: "raw `git log --name-only` / `find -mtime` / `ls -t` for staleness/archive intent (text-local, connection-blind; misses the cold-SUBTREE locality signal). DISTINCT from comp-freshness (that is data-pipeline S3/DDB)."
+    status: canonical    # NFRA_EXPAND Strand-C (HEATMAP_OBJECT); engine org/modules/heatmap/ pinned 2e3c27290; comp-heat 2026-06-25 CTO
+  - id: estate.heat.uncommitted_drift
+    use_case: "What have I written that isn't committed? (writes NOT in a commit: untracked + modified, freshest first; the LOCAL->GIT layer)"
+    canonical_call: "comp-heat drift [--top N] [--json]"
+    tool: comp-heat
+    mode: query
+    layer: pipeline
+    cost: "~seconds"
+    freshness: "live `git status` working-tree snapshot + mtime ranking"
+    rebuild_trigger: "n/a (always live)"
+    anti_pattern: "raw `git status` for the uncommitted-intent question (comp-heat ranks freshest-first + cross-refs the GIT->DEPLOY hop = comp-pipescript deployed + comp-freshness)"
+    status: canonical    # NFRA_EXPAND Strand-C; comp-heat 2026-06-25 CTO
+
 # ===========================================================================
 # tools_index — per-tool instructional reference (AC1 'instructional for each
 # comp tool'). One block per comp-* tool: what it does, its subcommands, and
@@ -688,3 +712,4 @@ tools_index:
   comp-registry: { does: "REGISTRY narrative vs project-JSON drift", subcommands: ["sync ROW=N", "--project", "--all"], entries: [meta.registry.drift] }
   comp-coverage: { does: "Compiler/task-order coverage report", subcommands: ["<args>"], entries: [meta.coverage.report] }
   comp-graph:    { does: "Freshness status across all graphs (local trace caches + cloud artifacts) + clear; uniform --fresh/--force contract (graph_cache.py)", subcommands: [status, clear, "--json"], entries: [meta.freshness.status] }
+  comp-heat:     { does: "Estate OBJECT write-freshness + hygiene (repo files: hot/warm/cold + cold SUBTREES=archive candidates, uncommitted-write drift); ADVISORY-ONLY, read-only. DISTINCT from comp-freshness (data-pipeline S3/DDB)", subcommands: [freshness, drift, score], entries: [estate.heat.object_freshness, estate.heat.uncommitted_drift] }

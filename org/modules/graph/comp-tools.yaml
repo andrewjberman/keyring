@@ -35,6 +35,20 @@ tools:
     cost: "~2s"
     output: "Node/edge counts by type, cached to .comp-graph/graph.json"
 
+  comp-heat:
+    command: "comp-heat <freshness [path] | drift | score <id> --age-days N> [--half-life N] [--top N] [--json]"
+    segment_scope: cross-segment
+    when: |
+      - "What's stale / dead / safe to archive here?" (freshness — per-path hot/warm/cold + ranked COLD SUBTREES = archive candidates)
+      - "What have I written that isn't committed?" (drift — writes NOT in a commit: untracked + modified, freshest first; the LOCAL->GIT layer)
+      - Ad-hoc heat score for one item (score — S0 recency-decay band)
+    cost: "~seconds (one git-history pass, derived-on-demand; no persisted store)"
+    output: "hot/warm/cold bands + cold subtrees (archive candidates) | uncommitted-write drift list | single-item heat score; --json for machine output"
+    name_note: "DISTINCT from comp-freshness (DATA-PIPELINE S3/DDB artifact/chain staleness for gold runs). comp-heat = REPO/ESTATE OBJECT write-freshness + hygiene. The GIT->DEPLOY hop = comp-pipescript deployed + comp-freshness (comp-heat drift is LOCAL->GIT only)."
+    guardrails: "ADVISORY-ONLY (scores/clusters/flags; never recommends-to-delete = O3, never auto-acts; inherits NFRA_DEBTSCAN never-auto-delete + blast-radius verify-before-recommend) + READ-ONLY (derived from git, no new store)."
+    engine: "org/modules/heatmap/{heat_map.py S0, object_freshness.py O1} (NFRA_EXPAND Strand-C; pinned API 2e3c27290)"
+    project: "NFRA_EXPAND (HEATMAP_OBJECT strand)"
+
   comp-aws:
     command: "comp-aws <derive|classes|metrics|diff|dual-managed|snapshot|score> [opts]"
     segment_scope: aws-cloud

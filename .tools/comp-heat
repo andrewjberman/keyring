@@ -1,0 +1,216 @@
+#!/usr/bin/env python3
+"""
+comp-heat -- estate OBJECT write-freshness + hygiene surface (NFRA_HEATMAP_OBJECT).
+
+The canonical comp-tool over the heat_map engine (org/modules/heatmap/, NFRA_EXPAND Strand-C):
+answers the estate-cognition questions -- "what's stale / safe to archive?", "what have I
+written that isn't committed?", "how hot is this item?" -- that Rule 21 routes through a
+relationship-aware tool rather than raw `git status` / `git log --name-only` / `find -mtime`
+(text-local, connection-blind).
+
+ADVISORY-ONLY + READ-ONLY: comp-heat SCORES / CLUSTERS / FLAGS. It never recommends-to-delete
+(that is O3, separately guardrailed) and never writes to the repo or any store -- the snapshot is
+derived-on-demand from git (git IS the write-history), not a persisted time-series. Inherits the
+NFRA_DEBTSCAN never-auto-delete + blast-radius verify-before-recommend doctrine.
+
+NAME NOTE -- distinct from `comp-freshness`:
+  comp-freshness = DATA-PIPELINE freshness (S3/DDB artifact + chain staleness for gold runs).
+  comp-heat      = REPO/ESTATE OBJECT write-freshness + hygiene (this tool).
+The two are complementary; both help texts cross-link.
+
+Usage:
+  comp-heat freshness [path] [--half-life N] [--top N] [--json [OUT]]
+        per-path hot/warm/cold + ranked COLD SUBTREES (archive candidates). [O1 build]
+        path = subtree to scope to (default: the repo root / whole estate).
+  comp-heat drift [--top N] [--json [OUT]]
+        WRITES NOT IN A COMMIT (untracked + modified working-tree, freshest first) -- the
+        LOCAL->GIT layer. "what have I written that isn't committed?" [O1 uncommitted_writes]
+  comp-heat score <id> --age-days N [--half-life N] [--json]
+        ad-hoc S0 heat score for one item (diagnostic). [S0 score_item]
+  comp-heat --help
+
+Composition (do NOT duplicate): `comp-heat drift` is LOCAL->GIT only. The GIT->DEPLOY hop --
+committed code whose served artifact is older = undeployed -- is `comp-pipescript deployed`
+(MATCH/STALE/MISSING) + `comp-freshness`. Chain them for the full local->git->deploy view.
+
+Author: 1.0.0_SA_CTO (comp-tool registry). Spec: 0.4.0_DS (docs/briefs/comp-heat-tool-spec-for-cto-20260625.md).
+Engine: org/modules/heatmap/{heat_map.py (S0), object_freshness.py (O1)} (0.4.0_DS, dac519c88).
+"""
+
+from __future__ import annotations
+
+import argparse
+import os
+import sys
+
+_HERE = os.path.dirname(os.path.abspath(__file__))
+REPO_ROOT = os.path.dirname(_HERE)                       # .tools/ -> repo root
+HEATMAP_DIR = os.path.join(REPO_ROOT, "org", "modules", "heatmap")
+
+
+def cmd_freshness(a) -> int:
+    # The O1 engine scores the WHOLE repo (git history is repo-root-relative, so its --root must
+    # BE the repo root). Subtree scoping is therefore a wrapper-side PREFIX FILTER over the engine's
+    # pure analytic (build/summarize/cluster) -- reused, not re-implemented.
+    if not os.path.isdir(HEATMAP_DIR):
+        sys.stderr.write(f"comp-heat: heatmap module missing at {HEATMAP_DIR}\n")
+        return 3
+    sys.path.insert(0, HEATMAP_DIR)
+    try:
+        import time
+        from heat_map import HeatParams, cluster_by_locality, summarize  # noqa: E402
+        from object_freshness import build                                # noqa: E402
+    except Exception as e:                                                 # noqa: BLE001
+        sys.stderr.write(f"comp-heat: cannot import the heat_map engine: {e}\n")
+        return 3
+
+    p = HeatParams(half_life_days=a.half_life)
+    scores, src = build(REPO_ROOT, p, time.time())
+
+    rel = a.path.replace("\\", "/").strip("/") if a.path else ""
+    if rel:
+        scores = [s for s in scores if s.item_id == rel or s.item_id.startswith(rel + "/")]
+        if not scores:
+            print(f"comp-heat freshness: no tracked/untracked files under '{rel}/' "
+                  f"(check the path is repo-root-relative).")
+            return 0
+
+    summ = summarize(scores)
+    clusters = cluster_by_locality(scores, lambda path: os.path.dirname(path) or ".")
+    cold_dirs = sorted(((k, v) for k, v in clusters.items() if v["n"] >= 3 and v["cold_frac"] >= 0.8),
+                       key=lambda kv: (-kv[1]["n_cold"], -kv[1]["oldest_age_days"]))
+    if a.json != "":                                      # human render (skip when JSON->stdout)
+        scope = f"{rel}/" if rel else "(whole estate)"
+        print(f"=== comp-heat freshness  scope={scope}  files={summ['n']}  half_life={a.half_life}d ===")
+        print(f"  bands: hot={summ['bands']['hot']} warm={summ['bands']['warm']} "
+              f"cold={summ['bands']['cold']} (cold_frac={summ['cold_frac']:.2f})")
+        print(f"  coldest {min(a.top, len(scores))} paths:")
+        for s in sorted(scores, key=lambda s: s.age_days, reverse=True)[:a.top]:
+            print(f"    {s.age_days:7.0f}d  {s.band:4s}  [{src.get(s.item_id, '?'):5s}]  {s.item_id}")
+        print(f"  cold SUBTREES (n>=3, cold_frac>=0.8) -- archive candidates (ADVISORY): {len(cold_dirs)}")
+        for k, v in cold_dirs[:a.top]:
+            print(f"    {v['n_cold']:4d}/{v['n']:<4d} cold  oldest={v['oldest_age_days']:.0f}d  {k}/")
+
+    if a.json is not None:
+        import json
+        snap = {"scope": rel or None, "half_life_days": a.half_life, "summary": summ,
+                "paths": [{"path": s.item_id, "age_days": round(s.age_days, 2),
+                           "score": round(s.score, 6), "band": s.band,
+                           "source": src.get(s.item_id, "?")} for s in scores],
+                "cold_subtrees": [{"dir": k, **v} for k, v in cold_dirs]}
+        text = json.dumps(snap, indent=2)
+        if a.json == "":
+            print(text)
+        else:
+            with open(a.json, "w", encoding="utf-8") as fh:
+                fh.write(text)
+            print(f"OK: wrote freshness snapshot -> {a.json} ({summ['n']} paths)")
+    return 0
+
+
+def cmd_drift(a) -> int:
+    if not os.path.isdir(HEATMAP_DIR):
+        sys.stderr.write(f"comp-heat: heatmap module missing at {HEATMAP_DIR}\n")
+        return 3
+    sys.path.insert(0, HEATMAP_DIR)
+    try:
+        import time
+        from object_freshness import uncommitted_writes    # noqa: E402
+    except Exception as e:                                  # noqa: BLE001
+        sys.stderr.write(f"comp-heat: cannot import the heat_map engine: {e}\n")
+        return 3
+    rows = uncommitted_writes(REPO_ROOT, time.time())
+    n_un = sum(1 for r in rows if r["class"] == "untracked")
+    n_mod = sum(1 for r in rows if r["class"] == "modified")
+
+    if a.json != "":                                        # human render (skip when JSON->stdout)
+        print(f"=== comp-heat drift: writes NOT in a commit  ({len(rows)}: "
+              f"{n_mod} modified + {n_un} untracked, freshest first) ===")
+        for r in rows[:a.top]:
+            age = f"{r['mtime_age_days']:.2f}d" if r["mtime_age_days"] is not None else "  -  "
+            print(f"    {age:>9}  {r['class']:9s} [{r['status'] or ' '}]  {r['path']}")
+        print("  (LOCAL->GIT layer; the GIT->DEPLOY hop = `comp-pipescript deployed` + `comp-freshness`)")
+
+    if a.json is not None:
+        import json
+        snap = {"n": len(rows), "n_modified": n_mod, "n_untracked": n_un, "uncommitted": rows}
+        text = json.dumps(snap, indent=2)
+        if a.json == "":
+            print(text)
+        else:
+            with open(a.json, "w", encoding="utf-8") as fh:
+                fh.write(text)
+            print(f"OK: wrote drift snapshot -> {a.json}")
+    return 0
+
+
+def cmd_score(a) -> int:
+    if not os.path.isdir(HEATMAP_DIR):
+        sys.stderr.write(f"comp-heat: heatmap module missing at {HEATMAP_DIR}\n")
+        return 3
+    sys.path.insert(0, HEATMAP_DIR)
+    try:
+        from heat_map import HeatParams, score_item       # noqa: E402
+    except Exception as e:                                 # noqa: BLE001
+        sys.stderr.write(f"comp-heat: cannot import S0 heat_map: {e}\n")
+        return 3
+    p = HeatParams(half_life_days=a.half_life)
+    s = score_item(a.id, a.age_days, p=p)
+    if a.json:
+        import json
+        print(json.dumps({"item_id": s.item_id, "age_days": round(s.age_days, 2),
+                          "recency_score": round(s.recency_score, 6),
+                          "score": round(s.score, 6), "band": s.band,
+                          "half_life_days": a.half_life}))
+    else:
+        print(f"=== comp-heat score: {s.item_id} ===")
+        print(f"  age={s.age_days:.2f}d  half_life={a.half_life}d  "
+              f"recency={s.recency_score:.4f}  band={s.band.upper()}")
+    return 0
+
+
+def _add_json(sp, with_value=True):
+    if with_value:
+        sp.add_argument("--json", nargs="?", const="", default=None,
+                        help="emit JSON; bare --json -> stdout, --json OUT -> write to OUT")
+    else:
+        sp.add_argument("--json", action="store_true", help="emit JSON to stdout")
+
+
+def main(argv=None) -> int:
+    ap = argparse.ArgumentParser(
+        prog="comp-heat",
+        description="Estate OBJECT write-freshness + hygiene (NFRA_HEATMAP_OBJECT). "
+                    "ADVISORY-ONLY, read-only. Distinct from comp-freshness (data-pipeline S3/DDB).",
+        epilog="compose: `comp-heat drift` is LOCAL->GIT; the GIT->DEPLOY hop is "
+               "`comp-pipescript deployed` + `comp-freshness`.")
+    sub = ap.add_subparsers(dest="cmd")
+
+    f = sub.add_parser("freshness", help="per-path hot/warm/cold + cold SUBTREES (archive candidates)")
+    f.add_argument("path", nargs="?", default="", help="subtree to scope to (default: repo root)")
+    f.add_argument("--half-life", type=float, default=30.0, help="decay half-life in days (default 30)")
+    f.add_argument("--top", type=int, default=25, help="show N coldest (default 25)")
+    _add_json(f)
+    f.set_defaults(fn=cmd_freshness)
+
+    d = sub.add_parser("drift", help="writes NOT in a commit (untracked + modified, freshest first)")
+    d.add_argument("--top", type=int, default=25, help="show N (default 25)")
+    _add_json(d)
+    d.set_defaults(fn=cmd_drift)
+
+    s = sub.add_parser("score", help="ad-hoc S0 heat score for one item")
+    s.add_argument("id", help="item id / label")
+    s.add_argument("--age-days", type=float, required=True, help="days since last write/activity")
+    s.add_argument("--half-life", type=float, default=30.0, help="decay half-life in days (default 30)")
+    _add_json(s, with_value=False)
+    s.set_defaults(fn=cmd_score)
+
+    args = ap.parse_args(argv)
+    if not getattr(args, "cmd", None):
+        ap.print_help()
+        return 0
+    return args.fn(args)
+
+
+if __name__ == "__main__":
+    sys.exit(main())
