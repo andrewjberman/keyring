@@ -1,0 +1,19 @@
+{
+  "project_code": "HEATMAP_PROCESS",
+  "macro_code": "NFRA",
+  "name": "High-traffic process audit + workflow-mining as an OPLMCP analytics schema (L0-L5; two-zone privacy)",
+  "description": "NFRA_HEATMAP process-domain (LD-0215). Formalizes the MSTR L0-L5 brief (capture->sessionize->mine->classify/rank->interview->synth) as a first-class analytics SCHEMA in the OPLMCP gateway. Reuses the .05 R8 audit-lake + the 100%-coverage app/tools.py hook + per-user identity + kill-switch. NET-NEW: the token-level semantic-signature distill (L0), mining/ranking (L2/L3), interview UX (L4), synth/verify (L5). HARD: two-zone de-identify privacy (no identity persisted; ephemeral hot-zone stitch only; close the source-found email-persisted gap); mutating-workflow synth gated (shadow-mode + human-auth).",
+  "prds": [
+    {"path": "docs/briefs/oplmcp-workflow-scoping-20260624.md", "label": "MSTR process-side brief: the L0-L5 pipeline + two-zone privacy + the OPLMCP-graph-grounded reuse map", "date": "2026-06-24"},
+    {"path": "docs/architecture/NFRA_HEATMAP_SCOPING.md", "label": "CTO scoping -- PROCESS side placement (extends OPLMCP) + TO candidates P0-P4", "date": "2026-06-25"}
+  ],
+  "related": ["NFRA_HEATMAP", "NFRA_OPLMCP"],
+  "status": "scoping",
+  "phase": "SCOPING -- part of NFRA_HEATMAP (LD-0215). TO candidates P0(L0 distill+de-identify)+P1(sessionize)+P2(mine/classify/rank)+P3(interview UX)+P4(synth/verify/adopt+live-router). SEQUENCES against OPLMCP .05 (R8 lake) landing -- decompose after OBJECT.",
+  "blocking": "Sequencing: PROCESS sequences against OPLMCP .05 (R8 audit-lake) landing -- the L0 capture substrate. Not a hard block (the lake is in flight), a sequencing dependency.",
+  "created": "2026-06-25",
+  "sovereign": "Andrew",
+  "coo_lane": "2.0.0_SA_COO",
+  "thread_counter": 0,
+  "threads": []
+}

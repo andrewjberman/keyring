@@ -1,0 +1,18 @@
+{
+  "project_code": "HEATMAP_OBJECT",
+  "macro_code": "NFRA",
+  "name": "Estate-file hygiene heat_map -- write-freshness + filesystem-locality clustering -> archive/delete RECOMMENDATIONS (advisory-only)",
+  "description": "NFRA_HEATMAP object-domain (LD-0215). Hourly write-freshness snapshots (git history + mtime -> hot/cold) + cluster cold items by filesystem locality -> a ranked archive/delete RECOMMENDATION report. HARD GUARDRAIL: ADVISORY-ONLY, never auto-deletes; inherits the DEBTSCAN never-auto-delete + verify-before-delete (orphan-invocation / name-vs-edge blast-radius) chain -- cold != safe-to-delete. Reuses DEBTSCAN(churn)+TSGRAPH(cluster)+git. The buildable-now half.",
+  "prds": [
+    {"path": "docs/architecture/NFRA_HEATMAP_SCOPING.md", "label": "CTO scoping -- OBJECT side (write-freshness heat + locality cluster + advisory recommendations) + TO candidates O1-O4/S0", "date": "2026-06-25"}
+  ],
+  "related": ["NFRA_HEATMAP", "NFRA_DEBTSCAN", "NFRA_TSGRAPH"],
+  "status": "scoping",
+  "phase": "SCOPING -- part of NFRA_HEATMAP (LD-0215). TO candidates S0(shared core)+O1(write-freshness engine)+O2(locality cluster)+O3(advisory archive/delete recs, blast-radius-gated)+O4(hygiene report). COO decomposes (OBJECT-first). Buildable now.",
+  "blocking": "None -- scoping. Buildable now (git/mtime + DEBTSCAN + TSGRAPH exist).",
+  "created": "2026-06-25",
+  "sovereign": "Andrew",
+  "coo_lane": "2.0.0_SA_COO",
+  "thread_counter": 0,
+  "threads": []
+}

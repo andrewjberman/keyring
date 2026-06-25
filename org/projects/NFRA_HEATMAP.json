@@ -1,0 +1,20 @@
+{
+  "project_code": "NFRA_HEATMAP",
+  "macro_code": "NFRA",
+  "macro": true,
+  "name": "Object+Process Analytics -- one write-activity/freshness heat_map analytic, two domains (estate self-knowledge)",
+  "description": "Andrew-direct via MSTR (LD-0215, 2026-06-25). ONE heat_map analytic (write/activity recency + clustering) applied to TWO domains: OBJECTS (estate-file hygiene -> archive/delete RECOMMENDATIONS, ADVISORY-ONLY) + PROCESSES (OPLMCP MCP-traffic audit/mining as an analytics schema, the L0-L5 workflow-scoping brief). Reuse-heavy: object reuses DEBTSCAN(churn/blast-radius)+TSGRAPH(cluster)+git; process reuses OPLMCP(.05 R8 lake, 100%-cov hook, identity, kill-switch). Guardrails: object never-auto-delete + verify-before-delete; process two-zone de-identify privacy (no identity persisted).",
+  "prds": [
+    {"path": "docs/architecture/NFRA_HEATMAP_SCOPING.md", "label": "CTO scoping (LD-0215): object/process split + reuse-map + placement + TO candidates + guardrails", "date": "2026-06-25"},
+    {"path": "docs/briefs/oplmcp-workflow-scoping-20260624.md", "label": "MSTR process-side brief: L0-L5 workflow-mining + two-zone privacy (the PROCESS substrate)", "date": "2026-06-24"}
+  ],
+  "related": ["NFRA_OPLMCP", "NFRA_DEBTSCAN", "NFRA_TSGRAPH"],
+  "status": "scoping",
+  "phase": "SCOPING -- CTO scoping doc landed 2026-06-25 (NFRA_HEATMAP_SCOPING.md, e34f226c6; LD-0215). NEW MACRO. NEXT: COO decomposes (OBJECT-first per the sequencing rec -- buildable now via git/mtime+DEBTSCAN; PROCESS sequences against OPLMCP .05 R8-lake landing). No build commitment; scope->COO-decompose->MSTR-spawn.",
+  "blocking": "None -- scoping stage. OBJECT side buildable now (git write-history + DEBTSCAN + TSGRAPH exist). PROCESS side sequences against OPLMCP .05 (R8 audit-lake) landing.",
+  "created": "2026-06-25",
+  "sovereign": "Andrew",
+  "coo_lane": "2.0.0_SA_COO",
+  "thread_counter": 0,
+  "threads": []
+}
