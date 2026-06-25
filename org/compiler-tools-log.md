@@ -8204,3 +8204,22 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-06-25 | 0.7.0_AE_CloudOps | NFRA_DEBTSCAN.TO-D3 | comp-kuzu | comp-kuzu CALL TABLE_INFO('CloudEdge') RETURN * | PASS |
 | 2026-06-25 | 0.5.0_AE_OpalETL | DIVZ/IDVZ-etf-staleness | comp-freshness | netassets_daily + mdpf etf_net_assets feeder (file-fresh; data-vintage = TrueShares T+1 cadence) | PASS |
 | 2026-06-25 | 0.5.0_AE_OpalETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-06-25 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/ETFS_AVGCAP.json --file or... | PASS |
+| 2026-06-25 | 0.7.0_AE_CloudOps | NFRA_DEBTSCAN.TO-D3 | comp-kuzu | comp-kuzu MATCH (a:CloudNode)-[e:CloudEdge]-(b:CloudNode) WHERE (a.node_type='S3_BUCKET... | PASS |
+| 2026-06-25 | 0.7.0_AE_CloudOps | NFRA_DEBTSCAN.TO-D3 | comp-kuzu | comp-kuzu MATCH (s:CloudNode) WHERE s.node_type='S3_BUCKET' RETURN s.node_id LIMIT 15 | PASS |
+| 2026-06-25 | 0.7.0_AE_CloudOps | NFRA_DEBTSCAN.TO-D3 | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/globgrph/debtscan_canon_score... | PASS |
+| 2026-06-25 | 0.7.0_AE_CloudOps | NFRA_DEBTSCAN.TO-D3 | comp-kuzu | comp-kuzu MATCH (a:CloudNode)-[e:CloudEdge]->(b:CloudNode) WHERE a.node_type IN ['API_R... | PASS |
+| 2026-06-25 | 0.7.0_AE_CloudOps | NFRA_DEBTSCAN.TO-D3 | comp-kuzu | comp-kuzu MATCH (a:CloudNode)-[e:CloudEdge]->(b:CloudNode) WHERE a.node_type='ServedURL... | PASS |
+| 2026-06-25 | 1.0.0_SA_CTO | NFRA_COMPRAIL.TO-6.cto-cvo-ld0207-hardening | comp-kuzu | comp-kuzu CALL show_tables() RETURN * | PASS |
+| 2026-06-25 | 0.7.0_AE_CloudOps | NFRA_DEBTSCAN.TO-D3 | comp-kuzu | comp-kuzu MATCH (n:CloudNode) WHERE n.node_type='LAMBDA' AND (n.name CONTAINS 'auth-val... | PASS |
+| 2026-06-25 | 0.7.0_AE_CloudOps | NFRA_DEBTSCAN.TO-D3 | comp-kuzu | comp-kuzu MATCH (n:CloudNode) WHERE n.node_type IN ['ServedURL','API_ROUTE'] RETURN n.n... | PASS |
+| 2026-06-25 | 1.0.0_SA_CTO | NFRA_COMPRAIL.TO-6.cto-cvo-ld0207-hardening | comp-kuzu | comp-kuzu MATCH (n:CloudNode) RETURN DISTINCT n.type AS node_type ORDER BY node_type | FAIL |
+| 2026-06-25 | 1.0.0_SA_CTO | NFRA_COMPRAIL.TO-6.cto-cvo-ld0207-hardening | comp-kuzu | comp-kuzu MATCH ()-[e:CloudEdge]->() RETURN DISTINCT e.edge_type AS edge_type ORDER BY ... | PASS |
+| 2026-06-25 | 1.0.0_SA_CTO | NFRA_COMPRAIL.TO-6.cto-cvo-ld0207-hardening | comp-kuzu | comp-kuzu MATCH (n:CloudNode) RETURN n LIMIT 1 | PASS |
+| 2026-06-25 | 1.0.0_SA_CTO | NFRA_COMPRAIL.TO-6.cto-cvo-ld0207-hardening | comp-kuzu | comp-kuzu MATCH (a)-[e:CloudEdge]->(b) WHERE e.edge_type IN ['ROUTES_TO','TRIGGERS','SE... | PASS |
+| 2026-06-25 | 0.4.0_DS_ClientPlatform | DATA_ANALYTICS.A1 | comp-surface-check | comp-surface-check check --mode advisory --file data/canonical/schwab/silver/build_fact... | PASS |
+| 2026-06-25 | 0.7.0_AE_CloudOps | NFRA_DEBTSCAN.TO-D3 | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/globgrph/debtscan_canon_score... | PASS |
+| 2026-06-25 | 0.7.0_AE_CloudOps | NFRA_DEBTSCAN.TO-D3 | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/globgrph/debtscan_canon_score... | PASS |
+| 2026-06-25 | 0.5.0_AE_OpalETL | ETFS_SETUP.W2 | comp-freshness | schwab/silver/rps path-resolution + etfs paths (substrate locate) | PASS |
+| 2026-06-25 | 0.5.0_AE_OpalETL | ETFS_SETUP.W2 | ds-commit-gate | bd-49f-etf-ownership-daily/lambda_function.py | PASS |
+| 2026-06-25 | 0.5.0_AE_OpalETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/bd-pipeline/bd-49f-etf... | PASS |
