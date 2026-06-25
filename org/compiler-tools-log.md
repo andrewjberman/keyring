@@ -8069,3 +8069,6 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-06-25 | 0.4.0_DE_ClientPlatform | DATA_ANALYTICS.FE1 | comp-surface-check | comp-surface-check check --mode advisory --file docs/briefs/DATA_ANALYTICS_fe_impact_mi... | PASS |
 2026-06-25 | 0.6.0_AE_PartnerETL | ADVI_BDAPIMIG.P1 | (none - closure window) | CVO accepted all 3 (A/B/C); RAVC-close coordination, no new code/infra -> build-window tool runs logged in prior entry
 | 2026-06-25 | 0.6.0_AE_PartnerETL | ADVI_BDAPIMIG.P1 | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+
+| 2026-06-25 | 0.7.0_AE_CloudOps | DATA_PLATFORM.DC2 + deploy_ledger | ds-commit-gate, comp-grep/glob, terraform validate (x3), comp-iam(pending pre-apply) | deploy_ledger --lambda/tf-lambda fix (c66b397d1, tested no-regression); DC2 harness arch-gate cycle + ~80% built+TF-validated (premise-falsified, dedicated docs + doc-scoped IAM); BD-cross routed to 0.6.0 |
+| 2026-06-25 | 0.7.0_AE_CloudOps | DATA_PLATFORM.DC2 | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
