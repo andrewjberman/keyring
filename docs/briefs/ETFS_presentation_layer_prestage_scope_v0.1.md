@@ -95,5 +95,34 @@ Live reality (grounded 2026-06-25):
 ## 5. WHAT'S SERVABLE TODAY (ingestion proven; presentation is the gap)
 Producers live this session (deploys: W1-inf `20260623T1544Z`, W3-cot `20260625T1352Z`, W2-49f `20260625T1747Z`); monthly AVGCAP served (05 + 06). So ingestion→S3 is DONE for all 3 partners; **the only missing leg is S3→presentation** — exactly this scope. A Form-B daily report could ship reading the live artifacts immediately; Form-A needs the internal-scope route built first.
 
+## 5b. DECISION (Andrew form-pick 2026-06-25, via in-session ask + COO `175929Z`) — BUILD SPEC
+
+**FORM = B (STANDALONE DAILY REPORT only)** — not the portal panel, not B-then-A. Reason: lowest firm-sep risk, fastest, fits "recording DAILY", no tenant-route work.
+**PRIMARY CUT = TOTAL-FIRST** — lead with total Opal-fund AUM per partner, then both by-ETF and by-partner breakdowns.
+
+### Report spec (total-first standalone daily report)
+```
+  OPAL ETF OWNERSHIP — DAILY RECORDING — <as_of_date>
+  ───────────────────────────────────────────────────────────────
+  TOTAL Opal-fund AUM by partner (sum over the 4 ETFs):
+     49 Financial   $<sum>   (monthly, as_of 06-18)
+     Inflection     $<sum>   (daily,   as_of 06-24)
+     Cottonwood     $<sum>   (daily,   as_of 06-22)
+     ── Opal-funds total $<grand_sum>
+  ───────────────────────────────────────────────────────────────
+  BY ETF (partners side-by-side)            [config-driven universe]
+     DIVZ   49F $—  | Inflec $30.1M | COT $—   | row total
+     IDVZ   ...
+     PFDE / PFOE ...
+  BY PARTNER (ETFs side-by-side)
+     Inflection   DIVZ $30.1M | IDVZ $23.3M | PFDE $19.0M | PFOE $11.0M
+     49 Financial / Cottonwood ...
+  ───────────────────────────────────────────────────────────────
+  MONTHLY-AVG (AVGCAP) + MoM delta   |   per-partner granularity footnotes (source_as_of)
+```
+- Universe **config-driven** (render `config.tickers` dynamically — adding an ETF must not need a report edit).
+- **Granularity honesty:** label each partner's REAL granularity from `source_as_of`; 49F = monthly (silver-fire-gated), inf/cot = daily; never imply 49F-daily before the silver fire. 49F upgrades to daily on Andrew's GO with zero structural change.
+- **Opal-INTERNAL only** (cross-partner; never a tenant route).
+
 ## 6. NEXT (the gated chain)
 Andrew FORM-PICK (A / B / B-then-A) → CTO design-gate (the served-path + the opal-internal scope-gate are the arch decisions; firm-sep is the bar) → DE build (presentation-producer artifact + the chosen form) → CVO ingestion→presentation validation (the AC: pixels/report match the served etfs artifact, firm-sep intact, granularity honest). TERRAFORMS/resources: the presentation-producer Lambda + its reader IAM + (Form A) the CloudFront behavior/route — scoped at design-gate. **No build yet — this is the decision-ready pre-stage.**
