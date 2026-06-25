@@ -32,6 +32,7 @@ from __future__ import annotations
 import argparse
 import json
 import os
+import re
 import subprocess
 import sys
 import time
@@ -59,6 +60,36 @@ def referenced_by(root: str, subtree_dir: str, limit: int = 5) -> list[str]:
     return [h for h in r.stdout.splitlines() if h][:limit]
 
 
+def referenced_index(root: str, subtree_dirs: list[str], limit: int = 5) -> dict[str, list[str]]:
+    """name-vs-edge inbound check for ALL candidates in ONE git-grep pass (COO-pointed: a
+    reference INDEX, not 225 sequential greps -- the real --all perf fix). One
+    `git grep -o -E "<alt of all paths>"` emits `file:matched-path` for every reference; we map
+    each matched path -> the EXTERNAL files that mention it. Longest-path-first alternation so a
+    parent path doesn't shadow a child. Any error -> HOLD-all (conservative/safe)."""
+    refs: dict[str, set] = {d: set() for d in subtree_dirs}
+    if not subtree_dirs:
+        return {}
+    # longest-first: prefer the most specific path when one is a prefix of another
+    ordered = sorted(subtree_dirs, key=len, reverse=True)
+    alt = "|".join(re.escape(d) for d in ordered)
+    valid = set(subtree_dirs)
+    try:
+        # one pass: `git grep -o` emits `file:matched-path` per reference (-I skips binaries)
+        r = subprocess.run(["git", "-C", root, "grep", "-I", "-o", "-E", "-e", alt],
+                           capture_output=True, text=True, timeout=180)
+    except Exception:
+        return {d: ["<grep-error>"] for d in subtree_dirs}   # uncertainty -> HOLD all (safe)
+    if r.returncode not in (0, 1):
+        return {d: ["<grep-error>"] for d in subtree_dirs}
+    for line in r.stdout.splitlines():
+        fpath, sep, matched = line.partition(":")
+        if not sep or matched not in valid:
+            continue
+        if not (fpath == matched or fpath.startswith(matched + "/")):   # external reference only
+            refs[matched].add(fpath)
+    return {d: sorted(v)[:limit] for d, v in refs.items()}
+
+
 def _blast_node(subtree_dir: str) -> str:
     """The graph query for the mandatory pre-action blast check. comp-blast accepts a file/prefix
     -- the subtree dir is the natural query for 'does anything upstream depend on this?'."""
@@ -66,9 +97,10 @@ def _blast_node(subtree_dir: str) -> str:
 
 
 def assess(root: str, candidates: list[dict]) -> list[dict]:
+    ref_map = referenced_index(root, [c["dir"] for c in candidates])   # ONE git-grep pass
     out: list[dict] = []
     for c in candidates:
-        refs = referenced_by(root, c["dir"])
+        refs = ref_map.get(c["dir"], [])
         recommend = len(refs) == 0
         out.append({
             **c,
