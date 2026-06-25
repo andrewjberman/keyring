@@ -4,14 +4,24 @@
   "name": "Estate-file hygiene heat_map -- write-freshness + filesystem-locality clustering -> archive/delete RECOMMENDATIONS (advisory-only)",
   "description": "NFRA_HEATMAP object-domain (LD-0215). Hourly write-freshness snapshots (git history + mtime -> hot/cold) + cluster cold items by filesystem locality -> a ranked archive/delete RECOMMENDATION report. HARD GUARDRAIL: ADVISORY-ONLY, never auto-deletes; inherits the DEBTSCAN never-auto-delete + verify-before-delete (orphan-invocation / name-vs-edge blast-radius) chain -- cold != safe-to-delete. Reuses DEBTSCAN(churn)+TSGRAPH(cluster)+git. The buildable-now half.",
   "prds": [
-    {"path": "docs/architecture/NFRA_HEATMAP_SCOPING.md", "label": "CTO scoping -- OBJECT side (write-freshness heat + locality cluster + advisory recommendations) + TO candidates O1-O4/S0", "date": "2026-06-25"}
+    {
+      "path": "docs/architecture/NFRA_HEATMAP_SCOPING.md",
+      "label": "CTO scoping -- OBJECT side (write-freshness heat + locality cluster + advisory recommendations) + TO candidates O1-O4/S0",
+      "date": "2026-06-25"
+    }
   ],
-  "related": ["NFRA_HEATMAP", "NFRA_DEBTSCAN", "NFRA_TSGRAPH"],
-  "status": "active",
-  "phase": "PHASE 0 -- DECOMPOSED (COO 2026-06-25, MSTR decompose-handoff 183744Z). TO set: S0 (shared heat_map primitive -- write/activity-recency scoring + decay + clustering, domain-parameterized) + O1 (write-freshness engine: git-history-authoritative + mtime-for-untracked -> per-path hot/warm/cold, hourly-snapshot heat time-series) + O2 (filesystem-locality clustering -- cold-subtree detection, reuse comp-cluster/TSGRAPH) + O3 (archive/delete RECOMMENDATION layer -- ADVISORY-ONLY, inherit DEBTSCAN never-auto-delete + orphan-invocation/name-vs-edge blast-radius verify-before-RECOMMEND) + O4 (hygiene report/surface -- ranked recs + evidence, human-reviewed, never auto-acts). COO SCOPING-ANSWERS: Q1 = shared heat_map core is a genuinely SHARED LIBRARY both projects import (S0; the unification is the point); Q2 = hourly-snapshot = a DERIVED view from git-history (NOT a new store -- git IS the write-history; mtime supplements untracked/generated); Q3 = OBJECT-first YES. LANE: single dedicated AE build-lane (DEBTSCAN/TSGRAPH/comp-tool reuse = CloudOps/0.7-shape) pipelining S0->O1/O2->O3->O4; named to MSTR for spawn. Awaiting MSTR spawn.",
+  "related": [
+    "NFRA_EXPAND",
+    "NFRA_DEBTSCAN",
+    "NFRA_TSGRAPH"
+  ],
+  "status": "scoping",
+  "phase": "NFRA_EXPAND Strand C (object hygiene) -- re-homed from NFRA_HEATMAP (Andrew consolidation 2026-06-25). PHASE 0 -- DECOMPOSED (COO 2026-06-25, MSTR decompose-handoff 183744Z). TO set: S0 (shared heat_map primitive -- write/activity-recency scoring + decay + clustering, domain-parameterized) + O1 (write-freshness engine: git-history-authoritative + mtime-for-untracked -> per-path hot/warm/cold, hourly-snapshot heat time-series) + O2 (filesystem-locality clustering -- cold-subtree detection, reuse comp-cluster/TSGRAPH) + O3 (archive/delete RECOMMENDATION layer -- ADVISORY-ONLY, inherit DEBTSCAN never-auto-delete + orphan-invocation/name-vs-edge blast-radius verify-before-RECOMMEND) + O4 (hygiene report/surface -- ranked recs + evidence, human-reviewed, never auto-acts). COO SCOPING-ANSWERS: Q1 = shared heat_map core is a genuinely SHARED LIBRARY both projects import (S0; the unification is the point); Q2 = hourly-snapshot = a DERIVED view from git-history (NOT a new store -- git IS the write-history; mtime supplements untracked/generated); Q3 = OBJECT-first YES. LANE: single dedicated AE build-lane (DEBTSCAN/TSGRAPH/comp-tool reuse = CloudOps/0.7-shape) pipelining S0->O1/O2->O3->O4; named to MSTR for spawn. Awaiting MSTR spawn.",
   "blocking": "No external/data gate -- BUILDABLE NOW (git/mtime + DEBTSCAN + comp-cluster/TSGRAPH all exist). Gated ONLY on MSTR spawn of the build lane (COO lane-set + cap flagged to MSTR 2026-06-25). NOT time-urgent (durable-hygiene value, no deadline) -> spawn-when-capacity-frees (post-ETFS-wrap / when the CloudOps-AE clears TO-D3 + DC2); legitimately-paced, not a coast-stall.",
   "created": "2026-06-25",
-  "pods": ["0.7"],
+  "pods": [
+    "0.7"
+  ],
   "sovereign": "Andrew",
   "coo_lane": "2.0.0_SA_COO",
   "thread_counter": 0,

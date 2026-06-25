@@ -1,0 +1,18 @@
+{
+  "project_code": "EXPAND_MSCLOUD",
+  "macro_code": "NFRA",
+  "name": "MS-Cloud graph ingestion -- graph the entire Microsoft cloud via the m365 server / Graph API",
+  "description": "NFRA_EXPAND Strand A (Andrew-direct 2026-06-25, the big expansion). Use the m365 MCP gateway's live delegated Graph API access to ingest the MS cloud into the globgrph graph as nodes/edges: users/groups/mailboxes/SharePoint/OneDrive/Teams/calendars/files + relationships (owns/has-access/member-of/shared-with/located-in) + activity/freshness metadata. Graph grows from Opal-AWS+repo to + the entire MS cloud = SSOT for all Opal properties. HARD PRIVACY: model STRUCTURE+METADATA+ACTIVITY only, NEVER content; the sensitive sub-graph is access-controlled (least-priv read role, not the open comp-kuzu surface); de-identify person-data.",
+  "prds": [
+    {"path": "docs/architecture/NFRA_EXPAND_SCOPING.md", "label": "Strand A scope: MS-cloud Graph-API ingestion + the structure-not-content privacy guardrail", "date": "2026-06-25"}
+  ],
+  "related": ["NFRA_EXPAND", "NFRA_GLOBGRPH", "NFRA_OPLMCP"],
+  "status": "scoping",
+  "phase": "SCOPING -- NFRA_EXPAND Strand A. The major new build: m365 Graph-API -> globgrph node/edge ingestion. Prerequisite for the GLOBAL heat_map (Strand C). COO decomposes after the auth-edge + local-heat_map quick wins.",
+  "blocking": "None hard -- scoping. The big build; sequences as the major expansion. Depends on the m365 gateway Graph API (live) + the globgrph derive pipeline.",
+  "created": "2026-06-25",
+  "sovereign": "Andrew",
+  "coo_lane": "2.0.0_SA_COO",
+  "thread_counter": 0,
+  "threads": []
+}
