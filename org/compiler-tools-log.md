@@ -8363,3 +8363,7 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 
 - 2026-06-25 0.4.0_DS_ClientPlatform [MIXED]: comp-which x1 (routed->comp-grep, found etf_ownership_dashboard.py allowlist to mirror); ds-commit-gate PASS on every .py commit (caught F401/E731); rest = direct boto3 parquet inspection (data-plane, off-rail per graph-presence). Canonize-gold A->C + ETFS AVGCAP correction.
 | 2026-06-25 | 0.4.0_DS_ClientPlatform | DATA_ANALYTICS.A1 | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-06-25 | 0.4.0_DE_ClientPlatform | DATA_ANALYTICS.FE1 | comp-surface-check | comp-surface-check check --mode advisory --file data/etfs/scripts/presentation/render_m... | PASS |
+| 2026-06-25 | 0.5.0_AE_OpalETL | (no-TO) | comp-iam | comp-iam service etfs-canon-fanin | PASS |
+| 2026-06-25 | 0.5.0_AE_OpalETL | ETFS_CANON-deploy | comp-iam | etfs-canon-fanin firm-sep (read etfs/daily + write table, zero firm-bucket) + fan-in 356-row verify | PASS |
+| 2026-06-25 | 0.5.0_AE_OpalETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/cr... | PASS |
