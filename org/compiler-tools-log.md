@@ -8255,3 +8255,7 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-06-25 | 0.7.0_AE_CloudOps | NFRA_DEBTSCAN.TO-D3 | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.7.0_AE_CloudOps/task... | PASS |
 | 2026-06-25 | 0.5.0_AE_OpalETL | ETFS-49f-daily-prestage | comp-freshness/ds-commit-gate | bd canonical/holdings source verify + producer gate + RPS-vs-canonical basis-delta grounding | PASS |
 | 2026-06-25 | 0.5.0_AE_OpalETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/bd-pipeline/bd-49f-etf... | PASS |
+| 2026-06-25 | 1.0.0_SA_CTO | NFRA_COMPRAIL.TO-6.cto-cvo-ld0207-hardening | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/NFRA_COMPTOOL_USEPATH... | PASS |
+| 2026-06-25 | 0.4.0_DE_ClientPlatform | DATA_ANALYTICS.FE1 | comp-surface-check | comp-surface-check check --mode advisory --file docs/briefs/ETFS_presentation_layer_pre... | PASS |
+2026-06-25 | 0.6.0_AE_PartnerETL | /49-schwab-conv | operational aws/python (skill sync+converters+S3-verify); 2x rail-checked s3 ls (delta-scope + Step-7 byte-verify) | 49F Schwab silver rolled thru 20260624 all 6 tables ERR=0; trn_nna rebuilt from empty | skill steps are Rule-21-free operational
+| 2026-06-25 | 0.6.0_AE_PartnerETL | ADHC_GLDINC.SS4c.ae-periodic-oracle-revalidation | comp-surface-check | comp-surface-check check --mode advisory --file .claude/skills/49-schwab-conv/SKILL.md ... | PASS |

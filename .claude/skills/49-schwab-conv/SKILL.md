@@ -27,7 +27,7 @@ gold consumer. **trn_nna (TRN Layer B) is the NNA-classified flows the gold C_01
 | File pattern | `CRS{YYYYMMDD}.{ACC,RPS,TRN,ULN,RLD,SEC,UPN,UPT,...}` (Schwab SI2 Desktop delivers per-account) |
 | Raw S3 dest | `s3://opal-data-schwab/01_raw/` (all ext) + `*.RPS` mirror to `s3://opal-data-schwab/bronze/rps/` |
 | Silver S3 dest | `s3://opal-data-bd/schwab/silver/{acc,rps,trn,trn_nna,uln,rld}/date=YYYYMMDD/data.parquet` (ULT is NOT from this skill — BD-side `B_03`-sourced, by design) |
-| Last-known state | as of 2026-06-22, silver complete through **20260618** (update this line each run) |
+| Last-known state | as of 2026-06-25, silver complete through **20260624** (update this line each run) |
 
 **SSE gotcha:** `opal-data-schwab` DENIES `PutObject` without `x-amz-server-side-encryption:
 AES256`. The sync script already passes `ExtraArgs={'ServerSideEncryption':'AES256'}` — if you ever
