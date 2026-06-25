@@ -8145,3 +8145,16 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-06-25 | 0.4.0_DE_ClientPlatform | DATA_ANALYTICS.FE1 | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DE_ClientPlatfor... | PASS |
 20260625T1633Z | 0.4.0_DE_ClientPlatform | DATA_ANALYTICS.FE1 | comp-pipescript io (49F/COT/INF D->A backtrack, ~35 scripts) + pipescript advi-bd/cot/inf | server-side Group-D->Group-A lineage v1.0 all-3-partners; gap: io empty-reads for 3 INF scripts (flagged)
 | 2026-06-25 | 0.4.0_DE_ClientPlatform | DATA_ANALYTICS.FE1 | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-06-25 | 0.6.0_AE_PartnerETL | ADVI_BDAPIMIG.P1 | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/bd-pipeline/bd-49f-fee... | PASS |
+| 2026-06-25 | 0.6.0_AE_PartnerETL | ADVI_BDAPIMIG.P1 | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/ci/lambda-source-map.json | PASS |
+| 2026-06-25 | 0.6.0_AE_PartnerETL | ADVI_BDAPIMIG.P1 | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/ci/lambda-source-map.j... | PASS |
+| 2026-06-25 | 0.7.0_AE_CloudOps | DATA_PLATFORM.DC2 | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/terraform/crawl-harness/dc2-t... | PASS |
+| 2026-06-25 | 0.6.0_AE_PartnerETL | ADVI_BDAPIMIG.P1 | comp-iam | comp-iam gaps | PASS |
+| 2026-06-25 | 0.6.0_AE_PartnerETL | ADVI_BDAPIMIG.P1 | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/change_management/20... | PASS |
+| 2026-06-25 | 0.6.0_AE_PartnerETL | ADVI_BDAPIMIG.P1 | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/terraform/bd-pipeline/bd-49f-... | PASS |
+| 2026-06-25 | 0.7.0_AE_CloudOps | NFRA_DEBTSCAN.TO-D3 | comp-kuzu | comp-kuzu MATCH (n) RETURN count(n) AS nodes | PASS |
+| 2026-06-25 | 0.6.0_AE_PartnerETL | ADVI_BDAPIMIG.P1 | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/ci/lambda-source-map.j... | PASS |
+| 2026-06-25 | 0.7.0_AE_CloudOps | NFRA_DEBTSCAN.TO-D3 | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/terraform/crawl-harness/dc2-t... | PASS |
+| 2026-06-25 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/mcp/.last-drive-2.0.0_SA_COO --file... | PASS |
+2026-06-25 | 0.6.0_AE_PartnerETL | ADVI_BDAPIMIG bd-fees + MDPF cross-link | pipescript mdpf/--resource fees, comp-freshness chain bd, comp-which, comp-glob, comp-iam gaps x2, ds-commit-gate | grounded the MDPF gate->silver/fees blocker + restored fees REST end-to-end (zero-code); no IAM gap | rail: diagnostic s3/ssm/ec2 calls carried # rail-checked markers
+| 2026-06-25 | 0.6.0_AE_PartnerETL | ADVI_BDAPIMIG.P1 | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
