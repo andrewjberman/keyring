@@ -8310,3 +8310,5 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-06-25 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
 2026-06-25 | 0.6.0_AE_PartnerETL | SS4c-coord/egress/Phase-2/verify | comp-iam gaps, comp-glob, comp-surface-check selfcheck/scan, comp-freshness chain bd, rail-checked aws live reads | authored TO#2 limb+TO#3 cost-line+Phase-2 scope, restored SEV1 egress, live-verified BD recovery (caught dead cookie) | live-state verify (rail-checked aws) the comp-tools don't emit
 | 2026-06-25 | 0.6.0_AE_PartnerETL | ADHC_GLDINC.SS4c.ae-periodic-oracle-revalidation | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-06-25 | 0.5.0_AE_OpalETL | ETFS_CANON-skeleton | ds-commit-gate + terraform fmt | etfs-canon-fanin lambda gate + dynamo/fanin TF fmt (SKELETON, not deployed) | PASS |
+| 2026-06-25 | 0.5.0_AE_OpalETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/etfs-pipeline/etfs-can... | PASS |
