@@ -8128,3 +8128,20 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-06-25 | 0.4.0_DS_ClientPlatform | DATA_ANALYTICS.A1 | comp-surface-check | comp-surface-check check --mode advisory --file data/canonical/scripts/silver/build_rel... | PASS |
 | 2026-06-25 | 0.5.0_AE_OpalETL | MDPF_ASSETS.FREEZE-DX | (session-log line) | dx complete: comp-which/comp-glob/pipescript/comp-freshness used -- see per-tool rows above | PASS |
 | 2026-06-25 | 0.5.0_AE_OpalETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-06-25 | 0.4.0_DE_ClientPlatform | DATA_ANALYTICS.FE1 | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DE_ClientPlatfor... | PASS |
+| 2026-06-25 | 0.4.0_DS_ClientPlatform | DATA_ANALYTICS.A1 | comp-surface-check | comp-surface-check check --mode advisory --file data/canonical/scripts/silver/build_fac... | PASS |
+| 2026-06-25 | 0.4.0_DE_ClientPlatform | DATA_ANALYTICS.FE1 | comp-pipescript | comp-pipescript io data/inf/scripts/gold/INF_D_04.client_portal_summary.py | PASS |
+| 2026-06-25 | 0.4.0_DE_ClientPlatform | DATA_ANALYTICS.FE1 | comp-pipescript | comp-pipescript io data/inf/scripts/gold/INF_B_02.canonical_lots.py | PASS |
+| 2026-06-25 | 0.4.0_DE_ClientPlatform | DATA_ANALYTICS.FE1 | comp-pipescript | comp-pipescript io data/inf/scripts/gold/INF_A_03.positions_cube.py | PASS |
+| 2026-06-25 | 0.4.0_DE_ClientPlatform | DATA_ANALYTICS.FE1 | comp-pipescript | comp-pipescript io data/inf/scripts/gold/INF_09.generate_partner_analytics.py | PASS |
+| 2026-06-25 | 0.4.0_DE_ClientPlatform | DATA_ANALYTICS.FE1 | comp-pipescript | comp-pipescript io data/inf/scripts/gold/INF_D_00.portal_aggregates.py | PASS |
+| 2026-06-25 | 0.4.0_DE_ClientPlatform | DATA_ANALYTICS.FE1 | comp-pipescript | comp-pipescript io data/inf/scripts/gold/INF_D_05.activity_scan.py | PASS |
+| 2026-06-25 | 0.4.0_DE_ClientPlatform | DATA_ANALYTICS.FE1 | comp-pipescript | comp-pipescript io data/inf/scripts/gold/INF_D_06.cash_drag.py | PASS |
+| 2026-06-25 | 0.4.0_DE_ClientPlatform | DATA_ANALYTICS.FE1 | comp-pipescript | comp-pipescript io data/inf/scripts/gold/INF_D_07a.firm_concentrations.py | PASS |
+| 2026-06-25 | 0.4.0_DE_ClientPlatform | DATA_ANALYTICS.FE1 | comp-pipescript | comp-pipescript io data/inf/scripts/gold/INF_D_08.nmec_nmnc_nna.py | PASS |
+| 2026-06-25 | 0.7.0_AE_CloudOps | DATA_PLATFORM.DC2 | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/ec2/crawl-harness/src/dc2-tes... | PASS |
+| 2026-06-25 | 0.7.0_AE_CloudOps | DATA_PLATFORM.DC2 | comp-iam | comp-iam service dc2-test1-orchestrator | PASS |
+| 2026-06-25 | 0.7.0_AE_CloudOps | DATA_PLATFORM.DC2 | comp-iam | comp-iam service dc2-test1-orchestrator | PASS |
+| 2026-06-25 | 0.4.0_DE_ClientPlatform | DATA_ANALYTICS.FE1 | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DE_ClientPlatfor... | PASS |
+20260625T1633Z | 0.4.0_DE_ClientPlatform | DATA_ANALYTICS.FE1 | comp-pipescript io (49F/COT/INF D->A backtrack, ~35 scripts) + pipescript advi-bd/cot/inf | server-side Group-D->Group-A lineage v1.0 all-3-partners; gap: io empty-reads for 3 INF scripts (flagged)
+| 2026-06-25 | 0.4.0_DE_ClientPlatform | DATA_ANALYTICS.FE1 | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
