@@ -32,3 +32,17 @@
 - **SURROGATE/HASH genuinely PRUDENT (no/fragile natural key):** `fact_lot_unrealized` (`lot_uid` -- no natural key exists at all) and `fact_transaction` (`txn_uid` hash -- fragile 8-col natural key + it's the dedup/aberration anchor).
 
 These two are exactly where the custodian data gives us no stable row identity -- so a deterministic surrogate is not gold-plating, it's required for stable joins, idempotent incremental loads, and (for txn) the aberration-excision hook.
+
+## v0.3 amendment -- PRESERVE FIFO reconstruction as an independent custodian-latency sanity check (Andrew-direct 2026-06-25)
+
+Andrew-direct: do NOT fully retire FIFO reconstruction. We have no visibility into custodian-side ETL latency/errors, so an independent FIFO-from-our-own-transactions check on the custodian-direct lots is worth its (small) cost. This REVISES the earlier "retires B_01 FIFO" framing: B_01 is **repositioned from the serving path to a VALIDATION lane**, not deleted.
+
+**Design change -- a SECOND hash on `fact_lot_unrealized`:**
+- `lot_uid` (per-snapshot, +occurrence-index) -- the SERVING row key (unchanged; serves the custodian-direct ULN lots).
+- **`lot_lineage_id`** = deterministic hash over the lot's natural identity `(account_id, cusip, acquired_date, cost_per_share)` -- a PERSISTENT comparison key. This is the "additional hash." It is the grain at which the FIFO-reconstructed lots and the custodian ULN lots are compared (sum qty/cost within the key; the key is not row-unique -- 289 collisions on 06-18 -- so the comparison aggregates to it, which is fine for a parity check).
+
+**The validation lane:** the FIFO reconstruction (B_01 logic, rebuilt on `fact_transaction`) produces reconstructed lots keyed on the SAME `lot_lineage_id` -> compare vs custodian ULN at that grain -> divergence beyond tolerance = a **custodian-latency / error flag** (the sanity check). Serving stays custodian-direct (lean); FIFO is the cross-check.
+
+**Honest cost (it is slightly more than "just a hash"):** = the `lot_lineage_id` hash (trivial) + RETAINING the FIFO reconstruction compute (the B_01 logic) + RUNNING it to compare. Mitigation: run the FIFO check **sampled / periodic** (e.g. a daily sample of accounts, or a full weekly pass), NOT a nightly full-recompute -- so it's a cheap watchdog, not a return to the heavy nightly FIFO. The transactions raw material (`fact_transaction`) is already required, so the marginal cost is the retained logic + a bounded check run.
+
+**Patch-register update:** B_01 / `is_ghost` move from "EXCISE (retire)" to "REPOSITION (validation lane)". The bd_stale/is_ghost flag becomes meaningful again ONLY inside the validation lane (a FIFO-reconstructed position the custodian doesn't confirm = a divergence signal), not in the served path.
