@@ -1,0 +1,30 @@
+{
+  "project_code": "SCTY_MCPGUARD",
+  "macro_code": "SCTY",
+  "name": "MCP destructive-action guardrails -- the SAFETY layer above PREMCP's AUTH layer (\"so they dont accidentally delete the whole onedrive\")",
+  "description": "Andrew-direct (2026-06-26, verbatim 'so they dont accidentally delete the whole onedrive'). CTO-authored PRD docs/architecture/SCTY_MCPGUARD_PRD.md (commit 0019b1743), parallel to SCTY_PREMCP. The SAFETY layer that sits ABOVE PREMCP's AUTH layer: PREMCP governs WHO can call the gateway; MCPGUARD governs WHAT a destructive call can do once authorized. KEY FRAMING (CTO): contain-don't-classify -- ONE guard mitigates BOTH the honest fat-finger AND the hijacked-agent injection, because both end at the same destructive Graph call (no intent-classification needed -- that's a separate workstream's burden). Load-bearing context: the m365 MCP gateway is now the SINGLE MS-Graph chokepoint (Andrew-sovereign 2026-06-26: NFRA_MSGRAPH consumes Graph THROUGH the gateway, no new registration) -- so the guardrails sit at ONE chokepoint, which is the elegant place to enforce them. SIX guardrails: G1 BLAST-RADIUS CAP (the OneDrive-stopper -- a single call cannot touch more than N items / a whole tree), G2 classification gate (read vs write vs destructive), G3 confirm-on-destructive (human/second-factor confirm before a destructive call lands), G4 reversibility-first/undo (DENY permanent-delete, route to recycle bin -- recoverable by default), G5 rate-limit / anomaly detection, G6 audit / alert (every destructive call logged + alertable). Aligned to NFRA_MSGRAPH S6 (multi-user) + the delegated-token-via-gateway model (the same chokepoint NFRA_MSGRAPH S2 uses).",
+  "prds": [
+    {
+      "path": "docs/architecture/SCTY_MCPGUARD_PRD.md",
+      "label": "CTO PRD (0019b1743): the 6 guardrails (G1 blast-radius cap ... G6 audit/alert), contain-don't-classify framing, S7 phasing, S0-enumeration-first seam",
+      "date": "2026-06-26"
+    }
+  ],
+  "related": [
+    "SCTY_PREMCP",
+    "NFRA_MSGRAPH",
+    "NFRA_OPLMCP"
+  ],
+  "status": "decomposing",
+  "phase": "DECOMPOSING 2026-06-26 (Andrew-direct via CTO 162617Z; PRD landed 0019b1743). COO registers + decomposes per CTO ASK. SEAM PLAN (CTO-suggested, recon-first): S0 = the DESTRUCTIVE-SURFACE ENUMERATION (the registry every guardrail TO consumes -- enumerate every destructive/write Graph call the m365 gateway exposes + its blast-radius profile) lands FIRST + gates all guardrail TOs [TO AUTHORED: SCTY_MCPGUARD.S0.destructive-surface-enum.md]. Then G1-G6 guardrail TOs cut ON S0's enumeration output (don't pre-commit guardrail specifics before the surface is enumerated -- same recon-first discipline as NFRA_MSGRAPH S1). G1 (blast-radius cap, the OneDrive-stopper) is the headline/first guardrail. LANE: a CloudOps/AE lane owns the gateway tool surface (0.7.0_AE_CloudOps = CloudOps + gateway/OTP owner, natural fit; coordinate w/ 0.8.0_AE_CloudComp who grounded the gateway call-path for NFRA_MSGRAPH S2). Each TO carries a CVO LIVE-BEHAVIOR verify gate (prove the guard actually blocks a destructive call live, not asserted); CTO arch-gates at spec + implementable-change. NEXT: GO held for Andrew's PRD review (his direct ask -- deliverables ready for review; not blocking -- guardrails are S5-phased, aligned to the later NFRA_MSGRAPH S6 multi-user). On Andrew's go-ahead -> GO S0 -> cut G1-G6 on the enumeration. ALSO FOLDING: PREMCP S2B's 3 new verify-TOs (JWT header-key-injection + alg-confusion, SSRF-source route audit, redirect_uri exact-match) into the SCTY_PREMCP decomposition (separate from this registration).",
+  "blocking": "None -- decomposing. Not blocking: the guardrails are S5-phased + aligned to NFRA_MSGRAPH S6 (multi-user, later). Depends on: the m365 gateway tool surface (NFRA_OPLMCP, live) for S0 enumeration. GO held for Andrew's PRD review (his direct ask).",
+  "created": "2026-06-26",
+  "sovereign": "Andrew",
+  "coo_lane": "2.0.0_SA_COO",
+  "thread_counter": 0,
+  "threads": [],
+  "lanes": {
+    "S0 destructive-surface enumeration": "CloudOps/AE gateway-surface owner (0.7.0_AE_CloudOps, coord 0.8.0_AE_CloudComp) -- TBD-pin-on-GO",
+    "G1-G6 guardrails": "TBD on S0 enumeration -- CloudOps/AE build + CVO live-behavior verify + CTO arch-gate"
+  }
+}
