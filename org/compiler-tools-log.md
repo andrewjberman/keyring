@@ -9113,3 +9113,4 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-06-26 | 1.0.0_SA_CTO | (no-TO) | (none direct) | session of arch-gate RULINGS + agent recovery + registry-check tooling fix; grounding rode each implementing agents RAVC comp-tool evidence (Rule-22 producer-grounds/gate-cites); registry-check.py validated by running engine | N/A |
 - 2026-06-26T23:40Z session-close (COO): canonical silver COMPLETE 17/17 (S3-verified a1a32f44c) + gold scoped (08_GOLD_SCOPE.md 486c0253b, build halted for Monday per Andrew). /drive cron 8876765e stopped (wind-down). aws s3 ls silver-verify (rail-checked, deploy-verify operational), git-log COO-free per Rule 21.
 | 2026-06-26 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-06-26 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/1.0.0_SA_CTO/logs/2026-0... | PASS |
