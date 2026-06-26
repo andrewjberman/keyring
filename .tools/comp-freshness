@@ -54,7 +54,13 @@ except ImportError:
 WORKSPACE = Path(__file__).resolve().parent.parent
 BD_CONFIG  = WORKSPACE / "data" / "black_diamond" / "scripts" / "gold" / "gold_freshness_config.yaml"
 INF_CONFIG = WORKSPACE / "data" / "inf" / "scripts" / "gold" / "gold_freshness_config.yaml"
+COT_CONFIG = WORKSPACE / "data" / "cot" / "scripts" / "gold" / "gold_freshness_config.yaml"
 DDB_CONFIG = WORKSPACE / "data" / "ddb_freshness_config.yaml"
+
+# Firm-clean pipeline -> config map (each firm's config loaded by its own key, no commingling).
+# cot added 2026-06-26 (CVO comp-tools campaign) so cot served artifacts get a freshness check
+# (was bd/inf-only -> cot had NO comp-freshness coverage). cot content-mode rides as_of_field.
+PIPELINE_CONFIGS = {"bd": BD_CONFIG, "inf": INF_CONFIG, "cot": COT_CONFIG}
 
 CADENCE_LABELS = {
     "daily":          "daily",
@@ -244,7 +250,30 @@ def _load_config(path: Path) -> list[dict]:
         missing = required_fields - set(entry.keys())
         if missing:
             raise ConfigError(f"Entry {i} missing required fields: {missing}")
-    return data
+    return _filter_partition_key_entries(data, path)
+
+
+def _filter_partition_key_entries(data: list[dict], path: Path) -> list[dict]:
+    """LOAD-FILTER (the load-bearing safety mechanism, CTO-gated 2026-06-26): drop entries
+    whose freshness is keyed to a silver date-PARTITION-key (as_of_source: silver-partition-key,
+    a freshness_manifest_gen.py / BD-source-bound concept). comp-freshness only knows mtime +
+    as_of_field content-mode; mtime-checking a partition-key snapshot table FALSE-REDs every run
+    (the config header warns of exactly this -- BD pins a frozen CurrentDay as-of, so a daily
+    rewrite has a fresh mtime but a stale stamped as-of). Fail-SAFE: such an entry is SKIPPED
+    here (never mtime-mischecked) and announced LOUD, never silently mis-verdicted. (bd/inf carry
+    none today -> no-op there; this protects the cot served-config load.)"""
+    kept, skipped = [], []
+    for e in data:
+        if str(e.get("as_of_source", "")).strip() == "silver-partition-key":
+            skipped.append(e.get("artifact_id", "?"))
+        else:
+            kept.append(e)
+    if skipped:
+        print(f"comp-freshness: NOTE -- {len(skipped)} partition-key entr"
+              f"{'y' if len(skipped)==1 else 'ies'} in {path.name} SKIPPED (as_of_source: "
+              f"silver-partition-key is freshness_manifest_gen's domain; comp-freshness would "
+              f"mtime-mischeck -> false-RED). Skipped: {', '.join(skipped)}", file=sys.stderr)
+    return kept
 
 
 def _load_configs(pipeline: Optional[str] = None) -> tuple[list[dict], list[dict]]:
@@ -632,7 +661,18 @@ def _fmt_row(r: dict) -> str:
     age  = (f"{r['age_h']:.1f}h" if r["age_h"] is not None else "N/A").ljust(_COL_AGE)
     fail = (f"{r['fail_at_h']}h" if r["fail_at_h"] is not None else "N/A").ljust(_COL_FAIL)
     st   = r["status"].ljust(_COL_ST)
-    return f"{aid} | {key} | {ts} | {age} | {fail} | {st}"
+    base = f"{aid} | {key} | {ts} | {age} | {fail} | {st}"
+    # When content-mode was engaged, the displayed age_h is MTIME (secondary). Surface the
+    # authoritative content age so a content-driven WARN/FAIL is legible (not 'WARN at 0.6h?').
+    if "mtime_status" in r:
+        if r.get("content_checked"):
+            base += " [content as_of %s, %.1fh]" % (r.get("content_as_of", "?"),
+                                                    r.get("content_age_h") or 0.0)
+            if r.get("status") in ("WARN", "FAIL") and r.get("mtime_status") == "PASS":
+                base += " <MTIME-FRESH/CONTENT-STALE>"
+        else:
+            base += " [content UNCHECKED -> mtime is the weaker signal]"
+    return base
 
 
 def _fmt_header() -> str:
@@ -665,10 +705,10 @@ def print_results(results: list[dict], label: str = "") -> int:
 # Subcommand handlers
 # ---------------------------------------------------------------------------
 def cmd_chain(pipeline: str) -> int:
-    if pipeline not in ("bd", "inf"):
-        print(f"ERROR: unknown pipeline {pipeline!r}. Use 'bd' or 'inf'.", file=sys.stderr)
+    if pipeline not in PIPELINE_CONFIGS:
+        print(f"ERROR: unknown pipeline {pipeline!r}. Use {'/'.join(PIPELINE_CONFIGS)}.", file=sys.stderr)
         return 2
-    config_path = BD_CONFIG if pipeline == "bd" else INF_CONFIG
+    config_path = PIPELINE_CONFIGS[pipeline]
     entries = _load_config(config_path)
     # Filter out on-demand entries for chain check (show them as SKIP)
     results = check_entries(entries)
@@ -828,6 +868,14 @@ def cmd_all() -> int:
     else:
         print(f"WARN: INF config not found: {INF_CONFIG}", file=sys.stderr)
 
+    # S3: COT (served entries only; partition-key silver entries load-filtered out)
+    if COT_CONFIG.exists():
+        cot_entries = _load_config(COT_CONFIG)
+        cot_results = check_entries(cot_entries)
+        exit_code = max(exit_code, print_results(cot_results, label="chain cot (S3)"))
+    else:
+        print(f"WARN: COT config not found: {COT_CONFIG}", file=sys.stderr)
+
     # DDB
     if DDB_CONFIG.exists():
         ddb_entries = _load_ddb_config()
@@ -841,7 +889,7 @@ def cmd_all() -> int:
 
 def cmd_list() -> int:
     """Print cadence config in human-readable form grouped by pipeline."""
-    for label, path in (("BD", BD_CONFIG), ("INF", INF_CONFIG)):
+    for label, path in (("BD", BD_CONFIG), ("INF", INF_CONFIG), ("COT", COT_CONFIG)):
         if not path.exists():
             print(f"\n-- {label} config not found: {path} --")
             continue
@@ -925,7 +973,7 @@ Examples:
     sub = parser.add_subparsers(dest="command")
 
     p_chain = sub.add_parser("chain", help="Check all S3 chain input artifacts")
-    p_chain.add_argument("pipeline", choices=["bd", "inf"])
+    p_chain.add_argument("pipeline", choices=["bd", "inf", "cot"])
 
     p_script = sub.add_parser("script", help="Check inputs for a specific script ID")
     p_script.add_argument("script_id")
