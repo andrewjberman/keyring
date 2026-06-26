@@ -88,3 +88,63 @@ The over-flags are the proof of the thesis; each is a precise suppressor to add:
   (COO formalizes the registry/TO once the design lands).
 
 Prototype: `org/tier1_exec/3.0.0_SA_CVO/deliverables/dup_scan_proto.py` (NAME-level, advisory, read-only).
+
+---
+
+# v2 (POST-ARCH-GATE BUILD) -- results against the live estate
+
+CTO arch-gated GO (86d56a3c7) with 4 conditions. v2 (`dup_scan_v2.py`, advisory/read-only) carries
+all four; run against the live estate. Machine-readable ledger: `dup_scan_v2_ledger.json`.
+
+## Condition 1 -- precise + auditable suppressors (NO silent suppression)
+The v1 over-flag (1358 "concerning" TF pairs) was dominated by LEGITIMATE structure. v2 adds four
+PRECISE suppressors, each matching ONLY its exact benign pattern and LOGGING what it hid (a
+suppressor masking a real dup is therefore inspectable). Live run: **524 pairs suppressed, all
+audited** -- `BENIGN_CROSS_FIRM` 276, `BENIGN_IAM_POLICY_SPLIT` 148, `BENIGN_SERVICE_SPLIT` 84,
+`BENIGN_ENV_TWIN` 16. The decisive one was **STRUCTURAL, not string-heuristic**: `BENIGN_IAM_POLICY_SPLIT`
+parses the actual `role =` attribute and suppresses two inline policies attached to the SAME role
+(one role's policy split by action-area) -- it does NOT mask a real dup, because a true duplicate
+surfaces as an EXACT label or identical CONTENT, neither of which that branch touches.
+Result: the NAME tier collapsed from 1358 to **10 high-value EXACT-label cross-module collisions**
+(the real twin/double-management signal) + a demoted informational near-band.
+
+The 10 high-value catches incl.: `aws_dynamodb_table.opal_users_v2` (the routed first-catch),
+`aws_iam_role.bd_exporter` x2 (ec2 vs bd-pipeline), `aws_iam_role_policy.step_functions_lambda_invoke`
+(multi-account prod/staging vs bd-pipeline), and the `infra/aws/lambda/deprecated/` `aws_lambda_function.this`
++ `aws_cloudwatch_event_target.lambda` twins (dead-prior -> see condition 2).
+
+## Condition 2 -- DEAD = graph-confirmed (Rule 22), else graph-pending
+The dead-confirm leg runs ONLY on high-value findings (cached, short-timeout). A `deprecated//archive/`
+path RAISES the dead-prior but the verdict is **`INFERRED_DEAD_GRAPH_PENDING`** until a real graph
+result shows zero consumers -- it NEVER prints `CONFIRMED_DEAD` off a path prior alone. Live run: the
+`deprecated/` lambda.this + event_target.lambda correctly returned `INFERRED_DEAD_GRAPH_PENDING`.
+**Refinement from COO's adjacent finding (opal-users v1):** the dead-confirm leg should take TWO
+evidence sources -- graph-reachability (comp-blast/downstream) AND runtime read-metrics
+(CloudWatch `ConsumedReadCapacity`). opal-users(v1) is a validated DEAD-TWIN by metric (0 reads/24h
+vs v2's 103) -> it becomes the **regression fixture** for the dead-confirm leg: 0-reads + 0-consumers
+= `CONFIRMED_DEAD`; either signal alone or absent = `INFERRED_*, pending`. Removal always human-confirm.
+
+## Condition 4 -- CONTENT-level tier + DOGFOOD (proven)
+Content tier scans **git-tracked first-party py bodies only** (3184; vendored layer/site-packages
+deps excluded by construction + a belt filter). Two sub-tiers: **C1 exact-body-hash groups** (O(N),
+catches byte-identical copied modules) and **C2 BM25 near** (drifted shared-body dups).
+- **C1 real finds:** `build_transaction_engine.py` x3 (canonical + two timestamped `_GOOD_` backups in
+  `archive/versions/`), `bd-price-update/lambda_function_v1_backup.py` IDENTICAL to the archived
+  price_update body (a backup-twin living in the LIVE lambda tree), and
+  `data/smartx/scripts/lambda_smartx_query.py` == `infra/aws/lambda/smartx_query/lambda_function.py`
+  (the same code dual-homed in a source dir AND the lambda tree -> drift risk).
+- **C2 DOGFOOD (CTO's explicit test): PASSED.** The top content-neighbors of `lib/trading_calendar.py`
+  are EXACTLY the 5 not-yet-migrated copies CTO named:
+  `data/mdpf/scripts/gold/_trading_day_calendar.py` (norm 0.524, top hit), `mdpf-daily-trigger`,
+  `bd-cot-freshness-probe`, `bd-49f-freshness-probe`, `mdpf-freshness-checker` (all lambda_function.py).
+  => the content tier WOULD have flagged the triplicated calendar pre-convergence. Dogfood confirmed.
+
+## What v2 still owes (the standing-dimension arch-gate ask)
+- the C2 exhaustive all-pairs near-sweep is bounded for the prototype (proven via exact-dup groups +
+  the one-doc dogfood); production needs the blocked-by-stem + max-df candidate-gen at full corpus.
+- wire `suppression_v1.yaml` (the 4 suppressor classes land as `pending_review_classes` until CVO-ruled).
+- the metrics+graph dual-evidence dead-confirm leg (opal-users v1 as regression fixture).
+- broaden classes to S3 prefixes + EventBridge rules; CONTENT tier over gold/silver scripts.
+Then COO formalizes the debtscan-dimension home + `comp-dups` manifest registration.
+
+Build: `dup_scan_v2.py` + `dup_scan_v2_ledger.json` (advisory, read-only, never removes).
