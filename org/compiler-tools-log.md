@@ -8820,3 +8820,10 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-06-26 | 0.2.0_DS_PortfolioAnalytics | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
 | 2026-06-26 | 0.2.0_DE_PortfolioAnalytics | (no-TO) | ds-commit-gate | .tools/ds-commit-gate.sh yang-generate-peer-performance/lambda_function.py | PASS |
 | 2026-06-26 | 0.2.0_DE_PortfolioAnalytics | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-06-26 | 0.2.0_DT_PortfolioAnalytics | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/ci/lambda-source-map.j... | PASS |
+| 2026-06-26 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/NFRA_GLOBGRPH.json | PASS |
+| 2026-06-26 | 0.2.0_DT_PortfolioAnalytics | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.2.0_DT_PortfolioAnal... | PASS |
+
+- 2026-06-26 (1.0.0_SA_CTO): SCTY two-PRD delivery + gate sweep. comp-grep NYSE_HOLIDAYS (found 5 calendar copies not 4, corrected CVO enum); source-Read/git-show grounded every ruling (CTO-B diff 65908e4a3, S2 call-path server.py/token_broker.py, retry-net eventbridge.tf:15-33); aws events describe-rule grounded PIECE-2 confirm (operational, off-rail). Gap candidate: no comp-tool for EventBridge rule-pattern inspection.
+2026-06-26 | 0.2.0_DT_PortfolioAnalytics | DEPLOY yang-v2.4.15 peer-performance validate_peer_output fail-closed guard (DS 7f77542de) | no comp-tool this delta -- same lambda/blast as 2.4.13-14; guard confirmed PASS on live source via rerun (200/no-error, served still 5-model).
+| 2026-06-26 | 0.2.0_DT_PortfolioAnalytics | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md | PASS |
