@@ -284,6 +284,20 @@ lanes:
       - 0.7.0_AE_CloudOps
     description: "YCharts market-data pull Lambda source (infra/aws/lambda/ycharts-market-data-pull/**) — YALP_MDSRC.C2 co-owners 0.1.0_DS + 0.2.0_DS authorized for code edits (the C2 TO 353b00116 assigns the DS pair to BUILD the pull module); 0.7.0_AE_CloudOps for infra/Terraform/deploy. Mirrors the TRADE_PIPELINE_INFRA DS-code/AE-infra split. COO ruling 2026-05-22 (YALP_MDSRC.C2 owned-paths gap)."
 
+  YANG_PIPELINE_DEPLOY:
+    permitted_agents:
+      - 0.5.0_AE_OpalETL
+      - 0.5.0_AE_OpalETL~B
+      - 0.6.0_AE_PartnerETL
+      - 0.6.1_AE_PartnerETL
+      - 0.6.2_AE_PartnerETL
+      - 0.7.0_AE_CloudOps
+      - 0.7.0_AE_CloudOps~A
+      - 0.7.0_AE_CloudOps~B
+      - 0.7.0_AE_CloudOps~C
+      - 0.2.0_DT_PortfolioAnalytics
+    description: "yang-pipeline deploy lane — the full AE CLOUD_OPS_OR_ETL set (PRESERVED verbatim, so AE deploys of all pipelines via the shared source map are unaffected) PLUS 0.2.0_DT_PortfolioAnalytics, who holds Full DT Authority over yang-pipeline and whose lambda deploys MECHANICALLY write the source map + yang TF CHANGELOG. SCOPED to yang-pipeline — NOT a blanket infra/aws grant. Closes the DT-enum gap (3 audited GIT_COMMIT_AUTHOR_OVERRIDE on the clean yang-v2.4.12 deploy 2026-06-26 — a repeat override for a STANDING role-authorized action = a coverage gap to close). Mirrors the TRADE_PIPELINE_INFRA (DT 0.3.0) + YCHARTS (DS) code-owner-gets-scoped-infra precedents. Drafted by 0.2.0_DT per COO approval 20260626T154102Z; CTO arch-gated 2026-06-26 — DT authority SOURCE-VERIFIED (prompt.md:39 'yang-pipeline — Full DT Authority' + deliverables/deployment_map.xml:26 module name=yang-pipeline authority=full), and AE set verified == CLOUD_OPS_OR_ETL exactly (no AE regression on the shared source map). Grantor-landed (SoD: grantee does not commit its own permission grant)."
+
   TIER0_LAW:
     permitted_agents: []
     description: "Tier-0 governance law -- Constitution, Stakes Matrix, Directives. NO agent; Andrew-only (human commit). Constitution Art. III. The owned-paths hook fails OPEN for a no-serial human committer (owned-paths-check.sh lines 67-72: GIT_AUTHOR_NAME unset -> skip), so Andrew commits the law docs unimpeded while any agent serial hits the empty permitted_agents and is blocked. Added 2026-05-22 by COO per Andrew directive (Tier-0 framework)."
@@ -1113,6 +1127,14 @@ paths:
   "infra/aws/lambda/ycharts-market-data-pull/**":
     lane: YCHARTS_PULL_MODULE
     note: "YCharts pull Lambda source — C2 co-owners 0.1.0_DS + 0.2.0_DS author code, 0.7.0_AE deploys; longest-match overrides the infra/aws/** AE-only rule (COO ruling 2026-05-22 YALP_MDSRC.C2)"
+
+  "infra/aws/terraform/yang-pipeline/**":
+    lane: YANG_PIPELINE_DEPLOY
+    note: "yang-pipeline Terraform (CHANGELOG.json written by record-terraform-deploy + the pipeline TF DT 0.2.0 holds Full DT Authority on). DT 0.2.0 + full AE set. Longest-match overrides infra/aws/** AE-only. COO-approved 20260626T154102Z, CTO-gated (DT authority source-verified prompt.md:39 + deployment_map.xml:26)."
+
+  "infra/aws/lambda/ci/lambda-source-map.json":
+    lane: YANG_PIPELINE_DEPLOY
+    note: "Shared Lambda source map (CI drift-detection SoT) — build-and-upload + record-terraform-deploy write it on every yang deploy. Was infra/aws/** (CLOUD_OPS_OR_ETL, full AE set); YANG_PIPELINE_DEPLOY PRESERVES that exact AE set (no regression — all pipelines' AE deploys still write it) + adds DT 0.2.0 (yang). Exact-file longest-match overrides infra/aws/** AE-only. Cross-pipeline mis-writes remain bounded by the CI source-map drift detection (Rule 4)."
 
   "infra/aws/**":
     lane: CLOUD_OPS_OR_ETL
