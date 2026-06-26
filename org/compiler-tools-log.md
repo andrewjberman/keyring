@@ -8928,3 +8928,57 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-06-26 | 0.8.0_AE_MSGraph | ADVI_TAXSMA.S0.3 | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
 - 2026-06-26 ~1919Z 0.4.0_DE_ClientPlatform [ADVI_COTMVP S0/D2]: comp-transform schema-check PartnerAnalytics x2 (PASS baseline + PASS post-D2 -- the PRD-S4 cross-tenant guardrail evidence bracketing the .quarters guard edit). comp-grep/comp-glob FAILED (0 files) inside the portal submodule -> nested-repo working-set gap, fell back to native Grep (Rule 21 nudge). Plus bun typecheck exit-0 + direct S3 grounding pulls.
 | 2026-06-26 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-06-26 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/NFRA_COMPRA... | PASS |
+| 2026-06-26 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/mcp/.last-drive-2.0.0_SA_COO --file... | PASS |
+| 2026-06-26 | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier0/reviews/RV-0040.md | PASS |
+| 2026-06-26 | 0.4.0_DS_ClientPlatform | (no-TO) | pipescript | pipescript --list | PASS |
+| 2026-06-26 | 0.4.0_DS_ClientPlatform | (no-TO) | pipescript | pipescript advi-bd | PASS |
+| 2026-06-26 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-transform | comp-transform schema-check PartnerAnalytics | PASS |
+| 2026-06-26 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/responses/C... | PASS |
+| 2026-06-26 | 0.8.0_AE_CloudComp | (no-TO) | comp-kuzu | comp-kuzu MATCH (n) RETURN n.layer AS layer, count(*) AS n ORDER BY n DESC | PASS |
+| 2026-06-26 | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier0/reviews/RV-0040.md | PASS |
+| 2026-06-26 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/deliverable... | PASS |
+| 2026-06-26 | 0.8.0_AE_CloudComp | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.8.0_AE_CloudComp/del... | PASS |
+| 2026-06-26 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/deliverable... | PASS |
+| 2026-06-26 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/mcp/.last-drive-2.0.0_SA_COO --file... | PASS |
+| 2026-06-26 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file src/pages/AdvisorIntelligence/_shared/c... | PASS |
+| 2026-06-26 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file portal | PASS |
+| 2026-06-26 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/DATA_ANALYTICS_A1_TRA... | PASS |
+| 2026-06-26 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file data/DATA_ANALYTICS_A1_TRANSFORMATION_L... | PASS |
+| 2026-06-26 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/responses/C... | PASS |
+| 2026-06-26 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check list | PASS |
+| 2026-06-26 | 3.0.0_SA_CVO | (no-TO) | comp-pipescript | comp-pipescript io | FAIL |
+| 2026-06-26 | 3.0.0_SA_CVO | (no-TO) | pipescript | pipescript model-portfolios | PASS |
+| 2026-06-26 | 0.4.0_DS_ClientPlatform | (no-TO) | pipescript | pipescript advi-inf | PASS |
+| 2026-06-26 | 3.0.0_SA_CVO | (no-TO) | pipescript | pipescript advi | FAIL |
+| 2026-06-26 | 3.0.0_SA_CVO | (no-TO) | pipescript | pipescript --list | PASS |
+| 2026-06-26 | 3.0.0_SA_CVO | (no-TO) | pipescript | pipescript advi-inf | PASS |
+| 2026-06-26 | 3.0.0_SA_CVO | (no-TO) | pipescript | pipescript mdpf | PASS |
+| 2026-06-26 | 0.8.0_AE_CloudComp | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/globgrph/ms_cloud_extract.py ... | PASS |
+| 2026-06-26 | 0.7.0_AE_CloudOps | NFRA_TSGRAPH.P2-2 | comp-kuzu | comp-kuzu MATCH (c:CloudNode) WHERE c.node_type IN ['PanelCluster','Page'] RETURN c.nod... | PASS |
+| 2026-06-26 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-transform | comp-transform schema-check PartnerAnalytics | PASS |
+| 2026-06-26 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-transform | comp-transform ternary-audit PartnerAnalytics | PASS |
+| 2026-06-26 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/NFRA_MSGRAP... | PASS |
+| 2026-06-26 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/deliverable... | PASS |
+| 2026-06-26 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/NFRA_MSGRAPH_PRD.md | PASS |
+| 2026-06-26 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file src/pages/AdvisorIntelligence/_shared/c... | PASS |
+| 2026-06-26 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file portal | PASS |
+| 2026-06-26 | 0.8.0_AE_CloudComp | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.8.0_AE_CloudComp/del... | PASS |
+| 2026-06-26 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/mcp/.last-drive-2.0.0_SA_COO --file... | PASS |
+| 2026-06-26 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file data/DATA_ANALYTICS_A1_TRANSFORMATION_L... | PASS |
+| 2026-06-26 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/deliverable... | PASS |
+| 2026-06-26 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file data/DATA_ANALYTICS_A2_ESSENTIAL_SPEC.md | PASS |
+| 2026-06-26 | 0.8.0_AE_CloudComp | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/globgrph/node_health.py --fil... | PASS |
+| 2026-06-26 | 3.0.0_SA_CVO | (no-TO) | comp-pipescript | comp-pipescript deployed | PASS |
+| 2026-06-26 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/deliverable... | PASS |
+| 2026-06-26 | 0.0.1_UA_mstools | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file tools/tax_sma/YANG_TAXSMA_AUTOMATION_SP... | PASS |
+| 2026-06-26 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/responses/C... | PASS |
+| 2026-06-26 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .gitignore | PASS |
+| 2026-06-26 | 0.7.0_AE_CloudOps | NFRA_TSGRAPH.P2-2 | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/globgrph/derive_runner.py | PASS |
+| 2026-06-26 | 0.7.0_AE_CloudOps | NFRA_TSGRAPH.P2-2 | comp-iam | comp-iam service derive_runner | PASS |
+| 2026-06-26 | 0.7.0_AE_CloudOps | NFRA_TSGRAPH.P2-2 | comp-iam | comp-iam service globgrph-derive-runner | PASS |
+| 2026-06-26 | 0.8.0_AE_CloudComp | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.8.0_AE_CloudComp/del... | PASS |
+| 2026-06-26 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/mcp/.last-drive-2.0.0_SA_COO --file... | PASS |
+| 2026-06-26 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file data/DATA_ANALYTICS_A3_PREP_CTO_DECISIO... | PASS |
+| 2026-06-26 | 0.7.0_AE_CloudOps | NFRA_TSGRAPH.P2-2 | comp-kuzu (0-cluster pre-state + provenance), comp-iam service (derive roles, no new IAM), comp-grep/glob (DATEMODE-C-done, derive runner+P4, item2a GetObject, SSL fix), ds-commit-gate (derive_runner.py PASS), deploy_ledger open+close L1-L3, comp-to | P2-2 staged-gated (L1-L3 done, L4-L5 on combined post-L6 ship); also ETFS-SES SESv2 verify, DC2 live-ground correction, inf-positions false-alarm corroboration |
+| 2026-06-26 | 0.7.0_AE_CloudOps | NFRA_TSGRAPH.P2-2 | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
