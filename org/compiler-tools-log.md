@@ -8562,3 +8562,16 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-06-26 | 0.6.0_AE_PartnerETL | ADVI_COTETL.L4-GUARD | comp-iam | comp-iam reconcile | FAIL |
 | 2026-06-26 | 0.5.0_AE_OpalETL | comp-which x4, comp-freshness (chain bd/inf + script mdpf), pipescript (mdpf + --resource), comp-iam service, comp-glob | MDPF freeze-recovery verify: bd chain fresh, aggregate_aua catchup confirmed -> 06-25, interior 06-24/25 smell flagged; SES IAM validated. GAP: mdpf has no freshness_config + not registered for comp-pipescript io (filed to CTO). |
 | 2026-06-26 | 0.5.0_AE_OpalETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-06-26 | 0.7.0_AE_CloudOps | (no-TO) | comp-iam | comp-iam service cot-exporter-ec2-role | PASS |
+| 2026-06-26 | 0.7.0_AE_CloudOps | (no-TO) | comp-iam | comp-iam role cot-exporter-ec2-role | PASS |
+| 2026-06-26 | 0.6.0_AE_PartnerETL | ADVI_COTETL.L4-GUARD | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.6.0_AE_PartnerETL/de... | PASS |
+| 2026-06-26 | 0.6.0_AE_PartnerETL | ADVI_COTETL.L4-GUARD | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/ci/lambda-source-map.j... | PASS |
+| 2026-06-26 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.6.0_AE_PartnerETL/ta... | PASS |
+| 2026-06-26 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/mcp/.last-drive-2.0.0_SA_COO --file... | PASS |
+| 2026-06-26 | 3.0.0_SA_CVO | NFRA_TSGRAPH.P3-1 | comp-iam | comp-iam role bd-cot-keepalive-role | PASS |
+| 2026-06-26 | 3.0.0_SA_CVO | NFRA_TSGRAPH.P3-1 | comp-iam | comp-iam role bd-cot-freshness-probe-role | PASS |
+| 2026-06-26 | 0.7.0_AE_CloudOps | (no-TO) | comp-pipescript | comp-pipescript deployed cot | PASS |
+| 2026-06-26 | 0.6.0_AE_PartnerETL | ADVI_COTETL.L4-GUARD | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.6.0_AE_PartnerETL/de... | PASS |
+| 2026-06-26 | 0.4.0_DE_ClientPlatform | NFRA_TSGRAPH.P2-1 | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DE_ClientPlatfor... | PASS |
+2026-06-26 | 0.6.0_AE_PartnerETL | ADVI_COTETL.L4-GUARD | comp-to, comp-iam service/gaps/reconcile, comp-pipescript io, comp-freshness chain/artifact | PIECE 1 cot detection layer deploy: comp-iam service+gaps validated new-lambda policy (all GRANTED, 0 gaps); comp-iam reconcile census stale 06-03 -> authoritative live get-role-policy confirmed Deny opal-data-bd; GAPS: comp-pipescript io gold-only (no bronze session script), comp-freshness chain no cot pipeline/cadence (-> NFRA_COT_TOOLING).
+| 2026-06-26 | 0.6.0_AE_PartnerETL | ADVI_COTETL.L4-GUARD | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
