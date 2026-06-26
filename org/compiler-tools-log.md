@@ -8575,3 +8575,83 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-06-26 | 0.4.0_DE_ClientPlatform | NFRA_TSGRAPH.P2-1 | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DE_ClientPlatfor... | PASS |
 2026-06-26 | 0.6.0_AE_PartnerETL | ADVI_COTETL.L4-GUARD | comp-to, comp-iam service/gaps/reconcile, comp-pipescript io, comp-freshness chain/artifact | PIECE 1 cot detection layer deploy: comp-iam service+gaps validated new-lambda policy (all GRANTED, 0 gaps); comp-iam reconcile census stale 06-03 -> authoritative live get-role-policy confirmed Deny opal-data-bd; GAPS: comp-pipescript io gold-only (no bronze session script), comp-freshness chain no cot pipeline/cadence (-> NFRA_COT_TOOLING).
 | 2026-06-26 | 0.6.0_AE_PartnerETL | ADVI_COTETL.L4-GUARD | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-06-26 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/ec2/m365-mcp-gateway/app/conf... | PASS |
+| 2026-06-26 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/mcp/.last-drive-2.0.0_SA_COO --file... | PASS |
+| 2026-06-26 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/ADVI_COTETL.json | PASS |
+| 2026-06-26 | 0.6.0_AE_PartnerETL | ADVI_COTETL.L4-GUARD | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/cot-pipeline/bd-cot-fr... | PASS |
+| 2026-06-26 | 0.6.0_AE_PartnerETL | ADVI_COTETL.L4-GUARD | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/ci/lambda-source-map.json | PASS |
+| 2026-06-26 | 0.6.0_AE_PartnerETL | ADVI_COTETL.L4-GUARD | comp-iam | comp-iam gaps | PASS |
+| 2026-06-26 | 0.6.0_AE_PartnerETL | ADVI_COTETL.L4-GUARD | comp-iam | comp-iam service bd-cot-freshness-probe | PASS |
+| 2026-06-26 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/mcp/comprail-gate1.enforce | PASS |
+| 2026-06-26 | 0.6.0_AE_PartnerETL | ADVI_COTETL.L4-GUARD | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/ci/lambda-source-map.j... | PASS |
+| 2026-06-26 | 0.5.0_AE_OpalETL | (no-TO) | comp-iam | comp-iam service astn-wsjft-orchestrator | PASS |
+| 2026-06-26 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/ec2/m365-mcp-gateway/deploy-t... | PASS |
+| 2026-06-26 | 0.6.0_AE_PartnerETL | ADVI_COTETL.L4-GUARD | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.6.0_AE_PartnerETL/de... | PASS |
+| 2026-06-26 | 0.6.0_AE_PartnerETL | ADVI_COTETL.L4-GUARD | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.6.0_AE_PartnerETL/lo... | PASS |
+| 2026-06-26 | 0.5.0_AE_OpalETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/terraform/astn-pipeline/insta... | PASS |
+| 2026-06-26 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/ADVI_COTETL.json --file or... | PASS |
+| 2026-06-26 | 0.5.0_AE_OpalETL | (no-TO) | comp-iam | comp-iam service astn-wsjft-orchestrator | PASS |
+| 2026-06-26 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/ec2/EC2_MANIFEST.json | PASS |
+| 2026-06-26 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/change_management/20... | PASS |
+| 2026-06-26 | 0.5.0_AE_OpalETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/change_management/20... | PASS |
+| 2026-06-26 | 0.6.0_AE_PartnerETL | ADVI_COTETL.L4-GUARD | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/terraform/cot-pipeline/iam.tf | PASS |
+| 2026-06-26 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/ADVI_COTETL.json | PASS |
+| 2026-06-26 | 0.5.0_AE_OpalETL | (no-TO) | comp-iam | comp-iam role astn-wsjft-orchestrator | PASS |
+| 2026-06-26 | 0.5.0_AE_OpalETL | (no-TO) | comp-iam | comp-iam role astn-wsjft-scheduler | PASS |
+| 2026-06-26 | 0.5.0_AE_OpalETL | (no-TO) | comp-iam | comp-iam role etf-ownership-dashboard | PASS |
+| 2026-06-26 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/ADVI_COTETL.json | PASS |
+| 2026-06-26 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+| 2026-06-26 | 0.5.0_AE_OpalETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/briefs/comp-iam-false-missing-tf-r... | PASS |
+| 2026-06-26 | 0.6.0_AE_PartnerETL | ADVI_COTETL.L4-GUARD | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/ec2/bd-cot-auto-login/run-bd-... | PASS |
+| 2026-06-26 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/ADVI_COTETL.json | PASS |
+| 2026-06-26 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file data/cot/scripts/bronze/probe_holdings_... | PASS |
+| 2026-06-26 | 3.0.0_SA_CVO | NFRA_TSGRAPH.P3-1 | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/deliverable... | PASS |
+| 2026-06-26 | 0.2.0_DS_PortfolioAnalytics | (no-TO) | comp-pipescript | comp-pipescript io infra/aws/lambda/v2_portal/yang_pipeline/portfolios/yang-model-portf... | PASS |
+| 2026-06-26 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file CLAUDE.md | PASS |
+| 2026-06-26 | 0.2.0_DS_PortfolioAnalytics | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/briefs/devops-brief-model-portfoli... | PASS |
+| 2026-06-26 | 0.2.0_DS_PortfolioAnalytics | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/briefs/devops-brief-model-portfoli... | PASS |
+| 2026-06-26 | 0.6.0_AE_PartnerETL | ADVI_COTETL.L4-GUARD | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.6.0_AE_PartnerETL/de... | PASS |
+| 2026-06-26 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/ADVI_COTETL.json | PASS |
+| 2026-06-26 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/ADVI_COTETL.json | PASS |
+| 2026-06-26 | 0.2.0_DT_PortfolioAnalytics | (no-TO) | comp-pipescript | comp-pipescript io yang-model-portfolio-benchmarks | FAIL |
+| 2026-06-26 | 0.5.0_AE_OpalETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/extract_iam.py --file... | PASS |
+| 2026-06-26 | 0.2.0_DT_PortfolioAnalytics | (no-TO) | comp-blast | comp-blast yang-model-portfolio-benchmarks | PASS |
+| 2026-06-26 | 0.2.0_DT_PortfolioAnalytics | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/ci/lambda-source-map.json | PASS |
+| 2026-06-26 | 0.5.0_AE_OpalETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/extract_iam.py | PASS |
+| 2026-06-26 | 0.5.0_AE_OpalETL | (no-TO) | comp-iam | comp-iam role astn-wsjft-orchestrator | PASS |
+| 2026-06-26 | 0.5.0_AE_OpalETL | (no-TO) | comp-iam | comp-iam role astn-wsjft-scheduler | PASS |
+| 2026-06-26 | 0.5.0_AE_OpalETL | (no-TO) | comp-iam | comp-iam service astn-wsjft-orchestrator | PASS |
+| 2026-06-26 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/ec2/bd-49f-auto-login/bd_49f_... | PASS |
+| 2026-06-26 | 3.0.0_SA_CVO | NFRA_TSGRAPH.P3-1 | comp-adapter-audit | comp-adapter-audit __bogus_zzz_target__ | FAIL |
+| 2026-06-26 | 3.0.0_SA_CVO | NFRA_TSGRAPH.P3-1 | comp-blast | comp-blast __bogus_zzz_target__ | PASS |
+| 2026-06-26 | 3.0.0_SA_CVO | NFRA_TSGRAPH.P3-1 | comp-cache | comp-cache __bogus_zzz_target__ | FAIL |
+| 2026-06-26 | 0.2.0_DT_PortfolioAnalytics | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/ci/lambda-source-map.json | PASS |
+| 2026-06-26 | 3.0.0_SA_CVO | NFRA_TSGRAPH.P3-1 | comp-chainrun | comp-chainrun __bogus_zzz_target__ | FAIL |
+| 2026-06-26 | 3.0.0_SA_CVO | NFRA_TSGRAPH.P3-1 | comp-constants | comp-constants __bogus_zzz_target__ | FAIL |
+| 2026-06-26 | 3.0.0_SA_CVO | NFRA_TSGRAPH.P3-1 | comp-coverage | comp-coverage __bogus_zzz_target__ | FAIL |
+| 2026-06-26 | 3.0.0_SA_CVO | NFRA_TSGRAPH.P3-1 | comp-diff | comp-diff __bogus_zzz_target__ | FAIL |
+| 2026-06-26 | 3.0.0_SA_CVO | NFRA_TSGRAPH.P3-1 | comp-iam | comp-iam __bogus_zzz_target__ | FAIL |
+| 2026-06-26 | 3.0.0_SA_CVO | NFRA_TSGRAPH.P3-1 | comp-incrparity | comp-incrparity __bogus_zzz_target__ | FAIL |
+| 2026-06-26 | 3.0.0_SA_CVO | NFRA_TSGRAPH.P3-1 | comp-lambdamap | comp-lambdamap __bogus_zzz_target__ | FAIL |
+| 2026-06-26 | 3.0.0_SA_CVO | NFRA_TSGRAPH.P3-1 | comp-manifest-check | comp-manifest-check __bogus_zzz_target__ | FAIL |
+| 2026-06-26 | 3.0.0_SA_CVO | NFRA_TSGRAPH.P3-1 | comp-pii | comp-pii __bogus_zzz_target__ | FAIL |
+| 2026-06-26 | 3.0.0_SA_CVO | NFRA_TSGRAPH.P3-1 | comp-pipescript | comp-pipescript __bogus_zzz_target__ | FAIL |
+| 2026-06-26 | 3.0.0_SA_CVO | NFRA_TSGRAPH.P3-1 | comp-platinum | comp-platinum __bogus_zzz_target__ | FAIL |
+| 2026-06-26 | 3.0.0_SA_CVO | NFRA_TSGRAPH.P3-1 | comp-registry | comp-registry __bogus_zzz_target__ | FAIL |
+| 2026-06-26 | 3.0.0_SA_CVO | NFRA_TSGRAPH.P3-1 | comp-routes | comp-routes __bogus_zzz_target__ | FAIL |
+| 2026-06-26 | 3.0.0_SA_CVO | NFRA_TSGRAPH.P3-1 | comp-trace | comp-trace __bogus_zzz_target__ | PASS |
+| 2026-06-26 | 3.0.0_SA_CVO | NFRA_TSGRAPH.P3-1 | comp-transform | comp-transform __bogus_zzz_target__ | FAIL |
+| 2026-06-26 | 3.0.0_SA_CVO | NFRA_TSGRAPH.P3-1 | comp-types | comp-types __bogus_zzz_target__ | FAIL |
+| 2026-06-26 | 3.0.0_SA_CVO | NFRA_TSGRAPH.P3-1 | comp-validate | comp-validate __bogus_zzz_target__ | FAIL |
+| 2026-06-26 | 3.0.0_SA_CVO | NFRA_TSGRAPH.P3-1 | comp-xref | comp-xref __bogus_zzz_target__ | PASS |
+| 2026-06-26 | 3.0.0_SA_CVO | NFRA_TSGRAPH.P3-1 | comp-tooltip | comp-tooltip __bogus_zzz_target__ | FAIL |
+| 2026-06-26 | 3.0.0_SA_CVO | NFRA_TSGRAPH.P3-1 | comp-graph | comp-graph __bogus_zzz_target__ | FAIL |
+| 2026-06-26 | 3.0.0_SA_CVO | NFRA_TSGRAPH.P3-1 | comp-iam | comp-iam role astn-wsjft-orchestrator-role | PASS |
+| 2026-06-26 | 3.0.0_SA_CVO | NFRA_TSGRAPH.P3-1 | comp-iam | comp-iam service astn-wsjft-orchestrator-role | PASS |
+| 2026-06-26 | 3.0.0_SA_CVO | NFRA_TSGRAPH.P3-1 | comp-iam | comp-iam stats | PASS |
+| 2026-06-26 | 3.0.0_SA_CVO | NFRA_TSGRAPH.P3-1 | comp-iam | comp-iam role astn-wsjft-scheduler-role | PASS |
+| 2026-06-26 | 0.2.0_DE_PortfolioAnalytics | (no-TO) | comp-transform | comp-transform schema-check RollingCaptureChart | FAIL |
+| 2026-06-26 | 0.2.0_DE_PortfolioAnalytics | (no-TO) | comp-transform | comp-transform schema-check RollingSharpeChart | FAIL |
+| 2026-06-26 | 0.2.0_DE_PortfolioAnalytics | (no-TO) | comp-transform | comp-transform schema-check MaxDrawdownChart | FAIL |
+| 2026-06-26 | 0.5.0_AE_OpalETL | comp-iam (service/role pre+post), comp-which/grep/glob, terraform plan/safe-apply, ds-commit-gate, pytest | ASTN CEO-brief outage root-caused (half-landed orchestrator IAM, ec2:StartInstances) + fixed (58a2211); comp-iam FALSE-MISSING root-caused to cross-file TF resource-name collision + FIXED (d7ccc029e, module-namespace key). Live get-role-policy was ground truth (comp-iam DESIRED-verdict was the defect). |
+| 2026-06-26 | 0.5.0_AE_OpalETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
