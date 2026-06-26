@@ -19,7 +19,8 @@
     "NFRA_GLOBGRPH"
   ],
   "children": [
-    "SCTY_PREMCP"
+    "SCTY_PREMCP",
+    "SCTY_MCPGUARD"
   ],
   "status": "active",
   "phase": "PHASE 0 -- PRD/CHARTER. CVO scaffolded the proposal (security/SCTY_macro_proposal.md) + the external-repo analysis + the methodology-catalog + the diligence-checklist (in /security, working tree). CTO formalized the PRD 2026-06-24 (docs/architecture/SCTY_PRD.md). SEQUENCE: CTO PRD (DONE) -> COO commits /security + adds the owned-paths lane rule + decomposes the first-chartered-work; MSTR ledgers the macro-creation (Tier-0 LD, mirrors LD-0209). FIRST CHARTERED WORK (urgency-ordered): (1) URGENT -- the agent-supply-chain control (external-content=untrusted-data; sandbox agent tool-access; no-auto-run-external-MCP/scripts) -- protects the ACTIVE recon agents + the whole fabric; CTO arch-gates the design; (2) own-attack-surface self-assessment (portal/gateway/API/AWS vs the distilled checklist -- the OPLMCP gateway first); (3) fold the recon-ROE + crawl-isolation under the SCTY security-framing. Paces alongside the hot priorities.",

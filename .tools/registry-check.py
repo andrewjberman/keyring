@@ -133,6 +133,9 @@ def build_rows():
         rows.append({
             "code": code, "status": st or "unknown", "dt": dt, "owner": owner,
             "age_h": age_h,
+            "macro": bool(d.get("macro")),
+            "macro_code": str(d.get("macro_code") or "").strip(),
+            "children": d.get("children") or [],
             "what": first_sentence(what, 100),
             "where": first_sentence(where, 150),
             "why": first_sentence(why, 150),
@@ -169,22 +172,93 @@ def fmt_commit(dt, now):
 SEP = "-" * 56
 
 
-def emit(title, rs, now, start=1):
+def _print_record(i, r, now, indent="", macro_of="", macro_tag=False):
     # Vertical field-per-line record (Andrew-direct 2026-06-08): each field on its
     # own labeled line, What/Where/Why never run together, ASCII-only separators.
+    def p(s):
+        print(f"{indent}{s}")
+    tag = f"  ({macro_of} child)" if macro_of else ("  [MACRO]" if macro_tag else "")
+    p(f"#: {i}")
+    p(f"Project: {r['code']}{tag}")
+    p(f"Status: {r['status']}")
+    p(f"Last commit: {fmt_commit(r['dt'], now)} - {short_owner(r['owner'])}")
+    p(f"What:  {r['what'] or '-'}")
+    p(f"Where: {r['where'] or '-'}")
+    p(f"Why:   {r['why'] or '-'}")
+
+
+def _print_macro_header(m, kid_count, now):
+    # A macro is a CONTAINER, not a workstream -- render it as a program header,
+    # NOT a numbered What/Where/Why project row (fix: macro masquerading as a row).
+    print(f"[MACRO] {m['code']} -- {m['what'] or m['code']}")
+    print(f"  Status: {m['status']}  (program container; {kid_count} child project(s) below)")
+    print(f"  Why:   {m['why'] or '-'}")
+    print(f"  Last:  {fmt_commit(m['dt'], now)} - {short_owner(m['owner'])} (macro charter/PRD)")
+
+
+def emit(title, rs, now, macros_by_code, start=1):
+    # Macro-aware grouping: a macro renders as a header with its child projects
+    # nested beneath it (fix: macros + children no longer flat peer rows). A child
+    # whose macro lives in a different tier renders solo with a "(<MACRO> child)" tag.
     bar = f"Registry -- {title} ({len(rs)})"
     print(f"\n{bar}\n{'=' * len(bar)}")
-    for i, r in enumerate(rs, start):
-        if i > start:
+
+    macro_rows = [r for r in rs if r["macro"]]
+    macro_codes_here = {m["code"] for m in macro_rows}
+    children_by_macro, standalone = {}, []
+    for r in rs:
+        if r["macro"]:
+            continue
+        mc = r["macro_code"]
+        if mc and mc in macros_by_code and mc != r["code"]:
+            children_by_macro.setdefault(mc, []).append(r)
+        else:
+            standalone.append(r)
+
+    # Display units ordered by recency. A macro unit's recency = newest of (macro, kids).
+    # Only macros WITH child projects present get the container-header treatment;
+    # a macro:true with no children is an ordinary workstream carrying a family tag
+    # (e.g. NFRA_MSGRAPH/ASTN_WSJFT) -> render as a normal row, just [MACRO]-tagged.
+    units = []  # (recency_iso, kind, row, kids)
+    for m in macro_rows:
+        kids = children_by_macro.get(m["code"], [])
+        if kids:
+            recency = max([m["dt"] or ""] + [k["dt"] or "" for k in kids])
+            units.append((recency, "macro", m, kids))
+        else:
+            units.append((m["dt"] or "", "solo-macro", m, None))
+    for r in standalone:
+        units.append((r["dt"] or "", "solo", r, None))
+    # Orphan children (their macro is in the OTHER tier) -> solo, tagged.
+    for mc, kids in children_by_macro.items():
+        if mc not in macro_codes_here:
+            for k in kids:
+                units.append((k["dt"] or "", "orphan", k, None))
+    units.sort(key=lambda u: u[0], reverse=True)
+
+    i = start
+    first = True
+    for recency, kind, row, kids in units:
+        if not first:
             print(f"\n{SEP}")
-        print(f"\n#: {i}")
-        print(f"Project: {r['code']}")
-        print(f"Status: {r['status']}")
-        print(f"Last commit: {fmt_commit(r['dt'], now)} - {short_owner(r['owner'])}")
-        print(f"What:  {r['what'] or '-'}")
-        print(f"Where: {r['where'] or '-'}")
-        print(f"Why:   {r['why'] or '-'}")
-    return start + len(rs)
+        first = False
+        print()
+        if kind == "macro":
+            _print_macro_header(row, len(kids), now)
+            for k in sorted(kids, key=lambda x: x["dt"] or "", reverse=True):
+                print()
+                _print_record(i, k, now, indent="  ", macro_of=row["code"])
+                i += 1
+        elif kind == "orphan":
+            _print_record(i, row, now, macro_of=row["macro_code"])
+            i += 1
+        elif kind == "solo-macro":
+            _print_record(i, row, now, macro_tag=True)
+            i += 1
+        else:
+            _print_record(i, row, now)
+            i += 1
+    return i
 
 
 def main():
@@ -198,11 +272,15 @@ def main():
         print(json.dumps(out, indent=2, default=str))
         return
 
+    # Macros (macro==true) across BOTH tiers, so a child can resolve its parent
+    # even when the two land in different tiers (hot child / cold macro).
+    macros_by_code = {r["code"]: r for r in (hot + cold) if r["macro"]}
+
     cold_hint = "showing HOT + COLD below" if allmode else f"run /registry-check -all for the {len(cold)} cold"
     print(f"REGISTRY  {now.strftime('%Y-%m-%dT%H:%MZ')}  |  {len(malformed)} malformed  |  {cold_hint}")
-    n = emit("HOT  (worked <72h, not closed)", hot, now)
+    n = emit("HOT  (worked <72h, not closed)", hot, now, macros_by_code)
     if allmode:
-        emit("COLD  (>72h since work, still not closed)", cold, now, n)
+        emit("COLD  (>72h since work, still not closed)", cold, now, macros_by_code, n)
     if malformed:
         print(f"\nWARN: MALFORMED JSON ({len(malformed)}) -- unparseable, fix these:")
         for m in malformed:
