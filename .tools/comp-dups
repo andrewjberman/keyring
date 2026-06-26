@@ -1,0 +1,27 @@
+#!/usr/bin/env python3
+"""comp-dups -- thin PATH wrapper for the NFRA_DEBTSCAN dups dimension.
+
+Routes to the canonical engine org/modules/graph/debtscan/dup_scan.py. comp-which-routable
+("find duplicate / dead-twin resources across the estate -- double-managed TF, unused legacy
+tables, triplicated code"). ADVISORY / read-only -- NEVER removes anything.
+
+  comp-dups                         on-demand scan (human-readable)
+  comp-dups --json                  emit the result as JSON
+  comp-dups --class CROSS_FIRM|IAM_POLICY_SPLIT|SERVICE_SPLIT|ENV_TWIN   filter the suppression audit
+  comp-dups --nightly               post-derive: write the dated ledger + dups_latest.json
+  comp-dups --validate-dead         dead-confirm fixture validation (opal-users v1/v2)
+"""
+import os
+import runpy
+import sys
+
+_HERE = os.path.dirname(os.path.abspath(__file__))          # .tools/
+_WS = os.path.dirname(_HERE)                                 # repo root
+_ENGINE = os.path.join(_WS, "org", "modules", "graph", "debtscan", "dup_scan.py")
+
+if not os.path.exists(_ENGINE):
+    sys.stderr.write(f"comp-dups: engine not found at {_ENGINE}\n")
+    sys.exit(2)
+
+sys.argv = [_ENGINE] + sys.argv[1:]
+runpy.run_path(_ENGINE, run_name="__main__")
