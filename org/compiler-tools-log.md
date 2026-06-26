@@ -8895,3 +8895,10 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-06-26 | 0.4.0_DS_ClientPlatform | ADVI_COTMVP.D1 | comp-pipescript | comp-pipescript io D_00b | PASS |
 2026-06-26 0.2.0_DT_PortfolioAnalytics /Peers SI fix DEV->PROD promote (v2.1.127): no comp-tool run -- single-file portal app promote; gates ran in-band (VALGATE D-1 PASS, surface-check OK, push-time tsc PASS); dependency surface pre-established by DE verify.
 | 2026-06-26 | 0.2.0_DT_PortfolioAnalytics | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-06-26 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/graph-call-manifest.yaml | PASS |
+
+## 2026-06-26 ~1825Z 0.2.0_DE_PortfolioAnalytics (peers_si_double_annualization_fix)
+- comp-transform schema-check PeersTab: WARN (types-resolution only, interfaces inline; no MISSING) before the FE edit.
+- comp-routes trace/behaviors: PASS -- found portal SPA serving path + PROD CF domain (ddekdm5vg1xns.cloudfront.net), confirmed /Peers is auth-gated; used instead of a raw aws cloudfront call (HUD gated the raw attempt, complied).
+| 2026-06-26 | 0.8.0_AE_MSGraph | NFRA_MSGRAPH.S2 | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.8.0_AE_CloudComp/del... | PASS |
+| 2026-06-26 | 0.2.0_DE_PortfolioAnalytics | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
