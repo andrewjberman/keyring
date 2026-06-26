@@ -8828,3 +8828,19 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 2026-06-26 | 0.2.0_DT_PortfolioAnalytics | DEPLOY yang-v2.4.15 peer-performance validate_peer_output fail-closed guard (DS 7f77542de) | no comp-tool this delta -- same lambda/blast as 2.4.13-14; guard confirmed PASS on live source via rerun (200/no-error, served still 5-model).
 | 2026-06-26 | 0.2.0_DT_PortfolioAnalytics | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md | PASS |
 | 2026-06-26 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/1.0.0_SA_CTO/logs/2026-0... | PASS |
+| 2026-06-26 | 0.8.0_AE_MSGraph | NFRA_MSGRAPH.S2 | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/ec2/m365-mcp-gateway/deploy-t... | PASS |
+| 2026-06-26 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+| 2026-06-26 | 3.0.0_SA_CVO | NFRA_TSGRAPH.P3-1 | comp-surface-check | comp-surface-check check --mode advisory --file .tools/comp-freshness --file data/cot/s... | PASS |
+| 2026-06-26 | 3.0.0_SA_CVO | NFRA_TSGRAPH.P3-1 | comp-surface-check | comp-surface-check check --mode advisory --file .tools/comp-freshness --file data/cot/s... | PASS |
+| 2026-06-26 | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier0/ledger/LD-0220.md --file org/... | PASS |
+| 2026-06-26 | 0.8.0_AE_MSGraph | NFRA_MSGRAPH.S2 | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/terraform/m365-mcp-gateway/ms... | PASS |
+| 2026-06-26 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .owned-paths.yaml | PASS |
+| 2026-06-26 | 0.8.0_AE_MSGraph | NFRA_MSGRAPH.S2 | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/globgrph/Dockerfile --file in... | PASS |
+| 2026-06-26 | 3.0.0_SA_CVO | NFRA_TSGRAPH.P3-1 | comp-surface-check | comp-surface-check check --mode advisory --file .tools/comp-freshness --file data/cot/s... | PASS |
+| 2026-06-26 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/mcp/.last-drive-2.0.0_SA_COO --file... | PASS |
+| 2026-06-26 | 3.0.0_SA_CVO | NFRA_TSGRAPH.P3-1 | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/deliverable... | PASS |
+| 2026-06-26 | 0.6.0_AE_PartnerETL | ADVI_COTETL.L4-GUARD | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.6.0_AE_PartnerETL/de... | PASS |
+| 2026-06-26 | 0.8.0_AE_MSGraph | NFRA_MSGRAPH.S2 | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/ec2/EC2_MANIFEST.json --file ... | PASS |
+- 2026-06-26 0.0.0_AB_MSTR session_close_1708Z: no comp-tools run -- governance (/mstr-review RV-0039) + org-doc/skill/scaffold work (teams-assist LD-0216, cleanup LD-0219, Tier-0 Utility framework LD-0220 + kit propagation); no code/infra/data/AWS change, Rule-20/21 N/A (org-record + blueprint-kit authoring).
+2026-06-26 | 0.8.0_AE_CloudComp | NFRA_MSGRAPH.S2 | deploy_ledger open/close-leg (6-leg, L1-L5 closed), comp-kuzu n.source=ms DEFERRED to L6 nightly, native Read (gateway auth grounding Rule 22), rail-checked greps (TF/codebuild lookups) | MS ingest GO-LIVE deploy-activation: gateway /ms/* read-only endpoint LIVE + derive task-def MS-enabled + live read-only path proven (34 nodes, SS4 cert PASS)
+| 2026-06-26 | 0.8.0_AE_MSGraph | NFRA_MSGRAPH.S2 | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
