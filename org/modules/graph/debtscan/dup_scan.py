@@ -517,7 +517,9 @@ def _print_human(res: dict) -> None:
 
 def write_ledger(res: dict) -> tuple:
     """Write the dated dimension ledger + the standing latest-pointer to the debtscan home
-    (D1-D5 dated+latest pattern). Called by --nightly (post-derive hook)."""
+    (D1-D5 dated+latest pattern). Called by --nightly (post-derive hook).
+    The full JSON is GITIGNORED (regenerable, ~600KB/night = bloat -- COO ruling 2026-06-26);
+    a SMALL tracked summary (write_summary) carries the audit trail instead."""
     home = Path(__file__).resolve().parent
     stamp = dt.date.today().isoformat()
     payload = {"dimension": "comp-dups", "generated_date": stamp, "advisory_only": True, **res}
@@ -527,6 +529,38 @@ def write_ledger(res: dict) -> tuple:
     dated.write_text(body, encoding="utf-8")
     latest.write_text(body, encoding="utf-8")
     return dated, latest
+
+
+def write_summary(res: dict) -> Path:
+    """Write a SMALL tracked summary (per-class counts + top-N findings) next to the D1-D5 .md
+    reports -- the committed audit trail (the full JSON is gitignored). COO ruling 2026-06-26."""
+    home = Path(__file__).resolve().parent
+    stamp = dt.date.today().isoformat()
+    tf = res["tf_name_findings"]
+    high = [f for f in tf if f["tier"] == "high"]
+    exact = res["content"]["exact_dups"]
+    sup = res["suppression_summary"]
+    lines = [
+        f"# comp-dups dimension summary -- {stamp}",
+        "",
+        "Auto-emitted by `comp-dups --nightly` (NFRA_DEBTSCAN dups dimension). Advisory; NEVER removes.",
+        "Full candidate JSON is gitignored (regenerable); this small summary is the tracked audit trail.",
+        "",
+        f"## Suppression (audited, no silent suppression): {sum(sup.values())} pairs",
+    ]
+    for sid, n in sorted(sup.items(), key=lambda kv: -kv[1]):
+        lines.append(f"- {sid}: {n}")
+    lines += ["", f"## CLASS A-high -- TF EXACT-label cross-module collisions: {len(high)}"]
+    for f in high:
+        dead = f" [dead={f['dead_status']}]" if f["dead_status"] else ""
+        lines.append(f"- {f['a']} <{f['a_mod']}> ~ <{f['b_mod']}>{dead}")
+    lines += ["", f"## CLASS C1 -- CONTENT exact-body dup families: {len(exact)}"]
+    for r in exact:
+        lines.append(f"- x{len(r['members'])} ({r['lines']}L) {r['distinct_names']}")
+    lines += ["", f"## CONTENT corpus scanned: {res['content']['corpus_size']} first-party py bodies"]
+    summ = home / "DUPS_summary.md"
+    summ.write_text("\n".join(lines) + "\n", encoding="utf-8")
+    return summ
 
 
 def main(argv=None) -> int:
@@ -550,8 +584,9 @@ def main(argv=None) -> int:
     res = run_scan(class_filter=args.cls)
     if args.nightly:
         dated, latest = write_ledger(res)
+        summ = write_summary(res)
         high = sum(1 for f in res["tf_name_findings"] if f["tier"] == "high")
-        print(f"comp-dups --nightly: wrote {dated.name} + {latest.name} -> {dated.parent}")
+        print(f"comp-dups --nightly: wrote {dated.name} + {latest.name} (gitignored) + {summ.name} (tracked)")
         print(f"  TF-high={high} | content-exact-dups={len(res['content']['exact_dups'])} | "
               f"suppressed={len(res['suppression_audit'])} (advisory; NEVER removes)")
         return 0
