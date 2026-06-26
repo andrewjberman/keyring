@@ -783,11 +783,34 @@ def _parse_terraform_iam(workspace_root: Path) -> dict[str, IamRole]:
     Returns dict: role_name -> IamRole."""
     roles: dict[str, IamRole] = {}
 
-    tf_base = workspace_root / "infra" / "aws" / "terraform"
-    if not tf_base.exists():
+    # Scan ALL terraform roots, not just infra/aws/terraform. multi-account/terraform and the
+    # per-service ec2/*/terraform roots declare real IAM roles too; globbing only the primary
+    # root left them with NO gap-check at all -- a silent coverage hole on this Rule-20 deploy
+    # gate (0.5.0_AE surfaced it during the collision fix; CTO routed it to the comp-tools
+    # campaign 2026-06-26). The module-keyed role_tf_to_name + loud collision guard (below)
+    # make multi-root scanning safe -- a bare label reused across roots no longer mis-links.
+    aws_base = workspace_root / "infra" / "aws"
+    tf_roots = [
+        aws_base / "terraform",
+        aws_base / "multi-account" / "terraform",
+        aws_base / "ec2",            # rglob picks up each service's terraform/ subdir
+    ]
+    all_tf_files: list[Path] = []
+    seen_tf: set[Path] = set()
+    for root in tf_roots:
+        if not root.exists():
+            continue
+        for f in root.rglob("*.tf"):
+            # skip .terraform/ vendored module + provider caches (would double-count copies)
+            if ".terraform" in f.parts:
+                continue
+            rf = f.resolve()
+            if rf not in seen_tf:
+                seen_tf.add(rf)
+                all_tf_files.append(f)
+    if not all_tf_files:
         return roles
-
-    all_tf_files = list(tf_base.rglob("*.tf"))
+    all_tf_files.sort()
 
     # First pass: collect all role definitions
     # NAMESPACED by module dir: a Terraform resource label (`aws_iam_role "orchestrator"`) is
@@ -821,6 +844,15 @@ def _parse_terraform_iam(workspace_root: Path) -> dict[str, IamRole]:
                     if mod_dir not in module_var_cache:
                         module_var_cache[mod_dir] = _collect_module_var_defaults(mod_dir)
                     role_name = _resolve_tf_vars(role_name, module_var_cache[mod_dir])
+                # A still-unresolved ${var.X} = a REUSABLE module template (e.g.
+                # multi-account/terraform/modules/lambda) with no concrete default -- it is
+                # instantiated elsewhere under a concrete name (which we DO scan). Listing the
+                # templated pseudo-name is unqueryable noise; skip it, but LOUDLY (no silent drop).
+                if "${var." in role_name:
+                    print(f"comp-iam: NOTE -- skipping reusable module-template role "
+                          f"'{role_name}' in {rel} (unresolved var; instantiated concretely "
+                          f"elsewhere).", file=sys.stderr)
+                    continue
                 role_tf_to_name[(str(tf_file.parent), tf_res)] = role_name
                 _label_to_roles.setdefault(tf_res, set()).add(role_name)
                 if role_name not in roles:
