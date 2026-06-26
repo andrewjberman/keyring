@@ -35,6 +35,56 @@ def _normalize_serial(serial: str) -> str:
     """
     return re.sub(r"~([A-Za-z0-9]+)$", r"_\1", serial)
 
+
+def _home_folder_tier_dirs(paths_config: dict) -> set[str]:
+    """Closed set of tier-dirs for the home-folder convention (ADHC_OWNPTH.003).
+
+    Derived from the YAML's OWN path rules at load (single source -- no hardcoded
+    drifting copy), gated to tier-prefixed dirs (``^tier\\d``) so the convention can
+    ONLY ever apply under a real tier home-dir. This closes the one abuse vector CTO
+    flagged (arch-GO 170100Z Q1): an open ``org/*/<serial>/`` wildcard -- a path like
+    ``org/EVIL/<serial>/logs`` can never match because EVIL is not a tier-dir the YAML
+    enumerates. Returns e.g. {tier0, tier1_exec, tier2_senior, tier3_junior, tier3_rd}.
+    """
+    dirs: set[str] = set()
+    for pattern in paths_config:
+        parts = pattern.replace("\\", "/").lstrip("/").split("/")
+        if len(parts) >= 2 and parts[0] == "org" and re.match(r"^tier\d", parts[1]):
+            dirs.add(parts[1])
+    return dirs
+
+
+def _owns_home_folder(agent_norm: str, agent_base: str, path: str,
+                      tier_dirs: set[str]) -> bool:
+    """Home-folder convention (ADHC_OWNPTH.003, CTO arch-GO 170100Z).
+
+    True iff `path` is the committer's OWN home folder:
+        org/<tier-dir>/<SERIAL>/(logs|task_orders)/**
+    where <tier-dir> is in the YAML-derived closed set and <SERIAL> EQUALS the
+    committer's base identity (self if a base serial; tilde-stripped base if a ~lane).
+
+    SAFETY (the load-bearing point CTO confirmed): the grant is to the committer's OWN
+    folder ONLY -- <SERIAL> must equal the committer's own (stripped) serial, so agent A
+    can never reach agent B's folder. Scope is (logs|task_orders) ONLY -- deliverables /
+    other subtrees stay enumeration-gated. Relocation-proof: matches the <SERIAL> path
+    component, not a fixed tier prefix (tier3_rd -> tier3_junior moves never reopen it).
+    """
+    p = path.replace("\\", "/").lstrip("/").split("/")
+    if not (len(p) >= 4 and p[0] == "org" and p[1] in tier_dirs
+            and p[3] in ("logs", "task_orders")):
+        return False
+    path_serial = p[2]
+    # committer IS the home-folder serial (a base committing its own folder), OR
+    # is a ~lane of it (stripped base equals the path serial). A true base's stripped
+    # form is a non-serial (e.g. 0.3.1_RD) that cannot equal a real <SERIAL>, so the
+    # tilde branch never false-permits a base against another agent's folder.
+    if path_serial == agent_norm:
+        return True
+    if agent_base != agent_norm and path_serial == agent_base:
+        return True
+    return False
+
+
 try:
     import yaml as _yaml
     def _load_yaml(path: str) -> dict:
@@ -107,6 +157,17 @@ def check_agent(agent: str, path: str, lanes: dict[str, Any],
         #     matches nothing).
         agent_base = re.sub(r"_[A-Za-z0-9]+$", "", agent_norm)
         if agent_base != agent_norm and agent_base in permitted_norm:
+            return True
+        # ADHC_OWNPTH.003 (2026-06-26, ws CTO arch-GO 170100Z): home-folder convention --
+        # 3rd clause, consulted ONLY after exact-match + tilde-strip both fail (additive-
+        # after, same posture as RV-0030 F-003: never REVOKES an allow). A serial (base or
+        # ~lane) is permitted on its OWN home folder org/<tier>/<SERIAL>/(logs|task_orders)/**
+        # by CONVENTION -- ends the enumeration whack-a-mole (a new pod/agent never needs an
+        # ANY_POD add to commit its own logs/TOs). SAFE: grants the committer's OWN folder
+        # only (<SERIAL> must equal the committer's stripped base); closed YAML-derived
+        # tier-dir set (no org/*/ wildcard); scoped to logs+task_orders only.
+        if _owns_home_folder(agent_norm, agent_base, path,
+                             _home_folder_tier_dirs(paths_config)):
             return True
         return False
 
