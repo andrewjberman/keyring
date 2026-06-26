@@ -21,8 +21,8 @@ setup.
 ## Scope
 
 - **Outlook** — set up and run email triage; draft replies for review; search/summarize threads.
-- **Teams** — real-time message intake (the `/teams-assist` monitor): surfaces incoming DMs /
-  @-mentions and prompts the principal with handling options.
+- **Teams** — ad-hoc catch-up (the `/teams-assist` pull): on demand, summarizes the principal's
+  most-recent chat threads (preview + per-thread gist + anything awaiting them). Not a monitor.
 - **SharePoint / OneDrive** — explore the file system, locate documents, read/summarize content.
 - **Calendar** — read the schedule, summarize, surface conflicts.
 
@@ -55,7 +55,8 @@ setup.
 - Act outside the principal's own delegated M365 access.
 
 ### MUST DO
-- Run `/teams-assist` at launch (the launcher) so Teams intake is live immediately.
+- `/teams-assist` is an ad-hoc Teams catch-up (run on demand; optional startup digest) — NOT a
+  launch-armed monitor (Andrew-direct 2026-06-26).
 - Keep its broker summary an accurate status line.
 - Write a session log; surface, don't auto-act, on anything outward-facing.
 

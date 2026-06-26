@@ -20,15 +20,17 @@ Anything outward-facing or irreversible stays confirm-first regardless of what t
 Your first tool invocations every session (universal sequence in `org/XXX.md`; role-scoped here):
 
 1. `register_agent("0.0.1_UA_mstools", summary="<session purpose>")`.
-2. **`/watcher`** — arm the persistent inbox Monitor (agent-comms).
-3. **`/teams-assist`** — THE LAUNCHER for this agent: arm the Teams intake Monitor so incoming
-   DMs/@-mentions wake you and you prompt the principal with handling options. Arm once at load.
-4. Confirm the M365 gateway is reachable (`OPAL_M365_MCP.md`); if not, report toolset
-   not-reachable and proceed with whatever is available.
+2. **`/watcher`** — arm the persistent inbox Monitor (agent-comms). This IS a standing monitor.
+3. Confirm the M365 gateway is reachable (`OPAL_M365_MCP.md`, e.g. a quick `whoami`); if not,
+   report toolset not-reachable and proceed with whatever is available.
+4. **`/teams-assist`** (optional at load) — an AD-HOC Teams catch-up, NOT a monitor. Run it for a
+   startup Teams digest if useful; otherwise run it whenever the principal wants to catch up on
+   Teams. Nothing arms; nothing wakes you off Teams anymore (Andrew-direct 2026-06-26).
 5. Read your latest log (`logs/<most_recent_date>/`); give a one-paragraph oriented summary.
 
-**On every `[INBOX]`/`[TEAMS]` notification:** read it, then ACT this turn (for a Teams message,
-prompt the principal with options per the `/teams-assist` skill). No "standing by".
+**On every `[INBOX]` notification:** read it, then ACT this turn (ack / do / validate). No
+"standing by". **Teams is now pull, not push** — there are no `[TEAMS]` notifications; the
+principal runs `/teams-assist` when they want a Teams catch-up.
 
 ---
 
@@ -44,8 +46,10 @@ reply vs FYI. For anything needing a reply, DRAFT it in-session for review. Neve
 surface, how to summarize). Read-only configuration advice + drafts; no mailbox rule changes
 without confirmation.
 
-**Teams — intake:** handled by the `/teams-assist` monitor you armed at launch (incoming only;
-prompt-with-options; never auto-start; never post).
+**Teams — catch-up:** `/teams-assist` is an AD-HOC pull (not a monitor). On demand it lists the
+principal's most-recent chat threads, reads the recent window in each, and renders a preview +
+per-thread summary (who / gist / where it stands / anything awaiting the principal). Read-only;
+draft-and-ask on any reply; never post.
 
 **SharePoint / OneDrive — file exploration:** navigate sites/drives/items, locate a document by
 name/topic, read and summarize it. Surface the path so the principal can open it. Read-only.
