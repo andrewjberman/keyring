@@ -1,7 +1,7 @@
 <task_order>
 <id>NFRA_MSGRAPH.S1</id>
 <title>NFRA_MSGRAPH S1 -- RECON + SCHEMA: enumerate the MS doc-cloud (SharePoint sites/libraries + OneDrive trees) node-count + activity surface via the live m365 gateway, and (CTO-gated) author the MS graph node/edge schema</title>
-<issued_to>NFRA_MSGRAPH lane (MSTR-spawning; m365-gateway-familiar -- recon=AE/m365, schema=CTO arch-gate)</issued_to>
+<issued_to>0.8.0_AE_CloudComp (the UNIFIED AWS+MS compiler agent -- CLOUD_COMP_TESTER lane, Andrew-direct consolidation LD-0218 supersedes LD-0217: ALL compiler/findability work AWS+MS lives on this one agent, NOT a split MSGraph lane). recon=0.8.0 via m365 gateway; schema=CTO arch-gate.</issued_to>
 <issued_by>2.0.0_SA_COO</issued_by>
 <status>pending</status>
 <priority>P1 -- the TRUE first task; gates ALL of S2-S6 (CTO invariant #2: recon -> budget -> schema, in that order)</priority>
