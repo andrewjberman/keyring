@@ -68,24 +68,56 @@ def main() -> int:
         return rows
 
     # --- Phase-2 MANDATE query (node_type form of the TO's (p:Page)-[:CLUSTERS]->(c:PanelCluster)-[:CONTAINS_DRILLDOWN*0..]->(d)) ---
-    print("\n=== Phase-2 mandate: per-page  Page -CLUSTERS-> PanelCluster -CONTAINS_DRILLDOWN*0..-> d ===")
-    rows = q(
+    # KUZU-BUILD LIMITATION (local pkg, empirically pinned 2026-06-26): variable-length recursion over the
+    # single-table CloudEdge schema is unstable -- an inline rel-property filter on `*0..` is a PARSER ERROR,
+    # and the `*0..N WHERE all(r in rels(e) ...)` workaround SEGFAULTS (exit 139) at bound N>=4 (N<=3 is safe).
+    # The real drilldown tree reaches depth 4, so no safe recursive bound covers it locally. We therefore
+    # validate the traversal with EXPLICIT fixed-length single-hop chains (single-hop inline filters are
+    # crash-free) UNION'd over depths 1..MAXD -- crash-free AND full-depth. The recursive `*0..` form is
+    # reserved for the comp-kuzu CANONICAL surface (newer Kuzu build) once AE P2-2 materializes the layer.
+    MAXD = 4  # observed max CONTAINS_DRILLDOWN nesting depth (1..4)
+
+    def _chain(n: int) -> str:
+        # exactly n chained single-hop CONTAINS_DRILLDOWN edges from c to d
+        hops = "".join(
+            "-[:CloudEdge {edge_type:'CONTAINS_DRILLDOWN'}]->" + ("(:CloudNode)" if i < n - 1 else "(d:CloudNode)")
+            for i in range(n))
+        return f"MATCH (c){hops}"
+
+    def _reach_distinct(cluster_pred: str) -> set:
+        # DISTINCT drilldown-reachable node ids across depths 1..MAXD for clusters matching cluster_pred
+        ids = set()
+        for n in range(1, MAXD + 1):
+            # WHERE-bind c in MATCH #1, then a second MATCH chains off the carried c (comma/new-MATCH required;
+            # a bare pattern after WHERE is a parser error). _chain(n) itself starts with 'MATCH (c)...'.
+            cy = (f"MATCH (c:CloudNode {{node_type:'PanelCluster'}}) WHERE {cluster_pred} "
+                  + _chain(n)
+                  + " RETURN DISTINCT d.node_id AS id")
+            for (i,) in q(cy):
+                ids.add(i)
+        return ids
+
+    print("\n=== Phase-2 mandate: per-page  Page -CLUSTERS-> PanelCluster -CONTAINS_DRILLDOWN(1..%d)-> d ===" % MAXD)
+    page_rows = q(
         "MATCH (p:CloudNode {node_type:'Page'})-[:CloudEdge {edge_type:'CLUSTERS'}]->(c:CloudNode {node_type:'PanelCluster'}) "
-        "OPTIONAL MATCH (c)-[:CloudEdge {edge_type:'CONTAINS_DRILLDOWN'}*0..]->(d:CloudNode) "
-        "RETURN p.props AS page, count(DISTINCT c) AS clusters, count(DISTINCT d) AS reachable "
-        "ORDER BY clusters DESC")
-    for page, c, d in rows:
+        "RETURN p.props AS page, count(DISTINCT c) AS clusters ORDER BY clusters DESC")
+    for page, c in page_rows:
         nm = json.loads(page).get("name")
-        print(f"  {nm:28s} clusters={c:3d}  reachable(CONTAINS_DRILLDOWN*0..)={d}")
+        reach = _reach_distinct(f"c.node_id STARTS WITH 'cluster:{nm}:'")
+        print(f"  {nm:28s} clusters={c:3d}  reachable(CONTAINS_DRILLDOWN 1..{MAXD})={len(reach)}")
 
     # --- drilldown nesting depth traverses (AdvisorIntelligence) ---
-    print("\n=== AdvisorIntelligence: drilldown nesting depth (max CONTAINS_DRILLDOWN chain) ===")
-    rows = q(
-        "MATCH (c:CloudNode {node_type:'PanelCluster'}) WHERE c.node_id STARTS WITH 'cluster:AdvisorIntelligence:' "
-        "MATCH path = (c)-[:CloudEdge {edge_type:'CONTAINS_DRILLDOWN'}*1..]->(d:CloudNode) "
-        "RETURN max(length(path)) AS max_depth, count(DISTINCT d) AS drilldown_nodes")
-    for md, dn in rows:
-        print(f"  AdvisorIntelligence: max CONTAINS_DRILLDOWN depth = {md}, distinct reachable nodes = {dn}")
+    print("\n=== AdvisorIntelligence: drilldown nesting depth (explicit per-depth chains, crash-free) ===")
+    max_depth = 0
+    ai_nodes: set = set()
+    for n in range(1, MAXD + 1):
+        cy = ("MATCH (c:CloudNode {node_type:'PanelCluster'}) WHERE c.node_id STARTS WITH 'cluster:AdvisorIntelligence:' "
+              + _chain(n) + " RETURN DISTINCT d.node_id AS id")
+        hits = [i for (i,) in q(cy)]
+        if hits:
+            max_depth = n
+            ai_nodes.update(hits)
+    print(f"  AdvisorIntelligence: max CONTAINS_DRILLDOWN depth = {max_depth}, distinct reachable nodes = {len(ai_nodes)}")
 
     # --- per-firm _partners cohort tagged first-class on drilldown edges ---
     print("\n=== per-firm _partners cohort axis tagged on CONTAINS_DRILLDOWN (first-class L3) ===")
