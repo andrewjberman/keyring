@@ -8861,3 +8861,18 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-06-26 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/mcp/BROKER_OPS.md | PASS |
 | 2026-06-26 | 0.8.0_AE_MSGraph | NFRA_MSGRAPH.S2 | comp-kuzu | comp-kuzu MATCH (n) RETURN n.layer AS layer, count(*) AS n | PASS |
 | 2026-06-26 | 0.0.1_UA_mstools | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-06-26 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .owned-paths.yaml --file org/mcp/BROKER... | PASS |
+| 2026-06-26 | 3.0.0_SA_CVO | NFRA_TSGRAPH.P3-1 | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/deliverable... | PASS |
+| 2026-06-26 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/mcp/.last-drive-2.0.0_SA_COO --file... | PASS |
+| 2026-06-26 | 0.4.0_DS_ClientPlatform | ETFS_AVGCAP.W3 | comp-pipescript | comp-pipescript io INF_build_canonical_prices | FAIL |
+| 2026-06-26 | 0.4.0_DS_ClientPlatform | ETFS_AVGCAP.W3 | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-06-26 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/change_management/20... | PASS |
+| 2026-06-26 | 3.0.0_SA_CVO | NFRA_TSGRAPH.P3-1 | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/deliverable... | PASS |
+| 2026-06-26 | 0.4.0_DS_ClientPlatform | INF_REPRICE.design | pipescript | pipescript --list | PASS |
+| 2026-06-26 | 0.4.0_DS_ClientPlatform | INF_REPRICE.design | comp-blast | comp-blast resolve_prices_for_ticker | PASS |
+| 2026-06-26 | 0.2.0_DS_PortfolioAnalytics | (no-TO) | comp-pipescript | comp-pipescript --list | FAIL |
+| 2026-06-26 | 0.2.0_DS_PortfolioAnalytics | (no-TO) | pipescript | pipescript --list | PASS |
+| 2026-06-26 | 0.4.0_DS_ClientPlatform | INF_REPRICE.design | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-06-26 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/change_management/20... | PASS |
+2026-06-26 | 0.2.0_DS_PortfolioAnalytics | comp-which x2 | /Peers SI audit -- routed producer+FE-component questions; no gold .py touched (audit+FE referral)
+| 2026-06-26 | 0.2.0_DS_PortfolioAnalytics | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
