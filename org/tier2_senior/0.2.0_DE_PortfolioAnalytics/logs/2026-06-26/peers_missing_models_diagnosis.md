@@ -55,12 +55,27 @@ lane). Left the validated edit in the working tree + saved
 `deliverables/peer_parser_fix.patch`; handed to **DT** (in-lane commit + TF deploy + rerun,
 mirroring the benchmarks fast-track) and **DS** (pipeline owner). DT ACK'd and is deploying.
 
-## Open
+## Outcome — FIXED + VERIFIED (CLOSED)
 
-- **DT:** review + comp-blast + deploy ledger + in-lane commit (audited override on AE-lane
-  source) + build/TF deploy + tag + rerun against the 06-18 source + CF-invalidate.
-- **DE (me):** on DT's served-regen ping, re-pull `peer_performance.json` (expect 5 models)
-  + confirm all five render in the /Peers toggle.
+- **Fix committed** `d4ae41b84` (DS, data-owner, my attribution kept). DS independently
+  reproduced the drop->recover on the wide archive source before committing.
+- **Dangling-pointer op-finding (DE):** `json/latest/peer_excel.json` s3_key
+  `uploads/...20260618.xlsx` was MISSING from `uploads/` (the June file was rotated to
+  `data-refresh/archive/` after the 06-21 run). A naive rerun would NoSuchKey or regress to
+  the narrow `202512`. Flagged to DT + DS; DT confirmed independently.
+- **DT deploy** (`yang-v2.4.13`): restored the wide 06-18 file to `uploads/` (also repairs
+  the manifest pointer) + **deterministic invoke** against it -> regenerated the artifact.
+  This gave DS the clean proof gate (same wide source: old code=2 models, fixed=5).
+- **DE verify PASS:** re-pulled served `peer_performance.json` (regen 2026-06-26T16:18:08Z,
+  data_as_of 06-18) -> models `{UST, ST, INT, LTC, LTA}` (5), col-26 LTA+LTC pair recovered,
+  INT 1Y model=6.3888 bm=7.7631 p50=6.6365, 6 periods each. FE renders a toggle per model in
+  data (deterministic filter) -> all 5 buttons render; FE needed no change.
+
+**Residual (non-blocking):** pixel screenshot not captured — the dev server gates on `/login`
+and I have no portal creds, so I can't drive to /Peers in a browser. Functional correctness
+proven via served data + the deterministic FE filter; end-users see all 5 once CF finishes
+invalidating (~5-10min from DT's 16:19Z invalidate). Operator can eyeball live /Peers as the
+final pixel confirm.
 
 ## Compiler Tools
 
