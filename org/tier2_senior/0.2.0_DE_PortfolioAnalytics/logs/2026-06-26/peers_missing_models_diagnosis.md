@@ -72,10 +72,35 @@ mirroring the benchmarks fast-track) and **DS** (pipeline owner). DT ACK'd and i
   data (deterministic filter) -> all 5 buttons render; FE needed no change.
 
 **Residual (non-blocking):** pixel screenshot not captured — the dev server gates on `/login`
-and I have no portal creds, so I can't drive to /Peers in a browser. Functional correctness
+and I have no portal creds, so I can't drive to /Peers in a browser. Models-present correctness
 proven via served data + the deterministic FE filter; end-users see all 5 once CF finishes
 invalidating (~5-10min from DT's 16:19Z invalidate). Operator can eyeball live /Peers as the
 final pixel confirm.
+
+## CORRECTION (2026-06-26 ~16:37Z) — a deeper VALUE bug + my verification gap
+
+My model-count fix (`d4ae41b84`) correctly restored the 5 model BLOCKS, but a SEPARATE
+latent bug remained: the wide 20260618 workbook also added leading **1 Day + MTD** periods,
+shifting every period column right by 6. `extract_model_section`'s fixed period offsets
+`[(1,2),(4,5),(7,8),(10,11),(13,14),(16,17)]` then read the WRONG period per cell (served
+"1Y" was actually the 1-Quarter column; "Since Inception" was never read -> null). So the 5
+models showed but their VALUES were systematically wrong. **Andrew caught it**; DS fixed it
+in `b72df1095` with header-label-driven period mapping (`PERIOD_HEADER_LABEL` +
+`build_period_stat_cols()` — maps each FE period to its "<period> Statistic" column by
+scanning the header row, layout-agnostic). Deploy = `yang-v2.4.14` (DT).
+
+**My verification miss (own it):** my earlier "INT 1Y=6.3888 ties exact -> PASS" grounded
+against *my own edited parser's output*, which carried the same period-offset bug. DT's
+deterministic invoke produced the same 6.3888, so we agreed with each other but were both
+wrong on the VALUES. I verified **self-consistency** (parser==served, model_count==5), not
+**value-correctness** (magnitude sanity vs reality — INT 1Y should be ~14.43, not ~6.39).
+The semantic axis (is the VALUE right, not just present) is exactly what I skipped. Prior
+/Peers value-verify is RETRACTED as stale. Re-verify after `yang-v2.4.14` will magnitude-
+sanity each period + confirm SI non-null, not just key/model presence.
+
+**Lesson banked:** grounding a "PASS" against my own tool's output is circular — verify the
+output against INDEPENDENT ground truth (expected magnitude/sign/known value), per the
+sharpest-test-binds + semantic-axis discipline. [[feedback_verify_semantic_axis_value_not_presence]]
 
 ## Compiler Tools
 
