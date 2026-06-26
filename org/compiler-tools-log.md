@@ -9092,3 +9092,13 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-06-26 | 3.0.0_SA_CVO | (no-TO) | comp-kuzu | comp-kuzu MATCH (n) WHERE n.layer='aws' AND n.node_type IN ['Field','JSXElement','JSXRe... | PASS |
 | 2026-06-26 | 0.7.0_AE_CloudOps | DATA_PLATFORM.DC1 + comp-freshness | comp-freshness chain cot (independent verify of CVO 8e1de0fd0 partition-key mode -- all 5 silver PASS via date-key, pagination-safe) | coordination/review window: CTO dc1-crawl-run pre-apply GO ack'd + CVO comp-freshness cot-coverage CONFIRMED + 0.6.2 cross-domain cot-box coord ack'd; no new deliverable commits |
 | 2026-06-26 | 0.7.0_AE_CloudOps | NFRA_TSGRAPH.P2-2 | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-06-26 | 3.0.0_SA_CVO | (no-TO) | comp-kuzu | comp-kuzu MATCH (n) WHERE n.layer='aws' AND n.node_type IN ['IAM_POLICY','LAMBDA','IAM_... | PASS |
+| 2026-06-26 | 3.0.0_SA_CVO | (no-TO) | comp-kuzu | comp-kuzu MATCH (n) WHERE n.layer='UNCATEGORIZED' OR n.node_type='EXTERNAL_ENDPOINT' RE... | PASS |
+| 2026-06-26 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/responses/C... | PASS |
+| 2026-06-26 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file data/canonical/schwab/build_canonical_d... | PASS |
+| 2026-06-26 | 0.8.0_AE_CloudComp | (no-TO) | comp-kuzu | comp-kuzu MATCH (n) WHERE n.layer='portal' AND n.node_type='Module' RETURN n.name AS na... | PASS |
+| 2026-06-26 | 0.8.0_AE_CloudComp | (no-TO) | comp-kuzu | comp-kuzu MATCH (n) WHERE n.layer='portal' RETURN n.node_type AS t, count(*) AS c ORDER... | PASS |
+| 2026-06-26 | 0.8.0_AE_CloudComp | (no-TO) | comp-kuzu | comp-kuzu MATCH (n) WHERE n.layer='portal' AND n.node_type='Module' AND (NOT n.name CON... | PASS |
+| 2026-06-26 | 0.8.0_AE_CloudComp | (no-TO) | comp-kuzu | comp-kuzu MATCH (n) WHERE n.layer='portal' AND n.node_type='Module' RETURN count(*) AS ... | PASS |
+2026-06-26 | 0.4.0_DE_ClientPlatform | ADVI_COTMVP NMNC-semantics + Mix/Books grounding | NONE run (DIAGNOSE/COORDINATE window, no DE code change) -- grounding was source Read/Grep on D_00b/D_03/D_04/C_06 + served-JSON inspection; producer fix is DS lane (d3e479759). Prior-window schema-check/ternary-audit logged @aada953d1.
+| 2026-06-26 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
