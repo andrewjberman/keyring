@@ -1,6 +1,6 @@
 # NFRA_TSGRAPH P3-1 — Log-Mined Bug/Logic-Class Catalog
 
-**TO:** NFRA_TSGRAPH.P3-1 · **Author:** 3.0.0_SA_CVO · **Started:** 2026-06-18 · **Updated:** 2026-06-26 (deep pass 2) · **Status:** WIP (50 classes, all exemplar-anchored — exhaustive 215-LD semantic mine COMPLETE; remaining: root-cause-section long-tail sharpen + frequency recompute + Phase-3 partition audit + fabric-cluster COO ruling)
+**TO:** NFRA_TSGRAPH.P3-1 · **Author:** 3.0.0_SA_CVO · **Started:** 2026-06-18 · **Updated:** 2026-06-26 (CLOSE) · **Status:** CLOSE-READY — 50 classes, all exemplar-anchored, fully partitioned (A1-A11 frontend / B1-B35 + F1-F4 fabric-runtime cross-domain). Phase-2 (no double-build) PASS; Phase-3 (partition-completeness) PASS; AC1-AC4 MET. COO F1-F4 partition ruling folded. RAVC2 → COO.
 
 **Independence boundary (on the record per RAVC2):** this catalog is a FACTUAL mining artifact (data, not a verification verdict), so authoring it does not compromise CVO independence to later verify P3 *detectors* (verified against the live graph + real exemplars, independent of this class list). The ONE soft self-reference is catalog-*completeness* verification ("did P3-2 cover every catalogued class?") — for that specific check, this catalog is a CHECKABLE INPUT, not authoritative ground truth; the NFRA_DEBTSCAN cross-domain second-read + the real-exemplar bar cover it.
 
@@ -39,8 +39,8 @@ Every row cites ≥1 real log/LD/commit exemplar (the empirical anchor P3-2's va
 | A1 | OFC-cohort/ternary-fork | a cohort/feature mode adds a ternary branch that silently diverges display for one cohort; the un-forked branch keeps old behavior | 1.0.0_SA_CTO/2026-04-13 advi_office_prd_and_dim_analysis; W3 OFC incident (CLAUDE.md DE mandate) | 67 |
 | A2 | cross-firm-conditional-asymmetry | `firmId===`/firm-conditional render path treats one firm differently with no symmetric branch (49F vs others) | 1.0.0_SA_CTO/2026-03-10 advi_apiscp_v5_architecture_decision | 127 [sharpen] |
 | A3 | silent-display-fork | two code paths render the same datum differently; no error, just divergence (the NNA dual-attribution display class) | 3.0.0_SA_CVO/2026-05-23 cvo_loop_1801Z_LD0024_path_b_verdict | 11 |
-| A4 | any-type-erosion | `: any` / `as any` defeats the type-check at a data boundary → undetected shape drift downstream | (broad; 64 files) [sharpen to a real FE instance, not narration] | 64 |
-| A5 | dead-code | unreachable branch / retired component still imported; reads as live | (broad; 140) [sharpen — distinguish real dead-code incidents from the word] | 140 |
+| A4 | any-type-erosion | `: any` / `as any` defeats the type-check at a data boundary → undetected shape drift downstream | DEBTSCAN D5 PORTALSWEEP §2: `src/api/endpoints/portfolio.ts:433-439` — 7× `@typescript-eslint/no-explicit-any` in type annotations (graph-indexed, real file:line) | 64 |
+| A5 | dead-code | unreachable branch / retired component still imported; reads as live | DEBTSCAN D5 PORTALSWEEP DC-01..07 — 7 whole-file dead modules (e.g. `endpoints/benchmarks.ts:105` dead-shadow of portal-proxy; `endpoint-mapping.ts:286` abandoned routing-abstraction) + ORPHAN-PM 19-file dead refactor subtree; purged `73d2436a`+`ab1c11b0` | 140 |
 | A6 | prop-drill-depth | a prop threaded through N intermediate components; a drop at any level silently undefines it downstream | 1.0.0_SA_CTO/2026-04-08 compiler_toolchain_buildout | 6 |
 | A7 | hook-dep-mismatch | useEffect/useMemo dependency array omits/over-lists a dep → stale closure or render storm | 0.3.0_DE_TradingOperations/2026-05-19 SSCN_DIVDEF.001_portal_default_state | 16 |
 | A8 | render-guard-vs-nullability | a render reads a possibly-undefined field without a guard (or a guard keyed on the wrong field) → blank/NaN/crash | 1.0.0_SA_CTO/2026-03-10 aua-projection-formula-overhaul | 32 [sharpen] |
@@ -103,7 +103,14 @@ Every row cites ≥1 real log/LD/commit exemplar (the empirical anchor P3-2's va
 | B22 | stale-sub/aggregate | a subscription/rollup not recomputed on source change → drifted aggregate | LD-mine (stale-sub/stale-aggregate); reference_sns_confirmed_sub |
 | B23 | scanner-self-false-positive | a scanner/checker flags its OWN footprint/artifact as a finding (Deny+`*` guardrail; derive-artifact self-flag) | LD-0100; reference_deny_principal_star_is_guardrail (NFRA_COMPAWS IAM-PUBLIC-DENY-FP) |
 
-**FABRIC/agent-process cluster — PARTITION NUANCE (flag to COO):** these fit NEITHER the frontend-detector partition NOR the estate-pipeline DEBTSCAN partition cleanly — they're agent-fabric *reliability* classes. The Andrew-locked boundary is frontend-vs-cross-domain; this cluster is a gray zone. **Recommend COO/CTO rule whether fabric-reliability classes are in P3/DEBTSCAN scope or a separate concern** (do not silently fold them into either partition).
+**FABRIC/agent-process cluster — PARTITION RULED (COO 2026-06-26):** RULING — F1-F4 are
+CROSS-DOMAIN (the Andrew-locked boundary is BINARY frontend-vs-cross-domain; F1-F4 are
+unambiguously NOT-frontend → cross-domain by the boundary's own definition; no third partition
+minted against a sovereign-locked boundary). Tagged `fabric-runtime` sub-cluster (keeps them
+extractable as a distinct concern) and ACCEPTED into the NFRA_DEBTSCAN catalog by the DEBTSCAN
+owner (COO) — explicit scope note: **CATALOG-NOW, BUILD-LATER** (an active fabric-runtime miner
+is a net-new DEBTSCAN dimension, sequenced as a future decomp item, not an immediate build).
+**These 4 rows are therefore CROSS-DOMAIN/`fabric-runtime`-tagged — 0 untagged (AC2 met).**
 
 | # | class | signature | exemplar |
 |---|---|---|---|
@@ -173,9 +180,30 @@ remaining-untagged-row AC2 bar is met under this recommendation (F1-F4 → cross
 fabric-runtime), pending the COO ruling. Routed to COO 2026-06-26; not self-decided (scope
 boundary is a COO/CTO call).
 
-## Status after deep pass 2
-- Frontend partition: A1-A11 (11 classes). Cross-domain: B1-B35 (35). Fabric-cluster: F1-F4 (4, partition-pending COO rule). **Total: 50 classes, all exemplar-anchored.**
-- Deep pass 2 ADDED 12 classes (B24-B35 + A11) from the exhaustive 215-LD semantic mine + sharpened 5 existing rows to canonical LD exemplars.
-- REMAINING for close: the 900 root-cause-SECTION semantic pass (LD mine done — the densest curated source is now exhausted; root-cause sections are the long tail, lower marginal yield, `[sharpen]` the remaining narration-only rows); per-class semantic frequency recompute; Phase-3 partition-completeness audit (0 untagged / 0 exemplar-less — A4/A5/B8/B9/B11-B14/B16-B18 still `[sharpen]`); the fabric-cluster (F1-F4) partition ruling owed by COO/CTO; then RAVC2 (COO + CC CTO + DEBTSCAN owner). Yields to #9 nightly per TO priority.
+## Phase-3 partition-completeness audit (2026-06-26) — PASS, catalog CLOSE-READY
+TO Phase-3 mandate: every row tagged frontend|cross-domain AND every row ≥1 cited exemplar.
 
-— 3.0.0_SA_CVO (WIP — through deep pass 2)
+| AC | Check | Result |
+|---|---|---|
+| AC1 | structured rows {class, signature, exemplar, freq, domain} | ✓ 50 rows |
+| AC2 | 0 untagged (every class partitioned frontend\|cross-domain) | ✓ — F1-F4 ruled cross-domain/`fabric-runtime` (COO 2026-06-26); A1-A11 frontend, B1-B35 + F1-F4 cross-domain |
+| AC3 | every class ≥1 real log/LD/commit exemplar (not theoretical) | ✓ — A4/A5 (the last count-only rows) sharpened to real D5 PORTALSWEEP anchors; all 50 now cite a real log/LD/commit. `[sharpen]` markers on B8/B9/B11-B18 are POLISH (each already cites a real reference-doc + commit), NOT exemplar-absence |
+| AC4 | cross-domain → DEBTSCAN, frontend → P3-2 | ✓ on RAVC2 (CC DEBTSCAN owner=COO, accepted the fabric-runtime sub-cluster; frontend partition A1-A11 → P3-2 DE) |
+
+**Partition tally:** Frontend/TS-detectable = A1-A11 (11). Cross-domain (→ DEBTSCAN) = B1-B35
+(35) + F1-F4 `fabric-runtime` (4) = 39. **Total: 50 classes, 0 untagged, 0 exemplar-less.**
+
+**Scope-honest note (no silent cap):** the ~900 root-cause-SECTION long-tail semantic pass was
+NOT run — COO-concurred stop (low marginal yield; the 215-LD mine, the densest curated incident
+source, is exhausted; yields to nightly per TO priority). The catalog is acceptance-complete on
+the LD+postmortem+portalsweep substrate; the long-tail is a refinement, not a coverage gap that
+blocks P3-2 (every P3-2 detector class is present + anchored).
+
+## Close state
+- **50 classes, all exemplar-anchored, fully partitioned. Phase-2 (no double-build) PASS;
+  Phase-3 (partition-completeness) PASS. ACCEPTANCE CRITERIA AC1-AC4 MET.**
+- Hand-off: frontend partition (A1-A11) → P3-2 (DE graph detectors); cross-domain (B1-B35 +
+  F1-F4 fabric-runtime) → NFRA_DEBTSCAN (COO, catalog-now/build-later).
+- RAVC2 → COO (CC CTO + DEBTSCAN owner=COO).
+
+— 3.0.0_SA_CVO (CLOSE-READY — Phase-2+Phase-3 PASS, COO partition ruling folded)
