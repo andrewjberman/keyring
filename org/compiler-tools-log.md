@@ -8989,3 +8989,14 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-06-26 | 0.0.1_UA_mstools | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/ec2/m365-mcp-gateway/app/tool... | PASS |
 2026-06-26 | 0.4.0_DE_ClientPlatform | ADVI_COTMVP D2/D3/B | comp-transform schema-check PartnerAnalytics (PASS, every touch), ternary-audit (no new gaps), comp-which (routed source-read per Rule22) | GAP: comp-grep returned 0 files for portal-nested src paths (didn't traverse submodule) -> native Grep fallback
 | 2026-06-26 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-06-26 | 0.8.0_AE_CloudComp | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/ec2/m365-mcp-gateway/app/tool... | PASS |
+| 2026-06-26 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file data/cot/scripts/gold/D_04.client_porta... | PASS |
+| 2026-06-26 | 0.7.0_AE_CloudOps | NFRA_TSGRAPH.P2-2 | comp-surface-check | comp-surface-check check --mode advisory --file .tools/comp-freshness | PASS |
+| 2026-06-26 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/deliverable... | PASS |
+| 2026-06-26 | 0.8.0_AE_CloudComp | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/ec2/m365-mcp-gateway/app/tool... | PASS |
+| 2026-06-26 | 3.0.0_SA_CVO | (no-TO) | comp-kuzu | comp-kuzu MATCH (n) WHERE n.layer='ms' RETURN count(n) AS ms_nodes | PASS |
+| 2026-06-26 | 3.0.0_SA_CVO | (no-TO) | comp-kuzu | comp-kuzu MATCH (n) RETURN n.layer AS layer, count(n) AS cnt ORDER BY cnt DESC | PASS |
+| 2026-06-26 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file data/DATA_ANALYTICS_A1_TRANSFORMATION_L... | PASS |
+| 2026-06-26 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/mcp/.last-drive-2.0.0_SA_COO --file... | PASS |
+| 2026-06-26 | 0.4.0_DS_ClientPlatform | DATA_ANALYTICS A1/A2/A3-prep + Leg-2b + COTMVP_B | pipescript,comp-pipescript io,comp-freshness,comp-grep,ds-commit-gate,safe-deploy | A1/A2 spine + COTMVP_B io-gate + grounded collision maps; comp-freshness pagination bug surfaced (fixed f5945f661) | MIXED |
+| 2026-06-26 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
