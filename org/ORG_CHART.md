@@ -6,6 +6,9 @@
 X.Y.Z_ROLE_Name
 
 Tier is determined by the value of X and Z:
+  0.0.Z  (X=0, Y=0)   = Tier 0 (Utility / meta-coordination for the principal)
+                          0.0.0 = MSTR (governance utility, in org/tier0_exec/)
+                          0.0.N where N > 0 = UA tool utilities (in org/tier0_utility/)
   X.0.0  where X > 0  = Tier 1 (Exec)    — e.g., 1.0.0_SA_CTO, 2.0.0_SA_COO
   0.Y.0  where Y > 0  = Tier 2 (Senior)  — Y encodes pod (1-4) or shared service (5-7)
   0.Y.Z  where Z > 0  = Tier 3 (Junior)  — Y = pod, Z = pod-local leaf index (starts at 1)
@@ -24,6 +27,7 @@ Name = Responsibility scope
 ```
 
 **Role Codes:**
+- `UA` = Utility Agent (Tier-0 tool surface — bundled toolset, launches pre-armed + pre-briefed; e.g. `0.0.1_UA_mstools`, `0.0.2_UA_awstools`). Framework: `org/tier0_utility/README.md`.
 - `SA` = Systems Architect
 - `DE` = Dashboard Engineer (PM)
 - `DT` = DevOps Technician
