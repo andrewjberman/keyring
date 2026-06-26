@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-comp-freshness -- S3 + DynamoDB artifact freshness gate for BD and INF gold chains.
+comp-freshness -- S3 + DynamoDB artifact freshness gate for BD, INF, and COT gold chains.
 
 Detects stale upstream S3 data before a script runs against it and produces
 wrong output silently. Implements the ADHC_COMPIL v3 Theme G specification.
@@ -11,12 +11,12 @@ Incidents this tool would have caught:
   2026-04-29 silver/aum_snapshot 8-day staleness -> $89.6M vs $182.71M correct
 
 Usage:
-  comp-freshness chain {bd|inf}       check all S3 chain input artifacts
+  comp-freshness chain {bd|inf|cot}   check all S3 chain input artifacts
   comp-freshness script <id>          check inputs for a specific script
   comp-freshness artifact <s3-prefix> check a single S3 artifact
   comp-freshness ddb <table>          check DynamoDB table freshness (from ddb config)
   comp-freshness ddb <table> --pattern FIRM#   narrow to items with this PK prefix
-  comp-freshness all                  check all S3 (bd+inf) + all DDB entries in one pass
+  comp-freshness all                  check all S3 (bd+inf+cot) + all DDB entries in one pass
   comp-freshness --list               print all cadence config (S3 + DDB)
   comp-freshness --help               show help
 
@@ -36,6 +36,7 @@ import concurrent.futures
 import datetime
 import json
 import os
+import re
 import shutil
 import subprocess
 import sys
@@ -271,26 +272,43 @@ def _load_config(path: Path) -> list[dict]:
 
 
 def _filter_partition_key_entries(data: list[dict], path: Path) -> list[dict]:
-    """LOAD-FILTER (the load-bearing safety mechanism, CTO-gated 2026-06-26): drop entries
-    whose freshness is keyed to a silver date-PARTITION-key (as_of_source: silver-partition-key,
-    a freshness_manifest_gen.py / BD-source-bound concept). comp-freshness only knows mtime +
-    as_of_field content-mode; mtime-checking a partition-key snapshot table FALSE-REDs every run
-    (the config header warns of exactly this -- BD pins a frozen CurrentDay as-of, so a daily
-    rewrite has a fresh mtime but a stale stamped as-of). Fail-SAFE: such an entry is SKIPPED
-    here (never mtime-mischecked) and announced LOUD, never silently mis-verdicted. (bd/inf carry
-    none today -> no-op there; this protects the cot served-config load.)"""
-    kept, skipped = [], []
+    """PARTITION-KEY entries (as_of_source: silver-partition-key) are now CHECKED via
+    PARTITION-KEY MODE (silver/<table>/YYYY-MM-DD.parquet -> MAX date-key = the stamped as_of ->
+    stamped_date_age vs the entry thresholds), NOT skipped. This RESOLVES the original safety
+    concern the CTO-gated 2026-06-26 skip protected against: mtime-mischeck false-RED is avoided
+    because the basis is the DATE-KEY (BD's stamped as_of), never mtime -- the same correctness the
+    skip was guarding, now implemented rather than deferred to freshness_manifest_gen. A daily
+    rewrite with a frozen CurrentDay as_of is now CAUGHT (stamped_date_age grows -> WARN per the
+    entry's fail:None / serving-day thresholds), the freeze-detection the skip could not provide.
+    Gate-flip flagged to CTO/0.7.0 (3.0.0_SA_CVO 2026-06-26, Andrew-direct cot-coverage). Entries
+    keep a `_pk_check` tag so the per-entry check routes to partition-key mode."""
     for e in data:
         if str(e.get("as_of_source", "")).strip() == "silver-partition-key":
-            skipped.append(e.get("artifact_id", "?"))
-        else:
-            kept.append(e)
-    if skipped:
-        print(f"comp-freshness: NOTE -- {len(skipped)} partition-key entr"
-              f"{'y' if len(skipped)==1 else 'ies'} in {path.name} SKIPPED (as_of_source: "
-              f"silver-partition-key is freshness_manifest_gen's domain; comp-freshness would "
-              f"mtime-mischeck -> false-RED). Skipped: {', '.join(skipped)}", file=sys.stderr)
-    return kept
+            e["_pk_check"] = True
+    return data
+
+
+_DATE_KEY_RE = re.compile(r"(\d{4}-\d{2}-\d{2})")
+
+
+def _max_partition_date(s3_prefix: str):
+    """List a silver/<table>/ prefix and return the MAX YYYY-MM-DD parsed from the object
+    filenames (the stamped as_of date-key), or None if none found / prefix unreadable."""
+    raw = _aws("s3", "ls", s3_prefix if s3_prefix.endswith("/") else s3_prefix + "/", check_aws=False)
+    if not raw:
+        return None
+    best = None
+    for line in raw.splitlines():
+        m = _DATE_KEY_RE.search(line)
+        if not m:
+            continue
+        try:
+            d = datetime.datetime.strptime(m.group(1), "%Y-%m-%d").date()
+        except ValueError:
+            continue
+        if best is None or d > best:
+            best = d
+    return best
 
 
 def _load_configs(pipeline: Optional[str] = None) -> tuple[list[dict], list[dict]]:
@@ -599,6 +617,30 @@ def _evaluate_artifact(entry: dict, now: datetime.datetime,
     mtime_status = _status_from_age(age_h, warn_h, fail_h, severity)
     result["status"] = mtime_status
 
+    # ---- PARTITION-KEY MODE override (as_of_source: silver-partition-key) ----
+    # The stamped as_of is the MAX silver date-PARTITION-key (silver/<table>/YYYY-MM-DD.parquet),
+    # NOT mtime: a daily rewrite of a frozen CurrentDay table has a fresh mtime but a stale date-key.
+    # Authoritative for these entries; resolves the old CTO-gated skip (date-key basis, no mtime
+    # mischeck) AND adds the freeze-detection the skip could not provide.
+    if entry.get("_pk_check"):
+        result["mtime_status"] = mtime_status
+        max_date = _max_partition_date(s3_key)
+        if max_date is None:
+            result["notes"] = (result["notes"] + " | PARTITION-KEY UNCHECKED (no YYYY-MM-DD "
+                               "date-key object under prefix); mtime is the WEAKER signal").strip(" |")
+            return result
+        stamped_dt = datetime.datetime(max_date.year, max_date.month, max_date.day,
+                                       tzinfo=datetime.timezone.utc)
+        stamped_age_h = (now - stamped_dt).total_seconds() / 3600.0
+        result["partition_as_of"] = max_date.isoformat()
+        result["partition_age_h"] = round(stamped_age_h, 1)
+        result["status"] = _status_from_age(stamped_age_h, warn_h, fail_h, severity)
+        if result["status"] in ("FAIL", "WARN") and mtime_status == "PASS":
+            result["notes"] = (result["notes"] + f" | MTIME-FRESH-BUT-PARTITION-STALE: mtime "
+                               f"{result['age_h']}h PASS but MAX date-key {max_date.isoformat()} "
+                               f"is {round(stamped_age_h,1)}h old (stamped-as_of freeze)").strip(" |")
+        return result
+
     # ---- CONTENT-MODE override (authoritative when as_of_field is declared) ----
     if as_of_field:
         result["mtime_status"] = mtime_status  # mtime kept as a secondary signal
@@ -719,7 +761,13 @@ def _fmt_row(r: dict) -> str:
     base = f"{aid} | {key} | {ts} | {age} | {fail} | {st}"
     # When content-mode was engaged, the displayed age_h is MTIME (secondary). Surface the
     # authoritative content age so a content-driven WARN/FAIL is legible (not 'WARN at 0.6h?').
-    if "mtime_status" in r:
+    if "partition_as_of" in r:
+        # PARTITION-KEY MODE: the authoritative basis is the MAX silver date-key (stamped as_of).
+        base += " [as_of %s (date-key), %.1fh]" % (r.get("partition_as_of", "?"),
+                                                   r.get("partition_age_h") or 0.0)
+        if r.get("status") in ("WARN", "FAIL") and r.get("mtime_status") == "PASS":
+            base += " <MTIME-FRESH/PARTITION-STALE>"
+    elif "mtime_status" in r:
         if r.get("content_checked"):
             if "trading_days_behind" in r:
                 base += " [content as_of %s, %dtd behind %s frontier]" % (
@@ -777,8 +825,13 @@ def cmd_chain(pipeline: str) -> int:
 def cmd_script(script_id: str) -> int:
     """Check freshness for inputs of a specific script (BD or INF)."""
     # Determine pipeline from script ID prefix
-    pipeline = "inf" if script_id.upper().startswith("INF_") else "bd"
-    config_path = BD_CONFIG if pipeline == "bd" else INF_CONFIG
+    su = script_id.upper()
+    if su.startswith("INF_"):
+        pipeline, config_path = "inf", INF_CONFIG
+    elif su.startswith("COT_") or su.startswith("COT"):
+        pipeline, config_path = "cot", COT_CONFIG
+    else:
+        pipeline, config_path = "bd", BD_CONFIG
     entries = _load_config(config_path)
 
     # Filter entries tagged to this script (scripts[] field in config)
@@ -1010,7 +1063,7 @@ def cmd_list() -> int:
 def main() -> int:
     parser = argparse.ArgumentParser(
         prog="comp-freshness",
-        description="S3 + DynamoDB artifact freshness gate for BD and INF gold chains.",
+        description="S3 + DynamoDB artifact freshness gate for BD, INF, and COT gold chains.",
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog="""
 Exit codes:
@@ -1052,7 +1105,7 @@ Examples:
     p_ddb.add_argument("--pattern", default=None,
                        help="PK prefix pattern override (e.g. 'FIRM#'); uses config default if omitted")
 
-    sub.add_parser("all", help="Check all S3 (bd+inf) + all DDB entries in one pass")
+    sub.add_parser("all", help="Check all S3 (bd+inf+cot) + all DDB entries in one pass")
 
     parser.add_argument("--list", action="store_true", help="Print all cadence config (S3 + DDB)")
 
