@@ -61,8 +61,11 @@ POLL_INTERVAL_S = 2.0  # seconds between broker polls
 # (the Constitution + ledger/cycles/ratifications control plane) -- org/tier0/
 # must never be scanned here, or its subdirs (audit/, cycles/, ledger/,
 # ratifications/) would be mistaken for agent folders.
+# tier0_utility holds the principal-facing Utility Agents (0.0.N_UA_<toolset>);
+# it contains ONLY agent folders, so scanning it is safe (LD-0220, 2026-06-26).
 TIER_DIRS = {
     "tier0_exec": ORG_ROOT / "tier0_exec",
+    "tier0_utility": ORG_ROOT / "tier0_utility",
     "tier1_exec": ORG_ROOT / "tier1_exec",
     "tier2_senior": ORG_ROOT / "tier2_senior",
     "tier3_junior": ORG_ROOT / "tier3_junior",

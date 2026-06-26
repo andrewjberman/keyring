@@ -79,7 +79,7 @@ fi
 
 # Resolve agent folder name (match on base serial)
 AGENT_DIR=""
-for tier in tier0_exec tier1_exec tier2_senior tier3_junior; do
+for tier in tier0_exec tier0_utility tier1_exec tier2_senior tier3_junior; do
     for d in "$SCRIPT_DIR/../$tier"/*/; do
         [ -d "$d" ] || continue
         case "$(basename "$d")" in

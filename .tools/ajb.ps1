@@ -116,6 +116,9 @@ function Get-AgentLoopDirective {
         '^2\.1\.0_SC_CompLearns(~[A-Za-z0-9]+)?$' {
             return "$header`n  CL Tier-2 SC (CompLearns) -- arms ZERO crons (LD-0157; event-driven).`n  1. Run /watcher ONCE (arm-at-load).`n  Event-driven: act on Monitor-delivered TOs; keep broker STATUS accurate so CL COO finds blocks. /work is AD-HOC."
         }
+        '^0\.0\.[0-9]+_UA_' {
+            return "$header`n  Tier-0 Utility Agent (UA) -- principal-facing tool surface (LD-0220, 2026-06-26). Arms ZERO crons; pre-armed via its launcher skills.`n  1. Run /watcher ONCE (arm-at-load).`n  2. Run the launcher skill(s) in your prompt.md 'On Launch' section (e.g. mstools arms /teams-assist; awstools arms its portal/AWS read tools) so your toolset is live the moment you launch.`n  Event-driven + on-demand: act on Monitor-delivered notifications; draft-and-ask on anything outward-facing/irreversible; not part of the PRD->TO dispatch hierarchy. Identity/brief: org/tier0_utility/$base/."
+        }
         default {
             return "$header`n  UNRECOGNIZED ('$Serial' matched no role pattern)`n  1. Run /watcher ONCE (arm-at-load).`n  WARN MSTR: 'role-mapping gap for $Serial in ajb.ps1'."
         }
