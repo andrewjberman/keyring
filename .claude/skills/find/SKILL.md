@@ -40,6 +40,9 @@ working engine (`serp_opal`); the free DDG path is blocked (HTTP 202).
 python data/find/dualbiz/scripts/serp.py --engine brightdata --pages 3 \
     --out data/find/dualbiz/config/serp-harvested-$(date -u +%Y-%m-%d)-<geo>.json
 # (for a targeted aggregator, run its RIA string: e.g. "offered through Brookstone Capital Management" Florida)
+# PROVIDER-AGNOSTIC discovery (data-driven, finds firms beyond the seed roster) -- anchors on the
+# disclosure phrase ("advisory services offered through", ~66% near-universal) x category vocab x geo:
+python data/find/dualbiz/scripts/serp.py --discover <Geo> --engine brightdata --pages 2
 python data/find/dualbiz/scripts/registry.py --merge <that-file>     # additive into S2 registry
 ```
 - **Case C needs a DIFFERENT lever** -- disclosure reverse-search can't reach insurance-only
