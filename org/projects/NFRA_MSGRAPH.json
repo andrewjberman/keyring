@@ -1,0 +1,36 @@
+{
+  "project_code": "NFRA_MSGRAPH",
+  "macro_code": "NFRA",
+  "macro": true,
+  "name": "MS Document-Cloud Graph + Heat-Map + Comp-Tools (SharePoint/OneDrive) -- agent-findability over the MS estate",
+  "description": "Andrew-direct 2026-06-26 (15:00Z). ELEVATED to a first-class macro (Andrew chose 'elevate MS to its own macro' 15:09Z via COO structure-decision) -- carves the MS vertical OUT of NFRA_EXPAND: absorbs Strand A (EXPAND_MSCLOUD, the SP/OneDrive Graph-API ingestion) + the MS-instance of Strand C (the heat-map), and ADDS a new MS comp-tools/index layer. THREE components: (1) INGESTION -- SharePoint sites/libraries + OneDrive trees into the single AWS Nessie/Iceberg globgrph via the m365 gateway delegated Graph API: nodes(site/library/folder/file)+edges(contains/owned-by/has-access/shared-with)+activity(lastModified/lastAccessed). HARD GUARDRAILS (inherited from EXPAND_MSCLOUD, Andrew load-bearing, enforced in code): STRUCTURE/METADATA/ACTIVITY ONLY never CONTENT (file bodies never graphed); OUTLOOK(email+calendar)+ALL personal/P2P comms(Teams chats/DMs) STRICTLY OFF-graph; access-topology (who-has-access/shared-with) RETAINED (org-internal access = security-valid, not privacy). (2) HEAT-MAP -- persistent MS hot/cold + clustering + persistent snapshots (Andrew: 'maybe hourly basis') feeding a HEAT-INDEX; reuses the HEATMAP engine (HEATMAP_OBJECT build-complete) over the MS slice of the expanded graph. (3) COMP-TOOLS + INDEX (the NEW layer, the headline deliverable) -- MS-specific comp-tools: a findability 'comp-which for the doc-cloud' + heat-index-directed tools, so AGENTS FIND WHAT THEY NEED FASTER when working in the MS space. Reuses: the globgrph derive pipeline + the live m365 gateway Graph API (NFRA_OPLMCP) + the HEATMAP analytics engine + the comp-tool/comp-which pattern (NFRA_COMPRAIL). PRD: CTO carves/extends from NFRA_EXPAND_PRD (NFRA_EXPAND retains Strand B auth-edge + Strand C non-MS repo/MCP heat-map).",
+  "prds": [
+    {
+      "path": "docs/architecture/NFRA_EXPAND_PRD.md",
+      "label": "BASE -- Strand A (MS ingestion) scope + guardrails + 5 design Qs; CTO carves the NFRA_MSGRAPH PRD from this",
+      "date": "2026-06-25"
+    }
+  ],
+  "related": [
+    "NFRA_EXPAND",
+    "EXPAND_MSCLOUD",
+    "NFRA_GLOBGRPH",
+    "NFRA_OPLMCP",
+    "HEATMAP_OBJECT",
+    "HEATMAP_PROCESS",
+    "NFRA_COMPRAIL"
+  ],
+  "status": "scoping",
+  "phase": "SCOPING -- Andrew-direct 2026-06-26, ELEVATED to first-class macro (structure-decision 15:09Z). COO initial analysis reported to CTO (15:08Z) -- it's the MS vertical of NFRA_EXPAND + a NEW comp-tools/index layer; recommend extend/carve NFRA_EXPAND_PRD not from-scratch. NEXT: CTO develops the NFRA_MSGRAPH PRD (carve MS-vertical out of NFRA_EXPAND + fold in the comp-tools/index layer + Andrew's hourly heat-map cadence + resolve Strand-A open design-Qs: cadence/delta-sync, scale/granularity, activity source). THEN COO decomposes to TOs + prioritizes the drive (Andrew-direct sequence). EXPAND_MSCLOUD re-homes into this macro (was NFRA_EXPAND Strand A).",
+  "blocking": "None -- scoping. PRD-pending (CTO). Depends on: m365 gateway delegated Graph API (live, NFRA_OPLMCP) + the globgrph derive pipeline + the HEATMAP engine (HEATMAP_OBJECT build-complete). No hard blocker; the major new build is the MS-cloud Graph-API ingestion at scale.",
+  "created": "2026-06-26",
+  "sovereign": "Andrew",
+  "coo_lane": "2.0.0_SA_COO",
+  "thread_counter": 0,
+  "threads": [],
+  "lanes": {
+    "ingestion (SP/OneDrive Graph-API)": "AE-cloud + m365-gateway owner (TBD-on-PRD)",
+    "heat-map (MS hot/cold + hourly snapshots)": "DE + DS + AE (HEATMAP engine reuse, TBD-on-PRD)",
+    "comp-tools + findability index": "TBD-on-PRD (comp-tool pattern owner)"
+  }
+}
