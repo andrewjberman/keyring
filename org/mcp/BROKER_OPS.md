@@ -41,6 +41,31 @@ its start. The on-disk commit is inert until **the runtime relaunches the MCP se
    and self-registration are distinct — the reconnect enables the broker to FIND the folder; the agent
    still calls `register_agent`).
 
+## Scope of a reconnect: PER-SESSION, not fabric-global
+
+A `/mcp` reconnect reloads ONLY the client where it is run (plus any freshly-launched session, which
+reads current code at spawn). Each agent session has its OWN stdio `server.py` subprocess (`.mcp.json`
+spawns one per client), and resolution walks THAT process's in-memory `TIER_DIRS`. A long-running
+session that PREDATES the `server.py` change keeps resolving against stale `TIER_DIRS` until IT
+individually cycles. (Grounded 2026-06-26: after Andrew's reconnect, MSTR's pre-existing session still
+returned "not found" for the new UA, while the UA's own + freshly-cycled sessions resolved it.) Net:
+the change is live in the sessions that matter (the new agent itself, newly-launched sessions, and any
+operator-reconnected one); stale pre-existing sessions reach the new agent via the **filesystem-inbox
+fallback** (delivery shows `(filesystem)` only, no channel push) until they restart. Do not read "one
+reconnect = fabric-wide resolution."
+
+## Adding a NEW tier-folder: the 4 enumerators (do ALL four)
+
+A new `org/<tier-dir>/` (e.g. LD-0220's `tier0_utility`) is invisible until all FOUR folder-enumerators
+list it — partial wiring is the LD-0220 failure mode (broker register + launch + self-commit each broke
+separately). Update together:
+1. `org/mcp/server.py` — `TIER_DIRS` map (broker agent-folder resolution). Needs an operator reconnect.
+2. `org/mcp/inbox-watch.sh` — the tier-scan loop (inbox Monitor folder resolution). Live on-disk.
+3. `.tools/ajb.ps1` — the role-mapper pattern (so the agent gets a launch directive, not UNRECOGNIZED).
+4. `.owned-paths.yaml` — a `org/<tier-dir>/**` path rule + lane (else self-commits hit "UNDEFINED");
+   if the dir matches `^tier\d`, this also enrolls it into the home-folder convention so each agent
+   self-owns its `logs/` + `task_orders/` (ADHC_OWNPTH.003) without per-agent YAML adds.
+
 ## Why "not us"
 
 Restarting a shared, runtime-owned MCP server from inside an agent session is both impossible (it's

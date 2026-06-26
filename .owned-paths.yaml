@@ -317,6 +317,13 @@ lanes:
       - 2.0.0_SA_COO
     description: "Tier-0 agent home folder (org/tier0_exec/0.0.0_AB_MSTR/) -- MSTR's broker-resolvable agent directory: logs, task_orders. MSTR owns its own logs; CTO/COO maintain the control-plane plumbing. Distinct from TIER0_MSTR (org/tier0/ operating artifacts). Added 2026-05-22 by CTO per MSTR charter LD-0001 (broker activation)."
 
+  TIER0_UTILITY:
+    permitted_agents:
+      - 0.0.0_AB_MSTR
+      - 1.0.0_SA_CTO
+      - 2.0.0_SA_COO
+    description: "Tier-0 Utility Agent (UA) home folders (org/tier0_utility/0.0.N_UA_*/) -- the principal-facing tool-surface agents, broker-resolvable per server.py TIER_DIRS. Holds ONLY UA agent folders. Each UA self-owns its own logs/ + task_orders/ via the home-folder convention (org/tier0_utility matches ^tier\\d, so it auto-enrolls once a path rule exists); CTO/COO retain access for plumbing + TO authoring. LD-0220 (2026-06-26) -- the 4th enumerator (after server.py TIER_DIRS, inbox-watch.sh, ajb.ps1) needed to complete the tier0_utility rollout; surfaced + staged by 0.0.1_UA_mstools on first launch."
+
   WS_CHARTER_AUDIT:
     permitted_agents:
       - 0.0.0_AB_MSTR
@@ -648,6 +655,9 @@ paths:
   "org/tier0_exec/**":
     lane: TIER0_EXEC
     note: "MSTR agent home folder -- the broker-resolvable directory (org/mcp/server.py TIER_DIRS). Holds ONLY 0.0.0_AB_MSTR/; deliberately separate from org/tier0/ so the law + control-plane subdirs are never scanned as agent folders."
+  "org/tier0_utility/**":
+    lane: TIER0_UTILITY
+    note: "Tier-0 Utility Agent (UA) home folders -- broker-resolvable per server.py TIER_DIRS. Holds ONLY 0.0.N_UA_*/ agent folders. Each UA self-owns its logs/ + task_orders/ via the home-folder convention (this rule enrolls tier0_utility into the ^tier\\d home-folder tier-dir set). LD-0220 (2026-06-26)."
 
   # -----------------------------------------------------------------------
   # SCTY security macro -- the /security root program (Andrew-direct 2026-06-24,
