@@ -8655,3 +8655,7 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-06-26 | 0.2.0_DE_PortfolioAnalytics | (no-TO) | comp-transform | comp-transform schema-check MaxDrawdownChart | FAIL |
 | 2026-06-26 | 0.5.0_AE_OpalETL | comp-iam (service/role pre+post), comp-which/grep/glob, terraform plan/safe-apply, ds-commit-gate, pytest | ASTN CEO-brief outage root-caused (half-landed orchestrator IAM, ec2:StartInstances) + fixed (58a2211); comp-iam FALSE-MISSING root-caused to cross-file TF resource-name collision + FIXED (d7ccc029e, module-namespace key). Live get-role-policy was ground truth (comp-iam DESIRED-verdict was the defect). |
 | 2026-06-26 | 0.5.0_AE_OpalETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-06-26 | 0.2.0_DE_PortfolioAnalytics | (no-TO) | pipescript | pipescript --fe-reachability | PASS |
+| 2026-06-26 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/tests/test_iam_role_l... | PASS |
+2026-06-26 | 0.2.0_DS_PortfolioAnalytics | MDLP_RVVALT index/etf dual-benchmark timeseries | comp-which (backstop, no FE-wiring tool -> gap banked), comp-pipescript io (PASS: output keys unchanged, additive), py_compile (PASS) | gap: no comp-tool maps portal chart -> benchmark data path/toggle wiring
+| 2026-06-26 | 0.2.0_DS_PortfolioAnalytics | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
