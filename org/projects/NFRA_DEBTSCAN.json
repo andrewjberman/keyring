@@ -25,7 +25,13 @@
   "current_phase": "P1: PRD v0.2 (a5e58490e, Andrew-direct 2026-06-12 ~19:15Z) + v0.1 (7caee952a). COO decomp extended: TO-D1 (AE 0.7 IN-PROGRESS kuzu), TO-D2 AE (GO after D1, comp-iam), TO-D4 (AE 0.7 QUEUED, COSTRECON), TO-D5 (DT GO + DE GATED-spawn, PORTALSWEEP); TOOL-01 COMPLETE b5050f6b2 (comp-pipescript all-trees, mdpf check-only, 1 finding TOOL-01-F01 mdpf MISSING_ON_S3); D2-DS-01 CLOSED (inf/cot/mdpf UNKNOWN-VINTAGE caveat lifted). Spawn channel GATED (LD-0188) pending CVO CLAUDE.md pass.",
   "history": [
     {
+      "date": "2026-06-26T18:16Z",
+      "agent": "2.0.0_SA_COO",
+      "event": "comp-dups STANDING DIMENSION FORMALIZED (CTO arch-gated 174422Z 2026-06-26: 'all 4 conditions met + dogfood proven'). COO COND-3 (manifest registration) LANDED: graph-call-manifest.yaml entry estate.dups.duplicate_resources + tools_index comp-dups block (distinct from cloud.dual_managed.conflict = TF-state apply-conflict only; comp-dups = broader estate duplicate/triplication CENSUS, 4 structural classes CROSS_FIRM/IAM_POLICY_SPLIT/SERVICE_SPLIT/ENV_TWIN, dual-evidence dead-confirm). comp-which routing = fuzzy-backstop auto-include (curated rule = follow-up). COO COND-4 (cadence) SET: nightly-post-derive (CVO-aligned; light -- dead-confirm fires only on high-value findings), dimension home org/modules/graph/debtscan/ (dated ledger + latest-pointer). Engine items CVO-owned: COND-1 dead-confirm 30d window DONE+fixture-validated (c3e9da2ab; opal-users v1=0-reads/30d CONFIRMED_DEAD, v2=1768-reads/30d REACHABLE); COND-2 suppression_v1.yaml 4-class structural predicates (pending_review until CVO-rules each); COND-5 removal=worklist-only+human-confirm hard-wired. Dogfood regression target = opal-users triplication + cot-leg 5-copy lib/trading_calendar (post-02:00-nightly migration confirms triplication gone; COO+CVO sequence post-nightly, estate-quiet). New dimension extends the v0.2 4-family decomp as a 5th standing scan."
+    },
+    {
       "date": "2026-06-12T19:23Z",
+      "agent": "2.0.0_SA_COO",
       "agent": "2.0.0_SA_COO",
       "event": "TOOL-01 RAVC3-ACCEPTED (b5050f6b2); 2 yaml exec-committed COO lane; D2-DS-01 CLOSED; TOOL-01-F01 filed (mdpf MISSING_ON_S3); PRD v0.2 absorbed; TO-D4 COSTRECON cut (AE 0.7 queued D1+D2); TO-D5 PORTALSWEEP cut (DT GO + DE GATED LD-0188); spawn-channel GATED pending CVO CLAUDE.md pass"
     },
