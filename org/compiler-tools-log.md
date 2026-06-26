@@ -8529,3 +8529,36 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-06-25 | 0.5.0_AE_OpalETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
 - 2026-06-25 3.0.0_SA_CVO (session_close_2054-2356Z): comp-iam x2 (etfs-canon-fanin firm-sep cert PASS; bd-49f-auto-login re-cert post-BrightData-drop); comp-kuzu/comp-graph-status (graph SQS/Kuzu health all-green); comp-grep (etfs-table no-route check); comp-which routing. Bulk = live operational validation (boto3 SM/SSM cot+49F completing-runs, m365-gateway OTP grabs, mint-verifies, EC2 t3.large resize coord) -- off-rail, rail-checked markers logged.
 | 2026-06-25 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-06-26 | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier0/reviews/RV-0039.md | PASS |
+| 2026-06-26 | 3.0.0_SA_CVO | NFRA_TSGRAPH.P3-1 | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/deliverable... | PASS |
+| 2026-06-26 | 0.4.0_DE_ClientPlatform | NFRA_TSGRAPH.P2-1 | comp-kuzu | comp-kuzu MATCH (n) RETURN labels(n)[0] AS kind, count(*) AS c ORDER BY c DESC | PASS |
+| 2026-06-26 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/mcp/.last-drive-2.0.0_SA_COO --file... | PASS |
+| 2026-06-26 | 0.4.0_DE_ClientPlatform | NFRA_TSGRAPH.P2-1 | comp-kuzu | comp-kuzu MATCH (n:CloudNode) WHERE n.node_type IN ['Page','PanelCluster'] RETURN n.nod... | PASS |
+| 2026-06-26 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.6.0_AE_PartnerETL/ta... | PASS |
+| 2026-06-26 | 0.4.0_DE_ClientPlatform | NFRA_TSGRAPH.P2-1 | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/tsgraph_spike/load_cl... | PASS |
+| 2026-06-26 | 0.4.0_DE_ClientPlatform | NFRA_TSGRAPH.P2-1 | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DE_ClientPlatfor... | PASS |
+| 2026-06-26 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/NFRA_TSGRAPH.json | PASS |
+| 2026-06-26 | 0.6.0_AE_PartnerETL | ADVI_COTETL.L4-GUARD | comp-iam | comp-iam service cot | PASS |
+| 2026-06-26 | 0.6.0_AE_PartnerETL | ADVI_COTETL.L4-GUARD | comp-pipescript | comp-pipescript io cot_bd_session_fetch | FAIL |
+| 2026-06-26 | 0.4.0_DE_ClientPlatform | NFRA_TSGRAPH.P2-1 | comp-pipescript | comp-pipescript io data/black_diamond/scripts/gold/D_01.partner_analytics.py | PASS |
+| 2026-06-26 | 0.4.0_DE_ClientPlatform | NFRA_TSGRAPH.P2-1 | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DE_ClientPlatfor... | PASS |
+| 2026-06-26 | 0.7.0_AE_CloudOps | (no-TO) | comp-iam | comp-iam service dc2-test1-eventbridge-invoke-role | PASS |
+| 2026-06-26 | 0.4.0_DE_ClientPlatform | NFRA_TSGRAPH.P2-1 | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DE_ClientPlatfor... | PASS |
+| 2026-06-26 | 1.0.0_SA_CTO | (no-TO) | comp-pipescript | comp-pipescript io D_01 | PASS |
+| 2026-06-26 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.6.0_AE_PartnerETL/ta... | PASS |
+| 2026-06-26 | 0.7.0_AE_CloudOps | (no-TO) | comp-iam | comp-iam service etfs-reports-orchestrator | PASS |
+| 2026-06-26 | 3.0.0_SA_CVO | NFRA_TSGRAPH.P3-1 | comp-iam | comp-iam role cot-exporter-ec2-role | PASS |
+| 2026-06-26 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/mcp/.last-drive-2.0.0_SA_COO --file... | PASS |
+| 2026-06-26 | 0.6.0_AE_PartnerETL | ADVI_COTETL.L4-GUARD | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/ci/lambda-source-map.j... | PASS |
+| 2026-06-26 | 0.5.0_AE_OpalETL | (no-TO) | comp-iam | comp-iam service etf-ownership-dashboard | PASS |
+| 2026-06-26 | 0.6.0_AE_PartnerETL | ADVI_COTETL.L4-GUARD | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/ci/lambda-source-map.json | PASS |
+| 2026-06-26 | 0.6.0_AE_PartnerETL | ADVI_COTETL.L4-GUARD | comp-iam | comp-iam service bd-cot-keepalive | PASS |
+| 2026-06-26 | 0.6.0_AE_PartnerETL | ADVI_COTETL.L4-GUARD | comp-iam | comp-iam service bd-cot-freshness-probe | PASS |
+| 2026-06-26 | 0.6.0_AE_PartnerETL | ADVI_COTETL.L4-GUARD | comp-iam | comp-iam gaps | PASS |
+| 2026-06-26 | 0.5.0_AE_OpalETL | (no-TO) | pipescript | pipescript --resource aggregate_aua_timeseries | PASS |
+| 2026-06-26 | 0.5.0_AE_OpalETL | (no-TO) | pipescript | pipescript mdpf | PASS |
+| 2026-06-26 | 0.6.0_AE_PartnerETL | ADVI_COTETL.L4-GUARD | comp-iam | comp-iam -h | PASS |
+| 2026-06-26 | 0.6.0_AE_PartnerETL | ADVI_COTETL.L4-GUARD | comp-iam | comp-iam reconcile bd-cot-keepalive | FAIL |
+| 2026-06-26 | 0.6.0_AE_PartnerETL | ADVI_COTETL.L4-GUARD | comp-iam | comp-iam reconcile | FAIL |
+| 2026-06-26 | 0.5.0_AE_OpalETL | comp-which x4, comp-freshness (chain bd/inf + script mdpf), pipescript (mdpf + --resource), comp-iam service, comp-glob | MDPF freeze-recovery verify: bd chain fresh, aggregate_aua catchup confirmed -> 06-25, interior 06-24/25 smell flagged; SES IAM validated. GAP: mdpf has no freshness_config + not registered for comp-pipescript io (filed to CTO). |
+| 2026-06-26 | 0.5.0_AE_OpalETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
