@@ -8719,3 +8719,20 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-06-26 | 3.0.0_SA_CVO | NFRA_TSGRAPH.P3-1 | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/extract_iam.py --file... | PASS |
 2026-06-26 | 0.2.0_DT_PortfolioAnalytics | DEPLOY (delta) manual lambda rerun + portal PROD promote portal-v2.1.126 | no comp-tool runs this delta -- Rule-20 graph check (comp-blast) logged in paired yang-v2.4.12 entry; this window = aws invoke + /prod-deploy operational steps.
 | 2026-06-26 | 0.2.0_DT_PortfolioAnalytics | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-06-26 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+| 2026-06-26 | 3.0.0_SA_CVO | NFRA_TSGRAPH.P3-1 | comp-manifest-check | comp-manifest-check | FAIL |
+| 2026-06-26 | 3.0.0_SA_CVO | NFRA_TSGRAPH.P3-1 | comp-manifest-check | comp-manifest-check list | PASS |
+| 2026-06-26 | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier0/ledger/LD-0217.md --file org/... | PASS |
+| 2026-06-26 | 3.0.0_SA_CVO | NFRA_TSGRAPH.P3-1 | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/graph-call-manifest.yaml | PASS |
+| 2026-06-26 | 0.8.0_AE_MSGraph | NFRA_MSGRAPH.S1 | comp-kuzu | comp-kuzu MATCH (n) RETURN DISTINCT labels(n) AS lbl, count(*) AS n ORDER BY n DESC LIM... | PASS |
+| 2026-06-26 | 0.8.0_AE_MSGraph | NFRA_MSGRAPH.S1 | comp-kuzu | comp-kuzu MATCH (n) RETURN n LIMIT 2 | PASS |
+| 2026-06-26 | 0.8.0_AE_MSGraph | NFRA_MSGRAPH.S1 | comp-kuzu | comp-kuzu MATCH (n) RETURN DISTINCT n.node_type AS t, count(*) AS c ORDER BY c DESC LIM... | PASS |
+| 2026-06-26 | 0.8.0_AE_MSGraph | NFRA_MSGRAPH.S1 | comp-kuzu | comp-kuzu MATCH ()-[e]->() RETURN DISTINCT e.edge_type AS t, count(*) AS c ORDER BY c D... | PASS |
+| 2026-06-26 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/NFRA_MSGRAPH.json --file o... | PASS |
+| 2026-06-26 | 0.8.0_AE_MSGraph | NFRA_MSGRAPH.S1 | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/NFRA_MSGRAPH/S1_MS_GRAPH_S... | PASS |
+| 2026-06-26 | 0.8.0_AE_MSGraph | NFRA_MSGRAPH.S1 | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.8.0_AE_CloudComp/del... | PASS |
+| 2026-06-26 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .owned-paths.yaml | PASS |
+| 2026-06-26 | 0.8.0_AE_MSGraph | NFRA_MSGRAPH.S1 | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.8.0_AE_CloudComp/log... | PASS |
+2026-06-26 | 0.8.0_AE_CloudComp | NFRA_MSGRAPH.S1 | comp-which (m365 enum -> BACKSTOP/gap, S4 target), comp-to, comp-kuzu (single-CloudNode model grounding) | recon+schema authored, schema -> CTO gate
+| 2026-06-26 | 3.0.0_SA_CVO | NFRA_TSGRAPH.P3-1 | comp-surface-check | comp-surface-check check --mode advisory --file .tools/comp-freshness --file data/cot/s... | PASS |
+| 2026-06-26 | 0.8.0_AE_MSGraph | NFRA_MSGRAPH.S1 | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md | PASS |
