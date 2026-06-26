@@ -149,6 +149,30 @@ Every row cites ≥1 real log/LD/commit exemplar (the empirical anchor P3-2's va
 | F3 race-class | LD-0070 (kill-orphans liveness-window race, SIGTERM'd MSTR 2x) + LD-0205 (TO_ID write race) |
 | B15 tooling-false-empty | LD-0208 (key-drift silent-empty) is the config-drift sibling of the subprocess-false-empty original — cross-referenced, kept distinct (B31) |
 
+## Phase-2 mandate — DEBTSCAN double-build check (2026-06-26, CONFIRMED clean)
+Ran the TO Phase-2 mandate: confirm this catalog is the shared UPSTREAM, not a duplicate of
+an existing NFRA_DEBTSCAN artifact. `comp-which` routed via the manifest fuzzy-backstop (no
+curated rule — itself the B31 schema-key-drift / LD-0208 class), so ran the primitive directly
+per the backstop instruction: read `org/projects/NFRA_DEBTSCAN.json` + `ls
+org/modules/graph/debtscan/`. DEBTSCAN's dimensions are reachability (D1), composition
+(D2/D2X), costrecon (D4), portalsweep (D5), canon-motif, and dups (`dup_scan.py`) — **every
+one a reachability/composition/cost/dup scanner; NONE is a bug/logic-class miner.** The TO
+`if_mismatch` (STOP + reconcile if DEBTSCAN already holds a bug-class artifact) does NOT
+trigger. This catalog is a clean shared upstream. **Phase-2: PASS.**
+
+## F1-F4 fabric-cluster partition — RECOMMENDATION routed to COO (the open AC2 item)
+The Andrew-LOCKED boundary is frontend-detectable vs cross-domain (pipeline/data/infra). F1-F4
+(marker-artifact-FP liveness, shared-resource contention, race-class, iteration-debt) are
+agent-fabric RUNTIME-reliability classes — neither cleanly TS-graphable (not in the portal
+graph P3-2 scans) nor classic estate-pipeline (DEBTSCAN's data/infra domain). **CVO
+recommendation:** fold F1-F4 into the CROSS-DOMAIN partition as a tagged `fabric-runtime`
+sub-cluster handed to DEBTSCAN (its scope is the "whole estate" incl. compositional risk, and
+the signatures ARE graph-able — telemetry/broker/hook artifacts are estate nodes), BUT
+explicitly flagged for DEBTSCAN-owner acceptance since they are runtime-not-pipeline. The 0
+remaining-untagged-row AC2 bar is met under this recommendation (F1-F4 → cross-domain/
+fabric-runtime), pending the COO ruling. Routed to COO 2026-06-26; not self-decided (scope
+boundary is a COO/CTO call).
+
 ## Status after deep pass 2
 - Frontend partition: A1-A11 (11 classes). Cross-domain: B1-B35 (35). Fabric-cluster: F1-F4 (4, partition-pending COO rule). **Total: 50 classes, all exemplar-anchored.**
 - Deep pass 2 ADDED 12 classes (B24-B35 + A11) from the exhaustive 215-LD semantic mine + sharpened 5 existing rows to canonical LD exemplars.
