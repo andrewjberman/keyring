@@ -50,12 +50,20 @@ RULES = [
     # that reads like a text search ('find every...'). Forced STRONG so it routes BEFORE the
     # search-verb grep primitive (mirrors the call-sites->comp-blast special-case).
     (["xref", "graph node", "graph nodes", "node touching", "nodes touching", "touching a symbol",
-      "every graph node", "graph symbol", "symbol across"],
+      "every graph node", "graph symbol", "symbol across",
+      # real-NL "where does symbol X appear graph-wide" vocabulary -- without these it fell
+      # through to the grep primitive instead of the graph-aware xref. (paraphrase 2026-06-26)
+      "across the graph", "in the graph", "graph-wide", "everywhere in the graph",
+      "show up across", "where does the symbol"],
      "graph nodes touching a symbol (xref)",
      ["comp-xref <symbol>", "comp-xref --save  # snapshot, then comp-xref to diff"],
      "every graph node (id/label/file/edge) touching a symbol -- graph traversal, not a text grep"),
     (["portal", "component", "endpoint", "scoped route", "/api/", ".tsx", "tsx",
-      "frontend", "renders", "rendering", "getadvisor", "which lambda serves", "serves /api"],
+      "frontend", "renders", "rendering", "getadvisor", "which lambda serves", "serves /api",
+      # real-NL feed vocabulary (paraphrase-probe 2026-06-26): an agent asks "what FEEDS/
+      # HANDS DATA TO the X panel/card/widget/tab", not "which producer feeds a component".
+      "panel", "card", "widget", "feeds", "hands data", "hands data to", "feeds the",
+      "what feeds", "data to the"],
      "portal component / route",
      ["comp-transform schema-check <Component>", "comp-routes behaviors", "pipescript <thread>"],
      "which producer/endpoint feeds a portal component + the serving/CF route"),
@@ -71,7 +79,10 @@ RULES = [
      "AWS resources / thread ownership",
      ["comp-aws", "pipescript <name>", "comp-pipescript deployed"],
      "what AWS resources exist + which named thread owns them"),
-    (["breaks", "blast", "what depends", "if i change", "impact of changing", "downstream of"],
+    (["breaks", "blast", "what depends", "if i change", "impact of changing", "downstream of",
+      # real-NL impact vocabulary: "what would a CHANGE TO X AFFECT", "what does changing X
+      # break" -- agents say affect/change-to, not "impact of changing". (paraphrase 2026-06-26)
+      "affect", "affects", "affected", "change to", "a change to", "changing"],
      "blast radius",
      ["comp-blast <fn-or-artifact>"],
      "what breaks if you change X (pass a function name, not a script name)"),
@@ -97,11 +108,26 @@ RULES = [
      ["pipescript --list", "comp-pipescript deployed --firm <bd|inf|cot|mdpf>",
       "comp-glob data/<firm>/scripts/gold/"],
      "the scripts in a named pipeline/firm (+ deployed MATCH/STALE state)"),
+    # comp-graph = freshness of the GRAPHS THEMSELVES (cloud/trace/kuzu cache vintages), distinct
+    # from comp-freshness (data-pipeline S3/DDB upstream readiness). Placed BEFORE the data-freshness
+    # rule with graph-vintage vocabulary so "are the graphs current / kuzu freshness" wins over the
+    # bare "current" data-freshness keyword. (collision fix when "current" was added 2026-06-26)
+    (["each graph", "all graphs", "the graphs", "graphs current", "graphs fresh", "graph freshness",
+      "graph cache", "graph caches", "trace cache", "kuzu", "graph vintage", "are the graphs",
+      "graphs at a glance", "every graph current"],
+     "graph cache freshness (cloud/trace/kuzu vintages)",
+     ["comp-graph status [--json]", "comp-graph clear <platinum|trace|all>"],
+     "freshness of the GRAPHS themselves (cloud/trace/kuzu cache vintages) -- NOT data-pipeline freshness"),
     # LD-0208 fix (C): vetted routes for the high-value long tail the audit named as
     # misrouted (freshness/validate/pii). Tight keyword lists -> no over-match; the
     # manifest backstop covers the rest of the catalog now that its key is fixed.
     (["fresh", "freshness", "fresh enough", "up to date", "up-to-date", "data current",
-      "how old is the data", "last updated", "upstream data"],
+      "how old is the data", "last updated", "upstream data",
+      # real-NL currency vocabulary: "is X CURRENT / actually current / still current / how
+      # current". Without these the bare word "artifact" mis-grabbed these to the producer
+      # rule (comp-pipescript io). (paraphrase 2026-06-26) Note: "is the SERVED output current"
+      # is the comp-freshness content-mode lane (CTO spec) -- route here for now.
+      "current", "actually current", "still current", "how current", "still fresh"],
      "data freshness (upstream ready to run a chain)",
      ["comp-freshness chain <bd|inf>", "comp-freshness script <id>"],
      "is the upstream S3 data fresh enough to run a gold chain (chain_ready)"),
@@ -111,7 +137,10 @@ RULES = [
      ["comp-validate <script_id> --artifact <local/path>"],
      "does a gold artifact satisfy its declared invariants BEFORE the S3 upload"),
     (["pii", "personal data", "expose pii", "cleartext", "pseudonym", "pseudonymized",
-      "sensitive data exposed", "leak personal"],
+      "sensitive data exposed", "leak personal",
+      # real-NL leak vocabulary: "could X LEAK an SSN / social security to the browser/user".
+      # Without these it mis-grabbed to the backstop. (paraphrase 2026-06-26)
+      "ssn", "leak", "leaks", "leaking", "social security"],
      "PII exposure (component/route to external users)",
      ["comp-pii audit", "comp-pii scan <Component>"],
      "does a component/route expose PII to external users (cleartext vs pseudonymized)"),
