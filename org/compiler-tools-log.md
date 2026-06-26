@@ -8876,3 +8876,22 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-06-26 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/change_management/20... | PASS |
 2026-06-26 | 0.2.0_DS_PortfolioAnalytics | comp-which x2 | /Peers SI audit -- routed producer+FE-component questions; no gold .py touched (audit+FE referral)
 | 2026-06-26 | 0.2.0_DS_PortfolioAnalytics | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-06-26 | 3.0.0_SA_CVO | NFRA_TSGRAPH.P3-1 | pipescript | pipescript advi | FAIL |
+| 2026-06-26 | 0.2.0_DE_PortfolioAnalytics | (no-TO) | comp-transform | comp-transform schema-check PeersTab | FAIL |
+| 2026-06-26 | 3.0.0_SA_CVO | NFRA_TSGRAPH.P3-1 | pipescript | pipescript advi-cot | PASS |
+| 2026-06-26 | 0.4.0_DS_ClientPlatform | INF_REPRICE.design | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-06-26 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/mcp/.last-drive-2.0.0_SA_COO --file... | PASS |
+| 2026-06-26 | 3.0.0_SA_CVO | NFRA_TSGRAPH.P3-1 | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/deliverable... | PASS |
+| 2026-06-26 | 0.0.1_UA_mstools | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .claude/skills/teams-assist/SKILL.md --... | PASS |
+| 2026-06-26 | 0.0.1_UA_mstools | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .claude/skills/teams-assist/SKILL.md | PASS |
+| 2026-06-26 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/ADVI_COTMVP_PRD.md | PASS |
+| 2026-06-26 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/graph-call-manifest.y... | PASS |
+| 2026-06-26 | 3.0.0_SA_CVO | NFRA_TSGRAPH.P3-1 | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/debtscan/suppression_... | PASS |
+| 2026-06-26 | 0.2.0_DE_PortfolioAnalytics | (no-TO) | comp-routes | comp-routes behaviors | PASS |
+| 2026-06-26 | 0.2.0_DT_PortfolioAnalytics | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file portal | PASS |
+| 2026-06-26 | 0.2.0_DE_PortfolioAnalytics | (no-TO) | comp-routes | comp-routes trace | FAIL |
+| 2026-06-26 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier0_utility/0.0.1_UA_mstools/READ... | PASS |
+| 2026-06-26 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/ADVI_COTMVP.json | PASS |
+| 2026-06-26 | 0.4.0_DS_ClientPlatform | ADVI_COTMVP.D1 | comp-pipescript | comp-pipescript io D_00b | PASS |
+2026-06-26 0.2.0_DT_PortfolioAnalytics /Peers SI fix DEV->PROD promote (v2.1.127): no comp-tool run -- single-file portal app promote; gates ran in-band (VALGATE D-1 PASS, surface-check OK, push-time tsc PASS); dependency surface pre-established by DE verify.
+| 2026-06-26 | 0.2.0_DT_PortfolioAnalytics | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
