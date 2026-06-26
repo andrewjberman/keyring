@@ -8779,3 +8779,32 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-06-26 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
 2026-06-26 | 0.2.0_DT_PortfolioAnalytics | DEPLOY yang-v2.4.13 peer-performance col-scan + wide-source rerun | comp-blast yang-generate-peer-performance (PASS, blast=peer_performance.json consumer chain, no new edges, Rule 20). Deploy override-free via new YANG_PIPELINE_DEPLOY lane.
 | 2026-06-26 | 0.2.0_DT_PortfolioAnalytics | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-06-26 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/NFRA_MSGRAPH/task_orders/N... | PASS |
+| 2026-06-26 | 0.6.0_AE_PartnerETL | ADVI_COTETL.L4-GUARD | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/ec2/bd-49f-auto-login/bd_49f_... | PASS |
+| 2026-06-26 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/SCTY_MCPGUARD_PRD.md ... | PASS |
+| 2026-06-26 | 0.2.0_DE_PortfolioAnalytics | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.2.0_DE_PortfolioAnal... | PASS |
+| 2026-06-26 | 0.6.0_AE_PartnerETL | ADVI_COTETL.L4-GUARD | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.6.0_AE_PartnerETL/de... | PASS |
+| 2026-06-26 | 0.7.0_AE_CloudOps | (no-TO) | comp-blast | comp-blast bd_49f_auto_login.js | FAIL |
+| 2026-06-26 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/ADVI_COTETL.json | PASS |
+| 2026-06-26 | 0.6.0_AE_PartnerETL | ADVI_COTETL.L4-GUARD | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.6.0_AE_PartnerETL/de... | PASS |
+| 2026-06-26 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/SCTY_MCPGUARD.json --file ... | PASS |
+| 2026-06-26 | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/org/modules/graph/types-index/Tenan... | PASS |
+| 2026-06-26 | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/org/modules/graph/types-index/Tenan... | PASS |
+| 2026-06-26 | 0.8.0_AE_MSGraph | NFRA_MSGRAPH.S2 | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/ec2/m365-mcp-gateway/app/conf... | PASS |
+| 2026-06-26 | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/org/modules/graph/types-index/Tenan... | PASS |
+| 2026-06-26 | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/org/modules/graph/types-index/Tenan... | PASS |
+| 2026-06-26 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-06-26 | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/org/modules/graph/types-index/Tenan... | PASS |
+| 2026-06-26 | 0.2.0_DS_PortfolioAnalytics | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/v2_portal/yang_pipelin... | PASS |
+| 2026-06-26 | 0.7.0_AE_CloudOps | (no-TO) | comp-iam | comp-iam | PASS |
+| 2026-06-26 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/SCTY_MCPGUARD.json --file ... | PASS |
+| 2026-06-26 | 0.8.0_AE_MSGraph | NFRA_MSGRAPH.S2 | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/m365-ms-ingest-livenes... | PASS |
+| 2026-06-26 | 0.2.0_DT_PortfolioAnalytics | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/ci/lambda-source-map.json | PASS |
+| 2026-06-26 | 0.2.0_DT_PortfolioAnalytics | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/ci/lambda-source-map.j... | PASS |
+| 2026-06-26 | 0.2.0_DE_PortfolioAnalytics | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.2.0_DE_PortfolioAnal... | PASS |
+| 2026-06-26 | 0.2.0_DT_PortfolioAnalytics | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.2.0_DT_PortfolioAnal... | PASS |
+| 2026-06-26 | 0.8.0_AE_MSGraph | NFRA_MSGRAPH.S2 | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/ec2/m365-mcp-gateway/app/ms_i... | PASS |
+| 2026-06-26 | 0.8.0_AE_MSGraph | NFRA_MSGRAPH.S2 | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.8.0_AE_CloudComp/del... | PASS |
+2026-06-26 | 0.2.0_DT_PortfolioAnalytics | DEPLOY yang-v2.4.14 peer-performance period header-label map fix (supersedes 2.4.13 col-scan; corrected values, SI populated) | no comp-tool this delta -- same lambda/blast as 2.4.13 (comp-blast logged there); operational redeploy+rerun.
+2026-06-26 | 0.8.0_AE_CloudComp | NFRA_MSGRAPH.S2 | comp-to, comp-blast (NOT-FOUND internal fns), comp-kuzu n.source=ms (DEFERRED post-deploy) | gateway /ms/* endpoint + read-only scoping + liveness TF + deploy plan; native Read for gateway-auth grounding (Rule 22)
+| 2026-06-26 | 0.8.0_AE_MSGraph | NFRA_MSGRAPH.S2 | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
