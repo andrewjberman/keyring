@@ -180,12 +180,20 @@ def get_latest_modified(s3_key_prefix: str) -> Optional[datetime.datetime]:
         raise ConfigError(str(e))
 
     # Step 1: partition-aware listing (safe query: CommonPrefixes[*].Prefix returns []
-    # when no sub-prefixes; does not fail on null unlike sort_by on null array)
+    # when no sub-prefixes; does not fail on null unlike sort_by on null array).
+    # PAGINATE (NFRA fix 2026-06-26): a prefix with >1000 daily snapshot_date= partitions
+    # (>~2.7yr of files; e.g. inf positions_mv 2020->now, ~2200 partitions) overflows ONE
+    # ListObjectsV2 page. With --no-paginate the CLI returned only the first 1000 CommonPrefixes
+    # -- lexicographically the OLDEST dates -- so sorted(...)[-1] picked the newest of the OLD
+    # page (~2023), whose data.parquet was written during the one-time backfill -> reported the
+    # BACKFILL mtime (e.g. 2026-05-11) as "latest" and false-FAILed a LIVE+FRESH critical input
+    # (and would false-PASS a genuinely-frozen one). Auto-pagination returns ALL CommonPrefixes
+    # (per-page text output, whitespace-joined -> .split() below handles it), so sorted(...)[-1]
+    # sees the true newest partition (snapshot_date=<today>).
     raw_prefixes = _aws("s3api", "list-objects-v2",
                         "--bucket", bucket,
                         "--prefix", prefix,
                         "--delimiter", "/",
-                        "--no-paginate",
                         "--query", "CommonPrefixes[*].Prefix",
                         "--output", "text")
 
