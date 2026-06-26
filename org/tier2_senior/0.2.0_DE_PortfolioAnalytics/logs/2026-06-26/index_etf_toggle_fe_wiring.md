@@ -77,12 +77,22 @@ data-source field swap inside already-rendering recharts components (no render-s
 change), so render-regression risk is low; flagged to DT as a fast post-promote spot-check,
 NOT a gate. Did not hold Andrew's ASAP promote on an unacquirable browser.
 
-## Open / handoff
+## Outcome — LIVE on PROD
 
-- **DT:** running the DEV->PROD promote (GO given). Will report the `portal-vX.Y.Z` tag + CI
-  conclusion.
-- **DE (me)/DT, post-promote (low-risk):** one pixel screenshot of the 3 charts toggling on
-  PROD once the shared browser frees — spot-check, not a gate.
+DT ran the canonical promote: **PROD `bee2842f`, tag `portal-v2.1.126`** (peeled-verified),
+CI run 28248041838 conclusion=success, parity-gate empty, workspace pointer bumped
+`46248a804` on CLOUD, main tree back on DEV. Validated DT's evidence; GO closed both sides.
+
+**The Index/ETF toggle on Up/Down Capture + Rolling Sharpe + Max Drawdown is LIVE for
+internal/Opal users** (behind `SHOW_BENCHMARK_TOGGLE`; external stays ETF default).
+Andrew's ASAP delivered end-to-end in-session.
+
+## Residual (non-gating)
+
+- Pixel screenshot of the 3 charts toggling on PROD — deferred the whole session because the
+  shared Playwright browser profile was hard-locked by another agent. Functional behavior was
+  proven on live data (compute-equivalence above), so this is a spot-check, not a gate;
+  owner = whoever frees the browser first (DT or DE).
 
 ## Compiler Tools
 
