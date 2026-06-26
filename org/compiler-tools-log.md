@@ -9053,3 +9053,18 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-06-26 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/mcp/.last-drive-2.0.0_SA_COO --file... | PASS |
 | 2026-06-26 | 0.7.0_AE_CloudOps | NFRA_TSGRAPH.P2-2 + DATA_PLATFORM.DC1 | comp-freshness (pagination-bug found+fixed+all-sweep), comp-kuzu (P2-2 L5 verify 106n/387e HEAD-current), comp-grep/glob (freshness-impl, INF_B_00, dc2-crawl-run template), ds-commit-gate (x2), deploy_ledger close-all-5, terraform validate (dc1-crawl-run.tf), bun test (92/92) | P2-2 CLOSED + comp-freshness fix f5945f661 + eclipse-config 886cebfff + dc1-crawl-run doc eabb2ae60 (CTO pre-apply pending) |
 | 2026-06-26 | 0.7.0_AE_CloudOps | NFRA_TSGRAPH.P2-2 | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-06-26 | 0.1.0_DS_MarketIntelligence | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .claude/skills/find-dualbiz/SKILL.md | PASS |
+| 2026-06-26 | 0.8.0_AE_CloudComp | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.8.0_AE_CloudComp/del... | PASS |
+| 2026-06-26 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .tools/comp-freshness | PASS |
+| 2026-06-26 | 3.0.0_SA_CVO | (no-TO) | comp-kuzu | comp-kuzu MATCH (n) RETURN n.node_type AS t, n.layer AS layer, count(n) AS c ORDER BY c... | PASS |
+| 2026-06-26 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/responses/C... | PASS |
+| 2026-06-26 | 0.1.0_DS_MarketIntelligence | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .claude/skills/target/SKILL.md --file d... | PASS |
+| 2026-06-26 | 0.8.0_AE_CloudComp | (no-TO) | comp-kuzu | comp-kuzu MATCH (n) RETURN n.node_type AS node_type, n.layer AS cur_layer, count(*) AS ... | PASS |
+| 2026-06-26 | 0.8.0_AE_CloudComp | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.8.0_AE_CloudComp/del... | PASS |
+| 2026-06-26 | 3.0.0_SA_CVO | (no-TO) | comp-kuzu | comp-kuzu MATCH (n) WHERE n.node_type IN ['Endpoint','ServedURL','EXTERNAL_ENDPOINT'] R... | PASS |
+| 2026-06-26 | 3.0.0_SA_CVO | (no-TO) | comp-kuzu | comp-kuzu MATCH (n) RETURN count(DISTINCT n.node_type) AS distinct_types | PASS |
+| 2026-06-26 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/mcp/.last-drive-2.0.0_SA_COO --file... | PASS |
+| 2026-06-26 | 0.8.0_AE_CloudComp | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/globgrph/derive_runner.py | PASS |
+| 2026-06-26 | 0.1.0_DS_MarketIntelligence | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file data/find/dualbiz/config/fingerprint-v1... | PASS |
+2026-06-26T2252Z 2.0.0_SA_COO (COO session 1920-2252Z, 10 /drive cycles): fabric-check.py --blocks x10 (agent-axis block detect, broker-vs-telemetry fusion caught CTO/0.7.0 false-stalls), deploy_ledger.py check --red x10 (NEVER-half-landed; 3 concurrent combined-ship ledgers -> CLEAN at close), critical-surface SQS poll x10 (1 transient SSL self-resolved). comp-* worker-tools (comp-kuzu/comp-freshness/pipescript) were workers lane. Native inbox/git reads rail-checked Rule-21-free.
+| 2026-06-26 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
