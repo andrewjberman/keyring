@@ -8809,3 +8809,9 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 2026-06-26 | 0.8.0_AE_CloudComp | NFRA_MSGRAPH.S2 | comp-to, comp-blast (NOT-FOUND internal fns), comp-kuzu n.source=ms (DEFERRED post-deploy) | gateway /ms/* endpoint + read-only scoping + liveness TF + deploy plan; native Read for gateway-auth grounding (Rule 22)
 | 2026-06-26 | 0.8.0_AE_MSGraph | NFRA_MSGRAPH.S2 | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
 | 2026-06-26 | 0.2.0_DT_PortfolioAnalytics | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.2.0_DT_PortfolioAnal... | PASS |
+| 2026-06-26 | 0.2.0_DE_PortfolioAnalytics | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.2.0_DE_PortfolioAnal... | PASS |
+| 2026-06-26 | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/ORG_CHART.md --file org/tier0/ledge... | PASS |
+
+- 2026-06-26 0.4.0_DS_ClientPlatform (cot retry-net pair-ready + D3 retire): ds-commit-gate PASS on retry-net trio (3/3); safe-commit surface-check OK (D3 stub c59e68559); 3x rail-checked in-function literal/flag reads (no comp-tool fits in-body lookups). No estate-graph change this window.
+| 2026-06-26 | 0.2.0_DS_PortfolioAnalytics | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/v2_portal/yang_pipelin... | PASS |
+| 2026-06-26 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
