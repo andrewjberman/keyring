@@ -8659,3 +8659,20 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-06-26 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/tests/test_iam_role_l... | PASS |
 2026-06-26 | 0.2.0_DS_PortfolioAnalytics | MDLP_RVVALT index/etf dual-benchmark timeseries | comp-which (backstop, no FE-wiring tool -> gap banked), comp-pipescript io (PASS: output keys unchanged, additive), py_compile (PASS) | gap: no comp-tool maps portal chart -> benchmark data path/toggle wiring
 | 2026-06-26 | 0.2.0_DS_PortfolioAnalytics | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-06-26 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/briefs/cot-datemode-b-forward-fix-... | PASS |
+| 2026-06-26 | 0.2.0_DT_PortfolioAnalytics | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.2.0_DT_PortfolioAnal... | PASS |
+| 2026-06-26 | 0.2.0_DT_PortfolioAnalytics | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/ci/lambda-source-map.j... | PASS |
+| 2026-06-26 | 3.0.0_SA_CVO | NFRA_TSGRAPH.P3-1 | comp-aws | comp-aws __bogus_subcmd_zzz__ | FAIL |
+| 2026-06-26 | 3.0.0_SA_CVO | NFRA_TSGRAPH.P3-1 | comp-build | comp-build | PASS |
+| 2026-06-26 | 3.0.0_SA_CVO | NFRA_TSGRAPH.P3-1 | comp-kuzu | comp-kuzu __bogus_subcmd_zzz__ | FAIL |
+| 2026-06-26 | 3.0.0_SA_CVO | NFRA_TSGRAPH.P3-1 | comp-perf | comp-perf __bogus_subcmd_zzz__ | FAIL |
+| 2026-06-26 | 3.0.0_SA_CVO | NFRA_TSGRAPH.P3-1 | comp-surface-check | comp-surface-check __bogus_subcmd_zzz__ | FAIL |
+| 2026-06-26 | 3.0.0_SA_CVO | NFRA_TSGRAPH.P3-1 | comp-manifest-check | comp-manifest-check __bogus_subcmd_zzz__ | FAIL |
+| 2026-06-26 | 3.0.0_SA_CVO | NFRA_TSGRAPH.P3-1 | comp-pii | comp-pii __bogus_subcmd_zzz__ | FAIL |
+| 2026-06-26 | 3.0.0_SA_CVO | NFRA_TSGRAPH.P3-1 | comp-constants | comp-constants __bogus_subcmd_zzz__ | FAIL |
+| 2026-06-26 | 3.0.0_SA_CVO | NFRA_TSGRAPH.P3-1 | comp-pipescript | comp-pipescript __bogus_subcmd_zzz__ | FAIL |
+| 2026-06-26 | 0.2.0_DT_PortfolioAnalytics | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/terraform/yang-pipeline/CHANG... | PASS |
+| 2026-06-26 | 0.2.0_DE_PortfolioAnalytics | (no-TO) | comp-which | comp-which "deps of ModelTimeseriesPoint + 3 charts" -> pipescript --fe-reachability | PASS |
+| 2026-06-26 | 0.2.0_DE_PortfolioAnalytics | (no-TO) | comp-transform | comp-transform schema-check RollingCaptureChart/RollingSharpeChart/MaxDrawdownChart | FAIL (component not found -- registry gap) |
+| 2026-06-26 | 0.2.0_DE_PortfolioAnalytics | (no-TO) | pipescript | pipescript --fe-reachability (thread-tier; used Grep for component-level consumer trace) | PASS |
+| 2026-06-26 | 0.2.0_DE_PortfolioAnalytics | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
