@@ -8922,3 +8922,7 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-06-26 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/ADVI_TAXSMA.json --file or... | PASS |
 | 2026-06-26 | 0.0.1_UA_mstools | (no-TO) | (none) | M365 principal work + Andrew-direct CVO/CTO/COO dispatch (Cottonwood, Tax SMA->PFMG_TAXSMA PRD) + read-only Schwab SI2 desktop feasibility (registry/DLL static analysis); no AWS/pipeline/portal/IAM surface for comp-* | N/A |
 | 2026-06-26 | 0.0.1_UA_mstools | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-06-26 | 0.4.0_DS_ClientPlatform | PFMG_TAXSMA.S0.2 | comp-surface-check | comp-surface-check check --mode advisory --file docs/briefs/PFMG_TAXSMA_S0.2_converter_... | PASS |
+2026-06-26 | 0.8.0_AE_CloudComp | NFRA_MSGRAPH re-scope + ADVI_TAXSMA.S0.3 | comp-to (S1/S2/S0.3), comp-kuzu (L6 baseline aws=12644/ms=0), m365 gateway read tools (live /sites/Shared recon ~4560 nodes + S0.3 mail-grounding) | re-scope brief -> CVO SOUND -> CTO arch-gate; S0.3 email rule grounded (first=PRELIM/second=final by sent-time)
+| 2026-06-26 | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier0/sessions/SS-0009.md | PASS |
+| 2026-06-26 | 0.8.0_AE_MSGraph | ADVI_TAXSMA.S0.3 | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
