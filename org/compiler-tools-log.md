@@ -9008,3 +9008,48 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-06-26 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/mcp/.last-drive-2.0.0_SA_COO --file... | PASS |
 - 2026-06-26 2045Z 0.0.1_UA_mstools: comp-which HUD-nudges acknowledged (searches were local-process/network diag + literal source lookups, rail-checked); safe-commit gate PASS (bfa81d9da tax_sma) + BLOCKED-correctly (gateway tools.py, owned-paths AE-lane -> routed to AE, no --force); py_compile+ruff py39 PASS on gateway tools.py.
 | 2026-06-26 | 0.0.1_UA_mstools | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-06-26 | 0.1.0_DS_MarketIntelligence | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file data/find/dualbiz/config/candidates.jso... | PASS |
+| 2026-06-26 | 0.1.0_DS_MarketIntelligence | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file data/find/dualbiz/scripts/cases.py | PASS |
+| 2026-06-26 | 0.1.0_DS_MarketIntelligence | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .claude/skills/find-dualbiz/SKILL.md | PASS |
+| 2026-06-26 | 0.8.0_AE_CloudComp | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/globgrph/Dockerfile | PASS |
+| 2026-06-26 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/mcp/.last-drive-2.0.0_SA_COO --file... | PASS |
+| 2026-06-26 | 0.8.0_AE_CloudComp | (no-TO) | comp-kuzu | comp-kuzu MATCH (n) RETURN n.layer AS layer, count(*) AS n ORDER BY n DESC | PASS |
+| 2026-06-26 | 0.8.0_AE_CloudComp | (no-TO) | comp-kuzu | comp-kuzu MATCH (n) WHERE n.layer='aws' AND n.type IN ['PanelCluster','Page'] RETURN n.... | FAIL |
+| 2026-06-26 | 0.8.0_AE_CloudComp | (no-TO) | comp-kuzu | comp-kuzu MATCH (n) WHERE n.layer='aws' RETURN n.type AS type, count(*) AS c ORDER BY c... | FAIL |
+| 2026-06-26 | 0.8.0_AE_CloudComp | (no-TO) | comp-kuzu | comp-kuzu MATCH (n) WHERE n.layer='aws' RETURN n.node_type AS t, count(*) AS c ORDER BY... | PASS |
+| 2026-06-26 | 3.0.0_SA_CVO | (no-TO) | comp-manifest-check | comp-manifest-check | FAIL |
+| 2026-06-26 | 3.0.0_SA_CVO | (no-TO) | comp-manifest-check | comp-manifest-check list | PASS |
+| 2026-06-26 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .tools/comp-secrets --file org/modules/... | PASS |
+| 2026-06-26 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file data/inf/scripts/classification/classif... | PASS |
+| 2026-06-26 | 3.0.0_SA_CVO | (no-TO) | comp-kuzu | comp-kuzu MATCH (n) RETURN n.layer AS layer, count(n) AS cnt ORDER BY cnt DESC | PASS |
+| 2026-06-26 | 3.0.0_SA_CVO | (no-TO) | comp-kuzu | comp-kuzu MATCH (n) WHERE n.layer='aws' RETURN n.node_type AS type, count(n) AS cnt ORD... | PASS |
+| 2026-06-26 | 3.0.0_SA_CVO | (no-TO) | comp-kuzu | comp-kuzu MATCH (n) WHERE n.layer='ms' RETURN n.node_type AS type, n.name AS name, n.pr... | PASS |
+| 2026-06-26 | 3.0.0_SA_CVO | (no-TO) | comp-kuzu | comp-kuzu MATCH (m)-[r]->(a) WHERE m.layer='ms' AND a.layer='aws' RETURN m.node_type, r... | PASS |
+| 2026-06-26 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/responses/C... | PASS |
+| 2026-06-26 | 0.1.0_DS_MarketIntelligence | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .claude/skills/find-dualbiz/SKILL.md --... | PASS |
+| 2026-06-26 | 3.0.0_SA_CVO | (no-TO) | comp-manifest-check | comp-manifest-check list | PASS |
+| 2026-06-26 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .tools/comp-secrets --file org/modules/... | PASS |
+| 2026-06-26 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/findings/20... | PASS |
+| 2026-06-26 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file data/cot/scripts/gold/D_03.composition_... | PASS |
+| 2026-06-26 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/mcp/.last-drive-2.0.0_SA_COO --file... | PASS |
+| 2026-06-26 | 0.1.0_DS_MarketIntelligence | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file data/find/dualbiz/config/candidates.jso... | PASS |
+| 2026-06-26 | 0.7.0_AE_CloudOps | NFRA_TSGRAPH.P2-2 | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/globgrph/derive_runner.py | PASS |
+| 2026-06-26 | 0.8.0_AE_CloudComp | (no-TO) | comp-kuzu | comp-kuzu MATCH (n) RETURN n.layer AS layer, count(*) AS n ORDER BY n DESC | PASS |
+| 2026-06-26 | 0.6.2_AE_PartnerETL | (no-TO) | comp-pipescript | comp-pipescript deployed --firm cot | PASS |
+| 2026-06-26 | 0.8.0_AE_CloudComp | (no-TO) | comp-kuzu | comp-kuzu MATCH (n) WHERE n.layer='ms' RETURN n.node_type AS t, count(*) AS c ORDER BY ... | PASS |
+| 2026-06-26 | 0.8.0_AE_CloudComp | (no-TO) | comp-kuzu | comp-kuzu MATCH (n) WHERE n.layer='ms' AND NOT n.node_type IN ['MS_SITE','MS_LIBRARY','... | PASS |
+| 2026-06-26 | 0.8.0_AE_CloudComp | (no-TO) | comp-kuzu | comp-kuzu MATCH ()-[e]->() WHERE e.layer='ms' RETURN e.edge_type AS t, count(*) AS c OR... | PASS |
+| 2026-06-26 | 0.8.0_AE_CloudComp | (no-TO) | comp-kuzu | comp-kuzu MATCH (n) WHERE n.layer='aws' AND n.node_type IN ['IAM_POLICY','LAMBDA','IAM_... | PASS |
+| 2026-06-26 | 0.7.0_AE_CloudOps | NFRA_TSGRAPH.P2-2 | comp-kuzu | comp-kuzu MATCH (c:CloudNode) WHERE c.node_type IN ['PanelCluster','Page'] RETURN c.nod... | PASS |
+| 2026-06-26 | 0.7.0_AE_CloudOps | NFRA_TSGRAPH.P2-2 | comp-kuzu | comp-kuzu MATCH ()-[e:CloudEdge]->() WHERE e.edge_type IN ['CLUSTERS','CONTAINS_DRILLDO... | PASS |
+| 2026-06-26 | 0.6.2_AE_PartnerETL | (no-TO) | comp-pipescript | comp-pipescript deployed | PASS |
+| 2026-06-26 | 3.0.0_SA_CVO | (no-TO) | comp-kuzu | comp-kuzu MATCH (n) WHERE n.layer='ms' RETURN n.node_type AS t, count(n) AS c ORDER BY ... | PASS |
+| 2026-06-26 | 3.0.0_SA_CVO | (no-TO) | comp-kuzu | comp-kuzu MATCH (n) WHERE n.layer='aws' AND n.node_type IN ['IAM_POLICY','LAMBDA','IAM_... | PASS |
+| 2026-06-26 | 3.0.0_SA_CVO | (no-TO) | comp-kuzu | comp-kuzu MATCH (n) WHERE n.layer='ms' AND (n.props CONTAINS 'content' OR n.props CONTA... | PASS |
+| 2026-06-26 | 3.0.0_SA_CVO | (no-TO) | comp-kuzu | comp-kuzu MATCH (m)-[r]->(a) WHERE m.layer='ms' AND a.layer='aws' RETURN count(r) AS ms... | PASS |
+| 2026-06-26 | 0.7.0_AE_CloudOps | NFRA_TSGRAPH.P2-2 | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/change_management/20... | PASS |
+| 2026-06-26 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/responses/C... | PASS |
+| 2026-06-26 | 0.7.0_AE_CloudOps | NFRA_TSGRAPH.P2-2 | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/terraform/crawl-harness/dc1-c... | PASS |
+| 2026-06-26 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/mcp/.last-drive-2.0.0_SA_COO --file... | PASS |
+| 2026-06-26 | 0.7.0_AE_CloudOps | NFRA_TSGRAPH.P2-2 + DATA_PLATFORM.DC1 | comp-freshness (pagination-bug found+fixed+all-sweep), comp-kuzu (P2-2 L5 verify 106n/387e HEAD-current), comp-grep/glob (freshness-impl, INF_B_00, dc2-crawl-run template), ds-commit-gate (x2), deploy_ledger close-all-5, terraform validate (dc1-crawl-run.tf), bun test (92/92) | P2-2 CLOSED + comp-freshness fix f5945f661 + eclipse-config 886cebfff + dc1-crawl-run doc eabb2ae60 (CTO pre-apply pending) |
+| 2026-06-26 | 0.7.0_AE_CloudOps | NFRA_TSGRAPH.P2-2 | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
