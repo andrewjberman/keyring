@@ -8902,3 +8902,23 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 - comp-routes trace/behaviors: PASS -- found portal SPA serving path + PROD CF domain (ddekdm5vg1xns.cloudfront.net), confirmed /Peers is auth-gated; used instead of a raw aws cloudfront call (HUD gated the raw attempt, complied).
 | 2026-06-26 | 0.8.0_AE_MSGraph | NFRA_MSGRAPH.S2 | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.8.0_AE_CloudComp/del... | PASS |
 | 2026-06-26 | 0.2.0_DE_PortfolioAnalytics | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-06-26 | 0.4.0_DS_ClientPlatform | ADVI_COTMVP.D1 | comp-surface-check | comp-surface-check check --mode advisory --file docs/briefs/ADVI_COTMVP_D1_nmnc_groundi... | PASS |
+| 2026-06-26 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/ADVI_TAXSMA_PRD.md | PASS |
+| 2026-06-26 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/mcp/.last-drive-2.0.0_SA_COO --file... | PASS |
+| 2026-06-26 | 3.0.0_SA_CVO | NFRA_TSGRAPH.P3-1 | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/deliverable... | PASS |
+| 2026-06-26 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/ADVI_COTMVP_PRD.md | PASS |
+| 2026-06-26 | 3.0.0_SA_CVO | NFRA_TSGRAPH.P3-1 | comp-surface-check | comp-surface-check check --mode advisory --file .tools/comp-dups --file org/modules/gra... | PASS |
+| 2026-06-26 | 3.0.0_SA_CVO | NFRA_TSGRAPH.P3-1 | comp-surface-check | comp-surface-check check --mode advisory --file .tools/comp-which | PASS |
+| 2026-06-26 | 0.4.0_DS_ClientPlatform | ADVI_COTMVP.D1 | comp-surface-check | comp-surface-check check --mode advisory --file docs/briefs/ADVI_COTMVP_D1_nmnc_groundi... | PASS |
+| 2026-06-26 | 3.0.0_SA_CVO | NFRA_TSGRAPH.P3-1 | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/deliverable... | PASS |
+| 2026-06-26 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/ADVI_COTMVP.json --file or... | PASS |
+| 2026-06-26 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/ADVI_TAXSMA_PRD.md --... | PASS |
+| 2026-06-26 | 3.0.0_SA_CVO | NFRA_TSGRAPH.P3-1 | comp-surface-check | comp-surface-check check --mode advisory --file .gitignore --file org/modules/graph/deb... | PASS |
+| 2026-06-26 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/ADVI_TAXSMA.json | PASS |
+| 2026-06-26 | 0.8.0_AE_MSGraph | ADVI_TAXSMA.S0.3 | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.8.0_AE_CloudComp/del... | PASS |
+| 2026-06-26 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-transform | comp-transform schema-check PartnerAnalytics | PASS |
+| 2026-06-26 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-transform | comp-transform schema-check PartnerAnalytics | PASS |
+| 2026-06-26 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/ADVI_TAXSMA.json | PASS |
+| 2026-06-26 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/ADVI_TAXSMA.json --file or... | PASS |
+| 2026-06-26 | 0.0.1_UA_mstools | (no-TO) | (none) | M365 principal work + Andrew-direct CVO/CTO/COO dispatch (Cottonwood, Tax SMA->PFMG_TAXSMA PRD) + read-only Schwab SI2 desktop feasibility (registry/DLL static analysis); no AWS/pipeline/portal/IAM surface for comp-* | N/A |
+| 2026-06-26 | 0.0.1_UA_mstools | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
