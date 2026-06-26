@@ -657,6 +657,16 @@ paths:
     lane: SCTY
     note: "SCTY security program root (external-repo analysis + untrusted-repo sandbox process + per-repo security verdicts + macro charter). CVO authors analysis/verdicts; CTO PRD/arch-gate; COO commit/coordinate/decompose; MSTR governance. Worker lanes added at SCTY-decompose. Added 2026-06-24 by 2.0.0_SA_COO per CVO [ACTION] 175444Z."
 
+  # -----------------------------------------------------------------------
+  # lib/ -- cross-cutting shared pure-Python primitives (NO AWS deps),
+  # vendored-by-lambdas-at-package + imported-directly-by-CLI. CTO-blessed
+  # home (2026-06-26) for the frontier-cadence trading_calendar convergence.
+  # New repo-root was UNDEFINED -> validated build commit-blocked.
+  # -----------------------------------------------------------------------
+  "lib/**":
+    lane: BASE_EXEC
+    note: "Cross-cutting shared pure-Python primitive home (CTO-blessed 2026-06-26 for the trading_calendar frontier-cadence convergence -- one NYSE-calendar definition that the 3 probe lambdas + comp-freshness content-mode + COO's bd_cot_served_aua_stale alarm all consume, replacing 5 prior divergent copies). BASE_EXEC rationale: high-blast-radius shared libs (everything imports them) gate to base-workspace execs (CTO/COO/CVO) who carry estate-wide view; consumers VENDOR/READ the lib at lambda-package time (no commit-lane needed). Widen on demonstrated need. Added 2026-06-26 by 1.0.0_SA_CTO per CVO CLEAR-NEEDED 165711Z (lib/ UNDEFINED -> validated build [85/85 green] commit-blocked; CVO correctly would not self-grant the path)."
+
   "org/ws-charter-hard-block-audit.log":
     lane: WS_CHARTER_AUDIT
     note: "/ws-charter HARD-BLOCK audit log -- MSTR-owned header content (TIER0_LAW-equivalent enumeration per /ws-charter SKILL.md Step 4a Meta-catches §3); ws CTO appends HARD-EXIT entries per fire. Init landed at LD-0080 (10f7ed154); lane added per LD-0080 authorization chain + MSTR INIT-REQUEST 2026-05-26."
