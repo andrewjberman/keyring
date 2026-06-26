@@ -8776,3 +8776,6 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-06-26 | 0.6.0_AE_PartnerETL | ADVI_COTETL.L4-GUARD | comp-iam / terraform plan -target / deploy_ledger | PIECE-2 activation + #1 close: firm-sep Deny-bd verify (live get-role-policy), 0-diff x2 on Delta-2+re-point, 3 ledgers 3/3 | PASS |
 | 2026-06-26 | 0.8.0_AE_MSGraph | NFRA_MSGRAPH.S2 | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.8.0_AE_CloudComp/del... | PASS |
 | 2026-06-26 | 0.6.0_AE_PartnerETL | ADVI_COTETL.L4-GUARD | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-06-26 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+2026-06-26 | 0.2.0_DT_PortfolioAnalytics | DEPLOY yang-v2.4.13 peer-performance col-scan + wide-source rerun | comp-blast yang-generate-peer-performance (PASS, blast=peer_performance.json consumer chain, no new edges, Rule 20). Deploy override-free via new YANG_PIPELINE_DEPLOY lane.
+| 2026-06-26 | 0.2.0_DT_PortfolioAnalytics | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
