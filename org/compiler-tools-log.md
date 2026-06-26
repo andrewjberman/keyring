@@ -8818,3 +8818,5 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-06-26 | 0.2.0_DT_PortfolioAnalytics | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/ci/lambda-source-map.json | PASS |
 2026-06-26 | 0.2.0_DS_PortfolioAnalytics | peer-performance layout-drift value bug + Index/ETF toggle closeout | comp-which (backstop, no Excel-parser-structure tool -> gap banked), comp-pipescript io (PASS, keys unchanged), py_compile x4 (PASS), raw-cell openpyxl/pandas ground-truth (decisive) | gap: no comp-tool maps producer->source-cell structure; verify discipline: don't derive verify target from same code path (false-green banked)
 | 2026-06-26 | 0.2.0_DS_PortfolioAnalytics | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-06-26 | 0.2.0_DE_PortfolioAnalytics | (no-TO) | ds-commit-gate | .tools/ds-commit-gate.sh yang-generate-peer-performance/lambda_function.py | PASS |
+| 2026-06-26 | 0.2.0_DE_PortfolioAnalytics | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
