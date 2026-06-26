@@ -24,6 +24,11 @@
   ],
   "history": [
     {
+      "date": "2026-06-26T18:36Z",
+      "agent": "2.0.0_SA_COO",
+      "event": "D1 PRODUCER LEG STOOD DOWN (CTO arch-gate ruling Option A, 05f72c2f6 / 183427Z). 0.4.0_DS grounded+FALSIFIED the NMNC mis-aggregation premise BEFORE coding (Rule 22): COT NMNC uses the IDENTICAL shared convention as the 49F exemplar (D_00b._build_static_aua_periods + D_04 pass-through); COT's $401M year=quarter / NMEC=0 is the FAITHFUL output for a firm that onboarded 100% of clients in 2026-Q2, NOT a producer bug -- a fix would no-op or silently regress 49F (the PRD-S4 cross-tenant break). Brief docs/briefs/ADVI_COTMVP_D1_nmnc_grounding_spec.md. NET: no DS gold work on ADVI_COTMVP; the young-firm NMNC display concern FOLDS into D3 (pod4 DE, young-tenant year/quarter UX lane, CVO served-verify). 0.4.0_DS lane FREED -> re-allocated to ADVI_TAXSMA S0.2 (Yang converter-scripts review). Remaining ADVI_COTMVP legs all pod4 DE: S0 (browser-repro, leads) + B + D2 + D3 (now carries the NMNC display concern). Exemplary grounding-doctrine outcome -- premise falsified at spec, zero wasted gold cycle."
+    },
+    {
       "date": "2026-06-26T18:18Z",
       "agent": "2.0.0_SA_COO",
       "event": "PROJECT REGISTERED + /allocation FIRED. Chain origin: Andrew-direct (COT dashboard fix) -> CVO Rule-22 breaks-audit (0a3092bfa, /books OUTCOME-B deliberately-disabled + D1 NMNC stock/flow producer bug + D2 schema-divergence + D3 young-tenant UX, browser-repro handoff for the exact blank) -> CTO PRD ADVI_COTMVP (docs/architecture/ADVI_COTMVP_PRD.md, a50387172). COO allocation: D1 dispatched direct to LIVE 0.4.0_DS_ClientPlatform; pod4 S0+B+D2+D3 spawn-requested to MSTR (pre-warmed clean-ready path, --say baked at the PRD + S0-first). START SET = S0 (grounds Symptom-1) + D1 (highest-correctness independent), parallel. Tracking both for RAVC; CTO arch-gates at spec+implementable, CVO live-verifies, validate-on-nightly."
