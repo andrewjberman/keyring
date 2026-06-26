@@ -17,6 +17,7 @@ from __future__ import annotations
 
 import json
 import re
+import sys
 from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Optional
@@ -789,7 +790,15 @@ def _parse_terraform_iam(workspace_root: Path) -> dict[str, IamRole]:
     all_tf_files = list(tf_base.rglob("*.tf"))
 
     # First pass: collect all role definitions
-    role_tf_to_name: dict[str, str] = {}  # tf_resource_name -> role_name
+    # NAMESPACED by module dir: a Terraform resource label (`aws_iam_role "orchestrator"`) is
+    # module-LOCAL, so the same bare label reused across two roots is two DIFFERENT roles. Keying
+    # this map by the bare label (pre-2026-06-26) collided them last-writer-wins, so the loser
+    # role's inline policy linked to the winner -> the loser was credited 0 statements -> every
+    # action FALSE-MISSING in this Rule-20 deploy-gate tool (incident: astn-wsjft-orchestrator-role
+    # vs etfs-reports-orchestrator-role, both `aws_iam_role "orchestrator"`; root-caused 0.5.0_AE
+    # 2026-06-26, brief docs/briefs/comp-iam-false-missing-tf-resource-collision-20260626.md).
+    role_tf_to_name: dict[tuple[str, str], str] = {}  # (module_dir, tf_resource) -> role_name
+    _label_to_roles: dict[str, set[str]] = {}  # bare tf_resource label -> {role_names} (collision detector)
     module_var_cache: dict[Path, dict[str, str]] = {}  # module dir -> {var: default} (lazy)
     for tf_file in all_tf_files:
         try:
@@ -812,13 +821,23 @@ def _parse_terraform_iam(workspace_root: Path) -> dict[str, IamRole]:
                     if mod_dir not in module_var_cache:
                         module_var_cache[mod_dir] = _collect_module_var_defaults(mod_dir)
                     role_name = _resolve_tf_vars(role_name, module_var_cache[mod_dir])
-                role_tf_to_name[tf_res] = role_name
+                role_tf_to_name[(str(tf_file.parent), tf_res)] = role_name
+                _label_to_roles.setdefault(tf_res, set()).add(role_name)
                 if role_name not in roles:
                     roles[role_name] = IamRole(
                         role_name=role_name,
                         tf_resource=tf_res,
                         source_file=rel,
                     )
+
+    # Collision guard (LOUD): a bare TF role label reused across modules used to silently
+    # mis-link policies (see the namespacing note above). With module-keyed role_tf_to_name the
+    # link is now correct, but surface the reuse to stderr so a future collision is never silent.
+    for _label, _rnames in sorted(_label_to_roles.items()):
+        if len(_rnames) > 1:
+            print(f"comp-iam: NOTE -- TF role label '{_label}' is reused across modules by "
+                  f"{sorted(_rnames)}; now module-namespaced (pre-fix this silently mis-linked "
+                  f"their inline policies -> FALSE-MISSING).", file=sys.stderr)
 
     # Second pass: parse inline policies and attach to roles
     for tf_file in all_tf_files:
@@ -835,7 +854,8 @@ def _parse_terraform_iam(workspace_root: Path) -> dict[str, IamRole]:
             if not role_ref:
                 continue
             tf_role = role_ref.group(1)
-            role_name = role_tf_to_name.get(tf_role)
+            # Resolve the role ref WITHIN the same module (TF refs are module-local).
+            role_name = role_tf_to_name.get((str(tf_file.parent), tf_role))
             if not role_name or role_name not in roles:
                 continue
 
@@ -863,7 +883,7 @@ def _parse_terraform_iam(workspace_root: Path) -> dict[str, IamRole]:
                 role_ref = _TF_ROLE_REF.search(attach_block)
                 if role_ref:
                     tf_role = role_ref.group(1)
-                    role_name = role_tf_to_name.get(tf_role)
+                    role_name = role_tf_to_name.get((str(tf_file.parent), tf_role))
                     if role_name and role_name in roles:
                         roles[role_name].statements.extend(stmts)
 
@@ -889,7 +909,7 @@ def _parse_terraform_iam(workspace_root: Path) -> dict[str, IamRole]:
             if not role_ref:
                 continue
             tf_role = role_ref.group(1)
-            role_name = role_tf_to_name.get(tf_role)
+            role_name = role_tf_to_name.get((str(tf_file.parent), tf_role))
             if not role_name or role_name not in roles:
                 continue
 
