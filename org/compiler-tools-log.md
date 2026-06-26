@@ -9070,3 +9070,17 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-06-26 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
 | 2026-06-26 | 3.0.0_SA_CVO | session-close | comp-kuzu (COND-A 5422 + taxonomy 49-type census diff -> caught unmapped-15), comp-secrets (NEW, built+canonical), comp-freshness cot (NEW partition-key mode), comp-surface-check, comp-which/comp-manifest-check, pipescript | PASS | verify-not-trust spine; SSL win-cert-bundle gap banked |
 | 2026-06-26 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-06-26 | 0.1.0_DS_MarketIntelligence | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file data/find/dualbiz/config/fingerprint-v1... | PASS |
+| 2026-06-26 | 0.8.0_AE_CloudComp | (no-TO) | comp-kuzu | comp-kuzu MATCH (n) WHERE n.node_type='EXTERNAL_ENDPOINT' RETURN n.id AS id, n.name AS ... | FAIL |
+| 2026-06-26 | 0.8.0_AE_CloudComp | (no-TO) | comp-kuzu | comp-kuzu MATCH (a)-[e]->(n) WHERE n.node_type='EXTERNAL_ENDPOINT' RETURN a.node_type A... | PASS |
+| 2026-06-26 | 0.6.2_AE_PartnerETL | (no-TO) | comp-iam | comp-iam service cot-exporter | PASS |
+| 2026-06-26 | 0.6.2_AE_PartnerETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/ec2/bd-cot-auto-login/run-bd-... | PASS |
+| 2026-06-26 | 0.1.0_DS_MarketIntelligence | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .claude/skills/find/SKILL.md --file dat... | PASS |
+| 2026-06-26 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/mcp/.last-drive-2.0.0_SA_COO --file... | PASS |
+| 2026-06-26 | 0.8.0_AE_CloudComp | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/globgrph/derive_runner.py --f... | PASS |
+| 2026-06-26 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .tools/registry-check.py --file org/pro... | PASS |
+| 2026-06-26 | 0.1.0_DS_MarketIntelligence | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file data/find/dualbiz/scripts/cases.py | PASS |
+| 2026-06-26 | 0.8.0_AE_CloudComp | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/globgrph/derive_runner.py | PASS |
+| 2026-06-26 | 0.8.0_AE_CloudComp | (no-TO) | comp-kuzu | comp-kuzu MATCH (n) RETURN n.layer AS layer, count(*) AS n ORDER BY n DESC | PASS |
+- 2026-06-26T23:21Z /drive cycle 12 (COO): fabric-check (PASS, stale_verify=4 all telemetry-gaps), deploy_ledger check --red (1 OPEN in-window taxonomy), SQS poll (CLEAN). Native git-log/inbox-read (COO-free per Rule 21). Attest+monitor: DATA_ANALYTICS silver-completion ADVANCING (DS Andrew-direct build).
+| 2026-06-26 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
