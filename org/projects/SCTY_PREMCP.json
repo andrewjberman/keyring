@@ -19,6 +19,19 @@
   "status": "active",
   "phase": "PHASE 0 -- PRD/CHARTER (CTO authored 2026-06-25, grounded in the live gateway source via 2 Explore sweeps). SEQUENCE: CTO PRD (DONE) -> COO commits + decomposes Phase-1 (TO-P1a token-revocation / TO-P1b VA-signature-TODO / TO-P1c /otp-build-per-A-ruling+liveness / TO-P1d secrets-rotation-SOP) -> 0.7.0_AE_CloudOps builds, CTO arch-gates each control, CVO verifies on LIVE (verifier-not-fixer). FIRST/URGENT: TO-P1c (/otp -- unblocks BD durable auto-login, near-term) + TO-P1a (revocation -- highest standalone gap). Phase-1 lands in PARALLEL with / immediately after OPLMCP STEP-C go-live (additive, non-blocking).",
   "blocking": "None to PRD. The /otp auth-model arch-GO is RULED (Option A) -- 0.7.0 un-blocked to build /otp/fetch. Phase-1 build sequences against the 0.7.0 gateway lane (busy on STEP-C + ETFS SES); durable, no deadline except the /otp near-term BD-auto-login need. Security-sensitive: /security-tree commits route through COO per SCTY; this PRD (docs/architecture) + JSON (org/projects) are CTO-authorable per the SCTY_PRD precedent.",
+  "inbound_to_fold": [
+    {
+      "date": "2026-06-26",
+      "source": "0.8.0_AE_CloudComp 171209Z (CTO-flagged ref 171106Z)",
+      "summary": "NFRA_MSGRAPH.S2 deploy = a clean REFERENCE CONSUMER for 3 converging PREMCP items, all the same consumer (the systematic per-consumer scoping reference case). Capture for the decomposition pass (GO-held for Andrew):",
+      "items": [
+        "H-class network-exposure: NEW OIDC-exempt ALB path /ms/{sites,site_children,onedrive_children,search,health} (rule ms_ingest_capability priority=31, infra/aws/terraform/m365-mcp-gateway/ms-ingest.tf) -- forwards WITHOUT authenticate-oidc, gated ONLY by static MS_INGEST_BEARER (read-only-by-construction). Joins /otp/* + the MCP-OAuth bypass paths in the bearer-gated-not-OIDC perimeter set. Must be VISIBLE in the perimeter model, not silent.",
+        "A-class bearer surface: MS_INGEST_BEARER (secret opal/mcp/ms-ingest-token) -- new credential for the A1 revocation + A2 least-scope token inventory; derive is its reference consumer.",
+        "3rd-layer read-only-scope-token TO (Andrew's server-layer-scoping refinement, CTO-deferred to PREMCP = B2): the derive is the natural FIRST consumer of per-consumer read-only gateway-capability scoping (Sites.Read.All/Files.Read.All, never Files.ReadWrite.All) -- destructive impossible at the permission layer."
+      ],
+      "status": "captured (not yet decomposed -- folds into the Andrew-GO'd decomposition pass alongside P1a-P1d + the S2B verify-TOs + B2)"
+    }
+  ],
   "created": "2026-06-25",
   "pods": ["1.0", "3.0", "0.7", "0.6", "2.0"],
   "pipeline": "MCP-surface hardening: grounded risk-surface inventory (gateway routes/auth/secrets/edge) -> prioritized defense-in-depth controls (token-revocation, write-entitlements, rate-limit/WAF, secrets-rotation, network-isolation, broker-review) -> CTO arch-gate each -> 0.7.0 build -> CVO verify-on-live. Frames+references NFRA_OPLMCP (owns the gateway) + ADVI_BDAPIMIG (the /otp consumer); does not duplicate.",
