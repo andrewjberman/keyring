@@ -86,6 +86,18 @@ RULES = [
      "blast radius",
      ["comp-blast <fn-or-artifact>"],
      "what breaks if you change X (pass a function name, not a script name)"),
+    # comp-dups = NFRA_DEBTSCAN dups dimension (CVO 2026-06-26; manifest entry COO 4d56eb0db).
+    # Distinctive dup/dead-twin vocab so a "find duplicate resources" query routes to the tool,
+    # not the grep fallback. Advisory/read-only.
+    (["duplicate", "duplicates", "duplicated", "dead-twin", "dead twin", "deadtwin",
+      "double-managed", "double managed", "doubly managed", "triplicated", "triplicate",
+      "near-duplicate", "near duplicate", "dup resource", "duplicate resource", "duplicate resources",
+      "unused legacy", "two modules manage", "two modules managing", "same-name resource",
+      "redundant resource", "copied module", "copied modules", "find dups", "dead resource",
+      "never cleared", "still carries the same name"],
+     "duplicate / dead-twin resources (debtscan dups dimension)",
+     ["comp-dups", "comp-dups --class CROSS_FIRM|IAM_POLICY_SPLIT|SERVICE_SPLIT|ENV_TWIN", "comp-dups --nightly"],
+     "find duplicate / dead-twin resources across the estate -- double-managed TF, unused legacy tables, triplicated code (advisory; NEVER removes)"),
     (["cache", "collision", "query key", "react query"],
      "cache collisions",
      ["comp-cache collisions"],
