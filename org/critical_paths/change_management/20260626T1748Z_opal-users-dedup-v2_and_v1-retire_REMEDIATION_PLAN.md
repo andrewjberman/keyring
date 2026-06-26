@@ -45,28 +45,35 @@ A bare block-removal-then-apply would plan to **DESTROY** the physical identity 
 
 ## PART B -- opal-users (v1) dead-twin retire
 
-### B.1 Grounded "dead" determination (read + write, 7-day)
-- **Reads:** 0 reads / 24h (COO-grounded) vs opal-users-v2's 103 reads -- "dead" is a confirmed metric, not an inference (Rule-22 dead-confirm).
-- **Writes (this plan, 20260626T1747Z):** opal-users shows **ZERO** write ops over a full 7-day window -- PutItem/UpdateItem/DeleteItem/BatchWriteItem all emit no datapoints; ConsumedWriteCapacityUnits Sum = **0.0** (2026-06-19 -> 2026-06-26). Confirms caveat-(b): not just zero-READ, zero-WRITE too.
+### B.1 Grounded "dead" determination (read + write, 30-day -- per CTO arch-gate condition-1)
+- **Reads:** **0 reads / 30d** (CVO fixture -- the stronger 30d citation, NOT the 24h figure) vs opal-users-v2's 103 reads. "dead" is a confirmed metric, not an inference (Rule-22 dead-confirm).
+- **Writes (this plan, 20260626T1756Z, 30-day):** opal-users shows **ZERO** writes across a FULL 30-day window (2026-05-27 -> 2026-06-26): ConsumedWriteCapacityUnits Sum = **0.0 on all 30 daily datapoints** (metric IS collected -- ~1378 samples/day, every day flat-zero), and PutItem/UpdateItem/DeleteItem/BatchWriteItem all emit no successful-request samples over 30d. **A ~monthly write-only job (e.g. a month-end archival writer firing ~06-18) would fall INSIDE this 30d window -> caught, not missed.** This matches the 30d read bar per CTO condition-1; the forward >=35d alarm (B.3) adds the next-cycle margin.
 - **Single-managed:** opal_users (v1) is declared ONLY in portal-auth/dynamodb.tf:151-165 -- absent from shared-infra. No double-management; no state-rm-first complication for the de-dup reason (only for the destroy-sequencing reason, see B.3).
-- 12 items (per TF comment). Hash key = email, no GSIs. Note: a same-named table also exists in us-east-2 (iam.tf:51) -- this retire scopes us-east-1 ONLY (the imported one); us-east-2 is a separate disposition if it exists.
+- 12 items (per TF comment). Hash key = email, no GSIs. **us-east-2 scoping:** a same-named `opal-users` table is GRANTED in us-east-2 (iam.tf:51, status UNKNOWN/deferred). **This retire scopes us-east-1 ONLY** (the imported table); us-east-2 is a SEPARATE disposition (see Follow-up) and its IAM grant is explicitly LEFT INTACT by this plan (CTO condition-2).
 
 ### B.2 Caveats held (COO 174231Z, all non-negotiable)
 - (a) DELETE = unrecoverable -> Andrew human-confirm + an **S3 export snapshot FIRST** (12 items, trivial safety net before drop).
-- (b) **Forward write-metric + 7-day window** before recommending drop. The retrospective 7d-zero-write above is strong grounding to START; the plan ALSO arms a forward CloudWatch alarm on any write to opal-users for a 7-day watch -- any write fires -> ABORT the retire + re-investigate. Belt-and-suspenders.
+- (b) **Write-window >= a full monthly cycle** before the irreversible drop (CTO condition-1). Satisfied two ways: (i) 30d-historical-zero-writes GROUNDED above (catches a monthly writer), AND (ii) a FORWARD CloudWatch alarm on any write to opal-users held **>= 35 days** (full monthly cycle + margin -> catches the NEXT month-cycle writer too) before the drop -- any write fires -> ABORT the retire + re-investigate. Belt-and-suspenders; the longer watch is free given deliberate timing.
 - (c) SEPARATE from v2 de-dup (no contention) -> routed to CVO as a dead-resource retire item.
 
 ### B.3 Sequence
-1. **Arm forward watch:** CloudWatch alarm on opal-users ConsumedWriteCapacityUnits > 0 (or PutItem/UpdateItem/DeleteItem SampleCount > 0) for a 7-day window. Any trip -> ABORT.
-2. **After 7d clean:** export snapshot -> `aws dynamodb scan --table-name opal-users --region us-east-1` to a JSON, `aws s3 cp` to a durable retire-snapshot prefix (e.g. s3://<shared-infra-artifact-bucket>/retired-tables/opal-users/20260...Z.json). Verify 12 items captured.
+1. **Arm forward watch (>= 35 days):** CloudWatch alarm on opal-users ConsumedWriteCapacityUnits > 0 (or PutItem/UpdateItem/DeleteItem SampleCount > 0) held a full monthly cycle + margin. Any trip -> ABORT. (30d-historical-zero already grounded in B.1; this catches the next cycle.)
+2. **After >=35d clean:** export snapshot -> `aws dynamodb scan --table-name opal-users --region us-east-1` to a JSON, `aws s3 cp` to a durable retire-snapshot prefix (e.g. s3://<shared-infra-artifact-bucket>/retired-tables/opal-users/20260...Z.json). Verify 12 items captured.
 3. **Andrew human-confirm** the drop (unrecoverable-class).
-4. **Drop:** non-destructive-to-state ordering -- because the block is still in portal-auth, a manual table delete would leave terraform wanting to RE-CREATE it on next apply (state has it, live gone). So: `terraform state rm aws_dynamodb_table.opal_users` (portal-auth) FIRST -> then delete the physical table (`aws dynamodb delete-table --table-name opal-users --region us-east-1`) -> remove the block (portal-auth/dynamodb.tf:145-165) -> prune the now-dead ARN lines iam.tf:50-51 (opal-users us-east-1 + us-east-2) -> `terraform plan` 0-diff both effects.
+4. **Drop:** non-destructive-to-state ordering -- because the block is still in portal-auth, a manual table delete would leave terraform wanting to RE-CREATE it on next apply (state has it, live gone). So: `terraform state rm aws_dynamodb_table.opal_users` (portal-auth) FIRST -> then delete the physical table (`aws dynamodb delete-table --table-name opal-users --region us-east-1`) -> remove the block (portal-auth/dynamodb.tf:145-165) -> **prune ONLY the us-east-1 ARN grant (iam.tf:50); LEAVE iam.tf:51 (us-east-2 opal-users) INTACT** [CTO condition-2 -- pruning :51 would revoke the us-east-2 grant, which contradicts this plan's us-east-2 deferral and would BREAK access if us-east-2 is live] -> `terraform plan` 0-diff both effects.
 5. **Ledger + commit** under deploy-completion ledger; route the data point to CVO/NFRA_DEBTSCAN.
 
 ### B.4 Gates
 - COO review -> Andrew human-confirm (drop authorization). No CTO arch-gate strictly required (single-managed, no cross-root state surgery) but CC CTO for visibility. Route to CVO/NFRA_DEBTSCAN.
 
 ---
+
+## Follow-up (separate, low-pri -- do NOT couple to tonight's v1/v2 work)
+**us-east-2 `opal-users` (status UNKNOWN) = a 3RD table in the family** needing its OWN dead-vs-live determination (same dead-twin check: reads/writes 30d + consumers). Ground in a future window -> if dead, its own retire (export-snapshot + Andrew-confirm + prune iam.tf:51 THEN); if live, leave it (grant stays intact -- as this plan already does). Flag to COO + CVO/NFRA_DEBTSCAN when scoped. (Surfaced by the CTO doc-read of the iam.tf:51 us-east-2 grant.)
+
+## Gate status (CTO arch-gate 20260626T1755Z)
+- **Part A (v2 de-dup): PRE-CLEARED CLEAN** -- sequence correct+complete, nothing to add. Tomorrow = Andrew human-confirm (CTO's note for Andrew: a proven NO-OP to the live table -- table/data/PITR untouched, only portal-auth's duplicate management pointer removed) -> execute.
+- **Part B (v1 retire): SHAPE-CLEARED + 2 CONDITIONS FOLDED** (this revision): (1) 30d read/write bar [30d-zero-writes grounded B.1 + forward >=35d alarm B.3.1]; (2) us-east-1-ARN-ONLY prune [B.3.4, leave us-east-2 grant intact]. With both folded -> GO-pending-Andrew-confirm.
 
 ## Sequencing note
 Both are DELIBERATE / not-tonight (estate-quiet for the 02:00 proofs). Execute in my window after the proofs clear, COO sequences the gates. v2 de-dup and v1 retire are independent (no shared state, no contention) and can run in either order or in parallel windows. Neither is coupled to the retry-net deploy (separate cot-pipeline change, also tomorrow).
