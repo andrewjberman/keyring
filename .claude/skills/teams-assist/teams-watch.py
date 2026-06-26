@@ -77,41 +77,78 @@ def self_id(token: str | None) -> str | None:
         return None
 
 
-def is_outgoing(m: dict, me: str | None) -> bool:
+_ME_NAME: str | None = None       # cached authenticated-user display name (whoami)
+_ME_NAME_FETCHED = False          # whoami attempted (don't retry every poll if it returned nothing)
+
+
+def self_name(token: str | None) -> str | None:
+    """The authenticated user's DISPLAY NAME (e.g. 'Andrew Berman') -- the only field that matches
+    the gateway's per-message `from_name`, so the monitor can drop the user's OWN outgoing messages.
+    The token has no `name` claim (sub=email only), so fetch it ONCE via the gateway `whoami` tool
+    and cache it. Best-effort: on any failure returns None and the outgoing-filter falls back to the
+    email/machine-id branches (effectively inert) -- never blocks the monitor."""
+    global _ME_NAME, _ME_NAME_FETCHED
+    if _ME_NAME_FETCHED:
+        return _ME_NAME
+    _ME_NAME_FETCHED = True
+    res = _gateway_call(token, "whoami", {}) if token else None
+    if isinstance(res, dict):
+        nm = res.get("displayName") or res.get("display_name") or res.get("name")
+        _ME_NAME = str(nm).strip() if nm else None
+    return _ME_NAME
+
+
+def is_outgoing(m: dict, me: str | None, me_name: str | None = None) -> bool:
     """True if message `m` was sent BY the authenticated user (an outgoing message we must NOT wake
-    on). Honors an explicit gateway flag first; else matches the sender against `me` across the
-    plausible sender fields. Fail-open: if neither a flag nor a usable sender field is present, the
-    message is treated as INCOMING (returns False) so a real ask is never silently dropped."""
+    on). Honors an explicit gateway flag first; else matches the sender against `me` (token sub /
+    email) and `me_name` (the authenticated user's DISPLAY NAME) across the plausible sender fields.
+    Fail-open: if no flag and no usable sender field resolves, the message is treated as INCOMING
+    (returns False) so a real ask is never silently dropped.
+
+    GROUNDED SCHEMA (0.5.0_AE 2026-06-26, against the live gateway): poll_addressed_teams_messages
+    returns ONLY {chat_id, chat_type, from_name, preview, timestamp_utc, is_mention} per message --
+    NO is_from_me/direction flag and NO machine sender-id; the sole sender field is `from_name`, a
+    DISPLAY NAME ("Andrew Berman"), sometimes null. The gateway token is also minimal (sub=email
+    only, no `name` claim). So the ONLY workable self-match today is from_name vs the authenticated
+    user's display name (`me_name`, fetched once via whoami). The branches below keep the email/
+    machine-id matches for forward-compat if the gateway adds those fields; the server-side
+    `is_from_me` boolean remains the durable fix (collision-proof) -- flagged to the gateway owner."""
     global _SCHEMA_WARNED
-    # (1) explicit gateway flag -- the authoritative signal if the gateway sets one
+    # (1) explicit gateway flag -- the authoritative signal if the gateway ever sets one
     for k in ("is_from_me", "from_me", "is_outgoing", "outgoing"):
         v = m.get(k)
         if isinstance(v, bool):
             return v
     if str(m.get("direction", "")).strip().lower() == "outgoing":
         return True
-    # (2) sender-identity match against `me` (gateway-token sub), across candidate sender fields
+    fname = str(m.get("from_name", "") or "").strip().lower()
+    # (2) display-name match -- the ONLY self-indicator the current gateway schema actually carries
+    if me_name and fname and fname == me_name.strip().lower():
+        return True
+    # (3) email / machine-id match against `me` (token sub) -- forward-compat for a richer schema
     if me:
         local = me.split("@")[0]
         for k in ("from_id", "from_email", "from_upn", "from_aad_id", "from_user_id", "from_name"):
             c = str(m.get(k, "")).strip().lower()
             if c and (c == me or c == local):
                 return True
-        # no sender field resolved to a comparable identity -> note once, then fail-open
-        if not any(m.get(k) for k in ("from_id", "from_email", "from_upn", "from_aad_id", "from_user_id")):
-            if not _SCHEMA_WARNED:
-                print("[teams-watch] note: no machine sender-id field on message "
-                      f"(keys={sorted(m.keys())}); outgoing-filter relies on from_name match only "
-                      "-- confirm the gateway poll_addressed_teams_messages sender schema with 0.5.0_AE",
-                      file=sys.stderr, flush=True)
-                _SCHEMA_WARNED = True
+    # No machine sender-id AND no display-name to match on -> note once, then fail-open
+    if not me_name and not any(
+        m.get(k) for k in ("from_id", "from_email", "from_upn", "from_aad_id", "from_user_id")
+    ):
+        if not _SCHEMA_WARNED:
+            print("[teams-watch] note: no machine sender-id and no self display-name resolved "
+                  f"(keys={sorted(m.keys())}); outgoing-filter inert -- confirm whoami/gateway schema",
+                  file=sys.stderr, flush=True)
+            _SCHEMA_WARNED = True
     return False
 
 
-def poll(token: str, since: str) -> dict | None:
+def _gateway_call(token: str, name: str, arguments: dict) -> dict | None:
+    """One stateless MCP tools/call to the gateway; returns the tool's parsed JSON result (or None)."""
     body = json.dumps({
         "jsonrpc": "2.0", "id": 1, "method": "tools/call",
-        "params": {"name": "poll_addressed_teams_messages", "arguments": {"since_iso": since}},
+        "params": {"name": name, "arguments": arguments},
     }).encode()
     req = urllib.request.Request(GATEWAY, data=body, method="POST", headers={
         "Authorization": f"Bearer {token}",
@@ -131,6 +168,10 @@ def poll(token: str, since: str) -> dict | None:
     return None
 
 
+def poll(token: str, since: str) -> dict | None:
+    return _gateway_call(token, "poll_addressed_teams_messages", {"since_iso": since})
+
+
 def main() -> None:
     if os.path.exists(CURSOR_FILE):
         cursor = open(CURSOR_FILE, encoding="utf-8").read().strip() or now_iso()
@@ -143,12 +184,13 @@ def main() -> None:
         tok = read_token()
         if tok:
             me = self_id(tok)
+            me_name = self_name(tok)  # cached after first poll; the display-name self-match key
             try:
                 res = poll(tok, cursor)
                 if res:
                     for m in res.get("new_messages", []):
                         # INCOMING ONLY: skip my own outgoing messages (Andrew-direct 2026-06-26)
-                        if is_outgoing(m, me):
+                        if is_outgoing(m, me, me_name):
                             continue
                         # one STDOUT line per new INCOMING message = one agent ping (work-intake signal)
                         print(f"[TEAMS] {m.get('chat_type')} from {m.get('from_name')}: "
