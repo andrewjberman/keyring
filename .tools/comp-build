@@ -1,0 +1,12 @@
+#!/bin/bash
+# comp-build — force rebuild the trace graph (or --check freshness without rebuild)
+# Forwards "$@" like every sibling wrapper (comp-trace/blast/xref): without it the
+# wrapper hardcoded a bare `build`, so `comp-build --check` (cli's verify-freshness-
+# without-rebuild, exit 2 on drift) was UNREACHABLE -- it silently ran a full rebuild
+# instead -- and any stray/typo'd arg was dropped silently rather than rejected loud.
+# (comp-tools duress sweep fix, 3.0.0_SA_CVO 2026-06-26)
+WORKSPACE="$(cd "$(dirname "$0")/.." && pwd)"
+python "$WORKSPACE/org/modules/graph/cli.py" build "$@"
+_exit=$?
+python "$WORKSPACE/org/modules/graph/comp_log_auto.py" "comp-build" "" $_exit 2>/dev/null
+exit $_exit
