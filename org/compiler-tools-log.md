@@ -8844,3 +8844,20 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 - 2026-06-26 0.0.0_AB_MSTR session_close_1708Z: no comp-tools run -- governance (/mstr-review RV-0039) + org-doc/skill/scaffold work (teams-assist LD-0216, cleanup LD-0219, Tier-0 Utility framework LD-0220 + kit propagation); no code/infra/data/AWS change, Rule-20/21 N/A (org-record + blueprint-kit authoring).
 2026-06-26 | 0.8.0_AE_CloudComp | NFRA_MSGRAPH.S2 | deploy_ledger open/close-leg (6-leg, L1-L5 closed), comp-kuzu n.source=ms DEFERRED to L6 nightly, native Read (gateway auth grounding Rule 22), rail-checked greps (TF/codebuild lookups) | MS ingest GO-LIVE deploy-activation: gateway /ms/* read-only endpoint LIVE + derive task-def MS-enabled + live read-only path proven (34 nodes, SS4 cert PASS)
 | 2026-06-26 | 0.8.0_AE_MSGraph | NFRA_MSGRAPH.S2 | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-06-26 | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier0/sessions/SS-0008.md | PASS |
+| 2026-06-26 | 0.8.0_AE_MSGraph | NFRA_MSGRAPH.S2 | comp-kuzu | comp-kuzu MATCH (n) RETURN n.layer AS layer, count(*) AS n ORDER BY n DESC | PASS |
+| 2026-06-26 | 0.8.0_AE_MSGraph | NFRA_MSGRAPH.S2 | comp-kuzu | comp-kuzu MATCH (n) RETURN count(*) AS total_nodes | PASS |
+| 2026-06-26 | 0.8.0_AE_MSGraph | NFRA_MSGRAPH.S2 | comp-kuzu | comp-kuzu MATCH (n) WHERE n.source='ms' RETURN count(*) AS ms_nodes_should_be_0_pre_nig... | PASS |
+| 2026-06-26 | 0.0.1_UA_mstools | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .tools/ajb.ps1 --file org/mcp/inbox-wat... | PASS |
+| 2026-06-26 | 0.8.0_AE_MSGraph | NFRA_MSGRAPH.S2 | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.8.0_AE_CloudComp/del... | PASS |
+| 2026-06-26 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/SCTY_PREMCP.json | PASS |
+| 2026-06-26 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/ec2/EC2_MANIFEST.json | PASS |
+| 2026-06-26 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .tools/owned-paths-validate.py --file t... | PASS |
+| 2026-06-26 | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier0/ledger/LD-0220.md | PASS |
+| 2026-06-26 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .tools/ajb.ps1 --file org/mcp/inbox-wat... | PASS |
+| 2026-06-26 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/mcp/.last-drive-2.0.0_SA_COO --file... | PASS |
+| 2026-06-26 | 0.0.1_UA_mstools | (no-TO) | (none) | launch + self-reachability infra fix (broker/watcher/role-mapper enumerators, BASE_EXEC, routed to CTO); grounded via direct source read + py_compile/bash -n + live re-test -- no data/pipeline/IAM/portal surface for comp-* | N/A |
+| 2026-06-26 | 0.0.1_UA_mstools | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-06-26 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/mcp/BROKER_OPS.md | PASS |
+| 2026-06-26 | 0.8.0_AE_MSGraph | NFRA_MSGRAPH.S2 | comp-kuzu | comp-kuzu MATCH (n) RETURN n.layer AS layer, count(*) AS n | PASS |
+| 2026-06-26 | 0.0.1_UA_mstools | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
