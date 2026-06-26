@@ -15,6 +15,29 @@ or a person.
 /target Paul Tinnirello of Fairway          -> PERSON, company scoped explicitly
 ```
 
+## Step 0 -- CONFIRM IDENTITY via WebSearch FIRST (prerequisite, do before any Lusha call)
+
+Before spending a Lusha credit, **use the plain (free) WebSearch tool to confirm the firm's
+canonical website domain + LinkedIn company URL.** This is a trivial web search -- do NOT use
+serp_opal/BrightData (no SERP credits needed) and do NOT rely on Lusha's own company search
+for discovery (it's weaker; use it only to resolve the confirmed domain). The registry domain
+can be thin/alternate and Lusha will NOT_FOUND it (empirically: `fairwayfp.com` -> NOT_FOUND,
+only `fairwayfinancialpartners.com` -> found). A confirmed domain pins the right entity and
+avoids a wasted lookup.
+
+```
+WebSearch: "<firm name>" <state> wealth OR financial linkedin
+```
+- Take the firm's OWN site domain (not a directory/aggregator) + its
+  `linkedin.com/company/<slug>` URL from the results.
+- Pass the confirmed domain to `target.py --domain <confirmed>` (Lusha `companies/search`
+  resolves by domain/name; the confirmed domain is the precise key).
+- The LinkedIn URL is the confirmation that you have the right firm (and is the identity to
+  carry into any LinkedIn-side follow-up). If WebSearch and Lusha disagree on the domain,
+  trust the WebSearch-confirmed canonical site.
+- If WebSearch can't confirm a real site (or the firm is too small/new to have one), say so
+  before calling Lusha -- a NOT_FOUND is then the expected result, not a bug.
+
 ## Decide the tier
 
 - **Argument is a company / firm name** -> **COMPANY (org-chart) tier.** Cheaper. Returns
