@@ -46,13 +46,43 @@ charts shows index until the data lands, then flips live with no FE redeploy.
   another session; and the real toggle test requires the post-deploy data anyway. Folded
   into the **post-nightly verify** (see Open).
 
+## Fast-track verification (gate cleared same session)
+
+DT fast-tracked the data (Andrew-direct ASAP): deployed `yang-v2.4.12` AND manually
+reran the producer, so the served artifact carried the new fields within the session
+(no wait for the PM upload). DS data-verify PASSED (2790 rows, alias holds, etf distinct
+2767/2790, **zero nulls** — etf full history from inception, magnitudes sane).
+
+**Behavior verify (DE):** pulled the LIVE served artifact (`s3://opal-data-portal-v2/
+json/benchmarks/model_portfolio_timeseries.json`, generated_at 2026-06-26T15:18:08Z) and
+ran my exact chart math for INT under both toggles:
+
+| metric | INDEX | ETF | differ |
+|---|---|---|---|
+| Up Capture 1Y | 92.12 | 82.32 | YES |
+| Down Capture 1Y | 99.07 | 90.09 | YES |
+| Rolling Sharpe BM 1Y | 1.927 | 1.62 | YES |
+| Benchmark Max Drawdown | -9.086% | -9.74% | YES |
+| **Model** Max Drawdown (control) | -6.599% | -6.599% | toggle-invariant OK |
+
+=> all 3 charts demonstrably respond to the toggle on live data; the model-only control
+is invariant (selector doesn't leak into model math). Spot INT 2026-06-18 ties to DS
+exactly (model 0.005449 / idx 0.004437 / etf 0.008608).
+
+**GO given to DT** (20260626T1524Z) to run the DEV->PROD promote of e5029515.
+
+**Residual (one, low-risk):** the PIXEL screenshot leg was NOT run — the shared Playwright
+browser profile was hard-locked by another agent's session all session. The change is a
+data-source field swap inside already-rendering recharts components (no render-structure
+change), so render-regression risk is low; flagged to DT as a fast post-promote spot-check,
+NOT a gate. Did not hold Andrew's ASAP promote on an unacquirable browser.
+
 ## Open / handoff
 
-- **DT:** deploy `yang-model-portfolio-benchmarks` (Terraform-only, DS commit f3cfe6a4a)
-  so the next nightly emits the dual-benchmark fields. Flagged to COO (20260626T1508Z).
-- **DE (me), post-nightly:** verify served `model_portfolio_timeseries.json` rows carry
-  `index_benchmark_return` (== `benchmark_return` alias) + distinct `etf_benchmark_return`;
-  screenshot the 3 charts toggling. Gated on the DT deploy + nightly.
+- **DT:** running the DEV->PROD promote (GO given). Will report the `portal-vX.Y.Z` tag + CI
+  conclusion.
+- **DE (me)/DT, post-promote (low-risk):** one pixel screenshot of the 3 charts toggling on
+  PROD once the shared browser frees — spot-check, not a gate.
 
 ## Compiler Tools
 
