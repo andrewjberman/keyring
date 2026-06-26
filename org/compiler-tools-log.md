@@ -9105,3 +9105,8 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-06-26 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file data/canonical/schwab/docs/08_GOLD_SCOP... | PASS |
 2026-06-26 | 0.6.2_AE_PartnerETL | cot device-trust re-inject + BD auth analysis | comp-pipescript deployed --firm cot (D_03/D_04 MATCH, gate b); comp-iam service cot-exporter (box SM access -> no IAM change); comp-grep/comp-glob (auto-login + eventbridge locate); comp-freshness GAP (cot uncovered, bd+inf only -> rail-checked aws s3 ls); comp-which PARTIAL (registration collision). | PASS
 | 2026-06-26 | 0.6.2_AE_PartnerETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-06-26 | 0.8.0_AE_CloudComp | (no-TO) | comp-kuzu | comp-kuzu MATCH (n) WHERE n.layer='portal' AND n.node_type IN ['PanelCluster','Page','R... | PASS |
+| 2026-06-26 | 0.8.0_AE_CloudComp | (no-TO) | comp-kuzu | comp-kuzu MATCH (n) WHERE n.layer='portal' RETURN (CASE WHEN n.node_type IN ['PanelClus... | PASS |
+| 2026-06-26 | 0.8.0_AE_CloudComp | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.8.0_AE_CloudComp/del... | PASS |
+| 2026-06-26 | 3.0.0_SA_CVO | taxonomy-rederive-signoff | comp-kuzu (re-derive per-class acceptance: aws-pure leak-check + 9 per-class counts + UNCATEGORIZED/EXTERNAL_ENDPOINT) | PASS | permanent COND-A fix verified; standing definition |
+| 2026-06-26 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
