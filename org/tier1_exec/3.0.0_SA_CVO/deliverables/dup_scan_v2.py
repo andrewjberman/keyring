@@ -17,10 +17,13 @@ Advisory/scanner ONLY. Output = a RANKED candidate ledger + a SUPPRESSION AUDIT.
 """
 from __future__ import annotations
 
+import datetime as dt
 import hashlib
 import json
 import math
+import os
 import re
+import shutil
 import subprocess
 import sys
 from collections import defaultdict
@@ -233,6 +236,64 @@ def graph_dead_confirm(resource_id: str, path: str) -> str:
         pass  # no usable graph result -> never assert CONFIRMED; keep the honest fallback
     _DEAD_CACHE[resource_id] = verdict
     return verdict
+
+
+# ---- metric-evidence dead-confirm (CTO production condition 1: WINDOW >= longest access cadence) --
+_AWS = shutil.which("aws.cmd") or shutil.which("aws") or os.path.expanduser(
+    "~/AppData/Local/Programs/Python/Python312/Scripts/aws.cmd")
+_DDB_WINDOW_DAYS = 30  # >= longest plausible low-frequency access cadence; 24h would FALSE-CONFIRM a
+#                        weekly/monthly-read table (a billing job, a monthly report). CTO cond-1.
+
+
+def metric_reads_sum(table: str, window_days: int = _DDB_WINDOW_DAYS, now: str = "2026-06-26T18:00:00") -> tuple:
+    """Sum of DynamoDB ConsumedReadCapacityUnits over [now-window, now]. Returns (sum, n_datapoints)
+    or (None, 0) on error. Read-only operational metric query (no graph edge -> raw aws is correct)."""
+    end = dt.datetime.strptime(now, "%Y-%m-%dT%H:%M:%S")
+    start = end - dt.timedelta(days=window_days)
+    try:
+        r = subprocess.run(
+            [_AWS, "cloudwatch", "get-metric-statistics", "--namespace", "AWS/DynamoDB",
+             "--metric-name", "ConsumedReadCapacityUnits", "--dimensions", f"Name=TableName,Value={table}",
+             "--start-time", start.strftime("%Y-%m-%dT%H:%M:%S"), "--end-time", end.strftime("%Y-%m-%dT%H:%M:%S"),
+             "--period", str(window_days * 86400), "--statistics", "Sum", "--output", "json"],
+            capture_output=True, text=True, timeout=60,
+        )
+        if r.returncode != 0:
+            return (None, 0)
+        pts = json.loads(r.stdout).get("Datapoints", [])
+        return (sum(p.get("Sum", 0) for p in pts), len(pts))
+    except (OSError, subprocess.TimeoutExpired, ValueError):
+        return (None, 0)
+
+
+def windowed_dead_verdict(graph_status: str, table: str, window_days: int = _DDB_WINDOW_DAYS) -> str:
+    """DUAL-EVIDENCE dead-confirm (CTO cond-1+2): CONFIRMED_DEAD requires BOTH the graph showing
+    zero consumers AND zero runtime reads over a window >= the longest plausible access cadence.
+    Either signal alone => INFERRED (graph-pending or metric-pending). The verdict string CARRIES
+    the window, so a human adjudicating the removal-worklist sees exactly what 'dead' rests on."""
+    reads, npts = metric_reads_sum(table, window_days)
+    metric_dead = (reads is not None and npts > 0 and reads == 0)
+    graph_zero = graph_status in ("CONFIRMED_DEAD", "INFERRED_DEAD_GRAPH_PENDING")  # 0/pending consumers
+    graph_confirmed_zero = (graph_status == "CONFIRMED_DEAD")
+    if graph_confirmed_zero and metric_dead:
+        return f"CONFIRMED_DEAD (0 reads/{window_days}d, 0 graph-consumers)"
+    if metric_dead and graph_zero:
+        return f"INFERRED_DEAD (0 reads/{window_days}d; graph-consumers PENDING)"
+    if metric_dead:
+        return f"INFERRED_DEAD (0 reads/{window_days}d; graph REACHABLE-or-unknown)"
+    if reads is None:
+        return "INFERRED_DEAD (metric-pending)" if graph_zero else "UNKNOWN"
+    return f"REACHABLE ({reads:.0f} reads/{window_days}d)"
+
+
+def validate_dead_confirm() -> None:
+    """Fixture validation (CTO cond-1): opal-users v1 must read CONFIRMED/INFERRED-dead over the
+    WINDOW (not just 24h); v2 must be REACHABLE. Proves the window guards against false-confirm."""
+    print(f"=== DEAD-CONFIRM FIXTURE VALIDATION (window={_DDB_WINDOW_DAYS}d) ===")
+    for table, graph_assume in [("opal-users", "CONFIRMED_DEAD"), ("opal-users-v2", "REACHABLE")]:
+        reads, npts = metric_reads_sum(table)
+        verdict = windowed_dead_verdict(graph_assume, table)
+        print(f"  {table:<16} reads/{_DDB_WINDOW_DAYS}d={reads} pts={npts}  graph_assume={graph_assume}  -> {verdict}")
 
 
 # ---- corpus A: TF resource labels (NAME-level) --------------------------------------------
@@ -456,4 +517,7 @@ def main():
 
 
 if __name__ == "__main__":
+    if len(sys.argv) > 1 and sys.argv[1] == "validate-dead":
+        validate_dead_confirm()
+        sys.exit(0)
     sys.exit(main())
