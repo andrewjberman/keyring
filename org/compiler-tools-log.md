@@ -8679,3 +8679,43 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-06-26 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/briefs/cot-datemode-b-forward-fix-... | PASS |
 2026-06-26 | 0.2.0_DT_PortfolioAnalytics | DEPLOY yang-v2.4.12 | comp-blast yang-model-portfolio-benchmarks (PASS, blast radius -> model_portfolio_timeseries.json consumer chain, cleared additive change, Rule 20); comp-pipescript io (OUT-OF-SCOPE, correctly routed globgrph-owned -> comp-blast). Gap: comp-pipescript io doesn't model non-medallion globgrph threads (known boundary).
 | 2026-06-26 | 0.2.0_DT_PortfolioAnalytics | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-06-26 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/EXPAND_MSCLOUD.json --file... | PASS |
+| 2026-06-26 | 3.0.0_SA_CVO | NFRA_TSGRAPH.P3-1 | comp-trace | comp-trace __nonexistent_zzz_target__ | FAIL |
+| 2026-06-26 | 3.0.0_SA_CVO | NFRA_TSGRAPH.P3-1 | comp-blast | comp-blast __nonexistent_zzz_target__ | FAIL |
+| 2026-06-26 | 3.0.0_SA_CVO | NFRA_TSGRAPH.P3-1 | comp-xref | comp-xref __nonexistent_zzz_target__ | FAIL |
+| 2026-06-26 | 3.0.0_SA_CVO | NFRA_TSGRAPH.P3-1 | comp-trace | comp-trace gold:A_00.accounts_dimension | PASS |
+| 2026-06-26 | 3.0.0_SA_CVO | NFRA_TSGRAPH.P3-1 | comp-blast | comp-blast gold:A_00.accounts_dimension | PASS |
+| 2026-06-26 | 3.0.0_SA_CVO | NFRA_TSGRAPH.P3-1 | comp-xref | comp-xref gold:A_00.accounts_dimension | PASS |
+| 2026-06-26 | 3.0.0_SA_CVO | NFRA_TSGRAPH.P3-1 | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/cli.py --file org/mod... | PASS |
+| 2026-06-26 | 3.0.0_SA_CVO | NFRA_TSGRAPH.P3-1 | comp-iam | comp-iam role astn-wsjft-orchestrator | PASS |
+| 2026-06-26 | 3.0.0_SA_CVO | NFRA_TSGRAPH.P3-1 | comp-iam | comp-iam service astn-wsjft-orchestrator | PASS |
+| 2026-06-26 | 3.0.0_SA_CVO | NFRA_TSGRAPH.P3-1 | comp-iam | comp-iam census | FAIL |
+| 2026-06-26 | 3.0.0_SA_CVO | NFRA_TSGRAPH.P3-1 | comp-iam | comp-iam gaps | PASS |
+| 2026-06-26 | 3.0.0_SA_CVO | NFRA_TSGRAPH.P3-1 | comp-build | comp-build | PASS |
+| 2026-06-26 | 0.6.0_AE_PartnerETL | ADVI_COTETL.L4-GUARD | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/ec2/bd-cot-auto-login/secret-... | PASS |
+| 2026-06-26 | 3.0.0_SA_CVO | NFRA_TSGRAPH.P3-1 | comp-surface-check | comp-surface-check check --mode advisory --file .tools/comp-build | PASS |
+| 2026-06-26 | 3.0.0_SA_CVO | NFRA_TSGRAPH.P3-1 | comp-build | comp-build | PASS |
+| 2026-06-26 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/ADVI_COTETL.json | PASS |
+| 2026-06-26 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/NFRA_MSGRAPH_PRD.md | PASS |
+| 2026-06-26 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/briefs/cot-datemode-b-forward-fix-... | PASS |
+| 2026-06-26 | 0.2.0_DS_PortfolioAnalytics | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/v2_portal/yang_pipelin... | PASS |
+| 2026-06-26 | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .claude/skills/teams-assist/SKILL.md --... | PASS |
+| 2026-06-26 | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .claude/skills/teams-assist/SKILL.md --... | PASS |
+| 2026-06-26 | 3.0.0_SA_CVO | NFRA_TSGRAPH.P3-1 | comp-surface-check | comp-surface-check check --mode advisory --file .tools/comp-which --file .tools/comp-wh... | PASS |
+| 2026-06-26 | 0.2.0_DE_PortfolioAnalytics | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.2.0_DE_PortfolioAnal... | PASS |
+| 2026-06-26 | 0.5.0_AE_OpalETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .claude/skills/teams-assist/teams-watch.py | PASS |
+| 2026-06-26 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/change_management/20... | PASS |
+| 2026-06-26 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/ADVI_COTETL.json | PASS |
+| 2026-06-26 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-blast | comp-blast silver/holdings | FAIL |
+| 2026-06-26 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-blast | comp-blast canonical_holdings | PASS |
+| 2026-06-26 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript io D_00b.portal_timeseries | PASS |
+| 2026-06-26 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/NFRA_MSGRAPH.json --file o... | PASS |
+| 2026-06-26 | 0.2.0_DT_PortfolioAnalytics | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file portal | PASS |
+| 2026-06-26 | 3.0.0_SA_CVO | NFRA_TSGRAPH.P3-1 | comp-iam | comp-iam census | FAIL |
+| 2026-06-26 | 3.0.0_SA_CVO | NFRA_TSGRAPH.P3-1 | comp-iam | comp-iam gaps | PASS |
+| 2026-06-26 | 3.0.0_SA_CVO | NFRA_TSGRAPH.P3-1 | comp-surface-check | comp-surface-check check --mode advisory --file .tools/comp-freshness --file tests/comp... | PASS |
+| 2026-06-26 | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier0/ledger/LD-0217.md | PASS |
+| 2026-06-26 | 0.2.0_DE_PortfolioAnalytics | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.2.0_DE_PortfolioAnal... | PASS |
+| 2026-06-26 | 3.0.0_SA_CVO | NFRA_TSGRAPH.P3-1 | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/extract_iam.py --file... | PASS |
+2026-06-26 | 0.2.0_DT_PortfolioAnalytics | DEPLOY (delta) manual lambda rerun + portal PROD promote portal-v2.1.126 | no comp-tool runs this delta -- Rule-20 graph check (comp-blast) logged in paired yang-v2.4.12 entry; this window = aws invoke + /prod-deploy operational steps.
+| 2026-06-26 | 0.2.0_DT_PortfolioAnalytics | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
