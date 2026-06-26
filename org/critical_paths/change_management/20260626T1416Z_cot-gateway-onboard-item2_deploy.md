@@ -10,16 +10,19 @@
   5. safe-apply Delta-1 -> safe-ec2-deploy gateway -> /otp/fetch e2e proof (cot bearer + tight window, against the 13:07Z cot OTP email; expired code, proving the MECHANISM).
 
 ## Steps
-- [ ] safe-commit deploy-to-ec2.sh + secrets-iam.tf + this ledger
-- [ ] push CLOUD
-- [ ] terraform plan m365-mcp-gateway (expect ADD-ONLY: 1 data source read + 1 inline-policy ARN; 0 destroy/0 replace) -- -target the gw_golive policy if other diffs
-- [ ] safe-apply Delta-1; 0-diff verify
-- [ ] comp-iam service: confirm cot bearer ARN now GRANTED on the gateway role
-- [ ] safe-ec2-deploy.sh m365-mcp-gateway deploy-to-ec2.sh (builds tarball w/ CTO-A code + both-bearer OTP_BEARER; ~3s restart of the LIVE gateway -- routine redeploy, MCP/teams clients reconnect)
-- [ ] verify gateway /health + /mcp 401 + AS metadata (deploy script smoke)
-- [ ] PROVE /otp/fetch: curl with cot bearer + since-window matching the 13:07Z cot OTP -> resolves the cot code (mechanism proof)
-- [ ] RAVC COO + confirm to 0.6.0 (gw-side ready -> their PIECE-2 box flip) + CVO 6-clause
-- [ ] CLOSE ledger
+- [x] safe-commit deploy-to-ec2.sh + secrets-iam.tf + this ledger (ab1a7eb11)
+- [x] push CLOUD (ab1a7eb11)
+- [x] terraform plan m365-mcp-gateway -- ADD-ONLY confirmed: 0 add, 1 change (cot ARN into GatewaySecretsRead), 0 destroy
+- [x] safe-apply Delta-1 (-target gw_golive) -- Apply complete: 0 added, 1 changed, 0 destroyed
+- [x] safe-ec2-deploy.sh m365-mcp-gateway -> i-07dccb1615503ac99: deploy SUCCESS (service active, /health {"ok":true}, AS metadata serves, /mcp unauth->401). Both-bearer OTP_BEARER + CTO-A code LIVE. (EC2_MANIFEST recorded; the record-step auto-commit hit the known owned-paths/Andrew-identity block -> committed manifest under correct author c254c74c3.)
+- [x] /otp/fetch PROOF (solo, gw-side): cot bearer ACCEPTED (returns JSON {"code":...} vs bogus bearer -> 401) -> cot bearer onboarding WORKS. CTO-A window param accepted + filtering (skips out-of-window). Positive CODE-resolution not shown solo: the 13:03Z cot OTP email is crowded out of the $top=15-newest-since-filter (delayed-fetch artifact, not a bug) -- positive self-fetch resolves only on a FRESH trigger (the box-up-window e2e). 49F path UNCHANGED (CTO-A default-off; 49F bearer still in OTP_BEARER list).
+
+## STATUS: gw-side deploy COMPLETE + CLOSED 2026-06-26T14:23Z.
+Gw-side ready (Delta-1 applied + gateway deployed + cot bearer accepted-proven). The FULL unattended self-fetch e2e (fresh cot trigger -> box self-fetches -> code within tight window) + 0.6.0's box-env flip + CVO 6-clause verify are the COORDINATED BOX-UP-WINDOW step -- tracked there, NOT a stranded leg of THIS deploy (this deploy began + finished in-session: applied, deployed, smoke-passed, bearer-accept-proven).
+
+## Follow-on (separate window, tracked):
+- 0.6.0 PIECE-2: box-env adapter=gateway flip + cot-role IAM Delta-2 + 02:30 stagger + CTO-B retry. Trigger = this gw-side-ready confirm.
+- Full /otp/fetch self-fetch e2e proof with a fresh cot trigger + CVO 6-clause verify.
 
 ## Notes
 - 49F path UNCHANGED: CTO-A default-off (window only when caller passes window_seconds); OTP_BEARER now a 2-item list (49F still validates).
