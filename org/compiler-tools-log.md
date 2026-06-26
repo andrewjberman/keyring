@@ -8808,3 +8808,4 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 2026-06-26 | 0.2.0_DT_PortfolioAnalytics | DEPLOY yang-v2.4.14 peer-performance period header-label map fix (supersedes 2.4.13 col-scan; corrected values, SI populated) | no comp-tool this delta -- same lambda/blast as 2.4.13 (comp-blast logged there); operational redeploy+rerun.
 2026-06-26 | 0.8.0_AE_CloudComp | NFRA_MSGRAPH.S2 | comp-to, comp-blast (NOT-FOUND internal fns), comp-kuzu n.source=ms (DEFERRED post-deploy) | gateway /ms/* endpoint + read-only scoping + liveness TF + deploy plan; native Read for gateway-auth grounding (Rule 22)
 | 2026-06-26 | 0.8.0_AE_MSGraph | NFRA_MSGRAPH.S2 | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-06-26 | 0.2.0_DT_PortfolioAnalytics | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.2.0_DT_PortfolioAnal... | PASS |

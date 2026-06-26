@@ -85,3 +85,25 @@ None.
   once CF clears.
 - [0.5.0_AE_OpalETL / 0.7.0_AE_CloudOps] (low-pri, on record) the manifest-pointer-dangling-after-
   uploads-rotation pattern + the dead CF distribution id E2LPCXXBLDGWXY in yang-invalidate-cloudfront.
+
+---
+
+## ADDENDUM — yang-v2.4.14 period-map redeploy (false-green correction)
+
+Andrew flagged the peer NUMBERS looked wrong. Root cause = a SECOND, deeper bug: the wide
+06-18 workbook added leading 1Day+MTD periods (3 cols each), shifting every period column right
+by 6; the parser's hardcoded stat offsets [1,4,7,10,13,16] read the WRONG period for every cell
+(served "1Y" was actually 1-Quarter; Since Inception never read). DS fix b72df1095 maps period
+-> stat-col by HEADER LABEL (build_period_stat_cols). Deployed yang-v2.4.14 (sha
+qhjMKxByTyspQpCJY9zz3KiM0YYTwdh46k7s95l+Z1A=, 0-diff, F5-verified, ledger closed, override-free)
++ reran wide source.
+
+SERVED VERIFY (corrected): INT 1Y 6.3888->14.4275; UST 3.802; ST 4.1995; LTC 20.0293; LTA
+22.4009; Since Inception POPULATED all 5 (was null). All 5x6 present.
+
+**FALSE-GREEN LESSON:** the yang-v2.4.13 "verify PASS" matched target INT 1Y=6.3888 — but that
+target was computed by the SAME buggy offset code (DE's local parser + deployed parser shared the
+offset bug), so it was self-consistently WRONG. A numeric verify target derived from the same
+code path is NOT independent verification. This pass verified against an invariant the bug could
+not satisfy (Since Inception non-null) + corrected absolute values. See memory
+[[diag-verify-target-from-same-buggy-code-is-false-green]].
