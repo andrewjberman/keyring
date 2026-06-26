@@ -8758,3 +8758,8 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-06-26 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
 | 2026-06-26 | 0.2.0_DE_PortfolioAnalytics | (no-TO) | pipescript | pipescript --resource peer_performance -> model-portfolios/yang-peer-performance | PASS |
 | 2026-06-26 | 0.2.0_DE_PortfolioAnalytics | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-06-26 | 0.2.0_DT_PortfolioAnalytics | (no-TO) | comp-blast | comp-blast yang-generate-peer-performance | PASS |
+| 2026-06-26 | 0.8.0_AE_MSGraph | NFRA_MSGRAPH.S2 | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.8.0_AE_CloudComp/del... | PASS |
+| 2026-06-26 | 0.2.0_DS_PortfolioAnalytics | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/v2_portal/yang_pipelin... | PASS |
+2026-06-26 | 0.8.0_AE_CloudComp | NFRA_MSGRAPH.S2 | comp-to, comp-blast commit_to_iceberg/run_full_derive (NOT-FOUND -- internal fns; real blast = 8-field Iceberg schema kept byte-identical), comp-kuzu n.source=ms (DEFERRED post-deploy) | extract_ms_cloud built + SS4 cert proven 11/11; at CTO arch-gate
+| 2026-06-26 | 0.8.0_AE_MSGraph | NFRA_MSGRAPH.S2 | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
