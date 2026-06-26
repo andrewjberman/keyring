@@ -102,6 +102,23 @@ sanity each period + confirm SI non-null, not just key/model presence.
 output against INDEPENDENT ground truth (expected magnitude/sign/known value), per the
 sharpest-test-binds + semantic-axis discipline. [[feedback_verify_semantic_axis_value_not_presence]]
 
+## RE-VERIFY (yang-v2.4.14) — PASS, source-grounded this time (CLOSED)
+
+Applied the lesson — grounded against the **raw source Excel cell**, not the parser:
+- Served `INT 1Y model=14.4275` == SOURCE workbook "1 Year Statistic" INT cell
+  (`14.4275302...`). Exact independent tie. **PASS**.
+- The old bogus `6.3888` is now correctly served as INT **1Q** -> period-shift confirmed,
+  fix correct.
+- Since Inception populated for all 5 (was null); INT SI=13.8746 == source cumulative
+  (FE annualizes at render).
+- Cross-model 1Y risk-ordering sane: UST 3.80 < ST 4.20 < INT 14.43 < LTC 20.03 < LTA 22.40
+  (more aggressive -> higher 1Y in an up year); all positive, sensible magnitudes.
+- Served generated 2026-06-26T16:40:37Z, data_as_of 06-18, model_count 5.
+
+Both layers closed: model-count (`d4ae41b84`) + values (`b72df1095`) on **yang-v2.4.14**.
+FE unaffected (period keys unchanged). Pixel screenshot still blocked (portal `/login`, no
+creds) -> operator eyeball once CF clears.
+
 ## Compiler Tools
 
 | Tool | Result |
