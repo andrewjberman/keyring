@@ -8736,3 +8736,25 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 2026-06-26 | 0.8.0_AE_CloudComp | NFRA_MSGRAPH.S1 | comp-which (m365 enum -> BACKSTOP/gap, S4 target), comp-to, comp-kuzu (single-CloudNode model grounding) | recon+schema authored, schema -> CTO gate
 | 2026-06-26 | 3.0.0_SA_CVO | NFRA_TSGRAPH.P3-1 | comp-surface-check | comp-surface-check check --mode advisory --file .tools/comp-freshness --file data/cot/s... | PASS |
 | 2026-06-26 | 0.8.0_AE_MSGraph | NFRA_MSGRAPH.S1 | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md | PASS |
+| 2026-06-26 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-06-26 | 0.2.0_DE_PortfolioAnalytics | (no-TO) | pipescript | pipescript --resource peer_performance | PASS |
+| 2026-06-26 | 3.0.0_SA_CVO | NFRA_TSGRAPH.P3-1 | comp-surface-check | comp-surface-check check --mode advisory --file tests/comp_freshness/test_comp_freshnes... | PASS |
+| 2026-06-26 | 2.0.0_SA_COO | (no-TO) | comp-blast | comp-blast derive_runner | FAIL |
+| 2026-06-26 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/NFRA_MSGRAPH.json --file o... | PASS |
+| 2026-06-26 | 0.7.0_AE_CloudOps | (no-TO) | comp-iam | comp-iam gaps | PASS |
+| 2026-06-26 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+| 2026-06-26 | 0.8.0_AE_MSGraph | NFRA_MSGRAPH.S2 | comp-blast | comp-blast commit_to_iceberg | FAIL |
+| 2026-06-26 | 0.8.0_AE_MSGraph | NFRA_MSGRAPH.S2 | comp-blast | comp-blast run_full_derive | FAIL |
+| 2026-06-26 | 3.0.0_SA_CVO | NFRA_TSGRAPH.P3-1 | comp-surface-check | comp-surface-check check --mode advisory --file data/cot/scripts/gold/gold_freshness_co... | PASS |
+| 2026-06-26 | 0.2.0_DE_PortfolioAnalytics | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/v2_portal/yang_pipelin... | PASS |
+| 2026-06-26 | 3.0.0_SA_CVO | NFRA_TSGRAPH.P3-1 | comp-trace | comp-trace __zzz_nonexist__ | FAIL |
+| 2026-06-26 | 3.0.0_SA_CVO | NFRA_TSGRAPH.P3-1 | comp-blast | comp-blast __zzz_nonexist__ | FAIL |
+| 2026-06-26 | 3.0.0_SA_CVO | NFRA_TSGRAPH.P3-1 | comp-xref | comp-xref __zzz_nonexist__ | FAIL |
+| 2026-06-26 | 3.0.0_SA_CVO | NFRA_TSGRAPH.P3-1 | comp-build | comp-build | FAIL |
+| 2026-06-26 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/DATA_PLATFORM_D2_BLAC... | PASS |
+| 2026-06-26 | 3.0.0_SA_CVO | NFRA_TSGRAPH.P3-1 | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/deliverable... | PASS |
+| 2026-06-26 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+| 2026-06-26 | 0.8.0_AE_MSGraph | NFRA_MSGRAPH.S2 | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/globgrph/derive_runner.py --f... | PASS |
+| 2026-06-26 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-06-26 | 0.2.0_DE_PortfolioAnalytics | (no-TO) | pipescript | pipescript --resource peer_performance -> model-portfolios/yang-peer-performance | PASS |
+| 2026-06-26 | 0.2.0_DE_PortfolioAnalytics | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
