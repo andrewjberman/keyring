@@ -9000,3 +9000,11 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-06-26 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/mcp/.last-drive-2.0.0_SA_COO --file... | PASS |
 | 2026-06-26 | 0.4.0_DS_ClientPlatform | DATA_ANALYTICS A1/A2/A3-prep + Leg-2b + COTMVP_B | pipescript,comp-pipescript io,comp-freshness,comp-grep,ds-commit-gate,safe-deploy | A1/A2 spine + COTMVP_B io-gate + grounded collision maps; comp-freshness pagination bug surfaced (fixed f5945f661) | MIXED |
 | 2026-06-26 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-06-26 | 0.8.0_AE_CloudComp | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/ec2/m365-mcp-gateway/app/tool... | PASS |
+| 2026-06-26 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/responses/C... | PASS |
+| 2026-06-26 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/responses/C... | PASS |
+| 2026-06-26 | 0.7.0_AE_CloudOps | NFRA_TSGRAPH.P2-2 | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/ec2/crawl-harness/src/eclipse... | PASS |
+| 2026-06-26 | 0.8.0_AE_CloudComp | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file tools/tax_sma/run_converter.py --file t... | PASS |
+| 2026-06-26 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/mcp/.last-drive-2.0.0_SA_COO --file... | PASS |
+- 2026-06-26 2045Z 0.0.1_UA_mstools: comp-which HUD-nudges acknowledged (searches were local-process/network diag + literal source lookups, rail-checked); safe-commit gate PASS (bfa81d9da tax_sma) + BLOCKED-correctly (gateway tools.py, owned-paths AE-lane -> routed to AE, no --force); py_compile+ruff py39 PASS on gateway tools.py.
+| 2026-06-26 | 0.0.1_UA_mstools | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
