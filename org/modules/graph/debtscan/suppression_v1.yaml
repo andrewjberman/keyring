@@ -302,3 +302,93 @@ pending_review_classes:
       - BenchmarkHeatmap
       - PeersTab
     evidence: CTO D8-AE finding; TO-D1 Day-0 backlog; CVO inert ruling 2026-06-12
+
+  # ===========================================================================
+  # comp-dups DUPLICATE-suppression family (NFRA_DEBTSCAN dups dimension).
+  # NOTE: a DIFFERENT finding-type than every class above. The classes above
+  # suppress DEAD/orphan findings (a single resource read as unreachable). These
+  # suppress DUPLICATE-PAIR findings (two lexical-twin resources that are benign
+  # by structure, not duplication). Authored 3.0.0_SA_CVO 2026-06-26 from the
+  # comp-dups v2 live run (commit 15d6e8adb); 524 pairs suppressed + every pair
+  # LOGGED (CTO production cond-1: no silent suppression). Each class carries its
+  # STRUCTURAL PREDICATE (reproducible, re-derivable -- CTO production cond-2),
+  # NOT a pair-list. active:false until I CVO-RULE each (active-flag contract:
+  # nothing suppresses a finding CVO has not ruled). Per-class ruling pending.
+  # ===========================================================================
+
+  - id: DUP_BENIGN_CROSS_FIRM
+    active: false
+    finding_type: duplicate_pair
+    reason: >
+      A lexical-twin resource pair whose two sides resolve to DIFFERENT firms
+      (49f/bd/cot/inf/mdpf/yang/schwab/astn/etfs/smartx/news/nna) is EXPECTED
+      firm-separation architecture, NEVER duplication -- a bd resource and its
+      cot/inf twin is by design (gate + IAM enforced). The single hardest, most
+      load-bearing suppressor; 276 pairs on the 2026-06-26 run.
+    predicate: >
+      firm_of(a) is not null AND firm_of(b) is not null AND firm_of(a) != firm_of(b),
+      where firm_of(x) = the firm token matched in the resource path OR label by the
+      boundary-anchored pattern (^|[/_-])<firm>([/_-]|$).
+    affected_types: [DUP_PAIR_TF_RESOURCE, DUP_PAIR_FILE, DUP_PAIR_S3_PREFIX, DUP_PAIR_LAMBDA, DUP_PAIR_GOLD_SCRIPT]
+    cannot_mask: a same-firm real dup never matches (requires distinct resolved firms).
+    run_2026_06_26_count: 276
+    evidence: comp-dups v2 live run 15d6e8adb; each suppressed pair logged to the scan ledger
+
+  - id: DUP_BENIGN_IAM_POLICY_SPLIT
+    active: false
+    finding_type: duplicate_pair
+    reason: >
+      Two aws_iam_role_policy / aws_iam_role_policy_attachment resources in the SAME
+      module that attach the SAME role (parsed `role =` attribute, STRUCTURAL not a
+      string guess) and carry DIFFERENT labels are one role's inline policy split by
+      action-area -- legitimate IAM structure, not duplication. 148 pairs on the run.
+    predicate: >
+      type(a) == type(b) AND type(a) in {aws_iam_role_policy, aws_iam_role_policy_attachment}
+      AND role(a) == role(b) (parsed from the block's `role =` attr) AND module(a) == module(b)
+      AND label(a) != label(b).
+    affected_types: [DUP_PAIR_TF_RESOURCE]
+    cannot_mask: >
+      a true duplicate surfaces as an EXACT-label collision OR identical CONTENT, neither of
+      which this predicate matches (it REQUIRES distinct labels + same parsed role); so it
+      structurally cannot hide a real dup.
+    run_2026_06_26_count: 148
+    evidence: comp-dups v2 live run 15d6e8adb; role= attr parse; each pair logged
+
+  - id: DUP_BENIGN_SERVICE_SPLIT
+    active: false
+    finding_type: duplicate_pair
+    reason: >
+      Two TF resources in the SAME module whose labels share a common base differing ONLY
+      by a known service suffix are one resource/role's config split by AWS service, not
+      duplication. 84 pairs on the run.
+    predicate: >
+      module(a) == module(b) AND strip_service_suffix(label(a)) == strip_service_suffix(label(b))
+      AND service_suffix(a) != service_suffix(b), where the suffix is one of the CLOSED set
+      {s3, cw, sm, ddb, dynamo, secrets, kms, logs, lambda, sqs, sns, ssm, cloudwatch} matched
+      as a trailing _<suffix>.
+    affected_types: [DUP_PAIR_TF_RESOURCE]
+    cannot_mask: >
+      requires a KNOWN service suffix on both sides + equal bases; an arbitrary near-name does
+      not match. (Bounded by the closed suffix set -- if the set grows it is an explicit edit,
+      auditable here.)
+    run_2026_06_26_count: 84
+    evidence: comp-dups v2 live run 15d6e8adb; closed service-suffix set; each pair logged
+
+  - id: DUP_BENIGN_ENV_TWIN
+    active: false
+    finding_type: duplicate_pair
+    reason: >
+      Two resources/files identical save for the environments/{dev,staging,prod} path
+      component are legitimate per-environment copies (the same resource deployed across
+      envs), not duplication. 16 pairs on the run.
+    predicate: >
+      normalize_env(path(a)) == normalize_env(path(b)) AND env(a) != env(b), where
+      normalize_env replaces the matched environments?/{dev|staging|stage|prod|production}
+      path component with a constant token and env(x) is that matched component. PRECISE:
+      the two paths must be identical EXCEPT the env component (not merely both-under-some-env-dir).
+    affected_types: [DUP_PAIR_TF_RESOURCE, DUP_PAIR_FILE]
+    cannot_mask: >
+      requires byte-identical paths after env-normalization; two genuinely different resources
+      that merely happen to live under env dirs do not match.
+    run_2026_06_26_count: 16
+    evidence: comp-dups v2 live run 15d6e8adb; env-component normalization; each pair logged
