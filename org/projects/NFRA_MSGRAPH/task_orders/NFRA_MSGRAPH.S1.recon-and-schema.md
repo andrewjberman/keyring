@@ -3,7 +3,8 @@
 <title>NFRA_MSGRAPH S1 -- RECON + SCHEMA: enumerate the MS doc-cloud (SharePoint sites/libraries + OneDrive trees) node-count + activity surface via the live m365 gateway, and (CTO-gated) author the MS graph node/edge schema</title>
 <issued_to>0.8.0_AE_CloudComp (the UNIFIED AWS+MS compiler agent -- CLOUD_COMP_TESTER lane, Andrew-direct consolidation LD-0218 supersedes LD-0217: ALL compiler/findability work AWS+MS lives on this one agent, NOT a split MSGraph lane). recon=0.8.0 via m365 gateway; schema=CTO arch-gate.</issued_to>
 <issued_by>2.0.0_SA_COO</issued_by>
-<status>pending</status>
+<status>complete</status>
+<completion>COMPLETE 2026-06-26 15:52Z. 0.8.0_AE_CloudComp delivered recon + schema (commit b6b92f150, pushed CLOUD). CTO arch-gate PASS 5/5 (155156Z): single-label/property-typed merge, 7 node_types + ms_state, 5 CLOSED edge verbs, the §4 content/comms gate-impossible cert, /permissions->S5 ratified. RAVC-accepted by COO (155222Z). Recon numbers folded to registry s1_recon_results (exclusion-policy = S2 budget driver, ~10^3 organic nodes; lastModified write-heat GREEN; /delta+/insights+/permissions deferred to S5). Deliverables: org/tier2_senior/0.8.0_AE_CloudComp/deliverables/NFRA_MSGRAPH/{S1_RECON_REPORT.md, S1_MS_GRAPH_SCHEMA.md}. S2 authorized + cut (NFRA_MSGRAPH.S2.extract-ms-cloud.md).</completion>
 <priority>P1 -- the TRUE first task; gates ALL of S2-S6 (CTO invariant #2: recon -> budget -> schema, in that order)</priority>
 <project>NFRA_MSGRAPH</project>
 
