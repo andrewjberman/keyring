@@ -8676,3 +8676,6 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-06-26 | 0.2.0_DE_PortfolioAnalytics | (no-TO) | comp-transform | comp-transform schema-check RollingCaptureChart/RollingSharpeChart/MaxDrawdownChart | FAIL (component not found -- registry gap) |
 | 2026-06-26 | 0.2.0_DE_PortfolioAnalytics | (no-TO) | pipescript | pipescript --fe-reachability (thread-tier; used Grep for component-level consumer trace) | PASS |
 | 2026-06-26 | 0.2.0_DE_PortfolioAnalytics | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-06-26 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/briefs/cot-datemode-b-forward-fix-... | PASS |
+2026-06-26 | 0.2.0_DT_PortfolioAnalytics | DEPLOY yang-v2.4.12 | comp-blast yang-model-portfolio-benchmarks (PASS, blast radius -> model_portfolio_timeseries.json consumer chain, cleared additive change, Rule 20); comp-pipescript io (OUT-OF-SCOPE, correctly routed globgrph-owned -> comp-blast). Gap: comp-pipescript io doesn't model non-medallion globgrph threads (known boundary).
+| 2026-06-26 | 0.2.0_DT_PortfolioAnalytics | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
