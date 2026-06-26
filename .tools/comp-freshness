@@ -555,6 +555,16 @@ def _evaluate_artifact(entry: dict, now: datetime.datetime,
         result["status"] = "SKIP"
         return result
 
+    # DEPRECATED: an entry for an artifact the pipeline does NOT (or no longer) produces -- a
+    # by-design absence. SKIP (not WARN on Prefix-not-found), but surface it as a deprecated
+    # FINDING (false-clean discipline: documented, not silently omitted), so a stale config entry
+    # is visible + clearable rather than a chronic false-WARN. (CVO 2026-06-26)
+    if cadence == "deprecated":
+        result["status"] = "SKIP"
+        result["notes"] = ("DEPRECATED config entry (by-design absent / not produced) -- "
+                           + (result["notes"] or "")).strip(" -")
+        return result
+
     if last_modified is None:
         # Prefix not found: WARN (could be a new artifact not yet populated)
         result["status"] = "WARN"
