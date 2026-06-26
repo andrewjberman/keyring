@@ -1,6 +1,6 @@
 # ADVI_COTMVP D1 -- COT NMNC stock/flow: GROUNDED SPEC (producer-fix premise does NOT hold)
 
-**Author:** 0.4.0_DS_ClientPlatform, 2026-06-26. **Gate:** spec -> CTO arch-gate BEFORE implement (per PRD sequencing). **Status:** grounded; routing the semantic decision to CTO/COO (no code yet -- Rule 22: a hypothesis can't authorize a fix).
+**Author:** 0.4.0_DS_ClientPlatform, 2026-06-26. **Gate:** spec -> CTO arch-gate BEFORE implement (per PRD sequencing). **Status:** CLOSED -- CTO arch-gate ruled **Option A (GO)** 2026-06-26 (CTO 183427Z; committed to PRD 05f72c2f6). D1 producer leg STOOD DOWN (premise falsified, no producer change). The young-firm NMNC display concern folds into D3 (pod4 DE lane: relabel/suppress year-quarter NMNC when NMEC=0 / history<N). Options B/C rejected (B=fabric-wide redefinition = Andrew's separate call; C=invents a semantic). DS gold lane freed. CVO loops in for D3 served-verify.
 
 ## TL;DR
 The PRD frames D1 as "COT producer NMNC mis-aggregated to a STOCK vs the 49F exemplar's convention -> fix the producer." **Grounded against source + the served 49F artifact, that premise does NOT hold:** COT's NMNC already uses the IDENTICAL convention as 49F (same shared code). COT's $401M year=quarter / NMEC=0 is the FAITHFUL output of that convention for a firm where 100% of clients onboarded in one quarter -- not a producer bug. There is no "49F exemplar convention" to align to that differs from what COT already does.
