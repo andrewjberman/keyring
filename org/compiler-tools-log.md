@@ -9084,3 +9084,11 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-06-26 | 0.8.0_AE_CloudComp | (no-TO) | comp-kuzu | comp-kuzu MATCH (n) RETURN n.layer AS layer, count(*) AS n ORDER BY n DESC | PASS |
 - 2026-06-26T23:21Z /drive cycle 12 (COO): fabric-check (PASS, stale_verify=4 all telemetry-gaps), deploy_ledger check --red (1 OPEN in-window taxonomy), SQS poll (CLEAN). Native git-log/inbox-read (COO-free per Rule 21). Attest+monitor: DATA_ANALYTICS silver-completion ADVANCING (DS Andrew-direct build).
 | 2026-06-26 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-06-26 | 0.8.0_AE_CloudComp | (no-TO) | comp-kuzu | comp-kuzu MATCH (n) WHERE n.layer='aws' RETURN n.node_type AS t, count(*) AS c ORDER BY... | PASS |
+| 2026-06-26 | 0.8.0_AE_CloudComp | (no-TO) | comp-kuzu | comp-kuzu MATCH (n) WHERE n.node_type='EXTERNAL_ENDPOINT' RETURN count(*) AS should_be_0 | PASS |
+| 2026-06-26 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/briefs/allo... | PASS |
+| 2026-06-26 | 0.8.0_AE_CloudComp | (no-TO) | comp-kuzu | comp-kuzu MATCH (n) RETURN count(*) AS c | PASS |
+| 2026-06-26 | 3.0.0_SA_CVO | (no-TO) | comp-kuzu | comp-kuzu MATCH (n) RETURN n.layer AS layer, count(n) AS c ORDER BY c DESC | PASS |
+| 2026-06-26 | 3.0.0_SA_CVO | (no-TO) | comp-kuzu | comp-kuzu MATCH (n) WHERE n.layer='aws' AND n.node_type IN ['Field','JSXElement','JSXRe... | PASS |
+| 2026-06-26 | 0.7.0_AE_CloudOps | DATA_PLATFORM.DC1 + comp-freshness | comp-freshness chain cot (independent verify of CVO 8e1de0fd0 partition-key mode -- all 5 silver PASS via date-key, pagination-safe) | coordination/review window: CTO dc1-crawl-run pre-apply GO ack'd + CVO comp-freshness cot-coverage CONFIRMED + 0.6.2 cross-domain cot-box coord ack'd; no new deliverable commits |
+| 2026-06-26 | 0.7.0_AE_CloudOps | NFRA_TSGRAPH.P2-2 | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
