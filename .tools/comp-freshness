@@ -62,6 +62,15 @@ DDB_CONFIG = WORKSPACE / "data" / "ddb_freshness_config.yaml"
 # (was bd/inf-only -> cot had NO comp-freshness coverage). cot content-mode rides as_of_field.
 PIPELINE_CONFIGS = {"bd": BD_CONFIG, "inf": INF_CONFIG, "cot": COT_CONFIG}
 
+# Shared trading-day calendar (the ONE frontier/staleness definition, lib/trading_calendar.py).
+# GUARDED import: if absent (partial checkout), frontier-aware entries fall back to flat-hours --
+# never a hard failure. content-mode's freshness_basis:trading-day-frontier rides this.
+try:
+    sys.path.insert(0, str(WORKSPACE / "lib"))
+    import trading_calendar as _tcal  # noqa: E402
+except Exception:
+    _tcal = None
+
 CADENCE_LABELS = {
     "daily":          "daily",
     "business-daily": "business-daily (Mon-Fri)",
@@ -607,6 +616,34 @@ def _evaluate_artifact(entry: dict, now: datetime.datetime,
         result["content_as_of"] = str(raw_val)
         result["content_age_h"] = round(content_age_h, 1)
         result["content_checked"] = True
+
+        # FRONTIER-AWARE (shared lib/trading_calendar): when the entry opts in, staleness is
+        # TRADING-DAYS-BEHIND the expected priced frontier, NOT flat wall-clock hours. This
+        # removes the flat-threshold tradeoff (a flat 96h passes the normal Monday-reads-Friday
+        # lag BUT misses a 1-trading-day freeze AND false-warns a post-holiday Tuesday). One
+        # definition shared with the freshness probes + the served-aua-stale alarm (CTO-gated
+        # convergence 2026-06-26). Falls back to flat-hours if the lib is unavailable (guarded).
+        if entry.get("freshness_basis") == "trading-day-frontier" and _tcal is not None:
+            expected = _tcal.expected_last_trading_day(now)
+            tdb = _tcal.trading_days_behind(as_of_dt.date(), expected)
+            warn_tdb = entry.get("frontier_warn_trading_days", 2)
+            fail_tdb = entry.get("frontier_fail_trading_days")
+            result["trading_days_behind"] = tdb
+            result["frontier"] = expected.isoformat()
+            if fail_tdb is not None and tdb >= fail_tdb:
+                result["status"] = "FAIL" if severity == "ERROR" else "WARN"
+            elif tdb >= warn_tdb:
+                result["status"] = "WARN" if severity != "ERROR" or fail_tdb is None else "FAIL"
+            else:
+                result["status"] = "PASS"
+            if result["status"] in ("FAIL", "WARN") and mtime_status == "PASS":
+                result["notes"] = (result["notes"] + f" | MTIME-FRESH-BUT-CONTENT-STALE: mtime "
+                                   f"{result['age_h']}h PASS but internal as_of {raw_val} is "
+                                   f"{tdb} trading day(s) behind the {expected.isoformat()} "
+                                   f"frontier").strip(" |")
+            return result
+
+        # flat-hours content-mode (artifacts without a frontier basis)
         result["status"] = _status_from_age(content_age_h, warn_h, fail_h, severity)
         # the dangerous direction made LOUD: mtime says fresh, content says stale
         if result["status"] in ("FAIL", "WARN") and mtime_status == "PASS":
@@ -676,8 +713,12 @@ def _fmt_row(r: dict) -> str:
     # authoritative content age so a content-driven WARN/FAIL is legible (not 'WARN at 0.6h?').
     if "mtime_status" in r:
         if r.get("content_checked"):
-            base += " [content as_of %s, %.1fh]" % (r.get("content_as_of", "?"),
-                                                    r.get("content_age_h") or 0.0)
+            if "trading_days_behind" in r:
+                base += " [content as_of %s, %dtd behind %s frontier]" % (
+                    r.get("content_as_of", "?"), r.get("trading_days_behind"), r.get("frontier", "?"))
+            else:
+                base += " [content as_of %s, %.1fh]" % (r.get("content_as_of", "?"),
+                                                        r.get("content_age_h") or 0.0)
             if r.get("status") in ("WARN", "FAIL") and r.get("mtime_status") == "PASS":
                 base += " <MTIME-FRESH/CONTENT-STALE>"
         else:
