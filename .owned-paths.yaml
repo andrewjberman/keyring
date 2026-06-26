@@ -246,7 +246,8 @@ lanes:
       - 0.7.0_AE_CloudOps~A
       - 0.7.0_AE_CloudOps~B
       - 0.7.0_AE_CloudOps~C
-    description: "Any AE agent — infra/aws, pipeline Terraform, hook wiring. 0.7.0_AE_CloudOps~A added 2026-05-21 by COO: the lane is literally 'any AE agent' and ~A is one — the ~A suffix simply was not enumerated (tilde-lane owned-paths gap). A correct permanent add, not an exception. 0.7.0_AE_CloudOps~C added 2026-05-22 by COO~C: same gap — ~C is the ADVI_DEMOV1 AE lane running ADVI_DEMOV1.001 (infra/aws shared-infra TF + lambda-edge) under COO~C GO."
+      - 0.8.0_AE_CloudComp
+    description: "Any AE agent — infra/aws, pipeline Terraform, hook wiring. 0.7.0_AE_CloudOps~A added 2026-05-21 by COO: the lane is literally 'any AE agent' and ~A is one — the ~A suffix simply was not enumerated (tilde-lane owned-paths gap). A correct permanent add, not an exception. 0.7.0_AE_CloudOps~C added 2026-05-22 by COO~C: same gap — ~C is the ADVI_DEMOV1 AE lane running ADVI_DEMOV1.001 (infra/aws shared-infra TF + lambda-edge) under COO~C GO. 0.8.0_AE_CloudComp added 2026-06-26 by COO (2.0.0_SA_COO): the SAME enumeration gap — 0.8.0_AE_CloudComp is an AE agent (Andrew-direct LD-0218 made it the UNIFIED AWS+MS compiler/AE owner) and the lane is 'any AE agent'; it simply was not enumerated. A correct permanent add (it owns the globgrph-MS infra going forward, NFRA_MSGRAPH S2+ extract_ms_cloud in infra/aws/globgrph/). Grantee does not commit its own grant (SoD) — landed by COO grantor; CC CTO arch-awareness."
 
   DECK:
     permitted_agents:
