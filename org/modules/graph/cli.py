@@ -128,11 +128,18 @@ def cmd_trace(args):
     # Find matching nodes
     matches = g.find_node(query)
     if not matches:
+        # NOT-FOUND is LOUD (rc=3), NOT a silent rc=0. A query that resolves to
+        # zero nodes is a typo / wrong-target, which on a Rule-20 change-safety
+        # gate must NEVER read as a verified "nothing depends on this" clear.
+        # Only a SUCCESSFUL match that then has zero results may exit 0.
+        # (false-clear fix, 3.0.0_SA_CVO 2026-06-26; comp-tools duress sweep)
         if args.json:
-            print(json.dumps({"query": query, "matches": []}))
+            print(json.dumps({"query": query, "matches": [], "status": "NOT_FOUND"}))
         else:
-            print(f"No nodes matching: {query}")
-        sys.exit(0)
+            print(f"NOT-FOUND: no graph node matches '{query}' -- check the name "
+                  f"(typo?) or run comp-build. This is a NOT-FOUND, not a "
+                  f"'nothing-upstream/downstream' clear.", file=sys.stderr)
+        sys.exit(3)
 
     if len(matches) > 1 and not args.all:
         # ADHC_COMPIL_V4.021 Cat 3.5: --json honored on multi-match disambiguation
@@ -235,8 +242,13 @@ def cmd_blast(args):
 
     matches = g.find_node(query)
     if not matches:
-        print(f"No nodes matching: {query}")
-        sys.exit(0)
+        # NOT-FOUND is LOUD (rc=3). On comp-blast (a Rule-20 "what breaks if I
+        # change X" gate) a typo'd target must NEVER exit 0 as if it were a
+        # verified "nothing breaks" clear. (false-clear fix, 2026-06-26)
+        print(f"NOT-FOUND: no graph node matches '{query}' -- check the name "
+              f"(typo?) or run comp-build. This is a NOT-FOUND, not a "
+              f"'nothing breaks' clear.", file=sys.stderr)
+        sys.exit(3)
 
     node = matches[0]
 
@@ -437,13 +449,15 @@ def _xref_symbol_lookup(g: TraceGraph, symbol: str) -> None:
     print()
 
     if not matched_nodes and not matched_edges:
-        print("  No matches in graph.")
-        print()
-        print("  Hints:")
-        print("    - Symbol may be a Python module/function not yet indexed")
-        print("    - Run 'comp-build' to refresh graph; check stale-cache warnings")
-        print("    - For COMP_LEARNS-corpus symbols, comp-xref does not index that tree (out-of-scope)")
-        return
+        # NOT-FOUND is LOUD (rc=3), not a silent rc=0 return. A zero-match xref
+        # is a typo / unindexed symbol; it must be distinguishable from a
+        # successful lookup so it can't read as "verified clear". (fix 2026-06-26)
+        print("  No matches in graph.", file=sys.stderr)
+        print("  Hints:", file=sys.stderr)
+        print("    - Symbol may be a Python module/function not yet indexed", file=sys.stderr)
+        print("    - Run 'comp-build' to refresh graph; check stale-cache warnings", file=sys.stderr)
+        print("    - For COMP_LEARNS-corpus symbols, comp-xref does not index that tree (out-of-scope)", file=sys.stderr)
+        sys.exit(3)
 
     if matched_nodes:
         # Group by node_type for readability
