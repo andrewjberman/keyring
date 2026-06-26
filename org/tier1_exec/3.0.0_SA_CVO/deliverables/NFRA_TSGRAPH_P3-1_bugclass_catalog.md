@@ -1,6 +1,6 @@
 # NFRA_TSGRAPH P3-1 — Log-Mined Bug/Logic-Class Catalog
 
-**TO:** NFRA_TSGRAPH.P3-1 · **Author:** 3.0.0_SA_CVO · **Started:** 2026-06-18 · **Status:** WIP (first cut — silent-* family + TO-named frontend partition seeded; deep LD/postmortem semantic mine pending)
+**TO:** NFRA_TSGRAPH.P3-1 · **Author:** 3.0.0_SA_CVO · **Started:** 2026-06-18 · **Updated:** 2026-06-26 (deep pass 2) · **Status:** WIP (50 classes, all exemplar-anchored — exhaustive 215-LD semantic mine COMPLETE; remaining: root-cause-section long-tail sharpen + frequency recompute + Phase-3 partition audit + fabric-cluster COO ruling)
 
 **Independence boundary (on the record per RAVC2):** this catalog is a FACTUAL mining artifact (data, not a verification verdict), so authoring it does not compromise CVO independence to later verify P3 *detectors* (verified against the live graph + real exemplars, independent of this class list). The ONE soft self-reference is catalog-*completeness* verification ("did P3-2 cover every catalogued class?") — for that specific check, this catalog is a CHECKABLE INPUT, not authoritative ground truth; the NFRA_DEBTSCAN cross-domain second-read + the real-exemplar bar cover it.
 
@@ -112,8 +112,46 @@ Every row cites ≥1 real log/LD/commit exemplar (the empirical anchor P3-2's va
 | F3 | race-class | concurrency race (registration/spawn/hook ordering) | LD-0140 |
 | F4 | iteration-debt | repeated re-derivation / high-archetype-cost loops (the COST signal, not bugs) | LD-0029 |
 
-## Status after deep pass 1
-- Frontend partition: A1-A10 (10 classes). Cross-domain: B1-B23 (23). Fabric-cluster: F1-F4 (4, partition-pending COO rule). Total seeded: 37 classes, all exemplar-anchored.
-- REMAINING for close: exhaustive 204-LD read + 900 root-cause-section semantic pass; sharpen all `[sharpen]` rows to canonical exemplars; per-class semantic frequency; Phase-3 partition-completeness audit (0 untagged / 0 exemplar-less); the fabric-cluster partition ruling; then RAVC2 (COO + CC CTO + DEBTSCAN owner).
+## v3 additions — deep pass 2 (exhaustive LD-record semantic mine, all 215 LDs)
 
-— 3.0.0_SA_CVO (WIP — through deep pass 1)
+**Method:** extracted every LD `decision_summary` (org/tier0/ledger/LD-0001..0215), filtered to incident/root-cause-bearing entries (governance/charter/spawn LDs carry no bug class — confirms the Phase-1 methodology finding), semantic-read each. Yield below. Every row cites the LD that IS the empirical anchor (Rule-22 grounded — these are SOURCE incident records, not narration).
+
+**Cross-domain partition — new (→ NFRA_DEBTSCAN, not built in P3):**
+
+| # | class | signature | exemplar (LD) | freq |
+|---|---|---|---|---|
+| B24 | worktree-gitdir-path-assumption | code assumes `$REPO_ROOT/.git` is a DIRECTORY, but in a linked worktree it is a FILE (gitdir pointer) → `mkdir`/path-op fails ENOTDIR → silent fallback to an unsafe path (lock never acquired → unserialized commit storm) | LD-0138 (safe-commit LOCK_DIR; "same .git-is-a-file worktree-path bug class as the precommit-guard false-alarm"); LD-0140(a) | 2 |
+| B25 | config-in-unread-file / silently-ignored-flag | config wired into a file the tool does NOT load (settings.local.json vs committed settings.json), or a flag that silently SUPPRESSES (`async:true` killed hook firing) → looks-correct, never effective; prior "fix" targets the wrong layer | LD-0139 (3-day fabric telemetry-dead; "wired into the file CC won't read") | 1 |
+| B26 | fix-against-unverified-hypothesis | a fix shipped against a diagnosis that was never ground-confirmed → addresses the wrong class, real defect persists (the operational sibling of the Rule-22 grounding gap) | LD-0125/0126 (F-004 watchdog "shipped against wrong hypothesis"; storm root-cause twice-misframed); LD-0140(a) ("ruled without checking current state") | 3 |
+| B27 | noise-misattributed-as-cause (red-herring-log) | a loud/plausible background signal (a deprecation log, a co-occurring error) blamed as the cause while the true cause sits elsewhere; the inverse of grounding | LD-0144 (GCM DEPRECATED_ENDPOINT noise vs the real bun-Playwright transport hang) | 1 |
+| B28 | liveness-proxy-answers-for-dead-principal | a liveness check queries a PROXY (broker server PID / "1s ago") that is alive while the actual agent loop is wedged/dead → phantom-LIVE, messages accumulate unseen | LD-0111 (watcher-dead-but-broker-LIVE 12h phantom-inbox-receiver); LD-0181 (broker "1s ago" = server.py not the claude loop) | 2 |
+| B29 | local-event-triggers-global-destructive-sweep | a per-actor hook performs a FABRIC-WIDE destructive action (register hook ran `kill-orphans --stale --force` on every registration → each spawn SIGTERM'd peers' live watchers), and is SILENT (0 audit) → "undetermined" disruption | LD-0193(a) (exit-143 live-watcher-reap root cause) | 1 |
+| B30 | aggregate-poll-amplification | a per-client-benign poll interval × a fleet of N clients = sustained load that exhausts a shared resource (POLL_INTERVAL_S 2.0 × 14 servers = 7 polls/s → 617 TIME_WAIT sockets) | LD-0125 (broker polled-to-death; the fleet, not a self-spin) | 1 |
+| B31 | schema-key-drift-silent-empty-iterate | a consumer reads the WRONG key (`use_cases` vs the stored `entries`) → iterates an empty collection → matches nothing, EVER, with no error (a backstop that silently covers nothing) | LD-0208 (comp-which manifest-fuzzy backstop non-functional; ~28/36 tools unreachable) | 1 |
+| B32 | set-once-clobbered-by-later-emit | a value set at launch/init (tab title via OSC/WindowTitle) is silently overwritten by the app's own RUNTIME emit; the fix needs a layer that IGNORES later writes (suppressApplicationTitle) | LD-0101 / LD-0103 / LD-0182 (WT tab-title override by claude.exe runtime OSC) | 3 |
+| B33 | shared-global-last-writer-wins-cross-attribution | a value resolved from a single GLOBAL shared file (`.comp-graph/.agent_context` TO_ID) that every concurrent actor overwrites → last-writer-wins cross-attributes work to the wrong owner (per-process env escapes it) | LD-0205 (comp-log TO_ID race; corrupted NFRA_COMPRAIL TO-5 per-TO coverage) | 1 |
+| B34 | gate-keyed-on-presence-not-addressee | a gate keyed on a message being PRESENT rather than ADDRESSED-to-this-actor trips on foreign traffic (tilde-lane ferry copies scatter into unrelated base inboxes → false HALTGT trip; reflexive ack risks training away a real [STOP]) | LD-0131 (HALTGT ferry-scatter false-trip) | 1 |
+| B35 | ungrounded-mechanism-inference | a causal/WHY claim asserted from a grounded SYMPTOM but an INVENTED mechanism, then escalated to "proof/root-cause" → nearly drives a needless fix (the Rule-22 incident class) | LD-0206 (COTETL canonical-seal mis-inference 2026-06-22; grounded symptom, invented mechanism) | 1 |
+
+**Both-partition / methodology — new:**
+
+| # | class | signature | exemplar (LD) | partition |
+|---|---|---|---|---|
+| A11 | classifier-matches-mention-not-instance | a classifier/regex matches the VOCABULARY of a thing appearing in a report rather than an actual INSTANCE of it ("andrew ruling"/"sovereign decision" in a *status report* misread as a sovereign-decision *request* → false escalation; the named-"X class" regex over-matching process meta-vocab — the catalog's OWN Phase-1 finding) | LD-0163(2) (sovereign-classifier FP); the Phase-1 named-class regex finding (this catalog §Phase-1) | **frontend-detectable** (regex/classifier scope is TS-graphable) AND cross-domain (fabric classifiers) — dual; primary→frontend |
+
+**Sharpened existing rows (canonical exemplar now pinned):**
+
+| row | sharpened anchor |
+|---|---|
+| B23 scanner-self-false-positive | LD-0100 — `/mstr-spawn` marker scan matched the scanner's OWN PowerShell process (search-pattern literal in its CommandLine arg); fix = `$_.ProcessId -ne $selfPid`. Canonical exemplar. |
+| F1 marker-artifact-false-positive | LD-0193(a) (silent fabric-wide reaper) + LD-0158 (exit-143 idle-lane Monitor-death → silent-unreachable) |
+| F2 shared-resource-contention | LD-0127 (658-file CL strip — split-at-source > mediation-at-checkpoint) + LD-0138/0140 (shared git index) + LD-0205 (shared .agent_context) — canonical cluster |
+| F3 race-class | LD-0070 (kill-orphans liveness-window race, SIGTERM'd MSTR 2x) + LD-0205 (TO_ID write race) |
+| B15 tooling-false-empty | LD-0208 (key-drift silent-empty) is the config-drift sibling of the subprocess-false-empty original — cross-referenced, kept distinct (B31) |
+
+## Status after deep pass 2
+- Frontend partition: A1-A11 (11 classes). Cross-domain: B1-B35 (35). Fabric-cluster: F1-F4 (4, partition-pending COO rule). **Total: 50 classes, all exemplar-anchored.**
+- Deep pass 2 ADDED 12 classes (B24-B35 + A11) from the exhaustive 215-LD semantic mine + sharpened 5 existing rows to canonical LD exemplars.
+- REMAINING for close: the 900 root-cause-SECTION semantic pass (LD mine done — the densest curated source is now exhausted; root-cause sections are the long tail, lower marginal yield, `[sharpen]` the remaining narration-only rows); per-class semantic frequency recompute; Phase-3 partition-completeness audit (0 untagged / 0 exemplar-less — A4/A5/B8/B9/B11-B14/B16-B18 still `[sharpen]`); the fabric-cluster (F1-F4) partition ruling owed by COO/CTO; then RAVC2 (COO + CC CTO + DEBTSCAN owner). Yields to #9 nightly per TO priority.
+
+— 3.0.0_SA_CVO (WIP — through deep pass 2)
