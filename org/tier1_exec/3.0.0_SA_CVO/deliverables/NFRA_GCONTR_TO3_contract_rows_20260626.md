@@ -136,9 +136,9 @@ per the §3 `ratified_at` PENDING-* invariant, so the load-gate skips them until
     surface_gate: "comp-surface-check SEV2 (model_portfolios.peers)"
     value_check: "peer period basis matches the benchmark contract basis (comparability invariant)"
   ratified_by: [1.0.0_SA_CTO, 2.0.0_SA_COO]
-  ratified_at: PENDING-CTO-COO-SIGNOFF
+  ratified_at: "STAGED-ADVISORY (CTO+COO ratified 2026-06-26; enforce-flip gated on AE --load-contracts Q2 pin per v1-ADVISORY) -- real Nessie hash at load"
   active: true
-  provenance: "pipescript model-portfolios 2026-06-26"
+  provenance: "pipescript model-portfolios 2026-06-26; CTO+COO ratify-complete 201102Z"
 ```
 
 ### 5. aum-model-portfolios
@@ -161,9 +161,9 @@ per the §3 `ratified_at` PENDING-* invariant, so the load-gate skips them until
     surface_gate: "comp-surface-check SEV2 (model_portfolios.aum)"
     value_check: "aum_change == end_aum - start_aum (internal-consistency); flow-window matches period_defs"
   ratified_by: [1.0.0_SA_CTO, 2.0.0_SA_COO]
-  ratified_at: PENDING-CTO-COO-SIGNOFF
+  ratified_at: "STAGED-ADVISORY (CTO+COO ratified 2026-06-26, SmartX-canonical asymmetry CTO-affirmed COND-3; enforce-flip gated on AE --load-contracts Q2 pin) -- real Nessie hash at load"
   active: true
-  provenance: "pipescript mdpf/smartx 2026-06-26; aum.ts header"
+  provenance: "pipescript mdpf/smartx 2026-06-26; aum.ts header; CTO+COO ratify-complete 201102Z"
 ```
 
 ---
