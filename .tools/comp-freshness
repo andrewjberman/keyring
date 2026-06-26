@@ -445,11 +445,61 @@ def check_ddb_entries(entries: list[dict]) -> list[dict]:
 # ---------------------------------------------------------------------------
 # Freshness check logic
 # ---------------------------------------------------------------------------
-def _check_artifact(entry: dict, now: datetime.datetime) -> dict:
-    """
-    Check one artifact entry against its cadence thresholds.
-    Returns a result dict with: artifact_id, s3_key, last_modified, age_h,
-    fail_at_h, warn_at_h, status, severity, cadence, notes.
+def _status_from_age(age_h: float, warn_h, fail_h, severity: str) -> str:
+    """Map an age (hours) to PASS/WARN/FAIL against cadence thresholds. Shared by the
+    mtime path and the content path so they cannot drift."""
+    if fail_h is not None and age_h >= fail_h:
+        return "FAIL" if severity == "ERROR" else "WARN"
+    if warn_h is not None and age_h >= warn_h:
+        return "WARN"
+    return "PASS"
+
+
+def _parse_as_of(s: str) -> Optional[datetime.datetime]:
+    """Parse an artifact's INTERNAL as-of value (a date or timestamp) -> aware UTC datetime.
+    Tolerant of date-only ('2026-06-22'), ISO datetime, and trailing Z. Returns None if
+    unparseable (caller treats that as content-UNCHECKED, never a silent pass)."""
+    s = (s or "").strip()
+    if not s:
+        return None
+    for fmt in ("%Y-%m-%d", "%Y-%m-%dT%H:%M:%S", "%Y-%m-%dT%H:%M:%SZ",
+                "%Y-%m-%d %H:%M:%S", "%Y/%m/%d"):
+        try:
+            dt = datetime.datetime.strptime(s, fmt)
+            return dt.replace(tzinfo=datetime.timezone.utc)
+        except ValueError:
+            continue
+    try:
+        dt = datetime.datetime.fromisoformat(s.replace("Z", "+00:00"))
+        return dt if dt.tzinfo else dt.replace(tzinfo=datetime.timezone.utc)
+    except Exception:
+        return None
+
+
+def _resolve_as_of_field(doc, field: str):
+    """Resolve a (possibly dotted) as_of field path within a parsed JSON object.
+    Returns the value or None if the path is absent."""
+    val = doc
+    for part in field.split("."):
+        if isinstance(val, dict) and part in val:
+            val = val[part]
+        else:
+            return None
+    return val
+
+
+def _evaluate_artifact(entry: dict, now: datetime.datetime,
+                       last_modified: Optional[datetime.datetime],
+                       content_doc=None, content_error: str = "") -> dict:
+    """PURE status evaluation given already-fetched mtime + (optional) parsed object content.
+    Separated from I/O so content-mode is unit-testable without AWS.
+
+    CONTENT-MODE (CTO freshness-doctrine spec, 3.0.0_SA_CVO 2026-06-26): when the entry
+    declares `as_of_field`, the artifact's INTERNAL as-of date is AUTHORITATIVE and mtime
+    is demoted to a secondary sanity signal. mtime-fresh != content-fresh: a re-uploaded
+    but stale artifact gets a fresh LastModified while its internal as-of stays old -- the
+    EXACT cot freeze (mtime moved, data_as_of stuck at 06-22 -> mtime-only wrongly FRESH).
+    False-FRESH on a stale artifact is the dangerous direction; content-mode closes it.
     """
     artifact_id = entry["artifact_id"]
     s3_key = entry["s3_key_prefix"]
@@ -457,7 +507,7 @@ def _check_artifact(entry: dict, now: datetime.datetime) -> dict:
     severity = entry.get("severity", "ERROR").upper()
     warn_h = entry.get("warn_age_hours")
     fail_h = entry.get("fail_age_hours")
-    on_demand = (cadence == "on-demand")
+    as_of_field = entry.get("as_of_field")
 
     result = {
         "artifact_id": artifact_id,
@@ -472,18 +522,16 @@ def _check_artifact(entry: dict, now: datetime.datetime) -> dict:
         "notes":       entry.get("notes", ""),
     }
 
-    if on_demand:
+    if cadence == "on-demand":
         result["status"] = "SKIP"
         return result
 
-    last_modified = get_latest_modified(s3_key)
     if last_modified is None:
         # Prefix not found: WARN (could be a new artifact not yet populated)
         result["status"] = "WARN"
         result["notes"] = f"Prefix not found in S3: {s3_key}"
         return result
 
-    # Ensure timezone-aware comparison
     if last_modified.tzinfo is None:
         last_modified = last_modified.replace(tzinfo=datetime.timezone.utc)
     if now.tzinfo is None:
@@ -492,15 +540,74 @@ def _check_artifact(entry: dict, now: datetime.datetime) -> dict:
     result["last_modified"] = last_modified.isoformat()
     age_h = (now - last_modified).total_seconds() / 3600.0
     result["age_h"] = round(age_h, 1)
+    mtime_status = _status_from_age(age_h, warn_h, fail_h, severity)
+    result["status"] = mtime_status
 
-    if fail_h is not None and age_h >= fail_h:
-        result["status"] = "FAIL" if severity == "ERROR" else "WARN"
-    elif warn_h is not None and age_h >= warn_h:
-        result["status"] = "WARN"
-    else:
-        result["status"] = "PASS"
+    # ---- CONTENT-MODE override (authoritative when as_of_field is declared) ----
+    if as_of_field:
+        result["mtime_status"] = mtime_status  # mtime kept as a secondary signal
+        result["content_checked"] = False
+        if content_doc is None:
+            why = content_error or "object content unreadable"
+            result["notes"] = (result["notes"] + f" | CONTENT-MODE UNCHECKED ({why}); "
+                               "mtime is the WEAKER signal here").strip(" |")
+            return result
+        raw_val = _resolve_as_of_field(content_doc, as_of_field)
+        if raw_val is None:
+            result["notes"] = (result["notes"] + f" | CONTENT-MODE UNCHECKED "
+                               f"(as_of_field '{as_of_field}' absent); mtime is the WEAKER "
+                               "signal here").strip(" |")
+            return result
+        as_of_dt = _parse_as_of(str(raw_val))
+        if as_of_dt is None:
+            result["notes"] = (result["notes"] + f" | CONTENT-MODE UNCHECKED "
+                               f"(as_of '{raw_val}' unparseable); mtime is the WEAKER "
+                               "signal here").strip(" |")
+            return result
+        content_age_h = (now - as_of_dt).total_seconds() / 3600.0
+        result["content_as_of"] = str(raw_val)
+        result["content_age_h"] = round(content_age_h, 1)
+        result["content_checked"] = True
+        result["status"] = _status_from_age(content_age_h, warn_h, fail_h, severity)
+        # the dangerous direction made LOUD: mtime says fresh, content says stale
+        if result["status"] in ("FAIL", "WARN") and mtime_status == "PASS":
+            result["notes"] = (result["notes"] + f" | MTIME-FRESH-BUT-CONTENT-STALE: "
+                               f"mtime age {result['age_h']}h PASS but internal as_of "
+                               f"{raw_val} is {round(content_age_h,1)}h old").strip(" |")
 
     return result
+
+
+def _fetch_object_doc(s3_key: str):
+    """I/O: fetch a concrete .json S3 object's parsed content for content-mode.
+    Returns (doc, error). Scoped to concrete .json keys (served artifacts); a gzipped
+    or non-text origin yields (None, reason) -> content-UNCHECKED, documented weaker
+    signal, never a silent pass. (binary/gzip origin = a documented follow-on.)"""
+    if not s3_key.endswith(".json"):
+        return None, f"content-mode supports concrete .json keys only ({s3_key})"
+    raw = _aws("s3", "cp", s3_key, "-", check_aws=False)
+    if not raw:
+        return None, "object content unreadable (missing / gzipped / non-text origin)"
+    try:
+        return json.loads(raw), ""
+    except Exception:
+        return None, "object not parseable as JSON (gzipped origin? -> binary follow-on)"
+
+
+def _check_artifact(entry: dict, now: datetime.datetime) -> dict:
+    """
+    Check one artifact entry against its cadence thresholds (I/O + delegate to the pure
+    evaluator). Returns a result dict with: artifact_id, s3_key, last_modified, age_h,
+    fail_at_h, warn_at_h, status, severity, cadence, notes (+ content_* when as_of_field set).
+    """
+    if entry.get("cadence", "daily") == "on-demand":
+        return _evaluate_artifact(entry, now, None)  # evaluator returns SKIP for on-demand
+    s3_key = entry["s3_key_prefix"]
+    last_modified = get_latest_modified(s3_key)
+    content_doc, content_error = (None, "")
+    if entry.get("as_of_field") and last_modified is not None:
+        content_doc, content_error = _fetch_object_doc(s3_key)
+    return _evaluate_artifact(entry, now, last_modified, content_doc, content_error)
 
 
 def check_entries(entries: list[dict]) -> list[dict]:
