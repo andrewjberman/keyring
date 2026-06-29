@@ -18,31 +18,36 @@ Firm headline = SUM canonical(Schwab accounts)  +  SUM BD-allocations(accounts N
 ```
 No double-count: an account is EITHER Schwab-canonical OR BD-surplus, never both.
 
-## 3. Grounded reconciliation (2026-06-24, live artifacts)
+## 3. Grounded reconciliation (2026-06-24 data, FRESH xref 2026-06-29)
 
+**Authoritative (FRESH xref `opal-data-bd/schwab/silver/account_xref/date=20260629`):**
 ```
 BD allocations total (today's served book) ... $1,812,018,889   (6,811 accts)
-   Schwab accts, BD's value ................... $1,542,494,758   (5,482) -> DROP, replace w/ canonical
-   NON-Schwab "surplus" ...................... $  269,524,130   (1,329) -> KEEP (BD account_market_value)
+   Schwab accts, BD's value ................... $1,594,824,055   (5,737) -> DROP, replace w/ canonical
+   NON-Schwab "surplus" ...................... $  217,194,833   (1,074) -> KEEP (BD account_market_value)
 
 canonical Schwab positioned (authoritative) .. $1,591,227,965   (5,894 accts)
 
 CLEAN HEADLINE (the rule) = canonical(Schwab) + surplus
-   $1,591,227,965 + $269,524,130 = $1,860,752,096
-   vs BD-served $1,812,018,889  ->  +$48,733,207 move
+   $1,591,227,965 + $217,194,833 = $1,808,422,799
+   vs BD-served $1,812,018,889  ->  -$3,596,090 move (-0.2%, ESSENTIALLY FLAT)
 ```
+ANDREW RULING (2026-06-29): ACCEPT canonical-as-truth -- the (small) move is approved; S7 gate = canonical reproduces the NEW agreed headline (~$1.808B) STABLY over N-days, NOT reconcile-to-BD.
 
-### 3a. The +$48.7M move decomposes (the accept-vs-reconcile decision)
+### 3a. The move decomposes -- and the FRESH xref dissolved most of it
 ```
-(1) ACCOUNT-SET  +$78,188,617   412 Schwab accts canonical HAS, BD allocations does NOT
-                                (canonical more complete; xref @2026-04-21 is STALE -> won't bridge newer accts)
-(2) VALUATION    -$29,455,410   on the 5,482 SHARED accts canonical is ~$29.5M LOWER than BD
-                                (5,394/5,482 lower, median -$1,008/acct; NOT cash -- canonical $1.513B < BD ex-cash $1.542B;
-                                 canonical = Schwab-direct RPS, BD = its own feed -> a price-date or price-source diff)
-                 ────────────
-            net  +$48,733,207   (reconciles exactly)
+                       STALE xref(04-21)        FRESH xref(06-29)
+(1) ACCOUNT-SET        +$78,188,617 (412)       +$27,592,861 (157)   <- mostly a STALE-XREF ARTIFACT (04-21 failed
+                                                                        to bridge ~255 real Schwab accts -> mis-counted
+                                                                        ~$52M BD value as surplus + inflated canon-only)
+(2) VALUATION          -$29,455,410             -$31,188,951         <- REAL, holds. SAME-DATE (06-24 both sides) ->
+                                                                        NOT a price-date diff; a genuine Schwab-direct
+                                                                        price-SOURCE/method difference (canonical RPS
+                                                                        more authoritative). Andrew-accepted.
+                       ────────────             ────────────
+                net    +$48,733,207             -$3,596,090
 ```
-**Both effects say canonical is the better number** (more complete + more conservative/accurate). But it is a real upward move the firm sees -> a CONSCIOUS dispositioned decision at S7, not a silent delta. Open: (i) confirm the 412 are legit newer Schwab accts; (ii) confirm the -$29.5M is price-date vs price-source -- both need a FRESH xref (current is 2026-04-21).
+LESSON: the +$48.7M "scare" was a stale-bridge artifact. The fresh xref is a HARD DEPENDENCY of the partition rule (and of G0.held_away_aua + the dim_advisor bridges) -> must refresh each cutover-cadence run. Residual (optional airtight): confirm the -$31M is pure-price vs accrued/cash (same-date + systematic suggests valuation-method, not artifact).
 
 ## 4. The mechanism: `G0.held_away_aua` (one producer owns the non-Schwab union)
 
@@ -64,9 +69,9 @@ WRITE: `canonical/schwab/gold/held_away_aua/date=YYYY-MM-DD/` (parallel/NOT-serv
 
 The serving-flip CANNOT fire until, over the N-clean-days parallel window:
 ```
-canonical(Schwab) + G0(non-Schwab surplus)  ==  the agreed firm headline
+canonical(Schwab) + G0(non-Schwab surplus)  ==  the NEW AGREED HEADLINE (~$1.808B)   [reproduced STABLY, not vs-BD]
 ```
-PASS requires: (a) the surplus reconciles per-account through a FRESH xref; (b) the +$48.7M Schwab-valuation delta is DISPOSITIONED (accept canonical-as-truth, or reconciled to BD with the price-date/price-source cause named); (c) the active/total flag reproduces both the header (~$1.75B) and total ($1.82B). Proven, not asserted. cc CVO (S7 owner), CTO.
+PASS requires: (a) the surplus reconciles per-account through the FRESH xref (date>=run-date; 06-29 written); (b) disposition = **ACCEPTED canonical-as-truth (Andrew 2026-06-29)** -- the gate is "canonical reproduces the agreed ~$1.808B consistently," NOT "matches BD's $1.812B"; (c) the active/total flag reproduces both the header (~$1.75B) and total ($1.82B). Proven, not asserted. cc CVO (S7 owner, criterion folded db971c7f6), CTO.
 
 ## 7. Still owed to hit the publisher (the rest of the iceberg, from the seam pass)
 Canonical A-tier gold dims (accounts/client/advisor/fee_rate + a Schwab positions_cube analog) · the C-bridges (`account_team` C_07, `mix_daily_summary` C_06, `role_aua` C_01b, `holdings_lots` B_01) · the D artifact-JSON layer (the 6 published files) · `G0.held_away_aua` (this) · the active/total flag. Analytics core G1-G14 is done + order-correct; this doc covers the headline-AUA + non-Schwab thread.
