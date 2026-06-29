@@ -51,7 +51,7 @@ stages:
   - id: KUZU
     store: query surface (the estate read model)
   - id: ICEBERG
-    store: lakehouse tables -- 3 PHYSICAL tables: graph_nodes / graph_edges / graph_contracts.
+    store: "lakehouse -- 3 physical tables (graph_nodes / graph_edges / graph_contracts)"
     # GRAIN (0.8.0_AE~B-corrected 2026-06-29, base-confirmed on the Trino surface): `layer`
     # (aws/portal/ms) is a COLUMN on graph_nodes, NOT separate tables; pipeline=0 nodes (dropped).
     # The earlier "aws/portal/ms/pipeline assets" framing was a grain mismap.
