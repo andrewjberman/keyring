@@ -103,6 +103,14 @@ Methodical pass over all 27 named threads. **Finding: the deprecated debt is CON
 3. **TIER-3 (verify-then-archive):** E_* diagnostics (per-script heat), SNS orphans, isolated S3/KMS — re-verify vs current graph first.
 **Owner routing:** infra/TF + lambda teardowns → AE; bd data-scripts (E_*/archive) → DS; CVO flags + heat-ranks, never deletes.
 
+## TIER-2/3 VERIFICATION (Andrew-direct 2026-06-29 "verify all of that"; CONFIRMED effectively deprecated)
+Grounded against live AWS (CW Invocations = the real invoke-heat; SNS subscriptions; git-heat):
+- **smartx_query (BOTH copies dead — sharper than the earlier "dev-copy only"):** there is NO deployed `smartx_query` lambda in the live estate. The smartx PIPELINE is LIVE + healthy (smartx-ec2-autostart 45inv/90d, smartx-rest-pull 45, smartx-jwt-refresher 45, smartx-model-monthly-pull 13, opal-smartx-ingestion-pipeline 74) — but NONE is `smartx_query`. So both `infra/aws/lambda/smartx_query/lambda_function.py` AND `data/smartx/scripts/lambda_smartx_query.py` are dead prototype code for a function never (or no-longer) deployed. **CONFIRMED dead — both copies archive.** (The broader smartx thread is healthy; only smartx_query is dead.)
+- **3 SNS topics, 0 confirmed subscriptions** (D1 said 2; found 3): `astn-wsjft-alerts`, `trade-pipeline-ses-bounces`, `trade-pipeline-ses-complaints` — nothing receives them = dead/orphaned. **CONFIRMED candidates** (caveat: confirm SES isn't configured to emit to the bounce/complaint pair before removing — a 0-sub SES topic is inert but check the SES config).
+- **34 E_* diagnostics:** a SINGLE late-April batch (all git-committed 2026-04-27 → 2026-05-01, cold since), edgeless one-offs from the AUA-gap/fee-scorecard investigation. **CONFIRMED deprecated batch** — archive (a couple like E_19.write_aua_certification / E_24.rebuild_fee_scorecard may have produced a kept artifact; the trace_/diagnose_/audit_ ones are pure throwaway). DS lane.
+- **REMAINING (not yet re-verified):** 6 isolated S3_DATA_KEY + KMS×5 — need a current-graph re-verify (D1 is 06-12); deferred.
+**Verdict:** Andrew's "all effectively deprecated" CONFIRMED for smartx_query (both) + 3 SNS + 34 E_*. Routing: smartx_query + E_* → DS (data lane); SNS topics → AE~A (cloud, fold into the teardown dispatch). The whole-pipeline check distinguished the dead function (smartx_query) from the live smartx pipeline -- the heat verify is what separated them.
+
 ## grounding: field (Rule 22)
 - "infra/aws/lambda/deprecated is dead tooling" — SOURCE-CONFIRMED (the dir contents + comp-dups INFERRED_DEAD flag); the INFERRED_DEAD is comp-dups's own advisory (graph-pending), so it's a candidate not a verdict.
 - "heat is the real-vs-dup discriminator" — INFERRED (design): heat_band-as-discriminator is the NFRA_HEATMAP thesis; the federation that computes it is IN-BUILD (not yet live), so the heat-ranking is manual today.
