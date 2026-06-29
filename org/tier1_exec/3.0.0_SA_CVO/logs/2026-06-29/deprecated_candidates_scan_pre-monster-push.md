@@ -52,6 +52,25 @@ A single **universal heat_band per resource** (recency from the appropriate sour
 2. **Per-pipeline, heat-ranked:** run `comp-dups --class` per class + `pipescript <thread>` per pipeline (27 threads); for each twin, apply heat (manual now / heat_band post-federation) → mark the cold side deprecate-candidate.
 3. **Re-verify Tier-3 orphans vs the CURRENT graph** (the D1 ledger is 2026-06-12; the graph is now 5.1h-current) before acting — a 06-12 orphan may have gained an edge.
 
+## HEAT APPLIED (creative multi-source, since Trino/heat-fed not live yet — Andrew 2026-06-29)
+Disambiguated the twins NOW using git-commit + filesystem-mtime + CloudTrail + graph-reachability + live-LastModified:
+
+| Twin | HOT (real) | COLD (deprecate) | heat evidence |
+|---|---|---|---|
+| smartx_query | `infra/aws/lambda/smartx_query/lambda_function.py` (git 2026-01-04) | `data/smartx/scripts/lambda_smartx_query.py` (git **2025-11-18**, 7mo) | GIT-commit decisive |
+| build_transaction_engine | (none — no live non-archive copy) | ALL 3 archive copies (git 2026-02-23) | git + no-live-version → all cold |
+| opal_users_v2 TF | `terraform/shared-infra` (dir git **2026-06-29**) | `terraform/portal-auth/dynamodb.tf` (git 2026-04-06) | git-maintenance; **needs `terraform state` confirm of the live owner** |
+| bd_exporter TF | `terraform/bd-pipeline` (git 2026-06-29; the live role I co-verified comp-iam) | `ec2/bd-exporter/terraform` (git 2026-04-10) | git + the live role reconciles to bd-pipeline |
+| lambda/deprecated | (none) | whole dir (git 2026-02-23 + literally "deprecated") | git + name → dead |
+| bd-time-machine lambda | — | **CONFIRMED DEAD (Andrew-direct 2026-06-29: "never used, an idea we wanted to create, never finished")** | heat flagged it (graph-orphan + deployed-04-06-no-activity + 0-invoke), Andrew confirmed = abandoned prototype |
+
+**VALIDATION of the heat approach:** the multi-source heat read flagged bd-time-machine as cold/dead BEFORE Andrew's confirmation; Andrew then ground-truthed it as a never-finished prototype. That is exactly the half-baked-prototype the heat-mapping exists to catch — heat surfaced it, human confirmed it. The remediation for bd-time-machine (lambda + its TF + `snapshots/manifests` consumers) routes to the infra owner (AE) — CVO flags, never deletes; the deploy is live-but-dead, so a clean teardown (like the SCTY.W2 Moltbot pattern) is the move.
+
+**TWO METHODOLOGICAL LESSONS for the heat-mapping build (banked for NFRA_HEATMAP):**
+1. **GIT-COMMIT is the code-heat signal, NOT mtime** — both smartx twins show identical `2026-02-20` mtime (a git-CHECKOUT artifact: checkout resets mtime), while git-commit cleanly separates them (2025-11-18 vs 2026-01-04). For git-tracked files use last-commit; reserve mtime for UNtracked/generated artifacts. A heat-map keyed on filesystem mtime would mis-rank every tracked file.
+2. **CloudTrail gives DEPLOY-heat (management events) but NOT invoke-heat** — Lambda `Invoke` is a CloudTrail DATA event (off by default), so CloudTrail-Invoke-absence is NOT proof of no-invocation. Combine CloudTrail-management (last deploy/touch) with GRAPH-reachability (0 inbound edges) for the cold verdict — neither alone is definitive. (For real invoke-heat the heat-fed needs CW Invocations metric or enabled data-events, not CloudTrail-management.)
+**So the per-layer heat sources are:** code → git-last-commit; infra → git + terraform-state + live-LastModified; cloud-liveness → CW-invocations-metric + graph-reachability (CloudTrail-management only for deploy-heat); data → S3-LastModified/last-access. This is the heat_band recency-source-per-layer the federation must encode.
+
 ## grounding: field (Rule 22)
 - "infra/aws/lambda/deprecated is dead tooling" — SOURCE-CONFIRMED (the dir contents + comp-dups INFERRED_DEAD flag); the INFERRED_DEAD is comp-dups's own advisory (graph-pending), so it's a candidate not a verdict.
 - "heat is the real-vs-dup discriminator" — INFERRED (design): heat_band-as-discriminator is the NFRA_HEATMAP thesis; the federation that computes it is IN-BUILD (not yet live), so the heat-ranking is manual today.
