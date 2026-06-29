@@ -572,20 +572,22 @@ def reconcile_deployed(root, only, settle_retry_seconds=0, deployed_commit="",
         with open(os.path.join(root, SRCMAP_REL), "w", encoding="utf-8", newline="\n") as fh:
             json.dump(sm, fh, indent=2, ensure_ascii=False)
             fh.write("\n")
-    # C3 audit -- durable, append-only
-    try:
-        ts = datetime.datetime.now(datetime.timezone.utc).isoformat()
-        with open(os.path.join(root, audit_rel), "a", encoding="utf-8") as fh:
-            for n, old, new in reconciled:
-                fh.write(json.dumps({"ts": ts, "trigger": "automated-post-apply", "fn": n,
-                                     "action": "reconcile", "old_sha": old, "new_sha": new,
-                                     "deployed_commit": deployed_commit}) + "\n")
-            for n, vd, _ in held:
-                fh.write(json.dumps({"ts": ts, "trigger": "automated-post-apply", "fn": n,
-                                     "action": "HOLD", "verdict": vd,
-                                     "deployed_commit": deployed_commit}) + "\n")
-    except Exception as e:
-        print(f"  WARN: audit append failed ({e}) -- reconcile still applied")
+    # C3 audit -- durable, append-only. ONLY on an actual reconcile/HOLD (a
+    # no-op run must not touch the file -- keeps the tracked audit clean).
+    if reconciled or held:
+        try:
+            ts = datetime.datetime.now(datetime.timezone.utc).isoformat()
+            with open(os.path.join(root, audit_rel), "a", encoding="utf-8") as fh:
+                for n, old, new in reconciled:
+                    fh.write(json.dumps({"ts": ts, "trigger": "automated-post-apply", "fn": n,
+                                         "action": "reconcile", "old_sha": old, "new_sha": new,
+                                         "deployed_commit": deployed_commit}) + "\n")
+                for n, vd, _ in held:
+                    fh.write(json.dumps({"ts": ts, "trigger": "automated-post-apply", "fn": n,
+                                         "action": "HOLD", "verdict": vd,
+                                         "deployed_commit": deployed_commit}) + "\n")
+        except Exception as e:
+            print(f"  WARN: audit append failed ({e}) -- reconcile still applied")
 
     print(f"  reconcile-deployed: {len(reconciled)} reconciled, {len(held)} HELD, "
           f"{len(funcs) - len(reconciled) - len(held)} already-in-parity")
