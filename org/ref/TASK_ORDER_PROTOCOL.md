@@ -173,6 +173,8 @@ One file per feature. Never overwrite into a monolith.
 
 `staged` → `pending` happens when the agent receives a GO message from COO. Flip it immediately and begin. The GO message IS the authorization — do not ask Andrew.
 
+**Parseable-status convention (MSTR-adopted 2026-06-29, encouraged not gated).** The board tools (to-check, registry-check) classify a TO/project by the FIRST TOKEN of its status. Lead with a clean state word — `<status>complete — <detail>...</status>`, not `<status>active — ... DONE+ACCEPTED</status>` (first-word `active` reads OPEN even though done). DONE-class first-words: complete|completed|closed|cancelled|superseded|done|merged|shipped|decommissioned|archived|dropped. Both an XML `<status>` tag and a markdown `**Status:**` line are read (markdown now backtick-robust); a TO with NEITHER renders [??]. The parsers deliberately do NOT scan for a DONE token mid-string (would false-close an active phase status like build-complete), so a stale open first-word will NOT auto-flip — keep the first word truthful.
+
 ---
 
 ## Filename Convention
