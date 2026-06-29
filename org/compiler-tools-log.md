@@ -9602,3 +9602,9 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-06-29 | 0.4.0_DS_ClientPlatform | DATA_ANALYTICS.GOLD-CORE.ds-build-canonical-gold-g3-g10 | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
 2026-06-29 | 0.0.0_AB_MSTR | SS-0011 session-tail | comp-grep (feature_clb 0-match -> UNDER-reported; cross-checked rail-checked git grep = 181 refs; GAP: comp-grep working-set missed tracked docs for a retirement-completeness sweep) + native git branch-diff/ledger-read for stranding-verify + Trino M2 ledger validation. Coordination/retirement-dominant.
 | 2026-06-29 | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-06-29 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/DATA_SSOTMG_PRD.md | PASS |
+| 2026-06-29 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/logs/2026-0... | PASS |
+| 2026-06-29 | 0.8.0_AE_CloudComp~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/compdiff/freeze_monitor.py --... | PASS |
+| 2026-06-29 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/DATA_SSOTMG_PRD.md | PASS |
+2026-06-29 1.0.0_SA_CTO session-close delta (2145-2225Z): no comp-tool runs -- arch/coordination window (feature_clb binding-sweep edits + DATA_SSOTMG custodian-native PRD authoring + decomposition); CVO comp-parity correctness-track (custodian-exact 0/5892 $0 / BD-noise) cited as the DATA_SSOTMG evidence, CVO-run not re-run; Rule-20 graph checks ride the 06-30 DS build TOs.
+| 2026-06-29 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
