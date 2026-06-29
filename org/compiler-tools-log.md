@@ -9596,3 +9596,7 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-06-29 | 0.8.0_AE_CloudComp~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/compdiff/axes_git.py --file i... | PASS |
 | 2026-06-29 | 0.8.0_AE_CloudComp~B | NFRA_COMPDIFF.P1 | comp-which, comp-freshness, ds-commit-gate, safe-commit | ground comp-freshness surface + PRD axis-set; Rule-14/14a gates on the code/config/schema axis adapters | PASS |
 | 2026-06-29 | 0.8.0_AE_CloudComp~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-06-29 | 0.8.0_AE_CloudComp~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/globgrph/iceberg_parity.py | PASS |
+| 2026-06-29 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/DATA_SSOTMG... | PASS |
+| 2026-06-29 | 0.4.0_DS_ClientPlatform | inf-AUM | boto3 + comp-pipescript io + comp-which + ds-commit-gate | inf served-AUM investigation: layer-by-layer grounding located the 8 short-position rows ($129,678) INF_B_00 dropped; fixed (abs units) + chain-rebuilt; schedule grounded inf-api-positions.tf | PASS |
+| 2026-06-29 | 0.4.0_DS_ClientPlatform | DATA_ANALYTICS.GOLD-CORE.ds-build-canonical-gold-g3-g10 | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
