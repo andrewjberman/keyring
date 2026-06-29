@@ -275,17 +275,65 @@ def sha_check(root: str) -> int:
     return 1
 
 
+def derive(root: str, write: bool = False) -> int:
+    """Reconcile the source-map artifact_sha256 to the LIVE CodeSha256 for every
+    DRIFTED entry (the durable record-writer fix: record the DEPLOYED sha, not
+    the intended build-time sha). Folds the banked record-terraform-deploy
+    reconcile. Dry-run by default; --write mutates the source-map (CVO-gated).
+
+    SAFETY: only re-records entries the disposition-aware classifier returns as
+    real `drift` -- a DISPOSITIONED divergence (intentional _note) is NEVER
+    touched, and a CORRUPT_RECORD routes to the builder (not here). So --write
+    can only ever move a stale sha to the live deployed truth."""
+    sm = load_srcmap(root)
+    funcs = sm.get("functions", {})
+    print("comp-lambdamap derive -- reconcile source-map artifact_sha256 -> LIVE CodeSha256 "
+          "(Phase 2; dry-run unless --write)")
+    live = live_code_shas()
+    if live is None:
+        print("  UNAVAILABLE: could not read live CodeSha256 (boto3/creds absent).")
+        return 2
+    r = compute_sha_findings(funcs, live)
+    proposals = r["drift"]  # non-dispositioned, valid-base64, name-in-live, != live
+    print(f"  proposed re-records: {len(proposals)} | dispositioned (LEFT, intentional): "
+          f"{len(r['dispositioned'])} | corrupt (re-record via the builder, not here): {len(r['corrupt'])}")
+    for name, rec, liveh in proposals:
+        print(f"    {name}: {rec[:16]}.. -> {liveh[:16]}..")
+    if not write:
+        print("  DRY-RUN: no changes written. Re-run `derive --write` to apply "
+              "(CVO-GATED: mutates lambda-source-map.json -- requires CVO sign-off per the TO).")
+        return 0
+    print("  CVO-GATED WRITE: applying -- this mutates lambda-source-map.json. "
+          "Ensure CVO sign-off is on the record (NFRA_COMPAWS.LAMBDAMAP-P2 acceptance).")
+    if not proposals:
+        print("  nothing to re-record (no non-dispositioned drift). source-map already clean.")
+        return 0
+    for name, rec, liveh in proposals:
+        funcs[name]["artifact_sha256"] = liveh
+    with open(os.path.join(root, SRCMAP_REL), "w", encoding="utf-8", newline="\n") as fh:
+        json.dump(sm, fh, indent=2, ensure_ascii=False)
+        fh.write("\n")
+    print(f"  WROTE: re-recorded {len(proposals)} entr(ies) to live CodeSha256. "
+          f"Re-run `comp-lambdamap sha` to confirm 0 SHA_DRIFT.")
+    return 0
+
+
 def main(argv=None) -> int:
     ap = argparse.ArgumentParser(prog="comp-lambdamap")
     sub = ap.add_subparsers(dest="cmd")
     sub.add_parser("check", help="read-only source-map vs TF/disk drift detection (Phase 1)")
     sub.add_parser("sha", help="read-only recorded-sha vs LIVE CodeSha256 drift (Phase 2)")
+    d = sub.add_parser("derive", help="reconcile artifact_sha256 -> live CodeSha256 (dry-run; --write CVO-gated)")
+    d.add_argument("--write", action="store_true",
+                   help="apply the reconcile to lambda-source-map.json (CVO-gated mutation)")
     args = ap.parse_args(argv)
     root = workspace_root()
     if args.cmd in (None, "check"):
         return check(root)
     if args.cmd == "sha":
         return sha_check(root)
+    if args.cmd == "derive":
+        return derive(root, write=args.write)
     ap.print_help()
     return 2
 
