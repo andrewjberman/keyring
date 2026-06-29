@@ -360,7 +360,7 @@ entries:
 
   - id: pipeline.freshness.chain_ready
     use_case: "Is the upstream S3 data fresh enough to run a gold chain?"
-    canonical_call: "comp-freshness chain {bd|inf} ; comp-freshness script <id>"
+    canonical_call: "comp-freshness chain {bd|inf|cot} ; comp-freshness script <id>"
     tool: comp-freshness
     mode: rebuild
     layer: pipeline
@@ -734,7 +734,7 @@ tools_index:
   comp-adapter-audit: { does: "Portal adapter field-threading audit", subcommands: ["<adapter-fn>", "--severity"], entries: [trace.adapter.field_threading] }
   comp-tooltip:  { does: "Tooltip migration/coverage audit", subcommands: ["<args>"], entries: [meta.tooltip.migration] }
   comp-validate: { does: "Gold artifact invariant validation pre-upload", subcommands: ["<script_id> --artifact", "--list"], entries: [pipeline.validate.artifact] }
-  comp-freshness: { does: "Is upstream S3 data fresh enough to run a gold chain", subcommands: [chain, script, artifact], entries: [pipeline.freshness.chain_ready] }
+  comp-freshness: { does: "Is upstream S3 data fresh enough to run a gold chain", subcommands: [chain, script, artifact, ddb, all], entries: [pipeline.freshness.chain_ready] }
   comp-chainrun: { does: "Snapshot/diff gold artifacts around an atomic bundle", subcommands: [snapshot, diff], entries: [pipeline.chainrun.atomic_bundle] }
   comp-constants: { does: "Marker/firm-constant drift vs canonical config", subcommands: [check, index, new, list], entries: [pipeline.constants.drift] }
   comp-incrparity: { does: "Incremental BD-pipeline parity (cache vs oracle)", subcommands: ["<args>"], entries: [pipeline.incrparity.bd] }
