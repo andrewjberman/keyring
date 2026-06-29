@@ -9482,3 +9482,5 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-06-29 | 0.8.0_AE_CloudComp | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/terraform/globgrph/trino.tf | PASS |
 | 2026-06-29 | 0.8.0_AE_CloudComp~B | NFRA_MSGRAPH.S3b | comp-kuzu, ds-commit-gate, safe-commit | graph_nodes struct + 374/374 JOIN spot-join; Rule-14/14a gates on S3b emitter | PASS |
 | 2026-06-29 | 0.8.0_AE_CloudComp~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-06-29 | 0.4.0_DS_ClientPlatform | DATA_SSOTMG | comp-pipescript io/deployed + boto3 + ds-commit-gate | Schwab-SSOT cutover: G11-G14 wire, S+ stage, headline-AUA grounding (boto3 xref-split: +48.7M scare -> -3.6M fresh), xref-location fix (all 4 dims), DATEMODE-B+bd-silver recovery; io grounded the A/B/C/D DAG+publisher | PASS |
+| 2026-06-29 | 0.4.0_DS_ClientPlatform | DATA_ANALYTICS.GOLD-CORE.ds-build-canonical-gold-g3-g10 | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
