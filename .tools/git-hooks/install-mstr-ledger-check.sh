@@ -82,7 +82,7 @@ if [[ "$author" =~ $comp_re ]]; then
         fi
         if [[ "$carve_out_ok" != "1" ]]; then
             echo "BLOCKED: COMP-serial author '$author' must commit to COMP branch (currently on '$branch')." >&2
-            echo "Switch: git checkout COMP    (or use the feature_clb worktree which is pinned to COMP)" >&2
+            echo "Switch: git checkout COMP    (feature_clb worktree RETIRED, LD-0222 -- CL paused; re-home TBD)" >&2
             echo "(Path B carve-out: .claude/skills/** workspace-shared substrate is permitted on CLOUD; substantive CL-fabric content stays on COMP)" >&2
             exit 1
         fi

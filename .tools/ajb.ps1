@@ -160,8 +160,12 @@ function ajb {
     } else {
         switch -Regex ($base) {
             '^(1\.1\.0_SA_CTO|2\.1\.0_SA_COO|3\.1\.0_SA_CVO|2\.1\.0_SC_CompLearns|1\.[1-4]\.0_DS_CompLearns)$' {
-                $ws = 'C:\Users\AndrewBerman\Desktop\feature_clb'
-                Write-Host "[ajb] CL-serial routing -> feature_clb cwd (LD-0088 A.1)" -ForegroundColor Cyan
+                # feature_clb worktree RETIRED (LD-0222, Andrew-direct 2026-06-29) + CL agents PAUSED.
+                # Route CL serials to ws-root as the fallback so a launch does NOT hard-error on the
+                # deleted worktree (was: $ws = ...\feature_clb -> Test-Path fail -> Write-Error). The CL
+                # serial-routing identity (this case + the pattern) is PRESERVED for re-home if CL resumes.
+                $ws = 'C:\Users\AndrewBerman\Desktop\ajb_workspace'
+                Write-Host "[ajb] CL worktree RETIRED (LD-0222); CL paused -> ws-root fallback (re-home TBD)" -ForegroundColor Yellow
             }
             default {
                 $ws = 'C:\Users\AndrewBerman\Desktop\ajb_workspace'
