@@ -153,3 +153,37 @@ def test_parity_settle_guard():
                           lambda k: s3.get(k), modified=mod, now=now)
     assert v["s"][0] == "SETTLING", "a <180s-old divergence is an in-flight deploy, not a break"
     assert v["h"][0] == "POSSIBLE-HALF-LANDED", "a hours-old divergence is a real half-landed deploy"
+
+
+def test_reconcile_deployed_holds_half_landed(tmp_path, monkeypatch):
+    # CVO gate b56df0083 C1 safety: the UNATTENDED post-apply reconcile must reconcile a STALE-RECORD
+    # (live==S3) but HOLD a half-landed (live!=S3) -- record UNCHANGED, exit 1 (alert) -- never launder.
+    import json
+    smdir = tmp_path / "infra" / "aws" / "lambda" / "ci"
+    smdir.mkdir(parents=True)
+    sm = {"functions": {
+        "stale": {"artifact_sha256": _GOOD, "artifact_s3_key": "ks"},   # live==S3 -> reconcile
+        "half":  {"artifact_sha256": _GOOD, "artifact_s3_key": "kh"},   # live!=S3 -> HOLD
+    }}
+    (smdir / "lambda-source-map.json").write_text(json.dumps(sm))
+    LIVE = "Z" * 43 + "="
+    monkeypatch.setattr(lm, "live_code_shas", lambda: {"stale": LIVE, "half": LIVE})
+    monkeypatch.setattr(lm, "s3_artifact_sha", lambda k: {"ks": LIVE, "kh": "Q" * 43 + "="}.get(k))
+    monkeypatch.setattr(lm, "live_lambda_modified", lambda: {})        # no settling -> persistent
+    rc = lm.reconcile_deployed(str(tmp_path), ["stale", "half"], settle_retry_seconds=0)
+    assert rc == 1, "a held half-landed must exit 1 (C1 alert)"
+    out = json.loads((smdir / "lambda-source-map.json").read_text())
+    assert out["functions"]["stale"]["artifact_sha256"] == LIVE, "stale-record reconciled to live"
+    assert out["functions"]["half"]["artifact_sha256"] == _GOOD, "half-landed record UNCHANGED (not laundered)"
+    actions = {json.loads(l)["fn"]: json.loads(l)["action"]
+               for l in (smdir / "source-map-reconcile-audit.jsonl").read_text().splitlines()}
+    assert actions["stale"] == "reconcile" and actions["half"] == "HOLD", "C3 audit records both"
+
+
+def test_reconcile_deployed_fail_safe_empty_set(tmp_path):
+    # FAIL-SAFE (CTO condition): empty/unknown deployed set -> NO-OP exit 0 (never reconcile-all)
+    smdir = tmp_path / "infra" / "aws" / "lambda" / "ci"
+    smdir.mkdir(parents=True)
+    (smdir / "lambda-source-map.json").write_text('{"functions": {"x": {"artifact_sha256": "%s"}}}' % _GOOD)
+    assert lm.reconcile_deployed(str(tmp_path), [], settle_retry_seconds=0) == 0
+    assert lm.reconcile_deployed(str(tmp_path), ["no-such-fn"], settle_retry_seconds=0) == 0
