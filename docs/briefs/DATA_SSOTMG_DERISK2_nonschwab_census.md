@@ -87,10 +87,30 @@
 
 ## 5. Implications for the cutover (feeds PRD §10 + D5)
 
-1. **The held-away-in-Schwab cohort ($87-125M) is not a true BD-only bridge need.** It is Schwab-side (Schwab master rep_code) and ~97% live — it should come across with the Schwab-SSOT data itself once fee-mapping/positions are reconciled. Confirm these accounts appear in the Schwab ACC/RPS feeds at cutover; they do not require the Fidelity bridge.
+1. **The held-away-in-Schwab cohort ($87-125M) is live but its VALUE is BD-only — it does NOT come across with the RPS-based canonical cutover.** [SUPERSEDED by §5a scope-verify — the original optimistic "comes across with the cutover" claim is WRONG; see §5a.]
 2. **The irreducible BD bridge = the FULLY-NON-SCHWAB $166.3M** — no Schwab path. This is the real scope of the residual BD dependency and the D5 Fidelity-Data-Delivery decision.
 3. **The bridge is NOT mostly dormant** (contra the optimistic PRD §10 framing) — at least ~$69M is demonstrably live, and the ~$90M "no-txn" remainder is held-away product/unattributed that BD cannot measure, not proven-dormant. **Recommendation: do not assume the bridge shrinks to near-nothing on dormancy; size the Fidelity decision against the full ~$166M (with ~$64M of it static insurance/annuity/DAF product that may need a holding-snapshot, not a transaction feed).**
 4. **To firm up the split permanently:** adopt the long-standing recommendation `ADVI_49FRECN.006` — ingest an **explicit custodian column** into silver/allocations from the BD bronze feed (today it is rep_code-inferred). That removes the −20%/+15% definitional ambiguity in §2 and the no-RepCode $125.7M uncertainty.
+
+---
+
+## 5a. Scope-verify addendum (CTO-requested 2026-06-29) — does canonical_holdings capture held-away-in-Schwab?
+
+CTO flagged the cutover risk: if canonical excludes held-away-in-Schwab, the cutover silently drops it. Grounded against live S3 (canonical_holdings 2026-06-24, schwab/silver/acc 2026-06-24, account_xref 2026-04-21):
+
+**GROUNDED (state):**
+- canonical_holdings = **5,892 accts / $1,591.2M**, and it is a **CLEAN SUBSET of Schwab ACC (6,997 accts)** — 0 positioned accounts orphaned from the account master (good integrity).
+- **1,105 Schwab-ACC accounts have NO RPS position** (Schwab-known, unpositioned = the Schwab-side held-away/cash/closed universe).
+- Of the BD-side **held-away-in-Schwab cohort ($86.9M): only 11.9% ($10.4M, 54 accts) is PRESENT in canonical_holdings; 88.1% ($76.5M, 431 accts) is ABSENT.** Fully-non-Schwab: 100% absent (as expected — the true bridge).
+- **Schwab ACC carries NO balance/market_value column** (account-master only: ids/titles/taxpayer/manager/state). So Schwab delivers neither a position (RPS) nor a balance (ACC) for the held-away assets.
+
+**GROUNDED (mechanism):** the held-away VALUE exists in **neither** Schwab feed we hold (not RPS positions, not ACC balances) — it lives **only in BD silver/allocations**. The RPS-positions-based canonical_holdings therefore *structurally cannot* source it. This is not a canonical bug; it is the RPS scope.
+
+**DECISION-GRADE implication (corrects §5.1 + my earlier "comes across with the cutover" line):** held-away-in-Schwab is **BD-bridge-dependent like fully-non-Schwab**, UNLESS Schwab delivers a held-away/balances feed (none exists today). So the BD-dependent residual **NOT captured by canonical = fully-non-Schwab $166.3M + held-away-in-Schwab-absent $76.5M ≈ $243M** (not "only $166M irreducible"). $1,591.2M canonical + ~$253M non-Schwab ≈ $1.844B firm-wide served book — reconciles.
+
+**For CVO TO-4 Class-D parity subset:** the positioned parity subset = canonical_holdings (5,892 / $1.591B). The held-away-in-Schwab (unpositioned) is a **separate parity class** — no Schwab position/balance to parity-match against; it cannot be cut over on canonical_holdings and must be handled explicitly (Schwab held-away/balances feed, or remain on the BD bridge).
+
+**Next grounding step (flagged, not asserted):** whether Schwab CAN deliver a held-away/balances feed for the 1,105 unpositioned ACC accounts is the determinant of whether held-away-in-Schwab can leave the BD bridge — a Schwab-delivery question (D2/D5), not groundable from current artifacts.
 
 ---
 
