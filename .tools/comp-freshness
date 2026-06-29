@@ -1073,6 +1073,7 @@ Exit codes:
 
 Examples:
   comp-freshness chain bd
+  comp-freshness bd            # shorthand for: chain bd
   comp-freshness chain inf
   comp-freshness ddb opal-users-v2
   comp-freshness ddb opal-users-v2 --pattern "FIRM#"
@@ -1108,6 +1109,13 @@ Examples:
     sub.add_parser("all", help="Check all S3 (bd+inf+cot) + all DDB entries in one pass")
 
     parser.add_argument("--list", action="store_true", help="Print all cadence config (S3 + DDB)")
+
+    # Firm-shorthand convenience (Andrew-direct via CVO 2026-06-29): accept a bare
+    # bd|inf|cot as a top-level alias that dispatches to `chain <firm>` so the
+    # firm-first form never dead-ends on a raw argparse 'invalid choice'. Only fires
+    # when the FIRST token is exactly a firm shorthand; chain/ddb/all/--list unaffected.
+    if len(sys.argv) > 1 and sys.argv[1] in ("bd", "inf", "cot"):
+        sys.argv.insert(1, "chain")
 
     args = parser.parse_args()
 

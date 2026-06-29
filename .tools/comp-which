@@ -141,7 +141,7 @@ RULES = [
       # is the comp-freshness content-mode lane (CTO spec) -- route here for now.
       "current", "actually current", "still current", "how current", "still fresh"],
      "data freshness (upstream ready to run a chain)",
-     ["comp-freshness chain <bd|inf>", "comp-freshness script <id>"],
+     ["comp-freshness chain <bd|inf|cot>", "comp-freshness script <id>"],
      "is the upstream S3 data fresh enough to run a gold chain (chain_ready)"),
     (["invariant", "invariants", "validate artifact", "satisfy invariants", "before upload",
       "before s3 upload", "artifact valid", "passes validation"],
