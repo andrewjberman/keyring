@@ -1,4 +1,6 @@
-# Tool Spec Proposal — `comp-lambdamap parity` (a.k.a. comp-derivedrift): the read-only 3-leg deploy-parity classifier
+# Tool Spec Proposal — `comp-lambdamap parity`: the read-only 3-leg deploy-parity classifier
+
+> **NAME DECISION (Andrew-direct 2026-06-29):** canonical name = **`comp-lambdamap parity`**. The `comp-derivedrift` alias is **DROPPED** — Andrew prefers `comp-lambdamap parity` and judged `derivedrift` the weaker name. The `comp-lambdamap` prefix already disambiguates it from `comp-parity` (data/served parity), so no alias is needed for disambiguation. References to the alias below are superseded by this decision.
 
 **archetype:** IMPLEMENT (spec)
 **Author:** 3.0.0_SA_CVO | **Date:** 2026-06-29 | **For:** 1.0.0_SA_CTO (arch-gate: tool-vs-subcommand + naming) + 0.7.0_AE_CloudOps~B (build, owns comp-lambdamap) · cc 2.0.0_SA_COO
@@ -28,9 +30,9 @@ This table IS: (a) the parity answer, (b) the `derive --write` gate decision (ST
 ## NAMING DISAMBIGUATION (CTO arch-gate 2026-06-29 — be deliberate)
 TWO distinct "parity" concepts now exist — keep them clearly named so nobody conflates them:
 - **`comp-parity`** = **DATA / served parity** — canonical-build vs BD-served (the DATA_SSOTMG cutover gate, TO-4). "Is my DATA in parity."
-- **`comp-lambdamap parity`** (alias **`comp-derivedrift`**) = **DEPLOY parity** — source-map record vs live CodeSha256 vs S3-artifact sha (deploy integrity). "Is my DEPLOY in parity."
+- **`comp-lambdamap parity`** = **DEPLOY parity** — source-map record vs live CodeSha256 vs S3-artifact sha (deploy integrity). "Is my DEPLOY in parity."
 
-The `comp-derivedrift` alias actively HELPS here — it gives the deploy-parity surface a name that does NOT collide with the data-parity one.
+The `comp-lambdamap` prefix already keeps this distinct from `comp-parity` (data) — no alias needed. (Andrew-direct: `comp-derivedrift` alias dropped.)
 
 ## Shape (recommendation — CTO arch-gates the call)
 **Promote `classify_reconcile` into a read-only `comp-lambdamap parity` subcommand**, reusing the existing live-read + source-map-read + S3-head machinery — NOT a from-scratch separate `comp-derivedrift` binary (which would duplicate the boto/parse layer). If a distinct discoverable name is wanted, register `comp-derivedrift` in comp-which routing → `comp-lambdamap parity` (alias, not a second implementation). Two surfaces on one engine: `parity` = READ (classify, no mutation), `derive --write` = WRITE (acts on the same classification, STALE-RECORD only).
