@@ -13,12 +13,31 @@
   - Shim = inject `BASE` + a `date` arg (replace the 4 module-level constants), body untouched. **TRIVIAL** (thin wrapper / env). Deps: `pandas`, `openpyxl`.
   - **HOST INSIGHT (feeds Andrew's UI=HYBRID call):** `BASE` is a **OneDrive SHARED library** path ("Opal Capital\Shared - Documents\TAX"), NOT machine-local-only -> reachable via the **M365 gateway** -> cloud-stageable. So step-3 hosts cleanly HYBRID: M365/OneDrive intake of the Tax Lot CSVs -> run the parameterized converter (S3-side or a thin local runner) -> write `Initial Holding` back to OneDrive. No hard machine-local dependency for step-3.
 
-## Step-5 convert_optimization.py -- NOT LOCATABLE -> route to Yang/UA (Rule 22, do NOT infer I/O)
-- **Searched (this machine):** repo (absent), `C:\Users\AndrewBerman\{Downloads,Desktop,Documents}` (absent), `C:\Users\YangLiu` (**directory not present on this machine**). Not findable.
-- Per the PRD S0.2 mandate + COO + Rule 22: **request the file from Yang via 0.0.1_UA_mstools** -- do NOT infer or reconstruct its I/O contract. It is the OPEN blocker for the step-5 half.
-- Once the source lands: same-pattern S0.2 -- provenance-lock under `tools/tax_sma/canonical/`, pin its I/O contract from source, assess host (no verbatim directive yet for step-5, so a normal assessment -- but default to the same verbatim+parameterize posture unless told otherwise).
+## Step-5 convert_optimization.py -- LOCATED + provenance-locked + contract-pinned (UPDATED 2026-06-29)
+**STATUS CHANGE:** the file LANDED after the original brief was authored (the Yang/UA request worked). It is
+now in-repo + committed -- the original "NOT LOCATABLE" status is SUPERSEDED.
+- **Located + locked:** `tools/tax_sma/canonical/convert_optimization.py` (committed bfa81d9da, "capture canonical
+  step-5 converter + Yang source-spec"). Origin `C:\Users\AndrewBerman\Downloads\convert_optimization.py` (118 lines).
+- **Byte-fidelity (verified 2026-06-29):** the committed canonical copy is **BYTE-IDENTICAL** to Yang's Downloads
+  source (`diff` clean; 4004 bytes both). Landed VERBATIM (still carries the 3 box-drawing `U+2500` comment
+  separators -- a cosmetic ASCII-compliance deviation to optionally normalize like step-3's, ZERO logic impact).
+- **I/O contract (source-confirmed from the 118-line actual source):**
+  - IN: `{BASE}\optimization\{YYYYMMDD}\Acct-N.xlsx` (Axioma optimization output, one per account; reads the
+    **"Trade List"** sheet, header row = first cell == "Symbol", uses cols `Ticker` / `Trade Type` / `Traded Shares`)
+    + `{BASE}\Tax SMA Accounts.xlsx` (maps `Index` col -> `Account Number`, digits-only key).
+  - OUT: `{BASE}\Trade\{YYYYMMDD}\schwab_upload_{YYYYMMDD}.csv` -- **NO header**, rows `AccountNumber,Action,Quantity,Ticker`.
+    Action map: BUY->`B`, SELLSHORT/SHORT->`SS`, SELLLONG/LONG->`SL`, else->`S`. Qty = `abs(round(Traded Shares))` int.
+    Ticker `.`->`/`. Skips CASH_USD / zero-qty / blank-ticker / Total rows.
+- **HARD-GUARDRAIL CONFIRMED (load-bearing finding):** the script's terminal action is `OUTPUT_FILE.write_text(...)`
+  (line 115) -- it **GENERATES the trade CSV and STOPS. No Schwab upload, no trade execution, no API/browser post.**
+  So the PRD's non-negotiable guardrail (system generates, HUMAN reviews+executes) is satisfied by Yang's own code
+  at step-5; the automation just needs to surface the generated file for a human to upload.
+- **Host / shim effort (same posture as step-3):** hardcodes `BASE` (same OneDrive shared TAX dir) + `TODAY =
+  date.today()` (lines 21-26). Shim = inject `{BASE}` + `{date}`, body untouched -- TRIVIAL. Deps: `pandas` (+ openpyxl
+  for `read_excel`). HYBRID-hostable via the OneDrive-shared BASE, same as step-3.
 
-## Net assessment
-- **convert_cost_basis:** done-grounded -- located, drift-verified, contract-pinned, shim trivial, HYBRID-hostable via the OneDrive-shared BASE. Cheaper than a port (Andrew #3).
-- **convert_optimization:** BLOCKED on file delivery from Yang/UA. I/O both-directions = confirmed for step-3, UNKNOWN for step-5 pending the source.
-- **Architecture input:** the OneDrive-shared BASE supports CTO's HYBRID lean -- the file legs ride the M365 gateway + S3; only Yang's Factset (step 4) is irreducibly local.
+## Net assessment (UPDATED 2026-06-29 -- S0.2 now COMPLETE, both converters locked)
+- **convert_cost_basis (step-3):** located, drift-verified, contract-pinned, shim trivial, HYBRID-hostable via the OneDrive-shared BASE. Cheaper than a port (Andrew #3).
+- **convert_optimization (step-5):** **NO LONGER BLOCKED** -- located + committed (bfa81d9da, byte-identical to Yang's source), I/O contract pinned from the 118-line source (both directions), shim trivial, HYBRID-hostable. **Hard-guardrail confirmed in-code** (generates the CSV, never executes/uploads).
+- **S0.2 verdict:** BOTH converters are provenance-locked + contract-pinned + verbatim-faithful + trivially shimmable. S0.2 is COMPLETE. Remaining S0 gates = S0.1 (the Schwab-lot cost-basis audit -- the step-2 lookup-vs-pull lever) + S0.3 (the email PRELIM/final disambiguation rule).
+- **Architecture input:** both converters' OneDrive-shared BASE supports CTO's HYBRID lean -- the file legs ride the M365 gateway + S3; only Yang's Factset (step 4) is irreducibly local. The step-5 generate-not-execute property means the trade-file leg needs only a "file ready for human upload" surface, no execution-credential design.
