@@ -118,3 +118,21 @@ def test_sha_plain_note_does_not_suppress_real_drift():
     r = lm.compute_sha_findings(funcs, {"y": _GOOD2})   # recorded != live, no disposition marker
     assert [d[0] for d in r["drift"]] == ["y"], "a plain _note must not disposition-away real drift"
     assert not r["dispositioned"]
+
+
+def test_classify_reconcile_holds_half_landed_and_unverifiable():
+    # the CVO binding gate (ed13b714a) baked into the tool: --write reconciles ONLY STALE-RECORD
+    # (live == S3 artifact); POSSIBLE-HALF-LANDED (live != S3) + UNVERIFIABLE (no S3 sha) are HELD,
+    # else reconcile-to-live would LAUNDER a half-landed deploy.
+    drift = [
+        ("stale",      _GOOD,  "LIVEsha=="),   # live == S3 artifact -> SAFE
+        ("halflanded", _GOOD2, "LIVEbad=="),   # live != S3 artifact -> HOLD
+        ("unverif",    _GOOD,  "LIVEunk=="),   # S3 sha unreadable    -> HOLD
+    ]
+    key_of = lambda n: f"k/{n}.zip"
+    s3map = {"k/stale.zip": "LIVEsha==", "k/halflanded.zip": "OTHERsha==", "k/unverif.zip": None}
+    safe, unsafe = lm.classify_reconcile(drift, key_of, lambda k: s3map.get(k))
+    assert [s[0] for s in safe] == ["stale"], "only live==S3 is safe to reconcile"
+    assert sorted(u[0] for u in unsafe) == ["halflanded", "unverif"], "half-landed + unverifiable must be HELD"
+    assert any("HALF-LANDED" in u[3] for u in unsafe if u[0] == "halflanded")
+    assert any("UNVERIFIABLE" in u[3] for u in unsafe if u[0] == "unverif")
