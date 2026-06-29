@@ -199,6 +199,14 @@ def live_code_shas():
 # CORRUPT record (e.g. a Windows path leaked by record-terraform-deploy), NOT a
 # real deploy-drift -- distinguishing the two routes to different fixes.
 _B64_SHA256 = re.compile(r"^[A-Za-z0-9+/]{43}=$")
+# An entry whose `_note` documents an INTENTIONAL artifact-vs-live divergence
+# (e.g. live = a bundled package, the S3 artifact is a stale re-zip NOT to apply,
+# TF lifecycle ignore_changes) is NOT drift. Recognize the dispositioned class
+# and suppress it -- a recorded artifact_sha256 that intentionally != live
+# CodeSha256 must not false-flag as SHA_DRIFT (and must not mislead a re-record).
+# Conservative-correctness, same discipline as the comp-iam condition-fix.
+_DISPOSITION_RE = re.compile(r"intentional-leave|ignore_changes|not[\s-]?to[\s-]?apply",
+                             re.IGNORECASE)
 
 
 def compute_sha_findings(funcs: dict, live):
@@ -206,10 +214,11 @@ def compute_sha_findings(funcs: dict, live):
     functions{} and a {name: live_CodeSha256} map, classify each recorded entry.
     artifact_sha256 and AWS CodeSha256 are BOTH base64 SHA-256 -> directly ==.
 
-    CORRUPT_RECORD (recorded value not a valid base64 sha) is split out from
-    SHA_DRIFT so a source-map data bug isn't mis-reported as a deployed-code
-    divergence."""
-    drift, not_live, corrupt = [], [], []
+    CORRUPT_RECORD (recorded value not a valid base64 sha) is split from
+    SHA_DRIFT (a data bug isn't a deployed-code divergence); DISPOSITIONED (a
+    divergence the entry's _note documents as intentional) is also split out so
+    it neither false-flags nor invites a wrong re-record."""
+    drift, not_live, corrupt, dispositioned = [], [], [], []
     match = no_record = 0
     for name, e in sorted(funcs.items()):
         rec = e.get("artifact_sha256")
@@ -223,10 +232,12 @@ def compute_sha_findings(funcs: dict, live):
             not_live.append(name)
         elif live[name] == rec:
             match += 1
+        elif _DISPOSITION_RE.search(str(e.get("_note", ""))):
+            dispositioned.append((name, rec, live[name]))
         else:
             drift.append((name, rec, live[name]))
     return {"match": match, "no_record": no_record, "drift": drift,
-            "not_live": not_live, "corrupt": corrupt}
+            "not_live": not_live, "corrupt": corrupt, "dispositioned": dispositioned}
 
 
 def sha_check(root: str) -> int:
@@ -244,7 +255,7 @@ def sha_check(root: str) -> int:
     print(f"  functions: {len(funcs)} | recorded-sha: {recorded} | no-record: {r['no_record']} "
           f"| live-fns-in-acct: {len(live)}")
     print(f"  MATCH: {r['match']} | SHA_DRIFT: {len(r['drift'])} | NOT_LIVE: {len(r['not_live'])} "
-          f"| CORRUPT_RECORD: {len(r['corrupt'])}")
+          f"| CORRUPT_RECORD: {len(r['corrupt'])} | DISPOSITIONED: {len(r['dispositioned'])}")
     for name, rec, liveh in r["drift"]:
         print(f"    [SHA_DRIFT] {name}: source-map={rec[:16]}.. != live={liveh[:16]}.. "
               f"(live running a DIFFERENT artifact than recorded -- half-landed / out-of-band update)")
@@ -254,8 +265,12 @@ def sha_check(root: str) -> int:
     for name, rec in r["corrupt"]:
         print(f"    [CORRUPT_RECORD] {name}: artifact_sha256 is not a base64 sha: {rec[:40]!r} "
               f"(source-map data bug -- record-terraform-deploy wrote a non-sha value; re-record)")
+    for name, rec, liveh in r["dispositioned"]:
+        print(f"    [DISPOSITIONED] {name}: recorded != live, but _note documents an intentional "
+              f"divergence (e.g. bundled pkg / ignore_changes / S3-artifact not-to-apply) -- NOT drift")
     if not (r["drift"] or r["not_live"] or r["corrupt"]):
-        print("  CLEAN: every recorded artifact_sha256 matches the live CodeSha256.")
+        extra = f" ({len(r['dispositioned'])} dispositioned divergence(s) suppressed)" if r["dispositioned"] else ""
+        print(f"  CLEAN: every non-dispositioned recorded artifact_sha256 matches the live CodeSha256.{extra}")
         return 0
     return 1
 
