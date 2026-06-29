@@ -102,3 +102,19 @@ def test_sha_corrupt_record_not_miscounted_as_drift():
     r = lm.compute_sha_findings(funcs, {"x": _GOOD})
     assert not r["drift"], "path-leak corrupt record must not be reported as deploy-drift"
     assert r["corrupt"] and r["corrupt"][0][0] == "x"
+
+
+def test_sha_dispositioned_note_suppresses_drift():
+    # an entry whose _note documents an intentional divergence is DISPOSITIONED, not SHA_DRIFT
+    funcs = {"vf": {"artifact_sha256": _GOOD, "_note": "S3 artifact is a stale re-zip NOT to apply; TF ignore_changes; intentional-leave"}}
+    r = lm.compute_sha_findings(funcs, {"vf": _GOOD2})   # recorded != live, but dispositioned
+    assert not r["drift"], "dispositioned divergence must not be SHA_DRIFT"
+    assert [d[0] for d in r["dispositioned"]] == ["vf"]
+
+
+def test_sha_plain_note_does_not_suppress_real_drift():
+    # FALSE-NEGATIVE GUARD: a generic _note WITHOUT a disposition marker must NOT suppress real drift
+    funcs = {"y": {"artifact_sha256": _GOOD, "_note": "just a normal description, deployed by the daily job"}}
+    r = lm.compute_sha_findings(funcs, {"y": _GOOD2})   # recorded != live, no disposition marker
+    assert [d[0] for d in r["drift"]] == ["y"], "a plain _note must not disposition-away real drift"
+    assert not r["dispositioned"]
