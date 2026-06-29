@@ -28,6 +28,7 @@ Author: 0.7.0_AE_CloudOps.
 from __future__ import annotations
 
 import argparse
+import datetime
 import json
 import os
 import re
@@ -189,6 +190,36 @@ def live_code_shas():
         for page in cl.get_paginator("list_functions").paginate():
             for fn in page.get("Functions", []):
                 out[fn["FunctionName"]] = fn.get("CodeSha256", "")
+        return out
+    except Exception:
+        return None
+
+
+def _parse_lambda_mtime(s):
+    """list-functions LastModified ('2026-06-09T15:15:50.000+0000') -> aware
+    datetime, or None. Used by the parity settle-guard."""
+    if not s:
+        return None
+    try:
+        return datetime.datetime.strptime(s, "%Y-%m-%dT%H:%M:%S.%f%z")
+    except Exception:
+        try:
+            return datetime.datetime.fromisoformat(s.replace("Z", "+00:00"))
+        except Exception:
+            return None
+
+
+def live_lambda_modified():
+    """{name: aware-datetime of last code update} from one list-functions call,
+    or None if unavailable. Feeds the parity settle-guard (an in-flight deploy
+    makes live momentarily != S3 -- a transient, not a half-landed break)."""
+    try:
+        import boto3  # noqa: PLC0415
+        cl = boto3.client("lambda", region_name="us-east-1")
+        out = {}
+        for page in cl.get_paginator("list_functions").paginate():
+            for fn in page.get("Functions", []):
+                out[fn["FunctionName"]] = _parse_lambda_mtime(fn.get("LastModified"))
         return out
     except Exception:
         return None
@@ -368,17 +399,27 @@ def derive(root: str, write: bool = False) -> int:
 _PARITY_EXIT = {
     "MATCH": 0, "STALE-RECORD": 0, "DISPOSITIONED": 0, "NO-RECORD": 0,
     "POSSIBLE-HALF-LANDED": 1, "CORRUPT-RECORD": 1, "NOT-LIVE": 1,
-    "UNVERIFIABLE": 2,
+    "UNVERIFIABLE": 2, "SETTLING": 2,
 }
-_PARITY_ORDER = ["MATCH", "STALE-RECORD", "DISPOSITIONED", "POSSIBLE-HALF-LANDED",
-                 "CORRUPT-RECORD", "NOT-LIVE", "UNVERIFIABLE", "NO-RECORD"]
+_PARITY_ORDER = ["MATCH", "STALE-RECORD", "DISPOSITIONED", "SETTLING",
+                 "POSSIBLE-HALF-LANDED", "CORRUPT-RECORD", "NOT-LIVE",
+                 "UNVERIFIABLE", "NO-RECORD"]
+_SETTLE_SECONDS = 180  # an in-flight deploy < this old = SETTLING, not a break
 
 
-def compute_parity(funcs, live, key_of, sha_of_s3):
+def compute_parity(funcs, live, key_of, sha_of_s3, modified=None, now=None,
+                   settle_seconds=_SETTLE_SECONDS):
     """Pure 3-leg deploy-parity classifier -- record (source-map) x live
     (CodeSha256) x s3 (artifact content-sha256). Returns {name: (verdict,
     detail)}. COST GUARD: sha_of_s3 is invoked ONLY for the non-MATCH divergent
-    subset (MATCH/NO-RECORD/CORRUPT/NOT-LIVE never touch S3). Spec 9ebcbb49f."""
+    subset (MATCH/NO-RECORD/CORRUPT/NOT-LIVE never touch S3). Spec 9ebcbb49f.
+
+    SETTLE-GUARD (CVO race finding): if `modified` ({name: aware-datetime of
+    last code update}) and `now` are supplied, a live!=S3 divergence whose live
+    was updated < settle_seconds ago is an in-flight deploy (live moved, S3/
+    record not yet) -> classified SETTLING (transient could-not-verify, exit 2),
+    NOT POSSIBLE-HALF-LANDED -- so a CI gate doesn't flap red during normal
+    deploys. Omit modified/now to disable (pure-test default)."""
     out = {}
     for name, e in sorted(funcs.items()):
         rec = e.get("artifact_sha256")
@@ -404,7 +445,13 @@ def compute_parity(funcs, live, key_of, sha_of_s3):
             elif s3 == live[name]:
                 out[name] = ("STALE-RECORD", "live == S3 artifact; record stale (safe derive --write)")
             else:
-                out[name] = ("POSSIBLE-HALF-LANDED", "live != S3 artifact -- deploy problem, investigate")
+                mt = (modified or {}).get(name)
+                age = (now - mt).total_seconds() if (mt is not None and now is not None) else None
+                if age is not None and age < settle_seconds:
+                    out[name] = ("SETTLING",
+                                 f"live updated {int(age)}s ago (deploy in flight) -- transient, re-check after it lands")
+                else:
+                    out[name] = ("POSSIBLE-HALF-LANDED", "live != S3 artifact -- deploy problem, investigate")
     return out
 
 
@@ -418,8 +465,11 @@ def parity(root: str, as_json: bool = False) -> int:
         else:
             print("comp-lambdamap parity -- UNAVAILABLE: could not read live CodeSha256 (boto3/creds absent).")
         return 2
+    modified = live_lambda_modified()  # settle-guard input (None -> guard off)
+    now = datetime.datetime.now(datetime.timezone.utc)
     verdicts = compute_parity(funcs, live,
-                              lambda n: funcs[n].get("artifact_s3_key"), s3_artifact_sha)
+                              lambda n: funcs[n].get("artifact_s3_key"), s3_artifact_sha,
+                              modified=modified, now=now)
     counts = {v: 0 for v in _PARITY_ORDER}
     for _name, (verdict, _d) in verdicts.items():
         counts[verdict] = counts.get(verdict, 0) + 1
@@ -441,14 +491,22 @@ def parity(root: str, as_json: bool = False) -> int:
     for name, (verdict, detail) in verdicts.items():
         if verdict not in ("MATCH", "NO-RECORD"):
             print(f"    [{verdict}] {name}: {detail}")
-    # coverage line -- how much of the divergent subset could be S3-verified
-    div = counts["STALE-RECORD"] + counts["POSSIBLE-HALF-LANDED"] + counts["UNVERIFIABLE"]
-    if div:
-        print(f"  coverage: {div - counts['UNVERIFIABLE']}/{div} divergent entries S3-verified "
-              f"({counts['UNVERIFIABLE']} UNVERIFIABLE -- content-sha256 metadata absent)")
+    # COVERAGE PROMINENCE (CVO P3): exit-0 must not read as whole-estate-verified.
+    total = len(funcs)
+    unchecked = counts["NO-RECORD"] + counts["UNVERIFIABLE"] + counts["SETTLING"]
+    checked = total - unchecked
+    bits = []
+    if counts["NO-RECORD"]:
+        bits.append(f"{counts['NO-RECORD']} NO-RECORD")
+    if counts["UNVERIFIABLE"]:
+        bits.append(f"{counts['UNVERIFIABLE']} UNVERIFIABLE")
+    if counts["SETTLING"]:
+        bits.append(f"{counts['SETTLING']} SETTLING")
+    cov = f"  COVERAGE: {checked}/{total} functions verified" + (f"; UNCHECKED: {', '.join(bits)}" if bits else "")
+    print(cov)
     verdict_word = {0: "IN-PARITY (no integrity break)", 1: "INTEGRITY BREAK",
-                    2: "UNVERIFIABLE (could-not-verify)"}[exit_code]
-    print(f"  => {verdict_word} (exit {exit_code})")
+                    2: "UNVERIFIABLE / SETTLING (could-not-verify)"}[exit_code]
+    print(f"  => {verdict_word} over the {checked} verified (exit {exit_code})")
     return exit_code
 
 
