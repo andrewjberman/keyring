@@ -247,8 +247,14 @@ def validate_config(cfg):
         sid = s.get("id", "<no-id>")
         if not s.get("canonical", {}).get("table"):
             issues.append(f"correctness/{sid}: missing canonical.table")
-        if not s.get("schwab_raw", {}).get("table"):
-            issues.append(f"correctness/{sid}: missing schwab_raw.table (the custodian reference)")
+        ctype = s.get("correctness_type")
+        # PASSTHROUGH -> must name a schwab_raw feed (exact-tie ref); DERIVED -> must name derived_from + a check.
+        if ctype == "passthrough" and not s.get("schwab_raw", {}).get("table"):
+            issues.append(f"correctness/{sid}: passthrough missing schwab_raw.table (the custodian tie ref)")
+        elif ctype == "derived" and not (s.get("derived_from") and s.get("check")):
+            issues.append(f"correctness/{sid}: derived missing derived_from + check (the reconciliation spec)")
+        elif ctype not in ("passthrough", "derived"):
+            issues.append(f"correctness/{sid}: correctness_type must be passthrough|derived, got {ctype!r}")
         if s.get("tolerance_class") not in ("A", "B", "C", "D"):
             issues.append(f"correctness/{sid}: bad tolerance_class {s.get('tolerance_class')!r}")
     for s in jump:
