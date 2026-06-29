@@ -9580,3 +9580,10 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-06-29 | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/mcp/comp_ferry_queue.json | PASS |
 2026-06-29 1.0.0_SA_CTO session-close: comp-freshness inf (WARN -> aum_snapshot N/A led the inf dig) + comp-pipescript io INF_D_00 (GAP: dynamic-prefix holdings read unmodeled -> the graph-blindspot finding, shared P1 dep for comp-xray/comp-drift) + comp-grep/comp-glob producer traces + comp-which rail held (gated 2 raw greps -> comp-grep).
 | 2026-06-29 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-06-29 | 3.0.0_SA_CVO | (no-TO) | comp-parity | comp-parity 49f | PASS |
+| 2026-06-29 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file data/canonical/schwab/parity/49f_parity... | PASS |
+| 2026-06-29 | 0.6.1_AE_PartnerETL | (no-TO) | comp-pipescript | comp-pipescript io INF_D_00e | PASS |
+| 2026-06-29 | 0.6.1_AE_PartnerETL | (no-TO) | comp-blast | comp-blast INF_D_00e | PASS |
+| 2026-06-29 | 0.6.1_AE_PartnerETL | (no-TO) | comp-blast | comp-blast header_metrics_fresh.json | FAIL |
+- 20260629T2146Z 0.8.0_AE_CloudComp: S5 module handed to CTO + COMPDIFF P1 engine built. comp-which manifest backstop SURFACED the comp-diff name collision (check-before-build -> CTO ruled comp-xray); owned-paths gate correctly blocked an AE write to org/modules ANY_EXEC lane; engine self-test 6/6. No new rich-tool gap beyond "no CLI-name-collision guard" (caught via comp-which+ls).
+| 2026-06-29 | 0.8.0_AE_CloudComp | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
