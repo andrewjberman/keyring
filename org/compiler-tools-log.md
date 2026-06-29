@@ -9534,3 +9534,7 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-06-29 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/drift-topology.yaml | PASS |
 - 2026-06-29 0.7.0_AE_CloudOps~B: G2 cut-1 boto3 edge oracle (212 ASSUMES/31 IN_SG/21 SG nodes, PASS) + ds-gate (PASS) + comp-kuzu via CVO (PARTIAL -- graph pre-increment, cert gated on fresh derive) + aws athena/glue/ec2/lambda/iam/sfn/ecs (R8-PRIV AC4 + G2 enum, rail-checked). Oracle caught a real derive gap (EC2->SG missing). Window: R8-PRIV close + G2 inc-1 + close-time-flip spec + MCP-auth grounding.
 | 2026-06-29 | 0.7.0_AE_CloudOps~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-06-29 | 0.7.0_AE_CloudOps~A | (no-TO) | comp-routes | comp-routes behaviors | PASS |
+| 2026-06-29 | 3.0.0_SA_CVO | (no-TO) | comp-kuzu | comp-kuzu MATCH (a:CloudNode)-[r:CloudEdge]->(s:CloudNode) WHERE s.node_type='SECURITY_... | PASS |
+2026-06-29T2111Z 0.4.0_DT_ClientPlatform portal-v2.1.128 promote: no comp-* tool fits a pure DEV->PROD git promote; verification via VALGATE D-1 + tsc gate + CI deploy.yml + parity diff + tag-peel.
+| 2026-06-29 | 0.4.0_DT_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
