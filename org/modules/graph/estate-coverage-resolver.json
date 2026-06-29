@@ -28,6 +28,7 @@
   "portal-infra",
   "ops-internal",
   "data-refresh",
+  "canonical-schwab",
   "m365-mcp"
  ],
  "resources_by_named_thread": {
@@ -2898,6 +2899,20 @@
     "s3://opal-data-portal-v2/json/valuation/risk_premium_data.json"
    ],
    "frontend_resolution": "portal/src/api/endpoints/valuation.ts (CANONICAL source comment) + portal-proxy getValuationData -> /api/general/valuation/valuation_data.json; getRiskPremiumData -> /api/general/valuation/risk_premium_data.json consumed by portal/src/pages/Valuation/tabs/RiskPremiumTab.tsx."
+  },
+  {
+   "thread_id": "canonical-schwab",
+   "named_thread": "canonical-schwab",
+   "family": null,
+   "owning_tool": "comp-pipescript",
+   "status": "in-scope",
+   "reachability_status": "frontend-orphan",
+   "reason": null,
+   "debtscan_flags": [],
+   "description": "",
+   "producers": [],
+   "served_artifacts": [],
+   "frontend_resolution": ""
   }
  ]
 }

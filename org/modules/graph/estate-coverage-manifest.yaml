@@ -1184,3 +1184,19 @@ threads:
     tool_pointer: null
     last_reviewed: '2026-06-15'
     debtscan_flags: []
+
+  # ---- canonical-schwab (1) -- Schwab-SSOT parallel canonical layer (DATA_SSOTMG; DS-owned; parallel/NOT-served, cutover-gated) ----
+  # Registered 2026-06-29 (CVO ratified DS proposal): closes the comp-pipescript io "Unknown script in tree"
+  # gap on the canonical/schwab medallion tree (28 scripts: 1 orch + 13 silver + 14 gold G1-G14). owning_tool
+  # = comp-pipescript by the CTO-ratified MEDALLION-ONLY boundary (it IS a silver+gold pipeline, the bd/cot/inf
+  # analog). Source data/canonical/schwab/ -> deployed s3://opal-data-bd/code/canonical/schwab/ (28 verified) ->
+  # data s3://opal-data-bd/canonical/schwab/{silver(17 fact+5 dim),gold(G1-G14)}/. frontend-orphan = parallel/
+  # not-yet-served (cutover-gated per TO-4 parity harness), not a true orphan.
+  - family: canonical-schwab
+    named_thread: canonical-schwab
+    owning_tool: comp-pipescript
+    status: in-scope
+    reachability_status: frontend-orphan
+    tool_pointer: null
+    last_reviewed: '2026-06-29'
+    debtscan_flags: []
