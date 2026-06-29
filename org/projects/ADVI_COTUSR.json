@@ -10,7 +10,7 @@
   ],
   "status": "active",
   "phase": "PHASE 0 -- REGISTERED 2026-06-29 (1.0.0_SA_CTO, Andrew-direct). Canonical provisioning task via create_user_v2.py; owner = provisioning lane (0.7.0_AE_CloudOps; DT normally, AE owns when DT offline). 3 cottonwood users, role=user, no scoping (see everything), mustChangePassword temp password. SEQUENCE: resolve the cottonwoodmail.com domain-allowlist gap -> run the canonical script per-user -> read-back verify (PROFILE + MEMBER + opal-partner-cottonwood) -> confirm login (no domain 403).",
-  "blocking": "The cottonwoodmail.com vs cottonwood.com domain-allowlist resolution (portal firmAccess.ts + FIRM#META + create_user_v2.py FIRMS) is the pre-req -- without it the @cottonwoodmail.com users 403 at the email-domain gate. COO assigns the owner + drives.",
+  "blocking": "DOMAIN RESOLVED (Andrew-direct 2026-06-29: 'whatever their emails are is the canonical one') -> cottonwoodmail.com IS the canonical cottonwood domain; the registered cottonwood.com was a placeholder. PRE-REQ FIX: CLEAN REPLACE cottonwood.com -> cottonwoodmail.com in all 3 places (FIRM#META.domain + firmAccess.ts FIRM_EMAIL_DOMAINS + create_user_v2.py FIRMS). cottonwood.com was a placeholder (Andrew 2026-06-29: 'dont need @cottonwood.com') -> just drop it; no retention/migration of any @cottonwood.com placeholder test accounts needed. THEN provision the 3 @cottonwoodmail.com users. COO assigns the owner + drives.",
   "created": "2026-06-29",
   "pods": [
     "0.7",
