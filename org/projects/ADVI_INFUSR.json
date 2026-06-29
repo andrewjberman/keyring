@@ -1,0 +1,24 @@
+{
+  "project_code": "ADVI_INFUSR",
+  "macro_code": "ADVI",
+  "name": "Inflection user provisioning -- 2 Inflection users into opal-users-v2 + the opal-partner-inflection table",
+  "description": "Andrew-direct 2026-06-29: provision 2 Inflection users via the canonical provisioning script (users/scripts/create_user_v2.py) into opal-users-v2 (USER#/PROFILE + FIRM#inflection/MEMBER) + the opal-partner-inflection table. USERS: patrick@inflectionwealth.com, noel@inflectionwealth.com. PROFILE: firmId=inflection, tier=advisor, role=user, firmRole=null (= Inf-level USER, non-admin -- mirrors Joe Brandenburg; NOT firmRole=admin like peter@). Inflection model: peter@=Inf-level admin (firmRole=admin, full Books), non-admins=Profile-tab-only. TEMP PASSWORD: Andrew-provided pattern, mustChangePassword=true. DOMAIN: inflectionwealth.com MATCHES the registered firm domain (no mismatch -- clean). FLAG (CTO-grounded): a 'Patrick' already appears as an existing inflection non-admin in the peter provisioning TO (ADVI_INFPRM.W4a) -> patrick@inflectionwealth.com may ALREADY exist; the canonical script is idempotent (email-index GetItem check) so verify-or-no-op; noel@ is the genuinely-new user. Spec: docs/reference/user-provisioning-firm-scope-profiles-20260528.md (inflection profile).",
+  "prds": [],
+  "related": [
+    "ADVI_INFPRM",
+    "ADVI_INFLEC",
+    "ADVI_INFMVP"
+  ],
+  "status": "active",
+  "phase": "PHASE 0 -- REGISTERED 2026-06-29 (1.0.0_SA_CTO, Andrew-direct). Canonical provisioning task via create_user_v2.py; owner = provisioning lane (0.7.0_AE_CloudOps; DT normally). 2 inflection users, role=user firmRole=null (Inf-level user, like Joe Brandenburg), mustChangePassword temp password. SEQUENCE: idempotent-check patrick@ (may pre-exist) -> run the canonical script for noel@ (+ patrick@ if absent) -> read-back verify (PROFILE + MEMBER + opal-partner-inflection, firmRole=null non-admin) -> confirm login + Profile-tab access. Domain matches (inflectionwealth.com) -> no domain blocker.",
+  "blocking": "None hard. patrick@ may pre-exist (idempotent verify); domain matches so no allowlist gap. COO assigns the owner + drives.",
+  "created": "2026-06-29",
+  "pods": [
+    "0.7",
+    "0.4"
+  ],
+  "pipeline": "user provisioning: create_user_v2.py -> opal-users-v2 (USER#/PROFILE + FIRM#inflection/MEMBER) + opal-partner-inflection; firmId=inflection, tier=advisor, role=user, firmRole=null (Inf-level user), mustChangePassword temp password",
+  "coo_lane": "2.0.0_SA_COO",
+  "thread_counter": 0,
+  "threads": []
+}

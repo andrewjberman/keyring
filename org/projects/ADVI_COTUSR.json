@@ -1,0 +1,23 @@
+{
+  "project_code": "ADVI_COTUSR",
+  "macro_code": "ADVI",
+  "name": "Cottonwood user provisioning -- 3 Cottonwood users into opal-users-v2 + the opal-partner-cottonwood table",
+  "description": "Andrew-direct 2026-06-29: provision 3 Cottonwood users via the canonical provisioning script (users/scripts/create_user_v2.py) into opal-users-v2 (USER#/PROFILE + FIRM#cottonwood/MEMBER) + the opal-partner-cottonwood table. USERS: jay.rubottom@cottonwoodmail.com, stephen.shipley@cottonwoodmail.com, christa.bass@cottonwoodmail.com. PROFILE: firmId=cottonwood, tier=advisor, role=user. NO user-scoping at the Cottonwood level (Andrew-direct) -- they see everything; cottonwood has no advisor-intelligence tab + no region/office scoping, so a standard user already sees the full firm view (no per-advisor drill to gate). TEMP PASSWORD: Andrew-provided pattern, mustChangePassword=true. LOAD-BEARING BLOCKER (CTO-grounded): the users are @cottonwoodmail.com but the REGISTERED cottonwood firm domain is cottonwood.com (FIRM#META.domain + firmAccess.ts FIRM_EMAIL_DOMAINS + create_user_v2.py FIRMS dict all = cottonwood.com). A domain MISMATCH will 403 them at the portal email-domain gate (and/or the script may reject the domain) UNLESS cottonwoodmail.com is added to the cottonwood email-domain allowlist in all 3 places, OR the firm domain is corrected to cottonwoodmail.com. Resolve before/with provisioning. Spec: docs/reference/user-provisioning-firm-scope-profiles-20260528.md (cottonwood profile).",
+  "prds": [],
+  "related": [
+    "ADVI_COTETL",
+    "ADVI_COTMVP"
+  ],
+  "status": "active",
+  "phase": "PHASE 0 -- REGISTERED 2026-06-29 (1.0.0_SA_CTO, Andrew-direct). Canonical provisioning task via create_user_v2.py; owner = provisioning lane (0.7.0_AE_CloudOps; DT normally, AE owns when DT offline). 3 cottonwood users, role=user, no scoping (see everything), mustChangePassword temp password. SEQUENCE: resolve the cottonwoodmail.com domain-allowlist gap -> run the canonical script per-user -> read-back verify (PROFILE + MEMBER + opal-partner-cottonwood) -> confirm login (no domain 403).",
+  "blocking": "The cottonwoodmail.com vs cottonwood.com domain-allowlist resolution (portal firmAccess.ts + FIRM#META + create_user_v2.py FIRMS) is the pre-req -- without it the @cottonwoodmail.com users 403 at the email-domain gate. COO assigns the owner + drives.",
+  "created": "2026-06-29",
+  "pods": [
+    "0.7",
+    "0.4"
+  ],
+  "pipeline": "user provisioning: create_user_v2.py -> opal-users-v2 (USER#/PROFILE + FIRM#cottonwood/MEMBER) + opal-partner-cottonwood; firmId=cottonwood, tier=advisor, role=user, no scoping, mustChangePassword temp password",
+  "coo_lane": "2.0.0_SA_COO",
+  "thread_counter": 0,
+  "threads": []
+}
