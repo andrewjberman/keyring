@@ -71,6 +71,38 @@ Disambiguated the twins NOW using git-commit + filesystem-mtime + CloudTrail + g
 2. **CloudTrail gives DEPLOY-heat (management events) but NOT invoke-heat** — Lambda `Invoke` is a CloudTrail DATA event (off by default), so CloudTrail-Invoke-absence is NOT proof of no-invocation. Combine CloudTrail-management (last deploy/touch) with GRAPH-reachability (0 inbound edges) for the cold verdict — neither alone is definitive. (For real invoke-heat the heat-fed needs CW Invocations metric or enabled data-events, not CloudTrail-management.)
 **So the per-layer heat sources are:** code → git-last-commit; infra → git + terraform-state + live-LastModified; cloud-liveness → CW-invocations-metric + graph-reachability (CloudTrail-management only for deploy-heat); data → S3-LastModified/last-access. This is the heat_band recency-source-per-layer the federation must encode.
 
+## FULL 27-THREAD SWEEP (Andrew-direct; debt organized by area, heat-ranked)
+Methodical pass over all 27 named threads. **Finding: the deprecated debt is CONCENTRATED — infra-scaffolding + bd-archive/diagnostics + a few dev/test twins; the analytics threads (advi-inf, news, market-overview, macroeconomics, model-portfolios, valuation, correlation, positioning, cma, factor-tilts, attribution, partners, mdpf) are comp-dups-CLEAN** (no EXACT collisions or content-dups; only name-near noise). So the push-cleanup is bounded, not estate-wide.
+
+### INFRA / DEPLOY-TOOLING (highest-value — whole dead trees)
+- **`infra/aws/multi-account/terraform/`** — **DEAD NEVER-APPLIED SCAFFOLD** (15 .tf, git 2026-01-03, **0 terraform.tfstate / 0 .terraform** = never deployed). It is the SOURCE of 6/10 TF collisions (step_functions_lambda_invoke prod+staging, lambda.this, log_group.lambda, event_target.lambda) — they "collide" with the live single-account TF only because this scaffold exists on disk. **TIER-1 dead.** The estate is single-account; this multi-account prod/staging scaffold was never stood up.
+- **`infra/aws/lambda/deprecated/`** — whole dir, old deploy tooling (git 2026-02-23, named-deprecated). TIER-1.
+
+### advi-bd (the heaviest debt thread)
+- `data/black_diamond/archive/**` — build_transaction_engine ×5 (`_GOOD`/`_BAD`/`_v1`/`_v2`), lambda_function ×variants (`_updated`/`_v1_backup`). TIER-1 (archive prototypes).
+- `bd-price-update/lambda_function_v1_backup.py` (git 2026-02-24) — TIER-1 backup-of-deployed.
+- **`bd-time-machine`** lambda + its TF + `snapshots/manifests` consumers — **CONFIRMED DEAD (Andrew)**. TIER-1 teardown → AE.
+- `bd_exporter` TF twin — KEEP terraform/bd-pipeline (hot); DEPRECATE ec2/bd-exporter/terraform (04-10 cold). TIER-2.
+- **`E_*` diagnostic gold scripts ×34** (`E_00`..`E_24`+: decompose_aua_gap, diagnose_*, trace_*, dedup_audit, validate_*, audit_*) — edgeless one-off DIAGNOSTICS (no pipeline edges per D1). TIER-3 archival candidates — git-heat each (the recent ones like `E_24.rebuild_fee_scorecard`/`E_19.write_aua_certification` may be semi-prod; the pure trace/diagnose ones are throwaway). Per-script heat-rank before archiving.
+
+### smartx
+- `data/smartx/scripts/lambda_smartx_query.py` (git **2025-11-18** cold) — TIER-2 deprecate (dev copy; `infra/aws/lambda/smartx_query/` is the real/deployed).
+
+### security-scanner / seeking-alpha
+- `test_seeking_alpha_unauth/lambda_function_simple.py` + `test-seeking-alpha-unauth-simple/` — test-lambda twins (git 2026-01/02, cold). TIER-3 throwaway tests.
+
+### portal-auth / shared-infra
+- `opal_users_v2` DDB double-managed — KEEP shared-infra (06-29 hot); DEPRECATE portal-auth/dynamodb.tf (04-06) **after `terraform state` confirms which owns the live table** (auth DDB — confirm before touching). TIER-2.
+
+### Reachability orphans (cross-thread; D1 ledger 06-12, re-verify vs current graph)
+- 2 SNS topics, 0 subscribers — TIER-3 REAL. · 6 isolated S3_DATA_KEY · KMS×5 (PENDING) · 1 NEEDS-VERIFY DDB. (LOG_GROUP×190 / SECRET×40 / CW_ALARM×2 = implicit-edge FP, NOT candidates.)
+
+### Push-prep priority
+1. **TIER-1 (safe, git-preserved, high-confidence):** multi-account/terraform scaffold + lambda/deprecated dir + bd archive prototypes + bd-time-machine teardown. ~the bulk of the cleanup, low risk.
+2. **TIER-2 (twin-consolidation, needs state-confirm):** opal_users_v2 + bd_exporter + smartx dev-copy — pick the cold side per heat, confirm live-owner before removing the TF twin.
+3. **TIER-3 (verify-then-archive):** E_* diagnostics (per-script heat), SNS orphans, isolated S3/KMS — re-verify vs current graph first.
+**Owner routing:** infra/TF + lambda teardowns → AE; bd data-scripts (E_*/archive) → DS; CVO flags + heat-ranks, never deletes.
+
 ## grounding: field (Rule 22)
 - "infra/aws/lambda/deprecated is dead tooling" — SOURCE-CONFIRMED (the dir contents + comp-dups INFERRED_DEAD flag); the INFERRED_DEAD is comp-dups's own advisory (graph-pending), so it's a candidate not a verdict.
 - "heat is the real-vs-dup discriminator" — INFERRED (design): heat_band-as-discriminator is the NFRA_HEATMAP thesis; the federation that computes it is IN-BUILD (not yet live), so the heat-ranking is manual today.
