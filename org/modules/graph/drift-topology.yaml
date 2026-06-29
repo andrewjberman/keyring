@@ -6,6 +6,16 @@
 # This file is the SINGLE SOURCE OF TRUTH for "where does an artifact flow, and
 # is each hop checkable for parity?" It is BOTH the spec AND the coverage ledger.
 #
+# MISSION (Andrew-direct 2026-06-29 -- EXCLUSIVE scope): comp-drift exists for ONE
+# failure-mode class -- the structural cruft that accumulates when we iterate fast:
+# EDGES THAT GO NOWHERE, OLD DUPLICATED CHANNELS, DEPRECATED OUTPUTS 100+ DAYS OLD.
+# Half-baked resources get thrown away mid-iteration but not DELETED -> later they look
+# like a "big gap" when the channel was never really in use. comp-drift finds that cruft
+# + DISPOSITIONS it (genuine-in-use vs abandoned -- see disposition_model), so a dead
+# edge is cleaned up (not "fixed") and a genuine orphaned consumer is repointed.
+# It is NOT a general value/freshness monitor (that's comp-freshness); it watches the
+# STRUCTURE of the propagation topology for abandonment, duplication, and deprecation.
+#
 # - Each `stages` entry = a STORE an artifact lands in.
 # - Each `seams` entry = an EXPECTED-EQUALITY invariant between adjacent stages,
 #   plus the ENGINE that checks it (comp-drift CALLS the engine; it never
@@ -104,10 +114,11 @@ seams:
     stage_to: ICEBERG
     target_class: [table]
     invariant: lakehouse Iceberg tables == the canonical parquet / graph source they materialize from
-    engine: UNCOVERED
-    coverage: GAP              # <-- NO CHECKER TODAY. Build in P3 (seam engine, comp-drift calls it).
-    verdict_vocab: []
-    note: "FINDING: Iceberg materialization has no parity check vs its canonical source. P3 builds the seam engine."
+    engine: "infra/aws/globgrph/iceberg_parity.py"   # 0.8.0_AE~B, building 2026-06-29; module (not promoted until P2); Trino-INDEPENDENT (reads S3 metadata.json)
+    canonical_source: "derive_runner.py commit_to_iceberg pa_schema + _graph_contracts_schema (the PRODUCER's declared schema = SSOT, auto-tracks; CTO-ruled (a) over golden-fingerprint)"
+    coverage: COVERED          # was GAP -- closed 2026-06-29. SCHEMA-FINGERPRINT (live table schema == producer pa_schema) + VINTAGE (snapshot ts vs 26h cadence).
+    verdict_vocab: [MATCH, SCHEMA-DRIFT, STALE, UNVERIFIABLE]   # SCHEMA-DRIFT/STALE -> exit 1; UNVERIFIABLE -> exit 2; per-table worst-of rollup
+    note: "Iceberg materialization parity vs the producer's declared schema. Engine built 2026-06-29 (was the P3 GAP -- pulled forward)."
 
   - seam_id: seam-6
     stage_from: ICEBERG
@@ -137,6 +148,8 @@ seams:
       - catalog: git-code-heat
         kind: live-read         # SPECIAL CASE: read live, never materialized
         check: HEAD-pointer / vintage marker the live-read reflects (NOT a table-schema check)
+        engine: "infra/aws/globgrph/code_heat_parity.py"   # 0.8.0_AE~B, committed dd7cd996a; module (not promoted until P2)
+        coverage: COVERED       # VINTAGE-PRIMARY verdict (CTO-blessed): current=vintage within --max-age-hours (26h); BEHIND=vintage stale OR emitted commit absent; HEAD-advance-since-emit = EXPECTED detail, not a break (high-velocity monorepo). HEAD-match = corroborating detail.
         verdict_vocab: [current, BEHIND, UNVERIFIABLE]
     node_rollup: worst-of      # any UNVERIFIABLE -> node UNVERIFIABLE; any break -> node break
     note: "FINDING + LEVERAGE: design the per-catalog parity signal INTO the heat-federation build (AC threaded 0.8.0_AE 2026-06-29, pre-materialization). If it ships without -> seam-6 stays GAP + a retrofit TO."
@@ -150,13 +163,76 @@ seams:
     coverage: PARTIAL          # freshness is checked; the served==federation-result equality is not fully asserted
     verdict_vocab: [FRESH, STALE, UNVERIFIABLE]
 
+# ===== DISPOSITION MODEL (Andrew-direct 2026-06-29, LD-0221 scope -- LOAD-BEARING) =====
+# THE RAISON D'ETRE (Andrew verbatim): "when we are speeding through creating resources,
+# there is a recurring failure mode whereby half-baked resources are thrown away while
+# we're iterating but not deleted and then we get confused and think there is a big gap
+# when in reality that channel was never really in use."
+#
+# So every NON-FRESH seam finding MUST carry a DISPOSITION, not just a verdict -- else
+# comp-drift FALSE-FLAGS abandoned iteration-artifacts as drift (the exact confusion
+# comp-dups exists to end). A non-FRESH result is split BY IN-USE EVIDENCE:
+#
+#   disposition           meaning                                              action      exit
+#   --------------------  ---------------------------------------------------  ----------  ----
+#   FRESH                 producer==consumer, current                          none        0
+#   STALE-GENUINE-IN-USE  a REAL consumer reads it / a live producer writes    REPOINT     1
+#                         INTO it, but the path/producer moved or froze          /WIRE
+#   ABANDONED-ARTIFACT    no real consumer, no live publish-into, as-of        DISPOSITION 0  <-- NOT exit 1
+#                         predates the current design                           /DELETE     (dispositioned)
+#   UNVERIFIABLE          can't read the seam                                  investigate 2
+#
+# THE WHOLE POINT of the exit mapping: ABANDONED-ARTIFACT = exit-0-DISPOSITIONED, NEVER
+# exit-1. Abandoned junk must not raise a false integrity-break. STALE-GENUINE-IN-USE is
+# the only "fix me" break. (inf gold/holdings/ frozen 06-26 = STALE-GENUINE-IN-USE: a real
+# consumer (INF_D_00) reads it, the producer moved to gold/canonical/ -> repoint. NOT delete.)
+#
+# MANDATORY consumer_evidence on every non-FRESH record (what distinguishes the two):
+#   consumers:      real read-edges into the surface (incl. DYNAMIC-PREFIX reads*)
+#   publish_into:   a live producer still writing INTO it (a black-hole that's still fed = GENUINE)
+#   as_of_vs_design: an as-of predating the current design = an abandonment tell
+# comp-dups is the SIBLING that enumerates the duplicate/abandoned set; comp-drift CONSUMES
+# that set to classify (never re-derives it). Proof-cases to test the classifier:
+#   - astn-wsjft-alerts SNS: actively-published-INTO by a live alarm = GENUINE-unwired;
+#     a dead-prior-iteration alarm->topic = ABANDONED.
+#   - bd-gold sentinel 83d-stale: moved-marker = GENUINE; abandoned-prior-design = ABANDONED.
+#
+# *EDGE-COVERAGE SAFETY CAVEAT (inf-holdings incident 2026-06-29 -- LOAD-BEARING):
+#  the in-use/consumer evidence is only as good as the graph's edge set. DYNAMIC-PREFIX
+#  reads (load_latest_X / list_objects(Prefix=CONST)) are NOT extracted as edges today
+#  (INF_D_00's holdings read -- the AUA driver -- was invisible to comp-pipescript io).
+#  So "no modeled consumer" MUST classify as UNVERIFIABLE-CONSUMER, NEVER auto-ABANDONED
+#  -- else the classifier would tell you to DELETE a surface a dynamic read actually uses.
+#  EDGE-EXTRACTION COMPLETENESS (capture dynamic-prefix reads) is a P1 DEPENDENCY of the
+#  disposition classifier. A classifier over an incomplete edge-set has false confidence.
+disposition_model:
+  vocab: [FRESH, STALE-GENUINE-IN-USE, ABANDONED-ARTIFACT, UNVERIFIABLE]
+  exit_map: { FRESH: 0, STALE-GENUINE-IN-USE: 1, ABANDONED-ARTIFACT: 0, UNVERIFIABLE: 2 }
+  consumer_evidence_required: true          # mandatory on every non-FRESH record
+  no_modeled_consumer: UNVERIFIABLE-CONSUMER  # NEVER auto-ABANDONED (dynamic-edge safety)
+  abandoned_set_source: comp-dups           # comp-drift consumes; never re-derives
+  p1_dependency: edge-extraction-captures-dynamic-prefix-reads
+  abandonment_signals:                      # lean ABANDONED only when consumer_evidence confirms NO live use
+    - no_live_publish_into                  # nothing writes INTO it anymore
+    - as_of_predates_current_design         # the artifact is from a superseded design
+    - stale_beyond_expected_cadence         # CADENCE-RELATIVE, not an absolute age (Andrew 2026-06-29: "100 days
+                                            # isn't magical -- even 10 days old is probably deprecated"). Most estate
+                                            # artifacts are DAILY (nightly) -> stale > a few refresh-cycles past the
+                                            # artifact's OWN comp-freshness threshold = deprecated. A daily output 10d
+                                            # stale is deprecated; a weekly/quarterly one at 10d is not. Use the
+                                            # artifact's expected cadence (from comp-freshness), never a flat day-count.
+    - duplicate_of_an_active_channel        # an old dup of a channel that's now served elsewhere (comp-dups pair)
+  # GUARD: an abandonment_signal is necessary but NOT sufficient -- it must be corroborated by
+  # consumer_evidence showing no live consumer. A long-stable output WITH a live consumer is
+  # GENUINE (deliberately stable / slow-cadence), not abandoned. Staleness alone never auto-deletes.
+
 # Tri-state CI contract (PRD arch-gate (c), adopted from comp-lambdamap parity):
-#   exit 0 = clean / dispositioned (incl STALE-but-consistent, SELF-HEALING-current)
-#   exit 1 = true integrity break  (HALF-LANDED, deployed != committed, SCHEMA-MISMATCH)
-#   exit 2 = UNVERIFIABLE          (could-not-read the seam -- a FINDING, never silently MATCH)
-# Per-seam verdicts stay DISTINCT (never collapsed into one "DRIFT"); each verdict
-# cites its grounding (the live read it rests on -- CLAUDE.md Rule 22).
+#   exit 0 = clean / dispositioned (incl STALE-but-consistent, SELF-HEALING-current, ABANDONED-ARTIFACT)
+#   exit 1 = true integrity break  (HALF-LANDED, deployed != committed, SCHEMA-MISMATCH, STALE-GENUINE-IN-USE)
+#   exit 2 = UNVERIFIABLE          (could-not-read the seam OR no-modeled-consumer -- a FINDING, never silently MATCH)
+# Per-seam verdicts stay DISTINCT (never collapsed into one "DRIFT"); each verdict carries
+# its disposition + consumer_evidence + cites its grounding (the live read -- CLAUDE.md Rule 22).
 exit_contract:
-  "0": clean-or-dispositioned
-  "1": integrity-break
-  "2": unverifiable
+  "0": clean-or-dispositioned        # incl ABANDONED-ARTIFACT (disposition/delete, not a gap)
+  "1": integrity-break               # incl STALE-GENUINE-IN-USE (repoint/wire)
+  "2": unverifiable                  # incl no-modeled-consumer (dynamic-edge blind spot)
