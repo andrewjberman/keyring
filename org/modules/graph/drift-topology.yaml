@@ -144,7 +144,7 @@ seams:
         verdict_vocab: [MATCH, SCHEMA-DRIFT, STALE, UNVERIFIABLE]
       - catalog: graph_contracts
         kind: iceberg
-        check: trino-catalog-schema == live iceberg table schema/partitioning (ENSURE-ONLY: not nightly-re-materialized -> vintage N/A, schema-fingerprint only)
+        check: "trino-catalog-schema == live iceberg table schema/partitioning (ENSURE-ONLY -- not nightly-re-materialized, so vintage N/A, schema-fingerprint only)"
         verdict_vocab: [MATCH, SCHEMA-DRIFT, UNVERIFIABLE]
       - catalog: git-code-heat
         kind: live-read         # SPECIAL CASE: read live, never materialized
