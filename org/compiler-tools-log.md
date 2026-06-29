@@ -9484,3 +9484,17 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-06-29 | 0.8.0_AE_CloudComp~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
 | 2026-06-29 | 0.4.0_DS_ClientPlatform | DATA_SSOTMG | comp-pipescript io/deployed + boto3 + ds-commit-gate | Schwab-SSOT cutover: G11-G14 wire, S+ stage, headline-AUA grounding (boto3 xref-split: +48.7M scare -> -3.6M fresh), xref-location fix (all 4 dims), DATEMODE-B+bd-silver recovery; io grounded the A/B/C/D DAG+publisher | PASS |
 | 2026-06-29 | 0.4.0_DS_ClientPlatform | DATA_ANALYTICS.GOLD-CORE.ds-build-canonical-gold-g3-g10 | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-06-29 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/mcp/.last-drive-2.0.0_SA_COO --file... | PASS |
+| 2026-06-29 | 0.6.0_AE_PartnerETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/ec2/canonical-schwab-runner/s... | PASS |
+| 2026-06-29 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/briefs/allo... | PASS |
+| 2026-06-29 | 3.0.0_SA_CVO | (no-TO) | comp-kuzu | comp-kuzu MATCH (k:CloudNode) WHERE k.node_type='KMS_KEY' OPTIONAL MATCH (k)-[r:CloudEd... | PASS |
+| 2026-06-29 | 0.7.0_AE_CloudOps~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/terraform/portal-auth/dynamod... | PASS |
+| 2026-06-29 | 3.0.0_SA_CVO | (no-TO) | pipescript | pipescript --resource account_distribution | PASS |
+| 2026-06-29 | 3.0.0_SA_CVO | (no-TO) | pipescript | pipescript --resource aum-timeseries | PASS |
+| 2026-06-29 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/logs/2026-0... | PASS |
+| 2026-06-29 | 0.8.0_AE_CloudComp | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/terraform/globgrph/glue_code_... | PASS |
+| 2026-06-29 | 0.4.0_DE_ClientaPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file portal | PASS |
+2026-06-29 | 0.0.0_AB_MSTR | SS-0010 session | comp-grep (quartz/wp grounding, 0-match real), comp-which (drift -> no-route, confirmed no comp-drift), native marker-scan/ledger-read/seams-read for population+verification. Governance/coordination-dominant window; comp-graph tools N/A for MCP-runtime/process/deploy-ledger truth.
+| 2026-06-29 | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+2026-06-29 0.7.0_AE_CloudOps (provisioning/advisor-identity/ASTN/R8-PRIV-deploy window): ds-commit-gate on every .py (analyze/config/create_user_v2/partner_contracts/3 partner scripts/backfill -- caught+fixed F401/E402/E702); safe-ec2-deploy m365-gateway (R8-PRIV, on-box md5+systemd+401 verified); live aws ec2/ssm/ddb/lambda/cloudwatch/secretsmanager for provisioning+drift/dup-cleanup+IDOR-PoC+R8-PRIV-verify (served/live grounding, NEVER#7). Gap: create_user_v2 firm-agnostic -> closed by per-partner contract scripts.
+| 2026-06-29 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
