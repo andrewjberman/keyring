@@ -70,3 +70,35 @@ def test_detects_seeking_alpha_tf_sourcedir_bug(findings):
     wrong = _by_class(findings, "WRONG_SOURCE_DIR")
     assert "seeking-alpha-analysis-scraper" in wrong, \
         "WRONG_SOURCE_DIR missed the seeking-alpha TF source_dir bug"
+
+
+# --- Phase 2: sha-vs-live CodeSha256 (compute_sha_findings is pure -> unit-testable) ---
+
+_GOOD = "0" * 43 + "="          # well-formed 44-char base64 sha shape
+_GOOD2 = "1" * 43 + "="
+_PATHLEAK = "C:/Program Files/Git/abc123"   # the real record-terraform-deploy MSYS path-leak class
+
+
+def test_sha_findings_classifies_all_buckets():
+    funcs = {
+        "match_fn":   {"artifact_sha256": _GOOD},
+        "drift_fn":   {"artifact_sha256": _GOOD},
+        "notlive_fn": {"artifact_sha256": _GOOD2},
+        "norec_fn":   {},                                  # no artifact_sha256
+        "corrupt_fn": {"artifact_sha256": _PATHLEAK},      # non-base64 -> CORRUPT_RECORD
+    }
+    live = {"match_fn": _GOOD, "drift_fn": _GOOD2}         # match equal; drift differs; notlive absent
+    r = lm.compute_sha_findings(funcs, live)
+    assert r["match"] == 1
+    assert [d[0] for d in r["drift"]] == ["drift_fn"]
+    assert r["not_live"] == ["notlive_fn"]
+    assert r["no_record"] == 1
+    assert [c[0] for c in r["corrupt"]] == ["corrupt_fn"]
+
+
+def test_sha_corrupt_record_not_miscounted_as_drift():
+    # a path-leaked sha must be CORRUPT_RECORD, never SHA_DRIFT (different fix path)
+    funcs = {"x": {"artifact_sha256": _PATHLEAK}}
+    r = lm.compute_sha_findings(funcs, {"x": _GOOD})
+    assert not r["drift"], "path-leak corrupt record must not be reported as deploy-drift"
+    assert r["corrupt"] and r["corrupt"][0][0] == "x"
