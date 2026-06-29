@@ -362,6 +362,96 @@ def derive(root: str, write: bool = False) -> int:
     return 1 if unsafe else 0
 
 
+# Parity verdicts -> tri-state exit class (CTO arch-gate refinement, mirrors
+# comp-validate PASS/ADVISORY/UNVALIDATED). 0 = non-actionable, 1 = true
+# integrity break, 2 = could-not-verify.
+_PARITY_EXIT = {
+    "MATCH": 0, "STALE-RECORD": 0, "DISPOSITIONED": 0, "NO-RECORD": 0,
+    "POSSIBLE-HALF-LANDED": 1, "CORRUPT-RECORD": 1, "NOT-LIVE": 1,
+    "UNVERIFIABLE": 2,
+}
+_PARITY_ORDER = ["MATCH", "STALE-RECORD", "DISPOSITIONED", "POSSIBLE-HALF-LANDED",
+                 "CORRUPT-RECORD", "NOT-LIVE", "UNVERIFIABLE", "NO-RECORD"]
+
+
+def compute_parity(funcs, live, key_of, sha_of_s3):
+    """Pure 3-leg deploy-parity classifier -- record (source-map) x live
+    (CodeSha256) x s3 (artifact content-sha256). Returns {name: (verdict,
+    detail)}. COST GUARD: sha_of_s3 is invoked ONLY for the non-MATCH divergent
+    subset (MATCH/NO-RECORD/CORRUPT/NOT-LIVE never touch S3). Spec 9ebcbb49f."""
+    out = {}
+    for name, e in sorted(funcs.items()):
+        rec = e.get("artifact_sha256")
+        note = str(e.get("_note", ""))
+        if not rec:
+            out[name] = ("NO-RECORD", "no artifact_sha256 (not sha-tracked)")
+        elif not _B64_SHA256.match(str(rec)):
+            out[name] = ("CORRUPT-RECORD", f"record not base64: {str(rec)[:32]}")
+        elif name not in live:
+            # orphan record -- DISPOSITIONABLE (decommissioned-but-mapped = hygiene, not a break)
+            out[name] = (("DISPOSITIONED", "not-live, intentional _note")
+                         if _DISPOSITION_RE.search(note)
+                         else ("NOT-LIVE", "recorded but absent in live (orphan / wrong region)"))
+        elif live[name] == rec:
+            out[name] = ("MATCH", "")
+        elif _DISPOSITION_RE.search(note):
+            out[name] = ("DISPOSITIONED", "intentional divergence (_note)")
+        else:
+            # divergence -> leg 3 (the ONLY S3 read)
+            s3 = sha_of_s3(key_of(name))
+            if not s3:
+                out[name] = ("UNVERIFIABLE", "content-sha256 metadata absent on S3 artifact")
+            elif s3 == live[name]:
+                out[name] = ("STALE-RECORD", "live == S3 artifact; record stale (safe derive --write)")
+            else:
+                out[name] = ("POSSIBLE-HALF-LANDED", "live != S3 artifact -- deploy problem, investigate")
+    return out
+
+
+def parity(root: str, as_json: bool = False) -> int:
+    sm = load_srcmap(root)
+    funcs = sm.get("functions", {})
+    live = live_code_shas()
+    if live is None:
+        if as_json:
+            print(json.dumps({"error": "UNAVAILABLE", "reason": "no boto3/creds"}))
+        else:
+            print("comp-lambdamap parity -- UNAVAILABLE: could not read live CodeSha256 (boto3/creds absent).")
+        return 2
+    verdicts = compute_parity(funcs, live,
+                              lambda n: funcs[n].get("artifact_s3_key"), s3_artifact_sha)
+    counts = {v: 0 for v in _PARITY_ORDER}
+    for _name, (verdict, _d) in verdicts.items():
+        counts[verdict] = counts.get(verdict, 0) + 1
+    exit_code = max((_PARITY_EXIT.get(v, 0) for v, _ in verdicts.values()), default=0)
+
+    if as_json:
+        print(json.dumps({
+            "summary": counts,
+            "exit": exit_code,
+            "verdicts": {n: {"verdict": v, "detail": d} for n, (v, d) in verdicts.items()},
+        }, indent=2))
+        return exit_code
+
+    print("comp-lambdamap parity -- 3-leg deploy-parity (record x live CodeSha256 x S3 artifact), read-only")
+    print("  " + " | ".join(f"{v}: {counts[v]}" for v in _PARITY_ORDER))
+    # only actionable / notable verdicts get per-Lambda lines; MATCH + NO-RECORD
+    # are bulk non-actionable states -> summarized in the counts (full per-Lambda
+    # detail is in --json).
+    for name, (verdict, detail) in verdicts.items():
+        if verdict not in ("MATCH", "NO-RECORD"):
+            print(f"    [{verdict}] {name}: {detail}")
+    # coverage line -- how much of the divergent subset could be S3-verified
+    div = counts["STALE-RECORD"] + counts["POSSIBLE-HALF-LANDED"] + counts["UNVERIFIABLE"]
+    if div:
+        print(f"  coverage: {div - counts['UNVERIFIABLE']}/{div} divergent entries S3-verified "
+              f"({counts['UNVERIFIABLE']} UNVERIFIABLE -- content-sha256 metadata absent)")
+    verdict_word = {0: "IN-PARITY (no integrity break)", 1: "INTEGRITY BREAK",
+                    2: "UNVERIFIABLE (could-not-verify)"}[exit_code]
+    print(f"  => {verdict_word} (exit {exit_code})")
+    return exit_code
+
+
 def main(argv=None) -> int:
     ap = argparse.ArgumentParser(prog="comp-lambdamap")
     sub = ap.add_subparsers(dest="cmd")
@@ -370,6 +460,9 @@ def main(argv=None) -> int:
     d = sub.add_parser("derive", help="reconcile artifact_sha256 -> live CodeSha256 (dry-run; --write CVO-gated)")
     d.add_argument("--write", action="store_true",
                    help="apply the reconcile to lambda-source-map.json (CVO-gated mutation)")
+    p = sub.add_parser("parity", help="read-only 3-leg deploy-parity classifier (a.k.a. comp-derivedrift); "
+                                      "tri-state exit 0=in-parity 1=break 2=unverifiable")
+    p.add_argument("--json", action="store_true", help="machine-readable output for CI/piping")
     args = ap.parse_args(argv)
     root = workspace_root()
     if args.cmd in (None, "check"):
@@ -378,6 +471,8 @@ def main(argv=None) -> int:
         return sha_check(root)
     if args.cmd == "derive":
         return derive(root, write=args.write)
+    if args.cmd == "parity":
+        return parity(root, as_json=args.json)
     ap.print_help()
     return 2
 
