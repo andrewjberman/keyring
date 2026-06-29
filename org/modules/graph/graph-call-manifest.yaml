@@ -419,6 +419,18 @@ entries:
     anti_pattern: "assuming a Lambda is deployed without the SHA compare (stale-deploy class)"
     status: canonical
 
+  - id: cloud.lambdamap.parity
+    use_case: "Is my DEPLOYED estate in parity / why did a Lambda drift? Read-only 3-leg deploy-parity (record x live CodeSha256 x S3 content-sha256) -> MATCH/STALE-RECORD/POSSIBLE-HALF-LANDED/CORRUPT-RECORD/DISPOSITIONED/UNVERIFIABLE/NOT-LIVE. Tri-state exit 0/1/2."
+    canonical_call: "comp-lambdamap parity [--json]"
+    tool: comp-lambdamap
+    mode: query
+    layer: cloud
+    cost: "~live AWS (2-leg cheap; S3-head only the non-MATCH subset)"
+    freshness: "live Lambda CodeSha256 + S3 artifact metadata"
+    rebuild_trigger: "n/a -- read-only live parity classify"
+    anti_pattern: "reconciling sha-drift to live WITHOUT the 3rd (S3) leg -- launders a half-landed deploy. comp-lambdamap parity = DEPLOY parity, distinct from comp-parity = DATA/served parity. NOTE: race-sensitive to in-flight deploys (transient POSSIBLE-HALF-LANDED mid-deploy resolves on settle) -- re-read on a fresh-LastModified hit before treating exit-1 as a real break."
+    status: canonical
+
   - id: cloud.score.cert
     use_case: "Score the derived cloud graph vs the certified hand-audit oracle (F1)."
     canonical_call: "comp-aws score [--class C]"
@@ -738,7 +750,7 @@ tools_index:
   comp-chainrun: { does: "Snapshot/diff gold artifacts around an atomic bundle", subcommands: [snapshot, diff], entries: [pipeline.chainrun.atomic_bundle] }
   comp-constants: { does: "Marker/firm-constant drift vs canonical config", subcommands: [check, index, new, list], entries: [pipeline.constants.drift] }
   comp-incrparity: { does: "Incremental BD-pipeline parity (cache vs oracle)", subcommands: ["<args>"], entries: [pipeline.incrparity.bd] }
-  comp-lambdamap: { does: "Lambda deployed-SHA vs live CodeSha256 + runtime enum", subcommands: ["<args>"], entries: [cloud.lambdamap.deployed_sha] }
+  comp-lambdamap: { does: "Lambda deployed-SHA vs live CodeSha256 + 3-leg deploy-parity", subcommands: [check, sha, derive, parity], entries: [cloud.lambdamap.deployed_sha, cloud.lambdamap.parity] }
   comp-shell:    { does: "Bare Git-Bash-missing-util scan in new .sh (Rule 16)", subcommands: [scan], entries: [meta.shell.bare_util_scan] }
   comp-registry: { does: "REGISTRY narrative vs project-JSON drift", subcommands: ["sync ROW=N", "--project", "--all"], entries: [meta.registry.drift] }
   comp-coverage: { does: "Compiler/task-order coverage report", subcommands: ["<args>"], entries: [meta.coverage.report] }
