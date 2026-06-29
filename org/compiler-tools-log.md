@@ -9296,3 +9296,28 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-06-29 | 0.4.0_DS_ClientPlatform~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
 2026-06-29 0.4.0_DS_ClientPlatform~B | scope-verify + TO-7: comp-pipescript io (NOT-FOUND=canonical uncovered, documented), ds-commit-gate x2 PASS, read-only boto3 grounding (scope-verify/bridge-coverage/coherence). dim_advisor_role enriched + G11-G13 re-materialized.
 | 2026-06-29 | 0.4.0_DS_ClientPlatform~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-06-29 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/comp-parity... | PASS |
+| 2026-06-29 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/comp-parity... | PASS |
+| 2026-06-29 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/DATA_SSOTMG_PRD.md | PASS |
+| 2026-06-29 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/mcp/.last-drive-2.0.0_SA_COO --file... | PASS |
+| 2026-06-29 | 0.7.0_AE_CloudOps~B | (no-TO) | comp-lambdamap | comp-lambdamap parity | PASS |
+| 2026-06-29 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/comp-parity... | PASS |
+| 2026-06-29 | 0.7.0_AE_CloudOps~B | (no-TO) | comp-lambdamap | comp-lambdamap parity | PASS |
+| 2026-06-29 | 0.7.0_AE_CloudOps~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/lambdamap_cli.py | PASS |
+| 2026-06-29 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/briefs/allo... | PASS |
+| 2026-06-29 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/DATA_SSOTMG... | PASS |
+| 2026-06-29 | 0.7.0_AE_CloudOps~B | (no-TO) | comp-manifest-check | comp-manifest-check | FAIL |
+| 2026-06-29 | 0.7.0_AE_CloudOps~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/graph-call-manifest.yaml | PASS |
+| 2026-06-29 | 0.4.0_DS_ClientPlatform~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/briefs/derisk2_census/advisor_spli... | PASS |
+| 2026-06-29 | 3.0.0_SA_CVO | (no-TO) | comp-lambdamap | comp-lambdamap parity | PASS |
+| 2026-06-29 | 3.0.0_SA_CVO | (no-TO) | comp-lambdamap | comp-lambdamap parity --json | PASS |
+| 2026-06-29 | 3.0.0_SA_CVO | (no-TO) | comp-lambdamap | comp-lambdamap parity --json | FAIL |
+| 2026-06-29 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/bd-pipeline/bd-49f-ses... | PASS |
+| 2026-06-29 | 3.0.0_SA_CVO | (no-TO) | comp-lambdamap | comp-lambdamap parity | FAIL |
+| 2026-06-29 | 3.0.0_SA_CVO | (no-TO) | comp-lambdamap | comp-lambdamap parity --json | FAIL |
+| 2026-06-29 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/ci/lambda-source-map.j... | PASS |
+| 2026-06-29 | 0.4.0_DS_ClientPlatform~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file data/canonical/schwab/config/README_adv... | PASS |
+| 2026-06-29 | 3.0.0_SA_CVO | (no-TO) | comp-lambdamap | comp-lambdamap parity --json | PASS |
+| 2026-06-29 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/bd-pipeline/bd-49f-ses... | PASS |
+2026-06-29 0.4.0_DS_ClientPlatform~B | TO-7 addendum: comp-pipescript io (NOT-FOUND=canonical uncovered), ds-commit-gate+ruff (caught F841/E702 -> fixed), read-only boto3 (worksheet AUA-enrich, fail-loud override test, billable bridge). Override mechanism + G13 split-weighting.
+| 2026-06-29 | 0.4.0_DS_ClientPlatform~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
