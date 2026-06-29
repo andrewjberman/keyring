@@ -178,7 +178,7 @@ while IFS= read -r path; do
   [ -z "$path" ] && continue
   case "$path" in
     org/tier0/ledger/*|org/tier0/cycles/*|org/tier0/reviews/*|org/tier0/ratifications/*|org/tier0/sessions/*) : ;;
-    org/compiler-tools-log.md|org/git-author-override-audit.log) : ;;  # universal record-append lines (every-agent /log + author-override audit) -- a record append, not a strategic commitment (MSTR gate-hygiene fix 2026-06-29)
+    org/compiler-tools-log.md|org/git-author-override-audit.log|org/mcp/comp_ferry_queue.json) : ;;  # record-append / MSTR-owned execution-tracking (every-agent /log + author-override audit + the comp-ferry queue, LD-0119) -- tracking under an existing LD, not a new strategic commitment (MSTR gate-hygiene fix 2026-06-29)
     *) STRATEGIC=1 ;;
   esac
 done <<EOF
