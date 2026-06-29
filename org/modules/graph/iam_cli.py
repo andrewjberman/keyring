@@ -163,11 +163,16 @@ def cmd_service(args):
                     for a in sorted(stmt.actions):
                         print(f"      {a}")
                     if stmt.resources:
-                        print(f"    Resources ({len(stmt.resources)}):")
+                        scoped = stmt.scoping_condition()
+                        tag = (f"  [TAG-SCOPED via Condition {scoped} -- NOT broad]"
+                               if stmt.is_resource_scoped_by_condition() else "")
+                        print(f"    Resources ({len(stmt.resources)}):{tag}")
                         for r in stmt.resources[:5]:
                             print(f"      {r}")
                         if len(stmt.resources) > 5:
                             print(f"      ... and {len(stmt.resources) - 5} more")
+                    if stmt.condition:
+                        print(f"    Condition: {stmt.scoping_condition() or stmt.condition}")
                 print()
             return
 
@@ -238,9 +243,14 @@ def cmd_role(args):
             for a in sorted(stmt.actions):
                 print(f"      {a}")
             if stmt.resources:
-                print(f"    Resources: {', '.join(stmt.resources[:3])}")
+                scoped = stmt.scoping_condition()
+                tag = (f"  [TAG-SCOPED via Condition {scoped} -- NOT broad]"
+                       if stmt.is_resource_scoped_by_condition() else "")
+                print(f"    Resources: {', '.join(stmt.resources[:3])}{tag}")
                 if len(stmt.resources) > 3:
                     print(f"      ... +{len(stmt.resources)-3} more")
+            if stmt.condition:
+                print(f"    Condition: {stmt.scoping_condition() or stmt.condition}")
         print()
 
 

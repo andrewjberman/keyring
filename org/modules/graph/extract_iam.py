@@ -296,6 +296,43 @@ class IamStatement:
     actions: list[str]             # e.g., ['s3:GetObject', 's3:PutObject']
     resources: list[str]           # e.g., ['arn:aws:s3:::opal-data-bd/*']
     source_file: str
+    condition: str = ""            # raw Condition block text ("" if none)
+
+    def scoping_condition(self) -> Optional[str]:
+        """If this statement's Condition narrows WHICH resources the action can
+        act on (TBAC tag / account / org / ARN scoping), return a short summary
+        of that scoping; else None.
+
+        This is the NFRA_COMPAWS.IAM-CONDITIONS fix: comp-iam used to surface
+        Action + Resource but DROP the Condition, so a tag-scoped (TBAC)
+        Resource:"*" grant false-read as broad/unscoped. Anchor FP =
+        bd-exporter-ec2-role ec2:TerminateInstances Resource:"*" WITH
+        Condition StringEquals{ec2:ResourceTag/ManagedBy=lambda-scheduler}
+        (bd-pipeline/iam.tf) -- it can only terminate lambda-scheduler-tagged
+        runners, NOT account-wide, so it is NOT broad. Sibling to the existing
+        Deny-is-condition-scoped handling in deny_matches()."""
+        if not self.condition:
+            return None
+        # Resource-scoping keys: tag-based (TBAC), account, org boundary.
+        m = re.search(
+            r'["\']?((?:aws|[a-z0-9]+):(?:ResourceTag/[^"\'\s=:]+|ResourceAccount'
+            r'|ResourceOrgID|ResourceOrgPaths))["\']?\s*[=:]\s*["\']([^"\']+)["\']',
+            self.condition, re.IGNORECASE)
+        if m:
+            return f"{m.group(1)}={m.group(2)}"
+        # ARN-scoping operators (ArnLike/ArnEquals pinning a resource ARN).
+        if re.search(r'\bArn(?:Like|Equals)\b', self.condition, re.IGNORECASE):
+            am = re.search(r'["\'](arn:aws:[^"\']+)["\']', self.condition)
+            return f"ArnLike {am.group(1)}" if am else "ArnLike (resource-scoped)"
+        return None
+
+    def is_resource_scoped_by_condition(self) -> bool:
+        """True iff Resource is wildcard ('*') BUT a Condition narrows the
+        resources -> the grant is tag/ARN/account-scoped, NOT broad. A genuinely
+        broad grant (Resource:'*', no scoping Condition) returns False."""
+        if not any(r == '*' for r in self.resources):
+            return False
+        return self.scoping_condition() is not None
 
 
 @dataclass
@@ -741,6 +778,26 @@ def _parse_iam_statements(policy_text: str, source_file: str) -> list[IamStateme
         single = _field_value(name, text)
         return [single] if single else []
 
+    def _field_object(name: str, text: str) -> str:
+        """Extract the brace-balanced { ... } block for object field `name`
+        (e.g. Condition) from HCL or JSON. Returns '' if absent. Used to carry
+        the IAM Condition through so a tag-scoped Resource:* is not false-read
+        as broad (NFRA_COMPAWS.IAM-CONDITIONS)."""
+        m = re.search(rf'["\']?{name}["\']?\s*[=:]\s*\{{', text, re.IGNORECASE)
+        if not m:
+            return ""
+        start = m.end() - 1  # position of the opening {
+        depth = 0
+        for i in range(start, len(text)):
+            ch = text[i]
+            if ch == '{':
+                depth += 1
+            elif ch == '}':
+                depth -= 1
+                if depth == 0:
+                    return ' '.join(text[start:i + 1].split())
+        return ""
+
     for sm in stmt_re.finditer(policy_text):
         stmt_block = sm.group(1)
 
@@ -760,6 +817,7 @@ def _parse_iam_statements(policy_text: str, source_file: str) -> list[IamStateme
                     effect = _field_value('Effect', single_stmt) or 'Allow'
                     actions = _field_array('Action', single_stmt)
                     resources = _field_array('Resource', single_stmt)
+                    condition = _field_object('Condition', single_stmt)
 
                     if actions:
                         statements.append(IamStatement(
@@ -767,6 +825,7 @@ def _parse_iam_statements(policy_text: str, source_file: str) -> list[IamStateme
                             actions=actions,
                             resources=resources,
                             source_file=source_file,
+                            condition=condition,
                         ))
                     start = -1
 
