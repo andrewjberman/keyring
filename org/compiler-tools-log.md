@@ -9259,3 +9259,40 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-06-29 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/briefs/allo... | PASS |
 2026-06-29 0.4.0_DS_ClientPlatform~B | Schwab-SSOT lane: comp-which(PARTIAL mis-route), pipescript advi-bd + --list (estate), comp-grep (canonical-doc trace), comp-pipescript io (NOT-FOUND=canonical uncovered, documented), ds-commit-gate x3 PASS. DERISK-2 census + TO-3 G11-G13.
 | 2026-06-29 | 0.4.0_DS_ClientPlatform~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-06-29 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/DATA_SSOTMG_PRD.md | PASS |
+| 2026-06-29 | 0.7.0_AE_CloudOps~B | (no-TO) | comp-lambdamap | comp-lambdamap sha | FAIL |
+| 2026-06-29 | 0.4.0_DS_ClientPlatform~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/briefs/DATA_SSOTMG_DERISK2_nonschw... | PASS |
+| 2026-06-29 | 0.7.0_AE_CloudOps~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/ci/build-and-upload.sh... | PASS |
+| 2026-06-29 | 0.4.0_DS_ClientPlatform | DATA_ANALYTICS.GOLD-CORE.ds-build-canonical-gold-g3-g10 | pipescript | pipescript --list | PASS |
+| 2026-06-29 | 0.4.0_DS_ClientPlatform | DATA_ANALYTICS.GOLD-CORE.ds-build-canonical-gold-g3-g10 | pipescript | pipescript advi-bd | PASS |
+| 2026-06-29 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/logs/2026-0... | PASS |
+| 2026-06-29 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/DATA_SSOTMG_PRD.md | PASS |
+| 2026-06-29 | 0.7.0_AE_CloudOps~B | (no-TO) | comp-lambdamap | comp-lambdamap sha | FAIL |
+| 2026-06-29 | 0.7.0_AE_CloudOps~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/ci/lambda-source-map.json | PASS |
+| 2026-06-29 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/DATA_SSOTMG... | PASS |
+| 2026-06-29 | 0.4.0_DS_ClientPlatform | DATA_ANALYTICS.GOLD-CORE.ds-build-canonical-gold-g3-g10 | comp-pipescript | comp-pipescript io B_02 | PASS |
+| 2026-06-29 | 0.4.0_DS_ClientPlatform | DATA_ANALYTICS.GOLD-CORE.ds-build-canonical-gold-g3-g10 | comp-pipescript | comp-pipescript io C_03 | PASS |
+| 2026-06-29 | 0.4.0_DS_ClientPlatform | DATA_ANALYTICS.GOLD-CORE.ds-build-canonical-gold-g3-g10 | comp-pipescript | comp-pipescript io C_02 | PASS |
+| 2026-06-29 | 0.4.0_DS_ClientPlatform | DATA_ANALYTICS.GOLD-CORE.ds-build-canonical-gold-g3-g10 | comp-pipescript | comp-pipescript io C_05 | PASS |
+| 2026-06-29 | 0.4.0_DS_ClientPlatform | DATA_ANALYTICS.GOLD-CORE.ds-build-canonical-gold-g3-g10 | comp-pipescript | comp-pipescript io B_03 | PASS |
+| 2026-06-29 | 0.4.0_DS_ClientPlatform | DATA_ANALYTICS.GOLD-CORE.ds-build-canonical-gold-g3-g10 | comp-pipescript | comp-pipescript io D_03 | PASS |
+| 2026-06-29 | 0.7.0_AE_CloudOps~B | (no-TO) | comp-lambdamap | comp-lambdamap sha | FAIL |
+| 2026-06-29 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/DATA_SSOTMG... | PASS |
+| 2026-06-29 | 0.7.0_AE_CloudOps~B | (no-TO) | comp-lambdamap | comp-lambdamap sha | PASS |
+| 2026-06-29 | 0.7.0_AE_CloudOps~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/ci/lambda-source-map.j... | PASS |
+| 2026-06-29 | 3.0.0_SA_CVO | (no-TO) | comp-lambdamap | comp-lambdamap sha | PASS |
+| 2026-06-29 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/tests/test_lambdamap.py | PASS |
+| 2026-06-29 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/mcp/.last-drive-2.0.0_SA_COO --file... | PASS |
+| 2026-06-29 | 0.7.0_AE_CloudOps~B | (no-TO) | comp-lambdamap | comp-lambdamap derive | PASS |
+| 2026-06-29 | 0.7.0_AE_CloudOps~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/lambdamap_cli.py | PASS |
+| 2026-06-29 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-06-29 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/briefs/allo... | PASS |
+| 2026-06-29 | 0.4.0_DS_ClientPlatform~B | (no-TO) | comp-pipescript | comp-pipescript io build_dim_advisor_role.py | FAIL |
+| 2026-06-29 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/logs/2026-0... | PASS |
+| 2026-06-29 | 0.7.0_AE_CloudOps~B | (no-TO) | comp-lambdamap | comp-lambdamap derive | PASS |
+| 2026-06-29 | 0.7.0_AE_CloudOps~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/lambdamap_cli.py | PASS |
+| 2026-06-29 | 0.4.0_DS_ClientPlatform~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file data/canonical/schwab/docs/08_GOLD_SCOP... | PASS |
+| 2026-06-29 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/tests/test_lambdamap.py | PASS |
+| 2026-06-29 | 0.4.0_DS_ClientPlatform~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+2026-06-29 0.4.0_DS_ClientPlatform~B | scope-verify + TO-7: comp-pipescript io (NOT-FOUND=canonical uncovered, documented), ds-commit-gate x2 PASS, read-only boto3 grounding (scope-verify/bridge-coverage/coherence). dim_advisor_role enriched + G11-G13 re-materialized.
+| 2026-06-29 | 0.4.0_DS_ClientPlatform~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
