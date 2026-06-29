@@ -1,0 +1,35 @@
+{
+  "project_code": "NFRA_COMPDRIFT",
+  "macro_code": "NFRA",
+  "name": "comp-drift -- first-class estate drift compiler owning the local->git->cloud->nessie->kuzu->iceberg->trino->served propagation topology + per-hop parity",
+  "description": "Andrew-direct 2026-06-29 (live MSTR design session; brief docs/briefs/nfra-compdrift-brief-20260629.md, LD-0221). Drift detection is scattered as side-functions across ~10 tools with NO owner of the chain (symptom = the CTO naming-disambiguation arch-gate 2026-06-29 that stopped 3 'parity' concepts conflating). comp-drift = a FIRST-CLASS tool that OWNS a declared propagation topology + enforces the invariant that each hop is in parity with the stage before it; the existing seam-checkers become ENGINES it CALLS (NEVER re-implemented). The new first-class artifact = the topology manifest (org/modules/graph/drift-topology.yaml) + coverage ledger + a normalized cross-seam drift-record with a tri-state exit (adopted wholesale from the comp-lambdamap parity contract: 0 clean / 1 break / 2 UNVERIFIABLE, never-silently-MATCH). 5 CTO arch-gates ruled in the PRD: (a) manifest schema+location, (b) orchestrator-never-reimplement boundary, (c) normalized-record + tri-state CI contract, (d) Trino FAN-IN model (a node with N inbound catalog seams; git-code-heat = live-read HEAD-check special case), (e) the heat-federation cross-dependency AC. TIME-CRITICAL leverage: seam-6/seam-7 (Trino/Iceberg) depend on the LIVE NFRA_GLOBGRPH heat-federation build -- 'every federated catalog emits a checkable parity signal' threaded as an AC on that build BEFORE materialization (coordinated w/ 0.8.0_AE 2026-06-29 -- the one-time design-in window vs another scattered retrofit).",
+  "prds": [
+    {
+      "path": "docs/architecture/NFRA_COMPDRIFT_PRD.md",
+      "label": "CTO PRD v0.1 (2026-06-29) -- premise + thesis + the canonical propagation topology (8 stages / 7 seams, COVERED/PARTIAL/SELF-HEAL/GAP) + the 5 arch-gate rulings + compiler evidence + P1-P4 phasing/TO-decomp + the heat-federation cross-dependency AC + drift_producer.py fold-disposition",
+      "date": "2026-06-29"
+    }
+  ],
+  "related": [
+    "NFRA_GLOBGRPH",
+    "NFRA_EXPAND",
+    "NFRA_INFRPT",
+    "NFRA_COMPRAIL",
+    "DATA_SSOTMG"
+  ],
+  "status": "active",
+  "phase": "PHASE 0 -- PRD AUTHORED + macro REGISTERED 2026-06-29 (1.0.0_SA_CTO; docs/architecture/NFRA_COMPDRIFT_PRD.md). 5 arch-gates ruled; time-critical heat-federation design-in AC coordinated w/ 0.8.0_AE. SEQUENCE: P1 topology manifest + coverage map (highest-value/lowest-cost, pure-authoring -- the 'what's unguarded today' answer; lands with/right-after the PRD) -> P2 comp-drift orchestrator shell over the COVERED engines (no new check logic) -> P3 close the GAP seams (seam-5 Iceberg + seam-6 Trino co-designed INTO the heat-federation) -> P4 standing CI sweep folding drift_producer.py. COO decomposes; build = 0.7.0_AE (+~B, the comp-lambdamap/classify_reconcile owner), verify = 3.0.0_SA_CVO.",
+  "blocking": "None to PRD/P1 (P1 is pure-authoring against the existing engines). seam-6/seam-7 (P3) carry a HARD dependency on the NFRA_GLOBGRPH heat-federation build emitting the per-catalog parity signal -- the AC was threaded PRE-materialization (0.8.0_AE coordination 2026-06-29); if the federation ships WITHOUT it, seam-6/7 fall to GAP + a retrofit-instrumentation TO (the costly path this project exists to avoid). COO decomposes P1-P4.",
+  "created": "2026-06-29",
+  "pods": [
+    "0.7",
+    "0.8",
+    "3.0",
+    "1.0",
+    "2.0"
+  ],
+  "pipeline": "comp-drift: org/modules/graph/drift-topology.yaml (manifest = spec + coverage ledger) -> comp-drift <target> (full-chain walk) + comp-drift sweep (estate board) -> orchestrates the existing seam engines (comp-heat drift / comp-pipescript deployed / comp-lambdamap parity / comp-iam reconcile / comp-kuzu oracle / comp-transform schema-check / comp-freshness) -> normalized drift-record + tri-state exit (0 clean / 1 break / 2 UNVERIFIABLE) -> comp-which-routable + a standing CI sweep that folds drift_producer.py",
+  "coo_lane": "2.0.0_SA_COO",
+  "thread_counter": 0,
+  "threads": []
+}
