@@ -1,0 +1,11 @@
+#!/bin/bash
+# comp-parity -- DATA/served parity gate for a never-widen cutover (DATA_SSOTMG TO-4).
+# The daily, tolerance-aware, dual-gated proof that a canonical pipeline can stand in for the
+# BD-served surfaces -- the multi-day CLEAN streak IS the cutover gate (firm-by-firm, never-widen).
+# DISTINCT from `comp-lambdamap parity` (DEPLOY parity). Firm spec: data/canonical/schwab/parity/{firm}_parity_config.yaml
+# Usage: comp-parity [firm] [--config <path>] [--json]   (default firm: 49f)
+WORKSPACE="$(cd "$(dirname "$0")/.." && pwd)"
+python "$WORKSPACE/org/modules/graph/comp_parity_cli.py" "$@"
+_exit=$?
+python "$WORKSPACE/org/modules/graph/comp_log_auto.py" "comp-parity" "$*" $_exit 2>/dev/null
+exit $_exit
