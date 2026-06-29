@@ -9342,3 +9342,43 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-06-29 | 0.4.0_DS_ClientPlatform~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file data/canonical/schwab/docs/08_GOLD_SCOP... | PASS |
 2026-06-29 0.4.0_DS_ClientPlatform~B | Andrew no-normalize: comp-pipescript io (NOT-FOUND, canonical uncovered), ds-commit-gate+ruff (removed dead billable/_weights after dropping fee gate), read-only boto3 (raw-passthrough confirm + firm-rollup verify, F5). G13 raw-credit + advisor_split_reconciliation tracker ($224.2M/14.1% unattributed).
 | 2026-06-29 | 0.4.0_DS_ClientPlatform~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-06-29 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/DATA_SSOTMG... | PASS |
+| 2026-06-29 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/mcp/.last-drive-2.0.0_SA_COO --file... | PASS |
+| 2026-06-29 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/briefs/allo... | PASS |
+| 2026-06-29 | 0.4.0_DS_ClientPlatform~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/briefs/advisor_split_unattributed_... | PASS |
+| 2026-06-29 | 0.4.0_DS_ClientPlatform | DATA_ANALYTICS.GOLD-CORE.ds-build-canonical-gold-g3-g10 | comp-surface-check | comp-surface-check check --mode advisory --file data/canonical/schwab/build_canonical_d... | PASS |
+| 2026-06-29 | 0.4.0_DS_ClientPlatform | DATA_ANALYTICS.GOLD-CORE.ds-build-canonical-gold-g3-g10 | comp-surface-check | comp-surface-check check --mode advisory --file org/seams/canonical-schwab-ssot-ec2.md | PASS |
+| 2026-06-29 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/mcp/.last-drive-2.0.0_SA_COO --file... | PASS |
+| 2026-06-29 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/briefs/allo... | PASS |
+| 2026-06-29 | 0.7.0_AE_CloudOps~B | (no-TO) | comp-lambdamap | comp-lambdamap derive --only bd-portal-publisher,cot-bd-session-trigger | PASS |
+| 2026-06-29 | 0.7.0_AE_CloudOps~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/lambdamap_cli.py | PASS |
+| 2026-06-29 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file tools/astn_wsjft/scripts/analyze.py | PASS |
+| 2026-06-29 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/logs/2026-0... | PASS |
+| 2026-06-29 | 0.7.0_AE_CloudOps~B | (no-TO) | comp-lambdamap | comp-lambdamap reconcile-deployed --functions nonexistent-fn-xyz | PASS |
+| 2026-06-29 | 0.7.0_AE_CloudOps~B | (no-TO) | comp-lambdamap | comp-lambdamap reconcile-deployed --functions bd-portal-publisher,cot-bd-session-trigger | PASS |
+| 2026-06-29 | 0.7.0_AE_CloudOps~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/lambdamap_cli.py | PASS |
+| 2026-06-29 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/ec2/EC2_MANIFEST.json | PASS |
+| 2026-06-29 | 0.7.0_AE_CloudOps~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/ci/record-terraform-de... | PASS |
+| 2026-06-29 | 3.0.0_SA_CVO | (no-TO) | comp-lambdamap | comp-lambdamap reconcile-deployed --functions | PASS |
+| 2026-06-29 | 3.0.0_SA_CVO | (no-TO) | comp-lambdamap | comp-lambdamap reconcile-deployed --functions no-such-fn-xyz | PASS |
+| 2026-06-29 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file tools/astn_wsjft/scripts/config.py | PASS |
+| 2026-06-29 | 3.0.0_SA_CVO | (no-TO) | comp-lambdamap | comp-lambdamap reconcile-deployed --functions bd-portal-publisher | PASS |
+| 2026-06-29 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/tests/test_lambdamap.py | PASS |
+| 2026-06-29 | 0.7.0_AE_CloudOps~B | (no-TO) | comp-lambdamap | comp-lambdamap reconcile-deployed --functions bd-portal-publisher | PASS |
+| 2026-06-29 | 0.7.0_AE_CloudOps~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/ci/source-map-reconcil... | PASS |
+| 2026-06-29 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/mcp/.last-drive-2.0.0_SA_COO --file... | PASS |
+| 2026-06-29 | 3.0.0_SA_CVO | (no-TO) | comp-lambdamap | comp-lambdamap reconcile-deployed --functions bd-portal-publisher | PASS |
+| 2026-06-29 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/briefs/allo... | PASS |
+| 2026-06-29 | 0.7.0_AE_CloudOps~B | (no-TO) | comp-kuzu | comp-kuzu MATCH (sm:CloudNode)-[e:CloudEdge]->(l:CloudNode) WHERE sm.node_type='STATE_M... | PASS |
+| 2026-06-29 | 0.4.0_DS_ClientPlatform | DATA_ANALYTICS.GOLD-CORE.ds-build-canonical-gold-g3-g10 | comp-surface-check | comp-surface-check check --mode advisory --file org/seams/canonical-schwab-ssot-ec2.md | PASS |
+| 2026-06-29 | 0.7.0_AE_CloudOps~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/tests/test_sfn_asl_wa... | PASS |
+| 2026-06-29 | 0.6.2_AE_PartnerETL | SCHWAB_SSOT.DERISK-1.ae-quartz-ec2-schwab-pull-validation | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.6.2_AE_PartnerETL/lo... | PASS |
+| 2026-06-29 | 0.7.0_AE_CloudOps~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.7.0_AE_CloudOps/task... | PASS |
+| 2026-06-29 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/ADVI_COTUSR.json --file or... | PASS |
+| 2026-06-29 | 0.4.0_DS_ClientPlatform | DATA_ANALYTICS.GOLD-CORE.ds-build-canonical-gold-g3-g10 | comp-surface-check | comp-surface-check check --mode advisory --file org/seams/canonical-schwab-ssot-ec2.md | PASS |
+| 2026-06-29 | 3.0.0_SA_CVO | (no-TO) | comp-pipescript | comp-pipescript io data/canonical/schwab/gold/build_gold_holdings.py | FAIL |
+| 2026-06-29 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/estate-coverage-manif... | PASS |
+| 2026-06-29 | 3.0.0_SA_CVO | (no-TO) | comp-kuzu | comp-kuzu MATCH (s:STATE_MACHINE)-[:INVOKES]->(l) RETURN count(*) AS invokes | FAIL |
+| 2026-06-29 | 3.0.0_SA_CVO | (no-TO) | comp-kuzu | comp-kuzu MATCH (s:STATE_MACHINE)-[:INVOKES]->(l) RETURN count(*) AS invokes | FAIL |
+2026-06-29 | 0.0.1_UA_mstools | Schwab DERISK-1 consult chain | NONE (one-sentence why): consult/analysis grounded against the principal-local SI2 ClickOnce install + AE-reported live AWS state -- neither in the comp-indexed repo/AWS estate; no repo/infra/data change authored. comp-rail HUD nudges acknowledged, local-desktop-inspection exception holds.
+| 2026-06-29 | 0.0.1_UA_MSGraph | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
