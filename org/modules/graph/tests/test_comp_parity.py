@@ -107,3 +107,14 @@ def test_day_verdict_and_streak_mechanics():
     assert cp.update_streak(3, cp.FAIL) == 0          # a real divergence breaks the proof
     assert cp.update_streak(3, cp.STALE_SKIP) == 3    # stale holds, doesn't advance/reset
     assert cp.cutover_ready(5, 5) is True and cp.cutover_ready(4, 5) is False
+
+
+# ---- CUTOVER-JUMP measure (two-track model: vs-BD is a magnitude, not a tie) ----
+def test_cutover_jump_measures_not_ties_and_flags_structural():
+    # canonical (current) vs BD (lagged, non-uniform): small drifts + one 2x structural defect
+    canon = {"a": 100.0, "b": 200.0, "c": 651546.0, "d": 50.0}
+    bd    = {"a": 101.0, "b": 198.0, "c": 1302754.0, "d": 50.0}   # c is ~2x = structural
+    r = cp.measure_cutover_jump(canon, bd, structural_mult=1.5)
+    assert r["track"] == "cutover_jump" and r["verdict"] == "MEASURED"
+    assert r["n"] == 4 and r["n_structural"] == 1                  # only c flagged (>=1.5x)
+    assert r["structural_breaks"][0][0] == "c"                     # the 2x doubling surfaces

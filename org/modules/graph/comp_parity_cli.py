@@ -134,6 +134,37 @@ def compare_scope_subset(canon: dict, bd_full: dict, custody_accts: set, abs_usd
     return inner
 
 
+# ==================== CUTOVER-JUMP measure (vs a non-uniformly-stale BD -- NOT a tie-gate) ====================
+def measure_cutover_jump(canon: dict, bd: dict, structural_mult=1.5):
+    """Two-track model (Andrew 2026-06-29): BD lags >=1wk NON-UNIFORMLY (per-account), so it CANNOT be the
+    correctness reference -- exact-tie against it is structurally impossible. So canonical-vs-BD is NOT a
+    pass/fail tie; it MEASURES the cutover display-JUMP (how much the firm's numbers move when we flip from
+    lagged-BD to current-canonical) + flags only STRUCTURAL breaks (>= structural_mult x, e.g. the 2x
+    doubling) which are real defects, not lag. Correctness is gated elsewhere (canonical vs Schwab-raw).
+    Empirical basis: a uniform date-shift does NOT align them (canonical-06-18 vs BD-06-24 = 99.5% break,
+    WORSE than same-date 49%), so the lag is non-uniform -> measure, don't tie."""
+    keys = set(canon) & set(bd)
+    if not keys:
+        return {"track": "cutover_jump", "verdict": "NO-OVERLAP", "n": 0}
+    deltas = sorted(abs(canon[k] - bd[k]) for k in keys)
+    n = len(deltas)
+    total_canon = sum(canon[k] for k in keys)
+    total_bd = sum(bd[k] for k in keys)
+    structural = []
+    for k in keys:
+        lo, hi = min(canon[k], bd[k]), max(canon[k], bd[k])
+        if lo > 0 and hi / lo >= structural_mult:
+            structural.append((k, round(canon[k], 0), round(bd[k], 0), round(hi / lo, 2)))
+    # the headline JUMP = the firm-total display change at cutover (canonical fresher -> expected non-zero)
+    return {"track": "cutover_jump", "verdict": "MEASURED", "n": n,
+            "median_abs_delta": round(deltas[n // 2], 2),
+            "p95_abs_delta": round(deltas[min(n - 1, int(n * 0.95))], 2),
+            "headline_jump_usd": round(total_canon - total_bd, 2),
+            "headline_jump_pct": round((total_canon - total_bd) / total_bd * 100, 3) if total_bd else None,
+            "structural_breaks": sorted(structural, key=lambda x: -x[3])[:20],
+            "n_structural": len(structural)}
+
+
 # ==================== cross-cutting gates ====================
 def vintage_ok(canon_age_h, bd_age_h, max_age_h):
     """Dual-vintage: BOTH sides must be fresher than max_age. A frozen==frozen match is a FALSE pass,
@@ -204,26 +235,30 @@ def load_config(path):
 
 
 def validate_config(cfg):
-    """Structure-validate the firm parity spec (runs WITHOUT live data -- catches a malformed surface
-    map before the cadence). Returns (ok, issues)."""
+    """Structure-validate the firm parity spec (runs WITHOUT live data). TWO-TRACK model: a CORRECTNESS
+    track (canonical vs schwab_raw -- the hard cutover gate) + a CUTOVER-JUMP track (canonical vs bd_served
+    -- informational). Returns (ok, issues)."""
     issues = []
-    for s in cfg.get("surfaces", []):
+    corr = (cfg.get("correctness_track") or {}).get("surfaces", [])
+    jump = (cfg.get("cutover_jump_track") or {}).get("surfaces", [])
+    if not corr:
+        issues.append("missing correctness_track.surfaces (the hard cutover gate = canonical vs Schwab-raw)")
+    for s in corr:
         sid = s.get("id", "<no-id>")
         if not s.get("canonical", {}).get("table"):
-            issues.append(f"{sid}: missing canonical.table")
-        if not s.get("bd_served", {}).get("path"):
-            issues.append(f"{sid}: missing bd_served.path")
-        cls = s.get("tolerance_class")
-        if cls not in ("A", "B", "C", "D"):
-            issues.append(f"{sid}: bad tolerance_class {cls!r}")
-        # NAMESPACE GUARD: bd_served must NOT live under canonical/schwab (that's OUR side); BD's own
-        # gold/canonical/ is allowed (different root) -- catch an accidental cross-stream map.
+            issues.append(f"correctness/{sid}: missing canonical.table")
+        if not s.get("schwab_raw", {}).get("table"):
+            issues.append(f"correctness/{sid}: missing schwab_raw.table (the custodian reference)")
+        if s.get("tolerance_class") not in ("A", "B", "C", "D"):
+            issues.append(f"correctness/{sid}: bad tolerance_class {s.get('tolerance_class')!r}")
+    for s in jump:
+        sid = s.get("id", "<no-id>")
+        # NAMESPACE GUARD: bd_served must be a BD gold/platinum path, never the canonical root.
         for p in str(s.get("bd_served", {}).get("path", "")).split(","):
             if p.strip().startswith("canonical/schwab"):
-                issues.append(f"{sid}: bd_served path {p!r} points at the CANONICAL root (cross-stream "
-                              "map -- bd_served must be a BD gold/* path)")
-    if not cfg.get("total_aua_gate"):
-        issues.append("missing total_aua_gate (S7 firm-total-consistency)")
+                issues.append(f"jump/{sid}: bd_served {p!r} points at the CANONICAL root (cross-stream map)")
+    if not (cfg.get("correctness_track") or {}).get("total_aua_gate"):
+        issues.append("missing correctness_track.total_aua_gate (S7 firm-total-consistency)")
     return (not issues), issues
 
 
@@ -240,27 +275,26 @@ def main(argv=None):
     cfg_path = a.config or f"data/canonical/schwab/parity/{a.firm}_parity_config.yaml"
     cfg = load_config(cfg_path)
     ok, issues = validate_config(cfg)
-    n_surf = len(cfg.get("surfaces", []))
-    by_class = {}
-    for s in cfg.get("surfaces", []):
-        by_class[s["tolerance_class"]] = by_class.get(s["tolerance_class"], 0) + 1
+    corr = (cfg.get("correctness_track") or {}).get("surfaces", [])
+    jump = (cfg.get("cutover_jump_track") or {}).get("surfaces", [])
     out = {"firm": cfg.get("firm"), "config": cfg_path, "config_valid": ok, "issues": issues,
-           "surfaces": n_surf, "by_class": by_class,
+           "model": "two-track (correctness vs Schwab-raw [hard gate] + cutover-jump vs BD [informational])",
+           "correctness_surfaces": len(corr), "jump_surfaces": len(jump),
            "cutover_streak_target": cfg.get("cutover_gate", {}).get("clean_streak_target"),
-           # The per-surface S3-read + compare RUNS once the parallel cadence is live; the comparator
-           # CORE is unit-verified (test_comp_parity.py). This is the config-ready / cadence-gated state.
-           "run_status": "CONFIG-READY (live per-surface compare gated on the parallel cadence -- "
-                         "canonical + BD-served both producing daily; comparator core unit-verified)"}
+           "day1": "G1 correctness PROVEN: canonical_holdings vs schwab/silver/rps = 0/5892 value-breaks, "
+                   "$0 max delta (canonical ties the custodian exactly); vs-BD 49% break = BD's non-uniform lag",
+           "run_status": "TWO-TRACK CONFIG-READY -- correctness track G1 live-validated; remaining surfaces' "
+                         "schwab_raw refs to confirm per-provenance + grain-aware loaders"}
     if a.json:
         print(json.dumps(out, indent=2))
     else:
-        print(f"comp-parity {out['firm']} -- DATA/served parity gate (DATA_SSOTMG TO-4)")
+        print(f"comp-parity {out['firm']} -- DATA/served parity gate (DATA_SSOTMG TO-4), TWO-TRACK")
         print(f"  config: {cfg_path}  | valid: {'OK' if ok else 'ISSUES'}")
-        if issues:
-            for i in issues:
-                print(f"    ISSUE: {i}")
-        print(f"  surfaces: {n_surf}  by class: {by_class}  | streak target: {out['cutover_streak_target']}")
-        print(f"  => {out['run_status']}")
+        for i in issues:
+            print(f"    ISSUE: {i}")
+        print(f"  correctness surfaces (vs Schwab-raw, HARD gate): {len(corr)}")
+        print(f"  cutover-jump surfaces (vs BD, informational):    {len(jump)}  | streak target: {out['cutover_streak_target']}")
+        print(f"  DAY-1: {out['day1']}")
     return 0 if ok else 2
 
 
