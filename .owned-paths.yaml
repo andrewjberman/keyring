@@ -893,6 +893,10 @@ paths:
     lane: ANY_EXEC_OR_AE
     note: "Compiler tool engine implementations (extract_validate.py, extract_pipeline.py, etc.) — back-end paired with the *_cli.py entrypoints. AE owns extensions per ADHC_COMPIL_V4 family (009 symbolic-rule resolver in extract_validate.py 2026-05-08)."
 
+  "org/modules/compdiff/**":
+    lane: ANY_EXEC_OR_AE
+    note: "NFRA_COMPDIFF (comp-xray) engine + freeze-monitor. AE owns build (0.8.0_AE per NFRA_COMPDIFF.P1 TO); CTO ruled the dir = org/modules/compdiff/ (2026-06-29). Mirrors the org/modules/graph/comp_*.py comp-tool-implementation precedent (AE builds comp-tools in org/modules/, ANY_EXEC_OR_AE; more specific than org/modules/** ANY_EXEC). Grant added by COO to honor CTO's dir-ruling — comp-xray engine lives with the other comp-tools, not infra/aws/."
+
   "org/modules/graph/tsgraph_spike/**":
     lane: NFRA_TSGRAPH_SPIKE
     note: "NFRA_TSGRAPH.P0 ts-morph TS-semantic extractor/loader spike (the DE's PRD-designated authoring surface). Same-tool grant -> DE 0.4.0 self-commits its verified P0 code; AE retained for the P1 derive ingestion-leg co-wiring. Added 2026-06-17 by 0.7.0_AE_CloudOps per COO 193527Z. Longest-match overrides org/modules/** ANY_EXEC."
