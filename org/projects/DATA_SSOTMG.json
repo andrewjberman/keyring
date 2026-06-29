@@ -1,0 +1,36 @@
+{
+  "project_code": "DATA_SSOTMG",
+  "macro_code": "DATA",
+  "name": "49F Schwab-SSOT Cutover -- the thin coordinating program to move 49 Financial off Black Diamond onto Schwab-custodian-as-source-of-truth",
+  "description": "Andrew-direct 2026-06-29: take 49 Financial OFF Black Diamond and onto Schwab custodial data as the source of truth, 'in a big way.' Schwab is the underlying custodian (master acct 08242234); BD is a mid reporting middleman. This is the THIN COORDINATING umbrella (Andrew chose Option 2, 2026-06-29) that SEQUENCES the existing execution projects toward a parity-gated cutover -- it does NOT re-own their work: DATA_PLATFORM owns the Schwab custodian INGEST -> unified silver (incl. the open Quartz-EC2 raw-pull automation gap); DATA_ANALYTICS owns the canonical GOLD rebuild off that silver (G1-G13, incl. the open G3-G10 orchestrator-wiring gap + the held 49F-scoped advisor surfaces); ADVI_BDAPIMIG owns the residual BD auth, now reframed to a THIN advisor-metadata tether. TWO SOURCE-OF-TRUTH AXES (the key architectural call): custodial data (positions/txn/lots/tax/perf/NNA/holdings) -> Schwab-native; 49F business metadata (advisor architect/implementor roles + fee-split tabs) -> NOT custodial, stays a THIN BD tether (a scoped, keyed dim, honest bd-source-flagged), NOT a full BD exit until a Fidelity Data Delivery solution lands for the held-away book (~$156M fully-non-Schwab Fidelity + ~$109M held-away). HARD CONSTRAINT (Andrew 2026-06-29, verbatim intent): NO go-live/cutover until a functional end-to-end process is built IN PARALLEL and VALIDATED for SEVERAL DAYS (parity vs BD-served) -- never-widen, CTO+COO+Andrew-gated. RIGHT-SIZE BD auth: thin/low-freq tether => the heavy unattended firm-sep OTP lock (ADVI_BDAPIMIG GATE-B) is HELD; 49f stays attended/periodic.",
+  "prds": [
+    {
+      "path": "docs/architecture/DATA_SSOTMG_PRD.md",
+      "label": "CTO migration/cutover PRD -- FORTHCOMING (authoring 2026-06-29): the 4-phase 49F off-BD cutover (delivery automation + canonical gold completion + thin advisor-metadata tether dim + parallel-validate-several-days -> parity-gated never-widen cutover); grounds on the DATA_PLATFORM + DATA_ANALYTICS PRDs + the keep-local SCHWAB_SDD_DELIVERY_BRIEF.md feasibility",
+      "date": "2026-06-29"
+    }
+  ],
+  "related": [
+    "DATA_PLATFORM",
+    "DATA_ANALYTICS",
+    "ADVI_BDAPIMIG",
+    "NFRA_DTAFLP",
+    "MDPF_ASSETS"
+  ],
+  "status": "active",
+  "phase": "PHASE 0 -- program stood up 2026-06-29 (Andrew GO + Option-2 coordinating code). DS end-to-end grounding (0.4.0_DS, relayed + assessed via Andrew 2026-06-29): silver 17-fact/5-dim incremental build = SOLID (genuinely per-partition incremental, not daily full-recompute; one stale doc). The TWO actionable gaps: (1) Quartz-EC2 raw-pull NOT built -- raw ingest is local-machine + OneDrive-mediated today (SI2 Desktop -> OneDrive -> sync_schwab_onedrive_to_s3.py manual -> opal-data-schwab/01_raw); no EC2/Quartz automation exists [DATA_PLATFORM ingest; DERISK-1 in flight, 0.6.2]; (2) G3-G10 are BUILT but NOT wired into build_canonical_daily.py (orchestrator rolls only G1/G2) -> they freeze at date=2026-06-24 while silver+G1/G2 refresh [DATA_ANALYTICS gold; in-DS-lane fix GO'd]. Plus the held G11-G13 49F advisor/fee surfaces (thin-tether dim source now decided = BD-bridged). SEQUENCE: close the 2 gaps + build the held advisor dim + stand up a parity-validation harness -> run the full automated end-to-end daily cadence IN PARALLEL -> several days of validated parity vs BD-served -> never-widen parity-gated cutover.",
+  "blocking": "Cutover blocked BY DESIGN (Andrew hard constraint) on: (a) Quartz-EC2 raw-pull built + reliable [DATA_PLATFORM / DERISK-1]; (b) G3-G10 wired into the daily orchestrator + G11-G13 advisor surfaces built [DATA_ANALYTICS]; (c) a parity-validation harness running SEVERAL DAYS clean (canonical gold vs BD-served, within tolerance); (d) the non-Schwab/held-away census [DERISK-2] bounding the residual BD bridge. NONE of these lane-block the parallel BUILD from starting NOW -- they ARE the parallel build. CTO migration PRD forthcoming -> COO decomposes + drives the reorientation.",
+  "created": "2026-06-29",
+  "pods": [
+    "0.4",
+    "0.6",
+    "0.7",
+    "3.0",
+    "1.0",
+    "2.0"
+  ],
+  "pipeline": "the 49F off-BD cutover program: Schwab raw (Quartz-EC2 unattended pull) -> opal-data-schwab/01_raw -> canonical silver (17 fact/5 dim, incremental) -> canonical gold (G1-G13, FULL daily cadence) -> parity-validate vs BD-served (several days) -> never-widen cutover to Schwab-SSOT; BD shrinks to the thin advisor-metadata tether + (temporary) non-Schwab bridge until Fidelity Data Delivery",
+  "coo_lane": "2.0.0_SA_COO",
+  "thread_counter": 0,
+  "threads": []
+}
