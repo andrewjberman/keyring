@@ -9175,3 +9175,87 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-06-29 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/terraform/cot-pipeline/ssm.tf | PASS |
 | 2026-06-29 | 0.4.0_DS_ClientPlatform | ADVI_COTETL.DATEMODE-B | ds-commit-gate + comp-pipescript deployed | committed+deployed cot DATEMODE-B fix (bronze+silver); gate PASS x2, comp-pipescript deployed STALE->MATCH x2 on cot-exporter; deploy-completion ledger opened+closed (3 legs) | PASS |
 | 2026-06-29 | 0.4.0_DS_ClientPlatform | DATA_ANALYTICS.GOLD-CORE.ds-build-canonical-gold-g3-g10 | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/cr... | PASS |
+| 2026-06-29 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/mcp/.last-drive-2.0.0_SA_COO --file... | PASS |
+| 2026-06-29 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/briefs/allo... | PASS |
+| 2026-06-29 | 0.6.2_AE_PartnerETL | ADVI_BDAPIMIG.P1-DURABLE | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/ec2/EC2_MANIFEST.json --file ... | PASS |
+| 2026-06-29 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/ci/lambda-source-map.j... | PASS |
+| 2026-06-29 | 0.6.2_AE_PartnerETL | ADVI_BDAPIMIG.P1-DURABLE | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/ec2/bd-49f-auto-login/run-bd-... | PASS |
+| 2026-06-29 | 0.7.0_AE_CloudOps~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.7.0_AE_CloudOps/task... | PASS |
+| 2026-06-29 | 0.4.0_DS_ClientPlatform | DATA_ANALYTICS.GOLD-CORE.ds-build-canonical-gold-g3-g10 | comp-surface-check | comp-surface-check check --mode advisory --file docs/briefs/PFMG_TAXSMA_S0.2_converter_... | PASS |
+| 2026-06-29 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.7.0_AE_CloudOps/task... | PASS |
+| 2026-06-29 | 0.7.0_AE_CloudOps | (no-TO) | comp-blast | comp-blast bd-49f-freshness-probe | PASS |
+| 2026-06-29 | 0.6.2_AE_PartnerETL | ADVI_BDAPIMIG.P1-DURABLE | comp-iam | comp-iam service bd-49f-auto-login-role | PASS |
+| 2026-06-29 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/ec2/EC2_MANIFEST.json | PASS |
+| 2026-06-29 | 0.7.0_AE_CloudOps~B | (no-TO) | comp-kuzu | comp-kuzu MATCH (c:PanelCluster) RETURN count(c) AS panel_clusters | FAIL |
+| 2026-06-29 | 0.7.0_AE_CloudOps~B | (no-TO) | comp-kuzu | comp-kuzu MATCH (c:PanelCluster) RETURN count(c) AS panel_clusters | FAIL |
+| 2026-06-29 | 0.7.0_AE_CloudOps~B | (no-TO) | comp-kuzu | comp-kuzu MATCH (n:CloudNode) WHERE n.node_type CONTAINS 'Cluster' RETURN n.node_type A... | PASS |
+| 2026-06-29 | 0.6.2_AE_PartnerETL | ADVI_BDAPIMIG.P1-DURABLE | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.6.2_AE_PartnerETL/de... | PASS |
+| 2026-06-29 | 0.7.0_AE_CloudOps~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.7.0_AE_CloudOps/task... | PASS |
+| 2026-06-29 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/mcp/.last-drive-2.0.0_SA_COO --file... | PASS |
+| 2026-06-29 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/briefs/allo... | PASS |
+| 2026-06-29 | 0.7.0_AE_CloudOps~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.7.0_AE_CloudOps/task... | PASS |
+| 2026-06-29 | 0.7.0_AE_CloudOps~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/briefs/ae-0.7-to-registry-reconcil... | PASS |
+| 2026-06-29 | 0.6.2_AE_PartnerETL | ADVI_BDAPIMIG.P1-DURABLE | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.6.2_AE_PartnerETL/lo... | PASS |
+| 2026-06-29 | 0.6.2_AE_PartnerETL | ADVI_BDAPIMIG.P1-DURABLE | comp-pipescript | comp-pipescript deployed | PASS |
+| 2026-06-29 | 0.7.0_AE_CloudOps~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.7.0_AE_CloudOps/task... | PASS |
+| 2026-06-29 | 0.7.0_AE_CloudOps~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/terraform/bd-pipeline/bd-49f-... | PASS |
+| 2026-06-29 | 0.6.2_AE_PartnerETL | ADVI_BDAPIMIG.P1-DURABLE | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/terraform/bd-49f-auto-login/i... | PASS |
+| 2026-06-29 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/logs/2026-0... | PASS |
+| 2026-06-29 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-06-29 | 0.7.0_AE_CloudOps~B | (no-TO) | comp-iam | comp-iam role bd-exporter | PASS |
+| 2026-06-29 | 0.7.0_AE_CloudOps~B | (no-TO) | comp-iam | comp-iam service bd-exporter | PASS |
+| 2026-06-29 | 0.7.0_AE_CloudOps~B | (no-TO) | comp-iam | comp-iam gaps | PASS |
+| 2026-06-29 | 0.6.2_AE_PartnerETL | ADVI_BDAPIMIG.P1-DURABLE | comp-surface-check | comp-surface-check check --mode advisory --file .tools/comp-freshness --file .tools/com... | PASS |
+| 2026-06-29 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/mcp/.last-drive-2.0.0_SA_COO --file... | PASS |
+| 2026-06-29 | 0.7.0_AE_CloudOps~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/extract_iam.py --file... | PASS |
+| 2026-06-29 | 0.6.2_AE_PartnerETL | ADVI_BDAPIMIG.P1-DURABLE | comp-surface-check | comp-surface-check check --mode advisory --file .tools/comp-freshness --file .tools/com... | PASS |
+| 2026-06-29 | 3.0.0_SA_CVO | (no-TO) | comp-iam | comp-iam role bd-exporter | PASS |
+| 2026-06-29 | 3.0.0_SA_CVO | (no-TO) | comp-iam | comp-iam role bd-exporter | PASS |
+| 2026-06-29 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/briefs/allo... | PASS |
+| 2026-06-29 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/logs/2026-0... | PASS |
+| 2026-06-29 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/DATA_ANALYTICS.json --file... | PASS |
+| 2026-06-29 | 1.0.0_SA_CTO | (no-TO) | pipescript | pipescript --list | PASS |
+| 2026-06-29 | 1.0.0_SA_CTO | (no-TO) | comp-blast | comp-blast build_canonical_daily | FAIL |
+| 2026-06-29 | 1.0.0_SA_CTO | (no-TO) | comp-pipescript | comp-pipescript io build_gold_account_performance | FAIL |
+| 2026-06-29 | 1.0.0_SA_CTO | (no-TO) | pipescript | pipescript advi-bd | PASS |
+| 2026-06-29 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/graph-call-manifest.yaml | PASS |
+| 2026-06-29 | 3.0.0_SA_CVO | (no-TO) | comp-manifest-check | comp-manifest-check | FAIL |
+| 2026-06-29 | 0.4.0_DS_ClientPlatform | DATA_ANALYTICS.GOLD-CORE.ds-build-canonical-gold-g3-g10 | comp-surface-check | comp-surface-check check --mode advisory --file data/canonical/schwab/build_canonical_d... | PASS |
+| 2026-06-29 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/3.0.0_SA_CVO/task_orde... | PASS |
+| 2026-06-29 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/DATA_SSOTMG_PRD.md --... | PASS |
+| 2026-06-29 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/3.0.0_SA_CVO/task_orde... | PASS |
+| 2026-06-29 | 0.4.0_DS_ClientPlatform~B | (no-TO) | pipescript | pipescript --list | PASS |
+| 2026-06-29 | 0.4.0_DS_ClientPlatform~B | (no-TO) | pipescript | pipescript advi-bd | PASS |
+| 2026-06-29 | 0.7.0_AE_CloudOps~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .tools/registry-check.py --file .tools/... | PASS |
+| 2026-06-29 | 0.7.0_AE_CloudOps~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/ref/TASK_ORDER_PROTOCOL.md | PASS |
+| 2026-06-29 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-06-29 | 3.0.0_SA_CVO | (no-TO) | pipescript | pipescript advi-bd | PASS |
+| 2026-06-29 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/ref/TASK_ORDER_PROTOCOL.md | PASS |
+| 2026-06-29 | 0.7.0_AE_CloudOps~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.7.0_AE_CloudOps/task... | PASS |
+| 2026-06-29 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/DATA_SSOTMG... | PASS |
+| 2026-06-29 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/mcp/.last-drive-2.0.0_SA_COO --file... | PASS |
+| 2026-06-29 | 0.7.0_AE_CloudOps~B | (no-TO) | comp-lambdamap | comp-lambdamap sha | FAIL |
+| 2026-06-29 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/briefs/allo... | PASS |
+| 2026-06-29 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/DATA_SSOTMG... | PASS |
+| 2026-06-29 | 0.7.0_AE_CloudOps~B | (no-TO) | comp-lambdamap | comp-lambdamap sha | FAIL |
+| 2026-06-29 | 0.7.0_AE_CloudOps~B | (no-TO) | comp-lambdamap | comp-lambdamap check | FAIL |
+| 2026-06-29 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/DATA_SSOTMG... | PASS |
+| 2026-06-29 | 0.7.0_AE_CloudOps~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/lambdamap_cli.py --fi... | PASS |
+| 2026-06-29 | 0.7.0_AE_CloudOps~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/lambdamap_cli.py | PASS |
+| 2026-06-29 | 0.4.0_DS_ClientPlatform~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/briefs/DATA_SSOTMG_DERISK2_nonschw... | PASS |
+| 2026-06-29 | 0.4.0_DS_ClientPlatform~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-06-29 | 3.0.0_SA_CVO | (no-TO) | comp-lambdamap | comp-lambdamap sha | FAIL |
+| 2026-06-29 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/tests/test_lambdamap.py | PASS |
+| 2026-06-29 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/DATA_SSOTMG_PRD.md | PASS |
+| 2026-06-29 | 0.4.0_DS_ClientPlatform | DATA_ANALYTICS.GOLD-CORE.ds-build-canonical-gold-g3-g10 | comp-surface-check | comp-surface-check check --mode advisory --file data/black_diamond/scripts/silver/merge... | PASS |
+| 2026-06-29 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/bd-pipeline/bd-49f-ses... | PASS |
+| 2026-06-29 | 0.4.0_DS_ClientPlatform~B | (no-TO) | comp-pipescript | comp-pipescript io build_gold_advisor_attribution | FAIL |
+| 2026-06-29 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/terraform/bd-pipeline/bd-49f-... | PASS |
+| 2026-06-29 | 0.4.0_DS_ClientPlatform | DATA_ANALYTICS.GOLD-CORE.ds-build-canonical-gold-g3-g10 | comp-pipescript | comp-pipescript deployed data/black_diamond/scripts/silver/merge-daily-incremental.py | PASS |
+| 2026-06-29 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/ci/lambda-source-map.j... | PASS |
+| 2026-06-29 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/mcp/.last-drive-2.0.0_SA_COO --file... | PASS |
+| 2026-06-29 | 0.4.0_DS_ClientPlatform~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file data/canonical/schwab/docs/08_GOLD_SCOP... | PASS |
+| 2026-06-29 | 0.4.0_DS_ClientPlatform~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-06-29 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/briefs/allo... | PASS |
+2026-06-29 0.4.0_DS_ClientPlatform~B | Schwab-SSOT lane: comp-which(PARTIAL mis-route), pipescript advi-bd + --list (estate), comp-grep (canonical-doc trace), comp-pipescript io (NOT-FOUND=canonical uncovered, documented), ds-commit-gate x3 PASS. DERISK-2 census + TO-3 G11-G13.
+| 2026-06-29 | 0.4.0_DS_ClientPlatform~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
