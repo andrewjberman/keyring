@@ -1,0 +1,34 @@
+{
+  "project_code": "ADVI_PRVSYS",
+  "macro_code": "ADVI",
+  "name": "Partner User-Provisioning System -- templated provisioning scripts -> internal UI -> partner-admin self-service",
+  "description": "Andrew-direct 2026-06-29: ad-hoc user creation (hand-running create_user_v2.py, e.g. the 5 ADVI_COTUSR/INFUSR users) won't scale as Portal/Advisor-Intelligence activity grows. END-STATE: partner-firm ADMINS self-serve -- an admin page where a firm's admin adds their own users + scopes permissions, instead of us doing it. 3-PHASE system, LEADING with the templating of the provisioning scripts: P1 templated provisioning (productionize create_user_v2.py into a clean declarative-config, idempotent, AUDITED library + collapse the 3-copy firm-scope drift -- FIRM#META.domain + firmAccess.ts + the script FIRMS dict -- into ONE source of truth, the cottonwood-domain-drift class); P2 internal provisioning UI (an Opal-internal admin surface calling the P1 engine, so we stop hand-running scripts); P3 partner-admin self-service (a SCOPED admin page gated on firmRole=admin where a partner firm's admin manages ONLY their firm's users, tenant-isolated). LOAD-BEARING SECURITY (P3, PRD section 8): multi-tenant privilege surface -- the firmId MUST be server-derived from the caller's JWT, NEVER client-supplied (the cross-tenant escalation vector); firmRole=admin gates page AND API; scope-ceiling enforced server-side (no internal-tier, no admin-granting v1, no cross-firm, within the firm allowlist); every action audited; CVO ratifies tenant-isolation vs live. The 4-layer provisioning invariant (opal-users-v2 PROFILE+MEMBER / firmAccess.ts / JWT claims / opal-partner-{firm}) per docs/reference/user-provisioning-firm-scope-profiles-20260528.md.",
+  "prds": [
+    {
+      "path": "docs/architecture/ADVI_PRVSYS_PRD.md",
+      "label": "CTO PRD v0.1 (2026-06-29) -- premise + current-state (create_user_v2.py + the 4-layer model) + the 3-phase target (templated -> internal UI -> partner self-service) + the 4-layer invariant + P1-P3 TO decomp + compiler evidence + key decisions + the P3 tenant-isolation security model (server-derived firmId) + risks",
+      "date": "2026-06-29"
+    }
+  ],
+  "related": [
+    "ADVI_PRTORG",
+    "ADVI_COTUSR",
+    "ADVI_INFUSR",
+    "ADVI_INFPRM",
+    "DATA_SSOTMG"
+  ],
+  "status": "active",
+  "phase": "PHASE 0 -- PRD AUTHORED 2026-06-29 (1.0.0_SA_CTO; docs/architecture/ADVI_PRVSYS_PRD.md). Andrew-direct (the ad-hoc provisioning won't scale; end-state = partner self-service). SEQUENCE: COO decomposes; P1 LEADS (templating + the single-source-of-truth firm-scope fix -- the engine P2/P3 call + retires the cottonwood domain-drift class) -> P2 internal UI -> P3 partner-admin self-service (the tenant-isolation security is the load-bearing CVO-ratified gate). Engine = users/scripts/create_user_v2.py.",
+  "blocking": "None to PRD/P1. P3 (self-service) is gated on the P1 templated engine + the P2 internal UI + the CVO tenant-isolation ratification (a cross-firm write must 403). COO decomposes; P1 = AE/DT (provisioning lane) + DS (config); P2 = DE/RD (portal); P3 = DE/RD + AE (auth/API) + CVO (security gate).",
+  "created": "2026-06-29",
+  "pods": [
+    "0.4",
+    "0.7",
+    "3.0",
+    "1.0"
+  ],
+  "pipeline": "partner provisioning: create_user_v2.py -> P1 templated library (declarative firm-scope config single-source-of-truth, idempotent, audited, 4-layer atomic) -> P2 internal admin UI (we operate) -> P3 partner-admin self-service portal page (firmRole=admin, tenant-scoped API, server-derived firmId, CVO-ratified isolation)",
+  "coo_lane": "2.0.0_SA_COO",
+  "thread_counter": 0,
+  "threads": []
+}
