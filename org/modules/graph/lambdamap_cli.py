@@ -275,16 +275,56 @@ def sha_check(root: str) -> int:
     return 1
 
 
-def derive(root: str, write: bool = False) -> int:
-    """Reconcile the source-map artifact_sha256 to the LIVE CodeSha256 for every
-    DRIFTED entry (the durable record-writer fix: record the DEPLOYED sha, not
-    the intended build-time sha). Folds the banked record-terraform-deploy
-    reconcile. Dry-run by default; --write mutates the source-map (CVO-gated).
+ARTIFACT_BUCKET = "opal-313476888478-lambda-artifacts"
 
-    SAFETY: only re-records entries the disposition-aware classifier returns as
-    real `drift` -- a DISPOSITIONED divergence (intentional _note) is NEVER
-    touched, and a CORRUPT_RECORD routes to the builder (not here). So --write
-    can only ever move a stale sha to the live deployed truth."""
+
+def s3_artifact_sha(s3_key):
+    """The deploy artifact's base64 SHA-256 = the `content-sha256` metadata the
+    builders store at upload. The cheap evidence (head-object, no download) for
+    the live-vs-S3 parity check. None if unreadable (boto3/creds/object absent)."""
+    if not s3_key:
+        return None
+    try:
+        import boto3  # noqa: PLC0415
+        h = boto3.client("s3", region_name="us-east-1").head_object(
+            Bucket=ARTIFACT_BUCKET, Key=s3_key)
+        return (h.get("Metadata") or {}).get("content-sha256")
+    except Exception:
+        return None
+
+
+def classify_reconcile(drift, key_of, sha_of_s3):
+    """Split drift proposals into SAFE (STALE-RECORD: live == the current S3
+    deploy artifact -> recorded sha just went stale, reconcile is correct) vs
+    UNSAFE (POSSIBLE-HALF-LANDED or UNVERIFIABLE: live != S3 artifact, or the S3
+    sha can't be read -> reconcile-to-live would LAUNDER a wrong deployed
+    artifact + silence the detector). Pure (sha_of_s3 injected) -> testable.
+
+    This is CVO's binding gate condition baked into the tool (verdict ed13b714a):
+    --write must only touch entries where live == the S3 deploy artifact."""
+    safe, unsafe = [], []
+    for name, rec, liveh in drift:
+        s3sha = sha_of_s3(key_of(name))
+        if s3sha and s3sha == liveh:
+            safe.append((name, rec, liveh))
+        else:
+            reason = "POSSIBLE-HALF-LANDED (live != S3 artifact)" if s3sha else "UNVERIFIABLE (S3 sha unreadable)"
+            unsafe.append((name, rec, liveh, reason))
+    return safe, unsafe
+
+
+def derive(root: str, write: bool = False) -> int:
+    """Reconcile the source-map artifact_sha256 to the LIVE CodeSha256 for
+    DRIFTED entries -- the durable record-writer fix (record the DEPLOYED sha).
+    Dry-run by default; --write mutates the source-map (CVO-gated).
+
+    SAFE-BY-CONSTRUCTION on two axes: (1) disposition-aware -- only the
+    classifier's real `drift` is a candidate (a DISPOSITIONED/CORRUPT entry is
+    never written); (2) anti-launder -- each candidate is split STALE-RECORD
+    (live == current S3 deploy artifact, reconcile correct) vs POSSIBLE-HALF-
+    LANDED / UNVERIFIABLE, and --write touches ONLY the STALE-RECORD class. So
+    --write can only move a confirmed-stale sha to the deployed truth; it can
+    never launder a half-landed deploy or clobber a disposition."""
     sm = load_srcmap(root)
     funcs = sm.get("functions", {})
     print("comp-lambdamap derive -- reconcile source-map artifact_sha256 -> LIVE CodeSha256 "
@@ -294,28 +334,32 @@ def derive(root: str, write: bool = False) -> int:
         print("  UNAVAILABLE: could not read live CodeSha256 (boto3/creds absent).")
         return 2
     r = compute_sha_findings(funcs, live)
-    proposals = r["drift"]  # non-dispositioned, valid-base64, name-in-live, != live
-    print(f"  proposed re-records: {len(proposals)} | dispositioned (LEFT, intentional): "
-          f"{len(r['dispositioned'])} | corrupt (re-record via the builder, not here): {len(r['corrupt'])}")
-    for name, rec, liveh in proposals:
-        print(f"    {name}: {rec[:16]}.. -> {liveh[:16]}..")
+    safe, unsafe = classify_reconcile(
+        r["drift"], lambda n: funcs[n].get("artifact_s3_key"), s3_artifact_sha)
+    print(f"  drift candidates: {len(r['drift'])} -> STALE-RECORD (safe): {len(safe)} | "
+          f"POSSIBLE-HALF-LANDED/UNVERIFIABLE (HOLD): {len(unsafe)} | "
+          f"dispositioned (LEFT): {len(r['dispositioned'])} | corrupt (builder): {len(r['corrupt'])}")
+    for name, rec, liveh in safe:
+        print(f"    [STALE-RECORD] {name}: {rec[:16]}.. -> {liveh[:16]}.. (live == S3 artifact; safe to reconcile)")
+    for name, rec, liveh, reason in unsafe:
+        print(f"    [HOLD] {name}: recorded != live, but {reason} -- do NOT reconcile; investigate (could be half-landed)")
     if not write:
-        print("  DRY-RUN: no changes written. Re-run `derive --write` to apply "
-              "(CVO-GATED: mutates lambda-source-map.json -- requires CVO sign-off per the TO).")
-        return 0
-    print("  CVO-GATED WRITE: applying -- this mutates lambda-source-map.json. "
-          "Ensure CVO sign-off is on the record (NFRA_COMPAWS.LAMBDAMAP-P2 acceptance).")
-    if not proposals:
-        print("  nothing to re-record (no non-dispositioned drift). source-map already clean.")
-        return 0
-    for name, rec, liveh in proposals:
+        print("  DRY-RUN: no changes written. `derive --write` reconciles ONLY the STALE-RECORD class "
+              "(CVO-GATED per-entry confirm of live==S3, verdict ed13b714a).")
+        return 1 if unsafe else 0
+    print("  CVO-GATED WRITE: mutating lambda-source-map.json -- CVO sign-off WITH live==S3 evidence required "
+          "per entry (NFRA_COMPAWS.LAMBDAMAP-P2). Writing ONLY the STALE-RECORD class; HOLD entries skipped.")
+    if not safe:
+        print("  nothing safe to re-record.")
+        return 1 if unsafe else 0
+    for name, rec, liveh in safe:
         funcs[name]["artifact_sha256"] = liveh
     with open(os.path.join(root, SRCMAP_REL), "w", encoding="utf-8", newline="\n") as fh:
         json.dump(sm, fh, indent=2, ensure_ascii=False)
         fh.write("\n")
-    print(f"  WROTE: re-recorded {len(proposals)} entr(ies) to live CodeSha256. "
-          f"Re-run `comp-lambdamap sha` to confirm 0 SHA_DRIFT.")
-    return 0
+    print(f"  WROTE: reconciled {len(safe)} STALE-RECORD entr(ies) to live CodeSha256 "
+          f"({len(unsafe)} HOLD left for investigation). Re-run `comp-lambdamap sha` to confirm.")
+    return 1 if unsafe else 0
 
 
 def main(argv=None) -> int:
