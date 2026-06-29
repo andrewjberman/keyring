@@ -9542,3 +9542,12 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-06-29 | 0.8.0_AE_CloudComp | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
 2026-06-29 0.6.0_AE_PartnerETL CUTOVER-1: comp-iam role (runner pinpoint DESIRED==LIVE), comp-which (routed instance-role/TF-home), comp-grep (source-grounded xref read-location across 4 dim builders -> caught base-DS partial fix, 2 stale; confirmed schwab reads all 01_raw), live aws iam get-role-policy (rail-checked fresh-grant ground-truth, box+runner), terraform plan/validate (0-diff import + 12-add apply + 0-diff post), deploy_ledger.py (6-leg ledger CLOSED). Gap: comp-freshness no config for new parallel/not-served canonical/schwab/gold prefix -> rail-checked head-object for NEVER#7 SSE+mtime proof.
 | 2026-06-29 | 0.6.0_AE_PartnerETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-06-29 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/mcp/.last-drive-2.0.0_SA_COO --file... | PASS |
+| 2026-06-29 | 0.8.0_AE_CloudComp | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .tools/_trino_fed.py | PASS |
+| 2026-06-29 | 0.8.0_AE_CloudComp~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/globgrph/iceberg_parity.py --... | PASS |
+| 2026-06-29 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/briefs/allo... | PASS |
+| 2026-06-29 | 0.7.0_AE_CloudOps~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/bd-pipeline/bd-gold-de... | PASS |
+| 2026-06-29 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/NFRA_COMPDIFF_PRD.md ... | PASS |
+| 2026-06-29 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/drift-topology.yaml | PASS |
+| 2026-06-29 | 0.8.0_AE_CloudComp~B | NFRA_COMPDRIFT.seam-5 | comp-which, ds-commit-gate, safe-commit | route to seam-5 design; Rule-14/14a gates on the iceberg-vs-canonical parity engine + test (Nessie metadata-currency trap caught + fixed) | PASS |
+| 2026-06-29 | 0.8.0_AE_CloudComp~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
