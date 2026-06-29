@@ -6,7 +6,7 @@
   "prds": [
     {
       "path": "docs/architecture/DATA_SSOTMG_PRD.md",
-      "label": "CTO migration/cutover PRD -- FORTHCOMING (authoring 2026-06-29): the 4-phase 49F off-BD cutover (delivery automation + canonical gold completion + thin advisor-metadata tether dim + parallel-validate-several-days -> parity-gated never-widen cutover); grounds on the DATA_PLATFORM + DATA_ANALYTICS PRDs + the keep-local SCHWAB_SDD_DELIVERY_BRIEF.md feasibility",
+      "label": "CTO migration/cutover PRD v0.1 (2026-06-29): the 4-phase 49F off-BD cutover (P1 Quartz-EC2 delivery + P2 canonical gold completion [G3-G10 wire + G11-G13 thin advisor dim] + P3 parallel-validate-several-days parity harness + P4 parity-gated never-widen cutover); 6 TO candidates + compiler evidence (pipescript advi-bd = parity targets; comp-blast = canonical not graph-indexed); grounds on the DATA_PLATFORM + DATA_ANALYTICS PRDs + the keep-local SCHWAB_SDD_DELIVERY_BRIEF.md feasibility",
       "date": "2026-06-29"
     }
   ],
