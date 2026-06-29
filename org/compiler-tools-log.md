@@ -9382,3 +9382,10 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-06-29 | 3.0.0_SA_CVO | (no-TO) | comp-kuzu | comp-kuzu MATCH (s:STATE_MACHINE)-[:INVOKES]->(l) RETURN count(*) AS invokes | FAIL |
 2026-06-29 | 0.0.1_UA_mstools | Schwab DERISK-1 consult chain | NONE (one-sentence why): consult/analysis grounded against the principal-local SI2 ClickOnce install + AE-reported live AWS state -- neither in the comp-indexed repo/AWS estate; no repo/infra/data change authored. comp-rail HUD nudges acknowledged, local-desktop-inspection exception holds.
 | 2026-06-29 | 0.0.1_UA_MSGraph | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-06-29 | 3.0.0_SA_CVO | (no-TO) | comp-kuzu | comp-kuzu MATCH (s:STATE_MACHINE)-[:INVOKES]->() RETURN count(*) AS n | FAIL |
+| 2026-06-29 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/ADVI_COTUSR.json | PASS |
+| 2026-06-29 | 3.0.0_SA_CVO | (no-TO) | comp-kuzu | comp-kuzu CALL show_tables() RETURN name | PASS |
+| 2026-06-29 | 3.0.0_SA_CVO | (no-TO) | comp-kuzu | comp-kuzu MATCH ()-[r:INVOKES]->() RETURN count(r) AS invokes | FAIL |
+| 2026-06-29 | 3.0.0_SA_CVO | (no-TO) | comp-kuzu | comp-kuzu CALL show_tables() RETURN * | PASS |
+| 2026-06-29 | 0.6.2_AE_PartnerETL | ADVI_BDAPIMIG.P1-DURABLE + SCHWAB_SSOT.DERISK-1 | comp-iam / comp-freshness(+firm-shorthand fix) / deploy_ledger | session: 49f durable port LEG0-2 + freeze-recovery (cookie+scripts verified-fixed, silver->21:53Z nightly) + Schwab Quartz/SI2 EC2 spike (720MB->S3, unattended built) | PASS -- 3 logs (session_close + 2 detail) |
+| 2026-06-29 | 0.6.2_AE_PartnerETL | SCHWAB_SSOT.DERISK-1.ae-quartz-ec2-schwab-pull-validation | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
