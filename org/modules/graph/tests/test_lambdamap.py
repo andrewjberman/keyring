@@ -136,3 +136,20 @@ def test_classify_reconcile_holds_half_landed_and_unverifiable():
     assert sorted(u[0] for u in unsafe) == ["halflanded", "unverif"], "half-landed + unverifiable must be HELD"
     assert any("HALF-LANDED" in u[3] for u in unsafe if u[0] == "halflanded")
     assert any("UNVERIFIABLE" in u[3] for u in unsafe if u[0] == "unverif")
+
+
+def test_parity_settle_guard():
+    # CVO race-sensitivity finding (660-class): a live!=S3 divergence whose live was JUST updated
+    # (< 180s) is an in-flight deploy -> SETTLING (exit-2 transient), NOT a POSSIBLE-HALF-LANDED break.
+    # An old divergence (live stable for hours) IS a real half-landed deploy.
+    import datetime as dt
+    now = dt.datetime(2026, 6, 29, 16, 0, 0, tzinfo=dt.timezone.utc)
+    funcs = {"s": {"artifact_sha256": _GOOD, "artifact_s3_key": "ks"},
+             "h": {"artifact_sha256": _GOOD, "artifact_s3_key": "kh"}}
+    live = {"s": _GOOD2, "h": _GOOD2}
+    s3 = {"ks": "X" * 43 + "=", "kh": "X" * 43 + "="}   # both live != s3
+    mod = {"s": now - dt.timedelta(seconds=30), "h": now - dt.timedelta(hours=2)}
+    v = lm.compute_parity(funcs, live, lambda n: funcs[n]["artifact_s3_key"],
+                          lambda k: s3.get(k), modified=mod, now=now)
+    assert v["s"][0] == "SETTLING", "a <180s-old divergence is an in-flight deploy, not a break"
+    assert v["h"][0] == "POSSIBLE-HALF-LANDED", "a hours-old divergence is a real half-landed deploy"
