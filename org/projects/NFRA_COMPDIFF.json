@@ -1,0 +1,32 @@
+{
+  "project_code": "NFRA_COMPDIFF",
+  "macro_code": "NFRA",
+  "name": "comp-diff -- universal resource x-ray + temporal diff (all axes; the missing value-motion lens)",
+  "description": "Andrew-direct 2026-06-29 (born from the inf-AUA freeze): a tool to x-ray ANY producer/consumer across ALL relevant axes and diff that x-ray against a temporal anchor (a fixed date / the last date an axis genuinely changed / a create-or-delete). The estate hit the SAME failure 3x on 06-29 (cot platinum, bd xref, inf holdings): a value FROZE while its timestamp kept advancing -- invisible to every tool we own because they check the WRAPPER (mtime/existence) not the MOTION (is the content genuinely changing). comp-diff is the missing temporal/value-motion lens. AXES (all in scope -- Andrew 'start with all axes now'): code, config/wiring, output-value, schema, freshness, edges, iam, infra/deploy, existence, size -- each carrying a last-GENUINELY-changed timestamp (content-fingerprint penny-test, so a re-stamp is never a false change). ANCHORS: --at <date> / --since-last-change [--axis] / --since-created/deleted / --upstream (walk edges up to the cascade origin). DERIVED CROSS-AXIS SIGNALS: FROZEN-BUT-FRESH (freshness advances, value frozen -- the 3x bug), ORPHANED-READ (consumer reads a prefix the producer's write-config moved away from), SCHEMA-DRIFT-IN-PLACE, MAGNITUDE-SHIFT. TWO MODES: on-demand x-ray (forensic) + the FREEZE-MONITOR over served platinum/firm/*.json (the prevention -- would have alarmed Sat 06-27 on the inf freeze instead of caught Mon). NOT comp-drift (Andrew-explicit: drift = dead structure; comp-diff = one resource's history across all dimensions). Data already retained (git, S3 versioning, graph/Nessie versions, CloudTrail, TF) -> a query/aggregation layer, not new infra. Shares the in-VPC Trino-query module with comp-heat federated (S5; no persistent endpoint -- that's SCTY-gated).",
+  "prds": [
+    {
+      "path": "docs/architecture/NFRA_COMPDIFF_PRD.md",
+      "label": "CTO PRD v0.1 (2026-06-29) -- premise (3x frozen-but-fresh) + the x-ray concept + all 10 axes w/ data sources + the 4 temporal anchors + the derived cross-axis signals (FROZEN-BUT-FRESH etc.) + 2 modes (forensic + freeze-monitor) + the inf worked-example (2hr dig -> 1 command) + the comp-* family lenses + architecture (per-axis adapters, shared Trino-query module, content-fingerprint) + P1-P3 + risks (dynamic-edge blind spot)",
+      "date": "2026-06-29"
+    }
+  ],
+  "related": [
+    "NFRA_COMPDRIFT",
+    "NFRA_GLOBGRPH",
+    "NFRA_COMPRAIL"
+  ],
+  "status": "active",
+  "phase": "PHASE 0 -- PRD AUTHORED 2026-06-29 (1.0.0_SA_CTO; docs/architecture/NFRA_COMPDIFF_PRD.md). Andrew-direct, born from the inf-AUA freeze (the 3x frozen-but-fresh class no tool caught). ALL axes in scope from the start (Andrew). SEQUENCE: COO decomposes; P1 = engine + resource model + anchors + the cheap already-retained axes (code/config/output-value/schema/freshness/edges) + the FREEZE-MONITOR (the prevention deliverable) -> P2 heavier axes (iam/infra/existence/size) + --upstream cascade walk -> P3 Trino-federation axis + comp-which promotion + nightly-sweep wiring.",
+  "blocking": "None to PRD/P1. The edge axis + --upstream cascade walk depend on the dynamic-prefix-read extraction (shared P1 dependency with NFRA_COMPDRIFT -- INF_D_00's holdings read was invisible to the extractor; mark UNVERIFIABLE-EDGE never 'no edge'). The federation axis (P3) reuses the comp-heat in-VPC Trino-query module (S5). COO decomposes; build = AE + the comp-tools lane.",
+  "created": "2026-06-29",
+  "pods": [
+    "0.7",
+    "0.8",
+    "3.0",
+    "1.0"
+  ],
+  "pipeline": "comp-diff <resource> [--at | --since-last-change | --since-created/deleted | --upstream] -> resolve handle to applicable axes -> per-axis adapter (timeline of {when, content-fingerprint}) -> diff vs anchor -> per-axis changed?/when + derived cross-axis flags (FROZEN-BUT-FRESH etc.); + freeze-monitor mode over served surfaces",
+  "coo_lane": "2.0.0_SA_COO",
+  "thread_counter": 0,
+  "threads": []
+}
