@@ -21,7 +21,7 @@
     "NFRA_DEBTSCAN",
     "NFRA_TSGRAPH"
   ],
-  "status": "complete-as-superseded",
+  "status": "complete",
   "phase": "SUPERSEDED-by-NFRA_EXPAND 2026-06-25 (Andrew-direct, same day): Andrew consolidated F4(auth-edge)+HEATMAP+MS-Cloud-ingestion into ONE macro NFRA_EXPAND. The object+process heat_map scoped here becomes NFRA_EXPAND Strand C (now applied GLOBALLY over the expanded graph). Scope intact; just re-homed under the larger graph-SSOT-expansion vision. See NFRA_EXPAND_SCOPING.md.",
   "blocking": "None -- absorbed into NFRA_EXPAND (Strand C). HEATMAP_OBJECT/PROCESS continue as projects under NFRA_EXPAND.",
   "created": "2026-06-25",

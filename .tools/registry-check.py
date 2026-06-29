@@ -33,8 +33,31 @@ import sys
 
 # Canonical closed tokens + tolerant synonyms ("completed" is a known drift of "complete").
 CLOSED = {"complete", "completed", "closed", "cancelled", "canceled",
-          "merged", "superseded", "done", "inactive-closed"}
+          "merged", "superseded", "done", "inactive-closed",
+          "shipped", "decommissioned", "archived", "dropped"}
 HOT_HOURS = 72
+
+
+def _is_closed_status(st: str) -> bool:
+    """True if the project status denotes closed/done -- FIRST-TOKEN-PRIMARY,
+    not exact-match. Fixes the compound-status misread where exact `st in CLOSED`
+    failed (NFRA_HEATMAP 'complete-as-superseded' false-read as HOT).
+
+    Deliberately FIRST-TOKEN, NOT a scan-anywhere: a token-anywhere scan would
+    FALSE-CLOSE a genuinely-active phase status like 'build-complete'
+    (HEATMAP_OBJECT, an active re-homed strand) by matching the buried
+    'complete'. First-token respects the author's leading state word -- a
+    closed project leads with a closed token; 'build-complete' leads with
+    'build' (a phase prefix) and correctly STAYS active. Errs toward false-OPEN
+    (the safe direction -- never silently drops a live project). NFRA registry
+    hygiene 2026-06-29, MSTR-adopted status-format finding."""
+    st = (st or "").lower().strip()
+    if not st:
+        return False
+    if st in CLOSED:                       # fast path: exact canonical token
+        return True
+    first = re.split(r"[\s\-/]", st, maxsplit=1)[0].strip(".,;:")
+    return first in CLOSED
 PROJ_DIR = "org/projects"
 REGISTRY = "org/projects/REGISTRY.md"
 
@@ -120,7 +143,7 @@ def build_rows():
             continue
         code = d.get("project_code") or code
         st = str(d.get("status", "")).lower().strip()
-        if st in CLOSED:
+        if _is_closed_status(st):
             continue
         dt, owner, subj = git_latest(code)
         rname, rnarr = reg.get(code, ("", ""))

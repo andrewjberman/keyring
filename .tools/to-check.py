@@ -78,10 +78,16 @@ def _extract_tag_multi(text: str, *tags: str) -> str | None:
 
 def _extract_md_field(text: str, *labels: str) -> str | None:
     for label in labels:
-        m = re.search(rf"\*\*{re.escape(label)}:\*\*\s*`?([^`\n]+?)`?\s*$",
+        # Capture the value to END-OF-LINE. The old `([^`\n]+?)` stopped at the
+        # FIRST inline-code backtick, so a markdown status CONTAINING backticks
+        # (e.g. **Status:** complete -- ... `MAINT_MARK refs=8` ...) captured
+        # nothing -> the TO mis-rendered [??] despite leading with "complete".
+        # Capture to EOL, then strip any wrapping backticks. (NFRA registry
+        # hygiene 2026-06-29, MSTR-adopted status-format finding.)
+        m = re.search(rf"\*\*{re.escape(label)}:\*\*\s*([^\n]+?)\s*$",
                       text, re.MULTILINE | re.IGNORECASE)
         if m:
-            return m.group(1).strip()
+            return m.group(1).strip().strip("`").strip()
     return None
 
 
