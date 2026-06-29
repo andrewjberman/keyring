@@ -9514,3 +9514,8 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-06-29 | 0.7.0_AE_CloudOps~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/multi-account/ARCHITECTURE.md... | PASS |
 2026-06-29 | 0.0.0_AB_MSTR | SS-0010 session | comp-grep (quartz/wp grounding, 0-match real), comp-which (drift -> no-route, confirmed no comp-drift), native marker-scan/ledger-read/seams-read for population+verification. Governance/coordination-dominant window; comp-graph tools N/A for MCP-runtime/process/deploy-ledger truth.
 | 2026-06-29 | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md | PASS |
+| 2026-06-29 | 0.8.0_AE_CloudComp~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/globgrph/code_heat_parity.py ... | PASS |
+| 2026-06-29 | 0.8.0_AE_CloudComp | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/terraform/globgrph/trino.tf | PASS |
+| 2026-06-29 | 0.6.0_AE_PartnerETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/ec2/EC2_MANIFEST.json | PASS |
+| 2026-06-29 | 0.8.0_AE_CloudComp~B | NFRA_COMPDRIFT.seam-6 | comp-which, ds-commit-gate, safe-commit | route to compdrift seam-6 design; Rule-14/14a gates on the git-code-heat parity engine + test | PASS |
+| 2026-06-29 | 0.8.0_AE_CloudComp~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
