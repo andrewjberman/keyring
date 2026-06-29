@@ -9569,3 +9569,14 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-06-29 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/logs/2026-0... | PASS |
 - 2026-06-29 0.7.0_AE_CloudOps~B: OPLMCP gateway MCP-auth LIVE smoke-test (curl verify-on-served, no comp-tool -- live HTTP auth behavior, not TF-modeled). /mcp returns 401+WWW-Authenticate Bearer (PASS, spec-compliant; old 302->Microsoft gone); PRM + AS-facade discovery 200/well-formed. MCP auth at the edge = LIVE-verified.
 | 2026-06-29 | 0.7.0_AE_CloudOps~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-06-29 | 0.8.0_AE_CloudComp | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/compdiff/engine.py --file inf... | PASS |
+| 2026-06-29 | 0.7.0_AE_CloudOps~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/ci/lambda-source-map.j... | PASS |
+| 2026-06-29 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/NFRA_COMPDIFF_PRD.md ... | PASS |
+| 2026-06-29 | 0.8.0_AE_CloudComp | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/compdiff/axes_s3.py | PASS |
+| 2026-06-29 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .owned-paths.yaml | PASS |
+| 2026-06-29 | 0.8.0_AE_CloudComp | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/compdiff/axes_s3.py --file ... | PASS |
+| 2026-06-29 | 0.4.0_DS_ClientPlatform | DATA_ANALYTICS.GOLD-CORE.ds-build-canonical-gold-g3-g10 | comp-surface-check | comp-surface-check check --mode advisory --file data/inf/scripts/gold/INF_B_00.canonica... | PASS |
+| 2026-06-29 | 0.7.0_AE_CloudOps~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/test-seeking-alpha-una... | PASS |
+| 2026-06-29 | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/mcp/comp_ferry_queue.json | PASS |
+2026-06-29 1.0.0_SA_CTO session-close: comp-freshness inf (WARN -> aum_snapshot N/A led the inf dig) + comp-pipescript io INF_D_00 (GAP: dynamic-prefix holdings read unmodeled -> the graph-blindspot finding, shared P1 dep for comp-xray/comp-drift) + comp-grep/comp-glob producer traces + comp-which rail held (gated 2 raw greps -> comp-grep).
+| 2026-06-29 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
