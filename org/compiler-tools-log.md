@@ -9508,3 +9508,9 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-06-29 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/briefs/allo... | PASS |
 - 20260629T2030Z 0.7.0_AE_CloudOps~A [DEPLOY] teardown dispatch a47d169ef: comp-blast/comp-freshness/pipescript/comp-which used to pre-gate bd-time-machine teardown (trigger-ownership cleared via s3-notifications.tf); 3 teardowns done, 2 held on live-publisher/coupling refutation.
 | 2026-06-29 | 0.7.0_AE_CloudOps~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-06-29 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/briefs/inf-aua-frozen-202711894-in... | PASS |
+| 2026-06-29 | 0.8.0_AE_CloudComp | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/terraform/globgrph/glue_code_... | PASS |
+| 2026-06-29 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .tools/git-hooks/mstr-ledger-check.sh | PASS |
+| 2026-06-29 | 0.7.0_AE_CloudOps~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/multi-account/ARCHITECTURE.md... | PASS |
+2026-06-29 | 0.0.0_AB_MSTR | SS-0010 session | comp-grep (quartz/wp grounding, 0-match real), comp-which (drift -> no-route, confirmed no comp-drift), native marker-scan/ledger-read/seams-read for population+verification. Governance/coordination-dominant window; comp-graph tools N/A for MCP-runtime/process/deploy-ledger truth.
+| 2026-06-29 | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md | PASS |
