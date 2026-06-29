@@ -9,8 +9,8 @@
     "ADVI_INFLEC",
     "ADVI_INFMVP"
   ],
-  "status": "active",
-  "phase": "PHASE 0 -- REGISTERED 2026-06-29 (1.0.0_SA_CTO, Andrew-direct). Canonical provisioning task via create_user_v2.py; owner = provisioning lane (0.7.0_AE_CloudOps; DT normally). 2 inflection users, role=user firmRole=null (Inf-level user, like Joe Brandenburg), mustChangePassword temp password. SEQUENCE: idempotent-check patrick@ (may pre-exist) -> run the canonical script for noel@ (+ patrick@ if absent) -> read-back verify (PROFILE + MEMBER + opal-partner-inflection, firmRole=null non-admin) -> confirm login + Profile-tab access. Domain matches (inflectionwealth.com) -> no domain blocker.",
+  "status": "complete",
+  "phase": "COMPLETE 2026-06-29 (0.7.0_AE_CloudOps): 2 inflection users (patrick/noel@inflectionwealth.com, role=user non-admin/firmRole=user like Joe Brandenburg) provisioned + read-back verified (PROFILE+MEMBER+opal-partner-inflection) + PROD-login-confirmed (HTTP 200+JWT, no 403). Temp pw InflectionWealth7 (Andrew-direct), mustChangePassword=true. Domain matched (inflectionwealth.com), no blocker. Display names first-name-derived (Patrick/Noel; surnames if available later). COO-accepted 191014Z.",
   "blocking": "None hard. patrick@ may pre-exist (idempotent verify); domain matches so no allowlist gap. COO assigns the owner + drives.",
   "created": "2026-06-29",
   "pods": [

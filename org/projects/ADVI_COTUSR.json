@@ -8,8 +8,8 @@
     "ADVI_COTETL",
     "ADVI_COTMVP"
   ],
-  "status": "active",
-  "phase": "PHASE 0 -- REGISTERED 2026-06-29 (1.0.0_SA_CTO, Andrew-direct). Canonical provisioning task via create_user_v2.py; owner = provisioning lane (0.7.0_AE_CloudOps; DT normally, AE owns when DT offline). 3 cottonwood users, role=user, no scoping (see everything), mustChangePassword temp password. SEQUENCE: resolve the cottonwoodmail.com domain-allowlist gap -> run the canonical script per-user -> read-back verify (PROFILE + MEMBER + opal-partner-cottonwood) -> confirm login (no domain 403).",
+  "status": "complete",
+  "phase": "COMPLETE 2026-06-29 (0.7.0_AE_CloudOps): 3 cottonwood users (jay.rubottom/stephen.shipley/christa.bass@cottonwoodmail.com, role=user no-scoping) provisioned + read-back verified (PROFILE+MEMBER+opal-partner-cottonwood) + PROD-login-confirmed (opalinvest.dev/auth/login HTTP 200+JWT, no 403). Domain CLEAN-REPLACED cottonwood.com->cottonwoodmail.com in all 3 places (create_user_v2.py 9fb12fa50 / FIRM#META.domain DDB / firmAccess.ts 21f2178d CI-deployed DEV). 3 prior @cottonwood.com throwaway test accounts confirmed-orphaned (no migration). Residual low-pri: PROD firmAccess promote rides the next DEV->PROD (client-view correctness, NOT a login-blocker). COO-accepted 191014Z.",
   "blocking": "DOMAIN RESOLVED (Andrew-direct 2026-06-29: 'whatever their emails are is the canonical one') -> cottonwoodmail.com IS the canonical cottonwood domain; the registered cottonwood.com was a placeholder. PRE-REQ FIX: CLEAN REPLACE cottonwood.com -> cottonwoodmail.com in all 3 places (FIRM#META.domain + firmAccess.ts FIRM_EMAIL_DOMAINS + create_user_v2.py FIRMS). cottonwood.com was a placeholder (Andrew 2026-06-29: 'dont need @cottonwood.com') -> just drop it; no retention/migration of any @cottonwood.com placeholder test accounts needed. THEN provision the 3 @cottonwoodmail.com users. COO assigns the owner + drives.",
   "created": "2026-06-29",
   "pods": [
