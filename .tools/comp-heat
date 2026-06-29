@@ -177,6 +177,21 @@ def _add_json(sp, with_value=True):
         sp.add_argument("--json", action="store_true", help="emit JSON to stdout")
 
 
+def cmd_federated(a) -> int:
+    # comp-heat federated = the LIVE-Trino graph x code-heat view (the federation's net-new over
+    # the git-local freshness/drift engines). Engine: .tools/_trino_fed.py (0.8.0_AE, S5; transport
+    # = in-VPC run-task->Trino-REST->CloudWatch, zero new attack surface; the persistent endpoint is
+    # SCTY-gated/HELD). Shares the substrate comp-diff's lakehouse axis will reuse.
+    sys.path.insert(0, _HERE)            # .tools/ -- for _trino_fed
+    from _trino_fed import (run_federated_query, render_table,
+                            Q_CODE_BANDS, Q_CODE_COLDEST)
+    qs = [a.sql] if a.sql else [Q_CODE_BANDS] + ([Q_CODE_COLDEST.format(top=a.top)] if a.top else [])
+    for res in run_federated_query(qs):
+        print(f"\n# {res['sql'][:90]}")
+        print(render_table(res))
+    return 0
+
+
 def main(argv=None) -> int:
     ap = argparse.ArgumentParser(
         prog="comp-heat",
@@ -204,6 +219,12 @@ def main(argv=None) -> int:
     s.add_argument("--half-life", type=float, default=30.0, help="decay half-life in days (default 30)")
     _add_json(s, with_value=False)
     s.set_defaults(fn=cmd_score)
+
+    fed = sub.add_parser("federated",
+        help="hot/cold across estate ASSETS x their git code-heat (LIVE Trino federation; graph-joined)")
+    fed.add_argument("--top", type=int, default=0, help="also show the N coldest files")
+    fed.add_argument("--sql", help="run an arbitrary federated Trino query instead")
+    fed.set_defaults(fn=cmd_federated)
 
     args = ap.parse_args(argv)
     if not getattr(args, "cmd", None):
