@@ -25,6 +25,13 @@ Per Lambda, read the three shas and classify:
 
 This table IS: (a) the parity answer, (b) the `derive --write` gate decision (STALE-RECORD safe vs the rest HELD — already enforced per gate verdict `ed13b714a`), (c) the half-landed-deploy detector the NEVER-half-landed rule wants.
 
+## NAMING DISAMBIGUATION (CTO arch-gate 2026-06-29 — be deliberate)
+TWO distinct "parity" concepts now exist — keep them clearly named so nobody conflates them:
+- **`comp-parity`** = **DATA / served parity** — canonical-build vs BD-served (the DATA_SSOTMG cutover gate, TO-4). "Is my DATA in parity."
+- **`comp-lambdamap parity`** (alias **`comp-derivedrift`**) = **DEPLOY parity** — source-map record vs live CodeSha256 vs S3-artifact sha (deploy integrity). "Is my DEPLOY in parity."
+
+The `comp-derivedrift` alias actively HELPS here — it gives the deploy-parity surface a name that does NOT collide with the data-parity one.
+
 ## Shape (recommendation — CTO arch-gates the call)
 **Promote `classify_reconcile` into a read-only `comp-lambdamap parity` subcommand**, reusing the existing live-read + source-map-read + S3-head machinery — NOT a from-scratch separate `comp-derivedrift` binary (which would duplicate the boto/parse layer). If a distinct discoverable name is wanted, register `comp-derivedrift` in comp-which routing → `comp-lambdamap parity` (alias, not a second implementation). Two surfaces on one engine: `parity` = READ (classify, no mutation), `derive --write` = WRITE (acts on the same classification, STALE-RECORD only).
 
@@ -34,7 +41,10 @@ Two-leg first (record vs live — the existing `sha` pass, zero S3 reads); **S3-
 ## Output
 - Per-Lambda verdict line + a summary count (`MATCH: n | STALE-RECORD: n | HALF-LANDED: n | CORRUPT: n | DISPOSITIONED: n | UNVERIFIABLE: n | NOT-LIVE: n`).
 - `--json` mode for piping (CI / downstream).
-- Exit code: **0** when nothing actionable (all MATCH/STALE-RECORD/DISPOSITIONED); **1** when any HALF-LANDED / CORRUPT / NOT-LIVE / UNVERIFIABLE (the actionable classes) — so it's a usable CI gate ("is the estate truly in parity").
+- Exit code — **TRI-STATE** (CTO arch-gate refinement 2026-06-29, mirrors comp-validate PASS/ADVISORY/UNVALIDATED):
+  - **exit 0** = non-actionable: MATCH / STALE-RECORD / DISPOSITIONED. (STALE-RECORD = deploy consistent, record lags — not a break; still REPORTED so the record gets fixed.)
+  - **exit 1** = TRUE integrity break: POSSIBLE-HALF-LANDED / CORRUPT-RECORD / NOT-LIVE. **NOT-LIVE must be DISPOSITIONABLE** — a decommissioned-but-still-mapped Lambda is record hygiene, not a break; disposition it → DISPOSITIONED → exit 0, so the gate doesn't perpetually red on known-dead map entries.
+  - **exit 2** = UNVERIFIABLE (could-not-verify, content-sha256 metadata absent) — a FINDING, not a break, kept SEPARABLE from "broken" (the operator response differs: backfill metadata vs fix a deploy). CI policies it: during the metadata-coverage RAMP treat exit-2 as a loud WARN (gate not perpetually red on a known metadata gap); fail-closed end-state once coverage is complete (then UNVERIFIABLE genuinely means something's wrong → block). Never silently MATCH.
 
 ## Coverage caveat (honest-limit, from the gate re-verify)
 STALE-RECORD vs HALF-LANDED discrimination depends on the `content-sha256` metadata being present. Artifacts uploaded by a path that didn't stamp it (legacy `deploy.sh` / console) → **UNVERIFIABLE**, reported explicitly, never silently folded into MATCH. Coverage = the fraction of the estate carrying the metadata; worth a one-line surface in the summary so the operator knows how much the parity verdict actually covers.
