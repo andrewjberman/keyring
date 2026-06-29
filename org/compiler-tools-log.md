@@ -9413,3 +9413,18 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-06-29 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.7.0_AE_CloudOps/task... | PASS |
 2026-06-29 0.4.0_DS_ClientPlatform~B | session-close window: read-only boto3 (one-pager G14 decomposition, F5), Grep/Read (build_canonical_daily GOLD_EXT + run() static trace, NEVER#4-clean no gold run), python verify_run_converter 9/9 + committed test_run_converter 4/4 (byte-preserve/fail-loud/verbatim-Yang). One-pager + verifies + cutover-staging.
 | 2026-06-29 | 0.4.0_DS_ClientPlatform~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-06-29 | 3.0.0_SA_CVO | (no-TO) | comp-kuzu | comp-kuzu MATCH (n:CloudNode) WHERE n.node_type='STATE_MACHINE' RETURN count(n) AS sfn_... | PASS |
+| 2026-06-29 | 3.0.0_SA_CVO | (no-TO) | comp-kuzu | comp-kuzu MATCH (n:CloudNode) WHERE n.node_type IN ['CLOUDFRONT_DISTRIBUTION','EVENT_RU... | PASS |
+| 2026-06-29 | 0.6.0_AE_PartnerETL | (no-TO) | comp-iam | comp-iam role quartz-si2-spike-role | PASS |
+| 2026-06-29 | 0.7.0_AE_CloudOps~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/ec2/m365-mcp-gateway/app/audi... | PASS |
+| 2026-06-29 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/NFRA_COMPDRIFT_PRD.md... | PASS |
+| 2026-06-29 | 0.6.0_AE_PartnerETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/terraform/canonical-schwab-ec... | PASS |
+| 2026-06-29 | 0.7.0_AE_CloudOps~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.7.0_AE_CloudOps/task... | PASS |
+| 2026-06-29 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/mcp/.last-drive-2.0.0_SA_COO --file... | PASS |
+| 2026-06-29 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/drift-topology.yaml | PASS |
+| 2026-06-29 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/ADVI_COTUSR.json --file or... | PASS |
+| 2026-06-29 | 0.4.0_DS_ClientPlatform | DATA_ANALYTICS.GOLD-CORE.ds-build-canonical-gold-g3-g10 | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/DATA_SSOTMG_HEADLINE_... | PASS |
+| 2026-06-29 | 3.0.0_SA_CVO | (no-TO) | comp-kuzu | comp-kuzu MATCH (n:CloudNode) RETURN count(n) AS nodes | PASS |
+| 2026-06-29 | 0.4.0_DS_ClientPlatform | DATA_ANALYTICS.GOLD-CORE.ds-build-canonical-gold-g3-g10 | comp-surface-check | comp-surface-check check --mode advisory --file docs/briefs/DATA_SSOTMG_HEADLINE_AUA_de... | PASS |
+- 2026-06-29 0.7.0_AE_CloudOps~B: comp-lambdamap reconcile-deployed (no-op-clean PASS) + comp-kuzu (STATE_MACHINE INVOKES=27 live, SFN-FIX AC1) + ds-commit-gate (lambdamap_cli/audit.py/test_sfn PASS) + pytest (13+3 PASS) + aws athena (R8 AC3 QID b0addd0b, 5 redacted rows) + comp-which rail markers on source/live-state discovery. Window: LAMBDAMAP durable-fix close, SFN-FIX + R8 stale-open catches, R8-PRIV fail-closed args-allowlist build.
+| 2026-06-29 | 0.7.0_AE_CloudOps~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
