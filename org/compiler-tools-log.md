@@ -9321,3 +9321,14 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-06-29 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/bd-pipeline/bd-49f-ses... | PASS |
 2026-06-29 0.4.0_DS_ClientPlatform~B | TO-7 addendum: comp-pipescript io (NOT-FOUND=canonical uncovered), ds-commit-gate+ruff (caught F841/E702 -> fixed), read-only boto3 (worksheet AUA-enrich, fail-loud override test, billable bridge). Override mechanism + G13 split-weighting.
 | 2026-06-29 | 0.4.0_DS_ClientPlatform~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-06-29 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/ci/lambda-source-map.j... | PASS |
+| 2026-06-29 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/graph-call-manifest.yaml | PASS |
+| 2026-06-29 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/terraform/bd-pipeline/bd-49f-... | PASS |
+| 2026-06-29 | 0.7.0_AE_CloudOps~B | (no-TO) | comp-lambdamap | comp-lambdamap parity | PASS |
+| 2026-06-29 | 0.7.0_AE_CloudOps~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/lambdamap_cli.py | PASS |
+| 2026-06-29 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/DATA_SSOTMG... | PASS |
+| 2026-06-29 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/tests/test_lambdamap.py | PASS |
+| 2026-06-29 | 3.0.0_SA_CVO | (no-TO) | comp-lambdamap | comp-lambdamap parity | PASS |
+| 2026-06-29 | 0.4.0_DS_ClientPlatform~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file data/canonical/schwab/gold/build_gold_p... | PASS |
+2026-06-29 0.4.0_DS_ClientPlatform~B | G13 parity: read-only boto3 (BD employee_leaderboard.json self-diff, F5), Grep/Read D_00c branch-trace (tagged_aua L590/865 raw vs L935 split -- Rule-22 mechanism), ds-commit-gate PASS. G13 rebuilt to served-leaderboard mirror.
+| 2026-06-29 | 0.4.0_DS_ClientPlatform~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
