@@ -514,6 +514,92 @@ def parity(root: str, as_json: bool = False) -> int:
     return exit_code
 
 
+_RECONCILE_AUDIT = "infra/aws/lambda/ci/source-map-reconcile-audit.jsonl"
+
+
+def reconcile_deployed(root, only, settle_retry_seconds=0, deployed_commit="",
+                       audit_rel=_RECONCILE_AUDIT) -> int:
+    """Post-apply DURABLE source-map reconcile (CVO gate b56df0083 -- C1/C2/C3).
+    For the just-deployed function set `only`, reconcile STALE-RECORD (live==S3)
+    -> record the LIVE CodeSha256, so the source-map tracks deployed truth and
+    the drift class cannot recur.
+
+      C1 (HOLD + ALERT, exit 1): a just-deployed fn that is PERSISTENTLY
+         POSSIBLE-HALF-LANDED / UNVERIFIABLE after settle = the deploy didn't
+         fully land -> NOT reconciled, alerted (the caller SNS-notifies).
+      C2 (settle-aware): live is seconds old + S3 can lag -> a SETTLING (live!=
+         S3 within the deploy window) entry is retried once after
+         settle_retry_seconds, reconciled if it settles, alerted only if
+         persistent. Reuses compute_parity's settle-guard.
+      C3 (audit): every reconcile + every HOLD is appended to a durable JSONL.
+
+    FAIL-SAFE: an empty/unknown deployed set is a NO-OP (never reconcile-all)."""
+    sm = load_srcmap(root)
+    allf = sm.get("functions", {})
+    funcs = {n: allf[n] for n in (only or []) if n in allf}
+    if not funcs:
+        print("  reconcile-deployed: empty/unknown deployed set -- fail-safe NO-OP (never reconcile-all)")
+        return 0
+
+    def classify():
+        live = live_code_shas() or {}
+        modified = live_lambda_modified()
+        now = datetime.datetime.now(datetime.timezone.utc)
+        v = compute_parity(funcs, live, lambda n: funcs[n].get("artifact_s3_key"),
+                           s3_artifact_sha, modified=modified, now=now)
+        return v, live
+
+    verdicts, live = classify()
+    settling = [n for n, (vd, _) in verdicts.items() if vd == "SETTLING"]
+    if settling and settle_retry_seconds > 0:
+        print(f"  C2 settle: {len(settling)} in-flight ({', '.join(settling)}) -- waiting "
+              f"{settle_retry_seconds}s then re-checking")
+        import time  # noqa: PLC0415
+        time.sleep(settle_retry_seconds)
+        verdicts, live = classify()
+
+    reconciled, held = [], []
+    for n, (vd, detail) in sorted(verdicts.items()):
+        if vd == "STALE-RECORD":
+            old = funcs[n].get("artifact_sha256")
+            funcs[n]["artifact_sha256"] = live[n]
+            reconciled.append((n, old, live[n]))
+        elif vd in ("POSSIBLE-HALF-LANDED", "UNVERIFIABLE", "SETTLING"):
+            held.append((n, vd, detail))
+        # MATCH/DISPOSITIONED/NO-RECORD/CORRUPT: not this hook's job -> leave.
+
+    if reconciled:
+        with open(os.path.join(root, SRCMAP_REL), "w", encoding="utf-8", newline="\n") as fh:
+            json.dump(sm, fh, indent=2, ensure_ascii=False)
+            fh.write("\n")
+    # C3 audit -- durable, append-only
+    try:
+        ts = datetime.datetime.now(datetime.timezone.utc).isoformat()
+        with open(os.path.join(root, audit_rel), "a", encoding="utf-8") as fh:
+            for n, old, new in reconciled:
+                fh.write(json.dumps({"ts": ts, "trigger": "automated-post-apply", "fn": n,
+                                     "action": "reconcile", "old_sha": old, "new_sha": new,
+                                     "deployed_commit": deployed_commit}) + "\n")
+            for n, vd, _ in held:
+                fh.write(json.dumps({"ts": ts, "trigger": "automated-post-apply", "fn": n,
+                                     "action": "HOLD", "verdict": vd,
+                                     "deployed_commit": deployed_commit}) + "\n")
+    except Exception as e:
+        print(f"  WARN: audit append failed ({e}) -- reconcile still applied")
+
+    print(f"  reconcile-deployed: {len(reconciled)} reconciled, {len(held)} HELD, "
+          f"{len(funcs) - len(reconciled) - len(held)} already-in-parity")
+    for n, old, new in reconciled:
+        print(f"    [RECONCILED] {n}: {(old or '')[:16]}.. -> {new[:16]}..")
+    if held:
+        print("  !!! ALERT (C1): post-apply HALF-LANDED -- the deploy did NOT fully land for "
+              "(record HELD, NOT reconciled -- investigate):")
+        for n, vd, detail in held:
+            print(f"    [{vd}] {n}: {detail}")
+        return 1
+    return 0
+
+
 def main(argv=None) -> int:
     ap = argparse.ArgumentParser(prog="comp-lambdamap")
     sub = ap.add_subparsers(dest="cmd")
@@ -528,6 +614,14 @@ def main(argv=None) -> int:
     p = sub.add_parser("parity", help="read-only 3-leg deploy-parity classifier (a.k.a. comp-derivedrift); "
                                       "tri-state exit 0=in-parity 1=break 2=unverifiable")
     p.add_argument("--json", action="store_true", help="machine-readable output for CI/piping")
+    rd = sub.add_parser("reconcile-deployed",
+                        help="post-apply durable reconcile of the just-deployed set to live "
+                             "(settle-aware, HOLD+ALERT on persistent half-landed, audited)")
+    rd.add_argument("--functions", required=True,
+                    help="comma-separated just-deployed function names (the record-terraform-deploy set)")
+    rd.add_argument("--settle-retry-seconds", type=int, default=0,
+                    help="C2: wait this long then re-check SETTLING entries before alerting (post-apply: ~45)")
+    rd.add_argument("--deployed-commit", default="", help="commit sha for the audit record")
     args = ap.parse_args(argv)
     root = workspace_root()
     if args.cmd in (None, "check"):
@@ -540,6 +634,10 @@ def main(argv=None) -> int:
         return derive(root, write=args.write, only=only)
     if args.cmd == "parity":
         return parity(root, as_json=args.json)
+    if args.cmd == "reconcile-deployed":
+        fns = set(filter(None, (s.strip() for s in args.functions.split(","))))
+        return reconcile_deployed(root, fns, settle_retry_seconds=args.settle_retry_seconds,
+                                  deployed_commit=args.deployed_commit)
     ap.print_help()
     return 2
 
