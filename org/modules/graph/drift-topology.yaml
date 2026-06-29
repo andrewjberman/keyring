@@ -51,7 +51,10 @@ stages:
   - id: KUZU
     store: query surface (the estate read model)
   - id: ICEBERG
-    store: lakehouse tables (aws / portal / ms / pipeline assets)
+    store: lakehouse tables -- 3 PHYSICAL tables: graph_nodes / graph_edges / graph_contracts.
+    # GRAIN (0.8.0_AE~B-corrected 2026-06-29, base-confirmed on the Trino surface): `layer`
+    # (aws/portal/ms) is a COLUMN on graph_nodes, NOT separate tables; pipeline=0 nodes (dropped).
+    # The earlier "aws/portal/ms/pipeline assets" framing was a grain mismap.
   - id: TRINO
     store: federated query surface (unified heat_map / analytics; fan-in)
   - id: SERVED
@@ -128,23 +131,21 @@ seams:
     engine: UNCOVERED
     coverage: GAP              # <-- NO CHECKER TODAY. DESIGN-IN to the heat-federation build (the leverage point).
     fan_in: true              # Trino is a NODE with N inbound catalog seams (PRD arch-gate (d))
+    # GRAIN: per PHYSICAL iceberg table (0.8.0_AE~B-corrected -- NOT the old aws/portal/ms/pipeline
+    # layer-catalogs, which were a mismap; layer is a graph_nodes column). 3 tables + the live-read.
     bindings:
-      - catalog: aws-assets
+      - catalog: graph_nodes
         kind: iceberg
         check: trino-catalog-schema == live iceberg table schema/partitioning
         verdict_vocab: [MATCH, SCHEMA-DRIFT, STALE, UNVERIFIABLE]
-      - catalog: portal-assets
+      - catalog: graph_edges
         kind: iceberg
         check: trino-catalog-schema == live iceberg table schema/partitioning
         verdict_vocab: [MATCH, SCHEMA-DRIFT, STALE, UNVERIFIABLE]
-      - catalog: ms-assets
+      - catalog: graph_contracts
         kind: iceberg
-        check: trino-catalog-schema == live iceberg table schema/partitioning
-        verdict_vocab: [MATCH, SCHEMA-DRIFT, STALE, UNVERIFIABLE]
-      - catalog: pipeline-assets
-        kind: iceberg
-        check: trino-catalog-schema == live iceberg table schema/partitioning
-        verdict_vocab: [MATCH, SCHEMA-DRIFT, STALE, UNVERIFIABLE]
+        check: trino-catalog-schema == live iceberg table schema/partitioning (ENSURE-ONLY: not nightly-re-materialized -> vintage N/A, schema-fingerprint only)
+        verdict_vocab: [MATCH, SCHEMA-DRIFT, UNVERIFIABLE]
       - catalog: git-code-heat
         kind: live-read         # SPECIAL CASE: read live, never materialized
         check: HEAD-pointer / vintage marker the live-read reflects (NOT a table-schema check)
