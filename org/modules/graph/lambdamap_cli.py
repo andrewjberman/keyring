@@ -14,7 +14,13 @@ Drift classes:
   MISSING_ENTRY      TF-backed lambda with NO functions{} entry (CI-drift-blind)
   ORPHAN_ENTRY       functions{} entry with no TF resource AND no on-disk dir
 
-Phase 2 (future): derive [--write] + provenance. Not implemented here.
+Phase 2 (this file): `sha` -- live CodeSha256 drift detection. Compares each
+functions{} entry's recorded artifact_sha256 against the LIVE AWS CodeSha256
+(one paginated list-functions call, us-east-1). Read-only. Catches the
+half-landed / out-of-band-update class the source-map records but the live
+function diverged from. Exits 1 on any SHA_DRIFT or NOT_LIVE.
+Phase 2 remaining (next increments, CVO-gated): `derive --write` map-regenerate
++ provenance fold; multi-region/multi-runtime enumeration.
 
 Origin: BMKAUD source-map audit (CVO 359375d87) + CTO charter (f9e70457a).
 Author: 0.7.0_AE_CloudOps.
@@ -167,14 +173,104 @@ def check(root: str) -> int:
     return 1
 
 
+def live_code_shas():
+    """Return {function_name: CodeSha256} from live AWS (us-east-1), or None if
+    unavailable. ONE paginated list-functions call covers the whole account --
+    far cheaper than a get-function per entry, and CodeSha256 comes back inline.
+    None (not {}) signals 'could not read live' so sha_check reports UNAVAILABLE
+    rather than mis-flagging every function as NOT_LIVE."""
+    try:
+        import boto3  # noqa: PLC0415 -- optional dep; tool degrades gracefully without it
+    except Exception:
+        return None
+    try:
+        cl = boto3.client("lambda", region_name="us-east-1")
+        out: dict = {}
+        for page in cl.get_paginator("list_functions").paginate():
+            for fn in page.get("Functions", []):
+                out[fn["FunctionName"]] = fn.get("CodeSha256", "")
+        return out
+    except Exception:
+        return None
+
+
+# A valid AWS CodeSha256 / artifact_sha256 is base64-encoded SHA-256: 32 bytes
+# -> 44 base64 chars ending in '='. Anything else recorded in the field is a
+# CORRUPT record (e.g. a Windows path leaked by record-terraform-deploy), NOT a
+# real deploy-drift -- distinguishing the two routes to different fixes.
+_B64_SHA256 = re.compile(r"^[A-Za-z0-9+/]{43}=$")
+
+
+def compute_sha_findings(funcs: dict, live):
+    """Pure classifier (no print, no AWS) -- testable. Given the source-map
+    functions{} and a {name: live_CodeSha256} map, classify each recorded entry.
+    artifact_sha256 and AWS CodeSha256 are BOTH base64 SHA-256 -> directly ==.
+
+    CORRUPT_RECORD (recorded value not a valid base64 sha) is split out from
+    SHA_DRIFT so a source-map data bug isn't mis-reported as a deployed-code
+    divergence."""
+    drift, not_live, corrupt = [], [], []
+    match = no_record = 0
+    for name, e in sorted(funcs.items()):
+        rec = e.get("artifact_sha256")
+        if not rec:
+            no_record += 1
+            continue
+        if not _B64_SHA256.match(str(rec)):
+            corrupt.append((name, str(rec)))
+            continue
+        if name not in live:
+            not_live.append(name)
+        elif live[name] == rec:
+            match += 1
+        else:
+            drift.append((name, rec, live[name]))
+    return {"match": match, "no_record": no_record, "drift": drift,
+            "not_live": not_live, "corrupt": corrupt}
+
+
+def sha_check(root: str) -> int:
+    sm = load_srcmap(root)
+    funcs = sm.get("functions", {})
+    print("comp-lambdamap sha -- recorded artifact_sha256 vs LIVE CodeSha256 "
+          "(Phase 2, read-only, us-east-1)")
+    live = live_code_shas()
+    if live is None:
+        print("  UNAVAILABLE: could not read live CodeSha256 (boto3 or AWS creds "
+              "absent). Install boto3 / configure creds and re-run.")
+        return 2
+    r = compute_sha_findings(funcs, live)
+    recorded = len(funcs) - r["no_record"]
+    print(f"  functions: {len(funcs)} | recorded-sha: {recorded} | no-record: {r['no_record']} "
+          f"| live-fns-in-acct: {len(live)}")
+    print(f"  MATCH: {r['match']} | SHA_DRIFT: {len(r['drift'])} | NOT_LIVE: {len(r['not_live'])} "
+          f"| CORRUPT_RECORD: {len(r['corrupt'])}")
+    for name, rec, liveh in r["drift"]:
+        print(f"    [SHA_DRIFT] {name}: source-map={rec[:16]}.. != live={liveh[:16]}.. "
+              f"(live running a DIFFERENT artifact than recorded -- half-landed / out-of-band update)")
+    for name in r["not_live"]:
+        print(f"    [NOT_LIVE] {name}: recorded (with artifact_sha256) but NOT found live in us-east-1 "
+              f"(deleted out-of-band, renamed, or non-us-east-1)")
+    for name, rec in r["corrupt"]:
+        print(f"    [CORRUPT_RECORD] {name}: artifact_sha256 is not a base64 sha: {rec[:40]!r} "
+              f"(source-map data bug -- record-terraform-deploy wrote a non-sha value; re-record)")
+    if not (r["drift"] or r["not_live"] or r["corrupt"]):
+        print("  CLEAN: every recorded artifact_sha256 matches the live CodeSha256.")
+        return 0
+    return 1
+
+
 def main(argv=None) -> int:
     ap = argparse.ArgumentParser(prog="comp-lambdamap")
     sub = ap.add_subparsers(dest="cmd")
-    sub.add_parser("check", help="read-only drift detection (Phase 1)")
+    sub.add_parser("check", help="read-only source-map vs TF/disk drift detection (Phase 1)")
+    sub.add_parser("sha", help="read-only recorded-sha vs LIVE CodeSha256 drift (Phase 2)")
     args = ap.parse_args(argv)
     root = workspace_root()
     if args.cmd in (None, "check"):
         return check(root)
+    if args.cmd == "sha":
+        return sha_check(root)
     ap.print_help()
     return 2
 
