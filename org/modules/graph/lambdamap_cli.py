@@ -344,7 +344,7 @@ def classify_reconcile(drift, key_of, sha_of_s3):
     return safe, unsafe
 
 
-def derive(root: str, write: bool = False) -> int:
+def derive(root: str, write: bool = False, only=None) -> int:
     """Reconcile the source-map artifact_sha256 to the LIVE CodeSha256 for
     DRIFTED entries -- the durable record-writer fix (record the DEPLOYED sha).
     Dry-run by default; --write mutates the source-map (CVO-gated).
@@ -365,8 +365,12 @@ def derive(root: str, write: bool = False) -> int:
         print("  UNAVAILABLE: could not read live CodeSha256 (boto3/creds absent).")
         return 2
     r = compute_sha_findings(funcs, live)
+    drift = [d for d in r["drift"] if d[0] in only] if only else r["drift"]
+    if only is not None:
+        print(f"  scoped --only: {len(drift)} of {len(r['drift'])} drift candidate(s) in the named "
+              f"set (post-apply deployed scope)")
     safe, unsafe = classify_reconcile(
-        r["drift"], lambda n: funcs[n].get("artifact_s3_key"), s3_artifact_sha)
+        drift, lambda n: funcs[n].get("artifact_s3_key"), s3_artifact_sha)
     print(f"  drift candidates: {len(r['drift'])} -> STALE-RECORD (safe): {len(safe)} | "
           f"POSSIBLE-HALF-LANDED/UNVERIFIABLE (HOLD): {len(unsafe)} | "
           f"dispositioned (LEFT): {len(r['dispositioned'])} | corrupt (builder): {len(r['corrupt'])}")
@@ -518,6 +522,9 @@ def main(argv=None) -> int:
     d = sub.add_parser("derive", help="reconcile artifact_sha256 -> live CodeSha256 (dry-run; --write CVO-gated)")
     d.add_argument("--write", action="store_true",
                    help="apply the reconcile to lambda-source-map.json (CVO-gated mutation)")
+    d.add_argument("--only", default=None,
+                   help="comma-separated function names to scope the reconcile to "
+                        "(e.g. the post-apply deployed set, for the record-terraform-deploy hook)")
     p = sub.add_parser("parity", help="read-only 3-leg deploy-parity classifier (a.k.a. comp-derivedrift); "
                                       "tri-state exit 0=in-parity 1=break 2=unverifiable")
     p.add_argument("--json", action="store_true", help="machine-readable output for CI/piping")
@@ -528,7 +535,9 @@ def main(argv=None) -> int:
     if args.cmd == "sha":
         return sha_check(root)
     if args.cmd == "derive":
-        return derive(root, write=args.write)
+        only = (set(filter(None, (s.strip() for s in args.only.split(","))))
+                if args.only else None)
+        return derive(root, write=args.write, only=only)
     if args.cmd == "parity":
         return parity(root, as_json=args.json)
     ap.print_help()
