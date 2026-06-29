@@ -232,7 +232,7 @@ Per CL Const Article X.(c) firing cadence: "Periodic drift review — via /verif
 | Fabric | Constitution path | Notes |
 |---|---|---|
 | ws (3.0.0_SA_CVO) | `docs/architecture/CONSTITUTION.md` (canonical ws Tier-0) | ws CONSTITUTION + STAKES_MATRIX + DIRECTIVES per ws tier-0 framework |
-| CL (3.1.0_SA_CVO) | `feature_clb/org/foundations/CL_CONSTITUTION.md` (post-LD-0088 A.3 broker extension); pre-LD-0088: ferry via Andrew hand-ferry OR CL CTO inline MCP body | Per LD-0088 once A.3 lands, native cross-fabric read; pre-A.3 ferry pattern per Path-1 doctrine |
+| CL (3.1.0_SA_CVO) | `feature_clb/org/foundations/CL_CONSTITUTION.md` **[feature_clb RETIRED LD-0222; CL paused, re-home TBD]** (post-LD-0088 A.3 broker extension); pre-LD-0088: ferry via Andrew hand-ferry OR CL CTO inline MCP body | Per LD-0088 once A.3 lands, native cross-fabric read; pre-A.3 ferry pattern per Path-1 doctrine |
 
 **Drift-detection per-Article checklist** (apply to each Article of the invoker-fabric Constitution; example here for CL Const v1.0 AUTHORITATIVE; ws Constitution scan applies same shape to its Articles):
 

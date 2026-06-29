@@ -163,7 +163,7 @@ When invoked by CL COO (`2.1.0_SA_COO`), the same skill body applies with the fo
 - Most CL fabric cycles will emit `[ALLOCATION-NO-DELTA]` (4/4 Tier-1 LIVE + no Tier-2/3 demand). The skill retains defensive value (catch dropped Tier-1, surface rare CL-side `~lane` spawn) + audit-trail symmetry with ws fabric for MSTR cross-fabric aggregation.
 
 **Deliverable path:**
-- CL writes to `org/tier1_exec/2.1.0_SA_COO/briefs/allocation_{YYYYMMDDTHHMMZ}.md` (CL fabric tier1_exec lives in feature_clb worktree).
+- CL writes to `org/tier1_exec/2.1.0_SA_COO/briefs/allocation_{YYYYMMDDTHHMMZ}.md` (CL fabric tier1_exec lived in the feature_clb worktree -- **RETIRED LD-0222; CL paused, re-home TBD**).
 
 ---
 

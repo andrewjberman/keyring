@@ -80,7 +80,7 @@ If `register_agent` succeeds (no error), continue. If error, surface to MSTR via
 ## Step 2 — Hot-registry read (fabric-scoped)
 
 **ws COO** reads `org/projects/*.json` from ajb_workspace.
-**CL COO** reads `feature_clb/org/projects/*.json` from feature_clb worktree.
+**CL COO** reads `feature_clb/org/projects/*.json` from feature_clb worktree. **[feature_clb RETIRED LD-0222; CL paused, re-home TBD -- path dead pending re-home.]**
 
 Per LD-0042 fabric-scoping discipline: a COO drives only their fabric's registry. Cross-fabric coordination flows through MSTR or joint CTO+COO consult.
 
