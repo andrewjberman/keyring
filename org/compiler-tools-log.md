@@ -9428,3 +9428,57 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-06-29 | 0.4.0_DS_ClientPlatform | DATA_ANALYTICS.GOLD-CORE.ds-build-canonical-gold-g3-g10 | comp-surface-check | comp-surface-check check --mode advisory --file docs/briefs/DATA_SSOTMG_HEADLINE_AUA_de... | PASS |
 - 2026-06-29 0.7.0_AE_CloudOps~B: comp-lambdamap reconcile-deployed (no-op-clean PASS) + comp-kuzu (STATE_MACHINE INVOKES=27 live, SFN-FIX AC1) + ds-commit-gate (lambdamap_cli/audit.py/test_sfn PASS) + pytest (13+3 PASS) + aws athena (R8 AC3 QID b0addd0b, 5 redacted rows) + comp-which rail markers on source/live-state discovery. Window: LAMBDAMAP durable-fix close, SFN-FIX + R8 stale-open catches, R8-PRIV fail-closed args-allowlist build.
 | 2026-06-29 | 0.7.0_AE_CloudOps~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-06-29 | 0.7.0_AE_CloudOps~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/briefs/close-time-to-status-flip-d... | PASS |
+| 2026-06-29 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/logs/2026-0... | PASS |
+| 2026-06-29 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/ec2/EC2_MANIFEST.json | PASS |
+| 2026-06-29 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/DATA_SSOTMG... | PASS |
+| 2026-06-29 | 0.7.0_AE_CloudOps~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.7.0_AE_CloudOps/task... | PASS |
+| 2026-06-29 | 0.4.0_DS_ClientPlatform | DATA_ANALYTICS.GOLD-CORE.ds-build-canonical-gold-g3-g10 | comp-surface-check | comp-surface-check check --mode advisory --file docs/briefs/DATA_SSOTMG_HEADLINE_AUA_de... | PASS |
+| 2026-06-29 | 0.7.0_AE_CloudOps~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/aws-shapes/g2-edge-ce... | PASS |
+| 2026-06-29 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/mcp/.last-drive-2.0.0_SA_COO --file... | PASS |
+| 2026-06-29 | 3.0.0_SA_CVO | (no-TO) | pipescript | pipescript --list | PASS |
+| 2026-06-29 | 0.4.0_DE_ClientaPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file portal | PASS |
+| 2026-06-29 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file users/scripts/partners/README.md --file... | PASS |
+| 2026-06-29 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/logs/2026-0... | PASS |
+| 2026-06-29 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/REGISTRY.md | PASS |
+| 2026-06-29 | 0.4.0_DE_ClientaPlatform | (no-TO) | comp-transform | comp-transform ternary-audit InflectionAdvisorIntelligence | FAIL |
+| 2026-06-29 | 0.4.0_DS_ClientPlatform | DATA_ANALYTICS.GOLD-CORE.ds-build-canonical-gold-g3-g10 | comp-surface-check | comp-surface-check check --mode advisory --file org/seams/canonical-schwab-ssot-ec2.md | PASS |
+| 2026-06-29 | 0.4.0_DE_ClientaPlatform | (no-TO) | comp-transform | comp-transform schema-check AdvisorPublicProfile | PASS |
+| 2026-06-29 | 0.4.0_DE_ClientaPlatform | (no-TO) | comp-transform | comp-transform schema-check PartnerAnalytics | PASS |
+| 2026-06-29 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/logs/2026-0... | PASS |
+| 2026-06-29 | 0.4.0_DE_ClientaPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file portal | PASS |
+| 2026-06-29 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file users/scripts/partners/README.md --file... | PASS |
+| 2026-06-29 | 0.6.0_AE_PartnerETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/ec2/canonical-schwab-runner/r... | PASS |
+| 2026-06-29 | 0.8.0_AE_CloudComp | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.8.0_AE_CloudComp/del... | PASS |
+| 2026-06-29 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/logs/2026-0... | PASS |
+| 2026-06-29 | 0.6.0_AE_PartnerETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/terraform/canonical-schwab-ec... | PASS |
+| 2026-06-29 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/mcp/.last-drive-2.0.0_SA_COO --file... | PASS |
+| 2026-06-29 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/briefs/allo... | PASS |
+| 2026-06-29 | 0.4.0_DS_ClientPlatform | DATA_ANALYTICS.GOLD-CORE.ds-build-canonical-gold-g3-g10 | comp-surface-check | comp-surface-check check --mode advisory --file data/canonical/schwab/silver/build_dim_... | PASS |
+| 2026-06-29 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/logs/2026-0... | PASS |
+| 2026-06-29 | 0.7.0_AE_CloudOps~A | (no-TO) | comp-blast | comp-blast bd-time-machine | PASS |
+| 2026-06-29 | 0.8.0_AE_CloudComp | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/terraform/globgrph/main.tf --... | PASS |
+| 2026-06-29 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file users/scripts/backfill_user_names.py --... | PASS |
+| 2026-06-29 | 0.8.0_AE_CloudComp~B | (no-TO) | comp-kuzu | comp-kuzu MATCH (n:graph_nodes) WHERE n.layer IN ['pipeline','dash'] RETURN n.layer AS ... | FAIL |
+| 2026-06-29 | 0.7.0_AE_CloudOps~A | (no-TO) | pipescript | pipescript --resource gold/pipeline-complete.json | PASS |
+| 2026-06-29 | 0.8.0_AE_CloudComp~B | (no-TO) | comp-kuzu | comp-kuzu CALL show_tables() RETURN * | PASS |
+| 2026-06-29 | 0.8.0_AE_CloudComp~B | (no-TO) | comp-kuzu | comp-kuzu MATCH (n:CloudNode) WHERE n.layer IN ['pipeline','dash'] RETURN n.layer AS la... | PASS |
+| 2026-06-29 | 0.8.0_AE_CloudComp~B | (no-TO) | comp-kuzu | comp-kuzu MATCH (n:CloudNode) RETURN DISTINCT n.layer AS layer, count(*) AS c ORDER BY ... | PASS |
+| 2026-06-29 | 0.8.0_AE_CloudComp~B | (no-TO) | comp-kuzu | comp-kuzu MATCH (n:CloudNode) WHERE n.name =~ '.*\.(py|tsx|ts)' RETURN n.layer AS layer... | FAIL |
+| 2026-06-29 | 0.8.0_AE_CloudComp~B | (no-TO) | comp-kuzu | comp-kuzu MATCH (n:CloudNode) WHERE n.layer = 'portal' RETURN n.name AS name, n.node_ty... | PASS |
+| 2026-06-29 | 0.8.0_AE_CloudComp~B | (no-TO) | comp-kuzu | comp-kuzu MATCH (n:CloudNode) WHERE n.layer='aws' RETURN DISTINCT n.node_type AS nt, co... | PASS |
+| 2026-06-29 | 0.8.0_AE_CloudComp~B | (no-TO) | comp-kuzu | comp-kuzu MATCH (n:CloudNode) WHERE n.name STARTS WITH 'module:' AND NOT n.name STARTS ... | PASS |
+| 2026-06-29 | 0.8.0_AE_CloudComp~B | (no-TO) | comp-kuzu | comp-kuzu MATCH (n:CloudNode) WHERE n.name STARTS WITH 'module:' RETURN (n.name STARTS ... | PASS |
+| 2026-06-29 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/ADVI_PRVSYS_PRD.md --... | PASS |
+| 2026-06-29 | 0.8.0_AE_CloudComp~B | (no-TO) | comp-kuzu | comp-kuzu MATCH (n:CloudNode) WHERE n.name STARTS WITH 'module:portal/' RETURN n.name A... | PASS |
+| 2026-06-29 | 0.7.0_AE_CloudOps~A | (no-TO) | comp-aws | comp-aws bd-portal-publisher | FAIL |
+| 2026-06-29 | 0.4.0_DE_ClientaPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/briefs/ADVI_PARTNER_AUTHZ_backend_... | PASS |
+| 2026-06-29 | 0.7.0_AE_CloudOps~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/bd-pipeline/bd-price-u... | PASS |
+| 2026-06-29 | 0.6.0_AE_PartnerETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/terraform/canonical-schwab-ec... | PASS |
+| 2026-06-29 | 0.8.0_AE_CloudComp~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/globgrph/code_heat_emit.py --... | PASS |
+| 2026-06-29 | 0.4.0_DS_ClientPlatform | DATA_ANALYTICS.GOLD-CORE.ds-build-canonical-gold-g3-g10 | comp-surface-check | comp-surface-check check --mode advisory --file data/canonical/schwab/gold/build_gold_p... | PASS |
+| 2026-06-29 | 0.7.0_AE_CloudOps~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/bd-pipeline/bd-time-ma... | PASS |
+| 2026-06-29 | 1.0.0_SA_CTO | (no-TO) | comp-pipescript | comp-pipescript io INF_D_00.portal_aggregates.py | PASS |
+| 2026-06-29 | 0.8.0_AE_CloudComp | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/terraform/globgrph/trino.tf | PASS |
+| 2026-06-29 | 0.8.0_AE_CloudComp~B | NFRA_MSGRAPH.S3b | comp-kuzu, ds-commit-gate, safe-commit | graph_nodes struct + 374/374 JOIN spot-join; Rule-14/14a gates on S3b emitter | PASS |
+| 2026-06-29 | 0.8.0_AE_CloudComp~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
