@@ -1,0 +1,162 @@
+# =============================================================================
+# drift-topology.yaml -- the canonical propagation topology + coverage ledger
+# NFRA_COMPDRIFT P1 / TO-1.  PRD: docs/architecture/NFRA_COMPDRIFT_PRD.md
+# Authored: 1.0.0_SA_CTO 2026-06-29 (Andrew-direct MSTR charter LD-0221)
+# =============================================================================
+# This file is the SINGLE SOURCE OF TRUTH for "where does an artifact flow, and
+# is each hop checkable for parity?" It is BOTH the spec AND the coverage ledger.
+#
+# - Each `stages` entry = a STORE an artifact lands in.
+# - Each `seams` entry = an EXPECTED-EQUALITY invariant between adjacent stages,
+#   plus the ENGINE that checks it (comp-drift CALLS the engine; it never
+#   re-implements the check -- PRD arch-gate (b)).
+# - `coverage`: COVERED | PARTIAL | SELF-HEAL | GAP. Any GAP is a FINDING by
+#   construction -- a hop with no checker is unguarded drift you cannot see.
+# - Fan-in seams (Trino) carry `bindings:` -- N independent inbound catalog seams
+#   under one node (PRD arch-gate (d)).
+#
+# Adding a store (new custodian / graph layer / federated catalog) = one entry
+# here; the uncovered hop is then loud. Keep this in lockstep with the estate.
+#
+# COVERAGE SUMMARY (2026-06-29 authoring):
+#   COVERED   : seam-1, seam-2 (3 engines)
+#   PARTIAL   : seam-3, seam-7
+#   SELF-HEAL : seam-4  (auto-refresh, NOT asserted)
+#   GAP       : seam-5 (Iceberg), seam-6 (Trino)  <-- the unguarded seams TODAY
+# =============================================================================
+
+version: 1
+status: authored
+last_reviewed: "2026-06-29"
+
+stages:
+  - id: LOCAL
+    store: working tree (scripts / .tf / src)
+  - id: GIT
+    store: committed source (CLOUD / DEV / PROD branches)
+  - id: CLOUD
+    store: live AWS (S3 artifacts / Lambda / EC2 code / DynamoDB config)
+  - id: NESSIE
+    store: canonical versioned graph (CloudNode/CloudEdge = SSOT)
+  - id: KUZU
+    store: query surface (the estate read model)
+  - id: ICEBERG
+    store: lakehouse tables (aws / portal / ms / pipeline assets)
+  - id: TRINO
+    store: federated query surface (unified heat_map / analytics; fan-in)
+  - id: SERVED
+    store: platinum/firm JSON -> portal CDN / heat_map / dashboards
+
+seams:
+  - seam_id: seam-1
+    stage_from: LOCAL
+    stage_to: GIT
+    target_class: [script, tf, src]
+    invariant: every commit-worthy write is committed (no untracked/modified drift)
+    engine: "comp-heat drift"
+    coverage: COVERED
+    verdict_vocab: [CLEAN, UNCOMMITTED]
+
+  - seam_id: seam-2
+    stage_from: GIT
+    stage_to: CLOUD
+    target_class: [script, lambda, iam]
+    invariant: deployed artifact == committed source
+    # seam-2 is multi-engine: one per artifact class crossing GIT->CLOUD.
+    engines:
+      - target: script
+        engine: "comp-pipescript deployed"
+        invariant: local script == deployed S3 ETag
+        coverage: COVERED
+        verdict_vocab: [MATCH, STALE, MISSING]
+      - target: lambda
+        engine: "comp-lambdamap parity"   # CVO spec 2026-06-29; engine classify_reconcile live; read-surface promotion in flight
+        invariant: source-map record == live CodeSha256 == S3-artifact sha (3-leg)
+        coverage: COVERED
+        verdict_vocab: [MATCH, STALE-RECORD, POSSIBLE-HALF-LANDED, CORRUPT-RECORD, DISPOSITIONED, UNVERIFIABLE, NOT-LIVE]
+      - target: iam
+        engine: "comp-iam reconcile"
+        invariant: TF-desired IAM == live-AWS IAM
+        coverage: COVERED
+        verdict_vocab: [MATCH, TF-ONLY, LIVE-ONLY, DIVERGED]
+    coverage: COVERED
+
+  - seam_id: seam-3
+    stage_from: CLOUD
+    stage_to: NESSIE
+    target_class: [graph-node]
+    invariant: the graph reflects the LIVE estate (derive ran on current HEAD)
+    engine: "globgrph derive marker-oracle (comp-kuzu provenance header)"
+    coverage: PARTIAL          # marker-oracle surfaces vintage (current/BEHIND/UNKNOWN) but does not fully ASSERT live==graph
+    verdict_vocab: [current, BEHIND, UNKNOWN-VINTAGE]
+
+  - seam_id: seam-4
+    stage_from: NESSIE
+    stage_to: KUZU
+    target_class: [graph-node]
+    invariant: the query DB == the latest Nessie HEAD
+    engine: "comp-kuzu HEAD-advance (auto-refresh marker)"
+    coverage: SELF-HEAL        # self-heals on HEAD-advance, but the parity is NOT explicitly asserted as a checkable verdict
+    verdict_vocab: [current, refreshing]
+
+  - seam_id: seam-5
+    stage_from: KUZU            # (canonical parquet / graph source feeding the lakehouse)
+    stage_to: ICEBERG
+    target_class: [table]
+    invariant: lakehouse Iceberg tables == the canonical parquet / graph source they materialize from
+    engine: UNCOVERED
+    coverage: GAP              # <-- NO CHECKER TODAY. Build in P3 (seam engine, comp-drift calls it).
+    verdict_vocab: []
+    note: "FINDING: Iceberg materialization has no parity check vs its canonical source. P3 builds the seam engine."
+
+  - seam_id: seam-6
+    stage_from: ICEBERG
+    stage_to: TRINO
+    target_class: [catalog]
+    invariant: each Trino federated-catalog binding == its backing source schema/partitioning (PER catalog)
+    engine: UNCOVERED
+    coverage: GAP              # <-- NO CHECKER TODAY. DESIGN-IN to the heat-federation build (the leverage point).
+    fan_in: true              # Trino is a NODE with N inbound catalog seams (PRD arch-gate (d))
+    bindings:
+      - catalog: aws-assets
+        kind: iceberg
+        check: trino-catalog-schema == live iceberg table schema/partitioning
+        verdict_vocab: [MATCH, SCHEMA-DRIFT, STALE, UNVERIFIABLE]
+      - catalog: portal-assets
+        kind: iceberg
+        check: trino-catalog-schema == live iceberg table schema/partitioning
+        verdict_vocab: [MATCH, SCHEMA-DRIFT, STALE, UNVERIFIABLE]
+      - catalog: ms-assets
+        kind: iceberg
+        check: trino-catalog-schema == live iceberg table schema/partitioning
+        verdict_vocab: [MATCH, SCHEMA-DRIFT, STALE, UNVERIFIABLE]
+      - catalog: pipeline-assets
+        kind: iceberg
+        check: trino-catalog-schema == live iceberg table schema/partitioning
+        verdict_vocab: [MATCH, SCHEMA-DRIFT, STALE, UNVERIFIABLE]
+      - catalog: git-code-heat
+        kind: live-read         # SPECIAL CASE: read live, never materialized
+        check: HEAD-pointer / vintage marker the live-read reflects (NOT a table-schema check)
+        verdict_vocab: [current, BEHIND, UNVERIFIABLE]
+    node_rollup: worst-of      # any UNVERIFIABLE -> node UNVERIFIABLE; any break -> node break
+    note: "FINDING + LEVERAGE: design the per-catalog parity signal INTO the heat-federation build (AC threaded 0.8.0_AE 2026-06-29, pre-materialization). If it ships without -> seam-6 stays GAP + a retrofit TO."
+
+  - seam_id: seam-7
+    stage_from: TRINO
+    stage_to: SERVED
+    target_class: [served-json]
+    invariant: the served heat view == the Trino federation result
+    engine: "comp-freshness + heat-view check"
+    coverage: PARTIAL          # freshness is checked; the served==federation-result equality is not fully asserted
+    verdict_vocab: [FRESH, STALE, UNVERIFIABLE]
+
+# Tri-state CI contract (PRD arch-gate (c), adopted from comp-lambdamap parity):
+#   exit 0 = clean / dispositioned (incl STALE-but-consistent, SELF-HEALING-current)
+#   exit 1 = true integrity break  (HALF-LANDED, deployed != committed, SCHEMA-MISMATCH)
+#   exit 2 = UNVERIFIABLE          (could-not-read the seam -- a FINDING, never silently MATCH)
+# Per-seam verdicts stay DISTINCT (never collapsed into one "DRIFT"); each verdict
+# cites its grounding (the live read it rests on -- CLAUDE.md Rule 22).
+exit_contract:
+  "0": clean-or-dispositioned
+  "1": integrity-break
+  "2": unverifiable
