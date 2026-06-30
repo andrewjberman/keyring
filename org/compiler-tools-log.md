@@ -9914,3 +9914,8 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-06-30 | 0.7.0_AE_CloudOps | (no-TO) | comp-iam | comp-iam service opal-inf-served-guard | PASS |
 - 2026-06-30 0.8.0_AE_CloudComp~C (NFRA_COMPUNIFY.S0b+S1): comp-which routing cross-check (4 surface Qs, 0 placement findings, overlaps corroborated); comp_coverage_view.py --verify (AC4 non-breaking: 33 manifest entries subset-of 44 ledger union, exit 0); ds-commit-gate PASS; 6-rule gate dry-run PASS (one_home/inventory_completeness/declared_non_redundancy/seam_ref/coverage_single_home/no-phantom). S0 7850d813b, S0b 860aac86b, S1 8d55cd616.
 | 2026-06-30 | 0.8.0_AE_CloudComp~C | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-06-30 | 2.0.0_SA_COO~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/graph-call-manifest.yaml | PASS |
+| 2026-06-30 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/NFRA_GRAPHUNI_PRD.md ... | PASS |
+| 2026-06-30 | 0.6.0_AE_PartnerETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.6.0_AE_PartnerETL/de... | PASS |
+- 2026-06-30 0.8.0_AE_CloudComp~C (NFRA_COMPUNIFY S1 close/hold): no new comp-tool runs this window (SoD manifest-marker handoff + banked the owned-paths --check-agent gotcha memory; no code/infra/data change). S1 window runs recorded in the prior line.
+| 2026-06-30 | 0.8.0_AE_CloudComp~C | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
