@@ -152,6 +152,12 @@ seams:
         engine: "infra/aws/globgrph/code_heat_parity.py"   # 0.8.0_AE~B, committed dd7cd996a; module (not promoted until P2)
         coverage: COVERED       # VINTAGE-PRIMARY verdict (CTO-blessed): current=vintage within --max-age-hours (26h); BEHIND=vintage stale OR emitted commit absent; HEAD-advance-since-emit = EXPECTED detail, not a break (high-velocity monorepo). HEAD-match = corroborating detail.
         verdict_vocab: [current, BEHIND, UNVERIFIABLE]
+      - catalog: tool-activity-behavior
+        kind: derived-parquet   # NFRA_COMPLEARN P0 (~E): periodically-materialized derived view over the canonical source LOGS (read-only)
+        check: HEAD-pointer / vintage marker the emit reflects (NOT a table-schema check) -- the 3rd Trino catalog = the Behavior plane
+        engine: "infra/aws/globgrph/tool_activity_parity.py"   # 0.8.0_AE_CloudComp~E, NFRA_COMPLEARN P0; mirrors code_heat_parity.py
+        coverage: COVERED       # VINTAGE-PRIMARY: current=vintage within 26h; BEHIND=vintage stale OR commit absent; HEAD-advance-since-emit = EXPECTED
+        verdict_vocab: [current, BEHIND, UNVERIFIABLE]
     node_rollup: worst-of      # any UNVERIFIABLE -> node UNVERIFIABLE; any break -> node break
     note: "FINDING + LEVERAGE: design the per-catalog parity signal INTO the heat-federation build (AC threaded 0.8.0_AE 2026-06-29, pre-materialization). If it ships without -> seam-6 stays GAP + a retrofit TO."
 
