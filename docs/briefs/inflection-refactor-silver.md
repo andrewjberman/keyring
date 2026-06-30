@@ -61,8 +61,22 @@ RESOLVED:
 ### 5.3 ORION-API — RETIRE
 `silver/accounts_dim/` (legacy), `silver/orion-rest/` (stray), `silver/performance_dim/` (dup).
 
-### 5.4 Census-complete (DS~A correction 2026-06-30)
-The silver map above omitted two trees that must be CENSUSED (not silently dropped): `silver/prices/` (canonical_prices — the prices tree feeding gold; **KEEP**, classify under its own prices lineage, not an orion-dim) and `silver/historical_prices.parquet` (single-file; classify KEEP/retire per gold consumption). Drive the silver migration (S-R1..R5 / AC) off a FULL `s3://opal-data-inf/silver/` prefix census — same requirement as bronze §1 — so no tree survives unclassified.
+### 5.4 Complete prefix census — AC authority (DS~A live census 2026-06-30)
+
+Every `s3://opal-data-inf/silver/` prefix classified — no tree survives unclassified:
+
+| silver prefix | disposition |
+|---|---|
+| `api_dims/` | **RENAME** → `silver/orion-api/` (the main tree) |
+| `api_dims/{positions_mv, accounts_v2, household, household_rep_mapping, representatives, activity, billing, tax_realized, tax_unrealized}` | **KEEP** (canonical dims, correct shape) |
+| `api_dims/assets` + `api_dims/assets_v2` + flat `silver/assets_v2/` | **CONSOLIDATE** → ONE partitioned `assets` |
+| `api_dims/performance` + flat `silver/performance/` + `silver/performance_dim/` | **CONSOLIDATE** → ONE partitioned `performance` (retire `performance_dim`) |
+| flat `silver/transactions/` | **CONSOLIDATE** → `silver/orion-api/transactions/` partitioned |
+| `silver/accounts_dim/`, `silver/orion-rest/` | **RETIRE** (legacy / stray) |
+| `silver/eclipse/` | **RELOCATE** → `silver/eclipse-api/` (stubbed) |
+| `silver/prices/` (canonical_prices) | **KEEP** — non-orion-dim prices lineage (produced by INF_S_00, gold-consumed); own tree |
+| `silver/historical_prices.parquet` (29MB, single file, 2026-05-05) | **CENSUS-VERIFY** — looks like a one-time historical-prices load; trace producer/consumer before KEEP-vs-RETIRE (do NOT retire blindly) |
+| `silver/_silver_complete/`, `silver/meta/`, `api_dims/_chain_summary/` | **NON-DIM, KEEP** (sentinels/meta) |
 
 ### 5.4 ECLIPSE-API — 4 dims (relocate + stub, full-fidelity, exist today)
 | silver dim | from raw bronze | grain / key fields | ~rows |

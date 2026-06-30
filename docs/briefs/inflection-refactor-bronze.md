@@ -75,6 +75,22 @@ The enumeration is NOT an open task — comprehensive reverse-engineering work e
 - **R4 — Duplicate-script retirement:** pick one pull script per dim; delete the other; update the chain step registry.
 - **R5 — Eclipse structure:** rename `bronze/eclipse/` → `bronze/eclipse-api/` (the format + `{date}/` foldering are ALREADY correct — live-verified 2026-06-30: all-JSON, datestamped partitions, one file per endpoint incl. `model_composition_{id}.json` ×9). Move the pull onto the unified EC2 + extend to the §14 frontier. No format/foldering change needed — Eclipse is already the clean target.
 
+## 5b. Complete prefix census — AC1 authority (DS~A live census 2026-06-30)
+
+Every `s3://opal-data-inf/bronze/` prefix classified — the decommission/migration scope; no tree may survive unclassified:
+
+| bronze prefix | disposition |
+|---|---|
+| `orion-api/` | **KEEP/TARGET** — unified Orion bronze; all dims land here |
+| `orion-api-v2/` | **ELIMINATE** → merge into `orion-api/` |
+| `positions/` | **ELIMINATE** → raw JSON in `orion-api/` (own-prefix parquet) |
+| `assets/` | **ELIMINATE** → raw JSON in `orion-api/` |
+| `performance/` | **ELIMINATE** → de-convert (CSV copy already at `orion-api/{date}/performance_dim.csv`) |
+| `transactions/` | **ELIMINATE** → de-convert (CSV copy already at `orion-api/{date}/transactions.csv`) |
+| `eclipse/` | **RELOCATE** → `bronze/eclipse-api/` |
+| `orion/` | **NON-DIM, KEEP** — auth state (`jwt/current.json`, `browser-profile/state.json`, `otp/`); exempt from the layout refactor but it is the SPEC-4 auth surface |
+| `logs/` | **NON-DIM, KEEP** — runner logs |
+
 ## 6. Acceptance criteria (machine-checkable → PRD/TO)
 
 - AC1: every Orion REST dim lands under `bronze/orion-api/{date}/` — `bronze/orion-api-v2/`, `bronze/positions/`, `bronze/assets/` receive no new writes.
