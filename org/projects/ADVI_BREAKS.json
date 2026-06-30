@@ -1,0 +1,17 @@
+{
+  "project_code": "ADVI_BREAKS",
+  "macro_code": "ADVI",
+  "name": "Pipeline Break Assessment & Validation — Inflection / 49F / Cottonwood",
+  "description": "Andrew-sovereign P0 gate project (2026-06-30). Assess WHERE the breaks are in each custodian/partner served pipeline (Inflection, 49 Financial, Cottonwood) and VALIDATE each to GREEN. Origin: the Friday 2026-06-26 canonical-format exploration (DATA_PLATFORM/DATA_ANALYTICS) changed PROD somewhere; served AUA went frozen/clobbered on the live portal across pipelines. Anchor case (inf) traced live: a NEW 132-byte minimal stub producer is clobbering the mature 28830-byte INF_D_04/inf-portal-publisher HeaderMetricsResponse on the same served key (opal-data-inf/platinum/firm/header_metrics.json), AND nothing refreshed 06-30 (frozen) -- schema regression + freeze + false freshness, all live-grounded. Per-pipeline validation method (axes A map / B single-writer / C fresh / D correct-vs-custodian / E schema / F trigger) in the PRD. GATE: DATA_ANALYTICS and DATA_SSOTMG are BLOCKED until every in-scope pipeline validates GREEN with independent CVO confirmation + the prevention alarm live.",
+  "prds": ["docs/architecture/ADVI_BREAKS_PRD.md"],
+  "related": ["DATA_ANALYTICS", "DATA_SSOTMG", "DATA_PLATFORM", "NFRA_COMPDIFF"],
+  "status": "active",
+  "phase": "PHASE 0 -- PRD AUTHORED + macro REGISTERED 2026-06-30 (1.0.0_SA_CTO; Andrew-direct sovereign P0). Inflection anchor case traced LIVE this session (dual-writer clobber + 06-30 freeze, S3+source grounded). 49F + Cottonwood assessments are TO-3/TO-4 (Cottonwood freeze already DS-grounded 2026-06-30, feeds TO-4). 6 TOs decomposed in the PRD: TO-1 identify inf stub producer, TO-2 stop clobber + fix refresh, TO-3 49F sweep, TO-4 COT sweep, TO-5 CVO cross-cutting validation (gate-release verdict), TO-6 prevention alarm (single-writer + source-vs-served parity).",
+  "blocking": "None to PRD/registration. This project BLOCKS DATA_ANALYTICS + DATA_SSOTMG by Andrew-direct order (all else holds until the three pipelines are confirmed). COO decomposes TO-1..6 and drives; build DS(inf/cot)+AE(49f/trigger), independent validation CVO.",
+  "created": "2026-06-30",
+  "pods": ["0.4", "0.6", "0.7", "3.0", "1.0", "2.0"],
+  "pipeline": "ADVI",
+  "coo_lane": "P0 -- decompose TO-1..6 from the PRD, dispatch the inf rescue (TO-1/TO-2) first, parallel the 49F + COT sweeps (TO-3/TO-4), CVO holds TO-5 gate-release. Hold all DATA_ANALYTICS/DATA_SSOTMG dispatch until GREEN.",
+  "thread_counter": 0,
+  "threads": []
+}
