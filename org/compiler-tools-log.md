@@ -9681,3 +9681,6 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 
 - 2026-06-30 0.7.0_AE_CloudOps: ADVI_BREAKS 3-pipeline AE infra diagnose -- comp-iam (ruled out canonical-schwab-runner as inf writer), pipescript/advi-bd (bd gold trigger->runner->platinum map), comp-grep (B_01 RPS join), comp-which (routed, manifest backstop). Gap: no comp-tool for CloudTrail/EventBridge/SSM trigger-dispatch forensics -> candidate comp-trigger.
 | 2026-06-30 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-06-30 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+| 2026-06-30 | 0.4.0_DS_ClientPlatform | ADVI_BREAKS.TO-4 | comp-freshness/pipescript/comp-pipescript-io/comp-grep | cot freeze DIAGNOSE: comp-freshness cot (content-stale flag) + pipescript --resource header_metrics + comp-pipescript io D_00 + comp-grep (as_of/producer/e2-alarm wiring) | PASS |
+| 2026-06-30 | 0.4.0_DS_ClientPlatform | ADVI_BREAKS.TO-4 | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
