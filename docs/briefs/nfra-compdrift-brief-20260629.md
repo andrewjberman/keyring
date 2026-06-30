@@ -96,6 +96,16 @@ is a finding."
 
 ## 4. Trino — the fan-in federation special case (Andrew-flagged)
 
+> **[CORRECTION 2026-06-30, COO~B grounding]** The "4 iceberg catalogs (aws/portal/ms/pipeline)" framing
+> below is a LAYER-vs-TABLE mismap. Ground truth (memory `project_trino_federation_layer_live`, verified
+> the 2026-06-29 federation build; aligns CTO fix `adc20b328`): aws/portal/ms are a `layer` COLUMN on a
+> SINGLE `graph_nodes` table — 3 physical iceberg tables total (`graph_nodes`/`graph_edges`/`graph_contracts`).
+> The live Trino fan-in is 2 catalogs (iceberg + code_heat), soon 3 (+ tool_activity), NOT N per-layer
+> catalogs. Model the fan-in + the topology manifest on PHYSICAL catalogs so it carries no phantom per-layer
+> seams. (Fully corrected at COMPDRIFT-PRD time.) Related: the §4.3 "design-in window" is largely already
+> USED — the 06-29 federation shipped with seam-6 parity (code_heat_parity) — so this is less time-pressured
+> than framed below; COMPUNIFY-schema-first sequencing stands.
+
 Trino is **not a linear hop** like the others, and that changes how `comp-drift` must model it:
 
 1. **Fan-in, not a single seam.** Kuzu has one backing store (Nessie); Trino **federates many** — the Iceberg
