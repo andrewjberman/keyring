@@ -9889,3 +9889,7 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-06-30 | 2.0.0_SA_COO~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/NFRA_COMPUNIFY/task_orders... | PASS |
 | 2026-06-30 | 0.6.0_AE_PartnerETL | ADVI_BREAKS-49F | comp-pipescript io (C_00/B_00/B_03/B_01) | grounded canonical dep-chain = gold built FROM BD silver (no separate positions pull); refuted "3rd feed" framing; legacy unrealized_gain_loss non-gating (~B). BD-REST pull/merge/secret forensics = rail-checked raw aws/SSM (no comp-tool) | PASS |
 | 2026-06-30 | 0.6.0_AE_PartnerETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-06-30 | 0.8.0_AE_CloudComp~C | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/comp-coverage-map.yaml | PASS |
+
+| 2026-06-30 | 0.4.0_DS_ClientPlatform~B | ADVI_BREAKS TO-3 49F un-freeze | comp-which/comp-grep, comp-pipescript io+deployed, comp-freshness chain bd, ds-commit-gate, safe-commit/safe-deploy, boto3-forensics | comp-freshness surfaced the surgical D_03/D_04-frozen-while-siblings-fresh forensic; boto3 version/penny-test located the facts=[] root + the allocations 2nd-feed + the cert layer; ds-gate caught C_02 missing __future__ + ruff |
+| 2026-06-30 | 0.4.0_DS_ClientPlatform~B | ADVI_BREAKS.TO-3 | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
