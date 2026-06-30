@@ -20,3 +20,4 @@
 
 ## Log
 - 20260630T1426Z OPENED at deploy-start. STEP-1/2 dispatched to 0.7.0_AE (SSM on cot-exporter); awaiting new templateId + STEP-2 row-count.
+- 20260630T1450Z FORK/STEER: AE+~B grounded 49F's 431167 root as facts=0 TEMPLATE BODY (needs enrichment, not date/id). But cot's body is facts=1 ([{'name':'Fact'}]+8 levels) and produced 10.7MB under CurrentDay (only 06-22 change = dateRangeType CurrentDay->Custom) -> cot is NOT confirmed 49F's facts=0 root. STEERED AE: run cot --provision on the CURRENT body + STEP-2 verify FIRST (decisive). If non-empty -> STEP-3 wire (co-signed scope). If empty -> cot needs a COT-SCHEMA-PRESERVING fix (match cot's historical unrealized columns for silver/B_00, NOT 49F's target set) -- candidate = revert cot unrealized to CurrentDay (no-refreeze, holdings/alloc-specific); this is a SCOPE EXPANSION beyond the co-signed provision -> requires fresh CTO co-sign (flagged 145024Z). Ledger stays OPEN through the fork.
