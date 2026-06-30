@@ -10204,3 +10204,7 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-06-30 | 2.0.0_SA_COO~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/change_management/20... | PASS |
 | 2026-06-30 | 0.8.0_AE_CloudComp~C | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
 | 2026-06-30 | 0.8.0_AE_CloudComp~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.8.0_AE_CloudComp/log... | PASS |
+| 2026-06-30 | 0.8.0_AE_CloudComp~E | NFRA_COMPLEARN.P0 | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/change_management/20... | PASS |
+| 2026-06-30 | 2.0.0_SA_COO~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/drift-topology.yaml | PASS |
+2026-06-30T2346Z | 0.8.0_AE_CloudComp~D | NFRA_GRAPHUNI.P1 + NFRA_COMPDRIFT.P2 | comp-kuzu (provenance pre-mutation + node-id grounding) + comp-drift (built+self-verified, 3 surfaces) + comp-grep (mechanism Rule-22 grounding) | COMPDRIFT P2 shell accepted (a62bc471b); GRAPHUNI P1 gold-compute populate-lane done -- mechanism ratified, producer converged byte-verified w/ ~A (169==169 0-dangling), ingest fn committed (2316463d3), gold_compute.json emitted; awaiting ~B derive run
+| 2026-06-30 | 0.8.0_AE_CloudComp~D | NFRA_GRAPHUNI.P1.d1-fill-derive | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
