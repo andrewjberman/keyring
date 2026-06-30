@@ -10045,3 +10045,10 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-06-30 | 3.0.0_SA_CVO~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/responses/L... | PASS |
 2026-06-30T2147Z | 0.8.0_AE_CloudComp~A | NFRA_GRAPHUNI.P0-A | comp-which (route) + comp-kuzu (storage baseline, provenance current/pin==HEAD: S3_BUCKET 35 / 0 S3Key / 0 READS_S3) + comp-freshness chain inf (PASS) + comp-pipescript deployed (firm-scope quirk) + rail-checked s3api list-object-versions | storage denominator slice delivered (16a511346) + bucket<->key co-derive BYTE-MATCHES ~D firm_qualified.json (23 bd+inf, 312 qualified); GAP: no comp-tool for S3 object-version byte-forensics -> COMPLEARN
 | 2026-06-30 | 0.8.0_AE_CloudComp~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-06-30 | 0.0.0_AB_MSTR | NFRA_COMPDIFF.comptool-audit | comp-surface-check | comp-surface-check check --mode advisory --file org/tier0/ledger/LD-0230.md | PASS |
+| 2026-06-30 | 3.0.0_SA_CVO~B | NFRA_GRAPHUNI.P0-CVO | comp-blast | comp-blast | FAIL |
+| 2026-06-30 | 3.0.0_SA_CVO~B | NFRA_GRAPHUNI.P0-CVO | comp-xref | comp-xref | PASS |
+| 2026-06-30 | 3.0.0_SA_CVO~B | NFRA_GRAPHUNI.P0-CVO | comp-trace | comp-trace | FAIL |
+| 2026-06-30 | 3.0.0_SA_CVO~B | NFRA_GRAPHUNI.P0-CVO | comp-platinum | comp-platinum | PASS |
+- 2026-06-30 0.8.0_AE_CloudComp~C (GRAPHDEPTH first-green): comp-coverage-check check PASS (10 rules); ~D ran comp-coverage-check seam --producer graphuni-gold -> GREEN-IN-SCOPE (first live joint run; scope-phasing + producer-attribution verified on real population). Resolved compute->object CONTAINS disjointness (2612133a5).
+| 2026-06-30 | 0.8.0_AE_CloudComp~C | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
