@@ -56,10 +56,11 @@ RESOLVED:
 - `assets` / `assets_v2` — exists in 3 places (`api_dims/assets/`, `api_dims/assets_v2/`, flat `silver/assets_v2/`) → ONE partitioned dim.
 - `performance` — 3 places (`api_dims/performance/`, flat `silver/performance/`, flat `silver/performance_dim/`) → ONE.
 - `transactions` — flat-only (`silver/transactions/`), no partitioned home → give it `silver/orion-api/transactions/snapshot_date={date}/`.
-- **Per-dim migration risk:** confirm which copy GOLD currently reads before retiring the others (repoint gold's read, then retire).
+- **ATOMIC per-consumer repoint — NEVER bulk-retire the flats (CTO-routed, DS~A `d7ca2f6bb`):** GOLD READS the flats today (`silver/performance/`←INF_C_02; `silver/assets_v2/`←INF_D_03; `silver/transactions/`←the whole A-stage). A naive flat-retire re-triggers the INFGRO.009 phantom-path incident. Per dim: (1) parity-confirm copy-equivalence; (2) relocate the canonical → `silver/orion-api/{dim}/snapshot_date={date}/`; (3) repoint EACH gold consumer ATOMICALLY + parity-verify the gold output is byte-unchanged; (4) THEN retire the non-canonical. CVO independently verifies each per-consumer repoint's parity as LEG-1 builds.
 
-### 5.3 ORION-API — RETIRE
-`silver/accounts_dim/` (legacy), `silver/orion-rest/` (stray), `silver/performance_dim/` (dup).
+### 5.3 ORION-API — RETIRE vs REPOINT (DS~A dead-confirm `d7ca2f6bb`)
+- **RETIRE (DEAD-confirmed):** `silver/performance_dim/` (dup, dead), `silver/orion-rest/` (stray, dead).
+- **NOT dead → REPOINT + staleness-flag, do NOT retire:** `silver/accounts_dim/` is **LIVE-consumed** (INF_09 / INF_C_09 / INF_D_00) but its producer is **FROZEN 04-29** (legacy producer stopped). Repoint its consumers to the `accounts_v2` source + carry a staleness flag; retiring it would break 3 live gold consumers.
 
 ### 5.4 Complete prefix census — AC authority (DS~A live census 2026-06-30)
 
@@ -72,7 +73,9 @@ Every `s3://opal-data-inf/silver/` prefix classified — no tree survives unclas
 | `api_dims/assets` + `api_dims/assets_v2` + flat `silver/assets_v2/` | **CONSOLIDATE** → ONE partitioned `assets` |
 | `api_dims/performance` + flat `silver/performance/` + `silver/performance_dim/` | **CONSOLIDATE** → ONE partitioned `performance` (retire `performance_dim`) |
 | flat `silver/transactions/` | **CONSOLIDATE** → `silver/orion-api/transactions/` partitioned |
-| `silver/accounts_dim/`, `silver/orion-rest/` | **RETIRE** (legacy / stray) |
+| `silver/accounts_dim/` | **REPOINT + staleness-flag, NOT retire** — LIVE-consumed (INF_09/C_09/D_00), producer frozen 04-29; repoint consumers to accounts_v2 |
+| `silver/orion-rest/` | **RETIRE** (stray, DEAD-confirmed) |
+| `silver/performance_dim/` | **RETIRE** (dup, DEAD-confirmed) |
 | `silver/eclipse/` | **RELOCATE** → `silver/eclipse-api/` (stubbed) |
 | `silver/prices/` (canonical_prices) | **RETIRE** (post-repoint — see §5.5 yahoo removal) — the yahoo+interp price history is redundant with the Orion daily snapshot |
 | `silver/historical_prices.parquet` (29MB) | **RETIRE** — the T2 yahoo_finance input; removed with the yahoo thread (§5.5) |
