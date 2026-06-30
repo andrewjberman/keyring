@@ -10149,3 +10149,15 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-06-30 | 2.0.0_SA_COO~B | (no-TO) | comp-kuzu | comp-kuzu MATCH (n) WHERE n.name IN ['bd-gold-foundation','bd-gold-layer','bd-gold-deta... | PASS |
 - 2026-06-30 0.8.0_AE_CloudComp~C (comp-program 3-task window + TSGRAPH reg): comp-coverage-check check PASS + selfcheck --json 17/17 (locked-15 intact, +2 additive harness cases CVO~B-folded); seam-axis vs drift-topology ALIGNED (zero drift); ds-commit-gate/ruff clean. Registered comp-drift + Page/PanelCluster; staged multiparty_rollup + audit_grain harnesses. Commits 95eac5d04, 811398a28.
 | 2026-06-30 | 0.8.0_AE_CloudComp~C | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-06-30 | 0.8.0_AE_CloudComp~D | NFRA_COMPDRIFT.P2 | comp-drift | comp-drift coverage | PASS |
+| 2026-06-30 | 0.8.0_AE_CloudComp~D | NFRA_COMPDRIFT.P2 | comp-kuzu | comp-kuzu MATCH (n) RETURN count(n) LIMIT 1 | PASS |
+| 2026-06-30 | 0.8.0_AE_CloudComp~D | NFRA_COMPDRIFT.P2 | comp-drift | comp-drift sweep | FAIL |
+| 2026-06-30 | 0.8.0_AE_CloudComp~D | NFRA_COMPDRIFT.P2 | comp-surface-check | comp-surface-check check --mode advisory --file .tools/comp-drift --file org/modules/gr... | PASS |
+| 2026-06-30 | 0.8.0_AE_CloudComp~C | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/comp-coverage-map.yaml | PASS |
+| 2026-06-30 | 0.8.0_AE_CloudComp~D | NFRA_GRAPHUNI.P1.d1-fill-derive | comp-kuzu | comp-kuzu MATCH (n) RETURN count(n) AS n | PASS |
+| 2026-06-30 | 0.8.0_AE_CloudComp~A | (no-TO) | comp-kuzu | comp-kuzu MATCH (n:CloudNode) WHERE n.node_type='S3_BUCKET' RETURN count(*) AS buckets | PASS |
+| 2026-06-30 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/compdiff/value_parity_reader.py | PASS |
+2026-06-30 | 3.0.0_SA_CVO~B | NFRA_GRAPHUNI.P0-CVO | comp-coverage-check selfcheck --json, gc.Freshness.FORCE rebuild + comp-platinum page/reverse | condition (c) comp-platinum V2 re-anchor (caught+fixed a mixed-vintage trap; 2 real V1->V2 drifts, V2=truth) closing the 3-condition P1 gate; + layer-b 15->17 additive cases CVO-reverified | gap: comp-platinum has no --force/--fresh CLI flag (drove FORCE via module accessors)
+| 2026-06-30 | 0.8.0_AE_CloudComp~D | NFRA_GRAPHUNI.P1.d1-fill-derive | comp-kuzu | comp-kuzu MATCH (n) RETURN count(n) LIMIT 1 | PASS |
+| 2026-06-30 | 0.8.0_AE_CloudComp~B | (no-TO) | comp-kuzu | comp-kuzu MATCH (n:CloudNode) WHERE n.node_type IN ['PipelineScript','PipelineFunction'... | PASS |
+| 2026-06-30 | 3.0.0_SA_CVO~B | NFRA_GRAPHUNI.P0-CVO | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
