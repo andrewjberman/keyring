@@ -217,6 +217,17 @@ RULES = [
      "estate object write-freshness / hygiene (comp-heat)",
      ["comp-heat freshness [path]", "comp-heat drift"],
      "what's stale/dead/safe-to-archive (cold subtrees) or written-but-not-committed (drift) -- repo/estate OBJECT hygiene; DISTINCT from comp-freshness (data-pipeline S3/DDB)"),
+    # NFRA_COMPUNIFY S2: the COMPUNIFY gate. Distinctive coverage/placement/non-redundancy vocab
+    # so "does every comp-tool have one home / is every overlap declared / gate the coverage map"
+    # routes to the enforcement gate, not the grep fallback.
+    (["coverage check", "coverage map", "coverage gate", "non-redundancy", "non redundancy",
+      "every tool one home", "tool placement", "one home", "unplaced tool", "silent overlap",
+      "distinct_from", "comp-tool coverage", "tool coverage map", "gate the coverage",
+      "is every overlap declared", "every overlap declared", "comp tool one home"],
+     "comp-tool coverage gate (the COMPUNIFY non-redundancy invariant)",
+     ["comp-coverage-check", "comp-coverage-check selfcheck", "comp-coverage-check list"],
+     "does every comp-tool have exactly ONE home + is every overlap declared (the COMPUNIFY gate; "
+     "tri-state, also asserts the tools_index projection is current) -- the map-true-to-territory gate"),
 ]
 
 # Function-relationship intents that ARE a rich-tool job (route, do NOT run-the-primitive):
