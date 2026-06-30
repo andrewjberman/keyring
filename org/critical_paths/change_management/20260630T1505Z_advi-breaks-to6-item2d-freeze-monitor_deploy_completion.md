@@ -17,3 +17,4 @@
 
 ## Log
 - 20260630T1505Z OPENED at deploy-start (executor 0.7.0_AE). item2d plan pre-confirmed clean (8 add / 0 change / 0 destroy, -target'd; no drift to other globgrph resources). Proceeding L1 -> L2.
+- 20260630T1507Z L1 CLOSED: source-map entry opal-globgrph-freeze-monitor added (bb9684f0c). L2 CLOSED: safe-apply (HALT-gate passed clean) -> "Apply complete! 8 added, 0 changed, 0 destroyed"; lambda Active/Successful (python3.12), hourly rule rate(1 hour) ENABLED. L3 CLOSED: 0-diff re-plan = "No changes". **Executor deploy COMPLETE (L1-L3).** L4 (dry-run + first-publish co-verify) DISPATCHED to 0.8.0~B + CVO (their verification leg; ledger closes on their attest). Guarding-live. No stranded leg.
