@@ -3,7 +3,7 @@
 <title>NFRA_GRAPHUNI P1 -- D1 FILL: derive the missing node/edge classes (function-level + platinum full-stack) into Nessie via the GLOBGRPH derive/extract pipeline. The FIRST graph mutation.</title>
 <issued_to>0.8.0_AE_CloudComp~D</issued_to>
 <issued_by>2.0.0_SA_COO~B</issued_by>
-<status>staged -- HARD-BLOCKED (CTO inviolable-ordering dispatch gate): COO~B dispatches P1 ONLY after (a) P0 gap-list delivered AND (b) CVO signs the P0-CVO fixture LOCKED + representative. A P1 mutation before the fixture-lock voids the whole no-regression control. ~D does NOT self-advance.</status>
+<status>staged -- HARD-BLOCKED, DOUBLE-GATED (COO~B holds the P1 dispatch on BOTH): (a) CTO RATIFIES the AMENDED D1 spec -- the 2 Andrew-direct amendments (b63c17f63 §8+9: pipeline layer = FULL ingestion/bronze/silver/gold x bd/inf/cot/mdpf not gold-only [materially expanded derive+extractor scope] + stable-grain invariant) RE-OPENED release (a), which was prior-satisfied by the original 4 rulings; AND (b) CVO signs the P0-CVO fixture LOCKED + representative (a P1 mutation before the lock voids the no-regression control). Scope grew to the full tier ladder. ~D does NOT self-advance. NOTE: amendment-2 stable-grain invariant couples COMPUNIFY(governs node-schema)/GRAPHUNI(populates)/COMPDRIFT(edge-grain seam invariant) -- COO~B holds a ~C/~D granularity-alignment touch post-ratification.</status>
 <priority>P1 -- gates each tool's entry to P2 (D1-before-D2, Ruling 1).</priority>
 <project>NFRA_GRAPHUNI</project>
 <dependencies>HARD: NFRA_GRAPHUNI.P0 (the gap-list = the derive spec) AND NFRA_GRAPHUNI.P0-CVO (the pre-delta fixture) BOTH locked first -- this is the FIRST graph mutation, so the fixture must already be frozen against pre-delta state.</dependencies>
