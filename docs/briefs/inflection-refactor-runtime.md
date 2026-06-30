@@ -59,6 +59,8 @@
 
 ## 4. Validation — end-to-end gates (prove the single runner delivers)
 
+**These are POST-SETUP gates (Andrew 2026-06-30): run AFTER the refactor/cleanup is built end-to-end, as the post-setup validation phase — not before.** In particular, the **inf value-defect closure** (the +$1.72M stale-partition) is CONFIRMED here, on the refactored flow: a clean run produces a current-day holdings partition AND served `total.aua` == current-day `positions_mv` == Orion **to the cent** (the open defect closes only when the refactored chain demonstrates it, not on the interim timeout-tolerate deploy). CVO co-sign is reserved for this landed-artifact verification (deployed != resolved).
+
 - **Freshness:** `gold/meta/pipeline-complete.json` advances every run; current-day `holdings_{run_date}` exists (SPEC-3 AC1).
 - **Value-parity (no tolerance):** served `total.aua` == current-day `positions_mv` == Orion **to the cent** — the TO-6 alarm (CVO-co-verified) on every served firm-header.
 - **Completeness:** each bronze dim carries the full endpoint field-set; silver field-set ⊇ bronze (SPEC-1 AC4 / SPEC-2 AC4).

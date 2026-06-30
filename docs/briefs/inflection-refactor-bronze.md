@@ -32,7 +32,9 @@
 ```
 **Eliminated:** `bronze/orion-api-v2/` (merged into `bronze/orion-api/`), `bronze/positions/`, `bronze/assets/` (own-prefix parquet), and the old `bronze/eclipse/` (renamed `bronze/eclipse-api/` to parallel `orion-api` and make the two-domain separation explicit). One datestamped folder per **source domain**; one file per endpoint in its native format. The two domains never share a prefix (Principle 6).
 
-## 2. Single pull layer on the EC2
+## 2. Single pull layer on the EC2 — also a STRUCTURAL DURABLE FIX for the recurring freeze
+
+**Promoted from cleanup to durable fix (source-confirmed, commit `9ea447b3a`, 2026-06-30):** the recurring inf nightly freeze is the gold chain's **REDUNDANT inline perf re-pull** (`pull_inflection_performance_rest.py`) HANGING (103/41min on the Orion perf endpoint, before positions/B_00, blocking B_00 under `set -e`). The deployed `timeout-tolerate` is the *tactical* fix (time-box the inline pull, fall back to cron-landed bronze). **This single-pull-layer is the STRUCTURAL fix:** collapsing to ONE timeout-guarded pull per dim on the EC2 removes the duplicate-pull hang class entirely — there is no redundant second pull left to hang the chain. (Carry the dispatch-level `timeout(-k30,600s)` onto the unified pull so the one pull can never block the chain.)
 
 - The EC2 pulls **all** dims into bronze (today the inline chain pulls only 6; `tax`, `billing`, `unified_account_dim` are cron-Lambda-only — they move onto the EC2).
 - **Decommission** the 9 standalone cron Lambdas + their EventBridge rules (retro §5).
