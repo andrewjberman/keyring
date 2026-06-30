@@ -9992,3 +9992,15 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-06-30 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/NFRA_COMPUNIFY_PRD.md | PASS |
 - 2026-06-30 0.8.0_AE_CloudComp~C (NFRA_COMPUNIFY grain-thread): comp-coverage-check selfcheck (now 6/6 incl injected grain-re-typing->FAIL); check PASS (7 rules incl stable_grain, grain stable); B6 live-fired PASS on the commit; ds-commit-gate/ruff clean. Threaded stable-grain contract (8+9) extensible for sec-10 fold. Commit 01af67fcc.
 | 2026-06-30 | 0.8.0_AE_CloudComp~C | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-06-30 | 0.4.0_DS_ClientPlatform~A | ADVI_INFREF.P1 | comp-surface-check | comp-surface-check check --mode advisory --file data/inf/scripts/gold/orion-gold-dispat... | PASS |
+| 2026-06-30 | 2.0.0_SA_COO~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/NFRA_GRAPHUNI/task_orders/... | PASS |
+| 2026-06-30 | 0.6.2_AE_PartnerETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.6.2_AE_PartnerETL/ta... | PASS |
+| 2026-06-30 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/briefs/inflection-refactor-silver.md | PASS |
+| 2026-06-30 | 0.0.0_AB_MSTR | NFRA_COMPDIFF.comptool-audit | comp-surface-check | comp-surface-check check --mode advisory --file org/tier0/ledger/LD-0230.md | PASS |
+| 2026-06-30 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/NFRA_GRAPHDEPTH_PRD.m... | PASS |
+| 2026-06-30 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/NFRA_GRAPHDEPTH_PRD.md | PASS |
+| 2026-06-30 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+| 2026-06-30 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/NFRA_GRAPHDEPTH.json | PASS |
+| 2026-06-30 | 0.8.0_AE_CloudComp~C | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/comp-coverage-map.yam... | PASS |
+- 2026-06-30 0.8.0_AE_CloudComp~C (NFRA_COMPUNIFY sec-10 fold): git show 047ce51d0 (grounded EXISTENTIAL rollup semantics from source, Rule 22); comp-coverage-check selfcheck 9/9 (+ bad-drilldown-stratum->FAIL, 1:1-rollup->FAIL, rollup_defects existential logic); check PASS (9 rules); B6 live-fired PASS; ds-commit-gate/ruff clean. Folded fractal drilldown + existential-rollup as gate rules 8+9 + canonical rollup_defects() one-head. Commit 28fac26f2.
+| 2026-06-30 | 0.8.0_AE_CloudComp~C | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
