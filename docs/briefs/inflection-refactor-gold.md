@@ -47,14 +47,16 @@ The change vs today: today's `CHAIN_INCREMENTAL` is `pull → silver → D_*` (s
 
 Deferred (Andrew). Eclipse data lands raw (`bronze/eclipse-api/`) + stubbed silver (`silver/eclipse-api/`); there is **no gold/analytics flow yet**. When designed, the cross-domain join lives HERE (account by `int()`-coercion, model by name; ~96.6% reconcile, ~3.4% valuation-lag — D3 §6). Stub section; do not build under this spec.
 
-## 6. The break — current state (still occurring; NOT fixed by TO-2)
+## 6. The break — current state (MECHANISM CORRECTED 2026-06-30, source-confirmed)
 
-- TO-2 (`b0224d8cb`) fixed the **dual-writer clobber** (D_00 stub) only — it did NOT touch `load_latest_holdings` or the B_00-skip. So the **stale-partition value defect is OPEN**.
-- LIVE 2026-06-30: `pipeline-complete.json` stuck at 06-29 14:35Z; no `holdings_06-30`; served AUA stale at 06-29. The incremental chain is still skipping B_00. This is the gate-blocker for inf GREEN (the value-parity alarm will fire until the chain-composition fix lands).
+**CORRECTION (Rule 22):** my earlier premise "scheduled = incremental, skips INF_B_00" was an INFERENCE and is **REFUTED**. DS~A source-confirmed (eventbridge.tf:164 `mode="full"`; trigger:183/263; today's runner ps `--chain full`; B_00 wrote 06-20..28): **the scheduled nightly runs `--chain FULL` and DOES run B_00** every night. `CHAIN_INCREMENTAL` is MANUAL-only.
+- **The real recurring root = the FULL chain HANGS on `pull_inflection_performance_rest.py`** — PERF pull sits BEFORE positions/B_00 in CHAIN_FULL (confirmed pos 1 vs 9/11), so the hang kills the chain before B_00 ever runs → no fresh holdings (AE ground-truthed the hang: 103min, 41min). **The deployed timeout-tolerate is the durable fix.**
+- TO-2 (`b0224d8cb`) fixed only the dual-writer clobber; the stale-partition symptom is real and was OPEN, but its mechanism is the perf-hang, not an incremental-skip.
+- RESIDUAL to confirm (the acceptance bar verifies it): does a NON-hanging full run build the **current-day** (T) holdings partition, or T-1? (06-29: B_00 ran but wrote through 06-28 only.) If T-1, there is a B_00 date-coverage gap atop the hang.
 
 ## 7. Retroactive / migration work
 
-- **G-R1 — revise `CHAIN_INCREMENTAL`** (in `orion-gold-dispatch.sh`): insert `INF_B_00..B_03 --date={today}` + `INF_C_00..C_09 --date={today}` before the D-chain. (Chain-string + dispatch change; NO gold-script rewrite.)
+- **G-R1 — revise `CHAIN_INCREMENTAL`** (insert `INF_B_00..B_03 + C_00..C_09 --date={today}`): **PARKED for the nightly** (the nightly is `--chain full`, not incremental — §6 correction). Keep as the design contract for the MANUAL/future incremental path. The nightly's durable fix is the deployed **perf-hang timeout-tolerate** (so the full chain reaches B_00).
 - **G-R2 — `load_latest_holdings` partition-date assert** (the §3 fail-loud) — minimal INF_D_04 edit.
 - **G-R3 — `[DECISION]` A-stage cadence** — confirm which A dims incremental can cache vs must rebuild.
 - **G-R4 — backfill** the missing current-day holdings until the fix lands (operational; the live 06-30 staleness).
