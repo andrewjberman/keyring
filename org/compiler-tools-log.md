@@ -9846,3 +9846,10 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-06-30 | 0.6.1_AE_PartnerETL | ADVI_INFREF.P1 | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/inf-portal-publisher/l... | PASS |
 | 2026-06-30 | 0.4.0_DS_ClientPlatform~A | ADVI_BREAKS+ADVI_INFREF.P1 | comp-grep/pipescript/ds-gate/boto3 | inf P0 recovery end-to-end + refactor validation + P1 launch (session-close) | PASS (served==Orion to the cent; 3 premise refutations grounded) |
 | 2026-06-30 | 0.4.0_DS_ClientPlatform~A | ADVI_INFREF.P1 | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-06-30 | 0.6.1_AE_PartnerETL | ADVI_INFREF.P1 | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/ci/lambda-source-map.json | PASS |
+| 2026-06-30 | 0.6.1_AE_PartnerETL | ADVI_INFREF.P1 | comp-lambdamap | comp-lambdamap reconcile-deployed --functions inf-portal-publisher --settle-retry-secon... | PASS |
+| 2026-06-30 | 0.6.1_AE_PartnerETL | ADVI_INFREF.P1 | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/ci/lambda-source-map.j... | PASS |
+| 2026-06-30 | 0.6.1_AE_PartnerETL | ADVI_INFREF.P1 | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/change_management/20... | PASS |
+| 2026-06-30 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+| 2026-06-30 | 0.6.1_AE_PartnerETL | ADVI_INFREF.P1 | comp-which, comp-platinum, comp-grep | comp-which (route publisher+consumer) -> comp-platinum reverse aua_by_tax_status (FE-dead proof: no components) + comp-grep (locate publisher source) | PASS -- F1 dead-proof grounded for LEG-0 deploy |
+| 2026-06-30 | 0.6.1_AE_PartnerETL | ADVI_INFREF.P1 | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
