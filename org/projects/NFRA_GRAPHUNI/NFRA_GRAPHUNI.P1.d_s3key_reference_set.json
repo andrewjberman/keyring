@@ -4,175 +4,200 @@
   "compute_firms": [
    "inf"
   ],
-  "firm_unresolved": false
+  "firm_unresolved": false,
+  "level": "prefix"
  },
  "bronze/orion-api/*/transactions.csv": {
   "also_lambda_written": false,
   "compute_firms": [
    "inf"
   ],
-  "firm_unresolved": false
+  "firm_unresolved": false,
+  "level": "prefix"
  },
  "bronze/orion-api/activity/latest.csv": {
   "also_lambda_written": false,
   "compute_firms": [
    "inf"
   ],
-  "firm_unresolved": false
+  "firm_unresolved": false,
+  "level": "object"
  },
  "bronze/orion-api/household/latest.csv": {
   "also_lambda_written": false,
   "compute_firms": [
    "inf"
   ],
-  "firm_unresolved": false
+  "firm_unresolved": false,
+  "level": "object"
  },
  "bronze/orion-api/performance/latest.csv": {
   "also_lambda_written": false,
   "compute_firms": [
    "inf"
   ],
-  "firm_unresolved": false
+  "firm_unresolved": false,
+  "level": "object"
  },
  "bronze/orion-api/{*}/_BRONZE_COMPLETE.json": {
   "also_lambda_written": false,
   "compute_firms": [
    "inf"
   ],
-  "firm_unresolved": false
+  "firm_unresolved": false,
+  "level": "prefix"
  },
  "bronze/orion-api/{*}/assets.csv": {
   "also_lambda_written": false,
   "compute_firms": [
    "inf"
   ],
-  "firm_unresolved": false
+  "firm_unresolved": false,
+  "level": "prefix"
  },
  "bronze/orion-api/{*}/transactions.csv": {
   "also_lambda_written": false,
   "compute_firms": [
    "inf"
   ],
-  "firm_unresolved": false
+  "firm_unresolved": false,
+  "level": "prefix"
  },
  "bronze/orion-api/{date}/assets.csv": {
   "also_lambda_written": false,
   "compute_firms": [
    "inf"
   ],
-  "firm_unresolved": false
+  "firm_unresolved": false,
+  "level": "object"
  },
  "code/gold/*": {
   "also_lambda_written": false,
   "compute_firms": [
    "inf"
   ],
-  "firm_unresolved": false
+  "firm_unresolved": false,
+  "level": "prefix"
  },
  "config/ticker_lookup.json": {
   "also_lambda_written": true,
   "compute_firms": [
    "bd"
   ],
-  "firm_unresolved": false
+  "firm_unresolved": false,
+  "level": "object"
  },
  "config/yahoo_safe_tickers.txt": {
   "also_lambda_written": false,
   "compute_firms": [
    "bd"
   ],
-  "firm_unresolved": false
+  "firm_unresolved": false,
+  "level": "object"
  },
  "gold/_parity/account_gains/*/scorecard.json": {
   "also_lambda_written": false,
   "compute_firms": [
    "bd"
   ],
-  "firm_unresolved": false
+  "firm_unresolved": false,
+  "level": "prefix"
  },
  "gold/_parity/account_gains/{*}/scorecard.json": {
   "also_lambda_written": false,
   "compute_firms": [
    "bd"
   ],
-  "firm_unresolved": false
+  "firm_unresolved": false,
+  "level": "prefix"
  },
  "gold/_parity/canonical_lots/*/scorecard.json": {
   "also_lambda_written": false,
   "compute_firms": [
    "bd"
   ],
-  "firm_unresolved": false
+  "firm_unresolved": false,
+  "level": "prefix"
  },
  "gold/_parity/canonical_lots/{*}/scorecard.json": {
   "also_lambda_written": false,
   "compute_firms": [
    "bd"
   ],
-  "firm_unresolved": false
+  "firm_unresolved": false,
+  "level": "prefix"
  },
  "gold/_parity/holdings_lots/*/scorecard.json": {
   "also_lambda_written": false,
   "compute_firms": [
    "bd"
   ],
-  "firm_unresolved": false
+  "firm_unresolved": false,
+  "level": "prefix"
  },
  "gold/_parity/holdings_lots/{*}/scorecard.json": {
   "also_lambda_written": false,
   "compute_firms": [
    "bd"
   ],
-  "firm_unresolved": false
+  "firm_unresolved": false,
+  "level": "prefix"
  },
  "gold/_parity/positions_cube/*/scorecard.json": {
   "also_lambda_written": false,
   "compute_firms": [
    "bd"
   ],
-  "firm_unresolved": false
+  "firm_unresolved": false,
+  "level": "prefix"
  },
  "gold/_parity/positions_cube/{*}/scorecard.json": {
   "also_lambda_written": false,
   "compute_firms": [
    "bd"
   ],
-  "firm_unresolved": false
+  "firm_unresolved": false,
+  "level": "prefix"
  },
  "gold/_state/advisor_assignments/daily_state.parquet": {
   "also_lambda_written": false,
   "compute_firms": [
    "bd"
   ],
-  "firm_unresolved": false
+  "firm_unresolved": false,
+  "level": "object"
  },
  "gold/account_gains/{*}.parquet": {
   "also_lambda_written": false,
   "compute_firms": [
    "inf"
   ],
-  "firm_unresolved": false
+  "firm_unresolved": false,
+  "level": "prefix"
  },
  "gold/accounts_dimension_latest.parquet": {
   "also_lambda_written": false,
   "compute_firms": [
    "bd"
   ],
-  "firm_unresolved": false
+  "firm_unresolved": false,
+  "level": "object"
  },
  "gold/artifacts/49f/c1_recovered_accounts.json": {
   "also_lambda_written": false,
   "compute_firms": [
    "bd"
   ],
-  "firm_unresolved": false
+  "firm_unresolved": false,
+  "level": "object"
  },
  "gold/artifacts/49f/out_of_scope_accounts.json": {
   "also_lambda_written": false,
   "compute_firms": [
    "bd"
   ],
-  "firm_unresolved": false
+  "firm_unresolved": false,
+  "level": "object"
  },
  "gold/artifacts/advisor_fee_efficiency.json": {
   "also_lambda_written": false,
@@ -180,49 +205,56 @@
    "bd",
    "inf"
   ],
-  "firm_unresolved": false
+  "firm_unresolved": false,
+  "level": "object"
  },
  "gold/artifacts/client_mix_timeseries.json": {
   "also_lambda_written": false,
   "compute_firms": [
    "inf"
   ],
-  "firm_unresolved": false
+  "firm_unresolved": false,
+  "level": "object"
  },
  "gold/artifacts/client_tax_liability.json": {
   "also_lambda_written": false,
   "compute_firms": [
    "inf"
   ],
-  "firm_unresolved": false
+  "firm_unresolved": false,
+  "level": "object"
  },
  "gold/artifacts/clients_tab.json": {
   "also_lambda_written": false,
   "compute_firms": [
    "bd"
   ],
-  "firm_unresolved": false
+  "firm_unresolved": false,
+  "level": "object"
  },
  "gold/artifacts/cumulative_chart.json": {
   "also_lambda_written": false,
   "compute_firms": [
    "inf"
   ],
-  "firm_unresolved": false
+  "firm_unresolved": false,
+  "level": "object"
  },
  "gold/artifacts/employee_leaderboard.json": {
   "also_lambda_written": false,
   "compute_firms": [
    "bd"
   ],
-  "firm_unresolved": false
+  "firm_unresolved": false,
+  "level": "object"
  },
  "gold/artifacts/filters/dimensions.json": {
   "also_lambda_written": true,
   "compute_firms": [
    "bd"
   ],
-  "firm_unresolved": false
+  "firm_unresolved": false,
+  "level": "object"
  },
  "gold/artifacts/firm_mix_views.json": {
   "also_lambda_written": true,
@@ -230,56 +262,64 @@
    "bd",
    "inf"
   ],
-  "firm_unresolved": false
+  "firm_unresolved": false,
+  "level": "object"
  },
  "gold/artifacts/firm_mix_views_daily.json": {
   "also_lambda_written": false,
   "compute_firms": [
    "bd"
   ],
-  "firm_unresolved": false
+  "firm_unresolved": false,
+  "level": "object"
  },
  "gold/artifacts/implementor_leaderboard.json": {
   "also_lambda_written": false,
   "compute_firms": [
    "bd"
   ],
-  "firm_unresolved": false
+  "firm_unresolved": false,
+  "level": "object"
  },
  "gold/artifacts/partner_analytics/header_metrics_{*}.json": {
   "also_lambda_written": false,
   "compute_firms": [
    "bd"
   ],
-  "firm_unresolved": false
+  "firm_unresolved": false,
+  "level": "prefix"
  },
  "gold/artifacts/snapshots/aua_by_architect.json": {
   "also_lambda_written": false,
   "compute_firms": [
    "bd"
   ],
-  "firm_unresolved": false
+  "firm_unresolved": false,
+  "level": "object"
  },
  "gold/artifacts/snapshots/aua_by_region.json": {
   "also_lambda_written": false,
   "compute_firms": [
    "bd"
   ],
-  "firm_unresolved": false
+  "firm_unresolved": false,
+  "level": "object"
  },
  "gold/artifacts/snapshots/aua_by_state.json": {
   "also_lambda_written": false,
   "compute_firms": [
    "bd"
   ],
-  "firm_unresolved": false
+  "firm_unresolved": false,
+  "level": "object"
  },
  "gold/artifacts/snapshots/aua_by_tax_status.json": {
   "also_lambda_written": false,
   "compute_firms": [
    "bd"
   ],
-  "firm_unresolved": false
+  "firm_unresolved": false,
+  "level": "object"
  },
  "gold/artifacts/summary/header_metrics.json": {
   "also_lambda_written": true,
@@ -287,7 +327,8 @@
    "bd",
    "inf"
   ],
-  "firm_unresolved": false
+  "firm_unresolved": false,
+  "level": "object"
  },
  "gold/artifacts/timeseries_chart.json": {
   "also_lambda_written": false,
@@ -295,182 +336,208 @@
    "bd",
    "inf"
   ],
-  "firm_unresolved": false
+  "firm_unresolved": false,
+  "level": "object"
  },
  "gold/cache/hh_timeseries_anchors_{*}.parquet": {
   "also_lambda_written": false,
   "compute_firms": [
    "inf"
   ],
-  "firm_unresolved": false
+  "firm_unresolved": false,
+  "level": "prefix"
  },
  "gold/canonical/account_gains/": {
   "also_lambda_written": false,
   "compute_firms": [
    "bd"
   ],
-  "firm_unresolved": false
+  "firm_unresolved": false,
+  "level": "prefix"
  },
  "gold/canonical/account_gains/{*}.parquet": {
   "also_lambda_written": false,
   "compute_firms": [
    "bd"
   ],
-  "firm_unresolved": false
+  "firm_unresolved": false,
+  "level": "prefix"
  },
  "gold/canonical/advisor_fee_detail/": {
   "also_lambda_written": false,
   "compute_firms": [
    "bd"
   ],
-  "firm_unresolved": false
+  "firm_unresolved": false,
+  "level": "prefix"
  },
  "gold/canonical/advisor_fee_detail/{*}.parquet": {
   "also_lambda_written": false,
   "compute_firms": [
    "bd"
   ],
-  "firm_unresolved": false
+  "firm_unresolved": false,
+  "level": "prefix"
  },
  "gold/canonical/canonical_nna_{*}.parquet": {
   "also_lambda_written": false,
   "compute_firms": [
    "inf"
   ],
-  "firm_unresolved": false
+  "firm_unresolved": false,
+  "level": "prefix"
  },
  "gold/canonical/canonical_performance_2026-04-20.parquet": {
   "also_lambda_written": false,
   "compute_firms": [
    "inf"
   ],
-  "firm_unresolved": false
+  "firm_unresolved": false,
+  "level": "object"
  },
  "gold/canonical/canonical_performance_{*}.parquet": {
   "also_lambda_written": false,
   "compute_firms": [
    "inf"
   ],
-  "firm_unresolved": false
+  "firm_unresolved": false,
+  "level": "prefix"
  },
  "gold/canonical/holdings/": {
   "also_lambda_written": false,
   "compute_firms": [
    "bd"
   ],
-  "firm_unresolved": false
+  "firm_unresolved": false,
+  "level": "prefix"
  },
  "gold/canonical/holdings/{*}.parquet": {
   "also_lambda_written": false,
   "compute_firms": [
    "bd"
   ],
-  "firm_unresolved": false
+  "firm_unresolved": false,
+  "level": "prefix"
  },
  "gold/canonical/holdings_*.parquet": {
   "also_lambda_written": false,
   "compute_firms": [
    "inf"
   ],
-  "firm_unresolved": false
+  "firm_unresolved": false,
+  "level": "prefix"
  },
  "gold/canonical/holdings_gaps/{*}.parquet": {
   "also_lambda_written": false,
   "compute_firms": [
    "bd"
   ],
-  "firm_unresolved": false
+  "firm_unresolved": false,
+  "level": "prefix"
  },
  "gold/canonical/holdings_{*}.parquet": {
   "also_lambda_written": false,
   "compute_firms": [
    "inf"
   ],
-  "firm_unresolved": false
+  "firm_unresolved": false,
+  "level": "prefix"
  },
  "gold/canonical/lots_realized/": {
   "also_lambda_written": false,
   "compute_firms": [
    "bd"
   ],
-  "firm_unresolved": false
+  "firm_unresolved": false,
+  "level": "prefix"
  },
  "gold/canonical/lots_realized/{*}.parquet": {
   "also_lambda_written": false,
   "compute_firms": [
    "bd"
   ],
-  "firm_unresolved": false
+  "firm_unresolved": false,
+  "level": "prefix"
  },
  "gold/canonical/lots_unrealized/": {
   "also_lambda_written": false,
   "compute_firms": [
    "bd"
   ],
-  "firm_unresolved": false
+  "firm_unresolved": false,
+  "level": "prefix"
  },
  "gold/canonical/lots_unrealized/{*}.parquet": {
   "also_lambda_written": false,
   "compute_firms": [
    "bd"
   ],
-  "firm_unresolved": false
+  "firm_unresolved": false,
+  "level": "prefix"
  },
  "gold/canonical/nna/": {
   "also_lambda_written": false,
   "compute_firms": [
    "bd"
   ],
-  "firm_unresolved": false
+  "firm_unresolved": false,
+  "level": "prefix"
  },
  "gold/canonical/nna/{*}.parquet": {
   "also_lambda_written": false,
   "compute_firms": [
    "bd"
   ],
-  "firm_unresolved": false
+  "firm_unresolved": false,
+  "level": "prefix"
  },
  "gold/canonical/nna_atomic/{*}.parquet": {
   "also_lambda_written": false,
   "compute_firms": [
    "bd"
   ],
-  "firm_unresolved": false
+  "firm_unresolved": false,
+  "level": "prefix"
  },
  "gold/canonical/nna_validation/{*}.json": {
   "also_lambda_written": false,
   "compute_firms": [
    "bd"
   ],
-  "firm_unresolved": false
+  "firm_unresolved": false,
+  "level": "prefix"
  },
  "gold/canonical/performance/": {
   "also_lambda_written": false,
   "compute_firms": [
    "bd"
   ],
-  "firm_unresolved": false
+  "firm_unresolved": false,
+  "level": "prefix"
  },
  "gold/canonical/performance/{*}.parquet": {
   "also_lambda_written": false,
   "compute_firms": [
    "bd"
   ],
-  "firm_unresolved": false
+  "firm_unresolved": false,
+  "level": "prefix"
  },
  "gold/canonical/role_aua/": {
   "also_lambda_written": false,
   "compute_firms": [
    "bd"
   ],
-  "firm_unresolved": false
+  "firm_unresolved": false,
+  "level": "prefix"
  },
  "gold/canonical/role_aua/*.parquet": {
   "also_lambda_written": false,
   "compute_firms": [
    "bd"
   ],
-  "firm_unresolved": false
+  "firm_unresolved": false,
+  "level": "prefix"
  },
  "gold/canonical/role_aua/{*}.parquet": {
   "also_lambda_written": false,
@@ -478,28 +545,32 @@
    "bd",
    "inf"
   ],
-  "firm_unresolved": false
+  "firm_unresolved": false,
+  "level": "prefix"
  },
  "gold/canonical/watermarks.json": {
   "also_lambda_written": false,
   "compute_firms": [
    "bd"
   ],
-  "firm_unresolved": false
+  "firm_unresolved": false,
+  "level": "object"
  },
  "gold/classification/ticker_coverage_report.json": {
   "also_lambda_written": false,
   "compute_firms": [
    "inf"
   ],
-  "firm_unresolved": false
+  "firm_unresolved": false,
+  "level": "object"
  },
  "gold/client_performance.parquet": {
   "also_lambda_written": false,
   "compute_firms": [
    "bd"
   ],
-  "firm_unresolved": false
+  "firm_unresolved": false,
+  "level": "object"
  },
  "gold/dimensions/accounts_dimension_latest.parquet": {
   "also_lambda_written": false,
@@ -507,21 +578,24 @@
    "bd",
    "inf"
   ],
-  "firm_unresolved": false
+  "firm_unresolved": false,
+  "level": "object"
  },
  "gold/dimensions/advisor_assignments.parquet": {
   "also_lambda_written": true,
   "compute_firms": [
    "inf"
   ],
-  "firm_unresolved": false
+  "firm_unresolved": false,
+  "level": "object"
  },
  "gold/dimensions/advisor_assignments_history.parquet": {
   "also_lambda_written": false,
   "compute_firms": [
    "bd"
   ],
-  "firm_unresolved": false
+  "firm_unresolved": false,
+  "level": "object"
  },
  "gold/dimensions/client_dimension.parquet": {
   "also_lambda_written": false,
@@ -529,14 +603,16 @@
    "bd",
    "inf"
   ],
-  "firm_unresolved": false
+  "firm_unresolved": false,
+  "level": "object"
  },
  "gold/dimensions/dim_advisor_office.csv": {
   "also_lambda_written": false,
   "compute_firms": [
    "bd"
   ],
-  "firm_unresolved": false
+  "firm_unresolved": false,
+  "level": "object"
  },
  "gold/dimensions/fee_rate_history.parquet": {
   "also_lambda_written": false,
@@ -544,245 +620,280 @@
    "bd",
    "inf"
   ],
-  "firm_unresolved": false
+  "firm_unresolved": false,
+  "level": "object"
  },
  "gold/dimensions/schwab_bd_account_mapping.parquet": {
   "also_lambda_written": false,
   "compute_firms": [
    "bd"
   ],
-  "firm_unresolved": false
+  "firm_unresolved": false,
+  "level": "object"
  },
  "gold/dimensions/ticker_resolution.parquet": {
   "also_lambda_written": false,
   "compute_firms": [
    "bd"
   ],
-  "firm_unresolved": false
+  "firm_unresolved": false,
+  "level": "object"
  },
  "gold/eclipse/{*}/_meta/gold_complete.json": {
   "also_lambda_written": false,
   "compute_firms": [
    "inf"
   ],
-  "firm_unresolved": false
+  "firm_unresolved": false,
+  "level": "prefix"
  },
  "gold/eclipse/{*}/model_portfolio_accounts.parquet": {
   "also_lambda_written": false,
   "compute_firms": [
    "mdpf"
   ],
-  "firm_unresolved": false
+  "firm_unresolved": false,
+  "level": "prefix"
  },
  "gold/entities/accounts/{*}/aua_timeseries.json": {
   "also_lambda_written": false,
   "compute_firms": [
    "bd"
   ],
-  "firm_unresolved": false
+  "firm_unresolved": false,
+  "level": "prefix"
  },
  "gold/entities/advisors/{*}/book.json": {
   "also_lambda_written": false,
   "compute_firms": [
    "bd"
   ],
-  "firm_unresolved": false
+  "firm_unresolved": false,
+  "level": "prefix"
  },
  "gold/entities/advisors/{*}/composition.json": {
   "also_lambda_written": false,
   "compute_firms": [
    "bd"
   ],
-  "firm_unresolved": false
+  "firm_unresolved": false,
+  "level": "prefix"
  },
  "gold/entities/advisors/{*}/mix.json": {
   "also_lambda_written": false,
   "compute_firms": [
    "bd"
   ],
-  "firm_unresolved": false
+  "firm_unresolved": false,
+  "level": "prefix"
  },
  "gold/entities/advisors/{*}/mix_daily.json": {
   "also_lambda_written": false,
   "compute_firms": [
    "bd"
   ],
-  "firm_unresolved": false
+  "firm_unresolved": false,
+  "level": "prefix"
  },
  "gold/entities/advisors/{*}/mix_timeseries.json": {
   "also_lambda_written": false,
   "compute_firms": [
    "bd"
   ],
-  "firm_unresolved": false
+  "firm_unresolved": false,
+  "level": "prefix"
  },
  "gold/entities/advisors/{*}/timeseries.json": {
   "also_lambda_written": false,
   "compute_firms": [
    "bd"
   ],
-  "firm_unresolved": false
+  "firm_unresolved": false,
+  "level": "prefix"
  },
  "gold/entities/clients/": {
   "also_lambda_written": false,
   "compute_firms": [
    "bd"
   ],
-  "firm_unresolved": false
+  "firm_unresolved": false,
+  "level": "prefix"
  },
  "gold/entities/clients/*_views.json": {
   "also_lambda_written": false,
   "compute_firms": [
    "bd"
   ],
-  "firm_unresolved": false
+  "firm_unresolved": false,
+  "level": "prefix"
  },
  "gold/entities/clients/{*}.json": {
   "also_lambda_written": false,
   "compute_firms": [
    "bd"
   ],
-  "firm_unresolved": false
+  "firm_unresolved": false,
+  "level": "prefix"
  },
  "gold/entities/clients/{*}/aua_timeseries.json": {
   "also_lambda_written": false,
   "compute_firms": [
    "bd"
   ],
-  "firm_unresolved": false
+  "firm_unresolved": false,
+  "level": "prefix"
  },
  "gold/entities/clients/{*}/detail.json": {
   "also_lambda_written": false,
   "compute_firms": [
    "bd"
   ],
-  "firm_unresolved": false
+  "firm_unresolved": false,
+  "level": "prefix"
  },
  "gold/entities/clients/{*}_composition.json": {
   "also_lambda_written": false,
   "compute_firms": [
    "bd"
   ],
-  "firm_unresolved": false
+  "firm_unresolved": false,
+  "level": "prefix"
  },
  "gold/holdings/{*}.parquet": {
   "also_lambda_written": false,
   "compute_firms": [
    "inf"
   ],
-  "firm_unresolved": false
+  "firm_unresolved": false,
+  "level": "prefix"
  },
  "gold/holdings_lots_v2_dryrun/{*}.parquet": {
   "also_lambda_written": false,
   "compute_firms": [
    "bd"
   ],
-  "firm_unresolved": false
+  "firm_unresolved": false,
+  "level": "prefix"
  },
  "gold/lots/lots_latest.parquet": {
   "also_lambda_written": false,
   "compute_firms": [
    "inf"
   ],
-  "firm_unresolved": false
+  "firm_unresolved": false,
+  "level": "object"
  },
  "gold/lots/lots_{*}.parquet": {
   "also_lambda_written": false,
   "compute_firms": [
    "inf"
   ],
-  "firm_unresolved": false
+  "firm_unresolved": false,
+  "level": "prefix"
  },
  "gold/manifests/classify_watermark.json": {
   "also_lambda_written": false,
   "compute_firms": [
    "bd"
   ],
-  "firm_unresolved": false
+  "firm_unresolved": false,
+  "level": "object"
  },
  "gold/meta/account_gains_incr_watermark.json": {
   "also_lambda_written": false,
   "compute_firms": [
    "bd"
   ],
-  "firm_unresolved": false
+  "firm_unresolved": false,
+  "level": "object"
  },
  "gold/meta/advisor_assignments_watermark.json": {
   "also_lambda_written": false,
   "compute_firms": [
    "bd"
   ],
-  "firm_unresolved": false
+  "firm_unresolved": false,
+  "level": "object"
  },
  "gold/meta/canonical_lots_incr_watermark.json": {
   "also_lambda_written": false,
   "compute_firms": [
    "bd"
   ],
-  "firm_unresolved": false
+  "firm_unresolved": false,
+  "level": "object"
  },
  "gold/meta/client_timeseries_watermark.json": {
   "also_lambda_written": false,
   "compute_firms": [
    "bd"
   ],
-  "firm_unresolved": false
+  "firm_unresolved": false,
+  "level": "object"
  },
  "gold/meta/fee_rate_history_watermark.json": {
   "also_lambda_written": false,
   "compute_firms": [
    "bd"
   ],
-  "firm_unresolved": false
+  "firm_unresolved": false,
+  "level": "object"
  },
  "gold/meta/holdings_lots_incr_watermark.json": {
   "also_lambda_written": false,
   "compute_firms": [
    "bd"
   ],
-  "firm_unresolved": false
+  "firm_unresolved": false,
+  "level": "object"
  },
  "gold/meta/positions_cube_incr_watermark.json": {
   "also_lambda_written": false,
   "compute_firms": [
    "bd"
   ],
-  "firm_unresolved": false
+  "firm_unresolved": false,
+  "level": "object"
  },
  "gold/platinum/firm/cash_coverage_summary.json": {
   "also_lambda_written": false,
   "compute_firms": [
    "bd"
   ],
-  "firm_unresolved": false
+  "firm_unresolved": false,
+  "level": "object"
  },
  "gold/platinum/firm/cohort_a_summary.json": {
   "also_lambda_written": false,
   "compute_firms": [
    "bd"
   ],
-  "firm_unresolved": false
+  "firm_unresolved": false,
+  "level": "object"
  },
  "gold/positions_cube/*.parquet": {
   "also_lambda_written": false,
   "compute_firms": [
    "bd"
   ],
-  "firm_unresolved": false
+  "firm_unresolved": false,
+  "level": "prefix"
  },
  "gold/positions_cube/2026-04-20.parquet": {
   "also_lambda_written": false,
   "compute_firms": [
    "inf"
   ],
-  "firm_unresolved": false
+  "firm_unresolved": false,
+  "level": "object"
  },
  "gold/positions_cube/{*}.parquet": {
   "also_lambda_written": false,
   "compute_firms": [
    "inf"
   ],
-  "firm_unresolved": false
+  "firm_unresolved": false,
+  "level": "prefix"
  },
  "gold/timeseries/account_performance.parquet": {
   "also_lambda_written": false,
@@ -790,7 +901,8 @@
    "bd",
    "inf"
   ],
-  "firm_unresolved": false
+  "firm_unresolved": false,
+  "level": "object"
  },
  "gold/timeseries/client_performance.parquet": {
   "also_lambda_written": true,
@@ -799,133 +911,152 @@
    "inf",
    "mdpf"
   ],
-  "firm_unresolved": false
+  "firm_unresolved": false,
+  "level": "object"
  },
  "gold/timeseries/holdings_lots/": {
   "also_lambda_written": false,
   "compute_firms": [
    "bd"
   ],
-  "firm_unresolved": false
+  "firm_unresolved": false,
+  "level": "prefix"
  },
  "gold/timeseries/holdings_lots/2026-04-21.parquet": {
   "also_lambda_written": false,
   "compute_firms": [
    "bd"
   ],
-  "firm_unresolved": false
+  "firm_unresolved": false,
+  "level": "object"
  },
  "gold/timeseries/holdings_lots/backfill_{*}.parquet": {
   "also_lambda_written": false,
   "compute_firms": [
    "bd"
   ],
-  "firm_unresolved": false
+  "firm_unresolved": false,
+  "level": "prefix"
  },
  "gold/timeseries/holdings_lots/{*}.parquet": {
   "also_lambda_written": false,
   "compute_firms": [
    "bd"
   ],
-  "firm_unresolved": false
+  "firm_unresolved": false,
+  "level": "prefix"
  },
  "gold/timeseries/holdings_lots_shadow/{*}.parquet": {
   "also_lambda_written": false,
   "compute_firms": [
    "bd"
   ],
-  "firm_unresolved": false
+  "firm_unresolved": false,
+  "level": "prefix"
  },
  "gold/timeseries/positions_cube/": {
   "also_lambda_written": false,
   "compute_firms": [
    "bd"
   ],
-  "firm_unresolved": false
+  "firm_unresolved": false,
+  "level": "prefix"
  },
  "gold/timeseries/positions_cube/{*}.parquet": {
   "also_lambda_written": false,
   "compute_firms": [
    "bd"
   ],
-  "firm_unresolved": false
+  "firm_unresolved": false,
+  "level": "prefix"
  },
  "gold/timeseries/synthetic_positions_index.parquet": {
   "also_lambda_written": false,
   "compute_firms": [
    "bd"
   ],
-  "firm_unresolved": false
+  "firm_unresolved": false,
+  "level": "object"
  },
  "gold/validation/account_gap_buckets_*.json": {
   "also_lambda_written": false,
   "compute_firms": [
    "bd"
   ],
-  "firm_unresolved": false
+  "firm_unresolved": false,
+  "level": "prefix"
  },
  "gold/validation/all_non_yahoo_assets_*.json": {
   "also_lambda_written": false,
   "compute_firms": [
    "bd"
   ],
-  "firm_unresolved": false
+  "firm_unresolved": false,
+  "level": "prefix"
  },
  "gold/validation/aua_certification/{*}.json": {
   "also_lambda_written": false,
   "compute_firms": [
    "bd"
   ],
-  "firm_unresolved": false
+  "firm_unresolved": false,
+  "level": "prefix"
  },
  "gold/validation/aua_gap_decomposition_*.json": {
   "also_lambda_written": false,
   "compute_firms": [
    "bd"
   ],
-  "firm_unresolved": false
+  "firm_unresolved": false,
+  "level": "prefix"
  },
  "gold/validation/aua_gap_top_positions_*.json": {
   "also_lambda_written": false,
   "compute_firms": [
    "bd"
   ],
-  "firm_unresolved": false
+  "firm_unresolved": false,
+  "level": "prefix"
  },
  "gold/validation/aua_validation_{*}.json": {
   "also_lambda_written": false,
   "compute_firms": [
    "bd"
   ],
-  "firm_unresolved": false
+  "firm_unresolved": false,
+  "level": "prefix"
  },
  "gold/validation/gap_by_pricing_source_*.json": {
   "also_lambda_written": false,
   "compute_firms": [
    "bd"
   ],
-  "firm_unresolved": false
+  "firm_unresolved": false,
+  "level": "prefix"
  },
  "gold/validation/tail_asset_drill_*.json": {
   "also_lambda_written": false,
   "compute_firms": [
    "bd"
   ],
-  "firm_unresolved": false
+  "firm_unresolved": false,
+  "level": "prefix"
  },
  "gold/validation/unmatched_asset_analysis_*.json": {
   "also_lambda_written": false,
   "compute_firms": [
    "bd"
   ],
-  "firm_unresolved": false
+  "firm_unresolved": false,
+  "level": "prefix"
  },
  "gold/validation/yahoo_mapping_audit_*.json": {
   "also_lambda_written": false,
   "compute_firms": [
    "bd"
   ],
-  "firm_unresolved": false
+  "firm_unresolved": false,
+  "level": "prefix"
  },
  "gold/views/account_team.parquet": {
   "also_lambda_written": true,
@@ -933,49 +1064,56 @@
    "bd",
    "inf"
   ],
-  "firm_unresolved": false
+  "firm_unresolved": false,
+  "level": "object"
  },
  "gold/views/client_tax_liability.parquet": {
   "also_lambda_written": false,
   "compute_firms": [
    "bd"
   ],
-  "firm_unresolved": false
+  "firm_unresolved": false,
+  "level": "object"
  },
  "gold/views/firm_composition.json": {
   "also_lambda_written": true,
   "compute_firms": [
    "bd"
   ],
-  "firm_unresolved": false
+  "firm_unresolved": false,
+  "level": "object"
  },
  "gold/views/mix_daily_summary.json": {
   "also_lambda_written": false,
   "compute_firms": [
    "bd"
   ],
-  "firm_unresolved": false
+  "firm_unresolved": false,
+  "level": "object"
  },
  "gold/views/nna_aua_by_advisor.parquet": {
   "also_lambda_written": false,
   "compute_firms": [
    "bd"
   ],
-  "firm_unresolved": false
+  "firm_unresolved": false,
+  "level": "object"
  },
  "gold/views/nna_aua_by_geography.parquet": {
   "also_lambda_written": false,
   "compute_firms": [
    "bd"
   ],
-  "firm_unresolved": false
+  "firm_unresolved": false,
+  "level": "object"
  },
  "gold/views/nna_aua_by_geography_city.parquet": {
   "also_lambda_written": false,
   "compute_firms": [
    "bd"
   ],
-  "firm_unresolved": false
+  "firm_unresolved": false,
+  "level": "object"
  },
  "gold/views/rel_architect_lookup.parquet": {
   "also_lambda_written": false,
@@ -983,35 +1121,40 @@
    "bd",
    "inf"
   ],
-  "firm_unresolved": false
+  "firm_unresolved": false,
+  "level": "object"
  },
  "gold/views/relationship_team.parquet": {
   "also_lambda_written": false,
   "compute_firms": [
    "bd"
   ],
-  "firm_unresolved": false
+  "firm_unresolved": false,
+  "level": "object"
  },
  "platinum/accounts/{*}/summary.json": {
   "also_lambda_written": false,
   "compute_firms": [
    "bd"
   ],
-  "firm_unresolved": false
+  "firm_unresolved": false,
+  "level": "prefix"
  },
  "platinum/advisors/{*}/book.json": {
   "also_lambda_written": false,
   "compute_firms": [
    "inf"
   ],
-  "firm_unresolved": false
+  "firm_unresolved": false,
+  "level": "prefix"
  },
  "platinum/advisors/{*}/mix.json": {
   "also_lambda_written": false,
   "compute_firms": [
    "bd"
   ],
-  "firm_unresolved": false
+  "firm_unresolved": false,
+  "level": "prefix"
  },
  "platinum/advisors/{*}/nna_clients.json": {
   "also_lambda_written": false,
@@ -1019,14 +1162,16 @@
    "bd",
    "inf"
   ],
-  "firm_unresolved": false
+  "firm_unresolved": false,
+  "level": "prefix"
  },
  "platinum/advisors/{*}/positions.json": {
   "also_lambda_written": false,
   "compute_firms": [
    "bd"
   ],
-  "firm_unresolved": false
+  "firm_unresolved": false,
+  "level": "prefix"
  },
  "platinum/advisors/{*}/summary.json": {
   "also_lambda_written": false,
@@ -1034,91 +1179,104 @@
    "bd",
    "inf"
   ],
-  "firm_unresolved": false
+  "firm_unresolved": false,
+  "level": "prefix"
  },
  "platinum/advisors/{*}/timeseries.json": {
   "also_lambda_written": false,
   "compute_firms": [
    "bd"
   ],
-  "firm_unresolved": false
+  "firm_unresolved": false,
+  "level": "prefix"
  },
  "platinum/advisors/{*}}/composition.json": {
   "also_lambda_written": false,
   "compute_firms": [
    "inf"
   ],
-  "firm_unresolved": false
+  "firm_unresolved": false,
+  "level": "prefix"
  },
  "platinum/clients/{*}/composition.json": {
   "also_lambda_written": false,
   "compute_firms": [
    "bd"
   ],
-  "firm_unresolved": false
+  "firm_unresolved": false,
+  "level": "prefix"
  },
  "platinum/clients/{*}/concentration.json": {
   "also_lambda_written": false,
   "compute_firms": [
    "bd"
   ],
-  "firm_unresolved": false
+  "firm_unresolved": false,
+  "level": "prefix"
  },
  "platinum/clients/{*}/detail.json": {
   "also_lambda_written": false,
   "compute_firms": [
    "inf"
   ],
-  "firm_unresolved": false
+  "firm_unresolved": false,
+  "level": "prefix"
  },
  "platinum/clients/{*}/mix_timeseries.json": {
   "also_lambda_written": false,
   "compute_firms": [
    "bd"
   ],
-  "firm_unresolved": false
+  "firm_unresolved": false,
+  "level": "prefix"
  },
  "platinum/clients/{*}/summary.json": {
   "also_lambda_written": false,
   "compute_firms": [
    "bd"
   ],
-  "firm_unresolved": false
+  "firm_unresolved": false,
+  "level": "prefix"
  },
  "platinum/clients/{*}/timeseries.json": {
   "also_lambda_written": false,
   "compute_firms": [
    "inf"
   ],
-  "firm_unresolved": false
+  "firm_unresolved": false,
+  "level": "prefix"
  },
  "platinum/clients/{*}/top_holdings.json": {
   "also_lambda_written": false,
   "compute_firms": [
    "inf"
   ],
-  "firm_unresolved": false
+  "firm_unresolved": false,
+  "level": "prefix"
  },
  "platinum/clients/{*}/views.json": {
   "also_lambda_written": false,
   "compute_firms": [
    "bd"
   ],
-  "firm_unresolved": false
+  "firm_unresolved": false,
+  "level": "prefix"
  },
  "platinum/firm/_meta/bronze_skip_warning_{*}.json": {
   "also_lambda_written": false,
   "compute_firms": [
    "inf"
   ],
-  "firm_unresolved": false
+  "firm_unresolved": false,
+  "level": "prefix"
  },
  "platinum/firm/_meta/reconciliation_summary_holdings_{*}.json": {
   "also_lambda_written": false,
   "compute_firms": [
    "inf"
   ],
-  "firm_unresolved": false
+  "firm_unresolved": false,
+  "level": "prefix"
  },
  "platinum/firm/clients-tab-slim.json": {
   "also_lambda_written": true,
@@ -1126,14 +1284,16 @@
    "bd",
    "inf"
   ],
-  "firm_unresolved": false
+  "firm_unresolved": false,
+  "level": "object"
  },
  "platinum/firm/clients_tab.json": {
   "also_lambda_written": false,
   "compute_firms": [
    "inf"
   ],
-  "firm_unresolved": false
+  "firm_unresolved": false,
+  "level": "object"
  },
  "platinum/firm/cumulative_chart.json": {
   "also_lambda_written": true,
@@ -1141,7 +1301,8 @@
    "bd",
    "inf"
   ],
-  "firm_unresolved": false
+  "firm_unresolved": false,
+  "level": "object"
  },
  "platinum/firm/dashboard.json": {
   "also_lambda_written": false,
@@ -1149,7 +1310,8 @@
    "bd",
    "inf"
   ],
-  "firm_unresolved": false
+  "firm_unresolved": false,
+  "level": "object"
  },
  "platinum/firm/fee_efficiency.json": {
   "also_lambda_written": false,
@@ -1157,21 +1319,24 @@
    "bd",
    "inf"
   ],
-  "firm_unresolved": false
+  "firm_unresolved": false,
+  "level": "object"
  },
  "platinum/firm/filters/dimensions.json": {
   "also_lambda_written": false,
   "compute_firms": [
    "inf"
   ],
-  "firm_unresolved": false
+  "firm_unresolved": false,
+  "level": "object"
  },
  "platinum/firm/firm_composition.json": {
   "also_lambda_written": false,
   "compute_firms": [
    "inf"
   ],
-  "firm_unresolved": false
+  "firm_unresolved": false,
+  "level": "object"
  },
  "platinum/firm/header_metrics.json": {
   "also_lambda_written": false,
@@ -1179,7 +1344,8 @@
    "bd",
    "inf"
   ],
-  "firm_unresolved": false
+  "firm_unresolved": false,
+  "level": "object"
  },
  "platinum/firm/leaderboard.json": {
   "also_lambda_written": false,
@@ -1187,14 +1353,16 @@
    "bd",
    "inf"
   ],
-  "firm_unresolved": false
+  "firm_unresolved": false,
+  "level": "object"
  },
  "platinum/firm/leaderboard.prior_week.json": {
   "also_lambda_written": false,
   "compute_firms": [
    "bd"
   ],
-  "firm_unresolved": false
+  "firm_unresolved": false,
+  "level": "object"
  },
  "platinum/firm/mix_summary.json": {
   "also_lambda_written": false,
@@ -1202,14 +1370,16 @@
    "bd",
    "inf"
   ],
-  "firm_unresolved": false
+  "firm_unresolved": false,
+  "level": "object"
  },
  "platinum/firm/partner_analytics.json": {
   "also_lambda_written": false,
   "compute_firms": [
    "inf"
   ],
-  "firm_unresolved": false
+  "firm_unresolved": false,
+  "level": "object"
  },
  "platinum/firm/partner_analytics_{*}.json": {
   "also_lambda_written": false,
@@ -1217,7 +1387,8 @@
    "bd",
    "inf"
   ],
-  "firm_unresolved": false
+  "firm_unresolved": false,
+  "level": "prefix"
  },
  "platinum/firm/timeseries_chart.json": {
   "also_lambda_written": false,
@@ -1225,7 +1396,8 @@
    "bd",
    "inf"
   ],
-  "firm_unresolved": false
+  "firm_unresolved": false,
+  "level": "object"
  },
  "platinum/firm/timeseries_overview.json": {
   "also_lambda_written": false,
@@ -1233,105 +1405,120 @@
    "bd",
    "inf"
   ],
-  "firm_unresolved": false
+  "firm_unresolved": false,
+  "level": "object"
  },
  "platinum/firm/top_holdings.json": {
   "also_lambda_written": false,
   "compute_firms": [
    "inf"
   ],
-  "firm_unresolved": false
+  "firm_unresolved": false,
+  "level": "object"
  },
  "platinum/mdpf/aggregate_aua_timeseries.json": {
   "also_lambda_written": false,
   "compute_firms": [
    "mdpf"
   ],
-  "firm_unresolved": false
+  "firm_unresolved": false,
+  "level": "object"
  },
  "platinum/{*}/ownership_map.json": {
   "also_lambda_written": false,
   "compute_firms": [
    "bd"
   ],
-  "firm_unresolved": false
+  "firm_unresolved": false,
+  "level": "prefix"
  },
  "schwab/silver/rld/": {
   "also_lambda_written": false,
   "compute_firms": [
    "bd"
   ],
-  "firm_unresolved": false
+  "firm_unresolved": false,
+  "level": "prefix"
  },
  "schwab/silver/uln/": {
   "also_lambda_written": false,
   "compute_firms": [
    "bd"
   ],
-  "firm_unresolved": false
+  "firm_unresolved": false,
+  "level": "prefix"
  },
  "schwab/silver/ult/": {
   "also_lambda_written": false,
   "compute_firms": [
    "bd"
   ],
-  "firm_unresolved": false
+  "firm_unresolved": false,
+  "level": "prefix"
  },
  "silver/accounts_dim/latest.parquet": {
   "also_lambda_written": true,
   "compute_firms": [
    "inf"
   ],
-  "firm_unresolved": false
+  "firm_unresolved": false,
+  "level": "object"
  },
  "silver/allocations/*.parquet": {
   "also_lambda_written": false,
   "compute_firms": [
    "bd"
   ],
-  "firm_unresolved": false
+  "firm_unresolved": false,
+  "level": "prefix"
  },
  "silver/allocations/{*}.parquet": {
   "also_lambda_written": false,
   "compute_firms": [
    "bd"
   ],
-  "firm_unresolved": false
+  "firm_unresolved": false,
+  "level": "prefix"
  },
  "silver/api_dims/accounts_v2/snapshot_date={*}/data.parquet": {
   "also_lambda_written": false,
   "compute_firms": [
    "inf"
   ],
-  "firm_unresolved": false
+  "firm_unresolved": false,
+  "level": "prefix"
  },
  "silver/api_dims/positions_mv/snapshot_date={*}/data.parquet": {
   "also_lambda_written": false,
   "compute_firms": [
    "inf"
   ],
-  "firm_unresolved": false
+  "firm_unresolved": false,
+  "level": "prefix"
  },
  "silver/bd_assets_dim.parquet": {
   "also_lambda_written": false,
   "compute_firms": [
    "bd"
   ],
-  "firm_unresolved": false
+  "firm_unresolved": false,
+  "level": "object"
  },
  "silver/eclipse/{*}/_meta/silver_complete.json": {
   "also_lambda_written": false,
   "compute_firms": [
    "inf"
   ],
-  "firm_unresolved": false
+  "firm_unresolved": false,
+  "level": "prefix"
  },
  "silver/eclipse/{*}/model_composition.parquet": {
   "also_lambda_written": false,
   "compute_firms": [
    "inf"
   ],
-  "firm_unresolved": false
+  "firm_unresolved": false,
+  "level": "prefix"
  },
  "silver/eclipse/{*}/portfolios_full.parquet": {
   "also_lambda_written": false,
@@ -1339,14 +1526,16 @@
    "inf",
    "mdpf"
   ],
-  "firm_unresolved": false
+  "firm_unresolved": false,
+  "level": "prefix"
  },
  "silver/eclipse/{*}/portfolios_simple.parquet": {
   "also_lambda_written": false,
   "compute_firms": [
    "inf"
   ],
-  "firm_unresolved": false
+  "firm_unresolved": false,
+  "level": "prefix"
  },
  "silver/historical_prices.parquet": {
   "also_lambda_written": true,
@@ -1354,21 +1543,24 @@
    "bd",
    "inf"
   ],
-  "firm_unresolved": false
+  "firm_unresolved": false,
+  "level": "object"
  },
  "silver/meta/gap_manifest.json": {
   "also_lambda_written": false,
   "compute_firms": [
    "inf"
   ],
-  "firm_unresolved": false
+  "firm_unresolved": false,
+  "level": "object"
  },
  "silver/netassets_daily.parquet": {
   "also_lambda_written": false,
   "compute_firms": [
    "mdpf"
   ],
-  "firm_unresolved": false
+  "firm_unresolved": false,
+  "level": "object"
  },
  "silver/prices/canonical_prices.parquet": {
   "also_lambda_written": true,
@@ -1376,62 +1568,71 @@
    "bd",
    "inf"
   ],
-  "firm_unresolved": false
+  "firm_unresolved": false,
+  "level": "object"
  },
  "silver/realized/bd_realized_agg.parquet": {
   "also_lambda_written": false,
   "compute_firms": [
    "bd"
   ],
-  "firm_unresolved": false
+  "firm_unresolved": false,
+  "level": "object"
  },
  "silver/realized/bd_realized_compact.parquet": {
   "also_lambda_written": false,
   "compute_firms": [
    "bd"
   ],
-  "firm_unresolved": false
+  "firm_unresolved": false,
+  "level": "object"
  },
  "silver/transactions/*.parquet": {
   "also_lambda_written": false,
   "compute_firms": [
    "inf"
   ],
-  "firm_unresolved": false
+  "firm_unresolved": false,
+  "level": "prefix"
  },
  "silver/transactions/{*}.parquet": {
   "also_lambda_written": false,
   "compute_firms": [
    "bd"
   ],
-  "firm_unresolved": false
+  "firm_unresolved": false,
+  "level": "prefix"
  },
  "silver/unrealized/*.parquet": {
   "also_lambda_written": false,
   "compute_firms": [
    "bd"
   ],
-  "firm_unresolved": false
+  "firm_unresolved": false,
+  "level": "prefix"
  },
  "silver/unrealized/2026-04-20.parquet": {
   "also_lambda_written": false,
   "compute_firms": [
    "bd"
   ],
-  "firm_unresolved": false
+  "firm_unresolved": false,
+  "level": "object"
  },
  "silver/unrealized/unrealized_gain_loss.parquet": {
   "also_lambda_written": false,
   "compute_firms": [
    "bd"
   ],
-  "firm_unresolved": false
+  "firm_unresolved": false,
+  "level": "object"
  },
  "silver/unrealized/{*}.parquet": {
   "also_lambda_written": false,
   "compute_firms": [
    "bd"
   ],
-  "firm_unresolved": false
+  "firm_unresolved": false,
+  "level": "prefix"
  }
 }
