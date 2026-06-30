@@ -10185,3 +10185,21 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-06-30 | 0.4.0_DE_ClientPlatform | NFRA_TSGRAPH.P2-3 | comp-cluster | comp-cluster AdvisorIntelligence --json | PASS |
 | 2026-06-30T2318Z | 0.6.0_AE_PartnerETL | 49F freeze-class root diagnosis | comp-glob A_03* (PASS), comp-grep watermark/positions_cube/manifest-keys (PASS, mapped A_03 + 4 silver manifests) ; rail-checked raw aws+python parquet/xlsx trade_date reads + manifest file-list (no comp-tool covers artifact-content/manifest-list) | gap: comp-content/trace-date family (parquet/xlsx column-max + manifest file-list) -- recurring all session |
 | 2026-06-30 | 0.6.0_AE_PartnerETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-06-30 | 0.4.0_DS_ClientPlatform~A | ADVI_INFREF.P1 | comp-surface-check | comp-surface-check check --mode advisory --file data/inf/manual_api/pull_inflection_ass... | PASS |
+| 2026-06-30 | 0.8.0_AE_CloudComp~C | (no-TO) | comp-cluster | comp-cluster --help | PASS |
+| 2026-06-30 | 0.8.0_AE_CloudComp~D | NFRA_GRAPHUNI.P1.d1-fill-derive | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/globgrph/extract_gold_compute.py | PASS |
+| 2026-06-30 | 0.4.0_DS_ClientPlatform~B | (no-TO) | comp-pipescript | comp-pipescript postdeps merge-daily-incremental | PASS |
+| 2026-06-30 | 0.4.0_DS_ClientPlatform~A | ADVI_INFREF.P1 | comp-surface-check | comp-surface-check check --mode advisory --file data/inf/scripts/gold/INF_D_00e.fresh_h... | PASS |
+| 2026-06-30 | 0.8.0_AE_CloudComp~D | NFRA_GRAPHUNI.P1.d1-fill-derive | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/NFRA_GRAPHUNI/NFRA_GRAPHUN... | PASS |
+| 2026-06-30 | 0.8.0_AE_CloudComp~C | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/comp-coverage-map.yaml | PASS |
+| 2026-06-30 | 0.4.0_DS_ClientPlatform~A | ADVI_INFREF.P1 | comp-surface-check | comp-surface-check check --mode advisory --file data/inf/scripts/gold/INF_D_00e.fresh_h... | PASS |
+| 2026-06-30 | 0.4.0_DE_ClientPlatform | NFRA_TSGRAPH.P2-3 | comp-manifest-check | comp-manifest-check list | PASS |
+| 2026-06-30 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+| 2026-06-30 | 0.8.0_AE_CloudComp~D | NFRA_GRAPHUNI.P1.d1-fill-derive | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/globgrph/derive_runner.py --f... | PASS |
+| 2026-06-30 | 0.4.0_DE_ClientPlatform | NFRA_TSGRAPH.P2-3 | comp-manifest-check | comp-manifest-check check --file infra/aws/globgrph/comp_cluster_cli.py --file .tools/c... | PASS |
+| 2026-06-30 | 0.4.0_DS_ClientPlatform~A | ADVI_INFREF.P1 | comp-surface-check | comp-surface-check check --mode advisory --file data/inf/scripts/gold/INF_D_00e.fresh_h... | PASS |
+| 2026-06-30 | 0.4.0_DE_ClientPlatform | NFRA_TSGRAPH.P2-3 | comp-surface-check | comp-surface-check check --mode advisory --file .tools/comp-cluster --file .tools/comp-... | PASS |
+- 2026-06-30 0.8.0_AE_CloudComp~C (pipeline node_identity ratify + comp-cluster + RED-commit fix): comp-coverage-check check (CAUGHT b4c9c42c5 mid-block-Edit orphaning = 15 disposition_complete FAILs + caught comp-cluster unplaced -- the gate working); fixed ee2dfd98b; selfcheck --json 17/17 intact. Ratified GoldScript/GoldScriptFunction node_identity; placed comp-cluster. Commits b4c9c42c5/ee2dfd98b/f23932383.
+2026-06-30T2338Z | 0.8.0_AE_CloudComp~A | NFRA_GRAPHUNI.P1-A | comp-kuzu (provenance current pre-mutation gate + S3_BUCKET node_id=arn form) + aws s3 cp/ls (emit storage_s3keys.json) + python byte-diff (169==~D writes_touched, 0 dangling) | P1 storage population: delta computed (1629127da, 169 S3Key nodes+OWNED_BY/CONTAINS) + convergence byte-verified + emitted to globgrph producers/; graph unmutated (held for ~B's ONE derive); +COMPLEARN P0 primed+handed to ~E
+| 2026-06-30 | 2.0.0_SA_COO~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/change_management/20... | PASS |
+| 2026-06-30 | 0.8.0_AE_CloudComp~C | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
