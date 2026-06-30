@@ -10,7 +10,7 @@
 
 1. **Silver is the parquet-normalization + fact→dim layer.** Because bronze is now raw-native (CSV + JSON, no conversion), **silver is the single place every dim becomes typed parquet.**
 2. **FULL FIDELITY — no field is dropped or compressed bronze→silver.** Every field in the bronze raw record survives to silver. Permitted transforms: dtype coercion, camelCase→snake_case name standardization, dedupe (rows), mechanical provenance columns. The existing `convert_eclipse_portfolios_to_silver.py` is the template — `pd.DataFrame(raw)` (full record) → rename-all → coerce → dedup, **zero column selection** (Rule 17, header-documented). [Andrew-locked 2026-06-30: "keep full fidelity here."]
-3. **fact→dim RESHAPE is permitted in silver; field-relevance/slimming is NOT.** Per Andrew: "if we want to go from fact to dim in silver that is our choice." So silver may reshape a fact table into a dimension (dedup/pivot on keys) — but field slimming, business `fillna`/`dropna`, null-meaning judgment, and field-relevance decisions stay in **gold** (Rule 17 §17). The line: *change shape + dtype + name, never drop a field or business-judge a null.*
+3. **Minimal disruption — stay true to what silver does today; do NOT impose a new fact-vs-dim doctrine.** [Andrew-locked 2026-06-30] Silver already provides the data we need; the refactor consolidates duplicates/layout, it does not re-model. fact→dim reshape is *allowed* but NOT mandated — keeping existing fact tables alongside dims is fine. Hard rule stays: full fidelity (never drop a field) + dtype/dedup only; field slimming/null-judgment stays gold. Rationale: an eventual pure-fidelity (no-Orion) rebuild supersedes this, so don't over-engineer the interim. **The governing constraint for every consolidation choice (layout, naming, which copy to keep) = whatever GOLD is already accustomed to reading** (Principle 5a).
 4. **Two-domain separation holds:** `silver/orion-api/` + `silver/eclipse-api/` (eclipse stubbed). **No cross-source / cross-domain join before gold** (inherits bronze Principle 6 / AC8).
 5. **Single EC2, one converter dispatch, one layout** (inherits bronze Principles 3–4).
 
@@ -30,13 +30,16 @@
   - flat-layout outputs: `silver/assets_v2/`, `silver/performance/`, `silver/performance_dim/`, `silver/transactions/` (normalize to the partitioned layout).
   - stray/legacy trees: `silver/accounts_dim/` (deprecated SlickGrid-derived, superseded by accounts_v2), `silver/orion-rest/`.
 
-## 3. The fact→dim + Rule-17 contract `[DECISION — CTO/Andrew ratify]`
+## 3. The silver transform contract (DECISIONS RESOLVED — Andrew 2026-06-30)
 
-**PERMITTED in silver:** dedup (rows), dtype coercion, camelCase→snake_case name standardization, mechanical provenance (`snapshot_date`, `source_system`), fact→dim RESHAPE (pivot/dedup a fact into a dimension).
-**FORBIDDEN in silver (→ gold):** dropping/slimming any field, business `fillna`/`dropna`, null-meaning judgment, field-relevance decisions, cross-source/cross-domain joins.
+**PERMITTED:** dedup (rows), dtype coercion, `camelCase→snake_case` name standardization, mechanical provenance (`snapshot_date`, `source_system`), fact→dim reshape (allowed, not required).
+**FORBIDDEN (→ gold):** dropping/slimming any field, business `fillna`/`dropna`, null-meaning judgment, field-relevance decisions, cross-source/cross-domain joins.
 **Full-fidelity invariant:** silver field-set ⊇ bronze raw field-set, per dim (no field-count reduction).
-- `[DECISION]` **name casing:** keep the `camelCase→snake_case` standardization (rec — lossless 1:1, consistent across dims) vs preserve native vendor casing for true-raw field names. Either way every field survives; flagging because it's the only bronze→silver transform on names.
-- This section touches Rule 17 doctrine (it clarifies that fact→dim reshape is allowed where Rule 17 reads strict) → explicit CTO/Andrew ratification.
+
+RESOLVED:
+- **Name casing — KEEP `snake_case`** (Andrew-locked). Lossless 1:1; consistent; and gold is already accustomed to it.
+- **fact-vs-dim — NOT hardline** (Andrew-locked): keep existing fact tables alongside dims if that's what's there; don't re-model. Minimal disruption — silver already provides the needed data; an eventual pure-fidelity no-Orion rebuild supersedes the interim.
+- **GOLD-ACCUSTOMED governs:** every consolidation choice (which copy to keep, the layout, the names) is made to match what gold already reads — confirmed per dim (S-R5) before any retire. The refactor must not change what reaches gold.
 
 ## 4. Two-domain trees
 
