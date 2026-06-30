@@ -521,6 +521,7 @@ lanes:
       - 0.8.0_AE_CloudComp~D
       - 0.8.0_AE_CloudComp~A
       - 0.8.0_AE_CloudComp~B
+      - 0.8.0_AE_CloudComp~E
     description: "Execs + AEs — used for project JSONs (AE updates own project state) and hook-config files (AE 0.7 implements hook ecosystem). 3.0.0_SA_CVO + 3.1.0_SA_CVO added 2026-05-23 by COO: CVO is now Tier-1 Claude exec per Andrew 2026-05-22 ruling; enables CVO /spot-check fix-authorized alignment-metadata commits without routing every diff to COO. 0.7.0_AE_CloudOps~C added 2026-05-23 by COO: ~C is the ADVI_DEMOV1 AE infra lane (LD-0008 spawn); shares same tilde-lane gap pattern. 0.8.0_AE_CloudComp~C added 2026-06-30 by 2.0.0_SA_COO~B: the dedicated NFRA_COMPUNIFY build lane (MSTR spawn) needs to self-commit the comp-coverage-map.yaml ledger (S0->S3); same recurring tilde-lane gap. 0.8.0_AE_CloudComp~D added 2026-06-30 by 2.0.0_SA_COO~B: the Andrew-provisioned dedicated NFRA_GRAPHUNI build lane self-commits its deliverables (org/projects/NFRA_GRAPHUNI/** below, task_orders/ excluded). NOTE: base 0.8.0_AE_CloudComp is still absent from this lane (the pending NFRA_COMPDIFF org/modules/compdiff relocation grant) -- flagged to base-COO, not bundled here (out of NFRA_COMP* scope)."
 
   COMPILER_MANIFEST_CHECK:
@@ -846,6 +847,14 @@ paths:
   "org/projects/NFRA_GRAPHUNI/task_orders/**":
     lane: ANY_EXEC
     note: "NFRA_GRAPHUNI TASK ORDERS stay COO-governed (exec-only) -- the COO authors TOs + flips status; the build lane (~D) does NOT self-edit its own TO acceptance/scope. Longest-match overrides the NFRA_GRAPHUNI/** AE grant above. Governance boundary (mirrors debtscan): the do-er cannot weaken its own gate."
+
+  "org/projects/NFRA_COMPLEARN/**":
+    lane: ANY_EXEC_OR_AE
+    note: "NFRA_COMPLEARN (LD-0225) project DELIVERABLES -- the dedicated COMPLEARN build lane 0.8.0_AE_CloudComp~E self-commits its tool_activity catalog + ETL deliverable docs here. Longest-match over org/projects/** ANY_EXEC. Added 2026-06-30 by 2.0.0_SA_COO~B (pre-bundled with the P0 dispatch). task_orders/ excluded below (COO-governed). NOTE: the catalog CODE (infra/aws ETL + the Trino-catalog terraform) lives outside org/projects -- ~E flags those grants on first need."
+
+  "org/projects/NFRA_COMPLEARN/task_orders/**":
+    lane: ANY_EXEC
+    note: "NFRA_COMPLEARN TASK ORDERS stay COO-governed (exec-only); ~E does not self-edit its own TO acceptance. Longest-match overrides the NFRA_COMPLEARN/** AE grant above."
 
   "org/critical_paths/**":
     lane: ANY
