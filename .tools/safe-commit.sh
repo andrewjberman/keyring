@@ -282,6 +282,18 @@ if command -v comp-surface-check >/dev/null 2>&1 && [ -n "$IN_SCOPE" ]; then
   fi
 fi
 
+# B6 NFRA_COMPUNIFY S2: advisory comp-coverage-check gate (the COMPUNIFY enforcement gate).
+# When the commit touches the comp-tool coverage ledger OR adds/changes a .tools/comp-* tool,
+# re-validate the coverage map: every tool one home, every overlap declared, no phantom Trino
+# seam, inventory complete, tools_index projection current. ADVISORY (never blocks -- mirrors
+# B5; announce-then-enforce). Blocking ramp = drop the `|| true` + honor the tri-state exit.
+# Rule-16 clean (command -v / echo / grep / sed -- all in Git Bash 3.6.7).
+if command -v comp-coverage-check >/dev/null 2>&1 && [ -n "$IN_SCOPE" ]; then
+  if echo "$IN_SCOPE" | grep -qE 'comp-coverage-map\.yaml|\.tools/comp-'; then
+    comp-coverage-check check 2>&1 | sed 's/^/  [coverage-check] /' || true
+  fi
+fi
+
 # Proceed with the actual scoped commit. Use plain invocation (not exec) so the
 # EXIT trap fires after commit completion and releases the mutex.
 git commit --only "${COMMIT_ARGS[@]}" -- "${PATHSPEC[@]}"

@@ -495,6 +495,7 @@ meta_tools:
   - { tool: comp-build,             role: cache-management,   not_homed_reason: "rebuilds the trace-graph cache (the trace WRITE-PATH); operates on the tooling cache, not a surface" }
   - { tool: comp-manifest-check,    role: enforcement-gate,   not_homed_reason: "D6 manifest-ENFORCEMENT commit-gate; polices the manifest, not a surface query" }
   - { tool: comp-surface-check,     role: enforcement-gate,   not_homed_reason: "D8 critical-surface commit-gate (auto in safe-commit); an enforcement gate" }
+  - { tool: comp-coverage-check,    role: enforcement-gate,   not_homed_reason: "THE COMPUNIFY gate (NFRA_COMPUNIFY S2) -- enforces this ledger's own gate_contract + projection-currency; polices the coverage map, not a surface query" }
   - { tool: comp-registry,          role: governance,         not_homed_reason: "REGISTRY-narrative vs project-JSON drift + write-back; governs project records, not an estate surface" }
   - { tool: comp-coverage,          role: meta-report,        not_homed_reason: "compiler/task-order coverage report; a meta view over the tooling/TOs" }
   - { tool: comp-perf,              role: meta-measurement,   not_homed_reason: "tool-performance measurement; meta, not a graph-query use-case (manifest-excluded)" }

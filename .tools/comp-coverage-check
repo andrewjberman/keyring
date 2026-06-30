@@ -1,0 +1,30 @@
+#!/usr/bin/env python3
+"""comp-coverage-check -- THE COMPUNIFY GATE: enforce the comp-tool coverage map's
+non-redundancy invariant (NFRA_COMPUNIFY S2, CTO ruling #4).
+
+Routes to the canonical engine org/modules/graph/comp_coverage_check.py. Reads the
+source-of-truth ledger org/modules/graph/comp-coverage-map.yaml and FAILS when the map
+drifts from the territory: an UNPLACED tool, a SILENT overlap (shared resource, no declared
+distinct_from), a phantom Trino per-layer seam, an incomplete inventory, or a STALE
+tools_index projection. Tri-state, never false-PASS. comp-which-routable
+("does every comp-tool have exactly one home and is every overlap declared -- gate the
+comp-tool coverage map / coverage-check / non-redundancy invariant").
+
+  comp-coverage-check            gate the live ledger (exit 0 PASS / 1 FAIL / 2 UNVERIFIABLE)
+  comp-coverage-check selfcheck  inject unplaced-tool + silent-overlap + stale-projection -> each FAILS
+  comp-coverage-check list       the contract rules this gate enforces
+"""
+import os
+import runpy
+import sys
+
+_HERE = os.path.dirname(os.path.abspath(__file__))          # .tools/
+_WS = os.path.dirname(_HERE)                                 # repo root
+_ENGINE = os.path.join(_WS, "org", "modules", "graph", "comp_coverage_check.py")
+
+if not os.path.exists(_ENGINE):
+    sys.stderr.write(f"comp-coverage-check: engine not found at {_ENGINE}\n")
+    sys.exit(2)
+
+sys.argv = [_ENGINE] + sys.argv[1:]
+runpy.run_path(_ENGINE, run_name="__main__")

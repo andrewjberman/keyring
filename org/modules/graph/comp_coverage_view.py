@@ -56,14 +56,26 @@ def emit() -> int:
     return 0
 
 
-def verify() -> int:
-    ledger = _load(LEDGER)
-    union = {t["tool"] for t in ledger.get("tools", [])} | {
+def ledger_union(ledger: dict) -> set[str]:
+    """The set of every tool accounted in the ledger (homed + meta)."""
+    return {t["tool"] for t in ledger.get("tools", [])} | {
         m["tool"] for m in ledger.get("meta_tools", [])
     }
+
+
+def projection_lost(union: set[str], manifest_inv: set[str]) -> list[str]:
+    """The manifest tools_index entries ABSENT from the ledger union (i.e. lost on regeneration).
+    The single source of the projection-currency check -- comp_coverage_check imports this so the
+    gate and the projector never drift on what 'current' means."""
+    return sorted(manifest_inv - union)
+
+
+def verify() -> int:
+    ledger = _load(LEDGER)
+    union = ledger_union(ledger)
     manifest = _load(MANIFEST)
     inventory = set(manifest.get("tools_index", {}).keys())
-    lost = sorted(inventory - union)
+    lost = projection_lost(union, inventory)
     if lost:
         sys.stderr.write(
             "DRIFT: manifest tools_index carries tool(s) absent from the ledger "
