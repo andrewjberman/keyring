@@ -10161,3 +10161,7 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-06-30 | 0.8.0_AE_CloudComp~D | NFRA_GRAPHUNI.P1.d1-fill-derive | comp-kuzu | comp-kuzu MATCH (n) RETURN count(n) LIMIT 1 | PASS |
 | 2026-06-30 | 0.8.0_AE_CloudComp~B | (no-TO) | comp-kuzu | comp-kuzu MATCH (n:CloudNode) WHERE n.node_type IN ['PipelineScript','PipelineFunction'... | PASS |
 | 2026-06-30 | 3.0.0_SA_CVO~B | NFRA_GRAPHUNI.P0-CVO | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-06-30 | 0.8.0_AE_CloudComp~B | (no-TO) | comp-kuzu | comp-kuzu MATCH (n:CloudNode) RETURN n.layer AS layer, count(*) AS cnt ORDER BY cnt DESC | PASS |
+| 2026-06-30 | 0.8.0_AE_CloudComp~D | NFRA_GRAPHUNI.P1.d1-fill-derive | comp-kuzu | comp-kuzu MATCH (n) RETURN count(n) LIMIT 1 | PASS |
+- 2026-06-30 0.8.0_AE_CloudComp~C (portal inv-2 encode + P1 GO): comp-coverage-check check PASS + selfcheck --json 17/17 freeze-intact (portal edges registry-data); multiparty_rollup/assemble_rollup STAGED + ready (fire on Phase-A population, pull from comp-kuzu). Encoded CTO inv-2 ruling (CONTAINS_DRILLDOWN->CONTAINS+depth portal-4th-producer; CLUSTERS/SHARES_SOURCE distinct). Commit 22cb21116.
+| 2026-06-30 | 0.8.0_AE_CloudComp~C | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
