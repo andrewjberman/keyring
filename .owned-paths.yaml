@@ -856,6 +856,14 @@ paths:
     lane: ANY_EXEC
     note: "NFRA_COMPLEARN TASK ORDERS stay COO-governed (exec-only); ~E does not self-edit its own TO acceptance. Longest-match overrides the NFRA_COMPLEARN/** AE grant above."
 
+  "org/projects/NFRA_COMPDRIFT/**":
+    lane: ANY_EXEC_OR_AE
+    note: "NFRA_COMPDRIFT (LD-0221) project DELIVERABLES -- the build lane 0.8.0_AE_CloudComp~D self-commits comp-drift deliverable docs here. Code (org/modules/graph/drift_*.py via *_cli.py, .tools/comp-drift) is already AE-permitted; the graph-call-manifest.yaml comp-which registration is the exec/COO SoD step. task_orders/ excluded below. Added 2026-06-30 by 2.0.0_SA_COO~B."
+
+  "org/projects/NFRA_COMPDRIFT/task_orders/**":
+    lane: ANY_EXEC
+    note: "NFRA_COMPDRIFT TASK ORDERS stay COO-governed (exec-only); ~D does not self-edit its own TO acceptance. Longest-match overrides the NFRA_COMPDRIFT/** AE grant above."
+
   "org/critical_paths/**":
     lane: ANY
     note: "Critical-surfaces ledger (NFRA_GRAPHS §10.6, Andrew-direct 2026-06-12) — entries are written STRUCTURALLY by the mechanism that fires under the committing agent's author (SURFACE_ACK approval / comp-xref resign / scan finding / staleness), so any agent's legitimate ack or scan must not be lane-blocked. Append-only event files; README/skeleton CTO-authored."
