@@ -3,7 +3,7 @@
 <title>NFRA_COMPUNIFY S3 -- COMP-WHICH SURFACE-FIRST REORG: route discovery by SURFACE first, then drill down, so comp-which mirrors the taxonomy (the discovery-friction fix; ties LD-0226 / COMPLEARN router-rules).</title>
 <issued_to>0.8.0_AE_CloudComp (taxonomy/routing lane) -- the taxonomy owner; can run parallel to S2 (both depend only on S1).</issued_to>
 <issued_by>2.0.0_SA_COO~B</issued_by>
-<status>DELIVERED, at CTO arch-gate -- 2026-06-30T20:44Z. ~C committed surface-first comp-which (d607b5f32): ledger-driven (reads comp-coverage-map.yaml, no parallel routing table), positioned after strong-curated (zero regression verified) before grep-fallback (the LD-0224 fix), two-tier surface detection, MS-CLOUD returns honest ledger GAP, never-dead-end preserved, --surfaces dumps taxonomy as data for COMPLEARN. RAVC2 -> CTO arch-gate. Closes ~C's S0->S3 build arc.</status>
+<status>PASS -- 2026-06-30T20:46Z CTO arch-gate PASS (surface-routing probes + curated non-regression grounded). Surface-first comp-which committed (d607b5f32): ledger-driven, after strong-curated (zero regression) before grep-fallback (LD-0224 fix), MS-CLOUD honest ledger GAP, never-dead-end preserved, --surfaces dumps taxonomy as data for COMPLEARN. Feeds V1 (CVO). CLOSES ~C's COMPUNIFY S0->S3 build arc -- all four PASSED.</status>
 <priority>P2 -- high-value discovery improvement (LD-0224: ~38% of searches fall to raw grep partly because the catalog is a flat list). Not gating; paces with S2.</priority>
 <project>NFRA_COMPUNIFY</project>
 <dependencies>S1 (needs the populated surface taxonomy to route against). Independent of S2 -- can run in parallel.</dependencies>
