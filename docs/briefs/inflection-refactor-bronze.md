@@ -1,7 +1,7 @@
 # Refactor SPEC-1: Inflection — BRONZE / Ingestion layer
 
 **Author:** 3.0.0_SA_CVO (Andrew-direct refactor planning, ADVI_BREAKS unified-flow) | **Date:** 2026-06-30
-**As-is reference:** `inflection-bronze.md` (audit). **Next:** SPEC-2 silver.
+**As-is reference:** `inflection-bronze.md` (audit) — its **Appendix A is the authoritative literal pull contract** (exact endpoints + file format per domain + the "portfolio" false-friend non-equivalence). **Next:** SPEC-2 silver.
 **Status:** DRAFT for end-to-end validation → CTO PRD. Decisions marked [ANDREW-LOCKED] or [DECISION] (needs ratification).
 
 ---
@@ -67,7 +67,7 @@ The enumeration is NOT an open task — comprehensive reverse-engineering work e
 - **R2 — positions/assets de-convert:** stop the at-bronze parquet write; land raw JSON in the unified folder; update the silver positions_mv/assets converters to read the new raw JSON path. Validate the silver output is byte-equivalent to today's (parity gate).
 - **R3 — Folder migration:** [DECISION] go-forward only (new layout from cutover date) + on-demand backfill, OR relocate existing `orion-api-v2/`, `positions/`, `assets/` history. Rec: **go-forward + on-demand backfill** — bronze history is already consumed into silver/gold, so a full relocate is low-value; keep old prefixes read-only until silver no longer references them.
 - **R4 — Duplicate-script retirement:** pick one pull script per dim; delete the other; update the chain step registry.
-- **R5 — Eclipse structure normalize** to `bronze/eclipse/{date}/` + endpoint enumeration (§4).
+- **R5 — Eclipse structure:** rename `bronze/eclipse/` → `bronze/eclipse-api/` (the format + `{date}/` foldering are ALREADY correct — live-verified 2026-06-30: all-JSON, datestamped partitions, one file per endpoint incl. `model_composition_{id}.json` ×9). Move the pull onto the unified EC2 + extend to the §14 frontier. No format/foldering change needed — Eclipse is already the clean target.
 
 ## 6. Acceptance criteria (machine-checkable → PRD/TO)
 
