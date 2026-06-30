@@ -9608,3 +9608,40 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-06-29 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/DATA_SSOTMG_PRD.md | PASS |
 2026-06-29 1.0.0_SA_CTO session-close delta (2145-2225Z): no comp-tool runs -- arch/coordination window (feature_clb binding-sweep edits + DATA_SSOTMG custodian-native PRD authoring + decomposition); CVO comp-parity correctness-track (custodian-exact 0/5892 $0 / BD-noise) cited as the DATA_SSOTMG evidence, CVO-run not re-run; Rule-20 graph checks ride the 06-30 DS build TOs.
 | 2026-06-29 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-06-30 | 1.0.0_SA_CTO | (no-TO) | pipescript | pipescript --list | PASS |
+| 2026-06-30 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/DATA_SSOTMG.json --file or... | PASS |
+| 2026-06-30 | 3.0.0_SA_CVO | (no-TO) | pipescript | pipescript inf --resource header_metrics | FAIL |
+| 2026-06-30 | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier0/reviews/RV-0042.md | PASS |
+| 2026-06-30 | 3.0.0_SA_CVO | (no-TO) | pipescript | pipescript advi-inf --resource header_metrics | PASS |
+| 2026-06-30 | 3.0.0_SA_CVO | (no-TO) | comp-pipescript | comp-pipescript io INF_D_00 | PASS |
+| 2026-06-30 | 0.4.0_DS_ClientPlatform | (no-TO) | pipescript | pipescript --resource header_metrics.json | PASS |
+| 2026-06-30 | 3.0.0_SA_CVO | (no-TO) | pipescript | pipescript advi-inf --resource platinum/firm/header_metrics | PASS |
+| 2026-06-30 | 0.4.0_DS_ClientPlatform~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-06-30 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/ADVI_BREAKS_PRD.md --... | PASS |
+| 2026-06-30 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/briefs/ADVI... | PASS |
+| 2026-06-30 | 0.4.0_DS_ClientPlatform~B | ADVI_BREAKS.TO-3 | pipescript | pipescript --list | PASS |
+| 2026-06-30 | 0.4.0_DS_ClientPlatform~B | ADVI_BREAKS.TO-3 | comp-pipescript | comp-pipescript io build_gold_portal_aggregates.py | FAIL |
+| 2026-06-30 | 0.4.0_DS_ClientPlatform | ADVI_BREAKS.TO-4 | comp-pipescript | comp-pipescript io data/cot/scripts/gold/D_00.portal_aggregates.py | PASS |
+| 2026-06-30 | 0.4.0_DS_ClientPlatform~B | ADVI_BREAKS.TO-3 | pipescript | pipescript canonical-schwab | PASS |
+| 2026-06-30 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/ADVI_BREAKS_PRD.md | PASS |
+| 2026-06-30 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/logs/2026-0... | PASS |
+| 2026-06-30 | 0.7.0_AE_CloudOps | (no-TO) | pipescript | pipescript --resource header_metrics | PASS |
+| 2026-06-30 | 0.4.0_DS_ClientPlatform~B | ADVI_BREAKS.TO-3 | pipescript | pipescript --resource platinum/firm/header_metrics | FAIL |
+| 2026-06-30 | 0.4.0_DS_ClientPlatform~B | ADVI_BREAKS.TO-3 | comp-aws | comp-aws --help | PASS |
+| 2026-06-30 | 0.8.0_AE_CloudComp~B | (no-TO) | pipescript | pipescript --resource header_metrics | PASS |
+| 2026-06-30 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/logs/2026-0... | PASS |
+| 2026-06-30 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/ADVI_BREAKS_PRD.md | PASS |
+| 2026-06-30 | 0.0.0_AB_MSTR | NFRA_COMPDIFF.comp-xray-cli | comp-xray | comp-xray --help | PASS |
+| 2026-06-30 | 0.0.0_AB_MSTR | NFRA_COMPDIFF.comp-xray-cli | comp-xray | comp-xray code infra/aws/compdiff/engine.py | PASS |
+| 2026-06-30 | 0.0.0_AB_MSTR | NFRA_COMPDIFF.comp-xray-cli | comp-xray | comp-xray config infra/aws/terraform/cot-pipeline/iam.tf | PASS |
+| 2026-06-30 | 0.4.0_DS_ClientPlatform~A | ADVI_BREAKS.TO-1 | pipescript | pipescript inflection | FAIL |
+| 2026-06-30 | 0.4.0_DS_ClientPlatform~A | ADVI_BREAKS.TO-1 | pipescript | pipescript advi-inf | PASS |
+| 2026-06-30 | 0.0.0_AB_MSTR | NFRA_COMPDIFF.comp-xray-cli | comp-xray | comp-xray frozen opal-nonexistent-xray-test some/key.json --fields total_aua | FAIL |
+| 2026-06-30 | 0.0.0_AB_MSTR | NFRA_COMPDIFF.comp-xray-cli | comp-xray | comp-xray schema /tmp/does-not-exist.parquet | FAIL |
+| 2026-06-30 | 0.0.0_AB_MSTR | NFRA_COMPDIFF.comp-xray-cli | comp-xray | comp-xray code infra/aws/compdiff/engine.py --json | PASS |
+| 2026-06-30 | 0.0.0_AB_MSTR | NFRA_COMPDIFF.comp-xray-cli | comp-xray | comp-xray freeze-monitor | PASS |
+| 2026-06-30 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/logs/2026-0... | PASS |
+| 2026-06-30 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/ADVI_BREAKS_PRD.md | PASS |
+| 2026-06-30 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/ADVI_BREAKS_PRD.md | PASS |
+| 2026-06-30 | 0.4.0_DS_ClientPlatform~A | ADVI_BREAKS.TO-1 | comp-grep/pipescript | source-ID inf header_metrics 132B stub writer (READ-ONLY diagnosis) | CONFIRMED INF_D_00:885-898 |
+| 2026-06-30 | 0.4.0_DS_ClientPlatform~A | ADVI_BREAKS.TO-1 | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
