@@ -10052,3 +10052,9 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-06-30 | 3.0.0_SA_CVO~B | NFRA_GRAPHUNI.P0-CVO | comp-platinum | comp-platinum | PASS |
 - 2026-06-30 0.8.0_AE_CloudComp~C (GRAPHDEPTH first-green): comp-coverage-check check PASS (10 rules); ~D ran comp-coverage-check seam --producer graphuni-gold -> GREEN-IN-SCOPE (first live joint run; scope-phasing + producer-attribution verified on real population). Resolved compute->object CONTAINS disjointness (2612133a5).
 | 2026-06-30 | 0.8.0_AE_CloudComp~C | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-06-30 | 0.8.0_AE_CloudComp~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/NFRA_GRAPHUNI/NFRA_GRAPHUN... | PASS |
+| 2026-06-30 | 3.0.0_SA_CVO~B | NFRA_GRAPHUNI.P0-CVO | comp-xref | comp-xref --help | PASS |
+| 2026-06-30 | 3.0.0_SA_CVO~B | NFRA_GRAPHUNI.P0-CVO | comp-platinum | comp-platinum summary | PASS |
+| 2026-06-30 | 2.0.0_SA_COO~B | (no-TO) | comp-kuzu | comp-kuzu MATCH (n:CloudNode) RETURN n.layer AS layer, count(*) AS nodes ORDER BY nodes... | PASS |
+2026-06-30T2146Z | 0.8.0_AE_CloudComp~D | NFRA_GRAPHUNI.P1 | none (session-close closure + CVO get_agent_status gate-grounding only; GREEN-IN-SCOPE seam runs in 773e42a8b) | ~D<->~A coupling byte-match LOCKED (201 keys); terminal readiness; CVO on INFREF so fixture not imminent; holding P1 on CVO gate
+| 2026-06-30 | 0.8.0_AE_CloudComp~D | NFRA_GRAPHUNI.P0.d1-audit-gaplist | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
