@@ -204,7 +204,7 @@ grain_contract:
     - { edge_type: CALLS,     relation: calls,     levels: [function], producer: graphuni-gold, note: "function INVOKES function (gold call graph, ~1624 edges -- the single largest gold class; what comp-blast/comp-trace traverse). DISTINCT relation (control-flow) from contains/reads_s3/runs -> distinct type (ruling 4). compute->compute (intra-stratum, not a drilldown seam). script-level call edges fold in as a `script` level if they materialize. Added per ~D pre-flight finding 1." }
     - edge_type: CONTAINS                          # ONE semantic type (no re-type, rule 7/8), MULTI-PRODUCER by stratum-pair (COO~B encoding A)
       relation: contains
-      levels: [estate, surface, container, file, object, function, field]
+      levels: [estate, surface, container, file, object, prefix, function, field]   # prefix = storage bucket-contains-prefix-key grain (~A refinement-1)
       producer: shared                             # disposition = a per-stratum-pair split (below), NOT a single slice
       producer_by_pair:
         "compute->compute": graphuni-gold          # Pipeline contains Script contains Function (~D, compute-internal)
@@ -217,7 +217,7 @@ grain_contract:
     - { edge_type: DEPLOYS,   relation: deploys,   levels: [lambda, script], producer: deploy-seam, note: "GIT->CLOUD deploy edge (seam-2); producer=the deploy seam (AE/CI), NOT graphuni-gold" }
     - { edge_type: SERVES,    relation: serves,    levels: [route, served-json], producer: routing, note: "CF/route serves a payload; producer=routing/platinum, NOT graphuni-gold" }
     - { edge_type: RUNS,      relation: runs,      levels: [ec2, lambda, stepfn], producer: graphuni-infra, note: "resource RUNS compute (fractal stratum-stitcher, sec-10); EC2 -RUNS-> PipelineScript. graphuni INFRA tier (later than gold)" }
-    - { edge_type: OWNED_BY,  relation: owned_by,  levels: [object], producer: graphuni-storage, note: "object OWNED_BY its container-resource (sec-10); S3Key -OWNED_BY-> S3_BUCKET. Producer=graphuni-storage (~A, per fleet DECOMP-MAP, NOT infra/~B -- ~A F3). level=object: the ladder token (canonical; the S3Key-vs-DDB-item entity distinction is the NODE TYPE, not the level -- ~A F4). ~A's drilldown_seams[OWNED_BY] fires grain_drilldown_seams." }
+    - { edge_type: OWNED_BY,  relation: owned_by,  levels: [object, prefix], producer: graphuni-storage, note: "object/prefix S3Key OWNED_BY its bucket-resource (sec-10); S3Key -OWNED_BY-> S3_BUCKET. Producer=graphuni-storage (~A). levels=object (plain key) + prefix (trailing-slash + glob key, per node_identity forms -- ~A materializes 125 prefix-level keys eagerly, ~A refinement-1). The S3Key-vs-DDB-item entity distinction is the NODE TYPE, not the level (~A F4). Fires grain_drilldown_seams." }
 
   # LEVEL DISPOSITIONS (COO~B ruling 2206Z, reconciling Andrew's no-silent-caps WITH CTO boundary b/c):
   # the categorical bar = EXPLICIT-DISPOSITION-relative over the FIXED full denominator. EVERY
@@ -228,14 +228,14 @@ grain_contract:
   # SILENT GAP that FAILs. Defaults below; the producers (~D/~A/~B) refine THEIR slice's eager-vs-bounded.
   level_dispositions:
     CALLS:     { function: eager }
-    CONTAINS:  { estate: eager, surface: eager, container: eager, file: eager, object: eager, function: eager, field: bounded }  # field = deep terminal -> lazy (boundary b)
+    CONTAINS:  { estate: eager, surface: eager, container: eager, file: eager, object: eager, prefix: eager, function: eager, field: bounded }  # storage prefix=eager (~A, 125 keys); field = deep terminal -> lazy (boundary b)
     READS:     { field: bounded, object: eager }
-    READS_S3:  { object: eager, prefix: bounded }     # prefix-level (dynamic/rolling-window) reads = on-demand (boundary b); resolves ~D's finding (no longer a false gap)
+    READS_S3:  { object: eager, prefix: bounded }     # ~D compute READS: object=eager; prefix=bounded -- the 15 STATIC prefix-read edges materialize, but the prefix->object EXPANSION is lazy (~D precision). DISTINCT from storage prefix (~A, eager nodes).
     WRITES_S3: { object: eager, prefix: bounded }
     DEPLOYS:   { lambda: eager, script: eager }
     SERVES:    { route: eager, served-json: eager }
     RUNS:      { ec2: eager, lambda: eager, stepfn: eager }
-    OWNED_BY:  { object: eager }
+    OWNED_BY:  { object: eager, prefix: eager }       # ~A storage: both object + prefix S3Key nodes materialized eagerly (~A refinement-1, 125 prefix keys)
   # ============ FRACTAL DRILLDOWN -- CTO section-10, RATIFIED 205709Z (FOLDED ACTIVE) ============
   # Coarse resource nodes drill to fine internal structure via stable stratum-stitching edges.
   # Folded as the 8th+9th gate rules (grain_drilldown_seams + grain_rollup_consistency) -- a pure
@@ -268,6 +268,7 @@ grain_contract:
         - { form: prefix, level: prefix, marker: "trailing slash PRESERVED -- significant: a prefix node is DISTINCT from the same-path object node", example: "opal-data-bd/gold/canonical/holdings/" }
         - { form: glob,   level: prefix, marker: "literal '*' PRESERVED -- dynamic/rolling-window ref; NOT expanded, NOT collapsed into `object`", example: "opal-data-inf/bronze/orion-api-v2/*/representatives.json" }
       answer_to_D: "wildcards treated SPECIALLY -- form `object` (1) and form `glob` (3) do NOT collapse: glob keeps the literal '*' at level=prefix; object has no '*' at level=object. object/prefix/glob are 3 distinct canonical ids. Bucket-QUALIFY your edge targets (id = bucket + '/' + key) so they converge with ~A's S3Key node ids."
+      level_binding: "BINDING (~A refinement-2, govern ruling): a key containing a literal '*' = level `prefix`, ALWAYS -- this OVERRIDES any ends-in-filename heuristic. Rationale: a '*' matches MULTIPLE objects (a pattern), so it is a prefix/pattern node, NOT a single object, even when it ends in a filename (e.g. bronze/orion-api-v2/*/representatives.json = level PREFIX, not object). Both the edge-target (~D) and the S3Key node (~A) MUST tag a glob key level=prefix, or the id/level won't converge (dangling edge). ~D's reference-set count must reclassify its 111 glob keys object->prefix to match (the 273-object/15-prefix split becomes 163-object/125-prefix). Validated at the Phase-A ~D+~A convergence /seams."
       convergence_check: "the ~D(edge-target) <-> ~A(node) id equality is a DECLARATIVE+MECHANICAL /seams check in Phase A (no dangling READS_S3 target, no duplicate S3Key node)."
 
   # ============ REFERENCEABLE-TARGET (GRAPHDEPTH invariant 5, LD-0230 EP-2; ~C builds, CTO shape) ============
