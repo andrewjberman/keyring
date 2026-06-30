@@ -203,7 +203,7 @@ owner.
 - **MSTR** (this brief + LD-0231) scopes the delta; does not author the PRD.
 - **CTO** (`1.0.0_SA_CTO`) folds it into the COMPLEARN PRD + arch-gate; owns the posterior/scorer design
   + the Section-9 authoring-vs-landing ruling.
-- **COO~B** (`2.1.0_SA_COO`) coordinates — already on COMPLEARN + the DE; threads the curated-rules-now
+- **COO~B** (`2.0.0_SA_COO~B`) coordinates — already on COMPLEARN + the DE; threads the curated-rules-now
   vs posterior-later split + the Section-9 landing path so the DE isn't blocked.
 - **CVO** (`3.0.0_SA_CVO`) verifies the no-Goodhart honesty (score on value) + that a flagged mis-route
   reproduces as a real near-tie / under-match on the rail log (the routing-quality ground-truth).
