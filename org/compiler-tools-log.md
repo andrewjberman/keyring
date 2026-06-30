@@ -10058,3 +10058,16 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-06-30 | 2.0.0_SA_COO~B | (no-TO) | comp-kuzu | comp-kuzu MATCH (n:CloudNode) RETURN n.layer AS layer, count(*) AS nodes ORDER BY nodes... | PASS |
 2026-06-30T2146Z | 0.8.0_AE_CloudComp~D | NFRA_GRAPHUNI.P1 | none (session-close closure + CVO get_agent_status gate-grounding only; GREEN-IN-SCOPE seam runs in 773e42a8b) | ~D<->~A coupling byte-match LOCKED (201 keys); terminal readiness; CVO on INFREF so fixture not imminent; holding P1 on CVO gate
 | 2026-06-30 | 0.8.0_AE_CloudComp~D | NFRA_GRAPHUNI.P0.d1-audit-gaplist | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-06-30 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+| 2026-06-30 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/NFRA_GRAPHDEPTH_PRD.md | PASS |
+| 2026-06-30 | 3.0.0_SA_CVO~B | NFRA_GRAPHUNI.P0-CVO | comp-blast | comp-blast build_holdings_lots_snapshot --json --direction both | PASS |
+| 2026-06-30 | 3.0.0_SA_CVO~B | NFRA_GRAPHUNI.P0-CVO | comp-trace | comp-trace gold:D_04.client_portal_summary:main --json --direction both | PASS |
+| 2026-06-30 | 3.0.0_SA_CVO~B | NFRA_GRAPHUNI.P0-CVO | comp-xref | comp-xref generate_header_metrics --json | PASS |
+| 2026-06-30 | 3.0.0_SA_CVO~B | NFRA_GRAPHUNI.P0-CVO | comp-platinum | comp-platinum page AdvisorAnalytics | PASS |
+| 2026-06-30 | 2.0.0_SA_COO~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/NFRA_GRAPHUNI/task_orders/... | PASS |
+| 2026-06-30 | 0.8.0_AE_CloudComp~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/NFRA_GRAPHUNI/NFRA_GRAPHUN... | PASS |
+| 2026-06-30 | 2.0.0_SA_COO~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/NFRA_GRAPHUNI/NFRA_GRAPHUN... | PASS |
+| 2026-06-30 | 0.8.0_AE_CloudComp~C | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .tools/comp-coverage-check --file org/m... | PASS |
+| 2026-06-30 | 2.0.0_SA_COO~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/NFRA_GRAPHUNI/NFRA_GRAPHUN... | PASS |
+- 2026-06-30 0.8.0_AE_CloudComp~C (GRAPHDEPTH inv-5 + CVO-freeze): grounded invariant 5 + EP-2 from NFRA_GRAPHDEPTH_PRD sec-4 (Rule 22); comp-coverage-check selfcheck 14/14 + selfcheck --json freeze artifact (all_ok, 14 cases, 11 rules); check PASS; ds-commit-gate/ruff clean; B6 PASS. Folded referenceable-target rule (edge_type-keyed, EP-2). Commit 8ad43b6dc.
+| 2026-06-30 | 0.8.0_AE_CloudComp~C | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
