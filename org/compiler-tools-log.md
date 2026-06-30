@@ -9823,3 +9823,5 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-06-30 | 0.0.0_AB_MSTR | NFRA_COMPDIFF.comptool-audit | comp-iam | comp-iam reconcile --help | PASS |
 | 2026-06-30 | 0.6.1_AE_PartnerETL | ADVI_INFREF.P1 | (none — infra leg) | N/A: Leg-1 was EventBridge/IAM TF + Lambda mode grounding (not a gold-script edit/run); grounded via direct iam.tf/eventbridge.tf Reads + LIVE `aws events describe-rule` (Rule 22). comp-iam service/gaps + live get-role-policy deferred to Leg-2 apply-time per CTO arch-gate. | N/A |
 | 2026-06-30 | 0.6.1_AE_PartnerETL | ADVI_INFREF.P1 | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-06-30 | 0.6.0_AE_PartnerETL | ADVI_BREAKS-49F | comp-pipescript io / comp-which | B_01 unrealized-consumer grounding (CTO gate 1b) + schwab-persist routing; BD provision/test-pull/silver-merge have no comp-tool -> rail-checked raw aws/SSM | PASS |
+| 2026-06-30 | 0.6.0_AE_PartnerETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
