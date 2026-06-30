@@ -51,8 +51,14 @@ All three onset at/after **Friday 06-26 canonical/SSOT work** -> blast radius CO
 - CHANGE-EVENT C (Schwab-SSOT canonical interfering with 49F) — REFUTED as the freeze cause (Rule 22 source-confirm): canonical-schwab DOES write opal-data-bd (co-tenancy: `build_canonical_daily.py:48` + all `canonical/schwab/gold/*` BUCKET=opal-data-bd), BUT `build_gold_portal_aggregates.py` is explicitly **"NOT served"** (L132,137), writing an isolated `canonical/schwab/gold/.../date=/data.parquet` partition — NOT the served JSON key. Decisive negative: 49F served has ZERO writes after 06-26T05:00 (a clobber would show writes). => 49F freeze = **CHANGE-EVENT A only** (BD bronze dark 06-19 SS&C MFA -> D_00 ran on frozen silver -> froze 06-26). Fix = ADVI_BDAPIMIG.
 - LATENT risk banked for TO-6/SSOT: if a future canonical change ever re-points build_gold_portal_aggregates at the served key, 49F inherits INF's exact two-writer failure.
 
+## CORRECTION (CTO nuance, independently CONFIRMED) — 49F is TWO breaks, not event-A-solely
+My initial "49F = CHANGE-EVENT A solely" was INCOMPLETE. Ground-truthed CTO's nuance (did not concede on self-report) — evidence is SHARPER than his silver-fresh-06-29: comp-freshness chain bd shows the ENTIRE BD gold chain FRESH through 06-30T04:xx (canonical_holdings 04:13, client_performance 04:33, nna 04:30, dimensions 04:12) + BD silver fresh 06-29, YET served platinum/firm/header_metrics.json FROZEN 06-26T05:00. So feed AND broad gold recovered; only the D_00 served-PUBLISH step stopped ~06-26.
+- 49F = (A) 06-19 feed dark [recovered 06-25] + (B) D_00 served-publish stop ~06-26 [STILL BROKEN = active cause of the 4-day freeze, canonical-window orchestration drop]. Fix must restore the PUBLISH (B), not the feed.
+- Open: does the 49F header source the BD-silver leg (fresh) or the schwab-CRS silver leg (schwab_rps/uln/rld WARN/frozen 06-25T18:13)? TO-3 to confirm — determines pure-publish-drop vs source-leg-selection.
+- Verifier-got-verified: accepted the correction to my own finding on the evidence.
+
 ## Phase-2 rubric (locked to PRD §4 A-F)
-Per-pipeline GREEN only when ALL pass vs SERVED/custodian: A(chain map) / B(single-writer) / C(freshness: data_as_of==true date AND advances daily) / D(custodian parity within tol) / E(schema: all portal keys present) / F(trigger health). INF additionally must pass the TO-2 size/shape gate. ALL-GREEN x3 + TO-6 alarm live = CVO gate-release.
+Per-pipeline GREEN only when ALL pass vs SERVED/custodian: A(chain map) / B(single-writer) / C(freshness: data_as_of==true date AND advances daily) / D(custodian parity within tol) / E(schema: all portal keys present) / F(trigger health). INF additionally must pass the TO-2 size/shape gate. **49F F-axis: requires the D_00 served-publish to RESUME and served data_as_of to ADVANCE DAILY post-fix (feed-health alone does NOT earn GREEN); C-axis penny-test across 2+ business days.** ALL-GREEN x3 + TO-6 alarm live = CVO gate-release.
 
 ## Blockers
 None for the baseline (delivered). Phase-2 GREEN/AMBER/RED verdict is event-gated on the fix legs TO-2/3/4b landing.
