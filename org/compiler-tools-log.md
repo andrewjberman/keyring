@@ -10083,3 +10083,7 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-06-30 | 0.7.0_AE_CloudOps | (no-TO) | comp-routes | comp-routes behaviors | PASS |
 | 2026-06-30 | 0.7.0_AE_CloudOps | (no-TO) | comp-cache | comp-cache | PASS |
 | 2026-06-30 | 3.0.0_SA_CVO~B | NFRA_GRAPHUNI.P0-CVO | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-06-30 | 2.0.0_SA_COO~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/NFRA_GRAPHUNI/NFRA_GRAPHUN... | PASS |
+| 2026-06-30 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+- 2026-06-30 0.8.0_AE_CloudComp~C (GRAPHDEPTH disposition-bar): comp-coverage-check selfcheck --json freeze re-assert (ZERO drift on CVO~B-locked 14; only undisposed_level additive); selfcheck 15/15; seam no-scope full-bar false-STOP FIXED (prefix=bounded->phased); check PASS (12 rules); ds-commit-gate/ruff clean; B6 PASS. Encoded COO~B EXPLICIT-DISPOSITION bar ruling. Commit 8fefb51c5.
+| 2026-06-30 | 0.8.0_AE_CloudComp~C | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
