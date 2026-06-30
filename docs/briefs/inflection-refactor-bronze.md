@@ -13,6 +13,10 @@
 3. **Bronze's only job = ingestion + consistent bucket structure.** The consistency we enforce at bronze is the **folder layout**, not the file format.
 4. **Single execution layer = the EC2.** All pulls run unified on `inf-gold-layer-runner` EC2 (the same machine that will run silver+gold). No parallel cron-Lambda pull layer.
 5. **Eclipse is kept and pulled in full daily**, raw, into a consistent bronze structure — downstream silver/gold use TBD (we decide later; we do not discard the data).
+6. **The two source domains stay SEPARATE through bronze AND silver; they unify ONLY at gold.** Orion Connect (`api.cloud.orionadvisor.com`) and Eclipse (`www.orioneclipse.com`) are distinct products — different JWTs, different ID-spaces, and a deliberate naming false-friend (both expose a "portfolio" path that means different things: Orion `/api/v1/Portfolio/*` = custodial accounts+assets; Eclipse `/v1/portfolio/portfolios` = model-managed rebalancing portfolios). Keeping them in separate prefixes prevents the category error of treating them as one source. They are joined (account by `int()`-coercion, model by name; 96.6% reconcile, ~3.4% valuation-lag) only in the gold analytics layer.
+   - **bronze:** `bronze/orion-api/` + `bronze/eclipse-api/`
+   - **silver:** `silver/orion-api/` + `silver/eclipse-api/` (eclipse-api STUBBED/prospective for now — raw retained, no silver build required yet)
+   - **gold:** unified analytics (the cross-domain join lives here, nowhere upstream)
 
 ## 1. Target bronze layout (structure is what we unify, not format)
 
@@ -23,10 +27,10 @@
    representatives.json    household_rep_mapping.json     new_portfolio_accounts.json
    positions.json          assets.json                                       (v2 REST → native JSON, RAW — see §3)
 
- s3://opal-data-inf/bronze/eclipse/{YYYY-MM-DD}/          ← consistent Eclipse raw landing
-   portfolios_simple.json  portfolios.json   models.json   model_composition.json   [+ all other reachable endpoints — §4]
+ s3://opal-data-inf/bronze/eclipse-api/{YYYY-MM-DD}/      ← SEPARATE domain, consistent Eclipse raw landing
+   portfolios_simple.json  portfolios.json   models.json   model_composition_{id}.json   [+ frontier — §4]
 ```
-**Eliminated:** `bronze/orion-api-v2/` (merged into `bronze/orion-api/`), `bronze/positions/`, `bronze/assets/` (own-prefix parquet). One datestamped folder per source family; one file per dim in its native format.
+**Eliminated:** `bronze/orion-api-v2/` (merged into `bronze/orion-api/`), `bronze/positions/`, `bronze/assets/` (own-prefix parquet), and the old `bronze/eclipse/` (renamed `bronze/eclipse-api/` to parallel `orion-api` and make the two-domain separation explicit). One datestamped folder per **source domain**; one file per endpoint in its native format. The two domains never share a prefix (Principle 6).
 
 ## 2. Single pull layer on the EC2
 
@@ -54,7 +58,7 @@ The enumeration is NOT an open task — comprehensive reverse-engineering work e
 
 **Orion (S1/S2) — pull the FULL cataloged surface, not just today's 9 dims.** Beyond the 9 production pulls, the catalog documents: `Portfolio/Assets` per-client/per-account snapshot (the `canonical_holdings` source, S2); `Trading/Models` + `Trading/Models/{id}` (139 models, ticker-level composition); `Reporting/Custom/{id}/Generate/csv` (per-transaction grain); plus aux (`Authorization/User`/`Privileges`, SignalR completion, the `Homepage/Action/DataSources` stored-proc back-door). The unified EC2 pull lands each cataloged endpoint raw + datestamped under `bronze/orion-api/{date}/`.
 
-**Eclipse (S3) — structure is ALREADY the target; keep + expand.** `pull_eclipse_portfolios.py` already lands RAW JSON, datestamped, consistent: `bronze/eclipse/{date}/{portfolios_simple,portfolios_full,models,model_composition_{id}}.json` + `_meta/pull_complete.json` (4 artifact classes, 11 calls/run, 9 Opal model IDs `{3,5,6,7,8,9,10,28,29}`, on `inf-bronze-runner` EC2). It is the clean shape Orion-side bronze should match. Refactor = keep it, move it onto the unified EC2, and extend to the §14/crawler frontier. Downstream silver/gold for Eclipse stays TBD (we retain the raw data and decide later — Andrew-locked).
+**Eclipse (S3) — structure is ALREADY the target; keep + expand.** `pull_eclipse_portfolios.py` already lands RAW JSON, datestamped, consistent: `bronze/eclipse-api/{date}/{portfolios_simple,portfolios_full,models,model_composition_{id}}.json` + `_meta/pull_complete.json` (4 artifact classes, 11 calls/run, 9 Opal model IDs `{3,5,6,7,8,9,10,28,29}`, on `inf-bronze-runner` EC2). It is the clean shape Orion-side bronze should match (just relocated to its own `eclipse-api/` domain prefix per Principle 6). Refactor = keep it, move it onto the unified EC2, and extend to the §14/crawler frontier. Pull everything reachable now; silver/gold use decided later. Downstream silver/gold for Eclipse stays TBD (we retain the raw data and decide later — Andrew-locked).
 - **Durable risk to record (D3 §5.1):** the Eclipse JWT needs Andrew on the Eclipse firm roster (firmId 209900); if de-listed the pull goes dark (`422 No Firm Associated`). Record the Eclipse-admin contact — same fragility class as the OTP dependency (§7).
 
 ## 5. Retroactive / migration work
@@ -72,7 +76,8 @@ The enumeration is NOT an open task — comprehensive reverse-engineering work e
 - AC3: a bronze file exists for all dims for the run date, produced by the EC2 (no cron-Lambda invocation in the window); the 9 EventBridge cron rules are `DISABLED`/removed.
 - AC4: **completeness** — each bronze dim carries the full field set the endpoint returns (schema-completeness assertion per dim; no field dropped at bronze).
 - AC5: exactly one pull script per dim in the chain registry.
-- AC6: every endpoint in the DATA_PLATFORM catalog (INFLEC_API_ENDPOINTS_CATALOG + D3 S1/S2/S3 + the crawler-confirmed frontier) lands raw daily — Orion under `bronze/orion-api/{date}/`, Eclipse under `bronze/eclipse/{date}/` — including the currently-unpulled S1 surface (Trading/Models, Custom Reports, per-client Assets snapshot).
+- AC6: every endpoint in the DATA_PLATFORM catalog (INFLEC_API_ENDPOINTS_CATALOG + D3 S1/S2/S3 + the crawler-confirmed frontier) lands raw daily — Orion under `bronze/orion-api/{date}/`, Eclipse under `bronze/eclipse-api/{date}/` (the two domains never share a prefix) — including the currently-unpulled S1 surface (Trading/Models, Custom Reports, per-client Assets snapshot).
+- AC8: domain separation holds downstream — `silver/orion-api/` and `silver/eclipse-api/` are distinct trees (eclipse-api stubbed); NO cross-domain join exists before gold.
 - AC7: silver outputs post-refactor are parity-equal to pre-refactor (the de-convert + repoint introduced no value change) — validated several days before cutover.
 
 ## 7. Noted for the FINAL refactor step (Andrew-flagged, NOT this layer)
