@@ -74,9 +74,16 @@ Every `s3://opal-data-inf/silver/` prefix classified — no tree survives unclas
 | flat `silver/transactions/` | **CONSOLIDATE** → `silver/orion-api/transactions/` partitioned |
 | `silver/accounts_dim/`, `silver/orion-rest/` | **RETIRE** (legacy / stray) |
 | `silver/eclipse/` | **RELOCATE** → `silver/eclipse-api/` (stubbed) |
-| `silver/prices/` (canonical_prices) | **KEEP** — non-orion-dim prices lineage (produced by INF_S_00, gold-consumed); own tree |
-| `silver/historical_prices.parquet` (29MB, single file) | **KEEP** (RESOLVED — CVO trace): the **T2 yahoo_finance price layer**, read by `INF_build_canonical_prices.py` (L11-12, `HISTORICAL_PRICES_KEY` L49), built by `backfill_yahoo_prices.py` — active input to the canonical-prices T1/T2/T3 layering, NOT a one-time load |
+| `silver/prices/` (canonical_prices) | **RETIRE** (post-repoint — see §5.5 yahoo removal) — the yahoo+interp price history is redundant with the Orion daily snapshot |
+| `silver/historical_prices.parquet` (29MB) | **RETIRE** — the T2 yahoo_finance input; removed with the yahoo thread (§5.5) |
 | `silver/_silver_complete/`, `silver/meta/`, `api_dims/_chain_summary/` | **NON-DIM, KEEP** (sentinels/meta) |
+
+### 5.5 Yahoo-finance price-thread REMOVAL (Andrew-locked 2026-06-30)
+**Confirmed condition (CVO-grounded):** the Orion daily Assets snapshot gives FULL historical pricing via roll-forward — `positions_mv` = 2,227 daily partitions 2020-05-26→2026-06-30, 100% of active holdings Orion-priced every day. So the yahoo thread is redundant: `canonical_prices` (1.3M rows) is 57% yahoo_finance + 42% linear_interpolation + 0.4% transaction_observed — a parallel reconstruction of prices the snapshot already carries directly.
+- **REMOVE (silver side):** `backfill_yahoo_prices.py` (T2 producer), `silver/historical_prices.parquet` (T2 input), `silver/prices/canonical_prices.parquet` (output).
+- **Repoint (gold side, SPEC-3):** the 4 consumers (`INF_B_00/B_01/B_01b/D_07`) source prices from `positions_mv` (Orion snapshot) instead of `canonical_prices`; retire the yahoo/interp legs of `INF_build_canonical_prices.py`.
+- **Gating edge (verify per-consumer before delete):** any consumer needing a price for an asset on a date it was NOT held (outside `positions_mv`). For valuing HELD positions (AUA/holdings/concentration) the snapshot covers it.
+- **Posture (Andrew):** remove now; **reopen a third-party price source only if a real gap surfaces** (a needed price not available directly/indirectly from Orion historical).
 
 ### 5.4 ECLIPSE-API — 4 dims (relocate + stub, full-fidelity, exist today)
 | silver dim | from raw bronze | grain / key fields | ~rows |

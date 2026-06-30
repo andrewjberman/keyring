@@ -43,6 +43,13 @@ The change vs today: today's `CHAIN_INCREMENTAL` is `pull → silver → D_*` (s
 
 `INF_D_04` is the sole writer of `platinum/firm/header_metrics.json` + has the shape gate (rejects thin payloads). `INF_D_00`'s stub emit is removed (`b0224d8cb`). Preserve — do not reintroduce a second writer of any served key.
 
+## 4b. Price-source consolidation — REMOVE the yahoo thread (Andrew-locked 2026-06-30)
+
+Orion's daily Assets snapshot self-prices the full active book every day, back to 2020-05-26 (CVO-confirmed; SPEC-2 §5.5). So the yahoo/interp `canonical_prices` history is redundant. **Repoint the 4 gold consumers off `canonical_prices` → `positions_mv` (Orion snapshot price):**
+- `INF_B_00`, `INF_B_01`, `INF_B_01b`, `INF_D_07` — each currently reads `silver/prices/canonical_prices.parquet`; switch to the Orion `current_price`/`market_value` already in `positions_mv`.
+- Retire the yahoo + interpolation legs of `INF_build_canonical_prices.py` (INF_S_00); retire `canonical_prices.parquet` + `historical_prices.parquet` + `backfill_yahoo_prices.py` (SPEC-2 §5.5).
+- **Gating check per consumer (before delete):** confirm none needs a price for an asset on a date it was NOT held (outside `positions_mv`); for held-position valuation the snapshot covers it. **Posture:** remove now, reopen a 3rd-party price source only if a real gap surfaces.
+
 ## 5. eclipse-api gold — PENDING (no approach yet)
 
 Deferred (Andrew). Eclipse data lands raw (`bronze/eclipse-api/`) + stubbed silver (`silver/eclipse-api/`); there is **no gold/analytics flow yet**. When designed, the cross-domain join lives HERE (account by `int()`-coercion, model by name; ~96.6% reconcile, ~3.4% valuation-lag — D3 §6). Stub section; do not build under this spec.
