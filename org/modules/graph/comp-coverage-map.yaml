@@ -202,14 +202,15 @@ grain_contract:
   # demands ~D populate another lane's grain. Ties to the tool-calibration sweep (each tool at its grain).
   edge_types:
     - { edge_type: CALLS,     relation: calls,     levels: [function], producer: graphuni-gold, note: "function INVOKES function (gold call graph, ~1624 edges -- the single largest gold class; what comp-blast/comp-trace traverse). DISTINCT relation (control-flow) from contains/reads_s3/runs -> distinct type (ruling 4). compute->compute (intra-stratum, not a drilldown seam). script-level call edges fold in as a `script` level if they materialize. Added per ~D pre-flight finding 1." }
-    - edge_type: CONTAINS                          # ONE semantic type (no re-type, rule 7/8), MULTI-PRODUCER by stratum-pair (COO~B encoding A)
+    - edge_type: CONTAINS                          # ONE semantic type (no re-type, rule 7/8), MULTI-PRODUCER by stratum-pair (COO~B encoding A); portal=4th producer (CTO inv-2 ruling)
       relation: contains
-      levels: [estate, surface, container, file, object, prefix, function, field]   # prefix = storage bucket-contains-prefix-key grain (~A refinement-1)
-      producer: shared                             # disposition = a per-stratum-pair split (below), NOT a single slice
+      levels: [estate, surface, container, file, object, prefix, component, function, field]   # prefix = storage (~A); component = portal render-subtree nesting (CTO inv-2: CONTAINS_DRILLDOWN folds here)
+      producer: shared                             # disposition = a per-pair split (below), NOT a single slice
       producer_by_pair:
         "compute->compute": graphuni-gold          # Pipeline contains Script contains Function (~D, compute-internal)
         "resource->object": graphuni-storage       # Bucket contains Key (~A, storage -- per fleet DECOMP-MAP, ~A F3)
-        "compute->object": graphuni-infra          # Lambda contains handler (~B) -- UNAMBIGUOUS: ~D confirmed (4c6fc9352) its compute-internal CONTAINS is [container,file,function] (Pipeline->Script->Function) ONLY, NOT Function->Field, so there is NO ~D compute->object CONTAINS. The earlier level-split concern is RESOLVED -> compute->object CONTAINS is cleanly ~B (the denominator partition is fully disjoint here).
+        "compute->object": graphuni-infra          # Lambda contains handler (~B) -- UNAMBIGUOUS: ~D confirmed (4c6fc9352) its compute-internal CONTAINS is [container,file,function] ONLY (NOT Function->Field), so compute->object CONTAINS is cleanly ~B (partition disjoint).
+        "component->component": portal             # CTO inv-2 ruling (230130Z): TSGRAPH CONTAINS_DRILLDOWN (the RAW Component->Component render-subtree nesting) FOLDS to canonical CONTAINS; the depth(1..4) is the LEVEL, kind/cohort are PROPS, portal is the 4TH producer. DERIVE-not-EMIT: 0.4.0_DE keeps EMITTING CONTAINS_DRILLDOWN natively; the map canonicalizes -> CONTAINS(level=component/depth, producer=portal). NOT deduped vs RENDERS (different grain of the same render relation, 0.4.0_DE nuance 1b).
       note: "the structural grain ladder -- one relation, all depths as levels; populated by DIFFERENT producers per stratum-pair (the edge_type stays single; the ATTRIBUTION partitions). Denominator partitions CONTAINS by pair, not by re-typing."
     - { edge_type: READS,     relation: reads,     levels: [field, object], producer: portal, note: "portal-field/object READ -- DISTINCT relation from READS_S3 (ruling 4). Producer=portal/TSGRAPH, NOT graphuni-gold" }
     - { edge_type: READS_S3,  relation: reads_s3,  levels: [object, prefix], producer: graphuni-gold, note: "gold/lambda reads an S3 artifact; key-vs-prefix depth = the `levels` attr, SAME type (Amendment 2)" }
@@ -218,6 +219,8 @@ grain_contract:
     - { edge_type: SERVES,    relation: serves,    levels: [route, served-json], producer: routing, note: "CF/route serves a payload; producer=routing/platinum, NOT graphuni-gold" }
     - { edge_type: RUNS,      relation: runs,      levels: [ec2, lambda, stepfn], producer: graphuni-infra, note: "resource RUNS compute (fractal stratum-stitcher, sec-10); EC2 -RUNS-> PipelineScript. graphuni INFRA tier (later than gold)" }
     - { edge_type: OWNED_BY,  relation: owned_by,  levels: [object, prefix], producer: graphuni-storage, note: "object/prefix S3Key OWNED_BY its bucket-resource (sec-10); S3Key -OWNED_BY-> S3_BUCKET. Producer=graphuni-storage (~A). levels=object (plain key) + prefix (trailing-slash + glob key, per node_identity forms -- ~A materializes 125 prefix-level keys eagerly, ~A refinement-1). The S3Key-vs-DDB-item entity distinction is the NODE TYPE, not the level (~A F4). Fires grain_drilldown_seams." }
+    - { edge_type: CLUSTERS,      relation: clusters,      levels: [cluster], producer: portal, note: "TSGRAPH P2-1 (0.4.0_DE): Page CLUSTERS PanelCluster + PanelCluster cluster-MEMBERSHIP of its members. DISTINCT type (CTO inv-2 ruling + discriminant): PanelCluster is a DERIVED community-detection grouping (an algorithm's output, NOT a raw structural container) -> a different SEMANTIC from raw CONTAINS (boundary-a new-relation), NOT a CONTAINS fold." }
+    - { edge_type: SHARES_SOURCE, relation: shares_source, levels: [cluster], producer: portal, note: "TSGRAPH P2-1 (0.4.0_DE): PanelCluster <-> PanelCluster cross-panel COUPLING by shared data-source. DISTINCT type (CTO ruling): a coupling relation (not containment, not grouping), generalizes comp-cache collisions to the 6-source superset. props: sharedSources/sharedTypes/sharedCount/sourceType." }
 
   # LEVEL DISPOSITIONS (COO~B ruling 2206Z, reconciling Andrew's no-silent-caps WITH CTO boundary b/c):
   # the categorical bar = EXPLICIT-DISPOSITION-relative over the FIXED full denominator. EVERY
@@ -228,7 +231,9 @@ grain_contract:
   # SILENT GAP that FAILs. Defaults below; the producers (~D/~A/~B) refine THEIR slice's eager-vs-bounded.
   level_dispositions:
     CALLS:     { function: eager }
-    CONTAINS:  { estate: eager, surface: eager, container: eager, file: eager, object: eager, prefix: eager, function: eager, field: bounded }  # storage prefix=eager (~A, 125 keys); field = deep terminal -> lazy (boundary b)
+    CONTAINS:  { estate: eager, surface: eager, container: eager, file: eager, object: eager, prefix: eager, component: eager, function: eager, field: bounded }  # storage prefix=eager (~A); portal component=eager (0.4.0_DE materializes the render-subtree); field = deep terminal lazy (boundary b)
+    CLUSTERS:  { cluster: eager }     # portal: PanelCluster grouping materialized (TSGRAPH P2-1 live: CLUSTERS 91)
+    SHARES_SOURCE: { cluster: eager } # portal: cross-panel coupling materialized (TSGRAPH P2-1 live: SHARES_SOURCE 55)
     READS:     { field: bounded, object: eager }
     READS_S3:  { object: eager, prefix: bounded }     # ~D compute READS: object=eager; prefix=bounded -- the 15 STATIC prefix-read edges materialize, but the prefix->object EXPANSION is lazy (~D precision). DISTINCT from storage prefix (~A, eager nodes).
     WRITES_S3: { object: eager, prefix: bounded }
