@@ -29,6 +29,33 @@ import sys
 
 WS = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 MANIFEST = os.path.join(WS, "org", "modules", "graph", "graph-call-manifest.yaml")
+# NFRA_COMPUNIFY S3: the coverage ledger is the SOURCE OF TRUTH the surface-first router reads
+# (CTO ruling #1 -- route from the ledger, never a parallel hand-maintained routing catalog).
+LEDGER = os.path.join(WS, "org", "modules", "graph", "comp-coverage-map.yaml")
+
+# Surface keywords -> the apex surface a question is ABOUT. Explicit surface signals only
+# (NOT inferred from "lambda"/"iam") so surface-first never steals a vetted curated route.
+# TWO TIERS: SPECIFIC markers (unambiguous) win over GENERIC "cloud X" phrases -- so
+# "ms cloud estate" routes MS-CLOUD (specific "ms cloud"), not AWS (generic "cloud estate").
+SURFACE_KW_SPECIFIC = {
+    "MS-CLOUD":  ["ms-cloud", "ms cloud", "m365", "microsoft 365", "microsoft cloud", "teams",
+                  "sharepoint", "onedrive", "office 365", "ms estate", "ms surface"],
+    "TRINO":     ["trino", "federation", "federated", "cross-surface", "across surfaces",
+                  "join layer", "federated query", "federation surface"],
+    "AWS-CLOUD": ["aws", "aws-cloud", "live aws", "aws estate"],
+    "GIT":       ["git", "committed", "in git", "source control", "version control",
+                  "checked in", "git surface"],
+    "LOCAL":     ["working tree", "working directory", "local working", "local surface",
+                  "uncommitted local", "on disk locally"],
+}
+SURFACE_KW_GENERIC = {  # generic cloud phrases -> AWS, ONLY if no specific marker matched
+    "AWS-CLOUD": ["cloud estate", "cloud resource", "in the cloud", "on the cloud", "cloud graph",
+                  "cloud surface", "the cloud"],
+}
+# tokens that indicate WHICH surface (not WHICH tool) -- stripped before drill-ranking so a
+# tool whose concern merely mentions the surface name does not out-rank the right tool.
+_SURFACE_NOISE = {"surface", "tool", "tools", "inspect", "cloud", "aws", "git", "trino", "ms",
+                  "estate", "federated", "federation", "committed"}
 
 # Curated rules: (any-keyword list, label, [calls], why). Order = CVO bypass-volume rank.
 RULES = [
@@ -270,6 +297,100 @@ def _manifest_matches(q: str, qtok: set, top: int = 3):
     return out[:top]
 
 
+# --- NFRA_COMPUNIFY S3: surface-first routing, DRIVEN BY THE LEDGER (ruling #1) -------------
+def _load_ledger():
+    """Read the source-of-truth coverage ledger. None on any failure (router never crashes)."""
+    try:
+        import yaml
+        with open(LEDGER, encoding="utf-8") as f:
+            return yaml.safe_load(f) or {}
+    except Exception:
+        return None
+
+
+def _surface_index(led):
+    """{surface_id: {high_level, gap, gap_note, tools:[(tool, concern, concern_tokens)]}} built
+    from the ledger. Data-readable (AC3 -- COMPLEARN can score against this projection)."""
+    idx = {}
+    for s in (led.get("surfaces", []) if led else []):
+        sid = s.get("id")
+        hl = s.get("high_level_tool")
+        if not hl and s.get("high_level_tools"):
+            hl = " + ".join(s["high_level_tools"])
+        if hl == "GAP" or s.get("gap"):
+            hl = "GAP (no dedicated comp-tool)"
+        idx[sid] = {"high_level": hl, "gap": bool(s.get("gap")),
+                    "gap_note": s.get("gap_note") or s.get("high_level_concern"), "tools": []}
+    for t in (led.get("tools", []) if led else []):
+        sid = t.get("surface")
+        if sid and sid in idx:
+            idx[sid]["tools"].append((t["tool"], t.get("concern", ""), _tokens(t.get("concern", ""))))
+    return idx
+
+
+def _surface_has(ql, kw):
+    """Word-boundary match (so 'git' does not match 'digit', 'ms' does not match 'forms')."""
+    return re.search(r"(?<![\w])%s(?![\w])" % re.escape(kw), ql) is not None
+
+
+def _detect_surface(q):
+    """The apex surface a question explicitly names. SPECIFIC markers (longest wins) take priority
+    over GENERIC 'cloud X' phrases -- so 'ms cloud estate' resolves MS-CLOUD, not AWS-CLOUD."""
+    ql = q.lower()
+    best, best_len = None, 0
+    for sid, kws in SURFACE_KW_SPECIFIC.items():
+        for kw in kws:
+            if _surface_has(ql, kw) and len(kw) > best_len:
+                best, best_len = sid, len(kw)
+    if best:
+        return best
+    for sid, kws in SURFACE_KW_GENERIC.items():
+        for kw in kws:
+            if _surface_has(ql, kw):
+                return sid
+    return None
+
+
+def _surface_first(q, qtok):
+    """Resolve SURFACE -> drill to the tool from the ledger taxonomy. Returns
+    (surface_id, high_level, [(tool, concern), ...], gap_note) or None (never-dead-end fall-through)."""
+    led = _load_ledger()
+    if not led:
+        return None
+    sid = _detect_surface(q)
+    if not sid:
+        return None
+    info = _surface_index(led).get(sid)
+    if not info:
+        return None
+    if info["gap"]:
+        return (sid, info["high_level"], [], info.get("gap_note"))
+    # rank by CONCERN-token overlap, with surface-indicating tokens stripped (they say WHICH
+    # surface, not WHICH tool) so e.g. 'fresh in aws' ranks comp-freshness over comp-aws.
+    drill_tok = qtok - _SURFACE_NOISE
+    ranked = sorted(info["tools"], key=lambda x: -len(drill_tok & x[2]))
+    drilled = [(tool, concern) for tool, concern, toks in ranked if drill_tok & toks]
+    return (sid, info["high_level"], drilled, None)
+
+
+def _print_surfaces():
+    """Dump the surface-first taxonomy as data (COMPLEARN-consumable; AC3)."""
+    led = _load_ledger()
+    if not led:
+        print("comp-which --surfaces: ledger unreadable at %s" % LEDGER)
+        return 2
+    idx = _surface_index(led)
+    print("comp-which surface-first taxonomy (from %s):" % os.path.relpath(LEDGER, WS))
+    for sid in ("LOCAL", "GIT", "AWS-CLOUD", "MS-CLOUD", "TRINO"):
+        info = idx.get(sid)
+        if not info:
+            continue
+        print("\n%s   high-level: %s%s" % (sid, info["high_level"], "   [GAP]" if info["gap"] else ""))
+        for tool, concern, _ in info["tools"]:
+            print("  - %-18s %s" % (tool, concern))
+    return 0
+
+
 RAIL_LOG = os.path.join(WS, "org", "mcp", "comp-which-rail.log")
 
 # identifier-ish token patterns, in extraction-priority order (most specific first)
@@ -350,7 +471,10 @@ def main() -> int:
         print('comp-which "<your question>"  -- maps a natural-language question to the canonical comp-* call.')
         print('  e.g. comp-which "what produces canonical_prices.parquet?"')
         print('  Browse: pipescript --list   |   full catalog: org/modules/graph/graph-call-manifest.yaml')
+        print('  Surface-first taxonomy: comp-which --surfaces')
         return 0
+    if sys.argv[1].strip() in ("--surfaces", "--taxonomy"):  # NFRA_COMPUNIFY S3 -- the data view
+        return _print_surfaces()
     q = " ".join(sys.argv[1:]).strip()
     qtok = _tokens(q)
 
@@ -403,6 +527,35 @@ def main() -> int:
     if best_score >= STRONG:
         _route_print(hits)
         _log_rail("ROUTE", hits[0][1], term, q)
+        return 0
+
+    # NFRA_COMPUNIFY S3 -- SURFACE-FIRST ledger drill. When the question EXPLICITLY names a
+    # surface but no vetted curated rule strongly matched, resolve surface -> drill to the tool
+    # from the coverage ledger taxonomy. This is the LD-0224 raw-grep-fallback fix: a surface-
+    # addressed question now routes from the taxonomy instead of falling to grep. Driven by the
+    # ledger (ruling #1); positioned AFTER strong-curated (zero regression to the vetted hot
+    # path) and BEFORE the grep fallback (so it CATCHES the fallback class).
+    sf = _surface_first(q, qtok)
+    if sf is not None:
+        sid, high_level, drilled, gap_note = sf
+        print("  surface: %s   (high-level entry: %s)" % (sid, high_level))
+        if gap_note and not drilled:  # MS-CLOUD: honest GAP from the ledger -- do not invent a tool
+            print("  -> GAP: %s" % gap_note)
+            print("     (no dedicated comp-tool for this surface -- reach via the m365 MCP gateway /")
+            print("      the graph ms-layer; an empty node on COMPLEARN's build-next worklist.)")
+            _log_rail("ROUTE-SURFACE", "%s:GAP" % sid, term, q)
+            return 0
+        if drilled:
+            for tool, concern in drilled[:3]:
+                print("  -> %s   [%s]" % (tool, concern))
+        else:
+            print("  (no specific concern matched in the question; the %s surface toolkit:)" % sid)
+            for tool, concern, _ in _surface_index(_load_ledger()).get(sid, {}).get("tools", [])[:8]:
+                print("  -> %s   [%s]" % (tool, concern))
+        print("")
+        print("  (comp-which routed SURFACE-FIRST from the coverage ledger -- drill within the surface.")
+        print("   No tool fit? it would have RUN comp-grep/comp-glob -- never a dead-end.)")
+        _log_rail("ROUTE-SURFACE", sid, term, q)
         return 0
 
     if search_intent and term:
