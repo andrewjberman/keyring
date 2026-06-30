@@ -37,8 +37,9 @@ Author org/modules/graph/comp-coverage-map.yaml as the SKELETON (apex + high-lev
 <acceptance_criteria>
   1. comp-coverage-map.yaml exists with the 5-surface apex + the high-level tool per surface (ms-cloud explicitly flagged GAP), the seam axis REFERENCING drift-topology.yaml seam IDs (no duplication), and the {concern,granularity,surface|seam,distinct_from} node schema defined.
   2. The TRINO surface models physical catalogs (iceberg[3 tables]/code_heat/+tool_activity), not logical layers -- zero phantom per-layer seams.
-  3. The schema is structured so S1 can place ~38 tools at single homes AND S2 can machine-check the non-redundancy invariant against it.
-  4. RAVC2 to COO~B (cc CTO). Session log Compiler Tools section reproduces every &lt;run&gt; with observed output.
+  3. MACHINE-CHECKABILITY (CTO S0 arch-gate, load-bearing -- the whole invariant rests on the schema): the {concern,granularity,surface|seam,distinct_from} schema must let comp-coverage-check (S2) MECHANICALLY verify, with NO prose-only escape: (a) every tool resolves to exactly ONE (surface|seam) x granularity x concern node; (b) every shared-RESOURCE overlap carries a POPULATED distinct_from concern-declaration. If the schema cannot be gated mechanically, S0 is NOT done. Model one worked overlap (e.g. the IAM x3) in the skeleton to prove distinct_from is a structured field a gate can read, not free prose.
+  4. The seam axis REFERENCES drift-topology.yaml's seam-1..7 IDs (one artifact, not a copy) -- CTO confirms this at the S0 gate.
+  5. RAVC2 to COO~B (cc CTO) -- COO~B checks AC 1-4 then routes the deliverable to CTO for same-window arch-gate. Session log Compiler Tools section reproduces every &lt;run&gt; with observed output.
 </acceptance_criteria>
 
 <references>
