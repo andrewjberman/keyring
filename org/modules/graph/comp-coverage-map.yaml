@@ -718,6 +718,19 @@ meta_tools:
   - { tool: pipescript,             role: estate-router,      not_homed_reason: "the HUMAN ENTRY over the whole estate -- a named-thread traversal SUPERSET that ROUTES to homed sub-resolvers (comp-pipescript/globgrph/stitch/portal); a router+discovery surface, not a single-surface tool" }
   - { tool: comp-learns-run,        role: complearn-loop,     not_homed_reason: "the COMPLEARN (tool-USE verb) loop -- the SIBLING program, not a COMPUNIFY/COMPDRIFT surface tool" }
   - { tool: comp-learns-status,     role: complearn-loop,     not_homed_reason: "COMPLEARN loop status; the sibling use-verb program" }
+  # comp-drift -- registered govern-side (COO~B task-1, supporting ~D's COMPDRIFT orchestrator P2). PROVISIONAL
+  # home pending ~D's final P2 shape; full govern characterization per COO~B (declared_grain/concern/distinct_from).
+  - tool: comp-drift
+    role: compdrift-loop
+    declared_grain: [seam, cross-grain]   # operates at the SEAM grain across the seam axis (per-hop parity + disposition)
+    concern: "structural-cruft / abandonment DISPOSITION over the propagation seams (edges-that-go-nowhere, old duplicated channels, deprecated outputs) -- the resource-STATE verb of NFRA_COMP*"
+    distinct_from:
+      - { tool: comp-coverage-check, why: "comp-coverage-check gates the MAP (tool non-redundancy + grain); comp-drift gates resource-STATE drift over the seams" }
+      - { tool: comp-dups,           why: "comp-dups ENUMERATES the duplicate/abandoned set; comp-drift CONSUMES it to CLASSIFY (FRESH/STALE-GENUINE-IN-USE/ABANDONED-ARTIFACT/UNVERIFIABLE) -- never re-derives" }
+      - { tool: comp-aws,            why: "comp-aws dual-managed = TF-state apply-conflict only; comp-drift = the per-seam parity+abandonment disposition" }
+      - { tool: comp-parity,         why: "comp-parity = DATA/served parity for a cutover; comp-drift = structural propagation-topology drift (the cruft class)" }
+      - { tool: comp-xray,           why: "comp-xray = value-MOTION (frozen-but-fresh content); comp-drift = structural edge/channel abandonment, not value motion" }
+    not_homed_reason: "the COMPDRIFT state-drift VERB spans ALL drift-topology seams (seam-1..7), not one surface/seam -- a seam-axis-wide loop tool (sibling to COMPLEARN's comp-learns-* use-verb). Seam taxonomy ALIGNED: comp-drift's per-hop seams ARE the seam IDs this map references (one taxonomy, confirmed zero-drift). Provisional pending ~D P2; ~D confirms the final grain/home."
   - { tool: comp-v5-composite-test, role: test-harness,       not_homed_reason: "comp-tool regression test harness; not an estate inspection" }
   - { tool: comp-which-routing-test, role: test-harness,      not_homed_reason: "comp-which routing regression test harness; not an estate inspection" }
 

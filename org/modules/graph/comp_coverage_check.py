@@ -455,6 +455,56 @@ def seam(edges_path: str, rollup_path: str | None, scope_path: str | None = None
     return PASS
 
 
+# ----------------------------------------------------------------------------- post-population harnesses
+# Staged NOW (COO~B task-3) so they fire the instant Phase-A populates the depth ladders. Both REUSE
+# the canonical definitions (rollup_defects, tool_grain_map) -- one head, no re-implementation.
+def assemble_rollup(stitchers: list) -> dict:
+    """Build the fine->coarse rolls_up map from all producers' stratum-stitcher edges (RUNS/CONTAINS
+    coarse->fine, OWNED_BY fine->coarse). Transitive: a fine node rolls up to its coarsest ancestor.
+    stitchers = [{edge_type, src, dst}, ...]."""
+    parent: dict = {}
+    for s in stitchers:
+        et, src, dst = s.get("edge_type"), s.get("src"), s.get("dst")
+        if et in ("RUNS", "CONTAINS"):   # coarse src -RUNS/CONTAINS-> fine dst : dst's parent is src
+            parent[dst] = src
+        elif et == "OWNED_BY":           # fine src -OWNED_BY-> coarse dst : src's parent is dst
+            parent[src] = dst
+
+    def _root(n):
+        seen = set()
+        while n in parent and n not in seen:
+            seen.add(n)
+            n = parent[n]
+        return n
+
+    return {n: _root(n) for n in set(parent)}
+
+
+def multiparty_rollup(coarse_edges: list, fine_edges: list, stitchers: list) -> list:
+    """The Phase-A CROSS-STRATUM existential rollup (the storage-only-slice's deferred SEMANTIC axis):
+    assemble rolls_up from ALL producers' stitcher edges, then run the CANONICAL rollup_defects().
+    Returns [(defect_class, edge)] -- UNSUPPORTED / COARSE-INCOMPLETE. ~A+~D+~B+~C call this at Phase-A."""
+    return rollup_defects(coarse_edges, fine_edges, assemble_rollup(stitchers))
+
+
+def audit_grain(declared_map: dict, observed_map: dict) -> list:
+    """S4 AUDIT-part (post-population): declared-grain vs REAL-traversal. declared_map = tool_grain_map
+    (tool -> [grains]); observed_map = {tool: [grains it ACTUALLY traversed on the populated graph]}.
+    A tool traversing a grain it didn't declare, or declaring a grain it never traverses, = a finding.
+    A `cross-grain` declaration spans all -> never a mismatch."""
+    out = []
+    for tool, observed in observed_map.items():
+        declared = set(declared_map.get(tool, []))
+        if "cross-grain" in declared:
+            continue
+        obs = set(observed)
+        if obs - declared:
+            out.append((tool, "TRAVERSES-UNDECLARED", sorted(obs - declared)))
+        if declared - obs:
+            out.append((tool, "DECLARED-NOT-TRAVERSED", sorted(declared - obs)))
+    return out
+
+
 _CHECKERS = {
     "one_home": _check_one_home,
     "seam_reference_integrity": _check_seam_reference_integrity,
@@ -556,6 +606,8 @@ _SELFCHECK_CASES = [
     ("breadth_terminal_allowed_target", "gate-verdict", "FAIL"),
     ("seam_breadth_terminal_instance", "logic-assertion", "holds"),
     ("undisposed_level", "gate-verdict", "FAIL"),
+    ("multiparty_rollup_harness", "logic-assertion", "holds"),
+    ("s4_grain_audit_harness", "logic-assertion", "holds"),
 ]
 
 
@@ -669,6 +721,19 @@ def selfcheck(emit_json: bool = False) -> int:
         {"edge_type": "GHOST_UNDISPOSED", "relation": "ghost_undisp", "levels": ["mystery"], "producer": "graphuni-gold"})
     code, _, _ = run_gate(led_disp, seam_source, inventory=inv, manifest_inv=manifest_inv)
     results.append(("injected undisposed level -> FAIL", code == FAIL))
+
+    # o) MULTIPARTY cross-stratum rollup harness (Phase-A): assemble rolls_up from stitchers -> rollup_defects
+    stit = [{"edge_type": "RUNS", "src": "EC2", "dst": "Script"}, {"edge_type": "CONTAINS", "src": "Script", "dst": "fn1"},
+            {"edge_type": "OWNED_BY", "src": "key1", "dst": "BUCKET"}]
+    mp_clean = multiparty_rollup([("EC2", "BUCKET")], [("fn1", "key1")], stit)   # fn1->EC2, key1->BUCKET -> supported
+    mp_unsup = multiparty_rollup([("EC2", "GHOST")], [("fn1", "key1")], stit)    # coarse w/ no fine basis -> UNSUPPORTED
+    mp_ok = (not mp_clean and any(c == "UNSUPPORTED" for c, _ in mp_unsup))
+    results.append(("multiparty cross-stratum rollup harness (supported clean; unsupported->UNSUPPORTED)", mp_ok))
+
+    # p) S4 grain-AUDIT harness (post-population): declared-vs-real traversal mismatch -> finding
+    ga = audit_grain({"comp-blast": ["function", "symbol"]}, {"comp-blast": ["function", "object"]})
+    ga_ok = any(t == "comp-blast" and k == "TRAVERSES-UNDECLARED" for t, k, _ in ga)
+    results.append(("S4 grain-audit harness (traverses-undeclared -> finding)", ga_ok))
 
     if len(results) != len(_SELFCHECK_CASES):  # guard: metadata must stay 1:1 with the appends
         sys.stderr.write(f"selfcheck INTERNAL: {len(results)} cases vs {len(_SELFCHECK_CASES)} metadata -- update _SELFCHECK_CASES\n")
