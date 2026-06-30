@@ -1,0 +1,5075 @@
+{
+ "producer": "graphuni-storage",
+ "generated_at": "2026-06-30T23:16:13.224723+00:00",
+ "lane": "0.8.0_AE_CloudComp~A",
+ "phase": "NFRA_GRAPHUNI.P1-A storage (Phase-A, ~D-coupled writer-attributed subset)",
+ "canonical_id_convention": "<bucket>/<normalized-key> per ~C node_identity.S3Key (02286234a)",
+ "s3_bucket_node_id_form": "arn:aws:s3:::<bucket> (live graph form, OWNED_BY target)",
+ "nodes": [
+  {
+   "id": "opal-data-inf/bronze/orion-api/*/assets.csv",
+   "type": "S3Key",
+   "name": "bronze/orion-api/*/assets.csv",
+   "layer": "aws",
+   "stratum": "object",
+   "level": "prefix",
+   "bucket": "opal-data-inf",
+   "key": "bronze/orion-api/*/assets.csv",
+   "attribution": "writer-firm"
+  },
+  {
+   "id": "opal-data-inf/bronze/orion-api/*/transactions.csv",
+   "type": "S3Key",
+   "name": "bronze/orion-api/*/transactions.csv",
+   "layer": "aws",
+   "stratum": "object",
+   "level": "prefix",
+   "bucket": "opal-data-inf",
+   "key": "bronze/orion-api/*/transactions.csv",
+   "attribution": "writer-firm"
+  },
+  {
+   "id": "opal-data-inf/code/gold/*",
+   "type": "S3Key",
+   "name": "code/gold/*",
+   "layer": "aws",
+   "stratum": "object",
+   "level": "prefix",
+   "bucket": "opal-data-inf",
+   "key": "code/gold/*",
+   "attribution": "writer-firm"
+  },
+  {
+   "id": "opal-data-bd/gold/_parity/account_gains/*/scorecard.json",
+   "type": "S3Key",
+   "name": "gold/_parity/account_gains/*/scorecard.json",
+   "layer": "aws",
+   "stratum": "object",
+   "level": "prefix",
+   "bucket": "opal-data-bd",
+   "key": "gold/_parity/account_gains/*/scorecard.json",
+   "attribution": "writer-firm"
+  },
+  {
+   "id": "opal-data-bd/gold/_parity/account_gains/{*}/scorecard.json",
+   "type": "S3Key",
+   "name": "gold/_parity/account_gains/{*}/scorecard.json",
+   "layer": "aws",
+   "stratum": "object",
+   "level": "prefix",
+   "bucket": "opal-data-bd",
+   "key": "gold/_parity/account_gains/{*}/scorecard.json",
+   "attribution": "writer-firm"
+  },
+  {
+   "id": "opal-data-bd/gold/_parity/canonical_lots/*/scorecard.json",
+   "type": "S3Key",
+   "name": "gold/_parity/canonical_lots/*/scorecard.json",
+   "layer": "aws",
+   "stratum": "object",
+   "level": "prefix",
+   "bucket": "opal-data-bd",
+   "key": "gold/_parity/canonical_lots/*/scorecard.json",
+   "attribution": "writer-firm"
+  },
+  {
+   "id": "opal-data-bd/gold/_parity/canonical_lots/{*}/scorecard.json",
+   "type": "S3Key",
+   "name": "gold/_parity/canonical_lots/{*}/scorecard.json",
+   "layer": "aws",
+   "stratum": "object",
+   "level": "prefix",
+   "bucket": "opal-data-bd",
+   "key": "gold/_parity/canonical_lots/{*}/scorecard.json",
+   "attribution": "writer-firm"
+  },
+  {
+   "id": "opal-data-bd/gold/_parity/holdings_lots/*/scorecard.json",
+   "type": "S3Key",
+   "name": "gold/_parity/holdings_lots/*/scorecard.json",
+   "layer": "aws",
+   "stratum": "object",
+   "level": "prefix",
+   "bucket": "opal-data-bd",
+   "key": "gold/_parity/holdings_lots/*/scorecard.json",
+   "attribution": "writer-firm"
+  },
+  {
+   "id": "opal-data-bd/gold/_parity/holdings_lots/{*}/scorecard.json",
+   "type": "S3Key",
+   "name": "gold/_parity/holdings_lots/{*}/scorecard.json",
+   "layer": "aws",
+   "stratum": "object",
+   "level": "prefix",
+   "bucket": "opal-data-bd",
+   "key": "gold/_parity/holdings_lots/{*}/scorecard.json",
+   "attribution": "writer-firm"
+  },
+  {
+   "id": "opal-data-bd/gold/_parity/positions_cube/*/scorecard.json",
+   "type": "S3Key",
+   "name": "gold/_parity/positions_cube/*/scorecard.json",
+   "layer": "aws",
+   "stratum": "object",
+   "level": "prefix",
+   "bucket": "opal-data-bd",
+   "key": "gold/_parity/positions_cube/*/scorecard.json",
+   "attribution": "writer-firm"
+  },
+  {
+   "id": "opal-data-bd/gold/_parity/positions_cube/{*}/scorecard.json",
+   "type": "S3Key",
+   "name": "gold/_parity/positions_cube/{*}/scorecard.json",
+   "layer": "aws",
+   "stratum": "object",
+   "level": "prefix",
+   "bucket": "opal-data-bd",
+   "key": "gold/_parity/positions_cube/{*}/scorecard.json",
+   "attribution": "writer-firm"
+  },
+  {
+   "id": "opal-data-bd/gold/_state/advisor_assignments/daily_state.parquet",
+   "type": "S3Key",
+   "name": "gold/_state/advisor_assignments/daily_state.parquet",
+   "layer": "aws",
+   "stratum": "object",
+   "level": "object",
+   "bucket": "opal-data-bd",
+   "key": "gold/_state/advisor_assignments/daily_state.parquet",
+   "attribution": "writer-firm"
+  },
+  {
+   "id": "opal-data-inf/gold/account_gains/{*}.parquet",
+   "type": "S3Key",
+   "name": "gold/account_gains/{*}.parquet",
+   "layer": "aws",
+   "stratum": "object",
+   "level": "prefix",
+   "bucket": "opal-data-inf",
+   "key": "gold/account_gains/{*}.parquet",
+   "attribution": "writer-firm"
+  },
+  {
+   "id": "opal-data-bd/gold/accounts_dimension_latest.parquet",
+   "type": "S3Key",
+   "name": "gold/accounts_dimension_latest.parquet",
+   "layer": "aws",
+   "stratum": "object",
+   "level": "object",
+   "bucket": "opal-data-bd",
+   "key": "gold/accounts_dimension_latest.parquet",
+   "attribution": "writer-firm"
+  },
+  {
+   "id": "opal-data-bd/gold/artifacts/49f/c1_recovered_accounts.json",
+   "type": "S3Key",
+   "name": "gold/artifacts/49f/c1_recovered_accounts.json",
+   "layer": "aws",
+   "stratum": "object",
+   "level": "object",
+   "bucket": "opal-data-bd",
+   "key": "gold/artifacts/49f/c1_recovered_accounts.json",
+   "attribution": "writer-firm"
+  },
+  {
+   "id": "opal-data-bd/gold/artifacts/49f/out_of_scope_accounts.json",
+   "type": "S3Key",
+   "name": "gold/artifacts/49f/out_of_scope_accounts.json",
+   "layer": "aws",
+   "stratum": "object",
+   "level": "object",
+   "bucket": "opal-data-bd",
+   "key": "gold/artifacts/49f/out_of_scope_accounts.json",
+   "attribution": "writer-firm"
+  },
+  {
+   "id": "opal-data-bd/gold/artifacts/advisor_fee_efficiency.json",
+   "type": "S3Key",
+   "name": "gold/artifacts/advisor_fee_efficiency.json",
+   "layer": "aws",
+   "stratum": "object",
+   "level": "object",
+   "bucket": "opal-data-bd",
+   "key": "gold/artifacts/advisor_fee_efficiency.json",
+   "attribution": "writer-firm"
+  },
+  {
+   "id": "opal-data-inf/gold/artifacts/advisor_fee_efficiency.json",
+   "type": "S3Key",
+   "name": "gold/artifacts/advisor_fee_efficiency.json",
+   "layer": "aws",
+   "stratum": "object",
+   "level": "object",
+   "bucket": "opal-data-inf",
+   "key": "gold/artifacts/advisor_fee_efficiency.json",
+   "attribution": "writer-firm"
+  },
+  {
+   "id": "opal-data-inf/gold/artifacts/client_mix_timeseries.json",
+   "type": "S3Key",
+   "name": "gold/artifacts/client_mix_timeseries.json",
+   "layer": "aws",
+   "stratum": "object",
+   "level": "object",
+   "bucket": "opal-data-inf",
+   "key": "gold/artifacts/client_mix_timeseries.json",
+   "attribution": "writer-firm"
+  },
+  {
+   "id": "opal-data-inf/gold/artifacts/client_tax_liability.json",
+   "type": "S3Key",
+   "name": "gold/artifacts/client_tax_liability.json",
+   "layer": "aws",
+   "stratum": "object",
+   "level": "object",
+   "bucket": "opal-data-inf",
+   "key": "gold/artifacts/client_tax_liability.json",
+   "attribution": "writer-firm"
+  },
+  {
+   "id": "opal-data-bd/gold/artifacts/clients_tab.json",
+   "type": "S3Key",
+   "name": "gold/artifacts/clients_tab.json",
+   "layer": "aws",
+   "stratum": "object",
+   "level": "object",
+   "bucket": "opal-data-bd",
+   "key": "gold/artifacts/clients_tab.json",
+   "attribution": "writer-firm"
+  },
+  {
+   "id": "opal-data-inf/gold/artifacts/cumulative_chart.json",
+   "type": "S3Key",
+   "name": "gold/artifacts/cumulative_chart.json",
+   "layer": "aws",
+   "stratum": "object",
+   "level": "object",
+   "bucket": "opal-data-inf",
+   "key": "gold/artifacts/cumulative_chart.json",
+   "attribution": "writer-firm"
+  },
+  {
+   "id": "opal-data-bd/gold/artifacts/employee_leaderboard.json",
+   "type": "S3Key",
+   "name": "gold/artifacts/employee_leaderboard.json",
+   "layer": "aws",
+   "stratum": "object",
+   "level": "object",
+   "bucket": "opal-data-bd",
+   "key": "gold/artifacts/employee_leaderboard.json",
+   "attribution": "writer-firm"
+  },
+  {
+   "id": "opal-data-bd/gold/artifacts/filters/dimensions.json",
+   "type": "S3Key",
+   "name": "gold/artifacts/filters/dimensions.json",
+   "layer": "aws",
+   "stratum": "object",
+   "level": "object",
+   "bucket": "opal-data-bd",
+   "key": "gold/artifacts/filters/dimensions.json",
+   "attribution": "writer-firm"
+  },
+  {
+   "id": "opal-data-bd/gold/artifacts/firm_mix_views.json",
+   "type": "S3Key",
+   "name": "gold/artifacts/firm_mix_views.json",
+   "layer": "aws",
+   "stratum": "object",
+   "level": "object",
+   "bucket": "opal-data-bd",
+   "key": "gold/artifacts/firm_mix_views.json",
+   "attribution": "writer-firm"
+  },
+  {
+   "id": "opal-data-inf/gold/artifacts/firm_mix_views.json",
+   "type": "S3Key",
+   "name": "gold/artifacts/firm_mix_views.json",
+   "layer": "aws",
+   "stratum": "object",
+   "level": "object",
+   "bucket": "opal-data-inf",
+   "key": "gold/artifacts/firm_mix_views.json",
+   "attribution": "writer-firm"
+  },
+  {
+   "id": "opal-data-bd/gold/artifacts/firm_mix_views_daily.json",
+   "type": "S3Key",
+   "name": "gold/artifacts/firm_mix_views_daily.json",
+   "layer": "aws",
+   "stratum": "object",
+   "level": "object",
+   "bucket": "opal-data-bd",
+   "key": "gold/artifacts/firm_mix_views_daily.json",
+   "attribution": "writer-firm"
+  },
+  {
+   "id": "opal-data-bd/gold/artifacts/implementor_leaderboard.json",
+   "type": "S3Key",
+   "name": "gold/artifacts/implementor_leaderboard.json",
+   "layer": "aws",
+   "stratum": "object",
+   "level": "object",
+   "bucket": "opal-data-bd",
+   "key": "gold/artifacts/implementor_leaderboard.json",
+   "attribution": "writer-firm"
+  },
+  {
+   "id": "opal-data-bd/gold/artifacts/partner_analytics/header_metrics_{*}.json",
+   "type": "S3Key",
+   "name": "gold/artifacts/partner_analytics/header_metrics_{*}.json",
+   "layer": "aws",
+   "stratum": "object",
+   "level": "prefix",
+   "bucket": "opal-data-bd",
+   "key": "gold/artifacts/partner_analytics/header_metrics_{*}.json",
+   "attribution": "writer-firm"
+  },
+  {
+   "id": "opal-data-bd/gold/artifacts/summary/header_metrics.json",
+   "type": "S3Key",
+   "name": "gold/artifacts/summary/header_metrics.json",
+   "layer": "aws",
+   "stratum": "object",
+   "level": "object",
+   "bucket": "opal-data-bd",
+   "key": "gold/artifacts/summary/header_metrics.json",
+   "attribution": "writer-firm"
+  },
+  {
+   "id": "opal-data-inf/gold/artifacts/summary/header_metrics.json",
+   "type": "S3Key",
+   "name": "gold/artifacts/summary/header_metrics.json",
+   "layer": "aws",
+   "stratum": "object",
+   "level": "object",
+   "bucket": "opal-data-inf",
+   "key": "gold/artifacts/summary/header_metrics.json",
+   "attribution": "writer-firm"
+  },
+  {
+   "id": "opal-data-bd/gold/artifacts/timeseries_chart.json",
+   "type": "S3Key",
+   "name": "gold/artifacts/timeseries_chart.json",
+   "layer": "aws",
+   "stratum": "object",
+   "level": "object",
+   "bucket": "opal-data-bd",
+   "key": "gold/artifacts/timeseries_chart.json",
+   "attribution": "writer-firm"
+  },
+  {
+   "id": "opal-data-inf/gold/artifacts/timeseries_chart.json",
+   "type": "S3Key",
+   "name": "gold/artifacts/timeseries_chart.json",
+   "layer": "aws",
+   "stratum": "object",
+   "level": "object",
+   "bucket": "opal-data-inf",
+   "key": "gold/artifacts/timeseries_chart.json",
+   "attribution": "writer-firm"
+  },
+  {
+   "id": "opal-data-inf/gold/cache/hh_timeseries_anchors_{*}.parquet",
+   "type": "S3Key",
+   "name": "gold/cache/hh_timeseries_anchors_{*}.parquet",
+   "layer": "aws",
+   "stratum": "object",
+   "level": "prefix",
+   "bucket": "opal-data-inf",
+   "key": "gold/cache/hh_timeseries_anchors_{*}.parquet",
+   "attribution": "writer-firm"
+  },
+  {
+   "id": "opal-data-bd/gold/canonical/account_gains/{*}.parquet",
+   "type": "S3Key",
+   "name": "gold/canonical/account_gains/{*}.parquet",
+   "layer": "aws",
+   "stratum": "object",
+   "level": "prefix",
+   "bucket": "opal-data-bd",
+   "key": "gold/canonical/account_gains/{*}.parquet",
+   "attribution": "writer-firm"
+  },
+  {
+   "id": "opal-data-bd/gold/canonical/advisor_fee_detail/{*}.parquet",
+   "type": "S3Key",
+   "name": "gold/canonical/advisor_fee_detail/{*}.parquet",
+   "layer": "aws",
+   "stratum": "object",
+   "level": "prefix",
+   "bucket": "opal-data-bd",
+   "key": "gold/canonical/advisor_fee_detail/{*}.parquet",
+   "attribution": "writer-firm"
+  },
+  {
+   "id": "opal-data-inf/gold/canonical/canonical_performance_2026-04-20.parquet",
+   "type": "S3Key",
+   "name": "gold/canonical/canonical_performance_2026-04-20.parquet",
+   "layer": "aws",
+   "stratum": "object",
+   "level": "object",
+   "bucket": "opal-data-inf",
+   "key": "gold/canonical/canonical_performance_2026-04-20.parquet",
+   "attribution": "writer-firm"
+  },
+  {
+   "id": "opal-data-inf/gold/canonical/canonical_performance_{*}.parquet",
+   "type": "S3Key",
+   "name": "gold/canonical/canonical_performance_{*}.parquet",
+   "layer": "aws",
+   "stratum": "object",
+   "level": "prefix",
+   "bucket": "opal-data-inf",
+   "key": "gold/canonical/canonical_performance_{*}.parquet",
+   "attribution": "writer-firm"
+  },
+  {
+   "id": "opal-data-bd/gold/canonical/holdings/{*}.parquet",
+   "type": "S3Key",
+   "name": "gold/canonical/holdings/{*}.parquet",
+   "layer": "aws",
+   "stratum": "object",
+   "level": "prefix",
+   "bucket": "opal-data-bd",
+   "key": "gold/canonical/holdings/{*}.parquet",
+   "attribution": "writer-firm"
+  },
+  {
+   "id": "opal-data-inf/gold/canonical/holdings_*.parquet",
+   "type": "S3Key",
+   "name": "gold/canonical/holdings_*.parquet",
+   "layer": "aws",
+   "stratum": "object",
+   "level": "prefix",
+   "bucket": "opal-data-inf",
+   "key": "gold/canonical/holdings_*.parquet",
+   "attribution": "writer-firm"
+  },
+  {
+   "id": "opal-data-bd/gold/canonical/holdings_gaps/{*}.parquet",
+   "type": "S3Key",
+   "name": "gold/canonical/holdings_gaps/{*}.parquet",
+   "layer": "aws",
+   "stratum": "object",
+   "level": "prefix",
+   "bucket": "opal-data-bd",
+   "key": "gold/canonical/holdings_gaps/{*}.parquet",
+   "attribution": "writer-firm"
+  },
+  {
+   "id": "opal-data-bd/gold/canonical/lots_realized/{*}.parquet",
+   "type": "S3Key",
+   "name": "gold/canonical/lots_realized/{*}.parquet",
+   "layer": "aws",
+   "stratum": "object",
+   "level": "prefix",
+   "bucket": "opal-data-bd",
+   "key": "gold/canonical/lots_realized/{*}.parquet",
+   "attribution": "writer-firm"
+  },
+  {
+   "id": "opal-data-bd/gold/canonical/lots_unrealized/{*}.parquet",
+   "type": "S3Key",
+   "name": "gold/canonical/lots_unrealized/{*}.parquet",
+   "layer": "aws",
+   "stratum": "object",
+   "level": "prefix",
+   "bucket": "opal-data-bd",
+   "key": "gold/canonical/lots_unrealized/{*}.parquet",
+   "attribution": "writer-firm"
+  },
+  {
+   "id": "opal-data-bd/gold/canonical/nna/{*}.parquet",
+   "type": "S3Key",
+   "name": "gold/canonical/nna/{*}.parquet",
+   "layer": "aws",
+   "stratum": "object",
+   "level": "prefix",
+   "bucket": "opal-data-bd",
+   "key": "gold/canonical/nna/{*}.parquet",
+   "attribution": "writer-firm"
+  },
+  {
+   "id": "opal-data-bd/gold/canonical/nna_atomic/{*}.parquet",
+   "type": "S3Key",
+   "name": "gold/canonical/nna_atomic/{*}.parquet",
+   "layer": "aws",
+   "stratum": "object",
+   "level": "prefix",
+   "bucket": "opal-data-bd",
+   "key": "gold/canonical/nna_atomic/{*}.parquet",
+   "attribution": "writer-firm"
+  },
+  {
+   "id": "opal-data-bd/gold/canonical/nna_validation/{*}.json",
+   "type": "S3Key",
+   "name": "gold/canonical/nna_validation/{*}.json",
+   "layer": "aws",
+   "stratum": "object",
+   "level": "prefix",
+   "bucket": "opal-data-bd",
+   "key": "gold/canonical/nna_validation/{*}.json",
+   "attribution": "writer-firm"
+  },
+  {
+   "id": "opal-data-bd/gold/canonical/performance/{*}.parquet",
+   "type": "S3Key",
+   "name": "gold/canonical/performance/{*}.parquet",
+   "layer": "aws",
+   "stratum": "object",
+   "level": "prefix",
+   "bucket": "opal-data-bd",
+   "key": "gold/canonical/performance/{*}.parquet",
+   "attribution": "writer-firm"
+  },
+  {
+   "id": "opal-data-bd/gold/canonical/role_aua/*.parquet",
+   "type": "S3Key",
+   "name": "gold/canonical/role_aua/*.parquet",
+   "layer": "aws",
+   "stratum": "object",
+   "level": "prefix",
+   "bucket": "opal-data-bd",
+   "key": "gold/canonical/role_aua/*.parquet",
+   "attribution": "writer-firm"
+  },
+  {
+   "id": "opal-data-bd/gold/canonical/role_aua/{*}.parquet",
+   "type": "S3Key",
+   "name": "gold/canonical/role_aua/{*}.parquet",
+   "layer": "aws",
+   "stratum": "object",
+   "level": "prefix",
+   "bucket": "opal-data-bd",
+   "key": "gold/canonical/role_aua/{*}.parquet",
+   "attribution": "writer-firm"
+  },
+  {
+   "id": "opal-data-inf/gold/canonical/role_aua/{*}.parquet",
+   "type": "S3Key",
+   "name": "gold/canonical/role_aua/{*}.parquet",
+   "layer": "aws",
+   "stratum": "object",
+   "level": "prefix",
+   "bucket": "opal-data-inf",
+   "key": "gold/canonical/role_aua/{*}.parquet",
+   "attribution": "writer-firm"
+  },
+  {
+   "id": "opal-data-bd/gold/canonical/watermarks.json",
+   "type": "S3Key",
+   "name": "gold/canonical/watermarks.json",
+   "layer": "aws",
+   "stratum": "object",
+   "level": "object",
+   "bucket": "opal-data-bd",
+   "key": "gold/canonical/watermarks.json",
+   "attribution": "writer-firm"
+  },
+  {
+   "id": "opal-data-inf/gold/classification/ticker_coverage_report.json",
+   "type": "S3Key",
+   "name": "gold/classification/ticker_coverage_report.json",
+   "layer": "aws",
+   "stratum": "object",
+   "level": "object",
+   "bucket": "opal-data-inf",
+   "key": "gold/classification/ticker_coverage_report.json",
+   "attribution": "writer-firm"
+  },
+  {
+   "id": "opal-data-bd/gold/client_performance.parquet",
+   "type": "S3Key",
+   "name": "gold/client_performance.parquet",
+   "layer": "aws",
+   "stratum": "object",
+   "level": "object",
+   "bucket": "opal-data-bd",
+   "key": "gold/client_performance.parquet",
+   "attribution": "writer-firm"
+  },
+  {
+   "id": "opal-data-bd/gold/dimensions/accounts_dimension_latest.parquet",
+   "type": "S3Key",
+   "name": "gold/dimensions/accounts_dimension_latest.parquet",
+   "layer": "aws",
+   "stratum": "object",
+   "level": "object",
+   "bucket": "opal-data-bd",
+   "key": "gold/dimensions/accounts_dimension_latest.parquet",
+   "attribution": "writer-firm"
+  },
+  {
+   "id": "opal-data-inf/gold/dimensions/accounts_dimension_latest.parquet",
+   "type": "S3Key",
+   "name": "gold/dimensions/accounts_dimension_latest.parquet",
+   "layer": "aws",
+   "stratum": "object",
+   "level": "object",
+   "bucket": "opal-data-inf",
+   "key": "gold/dimensions/accounts_dimension_latest.parquet",
+   "attribution": "writer-firm"
+  },
+  {
+   "id": "opal-data-inf/gold/dimensions/advisor_assignments.parquet",
+   "type": "S3Key",
+   "name": "gold/dimensions/advisor_assignments.parquet",
+   "layer": "aws",
+   "stratum": "object",
+   "level": "object",
+   "bucket": "opal-data-inf",
+   "key": "gold/dimensions/advisor_assignments.parquet",
+   "attribution": "writer-firm"
+  },
+  {
+   "id": "opal-data-bd/gold/dimensions/advisor_assignments_history.parquet",
+   "type": "S3Key",
+   "name": "gold/dimensions/advisor_assignments_history.parquet",
+   "layer": "aws",
+   "stratum": "object",
+   "level": "object",
+   "bucket": "opal-data-bd",
+   "key": "gold/dimensions/advisor_assignments_history.parquet",
+   "attribution": "writer-firm"
+  },
+  {
+   "id": "opal-data-bd/gold/dimensions/client_dimension.parquet",
+   "type": "S3Key",
+   "name": "gold/dimensions/client_dimension.parquet",
+   "layer": "aws",
+   "stratum": "object",
+   "level": "object",
+   "bucket": "opal-data-bd",
+   "key": "gold/dimensions/client_dimension.parquet",
+   "attribution": "writer-firm"
+  },
+  {
+   "id": "opal-data-inf/gold/dimensions/client_dimension.parquet",
+   "type": "S3Key",
+   "name": "gold/dimensions/client_dimension.parquet",
+   "layer": "aws",
+   "stratum": "object",
+   "level": "object",
+   "bucket": "opal-data-inf",
+   "key": "gold/dimensions/client_dimension.parquet",
+   "attribution": "writer-firm"
+  },
+  {
+   "id": "opal-data-bd/gold/dimensions/fee_rate_history.parquet",
+   "type": "S3Key",
+   "name": "gold/dimensions/fee_rate_history.parquet",
+   "layer": "aws",
+   "stratum": "object",
+   "level": "object",
+   "bucket": "opal-data-bd",
+   "key": "gold/dimensions/fee_rate_history.parquet",
+   "attribution": "writer-firm"
+  },
+  {
+   "id": "opal-data-bd/gold/dimensions/schwab_bd_account_mapping.parquet",
+   "type": "S3Key",
+   "name": "gold/dimensions/schwab_bd_account_mapping.parquet",
+   "layer": "aws",
+   "stratum": "object",
+   "level": "object",
+   "bucket": "opal-data-bd",
+   "key": "gold/dimensions/schwab_bd_account_mapping.parquet",
+   "attribution": "writer-firm"
+  },
+  {
+   "id": "opal-data-bd/gold/dimensions/ticker_resolution.parquet",
+   "type": "S3Key",
+   "name": "gold/dimensions/ticker_resolution.parquet",
+   "layer": "aws",
+   "stratum": "object",
+   "level": "object",
+   "bucket": "opal-data-bd",
+   "key": "gold/dimensions/ticker_resolution.parquet",
+   "attribution": "writer-firm"
+  },
+  {
+   "id": "opal-data-inf/gold/eclipse/{*}/_meta/gold_complete.json",
+   "type": "S3Key",
+   "name": "gold/eclipse/{*}/_meta/gold_complete.json",
+   "layer": "aws",
+   "stratum": "object",
+   "level": "prefix",
+   "bucket": "opal-data-inf",
+   "key": "gold/eclipse/{*}/_meta/gold_complete.json",
+   "attribution": "writer-firm"
+  },
+  {
+   "id": "opal-data-bd/gold/entities/advisors/{*}/mix.json",
+   "type": "S3Key",
+   "name": "gold/entities/advisors/{*}/mix.json",
+   "layer": "aws",
+   "stratum": "object",
+   "level": "prefix",
+   "bucket": "opal-data-bd",
+   "key": "gold/entities/advisors/{*}/mix.json",
+   "attribution": "writer-firm"
+  },
+  {
+   "id": "opal-data-bd/gold/entities/advisors/{*}/mix_daily.json",
+   "type": "S3Key",
+   "name": "gold/entities/advisors/{*}/mix_daily.json",
+   "layer": "aws",
+   "stratum": "object",
+   "level": "prefix",
+   "bucket": "opal-data-bd",
+   "key": "gold/entities/advisors/{*}/mix_daily.json",
+   "attribution": "writer-firm"
+  },
+  {
+   "id": "opal-data-bd/gold/entities/advisors/{*}/mix_timeseries.json",
+   "type": "S3Key",
+   "name": "gold/entities/advisors/{*}/mix_timeseries.json",
+   "layer": "aws",
+   "stratum": "object",
+   "level": "prefix",
+   "bucket": "opal-data-bd",
+   "key": "gold/entities/advisors/{*}/mix_timeseries.json",
+   "attribution": "writer-firm"
+  },
+  {
+   "id": "opal-data-bd/gold/entities/clients/*_views.json",
+   "type": "S3Key",
+   "name": "gold/entities/clients/*_views.json",
+   "layer": "aws",
+   "stratum": "object",
+   "level": "prefix",
+   "bucket": "opal-data-bd",
+   "key": "gold/entities/clients/*_views.json",
+   "attribution": "writer-firm"
+  },
+  {
+   "id": "opal-data-bd/gold/entities/clients/{*}.json",
+   "type": "S3Key",
+   "name": "gold/entities/clients/{*}.json",
+   "layer": "aws",
+   "stratum": "object",
+   "level": "prefix",
+   "bucket": "opal-data-bd",
+   "key": "gold/entities/clients/{*}.json",
+   "attribution": "writer-firm"
+  },
+  {
+   "id": "opal-data-bd/gold/entities/clients/{*}/detail.json",
+   "type": "S3Key",
+   "name": "gold/entities/clients/{*}/detail.json",
+   "layer": "aws",
+   "stratum": "object",
+   "level": "prefix",
+   "bucket": "opal-data-bd",
+   "key": "gold/entities/clients/{*}/detail.json",
+   "attribution": "writer-firm"
+  },
+  {
+   "id": "opal-data-inf/gold/holdings/{*}.parquet",
+   "type": "S3Key",
+   "name": "gold/holdings/{*}.parquet",
+   "layer": "aws",
+   "stratum": "object",
+   "level": "prefix",
+   "bucket": "opal-data-inf",
+   "key": "gold/holdings/{*}.parquet",
+   "attribution": "writer-firm"
+  },
+  {
+   "id": "opal-data-bd/gold/holdings_lots_v2_dryrun/{*}.parquet",
+   "type": "S3Key",
+   "name": "gold/holdings_lots_v2_dryrun/{*}.parquet",
+   "layer": "aws",
+   "stratum": "object",
+   "level": "prefix",
+   "bucket": "opal-data-bd",
+   "key": "gold/holdings_lots_v2_dryrun/{*}.parquet",
+   "attribution": "writer-firm"
+  },
+  {
+   "id": "opal-data-inf/gold/lots/lots_latest.parquet",
+   "type": "S3Key",
+   "name": "gold/lots/lots_latest.parquet",
+   "layer": "aws",
+   "stratum": "object",
+   "level": "object",
+   "bucket": "opal-data-inf",
+   "key": "gold/lots/lots_latest.parquet",
+   "attribution": "writer-firm"
+  },
+  {
+   "id": "opal-data-inf/gold/lots/lots_{*}.parquet",
+   "type": "S3Key",
+   "name": "gold/lots/lots_{*}.parquet",
+   "layer": "aws",
+   "stratum": "object",
+   "level": "prefix",
+   "bucket": "opal-data-inf",
+   "key": "gold/lots/lots_{*}.parquet",
+   "attribution": "writer-firm"
+  },
+  {
+   "id": "opal-data-bd/gold/manifests/classify_watermark.json",
+   "type": "S3Key",
+   "name": "gold/manifests/classify_watermark.json",
+   "layer": "aws",
+   "stratum": "object",
+   "level": "object",
+   "bucket": "opal-data-bd",
+   "key": "gold/manifests/classify_watermark.json",
+   "attribution": "writer-firm"
+  },
+  {
+   "id": "opal-data-bd/gold/meta/account_gains_incr_watermark.json",
+   "type": "S3Key",
+   "name": "gold/meta/account_gains_incr_watermark.json",
+   "layer": "aws",
+   "stratum": "object",
+   "level": "object",
+   "bucket": "opal-data-bd",
+   "key": "gold/meta/account_gains_incr_watermark.json",
+   "attribution": "writer-firm"
+  },
+  {
+   "id": "opal-data-bd/gold/meta/advisor_assignments_watermark.json",
+   "type": "S3Key",
+   "name": "gold/meta/advisor_assignments_watermark.json",
+   "layer": "aws",
+   "stratum": "object",
+   "level": "object",
+   "bucket": "opal-data-bd",
+   "key": "gold/meta/advisor_assignments_watermark.json",
+   "attribution": "writer-firm"
+  },
+  {
+   "id": "opal-data-bd/gold/meta/canonical_lots_incr_watermark.json",
+   "type": "S3Key",
+   "name": "gold/meta/canonical_lots_incr_watermark.json",
+   "layer": "aws",
+   "stratum": "object",
+   "level": "object",
+   "bucket": "opal-data-bd",
+   "key": "gold/meta/canonical_lots_incr_watermark.json",
+   "attribution": "writer-firm"
+  },
+  {
+   "id": "opal-data-bd/gold/meta/fee_rate_history_watermark.json",
+   "type": "S3Key",
+   "name": "gold/meta/fee_rate_history_watermark.json",
+   "layer": "aws",
+   "stratum": "object",
+   "level": "object",
+   "bucket": "opal-data-bd",
+   "key": "gold/meta/fee_rate_history_watermark.json",
+   "attribution": "writer-firm"
+  },
+  {
+   "id": "opal-data-bd/gold/meta/holdings_lots_incr_watermark.json",
+   "type": "S3Key",
+   "name": "gold/meta/holdings_lots_incr_watermark.json",
+   "layer": "aws",
+   "stratum": "object",
+   "level": "object",
+   "bucket": "opal-data-bd",
+   "key": "gold/meta/holdings_lots_incr_watermark.json",
+   "attribution": "writer-firm"
+  },
+  {
+   "id": "opal-data-bd/gold/meta/positions_cube_incr_watermark.json",
+   "type": "S3Key",
+   "name": "gold/meta/positions_cube_incr_watermark.json",
+   "layer": "aws",
+   "stratum": "object",
+   "level": "object",
+   "bucket": "opal-data-bd",
+   "key": "gold/meta/positions_cube_incr_watermark.json",
+   "attribution": "writer-firm"
+  },
+  {
+   "id": "opal-data-bd/gold/platinum/firm/cash_coverage_summary.json",
+   "type": "S3Key",
+   "name": "gold/platinum/firm/cash_coverage_summary.json",
+   "layer": "aws",
+   "stratum": "object",
+   "level": "object",
+   "bucket": "opal-data-bd",
+   "key": "gold/platinum/firm/cash_coverage_summary.json",
+   "attribution": "writer-firm"
+  },
+  {
+   "id": "opal-data-bd/gold/platinum/firm/cohort_a_summary.json",
+   "type": "S3Key",
+   "name": "gold/platinum/firm/cohort_a_summary.json",
+   "layer": "aws",
+   "stratum": "object",
+   "level": "object",
+   "bucket": "opal-data-bd",
+   "key": "gold/platinum/firm/cohort_a_summary.json",
+   "attribution": "writer-firm"
+  },
+  {
+   "id": "opal-data-bd/gold/positions_cube/*.parquet",
+   "type": "S3Key",
+   "name": "gold/positions_cube/*.parquet",
+   "layer": "aws",
+   "stratum": "object",
+   "level": "prefix",
+   "bucket": "opal-data-bd",
+   "key": "gold/positions_cube/*.parquet",
+   "attribution": "writer-firm"
+  },
+  {
+   "id": "opal-data-inf/gold/positions_cube/2026-04-20.parquet",
+   "type": "S3Key",
+   "name": "gold/positions_cube/2026-04-20.parquet",
+   "layer": "aws",
+   "stratum": "object",
+   "level": "object",
+   "bucket": "opal-data-inf",
+   "key": "gold/positions_cube/2026-04-20.parquet",
+   "attribution": "writer-firm"
+  },
+  {
+   "id": "opal-data-inf/gold/positions_cube/{*}.parquet",
+   "type": "S3Key",
+   "name": "gold/positions_cube/{*}.parquet",
+   "layer": "aws",
+   "stratum": "object",
+   "level": "prefix",
+   "bucket": "opal-data-inf",
+   "key": "gold/positions_cube/{*}.parquet",
+   "attribution": "writer-firm"
+  },
+  {
+   "id": "opal-data-bd/gold/timeseries/account_performance.parquet",
+   "type": "S3Key",
+   "name": "gold/timeseries/account_performance.parquet",
+   "layer": "aws",
+   "stratum": "object",
+   "level": "object",
+   "bucket": "opal-data-bd",
+   "key": "gold/timeseries/account_performance.parquet",
+   "attribution": "writer-firm"
+  },
+  {
+   "id": "opal-data-inf/gold/timeseries/account_performance.parquet",
+   "type": "S3Key",
+   "name": "gold/timeseries/account_performance.parquet",
+   "layer": "aws",
+   "stratum": "object",
+   "level": "object",
+   "bucket": "opal-data-inf",
+   "key": "gold/timeseries/account_performance.parquet",
+   "attribution": "writer-firm"
+  },
+  {
+   "id": "opal-data-bd/gold/timeseries/client_performance.parquet",
+   "type": "S3Key",
+   "name": "gold/timeseries/client_performance.parquet",
+   "layer": "aws",
+   "stratum": "object",
+   "level": "object",
+   "bucket": "opal-data-bd",
+   "key": "gold/timeseries/client_performance.parquet",
+   "attribution": "writer-firm"
+  },
+  {
+   "id": "opal-data-inf/gold/timeseries/client_performance.parquet",
+   "type": "S3Key",
+   "name": "gold/timeseries/client_performance.parquet",
+   "layer": "aws",
+   "stratum": "object",
+   "level": "object",
+   "bucket": "opal-data-inf",
+   "key": "gold/timeseries/client_performance.parquet",
+   "attribution": "writer-firm"
+  },
+  {
+   "id": "opal-data-bd/gold/timeseries/holdings_lots/2026-04-21.parquet",
+   "type": "S3Key",
+   "name": "gold/timeseries/holdings_lots/2026-04-21.parquet",
+   "layer": "aws",
+   "stratum": "object",
+   "level": "object",
+   "bucket": "opal-data-bd",
+   "key": "gold/timeseries/holdings_lots/2026-04-21.parquet",
+   "attribution": "writer-firm"
+  },
+  {
+   "id": "opal-data-bd/gold/timeseries/holdings_lots/backfill_{*}.parquet",
+   "type": "S3Key",
+   "name": "gold/timeseries/holdings_lots/backfill_{*}.parquet",
+   "layer": "aws",
+   "stratum": "object",
+   "level": "prefix",
+   "bucket": "opal-data-bd",
+   "key": "gold/timeseries/holdings_lots/backfill_{*}.parquet",
+   "attribution": "writer-firm"
+  },
+  {
+   "id": "opal-data-bd/gold/timeseries/holdings_lots/{*}.parquet",
+   "type": "S3Key",
+   "name": "gold/timeseries/holdings_lots/{*}.parquet",
+   "layer": "aws",
+   "stratum": "object",
+   "level": "prefix",
+   "bucket": "opal-data-bd",
+   "key": "gold/timeseries/holdings_lots/{*}.parquet",
+   "attribution": "writer-firm"
+  },
+  {
+   "id": "opal-data-bd/gold/timeseries/holdings_lots_shadow/{*}.parquet",
+   "type": "S3Key",
+   "name": "gold/timeseries/holdings_lots_shadow/{*}.parquet",
+   "layer": "aws",
+   "stratum": "object",
+   "level": "prefix",
+   "bucket": "opal-data-bd",
+   "key": "gold/timeseries/holdings_lots_shadow/{*}.parquet",
+   "attribution": "writer-firm"
+  },
+  {
+   "id": "opal-data-bd/gold/timeseries/positions_cube/{*}.parquet",
+   "type": "S3Key",
+   "name": "gold/timeseries/positions_cube/{*}.parquet",
+   "layer": "aws",
+   "stratum": "object",
+   "level": "prefix",
+   "bucket": "opal-data-bd",
+   "key": "gold/timeseries/positions_cube/{*}.parquet",
+   "attribution": "writer-firm"
+  },
+  {
+   "id": "opal-data-bd/gold/timeseries/synthetic_positions_index.parquet",
+   "type": "S3Key",
+   "name": "gold/timeseries/synthetic_positions_index.parquet",
+   "layer": "aws",
+   "stratum": "object",
+   "level": "object",
+   "bucket": "opal-data-bd",
+   "key": "gold/timeseries/synthetic_positions_index.parquet",
+   "attribution": "writer-firm"
+  },
+  {
+   "id": "opal-data-bd/gold/validation/account_gap_buckets_*.json",
+   "type": "S3Key",
+   "name": "gold/validation/account_gap_buckets_*.json",
+   "layer": "aws",
+   "stratum": "object",
+   "level": "prefix",
+   "bucket": "opal-data-bd",
+   "key": "gold/validation/account_gap_buckets_*.json",
+   "attribution": "writer-firm"
+  },
+  {
+   "id": "opal-data-bd/gold/validation/all_non_yahoo_assets_*.json",
+   "type": "S3Key",
+   "name": "gold/validation/all_non_yahoo_assets_*.json",
+   "layer": "aws",
+   "stratum": "object",
+   "level": "prefix",
+   "bucket": "opal-data-bd",
+   "key": "gold/validation/all_non_yahoo_assets_*.json",
+   "attribution": "writer-firm"
+  },
+  {
+   "id": "opal-data-bd/gold/validation/aua_certification/{*}.json",
+   "type": "S3Key",
+   "name": "gold/validation/aua_certification/{*}.json",
+   "layer": "aws",
+   "stratum": "object",
+   "level": "prefix",
+   "bucket": "opal-data-bd",
+   "key": "gold/validation/aua_certification/{*}.json",
+   "attribution": "writer-firm"
+  },
+  {
+   "id": "opal-data-bd/gold/validation/aua_gap_decomposition_*.json",
+   "type": "S3Key",
+   "name": "gold/validation/aua_gap_decomposition_*.json",
+   "layer": "aws",
+   "stratum": "object",
+   "level": "prefix",
+   "bucket": "opal-data-bd",
+   "key": "gold/validation/aua_gap_decomposition_*.json",
+   "attribution": "writer-firm"
+  },
+  {
+   "id": "opal-data-bd/gold/validation/aua_gap_top_positions_*.json",
+   "type": "S3Key",
+   "name": "gold/validation/aua_gap_top_positions_*.json",
+   "layer": "aws",
+   "stratum": "object",
+   "level": "prefix",
+   "bucket": "opal-data-bd",
+   "key": "gold/validation/aua_gap_top_positions_*.json",
+   "attribution": "writer-firm"
+  },
+  {
+   "id": "opal-data-bd/gold/validation/aua_validation_{*}.json",
+   "type": "S3Key",
+   "name": "gold/validation/aua_validation_{*}.json",
+   "layer": "aws",
+   "stratum": "object",
+   "level": "prefix",
+   "bucket": "opal-data-bd",
+   "key": "gold/validation/aua_validation_{*}.json",
+   "attribution": "writer-firm"
+  },
+  {
+   "id": "opal-data-bd/gold/validation/gap_by_pricing_source_*.json",
+   "type": "S3Key",
+   "name": "gold/validation/gap_by_pricing_source_*.json",
+   "layer": "aws",
+   "stratum": "object",
+   "level": "prefix",
+   "bucket": "opal-data-bd",
+   "key": "gold/validation/gap_by_pricing_source_*.json",
+   "attribution": "writer-firm"
+  },
+  {
+   "id": "opal-data-bd/gold/validation/tail_asset_drill_*.json",
+   "type": "S3Key",
+   "name": "gold/validation/tail_asset_drill_*.json",
+   "layer": "aws",
+   "stratum": "object",
+   "level": "prefix",
+   "bucket": "opal-data-bd",
+   "key": "gold/validation/tail_asset_drill_*.json",
+   "attribution": "writer-firm"
+  },
+  {
+   "id": "opal-data-bd/gold/validation/unmatched_asset_analysis_*.json",
+   "type": "S3Key",
+   "name": "gold/validation/unmatched_asset_analysis_*.json",
+   "layer": "aws",
+   "stratum": "object",
+   "level": "prefix",
+   "bucket": "opal-data-bd",
+   "key": "gold/validation/unmatched_asset_analysis_*.json",
+   "attribution": "writer-firm"
+  },
+  {
+   "id": "opal-data-bd/gold/validation/yahoo_mapping_audit_*.json",
+   "type": "S3Key",
+   "name": "gold/validation/yahoo_mapping_audit_*.json",
+   "layer": "aws",
+   "stratum": "object",
+   "level": "prefix",
+   "bucket": "opal-data-bd",
+   "key": "gold/validation/yahoo_mapping_audit_*.json",
+   "attribution": "writer-firm"
+  },
+  {
+   "id": "opal-data-bd/gold/views/account_team.parquet",
+   "type": "S3Key",
+   "name": "gold/views/account_team.parquet",
+   "layer": "aws",
+   "stratum": "object",
+   "level": "object",
+   "bucket": "opal-data-bd",
+   "key": "gold/views/account_team.parquet",
+   "attribution": "writer-firm"
+  },
+  {
+   "id": "opal-data-inf/gold/views/account_team.parquet",
+   "type": "S3Key",
+   "name": "gold/views/account_team.parquet",
+   "layer": "aws",
+   "stratum": "object",
+   "level": "object",
+   "bucket": "opal-data-inf",
+   "key": "gold/views/account_team.parquet",
+   "attribution": "writer-firm"
+  },
+  {
+   "id": "opal-data-bd/gold/views/client_tax_liability.parquet",
+   "type": "S3Key",
+   "name": "gold/views/client_tax_liability.parquet",
+   "layer": "aws",
+   "stratum": "object",
+   "level": "object",
+   "bucket": "opal-data-bd",
+   "key": "gold/views/client_tax_liability.parquet",
+   "attribution": "writer-firm"
+  },
+  {
+   "id": "opal-data-bd/gold/views/mix_daily_summary.json",
+   "type": "S3Key",
+   "name": "gold/views/mix_daily_summary.json",
+   "layer": "aws",
+   "stratum": "object",
+   "level": "object",
+   "bucket": "opal-data-bd",
+   "key": "gold/views/mix_daily_summary.json",
+   "attribution": "writer-firm"
+  },
+  {
+   "id": "opal-data-bd/gold/views/rel_architect_lookup.parquet",
+   "type": "S3Key",
+   "name": "gold/views/rel_architect_lookup.parquet",
+   "layer": "aws",
+   "stratum": "object",
+   "level": "object",
+   "bucket": "opal-data-bd",
+   "key": "gold/views/rel_architect_lookup.parquet",
+   "attribution": "writer-firm"
+  },
+  {
+   "id": "opal-data-bd/gold/views/relationship_team.parquet",
+   "type": "S3Key",
+   "name": "gold/views/relationship_team.parquet",
+   "layer": "aws",
+   "stratum": "object",
+   "level": "object",
+   "bucket": "opal-data-bd",
+   "key": "gold/views/relationship_team.parquet",
+   "attribution": "writer-firm"
+  },
+  {
+   "id": "opal-data-bd/platinum/accounts/{*}/summary.json",
+   "type": "S3Key",
+   "name": "platinum/accounts/{*}/summary.json",
+   "layer": "aws",
+   "stratum": "object",
+   "level": "prefix",
+   "bucket": "opal-data-bd",
+   "key": "platinum/accounts/{*}/summary.json",
+   "attribution": "writer-firm"
+  },
+  {
+   "id": "opal-data-inf/platinum/advisors/{*}/book.json",
+   "type": "S3Key",
+   "name": "platinum/advisors/{*}/book.json",
+   "layer": "aws",
+   "stratum": "object",
+   "level": "prefix",
+   "bucket": "opal-data-inf",
+   "key": "platinum/advisors/{*}/book.json",
+   "attribution": "writer-firm"
+  },
+  {
+   "id": "opal-data-bd/platinum/advisors/{*}/mix.json",
+   "type": "S3Key",
+   "name": "platinum/advisors/{*}/mix.json",
+   "layer": "aws",
+   "stratum": "object",
+   "level": "prefix",
+   "bucket": "opal-data-bd",
+   "key": "platinum/advisors/{*}/mix.json",
+   "attribution": "writer-firm"
+  },
+  {
+   "id": "opal-data-bd/platinum/advisors/{*}/nna_clients.json",
+   "type": "S3Key",
+   "name": "platinum/advisors/{*}/nna_clients.json",
+   "layer": "aws",
+   "stratum": "object",
+   "level": "prefix",
+   "bucket": "opal-data-bd",
+   "key": "platinum/advisors/{*}/nna_clients.json",
+   "attribution": "writer-firm"
+  },
+  {
+   "id": "opal-data-inf/platinum/advisors/{*}/nna_clients.json",
+   "type": "S3Key",
+   "name": "platinum/advisors/{*}/nna_clients.json",
+   "layer": "aws",
+   "stratum": "object",
+   "level": "prefix",
+   "bucket": "opal-data-inf",
+   "key": "platinum/advisors/{*}/nna_clients.json",
+   "attribution": "writer-firm"
+  },
+  {
+   "id": "opal-data-bd/platinum/advisors/{*}/positions.json",
+   "type": "S3Key",
+   "name": "platinum/advisors/{*}/positions.json",
+   "layer": "aws",
+   "stratum": "object",
+   "level": "prefix",
+   "bucket": "opal-data-bd",
+   "key": "platinum/advisors/{*}/positions.json",
+   "attribution": "writer-firm"
+  },
+  {
+   "id": "opal-data-bd/platinum/advisors/{*}/summary.json",
+   "type": "S3Key",
+   "name": "platinum/advisors/{*}/summary.json",
+   "layer": "aws",
+   "stratum": "object",
+   "level": "prefix",
+   "bucket": "opal-data-bd",
+   "key": "platinum/advisors/{*}/summary.json",
+   "attribution": "writer-firm"
+  },
+  {
+   "id": "opal-data-inf/platinum/advisors/{*}/summary.json",
+   "type": "S3Key",
+   "name": "platinum/advisors/{*}/summary.json",
+   "layer": "aws",
+   "stratum": "object",
+   "level": "prefix",
+   "bucket": "opal-data-inf",
+   "key": "platinum/advisors/{*}/summary.json",
+   "attribution": "writer-firm"
+  },
+  {
+   "id": "opal-data-bd/platinum/advisors/{*}/timeseries.json",
+   "type": "S3Key",
+   "name": "platinum/advisors/{*}/timeseries.json",
+   "layer": "aws",
+   "stratum": "object",
+   "level": "prefix",
+   "bucket": "opal-data-bd",
+   "key": "platinum/advisors/{*}/timeseries.json",
+   "attribution": "writer-firm"
+  },
+  {
+   "id": "opal-data-inf/platinum/advisors/{*}}/composition.json",
+   "type": "S3Key",
+   "name": "platinum/advisors/{*}}/composition.json",
+   "layer": "aws",
+   "stratum": "object",
+   "level": "prefix",
+   "bucket": "opal-data-inf",
+   "key": "platinum/advisors/{*}}/composition.json",
+   "attribution": "writer-firm"
+  },
+  {
+   "id": "opal-data-bd/platinum/clients/{*}/composition.json",
+   "type": "S3Key",
+   "name": "platinum/clients/{*}/composition.json",
+   "layer": "aws",
+   "stratum": "object",
+   "level": "prefix",
+   "bucket": "opal-data-bd",
+   "key": "platinum/clients/{*}/composition.json",
+   "attribution": "writer-firm"
+  },
+  {
+   "id": "opal-data-bd/platinum/clients/{*}/concentration.json",
+   "type": "S3Key",
+   "name": "platinum/clients/{*}/concentration.json",
+   "layer": "aws",
+   "stratum": "object",
+   "level": "prefix",
+   "bucket": "opal-data-bd",
+   "key": "platinum/clients/{*}/concentration.json",
+   "attribution": "writer-firm"
+  },
+  {
+   "id": "opal-data-inf/platinum/clients/{*}/detail.json",
+   "type": "S3Key",
+   "name": "platinum/clients/{*}/detail.json",
+   "layer": "aws",
+   "stratum": "object",
+   "level": "prefix",
+   "bucket": "opal-data-inf",
+   "key": "platinum/clients/{*}/detail.json",
+   "attribution": "writer-firm"
+  },
+  {
+   "id": "opal-data-bd/platinum/clients/{*}/mix_timeseries.json",
+   "type": "S3Key",
+   "name": "platinum/clients/{*}/mix_timeseries.json",
+   "layer": "aws",
+   "stratum": "object",
+   "level": "prefix",
+   "bucket": "opal-data-bd",
+   "key": "platinum/clients/{*}/mix_timeseries.json",
+   "attribution": "writer-firm"
+  },
+  {
+   "id": "opal-data-bd/platinum/clients/{*}/summary.json",
+   "type": "S3Key",
+   "name": "platinum/clients/{*}/summary.json",
+   "layer": "aws",
+   "stratum": "object",
+   "level": "prefix",
+   "bucket": "opal-data-bd",
+   "key": "platinum/clients/{*}/summary.json",
+   "attribution": "writer-firm"
+  },
+  {
+   "id": "opal-data-inf/platinum/clients/{*}/timeseries.json",
+   "type": "S3Key",
+   "name": "platinum/clients/{*}/timeseries.json",
+   "layer": "aws",
+   "stratum": "object",
+   "level": "prefix",
+   "bucket": "opal-data-inf",
+   "key": "platinum/clients/{*}/timeseries.json",
+   "attribution": "writer-firm"
+  },
+  {
+   "id": "opal-data-inf/platinum/clients/{*}/top_holdings.json",
+   "type": "S3Key",
+   "name": "platinum/clients/{*}/top_holdings.json",
+   "layer": "aws",
+   "stratum": "object",
+   "level": "prefix",
+   "bucket": "opal-data-inf",
+   "key": "platinum/clients/{*}/top_holdings.json",
+   "attribution": "writer-firm"
+  },
+  {
+   "id": "opal-data-bd/platinum/clients/{*}/views.json",
+   "type": "S3Key",
+   "name": "platinum/clients/{*}/views.json",
+   "layer": "aws",
+   "stratum": "object",
+   "level": "prefix",
+   "bucket": "opal-data-bd",
+   "key": "platinum/clients/{*}/views.json",
+   "attribution": "writer-firm"
+  },
+  {
+   "id": "opal-data-inf/platinum/firm/_meta/bronze_skip_warning_{*}.json",
+   "type": "S3Key",
+   "name": "platinum/firm/_meta/bronze_skip_warning_{*}.json",
+   "layer": "aws",
+   "stratum": "object",
+   "level": "prefix",
+   "bucket": "opal-data-inf",
+   "key": "platinum/firm/_meta/bronze_skip_warning_{*}.json",
+   "attribution": "writer-firm"
+  },
+  {
+   "id": "opal-data-inf/platinum/firm/_meta/reconciliation_summary_holdings_{*}.json",
+   "type": "S3Key",
+   "name": "platinum/firm/_meta/reconciliation_summary_holdings_{*}.json",
+   "layer": "aws",
+   "stratum": "object",
+   "level": "prefix",
+   "bucket": "opal-data-inf",
+   "key": "platinum/firm/_meta/reconciliation_summary_holdings_{*}.json",
+   "attribution": "writer-firm"
+  },
+  {
+   "id": "opal-data-bd/platinum/firm/clients-tab-slim.json",
+   "type": "S3Key",
+   "name": "platinum/firm/clients-tab-slim.json",
+   "layer": "aws",
+   "stratum": "object",
+   "level": "object",
+   "bucket": "opal-data-bd",
+   "key": "platinum/firm/clients-tab-slim.json",
+   "attribution": "writer-firm"
+  },
+  {
+   "id": "opal-data-inf/platinum/firm/clients-tab-slim.json",
+   "type": "S3Key",
+   "name": "platinum/firm/clients-tab-slim.json",
+   "layer": "aws",
+   "stratum": "object",
+   "level": "object",
+   "bucket": "opal-data-inf",
+   "key": "platinum/firm/clients-tab-slim.json",
+   "attribution": "writer-firm"
+  },
+  {
+   "id": "opal-data-inf/platinum/firm/clients_tab.json",
+   "type": "S3Key",
+   "name": "platinum/firm/clients_tab.json",
+   "layer": "aws",
+   "stratum": "object",
+   "level": "object",
+   "bucket": "opal-data-inf",
+   "key": "platinum/firm/clients_tab.json",
+   "attribution": "writer-firm"
+  },
+  {
+   "id": "opal-data-bd/platinum/firm/cumulative_chart.json",
+   "type": "S3Key",
+   "name": "platinum/firm/cumulative_chart.json",
+   "layer": "aws",
+   "stratum": "object",
+   "level": "object",
+   "bucket": "opal-data-bd",
+   "key": "platinum/firm/cumulative_chart.json",
+   "attribution": "writer-firm"
+  },
+  {
+   "id": "opal-data-inf/platinum/firm/cumulative_chart.json",
+   "type": "S3Key",
+   "name": "platinum/firm/cumulative_chart.json",
+   "layer": "aws",
+   "stratum": "object",
+   "level": "object",
+   "bucket": "opal-data-inf",
+   "key": "platinum/firm/cumulative_chart.json",
+   "attribution": "writer-firm"
+  },
+  {
+   "id": "opal-data-bd/platinum/firm/dashboard.json",
+   "type": "S3Key",
+   "name": "platinum/firm/dashboard.json",
+   "layer": "aws",
+   "stratum": "object",
+   "level": "object",
+   "bucket": "opal-data-bd",
+   "key": "platinum/firm/dashboard.json",
+   "attribution": "writer-firm"
+  },
+  {
+   "id": "opal-data-inf/platinum/firm/dashboard.json",
+   "type": "S3Key",
+   "name": "platinum/firm/dashboard.json",
+   "layer": "aws",
+   "stratum": "object",
+   "level": "object",
+   "bucket": "opal-data-inf",
+   "key": "platinum/firm/dashboard.json",
+   "attribution": "writer-firm"
+  },
+  {
+   "id": "opal-data-bd/platinum/firm/fee_efficiency.json",
+   "type": "S3Key",
+   "name": "platinum/firm/fee_efficiency.json",
+   "layer": "aws",
+   "stratum": "object",
+   "level": "object",
+   "bucket": "opal-data-bd",
+   "key": "platinum/firm/fee_efficiency.json",
+   "attribution": "writer-firm"
+  },
+  {
+   "id": "opal-data-inf/platinum/firm/fee_efficiency.json",
+   "type": "S3Key",
+   "name": "platinum/firm/fee_efficiency.json",
+   "layer": "aws",
+   "stratum": "object",
+   "level": "object",
+   "bucket": "opal-data-inf",
+   "key": "platinum/firm/fee_efficiency.json",
+   "attribution": "writer-firm"
+  },
+  {
+   "id": "opal-data-inf/platinum/firm/filters/dimensions.json",
+   "type": "S3Key",
+   "name": "platinum/firm/filters/dimensions.json",
+   "layer": "aws",
+   "stratum": "object",
+   "level": "object",
+   "bucket": "opal-data-inf",
+   "key": "platinum/firm/filters/dimensions.json",
+   "attribution": "writer-firm"
+  },
+  {
+   "id": "opal-data-inf/platinum/firm/firm_composition.json",
+   "type": "S3Key",
+   "name": "platinum/firm/firm_composition.json",
+   "layer": "aws",
+   "stratum": "object",
+   "level": "object",
+   "bucket": "opal-data-inf",
+   "key": "platinum/firm/firm_composition.json",
+   "attribution": "writer-firm"
+  },
+  {
+   "id": "opal-data-bd/platinum/firm/header_metrics.json",
+   "type": "S3Key",
+   "name": "platinum/firm/header_metrics.json",
+   "layer": "aws",
+   "stratum": "object",
+   "level": "object",
+   "bucket": "opal-data-bd",
+   "key": "platinum/firm/header_metrics.json",
+   "attribution": "writer-firm"
+  },
+  {
+   "id": "opal-data-inf/platinum/firm/header_metrics.json",
+   "type": "S3Key",
+   "name": "platinum/firm/header_metrics.json",
+   "layer": "aws",
+   "stratum": "object",
+   "level": "object",
+   "bucket": "opal-data-inf",
+   "key": "platinum/firm/header_metrics.json",
+   "attribution": "writer-firm"
+  },
+  {
+   "id": "opal-data-bd/platinum/firm/leaderboard.json",
+   "type": "S3Key",
+   "name": "platinum/firm/leaderboard.json",
+   "layer": "aws",
+   "stratum": "object",
+   "level": "object",
+   "bucket": "opal-data-bd",
+   "key": "platinum/firm/leaderboard.json",
+   "attribution": "writer-firm"
+  },
+  {
+   "id": "opal-data-inf/platinum/firm/leaderboard.json",
+   "type": "S3Key",
+   "name": "platinum/firm/leaderboard.json",
+   "layer": "aws",
+   "stratum": "object",
+   "level": "object",
+   "bucket": "opal-data-inf",
+   "key": "platinum/firm/leaderboard.json",
+   "attribution": "writer-firm"
+  },
+  {
+   "id": "opal-data-bd/platinum/firm/mix_summary.json",
+   "type": "S3Key",
+   "name": "platinum/firm/mix_summary.json",
+   "layer": "aws",
+   "stratum": "object",
+   "level": "object",
+   "bucket": "opal-data-bd",
+   "key": "platinum/firm/mix_summary.json",
+   "attribution": "writer-firm"
+  },
+  {
+   "id": "opal-data-inf/platinum/firm/mix_summary.json",
+   "type": "S3Key",
+   "name": "platinum/firm/mix_summary.json",
+   "layer": "aws",
+   "stratum": "object",
+   "level": "object",
+   "bucket": "opal-data-inf",
+   "key": "platinum/firm/mix_summary.json",
+   "attribution": "writer-firm"
+  },
+  {
+   "id": "opal-data-inf/platinum/firm/partner_analytics.json",
+   "type": "S3Key",
+   "name": "platinum/firm/partner_analytics.json",
+   "layer": "aws",
+   "stratum": "object",
+   "level": "object",
+   "bucket": "opal-data-inf",
+   "key": "platinum/firm/partner_analytics.json",
+   "attribution": "writer-firm"
+  },
+  {
+   "id": "opal-data-bd/platinum/firm/partner_analytics_{*}.json",
+   "type": "S3Key",
+   "name": "platinum/firm/partner_analytics_{*}.json",
+   "layer": "aws",
+   "stratum": "object",
+   "level": "prefix",
+   "bucket": "opal-data-bd",
+   "key": "platinum/firm/partner_analytics_{*}.json",
+   "attribution": "writer-firm"
+  },
+  {
+   "id": "opal-data-inf/platinum/firm/partner_analytics_{*}.json",
+   "type": "S3Key",
+   "name": "platinum/firm/partner_analytics_{*}.json",
+   "layer": "aws",
+   "stratum": "object",
+   "level": "prefix",
+   "bucket": "opal-data-inf",
+   "key": "platinum/firm/partner_analytics_{*}.json",
+   "attribution": "writer-firm"
+  },
+  {
+   "id": "opal-data-bd/platinum/firm/timeseries_chart.json",
+   "type": "S3Key",
+   "name": "platinum/firm/timeseries_chart.json",
+   "layer": "aws",
+   "stratum": "object",
+   "level": "object",
+   "bucket": "opal-data-bd",
+   "key": "platinum/firm/timeseries_chart.json",
+   "attribution": "writer-firm"
+  },
+  {
+   "id": "opal-data-inf/platinum/firm/timeseries_chart.json",
+   "type": "S3Key",
+   "name": "platinum/firm/timeseries_chart.json",
+   "layer": "aws",
+   "stratum": "object",
+   "level": "object",
+   "bucket": "opal-data-inf",
+   "key": "platinum/firm/timeseries_chart.json",
+   "attribution": "writer-firm"
+  },
+  {
+   "id": "opal-data-bd/platinum/firm/timeseries_overview.json",
+   "type": "S3Key",
+   "name": "platinum/firm/timeseries_overview.json",
+   "layer": "aws",
+   "stratum": "object",
+   "level": "object",
+   "bucket": "opal-data-bd",
+   "key": "platinum/firm/timeseries_overview.json",
+   "attribution": "writer-firm"
+  },
+  {
+   "id": "opal-data-inf/platinum/firm/timeseries_overview.json",
+   "type": "S3Key",
+   "name": "platinum/firm/timeseries_overview.json",
+   "layer": "aws",
+   "stratum": "object",
+   "level": "object",
+   "bucket": "opal-data-inf",
+   "key": "platinum/firm/timeseries_overview.json",
+   "attribution": "writer-firm"
+  },
+  {
+   "id": "opal-data-inf/platinum/firm/top_holdings.json",
+   "type": "S3Key",
+   "name": "platinum/firm/top_holdings.json",
+   "layer": "aws",
+   "stratum": "object",
+   "level": "object",
+   "bucket": "opal-data-inf",
+   "key": "platinum/firm/top_holdings.json",
+   "attribution": "writer-firm"
+  },
+  {
+   "id": "opal-data-mdpf/platinum/mdpf/aggregate_aua_timeseries.json",
+   "type": "S3Key",
+   "name": "platinum/mdpf/aggregate_aua_timeseries.json",
+   "layer": "aws",
+   "stratum": "object",
+   "level": "object",
+   "bucket": "opal-data-mdpf",
+   "key": "platinum/mdpf/aggregate_aua_timeseries.json",
+   "attribution": "writer-firm"
+  },
+  {
+   "id": "opal-data-bd/platinum/{*}/ownership_map.json",
+   "type": "S3Key",
+   "name": "platinum/{*}/ownership_map.json",
+   "layer": "aws",
+   "stratum": "object",
+   "level": "prefix",
+   "bucket": "opal-data-bd",
+   "key": "platinum/{*}/ownership_map.json",
+   "attribution": "writer-firm"
+  },
+  {
+   "id": "opal-data-bd/silver/allocations/*.parquet",
+   "type": "S3Key",
+   "name": "silver/allocations/*.parquet",
+   "layer": "aws",
+   "stratum": "object",
+   "level": "prefix",
+   "bucket": "opal-data-bd",
+   "key": "silver/allocations/*.parquet",
+   "attribution": "writer-firm"
+  },
+  {
+   "id": "opal-data-bd/silver/allocations/{*}.parquet",
+   "type": "S3Key",
+   "name": "silver/allocations/{*}.parquet",
+   "layer": "aws",
+   "stratum": "object",
+   "level": "prefix",
+   "bucket": "opal-data-bd",
+   "key": "silver/allocations/{*}.parquet",
+   "attribution": "writer-firm"
+  },
+  {
+   "id": "opal-data-bd/silver/bd_assets_dim.parquet",
+   "type": "S3Key",
+   "name": "silver/bd_assets_dim.parquet",
+   "layer": "aws",
+   "stratum": "object",
+   "level": "object",
+   "bucket": "opal-data-bd",
+   "key": "silver/bd_assets_dim.parquet",
+   "attribution": "writer-firm"
+  },
+  {
+   "id": "opal-data-bd/silver/historical_prices.parquet",
+   "type": "S3Key",
+   "name": "silver/historical_prices.parquet",
+   "layer": "aws",
+   "stratum": "object",
+   "level": "object",
+   "bucket": "opal-data-bd",
+   "key": "silver/historical_prices.parquet",
+   "attribution": "writer-firm"
+  },
+  {
+   "id": "opal-data-bd/silver/prices/canonical_prices.parquet",
+   "type": "S3Key",
+   "name": "silver/prices/canonical_prices.parquet",
+   "layer": "aws",
+   "stratum": "object",
+   "level": "object",
+   "bucket": "opal-data-bd",
+   "key": "silver/prices/canonical_prices.parquet",
+   "attribution": "writer-firm"
+  },
+  {
+   "id": "opal-data-inf/silver/prices/canonical_prices.parquet",
+   "type": "S3Key",
+   "name": "silver/prices/canonical_prices.parquet",
+   "layer": "aws",
+   "stratum": "object",
+   "level": "object",
+   "bucket": "opal-data-inf",
+   "key": "silver/prices/canonical_prices.parquet",
+   "attribution": "writer-firm"
+  },
+  {
+   "id": "opal-data-bd/silver/realized/bd_realized_agg.parquet",
+   "type": "S3Key",
+   "name": "silver/realized/bd_realized_agg.parquet",
+   "layer": "aws",
+   "stratum": "object",
+   "level": "object",
+   "bucket": "opal-data-bd",
+   "key": "silver/realized/bd_realized_agg.parquet",
+   "attribution": "writer-firm"
+  },
+  {
+   "id": "opal-data-inf/silver/transactions/*.parquet",
+   "type": "S3Key",
+   "name": "silver/transactions/*.parquet",
+   "layer": "aws",
+   "stratum": "object",
+   "level": "prefix",
+   "bucket": "opal-data-inf",
+   "key": "silver/transactions/*.parquet",
+   "attribution": "writer-firm"
+  },
+  {
+   "id": "opal-data-bd/silver/unrealized/*.parquet",
+   "type": "S3Key",
+   "name": "silver/unrealized/*.parquet",
+   "layer": "aws",
+   "stratum": "object",
+   "level": "prefix",
+   "bucket": "opal-data-bd",
+   "key": "silver/unrealized/*.parquet",
+   "attribution": "writer-firm"
+  },
+  {
+   "id": "opal-data-bd/silver/unrealized/2026-04-20.parquet",
+   "type": "S3Key",
+   "name": "silver/unrealized/2026-04-20.parquet",
+   "layer": "aws",
+   "stratum": "object",
+   "level": "object",
+   "bucket": "opal-data-bd",
+   "key": "silver/unrealized/2026-04-20.parquet",
+   "attribution": "writer-firm"
+  },
+  {
+   "id": "opal-data-bd/silver/unrealized/unrealized_gain_loss.parquet",
+   "type": "S3Key",
+   "name": "silver/unrealized/unrealized_gain_loss.parquet",
+   "layer": "aws",
+   "stratum": "object",
+   "level": "object",
+   "bucket": "opal-data-bd",
+   "key": "silver/unrealized/unrealized_gain_loss.parquet",
+   "attribution": "writer-firm"
+  }
+ ],
+ "edges": [
+  {
+   "source": "opal-data-inf/bronze/orion-api/*/assets.csv",
+   "target": "arn:aws:s3:::opal-data-inf",
+   "edge_type": "OWNED_BY",
+   "layer": "aws",
+   "level": "prefix"
+  },
+  {
+   "source": "arn:aws:s3:::opal-data-inf",
+   "target": "opal-data-inf/bronze/orion-api/*/assets.csv",
+   "edge_type": "CONTAINS",
+   "layer": "aws",
+   "level": "prefix"
+  },
+  {
+   "source": "opal-data-inf/bronze/orion-api/*/transactions.csv",
+   "target": "arn:aws:s3:::opal-data-inf",
+   "edge_type": "OWNED_BY",
+   "layer": "aws",
+   "level": "prefix"
+  },
+  {
+   "source": "arn:aws:s3:::opal-data-inf",
+   "target": "opal-data-inf/bronze/orion-api/*/transactions.csv",
+   "edge_type": "CONTAINS",
+   "layer": "aws",
+   "level": "prefix"
+  },
+  {
+   "source": "opal-data-inf/code/gold/*",
+   "target": "arn:aws:s3:::opal-data-inf",
+   "edge_type": "OWNED_BY",
+   "layer": "aws",
+   "level": "prefix"
+  },
+  {
+   "source": "arn:aws:s3:::opal-data-inf",
+   "target": "opal-data-inf/code/gold/*",
+   "edge_type": "CONTAINS",
+   "layer": "aws",
+   "level": "prefix"
+  },
+  {
+   "source": "opal-data-bd/gold/_parity/account_gains/*/scorecard.json",
+   "target": "arn:aws:s3:::opal-data-bd",
+   "edge_type": "OWNED_BY",
+   "layer": "aws",
+   "level": "prefix"
+  },
+  {
+   "source": "arn:aws:s3:::opal-data-bd",
+   "target": "opal-data-bd/gold/_parity/account_gains/*/scorecard.json",
+   "edge_type": "CONTAINS",
+   "layer": "aws",
+   "level": "prefix"
+  },
+  {
+   "source": "opal-data-bd/gold/_parity/account_gains/{*}/scorecard.json",
+   "target": "arn:aws:s3:::opal-data-bd",
+   "edge_type": "OWNED_BY",
+   "layer": "aws",
+   "level": "prefix"
+  },
+  {
+   "source": "arn:aws:s3:::opal-data-bd",
+   "target": "opal-data-bd/gold/_parity/account_gains/{*}/scorecard.json",
+   "edge_type": "CONTAINS",
+   "layer": "aws",
+   "level": "prefix"
+  },
+  {
+   "source": "opal-data-bd/gold/_parity/canonical_lots/*/scorecard.json",
+   "target": "arn:aws:s3:::opal-data-bd",
+   "edge_type": "OWNED_BY",
+   "layer": "aws",
+   "level": "prefix"
+  },
+  {
+   "source": "arn:aws:s3:::opal-data-bd",
+   "target": "opal-data-bd/gold/_parity/canonical_lots/*/scorecard.json",
+   "edge_type": "CONTAINS",
+   "layer": "aws",
+   "level": "prefix"
+  },
+  {
+   "source": "opal-data-bd/gold/_parity/canonical_lots/{*}/scorecard.json",
+   "target": "arn:aws:s3:::opal-data-bd",
+   "edge_type": "OWNED_BY",
+   "layer": "aws",
+   "level": "prefix"
+  },
+  {
+   "source": "arn:aws:s3:::opal-data-bd",
+   "target": "opal-data-bd/gold/_parity/canonical_lots/{*}/scorecard.json",
+   "edge_type": "CONTAINS",
+   "layer": "aws",
+   "level": "prefix"
+  },
+  {
+   "source": "opal-data-bd/gold/_parity/holdings_lots/*/scorecard.json",
+   "target": "arn:aws:s3:::opal-data-bd",
+   "edge_type": "OWNED_BY",
+   "layer": "aws",
+   "level": "prefix"
+  },
+  {
+   "source": "arn:aws:s3:::opal-data-bd",
+   "target": "opal-data-bd/gold/_parity/holdings_lots/*/scorecard.json",
+   "edge_type": "CONTAINS",
+   "layer": "aws",
+   "level": "prefix"
+  },
+  {
+   "source": "opal-data-bd/gold/_parity/holdings_lots/{*}/scorecard.json",
+   "target": "arn:aws:s3:::opal-data-bd",
+   "edge_type": "OWNED_BY",
+   "layer": "aws",
+   "level": "prefix"
+  },
+  {
+   "source": "arn:aws:s3:::opal-data-bd",
+   "target": "opal-data-bd/gold/_parity/holdings_lots/{*}/scorecard.json",
+   "edge_type": "CONTAINS",
+   "layer": "aws",
+   "level": "prefix"
+  },
+  {
+   "source": "opal-data-bd/gold/_parity/positions_cube/*/scorecard.json",
+   "target": "arn:aws:s3:::opal-data-bd",
+   "edge_type": "OWNED_BY",
+   "layer": "aws",
+   "level": "prefix"
+  },
+  {
+   "source": "arn:aws:s3:::opal-data-bd",
+   "target": "opal-data-bd/gold/_parity/positions_cube/*/scorecard.json",
+   "edge_type": "CONTAINS",
+   "layer": "aws",
+   "level": "prefix"
+  },
+  {
+   "source": "opal-data-bd/gold/_parity/positions_cube/{*}/scorecard.json",
+   "target": "arn:aws:s3:::opal-data-bd",
+   "edge_type": "OWNED_BY",
+   "layer": "aws",
+   "level": "prefix"
+  },
+  {
+   "source": "arn:aws:s3:::opal-data-bd",
+   "target": "opal-data-bd/gold/_parity/positions_cube/{*}/scorecard.json",
+   "edge_type": "CONTAINS",
+   "layer": "aws",
+   "level": "prefix"
+  },
+  {
+   "source": "opal-data-bd/gold/_state/advisor_assignments/daily_state.parquet",
+   "target": "arn:aws:s3:::opal-data-bd",
+   "edge_type": "OWNED_BY",
+   "layer": "aws",
+   "level": "object"
+  },
+  {
+   "source": "arn:aws:s3:::opal-data-bd",
+   "target": "opal-data-bd/gold/_state/advisor_assignments/daily_state.parquet",
+   "edge_type": "CONTAINS",
+   "layer": "aws",
+   "level": "object"
+  },
+  {
+   "source": "opal-data-inf/gold/account_gains/{*}.parquet",
+   "target": "arn:aws:s3:::opal-data-inf",
+   "edge_type": "OWNED_BY",
+   "layer": "aws",
+   "level": "prefix"
+  },
+  {
+   "source": "arn:aws:s3:::opal-data-inf",
+   "target": "opal-data-inf/gold/account_gains/{*}.parquet",
+   "edge_type": "CONTAINS",
+   "layer": "aws",
+   "level": "prefix"
+  },
+  {
+   "source": "opal-data-bd/gold/accounts_dimension_latest.parquet",
+   "target": "arn:aws:s3:::opal-data-bd",
+   "edge_type": "OWNED_BY",
+   "layer": "aws",
+   "level": "object"
+  },
+  {
+   "source": "arn:aws:s3:::opal-data-bd",
+   "target": "opal-data-bd/gold/accounts_dimension_latest.parquet",
+   "edge_type": "CONTAINS",
+   "layer": "aws",
+   "level": "object"
+  },
+  {
+   "source": "opal-data-bd/gold/artifacts/49f/c1_recovered_accounts.json",
+   "target": "arn:aws:s3:::opal-data-bd",
+   "edge_type": "OWNED_BY",
+   "layer": "aws",
+   "level": "object"
+  },
+  {
+   "source": "arn:aws:s3:::opal-data-bd",
+   "target": "opal-data-bd/gold/artifacts/49f/c1_recovered_accounts.json",
+   "edge_type": "CONTAINS",
+   "layer": "aws",
+   "level": "object"
+  },
+  {
+   "source": "opal-data-bd/gold/artifacts/49f/out_of_scope_accounts.json",
+   "target": "arn:aws:s3:::opal-data-bd",
+   "edge_type": "OWNED_BY",
+   "layer": "aws",
+   "level": "object"
+  },
+  {
+   "source": "arn:aws:s3:::opal-data-bd",
+   "target": "opal-data-bd/gold/artifacts/49f/out_of_scope_accounts.json",
+   "edge_type": "CONTAINS",
+   "layer": "aws",
+   "level": "object"
+  },
+  {
+   "source": "opal-data-bd/gold/artifacts/advisor_fee_efficiency.json",
+   "target": "arn:aws:s3:::opal-data-bd",
+   "edge_type": "OWNED_BY",
+   "layer": "aws",
+   "level": "object"
+  },
+  {
+   "source": "arn:aws:s3:::opal-data-bd",
+   "target": "opal-data-bd/gold/artifacts/advisor_fee_efficiency.json",
+   "edge_type": "CONTAINS",
+   "layer": "aws",
+   "level": "object"
+  },
+  {
+   "source": "opal-data-inf/gold/artifacts/advisor_fee_efficiency.json",
+   "target": "arn:aws:s3:::opal-data-inf",
+   "edge_type": "OWNED_BY",
+   "layer": "aws",
+   "level": "object"
+  },
+  {
+   "source": "arn:aws:s3:::opal-data-inf",
+   "target": "opal-data-inf/gold/artifacts/advisor_fee_efficiency.json",
+   "edge_type": "CONTAINS",
+   "layer": "aws",
+   "level": "object"
+  },
+  {
+   "source": "opal-data-inf/gold/artifacts/client_mix_timeseries.json",
+   "target": "arn:aws:s3:::opal-data-inf",
+   "edge_type": "OWNED_BY",
+   "layer": "aws",
+   "level": "object"
+  },
+  {
+   "source": "arn:aws:s3:::opal-data-inf",
+   "target": "opal-data-inf/gold/artifacts/client_mix_timeseries.json",
+   "edge_type": "CONTAINS",
+   "layer": "aws",
+   "level": "object"
+  },
+  {
+   "source": "opal-data-inf/gold/artifacts/client_tax_liability.json",
+   "target": "arn:aws:s3:::opal-data-inf",
+   "edge_type": "OWNED_BY",
+   "layer": "aws",
+   "level": "object"
+  },
+  {
+   "source": "arn:aws:s3:::opal-data-inf",
+   "target": "opal-data-inf/gold/artifacts/client_tax_liability.json",
+   "edge_type": "CONTAINS",
+   "layer": "aws",
+   "level": "object"
+  },
+  {
+   "source": "opal-data-bd/gold/artifacts/clients_tab.json",
+   "target": "arn:aws:s3:::opal-data-bd",
+   "edge_type": "OWNED_BY",
+   "layer": "aws",
+   "level": "object"
+  },
+  {
+   "source": "arn:aws:s3:::opal-data-bd",
+   "target": "opal-data-bd/gold/artifacts/clients_tab.json",
+   "edge_type": "CONTAINS",
+   "layer": "aws",
+   "level": "object"
+  },
+  {
+   "source": "opal-data-inf/gold/artifacts/cumulative_chart.json",
+   "target": "arn:aws:s3:::opal-data-inf",
+   "edge_type": "OWNED_BY",
+   "layer": "aws",
+   "level": "object"
+  },
+  {
+   "source": "arn:aws:s3:::opal-data-inf",
+   "target": "opal-data-inf/gold/artifacts/cumulative_chart.json",
+   "edge_type": "CONTAINS",
+   "layer": "aws",
+   "level": "object"
+  },
+  {
+   "source": "opal-data-bd/gold/artifacts/employee_leaderboard.json",
+   "target": "arn:aws:s3:::opal-data-bd",
+   "edge_type": "OWNED_BY",
+   "layer": "aws",
+   "level": "object"
+  },
+  {
+   "source": "arn:aws:s3:::opal-data-bd",
+   "target": "opal-data-bd/gold/artifacts/employee_leaderboard.json",
+   "edge_type": "CONTAINS",
+   "layer": "aws",
+   "level": "object"
+  },
+  {
+   "source": "opal-data-bd/gold/artifacts/filters/dimensions.json",
+   "target": "arn:aws:s3:::opal-data-bd",
+   "edge_type": "OWNED_BY",
+   "layer": "aws",
+   "level": "object"
+  },
+  {
+   "source": "arn:aws:s3:::opal-data-bd",
+   "target": "opal-data-bd/gold/artifacts/filters/dimensions.json",
+   "edge_type": "CONTAINS",
+   "layer": "aws",
+   "level": "object"
+  },
+  {
+   "source": "opal-data-bd/gold/artifacts/firm_mix_views.json",
+   "target": "arn:aws:s3:::opal-data-bd",
+   "edge_type": "OWNED_BY",
+   "layer": "aws",
+   "level": "object"
+  },
+  {
+   "source": "arn:aws:s3:::opal-data-bd",
+   "target": "opal-data-bd/gold/artifacts/firm_mix_views.json",
+   "edge_type": "CONTAINS",
+   "layer": "aws",
+   "level": "object"
+  },
+  {
+   "source": "opal-data-inf/gold/artifacts/firm_mix_views.json",
+   "target": "arn:aws:s3:::opal-data-inf",
+   "edge_type": "OWNED_BY",
+   "layer": "aws",
+   "level": "object"
+  },
+  {
+   "source": "arn:aws:s3:::opal-data-inf",
+   "target": "opal-data-inf/gold/artifacts/firm_mix_views.json",
+   "edge_type": "CONTAINS",
+   "layer": "aws",
+   "level": "object"
+  },
+  {
+   "source": "opal-data-bd/gold/artifacts/firm_mix_views_daily.json",
+   "target": "arn:aws:s3:::opal-data-bd",
+   "edge_type": "OWNED_BY",
+   "layer": "aws",
+   "level": "object"
+  },
+  {
+   "source": "arn:aws:s3:::opal-data-bd",
+   "target": "opal-data-bd/gold/artifacts/firm_mix_views_daily.json",
+   "edge_type": "CONTAINS",
+   "layer": "aws",
+   "level": "object"
+  },
+  {
+   "source": "opal-data-bd/gold/artifacts/implementor_leaderboard.json",
+   "target": "arn:aws:s3:::opal-data-bd",
+   "edge_type": "OWNED_BY",
+   "layer": "aws",
+   "level": "object"
+  },
+  {
+   "source": "arn:aws:s3:::opal-data-bd",
+   "target": "opal-data-bd/gold/artifacts/implementor_leaderboard.json",
+   "edge_type": "CONTAINS",
+   "layer": "aws",
+   "level": "object"
+  },
+  {
+   "source": "opal-data-bd/gold/artifacts/partner_analytics/header_metrics_{*}.json",
+   "target": "arn:aws:s3:::opal-data-bd",
+   "edge_type": "OWNED_BY",
+   "layer": "aws",
+   "level": "prefix"
+  },
+  {
+   "source": "arn:aws:s3:::opal-data-bd",
+   "target": "opal-data-bd/gold/artifacts/partner_analytics/header_metrics_{*}.json",
+   "edge_type": "CONTAINS",
+   "layer": "aws",
+   "level": "prefix"
+  },
+  {
+   "source": "opal-data-bd/gold/artifacts/summary/header_metrics.json",
+   "target": "arn:aws:s3:::opal-data-bd",
+   "edge_type": "OWNED_BY",
+   "layer": "aws",
+   "level": "object"
+  },
+  {
+   "source": "arn:aws:s3:::opal-data-bd",
+   "target": "opal-data-bd/gold/artifacts/summary/header_metrics.json",
+   "edge_type": "CONTAINS",
+   "layer": "aws",
+   "level": "object"
+  },
+  {
+   "source": "opal-data-inf/gold/artifacts/summary/header_metrics.json",
+   "target": "arn:aws:s3:::opal-data-inf",
+   "edge_type": "OWNED_BY",
+   "layer": "aws",
+   "level": "object"
+  },
+  {
+   "source": "arn:aws:s3:::opal-data-inf",
+   "target": "opal-data-inf/gold/artifacts/summary/header_metrics.json",
+   "edge_type": "CONTAINS",
+   "layer": "aws",
+   "level": "object"
+  },
+  {
+   "source": "opal-data-bd/gold/artifacts/timeseries_chart.json",
+   "target": "arn:aws:s3:::opal-data-bd",
+   "edge_type": "OWNED_BY",
+   "layer": "aws",
+   "level": "object"
+  },
+  {
+   "source": "arn:aws:s3:::opal-data-bd",
+   "target": "opal-data-bd/gold/artifacts/timeseries_chart.json",
+   "edge_type": "CONTAINS",
+   "layer": "aws",
+   "level": "object"
+  },
+  {
+   "source": "opal-data-inf/gold/artifacts/timeseries_chart.json",
+   "target": "arn:aws:s3:::opal-data-inf",
+   "edge_type": "OWNED_BY",
+   "layer": "aws",
+   "level": "object"
+  },
+  {
+   "source": "arn:aws:s3:::opal-data-inf",
+   "target": "opal-data-inf/gold/artifacts/timeseries_chart.json",
+   "edge_type": "CONTAINS",
+   "layer": "aws",
+   "level": "object"
+  },
+  {
+   "source": "opal-data-inf/gold/cache/hh_timeseries_anchors_{*}.parquet",
+   "target": "arn:aws:s3:::opal-data-inf",
+   "edge_type": "OWNED_BY",
+   "layer": "aws",
+   "level": "prefix"
+  },
+  {
+   "source": "arn:aws:s3:::opal-data-inf",
+   "target": "opal-data-inf/gold/cache/hh_timeseries_anchors_{*}.parquet",
+   "edge_type": "CONTAINS",
+   "layer": "aws",
+   "level": "prefix"
+  },
+  {
+   "source": "opal-data-bd/gold/canonical/account_gains/{*}.parquet",
+   "target": "arn:aws:s3:::opal-data-bd",
+   "edge_type": "OWNED_BY",
+   "layer": "aws",
+   "level": "prefix"
+  },
+  {
+   "source": "arn:aws:s3:::opal-data-bd",
+   "target": "opal-data-bd/gold/canonical/account_gains/{*}.parquet",
+   "edge_type": "CONTAINS",
+   "layer": "aws",
+   "level": "prefix"
+  },
+  {
+   "source": "opal-data-bd/gold/canonical/advisor_fee_detail/{*}.parquet",
+   "target": "arn:aws:s3:::opal-data-bd",
+   "edge_type": "OWNED_BY",
+   "layer": "aws",
+   "level": "prefix"
+  },
+  {
+   "source": "arn:aws:s3:::opal-data-bd",
+   "target": "opal-data-bd/gold/canonical/advisor_fee_detail/{*}.parquet",
+   "edge_type": "CONTAINS",
+   "layer": "aws",
+   "level": "prefix"
+  },
+  {
+   "source": "opal-data-inf/gold/canonical/canonical_performance_2026-04-20.parquet",
+   "target": "arn:aws:s3:::opal-data-inf",
+   "edge_type": "OWNED_BY",
+   "layer": "aws",
+   "level": "object"
+  },
+  {
+   "source": "arn:aws:s3:::opal-data-inf",
+   "target": "opal-data-inf/gold/canonical/canonical_performance_2026-04-20.parquet",
+   "edge_type": "CONTAINS",
+   "layer": "aws",
+   "level": "object"
+  },
+  {
+   "source": "opal-data-inf/gold/canonical/canonical_performance_{*}.parquet",
+   "target": "arn:aws:s3:::opal-data-inf",
+   "edge_type": "OWNED_BY",
+   "layer": "aws",
+   "level": "prefix"
+  },
+  {
+   "source": "arn:aws:s3:::opal-data-inf",
+   "target": "opal-data-inf/gold/canonical/canonical_performance_{*}.parquet",
+   "edge_type": "CONTAINS",
+   "layer": "aws",
+   "level": "prefix"
+  },
+  {
+   "source": "opal-data-bd/gold/canonical/holdings/{*}.parquet",
+   "target": "arn:aws:s3:::opal-data-bd",
+   "edge_type": "OWNED_BY",
+   "layer": "aws",
+   "level": "prefix"
+  },
+  {
+   "source": "arn:aws:s3:::opal-data-bd",
+   "target": "opal-data-bd/gold/canonical/holdings/{*}.parquet",
+   "edge_type": "CONTAINS",
+   "layer": "aws",
+   "level": "prefix"
+  },
+  {
+   "source": "opal-data-inf/gold/canonical/holdings_*.parquet",
+   "target": "arn:aws:s3:::opal-data-inf",
+   "edge_type": "OWNED_BY",
+   "layer": "aws",
+   "level": "prefix"
+  },
+  {
+   "source": "arn:aws:s3:::opal-data-inf",
+   "target": "opal-data-inf/gold/canonical/holdings_*.parquet",
+   "edge_type": "CONTAINS",
+   "layer": "aws",
+   "level": "prefix"
+  },
+  {
+   "source": "opal-data-bd/gold/canonical/holdings_gaps/{*}.parquet",
+   "target": "arn:aws:s3:::opal-data-bd",
+   "edge_type": "OWNED_BY",
+   "layer": "aws",
+   "level": "prefix"
+  },
+  {
+   "source": "arn:aws:s3:::opal-data-bd",
+   "target": "opal-data-bd/gold/canonical/holdings_gaps/{*}.parquet",
+   "edge_type": "CONTAINS",
+   "layer": "aws",
+   "level": "prefix"
+  },
+  {
+   "source": "opal-data-bd/gold/canonical/lots_realized/{*}.parquet",
+   "target": "arn:aws:s3:::opal-data-bd",
+   "edge_type": "OWNED_BY",
+   "layer": "aws",
+   "level": "prefix"
+  },
+  {
+   "source": "arn:aws:s3:::opal-data-bd",
+   "target": "opal-data-bd/gold/canonical/lots_realized/{*}.parquet",
+   "edge_type": "CONTAINS",
+   "layer": "aws",
+   "level": "prefix"
+  },
+  {
+   "source": "opal-data-bd/gold/canonical/lots_unrealized/{*}.parquet",
+   "target": "arn:aws:s3:::opal-data-bd",
+   "edge_type": "OWNED_BY",
+   "layer": "aws",
+   "level": "prefix"
+  },
+  {
+   "source": "arn:aws:s3:::opal-data-bd",
+   "target": "opal-data-bd/gold/canonical/lots_unrealized/{*}.parquet",
+   "edge_type": "CONTAINS",
+   "layer": "aws",
+   "level": "prefix"
+  },
+  {
+   "source": "opal-data-bd/gold/canonical/nna/{*}.parquet",
+   "target": "arn:aws:s3:::opal-data-bd",
+   "edge_type": "OWNED_BY",
+   "layer": "aws",
+   "level": "prefix"
+  },
+  {
+   "source": "arn:aws:s3:::opal-data-bd",
+   "target": "opal-data-bd/gold/canonical/nna/{*}.parquet",
+   "edge_type": "CONTAINS",
+   "layer": "aws",
+   "level": "prefix"
+  },
+  {
+   "source": "opal-data-bd/gold/canonical/nna_atomic/{*}.parquet",
+   "target": "arn:aws:s3:::opal-data-bd",
+   "edge_type": "OWNED_BY",
+   "layer": "aws",
+   "level": "prefix"
+  },
+  {
+   "source": "arn:aws:s3:::opal-data-bd",
+   "target": "opal-data-bd/gold/canonical/nna_atomic/{*}.parquet",
+   "edge_type": "CONTAINS",
+   "layer": "aws",
+   "level": "prefix"
+  },
+  {
+   "source": "opal-data-bd/gold/canonical/nna_validation/{*}.json",
+   "target": "arn:aws:s3:::opal-data-bd",
+   "edge_type": "OWNED_BY",
+   "layer": "aws",
+   "level": "prefix"
+  },
+  {
+   "source": "arn:aws:s3:::opal-data-bd",
+   "target": "opal-data-bd/gold/canonical/nna_validation/{*}.json",
+   "edge_type": "CONTAINS",
+   "layer": "aws",
+   "level": "prefix"
+  },
+  {
+   "source": "opal-data-bd/gold/canonical/performance/{*}.parquet",
+   "target": "arn:aws:s3:::opal-data-bd",
+   "edge_type": "OWNED_BY",
+   "layer": "aws",
+   "level": "prefix"
+  },
+  {
+   "source": "arn:aws:s3:::opal-data-bd",
+   "target": "opal-data-bd/gold/canonical/performance/{*}.parquet",
+   "edge_type": "CONTAINS",
+   "layer": "aws",
+   "level": "prefix"
+  },
+  {
+   "source": "opal-data-bd/gold/canonical/role_aua/*.parquet",
+   "target": "arn:aws:s3:::opal-data-bd",
+   "edge_type": "OWNED_BY",
+   "layer": "aws",
+   "level": "prefix"
+  },
+  {
+   "source": "arn:aws:s3:::opal-data-bd",
+   "target": "opal-data-bd/gold/canonical/role_aua/*.parquet",
+   "edge_type": "CONTAINS",
+   "layer": "aws",
+   "level": "prefix"
+  },
+  {
+   "source": "opal-data-bd/gold/canonical/role_aua/{*}.parquet",
+   "target": "arn:aws:s3:::opal-data-bd",
+   "edge_type": "OWNED_BY",
+   "layer": "aws",
+   "level": "prefix"
+  },
+  {
+   "source": "arn:aws:s3:::opal-data-bd",
+   "target": "opal-data-bd/gold/canonical/role_aua/{*}.parquet",
+   "edge_type": "CONTAINS",
+   "layer": "aws",
+   "level": "prefix"
+  },
+  {
+   "source": "opal-data-inf/gold/canonical/role_aua/{*}.parquet",
+   "target": "arn:aws:s3:::opal-data-inf",
+   "edge_type": "OWNED_BY",
+   "layer": "aws",
+   "level": "prefix"
+  },
+  {
+   "source": "arn:aws:s3:::opal-data-inf",
+   "target": "opal-data-inf/gold/canonical/role_aua/{*}.parquet",
+   "edge_type": "CONTAINS",
+   "layer": "aws",
+   "level": "prefix"
+  },
+  {
+   "source": "opal-data-bd/gold/canonical/watermarks.json",
+   "target": "arn:aws:s3:::opal-data-bd",
+   "edge_type": "OWNED_BY",
+   "layer": "aws",
+   "level": "object"
+  },
+  {
+   "source": "arn:aws:s3:::opal-data-bd",
+   "target": "opal-data-bd/gold/canonical/watermarks.json",
+   "edge_type": "CONTAINS",
+   "layer": "aws",
+   "level": "object"
+  },
+  {
+   "source": "opal-data-inf/gold/classification/ticker_coverage_report.json",
+   "target": "arn:aws:s3:::opal-data-inf",
+   "edge_type": "OWNED_BY",
+   "layer": "aws",
+   "level": "object"
+  },
+  {
+   "source": "arn:aws:s3:::opal-data-inf",
+   "target": "opal-data-inf/gold/classification/ticker_coverage_report.json",
+   "edge_type": "CONTAINS",
+   "layer": "aws",
+   "level": "object"
+  },
+  {
+   "source": "opal-data-bd/gold/client_performance.parquet",
+   "target": "arn:aws:s3:::opal-data-bd",
+   "edge_type": "OWNED_BY",
+   "layer": "aws",
+   "level": "object"
+  },
+  {
+   "source": "arn:aws:s3:::opal-data-bd",
+   "target": "opal-data-bd/gold/client_performance.parquet",
+   "edge_type": "CONTAINS",
+   "layer": "aws",
+   "level": "object"
+  },
+  {
+   "source": "opal-data-bd/gold/dimensions/accounts_dimension_latest.parquet",
+   "target": "arn:aws:s3:::opal-data-bd",
+   "edge_type": "OWNED_BY",
+   "layer": "aws",
+   "level": "object"
+  },
+  {
+   "source": "arn:aws:s3:::opal-data-bd",
+   "target": "opal-data-bd/gold/dimensions/accounts_dimension_latest.parquet",
+   "edge_type": "CONTAINS",
+   "layer": "aws",
+   "level": "object"
+  },
+  {
+   "source": "opal-data-inf/gold/dimensions/accounts_dimension_latest.parquet",
+   "target": "arn:aws:s3:::opal-data-inf",
+   "edge_type": "OWNED_BY",
+   "layer": "aws",
+   "level": "object"
+  },
+  {
+   "source": "arn:aws:s3:::opal-data-inf",
+   "target": "opal-data-inf/gold/dimensions/accounts_dimension_latest.parquet",
+   "edge_type": "CONTAINS",
+   "layer": "aws",
+   "level": "object"
+  },
+  {
+   "source": "opal-data-inf/gold/dimensions/advisor_assignments.parquet",
+   "target": "arn:aws:s3:::opal-data-inf",
+   "edge_type": "OWNED_BY",
+   "layer": "aws",
+   "level": "object"
+  },
+  {
+   "source": "arn:aws:s3:::opal-data-inf",
+   "target": "opal-data-inf/gold/dimensions/advisor_assignments.parquet",
+   "edge_type": "CONTAINS",
+   "layer": "aws",
+   "level": "object"
+  },
+  {
+   "source": "opal-data-bd/gold/dimensions/advisor_assignments_history.parquet",
+   "target": "arn:aws:s3:::opal-data-bd",
+   "edge_type": "OWNED_BY",
+   "layer": "aws",
+   "level": "object"
+  },
+  {
+   "source": "arn:aws:s3:::opal-data-bd",
+   "target": "opal-data-bd/gold/dimensions/advisor_assignments_history.parquet",
+   "edge_type": "CONTAINS",
+   "layer": "aws",
+   "level": "object"
+  },
+  {
+   "source": "opal-data-bd/gold/dimensions/client_dimension.parquet",
+   "target": "arn:aws:s3:::opal-data-bd",
+   "edge_type": "OWNED_BY",
+   "layer": "aws",
+   "level": "object"
+  },
+  {
+   "source": "arn:aws:s3:::opal-data-bd",
+   "target": "opal-data-bd/gold/dimensions/client_dimension.parquet",
+   "edge_type": "CONTAINS",
+   "layer": "aws",
+   "level": "object"
+  },
+  {
+   "source": "opal-data-inf/gold/dimensions/client_dimension.parquet",
+   "target": "arn:aws:s3:::opal-data-inf",
+   "edge_type": "OWNED_BY",
+   "layer": "aws",
+   "level": "object"
+  },
+  {
+   "source": "arn:aws:s3:::opal-data-inf",
+   "target": "opal-data-inf/gold/dimensions/client_dimension.parquet",
+   "edge_type": "CONTAINS",
+   "layer": "aws",
+   "level": "object"
+  },
+  {
+   "source": "opal-data-bd/gold/dimensions/fee_rate_history.parquet",
+   "target": "arn:aws:s3:::opal-data-bd",
+   "edge_type": "OWNED_BY",
+   "layer": "aws",
+   "level": "object"
+  },
+  {
+   "source": "arn:aws:s3:::opal-data-bd",
+   "target": "opal-data-bd/gold/dimensions/fee_rate_history.parquet",
+   "edge_type": "CONTAINS",
+   "layer": "aws",
+   "level": "object"
+  },
+  {
+   "source": "opal-data-bd/gold/dimensions/schwab_bd_account_mapping.parquet",
+   "target": "arn:aws:s3:::opal-data-bd",
+   "edge_type": "OWNED_BY",
+   "layer": "aws",
+   "level": "object"
+  },
+  {
+   "source": "arn:aws:s3:::opal-data-bd",
+   "target": "opal-data-bd/gold/dimensions/schwab_bd_account_mapping.parquet",
+   "edge_type": "CONTAINS",
+   "layer": "aws",
+   "level": "object"
+  },
+  {
+   "source": "opal-data-bd/gold/dimensions/ticker_resolution.parquet",
+   "target": "arn:aws:s3:::opal-data-bd",
+   "edge_type": "OWNED_BY",
+   "layer": "aws",
+   "level": "object"
+  },
+  {
+   "source": "arn:aws:s3:::opal-data-bd",
+   "target": "opal-data-bd/gold/dimensions/ticker_resolution.parquet",
+   "edge_type": "CONTAINS",
+   "layer": "aws",
+   "level": "object"
+  },
+  {
+   "source": "opal-data-inf/gold/eclipse/{*}/_meta/gold_complete.json",
+   "target": "arn:aws:s3:::opal-data-inf",
+   "edge_type": "OWNED_BY",
+   "layer": "aws",
+   "level": "prefix"
+  },
+  {
+   "source": "arn:aws:s3:::opal-data-inf",
+   "target": "opal-data-inf/gold/eclipse/{*}/_meta/gold_complete.json",
+   "edge_type": "CONTAINS",
+   "layer": "aws",
+   "level": "prefix"
+  },
+  {
+   "source": "opal-data-bd/gold/entities/advisors/{*}/mix.json",
+   "target": "arn:aws:s3:::opal-data-bd",
+   "edge_type": "OWNED_BY",
+   "layer": "aws",
+   "level": "prefix"
+  },
+  {
+   "source": "arn:aws:s3:::opal-data-bd",
+   "target": "opal-data-bd/gold/entities/advisors/{*}/mix.json",
+   "edge_type": "CONTAINS",
+   "layer": "aws",
+   "level": "prefix"
+  },
+  {
+   "source": "opal-data-bd/gold/entities/advisors/{*}/mix_daily.json",
+   "target": "arn:aws:s3:::opal-data-bd",
+   "edge_type": "OWNED_BY",
+   "layer": "aws",
+   "level": "prefix"
+  },
+  {
+   "source": "arn:aws:s3:::opal-data-bd",
+   "target": "opal-data-bd/gold/entities/advisors/{*}/mix_daily.json",
+   "edge_type": "CONTAINS",
+   "layer": "aws",
+   "level": "prefix"
+  },
+  {
+   "source": "opal-data-bd/gold/entities/advisors/{*}/mix_timeseries.json",
+   "target": "arn:aws:s3:::opal-data-bd",
+   "edge_type": "OWNED_BY",
+   "layer": "aws",
+   "level": "prefix"
+  },
+  {
+   "source": "arn:aws:s3:::opal-data-bd",
+   "target": "opal-data-bd/gold/entities/advisors/{*}/mix_timeseries.json",
+   "edge_type": "CONTAINS",
+   "layer": "aws",
+   "level": "prefix"
+  },
+  {
+   "source": "opal-data-bd/gold/entities/clients/*_views.json",
+   "target": "arn:aws:s3:::opal-data-bd",
+   "edge_type": "OWNED_BY",
+   "layer": "aws",
+   "level": "prefix"
+  },
+  {
+   "source": "arn:aws:s3:::opal-data-bd",
+   "target": "opal-data-bd/gold/entities/clients/*_views.json",
+   "edge_type": "CONTAINS",
+   "layer": "aws",
+   "level": "prefix"
+  },
+  {
+   "source": "opal-data-bd/gold/entities/clients/{*}.json",
+   "target": "arn:aws:s3:::opal-data-bd",
+   "edge_type": "OWNED_BY",
+   "layer": "aws",
+   "level": "prefix"
+  },
+  {
+   "source": "arn:aws:s3:::opal-data-bd",
+   "target": "opal-data-bd/gold/entities/clients/{*}.json",
+   "edge_type": "CONTAINS",
+   "layer": "aws",
+   "level": "prefix"
+  },
+  {
+   "source": "opal-data-bd/gold/entities/clients/{*}/detail.json",
+   "target": "arn:aws:s3:::opal-data-bd",
+   "edge_type": "OWNED_BY",
+   "layer": "aws",
+   "level": "prefix"
+  },
+  {
+   "source": "arn:aws:s3:::opal-data-bd",
+   "target": "opal-data-bd/gold/entities/clients/{*}/detail.json",
+   "edge_type": "CONTAINS",
+   "layer": "aws",
+   "level": "prefix"
+  },
+  {
+   "source": "opal-data-inf/gold/holdings/{*}.parquet",
+   "target": "arn:aws:s3:::opal-data-inf",
+   "edge_type": "OWNED_BY",
+   "layer": "aws",
+   "level": "prefix"
+  },
+  {
+   "source": "arn:aws:s3:::opal-data-inf",
+   "target": "opal-data-inf/gold/holdings/{*}.parquet",
+   "edge_type": "CONTAINS",
+   "layer": "aws",
+   "level": "prefix"
+  },
+  {
+   "source": "opal-data-bd/gold/holdings_lots_v2_dryrun/{*}.parquet",
+   "target": "arn:aws:s3:::opal-data-bd",
+   "edge_type": "OWNED_BY",
+   "layer": "aws",
+   "level": "prefix"
+  },
+  {
+   "source": "arn:aws:s3:::opal-data-bd",
+   "target": "opal-data-bd/gold/holdings_lots_v2_dryrun/{*}.parquet",
+   "edge_type": "CONTAINS",
+   "layer": "aws",
+   "level": "prefix"
+  },
+  {
+   "source": "opal-data-inf/gold/lots/lots_latest.parquet",
+   "target": "arn:aws:s3:::opal-data-inf",
+   "edge_type": "OWNED_BY",
+   "layer": "aws",
+   "level": "object"
+  },
+  {
+   "source": "arn:aws:s3:::opal-data-inf",
+   "target": "opal-data-inf/gold/lots/lots_latest.parquet",
+   "edge_type": "CONTAINS",
+   "layer": "aws",
+   "level": "object"
+  },
+  {
+   "source": "opal-data-inf/gold/lots/lots_{*}.parquet",
+   "target": "arn:aws:s3:::opal-data-inf",
+   "edge_type": "OWNED_BY",
+   "layer": "aws",
+   "level": "prefix"
+  },
+  {
+   "source": "arn:aws:s3:::opal-data-inf",
+   "target": "opal-data-inf/gold/lots/lots_{*}.parquet",
+   "edge_type": "CONTAINS",
+   "layer": "aws",
+   "level": "prefix"
+  },
+  {
+   "source": "opal-data-bd/gold/manifests/classify_watermark.json",
+   "target": "arn:aws:s3:::opal-data-bd",
+   "edge_type": "OWNED_BY",
+   "layer": "aws",
+   "level": "object"
+  },
+  {
+   "source": "arn:aws:s3:::opal-data-bd",
+   "target": "opal-data-bd/gold/manifests/classify_watermark.json",
+   "edge_type": "CONTAINS",
+   "layer": "aws",
+   "level": "object"
+  },
+  {
+   "source": "opal-data-bd/gold/meta/account_gains_incr_watermark.json",
+   "target": "arn:aws:s3:::opal-data-bd",
+   "edge_type": "OWNED_BY",
+   "layer": "aws",
+   "level": "object"
+  },
+  {
+   "source": "arn:aws:s3:::opal-data-bd",
+   "target": "opal-data-bd/gold/meta/account_gains_incr_watermark.json",
+   "edge_type": "CONTAINS",
+   "layer": "aws",
+   "level": "object"
+  },
+  {
+   "source": "opal-data-bd/gold/meta/advisor_assignments_watermark.json",
+   "target": "arn:aws:s3:::opal-data-bd",
+   "edge_type": "OWNED_BY",
+   "layer": "aws",
+   "level": "object"
+  },
+  {
+   "source": "arn:aws:s3:::opal-data-bd",
+   "target": "opal-data-bd/gold/meta/advisor_assignments_watermark.json",
+   "edge_type": "CONTAINS",
+   "layer": "aws",
+   "level": "object"
+  },
+  {
+   "source": "opal-data-bd/gold/meta/canonical_lots_incr_watermark.json",
+   "target": "arn:aws:s3:::opal-data-bd",
+   "edge_type": "OWNED_BY",
+   "layer": "aws",
+   "level": "object"
+  },
+  {
+   "source": "arn:aws:s3:::opal-data-bd",
+   "target": "opal-data-bd/gold/meta/canonical_lots_incr_watermark.json",
+   "edge_type": "CONTAINS",
+   "layer": "aws",
+   "level": "object"
+  },
+  {
+   "source": "opal-data-bd/gold/meta/fee_rate_history_watermark.json",
+   "target": "arn:aws:s3:::opal-data-bd",
+   "edge_type": "OWNED_BY",
+   "layer": "aws",
+   "level": "object"
+  },
+  {
+   "source": "arn:aws:s3:::opal-data-bd",
+   "target": "opal-data-bd/gold/meta/fee_rate_history_watermark.json",
+   "edge_type": "CONTAINS",
+   "layer": "aws",
+   "level": "object"
+  },
+  {
+   "source": "opal-data-bd/gold/meta/holdings_lots_incr_watermark.json",
+   "target": "arn:aws:s3:::opal-data-bd",
+   "edge_type": "OWNED_BY",
+   "layer": "aws",
+   "level": "object"
+  },
+  {
+   "source": "arn:aws:s3:::opal-data-bd",
+   "target": "opal-data-bd/gold/meta/holdings_lots_incr_watermark.json",
+   "edge_type": "CONTAINS",
+   "layer": "aws",
+   "level": "object"
+  },
+  {
+   "source": "opal-data-bd/gold/meta/positions_cube_incr_watermark.json",
+   "target": "arn:aws:s3:::opal-data-bd",
+   "edge_type": "OWNED_BY",
+   "layer": "aws",
+   "level": "object"
+  },
+  {
+   "source": "arn:aws:s3:::opal-data-bd",
+   "target": "opal-data-bd/gold/meta/positions_cube_incr_watermark.json",
+   "edge_type": "CONTAINS",
+   "layer": "aws",
+   "level": "object"
+  },
+  {
+   "source": "opal-data-bd/gold/platinum/firm/cash_coverage_summary.json",
+   "target": "arn:aws:s3:::opal-data-bd",
+   "edge_type": "OWNED_BY",
+   "layer": "aws",
+   "level": "object"
+  },
+  {
+   "source": "arn:aws:s3:::opal-data-bd",
+   "target": "opal-data-bd/gold/platinum/firm/cash_coverage_summary.json",
+   "edge_type": "CONTAINS",
+   "layer": "aws",
+   "level": "object"
+  },
+  {
+   "source": "opal-data-bd/gold/platinum/firm/cohort_a_summary.json",
+   "target": "arn:aws:s3:::opal-data-bd",
+   "edge_type": "OWNED_BY",
+   "layer": "aws",
+   "level": "object"
+  },
+  {
+   "source": "arn:aws:s3:::opal-data-bd",
+   "target": "opal-data-bd/gold/platinum/firm/cohort_a_summary.json",
+   "edge_type": "CONTAINS",
+   "layer": "aws",
+   "level": "object"
+  },
+  {
+   "source": "opal-data-bd/gold/positions_cube/*.parquet",
+   "target": "arn:aws:s3:::opal-data-bd",
+   "edge_type": "OWNED_BY",
+   "layer": "aws",
+   "level": "prefix"
+  },
+  {
+   "source": "arn:aws:s3:::opal-data-bd",
+   "target": "opal-data-bd/gold/positions_cube/*.parquet",
+   "edge_type": "CONTAINS",
+   "layer": "aws",
+   "level": "prefix"
+  },
+  {
+   "source": "opal-data-inf/gold/positions_cube/2026-04-20.parquet",
+   "target": "arn:aws:s3:::opal-data-inf",
+   "edge_type": "OWNED_BY",
+   "layer": "aws",
+   "level": "object"
+  },
+  {
+   "source": "arn:aws:s3:::opal-data-inf",
+   "target": "opal-data-inf/gold/positions_cube/2026-04-20.parquet",
+   "edge_type": "CONTAINS",
+   "layer": "aws",
+   "level": "object"
+  },
+  {
+   "source": "opal-data-inf/gold/positions_cube/{*}.parquet",
+   "target": "arn:aws:s3:::opal-data-inf",
+   "edge_type": "OWNED_BY",
+   "layer": "aws",
+   "level": "prefix"
+  },
+  {
+   "source": "arn:aws:s3:::opal-data-inf",
+   "target": "opal-data-inf/gold/positions_cube/{*}.parquet",
+   "edge_type": "CONTAINS",
+   "layer": "aws",
+   "level": "prefix"
+  },
+  {
+   "source": "opal-data-bd/gold/timeseries/account_performance.parquet",
+   "target": "arn:aws:s3:::opal-data-bd",
+   "edge_type": "OWNED_BY",
+   "layer": "aws",
+   "level": "object"
+  },
+  {
+   "source": "arn:aws:s3:::opal-data-bd",
+   "target": "opal-data-bd/gold/timeseries/account_performance.parquet",
+   "edge_type": "CONTAINS",
+   "layer": "aws",
+   "level": "object"
+  },
+  {
+   "source": "opal-data-inf/gold/timeseries/account_performance.parquet",
+   "target": "arn:aws:s3:::opal-data-inf",
+   "edge_type": "OWNED_BY",
+   "layer": "aws",
+   "level": "object"
+  },
+  {
+   "source": "arn:aws:s3:::opal-data-inf",
+   "target": "opal-data-inf/gold/timeseries/account_performance.parquet",
+   "edge_type": "CONTAINS",
+   "layer": "aws",
+   "level": "object"
+  },
+  {
+   "source": "opal-data-bd/gold/timeseries/client_performance.parquet",
+   "target": "arn:aws:s3:::opal-data-bd",
+   "edge_type": "OWNED_BY",
+   "layer": "aws",
+   "level": "object"
+  },
+  {
+   "source": "arn:aws:s3:::opal-data-bd",
+   "target": "opal-data-bd/gold/timeseries/client_performance.parquet",
+   "edge_type": "CONTAINS",
+   "layer": "aws",
+   "level": "object"
+  },
+  {
+   "source": "opal-data-inf/gold/timeseries/client_performance.parquet",
+   "target": "arn:aws:s3:::opal-data-inf",
+   "edge_type": "OWNED_BY",
+   "layer": "aws",
+   "level": "object"
+  },
+  {
+   "source": "arn:aws:s3:::opal-data-inf",
+   "target": "opal-data-inf/gold/timeseries/client_performance.parquet",
+   "edge_type": "CONTAINS",
+   "layer": "aws",
+   "level": "object"
+  },
+  {
+   "source": "opal-data-bd/gold/timeseries/holdings_lots/2026-04-21.parquet",
+   "target": "arn:aws:s3:::opal-data-bd",
+   "edge_type": "OWNED_BY",
+   "layer": "aws",
+   "level": "object"
+  },
+  {
+   "source": "arn:aws:s3:::opal-data-bd",
+   "target": "opal-data-bd/gold/timeseries/holdings_lots/2026-04-21.parquet",
+   "edge_type": "CONTAINS",
+   "layer": "aws",
+   "level": "object"
+  },
+  {
+   "source": "opal-data-bd/gold/timeseries/holdings_lots/backfill_{*}.parquet",
+   "target": "arn:aws:s3:::opal-data-bd",
+   "edge_type": "OWNED_BY",
+   "layer": "aws",
+   "level": "prefix"
+  },
+  {
+   "source": "arn:aws:s3:::opal-data-bd",
+   "target": "opal-data-bd/gold/timeseries/holdings_lots/backfill_{*}.parquet",
+   "edge_type": "CONTAINS",
+   "layer": "aws",
+   "level": "prefix"
+  },
+  {
+   "source": "opal-data-bd/gold/timeseries/holdings_lots/{*}.parquet",
+   "target": "arn:aws:s3:::opal-data-bd",
+   "edge_type": "OWNED_BY",
+   "layer": "aws",
+   "level": "prefix"
+  },
+  {
+   "source": "arn:aws:s3:::opal-data-bd",
+   "target": "opal-data-bd/gold/timeseries/holdings_lots/{*}.parquet",
+   "edge_type": "CONTAINS",
+   "layer": "aws",
+   "level": "prefix"
+  },
+  {
+   "source": "opal-data-bd/gold/timeseries/holdings_lots_shadow/{*}.parquet",
+   "target": "arn:aws:s3:::opal-data-bd",
+   "edge_type": "OWNED_BY",
+   "layer": "aws",
+   "level": "prefix"
+  },
+  {
+   "source": "arn:aws:s3:::opal-data-bd",
+   "target": "opal-data-bd/gold/timeseries/holdings_lots_shadow/{*}.parquet",
+   "edge_type": "CONTAINS",
+   "layer": "aws",
+   "level": "prefix"
+  },
+  {
+   "source": "opal-data-bd/gold/timeseries/positions_cube/{*}.parquet",
+   "target": "arn:aws:s3:::opal-data-bd",
+   "edge_type": "OWNED_BY",
+   "layer": "aws",
+   "level": "prefix"
+  },
+  {
+   "source": "arn:aws:s3:::opal-data-bd",
+   "target": "opal-data-bd/gold/timeseries/positions_cube/{*}.parquet",
+   "edge_type": "CONTAINS",
+   "layer": "aws",
+   "level": "prefix"
+  },
+  {
+   "source": "opal-data-bd/gold/timeseries/synthetic_positions_index.parquet",
+   "target": "arn:aws:s3:::opal-data-bd",
+   "edge_type": "OWNED_BY",
+   "layer": "aws",
+   "level": "object"
+  },
+  {
+   "source": "arn:aws:s3:::opal-data-bd",
+   "target": "opal-data-bd/gold/timeseries/synthetic_positions_index.parquet",
+   "edge_type": "CONTAINS",
+   "layer": "aws",
+   "level": "object"
+  },
+  {
+   "source": "opal-data-bd/gold/validation/account_gap_buckets_*.json",
+   "target": "arn:aws:s3:::opal-data-bd",
+   "edge_type": "OWNED_BY",
+   "layer": "aws",
+   "level": "prefix"
+  },
+  {
+   "source": "arn:aws:s3:::opal-data-bd",
+   "target": "opal-data-bd/gold/validation/account_gap_buckets_*.json",
+   "edge_type": "CONTAINS",
+   "layer": "aws",
+   "level": "prefix"
+  },
+  {
+   "source": "opal-data-bd/gold/validation/all_non_yahoo_assets_*.json",
+   "target": "arn:aws:s3:::opal-data-bd",
+   "edge_type": "OWNED_BY",
+   "layer": "aws",
+   "level": "prefix"
+  },
+  {
+   "source": "arn:aws:s3:::opal-data-bd",
+   "target": "opal-data-bd/gold/validation/all_non_yahoo_assets_*.json",
+   "edge_type": "CONTAINS",
+   "layer": "aws",
+   "level": "prefix"
+  },
+  {
+   "source": "opal-data-bd/gold/validation/aua_certification/{*}.json",
+   "target": "arn:aws:s3:::opal-data-bd",
+   "edge_type": "OWNED_BY",
+   "layer": "aws",
+   "level": "prefix"
+  },
+  {
+   "source": "arn:aws:s3:::opal-data-bd",
+   "target": "opal-data-bd/gold/validation/aua_certification/{*}.json",
+   "edge_type": "CONTAINS",
+   "layer": "aws",
+   "level": "prefix"
+  },
+  {
+   "source": "opal-data-bd/gold/validation/aua_gap_decomposition_*.json",
+   "target": "arn:aws:s3:::opal-data-bd",
+   "edge_type": "OWNED_BY",
+   "layer": "aws",
+   "level": "prefix"
+  },
+  {
+   "source": "arn:aws:s3:::opal-data-bd",
+   "target": "opal-data-bd/gold/validation/aua_gap_decomposition_*.json",
+   "edge_type": "CONTAINS",
+   "layer": "aws",
+   "level": "prefix"
+  },
+  {
+   "source": "opal-data-bd/gold/validation/aua_gap_top_positions_*.json",
+   "target": "arn:aws:s3:::opal-data-bd",
+   "edge_type": "OWNED_BY",
+   "layer": "aws",
+   "level": "prefix"
+  },
+  {
+   "source": "arn:aws:s3:::opal-data-bd",
+   "target": "opal-data-bd/gold/validation/aua_gap_top_positions_*.json",
+   "edge_type": "CONTAINS",
+   "layer": "aws",
+   "level": "prefix"
+  },
+  {
+   "source": "opal-data-bd/gold/validation/aua_validation_{*}.json",
+   "target": "arn:aws:s3:::opal-data-bd",
+   "edge_type": "OWNED_BY",
+   "layer": "aws",
+   "level": "prefix"
+  },
+  {
+   "source": "arn:aws:s3:::opal-data-bd",
+   "target": "opal-data-bd/gold/validation/aua_validation_{*}.json",
+   "edge_type": "CONTAINS",
+   "layer": "aws",
+   "level": "prefix"
+  },
+  {
+   "source": "opal-data-bd/gold/validation/gap_by_pricing_source_*.json",
+   "target": "arn:aws:s3:::opal-data-bd",
+   "edge_type": "OWNED_BY",
+   "layer": "aws",
+   "level": "prefix"
+  },
+  {
+   "source": "arn:aws:s3:::opal-data-bd",
+   "target": "opal-data-bd/gold/validation/gap_by_pricing_source_*.json",
+   "edge_type": "CONTAINS",
+   "layer": "aws",
+   "level": "prefix"
+  },
+  {
+   "source": "opal-data-bd/gold/validation/tail_asset_drill_*.json",
+   "target": "arn:aws:s3:::opal-data-bd",
+   "edge_type": "OWNED_BY",
+   "layer": "aws",
+   "level": "prefix"
+  },
+  {
+   "source": "arn:aws:s3:::opal-data-bd",
+   "target": "opal-data-bd/gold/validation/tail_asset_drill_*.json",
+   "edge_type": "CONTAINS",
+   "layer": "aws",
+   "level": "prefix"
+  },
+  {
+   "source": "opal-data-bd/gold/validation/unmatched_asset_analysis_*.json",
+   "target": "arn:aws:s3:::opal-data-bd",
+   "edge_type": "OWNED_BY",
+   "layer": "aws",
+   "level": "prefix"
+  },
+  {
+   "source": "arn:aws:s3:::opal-data-bd",
+   "target": "opal-data-bd/gold/validation/unmatched_asset_analysis_*.json",
+   "edge_type": "CONTAINS",
+   "layer": "aws",
+   "level": "prefix"
+  },
+  {
+   "source": "opal-data-bd/gold/validation/yahoo_mapping_audit_*.json",
+   "target": "arn:aws:s3:::opal-data-bd",
+   "edge_type": "OWNED_BY",
+   "layer": "aws",
+   "level": "prefix"
+  },
+  {
+   "source": "arn:aws:s3:::opal-data-bd",
+   "target": "opal-data-bd/gold/validation/yahoo_mapping_audit_*.json",
+   "edge_type": "CONTAINS",
+   "layer": "aws",
+   "level": "prefix"
+  },
+  {
+   "source": "opal-data-bd/gold/views/account_team.parquet",
+   "target": "arn:aws:s3:::opal-data-bd",
+   "edge_type": "OWNED_BY",
+   "layer": "aws",
+   "level": "object"
+  },
+  {
+   "source": "arn:aws:s3:::opal-data-bd",
+   "target": "opal-data-bd/gold/views/account_team.parquet",
+   "edge_type": "CONTAINS",
+   "layer": "aws",
+   "level": "object"
+  },
+  {
+   "source": "opal-data-inf/gold/views/account_team.parquet",
+   "target": "arn:aws:s3:::opal-data-inf",
+   "edge_type": "OWNED_BY",
+   "layer": "aws",
+   "level": "object"
+  },
+  {
+   "source": "arn:aws:s3:::opal-data-inf",
+   "target": "opal-data-inf/gold/views/account_team.parquet",
+   "edge_type": "CONTAINS",
+   "layer": "aws",
+   "level": "object"
+  },
+  {
+   "source": "opal-data-bd/gold/views/client_tax_liability.parquet",
+   "target": "arn:aws:s3:::opal-data-bd",
+   "edge_type": "OWNED_BY",
+   "layer": "aws",
+   "level": "object"
+  },
+  {
+   "source": "arn:aws:s3:::opal-data-bd",
+   "target": "opal-data-bd/gold/views/client_tax_liability.parquet",
+   "edge_type": "CONTAINS",
+   "layer": "aws",
+   "level": "object"
+  },
+  {
+   "source": "opal-data-bd/gold/views/mix_daily_summary.json",
+   "target": "arn:aws:s3:::opal-data-bd",
+   "edge_type": "OWNED_BY",
+   "layer": "aws",
+   "level": "object"
+  },
+  {
+   "source": "arn:aws:s3:::opal-data-bd",
+   "target": "opal-data-bd/gold/views/mix_daily_summary.json",
+   "edge_type": "CONTAINS",
+   "layer": "aws",
+   "level": "object"
+  },
+  {
+   "source": "opal-data-bd/gold/views/rel_architect_lookup.parquet",
+   "target": "arn:aws:s3:::opal-data-bd",
+   "edge_type": "OWNED_BY",
+   "layer": "aws",
+   "level": "object"
+  },
+  {
+   "source": "arn:aws:s3:::opal-data-bd",
+   "target": "opal-data-bd/gold/views/rel_architect_lookup.parquet",
+   "edge_type": "CONTAINS",
+   "layer": "aws",
+   "level": "object"
+  },
+  {
+   "source": "opal-data-bd/gold/views/relationship_team.parquet",
+   "target": "arn:aws:s3:::opal-data-bd",
+   "edge_type": "OWNED_BY",
+   "layer": "aws",
+   "level": "object"
+  },
+  {
+   "source": "arn:aws:s3:::opal-data-bd",
+   "target": "opal-data-bd/gold/views/relationship_team.parquet",
+   "edge_type": "CONTAINS",
+   "layer": "aws",
+   "level": "object"
+  },
+  {
+   "source": "opal-data-bd/platinum/accounts/{*}/summary.json",
+   "target": "arn:aws:s3:::opal-data-bd",
+   "edge_type": "OWNED_BY",
+   "layer": "aws",
+   "level": "prefix"
+  },
+  {
+   "source": "arn:aws:s3:::opal-data-bd",
+   "target": "opal-data-bd/platinum/accounts/{*}/summary.json",
+   "edge_type": "CONTAINS",
+   "layer": "aws",
+   "level": "prefix"
+  },
+  {
+   "source": "opal-data-inf/platinum/advisors/{*}/book.json",
+   "target": "arn:aws:s3:::opal-data-inf",
+   "edge_type": "OWNED_BY",
+   "layer": "aws",
+   "level": "prefix"
+  },
+  {
+   "source": "arn:aws:s3:::opal-data-inf",
+   "target": "opal-data-inf/platinum/advisors/{*}/book.json",
+   "edge_type": "CONTAINS",
+   "layer": "aws",
+   "level": "prefix"
+  },
+  {
+   "source": "opal-data-bd/platinum/advisors/{*}/mix.json",
+   "target": "arn:aws:s3:::opal-data-bd",
+   "edge_type": "OWNED_BY",
+   "layer": "aws",
+   "level": "prefix"
+  },
+  {
+   "source": "arn:aws:s3:::opal-data-bd",
+   "target": "opal-data-bd/platinum/advisors/{*}/mix.json",
+   "edge_type": "CONTAINS",
+   "layer": "aws",
+   "level": "prefix"
+  },
+  {
+   "source": "opal-data-bd/platinum/advisors/{*}/nna_clients.json",
+   "target": "arn:aws:s3:::opal-data-bd",
+   "edge_type": "OWNED_BY",
+   "layer": "aws",
+   "level": "prefix"
+  },
+  {
+   "source": "arn:aws:s3:::opal-data-bd",
+   "target": "opal-data-bd/platinum/advisors/{*}/nna_clients.json",
+   "edge_type": "CONTAINS",
+   "layer": "aws",
+   "level": "prefix"
+  },
+  {
+   "source": "opal-data-inf/platinum/advisors/{*}/nna_clients.json",
+   "target": "arn:aws:s3:::opal-data-inf",
+   "edge_type": "OWNED_BY",
+   "layer": "aws",
+   "level": "prefix"
+  },
+  {
+   "source": "arn:aws:s3:::opal-data-inf",
+   "target": "opal-data-inf/platinum/advisors/{*}/nna_clients.json",
+   "edge_type": "CONTAINS",
+   "layer": "aws",
+   "level": "prefix"
+  },
+  {
+   "source": "opal-data-bd/platinum/advisors/{*}/positions.json",
+   "target": "arn:aws:s3:::opal-data-bd",
+   "edge_type": "OWNED_BY",
+   "layer": "aws",
+   "level": "prefix"
+  },
+  {
+   "source": "arn:aws:s3:::opal-data-bd",
+   "target": "opal-data-bd/platinum/advisors/{*}/positions.json",
+   "edge_type": "CONTAINS",
+   "layer": "aws",
+   "level": "prefix"
+  },
+  {
+   "source": "opal-data-bd/platinum/advisors/{*}/summary.json",
+   "target": "arn:aws:s3:::opal-data-bd",
+   "edge_type": "OWNED_BY",
+   "layer": "aws",
+   "level": "prefix"
+  },
+  {
+   "source": "arn:aws:s3:::opal-data-bd",
+   "target": "opal-data-bd/platinum/advisors/{*}/summary.json",
+   "edge_type": "CONTAINS",
+   "layer": "aws",
+   "level": "prefix"
+  },
+  {
+   "source": "opal-data-inf/platinum/advisors/{*}/summary.json",
+   "target": "arn:aws:s3:::opal-data-inf",
+   "edge_type": "OWNED_BY",
+   "layer": "aws",
+   "level": "prefix"
+  },
+  {
+   "source": "arn:aws:s3:::opal-data-inf",
+   "target": "opal-data-inf/platinum/advisors/{*}/summary.json",
+   "edge_type": "CONTAINS",
+   "layer": "aws",
+   "level": "prefix"
+  },
+  {
+   "source": "opal-data-bd/platinum/advisors/{*}/timeseries.json",
+   "target": "arn:aws:s3:::opal-data-bd",
+   "edge_type": "OWNED_BY",
+   "layer": "aws",
+   "level": "prefix"
+  },
+  {
+   "source": "arn:aws:s3:::opal-data-bd",
+   "target": "opal-data-bd/platinum/advisors/{*}/timeseries.json",
+   "edge_type": "CONTAINS",
+   "layer": "aws",
+   "level": "prefix"
+  },
+  {
+   "source": "opal-data-inf/platinum/advisors/{*}}/composition.json",
+   "target": "arn:aws:s3:::opal-data-inf",
+   "edge_type": "OWNED_BY",
+   "layer": "aws",
+   "level": "prefix"
+  },
+  {
+   "source": "arn:aws:s3:::opal-data-inf",
+   "target": "opal-data-inf/platinum/advisors/{*}}/composition.json",
+   "edge_type": "CONTAINS",
+   "layer": "aws",
+   "level": "prefix"
+  },
+  {
+   "source": "opal-data-bd/platinum/clients/{*}/composition.json",
+   "target": "arn:aws:s3:::opal-data-bd",
+   "edge_type": "OWNED_BY",
+   "layer": "aws",
+   "level": "prefix"
+  },
+  {
+   "source": "arn:aws:s3:::opal-data-bd",
+   "target": "opal-data-bd/platinum/clients/{*}/composition.json",
+   "edge_type": "CONTAINS",
+   "layer": "aws",
+   "level": "prefix"
+  },
+  {
+   "source": "opal-data-bd/platinum/clients/{*}/concentration.json",
+   "target": "arn:aws:s3:::opal-data-bd",
+   "edge_type": "OWNED_BY",
+   "layer": "aws",
+   "level": "prefix"
+  },
+  {
+   "source": "arn:aws:s3:::opal-data-bd",
+   "target": "opal-data-bd/platinum/clients/{*}/concentration.json",
+   "edge_type": "CONTAINS",
+   "layer": "aws",
+   "level": "prefix"
+  },
+  {
+   "source": "opal-data-inf/platinum/clients/{*}/detail.json",
+   "target": "arn:aws:s3:::opal-data-inf",
+   "edge_type": "OWNED_BY",
+   "layer": "aws",
+   "level": "prefix"
+  },
+  {
+   "source": "arn:aws:s3:::opal-data-inf",
+   "target": "opal-data-inf/platinum/clients/{*}/detail.json",
+   "edge_type": "CONTAINS",
+   "layer": "aws",
+   "level": "prefix"
+  },
+  {
+   "source": "opal-data-bd/platinum/clients/{*}/mix_timeseries.json",
+   "target": "arn:aws:s3:::opal-data-bd",
+   "edge_type": "OWNED_BY",
+   "layer": "aws",
+   "level": "prefix"
+  },
+  {
+   "source": "arn:aws:s3:::opal-data-bd",
+   "target": "opal-data-bd/platinum/clients/{*}/mix_timeseries.json",
+   "edge_type": "CONTAINS",
+   "layer": "aws",
+   "level": "prefix"
+  },
+  {
+   "source": "opal-data-bd/platinum/clients/{*}/summary.json",
+   "target": "arn:aws:s3:::opal-data-bd",
+   "edge_type": "OWNED_BY",
+   "layer": "aws",
+   "level": "prefix"
+  },
+  {
+   "source": "arn:aws:s3:::opal-data-bd",
+   "target": "opal-data-bd/platinum/clients/{*}/summary.json",
+   "edge_type": "CONTAINS",
+   "layer": "aws",
+   "level": "prefix"
+  },
+  {
+   "source": "opal-data-inf/platinum/clients/{*}/timeseries.json",
+   "target": "arn:aws:s3:::opal-data-inf",
+   "edge_type": "OWNED_BY",
+   "layer": "aws",
+   "level": "prefix"
+  },
+  {
+   "source": "arn:aws:s3:::opal-data-inf",
+   "target": "opal-data-inf/platinum/clients/{*}/timeseries.json",
+   "edge_type": "CONTAINS",
+   "layer": "aws",
+   "level": "prefix"
+  },
+  {
+   "source": "opal-data-inf/platinum/clients/{*}/top_holdings.json",
+   "target": "arn:aws:s3:::opal-data-inf",
+   "edge_type": "OWNED_BY",
+   "layer": "aws",
+   "level": "prefix"
+  },
+  {
+   "source": "arn:aws:s3:::opal-data-inf",
+   "target": "opal-data-inf/platinum/clients/{*}/top_holdings.json",
+   "edge_type": "CONTAINS",
+   "layer": "aws",
+   "level": "prefix"
+  },
+  {
+   "source": "opal-data-bd/platinum/clients/{*}/views.json",
+   "target": "arn:aws:s3:::opal-data-bd",
+   "edge_type": "OWNED_BY",
+   "layer": "aws",
+   "level": "prefix"
+  },
+  {
+   "source": "arn:aws:s3:::opal-data-bd",
+   "target": "opal-data-bd/platinum/clients/{*}/views.json",
+   "edge_type": "CONTAINS",
+   "layer": "aws",
+   "level": "prefix"
+  },
+  {
+   "source": "opal-data-inf/platinum/firm/_meta/bronze_skip_warning_{*}.json",
+   "target": "arn:aws:s3:::opal-data-inf",
+   "edge_type": "OWNED_BY",
+   "layer": "aws",
+   "level": "prefix"
+  },
+  {
+   "source": "arn:aws:s3:::opal-data-inf",
+   "target": "opal-data-inf/platinum/firm/_meta/bronze_skip_warning_{*}.json",
+   "edge_type": "CONTAINS",
+   "layer": "aws",
+   "level": "prefix"
+  },
+  {
+   "source": "opal-data-inf/platinum/firm/_meta/reconciliation_summary_holdings_{*}.json",
+   "target": "arn:aws:s3:::opal-data-inf",
+   "edge_type": "OWNED_BY",
+   "layer": "aws",
+   "level": "prefix"
+  },
+  {
+   "source": "arn:aws:s3:::opal-data-inf",
+   "target": "opal-data-inf/platinum/firm/_meta/reconciliation_summary_holdings_{*}.json",
+   "edge_type": "CONTAINS",
+   "layer": "aws",
+   "level": "prefix"
+  },
+  {
+   "source": "opal-data-bd/platinum/firm/clients-tab-slim.json",
+   "target": "arn:aws:s3:::opal-data-bd",
+   "edge_type": "OWNED_BY",
+   "layer": "aws",
+   "level": "object"
+  },
+  {
+   "source": "arn:aws:s3:::opal-data-bd",
+   "target": "opal-data-bd/platinum/firm/clients-tab-slim.json",
+   "edge_type": "CONTAINS",
+   "layer": "aws",
+   "level": "object"
+  },
+  {
+   "source": "opal-data-inf/platinum/firm/clients-tab-slim.json",
+   "target": "arn:aws:s3:::opal-data-inf",
+   "edge_type": "OWNED_BY",
+   "layer": "aws",
+   "level": "object"
+  },
+  {
+   "source": "arn:aws:s3:::opal-data-inf",
+   "target": "opal-data-inf/platinum/firm/clients-tab-slim.json",
+   "edge_type": "CONTAINS",
+   "layer": "aws",
+   "level": "object"
+  },
+  {
+   "source": "opal-data-inf/platinum/firm/clients_tab.json",
+   "target": "arn:aws:s3:::opal-data-inf",
+   "edge_type": "OWNED_BY",
+   "layer": "aws",
+   "level": "object"
+  },
+  {
+   "source": "arn:aws:s3:::opal-data-inf",
+   "target": "opal-data-inf/platinum/firm/clients_tab.json",
+   "edge_type": "CONTAINS",
+   "layer": "aws",
+   "level": "object"
+  },
+  {
+   "source": "opal-data-bd/platinum/firm/cumulative_chart.json",
+   "target": "arn:aws:s3:::opal-data-bd",
+   "edge_type": "OWNED_BY",
+   "layer": "aws",
+   "level": "object"
+  },
+  {
+   "source": "arn:aws:s3:::opal-data-bd",
+   "target": "opal-data-bd/platinum/firm/cumulative_chart.json",
+   "edge_type": "CONTAINS",
+   "layer": "aws",
+   "level": "object"
+  },
+  {
+   "source": "opal-data-inf/platinum/firm/cumulative_chart.json",
+   "target": "arn:aws:s3:::opal-data-inf",
+   "edge_type": "OWNED_BY",
+   "layer": "aws",
+   "level": "object"
+  },
+  {
+   "source": "arn:aws:s3:::opal-data-inf",
+   "target": "opal-data-inf/platinum/firm/cumulative_chart.json",
+   "edge_type": "CONTAINS",
+   "layer": "aws",
+   "level": "object"
+  },
+  {
+   "source": "opal-data-bd/platinum/firm/dashboard.json",
+   "target": "arn:aws:s3:::opal-data-bd",
+   "edge_type": "OWNED_BY",
+   "layer": "aws",
+   "level": "object"
+  },
+  {
+   "source": "arn:aws:s3:::opal-data-bd",
+   "target": "opal-data-bd/platinum/firm/dashboard.json",
+   "edge_type": "CONTAINS",
+   "layer": "aws",
+   "level": "object"
+  },
+  {
+   "source": "opal-data-inf/platinum/firm/dashboard.json",
+   "target": "arn:aws:s3:::opal-data-inf",
+   "edge_type": "OWNED_BY",
+   "layer": "aws",
+   "level": "object"
+  },
+  {
+   "source": "arn:aws:s3:::opal-data-inf",
+   "target": "opal-data-inf/platinum/firm/dashboard.json",
+   "edge_type": "CONTAINS",
+   "layer": "aws",
+   "level": "object"
+  },
+  {
+   "source": "opal-data-bd/platinum/firm/fee_efficiency.json",
+   "target": "arn:aws:s3:::opal-data-bd",
+   "edge_type": "OWNED_BY",
+   "layer": "aws",
+   "level": "object"
+  },
+  {
+   "source": "arn:aws:s3:::opal-data-bd",
+   "target": "opal-data-bd/platinum/firm/fee_efficiency.json",
+   "edge_type": "CONTAINS",
+   "layer": "aws",
+   "level": "object"
+  },
+  {
+   "source": "opal-data-inf/platinum/firm/fee_efficiency.json",
+   "target": "arn:aws:s3:::opal-data-inf",
+   "edge_type": "OWNED_BY",
+   "layer": "aws",
+   "level": "object"
+  },
+  {
+   "source": "arn:aws:s3:::opal-data-inf",
+   "target": "opal-data-inf/platinum/firm/fee_efficiency.json",
+   "edge_type": "CONTAINS",
+   "layer": "aws",
+   "level": "object"
+  },
+  {
+   "source": "opal-data-inf/platinum/firm/filters/dimensions.json",
+   "target": "arn:aws:s3:::opal-data-inf",
+   "edge_type": "OWNED_BY",
+   "layer": "aws",
+   "level": "object"
+  },
+  {
+   "source": "arn:aws:s3:::opal-data-inf",
+   "target": "opal-data-inf/platinum/firm/filters/dimensions.json",
+   "edge_type": "CONTAINS",
+   "layer": "aws",
+   "level": "object"
+  },
+  {
+   "source": "opal-data-inf/platinum/firm/firm_composition.json",
+   "target": "arn:aws:s3:::opal-data-inf",
+   "edge_type": "OWNED_BY",
+   "layer": "aws",
+   "level": "object"
+  },
+  {
+   "source": "arn:aws:s3:::opal-data-inf",
+   "target": "opal-data-inf/platinum/firm/firm_composition.json",
+   "edge_type": "CONTAINS",
+   "layer": "aws",
+   "level": "object"
+  },
+  {
+   "source": "opal-data-bd/platinum/firm/header_metrics.json",
+   "target": "arn:aws:s3:::opal-data-bd",
+   "edge_type": "OWNED_BY",
+   "layer": "aws",
+   "level": "object"
+  },
+  {
+   "source": "arn:aws:s3:::opal-data-bd",
+   "target": "opal-data-bd/platinum/firm/header_metrics.json",
+   "edge_type": "CONTAINS",
+   "layer": "aws",
+   "level": "object"
+  },
+  {
+   "source": "opal-data-inf/platinum/firm/header_metrics.json",
+   "target": "arn:aws:s3:::opal-data-inf",
+   "edge_type": "OWNED_BY",
+   "layer": "aws",
+   "level": "object"
+  },
+  {
+   "source": "arn:aws:s3:::opal-data-inf",
+   "target": "opal-data-inf/platinum/firm/header_metrics.json",
+   "edge_type": "CONTAINS",
+   "layer": "aws",
+   "level": "object"
+  },
+  {
+   "source": "opal-data-bd/platinum/firm/leaderboard.json",
+   "target": "arn:aws:s3:::opal-data-bd",
+   "edge_type": "OWNED_BY",
+   "layer": "aws",
+   "level": "object"
+  },
+  {
+   "source": "arn:aws:s3:::opal-data-bd",
+   "target": "opal-data-bd/platinum/firm/leaderboard.json",
+   "edge_type": "CONTAINS",
+   "layer": "aws",
+   "level": "object"
+  },
+  {
+   "source": "opal-data-inf/platinum/firm/leaderboard.json",
+   "target": "arn:aws:s3:::opal-data-inf",
+   "edge_type": "OWNED_BY",
+   "layer": "aws",
+   "level": "object"
+  },
+  {
+   "source": "arn:aws:s3:::opal-data-inf",
+   "target": "opal-data-inf/platinum/firm/leaderboard.json",
+   "edge_type": "CONTAINS",
+   "layer": "aws",
+   "level": "object"
+  },
+  {
+   "source": "opal-data-bd/platinum/firm/mix_summary.json",
+   "target": "arn:aws:s3:::opal-data-bd",
+   "edge_type": "OWNED_BY",
+   "layer": "aws",
+   "level": "object"
+  },
+  {
+   "source": "arn:aws:s3:::opal-data-bd",
+   "target": "opal-data-bd/platinum/firm/mix_summary.json",
+   "edge_type": "CONTAINS",
+   "layer": "aws",
+   "level": "object"
+  },
+  {
+   "source": "opal-data-inf/platinum/firm/mix_summary.json",
+   "target": "arn:aws:s3:::opal-data-inf",
+   "edge_type": "OWNED_BY",
+   "layer": "aws",
+   "level": "object"
+  },
+  {
+   "source": "arn:aws:s3:::opal-data-inf",
+   "target": "opal-data-inf/platinum/firm/mix_summary.json",
+   "edge_type": "CONTAINS",
+   "layer": "aws",
+   "level": "object"
+  },
+  {
+   "source": "opal-data-inf/platinum/firm/partner_analytics.json",
+   "target": "arn:aws:s3:::opal-data-inf",
+   "edge_type": "OWNED_BY",
+   "layer": "aws",
+   "level": "object"
+  },
+  {
+   "source": "arn:aws:s3:::opal-data-inf",
+   "target": "opal-data-inf/platinum/firm/partner_analytics.json",
+   "edge_type": "CONTAINS",
+   "layer": "aws",
+   "level": "object"
+  },
+  {
+   "source": "opal-data-bd/platinum/firm/partner_analytics_{*}.json",
+   "target": "arn:aws:s3:::opal-data-bd",
+   "edge_type": "OWNED_BY",
+   "layer": "aws",
+   "level": "prefix"
+  },
+  {
+   "source": "arn:aws:s3:::opal-data-bd",
+   "target": "opal-data-bd/platinum/firm/partner_analytics_{*}.json",
+   "edge_type": "CONTAINS",
+   "layer": "aws",
+   "level": "prefix"
+  },
+  {
+   "source": "opal-data-inf/platinum/firm/partner_analytics_{*}.json",
+   "target": "arn:aws:s3:::opal-data-inf",
+   "edge_type": "OWNED_BY",
+   "layer": "aws",
+   "level": "prefix"
+  },
+  {
+   "source": "arn:aws:s3:::opal-data-inf",
+   "target": "opal-data-inf/platinum/firm/partner_analytics_{*}.json",
+   "edge_type": "CONTAINS",
+   "layer": "aws",
+   "level": "prefix"
+  },
+  {
+   "source": "opal-data-bd/platinum/firm/timeseries_chart.json",
+   "target": "arn:aws:s3:::opal-data-bd",
+   "edge_type": "OWNED_BY",
+   "layer": "aws",
+   "level": "object"
+  },
+  {
+   "source": "arn:aws:s3:::opal-data-bd",
+   "target": "opal-data-bd/platinum/firm/timeseries_chart.json",
+   "edge_type": "CONTAINS",
+   "layer": "aws",
+   "level": "object"
+  },
+  {
+   "source": "opal-data-inf/platinum/firm/timeseries_chart.json",
+   "target": "arn:aws:s3:::opal-data-inf",
+   "edge_type": "OWNED_BY",
+   "layer": "aws",
+   "level": "object"
+  },
+  {
+   "source": "arn:aws:s3:::opal-data-inf",
+   "target": "opal-data-inf/platinum/firm/timeseries_chart.json",
+   "edge_type": "CONTAINS",
+   "layer": "aws",
+   "level": "object"
+  },
+  {
+   "source": "opal-data-bd/platinum/firm/timeseries_overview.json",
+   "target": "arn:aws:s3:::opal-data-bd",
+   "edge_type": "OWNED_BY",
+   "layer": "aws",
+   "level": "object"
+  },
+  {
+   "source": "arn:aws:s3:::opal-data-bd",
+   "target": "opal-data-bd/platinum/firm/timeseries_overview.json",
+   "edge_type": "CONTAINS",
+   "layer": "aws",
+   "level": "object"
+  },
+  {
+   "source": "opal-data-inf/platinum/firm/timeseries_overview.json",
+   "target": "arn:aws:s3:::opal-data-inf",
+   "edge_type": "OWNED_BY",
+   "layer": "aws",
+   "level": "object"
+  },
+  {
+   "source": "arn:aws:s3:::opal-data-inf",
+   "target": "opal-data-inf/platinum/firm/timeseries_overview.json",
+   "edge_type": "CONTAINS",
+   "layer": "aws",
+   "level": "object"
+  },
+  {
+   "source": "opal-data-inf/platinum/firm/top_holdings.json",
+   "target": "arn:aws:s3:::opal-data-inf",
+   "edge_type": "OWNED_BY",
+   "layer": "aws",
+   "level": "object"
+  },
+  {
+   "source": "arn:aws:s3:::opal-data-inf",
+   "target": "opal-data-inf/platinum/firm/top_holdings.json",
+   "edge_type": "CONTAINS",
+   "layer": "aws",
+   "level": "object"
+  },
+  {
+   "source": "opal-data-mdpf/platinum/mdpf/aggregate_aua_timeseries.json",
+   "target": "arn:aws:s3:::opal-data-mdpf",
+   "edge_type": "OWNED_BY",
+   "layer": "aws",
+   "level": "object"
+  },
+  {
+   "source": "arn:aws:s3:::opal-data-mdpf",
+   "target": "opal-data-mdpf/platinum/mdpf/aggregate_aua_timeseries.json",
+   "edge_type": "CONTAINS",
+   "layer": "aws",
+   "level": "object"
+  },
+  {
+   "source": "opal-data-bd/platinum/{*}/ownership_map.json",
+   "target": "arn:aws:s3:::opal-data-bd",
+   "edge_type": "OWNED_BY",
+   "layer": "aws",
+   "level": "prefix"
+  },
+  {
+   "source": "arn:aws:s3:::opal-data-bd",
+   "target": "opal-data-bd/platinum/{*}/ownership_map.json",
+   "edge_type": "CONTAINS",
+   "layer": "aws",
+   "level": "prefix"
+  },
+  {
+   "source": "opal-data-bd/silver/allocations/*.parquet",
+   "target": "arn:aws:s3:::opal-data-bd",
+   "edge_type": "OWNED_BY",
+   "layer": "aws",
+   "level": "prefix"
+  },
+  {
+   "source": "arn:aws:s3:::opal-data-bd",
+   "target": "opal-data-bd/silver/allocations/*.parquet",
+   "edge_type": "CONTAINS",
+   "layer": "aws",
+   "level": "prefix"
+  },
+  {
+   "source": "opal-data-bd/silver/allocations/{*}.parquet",
+   "target": "arn:aws:s3:::opal-data-bd",
+   "edge_type": "OWNED_BY",
+   "layer": "aws",
+   "level": "prefix"
+  },
+  {
+   "source": "arn:aws:s3:::opal-data-bd",
+   "target": "opal-data-bd/silver/allocations/{*}.parquet",
+   "edge_type": "CONTAINS",
+   "layer": "aws",
+   "level": "prefix"
+  },
+  {
+   "source": "opal-data-bd/silver/bd_assets_dim.parquet",
+   "target": "arn:aws:s3:::opal-data-bd",
+   "edge_type": "OWNED_BY",
+   "layer": "aws",
+   "level": "object"
+  },
+  {
+   "source": "arn:aws:s3:::opal-data-bd",
+   "target": "opal-data-bd/silver/bd_assets_dim.parquet",
+   "edge_type": "CONTAINS",
+   "layer": "aws",
+   "level": "object"
+  },
+  {
+   "source": "opal-data-bd/silver/historical_prices.parquet",
+   "target": "arn:aws:s3:::opal-data-bd",
+   "edge_type": "OWNED_BY",
+   "layer": "aws",
+   "level": "object"
+  },
+  {
+   "source": "arn:aws:s3:::opal-data-bd",
+   "target": "opal-data-bd/silver/historical_prices.parquet",
+   "edge_type": "CONTAINS",
+   "layer": "aws",
+   "level": "object"
+  },
+  {
+   "source": "opal-data-bd/silver/prices/canonical_prices.parquet",
+   "target": "arn:aws:s3:::opal-data-bd",
+   "edge_type": "OWNED_BY",
+   "layer": "aws",
+   "level": "object"
+  },
+  {
+   "source": "arn:aws:s3:::opal-data-bd",
+   "target": "opal-data-bd/silver/prices/canonical_prices.parquet",
+   "edge_type": "CONTAINS",
+   "layer": "aws",
+   "level": "object"
+  },
+  {
+   "source": "opal-data-inf/silver/prices/canonical_prices.parquet",
+   "target": "arn:aws:s3:::opal-data-inf",
+   "edge_type": "OWNED_BY",
+   "layer": "aws",
+   "level": "object"
+  },
+  {
+   "source": "arn:aws:s3:::opal-data-inf",
+   "target": "opal-data-inf/silver/prices/canonical_prices.parquet",
+   "edge_type": "CONTAINS",
+   "layer": "aws",
+   "level": "object"
+  },
+  {
+   "source": "opal-data-bd/silver/realized/bd_realized_agg.parquet",
+   "target": "arn:aws:s3:::opal-data-bd",
+   "edge_type": "OWNED_BY",
+   "layer": "aws",
+   "level": "object"
+  },
+  {
+   "source": "arn:aws:s3:::opal-data-bd",
+   "target": "opal-data-bd/silver/realized/bd_realized_agg.parquet",
+   "edge_type": "CONTAINS",
+   "layer": "aws",
+   "level": "object"
+  },
+  {
+   "source": "opal-data-inf/silver/transactions/*.parquet",
+   "target": "arn:aws:s3:::opal-data-inf",
+   "edge_type": "OWNED_BY",
+   "layer": "aws",
+   "level": "prefix"
+  },
+  {
+   "source": "arn:aws:s3:::opal-data-inf",
+   "target": "opal-data-inf/silver/transactions/*.parquet",
+   "edge_type": "CONTAINS",
+   "layer": "aws",
+   "level": "prefix"
+  },
+  {
+   "source": "opal-data-bd/silver/unrealized/*.parquet",
+   "target": "arn:aws:s3:::opal-data-bd",
+   "edge_type": "OWNED_BY",
+   "layer": "aws",
+   "level": "prefix"
+  },
+  {
+   "source": "arn:aws:s3:::opal-data-bd",
+   "target": "opal-data-bd/silver/unrealized/*.parquet",
+   "edge_type": "CONTAINS",
+   "layer": "aws",
+   "level": "prefix"
+  },
+  {
+   "source": "opal-data-bd/silver/unrealized/2026-04-20.parquet",
+   "target": "arn:aws:s3:::opal-data-bd",
+   "edge_type": "OWNED_BY",
+   "layer": "aws",
+   "level": "object"
+  },
+  {
+   "source": "arn:aws:s3:::opal-data-bd",
+   "target": "opal-data-bd/silver/unrealized/2026-04-20.parquet",
+   "edge_type": "CONTAINS",
+   "layer": "aws",
+   "level": "object"
+  },
+  {
+   "source": "opal-data-bd/silver/unrealized/unrealized_gain_loss.parquet",
+   "target": "arn:aws:s3:::opal-data-bd",
+   "edge_type": "OWNED_BY",
+   "layer": "aws",
+   "level": "object"
+  },
+  {
+   "source": "arn:aws:s3:::opal-data-bd",
+   "target": "opal-data-bd/silver/unrealized/unrealized_gain_loss.parquet",
+   "edge_type": "CONTAINS",
+   "layer": "aws",
+   "level": "object"
+  }
+ ],
+ "coverage": {
+  "keys_in_firm_qualified": 288,
+  "s3key_nodes": 169,
+  "owned_by_edges": 169,
+  "contains_edges": 169,
+  "level_split": {
+   "object": 87,
+   "prefix": 82
+  },
+  "attribution": {
+   "writer": 169
+  },
+  "unresolved_count": 142,
+  "unresolved": [
+   {
+    "key": "benchmarks/LATEST.json",
+    "reason": "no gold-writer (87 lambda-only -> ~B lambda-path / 55 declared-only -> Phase-B reader-firm)",
+    "reader_firms": []
+   },
+   {
+    "key": "blackdiamond/49f/session-trigger-mode.json",
+    "reason": "no gold-writer (87 lambda-only -> ~B lambda-path / 55 declared-only -> Phase-B reader-firm)",
+    "reader_firms": []
+   },
+   {
+    "key": "blackdiamond/cot/session-trigger-mode.json",
+    "reason": "no gold-writer (87 lambda-only -> ~B lambda-path / 55 declared-only -> Phase-B reader-firm)",
+    "reader_firms": []
+   },
+   {
+    "key": "bronze/orion-api-v2/*/household_rep_mapping.json",
+    "reason": "no gold-writer (87 lambda-only -> ~B lambda-path / 55 declared-only -> Phase-B reader-firm)",
+    "reader_firms": []
+   },
+   {
+    "key": "bronze/orion-api-v2/*/representatives.json",
+    "reason": "no gold-writer (87 lambda-only -> ~B lambda-path / 55 declared-only -> Phase-B reader-firm)",
+    "reader_firms": []
+   },
+   {
+    "key": "bronze/orion-api/activity/latest.csv",
+    "reason": "no gold-writer (87 lambda-only -> ~B lambda-path / 55 declared-only -> Phase-B reader-firm)",
+    "reader_firms": [
+     "inf"
+    ]
+   },
+   {
+    "key": "bronze/orion-api/household/latest.csv",
+    "reason": "no gold-writer (87 lambda-only -> ~B lambda-path / 55 declared-only -> Phase-B reader-firm)",
+    "reader_firms": [
+     "inf"
+    ]
+   },
+   {
+    "key": "bronze/orion-api/performance/latest.csv",
+    "reason": "no gold-writer (87 lambda-only -> ~B lambda-path / 55 declared-only -> Phase-B reader-firm)",
+    "reader_firms": [
+     "inf"
+    ]
+   },
+   {
+    "key": "bronze/orion-api/{*}/_BRONZE_COMPLETE.json",
+    "reason": "no gold-writer (87 lambda-only -> ~B lambda-path / 55 declared-only -> Phase-B reader-firm)",
+    "reader_firms": [
+     "inf"
+    ]
+   },
+   {
+    "key": "bronze/orion-api/{*}/assets.csv",
+    "reason": "no gold-writer (87 lambda-only -> ~B lambda-path / 55 declared-only -> Phase-B reader-firm)",
+    "reader_firms": [
+     "inf"
+    ]
+   },
+   {
+    "key": "bronze/orion-api/{*}/transactions.csv",
+    "reason": "no gold-writer (87 lambda-only -> ~B lambda-path / 55 declared-only -> Phase-B reader-firm)",
+    "reader_firms": [
+     "inf"
+    ]
+   },
+   {
+    "key": "bronze/orion-api/{date}/assets.csv",
+    "reason": "no gold-writer (87 lambda-only -> ~B lambda-path / 55 declared-only -> Phase-B reader-firm)",
+    "reader_firms": [
+     "inf"
+    ]
+   },
+   {
+    "key": "cache/fred/BAMLC0A0CM.csv",
+    "reason": "no gold-writer (87 lambda-only -> ~B lambda-path / 55 declared-only -> Phase-B reader-firm)",
+    "reader_firms": []
+   },
+   {
+    "key": "cache/fred/BAMLH0A0HYM2.csv",
+    "reason": "no gold-writer (87 lambda-only -> ~B lambda-path / 55 declared-only -> Phase-B reader-firm)",
+    "reader_firms": []
+   },
+   {
+    "key": "config/dynamic_stopwords.json",
+    "reason": "no gold-writer (87 lambda-only -> ~B lambda-path / 55 declared-only -> Phase-B reader-firm)",
+    "reader_firms": []
+   },
+   {
+    "key": "config/etf_universe.json",
+    "reason": "no gold-writer (87 lambda-only -> ~B lambda-path / 55 declared-only -> Phase-B reader-firm)",
+    "reader_firms": []
+   },
+   {
+    "key": "config/ticker_lookup.json",
+    "reason": "no gold-writer (87 lambda-only -> ~B lambda-path / 55 declared-only -> Phase-B reader-firm)",
+    "reader_firms": [
+     "bd"
+    ]
+   },
+   {
+    "key": "config/yahoo_safe_tickers.txt",
+    "reason": "no gold-writer (87 lambda-only -> ~B lambda-path / 55 declared-only -> Phase-B reader-firm)",
+    "reader_firms": [
+     "bd"
+    ]
+   },
+   {
+    "key": "consolidated/smartx_allocations.parquet",
+    "reason": "no gold-writer (87 lambda-only -> ~B lambda-path / 55 declared-only -> Phase-B reader-firm)",
+    "reader_firms": []
+   },
+   {
+    "key": "gold/_state/load_flows/watermark.json",
+    "reason": "no gold-writer (87 lambda-only -> ~B lambda-path / 55 declared-only -> Phase-B reader-firm)",
+    "reader_firms": []
+   },
+   {
+    "key": "gold/artifacts/clients/growth_timeseries.json",
+    "reason": "no gold-writer (87 lambda-only -> ~B lambda-path / 55 declared-only -> Phase-B reader-firm)",
+    "reader_firms": []
+   },
+   {
+    "key": "gold/artifacts/clients/tax_basis_breakdown.json",
+    "reason": "no gold-writer (87 lambda-only -> ~B lambda-path / 55 declared-only -> Phase-B reader-firm)",
+    "reader_firms": []
+   },
+   {
+    "key": "gold/artifacts/clients/tax_deferred_candidates.json",
+    "reason": "no gold-writer (87 lambda-only -> ~B lambda-path / 55 declared-only -> Phase-B reader-firm)",
+    "reader_firms": []
+   },
+   {
+    "key": "gold/artifacts/partner_analytics/header_metrics.json",
+    "reason": "no gold-writer (87 lambda-only -> ~B lambda-path / 55 declared-only -> Phase-B reader-firm)",
+    "reader_firms": []
+   },
+   {
+    "key": "gold/artifacts/snapshots/aua_by_architect.json",
+    "reason": "no gold-writer (87 lambda-only -> ~B lambda-path / 55 declared-only -> Phase-B reader-firm)",
+    "reader_firms": [
+     "bd"
+    ]
+   },
+   {
+    "key": "gold/artifacts/snapshots/aua_by_region.json",
+    "reason": "no gold-writer (87 lambda-only -> ~B lambda-path / 55 declared-only -> Phase-B reader-firm)",
+    "reader_firms": [
+     "bd"
+    ]
+   },
+   {
+    "key": "gold/artifacts/snapshots/aua_by_state.json",
+    "reason": "no gold-writer (87 lambda-only -> ~B lambda-path / 55 declared-only -> Phase-B reader-firm)",
+    "reader_firms": [
+     "bd"
+    ]
+   },
+   {
+    "key": "gold/artifacts/snapshots/aua_by_tax_status.json",
+    "reason": "no gold-writer (87 lambda-only -> ~B lambda-path / 55 declared-only -> Phase-B reader-firm)",
+    "reader_firms": [
+     "bd"
+    ]
+   },
+   {
+    "key": "gold/canonical/account_gains/",
+    "reason": "no gold-writer (87 lambda-only -> ~B lambda-path / 55 declared-only -> Phase-B reader-firm)",
+    "reader_firms": [
+     "bd"
+    ]
+   },
+   {
+    "key": "gold/canonical/advisor_fee_detail/",
+    "reason": "no gold-writer (87 lambda-only -> ~B lambda-path / 55 declared-only -> Phase-B reader-firm)",
+    "reader_firms": [
+     "bd"
+    ]
+   },
+   {
+    "key": "gold/canonical/canonical_nna_{*}.parquet",
+    "reason": "no gold-writer (87 lambda-only -> ~B lambda-path / 55 declared-only -> Phase-B reader-firm)",
+    "reader_firms": [
+     "inf"
+    ]
+   },
+   {
+    "key": "gold/canonical/holdings/",
+    "reason": "no gold-writer (87 lambda-only -> ~B lambda-path / 55 declared-only -> Phase-B reader-firm)",
+    "reader_firms": [
+     "bd"
+    ]
+   },
+   {
+    "key": "gold/canonical/holdings_{*}.parquet",
+    "reason": "no gold-writer (87 lambda-only -> ~B lambda-path / 55 declared-only -> Phase-B reader-firm)",
+    "reader_firms": [
+     "inf"
+    ]
+   },
+   {
+    "key": "gold/canonical/lots_realized/",
+    "reason": "no gold-writer (87 lambda-only -> ~B lambda-path / 55 declared-only -> Phase-B reader-firm)",
+    "reader_firms": [
+     "bd"
+    ]
+   },
+   {
+    "key": "gold/canonical/lots_unrealized/",
+    "reason": "no gold-writer (87 lambda-only -> ~B lambda-path / 55 declared-only -> Phase-B reader-firm)",
+    "reader_firms": [
+     "bd"
+    ]
+   },
+   {
+    "key": "gold/canonical/nna/",
+    "reason": "no gold-writer (87 lambda-only -> ~B lambda-path / 55 declared-only -> Phase-B reader-firm)",
+    "reader_firms": [
+     "bd"
+    ]
+   },
+   {
+    "key": "gold/canonical/performance/",
+    "reason": "no gold-writer (87 lambda-only -> ~B lambda-path / 55 declared-only -> Phase-B reader-firm)",
+    "reader_firms": [
+     "bd"
+    ]
+   },
+   {
+    "key": "gold/canonical/role_aua/",
+    "reason": "no gold-writer (87 lambda-only -> ~B lambda-path / 55 declared-only -> Phase-B reader-firm)",
+    "reader_firms": [
+     "bd"
+    ]
+   },
+   {
+    "key": "gold/clients/*.json",
+    "reason": "no gold-writer (87 lambda-only -> ~B lambda-path / 55 declared-only -> Phase-B reader-firm)",
+    "reader_firms": []
+   },
+   {
+    "key": "gold/dimensions/dim_advisor_office.csv",
+    "reason": "no gold-writer (87 lambda-only -> ~B lambda-path / 55 declared-only -> Phase-B reader-firm)",
+    "reader_firms": [
+     "bd"
+    ]
+   },
+   {
+    "key": "gold/dispatch-lock.json",
+    "reason": "no gold-writer (87 lambda-only -> ~B lambda-path / 55 declared-only -> Phase-B reader-firm)",
+    "reader_firms": []
+   },
+   {
+    "key": "gold/eclipse/{*}/model_portfolio_accounts.parquet",
+    "reason": "no gold-writer (87 lambda-only -> ~B lambda-path / 55 declared-only -> Phase-B reader-firm)",
+    "reader_firms": [
+     "mdpf"
+    ]
+   },
+   {
+    "key": "gold/entities/accounts/{*}/aua_timeseries.json",
+    "reason": "no gold-writer (87 lambda-only -> ~B lambda-path / 55 declared-only -> Phase-B reader-firm)",
+    "reader_firms": [
+     "bd"
+    ]
+   },
+   {
+    "key": "gold/entities/advisors/{*}/book.json",
+    "reason": "no gold-writer (87 lambda-only -> ~B lambda-path / 55 declared-only -> Phase-B reader-firm)",
+    "reader_firms": [
+     "bd"
+    ]
+   },
+   {
+    "key": "gold/entities/advisors/{*}/composition.json",
+    "reason": "no gold-writer (87 lambda-only -> ~B lambda-path / 55 declared-only -> Phase-B reader-firm)",
+    "reader_firms": [
+     "bd"
+    ]
+   },
+   {
+    "key": "gold/entities/advisors/{*}/timeseries.json",
+    "reason": "no gold-writer (87 lambda-only -> ~B lambda-path / 55 declared-only -> Phase-B reader-firm)",
+    "reader_firms": [
+     "bd"
+    ]
+   },
+   {
+    "key": "gold/entities/clients/",
+    "reason": "no gold-writer (87 lambda-only -> ~B lambda-path / 55 declared-only -> Phase-B reader-firm)",
+    "reader_firms": [
+     "bd"
+    ]
+   },
+   {
+    "key": "gold/entities/clients/{*}/aua_timeseries.json",
+    "reason": "no gold-writer (87 lambda-only -> ~B lambda-path / 55 declared-only -> Phase-B reader-firm)",
+    "reader_firms": [
+     "bd"
+    ]
+   },
+   {
+    "key": "gold/entities/clients/{*}_composition.json",
+    "reason": "no gold-writer (87 lambda-only -> ~B lambda-path / 55 declared-only -> Phase-B reader-firm)",
+    "reader_firms": [
+     "bd"
+    ]
+   },
+   {
+    "key": "gold/meta/client_timeseries_watermark.json",
+    "reason": "no gold-writer (87 lambda-only -> ~B lambda-path / 55 declared-only -> Phase-B reader-firm)",
+    "reader_firms": [
+     "bd"
+    ]
+   },
+   {
+    "key": "gold/meta/pipeline-complete.json",
+    "reason": "no gold-writer (87 lambda-only -> ~B lambda-path / 55 declared-only -> Phase-B reader-firm)",
+    "reader_firms": []
+   },
+   {
+    "key": "gold/timeseries/holdings_lots/",
+    "reason": "no gold-writer (87 lambda-only -> ~B lambda-path / 55 declared-only -> Phase-B reader-firm)",
+    "reader_firms": [
+     "bd"
+    ]
+   },
+   {
+    "key": "gold/timeseries/nna_total.json",
+    "reason": "no gold-writer (87 lambda-only -> ~B lambda-path / 55 declared-only -> Phase-B reader-firm)",
+    "reader_firms": []
+   },
+   {
+    "key": "gold/timeseries/positions_cube/",
+    "reason": "no gold-writer (87 lambda-only -> ~B lambda-path / 55 declared-only -> Phase-B reader-firm)",
+    "reader_firms": [
+     "bd"
+    ]
+   },
+   {
+    "key": "gold/trigger-mode.json",
+    "reason": "no gold-writer (87 lambda-only -> ~B lambda-path / 55 declared-only -> Phase-B reader-firm)",
+    "reader_firms": []
+   },
+   {
+    "key": "gold/trigger-pending.json",
+    "reason": "no gold-writer (87 lambda-only -> ~B lambda-path / 55 declared-only -> Phase-B reader-firm)",
+    "reader_firms": []
+   },
+   {
+    "key": "gold/views/firm_composition.json",
+    "reason": "no gold-writer (87 lambda-only -> ~B lambda-path / 55 declared-only -> Phase-B reader-firm)",
+    "reader_firms": [
+     "bd"
+    ]
+   },
+   {
+    "key": "gold/views/nna_aua_by_advisor.parquet",
+    "reason": "no gold-writer (87 lambda-only -> ~B lambda-path / 55 declared-only -> Phase-B reader-firm)",
+    "reader_firms": [
+     "bd"
+    ]
+   },
+   {
+    "key": "gold/views/nna_aua_by_geography.parquet",
+    "reason": "no gold-writer (87 lambda-only -> ~B lambda-path / 55 declared-only -> Phase-B reader-firm)",
+    "reader_firms": [
+     "bd"
+    ]
+   },
+   {
+    "key": "gold/views/nna_aua_by_geography_city.parquet",
+    "reason": "no gold-writer (87 lambda-only -> ~B lambda-path / 55 declared-only -> Phase-B reader-firm)",
+    "reader_firms": [
+     "bd"
+    ]
+   },
+   {
+    "key": "infrastructure/freshness_manifest.json",
+    "reason": "no gold-writer (87 lambda-only -> ~B lambda-path / 55 declared-only -> Phase-B reader-firm)",
+    "reader_firms": []
+   },
+   {
+    "key": "json-tiered/market-overview/rsi-summary.json",
+    "reason": "no gold-writer (87 lambda-only -> ~B lambda-path / 55 declared-only -> Phase-B reader-firm)",
+    "reader_firms": []
+   },
+   {
+    "key": "json-tiered/market-overview/summary/all-returns.json",
+    "reason": "no gold-writer (87 lambda-only -> ~B lambda-path / 55 declared-only -> Phase-B reader-firm)",
+    "reader_firms": []
+   },
+   {
+    "key": "json/benchmarks/benchmark_returns.json",
+    "reason": "no gold-writer (87 lambda-only -> ~B lambda-path / 55 declared-only -> Phase-B reader-firm)",
+    "reader_firms": []
+   },
+   {
+    "key": "json/benchmarks/etf_returns.json",
+    "reason": "no gold-writer (87 lambda-only -> ~B lambda-path / 55 declared-only -> Phase-B reader-firm)",
+    "reader_firms": []
+   },
+   {
+    "key": "json/benchmarks/model_portfolio_benchmarks.json",
+    "reason": "no gold-writer (87 lambda-only -> ~B lambda-path / 55 declared-only -> Phase-B reader-firm)",
+    "reader_firms": []
+   },
+   {
+    "key": "json/benchmarks/model_portfolio_timeseries.json",
+    "reason": "no gold-writer (87 lambda-only -> ~B lambda-path / 55 declared-only -> Phase-B reader-firm)",
+    "reader_firms": []
+   },
+   {
+    "key": "json/capital-markets/assumptions.json",
+    "reason": "no gold-writer (87 lambda-only -> ~B lambda-path / 55 declared-only -> Phase-B reader-firm)",
+    "reader_firms": []
+   },
+   {
+    "key": "json/capital-markets/views.json",
+    "reason": "no gold-writer (87 lambda-only -> ~B lambda-path / 55 declared-only -> Phase-B reader-firm)",
+    "reader_firms": []
+   },
+   {
+    "key": "json/correlations/correlation_data.json",
+    "reason": "no gold-writer (87 lambda-only -> ~B lambda-path / 55 declared-only -> Phase-B reader-firm)",
+    "reader_firms": []
+   },
+   {
+    "key": "json/factor-tilts/data.json",
+    "reason": "no gold-writer (87 lambda-only -> ~B lambda-path / 55 declared-only -> Phase-B reader-firm)",
+    "reader_firms": []
+   },
+   {
+    "key": "json/factor-tilts/tier1-snapshot.json",
+    "reason": "no gold-writer (87 lambda-only -> ~B lambda-path / 55 declared-only -> Phase-B reader-firm)",
+    "reader_firms": []
+   },
+   {
+    "key": "json/factor-tilts/tier2-spreads.json",
+    "reason": "no gold-writer (87 lambda-only -> ~B lambda-path / 55 declared-only -> Phase-B reader-firm)",
+    "reader_firms": []
+   },
+   {
+    "key": "json/factor-tilts/tier3-timeseries.json",
+    "reason": "no gold-writer (87 lambda-only -> ~B lambda-path / 55 declared-only -> Phase-B reader-firm)",
+    "reader_firms": []
+   },
+   {
+    "key": "json/latest/manifest.json",
+    "reason": "no gold-writer (87 lambda-only -> ~B lambda-path / 55 declared-only -> Phase-B reader-firm)",
+    "reader_firms": []
+   },
+   {
+    "key": "json/macro/macro_data.json",
+    "reason": "no gold-writer (87 lambda-only -> ~B lambda-path / 55 declared-only -> Phase-B reader-firm)",
+    "reader_firms": []
+   },
+   {
+    "key": "json/macro/timeseries/10y.json",
+    "reason": "no gold-writer (87 lambda-only -> ~B lambda-path / 55 declared-only -> Phase-B reader-firm)",
+    "reader_firms": []
+   },
+   {
+    "key": "json/macro/timeseries/2y.json",
+    "reason": "no gold-writer (87 lambda-only -> ~B lambda-path / 55 declared-only -> Phase-B reader-firm)",
+    "reader_firms": []
+   },
+   {
+    "key": "json/macro/vix_data.json",
+    "reason": "no gold-writer (87 lambda-only -> ~B lambda-path / 55 declared-only -> Phase-B reader-firm)",
+    "reader_firms": []
+   },
+   {
+    "key": "json/macro/volatility_data.json",
+    "reason": "no gold-writer (87 lambda-only -> ~B lambda-path / 55 declared-only -> Phase-B reader-firm)",
+    "reader_firms": []
+   },
+   {
+    "key": "json/market/market-regime-history.json",
+    "reason": "no gold-writer (87 lambda-only -> ~B lambda-path / 55 declared-only -> Phase-B reader-firm)",
+    "reader_firms": []
+   },
+   {
+    "key": "json/market/market-regime.json",
+    "reason": "no gold-writer (87 lambda-only -> ~B lambda-path / 55 declared-only -> Phase-B reader-firm)",
+    "reader_firms": []
+   },
+   {
+    "key": "json/market_metrics.json",
+    "reason": "no gold-writer (87 lambda-only -> ~B lambda-path / 55 declared-only -> Phase-B reader-firm)",
+    "reader_firms": []
+   },
+   {
+    "key": "json/mdpf/global/aggregate-aua-timeseries.json",
+    "reason": "no gold-writer (87 lambda-only -> ~B lambda-path / 55 declared-only -> Phase-B reader-firm)",
+    "reader_firms": []
+   },
+   {
+    "key": "json/peers/peer_performance.json",
+    "reason": "no gold-writer (87 lambda-only -> ~B lambda-path / 55 declared-only -> Phase-B reader-firm)",
+    "reader_firms": []
+   },
+   {
+    "key": "json/portfolios/account-distribution.json",
+    "reason": "no gold-writer (87 lambda-only -> ~B lambda-path / 55 declared-only -> Phase-B reader-firm)",
+    "reader_firms": []
+   },
+   {
+    "key": "json/portfolios/aum-metrics.json",
+    "reason": "no gold-writer (87 lambda-only -> ~B lambda-path / 55 declared-only -> Phase-B reader-firm)",
+    "reader_firms": []
+   },
+   {
+    "key": "json/portfolios/aum-timeseries.json",
+    "reason": "no gold-writer (87 lambda-only -> ~B lambda-path / 55 declared-only -> Phase-B reader-firm)",
+    "reader_firms": []
+   },
+   {
+    "key": "json/portfolios/non_model_assets.json",
+    "reason": "no gold-writer (87 lambda-only -> ~B lambda-path / 55 declared-only -> Phase-B reader-firm)",
+    "reader_firms": []
+   },
+   {
+    "key": "json/positioning/allocation_summary.json",
+    "reason": "no gold-writer (87 lambda-only -> ~B lambda-path / 55 declared-only -> Phase-B reader-firm)",
+    "reader_firms": []
+   },
+   {
+    "key": "json/positioning/etf-returns.json",
+    "reason": "no gold-writer (87 lambda-only -> ~B lambda-path / 55 declared-only -> Phase-B reader-firm)",
+    "reader_firms": []
+   },
+   {
+    "key": "json/positioning/holdings_attribution_data.json",
+    "reason": "no gold-writer (87 lambda-only -> ~B lambda-path / 55 declared-only -> Phase-B reader-firm)",
+    "reader_firms": []
+   },
+   {
+    "key": "json/positioning/positioning_data.json",
+    "reason": "no gold-writer (87 lambda-only -> ~B lambda-path / 55 declared-only -> Phase-B reader-firm)",
+    "reader_firms": []
+   },
+   {
+    "key": "json/returns/etf_period_returns.json",
+    "reason": "no gold-writer (87 lambda-only -> ~B lambda-path / 55 declared-only -> Phase-B reader-firm)",
+    "reader_firms": []
+   },
+   {
+    "key": "json/security_scanner/latest/factor_metadata.json",
+    "reason": "no gold-writer (87 lambda-only -> ~B lambda-path / 55 declared-only -> Phase-B reader-firm)",
+    "reader_firms": []
+   },
+   {
+    "key": "json/semantic-trending/latest.json",
+    "reason": "no gold-writer (87 lambda-only -> ~B lambda-path / 55 declared-only -> Phase-B reader-firm)",
+    "reader_firms": []
+   },
+   {
+    "key": "json/sentiment/fear-greed-index.json",
+    "reason": "no gold-writer (87 lambda-only -> ~B lambda-path / 55 declared-only -> Phase-B reader-firm)",
+    "reader_firms": []
+   },
+   {
+    "key": "json/sentiment/keyword-sentiments.json",
+    "reason": "no gold-writer (87 lambda-only -> ~B lambda-path / 55 declared-only -> Phase-B reader-firm)",
+    "reader_firms": []
+   },
+   {
+    "key": "json/trending/latest.json",
+    "reason": "no gold-writer (87 lambda-only -> ~B lambda-path / 55 declared-only -> Phase-B reader-firm)",
+    "reader_firms": []
+   },
+   {
+    "key": "json/valuation/risk_premium_data.json",
+    "reason": "no gold-writer (87 lambda-only -> ~B lambda-path / 55 declared-only -> Phase-B reader-firm)",
+    "reader_firms": []
+   },
+   {
+    "key": "json/valuation/valuation_data.json",
+    "reason": "no gold-writer (87 lambda-only -> ~B lambda-path / 55 declared-only -> Phase-B reader-firm)",
+    "reader_firms": []
+   },
+   {
+    "key": "json/yang/volatility_data.json",
+    "reason": "no gold-writer (87 lambda-only -> ~B lambda-path / 55 declared-only -> Phase-B reader-firm)",
+    "reader_firms": []
+   },
+   {
+    "key": "macro/macro_data.json",
+    "reason": "no gold-writer (87 lambda-only -> ~B lambda-path / 55 declared-only -> Phase-B reader-firm)",
+    "reader_firms": []
+   },
+   {
+    "key": "orion/bronze-trigger-mode.json",
+    "reason": "no gold-writer (87 lambda-only -> ~B lambda-path / 55 declared-only -> Phase-B reader-firm)",
+    "reader_firms": []
+   },
+   {
+    "key": "orion/jwt/current.json",
+    "reason": "no gold-writer (87 lambda-only -> ~B lambda-path / 55 declared-only -> Phase-B reader-firm)",
+    "reader_firms": []
+   },
+   {
+    "key": "orion/jwt/trigger-mode.json",
+    "reason": "no gold-writer (87 lambda-only -> ~B lambda-path / 55 declared-only -> Phase-B reader-firm)",
+    "reader_firms": []
+   },
+   {
+    "key": "otp/current.txt",
+    "reason": "no gold-writer (87 lambda-only -> ~B lambda-path / 55 declared-only -> Phase-B reader-firm)",
+    "reader_firms": []
+   },
+   {
+    "key": "otp/state.json",
+    "reason": "no gold-writer (87 lambda-only -> ~B lambda-path / 55 declared-only -> Phase-B reader-firm)",
+    "reader_firms": []
+   },
+   {
+    "key": "platinum/etf_ownership_dashboard.json",
+    "reason": "no gold-writer (87 lambda-only -> ~B lambda-path / 55 declared-only -> Phase-B reader-firm)",
+    "reader_firms": []
+   },
+   {
+    "key": "platinum/firm/leaderboard.prior_week.json",
+    "reason": "no gold-writer (87 lambda-only -> ~B lambda-path / 55 declared-only -> Phase-B reader-firm)",
+    "reader_firms": [
+     "bd"
+    ]
+   },
+   {
+    "key": "schwab/silver/rld/",
+    "reason": "no gold-writer (87 lambda-only -> ~B lambda-path / 55 declared-only -> Phase-B reader-firm)",
+    "reader_firms": [
+     "bd"
+    ]
+   },
+   {
+    "key": "schwab/silver/uln/",
+    "reason": "no gold-writer (87 lambda-only -> ~B lambda-path / 55 declared-only -> Phase-B reader-firm)",
+    "reader_firms": [
+     "bd"
+    ]
+   },
+   {
+    "key": "schwab/silver/ult/",
+    "reason": "no gold-writer (87 lambda-only -> ~B lambda-path / 55 declared-only -> Phase-B reader-firm)",
+    "reader_firms": [
+     "bd"
+    ]
+   },
+   {
+    "key": "security-reports/*_ai_summary.txt",
+    "reason": "no gold-writer (87 lambda-only -> ~B lambda-path / 55 declared-only -> Phase-B reader-firm)",
+    "reader_firms": []
+   },
+   {
+    "key": "security-reports/*_comprehensive_report.txt",
+    "reason": "no gold-writer (87 lambda-only -> ~B lambda-path / 55 declared-only -> Phase-B reader-firm)",
+    "reader_firms": []
+   },
+   {
+    "key": "security-reports/*_findings.json",
+    "reason": "no gold-writer (87 lambda-only -> ~B lambda-path / 55 declared-only -> Phase-B reader-firm)",
+    "reader_firms": []
+   },
+   {
+    "key": "security-reports/*_latest_counts.json",
+    "reason": "no gold-writer (87 lambda-only -> ~B lambda-path / 55 declared-only -> Phase-B reader-firm)",
+    "reader_firms": []
+   },
+   {
+    "key": "security-reports/*_security_report.txt",
+    "reason": "no gold-writer (87 lambda-only -> ~B lambda-path / 55 declared-only -> Phase-B reader-firm)",
+    "reader_firms": []
+   },
+   {
+    "key": "security-reports/latest_ai_summary.txt",
+    "reason": "no gold-writer (87 lambda-only -> ~B lambda-path / 55 declared-only -> Phase-B reader-firm)",
+    "reader_firms": []
+   },
+   {
+    "key": "security-reports/latest_score.json",
+    "reason": "no gold-writer (87 lambda-only -> ~B lambda-path / 55 declared-only -> Phase-B reader-firm)",
+    "reader_firms": []
+   },
+   {
+    "key": "seeking-alpha/analysis/manifests/*/layer1_summary.json",
+    "reason": "no gold-writer (87 lambda-only -> ~B lambda-path / 55 declared-only -> Phase-B reader-firm)",
+    "reader_firms": []
+   },
+   {
+    "key": "seeking-alpha/analysis/manifests/*/layer25_dedup_report.json",
+    "reason": "no gold-writer (87 lambda-only -> ~B lambda-path / 55 declared-only -> Phase-B reader-firm)",
+    "reader_firms": []
+   },
+   {
+    "key": "seeking-alpha/analysis/manifests/*/layer2_chunk_*.json",
+    "reason": "no gold-writer (87 lambda-only -> ~B lambda-path / 55 declared-only -> Phase-B reader-firm)",
+    "reader_firms": []
+   },
+   {
+    "key": "seeking-alpha/news/manifests/*/dedup_report.json",
+    "reason": "no gold-writer (87 lambda-only -> ~B lambda-path / 55 declared-only -> Phase-B reader-firm)",
+    "reader_firms": []
+   },
+   {
+    "key": "seeking-alpha/news/manifests/*/layer1_summary.json",
+    "reason": "no gold-writer (87 lambda-only -> ~B lambda-path / 55 declared-only -> Phase-B reader-firm)",
+    "reader_firms": []
+   },
+   {
+    "key": "sentiment/keyword-sentiments.json",
+    "reason": "no gold-writer (87 lambda-only -> ~B lambda-path / 55 declared-only -> Phase-B reader-firm)",
+    "reader_firms": []
+   },
+   {
+    "key": "silver/accounts_dim/latest.parquet",
+    "reason": "no gold-writer (87 lambda-only -> ~B lambda-path / 55 declared-only -> Phase-B reader-firm)",
+    "reader_firms": [
+     "inf"
+    ]
+   },
+   {
+    "key": "silver/api_dims/accounts_v2/snapshot_date={*}/data.parquet",
+    "reason": "no gold-writer (87 lambda-only -> ~B lambda-path / 55 declared-only -> Phase-B reader-firm)",
+    "reader_firms": [
+     "inf"
+    ]
+   },
+   {
+    "key": "silver/api_dims/positions_mv/snapshot_date={*}/data.parquet",
+    "reason": "no gold-writer (87 lambda-only -> ~B lambda-path / 55 declared-only -> Phase-B reader-firm)",
+    "reader_firms": [
+     "inf"
+    ]
+   },
+   {
+    "key": "silver/eclipse/{*}/_meta/silver_complete.json",
+    "reason": "no gold-writer (87 lambda-only -> ~B lambda-path / 55 declared-only -> Phase-B reader-firm)",
+    "reader_firms": [
+     "inf"
+    ]
+   },
+   {
+    "key": "silver/eclipse/{*}/model_composition.parquet",
+    "reason": "no gold-writer (87 lambda-only -> ~B lambda-path / 55 declared-only -> Phase-B reader-firm)",
+    "reader_firms": [
+     "inf"
+    ]
+   },
+   {
+    "key": "silver/eclipse/{*}/portfolios_full.parquet",
+    "reason": "no gold-writer (87 lambda-only -> ~B lambda-path / 55 declared-only -> Phase-B reader-firm)",
+    "reader_firms": [
+     "inf",
+     "mdpf"
+    ]
+   },
+   {
+    "key": "silver/eclipse/{*}/portfolios_simple.parquet",
+    "reason": "no gold-writer (87 lambda-only -> ~B lambda-path / 55 declared-only -> Phase-B reader-firm)",
+    "reader_firms": [
+     "inf"
+    ]
+   },
+   {
+    "key": "silver/interpolated_prices.parquet",
+    "reason": "no gold-writer (87 lambda-only -> ~B lambda-path / 55 declared-only -> Phase-B reader-firm)",
+    "reader_firms": []
+   },
+   {
+    "key": "silver/meta/gap_manifest.json",
+    "reason": "no gold-writer (87 lambda-only -> ~B lambda-path / 55 declared-only -> Phase-B reader-firm)",
+    "reader_firms": [
+     "inf"
+    ]
+   },
+   {
+    "key": "silver/netassets_daily.parquet",
+    "reason": "no gold-writer (87 lambda-only -> ~B lambda-path / 55 declared-only -> Phase-B reader-firm)",
+    "reader_firms": [
+     "mdpf"
+    ]
+   },
+   {
+    "key": "silver/realized/bd_realized_compact.parquet",
+    "reason": "no gold-writer (87 lambda-only -> ~B lambda-path / 55 declared-only -> Phase-B reader-firm)",
+    "reader_firms": [
+     "bd"
+    ]
+   },
+   {
+    "key": "silver/transactions/{*}.parquet",
+    "reason": "no gold-writer (87 lambda-only -> ~B lambda-path / 55 declared-only -> Phase-B reader-firm)",
+    "reader_firms": [
+     "bd"
+    ]
+   },
+   {
+    "key": "silver/unrealized/{*}.parquet",
+    "reason": "no gold-writer (87 lambda-only -> ~B lambda-path / 55 declared-only -> Phase-B reader-firm)",
+    "reader_firms": [
+     "bd"
+    ]
+   },
+   {
+    "key": "smartx/jwt/current.json",
+    "reason": "no gold-writer (87 lambda-only -> ~B lambda-path / 55 declared-only -> Phase-B reader-firm)",
+    "reader_firms": []
+   },
+   {
+    "key": "views/account_distribution.json",
+    "reason": "no gold-writer (87 lambda-only -> ~B lambda-path / 55 declared-only -> Phase-B reader-firm)",
+    "reader_firms": []
+   },
+   {
+    "key": "warehouse/_branch_head.main.json",
+    "reason": "no gold-writer (87 lambda-only -> ~B lambda-path / 55 declared-only -> Phase-B reader-firm)",
+    "reader_firms": []
+   }
+  ],
+  "note": "Phase-A = writer-firm-attributed (gold, ~D-coupled). The unresolved await ~B lambda-path (87 lambda-only) + Phase-B reader-firm (declared-only). NO SILENT CAP -- full 311-312 target reached after ~B/Phase-B."
+ }
+}
