@@ -49,6 +49,20 @@ tools:
     engine: "org/modules/heatmap/{heat_map.py S0, object_freshness.py O1} (NFRA_EXPAND Strand-C; pinned API 2e3c27290)"
     project: "NFRA_EXPAND (HEATMAP_OBJECT strand)"
 
+  comp-drift:
+    command: "comp-drift <coverage | <target> | sweep [--deep]> [--json]"
+    segment_scope: cross-segment
+    when: |
+      - "Did my gold script / Lambda / graph node propagate intact all the way (local->git->cloud->nessie->kuzu->iceberg->trino->served)?" (<target> -- full propagation-chain walk)
+      - "Where in the estate is the propagation topology UNGUARDED today?" (coverage -- the seam coverage ledger from drift-topology.yaml; any GAP is drift you cannot see)
+      - "Is the whole estate in propagation parity?" (sweep -- fan out across every seam -> unified board + coverage line; --deep invokes the live/network engines)
+    cost: "coverage ~instant (manifest read); sweep ~seconds (cheap seams live; the live/network engines are cost-guarded behind --deep or a <target>)"
+    output: "normalized per-hop drift-record {stage_from,stage_to,target,seam_id,verdict,severity,operator_action,grounding}; tri-state exit 0 clean / 1 integrity-break / 2 UNVERIFIABLE; --json for CI"
+    name_note: "ORCHESTRATOR -- CALLS the existing seam engines (comp-heat drift, comp-pipescript deployed, comp-lambdamap parity, comp-iam reconcile, comp-kuzu provenance, iceberg_parity, code_heat_parity, comp-freshness); it NEVER re-implements a seam check (PRD arch-gate b). DISTINCT from comp-xray (CONTENT motion) + comp-freshness (data-pipeline staleness): comp-drift owns the cross-seam propagation TOPOLOGY and never silently MATCHes an unreadable seam (UNVERIFIABLE = exit 2)."
+    guardrails: "READ-ONLY orchestration; never-silent-MATCH (an unreadable / GAP / cost-guarded seam -> UNVERIFIABLE, never false-clean -- Rule 22 grounding on every verdict); cost-guarded (cheap seams first; live/network engines behind --deep or a scoped <target>)."
+    engine: "org/modules/graph/drift_cli.py over org/modules/graph/drift-topology.yaml (the SSOT); orchestrates .tools/comp-* + infra/aws/globgrph/{iceberg,code_heat}_parity.py"
+    project: "NFRA_COMPDRIFT (P2 / TO-2 -- the orchestrator shell)"
+
   comp-xray:
     command: "comp-xray <frozen <bucket> <key> --fields F[,F] | s3 ... | code <path> | config <path> | schema <parquet|s3://> | freeze-monitor [--publish]> [--json]"
     segment_scope: cross-segment

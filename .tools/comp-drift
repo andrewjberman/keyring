@@ -1,0 +1,15 @@
+#!/bin/bash
+# comp-drift -- estate propagation-drift ORCHESTRATOR (NFRA_COMPDRIFT P2 / TO-2).
+# Walks the canonical propagation topology (drift-topology.yaml), CALLING the
+# existing seam engines (never re-implementing their check logic -- PRD arch-gate b).
+#   comp-drift coverage          -- the coverage ledger (what's unguarded today)
+#   comp-drift <target>          -- walk one artifact's full chain
+#   comp-drift sweep [--deep]    -- fan out across every seam -> board
+#   (--json on any; exit 0 clean / 1 integrity-break / 2 UNVERIFIABLE)
+WORKSPACE="$(cd "$(dirname "$0")/.." && pwd)"
+# Hand the orchestrator the REAL Git Bash (not the WSL relay) for engine subprocesses.
+export COMP_DRIFT_BASH="$(cygpath -w "$(command -v bash)" 2>/dev/null || command -v bash)"
+python "$WORKSPACE/org/modules/graph/drift_cli.py" "$@"
+_exit=$?
+python "$WORKSPACE/org/modules/graph/comp_log_auto.py" "comp-drift" "$*" $_exit 2>/dev/null
+exit $_exit
