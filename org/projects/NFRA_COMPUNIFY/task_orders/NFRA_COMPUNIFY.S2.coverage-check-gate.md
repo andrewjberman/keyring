@@ -3,7 +3,7 @@
 <title>NFRA_COMPUNIFY S2 -- THE GATE: build comp-coverage-check (the machine-checkable non-redundancy invariant as enforcement) -- fails when a tool is unplaced OR overlaps a sibling without a declared distinct_from.</title>
 <issued_to>0.7.0_AE_CloudOps (gate-infra lane) -- if firefight-pinned, a dedicated build instance (see &lt;allocation&gt;).</issued_to>
 <issued_by>2.0.0_SA_COO~B</issued_by>
-<status>dispatched -- 2026-06-30T20:14Z GO'd to 0.8.0_AE_CloudComp~C on CTO S1 gate-pass (parallel with S3). Regeneration-ownership ruling baked in (AC5). RAVC2 -> CTO arch-gate.</status>
+<status>DELIVERED, at CTO arch-gate -- 2026-06-30T20:44Z. ~C committed comp-coverage-check (6560cc103 + 1eb50c3cb), wired as advisory B6 in safe-commit.sh + ledger meta_tools + comp-which-routable. COO~B ground-checked: selfcheck all-green (clean->PASS, 3 injected->FAIL, no-checker->UNVERIFIABLE) + AC5 projection-currency (--verify in-gate). Exec regeneration confirmed: manifest verified-current (--verify exit 0, 45-tool ledger, non-breaking; S1 marker e302a1542 present) -- no regen diff forced. RAVC2 -> CTO arch-gate.</status>
 <priority>P2 -- the enforcement that keeps the map true to the territory by gate, not prose (CTO ruling #4). Follows S1.</priority>
 <project>NFRA_COMPUNIFY</project>
 <dependencies>S1 (needs the populated ledger + the distinct_from declarations to check against).</dependencies>
