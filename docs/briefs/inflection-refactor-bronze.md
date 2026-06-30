@@ -30,7 +30,8 @@
  s3://opal-data-inf/bronze/eclipse-api/{YYYY-MM-DD}/      ← SEPARATE domain, consistent Eclipse raw landing
    portfolios_simple.json  portfolios.json   models.json   model_composition_{id}.json   [+ frontier — §4]
 ```
-**Eliminated:** `bronze/orion-api-v2/` (merged into `bronze/orion-api/`), `bronze/positions/`, `bronze/assets/` (own-prefix parquet), and the old `bronze/eclipse/` (renamed `bronze/eclipse-api/` to parallel `orion-api` and make the two-domain separation explicit). One datestamped folder per **source domain**; one file per endpoint in its native format. The two domains never share a prefix (Principle 6).
+**Eliminated:** `bronze/orion-api-v2/` (merged into `bronze/orion-api/`), `bronze/positions/`, `bronze/assets/`, **`bronze/performance/`, `bronze/transactions/`** (all own-prefix parquet — the 4-dim inline-parquet double-write, §3), and the old `bronze/eclipse/` (renamed `bronze/eclipse-api/`). One datestamped folder per **source domain**; one file per endpoint in its native format; two domains never share a prefix (Principle 6).
+> **Complete-prefix-census required (DS~A correction):** this list is illustrative, NOT exhaustive — the decommission/migration scope (R1–R3 / AC1) must be driven by a FULL `s3://opal-data-inf/bronze/` prefix census so no own-prefix tree silently survives. Request the exact census from DS~A and enumerate it in the PRD/TO.
 
 ## 2. Single pull layer on the EC2 — also a STRUCTURAL DURABLE FIX for the recurring freeze
 
@@ -38,15 +39,18 @@
 
 - The EC2 pulls **all** dims into bronze (today the inline chain pulls only 6; `tax`, `billing`, `unified_account_dim` are cron-Lambda-only — they move onto the EC2).
 - **Decommission** the 9 standalone cron Lambdas + their EventBridge rules (retro §5).
-- **One pull script per dim** — retire the duplicate implementations: `transactions_v2.py` vs `transactions_rest.py`; `performance_dim.py` vs `performance_rest.py` (keep one each; the `_rest` copies live in `data/inf/manual_api/`).
+- **One pull script per dim** — retire the duplicate implementations: transactions has **THREE** variants in `data/inf/manual_api/` (`pull_inflection_transactions.py`, `_rest.py`, `_v2.py`); performance has `performance_dim.py` vs `performance_rest.py`. Keep exactly one per dim.
 - **Uniform resume/skip** [DECISION, rec: yes]: every dim skips re-pull if its `{date}` file already exists (idempotent re-runs); today only positions/assets have this guard.
 
-## 3. positions + assets — the raw-bronze correction (grounded)
+## 3. The parquet-at-bronze + double-write correction — FOUR dims (DS~A validation 2026-06-30)
 
-Both currently do `r.json()` (Orion returns **JSON**) → `pd.DataFrame` → `to_parquet` → own prefix. That is bronze doing format conversion. **Refactor:**
-- Bronze lands the **raw JSON** response: `bronze/orion-api/{date}/positions.json`, `.../assets.json`. No parquet at bronze.
-- The JSON→parquet conversion **moves to silver** (the `positions_mv` silver dim already emits parquet — repoint its converter to read the raw bronze JSON instead of a pre-made bronze parquet).
-- Net: positions/assets stop being structurally + format special; they become ordinary raw-JSON bronze dims like representatives.
+The parquet-at-bronze violators are **{positions, assets, performance, transactions}** — NOT just positions/assets. LIVE EVIDENCE (DS~A): `bronze/performance/2026-06-30.parquet` (3.2MB, 11:59Z) + `bronze/transactions/2026-06-30.parquet` (34MB, 12:13Z) — fresh PARQUET own-prefix (the **inline `_rest` path**) — coexisting with the cron-Envision CSVs at `bronze/orion-api/2026-06-30/{performance_dim,transactions}.csv`.
+- So **perf + txn are DOUBLE-WRITTEN in two formats to two locations**: cron CSV (`orion-api/{date}/`) + inline parquet (`bronze/{dim}/{date}.parquet`). This is STRONGER than the "6-dim same-format double-pull" framing — it's **same-dim / different-format / different-location**. (And the inline `_rest` parquet path is the SAME redundant layer whose perf re-pull is the source-confirmed hang locus — §2.)
+- positions/assets: `r.json()` → `to_parquet` → own prefix (`pull_inflection_{positions_daily,assets_v2}.py` L227/433, L228/401).
+**Refactor (R2 covers all 4):**
+- Bronze lands the **raw native** response (JSON) under the unified `bronze/orion-api/{date}/<dim>` — no parquet at bronze, for ANY of the 4.
+- The →parquet conversion moves to silver (repoint the silver converters to read the raw bronze).
+- Net: positions/assets/performance/transactions stop being format-special; the inline-parquet double-write is eliminated (it collapses into the single-pull-layer, §2).
 
 ## 4. The endpoint surface — ALREADY ENUMERATED (DATA_PLATFORM), pull it all
 

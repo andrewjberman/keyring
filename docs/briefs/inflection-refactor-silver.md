@@ -61,6 +61,9 @@ RESOLVED:
 ### 5.3 ORION-API — RETIRE
 `silver/accounts_dim/` (legacy), `silver/orion-rest/` (stray), `silver/performance_dim/` (dup).
 
+### 5.4 Census-complete (DS~A correction 2026-06-30)
+The silver map above omitted two trees that must be CENSUSED (not silently dropped): `silver/prices/` (canonical_prices — the prices tree feeding gold; **KEEP**, classify under its own prices lineage, not an orion-dim) and `silver/historical_prices.parquet` (single-file; classify KEEP/retire per gold consumption). Drive the silver migration (S-R1..R5 / AC) off a FULL `s3://opal-data-inf/silver/` prefix census — same requirement as bronze §1 — so no tree survives unclassified.
+
 ### 5.4 ECLIPSE-API — 4 dims (relocate + stub, full-fidelity, exist today)
 | silver dim | from raw bronze | grain / key fields | ~rows |
 |---|---|---|---|
