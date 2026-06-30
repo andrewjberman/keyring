@@ -50,7 +50,7 @@ RESOLVED:
 ## 5. Per-dim modeling map
 
 ### 5.1 ORION-API — KEEP (already correct shape: partitioned, active)
-`positions_mv` (AUA backbone — the per-day Assets snapshot), `accounts_v2`, `household`, `household_rep_mapping`, `representatives`, `activity`, `billing`, `tax_unrealized`, `tax_realized`. These stay; tree renamed `api_dims/`→`orion-api/`.
+`positions_mv` (AUA backbone — the per-day Assets snapshot), `accounts_v2`, `household_rep_mapping`, `representatives`, `activity`, `billing`, `tax_unrealized`, `tax_realized`. These stay; tree renamed `api_dims/`→`orion-api/`. (**`household` MOVED OUT of KEEP** → §5.3 repoint-then-retire: 1204h stale, deprecated-but-read by 4 gold consumers — DS~A grounded 2026-06-30.)
 
 ### 5.2 ORION-API — CONSOLIDATE onto the partitioned shape
 - `assets` / `assets_v2` — exists in 3 places (`api_dims/assets/`, `api_dims/assets_v2/`, flat `silver/assets_v2/`) → ONE partitioned dim.
@@ -61,8 +61,10 @@ RESOLVED:
 ### 5.3 ORION-API — RETIRE vs REPOINT (DS~A dead-confirm `d7ca2f6bb`; **deprecated-by-default sharpening — Andrew-direct 2026-06-30**)
 - **PRINCIPLE (Andrew-direct, "if something is 1490h stale, it is deprecated"):** a 1490h-class-stale artifact is **deprecated-by-default**. The burden flips — "keep" must be EARNED by a *proven* served-critical fresh read; absent that, **retire** (after the consumer census is proven complete + all-repointed, so no latent real reader breaks). Grounded against `pipescript advi-inf`: an artifact with **no live producer** + 1490h-stale = dead, not "frozen-but-maintained."
 - **RETIRE (DEAD-confirmed):** `silver/performance_dim/` (dup, dead), `silver/orion-rest/` (stray, dead).
-- **DEPRECATED → REPOINT consumers, THEN RETIRE the stale source (supersedes the prior "repoint+flag, keep" call):** `silver/accounts_dim/` (1490h stale, frozen 04-29) has **NO live producer** (replaced by `inf-accounts-v2-daily`, grounded `pipescript advi-inf`). Its real consumers (INF_C_09 / INF_D_00 — INF_09 was a **phantom** per DS~A's census correction) are repointed to `accounts_v2` (LEG-1, deployed). Once that repoint is **proven complete + all-repointed**, **RETIRE** the deprecated `accounts_dim/` source — do NOT flag-and-carry cruft forward.
-- **DEPRECATED-CANDIDATES (same ruling, pending per-dim producer/consumer confirm):** `silver/meta/gap_manifest.json` (1490h, frozen 04-29 — tied to the yahoo/price-gap layer removed in §5.5) → retire with yahoo. `silver/api_dims/household` (1204h stale) is listed KEEP in §5.1 but is 1490h-class stale — **resolve the inconsistency**: confirm it is genuinely active-low-churn vs deprecated (no live producer → retire). Old `api_dims/assets` (1326h) is already handled by the §5.4 CONSOLIDATE (superseded by `assets_v2`).
+- **DEPRECATED → REPOINT consumers, THEN RETIRE the stale source (supersedes the prior "repoint+flag, keep" call):** `silver/accounts_dim/` (1490h stale, frozen 04-29) has **NO live producer** (replaced by `inf-accounts-v2-daily`, grounded `pipescript advi-inf`). Its real consumers (INF_C_09 / INF_D_00 — INF_09 was a **phantom** per DS~A's census correction) are repointed to `accounts_v2` (LEG-1, deployed). Once that repoint is **proven complete + all-repointed**, **RETIRE** the deprecated `accounts_dim/` source — do NOT flag-and-carry cruft forward. DS~A grounded retire-eligible (zero live silver readers post-LEG-1).
+  - **DECLARATIVE distinction (DS~A — do NOT conflate):** retire `silver/accounts_dim/` ONLY. `gold/dimensions/accounts_dimension_latest.parquet` (`ACCOUNTS_DIM_KEY`, read by INF_A_04/C_00/C_02/C_03/C_05) is a **DIFFERENT, LIVE** artifact (INF_A_00 gold output) — leave it untouched. Name-collision trap.
+- **DEPRECATED-BUT-READ → REPOINT-then-RETIRE (DS~A grounded 2026-06-30):** `silver/api_dims/household` (1204h stale) is LIVE-read by **4 gold consumers** (INF_D_00d L68, INF_D_04 L88/L481, INF_D_04b L61, INF_D_05 L10) — the `accounts_dim` pattern repeating. Repoint the 4 consumers to `accounts_v2` (carries household_id + geo, INF_D_04 L3190) BEFORE retire (net-new LEG-1 repoint). Moved out of §5.1 KEEP.
+- **DEPRECATED-CANDIDATE (criticality pending):** `silver/meta/gap_manifest.json` (1490h, frozen 04-29) — read by INF_C_01 + INF_D_00c; confirm tolerate-stale-meta vs hard read before retire (tied to yahoo removal §5.5). Old `api_dims/assets` (1326h) handled by §5.4 CONSOLIDATE (superseded by `assets_v2`).
 
 ### 5.4 Complete prefix census — AC authority (DS~A live census 2026-06-30)
 
@@ -71,7 +73,8 @@ Every `s3://opal-data-inf/silver/` prefix classified — no tree survives unclas
 | silver prefix | disposition |
 |---|---|
 | `api_dims/` | **RENAME** → `silver/orion-api/` (the main tree) |
-| `api_dims/{positions_mv, accounts_v2, household, household_rep_mapping, representatives, activity, billing, tax_realized, tax_unrealized}` | **KEEP** (canonical dims, correct shape) |
+| `api_dims/{positions_mv, accounts_v2, household_rep_mapping, representatives, activity, billing, tax_realized, tax_unrealized}` | **KEEP** (canonical dims, correct shape) |
+| `silver/api_dims/household` | **REPOINT consumers → RETIRE (deprecated-but-read)** — 1204h stale, 4 live readers (D_00d/D_04/D_04b/D_05); repoint to accounts_v2 (household_id+geo) then retire |
 | `api_dims/assets` + `api_dims/assets_v2` + flat `silver/assets_v2/` | **CONSOLIDATE** → ONE partitioned `assets` |
 | `api_dims/performance` + flat `silver/performance/` + `silver/performance_dim/` | **CONSOLIDATE** → ONE partitioned `performance` (retire `performance_dim`) |
 | flat `silver/transactions/` | **CONSOLIDATE** → `silver/orion-api/transactions/` partitioned |
