@@ -3,7 +3,7 @@
 <title>NFRA_GRAPHUNI P0-A (~A) -- STORAGE-STRATUM read-only AUDIT: enumerate the storage ladder (S3_BUCKET superset S3Key superset object) denominator slice -- what's in the graph vs the derive-spec for storage. READ-ONLY, no mutation.</title>
 <issued_to>0.8.0_AE_CloudComp~A (POPULATE -- storage stratum, per the by-stratum fleet partition CTO-concurred 212036Z)</issued_to>
 <issued_by>2.0.0_SA_COO~B</issued_by>
-<status>staged -- dispatch on ~A liveness (LIVE confirmed PID 31296) + this mandate</status>
+<status>COMPLETE -- 2026-06-30T21:34Z. ~A delivered the storage denominator slice (16a511346, ~45min, read-only zero-mutation). COO~B ACCEPTED: ground-truthed both sides, covered-vs-expected explicit (storage 1/3 levels + 0/4 edge-types populated -- depth-flat at bucket). 5 findings ruled/routed: F1 LOAD-BEARING (canonical S3Key id = (bucket,key)-qualified not bucketless -> corrects ~D's 288-set, the ~A+~D+~C cross-stratum seam) RULED by COO~B; F2 inf-DAG-stale -> ~D fresh; F3/F4 producer-attribution + level-token -> ~C govern; F5 Phase-B lineage noted. Composes into the enumerated denominator (awaiting ~B infra slice) -> RAVC CTO before /seams.</status>
 <priority>P0 -- audit-first, read-only, parallel-safe with the firefight + with gold lands. Produces ~A's slice of the ENUMERATED DENOMINATOR (CTO sharpening 1) BEFORE any mutation.</priority>
 <project>NFRA_GRAPHUNI (GRAPHDEPTH P1 population, storage stratum)</project>
 <dependencies>NONE for the audit (read-only). Pairs with ~D's P0 (compute) + ~B's P0-B (infra) -> the union = the enumerated denominator. ~C governs the grain_contract these audit against.</dependencies>
