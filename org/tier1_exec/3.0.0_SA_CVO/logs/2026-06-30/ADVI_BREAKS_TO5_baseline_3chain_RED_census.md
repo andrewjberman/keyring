@@ -46,6 +46,14 @@ All three onset at/after **Friday 06-26 canonical/SSOT work** -> blast radius CO
 **What worked:** version-history (list-object-versions size-over-time) was the decisive tool — it dissolved CTO's "new Friday emitter" lead into "old emitter, evening re-fire" for INF, and cleanly separated the 3 mechanisms (clobber / pin / stopped). Ground-before-accept held: did not take the DS/CTO framing as given.
 **Gap:** exact INF thin-emitter not yet pinned (Rule-22 INFERRED) — handed to TO-1 with a sharpened hunt (what re-ran 06-29 21:00-22:10Z emitting the thin shape).
 
+## Addendum (post-baseline) — 49F CHANGE-EVENT C REFUTED + bucket confirmed (source-grounded)
+- 49F TRUE served key = **opal-data-BD**/platinum/firm/header_metrics.json (per Andrew + grounding). The opal-data-INF header_metrics_fresh.json (324B/06-29) is INF's own _fresh (INF_D_00e), NOT 49F. Served writer = `data/black_diamond/scripts/gold/D_00.portal_aggregates.py:725`.
+- CHANGE-EVENT C (Schwab-SSOT canonical interfering with 49F) — REFUTED as the freeze cause (Rule 22 source-confirm): canonical-schwab DOES write opal-data-bd (co-tenancy: `build_canonical_daily.py:48` + all `canonical/schwab/gold/*` BUCKET=opal-data-bd), BUT `build_gold_portal_aggregates.py` is explicitly **"NOT served"** (L132,137), writing an isolated `canonical/schwab/gold/.../date=/data.parquet` partition — NOT the served JSON key. Decisive negative: 49F served has ZERO writes after 06-26T05:00 (a clobber would show writes). => 49F freeze = **CHANGE-EVENT A only** (BD bronze dark 06-19 SS&C MFA -> D_00 ran on frozen silver -> froze 06-26). Fix = ADVI_BDAPIMIG.
+- LATENT risk banked for TO-6/SSOT: if a future canonical change ever re-points build_gold_portal_aggregates at the served key, 49F inherits INF's exact two-writer failure.
+
+## Phase-2 rubric (locked to PRD §4 A-F)
+Per-pipeline GREEN only when ALL pass vs SERVED/custodian: A(chain map) / B(single-writer) / C(freshness: data_as_of==true date AND advances daily) / D(custodian parity within tol) / E(schema: all portal keys present) / F(trigger health). INF additionally must pass the TO-2 size/shape gate. ALL-GREEN x3 + TO-6 alarm live = CVO gate-release.
+
 ## Blockers
 None for the baseline (delivered). Phase-2 GREEN/AMBER/RED verdict is event-gated on the fix legs TO-2/3/4b landing.
 
