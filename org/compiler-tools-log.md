@@ -9853,3 +9853,19 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-06-30 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
 | 2026-06-30 | 0.6.1_AE_PartnerETL | ADVI_INFREF.P1 | comp-which, comp-platinum, comp-grep | comp-which (route publisher+consumer) -> comp-platinum reverse aua_by_tax_status (FE-dead proof: no components) + comp-grep (locate publisher source) | PASS -- F1 dead-proof grounded for LEG-0 deploy |
 | 2026-06-30 | 0.6.1_AE_PartnerETL | ADVI_INFREF.P1 | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-06-30 | 0.8.0_AE_CloudComp~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/compdiff/engine.py --file inf... | PASS |
+| 2026-06-30 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+| 2026-06-30 | 0.4.0_DS_ClientPlatform~A | ADVI_INFREF.P1 | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-06-30 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/terraform/49f-value-parity/49... | PASS |
+| 2026-06-30 | 0.0.0_AB_MSTR | NFRA_COMPDIFF.comptool-audit | comp-surface-check | comp-surface-check check --mode advisory --file docs/briefs/nfra-comp-program-architect... | PASS |
+| 2026-06-30 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/briefs/inflection-refactor-silver.md | PASS |
+| 2026-06-30 | 0.4.0_DS_ClientPlatform~B | ADVI_BREAKS.TO-3 | comp-surface-check | comp-surface-check check --mode advisory --file data/black_diamond/scripts/gold/C_02.cl... | PASS |
+| 2026-06-30 | 0.4.0_DS_ClientPlatform~A | ADVI_INFREF.P1 | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-06-30 | 0.0.0_AB_MSTR | NFRA_COMPDIFF.comptool-audit | comp-surface-check | comp-surface-check check --mode advisory --file org/tier0/ledger/LD-0227.md | PASS |
+| 2026-06-30 | 0.4.0_DS_ClientPlatform~A | ADVI_INFREF.P1 | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-06-30 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+| 2026-06-30 | 0.6.0_AE_PartnerETL | (no-TO) | comp-pipescript | comp-pipescript io C_00.canonical_performance.py | PASS |
+| 2026-06-30 | 0.6.0_AE_PartnerETL | (no-TO) | comp-pipescript | comp-pipescript io B_00.canonical_holdings.py | PASS |
+| 2026-06-30 | 0.0.0_AB_MSTR | NFRA_COMPDIFF.comptool-audit | comp-surface-check | comp-surface-check check --mode advisory --file docs/briefs/nfra-compdrift-brief-202606... | PASS |
+2026-06-30 | 2.0.0_SA_COO~B | NFRA_COMPLEARN/program-coord | comp-which | "is the globgrph trino heat federation live" | PARTIAL (backstop route; no project-state tool); grounded via project_trino_federation_layer_live memory + registry instead -> corrected COMPDRIFT brief layer-vs-catalog mismap
+| 2026-06-30 | 2.0.0_SA_COO~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
