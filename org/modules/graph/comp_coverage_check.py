@@ -246,6 +246,29 @@ def _check_producer_attribution(led: dict, **_: object) -> list[str]:
     return out
 
 
+_DISPOSITIONS = {"eager", "bounded", "n_a"}
+
+
+def _check_disposition_complete(led: dict, **_: object) -> list[str]:
+    """EXPLICIT-DISPOSITION completeness (COO~B ruling). Every (edge_type x declared-level) must carry
+    an explicit disposition in {eager, bounded, n_a}. An undisposed level = a SILENT cap = FAIL."""
+    gc = led.get("grain_contract", {})
+    disp = gc.get("level_dispositions", {})
+    if not disp:
+        return []  # not declared yet -> nothing to check (gate-ready ahead of need)
+    out = []
+    for e in gc.get("edge_types", []):
+        et = e.get("edge_type")
+        et_disp = disp.get(et, {})
+        for lvl in e.get("levels", []):
+            d = et_disp.get(lvl)
+            if d is None:
+                out.append(f"disposition_complete: edge_type '{et}' level '{lvl}' is UNDISPOSED (no eager/bounded/n_a) -- a silent cap; declare its policy")
+            elif d not in _DISPOSITIONS:
+                out.append(f"disposition_complete: edge_type '{et}' level '{lvl}' disposition '{d}' is not one of {sorted(_DISPOSITIONS)}")
+    return out
+
+
 def _check_referenceable_target(led: dict, **_: object) -> list[str]:
     """REFERENCEABLE-TARGET contract (GRAPHDEPTH invariant 5, EP-2-keyed). Breadth edges may only
     target referenceable nodes, never terminal members. KEYED by edge_type. Contract-level check;
@@ -323,6 +346,7 @@ def seam_validate(led: dict, edges: list, rollup_view: dict | None, scope: dict 
     ref = gc.get("referenceable", {})                         # GRAPHDEPTH invariant 5: breadth-edge target check (EP-2-keyed)
     ref_targets = ref.get("referenceable_targets", {})
     ref_terminal = set(ref.get("terminal_node_types", []))
+    level_dispositions = gc.get("level_dispositions", {})     # COO~B ruling: eager(must-cover)|bounded(lazy)|n_a -- bounded/n_a not gaps
     mechanical, in_scope_gap, phased_pending, cross_lane = [], [], [], []
     populated_types: set = set()
     populated_levels: dict = defaultdict(set)
@@ -362,11 +386,16 @@ def seam_validate(led: dict, edges: list, rollup_view: dict | None, scope: dict 
             continue
         if et not in populated_types:                                    # claimed (or full-bar) but unpopulated
             in_scope_gap.append(f"edge_type '{et}' in scope but ZERO populated edges")
-        else:                                                            # LEVEL-granular: claimed levels must be covered; others phased
+        else:                                                            # LEVEL-granular + DISPOSITION-aware (COO~B ruling)
             declared = set(et_index[et].get("levels", []))
+            et_disp = level_dispositions.get(et, {})
             claimed = set(scope_levels[et]) if et in scope_levels else declared
             for lvl in sorted(claimed - populated_levels.get(et, set())):
-                in_scope_gap.append(f"edge_type '{et}' level '{lvl}' in scope but NOT populated")
+                d = et_disp.get(lvl)
+                if d in ("bounded", "n_a"):                              # boundary b/c: declared lazy/absent -> NOT a gap
+                    phased_pending.append(f"edge_type '{et}' level '{lvl}' -- disposition={d} (lazy/absent, declared), covered-when-materialized, not a gap")
+                else:                                                    # eager (must cover) or UNDISPOSED (the disposition_complete gate FAILs that separately)
+                    in_scope_gap.append(f"edge_type '{et}' level '{lvl}' (disposition={d or 'UNDISPOSED'}) in scope but NOT populated")
             for lvl in sorted(declared - claimed):
                 phased_pending.append(f"edge_type '{et}' level '{lvl}' -- OUT of claimed scope (phased)")
     check_strata = scope_strata if scope_strata is not None else strata
@@ -438,6 +467,7 @@ _CHECKERS = {
     "grain_rollup_consistency": _check_grain_rollup_consistency,
     "producer_attribution": _check_producer_attribution,
     "referenceable_target": _check_referenceable_target,
+    "disposition_complete": _check_disposition_complete,
 }
 
 
@@ -525,6 +555,7 @@ _SELFCHECK_CASES = [
     ("unattributed_edge_type", "gate-verdict", "FAIL"),
     ("breadth_terminal_allowed_target", "gate-verdict", "FAIL"),
     ("seam_breadth_terminal_instance", "logic-assertion", "holds"),
+    ("undisposed_level", "gate-verdict", "FAIL"),
 ]
 
 
@@ -631,6 +662,13 @@ def selfcheck(emit_json: bool = False) -> int:
     # m) NON-REFERENCEABLE-TARGET (instance, seam MECHANICAL): a populated breadth edge on a terminal node
     sv_ref = seam_validate(led, [{"edge_type": "CALLS", "level": "function", "from_stratum": "compute", "to_stratum": "compute", "target_node_type": "Statement"}], None)
     results.append(("seam: breadth edge -> terminal target fires MECHANICAL", bool(sv_ref["mechanical"])))
+
+    # n) DISPOSITION COMPLETENESS: a declared level with no eager/bounded/n_a disposition -> FAIL (silent cap)
+    led_disp = copy.deepcopy(led)
+    led_disp.setdefault("grain_contract", {}).setdefault("edge_types", []).append(
+        {"edge_type": "GHOST_UNDISPOSED", "relation": "ghost_undisp", "levels": ["mystery"], "producer": "graphuni-gold"})
+    code, _, _ = run_gate(led_disp, seam_source, inventory=inv, manifest_inv=manifest_inv)
+    results.append(("injected undisposed level -> FAIL", code == FAIL))
 
     if len(results) != len(_SELFCHECK_CASES):  # guard: metadata must stay 1:1 with the appends
         sys.stderr.write(f"selfcheck INTERNAL: {len(results)} cases vs {len(_SELFCHECK_CASES)} metadata -- update _SELFCHECK_CASES\n")

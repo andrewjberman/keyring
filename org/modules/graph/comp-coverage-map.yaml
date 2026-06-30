@@ -157,6 +157,12 @@ schema:
         predicate: "every breadth_edges entry has a referenceable_targets map entry (KEYED by edge_type, EP-2); every allowed-target in referenceable_targets is in referenceable.node_types and NOT in terminal_node_types; node_types and terminal_node_types are DISJOINT. INSTANCE-level (a populated breadth edge's target node_type in its allowed set) runs in the seam MECHANICAL axis."
         on_violation: "FAIL -- a breadth edge_type with no allowed-target entry, an allowed-target that is a terminal member (breadth landing on a terminal), or node/terminal type overlap (GRAPHDEPTH invariant 5)"
         description: "REFERENCEABLE-TARGET (GRAPHDEPTH invariant 5, LD-0230): breadth edges (CALLS/REFERENCES_TYPE/FETCHES/READS_S3) may ONLY target referenceable nodes (Function/TypeDecl/Endpoint/ReactComponent/S3Key), never terminal members (Statement/Field/Prop) -- where breadth composes with depth. KEYED by edge_type so EP-2's per-edge narrowing is DATA, not a code fork (CTO shape note)"
+      - id: disposition_complete
+        applies_to: "every (edge_type x declared-level) in grain_contract.level_dispositions (the categorical bar's denominator)"
+        inputs: [grain_contract.edge_types, grain_contract.level_dispositions]
+        predicate: "every declared level of every edge_type has an EXPLICIT disposition in {eager, bounded, n_a}. An UNDISPOSED level (in edge_types.levels but absent from level_dispositions, or with an unknown value) = the SILENT GAP that FAILs. (Coverage of eager levels is the seam's job; this rule enforces the no-silent-cap precondition: every level is explicitly disposed.)"
+        on_violation: "FAIL -- an undisposed level (a silent cap; the cap must be EXPLICIT + policy-justified -- eager/bounded/n_a -- never silent). COO~B ruling 2206Z reconciling Andrew no-silent-caps + CTO boundary b/c"
+        description: "EXPLICIT-DISPOSITION (COO~B ruling): the categorical bar is disposition-relative over the FIXED full denominator -- 'comprehensive' = every level explicitly disposed eager(must-cover)|bounded(lazy, boundary b)|n_a(type bottoms out, boundary c), ZERO undisposed. Bounded/n_a levels are NOT false gaps; a silently-omitted level IS a gap. The seam asserts eager-covered; this gate asserts disposition-complete"
 
 # =============================================================================
 # GRAIN CONTRACT -- the CROSS-MACRO stable-grain invariant (CTO-directed via COO~B,
@@ -212,6 +218,24 @@ grain_contract:
     - { edge_type: SERVES,    relation: serves,    levels: [route, served-json], producer: routing, note: "CF/route serves a payload; producer=routing/platinum, NOT graphuni-gold" }
     - { edge_type: RUNS,      relation: runs,      levels: [ec2, lambda, stepfn], producer: graphuni-infra, note: "resource RUNS compute (fractal stratum-stitcher, sec-10); EC2 -RUNS-> PipelineScript. graphuni INFRA tier (later than gold)" }
     - { edge_type: OWNED_BY,  relation: owned_by,  levels: [object], producer: graphuni-storage, note: "object OWNED_BY its container-resource (sec-10); S3Key -OWNED_BY-> S3_BUCKET. Producer=graphuni-storage (~A, per fleet DECOMP-MAP, NOT infra/~B -- ~A F3). level=object: the ladder token (canonical; the S3Key-vs-DDB-item entity distinction is the NODE TYPE, not the level -- ~A F4). ~A's drilldown_seams[OWNED_BY] fires grain_drilldown_seams." }
+
+  # LEVEL DISPOSITIONS (COO~B ruling 2206Z, reconciling Andrew's no-silent-caps WITH CTO boundary b/c):
+  # the categorical bar = EXPLICIT-DISPOSITION-relative over the FIXED full denominator. EVERY
+  # (edge_type x declared-level) carries ONE disposition: `eager` -> MUST be covered (a missing eager
+  # level = a real gap = FAIL); `bounded` (boundary b) -> lazy/on-demand, covered-when-materialized,
+  # NOT charged as a gap; `n_a` (boundary c) -> the type bottoms out before this level, declared-absent.
+  # "COMPREHENSIVE" = every level explicitly disposed (zero undisposed); an UNDISPOSED level = the
+  # SILENT GAP that FAILs. Defaults below; the producers (~D/~A/~B) refine THEIR slice's eager-vs-bounded.
+  level_dispositions:
+    CALLS:     { function: eager }
+    CONTAINS:  { estate: eager, surface: eager, container: eager, file: eager, object: eager, function: eager, field: bounded }  # field = deep terminal -> lazy (boundary b)
+    READS:     { field: bounded, object: eager }
+    READS_S3:  { object: eager, prefix: bounded }     # prefix-level (dynamic/rolling-window) reads = on-demand (boundary b); resolves ~D's finding (no longer a false gap)
+    WRITES_S3: { object: eager, prefix: bounded }
+    DEPLOYS:   { lambda: eager, script: eager }
+    SERVES:    { route: eager, served-json: eager }
+    RUNS:      { ec2: eager, lambda: eager, stepfn: eager }
+    OWNED_BY:  { object: eager }
   # ============ FRACTAL DRILLDOWN -- CTO section-10, RATIFIED 205709Z (FOLDED ACTIVE) ============
   # Coarse resource nodes drill to fine internal structure via stable stratum-stitching edges.
   # Folded as the 8th+9th gate rules (grain_drilldown_seams + grain_rollup_consistency) -- a pure
