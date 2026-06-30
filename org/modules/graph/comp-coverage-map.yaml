@@ -145,6 +145,12 @@ schema:
         predicate: "rollup.semantics == 'existential-aggregation' (CTO 047ce51d0, NOT 1:1 equality); BOTH defect classes UNSUPPORTED + COARSE-INCOMPLETE declared; every rollup_via edge is a declared edge_type. Contract-level (type) check at commit; the INSTANCE-level existential check (coarse edge EXISTS iff >=1 fine rolls up) runs against POPULATED edges via the shared comp_coverage_check.rollup_defects()."
         on_violation: "FAIL -- the rollup contract is mis-declared (wrong semantics = the 1:1-vs-existential drift 047ce51d0 corrected, or a missing defect class / undeclared rollup edge)"
         description: "GRAIN-CONSISTENCY ROLLUP (CTO sec-10, EXISTENTIAL-AGGREGATION 047ce51d0): a coarse edge EXISTS iff >=1 fine edge rolls up (OR-rollup); defects UNSUPPORTED (coarse, zero fine basis) + COARSE-INCOMPLETE (fine, coarse target absent). One canonical definition shared with GRAPHUNI/COMPDRIFT (rollup_defects)"
+      - id: producer_attribution
+        applies_to: "grain_contract.edge_types (the denominator universe)"
+        inputs: [grain_contract.edge_types]
+        predicate: "every edge_type carries a producer DISPOSITION -- a scalar `producer` OR a `producer_by_pair` map (multi-producer, e.g. CONTAINS). An edge_type with NEITHER = a silent gap in the denominator universe."
+        on_violation: "FAIL -- an UNATTRIBUTED edge_type (no producer disposition); a silent gap in the denominator universe the partition must cover (COO~B/CTO denominator structure)"
+        description: "DENOMINATOR completeness (COO~B/CTO affirmation): the grain_contract registry IS the universe the enumerated denominator partitions EXHAUSTIVE+DISJOINT. This rule enforces the no-silent-gap precondition (every type attributed); COO~B assembles the full disjoint partition + CVO verifies; the S4 calibration fills the precise (pair x level) attribution map"
 
 # =============================================================================
 # GRAIN CONTRACT -- the CROSS-MACRO stable-grain invariant (CTO-directed via COO~B,
@@ -184,14 +190,22 @@ grain_contract:
   # demands ~D populate another lane's grain. Ties to the tool-calibration sweep (each tool at its grain).
   edge_types:
     - { edge_type: CALLS,     relation: calls,     levels: [function], producer: graphuni-gold, note: "function INVOKES function (gold call graph, ~1624 edges -- the single largest gold class; what comp-blast/comp-trace traverse). DISTINCT relation (control-flow) from contains/reads_s3/runs -> distinct type (ruling 4). compute->compute (intra-stratum, not a drilldown seam). script-level call edges fold in as a `script` level if they materialize. Added per ~D pre-flight finding 1." }
-    - { edge_type: CONTAINS,  relation: contains,  levels: [estate, surface, container, file, object, function, field], producer: graphuni-gold, note: "the structural grain ladder -- one relation, all depths as levels" }
+    - edge_type: CONTAINS                          # ONE semantic type (no re-type, rule 7/8), MULTI-PRODUCER by stratum-pair (COO~B encoding A)
+      relation: contains
+      levels: [estate, surface, container, file, object, function, field]
+      producer: shared                             # disposition = a per-stratum-pair split (below), NOT a single slice
+      producer_by_pair:
+        "compute->compute": graphuni-gold          # Pipeline contains Script contains Function (~D, compute-internal)
+        "resource->object": graphuni-storage       # Bucket contains Key (~A, storage -- per fleet DECOMP-MAP, ~A F3)
+        "compute->object": graphuni-infra          # Lambda contains handler (~B). NOTE level-split: graphuni Function contains Field is ALSO compute->object (~D); the disjoint (pair x level) attribution resolves in S4 (the attribution map). Flagged, not silently merged.
+      note: "the structural grain ladder -- one relation, all depths as levels; populated by DIFFERENT producers per stratum-pair (the edge_type stays single; the ATTRIBUTION partitions). Denominator partitions CONTAINS by pair, not by re-typing."
     - { edge_type: READS,     relation: reads,     levels: [field, object], producer: portal, note: "portal-field/object READ -- DISTINCT relation from READS_S3 (ruling 4). Producer=portal/TSGRAPH, NOT graphuni-gold" }
     - { edge_type: READS_S3,  relation: reads_s3,  levels: [object, prefix], producer: graphuni-gold, note: "gold/lambda reads an S3 artifact; key-vs-prefix depth = the `levels` attr, SAME type (Amendment 2)" }
     - { edge_type: WRITES_S3, relation: writes_s3, levels: [object, prefix], producer: graphuni-gold, note: "writes an S3 artifact; depth = level attr" }
     - { edge_type: DEPLOYS,   relation: deploys,   levels: [lambda, script], producer: deploy-seam, note: "GIT->CLOUD deploy edge (seam-2); producer=the deploy seam (AE/CI), NOT graphuni-gold" }
     - { edge_type: SERVES,    relation: serves,    levels: [route, served-json], producer: routing, note: "CF/route serves a payload; producer=routing/platinum, NOT graphuni-gold" }
     - { edge_type: RUNS,      relation: runs,      levels: [ec2, lambda, stepfn], producer: graphuni-infra, note: "resource RUNS compute (fractal stratum-stitcher, sec-10); EC2 -RUNS-> PipelineScript. graphuni INFRA tier (later than gold)" }
-    - { edge_type: OWNED_BY,  relation: owned_by,  levels: [s3key, ddb-item], producer: graphuni-infra, note: "object OWNED_BY its container-resource (sec-10); S3Key -OWNED_BY-> S3_BUCKET. graphuni INFRA tier" }
+    - { edge_type: OWNED_BY,  relation: owned_by,  levels: [object], producer: graphuni-storage, note: "object OWNED_BY its container-resource (sec-10); S3Key -OWNED_BY-> S3_BUCKET. Producer=graphuni-storage (~A, per fleet DECOMP-MAP, NOT infra/~B -- ~A F3). level=object: the ladder token (canonical; the S3Key-vs-DDB-item entity distinction is the NODE TYPE, not the level -- ~A F4). ~A's drilldown_seams[OWNED_BY] fires grain_drilldown_seams." }
   # ============ FRACTAL DRILLDOWN -- CTO section-10, RATIFIED 205709Z (FOLDED ACTIVE) ============
   # Coarse resource nodes drill to fine internal structure via stable stratum-stitching edges.
   # Folded as the 8th+9th gate rules (grain_drilldown_seams + grain_rollup_consistency) -- a pure
@@ -211,6 +225,20 @@ grain_contract:
       - { id: COARSE-INCOMPLETE, meaning: "a FINE edge whose rolled-up coarse target is ABSENT (the coarse stratum is missing an edge the fine layer implies)", verdict: FAIL }
     enforced_at: "GRAPHUNI derive / COMPDRIFT seam against POPULATED edge INSTANCES (instance-level); comp-coverage-check validates the contract is well-declared (type-level) at commit + EXPOSES comp_coverage_check.rollup_defects() so the populator + the seam call ONE canonical existential-rollup definition (the 1:1-vs-existential drift 047ce51d0 corrected must not recur)"
   pending_extensions: []                     # sec-10 now FOLDED ACTIVE; none pending
+
+  # ============ NODE IDENTITY -- canonical convergence (COO~B encoding B; ~D input b0ffd71f5) ============
+  # ONE-HEAD node identity so a producer's EDGE-target id and another producer's NODE id converge on
+  # the SAME node (no dangling edge, no duplicate node). ~D emits READS_S3/WRITES_S3 to the canonical
+  # S3Key id; ~A populates the S3Key node at the same id; validated at the ~D+~A /seams (Phase A).
+  node_identity:
+    S3Key:
+      canonical_id: "<bucket>/<normalized-key>"   # bucket-QUALIFIED (globally unique across firms); no s3:// scheme; no leading slash; duplicate // collapsed; case PRESERVED (S3 keys are case-sensitive)
+      forms:                                       # ~D's 288-key reference set carries 3 forms -- each a DISTINCT canonical id (no collapse)
+        - { form: object, level: object, marker: "no trailing slash, no '*'", example: "opal-data-bd/gold/dimensions/accounts_dimension_latest.parquet  (273 of 288)" }
+        - { form: prefix, level: prefix, marker: "trailing slash PRESERVED -- significant: a prefix node is DISTINCT from the same-path object node", example: "opal-data-bd/gold/canonical/holdings/" }
+        - { form: glob,   level: prefix, marker: "literal '*' PRESERVED -- dynamic/rolling-window ref; NOT expanded, NOT collapsed into `object`", example: "opal-data-inf/bronze/orion-api-v2/*/representatives.json" }
+      answer_to_D: "wildcards treated SPECIALLY -- form `object` (1) and form `glob` (3) do NOT collapse: glob keeps the literal '*' at level=prefix; object has no '*' at level=object. object/prefix/glob are 3 distinct canonical ids. Bucket-QUALIFY your edge targets (id = bucket + '/' + key) so they converge with ~A's S3Key node ids."
+      convergence_check: "the ~D(edge-target) <-> ~A(node) id equality is a DECLARATIVE+MECHANICAL /seams check in Phase A (no dangling READS_S3 target, no duplicate S3Key node)."
 
 # =============================================================================
 # SURFACES -- the 5-surface APEX (PRD section 2, Andrew-direct).

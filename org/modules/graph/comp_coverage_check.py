@@ -236,6 +236,24 @@ def _check_grain_rollup_consistency(led: dict, **_: object) -> list[str]:
     return out
 
 
+def _check_producer_attribution(led: dict, **_: object) -> list[str]:
+    """DENOMINATOR completeness (COO~B/CTO): every edge_type must carry a producer disposition
+    (scalar `producer` OR a `producer_by_pair` map). An unattributed type = a silent denominator gap."""
+    out = []
+    for e in led.get("grain_contract", {}).get("edge_types", []):
+        if not e.get("producer") and not e.get("producer_by_pair"):
+            out.append(f"producer_attribution: edge_type '{e.get('edge_type')}' has NO producer disposition (scalar `producer` or `producer_by_pair`) -- a silent gap in the denominator universe")
+    return out
+
+
+def _edge_type_producers(et_def: dict) -> set:
+    """The producer set for an edge_type: a scalar producer -> {it}; a producer_by_pair map (multi-
+    producer, e.g. CONTAINS) -> the set of its values."""
+    if et_def.get("producer_by_pair"):
+        return set(et_def["producer_by_pair"].values())
+    return {et_def["producer"]} if et_def.get("producer") else set()
+
+
 def rollup_defects(coarse_edges, fine_edges, rolls_up):
     """THE CANONICAL existential-aggregation rollup check (CTO 047ce51d0) -- the ONE head GRAPHUNI's
     derive + COMPDRIFT's seam call against POPULATED edges (so the 1:1-vs-existential drift cannot
@@ -300,9 +318,10 @@ def seam_validate(led: dict, edges: list, rollup_view: dict | None, scope: dict 
 
     # --- AXIS 2: DECLARATIVE -- registry<->population coverage, SCOPE + PRODUCER aware ---
     for et in sorted(registry_types):
-        et_producer = et_index[et].get("producer")
-        if producer and et_producer and et_producer != producer:        # another lane's grain
-            cross_lane.append(f"'{et}' (producer={et_producer}) -- not {producer}'s grain; another lane populates it")
+        et_producers = _edge_type_producers(et_index[et])               # set: scalar -> {it}; producer_by_pair -> its values (multi-producer, e.g. CONTAINS)
+        if producer and et_producers and producer not in et_producers:  # another lane's grain (not among this type's producers)
+            tag = sorted(et_producers)[0] if len(et_producers) == 1 else sorted(et_producers)
+            cross_lane.append(f"'{et}' (producer={tag}) -- not {producer}'s grain; another lane populates it")
             continue
         if scope_types is not None and et not in scope_types:            # out of this increment's claim
             if et not in populated_types:
@@ -384,6 +403,7 @@ _CHECKERS = {
     "stable_grain": _check_stable_grain,
     "grain_drilldown_seams": _check_grain_drilldown_seams,
     "grain_rollup_consistency": _check_grain_rollup_consistency,
+    "producer_attribution": _check_producer_attribution,
 }
 
 
@@ -537,6 +557,13 @@ def selfcheck() -> int:
     scope_ok = (not sv_scope["mechanical"] and not sv_scope["in_scope_gap"] and not sv_scope["semantic"]
                 and bool(sv_scope["phased_pending"]) and bool(sv_scope["cross_lane"]))
     results.append(("seam scope+producer aware (claimed scope GREEN; others phased/cross-lane)", scope_ok))
+
+    # k) PRODUCER ATTRIBUTION: an edge_type with no producer disposition -> FAIL (silent denominator gap)
+    led_unattr = copy.deepcopy(led)
+    led_unattr.setdefault("grain_contract", {}).setdefault("edge_types", []).append(
+        {"edge_type": "GHOST_UNATTRIBUTED", "relation": "ghost", "levels": ["x"]})  # no producer / producer_by_pair
+    code, _, _ = run_gate(led_unattr, seam_source, inventory=inv, manifest_inv=manifest_inv)
+    results.append(("injected unattributed edge_type -> FAIL", code == FAIL))
 
     ok = all(passed for _, passed in results)
     for label, passed in results:
