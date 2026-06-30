@@ -416,6 +416,59 @@ seams:
       owning_tool: "comp-freshness + heat-view check"
 
 # =============================================================================
+# =============================================================================
+# TOOL-GRAIN CALIBRATION (COMPUNIFY S4 DECLARE-part; COO~B GO 2221Z; GRAPHDEPTH PRD section 3).
+# The CONSUMER side of the depth axis: each comp-tool DECLARES the grain(s) it scopes
+# investigations at, so it can drill (fine) / roll-up (coarse) without conflating grains. This is
+# the DECLARE pass (a declaration over the tool set + the grain contract -- POPULATION-INDEPENDENT);
+# the declared-vs-REAL-traversal AUDIT (a mismatch = a finding) follows Phase-A population (noted,
+# not blocked). Two-regime grain (PRD 2a): ABOVE-file = fixed-tier {surface, container, file};
+# BELOW-file = recursive {script, function, symbol, type, component, route, endpoint, field};
+# STRATA = {resource, compute, object}; cross-grain = spans. A grain with NO tool -> COMPLEARN.
+# =============================================================================
+tool_grain_calibration:
+  declared_for: homed-inspection-tools   # meta_tools (router/search/gate/cache-mgmt) are grain-AGNOSTIC (cross-cutting tooling-infra), not depth-scoped
+  audit_part: "declared-grain vs REAL-traversal -- post Phase-A population (does the tool actually traverse at its declared grain on the populated graph?); a mismatch = a finding. Fast-follow, not this pass."
+  tool_grain_map:                         # tool -> declared operating grain(s) (PRD section 3 + tool nature)
+    # ---- above-file / resource grain ----
+    comp-aws:          [resource]
+    comp-dups:         [resource]
+    comp-secrets:      [resource]
+    comp-iam:          [resource]
+    comp-lambdamap:    [resource, file]    # lambda deploy: the resource + the deployed file
+    # ---- file / script / object grain ----
+    comp-heat:         [file]
+    comp-xray:         [file, object]      # content-motion at file (code/config) + object (served key)
+    comp-shell:        [file]
+    comp-diff:         [file, symbol]
+    comp-pipescript:   [script, object]    # gold-script I/O (script + the S3 objects)
+    comp-validate:     [object]
+    comp-freshness:    [object]
+    comp-incrparity:   [object]
+    comp-parity:       [object]
+    comp-chainrun:     [object]
+    comp-constants:    [symbol]
+    # ---- below-file: function / symbol / type ----
+    comp-trace:        [function, symbol, cross-grain]   # function-level lineage; walks cross-grain
+    comp-blast:        [function, symbol, cross-grain]
+    comp-xref:         [symbol]
+    comp-types:        [type, symbol]
+    # ---- below-file: component / route (portal / serving) ----
+    comp-transform:    [component, field]
+    comp-adapter-audit: [component, field]
+    comp-pii:          [component, field]
+    comp-tooltip:      [component]
+    comp-cache:        [component]
+    comp-routes:       [route, endpoint]
+    # ---- cross-grain (span) ----
+    comp-platinum:     [cross-grain]       # component -> endpoint -> lambda -> object -> gold (full stack)
+    comp-kuzu:         [cross-grain]        # graph query, any grain
+    comp-graph:        [cross-grain]        # graph vintage across grains
+  grain_coverage_gaps:                     # grains with NO dedicated tool -> COMPLEARN build-next worklist
+    - { grain: container, regime: above-file, detail: "the L1 container tier (S3_BUCKET/MS_FOLDER/portal Module) has no dedicated container-grain tool -- comp-aws is resource-grain, not container", severity: medium }
+    - { grain: statement, regime: below-file, detail: "statement-grain (control-flow within a function) has no tool -- and is bounded-materialization (lazy), so low priority", severity: low }
+    - { grain: "ms-cloud (all)", regime: surface, detail: "the entire MS-CLOUD surface has no comp-tool at any grain (the comp-ms gap) -- ties the surface gap_census", severity: high }
+
 # TOOLS -- S1 FULL POPULATION. Every surface/seam-homed inspection tool placed at
 # exactly ONE (surface|seam) x granularity x concern home. The tooling-layer
 # (router/search/gate/cache-mgmt/test/COMPLEARN) lives in `meta_tools` below -- NOT
