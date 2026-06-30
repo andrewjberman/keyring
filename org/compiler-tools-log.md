@@ -10100,3 +10100,5 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-06-30 | 0.8.0_AE_CloudComp~B | (no-TO) | comp-aws | comp-aws --help | PASS |
 - 2026-06-30 0.8.0_AE_CloudComp~C (GRAPHDEPTH storage-refine): comp-coverage-check check PASS + selfcheck --json 15/15 freeze-intact (registry-data prefix-level adds, no new case). Applied ~A R1 (prefix=eager, 125 storage keys) + ruled R2 glob->prefix BINDING (convergence); CVO~B fixture->15. Commit 335edbd8f.
 | 2026-06-30 | 0.8.0_AE_CloudComp~C | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+2026-06-30 | 3.0.0_SA_CVO~B | NFRA_GRAPHUNI.P0-CVO | comp-coverage-check selfcheck --json | independently re-verified ~C's additive 15th selfcheck case (not self-report): 14 locked gate-verdict cases byte-identical (zero drift), undisposed_level additive, all 15 passed -> layer-b fixture extended to 15. | freeze-contract drift-check worked as designed
+| 2026-06-30 | 3.0.0_SA_CVO~B | NFRA_GRAPHUNI.P0-CVO | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
