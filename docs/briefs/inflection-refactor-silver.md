@@ -75,7 +75,7 @@ Every `s3://opal-data-inf/silver/` prefix classified — no tree survives unclas
 | `silver/accounts_dim/`, `silver/orion-rest/` | **RETIRE** (legacy / stray) |
 | `silver/eclipse/` | **RELOCATE** → `silver/eclipse-api/` (stubbed) |
 | `silver/prices/` (canonical_prices) | **KEEP** — non-orion-dim prices lineage (produced by INF_S_00, gold-consumed); own tree |
-| `silver/historical_prices.parquet` (29MB, single file, 2026-05-05) | **CENSUS-VERIFY** — looks like a one-time historical-prices load; trace producer/consumer before KEEP-vs-RETIRE (do NOT retire blindly) |
+| `silver/historical_prices.parquet` (29MB, single file) | **KEEP** (RESOLVED — CVO trace): the **T2 yahoo_finance price layer**, read by `INF_build_canonical_prices.py` (L11-12, `HISTORICAL_PRICES_KEY` L49), built by `backfill_yahoo_prices.py` — active input to the canonical-prices T1/T2/T3 layering, NOT a one-time load |
 | `silver/_silver_complete/`, `silver/meta/`, `api_dims/_chain_summary/` | **NON-DIM, KEEP** (sentinels/meta) |
 
 ### 5.4 ECLIPSE-API — 4 dims (relocate + stub, full-fidelity, exist today)
