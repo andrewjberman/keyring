@@ -246,6 +246,32 @@ def _check_producer_attribution(led: dict, **_: object) -> list[str]:
     return out
 
 
+def _check_referenceable_target(led: dict, **_: object) -> list[str]:
+    """REFERENCEABLE-TARGET contract (GRAPHDEPTH invariant 5, EP-2-keyed). Breadth edges may only
+    target referenceable nodes, never terminal members. KEYED by edge_type. Contract-level check;
+    the instance-level (a populated breadth edge's target node_type) runs in the seam MECHANICAL axis."""
+    ref = led.get("grain_contract", {}).get("referenceable")
+    if not ref:
+        return []  # not declared yet -> nothing to check (gate-ready ahead of need)
+    out = []
+    node_types = set(ref.get("node_types", []))
+    terminal = set(ref.get("terminal_node_types", []))
+    targets = ref.get("referenceable_targets", {})
+    overlap = node_types & terminal
+    if overlap:
+        out.append(f"referenceable_target: node_types and terminal_node_types OVERLAP on {sorted(overlap)} (a type cannot be both referenceable and terminal)")
+    for be in ref.get("breadth_edges", []):
+        if be not in targets:
+            out.append(f"referenceable_target: breadth edge_type '{be}' has NO referenceable_targets entry (keyed-by-edge_type map must cover every breadth edge)")
+            continue
+        for tgt in targets[be]:
+            if tgt in terminal:
+                out.append(f"referenceable_target: '{be}' allows TERMINAL target '{tgt}' (breadth edges must NEVER target a terminal member)")
+            elif tgt not in node_types:
+                out.append(f"referenceable_target: '{be}' allows '{tgt}' which is not a declared referenceable node_type")
+    return out
+
+
 def _edge_type_producers(et_def: dict) -> set:
     """The producer set for an edge_type: a scalar producer -> {it}; a producer_by_pair map (multi-
     producer, e.g. CONTAINS) -> the set of its values."""
@@ -294,6 +320,9 @@ def seam_validate(led: dict, edges: list, rollup_view: dict | None, scope: dict 
     scope_types = set(scope.get("edge_types", [])) if scope and scope.get("edge_types") is not None else None
     scope_strata = set(scope.get("strata", [])) if scope and scope.get("strata") is not None else None
     scope_levels = scope.get("levels", {}) if scope else {}   # {edge_type: [claimed levels]} -- level-granular scope (~D finding 2)
+    ref = gc.get("referenceable", {})                         # GRAPHDEPTH invariant 5: breadth-edge target check (EP-2-keyed)
+    ref_targets = ref.get("referenceable_targets", {})
+    ref_terminal = set(ref.get("terminal_node_types", []))
     mechanical, in_scope_gap, phased_pending, cross_lane = [], [], [], []
     populated_types: set = set()
     populated_levels: dict = defaultdict(set)
@@ -315,6 +344,10 @@ def seam_validate(led: dict, edges: list, rollup_view: dict | None, scope: dict 
                 populated_strata.add(s)
                 if s not in strata:
                     mechanical.append(f"edge '{et}' {k}='{s}' is not a declared stratum {sorted(strata)}")
+        tnt = e.get("target_node_type")                       # GRAPHDEPTH inv 5: a breadth edge must target a referenceable node, never a terminal
+        if et in ref_targets and tnt is not None and tnt not in ref_targets[et]:
+            kind = "TERMINAL" if tnt in ref_terminal else "non-referenceable"
+            mechanical.append(f"breadth edge '{et}' targets {kind} node_type '{tnt}' (allowed: {ref_targets[et]}) -- breadth edge on a non-referenceable target")
 
     # --- AXIS 2: DECLARATIVE -- registry<->population coverage, SCOPE + PRODUCER aware ---
     for et in sorted(registry_types):
@@ -404,6 +437,7 @@ _CHECKERS = {
     "grain_drilldown_seams": _check_grain_drilldown_seams,
     "grain_rollup_consistency": _check_grain_rollup_consistency,
     "producer_attribution": _check_producer_attribution,
+    "referenceable_target": _check_referenceable_target,
 }
 
 
@@ -472,8 +506,31 @@ def check() -> int:
     return FAIL
 
 
-def selfcheck() -> int:
-    """Inject the three violation classes the CTO arch-gate names + confirm the clean ledger PASSes."""
+# STABLE case metadata (id, kind, expected) -- 1:1 with the appends below, in order. This is the
+# FROZEN no-regression baseline CVO~B pins (GRAPHUNI P0-CVO fixture layer b): the {id -> expected}
+# verdict map. `selfcheck --json` emits it; the re-assert requires every case still `passed`. A
+# checker that drifts (e.g. existential rollup sliding toward 1:1) flips a verdict -> passed:false.
+_SELFCHECK_CASES = [
+    ("clean_passes", "gate-verdict", "PASS"),
+    ("unplaced_tool", "gate-verdict", "FAIL"),
+    ("silent_overlap", "gate-verdict", "FAIL"),
+    ("stale_projection", "gate-verdict", "FAIL"),
+    ("no_checker_rule", "gate-verdict", "UNVERIFIABLE"),
+    ("grain_retyping", "gate-verdict", "FAIL"),
+    ("bad_drilldown_stratum", "gate-verdict", "FAIL"),
+    ("rollup_1to1_semantics", "gate-verdict", "FAIL"),
+    ("rollup_defects_existential", "logic-assertion", "holds"),
+    ("seam_3_axes_fire", "logic-assertion", "holds"),
+    ("seam_scope_producer", "logic-assertion", "holds"),
+    ("unattributed_edge_type", "gate-verdict", "FAIL"),
+    ("breadth_terminal_allowed_target", "gate-verdict", "FAIL"),
+    ("seam_breadth_terminal_instance", "logic-assertion", "holds"),
+]
+
+
+def selfcheck(emit_json: bool = False) -> int:
+    """Inject every gate violation class + confirm the clean ledger PASSes. `emit_json` emits the
+    frozen {id, kind, expected, passed} verdict-set (CVO~B P0-CVO no-regression fixture, layer b)."""
     led = _load(LEDGER)
     seam_source = _load(SEAM_SOURCE)
     inv = _tools_dir_inventory()
@@ -565,9 +622,35 @@ def selfcheck() -> int:
     code, _, _ = run_gate(led_unattr, seam_source, inventory=inv, manifest_inv=manifest_inv)
     results.append(("injected unattributed edge_type -> FAIL", code == FAIL))
 
-    ok = all(passed for _, passed in results)
-    for label, passed in results:
-        sys.stdout.write(f"{'OK  ' if passed else 'FAIL'}: {label}\n")
+    # l) REFERENCEABLE-TARGET gate: a breadth edge allowed to target a TERMINAL member -> FAIL (inv 5)
+    led_ref = copy.deepcopy(led)
+    led_ref.setdefault("grain_contract", {}).setdefault("referenceable", {}).setdefault("referenceable_targets", {})["CALLS"] = ["Statement"]
+    code, _, _ = run_gate(led_ref, seam_source, inventory=inv, manifest_inv=manifest_inv)
+    results.append(("injected breadth->terminal allowed-target -> FAIL", code == FAIL))
+
+    # m) NON-REFERENCEABLE-TARGET (instance, seam MECHANICAL): a populated breadth edge on a terminal node
+    sv_ref = seam_validate(led, [{"edge_type": "CALLS", "level": "function", "from_stratum": "compute", "to_stratum": "compute", "target_node_type": "Statement"}], None)
+    results.append(("seam: breadth edge -> terminal target fires MECHANICAL", bool(sv_ref["mechanical"])))
+
+    if len(results) != len(_SELFCHECK_CASES):  # guard: metadata must stay 1:1 with the appends
+        sys.stderr.write(f"selfcheck INTERNAL: {len(results)} cases vs {len(_SELFCHECK_CASES)} metadata -- update _SELFCHECK_CASES\n")
+        return UNVERIFIABLE
+    cases = [{"id": cid, "kind": kind, "expected": exp, "passed": bool(passed), "label": label}
+             for (cid, kind, exp), (label, passed) in zip(_SELFCHECK_CASES, results)]
+    ok = all(c["passed"] for c in cases)
+    if emit_json:
+        led = _load(LEDGER)
+        sys.stdout.write(json.dumps({
+            "artifact": "comp-coverage-check.selfcheck.verdict_set",
+            "ledger_version": led.get("version"),
+            "n_cases": len(cases),
+            "gate_rules": [r.get("id") for r in led.get("schema", {}).get("gate_contract", {}).get("rules", [])],
+            "all_ok": ok,
+            "cases": [{k: c[k] for k in ("id", "kind", "expected", "passed")} for c in cases],
+        }, indent=2, sort_keys=True) + "\n")
+        return PASS if ok else FAIL
+    for c in cases:
+        sys.stdout.write(f"{'OK  ' if c['passed'] else 'FAIL'}: {c['label']}\n")
     sys.stdout.write(("selfcheck PASS -- the gate fails each injected violation + passes clean.\n" if ok
                       else "selfcheck FAILED -- the gate did not behave as specified.\n"))
     return PASS if ok else FAIL
@@ -590,7 +673,7 @@ def _arg(argv: list[str], flag: str) -> str | None:
 def main(argv: list[str]) -> int:
     cmd = argv[0] if argv else "check"
     if cmd == "selfcheck":
-        return selfcheck()
+        return selfcheck(emit_json="--json" in argv)
     if cmd == "list":
         return list_rules()
     if cmd == "seam":

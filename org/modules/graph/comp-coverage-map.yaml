@@ -151,6 +151,12 @@ schema:
         predicate: "every edge_type carries a producer DISPOSITION -- a scalar `producer` OR a `producer_by_pair` map (multi-producer, e.g. CONTAINS). An edge_type with NEITHER = a silent gap in the denominator universe."
         on_violation: "FAIL -- an UNATTRIBUTED edge_type (no producer disposition); a silent gap in the denominator universe the partition must cover (COO~B/CTO denominator structure)"
         description: "DENOMINATOR completeness (COO~B/CTO affirmation): the grain_contract registry IS the universe the enumerated denominator partitions EXHAUSTIVE+DISJOINT. This rule enforces the no-silent-gap precondition (every type attributed); COO~B assembles the full disjoint partition + CVO verifies; the S4 calibration fills the precise (pair x level) attribution map"
+      - id: referenceable_target
+        applies_to: "grain_contract.referenceable (the breadth-edge target contract)"
+        inputs: [grain_contract.referenceable]
+        predicate: "every breadth_edges entry has a referenceable_targets map entry (KEYED by edge_type, EP-2); every allowed-target in referenceable_targets is in referenceable.node_types and NOT in terminal_node_types; node_types and terminal_node_types are DISJOINT. INSTANCE-level (a populated breadth edge's target node_type in its allowed set) runs in the seam MECHANICAL axis."
+        on_violation: "FAIL -- a breadth edge_type with no allowed-target entry, an allowed-target that is a terminal member (breadth landing on a terminal), or node/terminal type overlap (GRAPHDEPTH invariant 5)"
+        description: "REFERENCEABLE-TARGET (GRAPHDEPTH invariant 5, LD-0230): breadth edges (CALLS/REFERENCES_TYPE/FETCHES/READS_S3) may ONLY target referenceable nodes (Function/TypeDecl/Endpoint/ReactComponent/S3Key), never terminal members (Statement/Field/Prop) -- where breadth composes with depth. KEYED by edge_type so EP-2's per-edge narrowing is DATA, not a code fork (CTO shape note)"
 
 # =============================================================================
 # GRAIN CONTRACT -- the CROSS-MACRO stable-grain invariant (CTO-directed via COO~B,
@@ -239,6 +245,23 @@ grain_contract:
         - { form: glob,   level: prefix, marker: "literal '*' PRESERVED -- dynamic/rolling-window ref; NOT expanded, NOT collapsed into `object`", example: "opal-data-inf/bronze/orion-api-v2/*/representatives.json" }
       answer_to_D: "wildcards treated SPECIALLY -- form `object` (1) and form `glob` (3) do NOT collapse: glob keeps the literal '*' at level=prefix; object has no '*' at level=object. object/prefix/glob are 3 distinct canonical ids. Bucket-QUALIFY your edge targets (id = bucket + '/' + key) so they converge with ~A's S3Key node ids."
       convergence_check: "the ~D(edge-target) <-> ~A(node) id equality is a DECLARATIVE+MECHANICAL /seams check in Phase A (no dangling READS_S3 target, no duplicate S3Key node)."
+
+  # ============ REFERENCEABLE-TARGET (GRAPHDEPTH invariant 5, LD-0230 EP-2; ~C builds, CTO shape) ============
+  # Breadth edges may ONLY target `referenceable` nodes, never terminal structural members -- this is
+  # where BREADTH composes with DEPTH (a breadth edge lands on a referenceable unit at some recursion
+  # level, never a raw statement/field/prop). KEYED BY edge_type (CTO EP-2 forward-compat): the future
+  # statement-grain DATA_FLOW/TAINTS narrowing (CALLS->Function, REFERENCES_TYPE->TypeDecl) is then a
+  # DATA change, NOT a schema/code fork. Today every breadth edge maps to the SAME referenceable set
+  # (the gross referenceable-vs-terminal gate); the keyed shape is the only forward-compat cost.
+  referenceable:
+    node_types: [Function, TypeDecl, Endpoint, ReactComponent, S3Key]   # VALID breadth-edge targets (referenceable units across surfaces)
+    terminal_node_types: [Statement, Field, Prop]                       # raw structural members -- NEVER breadth-edge targets
+    breadth_edges: [CALLS, REFERENCES_TYPE, FETCHES, READS_S3]          # the cross-surface/breadth edges this gate governs
+    referenceable_targets:                                              # per-edge-type allowed-target map (EP-2-keyed); today all -> the full set
+      CALLS:           [Function, TypeDecl, Endpoint, ReactComponent, S3Key]
+      REFERENCES_TYPE: [Function, TypeDecl, Endpoint, ReactComponent, S3Key]
+      FETCHES:         [Function, TypeDecl, Endpoint, ReactComponent, S3Key]
+      READS_S3:        [Function, TypeDecl, Endpoint, ReactComponent, S3Key]
 
 # =============================================================================
 # SURFACES -- the 5-surface APEX (PRD section 2, Andrew-direct).
