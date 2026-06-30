@@ -9949,3 +9949,18 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 
 - 2026-06-30 0.6.2_AE_PartnerETL (SCHWAB_SSOT SI2 EventBridge re-time): comp-which (NO_FIT->on-rails comp-grep, found EC2_MANIFEST entry); deploy_ledger.py open/close-leg/close (4-leg, CLOSED); safe-apply HALTGT (5 add/0/0); safe-commit surface-check (PASS). Mechanism grounded on-box (task XML + logs) before acting -- refuted the "scheduler dead" premise.
 | 2026-06-30 | 0.6.2_AE_PartnerETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-06-30 | 3.0.0_SA_CVO | (no-TO) | pipescript | pipescript advi-inf | PASS |
+| 2026-06-30 | 0.8.0_AE_CloudComp~C | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .tools/comp-which | PASS |
+| 2026-06-30 | 2.0.0_SA_COO~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/NFRA_GRAPHUNI/NFRA_GRAPHUN... | PASS |
+| 2026-06-30 | 0.6.2_AE_PartnerETL | (no-TO) | comp-iam | comp-iam service inf-api-reps | PASS |
+| 2026-06-30 | 0.6.2_AE_PartnerETL | (no-TO) | comp-blast | comp-blast inf-api-reps | PASS |
+| 2026-06-30 | 0.6.2_AE_PartnerETL | (no-TO) | comp-blast | comp-blast inf-accounts-v2-daily | PASS |
+| 2026-06-30 | 0.6.2_AE_PartnerETL | (no-TO) | comp-blast | comp-blast inf-unified-account-dim-daily | PASS |
+| 2026-06-30 | 0.6.2_AE_PartnerETL | (no-TO) | comp-blast | comp-blast inf-api-assets-v2 | PASS |
+| 2026-06-30 | 0.6.2_AE_PartnerETL | (no-TO) | comp-blast | comp-blast inf-api-positions | PASS |
+| 2026-06-30 | 0.6.2_AE_PartnerETL | (no-TO) | comp-blast | comp-blast inf-tax-daily | PASS |
+| 2026-06-30 | 0.6.2_AE_PartnerETL | (no-TO) | comp-blast | comp-blast inf-api-txn | PASS |
+| 2026-06-30 | 0.6.2_AE_PartnerETL | (no-TO) | comp-blast | comp-blast inf-billing-daily | PASS |
+| 2026-06-30 | 0.6.2_AE_PartnerETL | (no-TO) | comp-blast | comp-blast inf-performance-daily | PASS |
+- 2026-06-30 0.8.0_AE_CloudComp~C (NFRA_COMPUNIFY.S2+S3): comp-coverage-check selfcheck (CTO arch-gate -- 3 injected violations FAIL + no-checker UNVERIFIABLE + clean PASS); B6 live-fired [coverage-check] PASS on every commit; comp-which S2-wiring grep + S3 before/after battery (surface-first routes from taxonomy, ms-cloud GAP, paraphrase unchanged, never-dead-end); comp-shell+bash-n clean on safe-commit edit; ds-commit-gate/ruff clean. S2 6560cc103/1eb50c3cb, S3 d607b5f32.
+| 2026-06-30 | 0.8.0_AE_CloudComp~C | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
