@@ -104,6 +104,31 @@ git / local directory and daily agent behavior."
 The ratchet machinery (iterate/score/mutate/champion/experiment_log) is reused; only the SCORER and
 the MUTATION SPACE change (from compiler-quality -> toolset coverage/cost/value).
 
+## 5a. The routing rules ARE part of the champion + a worked example (Andrew-direct 2026-06-30)
+
+**Scope clarification the PRD must carry:** NFRA_COMPLEARN's mutation space is NOT just "build / merge /
+retire tools" — it **includes the comp-which curated routing rules**. A large share of discovery
+friction is **Mode-1 routing misses** (a tool EXISTS, the router doesn't connect the agent's phrasing
+to it), not missing tools. So the comp-which RULES map is a first-class **champion-config surface** the
+loop proposes mutations to — `comp-learns-run` should emit routing-rule changes, not only tool-build
+specs.
+
+**LD-0226 is the canonical worked example — a hand-run iteration of exactly this loop**, done
+2026-06-30 ahead of the build. The LD-0224 discovery audit found served-content-motion questions had no
+route (`header_metrics` raw-grepped 5x in 14d; "no comp-tool reads served content" named 2x), and MSTR
+wired a comp-xray curated rule + surfaced comp-freshness's `artifact` mode. **That manual fix IS one
+`comp-learns-run` iteration's output**; the loop should propose such routing-rule mutations
+automatically, scored: *did the new rule reduce the rail-escape / primitive-fallback rate for that
+intent?* Fold LD-0226 into the PRD as the reference iteration + the seed of the routing-rule mutation
+space.
+
+**Empirical design input (from the LD-0224 audit — carry into the scorer):** discovery is **AMBIENT,
+not invoked** — in the 14d to 2026-06-30 agents *typed* `comp-which` 3 times, but the PreToolUse HUD
+fired it **639 times** (ROUTE -> rich tool), against 590 primitive-fallbacks (RUN-GREP/RUN-GLOB) + 158
+DENY + 32 rail-checked overrides. So fabric fluency is a function of the **routing rules + the HUD**,
+not whether agents remember to ask — and the `comp-which-rail.log` action mix is the primary
+routing-quality signal the scorer reads.
+
 ## 6. Seed corpus — cold-start from 3 months of history (Andrew refinement #1)
 
 The loop does NOT start cold. We have a deep historical corpus to **backfill** the Behavior plane:
