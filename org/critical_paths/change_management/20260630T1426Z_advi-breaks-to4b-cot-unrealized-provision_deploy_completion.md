@@ -8,7 +8,7 @@
 
 | Leg | Type | Step | Status |
 |---|---|---|---|
-| L1 | BD-write (AE SSM) | STEP-1: `cot_bronze_ingest.py --table unrealized --provision` on cot-exporter -> new persisted templateId | OPEN |
+| L1 | BD-write (AE SSM) | STEP-1: `cot_bronze_ingest.py --table unrealized --provision` on cot-exporter -> new persisted templateId | DONE: templateId=237784 (AE SSM 3b218b3b, on the CURRENT 9abd0181b measures-selected body) |
 | L2 | verify (AE SSM) | STEP-2 GATE: Custom-mode unrealized pull w/ new id -> CONFIRM >0 data rows (vs current 3743B/0-row). 49F proved persisted-id qt4 can still empty -> load-bearing | OPEN |
 | L3 | s3-config (DS) | STEP-3: wire new templateId into code/bronze/templates/unrealized.json (ds-commit-gate + s3 cp) — GATED on L2 non-empty; RAVC CTO before serving | OPEN |
 | L4 | verify | NEXT scheduled nightly: forwardfill_v2/unrealized non-empty -> silver/unrealized non-empty -> B_00 CUSIP bridge restored (NEVER#4: no ad-hoc gold run) | OPEN |
@@ -20,4 +20,6 @@
 
 ## Log
 - 20260630T1426Z OPENED at deploy-start. STEP-1/2 dispatched to 0.7.0_AE (SSM on cot-exporter); awaiting new templateId + STEP-2 row-count.
+- 20260630T1513Z STEP-1 DONE: templateId=237784 provisioned. Context (~B, commit 9abd0181b 06-12): cot's unrealized body was measures-FIXED 06-12 (isSelected=true on 8 dims+6 meas, B_02 contract) -> worked under CurrentDay (10.7MB); the 06-13 "harvest+pin-back persisted id" was NEVER done (templateId stayed False); 237784 IS that intended pin-back. So cot = date-mode case (good body), NOT 49F's facts=0 case. Raises confidence 237784 carries measures under Custom.
+- 20260630T1516Z STEP-2 MECHANISM: script has NO isolation test-pull (load_template reads templateId from canonical S3 template) -> verify-before-wire mechanically blocked. Mitigant: wiring 237784 is NO-REGRESSION (237784 empty == current empty-stub; non-empty == fixed; never worse than False). Recommended CTO collapse to wire-then-verify (DS-lane git+s3 wire, then AE clean pull); awaiting CTO OK. AE holding off canonical (151649Z).
 - 20260630T1450Z FORK/STEER: AE+~B grounded 49F's 431167 root as facts=0 TEMPLATE BODY (needs enrichment, not date/id). But cot's body is facts=1 ([{'name':'Fact'}]+8 levels) and produced 10.7MB under CurrentDay (only 06-22 change = dateRangeType CurrentDay->Custom) -> cot is NOT confirmed 49F's facts=0 root. STEERED AE: run cot --provision on the CURRENT body + STEP-2 verify FIRST (decisive). If non-empty -> STEP-3 wire (co-signed scope). If empty -> cot needs a COT-SCHEMA-PRESERVING fix (match cot's historical unrealized columns for silver/B_00, NOT 49F's target set) -- candidate = revert cot unrealized to CurrentDay (no-refreeze, holdings/alloc-specific); this is a SCOPE EXPANSION beyond the co-signed provision -> requires fresh CTO co-sign (flagged 145024Z). Ledger stays OPEN through the fork.
