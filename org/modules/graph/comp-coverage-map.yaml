@@ -60,7 +60,10 @@ schema:
     granularity:
       type: enum
       values: [object, file, table, catalog, lambda, iam-policy, graph-node, served-json, component, route, cache-key, secret, symbol, type, seam, estate]
-      doc: "the grain the tool operates at -- the second home axis."
+      doc: "the grain the tool operates at -- the second home axis. EXEMPLIFIES the stable-grain
+        contract: grain is a DECLARED ATTRIBUTE on a stable tool, never a per-depth re-typing (a
+        deeper-grain tool is the same kind of node carrying a finer `granularity`, not a new type).
+        The graph-side edge/node grain model this governs is grain_contract (the cross-macro invariant)."
     concern:
       type: string
       doc: "the SINGLE question this node answers at its home. MUST be unique within any shared touches_resource group (that uniqueness IS the non-redundancy gate)."
@@ -124,6 +127,64 @@ schema:
         predicate: "set(t.tool for t in tools) | set(m.tool for m in meta_tools) == set(ground-truth inventory)  AND  the two sets are DISJOINT (no tool both homed and meta)"
         on_violation: "FAIL -- an UNPLACED tool (in neither tools nor meta_tools = silently dropped) or a DOUBLE-PLACED tool. CVO completeness (AC1)"
         description: "every comp-tool is ACCOUNTED exactly once -- either homed (tools[]) or carved out with a role (meta_tools[]); zero silently-dropped tools (the AC1 completeness contract)"
+      - id: stable_grain
+        applies_to: "grain_contract.edge_types + grain_contract.node_grain_ladder (the cross-macro graph type model)"
+        inputs: [grain_contract]
+        predicate: "grain_contract present; for edge_types: (a) each `relation` maps to EXACTLY ONE edge_type (group by relation; a relation in >1 type = per-depth re-typing); (b) every edge_type declares a non-empty `levels` attribute (grain is a DECLARED attribute, not encoded in the type name); (c) no edge_type NAME is another type's name + a node_grain_ladder level token (name-encoded re-typing). node_grain_ladder declares ONE CONTAINS relation with an ordered `levels` domain."
+        on_violation: "FAIL -- a semantic split by depth (per-depth re-typing of one relation/node) instead of carrying a `level` attribute. Violates the stable-grain contract (Amendment 2 x ruling 4)"
+        description: "STABLE-GRAIN CONTRACT (CTO reconciliation; COMPUNIFY governs, GRAPHUNI populates, COMPDRIFT seams on): DIFFERENT relation -> DIFFERENT edge_type (ruling 4); SAME relation at DIFFERENT grain -> SAME edge_type + a `level` attribute (Amendment 2); NEVER split a semantic by depth. Extends seam_reference_integrity/declared_non_redundancy to grain-stability"
+
+# =============================================================================
+# GRAIN CONTRACT -- the CROSS-MACRO stable-grain invariant (CTO-directed via COO~B,
+# ratified 2026-06-30T20:52Z). COMPUNIFY GOVERNS it (this schema + the `stable_grain`
+# gate rule), GRAPHUNI POPULATES to it (its P1 tier-ladder nodes/edges), and COMPDRIFT
+# SEAMS ON it (edge-grain stability). Aligned ONCE here so the three never drift.
+#
+# THE RECONCILIATION (CTO -- Amendment-2 stable-grain WITH ruling-4 distinct-by-semantic;
+# they are COMPLEMENTARY, and the `stable_grain` gate enforces exactly this test):
+#   - DIFFERENT RELATION   -> DIFFERENT edge_type           (ruling 4: semantic distinctness)
+#   - SAME RELATION, DIFFERENT depth/grain -> SAME edge_type + a `level` attribute  (Amendment 2)
+#   - NEVER split a semantic by depth (no per-depth re-typing of one relation)
+#   - Node granularity likewise = a DECLARED attribute on a stable CONTAINS ladder,
+#     never per-depth node re-typing. (tools[].granularity already embodies this -- grain is a
+#     FIELD on a stable tool, not a re-typed home.)
+# GRAPHUNI's ~D P1 population adds edge_types/levels HERE (one head); a populator that re-types a
+# relation by depth instead of adding a `level` FAILS the gate at commit (B6) -- the map-true-by-
+# enforcement discipline extended to grain.
+# =============================================================================
+grain_contract:
+  principles:
+    - "DIFFERENT RELATION -> DIFFERENT edge_type (ruling 4: semantic distinctness; e.g. gold READS_S3 != portal-field READS)."
+    - "SAME RELATION at DIFFERENT depth/grain -> SAME edge_type + a `level` attribute (Amendment 2: grain is a declared attribute, never a re-typing)."
+    - "NEVER split a semantic by depth (no per-depth re-typing of one relation)."
+    - "Node granularity = a declared attribute on a stable CONTAINS ladder, never per-depth node re-typing."
+  # The stable CONTAINS ladder: node grain is an ATTRIBUTE drawn from these ordered levels
+  # (coarse -> fine), never a per-depth node TYPE. ONE relation (contains), many levels.
+  node_grain_ladder:
+    relation: contains
+    edge_type: CONTAINS
+    levels: [estate, surface, container, file, object, function, field]
+  # The canonical RELATION vocabulary GRAPHUNI populates + COMPDRIFT seams on. SEED (GRAPHUNI
+  # extends in P1). INVARIANT: each `relation` -> exactly ONE edge_type; grain difference rides
+  # the `levels` attribute, NEVER a new type. distinct_relations are distinct types (ruling 4).
+  edge_types:
+    - { edge_type: CONTAINS,  relation: contains,  levels: [estate, surface, container, file, object, function, field], note: "the structural grain ladder -- one relation, all depths as levels" }
+    - { edge_type: READS,     relation: reads,     levels: [field, object], note: "portal-field/object READ -- DISTINCT relation from READS_S3 (ruling 4: different semantic -> different type)" }
+    - { edge_type: READS_S3,  relation: reads_s3,  levels: [object, prefix], note: "gold/lambda reads an S3 artifact; key-vs-prefix depth = the `levels` attr, SAME type (Amendment 2)" }
+    - { edge_type: WRITES_S3, relation: writes_s3, levels: [object, prefix], note: "writes an S3 artifact; depth = level attr" }
+    - { edge_type: DEPLOYS,   relation: deploys,   levels: [lambda, script], note: "GIT->CLOUD deploy edge (seam-2); artifact-class = level attr, one relation" }
+    - { edge_type: SERVES,    relation: serves,    levels: [route, served-json], note: "CF/route serves a payload; surface depth = level attr" }
+  # EXTENSIBILITY SEAM (COO~B scope-guard 2026-06-30T20:57Z): a THIRD amendment -- the FRACTAL-
+  # granularity model (coarse resource nodes drill to fine internal structure via stable RUNS/
+  # CONTAINS/OWNED_BY edges, e.g. EC2-RUNS->PipelineScript; 85129b12f section 10) -- is committed
+  # but NOT YET CTO-RATIFIED. When it ratifies it FOLDS into THIS gate as two NEW rule entries
+  # (NOT a re-type of the engine): (1) DRILLDOWN-SEAM checks (resource<->compute<->object strata),
+  # (2) a GRAIN-CONSISTENCY ROLLUP invariant (a coarse edge must roll up from its fine edges; a
+  # contradiction = a grain defect). The gate is already fold-ready: comp-coverage-check ENUMERATES
+  # gate_contract.rules and dispatches by id, so a new rule = one rule entry + one checker fn = a
+  # FOLD. NOT built here -- the seam is left open per the scope-guard (build only the ratified 8+9).
+  pending_extensions:
+    - { amendment: 10, name: fractal-granularity, status: COMMITTED-NOT-RATIFIED, ref: 85129b12f, folds_in: [grain_drilldown_seams, grain_rollup_consistency], build_when: "CTO ratifies section 10" }
 
 # =============================================================================
 # SURFACES -- the 5-surface APEX (PRD section 2, Andrew-direct).

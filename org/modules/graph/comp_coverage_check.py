@@ -156,6 +156,36 @@ def _check_inventory_completeness(led: dict, inventory: set[str] | None = None, 
     return out
 
 
+def _check_stable_grain(led: dict, **_: object) -> list[str]:
+    """The cross-macro stable-grain contract (CTO amendments 8+9; COMPUNIFY governs, GRAPHUNI
+    populates, COMPDRIFT seams on). EXTENSIBLE: the pending fractal-§10 drilldown/rollup rules
+    fold in as NEW rule entries + checkers, never an engine refactor."""
+    gc = led.get("grain_contract")
+    if not gc:
+        return ["stable_grain: grain_contract section absent (the cross-macro stable-grain contract must be declared)"]
+    out = []
+    ets = gc.get("edge_types", [])
+    ladder_levels = set(gc.get("node_grain_ladder", {}).get("levels", []))
+    names = {e.get("edge_type") for e in ets}
+    by_relation: dict[str, list[str]] = {}
+    for e in ets:
+        et, rel = e.get("edge_type"), e.get("relation")
+        if not e.get("levels"):
+            out.append(f"stable_grain: edge_type '{et}' declares no `levels` attribute (grain must be a declared attribute, not encoded in the type name)")
+        by_relation.setdefault(rel, []).append(et)
+    # (a) each relation -> exactly ONE edge_type (a relation split across types = per-depth re-typing)
+    for rel, types in by_relation.items():
+        if len(types) > 1:
+            out.append(f"stable_grain: relation '{rel}' is split across {sorted(types)} -- per-depth re-typing; use ONE edge_type + a `level` attribute (Amendment 2)")
+    # (c) no edge_type NAME = another type's name + a grain-level token (name-encoded re-typing)
+    _grain_suffixes = ladder_levels | {"l1", "l2", "deep", "shallow", "fine", "coarse"}
+    for et in names:
+        for other in names:
+            if et != other and et.startswith(other + "_") and et[len(other) + 1:].lower() in _grain_suffixes:
+                out.append(f"stable_grain: edge_type '{et}' name-encodes a grain level over '{other}' (per-depth re-typing) -- carry the depth as a `level` attribute on '{other}'")
+    return out
+
+
 _CHECKERS = {
     "one_home": _check_one_home,
     "seam_reference_integrity": _check_seam_reference_integrity,
@@ -163,6 +193,7 @@ _CHECKERS = {
     "coverage_single_home": _check_coverage_single_home,
     "no_trino_phantom_seam": _check_no_trino_phantom_seam,
     "inventory_completeness": _check_inventory_completeness,
+    "stable_grain": _check_stable_grain,
 }
 
 
@@ -217,7 +248,7 @@ def check() -> int:
         return UNVERIFIABLE
     code, violations, unverifiable = run_gate(led, seam_source)
     if code == PASS:
-        sys.stdout.write("PASS: comp-coverage-map.yaml is internally consistent -- every tool one home, every overlap declared, no phantom seam, inventory complete, projection current.\n")
+        sys.stdout.write("PASS: comp-coverage-map.yaml is internally consistent -- every tool one home, every overlap declared, no phantom seam, inventory complete, projection current, grain stable.\n")
         return PASS
     if code == UNVERIFIABLE:
         for u in unverifiable:
@@ -266,6 +297,13 @@ def selfcheck() -> int:
     led_norule["schema"]["gate_contract"]["rules"].append({"id": "ghost_rule_no_checker"})
     code, _, _ = run_gate(led_norule, seam_source, inventory=inv, manifest_inv=manifest_inv)
     results.append(("contract rule w/o checker -> UNVERIFIABLE", code == UNVERIFIABLE))
+
+    # e) GRAIN RE-TYPING: a relation split across two edge_types by depth (the stable-grain defect)
+    led_grain = copy.deepcopy(led)
+    led_grain.setdefault("grain_contract", {}).setdefault("edge_types", []).append(
+        {"edge_type": "READS_S3_PREFIX", "relation": "reads_s3", "levels": ["prefix"]})  # re-types reads_s3 by depth
+    code, _, _ = run_gate(led_grain, seam_source, inventory=inv, manifest_inv=manifest_inv)
+    results.append(("injected grain re-typing -> FAIL", code == FAIL))
 
     ok = all(passed for _, passed in results)
     for label, passed in results:
