@@ -9899,3 +9899,18 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-06-30 | 0.4.0_DS_ClientPlatform~A | ADVI_INFREF.P1 | comp-surface-check | comp-surface-check check --mode advisory --file data/inf/scripts/gold/INF_09.generate_p... | PASS |
 - 2026-06-30 (0.7.0_AE_CloudOps, ADVI_BREAKS prevention deploys): terraform validate/fmt (TO-2 served-guard module + 3 roots, PASS) + safe-apply x4 (item2d, inf/cot value-parity, item2d retune, HALT-gate clean, 0-diff each) + safe-commit x18 + boto3 logs.filter_log_events (bypassed CLI-v1 CW-Logs quirk for freeze-monitor publish attribution). comp-iam service DEFERRED to TO-2 apply-GO (module not in census until applied; IAM hand-grounded to served_guard.py boto3 calls).
 | 2026-06-30 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-06-30 | 0.8.0_AE_CloudComp~C | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/comp-coverage-map.yaml | PASS |
+| 2026-06-30 | 2.0.0_SA_COO~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/NFRA_COMPUNIFY/task_orders... | PASS |
+| 2026-06-30 | 0.8.0_AE_CloudComp~C | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/comp-coverage-map.yaml | PASS |
+| 2026-06-30 | 0.4.0_DS_ClientPlatform~A | ADVI_INFREF.P1 | comp-surface-check | comp-surface-check check --mode advisory --file data/inf/scripts/gold/INF_C_09.fee_stat... | PASS |
+| 2026-06-30 | 0.4.0_DS_ClientPlatform~A | ADVI_INFREF.P1 | comp-surface-check | comp-surface-check check --mode advisory --file data/inf/scripts/gold/INF_D_00c.portal_... | PASS |
+| 2026-06-30 | 0.0.0_AB_MSTR | NFRA_COMPDIFF.comptool-audit | comp-surface-check | comp-surface-check check --mode advisory --file docs/briefs/nfra-globgrph-substrate-uni... | PASS |
+| 2026-06-30 | 0.7.0_AE_CloudOps | (no-TO) | comp-iam | comp-iam service opal-inf-served-guard | PASS |
+| 2026-06-30 | 0.4.0_DS_ClientPlatform~B | ADVI_BREAKS.TO-3 | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/change_management/20... | PASS |
+| 2026-06-30 | 0.8.0_AE_CloudComp~C | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/comp-coverage-map.yam... | PASS |
+| 2026-06-30 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+| 2026-06-30 | 0.8.0_AE_CloudComp~C | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/comp-coverage-map.yam... | PASS |
+| 2026-06-30 | 0.4.0_DS_ClientPlatform~A | ADVI_INFREF.P1 | comp-surface-check | comp-surface-check check --mode advisory --file data/inf/scripts/gold/INF_D_00.portal_a... | PASS |
+| 2026-06-30 | 0.7.0_AE_CloudOps | (no-TO) | comp-iam | comp-iam service opal-inf-served-guard | PASS |
+- 2026-06-30 0.8.0_AE_CloudComp~C (NFRA_COMPUNIFY.S0b+S1): comp-which routing cross-check (4 surface Qs, 0 placement findings, overlaps corroborated); comp_coverage_view.py --verify (AC4 non-breaking: 33 manifest entries subset-of 44 ledger union, exit 0); ds-commit-gate PASS; 6-rule gate dry-run PASS (one_home/inventory_completeness/declared_non_redundancy/seam_ref/coverage_single_home/no-phantom). S0 7850d813b, S0b 860aac86b, S1 8d55cd616.
+| 2026-06-30 | 0.8.0_AE_CloudComp~C | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
