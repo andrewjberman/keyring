@@ -20880,12 +20880,6 @@
   },
   {
    "source": "pipeline:bd:gold:build_canonical_prices_v2",
-   "target": "opal-data-bd/config/ticker_lookup.json",
-   "edge_type": "READS_S3",
-   "level": "object"
-  },
-  {
-   "source": "pipeline:bd:gold:build_canonical_prices_v2",
    "target": "opal-data-bd/silver/historical_prices.parquet",
    "edge_type": "READS_S3",
    "level": "object"
@@ -23699,12 +23693,6 @@
    "level": "object"
   },
   {
-   "source": "pipeline:bd:gold:E_06.trace_asset_pricing",
-   "target": "opal-data-bd/config/ticker_lookup.json",
-   "edge_type": "READS_S3",
-   "level": "object"
-  },
-  {
    "source": "pipeline:bd:gold:E_07.account_gap_buckets:read_parquet",
    "target": "pipeline:bd:gold:E_07.account_gap_buckets:log",
    "edge_type": "CALLS",
@@ -23804,12 +23792,6 @@
    "source": "pipeline:bd:gold:E_08.tail_asset_drill:main",
    "target": "opal-data-bd/silver/prices/canonical_prices.parquet",
    "edge_type": "WRITES_S3",
-   "level": "object"
-  },
-  {
-   "source": "pipeline:bd:gold:E_08.tail_asset_drill",
-   "target": "opal-data-bd/config/ticker_lookup.json",
-   "edge_type": "READS_S3",
    "level": "object"
   },
   {
@@ -23927,12 +23909,6 @@
    "level": "object"
   },
   {
-   "source": "pipeline:bd:gold:E_11.unmatched_asset_analysis",
-   "target": "opal-data-bd/config/ticker_lookup.json",
-   "edge_type": "READS_S3",
-   "level": "object"
-  },
-  {
    "source": "pipeline:bd:gold:E_12.dump_all_non_yahoo:read_pq",
    "target": "opal-data-bd/gold/positions_cube/*.parquet",
    "edge_type": "WRITES_S3",
@@ -24035,12 +24011,6 @@
    "level": "object"
   },
   {
-   "source": "pipeline:bd:gold:E_14.audit_existing_mappings",
-   "target": "opal-data-bd/config/ticker_lookup.json",
-   "edge_type": "READS_S3",
-   "level": "object"
-  },
-  {
    "source": "pipeline:bd:gold:E_15.validate_yf_overrides:main",
    "target": "pipeline:bd:gold:E_15.validate_yf_overrides:log",
    "edge_type": "CALLS",
@@ -24050,12 +24020,6 @@
    "source": "pipeline:bd:gold:E_15.validate_yf_overrides:main",
    "target": "opal-data-bd/silver/historical_prices.parquet",
    "edge_type": "WRITES_S3",
-   "level": "object"
-  },
-  {
-   "source": "pipeline:bd:gold:E_15.validate_yf_overrides",
-   "target": "opal-data-bd/config/yahoo_safe_tickers.txt",
-   "edge_type": "READS_S3",
    "level": "object"
   },
   {
@@ -24104,12 +24068,6 @@
    "source": "pipeline:bd:gold:E_16.unit_math_audit:main",
    "target": "opal-data-bd/silver/prices/canonical_prices.parquet",
    "edge_type": "WRITES_S3",
-   "level": "object"
-  },
-  {
-   "source": "pipeline:bd:gold:E_17.check_49f_tickers",
-   "target": "opal-data-bd/config/yahoo_safe_tickers.txt",
-   "edge_type": "READS_S3",
    "level": "object"
   },
   {
@@ -29682,12 +29640,6 @@
   },
   {
    "source": "pipeline:bd:gold:A_03.positions_cube",
-   "target": "opal-data-bd/gold/timeseries/positions_cube/",
-   "edge_type": "READS_S3",
-   "level": "prefix"
-  },
-  {
-   "source": "pipeline:bd:gold:A_03.positions_cube",
    "target": "opal-data-bd/silver/allocations/{*}.parquet",
    "edge_type": "READS_S3",
    "level": "prefix"
@@ -29766,12 +29718,6 @@
   },
   {
    "source": "pipeline:bd:gold:B_00.canonical_holdings",
-   "target": "opal-data-bd/gold/timeseries/positions_cube/",
-   "edge_type": "READS_S3",
-   "level": "prefix"
-  },
-  {
-   "source": "pipeline:bd:gold:B_00.canonical_holdings",
    "target": "opal-data-bd/silver/allocations/{*}.parquet",
    "edge_type": "READS_S3",
    "level": "prefix"
@@ -29779,12 +29725,6 @@
   {
    "source": "pipeline:bd:gold:B_00.canonical_holdings",
    "target": "opal-data-bd/silver/prices/canonical_prices.parquet",
-   "edge_type": "READS_S3",
-   "level": "object"
-  },
-  {
-   "source": "pipeline:bd:gold:B_00.canonical_holdings",
-   "target": "opal-data-bd/silver/realized/bd_realized_compact.parquet",
    "edge_type": "READS_S3",
    "level": "object"
   },
@@ -29826,12 +29766,6 @@
   },
   {
    "source": "pipeline:bd:gold:B_01.holdings_lots",
-   "target": "opal-data-bd/gold/timeseries/holdings_lots/",
-   "edge_type": "READS_S3",
-   "level": "prefix"
-  },
-  {
-   "source": "pipeline:bd:gold:B_01.holdings_lots",
    "target": "opal-data-bd/silver/allocations/{*}.parquet",
    "edge_type": "READS_S3",
    "level": "prefix"
@@ -29841,12 +29775,6 @@
    "target": "opal-data-bd/silver/prices/canonical_prices.parquet",
    "edge_type": "READS_S3",
    "level": "object"
-  },
-  {
-   "source": "pipeline:bd:gold:B_01.holdings_lots",
-   "target": "opal-data-bd/silver/unrealized/{*}.parquet",
-   "edge_type": "READS_S3",
-   "level": "prefix"
   },
   {
    "source": "pipeline:bd:gold:B_01.holdings_lots",
@@ -29886,12 +29814,6 @@
   },
   {
    "source": "pipeline:bd:gold:B_01b.classify_new_securities",
-   "target": "opal-data-bd/gold/timeseries/holdings_lots/",
-   "edge_type": "READS_S3",
-   "level": "prefix"
-  },
-  {
-   "source": "pipeline:bd:gold:B_01b.classify_new_securities",
    "target": "opal-data-bd/gold/manifests/classify_watermark.json",
    "edge_type": "WRITES_S3",
    "level": "object"
@@ -29904,25 +29826,7 @@
   },
   {
    "source": "pipeline:bd:gold:B_02.canonical_lots",
-   "target": "opal-data-bd/gold/canonical/holdings/",
-   "edge_type": "READS_S3",
-   "level": "prefix"
-  },
-  {
-   "source": "pipeline:bd:gold:B_02.canonical_lots",
    "target": "opal-data-bd/gold/canonical/holdings/{*}.parquet",
-   "edge_type": "READS_S3",
-   "level": "prefix"
-  },
-  {
-   "source": "pipeline:bd:gold:B_02.canonical_lots",
-   "target": "opal-data-bd/gold/canonical/lots_realized/",
-   "edge_type": "READS_S3",
-   "level": "prefix"
-  },
-  {
-   "source": "pipeline:bd:gold:B_02.canonical_lots",
-   "target": "opal-data-bd/gold/canonical/lots_unrealized/",
    "edge_type": "READS_S3",
    "level": "prefix"
   },
@@ -29940,31 +29844,7 @@
   },
   {
    "source": "pipeline:bd:gold:B_02.canonical_lots",
-   "target": "opal-data-bd/schwab/silver/rld/",
-   "edge_type": "READS_S3",
-   "level": "prefix"
-  },
-  {
-   "source": "pipeline:bd:gold:B_02.canonical_lots",
-   "target": "opal-data-bd/schwab/silver/uln/",
-   "edge_type": "READS_S3",
-   "level": "prefix"
-  },
-  {
-   "source": "pipeline:bd:gold:B_02.canonical_lots",
-   "target": "opal-data-bd/schwab/silver/ult/",
-   "edge_type": "READS_S3",
-   "level": "prefix"
-  },
-  {
-   "source": "pipeline:bd:gold:B_02.canonical_lots",
    "target": "opal-data-bd/silver/prices/canonical_prices.parquet",
-   "edge_type": "READS_S3",
-   "level": "object"
-  },
-  {
-   "source": "pipeline:bd:gold:B_02.canonical_lots",
-   "target": "opal-data-bd/silver/realized/bd_realized_compact.parquet",
    "edge_type": "READS_S3",
    "level": "object"
   },
@@ -30006,25 +29886,7 @@
   },
   {
    "source": "pipeline:bd:gold:B_03.account_gains",
-   "target": "opal-data-bd/gold/canonical/account_gains/",
-   "edge_type": "READS_S3",
-   "level": "prefix"
-  },
-  {
-   "source": "pipeline:bd:gold:B_03.account_gains",
-   "target": "opal-data-bd/gold/canonical/holdings/",
-   "edge_type": "READS_S3",
-   "level": "prefix"
-  },
-  {
-   "source": "pipeline:bd:gold:B_03.account_gains",
    "target": "opal-data-bd/gold/canonical/holdings/{*}.parquet",
-   "edge_type": "READS_S3",
-   "level": "prefix"
-  },
-  {
-   "source": "pipeline:bd:gold:B_03.account_gains",
-   "target": "opal-data-bd/gold/canonical/lots_realized/",
    "edge_type": "READS_S3",
    "level": "prefix"
   },
@@ -30036,19 +29898,7 @@
   },
   {
    "source": "pipeline:bd:gold:B_03.account_gains",
-   "target": "opal-data-bd/gold/canonical/lots_unrealized/",
-   "edge_type": "READS_S3",
-   "level": "prefix"
-  },
-  {
-   "source": "pipeline:bd:gold:B_03.account_gains",
    "target": "opal-data-bd/gold/canonical/lots_unrealized/{*}.parquet",
-   "edge_type": "READS_S3",
-   "level": "prefix"
-  },
-  {
-   "source": "pipeline:bd:gold:B_03.account_gains",
-   "target": "opal-data-bd/silver/transactions/{*}.parquet",
    "edge_type": "READS_S3",
    "level": "prefix"
   },
@@ -30072,12 +29922,6 @@
   },
   {
    "source": "pipeline:bd:gold:C_00.canonical_performance",
-   "target": "opal-data-bd/gold/canonical/account_gains/",
-   "edge_type": "READS_S3",
-   "level": "prefix"
-  },
-  {
-   "source": "pipeline:bd:gold:C_00.canonical_performance",
    "target": "opal-data-bd/gold/canonical/account_gains/{*}.parquet",
    "edge_type": "READS_S3",
    "level": "prefix"
@@ -30096,19 +29940,7 @@
   },
   {
    "source": "pipeline:bd:gold:C_01.canonical_nna",
-   "target": "opal-data-bd/gold/canonical/account_gains/",
-   "edge_type": "READS_S3",
-   "level": "prefix"
-  },
-  {
-   "source": "pipeline:bd:gold:C_01.canonical_nna",
    "target": "opal-data-bd/gold/canonical/account_gains/{*}.parquet",
-   "edge_type": "READS_S3",
-   "level": "prefix"
-  },
-  {
-   "source": "pipeline:bd:gold:C_01.canonical_nna",
-   "target": "opal-data-bd/gold/canonical/nna/",
    "edge_type": "READS_S3",
    "level": "prefix"
   },
@@ -30144,12 +29976,6 @@
   },
   {
    "source": "pipeline:bd:gold:C_01b.role_aua_backfill",
-   "target": "opal-data-bd/gold/canonical/role_aua/",
-   "edge_type": "READS_S3",
-   "level": "prefix"
-  },
-  {
-   "source": "pipeline:bd:gold:C_01b.role_aua_backfill",
    "target": "opal-data-bd/gold/timeseries/account_performance.parquet",
    "edge_type": "READS_S3",
    "level": "object"
@@ -30169,24 +29995,6 @@
   {
    "source": "pipeline:bd:gold:C_01c.role_aua_flow_join",
    "target": "opal-data-bd/gold/canonical/nna_atomic/{*}.parquet",
-   "edge_type": "READS_S3",
-   "level": "prefix"
-  },
-  {
-   "source": "pipeline:bd:gold:C_02.client_performance",
-   "target": "opal-data-bd/gold/canonical/account_gains/",
-   "edge_type": "READS_S3",
-   "level": "prefix"
-  },
-  {
-   "source": "pipeline:bd:gold:C_02.client_performance",
-   "target": "opal-data-bd/gold/canonical/holdings/",
-   "edge_type": "READS_S3",
-   "level": "prefix"
-  },
-  {
-   "source": "pipeline:bd:gold:C_02.client_performance",
-   "target": "opal-data-bd/gold/canonical/performance/",
    "edge_type": "READS_S3",
    "level": "prefix"
   },
@@ -30212,12 +30020,6 @@
    "source": "pipeline:bd:gold:C_02.client_performance",
    "target": "opal-data-bd/gold/validation/aua_certification/{*}.json",
    "edge_type": "WRITES_S3",
-   "level": "prefix"
-  },
-  {
-   "source": "pipeline:bd:gold:C_03.account_performance",
-   "target": "opal-data-bd/gold/canonical/account_gains/",
-   "edge_type": "READS_S3",
    "level": "prefix"
   },
   {
@@ -30270,27 +30072,9 @@
   },
   {
    "source": "pipeline:bd:gold:C_05.client_tax_liability",
-   "target": "opal-data-bd/gold/canonical/lots_unrealized/",
-   "edge_type": "READS_S3",
-   "level": "prefix"
-  },
-  {
-   "source": "pipeline:bd:gold:C_05.client_tax_liability",
-   "target": "opal-data-bd/gold/timeseries/holdings_lots/",
-   "edge_type": "READS_S3",
-   "level": "prefix"
-  },
-  {
-   "source": "pipeline:bd:gold:C_05.client_tax_liability",
    "target": "opal-data-bd/gold/views/client_tax_liability.parquet",
    "edge_type": "WRITES_S3",
    "level": "object"
-  },
-  {
-   "source": "pipeline:bd:gold:C_06.client_mix_timeseries",
-   "target": "opal-data-bd/gold/canonical/holdings/",
-   "edge_type": "READS_S3",
-   "level": "prefix"
   },
   {
    "source": "pipeline:bd:gold:C_06.client_mix_timeseries",
@@ -30300,21 +30084,9 @@
   },
   {
    "source": "pipeline:bd:gold:C_06.client_mix_timeseries",
-   "target": "opal-data-bd/gold/entities/clients/",
-   "edge_type": "READS_S3",
-   "level": "prefix"
-  },
-  {
-   "source": "pipeline:bd:gold:C_06.client_mix_timeseries",
    "target": "opal-data-bd/gold/entities/clients/{*}.json",
    "edge_type": "READS_S3",
    "level": "prefix"
-  },
-  {
-   "source": "pipeline:bd:gold:C_06.client_mix_timeseries",
-   "target": "opal-data-bd/gold/meta/client_timeseries_watermark.json",
-   "edge_type": "READS_S3",
-   "level": "object"
   },
   {
    "source": "pipeline:bd:gold:C_06.client_mix_timeseries",
@@ -30378,24 +30150,6 @@
   },
   {
    "source": "pipeline:bd:gold:C_08.advisor_fee_efficiency",
-   "target": "opal-data-bd/gold/canonical/advisor_fee_detail/",
-   "edge_type": "READS_S3",
-   "level": "prefix"
-  },
-  {
-   "source": "pipeline:bd:gold:C_08.advisor_fee_efficiency",
-   "target": "opal-data-bd/gold/canonical/nna/",
-   "edge_type": "READS_S3",
-   "level": "prefix"
-  },
-  {
-   "source": "pipeline:bd:gold:C_08.advisor_fee_efficiency",
-   "target": "opal-data-bd/gold/canonical/role_aua/",
-   "edge_type": "READS_S3",
-   "level": "prefix"
-  },
-  {
-   "source": "pipeline:bd:gold:C_08.advisor_fee_efficiency",
    "target": "opal-data-bd/gold/dimensions/advisor_assignments_history.parquet",
    "edge_type": "READS_S3",
    "level": "object"
@@ -30423,30 +30177,6 @@
    "target": "opal-data-bd/gold/canonical/advisor_fee_detail/{*}.parquet",
    "edge_type": "WRITES_S3",
    "level": "prefix"
-  },
-  {
-   "source": "pipeline:bd:gold:D_00.portal_aggregates",
-   "target": "opal-data-bd/gold/artifacts/snapshots/aua_by_architect.json",
-   "edge_type": "READS_S3",
-   "level": "object"
-  },
-  {
-   "source": "pipeline:bd:gold:D_00.portal_aggregates",
-   "target": "opal-data-bd/gold/artifacts/snapshots/aua_by_region.json",
-   "edge_type": "READS_S3",
-   "level": "object"
-  },
-  {
-   "source": "pipeline:bd:gold:D_00.portal_aggregates",
-   "target": "opal-data-bd/gold/artifacts/snapshots/aua_by_state.json",
-   "edge_type": "READS_S3",
-   "level": "object"
-  },
-  {
-   "source": "pipeline:bd:gold:D_00.portal_aggregates",
-   "target": "opal-data-bd/gold/artifacts/snapshots/aua_by_tax_status.json",
-   "edge_type": "READS_S3",
-   "level": "object"
   },
   {
    "source": "pipeline:bd:gold:D_00.portal_aggregates",
@@ -30498,24 +30228,6 @@
   },
   {
    "source": "pipeline:bd:gold:D_00.portal_aggregates",
-   "target": "opal-data-bd/gold/views/nna_aua_by_advisor.parquet",
-   "edge_type": "READS_S3",
-   "level": "object"
-  },
-  {
-   "source": "pipeline:bd:gold:D_00.portal_aggregates",
-   "target": "opal-data-bd/gold/views/nna_aua_by_geography.parquet",
-   "edge_type": "READS_S3",
-   "level": "object"
-  },
-  {
-   "source": "pipeline:bd:gold:D_00.portal_aggregates",
-   "target": "opal-data-bd/gold/views/nna_aua_by_geography_city.parquet",
-   "edge_type": "READS_S3",
-   "level": "object"
-  },
-  {
-   "source": "pipeline:bd:gold:D_00.portal_aggregates",
    "target": "opal-data-bd/gold/views/rel_architect_lookup.parquet",
    "edge_type": "READS_S3",
    "level": "object"
@@ -30552,18 +30264,6 @@
   },
   {
    "source": "pipeline:bd:gold:D_00b.portal_timeseries",
-   "target": "opal-data-bd/gold/canonical/nna/",
-   "edge_type": "READS_S3",
-   "level": "prefix"
-  },
-  {
-   "source": "pipeline:bd:gold:D_00b.portal_timeseries",
-   "target": "opal-data-bd/gold/canonical/role_aua/",
-   "edge_type": "READS_S3",
-   "level": "prefix"
-  },
-  {
-   "source": "pipeline:bd:gold:D_00b.portal_timeseries",
    "target": "opal-data-bd/gold/dimensions/accounts_dimension_latest.parquet",
    "edge_type": "READS_S3",
    "level": "object"
@@ -30571,12 +30271,6 @@
   {
    "source": "pipeline:bd:gold:D_00b.portal_timeseries",
    "target": "opal-data-bd/gold/dimensions/client_dimension.parquet",
-   "edge_type": "READS_S3",
-   "level": "object"
-  },
-  {
-   "source": "pipeline:bd:gold:D_00b.portal_timeseries",
-   "target": "opal-data-bd/gold/dimensions/dim_advisor_office.csv",
    "edge_type": "READS_S3",
    "level": "object"
   },
@@ -30591,12 +30285,6 @@
    "target": "opal-data-bd/gold/timeseries/client_performance.parquet",
    "edge_type": "READS_S3",
    "level": "object"
-  },
-  {
-   "source": "pipeline:bd:gold:D_00b.portal_timeseries",
-   "target": "opal-data-bd/gold/timeseries/holdings_lots/",
-   "edge_type": "READS_S3",
-   "level": "prefix"
   },
   {
    "source": "pipeline:bd:gold:D_00b.portal_timeseries",
@@ -30621,24 +30309,6 @@
    "target": "opal-data-bd/gold/artifacts/timeseries_chart.json",
    "edge_type": "WRITES_S3",
    "level": "object"
-  },
-  {
-   "source": "pipeline:bd:gold:D_00c.portal_leaderboard",
-   "target": "opal-data-bd/gold/canonical/advisor_fee_detail/",
-   "edge_type": "READS_S3",
-   "level": "prefix"
-  },
-  {
-   "source": "pipeline:bd:gold:D_00c.portal_leaderboard",
-   "target": "opal-data-bd/gold/canonical/nna/",
-   "edge_type": "READS_S3",
-   "level": "prefix"
-  },
-  {
-   "source": "pipeline:bd:gold:D_00c.portal_leaderboard",
-   "target": "opal-data-bd/gold/canonical/role_aua/",
-   "edge_type": "READS_S3",
-   "level": "prefix"
   },
   {
    "source": "pipeline:bd:gold:D_00c.portal_leaderboard",
@@ -30702,12 +30372,6 @@
   },
   {
    "source": "pipeline:bd:gold:D_01.partner_analytics",
-   "target": "opal-data-bd/gold/canonical/nna/",
-   "edge_type": "READS_S3",
-   "level": "prefix"
-  },
-  {
-   "source": "pipeline:bd:gold:D_01.partner_analytics",
    "target": "opal-data-bd/gold/canonical/role_aua/{*}.parquet",
    "edge_type": "READS_S3",
    "level": "prefix"
@@ -30721,12 +30385,6 @@
   {
    "source": "pipeline:bd:gold:D_01.partner_analytics",
    "target": "opal-data-bd/gold/dimensions/client_dimension.parquet",
-   "edge_type": "READS_S3",
-   "level": "object"
-  },
-  {
-   "source": "pipeline:bd:gold:D_01.partner_analytics",
-   "target": "opal-data-bd/gold/dimensions/dim_advisor_office.csv",
    "edge_type": "READS_S3",
    "level": "object"
   },
@@ -30756,18 +30414,6 @@
   },
   {
    "source": "pipeline:bd:gold:D_01.partner_analytics",
-   "target": "opal-data-bd/gold/views/nna_aua_by_advisor.parquet",
-   "edge_type": "READS_S3",
-   "level": "object"
-  },
-  {
-   "source": "pipeline:bd:gold:D_01.partner_analytics",
-   "target": "opal-data-bd/gold/views/nna_aua_by_geography.parquet",
-   "edge_type": "READS_S3",
-   "level": "object"
-  },
-  {
-   "source": "pipeline:bd:gold:D_01.partner_analytics",
    "target": "opal-data-bd/gold/views/rel_architect_lookup.parquet",
    "edge_type": "READS_S3",
    "level": "object"
@@ -30788,24 +30434,6 @@
    "source": "pipeline:bd:gold:D_01.partner_analytics",
    "target": "opal-data-bd/gold/validation/aua_certification/{*}.json",
    "edge_type": "WRITES_S3",
-   "level": "prefix"
-  },
-  {
-   "source": "pipeline:bd:gold:D_02.advisor_client_detail",
-   "target": "opal-data-bd/gold/canonical/advisor_fee_detail/",
-   "edge_type": "READS_S3",
-   "level": "prefix"
-  },
-  {
-   "source": "pipeline:bd:gold:D_02.advisor_client_detail",
-   "target": "opal-data-bd/gold/canonical/nna/",
-   "edge_type": "READS_S3",
-   "level": "prefix"
-  },
-  {
-   "source": "pipeline:bd:gold:D_02.advisor_client_detail",
-   "target": "opal-data-bd/gold/canonical/role_aua/",
-   "edge_type": "READS_S3",
    "level": "prefix"
   },
   {
@@ -30834,30 +30462,6 @@
   },
   {
    "source": "pipeline:bd:gold:D_02.advisor_client_detail",
-   "target": "opal-data-bd/gold/entities/accounts/{*}/aua_timeseries.json",
-   "edge_type": "READS_S3",
-   "level": "prefix"
-  },
-  {
-   "source": "pipeline:bd:gold:D_02.advisor_client_detail",
-   "target": "opal-data-bd/gold/entities/advisors/{*}/book.json",
-   "edge_type": "READS_S3",
-   "level": "prefix"
-  },
-  {
-   "source": "pipeline:bd:gold:D_02.advisor_client_detail",
-   "target": "opal-data-bd/gold/entities/advisors/{*}/timeseries.json",
-   "edge_type": "READS_S3",
-   "level": "prefix"
-  },
-  {
-   "source": "pipeline:bd:gold:D_02.advisor_client_detail",
-   "target": "opal-data-bd/gold/entities/clients/{*}/aua_timeseries.json",
-   "edge_type": "READS_S3",
-   "level": "prefix"
-  },
-  {
-   "source": "pipeline:bd:gold:D_02.advisor_client_detail",
    "target": "opal-data-bd/gold/entities/clients/{*}/detail.json",
    "edge_type": "READS_S3",
    "level": "prefix"
@@ -30867,12 +30471,6 @@
    "target": "opal-data-bd/gold/timeseries/account_performance.parquet",
    "edge_type": "READS_S3",
    "level": "object"
-  },
-  {
-   "source": "pipeline:bd:gold:D_02.advisor_client_detail",
-   "target": "opal-data-bd/gold/timeseries/holdings_lots/",
-   "edge_type": "READS_S3",
-   "level": "prefix"
   },
   {
    "source": "pipeline:bd:gold:D_02.advisor_client_detail",
@@ -30924,31 +30522,7 @@
   },
   {
    "source": "pipeline:bd:gold:D_03.composition_artifacts",
-   "target": "opal-data-bd/gold/entities/advisors/{*}/composition.json",
-   "edge_type": "READS_S3",
-   "level": "prefix"
-  },
-  {
-   "source": "pipeline:bd:gold:D_03.composition_artifacts",
-   "target": "opal-data-bd/gold/entities/clients/{*}_composition.json",
-   "edge_type": "READS_S3",
-   "level": "prefix"
-  },
-  {
-   "source": "pipeline:bd:gold:D_03.composition_artifacts",
-   "target": "opal-data-bd/gold/timeseries/holdings_lots/",
-   "edge_type": "READS_S3",
-   "level": "prefix"
-  },
-  {
-   "source": "pipeline:bd:gold:D_03.composition_artifacts",
    "target": "opal-data-bd/gold/views/account_team.parquet",
-   "edge_type": "READS_S3",
-   "level": "object"
-  },
-  {
-   "source": "pipeline:bd:gold:D_03.composition_artifacts",
-   "target": "opal-data-bd/gold/views/firm_composition.json",
    "edge_type": "READS_S3",
    "level": "object"
   },
@@ -31038,12 +30612,6 @@
   },
   {
    "source": "pipeline:bd:gold:D_04.client_portal_summary",
-   "target": "opal-data-bd/gold/canonical/nna/",
-   "edge_type": "READS_S3",
-   "level": "prefix"
-  },
-  {
-   "source": "pipeline:bd:gold:D_04.client_portal_summary",
    "target": "opal-data-bd/gold/dimensions/accounts_dimension_latest.parquet",
    "edge_type": "READS_S3",
    "level": "object"
@@ -31056,31 +30624,7 @@
   },
   {
    "source": "pipeline:bd:gold:D_04.client_portal_summary",
-   "target": "opal-data-bd/gold/entities/accounts/{*}/aua_timeseries.json",
-   "edge_type": "READS_S3",
-   "level": "prefix"
-  },
-  {
-   "source": "pipeline:bd:gold:D_04.client_portal_summary",
-   "target": "opal-data-bd/gold/entities/advisors/{*}/book.json",
-   "edge_type": "READS_S3",
-   "level": "prefix"
-  },
-  {
-   "source": "pipeline:bd:gold:D_04.client_portal_summary",
-   "target": "opal-data-bd/gold/entities/advisors/{*}/composition.json",
-   "edge_type": "READS_S3",
-   "level": "prefix"
-  },
-  {
-   "source": "pipeline:bd:gold:D_04.client_portal_summary",
    "target": "opal-data-bd/gold/entities/advisors/{*}/mix.json",
-   "edge_type": "READS_S3",
-   "level": "prefix"
-  },
-  {
-   "source": "pipeline:bd:gold:D_04.client_portal_summary",
-   "target": "opal-data-bd/gold/entities/advisors/{*}/timeseries.json",
    "edge_type": "READS_S3",
    "level": "prefix"
   },
@@ -31092,19 +30636,7 @@
   },
   {
    "source": "pipeline:bd:gold:D_04.client_portal_summary",
-   "target": "opal-data-bd/gold/entities/clients/{*}/aua_timeseries.json",
-   "edge_type": "READS_S3",
-   "level": "prefix"
-  },
-  {
-   "source": "pipeline:bd:gold:D_04.client_portal_summary",
    "target": "opal-data-bd/gold/entities/clients/{*}/detail.json",
-   "edge_type": "READS_S3",
-   "level": "prefix"
-  },
-  {
-   "source": "pipeline:bd:gold:D_04.client_portal_summary",
-   "target": "opal-data-bd/gold/entities/clients/{*}_composition.json",
    "edge_type": "READS_S3",
    "level": "prefix"
   },
@@ -31116,31 +30648,13 @@
   },
   {
    "source": "pipeline:bd:gold:D_04.client_portal_summary",
-   "target": "opal-data-bd/gold/timeseries/holdings_lots/",
-   "edge_type": "READS_S3",
-   "level": "prefix"
-  },
-  {
-   "source": "pipeline:bd:gold:D_04.client_portal_summary",
    "target": "opal-data-bd/gold/views/account_team.parquet",
    "edge_type": "READS_S3",
    "level": "object"
   },
   {
    "source": "pipeline:bd:gold:D_04.client_portal_summary",
-   "target": "opal-data-bd/gold/views/firm_composition.json",
-   "edge_type": "READS_S3",
-   "level": "object"
-  },
-  {
-   "source": "pipeline:bd:gold:D_04.client_portal_summary",
    "target": "opal-data-bd/gold/views/mix_daily_summary.json",
-   "edge_type": "READS_S3",
-   "level": "object"
-  },
-  {
-   "source": "pipeline:bd:gold:D_04.client_portal_summary",
-   "target": "opal-data-bd/platinum/firm/leaderboard.prior_week.json",
    "edge_type": "READS_S3",
    "level": "object"
   },
@@ -31320,24 +30834,6 @@
   },
   {
    "source": "pipeline:inf:gold:INF_B_00.canonical_holdings",
-   "target": "opal-data-inf/bronze/orion-api/{*}/_BRONZE_COMPLETE.json",
-   "edge_type": "READS_S3",
-   "level": "prefix"
-  },
-  {
-   "source": "pipeline:inf:gold:INF_B_00.canonical_holdings",
-   "target": "opal-data-inf/bronze/orion-api/{*}/assets.csv",
-   "edge_type": "READS_S3",
-   "level": "prefix"
-  },
-  {
-   "source": "pipeline:inf:gold:INF_B_00.canonical_holdings",
-   "target": "opal-data-inf/silver/api_dims/positions_mv/snapshot_date={*}/data.parquet",
-   "edge_type": "READS_S3",
-   "level": "prefix"
-  },
-  {
-   "source": "pipeline:inf:gold:INF_B_00.canonical_holdings",
    "target": "opal-data-inf/platinum/firm/_meta/bronze_skip_warning_{*}.json",
    "edge_type": "WRITES_S3",
    "level": "prefix"
@@ -31392,12 +30888,6 @@
   },
   {
    "source": "pipeline:inf:gold:INF_C_00.canonical_performance",
-   "target": "opal-data-inf/gold/canonical/canonical_nna_{*}.parquet",
-   "edge_type": "READS_S3",
-   "level": "prefix"
-  },
-  {
-   "source": "pipeline:inf:gold:INF_C_00.canonical_performance",
    "target": "opal-data-inf/gold/canonical/canonical_performance_{*}.parquet",
    "edge_type": "READS_S3",
    "level": "prefix"
@@ -31412,18 +30902,6 @@
    "source": "pipeline:inf:gold:INF_C_00.canonical_performance",
    "target": "opal-data-inf/gold/canonical/canonical_performance_{*}.parquet",
    "edge_type": "WRITES_S3",
-   "level": "prefix"
-  },
-  {
-   "source": "pipeline:inf:gold:INF_C_01.canonical_nna",
-   "target": "opal-data-inf/silver/meta/gap_manifest.json",
-   "edge_type": "READS_S3",
-   "level": "object"
-  },
-  {
-   "source": "pipeline:inf:gold:INF_C_01b.role_aua_backfill",
-   "target": "opal-data-inf/gold/canonical/canonical_nna_{*}.parquet",
-   "edge_type": "READS_S3",
    "level": "prefix"
   },
   {
@@ -31506,12 +30984,6 @@
   },
   {
    "source": "pipeline:inf:gold:INF_C_04.validate_aua",
-   "target": "opal-data-inf/gold/canonical/holdings_{*}.parquet",
-   "edge_type": "READS_S3",
-   "level": "prefix"
-  },
-  {
-   "source": "pipeline:inf:gold:INF_C_04.validate_aua",
    "target": "opal-data-inf/gold/timeseries/client_performance.parquet",
    "edge_type": "READS_S3",
    "level": "object"
@@ -31557,12 +31029,6 @@
    "target": "opal-data-inf/gold/timeseries/account_performance.parquet",
    "edge_type": "READS_S3",
    "level": "object"
-  },
-  {
-   "source": "pipeline:inf:gold:INF_C_08.advisor_fee_efficiency",
-   "target": "opal-data-inf/gold/canonical/canonical_nna_{*}.parquet",
-   "edge_type": "READS_S3",
-   "level": "prefix"
   },
   {
    "source": "pipeline:inf:gold:INF_C_08.advisor_fee_efficiency",
@@ -31668,26 +31134,8 @@
   },
   {
    "source": "pipeline:inf:gold:INF_D_00c.portal_leaderboard",
-   "target": "opal-data-inf/silver/meta/gap_manifest.json",
-   "edge_type": "READS_S3",
-   "level": "object"
-  },
-  {
-   "source": "pipeline:inf:gold:INF_D_00c.portal_leaderboard",
    "target": "opal-data-inf/platinum/firm/leaderboard.json",
    "edge_type": "WRITES_S3",
-   "level": "object"
-  },
-  {
-   "source": "pipeline:inf:gold:INF_D_00e.fresh_header_supplement",
-   "target": "opal-data-inf/bronze/orion-api/{*}/assets.csv",
-   "edge_type": "READS_S3",
-   "level": "prefix"
-  },
-  {
-   "source": "pipeline:inf:gold:INF_D_00e.fresh_header_supplement",
-   "target": "opal-data-inf/bronze/orion-api/{date}/assets.csv",
-   "edge_type": "READS_S3",
    "level": "object"
   },
   {
@@ -31711,12 +31159,6 @@
   {
    "source": "pipeline:inf:gold:INF_D_02.advisor_client_detail",
    "target": "opal-data-inf/gold/views/account_team.parquet",
-   "edge_type": "READS_S3",
-   "level": "object"
-  },
-  {
-   "source": "pipeline:inf:gold:INF_D_02.advisor_client_detail",
-   "target": "opal-data-inf/silver/accounts_dim/latest.parquet",
    "edge_type": "READS_S3",
    "level": "object"
   },
@@ -31776,24 +31218,6 @@
   },
   {
    "source": "pipeline:inf:gold:INF_D_04.client_portal_summary",
-   "target": "opal-data-inf/bronze/orion-api/activity/latest.csv",
-   "edge_type": "READS_S3",
-   "level": "object"
-  },
-  {
-   "source": "pipeline:inf:gold:INF_D_04.client_portal_summary",
-   "target": "opal-data-inf/bronze/orion-api/household/latest.csv",
-   "edge_type": "READS_S3",
-   "level": "object"
-  },
-  {
-   "source": "pipeline:inf:gold:INF_D_04.client_portal_summary",
-   "target": "opal-data-inf/bronze/orion-api/performance/latest.csv",
-   "edge_type": "READS_S3",
-   "level": "object"
-  },
-  {
-   "source": "pipeline:inf:gold:INF_D_04.client_portal_summary",
    "target": "opal-data-inf/gold/artifacts/advisor_fee_efficiency.json",
    "edge_type": "READS_S3",
    "level": "object"
@@ -31809,12 +31233,6 @@
    "target": "opal-data-inf/gold/artifacts/timeseries_chart.json",
    "edge_type": "READS_S3",
    "level": "object"
-  },
-  {
-   "source": "pipeline:inf:gold:INF_D_04.client_portal_summary",
-   "target": "opal-data-inf/gold/canonical/holdings_{*}.parquet",
-   "edge_type": "READS_S3",
-   "level": "prefix"
   },
   {
    "source": "pipeline:inf:gold:INF_D_04.client_portal_summary",
@@ -31837,12 +31255,6 @@
   {
    "source": "pipeline:inf:gold:INF_D_04.client_portal_summary",
    "target": "opal-data-inf/platinum/firm/cumulative_chart.json",
-   "edge_type": "READS_S3",
-   "level": "object"
-  },
-  {
-   "source": "pipeline:inf:gold:INF_D_04.client_portal_summary",
-   "target": "opal-data-inf/silver/accounts_dim/latest.parquet",
    "edge_type": "READS_S3",
    "level": "object"
   },
@@ -31944,12 +31356,6 @@
   },
   {
    "source": "pipeline:inf:gold:INF_D_05.client_top_holdings",
-   "target": "opal-data-inf/silver/accounts_dim/latest.parquet",
-   "edge_type": "READS_S3",
-   "level": "object"
-  },
-  {
-   "source": "pipeline:inf:gold:INF_D_05.client_top_holdings",
    "target": "opal-data-inf/gold/cache/hh_timeseries_anchors_{*}.parquet",
    "edge_type": "WRITES_S3",
    "level": "prefix"
@@ -31968,12 +31374,6 @@
   },
   {
    "source": "pipeline:inf:gold:INF_D_06.client_timeseries",
-   "target": "opal-data-inf/silver/accounts_dim/latest.parquet",
-   "edge_type": "READS_S3",
-   "level": "object"
-  },
-  {
-   "source": "pipeline:inf:gold:INF_D_06.client_timeseries",
    "target": "opal-data-inf/gold/cache/hh_timeseries_anchors_{*}.parquet",
    "edge_type": "WRITES_S3",
    "level": "prefix"
@@ -31982,36 +31382,6 @@
    "source": "pipeline:inf:gold:INF_D_06.client_timeseries",
    "target": "opal-data-inf/platinum/clients/{*}/timeseries.json",
    "edge_type": "WRITES_S3",
-   "level": "prefix"
-  },
-  {
-   "source": "pipeline:inf:gold:INF_D_07.concentration_risk",
-   "target": "opal-data-inf/silver/accounts_dim/latest.parquet",
-   "edge_type": "READS_S3",
-   "level": "object"
-  },
-  {
-   "source": "pipeline:inf:gold:INF_D_07a.firm_concentrations",
-   "target": "opal-data-inf/silver/accounts_dim/latest.parquet",
-   "edge_type": "READS_S3",
-   "level": "object"
-  },
-  {
-   "source": "pipeline:inf:gold:INF_D_08.nmec_nmnc_nna",
-   "target": "opal-data-inf/bronze/orion-api/{*}/assets.csv",
-   "edge_type": "READS_S3",
-   "level": "prefix"
-  },
-  {
-   "source": "pipeline:inf:gold:INF_D_08.nmec_nmnc_nna",
-   "target": "opal-data-inf/bronze/orion-api/{*}/transactions.csv",
-   "edge_type": "READS_S3",
-   "level": "prefix"
-  },
-  {
-   "source": "pipeline:inf:gold:INF_D_08.nmec_nmnc_nna",
-   "target": "opal-data-inf/silver/api_dims/accounts_v2/snapshot_date={*}/data.parquet",
-   "edge_type": "READS_S3",
    "level": "prefix"
   },
   {
@@ -32046,63 +31416,23 @@
   },
   {
    "source": "pipeline:inf:gold:INF_E_00.eclipse_model_portfolios",
-   "target": "opal-data-inf/silver/eclipse/{*}/_meta/silver_complete.json",
-   "edge_type": "READS_S3",
-   "level": "prefix"
-  },
-  {
-   "source": "pipeline:inf:gold:INF_E_00.eclipse_model_portfolios",
-   "target": "opal-data-inf/silver/eclipse/{*}/model_composition.parquet",
-   "edge_type": "READS_S3",
-   "level": "prefix"
-  },
-  {
-   "source": "pipeline:inf:gold:INF_E_00.eclipse_model_portfolios",
-   "target": "opal-data-inf/silver/eclipse/{*}/portfolios_full.parquet",
-   "edge_type": "READS_S3",
-   "level": "prefix"
-  },
-  {
-   "source": "pipeline:inf:gold:INF_E_00.eclipse_model_portfolios",
-   "target": "opal-data-inf/silver/eclipse/{*}/portfolios_simple.parquet",
-   "edge_type": "READS_S3",
-   "level": "prefix"
-  },
-  {
-   "source": "pipeline:inf:gold:INF_E_00.eclipse_model_portfolios",
    "target": "opal-data-inf/gold/eclipse/{*}/_meta/gold_complete.json",
    "edge_type": "WRITES_S3",
    "level": "prefix"
-  },
-  {
-   "source": "pipeline:mdpf:gold:build_mdpf_wsd2_etf_netassets_feeder",
-   "target": "opal-data-mdpf/silver/netassets_daily.parquet",
-   "edge_type": "READS_S3",
-   "level": "object"
   },
   {
    "source": "pipeline:mdpf:gold:build_aggregate_aua_timeseries",
    "target": "opal-data-mdpf/platinum/mdpf/aggregate_aua_timeseries.json",
    "edge_type": "WRITES_S3",
    "level": "object"
-  },
-  {
-   "source": "pipeline:mdpf:gold:build_legacy_compat_emit",
-   "target": "opal-data-mdpf/gold/eclipse/{*}/model_portfolio_accounts.parquet",
-   "edge_type": "READS_S3",
-   "level": "prefix"
-  },
-  {
-   "source": "pipeline:mdpf:gold:build_legacy_compat_emit",
-   "target": "opal-data-mdpf/silver/eclipse/{*}/portfolios_full.parquet",
-   "edge_type": "READS_S3",
-   "level": "prefix"
   }
  ],
  "coverage": {
   "slices_scanned": "gold-compute (CALLS + READS_S3/WRITES_S3 + compute CONTAINS)",
   "node_id_convention": "pipeline:<firm>:gold:<script>[:<fn>] (pending ~C node_identity ratify)",
   "s3key_convention": "opal-data-<firm>/<key> (~C canonical 02286234a; glob=prefix 335edbd8f)",
+  "phase": "A",
+  "phase_b_deferred_count": 112,
   "unresolved": [
    "S3KEY_FIRM_UNRESOLVED key=gold/timeseries/client_performance.parquet (READS_S3 by gold:build_mdpf_wsc_inflection_feeder)",
    "S3KEY_FIRM_UNRESOLVED key=gold/timeseries/client_performance.parquet (READS_S3 by gold:build_mdpf_inflection_history_from_spine)"
