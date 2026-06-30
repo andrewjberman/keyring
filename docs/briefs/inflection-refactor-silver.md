@@ -50,7 +50,7 @@ RESOLVED:
 ## 5. Per-dim modeling map
 
 ### 5.1 ORION-API — KEEP (already correct shape: partitioned, active)
-`positions_mv` (AUA backbone — the per-day Assets snapshot), `accounts_v2`, `household_rep_mapping`, `representatives`, `activity`, `billing`, `tax_unrealized`, `tax_realized`. These stay; tree renamed `api_dims/`→`orion-api/`. (**`household` MOVED OUT of KEEP** → §5.3 repoint-then-retire: 1204h stale, deprecated-but-read by 4 gold consumers — DS~A grounded 2026-06-30.)
+`positions_mv` (AUA backbone — the per-day Assets snapshot), `accounts_v2`, `household_rep_mapping`, `representatives`, `activity`, `billing`, `tax_unrealized`, `tax_realized`. These stay; tree renamed `api_dims/`→`orion-api/`. (**`household` MOVED OUT of KEEP** → §5.3 LAYER-2 wire-vs-retire fork: 1204h stale, deprecated-but-read by 4 gold consumers, builder exists unwired — DS~A grounded 2026-06-30.)
 
 ### 5.2 ORION-API — CONSOLIDATE onto the partitioned shape
 - `assets` / `assets_v2` — exists in 3 places (`api_dims/assets/`, `api_dims/assets_v2/`, flat `silver/assets_v2/`) → ONE partitioned dim.
@@ -63,8 +63,9 @@ RESOLVED:
 - **RETIRE (DEAD-confirmed):** `silver/performance_dim/` (dup, dead), `silver/orion-rest/` (stray, dead).
 - **DEPRECATED → REPOINT consumers, THEN RETIRE the stale source (supersedes the prior "repoint+flag, keep" call):** `silver/accounts_dim/` (1490h stale, frozen 04-29) has **NO live producer** (replaced by `inf-accounts-v2-daily`, grounded `pipescript advi-inf`). Its real consumers (INF_C_09 / INF_D_00 — INF_09 was a **phantom** per DS~A's census correction) are repointed to `accounts_v2` (LEG-1, deployed). Once that repoint is **proven complete + all-repointed**, **RETIRE** the deprecated `accounts_dim/` source — do NOT flag-and-carry cruft forward. DS~A grounded retire-eligible (zero live silver readers post-LEG-1).
   - **DECLARATIVE distinction (DS~A — do NOT conflate):** retire `silver/accounts_dim/` ONLY. `gold/dimensions/accounts_dimension_latest.parquet` (`ACCOUNTS_DIM_KEY`, read by INF_A_04/C_00/C_02/C_03/C_05) is a **DIFFERENT, LIVE** artifact (INF_A_00 gold output) — leave it untouched. Name-collision trap.
-- **DEPRECATED-BUT-READ → REPOINT-then-RETIRE (DS~A grounded 2026-06-30):** `silver/api_dims/household` (1204h stale) is LIVE-read by **4 gold consumers** (INF_D_00d L68, INF_D_04 L88/L481, INF_D_04b L61, INF_D_05 L10) — the `accounts_dim` pattern repeating. Repoint the 4 consumers to `accounts_v2` (carries household_id + geo, INF_D_04 L3190) BEFORE retire (net-new LEG-1 repoint). Moved out of §5.1 KEEP.
+- **DEPRECATED-BUT-READ → LAYER-2 FORK (wire-vs-retire; DS~A grounded 2026-06-30):** `silver/api_dims/household` (1204h stale) is LIVE-read by **4 gold consumers** (INF_D_00d L68, INF_D_04 L88/L481, INF_D_04b L61, INF_D_05 L10) — the `accounts_dim` pattern repeating. Its silver **builder EXISTS** (`convert_orion_api_to_silver --dim household`) but was never chain-wired → stale; the bronze input (unified) is now on-stage. So TWO options (CTO LAYER-2 arch-call, same fork as perf_dim port-vs-consolidate): **(a) WIRE the builder** → household fresh, KEEP (4 consumers unchanged); **(b) REPOINT** the 4 consumers to `accounts_v2` (household_id + geo, INF_D_04 L3190) + retire. Moved out of §5.1 KEEP either way. NOT a tonight blocker (not cron-fed).
 - **DEPRECATED-CANDIDATE (criticality pending):** `silver/meta/gap_manifest.json` (1490h, frozen 04-29) — read by INF_C_01 + INF_D_00c; confirm tolerate-stale-meta vs hard read before retire (tied to yahoo removal §5.5). Old `api_dims/assets` (1326h) handled by §5.4 CONSOLIDATE (superseded by `assets_v2`).
+- **LAYER-2 STALE SWEEP (DS~A 2026-06-30 — non-blocking tonight, NOT cron-fed):** `activity` (3 consumers; builder exists unwired → wire-vs-retire fork like household); `aum_snapshot` + `orion_fees` (DEAD legacy `convert_orion_to_silver.py`, stopped 04-29 = the `accounts_dim` producer → deprecated, assess consumers + repoint-retire). LAYER-2 consolidation, not tonight's cron teardown.
 
 ### 5.4 Complete prefix census — AC authority (DS~A live census 2026-06-30)
 
@@ -74,7 +75,7 @@ Every `s3://opal-data-inf/silver/` prefix classified — no tree survives unclas
 |---|---|
 | `api_dims/` | **RENAME** → `silver/orion-api/` (the main tree) |
 | `api_dims/{positions_mv, accounts_v2, household_rep_mapping, representatives, activity, billing, tax_realized, tax_unrealized}` | **KEEP** (canonical dims, correct shape) |
-| `silver/api_dims/household` | **REPOINT consumers → RETIRE (deprecated-but-read)** — 1204h stale, 4 live readers (D_00d/D_04/D_04b/D_05); repoint to accounts_v2 (household_id+geo) then retire |
+| `silver/api_dims/household` | **LAYER-2 FORK: WIRE builder (keep) vs REPOINT→RETIRE** — 1204h stale, 4 live readers (D_00d/D_04/D_04b/D_05); builder exists unwired; CTO LAYER-2 call (not tonight) |
 | `api_dims/assets` + `api_dims/assets_v2` + flat `silver/assets_v2/` | **CONSOLIDATE** → ONE partitioned `assets` |
 | `api_dims/performance` + flat `silver/performance/` + `silver/performance_dim/` | **CONSOLIDATE** → ONE partitioned `performance` (retire `performance_dim`) |
 | flat `silver/transactions/` | **CONSOLIDATE** → `silver/orion-api/transactions/` partitioned |
