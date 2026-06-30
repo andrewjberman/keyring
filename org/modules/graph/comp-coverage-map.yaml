@@ -106,6 +106,12 @@ schema:
         predicate: "for each resource R touched by tools T (|T|>1): (a) every t in T has a distinct_from record citing R for every OTHER member of T;  (b) the `concern` values across T are pairwise DISTINCT"
         on_violation: "FAIL -- (a) silent overlap (undeclared) ; (b) true redundancy (concern collision) -> merge/retire/disambiguate"
         description: "the load-bearing non-redundancy invariant -- shared RESOURCE allowed only with a DECLARED, distinct CONCERN per tool"
+      - id: coverage_single_home
+        applies_to: "every seams.axis[] entry"
+        inputs: [seams.axis, seams.coverage_source]
+        predicate: "no axis entry carries a stored `coverage` field; coverage is READ from seams.coverage_source at view-time"
+        on_violation: "FAIL -- a stored coverage copy (drift-prone; coverage has ONE home = drift-topology.yaml). CTO S0 (b)-ruling; extends seam_reference_integrity to the coverage field"
+        description: "coverage status is referenced (read from coverage_source), never copied into the axis -- one-artifact-clean (parallels ruling #1 tools_index supersession + ruling #2 seam-ID reference)"
       - id: no_trino_phantom_seam
         applies_to: "trino_federation.catalogs"
         inputs: [trino_federation.fan_in_model, trino_federation.catalogs]
@@ -203,43 +209,42 @@ trino_federation:
 # =============================================================================
 # SEAMS -- the inter-surface parity axis. We REFERENCE the COMPDRIFT seam IDs
 # from drift-topology.yaml (ruling #2: ONE seam artifact). This is the static
-# MAP-of-seams view: seam_id + the surfaces it spans + its owning tool + coverage
-# status. The per-seam parity ENGINE + verdict_vocab + disposition model live in
-# drift-topology.yaml (COMPDRIFT) -- we do NOT duplicate them; we point at them.
+# MAP-of-seams view: seam_id + the surfaces it spans + its owning tool. The per-seam
+# parity ENGINE + verdict_vocab + disposition model live in drift-topology.yaml
+# (COMPDRIFT) -- we do NOT duplicate them; we point at them.
+#
+# CTO S0 (b)-RULING (option ii, 2026-06-30): `coverage` is NOT stored here -- it has
+# ONE home (drift-topology.yaml) and is READ at view-time from coverage_source, never
+# copied (a stored copy is drift-prone -- extends seam_reference_integrity to the
+# coverage field). gate rule `coverage_single_home` enforces no stored coverage.
 # =============================================================================
 seams:
-  ref: org/modules/graph/drift-topology.yaml   # ruling #2 -- the seam IDs are DEFINED there; both loops consume them
-  # The COMPUNIFY map-view: surfaces spanned + owning tool + coverage (mirrors, never redefines, drift-topology).
+  ref: org/modules/graph/drift-topology.yaml             # ruling #2 -- the seam IDs are DEFINED there; both loops consume them
+  coverage_source: org/modules/graph/drift-topology.yaml # CTO (b)-ruling -- coverage status is READ from here at view-time, never stored/copied
+  # The COMPUNIFY map-view: {seam_id, spans, owning_tool}; coverage is rendered from coverage_source at display.
   axis:
     - seam_id: seam-1
       spans: LOCAL -> GIT
       owning_tool: "comp-heat drift"
-      coverage: COVERED
     - seam_id: seam-2
       spans: GIT -> AWS-CLOUD
       owning_tool: "comp-pipescript deployed | comp-lambdamap parity | comp-iam reconcile"   # multi-engine (per artifact class)
-      coverage: COVERED
     - seam_id: seam-3
       spans: AWS-CLOUD -> NESSIE              # NESSIE/KUZU/ICEBERG = derived models (feed Trino), not apex surfaces
       owning_tool: "globgrph derive marker-oracle (comp-kuzu provenance header)"
-      coverage: PARTIAL
     - seam_id: seam-4
       spans: NESSIE -> KUZU
       owning_tool: "comp-kuzu HEAD-advance (auto-refresh marker)"
-      coverage: SELF-HEAL
     - seam_id: seam-5
       spans: KUZU -> ICEBERG
       owning_tool: "infra/aws/globgrph/iceberg_parity.py"
-      coverage: COVERED                       # closed 2026-06-29 (was GAP)
     - seam_id: seam-6
       spans: ICEBERG -> TRINO
       owning_tool: "code_heat_parity.py (git-code-heat binding COVERED); iceberg-catalog bindings UNCOVERED"
-      coverage: GAP                           # fan_in:true -- per physical catalog (see trino_federation.catalogs)
-      fan_in: true
+      fan_in: true                            # per physical catalog (see trino_federation.catalogs)
     - seam_id: seam-7
       spans: TRINO -> SERVED
       owning_tool: "comp-freshness + heat-view check"
-      coverage: PARTIAL
 
 # =============================================================================
 # TOOLS -- S0 SKELETON placement. S1 homes ALL ~38 tools; here we place the
