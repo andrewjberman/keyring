@@ -3,7 +3,7 @@
 <title>NFRA_GRAPHUNI P0 -- D1 COVERAGE AUDIT + gap-list: diff each structure-tool's local-cache schema vs the live unified Kuzu graph -> the exact net-new derive spec. READ-ONLY, NO graph mutation.</title>
 <issued_to>0.8.0_AE_CloudComp~D (Andrew-provisioned dedicated build lane; federation/globgrph/compdiff context)</issued_to>
 <issued_by>2.0.0_SA_COO~B</issued_by>
-<status>staged -- dispatch on CTO decomp-approval (RAVC pending)</status>
+<status>complete -- 2026-06-30 by 0.8.0_AE_CloudComp~D. Deliverable: org/projects/NFRA_GRAPHUNI/NFRA_GRAPHUNI.P0.d1-gap-list.md (per-tool gap-list = P1 derive spec). Read-only attested (caches byte-unchanged). RAVC2'd -> COO~B cc CTO+CVO. ~D now HOLDS for P1 GO (gated on CVO fixture-lock; does NOT self-advance).</status>
 <priority>P0 IMMEDIATE (Andrew-direct, LD-0228). The cheap high-leverage unblock: graph-read-only / no mutation, so it runs in PARALLEL with the live ADVI_BREAKS firefight without touching firefight surfaces. Gates everything (D1-before-D2, Ruling 1).</priority>
 <project>NFRA_GRAPHUNI</project>
 <dependencies>NONE for the audit. PAIRED with NFRA_GRAPHUNI.P0-CVO (the pre-delta fixture, 3.0.0_SA_CVO) -- BOTH must complete + lock BEFORE P1's first graph mutation (the fixture MUST capture pre-delta answers while the OLD caches are still authoritative). drift-topology.yaml seam IDs exist (D4 references seam-4, shared).</dependencies>
