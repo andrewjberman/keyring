@@ -7,11 +7,16 @@
 
 | Leg | Type | Step | Status |
 |---|---|---|---|
-| L1 | git | CLOUD commit B_01 source (ds-commit-gate PASS) under DS~B author | OPEN |
-| L2 | s3-prefix | upload B_01.holdings_lots.py -> s3://opal-data-bd/code/gold/ | OPEN |
-| L3 | verify | NEXT scheduled gold run: 49F served platinum/firm/header_metrics.json data_as_of UN-FREEZES (NEVER#4: no ad-hoc run) | OPEN |
+| L1 | git | CLOUD commit B_01 source (ds-commit-gate PASS) under DS~B author | CLOSED 9d5642cc3 |
+| L2 | s3-prefix | B_01.holdings_lots.py -> s3://opal-data-bd/code/gold/ (safe-deploy pre-push hook auto-deployed; comp-pipescript deployed = MATCH) | CLOSED |
+| L3 | effect-verify | the gate's EFFECT given the 4-day drift -- see CORRECTION below | RE-SCOPED |
 
-**Closure:** all 3 legs closed + RAVC COO+CTO+CVO. Unclosed at session end = COO alarm.
+**CORRECTION (20260630T1430Z, post-deploy ground-truth):** The gate ships CORRECT but its EFFECT is NOT a same-day restore. The last HEALTHY silver/unrealized partition is 06-24; 06-26..06-29 are empty stubs, 06-30 missing. For a 06-30+ run the 2-day window (the deliberately-NOT-widened cap, per the 2026-03-29 stale-false-close incident) holds NO non-empty partition -> the gate FAILS LOUD (no mass-close corruption, alarm fires) but does NOT restore the served value. The healthy partition AGED OUT of the 2-day window during the 4-day freeze. So the B_01 gate = corruption-prevention + fail-loud guard (durable; restores same-day IF caught within 2d, and once the feed is fresh again). The SERVED RESTORE now depends on the INGESTION fix (template-431167 -> fresh non-empty unrealized within the window). Restore tracked on the ingestion-fix follow-on, NOT this deploy.
+
+**Closure:** DEPLOY COMPLETE -- L1+L2 closed (code shipped + verified MATCH). L3 re-scoped: served-restore moved to the template-431167 ingestion follow-on (this gate alone does not un-freeze given the drift). RAVC'd COO+CTO+CVO with the correction.
 
 ## Log
 - 20260630T1424Z OPENED at deploy-start.
+- 20260630T1428Z L1 CLOSED commit 9d5642cc3 (ds-commit-gate PASS); L2 CLOSED safe-deploy hook deployed + comp-pipescript deployed MATCH.
+- 20260630T1430Z CORRECTION: gate is corruption-prevention+fail-loud, NOT same-day restore (healthy 06-24 aged out of the 2-day cap). Served-restore -> template-431167 ingestion fix.
+- 20260630T1438Z REGRESSION CAUGHT (pre-next-run): the deployed raise-on-all-empty version would set-e/wait_phase ABORT the gold chain at PHASE_B (gold_dispatch.sh:57 set -e, :360 FATAL-abort; B_01 call site :604 not try-wrapped) -> starve ALL downstream surfaces (worse than the localized D_03/D_04 freeze in prod). FOLLOW-UP DEPLOY: changed raise -> never-raise graceful fallback to nearest-existing partition (= prior prod behavior when all-empty, chain stays alive) + loud CONTRACT warn. Re-deployed (see L4/L5). Restore remains the template-431167 ingestion fix + backfill (P0, elevated by COO 143000Z).
