@@ -130,6 +130,22 @@ GROUNDED (live S3 sums; content-as-of via the VALUE test, which beats mtime per 
 
 RAVC'd COO + CVO (CC CTO). Pairs with CVO's Andrew-commissioned 3-pipeline ingestion->served /draw.
 
+### Freeze-day root (partition forensic — LastModified + per-partition market_value.sum)
+- The 06-29 SCHEDULED chain rewrote gold holdings for 06-20..06-28 in ONE 14:03:3x-42Z batch; MAX-date =
+  holdings_06-28 ($202,711,894.29, 11480 rows). It produced NO holdings_06-29. The only 06-29 partition is
+  MINE (LM 21:39:41Z, the manual 21:26Z pull; $200,987,115.59, 11416 rows, post-short-fix).
+- => at the 14:34Z D-stage, INF_D_04.load_latest_holdings() picked 06-28 (stale) = served $202,711,894.29.
+- ROOT: no 06-29 silver positions_mv partition existed at the 14:03Z gold build -> INF_B_00 (builds one gold
+  partition per silver snapshot_date it finds) maxed at 06-28. The scheduled 12:50Z pull did not land a
+  06-29-dated silver partition that day (the exact pull failure = runner/CW logs, AE lane).
+- RECURRENCE: recurs ANY day the scheduled pull fails to land a current-day silver partition. Durable defect
+  (flagged 0.8.0~B + CTO): load_latest_holdings SILENTLY serves the prior partition as fresh -> fail-loud /
+  alarm on a missing current-day partition (TO-6 guard).
+- Per-date sums are all DISTINCT/plausible (06-24 $202.32M, 06-25 $202.38M, 06-27/28 $202.71M weekend,
+  06-29 $200.99M) -> content is not frozen; a current-day partition was MISSING.
+- SELF-HEAL (in progress): today silver 06-30 landed ($202.13M); gold holdings_06-30 due ~14:30Z; once built,
+  load_latest picks 06-30 -> served ~$202.13M. Verifying via bg watch babvs3fbd + a value sum at the D_04 write.
+
 ## Compiler Tools
 | Tool | Use | Result |
 |---|---|---|
