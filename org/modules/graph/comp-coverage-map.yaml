@@ -197,7 +197,7 @@ grain_contract:
       producer_by_pair:
         "compute->compute": graphuni-gold          # Pipeline contains Script contains Function (~D, compute-internal)
         "resource->object": graphuni-storage       # Bucket contains Key (~A, storage -- per fleet DECOMP-MAP, ~A F3)
-        "compute->object": graphuni-infra          # Lambda contains handler (~B). NOTE level-split: graphuni Function contains Field is ALSO compute->object (~D); the disjoint (pair x level) attribution resolves in S4 (the attribution map). Flagged, not silently merged.
+        "compute->object": graphuni-infra          # Lambda contains handler (~B) -- UNAMBIGUOUS: ~D confirmed (4c6fc9352) its compute-internal CONTAINS is [container,file,function] (Pipeline->Script->Function) ONLY, NOT Function->Field, so there is NO ~D compute->object CONTAINS. The earlier level-split concern is RESOLVED -> compute->object CONTAINS is cleanly ~B (the denominator partition is fully disjoint here).
       note: "the structural grain ladder -- one relation, all depths as levels; populated by DIFFERENT producers per stratum-pair (the edge_type stays single; the ATTRIBUTION partitions). Denominator partitions CONTAINS by pair, not by re-typing."
     - { edge_type: READS,     relation: reads,     levels: [field, object], producer: portal, note: "portal-field/object READ -- DISTINCT relation from READS_S3 (ruling 4). Producer=portal/TSGRAPH, NOT graphuni-gold" }
     - { edge_type: READS_S3,  relation: reads_s3,  levels: [object, prefix], producer: graphuni-gold, note: "gold/lambda reads an S3 artifact; key-vs-prefix depth = the `levels` attr, SAME type (Amendment 2)" }
