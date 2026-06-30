@@ -232,6 +232,13 @@ grain_contract:
   level_dispositions:
     CALLS:     { function: eager }
     CONTAINS:  { estate: eager, surface: eager, container: eager, file: eager, object: eager, prefix: eager, component: eager, function: eager, field: bounded }  # storage prefix=eager (~A); portal component=eager (0.4.0_DE materializes the render-subtree); field = deep terminal lazy (boundary b)
+    READS:     { field: bounded, object: eager }
+    READS_S3:  { object: eager, prefix: bounded }     # ~D compute READS: object=eager; prefix=bounded -- the 15 STATIC prefix-read edges materialize, but the prefix->object EXPANSION is lazy (~D precision). DISTINCT from storage prefix (~A, eager nodes).
+    WRITES_S3: { object: eager, prefix: bounded }
+    DEPLOYS:   { lambda: eager, script: eager }
+    SERVES:    { route: eager, served-json: eager }
+    RUNS:      { ec2: eager, lambda: eager, stepfn: eager }
+    OWNED_BY:  { object: eager, prefix: eager }       # ~A storage: both object + prefix S3Key nodes materialized eagerly (~A refinement-1, 125 prefix keys)
     CLUSTERS:  { cluster: eager }     # portal: PanelCluster grouping materialized (TSGRAPH P2-1 live: CLUSTERS 91)
     SHARES_SOURCE: { cluster: eager } # portal: cross-panel coupling materialized (TSGRAPH P2-1 live: SHARES_SOURCE 55)
 
@@ -242,13 +249,6 @@ grain_contract:
   # canonical semantic. (A future derive MAY hard-relabel; the map is the contract either way.)
   native_edge_canonicalization:
     CONTAINS_DRILLDOWN: { canonical: CONTAINS, level: component, producer: portal, props_preserved: [depth, kind, cohort], physical: soft-stays-native, note: "TSGRAPH render-subtree; depth(1..4)=the canonical level; kind/cohort stay props; NOT deduped vs RENDERS. Physical Kuzu edge stays CONTAINS_DRILLDOWN (241 live) -> read native, treat as CONTAINS@component." }
-    READS:     { field: bounded, object: eager }
-    READS_S3:  { object: eager, prefix: bounded }     # ~D compute READS: object=eager; prefix=bounded -- the 15 STATIC prefix-read edges materialize, but the prefix->object EXPANSION is lazy (~D precision). DISTINCT from storage prefix (~A, eager nodes).
-    WRITES_S3: { object: eager, prefix: bounded }
-    DEPLOYS:   { lambda: eager, script: eager }
-    SERVES:    { route: eager, served-json: eager }
-    RUNS:      { ec2: eager, lambda: eager, stepfn: eager }
-    OWNED_BY:  { object: eager, prefix: eager }       # ~A storage: both object + prefix S3Key nodes materialized eagerly (~A refinement-1, 125 prefix keys)
   # ============ FRACTAL DRILLDOWN -- CTO section-10, RATIFIED 205709Z (FOLDED ACTIVE) ============
   # Coarse resource nodes drill to fine internal structure via stable stratum-stitching edges.
   # Folded as the 8th+9th gate rules (grain_drilldown_seams + grain_rollup_consistency) -- a pure
