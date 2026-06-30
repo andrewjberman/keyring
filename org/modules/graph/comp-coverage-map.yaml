@@ -283,6 +283,18 @@ grain_contract:
       answer_to_D: "wildcards treated SPECIALLY -- form `object` (1) and form `glob` (3) do NOT collapse: glob keeps the literal '*' at level=prefix; object has no '*' at level=object. object/prefix/glob are 3 distinct canonical ids. Bucket-QUALIFY your edge targets (id = bucket + '/' + key) so they converge with ~A's S3Key node ids."
       level_binding: "BINDING (~A refinement-2, govern ruling): a key containing a literal '*' = level `prefix`, ALWAYS -- this OVERRIDES any ends-in-filename heuristic. Rationale: a '*' matches MULTIPLE objects (a pattern), so it is a prefix/pattern node, NOT a single object, even when it ends in a filename (e.g. bronze/orion-api-v2/*/representatives.json = level PREFIX, not object). Both the edge-target (~D) and the S3Key node (~A) MUST tag a glob key level=prefix, or the id/level won't converge (dangling edge). ~D's reference-set count must reclassify its 111 glob keys object->prefix to match (the 273-object/15-prefix split becomes 163-object/125-prefix). Validated at the Phase-A ~D+~A convergence /seams."
       convergence_check: "the ~D(edge-target) <-> ~A(node) id equality is a DECLARATIVE+MECHANICAL /seams check in Phase A (no dangling READS_S3 target, no duplicate S3Key node)."
+    GoldScript:
+      canonical_id: "pipeline:<firm>:<tier>:<script_id>"   # RATIFIED (~D 231916Z, govern). firm-disambiguated (no bd/inf A_00 collision), tier-encoded (Amendment-8 ladder), byte-exact -- mirrors the S3Key bucket-qualified discipline
+      example: "pipeline:bd:gold:A_00.accounts_dimension  |  pipeline:inf:gold:INF_D_00.accounts_dimension"
+      firm: "from the script path: data/{black_diamond->bd, inf, mdpf, cot}/scripts/<tier>/"
+      tier: "gold for Phase-A (bronze/silver/ingestion = Phase-B)"
+      grain: file   # script = file-level on the compute CONTAINS ladder (container=pipeline:<firm>:<tier>, file=:<script>, function=:<fn>)
+      convergence_check: "~B EC2 -RUNS-> this script-level id; ~D CONTAINS this id -> its functions. The ~B<->~D RUNS co-key (no dangling RUNS target) -- Phase-A /seams."
+    GoldScriptFunction:
+      canonical_id: "pipeline:<firm>:<tier>:<script_id>:<function>"   # RATIFIED (~D 231916Z). the :<function> suffix = the compute-internal CONTAINS function level
+      example: "pipeline:bd:gold:A_00.accounts_dimension:build_accounts_dimension"
+      grain: function   # function = the finest compute level (~D's compute-internal CONTAINS bottoms here, NOT field -- 4c6fc9352)
+      convergence_check: "~D-internal co-key: CONTAINS script->fn, CALLS fn->fn, READS_S3/WRITES_S3 fn-> the canonical S3Key id. byte-exact across ~D's own edges."
 
   # ============ REFERENCEABLE-TARGET (GRAPHDEPTH invariant 5, LD-0230 EP-2; ~C builds, CTO shape) ============
   # Breadth edges may ONLY target `referenceable` nodes, never terminal structural members -- this is
@@ -472,6 +484,7 @@ tool_grain_calibration:
     comp-pii:          [component, field]
     comp-tooltip:      [component]
     comp-cache:        [component]
+    comp-cluster:      [cluster, component]   # TSGRAPH P2-3: page-rooted cluster/panel grain
     comp-routes:       [route, endpoint]
     # ---- cross-grain (span) ----
     comp-platinum:     [cross-grain]       # component -> endpoint -> lambda -> object -> gold (full stack)
@@ -584,7 +597,16 @@ tools:
     surface: AWS-CLOUD
     granularity: cache-key
     concern: "React-Query cache-KEY collision detection (shared key -> type-mismatch break)"
-    touches_resource: []
+    touches_resource: [panel-coupling]
+    distinct_from:
+      - { tool: comp-cluster, shared_resource: panel-coupling, my_concern: "React-Query cache-KEY collision (same key, mismatched type)", their_concern: "cross-panel SHARES_SOURCE data-source coupling (the 6-source superset)" }
+  - tool: comp-cluster
+    surface: AWS-CLOUD
+    granularity: cluster
+    concern: "page-rooted PAGE->PANEL->DRILLDOWN cluster structure + per-cluster data-sources + cross-panel SHARES_SOURCE coupling (NFRA_TSGRAPH P2-3; read-side peer of comp-cache, generalizing cache-key collisions to the 6-source coupling superset; queries the LIVE canonical graph, Rule 20)"
+    touches_resource: [panel-coupling]
+    distinct_from:
+      - { tool: comp-cache, shared_resource: panel-coupling, my_concern: "cross-panel SHARES_SOURCE data-source coupling (the 6-source superset)", their_concern: "React-Query cache-KEY collision (same key, mismatched type)" }
   - tool: comp-transform
     surface: AWS-CLOUD
     granularity: component
