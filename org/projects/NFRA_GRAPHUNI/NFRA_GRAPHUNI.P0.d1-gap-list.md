@@ -102,7 +102,46 @@ The unified graph must additionally hold (net-new, gold/backend half only):
 - **AC3 — RAVC2:** to COO~B, cc CTO (gap-list = the complete D1 derive spec per Ruling 1) + CVO (pairs with the P0-CVO fixture). Compiler-tools reproduction in the session log.
 
 ## 7. Residual unknowns / for CTO's D1 ruling
-1. **Layer placement** for the gold-pipeline node class (new `pipeline` layer vs aws code sub-layer) — affects the derive/extract pipeline mapping.
-2. **S3 grain model** — extend S3_BUCKET with child S3Key nodes, or a parallel S3Artifact class? (comp-blast S3_ARTIFACT and platinum S3Key are the same underlying object at the same grain — derive once.)
-3. **Route join** — store the denormalized full-stack record, or derive by traversal once the terminus exists?
-4. **Edge-grain disambiguation** — gold READS_S3/WRITES_S3 vs Kuzu's existing portal READS/WRITES must stay distinct `edge_type`s so a traversal doesn't cross grains.
+1. **Layer placement** for the gold-pipeline node class (new `pipeline` layer vs aws code sub-layer) — affects the derive/extract pipeline mapping. *[CTO ruled: new `pipeline` layer.]*
+2. **S3 grain model** — extend S3_BUCKET with child S3Key nodes, or a parallel S3Artifact class? (comp-blast S3_ARTIFACT and platinum S3Key are the same underlying object at the same grain — derive once.) *[CTO ruled: one S3Key class, `OWNED_BY` S3_BUCKET, derived once.]*
+3. **Route join** — store the denormalized full-stack record, or derive by traversal once the terminus exists? *[CTO ruled: derive by traversal, no denorm.]*
+4. **Edge-grain disambiguation** — gold READS_S3/WRITES_S3 vs Kuzu's existing portal READS/WRITES must stay distinct `edge_type`s so a traversal doesn't cross grains. *[CTO ruled: distinct edge_types; seam-taxonomy invariant for COO~B.]*
+
+---
+
+## 8. AMENDMENT (Andrew-direct 2026-06-30) — the `pipeline` layer is the FULL process architecture, not gold-only
+The gold layer is the **heaviest** sub-population but NOT the whole layer. The `pipeline` layer must capture the entire tier ladder across all pipelines.
+
+**Grounded current coverage (the gap is bigger than gold):**
+- TraceGraph (comp-blast/trace/xref cache) is ~99% gold-only: `black_diamond/gold` 723 + `inf/gold` 603, + token mdpf (gold 6 / backfill 8 / feeders 3 / bronze 1). **ZERO silver, ZERO bronze, ZERO cot.**
+- comp-pipescript `_build_dag` covers `bd-gold / bd-silver / inf-gold / inf-silver / inf-manual-api` — gold + silver for bd/inf only; **no bronze, no ingestion, no cot/mdpf.**
+- extract_pipeline.py docstring = "authoritative I/O mapping for **gold** scripts" (gold-anchored; `[bronze]`/`[silver]` are labels, not built DAGs).
+
+**The real architecture (on disk): 4 pipelines × the tier ladder.**
+| Tier | Role | Example scripts | Status |
+|---|---|---|---|
+| **ingestion / feeders** | external → S3 raw (lineage SOURCE) | `mdpf/feeders/wsb_49f_smartx_model_aua.py`, `inf/bronze/pull_eclipse_portfolios.py`, `bronze/orchestrator.py` | **net-net-new** (no tool extracts it) |
+| **bronze** | raw → bronze conversion | `bd/bronze/convert_schwab_acc_to_parquet.py`, `convert_schwab_lots_to_silver.py` | **net-new** |
+| **silver** | dedup + dtype standardization | `bd/silver/build_bd_assets_dim.py`, `build_interpolated_prices.py` | partial (comp-pipescript bd/inf only) |
+| **gold** | business logic (heaviest) | `A_00.accounts_dimension`, `INF_D_00.*` | audited (§3) |
+
+(Pipelines: **bd, inf, cot, mdpf**. cot + mdpf are near-entirely absent from current extraction.)
+
+**Derive-spec changes:**
+- Generalize the node class `GoldScript`/`GoldScriptFunction` → `PipelineScript`/`PipelineFunction` with declared attributes **`tier` ∈ {ingestion,bronze,silver,gold}** and **`pipeline` ∈ {bd,inf,cot,mdpf}**.
+- Add **ingestion-source** extraction (the feeders/orchestrators) — the lineage origin.
+- The grain-pure `READS_S3`/`WRITES_S3` edges carry **cross-tier lineage** (ingest→bronze→silver→gold via S3 keys) — that chain IS the process architecture.
+- Extractor scope: extract_pipeline.py generalizes from gold-anchored to **tier-agnostic across all 4 pipelines** + new ingestion extraction.
+
+## 9. AMENDMENT (Andrew-direct 2026-06-30) — STABLE node/edge definitions across granularities (the governing invariant)
+**The core discipline as we dive deeper: granularity is a DECLARED DIMENSION, never an ad-hoc re-typing.** A deeper dive (script→function→statement; bucket→key→object) ADDS instances within a FIXED node/edge type system — it must never fork the schema. This is the NFRA_TSGRAPH node-schema discipline + the COMPUNIFY `{concern, granularity, surface, distinct_from}` node schema, applied to the pipeline layer.
+
+**The proven pattern (TSGRAPH, grounded at head):** TSGRAPH carries a stable containment hierarchy where coarse→fine grain is expressed by STABLE edge types, not by re-typing nodes: `MS_FOLDER -CONTAINS-> MS_FILE` (5,411), `Module -DECLARES-> Component/TypeDecl` (1,344), `TypeDecl -HAS_FIELD-> Field` (4,269), `Component -CONTAINS_DRILLDOWN-> sub-component` (241). The node concept stays stable per level; the edge DEFINITION is grain-stable.
+
+**Applied to the pipeline layer (the schema-stability contract):**
+1. **Granularity = declared attribute + containment edges, not new types.** `PipelineNode` family with `{tier, level ∈ pipeline/script/function, pipeline}`; a stable `CONTAINS` ladder (`Pipeline -CONTAINS-> Script -CONTAINS-> Function`) lets you zoom depth without re-typing. Add a deeper level (e.g. statement) = a new `level` value + CONTAINS edges, NOT a new node type.
+2. **Edge types defined once by SEMANTIC, stable across grain.** `CALLS` = fn→fn at any depth; `READS_S3`/`WRITES_S3` = the same producer/consumer relation whether the endpoint is a script or a function (disambiguate by node grain, the edge semantic is fixed). CTO ruling 4 (distinct edge_type per grain) generalizes into a STABILITY contract: define an edge type by its semantic, keep it stable as levels are added — never overload one type across two semantics, never split one semantic into ad-hoc per-depth types.
+3. **Governance coupling:** these definitions live in the COMPUNIFY map's node schema (the ~C S0 apex, `comp-coverage-map.yaml`) so granularity + non-redundancy are gate-checked. GRAPHUNI (substrate) POPULATES the stable definitions; COMPUNIFY (map) GOVERNS them — the coupling Andrew identified.
+4. **The risk this kills:** if each deeper dive invents node/edge types, you get semantic fragmentation inside one physical graph — the exact failure GRAPHUNI/COMPUNIFY exist to prevent. Stable, granularity-parameterized definitions = the contract that makes diving deeper safe.
+
+*Routed to CTO (elevates ruling 1 + requests ratification of the schema-stability contract) + COO~B (program + the COMPUNIFY node-schema coupling). Build stays CVO-fixture-gated.*
