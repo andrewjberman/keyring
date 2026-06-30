@@ -3,7 +3,7 @@
 <title>NFRA_COMPUNIFY S0 -- APEX SKELETON: author comp-coverage-map.yaml (the 5-surface apex + high-level tools + the seam list referencing COMPDRIFT seam IDs + the node schema). The shared schema both loops reference; lands FAST.</title>
 <issued_to>0.8.0_AE_CloudComp (ledger/taxonomy lane). If the firefight pins the base/~B lane, a dedicated COMPUNIFY build instance picks it up (see &lt;allocation&gt;).</issued_to>
 <issued_by>2.0.0_SA_COO~B</issued_by>
-<status>staged</status>
+<status>dispatched -- 2026-06-30T19:37Z GO'd to 0.8.0_AE_CloudComp~C (LIVE PID 28640, spawned-with-direction by MSTR, verified driving S0). RAVC2 to COO~B -> COO~B checks AC1-4 -> routes to CTO same-window arch-gate.</status>
 <priority>P0 of the macro -- the FIRST, cheap, high-leverage unblock (the shared schema COMPDRIFT + COMPLEARN both reference). STRATEGIC-foundational; paces BEHIND the live ADVI_BREAKS firefight but is doc/modeling work (no infra, no firefight collision) -- pick it up in a firefight-idle window; it lands fast.</priority>
 <project>NFRA_COMPUNIFY</project>
 <dependencies>NONE. This is the apex skeleton -- it gates S1/S2/S3/V1, nothing gates it. drift-topology.yaml (seam IDs seam-1..7) already exists -- reference it, do not duplicate.</dependencies>
