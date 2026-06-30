@@ -10115,3 +10115,37 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 - 2026-06-30 0.8.0_AE_CloudComp~C (COMPUNIFY.S4-DECLARE + seam verdicts): comp-coverage-check check PASS + selfcheck --json 15/15 freeze-intact (S4 tool_grain_map is new data, no new case); ~A storage seam GREEN-IN-SCOPE (mech+decl, R1/R2 live-validated, semantic cross-stratum-deferred). S4 DECLARE done (29/29 tools grain-tagged, 3 gaps->COMPLEARN). Commit edb89b735.
 | 2026-06-30 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/change_management/20... | PASS |
 | 2026-06-30 | 0.8.0_AE_CloudComp~C | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-06-30 | 0.4.0_DE_ClientPlatform | NFRA_TSGRAPH.P2-1 | comp-transform | comp-transform schema-check PartnerAnalytics | PASS |
+| 2026-06-30 | 0.4.0_DE_ClientPlatform | NFRA_TSGRAPH.P2-1 | comp-cache | comp-cache collisions | PASS |
+| 2026-06-30 | 2.0.0_SA_COO~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .owned-paths.yaml --file org/projects/N... | PASS |
+| 2026-06-30 | 1.0.0_SA_CTO | (no-TO) | pipescript | pipescript --resource opal-data-bd/platinum/firm/header_metrics.json | FAIL |
+| 2026-06-30 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+| 2026-06-30 | 0.8.0_AE_CloudComp~B | (no-TO) | comp-kuzu | comp-kuzu MATCH (n:CloudNode) WHERE n.node_type='LAMBDA' RETURN count(*) AS lambda_count | PASS |
+| 2026-06-30 | 0.8.0_AE_CloudComp~B | (no-TO) | comp-kuzu | comp-kuzu MATCH (n:CloudNode) WHERE n.node_type='LAMBDA' AND (n.name CONTAINS 'value-pa... | PASS |
+| 2026-06-30 | 0.4.0_DE_ClientPlatform | NFRA_TSGRAPH.P2-1 | comp-kuzu | comp-kuzu MATCH (n) RETURN label(n) AS kind, count(*) AS c ORDER BY c DESC LIMIT 30 | PASS |
+| 2026-06-30 | 0.4.0_DE_ClientPlatform | NFRA_TSGRAPH.P2-1 | comp-kuzu | comp-kuzu MATCH (n) RETURN n.node_type AS node_type, count(*) AS c ORDER BY c DESC LIMI... | PASS |
+| 2026-06-30 | 0.4.0_DE_ClientPlatform | NFRA_TSGRAPH.P2-1 | comp-kuzu | comp-kuzu MATCH ()-[r]->() RETURN r.edge_type AS edge_type, count(*) AS c ORDER BY c DE... | PASS |
+| 2026-06-30 | 2.0.0_SA_COO~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .owned-paths.yaml | PASS |
+| 2026-06-30 | 0.4.0_DS_ClientPlatform~B | (no-TO) | comp-pipescript | comp-pipescript io B_00 | PASS |
+| 2026-06-30 | 0.4.0_DE_ClientPlatform | NFRA_TSGRAPH.P2-1 | comp-kuzu | comp-kuzu MATCH ()-[r]->() WHERE r.edge_type='CONTAINS_DRILLDOWN' RETURN r.depth AS dep... | FAIL |
+| 2026-06-30 | 0.4.0_DE_ClientPlatform | NFRA_TSGRAPH.P2-1 | comp-kuzu | comp-kuzu MATCH ()-[r]->() WHERE r.edge_type='CONTAINS_DRILLDOWN' AND r.cohort IS NOT N... | FAIL |
+| 2026-06-30 | 0.4.0_DE_ClientPlatform | NFRA_TSGRAPH.P2-1 | comp-kuzu | comp-kuzu MATCH (p)-[r]->(c) WHERE p.node_type='Page' AND r.edge_type='CLUSTERS' AND c.... | PASS |
+| 2026-06-30 | 0.8.0_AE_CloudComp~D | NFRA_COMPDRIFT.P2 | comp-kuzu | comp-kuzu MATCH (n) RETURN count(n) LIMIT 1 | PASS |
+| 2026-06-30 | 0.4.0_DE_ClientPlatform | NFRA_TSGRAPH.P2-1 | comp-kuzu | comp-kuzu MATCH ()-[r]->() WHERE r.edge_type='CONTAINS_DRILLDOWN' RETURN r LIMIT 1 | PASS |
+| 2026-06-30 | 0.4.0_DE_ClientPlatform | NFRA_TSGRAPH.P2-1 | comp-kuzu | comp-kuzu MATCH (c) WHERE c.node_type='PanelCluster' RETURN c LIMIT 1 | PASS |
+| 2026-06-30 | 0.4.0_DE_ClientPlatform | NFRA_TSGRAPH.P2-1 | comp-kuzu | comp-kuzu CALL TABLE_INFO('CloudEdge') RETURN * | PASS |
+| 2026-06-30 | 0.4.0_DS_ClientPlatform~B | (no-TO) | comp-pipescript | comp-pipescript io A_03 | PASS |
+| 2026-06-30 | 0.8.0_AE_CloudComp~E | NFRA_COMPLEARN.P0 | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/globgrph/tool_activity_emit.py | PASS |
+| 2026-06-30 | 0.8.0_AE_CloudComp~C | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/comp-coverage-map.yam... | PASS |
+| 2026-06-30 | 0.4.0_DE_ClientPlatform | NFRA_TSGRAPH.P2-1 | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DE_ClientPlatfor... | PASS |
+| 2026-06-30 | 0.8.0_AE_CloudComp~D | NFRA_COMPDRIFT.P2 | comp-kuzu | comp-kuzu MATCH (n) RETURN count(n) LIMIT 1 | PASS |
+| 2026-06-30 | 3.0.0_SA_CVO~B | NFRA_GRAPHUNI.P0-CVO | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/NFRA_GRAPHU... | PASS |
+| 2026-06-30 | 0.8.0_AE_CloudComp~C | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/comp-coverage-map.yaml | PASS |
+| 2026-06-30 | 0.8.0_AE_CloudComp~E | NFRA_COMPLEARN.P0 | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/globgrph/tool_activity_parity... | PASS |
+| 2026-06-30 | 0.8.0_AE_CloudComp~E | NFRA_COMPLEARN.P0 | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/drift-topology.yaml | PASS |
+| 2026-06-30 | 3.0.0_SA_CVO~B | NFRA_GRAPHUNI.P0-CVO | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/NFRA_GRAPHU... | PASS |
+| 2026-06-30 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+| 2026-06-30 | 0.8.0_AE_CloudComp~D | NFRA_COMPDRIFT.P2 | comp-kuzu | comp-kuzu MATCH (n) RETURN count(n) LIMIT 1 | PASS |
+| 2026-06-30 | 2.0.0_SA_COO~B | (no-TO) | comp-kuzu | comp-kuzu MATCH (n) WHERE n.name IN ['bd-gold-foundation','bd-gold-layer','bd-gold-deta... | PASS |
+- 2026-06-30 0.8.0_AE_CloudComp~C (comp-program 3-task window + TSGRAPH reg): comp-coverage-check check PASS + selfcheck --json 17/17 (locked-15 intact, +2 additive harness cases CVO~B-folded); seam-axis vs drift-topology ALIGNED (zero drift); ds-commit-gate/ruff clean. Registered comp-drift + Page/PanelCluster; staged multiparty_rollup + audit_grain harnesses. Commits 95eac5d04, 811398a28.
+| 2026-06-30 | 0.8.0_AE_CloudComp~C | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
