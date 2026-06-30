@@ -3,7 +3,7 @@
 <title>NFRA_GRAPHUNI P1 -- D1 FILL: derive the missing node/edge classes (function-level + platinum full-stack) into Nessie via the GLOBGRPH derive/extract pipeline. The FIRST graph mutation.</title>
 <issued_to>0.8.0_AE_CloudComp~D</issued_to>
 <issued_by>2.0.0_SA_COO~B</issued_by>
-<status>staged</status>
+<status>staged -- HARD-BLOCKED (CTO inviolable-ordering dispatch gate): COO~B dispatches P1 ONLY after (a) P0 gap-list delivered AND (b) CVO signs the P0-CVO fixture LOCKED + representative. A P1 mutation before the fixture-lock voids the whole no-regression control. ~D does NOT self-advance.</status>
 <priority>P1 -- gates each tool's entry to P2 (D1-before-D2, Ruling 1).</priority>
 <project>NFRA_GRAPHUNI</project>
 <dependencies>HARD: NFRA_GRAPHUNI.P0 (the gap-list = the derive spec) AND NFRA_GRAPHUNI.P0-CVO (the pre-delta fixture) BOTH locked first -- this is the FIRST graph mutation, so the fixture must already be frozen against pre-delta state.</dependencies>
