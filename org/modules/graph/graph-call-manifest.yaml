@@ -405,6 +405,17 @@ entries:
     rebuild_trigger: "n/a — parity is a live comparison"
     anti_pattern: "asserting incremental==oracle without the parity check (the GLDINC class)"
     status: canonical
+  - id: pipeline.parity.served_cutover
+    use_case: "Is a canonical pipeline ready to STAND IN for the BD-served surfaces (a never-widen cutover)? The daily, tolerance-aware, dual-gated DATA/served parity proof, firm-by-firm -- the multi-day CLEAN streak IS the cutover gate."
+    canonical_call: "comp-parity [firm] [--config data/canonical/schwab/parity/{firm}_parity_config.yaml] [--json]   # default firm: 49f"
+    tool: comp-parity
+    mode: query
+    layer: pipeline
+    cost: "~seconds (reads the canonical + BD-served artifacts + the firm parity-config tolerances)"
+    freshness: "live: compares the current canonical output vs the current BD-served surface per the firm's parity-config"
+    rebuild_trigger: "n/a (live comparison each run)"
+    anti_pattern: "declaring a cutover ready on a single clean day (the gate is a multi-day streak) or conflating with comp-lambdamap parity (that is DEPLOY parity; this is DATA/served parity). DATA_SSOTMG TO-4."
+    status: canonical    # DATA_SSOTMG TO-4; engine org/modules/graph/comp_parity_cli.py; registered 2026-06-30 (comp-tool audit, Andrew-direct)
 
   # ---- CLOUD additions ----
   - id: cloud.lambdamap.deployed_sha
@@ -774,6 +785,7 @@ tools_index:
   comp-chainrun: { does: "Snapshot/diff gold artifacts around an atomic bundle", subcommands: [snapshot, diff], entries: [pipeline.chainrun.atomic_bundle] }
   comp-constants: { does: "Marker/firm-constant drift vs canonical config", subcommands: [check, index, new, list], entries: [pipeline.constants.drift] }
   comp-incrparity: { does: "Incremental BD-pipeline parity (cache vs oracle)", subcommands: ["<args>"], entries: [pipeline.incrparity.bd] }
+  comp-parity:   { does: "DATA/served parity gate for a never-widen cutover (DATA_SSOTMG TO-4): tolerance-aware dual-gated proof a canonical pipeline can stand in for the BD-served surfaces, firm-by-firm; the multi-day CLEAN streak IS the cutover gate. DISTINCT from comp-lambdamap parity (DEPLOY parity)", subcommands: ["[firm]", "--config", "--json"], entries: [pipeline.parity.served_cutover] }
   comp-lambdamap: { does: "Lambda deployed-SHA vs live CodeSha256 + 3-leg deploy-parity", subcommands: [check, sha, derive, parity], entries: [cloud.lambdamap.deployed_sha, cloud.lambdamap.parity] }
   comp-shell:    { does: "Bare Git-Bash-missing-util scan in new .sh (Rule 16)", subcommands: [scan], entries: [meta.shell.bare_util_scan] }
   comp-registry: { does: "REGISTRY narrative vs project-JSON drift", subcommands: ["sync ROW=N", "--project", "--all"], entries: [meta.registry.drift] }

@@ -65,6 +65,19 @@ tools:
     engine: "infra/aws/compdiff/{engine.py, axes_s3.py, axes_git.py, axes_schema.py, freeze_monitor.py} (CLI cli.py); home relocates to org/modules/compdiff/ on COO lane-grant"
     project: "NFRA_COMPDIFF (the value-MOTION lens; P1 frozen-but-fresh prevention)"
 
+  comp-parity:
+    command: "comp-parity [firm] [--config <path>] [--json]   # default firm: 49f"
+    segment_scope: cross-segment
+    when: |
+      - "Is the canonical pipeline ready to STAND IN for the BD-served surfaces (never-widen cutover)?" (the daily, tolerance-aware, dual-gated DATA/served parity proof, firm-by-firm)
+      - "Has this firm's canonical-vs-served parity held a CLEAN multi-day streak?" (the streak IS the cutover gate)
+    cost: "~seconds (reads canonical + BD-served artifacts + the firm parity-config tolerances)"
+    output: "per-firm parity verdict (CLEAN/BREAK) + the dual-gate detail + streak state; --json for machine output"
+    name_note: "DISTINCT from comp-lambdamap parity (DEPLOY parity = deployed-SHA vs live CodeSha256). comp-parity = DATA/served parity (the canonical output can replace the served surface). Firm spec: data/canonical/schwab/parity/{firm}_parity_config.yaml."
+    guardrails: "READ-ONLY (compares live artifacts; never writes). A single clean day is NOT a cutover -- the gate is a multi-day CLEAN streak, never-widen, firm-by-firm."
+    engine: "org/modules/graph/comp_parity_cli.py"
+    project: "DATA_SSOTMG (TO-4 served-cutover parity gate)"
+
   comp-aws:
     command: "comp-aws <derive|classes|metrics|diff|dual-managed|snapshot|score> [opts]"
     segment_scope: aws-cloud
