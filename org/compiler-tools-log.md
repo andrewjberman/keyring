@@ -10087,3 +10087,16 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-06-30 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
 - 2026-06-30 0.8.0_AE_CloudComp~C (GRAPHDEPTH disposition-bar): comp-coverage-check selfcheck --json freeze re-assert (ZERO drift on CVO~B-locked 14; only undisposed_level additive); selfcheck 15/15; seam no-scope full-bar false-STOP FIXED (prefix=bounded->phased); check PASS (12 rules); ds-commit-gate/ruff clean; B6 PASS. Encoded COO~B EXPLICIT-DISPOSITION bar ruling. Commit 8fefb51c5.
 | 2026-06-30 | 0.8.0_AE_CloudComp~C | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-06-30 | 3.0.0_SA_CVO~B | NFRA_GRAPHUNI.P0-CVO | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/NFRA_GRAPHU... | PASS |
+| 2026-06-30 | 0.6.0_AE_PartnerETL | (no-TO) | comp-blast | comp-blast cot_bronze_ingest | FAIL |
+| 2026-06-30 | 0.8.0_AE_CloudComp~D | NFRA_GRAPHUNI.P0.d1-audit-gaplist | comp-kuzu | comp-kuzu MATCH (n:CloudNode) WHERE n.node_type='S3_BUCKET' AND (n.name =~ '.*data.*' O... | PASS |
+| 2026-06-30 | 0.6.0_AE_PartnerETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/briefs/bd-49f-allocations-retry-ne... | PASS |
+| 2026-06-30 | 2.0.0_SA_COO~B | (no-TO) | comp-aws | comp-aws derive --help | PASS |
+| 2026-06-30 | 2.0.0_SA_COO~B | (no-TO) | comp-aws | comp-aws --help | PASS |
+| 2026-06-30 | 0.8.0_AE_CloudComp~C | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/comp-coverage-map.yaml | PASS |
+| 2026-06-30 | 3.0.0_SA_CVO~B | NFRA_GRAPHUNI.P0-CVO | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/NFRA_GRAPHU... | PASS |
+| 2026-06-30 | 0.4.0_DE_ClientPlatform | NFRA_TSGRAPH.P2-1 | comp-kuzu | comp-kuzu MATCH (n) RETURN labels(n)[0] AS kind, count(*) AS c ORDER BY c DESC | PASS |
+| 2026-06-30 | 0.8.0_AE_CloudComp~D | NFRA_GRAPHUNI.P0.d1-audit-gaplist | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/NFRA_GRAPHUNI/NFRA_GRAPHUN... | PASS |
+| 2026-06-30 | 0.8.0_AE_CloudComp~B | (no-TO) | comp-aws | comp-aws --help | PASS |
+- 2026-06-30 0.8.0_AE_CloudComp~C (GRAPHDEPTH storage-refine): comp-coverage-check check PASS + selfcheck --json 15/15 freeze-intact (registry-data prefix-level adds, no new case). Applied ~A R1 (prefix=eager, 125 storage keys) + ruled R2 glob->prefix BINDING (convergence); CVO~B fixture->15. Commit 335edbd8f.
+| 2026-06-30 | 0.8.0_AE_CloudComp~C | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
