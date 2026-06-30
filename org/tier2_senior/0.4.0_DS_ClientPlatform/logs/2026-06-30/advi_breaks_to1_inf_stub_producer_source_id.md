@@ -48,6 +48,27 @@ READ-ONLY — TO-2 fix is CTO+COO-gated; not applied.
 RAVC'd to COO (primary) + CTO (CC, PRD §2 amend). AE paired on CloudTrail principal + 06-30 trigger-health.
 Rule 22: stub identity SOURCE-CONFIRMED; re-fire principal + no-06-30-trigger root remain AE-lane (INFERRED until AE confirms). No prod write fired.
 
+## Addendum — trigger trace tail (post-acceptance, CTO+COO requested; READ-ONLY)
+
+Both RAVCs ACCEPTED (CTO 131322Z, COO 131327Z); PRD §2 corrected, TO-1 cert-eligible, TO-2 recommendation
+endorsed-but-gated. Both asked for the remaining read-only trace tail. Source-side grounding (AE owns the
+live CloudTrail/CW confirm):
+
+- **Item #2 (no 06-30 chain fire) — TEMPERED, premature to call broken.** `infra/aws/terraform/inf-pipeline/eventbridge.tf`:
+  inf morning gold trigger = PRIMARY event-driven (INFETL.SILVER-AGGREGATOR ~13:00 UTC, gated on 06-30 bronze)
+  + FALLBACK `inf_canonical_prices_daily` `cron(0 14 * * ? *)` (14:00 UTC, ENABLED, target inf-gold-trigger, DLQ
+  inf-gold-trigger-dlq). My S3 check was ~13:14 UTC — BEFORE the 14:00 fallback; prior-day rich writes land
+  ~14:29-14:34Z (after the trigger). So "zero 06-30 writes" was not yet conclusive of a broken trigger (Rule 22).
+  Served staleness now is real, but the morning window is still open. AE to confirm post-14:00Z.
+- **Item #1 (what kicked the 3 INF_D_00-only evening runs) — NARROWED.** No committed code path invokes
+  `--single INF_D_00` / `--from INF_D_00` (grep data/ + infra/ = doc-comment hits only). Not a scheduled inf
+  rule → AE's principal hunt targets manual SSM/console runner exec or a non-inf (canonical/SSOT 06-29-eve)
+  job kicking an inf partial. Runner pulls orion-gold-dispatch.sh from `s3://opal-data-inf/code/gold/` (EC2_MANIFEST.json:307).
+- **Net:** a normal 06-30 chain fire self-corrects served to rich (stub-then-rich, rich wins); the durable risk
+  is the off-cadence INF_D_00-only re-runs, which TO-2 (remove the stub emit) kills regardless.
+
+Addendum RAVC'd to COO + AE (131557Z / 131607Z).
+
 ## Compiler Tools
 | Tool | Use | Result |
 |---|---|---|
