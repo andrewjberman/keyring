@@ -31,8 +31,10 @@ Usage:
 from __future__ import annotations
 
 import copy
+import json
 import os
 import sys
+from collections import defaultdict
 
 import yaml
 
@@ -253,6 +255,101 @@ def rollup_defects(coarse_edges, fine_edges, rolls_up):
     return defects
 
 
+def seam_validate(led: dict, edges: list, rollup_view: dict | None):
+    """The 3-axis govern<->populate SEAM validation (Andrew-direct symbiotic protocol). Validates
+    ~D's POPULATED edges against the grain_contract registry (~C governs) at the CATEGORICAL bar.
+    Returns {mechanical, declarative, semantic, coverage} -- each axis a list of findings ([] = clean).
+
+    INTERFACE (the contract ~D emits to):
+      edges       = [{edge_type, level, from_stratum, to_stratum}, ...]   (one per populated edge)
+      rollup_view = {"coarse": [[src,dst],...], "fine": [[src,dst],...], "rolls_up": {node: coarse_node}}
+                    (optional; the existential-rollup view for the SEMANTIC axis)
+    """
+    gc = led.get("grain_contract", {})
+    et_index = {e["edge_type"]: e for e in gc.get("edge_types", [])}
+    registry_types = set(et_index)
+    strata = set(gc.get("strata", []))
+    mechanical, declarative = [], []
+    populated_types: set = set()
+    populated_levels: dict = defaultdict(set)
+    populated_strata: set = set()
+
+    # --- AXIS 1: MECHANICAL -- every populated edge conforms to the registry ---
+    for e in edges:
+        et, lvl = e.get("edge_type"), e.get("level")
+        populated_types.add(et)
+        if et not in registry_types:
+            mechanical.append(f"populated edge_type '{et}' ABSENT from registry (population-orphan -- govern must add it or ~D mis-typed)")
+        elif lvl is not None and lvl not in et_index[et].get("levels", []):
+            mechanical.append(f"edge '{et}' level '{lvl}' not in declared levels {et_index[et].get('levels')}")
+        if et in registry_types and lvl is not None:
+            populated_levels[et].add(lvl)
+        for k in ("from_stratum", "to_stratum"):
+            s = e.get(k)
+            if s is not None:
+                populated_strata.add(s)
+                if s not in strata:
+                    mechanical.append(f"edge '{et}' {k}='{s}' is not a declared stratum {sorted(strata)}")
+
+    # --- AXIS 2: DECLARATIVE -- registry <-> population CATEGORICAL coverage (map == territory) ---
+    for rt in sorted(registry_types - populated_types):
+        declarative.append(f"registry edge_type '{rt}' has ZERO populated edges (registry-orphan / dead type -- retire it or ~D must populate)")
+    for st in sorted(strata - populated_strata):
+        declarative.append(f"stratum '{st}' has ZERO populated edges (uncovered stratum -- the categorical bar is not met)")
+    for et in sorted(registry_types & populated_types):
+        for lvl in sorted(set(et_index[et].get("levels", [])) - populated_levels.get(et, set())):
+            declarative.append(f"edge_type '{et}' level '{lvl}' declared but NOT populated (uncovered grain level)")
+
+    # --- AXIS 3: SEMANTIC -- existential rollup holds on the REAL edges (one head) ---
+    if rollup_view is None:
+        semantic = ["SEMANTIC axis NOT PROVIDED -- supply rollup_view {coarse, fine, rolls_up} to validate existential rollup (categorical bar requires it)"]
+    else:
+        defects = rollup_defects(rollup_view.get("coarse", []), rollup_view.get("fine", []), rollup_view.get("rolls_up", {}))
+        semantic = [f"{cls}: {edge}" for cls, edge in defects]
+
+    coverage = {
+        "registry_types": sorted(registry_types),
+        "populated_types": sorted(populated_types),
+        "covered_types": sorted(registry_types & populated_types),
+        "uncovered_strata": sorted(strata - populated_strata),
+    }
+    return {"mechanical": mechanical, "declarative": declarative, "semantic": semantic, "coverage": coverage}
+
+
+def seam(edges_path: str, rollup_path: str | None) -> int:
+    """CLI: 3-axis seam validation of ~D's populated edges vs the governed registry. Exit 0 GREEN /
+    1 RED (mechanical or semantic defect) / 2 INCOMPLETE (declarative coverage gap or semantic not provided)."""
+    try:
+        led = _load(LEDGER)
+        with open(edges_path, encoding="utf-8") as fh:
+            edges = json.load(fh)
+        rollup_view = None
+        if rollup_path:
+            with open(rollup_path, encoding="utf-8") as fh:
+                rollup_view = json.load(fh)
+    except Exception as exc:  # noqa: BLE001
+        sys.stderr.write(f"UNVERIFIABLE: could not read ledger/edges/rollup: {exc}\n")
+        return UNVERIFIABLE
+    r = seam_validate(led, edges, rollup_view)
+    for axis in ("mechanical", "declarative", "semantic"):
+        if r[axis]:
+            sys.stdout.write(f"[{axis.upper()}] {len(r[axis])} finding(s):\n")
+            for f in r[axis]:
+                sys.stdout.write(f"  - {f}\n")
+        else:
+            sys.stdout.write(f"[{axis.upper()}] clean.\n")
+    red = bool(r["mechanical"]) or any(not s.startswith("SEMANTIC axis NOT PROVIDED") for s in r["semantic"])
+    incomplete = bool(r["declarative"]) or any(s.startswith("SEMANTIC axis NOT PROVIDED") for s in r["semantic"])
+    if red:
+        sys.stdout.write("SEAM: RED -- STOP + reconcile (govern fixes the registry OR ~D fixes the edges); do NOT proceed.\n")
+        return FAIL
+    if incomplete:
+        sys.stdout.write("SEAM: INCOMPLETE -- categorical coverage not yet met (uncovered grain/stratum, or semantic axis not supplied). Baseline NOT robust.\n")
+        return UNVERIFIABLE
+    sys.stdout.write("SEAM: GREEN -- mechanical + declarative + semantic all clean; categorical coverage met. Both sign.\n")
+    return PASS
+
+
 _CHECKERS = {
     "one_home": _check_one_home,
     "seam_reference_integrity": _check_seam_reference_integrity,
@@ -398,6 +495,14 @@ def selfcheck() -> int:
              and ("EC2", "BUCKET") not in d)  # supported coarse + its fine -> clean
     results.append(("rollup_defects existential logic (UNSUPPORTED + COARSE-INCOMPLETE, supported clean)", rd_ok))
 
+    # i) SEAM validator -- each of the 3 axes fires on its own defect class
+    sv_orphan = seam_validate(led, [{"edge_type": "GHOST_TYPE", "level": "x", "from_stratum": "resource", "to_stratum": "compute"}], None)
+    sv_rollup = seam_validate(led, [], {"coarse": [["EC2", "GHOST"]], "fine": [], "rolls_up": {}})
+    seam_ok = (bool(sv_orphan["mechanical"])       # population-orphan edge_type -> MECHANICAL fires
+               and bool(sv_orphan["declarative"])  # registry types/strata unpopulated -> DECLARATIVE fires
+               and bool(sv_rollup["semantic"]))    # UNSUPPORTED coarse edge -> SEMANTIC fires
+    results.append(("seam validator: 3 axes fire on defects (mechanical/declarative/semantic)", seam_ok))
+
     ok = all(passed for _, passed in results)
     for label, passed in results:
         sys.stdout.write(f"{'OK  ' if passed else 'FAIL'}: {label}\n")
@@ -416,12 +521,22 @@ def list_rules() -> int:
     return PASS
 
 
+def _arg(argv: list[str], flag: str) -> str | None:
+    return argv[argv.index(flag) + 1] if flag in argv and argv.index(flag) + 1 < len(argv) else None
+
+
 def main(argv: list[str]) -> int:
     cmd = argv[0] if argv else "check"
     if cmd == "selfcheck":
         return selfcheck()
     if cmd == "list":
         return list_rules()
+    if cmd == "seam":
+        edges_path = _arg(argv, "--edges")
+        if not edges_path:
+            sys.stderr.write("usage: comp-coverage-check seam --edges <populated-edges.json> [--rollup <rollup-view.json>]\n")
+            return UNVERIFIABLE
+        return seam(edges_path, _arg(argv, "--rollup"))
     return check()
 
 

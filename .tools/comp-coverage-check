@@ -13,6 +13,11 @@ comp-tool coverage map / coverage-check / non-redundancy invariant").
   comp-coverage-check            gate the live ledger (exit 0 PASS / 1 FAIL / 2 UNVERIFIABLE)
   comp-coverage-check selfcheck  inject unplaced-tool + silent-overlap + stale-projection -> each FAILS
   comp-coverage-check list       the contract rules this gate enforces
+  comp-coverage-check seam --edges <populated.json> [--rollup <rollup.json>]
+                                 the 3-axis govern<->populate SEAM validation (GRAPHDEPTH symbiotic
+                                 protocol): MECHANICAL (populated edges conform to the registry) +
+                                 DECLARATIVE (registry<->population categorical coverage) + SEMANTIC
+                                 (existential rollup holds). GREEN/RED/INCOMPLETE; both ~C+~D sign.
 """
 import os
 import runpy
