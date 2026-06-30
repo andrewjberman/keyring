@@ -165,3 +165,20 @@ LAMBDA      -CONTAINS-> handler functions
 **The two-phase action (Andrew):**
 1. **GRAPHUNI builds the fractal substrate** (~D lane) — the `RUNS`/`CONTAINS`/`OWNED_BY` drilldown edges stitch the resource stratum to the compute stratum; these are net-new seams.
 2. **THEN the COMPUNIFY tool-calibration sweep** (~C map + ~D + CTO arch) — tag every comp-tool with the grain it operates at + returns, verify the set spans the ladder with no grain-confusion: `comp-aws` = resource; `comp-pipescript` = script/IO; `comp-blast/trace/xref` = function; `comp-platinum` = cross-grain traversal. ~C's `comp-coverage-map.yaml` already carries `granularity` as a node-schema field — this populates + gate-checks it. *Cross-lane; routed to CTO for decomposition + the GRAPHUNI<->COMPUNIFY grain-calibration coupling.*
+
+---
+
+## 11. CTO RATIFICATION REFINEMENTS (authoritative — the gate tests P1 builds against)
+Both amendments (8+9) RATIFIED by CTO (msg 205242Z). Two authoritative refinements thread into the build + gate:
+
+**A. Population phasing (sequencing guard, NOT a scope cut).** The SCHEMA is the full ladder from the start (so we never re-type — that IS Amendment 2). The POPULATION phases by tier:
+- (i) **GOLD tier = no-regression-CRITICAL** — it's what the 4 structure-tools traverse today + the D2 fixture baseline. Land it FIRST (or same-pass if clean).
+- (ii) **bronze / silver / ingestion = net-new ENRICHING lineage** — can't regress the tools' answers (the caches never held it). Enriches; phases after gold.
+- The full-ladder ambition must NOT delay the gold-tier re-point D2 needs. Full-ladder SCHEMA from the start; POPULATION phases without re-typing.
+
+**B. Ruling-4 <-> Amendment-2 reconciliation (the explicit gate test).** They are COMPLEMENTARY, not in tension — ruling 4's distinction is by SEMANTIC, not depth. The gate test:
+> different RELATION/semantic -> different `edge_type`; SAME relation at different depth -> SAME `edge_type` + a `level` attribute; NEVER split one semantic by depth.
+- `READS_S3` (S3-object producer/consumer) stays distinct from portal-field `READS` (different SEMANTIC).
+- `READS_S3` stays ONE type whether the endpoint is a script or a function — `level` carries the grain.
+
+**C. Governance gate (confirmed).** GRAPHUNI POPULATES the stable defs; COMPUNIFY GOVERNS them. The `comp-coverage-check` gate (one_home = surface|seam x granularity x concern) extends with the `level`/granularity dimension + the no-split-by-depth stability rule. ~C threads the stability contract into the COMPUNIFY node-schema gate; COO~B coordinates (also a COMPDRIFT seam invariant). The substrate<->map coupling, gate-enforced.
