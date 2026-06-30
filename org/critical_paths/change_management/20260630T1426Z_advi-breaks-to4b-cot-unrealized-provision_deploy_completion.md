@@ -10,7 +10,8 @@
 |---|---|---|---|
 | L1 | BD-write (AE SSM) | STEP-1: `cot_bronze_ingest.py --table unrealized --provision` on cot-exporter -> new persisted templateId | DONE: templateId=237784 (AE SSM 3b218b3b, on the CURRENT 9abd0181b measures-selected body) |
 | L2 | verify (AE SSM) | STEP-2 GATE: Custom-mode unrealized pull w/ new id -> CONFIRM >0 data rows (vs current 3743B/0-row). 49F proved persisted-id qt4 can still empty -> load-bearing | OPEN |
-| L3 | s3-config (DS) | STEP-3: wire new templateId into code/bronze/templates/unrealized.json (ds-commit-gate + s3 cp) — GATED on L2 non-empty; RAVC CTO before serving | OPEN |
+| L3 | s3-config (DS) | STEP-3: wire templateId=237784 into unrealized.json — DONE: git 0e47446f2 (ds-gate PASS) + s3 cp to canonical; git==S3 parity confirmed. (Order: CTO-approved wire-then-verify collapse, no isolation-verify mode; no-regression.) | DONE |
+| L2 | verify (AE SSM) | STEP-2 (now post-wire): AE clean `--table unrealized --date 2026-06-30` reads 237784 -> row-count. NON-EMPTY=FIXED / EMPTY=no-op | DISPATCHED to AE (237784 live in canonical) |
 | L4 | verify | NEXT scheduled nightly: forwardfill_v2/unrealized non-empty -> silver/unrealized non-empty -> B_00 CUSIP bridge restored (NEVER#4: no ad-hoc gold run) | OPEN |
 
 **Fork at L2:** if STEP-2 returns EMPTY, the provision alone is insufficient (same as 49F's 431167) -> pivot fix to the qt4 snapshot date-window semantics (start=end=asOfDate, not the 14d range) -> re-verify L2 -> then L3. ~B owns the parallel 49F 431167 repair.
