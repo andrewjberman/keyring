@@ -1,0 +1,2121 @@
+{
+ "producer": "graphuni-infra-stitchers",
+ "lane": "0.8.0_AE_CloudComp~B",
+ "phase": "NFRA_GRAPHUNI.P1-B infra+cross-stratum (S1 RUNS keystone + S3 lambda-IO converged-vs-~A)",
+ "id_conventions": {
+  "RUNS_target": "pipeline:<firm>:gold:<script> (~D GoldScript, ~C-ratified f23932383)",
+  "S3Key_target": "<bucket>/<key> (~A storage_s3keys.json node-id)"
+ },
+ "nodes": [],
+ "edges": [
+  {
+   "source": "arn:aws:ec2:us-east-1:313476888478:instance/i-0ed5afded2ebd4ed4",
+   "target": "pipeline:inf:gold:INF_09.generate_partner_analytics",
+   "edge_type": "RUNS",
+   "level": "ec2",
+   "stratum_pair": "resource->compute",
+   "producer_by_pair": "~B"
+  },
+  {
+   "source": "arn:aws:ec2:us-east-1:313476888478:instance/i-0ed5afded2ebd4ed4",
+   "target": "pipeline:inf:gold:INF_A_-1.materialize_txn_cache",
+   "edge_type": "RUNS",
+   "level": "ec2",
+   "stratum_pair": "resource->compute",
+   "producer_by_pair": "~B"
+  },
+  {
+   "source": "arn:aws:ec2:us-east-1:313476888478:instance/i-0ed5afded2ebd4ed4",
+   "target": "pipeline:inf:gold:INF_A_00.accounts_dimension",
+   "edge_type": "RUNS",
+   "level": "ec2",
+   "stratum_pair": "resource->compute",
+   "producer_by_pair": "~B"
+  },
+  {
+   "source": "arn:aws:ec2:us-east-1:313476888478:instance/i-0ed5afded2ebd4ed4",
+   "target": "pipeline:inf:gold:INF_A_01.advisor_assignments",
+   "edge_type": "RUNS",
+   "level": "ec2",
+   "stratum_pair": "resource->compute",
+   "producer_by_pair": "~B"
+  },
+  {
+   "source": "arn:aws:ec2:us-east-1:313476888478:instance/i-0ed5afded2ebd4ed4",
+   "target": "pipeline:inf:gold:INF_A_02.fee_rate_history",
+   "edge_type": "RUNS",
+   "level": "ec2",
+   "stratum_pair": "resource->compute",
+   "producer_by_pair": "~B"
+  },
+  {
+   "source": "arn:aws:ec2:us-east-1:313476888478:instance/i-0ed5afded2ebd4ed4",
+   "target": "pipeline:inf:gold:INF_A_03.positions_cube",
+   "edge_type": "RUNS",
+   "level": "ec2",
+   "stratum_pair": "resource->compute",
+   "producer_by_pair": "~B"
+  },
+  {
+   "source": "arn:aws:ec2:us-east-1:313476888478:instance/i-0ed5afded2ebd4ed4",
+   "target": "pipeline:inf:gold:INF_A_04.client_dimension",
+   "edge_type": "RUNS",
+   "level": "ec2",
+   "stratum_pair": "resource->compute",
+   "producer_by_pair": "~B"
+  },
+  {
+   "source": "arn:aws:ec2:us-east-1:313476888478:instance/i-0ed5afded2ebd4ed4",
+   "target": "pipeline:inf:gold:INF_B_00.canonical_holdings",
+   "edge_type": "RUNS",
+   "level": "ec2",
+   "stratum_pair": "resource->compute",
+   "producer_by_pair": "~B"
+  },
+  {
+   "source": "arn:aws:ec2:us-east-1:313476888478:instance/i-0ed5afded2ebd4ed4",
+   "target": "pipeline:inf:gold:INF_B_01.holdings_lots",
+   "edge_type": "RUNS",
+   "level": "ec2",
+   "stratum_pair": "resource->compute",
+   "producer_by_pair": "~B"
+  },
+  {
+   "source": "arn:aws:ec2:us-east-1:313476888478:instance/i-0ed5afded2ebd4ed4",
+   "target": "pipeline:inf:gold:INF_B_01b.classify_new_securities",
+   "edge_type": "RUNS",
+   "level": "ec2",
+   "stratum_pair": "resource->compute",
+   "producer_by_pair": "~B"
+  },
+  {
+   "source": "arn:aws:ec2:us-east-1:313476888478:instance/i-0ed5afded2ebd4ed4",
+   "target": "pipeline:inf:gold:INF_B_02.canonical_lots",
+   "edge_type": "RUNS",
+   "level": "ec2",
+   "stratum_pair": "resource->compute",
+   "producer_by_pair": "~B"
+  },
+  {
+   "source": "arn:aws:ec2:us-east-1:313476888478:instance/i-0ed5afded2ebd4ed4",
+   "target": "pipeline:inf:gold:INF_B_03.account_gains",
+   "edge_type": "RUNS",
+   "level": "ec2",
+   "stratum_pair": "resource->compute",
+   "producer_by_pair": "~B"
+  },
+  {
+   "source": "arn:aws:ec2:us-east-1:313476888478:instance/i-0ed5afded2ebd4ed4",
+   "target": "pipeline:inf:gold:INF_C_00.canonical_performance",
+   "edge_type": "RUNS",
+   "level": "ec2",
+   "stratum_pair": "resource->compute",
+   "producer_by_pair": "~B"
+  },
+  {
+   "source": "arn:aws:ec2:us-east-1:313476888478:instance/i-0ed5afded2ebd4ed4",
+   "target": "pipeline:inf:gold:INF_C_01.canonical_nna",
+   "edge_type": "RUNS",
+   "level": "ec2",
+   "stratum_pair": "resource->compute",
+   "producer_by_pair": "~B"
+  },
+  {
+   "source": "arn:aws:ec2:us-east-1:313476888478:instance/i-0ed5afded2ebd4ed4",
+   "target": "pipeline:inf:gold:INF_C_01b.role_aua_backfill",
+   "edge_type": "RUNS",
+   "level": "ec2",
+   "stratum_pair": "resource->compute",
+   "producer_by_pair": "~B"
+  },
+  {
+   "source": "arn:aws:ec2:us-east-1:313476888478:instance/i-0ed5afded2ebd4ed4",
+   "target": "pipeline:inf:gold:INF_C_02.client_performance",
+   "edge_type": "RUNS",
+   "level": "ec2",
+   "stratum_pair": "resource->compute",
+   "producer_by_pair": "~B"
+  },
+  {
+   "source": "arn:aws:ec2:us-east-1:313476888478:instance/i-0ed5afded2ebd4ed4",
+   "target": "pipeline:inf:gold:INF_C_03.account_performance",
+   "edge_type": "RUNS",
+   "level": "ec2",
+   "stratum_pair": "resource->compute",
+   "producer_by_pair": "~B"
+  },
+  {
+   "source": "arn:aws:ec2:us-east-1:313476888478:instance/i-0ed5afded2ebd4ed4",
+   "target": "pipeline:inf:gold:INF_C_04.validate_aua",
+   "edge_type": "RUNS",
+   "level": "ec2",
+   "stratum_pair": "resource->compute",
+   "producer_by_pair": "~B"
+  },
+  {
+   "source": "arn:aws:ec2:us-east-1:313476888478:instance/i-0ed5afded2ebd4ed4",
+   "target": "pipeline:inf:gold:INF_C_05.client_tax_liability",
+   "edge_type": "RUNS",
+   "level": "ec2",
+   "stratum_pair": "resource->compute",
+   "producer_by_pair": "~B"
+  },
+  {
+   "source": "arn:aws:ec2:us-east-1:313476888478:instance/i-0ed5afded2ebd4ed4",
+   "target": "pipeline:inf:gold:INF_C_06.client_mix_timeseries",
+   "edge_type": "RUNS",
+   "level": "ec2",
+   "stratum_pair": "resource->compute",
+   "producer_by_pair": "~B"
+  },
+  {
+   "source": "arn:aws:ec2:us-east-1:313476888478:instance/i-0ed5afded2ebd4ed4",
+   "target": "pipeline:inf:gold:INF_C_07.advisor_attribution",
+   "edge_type": "RUNS",
+   "level": "ec2",
+   "stratum_pair": "resource->compute",
+   "producer_by_pair": "~B"
+  },
+  {
+   "source": "arn:aws:ec2:us-east-1:313476888478:instance/i-0ed5afded2ebd4ed4",
+   "target": "pipeline:inf:gold:INF_C_08.advisor_fee_efficiency",
+   "edge_type": "RUNS",
+   "level": "ec2",
+   "stratum_pair": "resource->compute",
+   "producer_by_pair": "~B"
+  },
+  {
+   "source": "arn:aws:ec2:us-east-1:313476888478:instance/i-0ed5afded2ebd4ed4",
+   "target": "pipeline:inf:gold:INF_C_09.fee_status_audit",
+   "edge_type": "RUNS",
+   "level": "ec2",
+   "stratum_pair": "resource->compute",
+   "producer_by_pair": "~B"
+  },
+  {
+   "source": "arn:aws:ec2:us-east-1:313476888478:instance/i-0ed5afded2ebd4ed4",
+   "target": "pipeline:inf:gold:INF_D_00.portal_aggregates",
+   "edge_type": "RUNS",
+   "level": "ec2",
+   "stratum_pair": "resource->compute",
+   "producer_by_pair": "~B"
+  },
+  {
+   "source": "arn:aws:ec2:us-east-1:313476888478:instance/i-0ed5afded2ebd4ed4",
+   "target": "pipeline:inf:gold:INF_D_00b.portal_timeseries",
+   "edge_type": "RUNS",
+   "level": "ec2",
+   "stratum_pair": "resource->compute",
+   "producer_by_pair": "~B"
+  },
+  {
+   "source": "arn:aws:ec2:us-east-1:313476888478:instance/i-0ed5afded2ebd4ed4",
+   "target": "pipeline:inf:gold:INF_D_00c.portal_leaderboard",
+   "edge_type": "RUNS",
+   "level": "ec2",
+   "stratum_pair": "resource->compute",
+   "producer_by_pair": "~B"
+  },
+  {
+   "source": "arn:aws:ec2:us-east-1:313476888478:instance/i-0ed5afded2ebd4ed4",
+   "target": "pipeline:inf:gold:INF_D_00d.cumulative_chart",
+   "edge_type": "RUNS",
+   "level": "ec2",
+   "stratum_pair": "resource->compute",
+   "producer_by_pair": "~B"
+  },
+  {
+   "source": "arn:aws:ec2:us-east-1:313476888478:instance/i-0ed5afded2ebd4ed4",
+   "target": "pipeline:inf:gold:INF_D_00e.fresh_header_supplement",
+   "edge_type": "RUNS",
+   "level": "ec2",
+   "stratum_pair": "resource->compute",
+   "producer_by_pair": "~B"
+  },
+  {
+   "source": "arn:aws:ec2:us-east-1:313476888478:instance/i-0ed5afded2ebd4ed4",
+   "target": "pipeline:inf:gold:INF_D_00f.advisor_nna_canonical",
+   "edge_type": "RUNS",
+   "level": "ec2",
+   "stratum_pair": "resource->compute",
+   "producer_by_pair": "~B"
+  },
+  {
+   "source": "arn:aws:ec2:us-east-1:313476888478:instance/i-0ed5afded2ebd4ed4",
+   "target": "pipeline:inf:gold:INF_D_02.advisor_client_detail",
+   "edge_type": "RUNS",
+   "level": "ec2",
+   "stratum_pair": "resource->compute",
+   "producer_by_pair": "~B"
+  },
+  {
+   "source": "arn:aws:ec2:us-east-1:313476888478:instance/i-0ed5afded2ebd4ed4",
+   "target": "pipeline:inf:gold:INF_D_02b.top_holdings",
+   "edge_type": "RUNS",
+   "level": "ec2",
+   "stratum_pair": "resource->compute",
+   "producer_by_pair": "~B"
+  },
+  {
+   "source": "arn:aws:ec2:us-east-1:313476888478:instance/i-0ed5afded2ebd4ed4",
+   "target": "pipeline:inf:gold:INF_D_02c.client_directory",
+   "edge_type": "RUNS",
+   "level": "ec2",
+   "stratum_pair": "resource->compute",
+   "producer_by_pair": "~B"
+  },
+  {
+   "source": "arn:aws:ec2:us-east-1:313476888478:instance/i-0ed5afded2ebd4ed4",
+   "target": "pipeline:inf:gold:INF_D_02d.firm_mix_summary",
+   "edge_type": "RUNS",
+   "level": "ec2",
+   "stratum_pair": "resource->compute",
+   "producer_by_pair": "~B"
+  },
+  {
+   "source": "arn:aws:ec2:us-east-1:313476888478:instance/i-0ed5afded2ebd4ed4",
+   "target": "pipeline:inf:gold:INF_D_03.composition_artifacts",
+   "edge_type": "RUNS",
+   "level": "ec2",
+   "stratum_pair": "resource->compute",
+   "producer_by_pair": "~B"
+  },
+  {
+   "source": "arn:aws:ec2:us-east-1:313476888478:instance/i-0ed5afded2ebd4ed4",
+   "target": "pipeline:inf:gold:INF_D_04.client_portal_summary",
+   "edge_type": "RUNS",
+   "level": "ec2",
+   "stratum_pair": "resource->compute",
+   "producer_by_pair": "~B"
+  },
+  {
+   "source": "arn:aws:ec2:us-east-1:313476888478:instance/i-0ed5afded2ebd4ed4",
+   "target": "pipeline:inf:gold:INF_D_04b.client_publishers",
+   "edge_type": "RUNS",
+   "level": "ec2",
+   "stratum_pair": "resource->compute",
+   "producer_by_pair": "~B"
+  },
+  {
+   "source": "arn:aws:ec2:us-east-1:313476888478:instance/i-0ed5afded2ebd4ed4",
+   "target": "pipeline:inf:gold:INF_D_05.activity_scan",
+   "edge_type": "RUNS",
+   "level": "ec2",
+   "stratum_pair": "resource->compute",
+   "producer_by_pair": "~B"
+  },
+  {
+   "source": "arn:aws:ec2:us-east-1:313476888478:instance/i-0ed5afded2ebd4ed4",
+   "target": "pipeline:inf:gold:INF_D_05.client_top_holdings",
+   "edge_type": "RUNS",
+   "level": "ec2",
+   "stratum_pair": "resource->compute",
+   "producer_by_pair": "~B"
+  },
+  {
+   "source": "arn:aws:ec2:us-east-1:313476888478:instance/i-0ed5afded2ebd4ed4",
+   "target": "pipeline:inf:gold:INF_D_06.cash_drag",
+   "edge_type": "RUNS",
+   "level": "ec2",
+   "stratum_pair": "resource->compute",
+   "producer_by_pair": "~B"
+  },
+  {
+   "source": "arn:aws:ec2:us-east-1:313476888478:instance/i-0ed5afded2ebd4ed4",
+   "target": "pipeline:inf:gold:INF_D_06.client_timeseries",
+   "edge_type": "RUNS",
+   "level": "ec2",
+   "stratum_pair": "resource->compute",
+   "producer_by_pair": "~B"
+  },
+  {
+   "source": "arn:aws:ec2:us-east-1:313476888478:instance/i-0ed5afded2ebd4ed4",
+   "target": "pipeline:inf:gold:INF_D_07.concentration_risk",
+   "edge_type": "RUNS",
+   "level": "ec2",
+   "stratum_pair": "resource->compute",
+   "producer_by_pair": "~B"
+  },
+  {
+   "source": "arn:aws:ec2:us-east-1:313476888478:instance/i-0ed5afded2ebd4ed4",
+   "target": "pipeline:inf:gold:INF_D_07a.firm_concentrations",
+   "edge_type": "RUNS",
+   "level": "ec2",
+   "stratum_pair": "resource->compute",
+   "producer_by_pair": "~B"
+  },
+  {
+   "source": "arn:aws:ec2:us-east-1:313476888478:instance/i-0ed5afded2ebd4ed4",
+   "target": "pipeline:inf:gold:INF_D_08.nmec_nmnc_nna",
+   "edge_type": "RUNS",
+   "level": "ec2",
+   "stratum_pair": "resource->compute",
+   "producer_by_pair": "~B"
+  },
+  {
+   "source": "arn:aws:ec2:us-east-1:313476888478:instance/i-0ed5afded2ebd4ed4",
+   "target": "pipeline:inf:gold:INF_D_09.account_timeseries",
+   "edge_type": "RUNS",
+   "level": "ec2",
+   "stratum_pair": "resource->compute",
+   "producer_by_pair": "~B"
+  },
+  {
+   "source": "arn:aws:ec2:us-east-1:313476888478:instance/i-0ed5afded2ebd4ed4",
+   "target": "pipeline:inf:gold:INF_E_00.eclipse_model_portfolios",
+   "edge_type": "RUNS",
+   "level": "ec2",
+   "stratum_pair": "resource->compute",
+   "producer_by_pair": "~B"
+  },
+  {
+   "source": "arn:aws:ec2:us-east-1:313476888478:instance/i-0ed5afded2ebd4ed4",
+   "target": "pipeline:inf:gold:INF_build_canonical_prices",
+   "edge_type": "RUNS",
+   "level": "ec2",
+   "stratum_pair": "resource->compute",
+   "producer_by_pair": "~B"
+  },
+  {
+   "source": "arn:aws:ec2:us-east-1:313476888478:instance/i-0ed5afded2ebd4ed4",
+   "target": "pipeline:inf:gold:INF_run_c_chain",
+   "edge_type": "RUNS",
+   "level": "ec2",
+   "stratum_pair": "resource->compute",
+   "producer_by_pair": "~B"
+  },
+  {
+   "source": "arn:aws:ec2:us-east-1:313476888478:instance/i-04373615f03fbf9a9",
+   "target": "pipeline:inf:gold:INF_09.generate_partner_analytics",
+   "edge_type": "RUNS",
+   "level": "ec2",
+   "stratum_pair": "resource->compute",
+   "producer_by_pair": "~B"
+  },
+  {
+   "source": "arn:aws:ec2:us-east-1:313476888478:instance/i-04373615f03fbf9a9",
+   "target": "pipeline:inf:gold:INF_A_-1.materialize_txn_cache",
+   "edge_type": "RUNS",
+   "level": "ec2",
+   "stratum_pair": "resource->compute",
+   "producer_by_pair": "~B"
+  },
+  {
+   "source": "arn:aws:ec2:us-east-1:313476888478:instance/i-04373615f03fbf9a9",
+   "target": "pipeline:inf:gold:INF_A_00.accounts_dimension",
+   "edge_type": "RUNS",
+   "level": "ec2",
+   "stratum_pair": "resource->compute",
+   "producer_by_pair": "~B"
+  },
+  {
+   "source": "arn:aws:ec2:us-east-1:313476888478:instance/i-04373615f03fbf9a9",
+   "target": "pipeline:inf:gold:INF_A_01.advisor_assignments",
+   "edge_type": "RUNS",
+   "level": "ec2",
+   "stratum_pair": "resource->compute",
+   "producer_by_pair": "~B"
+  },
+  {
+   "source": "arn:aws:ec2:us-east-1:313476888478:instance/i-04373615f03fbf9a9",
+   "target": "pipeline:inf:gold:INF_A_02.fee_rate_history",
+   "edge_type": "RUNS",
+   "level": "ec2",
+   "stratum_pair": "resource->compute",
+   "producer_by_pair": "~B"
+  },
+  {
+   "source": "arn:aws:ec2:us-east-1:313476888478:instance/i-04373615f03fbf9a9",
+   "target": "pipeline:inf:gold:INF_A_03.positions_cube",
+   "edge_type": "RUNS",
+   "level": "ec2",
+   "stratum_pair": "resource->compute",
+   "producer_by_pair": "~B"
+  },
+  {
+   "source": "arn:aws:ec2:us-east-1:313476888478:instance/i-04373615f03fbf9a9",
+   "target": "pipeline:inf:gold:INF_A_04.client_dimension",
+   "edge_type": "RUNS",
+   "level": "ec2",
+   "stratum_pair": "resource->compute",
+   "producer_by_pair": "~B"
+  },
+  {
+   "source": "arn:aws:ec2:us-east-1:313476888478:instance/i-04373615f03fbf9a9",
+   "target": "pipeline:inf:gold:INF_B_00.canonical_holdings",
+   "edge_type": "RUNS",
+   "level": "ec2",
+   "stratum_pair": "resource->compute",
+   "producer_by_pair": "~B"
+  },
+  {
+   "source": "arn:aws:ec2:us-east-1:313476888478:instance/i-04373615f03fbf9a9",
+   "target": "pipeline:inf:gold:INF_B_01.holdings_lots",
+   "edge_type": "RUNS",
+   "level": "ec2",
+   "stratum_pair": "resource->compute",
+   "producer_by_pair": "~B"
+  },
+  {
+   "source": "arn:aws:ec2:us-east-1:313476888478:instance/i-04373615f03fbf9a9",
+   "target": "pipeline:inf:gold:INF_B_01b.classify_new_securities",
+   "edge_type": "RUNS",
+   "level": "ec2",
+   "stratum_pair": "resource->compute",
+   "producer_by_pair": "~B"
+  },
+  {
+   "source": "arn:aws:ec2:us-east-1:313476888478:instance/i-04373615f03fbf9a9",
+   "target": "pipeline:inf:gold:INF_B_02.canonical_lots",
+   "edge_type": "RUNS",
+   "level": "ec2",
+   "stratum_pair": "resource->compute",
+   "producer_by_pair": "~B"
+  },
+  {
+   "source": "arn:aws:ec2:us-east-1:313476888478:instance/i-04373615f03fbf9a9",
+   "target": "pipeline:inf:gold:INF_B_03.account_gains",
+   "edge_type": "RUNS",
+   "level": "ec2",
+   "stratum_pair": "resource->compute",
+   "producer_by_pair": "~B"
+  },
+  {
+   "source": "arn:aws:ec2:us-east-1:313476888478:instance/i-04373615f03fbf9a9",
+   "target": "pipeline:inf:gold:INF_C_00.canonical_performance",
+   "edge_type": "RUNS",
+   "level": "ec2",
+   "stratum_pair": "resource->compute",
+   "producer_by_pair": "~B"
+  },
+  {
+   "source": "arn:aws:ec2:us-east-1:313476888478:instance/i-04373615f03fbf9a9",
+   "target": "pipeline:inf:gold:INF_C_01.canonical_nna",
+   "edge_type": "RUNS",
+   "level": "ec2",
+   "stratum_pair": "resource->compute",
+   "producer_by_pair": "~B"
+  },
+  {
+   "source": "arn:aws:ec2:us-east-1:313476888478:instance/i-04373615f03fbf9a9",
+   "target": "pipeline:inf:gold:INF_C_01b.role_aua_backfill",
+   "edge_type": "RUNS",
+   "level": "ec2",
+   "stratum_pair": "resource->compute",
+   "producer_by_pair": "~B"
+  },
+  {
+   "source": "arn:aws:ec2:us-east-1:313476888478:instance/i-04373615f03fbf9a9",
+   "target": "pipeline:inf:gold:INF_C_02.client_performance",
+   "edge_type": "RUNS",
+   "level": "ec2",
+   "stratum_pair": "resource->compute",
+   "producer_by_pair": "~B"
+  },
+  {
+   "source": "arn:aws:ec2:us-east-1:313476888478:instance/i-04373615f03fbf9a9",
+   "target": "pipeline:inf:gold:INF_C_03.account_performance",
+   "edge_type": "RUNS",
+   "level": "ec2",
+   "stratum_pair": "resource->compute",
+   "producer_by_pair": "~B"
+  },
+  {
+   "source": "arn:aws:ec2:us-east-1:313476888478:instance/i-04373615f03fbf9a9",
+   "target": "pipeline:inf:gold:INF_C_04.validate_aua",
+   "edge_type": "RUNS",
+   "level": "ec2",
+   "stratum_pair": "resource->compute",
+   "producer_by_pair": "~B"
+  },
+  {
+   "source": "arn:aws:ec2:us-east-1:313476888478:instance/i-04373615f03fbf9a9",
+   "target": "pipeline:inf:gold:INF_C_05.client_tax_liability",
+   "edge_type": "RUNS",
+   "level": "ec2",
+   "stratum_pair": "resource->compute",
+   "producer_by_pair": "~B"
+  },
+  {
+   "source": "arn:aws:ec2:us-east-1:313476888478:instance/i-04373615f03fbf9a9",
+   "target": "pipeline:inf:gold:INF_C_06.client_mix_timeseries",
+   "edge_type": "RUNS",
+   "level": "ec2",
+   "stratum_pair": "resource->compute",
+   "producer_by_pair": "~B"
+  },
+  {
+   "source": "arn:aws:ec2:us-east-1:313476888478:instance/i-04373615f03fbf9a9",
+   "target": "pipeline:inf:gold:INF_C_07.advisor_attribution",
+   "edge_type": "RUNS",
+   "level": "ec2",
+   "stratum_pair": "resource->compute",
+   "producer_by_pair": "~B"
+  },
+  {
+   "source": "arn:aws:ec2:us-east-1:313476888478:instance/i-04373615f03fbf9a9",
+   "target": "pipeline:inf:gold:INF_C_08.advisor_fee_efficiency",
+   "edge_type": "RUNS",
+   "level": "ec2",
+   "stratum_pair": "resource->compute",
+   "producer_by_pair": "~B"
+  },
+  {
+   "source": "arn:aws:ec2:us-east-1:313476888478:instance/i-04373615f03fbf9a9",
+   "target": "pipeline:inf:gold:INF_C_09.fee_status_audit",
+   "edge_type": "RUNS",
+   "level": "ec2",
+   "stratum_pair": "resource->compute",
+   "producer_by_pair": "~B"
+  },
+  {
+   "source": "arn:aws:ec2:us-east-1:313476888478:instance/i-04373615f03fbf9a9",
+   "target": "pipeline:inf:gold:INF_D_00.portal_aggregates",
+   "edge_type": "RUNS",
+   "level": "ec2",
+   "stratum_pair": "resource->compute",
+   "producer_by_pair": "~B"
+  },
+  {
+   "source": "arn:aws:ec2:us-east-1:313476888478:instance/i-04373615f03fbf9a9",
+   "target": "pipeline:inf:gold:INF_D_00b.portal_timeseries",
+   "edge_type": "RUNS",
+   "level": "ec2",
+   "stratum_pair": "resource->compute",
+   "producer_by_pair": "~B"
+  },
+  {
+   "source": "arn:aws:ec2:us-east-1:313476888478:instance/i-04373615f03fbf9a9",
+   "target": "pipeline:inf:gold:INF_D_00c.portal_leaderboard",
+   "edge_type": "RUNS",
+   "level": "ec2",
+   "stratum_pair": "resource->compute",
+   "producer_by_pair": "~B"
+  },
+  {
+   "source": "arn:aws:ec2:us-east-1:313476888478:instance/i-04373615f03fbf9a9",
+   "target": "pipeline:inf:gold:INF_D_00d.cumulative_chart",
+   "edge_type": "RUNS",
+   "level": "ec2",
+   "stratum_pair": "resource->compute",
+   "producer_by_pair": "~B"
+  },
+  {
+   "source": "arn:aws:ec2:us-east-1:313476888478:instance/i-04373615f03fbf9a9",
+   "target": "pipeline:inf:gold:INF_D_00e.fresh_header_supplement",
+   "edge_type": "RUNS",
+   "level": "ec2",
+   "stratum_pair": "resource->compute",
+   "producer_by_pair": "~B"
+  },
+  {
+   "source": "arn:aws:ec2:us-east-1:313476888478:instance/i-04373615f03fbf9a9",
+   "target": "pipeline:inf:gold:INF_D_00f.advisor_nna_canonical",
+   "edge_type": "RUNS",
+   "level": "ec2",
+   "stratum_pair": "resource->compute",
+   "producer_by_pair": "~B"
+  },
+  {
+   "source": "arn:aws:ec2:us-east-1:313476888478:instance/i-04373615f03fbf9a9",
+   "target": "pipeline:inf:gold:INF_D_02.advisor_client_detail",
+   "edge_type": "RUNS",
+   "level": "ec2",
+   "stratum_pair": "resource->compute",
+   "producer_by_pair": "~B"
+  },
+  {
+   "source": "arn:aws:ec2:us-east-1:313476888478:instance/i-04373615f03fbf9a9",
+   "target": "pipeline:inf:gold:INF_D_02b.top_holdings",
+   "edge_type": "RUNS",
+   "level": "ec2",
+   "stratum_pair": "resource->compute",
+   "producer_by_pair": "~B"
+  },
+  {
+   "source": "arn:aws:ec2:us-east-1:313476888478:instance/i-04373615f03fbf9a9",
+   "target": "pipeline:inf:gold:INF_D_02c.client_directory",
+   "edge_type": "RUNS",
+   "level": "ec2",
+   "stratum_pair": "resource->compute",
+   "producer_by_pair": "~B"
+  },
+  {
+   "source": "arn:aws:ec2:us-east-1:313476888478:instance/i-04373615f03fbf9a9",
+   "target": "pipeline:inf:gold:INF_D_02d.firm_mix_summary",
+   "edge_type": "RUNS",
+   "level": "ec2",
+   "stratum_pair": "resource->compute",
+   "producer_by_pair": "~B"
+  },
+  {
+   "source": "arn:aws:ec2:us-east-1:313476888478:instance/i-04373615f03fbf9a9",
+   "target": "pipeline:inf:gold:INF_D_03.composition_artifacts",
+   "edge_type": "RUNS",
+   "level": "ec2",
+   "stratum_pair": "resource->compute",
+   "producer_by_pair": "~B"
+  },
+  {
+   "source": "arn:aws:ec2:us-east-1:313476888478:instance/i-04373615f03fbf9a9",
+   "target": "pipeline:inf:gold:INF_D_04.client_portal_summary",
+   "edge_type": "RUNS",
+   "level": "ec2",
+   "stratum_pair": "resource->compute",
+   "producer_by_pair": "~B"
+  },
+  {
+   "source": "arn:aws:ec2:us-east-1:313476888478:instance/i-04373615f03fbf9a9",
+   "target": "pipeline:inf:gold:INF_D_04b.client_publishers",
+   "edge_type": "RUNS",
+   "level": "ec2",
+   "stratum_pair": "resource->compute",
+   "producer_by_pair": "~B"
+  },
+  {
+   "source": "arn:aws:ec2:us-east-1:313476888478:instance/i-04373615f03fbf9a9",
+   "target": "pipeline:inf:gold:INF_D_05.activity_scan",
+   "edge_type": "RUNS",
+   "level": "ec2",
+   "stratum_pair": "resource->compute",
+   "producer_by_pair": "~B"
+  },
+  {
+   "source": "arn:aws:ec2:us-east-1:313476888478:instance/i-04373615f03fbf9a9",
+   "target": "pipeline:inf:gold:INF_D_05.client_top_holdings",
+   "edge_type": "RUNS",
+   "level": "ec2",
+   "stratum_pair": "resource->compute",
+   "producer_by_pair": "~B"
+  },
+  {
+   "source": "arn:aws:ec2:us-east-1:313476888478:instance/i-04373615f03fbf9a9",
+   "target": "pipeline:inf:gold:INF_D_06.cash_drag",
+   "edge_type": "RUNS",
+   "level": "ec2",
+   "stratum_pair": "resource->compute",
+   "producer_by_pair": "~B"
+  },
+  {
+   "source": "arn:aws:ec2:us-east-1:313476888478:instance/i-04373615f03fbf9a9",
+   "target": "pipeline:inf:gold:INF_D_06.client_timeseries",
+   "edge_type": "RUNS",
+   "level": "ec2",
+   "stratum_pair": "resource->compute",
+   "producer_by_pair": "~B"
+  },
+  {
+   "source": "arn:aws:ec2:us-east-1:313476888478:instance/i-04373615f03fbf9a9",
+   "target": "pipeline:inf:gold:INF_D_07.concentration_risk",
+   "edge_type": "RUNS",
+   "level": "ec2",
+   "stratum_pair": "resource->compute",
+   "producer_by_pair": "~B"
+  },
+  {
+   "source": "arn:aws:ec2:us-east-1:313476888478:instance/i-04373615f03fbf9a9",
+   "target": "pipeline:inf:gold:INF_D_07a.firm_concentrations",
+   "edge_type": "RUNS",
+   "level": "ec2",
+   "stratum_pair": "resource->compute",
+   "producer_by_pair": "~B"
+  },
+  {
+   "source": "arn:aws:ec2:us-east-1:313476888478:instance/i-04373615f03fbf9a9",
+   "target": "pipeline:inf:gold:INF_D_08.nmec_nmnc_nna",
+   "edge_type": "RUNS",
+   "level": "ec2",
+   "stratum_pair": "resource->compute",
+   "producer_by_pair": "~B"
+  },
+  {
+   "source": "arn:aws:ec2:us-east-1:313476888478:instance/i-04373615f03fbf9a9",
+   "target": "pipeline:inf:gold:INF_D_09.account_timeseries",
+   "edge_type": "RUNS",
+   "level": "ec2",
+   "stratum_pair": "resource->compute",
+   "producer_by_pair": "~B"
+  },
+  {
+   "source": "arn:aws:ec2:us-east-1:313476888478:instance/i-04373615f03fbf9a9",
+   "target": "pipeline:inf:gold:INF_E_00.eclipse_model_portfolios",
+   "edge_type": "RUNS",
+   "level": "ec2",
+   "stratum_pair": "resource->compute",
+   "producer_by_pair": "~B"
+  },
+  {
+   "source": "arn:aws:ec2:us-east-1:313476888478:instance/i-04373615f03fbf9a9",
+   "target": "pipeline:inf:gold:INF_build_canonical_prices",
+   "edge_type": "RUNS",
+   "level": "ec2",
+   "stratum_pair": "resource->compute",
+   "producer_by_pair": "~B"
+  },
+  {
+   "source": "arn:aws:ec2:us-east-1:313476888478:instance/i-04373615f03fbf9a9",
+   "target": "pipeline:inf:gold:INF_run_c_chain",
+   "edge_type": "RUNS",
+   "level": "ec2",
+   "stratum_pair": "resource->compute",
+   "producer_by_pair": "~B"
+  },
+  {
+   "source": "arn:aws:ec2:us-east-1:313476888478:instance/i-01003b035d2988dfb",
+   "target": "pipeline:bd:gold:A_00.accounts_dimension",
+   "edge_type": "RUNS",
+   "level": "ec2",
+   "stratum_pair": "resource->compute",
+   "producer_by_pair": "~B"
+  },
+  {
+   "source": "arn:aws:ec2:us-east-1:313476888478:instance/i-01003b035d2988dfb",
+   "target": "pipeline:bd:gold:A_01.advisor_assignments",
+   "edge_type": "RUNS",
+   "level": "ec2",
+   "stratum_pair": "resource->compute",
+   "producer_by_pair": "~B"
+  },
+  {
+   "source": "arn:aws:ec2:us-east-1:313476888478:instance/i-01003b035d2988dfb",
+   "target": "pipeline:bd:gold:A_02.fee_rate_history",
+   "edge_type": "RUNS",
+   "level": "ec2",
+   "stratum_pair": "resource->compute",
+   "producer_by_pair": "~B"
+  },
+  {
+   "source": "arn:aws:ec2:us-east-1:313476888478:instance/i-01003b035d2988dfb",
+   "target": "pipeline:bd:gold:A_03.positions_cube",
+   "edge_type": "RUNS",
+   "level": "ec2",
+   "stratum_pair": "resource->compute",
+   "producer_by_pair": "~B"
+  },
+  {
+   "source": "arn:aws:ec2:us-east-1:313476888478:instance/i-01003b035d2988dfb",
+   "target": "pipeline:bd:gold:A_04.client_dimension",
+   "edge_type": "RUNS",
+   "level": "ec2",
+   "stratum_pair": "resource->compute",
+   "producer_by_pair": "~B"
+  },
+  {
+   "source": "arn:aws:ec2:us-east-1:313476888478:instance/i-01003b035d2988dfb",
+   "target": "pipeline:bd:gold:B_00.canonical_holdings",
+   "edge_type": "RUNS",
+   "level": "ec2",
+   "stratum_pair": "resource->compute",
+   "producer_by_pair": "~B"
+  },
+  {
+   "source": "arn:aws:ec2:us-east-1:313476888478:instance/i-01003b035d2988dfb",
+   "target": "pipeline:bd:gold:B_01.holdings_lots",
+   "edge_type": "RUNS",
+   "level": "ec2",
+   "stratum_pair": "resource->compute",
+   "producer_by_pair": "~B"
+  },
+  {
+   "source": "arn:aws:ec2:us-east-1:313476888478:instance/i-01003b035d2988dfb",
+   "target": "pipeline:bd:gold:B_01b.classify_new_securities",
+   "edge_type": "RUNS",
+   "level": "ec2",
+   "stratum_pair": "resource->compute",
+   "producer_by_pair": "~B"
+  },
+  {
+   "source": "arn:aws:ec2:us-east-1:313476888478:instance/i-01003b035d2988dfb",
+   "target": "pipeline:bd:gold:B_02.canonical_lots",
+   "edge_type": "RUNS",
+   "level": "ec2",
+   "stratum_pair": "resource->compute",
+   "producer_by_pair": "~B"
+  },
+  {
+   "source": "arn:aws:ec2:us-east-1:313476888478:instance/i-01003b035d2988dfb",
+   "target": "pipeline:bd:gold:B_03.account_gains",
+   "edge_type": "RUNS",
+   "level": "ec2",
+   "stratum_pair": "resource->compute",
+   "producer_by_pair": "~B"
+  },
+  {
+   "source": "arn:aws:ec2:us-east-1:313476888478:instance/i-01003b035d2988dfb",
+   "target": "pipeline:bd:gold:C_00.canonical_performance",
+   "edge_type": "RUNS",
+   "level": "ec2",
+   "stratum_pair": "resource->compute",
+   "producer_by_pair": "~B"
+  },
+  {
+   "source": "arn:aws:ec2:us-east-1:313476888478:instance/i-01003b035d2988dfb",
+   "target": "pipeline:bd:gold:C_01.canonical_nna",
+   "edge_type": "RUNS",
+   "level": "ec2",
+   "stratum_pair": "resource->compute",
+   "producer_by_pair": "~B"
+  },
+  {
+   "source": "arn:aws:ec2:us-east-1:313476888478:instance/i-01003b035d2988dfb",
+   "target": "pipeline:bd:gold:C_01b.role_aua_backfill",
+   "edge_type": "RUNS",
+   "level": "ec2",
+   "stratum_pair": "resource->compute",
+   "producer_by_pair": "~B"
+  },
+  {
+   "source": "arn:aws:ec2:us-east-1:313476888478:instance/i-01003b035d2988dfb",
+   "target": "pipeline:bd:gold:C_01c.role_aua_flow_join",
+   "edge_type": "RUNS",
+   "level": "ec2",
+   "stratum_pair": "resource->compute",
+   "producer_by_pair": "~B"
+  },
+  {
+   "source": "arn:aws:ec2:us-east-1:313476888478:instance/i-01003b035d2988dfb",
+   "target": "pipeline:bd:gold:C_02.client_performance",
+   "edge_type": "RUNS",
+   "level": "ec2",
+   "stratum_pair": "resource->compute",
+   "producer_by_pair": "~B"
+  },
+  {
+   "source": "arn:aws:ec2:us-east-1:313476888478:instance/i-01003b035d2988dfb",
+   "target": "pipeline:bd:gold:C_03.account_performance",
+   "edge_type": "RUNS",
+   "level": "ec2",
+   "stratum_pair": "resource->compute",
+   "producer_by_pair": "~B"
+  },
+  {
+   "source": "arn:aws:ec2:us-east-1:313476888478:instance/i-01003b035d2988dfb",
+   "target": "pipeline:bd:gold:C_04.validate_aua",
+   "edge_type": "RUNS",
+   "level": "ec2",
+   "stratum_pair": "resource->compute",
+   "producer_by_pair": "~B"
+  },
+  {
+   "source": "arn:aws:ec2:us-east-1:313476888478:instance/i-01003b035d2988dfb",
+   "target": "pipeline:bd:gold:C_05.client_tax_liability",
+   "edge_type": "RUNS",
+   "level": "ec2",
+   "stratum_pair": "resource->compute",
+   "producer_by_pair": "~B"
+  },
+  {
+   "source": "arn:aws:ec2:us-east-1:313476888478:instance/i-01003b035d2988dfb",
+   "target": "pipeline:bd:gold:C_06.client_mix_timeseries",
+   "edge_type": "RUNS",
+   "level": "ec2",
+   "stratum_pair": "resource->compute",
+   "producer_by_pair": "~B"
+  },
+  {
+   "source": "arn:aws:ec2:us-east-1:313476888478:instance/i-01003b035d2988dfb",
+   "target": "pipeline:bd:gold:C_07.advisor_attribution",
+   "edge_type": "RUNS",
+   "level": "ec2",
+   "stratum_pair": "resource->compute",
+   "producer_by_pair": "~B"
+  },
+  {
+   "source": "arn:aws:ec2:us-east-1:313476888478:instance/i-01003b035d2988dfb",
+   "target": "pipeline:bd:gold:C_08.advisor_fee_efficiency",
+   "edge_type": "RUNS",
+   "level": "ec2",
+   "stratum_pair": "resource->compute",
+   "producer_by_pair": "~B"
+  },
+  {
+   "source": "arn:aws:ec2:us-east-1:313476888478:instance/i-01003b035d2988dfb",
+   "target": "pipeline:bd:gold:D_00.portal_aggregates",
+   "edge_type": "RUNS",
+   "level": "ec2",
+   "stratum_pair": "resource->compute",
+   "producer_by_pair": "~B"
+  },
+  {
+   "source": "arn:aws:ec2:us-east-1:313476888478:instance/i-01003b035d2988dfb",
+   "target": "pipeline:bd:gold:D_00b.portal_timeseries",
+   "edge_type": "RUNS",
+   "level": "ec2",
+   "stratum_pair": "resource->compute",
+   "producer_by_pair": "~B"
+  },
+  {
+   "source": "arn:aws:ec2:us-east-1:313476888478:instance/i-01003b035d2988dfb",
+   "target": "pipeline:bd:gold:D_00c.portal_leaderboard",
+   "edge_type": "RUNS",
+   "level": "ec2",
+   "stratum_pair": "resource->compute",
+   "producer_by_pair": "~B"
+  },
+  {
+   "source": "arn:aws:ec2:us-east-1:313476888478:instance/i-01003b035d2988dfb",
+   "target": "pipeline:bd:gold:D_00f.advisor_nna_canonical",
+   "edge_type": "RUNS",
+   "level": "ec2",
+   "stratum_pair": "resource->compute",
+   "producer_by_pair": "~B"
+  },
+  {
+   "source": "arn:aws:ec2:us-east-1:313476888478:instance/i-01003b035d2988dfb",
+   "target": "pipeline:bd:gold:D_01.partner_analytics",
+   "edge_type": "RUNS",
+   "level": "ec2",
+   "stratum_pair": "resource->compute",
+   "producer_by_pair": "~B"
+  },
+  {
+   "source": "arn:aws:ec2:us-east-1:313476888478:instance/i-01003b035d2988dfb",
+   "target": "pipeline:bd:gold:D_02.advisor_client_detail",
+   "edge_type": "RUNS",
+   "level": "ec2",
+   "stratum_pair": "resource->compute",
+   "producer_by_pair": "~B"
+  },
+  {
+   "source": "arn:aws:ec2:us-east-1:313476888478:instance/i-01003b035d2988dfb",
+   "target": "pipeline:bd:gold:D_03.composition_artifacts",
+   "edge_type": "RUNS",
+   "level": "ec2",
+   "stratum_pair": "resource->compute",
+   "producer_by_pair": "~B"
+  },
+  {
+   "source": "arn:aws:ec2:us-east-1:313476888478:instance/i-01003b035d2988dfb",
+   "target": "pipeline:bd:gold:D_04.client_portal_summary",
+   "edge_type": "RUNS",
+   "level": "ec2",
+   "stratum_pair": "resource->compute",
+   "producer_by_pair": "~B"
+  },
+  {
+   "source": "arn:aws:ec2:us-east-1:313476888478:instance/i-01003b035d2988dfb",
+   "target": "pipeline:bd:gold:E_00.decompose_aua_gap",
+   "edge_type": "RUNS",
+   "level": "ec2",
+   "stratum_pair": "resource->compute",
+   "producer_by_pair": "~B"
+  },
+  {
+   "source": "arn:aws:ec2:us-east-1:313476888478:instance/i-01003b035d2988dfb",
+   "target": "pipeline:bd:gold:E_01.account_quality_tiers",
+   "edge_type": "RUNS",
+   "level": "ec2",
+   "stratum_pair": "resource->compute",
+   "producer_by_pair": "~B"
+  },
+  {
+   "source": "arn:aws:ec2:us-east-1:313476888478:instance/i-01003b035d2988dfb",
+   "target": "pipeline:bd:gold:E_02.diagnose_positions_cube",
+   "edge_type": "RUNS",
+   "level": "ec2",
+   "stratum_pair": "resource->compute",
+   "producer_by_pair": "~B"
+  },
+  {
+   "source": "arn:aws:ec2:us-east-1:313476888478:instance/i-01003b035d2988dfb",
+   "target": "pipeline:bd:gold:E_03.trace_account_cube",
+   "edge_type": "RUNS",
+   "level": "ec2",
+   "stratum_pair": "resource->compute",
+   "producer_by_pair": "~B"
+  },
+  {
+   "source": "arn:aws:ec2:us-east-1:313476888478:instance/i-01003b035d2988dfb",
+   "target": "pipeline:bd:gold:E_04.dedup_audit",
+   "edge_type": "RUNS",
+   "level": "ec2",
+   "stratum_pair": "resource->compute",
+   "producer_by_pair": "~B"
+  },
+  {
+   "source": "arn:aws:ec2:us-east-1:313476888478:instance/i-01003b035d2988dfb",
+   "target": "pipeline:bd:gold:E_05.gap_by_pricing_source",
+   "edge_type": "RUNS",
+   "level": "ec2",
+   "stratum_pair": "resource->compute",
+   "producer_by_pair": "~B"
+  },
+  {
+   "source": "arn:aws:ec2:us-east-1:313476888478:instance/i-01003b035d2988dfb",
+   "target": "pipeline:bd:gold:E_06.trace_asset_pricing",
+   "edge_type": "RUNS",
+   "level": "ec2",
+   "stratum_pair": "resource->compute",
+   "producer_by_pair": "~B"
+  },
+  {
+   "source": "arn:aws:ec2:us-east-1:313476888478:instance/i-01003b035d2988dfb",
+   "target": "pipeline:bd:gold:E_07.account_gap_buckets",
+   "edge_type": "RUNS",
+   "level": "ec2",
+   "stratum_pair": "resource->compute",
+   "producer_by_pair": "~B"
+  },
+  {
+   "source": "arn:aws:ec2:us-east-1:313476888478:instance/i-01003b035d2988dfb",
+   "target": "pipeline:bd:gold:E_08.tail_asset_drill",
+   "edge_type": "RUNS",
+   "level": "ec2",
+   "stratum_pair": "resource->compute",
+   "producer_by_pair": "~B"
+  },
+  {
+   "source": "arn:aws:ec2:us-east-1:313476888478:instance/i-01003b035d2988dfb",
+   "target": "pipeline:bd:gold:E_09.unrecognized_exit_types",
+   "edge_type": "RUNS",
+   "level": "ec2",
+   "stratum_pair": "resource->compute",
+   "producer_by_pair": "~B"
+  },
+  {
+   "source": "arn:aws:ec2:us-east-1:313476888478:instance/i-01003b035d2988dfb",
+   "target": "pipeline:bd:gold:E_10.validate_ffill_cap",
+   "edge_type": "RUNS",
+   "level": "ec2",
+   "stratum_pair": "resource->compute",
+   "producer_by_pair": "~B"
+  },
+  {
+   "source": "arn:aws:ec2:us-east-1:313476888478:instance/i-01003b035d2988dfb",
+   "target": "pipeline:bd:gold:E_11.unmatched_asset_analysis",
+   "edge_type": "RUNS",
+   "level": "ec2",
+   "stratum_pair": "resource->compute",
+   "producer_by_pair": "~B"
+  },
+  {
+   "source": "arn:aws:ec2:us-east-1:313476888478:instance/i-01003b035d2988dfb",
+   "target": "pipeline:bd:gold:E_12.dump_all_non_yahoo",
+   "edge_type": "RUNS",
+   "level": "ec2",
+   "stratum_pair": "resource->compute",
+   "producer_by_pair": "~B"
+  },
+  {
+   "source": "arn:aws:ec2:us-east-1:313476888478:instance/i-01003b035d2988dfb",
+   "target": "pipeline:bd:gold:E_13.tail_decomposition",
+   "edge_type": "RUNS",
+   "level": "ec2",
+   "stratum_pair": "resource->compute",
+   "producer_by_pair": "~B"
+  },
+  {
+   "source": "arn:aws:ec2:us-east-1:313476888478:instance/i-01003b035d2988dfb",
+   "target": "pipeline:bd:gold:E_14.audit_existing_mappings",
+   "edge_type": "RUNS",
+   "level": "ec2",
+   "stratum_pair": "resource->compute",
+   "producer_by_pair": "~B"
+  },
+  {
+   "source": "arn:aws:ec2:us-east-1:313476888478:instance/i-01003b035d2988dfb",
+   "target": "pipeline:bd:gold:E_15.validate_yf_overrides",
+   "edge_type": "RUNS",
+   "level": "ec2",
+   "stratum_pair": "resource->compute",
+   "producer_by_pair": "~B"
+  },
+  {
+   "source": "arn:aws:ec2:us-east-1:313476888478:instance/i-01003b035d2988dfb",
+   "target": "pipeline:bd:gold:E_16.unit_math_audit",
+   "edge_type": "RUNS",
+   "level": "ec2",
+   "stratum_pair": "resource->compute",
+   "producer_by_pair": "~B"
+  },
+  {
+   "source": "arn:aws:ec2:us-east-1:313476888478:instance/i-01003b035d2988dfb",
+   "target": "pipeline:bd:gold:E_17.check_49f_tickers",
+   "edge_type": "RUNS",
+   "level": "ec2",
+   "stratum_pair": "resource->compute",
+   "producer_by_pair": "~B"
+  },
+  {
+   "source": "arn:aws:ec2:us-east-1:313476888478:instance/i-01003b035d2988dfb",
+   "target": "pipeline:bd:gold:E_18.detect_new_securities",
+   "edge_type": "RUNS",
+   "level": "ec2",
+   "stratum_pair": "resource->compute",
+   "producer_by_pair": "~B"
+  },
+  {
+   "source": "arn:aws:ec2:us-east-1:313476888478:instance/i-01003b035d2988dfb",
+   "target": "pipeline:bd:gold:E_19.write_aua_certification",
+   "edge_type": "RUNS",
+   "level": "ec2",
+   "stratum_pair": "resource->compute",
+   "producer_by_pair": "~B"
+  },
+  {
+   "source": "arn:aws:ec2:us-east-1:313476888478:instance/i-01003b035d2988dfb",
+   "target": "pipeline:bd:gold:E_20.cross_script_validation",
+   "edge_type": "RUNS",
+   "level": "ec2",
+   "stratum_pair": "resource->compute",
+   "producer_by_pair": "~B"
+  },
+  {
+   "source": "arn:aws:ec2:us-east-1:313476888478:instance/i-01003b035d2988dfb",
+   "target": "pipeline:bd:gold:E_21.generate_reconciliation_reference",
+   "edge_type": "RUNS",
+   "level": "ec2",
+   "stratum_pair": "resource->compute",
+   "producer_by_pair": "~B"
+  },
+  {
+   "source": "arn:aws:ec2:us-east-1:313476888478:instance/i-01003b035d2988dfb",
+   "target": "pipeline:bd:gold:E_22.diagnose_unassigned_accounts",
+   "edge_type": "RUNS",
+   "level": "ec2",
+   "stratum_pair": "resource->compute",
+   "producer_by_pair": "~B"
+  },
+  {
+   "source": "arn:aws:ec2:us-east-1:313476888478:instance/i-01003b035d2988dfb",
+   "target": "pipeline:bd:gold:E_23.diagnose_fee_splits",
+   "edge_type": "RUNS",
+   "level": "ec2",
+   "stratum_pair": "resource->compute",
+   "producer_by_pair": "~B"
+  },
+  {
+   "source": "arn:aws:ec2:us-east-1:313476888478:instance/i-01003b035d2988dfb",
+   "target": "pipeline:bd:gold:E_24.rebuild_fee_scorecard",
+   "edge_type": "RUNS",
+   "level": "ec2",
+   "stratum_pair": "resource->compute",
+   "producer_by_pair": "~B"
+  },
+  {
+   "source": "arn:aws:ec2:us-east-1:313476888478:instance/i-01003b035d2988dfb",
+   "target": "pipeline:bd:gold:E_25.aua_decomposition_audit",
+   "edge_type": "RUNS",
+   "level": "ec2",
+   "stratum_pair": "resource->compute",
+   "producer_by_pair": "~B"
+  },
+  {
+   "source": "arn:aws:ec2:us-east-1:313476888478:instance/i-01003b035d2988dfb",
+   "target": "pipeline:bd:gold:build_canonical_prices_v2",
+   "edge_type": "RUNS",
+   "level": "ec2",
+   "stratum_pair": "resource->compute",
+   "producer_by_pair": "~B"
+  },
+  {
+   "source": "arn:aws:ec2:us-east-1:313476888478:instance/i-01003b035d2988dfb",
+   "target": "pipeline:bd:gold:diag_sleeve_fix",
+   "edge_type": "RUNS",
+   "level": "ec2",
+   "stratum_pair": "resource->compute",
+   "producer_by_pair": "~B"
+  },
+  {
+   "source": "arn:aws:ec2:us-east-1:313476888478:instance/i-01003b035d2988dfb",
+   "target": "pipeline:bd:gold:gldinc_p1_shadow",
+   "edge_type": "RUNS",
+   "level": "ec2",
+   "stratum_pair": "resource->compute",
+   "producer_by_pair": "~B"
+  },
+  {
+   "source": "arn:aws:ec2:us-east-1:313476888478:instance/i-01003b035d2988dfb",
+   "target": "pipeline:bd:gold:gldinc_ss4c_weekly",
+   "edge_type": "RUNS",
+   "level": "ec2",
+   "stratum_pair": "resource->compute",
+   "producer_by_pair": "~B"
+  },
+  {
+   "source": "arn:aws:ec2:us-east-1:313476888478:instance/i-01003b035d2988dfb",
+   "target": "pipeline:bd:gold:gold_prof",
+   "edge_type": "RUNS",
+   "level": "ec2",
+   "stratum_pair": "resource->compute",
+   "producer_by_pair": "~B"
+  },
+  {
+   "source": "arn:aws:ec2:us-east-1:313476888478:instance/i-01003b035d2988dfb",
+   "target": "pipeline:bd:gold:run_b00_auagap002",
+   "edge_type": "RUNS",
+   "level": "ec2",
+   "stratum_pair": "resource->compute",
+   "producer_by_pair": "~B"
+  },
+  {
+   "source": "arn:aws:ec2:us-east-1:313476888478:instance/i-01003b035d2988dfb",
+   "target": "pipeline:bd:gold:run_b03_auagap002",
+   "edge_type": "RUNS",
+   "level": "ec2",
+   "stratum_pair": "resource->compute",
+   "producer_by_pair": "~B"
+  },
+  {
+   "source": "arn:aws:ec2:us-east-1:313476888478:instance/i-01003b035d2988dfb",
+   "target": "pipeline:bd:gold:run_c00_auagap002",
+   "edge_type": "RUNS",
+   "level": "ec2",
+   "stratum_pair": "resource->compute",
+   "producer_by_pair": "~B"
+  },
+  {
+   "source": "arn:aws:ec2:us-east-1:313476888478:instance/i-01003b035d2988dfb",
+   "target": "pipeline:bd:gold:run_c01c_rap1c",
+   "edge_type": "RUNS",
+   "level": "ec2",
+   "stratum_pair": "resource->compute",
+   "producer_by_pair": "~B"
+  },
+  {
+   "source": "arn:aws:ec2:us-east-1:313476888478:instance/i-01003b035d2988dfb",
+   "target": "pipeline:bd:gold:run_c02_auagap002",
+   "edge_type": "RUNS",
+   "level": "ec2",
+   "stratum_pair": "resource->compute",
+   "producer_by_pair": "~B"
+  },
+  {
+   "source": "arn:aws:ec2:us-east-1:313476888478:instance/i-01003b035d2988dfb",
+   "target": "pipeline:bd:gold:run_c03_auagap002",
+   "edge_type": "RUNS",
+   "level": "ec2",
+   "stratum_pair": "resource->compute",
+   "producer_by_pair": "~B"
+  },
+  {
+   "source": "arn:aws:ec2:us-east-1:313476888478:instance/i-01003b035d2988dfb",
+   "target": "pipeline:bd:gold:test_gldinc_cache_roundtrip",
+   "edge_type": "RUNS",
+   "level": "ec2",
+   "stratum_pair": "resource->compute",
+   "producer_by_pair": "~B"
+  },
+  {
+   "source": "arn:aws:ec2:us-east-1:313476888478:instance/i-01003b035d2988dfb",
+   "target": "pipeline:bd:gold:validate_platinum_consistency",
+   "edge_type": "RUNS",
+   "level": "ec2",
+   "stratum_pair": "resource->compute",
+   "producer_by_pair": "~B"
+  },
+  {
+   "source": "arn:aws:ec2:us-east-1:313476888478:instance/i-01003b035d2988dfb",
+   "target": "pipeline:bd:gold:validate_sl_nightly_gate",
+   "edge_type": "RUNS",
+   "level": "ec2",
+   "stratum_pair": "resource->compute",
+   "producer_by_pair": "~B"
+  },
+  {
+   "source": "arn:aws:ec2:us-east-1:313476888478:instance/i-0090b823a4a0997e3",
+   "target": "pipeline:bd:gold:A_00.accounts_dimension",
+   "edge_type": "RUNS",
+   "level": "ec2",
+   "stratum_pair": "resource->compute",
+   "producer_by_pair": "~B"
+  },
+  {
+   "source": "arn:aws:ec2:us-east-1:313476888478:instance/i-0090b823a4a0997e3",
+   "target": "pipeline:bd:gold:A_01.advisor_assignments",
+   "edge_type": "RUNS",
+   "level": "ec2",
+   "stratum_pair": "resource->compute",
+   "producer_by_pair": "~B"
+  },
+  {
+   "source": "arn:aws:ec2:us-east-1:313476888478:instance/i-0090b823a4a0997e3",
+   "target": "pipeline:bd:gold:A_02.fee_rate_history",
+   "edge_type": "RUNS",
+   "level": "ec2",
+   "stratum_pair": "resource->compute",
+   "producer_by_pair": "~B"
+  },
+  {
+   "source": "arn:aws:ec2:us-east-1:313476888478:instance/i-0090b823a4a0997e3",
+   "target": "pipeline:bd:gold:A_03.positions_cube",
+   "edge_type": "RUNS",
+   "level": "ec2",
+   "stratum_pair": "resource->compute",
+   "producer_by_pair": "~B"
+  },
+  {
+   "source": "arn:aws:ec2:us-east-1:313476888478:instance/i-0090b823a4a0997e3",
+   "target": "pipeline:bd:gold:A_04.client_dimension",
+   "edge_type": "RUNS",
+   "level": "ec2",
+   "stratum_pair": "resource->compute",
+   "producer_by_pair": "~B"
+  },
+  {
+   "source": "arn:aws:ec2:us-east-1:313476888478:instance/i-0090b823a4a0997e3",
+   "target": "pipeline:bd:gold:B_00.canonical_holdings",
+   "edge_type": "RUNS",
+   "level": "ec2",
+   "stratum_pair": "resource->compute",
+   "producer_by_pair": "~B"
+  },
+  {
+   "source": "arn:aws:ec2:us-east-1:313476888478:instance/i-0090b823a4a0997e3",
+   "target": "pipeline:bd:gold:B_01.holdings_lots",
+   "edge_type": "RUNS",
+   "level": "ec2",
+   "stratum_pair": "resource->compute",
+   "producer_by_pair": "~B"
+  },
+  {
+   "source": "arn:aws:ec2:us-east-1:313476888478:instance/i-0090b823a4a0997e3",
+   "target": "pipeline:bd:gold:B_01b.classify_new_securities",
+   "edge_type": "RUNS",
+   "level": "ec2",
+   "stratum_pair": "resource->compute",
+   "producer_by_pair": "~B"
+  },
+  {
+   "source": "arn:aws:ec2:us-east-1:313476888478:instance/i-0090b823a4a0997e3",
+   "target": "pipeline:bd:gold:B_02.canonical_lots",
+   "edge_type": "RUNS",
+   "level": "ec2",
+   "stratum_pair": "resource->compute",
+   "producer_by_pair": "~B"
+  },
+  {
+   "source": "arn:aws:ec2:us-east-1:313476888478:instance/i-0090b823a4a0997e3",
+   "target": "pipeline:bd:gold:B_03.account_gains",
+   "edge_type": "RUNS",
+   "level": "ec2",
+   "stratum_pair": "resource->compute",
+   "producer_by_pair": "~B"
+  },
+  {
+   "source": "arn:aws:ec2:us-east-1:313476888478:instance/i-0090b823a4a0997e3",
+   "target": "pipeline:bd:gold:C_00.canonical_performance",
+   "edge_type": "RUNS",
+   "level": "ec2",
+   "stratum_pair": "resource->compute",
+   "producer_by_pair": "~B"
+  },
+  {
+   "source": "arn:aws:ec2:us-east-1:313476888478:instance/i-0090b823a4a0997e3",
+   "target": "pipeline:bd:gold:C_01.canonical_nna",
+   "edge_type": "RUNS",
+   "level": "ec2",
+   "stratum_pair": "resource->compute",
+   "producer_by_pair": "~B"
+  },
+  {
+   "source": "arn:aws:ec2:us-east-1:313476888478:instance/i-0090b823a4a0997e3",
+   "target": "pipeline:bd:gold:C_01b.role_aua_backfill",
+   "edge_type": "RUNS",
+   "level": "ec2",
+   "stratum_pair": "resource->compute",
+   "producer_by_pair": "~B"
+  },
+  {
+   "source": "arn:aws:ec2:us-east-1:313476888478:instance/i-0090b823a4a0997e3",
+   "target": "pipeline:bd:gold:C_01c.role_aua_flow_join",
+   "edge_type": "RUNS",
+   "level": "ec2",
+   "stratum_pair": "resource->compute",
+   "producer_by_pair": "~B"
+  },
+  {
+   "source": "arn:aws:ec2:us-east-1:313476888478:instance/i-0090b823a4a0997e3",
+   "target": "pipeline:bd:gold:C_02.client_performance",
+   "edge_type": "RUNS",
+   "level": "ec2",
+   "stratum_pair": "resource->compute",
+   "producer_by_pair": "~B"
+  },
+  {
+   "source": "arn:aws:ec2:us-east-1:313476888478:instance/i-0090b823a4a0997e3",
+   "target": "pipeline:bd:gold:C_03.account_performance",
+   "edge_type": "RUNS",
+   "level": "ec2",
+   "stratum_pair": "resource->compute",
+   "producer_by_pair": "~B"
+  },
+  {
+   "source": "arn:aws:ec2:us-east-1:313476888478:instance/i-0090b823a4a0997e3",
+   "target": "pipeline:bd:gold:C_04.validate_aua",
+   "edge_type": "RUNS",
+   "level": "ec2",
+   "stratum_pair": "resource->compute",
+   "producer_by_pair": "~B"
+  },
+  {
+   "source": "arn:aws:ec2:us-east-1:313476888478:instance/i-0090b823a4a0997e3",
+   "target": "pipeline:bd:gold:C_05.client_tax_liability",
+   "edge_type": "RUNS",
+   "level": "ec2",
+   "stratum_pair": "resource->compute",
+   "producer_by_pair": "~B"
+  },
+  {
+   "source": "arn:aws:ec2:us-east-1:313476888478:instance/i-0090b823a4a0997e3",
+   "target": "pipeline:bd:gold:C_06.client_mix_timeseries",
+   "edge_type": "RUNS",
+   "level": "ec2",
+   "stratum_pair": "resource->compute",
+   "producer_by_pair": "~B"
+  },
+  {
+   "source": "arn:aws:ec2:us-east-1:313476888478:instance/i-0090b823a4a0997e3",
+   "target": "pipeline:bd:gold:C_07.advisor_attribution",
+   "edge_type": "RUNS",
+   "level": "ec2",
+   "stratum_pair": "resource->compute",
+   "producer_by_pair": "~B"
+  },
+  {
+   "source": "arn:aws:ec2:us-east-1:313476888478:instance/i-0090b823a4a0997e3",
+   "target": "pipeline:bd:gold:C_08.advisor_fee_efficiency",
+   "edge_type": "RUNS",
+   "level": "ec2",
+   "stratum_pair": "resource->compute",
+   "producer_by_pair": "~B"
+  },
+  {
+   "source": "arn:aws:ec2:us-east-1:313476888478:instance/i-0090b823a4a0997e3",
+   "target": "pipeline:bd:gold:D_00.portal_aggregates",
+   "edge_type": "RUNS",
+   "level": "ec2",
+   "stratum_pair": "resource->compute",
+   "producer_by_pair": "~B"
+  },
+  {
+   "source": "arn:aws:ec2:us-east-1:313476888478:instance/i-0090b823a4a0997e3",
+   "target": "pipeline:bd:gold:D_00b.portal_timeseries",
+   "edge_type": "RUNS",
+   "level": "ec2",
+   "stratum_pair": "resource->compute",
+   "producer_by_pair": "~B"
+  },
+  {
+   "source": "arn:aws:ec2:us-east-1:313476888478:instance/i-0090b823a4a0997e3",
+   "target": "pipeline:bd:gold:D_00c.portal_leaderboard",
+   "edge_type": "RUNS",
+   "level": "ec2",
+   "stratum_pair": "resource->compute",
+   "producer_by_pair": "~B"
+  },
+  {
+   "source": "arn:aws:ec2:us-east-1:313476888478:instance/i-0090b823a4a0997e3",
+   "target": "pipeline:bd:gold:D_00f.advisor_nna_canonical",
+   "edge_type": "RUNS",
+   "level": "ec2",
+   "stratum_pair": "resource->compute",
+   "producer_by_pair": "~B"
+  },
+  {
+   "source": "arn:aws:ec2:us-east-1:313476888478:instance/i-0090b823a4a0997e3",
+   "target": "pipeline:bd:gold:D_01.partner_analytics",
+   "edge_type": "RUNS",
+   "level": "ec2",
+   "stratum_pair": "resource->compute",
+   "producer_by_pair": "~B"
+  },
+  {
+   "source": "arn:aws:ec2:us-east-1:313476888478:instance/i-0090b823a4a0997e3",
+   "target": "pipeline:bd:gold:D_02.advisor_client_detail",
+   "edge_type": "RUNS",
+   "level": "ec2",
+   "stratum_pair": "resource->compute",
+   "producer_by_pair": "~B"
+  },
+  {
+   "source": "arn:aws:ec2:us-east-1:313476888478:instance/i-0090b823a4a0997e3",
+   "target": "pipeline:bd:gold:D_03.composition_artifacts",
+   "edge_type": "RUNS",
+   "level": "ec2",
+   "stratum_pair": "resource->compute",
+   "producer_by_pair": "~B"
+  },
+  {
+   "source": "arn:aws:ec2:us-east-1:313476888478:instance/i-0090b823a4a0997e3",
+   "target": "pipeline:bd:gold:D_04.client_portal_summary",
+   "edge_type": "RUNS",
+   "level": "ec2",
+   "stratum_pair": "resource->compute",
+   "producer_by_pair": "~B"
+  },
+  {
+   "source": "arn:aws:ec2:us-east-1:313476888478:instance/i-0090b823a4a0997e3",
+   "target": "pipeline:bd:gold:E_00.decompose_aua_gap",
+   "edge_type": "RUNS",
+   "level": "ec2",
+   "stratum_pair": "resource->compute",
+   "producer_by_pair": "~B"
+  },
+  {
+   "source": "arn:aws:ec2:us-east-1:313476888478:instance/i-0090b823a4a0997e3",
+   "target": "pipeline:bd:gold:E_01.account_quality_tiers",
+   "edge_type": "RUNS",
+   "level": "ec2",
+   "stratum_pair": "resource->compute",
+   "producer_by_pair": "~B"
+  },
+  {
+   "source": "arn:aws:ec2:us-east-1:313476888478:instance/i-0090b823a4a0997e3",
+   "target": "pipeline:bd:gold:E_02.diagnose_positions_cube",
+   "edge_type": "RUNS",
+   "level": "ec2",
+   "stratum_pair": "resource->compute",
+   "producer_by_pair": "~B"
+  },
+  {
+   "source": "arn:aws:ec2:us-east-1:313476888478:instance/i-0090b823a4a0997e3",
+   "target": "pipeline:bd:gold:E_03.trace_account_cube",
+   "edge_type": "RUNS",
+   "level": "ec2",
+   "stratum_pair": "resource->compute",
+   "producer_by_pair": "~B"
+  },
+  {
+   "source": "arn:aws:ec2:us-east-1:313476888478:instance/i-0090b823a4a0997e3",
+   "target": "pipeline:bd:gold:E_04.dedup_audit",
+   "edge_type": "RUNS",
+   "level": "ec2",
+   "stratum_pair": "resource->compute",
+   "producer_by_pair": "~B"
+  },
+  {
+   "source": "arn:aws:ec2:us-east-1:313476888478:instance/i-0090b823a4a0997e3",
+   "target": "pipeline:bd:gold:E_05.gap_by_pricing_source",
+   "edge_type": "RUNS",
+   "level": "ec2",
+   "stratum_pair": "resource->compute",
+   "producer_by_pair": "~B"
+  },
+  {
+   "source": "arn:aws:ec2:us-east-1:313476888478:instance/i-0090b823a4a0997e3",
+   "target": "pipeline:bd:gold:E_06.trace_asset_pricing",
+   "edge_type": "RUNS",
+   "level": "ec2",
+   "stratum_pair": "resource->compute",
+   "producer_by_pair": "~B"
+  },
+  {
+   "source": "arn:aws:ec2:us-east-1:313476888478:instance/i-0090b823a4a0997e3",
+   "target": "pipeline:bd:gold:E_07.account_gap_buckets",
+   "edge_type": "RUNS",
+   "level": "ec2",
+   "stratum_pair": "resource->compute",
+   "producer_by_pair": "~B"
+  },
+  {
+   "source": "arn:aws:ec2:us-east-1:313476888478:instance/i-0090b823a4a0997e3",
+   "target": "pipeline:bd:gold:E_08.tail_asset_drill",
+   "edge_type": "RUNS",
+   "level": "ec2",
+   "stratum_pair": "resource->compute",
+   "producer_by_pair": "~B"
+  },
+  {
+   "source": "arn:aws:ec2:us-east-1:313476888478:instance/i-0090b823a4a0997e3",
+   "target": "pipeline:bd:gold:E_09.unrecognized_exit_types",
+   "edge_type": "RUNS",
+   "level": "ec2",
+   "stratum_pair": "resource->compute",
+   "producer_by_pair": "~B"
+  },
+  {
+   "source": "arn:aws:ec2:us-east-1:313476888478:instance/i-0090b823a4a0997e3",
+   "target": "pipeline:bd:gold:E_10.validate_ffill_cap",
+   "edge_type": "RUNS",
+   "level": "ec2",
+   "stratum_pair": "resource->compute",
+   "producer_by_pair": "~B"
+  },
+  {
+   "source": "arn:aws:ec2:us-east-1:313476888478:instance/i-0090b823a4a0997e3",
+   "target": "pipeline:bd:gold:E_11.unmatched_asset_analysis",
+   "edge_type": "RUNS",
+   "level": "ec2",
+   "stratum_pair": "resource->compute",
+   "producer_by_pair": "~B"
+  },
+  {
+   "source": "arn:aws:ec2:us-east-1:313476888478:instance/i-0090b823a4a0997e3",
+   "target": "pipeline:bd:gold:E_12.dump_all_non_yahoo",
+   "edge_type": "RUNS",
+   "level": "ec2",
+   "stratum_pair": "resource->compute",
+   "producer_by_pair": "~B"
+  },
+  {
+   "source": "arn:aws:ec2:us-east-1:313476888478:instance/i-0090b823a4a0997e3",
+   "target": "pipeline:bd:gold:E_13.tail_decomposition",
+   "edge_type": "RUNS",
+   "level": "ec2",
+   "stratum_pair": "resource->compute",
+   "producer_by_pair": "~B"
+  },
+  {
+   "source": "arn:aws:ec2:us-east-1:313476888478:instance/i-0090b823a4a0997e3",
+   "target": "pipeline:bd:gold:E_14.audit_existing_mappings",
+   "edge_type": "RUNS",
+   "level": "ec2",
+   "stratum_pair": "resource->compute",
+   "producer_by_pair": "~B"
+  },
+  {
+   "source": "arn:aws:ec2:us-east-1:313476888478:instance/i-0090b823a4a0997e3",
+   "target": "pipeline:bd:gold:E_15.validate_yf_overrides",
+   "edge_type": "RUNS",
+   "level": "ec2",
+   "stratum_pair": "resource->compute",
+   "producer_by_pair": "~B"
+  },
+  {
+   "source": "arn:aws:ec2:us-east-1:313476888478:instance/i-0090b823a4a0997e3",
+   "target": "pipeline:bd:gold:E_16.unit_math_audit",
+   "edge_type": "RUNS",
+   "level": "ec2",
+   "stratum_pair": "resource->compute",
+   "producer_by_pair": "~B"
+  },
+  {
+   "source": "arn:aws:ec2:us-east-1:313476888478:instance/i-0090b823a4a0997e3",
+   "target": "pipeline:bd:gold:E_17.check_49f_tickers",
+   "edge_type": "RUNS",
+   "level": "ec2",
+   "stratum_pair": "resource->compute",
+   "producer_by_pair": "~B"
+  },
+  {
+   "source": "arn:aws:ec2:us-east-1:313476888478:instance/i-0090b823a4a0997e3",
+   "target": "pipeline:bd:gold:E_18.detect_new_securities",
+   "edge_type": "RUNS",
+   "level": "ec2",
+   "stratum_pair": "resource->compute",
+   "producer_by_pair": "~B"
+  },
+  {
+   "source": "arn:aws:ec2:us-east-1:313476888478:instance/i-0090b823a4a0997e3",
+   "target": "pipeline:bd:gold:E_19.write_aua_certification",
+   "edge_type": "RUNS",
+   "level": "ec2",
+   "stratum_pair": "resource->compute",
+   "producer_by_pair": "~B"
+  },
+  {
+   "source": "arn:aws:ec2:us-east-1:313476888478:instance/i-0090b823a4a0997e3",
+   "target": "pipeline:bd:gold:E_20.cross_script_validation",
+   "edge_type": "RUNS",
+   "level": "ec2",
+   "stratum_pair": "resource->compute",
+   "producer_by_pair": "~B"
+  },
+  {
+   "source": "arn:aws:ec2:us-east-1:313476888478:instance/i-0090b823a4a0997e3",
+   "target": "pipeline:bd:gold:E_21.generate_reconciliation_reference",
+   "edge_type": "RUNS",
+   "level": "ec2",
+   "stratum_pair": "resource->compute",
+   "producer_by_pair": "~B"
+  },
+  {
+   "source": "arn:aws:ec2:us-east-1:313476888478:instance/i-0090b823a4a0997e3",
+   "target": "pipeline:bd:gold:E_22.diagnose_unassigned_accounts",
+   "edge_type": "RUNS",
+   "level": "ec2",
+   "stratum_pair": "resource->compute",
+   "producer_by_pair": "~B"
+  },
+  {
+   "source": "arn:aws:ec2:us-east-1:313476888478:instance/i-0090b823a4a0997e3",
+   "target": "pipeline:bd:gold:E_23.diagnose_fee_splits",
+   "edge_type": "RUNS",
+   "level": "ec2",
+   "stratum_pair": "resource->compute",
+   "producer_by_pair": "~B"
+  },
+  {
+   "source": "arn:aws:ec2:us-east-1:313476888478:instance/i-0090b823a4a0997e3",
+   "target": "pipeline:bd:gold:E_24.rebuild_fee_scorecard",
+   "edge_type": "RUNS",
+   "level": "ec2",
+   "stratum_pair": "resource->compute",
+   "producer_by_pair": "~B"
+  },
+  {
+   "source": "arn:aws:ec2:us-east-1:313476888478:instance/i-0090b823a4a0997e3",
+   "target": "pipeline:bd:gold:E_25.aua_decomposition_audit",
+   "edge_type": "RUNS",
+   "level": "ec2",
+   "stratum_pair": "resource->compute",
+   "producer_by_pair": "~B"
+  },
+  {
+   "source": "arn:aws:ec2:us-east-1:313476888478:instance/i-0090b823a4a0997e3",
+   "target": "pipeline:bd:gold:build_canonical_prices_v2",
+   "edge_type": "RUNS",
+   "level": "ec2",
+   "stratum_pair": "resource->compute",
+   "producer_by_pair": "~B"
+  },
+  {
+   "source": "arn:aws:ec2:us-east-1:313476888478:instance/i-0090b823a4a0997e3",
+   "target": "pipeline:bd:gold:diag_sleeve_fix",
+   "edge_type": "RUNS",
+   "level": "ec2",
+   "stratum_pair": "resource->compute",
+   "producer_by_pair": "~B"
+  },
+  {
+   "source": "arn:aws:ec2:us-east-1:313476888478:instance/i-0090b823a4a0997e3",
+   "target": "pipeline:bd:gold:gldinc_p1_shadow",
+   "edge_type": "RUNS",
+   "level": "ec2",
+   "stratum_pair": "resource->compute",
+   "producer_by_pair": "~B"
+  },
+  {
+   "source": "arn:aws:ec2:us-east-1:313476888478:instance/i-0090b823a4a0997e3",
+   "target": "pipeline:bd:gold:gldinc_ss4c_weekly",
+   "edge_type": "RUNS",
+   "level": "ec2",
+   "stratum_pair": "resource->compute",
+   "producer_by_pair": "~B"
+  },
+  {
+   "source": "arn:aws:ec2:us-east-1:313476888478:instance/i-0090b823a4a0997e3",
+   "target": "pipeline:bd:gold:gold_prof",
+   "edge_type": "RUNS",
+   "level": "ec2",
+   "stratum_pair": "resource->compute",
+   "producer_by_pair": "~B"
+  },
+  {
+   "source": "arn:aws:ec2:us-east-1:313476888478:instance/i-0090b823a4a0997e3",
+   "target": "pipeline:bd:gold:run_b00_auagap002",
+   "edge_type": "RUNS",
+   "level": "ec2",
+   "stratum_pair": "resource->compute",
+   "producer_by_pair": "~B"
+  },
+  {
+   "source": "arn:aws:ec2:us-east-1:313476888478:instance/i-0090b823a4a0997e3",
+   "target": "pipeline:bd:gold:run_b03_auagap002",
+   "edge_type": "RUNS",
+   "level": "ec2",
+   "stratum_pair": "resource->compute",
+   "producer_by_pair": "~B"
+  },
+  {
+   "source": "arn:aws:ec2:us-east-1:313476888478:instance/i-0090b823a4a0997e3",
+   "target": "pipeline:bd:gold:run_c00_auagap002",
+   "edge_type": "RUNS",
+   "level": "ec2",
+   "stratum_pair": "resource->compute",
+   "producer_by_pair": "~B"
+  },
+  {
+   "source": "arn:aws:ec2:us-east-1:313476888478:instance/i-0090b823a4a0997e3",
+   "target": "pipeline:bd:gold:run_c01c_rap1c",
+   "edge_type": "RUNS",
+   "level": "ec2",
+   "stratum_pair": "resource->compute",
+   "producer_by_pair": "~B"
+  },
+  {
+   "source": "arn:aws:ec2:us-east-1:313476888478:instance/i-0090b823a4a0997e3",
+   "target": "pipeline:bd:gold:run_c02_auagap002",
+   "edge_type": "RUNS",
+   "level": "ec2",
+   "stratum_pair": "resource->compute",
+   "producer_by_pair": "~B"
+  },
+  {
+   "source": "arn:aws:ec2:us-east-1:313476888478:instance/i-0090b823a4a0997e3",
+   "target": "pipeline:bd:gold:run_c03_auagap002",
+   "edge_type": "RUNS",
+   "level": "ec2",
+   "stratum_pair": "resource->compute",
+   "producer_by_pair": "~B"
+  },
+  {
+   "source": "arn:aws:ec2:us-east-1:313476888478:instance/i-0090b823a4a0997e3",
+   "target": "pipeline:bd:gold:test_gldinc_cache_roundtrip",
+   "edge_type": "RUNS",
+   "level": "ec2",
+   "stratum_pair": "resource->compute",
+   "producer_by_pair": "~B"
+  },
+  {
+   "source": "arn:aws:ec2:us-east-1:313476888478:instance/i-0090b823a4a0997e3",
+   "target": "pipeline:bd:gold:validate_platinum_consistency",
+   "edge_type": "RUNS",
+   "level": "ec2",
+   "stratum_pair": "resource->compute",
+   "producer_by_pair": "~B"
+  },
+  {
+   "source": "arn:aws:ec2:us-east-1:313476888478:instance/i-0090b823a4a0997e3",
+   "target": "pipeline:bd:gold:validate_sl_nightly_gate",
+   "edge_type": "RUNS",
+   "level": "ec2",
+   "stratum_pair": "resource->compute",
+   "producer_by_pair": "~B"
+  },
+  {
+   "source": "arn:aws:ec2:us-east-1:313476888478:instance/i-02448edb624a7a7cf",
+   "target": "pipeline:mdpf:gold:_trading_day_calendar",
+   "edge_type": "RUNS",
+   "level": "ec2",
+   "stratum_pair": "resource->compute",
+   "producer_by_pair": "~B"
+  },
+  {
+   "source": "arn:aws:ec2:us-east-1:313476888478:instance/i-02448edb624a7a7cf",
+   "target": "pipeline:mdpf:gold:build_aggregate_aua_timeseries",
+   "edge_type": "RUNS",
+   "level": "ec2",
+   "stratum_pair": "resource->compute",
+   "producer_by_pair": "~B"
+  },
+  {
+   "source": "arn:aws:ec2:us-east-1:313476888478:instance/i-02448edb624a7a7cf",
+   "target": "pipeline:mdpf:gold:build_legacy_compat_emit",
+   "edge_type": "RUNS",
+   "level": "ec2",
+   "stratum_pair": "resource->compute",
+   "producer_by_pair": "~B"
+  },
+  {
+   "source": "arn:aws:ec2:us-east-1:313476888478:instance/i-02448edb624a7a7cf",
+   "target": "pipeline:mdpf:gold:build_mdpf_count_backfill_pre0518",
+   "edge_type": "RUNS",
+   "level": "ec2",
+   "stratum_pair": "resource->compute",
+   "producer_by_pair": "~B"
+  },
+  {
+   "source": "arn:aws:ec2:us-east-1:313476888478:instance/i-02448edb624a7a7cf",
+   "target": "pipeline:mdpf:gold:build_mdpf_etf_ownership_timeseries",
+   "edge_type": "RUNS",
+   "level": "ec2",
+   "stratum_pair": "resource->compute",
+   "producer_by_pair": "~B"
+  },
+  {
+   "source": "arn:aws:ec2:us-east-1:313476888478:instance/i-02448edb624a7a7cf",
+   "target": "pipeline:mdpf:gold:build_mdpf_inflection_history_from_spine",
+   "edge_type": "RUNS",
+   "level": "ec2",
+   "stratum_pair": "resource->compute",
+   "producer_by_pair": "~B"
+  },
+  {
+   "source": "arn:aws:ec2:us-east-1:313476888478:instance/i-02448edb624a7a7cf",
+   "target": "pipeline:mdpf:gold:build_mdpf_process_backfill",
+   "edge_type": "RUNS",
+   "level": "ec2",
+   "stratum_pair": "resource->compute",
+   "producer_by_pair": "~B"
+  },
+  {
+   "source": "arn:aws:ec2:us-east-1:313476888478:instance/i-02448edb624a7a7cf",
+   "target": "pipeline:mdpf:gold:build_mdpf_v0_bandaid_backfill",
+   "edge_type": "RUNS",
+   "level": "ec2",
+   "stratum_pair": "resource->compute",
+   "producer_by_pair": "~B"
+  },
+  {
+   "source": "arn:aws:ec2:us-east-1:313476888478:instance/i-02448edb624a7a7cf",
+   "target": "pipeline:mdpf:gold:build_mdpf_wsc_inflection_feeder",
+   "edge_type": "RUNS",
+   "level": "ec2",
+   "stratum_pair": "resource->compute",
+   "producer_by_pair": "~B"
+  },
+  {
+   "source": "arn:aws:ec2:us-east-1:313476888478:instance/i-02448edb624a7a7cf",
+   "target": "pipeline:mdpf:gold:build_mdpf_wsc_inflection_nonmodel_backfill",
+   "edge_type": "RUNS",
+   "level": "ec2",
+   "stratum_pair": "resource->compute",
+   "producer_by_pair": "~B"
+  },
+  {
+   "source": "arn:aws:ec2:us-east-1:313476888478:instance/i-02448edb624a7a7cf",
+   "target": "pipeline:mdpf:gold:build_mdpf_wsd2_etf_netassets_feeder",
+   "edge_type": "RUNS",
+   "level": "ec2",
+   "stratum_pair": "resource->compute",
+   "producer_by_pair": "~B"
+  },
+  {
+   "source": "arn:aws:ec2:us-east-1:313476888478:instance/i-02448edb624a7a7cf",
+   "target": "pipeline:mdpf:gold:build_mdpf_wse_49f_non_model_aua",
+   "edge_type": "RUNS",
+   "level": "ec2",
+   "stratum_pair": "resource->compute",
+   "producer_by_pair": "~B"
+  },
+  {
+   "source": "arn:aws:ec2:us-east-1:313476888478:instance/i-02448edb624a7a7cf",
+   "target": "pipeline:mdpf:gold:mdpf_aggregate_aua",
+   "edge_type": "RUNS",
+   "level": "ec2",
+   "stratum_pair": "resource->compute",
+   "producer_by_pair": "~B"
+  },
+  {
+   "source": "arn:aws:ec2:us-east-1:313476888478:instance/i-02448edb624a7a7cf",
+   "target": "pipeline:mdpf:gold:patch_mdpf_per_date_partitions",
+   "edge_type": "RUNS",
+   "level": "ec2",
+   "stratum_pair": "resource->compute",
+   "producer_by_pair": "~B"
+  },
+  {
+   "source": "arn:aws:ec2:us-east-1:313476888478:instance/i-02448edb624a7a7cf",
+   "target": "pipeline:mdpf:gold:pull_orion_model_composition",
+   "edge_type": "RUNS",
+   "level": "ec2",
+   "stratum_pair": "resource->compute",
+   "producer_by_pair": "~B"
+  },
+  {
+   "source": "arn:aws:ec2:us-east-1:313476888478:instance/i-02448edb624a7a7cf",
+   "target": "pipeline:mdpf:gold:verify_wsd2_clears_identity2",
+   "edge_type": "RUNS",
+   "level": "ec2",
+   "stratum_pair": "resource->compute",
+   "producer_by_pair": "~B"
+  },
+  {
+   "source": "arn:aws:ec2:us-east-1:313476888478:instance/i-02448edb624a7a7cf",
+   "target": "pipeline:mdpf:gold:wsb_49f_smartx_model_aua",
+   "edge_type": "RUNS",
+   "level": "ec2",
+   "stratum_pair": "resource->compute",
+   "producer_by_pair": "~B"
+  },
+  {
+   "source": "arn:aws:ec2:us-east-1:313476888478:instance/i-02448edb624a7a7cf",
+   "target": "pipeline:mdpf:gold:wsd_partner_held_etf",
+   "edge_type": "RUNS",
+   "level": "ec2",
+   "stratum_pair": "resource->compute",
+   "producer_by_pair": "~B"
+  },
+  {
+   "source": "lambda:inf-portal-advisor-publisher",
+   "target": "opal-data-inf/gold/views/account_team.parquet",
+   "edge_type": "READS_S3",
+   "level": "object",
+   "stratum_pair": "resource->object",
+   "producer_by_pair": "~B"
+  },
+  {
+   "source": "lambda:inf-portal-advisor-publisher",
+   "target": "opal-data-inf/gold/dimensions/advisor_assignments.parquet",
+   "edge_type": "READS_S3",
+   "level": "object",
+   "stratum_pair": "resource->object",
+   "producer_by_pair": "~B"
+  },
+  {
+   "source": "lambda:inf-portal-publisher",
+   "target": "opal-data-inf/gold/timeseries/client_performance.parquet",
+   "edge_type": "READS_S3",
+   "level": "object",
+   "stratum_pair": "resource->object",
+   "producer_by_pair": "~B"
+  },
+  {
+   "source": "lambda:inf-portal-publisher",
+   "target": "opal-data-inf/gold/views/account_team.parquet",
+   "edge_type": "READS_S3",
+   "level": "object",
+   "stratum_pair": "resource->object",
+   "producer_by_pair": "~B"
+  },
+  {
+   "source": "lambda:bd-price-update",
+   "target": "opal-data-bd/silver/prices/canonical_prices.parquet",
+   "edge_type": "WRITES_S3",
+   "level": "object",
+   "stratum_pair": "resource->object",
+   "producer_by_pair": "~B"
+  },
+  {
+   "source": "lambda:bd-price-update",
+   "target": "opal-data-bd/silver/historical_prices.parquet",
+   "edge_type": "READS_S3",
+   "level": "object",
+   "stratum_pair": "resource->object",
+   "producer_by_pair": "~B"
+  },
+  {
+   "source": "lambda:bd-price-update",
+   "target": "opal-data-bd/silver/prices/canonical_prices.parquet",
+   "edge_type": "READS_S3",
+   "level": "object",
+   "stratum_pair": "resource->object",
+   "producer_by_pair": "~B"
+  },
+  {
+   "source": "lambda:opal-partners-data",
+   "target": "opal-data-bd/gold/artifacts/summary/header_metrics.json",
+   "edge_type": "READS_S3",
+   "level": "object",
+   "stratum_pair": "resource->object",
+   "producer_by_pair": "~B"
+  },
+  {
+   "source": "lambda:opal-partners-data",
+   "target": "opal-data-bd/platinum/firm/clients-tab-slim.json",
+   "edge_type": "READS_S3",
+   "level": "object",
+   "stratum_pair": "resource->object",
+   "producer_by_pair": "~B"
+  },
+  {
+   "source": "lambda:opal-partners-data",
+   "target": "opal-data-bd/platinum/firm/cumulative_chart.json",
+   "edge_type": "READS_S3",
+   "level": "object",
+   "stratum_pair": "resource->object",
+   "producer_by_pair": "~B"
+  },
+  {
+   "source": "lambda:opal-partners-data",
+   "target": "opal-data-bd/gold/artifacts/filters/dimensions.json",
+   "edge_type": "READS_S3",
+   "level": "object",
+   "stratum_pair": "resource->object",
+   "producer_by_pair": "~B"
+  },
+  {
+   "source": "lambda:opal-partners-data",
+   "target": "opal-data-bd/gold/artifacts/firm_mix_views.json",
+   "edge_type": "READS_S3",
+   "level": "object",
+   "stratum_pair": "resource->object",
+   "producer_by_pair": "~B"
+  }
+ ],
+ "coverage": {
+  "S1_runs_edges": 250,
+  "S1_runners": {
+   "inf-gold-layer-runner": "inf",
+   "inf-gold-qa-runner": "inf",
+   "bd-gold-layer-runner": "bd",
+   "bd-gold-qa-runner": "bd",
+   "mdpf-daily-runner": "mdpf"
+  },
+  "S3_converged_edges": 12,
+  "S3_deferred_lambda_only": 314,
+  "total_edges": 262
+ }
+}
