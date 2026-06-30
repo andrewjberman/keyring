@@ -9684,3 +9684,142 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-06-30 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
 | 2026-06-30 | 0.4.0_DS_ClientPlatform | ADVI_BREAKS.TO-4 | comp-freshness/pipescript/comp-pipescript-io/comp-grep | cot freeze DIAGNOSE: comp-freshness cot (content-stale flag) + pipescript --resource header_metrics + comp-pipescript io D_00 + comp-grep (as_of/producer/e2-alarm wiring) | PASS |
 | 2026-06-30 | 0.4.0_DS_ClientPlatform | ADVI_BREAKS.TO-4 | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-06-30 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/ADVI_BREAKS_PRD.md | PASS |
+| 2026-06-30 | 0.8.0_AE_CloudComp~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/compdiff/engine.py --file inf... | PASS |
+| 2026-06-30 | 0.4.0_DS_ClientPlatform~B | ADVI_BREAKS.TO-3 | comp-pipescript | comp-pipescript io B_01 | PASS |
+| 2026-06-30 | 0.4.0_DS_ClientPlatform~A | ADVI_BREAKS.TO-2 | comp-pipescript | comp-pipescript io INF_D_00 | PASS |
+| 2026-06-30 | 0.4.0_DS_ClientPlatform~A | ADVI_BREAKS.TO-2 | comp-pipescript | comp-pipescript io INF_D_04 | PASS |
+| 2026-06-30 | 0.4.0_DS_ClientPlatform~A | ADVI_BREAKS.TO-2 | comp-surface-check | comp-surface-check check --mode advisory --file data/inf/scripts/gold/INF_D_00.portal_a... | PASS |
+| 2026-06-30 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/terraform/globgrph/item2e_ser... | PASS |
+| 2026-06-30 | 0.8.0_AE_CloudComp~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/compdiff/engine.py --file inf... | PASS |
+| 2026-06-30 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/ADVI_BREAKS_PRD.md | PASS |
+| 2026-06-30 | 0.4.0_DS_ClientPlatform~A | ADVI_BREAKS.TO-2 | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-06-30 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/ADVI_BREAKS_PRD.md | PASS |
+| 2026-06-30 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/compdiff/served_guard.py | PASS |
+| 2026-06-30 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/compdiff/served_guard.py | PASS |
+| 2026-06-30 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+| 2026-06-30 | 0.4.0_DS_ClientPlatform~B | ADVI_BREAKS.TO-3 | comp-surface-check | comp-surface-check check --mode advisory --file data/black_diamond/scripts/gold/B_01.ho... | PASS |
+| 2026-06-30 | 0.4.0_DS_ClientPlatform~B | ADVI_BREAKS.TO-3 | comp-pipescript | comp-pipescript deployed B_01 | PASS |
+| 2026-06-30 | 0.4.0_DS_ClientPlatform | ADVI_BREAKS.TO-4 | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/change_management/20... | PASS |
+| 2026-06-30 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+| 2026-06-30 | 0.4.0_DS_ClientPlatform~B | ADVI_BREAKS.TO-3 | comp-surface-check | comp-surface-check check --mode advisory --file data/black_diamond/scripts/gold/B_01.ho... | PASS |
+| 2026-06-30 | 0.4.0_DS_ClientPlatform~B | ADVI_BREAKS.TO-3 | comp-pipescript | comp-pipescript deployed B_01 | PASS |
+| 2026-06-30 | 0.4.0_DS_ClientPlatform~B | ADVI_BREAKS.TO-3 | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/change_management/20... | PASS |
+| 2026-06-30 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/briefs/inflection-bronze.md --file... | PASS |
+| 2026-06-30 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/briefs/inflection-gold.md | PASS |
+| 2026-06-30 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+| 2026-06-30 | 0.4.0_DS_ClientPlatform | ADVI_BREAKS.TO-4 | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/change_management/20... | PASS |
+| 2026-06-30 | 0.4.0_DS_ClientPlatform~B | ADVI_BREAKS.TO-3 | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/change_management/20... | PASS |
+| 2026-06-30 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/briefs/inflection-refactor-bronze.md | PASS |
+| 2026-06-30 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/briefs/inflection-refactor-bronze.md | PASS |
+| 2026-06-30 | 0.7.0_AE_CloudOps | (no-TO) | comp-pipescript | comp-pipescript deployed --firm inf | PASS |
+| 2026-06-30 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/ADVI_BREAKS_PRD.md | PASS |
+| 2026-06-30 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/ci/lambda-source-map.j... | PASS |
+| 2026-06-30 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/briefs/inflection-refactor-bronze.md | PASS |
+| 2026-06-30 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/change_management/20... | PASS |
+| 2026-06-30 | 0.8.0_AE_CloudComp~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/change_management/20... | PASS |
+| 2026-06-30 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+| 2026-06-30 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/briefs/inflection-bronze.md | PASS |
+| 2026-06-30 | 0.8.0_AE_CloudComp~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/compdiff/tests/test_freeze_mo... | PASS |
+| 2026-06-30 | 0.4.0_DS_ClientPlatform | ADVI_BREAKS.TO-4 | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/change_management/20... | PASS |
+| 2026-06-30 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/briefs/inflection-refactor-bronze.md | PASS |
+| 2026-06-30 | 0.8.0_AE_CloudComp~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/compdiff/engine.py --file inf... | PASS |
+| 2026-06-30 | 0.4.0_DS_ClientPlatform | ADVI_BREAKS.TO-4 | comp-surface-check | comp-surface-check check --mode advisory --file data/cot/scripts/bronze/templates/unrea... | PASS |
+| 2026-06-30 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/ADVI_BREAKS_PRD.md | PASS |
+| 2026-06-30 | 0.8.0_AE_CloudComp~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/compdiff/deploy/inf_value_par... | PASS |
+| 2026-06-30 | 0.4.0_DS_ClientPlatform | ADVI_BREAKS.TO-4 | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/change_management/20... | PASS |
+| 2026-06-30 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+| 2026-06-30 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/ADVI_BREAKS_PRD.md | PASS |
+| 2026-06-30 | 0.4.0_DS_ClientPlatform | ADVI_BREAKS.TO-4 | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/change_management/20... | PASS |
+| 2026-06-30 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/briefs/inflection-refactor-silver.md | PASS |
+| 2026-06-30 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/compdiff/deploy/_root.tf --fi... | PASS |
+| 2026-06-30 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/briefs/inflection-refactor-silver.md | PASS |
+| 2026-06-30 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/terraform/inf-value-parity/_r... | PASS |
+| 2026-06-30 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/compdiff/deploy/_root.tf --fi... | PASS |
+| 2026-06-30 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/briefs/inflection-refactor-gold.md | PASS |
+| 2026-06-30 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/ADVI_BREAKS_PRD.md | PASS |
+| 2026-06-30 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+| 2026-06-30 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/briefs/inflection-refactor-runtime.md | PASS |
+| 2026-06-30 | 0.4.0_DS_ClientPlatform~A | ADVI_BREAKS.TO-2 | comp-surface-check | comp-surface-check check --mode advisory --file data/inf/scripts/gold/orion-gold-dispat... | PASS |
+| 2026-06-30 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/change_management/20... | PASS |
+| 2026-06-30 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+| 2026-06-30 | 0.4.0_DS_ClientPlatform~A | ADVI_BREAKS.TO-2 | comp-surface-check | comp-surface-check check --mode advisory --file data/inf/scripts/gold/INF_D_04.client_p... | PASS |
+| 2026-06-30 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/briefs/inflection-refactor-gold.md | PASS |
+| 2026-06-30 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/logs/2026-0... | PASS |
+| 2026-06-30 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/logs/2026-0... | PASS |
+| 2026-06-30 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/briefs/inflection-refactor-bronze.... | PASS |
+| 2026-06-30 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+| 2026-06-30 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/briefs/inflection-refactor-bronze.... | PASS |
+| 2026-06-30 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/briefs/inflection-refactor-bronze.... | PASS |
+| 2026-06-30 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/briefs/inflection-refactor-silver.md | PASS |
+| 2026-06-30 | 0.0.0_AB_MSTR | NFRA_COMPDIFF.comp-xray-cli | comp-manifest-check | comp-manifest-check | FAIL |
+| 2026-06-30 | 0.0.0_AB_MSTR | NFRA_COMPDIFF.comp-xray-cli | comp-manifest-check | comp-manifest-check selfcheck | PASS |
+| 2026-06-30 | 0.0.0_AB_MSTR | NFRA_COMPDIFF.comp-xray-cli | comp-surface-check | comp-surface-check check --mode advisory --file .tools/comp-xray --file infra/aws/compd... | PASS |
+| 2026-06-30 | 0.0.0_AB_MSTR | NFRA_COMPDIFF.comp-xray-cli | comp-surface-check | comp-surface-check check --mode advisory --file .tools/comp-xray --file infra/aws/compd... | PASS |
+| 2026-06-30 | 0.0.0_AB_MSTR | NFRA_COMPDIFF.comp-xray-cli | comp-surface-check | comp-surface-check check --mode advisory --file .tools/comp-xray --file infra/aws/compd... | PASS |
+| 2026-06-30 | 0.0.0_AB_MSTR | NFRA_COMPDIFF.comp-xray-cli | comp-surface-check | comp-surface-check check --mode advisory --file .tools/comp-xray --file infra/aws/compd... | PASS |
+| 2026-06-30 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/briefs/inflection-refactor-gold.md... | PASS |
+| 2026-06-30 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+| 2026-06-30 | 0.0.0_AB_MSTR | NFRA_COMPDIFF.comp-xray-cli | comp-adapter-audit | comp-adapter-audit --help | PASS |
+| 2026-06-30 | 0.0.0_AB_MSTR | NFRA_COMPDIFF.comp-xray-cli | comp-aws | comp-aws --help | PASS |
+| 2026-06-30 | 0.0.0_AB_MSTR | NFRA_COMPDIFF.comp-xray-cli | comp-blast | comp-blast --help | PASS |
+| 2026-06-30 | 0.0.0_AB_MSTR | NFRA_COMPDIFF.comp-xray-cli | comp-build | comp-build | PASS |
+| 2026-06-30 | 0.0.0_AB_MSTR | NFRA_COMPDIFF.comp-xray-cli | comp-cache | comp-cache --help | PASS |
+| 2026-06-30 | 0.0.0_AB_MSTR | NFRA_COMPDIFF.comp-xray-cli | comp-chainrun | comp-chainrun --help | PASS |
+| 2026-06-30 | 0.0.0_AB_MSTR | NFRA_COMPDIFF.comp-xray-cli | comp-constants | comp-constants --help | PASS |
+| 2026-06-30 | 0.0.0_AB_MSTR | NFRA_COMPDIFF.comp-xray-cli | comp-coverage | comp-coverage --help | PASS |
+| 2026-06-30 | 0.0.0_AB_MSTR | NFRA_COMPDIFF.comp-xray-cli | comp-diff | comp-diff --help | PASS |
+| 2026-06-30 | 0.0.0_AB_MSTR | NFRA_COMPDIFF.comp-xray-cli | comp-graph | comp-graph --help | PASS |
+| 2026-06-30 | 0.0.0_AB_MSTR | NFRA_COMPDIFF.comp-xray-cli | comp-iam | comp-iam --help | PASS |
+| 2026-06-30 | 0.0.0_AB_MSTR | NFRA_COMPDIFF.comp-xray-cli | comp-incrparity | comp-incrparity --help | PASS |
+| 2026-06-30 | 0.0.0_AB_MSTR | NFRA_COMPDIFF.comp-xray-cli | comp-kuzu | comp-kuzu --help | PASS |
+| 2026-06-30 | 0.0.0_AB_MSTR | NFRA_COMPDIFF.comp-xray-cli | comp-lambdamap | comp-lambdamap --help | PASS |
+| 2026-06-30 | 0.0.0_AB_MSTR | NFRA_COMPDIFF.comp-xray-cli | comp-manifest-check | comp-manifest-check --help | PASS |
+| 2026-06-30 | 0.0.0_AB_MSTR | NFRA_COMPDIFF.comp-xray-cli | comp-parity | comp-parity --help | PASS |
+| 2026-06-30 | 0.0.0_AB_MSTR | NFRA_COMPDIFF.comp-xray-cli | comp-perf | comp-perf --help | PASS |
+| 2026-06-30 | 0.0.0_AB_MSTR | NFRA_COMPDIFF.comp-xray-cli | comp-pii | comp-pii --help | PASS |
+| 2026-06-30 | 0.0.0_AB_MSTR | NFRA_COMPDIFF.comp-xray-cli | comp-pipescript | comp-pipescript --help | PASS |
+| 2026-06-30 | 0.0.0_AB_MSTR | NFRA_COMPDIFF.comp-xray-cli | comp-platinum | comp-platinum --help | PASS |
+| 2026-06-30 | 0.0.0_AB_MSTR | NFRA_COMPDIFF.comp-xray-cli | comp-registry | comp-registry --help | PASS |
+| 2026-06-30 | 0.0.0_AB_MSTR | NFRA_COMPDIFF.comp-xray-cli | comp-routes | comp-routes --help | PASS |
+| 2026-06-30 | 0.0.0_AB_MSTR | NFRA_COMPDIFF.comp-xray-cli | comp-surface-check | comp-surface-check --help | PASS |
+| 2026-06-30 | 0.0.0_AB_MSTR | --help | comp-tooltip | comp-tooltip --help | FAIL |
+| 2026-06-30 | 0.0.0_AB_MSTR | --help | comp-trace | comp-trace --help | PASS |
+| 2026-06-30 | 0.0.0_AB_MSTR | --help | comp-transform | comp-transform --help | PASS |
+| 2026-06-30 | 0.0.0_AB_MSTR | --help | comp-types | comp-types --help | PASS |
+| 2026-06-30 | 0.0.0_AB_MSTR | --help | comp-validate | comp-validate --help | PASS |
+| 2026-06-30 | 0.0.0_AB_MSTR | --help | comp-xray | comp-xray --help | PASS |
+| 2026-06-30 | 0.0.0_AB_MSTR | --help | comp-xref | comp-xref --help | PASS |
+| 2026-06-30 | 0.0.0_AB_MSTR | --help | pipescript | pipescript --help | PASS |
+| 2026-06-30 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/ADVI_INFREF_PRD.md --... | PASS |
+| 2026-06-30 | 0.0.0_AB_MSTR | NFRA_COMPDIFF.comptool-audit | comp-parity | comp-parity --help | PASS |
+| 2026-06-30 | 0.4.0_DS_ClientPlatform~B | ADVI_BREAKS.TO-3 | comp-surface-check | comp-surface-check check --mode advisory --file data/black_diamond/scripts/bronze/templ... | PASS |
+| 2026-06-30 | 0.0.0_AB_MSTR | NFRA_COMPDIFF.comptool-audit | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/comp-tools.yaml --fil... | PASS |
+| 2026-06-30 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+| 2026-06-30 | 0.4.0_DS_ClientPlatform~B | ADVI_BREAKS.TO-3 | comp-surface-check | comp-surface-check check --mode advisory --file data/black_diamond/scripts/bronze/templ... | PASS |
+| 2026-06-30 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/briefs/ADVI... | PASS |
+| 2026-06-30 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/change_management/20... | PASS |
+| 2026-06-30 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/ADVI_BREAKS_PRD.md | PASS |
+| 2026-06-30 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/change_management/20... | PASS |
+| 2026-06-30 | 0.8.0_AE_CloudComp~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/change_management/20... | PASS |
+| 2026-06-30 | 0.4.0_DS_ClientPlatform~A | ADVI_INFREF.P1 | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-06-30 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+| 2026-06-30 | 0.6.1_AE_PartnerETL | ADVI_INFREF.P1 | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.6.1_AE_PartnerETL/de... | PASS |
+| 2026-06-30 | 0.4.0_DS_ClientPlatform | ADVI_BREAKS.TO-4 | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/change_management/20... | PASS |
+| 2026-06-30 | 0.6.0_AE_PartnerETL | (no-TO) | comp-pipescript | comp-pipescript io B_01.holdings_lots.py | PASS |
+| 2026-06-30 | 0.4.0_DS_ClientPlatform~B | ADVI_BREAKS.TO-3 | comp-surface-check | comp-surface-check check --mode advisory --file data/black_diamond/scripts/silver/merge... | PASS |
+| 2026-06-30 | 0.0.0_AB_MSTR | NFRA_COMPDIFF.comptool-audit | comp-surface-check | comp-surface-check check --mode advisory --file docs/briefs/nfra-complearn-brief-202606... | PASS |
+| 2026-06-30 | 0.6.1_AE_PartnerETL | ADVI_INFREF.P1 | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.6.1_AE_PartnerETL/de... | PASS |
+| 2026-06-30 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/briefs/inflection-refactor-gold.md | PASS |
+| 2026-06-30 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/terraform/49f-value-parity/49... | PASS |
+| 2026-06-30 | 0.6.1_AE_PartnerETL | ADVI_INFREF.P1 | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/terraform/inf-pipeline/eventb... | PASS |
+| 2026-06-30 | 0.8.0_AE_CloudComp~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/compdiff/value_parity_reader.py | PASS |
+| 2026-06-30 | 0.0.0_AB_MSTR | NFRA_COMPDIFF.comptool-audit | comp-aws | comp-aws --help | PASS |
+| 2026-06-30 | 0.0.0_AB_MSTR | NFRA_COMPDIFF.comptool-audit | comp-blast | comp-blast --help | PASS |
+| 2026-06-30 | 0.6.1_AE_PartnerETL | ADVI_INFREF.P1 | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/terraform/inf-pipeline/CHANGE... | PASS |
+| 2026-06-30 | 0.6.1_AE_PartnerETL | ADVI_INFREF.P1 | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/change_management/20... | PASS |
+| 2026-06-30 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/ADVI_INFREF_PRD.md | PASS |
+| 2026-06-30 | 0.0.0_AB_MSTR | NFRA_COMPDIFF.comptool-audit | comp-iam | comp-iam --help | PASS |
+| 2026-06-30 | 0.0.0_AB_MSTR | NFRA_COMPDIFF.comptool-audit | comp-iam | comp-iam reconcile --help | PASS |
+| 2026-06-30 | 0.6.1_AE_PartnerETL | ADVI_INFREF.P1 | (none — infra leg) | N/A: Leg-1 was EventBridge/IAM TF + Lambda mode grounding (not a gold-script edit/run); grounded via direct iam.tf/eventbridge.tf Reads + LIVE `aws events describe-rule` (Rule 22). comp-iam service/gaps + live get-role-policy deferred to Leg-2 apply-time per CTO arch-gate. | N/A |
+| 2026-06-30 | 0.6.1_AE_PartnerETL | ADVI_INFREF.P1 | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
