@@ -186,6 +186,73 @@ def _check_stable_grain(led: dict, **_: object) -> list[str]:
     return out
 
 
+def _check_grain_drilldown_seams(led: dict, **_: object) -> list[str]:
+    """FRACTAL DRILLDOWN-SEAM stability (CTO sec-10). Each stratum-stitching edge must be a stable
+    declared edge_type (carrying a `levels` attr) bridging two DECLARED strata. Empty when the
+    fractal model is not yet populated -> PASS (gate-ready-ahead-of-need)."""
+    gc = led.get("grain_contract", {})
+    seams = gc.get("drilldown_seams", [])
+    if not seams:
+        return []  # fractal not populated yet -- the gate is ready, fires when ~D populates
+    strata = set(gc.get("strata", []))
+    et_index = {e.get("edge_type"): e for e in gc.get("edge_types", [])}
+    out = []
+    for s in seams:
+        et = s.get("edge_type")
+        if et not in et_index:
+            out.append(f"grain_drilldown_seams: seam edge_type '{et}' is not a declared stable edge_type (a drilldown edge must be a stable type)")
+        elif not et_index[et].get("levels"):
+            out.append(f"grain_drilldown_seams: seam edge_type '{et}' carries no `levels` (grain must be a declared attribute)")
+        for k in ("from_stratum", "to_stratum"):
+            if s.get(k) not in strata:
+                out.append(f"grain_drilldown_seams: seam '{et}' {k}='{s.get(k)}' is not a declared stratum {sorted(strata)}")
+    return out
+
+
+def _check_grain_rollup_consistency(led: dict, **_: object) -> list[str]:
+    """GRAIN-CONSISTENCY ROLLUP contract (CTO sec-10, EXISTENTIAL-AGGREGATION 047ce51d0). Contract-
+    level (type) check: existential semantics declared, BOTH defect classes present, rollup_via edges
+    are declared types. The INSTANCE-level existential check runs via rollup_defects() on populated
+    edges. Empty when fractal not yet populated -> PASS."""
+    gc = led.get("grain_contract", {})
+    rollup = gc.get("rollup")
+    if not rollup and not gc.get("drilldown_seams"):
+        return []
+    if not rollup:
+        return ["grain_rollup_consistency: drilldown_seams present but no `rollup` contract declared"]
+    out = []
+    if rollup.get("semantics") != "existential-aggregation":
+        out.append(f"grain_rollup_consistency: rollup.semantics must be 'existential-aggregation' (CTO 047ce51d0, NOT 1:1 equality), got '{rollup.get('semantics')}'")
+    declared = {d.get("id") for d in rollup.get("defect_classes", [])}
+    for required in ("UNSUPPORTED", "COARSE-INCOMPLETE"):
+        if required not in declared:
+            out.append(f"grain_rollup_consistency: defect_class '{required}' not declared (the existential semantics requires both)")
+    et_names = {e.get("edge_type") for e in gc.get("edge_types", [])}
+    for rv in rollup.get("rollup_via", []):
+        if rv not in et_names:
+            out.append(f"grain_rollup_consistency: rollup_via edge '{rv}' is not a declared edge_type")
+    return out
+
+
+def rollup_defects(coarse_edges, fine_edges, rolls_up):
+    """THE CANONICAL existential-aggregation rollup check (CTO 047ce51d0) -- the ONE head GRAPHUNI's
+    derive + COMPDRIFT's seam call against POPULATED edges (so the 1:1-vs-existential drift cannot
+    recur). A coarse edge EXISTS iff >=1 fine edge rolls up to it (OR-rollup).
+      coarse_edges : iterable of (src, dst) at the coarse stratum
+      fine_edges   : iterable of (src, dst) at the fine stratum
+      rolls_up     : dict mapping a fine node -> the coarse node it rolls up to (via RUNS/CONTAINS/OWNED_BY)
+    Returns [(defect_class, edge)]: UNSUPPORTED (coarse, zero fine basis) + COARSE-INCOMPLETE (fine, coarse absent)."""
+    coarse = set(map(tuple, coarse_edges))
+    implied = set()
+    for fs, fd in fine_edges:
+        cs, cd = rolls_up.get(fs), rolls_up.get(fd)
+        if cs is not None and cd is not None:
+            implied.add((cs, cd))
+    defects = [("UNSUPPORTED", ce) for ce in sorted(coarse - implied)]
+    defects += [("COARSE-INCOMPLETE", ie) for ie in sorted(implied - coarse)]
+    return defects
+
+
 _CHECKERS = {
     "one_home": _check_one_home,
     "seam_reference_integrity": _check_seam_reference_integrity,
@@ -194,6 +261,8 @@ _CHECKERS = {
     "no_trino_phantom_seam": _check_no_trino_phantom_seam,
     "inventory_completeness": _check_inventory_completeness,
     "stable_grain": _check_stable_grain,
+    "grain_drilldown_seams": _check_grain_drilldown_seams,
+    "grain_rollup_consistency": _check_grain_rollup_consistency,
 }
 
 
@@ -304,6 +373,30 @@ def selfcheck() -> int:
         {"edge_type": "READS_S3_PREFIX", "relation": "reads_s3", "levels": ["prefix"]})  # re-types reads_s3 by depth
     code, _, _ = run_gate(led_grain, seam_source, inventory=inv, manifest_inv=manifest_inv)
     results.append(("injected grain re-typing -> FAIL", code == FAIL))
+
+    # f) DRILLDOWN SEAM bridging an UNDECLARED stratum -> FAIL (fractal sec-10)
+    led_seam = copy.deepcopy(led)
+    led_seam.setdefault("grain_contract", {}).setdefault("drilldown_seams", []).append(
+        {"edge_type": "RUNS", "from_stratum": "resource", "to_stratum": "GHOST_STRATUM"})
+    code, _, _ = run_gate(led_seam, seam_source, inventory=inv, manifest_inv=manifest_inv)
+    results.append(("injected bad drilldown stratum -> FAIL", code == FAIL))
+
+    # g) ROLLUP mis-declared as 1:1 (not existential) -> FAIL (the drift 047ce51d0 corrected)
+    led_rollup = copy.deepcopy(led)
+    led_rollup.setdefault("grain_contract", {}).setdefault("rollup", {})["semantics"] = "one-to-one-equality"
+    code, _, _ = run_gate(led_rollup, seam_source, inventory=inv, manifest_inv=manifest_inv)
+    results.append(("injected 1:1 rollup semantics -> FAIL", code == FAIL))
+
+    # h) rollup_defects() existential logic: UNSUPPORTED (coarse no fine basis) + COARSE-INCOMPLETE
+    #    (fine, coarse absent); a supported coarse + matching fine -> no defect.
+    rolls = {"fn1": "EC2", "key1": "BUCKET", "fn2": "EC2", "key2": "BUCKET2"}
+    coarse = [("EC2", "BUCKET"), ("EC2", "GHOST_BUCKET")]          # 2nd has no fine basis -> UNSUPPORTED
+    fine = [("fn1", "key1"), ("fn2", "key2")]                       # fn2/key2 imply (EC2,BUCKET2) absent -> COARSE-INCOMPLETE
+    d = {edge: cls for cls, edge in rollup_defects(coarse, fine, rolls)}  # edge -> defect class
+    rd_ok = (d.get(("EC2", "GHOST_BUCKET")) == "UNSUPPORTED"
+             and d.get(("EC2", "BUCKET2")) == "COARSE-INCOMPLETE"
+             and ("EC2", "BUCKET") not in d)  # supported coarse + its fine -> clean
+    results.append(("rollup_defects existential logic (UNSUPPORTED + COARSE-INCOMPLETE, supported clean)", rd_ok))
 
     ok = all(passed for _, passed in results)
     for label, passed in results:

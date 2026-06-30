@@ -133,6 +133,18 @@ schema:
         predicate: "grain_contract present; for edge_types: (a) each `relation` maps to EXACTLY ONE edge_type (group by relation; a relation in >1 type = per-depth re-typing); (b) every edge_type declares a non-empty `levels` attribute (grain is a DECLARED attribute, not encoded in the type name); (c) no edge_type NAME is another type's name + a node_grain_ladder level token (name-encoded re-typing). node_grain_ladder declares ONE CONTAINS relation with an ordered `levels` domain."
         on_violation: "FAIL -- a semantic split by depth (per-depth re-typing of one relation/node) instead of carrying a `level` attribute. Violates the stable-grain contract (Amendment 2 x ruling 4)"
         description: "STABLE-GRAIN CONTRACT (CTO reconciliation; COMPUNIFY governs, GRAPHUNI populates, COMPDRIFT seams on): DIFFERENT relation -> DIFFERENT edge_type (ruling 4); SAME relation at DIFFERENT grain -> SAME edge_type + a `level` attribute (Amendment 2); NEVER split a semantic by depth. Extends seam_reference_integrity/declared_non_redundancy to grain-stability"
+      - id: grain_drilldown_seams
+        applies_to: "grain_contract.drilldown_seams + grain_contract.strata (the fractal stratum-stitchers)"
+        inputs: [grain_contract.drilldown_seams, grain_contract.strata, grain_contract.edge_types]
+        predicate: "for each drilldown_seam: its edge_type is a DECLARED stable type in edge_types (carrying a `levels` attr), and from_stratum/to_stratum are both declared in `strata`. A cross-stratum edge that is name-encoded by grain or missing its `levels`/strata = FAIL. (Empty when fractal not yet populated -> PASS, gate-ready-ahead-of-need.)"
+        on_violation: "FAIL -- a stratum-stitching drilldown edge that is not a stable declared type, lacks a grain `level`, or bridges an undeclared stratum (CTO sec-10)"
+        description: "FRACTAL DRILLDOWN-SEAM stability (CTO sec-10, ratified 205709Z): coarse resource nodes drill to fine structure via stable RUNS/CONTAINS/OWNED_BY edges across resource<->compute<->object strata -- each a stable type with grain as a `level` attribute"
+      - id: grain_rollup_consistency
+        applies_to: "grain_contract.rollup (the cross-grain existential rollup contract)"
+        inputs: [grain_contract.rollup, grain_contract.edge_types]
+        predicate: "rollup.semantics == 'existential-aggregation' (CTO 047ce51d0, NOT 1:1 equality); BOTH defect classes UNSUPPORTED + COARSE-INCOMPLETE declared; every rollup_via edge is a declared edge_type. Contract-level (type) check at commit; the INSTANCE-level existential check (coarse edge EXISTS iff >=1 fine rolls up) runs against POPULATED edges via the shared comp_coverage_check.rollup_defects()."
+        on_violation: "FAIL -- the rollup contract is mis-declared (wrong semantics = the 1:1-vs-existential drift 047ce51d0 corrected, or a missing defect class / undeclared rollup edge)"
+        description: "GRAIN-CONSISTENCY ROLLUP (CTO sec-10, EXISTENTIAL-AGGREGATION 047ce51d0): a coarse edge EXISTS iff >=1 fine edge rolls up (OR-rollup); defects UNSUPPORTED (coarse, zero fine basis) + COARSE-INCOMPLETE (fine, coarse target absent). One canonical definition shared with GRAPHUNI/COMPDRIFT (rollup_defects)"
 
 # =============================================================================
 # GRAIN CONTRACT -- the CROSS-MACRO stable-grain invariant (CTO-directed via COO~B,
@@ -174,17 +186,27 @@ grain_contract:
     - { edge_type: WRITES_S3, relation: writes_s3, levels: [object, prefix], note: "writes an S3 artifact; depth = level attr" }
     - { edge_type: DEPLOYS,   relation: deploys,   levels: [lambda, script], note: "GIT->CLOUD deploy edge (seam-2); artifact-class = level attr, one relation" }
     - { edge_type: SERVES,    relation: serves,    levels: [route, served-json], note: "CF/route serves a payload; surface depth = level attr" }
-  # EXTENSIBILITY SEAM (COO~B scope-guard 2026-06-30T20:57Z): a THIRD amendment -- the FRACTAL-
-  # granularity model (coarse resource nodes drill to fine internal structure via stable RUNS/
-  # CONTAINS/OWNED_BY edges, e.g. EC2-RUNS->PipelineScript; 85129b12f section 10) -- is committed
-  # but NOT YET CTO-RATIFIED. When it ratifies it FOLDS into THIS gate as two NEW rule entries
-  # (NOT a re-type of the engine): (1) DRILLDOWN-SEAM checks (resource<->compute<->object strata),
-  # (2) a GRAIN-CONSISTENCY ROLLUP invariant (a coarse edge must roll up from its fine edges; a
-  # contradiction = a grain defect). The gate is already fold-ready: comp-coverage-check ENUMERATES
-  # gate_contract.rules and dispatches by id, so a new rule = one rule entry + one checker fn = a
-  # FOLD. NOT built here -- the seam is left open per the scope-guard (build only the ratified 8+9).
-  pending_extensions:
-    - { amendment: 10, name: fractal-granularity, status: COMMITTED-NOT-RATIFIED, ref: 85129b12f, folds_in: [grain_drilldown_seams, grain_rollup_consistency], build_when: "CTO ratifies section 10" }
+    - { edge_type: RUNS,      relation: runs,      levels: [ec2, lambda, stepfn], note: "resource RUNS compute (fractal stratum-stitcher, sec-10); EC2 -RUNS-> PipelineScript" }
+    - { edge_type: OWNED_BY,  relation: owned_by,  levels: [s3key, ddb-item], note: "object OWNED_BY its container-resource (fractal stratum-stitcher, sec-10); S3Key -OWNED_BY-> S3_BUCKET" }
+  # ============ FRACTAL DRILLDOWN -- CTO section-10, RATIFIED 205709Z (FOLDED ACTIVE) ============
+  # Coarse resource nodes drill to fine internal structure via stable stratum-stitching edges.
+  # Folded as the 8th+9th gate rules (grain_drilldown_seams + grain_rollup_consistency) -- a pure
+  # FOLD (new rule entries + checker fns), no engine refactor. CTO dispatched directly + lifted the
+  # scope-guard; COO~B confirmed (mandate-first applies to the CALIBRATION sweep, NOT this fold).
+  strata: [resource, compute, object]      # coarse -> fine
+  drilldown_seams:                          # stratum-stitching edges (reference edge_types + the strata they bridge)
+    - { edge_type: RUNS,     from_stratum: resource, to_stratum: compute }   # EC2 -RUNS-> PipelineScript
+    - { edge_type: CONTAINS, from_stratum: compute,  to_stratum: object }    # LAMBDA/Script -CONTAINS-> handler/function/field
+    - { edge_type: OWNED_BY, from_stratum: object,   to_stratum: resource }  # S3Key -OWNED_BY-> S3_BUCKET
+  rollup:
+    semantics: existential-aggregation       # CTO 047ce51d0: a coarse edge EXISTS iff >=1 fine edge rolls up (OR-rollup), NOT 1:1 equality
+    rollup_via: [RUNS, CONTAINS, OWNED_BY]    # the stratum-stitchers a fine edge aggregates UP through
+    example: "coarse EC2 READS S3_BUCKET  <==  fine PipelineFunction READS_S3 S3Key, where the fn rolls up (RUNS+CONTAINS) to EC2 AND S3Key OWNED_BY S3_BUCKET -- the coarse edge is the OR-rollup of the fine"
+    defect_classes:
+      - { id: UNSUPPORTED,       meaning: "a COARSE edge with ZERO supporting fine edges (the coarse claim has no fine basis)", verdict: FAIL }
+      - { id: COARSE-INCOMPLETE, meaning: "a FINE edge whose rolled-up coarse target is ABSENT (the coarse stratum is missing an edge the fine layer implies)", verdict: FAIL }
+    enforced_at: "GRAPHUNI derive / COMPDRIFT seam against POPULATED edge INSTANCES (instance-level); comp-coverage-check validates the contract is well-declared (type-level) at commit + EXPOSES comp_coverage_check.rollup_defects() so the populator + the seam call ONE canonical existential-rollup definition (the 1:1-vs-existential drift 047ce51d0 corrected must not recur)"
+  pending_extensions: []                     # sec-10 now FOLDED ACTIVE; none pending
 
 # =============================================================================
 # SURFACES -- the 5-surface APEX (PRD section 2, Andrew-direct).
