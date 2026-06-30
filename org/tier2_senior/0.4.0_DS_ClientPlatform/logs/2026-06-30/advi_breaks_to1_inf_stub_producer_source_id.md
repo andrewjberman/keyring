@@ -99,6 +99,37 @@ Full validated diff: `scratchpad/ADVI_BREAKS_TO2_inf_staged_patch.md`. Two files
   s3://opal-data-inf/code/gold/ → validate on next nightly (NO ad-hoc run) → CVO re-sweep B/C/E/F.
 - Background watch `babvs3fbd` on the served key independently confirms the ~14:30Z rich write.
 
+## inf VALUE DEFECT (COO new-priority -> Andrew INGESTION reframe -> Andrew-CONFIRMED downstream)
+
+COO dispatched the +$1.72M inf AUA over-statement (served 06-29 $202,711,894.29 vs Orion $200.99M).
+Andrew then reframed to "ingestion froze ~Friday"; I ground-truthed live and Andrew CONFIRMED the result.
+
+GROUNDED (live S3 sums; content-as-of via the VALUE test, which beats mtime per the cot trap):
+- silver/api_dims/positions_mv per snapshot_date = DISTINCT daily values, each ties Orion:
+  06-27/06-28 $202,582,215.84 (weekend carry, expected identical) | 06-29 $200,987,115.59 (=Orion 06-29)
+  | 06-30 $202,125,678.08 (=Orion 06-30 $202.13M). A frozen-Friday file would sum ~$203.0M; it does NOT.
+  => positions ingestion CONTENT is FRESH + CORRECT, not frozen. **Andrew-confirmed** ("getting to
+  202.13m today = we are pulling the correct data").
+- THE DEFECT is DOWNSTREAM: served 06-29 $202,711,894.29 = gold/canonical/holdings_2026-06-27 AND _06-28
+  BYTE-IDENTICAL (11480 rows, pre-short-fix = silver +$129,678 from the 8 dropped shorts). INF_D_04
+  load_latest_holdings() (L401) picks the MAX-date GOLD holdings partition; on the 06-29 run no fresh
+  06-29 GOLD partition existed at D-stage, so it computed off the stale 06-28 weekend partition. The
+  GOLD-canonical-holdings layer did not advance on that scheduled path — NOT ingestion.
+- Old +$1.72M decomposition: ~$1.59M stale-gold-partition (06-28 vs 06-29) + ~$0.13M pre-fix short-drop
+  (already fixed 07bc375d2; takes effect on the next clean build).
+- FRAGILITY (latent): load_latest_holdings picks the GLOBAL max-date partition, so if a day's B-stage
+  fails but D-stage still runs, D publishes a STALE partition with a fresh generated_at = false freshness
+  (exactly the 06-29 pattern). Worth a freshness/as-of assert (TO-6 class).
+- TODAY: silver 06-30 fresh ($202.13M); gold holdings_06-30 PENDING (chain fired 13:01Z, due ~14:30Z).
+  Once it builds, load_latest picks 06-30 -> served self-corrects to ~$202.13M. VERIFYING at ~14:30Z
+  (bg watch babvs3fbd on the served key + a value sum on gold holdings_06-30).
+- Open (partly unrecoverable — my 06-29 manual 21:26Z pull overwrote the scheduled silver partition):
+  whether the 06-29 SCHEDULED 12:50Z pull/B-stage failed to land a 06-29 gold partition (freeze-day),
+  which is why load_latest fell back to 06-28. Today's run is the recurrence test.
+- Pre-existing separate: inf_silver_accounts_dim FAIL (stale 2026-04-29, read by INF_D_00) — noted, predates Friday.
+
+RAVC'd COO + CVO (CC CTO). Pairs with CVO's Andrew-commissioned 3-pipeline ingestion->served /draw.
+
 ## Compiler Tools
 | Tool | Use | Result |
 |---|---|---|
