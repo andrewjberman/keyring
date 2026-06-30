@@ -137,10 +137,29 @@ Each cross-stratum seam is validated by ALL spanned strata + ~C; a RED from any 
 
 ## 4. FINDINGS / SMELL PASS
 
-- **F1 — EC2 name non-uniqueness (RUNS grain decision):** 31 instances, 23 distinct `name`s (`historical-prices-fetcher` ×8, `seeking-alpha-scraper` ×2). The node identity is per-instance (instance-id); `name` is the Name tag, non-unique. **Decision needed (~D populator + ~C governor):** is `EC2 -RUNS-> PipelineScript` keyed on the runner ROLE (one RUNS-set per role, instance multiplicity an attribute) or per-instance (8 identical RUNS-sets for the 8 hist-prices instances)? Recommend role-level with an instance-count attribute (the script binding is per-role).
+- **F1 — EC2 name non-uniqueness (RUNS grain decision) — RESOLVED:** 31 instances, 23 distinct `name`s (`historical-prices-fetcher` ×8, `seeking-alpha-scraper` ×2). The node identity is per-instance (instance-id); `name` is the Name tag, non-unique. **RESOLVED ~D 215302Z + ~B agree: RUNS = ROLE-level** — keyed on the 23 roles with `instance_count` as an attribute (per-instance would be N redundant identical RUNS-sets). Grain-contract fit (size-invariance): role is the meaningful `level`; instance is a finer level addable later WITHOUT re-typing. **~C governs the encoding** (`RUNS level=role` + `instance_count` attr). ~D's PipelineScript nodes are the per-role binding targets.
 - **F2 — coarse edge_type overload (rollup binding):** the existing coarse `EC2/LAMBDA READS S3_BUCKET` uses edge_type **`READS`**, which the grain_contract registry attributes to **producer=portal** (`relation=reads, levels=[field,object]`). The fine rollup target is **`READS_S3`** (producer=graphuni-gold). For the existential rollup to bind coarse⇄fine cleanly, **~C must rule** whether the coarse infra S3-read should be `READS_S3[level=bucket]` (same-semantic, grain-stable with the fine per Amendment-2) rather than `READS` (currently overloaded with the portal-field semantic). This is a DECLARATIVE registry-vs-territory item on the rollup keystone.
-- **F3 — GRAPH FRESHNESS GAP (the big one; bears on every count):** the estate-topology graph is **~23h stale on the node side** (latest `graph_nodes` commit 06-29 22:11; today's 4 deploys absent; live Lambda 174 vs graph 169). The `opal-globgrph-incremental-updater` fires (~20×/3h) with 0 errors / 0 backlog but `nodes_written=0` every batch — a silent no-op. Data-plane events are correctly excluded by design (management-events only, S3→bucket grain, `lambda_function.py` L105/L256); but today's CONTROL-plane deploys also aren't landing. ROOT not yet grounded (no-delta vs creation-events-not-arriving vs upsert-drop). **Lane = globgrph/comp-tools (0.7.0); flagged to COO~B + 0.7.0.** I grounded this slice's counts on LIVE state to compensate.
-- **F4 — non-pipeline EC2 (RUNS exclusions):** `m365-mcp-gateway` (the always-on MS MCP gateway service host) and `quartz-si2-spike` (experimental/spike) are NOT pipeline-script runners — declared `RUNS`-exclusions so the rollup doesn't false-demand a RUNS edge (confirm `quartz-si2-spike` standing with ~D).
+- **F3 — GRAPH FRESHNESS GAP (the big one; bears on every count):** the estate-topology graph is **~23h stale on the node side** (latest `graph_nodes` commit 06-29 22:11; today's 4 deploys absent; live Lambda 174 vs graph 169). The `opal-globgrph-incremental-updater` fires (~20×/3h) with 0 errors / 0 backlog but `nodes_written=0` every batch — a silent no-op. Data-plane events are correctly excluded by design (management-events only, S3→bucket grain, `lambda_function.py` L105/L256); but today's CONTROL-plane deploys also aren't landing. **ROOT GROUNDED (live-log-confirmed):** the EventBridge rule `opal-globgrph-cloudtrail-mgmt` IS correct (matches aws.lambda/ec2/s3/iam/… readOnly:false — today's events DO arrive; logs show it processing `opal-{cot,inf}-served-guard` + their `-recheck` SQS). But every bounded-derive (`lambda_function.py` L224-243 re-fetch-live-state) fails: `BOUNDED_DERIVE_FAIL … err=Connect timeout on endpoint URL https://lambda.us-east-1.amazonaws.com / https://sqs.us-east-1.amazonaws.com`. The VPC-bound updater can't reach the AWS service API endpoints → resource not re-derived → `nodes_written=0` → no commit since 06-29 22:11. The failure is caught + counted as a skip (`failed=0`) → no error/DLQ/alarm → **SILENT** (the dangerous part). Root class = VPC egress/endpoint connectivity (no route to lambda/sqs + likely all interface-endpoint services; persistent ~23h). Exact broken component (NAT vs interface-endpoint vs route/SG) = the next dig. **Lane = globgrph/comp-tools (0.7.0); grounded root routed to COO~B → dispatch 0.7.0 (215346Z) + check `opal-globgrph-freeze-monitor` for the same VPC issue.** I grounded this slice's counts on LIVE state to compensate.
+- **F4 — non-pipeline EC2 (RUNS exclusions) — RESOLVED:** `m365-mcp-gateway` (always-on MS MCP gateway host) and `quartz-si2-spike` (experimental/spike) are NOT pipeline-script runners — `RUNS`-exclusions so the rollup doesn't false-demand. **~D confirmed 215302Z** (grounded: ZERO gold-pipeline nodes reference quartz/si2-spike in the TraceGraph; neither is a named gold runner). The EC2→script binding is ~B's RUNS edge + the EC2 manifest ~B's domain; ~D's authoritative statement "no gold-pipeline script binds to either" → exclusion correct.
+
+### The 13 shared (compute+lambda) S3Keys — RESOLVED (~D 215302Z, the `also_lambda_written` subset of `NFRA_GRAPHUNI.P1.d_s3key_reference_set.json`)
+4-party {~B,~D,~A,~C}: ONE ~A S3Key node per (bucket,key) with TWO disjoint edges (~D compute `READS_S3` + ~B lambda `READS_S3`) → no double-count. Multi-firm keys split into one bucket-qualified S3Key per firm (both ~B + ~D edge to each).
+
+| key | firm(s) |
+|---|---|
+| config/ticker_lookup.json | bd |
+| gold/artifacts/filters/dimensions.json | bd |
+| gold/artifacts/firm_mix_views.json | bd, inf |
+| gold/artifacts/summary/header_metrics.json | bd, inf |
+| gold/dimensions/advisor_assignments.parquet | inf |
+| gold/timeseries/client_performance.parquet | bd, inf, mdpf |
+| gold/views/account_team.parquet | bd, inf |
+| gold/views/firm_composition.json | bd |
+| platinum/firm/clients-tab-slim.json | bd, inf |
+| platinum/firm/cumulative_chart.json | bd, inf |
+| silver/accounts_dim/latest.parquet | inf |
+| silver/historical_prices.parquet | bd, inf |
+| silver/prices/canonical_prices.parquet | bd, inf |
 
 ---
 
