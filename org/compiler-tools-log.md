@@ -9825,3 +9825,24 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-06-30 | 0.6.1_AE_PartnerETL | ADVI_INFREF.P1 | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
 | 2026-06-30 | 0.6.0_AE_PartnerETL | ADVI_BREAKS-49F | comp-pipescript io / comp-which | B_01 unrealized-consumer grounding (CTO gate 1b) + schwab-persist routing; BD provision/test-pull/silver-merge have no comp-tool -> rail-checked raw aws/SSM | PASS |
 | 2026-06-30 | 0.6.0_AE_PartnerETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-06-30 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+| 2026-06-30 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/terraform/cot-value-parity/co... | PASS |
+| 2026-06-30 | 0.6.0_AE_PartnerETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.6.0_AE_PartnerETL/de... | PASS |
+| 2026-06-30 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/briefs/pipeline-refactor-template.md | PASS |
+| 2026-06-30 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/change_management/20... | PASS |
+| 2026-06-30 | 0.4.0_DS_ClientPlatform~A | ADVI_INFREF.P1 | comp-surface-check | comp-surface-check check --mode advisory --file data/inf/scripts/gold/INF_D_00.portal_a... | PASS |
+| 2026-06-30 | 0.4.0_DS_ClientPlatform~A | ADVI_INFREF.P1 | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-06-30 | 0.6.1_AE_PartnerETL | ADVI_INFREF.P1 | comp-platinum | comp-platinum reverse platinum/firm/snapshots/aua_by_tax_status.json | PASS |
+| 2026-06-30 | 0.6.0_AE_PartnerETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.6.0_AE_PartnerETL/de... | PASS |
+| 2026-06-30 | 0.0.0_AB_MSTR | NFRA_COMPDIFF.comptool-audit | comp-surface-check | comp-surface-check check --mode advisory --file .tools/comp-which --file org/tier0/ledg... | PASS |
+| 2026-06-30 | 0.6.0_AE_PartnerETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.6.0_AE_PartnerETL/de... | PASS |
+| 2026-06-30 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+| 2026-06-30 | 0.4.0_DS_ClientPlatform~A | ADVI_INFREF.P1 | comp-surface-check | comp-surface-check check --mode advisory --file data/inf/scripts/gold/INF_09.generate_p... | PASS |
+| 2026-06-30 | 0.8.0_AE_CloudComp~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/compdiff/freeze_monitor.py --... | PASS |
+| 2026-06-30 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/change_management/20... | PASS |
+| 2026-06-30 | 0.0.0_AB_MSTR | NFRA_COMPDIFF.comptool-audit | comp-surface-check | comp-surface-check check --mode advisory --file docs/briefs/nfra-complearn-brief-202606... | PASS |
+| 2026-06-30 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/change_management/20... | PASS |
+| 2026-06-30 | 0.6.2_AE_PartnerETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/terraform/canonical-schwab-si... | PASS |
+| 2026-06-30 | 0.6.1_AE_PartnerETL | ADVI_INFREF.P1 | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/inf-portal-publisher/l... | PASS |
+| 2026-06-30 | 0.4.0_DS_ClientPlatform~A | ADVI_BREAKS+ADVI_INFREF.P1 | comp-grep/pipescript/ds-gate/boto3 | inf P0 recovery end-to-end + refactor validation + P1 launch (session-close) | PASS (served==Orion to the cent; 3 premise refutations grounded) |
+| 2026-06-30 | 0.4.0_DS_ClientPlatform~A | ADVI_INFREF.P1 | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
