@@ -69,6 +69,36 @@ live CloudTrail/CW confirm):
 
 Addendum RAVC'd to COO + AE (131557Z / 131607Z).
 
+## TO-1 CLOSE — both legs converged (DS source + AE forensic)
+
+AE infra forensic (0.7.0_AE 132129Z) fully converges with the DS source map:
+- **No-06-30-break — RESOLVED:** primary event-path fired 06-30 13:01Z (runner i-0ed5 launched; dispatch-lock
+  `mode=full source=aggregator`); chain in ~88-min compute; D_00/D_04 header writes DUE ~14:29-14:34Z. NOT a
+  trigger break — my temper confirmed and upgraded (didn't even need the 14:00 fallback).
+- **06-29-eve clobber principal:** CloudTrail excludes the scheduled inf-gold path AND in-instance SSM; only
+  Andrew-local boto3 write-then-readback in-window during his own 06-29-eve canonical/SSOT bootstrap (3
+  canonical-schwab-runner instances 20:17-20:32Z). → STRONGLY-INDICATED manual `INF_D_00 --upload` one-off,
+  NOT recurring automation. Rule-22 caveat: PutObject principal UNVERIFIABLE-by-log (org trail S3 data-event
+  selector = ReadOnly + S3 server-access-logging OFF on opal-data-inf) — decisively excludes scheduled, can't
+  positively name principal → TO-6 observability-gap input (a data-event-selector/access-logging fix).
+- **Net:** inf daily chain is HEALTHY and self-corrects served→rich ~14:30Z today (stub-then-rich, rich wins).
+  The 06-29 freeze was a transient one-off. TO-2 (emit-removal + shape gate) remains the DURABLE fix — kills
+  the manual-re-clobber class.
+
+## TO-2 — STAGED + READY (CTO arch-approved 131626Z; HELD for Andrew-GO via COO)
+
+Full validated diff: `scratchpad/ADVI_BREAKS_TO2_inf_staged_patch.md`. Two files:
+- INF_D_00.portal_aggregates.py: REMOVE the header_metrics emit (thin dict L885-891 + write L898 + dry-run-log
+  + comment unused const) → INF_D_04 sole/authoritative writer.
+- INF_D_04.client_portal_summary.py: ADD served-key shape gate before the PUT (require firm_name + nested
+  total{aua} + dates; ValueError on thin/stub) — defense-in-depth.
+- Consumer-safety VERIFIED (comp-pipescript io): consumer = getHeaderMetrics→ClientsTab; INF_D_04 rich header
+  preserves the legacy flat mirrors (total_aua/client_count/account_count L1276-1281) → ClientsTab reads a
+  SUPERSET of the stub, ZERO regression.
+- On-GO: apply → ds-commit-gate → comp-pipescript io re-confirm → safe-commit → `aws s3 cp` both to
+  s3://opal-data-inf/code/gold/ → validate on next nightly (NO ad-hoc run) → CVO re-sweep B/C/E/F.
+- Background watch `babvs3fbd` on the served key independently confirms the ~14:30Z rich write.
+
 ## Compiler Tools
 | Tool | Use | Result |
 |---|---|---|
@@ -76,5 +106,6 @@ Addendum RAVC'd to COO + AE (131557Z / 131607Z).
 | `comp-grep header_metrics` / `platinum/firm/header_metrics.json` | enumerate every writer of the served key | found INF_D_00:898 + INF_D_04:2495 (inf), plus BD/COT analogues; the draft brief named INF_D_00 as the flat stub (line-drifted but claim true) |
 | `pipescript advi-inf` | inf chain map / writers of the served key | confirmed inf-portal-publisher writes `header_metrics_fresh` (distinct key), narrowing the plain-key writers to INF_D_00 + INF_D_04 |
 | raw `aws s3api get-object`/`list-object-versions` | independently ground LIVE served object + version-size forensic | rail-checked marker (version-byte history is not a comp surface); confirmed 132B stub current + the daily-race + 06-29-eve flip + zero-06-30 |
+| `comp-pipescript io INF_D_00` / `INF_D_04` | DS-mandated pre-edit check for TO-2 staging | surfaced the consumer (getHeaderMetrics→ClientsTab) + confirmed INF_D_00 writes the key as `(terminal)` and INF_D_04 also writes it — the two-writer race; drove the consumer-safety verdict |
 
-DS minimum `comp-pipescript io` not run: this TO is READ-ONLY diagnosis, no gold script was edited/run — used `pipescript advi-inf` for the chain map instead.
+DS `comp-pipescript io` run on both gold scripts as part of TO-2 staging (consumer + column-gap surface). Diagnosis phase (TO-1) was read-only — `pipescript advi-inf` carried the chain map there.
