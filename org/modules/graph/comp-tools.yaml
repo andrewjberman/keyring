@@ -49,6 +49,22 @@ tools:
     engine: "org/modules/heatmap/{heat_map.py S0, object_freshness.py O1} (NFRA_EXPAND Strand-C; pinned API 2e3c27290)"
     project: "NFRA_EXPAND (HEATMAP_OBJECT strand)"
 
+  comp-xray:
+    command: "comp-xray <frozen <bucket> <key> --fields F[,F] | s3 ... | code <path> | config <path> | schema <parquet|s3://> | freeze-monitor [--publish]> [--json]"
+    segment_scope: cross-segment
+    when: |
+      - "Is this served value GENUINELY changing, or FROZEN-BUT-FRESH (value frozen while the timestamp keeps advancing)?" (frozen — the headline value-MOTION derivation on a served S3 JSON key)
+      - "Show me the raw value + freshness version timelines for this served key" (s3 — forensic, the two axes that derive the freeze)
+      - "Has this script's/config's LOGIC genuinely changed, or just been re-touched?" (code/config — git content-fingerprint timeline, penny-test de-dup)
+      - "Has this parquet's SCHEMA drifted in place (column added/dropped/retyped under a stable path)?" (schema — footer-schema fingerprint)
+      - Run the standing FROZEN-BUT-FRESH guard over the served targets (freeze-monitor — dry-run unless --publish to the critical-surface SNS topic)
+    cost: "code/config/schema-local ~seconds (git/footer read); frozen/s3/schema-s3/freeze-monitor = one S3 list_object_versions + per-version get (live AWS, ~seconds)"
+    output: "drift-record verdict (CLEAN/BREAK/UNVERIFIABLE) + disposition + derived flags + per-axis last_genuine_change + grounding; tri-state exit 0/1/2; --json for machine output"
+    name_note: "DISTINCT from comp-diff (the git->graph blast-radius tool, name unchanged) and from comp-freshness/comp-heat (those check the WRAPPER: mtime/existence/size; comp-xray checks the MOTION: is the CONTENT moving). The frozen-but-fresh class the wrapper-tools structurally cannot see."
+    guardrails: "READ-ONLY (list_object_versions + get_object + git log; never writes). VINTAGE-PRIMARY (grounds the authoritative retained version history, never newest-by-mtime). UNVERIFIABLE on a could-not-read axis = a finding (exit 2), never a silent clean. freeze-monitor is DRY-RUN by default (only --publish emits SNS)."
+    engine: "infra/aws/compdiff/{engine.py, axes_s3.py, axes_git.py, axes_schema.py, freeze_monitor.py} (CLI cli.py); home relocates to org/modules/compdiff/ on COO lane-grant"
+    project: "NFRA_COMPDIFF (the value-MOTION lens; P1 frozen-but-fresh prevention)"
+
   comp-aws:
     command: "comp-aws <derive|classes|metrics|diff|dual-managed|snapshot|score> [opts]"
     segment_scope: aws-cloud

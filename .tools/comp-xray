@@ -1,0 +1,15 @@
+#!/bin/bash
+# comp-xray -- value-MOTION lens (NFRA_COMPDIFF): is the CONTENT genuinely changing, or frozen-but-fresh?
+# Usage:
+#   comp-xray frozen <bucket> <key> --fields total_aua,total.aua [--cadence-days 1.0] [--json]
+#   comp-xray s3     <bucket> <key> --fields total_aua [--json]
+#   comp-xray code   <ws-path> [--json]
+#   comp-xray config <ws-path> [--json]
+#   comp-xray schema <parquet-path | s3://bucket/key> [--json]
+#   comp-xray freeze-monitor [--publish] [--json]
+# exit: 0 clean | 1 frozen-but-fresh integrity-break | 2 UNVERIFIABLE
+WORKSPACE="$(cd "$(dirname "$0")/.." && pwd)"
+python "$WORKSPACE/infra/aws/compdiff/cli.py" "$@"
+_exit=$?
+python "$WORKSPACE/org/modules/graph/comp_log_auto.py" "comp-xray" "$*" $_exit 2>/dev/null
+exit $_exit

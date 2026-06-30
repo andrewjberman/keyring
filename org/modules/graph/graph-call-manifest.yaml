@@ -692,6 +692,30 @@ entries:
     anti_pattern: "raw `git status` for the uncommitted-intent question (comp-heat ranks freshest-first + cross-refs the GIT->DEPLOY hop = comp-pipescript deployed + comp-freshness)"
     status: canonical    # NFRA_EXPAND Strand-C; comp-heat 2026-06-25 CTO
 
+  # ---- VALUE-MOTION LENS (comp-xray / NFRA_COMPDIFF) ----
+  - id: estate.xray.frozen_but_fresh
+    use_case: "Is a served value GENUINELY changing, or FROZEN-BUT-FRESH (the value froze while data_as_of/mtime keeps advancing)? The motion-not-wrapper lens -- the exact 3x-2026-06-29 freeze class (cot seal, bd xref, inf served-AUA) that mtime/size/existence tools structurally cannot see."
+    canonical_call: "comp-xray frozen <bucket> <key> --fields total_aua,total.aua [--cadence-days N] [--json]"
+    tool: comp-xray
+    mode: query
+    layer: pipeline
+    cost: "~seconds (one S3 list_object_versions + per-version get_object on the served key)"
+    freshness: "VINTAGE-PRIMARY: derived live from the authoritative S3 object-version history (versioning ON for served buckets); never newest-by-mtime"
+    rebuild_trigger: "n/a (always derived live)"
+    anti_pattern: "raw `aws s3 ls`/HeadObject for a freeze check (sees only the WRAPPER: mtime/size -- a re-stamped frozen value looks fresh). DISTINCT from comp-freshness/comp-heat (wrapper freshness) and comp-diff (git->graph blast). UNVERIFIABLE on a could-not-read axis is a finding, not a clean."
+    status: canonical    # NFRA_COMPDIFF P1; engine infra/aws/compdiff/; comp-xray CLI 2026-06-30 (Andrew-direct)
+  - id: estate.xray.content_motion_axis
+    use_case: "Has this code/config LOGIC or this parquet SCHEMA genuinely changed, or just been re-touched? Content-fingerprint timeline (penny-test de-dup) across git history (code/config) or footer-schema (schema = drift-in-place)."
+    canonical_call: "comp-xray code <ws-path>  |  comp-xray config <ws-path>  |  comp-xray schema <parquet-path|s3://bucket/key>  [--json]"
+    tool: comp-xray
+    mode: query
+    layer: pipeline
+    cost: "~seconds (git content-fingerprint pass, or one parquet footer read)"
+    freshness: "VINTAGE-PRIMARY: git history (code/config) / S3 object-versions or local mtime (schema) -- authoritative retained history, no newest-by-mtime guess"
+    rebuild_trigger: "n/a (always derived live)"
+    anti_pattern: "raw `git log`/`ls -t` to ask 'did the LOGIC change' (a re-touch with identical bytes looks like a change; comp-xray de-dups by content fingerprint). The standing guard = comp-xray freeze-monitor (dry-run unless --publish)."
+    status: canonical    # NFRA_COMPDIFF P1; comp-xray CLI 2026-06-30 (Andrew-direct)
+
   # ---- ESTATE DUPLICATE / DEAD-RESOURCE CENSUS (comp-dups / NFRA_DEBTSCAN standing dimension) ----
   - id: estate.dups.duplicate_resources
     use_case: "Is a logical resource duplicated/triplicated across the estate (cross-firm, IAM-policy-split, service-split, env-twin)? Which of the duplicates are DEAD (safe-retire candidates) vs REACHABLE? The standing debtscan dups dimension."
@@ -756,5 +780,6 @@ tools_index:
   comp-coverage: { does: "Compiler/task-order coverage report", subcommands: ["<args>"], entries: [meta.coverage.report] }
   comp-graph:    { does: "Freshness status across all graphs (local trace caches + cloud artifacts) + clear; uniform --fresh/--force contract (graph_cache.py)", subcommands: [status, clear, "--json"], entries: [meta.freshness.status] }
   comp-heat:     { does: "Estate OBJECT write-freshness + hygiene (repo files: hot/warm/cold + cold SUBTREES=archive candidates, uncommitted-write drift); ADVISORY-ONLY, read-only. DISTINCT from comp-freshness (data-pipeline S3/DDB)", subcommands: [freshness, drift, score], entries: [estate.heat.object_freshness, estate.heat.uncommitted_drift] }
+  comp-xray:     { does: "Value-MOTION lens (NFRA_COMPDIFF): is the CONTENT genuinely changing, or FROZEN-BUT-FRESH (value frozen while timestamp advances -- the 3x-2026-06-29 freeze class wrapper-tools cannot see)? Checks MOTION not the wrapper (mtime/size/existence). VINTAGE-PRIMARY, read-only, tri-state exit. DISTINCT from comp-diff (git->graph blast) + comp-freshness/comp-heat (wrapper freshness)", subcommands: [frozen, s3, code, config, schema, freeze-monitor], entries: [estate.xray.frozen_but_fresh, estate.xray.content_motion_axis] }
   comp-dups:     { does: "Estate duplicate/dead-resource CENSUS (NFRA_DEBTSCAN standing dimension): 4 structural duplicate classes (CROSS_FIRM/IAM_POLICY_SPLIT/SERVICE_SPLIT/ENV_TWIN) + dual-evidence dead-confirm (30d reads AND writes); bare=on-demand scan, --nightly=post-derive ledger-write to org/modules/graph/debtscan/ (DUPS_candidates.json + dups_latest.json). DISTINCT from comp-aws dual-managed (TF-state apply-conflict only); removal = worklist+human-confirm. Engine: dup_scan.py", subcommands: ["--class", "--nightly", "--json"], entries: [estate.dups.duplicate_resources] }
   comp-secrets:  { does: "AWS Secrets Manager lens: inventory (firm-tagged + rotation/freshness), SAFE read (redacted shape by default; --reveal=cleartext-to-stdout-never-logged), secret->consumer code/TF map, rotation audit. Read-only; SSL-fallback to the Windows cert store. DISTINCT from comp-iam (the IAM-grant/who-can-read view)", subcommands: [list, get, consumers, rotation], entries: [cloud.secrets.inspect] }
