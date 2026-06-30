@@ -517,7 +517,8 @@ lanes:
       - 0.7.0_AE_CloudOps
       - 0.7.0_AE_CloudOps~B
       - 0.7.0_AE_CloudOps~C
-    description: "Execs + AEs — used for project JSONs (AE updates own project state) and hook-config files (AE 0.7 implements hook ecosystem). 3.0.0_SA_CVO + 3.1.0_SA_CVO added 2026-05-23 by COO: CVO is now Tier-1 Claude exec per Andrew 2026-05-22 ruling; enables CVO /spot-check fix-authorized alignment-metadata commits without routing every diff to COO. 0.7.0_AE_CloudOps~C added 2026-05-23 by COO: ~C is the ADVI_DEMOV1 AE infra lane (LD-0008 spawn); shares same tilde-lane gap pattern."
+      - 0.8.0_AE_CloudComp~C
+    description: "Execs + AEs — used for project JSONs (AE updates own project state) and hook-config files (AE 0.7 implements hook ecosystem). 3.0.0_SA_CVO + 3.1.0_SA_CVO added 2026-05-23 by COO: CVO is now Tier-1 Claude exec per Andrew 2026-05-22 ruling; enables CVO /spot-check fix-authorized alignment-metadata commits without routing every diff to COO. 0.7.0_AE_CloudOps~C added 2026-05-23 by COO: ~C is the ADVI_DEMOV1 AE infra lane (LD-0008 spawn); shares same tilde-lane gap pattern. 0.8.0_AE_CloudComp~C added 2026-06-30 by 2.0.0_SA_COO~B: the dedicated NFRA_COMPUNIFY build lane (MSTR spawn) needs to self-commit the comp-coverage-map.yaml ledger (S0->S3); same recurring tilde-lane gap. NOTE: base 0.8.0_AE_CloudComp is still absent from this lane (the pending NFRA_COMPDIFF org/modules/compdiff relocation grant) -- flagged to base-COO, not bundled here (out of NFRA_COMP* scope)."
 
   COMPILER_MANIFEST_CHECK:
     permitted_agents:
@@ -920,6 +921,10 @@ paths:
   "org/modules/graph/comp-tools.yaml":
     lane: ANY_EXEC_OR_AE
     note: "Compiler tool registry. AE adds rows when shipping new compiler tools per ADHC_COMPIL_V4 family. Execs revise wider scope."
+
+  "org/modules/graph/comp-coverage-map.yaml":
+    lane: ANY_EXEC_OR_AE
+    note: "NFRA_COMPUNIFY coverage/provenance LEDGER -- the top-down comp-tool coverage MAP (supersedes the flat tools_index, CTO ruling #1). AE owns the build (0.8.0_AE_CloudComp~C, the dedicated COMPUNIFY build lane per NFRA_COMPUNIFY.S0->S3). Mirrors the org/modules/graph/comp_*.py + comp-tools.yaml comp-tool-registry precedent (AE builds comp-tools in org/modules/, ANY_EXEC_OR_AE; longest-match over org/modules/** ANY_EXEC). Added 2026-06-30 by 2.0.0_SA_COO~B (decompose-time grant; the S0 owned-paths grant did not ship bundled with the TO -- corrected here)."
 
   "org/modules/graph/comp-tools-segment-scope.md":
     lane: ANY_EXEC_OR_AE
