@@ -10165,3 +10165,23 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-06-30 | 0.8.0_AE_CloudComp~D | NFRA_GRAPHUNI.P1.d1-fill-derive | comp-kuzu | comp-kuzu MATCH (n) RETURN count(n) LIMIT 1 | PASS |
 - 2026-06-30 0.8.0_AE_CloudComp~C (portal inv-2 encode + P1 GO): comp-coverage-check check PASS + selfcheck --json 17/17 freeze-intact (portal edges registry-data); multiparty_rollup/assemble_rollup STAGED + ready (fire on Phase-A population, pull from comp-kuzu). Encoded CTO inv-2 ruling (CONTAINS_DRILLDOWN->CONTAINS+depth portal-4th-producer; CLUSTERS/SHARES_SOURCE distinct). Commit 22cb21116.
 | 2026-06-30 | 0.8.0_AE_CloudComp~C | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-06-30 | 2.0.0_SA_COO~B | (no-TO) | comp-manifest-check | comp-manifest-check | FAIL |
+| 2026-06-30 | 0.8.0_AE_CloudComp~A | (no-TO) | comp-kuzu | comp-kuzu MATCH (n:CloudNode) WHERE n.node_type='S3_BUCKET' AND n.name CONTAINS 'opal-d... | FAIL |
+| 2026-06-30 | 2.0.0_SA_COO~B | (no-TO) | comp-manifest-check | comp-manifest-check list | PASS |
+| 2026-06-30 | 2.0.0_SA_COO~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/graph-call-manifest.yaml | PASS |
+| 2026-06-30 | 0.8.0_AE_CloudComp~C | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/comp-coverage-map.yaml | PASS |
+| 2026-06-30 | 0.8.0_AE_CloudComp~A | (no-TO) | comp-kuzu | comp-kuzu MATCH (n:CloudNode) WHERE n.node_type='S3_BUCKET' AND n.name CONTAINS 'opal-d... | PASS |
+| 2026-06-30 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/change_management/20... | PASS |
+| 2026-06-30 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+| 2026-06-30 | 0.8.0_AE_CloudComp~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/NFRA_GRAPHUNI/NFRA_GRAPHUN... | PASS |
+| 2026-06-30 | 0.4.0_DE_ClientPlatform | NFRA_TSGRAPH.P2-3 | comp-kuzu | comp-kuzu --json MATCH (n:CloudNode) WHERE n.node_type='Module' AND n.name CONTAINS 'Ad... | PASS |
+| 2026-06-30 | 0.4.0_DE_ClientPlatform | NFRA_TSGRAPH.P2-3 | comp-kuzu | comp-kuzu --json MATCH (n:CloudNode) WHERE n.node_type='ReactComponent' RETURN n.node_i... | PASS |
+| 2026-06-30 | 0.8.0_AE_CloudComp~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/NFRA_GRAPHUNI/NFRA_GRAPHUN... | PASS |
+| 2026-06-30 | 0.8.0_AE_CloudComp~C | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/comp-coverage-map.yaml | PASS |
+| 2026-06-30 | 0.4.0_DE_ClientPlatform | NFRA_TSGRAPH.P2-3 | comp-cluster | comp-cluster --coverage | PASS |
+| 2026-06-30 | 0.4.0_DE_ClientPlatform | NFRA_TSGRAPH.P2-3 | comp-cluster | comp-cluster --list | PASS |
+| 2026-06-30 | 0.4.0_DE_ClientPlatform | NFRA_TSGRAPH.P2-3 | comp-cluster | comp-cluster AdvisorIntelligence | FAIL |
+| 2026-06-30 | 0.4.0_DE_ClientPlatform | NFRA_TSGRAPH.P2-3 | comp-cluster | comp-cluster AdvisorIntelligence | PASS |
+| 2026-06-30 | 0.4.0_DE_ClientPlatform | NFRA_TSGRAPH.P2-3 | comp-cluster | comp-cluster AdvisorIntelligence --json | PASS |
+| 2026-06-30T2318Z | 0.6.0_AE_PartnerETL | 49F freeze-class root diagnosis | comp-glob A_03* (PASS), comp-grep watermark/positions_cube/manifest-keys (PASS, mapped A_03 + 4 silver manifests) ; rail-checked raw aws+python parquet/xlsx trade_date reads + manifest file-list (no comp-tool covers artifact-content/manifest-list) | gap: comp-content/trace-date family (parquet/xlsx column-max + manifest file-list) -- recurring all session |
+| 2026-06-30 | 0.6.0_AE_PartnerETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
