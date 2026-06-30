@@ -9869,3 +9869,5 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-06-30 | 0.0.0_AB_MSTR | NFRA_COMPDIFF.comptool-audit | comp-surface-check | comp-surface-check check --mode advisory --file docs/briefs/nfra-compdrift-brief-202606... | PASS |
 2026-06-30 | 2.0.0_SA_COO~B | NFRA_COMPLEARN/program-coord | comp-which | "is the globgrph trino heat federation live" | PARTIAL (backstop route; no project-state tool); grounded via project_trino_federation_layer_live memory + registry instead -> corrected COMPDRIFT brief layer-vs-catalog mismap
 | 2026-06-30 | 2.0.0_SA_COO~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-06-30 | 0.4.0_DS_ClientPlatform | ADVI_BREAKS.TO-4b | s3api-versions/boto3-parquet-sum/deploy_ledger/comp-grep | cot TO-4b fix + lag-char + anchor: header version-history served-lag series + silver/holdings.market_value sum-tie ($0.00) + deploy_ledger --red clear + e2-alarm wiring grep | PASS |
+| 2026-06-30 | 0.4.0_DS_ClientPlatform | ADVI_BREAKS.TO-4 | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
