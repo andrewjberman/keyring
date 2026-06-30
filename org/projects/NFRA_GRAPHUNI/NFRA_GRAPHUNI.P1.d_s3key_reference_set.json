@@ -1,290 +1,1437 @@
-[
- "benchmarks/LATEST.json",
- "blackdiamond/49f/session-trigger-mode.json",
- "blackdiamond/cot/session-trigger-mode.json",
- "bronze/orion-api-v2/*/household_rep_mapping.json",
- "bronze/orion-api-v2/*/representatives.json",
- "bronze/orion-api/*/assets.csv",
- "bronze/orion-api/*/transactions.csv",
- "bronze/orion-api/activity/latest.csv",
- "bronze/orion-api/household/latest.csv",
- "bronze/orion-api/performance/latest.csv",
- "bronze/orion-api/{*}/_BRONZE_COMPLETE.json",
- "bronze/orion-api/{*}/assets.csv",
- "bronze/orion-api/{*}/transactions.csv",
- "bronze/orion-api/{date}/assets.csv",
- "cache/fred/BAMLC0A0CM.csv",
- "cache/fred/BAMLH0A0HYM2.csv",
- "code/gold/*",
- "config/dynamic_stopwords.json",
- "config/etf_universe.json",
- "config/ticker_lookup.json",
- "config/yahoo_safe_tickers.txt",
- "consolidated/smartx_allocations.parquet",
- "gold/_parity/account_gains/*/scorecard.json",
- "gold/_parity/account_gains/{*}/scorecard.json",
- "gold/_parity/canonical_lots/*/scorecard.json",
- "gold/_parity/canonical_lots/{*}/scorecard.json",
- "gold/_parity/holdings_lots/*/scorecard.json",
- "gold/_parity/holdings_lots/{*}/scorecard.json",
- "gold/_parity/positions_cube/*/scorecard.json",
- "gold/_parity/positions_cube/{*}/scorecard.json",
- "gold/_state/advisor_assignments/daily_state.parquet",
- "gold/_state/load_flows/watermark.json",
- "gold/account_gains/{*}.parquet",
- "gold/accounts_dimension_latest.parquet",
- "gold/artifacts/49f/c1_recovered_accounts.json",
- "gold/artifacts/49f/out_of_scope_accounts.json",
- "gold/artifacts/advisor_fee_efficiency.json",
- "gold/artifacts/client_mix_timeseries.json",
- "gold/artifacts/client_tax_liability.json",
- "gold/artifacts/clients/growth_timeseries.json",
- "gold/artifacts/clients/tax_basis_breakdown.json",
- "gold/artifacts/clients/tax_deferred_candidates.json",
- "gold/artifacts/clients_tab.json",
- "gold/artifacts/cumulative_chart.json",
- "gold/artifacts/employee_leaderboard.json",
- "gold/artifacts/filters/dimensions.json",
- "gold/artifacts/firm_mix_views.json",
- "gold/artifacts/firm_mix_views_daily.json",
- "gold/artifacts/implementor_leaderboard.json",
- "gold/artifacts/partner_analytics/header_metrics.json",
- "gold/artifacts/partner_analytics/header_metrics_{*}.json",
- "gold/artifacts/snapshots/aua_by_architect.json",
- "gold/artifacts/snapshots/aua_by_region.json",
- "gold/artifacts/snapshots/aua_by_state.json",
- "gold/artifacts/snapshots/aua_by_tax_status.json",
- "gold/artifacts/summary/header_metrics.json",
- "gold/artifacts/timeseries_chart.json",
- "gold/cache/hh_timeseries_anchors_{*}.parquet",
- "gold/canonical/account_gains/",
- "gold/canonical/account_gains/{*}.parquet",
- "gold/canonical/advisor_fee_detail/",
- "gold/canonical/advisor_fee_detail/{*}.parquet",
- "gold/canonical/canonical_nna_{*}.parquet",
- "gold/canonical/canonical_performance_2026-04-20.parquet",
- "gold/canonical/canonical_performance_{*}.parquet",
- "gold/canonical/holdings/",
- "gold/canonical/holdings/{*}.parquet",
- "gold/canonical/holdings_*.parquet",
- "gold/canonical/holdings_gaps/{*}.parquet",
- "gold/canonical/holdings_{*}.parquet",
- "gold/canonical/lots_realized/",
- "gold/canonical/lots_realized/{*}.parquet",
- "gold/canonical/lots_unrealized/",
- "gold/canonical/lots_unrealized/{*}.parquet",
- "gold/canonical/nna/",
- "gold/canonical/nna/{*}.parquet",
- "gold/canonical/nna_atomic/{*}.parquet",
- "gold/canonical/nna_validation/{*}.json",
- "gold/canonical/performance/",
- "gold/canonical/performance/{*}.parquet",
- "gold/canonical/role_aua/",
- "gold/canonical/role_aua/*.parquet",
- "gold/canonical/role_aua/{*}.parquet",
- "gold/canonical/watermarks.json",
- "gold/classification/ticker_coverage_report.json",
- "gold/client_performance.parquet",
- "gold/clients/*.json",
- "gold/dimensions/accounts_dimension_latest.parquet",
- "gold/dimensions/advisor_assignments.parquet",
- "gold/dimensions/advisor_assignments_history.parquet",
- "gold/dimensions/client_dimension.parquet",
- "gold/dimensions/dim_advisor_office.csv",
- "gold/dimensions/fee_rate_history.parquet",
- "gold/dimensions/schwab_bd_account_mapping.parquet",
- "gold/dimensions/ticker_resolution.parquet",
- "gold/dispatch-lock.json",
- "gold/eclipse/{*}/_meta/gold_complete.json",
- "gold/eclipse/{*}/model_portfolio_accounts.parquet",
- "gold/entities/accounts/{*}/aua_timeseries.json",
- "gold/entities/advisors/{*}/book.json",
- "gold/entities/advisors/{*}/composition.json",
- "gold/entities/advisors/{*}/mix.json",
- "gold/entities/advisors/{*}/mix_daily.json",
- "gold/entities/advisors/{*}/mix_timeseries.json",
- "gold/entities/advisors/{*}/timeseries.json",
- "gold/entities/clients/",
- "gold/entities/clients/*_views.json",
- "gold/entities/clients/{*}.json",
- "gold/entities/clients/{*}/aua_timeseries.json",
- "gold/entities/clients/{*}/detail.json",
- "gold/entities/clients/{*}_composition.json",
- "gold/holdings/{*}.parquet",
- "gold/holdings_lots_v2_dryrun/{*}.parquet",
- "gold/lots/lots_latest.parquet",
- "gold/lots/lots_{*}.parquet",
- "gold/manifests/classify_watermark.json",
- "gold/meta/account_gains_incr_watermark.json",
- "gold/meta/advisor_assignments_watermark.json",
- "gold/meta/canonical_lots_incr_watermark.json",
- "gold/meta/client_timeseries_watermark.json",
- "gold/meta/fee_rate_history_watermark.json",
- "gold/meta/holdings_lots_incr_watermark.json",
- "gold/meta/pipeline-complete.json",
- "gold/meta/positions_cube_incr_watermark.json",
- "gold/platinum/firm/cash_coverage_summary.json",
- "gold/platinum/firm/cohort_a_summary.json",
- "gold/positions_cube/*.parquet",
- "gold/positions_cube/2026-04-20.parquet",
- "gold/positions_cube/{*}.parquet",
- "gold/timeseries/account_performance.parquet",
- "gold/timeseries/client_performance.parquet",
- "gold/timeseries/holdings_lots/",
- "gold/timeseries/holdings_lots/2026-04-21.parquet",
- "gold/timeseries/holdings_lots/backfill_{*}.parquet",
- "gold/timeseries/holdings_lots/{*}.parquet",
- "gold/timeseries/holdings_lots_shadow/{*}.parquet",
- "gold/timeseries/nna_total.json",
- "gold/timeseries/positions_cube/",
- "gold/timeseries/positions_cube/{*}.parquet",
- "gold/timeseries/synthetic_positions_index.parquet",
- "gold/trigger-mode.json",
- "gold/trigger-pending.json",
- "gold/validation/account_gap_buckets_*.json",
- "gold/validation/all_non_yahoo_assets_*.json",
- "gold/validation/aua_certification/{*}.json",
- "gold/validation/aua_gap_decomposition_*.json",
- "gold/validation/aua_gap_top_positions_*.json",
- "gold/validation/aua_validation_{*}.json",
- "gold/validation/gap_by_pricing_source_*.json",
- "gold/validation/tail_asset_drill_*.json",
- "gold/validation/unmatched_asset_analysis_*.json",
- "gold/validation/yahoo_mapping_audit_*.json",
- "gold/views/account_team.parquet",
- "gold/views/client_tax_liability.parquet",
- "gold/views/firm_composition.json",
- "gold/views/mix_daily_summary.json",
- "gold/views/nna_aua_by_advisor.parquet",
- "gold/views/nna_aua_by_geography.parquet",
- "gold/views/nna_aua_by_geography_city.parquet",
- "gold/views/rel_architect_lookup.parquet",
- "gold/views/relationship_team.parquet",
- "infrastructure/freshness_manifest.json",
- "json-tiered/market-overview/rsi-summary.json",
- "json-tiered/market-overview/summary/all-returns.json",
- "json/benchmarks/benchmark_returns.json",
- "json/benchmarks/etf_returns.json",
- "json/benchmarks/model_portfolio_benchmarks.json",
- "json/benchmarks/model_portfolio_timeseries.json",
- "json/capital-markets/assumptions.json",
- "json/capital-markets/views.json",
- "json/correlations/correlation_data.json",
- "json/factor-tilts/data.json",
- "json/factor-tilts/tier1-snapshot.json",
- "json/factor-tilts/tier2-spreads.json",
- "json/factor-tilts/tier3-timeseries.json",
- "json/latest/manifest.json",
- "json/macro/macro_data.json",
- "json/macro/timeseries/10y.json",
- "json/macro/timeseries/2y.json",
- "json/macro/vix_data.json",
- "json/macro/volatility_data.json",
- "json/market/market-regime-history.json",
- "json/market/market-regime.json",
- "json/market_metrics.json",
- "json/mdpf/global/aggregate-aua-timeseries.json",
- "json/peers/peer_performance.json",
- "json/portfolios/account-distribution.json",
- "json/portfolios/aum-metrics.json",
- "json/portfolios/aum-timeseries.json",
- "json/portfolios/non_model_assets.json",
- "json/positioning/allocation_summary.json",
- "json/positioning/etf-returns.json",
- "json/positioning/holdings_attribution_data.json",
- "json/positioning/positioning_data.json",
- "json/returns/etf_period_returns.json",
- "json/security_scanner/latest/factor_metadata.json",
- "json/semantic-trending/latest.json",
- "json/sentiment/fear-greed-index.json",
- "json/sentiment/keyword-sentiments.json",
- "json/trending/latest.json",
- "json/valuation/risk_premium_data.json",
- "json/valuation/valuation_data.json",
- "json/yang/volatility_data.json",
- "macro/macro_data.json",
- "orion/bronze-trigger-mode.json",
- "orion/jwt/current.json",
- "orion/jwt/trigger-mode.json",
- "otp/current.txt",
- "otp/state.json",
- "platinum/accounts/{*}/summary.json",
- "platinum/advisors/{*}/book.json",
- "platinum/advisors/{*}/mix.json",
- "platinum/advisors/{*}/nna_clients.json",
- "platinum/advisors/{*}/positions.json",
- "platinum/advisors/{*}/summary.json",
- "platinum/advisors/{*}/timeseries.json",
- "platinum/advisors/{*}}/composition.json",
- "platinum/clients/{*}/composition.json",
- "platinum/clients/{*}/concentration.json",
- "platinum/clients/{*}/detail.json",
- "platinum/clients/{*}/mix_timeseries.json",
- "platinum/clients/{*}/summary.json",
- "platinum/clients/{*}/timeseries.json",
- "platinum/clients/{*}/top_holdings.json",
- "platinum/clients/{*}/views.json",
- "platinum/etf_ownership_dashboard.json",
- "platinum/firm/_meta/bronze_skip_warning_{*}.json",
- "platinum/firm/_meta/reconciliation_summary_holdings_{*}.json",
- "platinum/firm/clients-tab-slim.json",
- "platinum/firm/clients_tab.json",
- "platinum/firm/cumulative_chart.json",
- "platinum/firm/dashboard.json",
- "platinum/firm/fee_efficiency.json",
- "platinum/firm/filters/dimensions.json",
- "platinum/firm/firm_composition.json",
- "platinum/firm/header_metrics.json",
- "platinum/firm/leaderboard.json",
- "platinum/firm/leaderboard.prior_week.json",
- "platinum/firm/mix_summary.json",
- "platinum/firm/partner_analytics.json",
- "platinum/firm/partner_analytics_{*}.json",
- "platinum/firm/timeseries_chart.json",
- "platinum/firm/timeseries_overview.json",
- "platinum/firm/top_holdings.json",
- "platinum/mdpf/aggregate_aua_timeseries.json",
- "platinum/{*}/ownership_map.json",
- "schwab/silver/rld/",
- "schwab/silver/uln/",
- "schwab/silver/ult/",
- "security-reports/*_ai_summary.txt",
- "security-reports/*_comprehensive_report.txt",
- "security-reports/*_findings.json",
- "security-reports/*_latest_counts.json",
- "security-reports/*_security_report.txt",
- "security-reports/latest_ai_summary.txt",
- "security-reports/latest_score.json",
- "seeking-alpha/analysis/manifests/*/layer1_summary.json",
- "seeking-alpha/analysis/manifests/*/layer25_dedup_report.json",
- "seeking-alpha/analysis/manifests/*/layer2_chunk_*.json",
- "seeking-alpha/news/manifests/*/dedup_report.json",
- "seeking-alpha/news/manifests/*/layer1_summary.json",
- "sentiment/keyword-sentiments.json",
- "silver/accounts_dim/latest.parquet",
- "silver/allocations/*.parquet",
- "silver/allocations/{*}.parquet",
- "silver/api_dims/accounts_v2/snapshot_date={*}/data.parquet",
- "silver/api_dims/positions_mv/snapshot_date={*}/data.parquet",
- "silver/bd_assets_dim.parquet",
- "silver/eclipse/{*}/_meta/silver_complete.json",
- "silver/eclipse/{*}/model_composition.parquet",
- "silver/eclipse/{*}/portfolios_full.parquet",
- "silver/eclipse/{*}/portfolios_simple.parquet",
- "silver/historical_prices.parquet",
- "silver/interpolated_prices.parquet",
- "silver/meta/gap_manifest.json",
- "silver/netassets_daily.parquet",
- "silver/prices/canonical_prices.parquet",
- "silver/realized/bd_realized_agg.parquet",
- "silver/realized/bd_realized_compact.parquet",
- "silver/transactions/*.parquet",
- "silver/transactions/{*}.parquet",
- "silver/unrealized/*.parquet",
- "silver/unrealized/2026-04-20.parquet",
- "silver/unrealized/unrealized_gain_loss.parquet",
- "silver/unrealized/{*}.parquet",
- "smartx/jwt/current.json",
- "views/account_distribution.json",
- "warehouse/_branch_head.main.json"
-]
+{
+ "bronze/orion-api/*/assets.csv": {
+  "also_lambda_written": false,
+  "compute_firms": [
+   "inf"
+  ],
+  "firm_unresolved": false
+ },
+ "bronze/orion-api/*/transactions.csv": {
+  "also_lambda_written": false,
+  "compute_firms": [
+   "inf"
+  ],
+  "firm_unresolved": false
+ },
+ "bronze/orion-api/activity/latest.csv": {
+  "also_lambda_written": false,
+  "compute_firms": [
+   "inf"
+  ],
+  "firm_unresolved": false
+ },
+ "bronze/orion-api/household/latest.csv": {
+  "also_lambda_written": false,
+  "compute_firms": [
+   "inf"
+  ],
+  "firm_unresolved": false
+ },
+ "bronze/orion-api/performance/latest.csv": {
+  "also_lambda_written": false,
+  "compute_firms": [
+   "inf"
+  ],
+  "firm_unresolved": false
+ },
+ "bronze/orion-api/{*}/_BRONZE_COMPLETE.json": {
+  "also_lambda_written": false,
+  "compute_firms": [
+   "inf"
+  ],
+  "firm_unresolved": false
+ },
+ "bronze/orion-api/{*}/assets.csv": {
+  "also_lambda_written": false,
+  "compute_firms": [
+   "inf"
+  ],
+  "firm_unresolved": false
+ },
+ "bronze/orion-api/{*}/transactions.csv": {
+  "also_lambda_written": false,
+  "compute_firms": [
+   "inf"
+  ],
+  "firm_unresolved": false
+ },
+ "bronze/orion-api/{date}/assets.csv": {
+  "also_lambda_written": false,
+  "compute_firms": [
+   "inf"
+  ],
+  "firm_unresolved": false
+ },
+ "code/gold/*": {
+  "also_lambda_written": false,
+  "compute_firms": [
+   "inf"
+  ],
+  "firm_unresolved": false
+ },
+ "config/ticker_lookup.json": {
+  "also_lambda_written": true,
+  "compute_firms": [
+   "bd"
+  ],
+  "firm_unresolved": false
+ },
+ "config/yahoo_safe_tickers.txt": {
+  "also_lambda_written": false,
+  "compute_firms": [
+   "bd"
+  ],
+  "firm_unresolved": false
+ },
+ "gold/_parity/account_gains/*/scorecard.json": {
+  "also_lambda_written": false,
+  "compute_firms": [
+   "bd"
+  ],
+  "firm_unresolved": false
+ },
+ "gold/_parity/account_gains/{*}/scorecard.json": {
+  "also_lambda_written": false,
+  "compute_firms": [
+   "bd"
+  ],
+  "firm_unresolved": false
+ },
+ "gold/_parity/canonical_lots/*/scorecard.json": {
+  "also_lambda_written": false,
+  "compute_firms": [
+   "bd"
+  ],
+  "firm_unresolved": false
+ },
+ "gold/_parity/canonical_lots/{*}/scorecard.json": {
+  "also_lambda_written": false,
+  "compute_firms": [
+   "bd"
+  ],
+  "firm_unresolved": false
+ },
+ "gold/_parity/holdings_lots/*/scorecard.json": {
+  "also_lambda_written": false,
+  "compute_firms": [
+   "bd"
+  ],
+  "firm_unresolved": false
+ },
+ "gold/_parity/holdings_lots/{*}/scorecard.json": {
+  "also_lambda_written": false,
+  "compute_firms": [
+   "bd"
+  ],
+  "firm_unresolved": false
+ },
+ "gold/_parity/positions_cube/*/scorecard.json": {
+  "also_lambda_written": false,
+  "compute_firms": [
+   "bd"
+  ],
+  "firm_unresolved": false
+ },
+ "gold/_parity/positions_cube/{*}/scorecard.json": {
+  "also_lambda_written": false,
+  "compute_firms": [
+   "bd"
+  ],
+  "firm_unresolved": false
+ },
+ "gold/_state/advisor_assignments/daily_state.parquet": {
+  "also_lambda_written": false,
+  "compute_firms": [
+   "bd"
+  ],
+  "firm_unresolved": false
+ },
+ "gold/account_gains/{*}.parquet": {
+  "also_lambda_written": false,
+  "compute_firms": [
+   "inf"
+  ],
+  "firm_unresolved": false
+ },
+ "gold/accounts_dimension_latest.parquet": {
+  "also_lambda_written": false,
+  "compute_firms": [
+   "bd"
+  ],
+  "firm_unresolved": false
+ },
+ "gold/artifacts/49f/c1_recovered_accounts.json": {
+  "also_lambda_written": false,
+  "compute_firms": [
+   "bd"
+  ],
+  "firm_unresolved": false
+ },
+ "gold/artifacts/49f/out_of_scope_accounts.json": {
+  "also_lambda_written": false,
+  "compute_firms": [
+   "bd"
+  ],
+  "firm_unresolved": false
+ },
+ "gold/artifacts/advisor_fee_efficiency.json": {
+  "also_lambda_written": false,
+  "compute_firms": [
+   "bd",
+   "inf"
+  ],
+  "firm_unresolved": false
+ },
+ "gold/artifacts/client_mix_timeseries.json": {
+  "also_lambda_written": false,
+  "compute_firms": [
+   "inf"
+  ],
+  "firm_unresolved": false
+ },
+ "gold/artifacts/client_tax_liability.json": {
+  "also_lambda_written": false,
+  "compute_firms": [
+   "inf"
+  ],
+  "firm_unresolved": false
+ },
+ "gold/artifacts/clients_tab.json": {
+  "also_lambda_written": false,
+  "compute_firms": [
+   "bd"
+  ],
+  "firm_unresolved": false
+ },
+ "gold/artifacts/cumulative_chart.json": {
+  "also_lambda_written": false,
+  "compute_firms": [
+   "inf"
+  ],
+  "firm_unresolved": false
+ },
+ "gold/artifacts/employee_leaderboard.json": {
+  "also_lambda_written": false,
+  "compute_firms": [
+   "bd"
+  ],
+  "firm_unresolved": false
+ },
+ "gold/artifacts/filters/dimensions.json": {
+  "also_lambda_written": true,
+  "compute_firms": [
+   "bd"
+  ],
+  "firm_unresolved": false
+ },
+ "gold/artifacts/firm_mix_views.json": {
+  "also_lambda_written": true,
+  "compute_firms": [
+   "bd",
+   "inf"
+  ],
+  "firm_unresolved": false
+ },
+ "gold/artifacts/firm_mix_views_daily.json": {
+  "also_lambda_written": false,
+  "compute_firms": [
+   "bd"
+  ],
+  "firm_unresolved": false
+ },
+ "gold/artifacts/implementor_leaderboard.json": {
+  "also_lambda_written": false,
+  "compute_firms": [
+   "bd"
+  ],
+  "firm_unresolved": false
+ },
+ "gold/artifacts/partner_analytics/header_metrics_{*}.json": {
+  "also_lambda_written": false,
+  "compute_firms": [
+   "bd"
+  ],
+  "firm_unresolved": false
+ },
+ "gold/artifacts/snapshots/aua_by_architect.json": {
+  "also_lambda_written": false,
+  "compute_firms": [
+   "bd"
+  ],
+  "firm_unresolved": false
+ },
+ "gold/artifacts/snapshots/aua_by_region.json": {
+  "also_lambda_written": false,
+  "compute_firms": [
+   "bd"
+  ],
+  "firm_unresolved": false
+ },
+ "gold/artifacts/snapshots/aua_by_state.json": {
+  "also_lambda_written": false,
+  "compute_firms": [
+   "bd"
+  ],
+  "firm_unresolved": false
+ },
+ "gold/artifacts/snapshots/aua_by_tax_status.json": {
+  "also_lambda_written": false,
+  "compute_firms": [
+   "bd"
+  ],
+  "firm_unresolved": false
+ },
+ "gold/artifacts/summary/header_metrics.json": {
+  "also_lambda_written": true,
+  "compute_firms": [
+   "bd",
+   "inf"
+  ],
+  "firm_unresolved": false
+ },
+ "gold/artifacts/timeseries_chart.json": {
+  "also_lambda_written": false,
+  "compute_firms": [
+   "bd",
+   "inf"
+  ],
+  "firm_unresolved": false
+ },
+ "gold/cache/hh_timeseries_anchors_{*}.parquet": {
+  "also_lambda_written": false,
+  "compute_firms": [
+   "inf"
+  ],
+  "firm_unresolved": false
+ },
+ "gold/canonical/account_gains/": {
+  "also_lambda_written": false,
+  "compute_firms": [
+   "bd"
+  ],
+  "firm_unresolved": false
+ },
+ "gold/canonical/account_gains/{*}.parquet": {
+  "also_lambda_written": false,
+  "compute_firms": [
+   "bd"
+  ],
+  "firm_unresolved": false
+ },
+ "gold/canonical/advisor_fee_detail/": {
+  "also_lambda_written": false,
+  "compute_firms": [
+   "bd"
+  ],
+  "firm_unresolved": false
+ },
+ "gold/canonical/advisor_fee_detail/{*}.parquet": {
+  "also_lambda_written": false,
+  "compute_firms": [
+   "bd"
+  ],
+  "firm_unresolved": false
+ },
+ "gold/canonical/canonical_nna_{*}.parquet": {
+  "also_lambda_written": false,
+  "compute_firms": [
+   "inf"
+  ],
+  "firm_unresolved": false
+ },
+ "gold/canonical/canonical_performance_2026-04-20.parquet": {
+  "also_lambda_written": false,
+  "compute_firms": [
+   "inf"
+  ],
+  "firm_unresolved": false
+ },
+ "gold/canonical/canonical_performance_{*}.parquet": {
+  "also_lambda_written": false,
+  "compute_firms": [
+   "inf"
+  ],
+  "firm_unresolved": false
+ },
+ "gold/canonical/holdings/": {
+  "also_lambda_written": false,
+  "compute_firms": [
+   "bd"
+  ],
+  "firm_unresolved": false
+ },
+ "gold/canonical/holdings/{*}.parquet": {
+  "also_lambda_written": false,
+  "compute_firms": [
+   "bd"
+  ],
+  "firm_unresolved": false
+ },
+ "gold/canonical/holdings_*.parquet": {
+  "also_lambda_written": false,
+  "compute_firms": [
+   "inf"
+  ],
+  "firm_unresolved": false
+ },
+ "gold/canonical/holdings_gaps/{*}.parquet": {
+  "also_lambda_written": false,
+  "compute_firms": [
+   "bd"
+  ],
+  "firm_unresolved": false
+ },
+ "gold/canonical/holdings_{*}.parquet": {
+  "also_lambda_written": false,
+  "compute_firms": [
+   "inf"
+  ],
+  "firm_unresolved": false
+ },
+ "gold/canonical/lots_realized/": {
+  "also_lambda_written": false,
+  "compute_firms": [
+   "bd"
+  ],
+  "firm_unresolved": false
+ },
+ "gold/canonical/lots_realized/{*}.parquet": {
+  "also_lambda_written": false,
+  "compute_firms": [
+   "bd"
+  ],
+  "firm_unresolved": false
+ },
+ "gold/canonical/lots_unrealized/": {
+  "also_lambda_written": false,
+  "compute_firms": [
+   "bd"
+  ],
+  "firm_unresolved": false
+ },
+ "gold/canonical/lots_unrealized/{*}.parquet": {
+  "also_lambda_written": false,
+  "compute_firms": [
+   "bd"
+  ],
+  "firm_unresolved": false
+ },
+ "gold/canonical/nna/": {
+  "also_lambda_written": false,
+  "compute_firms": [
+   "bd"
+  ],
+  "firm_unresolved": false
+ },
+ "gold/canonical/nna/{*}.parquet": {
+  "also_lambda_written": false,
+  "compute_firms": [
+   "bd"
+  ],
+  "firm_unresolved": false
+ },
+ "gold/canonical/nna_atomic/{*}.parquet": {
+  "also_lambda_written": false,
+  "compute_firms": [
+   "bd"
+  ],
+  "firm_unresolved": false
+ },
+ "gold/canonical/nna_validation/{*}.json": {
+  "also_lambda_written": false,
+  "compute_firms": [
+   "bd"
+  ],
+  "firm_unresolved": false
+ },
+ "gold/canonical/performance/": {
+  "also_lambda_written": false,
+  "compute_firms": [
+   "bd"
+  ],
+  "firm_unresolved": false
+ },
+ "gold/canonical/performance/{*}.parquet": {
+  "also_lambda_written": false,
+  "compute_firms": [
+   "bd"
+  ],
+  "firm_unresolved": false
+ },
+ "gold/canonical/role_aua/": {
+  "also_lambda_written": false,
+  "compute_firms": [
+   "bd"
+  ],
+  "firm_unresolved": false
+ },
+ "gold/canonical/role_aua/*.parquet": {
+  "also_lambda_written": false,
+  "compute_firms": [
+   "bd"
+  ],
+  "firm_unresolved": false
+ },
+ "gold/canonical/role_aua/{*}.parquet": {
+  "also_lambda_written": false,
+  "compute_firms": [
+   "bd",
+   "inf"
+  ],
+  "firm_unresolved": false
+ },
+ "gold/canonical/watermarks.json": {
+  "also_lambda_written": false,
+  "compute_firms": [
+   "bd"
+  ],
+  "firm_unresolved": false
+ },
+ "gold/classification/ticker_coverage_report.json": {
+  "also_lambda_written": false,
+  "compute_firms": [
+   "inf"
+  ],
+  "firm_unresolved": false
+ },
+ "gold/client_performance.parquet": {
+  "also_lambda_written": false,
+  "compute_firms": [
+   "bd"
+  ],
+  "firm_unresolved": false
+ },
+ "gold/dimensions/accounts_dimension_latest.parquet": {
+  "also_lambda_written": false,
+  "compute_firms": [
+   "bd",
+   "inf"
+  ],
+  "firm_unresolved": false
+ },
+ "gold/dimensions/advisor_assignments.parquet": {
+  "also_lambda_written": true,
+  "compute_firms": [
+   "inf"
+  ],
+  "firm_unresolved": false
+ },
+ "gold/dimensions/advisor_assignments_history.parquet": {
+  "also_lambda_written": false,
+  "compute_firms": [
+   "bd"
+  ],
+  "firm_unresolved": false
+ },
+ "gold/dimensions/client_dimension.parquet": {
+  "also_lambda_written": false,
+  "compute_firms": [
+   "bd",
+   "inf"
+  ],
+  "firm_unresolved": false
+ },
+ "gold/dimensions/dim_advisor_office.csv": {
+  "also_lambda_written": false,
+  "compute_firms": [
+   "bd"
+  ],
+  "firm_unresolved": false
+ },
+ "gold/dimensions/fee_rate_history.parquet": {
+  "also_lambda_written": false,
+  "compute_firms": [
+   "bd",
+   "inf"
+  ],
+  "firm_unresolved": false
+ },
+ "gold/dimensions/schwab_bd_account_mapping.parquet": {
+  "also_lambda_written": false,
+  "compute_firms": [
+   "bd"
+  ],
+  "firm_unresolved": false
+ },
+ "gold/dimensions/ticker_resolution.parquet": {
+  "also_lambda_written": false,
+  "compute_firms": [
+   "bd"
+  ],
+  "firm_unresolved": false
+ },
+ "gold/eclipse/{*}/_meta/gold_complete.json": {
+  "also_lambda_written": false,
+  "compute_firms": [
+   "inf"
+  ],
+  "firm_unresolved": false
+ },
+ "gold/eclipse/{*}/model_portfolio_accounts.parquet": {
+  "also_lambda_written": false,
+  "compute_firms": [
+   "mdpf"
+  ],
+  "firm_unresolved": false
+ },
+ "gold/entities/accounts/{*}/aua_timeseries.json": {
+  "also_lambda_written": false,
+  "compute_firms": [
+   "bd"
+  ],
+  "firm_unresolved": false
+ },
+ "gold/entities/advisors/{*}/book.json": {
+  "also_lambda_written": false,
+  "compute_firms": [
+   "bd"
+  ],
+  "firm_unresolved": false
+ },
+ "gold/entities/advisors/{*}/composition.json": {
+  "also_lambda_written": false,
+  "compute_firms": [
+   "bd"
+  ],
+  "firm_unresolved": false
+ },
+ "gold/entities/advisors/{*}/mix.json": {
+  "also_lambda_written": false,
+  "compute_firms": [
+   "bd"
+  ],
+  "firm_unresolved": false
+ },
+ "gold/entities/advisors/{*}/mix_daily.json": {
+  "also_lambda_written": false,
+  "compute_firms": [
+   "bd"
+  ],
+  "firm_unresolved": false
+ },
+ "gold/entities/advisors/{*}/mix_timeseries.json": {
+  "also_lambda_written": false,
+  "compute_firms": [
+   "bd"
+  ],
+  "firm_unresolved": false
+ },
+ "gold/entities/advisors/{*}/timeseries.json": {
+  "also_lambda_written": false,
+  "compute_firms": [
+   "bd"
+  ],
+  "firm_unresolved": false
+ },
+ "gold/entities/clients/": {
+  "also_lambda_written": false,
+  "compute_firms": [
+   "bd"
+  ],
+  "firm_unresolved": false
+ },
+ "gold/entities/clients/*_views.json": {
+  "also_lambda_written": false,
+  "compute_firms": [
+   "bd"
+  ],
+  "firm_unresolved": false
+ },
+ "gold/entities/clients/{*}.json": {
+  "also_lambda_written": false,
+  "compute_firms": [
+   "bd"
+  ],
+  "firm_unresolved": false
+ },
+ "gold/entities/clients/{*}/aua_timeseries.json": {
+  "also_lambda_written": false,
+  "compute_firms": [
+   "bd"
+  ],
+  "firm_unresolved": false
+ },
+ "gold/entities/clients/{*}/detail.json": {
+  "also_lambda_written": false,
+  "compute_firms": [
+   "bd"
+  ],
+  "firm_unresolved": false
+ },
+ "gold/entities/clients/{*}_composition.json": {
+  "also_lambda_written": false,
+  "compute_firms": [
+   "bd"
+  ],
+  "firm_unresolved": false
+ },
+ "gold/holdings/{*}.parquet": {
+  "also_lambda_written": false,
+  "compute_firms": [
+   "inf"
+  ],
+  "firm_unresolved": false
+ },
+ "gold/holdings_lots_v2_dryrun/{*}.parquet": {
+  "also_lambda_written": false,
+  "compute_firms": [
+   "bd"
+  ],
+  "firm_unresolved": false
+ },
+ "gold/lots/lots_latest.parquet": {
+  "also_lambda_written": false,
+  "compute_firms": [
+   "inf"
+  ],
+  "firm_unresolved": false
+ },
+ "gold/lots/lots_{*}.parquet": {
+  "also_lambda_written": false,
+  "compute_firms": [
+   "inf"
+  ],
+  "firm_unresolved": false
+ },
+ "gold/manifests/classify_watermark.json": {
+  "also_lambda_written": false,
+  "compute_firms": [
+   "bd"
+  ],
+  "firm_unresolved": false
+ },
+ "gold/meta/account_gains_incr_watermark.json": {
+  "also_lambda_written": false,
+  "compute_firms": [
+   "bd"
+  ],
+  "firm_unresolved": false
+ },
+ "gold/meta/advisor_assignments_watermark.json": {
+  "also_lambda_written": false,
+  "compute_firms": [
+   "bd"
+  ],
+  "firm_unresolved": false
+ },
+ "gold/meta/canonical_lots_incr_watermark.json": {
+  "also_lambda_written": false,
+  "compute_firms": [
+   "bd"
+  ],
+  "firm_unresolved": false
+ },
+ "gold/meta/client_timeseries_watermark.json": {
+  "also_lambda_written": false,
+  "compute_firms": [
+   "bd"
+  ],
+  "firm_unresolved": false
+ },
+ "gold/meta/fee_rate_history_watermark.json": {
+  "also_lambda_written": false,
+  "compute_firms": [
+   "bd"
+  ],
+  "firm_unresolved": false
+ },
+ "gold/meta/holdings_lots_incr_watermark.json": {
+  "also_lambda_written": false,
+  "compute_firms": [
+   "bd"
+  ],
+  "firm_unresolved": false
+ },
+ "gold/meta/positions_cube_incr_watermark.json": {
+  "also_lambda_written": false,
+  "compute_firms": [
+   "bd"
+  ],
+  "firm_unresolved": false
+ },
+ "gold/platinum/firm/cash_coverage_summary.json": {
+  "also_lambda_written": false,
+  "compute_firms": [
+   "bd"
+  ],
+  "firm_unresolved": false
+ },
+ "gold/platinum/firm/cohort_a_summary.json": {
+  "also_lambda_written": false,
+  "compute_firms": [
+   "bd"
+  ],
+  "firm_unresolved": false
+ },
+ "gold/positions_cube/*.parquet": {
+  "also_lambda_written": false,
+  "compute_firms": [
+   "bd"
+  ],
+  "firm_unresolved": false
+ },
+ "gold/positions_cube/2026-04-20.parquet": {
+  "also_lambda_written": false,
+  "compute_firms": [
+   "inf"
+  ],
+  "firm_unresolved": false
+ },
+ "gold/positions_cube/{*}.parquet": {
+  "also_lambda_written": false,
+  "compute_firms": [
+   "inf"
+  ],
+  "firm_unresolved": false
+ },
+ "gold/timeseries/account_performance.parquet": {
+  "also_lambda_written": false,
+  "compute_firms": [
+   "bd",
+   "inf"
+  ],
+  "firm_unresolved": false
+ },
+ "gold/timeseries/client_performance.parquet": {
+  "also_lambda_written": true,
+  "compute_firms": [
+   "bd",
+   "inf",
+   "mdpf"
+  ],
+  "firm_unresolved": false
+ },
+ "gold/timeseries/holdings_lots/": {
+  "also_lambda_written": false,
+  "compute_firms": [
+   "bd"
+  ],
+  "firm_unresolved": false
+ },
+ "gold/timeseries/holdings_lots/2026-04-21.parquet": {
+  "also_lambda_written": false,
+  "compute_firms": [
+   "bd"
+  ],
+  "firm_unresolved": false
+ },
+ "gold/timeseries/holdings_lots/backfill_{*}.parquet": {
+  "also_lambda_written": false,
+  "compute_firms": [
+   "bd"
+  ],
+  "firm_unresolved": false
+ },
+ "gold/timeseries/holdings_lots/{*}.parquet": {
+  "also_lambda_written": false,
+  "compute_firms": [
+   "bd"
+  ],
+  "firm_unresolved": false
+ },
+ "gold/timeseries/holdings_lots_shadow/{*}.parquet": {
+  "also_lambda_written": false,
+  "compute_firms": [
+   "bd"
+  ],
+  "firm_unresolved": false
+ },
+ "gold/timeseries/positions_cube/": {
+  "also_lambda_written": false,
+  "compute_firms": [
+   "bd"
+  ],
+  "firm_unresolved": false
+ },
+ "gold/timeseries/positions_cube/{*}.parquet": {
+  "also_lambda_written": false,
+  "compute_firms": [
+   "bd"
+  ],
+  "firm_unresolved": false
+ },
+ "gold/timeseries/synthetic_positions_index.parquet": {
+  "also_lambda_written": false,
+  "compute_firms": [
+   "bd"
+  ],
+  "firm_unresolved": false
+ },
+ "gold/validation/account_gap_buckets_*.json": {
+  "also_lambda_written": false,
+  "compute_firms": [
+   "bd"
+  ],
+  "firm_unresolved": false
+ },
+ "gold/validation/all_non_yahoo_assets_*.json": {
+  "also_lambda_written": false,
+  "compute_firms": [
+   "bd"
+  ],
+  "firm_unresolved": false
+ },
+ "gold/validation/aua_certification/{*}.json": {
+  "also_lambda_written": false,
+  "compute_firms": [
+   "bd"
+  ],
+  "firm_unresolved": false
+ },
+ "gold/validation/aua_gap_decomposition_*.json": {
+  "also_lambda_written": false,
+  "compute_firms": [
+   "bd"
+  ],
+  "firm_unresolved": false
+ },
+ "gold/validation/aua_gap_top_positions_*.json": {
+  "also_lambda_written": false,
+  "compute_firms": [
+   "bd"
+  ],
+  "firm_unresolved": false
+ },
+ "gold/validation/aua_validation_{*}.json": {
+  "also_lambda_written": false,
+  "compute_firms": [
+   "bd"
+  ],
+  "firm_unresolved": false
+ },
+ "gold/validation/gap_by_pricing_source_*.json": {
+  "also_lambda_written": false,
+  "compute_firms": [
+   "bd"
+  ],
+  "firm_unresolved": false
+ },
+ "gold/validation/tail_asset_drill_*.json": {
+  "also_lambda_written": false,
+  "compute_firms": [
+   "bd"
+  ],
+  "firm_unresolved": false
+ },
+ "gold/validation/unmatched_asset_analysis_*.json": {
+  "also_lambda_written": false,
+  "compute_firms": [
+   "bd"
+  ],
+  "firm_unresolved": false
+ },
+ "gold/validation/yahoo_mapping_audit_*.json": {
+  "also_lambda_written": false,
+  "compute_firms": [
+   "bd"
+  ],
+  "firm_unresolved": false
+ },
+ "gold/views/account_team.parquet": {
+  "also_lambda_written": true,
+  "compute_firms": [
+   "bd",
+   "inf"
+  ],
+  "firm_unresolved": false
+ },
+ "gold/views/client_tax_liability.parquet": {
+  "also_lambda_written": false,
+  "compute_firms": [
+   "bd"
+  ],
+  "firm_unresolved": false
+ },
+ "gold/views/firm_composition.json": {
+  "also_lambda_written": true,
+  "compute_firms": [
+   "bd"
+  ],
+  "firm_unresolved": false
+ },
+ "gold/views/mix_daily_summary.json": {
+  "also_lambda_written": false,
+  "compute_firms": [
+   "bd"
+  ],
+  "firm_unresolved": false
+ },
+ "gold/views/nna_aua_by_advisor.parquet": {
+  "also_lambda_written": false,
+  "compute_firms": [
+   "bd"
+  ],
+  "firm_unresolved": false
+ },
+ "gold/views/nna_aua_by_geography.parquet": {
+  "also_lambda_written": false,
+  "compute_firms": [
+   "bd"
+  ],
+  "firm_unresolved": false
+ },
+ "gold/views/nna_aua_by_geography_city.parquet": {
+  "also_lambda_written": false,
+  "compute_firms": [
+   "bd"
+  ],
+  "firm_unresolved": false
+ },
+ "gold/views/rel_architect_lookup.parquet": {
+  "also_lambda_written": false,
+  "compute_firms": [
+   "bd",
+   "inf"
+  ],
+  "firm_unresolved": false
+ },
+ "gold/views/relationship_team.parquet": {
+  "also_lambda_written": false,
+  "compute_firms": [
+   "bd"
+  ],
+  "firm_unresolved": false
+ },
+ "platinum/accounts/{*}/summary.json": {
+  "also_lambda_written": false,
+  "compute_firms": [
+   "bd"
+  ],
+  "firm_unresolved": false
+ },
+ "platinum/advisors/{*}/book.json": {
+  "also_lambda_written": false,
+  "compute_firms": [
+   "inf"
+  ],
+  "firm_unresolved": false
+ },
+ "platinum/advisors/{*}/mix.json": {
+  "also_lambda_written": false,
+  "compute_firms": [
+   "bd"
+  ],
+  "firm_unresolved": false
+ },
+ "platinum/advisors/{*}/nna_clients.json": {
+  "also_lambda_written": false,
+  "compute_firms": [
+   "bd",
+   "inf"
+  ],
+  "firm_unresolved": false
+ },
+ "platinum/advisors/{*}/positions.json": {
+  "also_lambda_written": false,
+  "compute_firms": [
+   "bd"
+  ],
+  "firm_unresolved": false
+ },
+ "platinum/advisors/{*}/summary.json": {
+  "also_lambda_written": false,
+  "compute_firms": [
+   "bd",
+   "inf"
+  ],
+  "firm_unresolved": false
+ },
+ "platinum/advisors/{*}/timeseries.json": {
+  "also_lambda_written": false,
+  "compute_firms": [
+   "bd"
+  ],
+  "firm_unresolved": false
+ },
+ "platinum/advisors/{*}}/composition.json": {
+  "also_lambda_written": false,
+  "compute_firms": [
+   "inf"
+  ],
+  "firm_unresolved": false
+ },
+ "platinum/clients/{*}/composition.json": {
+  "also_lambda_written": false,
+  "compute_firms": [
+   "bd"
+  ],
+  "firm_unresolved": false
+ },
+ "platinum/clients/{*}/concentration.json": {
+  "also_lambda_written": false,
+  "compute_firms": [
+   "bd"
+  ],
+  "firm_unresolved": false
+ },
+ "platinum/clients/{*}/detail.json": {
+  "also_lambda_written": false,
+  "compute_firms": [
+   "inf"
+  ],
+  "firm_unresolved": false
+ },
+ "platinum/clients/{*}/mix_timeseries.json": {
+  "also_lambda_written": false,
+  "compute_firms": [
+   "bd"
+  ],
+  "firm_unresolved": false
+ },
+ "platinum/clients/{*}/summary.json": {
+  "also_lambda_written": false,
+  "compute_firms": [
+   "bd"
+  ],
+  "firm_unresolved": false
+ },
+ "platinum/clients/{*}/timeseries.json": {
+  "also_lambda_written": false,
+  "compute_firms": [
+   "inf"
+  ],
+  "firm_unresolved": false
+ },
+ "platinum/clients/{*}/top_holdings.json": {
+  "also_lambda_written": false,
+  "compute_firms": [
+   "inf"
+  ],
+  "firm_unresolved": false
+ },
+ "platinum/clients/{*}/views.json": {
+  "also_lambda_written": false,
+  "compute_firms": [
+   "bd"
+  ],
+  "firm_unresolved": false
+ },
+ "platinum/firm/_meta/bronze_skip_warning_{*}.json": {
+  "also_lambda_written": false,
+  "compute_firms": [
+   "inf"
+  ],
+  "firm_unresolved": false
+ },
+ "platinum/firm/_meta/reconciliation_summary_holdings_{*}.json": {
+  "also_lambda_written": false,
+  "compute_firms": [
+   "inf"
+  ],
+  "firm_unresolved": false
+ },
+ "platinum/firm/clients-tab-slim.json": {
+  "also_lambda_written": true,
+  "compute_firms": [
+   "bd",
+   "inf"
+  ],
+  "firm_unresolved": false
+ },
+ "platinum/firm/clients_tab.json": {
+  "also_lambda_written": false,
+  "compute_firms": [
+   "inf"
+  ],
+  "firm_unresolved": false
+ },
+ "platinum/firm/cumulative_chart.json": {
+  "also_lambda_written": true,
+  "compute_firms": [
+   "bd",
+   "inf"
+  ],
+  "firm_unresolved": false
+ },
+ "platinum/firm/dashboard.json": {
+  "also_lambda_written": false,
+  "compute_firms": [
+   "bd",
+   "inf"
+  ],
+  "firm_unresolved": false
+ },
+ "platinum/firm/fee_efficiency.json": {
+  "also_lambda_written": false,
+  "compute_firms": [
+   "bd",
+   "inf"
+  ],
+  "firm_unresolved": false
+ },
+ "platinum/firm/filters/dimensions.json": {
+  "also_lambda_written": false,
+  "compute_firms": [
+   "inf"
+  ],
+  "firm_unresolved": false
+ },
+ "platinum/firm/firm_composition.json": {
+  "also_lambda_written": false,
+  "compute_firms": [
+   "inf"
+  ],
+  "firm_unresolved": false
+ },
+ "platinum/firm/header_metrics.json": {
+  "also_lambda_written": false,
+  "compute_firms": [
+   "bd",
+   "inf"
+  ],
+  "firm_unresolved": false
+ },
+ "platinum/firm/leaderboard.json": {
+  "also_lambda_written": false,
+  "compute_firms": [
+   "bd",
+   "inf"
+  ],
+  "firm_unresolved": false
+ },
+ "platinum/firm/leaderboard.prior_week.json": {
+  "also_lambda_written": false,
+  "compute_firms": [
+   "bd"
+  ],
+  "firm_unresolved": false
+ },
+ "platinum/firm/mix_summary.json": {
+  "also_lambda_written": false,
+  "compute_firms": [
+   "bd",
+   "inf"
+  ],
+  "firm_unresolved": false
+ },
+ "platinum/firm/partner_analytics.json": {
+  "also_lambda_written": false,
+  "compute_firms": [
+   "inf"
+  ],
+  "firm_unresolved": false
+ },
+ "platinum/firm/partner_analytics_{*}.json": {
+  "also_lambda_written": false,
+  "compute_firms": [
+   "bd",
+   "inf"
+  ],
+  "firm_unresolved": false
+ },
+ "platinum/firm/timeseries_chart.json": {
+  "also_lambda_written": false,
+  "compute_firms": [
+   "bd",
+   "inf"
+  ],
+  "firm_unresolved": false
+ },
+ "platinum/firm/timeseries_overview.json": {
+  "also_lambda_written": false,
+  "compute_firms": [
+   "bd",
+   "inf"
+  ],
+  "firm_unresolved": false
+ },
+ "platinum/firm/top_holdings.json": {
+  "also_lambda_written": false,
+  "compute_firms": [
+   "inf"
+  ],
+  "firm_unresolved": false
+ },
+ "platinum/mdpf/aggregate_aua_timeseries.json": {
+  "also_lambda_written": false,
+  "compute_firms": [
+   "mdpf"
+  ],
+  "firm_unresolved": false
+ },
+ "platinum/{*}/ownership_map.json": {
+  "also_lambda_written": false,
+  "compute_firms": [
+   "bd"
+  ],
+  "firm_unresolved": false
+ },
+ "schwab/silver/rld/": {
+  "also_lambda_written": false,
+  "compute_firms": [
+   "bd"
+  ],
+  "firm_unresolved": false
+ },
+ "schwab/silver/uln/": {
+  "also_lambda_written": false,
+  "compute_firms": [
+   "bd"
+  ],
+  "firm_unresolved": false
+ },
+ "schwab/silver/ult/": {
+  "also_lambda_written": false,
+  "compute_firms": [
+   "bd"
+  ],
+  "firm_unresolved": false
+ },
+ "silver/accounts_dim/latest.parquet": {
+  "also_lambda_written": true,
+  "compute_firms": [
+   "inf"
+  ],
+  "firm_unresolved": false
+ },
+ "silver/allocations/*.parquet": {
+  "also_lambda_written": false,
+  "compute_firms": [
+   "bd"
+  ],
+  "firm_unresolved": false
+ },
+ "silver/allocations/{*}.parquet": {
+  "also_lambda_written": false,
+  "compute_firms": [
+   "bd"
+  ],
+  "firm_unresolved": false
+ },
+ "silver/api_dims/accounts_v2/snapshot_date={*}/data.parquet": {
+  "also_lambda_written": false,
+  "compute_firms": [
+   "inf"
+  ],
+  "firm_unresolved": false
+ },
+ "silver/api_dims/positions_mv/snapshot_date={*}/data.parquet": {
+  "also_lambda_written": false,
+  "compute_firms": [
+   "inf"
+  ],
+  "firm_unresolved": false
+ },
+ "silver/bd_assets_dim.parquet": {
+  "also_lambda_written": false,
+  "compute_firms": [
+   "bd"
+  ],
+  "firm_unresolved": false
+ },
+ "silver/eclipse/{*}/_meta/silver_complete.json": {
+  "also_lambda_written": false,
+  "compute_firms": [
+   "inf"
+  ],
+  "firm_unresolved": false
+ },
+ "silver/eclipse/{*}/model_composition.parquet": {
+  "also_lambda_written": false,
+  "compute_firms": [
+   "inf"
+  ],
+  "firm_unresolved": false
+ },
+ "silver/eclipse/{*}/portfolios_full.parquet": {
+  "also_lambda_written": false,
+  "compute_firms": [
+   "inf",
+   "mdpf"
+  ],
+  "firm_unresolved": false
+ },
+ "silver/eclipse/{*}/portfolios_simple.parquet": {
+  "also_lambda_written": false,
+  "compute_firms": [
+   "inf"
+  ],
+  "firm_unresolved": false
+ },
+ "silver/historical_prices.parquet": {
+  "also_lambda_written": true,
+  "compute_firms": [
+   "bd",
+   "inf"
+  ],
+  "firm_unresolved": false
+ },
+ "silver/meta/gap_manifest.json": {
+  "also_lambda_written": false,
+  "compute_firms": [
+   "inf"
+  ],
+  "firm_unresolved": false
+ },
+ "silver/netassets_daily.parquet": {
+  "also_lambda_written": false,
+  "compute_firms": [
+   "mdpf"
+  ],
+  "firm_unresolved": false
+ },
+ "silver/prices/canonical_prices.parquet": {
+  "also_lambda_written": true,
+  "compute_firms": [
+   "bd",
+   "inf"
+  ],
+  "firm_unresolved": false
+ },
+ "silver/realized/bd_realized_agg.parquet": {
+  "also_lambda_written": false,
+  "compute_firms": [
+   "bd"
+  ],
+  "firm_unresolved": false
+ },
+ "silver/realized/bd_realized_compact.parquet": {
+  "also_lambda_written": false,
+  "compute_firms": [
+   "bd"
+  ],
+  "firm_unresolved": false
+ },
+ "silver/transactions/*.parquet": {
+  "also_lambda_written": false,
+  "compute_firms": [
+   "inf"
+  ],
+  "firm_unresolved": false
+ },
+ "silver/transactions/{*}.parquet": {
+  "also_lambda_written": false,
+  "compute_firms": [
+   "bd"
+  ],
+  "firm_unresolved": false
+ },
+ "silver/unrealized/*.parquet": {
+  "also_lambda_written": false,
+  "compute_firms": [
+   "bd"
+  ],
+  "firm_unresolved": false
+ },
+ "silver/unrealized/2026-04-20.parquet": {
+  "also_lambda_written": false,
+  "compute_firms": [
+   "bd"
+  ],
+  "firm_unresolved": false
+ },
+ "silver/unrealized/unrealized_gain_loss.parquet": {
+  "also_lambda_written": false,
+  "compute_firms": [
+   "bd"
+  ],
+  "firm_unresolved": false
+ },
+ "silver/unrealized/{*}.parquet": {
+  "also_lambda_written": false,
+  "compute_firms": [
+   "bd"
+  ],
+  "firm_unresolved": false
+ }
+}

@@ -1,0 +1,1702 @@
+{
+ "benchmarks/LATEST.json": {
+  "reader_firms": [],
+  "writer_firms": []
+ },
+ "blackdiamond/49f/session-trigger-mode.json": {
+  "reader_firms": [],
+  "writer_firms": []
+ },
+ "blackdiamond/cot/session-trigger-mode.json": {
+  "reader_firms": [],
+  "writer_firms": []
+ },
+ "bronze/orion-api-v2/*/household_rep_mapping.json": {
+  "reader_firms": [],
+  "writer_firms": []
+ },
+ "bronze/orion-api-v2/*/representatives.json": {
+  "reader_firms": [],
+  "writer_firms": []
+ },
+ "bronze/orion-api/*/assets.csv": {
+  "reader_firms": [],
+  "writer_firms": [
+   "inf"
+  ]
+ },
+ "bronze/orion-api/*/transactions.csv": {
+  "reader_firms": [],
+  "writer_firms": [
+   "inf"
+  ]
+ },
+ "bronze/orion-api/activity/latest.csv": {
+  "reader_firms": [
+   "inf"
+  ],
+  "writer_firms": []
+ },
+ "bronze/orion-api/household/latest.csv": {
+  "reader_firms": [
+   "inf"
+  ],
+  "writer_firms": []
+ },
+ "bronze/orion-api/performance/latest.csv": {
+  "reader_firms": [
+   "inf"
+  ],
+  "writer_firms": []
+ },
+ "bronze/orion-api/{*}/_BRONZE_COMPLETE.json": {
+  "reader_firms": [
+   "inf"
+  ],
+  "writer_firms": []
+ },
+ "bronze/orion-api/{*}/assets.csv": {
+  "reader_firms": [
+   "inf"
+  ],
+  "writer_firms": []
+ },
+ "bronze/orion-api/{*}/transactions.csv": {
+  "reader_firms": [
+   "inf"
+  ],
+  "writer_firms": []
+ },
+ "bronze/orion-api/{date}/assets.csv": {
+  "reader_firms": [
+   "inf"
+  ],
+  "writer_firms": []
+ },
+ "cache/fred/BAMLC0A0CM.csv": {
+  "reader_firms": [],
+  "writer_firms": []
+ },
+ "cache/fred/BAMLH0A0HYM2.csv": {
+  "reader_firms": [],
+  "writer_firms": []
+ },
+ "code/gold/*": {
+  "reader_firms": [
+   "inf"
+  ],
+  "writer_firms": [
+   "inf"
+  ]
+ },
+ "config/dynamic_stopwords.json": {
+  "reader_firms": [],
+  "writer_firms": []
+ },
+ "config/etf_universe.json": {
+  "reader_firms": [],
+  "writer_firms": []
+ },
+ "config/ticker_lookup.json": {
+  "reader_firms": [
+   "bd"
+  ],
+  "writer_firms": []
+ },
+ "config/yahoo_safe_tickers.txt": {
+  "reader_firms": [
+   "bd"
+  ],
+  "writer_firms": []
+ },
+ "consolidated/smartx_allocations.parquet": {
+  "reader_firms": [],
+  "writer_firms": []
+ },
+ "gold/_parity/account_gains/*/scorecard.json": {
+  "reader_firms": [],
+  "writer_firms": [
+   "bd"
+  ]
+ },
+ "gold/_parity/account_gains/{*}/scorecard.json": {
+  "reader_firms": [],
+  "writer_firms": [
+   "bd"
+  ]
+ },
+ "gold/_parity/canonical_lots/*/scorecard.json": {
+  "reader_firms": [],
+  "writer_firms": [
+   "bd"
+  ]
+ },
+ "gold/_parity/canonical_lots/{*}/scorecard.json": {
+  "reader_firms": [
+   "bd"
+  ],
+  "writer_firms": [
+   "bd"
+  ]
+ },
+ "gold/_parity/holdings_lots/*/scorecard.json": {
+  "reader_firms": [],
+  "writer_firms": [
+   "bd"
+  ]
+ },
+ "gold/_parity/holdings_lots/{*}/scorecard.json": {
+  "reader_firms": [],
+  "writer_firms": [
+   "bd"
+  ]
+ },
+ "gold/_parity/positions_cube/*/scorecard.json": {
+  "reader_firms": [],
+  "writer_firms": [
+   "bd"
+  ]
+ },
+ "gold/_parity/positions_cube/{*}/scorecard.json": {
+  "reader_firms": [],
+  "writer_firms": [
+   "bd"
+  ]
+ },
+ "gold/_state/advisor_assignments/daily_state.parquet": {
+  "reader_firms": [
+   "bd"
+  ],
+  "writer_firms": [
+   "bd"
+  ]
+ },
+ "gold/_state/load_flows/watermark.json": {
+  "reader_firms": [],
+  "writer_firms": []
+ },
+ "gold/account_gains/{*}.parquet": {
+  "reader_firms": [
+   "inf"
+  ],
+  "writer_firms": [
+   "inf"
+  ]
+ },
+ "gold/accounts_dimension_latest.parquet": {
+  "reader_firms": [
+   "bd"
+  ],
+  "writer_firms": [
+   "bd"
+  ]
+ },
+ "gold/artifacts/49f/c1_recovered_accounts.json": {
+  "reader_firms": [],
+  "writer_firms": [
+   "bd"
+  ]
+ },
+ "gold/artifacts/49f/out_of_scope_accounts.json": {
+  "reader_firms": [],
+  "writer_firms": [
+   "bd"
+  ]
+ },
+ "gold/artifacts/advisor_fee_efficiency.json": {
+  "reader_firms": [
+   "bd",
+   "inf"
+  ],
+  "writer_firms": [
+   "bd",
+   "inf"
+  ]
+ },
+ "gold/artifacts/client_mix_timeseries.json": {
+  "reader_firms": [],
+  "writer_firms": [
+   "inf"
+  ]
+ },
+ "gold/artifacts/client_tax_liability.json": {
+  "reader_firms": [],
+  "writer_firms": [
+   "inf"
+  ]
+ },
+ "gold/artifacts/clients/growth_timeseries.json": {
+  "reader_firms": [],
+  "writer_firms": []
+ },
+ "gold/artifacts/clients/tax_basis_breakdown.json": {
+  "reader_firms": [],
+  "writer_firms": []
+ },
+ "gold/artifacts/clients/tax_deferred_candidates.json": {
+  "reader_firms": [],
+  "writer_firms": []
+ },
+ "gold/artifacts/clients_tab.json": {
+  "reader_firms": [
+   "bd"
+  ],
+  "writer_firms": [
+   "bd"
+  ]
+ },
+ "gold/artifacts/cumulative_chart.json": {
+  "reader_firms": [],
+  "writer_firms": [
+   "inf"
+  ]
+ },
+ "gold/artifacts/employee_leaderboard.json": {
+  "reader_firms": [
+   "bd"
+  ],
+  "writer_firms": [
+   "bd"
+  ]
+ },
+ "gold/artifacts/filters/dimensions.json": {
+  "reader_firms": [],
+  "writer_firms": [
+   "bd"
+  ]
+ },
+ "gold/artifacts/firm_mix_views.json": {
+  "reader_firms": [
+   "bd",
+   "inf"
+  ],
+  "writer_firms": [
+   "bd",
+   "inf"
+  ]
+ },
+ "gold/artifacts/firm_mix_views_daily.json": {
+  "reader_firms": [],
+  "writer_firms": [
+   "bd"
+  ]
+ },
+ "gold/artifacts/implementor_leaderboard.json": {
+  "reader_firms": [],
+  "writer_firms": [
+   "bd"
+  ]
+ },
+ "gold/artifacts/partner_analytics/header_metrics.json": {
+  "reader_firms": [],
+  "writer_firms": []
+ },
+ "gold/artifacts/partner_analytics/header_metrics_{*}.json": {
+  "reader_firms": [
+   "bd"
+  ],
+  "writer_firms": [
+   "bd"
+  ]
+ },
+ "gold/artifacts/snapshots/aua_by_architect.json": {
+  "reader_firms": [
+   "bd"
+  ],
+  "writer_firms": []
+ },
+ "gold/artifacts/snapshots/aua_by_region.json": {
+  "reader_firms": [
+   "bd"
+  ],
+  "writer_firms": []
+ },
+ "gold/artifacts/snapshots/aua_by_state.json": {
+  "reader_firms": [
+   "bd"
+  ],
+  "writer_firms": []
+ },
+ "gold/artifacts/snapshots/aua_by_tax_status.json": {
+  "reader_firms": [
+   "bd"
+  ],
+  "writer_firms": []
+ },
+ "gold/artifacts/summary/header_metrics.json": {
+  "reader_firms": [
+   "bd"
+  ],
+  "writer_firms": [
+   "bd",
+   "inf"
+  ]
+ },
+ "gold/artifacts/timeseries_chart.json": {
+  "reader_firms": [
+   "bd",
+   "inf"
+  ],
+  "writer_firms": [
+   "bd",
+   "inf"
+  ]
+ },
+ "gold/cache/hh_timeseries_anchors_{*}.parquet": {
+  "reader_firms": [
+   "inf"
+  ],
+  "writer_firms": [
+   "inf"
+  ]
+ },
+ "gold/canonical/account_gains/": {
+  "reader_firms": [
+   "bd"
+  ],
+  "writer_firms": []
+ },
+ "gold/canonical/account_gains/{*}.parquet": {
+  "reader_firms": [
+   "bd"
+  ],
+  "writer_firms": [
+   "bd"
+  ]
+ },
+ "gold/canonical/advisor_fee_detail/": {
+  "reader_firms": [
+   "bd"
+  ],
+  "writer_firms": []
+ },
+ "gold/canonical/advisor_fee_detail/{*}.parquet": {
+  "reader_firms": [],
+  "writer_firms": [
+   "bd"
+  ]
+ },
+ "gold/canonical/canonical_nna_{*}.parquet": {
+  "reader_firms": [
+   "inf"
+  ],
+  "writer_firms": []
+ },
+ "gold/canonical/canonical_performance_2026-04-20.parquet": {
+  "reader_firms": [],
+  "writer_firms": [
+   "inf"
+  ]
+ },
+ "gold/canonical/canonical_performance_{*}.parquet": {
+  "reader_firms": [
+   "inf"
+  ],
+  "writer_firms": [
+   "inf"
+  ]
+ },
+ "gold/canonical/holdings/": {
+  "reader_firms": [
+   "bd"
+  ],
+  "writer_firms": []
+ },
+ "gold/canonical/holdings/{*}.parquet": {
+  "reader_firms": [
+   "bd"
+  ],
+  "writer_firms": [
+   "bd"
+  ]
+ },
+ "gold/canonical/holdings_*.parquet": {
+  "reader_firms": [],
+  "writer_firms": [
+   "inf"
+  ]
+ },
+ "gold/canonical/holdings_gaps/{*}.parquet": {
+  "reader_firms": [],
+  "writer_firms": [
+   "bd"
+  ]
+ },
+ "gold/canonical/holdings_{*}.parquet": {
+  "reader_firms": [
+   "inf"
+  ],
+  "writer_firms": []
+ },
+ "gold/canonical/lots_realized/": {
+  "reader_firms": [
+   "bd"
+  ],
+  "writer_firms": []
+ },
+ "gold/canonical/lots_realized/{*}.parquet": {
+  "reader_firms": [
+   "bd"
+  ],
+  "writer_firms": [
+   "bd"
+  ]
+ },
+ "gold/canonical/lots_unrealized/": {
+  "reader_firms": [
+   "bd"
+  ],
+  "writer_firms": []
+ },
+ "gold/canonical/lots_unrealized/{*}.parquet": {
+  "reader_firms": [
+   "bd"
+  ],
+  "writer_firms": [
+   "bd"
+  ]
+ },
+ "gold/canonical/nna/": {
+  "reader_firms": [
+   "bd"
+  ],
+  "writer_firms": []
+ },
+ "gold/canonical/nna/{*}.parquet": {
+  "reader_firms": [],
+  "writer_firms": [
+   "bd"
+  ]
+ },
+ "gold/canonical/nna_atomic/{*}.parquet": {
+  "reader_firms": [
+   "bd"
+  ],
+  "writer_firms": [
+   "bd"
+  ]
+ },
+ "gold/canonical/nna_validation/{*}.json": {
+  "reader_firms": [],
+  "writer_firms": [
+   "bd"
+  ]
+ },
+ "gold/canonical/performance/": {
+  "reader_firms": [
+   "bd"
+  ],
+  "writer_firms": []
+ },
+ "gold/canonical/performance/{*}.parquet": {
+  "reader_firms": [],
+  "writer_firms": [
+   "bd"
+  ]
+ },
+ "gold/canonical/role_aua/": {
+  "reader_firms": [
+   "bd"
+  ],
+  "writer_firms": []
+ },
+ "gold/canonical/role_aua/*.parquet": {
+  "reader_firms": [],
+  "writer_firms": [
+   "bd"
+  ]
+ },
+ "gold/canonical/role_aua/{*}.parquet": {
+  "reader_firms": [
+   "bd"
+  ],
+  "writer_firms": [
+   "bd",
+   "inf"
+  ]
+ },
+ "gold/canonical/watermarks.json": {
+  "reader_firms": [
+   "bd"
+  ],
+  "writer_firms": [
+   "bd"
+  ]
+ },
+ "gold/classification/ticker_coverage_report.json": {
+  "reader_firms": [],
+  "writer_firms": [
+   "inf"
+  ]
+ },
+ "gold/client_performance.parquet": {
+  "reader_firms": [
+   "bd"
+  ],
+  "writer_firms": [
+   "bd"
+  ]
+ },
+ "gold/clients/*.json": {
+  "reader_firms": [],
+  "writer_firms": []
+ },
+ "gold/dimensions/accounts_dimension_latest.parquet": {
+  "reader_firms": [
+   "bd",
+   "inf"
+  ],
+  "writer_firms": [
+   "bd",
+   "inf"
+  ]
+ },
+ "gold/dimensions/advisor_assignments.parquet": {
+  "reader_firms": [],
+  "writer_firms": [
+   "inf"
+  ]
+ },
+ "gold/dimensions/advisor_assignments_history.parquet": {
+  "reader_firms": [
+   "bd"
+  ],
+  "writer_firms": [
+   "bd"
+  ]
+ },
+ "gold/dimensions/client_dimension.parquet": {
+  "reader_firms": [
+   "bd"
+  ],
+  "writer_firms": [
+   "bd",
+   "inf"
+  ]
+ },
+ "gold/dimensions/dim_advisor_office.csv": {
+  "reader_firms": [
+   "bd"
+  ],
+  "writer_firms": []
+ },
+ "gold/dimensions/fee_rate_history.parquet": {
+  "reader_firms": [
+   "bd",
+   "inf"
+  ],
+  "writer_firms": [
+   "bd"
+  ]
+ },
+ "gold/dimensions/schwab_bd_account_mapping.parquet": {
+  "reader_firms": [
+   "bd"
+  ],
+  "writer_firms": [
+   "bd"
+  ]
+ },
+ "gold/dimensions/ticker_resolution.parquet": {
+  "reader_firms": [
+   "bd"
+  ],
+  "writer_firms": [
+   "bd"
+  ]
+ },
+ "gold/dispatch-lock.json": {
+  "reader_firms": [],
+  "writer_firms": []
+ },
+ "gold/eclipse/{*}/_meta/gold_complete.json": {
+  "reader_firms": [],
+  "writer_firms": [
+   "inf"
+  ]
+ },
+ "gold/eclipse/{*}/model_portfolio_accounts.parquet": {
+  "reader_firms": [
+   "mdpf"
+  ],
+  "writer_firms": []
+ },
+ "gold/entities/accounts/{*}/aua_timeseries.json": {
+  "reader_firms": [
+   "bd"
+  ],
+  "writer_firms": []
+ },
+ "gold/entities/advisors/{*}/book.json": {
+  "reader_firms": [
+   "bd"
+  ],
+  "writer_firms": []
+ },
+ "gold/entities/advisors/{*}/composition.json": {
+  "reader_firms": [
+   "bd"
+  ],
+  "writer_firms": []
+ },
+ "gold/entities/advisors/{*}/mix.json": {
+  "reader_firms": [
+   "bd"
+  ],
+  "writer_firms": [
+   "bd"
+  ]
+ },
+ "gold/entities/advisors/{*}/mix_daily.json": {
+  "reader_firms": [],
+  "writer_firms": [
+   "bd"
+  ]
+ },
+ "gold/entities/advisors/{*}/mix_timeseries.json": {
+  "reader_firms": [],
+  "writer_firms": [
+   "bd"
+  ]
+ },
+ "gold/entities/advisors/{*}/timeseries.json": {
+  "reader_firms": [
+   "bd"
+  ],
+  "writer_firms": []
+ },
+ "gold/entities/clients/": {
+  "reader_firms": [
+   "bd"
+  ],
+  "writer_firms": []
+ },
+ "gold/entities/clients/*_views.json": {
+  "reader_firms": [],
+  "writer_firms": [
+   "bd"
+  ]
+ },
+ "gold/entities/clients/{*}.json": {
+  "reader_firms": [
+   "bd"
+  ],
+  "writer_firms": [
+   "bd"
+  ]
+ },
+ "gold/entities/clients/{*}/aua_timeseries.json": {
+  "reader_firms": [
+   "bd"
+  ],
+  "writer_firms": []
+ },
+ "gold/entities/clients/{*}/detail.json": {
+  "reader_firms": [
+   "bd"
+  ],
+  "writer_firms": [
+   "bd"
+  ]
+ },
+ "gold/entities/clients/{*}_composition.json": {
+  "reader_firms": [
+   "bd"
+  ],
+  "writer_firms": []
+ },
+ "gold/holdings/{*}.parquet": {
+  "reader_firms": [],
+  "writer_firms": [
+   "inf"
+  ]
+ },
+ "gold/holdings_lots_v2_dryrun/{*}.parquet": {
+  "reader_firms": [],
+  "writer_firms": [
+   "bd"
+  ]
+ },
+ "gold/lots/lots_latest.parquet": {
+  "reader_firms": [
+   "inf"
+  ],
+  "writer_firms": [
+   "inf"
+  ]
+ },
+ "gold/lots/lots_{*}.parquet": {
+  "reader_firms": [],
+  "writer_firms": [
+   "inf"
+  ]
+ },
+ "gold/manifests/classify_watermark.json": {
+  "reader_firms": [
+   "bd"
+  ],
+  "writer_firms": [
+   "bd"
+  ]
+ },
+ "gold/meta/account_gains_incr_watermark.json": {
+  "reader_firms": [
+   "bd"
+  ],
+  "writer_firms": [
+   "bd"
+  ]
+ },
+ "gold/meta/advisor_assignments_watermark.json": {
+  "reader_firms": [
+   "bd"
+  ],
+  "writer_firms": [
+   "bd"
+  ]
+ },
+ "gold/meta/canonical_lots_incr_watermark.json": {
+  "reader_firms": [
+   "bd"
+  ],
+  "writer_firms": [
+   "bd"
+  ]
+ },
+ "gold/meta/client_timeseries_watermark.json": {
+  "reader_firms": [
+   "bd"
+  ],
+  "writer_firms": []
+ },
+ "gold/meta/fee_rate_history_watermark.json": {
+  "reader_firms": [
+   "bd"
+  ],
+  "writer_firms": [
+   "bd"
+  ]
+ },
+ "gold/meta/holdings_lots_incr_watermark.json": {
+  "reader_firms": [
+   "bd"
+  ],
+  "writer_firms": [
+   "bd"
+  ]
+ },
+ "gold/meta/pipeline-complete.json": {
+  "reader_firms": [],
+  "writer_firms": []
+ },
+ "gold/meta/positions_cube_incr_watermark.json": {
+  "reader_firms": [
+   "bd"
+  ],
+  "writer_firms": [
+   "bd"
+  ]
+ },
+ "gold/platinum/firm/cash_coverage_summary.json": {
+  "reader_firms": [],
+  "writer_firms": [
+   "bd"
+  ]
+ },
+ "gold/platinum/firm/cohort_a_summary.json": {
+  "reader_firms": [],
+  "writer_firms": [
+   "bd"
+  ]
+ },
+ "gold/positions_cube/*.parquet": {
+  "reader_firms": [],
+  "writer_firms": [
+   "bd"
+  ]
+ },
+ "gold/positions_cube/2026-04-20.parquet": {
+  "reader_firms": [],
+  "writer_firms": [
+   "inf"
+  ]
+ },
+ "gold/positions_cube/{*}.parquet": {
+  "reader_firms": [],
+  "writer_firms": [
+   "inf"
+  ]
+ },
+ "gold/timeseries/account_performance.parquet": {
+  "reader_firms": [
+   "bd",
+   "inf"
+  ],
+  "writer_firms": [
+   "bd",
+   "inf"
+  ]
+ },
+ "gold/timeseries/client_performance.parquet": {
+  "reader_firms": [
+   "bd",
+   "inf",
+   "mdpf"
+  ],
+  "writer_firms": [
+   "bd",
+   "inf"
+  ]
+ },
+ "gold/timeseries/holdings_lots/": {
+  "reader_firms": [
+   "bd"
+  ],
+  "writer_firms": []
+ },
+ "gold/timeseries/holdings_lots/2026-04-21.parquet": {
+  "reader_firms": [],
+  "writer_firms": [
+   "bd"
+  ]
+ },
+ "gold/timeseries/holdings_lots/backfill_{*}.parquet": {
+  "reader_firms": [],
+  "writer_firms": [
+   "bd"
+  ]
+ },
+ "gold/timeseries/holdings_lots/{*}.parquet": {
+  "reader_firms": [],
+  "writer_firms": [
+   "bd"
+  ]
+ },
+ "gold/timeseries/holdings_lots_shadow/{*}.parquet": {
+  "reader_firms": [],
+  "writer_firms": [
+   "bd"
+  ]
+ },
+ "gold/timeseries/nna_total.json": {
+  "reader_firms": [],
+  "writer_firms": []
+ },
+ "gold/timeseries/positions_cube/": {
+  "reader_firms": [
+   "bd"
+  ],
+  "writer_firms": []
+ },
+ "gold/timeseries/positions_cube/{*}.parquet": {
+  "reader_firms": [],
+  "writer_firms": [
+   "bd"
+  ]
+ },
+ "gold/timeseries/synthetic_positions_index.parquet": {
+  "reader_firms": [],
+  "writer_firms": [
+   "bd"
+  ]
+ },
+ "gold/trigger-mode.json": {
+  "reader_firms": [],
+  "writer_firms": []
+ },
+ "gold/trigger-pending.json": {
+  "reader_firms": [],
+  "writer_firms": []
+ },
+ "gold/validation/account_gap_buckets_*.json": {
+  "reader_firms": [],
+  "writer_firms": [
+   "bd"
+  ]
+ },
+ "gold/validation/all_non_yahoo_assets_*.json": {
+  "reader_firms": [],
+  "writer_firms": [
+   "bd"
+  ]
+ },
+ "gold/validation/aua_certification/{*}.json": {
+  "reader_firms": [
+   "bd"
+  ],
+  "writer_firms": [
+   "bd"
+  ]
+ },
+ "gold/validation/aua_gap_decomposition_*.json": {
+  "reader_firms": [],
+  "writer_firms": [
+   "bd"
+  ]
+ },
+ "gold/validation/aua_gap_top_positions_*.json": {
+  "reader_firms": [],
+  "writer_firms": [
+   "bd"
+  ]
+ },
+ "gold/validation/aua_validation_{*}.json": {
+  "reader_firms": [
+   "bd"
+  ],
+  "writer_firms": [
+   "bd"
+  ]
+ },
+ "gold/validation/gap_by_pricing_source_*.json": {
+  "reader_firms": [],
+  "writer_firms": [
+   "bd"
+  ]
+ },
+ "gold/validation/tail_asset_drill_*.json": {
+  "reader_firms": [],
+  "writer_firms": [
+   "bd"
+  ]
+ },
+ "gold/validation/unmatched_asset_analysis_*.json": {
+  "reader_firms": [],
+  "writer_firms": [
+   "bd"
+  ]
+ },
+ "gold/validation/yahoo_mapping_audit_*.json": {
+  "reader_firms": [],
+  "writer_firms": [
+   "bd"
+  ]
+ },
+ "gold/views/account_team.parquet": {
+  "reader_firms": [
+   "bd",
+   "inf"
+  ],
+  "writer_firms": [
+   "bd",
+   "inf"
+  ]
+ },
+ "gold/views/client_tax_liability.parquet": {
+  "reader_firms": [
+   "bd"
+  ],
+  "writer_firms": [
+   "bd"
+  ]
+ },
+ "gold/views/firm_composition.json": {
+  "reader_firms": [
+   "bd"
+  ],
+  "writer_firms": []
+ },
+ "gold/views/mix_daily_summary.json": {
+  "reader_firms": [
+   "bd"
+  ],
+  "writer_firms": [
+   "bd"
+  ]
+ },
+ "gold/views/nna_aua_by_advisor.parquet": {
+  "reader_firms": [
+   "bd"
+  ],
+  "writer_firms": []
+ },
+ "gold/views/nna_aua_by_geography.parquet": {
+  "reader_firms": [
+   "bd"
+  ],
+  "writer_firms": []
+ },
+ "gold/views/nna_aua_by_geography_city.parquet": {
+  "reader_firms": [
+   "bd"
+  ],
+  "writer_firms": []
+ },
+ "gold/views/rel_architect_lookup.parquet": {
+  "reader_firms": [
+   "bd",
+   "inf"
+  ],
+  "writer_firms": [
+   "bd"
+  ]
+ },
+ "gold/views/relationship_team.parquet": {
+  "reader_firms": [],
+  "writer_firms": [
+   "bd"
+  ]
+ },
+ "infrastructure/freshness_manifest.json": {
+  "reader_firms": [],
+  "writer_firms": []
+ },
+ "json-tiered/market-overview/rsi-summary.json": {
+  "reader_firms": [],
+  "writer_firms": []
+ },
+ "json-tiered/market-overview/summary/all-returns.json": {
+  "reader_firms": [],
+  "writer_firms": []
+ },
+ "json/benchmarks/benchmark_returns.json": {
+  "reader_firms": [],
+  "writer_firms": []
+ },
+ "json/benchmarks/etf_returns.json": {
+  "reader_firms": [],
+  "writer_firms": []
+ },
+ "json/benchmarks/model_portfolio_benchmarks.json": {
+  "reader_firms": [],
+  "writer_firms": []
+ },
+ "json/benchmarks/model_portfolio_timeseries.json": {
+  "reader_firms": [],
+  "writer_firms": []
+ },
+ "json/capital-markets/assumptions.json": {
+  "reader_firms": [],
+  "writer_firms": []
+ },
+ "json/capital-markets/views.json": {
+  "reader_firms": [],
+  "writer_firms": []
+ },
+ "json/correlations/correlation_data.json": {
+  "reader_firms": [],
+  "writer_firms": []
+ },
+ "json/factor-tilts/data.json": {
+  "reader_firms": [],
+  "writer_firms": []
+ },
+ "json/factor-tilts/tier1-snapshot.json": {
+  "reader_firms": [],
+  "writer_firms": []
+ },
+ "json/factor-tilts/tier2-spreads.json": {
+  "reader_firms": [],
+  "writer_firms": []
+ },
+ "json/factor-tilts/tier3-timeseries.json": {
+  "reader_firms": [],
+  "writer_firms": []
+ },
+ "json/latest/manifest.json": {
+  "reader_firms": [],
+  "writer_firms": []
+ },
+ "json/macro/macro_data.json": {
+  "reader_firms": [],
+  "writer_firms": []
+ },
+ "json/macro/timeseries/10y.json": {
+  "reader_firms": [],
+  "writer_firms": []
+ },
+ "json/macro/timeseries/2y.json": {
+  "reader_firms": [],
+  "writer_firms": []
+ },
+ "json/macro/vix_data.json": {
+  "reader_firms": [],
+  "writer_firms": []
+ },
+ "json/macro/volatility_data.json": {
+  "reader_firms": [],
+  "writer_firms": []
+ },
+ "json/market/market-regime-history.json": {
+  "reader_firms": [],
+  "writer_firms": []
+ },
+ "json/market/market-regime.json": {
+  "reader_firms": [],
+  "writer_firms": []
+ },
+ "json/market_metrics.json": {
+  "reader_firms": [],
+  "writer_firms": []
+ },
+ "json/mdpf/global/aggregate-aua-timeseries.json": {
+  "reader_firms": [],
+  "writer_firms": []
+ },
+ "json/peers/peer_performance.json": {
+  "reader_firms": [],
+  "writer_firms": []
+ },
+ "json/portfolios/account-distribution.json": {
+  "reader_firms": [],
+  "writer_firms": []
+ },
+ "json/portfolios/aum-metrics.json": {
+  "reader_firms": [],
+  "writer_firms": []
+ },
+ "json/portfolios/aum-timeseries.json": {
+  "reader_firms": [],
+  "writer_firms": []
+ },
+ "json/portfolios/non_model_assets.json": {
+  "reader_firms": [],
+  "writer_firms": []
+ },
+ "json/positioning/allocation_summary.json": {
+  "reader_firms": [],
+  "writer_firms": []
+ },
+ "json/positioning/etf-returns.json": {
+  "reader_firms": [],
+  "writer_firms": []
+ },
+ "json/positioning/holdings_attribution_data.json": {
+  "reader_firms": [],
+  "writer_firms": []
+ },
+ "json/positioning/positioning_data.json": {
+  "reader_firms": [],
+  "writer_firms": []
+ },
+ "json/returns/etf_period_returns.json": {
+  "reader_firms": [],
+  "writer_firms": []
+ },
+ "json/security_scanner/latest/factor_metadata.json": {
+  "reader_firms": [],
+  "writer_firms": []
+ },
+ "json/semantic-trending/latest.json": {
+  "reader_firms": [],
+  "writer_firms": []
+ },
+ "json/sentiment/fear-greed-index.json": {
+  "reader_firms": [],
+  "writer_firms": []
+ },
+ "json/sentiment/keyword-sentiments.json": {
+  "reader_firms": [],
+  "writer_firms": []
+ },
+ "json/trending/latest.json": {
+  "reader_firms": [],
+  "writer_firms": []
+ },
+ "json/valuation/risk_premium_data.json": {
+  "reader_firms": [],
+  "writer_firms": []
+ },
+ "json/valuation/valuation_data.json": {
+  "reader_firms": [],
+  "writer_firms": []
+ },
+ "json/yang/volatility_data.json": {
+  "reader_firms": [],
+  "writer_firms": []
+ },
+ "macro/macro_data.json": {
+  "reader_firms": [],
+  "writer_firms": []
+ },
+ "orion/bronze-trigger-mode.json": {
+  "reader_firms": [],
+  "writer_firms": []
+ },
+ "orion/jwt/current.json": {
+  "reader_firms": [],
+  "writer_firms": []
+ },
+ "orion/jwt/trigger-mode.json": {
+  "reader_firms": [],
+  "writer_firms": []
+ },
+ "otp/current.txt": {
+  "reader_firms": [],
+  "writer_firms": []
+ },
+ "otp/state.json": {
+  "reader_firms": [],
+  "writer_firms": []
+ },
+ "platinum/accounts/{*}/summary.json": {
+  "reader_firms": [],
+  "writer_firms": [
+   "bd"
+  ]
+ },
+ "platinum/advisors/{*}/book.json": {
+  "reader_firms": [],
+  "writer_firms": [
+   "inf"
+  ]
+ },
+ "platinum/advisors/{*}/mix.json": {
+  "reader_firms": [],
+  "writer_firms": [
+   "bd"
+  ]
+ },
+ "platinum/advisors/{*}/nna_clients.json": {
+  "reader_firms": [],
+  "writer_firms": [
+   "bd",
+   "inf"
+  ]
+ },
+ "platinum/advisors/{*}/positions.json": {
+  "reader_firms": [],
+  "writer_firms": [
+   "bd"
+  ]
+ },
+ "platinum/advisors/{*}/summary.json": {
+  "reader_firms": [],
+  "writer_firms": [
+   "bd",
+   "inf"
+  ]
+ },
+ "platinum/advisors/{*}/timeseries.json": {
+  "reader_firms": [],
+  "writer_firms": [
+   "bd"
+  ]
+ },
+ "platinum/advisors/{*}}/composition.json": {
+  "reader_firms": [],
+  "writer_firms": [
+   "inf"
+  ]
+ },
+ "platinum/clients/{*}/composition.json": {
+  "reader_firms": [],
+  "writer_firms": [
+   "bd"
+  ]
+ },
+ "platinum/clients/{*}/concentration.json": {
+  "reader_firms": [],
+  "writer_firms": [
+   "bd"
+  ]
+ },
+ "platinum/clients/{*}/detail.json": {
+  "reader_firms": [],
+  "writer_firms": [
+   "inf"
+  ]
+ },
+ "platinum/clients/{*}/mix_timeseries.json": {
+  "reader_firms": [],
+  "writer_firms": [
+   "bd"
+  ]
+ },
+ "platinum/clients/{*}/summary.json": {
+  "reader_firms": [],
+  "writer_firms": [
+   "bd"
+  ]
+ },
+ "platinum/clients/{*}/timeseries.json": {
+  "reader_firms": [],
+  "writer_firms": [
+   "inf"
+  ]
+ },
+ "platinum/clients/{*}/top_holdings.json": {
+  "reader_firms": [],
+  "writer_firms": [
+   "inf"
+  ]
+ },
+ "platinum/clients/{*}/views.json": {
+  "reader_firms": [],
+  "writer_firms": [
+   "bd"
+  ]
+ },
+ "platinum/etf_ownership_dashboard.json": {
+  "reader_firms": [],
+  "writer_firms": []
+ },
+ "platinum/firm/_meta/bronze_skip_warning_{*}.json": {
+  "reader_firms": [],
+  "writer_firms": [
+   "inf"
+  ]
+ },
+ "platinum/firm/_meta/reconciliation_summary_holdings_{*}.json": {
+  "reader_firms": [],
+  "writer_firms": [
+   "inf"
+  ]
+ },
+ "platinum/firm/clients-tab-slim.json": {
+  "reader_firms": [],
+  "writer_firms": [
+   "bd",
+   "inf"
+  ]
+ },
+ "platinum/firm/clients_tab.json": {
+  "reader_firms": [
+   "inf"
+  ],
+  "writer_firms": [
+   "inf"
+  ]
+ },
+ "platinum/firm/cumulative_chart.json": {
+  "reader_firms": [
+   "inf"
+  ],
+  "writer_firms": [
+   "bd",
+   "inf"
+  ]
+ },
+ "platinum/firm/dashboard.json": {
+  "reader_firms": [],
+  "writer_firms": [
+   "bd",
+   "inf"
+  ]
+ },
+ "platinum/firm/fee_efficiency.json": {
+  "reader_firms": [],
+  "writer_firms": [
+   "bd",
+   "inf"
+  ]
+ },
+ "platinum/firm/filters/dimensions.json": {
+  "reader_firms": [],
+  "writer_firms": [
+   "inf"
+  ]
+ },
+ "platinum/firm/firm_composition.json": {
+  "reader_firms": [],
+  "writer_firms": [
+   "inf"
+  ]
+ },
+ "platinum/firm/header_metrics.json": {
+  "reader_firms": [],
+  "writer_firms": [
+   "bd",
+   "inf"
+  ]
+ },
+ "platinum/firm/leaderboard.json": {
+  "reader_firms": [],
+  "writer_firms": [
+   "bd",
+   "inf"
+  ]
+ },
+ "platinum/firm/leaderboard.prior_week.json": {
+  "reader_firms": [
+   "bd"
+  ],
+  "writer_firms": []
+ },
+ "platinum/firm/mix_summary.json": {
+  "reader_firms": [],
+  "writer_firms": [
+   "bd",
+   "inf"
+  ]
+ },
+ "platinum/firm/partner_analytics.json": {
+  "reader_firms": [],
+  "writer_firms": [
+   "inf"
+  ]
+ },
+ "platinum/firm/partner_analytics_{*}.json": {
+  "reader_firms": [],
+  "writer_firms": [
+   "bd",
+   "inf"
+  ]
+ },
+ "platinum/firm/timeseries_chart.json": {
+  "reader_firms": [],
+  "writer_firms": [
+   "bd",
+   "inf"
+  ]
+ },
+ "platinum/firm/timeseries_overview.json": {
+  "reader_firms": [],
+  "writer_firms": [
+   "bd",
+   "inf"
+  ]
+ },
+ "platinum/firm/top_holdings.json": {
+  "reader_firms": [],
+  "writer_firms": [
+   "inf"
+  ]
+ },
+ "platinum/mdpf/aggregate_aua_timeseries.json": {
+  "reader_firms": [],
+  "writer_firms": [
+   "mdpf"
+  ]
+ },
+ "platinum/{*}/ownership_map.json": {
+  "reader_firms": [],
+  "writer_firms": [
+   "bd"
+  ]
+ },
+ "schwab/silver/rld/": {
+  "reader_firms": [
+   "bd"
+  ],
+  "writer_firms": []
+ },
+ "schwab/silver/uln/": {
+  "reader_firms": [
+   "bd"
+  ],
+  "writer_firms": []
+ },
+ "schwab/silver/ult/": {
+  "reader_firms": [
+   "bd"
+  ],
+  "writer_firms": []
+ },
+ "security-reports/*_ai_summary.txt": {
+  "reader_firms": [],
+  "writer_firms": []
+ },
+ "security-reports/*_comprehensive_report.txt": {
+  "reader_firms": [],
+  "writer_firms": []
+ },
+ "security-reports/*_findings.json": {
+  "reader_firms": [],
+  "writer_firms": []
+ },
+ "security-reports/*_latest_counts.json": {
+  "reader_firms": [],
+  "writer_firms": []
+ },
+ "security-reports/*_security_report.txt": {
+  "reader_firms": [],
+  "writer_firms": []
+ },
+ "security-reports/latest_ai_summary.txt": {
+  "reader_firms": [],
+  "writer_firms": []
+ },
+ "security-reports/latest_score.json": {
+  "reader_firms": [],
+  "writer_firms": []
+ },
+ "seeking-alpha/analysis/manifests/*/layer1_summary.json": {
+  "reader_firms": [],
+  "writer_firms": []
+ },
+ "seeking-alpha/analysis/manifests/*/layer25_dedup_report.json": {
+  "reader_firms": [],
+  "writer_firms": []
+ },
+ "seeking-alpha/analysis/manifests/*/layer2_chunk_*.json": {
+  "reader_firms": [],
+  "writer_firms": []
+ },
+ "seeking-alpha/news/manifests/*/dedup_report.json": {
+  "reader_firms": [],
+  "writer_firms": []
+ },
+ "seeking-alpha/news/manifests/*/layer1_summary.json": {
+  "reader_firms": [],
+  "writer_firms": []
+ },
+ "sentiment/keyword-sentiments.json": {
+  "reader_firms": [],
+  "writer_firms": []
+ },
+ "silver/accounts_dim/latest.parquet": {
+  "reader_firms": [
+   "inf"
+  ],
+  "writer_firms": []
+ },
+ "silver/allocations/*.parquet": {
+  "reader_firms": [],
+  "writer_firms": [
+   "bd"
+  ]
+ },
+ "silver/allocations/{*}.parquet": {
+  "reader_firms": [
+   "bd"
+  ],
+  "writer_firms": [
+   "bd"
+  ]
+ },
+ "silver/api_dims/accounts_v2/snapshot_date={*}/data.parquet": {
+  "reader_firms": [
+   "inf"
+  ],
+  "writer_firms": []
+ },
+ "silver/api_dims/positions_mv/snapshot_date={*}/data.parquet": {
+  "reader_firms": [
+   "inf"
+  ],
+  "writer_firms": []
+ },
+ "silver/bd_assets_dim.parquet": {
+  "reader_firms": [
+   "bd"
+  ],
+  "writer_firms": [
+   "bd"
+  ]
+ },
+ "silver/eclipse/{*}/_meta/silver_complete.json": {
+  "reader_firms": [
+   "inf"
+  ],
+  "writer_firms": []
+ },
+ "silver/eclipse/{*}/model_composition.parquet": {
+  "reader_firms": [
+   "inf"
+  ],
+  "writer_firms": []
+ },
+ "silver/eclipse/{*}/portfolios_full.parquet": {
+  "reader_firms": [
+   "inf",
+   "mdpf"
+  ],
+  "writer_firms": []
+ },
+ "silver/eclipse/{*}/portfolios_simple.parquet": {
+  "reader_firms": [
+   "inf"
+  ],
+  "writer_firms": []
+ },
+ "silver/historical_prices.parquet": {
+  "reader_firms": [
+   "bd",
+   "inf"
+  ],
+  "writer_firms": [
+   "bd"
+  ]
+ },
+ "silver/interpolated_prices.parquet": {
+  "reader_firms": [],
+  "writer_firms": []
+ },
+ "silver/meta/gap_manifest.json": {
+  "reader_firms": [
+   "inf"
+  ],
+  "writer_firms": []
+ },
+ "silver/netassets_daily.parquet": {
+  "reader_firms": [
+   "mdpf"
+  ],
+  "writer_firms": []
+ },
+ "silver/prices/canonical_prices.parquet": {
+  "reader_firms": [
+   "bd",
+   "inf"
+  ],
+  "writer_firms": [
+   "bd",
+   "inf"
+  ]
+ },
+ "silver/realized/bd_realized_agg.parquet": {
+  "reader_firms": [
+   "bd"
+  ],
+  "writer_firms": [
+   "bd"
+  ]
+ },
+ "silver/realized/bd_realized_compact.parquet": {
+  "reader_firms": [
+   "bd"
+  ],
+  "writer_firms": []
+ },
+ "silver/transactions/*.parquet": {
+  "reader_firms": [],
+  "writer_firms": [
+   "inf"
+  ]
+ },
+ "silver/transactions/{*}.parquet": {
+  "reader_firms": [
+   "bd"
+  ],
+  "writer_firms": []
+ },
+ "silver/unrealized/*.parquet": {
+  "reader_firms": [],
+  "writer_firms": [
+   "bd"
+  ]
+ },
+ "silver/unrealized/2026-04-20.parquet": {
+  "reader_firms": [],
+  "writer_firms": [
+   "bd"
+  ]
+ },
+ "silver/unrealized/unrealized_gain_loss.parquet": {
+  "reader_firms": [
+   "bd"
+  ],
+  "writer_firms": [
+   "bd"
+  ]
+ },
+ "silver/unrealized/{*}.parquet": {
+  "reader_firms": [
+   "bd"
+  ],
+  "writer_firms": []
+ },
+ "smartx/jwt/current.json": {
+  "reader_firms": [],
+  "writer_firms": []
+ },
+ "views/account_distribution.json": {
+  "reader_firms": [],
+  "writer_firms": []
+ },
+ "warehouse/_branch_head.main.json": {
+  "reader_firms": [],
+  "writer_firms": []
+ }
+}
