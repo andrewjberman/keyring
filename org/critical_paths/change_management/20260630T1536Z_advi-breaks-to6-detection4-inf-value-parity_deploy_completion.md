@@ -1,6 +1,6 @@
 # Deploy-Completion Ledger — ADVI_BREAKS TO-6 detection-4: inf value-parity reader
 
-**Status:** OPEN
+**Status:** CLOSED (2026-06-30T17:30Z — two-sided fire-test proven (fire-on-stale + quiet-on-fresh), CVO co-signed → TO-2 GREEN)
 **Opened:** 2026-06-30T15:36Z by 0.7.0_AE_CloudOps (executor)
 **Deploy:** apply `infra/aws/compdiff/deploy/inf_value_parity.tf` (0.8.0~B-authored, committed 19237dc97) in a dedicated standalone TF root (`_root.tf`, state key `compdiff-inf-value-parity/tfstate`). The TO-6 detection-4 served-vs-source value-parity reader: hourly Lambda `opal-inf-value-parity` reads inf's OWN served header total_aua + inf's OWN silver positions_mv current_value sum, exact-match (no tolerance, Andrew-direct), publishes opal-critical-surface-alerts on a divergence. Firm-isolated (CTO option-b): inf-only GetObject, ZERO cross-firm, READ-ONLY (distinct from any enforcer write-role).
 **Gates cleared:** CTO co-signed the plan (152820Z, same-measure arch condition grounded) + COO floor GO (153142Z, time-sensitive to capture the two-sided fire-test over the ~16:20Z inf recovery). Within-firm standard inf infra (NOT the cross-firm carve-out).
