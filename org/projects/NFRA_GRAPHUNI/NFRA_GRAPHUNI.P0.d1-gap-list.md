@@ -160,7 +160,7 @@ S3_BUCKET   -CONTAINS/OWNED_BY-> S3Key        (CTO ruling 2 -- same fractal patt
 LAMBDA      -CONTAINS-> handler functions
 ```
 
-**Grain-consistency invariant (checkable):** a coarse-grain edge must ROLL UP from its fine-grain edges — `inf-gold-qa-runner READS S3_BUCKET` (resource) must be consistent with `PipelineFunction READS_S3 S3Key` (object) aggregated up `CONTAINS` + `S3Key OWNED_BY S3_BUCKET`. A drilldown that contradicts its rollup is a grain defect. This is a generalized COMPDRIFT seam invariant (cross-grain consistency), coordinate with COO~B's seam-taxonomy.
+**Grain-consistency rollup invariant — EXISTENTIAL AGGREGATION (CTO-ratified semantics, NOT 1:1 equality):** a coarse edge EXISTS iff at least one fine edge rolls up to it — `EC2 READS S3_BUCKET` is supported iff EXISTS a PipelineFunction inside it (via `RUNS`+`CONTAINS`) that `READS_S3` some `S3Key OWNED_BY` that bucket (the coarse edge = the OR-rollup of the fine edges). Two checkable defect classes: **(i) UNSUPPORTED** — a coarse edge with ZERO supporting fine edges (the coarse claim has no fine basis); **(ii) COARSE-INCOMPLETE** — a fine edge whose rolled-up coarse target is ABSENT (the coarse stratum is missing an edge the fine layer implies). A contradiction in either direction = a grain defect. Generalized COMPDRIFT seam invariant (cross-grain rollup parity) — banked into COO~B's seam-taxonomy.
 
 **The two-phase action (Andrew):**
 1. **GRAPHUNI builds the fractal substrate** (~D lane) — the `RUNS`/`CONTAINS`/`OWNED_BY` drilldown edges stitch the resource stratum to the compute stratum; these are net-new seams.

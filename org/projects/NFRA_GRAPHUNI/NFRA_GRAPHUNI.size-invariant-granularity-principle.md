@@ -19,7 +19,7 @@ It is the property that lets **ONE graph + ONE toolset + ONE gate-set serve ever
 ## The size-invariant contract (the invariants, for the gate)
 1. **Granularity = a declared `level` coordinate** + a stable `CONTAINS` ladder. A deeper dive ADDS instances/levels within FIXED types — it never re-types by depth.
 2. **Edge types defined ONCE by SEMANTIC, stable across grain.** Different relation/semantic -> different `edge_type`; SAME relation at different depth -> SAME `edge_type` + a `level` attribute; never split one semantic by depth, never overload one type across two semantics. (e.g. `READS_S3` != portal-field `READS` by semantic; `READS_S3` is ONE type whether the endpoint is a script or a function.)
-3. **Grain-consistency rollup (checkable):** a coarse-grain edge must roll up from its fine-grain edges (`EC2 READS S3_BUCKET` <- `PipelineFunction READS_S3 S3Key` aggregated up `CONTAINS` + `OWNED_BY`). A drilldown that contradicts its rollup is a grain defect.
+3. **Grain-consistency rollup = EXISTENTIAL AGGREGATION (checkable, not 1:1 equality):** a coarse edge EXISTS iff at least one fine edge rolls up to it (`EC2 READS S3_BUCKET` iff EXISTS an internal `PipelineFunction READS_S3 S3Key OWNED_BY` that bucket — the coarse edge is the OR-rollup of the fine). Two defect classes: (i) UNSUPPORTED (coarse edge, zero supporting fine edges); (ii) COARSE-INCOMPLETE (fine edge whose rolled-up coarse target is absent). A contradiction either way = a grain defect.
 4. **One-home + non-redundancy hold at EVERY scale** (the COMPUNIFY `comp-coverage-check` gate, extended with the `level`/granularity dimension + the no-split-by-depth rule).
 
 ## The populate/govern split (why size-invariance makes the stack work)
