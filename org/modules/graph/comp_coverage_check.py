@@ -255,21 +255,28 @@ def rollup_defects(coarse_edges, fine_edges, rolls_up):
     return defects
 
 
-def seam_validate(led: dict, edges: list, rollup_view: dict | None):
+def seam_validate(led: dict, edges: list, rollup_view: dict | None, scope: dict | None = None, producer: str | None = None):
     """The 3-axis govern<->populate SEAM validation (Andrew-direct symbiotic protocol). Validates
-    ~D's POPULATED edges against the grain_contract registry (~C governs) at the CATEGORICAL bar.
-    Returns {mechanical, declarative, semantic, coverage} -- each axis a list of findings ([] = clean).
+    ~D's POPULATED edges against the grain_contract registry (~C governs) at the CATEGORICAL bar,
+    SCOPE- and PRODUCER-aware (~D pre-flight findings 2+3) so phased tiers + cross-lane grains are
+    not false STOPs. Returns {mechanical, in_scope_gap, phased_pending, cross_lane, semantic}.
 
     INTERFACE (the contract ~D emits to):
       edges       = [{edge_type, level, from_stratum, to_stratum}, ...]   (one per populated edge)
       rollup_view = {"coarse": [[src,dst],...], "fine": [[src,dst],...], "rolls_up": {node: coarse_node}}
-                    (optional; the existential-rollup view for the SEMANTIC axis)
+      scope       = {"edge_types": [...], "strata": [...]}   (the grains THIS increment CLAIMS to cover;
+                    out-of-scope registry grains = phased-pending, expected, not a STOP. None = full bar.)
+      producer    = the lane under validation (e.g. 'graphuni-gold'); a registry type owned by ANOTHER
+                    producer is CROSS-LANE (not this increment's gap). None = all producers in scope.
     """
     gc = led.get("grain_contract", {})
     et_index = {e["edge_type"]: e for e in gc.get("edge_types", [])}
     registry_types = set(et_index)
     strata = set(gc.get("strata", []))
-    mechanical, declarative = [], []
+    scope_types = set(scope.get("edge_types", [])) if scope and scope.get("edge_types") is not None else None
+    scope_strata = set(scope.get("strata", [])) if scope and scope.get("strata") is not None else None
+    scope_levels = scope.get("levels", {}) if scope else {}   # {edge_type: [claimed levels]} -- level-granular scope (~D finding 2)
+    mechanical, in_scope_gap, phased_pending, cross_lane = [], [], [], []
     populated_types: set = set()
     populated_levels: dict = defaultdict(set)
     populated_strata: set = set()
@@ -291,62 +298,79 @@ def seam_validate(led: dict, edges: list, rollup_view: dict | None):
                 if s not in strata:
                     mechanical.append(f"edge '{et}' {k}='{s}' is not a declared stratum {sorted(strata)}")
 
-    # --- AXIS 2: DECLARATIVE -- registry <-> population CATEGORICAL coverage (map == territory) ---
-    for rt in sorted(registry_types - populated_types):
-        declarative.append(f"registry edge_type '{rt}' has ZERO populated edges (registry-orphan / dead type -- retire it or ~D must populate)")
-    for st in sorted(strata - populated_strata):
-        declarative.append(f"stratum '{st}' has ZERO populated edges (uncovered stratum -- the categorical bar is not met)")
-    for et in sorted(registry_types & populated_types):
-        for lvl in sorted(set(et_index[et].get("levels", [])) - populated_levels.get(et, set())):
-            declarative.append(f"edge_type '{et}' level '{lvl}' declared but NOT populated (uncovered grain level)")
+    # --- AXIS 2: DECLARATIVE -- registry<->population coverage, SCOPE + PRODUCER aware ---
+    for et in sorted(registry_types):
+        et_producer = et_index[et].get("producer")
+        if producer and et_producer and et_producer != producer:        # another lane's grain
+            cross_lane.append(f"'{et}' (producer={et_producer}) -- not {producer}'s grain; another lane populates it")
+            continue
+        if scope_types is not None and et not in scope_types:            # out of this increment's claim
+            if et not in populated_types:
+                phased_pending.append(f"'{et}' -- declared, OUT of this increment's claimed scope (phased; a later tier)")
+            continue
+        if et not in populated_types:                                    # claimed (or full-bar) but unpopulated
+            in_scope_gap.append(f"edge_type '{et}' in scope but ZERO populated edges")
+        else:                                                            # LEVEL-granular: claimed levels must be covered; others phased
+            declared = set(et_index[et].get("levels", []))
+            claimed = set(scope_levels[et]) if et in scope_levels else declared
+            for lvl in sorted(claimed - populated_levels.get(et, set())):
+                in_scope_gap.append(f"edge_type '{et}' level '{lvl}' in scope but NOT populated")
+            for lvl in sorted(declared - claimed):
+                phased_pending.append(f"edge_type '{et}' level '{lvl}' -- OUT of claimed scope (phased)")
+    check_strata = scope_strata if scope_strata is not None else strata
+    for st in sorted(set(check_strata) - populated_strata):
+        in_scope_gap.append(f"stratum '{st}' in scope but ZERO populated edges")
+    if scope_strata is not None:
+        for st in sorted(strata - scope_strata - populated_strata):
+            phased_pending.append(f"stratum '{st}' -- OUT of claimed scope (phased)")
 
     # --- AXIS 3: SEMANTIC -- existential rollup holds on the REAL edges (one head) ---
     if rollup_view is None:
-        semantic = ["SEMANTIC axis NOT PROVIDED -- supply rollup_view {coarse, fine, rolls_up} to validate existential rollup (categorical bar requires it)"]
+        semantic = ["SEMANTIC axis NOT PROVIDED -- supply rollup_view {coarse, fine, rolls_up} to validate existential rollup"]
     else:
-        defects = rollup_defects(rollup_view.get("coarse", []), rollup_view.get("fine", []), rollup_view.get("rolls_up", {}))
-        semantic = [f"{cls}: {edge}" for cls, edge in defects]
+        semantic = [f"{cls}: {edge}" for cls, edge in rollup_defects(rollup_view.get("coarse", []), rollup_view.get("fine", []), rollup_view.get("rolls_up", {}))]
 
-    coverage = {
-        "registry_types": sorted(registry_types),
-        "populated_types": sorted(populated_types),
-        "covered_types": sorted(registry_types & populated_types),
-        "uncovered_strata": sorted(strata - populated_strata),
-    }
-    return {"mechanical": mechanical, "declarative": declarative, "semantic": semantic, "coverage": coverage}
+    return {"mechanical": mechanical, "in_scope_gap": in_scope_gap, "phased_pending": phased_pending,
+            "cross_lane": cross_lane, "semantic": semantic}
 
 
-def seam(edges_path: str, rollup_path: str | None) -> int:
-    """CLI: 3-axis seam validation of ~D's populated edges vs the governed registry. Exit 0 GREEN /
-    1 RED (mechanical or semantic defect) / 2 INCOMPLETE (declarative coverage gap or semantic not provided)."""
+def seam(edges_path: str, rollup_path: str | None, scope_path: str | None = None, producer: str | None = None) -> int:
+    """CLI: scope/producer-aware 3-axis seam validation. Exit 0 GREEN (clean within claimed scope --
+    proceed; phased/cross-lane reported as expected) / 1 RED (mechanical or semantic defect -- STOP) /
+    2 IN-SCOPE-INCOMPLETE (claimed scope not fully covered, or semantic not supplied -- reconcile)."""
     try:
         led = _load(LEDGER)
         with open(edges_path, encoding="utf-8") as fh:
             edges = json.load(fh)
-        rollup_view = None
-        if rollup_path:
-            with open(rollup_path, encoding="utf-8") as fh:
-                rollup_view = json.load(fh)
+        rollup_view = json.load(open(rollup_path, encoding="utf-8")) if rollup_path else None
+        scope = json.load(open(scope_path, encoding="utf-8")) if scope_path else None
     except Exception as exc:  # noqa: BLE001
-        sys.stderr.write(f"UNVERIFIABLE: could not read ledger/edges/rollup: {exc}\n")
+        sys.stderr.write(f"UNVERIFIABLE: could not read ledger/edges/rollup/scope: {exc}\n")
         return UNVERIFIABLE
-    r = seam_validate(led, edges, rollup_view)
-    for axis in ("mechanical", "declarative", "semantic"):
-        if r[axis]:
-            sys.stdout.write(f"[{axis.upper()}] {len(r[axis])} finding(s):\n")
-            for f in r[axis]:
+    r = seam_validate(led, edges, rollup_view, scope=scope, producer=producer)
+    labels = [("mechanical", "MECHANICAL"), ("in_scope_gap", "DECLARATIVE/in-scope-gap"),
+              ("phased_pending", "DECLARATIVE/phased-pending"), ("cross_lane", "DECLARATIVE/cross-lane"),
+              ("semantic", "SEMANTIC")]
+    for key, label in labels:
+        if r[key]:
+            sys.stdout.write(f"[{label}] {len(r[key])} finding(s):\n")
+            for f in r[key]:
                 sys.stdout.write(f"  - {f}\n")
         else:
-            sys.stdout.write(f"[{axis.upper()}] clean.\n")
+            sys.stdout.write(f"[{label}] clean.\n")
     red = bool(r["mechanical"]) or any(not s.startswith("SEMANTIC axis NOT PROVIDED") for s in r["semantic"])
-    incomplete = bool(r["declarative"]) or any(s.startswith("SEMANTIC axis NOT PROVIDED") for s in r["semantic"])
+    incomplete = bool(r["in_scope_gap"]) or any(s.startswith("SEMANTIC axis NOT PROVIDED") for s in r["semantic"])
+    scope_note = f" (scope={'declared' if scope else 'FULL baseline bar'}, producer={producer or 'all'})"
     if red:
-        sys.stdout.write("SEAM: RED -- STOP + reconcile (govern fixes the registry OR ~D fixes the edges); do NOT proceed.\n")
+        sys.stdout.write(f"SEAM: RED{scope_note} -- STOP + reconcile (govern fixes the registry OR ~D fixes the edges); do NOT proceed.\n")
         return FAIL
     if incomplete:
-        sys.stdout.write("SEAM: INCOMPLETE -- categorical coverage not yet met (uncovered grain/stratum, or semantic axis not supplied). Baseline NOT robust.\n")
+        sys.stdout.write(f"SEAM: IN-SCOPE-INCOMPLETE{scope_note} -- the claimed scope is not fully covered (or semantic axis not supplied); reconcile before proceeding.\n")
         return UNVERIFIABLE
-    sys.stdout.write("SEAM: GREEN -- mechanical + declarative + semantic all clean; categorical coverage met. Both sign.\n")
+    if r["phased_pending"]:
+        sys.stdout.write(f"SEAM: GREEN-IN-SCOPE{scope_note} -- mechanical+semantic clean + claimed scope fully covered; {len(r['phased_pending'])} grain(s) phased for a later tier (EXPECTED). Both sign; proceed to next tier.\n")
+    else:
+        sys.stdout.write(f"SEAM: GREEN{scope_note} -- mechanical+semantic clean + full coverage; baseline-complete for this scope. Both sign.\n")
     return PASS
 
 
@@ -498,10 +522,21 @@ def selfcheck() -> int:
     # i) SEAM validator -- each of the 3 axes fires on its own defect class
     sv_orphan = seam_validate(led, [{"edge_type": "GHOST_TYPE", "level": "x", "from_stratum": "resource", "to_stratum": "compute"}], None)
     sv_rollup = seam_validate(led, [], {"coarse": [["EC2", "GHOST"]], "fine": [], "rolls_up": {}})
-    seam_ok = (bool(sv_orphan["mechanical"])       # population-orphan edge_type -> MECHANICAL fires
-               and bool(sv_orphan["declarative"])  # registry types/strata unpopulated -> DECLARATIVE fires
-               and bool(sv_rollup["semantic"]))    # UNSUPPORTED coarse edge -> SEMANTIC fires
+    seam_ok = (bool(sv_orphan["mechanical"])        # population-orphan edge_type -> MECHANICAL fires
+               and bool(sv_orphan["in_scope_gap"])  # registry types/strata unpopulated -> DECLARATIVE in-scope-gap fires
+               and bool(sv_rollup["semantic"]))     # UNSUPPORTED coarse edge -> SEMANTIC fires
     results.append(("seam validator: 3 axes fire on defects (mechanical/declarative/semantic)", seam_ok))
+
+    # j) SEAM scope+producer aware (~D pre-flight findings 2+3): a gold-tier increment CLAIMING only
+    #    CALLS -> GREEN-in-scope (no in_scope_gap), other gold grains PHASED, other-lane grains CROSS-LANE.
+    sv_scope = seam_validate(
+        led,
+        [{"edge_type": "CALLS", "level": "function", "from_stratum": "compute", "to_stratum": "compute"}],
+        {"coarse": [], "fine": [], "rolls_up": {}},
+        scope={"edge_types": ["CALLS"], "strata": ["compute"]}, producer="graphuni-gold")
+    scope_ok = (not sv_scope["mechanical"] and not sv_scope["in_scope_gap"] and not sv_scope["semantic"]
+                and bool(sv_scope["phased_pending"]) and bool(sv_scope["cross_lane"]))
+    results.append(("seam scope+producer aware (claimed scope GREEN; others phased/cross-lane)", scope_ok))
 
     ok = all(passed for _, passed in results)
     for label, passed in results:
@@ -534,9 +569,9 @@ def main(argv: list[str]) -> int:
     if cmd == "seam":
         edges_path = _arg(argv, "--edges")
         if not edges_path:
-            sys.stderr.write("usage: comp-coverage-check seam --edges <populated-edges.json> [--rollup <rollup-view.json>]\n")
+            sys.stderr.write("usage: comp-coverage-check seam --edges <edges.json> [--rollup <rollup.json>] [--scope <scope.json>] [--producer <lane>]\n")
             return UNVERIFIABLE
-        return seam(edges_path, _arg(argv, "--rollup"))
+        return seam(edges_path, _arg(argv, "--rollup"), _arg(argv, "--scope"), _arg(argv, "--producer"))
     return check()
 
 

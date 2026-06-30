@@ -179,15 +179,19 @@ grain_contract:
   # The canonical RELATION vocabulary GRAPHUNI populates + COMPDRIFT seams on. SEED (GRAPHUNI
   # extends in P1). INVARIANT: each `relation` -> exactly ONE edge_type; grain difference rides
   # the `levels` attribute, NEVER a new type. distinct_relations are distinct types (ruling 4).
+  # `producer` = the lane that POPULATES this edge_type (~D seam-pre-flight finding 3): the seam's
+  # DECLARATIVE registry-orphan check is scoped to the producer under validation, so it never falsely
+  # demands ~D populate another lane's grain. Ties to the tool-calibration sweep (each tool at its grain).
   edge_types:
-    - { edge_type: CONTAINS,  relation: contains,  levels: [estate, surface, container, file, object, function, field], note: "the structural grain ladder -- one relation, all depths as levels" }
-    - { edge_type: READS,     relation: reads,     levels: [field, object], note: "portal-field/object READ -- DISTINCT relation from READS_S3 (ruling 4: different semantic -> different type)" }
-    - { edge_type: READS_S3,  relation: reads_s3,  levels: [object, prefix], note: "gold/lambda reads an S3 artifact; key-vs-prefix depth = the `levels` attr, SAME type (Amendment 2)" }
-    - { edge_type: WRITES_S3, relation: writes_s3, levels: [object, prefix], note: "writes an S3 artifact; depth = level attr" }
-    - { edge_type: DEPLOYS,   relation: deploys,   levels: [lambda, script], note: "GIT->CLOUD deploy edge (seam-2); artifact-class = level attr, one relation" }
-    - { edge_type: SERVES,    relation: serves,    levels: [route, served-json], note: "CF/route serves a payload; surface depth = level attr" }
-    - { edge_type: RUNS,      relation: runs,      levels: [ec2, lambda, stepfn], note: "resource RUNS compute (fractal stratum-stitcher, sec-10); EC2 -RUNS-> PipelineScript" }
-    - { edge_type: OWNED_BY,  relation: owned_by,  levels: [s3key, ddb-item], note: "object OWNED_BY its container-resource (fractal stratum-stitcher, sec-10); S3Key -OWNED_BY-> S3_BUCKET" }
+    - { edge_type: CALLS,     relation: calls,     levels: [function], producer: graphuni-gold, note: "function INVOKES function (gold call graph, ~1624 edges -- the single largest gold class; what comp-blast/comp-trace traverse). DISTINCT relation (control-flow) from contains/reads_s3/runs -> distinct type (ruling 4). compute->compute (intra-stratum, not a drilldown seam). script-level call edges fold in as a `script` level if they materialize. Added per ~D pre-flight finding 1." }
+    - { edge_type: CONTAINS,  relation: contains,  levels: [estate, surface, container, file, object, function, field], producer: graphuni-gold, note: "the structural grain ladder -- one relation, all depths as levels" }
+    - { edge_type: READS,     relation: reads,     levels: [field, object], producer: portal, note: "portal-field/object READ -- DISTINCT relation from READS_S3 (ruling 4). Producer=portal/TSGRAPH, NOT graphuni-gold" }
+    - { edge_type: READS_S3,  relation: reads_s3,  levels: [object, prefix], producer: graphuni-gold, note: "gold/lambda reads an S3 artifact; key-vs-prefix depth = the `levels` attr, SAME type (Amendment 2)" }
+    - { edge_type: WRITES_S3, relation: writes_s3, levels: [object, prefix], producer: graphuni-gold, note: "writes an S3 artifact; depth = level attr" }
+    - { edge_type: DEPLOYS,   relation: deploys,   levels: [lambda, script], producer: deploy-seam, note: "GIT->CLOUD deploy edge (seam-2); producer=the deploy seam (AE/CI), NOT graphuni-gold" }
+    - { edge_type: SERVES,    relation: serves,    levels: [route, served-json], producer: routing, note: "CF/route serves a payload; producer=routing/platinum, NOT graphuni-gold" }
+    - { edge_type: RUNS,      relation: runs,      levels: [ec2, lambda, stepfn], producer: graphuni-infra, note: "resource RUNS compute (fractal stratum-stitcher, sec-10); EC2 -RUNS-> PipelineScript. graphuni INFRA tier (later than gold)" }
+    - { edge_type: OWNED_BY,  relation: owned_by,  levels: [s3key, ddb-item], producer: graphuni-infra, note: "object OWNED_BY its container-resource (sec-10); S3Key -OWNED_BY-> S3_BUCKET. graphuni INFRA tier" }
   # ============ FRACTAL DRILLDOWN -- CTO section-10, RATIFIED 205709Z (FOLDED ACTIVE) ============
   # Coarse resource nodes drill to fine internal structure via stable stratum-stitching edges.
   # Folded as the 8th+9th gate rules (grain_drilldown_seams + grain_rollup_consistency) -- a pure

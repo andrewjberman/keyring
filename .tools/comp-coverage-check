@@ -14,10 +14,14 @@ comp-tool coverage map / coverage-check / non-redundancy invariant").
   comp-coverage-check selfcheck  inject unplaced-tool + silent-overlap + stale-projection -> each FAILS
   comp-coverage-check list       the contract rules this gate enforces
   comp-coverage-check seam --edges <populated.json> [--rollup <rollup.json>]
+                          [--scope <scope.json>] [--producer <lane>]
                                  the 3-axis govern<->populate SEAM validation (GRAPHDEPTH symbiotic
                                  protocol): MECHANICAL (populated edges conform to the registry) +
-                                 DECLARATIVE (registry<->population categorical coverage) + SEMANTIC
-                                 (existential rollup holds). GREEN/RED/INCOMPLETE; both ~C+~D sign.
+                                 DECLARATIVE (registry<->population coverage, SCOPE + PRODUCER aware:
+                                 phased tiers + cross-lane grains are not false STOPs) + SEMANTIC
+                                 (existential rollup holds). GREEN-IN-SCOPE/RED/IN-SCOPE-INCOMPLETE;
+                                 both ~C+~D sign. scope={edge_types,levels,strata} = the increment's
+                                 claimed grains; producer = the lane being validated.
 """
 import os
 import runpy
