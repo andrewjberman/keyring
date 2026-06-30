@@ -130,6 +130,25 @@ RULES = [
      "graph cache freshness (cloud/trace/kuzu vintages)",
      ["comp-graph status [--json]", "comp-graph clear <platinum|trace|all>"],
      "freshness of the GRAPHS themselves (cloud/trace/kuzu cache vintages) -- NOT data-pipeline freshness"),
+    # comp-xray = the value-MOTION lens (NFRA_COMPDIFF). Placed BEFORE comp-freshness so a
+    # "is the served VALUE frozen / stuck / not moving / frozen-but-fresh" question routes to the
+    # CONTENT-motion tool, not the upstream-chain-freshness tool. The distinction the rule enforces:
+    # comp-freshness = "is upstream data fresh enough to RUN a chain" (WRAPPER / date-key);
+    # comp-xray = "is the served CONTENT genuinely changing, or frozen while its timestamp advances"
+    # (the 3x-2026-06-29 freeze class). Empirical demand: agents grepped header_metrics 5x + named
+    # "no comp-tool reads served-artifact CONTENT" 2x in the 14d to 2026-06-30 (MSTR comp-tool
+    # discovery audit, LD-0224 follow-on) -- the exact gap comp-xray now fills.
+    (["frozen", "frozen but fresh", "frozen-but-fresh", "stuck at", "stopped moving", "stopped changing",
+      "not moving", "not changing", "value froze", "value frozen", "same value", "re-stamped", "restamped",
+      "served value", "served content", "served-artifact content", "header_metrics", "content frozen",
+      "value motion", "genuinely changing", "actually changing", "is the value moving", "stale value",
+      "frozen value", "x-ray", "xray", "content fingerprint", "did the value change",
+      "schema drift in place", "drift in place", "value stopped", "timestamp advances but"],
+     "value-MOTION / frozen-but-fresh (comp-xray)",
+     ["comp-xray frozen <bucket> <key> --fields <f1,f2>", "comp-xray code <path>",
+      "comp-xray schema <parquet|s3://>", "comp-xray freeze-monitor"],
+     "is a served VALUE genuinely moving or FROZEN-BUT-FRESH (value frozen while the timestamp keeps "
+     "advancing) -- the content-MOTION lens, NOT wrapper freshness; also code/config/schema motion"),
     # LD-0208 fix (C): vetted routes for the high-value long tail the audit named as
     # misrouted (freshness/validate/pii). Tight keyword lists -> no over-match; the
     # manifest backstop covers the rest of the catalog now that its key is fixed.
@@ -137,12 +156,17 @@ RULES = [
       "how old is the data", "last updated", "upstream data",
       # real-NL currency vocabulary: "is X CURRENT / actually current / still current / how
       # current". Without these the bare word "artifact" mis-grabbed these to the producer
-      # rule (comp-pipescript io). (paraphrase 2026-06-26) Note: "is the SERVED output current"
-      # is the comp-freshness content-mode lane (CTO spec) -- route here for now.
-      "current", "actually current", "still current", "how current", "still fresh"],
+      # rule (comp-pipescript io). (paraphrase 2026-06-26) Note: the "is the served VALUE frozen /
+      # content-motion" lane is now comp-xray's (rule above); this rule stays the UPSTREAM-readiness
+      # (run-a-chain) freshness lane. The `artifact <s3-uri>` mode is surfaced here per the MSTR
+      # 2026-06-30 audit finding (agents couldn't find the ad-hoc-prefix-freshness mode).
+      "current", "actually current", "still current", "how current", "still fresh",
+      "how old is this prefix", "freshness of this s3", "prefix freshness", "s3 prefix", "how old is this s3"],
      "data freshness (upstream ready to run a chain)",
-     ["comp-freshness chain <bd|inf|cot>", "comp-freshness script <id>"],
-     "is the upstream S3 data fresh enough to run a gold chain (chain_ready)"),
+     ["comp-freshness chain <bd|inf|cot>", "comp-freshness script <id>",
+      "comp-freshness artifact <s3://prefix>  # ad-hoc prefix freshness", "comp-freshness ddb <table>"],
+     "is the upstream S3 data fresh enough to run a gold chain (chain_ready); artifact mode = how old "
+     "is any S3 prefix right now"),
     (["invariant", "invariants", "validate artifact", "satisfy invariants", "before upload",
       "before s3 upload", "artifact valid", "passes validation"],
      "artifact validation (declared invariants pre-upload)",
