@@ -9964,3 +9964,18 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-06-30 | 0.6.2_AE_PartnerETL | (no-TO) | comp-blast | comp-blast inf-performance-daily | PASS |
 - 2026-06-30 0.8.0_AE_CloudComp~C (NFRA_COMPUNIFY.S2+S3): comp-coverage-check selfcheck (CTO arch-gate -- 3 injected violations FAIL + no-checker UNVERIFIABLE + clean PASS); B6 live-fired [coverage-check] PASS on every commit; comp-which S2-wiring grep + S3 before/after battery (surface-first routes from taxonomy, ms-cloud GAP, paraphrase unchanged, never-dead-end); comp-shell+bash-n clean on safe-commit edit; ds-commit-gate/ruff clean. S2 6560cc103/1eb50c3cb, S3 d607b5f32.
 | 2026-06-30 | 0.8.0_AE_CloudComp~C | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-06-30 | 2.0.0_SA_COO~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/NFRA_COMPUNIFY/task_orders... | PASS |
+| 2026-06-30 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/briefs/inflection-refactor-silver.... | PASS |
+| 2026-06-30 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/change_management/20... | PASS |
+| 2026-06-30 | 0.8.0_AE_CloudComp~D | NFRA_GRAPHUNI.P0.d1-audit-gaplist | comp-kuzu | comp-kuzu MATCH ()-[r]->() WHERE r.edge_type IN ['CONTAINS','CONTAINS_DRILLDOWN','OWNED... | PASS |
+| 2026-06-30 | 0.8.0_AE_CloudComp~D | NFRA_GRAPHUNI.P0.d1-audit-gaplist | comp-kuzu | comp-kuzu MATCH (a:CloudNode)-[r]->(b:CloudNode) WHERE r.edge_type='CONTAINS' AND a.lay... | PASS |
+| 2026-06-30 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+| 2026-06-30 | 0.8.0_AE_CloudComp~D | NFRA_GRAPHUNI.P0.d1-audit-gaplist | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/NFRA_GRAPHUNI/NFRA_GRAPHUN... | PASS |
+| 2026-06-30 | 2.0.0_SA_COO~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/NFRA_COMPUNIFY/task_orders... | PASS |
+| 2026-06-30 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/briefs/inflection-refactor-silver.md | PASS |
+| 2026-06-30 | 0.8.0_AE_CloudComp~D | NFRA_GRAPHUNI.P0.d1-audit-gaplist | comp-kuzu | comp-kuzu MATCH (n:CloudNode) WHERE n.node_type='EC2_INSTANCE' RETURN n.name AS name LI... | PASS |
+| 2026-06-30 | 0.8.0_AE_CloudComp~D | NFRA_GRAPHUNI.P0.d1-audit-gaplist | comp-kuzu | comp-kuzu MATCH (a:CloudNode)-[r]->(b) WHERE a.node_type='EC2_INSTANCE' RETURN DISTINCT... | PASS |
+| 2026-06-30 | 2.0.0_SA_COO~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/NFRA_GRAPHUNI/task_orders/... | PASS |
+| 2026-06-30 | 0.8.0_AE_CloudComp~D | NFRA_GRAPHUNI.P0.d1-audit-gaplist | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/NFRA_GRAPHUNI/NFRA_GRAPHUN... | PASS |
+- 2026-06-30 0.8.0_AE_CloudComp~C (NFRA_COMPUNIFY arc-closeout): no new comp-tool runs (recorded the CTO arch-gate PASS verdict closing S0->S3; no code/infra change). V1 acceptance surfaces: comp-coverage-check selfcheck/check, comp-which --surfaces.
+| 2026-06-30 | 0.8.0_AE_CloudComp~C | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
