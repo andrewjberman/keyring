@@ -10010,3 +10010,13 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-06-30 | 2.0.0_SA_COO~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/NFRA_GRAPHDEPTH/task_order... | PASS |
 - 2026-06-30 0.8.0_AE_CloudComp~C (GRAPHDEPTH symbiotic seam): built comp-coverage-check seam (3-axis mechanical/declarative/semantic govern<->populate validation, categorical bar); selfcheck 10/10 (+seam 3-axis-fire); live demo on a 2-edge fixture -> INCOMPLETE (categorical bar honest); ds-commit-gate/ruff clean; B6 PASS. Commit ce6a6aa7c.
 | 2026-06-30 | 0.8.0_AE_CloudComp~C | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-06-30 | 0.8.0_AE_CloudComp~A | (no-TO) | comp-pipescript | comp-pipescript deployed INF_D_00 | PASS |
+| 2026-06-30 | 0.8.0_AE_CloudComp~A | (no-TO) | comp-pipescript | comp-pipescript deployed INF_D_04 | PASS |
+| 2026-06-30 | 0.0.0_AB_MSTR | NFRA_COMPDIFF.comptool-audit | comp-kuzu | comp-kuzu MATCH (n:CloudNode) RETURN n.layer AS layer, n.node_type AS node_type, count(... | PASS |
+| 2026-06-30 | 2.0.0_SA_COO~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .owned-paths.yaml | PASS |
+| 2026-06-30 | 2.0.0_SA_COO~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/NFRA_GRAPHDEPTH/task_order... | PASS |
+| 2026-06-30 | 0.8.0_AE_CloudComp~A | (no-TO) | comp-kuzu | comp-kuzu MATCH (n:CloudNode) WHERE n.node_type CONTAINS 'S3' OR n.node_type CONTAINS '... | PASS |
+| 2026-06-30 | 0.8.0_AE_CloudComp~A | (no-TO) | comp-kuzu | comp-kuzu MATCH ()-[e]->() WHERE e.edge_type IN ['OWNED_BY','CONTAINS','READS_S3','WRIT... | PASS |
+| 2026-06-30 | 0.8.0_AE_CloudComp~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.8.0_AE_CloudComp/tas... | PASS |
+2026-06-30T2045Z 0.4.0_DS_ClientPlatform~B (delta) -- deploy_ledger.py open/close-leg/check --red (re-indexed 49F-431167, bypass->clean OPEN); aws events describe-rule (SI2 rule live-verify ENABLED cron 35 8,20); comp-which FAIL (NameError SURFACE_KW in _detect_surface -- tool bug); safe-commit x2.
+| 2026-06-30 | 0.4.0_DS_ClientPlatform~B | ADVI_BREAKS.TO-3 | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
