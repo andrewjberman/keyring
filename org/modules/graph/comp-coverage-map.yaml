@@ -1,0 +1,326 @@
+# =============================================================================
+# comp-coverage-map.yaml -- THE APEX SKELETON of the comp-tool estate
+# NFRA_COMPUNIFY S0 / apex-skeleton.  PRD: docs/architecture/NFRA_COMPUNIFY_PRD.md
+# Authored: 0.8.0_AE_CloudComp~C 2026-06-30 (COMPUNIFY dedicated build lane; TO NFRA_COMPUNIFY.S0)
+# =============================================================================
+# ONE NOUN, TWO VERBS (Andrew-direct, LD-0227): this file is the static MAP (the
+# noun) that both NFRA_COMP* loops reference -- COMPDRIFT (the resource-STATE verb,
+# per-seam parity) and COMPLEARN (the tool-USE verb, build/optimize/retire). It is
+# authored FIRST and stably so the loops hang on ONE surface/seam taxonomy instead
+# of each inventing -- and diverging on -- its own (the meta-drift this prevents).
+#
+# WHAT THIS FILE IS (the S0 skeleton -- the cheap modeling step the program hangs on):
+#   - the 5-surface APEX (4 territory + Trino federation)            [section: surfaces]
+#   - the HIGH-LEVEL tool per surface (ms-cloud flagged GAP)         [section: surfaces]
+#   - the TRINO federation modeled by PHYSICAL CATALOG               [section: trino_federation]
+#   - the SEAM axis -- REFERENCING drift-topology.yaml seam IDs       [section: seams]
+#   - the NODE SCHEMA every entry carries + the machine-check gate    [section: schema]
+#   - one WORKED OVERLAP (IAM x3) proving distinct_from is structured [section: tools]
+#
+# WHAT THIS FILE IS NOT (yet):
+#   - the full drill-down population of all ~38 tools -> S1 (this skeleton places
+#     only the high-level entries + the worked overlap; S1 homes every tool).
+#   - the gap census / redundancy census -> S1.
+#   - the comp-coverage-check GATE itself -> S2 (this file defines the contract it enforces).
+#   - the tools_index regenerated-VIEW wiring -> S1 (ruling #1: this ledger SUPERSEDES
+#     the flat tools_index in graph-call-manifest.yaml; that becomes a generated projection).
+#
+# LOCKED CTO RULINGS (PRD section 6 -- NOT re-openable):
+#   1. This LEDGER is the source of truth; tools_index becomes a generated VIEW (ONE catalog).
+#   2. SEAM == COMPDRIFT topology, ONE artifact: reference drift-topology.yaml seam IDs; never duplicate.
+#   3. TRINO fan-in = PHYSICAL catalogs (iceberg[3 tables]/code_heat/+tool_activity), not logical layers.
+#   4. NON-REDUNDANCY invariant = a machine-checkable GATE; the schema below is built so S2 can read it.
+# =============================================================================
+
+version: 1
+status: skeleton            # S0 apex-skeleton; S1 populates, S2 gates
+last_reviewed: "2026-06-30"
+supersedes: graph-call-manifest.yaml#tools_index   # ruling #1 -- that becomes a generated view (S1 wires)
+seam_source: org/modules/graph/drift-topology.yaml  # ruling #2 -- ONE seam artifact; we reference its IDs
+
+# =============================================================================
+# SCHEMA -- the structure every `tools[]` node carries, AND the contract the S2
+# `comp-coverage-check` gate verifies MECHANICALLY (no prose-only escape).
+# THE LOAD-BEARING INVARIANT (Andrew-direct, PRD section 4):
+#   Every tool has exactly ONE home = (surface OR seam) x granularity x concern.
+#   Two tools may touch the same RESOURCE only if their CONCERN differs -- and that
+#   difference must be DECLARED. Silent overlap is a violation -> merge or disambiguate.
+# =============================================================================
+schema:
+  node_fields:
+    # --- the (surface|seam) x granularity x concern HOME (exactly one home) ---
+    surface:
+      type: enum
+      values: [LOCAL, GIT, AWS-CLOUD, MS-CLOUD, TRINO]
+      doc: "the territory/federation surface this node lives on. Set IFF this is a surface node."
+    seam:
+      type: enum
+      values: [seam-1, seam-2, seam-3, seam-4, seam-5, seam-6, seam-7]
+      doc: "the inter-surface parity seam this node checks. Set IFF this is a seam node. Value MUST exist in seam_source (drift-topology.yaml) -- referenced, never redefined."
+    granularity:
+      type: enum
+      values: [object, file, table, catalog, lambda, iam-policy, graph-node, served-json, component, route, cache-key, secret, symbol, type, seam, estate]
+      doc: "the grain the tool operates at -- the second home axis."
+    concern:
+      type: string
+      doc: "the SINGLE question this node answers at its home. MUST be unique within any shared touches_resource group (that uniqueness IS the non-redundancy gate)."
+    # --- overlap declaration (the non-redundancy machinery) ---
+    touches_resource:
+      type: list[string]
+      doc: "named resources this tool reads/inspects (e.g. IAM, 'parity', S3-artifact). The gate GROUPS tools by shared entries here; any group size > 1 REQUIRES distinct_from on every member."
+    distinct_from:
+      type: list[record]
+      record_fields: [tool, shared_resource, my_concern, their_concern]
+      doc: "POPULATED iff this node shares a touches_resource with another node. Each record names the sibling tool, the shared resource, and the two CONCERNS that differ. A structured field a gate READS -- not free prose."
+    # --- per-SURFACE provenance (refresh-cadence) -- explains DESIGNED cadence asymmetry ---
+    provenance:
+      type: record
+      record_fields: [refresh_mechanism, cadence, concurrency_basis]
+      applies_to: surface-nodes
+      doc: "how the surface's live state reaches the derived graph/map, and WHY at that cadence. LOAD-BEARING for read-correctness: the cadence is matched to each surface's multiagent-concurrency intensity BY DESIGN (MSTR/Andrew-clarified 2026-06-30; memory project_globgrph_refresh_cadence_by_concurrency_basis). A reader (or the COMPDRIFT seam-3 spec) MUST NOT mis-read a low-cadence surface (ms-cloud batch) as a coverage GAP -- a designed asymmetry is not a gap. concurrency_basis records the reason (where Opal runs concurrent agent processes)."
+
+  # --- the contract comp-coverage-check (S2) enforces against tools[] ---
+  # CTO DESIGN NOTE (S0 gate, carries to S2): these 4 rules ARE the comp-coverage-check
+  # SPEC. S2 READS this gate_contract as its machine-readable input and implements exactly
+  # these -- it does NOT re-implement a parallel rule-set (so the map can never drift from
+  # its own gate). Each rule is a structured record {id, applies_to, inputs, predicate,
+  # on_violation} a checker keys off; `description` is the human gloss only.
+  gate_contract:
+    reads: "this block is S2's input contract -- comp-coverage-check enumerates `rules` and evaluates each `predicate` over `inputs`"
+    rules:
+      - id: one_home
+        applies_to: "every tools[] entry"
+        inputs: [surface, seam, granularity, concern]
+        predicate: "len([f for f in (surface, seam) if f]) == 1  AND  granularity is set  AND  concern is set"
+        on_violation: "FAIL -- unplaced (zero-home) or ambiguous (two-home) tool"
+        description: "exactly ONE of {surface,seam} set + granularity + concern => the (surface|seam) x granularity x concern home invariant"
+      - id: seam_reference_integrity
+        applies_to: "every node with `seam` set"
+        inputs: [seam, seam_source]
+        predicate: "seam in seam_ids(load(seam_source))"
+        on_violation: "FAIL -- a seam_id absent from drift-topology.yaml (we reference, never invent)"
+        description: "seam IDs are DEFINED in drift-topology.yaml (ruling #2, ONE artifact); this map only references them"
+      - id: declared_non_redundancy
+        applies_to: "every touches_resource group of size > 1"
+        inputs: [touches_resource, distinct_from, concern]
+        predicate: "for each resource R touched by tools T (|T|>1): (a) every t in T has a distinct_from record citing R for every OTHER member of T;  (b) the `concern` values across T are pairwise DISTINCT"
+        on_violation: "FAIL -- (a) silent overlap (undeclared) ; (b) true redundancy (concern collision) -> merge/retire/disambiguate"
+        description: "the load-bearing non-redundancy invariant -- shared RESOURCE allowed only with a DECLARED, distinct CONCERN per tool"
+      - id: no_trino_phantom_seam
+        applies_to: "trino_federation.catalogs"
+        inputs: [trino_federation.fan_in_model, trino_federation.catalogs]
+        predicate: "fan_in_model == 'physical-catalog'  AND  no catalog entry keyed on a logical layer (aws/portal/ms)"
+        on_violation: "FAIL -- a per-logical-layer catalog (ruling #3 violation; layer is a graph_nodes COLUMN, not a catalog)"
+        description: "Trino fans in by PHYSICAL catalog only (iceberg[3 tables]/code_heat/+tool_activity); zero phantom per-layer seams"
+
+# =============================================================================
+# SURFACES -- the 5-surface APEX (PRD section 2, Andrew-direct).
+# FOUR territory surfaces (where state lives) + TRINO as the FEDERATION surface
+# (the derived join-layer ACROSS the others -- special, NOT a peer).
+# =============================================================================
+surfaces:
+  - id: LOCAL
+    kind: territory
+    store: "working tree (uncommitted scripts / .tf / src)"
+    high_level_tool: "comp-heat drift"
+    high_level_concern: "uncommitted-write drift -- is a commit-worthy local write still untracked/modified?"
+    provenance:
+      refresh_mechanism: on-demand-read       # comp-heat scans the working tree at invocation; not part of the nightly graph derive
+      cadence: on-invocation
+      concurrency_basis: "per-agent working tree (ephemeral, uncommitted); not a shared graph surface"
+    drill_down: S1   # depth tools home here in S1 (e.g. comp-shell on new .sh)
+
+  - id: GIT
+    kind: territory
+    store: "committed source (CLOUD / DEV / PROD branches)"
+    high_level_tools: ["comp-heat", "comp-xray (code/config)"]
+    high_level_concern: "committed-source state: object write-freshness (comp-heat) + value-MOTION / frozen-but-fresh (comp-xray)"
+    provenance:
+      refresh_mechanism: commit-driven         # state advances per commit; comp-heat/comp-xray read git on-demand
+      cadence: per-commit
+      concurrency_basis: "multi-agent commits to shared branches (CLOUD/DEV/PROD) -- high write-concurrency, captured at commit granularity"
+    drill_down: S1   # comp-pipescript io, comp-validate, comp-constants home here in S1
+
+  - id: AWS-CLOUD
+    kind: territory
+    store: "live AWS (S3 artifacts / Lambda / EC2 code / DynamoDB config / IAM)"
+    high_level_tool: "comp-aws"
+    high_level_concern: "live-AWS + Terraform-state cloud-graph (the write-path + cert)"
+    provenance:
+      refresh_mechanism: "event-driven (incremental_updater Lambda, near-real-time) + nightly comp-aws derive full reconcile"
+      cadence: near-real-time                  # HIGH-freshness BY DESIGN
+      concurrency_basis: "HIGH -- Opal runs multiagent processes IN AWS, so the estate changes continuously; event-driven freshness is matched to that intensity. (memory project_globgrph_refresh_cadence_by_concurrency_basis)"
+    drill_down: S1   # comp-routes/comp-cache/comp-transform/comp-freshness/comp-secrets/comp-iam/comp-pii/comp-platinum/comp-blast/trace home here in S1
+
+  - id: MS-CLOUD
+    kind: territory
+    store: "Microsoft 365 estate (Teams / SharePoint / OneDrive / mail)"
+    high_level_tool: GAP                      # <-- explicit GAP, NOT invented. Feeds COMPLEARN worklist (PRD deliverable 2).
+    high_level_concern: "ms-estate state -- NO dedicated comp-ms tool exists today"
+    gap: true                                  # the TOOL-FRONT gap (no comp-ms) -- a real empty node -> feeds COMPLEARN worklist
+    gap_note: "reachable ONLY via the m365 MCP gateway + the graph ms-`layer` column on graph_nodes; no comp-tool fronts this surface. Empty node flagged, not invented (TO scope rule)."
+    provenance:
+      refresh_mechanism: "batch extract only (extract_ms_cloud -> Kuzu via the same marker->refresh; NO incremental path -- CloudTrail is AWS-only)"
+      cadence: batch                           # LOW-cadence BY DESIGN -- NOT a coverage gap
+      concurrency_basis: "LOW -- Opal runs NO concurrent agent processes in MS / does not use Azure; batch cadence is matched to that. (Andrew-direct 2026-06-30)"
+      designed_asymmetry: true                 # DISTINCT from the tool-front `gap` above
+      not_a_gap_note: "the BATCH CADENCE is INTENTIONAL (Andrew-direct), NOT a coverage gap -- do NOT build an MS event-driven updater (effort against a non-need). COMPDRIFT seam-3 / any reader must read ms cadence as a designed asymmetry, not unguarded drift. The only ms GAP is the tool-front (no comp-ms), not the refresh cadence."
+
+  - id: TRINO
+    kind: federation                          # SPECIAL: the derived join-layer ACROSS the territory surfaces, NOT a peer.
+    store: "federated query surface (unified heat_map / analytics; fan-in by physical catalog)"
+    high_level_tool: "comp-kuzu"
+    future_tool: "comp-fed"                    # future federated front (PRD section 2)
+    high_level_concern: "cross-surface federated read -- the join over the derived models (Nessie->Kuzu->Iceberg) that FEED Trino"
+    provenance:
+      refresh_mechanism: "DERIVED -- refreshes as its backing catalogs do (iceberg nightly materialization; code_heat live-read); inherits each territory surface's cadence upstream"
+      cadence: "worst-of backing catalogs (per-catalog, see trino_federation)"
+      concurrency_basis: "federation has no native write-concurrency; its freshness is bounded by the slowest contributing surface/catalog -- so the per-surface cadences above explain the federation's freshness envelope"
+    note: "The derived MODELS (Nessie -> Kuzu -> Iceberg) are the MAP over the territory; they FEED Trino and can DRIFT (the comp-kuzu provenance-header lesson). They are NOT surfaces. Trino's fan-in is modeled in trino_federation below."
+
+# =============================================================================
+# TRINO FEDERATION -- modeled by PHYSICAL CATALOG (ruling #3, COO~B-grounded;
+# aligns the 2026-06-30 ICEBERG grain fix adc20b328). NOT per-logical-layer
+# catalogs -> zero phantom per-layer seams. aws/portal/ms is a `layer` COLUMN on
+# graph_nodes, not separate tables/catalogs.
+# =============================================================================
+trino_federation:
+  fan_in_model: physical-catalog            # ruling #3 -- gate `no_trino_phantom_seam` enforces this
+  catalogs:
+    - name: iceberg
+      kind: iceberg
+      physical_tables: [graph_nodes, graph_edges, graph_contracts]   # 3 physical tables; layer(aws/portal/ms) is a COLUMN on graph_nodes
+      inbound_seam: seam-6                   # the ICEBERG->TRINO fan-in seam (drift-topology.yaml; fan_in:true)
+      note: "pipeline=0 nodes dropped; the old aws/portal/ms/pipeline per-layer framing was a grain mismap (corrected adc20b328)."
+    - name: code_heat
+      kind: hive                             # Glue hive over the code_heat parquet prefix
+      inbound_seam: seam-6                   # git-code-heat binding under the seam-6 fan-in node (live-read special case)
+    - name: tool_activity
+      kind: future                           # COMPLEARN tool-USE telemetry catalog (not yet built)
+      status: GAP
+      gap_note: "future +1 catalog (PRD section 2 '+tool_activity future'); feeds COMPLEARN. Empty node flagged, not invented."
+
+# =============================================================================
+# SEAMS -- the inter-surface parity axis. We REFERENCE the COMPDRIFT seam IDs
+# from drift-topology.yaml (ruling #2: ONE seam artifact). This is the static
+# MAP-of-seams view: seam_id + the surfaces it spans + its owning tool + coverage
+# status. The per-seam parity ENGINE + verdict_vocab + disposition model live in
+# drift-topology.yaml (COMPDRIFT) -- we do NOT duplicate them; we point at them.
+# =============================================================================
+seams:
+  ref: org/modules/graph/drift-topology.yaml   # ruling #2 -- the seam IDs are DEFINED there; both loops consume them
+  # The COMPUNIFY map-view: surfaces spanned + owning tool + coverage (mirrors, never redefines, drift-topology).
+  axis:
+    - seam_id: seam-1
+      spans: LOCAL -> GIT
+      owning_tool: "comp-heat drift"
+      coverage: COVERED
+    - seam_id: seam-2
+      spans: GIT -> AWS-CLOUD
+      owning_tool: "comp-pipescript deployed | comp-lambdamap parity | comp-iam reconcile"   # multi-engine (per artifact class)
+      coverage: COVERED
+    - seam_id: seam-3
+      spans: AWS-CLOUD -> NESSIE              # NESSIE/KUZU/ICEBERG = derived models (feed Trino), not apex surfaces
+      owning_tool: "globgrph derive marker-oracle (comp-kuzu provenance header)"
+      coverage: PARTIAL
+    - seam_id: seam-4
+      spans: NESSIE -> KUZU
+      owning_tool: "comp-kuzu HEAD-advance (auto-refresh marker)"
+      coverage: SELF-HEAL
+    - seam_id: seam-5
+      spans: KUZU -> ICEBERG
+      owning_tool: "infra/aws/globgrph/iceberg_parity.py"
+      coverage: COVERED                       # closed 2026-06-29 (was GAP)
+    - seam_id: seam-6
+      spans: ICEBERG -> TRINO
+      owning_tool: "code_heat_parity.py (git-code-heat binding COVERED); iceberg-catalog bindings UNCOVERED"
+      coverage: GAP                           # fan_in:true -- per physical catalog (see trino_federation.catalogs)
+      fan_in: true
+    - seam_id: seam-7
+      spans: TRINO -> SERVED
+      owning_tool: "comp-freshness + heat-view check"
+      coverage: PARTIAL
+
+# =============================================================================
+# TOOLS -- S0 SKELETON placement. S1 homes ALL ~38 tools; here we place the
+# high-level surface entries (cross-referenced above) and model ONE WORKED OVERLAP
+# (the IAM x3 from PRD section 4) to PROVE distinct_from is a structured field the
+# S2 gate can read -- the load-bearing machine-checkability demonstration (AC 3).
+# =============================================================================
+tools:
+  # ---- WORKED OVERLAP: the IAM resource, touched by 3 tools with 3 DECLARED concerns ----
+  # PRD section 4 seed redundancy. Same RESOURCE (IAM), three distinct CONCERNS, each
+  # DECLARED -> the gate's declared_non_redundancy check passes BECAUSE distinct_from is
+  # populated and the concerns are pairwise distinct. This is the proof the invariant is
+  # machine-checkable, not prose.
+  - tool: comp-iam
+    surface: AWS-CLOUD
+    granularity: iam-policy
+    concern: "grant-analysis -- boto3 calls vs IAM grants (permission gaps; who-can-do-what)"
+    touches_resource: [IAM]
+    distinct_from:
+      - { tool: comp-aws,       shared_resource: IAM, my_concern: "grant-analysis (permission gaps)",   their_concern: "IAM-as-graph-nodes (estate topology)" }
+      - { tool: comp-lambdamap, shared_resource: IAM, my_concern: "grant-analysis (permission gaps)",   their_concern: "deploy-SHA (IAM role on a deployed Lambda)" }
+
+  - tool: comp-aws
+    surface: AWS-CLOUD
+    granularity: graph-node
+    concern: "IAM-as-graph-nodes -- the live-AWS cloud-graph estate topology (roles/policies as nodes/edges)"
+    touches_resource: [IAM]
+    distinct_from:
+      - { tool: comp-iam,       shared_resource: IAM, my_concern: "IAM-as-graph-nodes (estate topology)", their_concern: "grant-analysis (permission gaps)" }
+      - { tool: comp-lambdamap, shared_resource: IAM, my_concern: "IAM-as-graph-nodes (estate topology)", their_concern: "deploy-SHA (IAM role on a deployed Lambda)" }
+
+  - tool: comp-lambdamap
+    surface: AWS-CLOUD
+    granularity: lambda
+    concern: "deploy-SHA -- Lambda deployed-SHA vs live CodeSha256 (the role/IAM as seen at the deploy seam)"
+    touches_resource: [IAM]
+    distinct_from:
+      - { tool: comp-iam, shared_resource: IAM, my_concern: "deploy-SHA (IAM role on a deployed Lambda)", their_concern: "grant-analysis (permission gaps)" }
+      - { tool: comp-aws, shared_resource: IAM, my_concern: "deploy-SHA (IAM role on a deployed Lambda)", their_concern: "IAM-as-graph-nodes (estate topology)" }
+
+  # ---- high-level surface entries (the apex tools, placed; full drill-down = S1) ----
+  - tool: comp-heat
+    surface: LOCAL                            # high-level for LOCAL (drift subcommand) AND GIT (object freshness) -- subcommand-level homing is S1
+    granularity: object
+    concern: "estate-object write-freshness + uncommitted-write drift (LOCAL->GIT seam-1 owner)"
+    touches_resource: [estate-object-freshness]
+    distinct_from:
+      - { tool: comp-freshness, shared_resource: estate-object-freshness, my_concern: "estate-object write-freshness (repo files)", their_concern: "pipeline-data S3/DDB freshness" }
+      - { tool: comp-graph,     shared_resource: estate-object-freshness, my_concern: "estate-object write-freshness (repo files)", their_concern: "graph-cache vintage" }
+      - { tool: comp-xray,      shared_resource: estate-object-freshness, my_concern: "estate-object write-freshness (wrapper mtime/size)", their_concern: "value-MOTION (frozen-but-fresh content)" }
+
+  - tool: comp-xray
+    surface: GIT
+    granularity: file
+    concern: "value-MOTION -- is the CONTENT genuinely changing or frozen-but-fresh? (code/config motion lens)"
+    touches_resource: [estate-object-freshness]
+    distinct_from:
+      - { tool: comp-heat,      shared_resource: estate-object-freshness, my_concern: "value-MOTION (frozen-but-fresh content)", their_concern: "estate-object write-freshness (wrapper mtime/size)" }
+      - { tool: comp-freshness, shared_resource: estate-object-freshness, my_concern: "value-MOTION (content)", their_concern: "pipeline-data S3/DDB freshness" }
+      - { tool: comp-graph,     shared_resource: estate-object-freshness, my_concern: "value-MOTION (content)", their_concern: "graph-cache vintage" }
+
+  - tool: comp-kuzu
+    surface: TRINO                            # the federated read front (the join over the derived models that feed Trino)
+    granularity: graph-node
+    concern: "cross-surface federated read -- Cypher over the loaded estate graph (the FAST default read-path)"
+    touches_resource: []
+
+# =============================================================================
+# CENSUSES (S1) -- placeholders so the skeleton names the downstream worklists.
+# =============================================================================
+gap_census:
+  status: S1
+  seeds:                                       # PRD deliverable 2 -- empty (surface x level) nodes -> feed COMPLEARN
+    - { node: "MS-CLOUD high-level", gap: "no comp-ms tool" }
+    - { node: "TRINO tool_activity catalog", gap: "future +1 catalog not built" }
+    - { node: "seam-6 iceberg-catalog bindings", gap: "UNCOVERED (git-code-heat binding COVERED)" }
+    - { node: "LOCAL drill-down depth", gap: "thin below the high-level" }
+
+redundancy_census:
+  status: S1
+  seeds:                                       # PRD deliverable 3 -- the declared overlaps (IAM x3 modeled above as the proof)
+    - { resource: IAM,         tools: [comp-iam, comp-aws, comp-lambdamap], state: "DECLARED (worked example in tools[])" }
+    - { word: "parity",        tools: [comp-lambdamap, comp-parity, comp-incrparity], state: "S1 -- 3 concerns to declare" }
+    - { word: "freshness",     tools: [comp-freshness, comp-heat, comp-graph, comp-xray], state: "S1 -- 4 concerns to declare" }
