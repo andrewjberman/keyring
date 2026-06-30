@@ -10071,3 +10071,15 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-06-30 | 2.0.0_SA_COO~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/NFRA_GRAPHUNI/NFRA_GRAPHUN... | PASS |
 - 2026-06-30 0.8.0_AE_CloudComp~C (GRAPHDEPTH inv-5 + CVO-freeze): grounded invariant 5 + EP-2 from NFRA_GRAPHDEPTH_PRD sec-4 (Rule 22); comp-coverage-check selfcheck 14/14 + selfcheck --json freeze artifact (all_ok, 14 cases, 11 rules); check PASS; ds-commit-gate/ruff clean; B6 PASS. Folded referenceable-target rule (edge_type-keyed, EP-2). Commit 8ad43b6dc.
 | 2026-06-30 | 0.8.0_AE_CloudComp~C | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-06-30 | 2.0.0_SA_COO~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/NFRA_GRAPHUNI/NFRA_GRAPHUN... | PASS |
+| 2026-06-30 | 0.8.0_AE_CloudComp~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/NFRA_GRAPHUNI/NFRA_GRAPHUN... | PASS |
+| 2026-06-30 | 3.0.0_SA_CVO~B | NFRA_GRAPHUNI.P0-CVO | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/NFRA_GRAPHU... | PASS |
+| 2026-06-30 | 0.7.0_AE_CloudOps | (no-TO) | pipescript | pipescript --list | PASS |
+| 2026-06-30 | 0.7.0_AE_CloudOps | (no-TO) | pipescript | pipescript advi-bd | PASS |
+| 2026-06-30 | 0.7.0_AE_CloudOps | (no-TO) | comp-routes | comp-routes trace advisor-intelligence | PASS |
+| 2026-06-30 | 0.7.0_AE_CloudOps | (no-TO) | comp-routes | comp-routes behaviors | PASS |
+2026-06-30 | 3.0.0_SA_CVO~B | NFRA_GRAPHUNI.P0-CVO | comp-coverage-check selfcheck --json, comp-blast/trace/xref (cli.py), comp-platinum (page/reverse/summary) | captured the P0-CVO no-regression fixture (both layers): 14-case gate-verdict baseline + 65 set-form pre-delta tool answers over a deterministic sample; integrity-proven (content_sha stable, 65/65 byte-identical across a rebuild). FIXTURE-LOCKED -> P1 released. | direct cli.py invocation (shim auto-logger not fired); logged here manually
+| 2026-06-30 | 0.8.0_AE_CloudComp~C | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/comp-coverage-map.yam... | PASS |
+| 2026-06-30 | 0.7.0_AE_CloudOps | (no-TO) | comp-routes | comp-routes behaviors | PASS |
+| 2026-06-30 | 0.7.0_AE_CloudOps | (no-TO) | comp-cache | comp-cache | PASS |
+| 2026-06-30 | 3.0.0_SA_CVO~B | NFRA_GRAPHUNI.P0-CVO | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
