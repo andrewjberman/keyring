@@ -58,9 +58,11 @@ RESOLVED:
 - `transactions` — flat-only (`silver/transactions/`), no partitioned home → give it `silver/orion-api/transactions/snapshot_date={date}/`.
 - **ATOMIC per-consumer repoint — NEVER bulk-retire the flats (CTO-routed, DS~A `d7ca2f6bb`):** GOLD READS the flats today (`silver/performance/`←INF_C_02; `silver/assets_v2/`←INF_D_03; `silver/transactions/`←the whole A-stage). A naive flat-retire re-triggers the INFGRO.009 phantom-path incident. Per dim: (1) parity-confirm copy-equivalence; (2) relocate the canonical → `silver/orion-api/{dim}/snapshot_date={date}/`; (3) repoint EACH gold consumer ATOMICALLY + parity-verify the gold output is byte-unchanged; (4) THEN retire the non-canonical. CVO independently verifies each per-consumer repoint's parity as LEG-1 builds.
 
-### 5.3 ORION-API — RETIRE vs REPOINT (DS~A dead-confirm `d7ca2f6bb`)
+### 5.3 ORION-API — RETIRE vs REPOINT (DS~A dead-confirm `d7ca2f6bb`; **deprecated-by-default sharpening — Andrew-direct 2026-06-30**)
+- **PRINCIPLE (Andrew-direct, "if something is 1490h stale, it is deprecated"):** a 1490h-class-stale artifact is **deprecated-by-default**. The burden flips — "keep" must be EARNED by a *proven* served-critical fresh read; absent that, **retire** (after the consumer census is proven complete + all-repointed, so no latent real reader breaks). Grounded against `pipescript advi-inf`: an artifact with **no live producer** + 1490h-stale = dead, not "frozen-but-maintained."
 - **RETIRE (DEAD-confirmed):** `silver/performance_dim/` (dup, dead), `silver/orion-rest/` (stray, dead).
-- **NOT dead → REPOINT + staleness-flag, do NOT retire:** `silver/accounts_dim/` is **LIVE-consumed** (INF_09 / INF_C_09 / INF_D_00) but its producer is **FROZEN 04-29** (legacy producer stopped). Repoint its consumers to the `accounts_v2` source + carry a staleness flag; retiring it would break 3 live gold consumers.
+- **DEPRECATED → REPOINT consumers, THEN RETIRE the stale source (supersedes the prior "repoint+flag, keep" call):** `silver/accounts_dim/` (1490h stale, frozen 04-29) has **NO live producer** (replaced by `inf-accounts-v2-daily`, grounded `pipescript advi-inf`). Its real consumers (INF_C_09 / INF_D_00 — INF_09 was a **phantom** per DS~A's census correction) are repointed to `accounts_v2` (LEG-1, deployed). Once that repoint is **proven complete + all-repointed**, **RETIRE** the deprecated `accounts_dim/` source — do NOT flag-and-carry cruft forward.
+- **DEPRECATED-CANDIDATES (same ruling, pending per-dim producer/consumer confirm):** `silver/meta/gap_manifest.json` (1490h, frozen 04-29 — tied to the yahoo/price-gap layer removed in §5.5) → retire with yahoo. `silver/api_dims/household` (1204h stale) is listed KEEP in §5.1 but is 1490h-class stale — **resolve the inconsistency**: confirm it is genuinely active-low-churn vs deprecated (no live producer → retire). Old `api_dims/assets` (1326h) is already handled by the §5.4 CONSOLIDATE (superseded by `assets_v2`).
 
 ### 5.4 Complete prefix census — AC authority (DS~A live census 2026-06-30)
 
@@ -73,7 +75,7 @@ Every `s3://opal-data-inf/silver/` prefix classified — no tree survives unclas
 | `api_dims/assets` + `api_dims/assets_v2` + flat `silver/assets_v2/` | **CONSOLIDATE** → ONE partitioned `assets` |
 | `api_dims/performance` + flat `silver/performance/` + `silver/performance_dim/` | **CONSOLIDATE** → ONE partitioned `performance` (retire `performance_dim`) |
 | flat `silver/transactions/` | **CONSOLIDATE** → `silver/orion-api/transactions/` partitioned |
-| `silver/accounts_dim/` | **REPOINT + staleness-flag, NOT retire** — LIVE-consumed (INF_09/C_09/D_00), producer frozen 04-29; repoint consumers to accounts_v2 |
+| `silver/accounts_dim/` | **REPOINT consumers → RETIRE (deprecated)** — 1490h stale, NO live producer; real consumers C_09/D_00 (INF_09 phantom) repointed to accounts_v2 (LEG-1); retire the stale source once repoint proven complete (Andrew deprecated-by-default 2026-06-30) |
 | `silver/orion-rest/` | **RETIRE** (stray, DEAD-confirmed) |
 | `silver/performance_dim/` | **RETIRE** (dup, DEAD-confirmed) |
 | `silver/eclipse/` | **RELOCATE** → `silver/eclipse-api/` (stubbed) |
