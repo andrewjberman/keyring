@@ -9979,3 +9979,16 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-06-30 | 0.8.0_AE_CloudComp~D | NFRA_GRAPHUNI.P0.d1-audit-gaplist | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/NFRA_GRAPHUNI/NFRA_GRAPHUN... | PASS |
 - 2026-06-30 0.8.0_AE_CloudComp~C (NFRA_COMPUNIFY arc-closeout): no new comp-tool runs (recorded the CTO arch-gate PASS verdict closing S0->S3; no code/infra change). V1 acceptance surfaces: comp-coverage-check selfcheck/check, comp-which --surfaces.
 | 2026-06-30 | 0.8.0_AE_CloudComp~C | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-06-30 | 0.8.0_AE_CloudComp~D | NFRA_GRAPHUNI.P0.d1-audit-gaplist | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/NFRA_GRAPHUNI/NFRA_GRAPHUN... | PASS |
+| 2026-06-30 | 2.0.0_SA_COO~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/NFRA_GRAPHUNI/task_orders/... | PASS |
+| 2026-06-30 | 0.0.0_AB_MSTR | NFRA_COMPDIFF.comptool-audit | comp-surface-check | comp-surface-check check --mode advisory --file org/tier0/ledger/LD-0229.md | PASS |
+| 2026-06-30 | 2.0.0_SA_COO~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/NFRA_GRAPHUNI/task_orders/... | PASS |
+| 2026-06-30 | 0.8.0_AE_CloudComp~D | NFRA_GRAPHUNI.P0.d1-audit-gaplist | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/NFRA_GRAPHUNI/NFRA_GRAPHUN... | PASS |
+| 2026-06-30 | 0.6.2_AE_PartnerETL | (no-TO) | comp-iam | comp-iam service bd-49f-runner | PASS |
+| 2026-06-30 | 0.6.2_AE_PartnerETL | (no-TO) | comp-iam | comp-iam service bd-49f-auto-login | PASS |
+| 2026-06-30 | 0.8.0_AE_CloudComp~C | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/comp-coverage-map.yam... | PASS |
+| 2026-06-30 | 0.8.0_AE_CloudComp~D | NFRA_GRAPHUNI.P0.d1-audit-gaplist | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/NFRA_GRAPHUNI/NFRA_GRAPHUN... | PASS |
+| 2026-06-30 | 2.0.0_SA_COO~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/NFRA_GRAPHUNI/task_orders/... | PASS |
+| 2026-06-30 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/NFRA_COMPUNIFY_PRD.md | PASS |
+- 2026-06-30 0.8.0_AE_CloudComp~C (NFRA_COMPUNIFY grain-thread): comp-coverage-check selfcheck (now 6/6 incl injected grain-re-typing->FAIL); check PASS (7 rules incl stable_grain, grain stable); B6 live-fired PASS on the commit; ds-commit-gate/ruff clean. Threaded stable-grain contract (8+9) extensible for sec-10 fold. Commit 01af67fcc.
+| 2026-06-30 | 0.8.0_AE_CloudComp~C | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
