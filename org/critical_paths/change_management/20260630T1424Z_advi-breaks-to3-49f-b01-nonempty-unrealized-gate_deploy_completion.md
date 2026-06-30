@@ -1,5 +1,6 @@
 # Deploy-Completion Ledger — ADVI_BREAKS TO-3 49F: B_01 non-empty-unrealized gate
 
+**Status:** CLOSED -- closed 2026-06-30T14:40Z (deployed 6b903ab8e + verified MATCH + regression-free)
 **Opened:** 2026-06-30T14:24Z by 0.4.0_DS_ClientPlatform~B
 **Deploy:** B_01.holdings_lots.py `_resolve_unrealized_key` — skip 0-row/degenerate unrealized partitions, fall back to last NON-EMPTY within the existing 2-day window (restores 49F served frozen since 06-26T05:00).
 **Gates cleared:** CTO apply-co-sign (135551Z) + COO GO (142324Z) + Andrew GO (135xxx direct).
