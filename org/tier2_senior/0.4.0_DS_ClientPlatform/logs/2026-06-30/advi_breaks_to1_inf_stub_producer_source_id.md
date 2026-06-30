@@ -85,7 +85,17 @@ AE infra forensic (0.7.0_AE 132129Z) fully converges with the DS source map:
   The 06-29 freeze was a transient one-off. TO-2 (emit-removal + shape gate) remains the DURABLE fix — kills
   the manual-re-clobber class.
 
-## TO-2 — STAGED + READY (CTO arch-approved 131626Z; HELD for Andrew-GO via COO)
+## TO-2 — SHIPPED (Andrew-GO direct "fire TO2" 2026-06-30; CTO arch-approved 131626Z)
+
+Executed: INF_D_00 stub emit REMOVED (comp-pipescript io confirms it now writes only clients_tab +
+filters/dimensions; header_metrics GONE) + INF_D_04 served-key SHAPE GATE added (raises if firm_name/
+total{aua}/dates missing) + INF_D_04 now SOLE writer of platinum/firm/header_metrics.json. ds-commit-gate
+PASS (both); safe-commit **b0224d8cb** (origin HEAD 7dcaffe0f includes it); deployed both to
+s3://opal-data-inf/code/gold/. Validate on the NEXT clean nightly (today's 13:01Z chain may run old code;
+the served header is rich either way today since INF_D_04 wins last). Acceptance: served = rich (28830-ish B),
+no 132B stub version in the cycle, axis-B single-writer GREEN. RAVC'd COO + CVO.
+
+### (staging record, now executed)
 
 Full validated diff: `scratchpad/ADVI_BREAKS_TO2_inf_staged_patch.md`. Two files:
 - INF_D_00.portal_aggregates.py: REMOVE the header_metrics emit (thin dict L885-891 + write L898 + dry-run-log
