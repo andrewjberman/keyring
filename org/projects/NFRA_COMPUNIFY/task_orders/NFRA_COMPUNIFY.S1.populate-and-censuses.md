@@ -3,7 +3,7 @@
 <title>NFRA_COMPUNIFY S1 -- POPULATE + CENSUSES: place all ~38 tools at their single home; emit the gap census + the redundancy census; wire tools_index as a generated VIEW of the ledger.</title>
 <issued_to>0.8.0_AE_CloudComp (ledger/taxonomy lane) -- same builder as S0 (continuity of the taxonomy).</issued_to>
 <issued_by>2.0.0_SA_COO~B</issued_by>
-<status>staged</status>
+<status>dispatched -- 2026-06-30T19:53Z GO'd to 0.8.0_AE_CloudComp~C on CTO S0 gate-pass (S0 schema now stable). Parallel with the tiny S0 (b)-amendment. RAVC2 to COO~B -> CTO arch-gate (gate_contract dry-run on the full tool-set + both censuses).</status>
 <priority>P1 -- the populate + the two censuses (the first real value: the coverage/gap/redundancy map). Paces behind the firefight; follows S0.</priority>
 <project>NFRA_COMPUNIFY</project>
 <dependencies>S0 (the apex skeleton + node schema MUST be landed first -- S1 populates against it).</dependencies>
