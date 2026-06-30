@@ -279,7 +279,7 @@ grain_contract:
   # DATA change, NOT a schema/code fork. Today every breadth edge maps to the SAME referenceable set
   # (the gross referenceable-vs-terminal gate); the keyed shape is the only forward-compat cost.
   referenceable:
-    node_types: [Function, TypeDecl, Endpoint, ReactComponent, S3Key]   # VALID breadth-edge targets (referenceable units across surfaces)
+    node_types: [Function, TypeDecl, Endpoint, ReactComponent, S3Key, Page, PanelCluster]   # VALID breadth-edge targets (referenceable units across surfaces; Page/PanelCluster = TSGRAPH P2-1, 0.4.0_DE)
     terminal_node_types: [Statement, Field, Prop]                       # raw structural members -- NEVER breadth-edge targets
     breadth_edges: [CALLS, REFERENCES_TYPE, FETCHES, READS_S3]          # the cross-surface/breadth edges this gate governs
     referenceable_targets:                                              # per-edge-type allowed-target map (EP-2-keyed); today all -> the full set
