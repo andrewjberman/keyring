@@ -145,3 +145,23 @@ The gold layer is the **heaviest** sub-population but NOT the whole layer. The `
 4. **The risk this kills:** if each deeper dive invents node/edge types, you get semantic fragmentation inside one physical graph — the exact failure GRAPHUNI/COMPUNIFY exist to prevent. Stable, granularity-parameterized definitions = the contract that makes diving deeper safe.
 
 *Routed to CTO (elevates ruling 1 + requests ratification of the schema-stability contract) + COO~B (program + the COMPUNIFY node-schema coupling). Build stays CVO-fixture-gated.*
+
+---
+
+## 10. AMENDMENT (Andrew-direct 2026-06-30) — the FRACTAL-granularity model + the missing drilldown seams
+**Each layer is a granularity STRATUM; a coarse resource node drills down into its fine internal structure via stable drilldown edges. The same shape repeats fractally at every level.** This is the concrete mechanism under amendments 8+9.
+
+**Grounded keystone example (EC2 ↔ pipeline):** the 31 `EC2_INSTANCE` nodes ARE the named pipeline runners — `inf-gold-qa-runner`, `mdpf-daily-runner`, `cot-exporter`, `canonical-schwab-runner`, `inf-bronze-runner`, `historical-prices-fetcher`, `bd-49f-auto-login`, `astn-wsjft-scraper`. At the RESOURCE grain (all Kuzu holds today) they edge to `READS/WRITES S3_BUCKET`, `READS_SECRET`, `HAS_PROFILE`. But INTERNAL to `inf-gold-qa-runner` is the whole sequence of `INF_*` Python scripts (raw→processed). The drilldown edge `EC2 -RUNS-> PipelineScript` **DOES NOT EXIST** (verified: the EC2's only edges are resource-grain). That missing edge is the fractal seam between the aws-resource stratum and the pipeline-compute stratum.
+
+**The fractal chains to build (drilldown = the new seams):**
+```
+EC2_INSTANCE -RUNS-> PipelineScript -CONTAINS-> PipelineFunction -CALLS-> ... -READS_S3/WRITES_S3-> S3Key
+S3_BUCKET   -CONTAINS/OWNED_BY-> S3Key        (CTO ruling 2 -- same fractal pattern, object grain)
+LAMBDA      -CONTAINS-> handler functions
+```
+
+**Grain-consistency invariant (checkable):** a coarse-grain edge must ROLL UP from its fine-grain edges — `inf-gold-qa-runner READS S3_BUCKET` (resource) must be consistent with `PipelineFunction READS_S3 S3Key` (object) aggregated up `CONTAINS` + `S3Key OWNED_BY S3_BUCKET`. A drilldown that contradicts its rollup is a grain defect. This is a generalized COMPDRIFT seam invariant (cross-grain consistency), coordinate with COO~B's seam-taxonomy.
+
+**The two-phase action (Andrew):**
+1. **GRAPHUNI builds the fractal substrate** (~D lane) — the `RUNS`/`CONTAINS`/`OWNED_BY` drilldown edges stitch the resource stratum to the compute stratum; these are net-new seams.
+2. **THEN the COMPUNIFY tool-calibration sweep** (~C map + ~D + CTO arch) — tag every comp-tool with the grain it operates at + returns, verify the set spans the ladder with no grain-confusion: `comp-aws` = resource; `comp-pipescript` = script/IO; `comp-blast/trace/xref` = function; `comp-platinum` = cross-grain traversal. ~C's `comp-coverage-map.yaml` already carries `granularity` as a node-schema field — this populates + gate-checks it. *Cross-lane; routed to CTO for decomposition + the GRAPHUNI<->COMPUNIFY grain-calibration coupling.*
