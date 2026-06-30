@@ -9943,3 +9943,9 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-06-30 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/change_management/20... | PASS |
 2026-06-30T2040Z | 0.8.0_AE_CloudComp~D | NFRA_GRAPHUNI.P0 | comp-kuzu x5 (node/edge census + 0-row gold/CALLS proof + S3-grain) PASS; cache reads (graph.json TraceGraph, platinum pickles via pickletools/pickle) PASS; Grep/Read comp-xref+cli.py PASS | D1 coverage audit -- Kuzu lacks the gold (Python) pipeline backend; per-tool gap-list = P1 derive spec; read-only, caches byte-unchanged
 | 2026-06-30 | 0.8.0_AE_CloudComp~D | NFRA_GRAPHUNI.P0.d1-audit-gaplist | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-06-30 | 3.0.0_SA_CVO | (no-TO) | pipescript | pipescript inf | FAIL |
+| 2026-06-30 | 2.0.0_SA_COO~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .owned-paths.yaml | PASS |
+| 2026-06-30 | 0.8.0_AE_CloudComp~C | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .tools/comp-which | PASS |
+
+- 2026-06-30 0.6.2_AE_PartnerETL (SCHWAB_SSOT SI2 EventBridge re-time): comp-which (NO_FIT->on-rails comp-grep, found EC2_MANIFEST entry); deploy_ledger.py open/close-leg/close (4-leg, CLOSED); safe-apply HALTGT (5 add/0/0); safe-commit surface-check (PASS). Mechanism grounded on-box (task XML + logs) before acting -- refuted the "scheduler dead" premise.
+| 2026-06-30 | 0.6.2_AE_PartnerETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
