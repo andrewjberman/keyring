@@ -9645,3 +9645,39 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-06-30 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/ADVI_BREAKS_PRD.md | PASS |
 | 2026-06-30 | 0.4.0_DS_ClientPlatform~A | ADVI_BREAKS.TO-1 | comp-grep/pipescript | source-ID inf header_metrics 132B stub writer (READ-ONLY diagnosis) | CONFIRMED INF_D_00:885-898 |
 | 2026-06-30 | 0.4.0_DS_ClientPlatform~A | ADVI_BREAKS.TO-1 | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-06-30 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/ADVI_BREAKS_PRD.md | PASS |
+| 2026-06-30 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+| 2026-06-30 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/ADVI_BREAKS_PRD.md | PASS |
+| 2026-06-30 | 0.4.0_DS_ClientPlatform~A | ADVI_BREAKS.TO-1 | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-06-30 | 0.8.0_AE_CloudComp~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/compdiff/axes_s3.py --file in... | PASS |
+| 2026-06-30 | 0.4.0_DS_ClientPlatform~A | ADVI_BREAKS.TO-1 | comp-pipescript | comp-pipescript io INF_D_00 | PASS |
+| 2026-06-30 | 0.4.0_DS_ClientPlatform~A | ADVI_BREAKS.TO-1 | comp-pipescript | comp-pipescript io INF_D_04 | PASS |
+| 2026-06-30 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/ADVI_BREAKS_PRD.md | PASS |
+| 2026-06-30 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/ADVI_BREAKS_PRD.md | PASS |
+| 2026-06-30 | 0.7.0_AE_CloudOps | (no-TO) | comp-iam | comp-iam service canonical-schwab-runner | PASS |
+| 2026-06-30 | 0.4.0_DS_ClientPlatform~A | ADVI_BREAKS.TO-1 | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-06-30 | 0.8.0_AE_CloudComp~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/compdiff/freeze_monitor.py --... | PASS |
+| 2026-06-30 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/ADVI_BREAKS_PRD.md | PASS |
+| 2026-06-30 | 0.8.0_AE_CloudComp~B | (no-TO) | comp-iam | comp-iam service opal-globgrph-freeze-monitor | PASS |
+| 2026-06-30 | 0.8.0_AE_CloudComp~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/compdiff/lambda_function.py -... | PASS |
+| 2026-06-30 | 0.7.0_AE_CloudOps | (no-TO) | pipescript | pipescript bd-portal-publisher | FAIL |
+| 2026-06-30 | 0.7.0_AE_CloudOps | (no-TO) | comp-pipescript | comp-pipescript io | FAIL |
+| 2026-06-30 | 0.7.0_AE_CloudOps | (no-TO) | pipescript | pipescript advi-bd | PASS |
+| 2026-06-30 | 0.8.0_AE_CloudComp~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/compdiff/lambda_function.py -... | PASS |
+| 2026-06-30 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/ADVI_BREAKS_PRD.md | PASS |
+| 2026-06-30 | 3.0.0_SA_CVO | (no-TO) | pipescript | pipescript advi-inf | PASS |
+| 2026-06-30 | 3.0.0_SA_CVO | (no-TO) | pipescript | pipescript advi-cot | PASS |
+| 2026-06-30 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/ADVI_BREAKS_PRD.md | PASS |
+| 2026-06-30 | 3.0.0_SA_CVO | (no-TO) | pipescript | pipescript advi-bd | PASS |
+| 2026-06-30 | 0.8.0_AE_CloudComp~B | (no-TO) | comp-iam | comp-iam service opal-globgrph-freeze-monitor | PASS |
+| 2026-06-30 | 0.8.0_AE_CloudComp~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/terraform/globgrph/item2d_fre... | PASS |
+| 2026-06-30 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/ADVI_BREAKS_PRD.md | PASS |
+| 2026-06-30 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/ADVI_BREAKS_PRD.md | PASS |
+| 2026-06-30 | 0.4.0_DS_ClientPlatform~A | ADVI_BREAKS.TO-1 | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-06-30 | 0.8.0_AE_CloudComp~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/compdiff/engine.py --file inf... | PASS |
+| 2026-06-30 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+| 2026-06-30 | 0.4.0_DS_ClientPlatform~A | ADVI_BREAKS.TO-1 | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-06-30 | 1.0.0_SA_CTO | (no-TO) | comp-aws | comp-aws --help | PASS |
+
+- 2026-06-30 0.7.0_AE_CloudOps: ADVI_BREAKS 3-pipeline AE infra diagnose -- comp-iam (ruled out canonical-schwab-runner as inf writer), pipescript/advi-bd (bd gold trigger->runner->platinum map), comp-grep (B_01 RPS join), comp-which (routed, manifest backstop). Gap: no comp-tool for CloudTrail/EventBridge/SSM trigger-dispatch forensics -> candidate comp-trigger.
+| 2026-06-30 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
