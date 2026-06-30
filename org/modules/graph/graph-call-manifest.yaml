@@ -761,6 +761,16 @@ entries:
 # the canonical entry id(s) that carry the full query/rebuild instruction.
 # Full prose per-tool (when/cost/output history) cross-links to comp-tools.yaml.
 # ===========================================================================
+#
+# GENERATED VIEW (NFRA_COMPUNIFY S1, CTO ruling #1): the comp-tool INVENTORY here
+# (which tools exist + each tool's surface/seam home + concern) is a PROJECTION of
+# the SOURCE OF TRUTH ledger org/modules/graph/comp-coverage-map.yaml -- NOT a second
+# hand-maintained catalog. The OPERATIONAL fields below (does/subcommands/entries/
+# routing/examples) are authored here and STAY here; only the inventory + home/concern
+# is the ledger projection. Keep in lockstep: a tool present here but absent from the
+# ledger union(tools, meta_tools) is DRIFT. Project/verify with:
+#   python org/modules/graph/comp_coverage_view.py            # emit the ledger projection
+#   python org/modules/graph/comp_coverage_view.py --verify   # CI guard: exit 2 on drift
 tools_index:
   comp-kuzu:     { does: "Cypher query the loaded Kuzu graph (cloud + cross-layer); the FAST default read-path", subcommands: ["<cypher>", "--db-path", "--json", "--limit"], entries: [cloud.lookup.nodes_by_type, cloud.reachability.transitive, cloud.blast.what_breaks, xlayer.fullstack.firm_component_to_bucket] }
   comp-aws:      { does: "Live-AWS + Terraform-state cloud-graph compiler (the WRITE-PATH + cert)", subcommands: [derive, score, snapshot, metrics, diff, dual-managed, classes, iceberg-commit], entries: [cloud.derive.refresh, cloud.score.cert, cloud.classes.list, cloud.metrics.summary, cloud.diff.snapshot, cloud.dual_managed.conflict, cloud.snapshot.archive, cloud.iceberg.persist] }
