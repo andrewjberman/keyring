@@ -73,7 +73,60 @@ There are **two** mechanisms that pull Orion data:
 
 ## 7. Unified-flow target (Andrew-stated)
 
-One machine (`inf-gold-layer-runner` already runs the book in a ~2h envelope) does: **pull all dims → consistent datestamped bronze → silver → gold**. Collapses all 4 variance axes: one pull layer (kills layer-2 redundancy + double-pull), one bronze pattern (positions/assets stop being special), one pull script per dim with a uniform resume guard. Inflection's small book makes single-machine end-to-end feasible. Eclipse arm to be dropped (or wired to a real served feature) since it is currently orphaned.
+One machine (`inf-gold-layer-runner` already runs the book in a ~2h envelope) does: **pull all dims → consistent datestamped bronze → silver → gold**. Collapses all 4 variance axes: one pull layer (kills layer-2 redundancy + double-pull), one bronze pattern (positions/assets stop being special), one pull script per dim with a uniform resume guard. Inflection's small book makes single-machine end-to-end feasible. **Eclipse is KEPT (Andrew-decision, supersedes the earlier "drop" recommendation): pull everything raw to `bronze/eclipse-api/` daily; downstream silver/gold use decided later.** The two source domains stay separate through bronze + silver and unify ONLY at gold (see Appendix).
+
+## Appendix A — The bronze pull contract: exact endpoints + file format per domain
+
+**Format rule (it is NOT our choice — it is whatever the endpoint emits):**
+```
+ Orion report engines (Envision/ExcelReports, Custom Reports)  ──► CSV   (async POST→generate→poll→CSV)
+ Orion resource GETs (Portfolio/*, Trading/*)                  ──► JSON  (sync)
+ ALL Eclipse endpoints                                         ──► JSON  (sync)
+ Bronze stores each in that native format, RAW + COMPLETE, no conversion (→ parquet happens in silver).
+```
+So `bronze/orion-api/{date}/` is a MIX of `.csv` (6 report dims) + `.json` (resource GETs); `bronze/eclipse-api/{date}/` is ALL `.json`. (Today positions+assets are wrongly stored as parquet AT bronze — the refactor lands them as raw JSON, their native Orion response.)
+
+### A.1 `bronze/orion-api/{date}/` — Orion Connect (`api.cloud.orionadvisor.com`)
+| Endpoint | Provides | Format | Grain |
+|---|---|---|---|
+| `GET /api/v1/Reporting/Envision/ExcelReports` → `/{id}/Generate` → `/Run/{runId}` | aggregate dim reports: household, performance, activity, tax (unrealized+realized), billing | **CSV** | 1 row/group (summed) |
+| `POST /api/v1/Reporting/Custom/{reportId}/Generate/csv` | transactions (per-trade line items) | **CSV** | per-transaction |
+| `GET /api/v1/Portfolio/Accounts/NewPortfolio?$top=50000&...` | accounts dim (73 fields, ~2,905-3,030 accts; NMNC source) | **JSON** | per-account |
+| `GET /api/v1/Portfolio/Accounts?$top=5000` | full firm account list (3,030) | **JSON** | per-account |
+| `GET /api/v1/Portfolio/Clients/{clientId}/Assets/{MM-DD-YYYY}` | per-day MV SNAPSHOT (58 native fields/row) — the `canonical_holdings`/AUA source | **JSON** | per-client-per-day holding |
+| `GET /api/v1/Portfolio/Accounts/{accountId}/Assets/{MM-DD-YYYY}` | per-account per-day MV snapshot (alt grain) | **JSON** | per-account-per-day |
+| `GET /api/v1/Trading/Models` + `/Models/{id}` | model catalog + ticker-level composition (139 models) | **JSON** | per-model |
+| reps/households endpoint | representatives, household_rep_mapping | **JSON** | per-rep / per-HH |
+
+Observed-but-unused frontier (D3 §14.2 — read-only, pull per "everything we can get"): `POST /Homepage/Action/DataSources/{id}` (stored-proc back-door); `/api/signalr/negotiate` (completion push); `/Authorization/User` + `/Privileges`; `/Reporting/Envision/Reports/Recent` + `/ExcelReports/Categories`. No PUT/mutation (read-only posture).
+
+### A.2 `bronze/eclipse-api/{date}/` — Orion Eclipse (`www.orioneclipse.com`)
+| Endpoint | Provides | Format |
+|---|---|---|
+| `GET /v1/admin/Token` | auth (exchanges Orion JWT → Eclipse JWT) | JSON (token, not data) |
+| `GET /v1/portfolio/portfolios/simple` | account→model assignment (835-842 managed portfolios: `accountId, modelId, sleevePortfolio`) | **JSON** |
+| `GET /v1/portfolio/portfolios` | rebalance/value detail (`managedValue, excludedValue, cash, lastRebalancedOn`) | **JSON** |
+| `GET /v1/modeling/models` | model catalog (registry) | **JSON** |
+| `GET /v1/modeling/models/{id}` | composition tree (target weights); 9 Opal model IDs `{3,5,6,7,8,9,10,28,29}` | **JSON** |
+
+Observed-but-unused frontier (D3 §14.3): the entire Eclipse trade/rebalance WRITE surface (rebalance gen/approval, order/trade submission, model-assignment writes) — exists, consumed READ-ONLY; the D5 self-build-vs-SmartX frontier (not captured; needs a rebalance-action HAR).
+
+### A.3 The "portfolio" FALSE FRIEND — these are NOT equivalent endpoints
+
+Both domains expose a path containing "portfolio", which invites the category error of treating them as one source. They are **different products, different domains, different ID-spaces, different meaning, different grain:**
+
+| | Orion `/api/v1/Portfolio/*` | Eclipse `/v1/portfolio/portfolios` |
+|---|---|---|
+| Domain | `api.cloud.orionadvisor.com` | `www.orioneclipse.com` (DIFFERENT) |
+| "Portfolio" means | a **custodial account + its assets** (Accounts, Assets, Clients) | a **model-managed rebalancing portfolio** (a sleeve that gets rebalanced) |
+| Answers | "what the book IS worth / what happened" (reporting + custodial holdings) | "what the book SHOULD hold / how it's managed" (target weights, rebalance state) |
+| Grain / scope | 3,030 custodial accounts (full firm) | 842 *managed* portfolios / $199.7M (the advised subset under model overlay) |
+| JWT | Orion JWT (HS512, firm A_C 4698) | Eclipse JWT (HS256, firmId 209900) — SEPARATE, minted by exchanging the Orion JWT |
+| ID-space | Orion account/model IDs (INT) | DIFFERENT IDs (accountId STRING; model IDs separate) |
+
+**They diverge in purpose:** Orion Connect (incl. Envision) is the **reporting/aggregation + custodial** layer (displaceable — we pull it cleanly today; it feeds AUA + the served portal). Eclipse is the **trading/rebalance/model-overlay** layer (the genuinely-hard, active-management plane; the SmartX-partner-vs-self-build question). They **overlap on exactly one thing** — model composition (`Trading/Models/{id}` ≈ `/v1/modeling/models/{id}`), a deliberate cross-confirm. They are joined ONLY at gold (account by `int()`-coercion, model by name; 96.6% reconcile, ~3.4% valuation-lag) — never share a bronze/silver prefix.
+
+**Completeness honesty (D3 §14):** "bounded-complete" — Orion/Eclipse publish NO vendor API catalog; the surface is reverse-engineered. "Everything we can get" = the cataloged production set + the observed-but-unused frontier above, expandable via the DC1/DC2 crawler. Never claimed vendor-exhaustive.
 
 ## Compiler Tools
 | Tool | Use | Result |
