@@ -3,7 +3,7 @@
 <title>NFRA_COMPUNIFY S2 -- THE GATE: build comp-coverage-check (the machine-checkable non-redundancy invariant as enforcement) -- fails when a tool is unplaced OR overlaps a sibling without a declared distinct_from.</title>
 <issued_to>0.7.0_AE_CloudOps (gate-infra lane) -- if firefight-pinned, a dedicated build instance (see &lt;allocation&gt;).</issued_to>
 <issued_by>2.0.0_SA_COO~B</issued_by>
-<status>staged</status>
+<status>dispatched -- 2026-06-30T20:14Z GO'd to 0.8.0_AE_CloudComp~C on CTO S1 gate-pass (parallel with S3). Regeneration-ownership ruling baked in (AC5). RAVC2 -> CTO arch-gate.</status>
 <priority>P2 -- the enforcement that keeps the map true to the territory by gate, not prose (CTO ruling #4). Follows S1.</priority>
 <project>NFRA_COMPUNIFY</project>
 <dependencies>S1 (needs the populated ledger + the distinct_from declarations to check against).</dependencies>
@@ -17,6 +17,7 @@ CTO ruling #4 (PRD section 6): the non-redundancy invariant is a GATE, not just 
   2. Tri-state honest output (mirror the comp-rail conventions): PASS (every tool one home, every overlap declared) / FAIL (unplaced or silent-overlap, with the offending node named) / UNVERIFIABLE (could-not-read the ledger -- a finding, never a silent PASS).
   3. Register it on the comp-rail (comp-which-routable; manifest entry) + wire it as the COMPUNIFY acceptance gate so future tool additions must place themselves or fail.
   4. NEVER false-PASS a ledger it could not fully read (the never-false-clean discipline).
+  5. PROJECTION-CURRENCY (CTO regeneration-ownership ruling, 2026-06-30): comp-coverage-check ALSO asserts the tools_index projection is CURRENT -- run comp_coverage_view.py --verify as part of the gate; a STALE projection (manifest inventory drifted from the ledger union) FAILS the gate. The regeneration itself (comp_coverage_view.py emit -> writes the manifest) runs as an EXEC/CI step, NOT AE-inline (the manifest is ANY_EXEC/exec-controlled; AE inline-regen would be an SoD break). This keeps the ledger the single writer and the manifest a verified-current projection.
 </scope>
 
 <locked_rulings>Carry all 4 CTO rulings. This TO IS the materialization of ruling #4.</locked_rulings>

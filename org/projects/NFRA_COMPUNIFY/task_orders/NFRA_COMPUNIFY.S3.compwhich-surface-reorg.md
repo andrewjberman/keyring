@@ -3,7 +3,7 @@
 <title>NFRA_COMPUNIFY S3 -- COMP-WHICH SURFACE-FIRST REORG: route discovery by SURFACE first, then drill down, so comp-which mirrors the taxonomy (the discovery-friction fix; ties LD-0226 / COMPLEARN router-rules).</title>
 <issued_to>0.8.0_AE_CloudComp (taxonomy/routing lane) -- the taxonomy owner; can run parallel to S2 (both depend only on S1).</issued_to>
 <issued_by>2.0.0_SA_COO~B</issued_by>
-<status>staged</status>
+<status>dispatched -- 2026-06-30T20:14Z GO'd to 0.8.0_AE_CloudComp~C on CTO S1 gate-pass (parallel with S2; both depend only on S1). RAVC2 -> CTO arch-gate.</status>
 <priority>P2 -- high-value discovery improvement (LD-0224: ~38% of searches fall to raw grep partly because the catalog is a flat list). Not gating; paces with S2.</priority>
 <project>NFRA_COMPUNIFY</project>
 <dependencies>S1 (needs the populated surface taxonomy to route against). Independent of S2 -- can run in parallel.</dependencies>
