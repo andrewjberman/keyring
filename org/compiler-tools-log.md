@@ -10213,3 +10213,8 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-06-30 | 0.6.1_AE_PartnerETL | ADVI_INFREF.P1 | pipescript | pipescript --resource silver/transactions/ | PASS |
 | 2026-06-30 | 0.6.1_AE_PartnerETL | ADVI_INFREF.P1 | pipescript | pipescript --resource silver/api_dims/positions_mv/ | FAIL |
 | 2026-06-30 | 0.4.0_DS_ClientPlatform~A | ADVI_INFREF.P1 | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-06-30 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+| 2026-06-30 | 0.4.0_DE_ClientPlatform | NFRA_TSGRAPH.P2-3 | comp-surface-check | comp-surface-check check --mode advisory --file docs/briefs/comp-cluster-graph-manifest... | PASS |
+
+2026-06-30T2352Z | 0.8.0_AE_CloudComp~E | NFRA_COMPLEARN.P0 | comp-which, ds-commit-gate, safe-commit, safe-apply, deploy_ledger | Landed tool_activity Trino catalog #3: comp-which Rule-20 dep-check (low-blast roll), ds-commit-gate clean x2 .py, safe-commit x4 (owned-paths correctly blocked org/modules->SoD handoff), safe-apply TARGETED x2 (HALT-gate passed; isolated my 7 resources from held ADVI_BREAKS TO-6 item2d/2e), deploy_ledger 5-leg CLOSED. Gap: no comp-tool fronts the Trino federation for a SHOW-CATALOGS/queryable check (had to raw aws ecs execute-command) -- a comp-trino surface is a real lift.
+| 2026-06-30 | 0.8.0_AE_CloudComp~E | NFRA_COMPLEARN.P1 | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
