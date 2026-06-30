@@ -9883,3 +9883,9 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-06-30 | 2.0.0_SA_COO~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/NFRA_COMPUNIFY/task_orders... | PASS |
 | 2026-06-30 | 0.4.0_DS_ClientPlatform~A | ADVI_INFREF.P1 | grep/bash-n/parity/ds-gate/aws-cp | LEG-1 gold-read reconciliation + dead-confirm + LEG-2 pull-stage module build | PASS (parity-verified 57-script split; accounts_dim staleness found) |
 | 2026-06-30 | 0.4.0_DS_ClientPlatform~A | ADVI_INFREF.P1 | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-06-30 | 0.0.0_AB_MSTR | NFRA_COMPDIFF.comptool-audit | comp-kuzu | comp-kuzu MATCH (n) RETURN DISTINCT labels(n) AS t, count(*) AS c ORDER BY c DESC LIMIT 15 | PASS |
+| 2026-06-30 | 0.0.0_AB_MSTR | NFRA_COMPDIFF.comptool-audit | comp-kuzu | comp-kuzu MATCH (n:CloudNode) RETURN DISTINCT n.layer AS layer, count(*) AS c ORDER BY ... | PASS |
+| 2026-06-30 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/terraform/served-guard-49f/_r... | PASS |
+| 2026-06-30 | 2.0.0_SA_COO~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/NFRA_COMPUNIFY/task_orders... | PASS |
+| 2026-06-30 | 0.6.0_AE_PartnerETL | ADVI_BREAKS-49F | comp-pipescript io (C_00/B_00/B_03/B_01) | grounded canonical dep-chain = gold built FROM BD silver (no separate positions pull); refuted "3rd feed" framing; legacy unrealized_gain_loss non-gating (~B). BD-REST pull/merge/secret forensics = rail-checked raw aws/SSM (no comp-tool) | PASS |
+| 2026-06-30 | 0.6.0_AE_PartnerETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
