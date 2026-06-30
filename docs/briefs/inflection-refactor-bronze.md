@@ -42,11 +42,20 @@ Both currently do `r.json()` (Orion returns **JSON**) → `pd.DataFrame` → `to
 - The JSON→parquet conversion **moves to silver** (the `positions_mv` silver dim already emits parquet — repoint its converter to read the raw bronze JSON instead of a pre-made bronze parquet).
 - Net: positions/assets stop being structurally + format special; they become ordinary raw-JSON bronze dims like representatives.
 
-## 4. Eclipse — keep + pull everything (Andrew-locked)
+## 4. The endpoint surface — ALREADY ENUMERATED (DATA_PLATFORM), pull it all
 
-- Pull **all reachable Eclipse endpoints** daily, raw, into `bronze/eclipse/{date}/<endpoint>.json`. Currently 4 are pulled (`/v1/portfolio/portfolios/simple`, `/v1/portfolio/portfolios`, `/v1/modeling/models`, `/v1/modeling/models/{id}`) + `/v1/admin/Token` (auth).
-- [DECISION/spec task] **Enumerate the full Eclipse API surface** — the current 4 are what today's script happens to call, not a confirmed-complete set. Catalog the available endpoints and pull all that return firm data.
-- Downstream: no silver/gold required yet (the existing `INF_E_00`/`silver/eclipse` flow stays as-is or idle); we retain the raw data and decide use later.
+The enumeration is NOT an open task — comprehensive reverse-engineering work exists under DATA_PLATFORM. Authoritative sources of record:
+- **`docs/architecture/INFLEC_API_ENDPOINTS_CATALOG.md`** — the Orion endpoint catalog (Envision/ExcelReports, Custom Reports, Portfolio/Accounts, Portfolio/Assets families).
+- **`docs/architecture/DATA_PLATFORM_D3_orion_eclipse_arch_spec.md`** (v1.2, CTO-gated + CVO-reconciled) — the 3-surface span (S1 Orion REST dims, S2 per-day Assets snapshot, S3 Eclipse) with grounded endpoints, auth, and **§14 observed-but-unused frontier**.
+- **`docs/architecture/ADVI_ORIAPI.md`** — the full Orion Connect HAR-captured contract (Appendix A/B).
+- **DC1/DC2 crawler** (`run-orion-bfs-crawl.ts`, observe-only bounded-BFS) → self-catalogs to **`opal-crawl-catalog/eclipse/`** — the standing mechanism that EXPANDS the known surface.
+
+**Rule-22 honesty (from D3 §1):** Orion/Eclipse publish **no developer API catalog** — the surface is reverse-engineered from the web UI's calls. So "pull all we can get" = the full **cataloged + crawled** surface, NOT a vendor-exhaustive list (unknowable). The DC1/DC2 crawler is how the frontier grows; the bronze refactor pulls everything currently cataloged AND ingests newly-crawled endpoints as they're confirmed.
+
+**Orion (S1/S2) — pull the FULL cataloged surface, not just today's 9 dims.** Beyond the 9 production pulls, the catalog documents: `Portfolio/Assets` per-client/per-account snapshot (the `canonical_holdings` source, S2); `Trading/Models` + `Trading/Models/{id}` (139 models, ticker-level composition); `Reporting/Custom/{id}/Generate/csv` (per-transaction grain); plus aux (`Authorization/User`/`Privileges`, SignalR completion, the `Homepage/Action/DataSources` stored-proc back-door). The unified EC2 pull lands each cataloged endpoint raw + datestamped under `bronze/orion-api/{date}/`.
+
+**Eclipse (S3) — structure is ALREADY the target; keep + expand.** `pull_eclipse_portfolios.py` already lands RAW JSON, datestamped, consistent: `bronze/eclipse/{date}/{portfolios_simple,portfolios_full,models,model_composition_{id}}.json` + `_meta/pull_complete.json` (4 artifact classes, 11 calls/run, 9 Opal model IDs `{3,5,6,7,8,9,10,28,29}`, on `inf-bronze-runner` EC2). It is the clean shape Orion-side bronze should match. Refactor = keep it, move it onto the unified EC2, and extend to the §14/crawler frontier. Downstream silver/gold for Eclipse stays TBD (we retain the raw data and decide later — Andrew-locked).
+- **Durable risk to record (D3 §5.1):** the Eclipse JWT needs Andrew on the Eclipse firm roster (firmId 209900); if de-listed the pull goes dark (`422 No Firm Associated`). Record the Eclipse-admin contact — same fragility class as the OTP dependency (§7).
 
 ## 5. Retroactive / migration work
 
@@ -63,7 +72,7 @@ Both currently do `r.json()` (Orion returns **JSON**) → `pd.DataFrame` → `to
 - AC3: a bronze file exists for all dims for the run date, produced by the EC2 (no cron-Lambda invocation in the window); the 9 EventBridge cron rules are `DISABLED`/removed.
 - AC4: **completeness** — each bronze dim carries the full field set the endpoint returns (schema-completeness assertion per dim; no field dropped at bronze).
 - AC5: exactly one pull script per dim in the chain registry.
-- AC6: Eclipse — all enumerated endpoints land raw daily under `bronze/eclipse/{date}/`.
+- AC6: every endpoint in the DATA_PLATFORM catalog (INFLEC_API_ENDPOINTS_CATALOG + D3 S1/S2/S3 + the crawler-confirmed frontier) lands raw daily — Orion under `bronze/orion-api/{date}/`, Eclipse under `bronze/eclipse/{date}/` — including the currently-unpulled S1 surface (Trading/Models, Custom Reports, per-client Assets snapshot).
 - AC7: silver outputs post-refactor are parity-equal to pre-refactor (the de-convert + repoint introduced no value change) — validated several days before cutover.
 
 ## 7. Noted for the FINAL refactor step (Andrew-flagged, NOT this layer)
