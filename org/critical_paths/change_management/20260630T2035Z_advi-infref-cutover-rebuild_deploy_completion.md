@@ -6,6 +6,10 @@
 **Class:** deploy-completion (NEVER-law gate e38cc2b16; contract tool .tools/deploy_ledger.py, TO #5)
 **Window:** 16.0h (OPEN past window -> RED COO alarm via `deploy_ledger.py check --red`)
 
+## CLOSURE GATE (Andrew-direct binding, 2026-07-01, COO relay 051025Z)
+
+ADVI_INFREF must NOT be closed (JSON/REGISTRY flip OR complete-signal) until COMPLETELY complete AND independently **TRI-VALIDATED by 0.6.1_AE + 0.4.0_DS~A + 3.0.0_CVO**. Required-before-close FULL CHAIN, in order: staged -> CVO L3 -> swap -> DS `validate_post_swap` all-GREEN -> CVO L5 -> served-LIVE -> holds re-enabled -> `_meta` cleaned (INF_B_00 benign leak to platinum/firm/_meta/, 0.6.1 post-swap) -> ALL ledger legs closed -> THEN 3 independent attestations. Co-owned hold: **CTO** closes ledger legs L1-L7 only on VERIFIED proofs + does NOT co-sign L5 / signal complete until the chain + tri-attestation; **COO** holds the project/REGISTRY flip until tri-attestation. Neither flips a close-state on a single agent's "done." (Also recorded in COO cutover brief.)
+
 ---
 
 ## Manifest (every leg must carry proof before CLOSE)
