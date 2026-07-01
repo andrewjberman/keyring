@@ -11074,3 +11074,78 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-07-01T0620Z | 3.0.0_SA_CVO~B | comp-kuzu, pyiceberg time-travel, comp-coverage-check, comp_learns_score, comp_route, comp-which-routing-test, trino_catalog_parity, comp-depth, comp-graph, comp_rail_audit, D4 pytest | NFRA_COMP*/GRAPH* whole-program close-verify: 10 GREEN + 1 HOLD; grounded every verdict on live artifacts; found comp-graph legacy-mispoint + the (a) coverage gap | PASS |
 | 2026-07-01 | 3.0.0_SA_CVO~B | NFRA_COMPUNIFY.V1 | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
 | 2026-07-01 | 2.0.0_SA_COO~B | ADVI_49F_ADVISORS_BOUNDARY (shared) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/logs/2026-0... | PASS |
+| 2026-07-01 | 0.4.0_DE_ClientPlatform | ADVI_49F_ADVISORS_BOUNDARY (shared) | comp-transform | comp-transform schema-check AdvisorsTab | PASS |
+| 2026-07-01 | 2.0.0_SA_COO~B | ADVI_49F_ADVISORS_BOUNDARY (shared) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/NFRA_COMPROUTE.json --file... | PASS |
+| 2026-07-01 | 3.0.0_SA_CVO | ADVI_49F_ADVISORS_BOUNDARY (shared) | comp-transform | comp-transform schema-check AdvisorsTab | PASS |
+| 2026-07-01 | 0.8.0_AE_CloudComp~B | ADVI_49F_ADVISORS_BOUNDARY (shared) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/GRAPH_TOOLING_VALIDAT... | PASS |
+| 2026-07-01 | 0.8.0_AE_CloudComp~B | ADVI_49F_ADVISORS_BOUNDARY (shared) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.8.0_AE_CloudComp/GRA... | PASS |
+| 2026-07-01 | 2.0.0_SA_COO | ADVI_49F_ADVISORS_BOUNDARY (shared) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/briefs/infr... | PASS |
+| 2026-07-01 | 2.0.0_SA_COO | ADVI_49F_ADVISORS_BOUNDARY (shared) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+| 2026-07-01 | 0.8.0_AE_CloudComp~B | ADVI_49F_ADVISORS_BOUNDARY (shared) | comp-lambdamap | comp-lambdamap parity arn:aws:lambda:us-east-1:313476888478:function:bd-49f-fees-runner | FAIL |
+| 2026-07-01 | 0.8.0_AE_CloudComp~B | ADVI_49F_ADVISORS_BOUNDARY (shared) | comp-validate | comp-validate --help | PASS |
+| 2026-07-01 | 0.8.0_AE_CloudComp~B | ADVI_49F_ADVISORS_BOUNDARY (shared) | comp-parity | comp-parity 49f | PASS |
+| 2026-07-01 | 2.0.0_SA_COO~B | ADVI_49F_ADVISORS_BOUNDARY (shared) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/NFRA_COMPPROOF/VALIDATION-... | PASS |
+| 2026-07-01 | 0.8.0_AE_CloudComp~B | ADVI_49F_ADVISORS_BOUNDARY (shared) | comp-pipescript | comp-pipescript deployed arn:aws:lambda:us-east-1:313476888478:function:bd-49f-fees-runner | PASS |
+| 2026-07-01 | 0.8.0_AE_CloudComp~B | ADVI_49F_ADVISORS_BOUNDARY (shared) | comp-lambdamap | comp-lambdamap parity arn:aws:lambda:us-east-1:313476888478:function:bd-49f-fees-runner | FAIL |
+| 2026-07-01 | 0.8.0_AE_CloudComp~B | ADVI_49F_ADVISORS_BOUNDARY (shared) | comp-iam | comp-iam reconcile | FAIL |
+| 2026-07-01 | 0.8.0_AE_CloudComp~B | ADVI_49F_ADVISORS_BOUNDARY (shared) | comp-kuzu | comp-kuzu MATCH (n) RETURN count(n) LIMIT 1 | PASS |
+| 2026-07-01 | 0.8.0_AE_CloudComp~B | ADVI_49F_ADVISORS_BOUNDARY (shared) | comp-drift | comp-drift arn:aws:lambda:us-east-1:313476888478:function:bd-49f-fees-runner --deep | FAIL |
+| 2026-07-01 | 0.8.0_AE_CloudComp~B | ADVI_49F_ADVISORS_BOUNDARY (shared) | comp-trace | comp-trace gold:A_03.positions_cube --direction both --depth 2 | PASS |
+| 2026-07-01 | 2.0.0_SA_COO~B | ADVI_49F_ADVISORS_BOUNDARY (shared) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/NFRA_COMPPROOF/VALIDATION-... | PASS |
+| 2026-07-01 | 0.8.0_AE_CloudComp~B | ADVI_49F_ADVISORS_BOUNDARY (shared) | comp-trace | comp-trace gold:A_03.positions_cube:_load_allocation_signals --direction both --depth 2 | PASS |
+| 2026-07-01 | 0.8.0_AE_CloudComp~B | ADVI_49F_ADVISORS_BOUNDARY (shared) | comp-types | comp-types index ModelPortfolioData | PASS |
+| 2026-07-01 | 0.8.0_AE_CloudComp~B | ADVI_49F_ADVISORS_BOUNDARY (shared) | comp-types | comp-types blast ModelPortfolioData | PASS |
+| 2026-07-01 | 1.0.0_SA_CTO | ADVI_49F_ADVISORS_BOUNDARY (shared) | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/.open_deploys/advi-i... | PASS |
+| 2026-07-01 | 2.0.0_SA_COO | ADVI_49F_ADVISORS_BOUNDARY (shared) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+| 2026-07-01 | 0.4.0_DE_ClientPlatform | ADVI_49F_ADVISORS_BOUNDARY (shared) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-07-01 | 2.0.0_SA_COO | ADVI_49F_ADVISORS_BOUNDARY (shared) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/briefs/infr... | PASS |
+| 2026-07-01 | 0.8.0_AE_CloudComp~B | ADVI_49F_ADVISORS_BOUNDARY (shared) | comp-lambdamap | comp-lambdamap parity --json | PASS |
+| 2026-07-01 | 0.8.0_AE_CloudComp~B | ADVI_49F_ADVISORS_BOUNDARY (shared) | comp-lambdamap | comp-lambdamap parity --json | PASS |
+| 2026-07-01 | 0.8.0_AE_CloudComp~B | ADVI_49F_ADVISORS_BOUNDARY (shared) | comp-iam | comp-iam --help | PASS |
+| 2026-07-01 | 0.8.0_AE_CloudComp~B | NFRA_COMPPROOF.comp-tool-correctness-sweep (shared) | comp-iam | comp-iam reconcile --help | PASS |
+| 2026-07-01 | 0.8.0_AE_CloudComp~B | NFRA_COMPPROOF.comp-tool-correctness-sweep (shared) | comp-iam | comp-iam reconcile | FAIL |
+| 2026-07-01 | 2.0.0_SA_COO~B | NFRA_COMPPROOF.comp-tool-correctness-sweep (shared) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/task_orders... | PASS |
+| 2026-07-01 | 0.6.1_AE_PartnerETL | NFRA_COMPPROOF.comp-tool-correctness-sweep (shared) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/terraform/inf-pipeline/eventb... | PASS |
+| 2026-07-01 | 2.0.0_SA_COO~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/NFRA_COMPPROOF/VALIDATION-... | PASS |
+| 2026-07-01 | 0.4.0_DS_ClientPlatform | ADVI_TAGATTR.DS-1.d00c-full-tagged-role-aua-nna-fees | comp-pipescript | comp-pipescript io D_00c.portal_leaderboard | PASS |
+| 2026-07-01 | 0.8.0_AE_CloudComp~A | (no-TO) | comp-parity | comp-parity 49f | PASS |
+| 2026-07-01 | 0.8.0_AE_CloudComp~A | (no-TO) | comp-parity | comp-parity 49f --json | PASS |
+| 2026-07-01 | 0.4.0_DS_ClientPlatform | ADVI_TAGATTR.DS-1.d00c-full-tagged-role-aua-nna-fees | comp-blast | comp-blast D_00c | PASS |
+| 2026-07-01 | 0.8.0_AE_CloudComp~C | NFRA_COMPROUTE.DR2-surface-shadow-rail-flip | comp-surface-check | comp-surface-check check --mode advisory --file .tools/comp-which | PASS |
+| 2026-07-01 | 0.8.0_AE_CloudComp~B | (no-TO) | comp-pipescript | comp-pipescript deployed arn:aws:lambda:us-east-1:313476888478:function:bd-49f-fees-runner | PASS |
+| 2026-07-01 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-07-01 | 0.8.0_AE_CloudComp~B | (no-TO) | comp-lambdamap | comp-lambdamap parity --json | PASS |
+| 2026-07-01 | 0.8.0_AE_CloudComp~B | (no-TO) | comp-iam | comp-iam reconcile | FAIL |
+| 2026-07-01 | 0.8.0_AE_CloudComp~A | (no-TO) | comp-parity | comp-parity 49f --json | PASS |
+| 2026-07-01 | 0.8.0_AE_CloudComp~A | (no-TO) | comp-parity | comp-parity 49f | PASS |
+| 2026-07-01 | 0.8.0_AE_CloudComp~B | (no-TO) | comp-kuzu | comp-kuzu MATCH (n) RETURN count(n) LIMIT 1 | PASS |
+| 2026-07-01 | 0.8.0_AE_CloudComp~B | (no-TO) | comp-drift | comp-drift arn:aws:lambda:us-east-1:313476888478:function:bd-49f-fees-runner --deep | FAIL |
+| 2026-07-01 | 0.8.0_AE_CloudComp~B | (no-TO) | comp-pipescript | comp-pipescript deployed arn:aws:lambda:us-east-1:313476888478:function:access-anomaly-... | PASS |
+| 2026-07-01 | 0.8.0_AE_CloudComp~B | (no-TO) | comp-drift | comp-drift arn:aws:lambda:us-east-1:313476888478:function:access-anomaly-scanner --deep | FAIL |
+| 2026-07-01 | 0.8.0_AE_CloudComp~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/comp_parity_cli.py | PASS |
+| 2026-07-01 | 0.8.0_AE_CloudComp~B | (no-TO) | comp-kuzu | comp-kuzu MATCH (l:CloudNode)-[e:CloudEdge]->(r:CloudNode) WHERE l.node_type='LAMBDA' A... | PASS |
+| 2026-07-01 | 0.8.0_AE_CloudComp~B | (no-TO) | comp-kuzu | comp-kuzu MATCH (l:CloudNode)-[e:CloudEdge]->(r:CloudNode) WHERE l.node_type='LAMBDA' A... | PASS |
+| 2026-07-01 | 0.4.0_DS_ClientPlatform | ADVI_TAGATTR.DS-1.d00c-full-tagged-role-aua-nna-fees | comp-blast | comp-blast C_08 | PASS |
+| 2026-07-01 | 0.4.0_DS_ClientPlatform | ADVI_TAGATTR.DS-1.d00c-full-tagged-role-aua-nna-fees | comp-blast | comp-blast E_23 | PASS |
+| 2026-07-01 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+| 2026-07-01 | 0.8.0_AE_CloudComp~B | (no-TO) | comp-pipescript | comp-pipescript deployed arn:aws:lambda:us-east-1:313476888478:function:bd-49f-fees-runner | PASS |
+| 2026-07-01 | 0.6.1_AE_PartnerETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/terraform/inf-pipeline/eventb... | PASS |
+| 2026-07-01 | 0.8.0_AE_CloudComp~B | (no-TO) | comp-lambdamap | comp-lambdamap parity --json | PASS |
+| 2026-07-01 | 0.8.0_AE_CloudComp~B | (no-TO) | comp-iam | comp-iam reconcile | FAIL |
+| 2026-07-01 | 0.8.0_AE_CloudComp~B | (no-TO) | comp-kuzu | comp-kuzu MATCH (l:CloudNode)-[e:CloudEdge]->(r:CloudNode) WHERE l.node_type='LAMBDA' A... | PASS |
+| 2026-07-01 | 0.8.0_AE_CloudComp~B | (no-TO) | comp-kuzu | comp-kuzu MATCH (n) RETURN count(n) LIMIT 1 | PASS |
+| 2026-07-01 | 0.8.0_AE_CloudComp~B | (no-TO) | comp-drift | comp-drift arn:aws:lambda:us-east-1:313476888478:function:bd-49f-fees-runner --deep | PASS |
+| 2026-07-01 | 0.8.0_AE_CloudComp~B | (no-TO) | comp-pipescript | comp-pipescript deployed arn:aws:lambda:us-east-1:313476888478:function:access-anomaly-... | PASS |
+| 2026-07-01 | 0.8.0_AE_CloudComp~B | (no-TO) | comp-kuzu | comp-kuzu MATCH (l:CloudNode)-[e:CloudEdge]->(r:CloudNode) WHERE l.node_type='LAMBDA' A... | PASS |
+| 2026-07-01 | 0.8.0_AE_CloudComp~B | (no-TO) | comp-drift | comp-drift arn:aws:lambda:us-east-1:313476888478:function:access-anomaly-scanner --deep | FAIL |
+| 2026-07-01 | 0.8.0_AE_CloudComp~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .tools/_trino_fed.py | PASS |
+| 2026-07-01 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/NFRA_COMPPROOF_PRD.md... | PASS |
+| 2026-07-01 | 0.8.0_AE_CloudComp~E | NFRA_COMPRAIL.TO-5 | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/comp_route.py | PASS |
+| 2026-07-01 | 2.0.0_SA_COO~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/drift_cli.py | PASS |
+| 2026-07-01 | 0.8.0_AE_CloudComp~E | NFRA_COMPRAIL.TO-5 | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/comp_route.py | PASS |
+| 2026-07-01 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/briefs/infr... | PASS |
+| 2026-07-01 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/.open_deploys/advi-i... | PASS |
+| 2026-07-01 | 0.4.0_DT_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file portal | PASS |
+| 2026-07-01 | 2.0.0_SA_COO~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/NFRA_COMPPROOF/VALIDATION-... | PASS |
+| 2026-07-01 | 0.8.0_AE_CloudComp~E | NFRA_COMPRAIL.TO-5 | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/comp_route.py | PASS |
+| 2026-07-01 | 0.4.0_DS_ClientPlatform | ADVI_TAGATTR.DS-1.d00c-full-tagged-role-aua-nna-fees | comp-surface-check | comp-surface-check check --mode advisory --file data/black_diamond/scripts/gold/D_00c.p... | PASS |
