@@ -87,7 +87,11 @@ class Capability:
     declared_grains: tuple[str, ...] = ()
     kind: str = "surface"        # "surface" | "seam" | "meta"
     routable: bool = True        # False = pure tooling-layer node (gate/test/router), not a routing target
-    mode: str = "query"          # "query" (read-safe) | "rebuild"/"write"/"derive"/"mutate" (E1: excluded from read intents)
+    mode: str = "query"          # recompute/caching semantic: "query" (instant) | "recompute" (recomputes on
+                                 # read, e.g. comp-iam -- still ANSWERS reads). A future ranking prior; NOT the exclusion.
+    write_path: bool = False     # E1 (DR3, ~B-grounded): a genuine WRITE-PATH / graph-mutating / expensive-rebuild
+                                 # tool (comp-aws-derive 8-min / comp-build / comp-lambdamap-derive-write) -- EXCLUDED
+                                 # from read/navigate answers. Distinct from mode:recompute (read-answerable).
 
 
 @dataclass
@@ -247,15 +251,18 @@ def _score_one(cap, intent: str, ctx_d: dict, weights: Weights,
 # ============================================================================================
 # Default-router helpers (Stage A mode pre-filter + Stage B signal extractors).
 # ============================================================================================
-_REBUILD_MODES = {"rebuild", "write", "derive", "mutate"}
 _PATHY = re.compile(r"[/\\.*]|\.py|\.tf|\.json|\.yaml")
 
 
-def _mode_ok_for_read(cap) -> bool:
-    """Stage A (E1): a read/navigate intent must NOT route to a rebuild/write tool (a read -> an 8-min
-    comp-aws-derive is a category/cost error). Untagged caps default to query-safe (eligible); only a
-    cap explicitly tagged mode in {rebuild,write,derive,mutate} is excluded. ~B tags the manifest."""
-    return str(getattr(cap, "mode", "query")).strip().lower() not in _REBUILD_MODES
+def _read_eligible(cap) -> bool:
+    """Stage A (E1 / DR3, ~B-grounded): a read/navigate intent must NOT route to a genuine WRITE-PATH /
+    mutating / expensive-rebuild tool (comp-aws-derive 8-min, comp-build cache-rebuild, comp-lambdamap-
+    derive-write) -- those carry write_path=True (the purpose-built manifest tag). CRUCIAL: read-RECOMPUTE
+    tools (comp-iam / comp-freshness / comp-pipescript / ... -- they recompute from source on read but
+    ANSWER reads, no mutation) stay ELIGIBLE. Excluding by the conflated `mode:rebuild` (~B's finding:
+    56/56 tagged, but rebuild lumps ~3 write-path WITH ~17 read-recompute) would wrongly drop those 17
+    valid read surfaces. So the exclusion keys on write_path, NOT mode."""
+    return not bool(getattr(cap, "write_path", False))
 
 
 def _run_extractors(extractors, intent: str, ctx_d: dict) -> tuple[dict, dict]:
@@ -309,10 +316,10 @@ def route(intent: str, ctx, provider: CapabilityMapProvider,
     ctx_d = _ctx_dict(ctx)
     intent_class = str(ctx_d.get("intent_class", "")).strip().lower()   # ~C's tag; "" => legacy backstop
 
-    # STAGE A -- mode pre-filter (only for a read/navigate intent; legacy/compute => no filter).
+    # STAGE A -- write-path pre-filter (only for a read/navigate intent; legacy/compute => no filter).
     caps = [c for c in provider.capabilities() if getattr(c, "routable", True)]
     if intent_class in ("read", "navigate"):
-        caps = [c for c in caps if _mode_ok_for_read(c)]
+        caps = [c for c in caps if _read_eligible(c)]
 
     scored = [_score_one(c, intent, ctx_d, weights, provider, affinity_provider) for c in caps]
 
@@ -724,16 +731,22 @@ def _self_test() -> tuple[bool, list]:
        rB.decision and rB.decision.cap.id == "comp-drift" and aws_s.vetted and aws_s.score < rB.decision.score,
        f"-> {rB.decision.cap.id if rB.decision else None} (comp-aws vetted@{aws_s.score:.2f} < drift@{rB.decision.score if rB.decision else 0:.2f})")
 
-    # (3) MODE PRE-FILTER (E1): a READ intent must NEVER route to a rebuild tool (a read -> 8-min derive).
-    rebuild_caps = build_fixture_caps() + [
-        Capability("comp-aws-derive", ("aws", "estate", "rebuild", "derive", "graph"), surface="estate",
-                   grain="resource", concern="REBUILD the aws graph (8-min)", affinity_key="estate", mode="rebuild")]
-    provM = DictCapabilityProvider(rebuild_caps, role_surface_affinity={"AE": {"estate": 0.9}})
-    rM = route("aws estate graph", RouteContext(role="AE", intent_class="read"), provM)
-    ck("dr.read_never_rebuilds", "comp-aws-derive" not in {s.cap.id for s in rM.ranked},
-       f"rebuild tool excluded from READ intent: {'comp-aws-derive' not in {s.cap.id for s in rM.ranked}}")
-    rM2 = route("aws estate graph", RouteContext(role="AE"), provM)   # compute/legacy => no mode filter
-    ck("dr.compute_intent_no_mode_filter", "comp-aws-derive" in {s.cap.id for s in rM2.ranked}, "")
+    # (3) WRITE-PATH PRE-FILTER (E1 / DR3, ~B-grounded): a READ intent EXCLUDES a write-path tool
+    # (comp-aws-derive, 8-min) but KEEPS a read-RECOMPUTE tool (comp-iam-read -- recomputes on read, ANSWERS
+    # reads, no mutation). Excluding by the conflated mode:rebuild would wrongly drop the recompute surface.
+    mode_caps = build_fixture_caps() + [
+        Capability("comp-aws-derive", ("aws", "estate", "graph", "derive"), surface="estate", grain="resource",
+                   concern="REBUILD the aws graph (8-min write-path)", affinity_key="estate", write_path=True),
+        Capability("comp-iam-read", ("iam", "policy", "permission", "estate", "aws"), surface="estate",
+                   grain="iam-policy", concern="IAM read (recomputes from TF, no mutation)", affinity_key="estate",
+                   mode="recompute", write_path=False)]
+    provM = DictCapabilityProvider(mode_caps, role_surface_affinity={"AE": {"estate": 0.9}})
+    ids_rM = {s.cap.id for s in route("aws iam estate", RouteContext(role="AE", intent_class="read"), provM).ranked}
+    ck("dr.read_excludes_write_path_keeps_recompute",
+       "comp-aws-derive" not in ids_rM and "comp-iam-read" in ids_rM,
+       f"write-path excluded={'comp-aws-derive' not in ids_rM}; read-recompute KEPT={'comp-iam-read' in ids_rM}")
+    ids_rM2 = {s.cap.id for s in route("aws iam estate", RouteContext(role="AE"), provM).ranked}
+    ck("dr.compute_intent_no_write_path_filter", "comp-aws-derive" in ids_rM2, "")
 
     # (4) RELEVANCE FLOOR -> FALLBACK: an intent matching NOTHING (no vetted, ~0 query -- a high surface_prior
     # must NOT rescue it) -> kind="fallback" to comp-grep/glob, never a forced misroute / dead-end.
