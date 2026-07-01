@@ -11926,3 +11926,60 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-pipescript | comp-pipescript --help | PASS |
 | 2026-07-01 | 0.4.0_DS_ClientPlatform~A | (no-TO) INFREF ROOT-2 | comp-freshness / comp-pipescript deployed+io+postdeps / comp-which / comp-grep | inf chain freshness (prefix-PASS but blind to interior-date hole); INF_B_00+INF_C_00 deployed==local MATCH; io/postdeps; located holdings/perf/timeseries producers | PASS |
 | 2026-07-01 | 0.4.0_DS_ClientPlatform~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-drift | comp-drift gold/timeseries/client_performance.parquet | FAIL |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-kuzu | comp-kuzu MATCH (n:CloudNode) WHERE n.node_type CONTAINS 'EC2' OR n.node_type='INSTANCE... | PASS |
+| 2026-07-01 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-pipescript | comp-pipescript deployed | FAIL |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-pipescript | comp-pipescript chain cot | FAIL |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-pipescript | comp-pipescript postdeps build_canonical_prices_v2.py | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-pipescript | comp-pipescript io build_canonical_prices_v2.py | FAIL |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-pipescript | comp-pipescript consumers build_canonical_prices_v2.py | FAIL |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-blast | comp-blast s3://opal-data-bd/silver/prices/canonical_prices.parquet --direction down --... | FAIL |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-kuzu | comp-kuzu CALL show_tables() RETURN * | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-kuzu | comp-kuzu MATCH (n:CloudNode) RETURN n LIMIT 1 --json | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-kuzu | comp-kuzu MATCH (n:CloudNode) WHERE n.id CONTAINS 'canonical_prices' OR n.name CONTAINS... | FAIL |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-kuzu | comp-kuzu MATCH (n:CloudNode) WHERE n.node_id CONTAINS 'canonical_price' OR n.name CONT... | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-kuzu | comp-kuzu MATCH (n:CloudNode) WHERE n.node_id CONTAINS 'inject_scoped' OR n.name CONTAI... | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-kuzu | comp-kuzu MATCH (a:CloudNode)-[e:CloudEdge]->(b:CloudNode) WHERE b.node_id = 'opal-data... | FAIL |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-kuzu | comp-kuzu MATCH (a:CloudNode)-[e:CloudEdge]->(b:CloudNode) WHERE a.node_id = 'opal-data... | FAIL |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-kuzu | comp-kuzu MATCH (a:CloudNode)-[e:CloudEdge]->(b:CloudNode) WHERE a.node_id = 'opal-data... | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-kuzu | comp-kuzu MATCH (a:CloudNode)-[e:CloudEdge]->(b:CloudNode) WHERE b.node_id = 'opal-data... | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-kuzu | comp-kuzu MATCH (a:CloudNode)-[e:CloudEdge]->(b:CloudNode) WHERE a.node_id = 'opal-data... | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-kuzu | comp-kuzu MATCH (a:CloudNode)-[e:CloudEdge]->(b:CloudNode) WHERE a.node_id IN ['pipelin... | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-kuzu | comp-kuzu MATCH (n) RETURN DISTINCT n.node_type AS t, count(*) AS c ORDER BY c DESC | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-kuzu | comp-kuzu MATCH (n:CloudNode) WHERE n.name='inf-gold-layer-runner' RETURN n.node_id, n.... | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-kuzu | comp-kuzu MATCH (n) WHERE n.id =~ '(?i).*(delta|flow|quarter|qtr).*' RETURN n.node_type... | FAIL |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-kuzu | comp-kuzu MATCH (n:ReactComponent) RETURN n LIMIT 1 | FAIL |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-kuzu | comp-kuzu MATCH (n) WHERE n.node_type='ReactComponent' RETURN n LIMIT 1 | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-kuzu | comp-kuzu MATCH (n) RETURN DISTINCT label(n) AS l LIMIT 20 | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-kuzu | comp-kuzu MATCH (n) WHERE n.node_id =~ '(?i).*(delta|flow|quarter|qtr|phantom).*' RETUR... | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-kuzu | comp-kuzu --help | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-drift | comp-drift --help | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-kuzu | comp-kuzu MATCH (n) WHERE n.node_id =~ '(?i).*aum.metrics.*' RETURN n.node_type AS t, n... | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-kuzu | comp-kuzu MATCH (a)-[e]->(b) WHERE a.node_id = 'endpointurl:/api/general/portfolios/aum... | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-kuzu | comp-kuzu MATCH (a)-[e]->(b) WHERE b.node_id = 'endpointurl:/api/general/portfolios/aum... | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-blast | comp-blast --help | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-trace | comp-trace --help | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-xref | comp-xref --help | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-platinum | comp-platinum --help | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-pipescript | comp-pipescript --help | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-lambdamap | comp-lambdamap --help | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-iam | comp-iam --help | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-routes | comp-routes --help | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-kuzu | comp-kuzu CALL show_tables() RETURN * | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-kuzu | comp-kuzu MATCH (n:CloudNode) RETURN n.node_type AS t, count(*) AS c ORDER BY c DESC | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-kuzu | comp-kuzu MATCH (n:CloudNode) WHERE toLower(n.name) CONTAINS 'aua' OR toLower(n.name) C... | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-routes | comp-routes trace /api/scoped/partners/books/firm/all/mix-views | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-platinum | comp-platinum summary | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-trace | comp-trace getFirmMixViews --direction down --depth 6 | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-kuzu | comp-kuzu MATCH (n:CloudNode)-[e:CloudEdge]->(m:CloudNode) WHERE n.name CONTAINS 'firm/... | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-kuzu | comp-kuzu MATCH (n:CloudNode)<-[e:CloudEdge]-(m:CloudNode) WHERE n.name CONTAINS 'firm/... | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-kuzu | comp-kuzu MATCH (n:CloudNode)-[e:CloudEdge]->(m:CloudNode) WHERE n.name = 'opal-partner... | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-kuzu | comp-kuzu MATCH (n:CloudNode)-[e:CloudEdge]->(m:CloudNode) WHERE m.name = 'gold/artifac... | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-kuzu | comp-kuzu MATCH (n:CloudNode)-[e:CloudEdge]->(m:CloudNode) WHERE m.name = 'gold/artifac... | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-pipescript | comp-pipescript feeds D_03.composition_artifacts | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-pipescript | comp-pipescript feeds D_00.portal_aggregates | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-kuzu | comp-kuzu MATCH (n:CloudNode) WHERE n.node_type='PipelineScript' AND (n.name STARTS WIT... | FAIL |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-kuzu | comp-kuzu MATCH (n:CloudNode) WHERE n.name='D_00.portal_aggregates' RETURN n LIMIT 1 --... | PASS |
+| 2026-07-01 | 3.0.0_SA_CVO | (ETFS/Schwab-ingest) | comp-which,comp-routes,comp-glob | ETFS source-validation + 49F Schwab 06-25 ingest: comp-routes behaviors PASS (CDN edge); comp-which routed to backstops (no comp model for etfs artifact/Lambda-invoke/SSM/quartz-prefix -> rail-checked raw); comp-glob PASS (producer+config locate) | PARTIAL |
+| 2026-07-01 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
