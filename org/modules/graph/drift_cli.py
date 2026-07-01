@@ -1,5 +1,3 @@
-from __future__ import annotations
-
 """
 comp-drift -- the estate propagation-drift ORCHESTRATOR (NFRA_COMPDRIFT P2 / TO-2).
 
@@ -19,6 +17,7 @@ Discipline: NEVER silently MATCH a seam it could not read -- an unreadable /
 unwired / GAP seam is UNVERIFIABLE (exit 2), a FINDING, never false-clean
 (PRD arch-gate (c) + the disposition model). Every record carries `grounding`.
 """
+from __future__ import annotations
 
 import argparse
 import json
@@ -331,6 +330,50 @@ def adapter_code_heat_parity(seam, target, ctx):
                    "code_heat_parity.py -> %s (worst-of rollup)" % m.group(1))
 
 
+def adapter_tool_activity_parity(seam, target, ctx):
+    """seam-6 tool-activity-behavior binding: the COMPLEARN derived-parquet vintage check
+    (mirrors code_heat_parity -- VINTAGE-PRIMARY current/BEHIND/UNVERIFIABLE)."""
+    if not ctx.get("deep"):
+        return _record(seam, target or "<tool-activity>", "UNVERIFIABLE",
+                       "live tool_activity vintage read skipped (cost-guard; --deep to run)")
+    rc, out = _run(["python", os.path.join(WORKSPACE, "infra", "aws", "globgrph",
+                    "tool_activity_parity.py")])
+    m = re.search(r"BINDING VERDICT:\s*(current|BEHIND|UNVERIFIABLE)", out)
+    if not m:
+        return _record(seam, target or "<tool-activity>", "UNVERIFIABLE",
+                       "tool_activity_parity.py rc=%s (BINDING VERDICT unparsed -- not assuming current)" % rc)
+    return _record(seam, target or "<tool-activity>", m.group(1),
+                   "tool_activity_parity.py -> %s (worst-of rollup)" % m.group(1))
+
+
+def adapter_trino_catalog_parity(seam, target, ctx):
+    """seam-6 iceberg-catalog legs (graph_nodes/edges/contracts): Trino-side catalog parity vs the
+    live iceberg table (resolved snapshot + normalized schema). The engine checks all 3 catalogs in
+    ONE in-VPC query, so it runs ONCE per sweep (memoized in ctx) and each binding-call returns the
+    record for THIS binding's catalog (ctx['_binding'])."""
+    catalog = ctx.get("_binding") or ""
+    label = "<trino:%s>" % (catalog or "iceberg")
+    if not ctx.get("deep"):
+        return _record(seam, target or label, "UNVERIFIABLE",
+                       "live Trino federation query skipped (cost-guard ~4min Fargate; --deep to run)")
+    cache = ctx.get("_trino_parity")
+    if cache is None:
+        rc, out = _run(["python", os.path.join(WORKSPACE, "infra", "aws", "globgrph",
+                        "trino_catalog_parity.py"), "--json", "-"], timeout=540)
+        try:  # never guess a verdict from unparseable engine output
+            data = json.loads(out[out.index("{"):out.rindex("}") + 1])
+            cache = {c["catalog"]: c for c in data.get("detail", {}).get("catalogs", [])}
+        except Exception:  # noqa: BLE001
+            cache = {}
+        ctx["_trino_parity"] = cache
+    rec = cache.get(catalog)
+    if not rec:
+        return _record(seam, target or label, "UNVERIFIABLE",
+                       "trino_catalog_parity produced no record for catalog '%s' (engine unreadable/failed)"
+                       % (catalog or "?"))
+    return _record(seam, target or ("trino:%s" % catalog), rec["verdict"], rec["grounding"])
+
+
 def adapter_comp_freshness(seam, target, ctx):
     if not ctx.get("deep"):
         return _record(seam, target or "<served>", "UNVERIFIABLE",
@@ -375,6 +418,8 @@ ADAPTERS = {
     "comp-kuzu": adapter_comp_kuzu_provenance,
     "iceberg_parity.py": adapter_iceberg_parity,
     "code_heat_parity.py": adapter_code_heat_parity,
+    "tool_activity_parity.py": adapter_tool_activity_parity,
+    "trino_catalog_parity.py": adapter_trino_catalog_parity,
     "comp-freshness": adapter_comp_freshness,
 }
 
@@ -420,6 +465,7 @@ def walk_seams(topo: dict, target: str | None, ctx: dict,
             continue
         for sub_target, engine in _seam_engines(seam):
             adapter = _adapter_for(engine)
+            ctx["_binding"] = sub_target   # per-binding catalog label for fan-in adapters (seam-6)
             try:
                 rec = adapter(seam, target, ctx)
             except Exception as exc:  # noqa: BLE001

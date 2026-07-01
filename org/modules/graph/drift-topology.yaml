@@ -29,14 +29,14 @@
 # here; the uncovered hop is then loud. Keep this in lockstep with the estate.
 #
 # COVERAGE SUMMARY (updated 2026-07-01, 0.8.0_AE_CloudComp~C -- grounded on live `comp-drift coverage`):
-#   COVERED   : seam-1, seam-2 (3 engines), seam-5 (Iceberg -- iceberg_parity.py, closed 2026-06-29)
+#   COVERED   : seam-1, seam-2 (3 engines), seam-5 (Iceberg -- iceberg_parity.py, closed 2026-06-29),
+#               seam-6 (Trino fan-in, all 5 legs -- CLOSED 2026-07-01 P3(c)): git-code-heat + tool-activity
+#               (vintage engines) + 3 iceberg legs graph_nodes/edges/contracts (trino_catalog_parity.py,
+#               once the heat-federation/Trino surface went live + queryable).
 #   PARTIAL   : seam-3 (marker-oracle surfaces vintage, not a full live==graph assert), seam-7 (freshness only)
 #   SELF-HEAL : seam-4  (auto-refresh, NOT asserted)
-#   GAP       : seam-6 (Trino fan-in) -- 2 of 5 legs COVERED (git-code-heat, tool-activity-behavior);
-#               3 iceberg-catalog legs (graph_nodes/edges/contracts) are EXPLICIT-GAP below (a Trino-side
-#               engine is needed; dependency = the heat-federation/Trino surface stood up + queryable).
-#   NOTE: the old header listed seam-5 (Iceberg) as GAP -- that was STALE (seam-5 closed 2026-06-29 by
-#         iceberg_parity.py). Corrected here so the summary matches the seam bodies + live coverage tool.
+#   GAP       : none (seam-6 was the last GAP; closed 2026-07-01).
+#   NOTE: keep this summary in lockstep with the seam bodies + live `comp-drift coverage`.
 # =============================================================================
 
 version: 1
@@ -132,8 +132,8 @@ seams:
     stage_to: TRINO
     target_class: [catalog]
     invariant: each Trino federated-catalog binding == its backing source schema/partitioning (PER catalog)
-    engine: UNCOVERED
-    coverage: GAP              # <-- NO CHECKER TODAY. DESIGN-IN to the heat-federation build (the leverage point).
+    engine: "fan-in (per-binding engines -- see bindings)"
+    coverage: COVERED         # CLOSED 2026-07-01 (0.8.0_AE_CloudComp~D, P3(c)): all 5 legs now have an engine
     fan_in: true              # Trino is a NODE with N inbound catalog seams (PRD arch-gate (d))
     # GRAIN: per PHYSICAL iceberg table (0.8.0_AE~B-corrected -- NOT the old aws/portal/ms/pipeline
     # layer-catalogs, which were a mismap; layer is a graph_nodes column). 3 tables + the live-read.
@@ -141,23 +141,23 @@ seams:
       - catalog: graph_nodes
         kind: iceberg
         check: trino-catalog-schema == live iceberg table schema/partitioning
-        coverage: GAP            # EXPLICIT-GAP (never-silent, ~C 2026-07-01): the Trino-federation-layer check has NO engine today
-        engine: UNCOVERED
-        engine_needed: "a TRINO-SIDE parity engine: query the federated catalog's column schema + partitioning + resolved snapshot-pointer (information_schema.columns / <table>$snapshots / SHOW CREATE TABLE) and assert == the live iceberg table. DISTINCT from seam-5's iceberg_parity.py, which is grounded Trino-INDEPENDENT (it asserts iceberg-table==producer derive_runner.py schema via the Nessie _branch_head marker; it NEVER queries Trino) -- so seam-5 does NOT cover this leg. GROUNDED DESIGN LEAD (~C, source-read of iceberg_parity.py): a NATIVE iceberg connector reads table metadata directly, so this reduces to a THIN check -- assert Trino resolves the SAME catalog-current snapshot-pointer iceberg_parity.py already validates (base-check snapshot 5612831170965463937) + the same normalized schema/partitioning -> REUSE iceberg_parity.py _PA_TYPE/_IB_TYPE normalization + marker resolution (do NOT re-implement). DEPENDENCY: the heat-federation/Trino surface must be stood up + queryable first (AC-threaded 0.8.0_AE per node note); until then this leg is BLOCKED-GAP, not buildable."
+        coverage: COVERED        # CLOSED 2026-07-01 (0.8.0_AE_CloudComp~D, NFRA_COMPDRIFT P3(c)): heat-federation/Trino surface is LIVE + queryable
+        engine: "infra/aws/globgrph/trino_catalog_parity.py"
+        closed_by: "trino_catalog_parity.py -- asserts Trino resolves the SAME catalog-current snapshot-pointer the _branch_head marker records (the pointer iceberg_parity.py validates: `<table>$refs` main BRANCH snapshot_id == marker snapshot_id) + the SAME normalized column schema as the live iceberg table (SHOW COLUMNS normalized == metadata.json schema). THIN by the grounded design lead: REUSES iceberg_parity.py marker-resolution + _live_schema + _diff_schema + type-normalization (NOT re-implemented) + _trino_fed.py in-VPC run-task transport (NO new Trino transport)."
         verdict_vocab: [MATCH, SCHEMA-DRIFT, STALE, UNVERIFIABLE]
       - catalog: graph_edges
         kind: iceberg
         check: trino-catalog-schema == live iceberg table schema/partitioning
-        coverage: GAP            # EXPLICIT-GAP (never-silent, ~C 2026-07-01)
-        engine: UNCOVERED
-        engine_needed: "same Trino-side engine as graph_nodes (re-materialized table -> schema + partitioning + vintage). See graph_nodes engine_needed for the grounded design lead + Trino-standup dependency."
+        coverage: COVERED        # CLOSED 2026-07-01 (0.8.0_AE_CloudComp~D, NFRA_COMPDRIFT P3(c))
+        engine: "infra/aws/globgrph/trino_catalog_parity.py"
+        closed_by: "trino_catalog_parity.py (same engine as graph_nodes -- re-materialized table -> snapshot + schema parity)."
         verdict_vocab: [MATCH, SCHEMA-DRIFT, STALE, UNVERIFIABLE]
       - catalog: graph_contracts
         kind: iceberg
         check: "trino-catalog-schema == live iceberg table schema/partitioning (ENSURE-ONLY -- not nightly-re-materialized, so vintage N/A, schema-fingerprint only)"
-        coverage: GAP            # EXPLICIT-GAP (never-silent, ~C 2026-07-01)
-        engine: UNCOVERED
-        engine_needed: "same Trino-side engine as graph_nodes but ENSURE-ONLY -- schema-fingerprint + partitioning ONLY, vintage N/A (the derive never re-materializes graph_contracts). See graph_nodes engine_needed."
+        coverage: COVERED        # CLOSED 2026-07-01 (0.8.0_AE_CloudComp~D, NFRA_COMPDRIFT P3(c))
+        engine: "infra/aws/globgrph/trino_catalog_parity.py"
+        closed_by: "trino_catalog_parity.py -- ENSURE-ONLY: schema-fingerprint only; a snapshot difference with identical schema is a tolerated metadata rewrite (vintage N/A), so no STALE verdict for this leg."
         verdict_vocab: [MATCH, SCHEMA-DRIFT, UNVERIFIABLE]
       - catalog: git-code-heat
         kind: live-read         # SPECIAL CASE: read live, never materialized
@@ -172,7 +172,7 @@ seams:
         coverage: COVERED       # VINTAGE-PRIMARY: current=vintage within 26h; BEHIND=vintage stale OR commit absent; HEAD-advance-since-emit = EXPECTED
         verdict_vocab: [current, BEHIND, UNVERIFIABLE]
     node_rollup: worst-of      # any UNVERIFIABLE -> node UNVERIFIABLE; any break -> node break
-    note: "FINDING + LEVERAGE: design the per-catalog parity signal INTO the heat-federation build (AC threaded 0.8.0_AE 2026-06-29, pre-materialization). If it ships without -> seam-6 stays GAP + a retrofit TO."
+    note: "CLOSED 2026-07-01 (0.8.0_AE_CloudComp~D, P3(c)): all 5 legs COVERED. 3 iceberg legs (graph_nodes/edges/contracts) closed by trino_catalog_parity.py once the heat-federation/Trino surface went LIVE (Phase-1 grounded: SHOW TABLES/COLUMNS + $refs all resolve); git-code-heat + tool-activity-behavior closed by their vintage engines. comp-drift orchestrates all 5 (P2 adapters)."
 
   - seam_id: seam-7
     stage_from: TRINO
