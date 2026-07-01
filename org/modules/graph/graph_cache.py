@@ -146,9 +146,11 @@ def load(name: str, freshness: Freshness = Freshness.DEFAULT,
 
     meta = {"built_at", "age", "fingerprint"} for reporting. Rules:
       - FORCE  -> always miss.
-      - DEFAULT-> hit iff cache exists and age < ttl.
-      - FRESH  -> hit iff cache exists, age < ttl, AND (current_fingerprint is None
-                  OR it matches the stored fingerprint). Source drift -> miss.
+      - DEFAULT/FRESH -> hit iff cache exists, age < ttl, AND (current_fingerprint is None
+                  OR it matches the stored fingerprint). Source drift -> miss. (NFRA_GRAPHUNI
+                  P2/D2 (b): DEFAULT is now head-pinned -- honors the fingerprint like FRESH, so
+                  no tool serves a divergent-vintage cache. cached() supplies the fingerprint for
+                  both modes.)
     """
     if freshness == Freshness.FORCE:
         return None, None
@@ -165,9 +167,12 @@ def load(name: str, freshness: Freshness = Freshness.DEFAULT,
     age = time.time() - payload.built_at
     if age >= ttl:
         return None, None
-    if freshness == Freshness.FRESH and current_fingerprint is not None:
-        if payload.fingerprint != tuple(current_fingerprint):
-            return None, None
+    # NFRA_GRAPHUNI P2/D2 (b) HEAD-PIN (JOINT VERDICT 20260701): honor the source fingerprint in
+    # DEFAULT too (was FRESH-only) -- a within-TTL cache that DRIFTED from the current source is a
+    # MISS (rebuild), never a divergent-vintage serve. Kills the stale-cache-phantom class for every
+    # gc.cached tool (comp-platinum), matching cli.py::_get_graph. FORCE already returned above.
+    if current_fingerprint is not None and payload.fingerprint != tuple(current_fingerprint):
+        return None, None
     meta = {"built_at": payload.built_at, "age": age, "fingerprint": payload.fingerprint}
     return payload.obj, meta
 
@@ -196,7 +201,9 @@ def cached(name: str, builder, sources, freshness: Freshness = Freshness.DEFAULT
     The fingerprint is computed once (eagerly only under --fresh, else lazily at
     store time) and stored with the payload so a later --fresh call can compare.
     """
-    cur_fp = source_fingerprint(sources) if freshness == Freshness.FRESH else None
+    # HEAD-PIN (b): compute the fingerprint for DEFAULT too (not just FRESH) so a drifted within-TTL
+    # cache rebuilds -- head-pinned, no divergent vintage. FORCE skips it (always rebuilds anyway).
+    cur_fp = None if freshness == Freshness.FORCE else source_fingerprint(sources)
     obj, _meta = load(name, freshness, ttl=ttl, current_fingerprint=cur_fp)
     if obj is not None:
         return obj
