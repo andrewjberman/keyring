@@ -10411,3 +10411,42 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-06-30 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
 2026-07-01T0212Z | 0.8.0_AE_CloudComp~D | (checkpoint log, no new tool runs) | RAVC completion dispatch to COO~B + comp-heat engine-bug finding routed + P3 hold -- substantive tool runs recorded in prior log 2e43f9310 | n/a | -
 | 2026-06-30 | 0.8.0_AE_CloudComp~D | NFRA_GRAPHUNI.P1.d1-fill-derive | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-06-30 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/ADVI_INFREF_PATHMAP.m... | PASS |
+| 2026-06-30 | 0.8.0_AE_CloudComp~B | (no-TO) | comp-iam | comp-iam --help | PASS |
+| 2026-06-30 | 0.8.0_AE_CloudComp~B | (no-TO) | comp-iam | comp-iam roles | PASS |
+| 2026-06-30 | 0.4.0_DS_ClientPlatform~A | (no-TO) | comp-platinum | comp-platinum reverse activity_scan.json --firm inf | PASS |
+| 2026-06-30 | 0.4.0_DS_ClientPlatform~A | (no-TO) | comp-platinum | comp-platinum reverse activity_scan_1y.json --firm inf | PASS |
+| 2026-06-30 | 0.4.0_DS_ClientPlatform~A | (no-TO) | comp-platinum | comp-platinum reverse cash_drag.json --firm inf | PASS |
+| 2026-06-30 | 0.4.0_DS_ClientPlatform~A | (no-TO) | comp-platinum | comp-platinum reverse cash_drag_1y.json --firm inf | PASS |
+| 2026-06-30 | 0.8.0_AE_CloudComp~B | (no-TO) | comp-kuzu | comp-kuzu MATCH (n) WHERE n.id CONTAINS 'i-04373' OR n.id CONTAINS 'i-0ed5' RETURN n.id... | FAIL |
+| 2026-06-30 | 0.8.0_AE_CloudComp~B | (no-TO) | comp-kuzu | comp-kuzu MATCH (a)-[r:READS_S3]->(b) WHERE b.id CONTAINS 'opal-data-bd' OR b.name CONT... | FAIL |
+| 2026-06-30 | 0.8.0_AE_CloudComp~B | (no-TO) | comp-kuzu | comp-kuzu CALL show_tables() RETURN * | PASS |
+| 2026-06-30 | 0.8.0_AE_CloudComp~B | (no-TO) | comp-kuzu | comp-kuzu CALL table_info('CloudNode') RETURN * | PASS |
+| 2026-06-30 | 0.8.0_AE_CloudComp~B | (no-TO) | comp-kuzu | comp-kuzu CALL table_info('CloudEdge') RETURN * | PASS |
+| 2026-06-30 | 0.8.0_AE_CloudComp~B | (no-TO) | comp-kuzu | comp-kuzu MATCH (a:CloudNode)-[r:CloudEdge]->(b:CloudNode) WHERE r.edge_type='READS_S3'... | PASS |
+| 2026-06-30 | 0.8.0_AE_CloudComp~D | NFRA_GRAPHUNI.P1.d1-fill-derive | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/drift_cli.py | PASS |
+| 2026-06-30 | 0.8.0_AE_CloudComp~B | (no-TO) | comp-kuzu | comp-kuzu MATCH (n:CloudNode) RETURN DISTINCT n.node_type AS t, count(*) AS c ORDER BY ... | PASS |
+| 2026-06-30 | 0.8.0_AE_CloudComp~B | (no-TO) | comp-kuzu | comp-kuzu MATCH ()-[r:CloudEdge]->() RETURN DISTINCT r.edge_type AS t, count(*) AS c OR... | PASS |
+| 2026-06-30 | 0.8.0_AE_CloudComp~B | (no-TO) | comp-kuzu | comp-kuzu MATCH (a:CloudNode)-[r:CloudEdge]->(b:CloudNode) WHERE a.node_type='EC2_INSTA... | PASS |
+| 2026-06-30 | 0.8.0_AE_CloudComp~B | (no-TO) | comp-kuzu | comp-kuzu MATCH (a:CloudNode)-[r:CloudEdge]->(b:CloudNode) WHERE (a.node_id CONTAINS 'i... | PASS |
+| 2026-06-30 | 0.8.0_AE_CloudComp~B | (no-TO) | comp-kuzu | comp-kuzu MATCH (a:CloudNode)-[r:CloudEdge]->(b:CloudNode) WHERE (a.node_id CONTAINS 'i... | PASS |
+| 2026-06-30 | 0.8.0_AE_CloudComp~B | (no-TO) | comp-kuzu | comp-kuzu MATCH (p:CloudNode)-[r:CloudEdge]->(x:CloudNode) WHERE p.node_type='INSTANCE_... | PASS |
+| 2026-06-30 | 0.8.0_AE_CloudComp~B | (no-TO) | comp-kuzu | comp-kuzu MATCH (r:CloudNode)-[e:CloudEdge]->(x:CloudNode) WHERE r.node_type='IAM_ROLE'... | PASS |
+| 2026-06-30 | 0.8.0_AE_CloudComp~B | (no-TO) | comp-kuzu | comp-kuzu MATCH (r:CloudNode)-[e:CloudEdge]->(x:CloudNode) WHERE r.node_type='IAM_ROLE'... | PASS |
+| 2026-06-30 | 0.4.0_DS_ClientPlatform~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/briefs/advi-infref-l5-served-extra... | PASS |
+| 2026-06-30 | 0.8.0_AE_CloudComp~B | (no-TO) | comp-kuzu | comp-kuzu MATCH (p:CloudNode)-[e:CloudEdge]->(x:CloudNode) WHERE p.node_type='IAM_POLIC... | PASS |
+| 2026-06-30 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+| 2026-06-30 | 0.8.0_AE_CloudComp~B | (no-TO) | comp-kuzu | comp-kuzu MATCH (p:CloudNode)-[e:CloudEdge]->(b:CloudNode) WHERE p.node_type IN ['IAM_P... | PASS |
+| 2026-06-30 | 0.8.0_AE_CloudComp~B | (no-TO) | comp-iam | comp-iam role inf-gold-layer-ec2-role | PASS |
+| 2026-06-30 | 0.8.0_AE_CloudComp~B | (no-TO) | comp-iam | comp-iam role inf-gold-qa-runner-ec2-role | PASS |
+| 2026-06-30 | 1.0.0_SA_CTO | (no-TO) | comp-pipescript | comp-pipescript deployed orion-gold-dispatch.sh | PASS |
+| 2026-06-30 | 0.8.0_AE_CloudComp~D | NFRA_GRAPHUNI.P1.d1-fill-derive | comp-kuzu | comp-kuzu MATCH (n) RETURN count(n) LIMIT 1 | PASS |
+| 2026-06-30 | 0.8.0_AE_CloudComp~D | NFRA_GRAPHUNI.P1.d1-fill-derive | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/drift_cli.py | PASS |
+| 2026-06-30 | 0.8.0_AE_CloudComp~D | NFRA_GRAPHUNI.P1.d1-fill-derive | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/globgrph/extract_gold_compute.py | PASS |
+| 2026-06-30 | 3.0.0_SA_CVO~B | (no-TO) | comp-kuzu | comp-kuzu MATCH (n) RETURN count(n) AS total_nodes | PASS |
+| 2026-06-30 | 3.0.0_SA_CVO~B | (no-TO) | comp-kuzu | comp-kuzu --show-head | FAIL |
+| 2026-06-30 | 3.0.0_SA_CVO~B | (no-TO) | comp-kuzu | comp-kuzu MATCH (n) RETURN label(n) AS lbl, count(*) AS c ORDER BY c DESC | PASS |
+| 2026-06-30 | 3.0.0_SA_CVO~B | (no-TO) | comp-kuzu | comp-kuzu MATCH (n) RETURN n.node_type AS nt, count(*) AS c ORDER BY c DESC | PASS |
+| 2026-06-30 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/change_management/20... | PASS |
+2026-07-01T0242Z | 0.8.0_AE_CloudComp~C | NFRA_COMPUNIFY F2b-consolidation govern-fold | none (coordination-only) | Folded govern requirements into ~B/~D GRANTS_S3 capability-layer spec: MANDATORY semantic discriminator (capability|data-flow, the /seams category-error discipline) + GRANTS_S3 edge_type registration (my lane, HELD until ~D firms). My F2b consolidated, not re-raised. No code/map change -> comp-coverage-check runs when the edge_type lands.
+| 2026-06-30 | 0.8.0_AE_CloudComp~C | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
