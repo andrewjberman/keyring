@@ -15,9 +15,10 @@
     "NFRA_GLOBGRPH",
     "NFRA_COMPRAIL"
   ],
-  "status": "active",
-  "phase": "PHASE 0 -- PRD AUTHORED 2026-06-29 (1.0.0_SA_CTO; docs/architecture/NFRA_COMPDIFF_PRD.md). Andrew-direct, born from the inf-AUA freeze (the 3x frozen-but-fresh class no tool caught). ALL axes in scope from the start (Andrew). SEQUENCE: COO decomposes; P1 = engine + resource model + anchors + the cheap already-retained axes (code/config/output-value/schema/freshness/edges) + the FREEZE-MONITOR (the prevention deliverable) -> P2 heavier axes (iam/infra/existence/size) + --upstream cascade walk -> P3 Trino-federation axis + comp-which promotion + nightly-sweep wiring.",
-  "blocking": "None to PRD/P1. The edge axis + --upstream cascade walk depend on the dynamic-prefix-read extraction (shared P1 dependency with NFRA_COMPDRIFT -- INF_D_00's holdings read was invisible to the extractor; mark UNVERIFIABLE-EDGE never 'no edge'). The federation axis (P3) reuses the comp-heat in-VPC Trino-query module (S5). COO decomposes; build = AE + the comp-tools lane.",
+  "status": "complete",
+  "completed": "2026-07-01",
+  "phase": "COMPLETE 2026-07-01 (2-step close, COO~B). P1 (the substantive scope) DELIVERED + VERIFIED: the FREEZE-MONITOR over served platinum/firm/*.json (CVO co-signed two-sided fire-test 3.0.0_SA_CVO 172054Z/172505Z -- fires on a frozen-but-fresh signature, no false-fire on genuine motion) + comp-xray forensic CLI (81798d511, LD-0223; .tools/comp-xray live) + the cheap already-retained axes (b2a7d3b9a). Deliverables landed via the ADVI_BREAKS TO-6 value-parity track (both deploy-completion ledgers CLOSED inf 1730Z/cot 1803Z, tree clean); all 4 P1 ACs substantively MET. The missing value-motion lens (the 3x frozen-but-fresh class born from the inf-AUA freeze) is closed with a standing guard. P2 (heavier axes iam/infra/existence/size + --upstream) + P3 (Trino-federation axis + nightly-sweep) were never authored -- OPTIONAL ROADMAP, separately registerable if needed, NOT open work. Core goal ACHIEVED.",
+  "blocking": "None -- COMPLETE (P1 core delivered + CVO-fire-tested 2026-07-01; P2/P3 optional roadmap, unregistered).",
   "created": "2026-06-29",
   "pods": [
     "0.7",
