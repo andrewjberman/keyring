@@ -11073,3 +11073,4 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 
 | 2026-07-01T0620Z | 3.0.0_SA_CVO~B | comp-kuzu, pyiceberg time-travel, comp-coverage-check, comp_learns_score, comp_route, comp-which-routing-test, trino_catalog_parity, comp-depth, comp-graph, comp_rail_audit, D4 pytest | NFRA_COMP*/GRAPH* whole-program close-verify: 10 GREEN + 1 HOLD; grounded every verdict on live artifacts; found comp-graph legacy-mispoint + the (a) coverage gap | PASS |
 | 2026-07-01 | 3.0.0_SA_CVO~B | NFRA_COMPUNIFY.V1 | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-01 | 2.0.0_SA_COO~B | ADVI_49F_ADVISORS_BOUNDARY (shared) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/logs/2026-0... | PASS |
