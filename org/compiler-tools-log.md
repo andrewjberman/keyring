@@ -10250,3 +10250,67 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-06-30 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
 2026-07-01T0032Z | 0.8.0_AE_CloudComp~D | NFRA_GRAPHUNI.P1 | (read) derive_runner NODE_TYPE_LAYER Rule-22 diagnosis + python byte-consistency (emitter==map keys) + convergence re-verify (169 unchanged) + aws s3 re-emit | fail-loud recovery: CTO tier-agnostic correction (PipelineScript+tier=gold, LD-0230 rule-7 canonical) committed 200e3de35 byte-consistent; awaiting CVO~B verify -> ~B re-fire
 | 2026-06-30 | 0.8.0_AE_CloudComp~D | NFRA_GRAPHUNI.P1.d1-fill-derive | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-06-30 | 0.4.0_DE_ClientPlatform | NFRA_TSGRAPH.P2-3 | comp-transform | comp-transform schema-check CottonwoodClientsSection | PASS |
+| 2026-06-30 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+| 2026-06-30 | 0.4.0_DE_ClientPlatform | NFRA_TSGRAPH.P2-3 | comp-surface-check | comp-surface-check check --mode advisory --file .tools/comp-which | PASS |
+| 2026-06-30 | 0.4.0_DS_ClientPlatform~A | ADVI_INFREF.P1 | comp-surface-check | comp-surface-check check --mode advisory --file data/inf/scripts/silver/reconvert_bronz... | PASS |
+| 2026-06-30 | 0.4.0_DE_ClientPlatform | NFRA_TSGRAPH.P2-3 | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DE_ClientPlatfor... | PASS |
+| 2026-06-30 | 0.8.0_AE_CloudComp~D | NFRA_GRAPHUNI.P1.d1-fill-derive | comp-pipescript | comp-pipescript deployed A_00.accounts_dimension | PASS |
+| 2026-06-30 | 0.8.0_AE_CloudComp~D | NFRA_GRAPHUNI.P1.d1-fill-derive | comp-pipescript | comp-pipescript deployed --help | PASS |
+| 2026-06-30 | 0.8.0_AE_CloudComp~B | (no-TO) | comp-kuzu | comp-kuzu MATCH (n:CloudNode) WHERE n.node_type IN ['PipelineScript','PipelineFunction'... | PASS |
+| 2026-06-30 | 0.8.0_AE_CloudComp~B | (no-TO) | comp-kuzu | comp-kuzu MATCH (n:CloudNode) RETURN count(*) AS total | PASS |
+| 2026-06-30 | 0.8.0_AE_CloudComp~C | (no-TO) | comp-drift | comp-drift coverage | PASS |
+| 2026-06-30 | 0.4.0_DS_ClientPlatform~A | ADVI_INFREF.P1 | comp-surface-check | comp-surface-check check --mode advisory --file data/inf/scripts/verify/validate_post_s... | PASS |
+| 2026-06-30 | 0.8.0_AE_CloudComp~B | (no-TO) | comp-kuzu | comp-kuzu MATCH (a:CloudNode)-[e]->(b:CloudNode) WHERE e.edge_type='RUNS' RETURN a.node... | PASS |
+| 2026-06-30 | 0.8.0_AE_CloudComp~B | (no-TO) | comp-kuzu | comp-kuzu MATCH (a:CloudNode)-[e]->(b:CloudNode) WHERE e.edge_type IN ['READS_S3','WRIT... | PASS |
+| 2026-06-30 | 0.8.0_AE_CloudComp~D | NFRA_GRAPHUNI.P1.d1-fill-derive | comp-pipescript | comp-pipescript deployed A_00.accounts_dimension | PASS |
+| 2026-06-30 | 0.8.0_AE_CloudComp~D | NFRA_GRAPHUNI.P1.d1-fill-derive | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/drift_cli.py | PASS |
+| 2026-06-30 | 0.8.0_AE_CloudComp~B | (no-TO) | comp-kuzu | comp-kuzu MATCH (n:CloudNode) WHERE n.node_type='LAMBDA' AND n.name CONTAINS 'served-gu... | FAIL |
+| 2026-06-30 | 0.8.0_AE_CloudComp~B | (no-TO) | comp-kuzu | comp-kuzu MATCH ()-[e]->() WHERE e.edge_type IN ['RUNS','CALLS','CONTAINS','READS_S3','... | PASS |
+| 2026-06-30 | 0.8.0_AE_CloudComp~C | (no-TO) | comp-drift | comp-drift coverage | PASS |
+| 2026-06-30 | 0.8.0_AE_CloudComp~C | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/drift-topology.yaml | PASS |
+| 2026-06-30 | 0.0.0_AB_MSTR | NFRA_COMPDIFF.comptool-audit | comp-surface-check | comp-surface-check check --mode advisory --file docs/briefs/nfra-comproute-brief-202607... | PASS |
+| 2026-06-30 | 0.8.0_AE_CloudComp~D | NFRA_GRAPHUNI.P1.d1-fill-derive | comp-kuzu | comp-kuzu MATCH (n:CloudNode) WHERE n.layer='pipeline' RETURN n.node_type AS type, coun... | PASS |
+| 2026-06-30 | 0.8.0_AE_CloudComp~D | NFRA_GRAPHUNI.P1.d1-fill-derive | comp-kuzu | comp-kuzu MATCH (a:CloudNode)-[r]->() WHERE a.layer='pipeline' RETURN r.edge_type AS ed... | PASS |
+| 2026-06-30 | 0.8.0_AE_CloudComp~E | NFRA_COMPLEARN.P3 | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/NFRA_COMPLEARN/complearn_b... | PASS |
+| 2026-06-30 | 0.8.0_AE_CloudComp~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/NFRA_GRAPHUNI/NFRA_GRAPHUN... | PASS |
+| 2026-06-30 | 2.0.0_SA_COO~B | (no-TO) | comp-kuzu | comp-kuzu MATCH (n) RETURN count(n) AS nodes | PASS |
+| 2026-06-30 | 2.0.0_SA_COO~B | (no-TO) | comp-kuzu | comp-kuzu MATCH (n) WHERE n.node_type IN ['PipelineScript','PipelineFunction','Pipeline... | PASS |
+| 2026-06-30 | 2.0.0_SA_COO~B | (no-TO) | comp-kuzu | comp-kuzu MATCH (e:EC2_INSTANCE)-[r:RUNS]->(p:PipelineScript) RETURN count(r) AS runs_r... | FAIL |
+| 2026-06-30 | 0.8.0_AE_CloudComp~D | NFRA_GRAPHUNI.P1.d1-fill-derive | comp-kuzu | comp-kuzu MATCH (a:CloudNode)-[r]->(b:CloudNode) WHERE a.layer='pipeline' AND r.edge_ty... | PASS |
+| 2026-06-30 | 0.8.0_AE_CloudComp~D | NFRA_GRAPHUNI.P1.d1-fill-derive | comp-kuzu | comp-kuzu MATCH (a:CloudNode)-[r]->(b:CloudNode) WHERE a.layer='pipeline' AND r.edge_ty... | PASS |
+| 2026-06-30 | 0.8.0_AE_CloudComp~D | NFRA_GRAPHUNI.P1.d1-fill-derive | comp-kuzu | comp-kuzu MATCH (a:CloudNode)-[r]->(b:CloudNode) WHERE a.layer='pipeline' AND r.edge_ty... | PASS |
+| 2026-06-30 | 2.0.0_SA_COO~B | (no-TO) | comp-kuzu | comp-kuzu MATCH (a)-[r]->(b) WHERE r.edge_type = 'RUNS' RETURN count(r) AS runs, count(... | PASS |
+| 2026-06-30 | 0.8.0_AE_CloudComp~D | NFRA_GRAPHUNI.P1.d1-fill-derive | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/NFRA_GRAPHUNI/NFRA_GRAPHUN... | PASS |
+| 2026-06-30 | 0.8.0_AE_CloudComp~E | NFRA_COMPLEARN.P3 | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/NFRA_COMPLEARN/complearn_g... | PASS |
+| 2026-06-30 | 2.0.0_SA_COO~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .owned-paths.yaml --file org/modules/gr... | PASS |
+| 2026-06-30 | 3.0.0_SA_CVO~B | NFRA_GRAPHUNI.P0-CVO | comp-kuzu | comp-kuzu MATCH (n:CloudNode) WHERE n.layer='pipeline' RETURN n.node_type AS node_type,... | PASS |
+| 2026-06-30 | 0.8.0_AE_CloudComp~C | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .tools/comp-coverage-check --file org/m... | PASS |
+| 2026-06-30 | 0.8.0_AE_CloudComp~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/NFRA_GRAPHUNI/NFRA_GRAPHUN... | PASS |
+| 2026-06-30 | 3.0.0_SA_CVO~B | NFRA_GRAPHUNI.P0-CVO | comp-kuzu | comp-kuzu MATCH (n:CloudNode) WHERE n.node_type='S3Key' RETURN count(*) AS s3key_nodes | PASS |
+| 2026-06-30 | 3.0.0_SA_CVO~B | NFRA_GRAPHUNI.P0-CVO | comp-kuzu | comp-kuzu MATCH (a:CloudNode)-[e]->(b:CloudNode) WHERE e.edge_type IN ['READS_S3','WRIT... | PASS |
+| 2026-06-30 | 0.8.0_AE_CloudComp~B | (no-TO) | comp-kuzu | comp-kuzu MATCH (n:CloudNode) WHERE n.node_type='LAMBDA' AND n.name CONTAINS 'served-gu... | PASS |
+| 2026-06-30 | 3.0.0_SA_CVO~B | NFRA_GRAPHUNI.P0-CVO | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/NFRA_GRAPHU... | PASS |
+| 2026-06-30 | 0.8.0_AE_CloudComp~C | (no-TO) | comp-kuzu | comp-kuzu MATCH (n) RETURN count(n) AS nodes | PASS |
+| 2026-06-30 | 0.8.0_AE_CloudComp~C | (no-TO) | comp-kuzu | comp-kuzu MATCH ()-[e]->() RETURN e.edge_type AS et, count(*) AS n ORDER BY n DESC | PASS |
+| 2026-06-30 | 0.8.0_AE_CloudComp~B | (no-TO) | comp-kuzu | comp-kuzu MATCH (a:CloudNode)-[e]->(b:CloudNode) WHERE a.node_type='LAMBDA' AND b.node_... | PASS |
+| 2026-06-30 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+| 2026-06-30 | 0.8.0_AE_CloudComp~C | (no-TO) | comp-kuzu | comp-kuzu MATCH (n) RETURN n.node_type AS nt, count(*) AS n ORDER BY n DESC | PASS |
+| 2026-06-30 | 0.8.0_AE_CloudComp~C | (no-TO) | comp-kuzu | comp-kuzu MATCH (a)-[e]->(b) WHERE e.edge_type='READS_S3' RETURN a.node_type AS src, b.... | PASS |
+| 2026-06-30 | 0.8.0_AE_CloudComp~C | (no-TO) | comp-kuzu | comp-kuzu MATCH (a)-[e]->(b) WHERE e.edge_type='WRITES_S3' RETURN a.node_type AS src, b... | PASS |
+| 2026-06-30 | 0.8.0_AE_CloudComp~C | (no-TO) | comp-kuzu | comp-kuzu MATCH (a)-[e]->(b) WHERE e.edge_type='RUNS' RETURN a.node_type AS src, b.node... | PASS |
+| 2026-06-30 | 0.8.0_AE_CloudComp~C | (no-TO) | comp-kuzu | comp-kuzu MATCH (a)-[e]->(b) WHERE e.edge_type='OWNED_BY' RETURN a.node_type AS src, b.... | PASS |
+| 2026-06-30 | 0.8.0_AE_CloudComp~C | (no-TO) | comp-kuzu | comp-kuzu MATCH (a)-[e]->(b) WHERE e.edge_type='CONTAINS' AND (a.node_type='PipelineScr... | PASS |
+| 2026-06-30 | 0.8.0_AE_CloudComp~C | (no-TO) | comp-kuzu | comp-kuzu MATCH (a)-[e]->(b) WHERE a.node_type IN ['EC2_INSTANCE','LAMBDA'] AND b.node_... | PASS |
+| 2026-06-30 | 0.8.0_AE_CloudComp~C | (no-TO) | comp-kuzu | comp-kuzu MATCH (a)-[e]->(b) WHERE e.edge_type='READS' RETURN a.node_type AS src, b.nod... | PASS |
+| 2026-06-30 | 0.8.0_AE_CloudComp~D | NFRA_GRAPHUNI.P1.d1-fill-derive | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/drift_cli.py | PASS |
+| 2026-06-30 | 0.8.0_AE_CloudComp~E | NFRA_COMPLEARN.P3 | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/change_management/20... | PASS |
+| 2026-06-30 | 0.8.0_AE_CloudComp~C | (no-TO) | comp-kuzu | comp-kuzu MATCH (n) WHERE n.node_type='PipelineScript' RETURN n.id AS id, n.node_id AS ... | FAIL |
+| 2026-06-30 | 0.8.0_AE_CloudComp~C | (no-TO) | comp-kuzu | comp-kuzu MATCH (n) WHERE n.node_type='S3Key' RETURN n.id AS id, n.node_id AS node_id L... | FAIL |
+| 2026-06-30 | 0.8.0_AE_CloudComp~C | (no-TO) | comp-kuzu | comp-kuzu MATCH (n) WHERE n.node_type='EC2_INSTANCE' RETURN n.id AS id, n.node_id AS no... | FAIL |
+| 2026-06-30 | 0.8.0_AE_CloudComp~C | (no-TO) | comp-kuzu | comp-kuzu MATCH (n) WHERE n.node_type='S3_BUCKET' RETURN n.id AS id, n.node_id AS node_... | FAIL |
+| 2026-06-30 | 0.8.0_AE_CloudComp~C | (no-TO) | comp-kuzu | comp-kuzu MATCH (n) WHERE n.node_type='PipelineFunction' RETURN n.id AS id, n.node_id A... | FAIL |
+| 2026-06-30 | 0.8.0_AE_CloudComp~C | (no-TO) | comp-kuzu | comp-kuzu MATCH (n) WHERE n.node_type='S3Key' RETURN n LIMIT 1 | PASS |
+
+2026-07-01T0113Z | 0.8.0_AE_CloudComp~E | NFRA_COMPLEARN.P3 | comp-which, comp-grep, ds-commit-gate, safe-commit, safe-apply, deploy_ledger, comp-learns-status | P3 scheduled producer LANDED: comp-which grounded the #3 worklist gaps (Rule 22), comp-grep found the code_heat_emit re-emit precedent, safe-apply TARGETED 9 resources (isolated held item2d/2e), deploy_ledger 4-leg CLOSED, comp-learns-status renders the in-VPC-produced served surface (end-to-end proof). Shared-image collision handled clean (surfaced-then-proceed error owned + ground-truthed harmless + deferred to owner).
+| 2026-06-30 | 0.8.0_AE_CloudComp~E | NFRA_COMPLEARN.P3 | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
