@@ -762,6 +762,17 @@ def _self_test() -> tuple[bool, list]:
        rL.kind == "disambiguation" and all(not s.vetted for s in rL.ranked) and rL.fallback is None,
        "no extractors -> pure posterior, no vetted band, no fallback")
 
+    # (7 -- DRV cert, CVO~B ask) DOMINANCE GENERALIZES: a vetted hit dominates even when a WRONG cap has a
+    # STRONG competing query_match -- proving the win is the STRUCTURAL vetted band, not the keywords (so
+    # it is NOT tuned to any specific fixture paraphrase). "component schema field props parity" strongly
+    # query-matches comp-transform (wrong), but curated names comp-drift -> comp-drift still wins.
+    rD = route("component schema field props parity", RouteContext(role="AE"), provDR, extractors=[curated_ex])
+    tr = next(s for s in rD.ranked if s.cap.id == "comp-transform")
+    ck("dr.dominance_generalizes_over_strong_wrong_query",
+       rD.decision is not None and rD.decision.cap.id == "comp-drift" and rD.decision.vetted
+       and tr.query > 0.5 and tr.score < rD.decision.score,
+       f"comp-drift(vetted) beat comp-transform(query={tr.query:.2f}) -- structural, not keyword-tuned")
+
     ok = all(c["pass"] for c in checks)
     return ok, checks
 
