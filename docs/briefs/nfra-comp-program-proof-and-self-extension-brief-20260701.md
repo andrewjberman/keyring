@@ -64,6 +64,12 @@ traversal + comp-tools?** Score coverage. Every miss is a coverage gap that feed
 **This is the COMP_LEARNS thesis pointed inward** — measure whether structured compiler/graph assistance changes
 what an agent can solve on hard, real engineering failures. Reuse that program's measurement methodology where it fits.
 
+**CAP (Andrew-direct 2026-07-01): B is capped at the TOP 20 incidents by severity, each occurring in 2026, each
+mined from the real record.** The pinned, cited top-20 (ranked, with the severity lens + class-coverage rationale)
+is `docs/briefs/nfra-compproof-B-incident-corpus-top20-20260701.md` — this is B's FLOOR + CAP. The catalog-author
+verifies each citation against source and strips root-cause before the blind-solver sees it. The corpus doc also
+lists a bench of runners-up for swap-in.
+
 **Scope (IN).**
 1. **Build the corpus from the REAL record — do NOT invent incidents.** Mine: `git log -p CLAUDE.md` (every NEVER-rule
    cites an incident), the memory audit-discipline classes (Diagnostic-patterns/Verification-adjudication/
