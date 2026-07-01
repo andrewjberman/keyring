@@ -14,6 +14,19 @@ PAYLOAD="$CP/solver_view_${CASE}.txt"
 # sanitized cwd OUTSIDE the ws tree (so claude finds NO CLAUDE.md/memory/org-XXX up-tree)
 OUTDIR="${2:-$(mktemp -d -t "compproof_${CASE}_XXXXXX")}"
 
+# TRUE-SANDBOX (FIX-2, CTO 154055Z): the solver's cwd is a FILTERED REPO COPY in which the forbidden
+# narrative/answer set is PHYSICALLY ABSENT (+ NO .git -> no `git show HEAD:<forbidden>` history recover).
+# build_sandbox.sh makes the TEMPLATE once (fail-closed: it self-verifies + exits nonzero on any leak);
+# each solver gets a FRESH COPY as its cwd, so a broad `grep -r <symptom> .` finds nothing forbidden
+# because nothing forbidden is there. This is PREVENTION; harness.cheat_check stays as the post-hoc
+# backstop for any absolute-path read. Reuse a prebuilt template across the run via the env var
+# COMPPROOF_SANDBOX_TEMPLATE (build once -> avoids re-archiving the tree per case).
+TEMPLATE="${COMPPROOF_SANDBOX_TEMPLATE:-}"
+if [ -z "$TEMPLATE" ] || [ ! -d "$TEMPLATE" ]; then
+    TEMPLATE="$(bash "$CP/build_sandbox.sh")"
+fi
+cp -r "$TEMPLATE/." "$OUTDIR/"   # fresh per-solver sandbox (template stays pristine for the next case)
+
 # MSYS-PATH GOTCHA (run-1 bug, MSTR 150812Z): native-Windows python CANNOT resolve an MSYS `/c/...`
 # path -- neither for sys.path import NOR os.path.abspath (it mangles `/c/...` to `C:\c\...`). So do
 # NOT pass `$CP`/`$OUTDIR` (MSYS form) straight into python. Fix: run python FROM $CP (cwd resolves
@@ -33,9 +46,11 @@ OUTDIR_WIN="$(cygpath -w "$OUTDIR")"
 r=harness.assert_clean_context(r'''$OUTDIR_WIN'''); print('clean_context:', r['clean'], r['leaks']); \
 import sys; sys.exit(0 if r['clean'] else 3)" )
 
-# 3. LAUNCH (MSTR finalizes the flags): bare 'claude -p' from the sanitized cwd -- memory auto-recall
-#    OFF, no org/XXX.md fabric startup, no fabric-lane spawn wrapper. Full SUBSTRATE file-access is
-#    RETAINED (absolute paths + comp-tools on PATH); only the auto-injected CONTEXT is suppressed.
+# 3. LAUNCH (MSTR finalizes the flags): bare 'claude -p' from the TRUE-SANDBOX cwd -- memory auto-recall
+#    OFF, no org/XXX.md fabric startup, no fabric-lane spawn wrapper. The SUBSTRATE the solver reads IS
+#    the sandbox copy (forbidden narrative/answer set ABSENT); comp-tools on PATH + live-AWS creds reach
+#    the live graph/estate. BOTH leak vectors closed: CONTEXT suppressed (clean cwd) AND the forbidden
+#    files physically ABSENT (no relative/broad-grep leak, no .git history recover).
 #    Capture the ACTUAL tool-log (every Read/Grep/comp-tool call) -- that is what the B2 judge audits.
 #    Skeleton (adapt to the spawn tooling):
 #      ( cd "$OUTDIR" && claude -p "$(cat "$PAYLOAD")" \
@@ -45,5 +60,5 @@ import sys; sys.exit(0 if r['clean'] else 3)" )
 
 echo "PREPARED: case=$CASE"
 echo "  payload=$PAYLOAD (diff-gate-verified answer-free)"
-echo "  sanitized_cwd=$OUTDIR (clean-context verified)"
+echo "  sandbox_cwd=$OUTDIR (TRUE-SANDBOX: forbidden absent, no .git, clean-context verified)"
 echo "NEXT (MSTR): bare-launch claude -p from the sanitized cwd; capture tool_log; drop solver_results[$CASE]."
