@@ -487,6 +487,63 @@ def rollup_exit(records: list[dict]) -> int:
     return EXIT_CLEAN
 
 
+# ---- P4: fold drift_producer.py's infra/repo drift legs into the sweep board ----------------
+# PRD sec 8 (RULED: FOLD): drift_producer's checks (comp-manifest-check + comp-surface-check +
+# terraform-plan) join the estate board. comp-drift ORCHESTRATES drift_producer's leg functions
+# (import + call) -- it does NOT re-implement the checks (orchestrator-boundary 4b). The full sec-8
+# end-state (sweep EMITS drift_state.json + the infra-monitor Lambda reads it + retire drift_producer)
+# is the coordinated deploy-class follow-on; here the sweep FOLDS the disposition into one board.
+
+def _infra_rec(seam_id, stage_from, stage_to, verdict, grounding) -> dict:
+    cls = {"DRIFT": "break", "WATCH": "stale", "CLEAN": "clean",
+           "UNVERIFIABLE": "unverifiable"}.get(verdict, "unverifiable")
+    sev = {"clean": "OK", "stale": "WARN", "unverifiable": "WARN", "break": "ERROR"}[cls]
+    return {"seam_id": seam_id, "stage_from": stage_from, "stage_to": stage_to, "target": "<infra>",
+            "verdict": verdict, "severity": sev, "operator_action": ACTION[cls],
+            "disposition": None, "grounding": grounding, "_class": cls, "_engine": "drift_producer.py"}
+
+
+def _infra_findings(seam_id, stage_from, stage_to, leg) -> list[dict]:
+    findings = leg.get("findings", [])
+    if not findings:
+        return [_infra_rec(seam_id, stage_from, stage_to, "CLEAN", leg.get("note") or "no drift")]
+    out = []
+    for f in findings:
+        verdict = "DRIFT" if f.get("status") == "red" else "WATCH"  # drift_producer status: red|watch
+        src = f.get("module") or f.get("source") or "?"
+        out.append(_infra_rec(seam_id, stage_from, stage_to, verdict,
+                              "%s: %s" % (src, f.get("reason", ""))))
+    return out
+
+
+def fold_infra_drift(ctx: dict) -> list[dict]:
+    """P4: fold drift_producer's infra/repo drift legs into the board. The comp leg
+    (manifest + critical-surface) runs in the standard sweep; the terraform leg (tf plan across
+    modules -- slow) is cost-guarded to --deep. Never re-implements a check -- calls drift_producer."""
+    try:
+        sys.path.insert(0, os.path.join(WORKSPACE, ".tools"))
+        import drift_producer as dp
+    except Exception as exc:  # noqa: BLE001 -- unavailable producer is a VISIBLE gap, never silent-clean
+        return [_infra_rec("infra-comp", "REPO", "SURFACE", "UNVERIFIABLE",
+                           "cannot import drift_producer: %s" % exc)]
+    records = []
+    try:
+        records.extend(_infra_findings("infra-comp", "REPO", "SURFACE", dp.run_comp_leg()))
+    except Exception as exc:  # noqa: BLE001
+        records.append(_infra_rec("infra-comp", "REPO", "SURFACE", "UNVERIFIABLE",
+                                  "run_comp_leg raised: %s" % exc))
+    if ctx.get("deep"):
+        try:
+            records.extend(_infra_findings("infra-tf", "CODE", "INFRA", dp.run_terraform_leg()))
+        except Exception as exc:  # noqa: BLE001
+            records.append(_infra_rec("infra-tf", "CODE", "INFRA", "UNVERIFIABLE",
+                                      "run_terraform_leg raised: %s" % exc))
+    else:
+        records.append(_infra_rec("infra-tf", "CODE", "INFRA", "UNVERIFIABLE",
+                                  "terraform-plan infra-drift leg skipped (cost-guard; --deep to run)"))
+    return records
+
+
 # ---- TARGET CLASSIFY (which seams apply to an artifact) ---------------------
 
 def applicable_seams(target: str) -> set[str] | None:
@@ -588,6 +645,7 @@ def main(argv: list[str] | None = None) -> int:
     if mode == "sweep" or mode is None:
         # sweep: cheap seams always; live engines only under --deep (cost-guard)
         records = walk_seams(topo, None, ctx)
+        records.extend(fold_infra_drift(ctx))   # P4: fold drift_producer's infra/repo drift legs (PRD sec 8)
         code = rollup_exit(records)
         if args.json:
             print(json.dumps({"mode": "sweep", "exit": code, "records": _strip(records)}, indent=1))
