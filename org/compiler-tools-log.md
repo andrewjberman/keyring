@@ -10314,3 +10314,37 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 
 2026-07-01T0113Z | 0.8.0_AE_CloudComp~E | NFRA_COMPLEARN.P3 | comp-which, comp-grep, ds-commit-gate, safe-commit, safe-apply, deploy_ledger, comp-learns-status | P3 scheduled producer LANDED: comp-which grounded the #3 worklist gaps (Rule 22), comp-grep found the code_heat_emit re-emit precedent, safe-apply TARGETED 9 resources (isolated held item2d/2e), deploy_ledger 4-leg CLOSED, comp-learns-status renders the in-VPC-produced served surface (end-to-end proof). Shared-image collision handled clean (surfaced-then-proceed error owned + ground-truthed harmless + deferred to owner).
 | 2026-06-30 | 0.8.0_AE_CloudComp~E | NFRA_COMPLEARN.P3 | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-06-30 | 0.8.0_AE_CloudComp~C | (no-TO) | comp-kuzu | comp-kuzu CALL show_tables() RETURN * | PASS |
+| 2026-06-30 | 0.8.0_AE_CloudComp~C | (no-TO) | comp-kuzu | comp-kuzu MATCH (n) WHERE n.node_type='S3Key' RETURN keys(n) AS props LIMIT 1 | PASS |
+| 2026-06-30 | 0.8.0_AE_CloudComp~C | (no-TO) | comp-kuzu | comp-kuzu CALL table_info('CloudNode') RETURN * | PASS |
+| 2026-06-30 | 0.8.0_AE_CloudComp~C | (no-TO) | comp-kuzu | comp-kuzu CALL table_info('CloudEdge') RETURN * | PASS |
+| 2026-06-30 | 0.4.0_DS_ClientPlatform~A | ADVI_INFREF.P1 | comp-surface-check | comp-surface-check check --mode advisory --file data/inf/scripts/silver/reconvert_bronz... | PASS |
+| 2026-06-30 | 0.8.0_AE_CloudComp~C | (no-TO) | comp-kuzu | comp-kuzu --help | PASS |
+| 2026-06-30 | 0.8.0_AE_CloudComp~C | (no-TO) | comp-kuzu | comp-kuzu MATCH (a)-[e]->(b) WHERE e.edge_type='RUNS' WITH b.node_id AS script, count(D... | PASS |
+| 2026-06-30 | 0.8.0_AE_CloudComp~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/NFRA_GRAPHUNI/NFRA_GRAPHUN... | PASS |
+| 2026-06-30 | 0.8.0_AE_CloudComp~E | NFRA_COMPROUTE.S1-comp-dispatch-spec | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/NFRA_COMPLEARN/comp_dispat... | PASS |
+| 2026-06-30 | 0.8.0_AE_CloudComp~C | (no-TO) | comp-kuzu | comp-kuzu --json MATCH (a)-[e]->(b) WHERE e.edge_type='READS_S3' RETURN a.node_id AS s,... | PASS |
+| 2026-06-30 | 0.8.0_AE_CloudComp~C | (no-TO) | comp-kuzu | comp-kuzu --json MATCH (a)-[e]->(b) WHERE e.edge_type='WRITES_S3' RETURN a.node_id AS s... | PASS |
+| 2026-06-30 | 0.8.0_AE_CloudComp~C | (no-TO) | comp-kuzu | comp-kuzu --json MATCH (a)-[e]->(b) WHERE e.edge_type='RUNS' RETURN a.node_id AS s, b.n... | PASS |
+| 2026-06-30 | 0.8.0_AE_CloudComp~C | (no-TO) | comp-kuzu | comp-kuzu --json MATCH (a)-[e]->(b) WHERE e.edge_type='CONTAINS' AND a.node_type='Pipel... | PASS |
+| 2026-06-30 | 0.8.0_AE_CloudComp~C | (no-TO) | comp-kuzu | comp-kuzu --json MATCH (a)-[e]->(b) WHERE e.edge_type='OWNED_BY' AND a.node_type='S3Key... | PASS |
+| 2026-06-30 | 0.8.0_AE_CloudComp~C | (no-TO) | comp-kuzu | comp-kuzu --json MATCH (a)-[e]->(b) WHERE e.edge_type='READS' AND a.node_type='EC2_INST... | PASS |
+| 2026-06-30 | 0.8.0_AE_CloudComp~C | (no-TO) | comp-kuzu | comp-kuzu --json MATCH (a)-[e]->(b) WHERE e.edge_type='WRITES' AND a.node_type='EC2_INS... | PASS |
+| 2026-06-30 | 0.8.0_AE_CloudComp~C | (no-TO) | comp-kuzu | comp-kuzu --json MATCH (a)-[e]->(b) WHERE e.edge_type='RUNS' RETURN a.node_id AS s, b.n... | PASS |
+| 2026-06-30 | 0.8.0_AE_CloudComp~B | (no-TO) | comp-kuzu | comp-kuzu MATCH (a:CloudNode)-[e]->(b:CloudNode) WHERE a.node_type='LAMBDA' AND b.node_... | PASS |
+| 2026-06-30 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/NFRA_COMPLEARN_PRD.md... | PASS |
+| 2026-06-30 | 0.8.0_AE_CloudComp~C | (no-TO) | comp-kuzu | comp-kuzu MATCH (a)-[e]->(b) WHERE e.edge_type='READS' AND a.node_type='EC2_INSTANCE' A... | PASS |
+| 2026-06-30 | 0.8.0_AE_CloudComp~C | (no-TO) | comp-kuzu | comp-kuzu MATCH (a)-[e]->(b) WHERE e.edge_type='READS_S3' RETURN DISTINCT e.layer AS la... | PASS |
+| 2026-06-30 | 0.8.0_AE_CloudComp~C | (no-TO) | comp-kuzu | comp-kuzu MATCH (n) WHERE n.node_type IN ['EC2_INSTANCE','PipelineScript','S3_BUCKET','... | PASS |
+| 2026-06-30 | 0.8.0_AE_CloudComp~C | (no-TO) | comp-kuzu | comp-kuzu MATCH (a)-[e]->(b) WHERE e.edge_type IN ['READS','WRITES'] AND a.node_type IN... | PASS |
+| 2026-06-30 | 0.8.0_AE_CloudComp~C | (no-TO) | comp-kuzu | comp-kuzu MATCH (a)-[e]->(b) WHERE e.edge_type IN ['READS','WRITES'] AND a.node_type IN... | PASS |
+| 2026-06-30 | 0.8.0_AE_CloudComp~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/NFRA_GRAPHUNI/NFRA_GRAPHUN... | PASS |
+| 2026-06-30 | 0.8.0_AE_CloudComp~C | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/comp-coverage-map.yaml | PASS |
+| 2026-06-30 | 0.8.0_AE_CloudComp~B | (no-TO) | comp-kuzu | comp-kuzu MATCH (a:CloudNode)-[e]->(b:CloudNode) WHERE a.node_type='LAMBDA' AND b.node_... | PASS |
+| 2026-06-30 | 0.8.0_AE_CloudComp~D | NFRA_GRAPHUNI.P1.d1-fill-derive | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/drift_cli.py | PASS |
+| 2026-06-30 | 0.8.0_AE_CloudComp~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/NFRA_GRAPHUNI/NFRA_GRAPHUN... | PASS |
+| 2026-06-30 | 0.8.0_AE_CloudComp~E | NFRA_COMPROUTE.S1-comp-dispatch-spec | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/comp_dispatch.py | PASS |
+| 2026-06-30 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+
+2026-07-01T0131Z | 0.8.0_AE_CloudComp~E | NFRA_COMPROUTE.S1-comp-dispatch | comp-which, comp-dispatch, ds-commit-gate, safe-commit | Built comp-dispatch (COMPROUTE S1 #1): comp-which grounded the gap + found comp-which reads comp-coverage-map.yaml (routing source), comp-dispatch self-test byte-matches CHAIN_* vars bd+cot (the acceptance proof), ds-gate clean, safe-commit d804ff744. Registration/routing handed to ~C (one-home).
+| 2026-06-30 | 0.8.0_AE_CloudComp~E | NFRA_COMPROUTE.S1-comp-dispatch-spec | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
