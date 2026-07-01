@@ -28,16 +28,20 @@
 # Adding a store (new custodian / graph layer / federated catalog) = one entry
 # here; the uncovered hop is then loud. Keep this in lockstep with the estate.
 #
-# COVERAGE SUMMARY (2026-06-29 authoring):
-#   COVERED   : seam-1, seam-2 (3 engines)
-#   PARTIAL   : seam-3, seam-7
+# COVERAGE SUMMARY (updated 2026-07-01, 0.8.0_AE_CloudComp~C -- grounded on live `comp-drift coverage`):
+#   COVERED   : seam-1, seam-2 (3 engines), seam-5 (Iceberg -- iceberg_parity.py, closed 2026-06-29)
+#   PARTIAL   : seam-3 (marker-oracle surfaces vintage, not a full live==graph assert), seam-7 (freshness only)
 #   SELF-HEAL : seam-4  (auto-refresh, NOT asserted)
-#   GAP       : seam-5 (Iceberg), seam-6 (Trino)  <-- the unguarded seams TODAY
+#   GAP       : seam-6 (Trino fan-in) -- 2 of 5 legs COVERED (git-code-heat, tool-activity-behavior);
+#               3 iceberg-catalog legs (graph_nodes/edges/contracts) are EXPLICIT-GAP below (a Trino-side
+#               engine is needed; dependency = the heat-federation/Trino surface stood up + queryable).
+#   NOTE: the old header listed seam-5 (Iceberg) as GAP -- that was STALE (seam-5 closed 2026-06-29 by
+#         iceberg_parity.py). Corrected here so the summary matches the seam bodies + live coverage tool.
 # =============================================================================
 
 version: 1
 status: authored
-last_reviewed: "2026-06-29"
+last_reviewed: "2026-07-01"
 
 stages:
   - id: LOCAL
@@ -137,14 +141,23 @@ seams:
       - catalog: graph_nodes
         kind: iceberg
         check: trino-catalog-schema == live iceberg table schema/partitioning
+        coverage: GAP            # EXPLICIT-GAP (never-silent, ~C 2026-07-01): the Trino-federation-layer check has NO engine today
+        engine: UNCOVERED
+        engine_needed: "a TRINO-SIDE parity engine: query the federated catalog's column schema + partitioning + resolved snapshot-pointer (information_schema.columns / <table>$snapshots / SHOW CREATE TABLE) and assert == the live iceberg table. DISTINCT from seam-5's iceberg_parity.py, which is grounded Trino-INDEPENDENT (it asserts iceberg-table==producer derive_runner.py schema via the Nessie _branch_head marker; it NEVER queries Trino) -- so seam-5 does NOT cover this leg. GROUNDED DESIGN LEAD (~C, source-read of iceberg_parity.py): a NATIVE iceberg connector reads table metadata directly, so this reduces to a THIN check -- assert Trino resolves the SAME catalog-current snapshot-pointer iceberg_parity.py already validates (base-check snapshot 5612831170965463937) + the same normalized schema/partitioning -> REUSE iceberg_parity.py _PA_TYPE/_IB_TYPE normalization + marker resolution (do NOT re-implement). DEPENDENCY: the heat-federation/Trino surface must be stood up + queryable first (AC-threaded 0.8.0_AE per node note); until then this leg is BLOCKED-GAP, not buildable."
         verdict_vocab: [MATCH, SCHEMA-DRIFT, STALE, UNVERIFIABLE]
       - catalog: graph_edges
         kind: iceberg
         check: trino-catalog-schema == live iceberg table schema/partitioning
+        coverage: GAP            # EXPLICIT-GAP (never-silent, ~C 2026-07-01)
+        engine: UNCOVERED
+        engine_needed: "same Trino-side engine as graph_nodes (re-materialized table -> schema + partitioning + vintage). See graph_nodes engine_needed for the grounded design lead + Trino-standup dependency."
         verdict_vocab: [MATCH, SCHEMA-DRIFT, STALE, UNVERIFIABLE]
       - catalog: graph_contracts
         kind: iceberg
         check: "trino-catalog-schema == live iceberg table schema/partitioning (ENSURE-ONLY -- not nightly-re-materialized, so vintage N/A, schema-fingerprint only)"
+        coverage: GAP            # EXPLICIT-GAP (never-silent, ~C 2026-07-01)
+        engine: UNCOVERED
+        engine_needed: "same Trino-side engine as graph_nodes but ENSURE-ONLY -- schema-fingerprint + partitioning ONLY, vintage N/A (the derive never re-materializes graph_contracts). See graph_nodes engine_needed."
         verdict_vocab: [MATCH, SCHEMA-DRIFT, UNVERIFIABLE]
       - catalog: git-code-heat
         kind: live-read         # SPECIAL CASE: read live, never materialized

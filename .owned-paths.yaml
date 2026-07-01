@@ -954,6 +954,10 @@ paths:
     lane: ANY_EXEC_OR_AE
     note: "NFRA_COMPUNIFY coverage/provenance LEDGER -- the top-down comp-tool coverage MAP (supersedes the flat tools_index, CTO ruling #1). AE owns the build (0.8.0_AE_CloudComp~C, the dedicated COMPUNIFY build lane per NFRA_COMPUNIFY.S0->S3). Mirrors the org/modules/graph/comp_*.py + comp-tools.yaml comp-tool-registry precedent (AE builds comp-tools in org/modules/, ANY_EXEC_OR_AE; longest-match over org/modules/** ANY_EXEC). Added 2026-06-30 by 2.0.0_SA_COO~B (decompose-time grant; the S0 owned-paths grant did not ship bundled with the TO -- corrected here)."
 
+  "org/modules/graph/drift-topology.yaml":
+    lane: ANY_EXEC_OR_AE
+    note: "NFRA_COMPDRIFT propagation-topology + coverage LEDGER (the seam/coverage source of truth; CTO-authored LD-0221). AE govern-side edits it (0.8.0_AE_CloudComp~C aligns coverage-gap closes + seam taxonomy; ~D owns the comp-drift orchestrator that reads it). Mirrors the comp-coverage-map.yaml grant (longest-match over org/modules/** ANY_EXEC). Added 2026-07-01 by 2.0.0_SA_COO~B (decompose-time grant for the parallel COMPDRIFT coverage-gap work)."
+
   "org/modules/graph/comp-tools-segment-scope.md":
     lane: ANY_EXEC_OR_AE
     note: "1-page agent reference card paired with comp-tools.yaml — segment-scope tier guidance + cross-cutting axes. AE-authored per ADHC_COMPIL_V4.017."
