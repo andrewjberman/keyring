@@ -1726,7 +1726,7 @@
   },
   "build_tmp_phantom_note": "the '_build_tmp' node (vendored typing_extensions.py under infra/aws/lambda/portal_data_proxy/_build_tmp/) is a genuine trace-graph EXTRACTOR mis-typing (LAMBDA-typed vendored dep) -- ~D grounded it (Rule-22). NOT ~D's GRAPHUNI lane; root fix routed to the trace-graph/comp-build owner. Current-graph WRITES_S3=0 for it, so NOT denominator-affecting now; a hygiene/prior-vintage cleanup.",
   "portal_etfs_pipeline_lambda_tier": {
-   "count": 9,
+   "count": 6,
    "reason": "my-17-firm keys NOT in ~B's firm-lambda set -- ~D grounded (015220Z, TraceGraph source): NOT firm-pipeline, NOT gold-written, NOT orphan-in-firm. They belong to a THIRD producer tier = PORTAL/ETFS-pipeline lambdas (a distinct later-phase slice, like the product keys).",
    "disposition": "OUT of firm-fleet GRAPHDEPTH scope -> PORTAL/ETFS-pipeline-lambda follow-on slice (same family as the 43 product keys). Denominator stays 233 (NOT 233+9). No silent cap: enumerated + attributed here.",
    "etfs_lambda_written": {
@@ -1747,16 +1747,22 @@
      "gold/artifacts/partner_analytics/header_metrics.json",
      "gold/timeseries/nna_total.json"
     ]
-   },
-   "ops_control_pending_d_grounding": {
-    "count": 3,
-    "note": "gold ops-control (dispatch-lock/trigger-mode/trigger-pending); no gold-writer, no firm-lambda -> ~D grounding requested (likely same portal/etfs or EC2 tier).",
-    "ids": [
-     "gold/dispatch-lock.json",
-     "gold/trigger-mode.json",
-     "gold/trigger-pending.json"
-    ]
    }
+  },
+  "firm_control_plane_ephemeral": {
+   "count": 3,
+   "relative_keys": [
+    "gold/dispatch-lock.json",
+    "gold/trigger-mode.json",
+    "gold/trigger-pending.json"
+   ],
+   "physical_would_be": 5,
+   "grounded_facts": {
+    "writer_source_D": "~D 015642Z (TraceGraph): CODE-written by FIRM gold-trigger lambdas -- dispatch-lock<-inf-gold-trigger(inf); trigger-mode & trigger-pending<-inf-gold-trigger(inf)+bd-gold-trigger(bd), each firm's trigger lambda writing its OWN firm bucket.",
+    "live_absent_A": "~A 015642Z (aws s3 ls, NEVER#5): ALL 5 physical firm-qualified keys (opal-data-inf/gold/dispatch-lock, opal-data-{inf,bd}/gold/trigger-mode, opal-data-{inf,bd}/gold/trigger-pending) DO NOT EXIST on live S3."
+   },
+   "reconciliation": "~D (code-writer exists) and ~B (no persistent object) do NOT conflict -- they diverge on DEFINITION. The code writes these; no persistent object exists. INFERRED (not yet source-confirmed): EPHEMERAL control-plane -- dispatch-lock=a run-scoped lock, trigger-mode/pending=transient trigger-state, created-and-cleared per dispatch (would explain live-absent). To source-confirm: read inf-gold-trigger/bd-gold-trigger for a delete_object of the key.",
+   "disposition": "PENDING COO~B/~C ruling. ~A lean = OUT (denom stays 233): transient control-flow signals, not persistent storage-lineage data -- consistent with excluding secret-state (control/auth, not data). ALT = bounded-lazy-declared (code-declared, materialized-only-during-dispatch) IN-tagged. NOT silently dropped: enumerated + both facts grounded here."
   }
  },
  "firm_lambda_resolved": {
