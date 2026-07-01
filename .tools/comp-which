@@ -602,6 +602,66 @@ def _posterior_backstop(q: str, term) -> bool:
     return True
 
 
+def _default_router(q, qtok, hits, term, list_intent):
+    """NFRA_COMPROUTE DR2 FLIP (CVO~B DRV cert 4c1d93be5, shadow-GREEN): comp_route is now the DEFAULT
+    router. Runs comp_route.route() + the SignalExtractors (curated/surface-first VETTED, fuzzy soft/
+    confident-vetted), prints the decision / disambiguation, and rail-logs. A below-relevance-floor intent
+    FALLS to the on-rails comp-grep/comp-glob (never a dead-end). Returns 0 when handled; None on ANY error
+    -> the LEGACY cascade runs (fail-safe: the flip can NEVER break the LIVE enforcing rail). READ-safe:
+    a genuine write/rebuild question classes COMPUTE (E1 mode-filter skipped); else READ (write-path
+    tools excluded). The shadow proved this reproduces the cascade 0-regression before the flip."""
+    try:
+        for _p in (os.path.join(WS, "org", "modules", "graph"),
+                   os.path.join(WS, "infra", "aws", "globgrph")):
+            if _p not in sys.path:
+                sys.path.insert(0, _p)
+        import comp_route
+        import comp_capability_provider as _capmap
+        import comp_which_signals as _sig
+        provider = _capmap.get_provider()
+        ctx = {"role": "", "working_set": [], "trajectory": [],
+               "intent_class": _sig.classify_query_intent(q)}
+        r = comp_route.route(q, ctx, provider, extractors=_sig.EXTRACTORS)
+    except Exception:  # fail-safe -> legacy cascade
+        return None
+    # a call string + concern per routed cap, sourced from what comp-which already computed + the provider.
+    call_of = {}
+    for _s, _l, calls, _w in (hits or []):
+        for _c in (calls or []):
+            _cid = _c.strip().split()[0] if _c.strip() else ""
+            if _cid:
+                call_of.setdefault(_cid, _c)
+    try:
+        for _row in _manifest_matches(q, qtok):
+            _call = _row[2] if len(_row) > 2 else ""
+            _cid = (_call or (_row[1] if len(_row) > 1 else "") or "").strip().split()[0]
+            if _cid:
+                call_of.setdefault(_cid, _call or _cid)
+    except Exception:
+        pass
+    try:
+        concern_of = {c.id: (c.concern or "") for c in provider.capabilities()}
+    except Exception:
+        concern_of = {}
+    if r.kind == "fallback":
+        kind = "glob" if list_intent else "grep"
+        tgt = (_extract_path(q) if kind == "glob" else term) or term or "."
+        _log_rail("RUN-%s" % kind.upper(), "posterior-fallback", tgt, q)
+        return _run_primitive(kind, tgt)
+    caps = [s.cap.id for s in r.within_margin] or ([r.ranked[0].cap.id] if r.ranked else [])
+    if not caps:
+        return None
+    if r.kind == "disambiguation":
+        print("  near-tie -- the surface-aware router surfaces these; pick by concern (never a silent guess):\n")
+    for cid in caps[:4]:
+        print("  -> %s   [%s]" % (call_of.get(cid, cid), concern_of.get(cid, "")[:78]))
+    print("")
+    print("  (comp-which routed via the COMPROUTE default posterior router -- run the call yourself.")
+    print("   No tool fit? it would RUN comp-grep/comp-glob -- never a dead-end.)")
+    _log_rail("ROUTE-POSTERIOR", "+".join(caps[:4]), term, q)
+    return 0
+
+
 def main() -> int:
     for _s in (sys.stdout, sys.stderr):  # uncrashable output on a cp1252 console
         try:
@@ -651,6 +711,13 @@ def main() -> int:
 
     print('comp-which -- best match for: "%s"\n' % q)
 
+    # NFRA_COMPROUTE DR2 FLIP (CVO~B DRV cert 4c1d93be5): comp_route is the DEFAULT router. On any error
+    # it returns None -> the LEGACY cascade below runs (fail-safe -- the flip can never break the LIVE rail).
+    _dr = _default_router(q, qtok, hits, term, list_intent)
+    if _dr is not None:
+        return _dr
+
+    # --- LEGACY CASCADE (fail-safe fallback; the pre-flip behavior) ----------
     # --- DECISION (never dead-ends, NFRA_COMPRAIL TO-2 AC1; LD-0208 backstop-reorder) ----------
     # 1) STRONG curated route (>=4 == a phrase match or 2+ keyword tokens) -> the vetted answer.
     # 2) EXPLICIT search/list verb ("where is X", "find Y", "list files") -> RUN the primitive
