@@ -978,6 +978,10 @@ paths:
     lane: ANY_EXEC_OR_AE
     note: "ADHC_CMPAWS AWS-shape hand-audit fixtures + live-AWS cross-check records (s3-hand-audit-fixture-*.yaml, s3-live-aws-crosscheck-*.md). Co-owned: ws CTO design/schema, 0.7.0_AE live-AWS cross-check (the *-AE.md records), 3.0.0_SA_CVO hand-audit/certify. Was falling through to org/modules/** ANY_EXEC (which excludes AE), stranding AE's crosscheck record (RV-0030 F-003 — exec-record-path enumeration gap; AE base not in ANY_EXEC at all, so the tilde base-fallback can't reach it). Added 2026-06-08 by ws CTO. Longest-match overrides org/modules/** ANY_EXEC."
 
+  "org/modules/graph/compproof/**":
+    lane: ANY_EXEC_OR_AE
+    note: "NFRA_COMPPROOF program home (the one home per the PRD anti-drift-self-consistency rule) -- the B benchmark harness: corpus-loader + root-cause-strip diff-gate, blind-solver spawner, 3-axis (REACH x USABILITY x GROUNDING-RESILIENCE) scorer, gap-charter emitter, standing suite. AE 0.8.0_AE_CloudComp~D builds B1 to CTO arch (NFRA_COMPPROOF_B_HARNESS_DESIGN.md, 1315f9a03). Mirrors the org/modules/graph/comp_*.py + drift-topology.yaml decompose-time AE-build grant convention (CTO-ratified 2026-06-15: COO adds the graph-module build-lane rule at decompose-time; longest-match overrides org/modules/** ANY_EXEC). NOTE: ~B off-limits for COMPPROOF is a TASK-staffing constraint (validation subject), NOT a path-lock -- ANY_EXEC_OR_AE membership is harmless (it is not tasked). Added 2026-07-01 by 2.0.0_SA_COO~B (decompose-time grant); CC CTO. SoD: grantee ~D does not commit its own grant -- COO~B lands it."
+
   "org/modules/heatmap/**":
     lane: NFRA_HEATMAP
     note: "NFRA_HEATMAP module surface (heat_map.py S0 primitive, object_freshness.py O1 engine, README, tests). Strand-C build lane (DS 0.4.0 + AE 0.5.0) self-commits its gated-clean code; the canonical home next to org/modules/graph/. Added 2026-06-25 by 2.0.0_SA_COO per 0.4.0 RAVC 213807Z (the lanes-free GO build hit org/modules/** ANY_EXEC). Longest-match overrides org/modules/** ANY_EXEC."
