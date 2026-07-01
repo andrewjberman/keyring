@@ -11202,3 +11202,21 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-07-01 | 0.4.0_DS_ClientPlatform | ADVI_TAGATTR.DS-1.d00c-full-tagged-role-aua-nna-fees | comp-pipescript | comp-pipescript deployed D_04.client_portal_summary | PASS |
 | 2026-07-01 | 3.0.0_SA_CVO~B | NFRA_COMPPROOF.A1 | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/logs/2026-0... | PASS |
 | 2026-07-01 | 0.4.0_DS_ClientPlatform | ADVI_TAGATTR.DS-1.d00c-full-tagged-role-aua-nna-fees | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-01 | 2.0.0_SA_COO~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/NFRA_COMPPROOF/PROGRAM-LED... | PASS |
+| 2026-07-01 | 0.8.0_AE_CloudComp~D | NFRA_COMPPROOF.B1 | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/compproof/AFFORDANCE_... | PASS |
+| 2026-07-01 | 0.8.0_AE_CloudComp~D | NFRA_COMPPROOF.B1 | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/compproof/AFFORDANCE_... | PASS |
+| 2026-07-01 | 0.4.0_DS_ClientPlatform | ADVI_TAGATTR.DS-1.d00c-full-tagged-role-aua-nna-fees | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-07-01 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+| 2026-07-01 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/ADVI_TAGATTR.json | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-platinum | comp-platinum | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-platinum | comp-platinum tab-audit | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-platinum | comp-platinum page getHeaderMetrics | FAIL |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-platinum | comp-platinum summary | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-platinum | comp-platinum page PartnerAnalytics | PASS |
+| 2026-07-01 | 0.4.0_DS_ClientPlatform~A | (no-TO) | comp-pipescript | comp-pipescript io D_00c.portal_leaderboard.py | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-platinum | comp-platinum page PartnerAnalytics --firm inflection | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-routes | comp-routes | PASS |
+| 2026-07-01 | 0.4.0_DS_ClientPlatform | ADVI_TAGATTR.DS-1.d00c-full-tagged-role-aua-nna-fees | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-07-01 | 0.4.0_DS_ClientPlatform~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file data/black_diamond/scripts/gold/D_00c.p... | PASS |
+| 2026-07-01 | 0.8.0_AE_CloudComp~C | NFRA_COMPROUTE.DR2 | comp-which-routing-test/safe-commit-surface-check | /log: DR2 CLOSED (CVO~B post-flip GREEN, no rollback) + flywheel emit fix 32c817a6f (flip now emits every live route to comproute-routing.jsonl, unblocks ~E step-3/4); live fixture GREEN 34/34+3/3+20/20+3/3, emit row 407->408 | PASS |
+| 2026-07-01 | 0.8.0_AE_CloudComp~C | NFRA_COMPROUTE.DR2-surface-shadow-rail-flip | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
