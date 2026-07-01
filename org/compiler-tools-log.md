@@ -10240,3 +10240,13 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-06-30 | 0.4.0_DS_ClientPlatform~A | ADVI_INFREF.P1 | pipescript | pipescript inf | FAIL |
 2026-07-01 ~0018Z | 0.8.0_AE_CloudComp~B | P1 population derive FAILED-CLOSED diagnosis + escalation | comp-kuzu (post-fail HEAD/marker verify = decisive no-half-land ground-truth) | grounded 'did it commit?' before any rollback (clean fail-closed, marker safe -> no destructive revert); rail false-positive on a Python-source grep re-run with # rail-checked marker (COMPLEARN routing candidate)
 | 2026-06-30 | 0.8.0_AE_CloudComp~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-06-30 | 0.4.0_DS_ClientPlatform~A | ADVI_INFREF.P1 | pipescript | pipescript advi-inf | PASS |
+| 2026-06-30 | 0.4.0_DS_ClientPlatform~A | ADVI_INFREF.P1 | comp-surface-check | comp-surface-check check --mode advisory --file docs/briefs/advi-infref-p3-decommission... | PASS |
+| 2026-06-30 | 0.4.0_DS_ClientPlatform~A | ADVI_INFREF.P1 | comp-surface-check | comp-surface-check check --mode advisory --file docs/briefs/advi-infref-p3-decommission... | PASS |
+| 2026-06-30 | 0.8.0_AE_CloudComp~D | NFRA_GRAPHUNI.P1.d1-fill-derive | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/globgrph/derive_runner.py --f... | PASS |
+| 2026-06-30 | 0.8.0_AE_CloudComp~C | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/comp-coverage-map.yaml | PASS |
+| 2026-06-30 | 0.8.0_AE_CloudComp~E | NFRA_COMPLEARN.P3 | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/globgrph/Dockerfile --file in... | PASS |
+| 2026-06-30 | 0.4.0_DS_ClientPlatform~A | ADVI_INFREF.P1 | comp-surface-check | comp-surface-check check --mode advisory --file docs/briefs/advi-infref-p3-decommission... | PASS |
+| 2026-06-30 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+2026-07-01T0032Z | 0.8.0_AE_CloudComp~D | NFRA_GRAPHUNI.P1 | (read) derive_runner NODE_TYPE_LAYER Rule-22 diagnosis + python byte-consistency (emitter==map keys) + convergence re-verify (169 unchanged) + aws s3 re-emit | fail-loud recovery: CTO tier-agnostic correction (PipelineScript+tier=gold, LD-0230 rule-7 canonical) committed 200e3de35 byte-consistent; awaiting CVO~B verify -> ~B re-fire
+| 2026-06-30 | 0.8.0_AE_CloudComp~D | NFRA_GRAPHUNI.P1.d1-fill-derive | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
