@@ -104,6 +104,16 @@ RULES = [
      "graph nodes touching a symbol (xref)",
      ["comp-xref <symbol>", "comp-xref --save  # snapshot, then comp-xref to diff"],
      "every graph node (id/label/file/edge) touching a symbol -- graph traversal, not a text grep"),
+    # comp-symbols = NFRA_COMPROUTE S1 #2 (~E built e5ae5dd7a; CTO-ratified). FORWARD file-symbol INVENTORY
+    # (what a FILE defines), input=a FILE -- opposite of comp-xref (graph-wide OCCURRENCE of a symbol) + comp-blast
+    # (a symbol's blast-radius). "in file X" scoping keeps it off comp-xref's graph-wide lane. LD-0226 routing mutation.
+    (["list the functions in", "list the symbols in", "list the classes in", "symbols in file",
+      "functions in file", "classes in file", "what's defined in", "what is defined in", "defined in file",
+      "what functions are in", "what constants does", "what imports does", "what does file", "symbol inventory",
+      "where is function", "where is the function", "list functions in", "what functions does the file"],
+     "file-symbol inventory (comp-symbols)",
+     ["comp-symbols <file>", "comp-symbols <file> --grep <pat>", "comp-symbols <file> --kind func|class|const|import"],
+     "what a source FILE defines -- its functions/classes/constants/imports + line numbers (forward AST inventory; input=a FILE, opposite of comp-xref's graph-wide occurrence + comp-blast's blast-radius)"),
     (["portal", "component", "endpoint", "scoped route", "/api/", ".tsx", "tsx",
       "frontend", "renders", "rendering", "getadvisor", "which lambda serves", "serves /api",
       # real-NL feed vocabulary (paraphrase-probe 2026-06-26): an agent asks "what FEEDS/

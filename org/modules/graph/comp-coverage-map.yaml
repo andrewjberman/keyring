@@ -194,6 +194,26 @@ grain_contract:
     relation: contains
     edge_type: CONTAINS
     levels: [estate, surface, container, file, object, function, field]
+  # ---- the canonical node_type -> grain BRIDGE (S4-AUDIT V1 completeness, COO~B 20260701; ground-truthed
+  # vs the live census = 52 node_types, ALL mapped). A grain is PRESENT/traversable iff >=1 of its node_types
+  # has a populated node. NEVER-SILENT: a live node_type absent here = a bridge gap (re-audit vs census on drift).
+  node_type_grain:
+    resource:  [EC2_INSTANCE, LAMBDA, S3_BUCKET, DYNAMODB_TABLE, IAM_ROLE, IAM_POLICY, IAM_USER, INSTANCE_PROFILE, SECURITY_GROUP, SERVICE_PRINCIPAL, EVENT_RULE, EVENT_SOURCE, SECRET, CW_ALARM, LOG_GROUP, SNS_TOPIC, SQS_QUEUE, KMS_KEY, S3_BUCKET_POLICY, API_GW, VPC_ENDPOINT, ECS_TASK_DEFINITION, ECS_CLUSTER, ROUTE53_RECORD, LOAD_BALANCER, CLOUDFRONT_DISTRIBUTION, STATE_MACHINE, MS_USER]
+    container: [MS_FOLDER, MS_LIBRARY, Pipeline]        # Pipeline = the compute CONTAINS container (node_identity)
+    surface:   [Module, MS_SITE]
+    file:      [PipelineScript, MS_FILE]                # PipelineScript ALSO satisfies `script`
+    script:    [PipelineScript]
+    object:    [S3Key]
+    function:  [PipelineFunction]                       # PipelineFunction ALSO satisfies `symbol`
+    symbol:    [PipelineFunction, TypeDecl, Field]      # code-symbol grain (named definitions)
+    type:      [TypeDecl]
+    component: [ReactComponent, Component, JSXElement, JSXRender, Hook, DataFetch, ReactQueryKey, Page]
+    field:     [Field, Prop]
+    endpoint:  [Endpoint]
+    route:     [API_ROUTE, ServedURL]
+    cluster:   [PanelCluster]
+    # `chain` has NO graph node_type -- SOURCE-ONLY (tool_grain_calibration.source_only_grains); the dispatch DAG
+    # is not (yet) materialized as nodes -> COMPROUTE/COMPLEARN follow-on (a). The S4 graph-audit exempts it.
   # The canonical RELATION vocabulary GRAPHUNI populates + COMPDRIFT seams on. SEED (GRAPHUNI
   # extends in P1). INVARIANT: each `relation` -> exactly ONE edge_type; grain difference rides
   # the `levels` attribute, NEVER a new type. distinct_relations are distinct types (ruling 4).
@@ -497,7 +517,7 @@ tool_grain_calibration:
     comp-shell:        [file]
     comp-diff:         [file, symbol]
     comp-pipescript:   [script, object]    # gold-script I/O (script + the S3 objects)
-    comp-dispatch:     [chain]             # orchestration grain (ABOVE per-script): the gold-dispatch DAG. NFRA_COMPROUTE S1; fronts the previously-empty orchestration grain
+    comp-dispatch:     [chain]             # orchestration grain (ABOVE per-script): the gold-dispatch DAG. NFRA_COMPROUTE S1. `chain` is a SOURCE-ONLY grain (see source_only_grains) -- comp-dispatch parses the CHAIN_* vars from SOURCE, not the graph; the graph-traversal S4-AUDIT EXEMPTS it (COO~B ruling b, S4-audit close 20260701)
     comp-validate:     [object]
     comp-freshness:    [object]
     comp-incrparity:   [object]
@@ -508,6 +528,7 @@ tool_grain_calibration:
     comp-trace:        [function, symbol, cross-grain]   # function-level lineage; walks cross-grain
     comp-blast:        [function, symbol, cross-grain]
     comp-xref:         [symbol]
+    comp-symbols:      [file, symbol]      # file-symbol INVENTORY (forward AST enum of a file's own defs); NFRA_COMPROUTE S1 #2
     comp-types:        [type, symbol]
     # ---- below-file: component / route (portal / serving) ----
     comp-transform:    [component, field]
@@ -521,6 +542,11 @@ tool_grain_calibration:
     comp-platinum:     [cross-grain]       # component -> endpoint -> lambda -> object -> gold (full stack)
     comp-kuzu:         [cross-grain]        # graph query, any grain
     comp-graph:        [cross-grain]        # graph vintage across grains
+  source_only_grains: [chain]              # grains a tool operates at by SOURCE-PARSE (not graph-traversal). The S4 graph-traversal
+                                           # audit EXEMPTS these (a tool declaring a source-only grain is not a graph-traverser at that
+                                           # grain -- it reads source/config). COO~B ruling (b), S4-audit close 20260701: comp-dispatch[chain]
+                                           # parses the gold CHAIN_* vars from source, so `chain` absent from graph node-grains is EXPECTED,
+                                           # not a dead declaration. (a) = materialize the DAG as graph nodes = a queued COMPROUTE/COMPLEARN follow-on.
   grain_coverage_gaps:                     # grains with NO dedicated tool -> COMPLEARN build-next worklist
     - { grain: container, regime: above-file, detail: "the L1 container tier (S3_BUCKET/MS_FOLDER/portal Module) has no dedicated container-grain tool -- comp-aws is resource-grain, not container", severity: medium }
     - { grain: statement, regime: below-file, detail: "statement-grain (control-flow within a function) has no tool -- and is bounded-materialization (lazy), so low priority", severity: low }
@@ -736,11 +762,19 @@ tools:
     surface: AWS-CLOUD
     granularity: graph-node
     concern: "downstream IMPACT set + upstream callers (what breaks if I change X; function-level)"
-    touches_resource: [trace-graph]
+    touches_resource: [trace-graph, symbol-defn]
     distinct_from:
       - { tool: comp-trace, shared_resource: trace-graph, my_concern: "IMPACT set (what breaks)", their_concern: "dependency PATH walk" }
       - { tool: comp-diff,  shared_resource: trace-graph, my_concern: "IMPACT set (what breaks)", their_concern: "uncommitted-CHANGE blast" }
       - { tool: comp-xref,  shared_resource: trace-graph, my_concern: "IMPACT set (what breaks)", their_concern: "symbol OCCURRENCE lookup" }
+      - { tool: comp-symbols, shared_resource: symbol-defn, my_concern: "symbol-DEPENDENCY / blast-radius (REVERSE traversal, input=a NAME -- what breaks)", their_concern: "file-symbol INVENTORY (FORWARD enumeration, input=a FILE -- what it defines)" }
+  - tool: comp-symbols
+    surface: GIT
+    granularity: symbol
+    concern: "file-symbol INVENTORY -- what functions/classes/constants/imports a source file DEFINES + where (forward AST enumeration, input=a FILE). NFRA_COMPROUTE S1 #2; fronts the previously-empty file-symbol-inventory grain; COMPOSES with comp-blast (comp-symbols --grep -> pick a fn -> comp-blast it)"
+    touches_resource: [symbol-defn]
+    distinct_from:
+      - { tool: comp-blast, shared_resource: symbol-defn, my_concern: "file-symbol INVENTORY (FORWARD enumeration, input=a FILE -- what it defines)", their_concern: "symbol-DEPENDENCY / blast-radius (REVERSE traversal, input=a NAME -- what breaks)" }
 
   # ====================== seam-homed (inter-surface parity) ======================
   - tool: comp-lambdamap
