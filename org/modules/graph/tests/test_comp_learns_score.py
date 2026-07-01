@@ -21,6 +21,7 @@ from org.modules.graph.comp_learns_score import (  # noqa: E402
     build_gap_candidates,
     build_merge_retire_candidates,
     escape_severity,
+    is_preventive_tool,
     outcome_value,
 )
 
@@ -69,6 +70,19 @@ def test_every_gap_candidate_cites_value_evidence():
     for c in build_gap_candidates(rows):
         assert c["value_metric"]["escapes_prevented"] > 0
         assert c["value_evidence"]["top_terms"]
+
+
+def test_preventive_gate_retire_score_is_tempered_and_flagged():
+    """CTO caveat: a preventive/enforcement GATE (e.g. comp-manifest-check) with a low value-per-run is
+    likely silently SUCCEEDING (drift prevented = unobservable), not low-value. Its retire score is
+    tempered vs a plain tool with the identical low outcome, and it is flagged for human judgment."""
+    assert is_preventive_tool("comp-manifest-check") and is_preventive_tool("ds-commit-gate")
+    assert not is_preventive_tool("comp-lambdamap") and not is_preventive_tool("comp-constants")
+    rolling = [{"tool": "comp-manifest-check", "result": "FAIL"}] * 20 + [{"tool": "plain-tool", "result": "FAIL"}] * 20
+    cands = {c["candidate"].split()[0]: c for c in build_merge_retire_candidates(rolling)}
+    gate, plain = cands["comp-manifest-check"], cands["plain-tool"]
+    assert gate["preventive_gate"] is True and plain["preventive_gate"] is False
+    assert gate["value_score"] < plain["value_score"]   # tempered
 
 
 def test_reuses_comproute_l3_outcome_weighting():
