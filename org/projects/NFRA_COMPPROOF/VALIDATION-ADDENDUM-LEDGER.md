@@ -15,11 +15,11 @@ E3 + M1-M4 are self-disclosed with file:line but NOT adversarially re-verified; 
 |---|---|---|---|---|---|
 | E1 | HIGH | naturalness | comp-which routes read Qs ("what lambdas read bucket X") to comp-aws DERIVE (8-min rebuild); comp_route.py ignores the manifest mode:query\|rebuild tag | ~E (comp_route) + ~B assist + CTO | **FOLDED INTO COMPROUTE default-router re-scope** (Andrew-direct). E1 = the mode-GATE hard prior. Design converging CTO/~E/~C; dispatch on CTO ruling. |
 | E2 | HIGH | connectivity | portal serving->prod provenance dead-ends: SERVED_FROM lands on coarse opal-data-portal-v2 BUCKET not key-level S3Keys (derive_runner.py:1300); Endpoint->Lambda = 0 edges | ~D/DE (globgrph/TSGRAPH derive) | BANKED into the (a) GRAPHUNI derive-fidelity follow-on (~D ACK 131948Z) -- one derive pass, dispatched with (a). |
-| E3 | HIGH | tool | comp-drift reports a CLEAN lambda as a deploy break: drift_cli.py:217 passes target positionally to `comp-lambdamap parity` (no positional -> rc=2) | ~B (comp-drift, its domain) | RE-VERIFY (~B Step-1) then fix. ~B took it on the confirm. |
+| E3 | HIGH | tool | comp-drift reports a CLEAN lambda as a deploy break: drift_cli.py:217 passes target positionally to `comp-lambdamap parity` (no positional -> rc=2) | ~B author / COO~B exec-land | **EXEC-LANDED 17eaca870** (parity --json + target-verdict filter; IAM scoped to target's role via graph ASSUMES edge; estate drift -> informational. Two-dir self-test PASS: clean=EXIT0, real-drift=EXIT1. CVO~B Step-3 re-run) |
 | M1 | MED | tool | comp-trace S3 direction inverted | TBD on re-verify | RE-VERIFY (~B Step-1) |
 | M2 | MED | tool (SEV1-adjacent) | comp-types fabricates + PERSISTS a consumer graph for 0-importer nested types (MP/benchmark surface) | TBD on re-verify | RE-VERIFY (~B Step-1) -- MP/benchmark = critical-surface, verify carefully |
-| M3 | MED | tool | comp-parity headline is a hardcoded frozen string | TBD on re-verify | RE-VERIFY (~B Step-1) |
-| M4 | MED | tool | comp-heat federated mode crashes on its own default query | TBD on re-verify | RE-VERIFY (~B Step-1) |
+| M3 | MED | tool | comp-parity headline is a hardcoded frozen string (Rule-22 reserved-word: "PROVEN" as a live verdict, comparators never run) | ~A | **LANDED 0f3006763** (AE-authorable, ~A author-line; self-test both-dir PASS -- reserved-word removed + honest RECORDED relabel, function intact rc=0; CVO~B Step-3 re-run) |
+| M4 | MED | tool | comp-heat federated mode crashes on its own default query | ~A | **LANDED b36791252** (AE-authorable; bash-escape single-quote in _trino_fed.py; self-test both-dir PASS -- shlex POSIX round-trips all 3 canonical queries exact; live-Fargate run deferred to CVO~B Step-3 if warranted) |
 
 ## UNTESTED (rate-limited) -- Step-1 must exercise
 comp-grep, comp-glob, comp-validate -> PASS-or-error. (comp-grep/glob are the router's own fallback surface -> important they PASS.)
