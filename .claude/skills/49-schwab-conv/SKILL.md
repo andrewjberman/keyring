@@ -27,7 +27,7 @@ gold consumer. **trn_nna (TRN Layer B) is the NNA-classified flows the gold C_01
 | File pattern | `CRS{YYYYMMDD}.{ACC,RPS,TRN,ULN,RLD,SEC,UPN,UPT,...}` (Schwab SI2 Desktop delivers per-account) |
 | Raw S3 dest | `s3://opal-data-schwab/01_raw/` (all ext) + `*.RPS` mirror to `s3://opal-data-schwab/bronze/rps/` |
 | Silver S3 dest | `s3://opal-data-bd/schwab/silver/{acc,rps,trn,trn_nna,uln,rld}/date=YYYYMMDD/data.parquet` (ULT is NOT from this skill — BD-side `B_03`-sourced, by design) |
-| Last-known state | as of 2026-06-25, silver complete through **20260624** (update this line each run) |
+| Last-known state | as of 2026-07-01, silver complete through **20260625** (rps also **20260630**, from a same-drop CRS20260630.RPS); 06-26..06-30 full roll-forward in progress via 0.5.0_AE from the quartz-box validation prefix. `build_canonical_daily.py --date` needs a **HYPHENATED** date (`2026-06-25`), NOT compact — compact crashes `position_t0` strptime + throws a gold_holdings NoSuchKey (2026-07-01 CVO finding). (update this line each run) |
 
 **SSE gotcha:** `opal-data-schwab` DENIES `PutObject` without `x-amz-server-side-encryption:
 AES256`. The sync script already passes `ExtraArgs={'ServerSideEncryption':'AES256'}` — if you ever
@@ -108,6 +108,8 @@ silver lands — this skill's lane). It orchestrates the 5 silver facts + 5 dims
 trailing-30d account_gains off the silver you just rolled:
 
 ```bash
+# --date accepts compact ($LATEST is YYYYMMDD, e.g. 20260625) OR hyphenated (2026-06-25);
+# build_canonical_daily.py normalizes both in-script (2026-07-01 CVO compact-crash finding fixed).
 python data/canonical/schwab/build_canonical_daily.py --date $LATEST --upload
 # (or just --upload -> defaults to the latest RPS silver date)
 ```
