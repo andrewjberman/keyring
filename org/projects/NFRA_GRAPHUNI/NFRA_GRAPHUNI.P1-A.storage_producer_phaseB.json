@@ -2,7 +2,7 @@
  "producer": "graphuni-storage",
  "generated_at": "2026-07-01T01:30:00Z",
  "lane": "0.8.0_AE_CloudComp~A",
- "phase": "P1-A Phase-B (storage remainder; FIRM-ONLY per COO~B ruling 011939Z; read-only)",
+ "phase": "P1-A Phase-B (storage remainder; FIRM-ONLY; firm-lambda LIVE-VERIFIED via ~B; read-only)",
  "canonical_id_convention": "<bucket>/<normalized-key> (~C 02286234a); level: object | prefix (glob->prefix)",
  "s3_bucket_node_id_form": "arn:aws:s3:::<bucket>",
  "depends_on": "Phase-A land + {~B,~D,~A,~C} Phase-A /seams GREEN; then folds in the NEXT single derive",
@@ -622,6 +622,98 @@
    "bucket": "opal-data-mdpf",
    "key": "silver/netassets_daily.parquet",
    "attribution": "reader-firm"
+  },
+  {
+   "id": "opal-data-bd/gold/clients/*.json",
+   "type": "S3Key",
+   "name": "gold/clients/*.json",
+   "layer": "aws",
+   "stratum": "object",
+   "level": "prefix",
+   "bucket": "opal-data-bd",
+   "key": "gold/clients/*.json",
+   "attribution": "firm-lambda"
+  },
+  {
+   "id": "opal-data-bd/silver/interpolated_prices.parquet",
+   "type": "S3Key",
+   "name": "silver/interpolated_prices.parquet",
+   "layer": "aws",
+   "stratum": "object",
+   "level": "object",
+   "bucket": "opal-data-bd",
+   "key": "silver/interpolated_prices.parquet",
+   "attribution": "firm-lambda"
+  },
+  {
+   "id": "opal-data-inf/bronze/orion-api-v2/*/household_rep_mapping.json",
+   "type": "S3Key",
+   "name": "bronze/orion-api-v2/*/household_rep_mapping.json",
+   "layer": "aws",
+   "stratum": "object",
+   "level": "prefix",
+   "bucket": "opal-data-inf",
+   "key": "bronze/orion-api-v2/*/household_rep_mapping.json",
+   "attribution": "firm-lambda"
+  },
+  {
+   "id": "opal-data-inf/bronze/orion-api-v2/*/representatives.json",
+   "type": "S3Key",
+   "name": "bronze/orion-api-v2/*/representatives.json",
+   "layer": "aws",
+   "stratum": "object",
+   "level": "prefix",
+   "bucket": "opal-data-inf",
+   "key": "bronze/orion-api-v2/*/representatives.json",
+   "attribution": "firm-lambda"
+  },
+  {
+   "id": "opal-data-bd/blackdiamond/49f/session-trigger-mode.json",
+   "type": "S3Key",
+   "name": "blackdiamond/49f/session-trigger-mode.json",
+   "layer": "aws",
+   "stratum": "object",
+   "level": "object",
+   "bucket": "opal-data-bd",
+   "key": "blackdiamond/49f/session-trigger-mode.json",
+   "attribution": "firm-lambda",
+   "concern": "ops-control"
+  },
+  {
+   "id": "opal-data-bd/gold/_state/load_flows/watermark.json",
+   "type": "S3Key",
+   "name": "gold/_state/load_flows/watermark.json",
+   "layer": "aws",
+   "stratum": "object",
+   "level": "object",
+   "bucket": "opal-data-bd",
+   "key": "gold/_state/load_flows/watermark.json",
+   "attribution": "firm-lambda",
+   "concern": "ops-control"
+  },
+  {
+   "id": "opal-data-cot/blackdiamond/cot/session-trigger-mode.json",
+   "type": "S3Key",
+   "name": "blackdiamond/cot/session-trigger-mode.json",
+   "layer": "aws",
+   "stratum": "object",
+   "level": "object",
+   "bucket": "opal-data-cot",
+   "key": "blackdiamond/cot/session-trigger-mode.json",
+   "attribution": "firm-lambda",
+   "concern": "ops-control"
+  },
+  {
+   "id": "opal-data-inf/gold/meta/pipeline-complete.json",
+   "type": "S3Key",
+   "name": "gold/meta/pipeline-complete.json",
+   "layer": "aws",
+   "stratum": "object",
+   "level": "object",
+   "bucket": "opal-data-inf",
+   "key": "gold/meta/pipeline-complete.json",
+   "attribution": "firm-lambda",
+   "concern": "ops-control"
   }
  ],
  "edges": [
@@ -1408,185 +1500,118 @@
    "edge_type": "CONTAINS",
    "layer": "aws",
    "level": "object"
-  }
- ],
- "pending_lambda_only": [
-  {
-   "key": "bronze/orion-api-v2/*/household_rep_mapping.json",
-   "name": "bronze/orion-api-v2/*/household_rep_mapping.json",
-   "stratum": "object",
-   "level": "prefix",
-   "bucket": "PENDING_B_ARN_FIRM_LAMBDA",
-   "attribution": "firm-lambda-path",
-   "status": "pending_b_firm_target_byte_diff",
-   "kind": "firm-data"
   },
   {
-   "key": "bronze/orion-api-v2/*/representatives.json",
-   "name": "bronze/orion-api-v2/*/representatives.json",
-   "stratum": "object",
-   "level": "prefix",
-   "bucket": "PENDING_B_ARN_FIRM_LAMBDA",
-   "attribution": "firm-lambda-path",
-   "status": "pending_b_firm_target_byte_diff",
-   "kind": "firm-data"
+   "source": "opal-data-bd/gold/clients/*.json",
+   "target": "arn:aws:s3:::opal-data-bd",
+   "edge_type": "OWNED_BY",
+   "layer": "aws",
+   "level": "prefix"
   },
   {
-   "key": "gold/artifacts/clients/growth_timeseries.json",
-   "name": "gold/artifacts/clients/growth_timeseries.json",
-   "stratum": "object",
-   "level": "object",
-   "bucket": "PENDING_B_ARN_FIRM_LAMBDA",
-   "attribution": "firm-lambda-path",
-   "status": "pending_b_firm_target_byte_diff",
-   "kind": "firm-data"
+   "source": "arn:aws:s3:::opal-data-bd",
+   "target": "opal-data-bd/gold/clients/*.json",
+   "edge_type": "CONTAINS",
+   "layer": "aws",
+   "level": "prefix"
   },
   {
-   "key": "gold/artifacts/clients/tax_basis_breakdown.json",
-   "name": "gold/artifacts/clients/tax_basis_breakdown.json",
-   "stratum": "object",
-   "level": "object",
-   "bucket": "PENDING_B_ARN_FIRM_LAMBDA",
-   "attribution": "firm-lambda-path",
-   "status": "pending_b_firm_target_byte_diff",
-   "kind": "firm-data"
+   "source": "opal-data-bd/silver/interpolated_prices.parquet",
+   "target": "arn:aws:s3:::opal-data-bd",
+   "edge_type": "OWNED_BY",
+   "layer": "aws",
+   "level": "object"
   },
   {
-   "key": "gold/artifacts/clients/tax_deferred_candidates.json",
-   "name": "gold/artifacts/clients/tax_deferred_candidates.json",
-   "stratum": "object",
-   "level": "object",
-   "bucket": "PENDING_B_ARN_FIRM_LAMBDA",
-   "attribution": "firm-lambda-path",
-   "status": "pending_b_firm_target_byte_diff",
-   "kind": "firm-data"
+   "source": "arn:aws:s3:::opal-data-bd",
+   "target": "opal-data-bd/silver/interpolated_prices.parquet",
+   "edge_type": "CONTAINS",
+   "layer": "aws",
+   "level": "object"
   },
   {
-   "key": "gold/artifacts/partner_analytics/header_metrics.json",
-   "name": "gold/artifacts/partner_analytics/header_metrics.json",
-   "stratum": "object",
-   "level": "object",
-   "bucket": "PENDING_B_ARN_FIRM_LAMBDA",
-   "attribution": "firm-lambda-path",
-   "status": "pending_b_firm_target_byte_diff",
-   "kind": "firm-data"
+   "source": "opal-data-inf/bronze/orion-api-v2/*/household_rep_mapping.json",
+   "target": "arn:aws:s3:::opal-data-inf",
+   "edge_type": "OWNED_BY",
+   "layer": "aws",
+   "level": "prefix"
   },
   {
-   "key": "gold/clients/*.json",
-   "name": "gold/clients/*.json",
-   "stratum": "object",
-   "level": "prefix",
-   "bucket": "PENDING_B_ARN_FIRM_LAMBDA",
-   "attribution": "firm-lambda-path",
-   "status": "pending_b_firm_target_byte_diff",
-   "kind": "firm-data"
+   "source": "arn:aws:s3:::opal-data-inf",
+   "target": "opal-data-inf/bronze/orion-api-v2/*/household_rep_mapping.json",
+   "edge_type": "CONTAINS",
+   "layer": "aws",
+   "level": "prefix"
   },
   {
-   "key": "gold/timeseries/nna_total.json",
-   "name": "gold/timeseries/nna_total.json",
-   "stratum": "object",
-   "level": "object",
-   "bucket": "PENDING_B_ARN_FIRM_LAMBDA",
-   "attribution": "firm-lambda-path",
-   "status": "pending_b_firm_target_byte_diff",
-   "kind": "firm-data"
+   "source": "opal-data-inf/bronze/orion-api-v2/*/representatives.json",
+   "target": "arn:aws:s3:::opal-data-inf",
+   "edge_type": "OWNED_BY",
+   "layer": "aws",
+   "level": "prefix"
   },
   {
-   "key": "platinum/etf_ownership_dashboard.json",
-   "name": "platinum/etf_ownership_dashboard.json",
-   "stratum": "object",
-   "level": "object",
-   "bucket": "PENDING_B_ARN_FIRM_LAMBDA",
-   "attribution": "firm-lambda-path",
-   "status": "pending_b_firm_target_byte_diff",
-   "kind": "firm-data"
+   "source": "arn:aws:s3:::opal-data-inf",
+   "target": "opal-data-inf/bronze/orion-api-v2/*/representatives.json",
+   "edge_type": "CONTAINS",
+   "layer": "aws",
+   "level": "prefix"
   },
   {
-   "key": "silver/interpolated_prices.parquet",
-   "name": "silver/interpolated_prices.parquet",
-   "stratum": "object",
-   "level": "object",
-   "bucket": "PENDING_B_ARN_FIRM_LAMBDA",
-   "attribution": "firm-lambda-path",
-   "status": "pending_b_firm_target_byte_diff",
-   "kind": "firm-data"
+   "source": "opal-data-bd/blackdiamond/49f/session-trigger-mode.json",
+   "target": "arn:aws:s3:::opal-data-bd",
+   "edge_type": "OWNED_BY",
+   "layer": "aws",
+   "level": "object"
   },
   {
-   "key": "blackdiamond/49f/session-trigger-mode.json",
-   "name": "blackdiamond/49f/session-trigger-mode.json",
-   "stratum": "object",
-   "level": "object",
-   "bucket": "PENDING_B_ARN_FIRM_LAMBDA",
-   "attribution": "firm-lambda-path",
-   "status": "pending_b_firm_target_byte_diff",
-   "kind": "firm-ops-control",
-   "subflag": "IN_vs_OPS_borderline: firm-bucket trigger/lock/watermark -- default IN (real firm-lambda writes it); ~B byte-diff confirms"
+   "source": "arn:aws:s3:::opal-data-bd",
+   "target": "opal-data-bd/blackdiamond/49f/session-trigger-mode.json",
+   "edge_type": "CONTAINS",
+   "layer": "aws",
+   "level": "object"
   },
   {
-   "key": "blackdiamond/cot/session-trigger-mode.json",
-   "name": "blackdiamond/cot/session-trigger-mode.json",
-   "stratum": "object",
-   "level": "object",
-   "bucket": "PENDING_B_ARN_FIRM_LAMBDA",
-   "attribution": "firm-lambda-path",
-   "status": "pending_b_firm_target_byte_diff",
-   "kind": "firm-ops-control",
-   "subflag": "IN_vs_OPS_borderline: firm-bucket trigger/lock/watermark -- default IN (real firm-lambda writes it); ~B byte-diff confirms"
+   "source": "opal-data-bd/gold/_state/load_flows/watermark.json",
+   "target": "arn:aws:s3:::opal-data-bd",
+   "edge_type": "OWNED_BY",
+   "layer": "aws",
+   "level": "object"
   },
   {
-   "key": "gold/_state/load_flows/watermark.json",
-   "name": "gold/_state/load_flows/watermark.json",
-   "stratum": "object",
-   "level": "object",
-   "bucket": "PENDING_B_ARN_FIRM_LAMBDA",
-   "attribution": "firm-lambda-path",
-   "status": "pending_b_firm_target_byte_diff",
-   "kind": "firm-ops-control",
-   "subflag": "IN_vs_OPS_borderline: firm-bucket trigger/lock/watermark -- default IN (real firm-lambda writes it); ~B byte-diff confirms"
+   "source": "arn:aws:s3:::opal-data-bd",
+   "target": "opal-data-bd/gold/_state/load_flows/watermark.json",
+   "edge_type": "CONTAINS",
+   "layer": "aws",
+   "level": "object"
   },
   {
-   "key": "gold/dispatch-lock.json",
-   "name": "gold/dispatch-lock.json",
-   "stratum": "object",
-   "level": "object",
-   "bucket": "PENDING_B_ARN_FIRM_LAMBDA",
-   "attribution": "firm-lambda-path",
-   "status": "pending_b_firm_target_byte_diff",
-   "kind": "firm-ops-control",
-   "subflag": "IN_vs_OPS_borderline: firm-bucket trigger/lock/watermark -- default IN (real firm-lambda writes it); ~B byte-diff confirms"
+   "source": "opal-data-cot/blackdiamond/cot/session-trigger-mode.json",
+   "target": "arn:aws:s3:::opal-data-cot",
+   "edge_type": "OWNED_BY",
+   "layer": "aws",
+   "level": "object"
   },
   {
-   "key": "gold/meta/pipeline-complete.json",
-   "name": "gold/meta/pipeline-complete.json",
-   "stratum": "object",
-   "level": "object",
-   "bucket": "PENDING_B_ARN_FIRM_LAMBDA",
-   "attribution": "firm-lambda-path",
-   "status": "pending_b_firm_target_byte_diff",
-   "kind": "firm-ops-control",
-   "subflag": "IN_vs_OPS_borderline: firm-bucket trigger/lock/watermark -- default IN (real firm-lambda writes it); ~B byte-diff confirms"
+   "source": "arn:aws:s3:::opal-data-cot",
+   "target": "opal-data-cot/blackdiamond/cot/session-trigger-mode.json",
+   "edge_type": "CONTAINS",
+   "layer": "aws",
+   "level": "object"
   },
   {
-   "key": "gold/trigger-mode.json",
-   "name": "gold/trigger-mode.json",
-   "stratum": "object",
-   "level": "object",
-   "bucket": "PENDING_B_ARN_FIRM_LAMBDA",
-   "attribution": "firm-lambda-path",
-   "status": "pending_b_firm_target_byte_diff",
-   "kind": "firm-ops-control",
-   "subflag": "IN_vs_OPS_borderline: firm-bucket trigger/lock/watermark -- default IN (real firm-lambda writes it); ~B byte-diff confirms"
+   "source": "opal-data-inf/gold/meta/pipeline-complete.json",
+   "target": "arn:aws:s3:::opal-data-inf",
+   "edge_type": "OWNED_BY",
+   "layer": "aws",
+   "level": "object"
   },
   {
-   "key": "gold/trigger-pending.json",
-   "name": "gold/trigger-pending.json",
-   "stratum": "object",
-   "level": "object",
-   "bucket": "PENDING_B_ARN_FIRM_LAMBDA",
-   "attribution": "firm-lambda-path",
-   "status": "pending_b_firm_target_byte_diff",
-   "kind": "firm-ops-control",
-   "subflag": "IN_vs_OPS_borderline: firm-bucket trigger/lock/watermark -- default IN (real firm-lambda writes it); ~B byte-diff confirms"
+   "source": "arn:aws:s3:::opal-data-inf",
+   "target": "opal-data-inf/gold/meta/pipeline-complete.json",
+   "edge_type": "CONTAINS",
+   "layer": "aws",
+   "level": "object"
   }
  ],
  "coverage": {
@@ -1603,22 +1628,14 @@
    "attribution": "reader-firm (gold READS_S3, no gold writer)"
   },
   "lambda_only_pending": {
-   "firm_keys_in": 17,
-   "of_which_firm_data": 10,
-   "of_which_firm_ops_control_borderline": 7,
-   "convergence_target": "~B b_firm_lambda_targets.txt (86 firm-bucket lambda targets, full estate) -> distinct(86) subset (Phase-A 169 UNION my firm keys); my firm-lambda-ONLY subset == my Phase-B firm nodes. Byte-diff on the firm-only ruling (now GO). ~B READS+WRITES refine finalizes exact count.",
-   "level_split": {
-    "object": 14,
-    "prefix": 3
-   }
+   "status": "RESOLVED live-verified; see firm_lambda_resolved"
   },
   "no_silent_cap": "all 142 deferred keys enumerated (56 declared ready + 87 lambda-only staged); none dropped",
   "scope": "FIRM-ONLY (re-based from leaked ~311)",
   "denominator_rebase": {
-   "firm_storage_denominator": "169 (Phase-A) + 56 (declared reader) + ~17 (firm-lambda, exact pending ~B READS+WRITES refine) = ~242",
-   "was": "~311 (leaked non-firm product/ops keys into a firm-derived count)",
-   "phase_a_unaffected": "the 169 Phase-A stands (leak was entirely in the Phase-B tail); landed Phase-A /seams unaffected.",
-   "dispositioned_out": 70
+   "firm_storage_denominator_EXACT": "169 Phase-A + 56 declared + 8 firm-lambda-new-IN (4 firm-data + 4 ops-control) = 233 (secret-state OUT); or 237 if the 4 secret-state ruled IN",
+   "was": "~242 (estimate on ~17 firm-lambda); now EXACT + live-verified (12 real targets -> 8 new IN nodes + 7 edge-only; 128 phantom dropped)",
+   "phase_a_unaffected": "169 stands; Phase-A /seams CO-SIGNED + landed."
   }
  },
  "scope_ruling": "(A) FIRM-ONLY (COO~B 011939Z, Rule-22-grounded): firm gold-pipeline backend depth; product keys have NO gold-writer so cannot converge with any firm gold edge -> not firm-pipeline storage by construction.",
@@ -1708,5 +1725,50 @@
    ]
   },
   "build_tmp_phantom_note": "the '_build_tmp' node (vendored typing_extensions.py under infra/aws/lambda/portal_data_proxy/_build_tmp/) is a genuine trace-graph EXTRACTOR mis-typing (LAMBDA-typed vendored dep) -- ~D grounded it (Rule-22). NOT ~D's GRAPHUNI lane; root fix routed to the trace-graph/comp-build owner. Current-graph WRITES_S3=0 for it, so NOT denominator-affecting now; a hygiene/prior-vintage cleanup."
+ },
+ "firm_lambda_resolved": {
+  "source": "~B NFRA_GRAPHUNI.P1-B.firm_lambda_targets.txt (19 live-verified, boto3 head_object; 128 phantom cross-bucket product-reads DROPPED per ~A NEVER#5 catch)",
+  "edge_only_existing": {
+   "count": 7,
+   "note": "~B lambda READS_S3/WRITES_S3 edge attaches to my EXISTING node (Phase-A 5 + declared 2); no new S3Key node",
+   "ids": [
+    "opal-data-bd/config/ticker_lookup.json",
+    "opal-data-bd/silver/historical_prices.parquet",
+    "opal-data-bd/silver/prices/canonical_prices.parquet",
+    "opal-data-inf/gold/dimensions/advisor_assignments.parquet",
+    "opal-data-inf/gold/timeseries/client_performance.parquet",
+    "opal-data-inf/gold/views/account_team.parquet",
+    "opal-data-inf/silver/accounts_dim/latest.parquet"
+   ]
+  },
+  "new_firm_data_IN": {
+   "count": 4,
+   "ids": [
+    "opal-data-bd/gold/clients/*.json",
+    "opal-data-bd/silver/interpolated_prices.parquet",
+    "opal-data-inf/bronze/orion-api-v2/*/household_rep_mapping.json",
+    "opal-data-inf/bronze/orion-api-v2/*/representatives.json"
+   ]
+  },
+  "new_ops_control_IN_tagged": {
+   "count": 4,
+   "note": "COO~B ruling: KEEP IN, concern=ops-control (firm-pipeline control-state; ~C tags in grain_contract)",
+   "ids": [
+    "opal-data-bd/blackdiamond/49f/session-trigger-mode.json",
+    "opal-data-bd/gold/_state/load_flows/watermark.json",
+    "opal-data-cot/blackdiamond/cot/session-trigger-mode.json",
+    "opal-data-inf/gold/meta/pipeline-complete.json"
+   ]
+  },
+  "secret_state_PENDING_micro_call": {
+   "count": 4,
+   "note": "jwt/otp -- firm-bucket-present (live) BUT secret-state. COO~B's OWN earlier ruling: secrets = comp-secrets domain -> OUT. Default OUT pending COO~B/~C confirm; flagged both ways (not silent).",
+   "ids": [
+    "opal-data-bd/smartx/jwt/current.json",
+    "opal-data-inf/orion/jwt/current.json",
+    "opal-data-inf/orion/jwt/trigger-mode.json",
+    "opal-data-inf/otp/state.json"
+   ]
+  }
  }
 }
