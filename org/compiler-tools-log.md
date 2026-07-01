@@ -11983,3 +11983,33 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-kuzu | comp-kuzu MATCH (n:CloudNode) WHERE n.name='D_00.portal_aggregates' RETURN n LIMIT 1 --... | PASS |
 | 2026-07-01 | 3.0.0_SA_CVO | (ETFS/Schwab-ingest) | comp-which,comp-routes,comp-glob | ETFS source-validation + 49F Schwab 06-25 ingest: comp-routes behaviors PASS (CDN edge); comp-which routed to backstops (no comp model for etfs artifact/Lambda-invoke/SSM/quartz-prefix -> rail-checked raw); comp-glob PASS (producer+config locate) | PARTIAL |
 | 2026-07-01 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-kuzu | comp-kuzu MATCH (n:CloudNode)-[e:CloudEdge]->(m:CloudNode) WHERE m.name CONTAINS 'aua_c... | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-kuzu | comp-kuzu MATCH (a)-[e]->(b) WHERE b.node_id =~ '(?i).*aum-metrics.*' OR b.node_id =~ '... | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-pipescript | comp-pipescript consumers C_00 | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-pipescript | comp-pipescript chain canonical | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-pipescript | comp-pipescript deployed --firm inf | FAIL |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-kuzu | comp-kuzu MATCH (n) RETURN DISTINCT labels(n), count(*) | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-kuzu | comp-kuzu MATCH (n:CloudNode) RETURN DISTINCT n.node_type, count(*) ORDER BY count(*) DESC | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-kuzu | comp-kuzu MATCH (n:CloudNode) WHERE toLower(n.id) CONTAINS 'holding' OR toLower(n.id) C... | FAIL |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-kuzu | comp-kuzu --json MATCH (n:CloudNode) RETURN n LIMIT 1 | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-kuzu | comp-kuzu MATCH (n:CloudNode) WHERE toLower(n.node_id) CONTAINS 'holding' OR toLower(n.... | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-kuzu | comp-kuzu MATCH (n:CloudNode) WHERE n.node_type IN ['PipelineScript','DataFetch','Endpo... | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-kuzu | comp-kuzu MATCH (n) RETURN count(n) LIMIT 1 | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-drift | comp-drift | FAIL |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-kuzu | comp-kuzu MATCH (n)-[r]->(m) RETURN DISTINCT type(r), count(*) ORDER BY count(*) DESC | FAIL |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-kuzu | comp-kuzu MATCH ()-[r]->() RETURN DISTINCT label(r), count(*) ORDER BY count(*) DESC | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-kuzu | comp-kuzu MATCH ()-[r:CloudEdge]->() RETURN DISTINCT r.edge_type, count(*) ORDER BY cou... | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-routes | comp-routes | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-routes | comp-routes trace getPositioningData | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-routes | comp-routes endpoints | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-routes | comp-routes stats | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-kuzu | comp-kuzu MATCH (u:CloudNode {node_id:'endpointurl:/api/general/positioning/positioning... | FAIL |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-kuzu | comp-kuzu --json MATCH (u:CloudNode {node_id:'endpointurl:/api/general/positioning/posi... | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-kuzu | comp-kuzu CALL show_tables() RETURN * | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-kuzu | comp-kuzu MATCH (n:CloudNode) RETURN n.node_type AS t, count(*) AS c ORDER BY c DESC | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-kuzu | comp-kuzu MATCH (n:CloudNode) WHERE n.node_type='SNS_TOPIC' RETURN n.id | FAIL |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-kuzu | comp-kuzu MATCH (n:CloudNode) WHERE n.node_type='SNS_TOPIC' RETURN n LIMIT 1 | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-kuzu | comp-kuzu --json MATCH (n:CloudNode) WHERE n.node_type='SNS_TOPIC' RETURN n LIMIT 1 | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-kuzu | comp-kuzu --json MATCH (n:CloudNode) WHERE n.node_type='SNS_TOPIC' RETURN n.node_id AS ... | PASS |
+| 2026-07-01 | 0.8.0_AE_CloudComp~A | NFRA_COMPPROOF-B | comp-kuzu / ds-commit-gate / safe-commit | COMPPROOF-B harness harden: graph-coverage enumeration (repo-source vs allowlist roots) + assert_graph_no_narrative(=0) + harness.py gate + 5 commits (TRUE-SANDBOX -> completeness -> ALLOWLIST default + standing coverage-guard) | PASS |
+| 2026-07-01 | 0.8.0_AE_CloudComp~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
