@@ -11307,3 +11307,490 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-routes | comp-routes endpoints | PASS |
 | 2026-07-01 | 0.8.0_AE_CloudComp~A | NFRA_COMPPROOF comp-tool correctness sweep M1-M4 | comp-surface-check + comp-types + ds-commit-gate + tool-unit self-tests | 4 fixes each two-direction self-tested: M1 comp-trace tier-invariant (full _extract_script_io diff), M2 comp-types index-vs-blast align (SEV1, surface-check), M3 comp-parity reserved-word, M4 comp-heat SQL-escape (shlex posix). | PASS |
 | 2026-07-01 | 0.8.0_AE_CloudComp~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-01 | 3.0.0_SA_CVO~B | NFRA_COMPPROOF.M2-verify | comp-types | comp-types index ModelPortfolioData | PASS |
+| 2026-07-01 | 3.0.0_SA_CVO~B | NFRA_COMPPROOF.M2-verify | comp-types | comp-types blast ModelPortfolioData | PASS |
+| 2026-07-01 | 3.0.0_SA_CVO~B | NFRA_COMPPROOF.M2-verify | comp-types | comp-types index NonModelAssetsResponse | PASS |
+| 2026-07-01 | 3.0.0_SA_CVO~B | NFRA_COMPPROOF.M2-verify | comp-types | comp-types blast NonModelAssetsResponse | PASS |
+| 2026-07-01 | 3.0.0_SA_CVO~B | NFRA_COMPPROOF.M2-verify | comp-types | comp-types index PeerModelData | PASS |
+| 2026-07-01 | 3.0.0_SA_CVO~B | NFRA_COMPPROOF.M2-verify | comp-types | comp-types blast PeerModelData | PASS |
+| 2026-07-01 | 3.0.0_SA_CVO~B | NFRA_COMPPROOF.M2-verify | comp-types | comp-types index TenantLayoutConfig | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-trace | comp-trace model_portfolio_benchmarks.json --direction up --depth 4 | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-xray | comp-xray --help | PASS |
+| 2026-07-01 | 2.0.0_SA_COO~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/NFRA_COMPROUTE/POTION-DECO... | PASS |
+| 2026-07-01 | 3.0.0_SA_CVO~B | NFRA_COMPPROOF.M2-verify | comp-types | comp-types index ModelPortfolioData | PASS |
+| 2026-07-01 | 3.0.0_SA_CVO~B | NFRA_COMPPROOF.M2-verify | comp-types | comp-types blast ModelPortfolioData | PASS |
+| 2026-07-01 | 3.0.0_SA_CVO~B | NFRA_COMPPROOF.M2-verify | comp-types | comp-types index TenantLayoutConfig | PASS |
+| 2026-07-01 | 3.0.0_SA_CVO~B | NFRA_COMPPROOF.M2-verify | comp-surface-check | comp-surface-check | FAIL |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-xray | comp-xray freeze-monitor | FAIL |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-kuzu | comp-kuzu MATCH (n) RETURN count(n) LIMIT 1 | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-drift | comp-drift | FAIL |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-trace | comp-trace benchmarks/data --direction up --depth 3 | FAIL |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-blast | comp-blast yang-model-portfolio-benchmarks --direction up --depth 2 | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-trace | comp-trace | FAIL |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-platinum | comp-platinum | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-trace | comp-trace platinum/firm/header_metrics.json --direction up --depth 4 | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | pipescript | pipescript --resource s3://opal-data-cot/platinum/firm/header_metrics.json | FAIL |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-trace | comp-trace header_metrics --direction up --depth 4 | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-trace | comp-trace cot aua --direction up --depth 4 | FAIL |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-trace | comp-trace s3:platinum/firm/header_metrics.json --direction up --depth 6 | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-xray | comp-xray frozen s3://opal-data-cot/platinum/firm/header_metrics.json | FAIL |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-xray | comp-xray s3 s3://opal-data-cot/platinum/firm/header_metrics.json | FAIL |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-trace | comp-trace gold/timeseries/account_performance.parquet --direction up --depth 4 | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-xray | comp-xray s3 opal-data-cot platinum/firm/header_metrics.json --fields generated_at data... | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-xray | comp-xray s3 opal-data-cot platinum/firm/header_metrics.json --fields data_as_of total.... | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-platinum | comp-platinum --help | PASS |
+| 2026-07-01 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-platinum | comp-platinum reverse s3://opal-data-cot/platinum/firm/header_metrics.json | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-pipescript | comp-pipescript --help | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-trace | comp-trace _smartx_model_monthly.json --direction down --depth 3 | FAIL |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-pipescript | comp-pipescript io D_00 | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-xray | comp-xray schema opal-data-cot silver/prices/canonical_prices.parquet | FAIL |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-xray | comp-xray schema --help | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | pipescript | pipescript --resource canonical_prices.parquet | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-xray | comp-xray schema s3://opal-data-cot/silver/prices/canonical_prices.parquet | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-kuzu | comp-kuzu --help | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-trace | comp-trace --help | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-blast | comp-blast --help | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-xref | comp-xref --help | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-drift | comp-drift --help | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-pipescript | comp-pipescript --help | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-lambdamap | comp-lambdamap --help | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-iam | comp-iam --help | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-routes | comp-routes --help | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-platinum | comp-platinum --help | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-kuzu | comp-kuzu MATCH (n) RETURN count(n) LIMIT 1 | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-kuzu | comp-kuzu CALL show_tables() RETURN * | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-kuzu | comp-kuzu MATCH (n:CloudNode) RETURN DISTINCT n.node_type AS t, count(*) AS c ORDER BY ... | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-kuzu | comp-kuzu MATCH (n:CloudNode) RETURN n LIMIT 1 --json | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-kuzu | comp-kuzu MATCH (n:CloudNode) WHERE n.node_type IN ['API_ROUTE','Endpoint','ServedURL',... | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-kuzu | comp-kuzu MATCH ()-[e:CloudEdge]->() RETURN DISTINCT e.edge_type AS t, count(*) AS c OR... | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-routes | comp-routes trace getPeerPerformance | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-routes | comp-routes trace getModelPortfolioTimeseries | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-drift | comp-drift | FAIL |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-kuzu | comp-kuzu MATCH (n) RETURN count(n) LIMIT 1 | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-routes | comp-routes endpoints | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-kuzu | comp-kuzu MATCH (u:CloudNode)-[e:CloudEdge]-(m:CloudNode) WHERE u.node_id CONTAINS 'pee... | FAIL |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-drift | comp-drift sweep | FAIL |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-kuzu | comp-kuzu MATCH (u:CloudNode)-[e:CloudEdge]-(m:CloudNode) WHERE u.node_id CONTAINS 'mod... | FAIL |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-routes | comp-routes trace getHeaderMetrics | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-routes | comp-routes trace getPlatinumFirmDashboard | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-graph | comp-graph | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-graph | comp-graph status | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-kuzu | comp-kuzu MATCH (u:CloudNode)-[e:CloudEdge]->(m:CloudNode) WHERE u.node_id CONTAINS 'pe... | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-kuzu | comp-kuzu CALL show_tables() RETURN * | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-kuzu | comp-kuzu MATCH (u:CloudNode)<-[e:CloudEdge]-(m:CloudNode) WHERE u.node_id CONTAINS 'pe... | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-kuzu | comp-kuzu --help | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-kuzu | comp-kuzu MATCH (n:CloudNode) RETURN n LIMIT 1 --json | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-kuzu | comp-kuzu MATCH (p:CloudNode {node_id:'page:ModelPortfolios'})-[e:CloudEdge]->(m:CloudN... | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-kuzu | comp-kuzu MATCH (n:CloudNode) RETURN DISTINCT n.node_type AS t, count(*) AS c ORDER BY ... | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-kuzu | comp-kuzu MATCH (n:CloudNode) WHERE n.node_type='S3Key' AND (toLower(n.node_id) CONTAIN... | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-kuzu | comp-kuzu MATCH (p:CloudNode {node_id:'cluster:ModelPortfolios:0'})-[e:CloudEdge]->(m:C... | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-kuzu | comp-kuzu MATCH (n:CloudNode) WHERE toLower(n.node_id) CONTAINS 'scrap' OR toLower(n.no... | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-trace | comp-trace ModelPortfolios.tsx --direction down --depth 4 | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-xray | comp-xray freeze-monitor | FAIL |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-platinum | comp-platinum reverse platinum/firm/header_metrics.json | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-xray | comp-xray frozen opal-data-bd platinum/firm/header_metrics.json --fields total_aua,tota... | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-xray | comp-xray | FAIL |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-kuzu | comp-kuzu MATCH (n:CloudNode) WHERE n.node_type='LAMBDA' AND (toLower(n.name) CONTAINS ... | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-kuzu | comp-kuzu MATCH (n:CloudNode) WHERE n.node_type='S3Key' AND toLower(n.node_id) CONTAINS... | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-kuzu | comp-kuzu MATCH (n:CloudNode) WHERE toLower(n.node_id) CONTAINS 'peers/' OR toLower(n.n... | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | pipescript | pipescript --resource platinum/firm/header_metrics.json | FAIL |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-xray | comp-xray frozen -h | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-xray | comp-xray freeze-monitor -h | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-xray | comp-xray frozen opal-data-bd platinum/firm/header_metrics.json --fields total.aua tota... | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-pipescript | comp-pipescript feeds D_00 | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-kuzu | comp-kuzu MATCH (n:CloudNode {node_id:'arn:aws:lambda:us-east-1:313476888478:function:y... | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-pipescript | comp-pipescript io D_04 | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-kuzu | comp-kuzu MATCH (n:CloudNode {node_id:'arn:aws:lambda:us-east-1:313476888478:function:y... | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-pipescript | comp-pipescript feeds D_04 | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-lambdamap | comp-lambdamap check | FAIL |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-parity | comp-parity 49f | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-kuzu | comp-kuzu MATCH (n:CloudNode) RETURN n LIMIT 1 --json | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-kuzu | comp-kuzu MATCH (n:CloudNode) RETURN n.node_class AS class, count(*) AS c ORDER BY c DESC | FAIL |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-kuzu | comp-kuzu MATCH (n:CloudNode) RETURN n.source AS src, count(*) AS c, min(n.snapshot_ts)... | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-drift | comp-drift coverage | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-drift | comp-drift platinum/firm/header_metrics.json | FAIL |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-kuzu | comp-kuzu MATCH (n:CloudNode) RETURN n.node_type AS t, count(*) AS c ORDER BY c DESC LI... | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-kuzu | comp-kuzu MATCH (n:CloudNode) WHERE n.node_type='IAM_ROLE' RETURN n.name AS name --json | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | pipescript | pipescript --resource canonical_prices.parquet | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-pipescript | comp-pipescript deployed model_portfolio_benchmarks.json | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-kuzu | comp-kuzu MATCH (n) RETURN count(n) LIMIT 1 | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-drift | comp-drift model_portfolio_benchmarks.json | FAIL |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-xray | comp-xray frozen opal-data-inf platinum/firm/header_metrics.json --fields total_aua tot... | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-pipescript | comp-pipescript io INF_D_00 | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-pipescript | comp-pipescript io bd-canonical-prices | FAIL |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-pipescript | comp-pipescript io INF_D_04 | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-lambdamap | comp-lambdamap --help | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-lambdamap | comp-lambdamap | FAIL |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-xray | comp-xray code data/cot/scripts/bronze/cot_bd_session_fetch.py | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-xray | comp-xray code data/cot/scripts/silver/cot_silver_merge.py | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-pipescript | comp-pipescript io build_canonical_prices_v2 | FAIL |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-pipescript | comp-pipescript consumers canonical_prices | FAIL |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | pipescript | pipescript --list | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-pipescript | comp-pipescript dag | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | pipescript | pipescript advi-cot | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-kuzu | comp-kuzu --help | PASS |
+| 2026-07-01 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-platinum | comp-platinum reverse s3://opal-data-cot/platinum/firm/header_metrics.json | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-routes | comp-routes reverse | FAIL |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-routes | comp-routes | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-kuzu | comp-kuzu CALL show_tables() RETURN * | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-kuzu | comp-kuzu MATCH (n:CloudNode) RETURN DISTINCT n.node_type AS t, count(*) AS c ORDER BY ... | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-kuzu | comp-kuzu MATCH ()-[e:CloudEdge]->() RETURN DISTINCT e.edge_type AS t, count(*) AS c OR... | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-kuzu | comp-kuzu MATCH (s:CloudNode)-[e:CloudEdge]-(n:CloudNode) WHERE s.node_id CONTAINS 'bla... | FAIL |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-kuzu | comp-kuzu MATCH (n:CloudNode) WHERE n.node_type='EC2_INSTANCE' AND (toLower(n.props) CO... | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-kuzu | comp-kuzu --json MATCH (n:CloudNode) WHERE toLower(n.id) CONTAINS 'aua' RETURN n.id AS ... | FAIL |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-kuzu | comp-kuzu --json MATCH (n:CloudNode) WHERE toLower(n.id) CONTAINS 'mix' RETURN n.id AS ... | FAIL |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-kuzu | comp-kuzu --json MATCH (n:CloudNode) WHERE n.node_type='Field' RETURN n LIMIT 3 | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-kuzu | comp-kuzu --json MATCH (n:CloudNode) WHERE n.node_type='PipelineFunction' RETURN n LIMIT 2 | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-kuzu | comp-kuzu --json MATCH (n:CloudNode) WHERE toLower(n.node_id) CONTAINS 'aua' OR toLower... | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-lambdamap | comp-lambdamap check | FAIL |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-kuzu | comp-kuzu --json MATCH (n:CloudNode) WHERE toLower(n.node_id) CONTAINS 'mix' OR toLower... | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-kuzu | comp-kuzu --json MATCH (n:CloudNode) WHERE toLower(n.node_id) CONTAINS 'book' OR toLowe... | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-kuzu | comp-kuzu --json MATCH (n:CloudNode) WHERE toLower(n.node_id) CONTAINS 'active' OR toLo... | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-kuzu | comp-kuzu --json MATCH (n:CloudNode) WHERE toLower(n.node_id) CONTAINS 'headline' OR to... | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-kuzu | comp-kuzu --json MATCH (n:CloudNode) WHERE toLower(n.node_id) CONTAINS 'advis' OR toLow... | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-kuzu | comp-kuzu --json MATCH (n:CloudNode) WHERE toLower(n.node_id) CONTAINS 'rollup' OR toLo... | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-kuzu | comp-kuzu --json MATCH (n:CloudNode) WHERE toLower(n.node_id) CONTAINS 'allocation' OR ... | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-kuzu | comp-kuzu --json MATCH (n:CloudNode) WHERE toLower(n.node_id) CONTAINS 'aua' RETURN n.n... | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-kuzu | comp-kuzu --json MATCH (n:CloudNode) WHERE toLower(n.node_id) CONTAINS 'aua' RETURN n.n... | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-kuzu | comp-kuzu --json MATCH (n:CloudNode) WHERE n.node_type='Endpoint' AND (toLower(n.node_i... | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-routes | comp-routes trace getHeaderMetricsFresh | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-routes | comp-routes trace getHeaderMetrics | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-routes | comp-routes endpoints | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-platinum | comp-platinum reverse platinum/firm/header_metrics.json | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-pipescript | comp-pipescript io D_04 | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-lambdamap | comp-lambdamap --help | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-kuzu | comp-kuzu --help | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-kuzu | comp-kuzu CALL show_tables() RETURN * | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-kuzu | comp-kuzu CALL table_info('CloudNode') RETURN * | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-kuzu | comp-kuzu CALL table_info('CloudEdge') RETURN * | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-kuzu | comp-kuzu MATCH (n:CloudNode) RETURN n.node_type AS t, count(*) AS c ORDER BY c DESC --... | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-kuzu | comp-kuzu MATCH ()-[e:CloudEdge]->() RETURN e.edge_type AS t, count(*) AS c ORDER BY c ... | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-kuzu | comp-kuzu MATCH (n:CloudNode) WHERE toLower(n.name) CONTAINS 'scrap' OR toLower(n.name)... | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-kuzu | comp-kuzu MATCH (n:CloudNode) WHERE n.node_type='DataFetch' AND (toLower(n.name) CONTAI... | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-kuzu | comp-kuzu MATCH (n:CloudNode) WHERE toLower(n.name) CONTAINS 'bronze' AND (toLower(n.na... | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-lambdamap | comp-lambdamap check | FAIL |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-routes | comp-routes origins | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-kuzu | comp-kuzu MATCH (n:CloudNode) WHERE n.node_type='LAMBDA' AND toLower(n.name) STARTS WIT... | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-kuzu | comp-kuzu MATCH (n:CloudNode) WHERE n.name STARTS WITH 'bd-' RETURN n.node_type AS t, n... | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-kuzu | comp-kuzu MATCH (n:CloudNode) WHERE n.node_type='S3Key' AND toLower(n.name) CONTAINS 'b... | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-kuzu | comp-kuzu MATCH (n:CloudNode {name:'bd-49f-runner'})-[e:CloudEdge]->(m:CloudNode) RETUR... | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-kuzu | comp-kuzu MATCH (n:CloudNode {name:'bd-49f-runner'})<-[e:CloudEdge]-(m:CloudNode) RETUR... | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-kuzu | comp-kuzu MATCH (s:CloudNode {name:'blackdiamond/49f/session'})<-[e:CloudEdge]-(m:Cloud... | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-kuzu | comp-kuzu MATCH (n:CloudNode) WHERE n.node_type='SECRET' AND toLower(n.name) CONTAINS '... | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-kuzu | comp-kuzu MATCH (n:CloudNode {name:'bd-49f-session-trigger'})-[e:CloudEdge]->(m:CloudNo... | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-kuzu | comp-kuzu MATCH (n:CloudNode {name:'bd-49f-session-trigger'})<-[e:CloudEdge]-(m:CloudNo... | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-kuzu | comp-kuzu MATCH (n:CloudNode {name:'bd-49f-auto-login'})-[e:CloudEdge]-(m:CloudNode) RE... | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-drift | comp-drift --help | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-pipescript | comp-pipescript stats | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-pipescript | comp-pipescript consumers B_00 | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-kuzu | comp-kuzu MATCH (n:CloudNode) WHERE n.name STARTS WITH 'bd-49f' RETURN n.node_type AS t... | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-routes | comp-routes stats | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-kuzu | comp-kuzu --help | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-blast | comp-blast --help | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-trace | comp-trace --help | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-xref | comp-xref --help | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-platinum | comp-platinum --help | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-drift | comp-drift --help | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-kuzu | comp-kuzu CALL show_tables() RETURN * --json | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-kuzu | comp-kuzu MATCH (n:CloudNode) RETURN n LIMIT 1 --json | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-kuzu | comp-kuzu MATCH (n:CloudNode) RETURN DISTINCT n.kind AS kind ORDER BY kind --json | FAIL |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-kuzu | comp-kuzu MATCH (n:CloudNode) RETURN DISTINCT n.node_type AS t, count(*) AS c ORDER BY ... | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-pipescript | comp-pipescript feeds D_00 | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-pipescript | comp-pipescript io C_03 | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-kuzu | comp-kuzu MATCH (n:CloudNode) WHERE toLower(n.node_id) CONTAINS 'canonical' OR toLower(... | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-drift | comp-drift coverage | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-kuzu | comp-kuzu MATCH (n:CloudNode) WHERE toLower(n.node_id) CONTAINS 'price' AND n.node_type... | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-kuzu | comp-kuzu CALL show_tables() RETURN * | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-kuzu | comp-kuzu MATCH (n:CloudNode) RETURN DISTINCT n.node_type | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-kuzu | comp-kuzu MATCH ()-[e:CloudEdge]->() RETURN DISTINCT e.edge_type | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-kuzu | comp-kuzu --json MATCH (n:CloudNode) WHERE n.node_type IN ['ReactComponent','Page','Pan... | FAIL |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-kuzu | comp-kuzu MATCH (n:CloudNode) RETURN n LIMIT 1 | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-kuzu | comp-kuzu MATCH (n:CloudNode) WHERE n.node_type IN ['ReactComponent','Page','PanelClust... | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-trace | comp-trace DistributionTab.tsx --direction up --depth 6 | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-pipescript | comp-pipescript feeds INF_D_04 | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-pipescript | comp-pipescript io INF_D_04 | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-kuzu | comp-kuzu MATCH (n:CloudNode)-[e:CloudEdge]->(m:CloudNode) WHERE n.node_id CONTAINS 'Di... | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-kuzu | comp-kuzu MATCH (n:CloudNode) WHERE n.node_type IN ['ReactQueryKey','Endpoint','ServedU... | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-kuzu | comp-kuzu MATCH (n:CloudNode)-[e:CloudEdge]-(m:CloudNode) WHERE n.node_id = 'endpoint:g... | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-kuzu | comp-kuzu MATCH (n:CloudNode)-[e:CloudEdge]-(m:CloudNode) WHERE n.node_id = 'endpoint:g... | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-kuzu | comp-kuzu MATCH (n) RETURN DISTINCT labels(n) AS lbl, count(*) AS c ORDER BY c DESC | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-kuzu | comp-kuzu MATCH (n:CloudNode) WHERE n.node_type IN ['LAMBDA','S3Key','Pipeline','Pipeli... | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-kuzu | comp-kuzu MATCH (n:CloudNode) RETURN DISTINCT n.node_type AS t, count(*) AS c ORDER BY ... | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-kuzu | comp-kuzu MATCH ()-[r]->() RETURN DISTINCT r.edge_type AS et, count(*) AS c ORDER BY c ... | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-kuzu | comp-kuzu MATCH (n:CloudNode)-[e:CloudEdge]->(m:CloudNode) WHERE n.node_id = 'pipeline:... | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-kuzu | comp-kuzu MATCH (n:CloudNode) WHERE n.node_type='SNS_TOPIC' RETURN n.id AS id | FAIL |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-kuzu | comp-kuzu MATCH (n:CloudNode)-[e:CloudEdge]-(m:CloudNode) WHERE m.node_id CONTAINS 'gol... | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-kuzu | comp-kuzu MATCH (a)-[r]->(b) WHERE r.edge_type='SUBSCRIBES' RETURN a.id, b.id | FAIL |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-kuzu | comp-kuzu MATCH (a)-[r]->(b) WHERE r.edge_type='PUBLISHES_TO' RETURN a.id AS src, b.id ... | FAIL |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | pipescript | pipescript --list | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-kuzu | comp-kuzu MATCH (n:CloudNode) WHERE n.node_type='SNS_TOPIC' RETURN n LIMIT 1 | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | pipescript | pipescript --resource aua | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | pipescript | pipescript --resource mix | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-kuzu | comp-kuzu --json MATCH (n:CloudNode) WHERE n.node_type='SNS_TOPIC' RETURN n.name AS nam... | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-blast | comp-blast opal-data-bd/silver/prices/canonical_prices.parquet --direction up --depth 2 | FAIL |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-kuzu | comp-kuzu MATCH (a:CloudNode)-[e:CloudEdge]->(b:CloudNode) WHERE b.node_id CONTAINS 'ca... | FAIL |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | pipescript | pipescript advi-cot | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-kuzu | comp-kuzu --json MATCH (n:CloudNode) WHERE n.node_type='SNS_TOPIC' RETURN n.name AS nam... | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-kuzu | comp-kuzu MATCH ()-[e:CloudEdge]->() RETURN DISTINCT e.rel_type AS r, count(*) AS c ORD... | FAIL |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-kuzu | comp-kuzu MATCH (a:CloudNode)-[e:CloudEdge]-(b:CloudNode) WHERE a.node_id = 'opal-data-... | FAIL |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-kuzu | comp-kuzu MATCH (a)-[e:CloudEdge]->(b) RETURN e LIMIT 1 --json | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-kuzu | comp-kuzu --json MATCH (n:CloudNode) WHERE n.node_type='IAM_POLICY' AND n.props =~ '(?i... | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-kuzu | comp-kuzu MATCH (a:CloudNode)-[e:CloudEdge]-(b:CloudNode) WHERE a.node_id = 'opal-data-... | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-kuzu | comp-kuzu MATCH ()-[e:CloudEdge]->() RETURN DISTINCT e.edge_type AS r, count(*) AS c OR... | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-kuzu | comp-kuzu --json MATCH (n:CloudNode) WHERE n.node_type='IAM_POLICY' RETURN n.name AS na... | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-pipescript | comp-pipescript io D_00.portal_aggregates | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-kuzu | comp-kuzu MATCH (n:CloudNode) RETURN DISTINCT n.drift_class AS dc, count(*) AS c ORDER ... | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-kuzu | comp-kuzu MATCH (n:CloudNode) WHERE n.drift_class <> 'DECLARED' RETURN n.node_type AS t... | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-pipescript | comp-pipescript io C_01.canonical_nna | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-kuzu | comp-kuzu MATCH (n)-[e:CloudEdge]->(m) WHERE n.node_id CONTAINS 'D_00f.advisor_nna_cano... | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-pipescript | comp-pipescript io C_01b.role_aua_backfill | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-pipescript | comp-pipescript io C_01c.role_aua_flow_join | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-routes | comp-routes endpoints | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-routes | comp-routes trace getPlatinumClientSummary | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-routes | comp-routes trace getPlatinumClientDetailStatic | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-routes | comp-routes trace getClientsTab | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-pipescript | comp-pipescript io C_04.validate_aua | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-routes | comp-routes trace getMdpfAggregateAUATimeSeriesByFirm | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-kuzu | comp-kuzu MATCH (n)-[e:CloudEdge]->(m) WHERE m.node_id CONTAINS 'cumulative_chart' AND ... | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-xref | comp-xref apply_ap_gate | FAIL |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | pipescript | pipescript --list | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | pipescript | pipescript --resource holdings | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-routes | comp-routes api-routes | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | pipescript | pipescript advi-cot | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-kuzu | comp-kuzu MATCH (n) RETURN DISTINCT labels(n) AS lbl, count(*) AS c | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-pipescript | comp-pipescript dag | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-pipescript | comp-pipescript stats | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-pipescript | comp-pipescript deployed opal-data-bd/platinum/firm/advisor_nna_canonical.json | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-kuzu | comp-kuzu MATCH (n) RETURN count(n) LIMIT 1 | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-drift | comp-drift opal-data-bd/platinum/firm/advisor_nna_canonical.json | FAIL |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-trace | comp-trace --help | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-xref | comp-xref --help | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-blast | comp-blast --help | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-pipescript | comp-pipescript io D_00 | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-drift | comp-drift --help | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-routes | comp-routes | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-lambdamap | comp-lambdamap | FAIL |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-blast | comp-blast lambda:inf-portal-advisor-publisher --direction up --depth 3 | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-pipescript | comp-pipescript deployed --firm inf | FAIL |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | pipescript | pipescript advi-cot | PASS |
+| 2026-07-01 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | pipescript | pipescript advi-bd | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-pipescript | comp-pipescript feeds header_metrics | FAIL |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-iam | comp-iam gaps | FAIL |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-iam | comp-iam stats | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-kuzu | comp-kuzu --help | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-iam | comp-iam --help | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-kuzu | comp-kuzu CALL show_tables() RETURN * --json | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-kuzu | comp-kuzu CALL table_info('CloudNode') RETURN * --json | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-kuzu | comp-kuzu MATCH (n:CloudNode) RETURN n.kind AS kind, count(*) AS c ORDER BY c DESC --json | FAIL |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-kuzu | comp-kuzu MATCH (n:CloudNode) RETURN n.node_type AS t, count(*) AS c ORDER BY c DESC --... | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-platinum | comp-platinum summary | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-kuzu | comp-kuzu MATCH (n:CloudNode) WHERE n.node_type CONTAINS 'sns' OR n.node_type CONTAINS ... | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-platinum | comp-platinum tab-audit | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-kuzu | comp-kuzu MATCH (n:CloudNode) WHERE n.node_type='IAM_POLICY' AND n.props CONTAINS 'Deny... | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-kuzu | comp-kuzu MATCH (n:CloudNode) WHERE n.node_type='IAM_POLICY' RETURN n.name, n.props LIM... | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-kuzu | comp-kuzu MATCH (n) RETURN count(n) LIMIT 1 | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-drift | comp-drift | FAIL |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-pipescript | comp-pipescript io C_01 | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-pipescript | comp-pipescript io C_03 | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-drift | comp-drift --help | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-kuzu | comp-kuzu MATCH (n) RETURN count(n) LIMIT 1 | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-drift | comp-drift | FAIL |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-iam | comp-iam reconcile | FAIL |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-trace | comp-trace DistributionTab.tsx --direction up --depth 6 | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | pipescript | pipescript --list | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | pipescript | pipescript trade-submission | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-trace | comp-trace gold/canonical/holdings --direction up --depth 3 | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-kuzu | comp-kuzu | FAIL |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-blast | comp-blast | FAIL |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-trace | comp-trace | FAIL |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-xref | comp-xref | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-pipescript | comp-pipescript io A_03 | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-pipescript | comp-pipescript chain A_03 | FAIL |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-pipescript | comp-pipescript io D_00 | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-trace | comp-trace platinum/mdpf/aggregate_aua_timeseries.json --direction up --depth 4 | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | pipescript | pipescript --resource platinum/mdpf/aggregate_aua_timeseries.json | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-pipescript | comp-pipescript io mdpf_aggregate_aua | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | pipescript | pipescript mdpf-global-view | FAIL |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | pipescript | pipescript mdpf | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-kuzu | comp-kuzu MATCH (n:CloudNode) WHERE n.drift_class IS NOT NULL AND n.drift_class <> '' R... | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-trace | comp-trace opal-trade-submissions --both | FAIL |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-xray | comp-xray | FAIL |
+| 2026-07-01 | 0.5.0_AE_OpalETL | (no-TO) | comp-routes | comp-routes behaviors | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-constants | comp-constants | FAIL |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-trace | comp-trace trace opal-trade-submissions | FAIL |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-kuzu | comp-kuzu MATCH (n)-[r]->(m) WHERE m.name CONTAINS 'trade-submissions' OR n.name CONTAI... | FAIL |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-trace | comp-trace trace --help | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-kuzu | comp-kuzu MATCH (n)-[r]->(m) WHERE m.name CONTAINS 'trade-submissions' RETURN n.name AS... | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-platinum | comp-platinum | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | pipescript | pipescript --resource header_metrics.json | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-drift | comp-drift coverage | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-kuzu | comp-kuzu MATCH (a:CloudNode)-[e:CloudEdge]->(b:CloudNode) WHERE b.name CONTAINS 'criti... | FAIL |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-graph | comp-graph | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-kuzu | comp-kuzu CALL show_tables() RETURN * | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-graph | comp-graph status | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-pipescript | comp-pipescript deployed opal-portfolio-excel-generator | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-kuzu | comp-kuzu MATCH (n:CloudNode) RETURN n.node_type AS t, count(*) AS c ORDER BY c DESC | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-kuzu | comp-kuzu MATCH (n) RETURN count(n) LIMIT 1 | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-drift | comp-drift opal-portfolio-excel-generator | FAIL |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-kuzu | comp-kuzu MATCH (n:CloudNode) WHERE n.node_type='Hook' RETURN n.id LIMIT 15 | FAIL |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-kuzu | comp-kuzu CALL table_info('CloudEdge') RETURN * --json | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-xray | comp-xray frozen opal-data-cot platinum/firm/header_metrics.json --fields total_aua,tot... | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-kuzu | comp-kuzu MATCH ()-[e:CloudEdge]->() RETURN e.edge_type AS t, count(*) AS c ORDER BY c ... | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-kuzu | comp-kuzu MATCH (n:CloudNode) RETURN n LIMIT 1 | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-xray | comp-xray frozen opal-data-cot platinum/firm/timeseries_chart.json --fields data_as_of,... | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-kuzu | comp-kuzu MATCH ()-[r:CloudEdge]->() RETURN r LIMIT 1 | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-iam | comp-iam service sns | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-kuzu | comp-kuzu MATCH (a:CloudNode)-[e:CloudEdge]-(b:CloudNode) WHERE a.node_type='SNS_TOPIC'... | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-kuzu | comp-kuzu MATCH (a:CloudNode)-[e:CloudEdge]->(b:CloudNode) WHERE a.node_type='SNS_TOPIC... | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-kuzu | comp-kuzu MATCH ()-[e:CloudEdge]->() WHERE e.edge_type CONTAINS 'SUBSCRI' OR e.edge_typ... | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-pipescript | comp-pipescript --resource header_metrics.json | FAIL |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-kuzu | comp-kuzu --help | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-blast | comp-blast --help | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-trace | comp-trace --help | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-xref | comp-xref --help | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-trace | comp-trace silver/fees --direction up --depth 3 | FAIL |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-kuzu | comp-kuzu MATCH (n:CloudNode) RETURN n.drift_class AS d, count(*) AS c ORDER BY c DESC | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-kuzu | comp-kuzu | FAIL |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-kuzu | comp-kuzu CALL show_tables() RETURN * | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-kuzu | comp-kuzu MATCH (n:CloudNode) RETURN DISTINCT n.node_type AS t, count(*) AS c ORDER BY ... | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-kuzu | comp-kuzu MATCH ()-[e:CloudEdge]->() RETURN DISTINCT e.edge_type AS t, count(*) AS c OR... | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-kuzu | comp-kuzu MATCH (n:CloudNode) RETURN DISTINCT n.node_type AS t, count(*) AS c ORDER BY ... | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-kuzu | comp-kuzu MATCH ()-[e:CloudEdge]->() RETURN DISTINCT e.rel_type AS r, count(*) AS c ORD... | FAIL |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-kuzu | comp-kuzu MATCH (n) RETURN count(n) LIMIT 1 | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-kuzu | comp-kuzu MATCH (n:CloudNode) RETURN n LIMIT 1 --json | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-drift | comp-drift | FAIL |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-kuzu | comp-kuzu MATCH ()-[e:CloudEdge]->() RETURN e LIMIT 1 --json | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-kuzu | comp-kuzu CALL show_tables() RETURN * | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-kuzu | comp-kuzu MATCH ()-[e:CloudEdge]->() RETURN DISTINCT e.edge_type AS r, count(*) AS c OR... | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-kuzu | comp-kuzu MATCH (n:CloudNode) RETURN n.node_type AS t, count(*) AS c ORDER BY c DESC | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-kuzu | comp-kuzu MATCH (a:CloudNode)-[e:CloudEdge]->(b:CloudNode) WHERE e.edge_type='SUBSCRIBE... | FAIL |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-kuzu | comp-kuzu MATCH (a:CloudNode)-[e:CloudEdge]->(b:CloudNode) WHERE e.edge_type='DEAD_LETT... | FAIL |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-kuzu | comp-kuzu MATCH (a:CloudNode)-[e:CloudEdge]->(b:CloudNode) WHERE e.edge_type='PUBLISHES... | FAIL |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-drift | comp-drift coverage | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-kuzu | comp-kuzu MATCH (n:CloudNode) RETURN n LIMIT 1 | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-kuzu | comp-kuzu MATCH (a:CloudNode)-[e:CloudEdge]->(b:CloudNode) WHERE e.edge_type='SUBSCRIBE... | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-kuzu | comp-kuzu MATCH (a:CloudNode)-[e:CloudEdge]->(b:CloudNode) WHERE e.edge_type='DEAD_LETT... | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-kuzu | comp-kuzu MATCH (a:CloudNode)-[e:CloudEdge]->(b:CloudNode) WHERE e.edge_type='NOTIFIES'... | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-kuzu | comp-kuzu MATCH (a:CloudNode)-[e:CloudEdge]->(b:CloudNode) WHERE e.edge_type='TRIGGERS'... | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-kuzu | comp-kuzu MATCH (a:CloudNode)-[e:CloudEdge]->(b:CloudNode) WHERE e.edge_type='INVOKES' ... | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-kuzu | comp-kuzu MATCH (n) RETURN count(n) LIMIT 1 | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-kuzu | comp-kuzu MATCH (n:CloudNode) WHERE n.node_type='EVENT_RULE' RETURN n.drift_class, coun... | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-kuzu | comp-kuzu MATCH (n:CloudNode) WHERE n.node_type='LAMBDA' RETURN n.drift_class, count(*) | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-drift | comp-drift sweep | FAIL |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-kuzu | comp-kuzu MATCH (n:CloudNode) RETURN DISTINCT n.drift_class, count(*) ORDER BY count(*)... | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-kuzu | comp-kuzu MATCH (n:CloudNode) WHERE n.node_type='STATE_MACHINE' RETURN n.node_id, n.dri... | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-kuzu | comp-kuzu MATCH (a:CloudNode)-[e:CloudEdge]->(b:CloudNode) WHERE e.edge_type='EMITS_TO'... | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-kuzu | comp-kuzu MATCH (a:CloudNode)-[e:CloudEdge]->(b:CloudNode) WHERE e.edge_type='INVOKES' ... | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-kuzu | comp-kuzu MATCH (a:CloudNode)-[e:CloudEdge]->(b:CloudNode) WHERE a.node_id CONTAINS 'md... | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-kuzu | comp-kuzu MATCH (a:CloudNode)-[e:CloudEdge]->(b:CloudNode) WHERE b.node_id CONTAINS 'md... | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | NFRA_COMPPROOF.B-harness-harden (shared) | comp-kuzu | comp-kuzu MATCH (n:CloudNode) WHERE n.node_type='EVENT_RULE' RETURN n.node_id, n.props ... | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | NFRA_COMPPROOF.B-harness-harden (shared) | comp-kuzu | comp-kuzu --json MATCH (n:CloudNode) WHERE n.node_type='EVENT_RULE' RETURN n.node_id AS... | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | NFRA_COMPPROOF.B-harness-harden (shared) | comp-kuzu | comp-kuzu --json MATCH (n:CloudNode) WHERE n.node_type='EVENT_RULE' RETURN n.node_id AS... | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | NFRA_COMPPROOF.B-harness-harden (shared) | comp-routes | comp-routes trace getPlatinumPartnerAnalytics | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | NFRA_COMPPROOF.B-harness-harden (shared) | comp-platinum | comp-platinum page AdvisorIntelligence | FAIL |
+| 2026-07-01 | 0.0.0_AB_MSTR | NFRA_COMPPROOF.B-harness-harden (shared) | comp-kuzu | comp-kuzu MATCH (n:CloudNode) WHERE n.node_id CONTAINS 'inf-etf-ownership-on-gold-compl... | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | NFRA_COMPPROOF.B-harness-harden (shared) | comp-kuzu | comp-kuzu MATCH (a:CloudNode)-[e:CloudEdge]->(b:CloudNode) WHERE a.node_id CONTAINS 'in... | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | NFRA_COMPPROOF.B-harness-harden (shared) | comp-kuzu | comp-kuzu MATCH (a:CloudNode)-[e:CloudEdge]->(b:CloudNode) WHERE b.node_id CONTAINS 'in... | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | NFRA_COMPPROOF.B-harness-harden (shared) | comp-platinum | comp-platinum reverse platinum/firm/partner_analytics.json | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | NFRA_COMPPROOF.B-harness-harden (shared) | comp-platinum | comp-platinum | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | NFRA_COMPPROOF.B-harness-harden (shared) | comp-kuzu | comp-kuzu MATCH (a:CloudNode)-[e:CloudEdge]->(b:CloudNode) WHERE b.node_id CONTAINS 'in... | PASS |
+| 2026-07-01 | 2.0.0_SA_COO | NFRA_COMPPROOF.B-harness-harden (shared) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+| 2026-07-01 | 0.8.0_AE_CloudComp~A | NFRA_COMPPROOF.B-harness-harden (shared) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/compproof/harness.py | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | NFRA_COMPPROOF.B-harness-harden (shared) | comp-kuzu | comp-kuzu --json MATCH (n:CloudNode) WHERE n.node_id CONTAINS 'inf-etf-ownership-on-gol... | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | NFRA_COMPPROOF.B-harness-harden (shared) | comp-kuzu | comp-kuzu --json MATCH (n:CloudNode) WHERE n.node_id='arn:aws:s3:::opal-data-inf' RETUR... | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | NFRA_COMPPROOF.B-harness-harden (shared) | comp-kuzu | comp-kuzu MATCH (a:CloudNode)-[e:CloudEdge]->(b:CloudNode) WHERE b.node_id CONTAINS 'in... | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | NFRA_COMPPROOF.B-harness-harden (shared) | comp-kuzu | comp-kuzu --json MATCH (n:CloudNode) WHERE n.node_id CONTAINS 'inf-etf-ownership-daily'... | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | NFRA_COMPPROOF.B-harness-harden (shared) | comp-pipescript | comp-pipescript deployed inf-etf-ownership-on-gold-complete | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | NFRA_COMPPROOF.B-harness-harden (shared) | comp-kuzu | comp-kuzu MATCH (n) RETURN count(n) LIMIT 1 | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | NFRA_COMPPROOF.B-harness-harden (shared) | comp-drift | comp-drift inf-etf-ownership-on-gold-complete | FAIL |
+| 2026-07-01 | 0.0.0_AB_MSTR | NFRA_COMPPROOF.B-harness-harden (shared) | comp-kuzu | comp-kuzu --help | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | NFRA_COMPPROOF.B-harness-harden (shared) | comp-blast | comp-blast --help | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | NFRA_COMPPROOF.B-harness-harden (shared) | comp-trace | comp-trace --help | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | NFRA_COMPPROOF.B-harness-harden (shared) | comp-xref | comp-xref --help | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | NFRA_COMPPROOF.B-harness-harden (shared) | comp-drift | comp-drift --help | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | NFRA_COMPPROOF.B-harness-harden (shared) | comp-lambdamap | comp-lambdamap --help | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | NFRA_COMPPROOF.B-harness-harden (shared) | comp-routes | comp-routes --help | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | NFRA_COMPPROOF.B-harness-harden (shared) | comp-platinum | comp-platinum --help | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | NFRA_COMPPROOF.B-harness-harden (shared) | comp-pipescript | comp-pipescript --help | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | NFRA_COMPPROOF.B-harness-harden (shared) | comp-kuzu | comp-kuzu CALL show_tables() RETURN * | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | NFRA_COMPPROOF.B-harness-harden (shared) | comp-kuzu | comp-kuzu MATCH (a:CloudNode)-[e:CloudEdge]->(b:CloudNode) WHERE b.node_id CONTAINS 'da... | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | NFRA_COMPPROOF.B-harness-harden (shared) | comp-kuzu | comp-kuzu MATCH (n:CloudNode) RETURN n LIMIT 1 --json | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | NFRA_COMPPROOF.B-harness-harden (shared) | comp-kuzu | comp-kuzu MATCH (n:CloudNode) RETURN n.node_type AS t, count(*) AS c ORDER BY c DESC | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | NFRA_COMPPROOF.B-harness-harden (shared) | comp-kuzu | comp-kuzu MATCH (n:CloudNode) WHERE n.node_type='DYNAMODB_TABLE' RETURN n.name AS name ... | PASS |
+| 2026-07-01 | 2.0.0_SA_COO | NFRA_COMPPROOF.B-harness-harden (shared) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | NFRA_COMPPROOF.B-harness-harden (shared) | comp-trace | comp-trace opal-trade-submissions --direction up --depth 4 | FAIL |
+| 2026-07-01 | 0.0.0_AB_MSTR | NFRA_COMPPROOF.B-harness-harden (shared) | comp-xray | comp-xray frozen opal-data-cot platinum/firm/header_metrics.json --fields total_aua,tot... | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | NFRA_COMPPROOF.B-harness-harden (shared) | pipescript | pipescript --resource platinum/firm/header_metrics.json | FAIL |
+| 2026-07-01 | 0.0.0_AB_MSTR | NFRA_COMPPROOF.B-harness-harden (shared) | comp-kuzu | comp-kuzu MATCH (n:CloudNode) WHERE n.name='opal-trade-submissions' RETURN n.node_id, n... | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | NFRA_COMPPROOF.B-harness-harden (shared) | comp-kuzu | comp-kuzu MATCH (a:CloudNode)-[e:CloudEdge]->(b:CloudNode) WHERE b.name='opal-trade-sub... | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | NFRA_COMPPROOF.B-harness-harden (shared) | pipescript | pipescript --list | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | NFRA_COMPPROOF.B-harness-harden (shared) | pipescript | pipescript advi-cot | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | NFRA_COMPPROOF.B-harness-harden (shared) | comp-drift | comp-drift s3://opal-data-cot/platinum/firm/header_metrics.json | FAIL |
+| 2026-07-01 | 2.0.0_SA_COO | NFRA_COMPPROOF.B-harness-harden (shared) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/ETFS_SETUP.json | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | NFRA_COMPPROOF.B-harness-harden (shared) | comp-kuzu | comp-kuzu MATCH (n:CloudNode) WHERE n.node_type='LAMBDA' AND n.name STARTS WITH 'trade-... | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | NFRA_COMPPROOF.B-harness-harden (shared) | comp-kuzu | comp-kuzu MATCH (n:CloudNode) WHERE toLower(n.id) CONTAINS 'aum' OR toLower(n.id) CONTA... | FAIL |
+| 2026-07-01 | 0.0.0_AB_MSTR | NFRA_COMPPROOF.B-harness-harden (shared) | comp-kuzu | comp-kuzu MATCH (n:CloudNode) WHERE n.node_type='PipelineScript' RETURN n.* LIMIT 3 | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | NFRA_COMPPROOF.B-harness-harden (shared) | comp-kuzu | comp-kuzu MATCH (n:CloudNode) WHERE toLower(n.node_id) CONTAINS 'smartx' OR toLower(n.n... | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | NFRA_COMPPROOF.B-harness-harden (shared) | comp-kuzu | comp-kuzu MATCH (n:CloudNode) WHERE n.node_type='LAMBDA' AND n.name CONTAINS 'portfolio... | PASS |
+| 2026-07-01 | 3.0.0_SA_CVO | NFRA_COMPPROOF.B-harness-harden (shared) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/logs/2026-0... | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | NFRA_COMPPROOF.B-harness-harden (shared) | comp-lambdamap | comp-lambdamap sha | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | NFRA_COMPPROOF.B-harness-harden (shared) | comp-lambdamap | comp-lambdamap parity | PASS |
+| 2026-07-01 | 2.0.0_SA_COO | NFRA_COMPPROOF.B-harness-harden (shared) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/ETFS_SETUP.json | PASS |
+| 2026-07-01 | 0.5.0_AE_OpalETL | NFRA_COMPPROOF.B-harness-harden (shared) | comp-surface-check | comp-surface-check check --mode advisory --file docs/briefs/scty-mcp-employee-onboardin... | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | NFRA_COMPPROOF.B-harness-harden (shared) | comp-kuzu | comp-kuzu --help | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | NFRA_COMPPROOF.B-harness-harden (shared) | comp-blast | comp-blast --help | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | NFRA_COMPPROOF.B-harness-harden (shared) | comp-trace | comp-trace --help | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | NFRA_COMPPROOF.B-harness-harden (shared) | comp-xref | comp-xref --help | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | NFRA_COMPPROOF.B-harness-harden (shared) | comp-drift | comp-drift --help | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | NFRA_COMPPROOF.B-harness-harden (shared) | comp-kuzu | comp-kuzu MATCH (n) RETURN count(n) LIMIT 1 | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | NFRA_COMPPROOF.B-harness-harden (shared) | comp-drift | comp-drift | FAIL |
+| 2026-07-01 | 0.0.0_AB_MSTR | NFRA_COMPPROOF.B-harness-harden (shared) | comp-trace | comp-trace aum-metrics.json --direction both --depth 3 | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | NFRA_COMPPROOF.B-harness-harden (shared) | comp-blast | comp-blast generate_smartx_timeseries_and_metrics.py | FAIL |
+| 2026-07-01 | 0.0.0_AB_MSTR | NFRA_COMPPROOF.B-harness-harden (shared) | comp-kuzu | comp-kuzu MATCH (n) RETURN DISTINCT label(n) AS lbl, count(*) AS c ORDER BY c DESC | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | NFRA_COMPPROOF.B-harness-harden (shared) | comp-kuzu | comp-kuzu MATCH (n:CloudNode) RETURN n.node_type AS t, count(*) AS c ORDER BY c DESC | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | NFRA_COMPPROOF.B-harness-harden (shared) | comp-kuzu | comp-kuzu MATCH ()-[r]->() RETURN r.edge_type AS t, count(*) AS c ORDER BY c DESC | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | NFRA_COMPPROOF.B-harness-harden (shared) | comp-kuzu | comp-kuzu MATCH (a:CloudNode)-[r:TRIGGERS]->(b:CloudNode) RETURN a.node_type AS src, b.... | FAIL |
+| 2026-07-01 | 0.0.0_AB_MSTR | NFRA_COMPPROOF.B-harness-harden (shared) | comp-kuzu | comp-kuzu MATCH (n:CloudNode) WHERE n.node_type='EVENT_SOURCE' RETURN n.id LIMIT 90 | FAIL |
+| 2026-07-01 | 0.0.0_AB_MSTR | NFRA_COMPPROOF.B-harness-harden (shared) | comp-kuzu | comp-kuzu --json MATCH (n:CloudNode) WHERE n.node_type='EVENT_SOURCE' RETURN n LIMIT 2 | PASS |
+| 2026-07-01 | 0.8.0_AE_CloudComp~A | NFRA_COMPPROOF.B-harness-harden (shared) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/compproof/build_sandb... | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | NFRA_COMPPROOF.B-harness-harden (shared) | comp-kuzu | comp-kuzu CALL show_tables() RETURN * | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | NFRA_COMPPROOF.B-harness-harden (shared) | comp-kuzu | comp-kuzu MATCH (a:CloudNode)-[r:CloudEdge]->(b:CloudNode) WHERE r.edge_type='TRIGGERS'... | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | NFRA_COMPPROOF.B-harness-harden (shared) | comp-kuzu | comp-kuzu MATCH (a:CloudNode)-[r:CloudEdge]->(b:CloudNode) WHERE r.edge_type='EMITS_TO'... | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | NFRA_COMPPROOF.B-harness-harden (shared) | comp-kuzu | comp-kuzu MATCH (a:CloudNode)-[r:CloudEdge]->(b:CloudNode) WHERE r.edge_type IN ['INVOK... | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | NFRA_COMPPROOF.B-harness-harden (shared) | comp-kuzu | comp-kuzu MATCH (q:CloudNode) WHERE q.node_type='SQS_QUEUE' OPTIONAL MATCH (a)-[r:Cloud... | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | NFRA_COMPPROOF.B-harness-harden (shared) | comp-kuzu | comp-kuzu MATCH (q:CloudNode) WHERE q.node_type='SQS_QUEUE' OPTIONAL MATCH (q)-[r:Cloud... | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | NFRA_COMPPROOF.B-harness-harden (shared) | comp-kuzu | comp-kuzu MATCH (s:CloudNode) WHERE s.node_type='STATE_MACHINE' RETURN s.node_id, s.nam... | PASS |
+| 2026-07-01 | 0.8.0_AE_CloudComp~A | NFRA_COMPPROOF.B-harness-harden (shared) | comp-kuzu | comp-kuzu MATCH (n) WHERE n.props CONTAINS 'postmortem' OR n.props CONTAINS 'root cause... | PASS |
+| 2026-07-01 | 1.0.0_SA_CTO | NFRA_COMPPROOF.B-harness-harden (shared) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/SCTY_MCPGUARD_PRD.md ... | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | NFRA_COMPPROOF.B-harness-harden (shared) | comp-kuzu | comp-kuzu --json MATCH (q:CloudNode) WHERE q.name IN ['opal-inf-served-guard-recheck','... | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | NFRA_COMPPROOF.B-harness-harden (shared) | comp-kuzu | comp-kuzu --json MATCH (n:CloudNode) WHERE n.name='mdpf-daily-refresh-trigger' RETURN n... | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | NFRA_COMPPROOF.B-harness-harden (shared) | comp-kuzu | comp-kuzu MATCH (n:CloudNode {name:'mdpf-daily-refresh-trigger'}) OPTIONAL MATCH (n)-[r... | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | NFRA_COMPPROOF.B-harness-harden (shared) | comp-kuzu | comp-kuzu MATCH (a)-[r:CloudEdge]->(n:CloudNode {name:'mdpf-daily-refresh-trigger'}) RE... | PASS |
+| 2026-07-01 | 2.0.0_SA_COO | NFRA_COMPPROOF.B-harness-harden (shared) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/task_orders... | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | NFRA_COMPPROOF.B-harness-harden (shared) | comp-kuzu | comp-kuzu MATCH (n:CloudNode) WHERE n.node_type='EC2_INSTANCE' RETURN n.name AS name | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | NFRA_COMPPROOF.B-harness-harden (shared) | comp-xref | comp-xref safe-commit.sh | FAIL |
+| 2026-07-01 | 0.8.0_AE_CloudComp~A | NFRA_COMPPROOF.B-harness-harden (shared) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/compproof/AFFORDANCE_... | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | NFRA_COMPPROOF.B-harness-harden (shared) | comp-kuzu | comp-kuzu --json MATCH (n:CloudNode) WHERE n.node_type='EVENT_RULE' RETURN n.name AS na... | PASS |
+| 2026-07-01 | 2.0.0_SA_COO | NFRA_COMPPROOF.B-harness-harden (shared) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/SCTY_MCPGUARD.json --file ... | PASS |
+| 2026-07-01 | 2.0.0_SA_COO | NFRA_COMPPROOF.B-harness-harden (shared) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | NFRA_COMPPROOF.B-harness-harden (shared) | comp-kuzu | comp-kuzu MATCH (n:CloudNode) WHERE n.name CONTAINS 'demo' RETURN n.node_type AS t, n.n... | PASS |
+| 2026-07-01 | 0.5.0_AE_OpalETL | SCTY_ONBOARDING_GUARDRAILS_decomposition | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/SCTY_MCPGUARD/SCTY_MCPGUAR... | PASS |
+| 2026-07-01 | 2.0.0_SA_COO | NFRA_COMPPROOF.B-harness-harden (shared) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+| 2026-07-01 | 0.5.0_AE_OpalETL | SCTY_ONBOARDING_GUARDRAILS_decomposition | comp-surface-check | comp-surface-check check --mode advisory --file docs/briefs/scty-mcpguard-s0-tier-model... | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | NFRA_COMPPROOF.B-harness-harden (shared) | comp-kuzu | comp-kuzu MATCH (n:CloudNode) RETURN n.drift_class AS dc, count(*) AS c ORDER BY c DESC | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | NFRA_COMPPROOF.B-harness-harden (shared) | comp-kuzu | comp-kuzu MATCH (n:CloudNode) WHERE n.drift_class IN ['DECLARED-no-LIVE','DRIFT'] AND n... | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | NFRA_COMPPROOF.B-harness-harden (shared) | comp-kuzu | comp-kuzu --json MATCH (n:CloudNode {name:'inf-etf-ownership-on-gold-complete'}) OPTION... | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | NFRA_COMPPROOF.B-harness-harden (shared) | comp-kuzu | comp-kuzu MATCH (a)-[r:CloudEdge]->(n:CloudNode {name:'inf-etf-ownership-on-gold-comple... | PASS |
+| 2026-07-01 | 1.0.0_SA_CTO | NFRA_COMPPROOF.B-harness-harden (shared) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/SCTY_MCPGUARD_PRD.md | PASS |
+| 2026-07-01 | 2.0.0_SA_COO | NFRA_COMPPROOF.B-harness-harden (shared) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/task_orders... | PASS |
+| 2026-07-01 | 0.5.0_AE_OpalETL | SCTY_ONBOARDING_GUARDRAILS_decomposition | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.5.0_AE_OpalETL/deliv... | PASS |
+| 2026-07-01 | 0.5.0_AE_OpalETL | SCTY_ONBOARDING_GUARDRAILS_decomposition | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.5.0_AE_OpalETL/deliv... | PASS |
+| 2026-07-01 | 3.0.0_SA_CVO | NFRA_COMPPROOF.B-harness-harden (shared) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/logs/2026-0... | PASS |
+| 2026-07-01 | 2.0.0_SA_COO | NFRA_COMPPROOF.B-harness-harden (shared) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/task_orders... | PASS |
+| 2026-07-01 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/task_orders... | PASS |
+| 2026-07-01 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/task_orders... | PASS |
+| 2026-07-01 | 0.2.0_DT_PortfolioAnalytics | (post-nightly served-verify) | (none — served-data F5) | served-artifact content verify: json/ path, no comp-tool models field-presence/value-invariant on served proxy artifacts (data-plane by graph-presence principle) | N/A |
+| 2026-07-01 | 0.2.0_DT_PortfolioAnalytics | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
