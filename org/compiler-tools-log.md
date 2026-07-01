@@ -12013,3 +12013,15 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-kuzu | comp-kuzu --json MATCH (n:CloudNode) WHERE n.node_type='SNS_TOPIC' RETURN n.node_id AS ... | PASS |
 | 2026-07-01 | 0.8.0_AE_CloudComp~A | NFRA_COMPPROOF-B | comp-kuzu / ds-commit-gate / safe-commit | COMPPROOF-B harness harden: graph-coverage enumeration (repo-source vs allowlist roots) + assert_graph_no_narrative(=0) + harness.py gate + 5 commits (TRUE-SANDBOX -> completeness -> ALLOWLIST default + standing coverage-guard) | PASS |
 | 2026-07-01 | 0.8.0_AE_CloudComp~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-kuzu | comp-kuzu --json MATCH (n:CloudNode) WHERE n.node_type='IAM_POLICY' RETURN n LIMIT 1 | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-kuzu | comp-kuzu MATCH ()-[e:CloudEdge]->() RETURN e.edge_type AS t, count(*) AS c ORDER BY c ... | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-kuzu | comp-kuzu MATCH (a)-[e:CloudEdge]->(b) WHERE b.name='bd-allocation-file-missing' OR a.n... | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-kuzu | comp-kuzu MATCH (a)-[e:CloudEdge]->(b) WHERE e.edge_type='SUBSCRIBES' RETURN a.name AS ... | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-kuzu | comp-kuzu MATCH (a)-[e:CloudEdge]->(b:CloudNode) WHERE e.edge_type='PUBLISHES_TO' RETUR... | PASS |
+| 2026-07-01 | 0.4.0_DS_ClientPlatform~A | (no-TO) | comp-pipescript | comp-pipescript deployed data/canonical/schwab/build_canonical_daily.py | PASS |
+| 2026-07-01 | 0.4.0_DS_ClientPlatform~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .claude/skills/49-schwab-conv/SKILL.md ... | PASS |
+| 2026-07-01 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/MCP_INTEGRATION_FRAME... | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-kuzu | comp-kuzu MATCH (a)-[e:CloudEdge]->(b) WHERE a.name='bd-allocation-file-checker' OR b.n... | PASS |
+| 2026-07-01 | 0.4.0_DS_ClientPlatform~A | (no-TO) build_canonical_daily --date fix | ds-commit-gate / comp-pipescript deployed / comp-grep | gate clean x2; deployed=no-match (REPO-RUN, no S3 deploy); comp-grep grounded $LATEST compact-vs-hyphenated mismatch | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-kuzu | comp-kuzu --json MATCH (n:CloudNode) WHERE n.name='bd-allocation-file-check-daily' RETU... | PASS |
+| 2026-07-01 | 0.4.0_DS_ClientPlatform~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
