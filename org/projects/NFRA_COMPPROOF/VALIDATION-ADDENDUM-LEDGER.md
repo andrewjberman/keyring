@@ -38,6 +38,13 @@ comp-grep, comp-glob, comp-validate -> PASS-or-error. (comp-grep/glob are the ro
   - M1-M4 -> **~A comp-tool correctness sweep** (dispatched 132612Z; ~A ACK). M2 (comp-types, MP/benchmark SEV1) = comp-surface-check + CVO~B verify.
 - **Step-3 revalidate:** CVO~B-gated, after the fixes land -> re-run the affected checks / the workflow -> 0 open gaps.
 
+## REVALIDATE PROGRESS 2026-07-01T1511Z
+- **E3 (17eaca870) REVALIDATE GREEN** (~B, served-behavior): clean lambda EXIT 0, false break dead.
+- **M4 (b36791252) REVALIDATE GREEN** (~B): comp-heat federated rc=0, real rows, no crash.
+- **E1 CLOSED (live-verified, COO~B grounded):** ~B reported "E1 open" but tested a STALE PRE-FLIP checkout (2033b8d70); the flip (94b64a5af) landed ~30 min earlier. On the LIVE flipped comp-which (94b64a5af confirmed ancestor of HEAD), the exact read repro "what lambdas read from opal-data-bd" routes to comp-parity NOT comp-aws-derive -- write_path exclusion active, 0 write_path in the read answer. E1 AC MET. (Verification-hygiene: a stale-checkout false-open, the same stale-vintage class the session fought.)
+- **M3 (0f3006763):** landed; formal revalidate rides the CVO~B Step-3 sweep.
+- REMAINING for full revalidate: E2 (~D/DE, rides (a)) + M1/M2 (~A, in flight). CVO~B Step-3 is the authoritative independent pass.
+
 ## NOTES
 - E1's convergence with the Andrew-direct COMPROUTE default-router re-scope is the headline: ~B's independent validation root-caused the exact problem Andrew directed (read intent -> rebuild tool). The fix is ONE increment, not two.
 - ~B stays OFF COMPPROOF tasking (Andrew hard constraint) -- but the validation + this fix->retest->revalidate addendum IS ~B's Andrew-direct lane (not COMPPROOF), so ~B on E3 + E1-assist is in-scope.
