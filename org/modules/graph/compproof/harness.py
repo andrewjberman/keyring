@@ -89,6 +89,16 @@ def _is_forbidden_path(p: str) -> bool:
         return True
     if p.startswith("org/modules/graph/debtscan/"):       # incident debtscan ledgers (resolution records
         return True                                       # under an otherwise-allowed source tree)
+    if "org/modules/graph/compproof/" in p:               # FIX-1 stopgap (MSTR finding-1): the COMPPROOF
+        return True                                       # harness internals -- corpus.py IS the sealed
+                                                          # answer-key (23 plaintext root-causes) -- sit
+                                                          # under the otherwise-allowed org/modules/graph
+                                                          # source tree; a solver reading ANY compproof/
+                                                          # file = catting its own answer. Substring (not
+                                                          # startswith) so an ABSOLUTE-path read
+                                                          # (c:/.../compproof/corpus.py) is caught too.
+                                                          # (TRUE-SANDBOX makes them physically absent;
+                                                          # this gates the post-hoc cheat_check meanwhile.)
     if "compiler-tools-log" in p:                         # the running narrative tool-log
         return True
     if p.startswith("docs/") and "postmortem" in p:       # postmortem docs (arch/PRD docs stay allowed)
