@@ -87,19 +87,23 @@ class Capability:
     declared_grains: tuple[str, ...] = ()
     kind: str = "surface"        # "surface" | "seam" | "meta"
     routable: bool = True        # False = pure tooling-layer node (gate/test/router), not a routing target
+    mode: str = "query"          # "query" (read-safe) | "rebuild"/"write"/"derive"/"mutate" (E1: excluded from read intents)
 
 
 @dataclass
 class RouteContext:
-    """The routing context = {role, working-set, trajectory}. Normalized to a plain dict at the
-    provider boundary (ctx["role"]) per the locked L2->L3 contract."""
+    """The routing context = {role, working-set, trajectory, intent_class}. Normalized to a plain dict at
+    the provider boundary per the locked L2->L3 contract. intent_class (~C's surface tag: read|navigate|
+    compute; "" = legacy/backstop) drives the Stage-A mode pre-filter (E1)."""
 
     role: str = ""
     working_set: tuple[str, ...] = ()      # open files / recent tools (context signal)
     trajectory: tuple[str, ...] = ()       # recent intents (session-trajectory signal)
+    intent_class: str = ""                 # "read" | "navigate" | "compute" | "" (legacy/backstop)
 
     def as_dict(self) -> dict:
-        return {"role": self.role, "working_set": list(self.working_set), "trajectory": list(self.trajectory)}
+        return {"role": self.role, "working_set": list(self.working_set),
+                "trajectory": list(self.trajectory), "intent_class": self.intent_class}
 
 
 def _ctx_dict(ctx) -> dict:
@@ -108,19 +112,29 @@ def _ctx_dict(ctx) -> dict:
         return ctx.as_dict()
     if isinstance(ctx, Mapping):
         return {"role": ctx.get("role", ""), "working_set": list(ctx.get("working_set", [])),
-                "trajectory": list(ctx.get("trajectory", []))}
-    return {"role": "", "working_set": [], "trajectory": []}
+                "trajectory": list(ctx.get("trajectory", [])), "intent_class": ctx.get("intent_class", "")}
+    return {"role": "", "working_set": [], "trajectory": [], "intent_class": ""}
+
+
+# The vetted-band offset (CTO ruling 2026-07-01): a VETTED signal (curated / surface-first) scores
+# 1.0 + confidence in [1.0, 2.0); the base posterior lives in [0, 1). The +1.0 is STRUCTURAL (fixed-by-
+# construction, NOT fixture-calibrated) -- so a vetted match ALWAYS outranks non-vetted. This is what
+# makes the default-router's no-regression a THEOREM, not a tuned weight. NEVER move this to Weights.
+_VETTED_OFFSET = 1.0
 
 
 @dataclass
 class Weights:
-    """Scorer weights + the disambiguation margin. Tunable; the Goodhart gate (CVO) tunes these on a
-    VALUE metric, never usage. Defaults: likelihood-primary (query), prior a boost, affinity meaningful."""
+    """Scorer weights + the disambiguation margin + the default-router thresholds. Tunable; the Goodhart
+    gate (CVO) tunes these on a VALUE metric, never usage. Defaults: likelihood-primary (query), prior a
+    boost, affinity meaningful. (The _VETTED_OFFSET is deliberately NOT here -- it is structural, not tunable.)"""
 
     w_q: float = 0.55
     w_s: float = 0.20
     w_h: float = 0.25
+    w_f: float = 0.15      # soft (fuzzy) extractor weight -- adds into the base band, never dominant
     eps: float = 0.05      # within-margin => disambiguate, never argmax
+    relevance_floor: float = 0.15   # top base-band score < floor => nothing relevant => grep/glob FALLBACK
 
 
 @dataclass
@@ -131,17 +145,20 @@ class Scored:
     prior: float
     affinity: Optional[float]   # None => cold-start for this capability (no history)
     matched_terms: tuple[str, ...]
+    vetted: bool = False            # a VETTED signal (curated/surface-first) named this cap => dominant band
+    vetted_confidence: float = 0.0  # the vetted signal's confidence (curated 1.0; surface-first < 1.0)
 
 
 @dataclass
 class RouteResult:
-    kind: str                       # "decision" | "disambiguation" | "empty"
+    kind: str                       # "decision" | "disambiguation" | "fallback" | "empty"
     intent: str
     ranked: list                    # list[Scored], full ranking (nothing is ever filtered out by score)
     within_margin: list             # list[Scored] tied within eps (== [decision] when confident)
     cold_start: bool
     training_row: dict              # the flywheel row L4 persists to tool_activity
     regression_case: dict           # the routing regression-test case L4 persists
+    fallback: Optional[str] = None  # when kind=="fallback": the on-rails grep/glob suggestion (never a dead-end)
 
     @property
     def decision(self) -> Optional[Scored]:
@@ -228,44 +245,127 @@ def _score_one(cap, intent: str, ctx_d: dict, weights: Weights,
 
 
 # ============================================================================================
-# THE ENGINE -- route(intent, ctx, provider [, affinity_provider]). Provider-agnostic.
+# Default-router helpers (Stage A mode pre-filter + Stage B signal extractors).
+# ============================================================================================
+_REBUILD_MODES = {"rebuild", "write", "derive", "mutate"}
+_PATHY = re.compile(r"[/\\.*]|\.py|\.tf|\.json|\.yaml")
+
+
+def _mode_ok_for_read(cap) -> bool:
+    """Stage A (E1): a read/navigate intent must NOT route to a rebuild/write tool (a read -> an 8-min
+    comp-aws-derive is a category/cost error). Untagged caps default to query-safe (eligible); only a
+    cap explicitly tagged mode in {rebuild,write,derive,mutate} is excluded. ~B tags the manifest."""
+    return str(getattr(cap, "mode", "query")).strip().lower() not in _REBUILD_MODES
+
+
+def _run_extractors(extractors, intent: str, ctx_d: dict) -> tuple[dict, dict]:
+    """Run the SignalExtractors (locked interface with ~C). Each yields {cap_id, confidence, vetted}.
+    Returns (vetted_by_cap, soft_by_cap): the MAX confidence per cap in each class (curated 1.0 wins
+    the vetted band; strongest fuzzy wins the soft add)."""
+    vetted: dict = {}
+    soft: dict = {}
+    for ex in extractors or ():
+        try:
+            hits = ex(intent, ctx_d) or ()
+        except Exception:  # noqa: BLE001 -- a broken extractor never breaks routing (fail-safe)
+            continue
+        for h in hits:
+            cid = h.get("cap_id")
+            if not cid:
+                continue
+            conf = float(h.get("confidence", 0.0))
+            tgt = vetted if h.get("vetted") else soft
+            if conf > tgt.get(cid, -1.0):
+                tgt[cid] = conf
+    return vetted, soft
+
+
+def _fallback_suggestion(intent: str) -> str:
+    """The on-rails never-dead-end fallback (COMPRAIL's sanctioned raw search) for a below-floor intent."""
+    return "comp-glob" if _PATHY.search(intent or "") else "comp-grep"
+
+
+# ============================================================================================
+# THE ENGINE -- route(intent, ctx, provider [, affinity_provider, extractors]). Provider-agnostic.
 # ============================================================================================
 def route(intent: str, ctx, provider: CapabilityMapProvider,
           affinity_provider: Optional[AffinityProvider] = None,
-          weights: Optional[Weights] = None) -> RouteResult:
-    """Decide which capability serves `intent` in `ctx`.
+          weights: Optional[Weights] = None,
+          extractors: Optional[list] = None) -> RouteResult:
+    """Decide which capability serves `intent` in `ctx`. Serves BOTH roles from one engine:
 
-    PRIOR-not-FILTER: EVERY routable candidate is scored + ranked; none is ever excluded by surface (a
-    strong query_match on a non-ctx surface can win or land within-margin). MARGIN gate: within eps of
-    the top => surface ALL tied candidates with their concern (never silent-argmax). COLD-START: no
-    affinity_provider (or it returns None for every cap) => score = query + prior + margin, still routes."""
+    - BACKSTOP (legacy, extractors=None + no intent_class): pure posterior (query + surface_prior +
+      [shadow] affinity) + margin gate -- EXACTLY the prior behavior (backward-compatible).
+    - DEFAULT ROUTER (extractors passed): the 3-stage decision (CTO ruling 2026-07-01):
+        A. MODE PRE-FILTER (E1) -- a read/navigate intent (ctx.intent_class) excludes rebuild/write tools
+           (action-class/cost filter; PRIOR-not-FILTER still holds WITHIN the mode-allowed set).
+        B. BANDED SCORE -- a VETTED signal (curated/surface-first) scores 1.0 + confidence in [1.0, 2.0)
+           (STRUCTURAL dominance, not a tuned weight); a SOFT (fuzzy) signal adds into the base band
+           [0, 1); the base posterior is the query+prior+affinity score. Within a band the margin gate
+           disambiguates (2+ vetted near-ties => surface both, never silent-argmax).
+        C. CONFIDENCE GATE -- top base-band score < relevance_floor (a vetted hit always clears it) =>
+           kind="fallback" to comp-grep/comp-glob (never a dead-end, never a forced misroute)."""
     weights = weights or Weights()
     ctx_d = _ctx_dict(ctx)
+    intent_class = str(ctx_d.get("intent_class", "")).strip().lower()   # ~C's tag; "" => legacy backstop
+
+    # STAGE A -- mode pre-filter (only for a read/navigate intent; legacy/compute => no filter).
     caps = [c for c in provider.capabilities() if getattr(c, "routable", True)]
+    if intent_class in ("read", "navigate"):
+        caps = [c for c in caps if _mode_ok_for_read(c)]
+
     scored = [_score_one(c, intent, ctx_d, weights, provider, affinity_provider) for c in caps]
-    scored.sort(key=lambda s: (-s.score, s.cap.id))     # deterministic tie-break by id
+
+    # STAGE B -- fold the vetted/soft signal extractors into the band (opt-in; None => pure posterior).
+    vetted_by_cap: dict = {}
+    soft_by_cap: dict = {}
+    if extractors:
+        vetted_by_cap, soft_by_cap = _run_extractors(extractors, intent, ctx_d)
+        for s in scored:
+            vc = vetted_by_cap.get(s.cap.id)
+            if vc is not None:                                  # VETTED -> the dominant band [1.0, 2.0)
+                s.vetted = True
+                s.vetted_confidence = vc
+                s.score = _VETTED_OFFSET + vc                   # structural: always > any base-band score
+            else:                                               # SOFT (fuzzy) -> stays in the base band
+                s.score = min(0.999, s.score + weights.w_f * soft_by_cap.get(s.cap.id, 0.0))
+    scored.sort(key=lambda s: (-s.score, s.cap.id))             # deterministic tie-break by id
+    cold_start = all(s.affinity is None for s in scored)
 
     if not scored:
-        return RouteResult("empty", intent, [], [], True, {}, {})
+        return RouteResult("empty", intent, [], [], True, {}, {}, None)
 
     top = scored[0].score
-    within = [s for s in scored if (top - s.score) < weights.eps]   # includes the top; PRIOR never filters
-    cold_start = all(s.affinity is None for s in scored)
+    top_s = scored[0]
+
+    # STAGE C -- confidence gate. RELEVANCE FLOOR (absolute): measured on RELEVANCE (vetted OR
+    # query + affinity + soft), NOT the surface_prior BIAS -- a nonsense intent on the role's home
+    # surface must still fall back (a high prior never RESCUES a zero-relevance intent). A vetted hit
+    # clears it by construction. Below floor => FALLBACK to the on-rails grep/glob (never a dead-end).
+    top_relevance = (_VETTED_OFFSET if top_s.vetted else
+                     weights.w_q * top_s.query + weights.w_h * (top_s.affinity or 0.0)
+                     + weights.w_f * soft_by_cap.get(top_s.cap.id, 0.0))
+    if top_relevance < weights.relevance_floor:
+        fb = _fallback_suggestion(intent)
+        training_row = {
+            "intent": intent, "role": ctx_d.get("role", ""), "working_set": ctx_d.get("working_set", []),
+            "ranked": [{"id": s.cap.id, "score": round(s.score, 4)} for s in scored[:5]],
+            "kind": "fallback", "cold_start": cold_start, "fallback": fb, "outcome": None,
+        }
+        return RouteResult("fallback", intent, scored, [], cold_start, training_row, {}, fb)
+
+    within = [s for s in scored if (top - s.score) < weights.eps]   # includes the top; PRIOR never filters within a band
     kind = "decision" if len(within) == 1 else "disambiguation"
 
     # The flywheel: every route is a training row; every disambiguation is a regression-test case.
-    # L4 persists these (training_row -> tool_activity; regression_case -> the routing regression test).
     training_row = {
         "intent": intent, "role": ctx_d.get("role", ""),
         "working_set": ctx_d.get("working_set", []),
         "ranked": [{"id": s.cap.id, "score": round(s.score, 4),
-                    "query": round(s.query, 4), "prior": round(s.prior, 4),
+                    "query": round(s.query, 4), "prior": round(s.prior, 4), "vetted": s.vetted,
                     "affinity": (round(s.affinity, 4) if s.affinity is not None else None)}
                    for s in scored[:5]],
-        "kind": kind, "cold_start": cold_start,
-        # outcome is filled at USE time by the surface (which option the agent picked / whether it
-        # resolved the intent) -- that closes the loop into the OUTCOME-weighted signal, not a count.
-        "outcome": None,
+        "kind": kind, "cold_start": cold_start, "outcome": None,
     }
     regression_case = {
         "intent": intent, "role": ctx_d.get("role", ""),
@@ -273,7 +373,7 @@ def route(intent: str, ctx, provider: CapabilityMapProvider,
         "expect_ids": [s.cap.id for s in within],
     } if kind == "disambiguation" else {}
 
-    return RouteResult(kind, intent, scored, within, cold_start, training_row, regression_case)
+    return RouteResult(kind, intent, scored, within, cold_start, training_row, regression_case, None)
 
 
 # ============================================================================================
@@ -464,15 +564,22 @@ def _fmt_scored(s: "Scored") -> str:
 def render(r: RouteResult) -> str:
     if r.kind == "empty":
         return f'comp-route: no candidate capabilities for "{r.intent}"'
+    if r.kind == "fallback":
+        L = [f'=== comp-route: "{r.intent}" ===   [FALLBACK: nothing cleared the relevance floor]',
+             f"\nFALLBACK -> {r.fallback}  (on-rails never-dead-end raw search; no confident route)",
+             "\nfull ranking (all below floor):"]
+        L += [_fmt_scored(s) for s in r.ranked[:5]]
+        return "\n".join(L)
     L = [f'=== comp-route: "{r.intent}" ===' + ("   [COLD-START: no learned affinity]" if r.cold_start else "")]
     if r.kind == "decision":
         d = r.decision
-        L.append(f"\nDECISION (confident, margin >= eps): {d.cap.id}")
+        vt = "  [VETTED]" if d.vetted else ""
+        L.append(f"\nDECISION (confident, margin >= eps): {d.cap.id}{vt}")
         L.append(_fmt_scored(d))
     else:
         L.append(f"\nDISAMBIGUATION ({len(r.within_margin)} within-margin -- pick by concern, NOT auto-chosen):")
         for s in r.within_margin:
-            L.append(_fmt_scored(s))
+            L.append(_fmt_scored(s) + ("  [VETTED]" if s.vetted else ""))
     L.append("\nfull ranking:")
     L += [_fmt_scored(s) for s in r.ranked]
     return "\n".join(L)
@@ -482,9 +589,10 @@ def _result_json(r: RouteResult) -> dict:
     def sd(s):
         return {"id": s.cap.id, "score": round(s.score, 4), "query": round(s.query, 4),
                 "prior": round(s.prior, 4), "affinity": (round(s.affinity, 4) if s.affinity is not None else None),
+                "vetted": s.vetted, "vetted_confidence": round(s.vetted_confidence, 4),
                 "surface": s.cap.surface, "grain": s.cap.grain, "concern": s.cap.concern,
                 "matched_terms": list(s.matched_terms)}
-    return {"kind": r.kind, "intent": r.intent, "cold_start": r.cold_start,
+    return {"kind": r.kind, "intent": r.intent, "cold_start": r.cold_start, "fallback": r.fallback,
             "decision": (sd(r.decision) if r.decision else None),
             "within_margin": [sd(s) for s in r.within_margin],
             "ranked": [sd(s) for s in r.ranked],
@@ -585,6 +693,74 @@ def _self_test() -> tuple[bool, list]:
     aw2 = next(s for s in dis2.ranked if s.cap.id == "comp-aws")
     ck("affinity.cold_cap_backs_off_to_surface_prior", aw2.affinity == aw2.prior == 0.8,
        f"comp-aws affinity={aw2.affinity} == surface_prior={aw2.prior}")
+
+    # ================= DEFAULT-ROUTER (DR1) -- the 3-stage engine (CTO ruling 2026-07-01) =================
+    # Mock SignalExtractors (the locked interface {cap_id, confidence, vetted}); ~C ships the real ones.
+    def curated_ex(intent, ctx_d):
+        return [{"cap_id": "comp-drift", "confidence": 1.0, "vetted": True}] if "parity" in intent else []
+
+    def surface_first_ex(intent, ctx_d):
+        return [{"cap_id": "comp-aws", "confidence": 0.8, "vetted": True}] if "estate" in intent else []
+
+    def fuzzy_ex(intent, ctx_d):
+        return [{"cap_id": "comp-cluster", "confidence": 0.5, "vetted": False}] if "group" in intent else []
+
+    EXTR = [curated_ex, surface_first_ex, fuzzy_ex]
+    provDR = build_fixture_provider(role_surface_affinity={"AE": {"estate": 0.8}})
+
+    # (1) VETTED DOMINANCE: a curated hit on a PARAPHRASE the bare posterior would misroute -> a confident
+    # DECISION to the vetted cap (this is the L4 4-paraphrase regression fix -- structural, not tuned).
+    rV = route("run the parity check now", RouteContext(role="AE"), provDR, extractors=EXTR)
+    ck("dr.vetted_dominates_paraphrase",
+       rV.kind == "decision" and rV.decision and rV.decision.cap.id == "comp-drift"
+       and rV.decision.vetted and rV.decision.score >= 1.0,
+       f"{rV.kind} -> {rV.decision.cap.id if rV.decision else None} score={rV.decision.score if rV.decision else 0:.2f}")
+
+    # (2) CURATED > SURFACE-FIRST by confidence-ordering (the existing invariant, STRUCTURAL no special-case):
+    # an intent triggering BOTH curated(comp-drift 1.0->2.0) AND surface-first(comp-aws 0.8->1.8) -> curated wins.
+    rB = route("estate parity", RouteContext(role="AE"), provDR, extractors=EXTR)
+    aws_s = next(s for s in rB.ranked if s.cap.id == "comp-aws")
+    ck("dr.curated_beats_surface_first",
+       rB.decision and rB.decision.cap.id == "comp-drift" and aws_s.vetted and aws_s.score < rB.decision.score,
+       f"-> {rB.decision.cap.id if rB.decision else None} (comp-aws vetted@{aws_s.score:.2f} < drift@{rB.decision.score if rB.decision else 0:.2f})")
+
+    # (3) MODE PRE-FILTER (E1): a READ intent must NEVER route to a rebuild tool (a read -> 8-min derive).
+    rebuild_caps = build_fixture_caps() + [
+        Capability("comp-aws-derive", ("aws", "estate", "rebuild", "derive", "graph"), surface="estate",
+                   grain="resource", concern="REBUILD the aws graph (8-min)", affinity_key="estate", mode="rebuild")]
+    provM = DictCapabilityProvider(rebuild_caps, role_surface_affinity={"AE": {"estate": 0.9}})
+    rM = route("aws estate graph", RouteContext(role="AE", intent_class="read"), provM)
+    ck("dr.read_never_rebuilds", "comp-aws-derive" not in {s.cap.id for s in rM.ranked},
+       f"rebuild tool excluded from READ intent: {'comp-aws-derive' not in {s.cap.id for s in rM.ranked}}")
+    rM2 = route("aws estate graph", RouteContext(role="AE"), provM)   # compute/legacy => no mode filter
+    ck("dr.compute_intent_no_mode_filter", "comp-aws-derive" in {s.cap.id for s in rM2.ranked}, "")
+
+    # (4) RELEVANCE FLOOR -> FALLBACK: an intent matching NOTHING (no vetted, ~0 query -- a high surface_prior
+    # must NOT rescue it) -> kind="fallback" to comp-grep/glob, never a forced misroute / dead-end.
+    rF = route("xyzzy nonsense unmatched tokens", RouteContext(role="AE"), provDR, extractors=EXTR)
+    ck("dr.relevance_floor_fallback_not_prior_rescued",
+       rF.kind == "fallback" and rF.fallback in ("comp-grep", "comp-glob"),
+       f"kind={rF.kind} fallback={rF.fallback} (prior-only did NOT rescue a zero-relevance intent)")
+
+    # (5) CTO GUARD -- a WRONG surface-first hit must NOT silently capture the route. A wrong vetted hit
+    # (comp-cluster 0.98) that NEAR-TIES the correct curated (comp-drift 1.0) -> DISAMBIGUATION surfaces
+    # BOTH (the agent sees the wrong one + the right one, never silently misrouted). The margin gate is
+    # the engine-side catch; a LONE wrong-vetted is bounded by extractor precision + measured in shadow.
+    def wrong_sf_ex(intent, ctx_d):
+        return [{"cap_id": "comp-cluster", "confidence": 0.98, "vetted": True}] if "parity" in intent else []
+
+    rG = route("parity check", RouteContext(role="AE"), provDR, extractors=[curated_ex, wrong_sf_ex])
+    ck("dr.guard_wrong_vetted_near_tie_disambiguates_not_silent",
+       rG.kind == "disambiguation" and {"comp-drift", "comp-cluster"} <= {s.cap.id for s in rG.within_margin},
+       f"kind={rG.kind} within={sorted(s.cap.id for s in rG.within_margin)}")
+
+    # (6) BACKWARD-COMPAT: no extractors + no intent_class => EXACTLY the legacy posterior backstop
+    # (unchanged; comp-which stays on it until CVO~B's shadow cert flips DR2). No vetted band, no mode filter.
+    rL = route("similar components", RouteContext(role="DE"),
+               build_fixture_provider(role_surface_affinity={"DE": {"graph": 0.6, "portal": 0.7}}))
+    ck("dr.backward_compatible_backstop",
+       rL.kind == "disambiguation" and all(not s.vetted for s in rL.ranked) and rL.fallback is None,
+       "no extractors -> pure posterior, no vetted band, no fallback")
 
     ok = all(c["pass"] for c in checks)
     return ok, checks
