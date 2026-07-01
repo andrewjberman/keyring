@@ -23,3 +23,11 @@
 - 20260701T010552Z LEG L2 closed: re-drive derive committed + marker advanced: _branch_head.main.json 00:46:54Z, new Nessie HEAD 3316621630930459138 (supe
 - 20260701T013802Z LEG L3 closed: Phase-A verified-correct + N-party-validated on the LIVE graph (HEAD 3316621630930459138): nodes/edges present + 0-dangl
 - 20260701T013803Z CLOSED -- all 3 legs proven
+
+## Reconciliation note (appended 20260701T0312Z by 2.0.0_SA_COO~B -- for CVO~B gate-lift MH4)
+
+CVO~B flagged a count reconcile-gap against L2's "18266 -> 19783 (+1517)". Resolved (grounded, comp-kuzu live 02:26Z build, HEAD current == marker):
+- The L2 "+1517" is correct ARITHMETIC (19783 - 18266). The enumerated GRAPHDEPTH-additive breakdown is exactly **1516** (PipelineFunction 1210 + PipelineScript 134 + Pipeline 3 + S3Key 169), which are the ONLY 4 canonical types the population adds and are invariant across derives (sourced from the pipeline producers, not the AWS census).
+- Therefore the residual **+1** at ledger-close (00:57Z build) is a NON-GRAPHDEPTH node (AWS-census vintage picked up during the 00:46Z derive), NOT an off-by-one in the additive population. The L2 note conflated total-delta with the 4-type breakdown; the +1 was simply unstated.
+- Live has since advanced 19783 -> **19791** (+8) via a LATER derive (02:26Z build), again all NON-GRAPHDEPTH (4-type count still 1516; LAMBDA now 174). The L2 count is a correct point-in-time snapshot; it is not stale for the deploy record.
+- These residuals do NOT indicate GRAPHDEPTH mutation/regression. The additive-only, zero-mutation CERTIFICATION belongs to CVO~B's independent gate-lift verify; decisive test handed to it (031050Z): pin a scratch Kuzu DB at pre-population HEAD `7647070038814948852`, confirm the 4 GRAPHDEPTH types = 0 there + no pre-existing node_type decreased current-vs-baseline + the 4-type additive delta = 1516.
