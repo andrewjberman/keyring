@@ -51,8 +51,14 @@ Post-reboot cold-start (watcher + /cloud-ops + org/XXX.md), then two threads dri
 - CVO~B RE-ATTEST GREEN (3eeff86e4): 133-id set byte-exact, 1337 exact, 169==169, denom
   232. **Emitted gold_compute.json to s3://opal-313476888478-globgrph/producers/graphuni/**
   (1043684 bytes, generated_at 2026-07-01T04:20:17Z) on ~B's STAGE-GO; verified
-  byte-identical to CVO~B's attestation. ~B audits the 4-file prefix + fires the derive;
-  I priority-interrupt to co-sign {~D,~A,~B} 169==169/232 on the populated graph.
+  byte-identical to CVO~B's attestation. ~B fired+landed the ONE derive (HEAD
+  5cca1bddef26bc22, snapshot 5434137157015633165, 04:38:31Z).
+- **CO-SIGN COMPLETE (populated graph, comp-kuzu CURRENT).** My compute slice landed EXACT:
+  1337 nodes (133 script + 1201 fn + 3 pipeline); edges CALLS 1623 / CONTAINS 1334 /
+  READS_S3 304 / WRITES_S3 269. CONVERGENCE {~D,~A,~B}: 169 distinct WRITE-target keys ALL
+  aws-layer S3Key, 0-dangling -> 169==169 on the live graph; READS_S3 118 targets all
+  aws-layer, 0-dangling (reads_only 55). denom 232 (169+55+8); RUNS keystone 248.
+  Co-signed to CVO~B (L3 landing verify) + RAVC'd COO~B. BOTH ~D threads now closed on my side.
 
 ## Compiler Tools
 | Tool | Invocation | Result | Note |
@@ -79,16 +85,15 @@ answer to ~A; pin/id-set/denom-232 confirms; emit confirm + STAGE-GO fulfil to ~
 COMPDRIFT P3c+P4 -> COO~B + CC CTO (manifest diff + sec-8 tail) + CVO~B (close-verify).
 
 ## Blockers
-None assumption-blocked. Phase-B co-sign is a real sequencing gate (waits on ~B's actual
-derive fire + HEAD-advance -- declared, not a coast). COMPDRIFT close awaits CVO~B's
-independent close-verify (registered) + COO~B accept.
+None. Both ~D threads CLOSED on my side this window. COMPDRIFT close = COO~B's mechanical
+2-step (full triad in: COO~B accept + CTO arch-confirm 93669f7ad + CVO~B GREEN 2d3ab618a).
+Phase-B ledger co-sign leg = COO~B's close (my RAVC + co-sign in; CVO~B L3 landing verify running).
 
-## Next Steps
-1. **[0.8.0_AE_CloudComp~B]** audit the 4-file prefix + fire the ONE Phase-B derive.
-2. **[0.8.0_AE_CloudComp~D] (me)** priority-interrupt on ~B's fire + HEAD-advance: co-sign
-   {~D,~A,~B} 169==169 / denom 232 on the populated graph; RAVC COO~B.
-3. **[3.0.0_SA_CVO~B]** COMPDRIFT P3c+P4 close-verify (live Trino) -> RAVC COO~B.
-4. **[1.0.0_SA_CTO]** apply the exec-lane manifest comp-drift refresh + arch-confirm the
-   PRD sec-8 emit/retire tail sequencing (infra-monitor Lambda rewire owner).
-5. **[0.8.0_AE_CloudComp~D]** post-Phase-B: GRANTS_S3 capability-edge (CTO arch-Q) when
-   COO~B sequences it.
+## Next Steps (all resolved this window unless noted follow-on)
+1. **[DONE] ~B** fired+landed the ONE Phase-B derive (HEAD 5cca1bddef26bc22).
+2. **[DONE] ~D (me)** co-signed {~D,~A,~B} 169==169 / denom 232, 0-dangling on the populated
+   graph; RAVC'd COO~B; co-signed CVO~B.
+3. **[DONE] 3.0.0_SA_CVO~B** COMPDRIFT close-verify GREEN (2d3ab618a); now running the Phase-B L3 landing verify.
+4. **[DONE] 1.0.0_SA_CTO** manifest refresh committed (93669f7ad) + sec-8 tail arch-confirmed + leg-reuse CONCUR.
+5. **[FOLLOW-ON] ~D** NFRA_INFRPT sec-8 retire-tail (AE-owned, never-widen parity-gated) + GRANTS_S3
+   capability-edge (CTO arch-Q) -- both on COO~B scheduling, post-Phase-B.
