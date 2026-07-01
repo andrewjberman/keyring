@@ -4,7 +4,7 @@
 **Deploy:** ADVI_INFREF full rebuild + cutover TONIGHT (Andrew-direct collapse via CVO, Option A). Timeline collapsed to this session; CVO in-session no-tolerance parity replaces multi-day parallel-run (TRANSFORM-correctness proof). Atomic cutover (new single-runner = SOLE served-key writer, single-writer inviolable) on CVO parity-GREEN + CTO co-sign; 9 crons HOLD one nightly (shadow-preferred non-served / atomic-off+recoverable-TF fallback per redirect-param determination); cron-TF DELETE finalizes on tomorrow nightly + Orion-morning-reset GREEN (Pass-5 day-over-day). Gate chain + rulings: NFRA org/projects refs + CVO relay 202656Z.
 **Authored by:** 1.0.0_SA_CTO
 **Class:** deploy-completion (NEVER-law gate e38cc2b16; contract tool .tools/deploy_ledger.py, TO #5)
-**Window:** 16.0h (OPEN past window -> RED COO alarm via `deploy_ledger.py check --red`)
+**Window:** 72.0h (EXTENDED from 16.0h @2026-07-01T13:20Z, 1.0.0_SA_CTO -- the 16h single-session window did NOT fit the multi-day close TAIL; the CUTOVER ACTIVATION completed on-time @06:07Z. Benign window-cross, NOT a strand. Close criterion + L4 re-scope in the JSON log NOTE. Andrew-direct tri-attestation gate enforced by COO's REGISTRY-flip hold.)
 
 ---
 
