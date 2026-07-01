@@ -7,8 +7,8 @@
     {"path": "docs/architecture/ADHC_PREFLT_PRD.md", "label": "Preflight Gate PRD v1.0 (RATIFIED)", "date": "2026-07-01"}
   ],
   "status": "active",
-  "phase": "Phase 0: PRD complete + CTO-RATIFIED 2026-07-01, COO decomposition pending. Recommended consumer 0.4.0_DS_ClientPlatform~A (proposal + seams author + proved the watch shape); AE 0.6/0.7 co-consult on SSM detached-launch/ceiling. TO-1 = build safe-ec2-run.sh; TO-1b = canonical ssm-terminal-OR-sentinel watch helper.",
-  "blocking": "COO task-order decomposition + GO. Not blocking on the ADVI_BREAKS firefight (that relaunch handles tonight via the raised-ceiling root-cause fix; this gate is the forward-looking systemic fix).",
+  "phase": "Phase 1: COO-DECOMPOSED + GO'd 2026-07-01 (2.0.0_SA_COO, decomp org/tier1_exec/2.0.0_SA_COO/task_orders/ADHC_PREFLT_TO_decomposition.md). TO-1 (DS~A) = build .tools/safe-ec2-run.sh (3 checks + preflight-record via deploy_ledger.py + safe-apply-style refuse); TO-1b (DS~A) = canonical ssm-terminal-OR-sentinel watch helper; P3 follow-on = CLAUDE.md rule + gate-ramp (COO fabric-wide rollout). AE 0.6/0.7 co-consult. SEQUENCED: DS~A executes AFTER INFREF L5 cutover settles (not preempting the fire).",
+  "blocking": "SEQUENCING (not a hard blocker): DS~A is on INFREF L5 (validate_post_swap) as PRIMARY; the gate build is the follow-on, starts when the ADVI_INFREF cutover settles. GO issued; DS~A pulls it post-cutover. Not blocking ADVI_BREAKS (tonight's relaunch = raised-ceiling fix; this gate is the forward systemic fix).",
   "created": "2026-07-01",
   "pods": ["0.4", "0.6", "0.7"],
   "pipeline": "n/a (org/dev infrastructure -- gate wrapper)",
