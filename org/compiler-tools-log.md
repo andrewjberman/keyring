@@ -11173,3 +11173,18 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 
 - 2026-07-01 0.4.0_DE_ClientPlatform: schema-check (AdvisorsTab, AdvisorPublicProfile) PASS + tsc/eslint GREEN across 49F Advisors boundary fix (90322ba0) + ADVI_TAGATTR FE follow-on (a58ff3a7); aws s3 grounding of leaderboard.json (QTD=0/YTD=156; total_aua 439.97M vs role-sum 358.34M) + source-grounded D_00c split mechanism (rule 22).
 | 2026-07-01 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-01 | 2.0.0_SA_COO~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .owned-paths.yaml | PASS |
+| 2026-07-01 | 3.0.0_SA_CVO~B | NFRA_COMPPROOF.A1 | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/logs/2026-0... | PASS |
+| 2026-07-01 | 0.8.0_AE_CloudComp~C | NFRA_COMPROUTE.DR2-surface-shadow-rail-flip | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/comp_capability_provi... | PASS |
+| 2026-07-01 | 2.0.0_SA_COO~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/NFRA_COMPPROOF/PROGRAM-LED... | PASS |
+| 2026-07-01 | 0.8.0_AE_CloudComp~D | NFRA_COMPPROOF.B1 | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/compproof/corpus.py -... | PASS |
+| 2026-07-01 | 0.8.0_AE_CloudComp~D | NFRA_COMPPROOF.B1 | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.8.0_AE_CloudComp/log... | PASS |
+| 2026-07-01 | 3.0.0_SA_CVO~B | NFRA_COMPPROOF.A1 | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/logs/2026-0... | PASS |
+| 2026-07-01 | 0.8.0_AE_CloudComp~D | NFRA_COMPPROOF.B1 | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/compproof/blind_run.p... | PASS |
+| 2026-07-01 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+| 2026-07-01 | 0.8.0_AE_CloudComp~D | NFRA_COMPPROOF.B1 | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/compproof/RUN_PROTOCO... | PASS |
+| 2026-07-01 | 0.8.0_AE_CloudComp~C | NFRA_COMPROUTE.DR2-surface-shadow-rail-flip | comp-surface-check | comp-surface-check check --mode advisory --file .tools/comp-which | PASS |
+| 2026-07-01 | 0.8.0_AE_CloudComp~C | NFRA_COMPROUTE.DR2-surface-shadow-rail-flip | comp-surface-check | comp-surface-check check --mode advisory --file .tools/comp-which | PASS |
+| 2026-07-01 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/ADVI_COTMVP.json | PASS |
+| 2026-07-01 | 0.8.0_AE_CloudComp~C | NFRA_COMPROUTE.DR2 | comp_route_shadow/comp-which-routing-test/comp-surface-check | /log: DR2 default-router FLIP -- SignalExtractors + shadow harness (iterated 9->0 regressions, SHADOW-GREEN: 0-reg/0-div/read-never-rebuilds/9.2%-sane-fallback, 2033b8d70) + E1 write_path (whole-write-only finding, ~E-concur) + THE FLIP 94b64a5af (CVO~B DRV cert 4c1d93be5); live post-flip fixture GREEN 34/34+3/3+20/20+3/3, surface-check clean | PASS |
+| 2026-07-01 | 0.8.0_AE_CloudComp~C | NFRA_COMPROUTE.DR2-surface-shadow-rail-flip | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
