@@ -11229,3 +11229,32 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-07-01 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/ADVI_TAGATTR.json | PASS |
 | 2026-07-01 | 0.8.0_AE_CloudComp~B | NFRA_GRAPHUNI PhaseB + graph-tooling validation + addendum E3/DR3 | comp-kuzu, comp-drift, comp-lambdamap, comp-iam, comp-aws, comp-manifest-check, +52-agent validation sweep | PhaseB derive landed (marker 5434137157015633165); e2e validation 27/32 PASS; E3+DR3 authored+self-tested+exec-landed (17eaca870/638abd521) | PASS |
 | 2026-07-01 | 0.8.0_AE_CloudComp~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-01 | 0.8.0_AE_CloudComp~B | (no-TO) | comp-pipescript | comp-pipescript deployed arn:aws:lambda:us-east-1:313476888478:function:bd-49f-fees-runner | PASS |
+| 2026-07-01 | 0.8.0_AE_CloudComp~B | (no-TO) | comp-lambdamap | comp-lambdamap parity --json | PASS |
+| 2026-07-01 | 0.8.0_AE_CloudComp~B | (no-TO) | comp-iam | comp-iam reconcile | FAIL |
+| 2026-07-01 | 0.8.0_AE_CloudComp~B | (no-TO) | comp-kuzu | comp-kuzu MATCH (l:CloudNode)-[e:CloudEdge]->(r:CloudNode) WHERE l.node_type='LAMBDA' A... | PASS |
+| 2026-07-01 | 0.8.0_AE_CloudComp~B | (no-TO) | comp-kuzu | comp-kuzu MATCH (n) RETURN count(n) LIMIT 1 | PASS |
+| 2026-07-01 | 0.8.0_AE_CloudComp~B | (no-TO) | comp-drift | comp-drift arn:aws:lambda:us-east-1:313476888478:function:bd-49f-fees-runner --deep | PASS |
+| 2026-07-01 | 0.8.0_AE_CloudComp~D | NFRA_COMPPROOF.B1 | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/compproof/spawn_solve... | PASS |
+| 2026-07-01 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/ADVI_TAGATTR.json | PASS |
+| 2026-07-01 | 2.0.0_SA_COO~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/NFRA_COMPPROOF/VALIDATION-... | PASS |
+| 2026-07-01 | 0.4.0_DS_ClientPlatform | ADVI_TAGATTR.DS-1.d00c-full-tagged-role-aua-nna-fees | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-07-01 | 3.0.0_SA_CVO~B | NFRA_COMPPROOF.B2 | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/logs/2026-0... | PASS |
+| 2026-07-01 | 0.8.0_AE_CloudComp~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/extract_pipeline.py | PASS |
+| 2026-07-01 | 2.0.0_SA_COO~B | (no-TO) | comp-aws | comp-aws --help | PASS |
+| 2026-07-01 | 0.8.0_AE_CloudComp~B | (no-TO) | comp-kuzu | comp-kuzu MATCH (n) RETURN count(n) AS n | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-platinum | comp-platinum --help | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-xref | comp-xref --help | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-drift | comp-drift --help | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-trace | comp-trace --help | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-blast | comp-blast --help | PASS |
+| 2026-07-01 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/ADVI_TAGATTR.json --file o... | PASS |
+| 2026-07-01 | 0.8.0_AE_CloudComp~A | (no-TO) | comp-types | comp-types index ModelPortfolioData | PASS |
+| 2026-07-01 | 0.8.0_AE_CloudComp~A | (no-TO) | comp-types | comp-types blast ModelPortfolioData | PASS |
+| 2026-07-01 | 0.8.0_AE_CloudComp~A | (no-TO) | comp-types | comp-types index NonModelAssetsResponse | PASS |
+| 2026-07-01 | 0.8.0_AE_CloudComp~A | (no-TO) | comp-types | comp-types blast NonModelAssetsResponse | PASS |
+| 2026-07-01 | 0.8.0_AE_CloudComp~A | (no-TO) | comp-types | comp-types index PeerModelData | PASS |
+| 2026-07-01 | 0.8.0_AE_CloudComp~A | (no-TO) | comp-types | comp-types blast PeerModelData | PASS |
+| 2026-07-01 | 0.8.0_AE_CloudComp~A | (no-TO) | comp-types | comp-types index TenantLayoutConfig | PASS |
+2026-07-01 ~1515Z | 0.4.0_DS_ClientPlatform~A | ADVI_TAGATTR leg-2 (bd D_00c) | comp-pipescript io (PASS: writes employee_leaderboard.json->D_04, fee from C_08 advisor_fee_detail, additive/no-gap) + ds-commit-gate (PASS) | GAP: safe-deploy post-deploy pipescript-verify CRASHES on Windows (WinError 193) = false-green gate hole, CTO-elevated to AE/ADHC_PREFLT; deploy verified manually via ETag.
+| 2026-07-01 | 0.4.0_DS_ClientPlatform~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
