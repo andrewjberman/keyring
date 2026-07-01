@@ -1,0 +1,2229 @@
+{
+ "producer": "graphuni-storage",
+ "generated_at": "2026-07-01T01:30:00Z",
+ "lane": "0.8.0_AE_CloudComp~A",
+ "phase": "P1-A Phase-B (storage remainder; PRE-COMPUTED read-only, ungated)",
+ "canonical_id_convention": "<bucket>/<normalized-key> (~C 02286234a); level: object | prefix (glob->prefix)",
+ "s3_bucket_node_id_form": "arn:aws:s3:::<bucket>",
+ "depends_on": "Phase-A land + {~B,~D,~A,~C} Phase-A /seams GREEN; then folds in the NEXT single derive",
+ "nodes": [
+  {
+   "id": "opal-data-bd/config/ticker_lookup.json",
+   "type": "S3Key",
+   "name": "config/ticker_lookup.json",
+   "layer": "aws",
+   "stratum": "object",
+   "level": "object",
+   "bucket": "opal-data-bd",
+   "key": "config/ticker_lookup.json",
+   "attribution": "reader-firm"
+  },
+  {
+   "id": "opal-data-bd/config/yahoo_safe_tickers.txt",
+   "type": "S3Key",
+   "name": "config/yahoo_safe_tickers.txt",
+   "layer": "aws",
+   "stratum": "object",
+   "level": "object",
+   "bucket": "opal-data-bd",
+   "key": "config/yahoo_safe_tickers.txt",
+   "attribution": "reader-firm"
+  },
+  {
+   "id": "opal-data-bd/gold/artifacts/snapshots/aua_by_architect.json",
+   "type": "S3Key",
+   "name": "gold/artifacts/snapshots/aua_by_architect.json",
+   "layer": "aws",
+   "stratum": "object",
+   "level": "object",
+   "bucket": "opal-data-bd",
+   "key": "gold/artifacts/snapshots/aua_by_architect.json",
+   "attribution": "reader-firm"
+  },
+  {
+   "id": "opal-data-bd/gold/artifacts/snapshots/aua_by_region.json",
+   "type": "S3Key",
+   "name": "gold/artifacts/snapshots/aua_by_region.json",
+   "layer": "aws",
+   "stratum": "object",
+   "level": "object",
+   "bucket": "opal-data-bd",
+   "key": "gold/artifacts/snapshots/aua_by_region.json",
+   "attribution": "reader-firm"
+  },
+  {
+   "id": "opal-data-bd/gold/artifacts/snapshots/aua_by_state.json",
+   "type": "S3Key",
+   "name": "gold/artifacts/snapshots/aua_by_state.json",
+   "layer": "aws",
+   "stratum": "object",
+   "level": "object",
+   "bucket": "opal-data-bd",
+   "key": "gold/artifacts/snapshots/aua_by_state.json",
+   "attribution": "reader-firm"
+  },
+  {
+   "id": "opal-data-bd/gold/artifacts/snapshots/aua_by_tax_status.json",
+   "type": "S3Key",
+   "name": "gold/artifacts/snapshots/aua_by_tax_status.json",
+   "layer": "aws",
+   "stratum": "object",
+   "level": "object",
+   "bucket": "opal-data-bd",
+   "key": "gold/artifacts/snapshots/aua_by_tax_status.json",
+   "attribution": "reader-firm"
+  },
+  {
+   "id": "opal-data-bd/gold/canonical/account_gains/",
+   "type": "S3Key",
+   "name": "gold/canonical/account_gains/",
+   "layer": "aws",
+   "stratum": "object",
+   "level": "prefix",
+   "bucket": "opal-data-bd",
+   "key": "gold/canonical/account_gains/",
+   "attribution": "reader-firm"
+  },
+  {
+   "id": "opal-data-bd/gold/canonical/advisor_fee_detail/",
+   "type": "S3Key",
+   "name": "gold/canonical/advisor_fee_detail/",
+   "layer": "aws",
+   "stratum": "object",
+   "level": "prefix",
+   "bucket": "opal-data-bd",
+   "key": "gold/canonical/advisor_fee_detail/",
+   "attribution": "reader-firm"
+  },
+  {
+   "id": "opal-data-bd/gold/canonical/holdings/",
+   "type": "S3Key",
+   "name": "gold/canonical/holdings/",
+   "layer": "aws",
+   "stratum": "object",
+   "level": "prefix",
+   "bucket": "opal-data-bd",
+   "key": "gold/canonical/holdings/",
+   "attribution": "reader-firm"
+  },
+  {
+   "id": "opal-data-bd/gold/canonical/lots_realized/",
+   "type": "S3Key",
+   "name": "gold/canonical/lots_realized/",
+   "layer": "aws",
+   "stratum": "object",
+   "level": "prefix",
+   "bucket": "opal-data-bd",
+   "key": "gold/canonical/lots_realized/",
+   "attribution": "reader-firm"
+  },
+  {
+   "id": "opal-data-bd/gold/canonical/lots_unrealized/",
+   "type": "S3Key",
+   "name": "gold/canonical/lots_unrealized/",
+   "layer": "aws",
+   "stratum": "object",
+   "level": "prefix",
+   "bucket": "opal-data-bd",
+   "key": "gold/canonical/lots_unrealized/",
+   "attribution": "reader-firm"
+  },
+  {
+   "id": "opal-data-bd/gold/canonical/nna/",
+   "type": "S3Key",
+   "name": "gold/canonical/nna/",
+   "layer": "aws",
+   "stratum": "object",
+   "level": "prefix",
+   "bucket": "opal-data-bd",
+   "key": "gold/canonical/nna/",
+   "attribution": "reader-firm"
+  },
+  {
+   "id": "opal-data-bd/gold/canonical/performance/",
+   "type": "S3Key",
+   "name": "gold/canonical/performance/",
+   "layer": "aws",
+   "stratum": "object",
+   "level": "prefix",
+   "bucket": "opal-data-bd",
+   "key": "gold/canonical/performance/",
+   "attribution": "reader-firm"
+  },
+  {
+   "id": "opal-data-bd/gold/canonical/role_aua/",
+   "type": "S3Key",
+   "name": "gold/canonical/role_aua/",
+   "layer": "aws",
+   "stratum": "object",
+   "level": "prefix",
+   "bucket": "opal-data-bd",
+   "key": "gold/canonical/role_aua/",
+   "attribution": "reader-firm"
+  },
+  {
+   "id": "opal-data-bd/gold/dimensions/dim_advisor_office.csv",
+   "type": "S3Key",
+   "name": "gold/dimensions/dim_advisor_office.csv",
+   "layer": "aws",
+   "stratum": "object",
+   "level": "object",
+   "bucket": "opal-data-bd",
+   "key": "gold/dimensions/dim_advisor_office.csv",
+   "attribution": "reader-firm"
+  },
+  {
+   "id": "opal-data-bd/gold/entities/accounts/{*}/aua_timeseries.json",
+   "type": "S3Key",
+   "name": "gold/entities/accounts/{*}/aua_timeseries.json",
+   "layer": "aws",
+   "stratum": "object",
+   "level": "prefix",
+   "bucket": "opal-data-bd",
+   "key": "gold/entities/accounts/{*}/aua_timeseries.json",
+   "attribution": "reader-firm"
+  },
+  {
+   "id": "opal-data-bd/gold/entities/advisors/{*}/book.json",
+   "type": "S3Key",
+   "name": "gold/entities/advisors/{*}/book.json",
+   "layer": "aws",
+   "stratum": "object",
+   "level": "prefix",
+   "bucket": "opal-data-bd",
+   "key": "gold/entities/advisors/{*}/book.json",
+   "attribution": "reader-firm"
+  },
+  {
+   "id": "opal-data-bd/gold/entities/advisors/{*}/composition.json",
+   "type": "S3Key",
+   "name": "gold/entities/advisors/{*}/composition.json",
+   "layer": "aws",
+   "stratum": "object",
+   "level": "prefix",
+   "bucket": "opal-data-bd",
+   "key": "gold/entities/advisors/{*}/composition.json",
+   "attribution": "reader-firm"
+  },
+  {
+   "id": "opal-data-bd/gold/entities/advisors/{*}/timeseries.json",
+   "type": "S3Key",
+   "name": "gold/entities/advisors/{*}/timeseries.json",
+   "layer": "aws",
+   "stratum": "object",
+   "level": "prefix",
+   "bucket": "opal-data-bd",
+   "key": "gold/entities/advisors/{*}/timeseries.json",
+   "attribution": "reader-firm"
+  },
+  {
+   "id": "opal-data-bd/gold/entities/clients/",
+   "type": "S3Key",
+   "name": "gold/entities/clients/",
+   "layer": "aws",
+   "stratum": "object",
+   "level": "prefix",
+   "bucket": "opal-data-bd",
+   "key": "gold/entities/clients/",
+   "attribution": "reader-firm"
+  },
+  {
+   "id": "opal-data-bd/gold/entities/clients/{*}/aua_timeseries.json",
+   "type": "S3Key",
+   "name": "gold/entities/clients/{*}/aua_timeseries.json",
+   "layer": "aws",
+   "stratum": "object",
+   "level": "prefix",
+   "bucket": "opal-data-bd",
+   "key": "gold/entities/clients/{*}/aua_timeseries.json",
+   "attribution": "reader-firm"
+  },
+  {
+   "id": "opal-data-bd/gold/entities/clients/{*}_composition.json",
+   "type": "S3Key",
+   "name": "gold/entities/clients/{*}_composition.json",
+   "layer": "aws",
+   "stratum": "object",
+   "level": "prefix",
+   "bucket": "opal-data-bd",
+   "key": "gold/entities/clients/{*}_composition.json",
+   "attribution": "reader-firm"
+  },
+  {
+   "id": "opal-data-bd/gold/meta/client_timeseries_watermark.json",
+   "type": "S3Key",
+   "name": "gold/meta/client_timeseries_watermark.json",
+   "layer": "aws",
+   "stratum": "object",
+   "level": "object",
+   "bucket": "opal-data-bd",
+   "key": "gold/meta/client_timeseries_watermark.json",
+   "attribution": "reader-firm"
+  },
+  {
+   "id": "opal-data-bd/gold/timeseries/holdings_lots/",
+   "type": "S3Key",
+   "name": "gold/timeseries/holdings_lots/",
+   "layer": "aws",
+   "stratum": "object",
+   "level": "prefix",
+   "bucket": "opal-data-bd",
+   "key": "gold/timeseries/holdings_lots/",
+   "attribution": "reader-firm"
+  },
+  {
+   "id": "opal-data-bd/gold/timeseries/positions_cube/",
+   "type": "S3Key",
+   "name": "gold/timeseries/positions_cube/",
+   "layer": "aws",
+   "stratum": "object",
+   "level": "prefix",
+   "bucket": "opal-data-bd",
+   "key": "gold/timeseries/positions_cube/",
+   "attribution": "reader-firm"
+  },
+  {
+   "id": "opal-data-bd/gold/views/firm_composition.json",
+   "type": "S3Key",
+   "name": "gold/views/firm_composition.json",
+   "layer": "aws",
+   "stratum": "object",
+   "level": "object",
+   "bucket": "opal-data-bd",
+   "key": "gold/views/firm_composition.json",
+   "attribution": "reader-firm"
+  },
+  {
+   "id": "opal-data-bd/gold/views/nna_aua_by_advisor.parquet",
+   "type": "S3Key",
+   "name": "gold/views/nna_aua_by_advisor.parquet",
+   "layer": "aws",
+   "stratum": "object",
+   "level": "object",
+   "bucket": "opal-data-bd",
+   "key": "gold/views/nna_aua_by_advisor.parquet",
+   "attribution": "reader-firm"
+  },
+  {
+   "id": "opal-data-bd/gold/views/nna_aua_by_geography.parquet",
+   "type": "S3Key",
+   "name": "gold/views/nna_aua_by_geography.parquet",
+   "layer": "aws",
+   "stratum": "object",
+   "level": "object",
+   "bucket": "opal-data-bd",
+   "key": "gold/views/nna_aua_by_geography.parquet",
+   "attribution": "reader-firm"
+  },
+  {
+   "id": "opal-data-bd/gold/views/nna_aua_by_geography_city.parquet",
+   "type": "S3Key",
+   "name": "gold/views/nna_aua_by_geography_city.parquet",
+   "layer": "aws",
+   "stratum": "object",
+   "level": "object",
+   "bucket": "opal-data-bd",
+   "key": "gold/views/nna_aua_by_geography_city.parquet",
+   "attribution": "reader-firm"
+  },
+  {
+   "id": "opal-data-bd/platinum/firm/leaderboard.prior_week.json",
+   "type": "S3Key",
+   "name": "platinum/firm/leaderboard.prior_week.json",
+   "layer": "aws",
+   "stratum": "object",
+   "level": "object",
+   "bucket": "opal-data-bd",
+   "key": "platinum/firm/leaderboard.prior_week.json",
+   "attribution": "reader-firm"
+  },
+  {
+   "id": "opal-data-bd/schwab/silver/rld/",
+   "type": "S3Key",
+   "name": "schwab/silver/rld/",
+   "layer": "aws",
+   "stratum": "object",
+   "level": "prefix",
+   "bucket": "opal-data-bd",
+   "key": "schwab/silver/rld/",
+   "attribution": "reader-firm"
+  },
+  {
+   "id": "opal-data-bd/schwab/silver/uln/",
+   "type": "S3Key",
+   "name": "schwab/silver/uln/",
+   "layer": "aws",
+   "stratum": "object",
+   "level": "prefix",
+   "bucket": "opal-data-bd",
+   "key": "schwab/silver/uln/",
+   "attribution": "reader-firm"
+  },
+  {
+   "id": "opal-data-bd/schwab/silver/ult/",
+   "type": "S3Key",
+   "name": "schwab/silver/ult/",
+   "layer": "aws",
+   "stratum": "object",
+   "level": "prefix",
+   "bucket": "opal-data-bd",
+   "key": "schwab/silver/ult/",
+   "attribution": "reader-firm"
+  },
+  {
+   "id": "opal-data-bd/silver/realized/bd_realized_compact.parquet",
+   "type": "S3Key",
+   "name": "silver/realized/bd_realized_compact.parquet",
+   "layer": "aws",
+   "stratum": "object",
+   "level": "object",
+   "bucket": "opal-data-bd",
+   "key": "silver/realized/bd_realized_compact.parquet",
+   "attribution": "reader-firm"
+  },
+  {
+   "id": "opal-data-bd/silver/transactions/{*}.parquet",
+   "type": "S3Key",
+   "name": "silver/transactions/{*}.parquet",
+   "layer": "aws",
+   "stratum": "object",
+   "level": "prefix",
+   "bucket": "opal-data-bd",
+   "key": "silver/transactions/{*}.parquet",
+   "attribution": "reader-firm"
+  },
+  {
+   "id": "opal-data-bd/silver/unrealized/{*}.parquet",
+   "type": "S3Key",
+   "name": "silver/unrealized/{*}.parquet",
+   "layer": "aws",
+   "stratum": "object",
+   "level": "prefix",
+   "bucket": "opal-data-bd",
+   "key": "silver/unrealized/{*}.parquet",
+   "attribution": "reader-firm"
+  },
+  {
+   "id": "opal-data-inf/bronze/orion-api/activity/latest.csv",
+   "type": "S3Key",
+   "name": "bronze/orion-api/activity/latest.csv",
+   "layer": "aws",
+   "stratum": "object",
+   "level": "object",
+   "bucket": "opal-data-inf",
+   "key": "bronze/orion-api/activity/latest.csv",
+   "attribution": "reader-firm"
+  },
+  {
+   "id": "opal-data-inf/bronze/orion-api/household/latest.csv",
+   "type": "S3Key",
+   "name": "bronze/orion-api/household/latest.csv",
+   "layer": "aws",
+   "stratum": "object",
+   "level": "object",
+   "bucket": "opal-data-inf",
+   "key": "bronze/orion-api/household/latest.csv",
+   "attribution": "reader-firm"
+  },
+  {
+   "id": "opal-data-inf/bronze/orion-api/performance/latest.csv",
+   "type": "S3Key",
+   "name": "bronze/orion-api/performance/latest.csv",
+   "layer": "aws",
+   "stratum": "object",
+   "level": "object",
+   "bucket": "opal-data-inf",
+   "key": "bronze/orion-api/performance/latest.csv",
+   "attribution": "reader-firm"
+  },
+  {
+   "id": "opal-data-inf/bronze/orion-api/{*}/_BRONZE_COMPLETE.json",
+   "type": "S3Key",
+   "name": "bronze/orion-api/{*}/_BRONZE_COMPLETE.json",
+   "layer": "aws",
+   "stratum": "object",
+   "level": "prefix",
+   "bucket": "opal-data-inf",
+   "key": "bronze/orion-api/{*}/_BRONZE_COMPLETE.json",
+   "attribution": "reader-firm"
+  },
+  {
+   "id": "opal-data-inf/bronze/orion-api/{*}/assets.csv",
+   "type": "S3Key",
+   "name": "bronze/orion-api/{*}/assets.csv",
+   "layer": "aws",
+   "stratum": "object",
+   "level": "prefix",
+   "bucket": "opal-data-inf",
+   "key": "bronze/orion-api/{*}/assets.csv",
+   "attribution": "reader-firm"
+  },
+  {
+   "id": "opal-data-inf/bronze/orion-api/{*}/transactions.csv",
+   "type": "S3Key",
+   "name": "bronze/orion-api/{*}/transactions.csv",
+   "layer": "aws",
+   "stratum": "object",
+   "level": "prefix",
+   "bucket": "opal-data-inf",
+   "key": "bronze/orion-api/{*}/transactions.csv",
+   "attribution": "reader-firm"
+  },
+  {
+   "id": "opal-data-inf/bronze/orion-api/{date}/assets.csv",
+   "type": "S3Key",
+   "name": "bronze/orion-api/{date}/assets.csv",
+   "layer": "aws",
+   "stratum": "object",
+   "level": "prefix",
+   "bucket": "opal-data-inf",
+   "key": "bronze/orion-api/{date}/assets.csv",
+   "attribution": "reader-firm"
+  },
+  {
+   "id": "opal-data-inf/gold/canonical/canonical_nna_{*}.parquet",
+   "type": "S3Key",
+   "name": "gold/canonical/canonical_nna_{*}.parquet",
+   "layer": "aws",
+   "stratum": "object",
+   "level": "prefix",
+   "bucket": "opal-data-inf",
+   "key": "gold/canonical/canonical_nna_{*}.parquet",
+   "attribution": "reader-firm"
+  },
+  {
+   "id": "opal-data-inf/gold/canonical/holdings_{*}.parquet",
+   "type": "S3Key",
+   "name": "gold/canonical/holdings_{*}.parquet",
+   "layer": "aws",
+   "stratum": "object",
+   "level": "prefix",
+   "bucket": "opal-data-inf",
+   "key": "gold/canonical/holdings_{*}.parquet",
+   "attribution": "reader-firm"
+  },
+  {
+   "id": "opal-data-inf/silver/accounts_dim/latest.parquet",
+   "type": "S3Key",
+   "name": "silver/accounts_dim/latest.parquet",
+   "layer": "aws",
+   "stratum": "object",
+   "level": "object",
+   "bucket": "opal-data-inf",
+   "key": "silver/accounts_dim/latest.parquet",
+   "attribution": "reader-firm"
+  },
+  {
+   "id": "opal-data-inf/silver/api_dims/accounts_v2/snapshot_date={*}/data.parquet",
+   "type": "S3Key",
+   "name": "silver/api_dims/accounts_v2/snapshot_date={*}/data.parquet",
+   "layer": "aws",
+   "stratum": "object",
+   "level": "prefix",
+   "bucket": "opal-data-inf",
+   "key": "silver/api_dims/accounts_v2/snapshot_date={*}/data.parquet",
+   "attribution": "reader-firm"
+  },
+  {
+   "id": "opal-data-inf/silver/api_dims/positions_mv/snapshot_date={*}/data.parquet",
+   "type": "S3Key",
+   "name": "silver/api_dims/positions_mv/snapshot_date={*}/data.parquet",
+   "layer": "aws",
+   "stratum": "object",
+   "level": "prefix",
+   "bucket": "opal-data-inf",
+   "key": "silver/api_dims/positions_mv/snapshot_date={*}/data.parquet",
+   "attribution": "reader-firm"
+  },
+  {
+   "id": "opal-data-inf/silver/eclipse/{*}/_meta/silver_complete.json",
+   "type": "S3Key",
+   "name": "silver/eclipse/{*}/_meta/silver_complete.json",
+   "layer": "aws",
+   "stratum": "object",
+   "level": "prefix",
+   "bucket": "opal-data-inf",
+   "key": "silver/eclipse/{*}/_meta/silver_complete.json",
+   "attribution": "reader-firm"
+  },
+  {
+   "id": "opal-data-inf/silver/eclipse/{*}/model_composition.parquet",
+   "type": "S3Key",
+   "name": "silver/eclipse/{*}/model_composition.parquet",
+   "layer": "aws",
+   "stratum": "object",
+   "level": "prefix",
+   "bucket": "opal-data-inf",
+   "key": "silver/eclipse/{*}/model_composition.parquet",
+   "attribution": "reader-firm"
+  },
+  {
+   "id": "opal-data-inf/silver/eclipse/{*}/portfolios_full.parquet",
+   "type": "S3Key",
+   "name": "silver/eclipse/{*}/portfolios_full.parquet",
+   "layer": "aws",
+   "stratum": "object",
+   "level": "prefix",
+   "bucket": "opal-data-inf",
+   "key": "silver/eclipse/{*}/portfolios_full.parquet",
+   "attribution": "reader-firm"
+  },
+  {
+   "id": "opal-data-inf/silver/eclipse/{*}/portfolios_simple.parquet",
+   "type": "S3Key",
+   "name": "silver/eclipse/{*}/portfolios_simple.parquet",
+   "layer": "aws",
+   "stratum": "object",
+   "level": "prefix",
+   "bucket": "opal-data-inf",
+   "key": "silver/eclipse/{*}/portfolios_simple.parquet",
+   "attribution": "reader-firm"
+  },
+  {
+   "id": "opal-data-inf/silver/meta/gap_manifest.json",
+   "type": "S3Key",
+   "name": "silver/meta/gap_manifest.json",
+   "layer": "aws",
+   "stratum": "object",
+   "level": "object",
+   "bucket": "opal-data-inf",
+   "key": "silver/meta/gap_manifest.json",
+   "attribution": "reader-firm"
+  },
+  {
+   "id": "opal-data-mdpf/gold/eclipse/{*}/model_portfolio_accounts.parquet",
+   "type": "S3Key",
+   "name": "gold/eclipse/{*}/model_portfolio_accounts.parquet",
+   "layer": "aws",
+   "stratum": "object",
+   "level": "prefix",
+   "bucket": "opal-data-mdpf",
+   "key": "gold/eclipse/{*}/model_portfolio_accounts.parquet",
+   "attribution": "reader-firm"
+  },
+  {
+   "id": "opal-data-mdpf/silver/eclipse/{*}/portfolios_full.parquet",
+   "type": "S3Key",
+   "name": "silver/eclipse/{*}/portfolios_full.parquet",
+   "layer": "aws",
+   "stratum": "object",
+   "level": "prefix",
+   "bucket": "opal-data-mdpf",
+   "key": "silver/eclipse/{*}/portfolios_full.parquet",
+   "attribution": "reader-firm"
+  },
+  {
+   "id": "opal-data-mdpf/silver/netassets_daily.parquet",
+   "type": "S3Key",
+   "name": "silver/netassets_daily.parquet",
+   "layer": "aws",
+   "stratum": "object",
+   "level": "object",
+   "bucket": "opal-data-mdpf",
+   "key": "silver/netassets_daily.parquet",
+   "attribution": "reader-firm"
+  }
+ ],
+ "edges": [
+  {
+   "source": "opal-data-bd/config/ticker_lookup.json",
+   "target": "arn:aws:s3:::opal-data-bd",
+   "edge_type": "OWNED_BY",
+   "layer": "aws",
+   "level": "object"
+  },
+  {
+   "source": "opal-data-bd/config/yahoo_safe_tickers.txt",
+   "target": "arn:aws:s3:::opal-data-bd",
+   "edge_type": "OWNED_BY",
+   "layer": "aws",
+   "level": "object"
+  },
+  {
+   "source": "opal-data-bd/gold/artifacts/snapshots/aua_by_architect.json",
+   "target": "arn:aws:s3:::opal-data-bd",
+   "edge_type": "OWNED_BY",
+   "layer": "aws",
+   "level": "object"
+  },
+  {
+   "source": "opal-data-bd/gold/artifacts/snapshots/aua_by_region.json",
+   "target": "arn:aws:s3:::opal-data-bd",
+   "edge_type": "OWNED_BY",
+   "layer": "aws",
+   "level": "object"
+  },
+  {
+   "source": "opal-data-bd/gold/artifacts/snapshots/aua_by_state.json",
+   "target": "arn:aws:s3:::opal-data-bd",
+   "edge_type": "OWNED_BY",
+   "layer": "aws",
+   "level": "object"
+  },
+  {
+   "source": "opal-data-bd/gold/artifacts/snapshots/aua_by_tax_status.json",
+   "target": "arn:aws:s3:::opal-data-bd",
+   "edge_type": "OWNED_BY",
+   "layer": "aws",
+   "level": "object"
+  },
+  {
+   "source": "opal-data-bd/gold/canonical/account_gains/",
+   "target": "arn:aws:s3:::opal-data-bd",
+   "edge_type": "OWNED_BY",
+   "layer": "aws",
+   "level": "prefix"
+  },
+  {
+   "source": "opal-data-bd/gold/canonical/advisor_fee_detail/",
+   "target": "arn:aws:s3:::opal-data-bd",
+   "edge_type": "OWNED_BY",
+   "layer": "aws",
+   "level": "prefix"
+  },
+  {
+   "source": "opal-data-bd/gold/canonical/holdings/",
+   "target": "arn:aws:s3:::opal-data-bd",
+   "edge_type": "OWNED_BY",
+   "layer": "aws",
+   "level": "prefix"
+  },
+  {
+   "source": "opal-data-bd/gold/canonical/lots_realized/",
+   "target": "arn:aws:s3:::opal-data-bd",
+   "edge_type": "OWNED_BY",
+   "layer": "aws",
+   "level": "prefix"
+  },
+  {
+   "source": "opal-data-bd/gold/canonical/lots_unrealized/",
+   "target": "arn:aws:s3:::opal-data-bd",
+   "edge_type": "OWNED_BY",
+   "layer": "aws",
+   "level": "prefix"
+  },
+  {
+   "source": "opal-data-bd/gold/canonical/nna/",
+   "target": "arn:aws:s3:::opal-data-bd",
+   "edge_type": "OWNED_BY",
+   "layer": "aws",
+   "level": "prefix"
+  },
+  {
+   "source": "opal-data-bd/gold/canonical/performance/",
+   "target": "arn:aws:s3:::opal-data-bd",
+   "edge_type": "OWNED_BY",
+   "layer": "aws",
+   "level": "prefix"
+  },
+  {
+   "source": "opal-data-bd/gold/canonical/role_aua/",
+   "target": "arn:aws:s3:::opal-data-bd",
+   "edge_type": "OWNED_BY",
+   "layer": "aws",
+   "level": "prefix"
+  },
+  {
+   "source": "opal-data-bd/gold/dimensions/dim_advisor_office.csv",
+   "target": "arn:aws:s3:::opal-data-bd",
+   "edge_type": "OWNED_BY",
+   "layer": "aws",
+   "level": "object"
+  },
+  {
+   "source": "opal-data-bd/gold/entities/accounts/{*}/aua_timeseries.json",
+   "target": "arn:aws:s3:::opal-data-bd",
+   "edge_type": "OWNED_BY",
+   "layer": "aws",
+   "level": "prefix"
+  },
+  {
+   "source": "opal-data-bd/gold/entities/advisors/{*}/book.json",
+   "target": "arn:aws:s3:::opal-data-bd",
+   "edge_type": "OWNED_BY",
+   "layer": "aws",
+   "level": "prefix"
+  },
+  {
+   "source": "opal-data-bd/gold/entities/advisors/{*}/composition.json",
+   "target": "arn:aws:s3:::opal-data-bd",
+   "edge_type": "OWNED_BY",
+   "layer": "aws",
+   "level": "prefix"
+  },
+  {
+   "source": "opal-data-bd/gold/entities/advisors/{*}/timeseries.json",
+   "target": "arn:aws:s3:::opal-data-bd",
+   "edge_type": "OWNED_BY",
+   "layer": "aws",
+   "level": "prefix"
+  },
+  {
+   "source": "opal-data-bd/gold/entities/clients/",
+   "target": "arn:aws:s3:::opal-data-bd",
+   "edge_type": "OWNED_BY",
+   "layer": "aws",
+   "level": "prefix"
+  },
+  {
+   "source": "opal-data-bd/gold/entities/clients/{*}/aua_timeseries.json",
+   "target": "arn:aws:s3:::opal-data-bd",
+   "edge_type": "OWNED_BY",
+   "layer": "aws",
+   "level": "prefix"
+  },
+  {
+   "source": "opal-data-bd/gold/entities/clients/{*}_composition.json",
+   "target": "arn:aws:s3:::opal-data-bd",
+   "edge_type": "OWNED_BY",
+   "layer": "aws",
+   "level": "prefix"
+  },
+  {
+   "source": "opal-data-bd/gold/meta/client_timeseries_watermark.json",
+   "target": "arn:aws:s3:::opal-data-bd",
+   "edge_type": "OWNED_BY",
+   "layer": "aws",
+   "level": "object"
+  },
+  {
+   "source": "opal-data-bd/gold/timeseries/holdings_lots/",
+   "target": "arn:aws:s3:::opal-data-bd",
+   "edge_type": "OWNED_BY",
+   "layer": "aws",
+   "level": "prefix"
+  },
+  {
+   "source": "opal-data-bd/gold/timeseries/positions_cube/",
+   "target": "arn:aws:s3:::opal-data-bd",
+   "edge_type": "OWNED_BY",
+   "layer": "aws",
+   "level": "prefix"
+  },
+  {
+   "source": "opal-data-bd/gold/views/firm_composition.json",
+   "target": "arn:aws:s3:::opal-data-bd",
+   "edge_type": "OWNED_BY",
+   "layer": "aws",
+   "level": "object"
+  },
+  {
+   "source": "opal-data-bd/gold/views/nna_aua_by_advisor.parquet",
+   "target": "arn:aws:s3:::opal-data-bd",
+   "edge_type": "OWNED_BY",
+   "layer": "aws",
+   "level": "object"
+  },
+  {
+   "source": "opal-data-bd/gold/views/nna_aua_by_geography.parquet",
+   "target": "arn:aws:s3:::opal-data-bd",
+   "edge_type": "OWNED_BY",
+   "layer": "aws",
+   "level": "object"
+  },
+  {
+   "source": "opal-data-bd/gold/views/nna_aua_by_geography_city.parquet",
+   "target": "arn:aws:s3:::opal-data-bd",
+   "edge_type": "OWNED_BY",
+   "layer": "aws",
+   "level": "object"
+  },
+  {
+   "source": "opal-data-bd/platinum/firm/leaderboard.prior_week.json",
+   "target": "arn:aws:s3:::opal-data-bd",
+   "edge_type": "OWNED_BY",
+   "layer": "aws",
+   "level": "object"
+  },
+  {
+   "source": "opal-data-bd/schwab/silver/rld/",
+   "target": "arn:aws:s3:::opal-data-bd",
+   "edge_type": "OWNED_BY",
+   "layer": "aws",
+   "level": "prefix"
+  },
+  {
+   "source": "opal-data-bd/schwab/silver/uln/",
+   "target": "arn:aws:s3:::opal-data-bd",
+   "edge_type": "OWNED_BY",
+   "layer": "aws",
+   "level": "prefix"
+  },
+  {
+   "source": "opal-data-bd/schwab/silver/ult/",
+   "target": "arn:aws:s3:::opal-data-bd",
+   "edge_type": "OWNED_BY",
+   "layer": "aws",
+   "level": "prefix"
+  },
+  {
+   "source": "opal-data-bd/silver/realized/bd_realized_compact.parquet",
+   "target": "arn:aws:s3:::opal-data-bd",
+   "edge_type": "OWNED_BY",
+   "layer": "aws",
+   "level": "object"
+  },
+  {
+   "source": "opal-data-bd/silver/transactions/{*}.parquet",
+   "target": "arn:aws:s3:::opal-data-bd",
+   "edge_type": "OWNED_BY",
+   "layer": "aws",
+   "level": "prefix"
+  },
+  {
+   "source": "opal-data-bd/silver/unrealized/{*}.parquet",
+   "target": "arn:aws:s3:::opal-data-bd",
+   "edge_type": "OWNED_BY",
+   "layer": "aws",
+   "level": "prefix"
+  },
+  {
+   "source": "opal-data-inf/bronze/orion-api/activity/latest.csv",
+   "target": "arn:aws:s3:::opal-data-inf",
+   "edge_type": "OWNED_BY",
+   "layer": "aws",
+   "level": "object"
+  },
+  {
+   "source": "opal-data-inf/bronze/orion-api/household/latest.csv",
+   "target": "arn:aws:s3:::opal-data-inf",
+   "edge_type": "OWNED_BY",
+   "layer": "aws",
+   "level": "object"
+  },
+  {
+   "source": "opal-data-inf/bronze/orion-api/performance/latest.csv",
+   "target": "arn:aws:s3:::opal-data-inf",
+   "edge_type": "OWNED_BY",
+   "layer": "aws",
+   "level": "object"
+  },
+  {
+   "source": "opal-data-inf/bronze/orion-api/{*}/_BRONZE_COMPLETE.json",
+   "target": "arn:aws:s3:::opal-data-inf",
+   "edge_type": "OWNED_BY",
+   "layer": "aws",
+   "level": "prefix"
+  },
+  {
+   "source": "opal-data-inf/bronze/orion-api/{*}/assets.csv",
+   "target": "arn:aws:s3:::opal-data-inf",
+   "edge_type": "OWNED_BY",
+   "layer": "aws",
+   "level": "prefix"
+  },
+  {
+   "source": "opal-data-inf/bronze/orion-api/{*}/transactions.csv",
+   "target": "arn:aws:s3:::opal-data-inf",
+   "edge_type": "OWNED_BY",
+   "layer": "aws",
+   "level": "prefix"
+  },
+  {
+   "source": "opal-data-inf/bronze/orion-api/{date}/assets.csv",
+   "target": "arn:aws:s3:::opal-data-inf",
+   "edge_type": "OWNED_BY",
+   "layer": "aws",
+   "level": "prefix"
+  },
+  {
+   "source": "opal-data-inf/gold/canonical/canonical_nna_{*}.parquet",
+   "target": "arn:aws:s3:::opal-data-inf",
+   "edge_type": "OWNED_BY",
+   "layer": "aws",
+   "level": "prefix"
+  },
+  {
+   "source": "opal-data-inf/gold/canonical/holdings_{*}.parquet",
+   "target": "arn:aws:s3:::opal-data-inf",
+   "edge_type": "OWNED_BY",
+   "layer": "aws",
+   "level": "prefix"
+  },
+  {
+   "source": "opal-data-inf/silver/accounts_dim/latest.parquet",
+   "target": "arn:aws:s3:::opal-data-inf",
+   "edge_type": "OWNED_BY",
+   "layer": "aws",
+   "level": "object"
+  },
+  {
+   "source": "opal-data-inf/silver/api_dims/accounts_v2/snapshot_date={*}/data.parquet",
+   "target": "arn:aws:s3:::opal-data-inf",
+   "edge_type": "OWNED_BY",
+   "layer": "aws",
+   "level": "prefix"
+  },
+  {
+   "source": "opal-data-inf/silver/api_dims/positions_mv/snapshot_date={*}/data.parquet",
+   "target": "arn:aws:s3:::opal-data-inf",
+   "edge_type": "OWNED_BY",
+   "layer": "aws",
+   "level": "prefix"
+  },
+  {
+   "source": "opal-data-inf/silver/eclipse/{*}/_meta/silver_complete.json",
+   "target": "arn:aws:s3:::opal-data-inf",
+   "edge_type": "OWNED_BY",
+   "layer": "aws",
+   "level": "prefix"
+  },
+  {
+   "source": "opal-data-inf/silver/eclipse/{*}/model_composition.parquet",
+   "target": "arn:aws:s3:::opal-data-inf",
+   "edge_type": "OWNED_BY",
+   "layer": "aws",
+   "level": "prefix"
+  },
+  {
+   "source": "opal-data-inf/silver/eclipse/{*}/portfolios_full.parquet",
+   "target": "arn:aws:s3:::opal-data-inf",
+   "edge_type": "OWNED_BY",
+   "layer": "aws",
+   "level": "prefix"
+  },
+  {
+   "source": "opal-data-inf/silver/eclipse/{*}/portfolios_simple.parquet",
+   "target": "arn:aws:s3:::opal-data-inf",
+   "edge_type": "OWNED_BY",
+   "layer": "aws",
+   "level": "prefix"
+  },
+  {
+   "source": "opal-data-inf/silver/meta/gap_manifest.json",
+   "target": "arn:aws:s3:::opal-data-inf",
+   "edge_type": "OWNED_BY",
+   "layer": "aws",
+   "level": "object"
+  },
+  {
+   "source": "opal-data-mdpf/gold/eclipse/{*}/model_portfolio_accounts.parquet",
+   "target": "arn:aws:s3:::opal-data-mdpf",
+   "edge_type": "OWNED_BY",
+   "layer": "aws",
+   "level": "prefix"
+  },
+  {
+   "source": "opal-data-mdpf/silver/eclipse/{*}/portfolios_full.parquet",
+   "target": "arn:aws:s3:::opal-data-mdpf",
+   "edge_type": "OWNED_BY",
+   "layer": "aws",
+   "level": "prefix"
+  },
+  {
+   "source": "opal-data-mdpf/silver/netassets_daily.parquet",
+   "target": "arn:aws:s3:::opal-data-mdpf",
+   "edge_type": "OWNED_BY",
+   "layer": "aws",
+   "level": "object"
+  },
+  {
+   "source": "arn:aws:s3:::opal-data-bd",
+   "target": "opal-data-bd/config/ticker_lookup.json",
+   "edge_type": "CONTAINS",
+   "layer": "aws",
+   "level": "object"
+  },
+  {
+   "source": "arn:aws:s3:::opal-data-bd",
+   "target": "opal-data-bd/config/yahoo_safe_tickers.txt",
+   "edge_type": "CONTAINS",
+   "layer": "aws",
+   "level": "object"
+  },
+  {
+   "source": "arn:aws:s3:::opal-data-bd",
+   "target": "opal-data-bd/gold/artifacts/snapshots/aua_by_architect.json",
+   "edge_type": "CONTAINS",
+   "layer": "aws",
+   "level": "object"
+  },
+  {
+   "source": "arn:aws:s3:::opal-data-bd",
+   "target": "opal-data-bd/gold/artifacts/snapshots/aua_by_region.json",
+   "edge_type": "CONTAINS",
+   "layer": "aws",
+   "level": "object"
+  },
+  {
+   "source": "arn:aws:s3:::opal-data-bd",
+   "target": "opal-data-bd/gold/artifacts/snapshots/aua_by_state.json",
+   "edge_type": "CONTAINS",
+   "layer": "aws",
+   "level": "object"
+  },
+  {
+   "source": "arn:aws:s3:::opal-data-bd",
+   "target": "opal-data-bd/gold/artifacts/snapshots/aua_by_tax_status.json",
+   "edge_type": "CONTAINS",
+   "layer": "aws",
+   "level": "object"
+  },
+  {
+   "source": "arn:aws:s3:::opal-data-bd",
+   "target": "opal-data-bd/gold/canonical/account_gains/",
+   "edge_type": "CONTAINS",
+   "layer": "aws",
+   "level": "prefix"
+  },
+  {
+   "source": "arn:aws:s3:::opal-data-bd",
+   "target": "opal-data-bd/gold/canonical/advisor_fee_detail/",
+   "edge_type": "CONTAINS",
+   "layer": "aws",
+   "level": "prefix"
+  },
+  {
+   "source": "arn:aws:s3:::opal-data-bd",
+   "target": "opal-data-bd/gold/canonical/holdings/",
+   "edge_type": "CONTAINS",
+   "layer": "aws",
+   "level": "prefix"
+  },
+  {
+   "source": "arn:aws:s3:::opal-data-bd",
+   "target": "opal-data-bd/gold/canonical/lots_realized/",
+   "edge_type": "CONTAINS",
+   "layer": "aws",
+   "level": "prefix"
+  },
+  {
+   "source": "arn:aws:s3:::opal-data-bd",
+   "target": "opal-data-bd/gold/canonical/lots_unrealized/",
+   "edge_type": "CONTAINS",
+   "layer": "aws",
+   "level": "prefix"
+  },
+  {
+   "source": "arn:aws:s3:::opal-data-bd",
+   "target": "opal-data-bd/gold/canonical/nna/",
+   "edge_type": "CONTAINS",
+   "layer": "aws",
+   "level": "prefix"
+  },
+  {
+   "source": "arn:aws:s3:::opal-data-bd",
+   "target": "opal-data-bd/gold/canonical/performance/",
+   "edge_type": "CONTAINS",
+   "layer": "aws",
+   "level": "prefix"
+  },
+  {
+   "source": "arn:aws:s3:::opal-data-bd",
+   "target": "opal-data-bd/gold/canonical/role_aua/",
+   "edge_type": "CONTAINS",
+   "layer": "aws",
+   "level": "prefix"
+  },
+  {
+   "source": "arn:aws:s3:::opal-data-bd",
+   "target": "opal-data-bd/gold/dimensions/dim_advisor_office.csv",
+   "edge_type": "CONTAINS",
+   "layer": "aws",
+   "level": "object"
+  },
+  {
+   "source": "arn:aws:s3:::opal-data-bd",
+   "target": "opal-data-bd/gold/entities/accounts/{*}/aua_timeseries.json",
+   "edge_type": "CONTAINS",
+   "layer": "aws",
+   "level": "prefix"
+  },
+  {
+   "source": "arn:aws:s3:::opal-data-bd",
+   "target": "opal-data-bd/gold/entities/advisors/{*}/book.json",
+   "edge_type": "CONTAINS",
+   "layer": "aws",
+   "level": "prefix"
+  },
+  {
+   "source": "arn:aws:s3:::opal-data-bd",
+   "target": "opal-data-bd/gold/entities/advisors/{*}/composition.json",
+   "edge_type": "CONTAINS",
+   "layer": "aws",
+   "level": "prefix"
+  },
+  {
+   "source": "arn:aws:s3:::opal-data-bd",
+   "target": "opal-data-bd/gold/entities/advisors/{*}/timeseries.json",
+   "edge_type": "CONTAINS",
+   "layer": "aws",
+   "level": "prefix"
+  },
+  {
+   "source": "arn:aws:s3:::opal-data-bd",
+   "target": "opal-data-bd/gold/entities/clients/",
+   "edge_type": "CONTAINS",
+   "layer": "aws",
+   "level": "prefix"
+  },
+  {
+   "source": "arn:aws:s3:::opal-data-bd",
+   "target": "opal-data-bd/gold/entities/clients/{*}/aua_timeseries.json",
+   "edge_type": "CONTAINS",
+   "layer": "aws",
+   "level": "prefix"
+  },
+  {
+   "source": "arn:aws:s3:::opal-data-bd",
+   "target": "opal-data-bd/gold/entities/clients/{*}_composition.json",
+   "edge_type": "CONTAINS",
+   "layer": "aws",
+   "level": "prefix"
+  },
+  {
+   "source": "arn:aws:s3:::opal-data-bd",
+   "target": "opal-data-bd/gold/meta/client_timeseries_watermark.json",
+   "edge_type": "CONTAINS",
+   "layer": "aws",
+   "level": "object"
+  },
+  {
+   "source": "arn:aws:s3:::opal-data-bd",
+   "target": "opal-data-bd/gold/timeseries/holdings_lots/",
+   "edge_type": "CONTAINS",
+   "layer": "aws",
+   "level": "prefix"
+  },
+  {
+   "source": "arn:aws:s3:::opal-data-bd",
+   "target": "opal-data-bd/gold/timeseries/positions_cube/",
+   "edge_type": "CONTAINS",
+   "layer": "aws",
+   "level": "prefix"
+  },
+  {
+   "source": "arn:aws:s3:::opal-data-bd",
+   "target": "opal-data-bd/gold/views/firm_composition.json",
+   "edge_type": "CONTAINS",
+   "layer": "aws",
+   "level": "object"
+  },
+  {
+   "source": "arn:aws:s3:::opal-data-bd",
+   "target": "opal-data-bd/gold/views/nna_aua_by_advisor.parquet",
+   "edge_type": "CONTAINS",
+   "layer": "aws",
+   "level": "object"
+  },
+  {
+   "source": "arn:aws:s3:::opal-data-bd",
+   "target": "opal-data-bd/gold/views/nna_aua_by_geography.parquet",
+   "edge_type": "CONTAINS",
+   "layer": "aws",
+   "level": "object"
+  },
+  {
+   "source": "arn:aws:s3:::opal-data-bd",
+   "target": "opal-data-bd/gold/views/nna_aua_by_geography_city.parquet",
+   "edge_type": "CONTAINS",
+   "layer": "aws",
+   "level": "object"
+  },
+  {
+   "source": "arn:aws:s3:::opal-data-bd",
+   "target": "opal-data-bd/platinum/firm/leaderboard.prior_week.json",
+   "edge_type": "CONTAINS",
+   "layer": "aws",
+   "level": "object"
+  },
+  {
+   "source": "arn:aws:s3:::opal-data-bd",
+   "target": "opal-data-bd/schwab/silver/rld/",
+   "edge_type": "CONTAINS",
+   "layer": "aws",
+   "level": "prefix"
+  },
+  {
+   "source": "arn:aws:s3:::opal-data-bd",
+   "target": "opal-data-bd/schwab/silver/uln/",
+   "edge_type": "CONTAINS",
+   "layer": "aws",
+   "level": "prefix"
+  },
+  {
+   "source": "arn:aws:s3:::opal-data-bd",
+   "target": "opal-data-bd/schwab/silver/ult/",
+   "edge_type": "CONTAINS",
+   "layer": "aws",
+   "level": "prefix"
+  },
+  {
+   "source": "arn:aws:s3:::opal-data-bd",
+   "target": "opal-data-bd/silver/realized/bd_realized_compact.parquet",
+   "edge_type": "CONTAINS",
+   "layer": "aws",
+   "level": "object"
+  },
+  {
+   "source": "arn:aws:s3:::opal-data-bd",
+   "target": "opal-data-bd/silver/transactions/{*}.parquet",
+   "edge_type": "CONTAINS",
+   "layer": "aws",
+   "level": "prefix"
+  },
+  {
+   "source": "arn:aws:s3:::opal-data-bd",
+   "target": "opal-data-bd/silver/unrealized/{*}.parquet",
+   "edge_type": "CONTAINS",
+   "layer": "aws",
+   "level": "prefix"
+  },
+  {
+   "source": "arn:aws:s3:::opal-data-inf",
+   "target": "opal-data-inf/bronze/orion-api/activity/latest.csv",
+   "edge_type": "CONTAINS",
+   "layer": "aws",
+   "level": "object"
+  },
+  {
+   "source": "arn:aws:s3:::opal-data-inf",
+   "target": "opal-data-inf/bronze/orion-api/household/latest.csv",
+   "edge_type": "CONTAINS",
+   "layer": "aws",
+   "level": "object"
+  },
+  {
+   "source": "arn:aws:s3:::opal-data-inf",
+   "target": "opal-data-inf/bronze/orion-api/performance/latest.csv",
+   "edge_type": "CONTAINS",
+   "layer": "aws",
+   "level": "object"
+  },
+  {
+   "source": "arn:aws:s3:::opal-data-inf",
+   "target": "opal-data-inf/bronze/orion-api/{*}/_BRONZE_COMPLETE.json",
+   "edge_type": "CONTAINS",
+   "layer": "aws",
+   "level": "prefix"
+  },
+  {
+   "source": "arn:aws:s3:::opal-data-inf",
+   "target": "opal-data-inf/bronze/orion-api/{*}/assets.csv",
+   "edge_type": "CONTAINS",
+   "layer": "aws",
+   "level": "prefix"
+  },
+  {
+   "source": "arn:aws:s3:::opal-data-inf",
+   "target": "opal-data-inf/bronze/orion-api/{*}/transactions.csv",
+   "edge_type": "CONTAINS",
+   "layer": "aws",
+   "level": "prefix"
+  },
+  {
+   "source": "arn:aws:s3:::opal-data-inf",
+   "target": "opal-data-inf/bronze/orion-api/{date}/assets.csv",
+   "edge_type": "CONTAINS",
+   "layer": "aws",
+   "level": "prefix"
+  },
+  {
+   "source": "arn:aws:s3:::opal-data-inf",
+   "target": "opal-data-inf/gold/canonical/canonical_nna_{*}.parquet",
+   "edge_type": "CONTAINS",
+   "layer": "aws",
+   "level": "prefix"
+  },
+  {
+   "source": "arn:aws:s3:::opal-data-inf",
+   "target": "opal-data-inf/gold/canonical/holdings_{*}.parquet",
+   "edge_type": "CONTAINS",
+   "layer": "aws",
+   "level": "prefix"
+  },
+  {
+   "source": "arn:aws:s3:::opal-data-inf",
+   "target": "opal-data-inf/silver/accounts_dim/latest.parquet",
+   "edge_type": "CONTAINS",
+   "layer": "aws",
+   "level": "object"
+  },
+  {
+   "source": "arn:aws:s3:::opal-data-inf",
+   "target": "opal-data-inf/silver/api_dims/accounts_v2/snapshot_date={*}/data.parquet",
+   "edge_type": "CONTAINS",
+   "layer": "aws",
+   "level": "prefix"
+  },
+  {
+   "source": "arn:aws:s3:::opal-data-inf",
+   "target": "opal-data-inf/silver/api_dims/positions_mv/snapshot_date={*}/data.parquet",
+   "edge_type": "CONTAINS",
+   "layer": "aws",
+   "level": "prefix"
+  },
+  {
+   "source": "arn:aws:s3:::opal-data-inf",
+   "target": "opal-data-inf/silver/eclipse/{*}/_meta/silver_complete.json",
+   "edge_type": "CONTAINS",
+   "layer": "aws",
+   "level": "prefix"
+  },
+  {
+   "source": "arn:aws:s3:::opal-data-inf",
+   "target": "opal-data-inf/silver/eclipse/{*}/model_composition.parquet",
+   "edge_type": "CONTAINS",
+   "layer": "aws",
+   "level": "prefix"
+  },
+  {
+   "source": "arn:aws:s3:::opal-data-inf",
+   "target": "opal-data-inf/silver/eclipse/{*}/portfolios_full.parquet",
+   "edge_type": "CONTAINS",
+   "layer": "aws",
+   "level": "prefix"
+  },
+  {
+   "source": "arn:aws:s3:::opal-data-inf",
+   "target": "opal-data-inf/silver/eclipse/{*}/portfolios_simple.parquet",
+   "edge_type": "CONTAINS",
+   "layer": "aws",
+   "level": "prefix"
+  },
+  {
+   "source": "arn:aws:s3:::opal-data-inf",
+   "target": "opal-data-inf/silver/meta/gap_manifest.json",
+   "edge_type": "CONTAINS",
+   "layer": "aws",
+   "level": "object"
+  },
+  {
+   "source": "arn:aws:s3:::opal-data-mdpf",
+   "target": "opal-data-mdpf/gold/eclipse/{*}/model_portfolio_accounts.parquet",
+   "edge_type": "CONTAINS",
+   "layer": "aws",
+   "level": "prefix"
+  },
+  {
+   "source": "arn:aws:s3:::opal-data-mdpf",
+   "target": "opal-data-mdpf/silver/eclipse/{*}/portfolios_full.parquet",
+   "edge_type": "CONTAINS",
+   "layer": "aws",
+   "level": "prefix"
+  },
+  {
+   "source": "arn:aws:s3:::opal-data-mdpf",
+   "target": "opal-data-mdpf/silver/netassets_daily.parquet",
+   "edge_type": "CONTAINS",
+   "layer": "aws",
+   "level": "object"
+  }
+ ],
+ "pending_lambda_only": [
+  {
+   "key": "benchmarks/LATEST.json",
+   "name": "benchmarks/LATEST.json",
+   "stratum": "object",
+   "level": "object",
+   "bucket": "PENDING_B_LAMBDA_PATH",
+   "attribution": "lambda-path",
+   "status": "pending_b_314_target_convergence"
+  },
+  {
+   "key": "blackdiamond/49f/session-trigger-mode.json",
+   "name": "blackdiamond/49f/session-trigger-mode.json",
+   "stratum": "object",
+   "level": "object",
+   "bucket": "PENDING_B_LAMBDA_PATH",
+   "attribution": "lambda-path",
+   "status": "pending_b_314_target_convergence"
+  },
+  {
+   "key": "blackdiamond/cot/session-trigger-mode.json",
+   "name": "blackdiamond/cot/session-trigger-mode.json",
+   "stratum": "object",
+   "level": "object",
+   "bucket": "PENDING_B_LAMBDA_PATH",
+   "attribution": "lambda-path",
+   "status": "pending_b_314_target_convergence"
+  },
+  {
+   "key": "bronze/orion-api-v2/*/household_rep_mapping.json",
+   "name": "bronze/orion-api-v2/*/household_rep_mapping.json",
+   "stratum": "object",
+   "level": "prefix",
+   "bucket": "PENDING_B_LAMBDA_PATH",
+   "attribution": "lambda-path",
+   "status": "pending_b_314_target_convergence"
+  },
+  {
+   "key": "bronze/orion-api-v2/*/representatives.json",
+   "name": "bronze/orion-api-v2/*/representatives.json",
+   "stratum": "object",
+   "level": "prefix",
+   "bucket": "PENDING_B_LAMBDA_PATH",
+   "attribution": "lambda-path",
+   "status": "pending_b_314_target_convergence"
+  },
+  {
+   "key": "cache/fred/BAMLC0A0CM.csv",
+   "name": "cache/fred/BAMLC0A0CM.csv",
+   "stratum": "object",
+   "level": "object",
+   "bucket": "PENDING_B_LAMBDA_PATH",
+   "attribution": "lambda-path",
+   "status": "pending_b_314_target_convergence"
+  },
+  {
+   "key": "cache/fred/BAMLH0A0HYM2.csv",
+   "name": "cache/fred/BAMLH0A0HYM2.csv",
+   "stratum": "object",
+   "level": "object",
+   "bucket": "PENDING_B_LAMBDA_PATH",
+   "attribution": "lambda-path",
+   "status": "pending_b_314_target_convergence"
+  },
+  {
+   "key": "config/dynamic_stopwords.json",
+   "name": "config/dynamic_stopwords.json",
+   "stratum": "object",
+   "level": "object",
+   "bucket": "PENDING_B_LAMBDA_PATH",
+   "attribution": "lambda-path",
+   "status": "pending_b_314_target_convergence"
+  },
+  {
+   "key": "config/etf_universe.json",
+   "name": "config/etf_universe.json",
+   "stratum": "object",
+   "level": "object",
+   "bucket": "PENDING_B_LAMBDA_PATH",
+   "attribution": "lambda-path",
+   "status": "pending_b_314_target_convergence"
+  },
+  {
+   "key": "consolidated/smartx_allocations.parquet",
+   "name": "consolidated/smartx_allocations.parquet",
+   "stratum": "object",
+   "level": "object",
+   "bucket": "PENDING_B_LAMBDA_PATH",
+   "attribution": "lambda-path",
+   "status": "pending_b_314_target_convergence"
+  },
+  {
+   "key": "gold/_state/load_flows/watermark.json",
+   "name": "gold/_state/load_flows/watermark.json",
+   "stratum": "object",
+   "level": "object",
+   "bucket": "PENDING_B_LAMBDA_PATH",
+   "attribution": "lambda-path",
+   "status": "pending_b_314_target_convergence"
+  },
+  {
+   "key": "gold/artifacts/clients/growth_timeseries.json",
+   "name": "gold/artifacts/clients/growth_timeseries.json",
+   "stratum": "object",
+   "level": "object",
+   "bucket": "PENDING_B_LAMBDA_PATH",
+   "attribution": "lambda-path",
+   "status": "pending_b_314_target_convergence"
+  },
+  {
+   "key": "gold/artifacts/clients/tax_basis_breakdown.json",
+   "name": "gold/artifacts/clients/tax_basis_breakdown.json",
+   "stratum": "object",
+   "level": "object",
+   "bucket": "PENDING_B_LAMBDA_PATH",
+   "attribution": "lambda-path",
+   "status": "pending_b_314_target_convergence"
+  },
+  {
+   "key": "gold/artifacts/clients/tax_deferred_candidates.json",
+   "name": "gold/artifacts/clients/tax_deferred_candidates.json",
+   "stratum": "object",
+   "level": "object",
+   "bucket": "PENDING_B_LAMBDA_PATH",
+   "attribution": "lambda-path",
+   "status": "pending_b_314_target_convergence"
+  },
+  {
+   "key": "gold/artifacts/partner_analytics/header_metrics.json",
+   "name": "gold/artifacts/partner_analytics/header_metrics.json",
+   "stratum": "object",
+   "level": "object",
+   "bucket": "PENDING_B_LAMBDA_PATH",
+   "attribution": "lambda-path",
+   "status": "pending_b_314_target_convergence"
+  },
+  {
+   "key": "gold/clients/*.json",
+   "name": "gold/clients/*.json",
+   "stratum": "object",
+   "level": "prefix",
+   "bucket": "PENDING_B_LAMBDA_PATH",
+   "attribution": "lambda-path",
+   "status": "pending_b_314_target_convergence"
+  },
+  {
+   "key": "gold/dispatch-lock.json",
+   "name": "gold/dispatch-lock.json",
+   "stratum": "object",
+   "level": "object",
+   "bucket": "PENDING_B_LAMBDA_PATH",
+   "attribution": "lambda-path",
+   "status": "pending_b_314_target_convergence"
+  },
+  {
+   "key": "gold/meta/pipeline-complete.json",
+   "name": "gold/meta/pipeline-complete.json",
+   "stratum": "object",
+   "level": "object",
+   "bucket": "PENDING_B_LAMBDA_PATH",
+   "attribution": "lambda-path",
+   "status": "pending_b_314_target_convergence"
+  },
+  {
+   "key": "gold/timeseries/nna_total.json",
+   "name": "gold/timeseries/nna_total.json",
+   "stratum": "object",
+   "level": "object",
+   "bucket": "PENDING_B_LAMBDA_PATH",
+   "attribution": "lambda-path",
+   "status": "pending_b_314_target_convergence"
+  },
+  {
+   "key": "gold/trigger-mode.json",
+   "name": "gold/trigger-mode.json",
+   "stratum": "object",
+   "level": "object",
+   "bucket": "PENDING_B_LAMBDA_PATH",
+   "attribution": "lambda-path",
+   "status": "pending_b_314_target_convergence"
+  },
+  {
+   "key": "gold/trigger-pending.json",
+   "name": "gold/trigger-pending.json",
+   "stratum": "object",
+   "level": "object",
+   "bucket": "PENDING_B_LAMBDA_PATH",
+   "attribution": "lambda-path",
+   "status": "pending_b_314_target_convergence"
+  },
+  {
+   "key": "infrastructure/freshness_manifest.json",
+   "name": "infrastructure/freshness_manifest.json",
+   "stratum": "object",
+   "level": "object",
+   "bucket": "PENDING_B_LAMBDA_PATH",
+   "attribution": "lambda-path",
+   "status": "pending_b_314_target_convergence"
+  },
+  {
+   "key": "json-tiered/market-overview/rsi-summary.json",
+   "name": "json-tiered/market-overview/rsi-summary.json",
+   "stratum": "object",
+   "level": "object",
+   "bucket": "PENDING_B_LAMBDA_PATH",
+   "attribution": "lambda-path",
+   "status": "pending_b_314_target_convergence"
+  },
+  {
+   "key": "json-tiered/market-overview/summary/all-returns.json",
+   "name": "json-tiered/market-overview/summary/all-returns.json",
+   "stratum": "object",
+   "level": "object",
+   "bucket": "PENDING_B_LAMBDA_PATH",
+   "attribution": "lambda-path",
+   "status": "pending_b_314_target_convergence"
+  },
+  {
+   "key": "json/benchmarks/benchmark_returns.json",
+   "name": "json/benchmarks/benchmark_returns.json",
+   "stratum": "object",
+   "level": "object",
+   "bucket": "PENDING_B_LAMBDA_PATH",
+   "attribution": "lambda-path",
+   "status": "pending_b_314_target_convergence"
+  },
+  {
+   "key": "json/benchmarks/etf_returns.json",
+   "name": "json/benchmarks/etf_returns.json",
+   "stratum": "object",
+   "level": "object",
+   "bucket": "PENDING_B_LAMBDA_PATH",
+   "attribution": "lambda-path",
+   "status": "pending_b_314_target_convergence"
+  },
+  {
+   "key": "json/benchmarks/model_portfolio_benchmarks.json",
+   "name": "json/benchmarks/model_portfolio_benchmarks.json",
+   "stratum": "object",
+   "level": "object",
+   "bucket": "PENDING_B_LAMBDA_PATH",
+   "attribution": "lambda-path",
+   "status": "pending_b_314_target_convergence"
+  },
+  {
+   "key": "json/benchmarks/model_portfolio_timeseries.json",
+   "name": "json/benchmarks/model_portfolio_timeseries.json",
+   "stratum": "object",
+   "level": "object",
+   "bucket": "PENDING_B_LAMBDA_PATH",
+   "attribution": "lambda-path",
+   "status": "pending_b_314_target_convergence"
+  },
+  {
+   "key": "json/capital-markets/assumptions.json",
+   "name": "json/capital-markets/assumptions.json",
+   "stratum": "object",
+   "level": "object",
+   "bucket": "PENDING_B_LAMBDA_PATH",
+   "attribution": "lambda-path",
+   "status": "pending_b_314_target_convergence"
+  },
+  {
+   "key": "json/capital-markets/views.json",
+   "name": "json/capital-markets/views.json",
+   "stratum": "object",
+   "level": "object",
+   "bucket": "PENDING_B_LAMBDA_PATH",
+   "attribution": "lambda-path",
+   "status": "pending_b_314_target_convergence"
+  },
+  {
+   "key": "json/correlations/correlation_data.json",
+   "name": "json/correlations/correlation_data.json",
+   "stratum": "object",
+   "level": "object",
+   "bucket": "PENDING_B_LAMBDA_PATH",
+   "attribution": "lambda-path",
+   "status": "pending_b_314_target_convergence"
+  },
+  {
+   "key": "json/factor-tilts/data.json",
+   "name": "json/factor-tilts/data.json",
+   "stratum": "object",
+   "level": "object",
+   "bucket": "PENDING_B_LAMBDA_PATH",
+   "attribution": "lambda-path",
+   "status": "pending_b_314_target_convergence"
+  },
+  {
+   "key": "json/factor-tilts/tier1-snapshot.json",
+   "name": "json/factor-tilts/tier1-snapshot.json",
+   "stratum": "object",
+   "level": "object",
+   "bucket": "PENDING_B_LAMBDA_PATH",
+   "attribution": "lambda-path",
+   "status": "pending_b_314_target_convergence"
+  },
+  {
+   "key": "json/factor-tilts/tier2-spreads.json",
+   "name": "json/factor-tilts/tier2-spreads.json",
+   "stratum": "object",
+   "level": "object",
+   "bucket": "PENDING_B_LAMBDA_PATH",
+   "attribution": "lambda-path",
+   "status": "pending_b_314_target_convergence"
+  },
+  {
+   "key": "json/factor-tilts/tier3-timeseries.json",
+   "name": "json/factor-tilts/tier3-timeseries.json",
+   "stratum": "object",
+   "level": "object",
+   "bucket": "PENDING_B_LAMBDA_PATH",
+   "attribution": "lambda-path",
+   "status": "pending_b_314_target_convergence"
+  },
+  {
+   "key": "json/latest/manifest.json",
+   "name": "json/latest/manifest.json",
+   "stratum": "object",
+   "level": "object",
+   "bucket": "PENDING_B_LAMBDA_PATH",
+   "attribution": "lambda-path",
+   "status": "pending_b_314_target_convergence"
+  },
+  {
+   "key": "json/macro/macro_data.json",
+   "name": "json/macro/macro_data.json",
+   "stratum": "object",
+   "level": "object",
+   "bucket": "PENDING_B_LAMBDA_PATH",
+   "attribution": "lambda-path",
+   "status": "pending_b_314_target_convergence"
+  },
+  {
+   "key": "json/macro/timeseries/10y.json",
+   "name": "json/macro/timeseries/10y.json",
+   "stratum": "object",
+   "level": "object",
+   "bucket": "PENDING_B_LAMBDA_PATH",
+   "attribution": "lambda-path",
+   "status": "pending_b_314_target_convergence"
+  },
+  {
+   "key": "json/macro/timeseries/2y.json",
+   "name": "json/macro/timeseries/2y.json",
+   "stratum": "object",
+   "level": "object",
+   "bucket": "PENDING_B_LAMBDA_PATH",
+   "attribution": "lambda-path",
+   "status": "pending_b_314_target_convergence"
+  },
+  {
+   "key": "json/macro/vix_data.json",
+   "name": "json/macro/vix_data.json",
+   "stratum": "object",
+   "level": "object",
+   "bucket": "PENDING_B_LAMBDA_PATH",
+   "attribution": "lambda-path",
+   "status": "pending_b_314_target_convergence"
+  },
+  {
+   "key": "json/macro/volatility_data.json",
+   "name": "json/macro/volatility_data.json",
+   "stratum": "object",
+   "level": "object",
+   "bucket": "PENDING_B_LAMBDA_PATH",
+   "attribution": "lambda-path",
+   "status": "pending_b_314_target_convergence"
+  },
+  {
+   "key": "json/market/market-regime-history.json",
+   "name": "json/market/market-regime-history.json",
+   "stratum": "object",
+   "level": "object",
+   "bucket": "PENDING_B_LAMBDA_PATH",
+   "attribution": "lambda-path",
+   "status": "pending_b_314_target_convergence"
+  },
+  {
+   "key": "json/market/market-regime.json",
+   "name": "json/market/market-regime.json",
+   "stratum": "object",
+   "level": "object",
+   "bucket": "PENDING_B_LAMBDA_PATH",
+   "attribution": "lambda-path",
+   "status": "pending_b_314_target_convergence"
+  },
+  {
+   "key": "json/market_metrics.json",
+   "name": "json/market_metrics.json",
+   "stratum": "object",
+   "level": "object",
+   "bucket": "PENDING_B_LAMBDA_PATH",
+   "attribution": "lambda-path",
+   "status": "pending_b_314_target_convergence"
+  },
+  {
+   "key": "json/mdpf/global/aggregate-aua-timeseries.json",
+   "name": "json/mdpf/global/aggregate-aua-timeseries.json",
+   "stratum": "object",
+   "level": "object",
+   "bucket": "PENDING_B_LAMBDA_PATH",
+   "attribution": "lambda-path",
+   "status": "pending_b_314_target_convergence"
+  },
+  {
+   "key": "json/peers/peer_performance.json",
+   "name": "json/peers/peer_performance.json",
+   "stratum": "object",
+   "level": "object",
+   "bucket": "PENDING_B_LAMBDA_PATH",
+   "attribution": "lambda-path",
+   "status": "pending_b_314_target_convergence"
+  },
+  {
+   "key": "json/portfolios/account-distribution.json",
+   "name": "json/portfolios/account-distribution.json",
+   "stratum": "object",
+   "level": "object",
+   "bucket": "PENDING_B_LAMBDA_PATH",
+   "attribution": "lambda-path",
+   "status": "pending_b_314_target_convergence"
+  },
+  {
+   "key": "json/portfolios/aum-metrics.json",
+   "name": "json/portfolios/aum-metrics.json",
+   "stratum": "object",
+   "level": "object",
+   "bucket": "PENDING_B_LAMBDA_PATH",
+   "attribution": "lambda-path",
+   "status": "pending_b_314_target_convergence"
+  },
+  {
+   "key": "json/portfolios/aum-timeseries.json",
+   "name": "json/portfolios/aum-timeseries.json",
+   "stratum": "object",
+   "level": "object",
+   "bucket": "PENDING_B_LAMBDA_PATH",
+   "attribution": "lambda-path",
+   "status": "pending_b_314_target_convergence"
+  },
+  {
+   "key": "json/portfolios/non_model_assets.json",
+   "name": "json/portfolios/non_model_assets.json",
+   "stratum": "object",
+   "level": "object",
+   "bucket": "PENDING_B_LAMBDA_PATH",
+   "attribution": "lambda-path",
+   "status": "pending_b_314_target_convergence"
+  },
+  {
+   "key": "json/positioning/allocation_summary.json",
+   "name": "json/positioning/allocation_summary.json",
+   "stratum": "object",
+   "level": "object",
+   "bucket": "PENDING_B_LAMBDA_PATH",
+   "attribution": "lambda-path",
+   "status": "pending_b_314_target_convergence"
+  },
+  {
+   "key": "json/positioning/etf-returns.json",
+   "name": "json/positioning/etf-returns.json",
+   "stratum": "object",
+   "level": "object",
+   "bucket": "PENDING_B_LAMBDA_PATH",
+   "attribution": "lambda-path",
+   "status": "pending_b_314_target_convergence"
+  },
+  {
+   "key": "json/positioning/holdings_attribution_data.json",
+   "name": "json/positioning/holdings_attribution_data.json",
+   "stratum": "object",
+   "level": "object",
+   "bucket": "PENDING_B_LAMBDA_PATH",
+   "attribution": "lambda-path",
+   "status": "pending_b_314_target_convergence"
+  },
+  {
+   "key": "json/positioning/positioning_data.json",
+   "name": "json/positioning/positioning_data.json",
+   "stratum": "object",
+   "level": "object",
+   "bucket": "PENDING_B_LAMBDA_PATH",
+   "attribution": "lambda-path",
+   "status": "pending_b_314_target_convergence"
+  },
+  {
+   "key": "json/returns/etf_period_returns.json",
+   "name": "json/returns/etf_period_returns.json",
+   "stratum": "object",
+   "level": "object",
+   "bucket": "PENDING_B_LAMBDA_PATH",
+   "attribution": "lambda-path",
+   "status": "pending_b_314_target_convergence"
+  },
+  {
+   "key": "json/security_scanner/latest/factor_metadata.json",
+   "name": "json/security_scanner/latest/factor_metadata.json",
+   "stratum": "object",
+   "level": "object",
+   "bucket": "PENDING_B_LAMBDA_PATH",
+   "attribution": "lambda-path",
+   "status": "pending_b_314_target_convergence"
+  },
+  {
+   "key": "json/semantic-trending/latest.json",
+   "name": "json/semantic-trending/latest.json",
+   "stratum": "object",
+   "level": "object",
+   "bucket": "PENDING_B_LAMBDA_PATH",
+   "attribution": "lambda-path",
+   "status": "pending_b_314_target_convergence"
+  },
+  {
+   "key": "json/sentiment/fear-greed-index.json",
+   "name": "json/sentiment/fear-greed-index.json",
+   "stratum": "object",
+   "level": "object",
+   "bucket": "PENDING_B_LAMBDA_PATH",
+   "attribution": "lambda-path",
+   "status": "pending_b_314_target_convergence"
+  },
+  {
+   "key": "json/sentiment/keyword-sentiments.json",
+   "name": "json/sentiment/keyword-sentiments.json",
+   "stratum": "object",
+   "level": "object",
+   "bucket": "PENDING_B_LAMBDA_PATH",
+   "attribution": "lambda-path",
+   "status": "pending_b_314_target_convergence"
+  },
+  {
+   "key": "json/trending/latest.json",
+   "name": "json/trending/latest.json",
+   "stratum": "object",
+   "level": "object",
+   "bucket": "PENDING_B_LAMBDA_PATH",
+   "attribution": "lambda-path",
+   "status": "pending_b_314_target_convergence"
+  },
+  {
+   "key": "json/valuation/risk_premium_data.json",
+   "name": "json/valuation/risk_premium_data.json",
+   "stratum": "object",
+   "level": "object",
+   "bucket": "PENDING_B_LAMBDA_PATH",
+   "attribution": "lambda-path",
+   "status": "pending_b_314_target_convergence"
+  },
+  {
+   "key": "json/valuation/valuation_data.json",
+   "name": "json/valuation/valuation_data.json",
+   "stratum": "object",
+   "level": "object",
+   "bucket": "PENDING_B_LAMBDA_PATH",
+   "attribution": "lambda-path",
+   "status": "pending_b_314_target_convergence"
+  },
+  {
+   "key": "json/yang/volatility_data.json",
+   "name": "json/yang/volatility_data.json",
+   "stratum": "object",
+   "level": "object",
+   "bucket": "PENDING_B_LAMBDA_PATH",
+   "attribution": "lambda-path",
+   "status": "pending_b_314_target_convergence"
+  },
+  {
+   "key": "macro/macro_data.json",
+   "name": "macro/macro_data.json",
+   "stratum": "object",
+   "level": "object",
+   "bucket": "PENDING_B_LAMBDA_PATH",
+   "attribution": "lambda-path",
+   "status": "pending_b_314_target_convergence"
+  },
+  {
+   "key": "orion/bronze-trigger-mode.json",
+   "name": "orion/bronze-trigger-mode.json",
+   "stratum": "object",
+   "level": "object",
+   "bucket": "PENDING_B_LAMBDA_PATH",
+   "attribution": "lambda-path",
+   "status": "pending_b_314_target_convergence"
+  },
+  {
+   "key": "orion/jwt/current.json",
+   "name": "orion/jwt/current.json",
+   "stratum": "object",
+   "level": "object",
+   "bucket": "PENDING_B_LAMBDA_PATH",
+   "attribution": "lambda-path",
+   "status": "pending_b_314_target_convergence"
+  },
+  {
+   "key": "orion/jwt/trigger-mode.json",
+   "name": "orion/jwt/trigger-mode.json",
+   "stratum": "object",
+   "level": "object",
+   "bucket": "PENDING_B_LAMBDA_PATH",
+   "attribution": "lambda-path",
+   "status": "pending_b_314_target_convergence"
+  },
+  {
+   "key": "otp/current.txt",
+   "name": "otp/current.txt",
+   "stratum": "object",
+   "level": "object",
+   "bucket": "PENDING_B_LAMBDA_PATH",
+   "attribution": "lambda-path",
+   "status": "pending_b_314_target_convergence"
+  },
+  {
+   "key": "otp/state.json",
+   "name": "otp/state.json",
+   "stratum": "object",
+   "level": "object",
+   "bucket": "PENDING_B_LAMBDA_PATH",
+   "attribution": "lambda-path",
+   "status": "pending_b_314_target_convergence"
+  },
+  {
+   "key": "platinum/etf_ownership_dashboard.json",
+   "name": "platinum/etf_ownership_dashboard.json",
+   "stratum": "object",
+   "level": "object",
+   "bucket": "PENDING_B_LAMBDA_PATH",
+   "attribution": "lambda-path",
+   "status": "pending_b_314_target_convergence"
+  },
+  {
+   "key": "security-reports/*_ai_summary.txt",
+   "name": "security-reports/*_ai_summary.txt",
+   "stratum": "object",
+   "level": "prefix",
+   "bucket": "PENDING_B_LAMBDA_PATH",
+   "attribution": "lambda-path",
+   "status": "pending_b_314_target_convergence"
+  },
+  {
+   "key": "security-reports/*_comprehensive_report.txt",
+   "name": "security-reports/*_comprehensive_report.txt",
+   "stratum": "object",
+   "level": "prefix",
+   "bucket": "PENDING_B_LAMBDA_PATH",
+   "attribution": "lambda-path",
+   "status": "pending_b_314_target_convergence"
+  },
+  {
+   "key": "security-reports/*_findings.json",
+   "name": "security-reports/*_findings.json",
+   "stratum": "object",
+   "level": "prefix",
+   "bucket": "PENDING_B_LAMBDA_PATH",
+   "attribution": "lambda-path",
+   "status": "pending_b_314_target_convergence"
+  },
+  {
+   "key": "security-reports/*_latest_counts.json",
+   "name": "security-reports/*_latest_counts.json",
+   "stratum": "object",
+   "level": "prefix",
+   "bucket": "PENDING_B_LAMBDA_PATH",
+   "attribution": "lambda-path",
+   "status": "pending_b_314_target_convergence"
+  },
+  {
+   "key": "security-reports/*_security_report.txt",
+   "name": "security-reports/*_security_report.txt",
+   "stratum": "object",
+   "level": "prefix",
+   "bucket": "PENDING_B_LAMBDA_PATH",
+   "attribution": "lambda-path",
+   "status": "pending_b_314_target_convergence"
+  },
+  {
+   "key": "security-reports/latest_ai_summary.txt",
+   "name": "security-reports/latest_ai_summary.txt",
+   "stratum": "object",
+   "level": "object",
+   "bucket": "PENDING_B_LAMBDA_PATH",
+   "attribution": "lambda-path",
+   "status": "pending_b_314_target_convergence"
+  },
+  {
+   "key": "security-reports/latest_score.json",
+   "name": "security-reports/latest_score.json",
+   "stratum": "object",
+   "level": "object",
+   "bucket": "PENDING_B_LAMBDA_PATH",
+   "attribution": "lambda-path",
+   "status": "pending_b_314_target_convergence"
+  },
+  {
+   "key": "seeking-alpha/analysis/manifests/*/layer1_summary.json",
+   "name": "seeking-alpha/analysis/manifests/*/layer1_summary.json",
+   "stratum": "object",
+   "level": "prefix",
+   "bucket": "PENDING_B_LAMBDA_PATH",
+   "attribution": "lambda-path",
+   "status": "pending_b_314_target_convergence"
+  },
+  {
+   "key": "seeking-alpha/analysis/manifests/*/layer25_dedup_report.json",
+   "name": "seeking-alpha/analysis/manifests/*/layer25_dedup_report.json",
+   "stratum": "object",
+   "level": "prefix",
+   "bucket": "PENDING_B_LAMBDA_PATH",
+   "attribution": "lambda-path",
+   "status": "pending_b_314_target_convergence"
+  },
+  {
+   "key": "seeking-alpha/analysis/manifests/*/layer2_chunk_*.json",
+   "name": "seeking-alpha/analysis/manifests/*/layer2_chunk_*.json",
+   "stratum": "object",
+   "level": "prefix",
+   "bucket": "PENDING_B_LAMBDA_PATH",
+   "attribution": "lambda-path",
+   "status": "pending_b_314_target_convergence"
+  },
+  {
+   "key": "seeking-alpha/news/manifests/*/dedup_report.json",
+   "name": "seeking-alpha/news/manifests/*/dedup_report.json",
+   "stratum": "object",
+   "level": "prefix",
+   "bucket": "PENDING_B_LAMBDA_PATH",
+   "attribution": "lambda-path",
+   "status": "pending_b_314_target_convergence"
+  },
+  {
+   "key": "seeking-alpha/news/manifests/*/layer1_summary.json",
+   "name": "seeking-alpha/news/manifests/*/layer1_summary.json",
+   "stratum": "object",
+   "level": "prefix",
+   "bucket": "PENDING_B_LAMBDA_PATH",
+   "attribution": "lambda-path",
+   "status": "pending_b_314_target_convergence"
+  },
+  {
+   "key": "sentiment/keyword-sentiments.json",
+   "name": "sentiment/keyword-sentiments.json",
+   "stratum": "object",
+   "level": "object",
+   "bucket": "PENDING_B_LAMBDA_PATH",
+   "attribution": "lambda-path",
+   "status": "pending_b_314_target_convergence"
+  },
+  {
+   "key": "silver/interpolated_prices.parquet",
+   "name": "silver/interpolated_prices.parquet",
+   "stratum": "object",
+   "level": "object",
+   "bucket": "PENDING_B_LAMBDA_PATH",
+   "attribution": "lambda-path",
+   "status": "pending_b_314_target_convergence"
+  },
+  {
+   "key": "smartx/jwt/current.json",
+   "name": "smartx/jwt/current.json",
+   "stratum": "object",
+   "level": "object",
+   "bucket": "PENDING_B_LAMBDA_PATH",
+   "attribution": "lambda-path",
+   "status": "pending_b_314_target_convergence"
+  },
+  {
+   "key": "views/account_distribution.json",
+   "name": "views/account_distribution.json",
+   "stratum": "object",
+   "level": "object",
+   "bucket": "PENDING_B_LAMBDA_PATH",
+   "attribution": "lambda-path",
+   "status": "pending_b_314_target_convergence"
+  },
+  {
+   "key": "warehouse/_branch_head.main.json",
+   "name": "warehouse/_branch_head.main.json",
+   "stratum": "object",
+   "level": "object",
+   "bucket": "PENDING_B_LAMBDA_PATH",
+   "attribution": "lambda-path",
+   "status": "pending_b_314_target_convergence"
+  }
+ ],
+ "coverage": {
+  "phase_b_total_deferred_keys": 142,
+  "declared_only_ready": {
+   "s3key_nodes": 56,
+   "owned_by_edges": 56,
+   "contains_edges": 56,
+   "level_split": {
+    "object": 20,
+    "prefix": 36
+   },
+   "source": "~D edge_targets.json reads_only (bucket-qualified, adopted verbatim -> byte-converges with ~D by construction)",
+   "attribution": "reader-firm (gold READS_S3, no gold writer)"
+  },
+  "lambda_only_pending": {
+   "keys": 87,
+   "level_split": {
+    "object": 74,
+    "prefix": 13
+   },
+   "bucket_attribution_owner": "~B lambda-path (infra/aws/lambda/{firm}-pipeline)",
+   "convergence_target": "~B P1-B.stitchers_producer.json coverage.S3_deferred_lambda_only=314 edges -> DISTINCT bucket-qualified targets == my lambda-only S3Key node ids (byte-converge like Phase-A 169==169)",
+   "blocker": "~B must emit the 314 deferred lambda edge target ids (currently a COUNT only, 0 emitted edges for these)"
+  },
+  "denominator_check": {
+   "phase_a": 169,
+   "declared_only": 56,
+   "lambda_only_keys": 87,
+   "expected_total_bucket_qualified": "169 + 56 + ~86 = ~311 (matches enumerated-denominator ~311-312)"
+  },
+  "no_silent_cap": "all 142 deferred keys enumerated (56 declared ready + 87 lambda-only staged); none dropped"
+ }
+}
