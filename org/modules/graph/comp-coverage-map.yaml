@@ -542,6 +542,7 @@ tool_grain_calibration:
     comp-platinum:     [cross-grain]       # component -> endpoint -> lambda -> object -> gold (full stack)
     comp-kuzu:         [cross-grain]        # graph query, any grain
     comp-graph:        [cross-grain]        # graph vintage across grains
+    comp-depth:        [cross-grain]        # DEPTH-scoping: drill/rollup ACROSS grains on the CONTAINS ladder + strata (NFRA_GRAPHDEPTH P3)
   source_only_grains: [chain]              # grains a tool operates at by SOURCE-PARSE (not graph-traversal). The S4 graph-traversal
                                            # audit EXEMPTS these (a tool declaring a source-only grain is not a graph-traverser at that
                                            # grain -- it reads source/config). COO~B ruling (b), S4-audit close 20260701: comp-dispatch[chain]
@@ -805,6 +806,11 @@ tools:
       - { tool: comp-freshness, shared_resource: freshness, my_concern: "graph-cache VINTAGE (derived-model staleness)", their_concern: "pipeline-DATA S3/DDB freshness" }
       - { tool: comp-heat,      shared_resource: freshness, my_concern: "graph-cache VINTAGE", their_concern: "estate-object write-freshness (repo files)" }
       - { tool: comp-xray,      shared_resource: freshness, my_concern: "graph-cache VINTAGE", their_concern: "value-MOTION (content)" }
+  - tool: comp-depth
+    surface: TRINO
+    granularity: graph-node
+    concern: "DEPTH-scoped graph querying (NFRA_GRAPHDEPTH P3) -- scope a traversal to a declared grain: drill coarse->fine + rollup fine->coarse EXISTENTIAL over the RUNS/CONTAINS/OWNED_BY strata (drilldown_seams-derived), grain-scoped node sets, and a breadth blast SCOPED to a grain. The DEPTH coordinate composed with BREADTH on the ONE marker-head handle (comp_marker_read.py); grain-calibrated by grain_contract, SIZE-INVARIANT (--to/--grain, never a type fork). DISTINCT from comp-kuzu (raw Cypher, any query) + comp-blast (breadth IMPACT set) + comp-trace (dependency PATH) -- comp-depth owns the grain/DEPTH scope"
+    touches_resource: []
 
 # =============================================================================
 # META TOOLS -- the tooling LAYER: router/search/enforcement-gate/cache-mgmt/test/

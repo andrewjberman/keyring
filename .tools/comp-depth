@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+# comp-depth -- DEPTH-scoped querying on the ONE marker-head graph (NFRA_GRAPHDEPTH P3).
+#
+# The DEPTH coordinate of an investigation (BREADTH = where on the surface, comp-blast/trace/xref;
+# DEPTH = what grain, this tool). Composes on the SAME marker-head read-handle (comp_marker_read.py)
+# the re-pointed breadth tools use -- ONE head, provenance-checked every call (D4). Grain-CALIBRATED
+# by the grain_contract 0.8.0_AE_CloudComp~C governs (node_type_grain + drilldown_seams + strata);
+# SIZE-INVARIANT (ONE tool + type-system serves every grain via a --to/--grain arg, never a type fork).
+# Tracked engine: org/modules/graph/comp_depth_cli.py (the .tools/ wrapper is the PATH front).
+#
+# Usage:
+#   comp-depth grains <node-id>              # the node's grain(s) SET + CONTAINS-ladder level
+#   comp-depth scope  <grain> [--limit N]    # every node at <grain>
+#   comp-depth drill  <node-id> --to <grain> # coarse->fine: the <grain>-grained descendants
+#   comp-depth rollup <node-id> --to <grain> # fine->coarse EXISTENTIAL: roll up to <grain>
+#   comp-depth blast  <node-id> --grain <g>  # a breadth blast SCOPED to grain <g> (depth x breadth)
+set -euo pipefail
+
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+if git_top="$(git -C "${SCRIPT_DIR}" rev-parse --show-toplevel 2>/dev/null)"; then
+    WORKSPACE_ROOT="${git_top}"
+else
+    WORKSPACE_ROOT="/c/Users/AndrewBerman/Desktop/ajb_workspace"
+fi
+
+exec "${COMP_PYTHON:-python}" "${WORKSPACE_ROOT}/org/modules/graph/comp_depth_cli.py" "$@"
