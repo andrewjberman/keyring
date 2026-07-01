@@ -10570,3 +10570,80 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-07-01 | 2.0.0_SA_COO | NFRA_COMPROUTE.L3 (shared) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/briefs/infr... | PASS |
 | 2026-07-01 | 0.8.0_AE_CloudComp~E | NFRA_COMPLEARN.P2 | comp-learns-score/ds-commit-gate/pytest | /log: preventive-gate fold (3dffba0a9) self-test 7/7 + comp-manifest-check tempered retire #2->#12 + pytest 8/8 | PASS |
 | 2026-07-01 | 0.8.0_AE_CloudComp~E | NFRA_COMPLEARN.P2 | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-01 | 0.8.0_AE_CloudComp~C | NFRA_COMPROUTE.L4.comp-which-integration-regression-loop | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.8.0_AE_CloudComp/log... | PASS |
+| 2026-07-01 | 0.8.0_AE_CloudComp~D | NFRA_COMPDRIFT.P3c-P4.seam6-trino-closer-and-ci-sweep | comp-kuzu | comp-kuzu MATCH (n) RETURN count(n) LIMIT 1 | PASS |
+| 2026-07-01 | 0.8.0_AE_CloudComp~D | NFRA_COMPDRIFT.P3c-P4.seam6-trino-closer-and-ci-sweep | comp-drift | comp-drift sweep | FAIL |
+| 2026-07-01 | 2.0.0_SA_COO | NFRA_COMPROUTE.L3 (shared) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/briefs/infr... | PASS |
+| 2026-07-01 | 3.0.0_SA_CVO~B | NFRA_COMPUNIFY.V1 | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/logs/2026-0... | PASS |
+| 2026-07-01 | 0.8.0_AE_CloudComp~D | NFRA_COMPDRIFT.P3c-P4.seam6-trino-closer-and-ci-sweep | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/drift_cli.py --file o... | PASS |
+| 2026-07-01 | 2.0.0_SA_COO~B | NFRA_COMPROUTE.L3 (shared) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/NFRA_COMPLEARN.json --file... | PASS |
+| 2026-07-01 | 0.8.0_AE_CloudComp~D | NFRA_COMPDRIFT.P3c-P4.seam6-trino-closer-and-ci-sweep | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/drift_cli.py | PASS |
+| 2026-07-01 | 2.0.0_SA_COO~B | NFRA_COMPROUTE.L3 (shared) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/NFRA_COMPROUTE.json --file... | PASS |
+| 2026-07-01 | 0.8.0_AE_CloudComp~E | NFRA_COMPLEARN.P2 | comp-surface-check | comp-surface-check check --mode advisory --file .gitignore --file org/modules/graph/com... | PASS |
+| 2026-07-01 | 0.8.0_AE_CloudComp~D | NFRA_COMPDRIFT.P3c-P4.seam6-trino-closer-and-ci-sweep | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.8.0_AE_CloudComp/tas... | PASS |
+| 2026-07-01 | 0.8.0_AE_CloudComp~E | NFRA_COMPLEARN.P2 | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/comp_learns_score.py | PASS |
+| 2026-07-01 | 2.0.0_SA_COO | NFRA_COMPROUTE.L3 (shared) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+| 2026-07-01 | 0.8.0_AE_CloudComp~D | NFRA_COMPDRIFT.P3c-P4.seam6-trino-closer-and-ci-sweep | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.8.0_AE_CloudComp/log... | PASS |
+| 2026-07-01 | 1.0.0_SA_CTO | NFRA_COMPROUTE.L3 (shared) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/graph-call-manifest.yaml | PASS |
+| 2026-07-01 | 2.0.0_SA_COO~B | NFRA_COMPROUTE.L3 (shared) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/NFRA_COMPAWS/DECOMP-MAP.md... | PASS |
+| 2026-07-01 | 3.0.0_SA_CVO~B | NFRA_COMPUNIFY.V1 | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/logs/2026-0... | PASS |
+| 2026-07-01 | 2.0.0_SA_COO~B | NFRA_COMPROUTE.L3 (shared) | comp-surface-check | comp-surface-check check --mode advisory --file .gitignore --file org/modules/graph/tes... | PASS |
+| 2026-07-01 | 2.0.0_SA_COO~B | NFRA_COMPROUTE.L3 (shared) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/NFRA_COMPDRIFT.json --file... | PASS |
+| 2026-07-01 | 0.8.0_AE_CloudComp~E | NFRA_COMPLEARN.P2 | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/comp_route.py | PASS |
+| 2026-07-01 | 1.0.0_SA_CTO | NFRA_COMPROUTE.L3 (shared) | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/.open_deploys/advi-i... | PASS |
+| 2026-07-01 | 3.0.0_SA_CVO~B | NFRA_COMPUNIFY.V1 | comp-kuzu | comp-kuzu MATCH (n:CloudNode) WHERE n.node_type IN ['ECS_TASK_DEFINITION','ECS_CLUSTER'... | PASS |
+| 2026-07-01 | 2.0.0_SA_COO | NFRA_COMPROUTE.L3 (shared) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/briefs/infr... | PASS |
+| 2026-07-01 | 0.8.0_AE_CloudComp~B | NFRA_COMPROUTE.L3 (shared) | comp-kuzu | comp-kuzu MATCH ()-[e]->() WHERE e.edge_type = 'RUNS' RETURN count(e) AS runs_edges | PASS |
+| 2026-07-01 | 3.0.0_SA_CVO~B | NFRA_COMPUNIFY.V1 | comp-kuzu | comp-kuzu MATCH (n:CloudNode) WHERE n.node_type IN ['VPC','VPC_ENDPOINT','SECURITY_GROU... | PASS |
+| 2026-07-01 | 0.8.0_AE_CloudComp~A | NFRA_COMPROUTE.L3 (shared) | comp-kuzu | comp-kuzu MATCH (n) WHERE n.node_type='S3Key' RETURN count(n) AS s3key_nodes | PASS |
+| 2026-07-01 | 3.0.0_SA_CVO~B | NFRA_COMPUNIFY.V1 | comp-kuzu | comp-kuzu MATCH (n:CloudNode) RETURN count(n) AS nodes | PASS |
+| 2026-07-01 | 3.0.0_SA_CVO~B | NFRA_COMPUNIFY.V1 | comp-kuzu | comp-kuzu MATCH (n:CloudNode) WHERE n.node_type IN ['PipelineFunction','PipelineScript'... | PASS |
+| 2026-07-01 | 0.8.0_AE_CloudComp~D | NFRA_COMPDRIFT.P3c-P4.seam6-trino-closer-and-ci-sweep | comp-kuzu | comp-kuzu MATCH (n) WHERE n.node_type IN ["PipelineScript","PipelineFunction","Pipeline... | PASS |
+| 2026-07-01 | 0.8.0_AE_CloudComp~E | NFRA_COMPLEARN.P2 | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/comp_route_affinity.py | PASS |
+| 2026-07-01 | 0.8.0_AE_CloudComp~A | NFRA_COMPROUTE.L3 (shared) | comp-kuzu | comp-kuzu MATCH (a)-[e]->(b) WHERE e.edge_type='OWNED_BY' AND a.node_type='S3Key' RETUR... | PASS |
+| 2026-07-01 | 0.8.0_AE_CloudComp~D | NFRA_COMPDRIFT.P3c-P4.seam6-trino-closer-and-ci-sweep | comp-kuzu | comp-kuzu MATCH (n)-[e]->(m) WHERE n.node_type IN ["PipelineScript","PipelineFunction",... | PASS |
+| 2026-07-01 | 0.8.0_AE_CloudComp~B | NFRA_COMPROUTE.L3 (shared) | comp-kuzu | comp-kuzu MATCH (l)-[e]->(s) WHERE e.edge_type IN ['READS_S3','WRITES_S3'] AND l.id STA... | FAIL |
+| 2026-07-01 | 0.8.0_AE_CloudComp~A | NFRA_COMPROUTE.L3 (shared) | comp-kuzu | comp-kuzu MATCH (a)-[e]->(b) WHERE e.edge_type='CONTAINS' AND b.node_type='S3Key' RETUR... | PASS |
+| 2026-07-01 | 0.8.0_AE_CloudComp~D | NFRA_COMPDRIFT.P3c-P4.seam6-trino-closer-and-ci-sweep | comp-kuzu | comp-kuzu MATCH (n)-[e]->(m) WHERE e.edge_type="WRITES_S3" AND n.node_type IN ["Pipelin... | PASS |
+| 2026-07-01 | 0.8.0_AE_CloudComp~A | NFRA_COMPROUTE.L3 (shared) | comp-kuzu | comp-kuzu MATCH (n) WHERE n.node_id = 'opal-data-inf/bronze/orion-api/{date}/assets.csv... | PASS |
+| 2026-07-01 | 0.8.0_AE_CloudComp~A | NFRA_COMPROUTE.L3 (shared) | comp-kuzu | comp-kuzu MATCH (n) WHERE n.node_id IN ['opal-data-bd/gold/clients/*.json','opal-data-b... | PASS |
+| 2026-07-01 | 0.8.0_AE_CloudComp~B | NFRA_COMPROUTE.L3 (shared) | comp-kuzu | comp-kuzu MATCH (n) RETURN n LIMIT 1 | PASS |
+| 2026-07-01 | 0.8.0_AE_CloudComp~D | NFRA_COMPDRIFT.P3c-P4.seam6-trino-closer-and-ci-sweep | comp-kuzu | comp-kuzu MATCH (n)-[e]->(m) WHERE e.edge_type="WRITES_S3" AND n.node_type IN ["Pipelin... | PASS |
+| 2026-07-01 | 0.8.0_AE_CloudComp~D | NFRA_COMPDRIFT.P3c-P4.seam6-trino-closer-and-ci-sweep | comp-kuzu | comp-kuzu MATCH (n)-[e]->(m) WHERE e.edge_type="READS_S3" AND n.node_type IN ["Pipeline... | PASS |
+| 2026-07-01 | 0.8.0_AE_CloudComp~A | NFRA_COMPROUTE.L3 (shared) | comp-kuzu | comp-kuzu MATCH (a)-[e]->(b) WHERE b.node_type='S3Key' RETURN e.edge_type AS into_s3key... | PASS |
+| 2026-07-01 | 0.8.0_AE_CloudComp~A | NFRA_COMPROUTE.L3 (shared) | comp-kuzu | comp-kuzu MATCH (a)-[e]->(b) WHERE a.node_type='S3Key' RETURN e.edge_type AS from_s3key... | PASS |
+| 2026-07-01 | 0.8.0_AE_CloudComp~A | NFRA_COMPROUTE.L3 (shared) | comp-kuzu | comp-kuzu MATCH (a)-[e]->(b) WHERE e.edge_type='WRITES_S3' AND b.node_type='S3Key' RETU... | PASS |
+| 2026-07-01 | 3.0.0_SA_CVO~B | NFRA_COMPUNIFY.V1 | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/logs/2026-0... | PASS |
+| 2026-07-01 | 0.8.0_AE_CloudComp~D | NFRA_COMPDRIFT.P3c-P4.seam6-trino-closer-and-ci-sweep | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.8.0_AE_CloudComp/log... | PASS |
+| 2026-07-01 | 0.8.0_AE_CloudComp~C | NFRA_COMPROUTE.L4.comp-which-integration-regression-loop | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/comp-coverage-map.yam... | PASS |
+| 2026-07-01 | 0.8.0_AE_CloudComp~A | NFRA_COMPROUTE.L3 (shared) | comp-kuzu | comp-kuzu MATCH (a)-[e]->(b) WHERE e.edge_type='WRITES_S3' AND b.node_type='S3Key' RETU... | PASS |
+| 2026-07-01 | 0.8.0_AE_CloudComp~A | NFRA_COMPROUTE.L3 (shared) | comp-kuzu | comp-kuzu MATCH (a)-[e]->(b) WHERE e.edge_type='WRITES_S3' AND b.node_id IN ['opal-data... | PASS |
+| 2026-07-01 | 0.8.0_AE_CloudComp~A | NFRA_COMPROUTE.L3 (shared) | comp-kuzu | comp-kuzu MATCH (a)-[e]->(b) WHERE e.edge_type='WRITES_S3' AND b.node_type='S3Key' AND ... | PASS |
+| 2026-07-01 | 0.8.0_AE_CloudComp~A | NFRA_COMPROUTE.L3 (shared) | comp-kuzu | comp-kuzu MATCH (a)-[e]->(b) WHERE e.edge_type='WRITES_S3' AND b.node_type='S3Key' AND ... | PASS |
+| 2026-07-01 | 2.0.0_SA_COO~B | NFRA_COMPROUTE.L3 (shared) | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/change_management/20... | PASS |
+| 2026-07-01 | 2.0.0_SA_COO~B | NFRA_COMPROUTE.L3 (shared) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.8.0_AE_CloudComp/tas... | PASS |
+| 2026-07-01 | 2.0.0_SA_COO~B | NFRA_COMPROUTE.L3 (shared) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/NFRA_GRAPHDEPTH.json --fil... | PASS |
+| 2026-07-01 | 0.8.0_AE_CloudComp~A | NFRA_COMPROUTE.L3 (shared) | comp-aws | comp-aws --help | PASS |
+| 2026-07-01 | 0.8.0_AE_CloudComp~A | NFRA_COMPROUTE.L3 (shared) | comp-aws | comp-aws classes | PASS |
+| 2026-07-01 | 0.8.0_AE_CloudComp~B | NFRA_COMPROUTE.L3 (shared) | comp-blast | comp-blast YangDataPipeline | FAIL |
+| 2026-07-01 | 0.8.0_AE_CloudComp~B | NFRA_COMPROUTE.L3 (shared) | comp-aws | comp-aws --help | PASS |
+| 2026-07-01 | 0.8.0_AE_CloudComp~B | NFRA_COMPROUTE.L3 (shared) | comp-aws | comp-aws score --help | PASS |
+| 2026-07-01 | 0.8.0_AE_CloudComp~B | NFRA_COMPROUTE.L3 (shared) | comp-aws | comp-aws score stepfunctions | FAIL |
+| 2026-07-01 | 0.8.0_AE_CloudComp~B | NFRA_COMPROUTE.L3 (shared) | comp-aws | comp-aws score --class stepfunctions | PASS |
+| 2026-07-01 | 0.8.0_AE_CloudComp~E | NFRA_COMPRAIL.TO-5 | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/comp_rail_audit.py | PASS |
+| 2026-07-01 | 0.8.0_AE_CloudComp~D | NFRA_GRAPHUNI.P2-P3.repoint-onto-marker-head-and-retire-local-caches | comp-kuzu | comp-kuzu MATCH (n) WHERE n.node_type="PipelineFunction" RETURN n.id LIMIT 2 | FAIL |
+| 2026-07-01 | 0.8.0_AE_CloudComp~D | NFRA_GRAPHUNI.P2-P3.repoint-onto-marker-head-and-retire-local-caches | comp-kuzu | comp-kuzu MATCH (n) WHERE n.node_type="PipelineScript" RETURN n.id LIMIT 2 | FAIL |
+| 2026-07-01 | 0.8.0_AE_CloudComp~D | NFRA_GRAPHUNI.P2-P3.repoint-onto-marker-head-and-retire-local-caches | comp-kuzu | comp-kuzu MATCH (n) WHERE n.node_type="S3Key" RETURN n.id LIMIT 2 | FAIL |
+| 2026-07-01 | 0.8.0_AE_CloudComp~D | NFRA_GRAPHUNI.P2-P3.repoint-onto-marker-head-and-retire-local-caches | comp-kuzu | comp-kuzu MATCH (n) WHERE n.node_type="LAMBDA" RETURN n.id, n.arn LIMIT 1 | FAIL |
+| 2026-07-01 | 0.8.0_AE_CloudComp~E | NFRA_COMPRAIL.TO-5 | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.8.0_AE_CloudComp/log... | PASS |
+| 2026-07-01 | 0.8.0_AE_CloudComp~D | NFRA_GRAPHUNI.P2-P3.repoint-onto-marker-head-and-retire-local-caches | comp-kuzu | comp-kuzu MATCH (n) WHERE n.node_type="PipelineFunction" RETURN n.node_id LIMIT 2 | PASS |
+| 2026-07-01 | 0.8.0_AE_CloudComp~D | NFRA_GRAPHUNI.P2-P3.repoint-onto-marker-head-and-retire-local-caches | comp-kuzu | comp-kuzu MATCH (n) WHERE n.node_type="S3Key" RETURN n.node_id LIMIT 2 | PASS |
+| 2026-07-01 | 0.8.0_AE_CloudComp~D | NFRA_GRAPHUNI.P2-P3.repoint-onto-marker-head-and-retire-local-caches | comp-kuzu | comp-kuzu MATCH (n) WHERE n.node_type="LAMBDA" RETURN n.node_id LIMIT 2 | PASS |
+| 2026-07-01 | 2.0.0_SA_COO | NFRA_COMPROUTE.L3 (shared) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/briefs/infr... | PASS |
+| 2026-07-01 | 3.0.0_SA_CVO~B | NFRA_COMPUNIFY.V1 | comp-aws | comp-aws classes | PASS |
+| 2026-07-01 | 2.0.0_SA_COO | NFRA_COMPROUTE.L3 (shared) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+| 2026-07-01 | 0.8.0_AE_CloudComp~A | NFRA_COMPROUTE.L3 (shared) | comp-aws | comp-aws metrics | PASS |
+| 2026-07-01 | 0.4.0_DS_ClientPlatform~A | NFRA_COMPROUTE.L3 (shared) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-07-01 | 1.0.0_SA_CTO | ADVI_BREAKS firefight + NFRA_COMP* | comp-which/comp-pipescript/deploy_ledger/comp_learns_score | comp-which(x2 routed->backstop); comp-pipescript deployed --firm inf (TIMEOUT 150s); deploy_ledger check --red (PASS); comp_learns_score --self-test 7/7 + --goodhart-audit 250-inv (PASS); value-parity invoke FRESH; rail-checked SSM/S3 direct (fallbacks) | MIXED -- gaps: inf-sweep-timeout(comp-pipescript+comp-freshness), no-ssm-job-status-tool, no-eventbridge-schedule-state-tool |
+| 2026-07-01 | 0.8.0_AE_CloudComp~B | NFRA_COMPROUTE.L3 (shared) | comp-aws | comp-aws classes | PASS |
+| 2026-07-01 | 1.0.0_SA_CTO | NFRA_COMPROUTE.L3 (shared) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
