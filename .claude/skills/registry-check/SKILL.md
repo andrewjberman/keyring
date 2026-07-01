@@ -87,6 +87,32 @@ re-run. The styling layer (palette/logo/Lato/card layout) is reusable as-is; onl
 data list is the curated snapshot (last: 2026-06-25, 22 HOT projects). Born from
 Andrew's 2026-06-25 ask to render the board "/draw style" as a branded SVG.
 
+## Branded HTML dashboard (live card + activity-bar view)
+
+For a scannable **dashboard** -- one card per not-closed project, macro-colored,
+**sized by a real ACTIVITY BAR** (commits referencing the project in the last N
+days), sorted busiest -> quietest, with status pills + owner + last-touch -- use
+the companion renderer **`render_dashboard.py`** (this skill dir). Born from
+Andrew's 2026-07-01 ask ("nice cards, easy to read, bars for how much activity...
+a dashboard view of everything we've got going on").
+
+```bash
+python .claude/skills/registry-check/render_dashboard.py            # HOT, 7d window -> Desktop/Opal_Project_Dashboard.html
+python .claude/skills/registry-check/render_dashboard.py --all      # include COLD (>72h)
+python .claude/skills/registry-check/render_dashboard.py --days 14  # activity window
+python .claude/skills/registry-check/render_dashboard.py --out PATH.html
+```
+
+**LIVE, not a snapshot (the key difference from the SVG board):** it LOADS the
+canonical engine (`.tools/registry-check.py`) and reuses `build_rows()`, so
+What/Where/status/owner/age stay in ONE place; the only thing it adds is the
+**7-day git-activity count** (the one signal the text lens doesn't compute) and the
+presentation. No hand-curated data list to keep fresh -- re-run and it's current.
+Default output lands on the Desktop (`Opal_Project_Dashboard.html`); `SendUserFile
+--display render` to surface it. The `expected_cadence`-style caveat is in the
+footer: a low bar on a fresh PRD means "just chartered," not "stalled." The
+`/to-check` skill has a parallel `render_to_dashboard.py` (TO-load-by-agent + by-project).
+
 ## Notes
 
 - **Read-only.** Never writes, never dispatches. A lens, like `/fabric-check`.

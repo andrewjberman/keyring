@@ -97,6 +97,30 @@ Project code resolution order: `<to_id>` prefix > `<project>` / `<project_code>`
 Use `/prd-check` first to identify the hot projects; use `/to-check` to see their
 TO workload. Use `/to-check --all` for a workspace-wide active-TO audit.
 
+## Branded HTML dashboard (live card + activity-bar view)
+
+The visual companion to the text lens (the TO variant of `/registry-check`'s
+`render_dashboard.py`) -- emits a single Opal-branded HTML dashboard of active TOs:
+(1) **TO load by agent** -- a leaderboard, one bar per agent sized by TO count,
+segmented by status (active/pending/blocked) = the who-carries-how-much /
+bottleneck read; (2) **by project** -- a card per project with a status-segmented
+TO-count bar + the compact TO list. Renderer **`render_to_dashboard.py`** (this skill
+dir); born from Andrew's 2026-07-01 dashboard ask.
+
+```bash
+python .claude/skills/to-check/render_to_dashboard.py             # hot PRD projects -> Desktop/Opal_TaskOrder_Dashboard.html
+python .claude/skills/to-check/render_to_dashboard.py --all       # all workspace TOs
+python .claude/skills/to-check/render_to_dashboard.py --project CODE
+python .claude/skills/to-check/render_to_dashboard.py --assignee SERIAL
+python .claude/skills/to-check/render_to_dashboard.py --out PATH.html
+```
+
+**LIVE, not a snapshot:** it LOADS the canonical engine (`.tools/to-check.py`) via
+importlib and reuses its TO parser + classifier + agent-tokenizer, so the TO-schema
+logic stays in ONE place (no drift). Same scope flags as the text lens. Default
+output lands on the Desktop (`Opal_TaskOrder_Dashboard.html`); `SendUserFile
+--display render` to surface it.
+
 ## Notes
 
 - Read-only. Never dispatches.
