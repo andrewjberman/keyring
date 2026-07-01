@@ -80,7 +80,7 @@ def _load_grain_contract() -> dict:
         with open(_COVERAGE_MAP, "r", encoding="utf-8") as fh:
             gc = (yaml.safe_load(fh) or {}).get("grain_contract", {}) or {}
     except Exception:  # noqa: BLE001
-        return {"node_type_grains": {}, "ladder_levels": [], "drilldown": {}}
+        return {"node_type_grains": {}, "ladder_levels": [], "drilldown": [], "strata": []}
     # node_type_grain: grain -> [node_types]; invert to node_type -> {grains} (MANY-to-MANY).
     nt_grains: dict[str, set] = {}
     for grain, types in (gc.get("node_type_grain", {}) or {}).items():
@@ -88,14 +88,37 @@ def _load_grain_contract() -> dict:
             nt_grains.setdefault(t, set()).add(grain)
     ladder = ((gc.get("node_grain_ladder", {}) or {}).get("levels", []) or [])
     return {"node_type_grains": nt_grains, "ladder_levels": ladder,
-            "drilldown": gc.get("drilldown_seams", {}) or {}}
+            "drilldown": gc.get("drilldown_seams", []) or [],
+            "strata": gc.get("strata", []) or []}
 
 
 _GC = _load_grain_contract()
-# drilldown seam directions (~C clarification 1, sign-off): drill coarse->fine =
-# RUNS/CONTAINS forward + OWNED_BY reverse; rollup = the opposite.
-_DRILL_FORWARD = ("RUNS", "CONTAINS")
-_DRILL_REVERSE = ("OWNED_BY",)
+
+
+def _derive_drill_directions(drilldown, strata):
+    """Derive the coarse->fine (drill FORWARD) vs fine->coarse (drill REVERSE) drilldown edge-type
+    sets from grain_contract.drilldown_seams + the strata order (~C P3 sign-off refinement -- DERIVED
+    from the contract, NOT hardcoded, so a future 4th stratum-stitcher propagates automatically). An
+    edge is drill-FORWARD (coarse->fine) iff its from_stratum is COARSER (earlier in the strata order)
+    than its to_stratum; else drill-REVERSE (drilling coarse->fine traverses it backward -- e.g.
+    OWNED_BY object->resource). rollup() uses the opposite directions (fine->coarse)."""
+    order = {s: i for i, s in enumerate(strata or [])}
+    fwd, rev = [], []
+    for seam in (drilldown or []):
+        et = seam.get("edge_type")
+        fi, ti = order.get(seam.get("from_stratum")), order.get(seam.get("to_stratum"))
+        if not et or fi is None or ti is None:
+            continue
+        (fwd if fi < ti else rev).append(et)
+    return tuple(dict.fromkeys(fwd)), tuple(dict.fromkeys(rev))
+
+
+# DERIVED from grain_contract.drilldown_seams + strata (~C P3 sign-off refinement -- was hardcoded
+# ('RUNS','CONTAINS')/('OWNED_BY',)). Fail-soft to that canonical 3-seam set if the contract is
+# unreadable, so a YAML read failure is never a silent no-op traversal.
+_DRILL_FORWARD, _DRILL_REVERSE = _derive_drill_directions(_GC["drilldown"], _GC["strata"])
+if not _DRILL_FORWARD and not _DRILL_REVERSE:
+    _DRILL_FORWARD, _DRILL_REVERSE = ("RUNS", "CONTAINS"), ("OWNED_BY",)
 
 # The TRACE-GRAPH SCOPE (byte-match target for the re-point): the node namespaces + edge types
 # the pre-delta .comp-graph/graph.json trace graph carried (grounded on CVO~B's frozen
