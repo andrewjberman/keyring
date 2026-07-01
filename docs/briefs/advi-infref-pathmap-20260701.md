@@ -27,9 +27,11 @@ dim-prefixed, not under `bronze/orion-api/`. What we did tonight = the FORMAT de
 goal) is **outstanding + was untracked until this doc**. Per §4-R1 the CTO ruled the unified layout
 is GO-FORWARD-from-cutover (don't migrate history) — so this is a scheduled follow-on, not a tonight-break.
 
-**DISPOSITION (AWAITING Andrew):** (a) accept dim-prefixed as operative + amend PRD §1/§4-R1 to match;
-or (b) schedule the `orion-api/eclipse-api` unification as a clean go-forward leg (new layout from
-cutover, freeze dim-prefixed read-only per §4-R1).
+**DISPOSITION — RULED (a), Andrew-direct 2026-07-01** ("just accept (a) fuck it, if we want to fix it
+later can deal with it downstream"): **dim-prefixed bronze + mixed silver is the OPERATIVE layout.**
+The `orion-api/eclipse-api` folder UNIFICATION is DEFERRED downstream (fix-later-if-wanted, NOT a
+scheduled leg). Action: CTO to amend PRD §1/§4-R1 to reflect the operative layout + promote this file
+to `docs/architecture/` (issued to CTO 2026-07-01). This doc remains the living ref/path gate.
 
 ---
 
