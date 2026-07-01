@@ -170,10 +170,12 @@ class CapabilityMapProvider(Protocol):
 @runtime_checkable
 class AffinityProvider(Protocol):
     """The LEARNED term (COMPLEARN, ~E's tool_activity). Returns an OUTCOME-weighted affinity in [0,1]
-    for (affinity_key, role), or None when there is no history (cold-start for that capability). MUST
-    be outcome-weighted, never a raw invocation count (CTO ruling 4)."""
+    for (cap_id, role) -- keyed PER-CAP-ID (CTO ruling 2026-07-01), so it can disambiguate same-surface
+    tools. `prior` is the m-estimate backoff (the engine passes the cap's surface_prior): a cold cap
+    (n=0) backs off to it, a hot cap converges to its own per-cap outcome mean. Returns None only when
+    there is no data AND no prior. MUST be outcome-weighted, never a raw invocation count (CTO ruling 4)."""
 
-    def affinity(self, affinity_key: str, role: str, ctx: Mapping) -> Optional[float]:
+    def affinity(self, cap_id: str, role: str, ctx: Mapping, prior: Optional[float] = None) -> Optional[float]:
         ...
 
 
@@ -208,12 +210,19 @@ def _score_one(cap, intent: str, ctx_d: dict, weights: Weights,
                affinity_provider: Optional[AffinityProvider]) -> Scored:
     q, matched = query_match(intent, cap.keywords)
     key = provider.affinity_key(cap) if hasattr(provider, "affinity_key") else getattr(cap, "affinity_key", cap.surface)
-    # PRIOR: provider-owned role_surface_affinity lookup. ADDITIVE, never a filter; cold-start -> 0.0.
+    # PRIOR (w_s): provider-owned role_surface_affinity lookup, keyed by the SURFACE (affinity_key).
+    # ADDITIVE, never a filter; cold-start -> 0.0.
     p = float(provider.surface_prior(key, ctx_d)) if hasattr(provider, "surface_prior") else 0.0
     a: Optional[float] = None
     if affinity_provider is not None:
-        a = affinity_provider.affinity(key, ctx_d.get("role", ""), ctx_d)
-    a_term = a if a is not None else 0.0           # cold-start for this cap => 0 learned contribution
+        # LEARNED (w_h) keyed PER-CAP-ID (CTO ruling 2026-07-01) -- "has THIS role had good outcomes
+        # with THIS capability" is inherently per-cap; a surface-grain learned term is redundant with
+        # w_s and cannot disambiguate same-surface tools. The m-estimate prior is the surface-grain
+        # surface_prior, so a cold cap (n=0) backs off to the static prior (subsumes the (c) hybrid).
+        # NOTE: SHADOW until real routing-outcome telemetry justifies live weighting (CTO seq step 4);
+        # comp-which passes affinity_provider=None today, so live routing stays cold-start.
+        a = affinity_provider.affinity(getattr(cap, "id", ""), ctx_d.get("role", ""), ctx_d, prior=p)
+    a_term = a if a is not None else 0.0           # no learned data + no backoff => 0 contribution
     score = weights.w_q * q + weights.w_s * p + weights.w_h * a_term
     return Scored(cap=cap, score=score, query=q, prior=p, affinity=a, matched_terms=matched)
 
@@ -293,18 +302,19 @@ class DictCapabilityProvider:
 
 
 class DictAffinityProvider:
-    """An affinity map from a pre-computed {(affinity_key, role): value} dict (already outcome-weighted).
-    For tests / a cache. None when a key is absent (cold-start)."""
+    """A pre-computed {(cap_id, role): value} affinity map (already outcome-weighted), keyed PER-CAP-ID.
+    For tests / a cache. An absent cap backs off to `prior` (the surface-grain m-estimate prior the
+    engine passes); None if no prior given either."""
 
     def __init__(self, table: dict):
         self._t = table
 
-    def affinity(self, affinity_key: str, role: str, ctx: Mapping) -> Optional[float]:
-        if (affinity_key, role) in self._t:
-            return float(self._t[(affinity_key, role)])
-        if affinity_key in self._t:
-            return float(self._t[affinity_key])
-        return None
+    def affinity(self, cap_id: str, role: str, ctx: Mapping, prior: Optional[float] = None) -> Optional[float]:
+        if (cap_id, role) in self._t:
+            return float(self._t[(cap_id, role)])
+        if cap_id in self._t:
+            return float(self._t[cap_id])
+        return prior
 
 
 # ---- the OUTCOME-weighted learned term off the live tool_activity catalog (CTO ruling 4) ----------
@@ -335,19 +345,24 @@ def outcome_value(row: dict) -> float:
 
 
 def outcome_weighted_affinity(rows: list, key: str, role: str, k: float = 5.0,
-                              prior: float = 0.5) -> Optional[float]:
-    """OUTCOME-weighted affinity for (key, role) over tool_activity rows, in [0,1], or None if no rows.
+                              prior: Optional[float] = None) -> Optional[float]:
+    """OUTCOME-weighted affinity for (key=cap_id, role) over tool_activity rows, in [0,1].
 
     Anti-Goodhart core: the SCORE is the (shrunk) MEAN outcome value, never the SUM/COUNT. Count enters
-    ONLY as the confidence denominator of an m-estimate: affinity = (sum(v) + k*prior) / (n + k). So
-    100 low-value invocations do NOT beat 5 high-value ones; more usage only sharpens confidence in the
-    outcome estimate, it is never itself the reward (CTO ruling 4)."""
+    ONLY as the confidence denominator of an m-estimate: affinity = (sum(v) + k*p) / (n + k). So 100
+    low-value invocations do NOT beat 5 high-value ones; more usage only sharpens confidence in the
+    outcome estimate, it is never itself the reward (CTO ruling 4).
+
+    `prior` is the surface-grain m-estimate backoff (the engine passes the cap's surface_prior, CTO
+    ruling 2026-07-01): a cold cap (n=0) backs off to it -- subsuming the (c) hybrid -- and a hot cap
+    converges to its own per-cap mean. n=0 with no prior returns None (true cold-start)."""
     vals = [outcome_value(r) for r in rows
             if r.get("tool") == key and (not role or r.get("role") in (role, None))]
     n = len(vals)
     if n == 0:
-        return None
-    return (sum(vals) + k * prior) / (n + k)
+        return prior   # backoff to the surface-grain prior; None if none given (true cold-start)
+    p = prior if prior is not None else 0.5
+    return (sum(vals) + k * p) / (n + k)
 
 
 class ToolActivityAffinityProvider:
@@ -372,8 +387,8 @@ class ToolActivityAffinityProvider:
                 self._rows = []
         return self._rows
 
-    def affinity(self, affinity_key: str, role: str, ctx: Mapping) -> Optional[float]:
-        return outcome_weighted_affinity(self._load(), affinity_key, role, k=self._k)
+    def affinity(self, cap_id: str, role: str, ctx: Mapping, prior: Optional[float] = None) -> Optional[float]:
+        return outcome_weighted_affinity(self._load(), cap_id, role, k=self._k, prior=prior)
 
 
 def _default_tool_activity_rows() -> list:
@@ -550,11 +565,26 @@ def _self_test() -> tuple[bool, list]:
     ck("goodhart.outcome_beats_count", a_good is not None and a_spam is not None and a_good > a_spam,
        f"good(n=4)={a_good:.3f} > spammy(n=80)={a_spam:.3f}")
 
-    # And with a real AffinityProvider wired in, the learned term actually moves the score.
-    aff = DictAffinityProvider({("estate", "AE"): 0.9})
-    rB2 = route("estate drift", ctxB, provB, affinity_provider=aff)
-    drift2 = next(s for s in rB2.ranked if s.cap.id == "comp-drift")
-    ck("affinity.moves_score", drift2.affinity == 0.9 and rB2.cold_start is False, f"drift affinity={drift2.affinity}")
+    # PER-CAP-ID disambiguation (CTO ruling 2026-07-01, the whole point): the query "estate" matches
+    # comp-drift AND comp-aws equally (both on the 'estate' surface, equal query, equal prior) -> without
+    # affinity it is a TIE (disambiguation). A PER-CAP learned term (drift 0.95 vs aws 0.2) breaks the
+    # tie to a confident DECISION -- the ONE job a surface-grain w_h could NOT do (it gave both caps the
+    # same value). comp-aws with no per-cap data would back off to its surface_prior.
+    tie = route("estate", RouteContext(role="AE"), provB)
+    aff = DictAffinityProvider({("comp-drift", "AE"): 0.95, ("comp-aws", "AE"): 0.2})
+    dis = route("estate", RouteContext(role="AE"), provB, affinity_provider=aff)
+    ds = next(s for s in dis.ranked if s.cap.id == "comp-drift")
+    aw = next(s for s in dis.ranked if s.cap.id == "comp-aws")
+    ck("affinity.per_cap_disambiguates_same_surface",
+       {"comp-drift", "comp-aws"} <= {s.cap.id for s in tie.within_margin} and ds.affinity == 0.95
+       and aw.affinity == 0.2 and dis.decision is not None and dis.decision.cap.id == "comp-drift",
+       f"no-aff={tie.kind}; with-aff decision={dis.decision.cap.id if dis.decision else None}")
+    # cold cap backs off to the surface-grain prior (the (c) hybrid, subsumed by the m-estimate).
+    aff2 = DictAffinityProvider({("comp-drift", "AE"): 0.95})
+    dis2 = route("estate", RouteContext(role="AE"), provB, affinity_provider=aff2)
+    aw2 = next(s for s in dis2.ranked if s.cap.id == "comp-aws")
+    ck("affinity.cold_cap_backs_off_to_surface_prior", aw2.affinity == aw2.prior == 0.8,
+       f"comp-aws affinity={aw2.affinity} == surface_prior={aw2.prior}")
 
     ok = all(c["pass"] for c in checks)
     return ok, checks
