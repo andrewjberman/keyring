@@ -190,37 +190,53 @@ def deploy_file(
     return "SHA_MISMATCH", f"local:{local_md5} s3:{s3_etag}"
 
 
-def _find_comp_pipescript() -> Optional[str]:
-    """Locate comp-pipescript; git hooks don't source bashrc so .tools/ may not be in PATH."""
-    found = shutil.which("comp-pipescript")
-    if found:
-        return found
-    # Fall back to sibling in .tools/ (safe_deploy_core.py lives there too)
-    candidate = pathlib.Path(__file__).parent / "comp-pipescript"
+def _find_pipeline_cli() -> Optional[str]:
+    """Locate pipeline_cli.py -- the engine BEHIND the extensionless `comp-pipescript` bash
+    wrapper (the wrapper just runs `python org/modules/graph/pipeline_cli.py "$@"`).
+
+    We target the Python entry, NOT the wrapper, on purpose: subprocess-exec of the
+    extensionless bash wrapper raises OSError WinError 193 ("%1 is not a valid Win32
+    application") on Windows -- the S3 cp already SUCCEEDED, so the verify step silently
+    crashes and the deploy reads GREEN while UNVERIFIED (latent false-green; CTO 20260701T1511Z,
+    surfaced by DS~A on the ADVI_TAGATTR leg-2 bd deploy). Invoking the Python entry directly via
+    sys.executable is the ratified cross-platform pattern (harness.py/kuzu_cli, commit 572a5d9b8:
+    "no bash hop -- the WSL /bin/bash relay is broken from Windows-python")."""
+    candidate = WORKSPACE / "org" / "modules" / "graph" / "pipeline_cli.py"
     if candidate.exists():
         return str(candidate)
+    # PATH fallback via the wrapper's location (git hooks don't source bashrc), resolving the
+    # sibling engine relative to a discovered wrapper if the canonical path ever moves.
+    wrapper = shutil.which("comp-pipescript")
+    if wrapper:
+        sib = pathlib.Path(wrapper).resolve().parent.parent / "org" / "modules" / "graph" / "pipeline_cli.py"
+        if sib.exists():
+            return str(sib)
     return None
 
 
 def run_pipescript_verify(pipeline_label: str, layer: str) -> tuple[bool, str]:
-    """Run comp-pipescript deployed for pipeline+layer; return (all_match, output).
+    """Run `comp-pipescript deployed` (via its pipeline_cli.py engine) for pipeline+layer;
+    return (all_match, output).
 
     Treats STALE or MISSING_ON_S3 in output as failure.
-    If comp-pipescript is unreachable, warns and returns True (MD5 verify already passed).
+    If the engine is unreachable, warns and returns True (MD5 verify already passed).
+
+    Invoked as [sys.executable, pipeline_cli.py, ...] rather than the bash wrapper so the verify
+    actually EXECUTES on Windows (the WinError-193 gate-hole fix -- see _find_pipeline_cli).
     """
-    comp_bin = _find_comp_pipescript()
-    if not comp_bin:
-        return True, "WARN: comp-pipescript not found; skipping pipescript verify (MD5 verify passed)"
+    cli = _find_pipeline_cli()
+    if not cli:
+        return True, "WARN: pipeline_cli.py not found; skipping pipescript verify (MD5 verify passed)"
 
     pipeline_arg = f"{pipeline_label}-{layer}"
     env = _aws_env()
     try:
         result = subprocess.run(
-            [comp_bin, "deployed", "--pipeline", pipeline_arg],
+            [sys.executable, cli, "deployed", "--pipeline", pipeline_arg],
             capture_output=True, text=True, timeout=120, env=env,
         )
     except subprocess.TimeoutExpired:
-        return True, f"WARN: comp-pipescript --pipeline {pipeline_arg} timed out; skipping (MD5 passed)"
+        return True, f"WARN: pipescript verify --pipeline {pipeline_arg} timed out; skipping (MD5 passed)"
     output = result.stdout + result.stderr
     if "STALE" in output or "MISSING_ON_S3" in output:
         return False, output
