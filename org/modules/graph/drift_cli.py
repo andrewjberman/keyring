@@ -43,6 +43,10 @@ TOPOLOGY = os.path.join(WORKSPACE, "org", "modules", "graph", "drift-topology.ya
 BASH_EXE = (os.environ.get("COMP_DRIFT_BASH")
             or shutil.which("bash")
             or "bash")
+# comp-heat + comp-freshness are PYTHON scripts (#!/usr/bin/env python3); the rest are bash.
+# Forcing a python tool through `bash <file>` mis-parses the source and HANGS (2min timeout in
+# testing -> rc=124 -> false UNVERIFIABLE). So _bash() dispatches on each tool's shebang below.
+PYTHON_EXE = (sys.executable or shutil.which("python3") or shutil.which("python") or "python")
 
 # Tri-state exit (PRD arch-gate (c); manifest exit_contract).
 EXIT_CLEAN, EXIT_BREAK, EXIT_UNVERIFIABLE = 0, 1, 2
@@ -90,8 +94,20 @@ def _run(cmd: list[str], timeout: int = 120) -> tuple[int, str]:
         return 125, "engine invocation error: %s" % exc
 
 
+def _interp(tool_path: str) -> list[str]:
+    """The interpreter for a .tools/ script, by its shebang (python tools must NOT run via bash)."""
+    try:
+        with open(tool_path, "r", encoding="utf-8", errors="replace") as fh:
+            first = fh.readline()
+    except OSError:
+        first = ""
+    return [PYTHON_EXE] if "python" in first else [BASH_EXE]
+
+
 def _bash(tool: str, *args: str, timeout: int = 120) -> tuple[int, str]:
-    return _run([BASH_EXE, os.path.join(WORKSPACE, ".tools", tool), *args], timeout=timeout)
+    # Name kept for call-site stability; dispatches by shebang (bash OR python), not always bash.
+    tool_path = os.path.join(WORKSPACE, ".tools", tool)
+    return _run(_interp(tool_path) + [tool_path, *args], timeout=timeout)
 
 
 def _classify(verdict: str) -> str:
@@ -312,7 +328,12 @@ def adapter_comp_freshness(seam, target, ctx):
     if not ctx.get("deep"):
         return _record(seam, target or "<served>", "UNVERIFIABLE",
                        "live served-freshness read skipped (cost-guard; --deep to run)")
-    rc, out = _bash("comp-freshness", *([target] if target else []))
+    # INVOCATION (grounded on comp-freshness argparse): no-arg prints help+exit2; the full-estate
+    # sweep is `all` (bd+inf+cot S3 + DDB), a single artifact is `artifact <s3_prefix>`.
+    # PERF: `all` is the SLOW seam engine (live S3 x3 firms + full DDB) -- can exceed the default
+    # 120s, so it gets a 300s budget here; if even that is exceeded it returns UNVERIFIABLE-by-
+    # timeout (rc=124, honest -- never-silent). seam-served is the sweep's heaviest --deep leg.
+    rc, out = _bash("comp-freshness", *(["artifact", target] if target else ["all"]), timeout=300)
     # HARDENED (grounded on comp-freshness source): the tool's AUTHORITATIVE rollup is its EXIT
     # CODE, not a printed token -- print_results() returns `1 if any_fail else 0`, main() max()es
     # it across the bd/inf/cot/ddb chains, and 2 = config/arg error. Its per-row STATUS vocab is
