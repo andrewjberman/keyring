@@ -1724,7 +1724,40 @@
     "warehouse/_branch_head.main.json"
    ]
   },
-  "build_tmp_phantom_note": "the '_build_tmp' node (vendored typing_extensions.py under infra/aws/lambda/portal_data_proxy/_build_tmp/) is a genuine trace-graph EXTRACTOR mis-typing (LAMBDA-typed vendored dep) -- ~D grounded it (Rule-22). NOT ~D's GRAPHUNI lane; root fix routed to the trace-graph/comp-build owner. Current-graph WRITES_S3=0 for it, so NOT denominator-affecting now; a hygiene/prior-vintage cleanup."
+  "build_tmp_phantom_note": "the '_build_tmp' node (vendored typing_extensions.py under infra/aws/lambda/portal_data_proxy/_build_tmp/) is a genuine trace-graph EXTRACTOR mis-typing (LAMBDA-typed vendored dep) -- ~D grounded it (Rule-22). NOT ~D's GRAPHUNI lane; root fix routed to the trace-graph/comp-build owner. Current-graph WRITES_S3=0 for it, so NOT denominator-affecting now; a hygiene/prior-vintage cleanup.",
+  "portal_etfs_pipeline_lambda_tier": {
+   "count": 9,
+   "reason": "my-17-firm keys NOT in ~B's firm-lambda set -- ~D grounded (015220Z, TraceGraph source): NOT firm-pipeline, NOT gold-written, NOT orphan-in-firm. They belong to a THIRD producer tier = PORTAL/ETFS-pipeline lambdas (a distinct later-phase slice, like the product keys).",
+   "disposition": "OUT of firm-fleet GRAPHDEPTH scope -> PORTAL/ETFS-pipeline-lambda follow-on slice (same family as the 43 product keys). Denominator stays 233 (NOT 233+9). No silent cap: enumerated + attributed here.",
+   "etfs_lambda_written": {
+    "count": 1,
+    "writer": "lambda:etf-ownership-dashboard (infra/aws/lambda/etfs-pipeline)",
+    "ids": [
+     "platinum/etf_ownership_dashboard.json"
+    ]
+   },
+   "v2portal_partners_consumed_writer_unknown": {
+    "count": 5,
+    "reader": "lambda:opal-partners-data (infra/aws/lambda/v2_portal/partners)",
+    "note": "READ by a v2_portal partners lambda; NO writer of ANY type in the TraceGraph -- a REAL lineage residual (candidate: EC2/non-Python producer or a lambda outside the trace). The portal/etfs slice's future extraction resolves the writer.",
+    "ids": [
+     "gold/artifacts/clients/growth_timeseries.json",
+     "gold/artifacts/clients/tax_basis_breakdown.json",
+     "gold/artifacts/clients/tax_deferred_candidates.json",
+     "gold/artifacts/partner_analytics/header_metrics.json",
+     "gold/timeseries/nna_total.json"
+    ]
+   },
+   "ops_control_pending_d_grounding": {
+    "count": 3,
+    "note": "gold ops-control (dispatch-lock/trigger-mode/trigger-pending); no gold-writer, no firm-lambda -> ~D grounding requested (likely same portal/etfs or EC2 tier).",
+    "ids": [
+     "gold/dispatch-lock.json",
+     "gold/trigger-mode.json",
+     "gold/trigger-pending.json"
+    ]
+   }
+  }
  },
  "firm_lambda_resolved": {
   "source": "~B NFRA_GRAPHUNI.P1-B.firm_lambda_targets.txt (19 live-verified, boto3 head_object; 128 phantom cross-bucket product-reads DROPPED per ~A NEVER#5 catch)",
