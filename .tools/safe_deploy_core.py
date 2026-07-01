@@ -9,6 +9,7 @@ from __future__ import annotations
 import hashlib
 import os
 import pathlib
+import re
 import shutil
 import subprocess
 import sys
@@ -214,33 +215,55 @@ def _find_pipeline_cli() -> Optional[str]:
     return None
 
 
-def run_pipescript_verify(pipeline_label: str, layer: str) -> tuple[bool, str]:
-    """Run `comp-pipescript deployed` (via its pipeline_cli.py engine) for pipeline+layer;
-    return (all_match, output).
+def _pipescript_output_ok(output: str) -> bool:
+    """Parse a `comp-pipescript deployed <script>` result: True = clean, False = STALE/MISSING.
+
+    Reads the 'Summary: N MATCH, N STALE, N MISSING_ON_S3, ...' COUNTS -- NOT a bare substring.
+    The summary line literally contains the tokens 'STALE'/'MISSING_ON_S3' even at count 0, so the
+    old `"STALE" in output` test FALSE-FAILED every COMPLETED run (it only ever "passed" because
+    the check never completed on Windows -- WinError-193 crash, then big-layer timeout; the
+    scope-to-changed-script fix (b) makes it complete reliably and surfaced this). Failure semantics
+    are unchanged from the original intent: STALE or MISSING_ON_S3 => fail. Falls back to a per-line
+    status scan when no summary line is present (no '0 STALE' summary to confuse it there)."""
+    m = re.search(r"Summary:\s*([^\n]+)", output)
+    if m:
+        counts = {tok: int(n) for n, tok in re.findall(r"(\d+)\s+([A-Z0-9_-]+)", m.group(1))}
+        return counts.get("STALE", 0) == 0 and counts.get("MISSING_ON_S3", 0) == 0
+    return not re.search(r"\b(STALE|MISSING_ON_S3)\b", output)
+
+
+def run_pipescript_verify(rel_path: str) -> tuple[bool, str]:
+    """Run `comp-pipescript deployed <rel_path>` (via its pipeline_cli.py engine) for ONE
+    just-deployed script; return (match, output).
+
+    Scoped to the CHANGED script, not the whole label-layer (CTO ruling (b) 20260701T1735Z): the
+    deploy-verify's job is "did THIS deploy's scripts land", so we verify exactly what was PUSHED.
+    A repo-relative `data/<tree>/scripts/...` path auto-detects the firm/tree in pipeline_cli's
+    scope-resolution and checks ONLY that script against its own bucket. This (a) scales with the
+    deploy size (1-few scripts -> seconds), so it NEVER times out on a big layer, and (b) removes
+    the fail-open-WARN-on-timeout soft-no-op -- a completing per-script check FAILS LOUD on
+    STALE/MISSING. Estate-wide drift (are UNCHANGED scripts current?) is a different job =
+    comp-pipescript's no-arg sweep, NOT the deploy-verify's.
 
     Treats STALE or MISSING_ON_S3 in output as failure.
+    Invoked as [sys.executable, pipeline_cli.py, ...] rather than the extensionless bash wrapper so
+    the verify actually EXECUTES on Windows (the WinError-193 gate-hole fix -- see _find_pipeline_cli).
     If the engine is unreachable, warns and returns True (MD5 verify already passed).
-
-    Invoked as [sys.executable, pipeline_cli.py, ...] rather than the bash wrapper so the verify
-    actually EXECUTES on Windows (the WinError-193 gate-hole fix -- see _find_pipeline_cli).
     """
     cli = _find_pipeline_cli()
     if not cli:
         return True, "WARN: pipeline_cli.py not found; skipping pipescript verify (MD5 verify passed)"
 
-    pipeline_arg = f"{pipeline_label}-{layer}"
     env = _aws_env()
     try:
         result = subprocess.run(
-            [sys.executable, cli, "deployed", "--pipeline", pipeline_arg],
+            [sys.executable, cli, "deployed", rel_path],
             capture_output=True, text=True, timeout=120, env=env,
         )
     except subprocess.TimeoutExpired:
-        return True, f"WARN: pipescript verify --pipeline {pipeline_arg} timed out; skipping (MD5 passed)"
+        return True, f"WARN: pipescript verify {rel_path} timed out; skipping (MD5 passed)"
     output = result.stdout + result.stderr
-    if "STALE" in output or "MISSING_ON_S3" in output:
-        return False, output
-    return True, output
+    return _pipescript_output_ok(output), output
 
 
 def write_bypass_audit(author: str, files: list[str], commit_sha: str, reason: str) -> None:
@@ -348,25 +371,18 @@ def main(argv: list[str]) -> int:
     print()
 
     if not args.no_pipescript:
-        # comp-pipescript verify phase: group by pipeline+layer
-        seen_combos: set[tuple[str, str]] = set()
+        # comp-pipescript verify phase: per CHANGED SCRIPT (CTO ruling (b) 20260701T1735Z).
+        # Iterate `deployed` -- the exact set of scripts that landed on S3 this run -- and verify
+        # each individually. Verifying what THIS deploy pushed (not the whole label-layer) scopes
+        # the check to the deploy size, so it completes in seconds and never times out on a big
+        # layer, and it fails LOUD on STALE/MISSING instead of soft-no-op-on-timeout.
         verify_ok = True
-        for rel_path in files:
-            target = file_to_s3_target(rel_path)
-            if target is None:
-                continue
-            _, _, label = target
-            p = pathlib.PurePosixPath(rel_path.replace("\\", "/"))
-            layer = p.parts[3]
-            combo = (label, layer)
-            if combo in seen_combos:
-                continue
-            seen_combos.add(combo)
-            ok, output = run_pipescript_verify(label, layer)
+        for rel_path, _bucket, _s3_key in deployed:
+            ok, output = run_pipescript_verify(rel_path)
             if ok:
-                print(f"  VERIFY OK  comp-pipescript deployed --pipeline {label}-{layer}")
+                print(f"  VERIFY OK  comp-pipescript deployed {rel_path}")
             else:
-                print(f"  VERIFY FAIL  comp-pipescript deployed --pipeline {label}-{layer}")
+                print(f"  VERIFY FAIL  comp-pipescript deployed {rel_path}")
                 print(output[:800])
                 verify_ok = False
 
