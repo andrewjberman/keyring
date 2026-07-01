@@ -11196,3 +11196,5 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-07-01 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
 | 2026-07-01 | 3.0.0_SA_CVO~B | NFRA_COMPPROOF.A1 | comp-pipescript | comp-pipescript deployed D_01.partner_analytics | PASS |
 | 2026-07-01 | 0.4.0_DS_ClientPlatform | ADVI_TAGATTR.DS-1.d00c-full-tagged-role-aua-nna-fees | comp-surface-check | comp-surface-check check --mode advisory --file data/cot/scripts/gold/D_04.client_porta... | PASS |
+2026-07-01 0.6.1_AE_PartnerETL | ADVI_INFREF cutover + pull-retiming: comp-which -> pipescript --resource + comp-platinum reverse (swap blast radius pre-fire), pipescript advi-inf (ETL diagram), comp-surface-check (TF commit clean). Rail-checked markers on in-flight SSM/S3 rebuild-progress reads + verify-own-change-vs-live EventBridge; native Grep for TF-edit verify. No gaps.
+| 2026-07-01 | 0.6.1_AE_PartnerETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
