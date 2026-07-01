@@ -199,12 +199,34 @@ def adapter_comp_lambdamap(seam, target, ctx):
         return _record(seam, target or "<lambda>", "UNVERIFIABLE",
                        "live 3-leg sha read skipped (cost-guard; run with --deep or a <target>)")
     rc, out = _bash("comp-lambdamap", "parity", *([target] if target else []))
-    tok = _first_token(out, ["POSSIBLE-HALF-LANDED", "STALE-RECORD", "CORRUPT-RECORD",
-                             "DISPOSITIONED", "UNVERIFIABLE", "NOT-LIVE", "MATCH"])
-    if tok is None:
+    # HARDENED (grounded on real parity output): parse per-verdict COUNTS, not a token-scan.
+    # The summary line prints EVERY verdict token with its count ("MATCH: 131 | STALE-RECORD: 0
+    # | ... | POSSIBLE-HALF-LANDED: 0 | ... | NO-RECORD: 40"), so a token-first-match ALWAYS
+    # false-flags POSSIBLE-HALF-LANDED (present at 0-count) as an integrity BREAK. DISPOSITIONED
+    # = intentional divergence (not a break); NO-RECORD = uncovered/unchecked (coverage note,
+    # never-silent -- must not read as fully-verified-clean).
+    counts = {m.group(1): int(m.group(2)) for m in re.finditer(
+        r"(MATCH|STALE-RECORD|DISPOSITIONED|SETTLING|POSSIBLE-HALF-LANDED|"
+        r"CORRUPT-RECORD|NOT-LIVE|UNVERIFIABLE|NO-RECORD):\s*(\d+)", out)}
+    if not counts:
         return _record(seam, target or "<lambda>", "UNVERIFIABLE",
-                       "comp-lambdamap parity rc=%s (verdict unparsed)" % rc)
-    return _record(seam, target or "<lambda>", tok, "comp-lambdamap parity -> %s" % tok)
+                       "comp-lambdamap parity rc=%s (verdict counts unparsed -- not assuming MATCH)" % rc)
+    hot = [(t, counts[t]) for t in ("POSSIBLE-HALF-LANDED", "STALE-RECORD", "CORRUPT-RECORD")
+           if counts.get(t)]
+    if hot:
+        return _record(seam, target or "<lambda>", hot[0][0],
+                       "comp-lambdamap parity: " + ", ".join("%d %s" % (c, t) for t, c in hot))
+    if counts.get("NOT-LIVE") or counts.get("UNVERIFIABLE"):
+        return _record(seam, target or "<lambda>", "UNVERIFIABLE",
+                       "comp-lambdamap parity: %d NOT-LIVE / %d UNVERIFIABLE"
+                       % (counts.get("NOT-LIVE", 0), counts.get("UNVERIFIABLE", 0)))
+    note = "%d MATCH" % counts.get("MATCH", 0)
+    if counts.get("DISPOSITIONED"):
+        note += ", %d DISPOSITIONED (intentional)" % counts["DISPOSITIONED"]
+    if counts.get("NO-RECORD"):
+        note += ", %d NO-RECORD UNCHECKED" % counts["NO-RECORD"]
+    return _record(seam, target or "<lambda>", "MATCH",
+                   "comp-lambdamap parity: %s -- no integrity break" % note)
 
 
 def adapter_comp_iam(seam, target, ctx):
