@@ -11258,3 +11258,6 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-07-01 | 0.8.0_AE_CloudComp~A | (no-TO) | comp-types | comp-types index TenantLayoutConfig | PASS |
 2026-07-01 ~1515Z | 0.4.0_DS_ClientPlatform~A | ADVI_TAGATTR leg-2 (bd D_00c) | comp-pipescript io (PASS: writes employee_leaderboard.json->D_04, fee from C_08 advisor_fee_detail, additive/no-gap) + ds-commit-gate (PASS) | GAP: safe-deploy post-deploy pipescript-verify CRASHES on Windows (WinError 193) = false-green gate hole, CTO-elevated to AE/ADHC_PREFLT; deploy verified manually via ETag.
 | 2026-07-01 | 0.4.0_DS_ClientPlatform~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+
+- 2026-07-01 0.4.0_DE_ClientPlatform: coordination window (ADVI_TAGATTR leg-2 fee-basis grounding + DS-2 shelve + COTMVP-B producer un-stall cf4d23f01) -- no NEW comp runs; grounding via native Read (CottonwoodClientsSection schema, AdvisorsTab/RoleDonut fee-render check) + aws s3 ls (cot client_directory absence); DE schema-check/tsc rode the a58ff3a7 FE commit (prior log).
+| 2026-07-01 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
