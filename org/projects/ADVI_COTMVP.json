@@ -11,7 +11,7 @@
     "0.4"
   ],
   "created": "2026-06-26",
-  "current_phase": "P1 -- EXECUTING (registered + /allocation fired 2026-06-26 ~18:18Z). Andrew-sovereign COT dashboard fix; CTO PRD authored (docs/architecture/ADVI_COTMVP_PRD.md, a50387172) grounded in CVO's Rule-22 breaks-audit (0a3092bfa, NOT re-derived). 5 items, 2 lanes: pod4/DE owns S0+B+D2+D3, 0.4.0_DS owns D1 (gold). START SET (dispatched, parallel): S0 (DE) = browser-repro to PIN Symptom-1's exact blank (DevTools toggle Year->Quarter->Month on COT PartnerAnalytics, capture which view blanks + failing request -- CVO did NOT invent the exact blank, GATES the Symptom-1 code leg, RAVC CTO the grounded blank); D1 (DS) = COT producer NMNC stock/flow fix (served $401M STOCK at year/quarter vs $169K FLOW monthly reads broken; fix to a consistent semantic ALIGNED TO 49F EXEMPLAR, highest-correctness, independent). FOLLOW legs (DE): B = /books option-A firm-level Books view (COT no advisor dimension, Andrew wants a display solution); D2 = .quarters schema-guard hardening (latent cross-tenant crash if stacked flips on); D3 = young-tenant year/quarter UX (3mo history=1 bar reads empty, framing depends on S0). GUARDRAIL (PRD S4): D2/B/D3 touch shared PartnerAnalytics -> comp-transform schema-check keeps Inflection/49F GREEN (no cross-tenant regression). Each leg: validate-on-nightly (NEVER#4), CVO live-verify, CTO arch-gate at spec+implementable. ALLOCATION: DS live (D1 dispatched direct); DE spawn-requested via pre-warmed MSTR path (--say at the PRD).",
+  "current_phase": "P2 -- DE-FRONTEND-ONLY (D1 DS leg STOOD DOWN; do NOT read a live DS leg here). CORRECTED 2026-07-01T14:21Z after a stale-current_phase phantom nearly drove a COTMVP cot-DS FOLD (2.0.0_SA_COO caught by 0.4.0_DS Rule-22 grounding). REALITY: the ONLY DS leg (D1 COT producer NMNC stock/flow) was STOOD DOWN 2026-06-26T18:36Z (CTO Option-A 05f72c2f6; 0.4.0_DS falsified the premise BEFORE coding -- cot==bd shared code, COT $401M year=quarter is FAITHFUL young-firm output, a fix would regress 49F; brief docs/briefs/ADVI_COTMVP_D1_nmnc_grounding_spec.md). NO DS GOLD WORK on this PRD; the 0.4.0_DS lane is FREED. ALL remaining legs are pod4/DE frontend: S0 (browser-repro, gates Symptom-1); B (/books firm-level Books view -- Clients roster shipped PROD v2.1.129 07d5887f); D2 (.quarters schema-guard -- CVO live-verified 06-26); D3 (young-tenant year/quarter UX, carries the folded NMNC display concern -- CVO live-verified 06-26). GUARDRAIL (PRD S4): D2/B/D3 touch shared PartnerAnalytics -> comp-transform schema-check keeps Inflection/49F GREEN. Owner 0.4.0_DE. CTO PRD a50387172 grounded in CVO breaks-audit 0a3092bfa. (History[0] 18:36Z is the authoritative D1-standdown record.)",
   "prds": [
     {
       "path": "docs/architecture/ADVI_COTMVP_PRD.md",
@@ -25,6 +25,11 @@
     "AUTH_COTTON"
   ],
   "history": [
+    {
+      "date": "2026-07-01T14:21Z",
+      "agent": "2.0.0_SA_COO",
+      "event": "STALE-current_phase FIXED (queue-hygiene). The current_phase field still described '0.4.0_DS owns D1 (gold) / DS live (D1 dispatched direct)' though D1 was stood-down 06-26 (per description + history[1]). That stale phantom nearly drove a COTMVP cot-DS FOLD dispatch this tick -- 0.4.0_DS Rule-22-grounded that there is NO COTMVP DS work (D1 stood-down; COTMVP-B = DE /books frontend, not a DS leg) BEFORE running, exactly the grounding-doctrine catch. Rewrote current_phase to DE-frontend-only reality; freed cot-DS capacity redirected to the REAL cot-gold queue (ADVI_COTETL.ASSETSDIM-BACKFILL). Lesson: current_phase must be updated at leg-standdown, not just description/history."
+    },
     {
       "date": "2026-06-26T18:36Z",
       "agent": "2.0.0_SA_COO",
