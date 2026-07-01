@@ -29,6 +29,15 @@ comp-grep, comp-glob, comp-validate -> PASS-or-error. (comp-grep/glob are the ro
 2. **Step 2 (on confirm):** dispatch fixes to owners. E1 rides the COMPROUTE increment; E2 rides (a); E3 = ~B; M1-M4 = owners TBD (M2 critical-surface care).
 3. **Step 3:** revalidate -- re-run the affected checks / the workflow -> 0 open gaps. CVO~B verify-gate (COMPPROOF-adjacent honesty).
 
+## STATUS UPDATE 2026-07-01T1326Z
+- **Step-1 re-verify COMPLETE (~B, RAVC'd):** all 5 errors CONFIRMED with live repro + file:line, 0 retractions; the 3 rate-limited tools (comp-grep/comp-glob/comp-validate) all PASS. Caveat CLOSED. Rule-22 satisfied -> the confirmed set is actionable.
+- **DISPATCHED:**
+  - E1 -> **DECOMPOSED into the COMPROUTE default-router increment** (CTO BLESSED 132556Z): DR3 (~B) = manifest mode:query|rebuild tagging; the hard mode-gate is DR1 (~E) Stage-A. E1 closes when a read routes to a query surface (0 mode:rebuild).
+  - E2 -> **~D (a)-derive-fidelity queue** (banked; one derive pass with the (a) cross-script bridges; CVO~B pins the coverage-proof).
+  - E3 -> **~B authoring** (whole-estate parity --json + filter; scope --deep IAM to target) + two-direction self-test (clean passes + real break caught) -> **COO~B exec-lands** (org/modules/graph/ = exec-lane).
+  - M1-M4 -> **~A comp-tool correctness sweep** (dispatched 132612Z; ~A ACK). M2 (comp-types, MP/benchmark SEV1) = comp-surface-check + CVO~B verify.
+- **Step-3 revalidate:** CVO~B-gated, after the fixes land -> re-run the affected checks / the workflow -> 0 open gaps.
+
 ## NOTES
 - E1's convergence with the Andrew-direct COMPROUTE default-router re-scope is the headline: ~B's independent validation root-caused the exact problem Andrew directed (read intent -> rebuild tool). The fix is ONE increment, not two.
 - ~B stays OFF COMPPROOF tasking (Andrew hard constraint) -- but the validation + this fix->retest->revalidate addendum IS ~B's Andrew-direct lane (not COMPPROOF), so ~B on E3 + E1-assist is in-scope.
