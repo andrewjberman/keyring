@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""test_safe_deploy.py -- 6-fixture test suite for safe_deploy_core.py (ADHC_DSFLOW.005).
+"""test_safe_deploy.py -- 7-fixture test suite for safe_deploy_core.py (ADHC_DSFLOW.005).
 
 Tests (no real AWS required -- subprocess mocked):
   1. PASS      -- gold script, upload OK, ETag matches local MD5
@@ -8,8 +8,11 @@ Tests (no real AWS required -- subprocess mocked):
   4. FAIL-MISMATCH -- upload OK but ETag mismatches local MD5 -> SHA guard fires
   5. BYPASS        -- --allow-stale -> audit log entry written, exit 0
   6. INF-PATH      -- data/inf/* maps to opal-data-inf, not opal-data-bd
+  7. PIPESCRIPT-VERDICT -- the verify-output parser is correct on a known-good AND a
+     known-bad fixture (ADHC_PREFLT: prove the gate emits the CORRECT verdict, not just
+     "fails loud"; regression-guards the "0 STALE"-substring false-fail).
 
-Exit 0 if all 6 assertions hold; exit 1 with details on any failure.
+Exit 0 if all 7 assertions hold; exit 1 with details on any failure.
 """
 from __future__ import annotations
 
@@ -30,6 +33,7 @@ file_to_s3_target = _core.file_to_s3_target
 detect_script_files = _core.detect_script_files
 deploy_file = _core.deploy_file
 write_bypass_audit = _core.write_bypass_audit
+_pipescript_output_ok = _core._pipescript_output_ok
 main = _core.main
 
 
@@ -229,6 +233,34 @@ def test_inf_path_resolution():
 
 
 # ---------------------------------------------------------------------------
+# Case 7: PIPESCRIPT-VERDICT — the verify-output parser is correct on a KNOWN-GOOD
+# and a KNOWN-BAD fixture (ADHC_PREFLT canonical case study, CTO 20260701T1747Z).
+# Regression-guards the substring false-fail: `"STALE" in output` matched the summary
+# line's "0 STALE" LABEL -> FAIL on every clean deploy. It was invisible until the
+# scope-to-changed-script fix (b) made the gate reliably COMPLETE (a never-completing
+# gate hides its own verdict-logic bug). This asserts the gate emits the CORRECT
+# verdict end-to-end, not merely that it "fails loud".
+# ---------------------------------------------------------------------------
+def test_pipescript_verdict_parse():
+    known_good = "  Summary: 1 MATCH, 0 STALE, 0 MISSING_ON_S3, 0 LOCAL_MISSING, 0 UNCOVERED"
+    known_bad_stale = "  [SILVER] foo.py  STALE\n  Summary: 0 MATCH, 1 STALE, 0 MISSING_ON_S3"
+    known_bad_missing = "  Summary: 0 MATCH, 0 STALE, 1 MISSING_ON_S3, 0 LOCAL_MISSING"
+    nosum_good = "  [SILVER] foo.py                        MATCH"
+    nosum_bad = "  [SILVER] foo.py                        STALE"
+
+    # KNOWN-GOOD must PASS (the exact regression the substring bug broke -- "0 STALE" != a real STALE)
+    assert _pipescript_output_ok(known_good) is True, \
+        "Case 7 FAIL: clean '0 STALE' summary must be OK (the substring-false-fail regression)"
+    # KNOWN-BAD must FAIL loud
+    assert _pipescript_output_ok(known_bad_stale) is False, "Case 7 FAIL: 1 STALE must fail"
+    assert _pipescript_output_ok(known_bad_missing) is False, "Case 7 FAIL: 1 MISSING_ON_S3 must fail"
+    # No-summary fallback (per-line status scan)
+    assert _pipescript_output_ok(nosum_good) is True, "Case 7 FAIL: no-summary MATCH must be OK"
+    assert _pipescript_output_ok(nosum_bad) is False, "Case 7 FAIL: no-summary STALE must fail"
+    return True
+
+
+# ---------------------------------------------------------------------------
 # Runner
 # ---------------------------------------------------------------------------
 
@@ -239,6 +271,7 @@ CASES = [
     ("FAIL-MISMATCH corrupt ETag SHA guard", test_fail_sha_mismatch),
     ("BYPASS --allow-stale writes audit entry", test_bypass_allow_stale),
     ("INF-PATH data/inf->opal-data-inf routing", test_inf_path_resolution),
+    ("PIPESCRIPT-VERDICT parser known-good/known-bad", test_pipescript_verdict_parse),
 ]
 
 
