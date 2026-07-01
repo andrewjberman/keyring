@@ -59,3 +59,19 @@ post-step (7), sparse/lookup compute bug (8,15,16), stale-inclusion inflation (9
 (17), and comms/commit discipline (18,19,20). B measures whether the graph + comp-tools can reach root cause
 across ALL these classes, not just the ones the program was built around. Class-diversity is the point:
 the MISSes tell us which classes the substrate is blind to.
+
+## Live-surfaced class addition — "success-shaped-but-wrong" (bench + TO-B1 harness probe; NOT in the capped 20)
+
+A CLASS, not a historical incident, so it does NOT occupy a numbered slot — the Andrew-pinned cap of 20 holds.
+**tool-output-silently-wrong -> MISS-by-mis-grounding:** a tool returns a CONFIDENTLY-WRONG output (0-count /
+empty / rc=0 / silent syntax-slip) that a blind-trust agent records as TRUTH. Live evidence, THIS session, on the
+COMPPROOF work itself: BOTH MSTR and CTO independently hit the same `grep -E` + BRE-`\|` dialect bug — the pattern
+silently matched a literal pipe, false-negativing every check to a 0-count; each was saved ONLY by grounding the 0
+against an expected-nonzero, not by trusting the tool. Pairs exactly with the ADVI_BREAKS rc=0-but-54%-households-
+missing STEP3 case (both = "success-SHAPED but wrong; only grounding catches it").
+
+This adds a THIRD scorer axis (CTO owns, TO-B1 arch-lead): **REACH x USABILITY x GROUNDING-RESILIENCE** — does the
+blind-solver catch a success-shaped-wrong tool output, or record it as phantom truth? Operational home = the TO-B1
+harness probe (a canary: feed a tool an input that SHOULD return N but a slip returns 0/empty/rc=0; the grounded
+solver cross-checks and catches it, the blind-trust solver records the phantom). This line is the authoritative-doc
+pin; the harness is where it runs. The meta-test caught its own two authors before it was even built.
