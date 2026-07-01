@@ -22,7 +22,10 @@ _WORKSPACE = Path(__file__).resolve().parents[4]
 sys.path.insert(0, str(_WORKSPACE))
 
 from org.modules.graph.comp_route import (  # noqa: E402
+    Capability,
     DictAffinityProvider,
+    DictCapabilityProvider,
+    build_fixture_caps,
     RouteContext,
     Weights,
     _self_test,
@@ -104,14 +107,76 @@ def test_affinity_is_outcome_weighted_not_count():
     assert outcome_weighted_affinity(rows, "unseen-tool", "DE") is None   # no rows -> cold-start (None)
 
 
-def test_affinity_provider_moves_the_score():
-    """A wired AffinityProvider contributes the w_h learned term (and clears cold_start)."""
+def test_affinity_provider_is_per_cap_id_and_disambiguates_same_surface():
+    """CTO ruling 2026-07-01: the learned term keys PER-CAP-ID, so it disambiguates two same-surface
+    tools (comp-drift vs comp-aws, both 'estate') -- the one job a surface-grain term could not do. A
+    cold cap backs off to its surface_prior (the m-estimate prior; the (c) hybrid subsumed)."""
     prov = build_fixture_provider(role_surface_affinity={"AE": {"estate": 0.8}})
-    aff = DictAffinityProvider({("estate", "AE"): 0.9})
-    r = route("estate drift", RouteContext(role="AE"), prov, affinity_provider=aff)
-    drift = next(s for s in r.ranked if s.cap.id == "comp-drift")
-    assert drift.affinity == 0.9
-    assert r.cold_start is False
+    tie = route("estate", RouteContext(role="AE"), prov)
+    assert {"comp-drift", "comp-aws"} <= {s.cap.id for s in tie.within_margin}   # tie without affinity
+    aff = DictAffinityProvider({("comp-drift", "AE"): 0.95, ("comp-aws", "AE"): 0.2})
+    dis = route("estate", RouteContext(role="AE"), prov, affinity_provider=aff)
+    assert dis.decision is not None and dis.decision.cap.id == "comp-drift"      # affinity breaks the tie
+    assert next(s for s in dis.ranked if s.cap.id == "comp-drift").affinity == 0.95
+    aff2 = DictAffinityProvider({("comp-drift", "AE"): 0.95})                    # comp-aws now cold
+    dis2 = route("estate", RouteContext(role="AE"), prov, affinity_provider=aff2)
+    aw = next(s for s in dis2.ranked if s.cap.id == "comp-aws")
+    assert aw.affinity == aw.prior == 0.8                                        # cold cap -> surface_prior
+
+
+def _curated_ex(intent, ctx_d):
+    return [{"cap_id": "comp-drift", "confidence": 1.0, "vetted": True}] if "parity" in intent else []
+
+
+def _surface_first_ex(intent, ctx_d):
+    return [{"cap_id": "comp-aws", "confidence": 0.8, "vetted": True}] if "estate" in intent else []
+
+
+def test_default_router_vetted_signal_dominates_structurally():
+    """DR1 (CTO ruling 2026-07-01): a curated hit on a PARAPHRASE the bare posterior would misroute wins
+    as a confident DECISION -- the vetted band [1.0,2.0) dominates by construction (the 4-paraphrase
+    regression fix). curated (1.0->2.0) beats surface-first (0.8->1.8) by confidence-ordering."""
+    prov = build_fixture_provider(role_surface_affinity={"AE": {"estate": 0.8}})
+    r = route("run the parity check", RouteContext(role="AE"), prov, extractors=[_curated_ex, _surface_first_ex])
+    assert r.kind == "decision" and r.decision.cap.id == "comp-drift"
+    assert r.decision.vetted and r.decision.score >= 1.0
+    # both vetted, curated (2.0) > surface-first (1.8), structurally
+    r2 = route("estate parity", RouteContext(role="AE"), prov, extractors=[_curated_ex, _surface_first_ex])
+    aws = next(s for s in r2.ranked if s.cap.id == "comp-aws")
+    assert r2.decision.cap.id == "comp-drift" and aws.vetted and aws.score < r2.decision.score
+
+
+def test_default_router_read_excludes_write_path_keeps_recompute():
+    """DR1 Stage-A (E1/DR3): a read intent hard-excludes write_path=True tools (a read must never trigger
+    an 8-min derive) but KEEPS read-recompute tools (recompute on read, ANSWER reads, no mutation --
+    excluding by the conflated mode:rebuild would wrongly drop them). Compute/legacy => no filter."""
+    caps = build_fixture_caps() + [
+        Capability("comp-aws-derive", ("aws", "estate", "derive"), surface="estate", grain="resource",
+                   concern="REBUILD (8-min)", affinity_key="estate", write_path=True),
+        Capability("comp-iam-read", ("iam", "policy", "estate", "aws"), surface="estate", grain="iam-policy",
+                   concern="IAM read (recompute, no mutation)", affinity_key="estate", mode="recompute")]
+    prov = DictCapabilityProvider(caps, role_surface_affinity={"AE": {"estate": 0.9}})
+    read = {s.cap.id for s in route("aws iam estate", RouteContext(role="AE", intent_class="read"), prov).ranked}
+    assert "comp-aws-derive" not in read and "comp-iam-read" in read
+    compute = {s.cap.id for s in route("aws iam estate", RouteContext(role="AE"), prov).ranked}
+    assert "comp-aws-derive" in compute   # no intent_class -> no filter
+
+
+def test_default_router_relevance_floor_falls_back_not_prior_rescued():
+    """DR1 Stage-C: an intent with ~0 relevance (no vetted, ~0 query) FALLS BACK to grep/glob even when a
+    surface_prior is high -- the floor measures relevance, not the prior bias (a high prior never rescues
+    a zero-relevance intent). Never a forced misroute / dead-end."""
+    prov = build_fixture_provider(role_surface_affinity={"AE": {"estate": 0.8}})
+    r = route("xyzzy nonsense unmatched", RouteContext(role="AE"), prov, extractors=[_curated_ex])
+    assert r.kind == "fallback" and r.fallback in ("comp-grep", "comp-glob")
+
+
+def test_default_router_is_backward_compatible_backstop():
+    """DR1: with no extractors + no intent_class, route() is EXACTLY the legacy posterior backstop (no
+    vetted band, no mode filter, no fallback) -- comp-which stays on it until the shadow cert flips DR2."""
+    prov = build_fixture_provider(role_surface_affinity={"DE": {"graph": 0.6, "portal": 0.7}})
+    r = route("similar components", RouteContext(role="DE"), prov)
+    assert r.kind == "disambiguation" and all(not s.vetted for s in r.ranked) and r.fallback is None
 
 
 def test_engine_consumes_a_foreign_capability_object_duck_typed():

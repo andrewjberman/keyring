@@ -116,6 +116,7 @@ entries:
     canonical_call: "comp-aws derive --out <path>    # full; or --resource <arn> for bounded"
     tool: comp-aws
     mode: rebuild
+    write_path: true    # DR3/E1: mutating write-path (rebuilds Nessie/graph) -- read/navigate intents EXCLUDE cap.write_path==true (~E DR1 pre-filter). NOT a read answer.
     layer: cloud
     cost: "~8min full / seconds bounded"
     freshness: "live"
@@ -190,6 +191,7 @@ entries:
     canonical_call: "comp-build [--check]"
     tool: comp-build
     mode: rebuild
+    write_path: true    # DR3/E1: mutating write-path (rebuilds the trace_graph cache) -- read/navigate intents EXCLUDE cap.write_path==true. NOT a read answer.
     layer: trace
     cost: "~9.8s"
     freshness: "writes graph.json"
@@ -428,6 +430,19 @@ entries:
     freshness: "live Lambda config"
     rebuild_trigger: "n/a — live deployed-SHA check"
     anti_pattern: "assuming a Lambda is deployed without the SHA compare (stale-deploy class)"
+    status: canonical
+
+  - id: cloud.lambdamap.derive_write
+    use_case: "Regenerate/reconcile the Lambda source-map to the DEPLOYED CodeSha256 (WRITE-PATH -- CVO-gated; anti-launder reconciles ONLY the STALE-RECORD live==S3 class)."
+    canonical_call: "comp-lambdamap derive --write [--only <fns>]    # CVO-gated map write"
+    tool: comp-lambdamap
+    mode: rebuild
+    write_path: true    # DR3/E1: mutating write-path (writes the source-map). NOT a read answer; read/navigate intents exclude cap.write_path==true.
+    layer: cloud
+    cost: "~live AWS"
+    freshness: "live Lambda config -> source-map write"
+    rebuild_trigger: "post-apply source-map reconcile (record-terraform-deploy hook, scoped --only)"
+    anti_pattern: "derive --write without the anti-launder STALE-RECORD gate (would launder a wrong deployed artifact)"
     status: canonical
 
   - id: cloud.lambdamap.parity
