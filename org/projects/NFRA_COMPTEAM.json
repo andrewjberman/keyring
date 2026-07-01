@@ -1,0 +1,19 @@
+{
+  "project_code": "NFRA_COMPTEAM",
+  "macro_code": "NFRA",
+  "name": "Onboard the Opal team to MCP (agent kit + partitioned portal read-areas)",
+  "description": "Andrew-direct 2026-07-01 (MSTR charter LD-0237). Package the comp-tool + agent-org stack for Opal colleagues onboarding to the Opal MCP. TWO workstreams under ONE macro. A (how they get AGENTS): refresh the Desktop agent_org_blueprint_v1 -> a versioned self-contained agent_org_blueprint_vN a teammate unzips->registers->has a current correctly-railed correctly-routing agent -- current CLAUDE.md (rules+gates, strip Opal incident-history) + the comp-which RAIL harness (COMPRAIL + comp-grep/glob + HUD) + the ranking router MECHANISM (COMPROUTE posterior, now-default post-DRV-flip) + COMPUNIFY coverage-prior (transferable same-estate) + COMPLEARN COLD-START (per-teammate-agent, no Opal-affinity transplant); NO git/deploy machinery (read/reason kit). B (how they get INFORMATION): partitioned scoped read-areas over kuzu/nessie/iceberg so a teammate pulls portal-displayed data by panel cluster -- enumerate portal surfaces via TSGRAPH PanelCluster nodes, map each cluster->its served data source (SERVED_FROM fine-lineage), design per-team/per-surface scoped read-partitions. PAIRED with SCTY (the security twin): the read-scope IS a SCTY entitlement (maps onto the user-type-tier + read-only-scope model); onboarding is GATED on the SCTY guardrails live. This is the 'more agents' Andrew flagged on the SCTY deploy -- COMPTEAM+SCTY converge. Same Opal estate (not external productization). PRD docs/architecture/NFRA_COMPTEAM_PRD.md.",
+  "prds": [
+    {"path": "docs/architecture/NFRA_COMPTEAM_PRD.md", "label": "COMPTEAM PRD v1.0 (CTO-authored)", "date": "2026-07-01"}
+  ],
+  "status": "active",
+  "phase": "Phase 0: PRD complete (CTO 2026-07-01, 58a1f8738), MSTR-accepted; COO decomposition looped. First-wave A1 (kit-refresh + strip-list gate, AE/DE) + B1 (TSGRAPH portal-surface->data-source map, DE) PARALLEL; B2 (scoped read-partition design, AE-graph + SCTY-coord) FOLLOWS B1 + GATES on the SCTY entitlements model. Arch-gates (CTO): A kit strip-list (fail-closed on secrets/internals/incident-prose in a distribution artifact); B read-partition access-scoping (provably-scoped, SCTY-coupled, fail-closed on unverified identity).",
+  "blocking": "COO TO decomposition + GO. B2 gated on the SCTY entitlements model (SCTY_PREMCP B2 read-only-scope + SCTY_MCPGUARD SS4 tiers, deploying now). Leash (every TO): read-only/no-git distribution; scoped-read = security surface -> SCTY-coordinated (no unscoped read); strip non-transferable Opal internals; ground portal-map vs TSGRAPH + live served.",
+  "created": "2026-07-01",
+  "pods": ["0.5", "0.4", "0.8", "1.0", "2.0"],
+  "pipeline": "n/a (productization/distribution of the comp-tool + agent-org stack)",
+  "thread_counter": 0,
+  "threads": [],
+  "depends_on": ["SCTY_MCPGUARD", "SCTY_PREMCP", "NFRA_TSGRAPH", "NFRA_COMPRAIL", "NFRA_COMPROUTE"],
+  "depends_on_note": "The ENABLEMENT twin of SCTY (security) -- B's read-scope binds to the SCTY user-type-tier + read-only-scope entitlement model (do not ship an unscoped read); onboarding gated on the SCTY guardrails live. B uses NFRA_TSGRAPH PanelCluster + SERVED_FROM lineage (org/modules/graph/tsgraph_spike). A packages COMPRAIL (rail) + COMPROUTE (ranking, now-default post-DRV-flip) + COMPUNIFY prior; COMPLEARN cold-start. Directive-candidate (MSTR surfacing to Andrew; Andrew-direct-authorized-not-a-standing-mandate until ratified)."
+}
