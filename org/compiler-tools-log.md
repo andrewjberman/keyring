@@ -11261,3 +11261,5 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 
 - 2026-07-01 0.4.0_DE_ClientPlatform: coordination window (ADVI_TAGATTR leg-2 fee-basis grounding + DS-2 shelve + COTMVP-B producer un-stall cf4d23f01) -- no NEW comp runs; grounding via native Read (CottonwoodClientsSection schema, AdvisorsTab/RoleDonut fee-render check) + aws s3 ls (cot client_directory absence); DE schema-check/tsc rode the a58ff3a7 FE commit (prior log).
 | 2026-07-01 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-01 | 0.4.0_DS_ClientPlatform | ADVI_TAGATTR.DS-2 | (none) | DS-2 authored->toggle->Andrew-shelved (no gold code landed) + offline bd account_team dry-run delta (no_infer magnitude) + git-sync leg-2 deconflict | N/A doc+dryrun |
+| 2026-07-01 | 0.4.0_DS_ClientPlatform | ADVI_TAGATTR.DS-1.d00c-full-tagged-role-aua-nna-fees | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
