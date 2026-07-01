@@ -929,7 +929,7 @@ role_surface_affinity:
   scale: "0.0 neutral .. 1.0 strong-affinity; ADDITIVE boost in score(), NEVER a hard filter (PRIOR-not-FILTER, CTO ruling 3)"
   default_prior: 0.0            # cold-start / unknown role -> neutral (additive 0 = no bias, never a filter)
   keys: [LOCAL, GIT, AWS-CLOUD, MS-CLOUD, TRINO, SEAM, META]   # the affinity-key domain (== normalized cap.surface)
-  learned_term_note: "This is the PRIOR only. The LEARNED history_affinity term (COMPLEARN tool_activity, ~E, OUTCOME-weighted) is joined by cap.affinity_key at score-time and accretes over these seeds -- the posterior tunes the real weights, these bootstrap it (CTO ruling 5: curated is the bootstrap, not the destination)."
+  learned_term_note: "This is the PRIOR only. The LEARNED history_affinity term (COMPLEARN tool_activity, ~E, OUTCOME-weighted) is joined by cap.id at score-time (per-cap-id, CTO-ratified 2026-07-01, engine f64083634 -- so it disambiguates SAME-surface tools; affinity_key here is the PRIOR key ONLY) and accretes over these seeds -- the posterior tunes the real weights, these bootstrap it (CTO ruling 5: curated is the bootstrap, not the destination)."
   by_role:
     # DS: gold/silver/bronze pipeline scripts -> GIT authoring + AWS-CLOUD S3/DDB objects
     DS:   { LOCAL: 0.4, GIT: 0.8, AWS-CLOUD: 0.7, MS-CLOUD: 0.0, TRINO: 0.2, SEAM: 0.3, META: 0.1 }

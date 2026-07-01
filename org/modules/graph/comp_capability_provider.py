@@ -86,7 +86,9 @@ class Capability:
     surface: str          # LOCAL/GIT/AWS-CLOUD/MS-CLOUD/TRINO | a seam-id | "META"
     grain: str            # the home granularity (single); declared_grains carries all
     concern: str          # the one-question concern (from the map)
-    affinity_key: str     # NORMALIZED surface = join key into role_surface_affinity + tool_activity
+    affinity_key: str     # NORMALIZED surface = the PRIOR key (role_surface_affinity / surface_prior).
+    #                       NOT the learned key: the LEARNED history_affinity term keys by `id` (per-cap-id,
+    #                       CTO-ratified 2026-07-01, engine f64083634) so it can disambiguate same-surface tools.
     # ---- enrichments (non-binding; do not alter the 6 above) ----
     declared_grains: Tuple[str, ...] = ()   # tool_grain_calibration operating grains
     kind: str = "surface"                   # "surface" | "seam" | "meta"
@@ -99,7 +101,7 @@ class CapabilityMapProvider:
 
       capabilities() -> list[Capability]           the full capability set
       surface_prior(surface_or_key, ctx) -> float  the role->surface additive prior
-      affinity_key(cap) -> str                     the history_affinity join key
+      affinity_key(cap) -> str                     the PRIOR (surface) key; the LEARNED term keys by cap.id (per-cap-id)
 
     L3's engine codes to THIS (never to a concrete map) so any Stage-2 provider
     slots in unchanged. Subclasses / duck-typed implementations both satisfy it.
