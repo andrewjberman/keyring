@@ -131,14 +131,11 @@ def _record(seam: dict, target: str, verdict: str, grounding: str,
 # Each adapter INVOKES the existing engine and NORMALIZES its verdict. It never
 # re-implements the check. If it cannot confidently read a verdict from the
 # engine output, it returns UNVERIFIABLE (never guesses MATCH).
-
-def _first_token(out: str, vocab: list[str]) -> str | None:
-    """Find the first verdict token from the seam vocab present in engine output."""
-    up = out.upper()
-    for tok in sorted(vocab, key=len, reverse=True):
-        if tok.upper() in up:
-            return tok
-    return None
+# (Historical: the adapters formerly shared a _first_token(vocab) helper; it was REMOVED after
+# every adapter was hardened to parse each engine's AUTHORITATIVE rollup line / exit code. A
+# token-first-scan false-flagged whenever a 0-count verdict token appeared in a summary line
+# (or when the scanned vocab wasn't even what the tool prints) -- see the comp-lambdamap /
+# comp-freshness / comp-iam adapter notes below. Do NOT re-introduce a token-scan.)
 
 
 def adapter_comp_heat_drift(seam, target, ctx):
@@ -233,12 +230,33 @@ def adapter_comp_iam(seam, target, ctx):
     if not ctx.get("deep"):
         return _record(seam, target or "<iam>", "UNVERIFIABLE",
                        "live IAM reconcile skipped (cost-guard + stale-census caveat; --deep to run)")
-    rc, out = _bash("comp-iam", "reconcile", *([target] if target else []))
-    tok = _first_token(out, ["DIVERGED", "TF-ONLY", "LIVE-ONLY", "MATCH"])
-    if tok is None:
+    # reconcile is ESTATE-WIDE: iam_cli.py add_parser('reconcile') takes NO positional (unlike
+    # service/role), so we never pass a target -- IAM drift is estate-scoped, not per-artifact.
+    rc, out = _bash("comp-iam", "reconcile")
+    if rc in (124, 125, 127):
         return _record(seam, target or "<iam>", "UNVERIFIABLE",
-                       "comp-iam reconcile rc=%s (verdict unparsed)" % rc)
-    return _record(seam, target or "<iam>", tok, "comp-iam reconcile -> %s" % tok)
+                       "comp-iam reconcile unavailable (rc=%s: timeout/not-found/error)" % rc)
+    # HARDENED (grounded on iam_cli.py cmd_reconcile): the authoritative rollup is the
+    # "Total: N live-only-role | M live-only-action | K over-perm" line (exit = 1 if
+    # live-only-role+live-only-action else 0; over-perm does NOT gate exit). The old
+    # _first_token([DIVERGED,TF-ONLY,LIVE-ONLY,MATCH]) scanned tokens the tool NEVER prints as a
+    # verdict (only "DRIFT-LIVE-ONLY" carries "LIVE-ONLY" as a substring, and only when drift
+    # exists) -- wrong vocabulary (read notes, not the verdict).
+    m = re.search(r"Total:\s*(\d+) live-only-role \|\s*(\d+) live-only-action \|\s*(\d+) over-perm", out)
+    if not m:
+        return _record(seam, target or "<iam>", "UNVERIFIABLE",
+                       "comp-iam reconcile rc=%s (Total rollup unparsed -- not assuming clean)" % rc)
+    lo_role, lo_action, overperm = (int(x) for x in m.groups())
+    if lo_role or lo_action:
+        return _record(seam, target or "<iam>", "DIVERGED",
+                       "comp-iam reconcile: %d live-only-role / %d live-only-action drift "
+                       "(census-backed; ground a FRESH IAM change on live get-role-policy, not this verdict)"
+                       % (lo_role, lo_action))
+    note = "no desired-vs-live drift"
+    if overperm:
+        note += ", %d over-perm (hygiene finding, non-drift)" % overperm
+    return _record(seam, target or "<iam>", "MATCH",
+                   "comp-iam reconcile: %s (census-backed; stale-census caveat applies)" % note)
 
 
 def adapter_comp_kuzu_provenance(seam, target, ctx):
