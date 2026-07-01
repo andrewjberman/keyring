@@ -80,15 +80,24 @@ from unified (unchanged, not the freeze). The gold layer already half-patches th
 $14M invisible GEO-AUA fix) -- proving accounts_v2 is fresh + carries `household_id` + `state`.
 
 **The repoint:** move `build_household`'s geo source from `geo_verify` -> `accounts_v2` (fresh,
-CHAIN_PULL-produced daily), AUA still from unified.
-**OPEN field-coverage question (VERIFY before authoring):** accounts_v2 CONFIRMED to carry
-{household_id, state}. Coverage of {household_name, city, country, rep_id, rep_name} is UNCONFIRMED
--- must check the accounts_v2 silver schema first. Two dispositions:
-  (a) accounts_v2 covers all geo fields -> clean single-source swap; or
-  (b) accounts_v2 has state only -> hybrid: fresh state/household from accounts_v2, rep_name/
-      household_name from a fresh source (unified_account_dim / reps), NEVER re-introduce geo_verify.
-Do NOT author against pre-rebuild state; execute post-cutover with fresh silver in place, schema-check
-first (Rule 20). This repoint gates A9 -- A9 stays LAST until it lands + soaks.
+CHAIN_PULL-produced daily; silver `silver/api_dims/accounts_v2/`), AUA still from unified.
+
+**Field-coverage RESOLVED 2026-06-30** (accounts_v2 silver 2026-06-30 = 863 rows, 45 cols, FRESH).
+The 7 geo_keep fields map as -- 5 clean, 1 constant, 1 sourced-elsewhere:
+| household dim field | accounts_v2 source | note |
+|---|---|---|
+| household_id | `household_id` | clean |
+| state_code | `state` | clean (rename) -- this is the field INF_D_00d already patches |
+| city | `city` | clean |
+| rep_id | `rep_id` | clean |
+| rep_name | `representative_name` | clean (rename) |
+| country | (constant `US`) | all Inflection accounts are US; or carry last-known. Trivial. |
+| household_name | NOT in accounts_v2 | **redundant in this dim** -- real consumers source it elsewhere: INF_A_04.client_dimension loads household_name from `silver/aum_snapshot` (L83-84); INF_D_04 from its own `Household.Name` map. Confirm no consumer reads household_name FROM `silver/api_dims/household/` (comp-blast), then null/drop it, OR left-join from aum_snapshot for completeness. |
+
+Disposition: **near-clean single-source swap** -- 5 fields direct from accounts_v2, country constant,
+household_name dropped/null (or aum_snapshot join). No re-introduction of geo_verify. Execute
+post-cutover with fresh silver in place; final consumer-check on household_name first (Rule 20).
+This repoint gates A9 -- A9 stays LAST until it lands + soaks.
 
 ---
 
