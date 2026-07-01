@@ -11169,3 +11169,7 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-07-01 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-transform | comp-transform schema-check AdvisorPublicProfile | PASS |
 | 2026-07-01 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-transform | comp-transform schema-check AdvisorsTab | PASS |
 | 2026-07-01 | 0.4.0_DS_ClientPlatform | ADVI_TAGATTR.DS-1.d00c-full-tagged-role-aua-nna-fees | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-01 | 3.0.0_SA_CVO~B | NFRA_COMPPROOF.D1 | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/logs/2026-0... | PASS |
+
+- 2026-07-01 0.4.0_DE_ClientPlatform: schema-check (AdvisorsTab, AdvisorPublicProfile) PASS + tsc/eslint GREEN across 49F Advisors boundary fix (90322ba0) + ADVI_TAGATTR FE follow-on (a58ff3a7); aws s3 grounding of leaderboard.json (QTD=0/YTD=156; total_aua 439.97M vs role-sum 358.34M) + source-grounded D_00c split mechanism (rule 22).
+| 2026-07-01 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
