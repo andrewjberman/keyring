@@ -114,12 +114,53 @@ def _local_rail_rows() -> list:
     return rows
 
 
+# The NFRA_COMPROUTE flywheel sink -- comp-which appends each live backstop route()'s training_row
+# here (append-only JSONL; gitignored + rotated). This is the loop CLOSING into the scorer: the live
+# router's own hedges become routing-friction candidates.
+ROUTING_SINK = "org/mcp/comproute-routing.jsonl"
+
+
+def parse_routing_log(path: str = "", max_rows: int = 50000) -> list:
+    """Read the comp-which flywheel sink -> route rows (each is a route().training_row:
+    intent/role/ranked/kind/cold_start/outcome). Best-effort: [] if absent; skips malformed lines."""
+    p = path or os.path.join(_WS, ROUTING_SINK)
+    rows: list = []
+    if not os.path.exists(p):
+        return rows
+    with open(p, encoding="utf-8", errors="replace") as fh:
+        for ln in fh:
+            ln = ln.strip()
+            if not ln:
+                continue
+            try:
+                rows.append(json.loads(ln))
+            except Exception:  # noqa: BLE001 -- a malformed line never fails the ingest
+                continue
+    return rows[-max_rows:]
+
+
+def maybe_rotate_routing_sink(max_bytes: int = 8_000_000) -> bool:
+    """Size-based rotation of the append-only sink (ingest-side hygiene, ~C handoff): rename to .1 when
+    it exceeds max_bytes so it stays bounded. Best-effort; returns True if it rotated."""
+    p = os.path.join(_WS, ROUTING_SINK)
+    try:
+        if os.path.exists(p) and os.path.getsize(p) > max_bytes:
+            os.replace(p, p + ".1")
+            return True
+    except Exception:  # noqa: BLE001 -- rotation is hygiene, never fatal
+        pass
+    return False
+
+
 def load_corpus() -> dict:
-    """Acquire the seed corpus. Returns {rail, sessions, rolling, source}. Reuses the emitter parsers
-    when present (identical to the live catalog rows); degrades to a local rail parse otherwise."""
+    """Acquire the seed corpus. Returns {rail, sessions, rolling, routing, source}. Reuses the emitter
+    parsers when present (identical to the live catalog rows); degrades to a local rail parse otherwise.
+    `routing` = the live comp-which route rows (the flywheel closing into the scorer)."""
+    routing = parse_routing_log()
     tae = _emitter()
     if tae is None:
-        return {"rail": _local_rail_rows(), "sessions": [], "rolling": [], "source": "local-rail-only"}
+        return {"rail": _local_rail_rows(), "sessions": [], "rolling": [], "routing": routing,
+                "source": "local-rail-only"}
     rail = tae.parse_rail(os.path.join(_WS, tae.RAIL_LOG))
     rolling = []
     try:
@@ -131,7 +172,8 @@ def load_corpus() -> dict:
         sessions = tae.parse_session_logs(tae.SESSION_LOG_TIERS)
     except Exception:  # noqa: BLE001 -- session walk is optional enrichment (gap_text); rail is primary
         sessions = []
-    return {"rail": rail, "sessions": sessions, "rolling": rolling, "source": "emitter-parsers"}
+    return {"rail": rail, "sessions": sessions, "rolling": rolling, "routing": routing,
+            "source": "emitter-parsers"}
 
 
 # ============================================================================================
@@ -258,6 +300,53 @@ def build_merge_retire_candidates(rolling: list) -> list:
     return out
 
 
+def build_routing_candidates(routing: list) -> list:
+    """Routing-friction candidates from the LIVE router's own hedges (the flywheel closing into the
+    scorer). A DISAMBIGUATION means the router surfaced a near-tie -- it could not confidently decide
+    -- so a curated routing rule / keyword refinement would convert it to a confident decision (the
+    LD-0226 routing-mutation surface). value = the count of low-confidence routes a rule would sharpen
+    (friction averted), NEVER tool usage. cold_start routes additionally flag WHERE the learned
+    affinity term is most missing (drives the affinity-cache priority). A CONFIDENT decision is healthy
+    and is NOT a candidate."""
+    clusters: dict = defaultdict(lambda: {"disambig": 0, "coldstart": 0, "events": 0,
+                                          "intents": defaultdict(int), "tied": defaultdict(int),
+                                          "roles": set()})
+    for r in routing:
+        intent = r.get("intent", "") or ""
+        toks = [t.lower() for t in _TOK.findall(intent) if t.lower() not in _STOP and len(t) > 2]
+        key = " ".join(toks[:3]) if toks else "(no-intent)"
+        c = clusters[key]
+        c["events"] += 1
+        if r.get("kind") == "disambiguation":
+            c["disambig"] += 1
+            for s in (r.get("ranked") or [])[:3]:
+                if s.get("id"):
+                    c["tied"][s["id"]] += 1
+        if r.get("cold_start"):
+            c["coldstart"] += 1
+        if intent:
+            c["intents"][intent] += 1
+        if r.get("role"):
+            c["roles"].add(r["role"])
+    out = []
+    for key, c in clusters.items():
+        if c["disambig"] == 0:            # only HEDGES are friction; confident decisions are healthy
+            continue
+        out.append({
+            "candidate": f"routing: {key}",
+            "kind": "routing-friction",
+            "value_score": round(float(c["disambig"]), 2),   # low-confidence routes a rule would sharpen
+            "value_metric": {"low_confidence_routes": c["disambig"], "cold_start_routes": c["coldstart"],
+                             "total_routes": c["events"]},
+            "value_evidence": {
+                "top_terms": [{"term": t, "n": n} for t, n in
+                              sorted(c["intents"].items(), key=lambda kv: -kv[1])[:3]],
+                "tied_tools": sorted(c["tied"], key=lambda k: -c["tied"][k])[:4],
+            },
+        })
+    return out
+
+
 # ============================================================================================
 # COMPUNIFY coverage-map cross-ref -- disposition (route-fix vs build-new), the LD-0226 split.
 # ============================================================================================
@@ -294,6 +383,11 @@ def disposition(cand: dict, coverage: list) -> dict:
     """route-fix (an existing tool/surface already covers this concern -> a routing rule is the fix,
     LD-0226) vs build-new (no covering tool -> a real gap). Heuristic keyword overlap against the
     coverage map; honest 'undetermined' when the map is unavailable."""
+    if cand["kind"] == "routing-friction":
+        return {"disposition": "routing-refinement", "covering": None,
+                "note": "the LIVE router repeatedly hedged this intent -- a curated comp-which rule / "
+                        "keyword refinement (or the learned affinity term) would sharpen it to a "
+                        "confident decision (LD-0226 routing-mutation surface)"}
     if cand["kind"] == "merge-retire":
         return {"disposition": "merge-retire", "covering": None}
     if not coverage:
@@ -322,7 +416,8 @@ def run_iteration(top: int = 20) -> dict:
     coverage = load_coverage_terms()
     gaps = build_gap_candidates(corpus["rail"])
     retire = build_merge_retire_candidates(corpus["rolling"])
-    candidates = gaps + retire
+    routing = build_routing_candidates(corpus.get("routing", []))    # the flywheel: live router hedges
+    candidates = gaps + retire + routing
     for c in candidates:
         c.update(disposition(c, coverage))
     candidates.sort(key=lambda c: -c["value_score"])
@@ -333,7 +428,7 @@ def run_iteration(top: int = 20) -> dict:
         "iteration": "single (advisory-only -- CTO ratifies, no auto-mutation)",
         "corpus_source": corpus["source"],
         "corpus_size": {"rail_rows": len(corpus["rail"]), "session_rows": len(corpus["sessions"]),
-                        "rolling_rows": len(corpus["rolling"])},
+                        "rolling_rows": len(corpus["rolling"]), "routing_rows": len(corpus.get("routing", []))},
         "coverage_map_entries": len(coverage),
         "value_metric": "escapes-prevented / chains-shortened / drift-caught / cost-per-outcome "
                         "(NEVER usage count -- CTO Goodhart gate)",
@@ -405,6 +500,17 @@ def _self_test() -> tuple[bool, list]:
     ck("one_signal.shared_outcome_weighting", outcome_value({"result": "PASS"}) == 1.0
        and result_class("DENY") == 0.0, "comp_route.outcome_value/result_class imported + consistent")
 
+    # Flywheel closure: the LIVE router's HEDGES (disambiguations) surface as routing-friction
+    # candidates; a confident decision is healthy and is NOT a candidate.
+    routes = ([{"intent": "cluster similar things", "kind": "disambiguation", "cold_start": True,
+                "ranked": [{"id": "comp-cluster"}, {"id": "comp-transform"}]}] * 3
+              + [{"intent": "what breaks if I change", "kind": "decision", "cold_start": True,
+                  "ranked": [{"id": "comp-blast"}]}] * 5)
+    rc_ids = {c["candidate"] for c in build_routing_candidates(routes)}
+    ck("flywheel.hedges_surface_confident_routes_dont",
+       any("cluster" in x for x in rc_ids) and not any("breaks" in x or "change" in x for x in rc_ids),
+       f"routing-friction candidates: {sorted(rc_ids)}")
+
     ok = all(c["pass"] for c in checks)
     return ok, checks
 
@@ -412,7 +518,8 @@ def _self_test() -> tuple[bool, list]:
 def _render(it: dict) -> str:
     L = ["=== comp-learns-score -- NFRA_COMPLEARN P2 value-anchored worklist (ADVISORY -- CTO ratifies) ===",
          f"corpus: {it['corpus_source']}  rail={it['corpus_size']['rail_rows']} "
-         f"rolling={it['corpus_size']['rolling_rows']} session={it['corpus_size']['session_rows']}  "
+         f"rolling={it['corpus_size']['rolling_rows']} session={it['corpus_size']['session_rows']} "
+         f"routing={it['corpus_size'].get('routing_rows', 0)} (flywheel)  "
          f"coverage-map entries={it['coverage_map_entries']}",
          f"value metric: {it['value_metric']}",
          f"rail enforcement (context, NOT candidates): {it['rail_enforcement']['raw_search_denials']} "
@@ -429,8 +536,16 @@ def _render(it: dict) -> str:
             L.append(f"      evidence terms: {terms}")
             if c.get("note"):
                 L.append(f"      -> {c['note']}")
+        elif c["kind"] == "routing-friction":
+            L.append(f"      low_confidence_routes={vm['low_confidence_routes']} "
+                     f"(cold_start={vm['cold_start_routes']} total={vm['total_routes']})  "
+                     f"tied: {', '.join(c['value_evidence']['tied_tools'])}")
+            intents = "; ".join(f"{t['term']!r}" for t in c["value_evidence"]["top_terms"][:2])
+            L.append(f"      intents: {intents}")
+            if c.get("note"):
+                L.append(f"      -> {c['note']}")
         else:
-            L.append(f"      {c['value_evidence']['note']}")
+            L.append(f"      {c['value_evidence'].get('note', '')}")
     L.append("\nADVISORY ONLY -- no auto-mutation. Routing-miss (route-fix) items feed the comp-which "
              "rule surface (LD-0226). CTO ratifies KEEP/DISCARD.")
     return "\n".join(L)
