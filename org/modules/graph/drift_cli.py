@@ -243,11 +243,14 @@ def adapter_iceberg_parity(seam, target, ctx):
         return _record(seam, target or "<iceberg>", "UNVERIFIABLE",
                        "live S3 iceberg metadata read skipped (cost-guard; --deep to run)")
     rc, out = _run(["python", os.path.join(WORKSPACE, "infra", "aws", "globgrph", "iceberg_parity.py")])
-    tok = _first_token(out, ["SCHEMA-DRIFT", "STALE", "UNVERIFIABLE", "MATCH"])
-    if tok is None:
+    # HARDENED: parse the authoritative "NODE ROLLUP: <v> (worst-of)" line, not a per-table token-scan
+    # (each of the 3 tables prints its own MATCH/SCHEMA-DRIFT; the rollup is the seam verdict).
+    m = re.search(r"NODE ROLLUP:\s*(MATCH|SCHEMA-DRIFT|STALE|UNVERIFIABLE)", out)
+    if not m:
         return _record(seam, target or "<iceberg>", "UNVERIFIABLE",
-                       "iceberg_parity.py rc=%s (verdict unparsed)" % rc)
-    return _record(seam, target or "<iceberg>", tok, "iceberg_parity.py -> %s" % tok)
+                       "iceberg_parity.py rc=%s (NODE ROLLUP unparsed -- not assuming MATCH)" % rc)
+    return _record(seam, target or "<iceberg>", m.group(1),
+                   "iceberg_parity.py -> %s (worst-of over graph_nodes/edges/contracts)" % m.group(1))
 
 
 def adapter_code_heat_parity(seam, target, ctx):
