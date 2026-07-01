@@ -1,0 +1,65 @@
+{
+  "meta": {
+    "artifact": "AE-side LIVE census (independent boto3 oracle) -- COMPAWS StepFunctions class",
+    "author": "0.8.0_AE_CloudComp~A",
+    "generated_at": "2026-07-01T05:10:51Z",
+    "method": "boto3 list_state_machines + describe_state_machine + list_activities; RECURSIVE ASL walk (Parallel.Branches + Map.Iterator/ItemProcessor) for INVOKES",
+    "purpose": "no-drift anchor vs 06-08 hand-audit fixture v0.2 + oracle for ~B trace_graph SFN-BRIDGE re-diff (STATE_MACHINE->LAMBDA sfn_invokes) + CVO StepFn re-cert",
+    "cross_refs": {
+      "hand_audit_fixture": "stepfunctions-hand-audit-fixture-v0.1.yaml (v0.2)",
+      "comp_aws_score": "stepfunctions F1=1.0 live (e13e93391)"
+    },
+    "result": "1 STATE_MACHINE / 0 ACTIVITY; INVOKES recursive=26 shallow=9 nested_gap=17; def_hash 5082ce9dba1318fd UNCHANGED vs 06-08 -> zero drift"
+  },
+  "class": "stepfunctions",
+  "region": "us-east-1",
+  "state_machines": [
+    {
+      "name": "YangDataPipeline",
+      "arn": "arn:aws:states:us-east-1:313476888478:stateMachine:YangDataPipeline",
+      "machine_type": "STANDARD",
+      "status": "ACTIVE",
+      "role_arn": "arn:aws:iam::313476888478:role/yang-pipeline-sfn-role",
+      "logging_level": "OFF",
+      "tracing_enabled": false,
+      "definition_hash": "5082ce9dba1318fd",
+      "invokes_recursive": [
+        "arn:aws:lambda:us-east-1:313476888478:function:opal-market-overview-tiered-generator",
+        "arn:aws:lambda:us-east-1:313476888478:function:opal-market-regime-classifier",
+        "arn:aws:lambda:us-east-1:313476888478:function:opal-market-rsi-tiered-generator",
+        "arn:aws:lambda:us-east-1:313476888478:function:yang-canon-interlock",
+        "arn:aws:lambda:us-east-1:313476888478:function:yang-capture-output-versions",
+        "arn:aws:lambda:us-east-1:313476888478:function:yang-cleanup-uploads",
+        "arn:aws:lambda:us-east-1:313476888478:function:yang-generate-allocation-summary",
+        "arn:aws:lambda:us-east-1:313476888478:function:yang-generate-cma",
+        "arn:aws:lambda:us-east-1:313476888478:function:yang-generate-correlation",
+        "arn:aws:lambda:us-east-1:313476888478:function:yang-generate-etf-returns",
+        "arn:aws:lambda:us-east-1:313476888478:function:yang-generate-factor-tilts",
+        "arn:aws:lambda:us-east-1:313476888478:function:yang-generate-holdings-attribution",
+        "arn:aws:lambda:us-east-1:313476888478:function:yang-generate-latest",
+        "arn:aws:lambda:us-east-1:313476888478:function:yang-generate-macro",
+        "arn:aws:lambda:us-east-1:313476888478:function:yang-generate-macro-timeseries",
+        "arn:aws:lambda:us-east-1:313476888478:function:yang-generate-manifest",
+        "arn:aws:lambda:us-east-1:313476888478:function:yang-generate-peer-performance",
+        "arn:aws:lambda:us-east-1:313476888478:function:yang-generate-positioning",
+        "arn:aws:lambda:us-east-1:313476888478:function:yang-generate-risk-premium",
+        "arn:aws:lambda:us-east-1:313476888478:function:yang-generate-valuation",
+        "arn:aws:lambda:us-east-1:313476888478:function:yang-get-prior-metadata",
+        "arn:aws:lambda:us-east-1:313476888478:function:yang-ingest-dynamodb",
+        "arn:aws:lambda:us-east-1:313476888478:function:yang-invalidate-cloudfront",
+        "arn:aws:lambda:us-east-1:313476888478:function:yang-model-portfolio-benchmarks",
+        "arn:aws:lambda:us-east-1:313476888478:function:yang-move-to-processed",
+        "arn:aws:lambda:us-east-1:313476888478:function:yang-validate-files"
+      ],
+      "invokes_recursive_count": 26,
+      "invokes_shallow_count": 9,
+      "nested_gap": 17,
+      "task_integration_types": {
+        "lambda_direct": 27
+      },
+      "logs_to": []
+    }
+  ],
+  "activity_count": 0,
+  "activities": []
+}
