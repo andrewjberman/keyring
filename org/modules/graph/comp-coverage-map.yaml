@@ -558,8 +558,9 @@ tool_grain_calibration:
 # silently dropped; ACCOUNTED with a declared role + not_homed_reason (mirrors the
 # manifest's excluded_not_graph_use_cases). Completeness = union(tools, meta_tools)
 # == the full .tools/comp-* + pipescript inventory (gate `inventory_completeness`).
-# Inventory ground-truthed from `.tools/` (43 comp-* + pipescript = 44) + per-tool
-# concern/DISTINCT-from harvested from comp-tools.yaml (the prose this map re-homes).
+# Inventory ground-truthed from `.tools/` (comp-* + pipescript; union(tools,meta_tools)=49
+# as of 2026-07-01 -- grew from 44 at S1 via the NFRA_COMPROUTE S1 adds comp-dispatch/comp-symbols;
+# CVO~B V1 P2-2 count-sync) + per-tool concern/DISTINCT-from harvested from comp-tools.yaml.
 # =============================================================================
 tools:
   # ====================== LOCAL surface ======================
@@ -642,10 +643,11 @@ tools:
     surface: AWS-CLOUD
     granularity: graph-node
     concern: "IAM-as-graph-nodes -- the live-AWS cloud-graph estate topology (17 node classes; the WRITE-PATH + cert; the LIVE half of the desired-vs-live overlay)"
-    touches_resource: [IAM]
+    touches_resource: [IAM, estate-structure]   # estate-structure added (CVO~B V1 P2-1): comp-aws's dual-managed detection shares the resource with comp-dups; now bidirectionally DECLARED so the gate forms the group (was a one-sided comp-dups declaration)
     distinct_from:
       - { tool: comp-iam,       shared_resource: IAM, my_concern: "IAM-as-graph-nodes (estate topology)", their_concern: "grant-analysis (permission gaps)" }
       - { tool: comp-lambdamap, shared_resource: IAM, my_concern: "IAM-as-graph-nodes (estate topology)", their_concern: "deploy-SHA (IAM role on a deployed Lambda)" }
+      - { tool: comp-dups,      shared_resource: estate-structure, my_concern: "DUAL-MANAGED (TF-state apply-conflict only)", their_concern: "DUPLICATE/dead-resource census (structural)" }
   - tool: comp-iam
     surface: AWS-CLOUD
     granularity: iam-policy
@@ -875,6 +877,10 @@ redundancy_census:
     - { resource: trace-graph,      tools: [comp-trace, comp-blast, comp-diff, comp-xref], concerns: ["dependency PATH walk", "IMPACT set", "uncommitted-CHANGE blast", "symbol OCCURRENCE"], state: DECLARED, finding: none }
     - { resource: portal-component, tools: [comp-transform, comp-adapter-audit, comp-pii], concerns: ["JSX field-render vs TS type", "adapter field-threading vs live S3", "PII exposure"], state: DECLARED, finding: none }
     - { resource: estate-structure, tools: [comp-dups, comp-aws], concerns: ["DUPLICATE/dead census", "DUAL-MANAGED (TF-state conflict)"], state: DECLARED, finding: none }
+    # census synced to the gate-formed touches_resource groups (CVO~B V1 P2-1): these 3 were correctly bidirectional in tools[] but missing from the summary
+    - { resource: dispatch-dag,     tools: [comp-pipescript, comp-dispatch], concerns: ["per-SCRIPT io/deploy", "orchestration-DAG at CHAIN grain"], state: DECLARED, finding: none }
+    - { resource: panel-coupling,   tools: [comp-cache, comp-cluster], concerns: ["React-Query cache-KEY collision", "cross-panel SHARES_SOURCE coupling (6-source superset)"], state: DECLARED, finding: none }
+    - { resource: symbol-defn,      tools: [comp-blast, comp-symbols], concerns: ["symbol-DEPENDENCY / blast-radius (REVERSE, input=NAME)", "file-symbol INVENTORY (FORWARD, input=FILE)"], state: DECLARED, finding: none }
 
 # =============================================================================
 # tools_index GENERATED VIEW (CTO ruling #1) -- this LEDGER is the source of truth;
@@ -895,7 +901,7 @@ tools_index_generation:
     operational fields. One catalog: a tool present in the manifest but ABSENT here =>
     a drift FINDING (the manifest must not carry a tool the ledger doesn't home/account).
   generator: org/modules/graph/comp_coverage_view.py   # emit (project) + --verify (the CI non-breaking guard); read-only, never mutates the manifest
-  non_breaking_proof: "S1 verified via `comp_coverage_view.py --verify`: all 33 manifest tools_index entries are present in union(tools, meta_tools)=44 here (no tool lost in the projection); exit 0. comp-which routing unaffected (routing fields untouched)."
+  non_breaking_proof: "S1 verified via `comp_coverage_view.py --verify`: all 33 manifest tools_index entries are present in union(tools, meta_tools) here (=44 at S1; =49 as of 2026-07-01 after the COMPROUTE S1 comp-dispatch/comp-symbols adds) -- no tool lost in the projection; exit 0. comp-which routing unaffected (routing fields untouched)."
   manifest_marker_status: "AUTHORED-in-working-tree, commit RAVC'd to COO~B/CTO -- graph-call-manifest.yaml is ANY_EXEC lane (not AE-committable); the GENERATED-VIEW marker edit is ready (source-of-truth = this ledger; regen/verify = comp_coverage_view.py) but lands via an exec commit or a lane grant. The ledger side (source of truth + generator + non-breaking proof) is COMPLETE + committed; the manifest is the marked projection target once the 1-block marker lands."
 
 # =============================================================================
