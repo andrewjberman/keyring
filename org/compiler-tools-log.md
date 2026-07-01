@@ -11226,3 +11226,6 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 
 - 2026-07-01 0.8.0_AE_CloudComp~D NFRA_COMPPROOF.B1 blind-run mechanism: harness.py + corpus_loader.py self-tests (all NEVER#4 gates PASS: strip 20/20, scaffolding-invariant, isolation-VOID, postmortem-cheat-VOID, clean-context proxy + live-context direct), blind_run.py driver demo (B-01->PARTIAL+charter), B-01 payload emit, ds-commit-gate x4, bash -n spawn_solver.sh. Commits e48658eee/023283edd/d4fb97b40/0ec100b0f.
 | 2026-07-01 | 0.8.0_AE_CloudComp~D | NFRA_COMPPROOF.B1 | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-01 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/ADVI_TAGATTR.json | PASS |
+| 2026-07-01 | 0.8.0_AE_CloudComp~B | NFRA_GRAPHUNI PhaseB + graph-tooling validation + addendum E3/DR3 | comp-kuzu, comp-drift, comp-lambdamap, comp-iam, comp-aws, comp-manifest-check, +52-agent validation sweep | PhaseB derive landed (marker 5434137157015633165); e2e validation 27/32 PASS; E3+DR3 authored+self-tested+exec-landed (17eaca870/638abd521) | PASS |
+| 2026-07-01 | 0.8.0_AE_CloudComp~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
