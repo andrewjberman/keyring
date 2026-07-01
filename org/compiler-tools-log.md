@@ -11188,3 +11188,11 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-07-01 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/ADVI_COTMVP.json | PASS |
 | 2026-07-01 | 0.8.0_AE_CloudComp~C | NFRA_COMPROUTE.DR2 | comp_route_shadow/comp-which-routing-test/comp-surface-check | /log: DR2 default-router FLIP -- SignalExtractors + shadow harness (iterated 9->0 regressions, SHADOW-GREEN: 0-reg/0-div/read-never-rebuilds/9.2%-sane-fallback, 2033b8d70) + E1 write_path (whole-write-only finding, ~E-concur) + THE FLIP 94b64a5af (CVO~B DRV cert 4c1d93be5); live post-flip fixture GREEN 34/34+3/3+20/20+3/3, surface-check clean | PASS |
 | 2026-07-01 | 0.8.0_AE_CloudComp~C | NFRA_COMPROUTE.DR2-surface-shadow-rail-flip | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-01 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/ADVI_COTMVP.json | PASS |
+| 2026-07-01 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DS_ClientPlatfor... | PASS |
+| 2026-07-01 | 2.0.0_SA_COO~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/NFRA_COMPROUTE.json --file... | PASS |
+| 2026-07-01 | 0.8.0_AE_CloudComp~C | NFRA_COMPROUTE.DR2-surface-shadow-rail-flip | comp-surface-check | comp-surface-check check --mode advisory --file .tools/comp-which | PASS |
+| 2026-07-01 | 3.0.0_SA_CVO~B | NFRA_COMPPROOF.A1 | comp-kuzu | comp-kuzu MATCH (n:CloudNode) RETURN count(n) | PASS |
+| 2026-07-01 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+| 2026-07-01 | 3.0.0_SA_CVO~B | NFRA_COMPPROOF.A1 | comp-pipescript | comp-pipescript deployed D_01.partner_analytics | PASS |
+| 2026-07-01 | 0.4.0_DS_ClientPlatform | ADVI_TAGATTR.DS-1.d00c-full-tagged-role-aua-nna-fees | comp-surface-check | comp-surface-check check --mode advisory --file data/cot/scripts/gold/D_04.client_porta... | PASS |
