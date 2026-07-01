@@ -327,6 +327,22 @@ grain_contract:
       FETCHES:         [Function, TypeDecl, Endpoint, ReactComponent, S3Key]
       READS_S3:        [Function, TypeDecl, Endpoint, ReactComponent, S3Key]
 
+  # ============ NODE SCOPE-DISPOSITION -- the census boundary (COO~B directive 20260701; ~A enumerates) ============
+  # WHICH estate nodes are IN the Phase-A denominator vs deferred vs excluded. This grain_contract encodes the
+  # TAXONOMY (the classification RULE); the specific per-key membership is CENSUS DATA (~A's firm_qualified.json
+  # enumeration), enumerated AGAINST this taxonomy. NEVER-SILENT: an excluded node MUST cite a reason -- a silent
+  # exclusion is a hidden cap (the exact no-silent-cap bar disposition_complete enforces for levels + the
+  # comp-drift ABANDONED-ARTIFACT disposition-model requires for a dead channel).
+  node_scope_disposition:
+    dispositions:
+      - { class: firm,        scope: IN,                  meaning: "a firm's operational estate key (bd/inf/cot/mdpf) -- IN the Phase-A denominator", action: materialize }
+      - { class: product,     scope: follow-on-estate,    meaning: "a product/portfolio estate key -- a LATER estate wave, deferred (DECLARED, not dropped)", action: defer }
+      - { class: phantom-ops, scope: excluded-with-reason, meaning: "an ops-artifact that is NOT a real estate node (abandoned/iteration-scratch/non-served) -- EXCLUDED, but EVERY exclusion CITES its reason", action: exclude }
+    concern_tags:
+      - { concern: ops-control, disposition: IN, instance: "~A's 7 firm keys (the operational-control keys; ~A enumeration) = concern=ops-control, IN scope", note: "an ops-control key is a firm-class key whose concern is operational control -- IN the denominator" }
+    membership_source: "the specific per-key class + the exact 7 ops-control keys + each phantom-ops exclusion REASON live in ~A's census (firm_qualified.json), enumerated against THIS taxonomy. The contract encodes the RULE; ~A enumerates + CVO verifies the DATA."
+    never_silent: "a phantom-ops exclusion REQUIRES a cited reason (mirrors disposition_complete for levels + the comp-drift ABANDONED-ARTIFACT disposition model) -- a silent exclusion = a hidden cap, forbidden."
+
 # =============================================================================
 # SURFACES -- the 5-surface APEX (PRD section 2, Andrew-direct).
 # FOUR territory surfaces (where state lives) + TRINO as the FEDERATION surface
