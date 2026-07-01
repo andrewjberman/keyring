@@ -13,10 +13,12 @@ pre->post delta measures the default-router flip's solvability improvement (harn
    DIFF-GATE-verified payload). The solver reaches for the root cause via the live graph + comp-tools
    and returns `{concluded_root_cause, traversal_path, confidence}`. Collect into:
    ```json
-   solver_results = { "B-01": {"concluded_root_cause": "...", "traversal_path": ["..."], "confidence": "low|med|high"}, ... }
+   solver_results = { "B-01": {"concluded_root_cause": "...", "traversal_path": ["..."], "tool_log": ["<actual Read/Grep/comp-tool call>"], "confidence": "low|med|high"}, ... }
    ```
    (case_id B-NN is the opaque id; MSTR does NOT need the incident identity -- just spawn per case_id
-   with its solver_view. The case_id->incident map is judge-side.)
+   with its solver_view. The case_id->incident map is judge-side. **`tool_log` = the actual captured
+   tool-calls, authoritative for the clean-room path-audit -- see AFFORDANCE_SPEC.md for the full
+   sanitized-launch + tool-log-capture + path-audit mechanism, which supersedes this schema.**)
 
 2. **CVO~B (TO-B2 judge)** -- for each solved case, given `corpus_loader.judge_view(incident)` (the
    sealed root_cause + how-found) + the solver's concluded-root-cause + path, score the 3 axes:

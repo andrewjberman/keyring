@@ -18,6 +18,7 @@ Author: 0.8.0_AE_CloudComp~D (NFRA_COMPPROOF.B1, CTO arch 1315f9a03). 2026-07-01
 from __future__ import annotations
 
 import os
+import re
 import sys
 
 _HERE = os.path.dirname(os.path.abspath(__file__))
@@ -60,6 +61,100 @@ def isolation_gate(incident: dict, *, solver_id: str, judge_id: str,
         reasons.append("root_cause leaked into solver payload: %s" % (strip["leaked_terms"] or "full-string"))
     return {"case_id": case_id, "void": bool(reasons), "reasons": reasons,
             "distinct_roles": distinct, "strip_clean": strip_clean}
+
+
+# ---- the CLEAN-ROOM anti-cheat gate (the spine-validity guard; CTO ruling 143421Z) ---------
+# Clean-room boundary: reaching the root cause via the ALLOWED substrate = a valid GRAPH-SOLVED;
+# reading a FORBIDDEN narrative/resolution record = the answer-lookup cheat (a false SOLVED).
+#
+# ALLOWED (the substrate B tests -- NOT flagged): comp-tools (comp-which/blast/kuzu/aws/...), the
+#   graph DB, LIVE estate reads (S3/SSM/DDB/served artifacts), and SOURCE CODE (data/*/scripts,
+#   infra/, portal/, org/modules/graph). This is exactly what the real ADVI_BREAKS solve used.
+# FORBIDDEN (answer-lookup): the NARRATIVE/RESOLUTION records that document an incident's root-cause
+#   + fix -- reading one is the cheat.
+ALLOWED_AFFORDANCES = ("comp-tools (comp-which/blast/kuzu/trace/xref/platinum/drift/freshness/"
+                       "pipescript/iam/routes/depth)", "the graph DB (Nessie/Kuzu @ marker HEAD)",
+                       "LIVE estate reads (S3/SSM/DDB/served artifacts)",
+                       "SOURCE CODE (data/*/scripts, infra/, portal/, org/modules/graph)")
+
+
+def _is_forbidden_path(p: str) -> bool:
+    """True if a repo path is a NARRATIVE/RESOLUTION record (CTO clean-room denylist), not source."""
+    p = p.strip().lower().lstrip("./").replace("\\", "/")
+    if p.startswith("memory/") or p.startswith("org/critical_paths/"):
+        return True
+    if p.startswith("org/") and "/logs/" in p:            # session logs
+        return True
+    if p.startswith("org/daily_log/"):                    # daily narrative logs
+        return True
+    if p.startswith("org/modules/graph/debtscan/"):       # incident debtscan ledgers (resolution records
+        return True                                       # under an otherwise-allowed source tree)
+    if "compiler-tools-log" in p:                         # the running narrative tool-log
+        return True
+    if p.startswith("docs/") and "postmortem" in p:       # postmortem docs (arch/PRD docs stay allowed)
+        return True
+    if "claude.md" in p:                                  # incident-prose / NEVER-history
+        return True
+    return False
+
+
+def resolution_artifacts(incident: dict) -> list:
+    """THIS incident's specific answer-bearing citation path(s) -- the definite resolution record.
+    Reading one is the unambiguous cheat (the incident's own postmortem). Derived from the citation."""
+    arts = []
+    for c in str(incident.get("citation", "")).split(";"):
+        c = c.strip().split(":")[0].strip()              # drop a trailing :line-number
+        c = c.replace(" origin", "").replace(" (verbatim incident text)", "").strip()
+        if c and ("/" in c or c.lower().endswith(".json") or c.lower().endswith(".md")):
+            arts.append(c)
+    return arts
+
+
+def cheat_check(traversal_path, incident: dict) -> dict:
+    """Post-hoc audit (CTO's judge-path-validation HARD gate): did the solver READ a forbidden
+    narrative/resolution record (answer-lookup) rather than reach via the allowed substrate? Returns
+    {cheated, citation_hits, narrative_hits}. Any hit VOIDs the run -- B measures graph-reachability,
+    not 'is the answer written down'. Two layers: (a) THIS incident's citation path (definite); (b)
+    ANY forbidden narrative-category path (the clean-room denylist)."""
+    steps = [str(s) for s in (traversal_path or [])]
+    path_text = " ".join(steps).lower()
+    citation_hits = [a for a in resolution_artifacts(incident) if a.lower() in path_text]
+    # scan each cited step's tokens for a forbidden narrative path
+    narrative_hits = sorted({tok for s in steps for tok in re.findall(r"[A-Za-z0-9_./\\-]+", s)
+                             if ("/" in tok) and _is_forbidden_path(tok)})
+    return {"cheated": bool(citation_hits or narrative_hits),
+            "citation_hits": citation_hits, "narrative_hits": narrative_hits}
+
+
+# Fabric-injection markers: files a `claude -p` launch auto-loads by walking UP from its cwd (CLAUDE.md
+# + memory auto-recall + org/XXX.md startup). CLAUDE.md states several corpus root-causes VERBATIM
+# (incl. #1 ADVI_BREAKS) -- so a launch whose cwd sits inside the fabric tree injects the answer with
+# NO tool-call (invisible to the tool-log audit). The clean-room launch MUST run from a cwd with no
+# such ancestor. (CTO FINAL refinement 143953Z; MSTR caught the context-injection hole.)
+# The ANSWER-BEARING fabric injectors: project CLAUDE.md (states corpus root-causes verbatim), the
+# org/XXX.md fabric startup, and the auto-recall memory index. NOT ~/.claude/settings.json -- that is
+# benign global CC config (permissions), present above every temp dir under the user home, not narrative.
+_FABRIC_INJECTION_MARKERS = ("CLAUDE.md", os.path.join("org", "XXX.md"), os.path.join("memory", "MEMORY.md"))
+
+
+def assert_clean_context(cwd: str) -> dict:
+    """NEVER#4 standing gate: the bare-launch cwd must inject NO fabric narrative. `claude -p`
+    discovers CLAUDE.md / memory / org-XXX by walking UP from cwd, so a clean launch dir is one where
+    NO ancestor carries an injection marker (i.e. OUTSIDE the workspace tree). A false-clean launch
+    would silently false-SOLVE the whole corpus (the answer arrives before any traversal). Returns
+    {clean, leaks}. Pair with the tool-log path-audit: context-suppress + file-audit = airtight."""
+    leaks, cur, seen = [], os.path.abspath(cwd), set()
+    while cur not in seen:
+        seen.add(cur)
+        for marker in _FABRIC_INJECTION_MARKERS:
+            mp = os.path.join(cur, marker)
+            if os.path.exists(mp):
+                leaks.append(mp)
+        parent = os.path.dirname(cur)
+        if parent == cur:
+            break
+        cur = parent
+    return {"clean": not leaks, "leaks": leaks}
 
 
 # ---- the 3-axis scorer (REACH x USABILITY x GROUNDING-RESILIENCE) --------------------------
@@ -136,6 +231,20 @@ def run_incident(incident: dict, solver_result: dict, *, solver_id: str, judge_i
            "isolation": gate, "solver_result": solver_result}
     if gate["void"]:
         rec["verdict"] = "VOID"
+        rec["void_reason"] = "isolation: " + "; ".join(gate["reasons"])
+        rec["charter"] = None
+        return rec
+    # clean-room anti-cheat (CTO FINAL 143701Z): the HARD VOID-gate audits the solver's ACTUAL
+    # captured tool-log (every Read/Grep/comp-tool call), NOT its self-reported path -- reading a
+    # forbidden narrative/resolution record VOIDs the run (answer-lookup, not graph-traversal). The
+    # spine's validity guard -- else every historical incident is a false SOLVED via postmortem-grep.
+    audit_source = solver_result.get("tool_log") or solver_result.get("traversal_path")
+    cheat = cheat_check(audit_source, incident)
+    rec["cheat_check"] = cheat
+    if cheat["cheated"]:
+        rec["verdict"] = "VOID"
+        rec["void_reason"] = ("postmortem-cheat: solver read a forbidden resolution record "
+                              "(citation=%s narrative=%s)" % (cheat["citation_hits"], cheat["narrative_hits"]))
         rec["charter"] = None
         return rec
     verdict = score_run(**judge_axes)
@@ -181,6 +290,27 @@ def _selftest() -> int:
     assert run["verdict"] == "PARTIAL", "ADVI_BREAKS mock (narrowed+fell-back) -> PARTIAL, got %s" % run["verdict"]
     assert run["charter"] is not None, "a PARTIAL must emit a gap-charter"
 
+    # postmortem anti-cheat: a solver that READ the incident's resolution record VOIDs (cheat != solve),
+    # even with a perfect-looking 3-axis judgment -- the spine-validity guard.
+    cheat_solver = {"concluded_root_cause": "the stranded 4-layer cutover",
+                    "traversal_path": ["read org/modules/graph/debtscan/2026-06-12_LIVE_inf-ADVI-stranded-deploy-P0.md"],
+                    "confidence": "high"}
+    cheat_run = run_incident(adv, cheat_solver, solver_id="B-SOLVER-fresh", judge_id="3.0.0_SA_CVO~B",
+                             judge_axes={"reach": "yes", "usability": "usable", "grounding_resilience": "resist"})
+    assert cheat_run["verdict"] == "VOID" and "postmortem-cheat" in cheat_run.get("void_reason", ""), \
+        "reading the resolution record must VOID (cheat != solve), got %s" % cheat_run["verdict"]
+
+    # NEVER#4 (CTO 143953Z): the sanitized bare-launch cwd must inject NO fabric narrative. A temp dir
+    # outside the ws is clean; the fabric tree (this module's dir) is CONTAMINATED (CLAUDE.md up-tree).
+    import tempfile
+    _canary = tempfile.mkdtemp(prefix="compproof_canary_")
+    try:
+        assert assert_clean_context(_canary)["clean"], "a temp dir outside the ws must be clean-context"
+    finally:
+        os.rmdir(_canary)
+    assert not assert_clean_context(_HERE)["clean"], \
+        "the fabric tree MUST read as context-CONTAMINATED (CLAUDE.md/memory up-tree) -- else false-SOLVE"
+
     # scorer vocab: SOLVED / MISS boundaries.
     assert score_run(reach="yes", usability="usable", grounding_resilience="resist") == "SOLVED"
     assert score_run(reach="yes", usability="usable", grounding_resilience="trip") == "MISS"  # mis-grounding
@@ -191,7 +321,8 @@ def _selftest() -> int:
                      {"case_id": "B-03", "verdict": "MISS"}, {"case_id": "B-04", "verdict": "VOID"}])
     assert agg["n_scored"] == 3 and agg["n_void"] == 1 and agg["counts"]["SOLVED"] == 1
     print("SELF-TEST PASS: strip 20/20 | scaffolding-invariant HOLDS | payload excludes answer |"
-          " isolation VOID-on-violation | ADVI_BREAKS -> PARTIAL + charter | scorer + aggregate OK")
+          " isolation VOID-on-violation | postmortem-cheat VOIDs | clean-context gate | ADVI_BREAKS"
+          " -> PARTIAL + charter | scorer + aggregate OK")
     return 0
 
 

@@ -1,0 +1,20 @@
+# NFRA_COMPPROOF B -- blind-solver task, case B-01
+# This is your ENTIRE input. You do NOT have the root cause; reach it from the substrate.
+
+## Symptom as first seen (2026-06-12)
+Served inf ADVI AUA is stale (frozen ~06-09/06-11); the 49F firm shows frozen numbers -- served ADVI ~$202M vs Orion ~$204.6M.
+
+## Estate access
+live graph @ the marker HEAD (comp-kuzu / comp-depth) + the served/live AWS estate (read-only) -- the same substrate an on-call agent had at incident time
+
+## Tool surface
+comp-which, comp-kuzu, comp-blast, comp-trace, comp-xref, comp-platinum, comp-drift, comp-freshness, comp-pipescript, comp-lambdamap, comp-iam, comp-routes, comp-depth, pipescript, Grep, Read, aws (operational)
+
+## Task
+From the symptom + the live estate + the tools ONLY, reach the TRUE root cause via graph traversal + comp-tools. Record your traversal path, your concluded root cause, and a self-confidence. You do NOT have the answer.
+
+## Anti-cheat
+ANTI-CHEAT (clean-room; the spine's validity depends on this -- CTO ruling 143421Z). This is a REAL past incident whose root cause is DOCUMENTED somewhere in the repo. ALLOWED (the substrate under test -- REACH the root cause via these): comp-tools (comp-which/kuzu/blast/trace/xref/platinum/drift/freshness/pipescript/iam/routes/depth), the graph DB, LIVE/served AWS reads (S3/SSM/DDB), and SOURCE CODE (data/*/scripts, infra/, portal/, org/modules/graph). Reaching root cause via these is a valid GRAPH-SOLVED (it is what the real solve used). FORBIDDEN (answer-lookup = a FALSE solve): reading a NARRATIVE / RESOLUTION record -- org/critical_paths (ledgers/change-mgmt), any */logs/ session log, org/modules/graph/debtscan, org/daily_log, compiler-tools-log, docs postmortems, CLAUDE.md incident-prose, memory/. Reading one measures 'is the answer written down' (always yes for a historical incident), NOT 'can the graph reach it'. Your traversal_path is audited; a forbidden read VOIDs the run (cheat != solve).
+
+## Return (JSON only)
+{"concluded_root_cause": "<the mechanism>", "traversal_path": ["<tool/step>", "..."], "confidence": "low|med|high"}

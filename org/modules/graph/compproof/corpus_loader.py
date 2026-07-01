@@ -152,6 +152,70 @@ def assert_scaffolding_invariant(incidents=None) -> dict:
     return {"invariant_holds": not divergent, "divergent_fields": sorted(divergent)}
 
 
+ANTI_CHEAT = (
+    "ANTI-CHEAT (clean-room; the spine's validity depends on this -- CTO ruling 143421Z). This is a "
+    "REAL past incident whose root cause is DOCUMENTED somewhere in the repo. "
+    "ALLOWED (the substrate under test -- REACH the root cause via these): comp-tools "
+    "(comp-which/kuzu/blast/trace/xref/platinum/drift/freshness/pipescript/iam/routes/depth), the graph "
+    "DB, LIVE/served AWS reads (S3/SSM/DDB), and SOURCE CODE (data/*/scripts, infra/, portal/, "
+    "org/modules/graph). Reaching root cause via these is a valid GRAPH-SOLVED (it is what the real "
+    "solve used). "
+    "FORBIDDEN (answer-lookup = a FALSE solve): reading a NARRATIVE / RESOLUTION record -- "
+    "org/critical_paths (ledgers/change-mgmt), any */logs/ session log, org/modules/graph/debtscan, "
+    "org/daily_log, compiler-tools-log, docs postmortems, CLAUDE.md incident-prose, memory/. Reading "
+    "one measures 'is the answer written down' (always yes for a historical incident), NOT 'can the "
+    "graph reach it'. Your traversal_path is audited; a forbidden read VOIDs the run (cheat != solve).")
+
+
+def incident_by_case_id(case_id: str) -> dict:
+    """Resolve an opaque case_id (B-NN) to its incident dict; raise if unknown."""
+    for i in corpus.INCIDENTS:
+        if _case_id(i) == case_id:
+            return i
+    raise KeyError("no incident for case_id %r" % case_id)
+
+
+def solver_view_by_case_id(case_id: str) -> dict:
+    """Convenience: build the answer-free solver-view from the opaque case_id STRING (MSTR-facing --
+    fixes the TypeError from passing a case_id where solver_view expects an incident dict, and lets a
+    spawn-executor avoid importing the answer-bearing corpus)."""
+    return solver_view(incident_by_case_id(case_id))
+
+
+def render_solver_prompt(case_id: str) -> str:
+    """The answer-free solver PROMPT (a fresh agent's ENTIRE input) as text. Runs the diff-gate FIRST
+    and REFUSES to emit on any leak (fail-closed) -- so an emitted artifact is provably answer-free."""
+    inc = incident_by_case_id(case_id)
+    gate = diff_gate(inc)
+    if not gate["passed"]:
+        raise RuntimeError("REFUSING to emit %s -- strip leak: %s / full=%s"
+                           % (case_id, gate["leaked_terms"], gate["full_string_leak"]))
+    sv = solver_view(inc)
+    return "\n".join([
+        "# NFRA_COMPPROOF B -- blind-solver task, case %s" % sv["case_id"],
+        "# This is your ENTIRE input. You do NOT have the root cause; reach it from the substrate.",
+        "",
+        "## Symptom as first seen (%s)" % sv.get("date", "n/a"),
+        sv["symptom_as_first_seen"],
+        "",
+        "## Estate access",
+        sv["estate_access"],
+        "",
+        "## Tool surface",
+        ", ".join(sv["tool_surface"]),
+        "",
+        "## Task",
+        sv["task"],
+        "",
+        "## Anti-cheat",
+        ANTI_CHEAT,
+        "",
+        "## Return (JSON only)",
+        '{"concluded_root_cause": "<the mechanism>", "traversal_path": ["<tool/step>", "..."], '
+        '"confidence": "low|med|high"}',
+    ])
+
+
 def load(incident_id: str = None):
     """Load one incident (by id) or all -- returning (solver_view, judge_view) pairs. The pair is the
     unit the spawner (solver-view) + the judge (judge-view) consume; the strip is gate-verified first."""
@@ -163,6 +227,22 @@ def load(incident_id: str = None):
 
 
 def main() -> int:
+    import argparse
+    ap = argparse.ArgumentParser(prog="compproof-corpus-loader",
+                                 description="STRIP DIFF-GATE report, or --emit-case to emit an answer-free solver prompt")
+    ap.add_argument("--emit-case", default="", help="emit the answer-free solver prompt for a case_id (e.g. B-01)")
+    ap.add_argument("--out", default="", help="write the emitted prompt here (else stdout)")
+    a = ap.parse_args()
+    if a.emit_case:
+        prompt = render_solver_prompt(a.emit_case)   # fail-closed: raises on any strip leak
+        if a.out:
+            with open(a.out, "w", encoding="utf-8") as fh:
+                fh.write(prompt + "\n")
+            print("OK: wrote %s (%d chars; diff-gate-verified answer-free) for %s"
+                  % (a.out, len(prompt), a.emit_case))
+        else:
+            print(prompt)
+        return 0
     gate = diff_gate_all()
     print("=== NFRA_COMPPROOF B corpus-loader -- STRIP DIFF-GATE (root_cause NOT-IN solver_view) ===")
     print("  incidents: %d" % gate["n"])
