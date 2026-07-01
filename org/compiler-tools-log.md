@@ -12434,3 +12434,6 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-07-01 | 0.4.0_DS_ClientPlatform~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/change_management/20... | PASS |
 | 2026-07-01 | 0.4.0_DS_ClientPlatform~A | MDPF_WSE_SWAP | comp-which/comp-pipescript io+deployed/pipescript | WS-E swap grounding: RPS silver schema+partitions, gold-script I/O, mdpf deploy-verify (rail-checked head-object) | ROUTED/PARTIAL |
 | 2026-07-01 | 0.4.0_DS_ClientPlatform~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-01 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+2026-07-01 | 0.4.0_DE_ClientPlatform | comp-freshness (per-entity artifact live-confirm x~10: advisor/account/client patterns bd+inf), aws s3 ls (rail-checked, representative-id + inf client filename discovery) -> B1 v0.3.1 PER-ENTITY tier live-confirmed, inf client path refined summary->detail.json, B1 FULLY CLOSED (all 3 tiers grounded, schema 1.0 frozen).
+| 2026-07-01 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
