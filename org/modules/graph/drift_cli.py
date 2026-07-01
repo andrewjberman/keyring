@@ -255,11 +255,14 @@ def adapter_code_heat_parity(seam, target, ctx):
         return _record(seam, target or "<code_heat>", "UNVERIFIABLE",
                        "live code_heat HEAD-pointer read skipped (cost-guard; --deep to run)")
     rc, out = _run(["python", os.path.join(WORKSPACE, "infra", "aws", "globgrph", "code_heat_parity.py")])
-    tok = _first_token(out, ["BEHIND", "UNVERIFIABLE", "current"])
-    if tok is None:
+    # HARDENED: parse the authoritative "BINDING VERDICT: <v> (worst-of)" line, not a token-scan
+    # (the per-catalog lines also carry BEHIND/current, so a token-scan could pick a non-rollup one).
+    m = re.search(r"BINDING VERDICT:\s*(current|BEHIND|UNVERIFIABLE)", out)
+    if not m:
         return _record(seam, target or "<code_heat>", "UNVERIFIABLE",
-                       "code_heat_parity.py rc=%s (verdict unparsed)" % rc)
-    return _record(seam, target or "<code_heat>", tok, "code_heat_parity.py -> %s" % tok)
+                       "code_heat_parity.py rc=%s (BINDING VERDICT unparsed -- not assuming current)" % rc)
+    return _record(seam, target or "<code_heat>", m.group(1),
+                   "code_heat_parity.py -> %s (worst-of rollup)" % m.group(1))
 
 
 def adapter_comp_freshness(seam, target, ctx):
