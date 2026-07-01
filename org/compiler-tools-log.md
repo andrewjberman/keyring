@@ -11155,3 +11155,6 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-07-01 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/briefs/infr... | PASS |
 | 2026-07-01 | 0.8.0_AE_CloudComp~E | NFRA_COMPROUTE.DR1 | comp_route/pytest/git-tag | DR1 default-router 3-stage engine (8b0dd364e, tag comproute-dr1-v0.1.1) -- self-test 22/22, pytest 13/13; structural-dominance + relevance-floor + write_path E1 filter | PASS |
 | 2026-07-01 | 0.8.0_AE_CloudComp~E | NFRA_COMPRAIL.TO-5 | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/briefs/nfra-compproof-B-incident-c... | PASS |
+| 2026-07-01 | 0.4.0_DS_ClientPlatform | ADVI_TAGATTR.DS-1.d00c-full-tagged-role-aua-nna-fees | comp-pipescript | comp-pipescript io D_04.client_portal_summary | PASS |
+| 2026-07-01 | 0.4.0_DS_ClientPlatform | ADVI_TAGATTR.DS-1.d00c-full-tagged-role-aua-nna-fees | comp-surface-check | comp-surface-check check --mode advisory --file data/black_diamond/scripts/gold/D_04.cl... | PASS |
