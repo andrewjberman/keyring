@@ -505,6 +505,60 @@ def audit_grain(declared_map: dict, observed_map: dict) -> list:
     return out
 
 
+def _declared_grain_map(led: dict) -> dict:
+    """The DECLARED side of the S4 audit: tool_grain_calibration.tool_grain_map (tool -> [grains]).
+    ONE source of truth -- the same block the calibration lives in; never re-typed here."""
+    return led.get("tool_grain_calibration", {}).get("tool_grain_map", {})
+
+
+def audit(observed_path: str | None) -> int:
+    """CLI: the S4 AUDIT harness -- declared tool_grain_map vs REAL post-population traversal. STAGED
+    ready-to-fire so it runs the INSTANT Phase-A population lands. observed_path = a JSON object
+    {tool: [grains it ACTUALLY traversed]} produced by the post-population traversal step -- the SAME
+    caller-supplies-the-pull contract as `seam --edges` (the traversal SOURCE is the populated
+    comp-kuzu graph / the COMPLEARN behavior plane; the harness never re-implements the pull). The
+    DECLARED side loads from the ledger now. Exit 0 GREEN (declared==observed, no grain drift) /
+    1 RED (a grain mismatch finding) / 2 UNVERIFIABLE (no observed map yet -- graph not populated;
+    NEVER a silent PASS)."""
+    try:
+        led = _load(LEDGER)
+    except Exception as exc:  # noqa: BLE001 -- could-not-read is UNVERIFIABLE, never a silent PASS
+        sys.stderr.write(f"UNVERIFIABLE: could not read the ledger: {exc}\n")
+        return UNVERIFIABLE
+    declared = _declared_grain_map(led)
+    if not declared:
+        sys.stderr.write("UNVERIFIABLE: tool_grain_calibration.tool_grain_map absent from the ledger -- nothing to audit against.\n")
+        return UNVERIFIABLE
+    if not observed_path:
+        sys.stderr.write(
+            "UNVERIFIABLE: no --observed <observed.json> supplied. The AUDIT harness is STAGED but the "
+            "OBSERVED side needs the POPULATED graph. Post-population, pull each tool's actually-traversed "
+            "grains (comp-kuzu traversal / COMPLEARN behavior plane) into observed.json {tool: [grains]} "
+            "and re-run `comp-coverage-check audit --observed observed.json`. Pre-population is UNVERIFIABLE, "
+            "never a silent PASS.\n")
+        return UNVERIFIABLE
+    try:
+        observed = json.load(open(observed_path, encoding="utf-8"))
+    except Exception as exc:  # noqa: BLE001
+        sys.stderr.write(f"UNVERIFIABLE: could not read observed map {observed_path}: {exc}\n")
+        return UNVERIFIABLE
+    if not isinstance(observed, dict) or not observed:
+        sys.stderr.write(f"UNVERIFIABLE: observed map {observed_path} is empty or not a {{tool: [grains]}} object.\n")
+        return UNVERIFIABLE
+    findings = audit_grain(declared, observed)
+    if not findings:
+        sys.stdout.write(f"AUDIT: GREEN -- every observed tool ({len(observed)}) traverses at exactly its declared grain(s). No grain drift.\n")
+        return PASS
+    sys.stdout.write(f"AUDIT: {len(findings)} grain-drift finding(s) (declared tool_grain_map vs REAL traversal):\n")
+    for tool, kind, grains in findings:
+        if kind == "TRAVERSES-UNDECLARED":
+            sys.stdout.write(f"  - {tool}: TRAVERSES-UNDECLARED {grains} -- traverses a grain it did not declare (widen the declaration OR the tool overreaches its grain).\n")
+        else:
+            sys.stdout.write(f"  - {tool}: DECLARED-NOT-TRAVERSED {grains} -- declares a grain it never traverses (dead declaration OR that grain was never populated).\n")
+    sys.stdout.write("AUDIT: RED -- reconcile the tool_grain_map with real traversal (feed new grain-gaps to COMPLEARN ~E).\n")
+    return FAIL
+
+
 _CHECKERS = {
     "one_home": _check_one_home,
     "seam_reference_integrity": _check_seam_reference_integrity,
@@ -785,6 +839,8 @@ def main(argv: list[str]) -> int:
             sys.stderr.write("usage: comp-coverage-check seam --edges <edges.json> [--rollup <rollup.json>] [--scope <scope.json>] [--producer <lane>]\n")
             return UNVERIFIABLE
         return seam(edges_path, _arg(argv, "--rollup"), _arg(argv, "--scope"), _arg(argv, "--producer"))
+    if cmd == "audit":
+        return audit(_arg(argv, "--observed"))
     return check()
 
 

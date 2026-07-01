@@ -25,6 +25,15 @@ comp-tool coverage map / coverage-check / non-redundancy invariant").
                                  (existential rollup holds). GREEN-IN-SCOPE/RED/IN-SCOPE-INCOMPLETE;
                                  both ~C+~D sign. scope={edge_types,levels,strata} = the increment's
                                  claimed grains; producer = the lane being validated.
+  comp-coverage-check audit [--observed <observed.json>]
+                                 the S4 AUDIT harness: DECLARED tool_grain_map vs REAL post-population
+                                 traversal. Staged ready-to-fire -- runs the INSTANT Phase-A populates.
+                                 observed.json = {tool: [grains actually traversed]}, caller-pulled from
+                                 the populated comp-kuzu graph / COMPLEARN behavior plane (same
+                                 supply-the-pull contract as `seam --edges`). Exit 0 GREEN (no grain
+                                 drift) / 1 RED (a declared-vs-real mismatch -> feed COMPLEARN ~E) /
+                                 2 UNVERIFIABLE (no observed map yet -- graph not populated; never
+                                 a silent PASS).
 """
 import os
 import runpy
