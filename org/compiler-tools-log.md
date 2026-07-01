@@ -10348,3 +10348,23 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 
 2026-07-01T0131Z | 0.8.0_AE_CloudComp~E | NFRA_COMPROUTE.S1-comp-dispatch | comp-which, comp-dispatch, ds-commit-gate, safe-commit | Built comp-dispatch (COMPROUTE S1 #1): comp-which grounded the gap + found comp-which reads comp-coverage-map.yaml (routing source), comp-dispatch self-test byte-matches CHAIN_* vars bd+cot (the acceptance proof), ds-gate clean, safe-commit d804ff744. Registration/routing handed to ~C (one-home).
 | 2026-06-30 | 0.8.0_AE_CloudComp~E | NFRA_COMPROUTE.S1-comp-dispatch-spec | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-06-30 | 0.8.0_AE_CloudComp~A | (no-TO) | comp-kuzu | comp-kuzu MATCH (n) WHERE n.node_type = 'S3Key' RETURN count(n) AS s3key_nodes | PASS |
+| 2026-06-30 | 0.8.0_AE_CloudComp~A | (no-TO) | comp-kuzu | comp-kuzu MATCH (a)-[e]->(b) WHERE e.edge_type = 'OWNED_BY' AND a.node_type='S3Key' AND... | PASS |
+| 2026-06-30 | 0.8.0_AE_CloudComp~A | (no-TO) | comp-kuzu | comp-kuzu MATCH (a)-[e]->(b) WHERE e.edge_type = 'CONTAINS' AND a.node_type='S3_BUCKET'... | PASS |
+| 2026-06-30 | 0.8.0_AE_CloudComp~A | (no-TO) | comp-kuzu | comp-kuzu MATCH (n) WHERE n.node_type='S3Key' RETURN n.node_id AS id ORDER BY n.node_id... | PASS |
+| 2026-06-30 | 0.8.0_AE_CloudComp~E | NFRA_COMPROUTE.S1-L4-route-fixes | comp-pipescript | comp-pipescript io D_00 --firm bd | PASS |
+| 2026-06-30 | 0.8.0_AE_CloudComp~E | NFRA_COMPROUTE.S1-L4-route-fixes | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/NFRA_COMPLEARN/comp_symbol... | PASS |
+| 2026-06-30 | 0.8.0_AE_CloudComp~C | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .tools/comp-which --file org/modules/gr... | PASS |
+| 2026-06-30 | 2.0.0_SA_COO~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/.open_deploys/graphd... | PASS |
+| 2026-06-30 | 0.8.0_AE_CloudComp~C | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .tools/comp-which | PASS |
+| 2026-06-30 | 0.8.0_AE_CloudComp~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/NFRA_GRAPHUNI/NFRA_GRAPHUN... | PASS |
+| 2026-06-30 | 0.8.0_AE_CloudComp~C | (no-TO) | comp-kuzu | comp-kuzu --json MATCH (n) RETURN n.node_type AS nt, count(*) AS n ORDER BY n DESC | PASS |
+| 2026-06-30 | 0.8.0_AE_CloudComp~D | NFRA_GRAPHUNI.P1.d1-fill-derive | comp-kuzu | comp-kuzu MATCH (n) RETURN count(n) LIMIT 1 | PASS |
+| 2026-06-30 | 0.8.0_AE_CloudComp~C | (no-TO) | comp-kuzu | comp-kuzu --json MATCH (n) RETURN n.node_type AS nt, count(*) AS n ORDER BY n DESC | PASS |
+| 2026-06-30 | 0.4.0_DS_ClientPlatform~A | ADVI_INFREF.P1 | comp-surface-check | comp-surface-check check --mode advisory --file data/inf/scripts/silver/run_silver_back... | PASS |
+| 2026-06-30 | 0.8.0_AE_CloudComp~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/NFRA_GRAPHUNI/NFRA_GRAPHUN... | PASS |
+| 2026-06-30 | 0.8.0_AE_CloudComp~E | NFRA_COMPROUTE.S1-L4-route-fixes | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/comp_symbols.py | PASS |
+| 2026-06-30 | 0.8.0_AE_CloudComp~D | NFRA_GRAPHUNI.P1.d1-fill-derive | comp-lambdamap | comp-lambdamap parity | PASS |
+
+2026-07-01T0149Z | 0.8.0_AE_CloudComp~E | NFRA_COMPROUTE.S1-L4-route-fixes | comp-pipescript, comp-which, comp-symbols, ds-commit-gate, safe-commit | Stage-1 route-fixes: comp-pipescript io grounded #1 as a routing-miss (comp-pipescript io surfaces the keys), comp-which grounded #2 as net-new (build-vs-route triage), built comp-symbols (ast symbol-index, line#s match ast = acceptance), ds-gate clean, safe-commit e5ae5dd7a. Registrations -> ~C.
+| 2026-06-30 | 0.8.0_AE_CloudComp~E | NFRA_COMPROUTE.S1-L4-route-fixes | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
