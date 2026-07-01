@@ -1,0 +1,26 @@
+{
+  "project_code": "ADVI_TAGATTR",
+  "macro_code": "ADVI",
+  "code": "ADVI_TAGATTR",
+  "title": "49F advisor role AUA/NNA/fee full-tagging + total_aua attribution fix",
+  "name": "49F Advisor Attribution Full-Tagging (TAGATTR)",
+  "description": "Andrew-direct fix to 49F AdvisorIntelligence: advisor role AUA/NNA/fees are FULL-TAGGED (not split-weighted) + labeled non-additive; and the served advisor total_aua rollup migrates to architect_no_infer (stop crediting 49F House / impl-pairing-inferred accounts to named advisors). Root cause: D_00c dropped the canonical aua_tagged_total (Travis Penfield $440M tagged vs $358M split-weighted, same page). Multi-leg across DS (data) + DE (FE) + CTO (arch-gates). SEV1-adjacent (advisor AUA surface).",
+  "status": "active",
+  "owner": "0.4.0_DS_ClientPlatform",
+  "pods": [
+    "0.4"
+  ],
+  "created": "2026-07-01",
+  "current_phase": "P1 EXECUTING -- code LANDED, converging to tonight's nightly-validations. LEGS: (1) DS-1 leg-1 [role AUA/NNA/inflows/outflows FULL-TAGGED + non-additive-labeled at served] = LANDED+deployed+verified (D_00c 0ab172d3f + D_04 fc8c18361, comp-pipescript MATCH; ARCH-GATE-1 labeling done: aua_basis + role_breakdown_semantics=advisor_tagged_full_nonadditive; advisor total_aua ~439.97M unchanged), VALIDATES on the bd nightly ~04:00Z (base-DS comp-validate Phase-3 + DE render-verify + CVO served-verify). (2) DS-1 leg-2 [fee-basis full-tag] = BLOCKED on CTO ADR -- fee-basis is C_08-COUPLED (fee_paying.aua scaled to C_08 billing; implied_revenue from C_08), fee-blast gate fired correctly + escalated (A: full-tag non-additive w/ fee-owner coord vs B: keep C_08-reconciled); no silent rebasing. (3) FE (a58ff3a7, DE) [donut-center now dedup-total resolving the $440M-vs-$358M mismatch + non-additive rollup guard] = deployed to DEV, CI-green, RIDES the 2nd portal promote to PROD. (4) DS-2 (32d035b5b, STAGED) [D_02 served advisor total_aua + D_01 PartnerAnalytics ADV -> architect_no_infer; stops crediting House/inferred accounts to named advisors; Layer-2 kept; scoped to 2 AUA surfaces] = GATED on (leg-1-validated + CTO-arch + Andrew-magnitude-confirm on the DOWNWARD served total_aua shift before serve; base-DS dry-runs the delta -> COO routes magnitude to Andrew), MEDIUM priority, sequenced AFTER leg-1 (same served artifact). base-DS parked on the gates; DS-2 next-in-queue behind leg-1.",
+  "related": [
+    "ADVI_COTMVP",
+    "ADVI_INFREF"
+  ],
+  "history": [
+    {
+      "date": "2026-07-01T14:54Z",
+      "agent": "2.0.0_SA_COO",
+      "event": "PROJECT FILE CREATED (COO tracking-formalization; queue-hygiene). TAGATTR had grown into a multi-leg Andrew-direct effort (DS-1 leg-1 deployed, leg-2-fee on CTO ADR, FE riding 2nd promote, DS-2 staged w/ an Andrew-magnitude gate) but was only tracked ad-hoc in COO drive_logs -> registered so /drive classifies it + the DS-2 gates (leg-1-validated + CTO-arch + Andrew-downward-shift-confirm) aren't dropped. TO trail: DS-1 0517a8397 (DE-authored, fee-blast gate AC7 ee396d9a0); DS-2 staged 32d035b5b. FE a58ff3a7. Owners: 0.4.0_DS (data), 0.4.0_DE (FE), 1.0.0_SA_CTO (arch-gates)."
+    }
+  ]
+}
