@@ -2,17 +2,27 @@
 
 The spine's validity rests on the blind-solver reaching root cause from the SUBSTRATE, not by
 looking the answer up. Because these are REAL historical incidents whose root-cause is documented in
-the repo, there are TWO leak vectors -- and both are closed (CTO ruling chain 143421Z / 143701Z /
-143953Z; MSTR enforcement ground-truth):
+the repo, there are **THREE** leak vectors -- all closed (CTO ruling chain 143421Z / 143701Z /
+143953Z / **154055Z TRUE-SANDBOX**; MSTR /seams enforcement ground-truth found the residual 2):
 
 - **Vector 1 -- CONTEXT-INJECTION (no tool-call):** a fabric-lane spawn auto-injects CLAUDE.md +
   memory-recall + org/XXX.md via system-reminders. CLAUDE.md states several corpus root-causes
   VERBATIM (incl. #1 ADVI_BREAKS). Invisible to a file-read audit. -> closed by the **sanitized
-  bare-launch** (below) + the `assert_clean_context()` standing gate.
-- **Vector 2 -- FILE-READ answer-lookup:** the solver deliberately Reads/Greps the incident's
-  narrative/resolution record. -> closed by the **tool-log path-audit VOID-gate** (below).
+  bare-launch** + the `assert_clean_context()` / `assert_live_context_clean()` gates AND (TRUE-SANDBOX)
+  the injection-marker files (CLAUDE.md / org/XXX.md / memory) are ABSENT from the solver's sandbox cwd.
+- **Vector 2 -- FILE-READ answer-lookup:** the solver Reads/Greps the incident's narrative/resolution
+  record -- OR the compproof answer-key `corpus.py`, which used to sit in the ALLOWED org/modules/graph
+  tree (MSTR finding-1). -> closed PRIMARILY by the **TRUE-SANDBOX**: the solver runs in a FILTERED REPO
+  COPY where the ENTIRE forbidden set is PHYSICALLY ABSENT (+ no `.git`, so no `git show HEAD:<forbidden>`
+  recover), so a broad `grep -r X .` finds nothing forbidden. The **tool-log path-audit** (`cheat_check`,
+  now incl. `org/modules/graph/compproof/`) stays as the post-hoc backstop for any absolute-path read.
+- **Vector 3 -- GRAPH-CONTENT answer-lookup (MSTR finding-2):** comp-kuzu / comp-blast are ALLOWED, so
+  if the derive ever indexed narrative prose as node CONTENT, the answer could arrive via the graph. ->
+  closed by `assert_graph_no_narrative()` (fail-loud if any node name/props carries a narrative marker;
+  the structural graph asserts 0 today; guards a future derive regression).
 
-Context-suppress + file-audit = airtight (belt AND suspenders).
+TRUE-SANDBOX (prevention) + context-gate + graph-check + the post-hoc file-audit (backstop) =
+DEFENSE-IN-DEPTH. NOT claimed "airtight" -- these are layered guards MSTR /seams re-tests, not a proof.
 
 ## The allow / deny boundary (CTO clean-room)
 
@@ -32,8 +42,11 @@ the real ADVI_BREAKS solve used):
 - `CLAUDE.md` (incident-prose / NEVER-history) and any `*compiler-tools-log*`
 - `docs/**` postmortem docs (arch/PRD docs stay ALLOWED -- only postmortems are forbidden)
 
-Enforced in code: `harness._is_forbidden_path()` + `harness.resolution_artifacts()` (THIS incident's
-citation, the definite record).
+Enforced in code: **TRUE-SANDBOX** `build_sandbox.sh` (filtered repo copy, forbidden physically absent,
+no `.git`; fail-closed self-verify) + `spawn_solver.sh` (per-solver sandbox cwd); `harness._is_forbidden_path()`
+(now incl. `org/modules/graph/compproof/`) + `harness.cheat_check()` (post-hoc backstop audit) +
+`harness.resolution_artifacts()` (THIS incident's citation) + `harness.assert_graph_no_narrative()`
+(Vector-3 graph-content check).
 
 ## 1. LAUNCH -- sanitized bare-launch (Vector-1 close)
 

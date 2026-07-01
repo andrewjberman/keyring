@@ -19,6 +19,7 @@ from __future__ import annotations
 
 import os
 import re
+import subprocess
 import sys
 
 _HERE = os.path.dirname(os.path.abspath(__file__))
@@ -134,6 +135,48 @@ def cheat_check(traversal_path, incident: dict) -> dict:
                              if ("/" in tok) and _is_forbidden_path(tok)})
     return {"cheated": bool(citation_hits or narrative_hits),
             "citation_hits": citation_hits, "narrative_hits": narrative_hits}
+
+
+# FIX-3 graph-check (MSTR finding-2): the THIRD leak vector. comp-kuzu/comp-blast are ALLOWED, so if
+# the derive ever indexed NARRATIVE PROSE (an incident record / root-cause description) as node CONTENT
+# (name/props), a solver could retrieve the answer through the allowed graph surface -- past both the
+# context gate AND the file-read audit. The graph is structural (AWS resources / pipeline scripts /
+# S3 keys), so this asserts 0; it is a fail-loud guard against a future derive regression that folds
+# narrative into node props.
+_GRAPH_NARRATIVE_MARKERS = ("postmortem", "root cause", "root-cause", "NEVER#",
+                            "one miss = an incident", "incident report", "resolution record")
+
+
+def assert_graph_no_narrative(timeout: int = 120) -> dict:
+    """Assert the live comp-kuzu graph does NOT index narrative prose as node content. Runs ONE
+    comp-kuzu CONTAINS query over the markers; returns {clean, hits, query, detail}. VOID/fail-loud on
+    any hit (the graph itself could hand a solver the answer). Structural graph -> expected clean=True."""
+    conds = " OR ".join("n.props CONTAINS '%s' OR n.name CONTAINS '%s'" % (m, m)
+                        for m in _GRAPH_NARRATIVE_MARKERS)
+    q = "MATCH (n) WHERE %s RETURN count(n) AS narrative_nodes" % conds
+    # comp-kuzu is a bash wrapper around `python <ws>/infra/aws/globgrph/kuzu_cli.py <query>`. Call
+    # kuzu_cli.py directly via sys.executable (same interpreter, cwd=ws) -- avoids the bash hop, which
+    # is fragile from Windows-python (a broken WSL /bin/bash relay shadows git-bash on this host).
+    ws = os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(
+        os.path.dirname(os.path.abspath(__file__))))))  # compproof->graph->modules->org->ws
+    kuzu_cli = os.path.join(ws, "infra", "aws", "globgrph", "kuzu_cli.py")
+    try:
+        r = subprocess.run([sys.executable, kuzu_cli, q], capture_output=True, text=True,
+                           timeout=timeout, cwd=ws)
+    except Exception as e:  # noqa: BLE001
+        return {"clean": False, "hits": None, "query": q, "detail": "comp-kuzu invocation failed: %r" % e}
+    n = None
+    for line in r.stdout.splitlines():
+        s = line.strip()
+        if s.isdigit():
+            n = int(s)
+            break
+    if n is None:
+        return {"clean": False, "hits": None, "query": q,
+                "detail": "could not parse comp-kuzu count; stderr=%r" % r.stderr[:200]}
+    return {"clean": n == 0, "hits": n, "query": q,
+            "detail": "structural graph carries no narrative-in-node-content" if n == 0
+                      else "%d node(s) carry narrative prose in content -- derive regression" % n}
 
 
 # Fabric-injection markers: files a `claude -p` launch auto-loads by walking UP from its cwd (CLAUDE.md
