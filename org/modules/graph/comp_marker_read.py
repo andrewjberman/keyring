@@ -97,6 +97,29 @@ _GC = _load_grain_contract()
 _DRILL_FORWARD = ("RUNS", "CONTAINS")
 _DRILL_REVERSE = ("OWNED_BY",)
 
+# The TRACE-GRAPH SCOPE (byte-match target for the re-point): the node namespaces + edge types
+# the pre-delta .comp-graph/graph.json trace graph carried (grounded on CVO~B's frozen
+# graph.json.pinned_predelta: node ns gold/s3/lambda/endpoint/eventbridge/component; edges
+# CALLS/READS_S3/WRITES_S3/FETCHES/TRIGGERS -- NOTABLY NO CONTAINS). as_tracegraph() projects
+# EXACTLY this scope so comp-blast/trace/xref reproduce their pre-delta answers set-equal; the
+# marker-head's unification EXPANSION (CONTAINS containers + RUNS/OWNED_BY infra strata + the
+# resource/portal/MS namespaces) stays available to GRAPHDEPTH via the FULL projection
+# (nodes()/drill()/rollup()), never leaking into the re-pointed tools' default answers.
+_TRACEGRAPH_NAMESPACES = frozenset(("gold", "s3", "lambda", "endpoint", "eventbridge", "component"))
+_TRACEGRAPH_EDGE_TYPES = frozenset(("CALLS", "READS_S3", "WRITES_S3", "FETCHES", "TRIGGERS"))
+
+
+def _namespace(canon: str) -> str:
+    return canon.split(":", 1)[0] if ":" in canon else ""
+
+
+def _script_of(canon: str):
+    """The SCRIPT id of a canonical function id (gold:<script>:<fn> -> gold:<script>); None if
+    not a function. Used for the scoped-projection script-grain s3 rollup."""
+    if canon.startswith("gold:") and canon.count(":") >= 2:
+        return canon.rsplit(":", 1)[0]
+    return None
+
 
 # ---- id canonicalization: Kuzu marker-head id -> TraceGraph namespace -------------------
 # Grounded against the live CloudNode ids + CVO~B's frozen fixture answer ids (both sides
@@ -119,6 +142,9 @@ def canon_id(node_id: str, node_type: str = "") -> str:
     if nid.startswith("arn:aws:lambda:") and ":function:" in nid:
         return "lambda:" + nid.split(":function:", 1)[1]
     # already-canonical (gold:/s3:/lambda:/endpoint:/module:) or an as-yet-unmapped type
+    # NOTE: s3-key glob-form (bare '*' vs '{*}') is NOT normalized here -- the frozen fixture
+    # itself carries BOTH forms heterogeneously (per-key, from build_graph), so no single
+    # normalization matches; the key-form + coverage divergence is the deferred re-point finding.
     return nid
 
 
@@ -145,20 +171,20 @@ class MarkerHeadGraph:
         self.provenance = provenance          # {status, marker_head, nodes_snapshot_id, built_at}
         self._raw_nodes = nodes               # [{node_id, node_type, arn, props}]
         self._raw_edges = edges               # [{src, dst, edge_type}]
-        self._tg: TraceGraph | None = None
+        self._tg: TraceGraph | None = None        # scoped (re-point) projection cache
+        self._full_tg: TraceGraph | None = None   # full (GRAPHDEPTH) projection cache
 
-    # -- GRAPHUNI re-point surface: the byte-compatible TraceGraph projection --
-    def as_tracegraph(self) -> TraceGraph:
-        """Id-canonicalized TraceGraph at the marker head. Each Node.metadata carries
-        `grains` (SET) + `level` for GRAPHDEPTH depth-scoping (extra metadata keys do NOT
-        change the lens logic, which reads id/node_type/label/file_path/function_name)."""
-        if self._tg is not None:
-            return self._tg
+    # -- projection (scoped=trace-graph re-point target; unscoped=full estate for GRAPHDEPTH) --
+    def _project(self, scoped: bool) -> TraceGraph:
         g = TraceGraph(built_at=_as_epoch(self.provenance.get("built_at")))
+        keep: set = set()
         for rn in self._raw_nodes:
             nt = rn.get("node_type") or "UNKNOWN"
             props = rn.get("props") or {}
             cid = canon_id(rn.get("node_id") or rn.get("arn") or "", nt)
+            if scoped and _namespace(cid) not in _TRACEGRAPH_NAMESPACES:
+                continue   # unification-expansion node (resource/portal/MS strata) -> GRAPHDEPTH only
+            keep.add(cid)
             grains = _grains_for(nt)
             g.add_node(Node(
                 id=cid, node_type=nt,
@@ -170,17 +196,49 @@ class MarkerHeadGraph:
                           "marker_head": self.provenance.get("marker_head")},
             ))
         for re in self._raw_edges:
+            et = re.get("edge_type") or "UNKNOWN"
+            if scoped and et not in _TRACEGRAPH_EDGE_TYPES:
+                continue   # CONTAINS/RUNS/OWNED_BY are unification/depth edges -> not in the trace-graph scope
             s = canon_id(re.get("src") or "", "")
             t = canon_id(re.get("dst") or "", "")
-            g.add_edge(Edge(source=s, target=t, edge_type=re.get("edge_type") or "UNKNOWN"))
-        self._tg = g
+            if scoped and (s not in keep or t not in keep):
+                continue
+            g.add_edge(Edge(source=s, target=t, edge_type=et))
+            # SCRIPT-GRAIN s3 ROLLUP (scoped only): the pre-delta trace graph modeled READS/WRITES_S3
+            # at SCRIPT grain (script<->s3, 445 edges) alongside some function-grain (131); the
+            # compute producer is function-grain only. Roll each function<->s3 up to script<->s3
+            # (existential: a script reads/writes s3 iff a contained function does -- the function id
+            # encodes its script) so cross-script blast/trace reachability matches the frozen fixture.
+            if scoped and et in ("READS_S3", "WRITES_S3"):
+                s_scr, t_scr = _script_of(s), _script_of(t)
+                if s_scr and s_scr in keep and s_scr != s:
+                    g.add_edge(Edge(source=s_scr, target=t, edge_type=et))
+                if t_scr and t_scr in keep and t_scr != t:
+                    g.add_edge(Edge(source=s, target=t_scr, edge_type=et))
         return g
+
+    # -- GRAPHUNI re-point surface: the byte-compatible (trace-graph-SCOPED) projection --
+    def as_tracegraph(self) -> TraceGraph:
+        """Trace-graph-SCOPED, id-canonicalized projection at the marker head -- the byte-match
+        target for the re-pointed comp-blast/trace/xref (only the pre-delta trace-graph scope:
+        namespaces gold/s3/lambda/endpoint/eventbridge/component + edges CALLS/READS_S3/WRITES_S3/
+        FETCHES/TRIGGERS). Each Node.metadata carries `grains` SET + `level` (harmless extra keys;
+        the lens reads id/node_type/label/file_path/function_name)."""
+        if self._tg is None:
+            self._tg = self._project(scoped=True)
+        return self._tg
+
+    def full(self) -> TraceGraph:
+        """FULL unified projection (all strata, unscoped) -- for GRAPHDEPTH nodes/drill/rollup."""
+        if self._full_tg is None:
+            self._full_tg = self._project(scoped=False)
+        return self._full_tg
 
     # -- GRAPHDEPTH P3 surface (~C-coordinated) --
     def nodes(self, *, scope_grain=None) -> list[Node]:
         """Grain-scoped node set. scope_grain (str | set | None) filters by MEMBERSHIP in
         each node's grains SET (~C refinement: many-to-many, not equality)."""
-        g = self.as_tracegraph()
+        g = self.full()
         if scope_grain is None:
             return list(g.nodes.values())
         want = {scope_grain} if isinstance(scope_grain, str) else set(scope_grain)
@@ -188,7 +246,7 @@ class MarkerHeadGraph:
                 if want & set(n.metadata.get("grains") or [])]
 
     def _adj(self, forward: bool):
-        g = self.as_tracegraph()
+        g = self.full()
         adj: dict[str, list[Edge]] = {}
         for e in g.edges:
             key = e.source if forward else e.target
@@ -209,7 +267,7 @@ class MarkerHeadGraph:
                               fwd_types=_DRILL_REVERSE, rev_types=_DRILL_FORWARD)
 
     def _traverse(self, start: str, to_grain: str, fwd_types, rev_types) -> list[Node]:
-        g = self.as_tracegraph()
+        g = self.full()
         fwd, rev = self._adj(True), self._adj(False)
         want, seen, out, stack = to_grain, set(), [], [start]
         while stack:
