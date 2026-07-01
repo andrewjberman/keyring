@@ -295,11 +295,23 @@ def adapter_comp_freshness(seam, target, ctx):
         return _record(seam, target or "<served>", "UNVERIFIABLE",
                        "live served-freshness read skipped (cost-guard; --deep to run)")
     rc, out = _bash("comp-freshness", *([target] if target else []))
-    tok = _first_token(out, ["STALE", "UNVERIFIABLE", "FRESH"])
-    if tok is None:
+    # HARDENED (grounded on comp-freshness source): the tool's AUTHORITATIVE rollup is its EXIT
+    # CODE, not a printed token -- print_results() returns `1 if any_fail else 0`, main() max()es
+    # it across the bd/inf/cot/ddb chains, and 2 = config/arg error. Its per-row STATUS vocab is
+    # PASS/WARN/FAIL/SKIP; it NEVER prints "STALE"/"FRESH" as a verdict (those appear only inside
+    # note substrings like MTIME-FRESH-BUT-CONTENT-STALE), so the old _first_token([STALE,
+    # UNVERIFIABLE,FRESH]) keyed off the WRONG vocabulary -- it read notes, not the verdict.
+    if rc in (124, 125, 127):
         return _record(seam, target or "<served>", "UNVERIFIABLE",
-                       "comp-freshness rc=%s (verdict unparsed)" % rc)
-    return _record(seam, target or "<served>", tok, "comp-freshness -> %s" % tok)
+                       "comp-freshness unavailable (rc=%s: timeout/not-found/error)" % rc)
+    if rc == 0:
+        return _record(seam, target or "<served>", "FRESH",
+                       "comp-freshness exit 0: no FAIL row (served chain fresh; WARN=aging tolerated)")
+    if rc == 1:
+        return _record(seam, target or "<served>", "STALE",
+                       "comp-freshness exit 1: >=1 FAIL row (a served artifact is stale/failed)")
+    return _record(seam, target or "<served>", "UNVERIFIABLE",
+                   "comp-freshness exit %s (config/arg error or unknown -- not assuming FRESH)" % rc)
 
 
 def adapter_uncovered(seam, target, ctx):
