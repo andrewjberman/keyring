@@ -12401,3 +12401,29 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-07-01 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .claude/skills/registry-check/SKILL.md ... | PASS |
 2026-07-01 | 0.4.0_DE_ClientPlatform | comp-cluster(--json x15,--list), comp-kuzu(SERVED_FROM+edge dumps), comp-platinum(tab-audit,summary), comp-freshness(chain bd/cot + artifact x25), comp-which x3, comp-grep, comp-pipescript(deployed:PARTIAL wrong-firm), pipescript(advi-cot) -> NFRA_COMPTEAM B1 map v0.1-v0.3 (91 clusters, 2-tier grounded, CTO-accepted) + TAGATTR/COTMVP render-verify grounding. Gap: SERVED_FROM covers static only -> dynamic-edge enrich routed to my TSGRAPH lane.
 | 2026-07-01 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-01 | 0.7.0_AE_CloudOps~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/briefs/scty-mcpguard-provider-chec... | PASS |
+| 2026-07-01 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-kuzu | comp-kuzu MATCH (n:CloudNode) WHERE n.node_type='ServedURL' AND n.node_id CONTAINS 'sco... | PASS |
+| 2026-07-01 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-kuzu | comp-kuzu MATCH (n:CloudNode) WHERE n.node_type='ServedURL' AND (n.node_id CONTAINS 'ad... | PASS |
+| 2026-07-01 | 0.7.0_AE_CloudOps~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/change_management/20... | PASS |
+| 2026-07-01 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/briefs/nfra-tsgraph-dynamic-served... | PASS |
+| 2026-07-01 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/task_orders... | PASS |
+| 2026-07-01 | 0.5.0_AE_OpalETL | MDPF_49F_SCHWAB_BASIS_SWITCH | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/ci/lambda-source-map.j... | PASS |
+| 2026-07-01 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+| 2026-07-01 | 0.5.0_AE_OpalETL | MDPF_49F_SCHWAB_BASIS_SWITCH | comp-lambdamap | comp-lambdamap reconcile-deployed --functions mdpf-daily-trigger --settle-retry-seconds... | PASS |
+| 2026-07-01 | 0.5.0_AE_OpalETL | MDPF_49F_SCHWAB_BASIS_SWITCH | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/ci/lambda-source-map.j... | PASS |
+| 2026-07-01 | 0.5.0_AE_OpalETL | MDPF_49F_SCHWAB_BASIS_SWITCH | comp-surface-check | comp-surface-check check --mode advisory --file docs/briefs/mdpf-wse-swap-handoff-to-ds... | PASS |
+| 2026-07-01 | 0.7.0_AE_CloudOps~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/NFRA_INTEGRATIONS_PRD... | PASS |
+| 2026-07-01 | 0.7.0_AE_CloudOps~A | (no-TO) | comp-blast | comp-blast run_integration_tool | FAIL |
+| 2026-07-01 | 0.7.0_AE_CloudOps~A | (no-TO) | comp-blast | comp-blast resolve_tier | FAIL |
+| 2026-07-01 | 0.4.0_DS_ClientPlatform~A | (no-TO) | pipescript | pipescript --resource schwab/silver/rps | FAIL |
+| 2026-07-01 | 0.5.0_AE_OpalETL | MDPF_49F_SCHWAB_BASIS_SWITCH | comp-surface-check | comp-surface-check check --mode advisory --file docs/briefs/mdpf-leg2-schwab-native-san... | PASS |
+| 2026-07-01 | 0.7.0_AE_CloudOps~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/NFRA_INTEGRATIONS_PRD... | PASS |
+| 2026-07-01 | 0.4.0_DS_ClientPlatform~A | (no-TO) | comp-pipescript | comp-pipescript io build_mdpf_wse_49f_non_model_aua.py | PASS |
+| 2026-07-01 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+| 2026-07-01 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-kuzu | comp-kuzu --json MATCH (n:CloudNode) WHERE n.node_type IN ['S3_BUCKET','S3'] AND n.name... | PASS |
+| 2026-07-01 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-kuzu | comp-kuzu --json MATCH (n:CloudNode) WHERE n.node_type='Endpoint' RETURN n.node_id AS i... | PASS |
+| 2026-07-01 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/globgrph/derive_runner.py --f... | PASS |
+| 2026-07-01 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DE_ClientPlatfor... | PASS |
+| 2026-07-01 | 0.7.0_AE_CloudOps~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/ec2/m365-mcp-gateway/app/guar... | PASS |
+2026-07-01 | 0.4.0_DE_ClientPlatform | comp-kuzu (ServedURL/Endpoint/S3 node pull -> 'no ADVI ServedURL node' finding), comp-freshness (PER-ENTITY travis_penfield live-confirm), python local-dry-run (extracted-slice vs live S3: 26 edges/0 dangling) -> TSGRAPH stitch_served_from_dynamic built+validated+AE-handoff. Infra commit correctly owned-paths-blocked (AE lane) -> bundled+routed.
+| 2026-07-01 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
