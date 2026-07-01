@@ -59,10 +59,25 @@ catching the coverage gap via the fixture BEFORE wiring the re-point (the fixtur
 **Gap found:** THE finding -- the GRAPHUNI population's compute slice under-covers build_graph's
 cross-script data-flow; the re-point can't byte-match until that's resolved (fork).
 
+## RESOLUTION (JOINT VERDICT -> (b) LANDED, CLOSE-READY)
+COO~B relayed the converged CTO+CVO~B verdict = **(b)-GO** (head-pinned build_graph; (a) literal-Kuzu
+DEFERRED as the coverage-equivalence workstream; (c) rejected). "Do NOT regress coverage to satisfy the
+letter" (CTO). Shipped (b):
+- **4 structure tools head-pinned** -- cli.py::_get_graph (blast/trace/xref, e0d839996) + graph_cache
+  DEFAULT (platinum, 70ff64a56): serve the cache ONLY if drift-free (current source), else rebuild.
+- **Producer head-pinned** -- extract_gold_compute (57518fc3a): rebuild-if-stale before read (the ACTUAL
+  1347 phantom source, folded into the close per COO~B ITEM-2 "don't over-claim").
+- **D4 one-head assertion** -- test PASSING (gc drift->miss; _get_graph rebuilds on source-drift, serves
+  current sha). Exec-land routed to CVO~B (tests/ = ANY_EXEC, AE-blocked).
+- **CVO~B (b) cert GREEN (150e0b8b4)** -- blast 28/28, trace 6/6, platinum 8/8 byte-equal; xref delta
+  DECISIVELY confirmed source-drift (re-pointed == fresh build_graph, both != 20h-stale fixture). Zero
+  re-point regression. Coverage PRESERVED (blast 216/148, not the 13-node Nessie regression).
+GRAPHUNI closes VINTAGE-unified (phantom class killed) on the D4-test-land + COO~B 2-step. NOT graph-unified
+-- (a) is the tracked follow-on (CVO~B pins the coverage-equivalence measurement).
+
 ## Blockers
-Re-point HELD on COO~B's converged CTO(ruling-2)+CVO~B(fixture-bar) verdict -- a real external gate,
-explicitly instructed ("do not act until I relay the joint verdict"). NOT assumption-blocked. Read-handle
-infra + ~C's GRAPHDEPTH P3 are UNBLOCKED + proceeding.
+None assumption-blocked. Residual = exec steps: D4-test SoD-land (CVO~B) + COO~B 2-step close. (a) +
+GRANTS_S3 + NFRA_INFRPT retire-tail = the COO~B-sequenced post-close queue.
 
 ## Next Steps
 1. **[1.0.0_SA_CTO / 3.0.0_SA_CVO~B]** the converged ruling (a/b/c) -- COO~B relays ONE decision.
