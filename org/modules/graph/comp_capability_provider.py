@@ -53,6 +53,30 @@ except ImportError as exc:  # pragma: no cover - yaml is a repo baseline dep
 
 _HERE = os.path.dirname(os.path.abspath(__file__))
 DEFAULT_MAP_PATH = os.path.join(_HERE, "comp-coverage-map.yaml")
+_MANIFEST_PATH = os.path.join(_HERE, "graph-call-manifest.yaml")
+
+
+def _load_write_path_tools(manifest_path=None):
+    """Per-tool cap.write_path, sourced from ~B's DR3 manifest tags (E1). A tool is a genuine WRITE-PATH
+    tool (DR1 route() excludes it from a read/navigate intent) IFF it has >=1 write_path entry AND NO
+    read-answering entry -- i.e. a WHOLE-write tool (comp-build). A MIXED tool stays write_path=False:
+    comp-aws's `derive` is write but classes/metrics/diff ANSWER reads; comp-lambdamap's `derive --write`
+    is a subcommand but deploy-SHA parity is a read. Tool-level exclusion of a mixed tool would wrongly
+    drop its reads (and regress its read self-route). ~C DR2 finding: E1 tool-level exclusion is
+    whole-write-tools ONLY; a write SUBCOMMAND is a COMPUTE-intent action (free, never read-routed)."""
+    try:
+        import yaml
+        with open(manifest_path or _MANIFEST_PATH, "r", encoding="utf-8") as fh:
+            m = yaml.safe_load(fh) or {}
+    except Exception:  # noqa: BLE001 -- manifest unreadable => no write-path exclusion (fail-open, surfaced)
+        return frozenset()
+    per_tool = {}
+    for e in (m.get("entries") or []):
+        tool = str(e.get("tool", "")).split()[0]
+        if tool:
+            per_tool.setdefault(tool, []).append(bool(e.get("write_path", False)))
+    return frozenset(t for t, flags in per_tool.items() if flags and all(flags))
+
 
 # The affinity-key domain (== the normalized cap.surface). Surface-homed tools key
 # on their surface; seam-homed tools bucket to SEAM; the tooling layer buckets to META.
@@ -60,10 +84,19 @@ SEAM_KEY = "SEAM"
 META_KEY = "META"
 SURFACE_KEYS = ("LOCAL", "GIT", "AWS-CLOUD", "MS-CLOUD", "TRINO", SEAM_KEY, META_KEY)
 
-# meta_tool roles that ARE routing targets (the never-dead-end search primitives
-# comp-which RUNS when no rich tool fits); the rest of the tooling layer is present
-# for INVENTORY COMPLETENESS (never-silent) but not a routing candidate.
-_ROUTABLE_META_ROLES = frozenset({"search-primitive"})
+# meta_tool roles that ARE routing TARGETS (comp-which routes intents TO them -- they appear in the
+# manifest tools_index). DR2 (default-router): the routable set must match comp-which's actual routing
+# targets, so an agent's intent can reach e.g. pipescript (a pipeline is resources wired by python
+# scripts -- pipescript walks that named thread), comp-build (rebuild the trace cache), comp-coverage
+# (coverage report), comp-drift (drift orchestrator), comp-registry (registry drift). NON-routable =
+# the tooling INFRA that is never a route target: router (comp-which itself), search-primitive
+# (comp-grep/glob -- the never-dead-end FALLBACK, surfaced via route()'s kind="fallback", not a scored
+# candidate), session-primitive (comp-to), enforcement-gate (the commit gates), test-harness,
+# meta-measurement (comp-perf). Present-for-completeness (routable=False) still keeps inventory whole.
+_ROUTABLE_META_ROLES = frozenset({
+    "estate-router", "cache-management", "meta-report", "governance",
+    "compdrift-loop", "complearn-loop",
+})
 
 # Minimal stopword set for keyword extraction (query_match wants a rich bag-of-words,
 # so filter only true noise words + the ubiquitous "comp" token).
@@ -93,6 +126,10 @@ class Capability:
     declared_grains: Tuple[str, ...] = ()   # tool_grain_calibration operating grains
     kind: str = "surface"                   # "surface" | "seam" | "meta"
     routable: bool = True                   # a routing target vs present-for-completeness
+    write_path: bool = False                # E1 (DR3, ~B-tagged): a genuine WRITE-PATH tool (rebuild/derive/
+    #                                         write, e.g. comp-aws-derive/comp-build) -> EXCLUDED from a
+    #                                         read/navigate intent by DR1 route()'s Stage-A. read-recompute
+    #                                         (default) stays write_path=False. The engine reads cap.write_path.
 
 
 class CapabilityMapProvider:
@@ -175,6 +212,7 @@ def _grains_for(tool_id: str, grain_map: Mapping[str, Any], fallback: str) -> Tu
 def _build_capabilities(m: Mapping[str, Any]) -> List[Capability]:
     """Project the COMPUNIFY map (tools[] + meta_tools[]) into Capability records."""
     grain_map = ((m.get("tool_grain_calibration") or {}).get("tool_grain_map")) or {}
+    write_path_tools = _load_write_path_tools()   # E1: whole-write tools (~B DR3 manifest tags), read-excluded
     caps: List[Capability] = []
 
     # ---- surface / seam-homed inspection tools (the routing targets) ----
@@ -205,6 +243,7 @@ def _build_capabilities(m: Mapping[str, Any]) -> List[Capability]:
                 declared_grains=_grains_for(tool_id, grain_map, grain),
                 kind=kind,
                 routable=True,
+                write_path=(tool_id in write_path_tools),
             )
         )
 
@@ -228,6 +267,7 @@ def _build_capabilities(m: Mapping[str, Any]) -> List[Capability]:
                 declared_grains=tuple(str(g) for g in declared) if declared else (),
                 kind="meta",
                 routable=role in _ROUTABLE_META_ROLES,
+                write_path=(tool_id in write_path_tools),
             )
         )
 
