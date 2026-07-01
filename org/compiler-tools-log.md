@@ -12327,3 +12327,74 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 2026-07-01 2.0.0_SA_COO~B -- COMPPROOF definitive blind-run COORDINATE window: no own comp-tool runs (blind-run orchestration + verdict routing via MCP); harness/judge tooling ran under MSTR (build_sandbox.sh/spawn_solver.sh/content-audit) + CVO~B (blind_run.py/harness.cheat_check/3-axis score_run) + ~A (aggregation). VALIDATE carry-in: my independent allowlist re-verify superseded by CVO~B tool_log grounding (finding B, sandbox-bypass).
 | 2026-07-01 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-kuzu | comp-kuzu MATCH (n:CloudNode) WHERE n.node_type='ServedURL' RETURN n.name AS name, n.no... | PASS |
 | 2026-07-01 | 2.0.0_SA_COO~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-01 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-kuzu | comp-kuzu MATCH (a:CloudNode)-[e:CloudEdge]->(b:CloudNode) WHERE a.node_id IN ['endpoin... | PASS |
+| 2026-07-01 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-kuzu | comp-kuzu MATCH (a:CloudNode)-[e:CloudEdge]->(b:CloudNode) WHERE b.node_id='endpoint:ge... | PASS |
+| 2026-07-01 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-kuzu | comp-kuzu MATCH (a:CloudNode)-[e:CloudEdge]->(b:CloudNode) WHERE e.edge_type='SERVED_FR... | PASS |
+| 2026-07-01 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-cluster | comp-cluster PortfolioManagement --json | PASS |
+| 2026-07-01 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-cluster | comp-cluster TradeSubmission --json | PASS |
+| 2026-07-01 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-cluster | comp-cluster AdvisorIntelligence --json | PASS |
+| 2026-07-01 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-cluster | comp-cluster DataRefresh --json | PASS |
+| 2026-07-01 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-cluster | comp-cluster MarketPerformance --json | PASS |
+| 2026-07-01 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-cluster | comp-cluster SecurityScanner --json | PASS |
+| 2026-07-01 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-cluster | comp-cluster FactorTilts --json | PASS |
+| 2026-07-01 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-cluster | comp-cluster Valuation --json | PASS |
+| 2026-07-01 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-cluster | comp-cluster Attribution --json | PASS |
+| 2026-07-01 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-cluster | comp-cluster auth --json | PASS |
+| 2026-07-01 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-cluster | comp-cluster Correlation --json | PASS |
+| 2026-07-01 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-cluster | comp-cluster Positioning --json | PASS |
+| 2026-07-01 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-cluster | comp-cluster CapitalMarketAssumptions --json | PASS |
+| 2026-07-01 | 0.2.0_DT_PortfolioAnalytics | (no-TO) | comp-blast | comp-blast yang-generate-holdings-attribution | PASS |
+| 2026-07-01 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-cluster | comp-cluster Macroeconomics --json | PASS |
+| 2026-07-01 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-cluster | comp-cluster ModelPortfolios --json | PASS |
+| 2026-07-01 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-cluster | comp-cluster PortfolioManagement --json | PASS |
+| 2026-07-01 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-cluster | comp-cluster TradeSubmission --json | PASS |
+| 2026-07-01 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-cluster | comp-cluster AdvisorIntelligence --json | PASS |
+| 2026-07-01 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-cluster | comp-cluster DataRefresh --json | PASS |
+| 2026-07-01 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-cluster | comp-cluster MarketPerformance --json | PASS |
+| 2026-07-01 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-cluster | comp-cluster SecurityScanner --json | PASS |
+| 2026-07-01 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-cluster | comp-cluster FactorTilts --json | PASS |
+| 2026-07-01 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-cluster | comp-cluster Valuation --json | PASS |
+| 2026-07-01 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-cluster | comp-cluster Attribution --json | PASS |
+| 2026-07-01 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-cluster | comp-cluster auth --json | PASS |
+| 2026-07-01 | 0.2.0_DT_PortfolioAnalytics | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/ci/lambda-source-map.j... | PASS |
+| 2026-07-01 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-cluster | comp-cluster Correlation --json | PASS |
+| 2026-07-01 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-cluster | comp-cluster Positioning --json | PASS |
+| 2026-07-01 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-cluster | comp-cluster CapitalMarketAssumptions --json | PASS |
+| 2026-07-01 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-cluster | comp-cluster Macroeconomics --json | PASS |
+| 2026-07-01 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-cluster | comp-cluster ModelPortfolios --json | PASS |
+| 2026-07-01 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-kuzu | comp-kuzu --help | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-kuzu | comp-kuzu MATCH (n:CloudNode) WHERE n.node_type='CW_ALARM' AND n.name='inf-gold-chain-f... | PASS |
+| 2026-07-01 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-kuzu | comp-kuzu --json MATCH (a:CloudNode)-[e:CloudEdge]->(b:CloudNode) WHERE e.edge_type='SE... | PASS |
+| 2026-07-01 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-kuzu | comp-kuzu --json MATCH (a:CloudNode)-[e:CloudEdge]->(b:CloudNode) WHERE e.edge_type IN ... | PASS |
+| 2026-07-01 | 0.5.0_AE_OpalETL | MDPF_49F_SCHWAB_BASIS_SWITCH | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/ec2/m365-mcp-gateway/app/audi... | PASS |
+| 2026-07-01 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-kuzu | comp-kuzu --json MATCH (a:CloudNode)-[e:CloudEdge]->(b:CloudNode) WHERE e.edge_type='SE... | PASS |
+| 2026-07-01 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-kuzu | comp-kuzu --json MATCH (a:CloudNode)-[e:CloudEdge]->(b:CloudNode) WHERE e.edge_type IN ... | PASS |
+| 2026-07-01 | 0.2.0_DT_PortfolioAnalytics | (no-TO) | comp-lambdamap | comp-lambdamap reconcile-deployed --functions yang-generate-holdings-attribution --sett... | PASS |
+| 2026-07-01 | 0.2.0_DT_PortfolioAnalytics | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/ci/lambda-source-map.j... | PASS |
+| 2026-07-01 | 0.2.0_DT_PortfolioAnalytics | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.2.0_DT_PortfolioAnal... | PASS |
+| 2026-07-01 | 0.5.0_AE_OpalETL | MDPF_49F_SCHWAB_BASIS_SWITCH | comp-surface-check | comp-surface-check check --mode advisory --file docs/briefs/mdpf-trigger-repoint-schwab... | PASS |
+| 2026-07-01 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+| 2026-07-01 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+| 2026-07-01 | 0.5.0_AE_OpalETL | MDPF_49F_SCHWAB_BASIS_SWITCH | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/mdpf-pipeline/mdpf-dai... | PASS |
+| 2026-07-01 | 0.5.0_AE_OpalETL | MDPF_49F_SCHWAB_BASIS_SWITCH | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/mdpf-pipeline/mdpf-dai... | PASS |
+| 2026-07-01 | 0.7.0_AE_CloudOps~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/ec2/m365-mcp-gateway/deploy-t... | PASS |
+| 2026-07-01 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+| 2026-07-01 | 0.7.0_AE_CloudOps~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/ec2/EC2_MANIFEST.json | PASS |
+| 2026-07-01 | 0.2.0_DT_PortfolioAnalytics | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/change_management/20... | PASS |
+| 2026-07-01 | 0.5.0_AE_OpalETL | MDPF_49F_SCHWAB_BASIS_SWITCH | comp-surface-check | comp-surface-check check --mode advisory --file docs/briefs/nfra-integrations-project-p... | PASS |
+| 2026-07-01 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DE_ClientPlatfor... | PASS |
+| 2026-07-01 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-platinum | comp-platinum --help | PASS |
+| 2026-07-01 | 0.7.0_AE_CloudOps~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/briefs/safe-ec2-deploy-worktree-se... | PASS |
+| 2026-07-01 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-platinum | comp-platinum tab-audit | PASS |
+| 2026-07-01 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-platinum | comp-platinum tab-audit | PASS |
+| 2026-07-01 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/NFRA_INTEGRATIONS_PRD... | PASS |
+| 2026-07-01 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-platinum | comp-platinum summary | PASS |
+| 2026-07-01 | 0.5.0_AE_OpalETL | MDPF_49F_SCHWAB_BASIS_SWITCH | comp-surface-check | comp-surface-check check --mode advisory --file docs/briefs/nfra-integrations-pillar3-s... | PASS |
+| 2026-07-01 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/NFRA_WEBSITE.json --file o... | PASS |
+| 2026-07-01 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+| 2026-07-01 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DE_ClientPlatfor... | PASS |
+| 2026-07-01 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-kuzu | comp-kuzu MATCH (a:CloudNode)-[e:CloudEdge]->(b:CloudNode) WHERE e.edge_type IN ['WRITE... | PASS |
+| 2026-07-01 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DE_ClientPlatfor... | PASS |
+| 2026-07-01 | 0.5.0_AE_OpalETL | MDPF_49F_SCHWAB_BASIS_SWITCH | comp-iam | comp-iam service mdpf-daily-trigger | PASS |
+| 2026-07-01 | 0.2.0_DT_PortfolioAnalytics | (yang-v2.4.16 parser hardening) | comp-blast | comp-blast yang-generate-holdings-attribution: input-side change, output shape unchanged, no breaking edges (Rule 20 pre-infra); forensic+SFN+notification-config are operational (no comp-tool) | PASS |
+| 2026-07-01 | 0.2.0_DT_PortfolioAnalytics | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
