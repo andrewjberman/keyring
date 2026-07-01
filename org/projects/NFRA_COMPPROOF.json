@@ -1,0 +1,19 @@
+{
+  "project_code": "NFRA_COMPPROOF",
+  "macro_code": "NFRA",
+  "name": "Prove the COMP* Program (+ can it grow itself?)",
+  "description": "Andrew-direct 2026-07-01 (MSTR charter LD-0234/0235). The PHASE-2 meta-test pointed at the graph-substrate program itself: does the shared cognition actually SOLVE real problems, and does the loop actually LEARN autonomously? 4 non-redundant workstreams, spined on B: A=seam/process spot-check sweep (breadth, CVO, rides wave-close); B=THE SPINE, incident-regression graph-solvability benchmark (blind-test agents reach root cause via graph+comp-tools on the REAL record; corpus CAPPED at the pinned top-20 2026 incidents 5402f130b, 10 failure-classes, start ADVI_BREAKS; SOLVED/PARTIAL/MISS under a REACH x USABILITY rubric; misses->gap charters; standing re-runnable suite); C=COMPROUTE efficacy eval (precision@1/recall, CVO Goodhart honesty-gate, AFTER the default-router shadow-flip); D=COMPLEARN autonomy audit (D1: loop real vs dead ratchet, live EventBridge->Fargate artifacts) + D2 self-extending-toolchain spike (FENCED, PROPOSED-NOT-DEPLOYED, gated behind D1, sovereign CL-fabric surface). HARD gates: blind-solver isolation (author!=solver!=judge), REACH x USABILITY, ground-on-live-not-Status, no-invent-incidents, no-auto-merge-synthesized-tools. ~B OFF-LIMITS (it's the validation subject). PRD docs/architecture/NFRA_COMPPROOF_PRD.md.",
+  "prds": [
+    {"path": "docs/architecture/NFRA_COMPPROOF_PRD.md", "label": "COMPPROOF PRD v1.0 (CTO-authored)", "date": "2026-07-01"}
+  ],
+  "status": "active",
+  "phase": "Phase 0: PRD complete (CTO 2026-07-01), COO~B decomposition pending. 1 macro (A/B/C/D1) + D2 fenced-sub. Sequencing: B first (seeds C+D); A/C/D1 concurrent on live artifacts (C after default-router shadow-flip); D2 gated behind D1. Lanes: CTO architects B-harness; DS/AE build; CVO/CVO~B score+honesty-gate; ~E COMPROUTE eval; DE/DS D2 spike. ~B OFF-LIMITS (validation subject). Seed baseline = ~B e2e validation 4e9f0258d (VALIDATED_WITH_GAPS).",
+  "blocking": "COO~B TO decomposition + GO. Leash: do NOT preempt the live gate-lift wave (B/C/D1 ride live artifacts, A rides wave-close; GRAPHDEPTH precedence). D2 CL-fabric re-activation = Andrew-sovereign (RV-0026 F-002), surfaced not self-authorized.",
+  "created": "2026-07-01",
+  "pods": ["0.8", "3.0", "0.4", "1.0", "2.0"],
+  "pipeline": "n/a (graph-substrate program validation + bounded R&D)",
+  "thread_counter": 0,
+  "threads": [],
+  "depends_on": [],
+  "depends_on_note": "Validates the just-shipped COMP* program (COMPROUTE 12c7aa1f4, COMPLEARN bdc6d01a6, COMPDRIFT, GLOBGRPH, GRAPHUNI). C sequences after the reopened default-router shadow-flip (CTO ruling 132556Z). B seed = ~B e2e validation (4e9f0258d). Anti-drift self-consistency: ONE home org/modules/graph/compproof/ + one program ledger + one owner (the validator must not itself drift)."
+}
