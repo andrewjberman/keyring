@@ -46,11 +46,20 @@ def _get_graph(force_rebuild: bool = False, check_freshness: bool = True) -> Tra
     if not force_rebuild and _CACHE_FILE.exists():
         try:
             g = TraceGraph.load(_CACHE_FILE)
-            age = time.time() - g.built_at
-            if age < 300:  # 5 min cache
-                if check_freshness:
-                    drift = check_node_freshness(g, _WORKSPACE)
-                    emit_stale_warn(drift)
+            if check_freshness:
+                # NFRA_GRAPHUNI P2/D2 (b) -- HEAD-PINNED build_graph (JOINT VERDICT 20260701,
+                # CTO ruling-2-intent + CVO~B fixture-bar): serve the cache ONLY if it reflects the
+                # CURRENT source (no node-SHA drift) = ONE current vintage, never a divergent-vintage
+                # cache. This KILLS the stale-cache-phantom class (the 1347-vs-1337 catch) + is the D4
+                # one-head guarantee for the structure tools. A drifted cache -> rebuild (below), NOT
+                # serve-stale-within-a-5min-TTL. Answers stay == fresh build_graph (zero coverage
+                # regression -- (a), the literal Kuzu-projection re-point, is the deferred follow-on).
+                drift = check_node_freshness(g, _WORKSPACE)
+                if not drift:
+                    return g
+                emit_stale_warn(drift)   # drifted -> fall through to a head-pinned rebuild
+            elif (time.time() - g.built_at) < 300:
+                # freshness opted out (e.g. internal callers) -> retain the cheap TTL fast-path
                 return g
         except Exception:
             pass
