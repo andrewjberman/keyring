@@ -157,7 +157,6 @@ opal-data-inf/bronze/orion-api/*/transactions.csv
 opal-data-inf/bronze/orion-api/{*}/_BRONZE_COMPLETE.json
 opal-data-inf/bronze/orion-api/{*}/assets.csv
 opal-data-inf/bronze/orion-api/{*}/transactions.csv
-opal-data-inf/bronze/orion-api/{date}/assets.csv
 opal-data-inf/bronze/orion-api/activity/latest.csv
 opal-data-inf/bronze/orion-api/household/latest.csv
 opal-data-inf/bronze/orion-api/performance/latest.csv
