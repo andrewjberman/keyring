@@ -56,8 +56,10 @@ Q_TABLES = "SHOW TABLES FROM iceberg.globgrph"
 
 def _runtime_script(sqls: list[str]) -> str:
     """Bash that curls the Trino REST API for each SQL, following nextUri, echoing each JSON page.
-    SQLs are single-quote wrapped -- they must not contain a bare single quote (use only the
-    LIKE/identifier literals in the canonical queries, which have none)."""
+    Each SQL is passed as one bash arg wrapped in single quotes; any single quote INSIDE the SQL
+    (e.g. the LIKE 'module:%' literal in the canonical queries) is bash-escaped -- close the quote,
+    add an escaped literal quote, reopen -- so it transports intact. (M4 fix: the v0 guard used to
+    RAISE on a bare single quote, which crashed comp-heat federated on its OWN default query.)"""
     parts = [
         "B=http://trino.opal-globgrph.local:8080",
         ("q(){ echo \"" + _SQLMARK + " $1\"; "
@@ -68,9 +70,11 @@ def _runtime_script(sqls: list[str]) -> str:
          "sleep 1; done; }"),
     ]
     for sql in sqls:
-        if "'" in sql:
-            raise ValueError("SQL with a single quote is unsupported by the v0 run-task transport")
-        parts.append("q '" + sql + "'")
+        # Bash single-quote escaping (' -> '\'' : end-quote, escaped literal quote, reopen-quote) so
+        # a SQL with single quotes -- the LIKE 'module:%' in the canonical queries -- transports intact
+        # instead of crashing. (M4 fix: replaced the guard that RAISED on the default query.)
+        esc = sql.replace("'", "'\\''")
+        parts.append("q '" + esc + "'")
     parts.append("echo " + _DONEMARK)
     return "; ".join(parts)
 
