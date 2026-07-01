@@ -622,6 +622,7 @@ def _default_router(q, qtok, hits, term, list_intent):
         ctx = {"role": "", "working_set": [], "trajectory": [],
                "intent_class": _sig.classify_query_intent(q)}
         r = comp_route.route(q, ctx, provider, extractors=_sig.EXTRACTORS)
+        _emit_training_row(getattr(r, "training_row", {}))  # flywheel: every LIVE route -> COMPLEARN (~E ingest)
     except Exception:  # fail-safe -> legacy cascade
         return None
     # a call string + concern per routed cap, sourced from what comp-which already computed + the provider.
