@@ -927,6 +927,21 @@ def _extract_script_io(
     sio.read_keys = sorted(set(sio.read_keys))
     sio.write_keys = sorted(set(sio.write_keys))
 
+    # M1 fix (comp-trace S3 direction): TIER-CONSISTENCY gate. A GOLD-tier script writes gold/ or
+    # platinum/, never silver/ or bronze/ (those tiers are produced by the silver/bronze scripts). A
+    # silver/bronze WRITE attributed to a gold script is a mis-classification: bd/cot A_03 assign
+    # `key = 'silver/allocations/...'` (a READ, via get_object) in a loader fn, then reuse the local
+    # name `key` in _write_one_partition where the GOLD write key is tuple-unpacked from `args`
+    # (`date_str, df_bytes, key = args`) + put_object(Key=key) -- the stale silver path leaked into a
+    # spurious WRITES_S3 edge. Census-verified: the ONLY gold-script silver/bronze writes across all
+    # pipelines are exactly these false ones -> zero-collateral. Write-only, so the genuine READ of
+    # silver/allocations is preserved. This encodes the tier invariant instead of perturbing the
+    # cross-function var heuristic (which is load-bearing for real read edges and cannot be scoped
+    # without dropping them -- verified via a full _extract_script_io before/after diff).
+    if "gold" in (pipeline or ""):
+        sio.write_keys = [w for w in sio.write_keys
+                          if not str(w).startswith(("silver/", "bronze/"))]
+
     # GAP 3: Rolling-window candidate detection.
     # If a FUNC key appears in BOTH reads and writes for the same script, surface it
     # as a rolling_window_candidate so cmd_io can emit a WARNING.
