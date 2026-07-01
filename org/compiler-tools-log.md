@@ -10653,3 +10653,18 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-07-01 | 0.8.0_AE_CloudComp~A | NFRA_COMPROUTE.L3 (shared) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/aws-shapes/stepfuncti... | PASS |
 | 2026-07-01 | 2.0.0_SA_COO | NFRA_COMPROUTE.L3 (shared) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/briefs/infr... | PASS |
 | 2026-07-01 | 0.8.0_AE_CloudComp~C | NFRA_COMPROUTE.L4.comp-which-integration-regression-loop | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-01 | 0.8.0_AE_CloudComp~D | NFRA_GRAPHUNI.P2-P3.repoint-onto-marker-head-and-retire-local-caches | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/marker_head_read.py | PASS |
+| 2026-07-01 | 2.0.0_SA_COO~B | NFRA_COMPROUTE.L3 (shared) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/NFRA_COMPRAIL.json --file ... | PASS |
+| 2026-07-01 | 0.8.0_AE_CloudComp~B | NFRA_COMPROUTE.L3 (shared) | comp-kuzu | comp-kuzu MATCH (n) RETURN n.node_type AS node_type, count(*) AS n ORDER BY n DESC | PASS |
+| 2026-07-01 | 3.0.0_SA_CVO~B | NFRA_COMPUNIFY.V1 | comp-graph | comp-graph status | PASS |
+| 2026-07-01 | 0.8.0_AE_CloudComp~B | NFRA_COMPROUTE.L3 (shared) | comp-kuzu | comp-kuzu MATCH ()-[e]->() RETURN e.edge_type AS edge_type, count(*) AS n ORDER BY n DESC | PASS |
+| 2026-07-01 | 0.8.0_AE_CloudComp~D | NFRA_GRAPHUNI.P2-P3.repoint-onto-marker-head-and-retire-local-caches | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/comp_marker_read.py | PASS |
+| 2026-07-01 | 3.0.0_SA_CVO~B | NFRA_COMPUNIFY.V1 | comp-kuzu | comp-kuzu MATCH (n:CloudNode) WHERE n.node_type='' OR n.node_type IS NULL RETURN count(... | PASS |
+| 2026-07-01 | 3.0.0_SA_CVO~B | NFRA_COMPUNIFY.V1 | comp-kuzu | comp-kuzu MATCH (n:CloudNode) WHERE n.node_type='S3_BUCKET' AND n.node_id CONTAINS '/' ... | PASS |
+| 2026-07-01 | 3.0.0_SA_CVO~B | NFRA_COMPUNIFY.V1 | comp-blast | comp-blast generate_header_metrics | PASS |
+| 2026-07-01 | 2.0.0_SA_COO~B | NFRA_COMPROUTE.L3 (shared) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/NFRA_COMPAWS.json --file o... | PASS |
+| 2026-07-01 | 3.0.0_SA_CVO~B | NFRA_COMPUNIFY.V1 | comp-kuzu | comp-kuzu MATCH (n:CloudNode) WHERE n.node_id CONTAINS 'partner_analytics:generate_head... | PASS |
+| 2026-07-01 | 1.0.0_SA_CTO | NFRA_COMPROUTE.L3 (shared) | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/change_management/20... | PASS |
+| 2026-07-01 | 3.0.0_SA_CVO~B | NFRA_COMPUNIFY.V1 | comp-kuzu | comp-kuzu MATCH (a:CloudNode)-[e:CloudEdge]->(b:CloudNode) WHERE a.node_id CONTAINS 'pa... | PASS |
+| 2026-07-01 | 0.8.0_AE_CloudComp~A | NFRA_GRAPHUNI Phase-B co-sign + NFRA_COMPAWS Phase-0 | comp-kuzu + comp-aws + comp-surface-check + live-boto3 | comp-kuzu 6 live queries (232 S3Key 0-dangling, 169==169 holds, 175=169compute+6lambda grounded, dropped-key absent) = the storage co-sign; comp-aws classes/help (metrics timed-out=full derive, used git cert scorecard); StepFn recursive-ASL boto3 census (26 INVOKES, def_hash unchanged=0 drift). | PASS |
+| 2026-07-01 | 0.8.0_AE_CloudComp~A | NFRA_COMPROUTE.L3 (shared) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
