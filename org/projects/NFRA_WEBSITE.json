@@ -7,8 +7,8 @@
     {"path": "docs/architecture/NFRA_WEBSITE_PRD.md", "label": "WEBSITE PRD v1.0 (CTO-authored)", "date": "2026-07-01"}
   ],
   "status": "active",
-  "phase": "Phase 0: PRD complete (CTO 2026-07-01), grounded against the two backups. Awaiting COO decomposition + Andrew's 5 open decisions (hosting EC2-vs-Lightsail-vs-RDS; email SES-vs-existing-SMTP; is-Cloudflare-currently-proxying; CloudFront-now-or-later; exact GoDaddy record shape). First-wave: W1 (AE Terraform provision + WP stack + restore-to-staging) -> W2 (DNS/TLS/email/backups/hardening + CVO staging-verify) -> W3 (cutover + post-verify + rollback).",
-  "blocking": "COO TO decomposition + GO + Andrew's 5 open decisions (SS10). Leash: lift-and-shift (no redesign); keep GoDaddy DNS (records only, no zone move); never destroy the old host until the AWS site is CVO-verified live; harden the public WP surface.",
+  "phase": "Phase 0: PRD complete (CTO 2026-07-01), grounded against the two backups + 3 house-style SVG diagrams rendered to Desktop (current/target/migration). HELD AT PRD -- Andrew PARKED it 2026-07-01 ('wait on website for now, just leave it in PRDs'). NO decomposition until Andrew greenlights the hosting approach + the 5 open decisions (hosting EC2-vs-Lightsail-vs-RDS; email SES-vs-existing-SMTP; is-Cloudflare-currently-proxying; CloudFront-now-or-later; exact GoDaddy record shape). Ready-to-decompose on his GO (first-wave W1 provision+restore-to-staging -> W2 DNS/TLS/email/backups/hardening+CVO-verify -> W3 cutover+rollback).",
+  "blocking": "HELD by Andrew at PRD stage (2026-07-01) -- do NOT decompose/dispatch until he greenlights. On GO: COO decomposes W1/W2/W3 + Andrew confirms the 5 open decisions. Leash: lift-and-shift (no redesign); keep GoDaddy DNS (records only, no zone move); never destroy the old host until the AWS site is CVO-verified live; harden the public WP surface.",
   "created": "2026-07-01",
   "pods": ["0.7", "3.0", "1.0", "2.0"],
   "pipeline": "n/a (website hosting migration; WordPress on EC2)",
