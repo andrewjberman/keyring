@@ -34,8 +34,8 @@ def _grep_portal(pattern: str, extra_flags: list[str] | None = None) -> list[str
             ['grep'] + flags + [pattern, str(_PORTAL_SRC)],
             capture_output=True, text=True, timeout=15
         )
-        return [l.rstrip('\n') for l in result.stdout.splitlines()
-                if l.strip() and not l.startswith('Binary file')]
+        return [ln.rstrip('\n') for ln in result.stdout.splitlines()
+                if ln.strip() and not ln.startswith('Binary file')]
     except Exception:
         return []
 
@@ -83,7 +83,6 @@ def _classify_line(content: str, type_name: str) -> str:
         return 'import'
     if re.search(r'\buse' + re.escape(type_name) + r'\s*\(', code, re.IGNORECASE):
         return 'hook-call'
-    hook_fn = 'use' + type_name[0].upper() + type_name[1:]
     if re.search(r'\buse\w+\s*\(' , code) and 'layout' in type_name.lower():
         if re.search(r'=\s+use\w+\(', code):
             return 'hook-call'
@@ -201,13 +200,20 @@ def cmd_index(args: argparse.Namespace) -> int:
 
     _add_hits(_grep_portal(hook_name, ['-F']))
 
-    # Search for DEFAULT_LAYOUT references (the exported default from the type file)
-    default_const_hits = _grep_portal(f'DEFAULT_LAYOUT', ['-F'])
-    _add_hits(default_const_hits)
+    # M2 fix: the DEFAULT_LAYOUT constant + layout.*/tenantLayout.*/dataSourceLayout.* field-access
+    # searches are TenantLayoutConfig-SPECIFIC consumer patterns -- they do NOT reference the queried
+    # type by name, so running them for ANY OTHER type FABRICATED a bogus consumer graph (comp-types
+    # index ModelPortfolioData returned 38 TenantLayoutConfig sites while its own blast reports 0).
+    # Gate them to TenantLayoutConfig so a 0-importer nested type (ModelPortfolioData, PeerModelData,
+    # NonModelAssetsResponse) indexes to its GENUINE references only -> index aligns with blast.
+    if type_name == 'TenantLayoutConfig':
+        # Search for DEFAULT_LAYOUT references (the exported default from the type file)
+        default_const_hits = _grep_portal('DEFAULT_LAYOUT', ['-F'])
+        _add_hits(default_const_hits)
 
-    # Search for field accesses on common layout variable names: layout.X, tenantLayout.X
-    for var_name in ('layout.', 'tenantLayout.', 'dataSourceLayout.'):
-        _add_hits(_grep_portal(var_name, ['-F']))
+        # Search for field accesses on common layout variable names: layout.X, tenantLayout.X
+        for var_name in ('layout.', 'tenantLayout.', 'dataSourceLayout.'):
+            _add_hits(_grep_portal(var_name, ['-F']))
 
     # Exclude the definition file itself and .d.ts files
     def_path_str = str(def_file) if def_file else None
@@ -252,7 +258,7 @@ def cmd_index(args: argparse.Namespace) -> int:
         for fb in fallbacks:
             print(f'    {fb["file"]}:{fb["line"]} — {fb["code"][:80]}')
     else:
-        print(f'\n  Default-fallback sites: none detected')
+        print('\n  Default-fallback sites: none detected')
 
     # Firm-conditional sites
     if getattr(args, 'firm_conditional_sites', False):
@@ -267,11 +273,14 @@ def cmd_index(args: argparse.Namespace) -> int:
 
     # Severity check
     severity = getattr(args, 'severity', None)
-    if severity == 'error' and len(consumers) < 29:
-        print(f'\n  ERROR: only {len(consumers)} consumer sites found; expected >= 29')
-        return 1
-    elif severity == 'warn' and len(consumers) < 29:
-        print(f'\n  WARN: only {len(consumers)} consumer sites found; expected >= 29')
+    # M2 fix: the >= 29 expected-consumer floor is TenantLayoutConfig-specific (its known consumer
+    # count) -- applying it to any other type would false-ERROR a genuinely low/zero-consumer type.
+    if type_name == 'TenantLayoutConfig':
+        if severity == 'error' and len(consumers) < 29:
+            print(f'\n  ERROR: only {len(consumers)} consumer sites found; expected >= 29')
+            return 1
+        elif severity == 'warn' and len(consumers) < 29:
+            print(f'\n  WARN: only {len(consumers)} consumer sites found; expected >= 29')
 
     # Write manifest
     _TYPES_INDEX_DIR.mkdir(parents=True, exist_ok=True)
@@ -282,7 +291,7 @@ def cmd_index(args: argparse.Namespace) -> int:
         f'total_consumer_sites: {len(consumers)}',
         f'elapsed_seconds: {elapsed:.2f}',
         f'default_fallback_sites: {len(fallbacks)}',
-        f'consumers:',
+        'consumers:',
     ]
     for c in consumers_sorted:
         manifest_lines.append(f'  - file: {c["file"]}')
@@ -335,7 +344,7 @@ def cmd_blast(args: argparse.Namespace) -> int:
         lines.append(f'  - {f}')
     manifest_path.write_text('\n'.join(lines) + '\n', encoding='utf-8')
     print(f'\n  Manifest: {_rel(str(manifest_path))}')
-    print(f'\nPASS: comp-types blast complete')
+    print('\nPASS: comp-types blast complete')
     return 0
 
 
@@ -370,7 +379,7 @@ def cmd_fields(args: argparse.Namespace) -> int:
             consumers.append({'file': _rel(file_path), 'line': lineno, 'code': code.strip()[:80]})
         field_consumers[field] = consumers
 
-    print(f'\n  Per-field consumer summary:\n')
+    print('\n  Per-field consumer summary:\n')
     print(f'  {"FIELD":<30}  {"CONSUMERS":>9}  STATUS')
     print(f'  {"-"*30}  {"-"*9}  {"-"*10}')
     for field in fields:
@@ -391,12 +400,12 @@ def cmd_fields(args: argparse.Namespace) -> int:
         yaml_lines.append(f'    consumer_count: {count}')
         yaml_lines.append(f'    status: {"UNUSED" if count == 0 else "USED" if count < 5 else "READ-EVERYWHERE"}')
         if field_consumers[field]:
-            yaml_lines.append(f'    consumers:')
+            yaml_lines.append('    consumers:')
             for c in field_consumers[field][:5]:
                 yaml_lines.append(f'      - {c["file"]}:{c["line"]}')
     manifest_path.write_text('\n'.join(yaml_lines) + '\n', encoding='utf-8')
     print(f'\n  Manifest: {_rel(str(manifest_path))}')
-    print(f'\nPASS: comp-types fields complete')
+    print('\nPASS: comp-types fields complete')
     return 0
 
 
