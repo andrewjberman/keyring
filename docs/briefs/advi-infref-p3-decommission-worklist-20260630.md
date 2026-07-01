@@ -69,6 +69,27 @@ leaf-first (least-depended-on first) so a surprise reader surfaces on a low-blas
 Do NOT disable A9 until the household repoint to accounts_v2 has landed AND soaked -- else household
 geo goes stale again (the exact 1204h-stale incident this refactor fixes).
 
+### A9 precondition -- LEG-1 household repoint (GROUNDED 2026-06-30, execute post-cutover)
+
+The freeze mechanism, source-confirmed: `data/inf/scripts/silver/convert_orion_api_to_silver.py`
+`build_household()` L141 -- `geo = read_bronze_csv(snapshot_date, 'geo_verify')`. household silver
+sources household_id / household_name / state_code / city / country / rep_id / rep_name from the
+**frozen** `geo_verify` bronze CSV (last 20260428 -> household frozen 05-11 / 1204h stale). AUA comes
+from unified (unchanged, not the freeze). The gold layer already half-patches this: INF_D_00d
+`_supplement_hh_dim_state()` L174 back-fills `state_code` gaps from `accounts_v2.state` (ADVI_INFTGT.TO-4b,
+$14M invisible GEO-AUA fix) -- proving accounts_v2 is fresh + carries `household_id` + `state`.
+
+**The repoint:** move `build_household`'s geo source from `geo_verify` -> `accounts_v2` (fresh,
+CHAIN_PULL-produced daily), AUA still from unified.
+**OPEN field-coverage question (VERIFY before authoring):** accounts_v2 CONFIRMED to carry
+{household_id, state}. Coverage of {household_name, city, country, rep_id, rep_name} is UNCONFIRMED
+-- must check the accounts_v2 silver schema first. Two dispositions:
+  (a) accounts_v2 covers all geo fields -> clean single-source swap; or
+  (b) accounts_v2 has state only -> hybrid: fresh state/household from accounts_v2, rep_name/
+      household_name from a fresh source (unified_account_dim / reps), NEVER re-introduce geo_verify.
+Do NOT author against pre-rebuild state; execute post-cutover with fresh silver in place, schema-check
+first (Rule 20). This repoint gates A9 -- A9 stays LAST until it lands + soaks.
+
 ---
 
 ## GROUP B -- redundant / stub producers
