@@ -11222,3 +11222,7 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-07-01 | 0.8.0_AE_CloudComp~C | NFRA_COMPROUTE.DR2-surface-shadow-rail-flip | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
 | 2026-07-01 | 0.8.0_AE_CloudComp~E | NFRA_COMPROUTE.DR1 | get_provider+comp_route | /log: E1 e2e verification vs the LIVE 50-cap provider -- write_path=[comp-build] only, excluded from reads, comp-aws/lambdamap KEPT; default-router flip LIVE | PASS |
 | 2026-07-01 | 0.8.0_AE_CloudComp~E | NFRA_COMPRAIL.TO-5 | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | pipescript | pipescript --resource header_metrics.json | PASS |
+
+- 2026-07-01 0.8.0_AE_CloudComp~D NFRA_COMPPROOF.B1 blind-run mechanism: harness.py + corpus_loader.py self-tests (all NEVER#4 gates PASS: strip 20/20, scaffolding-invariant, isolation-VOID, postmortem-cheat-VOID, clean-context proxy + live-context direct), blind_run.py driver demo (B-01->PARTIAL+charter), B-01 payload emit, ds-commit-gate x4, bash -n spawn_solver.sh. Commits e48658eee/023283edd/d4fb97b40/0ec100b0f.
+| 2026-07-01 | 0.8.0_AE_CloudComp~D | NFRA_COMPPROOF.B1 | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
