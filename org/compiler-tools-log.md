@@ -10554,3 +10554,11 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-07-01 | 1.0.0_SA_CTO | NFRA_COMPROUTE.L3 (shared) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/ADHC_PREFLT_PRD.md --... | PASS |
 | 2026-07-01 | 0.8.0_AE_CloudComp~D | NFRA_COMPDRIFT.P3c-P4.seam6-trino-closer-and-ci-sweep | comp-drift | comp-drift coverage | PASS |
 | 2026-07-01 | 0.8.0_AE_CloudComp~B | NFRA_COMPROUTE.L3 (shared) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-01 | 0.8.0_AE_CloudComp~D | NFRA_COMPDRIFT.P3c-P4.seam6-trino-closer-and-ci-sweep | comp-kuzu | comp-kuzu MATCH (n) RETURN count(n) LIMIT 1 | PASS |
+| 2026-07-01 | 0.8.0_AE_CloudComp~D | NFRA_COMPDRIFT.P3c-P4.seam6-trino-closer-and-ci-sweep | comp-drift | comp-drift sweep | FAIL |
+| 2026-07-01 | 2.0.0_SA_COO~B | NFRA_COMPROUTE.L3 (shared) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/tests/test_comp_learn... | PASS |
+| 2026-07-01 | 0.8.0_AE_CloudComp~D | NFRA_COMPDRIFT.P3c-P4.seam6-trino-closer-and-ci-sweep | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/globgrph/trino_catalog_parity... | PASS |
+| 2026-07-01 | 2.0.0_SA_COO | NFRA_COMPROUTE.L3 (shared) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/ADHC_PREFLT.json --file or... | PASS |
+| 2026-07-01 | 0.8.0_AE_CloudComp~C | NFRA_COMPROUTE.L4.comp-which-integration-regression-loop | comp-surface-check | comp-surface-check check --mode advisory --file .tools/comp-which --file .tools/comp-wh... | PASS |
+| 2026-07-01 | 0.8.0_AE_CloudComp~B | NFRA_GRAPHUNI.P1 Phase-B staging | (none) | staging-execution window (producer emit + s3 upload + own-artifact 0-dangle/ARN validation); Rule-20 checks rode prior conductor window; fire uses comp-kuzu next window | N/A |
+| 2026-07-01 | 0.8.0_AE_CloudComp~B | NFRA_COMPROUTE.L3 (shared) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
