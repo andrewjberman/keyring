@@ -1,0 +1,24 @@
+#!/usr/bin/env bash
+# comp-symbols -- the intra-file SYMBOL-INVENTORY tool (NFRA_COMPROUTE Stage-1 #3).
+#
+# The file-INVENTORY sibling to comp-blast's symbol-DEPENDENCY (blast-radius) concern -- CTO ruling
+# 2026-07-01: opposite directions + inputs + distinct concern -> distinct one-home node -> sibling,
+# not a `comp-blast symbols` subcommand. Deterministic ast.parse (functions/classes/module-consts/
+# imports + line numbers) -- read-only, no LLM, no execution. Tracked impl:
+# org/modules/graph/comp_symbols.py (.tools/ is gitignored, the comp-tool convention).
+#
+# Usage:
+#   comp-symbols <file>                    # the symbol index (functions/classes/constants/imports + lines)
+#   comp-symbols <file> --grep <pattern>   # filter symbol names (regex, case-insensitive)
+#   comp-symbols <file> --kind func|class|const|import
+#   comp-symbols <file> --json
+set -euo pipefail
+
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+if git_top="$(git -C "${SCRIPT_DIR}" rev-parse --show-toplevel 2>/dev/null)"; then
+    WORKSPACE_ROOT="${git_top}"
+else
+    WORKSPACE_ROOT="/c/Users/AndrewBerman/Desktop/ajb_workspace"
+fi
+
+exec "${COMP_PYTHON:-python}" "${WORKSPACE_ROOT}/org/modules/graph/comp_symbols.py" "$@"
