@@ -124,6 +124,34 @@ def diff_gate_all(incidents=None) -> dict:
     return {"passed": not violations, "n": len(results), "results": results, "violations": violations}
 
 
+def scaffolding_fields() -> tuple:
+    """Solver-view fields that are FIXED boilerplate (incident-AGNOSTIC) -- estate_access + tool_surface
+    + task. The diff-gate EXCLUDES these (they are identical for all 20, so they cannot leak an
+    incident's mechanism). See assert_scaffolding_invariant."""
+    return ("estate_access", "tool_surface", "task")
+
+
+def assert_scaffolding_invariant(incidents=None) -> dict:
+    """CTO arch-lead GUARD (B1 review 141311Z): the diff-gate's exclude-the-scaffolding scoping is
+    sound ONLY while the scaffolding stays IDENTICAL across all 20 solver-views (incident-agnostic).
+    If it is ever PARAMETERIZED per-incident (a custom tool-hint / per-incident estate-scope / task-
+    framing), it COULD then carry a mechanism leak -> the diff-gate MUST widen to cover it. This guard
+    asserts the invariant; a False return is the signal to widen the gate. Returns
+    {invariant_holds, divergent_fields}."""
+    incidents = corpus.INCIDENTS if incidents is None else incidents
+    ref, divergent = None, set()
+    for inc in incidents:
+        sv = solver_view(inc)
+        scaf = {k: sv.get(k) for k in scaffolding_fields()}
+        if ref is None:
+            ref = scaf
+        else:
+            for k in scaffolding_fields():
+                if scaf.get(k) != ref.get(k):
+                    divergent.add(k)
+    return {"invariant_holds": not divergent, "divergent_fields": sorted(divergent)}
+
+
 def load(incident_id: str = None):
     """Load one incident (by id) or all -- returning (solver_view, judge_view) pairs. The pair is the
     unit the spawner (solver-view) + the judge (judge-view) consume; the strip is gate-verified first."""
@@ -144,7 +172,11 @@ def main() -> int:
         print("  [%s] %s%s" % (tag, r["id"], extra))
     print("  DIFF-GATE: %s (%d/%d strip-clean)" % (
         "PASS" if gate["passed"] else "FAIL -- VOID", gate["n"] - len(gate["violations"]), gate["n"]))
-    return 0 if gate["passed"] else 2
+    inv = assert_scaffolding_invariant()
+    print("  SCAFFOLDING-INVARIANT: %s%s" % (
+        "HOLDS (diff-gate exclude-scaffolding scoping sound)" if inv["invariant_holds"]
+        else "DIVERGED -> WIDEN THE DIFF-GATE", "" if inv["invariant_holds"] else " %s" % inv["divergent_fields"]))
+    return 0 if (gate["passed"] and inv["invariant_holds"]) else 2
 
 
 if __name__ == "__main__":

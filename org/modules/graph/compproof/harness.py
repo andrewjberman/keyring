@@ -152,6 +152,12 @@ def _selftest() -> int:
     gate_all = corpus_loader.diff_gate_all()
     assert gate_all["passed"], "STRIP DIFF-GATE must pass 20/20 (got %s)" % gate_all["violations"]
 
+    # CTO arch guard (B1 review): the diff-gate's exclude-scaffolding scoping is sound ONLY while the
+    # scaffolding is incident-INVARIANT. If a future incident parameterizes it, this fails -> widen the gate.
+    inv = corpus_loader.assert_scaffolding_invariant()
+    assert inv["invariant_holds"], \
+        "scaffolding must be incident-invariant (diff-gate scoping guard); diverged: %s" % inv["divergent_fields"]
+
     adv = next(i for i in corpus.INCIDENTS if i["id"] == "ADVI_BREAKS")
     payload = spawn_payload(adv)
     # AC#2: the spawn payload PROVABLY excludes the answer.
@@ -184,8 +190,8 @@ def _selftest() -> int:
     agg = aggregate([{"case_id": "B-01", "verdict": "PARTIAL"}, {"case_id": "B-02", "verdict": "SOLVED"},
                      {"case_id": "B-03", "verdict": "MISS"}, {"case_id": "B-04", "verdict": "VOID"}])
     assert agg["n_scored"] == 3 and agg["n_void"] == 1 and agg["counts"]["SOLVED"] == 1
-    print("SELF-TEST PASS: strip 20/20 | payload excludes answer | isolation VOID-on-violation |"
-          " ADVI_BREAKS -> PARTIAL + charter | scorer + aggregate OK")
+    print("SELF-TEST PASS: strip 20/20 | scaffolding-invariant HOLDS | payload excludes answer |"
+          " isolation VOID-on-violation | ADVI_BREAKS -> PARTIAL + charter | scorer + aggregate OK")
     return 0
 
 
