@@ -24,7 +24,6 @@ the I/O layer (S3 load) wraps them and runs once the parallel cadence is live.
 from __future__ import annotations
 
 import json
-import math
 
 
 # ---- verdict vocabulary ----
@@ -287,10 +286,16 @@ def main(argv=None):
            "model": "two-track (correctness vs Schwab-raw [hard gate] + cutover-jump vs BD [informational])",
            "correctness_surfaces": len(corr), "jump_surfaces": len(jump),
            "cutover_streak_target": cfg.get("cutover_gate", {}).get("clean_streak_target"),
-           "day1": "G1 correctness PROVEN: canonical_holdings vs schwab/silver/rps = 0/5892 value-breaks, "
-                   "$0 max delta (canonical ties the custodian exactly); vs-BD 49% break = BD's non-uniform lag",
-           "run_status": "TWO-TRACK CONFIG-READY -- correctness track G1 live-validated; remaining surfaces' "
-                         "schwab_raw refs to confirm per-provenance + grain-aware loaders"}
+           # RECORDED static prior result -- NOT re-measured by this run. This CLI load+validate+prints
+           # config only; the live comparators are defined but NOT invoked here. Reserved words (the
+           # proof-class) are legal only on a source-confirmed / re-measured claim (CLAUDE.md Rule-22),
+           # so this is labeled RECORDED (M3 fix: was a hardcoded reserved-word headline printed as a verdict).
+           "day1": "RECORDED (static, NOT re-measured by this run): G1 correctness measured 0/5892 "
+                   "value-breaks / $0 max delta (canonical_holdings vs schwab/silver/rps) at the DATA_SSOTMG "
+                   "G1 pass; vs-BD 49% break = BD non-uniform lag. Re-run the live comparators to re-confirm.",
+           "run_status": "TWO-TRACK CONFIG-READY (this run validates CONFIG only). Correctness track: G1 has "
+                         "a RECORDED prior clean result (see day1) -- NOT re-measured here. Remaining surfaces' "
+                         "schwab_raw refs to confirm per-provenance + grain-aware loaders."}
     if a.json:
         print(json.dumps(out, indent=2))
     else:
@@ -300,7 +305,7 @@ def main(argv=None):
             print(f"    ISSUE: {i}")
         print(f"  correctness surfaces (vs Schwab-raw, HARD gate): {len(corr)}")
         print(f"  cutover-jump surfaces (vs BD, informational):    {len(jump)}  | streak target: {out['cutover_streak_target']}")
-        print(f"  DAY-1: {out['day1']}")
+        print(f"  G1: {out['day1']}")
     return 0 if ok else 2
 
 
