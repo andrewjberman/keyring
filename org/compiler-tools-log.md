@@ -12427,3 +12427,10 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-07-01 | 0.7.0_AE_CloudOps~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/ec2/m365-mcp-gateway/app/guar... | PASS |
 2026-07-01 | 0.4.0_DE_ClientPlatform | comp-kuzu (ServedURL/Endpoint/S3 node pull -> 'no ADVI ServedURL node' finding), comp-freshness (PER-ENTITY travis_penfield live-confirm), python local-dry-run (extracted-slice vs live S3: 26 edges/0 dangling) -> TSGRAPH stitch_served_from_dynamic built+validated+AE-handoff. Infra commit correctly owned-paths-blocked (AE lane) -> bundled+routed.
 | 2026-07-01 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-01 | 0.4.0_DS_ClientPlatform~A | (no-TO) | comp-pipescript | comp-pipescript deployed build_mdpf_wse_49f_non_model_aua.py | PASS |
+| 2026-07-01 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DE_ClientPlatfor... | PASS |
+| 2026-07-01 | 0.5.0_AE_OpalETL | MDPF_49F_SCHWAB_BASIS_SWITCH | comp-surface-check | comp-surface-check check --mode advisory --file docs/briefs/mdpf-49f-custody-schwab-nat... | PASS |
+| 2026-07-01 | 0.4.0_DS_ClientPlatform~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file data/mdpf/scripts/gold/build_mdpf_wse_4... | PASS |
+| 2026-07-01 | 0.4.0_DS_ClientPlatform~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/change_management/20... | PASS |
+| 2026-07-01 | 0.4.0_DS_ClientPlatform~A | MDPF_WSE_SWAP | comp-which/comp-pipescript io+deployed/pipescript | WS-E swap grounding: RPS silver schema+partitions, gold-script I/O, mdpf deploy-verify (rail-checked head-object) | ROUTED/PARTIAL |
+| 2026-07-01 | 0.4.0_DS_ClientPlatform~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
