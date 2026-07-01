@@ -34,13 +34,26 @@ the real ADVI_BREAKS solve used):
 - LIVE / served estate reads: S3 / SSM / DynamoDB / served artifacts (read-only)
 - SOURCE CODE: `data/*/scripts`, `infra/`, `portal/`, `org/modules/graph` (the module source)
 
-**FORBIDDEN** (answer-lookup = a FALSE solve; reading one VOIDs the run):
-- `org/critical_paths/**` (change-management ledgers + critical-path records)
-- `org/modules/graph/debtscan/**` (incident debtscan ledgers -- resolution records under an otherwise-allowed tree)
-- `org/**/logs/**` (session logs) and `org/daily_log/**` (daily narrative)
-- `memory/**` (fabric memory)
-- `CLAUDE.md` (incident-prose / NEVER-history) and any `*compiler-tools-log*`
-- `docs/**` postmortem docs (arch/PRD docs stay ALLOWED -- only postmortems are forbidden)
+**FORBIDDEN** (answer-lookup = a FALSE solve; reading one VOIDs the run). LOCATION-AGNOSTIC + NAME-
+VARIANT-aware -- the org/docs-scoping was a completeness bug (COO~B 171554Z: a top-level `logs/` +
+a `session_logs/` variant leaked past `find org`/`find docs`). The TRUE-SANDBOX removes ALL of these
+ANYWHERE in the tree:
+- ANY narrative-container DIR, any location + name variant: `logs/`, `session_logs/`, `sessions/`,
+  `threads/`, `handoffs/`, `daily_log/`, `change_management/`, `org/critical_paths/**`
+- ANY `*postmortem*` (file or dir), any location -- documented incident resolutions
+- `org/modules/graph/debtscan/**` (incident debtscan ledgers)
+- `memory/**`; `CLAUDE.md` + `org/XXX.md` (incident-prose / fabric-injection markers); any `*compiler-tools-log*`
+- the answer-key `org/modules/graph/compproof/**` (corpus.py = the sealed root-causes)
+- EACH corpus incident's DEFINITE citation record (`harness.resolution_artifacts`) wherever it lives,
+  incl. under otherwise-allowed trees (e.g. `docs/architecture/*_PRD.md`, `org/projects/*.json`)
+- a broad answer-bearing narrative `.md` name sweep (incident/retrospective/reconciliation/session_log/
+  handoff/closeout/ledger), any location
+
+COMPLETENESS CAVEAT: a name/location BLOCKLIST cannot be PROVABLY complete for narrative scattered
+through otherwise-allowed trees (this spec keeps docs arch/PRD ALLOWED, yet some docs document
+resolutions). The provably-complete model is an ALLOWLIST (sandbox = ONLY the allowed source substrate)
+-- flagged to CTO/COO for the boundary ruling. build_sandbox.sh's fail-closed verify asserts the above
+are gone (a future miss FAILS the build).
 
 Enforced in code: **TRUE-SANDBOX** `build_sandbox.sh` (filtered repo copy, forbidden physically absent,
 no `.git`; fail-closed self-verify) + `spawn_solver.sh` (per-solver sandbox cwd); `harness._is_forbidden_path()`
