@@ -60,10 +60,16 @@ _SURFACE_NOISE = {"surface", "tool", "tools", "inspect", "cloud", "aws", "git", 
 # Curated rules: (any-keyword list, label, [calls], why). Order = CVO bypass-volume rank.
 RULES = [
     (["produce", "produces", "consume", "consumes", "who reads", "who writes", "what writes",
-      "what reads", "artifact", "s3 key", "s3://", "parquet", "platinum/", "/gold/", "/silver/"],
-     "S3 artifact / who-reads-writes",
-     ["comp-pipescript io <script>", "pipescript --resource <key>"],
-     "what produces/consumes an S3 key + who reads an artifact"),
+      "what reads", "artifact", "s3 key", "s3://", "parquet", "platinum/", "/gold/", "/silver/",
+      # ~E COMPROUTE S1 L4 route-fix #1 (LD-0226): "what KEY/artifact does gold script X write" was a
+      # routing MISS -- comp-pipescript io already surfaces every keyed artifact (incl FUNC-keys like
+      # aua_certification_key) with its S3 path + producer/consumer. Phrase-addition, NOT a new node.
+      "output key", "output-key", "output _key", "_key", "_key=", "what key does", "which key does",
+      "keyed artifact", "output constant", "output constants", "gold script write", "gold script output",
+      "what does gold script", "what does the gold script", "what does script x write", "write to s3"],
+     "S3 artifact / who-reads-writes + gold-script output keys",
+     ["comp-pipescript io <script>", "comp-pipescript io <script> --firm <bd|inf|cot|mdpf>", "pipescript --resource <key>"],
+     "what produces/consumes an S3 key + who reads an artifact + what KEY/artifact a gold script writes (io surfaces the _KEY constants incl FUNC-keys)"),
     # comp-dispatch = NFRA_COMPROUTE S1 #1 (~E built d804ff744; CTO-ratified). The gold-dispatch
     # orchestration-DAG grain (which scripts run / order / chain-group-flag / gate) -- ABOVE per-script
     # (comp-pipescript). Distinctive dispatch/chain-orchestration vocab so it does NOT collide with
