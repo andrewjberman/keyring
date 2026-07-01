@@ -11794,3 +11794,13 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-07-01 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/task_orders... | PASS |
 | 2026-07-01 | 0.2.0_DT_PortfolioAnalytics | (post-nightly served-verify) | (none — served-data F5) | served-artifact content verify: json/ path, no comp-tool models field-presence/value-invariant on served proxy artifacts (data-plane by graph-presence principle) | N/A |
 | 2026-07-01 | 0.2.0_DT_PortfolioAnalytics | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-01 | 0.2.0_DT_PortfolioAnalytics | (no-TO) | pipescript | pipescript --list | PASS |
+| 2026-07-01 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .tools/safe_deploy_core.py | PASS |
+| 2026-07-01 | 0.2.0_DT_PortfolioAnalytics | (no-TO) | pipescript | pipescript mdpf | PASS |
+| 2026-07-01 | 0.5.0_AE_OpalETL | SCTY_ONBOARDING_GUARDRAILS_decomposition | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.5.0_AE_OpalETL/deliv... | PASS |
+| 2026-07-01 | 0.5.0_AE_OpalETL | SCTY_ONBOARDING_GUARDRAILS_decomposition | comp-surface-check | comp-surface-check check --mode advisory --file docs/briefs/scty-mcpguard-landing-diff-... | PASS |
+| 2026-07-01 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/task_orders... | PASS |
+| 2026-07-01 | 0.8.0_AE_CloudComp~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/compproof/AFFORDANCE_... | PASS |
+| 2026-07-01 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .tools/safe_deploy_core.py | PASS |
+| 2026-07-01 | 0.8.0_AE_CloudComp | SCTY_MCPGUARD-nobypass-corroboration | (none) | intra-app Python call-path + Graph-egress census of m365-mcp-gateway/app -- native Grep/Read (no comp-tool models intra-module Python call graphs) | N/A |
+| 2026-07-01 | 0.8.0_AE_CloudComp | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
