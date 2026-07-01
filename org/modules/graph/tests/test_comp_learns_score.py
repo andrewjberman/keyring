@@ -20,6 +20,7 @@ from org.modules.graph.comp_learns_score import (  # noqa: E402
     _self_test,
     build_gap_candidates,
     build_merge_retire_candidates,
+    build_routing_candidates,
     escape_severity,
     is_preventive_tool,
     outcome_value,
@@ -83,6 +84,24 @@ def test_preventive_gate_retire_score_is_tempered_and_flagged():
     gate, plain = cands["comp-manifest-check"], cands["plain-tool"]
     assert gate["preventive_gate"] is True and plain["preventive_gate"] is False
     assert gate["value_score"] < plain["value_score"]   # tempered
+
+
+def test_flywheel_router_hedges_become_routing_friction_candidates():
+    """The loop closing into the scorer: a live route that DISAMBIGUATED (the router hedged a near-tie)
+    is a routing-friction candidate (a curated rule would sharpen it); a CONFIDENT decision is healthy
+    and is not a candidate. value = low-confidence-route count, not tool usage."""
+    routes = ([{"intent": "cluster similar things", "kind": "disambiguation", "cold_start": True,
+                "ranked": [{"id": "comp-cluster"}, {"id": "comp-transform"}]}] * 3
+              + [{"intent": "what breaks if I change", "kind": "decision",
+                  "ranked": [{"id": "comp-blast"}]}] * 5)
+    cands = build_routing_candidates(routes)
+    ids = {c["candidate"] for c in cands}
+    assert any("cluster" in x for x in ids)
+    assert not any("breaks" in x or "change" in x for x in ids)   # confident decision is not friction
+    hedge = next(c for c in cands if "cluster" in c["candidate"])
+    assert hedge["kind"] == "routing-friction"
+    assert hedge["value_metric"]["low_confidence_routes"] == 3
+    assert set(hedge["value_evidence"]["tied_tools"]) == {"comp-cluster", "comp-transform"}
 
 
 def test_reuses_comproute_l3_outcome_weighting():
