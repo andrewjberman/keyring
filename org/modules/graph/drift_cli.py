@@ -23,6 +23,7 @@ unwired / GAP seam is UNVERIFIABLE (exit 2), a FINDING, never false-clean
 import argparse
 import json
 import os
+import re
 import shutil
 import subprocess
 import sys
@@ -173,11 +174,24 @@ def adapter_comp_pipescript_deployed(seam, target, ctx):
                        "comp-pipescript all-gold deploy sweep skipped (cost-guard; run a <target> or --deep)")
     args = ["deployed"] + ([target] if target else [])
     rc, out = _bash("comp-pipescript", *args, timeout=120)
-    tok = _first_token(out, ["MISSING", "STALE", "MATCH"])
-    if tok is None:
+    # HARDENED: parse the Summary COUNTS, not token-presence -- the tokens STALE/MISSING_ON_S3/etc.
+    # ALWAYS appear in the summary (with 0 counts), so a token-first-match would false-flag.
+    m = re.search(r"Summary:\s*(\d+) MATCH,\s*(\d+) STALE,\s*(\d+) MISSING_ON_S3,"
+                  r"\s*(\d+) LOCAL_MISSING,\s*(\d+) TIMEOUT,\s*(\d+) AWS_UNREACHABLE", out)
+    if not m:
         return _record(seam, target or "<all-gold>", "UNVERIFIABLE",
-                       "comp-pipescript deployed rc=%s (verdict unparsed -- not assuming MATCH)" % rc)
-    return _record(seam, target or "<all-gold>", tok, "comp-pipescript deployed -> %s" % tok)
+                       "comp-pipescript deployed rc=%s (Summary unparsed -- not assuming MATCH)" % rc)
+    match, stale, miss, lmiss, timeout, unreach = (int(x) for x in m.groups())
+    if timeout or unreach:
+        return _record(seam, target or "<all-gold>", "UNVERIFIABLE",
+                       "comp-pipescript deployed: %d TIMEOUT / %d AWS_UNREACHABLE" % (timeout, unreach))
+    if stale or miss or lmiss:
+        verdict = "STALE" if stale else "MISSING"
+        return _record(seam, target or "<all-gold>", verdict,
+                       "comp-pipescript deployed: %d STALE / %d MISSING_ON_S3 / %d LOCAL_MISSING"
+                       % (stale, miss, lmiss))
+    return _record(seam, target or "<all-gold>", "MATCH",
+                   "comp-pipescript deployed: %d MATCH, all up-to-date on S3" % match)
 
 
 def adapter_comp_lambdamap(seam, target, ctx):
