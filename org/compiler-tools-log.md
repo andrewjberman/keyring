@@ -10473,3 +10473,5 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-06-30 | 0.8.0_AE_CloudComp~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/NFRA_GRAPHUNI/emit_b_stitc... | PASS |
 | 2026-06-30 | 0.4.0_DS_ClientPlatform~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/briefs/advi-infref-l5-served-extra... | PASS |
 | 2026-06-30 | 0.6.0_AE_PartnerETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+2026-07-01T0257Z | 0.4.0_DS_ClientPlatform~A | ADVI_INFREF LEG-5 | comp-which->comp-platinum reverse (served consumers), comp-grep (portal fetch pattern + OUTPUT_PREFIX consumers -- the swap-target catch) | PASS; comp-platinum reverse null on dynamic keys (comp-grep decisive); rail-checked aws s3 ls/head for staging/sentinel/keycount/snapshot (no comp-tool models in-flight rebuild keyspace)
+| 2026-06-30 | 0.4.0_DS_ClientPlatform~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
