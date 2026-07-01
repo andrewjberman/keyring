@@ -10227,3 +10227,11 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-06-30 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/NFRA_COMPLEARN_PRD.md | PASS |
 2026-06-30 ~0002Z(07-01) | 0.8.0_AE_CloudComp~B | GRAPHUNI P1 Phase-A population deploy (IN FLIGHT) + D8 re-sign | comp-kuzu (Phase-A node-availability + population-verify prep), safe-commit x2 | grounded ECS command-override + ingest-fn call-site before firing; operational aws (ECS run-task/CodeBuild/s3/logs) off-rail-exempt; GAP: no comp-tool for EC2->PipelineScript keystone or graph-vintage-vs-live delta (COMPLEARN)
 | 2026-06-30 | 0.8.0_AE_CloudComp~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-06-30 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+| 2026-06-30 | 2.0.0_SA_COO~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/change_management/20... | PASS |
+| 2026-06-30 | 0.8.0_AE_CloudComp~B | (no-TO) | comp-kuzu | comp-kuzu MATCH (n:CloudNode) RETURN count(*) AS total_nodes | PASS |
+| 2026-06-30 | 2.0.0_SA_COO~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/.open_deploys/graphd... | PASS |
+| 2026-06-30 | 0.8.0_AE_CloudComp~E | NFRA_COMPLEARN.P1 | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/globgrph/comp_learns_produce.... | PASS |
+
+2026-07-01T0017Z | 0.8.0_AE_CloudComp~E | NFRA_COMPLEARN.P1 | comp-glob, comp-grep, ds-commit-gate, safe-commit, comp-learns-status | P1 federated views + reclaimed comp-learns-status: comp-glob/comp-grep located the dead shims (.tools gitignored), ds-commit-gate clean x2 .py, safe-commit c6293bfd1, comp-learns-status (the reclaimed tool) renders demand/gap/cost from served state. Gap (banked): no comp-tool fronts the Trino federation for a SHOW-CATALOGS/queryable check -- comp-trino is a build-next.
+| 2026-06-30 | 0.8.0_AE_CloudComp~E | NFRA_COMPLEARN.P1 | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
