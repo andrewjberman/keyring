@@ -283,15 +283,28 @@ grain_contract:
       answer_to_D: "wildcards treated SPECIALLY -- form `object` (1) and form `glob` (3) do NOT collapse: glob keeps the literal '*' at level=prefix; object has no '*' at level=object. object/prefix/glob are 3 distinct canonical ids. Bucket-QUALIFY your edge targets (id = bucket + '/' + key) so they converge with ~A's S3Key node ids."
       level_binding: "BINDING (~A refinement-2, govern ruling): a key containing a literal '*' = level `prefix`, ALWAYS -- this OVERRIDES any ends-in-filename heuristic. Rationale: a '*' matches MULTIPLE objects (a pattern), so it is a prefix/pattern node, NOT a single object, even when it ends in a filename (e.g. bronze/orion-api-v2/*/representatives.json = level PREFIX, not object). Both the edge-target (~D) and the S3Key node (~A) MUST tag a glob key level=prefix, or the id/level won't converge (dangling edge). ~D's reference-set count must reclassify its 111 glob keys object->prefix to match (the 273-object/15-prefix split becomes 163-object/125-prefix). Validated at the Phase-A ~D+~A convergence /seams."
       convergence_check: "the ~D(edge-target) <-> ~A(node) id equality is a DECLARATIVE+MECHANICAL /seams check in Phase A (no dangling READS_S3 target, no duplicate S3Key node)."
-    GoldScript:
-      canonical_id: "pipeline:<firm>:<tier>:<script_id>"   # RATIFIED (~D 231916Z, govern). firm-disambiguated (no bd/inf A_00 collision), tier-encoded (Amendment-8 ladder), byte-exact -- mirrors the S3Key bucket-qualified discipline
+    # CTO amendment-1 (enforced via COO~B 20260701T0023Z): the compute-backend node_types are
+    # TIER-AGNOSTIC -- Pipeline / PipelineScript / PipelineFunction, with `tier` a NODE ATTRIBUTE
+    # (tier=gold today), NOT baked into the type NAME. One node_type per grain covers ALL tiers --
+    # no Bronze/SilverScript split at Phase-B, no re-gate. The id scheme was ALREADY tier-parametric
+    # (`<tier>` is a key field), so this is a pure node_type-NAME canonicalization (id/grain/convergence
+    # UNCHANGED). ~D emits these canonical names; this grain-map + the NODE_TYPE_LAYER speak the same
+    # name end-to-end (amendment-1, once). Prior names GoldScript/GoldScriptFunction retired.
+    Pipeline:
+      canonical_id: "pipeline:<firm>:<tier>"   # the CONTAINS container grain (a firm+tier pipeline); top of the compute ladder
+      example: "pipeline:bd:gold  |  pipeline:inf:gold"
+      firm: "from the script path: data/{black_diamond->bd, inf, mdpf, cot}/scripts/<tier>/"
+      tier: "gold for Phase-A (bronze/silver/ingestion = Phase-B); a NODE ATTRIBUTE, not part of the type name"
+      grain: container   # container -CONTAINS-> file -CONTAINS-> function (compute-internal ladder, ~D)
+    PipelineScript:      # was GoldScript pre-amendment-1 (tier-agnostic node_type rename; id/grain UNCHANGED)
+      canonical_id: "pipeline:<firm>:<tier>:<script_id>"   # RATIFIED (~D 231916Z, govern) + amendment-1 name-canonicalized. firm-disambiguated (no bd/inf A_00 collision), tier-encoded (Amendment-8 ladder), byte-exact -- mirrors the S3Key bucket-qualified discipline
       example: "pipeline:bd:gold:A_00.accounts_dimension  |  pipeline:inf:gold:INF_D_00.accounts_dimension"
       firm: "from the script path: data/{black_diamond->bd, inf, mdpf, cot}/scripts/<tier>/"
-      tier: "gold for Phase-A (bronze/silver/ingestion = Phase-B)"
+      tier: "gold for Phase-A (bronze/silver/ingestion = Phase-B); a NODE ATTRIBUTE, not part of the type name"
       grain: file   # script = file-level on the compute CONTAINS ladder (container=pipeline:<firm>:<tier>, file=:<script>, function=:<fn>)
       convergence_check: "~B EC2 -RUNS-> this script-level id; ~D CONTAINS this id -> its functions. The ~B<->~D RUNS co-key (no dangling RUNS target) -- Phase-A /seams."
-    GoldScriptFunction:
-      canonical_id: "pipeline:<firm>:<tier>:<script_id>:<function>"   # RATIFIED (~D 231916Z). the :<function> suffix = the compute-internal CONTAINS function level
+    PipelineFunction:    # was GoldScriptFunction pre-amendment-1 (tier-agnostic node_type rename; id/grain UNCHANGED)
+      canonical_id: "pipeline:<firm>:<tier>:<script_id>:<function>"   # RATIFIED (~D 231916Z) + amendment-1 name-canonicalized. the :<function> suffix = the compute-internal CONTAINS function level
       example: "pipeline:bd:gold:A_00.accounts_dimension:build_accounts_dimension"
       grain: function   # function = the finest compute level (~D's compute-internal CONTAINS bottoms here, NOT field -- 4c6fc9352)
       convergence_check: "~D-internal co-key: CONTAINS script->fn, CALLS fn->fn, READS_S3/WRITES_S3 fn-> the canonical S3Key id. byte-exact across ~D's own edges."
