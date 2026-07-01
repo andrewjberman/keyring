@@ -1,0 +1,8 @@
+{
+  "B-02": { "reach": "yes",       "usability": "usable", "grounding_resilience": "resist" },
+  "B-03": { "reach": "no",        "usability": "usable", "grounding_resilience": "resist" },
+  "B-04": { "reach": "yes",       "usability": "usable", "grounding_resilience": "resist" },
+  "B-05": { "reach": "yes",       "usability": "usable", "grounding_resilience": "resist" },
+  "B-06": { "reach": "yes",       "usability": "usable", "grounding_resilience": "resist" },
+  "B-07": { "reach": "yes",       "usability": "usable", "grounding_resilience": "resist" }
+}
