@@ -57,6 +57,19 @@ _ESCAPE_ACTIONS = {"RUN-GREP", "RUN-GLOB", "RUN-LS", "DENY"}
 _ROUTE_ACTIONS = {"ROUTE", "ROUTE-SURFACE"}
 # Drift/parity-intent terms -- demand for the change/estate concern (the drift-caught value dim).
 _DRIFT_RX = re.compile(r"drift|parity|stale|vintage|freshness|head|sha|diff", re.I)
+# PREVENTIVE / enforcement GATES (CTO caveat 2026-07-01): a gate's value is the drift it silently
+# PREVENTS -- unobservable in the outcome cols -- so it scores LOW value-per-run BY DESIGN even while
+# working. "Low value-per-run" on a gate can mean "the gate is doing its job," NOT "retire it." So a
+# preventive tool's retire score is TEMPERED + flagged for mandatory human judgment (never auto-harm;
+# advisory-only anyway). Detect the gate/check/validate/guard family + the safe-* wrappers.
+_PREVENTIVE_RX = re.compile(r"-(check|gate|validate|guard|audit|lint)$|manifest-check|surface-check|"
+                            r"commit-gate|precommit|safe-(commit|apply|deploy)")
+
+
+def is_preventive_tool(tool: str) -> bool:
+    """True if `tool` is a preventive/enforcement gate whose value is drift-PREVENTED (unobservable),
+    so a low observed value-per-run does NOT imply low value (CTO caveat)."""
+    return bool(_PREVENTIVE_RX.search(tool or ""))
 _STOP = frozenset("a an the of for to in on is are do does how what which with by via that this "
                   "my your and or not no def class import from return self none true false".split())
 _TOK = re.compile(r"[A-Za-z0-9_]+")
@@ -221,14 +234,26 @@ def build_merge_retire_candidates(rolling: list) -> list:
         if mean_val >= 0.6:                                 # healthy value-per-run => not a retire target
             continue
         # value of retiring = runs * (1 - mean_val): low-value runs are cost/noise the retire averts.
+        base = a["n"] * (1.0 - mean_val)
+        preventive = is_preventive_tool(tool)
+        # A preventive GATE's low value-per-run is BY DESIGN (it silently prevents drift), so TEMPER
+        # its retire score heavily + flag it -- "low value-per-run" here likely means "working", not
+        # "retire" (CTO caveat). Human judgment required before retiring an enforcement gate.
+        score = round(base * (0.25 if preventive else 1.0), 2)
+        note = (f"{a['n']} runs at mean outcome {mean_val:.2f} (< 0.6 healthy); "
+                + ("PREVENTIVE/ENFORCEMENT GATE -- low value-per-run is likely the gate SILENTLY "
+                   "SUCCEEDING (drift PREVENTED = unobservable value), NOT low value. Retire score "
+                   "tempered; MANDATORY human judgment before retire (CLAUDE.md rule 20/21)."
+                   if preventive
+                   else "usage does NOT justify keep -- value/run is low"))
         out.append({
-            "candidate": f"{tool} (low value-per-run)",
+            "candidate": f"{tool} (low value-per-run)" + (" [preventive gate]" if preventive else ""),
             "kind": "merge-retire",
-            "value_score": round(a["n"] * (1.0 - mean_val), 2),
-            "value_metric": {"cost_per_outcome": round(a["n"] * (1.0 - mean_val), 2),
-                             "runs": a["n"], "mean_outcome_value": round(mean_val, 3)},
-            "value_evidence": {"note": f"{a['n']} runs at mean outcome {mean_val:.2f} "
-                                       f"(< 0.6 healthy); usage does NOT justify keep -- value/run is low"},
+            "preventive_gate": preventive,
+            "value_score": score,
+            "value_metric": {"cost_per_outcome": score, "runs": a["n"],
+                             "mean_outcome_value": round(mean_val, 3), "preventive_gate": preventive},
+            "value_evidence": {"note": note},
         })
     return out
 
@@ -353,6 +378,17 @@ def _self_test() -> tuple[bool, list]:
     ret = {c["candidate"].split()[0]: c for c in build_merge_retire_candidates(rolling)}
     ck("goodhart.high_usage_low_value_retires", "noisy" in ret and "solid" not in ret,
        f"retire candidates: {sorted(ret)}")
+
+    # Preventive-gate caveat (CTO 2026-07-01): a GATE with the SAME low outcome as a plain tool gets a
+    # TEMPERED retire score + a flag -- low value-per-run on a gate likely means it is silently
+    # succeeding (drift PREVENTED), not that it should be retired.
+    pr = {c["candidate"].split()[0]: c for c in build_merge_retire_candidates(
+        [{"tool": "comp-manifest-check", "result": "FAIL"}] * 20 + [{"tool": "plain-tool", "result": "FAIL"}] * 20)}
+    gate, plain = pr.get("comp-manifest-check"), pr.get("plain-tool")
+    ck("preventive_gate.tempered_and_flagged",
+       bool(gate) and bool(plain) and gate["preventive_gate"] and not plain["preventive_gate"]
+       and gate["value_score"] < plain["value_score"],
+       f"gate={gate['value_score'] if gate else None} < plain={plain['value_score'] if plain else None}, flagged")
 
     # Every ranked item cites value evidence (no evidence-free rank -- a Goodhart leak).
     it = run_iteration(top=10)
