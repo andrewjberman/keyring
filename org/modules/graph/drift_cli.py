@@ -68,6 +68,8 @@ ACTION = {
     "unverifiable": "investigate -- could not read the seam; do NOT assume clean",
     "dispositioned": "disposition -- abandoned artifact; clean up (not fix)",
     "self_heal": "none -- self-heals on HEAD-advance (informational)",
+    "stale": "refresh -- vintage-stale DERIVED layer (behind the marker); re-derive it. NOT an "
+             "integrity break, and does NOT auto-self-heal on read (unlike comp-kuzu's marker oracle)",
     "partial": "note -- partial coverage; the equality is not fully asserted",
 }
 
@@ -120,6 +122,8 @@ def _classify(verdict: str) -> str:
         return "dispositioned"
     if v in {"REFRESHING", "SELF-HEALING"}:
         return "self_heal"
+    if v in {"BEHIND", "VINTAGE-STALE"}:
+        return "stale"   # a vintage-stale DERIVED layer: a WARN finding, NOT a break, NOT self-healing
     return "clean"
 
 
@@ -128,7 +132,7 @@ def _record(seam: dict, target: str, verdict: str, grounding: str,
     """The normalized cross-seam drift-record envelope (PRD arch-gate (c))."""
     cls = _classify(verdict)
     sev = {"clean": "OK", "self_heal": "OK", "partial": "INFO",
-           "dispositioned": "INFO", "unverifiable": "WARN", "break": "ERROR"}[cls]
+           "dispositioned": "INFO", "stale": "WARN", "unverifiable": "WARN", "break": "ERROR"}[cls]
     return {
         "seam_id": seam.get("seam_id"),
         "stage_from": seam.get("stage_from"),
@@ -283,8 +287,11 @@ def adapter_comp_kuzu_provenance(seam, target, ctx):
         verdict = "current"
         ground = "comp-kuzu provenance: HEAD current (pin == marker HEAD)"
     elif "behind" in low:
-        verdict = "BEHIND"
-        ground = "comp-kuzu provenance: BEHIND (self-heals on next read)"
+        # comp-kuzu BEHIND SELF-HEALS: the marker oracle auto-re-derives the Kuzu projection on the
+        # next read after a HEAD-advance. So it is self_heal/OK -- NOT the same as code_heat's BEHIND
+        # (a vintage-stale derived layer that classifies "stale"/WARN and needs a manual re-derive).
+        verdict = "SELF-HEALING"
+        ground = "comp-kuzu provenance: BEHIND -> SELF-HEALING (marker oracle re-derives on next read)"
     elif "unknown vintage" in low or "unknown-vintage" in low:
         verdict = "UNKNOWN-VINTAGE"
         ground = "comp-kuzu provenance: UNKNOWN VINTAGE (freshness unverifiable)"
