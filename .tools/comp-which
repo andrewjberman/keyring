@@ -129,6 +129,19 @@ RULES = [
      "cache collisions",
      ["comp-cache collisions"],
      "cache-key collisions / shared keys"),
+    # comp-drift = NFRA estate propagation-drift ORCHESTRATOR (LD-0231 fold; land-now per MSTR
+    # 2026-06-30 to fix comp-drift's own self-route mis-fire -> routing regression 34/35 -> 35/35).
+    # Walks drift-topology.yaml calling the seam engines; distinctive propagation/parity vocab so
+    # "did X propagate intact end-to-end / where is the estate unguarded / is the estate in parity"
+    # routes here, not to comp-aws.
+    (["propagation drift", "propagation-drift", "propagate intact", "propagated intact",
+      "did it propagate", "did x propagate", "end-to-end propagation", "propagate end to end",
+      "drift topology", "drift-topology", "estate unguarded", "where is the estate unguarded",
+      "estate in parity", "is the estate in parity", "estate propagation", "drift orchestrator",
+      "local to git to cloud to nessie", "propagate local to served"],
+     "estate propagation-drift orchestrator",
+     ["comp-drift coverage", "comp-drift <target>", "comp-drift sweep"],
+     "did X propagate intact local->git->cloud->nessie->kuzu->iceberg->trino->served / where is the estate unguarded / is the estate in parity (walks drift-topology.yaml, calls the seam engines, never re-implements)"),
     (["what's in", "whats in", "everything in", "whole pipeline", "the scanner", "named thread", "what is in the"],
      "named-thread traversal",
      ["pipescript <name>", "pipescript --list"],
