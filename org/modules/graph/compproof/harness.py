@@ -157,6 +157,35 @@ def assert_clean_context(cwd: str) -> dict:
     return {"clean": not leaks, "leaks": leaks}
 
 
+# Generic markers that betray a fabric-narrative injection in a launched solver's INITIAL context.
+_NARRATIVE_CONTEXT_MARKERS = (
+    "claudemd", "claude.md", "memory.md", "memory_full", "## never", "one miss = an incident",
+    "codebase and user instructions are shown below", "auto-recall", "recalled memor",
+    "opal capital workspace", "never reference another firm",
+)
+
+
+def assert_live_context_clean(injected_context: str, incident: dict = None) -> dict:
+    """NEVER#4 DIRECT (CTO 144725Z belt-and-suspenders upgrade): read the launched solver's ACTUAL
+    injected context (its transcript's system prompt + first system-reminders, BEFORE any traversal)
+    and assert it is narrative-free. Stronger than the assert_clean_context file-presence PROXY -- it
+    catches a runtime-injection vector the proxy misses (e.g. a global ~/.claude hook that injects
+    answer-bearing content with no file up-tree). Two checks: (a) no generic fabric-narrative marker;
+    (b) if an incident is given, none of ITS sealed root-cause distinctive terms appear (direct
+    answer-injection). Returns {clean, generic_hits, answer_hits}. Wire as the STANDING per-run gate
+    when the launch captures the injected context -- a false-clean silently false-SOLVES the corpus."""
+    text = (injected_context or "").lower()
+    generic = sorted(m for m in _NARRATIVE_CONTEXT_MARKERS if m in text)
+    answer = []
+    if incident is not None:
+        sealed = " ".join(str(incident.get(f, "")) for f in corpus.sealed_fields())
+        symptom_terms = corpus_loader._terms(incident.get("symptom_as_first_seen", ""))
+        distinctive = corpus_loader._terms(sealed) - symptom_terms
+        ctx_tokens = {t.strip("._") for t in re.findall(r"[A-Za-z0-9_.]+", text)}
+        answer = sorted(t for t in distinctive if t in ctx_tokens)
+    return {"clean": not (generic or answer), "generic_hits": generic, "answer_hits": answer}
+
+
 # ---- the 3-axis scorer (REACH x USABILITY x GROUNDING-RESILIENCE) --------------------------
 
 def score_run(*, reach: str, usability: str, grounding_resilience: str) -> str:
@@ -234,6 +263,19 @@ def run_incident(incident: dict, solver_result: dict, *, solver_id: str, judge_i
         rec["void_reason"] = "isolation: " + "; ".join(gate["reasons"])
         rec["charter"] = None
         return rec
+    # NEVER#4 DIRECT (CTO 144725Z): if the launch captured the solver's INITIAL injected context,
+    # assert it carried no fabric-narrative / answer (Vector-1 runtime-injection close, the standing
+    # per-run gate beyond the file-presence proxy). A context-contaminated run is INVALID -> VOID.
+    ictx = solver_result.get("injected_context")
+    if ictx is not None:
+        live = assert_live_context_clean(ictx, incident)
+        rec["live_context"] = live
+        if not live["clean"]:
+            rec["verdict"] = "VOID"
+            rec["void_reason"] = ("context-injection: launched solver's context carried narrative/answer "
+                                  "(generic=%s answer=%s)" % (live["generic_hits"], live["answer_hits"]))
+            rec["charter"] = None
+            return rec
     # clean-room anti-cheat (CTO FINAL 143701Z): the HARD VOID-gate audits the solver's ACTUAL
     # captured tool-log (every Read/Grep/comp-tool call), NOT its self-reported path -- reading a
     # forbidden narrative/resolution record VOIDs the run (answer-lookup, not graph-traversal). The
@@ -311,6 +353,19 @@ def _selftest() -> int:
     assert not assert_clean_context(_HERE)["clean"], \
         "the fabric tree MUST read as context-CONTAMINATED (CLAUDE.md/memory up-tree) -- else false-SOLVE"
 
+    # NEVER#4 DIRECT: the live-context assertion -- a narrative-free injected context passes; an
+    # injected CLAUDE.md/answer is caught + VOIDs the run (the standing per-run runtime-injection gate).
+    assert assert_live_context_clean("Symptom: served AUA stale. Task: reach root cause via the graph.", adv)["clean"], \
+        "a narrative-free injected context must pass"
+    dirty_ctx = ("codebase and user instructions are shown below -- CLAUDE.md ## NEVER ... "
+                 "the stranded 4-layer cutover quorum eclipse basename-collision")
+    assert not assert_live_context_clean(dirty_ctx, adv)["clean"], "injected CLAUDE.md/answer must be caught"
+    ctx_void = run_incident(adv, {"injected_context": dirty_ctx, "traversal_path": ["comp-kuzu"]},
+                            solver_id="B-SOLVER-fresh", judge_id="3.0.0_SA_CVO~B",
+                            judge_axes={"reach": "yes", "usability": "usable", "grounding_resilience": "resist"})
+    assert ctx_void["verdict"] == "VOID" and "context-injection" in ctx_void.get("void_reason", ""), \
+        "a context-injected run must VOID (got %s)" % ctx_void["verdict"]
+
     # scorer vocab: SOLVED / MISS boundaries.
     assert score_run(reach="yes", usability="usable", grounding_resilience="resist") == "SOLVED"
     assert score_run(reach="yes", usability="usable", grounding_resilience="trip") == "MISS"  # mis-grounding
@@ -321,8 +376,8 @@ def _selftest() -> int:
                      {"case_id": "B-03", "verdict": "MISS"}, {"case_id": "B-04", "verdict": "VOID"}])
     assert agg["n_scored"] == 3 and agg["n_void"] == 1 and agg["counts"]["SOLVED"] == 1
     print("SELF-TEST PASS: strip 20/20 | scaffolding-invariant HOLDS | payload excludes answer |"
-          " isolation VOID-on-violation | postmortem-cheat VOIDs | clean-context gate | ADVI_BREAKS"
-          " -> PARTIAL + charter | scorer + aggregate OK")
+          " isolation VOID-on-violation | postmortem-cheat VOIDs | clean-context proxy + live-context"
+          " gate | ADVI_BREAKS -> PARTIAL + charter | scorer + aggregate OK")
     return 0
 
 

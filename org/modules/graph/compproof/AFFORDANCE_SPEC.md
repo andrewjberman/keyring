@@ -45,11 +45,18 @@ Spawn each solver as a SEPARATE PROCESS via `claude -p "<solver-view>"`, in a **
 - FULL file-access to the substrate is RETAINED -- the solver reads source / runs comp-tools / queries
   live AWS by absolute path + PATH tools. Only the AUTO-INJECTED context is suppressed.
 
-**Pre-flight gate (NEVER#4):** `harness.assert_clean_context(launch_cwd)` must return `clean=True`
-before any real spawn -- it walks up from the cwd and asserts no injection marker
-(CLAUDE.md/org-XXX/memory/.claude) is discoverable. A live canary (`claude -p "print your initial
-injected context"` in the sanitized cwd, assert no CLAUDE.md/NEVER/memory text) is the belt check MSTR
-runs once before firing the corpus. `reference: spawn_solver.sh`.
+**Pre-flight gate (NEVER#4 PROXY):** `harness.assert_clean_context(launch_cwd)` must return
+`clean=True` before any real spawn -- it walks up from the cwd and asserts no injection marker
+(CLAUDE.md/org-XXX/memory) is discoverable. `reference: spawn_solver.sh`.
+
+**Standing per-run gate (NEVER#4 DIRECT, CTO 144725Z belt-and-suspenders):**
+`harness.assert_live_context_clean(injected_context, incident)` reads the launched solver's ACTUAL
+initial injected context (captured from its transcript's system prompt + first system-reminders,
+pre-traversal) and asserts it is narrative-free -- no generic fabric marker AND none of the incident's
+sealed root-cause distinctive terms. This is STRONGER than the file-presence proxy: it catches a
+runtime-injection vector the proxy misses (e.g. a global ~/.claude hook injecting answer-bearing
+content with no file up-tree). Wired into `run_incident` (VOID on any injected narrative/answer) when
+the launch captures `injected_context`. A false-clean silently false-SOLVES the whole corpus.
 
 ## 2. CAPTURE -- the actual tool-log (not self-report)
 
@@ -69,7 +76,8 @@ SOLVED. Wired into `harness.run_incident` (prefers `solver_result["tool_log"]` o
 solver_results[case_id] = {
   "concluded_root_cause": "<mechanism>",
   "traversal_path": ["<self-reported step>", "..."],
-  "tool_log": ["<actual Read/Grep/comp-tool call>", "..."],   // authoritative for the audit
+  "tool_log": ["<actual Read/Grep/comp-tool call>", "..."],   // authoritative for the file-read audit
+  "injected_context": "<the solver's INITIAL system prompt + system-reminders, pre-traversal>",  // live-context gate
   "confidence": "low|med|high"
 }
 judge_axes[case_id] = { "reach": "yes|narrowed|no", "usability": "usable|too-slow|fell-back",
