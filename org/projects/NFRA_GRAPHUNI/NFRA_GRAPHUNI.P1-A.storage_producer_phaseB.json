@@ -1633,7 +1633,7 @@
   "no_silent_cap": "all 142 deferred keys enumerated (56 declared ready + 87 lambda-only staged); none dropped",
   "scope": "FIRM-ONLY (re-based from leaked ~311)",
   "denominator_rebase": {
-   "firm_storage_denominator_EXACT": "169 Phase-A + 56 declared + 8 firm-lambda-new-IN (4 firm-data + 4 ops-control) = 233 (secret-state OUT); or 237 if the 4 secret-state ruled IN",
+   "firm_storage_denominator_EXACT": "169 Phase-A + 56 declared + 8 firm-lambda-IN (4 firm-data + 4 ops-control-tagged) = 233 EXACT (COO~B ACCEPTED 015035Z; secret-state 4 RULED OUT; every node live-verified real)",
    "was": "~242 (estimate on ~17 firm-lambda); now EXACT + live-verified (12 real targets -> 8 new IN nodes + 7 edge-only; 128 phantom dropped)",
    "phase_a_unaffected": "169 stands; Phase-A /seams CO-SIGNED + landed."
   }
@@ -1760,9 +1760,9 @@
     "opal-data-inf/gold/meta/pipeline-complete.json"
    ]
   },
-  "secret_state_PENDING_micro_call": {
+  "secret_state_RULED_OUT": {
    "count": 4,
-   "note": "jwt/otp -- firm-bucket-present (live) BUT secret-state. COO~B's OWN earlier ruling: secrets = comp-secrets domain -> OUT. Default OUT pending COO~B/~C confirm; flagged both ways (not silent).",
+   "ruling": "OUT -- COO~B 015035Z (consistent w/ the 27-ops disposition): jwt/otp = AUTH/SECRET STATE, comp-secrets' domain (inventory/rotation/consumers), NOT GRAPHDEPTH storage-data lineage. Firm-bucket-present + firm-lambda-touched but excluded to avoid double-cover + conflating auth-control w/ data-lineage. ~C encodes: secret-state -> excluded (comp-secrets domain), no-silent-cap.",
    "ids": [
     "opal-data-bd/smartx/jwt/current.json",
     "opal-data-inf/orion/jwt/current.json",
