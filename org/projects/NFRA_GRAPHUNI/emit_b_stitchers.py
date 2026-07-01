@@ -10,7 +10,9 @@ S3 LAMBDA-READS_S3/WRITES_S3->S3Key: lambda IO from the TraceGraph, joined again
 Read-only; writes only the producer JSON.
 """
 from __future__ import annotations
-import argparse, json, sys
+import argparse
+import json
+import sys
 from pathlib import Path
 
 _WS = Path("C:/Users/AndrewBerman/Desktop/ajb_workspace")
@@ -28,6 +30,10 @@ GOLD_RUNNERS = {
     "i-02448edb624a7a7cf": ("mdpf-daily-runner", "mdpf", "gold-daily"),
 }
 EC2_ARN = "arn:aws:ec2:us-east-1:313476888478:instance/{}"
+# Phase-A finding fix: LAMBDA sources MUST be keyed on the canonical ARN node-id
+# (== the graph's ARN-keyed LAMBDA nodes), NOT the TraceGraph "lambda:<name>" form,
+# which does not resolve and dropped the Phase-A 12 lambda-S3 edges.
+LAMBDA_ARN = "arn:aws:lambda:us-east-1:313476888478:function:{}"
 
 FIRM_BUCKET = {"inf": "opal-data-inf", "bd": "opal-data-bd", "cot": "opal-data-cot",
                "mdpf": "opal-data-mdpf"}
@@ -113,7 +119,7 @@ def main() -> int:
         if sig in seen:
             continue
         seen.add(sig)
-        edges.append({"source": f"lambda:{lam}", "target": target, "edge_type": e.edge_type,
+        edges.append({"source": LAMBDA_ARN.format(lam), "target": target, "edge_type": e.edge_type,
                       "level": "prefix" if ("*" in target or target.endswith("/")) else "object",
                       "stratum_pair": "resource->object", "producer_by_pair": "~B"})
         s3_match += 1
@@ -125,6 +131,8 @@ def main() -> int:
         "id_conventions": {
             "RUNS_target": "pipeline:<firm>:gold:<script> (~D GoldScript, ~C-ratified f23932383)",
             "S3Key_target": "<bucket>/<key> (~A storage_s3keys.json node-id)",
+            "LAMBDA_source": ("arn:aws:lambda:us-east-1:313476888478:function:<name> "
+                              "(canonical ARN node-id; Phase-A finding fix -- NOT lambda:<name>)"),
         },
         "nodes": nodes,
         "edges": edges,
