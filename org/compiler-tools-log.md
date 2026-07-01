@@ -12454,3 +12454,8 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-07-01 | 0.5.0_AE_OpalETL | MDPF_49F_SCHWAB_BASIS_SWITCH | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
 | 2026-07-01 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .claude/skills/ycharts-report/SKILL.md | PASS |
 | 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-01 | 0.7.0_AE_CloudOps~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/ec2/m365-mcp-gateway/deploy-t... | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/briefs/nfra-agentbus-brief-2026070... | PASS |
+| 2026-07-01 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .claude/skills/ycharts-report/SKILL.md | PASS |
+| 2026-07-01 | 0.7.0_AE_CloudOps | (no-TO) | pipeline_cli.py deployed (comp-pipescript engine) + ds-commit-gate | safe-deploy repair verified live (cot/bd/inf-silver -> MATCH); the fix IS invoking this engine directly via sys.executable; ds-commit-gate PASS all .py. Rest of session = native Read (gateway source) + operational aws/ssm (live grounding) + Playwright (YCharts external-SaaS recon) -- no comp-tool applies | PASS |
+| 2026-07-01 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
