@@ -12316,3 +12316,14 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 2026-07-01 | 3.0.0_SA_CVO~B | NFRA_COMPPROOF.TO-B2 | blind_run.py self-check PASS (5 SOLVED/1 MISS/0 VOID) + harness.cheat_check/assert_live_context_clean isolation gates on 18 cases; judge task = grounding solver artifacts vs allowed source (Read/Grep/git log), not an estate traversal.
 | 2026-07-01 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-kuzu | comp-kuzu MATCH (a:CloudNode)-[e:CloudEdge]->(b:CloudNode) WHERE e.edge_type='SERVED_FR... | PASS |
 | 2026-07-01 | 3.0.0_SA_CVO~B | NFRA_COMPPROOF.TO-B2 | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-01 | 0.0.0_AB_MSTR | (no-TO) | comp-lambdamap | comp-lambdamap check | FAIL |
+| 2026-07-01 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-kuzu | comp-kuzu MATCH (n:CloudNode) WHERE n.name IN ['firm-leaderboard','getFirmLeaderboard',... | PASS |
+| 2026-07-01 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-kuzu | comp-kuzu MATCH (a:CloudNode)-[e:CloudEdge]->(b:CloudNode) WHERE a.name IN ['firm-leade... | PASS |
+| 2026-07-01 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check list | PASS |
+| 2026-07-01 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-kuzu | comp-kuzu MATCH (n:CloudNode) WHERE n.node_type='DataFetch' RETURN n.name AS name, n.no... | PASS |
+| 2026-07-01 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-kuzu | comp-kuzu MATCH (n:CloudNode) WHERE n.node_type='Hook' RETURN n.name AS name, n.node_id... | PASS |
+| 2026-07-01 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-kuzu | comp-kuzu MATCH (n:CloudNode) WHERE n.node_type='Endpoint' RETURN n.name AS name, n.nod... | PASS |
+| 2026-07-01 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-kuzu | comp-kuzu MATCH (n:CloudNode) WHERE n.node_type='ReactQueryKey' RETURN n.name AS name, ... | PASS |
+2026-07-01 2.0.0_SA_COO~B -- COMPPROOF definitive blind-run COORDINATE window: no own comp-tool runs (blind-run orchestration + verdict routing via MCP); harness/judge tooling ran under MSTR (build_sandbox.sh/spawn_solver.sh/content-audit) + CVO~B (blind_run.py/harness.cheat_check/3-axis score_run) + ~A (aggregation). VALIDATE carry-in: my independent allowlist re-verify superseded by CVO~B tool_log grounding (finding B, sandbox-bypass).
+| 2026-07-01 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-kuzu | comp-kuzu MATCH (n:CloudNode) WHERE n.node_type='ServedURL' RETURN n.name AS name, n.no... | PASS |
+| 2026-07-01 | 2.0.0_SA_COO~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
