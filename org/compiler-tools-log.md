@@ -10235,3 +10235,8 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 
 2026-07-01T0017Z | 0.8.0_AE_CloudComp~E | NFRA_COMPLEARN.P1 | comp-glob, comp-grep, ds-commit-gate, safe-commit, comp-learns-status | P1 federated views + reclaimed comp-learns-status: comp-glob/comp-grep located the dead shims (.tools gitignored), ds-commit-gate clean x2 .py, safe-commit c6293bfd1, comp-learns-status (the reclaimed tool) renders demand/gap/cost from served state. Gap (banked): no comp-tool fronts the Trino federation for a SHOW-CATALOGS/queryable check -- comp-trino is a build-next.
 | 2026-06-30 | 0.8.0_AE_CloudComp~E | NFRA_COMPLEARN.P1 | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-06-30 | 0.4.0_DS_ClientPlatform~A | ADVI_INFREF.P1 | comp-surface-check | comp-surface-check check --mode advisory --file data/inf/scripts/verify/validate_post_s... | PASS |
+| 2026-06-30 | 0.4.0_DS_ClientPlatform~A | ADVI_INFREF.P1 | pipescript | pipescript --list | PASS |
+| 2026-06-30 | 0.4.0_DS_ClientPlatform~A | ADVI_INFREF.P1 | pipescript | pipescript inf | FAIL |
+2026-07-01 ~0018Z | 0.8.0_AE_CloudComp~B | P1 population derive FAILED-CLOSED diagnosis + escalation | comp-kuzu (post-fail HEAD/marker verify = decisive no-half-land ground-truth) | grounded 'did it commit?' before any rollback (clean fail-closed, marker safe -> no destructive revert); rail false-positive on a Python-source grep re-run with # rail-checked marker (COMPLEARN routing candidate)
+| 2026-06-30 | 0.8.0_AE_CloudComp~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
