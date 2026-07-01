@@ -10464,3 +10464,12 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-07-01 | 3.0.0_SA_CVO~B | (gate-lift) | comp-kuzu/comp-glob/comp-which | gate-lift verify grounding: graph vintage/HEAD/counts (19791n, HEAD current, LAMBDA 174, S3Key 169) + located derive_runner.py NODE_TYPE_LAYER +4 committed 200e3de35; surfaced +8 vs-ledger reconcile-gap | PASS (verify IN PROGRESS, no verdict yet) |
 | 2026-06-30 | 0.6.1_AE_PartnerETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
 | 2026-06-30 | 3.0.0_SA_CVO~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/logs/2026-0... | PASS |
+| 2026-06-30 | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/briefs/ses-cloudwatch-alarm-noise-... | PASS |
+| 2026-06-30 | 0.4.0_DS_ClientPlatform~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file data/inf/scripts/verify/validate_post_s... | PASS |
+| 2026-07-01T0250Z | 0.6.0_AE_PartnerETL | pre-reboot checkpoint | comp-freshness chain bd (earlier); rail-checked raw aws+python for the feed-watch build + HALF-1 park (parquet/xlsx date-max, S3 listings) -- no comp-tool covers feed raw->silver->served integrity, which bd_feed_integrity.py now provides | gap: comp-content/feed-integrity family (promote bd_feed_integrity.py to .tools after multi-day calibration) |
+| 2026-06-30 | 0.6.0_AE_PartnerETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file data/black_diamond/scripts/diagnostics/... | PASS |
+| 2026-06-30 | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/briefs/ses-cloudwatch-alarm-noise-... | PASS |
+| 2026-06-30 | 0.8.0_AE_CloudComp~B | (no-TO) | comp-kuzu | comp-kuzu MATCH (n:CloudNode) WHERE n.node_id='arn:aws:lambda:us-east-1:313476888478:fu... | PASS |
+| 2026-06-30 | 0.8.0_AE_CloudComp~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/NFRA_GRAPHUNI/emit_b_stitc... | PASS |
+| 2026-06-30 | 0.4.0_DS_ClientPlatform~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/briefs/advi-infref-l5-served-extra... | PASS |
+| 2026-06-30 | 0.6.0_AE_PartnerETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
