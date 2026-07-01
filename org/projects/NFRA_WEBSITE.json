@@ -1,0 +1,19 @@
+{
+  "project_code": "NFRA_WEBSITE",
+  "macro_code": "NFRA",
+  "name": "Migrate the Opal Capital website (WordPress) to AWS",
+  "description": "Andrew-direct 2026-07-01. Lift-and-shift the Opal Capital marketing website into the Opal AWS estate; keep GoDaddy as the DNS/registrar (records-only cutover, no zone move). GROUNDED against two provided backups (updraft backup.zip = UpdraftPlus set 2026-06-30; opalcapital.zip = full tree + 16MB opal_202606.sql): WordPress built with Bricks builder (bricks + bricks-opal child + AutomaticCSS); 16MB DB, ~13MB media, 18 plugins (gravityforms/omnisend/wp-mail-smtp/litespeed-cache/redirection/seopress/pdf-embedder/safe-svg/ACPT + security wps-hide-login/wps-limit-login/password-protected/turnstile + updraftplus/migrate-guru). Small low-traffic corporate site. TARGET (recommended): EC2 in the Opal VPC (Terraform-managed), OpenLiteSpeed+PHP8+MariaDB-local (16MB DB doesn't warrant RDS), Elastic IP (GoDaddy apex A-record -> EIP = the clean keep-GoDaddy path), Let's Encrypt/Certbot TLS, UpdraftPlus->S3 backups, SG-locked + SSM. Alternatives documented: Lightsail (simpler, off-VPC), EC2+RDS (overkill for 16MB), EC2+CloudFront+ACM (GoDaddy-apex-ALIAS nuance). Static-export REJECTED (Gravity Forms + dynamic backend). Migration: Terraform provision -> WP stack -> UpdraftPlus restore -> re-activate licenses (Bricks/ACSS/GravityForms/Omnisend) -> configure -> STAGE+CVO-verify -> lower TTL -> GoDaddy record cutover -> Certbot -> post-verify -> rollback-window (old host stays live). ~$20-40/mo. PRD docs/architecture/NFRA_WEBSITE_PRD.md.",
+  "prds": [
+    {"path": "docs/architecture/NFRA_WEBSITE_PRD.md", "label": "WEBSITE PRD v1.0 (CTO-authored)", "date": "2026-07-01"}
+  ],
+  "status": "active",
+  "phase": "Phase 0: PRD complete (CTO 2026-07-01), grounded against the two backups. Awaiting COO decomposition + Andrew's 5 open decisions (hosting EC2-vs-Lightsail-vs-RDS; email SES-vs-existing-SMTP; is-Cloudflare-currently-proxying; CloudFront-now-or-later; exact GoDaddy record shape). First-wave: W1 (AE Terraform provision + WP stack + restore-to-staging) -> W2 (DNS/TLS/email/backups/hardening + CVO staging-verify) -> W3 (cutover + post-verify + rollback).",
+  "blocking": "COO TO decomposition + GO + Andrew's 5 open decisions (SS10). Leash: lift-and-shift (no redesign); keep GoDaddy DNS (records only, no zone move); never destroy the old host until the AWS site is CVO-verified live; harden the public WP surface.",
+  "created": "2026-07-01",
+  "pods": ["0.7", "3.0", "1.0", "2.0"],
+  "pipeline": "n/a (website hosting migration; WordPress on EC2)",
+  "thread_counter": 0,
+  "threads": [],
+  "depends_on": [],
+  "depends_on_note": "AE/CloudOps-led (Terraform + EC2 + WP stack + DNS/TLS/backups); CVO live-verifies the served site + forms + TLS post-cutover. Independent of the portal app + the data estate (a separate public marketing surface -- network-isolate it from the data estate). Source backups examined 2026-07-01 (WordPress/Bricks; not stored in-repo)."
+}
