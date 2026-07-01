@@ -1,7 +1,9 @@
 # Deploy-Completion Ledger — MDPF Schwab-silver roll-forward (06-26 → 06-30)
 
-**Opened:** 2026-07-01T18:00Z (promote-START) | **Owner:** 0.5.0_AE_OpalETL | **Authorized:** Andrew-direct (via COO 175933Z) | **Priority:** P1 (served aggregate-AUA frozen 6 days since 06-25)
+**Status:** OPEN
+**Opened:** 2026-07-01T18:00Z (promote-START) | **Owner:** 0.5.0_AE_OpalETL | **Authorized:** Andrew-direct (via COO 175933Z) | **Priority:** P1 (served aggregate-AUA frozen 6 days since 06-25) | **Window:** 24h (P1)
 **Class:** served-data change (un-freezes MDPF served client AUA) — NO-HALF-DEPLOYS gate binds: every leg tracked; unclosed at session end = COO alarm.
+_(COO added the **Status:** + **Window:** markers 2026-07-01T18:10Z so deploy_ledger.py indexes it — the ledger body was well-formed; owner 0.5.0 drives the legs to close.)_
 
 ## Why
 MDPF served aggregate_aua frozen @2026-06-25 16:42Z. Root: Schwab bd/silver frozen @06-25 → WS-E 49F build sees $0/0-accounts from bd/silver/allocations → non_model_aua = -$1.4B → verification fails → no serve. Fix: roll Schwab silver forward 06-26/06-29/06-30. Raw for those dates is in the quartz-validation prefix (Andrew authorized promoting it to prod for THIS roll-forward; the durable quartz-daily cutover is a SEPARATE follow-up COO tees to Andrew).
