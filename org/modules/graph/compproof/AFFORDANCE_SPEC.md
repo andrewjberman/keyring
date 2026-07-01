@@ -49,14 +49,23 @@ ANYWHERE in the tree:
 - a broad answer-bearing narrative `.md` name sweep (incident/retrospective/reconciliation/session_log/
   handoff/closeout/ledger), any location
 
-COMPLETENESS CAVEAT: a name/location BLOCKLIST cannot be PROVABLY complete for narrative scattered
-through otherwise-allowed trees (this spec keeps docs arch/PRD ALLOWED, yet some docs document
-resolutions). The provably-complete model is an ALLOWLIST (sandbox = ONLY the allowed source substrate)
--- flagged to CTO/COO for the boundary ruling. build_sandbox.sh's fail-closed verify asserts the above
-are gone (a future miss FAILS the build).
+CTO RULED ALLOWLIST (175214Z) -- now THE model (build_sandbox.sh default). The sandbox COPIES ONLY the
+allowed source substrate: `data/*/scripts` + `infra/` + `portal/` + `org/modules/graph` (MINUS the
+answer-key + debtscan). DOCS DROPPED; all `org/` except `org/modules/graph` dropped; project-JSONs
+dropped. The forbidden narrative/answer set is absent BY CONSTRUCTION (never copied) -> PROVABLY
+complete (a blocklist cannot be -- narrative scatters through otherwise-"allowed" trees; the real
+ADVI_BREAKS solve used SOURCE + live SSM/S3 + graph + comp-tools, NOT arch-docs-for-the-answer, so
+docs-absent does not change what B measures). The FORBIDDEN list above is retained by the fallback
+blocklist mode (`COMPPROOF_SANDBOX_MODE=blocklist`) + as the belt-scrub WITHIN the allowlist's copied
+trees (answer-key/debtscan under org/modules/graph). LOAD-BEARING GUARD (CTO guard #1): build_sandbox.sh
+asserts GRAPH-COVERAGE -- every graph-referenced repo-source ROOT + every data-firm-with-scripts is
+present in the template; an under-enumerated allowlist would false-MISS a reachable source -> B
+UNDER-scores. (Guard #2: a specific non-narrative reference genuinely needed = an explicit reviewed +
+narrative-checked add; default is docs-absent.)
 
-Enforced in code: **TRUE-SANDBOX** `build_sandbox.sh` (filtered repo copy, forbidden physically absent,
-no `.git`; fail-closed self-verify) + `spawn_solver.sh` (per-solver sandbox cwd); `harness._is_forbidden_path()`
+Enforced in code: **TRUE-SANDBOX** `build_sandbox.sh` (ALLOWLIST copy-only-allowed default -> forbidden
+absent BY CONSTRUCTION + GRAPH-COVERAGE guard; blocklist fallback mode; no `.git`; fail-closed self-verify)
++ `spawn_solver.sh` (per-solver sandbox cwd); `harness._is_forbidden_path()`
 (now incl. `org/modules/graph/compproof/`) + `harness.cheat_check()` (post-hoc backstop audit) +
 `harness.resolution_artifacts()` (THIS incident's citation) + `harness.assert_graph_no_narrative()`
 (Vector-3 graph-content check).

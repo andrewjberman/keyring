@@ -22,14 +22,33 @@ mkdir -p "$TEMPLATE"
 
 echo "SANDBOX: building filtered template at $TEMPLATE" >&2
 
-# 1. export the tracked tree at HEAD (no .git). Superproject first.
+# 1. export the tracked tree at HEAD (no .git). MODE selects the isolation model (CTO ruling pending
+# on allowlist-vs-blocklist -- COO~B 174421Z routed it, leans allowlist):
+#   blocklist (default, COO~B RE-VERIFY GREEN 99af83086): copy the WHOLE tree, then rm the forbidden
+#             set in step 2 (location-agnostic + variant-aware + citation records).
+#   allowlist (provably-complete): copy ONLY the allowed SOURCE substrate (AFFORDANCE_SPEC ALLOWED) ->
+#             the forbidden narrative/answer set is absent BY CONSTRUCTION (never copied), not by
+#             removal. Step 2 still scrubs the sub-forbidden WITHIN the allowed trees (the answer-key +
+#             debtscan under org/modules/graph). Both modes share the same fail-closed step-3 verify.
 # NOTE: git-bash tar cannot recreate committed venv symlinks (data/*/.venv, tools/analytics_venv,
 # infra/.../cookie-env, research/.../venv -> /usr/bin/python3). Those are BUILD JUNK, not incident
 # substrate -- extract TOLERANTLY (symlink failures non-fatal) then rm the venv-class dirs in step 2.
 # A genuinely-broken extraction is caught fail-closed by the step-3 allowed-substrate-present verify.
+# DEFAULT = allowlist (CTO ruling 175214Z: copy-ONLY-allowed is the provably-complete gate; docs
+# DROPPED). blocklist stays available as a fallback mode (COMPPROOF_SANDBOX_MODE=blocklist).
+MODE="${COMPPROOF_SANDBOX_MODE:-allowlist}"
+echo "SANDBOX: mode=$MODE" >&2
 set +e
-( cd "$WS" && git archive --format=tar HEAD ) | tar -x -C "$TEMPLATE" 2>/dev/null
-# portal is a SUBMODULE -- git archive of the superproject leaves it empty; archive it separately.
+if [ "$MODE" = "allowlist" ]; then
+    # ALLOWED SOURCE: data/*/scripts, infra/, org/modules/graph (+ portal below). git pathspec globbing
+    # is unreliable for data/*/scripts -> enumerate the data/<firm>/scripts dirs via ls-files+grep.
+    DATA_SCRIPT_DIRS="$(cd "$WS" && git ls-files | grep -E '^data/[^/]+/scripts/' | awk -F/ '{print $1"/"$2"/scripts"}' | sort -u | tr '\n' ' ')"
+    ( cd "$WS" && git archive --format=tar HEAD -- $DATA_SCRIPT_DIRS infra org/modules/graph ) | tar -x -C "$TEMPLATE" 2>/dev/null
+else
+    ( cd "$WS" && git archive --format=tar HEAD ) | tar -x -C "$TEMPLATE" 2>/dev/null
+fi
+# portal is a SUBMODULE (allowed SOURCE in BOTH modes) -- git archive of the superproject leaves it
+# empty; archive it separately.
 if [ -d "$WS/portal/.git" ] || [ -f "$WS/portal/.git" ]; then
     mkdir -p "$TEMPLATE/portal"
     ( cd "$WS/portal" && git archive --format=tar HEAD ) | tar -x -C "$TEMPLATE/portal" 2>/dev/null
@@ -125,6 +144,25 @@ for f in data/black_diamond/scripts/gold infra/aws/globgrph \
          org/modules/graph/comp_aws_cli.py portal/src; do
     [ -e "$TEMPLATE/$f" ] || { echo "VERIFY-FAIL: allowed substrate MISSING -> $f" >&2; FAIL=1; }
 done
+# GRAPH-COVERAGE GUARD (CTO 175214Z guard #1 -- LOAD-BEARING for allowlist): the allowlist must include
+# EVERY source the GRAPH references, or a solver false-MISSes a reachable source -> B UNDER-scores. Assert
+# every graph repo-source path ROOT (excluding M365 SharePoint nodes -- live-MCP, not repo files) is
+# present, AND every repo data-firm-with-scripts is present (PipelineScript nodes map firm+name ->
+# data/<firm>/scripts). comp-kuzu unreachable -> WARN (unverified); a GAP -> FAIL.
+if [ "$MODE" = "allowlist" ]; then
+    GROOTS="$(comp-kuzu "MATCH (n:CloudNode) WHERE (n.props CONTAINS 'path') AND NOT n.node_type IN ['MS_FILE','MS_FOLDER'] RETURN n.props" 2>/dev/null \
+        | grep -oE '"path": *"[^"]+"' | sed -E 's/"path": *"//; s/"$//' | grep -E '/' | awk -F/ '{print $1}' | sort -u)"
+    if [ -z "$GROOTS" ]; then
+        echo "SANDBOX WARN: graph-coverage guard could not reach comp-kuzu -- coverage UNVERIFIED this build" >&2
+    else
+        for r in $GROOTS; do
+            [ -d "$TEMPLATE/$r" ] || { echo "VERIFY-FAIL: graph references repo-source root '$r' NOT in allowlist (would false-MISS -> B under-scores)" >&2; FAIL=1; }
+        done
+    fi
+    for d in $(cd "$WS" && git ls-files | grep -oE '^data/[^/]+/scripts' | sort -u); do
+        [ -d "$TEMPLATE/$d" ] || { echo "VERIFY-FAIL: data-firm scripts '$d' MISSING from allowlist (graph PipelineScript would false-MISS)" >&2; FAIL=1; }
+    done
+fi
 if [ "$FAIL" -ne 0 ]; then
     echo "SANDBOX VERIFY FAILED -- NOT emitting template path (fail-closed)." >&2
     exit 1
