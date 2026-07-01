@@ -481,6 +481,7 @@ tool_grain_calibration:
     comp-shell:        [file]
     comp-diff:         [file, symbol]
     comp-pipescript:   [script, object]    # gold-script I/O (script + the S3 objects)
+    comp-dispatch:     [chain]             # orchestration grain (ABOVE per-script): the gold-dispatch DAG. NFRA_COMPROUTE S1; fronts the previously-empty orchestration grain
     comp-validate:     [object]
     comp-freshness:    [object]
     comp-incrparity:   [object]
@@ -545,7 +546,16 @@ tools:
     surface: GIT
     granularity: file
     concern: "gold-script DAG -- intra-pipeline I/O (reads/writes), chains, column-gaps, portal consumers (the `deployed` subcmd serves seam-2)"
-    touches_resource: []
+    touches_resource: [dispatch-dag]
+    distinct_from:
+      - { tool: comp-dispatch, shared_resource: dispatch-dag, my_concern: "per-SCRIPT io/deploy (a single script's reads/writes/column-gaps/deployed-parity)", their_concern: "orchestration-DAG at CHAIN grain (which scripts the gold dispatch runs, in what order, under which chain-group-flag, past which gate)" }
+  - tool: comp-dispatch
+    surface: GIT
+    granularity: chain
+    concern: "gold-dispatch orchestration-DAG -- which scripts run / in what order / under which chain-group-flag / past which gate (freshness/resume-skip/incremental); firm-parameterized (data/<firm>/scripts/gold). NFRA_COMPROUTE S1 #1; fronts the previously-empty orchestration grain; COMPOSES with comp-pipescript (drill chain -> per-script io)"
+    touches_resource: [dispatch-dag]
+    distinct_from:
+      - { tool: comp-pipescript, shared_resource: dispatch-dag, my_concern: "orchestration-DAG at CHAIN grain (which scripts run, order, chain-group-flag, gate)", their_concern: "per-SCRIPT io/deploy (a single script's reads/writes/column-gaps/deployed-parity)" }
   - tool: comp-validate
     surface: GIT
     granularity: file

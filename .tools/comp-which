@@ -64,6 +64,19 @@ RULES = [
      "S3 artifact / who-reads-writes",
      ["comp-pipescript io <script>", "pipescript --resource <key>"],
      "what produces/consumes an S3 key + who reads an artifact"),
+    # comp-dispatch = NFRA_COMPROUTE S1 #1 (~E built d804ff744; CTO-ratified). The gold-dispatch
+    # orchestration-DAG grain (which scripts run / order / chain-group-flag / gate) -- ABOVE per-script
+    # (comp-pipescript). Distinctive dispatch/chain-orchestration vocab so it does NOT collide with
+    # comp-pipescript (per-script io) or comp-freshness (data freshness). LD-0226 routing mutation.
+    (["gold dispatch", "gold_dispatch", "dispatch run", "does the dispatch run", "dispatch chain",
+      "chain order", "what does chain", "which chain", "chain group", "chain-group", "chain group flag",
+      "dispatch stages", "dispatch groups", "dispatch dag", "orchestration dag", "resume-skip",
+      "resume skip", "conditional skip", "does the gold run skip", "gold run skip", "undispatched",
+      "what scripts does the gold", "scripts does the dispatch", "run order of", "does the dispatch skip"],
+     "gold-dispatch orchestration DAG (comp-dispatch)",
+     ["comp-dispatch <firm>", "comp-dispatch <firm> --chain <name>", "comp-dispatch <firm> --script <id>",
+      "comp-dispatch <firm> --gates", "comp-dispatch <firm> --undispatched"],
+     "what the gold dispatch runs -- chain order, chain-group flags, freshness/resume/incremental gates, undispatched diagnostics (NFRA_COMPROUTE S1; drill a script -> comp-pipescript io)"),
     # LD-0208 fix (C, residual): comp-platinum is the per-firm FULL-STACK tracer
     # (component -> endpoint -> Lambda/S3 -> gold). It collides with the portal/component rule
     # on bare "component/endpoint" -> placed FIRST with distinctive phrases so a full-stack /
