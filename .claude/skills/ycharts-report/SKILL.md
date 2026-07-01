@@ -35,6 +35,7 @@ report-GENERATION flow (it creates a report artifact), so it is confirm-first on
 | `custom_field` | Optional custom field | empty |
 | `data_as_of` | `PERFORMANCE/RISK DATA AS OF` -- `Latest` or a date | `Latest` |
 | `print_as_draft` | Watermark as draft | `false` |
+| `output_dir` | Where the finished PDF is dropped for the user | the user's Downloads (`C:\Users\AndrewBerman\Downloads`) |
 
 ## Auth -- inject the shared session (do NOT log in fresh)
 
@@ -86,11 +87,20 @@ login user/pw are NOT stored in this file -- read them from the operator or a se
    before generating a REAL client report.**
 6. **Generate.** Click **GENERATE**. Endpoint: `POST /custom_pdf_reports/<sessionId>` -> `201`.
    The report generates async (poll `GET /background_jobs/in_progress` + `ai-proxy.ycharts.com/jobs_progress/<id>`).
-7. **Retrieve the PDF.** The finished report is a **presigned S3 URL**:
+7. **Retrieve the PDF + DROP IT IN THE USER'S DOWNLOADS.** On GENERATE the browser downloads the
+   finished report; the Playwright MCP saves it to the Playwright output dir
+   (`<workspace>/.playwright-mcp/pdf-report-*.pdf`). **Transfer it off the Playwright dir to the
+   user's Downloads** (Andrew-direct 2026-07-01 -- the report must land where the user can grab it):
+   ```bash
+   SRC=$(ls -t "<workspace>/.playwright-mcp/"pdf-report-*.pdf | head -1)
+   DEST="/c/Users/AndrewBerman/Downloads/<client>_vs_<comparison>_<template>_<YYYY-MM-DD>.pdf"
+   cp "$SRC" "$DEST"    # verify: head -c5 "$DEST" == "%PDF-"
+   ```
+   Report the Downloads path to the operator. (Underlying source: the report is a **presigned S3 URL**
    `GET https://ycharts-media.s3.amazonaws.com/compliance_reports/pdf_report_P_<client>_vs_P_<model>_<date>_<hash>.pdf?<AWSAccessKeyId>&<Signature>&<x-amz-security-token>&Expires=...`
-   -- it downloads on GENERATE. Capture the downloaded file (the browser saves it to the Playwright
-   output dir) and return its path / hand it to the operator. The presigned URL expires (~1h) -- fetch
-   promptly. The PDF contains CLIENT data: keep it out of git; treat per Third-Party Data Standard.
+   -- if the browser download didn't fire, grab that URL from the network and `curl -o "$DEST"` it;
+   it expires ~1h, so fetch promptly.) The PDF contains CLIENT data: it belongs in the user's
+   Downloads, NOT in the repo/git; delete any copy left in `.playwright-mcp` after transfer.
 
 ## Customization / "various edits"
 - **Different report shape:** change `template` (comparison vs proposal vs overview vs perf/risk) and
