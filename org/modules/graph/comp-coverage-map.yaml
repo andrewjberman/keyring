@@ -897,3 +897,48 @@ tools_index_generation:
   generator: org/modules/graph/comp_coverage_view.py   # emit (project) + --verify (the CI non-breaking guard); read-only, never mutates the manifest
   non_breaking_proof: "S1 verified via `comp_coverage_view.py --verify`: all 33 manifest tools_index entries are present in union(tools, meta_tools)=44 here (no tool lost in the projection); exit 0. comp-which routing unaffected (routing fields untouched)."
   manifest_marker_status: "AUTHORED-in-working-tree, commit RAVC'd to COO~B/CTO -- graph-call-manifest.yaml is ANY_EXEC lane (not AE-committable); the GENERATED-VIEW marker edit is ready (source-of-truth = this ledger; regen/verify = comp_coverage_view.py) but lands via an exec commit or a lane grant. The ledger side (source of truth + generator + non-breaking proof) is COMPLETE + committed; the manifest is the marked projection target once the 1-block marker lands."
+
+# =============================================================================
+# ROLE -> SURFACE AFFINITY (NFRA_COMPROUTE L2 -- the surface_prior context input).
+# GOVERNOR-REGISTERED (~C, 2026-07-01): COMPUNIFY owns the map's one-home; COMPROUTE
+# READS this table, never edits it from the router side (PRD section 8). The COMPROUTE
+# posterior scorer reads it as: surface_prior(cap.surface, ctx) =
+#   role_surface_affinity.by_role[ctx.role][ normalize(cap.surface) ].
+# The affinity-KEY domain == the normalized capability surface: a surface-homed tool
+# keys on its surface (LOCAL/GIT/AWS-CLOUD/MS-CLOUD/TRINO); a seam-homed tool buckets
+# to SEAM; the tooling layer buckets to META.
+#
+# PRIOR-not-FILTER (PRD section 2 + CTO ruling 3, INVIOLABLE): these weights are an
+# ADDITIVE bias in score() -- 0.0 is neutral (no bias), a value NEVER excludes a
+# cross-surface capability with strong query_match. An unknown role -> default_prior.
+# COLD-START SEED ONLY (LD-0231 curated cold-start priors -- the DE's surface-of-
+# operations observation -- + the CLAUDE.md role->surface mapping). Deliberately
+# conservative (max 0.8) so query_match + the LEARNED history_affinity (COMPLEARN
+# tool_activity, ~E; Goodhart-anchored, CVO~B-verified) dominate and accrete over it.
+# The provider (org/modules/graph/comp_capability_provider.py) reads THIS block.
+# =============================================================================
+role_surface_affinity:
+  version: 1
+  seeded_from: "LD-0231 curated cold-start priors (the DE comp-cluster surface-of-operations miss) + CLAUDE.md role->surface mapping. ~C governor ADD, NFRA_COMPROUTE.L2."
+  scale: "0.0 neutral .. 1.0 strong-affinity; ADDITIVE boost in score(), NEVER a hard filter (PRIOR-not-FILTER, CTO ruling 3)"
+  default_prior: 0.0            # cold-start / unknown role -> neutral (additive 0 = no bias, never a filter)
+  keys: [LOCAL, GIT, AWS-CLOUD, MS-CLOUD, TRINO, SEAM, META]   # the affinity-key domain (== normalized cap.surface)
+  learned_term_note: "This is the PRIOR only. The LEARNED history_affinity term (COMPLEARN tool_activity, ~E, OUTCOME-weighted) is joined by cap.affinity_key at score-time and accretes over these seeds -- the posterior tunes the real weights, these bootstrap it (CTO ruling 5: curated is the bootstrap, not the destination)."
+  by_role:
+    # DS: gold/silver/bronze pipeline scripts -> GIT authoring + AWS-CLOUD S3/DDB objects
+    DS:   { LOCAL: 0.4, GIT: 0.8, AWS-CLOUD: 0.7, MS-CLOUD: 0.0, TRINO: 0.2, SEAM: 0.3, META: 0.1 }
+    # DE: portal components/routes/cache (the LD-0231 mis-route lane) -> AWS-CLOUD component grain
+    DE:   { LOCAL: 0.3, GIT: 0.5, AWS-CLOUD: 0.8, MS-CLOUD: 0.0, TRINO: 0.2, SEAM: 0.2, META: 0.1 }
+    # RD: portal render (component/field) -> AWS-CLOUD component grain
+    RD:   { LOCAL: 0.2, GIT: 0.3, AWS-CLOUD: 0.8, MS-CLOUD: 0.0, TRINO: 0.1, SEAM: 0.1, META: 0.1 }
+    # DT: deploy/infra (lambda/routes/CF + deploy parity) -> AWS-CLOUD + the deploy SEAM
+    DT:   { LOCAL: 0.3, GIT: 0.5, AWS-CLOUD: 0.7, MS-CLOUD: 0.0, TRINO: 0.2, SEAM: 0.7, META: 0.1 }
+    # AE: cloud engineer (IAM/lambda/deploy) -> AWS-CLOUD + the deploy SEAM
+    AE:   { LOCAL: 0.3, GIT: 0.5, AWS-CLOUD: 0.8, MS-CLOUD: 0.0, TRINO: 0.3, SEAM: 0.7, META: 0.1 }
+    # CTO/COO/CVO: cross-cutting exec -> balanced, graph/federation-leaning (TRINO) + governance (META)
+    CTO:  { LOCAL: 0.3, GIT: 0.5, AWS-CLOUD: 0.5, MS-CLOUD: 0.1, TRINO: 0.6, SEAM: 0.5, META: 0.4 }
+    COO:  { LOCAL: 0.3, GIT: 0.5, AWS-CLOUD: 0.5, MS-CLOUD: 0.1, TRINO: 0.6, SEAM: 0.5, META: 0.4 }
+    CVO:  { LOCAL: 0.3, GIT: 0.5, AWS-CLOUD: 0.5, MS-CLOUD: 0.1, TRINO: 0.6, SEAM: 0.5, META: 0.4 }
+    # MSTR: governance-leaning, broad-but-shallow
+    MSTR: { LOCAL: 0.3, GIT: 0.4, AWS-CLOUD: 0.3, MS-CLOUD: 0.2, TRINO: 0.4, SEAM: 0.3, META: 0.5 }
+  registration: "GOVERNOR act (COMPUNIFY/~C one-home, PRD section 5): the table lives HERE in the CI-guarded map; COMPROUTE's read-side provider reads it, never mutates the map. New data -- no comp-coverage-check gate rule reads it, so the gate is unaffected (same pattern as node_scope_disposition, commit 1327fd0ad)."
