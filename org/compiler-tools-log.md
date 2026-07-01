@@ -11149,3 +11149,9 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-07-01 | 2.0.0_SA_COO~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/NFRA_COMPPROOF/VALIDATION-... | PASS |
 | 2026-07-01 | 0.8.0_AE_CloudComp~E | NFRA_COMPRAIL.TO-5 | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/comp_route.py | PASS |
 | 2026-07-01 | 0.4.0_DS_ClientPlatform | ADVI_TAGATTR.DS-1.d00c-full-tagged-role-aua-nna-fees | comp-surface-check | comp-surface-check check --mode advisory --file data/black_diamond/scripts/gold/D_00c.p... | PASS |
+| 2026-07-01 | 0.4.0_DS_ClientPlatform | ADVI_TAGATTR.DS-1.d00c-full-tagged-role-aua-nna-fees | comp-pipescript | comp-pipescript deployed D_00c.portal_leaderboard | PASS |
+| 2026-07-01 | 0.4.0_DT_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DT_ClientPlatfor... | PASS |
+| 2026-07-01 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/NFRA_COMPPROOF_B_HARN... | PASS |
+| 2026-07-01 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/briefs/infr... | PASS |
+| 2026-07-01 | 0.8.0_AE_CloudComp~E | NFRA_COMPROUTE.DR1 | comp_route/pytest/git-tag | DR1 default-router 3-stage engine (8b0dd364e, tag comproute-dr1-v0.1.1) -- self-test 22/22, pytest 13/13; structural-dominance + relevance-floor + write_path E1 filter | PASS |
+| 2026-07-01 | 0.8.0_AE_CloudComp~E | NFRA_COMPRAIL.TO-5 | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
