@@ -2,7 +2,7 @@
 """comp-which routing regression guard (LD-0208 fix (D), CTO / NFRA_COMPRAIL TO-6).
 
 The standing "every comp-tool is reachable via the mandated router" oracle Andrew
-asked for (2026-06-22, brief comp-which-routing-audit §4.4). Two assertions:
+asked for (2026-06-22, brief comp-which-routing-audit section 4.4). Two assertions:
 
   TEST 1 (end-to-end self-routing -- the strong oracle, adapted from MSTR's coverage
     probe 2026-06-25): feed EACH tools_index tool its OWN richest use_case sentence as
@@ -150,6 +150,52 @@ def test_diverse_paraphrase(verbose=False):
     return _PARAPHRASES, fails
 
 
+def test_comproute_posterior_live(verbose=False):
+    """NFRA_COMPROUTE L4 -- the surface-aware posterior resolves the grounded failure modes LIVE against
+    the REAL 49-cap COMPUNIFY provider (not a fixture). Asserts (A) never-silent-argmax -- a genuine
+    near-tie surfaces BOTH candidates each carrying a concern; and PRIOR-not-FILTER -- a strong
+    query_match is NEVER excluded by surface; and graceful cold-start (empty role still routes)."""
+    checks, fails = [], []
+    try:
+        _gm = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
+                           "org", "modules", "graph")
+        if _gm not in sys.path:
+            sys.path.insert(0, _gm)
+        import comp_route
+        import comp_capability_provider as _capmap
+        prov = _capmap.get_provider()
+    except Exception as e:  # a broken engine/provider IS a real L4 regression
+        return checks, ["COMPROUTE engine/provider unavailable: %s" % e]
+
+    # (A) within-margin cross-tool on the LIVE map -> disambiguation, BOTH surfaced, each with a concern
+    checks.append("A.disambiguation-live")
+    rA = comp_route.route("audit portal component fields for schema issues",
+                          {"role": "DE", "working_set": [], "trajectory": []}, prov)
+    idsA = [s.cap.id for s in rA.within_margin]
+    if rA.kind != "disambiguation" or len(idsA) < 2:
+        fails.append('A: expected a near-tie disambiguation, got %s %s' % (rA.kind, idsA))
+    elif not {"comp-transform", "comp-adapter-audit"} & set(idsA):
+        fails.append('A: expected the portal-component near-tie, got %s' % idsA)
+    elif any(not getattr(s.cap, "concern", "") for s in rA.within_margin):
+        fails.append('A: a within-margin candidate lacks a concern (cannot disambiguate)')
+
+    # (PRIOR-not-FILTER) a strong query_match on a NON-ctx surface still ranks (prior is additive, not a filter)
+    checks.append("PRIOR-not-FILTER-live")
+    rP = comp_route.route("iam permission grant gaps before deploy",
+                          {"role": "DE", "working_set": [], "trajectory": []}, prov)  # DE ctx, AWS/iam query
+    if "comp-iam" not in [s.cap.id for s in rP.ranked[:3]]:
+        fails.append('PRIOR-not-FILTER: comp-iam must still rank for an iam query under a DE ctx, got %s'
+                     % [s.cap.id for s in rP.ranked[:3]])
+
+    # (cold-start) empty role still routes (degrades to query+prior+margin -- the PRD promise)
+    checks.append("cold-start-live")
+    rC = comp_route.route("iam permission grant gaps before deploy",
+                          {"role": "", "working_set": [], "trajectory": []}, prov)
+    if not rC.ranked:
+        fails.append('cold-start: empty-role query returned no ranking')
+    return checks, fails
+
+
 def main() -> int:
     verbose = "--verbose" in sys.argv
     manifest = _load_manifest()
@@ -157,6 +203,7 @@ def main() -> int:
     tools, f1 = test_self_routing(manifest, verbose)
     cases, f2 = test_audit_reproduction(verbose)
     paras, f3 = test_diverse_paraphrase(verbose)
+    pchecks, f4 = test_comproute_posterior_live(verbose)
 
     print("\ncomp-which routing regression guard (LD-0208)")
     print("  TEST 1 end-to-end self-routing: %d/%d routable tools surface themselves"
@@ -171,13 +218,17 @@ def main() -> int:
           % (len(paras) - len(f3), len(paras)))
     for line in f3:
         print("    FAIL: %s" % line)
+    print("  TEST 4 COMPROUTE posterior LIVE: %d/%d grounded cases resolve (never-silent-argmax + PRIOR-not-FILTER + cold-start)"
+          % (len(pchecks) - len(f4), len(pchecks)))
+    for line in f4:
+        print("    FAIL: %s" % line)
 
-    if f1 or f2 or f3:
-        print("\nRESULT: FAIL (%d unreachable + %d audit regressions + %d paraphrase misroutes)"
-              % (len(f1), len(f2), len(f3)))
+    if f1 or f2 or f3 or f4:
+        print("\nRESULT: FAIL (%d unreachable + %d audit regressions + %d paraphrase misroutes + %d posterior)"
+              % (len(f1), len(f2), len(f3), len(f4)))
         return 1
-    print("\nRESULT: PASS -- %d tools self-route; %d audit cases + %d diverse paraphrases route correctly"
-          % (len(tools), len(cases), len(paras)))
+    print("\nRESULT: PASS -- %d tools self-route; %d audit + %d paraphrases route; %d COMPROUTE-posterior grounded cases resolve live"
+          % (len(tools), len(cases), len(paras), len(pchecks)))
     return 0
 
 
