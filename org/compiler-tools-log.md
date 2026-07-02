@@ -12514,3 +12514,37 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-07-02 | 0.4.0_DS_ClientPlatform~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
 | 2026-07-02 | 1.0.0_SA_CTO | NFRA_INTEGRATIONS.P2 | comp-freshness/comp-which/comp-to/deploy_ledger + rail-checked-aws | INFREF ledger grounding (comp-freshness inf; EventBridge/served-platinum/DLQ/gold-trigger live) + YCharts AC5 numstat byte-verify + P2 STANDARD codify | MIXED | GAP: no comp-tool exposes live EventBridge rule enable-state (comp-which near-tie miss) -> COMPLEARN/TOOLHEALTH worklist candidate |
 | 2026-07-02 | 1.0.0_SA_CTO | NFRA_INTEGRATIONS.P2 | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-02 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/graph-call-manifest.yaml | PASS |
+| 2026-07-02 | 0.4.0_DE_ClientPlatform | NFRA_TSGRAPH.P2-3.de-comp-cluster-cli | comp-manifest-check | comp-manifest-check list | PASS |
+| 2026-07-02 | 0.4.0_DE_ClientPlatform | NFRA_TSGRAPH.P2-3.de-comp-cluster-cli | comp-manifest-check | comp-manifest-check selfcheck | PASS |
+| 2026-07-02 | 0.4.0_DE_ClientPlatform | NFRA_TSGRAPH.P2-3.de-comp-cluster-cli | comp-cluster | comp-cluster AdvisorIntelligence | PASS |
+| 2026-07-02 | 0.4.0_DE_ClientPlatform | NFRA_TSGRAPH.P2-3.de-comp-cluster-cli | comp-cluster | comp-cluster --coverage | PASS |
+| 2026-07-02 | 3.0.0_SA_CVO | (no-TO) | pipescript | pipescript --list | PASS |
+| 2026-07-02 | 0.4.0_DE_ClientPlatform | NFRA_TSGRAPH.P2-3.de-comp-cluster-cli | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DE_ClientPlatfor... | PASS |
+| 2026-07-02 | 3.0.0_SA_CVO | (no-TO) | pipescript | pipescript advi-bd | PASS |
+| 2026-07-02 | 1.0.0_SA_CTO | NFRA_INTEGRATIONS.P2 | comp-pipescript | comp-pipescript deployed --pipeline mdpf | PASS |
+| 2026-07-02 | 3.0.0_SA_CVO | (no-TO) | pipescript | pipescript advi-inf | PASS |
+| 2026-07-02 | 3.0.0_SA_CVO | (no-TO) | comp-pipescript | comp-pipescript deployed --firm bd | PASS |
+| 2026-07-02 | 0.5.0_AE_OpalETL | NFRA_INTEGRATIONS.P3.ae-storage-dependency-firmsep-schema | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/change_management/20... | PASS |
+| 2026-07-02 | 0.6.0_AE_PartnerETL | (no-TO) | pipescript | pipescript --list | PASS |
+| 2026-07-02 | 0.6.0_AE_PartnerETL | (no-TO) | pipescript | pipescript advi-bd | PASS |
+| 2026-07-02 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+| 2026-07-02 | 0.4.0_DE_ClientPlatform | NFRA_P0_stale_portal_serving_check | comp-platinum | comp-platinum --help | PASS |
+| 2026-07-02 | 0.5.0_AE_OpalETL | NFRA_INTEGRATIONS.P3.ae-storage-dependency-firmsep-schema | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/NFRA_INTEGRATIONS_STA... | PASS |
+| 2026-07-02 | 0.4.0_DE_ClientPlatform | NFRA_P0_stale_portal_serving_check | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DE_ClientPlatfor... | PASS |
+| 2026-07-02 | 0.4.0_DE_ClientPlatform | NFRA_P0_stale_portal_serving_check | comp-routes | comp-routes behaviors | PASS |
+| 2026-07-02 | 0.5.0_AE_OpalETL | NFRA_INTEGRATIONS.P3.ae-storage-dependency-firmsep-schema | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/ec2/EC2_MANIFEST.json | PASS |
+| 2026-07-02 | 0.4.0_DS_ClientPlatform~A | (no-TO) | comp-pipescript | comp-pipescript --help | PASS |
+| 2026-07-02 | 0.4.0_DS_ClientPlatform~A | (no-TO) | comp-pipescript | comp-pipescript io --help | PASS |
+| 2026-07-02 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+| 2026-07-02 | 0.4.0_DS_ClientPlatform~A | (no-TO) | comp-pipescript | comp-pipescript deployed --pipeline inf | PASS |
+| 2026-07-02 | 0.4.0_DS_ClientPlatform~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file data/inf/scripts/silver/convert_transac... | PASS |
+| 2026-07-02 | 0.6.0_AE_PartnerETL | (no-TO) | pipescript | pipescript advi-bd | PASS |
+| 2026-07-02 | 0.6.1_AE_PartnerETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file data/inf/manual_api/pull_inflection_tra... | PASS |
+| 2026-07-02 | 0.4.0_DS_ClientPlatform~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file data/inf/scripts/silver/convert_transac... | PASS |
+| 2026-07-02 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+| 2026-07-02 | 0.4.0_DS_ClientPlatform~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file data/inf/manual_api/pull_inflection_tra... | PASS |
+| 2026-07-02 | 0.4.0_DS_ClientPlatform~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/briefs/schwab-daily-box-repoint-du... | PASS |
+| 2026-07-02 | 1.0.0_SA_CTO | NFRA_INTEGRATIONS.P2 | comp-pipescript | comp-pipescript io convert_transactions_to_silver.py | PASS |
+| 2026-07-02 | 0.4.0_DS_ClientPlatform~A | (no-TO) | comp-grep/comp-pipescript | INF_API_SILVER_TXN chain-step + converter trace (deployed --pipeline inf MATCH); schwab/silver + canonical/schwab + SSOTMG enum seed for 2 Explore agents | PASS | INF txn P0 3-fixes + schwab daily-box re-point design |
+| 2026-07-02 | 0.4.0_DS_ClientPlatform~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
