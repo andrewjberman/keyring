@@ -27,6 +27,8 @@ Hardened today: `schedule.tf` v1.1.0 quiesce-wait (0.6.2 race-fix) -- the box no
 1. Path V writes the validation prefix, not prod -> prod only advances via Path M (manual).
 2. Even if raw is fresh, the 6 CONVERTERS + canonical are MANUAL (Path M steps 2-7.5). And `convert_schwab_trn_to_parquet.py` reads **LOCAL OneDrive disk** (`DEFAULT_SRC_DIR`) -> it CANNOT run headless (a bridge advancing only S3 silently no-ops TRN Layer-A -- hit today).
 
+**ROOT-CAUSE FINDING (2026-07-02 ground-first, CONFIRMED behaviorally -- the crux blocker):** Path V and Path M are TWO SI2 clients on the SAME 08242234 enrollment, and they CONTEND for the SI2 "Download all new files" pool -- whichever client downloads a given day's file first CONSUMES its new-flag, so the other never sees it. Evidence (live file-presence): RPS by client -- 06-25 OneDrive-only / 06-26 BOX-only / 06-29 BOX-only / 06-30 OneDrive-only / 07-01 BOX-only = ZERO dates gotten by both; a near-perfect COMPLEMENTARY split across 5 dates. SOURCE-CONFIRMED sub-fact: CRS20260630.RPS is ABSENT on the box locally ("never had it") -> a DOWNLOAD gap, not a sync gap (today's sync-race-fix does NOT address it). CONSEQUENCE: while both clients run, NEITHER gets a complete daily set -> **N=5-clean-days is UNACHIEVABLE until the box is the SOLE SI2 client.** (The exact SI2-internal ack mechanism is an implementation detail; the contention is behaviorally grounded.) This is deeper than the sync-race and is the true reason the N=5 hold hasn't cleared.
+
 ## 2. Design target (Option A): a durable, automated, daily, fail-loud Schwab-ingest
 
 Make Path V the production ingest end-to-end (download -> prod raw -> silver -> canonical), retiring the manual Path M, with fail-loud monitoring so a stall is never silent.
@@ -80,5 +82,37 @@ The automation exists to serve MDPF 49F custody freshness. 0.5.0 (WS-3 MDPF-cust
 - **Mechanism-agnostic consumer:** MDPF consumes whatever lands in `schwab/silver/rps`; the mechanism (promote the SI2 box to prod, or another) is the Schwab-lane call. 0.5.0 defers it. So this design owns the mechanism; WS-3 owns the consumer-side safety-gate. The two PAIR: the gate protects MDPF whether ingest is automated OR reliably-manual.
 - **Interlock:** WS-3's generalized leg-2 protection-gate is the backstop for THIS automation too -- if a future automated run lands fresh-but-wrong Schwab data, the gate blocks the bad replace. So automating ingest does not weaken the served-correctness guarantee.
 
-## 6. Deliverable status
+## 6. Harden-phase design -- FINISH-THE-BOX (COO GO 2026-07-02; design-ready, execution Andrew-gated)
+
+Goal: a contention-free box that produces a COMPLETE daily set (incl the MDPF-critical RPS), accrues N=5 clean days, then repoints (Caution-B). Root cause = SI2 shared-new-files contention (sec 1, exercise-confirmed). Fix = make the box the SOLE SI2 client, WITHOUT starving prod during the accrual.
+
+### 6.1 Sole-client mechanism (PREFERRED -- the natural finish-the-box end-state)
+- **Quiesce the manual OneDrive desktop SI2 pull on 08242234** so the box owns the full daily download (no manual client consuming new-flags first). Concretely: Andrew stops his desktop SI2 client from auto-downloading 08242234 (disable its scheduled/auto pull, or set it read-only/no-download for that enrollment). The box's `SchwabAutoDownload` then sees the complete daily "new files" set.
+- **EXECUTION IS SOVEREIGN-GATED:** stopping Andrew's desktop pull is HIS action + ties to the Caution-B pace (MSTR carrying to Andrew). Design-ready + arch-gated NOW; DO NOT quiesce Andrew's pull without his OK.
+
+### 6.2 Prod-continuity through the accrual (the trap -- MUST solve)
+The box writes the VALIDATION prefix until the repoint (held). So if the manual pull stops for the sole-client accrual, prod `01_raw` goes UNFED for the N=5 window -> MDPF 49F custody re-freezes (the exact 4th-stall). SOLUTION: a **temporary daily bridge** during accrual -- the same validation->prod promote + converter run I executed today (2026-07-02), run DAILY (automated, event-driven off the box's clean daily sync) so prod stays current WHILE the box proves out sole-client. After N=5 + repoint, the bridge is retired (the box feeds prod directly). This decouples "prod stays fresh" from "box earns its N=5" -- both happen in parallel, no gap.
+
+### 6.3 N=5 clean-day accrual plan
+- **"Clean box-day" defined:** for trading day D, the box's daily output contains the FULL expected CRS set for D INCLUDING RPS (the file it starved on), each byte-parity-consistent with the vendor delivery. (RLY/RTY are periodic; the gate keys on the CORE set: ACC/RPS/TRN/ULN/RLD/SEC/UPN/UPT/TCF/TCFX, calendar-aware.)
+- Accrue **5 consecutive clean sole-client trading days**. The per-date completeness check (6.4) IS the accrual tracker -- a missing RPS resets the counter (exactly what 06-30 would have done).
+- Only from a CONTENTION-FIXED box (sole-client or fetch-by-date) -- clean days under the current 2-client contention are meaningless (the box will keep missing manual-claimed files).
+
+### 6.4 Fail-loud (per-date completeness -- the accrual tracker AND the prod monitor)
+- **Per-date completeness alarm:** for each trading day, verify the box output (then, post-repoint, prod `01_raw`) has the full CORE CRS set incl RPS; a missing MDPF-critical file -> alarm (catches the 06-30-class silent gap). Calendar-aware (weekends/holidays clean-skip).
+- Ties to the WS-3/MDPF SLA (sec 5): alarm fires within the 2-trading-day window so a stall is fixed before MDPF DEFERs.
+- Complements the existing 14h EventBridge absence alarm + the silver-freshness alarm (sec 2D).
+
+### 6.5 Fetch-by-DATE fallback (contention-immune, if Andrew declines to stop the manual pull)
+- If Andrew keeps his manual desktop pull, make the box download CONTENTION-IMMUNE: re-pull each date's full set by DATE, not by the "new files" flag -> the box gets complete sets regardless of what the manual client consumed. Both clients co-run, no prod gap, no Andrew behavior change.
+- PREREQUISITE TO GROUND: does the SI2 Desktop app support a date-scoped re-pull (vs only "download all NEW")? Unknown -- a box-side capability probe decides feasibility. If the SI2 app cannot re-pull by date, this fallback needs a different download mechanism (heavier).
+
+### 6.6 Sequencing (execution, Andrew-gated)
+1. [SOVEREIGN] Andrew answers the Caution-B pace + agrees to stop the manual pull (or picks fetch-by-date).
+2. Quiesce manual pull (6.1) [or implement fetch-by-date (6.5)] + stand up the temporary daily bridge (6.2) so prod stays fed.
+3. Accrue N=5 clean sole-client days (6.3), tracked by the completeness alarm (6.4).
+4. [CTO arch-gate + CTO+COO never-widen] Repoint `sync-to-s3.ps1` validation->prod `01_raw` (+RPS->bronze/rps) -- the held Caution-B repoint.
+5. Retire the temporary daily bridge + the manual OneDrive path (now redundant). Automate the converter+canonical steps (sec 2B/2C). C3 (TRN-A->S3) gates the headless converter.
+
+## 7. Deliverable status
 DESIGN-READY. If Andrew GO's Option A -> this becomes the build TO (owner: 0.6.2/0.5.0 AE lane; C3 gates it). If Option B (defer) -> the fail-loud monitoring (D2/D3/D4) is the MINIMUM to add even under manual ingest, so a manual-skip alarms (the 4th-stall would have alarmed at D3). RAVC COO+CTO+0.5.0.
