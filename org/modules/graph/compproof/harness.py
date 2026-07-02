@@ -224,14 +224,23 @@ def assert_live_context_clean(injected_context: str, incident: dict = None) -> d
     and assert it is narrative-free. Stronger than the assert_clean_context file-presence PROXY -- it
     catches a runtime-injection vector the proxy misses (e.g. a global ~/.claude hook that injects
     answer-bearing content with no file up-tree). Two checks: (a) no generic fabric-narrative marker;
-    (b) if an incident is given, none of ITS sealed root-cause distinctive terms appear (direct
-    answer-injection). Returns {clean, generic_hits, answer_hits}. Wire as the STANDING per-run gate
+    (b) if an incident is given, none of ITS distinctive true_root_cause terms appear (direct
+    answer-injection -- true_root_cause ONLY, not the detection/class scaffolding; see E-FIX below).
+    Returns {clean, generic_hits, answer_hits}. Wire as the STANDING per-run gate
     when the launch captures the injected context -- a false-clean silently false-SOLVES the corpus."""
     text = (injected_context or "").lower()
     generic = sorted(m for m in _NARRATIVE_CONTEXT_MARKERS if m in text)
     answer = []
     if incident is not None:
-        sealed = " ".join(str(incident.get(f, "")) for f in corpus.sealed_fields())
+        # E-FIX (CTO/COO~B 2026-07-02, TO-B2 aggregate-with-corrections): derive the distinctive
+        # answer-terms from the true_root_cause ONLY -- NOT from all sealed_fields(). The other sealed
+        # fields (how_it_was_actually_found, failure_class) are DETECTION/CLASS scaffolding, e.g.
+        # "phase-1 synthesis REVIEW" / "financial-path REVIEW" -- a benign scaffolding word ("review")
+        # appearing in a solver's system-init context is NOT answer-injection. Including them
+        # false-VOID'd B-15/B-16 on the shared token "review". A leaked context's actual answer is the
+        # ROOT CAUSE, so it is the correct and sole answer-term source. Grounded: void 2->0, NO other
+        # incident newly leaks (CVO~B pre-verified, commit e43e20012).
+        sealed = str(incident.get("true_root_cause", ""))
         symptom_terms = corpus_loader._terms(incident.get("symptom_as_first_seen", ""))
         distinctive = corpus_loader._terms(sealed) - symptom_terms
         ctx_tokens = {t.strip("._") for t in re.findall(r"[A-Za-z0-9_.]+", text)}

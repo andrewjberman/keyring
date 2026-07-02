@@ -149,12 +149,26 @@ INCIDENTS = [
     },
     {
         "id": "MDPF_AGG_FREEZE_177B", "rank": 13, "date": "2026-06-25",
-        "failure_class": "frozen-but-fresh (aggregate)",
+        # RE-SEALED (F-fix, CTO-ratified 2026-07-02; TO-B2 CVO~B FINDING F). The integrity bar is met:
+        # a seal changes ONLY on independent proof-of-defect (causally-impossible-on-the-merits), NOT
+        # solver-disagreement. OLD cause "Aggregate froze on a trading-day-lag alarm mis-point; un-froze
+        # via alarm repoint" (from a shallow read of org/compiler-tools-log.md:8170) is DEFECTIVE +
+        # causally impossible: bd-49f-interim.tf:393-411 -- the silver-stale alarms' only actions are
+        # alarm_actions/ok_actions = the bd_49f_cookie_alerts SNS topic (an email SIGNAL); an alarm is
+        # not an actuator and categorically cannot un-freeze an aggregate. The authoritative CVO-verified
+        # diagnosis (MDPF_ASSETS.FREEZE-DX_diagnosis.md:9) grounds the real mechanism: the convergence
+        # gate correctly DEFERS on a genuinely-stale upstream (BD silver fees). "NOT an MDPF-side code
+        # break." (The B-13 seal was itself an instance of B-17 COTETL_SEAL_MISINFERENCE -> seal-review gate.)
+        "failure_class": "correct-defer on stale upstream (downstream victim)",
         "symptom_as_first_seen": "The MDPF aggregate AUA ($1.77B) is frozen.",
-        "true_root_cause": "Aggregate froze on a trading-day-lag alarm mis-point; un-froze via alarm repoint.",
-        "how_it_was_actually_found": "alarm-repoint.",
-        "detection": "alarm-repoint", "severity_anchor": "$1.77B aggregate headline frozen",
-        "citation": "org/compiler-tools-log.md:8170",
+        "true_root_cause": "The MDPF daily-chain convergence gate CORRECTLY DEFERRED (fresh-custody "
+            "protection) on a genuinely-stale upstream -- BD silver `fees` frozen at the 06-18 partition "
+            "since the 06-19 BD-49F break; the served aggregate is a downstream victim, NOT a defect on the MDPF side.",
+        "how_it_was_actually_found": "per-stage live freshness isolated the stuck input to BD silver "
+            "fees; gate source + CloudWatch defer-decisions confirmed a correct defer (not a break).",
+        "detection": "per-stage freshness + gate-source grounding", "severity_anchor": "$1.77B aggregate headline frozen",
+        "citation": "org/tier2_senior/0.5.0_AE_OpalETL/logs/2026-06-25/MDPF_ASSETS.FREEZE-DX_diagnosis.md:9; "
+            "infra/aws/terraform/bd-pipeline/bd-49f-interim.tf:393-411 (alarm=SNS-signal-only -> old cause causally impossible)",
     },
     {
         "id": "AUA_NNA_CONFLATION", "rank": 14, "date": "2026-03-06",

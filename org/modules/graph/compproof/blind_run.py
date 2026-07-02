@@ -88,10 +88,15 @@ def main(argv=None) -> int:
                                  description="NFRA_COMPPROOF B blind-run driver (aggregate + charters)")
     ap.add_argument("--solver-results", default="", help="JSON {case_id: solver_result} (MSTR-spawned)")
     ap.add_argument("--judge-axes", default="", help="JSON {case_id: {reach,usability,grounding_resilience}} (CVO/B2)")
+    ap.add_argument("--caveats", default="", help="JSON judge-methodology caveats companion (CVO/B2) to "
+                    "fold into the report so the Andrew-facing aggregate carries the known-error "
+                    "corrections + rubric caveats instead of silently dropping them")
     ap.add_argument("--out", default="", help="write the full result JSON here")
     ap.add_argument("--json", action="store_true", help="print the result JSON instead of the report")
     a = ap.parse_args(argv)
     result = run_all(_load_json(a.solver_results), _load_json(a.judge_axes))
+    if a.caveats:
+        result["methodology_caveats"] = _load_json(a.caveats)
     if a.json:
         print(json.dumps(result, indent=1, default=str))
     else:
