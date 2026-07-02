@@ -91,6 +91,42 @@ consecutive nightlies BEFORE removing the interim crons. Destructive TF delete i
 Rule-20 note: read-only grounding pass, no infra change made; the implementing safe-apply TO
 will carry comp-aws/comp-iam checks at execution time.
 
+## Q-A/Q-B RESOLUTION (grounded round 2, post CTO arch-gate 201756Z)
+
+### Q-B gate PASSES -- aggregator is truly writer-less once the 9 crons are gone.
+Full-estate grep of `silver/_silver_complete/` writers = EXACTLY the 9 interim crons (one dim
+sentinel each: accounts_v2/assets_v2/positions_daily/representatives/transactions/billing/
+performance/tax/unified_account_dim) + inf-silver-aggregator's OWN `_AGGREGATOR_FIRED.json`
+idempotency marker (the consumer, retires WITH them). The single-runner writes ZERO. => safe to
+decommission the aggregator + s3-notification IN Stage-3 WITH the crons (not before, not dormant).
+
+### Q-A = OPTION (i) grounded-viable: --chain full SELF-PRODUCES INF_S_00; no post-open dep.
+- `INF_S_00 = INF_build_canonical_prices.py`. Dispatch AUTO-RUNS it as a pre-gate step at the
+  front of every `--chain full` (orion-gold-dispatch.sh:1394-1422: "auto-run INF_S_00 before the
+  freshness gate ... aborts the full chain if it fails"). It does NOT read INF_S_00 from a
+  separate producer -> the chain SELF-PRODUCES canonical prices in-process. This is the single
+  fact CTO said "picks the option."
+- INF_S_00 INPUTS (INF_build_canonical_prices.py:9-14,48-50): T1 transaction_observed =
+  `silver/transactions/` (the SAME pre-open Orion txn silver CHAIN_PULL produces; ties to the
+  forward-label seal) + T2 yahoo_finance = `silver/historical_prices.parquet` (separate daily EOD
+  producer, FALLBACK tier) + T3 interpolation + T4 carry_forward. **NO post-open live market
+  feed.** => the 10:47ET schedule is NOT price-driven; it is merely the chosen trigger cadence.
+- => inf-canonical-prices-daily (10:47ET) is JUST a trigger, redundant with a 9ET --chain-full
+  trigger; under option (i) it RETIRES too (add to Stage-3 delete). ONE full pull+compute/day at
+  9ET, INF_S_00 self-produced fresh at the front. No double-run, no ordering issue.
+- SECONDARY input-timing note (N-nightly verify item, NOT a blocker): T2
+  `silver/historical_prices.parquet` is produced by the separate historical-prices pipeline
+  (infra/aws/ec2/historical-prices/). Confirm it lands before the 9ET chain consumes it; T2 is a
+  FALLBACK tier (T1 transaction_observed primary + T4 carry_forward), so a one-day-late T2
+  degrades gracefully, not fatally. The INF_S_00 pre-gate/CHAIN_PULL internal ordering is
+  UNCHANGED by moving the trigger time (pre-existing behavior, orthogonal to L7).
+
+### Updated Stage-3 delete set (on CTO option-(i) arch-sign)
+9 interim REST-pull crons + inf-silver-aggregator + its s3-notification + inf-canonical-prices-daily
+(the 10:47 trigger) -- ALL redundant under a single 9ET --chain-full trigger. jwt-fetch +
+opal-inf-bronze-runner UNTOUCHED (hard deps). Human-gated (COO + Andrew) on the specific resources.
+
 ## Next
-RAVC 1.0.0_SA_CTO with this scope + Q-A/Q-B; on his arch-gate, build the additive-9ET-trigger
-safe-apply plan first (non-destructive), N-nightly-verify, THEN the staged cron/Lambda delete.
+RAVC'd CTO round-2 (Q-A option (i) + Q-B PASS). On his option-(i) arch-sign, build the Stage-1
+additive-9ET-trigger safe-apply plan (non-destructive), N-nightly-verify (incl the T2
+historical_prices cadence check), THEN the human-gated Stage-3 delete.
