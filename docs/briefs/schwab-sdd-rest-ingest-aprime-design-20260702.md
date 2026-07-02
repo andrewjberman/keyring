@@ -40,5 +40,16 @@ Headless Playwright+Chromium driving the LMS-gateway OAuth flow (CV Kimi-VL + th
 - Ledger every box-state change (NO-HALF-DEPLOYS). Firm-sep binding throughout.
 - **SEQUENCE:** (0) CTO arch-gate → (1) capturer (SM blob, full jar, F1/F2) → (2) **liveness alarm FIRST** → (3) ingest (`schwab_sdd_ingest.py`, list/download/land-validation/sentinel, firm-sep 2-layer, OAuth-refresh) → (4) bronze→silver wire → (5) exercise-confirm: prove a REST fetch of a KNOWN date (the missing 06-30 RPS = prove-and-recover) lands via REST → RAVC CTO+MSTR → (6) daily-cycle wiring. Repoint remains N=5+never-widen+Andrew-gated (LEG-5, untouched).
 
+## 6b. CTO ARCH-GATE CONDITIONS (approved da995bf56 2026-07-02T231837Z — BOUND into the build)
+- **Exercise-confirm gates reliance:** a LIVE SDD REST fetch of the missing 06-30 RPS (prove-and-recover) must PASS before ANY production ingest. NO live SDD REST call until CTO has SEEN the capturer + the alarm.
+- **SM blob:** KMS-encrypted + scoped `schwab/sdd/session`.
+- **Firm-sep UNCONDITIONALLY fail-closed:** app-guard ABORTs if `SCHWAB_S3_BUCKET` unset OR cross-firm (no default, no proceed-on-unset); IAM DenyPlane explicitly Denies bd AND cot AND inf buckets.
+- **SDD surface least-privilege:** only list-by-date/type/master + download, scoped to 08242234; no broader SDD API.
+- **Liveness alarm → the OPS CHANNEL** (Andrew's this-session ruling; COO names it), NOT personal email. PendingConfirmation safeguard kept. Alarm built + verified-DELIVERING (confirmed-sub) BEFORE any standing-session/re-mint reliance.
+
+## 6c. FOLDED SCOPE — CVO schwab-dependency baseline (COO 231431Z; CVO verifies at arch-gate)
+- **ULT (grounded verdict 2026-07-02):** `schwab/silver/ult` is LIVE-CONSUMED (14 gold + 2 lambda consumers; gated freshness input `warn_age_hours=36`, scripts:[B_02.canonical_lots]), NOT dormant. 85d-frozen = the ult silver converter isn't run daily (uln/rld are via /49-schwab-conv; ult is not). Impact = bounded served-QUALITY staleness (B_02 lot-cost-basis 85d-stale; NOT gross AUA — WARN-gate + fallback profile masks it). **A-prime re-point MUST wire `convert_schwab_lots_to_silver.py ult` (mode 3) into the daily cycle** (raw CRS*.ULT is box-fed) → silver/ult un-freezes.
+- **Two-namespace consolidation:** `opal-data-schwab/silver/RPS|ULN` (uppercase, box-fed SI2 raw) vs `opal-data-bd/schwab/silver/rps|uln|rld|ult` (lowercase, bd silver) → the re-point consolidates onto the box-fed path. Fold into the re-point design; CVO verifies.
+
 ## 7. Prereqs already resolved (stand regardless)
 S3→box code-deploy IAM path (SchwabOpsCodeRead, applied+verified, tag canonical-schwab-ec2-v1.0.0) · console-session task pattern · daily-bridge design · the parity/completeness discipline. Only "how the box gets a complete set" changed: GUI-download → SDD REST.
