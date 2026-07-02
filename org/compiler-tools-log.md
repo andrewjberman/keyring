@@ -12462,3 +12462,44 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-07-01 | 0.7.0_AE_CloudOps~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/ec2/EC2_MANIFEST.json --file ... | PASS |
 | 2026-07-01 | 0.7.0_AE_CloudOps~A | ycharts-enable | deploy_ledger.py + safe-apply + safe-ec2-deploy + ds-commit-gate + terraform init/plan | YCharts-enable deploy: 4-leg ledger opened+CLOSED; HALT-gated IAM apply (1 added, 0-diff live-verified); safe-ec2-deploy SUCCESS; ds-gate PASS on integration.py+audit.py; box-verify self-cert VERDICT=PASS (below-tier-deny zero-egress + roster 200). Rail gap: comp-rail false-positives on literal 'aws iam' inside a quoted deploy_ledger --proof string | PASS |
 | 2026-07-01 | 0.7.0_AE_CloudOps~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-02 | 0.5.0_AE_OpalETL | (no-TO) | comp-pipescript | comp-pipescript deployed data/mdpf/scripts/gold/validate_schwab_native_custody.py | PASS |
+| 2026-07-02 | 3.0.0_SA_CVO | (no-TO) | pipescript | pipescript mdpf | PASS |
+| 2026-07-02 | 3.0.0_SA_CVO | (no-TO) | comp-pipescript | comp-pipescript deployed validate_schwab_native_custody.py | PASS |
+| 2026-07-02 | 3.0.0_SA_CVO | (no-TO) | comp-pipescript | comp-pipescript deployed --firm mdpf | PASS |
+| 2026-07-02 | 0.7.0_AE_CloudOps~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/briefs/safe-ec2-deploy-worktree-se... | PASS |
+| 2026-07-02 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+| 2026-07-02 | 0.4.0_DS_ClientPlatform~A | (no-TO) | comp-pipescript | comp-pipescript deployed validate_schwab_native_custody.py | PASS |
+| 2026-07-02 | 0.4.0_DS_ClientPlatform~A | (no-TO) | comp-pipescript | comp-pipescript --help | PASS |
+| 2026-07-02 | 0.4.0_DS_ClientPlatform~A | (no-TO) | comp-pipescript | comp-pipescript deployed --pipeline mdpf | PASS |
+| 2026-07-02 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/briefs/allo... | PASS |
+| 2026-07-02 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/findings/MD... | PASS |
+| 2026-07-02 | 0.4.0_DS_ClientPlatform~A | (no-TO) | comp-pipescript | comp-pipescript io validate_schwab_native_custody.py | PASS |
+| 2026-07-02 | 0.4.0_DS_ClientPlatform~A | (no-TO) | comp-pipescript | comp-pipescript chain validate_schwab_native_custody.py | FAIL |
+| 2026-07-02 | 0.4.0_DS_ClientPlatform~A | (no-TO) | comp-pipescript | comp-pipescript io build_mdpf_wse_49f_non_model_aua.py | PASS |
+| 2026-07-02 | 0.4.0_DS_ClientPlatform~A | (no-TO) | comp-pipescript | comp-pipescript io mdpf_aggregate_aua.py | PASS |
+| 2026-07-02 | 0.5.0_AE_OpalETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/briefs/mdpf-custody-flip-runbook-2... | PASS |
+| 2026-07-02 | 0.4.0_DS_ClientPlatform~A | (no-TO) | comp-pipescript | comp-pipescript io build_aggregate_aua_timeseries.py | FAIL |
+| 2026-07-02 | 0.7.0_AE_CloudOps~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/ec2/safe-ec2-deploy.sh | PASS |
+| 2026-07-02 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/NFRA_INTEGRATIONS.json --f... | PASS |
+| 2026-07-02 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+| 2026-07-02 | 0.4.0_DS_ClientPlatform~A | (no-TO) | comp-pipescript | comp-pipescript deployed --pipeline mdpf | PASS |
+| 2026-07-02 | 0.4.0_DE_ClientPlatform | NFRA_TSGRAPH.P2-3.de-comp-cluster-cli | comp-cluster | comp-cluster --list | PASS |
+| 2026-07-02 | 0.4.0_DE_ClientPlatform | NFRA_TSGRAPH.P2-3.de-comp-cluster-cli | comp-cluster | comp-cluster AdvisorIntelligence | PASS |
+| 2026-07-02 | 0.5.0_AE_OpalETL | NFRA_INTEGRATIONS.P3.ae-storage-dependency-firmsep-schema | comp-iam | comp-iam | PASS |
+| 2026-07-02 | 0.4.0_DS_ClientPlatform~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/ec2/mdpf-daily-runner/mdpf-da... | PASS |
+| 2026-07-02 | 0.4.0_DE_ClientPlatform | NFRA_TSGRAPH.P2-3.de-comp-cluster-cli | comp-cluster | comp-cluster --coverage | PASS |
+| 2026-07-02 | 0.4.0_DE_ClientPlatform | NFRA_TSGRAPH.P2-3.de-comp-cluster-cli | comp-manifest-check | comp-manifest-check | FAIL |
+| 2026-07-02 | 0.4.0_DE_ClientPlatform | NFRA_TSGRAPH.P2-3.de-comp-cluster-cli | comp-manifest-check | comp-manifest-check selfcheck | PASS |
+| 2026-07-02 | 0.4.0_DE_ClientPlatform | NFRA_TSGRAPH.P2-3.de-comp-cluster-cli | comp-manifest-check | comp-manifest-check list | PASS |
+| 2026-07-02 | 0.7.0_AE_CloudOps~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/NFRA_INTEGRATIONS_STA... | PASS |
+| 2026-07-02 | 0.5.0_AE_OpalETL | NFRA_INTEGRATIONS.P3.ae-storage-dependency-firmsep-schema | comp-surface-check | comp-surface-check check --mode advisory --file docs/briefs/nfra-integrations-pillar3-s... | PASS |
+| 2026-07-02 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/ETFS_SETUP.json --file org... | PASS |
+| 2026-07-02 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/NFRA_AGENTBUS_PRD.md ... | PASS |
+| 2026-07-02 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/.open_deploys/advi-i... | PASS |
+| 2026-07-02 | 0.4.0_DE_ClientPlatform | NFRA_TSGRAPH.P2-3.de-comp-cluster-cli | comp-surface-check | comp-surface-check check --mode advisory --file .tools/comp-which | PASS |
+| 2026-07-02 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/briefs/allo... | PASS |
+| 2026-07-02 | 0.5.0_AE_OpalETL | NFRA_INTEGRATIONS.P3.ae-storage-dependency-firmsep-schema | comp-pipescript | comp-pipescript deployed data/mdpf/scripts/gold/validate_schwab_native_custody.py | PASS |
+| 2026-07-02 | 0.4.0_DS_ClientPlatform~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/change_management/20... | PASS |
+| 2026-07-02 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/NFRA_INTEGRATIONS.json | PASS |
+| 2026-07-02 | 0.7.0_AE_CloudOps~A | safe-ec2-deploy-fix + NFRA_INTEGRATIONS-001 P1 | safe-commit + halt-gate-check(sourced) + bash -n | safe-ec2-deploy sub-fix: worktree-aware serial + fail-closed attribution + safe-commit manifest (self-verified main-tree+worktree, 1/1073 scoped). P1: STANDARD v1.1 fidelity refresh source-vs-code (drift found+fixed) | PASS |
+| 2026-07-02 | 0.7.0_AE_CloudOps~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
