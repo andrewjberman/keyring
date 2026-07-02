@@ -38,4 +38,17 @@
 2. **ROLLBACK ARMED:** any unexpected widen vs frozen bd -> fire rollback (SSM=bd) immediately + ping COO to re-convene. (Closes CTO's dry-run caveat: non_model -31% + model_aua-after were 06-24 dry-run/unattested -> post-flip per-field capture verifies live.)
 3. This record CLOSES on CVO post-flip cert + freeze-clear.
 
-## Status: OPEN (FIRED + verified 2026-07-02T14:06:52Z, param=schwab v2; ROLLBACK ARMED; awaiting CVO post-flip parity cert on the first schwab-native nightly + 06-25 freeze-clear)
+## WS-3 flip-ledger-close checklist (pre-staged 2026-07-02T15:11Z, per COO -- fill on the first schwab-native run)
+
+Un-freeze path = LEVER 1 (ride inf): 0.6.1's clean inf chain RUNNING (proc 17328, 15:07Z); INF sentinel ETA ~15:35Z -> mdpf-daily-trigger AUTO-fires on the schwab basis. (LEVER 2 manual SSM dispatch = armed fallback, held; do NOT fire without COO GO.)
+
+Close ALL of these to flip Status OPEN -> CLOSED:
+- [ ] INF sentinel fired -> mdpf runner (i-02448edb624a7a7cf) dispatched, CUSTODY_SOURCE=schwab stamped. run_date = ____ ; RPS date consumed = ____ (06-30, OR 07-01 if 0.6.2's bridge silver landed first).
+- [ ] Chain reached SERVE -- leg-2 Stage 2.5 gate PASSED (rc=0, not DEFER); WS-A platinum + non_model_assets.json + aggregate_aua_timeseries.json updated for run_date.
+- [ ] CVO per-field parity PASS: served-after custody / model_aua / non_model_aua vs frozen bd -> NO field widens unexpectedly; served custody == sum(schwab/silver/rps/<RPS date>) CASH-excluded, to the cent.
+- [ ] 06-25 16:42Z freeze CLEARED -- served aggregate AUA vintage advanced past 06-25.
+- [ ] Rollback NOT triggered (no unexpected widen).
+
+ON ALL-CHECKED -> WS-3 verdict CLOSE (flip un-froze MDPF; freeze (c) resolved). ON ANY UNEXPECTED WIDEN -> fire rollback `aws ssm put-parameter --name "/mdpf/custody_source" --value "bd" --overwrite --region us-east-1` (PowerShell), ledger STAYS OPEN, ping COO to re-convene.
+
+## Status: OPEN (FIRED + verified 2026-07-02T14:06:52Z, param=schwab v2; ROLLBACK ARMED; LEVER-1 imminent -- inf sentinel ETA ~15:35Z; awaiting first schwab-native run -> CVO per-field parity + 06-25 freeze-clear)
