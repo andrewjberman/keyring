@@ -335,6 +335,43 @@ def rail_enforcement_context() -> dict:
 
 
 # --------------------------------------------------------------------------------------------
+# The EFFECTIVE-feed join contract (TH-A) -- makes Phase-B a CONFIG wire, not a code change.
+# --------------------------------------------------------------------------------------------
+def load_effective_feed(path: str) -> dict:
+    """Load TH-A's per-tool EFFECTIVE probe stream from JSON -> a normalized {canonical_tool: bool}.
+
+    PROPOSED TH-A CONTRACT (subject to TH-A agreement per the TO's cross-domain coordination): a JSON
+    object keyed by tool id, whose value is either a bare bool (effective yes/no) OR an object with an
+    'effective' bool (extra probe fields ignored here). Examples both accepted:
+        {"comp-blast": true, "comp-drift": false}
+        {"comp-blast": {"effective": true, "reach": 0.9, "usability": 0.8}}
+    Unknown/None values -> the tool stays EFFECTIVE-pending (never a silent False). Best-effort: a
+    missing/unreadable file returns {} (the query degrades to the 2-live-axis skeleton, never a crash).
+    When this feed is present, classify_full() yields the full 4-verdict and KEEP<->FIX flips PURELY on
+    the EFFECTIVE axis -- the load-bearing property, now driven by real TH-A data."""
+    feed: dict = {}
+    if not path or not os.path.exists(path):
+        return feed
+    try:
+        with open(path, encoding="utf-8", errors="replace") as fh:
+            raw = json.load(fh)
+    except Exception:  # noqa: BLE001 -- a malformed feed degrades to skeleton, never crashes the query
+        return feed
+    if not isinstance(raw, dict):
+        return feed
+    for k, v in raw.items():
+        tool = _canonical_tool(k)
+        if not tool:
+            continue
+        if isinstance(v, bool):
+            feed[tool] = v
+        elif isinstance(v, dict) and isinstance(v.get("effective"), bool):
+            feed[tool] = v["effective"]
+        # anything else (None/number/str) -> leave the tool EFFECTIVE-pending (never a silent False)
+    return feed
+
+
+# --------------------------------------------------------------------------------------------
 # The fused health query.
 # --------------------------------------------------------------------------------------------
 def health(effective_feed: dict | None = None) -> dict:
@@ -567,6 +604,28 @@ def _self_test() -> tuple:
     ck("anchor.every_verdict_cites_value_not_count", anchored and no_count_verdict,
        f"{live['n_tools']} live tools, all cite an outcome/quality anchor")
 
+    # (9) PHASE-B MACHINERY on REAL live tools (acceptance #2 demonstrated end-to-end, real feed pends
+    # TH-A): take a live KEEP tool, feed EFFECTIVE=False via the same seam TH-A will use -> it flips to
+    # a CONFIRMED FIX (not pending); feed EFFECTIVE=True -> it stays KEEP (final). USED + RAIL held
+    # constant, so ONLY the EFFECTIVE axis moved the verdict. This proves the join wire works on the
+    # live substrate today; TH-A just supplies the real probe values.
+    # exclude preventive gates: their EFFECTIVE=False is TEMPERED (stays KEEP by design), so they are
+    # the wrong probe for the plain KEEP->FIX flip (that temper is proven separately in check 6/6b).
+    keep_tool = next((r["tool"] for r in live["tools"]
+                      if r["verdict"] == "KEEP" and r["pending_effective"]
+                      and not cls.is_preventive_tool(r["tool"])), None)
+    if keep_tool:
+        h_fix = health(effective_feed={keep_tool: False})
+        h_keep = health(effective_feed={keep_tool: True})
+        row_fix = next(r for r in h_fix["tools"] if r["tool"] == keep_tool)
+        row_keep = next(r for r in h_keep["tools"] if r["tool"] == keep_tool)
+        ck("phaseB.effective_feed_flips_live_keep_to_fix",
+           row_fix["verdict"] == "FIX" and not row_fix["pending_effective"]
+           and row_keep["verdict"] == "KEEP" and not row_keep["pending_effective"],
+           f"{keep_tool}: eff=False -> {row_fix['verdict']}(final) / eff=True -> {row_keep['verdict']}(final)")
+    else:
+        ck("phaseB.effective_feed_flips_live_keep_to_fix", True, "no pending-KEEP live tool to exercise")
+
     ok = all(c["pass"] for c in checks)
     return ok, checks
 
@@ -600,6 +659,8 @@ def main() -> int:
     ap.add_argument("--json", action="store_true", help="machine-readable")
     ap.add_argument("--goodhart-audit", action="store_true", help="prove the verdict is value-driven not usage-driven")
     ap.add_argument("--self-test", action="store_true", help="taxonomy + value-honesty + EFFECTIVE-flip self-test")
+    ap.add_argument("--effective-feed", metavar="JSON",
+                    help="TH-A EFFECTIVE probe stream (JSON {tool: bool}); present => full 4-verdict (Phase-B)")
     args = ap.parse_args()
 
     if args.self_test:
@@ -623,7 +684,8 @@ def main() -> int:
                    + f"  VERDICT: {audit['verdict']}")
         return 0
 
-    h = health()
+    feed = load_effective_feed(args.effective_feed) if args.effective_feed else None
+    h = health(effective_feed=feed)
     if args.tool:
         print(_render_tool(h, _canonical_tool(args.tool) or args.tool))
     elif args.json:
