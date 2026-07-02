@@ -170,6 +170,17 @@
           }
         ]
       }
+    ],
+    "SessionEnd": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash \"$CLAUDE_PROJECT_DIR/infra/aws/globgrph/tool_activity_emit_local.sh\" --detach || true",
+            "timeout": 15
+          }
+        ]
+      }
     ]
   }
 }
