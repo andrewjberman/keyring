@@ -1,7 +1,12 @@
 # DRAFT: ADVI_ETLFIX WS-4 — Predictable Portal Refresh (freshness-SLA-as-GATE + single-writer/no-clobber + re-publish path)
 
-**Status:** DRAFT design brief for the CTO arch-gate (SLA-as-GATE). **Author:** 0.4.0_DE_ClientPlatform · 2026-07-02
+**Status:** DRAFT design brief — **ARCH-GATE RULED 2026-07-02** (CTO ruled BOTH core calls YES; COO+CVO accepted; the 6 ADs are working defaults, CTO arch-reviews them on the firmed WS-4 TO). **Author:** 0.4.0_DE_ClientPlatform · 2026-07-02
 **For:** 1.0.0_SA_CTO (arch-gate) · CC 2.0.0_SA_COO (drive) · 3.0.0_SA_CVO (freshness verification)
+
+**Arch-gate ruling (2026-07-02) + folded refinements:**
+- CTO RULED YES on (1) content-`data_as_of` oracle (not mtime) + (2) outcome-keyed alarm (served-advanced-to-today, not chain-success) — "content-keyed (can't be fooled by mtime) AND outcome-keyed (can't be silenced by a degrade)". CTO added REQUIREMENT R1 (below). Two distinct gates: `ChainStepDegraded` = the DEGRADE signal; the outcome-keyed served-advance = the STALE-SERVED signal (this one is the load-bearing anti-silent-freeze gate).
+- CVO added load-bearing refinement C1 (per-dimension outcome-key — below).
+- COO: aligns exactly with CTO GATE-4; WS-4 is durable Phase-1 (not firefight-urgent).
 **PRD:** docs/architecture/ADVI_ETLFIX_PRD.md §5 WS-4 / §4 invariant-1&4 / §6 arch-gate-4. **COO decomp:** org/tier1_exec/2.0.0_SA_COO/briefs/ADVI_ETLFIX_decomposition_20260702.md WS-4.
 **Not implement — SHAPE for RAVC.** Preemptible: the moment an upstream leg un-freezes, the Phase-0 post-fix re-publish preempts this.
 
@@ -36,6 +41,8 @@ Per-partner SLA record (proposed schema):
 ```
 - **Oracle = comp-freshness + a CONTENT-vintage dimension** (the enhancement I flagged in the P0 RAVC): comp-freshness today reads S3 mtime; WS-4 adds a mode that fetches the served JSON and reads `vintage_field`, comparing to the business-date frontier. `comp-freshness` stays the queryable oracle; the alarm is the GATE wired off it.
 - **Fail-LOUD, per-partner:** each partner gets its own alarm (bd-stale, inf-stale, mdpf-stale are distinct). A miss pages; a degrade elsewhere cannot green it (outcome-keyed).
+- **R1 (CTO REQUIREMENT — the oracle's dependency):** every served-key-under-SLA MUST carry a reliable, standardized content-vintage field (`data_as_of` / `as_of` / data-`generated_at`). If a served artifact lacks one, the oracle can't key on content and FALLS BACK to mtime = the trap. So WS-4 has a PRE-REQ: audit the served-key set for a content-vintage field, and standardize/add it where missing. Per-surface field map (heterogeneous — CVO+CTO): bd=`data_as_of`, inf=`data_as_of` (header_metrics), MDPF=`as_of_last` (+ max-timeseries-date). The vintage-extractor config (AD-2) encodes this map; the audit confirms coverage.
+- **C1 (CVO refinement — per-feeder/per-DIMENSION outcome-key, load-bearing):** the outcome-key must be PER-DIMENSION content-advance, NOT just the top-level served `data_as_of`. Why: a chain can COMPLETE GREEN via a DEFER-guard that ROLLS FORWARD one stale dimension (e.g. txn stale, other dims fresh) — the AGGREGATE served `as_of` still looks advanced, so an aggregate-keyed alarm slips it through. The SLA must therefore assert per-contributing-dimension freshness where the served artifact exposes per-dimension vintage (or the emit stamps a per-dimension `as_of` map). Pair with the staleness-CEILING (CTO robustness limb-3): a rolled-forward dimension escalates warn->high-sev/hard past N trading days so a persistent degrade can't roll forward indefinitely behind a low-sev warn.
 
 ## 3. WS-4 limb (b) — single-writer + no-clobber, uniform across served keys
 Anchored on the ADVI_BREAKS inf stub-clobber: `INF_D_00:885-898` emitted a minimal 728B header stub that raced `orion-gold-dispatch.sh` (D_00-before-D_04) and became last-writer, collapsing the mature header on the shared served key.
@@ -61,8 +68,8 @@ Anchored on the ADVI_BREAKS inf stub-clobber: `INF_D_00:885-898` emitted a minim
 - **CTO:** arch-gate — the SLA-as-GATE design (esp. the content-vs-mtime oracle + the outcome-keyed anti-silent-degrade model).
 
 ## 7. Machine-checkable ACs (WS-4, from PRD AC#4)
-1. Every anchor-partner served artifact (bd/inf/MDPF) has a declared daily freshness SLA record with a CONTENT-vintage field (not mtime).
-2. A per-partner fail-loud alarm fires when served `data_as_of` lags the business frontier past `fail_lag_bdays` — DEMONSTRATED by a simulated content-stale (e.g. hold a served key at yesterday's `data_as_of`) firing the partner alarm while an unrelated green chain does NOT silence it.
+1. Every anchor-partner served artifact (bd/inf/MDPF) has a declared daily freshness SLA record with a CONTENT-vintage field (not mtime). **(R1 pre-req)** The served-key set is AUDITED for a content-vintage field; every SLA'd key has one (standardized/added where missing) — no key silently falls back to mtime.
+2. A per-partner fail-loud alarm fires when served content lags the business frontier past `fail_lag_bdays` — DEMONSTRATED by TWO adversarial cases: (i) a simulated content-stale (hold a served key at yesterday's `data_as_of`) fires the partner alarm while an unrelated green chain does NOT silence it; **(ii, C1)** a chain that COMPLETES GREEN via a DEFER-guard-rolled-forward stale DIMENSION (one dim stale, aggregate `as_of` still looks advanced) ALSO fires the partner alarm — the per-dimension outcome-key catches it. Past N trading days the alarm escalates to high-sev/hard (staleness-ceiling).
 3. Single-writer verified per served key (S3 version-history: one writer/night); no-clobber DEMONSTRATED (a minimal-stub PUT against a mature key is refused/blocked).
 4. The DE re-publish path is proven on >=1 real un-freeze (served `data_as_of` advances to current post-upstream-fix; CF serves the fresh content).
 5. The SLA + no-clobber config is PARAMETERIZED per partner (feeds WS-5 generalization).
