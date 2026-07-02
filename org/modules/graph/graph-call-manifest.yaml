@@ -770,6 +770,23 @@ entries:
     status: canonical    # Andrew-direct build 2026-06-26 (3.0.0_SA_CVO); CTO arch-gated canonical 215841Z (--reveal break-glass condition WITHDRAWN -- comp-tools are Andrew-only, no multi-user transcript-exposure; redacted-by-default kept). Q2 comp-iam handoff KEPT (not folded). Q3 cadence = on-demand now; if pursued, converge as a node_health/debtscan rotation-staleness DIMENSION (COND-B "one surface"), NOT a comp-secrets ledger silo -- COO call.
     notes: "READ-ONLY (no put/update/rotate/delete call). SAFETY: get is REDACTED by default (JSON key-names / opaque len+sha8+last4 -- never the value); --reveal prints cleartext to STDOUT ONLY, and the comp auto-logger records `tool + args` (the secret NAME) NEVER stdout, so a revealed value is never written to compiler-tools-log.md. FIRM-SEPARATION tag from the name prefix (cot checked BEFORE bd so blackdiamond/cot/* tags cot, not bd). SSL: honors $AWS_CA_BUNDLE/$REQUESTS_CA_BUNDLE then auto-falls-back to the Windows cert store (reference_aws_boto3_ssl_corporate_proxy_wincert_bundle) so it works on the proxy-broken local host AND on EC2. DISTINCT from comp-iam (that is the IAM-GRANT view = which ROLES can read a secret, TF-modeled; comp-secrets consumers = the static CODE/TF references + the live secret metadata). comp-which routing string: 'read / inspect an aws secret ; who consumes this secret ; are any secrets un-rotated or stale' -> comp-secrets (fuzzy backstop auto-includes this entry; curated-rule add is the follow-up)."
 
+  # ---- PORTAL CLUSTER LENS (comp-cluster) -- NFRA_TSGRAPH P2 PAGE->PANEL->DRILLDOWN ----
+  - id: cloud.cluster.page_panel_drilldown
+    use_case: "What's the page-rooted PANEL->DRILLDOWN component structure of a portal page -- its data-source clusters, drilldown nesting (depth + per-firm cohort fork), and cross-panel shared-source coupling?"
+    canonical_call: |
+      comp-cluster AdvisorIntelligence    # panel->drilldown tree + per-cluster sources + cross-panel coupling
+      comp-cluster --list                 # every page + cluster counts + coverage
+      comp-cluster --coverage             # page-tree coverage (119/119, visible unresolved)
+      comp-cluster <Page> --json          # structured
+    tool: comp-cluster
+    mode: query
+    layer: cloud
+    cost: "~1-2s (reads the materialized cluster layer off the canonical Kuzu graph)"
+    freshness: "live canonical Nessie->Kuzu graph (NFRA_TSGRAPH P2-1 extractor emit, P2-2 materialized); prints the comp-kuzu provenance header to stderr (current/BEHIND/UNKNOWN VINTAGE); auto-refreshes on HEAD-advance; Rule 20 QUERY-default -- never rebuilds"
+    rebuild_trigger: "n/a -- queries the live graph; the cluster layer re-derives with the graph refresh (P2-1 extractor -> P2-2 derive), not by this tool"
+    anti_pattern: "raw grep/Read across portal/src/pages to reconstruct a page's panel->drilldown tree + which components share a data source (text-local; misses the render-subtree nesting + the per-firm cohort fork + cross-panel coupling); comp-cache sees only RQ-key collisions -- comp-cluster generalizes that to the full component<->data-source coupling (the 6-source superset) over the materialized cluster graph"
+    status: canonical    # NFRA_TSGRAPH P2-3 (0.4.0_DE 2026-06-30); COO~B GO + CTO inv-2 edge ruling 22cb21116 (CONTAINS_DRILLDOWN->CONTAINS+depth canonical, CLUSTERS/SHARES_SOURCE distinct). Ledger-registered (comp-coverage-map.yaml, ~C). comp-which routing: 'panel/drilldown tree of a page ; which components share a data source ; per-firm cohort component fork' -> comp-cluster (fuzzy backstop auto-includes; curated-rule follow-up).
+
 # ===========================================================================
 # tools_index — per-tool instructional reference (AC1 'instructional for each
 # comp tool'). One block per comp-* tool: what it does, its subcommands, and
@@ -801,6 +818,7 @@ tools_index:
   comp-xref:     { does: "Symbol cross-ref (cached) + graph-state drift-vs-baseline", subcommands: ["<symbol>", "--save"], entries: [trace.xref.symbol, trace.xref.graph_drift] }
   comp-transform: { does: "React component field-render schema-check (MISSING/UNUSED)", subcommands: [schema-check, ternary-audit], entries: [trace.transform.component_fields] }
   comp-cache:    { does: "React Query cache-key collision detection", subcommands: [map, collisions, key], entries: [trace.cache.key_collisions] }
+  comp-cluster:  { does: "Page-rooted PAGE->PANEL->DRILLDOWN cluster view over the LIVE canonical graph (data-source clusters + drilldown depth/cohort + cross-panel SHARES_SOURCE coupling); the cloud-graph generalization of comp-cache", subcommands: ["<Page>", "--list", "--coverage", "--json", "--db-path"], entries: [cloud.cluster.page_panel_drilldown] }
   comp-pii:      { does: "PII exposure audit (routes + components)", subcommands: [audit, scan], entries: [trace.pii.exposure] }
   comp-types:    { does: "TS type consumers (before editing a shared type)", subcommands: [index], entries: [trace.types.type_consumers] }
   comp-adapter-audit: { does: "Portal adapter field-threading audit", subcommands: ["<adapter-fn>", "--severity"], entries: [trace.adapter.field_threading] }
