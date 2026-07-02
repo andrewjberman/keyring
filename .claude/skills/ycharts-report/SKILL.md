@@ -1,41 +1,81 @@
 ---
 name: ycharts-report
-description: Generate a YCharts client PDF report -- the comparison / "stress test" proposal engine (Comprehensive Comparison / Proposal / Overview / Performance-and-Risk, etc.) -- by driving the YCharts internal flow with Playwright, authenticated from the `ycharts/credentials` Secrets Manager cookie bundle (NO fresh login, so the single YCharts seat is not evicted). Fully parameterized: pick the CLIENT portfolio by name, a COMPARISON security/model (e.g. an Opal model), a report TEMPLATE + type, and customize every report field (title, prepared-for/by, organization, contact info, performance-as-of, draft). Produces the finished PDF (a presigned S3 URL) and can save/return it. Use when the operator says "/ycharts-report", asks to "run a YCharts stress test / comparison report", "generate a client comparison PDF / proposal in YCharts", "build the David-Vickers-vs-Opal report", or similar. Opal-specific; needs the Playwright MCP + AWS access to `ycharts/credentials`.
+description: Generate a YCharts client PDF report -- the comparison / "stress test" / blended-portfolio engine (Comprehensive Comparison / Multi-Comp / Overview / Proposal / Performance-and-Risk, etc.) -- by driving the YCharts internal flow with Playwright, authenticated from the `ycharts/credentials` Secrets Manager cookie bundle (NO fresh login, so the single YCharts seat is not evicted). Two modes: (SELECT) pick an existing client portfolio and compare it against a model, or (BUILD) construct a "blended" mock client portfolio from N Opal models by dollar/percent weight, then report on it. Fully parameterized: pick/BUILD the CLIENT portfolio, a COMPARISON security/model, a report TEMPLATE + type, and customize every report field (title, prepared-for/by, organization, contact, advisory fee, performance-as-of, draft). Produces the finished PDF (a presigned S3 URL) and drops it in the user's Downloads. Use when the operator says "/ycharts-report", asks to "run a YCharts stress test / comparison report", "generate a client comparison PDF / proposal", "build the David-Vickers-vs-Opal report", "build a blend of Opal models and run an overview", "run a stress test on this blend", or similar. Opal-specific; needs the Playwright MCP + AWS access to `ycharts/credentials`.
 ---
 
-# /ycharts-report -- YCharts client comparison / stress-test PDF report
+# /ycharts-report -- YCharts client comparison / stress-test / blended-portfolio PDF report
 
-Automates the exact YCharts flow an analyst runs by hand: take a **client portfolio**, compare it
-against a **model** (e.g. an Opal model), pick a **report template**, fill the client-facing
-**metadata**, and generate a **client-ready PDF**. Reverse-engineered live 2026-07-01 (0.7.0_AE);
-this skill reproduces that proven flow and parameterizes every input.
+Automates the exact YCharts flow an analyst (Alyssa) runs by hand: take (or BUILD) a **client
+portfolio**, optionally compare it against a **model** (e.g. an Opal model), pick a **report
+template**, fill the client-facing **metadata**, and generate a **client-ready PDF**.
+Reverse-engineered live 2026-07-01 (comparison flow) + 2026-07-02 (blended/model-portfolio flow,
+from Alyssa's "Blended walkthrough" HAR + audio); this skill reproduces both proven flows and
+parameterizes every input.
 
-The engine behind it is YCharts' `custom_pdf_reports` API -- a server-side **generate -> presigned
-S3 PDF** flow, so the finished PDF is retrievable programmatically (it is not a client-side render).
+The engine behind both is YCharts' `custom_pdf_reports` API -- a server-side **generate -> presigned
+S3 PDF** flow, so the finished PDF is retrievable programmatically (not a client-side render).
 
 ## When to use
 Operator types `/ycharts-report`, or asks to produce a YCharts client comparison / proposal /
-stress-test / tearsheet PDF (client-vs-model). NOT for raw market-data pulls -- that is the
+stress-test / tearsheet / blended-portfolio PDF. NOT for raw market-data pulls -- that is the
 read-only `ycharts_*` MCP integration (`app/integrations/ycharts/`); this skill is the
 report-GENERATION flow (it creates a report artifact), so it is confirm-first on real client output.
 
+## Two modes -- pick from the request
+
+| Mode | Use when | Core work |
+|---|---|---|
+| **SELECT** | The client portfolio already exists in YCharts (imported / previously built) | Find it in the list -> Generate Report |
+| **BUILD** | The request gives you a **blend / list of Opal models + weights** ("run a stress test on the following blend...", "model a client across our portfolios") | **Create** a blended mock client portfolio from the models, then Generate Report |
+
+**The "blend" tell (Alyssa's rule):** if the requester says *"it would be helpful to see the following
+**blend**"* / gives you a set of models with dollar amounts, they want a **mock blended portfolio** ->
+Mode BUILD + a **Comprehensive Overview (No Benchmark)** report (a single-portfolio "stress test" whose
+PDF dissects the allocation itself -- sector, drawdown, per-sleeve holdings, trend -- so no benchmark is
+needed). Only add a benchmark / use a comparison template if they explicitly ask to compare it to
+something.
+
+## Report-template decision (the 3 templates Opal actually uses -- all "No Benchmark")
+
+| The ask | Template (`report_type`) | #securities |
+|---|---|---|
+| "stress test on their portfolio" / a single blend | **Comprehensive Overview (No Benchmark)** (`aggregate_security_overview`) | 1 |
+| "their portfolio **vs one** of our models" | **Comprehensive Comparison (No Benchmark)** (`aggregate_security_comparison`) | 2 |
+| "**multiple** portfolios compared" (e.g. LTC vs Short-Term vs the client's portfolio) | **Comprehensive Multi-Comp (No Benchmark)** (`multi_security_comparison`) | 3+ |
+
+"The other templates we don't really use." When the email is ambiguous, default to **Overview** for a
+"blend"/"stress test" ask, and ask the operator if it's a comparison.
+
 ## Inputs (ask for what's missing; sensible defaults noted)
 
-| Input | Meaning | Default |
-|---|---|---|
-| `client` | The client portfolio -- a **name** (fuzzy-matched in the portfolio list) or a `P:<id>` | required |
-| `comparison` | The security/model to compare against -- a name (autocomplete) or `P:<id>` (e.g. `Opal Long-Term Conservative`) | required for comparison reports |
-| `template` | Report template name | `Comprehensive Comparison` |
-| `report_type` | `1 Security` / `2 Securities` / `3+ Securities` | inferred from #securities (`2 Securities` for client-vs-one-model) |
-| `title` | Report title | auto: `"<client> vs. <comparison> <template>"` (editable) |
-| `prepared_for` | Recipient / client name shown on the report (REQUIRED by YCharts) | ask the operator |
-| `prepared_by` | Advisor name | the seat owner (e.g. `Alyssa Keith`) |
-| `organization` | Firm | `Opal Capital` |
-| `contact_phone` / `contact_email` / `contact_url` | Contact block (phone + URL are REQUIRED by YCharts) | the seat's saved values |
-| `custom_field` | Optional custom field | empty |
-| `data_as_of` | `PERFORMANCE/RISK DATA AS OF` -- `Latest` or a date | `Latest` |
-| `print_as_draft` | Watermark as draft | `false` |
-| `output_dir` | Where the finished PDF is dropped for the user | the user's Downloads (`C:\Users\AndrewBerman\Downloads`) |
+| Input | Mode | Meaning | Default |
+|---|---|---|---|
+| `blend` | BUILD | List of constituents: `[{model, weight}, ...]` -- each `model` a name (autocomplete, type `Opal` first) or `P:<id>`; `weight` a dollar amount (or %) | required (BUILD) |
+| `weight_type` | BUILD | `Dollars` or `Percent` -- how the weights are expressed | `Dollars` (Alyssa's standard) |
+| `benchmark` | BUILD | Benchmark symbol for the built portfolio | `^SPXTR` (S&P 500 TR); only surfaced in the PDF for comparison templates |
+| `advisory_fee` | BUILD | Annual advisory fee on the built portfolio | `0.01` (1%). **Exception: if the request is from/for Dawson Moses -> `0.0036` (0.36%).** |
+| `client` | SELECT | Existing client portfolio -- a **name** (fuzzy-matched) or `P:<id>` | required (SELECT) |
+| `comparison` | both | The security/model to compare against (comparison/multi-comp only) -- a name (autocomplete) or `P:<id>` | required for comparison reports |
+| `template` | both | Report template name | inferred from the ask (see decision table); else `Comprehensive Overview (No Benchmark)` |
+| `report_type` | both | `aggregate_security_overview` / `aggregate_security_comparison` / `multi_security_comparison` | inferred from #securities |
+| `name` / `title` | both | Portfolio name AND report title -- **the client's name** (or, for an advisor's mock, the advisor's name) | ask; see "Name & title rules" |
+| `prepared_for` | both | Recipient shown on the report | **derived from the requester's email domain** (Opal->"Opal Capital", 49->"49 Financial", inflection->the firm); ask if unknown |
+| `prepared_by` | both | Advisor/preparer name | the seat owner (`Alyssa Keith`) -- stays constant |
+| `organization` | both | Firm | `Opal Capital` |
+| `contact_phone` / `contact_email` / `contact_url` | both | Contact block (phone + URL required by YCharts) | the seat's saved values |
+| `data_as_of` | both | `PERFORMANCE/RISK DATA AS OF` -- `latest` or a date | `latest` |
+| `print_as_draft` | both | Watermark as draft | `false` |
+| `output_dir` | both | Where the finished PDF is dropped | the user's Downloads (`C:\Users\AndrewBerman\Downloads`) |
+
+### Name & title rules (Alyssa)
+- **Portfolio name = report title = the client's name.** If it's an advisor wanting a mock portfolio,
+  use the advisor's name. "Whoever it's for is who the name goes to."
+- **Strip the template suffix from the report title.** YCharts pre-fills the title as e.g.
+  `"<name> Comprehensive Overview (No Benchmark)"`; Alyssa deletes everything but the client's name
+  (looks messy otherwise). Final title = just the name (the HAR shows `"Louis Aquino "`).
+- **Ambiguity to flag, not guess:** the source Excel/email title sometimes carries the advisor's last
+  name AND the client's last name. If the requesting email's sender last-name == one of them, the
+  OTHER is usually the client. When unsure, ask -- do not guess the client name.
 
 ## Auth -- inject the shared session (do NOT log in fresh)
 
@@ -51,95 +91,177 @@ this skill REUSES the shared session from Secrets Manager instead of logging in:
    `page.context().storageState({path})` on the way back out to refresh the secret if needed.)
 3. **Freshness check:** navigate `https://ycharts.com/model_portfolios/list/` and confirm you are
    NOT bounced to `/login`. If bounced, the shared session is dead/evicted -> the credential needs a
-   refresh (see "Refreshing the credential" below); STOP and report -- do not fall back to a fresh
-   login without operator go (it would evict the live seat).
+   refresh (see "Refreshing the credential"); STOP and report -- do not fall back to a fresh login
+   without operator go (it would evict the live seat).
 
 If injection is not viable and the operator explicitly OKs a login: the seat must be confirmed CLEAR
-first, and after finishing, refresh `ycharts/credentials` from the new session (see bottom). The
-login user/pw are NOT stored in this file -- read them from the operator or a secret at run time.
+first, and after finishing, refresh `ycharts/credentials` from the new session (see bottom).
 
-## The flow (proven selectors + the endpoint each step hits)
+---
 
-1. **List + resolve the client.** `GET https://ycharts.com/model_portfolios/list/`. Find the client
-   row: type `client` into the list Search box, or scan rows for the name; capture its portfolio id
-   `P:<id>` (the edit link is `/model_portfolios/client/<id>/edit/`). Endpoint: `GET /model_portfolios/`.
-2. **Open the row menu -> Generate Report.** Click the row's actions button
+## Flow A -- SELECT an existing portfolio, then report (proven 2026-07-01)
+
+1. **List + resolve the client.** `GET https://ycharts.com/model_portfolios/list/`. Type `client`
+   into the list Search box or scan rows for the name; capture `P:<id>` (edit link
+   `/model_portfolios/client/<id>/edit/`). List data: `GET /model_portfolios/?...&sortColumn=user_modify_date&sortDirection=desc`.
+2. **Row menu -> Generate Report.** Click the row actions button
    `#list-item-dropdown-model_portfolio-<id> > .btn.btn-secondary`, then the **"Generate Report"**
-   menu link (match by text). (Other menu items: Export Holdings, Download Source File, Change Type,
-   Duplicate, Delete -- ignore.)
-3. **Generate Report modal.** Set **Report Type** (checkboxes `1 Security` / `2 Securities` /
-   `3+ Securities`) and pick the **template** row by name (`template`, e.g. `Comprehensive Comparison`;
-   others: `Comprehensive Proposal`, `Comprehensive Overview`, `Performance and Risk Comparison`,
-   `Three Page Comparison`, `Comparison Report with Risk Profiles`, ...). Click **Start**
-   (`[data-test-id='Start']`). Endpoint: `GET /custom_pdf_reports/generate/collection?...reportType=
-   aggregate_security_comparison,aggregate_security_overview,multi_security_comparison&securityId=P:<id>`
-   then `GET /custom_pdf_reports/generate/<sessionId>` + `GET /data_templates/library_menu/model_portfolio`.
-4. **Securities step ("Generate N Securities Report").** Security 1 is the client (pre-filled).
-   For security 2, type `comparison` into `[data-test-id="secondary-security-autocomplete"] input[name="q"]`
-   -> pick the match from the grouped dropdown (Portfolios / Separate Account / Mutual Funds; an Opal
-   model appears under **Portfolios** as `P:<id> Opal ...`). Endpoint: `GET /search/suggest/report_securities?q=<comparison>`.
-   Click **NEXT** -> `POST /custom_pdf_reports/validate_report_securities/<sessionId>`.
-5. **Customize step.** Fill the report metadata from the inputs: `REPORT TITLE` (auto-filled,
-   overridable with `title`), `PREPARED FOR*` (`prepared_for`, placeholder "Enter recipient's name"),
-   `PREPARED BY*`, `ORGANIZATION`, `CONTACT PHONE*`, `CONTACT EMAIL`, `CONTACT URL*`, `CUSTOM FIELD`,
-   `PERFORMANCE/RISK DATA AS OF` (`data_as_of`), `Print as Draft` (`print_as_draft`). Required*: title,
-   prepared_for, prepared_by, contact_phone, contact_url. **Confirm the values with the operator
-   before generating a REAL client report.**
-6. **Generate.** Click **GENERATE**. Endpoint: `POST /custom_pdf_reports/<sessionId>` -> `201`.
-   The report generates async (poll `GET /background_jobs/in_progress` + `ai-proxy.ycharts.com/jobs_progress/<id>`).
-7. **Retrieve the PDF + DROP IT IN THE USER'S DOWNLOADS.** On GENERATE the browser downloads the
-   finished report; the Playwright MCP saves it to the Playwright output dir
-   (`<workspace>/.playwright-mcp/pdf-report-*.pdf`). **Transfer it off the Playwright dir to the
-   user's Downloads** (Andrew-direct 2026-07-01 -- the report must land where the user can grab it):
-   ```bash
-   SRC=$(ls -t "<workspace>/.playwright-mcp/"pdf-report-*.pdf | head -1)
-   DEST="/c/Users/AndrewBerman/Downloads/<client>_vs_<comparison>_<template>_<YYYY-MM-DD>.pdf"
-   cp "$SRC" "$DEST"    # verify: head -c5 "$DEST" == "%PDF-"
-   ```
-   Report the Downloads path to the operator. (Underlying source: the report is a **presigned S3 URL**
-   `GET https://ycharts-media.s3.amazonaws.com/compliance_reports/pdf_report_P_<client>_vs_P_<model>_<date>_<hash>.pdf?<AWSAccessKeyId>&<Signature>&<x-amz-security-token>&Expires=...`
-   -- if the browser download didn't fire, grab that URL from the network and `curl -o "$DEST"` it;
-   it expires ~1h, so fetch promptly.) The PDF contains CLIENT data: it belongs in the user's
-   Downloads, NOT in the repo/git; delete any copy left in `.playwright-mcp` after transfer.
+   menu link (match by text). (Other items: Export Holdings, Download Source File, Change Type,
+   Duplicate, Delete -- ignore; "we do not use any of these other ones.")
+3. Continue at **"The report-generation engine"** below (template pick -> securities -> customize -> generate).
 
-## Customization / "various edits"
-- **Different report shape:** change `template` (comparison vs proposal vs overview vs perf/risk) and
-  `report_type` (1 / 2 / 3+ securities). 3+ securities = multi-comparison (add more securities in step 4).
-- **Different benchmark/model:** change `comparison` (any YCharts security, ETF, fund, index, or model
-  portfolio -- e.g. any of the Opal models, or `S&P 500 Total Return`).
-- **Branding / recipient:** `title`, `prepared_for`, `prepared_by`, `organization`, contact block,
-  `custom_field` are all free-text.
-- **As-of date:** `data_as_of` to a specific date for a point-in-time report; `Latest` otherwise.
-- **Draft:** `print_as_draft=true` to watermark.
-- **No-benchmark variants** exist as their own templates (`... (No Benchmark)`).
+---
+
+## Flow B -- BUILD a blended mock client portfolio, then report (proven 2026-07-02)
+
+A "blend" is a **client portfolio** (`label:"client_portfolio"`) built as a dollar-weighted mix of
+Opal model portfolios. Two ways to create it; **B-API is preferred for automation** (exact body known,
+no fragile multi-item DOM), **B-UI mirrors what a human does**.
+
+**UI path (human reference / when driving the DOM):** Portfolios list -> **Create New** -> the "Create
+blank portfolio" popup (4 options: Benchmark portfolio / Household / Model portfolio / **Client
+portfolio**) -> pick **Client portfolio** -> the builder opens (`GET /model_portfolios/fixed/client/new/?targetFolder=`).
+For each constituent: type `Opal` first (Opal models surface in autocomplete via
+`GET /search/suggest/fixed_model_portfolio_items?q=Opal...`), pick the model, put the **dollar** amount
+in the weight (commas don't work; the input dropdown must be set to **Dollars**). The builder allows
+only **2 items at once** -- use **"Add item"** for the 3rd+. In the "Basic info" sidebar the ONLY field
+changed is the **advisory fee**: none -> **annual**, **1%** (`0.36%` for Dawson Moses). Set the
+portfolio **name** = client's name. **Save** -> it calculates (you can't generate until calc finishes)
+-> click **update** to refresh the list.
+
+**B1 (API-direct create -- preferred).** Via `browser_run_code_unsafe`, `fetch` the create endpoint
+with the CSRF token (from the `csrftoken` cookie) as `X-CSRFToken` + `X-Requested-With: XMLHttpRequest`:
+
+`POST https://ycharts.com/model_portfolios/fixed/` -- **`multipart/form-data`, two parts:**
+- part **`portfolio`** (JSON):
+  ```json
+  {"name":"<client name>","description":"","benchmark_symbol":"^SPXTR","benchmark_creation_type":"custom",
+   "historical_performance":null,"management_fee":0.01,"management_fee_frequency":"annually","service_type":null,
+   "custom_level":null,"label":"client_portfolio","level_type":"auto","level_as_of_type":"prior_close",
+   "level_as_of_date":null,"rebalance_frequency":"quarterly","reinvest_dividends":false,"show_avg_cost_basis":false,
+   "show_exposure_proxy":false,"show_performance_proxy":false,"start_of_series":"oldest","series_start_level_date":null,
+   "weight_type":"Dollars","tax_status":"non_qualified","imported_holdings_id":null,"uses_legacy_data":false,
+   "rebalance_cash":true,"household_level_calc_method":null,"base_currency":null,"custom_field":null}
+  ```
+- part **`items`** (JSON array), one per constituent:
+  ```json
+  [{"name":"Opal Short-Term","security_id":"P:1728415","display_security_id":"P:1728415",
+    "weighting":750000,"weight_text":"750000","target_weighting":null,"current_weighting":null,
+    "dollars_weighting":null,"shares_weighting":null,"exposure_proxy_security_id":"","exposure_proxy_display_security_id":"",
+    "exposure_proxy_name":"","avg_cost_basis":null,"ignores_period_rebalance":false,"isUnshared":false,"isNotOwned":false,"is_valid":true}]
+  ```
+  Returns **`201` with an EMPTY body and NO Location header** -- the new id is NOT returned here.
+  (Known Opal model ids seen in the walkthrough: Opal Short-Term `P:1728415`, Opal Intermediate-Term
+  `P:1728315`, Opal Long-Term Conservative `P:1728413`. Resolve any other model live via
+  `GET /search/suggest/fixed_model_portfolio_items?q=Opal%20<...>`.)
+
+**B2 (resolve the new id).** Reload `GET /model_portfolios/?...&sortColumn=user_modify_date&sortDirection=desc&page=1`
+(or re-navigate the list) -- the just-created blend is **row 1** (newest). Read its `P:<id>` (this is
+the `securityId` for the report). Confirm calc is done: `GET /model_portfolios/<id>/status?` returns ready.
+
+**B3 (optional recalc / edit).** To adjust weights after creation:
+`PUT /model_portfolios/fixed/<id>?calculate=true` -- **JSON** (note: outer object wrapping `portfolio` +
+`items`, NOT multipart): `{"portfolio":{...same fields, +"existing_portfolio_id":null,"household_level_calc_method":"traditional"},"items":[{...,"target_weighting":<pct>,"current_weighting":<pct>,"shares_weighting":<n>,"dollars_weighting":<n>}]}`.
+Only needed if the operator changes the blend; the create + report path does not require it.
+
+**B4.** Continue at **"The report-generation engine"** below with `securityId=P:<new id>`.
+
+---
+
+## The report-generation engine (shared by Flow A and Flow B)
+
+Same `custom_pdf_reports` engine regardless of how the portfolio got there.
+
+1. **Open the report menu for the security.**
+   `GET /custom_pdf_reports/generate/collection?dataSource=legacy&reportType=aggregate_security_comparison:::true,,,aggregate_security_overview:::true,,,multi_security_comparison:::true&securityId=P:<id>`
+   -> the template menu (folders of templates). Pick the row by **template name** (the 3 Opal uses:
+   `Comprehensive Overview (No Benchmark)`, `Comprehensive Comparison (No Benchmark)`,
+   `Comprehensive Multi-Comp (No Benchmark)`). Each template has an `id` (e.g. Comprehensive Overview
+   (No Benchmark) = `14141822`, a YCharts public template) and a `report_type`.
+2. **Open the template session.** `GET /custom_pdf_reports/generate/<templateId>`.
+3. **Securities step.** For an Overview, the single security is the portfolio (pre-filled). For a
+   Comparison/Multi-Comp, add security 2 (+ 3...) via `GET /search/suggest/report_securities?q=<comparison>`
+   (an Opal model appears under **Portfolios** as `P:<id> Opal ...`). Validate:
+   `POST /custom_pdf_reports/validate_report_securities/<templateId>` body
+   `{"security_ids":["P:<id>", ...],"modules":null}` -> `200 {}`.
+4. **Customize step.** Fill the metadata (title stripped to the client name; prepared_for from the
+   email domain; prepared_by constant; contact block; `as_of_date_option`; draft). **Confirm the
+   resolved values with the operator before a REAL client report.**
+5. **Generate.** `POST /custom_pdf_reports/<templateId>` -> **`201`** -> `{"report_url":"https://ycharts-media.s3.amazonaws.com/compliance_reports/pdf_report_P_<id>_<MM-DD-YYYY>.pdf?AWSAccessKeyId=...&Signature=...&x-amz-security-token=...&Expires=..."}`.
+   The generate JSON body (captured schema):
+   ```json
+   {"security_ids":["P:<id>"],"contact_email":"...","contact_phone":"...","contact_url":"...",
+    "organization":"Opal Capital","prepared_by":"Alyssa Keith","prepared_for":"49 Financial",
+    "custom_field":null,"report_title":"<client name>","as_of_date_option":"latest","designation_type":"deliverable",
+    "hartford_client_id":null,"hartford_client_name":null,"hartford_firm_name":null,"hartford_model_names":null,
+    "saved_hypothetical_id":null,"saved_analysis_plan_id":null,"risk_profile":null,"talking_points":{},"custom_texts":{},
+    "serialized_transition_analyses":{},"naming_convention":"truncated","dollar_conversion_levels":[],
+    "custom_security_labels":[],"export_type":null,"performance_disclosure_footnote":"<std footnote>","sections":[],
+    "fund_chart_securities_choice":"saved_asset_securities_only","scatter_plot_securities_choice":"saved_asset_securities_only",
+    "comp_table_securities_choice":"saved_asset_securities_only","timeseries_table_securities_choice":"saved_asset_securities_only",
+    "generationModalsState":{"coverPageInfo":{...},"primarySecurity":{"securityId":"P:<id>","securityType":"model_portfolio"},
+      "selectedReport":{"report_type":"aggregate_security_overview","id":<templateId>,"num_required_securities":1,...},
+      "transitionAnalyses":{},"reportTitle":"<client name>","namingConvention":"truncated"},"reportState":null}
+   ```
+   The report generates async (poll `GET /background_jobs/in_progress` + `ai-proxy.ycharts.com/jobs_progress/<id>`),
+   but the generate `POST` itself returns the `report_url` synchronously on `201`.
+
+---
+
+## Retrieve the PDF + DROP IT IN THE USER'S DOWNLOADS
+On GENERATE the browser downloads the finished report; the Playwright MCP saves it to
+`<workspace>/.playwright-mcp/pdf-report-*.pdf`. **Transfer it off the Playwright dir to the user's
+Downloads** (Andrew-direct 2026-07-01 -- the report must land where the user can grab it):
+```bash
+SRC=$(ls -t "<workspace>/.playwright-mcp/"pdf-report-*.pdf | head -1)
+DEST="/c/Users/AndrewBerman/Downloads/<client-name>_<template>_<YYYY-MM-DD>.pdf"
+cp "$SRC" "$DEST"    # verify: head -c5 "$DEST" == "%PDF-"
+```
+If the browser download didn't fire, grab the `report_url` (presigned S3, expires ~1h -- fetch
+promptly) from the generate response / network and `curl -o "$DEST"` it. The PDF contains CLIENT data:
+it belongs in Downloads, NOT in the repo/git; delete any copy left in `.playwright-mcp` after transfer.
 
 ## Guardrails
 - **Single seat:** inject the shared cookie; do not fresh-login without a clear seat + operator go.
-- **Real client output is confirm-first:** show the resolved inputs (client, comparison, template,
-  prepared_for) and ask before the final GENERATE when producing a real client-facing report. For an
-  endpoint/format test, use a throwaway portfolio + a benign `prepared_for` (e.g. "Internal Test").
-- **Client data:** the generated PDF + any holdings are client PII -- keep local, never commit, never
-  echo. Delete throwaway artifacts after.
+- **Real client output is confirm-first:** show the resolved inputs (mode, blend/client, template,
+  prepared_for, name/title) and ask before the final GENERATE for a real client-facing report. For an
+  endpoint/format test, use a throwaway blend + a benign `prepared_for` (e.g. "Internal Test").
+- **Client data:** the generated PDF + holdings + the client name are client PII -- keep local, never
+  commit, never echo. Delete throwaway artifacts after.
 - **Credential hygiene:** never echo cookie values; the bundle lives ONLY in `ycharts/credentials`.
+- **Backtest range caveat:** the Opal models started ~April 2024, so reports can't show >5yr history --
+  a short trailing window in the PDF is expected, not a bug.
 
 ## Refreshing the credential (if the session is dead / after a login)
 Capture the current context cookies without displaying them and swap them in:
-1. `await page.context().storageState({ path: '.playwright-mcp/yc_state.json' })` (writes cookies to a
-   gitignored file; return only a MASKED summary of names/lengths).
-2. Build `{"cookies": "<name=value; ...>"}` from the `ycharts.com` cookies (essentials must include
-   `ycsessionid` + `csrftoken` + `aws-waf-token`), write to a temp file.
+1. `await page.context().storageState({ path: '.playwright-mcp/yc_state.json' })` (gitignored file;
+   return only a MASKED names/lengths summary).
+2. Build `{"cookies": "<name=value; ...>"}` from the `ycharts.com` cookies (essentials: `ycsessionid`
+   + `csrftoken` + `aws-waf-token`), write to a temp file.
 3. `aws secretsmanager put-secret-value --secret-id ycharts/credentials --secret-string file://<temp>`
    (value via `file://`, never on argv). Re-read masked to confirm. **Delete the temp files.**
-Note: the refreshed session stays valid only while no one else logs into that YCharts login (it will
-evict / be evicted -- single seat). For a durable service credential, use the dedicated YCharts seat
-(YALP_MDSRC plan), not a shared human login.
+Note: the refreshed session stays valid only while no one else logs into that YCharts login (single
+seat). For a durable service credential, use the dedicated YCharts seat (YALP_MDSRC plan), not a
+shared human login.
 
 ## Under the hood (for an API-direct future)
-The whole flow is the `custom_pdf_reports` engine; a headless version can skip the browser:
-`GET /custom_pdf_reports/generate/collection?reportType=<...>&securityId=P:<id>` (templates) ->
-`GET /custom_pdf_reports/generate/<sessionId>` (open session) ->
-`POST /custom_pdf_reports/validate_report_securities/<sessionId>` (securities) ->
-`POST /custom_pdf_reports/<sessionId>` (generate, returns the S3 PDF url) -> fetch the presigned S3 url.
-All authenticated with the `ycharts/credentials` cookie header + `X-CSRFToken` (from the `csrftoken`
-cookie) + `X-Requested-With: XMLHttpRequest` on the POSTs. Report types seen:
-`aggregate_security_comparison`, `aggregate_security_overview`, `multi_security_comparison`.
+The whole thing is server-side; a headless version can skip the browser entirely:
+- BUILD: `POST /model_portfolios/fixed/` (multipart portfolio+items) -> reload
+  `/model_portfolios/?sortColumn=user_modify_date&sortDirection=desc` to read the new `P:<id>`
+  [-> `PUT /model_portfolios/fixed/<id>?calculate=true` to recalc].
+- REPORT: `GET /custom_pdf_reports/generate/collection?reportType=<...>&securityId=P:<id>` (templates)
+  -> `GET /custom_pdf_reports/generate/<templateId>` (open) ->
+  `POST /custom_pdf_reports/validate_report_securities/<templateId>` (securities) ->
+  `POST /custom_pdf_reports/<templateId>` (generate, returns the S3 PDF url) -> fetch the presigned url.
+All authenticated with the `ycharts/credentials` cookie header + `X-CSRFToken` (from `csrftoken`) +
+`X-Requested-With: XMLHttpRequest` on the POSTs. Report types: `aggregate_security_overview`,
+`aggregate_security_comparison`, `multi_security_comparison`. Transition-analysis is a present-but-unused
+surface here (`/model_portfolios/transition_analysis/list`, `serialized_transition_analyses`,
+`transitionAnalyses`) -- wire it only if a request needs it.
+
+## Roadmap intent (from Alyssa's walkthrough -- for the product owner, not this skill's runtime)
+Alyssa's stated goal (twice) is a **front-end form** for advisors: they click exactly what they want
+(client name, the models + weights, the report template) and the form auto-feeds this skill so Claude
+generates the PDF -- replacing the fragile "advisor emails ambiguous free text" intake that doesn't
+scale as more firms/advisors come through. This skill is the automation engine that form would drive;
+the form itself is a separate frontend deliverable (flag to CTO/DE).
