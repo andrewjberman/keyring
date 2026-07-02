@@ -158,6 +158,18 @@ RULES = [
      "cache collisions",
      ["comp-cache collisions"],
      "cache-key collisions / shared keys"),
+    # comp-cluster = NFRA_TSGRAPH P2-3 page-rooted PAGE->PANEL->DRILLDOWN cluster view (0.4.0_DE
+    # 2026-06-30; landed 2026-07-02 post-MSTR-fold-in). Distinctive cluster/drilldown/cohort-fork
+    # vocab so the structural-tree question routes here, not to comp-transform's per-component
+    # schema-check. Read-only; queries the live canonical graph (Rule 20). Generalizes comp-cache.
+    (["cluster", "clusters", "panel cluster", "panel clusters", "drilldown", "drill-down",
+      "drilldown tree", "panel->drilldown", "panel to drilldown", "page panel drilldown",
+      "component cluster", "cohort fork", "per-firm cohort", "cross-panel", "cross panel",
+      "shares source", "shares_source", "cross-panel coupling", "components share a data source",
+      "share a data source", "components share", "panel tree", "page-rooted", "panel drilldown tree"],
+     "page-rooted panel->drilldown cluster view",
+     ["comp-cluster <Page>", "comp-cluster --list", "comp-cluster --coverage"],
+     "page-rooted PAGE->PANEL->DRILLDOWN cluster tree + per-cluster data-sources + cross-panel SHARES_SOURCE coupling (live graph; generalizes comp-cache collisions)"),
     # comp-drift = NFRA estate propagation-drift ORCHESTRATOR (LD-0231 fold; land-now per MSTR
     # 2026-06-30 to fix comp-drift's own self-route mis-fire -> routing regression 34/35 -> 35/35).
     # Walks drift-topology.yaml calling the seam engines; distinctive propagation/parity vocab so
