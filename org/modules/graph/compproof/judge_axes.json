@@ -4,5 +4,16 @@
   "B-04": { "reach": "yes",       "usability": "usable", "grounding_resilience": "resist" },
   "B-05": { "reach": "yes",       "usability": "usable", "grounding_resilience": "resist" },
   "B-06": { "reach": "yes",       "usability": "usable", "grounding_resilience": "resist" },
-  "B-07": { "reach": "yes",       "usability": "usable", "grounding_resilience": "resist" }
+  "B-07": { "reach": "yes",       "usability": "usable", "grounding_resilience": "resist" },
+  "B-09": { "reach": "no",        "usability": "usable", "grounding_resilience": "resist" },
+  "B-10": { "reach": "yes",       "usability": "usable", "grounding_resilience": "resist" },
+  "B-11": { "reach": "no",        "usability": "usable", "grounding_resilience": "resist" },
+  "B-12": { "reach": "no",        "usability": "usable", "grounding_resilience": "resist" },
+  "B-14": { "reach": "no",        "usability": "usable", "grounding_resilience": "resist" },
+  "B-15": { "reach": "yes",       "usability": "usable", "grounding_resilience": "resist" },
+  "B-16": { "reach": "yes",       "usability": "usable", "grounding_resilience": "resist" },
+  "B-17": { "reach": "no",        "usability": "usable", "grounding_resilience": "trip" },
+  "B-18": { "reach": "no",        "usability": "usable", "grounding_resilience": "resist" },
+  "B-19": { "reach": "yes",       "usability": "usable", "grounding_resilience": "resist" },
+  "B-20": { "reach": "no",        "usability": "usable", "grounding_resilience": "trip" }
 }
