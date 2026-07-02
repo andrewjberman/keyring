@@ -1,6 +1,10 @@
-# Deploy-completion ledger -- ADVI_BDAPIMIG D1+D2 (txn-chunk + bd-silver etag content-skip)
+# Deploy Completion Record -- ADVI_BDAPIMIG D1+D2 (txn-chunk + bd-silver etag content-skip)
 
-**Owner:** 0.4.0_DS_ClientPlatform~B | **Opened+Closed:** 2026-07-02 (~19:15Z -> 19:28Z, same session)
+**Status:** CLOSED -- all 3 DS artifacts deployed + ground-truth-verified (S3 ETag == local md5); no stranded leg.
+**Date opened:** 2026-07-02T19:15Z (deploy-start)
+**Date closed:** 2026-07-02T19:28Z
+**Class:** deploy-completion (NEVER rule -- opened at deploy-start, closed at completion; no half-landed)
+**Owner:** 0.4.0_DS_ClientPlatform~B
 **Authority:** MSTR-DIRECT (184413Z) + CTO GATE-1 BLESSED (183251Z) + Andrew-GO HALF-2 (2026-07-02).
 **Commit:** 8029aa080 (on origin/CLOUD). **RAVC:** 1.0.0_SA_CTO + 2.0.0_SA_COO + 0.6.0_AE_PartnerETL.
 
@@ -50,5 +54,5 @@ Historical same-name-skipped partitions: the D2 reprocess-once migration AUTO-HE
 post-deploy merge run (every current forwardfill file reprocesses once -> REPLACE). Residual scoping +
 freshness re-verify vs raw forwardfill to be RAVC'd after the first triggered run confirms the sweep.
 
-**Status: CLOSED** -- all 3 DS artifacts deployed + ground-truth-verified; no stranded leg. Cross-lane
-items (1-3) tracked to 0.6.0_AE for the runner-enable wave.
+**Close confirmation:** all 3 DS artifacts deployed + ground-truth-verified; no stranded leg (see
+**Status:** CLOSED in the header). Cross-lane items (1-3) tracked to 0.6.0_AE for the runner-enable wave.
