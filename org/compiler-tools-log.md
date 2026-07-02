@@ -12612,3 +12612,40 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-07-02 | 0.6.0_AE_PartnerETL | (no-TO) | comp-iam | comp-iam service bd-49f-runner | PASS |
 | 2026-07-02 | 0.5.0_AE_OpalETL | MDPF-flip-close | (none -- on-call verification window) | validated the LIVE serve via S3 telemetry status.json (LEG2-CUSTODY-GATE=ok) + PowerShell SSM verify + CVO parity; no comp-tool target (grounding was the prior window) | N/A |
 | 2026-07-02 | 0.5.0_AE_OpalETL | NFRA_INTEGRATIONS.P3.ae-storage-dependency-firmsep-schema | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-02 | 0.7.0_AE_CloudOps~A | (no-TO) | comp-iam | comp-iam service bd-49f-session-trigger | PASS |
+| 2026-07-02 | 0.7.0_AE_CloudOps~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/terraform/bd-pipeline/bd-49f-... | PASS |
+| 2026-07-02 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/ADVI_BDAPIMIG.json --file ... | PASS |
+| 2026-07-02 | 0.7.0_AE_CloudOps~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/change_management/20... | PASS |
+| 2026-07-02 | 1.0.0_SA_CTO | NFRA_INTEGRATIONS.P2 | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/.open_deploys/advi-i... | PASS |
+| 2026-07-02 | 0.4.0_DS_ClientPlatform~B | (no-TO) | comp-blast | comp-blast cot_bronze_ingest | FAIL |
+| 2026-07-02 | 0.4.0_DS_ClientPlatform~B | (no-TO) | comp-pipescript | comp-pipescript io merge-daily-incremental.py | FAIL |
+| 2026-07-02 | 2.0.0_SA_COO~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.7.0_AE_CloudOps/task... | PASS |
+| 2026-07-02 | 0.7.0_AE_CloudOps~A | (no-TO) | pipescript | pipescript --list | PASS |
+| 2026-07-02 | 0.4.0_DS_ClientPlatform~B | (no-TO) | comp-pipescript | comp-pipescript deployed merge-daily-incremental.py | PASS |
+| 2026-07-02 | 0.4.0_DS_ClientPlatform~B | (no-TO) | comp-pipescript | comp-pipescript deployed cot_bronze_ingest.py | PASS |
+| 2026-07-02 | 0.7.0_AE_CloudOps~A | (no-TO) | pipescript | pipescript advi-bd | PASS |
+| 2026-07-02 | 0.4.0_DS_ClientPlatform~B | (no-TO) | comp-pipescript | comp-pipescript io merge-daily-incremental | FAIL |
+| 2026-07-02 | 2.0.0_SA_COO~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+| 2026-07-02 | 3.0.0_SA_CVO | (no-TO) | comp-lambdamap | comp-lambdamap parity | PASS |
+| 2026-07-02 | 2.0.0_SA_COO~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.8.0_AE_CloudComp/tas... | PASS |
+| 2026-07-02 | 3.0.0_SA_CVO | (no-TO) | comp-lambdamap | comp-lambdamap parity --json | PASS |
+| 2026-07-02 | 0.4.0_DS_ClientPlatform~A | (no-TO) | comp-pipescript | comp-pipescript io mdpf_aggregate_aua.py | PASS |
+| 2026-07-02 | 0.4.0_DS_ClientPlatform~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file data/mdpf/scripts/backfill/build_aggreg... | PASS |
+| 2026-07-02 | 0.4.0_DS_ClientPlatform~A | (no-TO) | comp-pipescript | comp-pipescript deployed --pipeline mdpf | PASS |
+| 2026-07-02 | 0.7.0_AE_CloudOps | NFRA_AGENTBUS.S2 | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/terraform/nfra-agentbus/.terr... | PASS |
+| 2026-07-02 | 0.4.0_DS_ClientPlatform~C | (no-TO) | pipescript | pipescript --list | PASS |
+| 2026-07-02 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+| 2026-07-02 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/briefs/allo... | PASS |
+| 2026-07-02 | 0.4.0_DS_ClientPlatform~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file data/black_diamond/scripts/silver/merge... | PASS |
+| 2026-07-02 | 0.7.0_AE_CloudOps~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/terraform/bd-pipeline/bd-49f-... | PASS |
+| 2026-07-02 | 0.7.0_AE_CloudOps | NFRA_AGENTBUS.S2 | comp-iam | comp-iam gaps | PASS |
+| 2026-07-02 | 2.0.0_SA_COO~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+| 2026-07-02 | 0.7.0_AE_CloudOps~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/change_management/20... | PASS |
+| 2026-07-02 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+| 2026-07-02 | 0.4.0_DE_ClientPlatform | NFRA_P0_stale_portal_serving_check | comp-surface-check | comp-surface-check check --mode advisory --file data/black_diamond/scripts/gold/gold_fr... | PASS |
+| 2026-07-02 | 0.4.0_DS_ClientPlatform~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/change_management/20... | PASS |
+| 2026-07-02 | 3.0.0_SA_CVO | (no-TO) | comp-lambdamap | comp-lambdamap parity --json | PASS |
+| 2026-07-02 | 3.0.0_SA_CVO | (no-TO) | comp-lambdamap | comp-lambdamap parity --json | PASS |
+| 2026-07-02 | 0.7.0_AE_CloudOps~A | ADVI_BDAPIMIG | comp-iam,pipescript,comp-freshness,deploy_ledger | kill-cookie gate -> caught+fixed runner-run IAM bug (comp-iam service; bd-v2.43.0) + box-retire comp-blast (pipescript advi-bd -> bd-assets/SEV1 exclusion) + asset-dim freshness (comp-freshness) + authtoken-dead alarm retire (bd-v2.44.0); 2 ledgers CLOSED | PASS |
+| 2026-07-02 | 0.4.0_DE_ClientPlatform | NFRA_P0_stale_portal_serving_check | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DE_ClientPlatfor... | PASS |
+| 2026-07-02 | 0.7.0_AE_CloudOps~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
