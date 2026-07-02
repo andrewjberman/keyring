@@ -12560,3 +12560,13 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-07-02 | 0.6.2_AE_PartnerETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .claude/skills/49-schwab-conv/SKILL.md ... | PASS |
 | 2026-07-02 | 0.6.2_AE_PartnerETL | (no-TO) | live-aws/ssm/native+rail-checked s3api | Schwab SI2 P0: grounded fork + 07-01 silver bridge + EB race-fix. Live-state grounding (F5: AWS/S3/SSM/box-fs, not graph); raw byte/ETag cross-prefix parity + silver date=partition verify carried inline # rail-checked markers (no comp-tool fits either -- flagged as coverage gap in session log). comp-surface-check auto-ran on all commits. | N/A |
 | 2026-07-02 | 0.6.2_AE_PartnerETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-02 | 0.4.0_DE_ClientPlatform | NFRA_P0_stale_portal_serving_check | comp-surface-check | comp-surface-check check --mode advisory --file docs/briefs/advi_etlfix_ws4_portal_refr... | PASS |
+| 2026-07-02 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+| 2026-07-02 | 0.6.2_AE_PartnerETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/ec2/bd-49f-auto-login/bd_49f_... | PASS |
+| 2026-07-02 | 0.6.2_AE_PartnerETL | (no-TO) | pipescript | pipescript mdpf | PASS |
+| 2026-07-02 | 0.4.0_DS_ClientPlatform~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file data/inf/scripts/silver/convert_perform... | PASS |
+| 2026-07-02 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+| 2026-07-02 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/briefs/ADVI... | PASS |
+| 2026-07-02 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/briefs/ADVI... | PASS |
+| 2026-07-02 | 0.5.0_AE_OpalETL | NFRA_INTEGRATIONS.P3 + MDPF-flip | comp-pipescript deployed / terraform state-show+refresh-only / comp-iam+comp-glob | leg-2 gold MATCH verify; phantom SSM-drift grounded (MSYS-slash artifact, not real); firm-sep grounded via PIPELINE_MAP + runtime cross-firm Deny | PASS |
+| 2026-07-02 | 0.5.0_AE_OpalETL | NFRA_INTEGRATIONS.P3.ae-storage-dependency-firmsep-schema | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
