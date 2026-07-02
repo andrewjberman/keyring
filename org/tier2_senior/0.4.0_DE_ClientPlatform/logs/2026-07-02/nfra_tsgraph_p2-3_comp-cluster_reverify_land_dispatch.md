@@ -54,8 +54,20 @@ the one DE-lane piece, and dispatched the two lane-blocked pieces to close.
 | `owned-paths-check.sh` (test seam) | verdicts confirmed | engine=AE, manifest=exec, .gitignore=not-DE, comp-* wrappers=allowed |
 | `safe-commit.sh` (comp-which) | PASS | surface-check OK + coverage-check PASS -> `7bfd79978` |
 
+## Close-out — P2-3 COMPLETE (same session)
+
+Both cross-lane commits landed within minutes (COO drove the allocation; RAVC loop clean):
+- **engine + wrapper** `1500d21e5` (0.7.0_AE_CloudOps~A) — one commit, `-1` unused `deque` import (ruff F401 for ds-gate); verified behavior-neutral (on-disk == HEAD engine; tree + coverage reproduce identically).
+- **manifest entry** `7dba705d6` (2.0.0_SA_COO, ANY_EXEC) — `cloud.cluster.page_panel_drilldown` + tools_index; engine-first order.
+
+ACs verified on the LANDED artifact:
+- **AC1** — comp-cluster AdvisorIntelligence real tree (11 clusters, depth d1..d4, cohort=inflection fork, 23 SHARES_SOURCE). PASS.
+- **AC2** — comp-manifest-check selfcheck PASS + comp_coverage_view --verify OK (35/35 tools_index in ledger union) + comp-which resolves cluster qs -> comp-cluster. PASS.
+- **AC3** — 118/119 + 1 VISIBLE unresolved (holdings-shared.tsx), 0 SILENT. PASS.
+- **AC4** — this log's Compiler Tools section. PASS.
+
+TO `<status>` -> complete; RAVC2-closed to COO cc CTO. **NFRA_TSGRAPH P2-3 CLOSED.**
+
 ## Next Steps
-- **[0.7.0_AE_CloudOps~A or 0.8.0_AE_CloudComp (COO to allocate)]** commit engine `comp_cluster_cli.py` + wrapper `.tools/comp-cluster` (git add -f) IN ONE COMMIT from the durable bundle (`.../c333ddac-.../scratchpad/p2-3-comp-cluster-bundle/`).
-- **[2.0.0_SA_COO / 1.0.0_SA_CTO / 3.0.0_SA_CVO (any exec)]** `git apply <bundle>/manifest-only.patch` -> commit the graph-call-manifest.yaml comp-cluster entry + tools_index (AC2).
-- **[0.4.0_DE, me]** on both landing: run `comp-manifest-check` (Phase-3 mandate + AC2) + `comp_coverage_view --verify` -> RAVC2 close to COO cc CTO, flip TO `<status>` to complete.
-- **[2.0.0_SA_COO]** structural question surfaced (SS6): comp-tool authoring (DE) vs landing (AE engine + exec manifest) lane ownership — the TO's `<consult>DT</consult>` for the manifest is imprecise (it's ANY_EXEC, not DT).
+- **[2.0.0_SA_COO]** SS6 lane-doctrine follow-up (banked): comp-tool authoring (DE logic+wrapper) vs landing (AE engine + exec manifest) — the TO's `<consult>DT</consult>` for the manifest was imprecise (ANY_EXEC, not DT).
+- **[0.4.0_DE, me]** back to event-driven; other lanes (COTMVP-B / COMPTEAM / TAGATTR) nightly-gated per COO drive.
