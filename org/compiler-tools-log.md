@@ -12503,3 +12503,12 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-07-02 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/NFRA_INTEGRATIONS.json | PASS |
 | 2026-07-02 | 0.7.0_AE_CloudOps~A | safe-ec2-deploy-fix + NFRA_INTEGRATIONS-001 P1 | safe-commit + halt-gate-check(sourced) + bash -n | safe-ec2-deploy sub-fix: worktree-aware serial + fail-closed attribution + safe-commit manifest (self-verified main-tree+worktree, 1/1073 scoped). P1: STANDARD v1.1 fidelity refresh source-vs-code (drift found+fixed) | PASS |
 | 2026-07-02 | 0.7.0_AE_CloudOps~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-02 | 3.0.0_SA_CVO | (no-TO) | comp-pipescript | comp-pipescript deployed --firm mdpf | PASS |
+| 2026-07-02 | 0.4.0_DE_ClientPlatform | NFRA_TSGRAPH.P2-3.de-comp-cluster-cli | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DE_ClientPlatfor... | PASS |
+| 2026-07-02 | 1.0.0_SA_CTO | NFRA_INTEGRATIONS.P2 | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/NFRA_INTEGRATIONS_STA... | PASS |
+| 2026-07-02 | 0.5.0_AE_OpalETL | NFRA_INTEGRATIONS.P3.ae-storage-dependency-firmsep-schema | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/ec2/mdpf-daily-runner/mdpf-da... | PASS |
+| 2026-07-02 | 0.7.0_AE_CloudOps~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .tools/comp-cluster --file infra/aws/gl... | PASS |
+| 2026-07-02 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/NFRA_INTEGRATIONS.json --f... | PASS |
+| 2026-07-02 | 0.5.0_AE_OpalETL | NFRA_INTEGRATIONS.P3.ae-storage-dependency-firmsep-schema | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/change_management/20... | PASS |
+| 2026-07-02 | 0.4.0_DS_ClientPlatform~A | (no-TO) | comp-pipescript | deployed --pipeline mdpf (MISSING->MATCH validate_schwab_native_custody.py) + io (leg-2/WS-E/rollup order) + chain | PASS | MDPF leg-2 gold-deploy+chain-wire; ground-truthed firm-tree prefix opal-data-mdpf |
+| 2026-07-02 | 0.4.0_DS_ClientPlatform~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
