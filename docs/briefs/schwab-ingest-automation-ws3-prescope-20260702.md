@@ -103,9 +103,10 @@ The box writes the VALIDATION prefix until the repoint (held). So if the manual 
 - Ties to the WS-3/MDPF SLA (sec 5): alarm fires within the 2-trading-day window so a stall is fixed before MDPF DEFERs.
 - Complements the existing 14h EventBridge absence alarm + the silver-freshness alarm (sec 2D).
 
-### 6.5 Fetch-by-DATE fallback (contention-immune, if Andrew declines to stop the manual pull)
-- If Andrew keeps his manual desktop pull, make the box download CONTENTION-IMMUNE: re-pull each date's full set by DATE, not by the "new files" flag -> the box gets complete sets regardless of what the manual client consumed. Both clients co-run, no prod gap, no Andrew behavior change.
-- PREREQUISITE TO GROUND: does the SI2 Desktop app support a date-scoped re-pull (vs only "download all NEW")? Unknown -- a box-side capability probe decides feasibility. If the SI2 app cannot re-pull by date, this fallback needs a different download mechanism (heavier).
+### 6.5 Fetch-by-DATE (contention-IMMUNE) -- GROUNDED FEASIBLE -> PROMOTED to PRIMARY (COO+CTO+MSTR converge; CTO finalizing)
+- CAPABILITY GROUNDED (2026-07-02, UI-source on the live SI2 app PID 7044): the SI2 Desktop app has THREE download modes -- "Download all new files" (ui 590596, the contended new-flag path click-download.ps1 uses), **"Download specific files" (ui 524756) + a "Download Specific Files -- Search Results" pane (ui 918726)** = a search-based ON-DEMAND / re-download (catalog search, download regardless of the new-flag), and "Schedule automatic tasks" (ui 1048796). => the box CAN fetch a specific date/file independent of the "new" state -> CONTENTION-IMMUNE.
+- PROPOSED MECHANISM (CTO finalizing): daily cycle = "download all new" (bulk/efficient) + a "download specific" SELF-HEAL pass for any expected date/file still missing (esp the MDPF-critical RPS). Both clients co-run, prod stays fed by the manual path through accrual, NO Andrew behavior-change, NO prod gap. An occasional stray manual pull can NEVER silently re-starve the box (structural robustness -- CTO arch-gate-1). This SUPERSEDES 6.1 sole-client-as-primary: quiesce becomes the eventual END-STATE (retire the manual pull), but fetch-by-date is the resilience mechanism.
+- RULE-22a RESIDUAL: feature EXISTENCE is UI-source-confirmed; the date-search-re-download BEHAVIOR is a build-phase exercise-confirm (controlled "Download specific files" run for a known past date's RPS) -- NOT run pre-build (navigating the live GUI would disrupt the 20:35Z scheduled cycle). Backstop: the per-date completeness alarm (6.4) stays regardless.
 
 ### 6.6 Sequencing (execution, Andrew-gated)
 1. [SOVEREIGN] Andrew answers the Caution-B pace + agrees to stop the manual pull (or picks fetch-by-date).
