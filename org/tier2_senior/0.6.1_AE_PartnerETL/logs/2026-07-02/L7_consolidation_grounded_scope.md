@@ -155,9 +155,36 @@ GROUNDING (Rule 22a): desired=validate PASS (now); applied+exercised=post-apply 
 describe-rule/list-targets live + first real bronze-complete fire) -- NOT asserting GREEN until
 exercised.
 
-## Next
-Awaiting CTO arch-sign + overall-gate ruling (RAVC 212249Z). On sign: open deploy-completion
-ledger (NO-HALF-DEPLOYS) -> safe-apply (HALTGT) -> verify rule live -> N-nightly-verify
-(after-Orion-settle + per-dim silver fresh + AUA parity + T2 historical cadence) -> human-gated
-(COO+Andrew) Stage-3 delete (9 crons + inf-silver-aggregator + s3-notification +
-inf-canonical-prices-daily). jwt-fetch + bronze-runner UNTOUCHED. Nothing applied/deleted.
+## STAGE-1 DEPLOYED + VERIFIED + LEDGER CLOSED (CTO ACK 220637Z)
+
+CTO arch-signed (212626Z), 2 apply-reqs delivered, DEPLOYED + applied-layer verified, ledger
+CLOSED (advi-infref-l7-stage1-bronzecomplete-trigger, 5 legs proven, no half-deploy). CTO ACK
+220637Z: "clean, complete Stage-1 -- all reqs met."
+- LIVE: inf-gold-full-on-bronze-complete rule ENABLED -> inf-gold-trigger {mode:full,source:
+  bronze-complete} on bronze/orion-api/*/_BRONZE_COMPLETE.json; inf-gold-trigger-dlq-depth alarm;
+  source-map sibling removed. safe-apply 4add/1change/0destroy RC=0, 0-diff re-plan, live
+  describe-rule/list-targets/describe-alarms confirmed (Rule 22a applied-layer).
+- Commits d0bcfb876 + 6659e0110 + 854f20848 + close on origin/CLOUD.
+
+## FIRST-EXERCISE CHECKLIST (the gate before Stage-3 -- RAVC CTO on the first fire)
+
+Event-driven on the next scheduled bronze-complete (~13:30Z/9:30ET, 07-03). NEVER ad-hoc -- verify
+on the SCHEDULED nightly's artifacts. Do NOT assert behavioral GREEN until ALL confirmed:
+1. RULE FIRED: aws events / CloudWatch -- inf-gold-full-on-bronze-complete Invocations>=1 on the
+   07-03 bronze-complete; inf-gold-trigger invoked with source=bronze-complete (dispatch-lock
+   run_id, NOT a 409-reject-from-a-competing-trigger -- confirm the bronze-complete fire is the
+   one that WON the lock, or that a win/409 both leave gold correctly produced).
+2. CHAIN RAN + SERVED ADVANCED: gold/meta/pipeline-complete.json 07-03; platinum/firm/
+   header_metrics.json generated_at advances; per-dim silver fresh; AUA parity.
+3. AFTER ORION-SETTLE (req b): the fire + chain land after bronze/orion-api is complete (the whole
+   point of the bronze-complete trigger) -- confirm timing.
+4. T2 CADENCE: silver/historical_prices.parquet (separate historical-prices EC2 pipeline) landed
+   BEFORE the chain consumed it (INF_S_00 T2 fallback tier; graceful if one-day-late but watch).
+5. JULY-4-OBSERVED HOLIDAY EDGE (CTO 220637Z bonus): 07-03 is July-4-observed (in
+   NYSE_CLOSED_DATES). The as_of-normalization must map served data_as_of to the PRIOR trading day
+   07-02, NOT 07-03. Confirm the served data_as_of across the holiday -- exercises BOTH the L7
+   trigger AND the as_of holiday-handling in one window. DLQ stays empty (else the alarm fires).
+
+On {all 5 GREEN across N nightlies} + the human gate (COO+Andrew): Stage-3 delete proceeds under
+NFRA_PPLINF decommission. Overall-gate = deferred hardening follow-on. jwt-fetch + bronze-runner
+UNTOUCHED. Nothing applied/deleted beyond the additive Stage-1.
