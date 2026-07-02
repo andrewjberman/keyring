@@ -44,6 +44,14 @@ SECURITY -- the -f overrides .gitignore (read this before committing near secret
   (unambiguous secret types always; contextual patterns when also gitignored). To
   double-check any commit: `git show --name-only HEAD` before pushing.
 
+COMMIT MESSAGE with shell-special chars (parens/brackets/backticks/$):
+  This wrapper quotes the forwarded message correctly (git commit --only "${COMMIT_ARGS[@]}").
+  BUT a message like  -m "fn() [pure]"  can still break at YOUR shell / the calling layer if
+  the -m value's quoting is lost there -- the OUTER shell parses `fn()` as subshell syntax
+  ("syntax error near unexpected token )") BEFORE this script runs. The break is UPSTREAM of
+  safe-commit, not inside it. Fix: single-quote the message, or use  -F <file>  / a heredoc
+  for any message containing parens, brackets, backticks, or $.
+
 OPTIONS:
   --force              Bypass contamination check; log to audit trail.
   --help               Show this help and exit.
