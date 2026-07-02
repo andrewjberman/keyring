@@ -1,6 +1,6 @@
-# NFRA_VERIFYGROUND — Verify-Before-Assert: Comp-Tool + Live Grounding (DRAFT for Andrew review)
+# NFRA_VERIFYGROUND — Verify-Before-Assert: Comp-Tool + Live Grounding
 
-**Author:** 3.0.0_SA_CVO · **Date:** 2026-07-02 · **Status:** DRAFT (Andrew-direct 2026-07-02; audit-baselined)
+**Author:** 3.0.0_SA_CVO · **Date:** 2026-07-02 · **Status:** RATIFIED — Rule 22a committed `012e24fcb` (CLAUDE.md line 41); COO adopted announce-mode (`20260702T195103Z`); tool-briefs → CTO next /drive cycle.
 **Origin:** the bd-49f ModeMarker incident + Andrew's two asks (comp-tool-grounded verify; fold into RAVC) + item #3 (Terraform/drift governance).
 
 ---
@@ -98,3 +98,21 @@ Canonical example (bd ModeMarker): `desired: comp-iam (would show DESIRED .tf) ;
 
 ## The CLAUDE.md Rule 22a wording (for commit on Andrew's nod)
 > **22a. Ground a verification claim on the RIGHT layer.** A claim that GATES an action: STATE/IAM → cite the comp-tool (graph/DESIRED) AND the live primitive (`get-role-policy`/`head-object`/`describe-*`) for APPLIED truth — mandatory for a fresh/in-flight change (`comp-iam` default = DESIRED, cannot tell landed-from-planned); BEHAVIOR/"works/GREEN" → EXERCISE the path (the test that fails if the claim is false), never a config read. Comp-tool-DESIRED-alone (an applied claim) or a config-read (a behavioral claim) = `INFERRED`, NON-ACTIONABLE → cert/dispatch owner withholds GO (**hard-withhold for SEV1 / IAM / security; nudge elsewhere**). Gate: the RAVC `grounding:` field carries `desired`(comp-tool) + `applied`(live) + `exercised`(the run); **safe-apply folds** the pre-apply drift-plan check + the write-without-read (marker/state object) paired-permission lint. Why/incident + full spec: `org/tier1_exec/3.0.0_SA_CVO/deliverables/NFRA_VERIFYGROUND_...20260702.md` (bd-49f ModeMarker: PutObject-only 06-29→07-02, silent because never-exercised; `comp-iam` DESIRED would have read the committed-not-applied fix as GREEN).
+
+---
+
+## 8. Day-1 dogfood evidence (2026-07-02 — the rule caught real errors the same day it landed)
+
+The discipline is not theoretical — it corrected four would-be-wrong CVO calls this session:
+1. **P2 gate-3 below-tier-deny (bounded-scan false-negative).** A bounded (evening-window) audit scan returned **0** min_tier_denied records. Under 22a-B I did NOT assert "no below-tier-deny exists" (which would have wrongly demanded a fresh probe) — I ran the full 5359-record scan, which **grounded the actual record** (`readonly-cert-probe@` DENIED min_tier on the deployed gateway @22:32:50Z). *Don't assert on incomplete grounding.* → cert PASS, CTO-acked.
+2. **WS-4 AC-2 root (mechanism-grounding).** I observed AC-2 not firing (a DEFER'd perf dim slips through) but did NOT assert the *cause* until I **read the served `dashboard.json`** and confirmed it exposes only a top-level `data_as_of`, **no per-dim as_of map**. Grounded the mechanism (Rule 22), not just the symptom. → the AC-2 gap is now a scoped emit-side fix (DE), not a hand-wave.
+3. **sha-baseline key-structure.** My first coverage check looked for a `provenance` key and would have reported "missing"; I re-read the **actual** committed entry shape (`artifact_sha256_provenance`) before asserting → 6/6 GREEN, no false alarm.
+4. **The P0 hypothesis-overturns.** "Schwab box stopped / vendor stuck" (falsified — wrong instance checked), "inf self-clears at 16:00Z" (falsified — inf was broken), "assets_v2 format landmine" (overturned by a fresh-silver-today exercise). Each was an `INFERRED` symptom-claim that source/live-grounding overturned before it drove a needless fix.
+
+## 9. Rollout status (as of 2026-07-02, EOD)
+
+- **Rule 22a:** LAW — committed `012e24fcb`, CLAUDE.md line 41.
+- **`grounding:` field (Clause A + §5):** ADOPTED announce-mode by COO (`20260702T195103Z`) — applied to the COO acceptance bars + all action-gating RAVCs going forward.
+- **Tool-briefs (§6.1 `comp-iam --live`, §6.2 paired-perm lint) + Clause-D safe-apply fold (§4):** routed to CTO for the **next /drive cycle** (build-before-hard-enforce; CTO delegates the safe-apply AE build).
+- **Estate baselines (Clause B/C):** cot vestigial marker (`cot-pipeline/iam.tf:60`) → routed DS~C; the sensitive sha-subset (6) → **committed `97059db92`, CVO re-confirm GREEN**; remaining ~34 → `comp-lambdamap baseline` follow-on TO (0.7.0~A owns).
+- **Enforce ramp:** nudge-mode now; hard-withhold on SEV1/IAM/security as the tool-briefs land. CVO verifies each tool/gate lands + FIRES (exercise-not-config-read — 22a on 22a).
