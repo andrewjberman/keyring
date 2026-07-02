@@ -51,4 +51,8 @@ Close ALL of these to flip Status OPEN -> CLOSED:  **[ALL CHECKED 2026-07-02T18:
 
 WS-3 VERDICT: **CLOSE** -- the flip un-froze MDPF; freeze (c) resolved, verified-green end-to-end.
 
+## Close authorization + follow-on
+- **CTO CO-SIGN** (1.0.0_SA_CTO, 2026-07-02T18:22Z): the post-flip never-widen caveat is MET on the LIVE served-after (not the dry-run) -- model_aua flat (-0.05%), non_model DOWN (-17.15%, residual re-attribution of a shrinking total = NOT a widen per the CTO bar), custody ties-to-cent. The dry-run caveat (non_model -31% dry-run; model_aua-after unattested) is CLOSED on live data. Flip CLOSE co-signed. (CVO parity PASS 18:17Z + rollback-disarm = the other close conditions, met in the checklist above.)
+- **Follow-on (NOT a flip-ledger condition, tracked so it isn't lost):** the served MDPF as_of label (07-02, inf-driven) is under the SEPARATE CVO Orion-labeling correctness audit (Andrew-direct, holding the INFREF close). The FLIP close is VALUE-correct + label-INDEPENDENT (custody ties to the 07-01 RPS to the cent). IF CVO rules the served as_of MIS-labeled, the re-label fix must ALSO cover the MDPF served as_of (a shared-label correction, not just inf) -- an AE-side follow-on I own, distinct from this closed flip.
+
 ## Status: CLOSED 2026-07-02T18:18Z -- MDPF UN-FREEZE VERIFIED-GREEN. Flip fired 14:06:52Z (schwab v2); first schwab-native run served on the 07-02 INF sentinel (leg-2 gate PASSED); CVO per-field parity PASS to the cent (custody delta $0.00 vs 07-01 RPS), 169h 06-25 freeze CLEARED (06-25->07-02), all fields DOWN/flat no-widen. ROLLBACK DISARMED. **Andrew fix-today P0 freeze (c) = RESOLVED.**
