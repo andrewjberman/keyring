@@ -70,8 +70,40 @@ transparency + safety-preservation on a broken wrapper."
    from the main tree -> `deploy-to-ec2.sh` -> manual `EC2_MANIFEST.json` record — with COO
    authorization and full transparency in the RAVC.
 
+## Update 2026-07-02 -- recurrence on the YCharts-enable deploy (from the MAIN tree)
+
+The YCharts-enable deploy ran `safe-ec2-deploy.sh` from the **main CLOUD tree** (no worktree, so
+defects 1/2 did not apply) and STILL hit two wrapper-hygiene failures in Step 3/3 (manifest record).
+The deploy itself SUCCEEDED (service active, /health ok, /mcp 401, self-cert PASS); only the
+record/commit sub-step failed -- but that reproduces the same attribution + commit gap even on the
+happy path, so it is worth folding into the durable fix:
+
+1. **`deployed_by=unknown-agent` even from the main tree.** `AGENT="${AGENT_NAME:-unknown-agent}"`
+   (L135) defaults to `unknown-agent` whenever `AGENT_NAME` is unset -- there is NO fallback to the
+   serial the halt-gate already resolves at L117. Result: the manifest recorded `unknown-agent`; I
+   corrected it to `0.7.0_AE_CloudOps~A` by hand. **Fix:** resolve `$AGENT` from the halt-gate-
+   resolved serial (export it from `halt_gate_check`) or an explicit audited `AGENT_SERIAL`; fail
+   CLOSED with a clear message rather than silently recording `unknown-agent`.
+2. **Bare `git add` + `git commit` (L155-164) is contamination-prone + identity-wrong.** During a
+   multi-agent window the index carried concurrent-agent files; `git add EC2_MANIFEST.json` + bare
+   `git commit` tried to commit the whole contaminated index under the machine git identity
+   ("Andrew Berman") -> owned-paths lane block across ~8 unrelated files, and the manifest commit
+   FAILED. I re-committed EC2_MANIFEST.json + the ledger scoped via `safe-commit.sh` (763aaf290).
+   **Fix:** replace the bare `git add`+`git commit` in Step 3/3 with
+   `.tools/safe-commit.sh --author "$AGENT <$AGENT@opal.agent>" -m "..." -- infra/aws/ec2/EC2_MANIFEST.json`
+   -- the wrapper's contamination guard (refuses out-of-pathspec staged files) + `--author` lane
+   scoping is exactly what this step needs (Rule 14a). This is COUPLED to fix (1): `--author $AGENT`
+   only passes the SHARED_CLOUD_OPS owned-paths lane when `$AGENT` is a real cloud-ops serial.
+
+Both are contained, in-lane (SHARED_CLOUD_OPS), and low-risk; they did NOT block the YCharts deploy
+(worked around with the same hand-record + scoped safe-commit pattern from the SCTY fallback).
+Routing unchanged (CTO / AE-infra durable pass) -- 0.7.0_AE_CloudOps~A can implement the contained
+(1)+(2) sub-fix on a COO/CTO nod; the worktree-aware + Windows-safe items (defects 1-3 above) remain
+the larger coordinated pass.
+
 ## Anchors
 
 - Deploy ledger: `org/critical_paths/change_management/20260701T1941Z_scty-mcpguard-live-gateway_deploy_completion.md`
-- Manifest commit: `2dc56d0b0` · Build HEAD: `8b24cd2bb` · Box: `i-07dccb1615503ac99`
-- Wrapper: `infra/aws/ec2/safe-ec2-deploy.sh` (halt_gate_check ~L117) · Rule 7 (CLAUDE.md)
+  · YCharts-enable ledger: `org/critical_paths/change_management/20260701T2228Z_ycharts-enable_deploy_completion.md`
+- Manifest commits: `2dc56d0b0` (SCTY) · `763aaf290` (YCharts, scoped safe-commit fallback) · Box: `i-07dccb1615503ac99`
+- Wrapper: `infra/aws/ec2/safe-ec2-deploy.sh` (halt_gate_check ~L117; AGENT ~L135; bare commit ~L155-164) · Rule 7 (CLAUDE.md)
