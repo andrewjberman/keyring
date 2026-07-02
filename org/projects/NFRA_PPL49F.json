@@ -1,0 +1,23 @@
+{
+  "project_code": "NFRA_PPL49F",
+  "macro_code": "NFRA",
+  "name": "49F pipeline resource-SSOT + debt decommission (bd cookie-REST + schwab SI2 custody -> MDPF aggregate + ADVI 49F served)",
+  "description": "Sub-project 1 of 3 of NFRA_PIPELINE (CTO PRD c925611f0, Andrew-direct 2026-07-02). Walk the 49F partner pipeline END-TO-END -- first resource (EventBridge trigger) through bronze->silver->gold->platinum->portal (the ADVI 49F served surface + the MDPF custody aggregate two-tier: build platinum/mdpf -> served portal-v2/json) -- with /seams + /molecule + /code-review, to establish the ABSOLUTE-TRUTH resource manifest (SSOT), then decommission every deprecated/floating/un-Terraform'd resource (SAFE-decommission only, comp-blast zero-consumer, unrecoverable=human-gated) and make the 49F Terraform rock-solid + applied (live==TF==applied, 0-drift). ORTHOGONAL to ADVI_ETLFIX (that = data-correct; this = resource-truth + estate hygiene); the /seams+/molecule pass ALSO independently re-verifies the 49F ETLFIX work. Firm-scoped (bd + schwab; NEVER cross to cot/inf, Rule 13). Method + deliverables + ACs: NFRA_PIPELINE_PRD.md sections 2/4/7.",
+  "prds": [
+    {"path": "docs/architecture/NFRA_PIPELINE_PRD.md", "label": "NFRA_PIPELINE PRD (CTO-authored; 3-pipeline resource-SSOT + debt decommission; this = sub-project 1/3)", "date": "2026-07-02"}
+  ],
+  "related": ["NFRA_PIPELINE", "NFRA_PPLINF", "NFRA_PPLCOT", "ADVI_ETLFIX", "ADVI_BDAPIMIG", "MDPF_ASSETS", "DATA_PLATFORM", "NFRA_DEBTSCAN"],
+  "status": "dormant",
+  "phase": "Phase 0 -- REGISTERED + STAGED 2026-07-02 (NFRA_PIPELINE decomposition, COO). SSOT-manifest traversal (/seams + /molecule + /code-review, trigger->portal) UN-STAGES to active when the 49F ETLFIX durable legs land + stabilize -- the bd-49F P1 cookie-REST deploy (ADVI_BDAPIMIG), the Schwab-ingest automation, and the MDPF custody flip -- so the pipeline is stable enough to manifest (PRD section 8). comp-debt (MSTR-chartered + TAKEN) runs NOW in parallel (its design doesn't gate on the pipeline). Decommission executes ONLY after the SSOT manifest + human-confirm.",
+  "blocking": "STAGED (self-clearing) behind the 49F ETLFIX durable legs: bd-49F P1 deploy + Schwab automation + MDPF-flip stability -- all in-flight this session; COO flips to active + decomposes the manifest/reconcile/decommission TOs when they land. Parallel non-gated start = comp-debt tooling design (MSTR). GUARDRAILS (PRD section 9): firm-separation (bd/schwab only, never cot/inf); no decommission on an INFERRED verdict (source-confirmed-dead only, Rule 22); unrecoverable (EC2/S3/IAM delete) = CTO-arch-gate + COO + Andrew confirm-first on the specific IDs, comp-blast-preceded; never-widen if the SSOT/TF work touches a served output; ground on live-applied not TF-desired.",
+  "created": "2026-07-02",
+  "pods": ["0.6", "0.5", "0.4", "1.0", "2.0", "3.0"],
+  "pipeline": "bd 49F (cookie-REST ingest) + schwab SI2 (custody) -> bronze/silver/gold/platinum -> MDPF custody aggregate (platinum/mdpf -> served portal-v2/json) + the ADVI 49F served surface -> portal",
+  "coo_lane": "2.0.0_SA_COO (driver). Un-stage trigger owner; decompose the manifest / debt-list / TF-reconcile / decommission TOs when the 49F ETLFIX legs land. Owners per PRD section 3: 0.6.0 (bd) + 0.6.2/0.5.0 (schwab/MDPF) AE, 0.4.0_DS (scripts), 0.4.0_DE (portal 49F + MDPF pages).",
+  "cvo_lane": "3.0.0_SA_CVO (verification). /molecule + /seams SOUND-cert; the manifest grounding audit (every edge Rule-22-cited); the decommission zero-consumer verification.",
+  "cto_lane": "1.0.0_SA_CTO (arch owner). Arch-gates: the sub-project TOs, the debt verdicts (source-confirmed-dead only), the TF reconciliation (live-applied not TF-desired), and EVERY decommission decision (esp. unrecoverable).",
+  "thread_counter": 0,
+  "threads": [],
+  "depends_on": ["ADVI_BDAPIMIG", "MDPF_ASSETS", "DATA_PLATFORM", "ADVI_ETLFIX", "NFRA_PIPELINE"],
+  "depends_on_note": "STAGED behind the 49F ETLFIX durable legs per PRD section 8 (don't disrupt the in-flight ETLFIX wave). ADVI_BDAPIMIG = the bd cookie-REST auth home; DATA_PLATFORM = the Schwab ingest home; MDPF_ASSETS = the custody aggregate home. This project establishes the RESOURCE-truth SSOT + debt-hygiene across those, firm-scoped to 49F; it does NOT re-own their data-correctness content (that's ADVI_ETLFIX). comp-debt (MSTR) is the shared tooling dependency, non-gating."
+}

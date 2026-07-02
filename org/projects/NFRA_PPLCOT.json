@@ -1,0 +1,23 @@
+{
+  "project_code": "NFRA_PPLCOT",
+  "macro_code": "NFRA",
+  "name": "Cottonwood pipeline resource-SSOT + debt decommission (cot_bronze_ingest DataMining REST -> cot served, firm-separated)",
+  "description": "Sub-project 3 of 3 of NFRA_PIPELINE (CTO PRD c925611f0, Andrew-direct 2026-07-02). Walk the Cottonwood partner pipeline END-TO-END -- first resource (the EventBridge trigger) through cot_bronze_ingest (DataMining REST) -> silver -> gold (snapshot-first) -> platinum -> the cot served surface -> portal -- with /seams + /molecule + /code-review, to establish the ABSOLUTE-TRUTH resource manifest (SSOT), then decommission every deprecated/floating/un-Terraform'd resource and make the cot Terraform rock-solid + applied (live==TF==applied, 0-drift). ORTHOGONAL to ADVI_COTETL (that = data-correct + the durable gateway auth; this = resource-truth + estate hygiene); the /seams+/molecule pass ALSO independently re-verifies the cot ETLFIX work. STRICTLY firm-separated -- opal-data-cot is a COMPLETELY separate firm pipeline from bd, NEVER mirrored/synced/coupled (gate + IAM Deny enforced, Rule 13); the manifest + decommission are cot-scoped only. Method + deliverables + ACs: NFRA_PIPELINE_PRD.md sections 2/4/7.",
+  "prds": [
+    {"path": "docs/architecture/NFRA_PIPELINE_PRD.md", "label": "NFRA_PIPELINE PRD (CTO-authored; 3-pipeline resource-SSOT + debt decommission; this = sub-project 3/3)", "date": "2026-07-02"}
+  ],
+  "related": ["NFRA_PIPELINE", "NFRA_PPL49F", "NFRA_PPLINF", "ADVI_ETLFIX", "ADVI_COTETL", "NFRA_DEBTSCAN"],
+  "status": "dormant",
+  "phase": "Phase 0 -- REGISTERED + STAGED 2026-07-02 (NFRA_PIPELINE decomposition, COO). SSOT-manifest traversal (/seams + /molecule + /code-review, trigger->portal) UN-STAGES to active AFTER the cot WS-2b harden lands (the cot silver/platinum AUA-freeze surface + the >=3 alarm + the T+2 cadence model) -- LAST of the 3 per PRD section 8 (PPLCOT after WS-2b). comp-debt (MSTR) runs NOW in parallel. Decommission executes ONLY after the SSOT manifest + human-confirm.",
+  "blocking": "STAGED (self-clearing) behind the cot WS-2b harden (DS~C + cot AE: timeseries_overview AUA-freeze surface landed 7d62a549f; awaiting the AE >=3 alarm TF + the CTO->Andrew structural-T+2 decision + the re-confirm-after-5-nightlies). COO flips to active + decomposes the manifest/reconcile/decommission TOs when WS-2b stabilizes. Parallel non-gated start = comp-debt tooling design (MSTR). GUARDRAILS (PRD section 9): STRICT firm-separation (cot only -- NEVER couple to the firm-bound cot_bronze_ingest-vs-bd edit, never mirror bd, IAM Deny enforced); no decommission on an INFERRED verdict (source-confirmed-dead only, Rule 22); unrecoverable (EC2/S3/IAM delete) = CTO-arch-gate + COO + Andrew confirm-first on the specific IDs, comp-blast-preceded; never-widen if the SSOT/TF work touches a served output; ground on live-applied not TF-desired.",
+  "created": "2026-07-02",
+  "pods": ["0.4", "1.0", "2.0", "3.0"],
+  "pipeline": "cot_bronze_ingest (Cottonwood DataMining REST) -> silver -> gold (snapshot-first) -> platinum -> the cot served surface -> portal (opal-data-cot, firm-separated from bd)",
+  "coo_lane": "2.0.0_SA_COO (driver). Un-stage trigger owner; decompose the manifest / debt-list / TF-reconcile / decommission TOs when the cot WS-2b harden lands. Owners per PRD section 3: 0.4.0_DS~C (cot lane) + the cot AE owner.",
+  "cvo_lane": "3.0.0_SA_CVO (verification). /molecule + /seams SOUND-cert; the manifest grounding audit; the decommission zero-consumer verification. Firm-separation cert (no bd coupling).",
+  "cto_lane": "1.0.0_SA_CTO (arch owner). Arch-gates: the sub-project TOs, the debt verdicts, the TF reconciliation (live-applied), and every decommission decision. Enforces the strict cot/bd firm-separation.",
+  "thread_counter": 0,
+  "threads": [],
+  "depends_on": ["ADVI_COTETL", "ADVI_ETLFIX", "NFRA_PIPELINE"],
+  "depends_on_note": "STAGED behind the cot WS-2b harden per PRD section 8 (PPLCOT is the LAST of the 3 to un-stage). ADVI_COTETL = the cot-arch home (the durable gateway auth, the snapshot-first gold). This project establishes the RESOURCE-truth SSOT + debt-hygiene for the cot pipeline, STRICTLY firm-scoped (never coupled to bd); it does NOT re-own the data-correctness content. comp-debt (MSTR) is the shared tooling dependency, non-gating."
+}

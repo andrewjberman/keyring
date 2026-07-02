@@ -1,0 +1,23 @@
+{
+  "project_code": "NFRA_PPLINF",
+  "macro_code": "NFRA",
+  "name": "Inflection pipeline resource-SSOT + debt decommission (Orion -> single-runner chain-full -> ADVI Inflection served)",
+  "description": "Sub-project 2 of 3 of NFRA_PIPELINE (CTO PRD c925611f0, Andrew-direct 2026-07-02). Walk the Inflection partner pipeline END-TO-END -- first resource (the EventBridge/bronze-complete trigger) through Orion -> bronze -> the single-runner --chain-full -> gold -> platinum -> the ADVI Inflection served surface -> portal -- with /seams + /molecule + /code-review, to establish the ABSOLUTE-TRUTH resource manifest (SSOT), then decommission every deprecated/floating/un-Terraform'd resource (esp. the interim L7 crons + the aggregator once the single 9ET runner is the end-state) and make the inf Terraform rock-solid + applied (live==TF==applied, 0-drift). Includes the L7-consolidation end-state (one event-driven runner on _BRONZE_COMPLETE; interim clock-crons + aggregator decommissioned). ORTHOGONAL to ADVI_ETLFIX/ADVI_INFREF (those = data-correct + un-freeze; this = resource-truth); the /seams+/molecule pass ALSO independently re-verifies the inf ETLFIX work. Firm-scoped (inf; NEVER cross to bd/cot, Rule 13). Method + deliverables + ACs: NFRA_PIPELINE_PRD.md sections 2/4/7.",
+  "prds": [
+    {"path": "docs/architecture/NFRA_PIPELINE_PRD.md", "label": "NFRA_PIPELINE PRD (CTO-authored; 3-pipeline resource-SSOT + debt decommission; this = sub-project 2/3)", "date": "2026-07-02"}
+  ],
+  "related": ["NFRA_PIPELINE", "NFRA_PPL49F", "NFRA_PPLCOT", "ADVI_ETLFIX", "ADVI_INFREF", "NFRA_DEBTSCAN"],
+  "status": "dormant",
+  "phase": "Phase 0 -- REGISTERED + STAGED 2026-07-02 (NFRA_PIPELINE decomposition, COO). SSOT-manifest traversal (/seams + /molecule + /code-review, trigger->portal) UN-STAGES to active when the inf ETLFIX durable legs land + stabilize -- the WS-1 converter-guard set (8-converter guards + the aum_snapshot fail-closed gate-hole fix) and the L7-consolidation additive-trigger (0.6.1, CTO-ruled OPTION-B event-on-_BRONZE_COMPLETE) reaching its single-runner end-state -- so the pipeline is stable enough to manifest (PRD section 8). comp-debt (MSTR) runs NOW in parallel. Decommission (esp. the interim L7 crons + aggregator) executes ONLY after the SSOT manifest + human-confirm.",
+  "blocking": "STAGED (self-clearing) behind the inf ETLFIX durable legs: WS-1 inf converter-guards + the aum_snapshot fail-closed fix (DS~A) + the L7-consolidation single-runner end-state (0.6.1, event-on-_BRONZE_COMPLETE, human-gated Stage-3) -- all in-flight this session; COO flips to active + decomposes the manifest/reconcile/decommission TOs when they land. Parallel non-gated start = comp-debt tooling design (MSTR). GUARDRAILS (PRD section 9): firm-separation (inf only, never bd/cot); no decommission on an INFERRED verdict (source-confirmed-dead only, Rule 22); unrecoverable (EC2/S3/IAM delete + the L7 interim-cron teardown) = CTO-arch-gate + COO + Andrew confirm-first on the specific IDs, comp-blast-preceded; never-widen if the SSOT/TF work touches a served output; ground on live-applied not TF-desired.",
+  "created": "2026-07-02",
+  "pods": ["0.6", "0.4", "1.0", "2.0", "3.0"],
+  "pipeline": "Orion (vendor) -> bronze -> single-runner --chain-full (event-driven on _BRONZE_COMPLETE, L7 end-state) -> gold -> platinum -> the ADVI Inflection served surface -> portal",
+  "coo_lane": "2.0.0_SA_COO (driver). Un-stage trigger owner; decompose the manifest / debt-list / TF-reconcile / decommission TOs (incl. the L7 interim-cron + aggregator decommission) when the inf ETLFIX legs land. Owners per PRD section 3: 0.6.1 AE, 0.4.0_DS (inf scripts), 0.4.0_DE (portal INF page).",
+  "cvo_lane": "3.0.0_SA_CVO (verification). /molecule + /seams SOUND-cert; the manifest grounding audit; the L7-end-state + decommission zero-consumer verification.",
+  "cto_lane": "1.0.0_SA_CTO (arch owner). Arch-gates: the sub-project TOs, the debt verdicts, the TF reconciliation (live-applied), the L7 single-runner end-state, and every decommission decision (esp. the interim-cron teardown).",
+  "thread_counter": 0,
+  "threads": [],
+  "depends_on": ["ADVI_INFREF", "ADVI_ETLFIX", "NFRA_PIPELINE"],
+  "depends_on_note": "STAGED behind the inf ETLFIX durable legs per PRD section 8 (don't disrupt the in-flight ETLFIX wave). ADVI_INFREF = the inf-arch home (L7-consolidation, the un-freeze ledger); ADVI_ETLFIX = the data-correctness umbrella (WS-1 converter-guards). This project establishes the RESOURCE-truth SSOT + debt-hygiene for the inf pipeline, firm-scoped; it does NOT re-own the data-correctness content. comp-debt (MSTR) is the shared tooling dependency, non-gating."
+}
