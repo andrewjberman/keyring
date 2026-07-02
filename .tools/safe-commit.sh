@@ -34,13 +34,25 @@ BEHAVIOR (commit-mutex v2 -- stage-inside-lock, MSTR-approved 2026-05-29):
      scoped to the listed paths regardless of index state. Mutex released
      on EXIT (trap). Stale lock reclaimed via dead-PID or age>=timeout.
 
+SECURITY -- the -f overrides .gitignore (read this before committing near secrets):
+  Step 3 uses `git add -f`, which FORCE-adds files EVEN IF gitignored. So passing a
+  DIRECTORY pathspec (e.g. `-- workflows/`) silently sweeps in gitignored secrets/PII
+  under it -- HARs with live cookies, .env, keys, client data. .gitignore does NOT
+  protect you here; a leaked live credential/PII in git history is UNRECOVERABLE.
+  RULE: pass EXPLICIT file paths near a sources/HAR/.env/secret tree -- never a bare
+  directory. The SENSITIVE-LEAK GATE below fail-CLOSED-blocks a would-be leak
+  (unambiguous secret types always; contextual patterns when also gitignored). To
+  double-check any commit: `git show --name-only HEAD` before pushing.
+
 OPTIONS:
   --force              Bypass contamination check; log to audit trail.
   --help               Show this help and exit.
   -- <pathspec...>     Files to commit. Required. Forwarded to git commit --only.
 
 ENV:
-  SAFE_COMMIT_AUDIT_LOG  Override audit log path (default: <repo>/org/git-author-override-audit.log).
+  SAFE_COMMIT_AUDIT_LOG        Override audit log path (default: <repo>/org/git-author-override-audit.log).
+  SAFE_COMMIT_ALLOW_SENSITIVE  Set to a reason string to override the sensitive-leak gate
+                               for a genuine sanitized fixture (audited). Leave UNSET normally.
 
 EXAMPLES:
   safe-commit.sh --author "0.7.0_AE_CloudOps <0.7.0_AE_CloudOps@opal.agent>" \
@@ -211,6 +223,57 @@ if [ -n "$IN_SCOPE" ]; then
     [ -z "$f" ] && continue
     IN_SCOPE_SET["$f"]=1
   done <<< "$IN_SCOPE"
+fi
+
+# ADHC_OWNPTH.007b -- SENSITIVE-LEAK GATE (fabric-wide, 2026-07-02; 0.7.0 near-miss: a
+# `safe-commit -- workflows/` directory pathspec would have force-added raw HARs carrying
+# LIVE cookies + client-holdings PII). The `git add -f` above OVERRIDES .gitignore, so a
+# DIRECTORY pathspec silently force-adds gitignored secrets/PII into git history -- which is
+# UNRECOVERABLE (persists in history + any push/clone even after a later delete). Refuse
+# fail-CLOSED when a to-be-committed (in-scope) file is either (a) an unambiguous secret
+# type, or (b) gitignored-per-rules (git check-ignore --no-index) AND matches a sensitive
+# pattern. Combining {gitignored} with {sensitive} for the contextual set keeps false-
+# positives near-zero (a TRACKED cookie_utils.py is not ignored -> never fires). Audited
+# override for a genuine sanitized fixture: SAFE_COMMIT_ALLOW_SENSITIVE="reason".
+_LEAK_ALWAYS_RE='\.(har|pem|p12|pfx|jks|keystore|ppk)$|(^|/)id_(rsa|dsa|ecdsa|ed25519)([./]|$)|(^|/)\.(netrc|pgpass)$'
+_LEAK_IF_IGNORED_RE='\.(env|key|crt|cer)$|(cookie|secret|credential|password|apikey|api_key|private_key|access_token|auth_token)|(^|/)(\.aws|\.ssh|\.gnupg|sources)/'
+_LEAK_EXCLUDE_RE='\.env\.(template|example|sample|dist)$'
+LEAK_HITS=()
+if [ -n "$IN_SCOPE" ]; then
+  while IFS= read -r f; do
+    [ -z "$f" ] && continue
+    printf '%s\n' "$f" | grep -qiE "$_LEAK_EXCLUDE_RE" && continue
+    if printf '%s\n' "$f" | grep -qiE "$_LEAK_ALWAYS_RE"; then
+      LEAK_HITS+=("$f")
+    elif printf '%s\n' "$f" | grep -qiE "$_LEAK_IF_IGNORED_RE" \
+         && git check-ignore --no-index -q -- "$f" 2>/dev/null; then
+      LEAK_HITS+=("$f")
+    fi
+  done <<< "$IN_SCOPE"
+fi
+if [ "${#LEAK_HITS[@]}" -gt 0 ]; then
+  mkdir -p "$(dirname "$AUDIT_LOG")"
+  if [ -n "${SAFE_COMMIT_ALLOW_SENSITIVE:-}" ]; then
+    echo "${ISO_TS} SENSITIVE-OVERRIDE  ${AGENT}  ${#LEAK_HITS[@]}  (${LEAK_HITS[*]})  reason=${SAFE_COMMIT_ALLOW_SENSITIVE}" >> "$AUDIT_LOG"
+    echo "WARN: SAFE_COMMIT_ALLOW_SENSITIVE override -- ${#LEAK_HITS[@]} sensitive file(s) WILL be committed:" >&2
+    printf '  %s\n' "${LEAK_HITS[@]}" >&2
+    echo "  Audit: ${AUDIT_LOG}" >&2
+  else
+    git reset -q HEAD -- "${LEAK_HITS[@]}" 2>/dev/null || true
+    echo "${ISO_TS} SENSITIVE-BLOCK  ${AGENT}  ${#LEAK_HITS[@]}  (${LEAK_HITS[*]})" >> "$AUDIT_LOG"
+    echo "ERROR: BLOCKED -- the pathspec would commit SENSITIVE file(s) (secret/PII leak risk)." >&2
+    echo "       safe-commit uses 'git add -f', which OVERRIDES .gitignore -- a DIRECTORY pathspec" >&2
+    echo "       force-adds gitignored secrets. A leaked live credential or client PII is" >&2
+    echo "       UNRECOVERABLE from git history." >&2
+    echo "" >&2
+    echo "Would-be-leaked (${#LEAK_HITS[@]}) -- now UNSTAGED for you:" >&2
+    printf '  %s\n' "${LEAK_HITS[@]}" >&2
+    echo "" >&2
+    echo "Fix: pass EXPLICIT non-sensitive file paths -- never a directory pathspec that sweeps these in." >&2
+    echo "     Verify with: git show --name-only HEAD  (before pushing near a sources/HAR/.env tree)." >&2
+    echo "     Genuine sanitized fixture? SAFE_COMMIT_ALLOW_SENSITIVE=\"reason\" (audited)." >&2
+    exit 1
+  fi
 fi
 
 # Contamination = staged-now files NEITHER in the in-scope set NOR in the baseline.
