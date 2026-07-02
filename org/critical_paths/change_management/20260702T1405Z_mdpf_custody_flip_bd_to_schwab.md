@@ -1,7 +1,7 @@
 # Deploy Completion Record -- MDPF 49F Custody Basis Flip (bd -> schwab)
 
 **Date opened:** 2026-07-02T14:05Z (fire-start)
-**Date closed:** OPEN -- closes on CVO post-flip parity cert + 06-25 freeze-clear
+**Date closed:** 2026-07-02T18:18Z -- CLOSED. MDPF un-freeze VERIFIED-GREEN (CVO parity PASS to the cent, freeze cleared 06-25->07-02, leg-2 Stage 2.5 gate PASSED). No half-landed state.
 **Deploy:** MDPF 49F custody basis flip -- SSM `/mdpf/custody_source` bd -> schwab. The never-widen served-critical cutover (ADVI_BDAPIMIG P1 served-AUA un-freeze; Andrew fix-today P0 freeze (c)).
 **Authored by:** 0.5.0_AE_OpalETL (flip owner + executor)
 **Class:** deploy-completion (NEVER rule -- opened at fire-start, closed at completion; no half-landed)
@@ -42,13 +42,13 @@
 
 Un-freeze path = LEVER 1 (ride inf): 0.6.1's clean inf chain RUNNING (proc 17328, 15:07Z); INF sentinel ETA ~15:35Z -> mdpf-daily-trigger AUTO-fires on the schwab basis. (LEVER 2 manual SSM dispatch = armed fallback, held; do NOT fire without COO GO.)
 
-Close ALL of these to flip Status OPEN -> CLOSED:
-- [ ] INF sentinel fired -> mdpf runner (i-02448edb624a7a7cf) dispatched, CUSTODY_SOURCE=schwab stamped. run_date = ____ ; RPS date consumed = ____ (06-30, OR 07-01 if 0.6.2's bridge silver landed first).
-- [ ] Chain reached SERVE -- leg-2 Stage 2.5 gate PASSED (rc=0, not DEFER); WS-A platinum + non_model_assets.json + aggregate_aua_timeseries.json updated for run_date.
-- [ ] CVO per-field parity PASS: served-after custody / model_aua / non_model_aua vs frozen bd -> NO field widens unexpectedly; served custody == sum(schwab/silver/rps/<RPS date>) CASH-excluded, to the cent.
-- [ ] 06-25 16:42Z freeze CLEARED -- served aggregate AUA vintage advanced past 06-25.
-- [ ] Rollback NOT triggered (no unexpected widen).
+Close ALL of these to flip Status OPEN -> CLOSED:  **[ALL CHECKED 2026-07-02T18:18Z]**
+- [x] INF sentinel fired (2026-07-02T18:05:33Z, written by 0.6.1) -> mdpf runner i-02448edb624a7a7cf DISPATCHED (running 18:05:45Z -> stopped 18:10:02Z; convergence gate PASSED, not a DEFER -- schwab/rps checked not bd, decoupling confirmed live), CUSTODY_SOURCE=schwab stamped. run_date = 2026-07-02 ; **RPS date consumed = 07-01** (0.6.2 bridged partition; 07-02 posts ~07-03 so as_of caps at 07-01).
+- [x] Chain reached SERVE -- telemetry status.json = **"complete"** (run mdpf_daily_20260702_180559); **LEG2-CUSTODY-GATE = ok** (Stage 2.5 gate PASSED, not DEFER); STAGE0/WS-E/WS-A all ok; served aggregate LastMod 18:08:33Z.
+- [x] CVO per-field parity PASS (3.0.0_SA_CVO 18:17Z): served 49F custody **$1,604,173,986.44 == sum(schwab/silver/rps/date=20260701, CASH-excl) $1,604,173,986.44, delta $0.00**. custody -2.78% / model_aua -0.05% / non_model_aua -17.15% -- ALL DOWN/flat, NO unexpected widen (per CTO's bar; the non_model drop = residual re-attribution of a shrinking total).
+- [x] 06-25 16:42Z freeze CLEARED -- served as_of 06-25 -> 07-02 (169h freeze cleared; custody correctly ties to the 07-01 RPS regardless of the 07-02 inf-driven label -- CVO's Orion-dating caveat noted for the record).
+- [x] Rollback NOT triggered (no widen) -- CVO STAND-DOWN; **rollback DISARMED**.
 
-ON ALL-CHECKED -> WS-3 verdict CLOSE (flip un-froze MDPF; freeze (c) resolved). ON ANY UNEXPECTED WIDEN -> fire rollback `aws ssm put-parameter --name "/mdpf/custody_source" --value "bd" --overwrite --region us-east-1` (PowerShell), ledger STAYS OPEN, ping COO to re-convene.
+WS-3 VERDICT: **CLOSE** -- the flip un-froze MDPF; freeze (c) resolved, verified-green end-to-end.
 
-## Status: OPEN (FIRED + verified 2026-07-02T14:06:52Z, param=schwab v2; ROLLBACK ARMED; LEVER-1 imminent -- inf sentinel ETA ~15:35Z; awaiting first schwab-native run -> CVO per-field parity + 06-25 freeze-clear)
+## Status: CLOSED 2026-07-02T18:18Z -- MDPF UN-FREEZE VERIFIED-GREEN. Flip fired 14:06:52Z (schwab v2); first schwab-native run served on the 07-02 INF sentinel (leg-2 gate PASSED); CVO per-field parity PASS to the cent (custody delta $0.00 vs 07-01 RPS), 169h 06-25 freeze CLEARED (06-25->07-02), all fields DOWN/flat no-widen. ROLLBACK DISARMED. **Andrew fix-today P0 freeze (c) = RESOLVED.**
