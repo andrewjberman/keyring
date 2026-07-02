@@ -60,10 +60,10 @@ MDPF's served surfaces aggregate N partner surfaces, so mdpf's gating cadence = 
 4. Remove the hand-set frontier_page where a grounded cadence exists (keep override only where provisional).
 5. AE alarm reads the DERIVED frontier_page (the existing one-source drift-guard, now grounded).
 
-## Open / needs-grounding (do NOT inherit magic-2 as truth)
-- **mdpf cadence** -- ungrounded; DS~C refine (this is the concrete next work; grounds the ":33 may-raise-to-3").
-- **cot holdings=2** -- PROVISIONAL, re-confirm-after-5-clean-nightlies (post-06-22-AUAFIX baseline thin).
-- bd/inf cadences DS~B-grounded 2026-07-02 -- confirm the grounding basis is a real cadence-confirm (like WS-2b), not an assumed T-1.
+## Status of the grounding (update 2026-07-02, e513cdde4)
+- **mdpf cadence -- GROUNDED + LANDED (was the open ":33 refine").** schwab_custody=2 (the slowest feeder), from BD_MAX_LAG_TRADING_DAYS=2 SOURCE-CONFIRMED (mdpf-daily-trigger lambda:69 + mdpf-pipeline/lambdas.tf:35; 0.5.0_AE_OpalETL pairing + DS~C verify). => mdpf frontier_page 2->3 folded into served config. table_cadence.yaml seeded (all 4 firms). DE building resolve_page_threshold().
+- **cot holdings=2** -- PROVISIONAL, re-confirm-after-5-clean-nightlies (post-06-22-AUAFIX baseline thin). Override held until lock.
+- **STILL OPEN:** bd/inf cadences are DS~B-grounded (recorded in table_cadence.yaml as cited) -- confirm the basis is a real cadence-confirm (like WS-2b), not an assumed T-1 (route to DS~B). Add gating_tables to the bd/inf served entries (DS~B lane). DE's resolve_page_threshold() (lib/served_vintage.py) is the remaining build.
 
 ## Ownership
 DS~C leads the schema + the cot & mdpf cadence grounding. DE owns the comp-freshness/served-config resolver + folds into the MDPF-derive increment. 0.5.0 owns MDPF aggregate gating. AE consumes the derived frontier_page. RAVC COO+CTO.
