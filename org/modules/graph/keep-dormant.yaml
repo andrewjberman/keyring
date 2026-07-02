@@ -1,0 +1,207 @@
+# =============================================================================
+# keep-dormant.yaml -- the CANONICAL keep-dormant registry (comp-debt keystone).
+#
+# The dormant-vs-dead GUARD's lookup source (NFRA_COMPDEBT_PRD.md 5, RULING 1).
+# A deliberate belt and a corpse are IDENTICAL on every mechanical signal (both
+# DISABLED, both 0-invocation, both 0-consumer). Only the INTENT ANNOTATION separates
+# them. This registry structures that intent so the guard becomes a lookup, not a
+# comment-parse, and so "keep this dormant" is a REVIEWABLE assertion, not tribal lore.
+#
+# RULING 1 (governance -- CTO arch-gated):
+#   1. YAML is CANONICAL (git-reviewed, firm-scopable, no live-drift). An
+#      opal:lifecycle=keep-dormant AWS tag is an OPTIONAL projected mirror; on any
+#      conflict the YAML wins (a tag is not in git history).
+#   2. EVERY entry MUST carry a grounded `reason` + a `rearm_condition` + an
+#      `annotation_cite` (file:line). An entry WITHOUT a grounded reason is itself
+#      unreviewable debt -- a bag of unjustified "keep" assertions.
+#   3. EVERY entry carries a `revalidate_by` DECAY date. A deliberate belt can DECAY
+#      into a true corpse (the rollback it protected is retired; the manual path is
+#      superseded). The guard flags an entry PAST its window as
+#      "keep-dormant STALE -- re-confirm still-a-belt or promote to DEBT". The registry
+#      is NOT write-once; it is periodically re-grounded. STALE never auto-promotes to
+#      DEBT -- it demands a human re-grounding.
+#
+# FAIL-SAFE DEFAULT (PRD 5): a resource tripping ONLY mechanical Tier-C debt-signals
+# defaults to KEEP-DORMANT, NEVER DEBT. Flip to DEBT only when a Tier-A/B keep-signal
+# is affirmatively RULED OUT and a positive dead-marker is present. A false-negative
+# (miss a corpse) is recoverable; a false-positive (decommission a deliberate belt) is
+# THE named failure mode.
+#
+# FIRM-SEPARATION: entries are firm-scoped (bd|cot|inf|mdpf|imo|shared). bd/cot/inf
+# NEVER cross (gate + IAM). `comp-debt --firm X` reads only the matching entries.
+# =============================================================================
+schema_version: 1
+
+# Default decay window for a keep-dormant assertion (days). Per-entry `revalidate_by`
+# overrides this; a short-lived cutover lever should set a TIGHTER window.
+revalidation_default_days: 180
+
+# Tier-A/B intent-annotation discriminators the guard ALSO recognizes in-line when a
+# resource is NOT yet registered here (the seed is intentionally incomplete). Documented
+# so the guard's regex vocabulary is reviewable, not hidden in code.
+discriminators:
+  tier_a_keep:            # any ~sufficient => KEEP-DORMANT
+    - "wired-not-armed"
+    - "arm via ENABLED / state=ENABLED"
+    - "DEPLOYED DORMANT / deployed-dormant"
+    - "go-live gated on X"
+    - "DISABLED by design / by-design"
+    - "keep-alive / keep-warm / KEEP_ALIVE=1 by design"
+    - "lifecycle.ignore_changes on an operationally-flipped value (rollback lever)"
+    - "rollback / LEVER / armed fallback / do NOT fire without <GO>"
+    - "deliberately NOT terraform-managed / never lands in Terraform state"
+    - "manual/future path / manual/emergency path"
+    - "named in a CLAUDE.md NEVER/rollback rule or a change-management LEVER ledger"
+  tier_b_corroborating:   # supports a keep, not sufficient alone
+    - "referenced in a runbook/SOP as the manual/emergency path"
+    - "a QA keep-warm whose alarm ACKNOWLEDGES the idle as by-design"
+    - "a DISABLED rule whose target is live via ANOTHER path"
+  tier_c_never_sufficient:  # these ARE the debt signals -- never a keep on their own
+    - "bare DISABLED"
+    - "0 CloudTrail / 0 invocations"
+    - "no graph consumer"
+    - "git-cold"
+    - "un-queried"
+  dead_markers:           # positive dead -- only flips to DEBT-ELIGIBLE when NO keep-signal present
+    - "DECOMMISSIONED"
+    - "superseded by X (with no re-arm/keep verb present)"
+    - "not consumed / no consumer / orphan (source-confirmed)"
+    - "cleanup tracked / removal tracked"
+
+# -----------------------------------------------------------------------------
+# SEED entries -- from the Tier-A intent-annotation parse (PRD 5). Every entry is
+# file:line-grounded. `resource_id` follows the verdict-schema <type>:<id> form;
+# `match` aliases let a signal's resource_id resolve regardless of the id form it emits.
+# `added` + `revalidate_by` are absolute dates (per the workspace convert-relative rule).
+# -----------------------------------------------------------------------------
+entries:
+
+  - resource_id: "event_rule:inf-gold-incremental-daily"
+    firm: inf
+    tier: A
+    match:
+      tf_address: "aws_cloudwatch_event_rule.inf_gold_incremental_daily"
+      aws_name: "inf-gold-incremental-daily"
+    reason: >-
+      ADVI_INFREF P1 two-flow: the incremental current-day gold path is WIRED-NOT-ARMED
+      (state=DISABLED) BY DESIGN -- deployed alongside the full-flow so the estate is
+      ready to cut over, held disabled per SPEC-3 6 / CTO arch-gate. DISABLED here is
+      the deliberate belt, not a corpse.
+    rearm_condition: "flip state=ENABLED (Terraform) when the incremental flow is arch-gated GO"
+    annotation_cite: "infra/aws/terraform/inf-pipeline/eventbridge.tf:315"
+    owner: 0.6.1_AE_PartnerETL
+    added: 2026-07-02
+    revalidate_by: 2026-12-29
+
+  - resource_id: "ssm_parameter:/mdpf/custody_source"
+    firm: mdpf
+    tier: A
+    match:
+      tf_address: "aws_ssm_parameter.mdpf_custody_source"
+      aws_name: "/mdpf/custody_source"
+    reason: >-
+      MDPF custody-basis cutover flag (bd->schwab, 2026-07-01). Operationally flipped at
+      run-time via SSM (never-widen + CVO co-sign), NOT via TF -- lifecycle.ignore_changes
+      =[value] so Terraform does NOT revert the live-set basis. A TF-DRIFT FALSE-POSITIVE
+      TRAP: the live value diverging from the TF default is BY DESIGN, must NOT read as
+      drift-debt.
+    rearm_condition: "n/a -- live control param; ignore_changes is permanent by design (re-point basis via SSM, not TF)"
+    annotation_cite: "infra/aws/terraform/mdpf-pipeline/lambdas.tf:55"
+    owner: 0.6.1_AE_PartnerETL
+    added: 2026-07-02
+    revalidate_by: 2026-12-29
+
+  - resource_id: "lever:mdpf-custody-flip-LEVER-2-manual-ssm-dispatch"
+    firm: mdpf
+    tier: A
+    match:
+      ledger: "org/critical_paths/change_management/20260702T1405Z_mdpf_custody_flip_bd_to_schwab.md"
+    reason: >-
+      The mdpf custody-flip rollback fallback: LEVER-2 (manual SSM dispatch of
+      mdpf-daily on the schwab basis) is an ARMED-BUT-HELD emergency path if the
+      auto-fire (LEVER-1 ride-inf) does not land. "do NOT fire without COO GO." A
+      documented change-management rollback LEVER = a deliberate belt, not debt.
+    rearm_condition: "manual SSM dispatch on COO GO if LEVER-1 auto-fire fails"
+    annotation_cite: "org/critical_paths/change_management/20260702T1405Z_mdpf_custody_flip_bd_to_schwab.md:43"
+    owner: 2.0.0_SA_COO
+    added: 2026-07-02
+    # TIGHT decay: a cutover rollback lever is short-lived -- once the schwab basis is
+    # proven stable the bd-rollback belt becomes a corpse. Re-validate SOON (belt-decay demo).
+    revalidate_by: 2026-08-16
+
+  - resource_id: "ec2_instance:bd-gold-qa-runner"
+    firm: bd
+    tier: A
+    match:
+      instance_id: "i-0090b823a4a0997e3"
+      aws_name: "bd-gold-qa-runner"
+    reason: >-
+      GOLD_KEEP_ALIVE=1 BY DESIGN -- an operator-attended QA runner (QA semantics: kept
+      warm across a QA session). Its idle is by-design, and the bd-gold-qa-runner-forgotten
+      alarm ACKNOWLEDGES that idle as by-design (Tier-B corroboration: an alarm that
+      recognizes the by-design idle). Cold/idle here is NOT a corpse. (Cost belt: the
+      alarm fires if left running >=8h so a forgotten session is caught -- visibility, not
+      decommission.)
+    rearm_condition: "operator starts a QA session; runner is manual-dispatch by design"
+    annotation_cite: "infra/aws/terraform/bd-pipeline/alarms.tf:77"
+    owner: 0.4.0_DS_ClientPlatform
+    added: 2026-07-02
+    revalidate_by: 2026-12-29
+
+  - resource_id: "secret_version:cot-session-initial"
+    firm: cot
+    tier: A
+    match:
+      tf_address: "aws_secretsmanager_secret_version.cot_session_initial"
+    reason: >-
+      Deliberately un-managed secret_version: lifecycle.ignore_changes=[secret_string] so
+      the live credential (set out-of-band via the CLI) never lands in Terraform state and
+      TF never reverts it. A TF-DRIFT FALSE-POSITIVE TRAP -- the TF-declared value
+      diverging from the live secret is BY DESIGN, must NOT read as drift-debt.
+    rearm_condition: "n/a -- credential rotated out-of-band via aws secretsmanager put-secret-value"
+    annotation_cite: "infra/aws/terraform/cot-pipeline/secrets.tf:35"
+    owner: 0.7.0_AE_CloudOps
+    added: 2026-07-02
+    revalidate_by: 2026-12-29
+
+  - resource_id: "secret_version:inf-eclipse-jwt-initial"
+    firm: inf
+    tier: A
+    match:
+      tf_address: "aws_secretsmanager_secret_version.eclipse_jwt_initial"
+    reason: >-
+      Deliberately un-managed secret_version (ignore_changes=[secret_string]) so the
+      eclipse JWT credential never lands in Terraform state. Same TF-DRIFT false-positive
+      trap as the cot/imo un-managed secrets -- a live-vs-TF divergence here is by design.
+    rearm_condition: "n/a -- credential rotated out-of-band via put-secret-value"
+    annotation_cite: "infra/aws/terraform/inf-pipeline/secrets.tf:39"
+    owner: 0.7.0_AE_CloudOps
+    added: 2026-07-02
+    revalidate_by: 2026-12-29
+
+  - resource_id: "secret_version:imo-find-insure-credentials"
+    firm: imo
+    tier: A
+    match:
+      note: "find-insure/* credentials -- values populated out-of-band, no TF secret_version"
+    reason: >-
+      FIND_INSURE find-insure/* credentials are populated out-of-band (create-secret /
+      put-secret-value), DELIBERATELY not a terraform-managed secret_version so the
+      credential never lands in Terraform state (mirrors the inf orion/credentials +
+      ycharts/credentials pattern). The absence of a TF secret_version is BY DESIGN and
+      must NOT read as un-managed drift-debt.
+    rearm_condition: "n/a -- credentials rotated out-of-band via the AWS CLI"
+    annotation_cite: "infra/aws/terraform/imo-pipeline/secrets.tf:5"
+    owner: 0.7.0_AE_CloudOps
+    added: 2026-07-02
+    revalidate_by: 2026-12-29
+
+# -----------------------------------------------------------------------------
+# SEED CANDIDATES pending grounding (NOT registry entries -- ruling-1 forbids an
+# ungrounded "keep" assertion). Recorded here for the CTO/MSTR to point at a cite:
+#   - ycharts deployed-dormant lambda: a ycharts-market-data-pull lambda EXISTS
+#     (infra/aws/lambda/ycharts-market-data-pull/), and the ycharts-report Flow-B is
+#     code-complete + CTO-accepted with live exercise DEFERRED pending a YALP_MDSRC
+#     service seat -- so a deployed-dormant ycharts component is PLAUSIBLE, but no
+#     "dormant by design" file:line annotation was found. Omitted until grounded.
+# -----------------------------------------------------------------------------
