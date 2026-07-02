@@ -12649,3 +12649,7 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-07-02 | 0.7.0_AE_CloudOps~A | ADVI_BDAPIMIG | comp-iam,pipescript,comp-freshness,deploy_ledger | kill-cookie gate -> caught+fixed runner-run IAM bug (comp-iam service; bd-v2.43.0) + box-retire comp-blast (pipescript advi-bd -> bd-assets/SEV1 exclusion) + asset-dim freshness (comp-freshness) + authtoken-dead alarm retire (bd-v2.44.0); 2 ledgers CLOSED | PASS |
 | 2026-07-02 | 0.4.0_DE_ClientPlatform | NFRA_P0_stale_portal_serving_check | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DE_ClientPlatfor... | PASS |
 | 2026-07-02 | 0.7.0_AE_CloudOps~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-02 | 2.0.0_SA_COO~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/NFRA_AGENTBUS.json | PASS |
+| 2026-07-02 | 0.8.0_AE_CloudComp | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/comp_tool_health.py -... | PASS |
+| 2026-07-02 | 0.7.0_AE_CloudOps | NFRA_AGENTBUS.S2 | comp-to, comp-iam, safe-apply, safe-commit | comp-iam gaps (0 new gap after iam.tf) + safe-apply 0-diff (10 res) + live sts-assume-role ReceiveMessage deny-test (own ALLOW / cross AccessDenied both directions) | PASS |
+| 2026-07-02 | 0.7.0_AE_CloudOps | NFRA_AGENTBUS.S2 | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
