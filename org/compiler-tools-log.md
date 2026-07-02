@@ -12653,3 +12653,29 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-07-02 | 0.8.0_AE_CloudComp | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/comp_tool_health.py -... | PASS |
 | 2026-07-02 | 0.7.0_AE_CloudOps | NFRA_AGENTBUS.S2 | comp-to, comp-iam, safe-apply, safe-commit | comp-iam gaps (0 new gap after iam.tf) + safe-apply 0-diff (10 res) + live sts-assume-role ReceiveMessage deny-test (own ALLOW / cross AccessDenied both directions) | PASS |
 | 2026-07-02 | 0.7.0_AE_CloudOps | NFRA_AGENTBUS.S2 | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-02 | 0.4.0_DS_ClientPlatform~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/change_management/20... | PASS |
+| 2026-07-02 | 0.4.0_DS_ClientPlatform~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file data/inf/scripts/gold/INF_D_00.portal_a... | PASS |
+| 2026-07-02 | 0.4.0_DE_ClientPlatform | NFRA_P0_stale_portal_serving_check | comp-surface-check | comp-surface-check check --mode advisory --file data/black_diamond/scripts/gold/gold_fr... | PASS |
+| 2026-07-02 | 0.6.2_AE_PartnerETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/briefs/schwab-ingest-automation-ws... | PASS |
+| 2026-07-02 | 0.6.2_AE_PartnerETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/briefs/schwab-ingest-automation-ws... | PASS |
+| 2026-07-02 | 3.0.0_SA_CVO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file CLAUDE.md --file org/tier1_exec/3.0.0_S... | PASS |
+| 2026-07-02 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+| 2026-07-02 | 2.0.0_SA_COO~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .owned-paths.yaml | PASS |
+| 2026-07-02 | 0.6.0_AE_PartnerETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/bd-pipeline/bd-49f-run... | PASS |
+| 2026-07-02 | 0.8.0_AE_CloudComp | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/comp_tool_health.py -... | PASS |
+| 2026-07-02 | 0.7.0_AE_CloudOps~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/ec2/EC2_MANIFEST.json | PASS |
+| 2026-07-02 | 0.7.0_AE_CloudOps~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/change_management/20... | PASS |
+| 2026-07-02 | 2.0.0_SA_COO~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/NFRA_TOOLHEALTH.json --fil... | PASS |
+| 2026-07-02 | 0.6.0_AE_PartnerETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/bd-pipeline/bd-silver-... | PASS |
+| 2026-07-02 | 0.7.0_AE_CloudOps | NFRA_AGENTBUS.S2 | comp-surface-check | comp-surface-check check --mode advisory --file .claude/skills/ycharts-report/SKILL.md ... | PASS |
+| 2026-07-02 | 0.4.0_DS_ClientPlatform~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file data/black_diamond/scripts/silver/merge... | PASS |
+| 2026-07-02 | 2.0.0_SA_COO~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/task_orders... | PASS |
+| 2026-07-02 | 0.6.2_AE_PartnerETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/briefs/schwab-ingest-automation-ws... | PASS |
+| 2026-07-02 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+| 2026-07-02 | 0.4.0_DS_ClientPlatform~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/change_management/20... | PASS |
+| 2026-07-02 | 0.4.0_DS_ClientPlatform~C | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/seams/cot-silver-holdings-to-platin... | PASS |
+| 2026-07-02 | 0.8.0_AE_CloudComp | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/comp_tool_health.py | PASS |
+| 2026-07-02 | 2.0.0_SA_COO~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/NFRA_COMPPROOF.json | PASS |
+2026-07-02 ~20:05Z 0.7.0_AE_CloudOps~A [DEPLOY] 5d9cc4649 Kimi-guard box-rollout to i-0fa1846f: deploy_ledger.py (CLOSED 3/3), safe-commit (manifest e4f80f856 + ledger), EC2 S3->SSM code deploy (on-box md5 5dafe6db==local, no OTP burn); read-only aws events describe-rule + ec2 describe-instances gate-verify (crons ENABLED, box idle, Thu -> 22:20Z fires). No comp-graph tool -- single-file deploy to a pre-scoped box; Rule-20 grounding rode the prior arc pipescript advi-bd.
+| 2026-07-02 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+| 2026-07-02 | 0.7.0_AE_CloudOps~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
