@@ -12683,3 +12683,19 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-07-02 | 0.6.0_AE_PartnerETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/bd-pipeline/bd-silver-... | PASS |
 | 2026-07-02 | 0.6.1_AE_PartnerETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.6.1_AE_PartnerETL/lo... | PASS |
 | 2026-07-02 | 0.4.0_DS_ClientPlatform~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-02 | 0.6.2_AE_PartnerETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/briefs/schwab-ingest-automation-ws... | PASS |
+| 2026-07-02 | 0.7.0_AE_CloudOps | NFRA_AGENTBUS.S2 | comp-surface-check | comp-surface-check check --mode advisory --file .claude/skills/ycharts-report/SKILL.md ... | PASS |
+| 2026-07-02 | 0.5.0_AE_OpalETL | ADVI_ETLFIX.WS-3 | comp-surface-check | comp-surface-check check --mode advisory --file docs/briefs/basis-move-protection-gate-... | PASS |
+| 2026-07-02 | 0.7.0_AE_CloudOps~A | (no-TO) | comp-lambdamap | comp-lambdamap --help | PASS |
+| 2026-07-02 | 0.7.0_AE_CloudOps~A | (no-TO) | comp-lambdamap | comp-lambdamap derive --help | PASS |
+| 2026-07-02 | 0.7.0_AE_CloudOps~A | (no-TO) | comp-lambdamap | comp-lambdamap sha --help | PASS |
+| 2026-07-02 | 0.8.0_AE_CloudComp | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/globgrph/tool_activity_emit.py | PASS |
+| 2026-07-02 | 2.0.0_SA_COO~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/NFRA_COMPPROOF.json | PASS |
+| 2026-07-02 | 3.0.0_SA_CVO~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/3.0.0_SA_CVO/deliverable... | PASS |
+| 2026-07-02 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .owned-paths.yaml | PASS |
+| 2026-07-02 | 0.6.1_AE_PartnerETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.6.1_AE_PartnerETL/lo... | PASS |
+| 2026-07-02 | 0.7.0_AE_CloudOps~A | (no-TO) | comp-lambdamap | comp-lambdamap derive --only trade-authorizer,trade-auth-handler,opal-bd-transaction-co... | PASS |
+| 2026-07-02 | 0.4.0_DS_ClientPlatform~C | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/seams/cot-silver-holdings-to-platin... | PASS |
+| 2026-07-02 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+- 2026-07-02 0.8.0_AE_CloudComp (NFRA_TOOLHEALTH TH-B): built+landed comp_tool_health.py (fused 3-axis health query) reusing comp_learns_score.load_corpus+comp_route un-forked; ds-commit-gate PASS x2 (comp_tool_health.py, tool_activity_emit.py), safe-commit x4 (owned-paths gate caught+routed the base enumeration gap), comp-surface-check PASS (no critical surface). comp-which PARTIAL (hedged on tool_activity-catalog intent -> coverage-gap noted). Commits 64c89d675/6b641ff05/d44cfcfd6. Emitter whitelist-extend + emit-UNWIRED finding (source-confirmed) routed to CTO.
+| 2026-07-02 | 0.8.0_AE_CloudComp | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
