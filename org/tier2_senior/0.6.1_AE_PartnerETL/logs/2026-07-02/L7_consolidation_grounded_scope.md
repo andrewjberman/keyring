@@ -126,7 +126,38 @@ decommission the aggregator + s3-notification IN Stage-3 WITH the crons (not bef
 (the 10:47 trigger) -- ALL redundant under a single 9ET --chain-full trigger. jwt-fetch +
 opal-inf-bronze-runner UNTOUCHED (hard deps). Human-gated (COO + Andrew) on the specific resources.
 
+## STAGE-1 BUILD (post CTO arch-sign option (i) 202800Z + A/B->OPTION B via COO 211327Z)
+
+CTO ruled the A/B trigger-design fork = OPTION B (event-on-_BRONZE_COMPLETE) -- eliminates the
+cron(0 13)=9ET-races-bronze-runner(9:30ET) ordering bug I caught pre-encode; fires after
+Orion-settle; no magic offset. COO relayed + attached 2 requirements: (a) reliable sentinel to
+key on; (b) confirm after-Orion-settle across N-nightly.
+
+BUILT (commit d0bcfb876, infra/aws/terraform/inf-pipeline/eventbridge.tf, terraform validate PASS,
+NOT applied): additive `inf_gold_full_on_bronze_complete` EventBridge rule (event_pattern
+source=aws.s3 / Object Created / key bronze/orion-api/*/_BRONZE_COMPLETE.json) -> target
+module.inf_gold_trigger constant input {mode:full,source:bronze-complete}, DLQ + retry(0) +
+lambda_permission mirror inf_canonical_prices_daily_target; rule ARN added to the DLQ queue-policy
+SourceArn. Non-destructive (runs ALONGSIDE aggregator+canonical through parity); dispatch-lock
+(mode=full TTL5400) 409-dedups concurrent fires.
+
+REQ(a) SATISFIED (grounded): orchestrator.py write_sentinel (L202-249) emits
+bronze/orion-api/{date}/_BRONZE_COMPLETE.json EVERY run, completeness-contract-gated (BRONZE-FIX #2
+hardened). No sentinel to add. NUANCE: body carries overall=success|failure|incomplete (not
+success-only); EventBridge can't filter body, so the rule fires on EXISTENCE (mirrors
+inf-assets-trigger, which does not overall-gate). Overall-gate = flagged OPTIONAL hardening
+(handler would need EventBridge-S3-format parse + sentinel read); RAVC'd CTO 212249Z to rule
+DEFER(my lean; served-guard+CVO parity are the backstops) vs ADD-now.
+
+REQ(b): folded into the N-nightly verify checklist.
+
+GROUNDING (Rule 22a): desired=validate PASS (now); applied+exercised=post-apply (aws events
+describe-rule/list-targets live + first real bronze-complete fire) -- NOT asserting GREEN until
+exercised.
+
 ## Next
-RAVC'd CTO round-2 (Q-A option (i) + Q-B PASS). On his option-(i) arch-sign, build the Stage-1
-additive-9ET-trigger safe-apply plan (non-destructive), N-nightly-verify (incl the T2
-historical_prices cadence check), THEN the human-gated Stage-3 delete.
+Awaiting CTO arch-sign + overall-gate ruling (RAVC 212249Z). On sign: open deploy-completion
+ledger (NO-HALF-DEPLOYS) -> safe-apply (HALTGT) -> verify rule live -> N-nightly-verify
+(after-Orion-settle + per-dim silver fresh + AUA parity + T2 historical cadence) -> human-gated
+(COO+Andrew) Stage-3 delete (9 crons + inf-silver-aggregator + s3-notification +
+inf-canonical-prices-daily). jwt-fetch + bronze-runner UNTOUCHED. Nothing applied/deleted.
