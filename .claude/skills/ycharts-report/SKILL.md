@@ -53,7 +53,7 @@ something.
 | `blend` | BUILD | List of constituents: `[{model, weight}, ...]` -- each `model` a name (autocomplete, type `Opal` first) or `P:<id>`; `weight` a dollar amount (or %) | required (BUILD) |
 | `weight_type` | BUILD | `Dollars` or `Percent` -- how the weights are expressed | `Dollars` (Alyssa's standard) |
 | `benchmark` | BUILD | Benchmark symbol for the built portfolio | `^SPXTR` (S&P 500 TR); only surfaced in the PDF for comparison templates |
-| `advisory_fee` | BUILD | Annual advisory fee on the built portfolio | `0.01` (1%). **Exception: if the request is from/for Dawson Moses -> `0.0036` (0.36%).** |
+| `advisory_fee` | BUILD | Annual advisory fee on the built portfolio -- **always an explicit input** (the authoritative per-client fee comes from the operator / the intake form, NOT skill logic) | `0.01` (1%); confirm with the operator |
 | `client` | SELECT | Existing client portfolio -- a **name** (fuzzy-matched) or `P:<id>` | required (SELECT) |
 | `comparison` | both | The security/model to compare against (comparison/multi-comp only) -- a name (autocomplete) or `P:<id>` | required for comparison reports |
 | `template` | both | Report template name | inferred from the ask (see decision table); else `Comprehensive Overview (No Benchmark)` |
@@ -66,6 +66,13 @@ something.
 | `data_as_of` | both | `PERFORMANCE/RISK DATA AS OF` -- `latest` or a date | `latest` |
 | `print_as_draft` | both | Watermark as draft | `false` |
 | `output_dir` | both | Where the finished PDF is dropped | the user's Downloads (`C:\Users\AndrewBerman\Downloads`) |
+
+### Advisory-fee reference (Alyssa-verbal -- confirm/source before a real run)
+The standard advisory fee is **1%** (`0.01`). Alyssa noted a per-advisor exception -- **Dawson Moses ->
+0.36%** (`0.0036`) -- but this is an UNSOURCED verbal note: treat it as operator-discoverable
+REFERENCE, **not** skill logic. Do NOT bake in a client->fee map (brittle, drifts silently, won't
+scale). Always take the fee as an input (default 1%) and CONFIRM it -- especially any exception -- with
+the operator before a real client run. The authoritative fee comes from the operator / the intake form.
 
 ### Name & title rules (Alyssa)
 - **Portfolio name = report title = the client's name.** If it's an advisor wanting a mock portfolio,
