@@ -927,6 +927,10 @@ paths:
     lane: ANY_EXEC_OR_AE
     note: "NFRA_COMPDIFF (comp-xray) engine + freeze-monitor. AE owns build (0.8.0_AE per NFRA_COMPDIFF.P1 TO); CTO ruled the dir = org/modules/compdiff/ (2026-06-29). Mirrors the org/modules/graph/comp_*.py comp-tool-implementation precedent (AE builds comp-tools in org/modules/, ANY_EXEC_OR_AE; more specific than org/modules/** ANY_EXEC). Grant added by COO to honor CTO's dir-ruling — comp-xray engine lives with the other comp-tools, not infra/aws/."
 
+  "workflows/**":
+    lane: ANY_EXEC_OR_AE
+    note: "/workflows/ -- Andrew-direct convention (2026-07-02): the research + design home for evolving automated processes (deep reverse-engineering + fork models; distinct from the terse .claude/skills runbooks). First occupant workflows/ycharts/stress-test/. Cross-cutting research, authored by whichever agent owns the process being modeled -> ANY_EXEC_OR_AE (execs + AEs). Grant added by COO per 0.7.0_AE SoD-flag + the yaml's repeat-override=coverage-gap rule; CC CTO. GOTCHA: NEVER safe-commit the workflows/ DIR pathspec (safe-commit git-add-f force-adds gitignored files) -- commit only explicit .md paths. Raw HARs/PII under workflows/**/sources/ are gitignored + live in private S3, never git."
+
   "org/modules/graph/tsgraph_spike/**":
     lane: NFRA_TSGRAPH_SPIKE
     note: "NFRA_TSGRAPH.P0 ts-morph TS-semantic extractor/loader spike (the DE's PRD-designated authoring surface). Same-tool grant -> DE 0.4.0 self-commits its verified P0 code; AE retained for the P1 derive ingestion-leg co-wiring. Added 2026-06-17 by 0.7.0_AE_CloudOps per COO 193527Z. Longest-match overrides org/modules/** ANY_EXEC."
