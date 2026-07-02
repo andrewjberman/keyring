@@ -15,6 +15,10 @@ parameterizes every input.
 The engine behind both is YCharts' `custom_pdf_reports` API -- a server-side **generate -> presigned
 S3 PDF** flow, so the finished PDF is retrievable programmatically (not a client-side render).
 
+**Research + design home:** `workflows/ycharts/stress-test/` -- `DECISION_TREE.md` (the fork model this
+skill implements: a fixed spine + 8 modular forks) + `ENDPOINTS.md` (full reverse-engineered mechanics) +
+the raw HAR/voice-memo sources. Read it when extending the skill; update it when a new fork/use-case appears.
+
 ## When to use
 Operator types `/ycharts-report`, or asks to produce a YCharts client comparison / proposal /
 stress-test / tearsheet / blended-portfolio PDF. NOT for raw market-data pulls -- that is the
@@ -26,7 +30,7 @@ report-GENERATION flow (it creates a report artifact), so it is confirm-first on
 | Mode | Use when | Core work |
 |---|---|---|
 | **SELECT** | The client portfolio already exists in YCharts (imported / previously built) | Find it in the list -> Generate Report |
-| **BUILD** | The request gives you a **blend / list of Opal models + weights** ("run a stress test on the following blend...", "model a client across our portfolios") | **Create** a blended mock client portfolio from the models, then Generate Report |
+| **BUILD** | The request gives you portfolio *contents* to construct -- either a **blend of Opal models + weights** ("run a stress test on the following blend...") OR a client's **actual holdings as an Excel** ("stress-test these client portfolios", file attached) | **Create** a client portfolio from those contents (models = manual/API; Excel = `holdings_upload`), then Generate Report. See Fork 1a vs 1b. |
 
 **The "blend" tell (Alyssa's rule):** if the requester says *"it would be helpful to see the following
 **blend**"* / gives you a set of models with dollar amounts, they want a **mock blended portfolio** ->
@@ -161,6 +165,18 @@ with the CSRF token (from the `csrftoken` cookie) as `X-CSRFToken` + `X-Requeste
   (Known Opal model ids seen in the walkthrough: Opal Short-Term `P:1728415`, Opal Intermediate-Term
   `P:1728315`, Opal Long-Term Conservative `P:1728413`. Resolve any other model live via
   `GET /search/suggest/fixed_model_portfolio_items?q=Opal%20<...>`.)
+
+**B1-upload (Fork 1b -- build from a client's Excel of ACTUAL holdings, instead of a blend of models).**
+When the request gives you a client's real holdings as a file (not a set of Opal models to blend):
+1. `POST /model_portfolios/fixed/holdings_upload/client` -- `multipart/form-data` with the Excel file.
+   Returns `{"status":"ok","errors":[...],"rows":[{"security_id":"<TICKER>","display_security_id":"<TICKER>",
+   "display_name":"<Name>","weighting":<amount>}, ...],"upload_record_id":<N>}` -- the parser resolves the
+   sheet's tickers to YCharts security ids + reads the weights. Check `errors` is empty.
+2. `POST /model_portfolios/fixed/` -- same shape as B1, but `items` = the returned `rows` (individual
+   securities, not models) and the `portfolio` part carries **`"upload_record_id":<N>`** (the linkage;
+   `imported_holdings_id` stays null). -> 201 empty.
+Then B2 (resolve id) + the report spine, exactly as for a model-blend. Batch (Fork 8): loop upload->create
+->report per client sheet (a walkthrough built 3 client portfolios + ran Overview on them in one session).
 
 **B2 (resolve the new id).** Reload `GET /model_portfolios/?...&sortColumn=user_modify_date&sortDirection=desc&page=1`
 (or re-navigate the list) -- the just-created blend is **row 1** (newest). Read its `P:<id>` (this is
