@@ -12717,3 +12717,51 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-07-02 | 0.5.0_AE_OpalETL | ADVI_ETLFIX.WS-3 | comp-to + aws s3 ls (RPS cadence, operational) | WS-3 durable: leg-2 -> basis-move protection-gate pattern (GATE-3 canon, doctrine authoring -- no comp-graph target) + RPS-cadence grounding for (1) delivery-dependency | N/A |
 | 2026-07-02 | 0.4.0_DS_ClientPlatform~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/change_management/20... | PASS |
 | 2026-07-02 | 0.5.0_AE_OpalETL | ADVI_ETLFIX.WS-3 | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-02 | 1.0.0_SA_CTO | NFRA_INTEGRATIONS.P2 | comp-surface-check | comp-surface-check check --mode advisory --file .tools/safe-commit.sh | PASS |
+| 2026-07-02 | 0.4.0_DS_ClientPlatform~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/briefs/advi-etlfix-ws1-classb-inf-... | PASS |
+| 2026-07-02 | 0.8.0_AE_CloudComp | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/globgrph/tool_activity_emit_l... | PASS |
+| 2026-07-02 | 1.0.0_SA_CTO | NFRA_INTEGRATIONS.P2 | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/NFRA_PIPELINE_PRD.md | PASS |
+| 2026-07-02 | 0.0.0_AB_MSTR | (no-TO) | pipescript | pipescript --debt | PASS |
+| 2026-07-02 | 0.0.0_AB_MSTR | (no-TO) | pipescript | pipescript --fe-reachability | PASS |
+| 2026-07-02 | 0.0.0_AB_MSTR | (no-TO) | comp-kuzu | comp-kuzu MATCH (n:CloudNode) RETURN DISTINCT n.node_type AS t, count(*) AS c ORDER BY ... | PASS |
+| 2026-07-02 | 0.0.0_AB_MSTR | (no-TO) | comp-blast | comp-blast build_employee_leaderboard | PASS |
+| 2026-07-02 | 0.0.0_AB_MSTR | (no-TO) | comp-xref | comp-xref bd-gold-layer-legacy | FAIL |
+| 2026-07-02 | 0.0.0_AB_MSTR | (no-TO) | comp-kuzu | comp-kuzu --limit 20 MATCH (s:S3Key) WHERE NOT EXISTS { MATCH (s)<-[e]-() } RETURN s.id... | FAIL |
+| 2026-07-02 | 0.0.0_AB_MSTR | (no-TO) | comp-kuzu | comp-kuzu --limit 20 MATCH (l:LAMBDA) WHERE NOT EXISTS { MATCH (l)<-[e]-() } RETURN l.n... | FAIL |
+| 2026-07-02 | 0.0.0_AB_MSTR | (no-TO) | comp-xref | comp-xref opal-partners-data | PASS |
+| 2026-07-02 | 0.0.0_AB_MSTR | (no-TO) | comp-kuzu | comp-kuzu CALL show_tables() RETURN * | PASS |
+| 2026-07-02 | 0.0.0_AB_MSTR | (no-TO) | comp-kuzu | comp-kuzu --limit 15 MATCH (s:CloudNode) WHERE s.node_type='S3Key' AND NOT EXISTS { MAT... | FAIL |
+| 2026-07-02 | 0.0.0_AB_MSTR | (no-TO) | comp-kuzu | comp-kuzu --limit 15 MATCH (l:CloudNode) WHERE l.node_type='LAMBDA' AND NOT EXISTS { MA... | PASS |
+| 2026-07-02 | 0.0.0_AB_MSTR | (no-TO) | comp-kuzu | comp-kuzu MATCH ()-[e:CloudEdge]->() RETURN DISTINCT e.edge_type AS et, count(*) AS c O... | PASS |
+| 2026-07-02 | 0.0.0_AB_MSTR | (no-TO) | comp-pipescript | comp-pipescript consumers D_00c | PASS |
+| 2026-07-02 | 0.0.0_AB_MSTR | (no-TO) | comp-pipescript | comp-pipescript consumers INF_A_02 | PASS |
+| 2026-07-02 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+| 2026-07-02 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/briefs/allo... | PASS |
+| 2026-07-02 | 0.4.0_DS_ClientPlatform~B | (no-TO) | comp-blast | comp-blast convert_assets_v2_to_silver | FAIL |
+| 2026-07-02 | 0.4.0_DS_ClientPlatform~B | (no-TO) | comp-blast | comp-blast assets_v2 | PASS |
+| 2026-07-02 | 0.0.0_AB_MSTR | (no-TO) | comp-iam | comp-iam --help | PASS |
+| 2026-07-02 | 3.0.0_SA_CVO~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/compproof/JUDGE_REPOR... | PASS |
+| 2026-07-02 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/NFRA_PPL49F.json --file or... | PASS |
+| 2026-07-02 | 0.7.0_AE_CloudOps~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.7.0_AE_CloudOps/task... | PASS |
+| 2026-07-02 | 0.6.1_AE_PartnerETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/terraform/inf-pipeline/eventb... | PASS |
+| 2026-07-02 | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/NFRA_COMPDEBT_DESIGN-... | PASS |
+| 2026-07-02 | 0.6.0_AE_PartnerETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/ec2/bd-49f-auto-login/bd_49f_... | PASS |
+| 2026-07-02 | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier0/ledger/LD-0240.md --file org/... | PASS |
+| 2026-07-02 | 0.6.1_AE_PartnerETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.6.1_AE_PartnerETL/lo... | PASS |
+| 2026-07-02 | 0.4.0_DS_ClientPlatform~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file data/inf/scripts/silver/_orion_api_silv... | PASS |
+| 2026-07-02 | 0.6.2_AE_PartnerETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/change_management/20... | PASS |
+| 2026-07-02 | 2.0.0_SA_COO~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+| 2026-07-02 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/NFRA_PPL49F.json --file or... | PASS |
+| 2026-07-02 | 3.0.0_SA_CVO~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/compproof/judge_metho... | PASS |
+| 2026-07-02 | 0.8.0_AE_CloudComp | (no-TO) | comp-iam | comp-iam service opal-globgrph-tool-activity-freshness | PASS |
+| 2026-07-02 | 0.6.2_AE_PartnerETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/terraform/canonical-schwab-ec... | PASS |
+| 2026-07-02 | 1.0.0_SA_CTO | NFRA_INTEGRATIONS.P2 | comp-surface-check | comp-surface-check check --mode advisory --file docs/architecture/NFRA_COMPDEBT_PRD.md | PASS |
+| 2026-07-02 | 0.6.1_AE_PartnerETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/ci/lambda-source-map.j... | PASS |
+| 2026-07-02 | 0.8.0_AE_CloudComp | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/globgrph/tool_activity_freshn... | PASS |
+| 2026-07-02 | 0.6.1_AE_PartnerETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/change_management/20... | PASS |
+| 2026-07-02 | 0.8.0_AE_CloudComp | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/globgrph/tool_activity_freshn... | PASS |
+2026-07-02 | 3.0.0_SA_CVO~B | NFRA_TOOLHEALTH.TH-V + NFRA_COMPPROOF.B2 | comp-tool-health(--self-test/--goodhart-audit/--json) + blind_run.py/harness gates + comp-* suite via 12 grounding subagents | TH-V VALIDATED_WITH_GAPS (50/50 re-derive, 3dp mean, zero usage-Goodhart) + B2 tranche-2 judged 7S/8M/2false-VOID (grounding-resilience caught B-17/B-20 trips); FINDINGS E/F/G/H + defective-seal catch | VALIDATE session, 2 threads accepted
+| 2026-07-02 | 0.6.0_AE_PartnerETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/ci/lambda-source-map.j... | PASS |
+| 2026-07-02 | 0.7.0_AE_CloudOps | NFRA_AGENTBUS.S2 | comp-surface-check | comp-surface-check check --mode advisory --file workflows/ycharts/stress-test/DECISION_... | PASS |
+| 2026-07-02 | 3.0.0_SA_CVO~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-02 | 3.0.0_SA_CVO~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
