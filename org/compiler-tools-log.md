@@ -12604,3 +12604,11 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-07-02 | 0.6.0_AE_PartnerETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
 - 2026-07-02 0.6.1_AE_PartnerETL: comp-freshness inf x~8 (grounded AUA-dim freshness vs gold-frozen at each decision point of the INFREF(b) un-freeze P0); comp-which HUD-routed to comp-freshness; extensive rail-checked raw-aws for live SSM/runner-step/dispatch-lock/sentinel-internals (in-flight-chain carve-out -- no comp-tool models live RunCommand state).
 | 2026-07-02 | 0.6.1_AE_PartnerETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-02 | 0.5.0_AE_OpalETL | NFRA_INTEGRATIONS.P3.ae-storage-dependency-firmsep-schema | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/change_management/20... | PASS |
+| 2026-07-02 | 2.0.0_SA_COO~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.4.0_DE_ClientPlatfor... | PASS |
+| 2026-07-02 | 2.0.0_SA_COO~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+| 2026-07-02 | 0.6.0_AE_PartnerETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/briefs/bd-49f-rest-runner-cutover-... | PASS |
+| 2026-07-02 | 0.5.0_AE_OpalETL | NFRA_INTEGRATIONS.P3.ae-storage-dependency-firmsep-schema | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/change_management/20... | PASS |
+| 2026-07-02 | 0.6.0_AE_PartnerETL | (no-TO) | comp-iam | comp-iam service bd-49f-runner | PASS |
+| 2026-07-02 | 0.5.0_AE_OpalETL | MDPF-flip-close | (none -- on-call verification window) | validated the LIVE serve via S3 telemetry status.json (LEG2-CUSTODY-GATE=ok) + PowerShell SSM verify + CVO parity; no comp-tool target (grounding was the prior window) | N/A |
+| 2026-07-02 | 0.5.0_AE_OpalETL | NFRA_INTEGRATIONS.P3.ae-storage-dependency-firmsep-schema | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
