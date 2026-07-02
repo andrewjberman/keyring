@@ -557,6 +557,26 @@ def _resolve_as_of_field(doc, field: str):
     return val
 
 
+def _per_dim_lags(mapping, now: datetime.datetime, expected):
+    """WS-4 AC-2: given a per-dimension as_of map {dim: date-str}, return
+    [(dim, date_str, trading_days_behind), ...] for each PARSEABLE entry (frontier-aware,
+    shared lib/trading_calendar), sorted worst-first. Unparseable/empty dims are skipped
+    but surfaced separately by the caller (never a silent pass). Catches the DEFER-roll-
+    forward case: a stale perf dim under a fresh top-level AUA aggregate -- invisible to a
+    single top-level data_as_of, visible per-dim (the inf-freeze mechanism)."""
+    out = []
+    if not isinstance(mapping, dict):
+        return out
+    for dim, raw in mapping.items():
+        d = _parse_as_of(str(raw))
+        if d is None:
+            continue
+        tdb = _tcal.trading_days_behind(d.date(), expected)
+        out.append((str(dim), str(raw), tdb))
+    out.sort(key=lambda x: x[2], reverse=True)  # worst (stalest) dim first -- it gates
+    return out
+
+
 def _evaluate_artifact(entry: dict, now: datetime.datetime,
                        last_modified: Optional[datetime.datetime],
                        content_doc=None, content_error: str = "") -> dict:
@@ -645,6 +665,53 @@ def _evaluate_artifact(entry: dict, now: datetime.datetime,
                                f"{result['age_h']}h PASS but MAX date-key {max_date.isoformat()} "
                                f"is {round(stamped_age_h,1)}h old (stamped-as_of freeze)").strip(" |")
         return result
+
+    # ---- PER-DIM CONTENT-MODE override (WS-4 AC-2, authoritative over top-level) ----
+    # When the entry declares as_of_map_field, the served artifact carries a per-DIMENSION
+    # as_of map {dim: date} (DS~A per-surface lineage emit). The surface's staleness is the
+    # WORST (stalest) dim -- so a DEFER'd perf-dim (06-30) under a fresh top-level AUA (07-02)
+    # is CAUGHT, where a single top-level data_as_of would false-GREEN it (the inf-freeze
+    # mechanism / CVO C1). Frontier-aware only; requires the trading-day-frontier basis.
+    as_of_map_field = entry.get("as_of_map_field")
+    if (as_of_map_field and entry.get("freshness_basis") == "trading-day-frontier"
+            and _tcal is not None):
+        result["mtime_status"] = mtime_status
+        result["content_checked"] = False
+        expected = _tcal.expected_last_trading_day(now)
+        result["frontier"] = expected.isoformat()
+        mapping = _resolve_as_of_field(content_doc, as_of_map_field) if content_doc else None
+        if not isinstance(mapping, dict) or not mapping:
+            # Map declared but absent/empty -> per-dim UNCHECKED; fall through to the single
+            # as_of_field top-level check below (never a silent pass on the missing map).
+            result["notes"] = (result["notes"] + f" | PER-DIM UNCHECKED (as_of_map_field "
+                               f"'{as_of_map_field}' absent/empty); using top-level as_of").strip(" |")
+        else:
+            dim_lags = _per_dim_lags(mapping, now, expected)
+            if not dim_lags:
+                result["notes"] = (result["notes"] + f" | PER-DIM UNCHECKED (no parseable dim "
+                                   f"in '{as_of_map_field}'); using top-level as_of").strip(" |")
+            else:
+                warn_tdb = entry.get("frontier_warn_trading_days", 2)
+                fail_tdb = entry.get("frontier_fail_trading_days")
+                worst_dim, worst_raw, worst_tdb = dim_lags[0]
+                result["trading_days_behind"] = worst_tdb
+                result["content_as_of"] = worst_raw
+                result["worst_dim"] = worst_dim
+                result["per_dim"] = {d: t for d, r, t in dim_lags}
+                result["content_checked"] = True
+                if fail_tdb is not None and worst_tdb >= fail_tdb:
+                    result["status"] = "FAIL" if severity == "ERROR" else "WARN"
+                elif worst_tdb >= warn_tdb:
+                    result["status"] = "WARN" if severity != "ERROR" or fail_tdb is None else "FAIL"
+                else:
+                    result["status"] = "PASS"
+                if result["status"] in ("FAIL", "WARN") and mtime_status == "PASS":
+                    result["notes"] = (result["notes"] + f" | MTIME-FRESH-BUT-DIM-STALE: mtime "
+                                       f"{result['age_h']}h PASS but dim '{worst_dim}' as_of "
+                                       f"{worst_raw} is {worst_tdb} trading day(s) behind the "
+                                       f"{expected.isoformat()} frontier (per-dim: "
+                                       f"{result['per_dim']})").strip(" |")
+                return result
 
     # ---- CONTENT-MODE override (authoritative when as_of_field is declared) ----
     if as_of_field:
@@ -736,7 +803,8 @@ def _check_artifact(entry: dict, now: datetime.datetime) -> dict:
     s3_key = entry["s3_key_prefix"]
     last_modified = get_latest_modified(s3_key)
     content_doc, content_error = (None, "")
-    if entry.get("as_of_field") and last_modified is not None:
+    # Fetch the object for EITHER the single as_of_field OR the per-dim as_of_map_field (WS-4 AC-2).
+    if (entry.get("as_of_field") or entry.get("as_of_map_field")) and last_modified is not None:
         content_doc, content_error = _fetch_object_doc(s3_key)
     return _evaluate_artifact(entry, now, last_modified, content_doc, content_error)
 
@@ -773,7 +841,14 @@ def _fmt_row(r: dict) -> str:
         if r.get("status") in ("WARN", "FAIL") and r.get("mtime_status") == "PASS":
             base += " <MTIME-FRESH/PARTITION-STALE>"
     elif "mtime_status" in r:
-        if r.get("content_checked"):
+        if r.get("content_checked") and "worst_dim" in r:
+            # PER-DIM MODE (WS-4 AC-2): show the worst dim + the full per-dim lag map.
+            base += " [worst dim '%s' as_of %s, %dtd behind %s; per-dim %s]" % (
+                r.get("worst_dim"), r.get("content_as_of", "?"),
+                r.get("trading_days_behind"), r.get("frontier", "?"), r.get("per_dim"))
+            if r.get("status") in ("WARN", "FAIL") and r.get("mtime_status") == "PASS":
+                base += " <MTIME-FRESH/DIM-STALE>"
+        elif r.get("content_checked"):
             if "trading_days_behind" in r:
                 base += " [content as_of %s, %dtd behind %s frontier]" % (
                     r.get("content_as_of", "?"), r.get("trading_days_behind"), r.get("frontier", "?"))
