@@ -12699,3 +12699,21 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 | 2026-07-02 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
 - 2026-07-02 0.8.0_AE_CloudComp (NFRA_TOOLHEALTH TH-B): built+landed comp_tool_health.py (fused 3-axis health query) reusing comp_learns_score.load_corpus+comp_route un-forked; ds-commit-gate PASS x2 (comp_tool_health.py, tool_activity_emit.py), safe-commit x4 (owned-paths gate caught+routed the base enumeration gap), comp-surface-check PASS (no critical surface). comp-which PARTIAL (hedged on tool_activity-catalog intent -> coverage-gap noted). Commits 64c89d675/6b641ff05/d44cfcfd6. Emitter whitelist-extend + emit-UNWIRED finding (source-confirmed) routed to CTO.
 | 2026-07-02 | 0.8.0_AE_CloudComp | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-02 | 0.7.0_AE_CloudOps~A | (no-TO) | comp-lambdamap | comp-lambdamap parity --help | PASS |
+| 2026-07-02 | 0.6.2_AE_PartnerETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.6.2_AE_PartnerETL/ta... | PASS |
+| 2026-07-02 | 2.0.0_SA_COO~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/NFRA_TOOLHEALTH.json --fil... | PASS |
+| 2026-07-02 | 0.4.0_DE_ClientPlatform | NFRA_P0_stale_portal_serving_check | comp-surface-check | comp-surface-check check --mode advisory --file lib/served_vintage.py | PASS |
+| 2026-07-02 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+| 2026-07-02 | 0.4.0_DS_ClientPlatform~C | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file data/cot/scripts/gold/gold_freshness_co... | PASS |
+| 2026-07-02 | 0.8.0_AE_CloudComp | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/comp_tool_health.py | PASS |
+| 2026-07-02 | 0.6.2_AE_PartnerETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file docs/briefs/bd-49f-auto-login-durable-h... | PASS |
+| 2026-07-02 | 1.0.0_SA_CTO | NFRA_INTEGRATIONS.P2 | comp-surface-check | comp-surface-check check --mode advisory --file .tools/safe-commit.sh | PASS |
+| 2026-07-02 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file lib/served_vintage.py | PASS |
+| 2026-07-02 | 0.5.0_AE_OpalETL | ADVI_ETLFIX.WS-3 | comp-surface-check | comp-surface-check check --mode advisory --file docs/briefs/basis-move-protection-gate-... | PASS |
+| 2026-07-02 | 0.4.0_DS_ClientPlatform~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file data/black_diamond/scripts/silver/merge... | PASS |
+| 2026-07-02 | 0.4.0_DE_ClientPlatform | NFRA_P0_stale_portal_serving_check | comp-surface-check | comp-surface-check check --mode advisory --file .tools/comp-freshness --file data/black... | PASS |
+| 2026-07-02 | 0.6.0_AE_PartnerETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/bd-pipeline/bd-served-... | PASS |
+| 2026-07-02 | 2.0.0_SA_COO~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+| 2026-07-02 | 0.5.0_AE_OpalETL | ADVI_ETLFIX.WS-3 | comp-to + aws s3 ls (RPS cadence, operational) | WS-3 durable: leg-2 -> basis-move protection-gate pattern (GATE-3 canon, doctrine authoring -- no comp-graph target) + RPS-cadence grounding for (1) delivery-dependency | N/A |
+| 2026-07-02 | 0.4.0_DS_ClientPlatform~B | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/change_management/20... | PASS |
+| 2026-07-02 | 0.5.0_AE_OpalETL | ADVI_ETLFIX.WS-3 | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
