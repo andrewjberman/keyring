@@ -457,18 +457,34 @@ def health(effective_feed: dict | None = None) -> dict:
 def _value_anchor(used, mean_outcome, rstate, verdict, value_low, preventive) -> dict:
     """The explicit VALUE citation for the verdict (acceptance #3: every KEEP/PROMOTE cites value; no
     verdict rests on invocation-count). Machine-checkable -- keys are outcome/quality, never a count."""
+    value_unknown = mean_outcome is None
+    no_rail = rstate == "no_signal"
+    # GAP-2 (CVO~B TH-V): do NOT assert "value-healthy" for a KEEP whose value is UNKNOWN + no rail
+    # signal -- qualify it as provisional/pending-EFFECTIVE. Still not usage-count: it is the ABSENCE
+    # of adverse value/rail evidence (a provisional keep), never high usage protecting the tool.
+    if verdict == "KEEP":
+        if value_unknown and no_rail:
+            basis = ("PROVISIONAL KEEP -- USED but value_unknown (no RESULT cells yet) AND no rail "
+                     "signal: NOT asserting value-healthy; pending the EFFECTIVE probe (TH-A). Not "
+                     "usage count -- it is the absence of adverse value/rail evidence, not usage.")
+        elif value_unknown:
+            basis = (f"PROVISIONAL KEEP -- value_unknown (no RESULT cells) but rail={rstate}; pending "
+                     "EFFECTIVE (TH-A). NOT usage count.")
+        else:
+            basis = ("KEEP rests on value-HEALTHY outcomes (mean >= threshold) + rail quality, NOT "
+                     "usage count.")
+    elif verdict == "PROMOTE":
+        basis = "PROMOTE rests on rail/effective signal without usage, NOT usage count."
+    else:
+        basis = "FIX/RETIRE rests on low value-outcome / dead-signal, NOT usage count."
     return {
         "mean_outcome_value": mean_outcome,               # value, not usage
         "value_healthy": (mean_outcome is None or mean_outcome >= HEALTHY_OUTCOME),
-        "value_unknown": mean_outcome is None,
+        "value_unknown": value_unknown,
         "rail_quality": rstate,
         "value_low_flag": value_low,
         "preventive_gate": preventive,
-        "basis": ("KEEP rests on value-healthy outcomes + rail decision-quality, NOT usage count"
-                  if verdict == "KEEP" else
-                  "PROMOTE rests on rail/effective signal without usage, NOT usage count"
-                  if verdict == "PROMOTE" else
-                  "FIX/RETIRE rests on low value-outcome / dead-signal, NOT usage count"),
+        "basis": basis,
     }
 
 
@@ -636,9 +652,13 @@ def _goodhart_audit() -> dict:
     live = health()
     tools = live["tools"]
     by_use = sorted(tools, key=lambda r: -r["used"]["events"])
+    # GAP-1 (CVO~B TH-V): show the HIGHEST-usage NON-keep tools among USED tools in usage order -- no
+    # arbitrary top-N window (a fixed [:15] hid comp-drift at usage-rank-18 and made this arm look
+    # empty even though the property holds). The highest-usage non-KEEP tool IS the proof.
+    used_by_use = [r for r in by_use if r["used"]["used"]]
     high_use_not_keep = [{"tool": r["tool"], "events": r["used"]["events"], "verdict": r["verdict"],
                           "mean_outcome": r["used"]["mean_outcome_value"]}
-                         for r in by_use[:15] if r["verdict"] != "KEEP"]
+                         for r in used_by_use if r["verdict"] != "KEEP"][:6]
     low_use_keep = [{"tool": r["tool"], "events": r["used"]["events"], "verdict": r["verdict"]}
                     for r in tools if r["verdict"] == "KEEP" and r["used"]["events"] < 20]
     return {
