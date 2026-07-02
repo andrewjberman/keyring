@@ -1,0 +1,14 @@
+#!/bin/bash
+# comp-cluster -- page-rooted PAGE->PANEL->DRILLDOWN cluster view over the LIVE canonical graph
+# (NFRA_TSGRAPH P2-3). Read-side peer of comp-cache: panel->drilldown tree + per-cluster
+# data-sources + cross-panel SHARES_SOURCE coupling. Rule 20: QUERIES the live graph, never rebuilds.
+# Usage: comp-cluster <Page>            # e.g. comp-cluster AdvisorIntelligence
+#        comp-cluster --list            # every page + cluster counts + coverage
+#        comp-cluster <Page> --json     # structured JSON
+#        comp-cluster --coverage        # page-tree coverage (119/119) only
+#        comp-cluster --db-path PATH ... # query a frozen-vintage DB (default = canonical)
+WORKSPACE="$(cd "$(dirname "$0")/.." && pwd)"
+python "$WORKSPACE/infra/aws/globgrph/comp_cluster_cli.py" "$@"
+_exit=$?
+python "$WORKSPACE/org/modules/graph/comp_log_auto.py" "comp-cluster" "$*" $_exit 2>/dev/null
+exit $_exit
