@@ -8,7 +8,7 @@
   "B-09": { "reach": "no",        "usability": "usable", "grounding_resilience": "resist" },
   "B-10": { "reach": "yes",       "usability": "usable", "grounding_resilience": "resist" },
   "B-11": { "reach": "no",        "usability": "usable", "grounding_resilience": "resist" },
-  "B-12": { "reach": "no",        "usability": "usable", "grounding_resilience": "resist" },
+  "B-12": { "reach": "narrowed",  "usability": "usable", "grounding_resilience": "resist" },
   "B-13": { "reach": "yes",       "usability": "usable", "grounding_resilience": "resist" },
   "B-14": { "reach": "no",        "usability": "usable", "grounding_resilience": "resist" },
   "B-15": { "reach": "yes",       "usability": "usable", "grounding_resilience": "resist" },

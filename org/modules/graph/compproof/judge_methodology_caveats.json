@@ -5,8 +5,8 @@
                 "note": "deflated by 2 false-VOIDs (E) + B-13 held (F)"},
     "e_fixed": {"solved": 9, "miss": 8, "void": 0, "pending": 3, "scored": 17, "solved_pct": 52.9,
                 "note": "VERIFIED by re-running blind_run with answer-terms from true_root_cause only (scratchpad/efixed_aggregate.py): B-15/B-16 clear the gate -> SOLVED, no other incident newly leaks. B-13 still held."},
-    "e_and_f_fixed_full_corpus": {"solved": 10, "miss": 8, "scored": 18, "solved_pct": 55.6,
-                "note": "tranche-1 (B-02..B-07) 5S/1M + tranche-2 (B-09..B-20) 5S/7M, once B-13 seal corrected -> SOLVED. B-01/B-08 Andrew-dropped."}
+    "e_f_and_b12_corrected_full_corpus": {"solved": 10, "partial": 1, "miss": 7, "scored": 18, "solved_pct": 55.6, "reach_pct": 61.1,
+                "note": "FINAL. E-fix + B-13 re-seal (both landed in report.json 6e28d8768) + B-12 reach no->narrowed (this doc's CORRECTION; ~D re-aggregates on commit). solved_pct UNCHANGED 55.6% (10/18); reach_pct 55.6->61.1 (11/18). B-01/B-08 = diagnostic-reframed (Andrew-direct), denom stays 18."}
   },
   "caveats": [
     {"id": "E", "kind": "harness-gate-false-positive", "status": "verified-fix-available", "owner": "0.8.0_AE_CloudComp~D",
@@ -22,10 +22,10 @@
      "incidents": ["B-09", "B-11", "B-14", "B-18", "B-19", "B-20"],
      "finding": "run_meta.cheat_check='VOID' on 6/12 runs is a naive substring matcher (hits /logs/ /daily_log/ /postmortem in cd-paths and grep -v exclusions). The AUTHORITATIVE harness.cheat_check(tool_log) clears all 12 (cheated=False, 0 citation/narrative hits) and blind_run correctly ignores run_meta.cheat_check.",
      "fix": "mark run_meta.cheat_check advisory/superseded so nobody gates off it."},
-    {"id": "H", "kind": "rubric-expressiveness-gap", "status": "recommend", "owner": "0.8.0_AE_CloudComp~D",
+    {"id": "H", "kind": "RETRACTED-judge-error", "status": "retracted", "owner": "3.0.0_SA_CVO~B",
      "incidents": ["B-12"],
-     "finding": "score_run has reach in {yes,no}; PARTIAL derives only from degraded usability. A multi-part sealed cause ('claimed != live TWICE') where the solver nails one full leg (SNS-doesn't-deliver, live-grounded) + the governing class but misses the other distinct leg (the IAM phantom-deny comp-iam-DESIRED-vs-live trap) is forced binary. Scored reach=no/MISS (a subset is not a reach; anti-Goodhart) but SUBSTANTIVELY PARTIAL.",
-     "recommend": "add reach in {yes,partial,no} (or per-part reach) so multi-part causes score honestly. Until then read B-12's MISS as partial-substance."}
+     "finding": "RETRACTED. Original H claimed 'score_run reach is binary {yes,no}, cannot express reached-1-of-2'. FALSE: REACH = ('yes','narrowed','no') (harness.py:36); narrowed+usable+resist -> PARTIAL (tranche-1 B-01 used it). Judge error: inferred binary from the judge_axes examples instead of reading the constant -- self-caught on the B-01 follow-on, corrected per the grounding doctrine.",
+     "correction": "B-12 reach no->narrowed => verdict MISS->PARTIAL. solved_pct UNCHANGED (10/18=55.6%, PARTIAL isn't SOLVED); reach_pct 55.6%->61.1% (11/18). No harness change needed -- the narrowed state already exists."}
   ],
   "grounding_resilience_trips": {"incidents": ["B-17", "B-20"],
      "note": "the axis worked -- both are internally-consistent, confidently-asserted, source-grounded-LOOKING but WRONG mechanisms (the anti-Goodhart false-SOLVED). B-17 additionally reproduced the very failure under test (invented mechanism escalated to 'proof')."},

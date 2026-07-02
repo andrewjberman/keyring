@@ -10,6 +10,24 @@ per incident; the 3 judge axes were re-derived per incident by 12 parallel groun
 direction, with my own direct grounding on the borderline/consequential cases (B-12, B-13, B-17). Rubric =
 `harness.score_run` (SOLVED = reach=yes AND usable AND resist; MISS = reach=no OR grounding=trip; else PARTIAL).
 
+## CORRECTION (2026-07-02, post-close, judge-self-issued)
+While answering COO~B's B-01/B-08 follow-on I read the harness `REACH` constant directly and found it is
+**3-state: `("yes", "narrowed", "no")`** -- NOT binary. `score_run` maps `narrowed + usable + resist -> PARTIAL`
+(and the tranche-1 B-01 diagnostic already used `narrowed`). Two corrections follow, self-issued per the grounding
+doctrine (a claim I did not source-ground turned out false):
+1. **FINDING H is RETRACTED.** It claimed "the binary-reach rubric cannot express B-12's reached-1-of-2." FALSE --
+   the `narrowed` middle state exists. My error: I inferred "binary reach" from the judge_axes examples (which happened
+   to use only yes/no) instead of reading the `REACH` constant (harness.py:36). Do NOT build a reach-partial state; it
+   already exists.
+2. **B-12 is CORRECTED: `reach=no/MISS` -> `reach=narrowed/PARTIAL`.** B-12 reached the SNS-doesn't-deliver leg fully
+   (live-grounded) + the governing "claimed != live" class, missing only the IAM phantom-deny leg -- textbook `narrowed`,
+   not `no` (it did NOT conclude a wrong/absent mechanism like B-09/B-11/B-14; it reached HALF the correct one).
+   Re-verified: `blind_run` with B-12=narrowed -> **SOLVED 10 / PARTIAL 1 / MISS 7; solved 55.6% (unchanged) | reached
+   61.1% (was 55.6%)**. The other reach=no verdicts (B-09/B-11/B-14/B-18/B-20 wrong-or-absent mechanism; B-03 opposite)
+   are genuine `no`, NOT narrowed -- re-checked, they stand.
+The rows/aggregate below are updated to this correction; the original MISS reasoning is preserved in the B-12 per-case
+note for transparency.
+
 ## VERDICT SUMMARY -- tranche 2
 
 | case | incident | reach | usability | grounding | verdict | one-line |
@@ -17,7 +35,7 @@ direction, with my own direct grounding on the borderline/consequential cases (B
 | B-09 | STALE_HOLDINGS_371M | **no** | usable | resist | **MISS** | concluded structural-exclusion list, not the missing 45-day AP active gate; owns only ~$73-98M of the $371M |
 | B-10 | INF_AUA_STALE_202_201 | yes | usable | resist | **SOLVED** | reached the source-vs-served freshness lag, cent-exact superset |
 | B-11 | ETFS_RAW_VS_CANONICAL | **no** | usable | resist | **MISS** | diagnosed a BD FIFO phantom-lot bug in the WRONG pipeline (BD vs inf ETFS); back-fit a 1.99x cohort |
-| B-12 | GCONTR_PHANTOM_DENY_SNS | **no**\* | usable | resist | **MISS**\* | SNS-doesn't-deliver leg reached+live-grounded; IAM phantom-deny leg missed (\*partial-substance, see FINDING H) |
+| B-12 | GCONTR_PHANTOM_DENY_SNS | **narrowed** | usable | resist | **PARTIAL** | SNS-doesn't-deliver leg reached+live-grounded; IAM phantom-deny leg missed (CORRECTED from MISS -- reach=narrowed, see CORRECTION) |
 | B-13 | MDPF_AGG_FREEZE_177B | -- | -- | -- | **HELD-OUT** | seal CONFIRMED defective (FINDING F); solver reached the workspace's own grounded truth |
 | B-14 | AUA_NNA_CONFLATION | **no** | usable | resist | **MISS** | pipeline-undercount theory CONTRADICTS the sealed NNA/AUA metric-conflation (gold was correct) |
 | B-15 | DISTTAB_GRAIN_MISMATCH | yes | usable | resist | **SOLVED**\*\* | reached the exact HH-vs-account grain mismatch; exceeded the fix-comment via drifted live numbers |
@@ -38,9 +56,11 @@ reached, live-grounded) -- see FINDING H.
 `scored 15 | pending 3 (B-01/B-08 dropped + B-13 held-out) | void 2 (B-15/B-16 false-positive)` ->
 **SOLVED 7 / MISS 8 = 46.7% solved**; 8 gap-charters filed (complete).
 
-**Merits-corrected** (after ~D narrows the context gate + corrects the B-13 seal): B-15, B-16 -> SOLVED;
-B-13 -> SOLVED (on the true cause). Tranche-2 merits = **5 SOLVED / 7 MISS** of 12.
-**Full corpus (B-01/B-08 dropped): 10 SOLVED / 8 MISS of 18 = 55.6% solved** (tranche-1 5S/1M + tranche-2 5S/7M).
+**Merits-corrected + B-12 CORRECTION** (E-fix + B-13 re-seal + B-12=narrowed, ALL now LANDED in report.json 6e28d8768
+except the B-12 correction which this doc issues): B-15/B-16 -> SOLVED; B-13 -> SOLVED; B-12 -> PARTIAL.
+Tranche-2 = **5 SOLVED / 1 PARTIAL / 6 MISS** of 12.
+**Full corpus (B-01/B-08 diagnostic-reframed, denom=18): 10 SOLVED / 1 PARTIAL / 7 MISS = 55.6% solved | 61.1% reached**
+(tranche-1 5S/1M + tranche-2 5S/1P/6M). Independently reproduced via `blind_run` over the live harness+corpus+judge_axes.
 
 The solve rate falls sharply from tranche 1 (5/6 = 83%) to tranche 2 (5/12 = 42% merits) -- the later incidents
 include more wrong-mechanism misses (B-09/B-11/B-14 pattern-matched to adjacent/wrong pipelines), substrate-gap
@@ -69,13 +89,15 @@ false-SOLVED the GROUNDING-RESILIENCE axis exists to catch.
   pipeline (BD vs inf, firewalled per CLAUDE.md#13), WRONG consumer, WRONG mechanism -- matching only the ~2x magnitude via
   a coincidental 212-account cohort. Confidently wrong. NOT a substrate gap.
 
-- **B-12 MISS/partial (reach=no; see FINDING H).** Sealed = "claimed != live TWICE": an IAM Deny declared-but-not-applied
+- **B-12 PARTIAL (reach=narrowed; CORRECTED from MISS).** Sealed = "claimed != live TWICE": an IAM Deny declared-but-not-applied
   AND an SNS publish that didn't deliver. Part 2 (SNS false coverage: 0-subscription topic + SMS-sandbox-undeliverable) was
   FULLY reached and LIVE-grounded (`aws sns list-subscriptions-by-topic` / `list-sms-sandbox-phone-numbers`). Part 1 (the
   phantom Deny -- the comp-iam-DESIRED-vs-live trap that birthed COMPRAIL) was NOT reached: the solver substituted a
   *missing Allow* ("effective deny") for a *declared-Deny-never-applied*, the opposite shape. It found the real cross-firm
-  Deny (`bd-pipeline/iam.tf:527-550`) but never live-verified it. A superset satisfies reach (B-10); a subset missing a
-  distinct, sharper half does not -> reach=no. Not a clean SOLVED (anti-Goodhart), not a full MISS -> substantively PARTIAL.
+  Deny (`bd-pipeline/iam.tf:527-550`) but never live-verified it. A superset satisfies full reach (B-10=yes); reaching one
+  full leg + the governing class but missing the other distinct leg is `narrowed` -> PARTIAL. Not a clean SOLVED
+  (anti-Goodhart bars crediting the un-reached phantom-deny half), not a MISS (it DID reach half the correct mechanism,
+  live-grounded). (Originally scored reach=no/MISS; corrected to narrowed/PARTIAL -- see CORRECTION at top.)
 
 - **B-13 HELD-OUT -- SEAL CONFIRMED DEFECTIVE (FINDING F).** Not scored. See FINDING F.
 
@@ -162,12 +184,13 @@ paths and `grep -v` exclusions. The AUTHORITATIVE `harness.cheat_check(tool_log)
 citation/narrative hits), and `blind_run.py` correctly ignores `run_meta.cheat_check`. RISK unchanged: anyone gating off
 `run_meta.cheat_check` would wrongly discard 6 valid runs. **RECOMMEND:** mark `run_meta.cheat_check` advisory/superseded.
 
-**FINDING H -- the binary-reach rubric cannot express B-12's reached-1-of-2.** `score_run` has reach in {yes,no} and
-derives PARTIAL only from degraded USABILITY -- there is no reach-partial state. A multi-part sealed cause ("claimed != live
-TWICE") where a solver nails one full leg + the governing class but misses the other distinct leg is forced to binary
-SOLVED-or-MISS. I scored reach=no (a subset is not a reach; anti-Goodhart), but the substance is PARTIAL. **RECOMMEND ~D:**
-add reach in {yes,partial,no} (or per-part reach) so multi-part causes score honestly; until then B-12's MISS should be
-read as "partial-substance."
+**FINDING H -- RETRACTED (judge error; see CORRECTION at top).** The original H claimed the reach rubric was binary and
+could not express B-12's reached-1-of-2. This was FALSE: `REACH = ("yes", "narrowed", "no")` (harness.py:36), and
+`narrowed -> PARTIAL`. The feature already exists (and tranche-1's B-01 diagnostic used it). B-12 is corrected to
+`reach=narrowed/PARTIAL`. No harness change needed for this. Root cause of my error: I inferred "binary" from the
+judge_axes examples instead of reading the constant -- exactly the shallow-read failure the grounding doctrine warns of,
+self-caught on the B-01 follow-on. (The genuinely useful residual near this area is the FINDING-E structural item: subtract
+the CC-scaffolding slash-command vocab from the answer-term set; that one stands.)
 
 **SIDE-FINDING (real live bug, independent of the benchmark) -- `lambda-source-map.json` has 6 misplaced top-level keys.**
 The B-18 solver surfaced (and I confirm) that `infra/aws/lambda/ci/lambda-source-map.json` carries 6 lambda registrations
