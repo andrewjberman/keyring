@@ -57,6 +57,11 @@ BD_CONFIG  = WORKSPACE / "data" / "black_diamond" / "scripts" / "gold" / "gold_f
 INF_CONFIG = WORKSPACE / "data" / "inf" / "scripts" / "gold" / "gold_freshness_config.yaml"
 COT_CONFIG = WORKSPACE / "data" / "cot" / "scripts" / "gold" / "gold_freshness_config.yaml"
 DDB_CONFIG = WORKSPACE / "data" / "ddb_freshness_config.yaml"
+# Served-layer config for the no-gold-tree pipelines (mdpf / yang / news / nna): these
+# are portal-served artifacts with NO per-firm gold_freshness_config.yaml. WS-4 wires it
+# into the engine (2026-07-02) so MDPF (a P0 custody surface) gets content-mode coverage
+# -- it was previously ORPHANED (consumed only by freshness_manifest_gen.py) = a blind spot.
+SERVED_CONFIG = WORKSPACE / "data" / "served_freshness_config.yaml"
 
 # Firm-clean pipeline -> config map (each firm's config loaded by its own key, no commingling).
 # cot added 2026-06-26 (CVO comp-tools campaign) so cot served artifacts get a freshness check
@@ -862,9 +867,12 @@ def cmd_artifact(s3_prefix: str, raw: bool = False, max_age=None) -> int:
     age WITHOUT a FRESH/STALE verdict (no guessed cadence). max_age (hours): an ad-hoc threshold
     for an unregistered prefix instead of the default-daily guess. Both are no-ops when the prefix
     HAS a registered cadence entry (the real config wins)."""
-    # Find matching entry in either config for thresholds
+    # Find matching entry in any config for thresholds (BD/INF/COT firm configs +
+    # the SERVED config for the no-gold-tree pipelines). Was BD+INF only -- COT + SERVED
+    # added 2026-07-02 (WS-4) so `comp-freshness artifact <cot-or-mdpf-served-key>` finds
+    # its registered content-mode entry instead of falling back to the mtime-guess default.
     entry = None
-    for path in (BD_CONFIG, INF_CONFIG):
+    for path in (BD_CONFIG, INF_CONFIG, COT_CONFIG, SERVED_CONFIG):
         if not path.exists():
             continue
         entries = _load_config(path)
@@ -988,6 +996,14 @@ def cmd_all() -> int:
     else:
         print(f"WARN: COT config not found: {COT_CONFIG}", file=sys.stderr)
 
+    # SERVED (no-gold-tree pipelines: mdpf/yang/news/nna) -- WS-4 content-mode coverage
+    if SERVED_CONFIG.exists():
+        served_entries = _load_config(SERVED_CONFIG)
+        served_results = check_entries(served_entries)
+        exit_code = max(exit_code, print_results(served_results, label="served (mdpf/yang/news/nna)"))
+    else:
+        print(f"WARN: SERVED config not found: {SERVED_CONFIG}", file=sys.stderr)
+
     # DDB
     if DDB_CONFIG.exists():
         ddb_entries = _load_ddb_config()
@@ -1001,7 +1017,8 @@ def cmd_all() -> int:
 
 def cmd_list() -> int:
     """Print cadence config in human-readable form grouped by pipeline."""
-    for label, path in (("BD", BD_CONFIG), ("INF", INF_CONFIG), ("COT", COT_CONFIG)):
+    for label, path in (("BD", BD_CONFIG), ("INF", INF_CONFIG), ("COT", COT_CONFIG),
+                        ("SERVED", SERVED_CONFIG)):
         if not path.exists():
             print(f"\n-- {label} config not found: {path} --")
             continue
