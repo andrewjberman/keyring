@@ -512,7 +512,14 @@ def render_open_deploys() -> str:
     /drive tick (NEVER-law e38cc2b16). Read-only here -- the RED alert itself
     is fired by `deploy_ledger.py check --red` (chained in /drive)."""
     state_dir = Path(__file__).resolve().parent.parent / "org" / "critical_paths" / ".open_deploys"
-    sentinels = sorted(state_dir.glob("*.json")) if state_dir.exists() else []
+    # Only real deploy-completion sentinels. SKIP dotfiles -- e.g. .unindexed_red_state.json is
+    # deploy_ledger.py's own alert-dedup STATE MAP ({ledger-path -> last-RED-alert-ts}), NOT an
+    # open-deploy sentinel; it has no `opened_at` and was throwing a spurious [UNREADABLE] each scan.
+    # (Filtering by name-suffix would be wrong -- real sentinels aren't all named *_deploy_completion,
+    # e.g. nfra-toolhealth-emit-wiring.json -- so exclude dotfiles, not by-suffix.)
+    sentinels = sorted(
+        p for p in state_dir.glob("*.json") if not p.name.startswith(".")
+    ) if state_dir.exists() else []
     if not sentinels:
         return "OPEN-DEPLOYS: none -- nothing half-landed"
     from datetime import datetime, timezone
