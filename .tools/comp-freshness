@@ -514,14 +514,41 @@ def check_ddb_entries(entries: list[dict]) -> list[dict]:
 # ---------------------------------------------------------------------------
 # Freshness check logic
 # ---------------------------------------------------------------------------
-def _status_from_age(age_h: float, warn_h, fail_h, severity: str) -> str:
+# WS-4 persistent-WARN escalation (0.6.2 schwab_ult proof-point, CTO-flagged 2026-07-02): a
+# WARN-severity gate NEVER escalates to FAIL (a bounded lag is tolerable), so it can WARN
+# forever -- schwab_ult WARN'd for 85 DAYS (2037h) at warn=36h/fail=72h, feeding served lot
+# cost-basis, silent the whole quarter. severity=WARN means "a BOUNDED lag is tolerable", NOT
+# "unbounded staleness is tolerable". So a WARN frozen FAR past its OWN fail ceiling escalates
+# to FAIL/loud. Cadence-RELATIVE (a multiple of the entry's own fail_age) so it only fires on an
+# unambiguous freeze: schwab_ult (28x its 72h fail) escalates; a slower-cadence WARN a little
+# past its (larger) ceiling does not. Per-entry `escalate_age_hours` overrides the default.
+WARN_ESCALATE_MULTIPLE = 10
+
+
+def _status_from_age(age_h: float, warn_h, fail_h, severity: str, escalate_h=None) -> str:
     """Map an age (hours) to PASS/WARN/FAIL against cadence thresholds. Shared by the
-    mtime path and the content path so they cannot drift."""
+    mtime path and the content path so they cannot drift. `escalate_h`: a WARN-severity gate
+    frozen past this hard ceiling escalates to FAIL (the persistent-WARN-forever catch)."""
+    if escalate_h is not None and age_h >= escalate_h:
+        return "FAIL"   # persistent-WARN escalation -- loud regardless of WARN severity
     if fail_h is not None and age_h >= fail_h:
         return "FAIL" if severity == "ERROR" else "WARN"
     if warn_h is not None and age_h >= warn_h:
         return "WARN"
     return "PASS"
+
+
+def _escalate_ceiling(entry: dict, fail_h, severity: str):
+    """The hard staleness ceiling past which a WARN-severity gate escalates to FAIL/loud
+    (WS-4 persistent-WARN catch). Explicit `escalate_age_hours` wins; else fail_age * MULTIPLE
+    for WARN-severity entries with a fail ceiling. None (no escalation) for ERROR entries (they
+    already FAIL at fail_age) or entries without a fail ceiling."""
+    explicit = entry.get("escalate_age_hours")
+    if explicit is not None:
+        return float(explicit)
+    if severity != "ERROR" and fail_h is not None:
+        return float(fail_h) * WARN_ESCALATE_MULTIPLE
+    return None
 
 
 def _parse_as_of(s: str) -> Optional[datetime.datetime]:
@@ -639,8 +666,17 @@ def _evaluate_artifact(entry: dict, now: datetime.datetime,
     result["last_modified"] = last_modified.isoformat()
     age_h = (now - last_modified).total_seconds() / 3600.0
     result["age_h"] = round(age_h, 1)
-    mtime_status = _status_from_age(age_h, warn_h, fail_h, severity)
+    escalate_h = _escalate_ceiling(entry, fail_h, severity)
+    mtime_status = _status_from_age(age_h, warn_h, fail_h, severity, escalate_h)
     result["status"] = mtime_status
+    # persistent-WARN escalation fired (WS-4 / 0.6.2): a WARN-severity gate frozen FAR past its
+    # own fail ceiling -> loud FAIL, never a silent WARN-forever (the schwab-ult-85-day class).
+    if (escalate_h is not None and age_h >= escalate_h and severity != "ERROR"):
+        result["escalated"] = True
+        result["notes"] = (result["notes"] + f" | PERSISTENT-WARN ESCALATED TO FAIL: age "
+                           f"{round(age_h,1)}h is >= {round(escalate_h,1)}h "
+                           f"({WARN_ESCALATE_MULTIPLE}x the {fail_h}h fail ceiling) -- a WARN "
+                           f"this far past ceiling is a freeze, not a tolerable lag").strip(" |")
 
     # ---- PARTITION-KEY MODE override (as_of_source: silver-partition-key) ----
     # The stamped as_of is the MAX silver date-PARTITION-key (silver/<table>/YYYY-MM-DD.parquet),
