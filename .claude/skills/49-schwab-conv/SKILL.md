@@ -26,7 +26,7 @@ gold consumer. **trn_nna (TRN Layer B) is the NNA-classified flows the gold C_01
 | Source (local) | `C:\Users\AndrewBerman\OneDrive - Opal Capital\Documents\Schwab Data Delivery\08242234\` |
 | File pattern | `CRS{YYYYMMDD}.{ACC,RPS,TRN,ULN,RLD,SEC,UPN,UPT,...}` (Schwab SI2 Desktop delivers per-account) |
 | Raw S3 dest | `s3://opal-data-schwab/01_raw/` (all ext) + `*.RPS` mirror to `s3://opal-data-schwab/bronze/rps/` |
-| Silver S3 dest | `s3://opal-data-bd/schwab/silver/{acc,rps,trn,trn_nna,uln,rld}/date=YYYYMMDD/data.parquet` (ULT is NOT from this skill — BD-side `B_03`-sourced, by design) |
+| Silver S3 dest | `s3://opal-data-bd/schwab/silver/{acc,rps,trn,trn_nna,uln,ult,rld}/date=YYYYMMDD/data.parquet` (ULT WIRED 2026-07-02 — it IS from the lots converter mode-3, NOT B_03; the old "B_03-sourced" note was WRONG and the ult mode was never invoked → silver/ult froze 85d. Now run every time.) |
 | Last-known state | as of 2026-07-02, all 6 silver tables through **20260701** (07-01 landed via the Andrew-GO'd ONE-OFF bridge from the quartz-box validation prefix -- 0.6.2, ledger 20260702T1515Z; N=5 repoint hold + OneDrive going-forward path INTACT; CVO-verified custody $1,604,173,986.44). GOTCHA banked: `convert_schwab_trn_to_parquet.py` reads **LOCAL OneDrive disk** (DEFAULT_SRC_DIR, floored 06-30) -> a bridge that advances only S3 silently NO-OPs TRN Layer-A; stage the raw locally + pass `--src-dir <dir>` (durable fix = DS~A C3: point TRN-A at S3 01_raw/). Step-7.5 canonical (`build_canonical_daily`) NOT run in that bridge -- run it if the canonical store must match silver. `build_canonical_daily.py --date` needs a **HYPHENATED** date (`2026-06-25`), NOT compact — compact crashes `position_t0` strptime + throws a gold_holdings NoSuchKey (2026-07-01 CVO finding). (update this line each run) |
 
 **SSE gotcha:** `opal-data-schwab` DENIES `PutObject` without `x-amz-server-side-encryption:
@@ -73,8 +73,10 @@ python data/black_diamond/scripts/bronze/convert_schwab_acc_to_parquet.py       
 python data/black_diamond/scripts/bronze/convert_schwab_rps_to_parquet.py        # -> schwab/silver/rps/      (position snapshots)
 python data/black_diamond/scripts/bronze/convert_schwab_trn_to_parquet.py        # -> schwab/silver/trn/      (TRN Layer A: raw transactions — INTERMEDIATE, not the NNA layer)
 python data/black_diamond/scripts/bronze/convert_schwab_trn_to_nna_silver.py     # -> schwab/silver/trn_nna/  (TRN Layer B: NNA-classified flows — the GOLD-CONSUMED table; reads trn/; feeds C_01.canonical_nna. MUST run AFTER trn Layer A)
-python data/black_diamond/scripts/bronze/convert_schwab_lots_to_silver.py uln     # -> schwab/silver/uln/      (B_02 unrealized lots, long+short — CANONICAL; replaces the retired convert_schwab_uln_to_silver.py long-only Rule-17-violating filter)
-python data/black_diamond/scripts/bronze/convert_schwab_lots_to_silver.py rld     # -> schwab/silver/rld/      (B_02 canonical lots — PRIMARY realized tax detail)
+python data/black_diamond/scripts/bronze/convert_schwab_lots_to_silver.py uln ult rld  # ONE call, 3 modes -> schwab/silver/{uln,ult,rld}/
+#   uln = unrealized lots long+short (non-taxable) — CANONICAL; replaces retired convert_schwab_uln_to_silver.py long-only Rule-17 filter
+#   ult = unrealized lot detail, TAXABLE (brokerage) — identical format to uln; FEEDS B_02.canonical_lots (gated gold-freshness input schwab_ult, warn_age 36h). WIRED 2026-07-02 (0.6.2, CTO-arch-gated): was NEVER invoked -> silver/ult froze 85 days (04-07..07-01) + degraded B_02 lot-cost-basis silently. RUN ULT EVERY TIME.
+#   rld = canonical realized lots — PRIMARY realized tax detail
 ```
 
 Expect `OK=N SKIP=0 ERR=0` per converter (N = new dates). A `SKIP` on an old historical date with
@@ -92,7 +94,7 @@ Confirm the latest partition exists + is non-zero for ALL SIX tables:
 
 ```bash
 LATEST={new_latest_date}   # e.g. 20260618
-for t in acc rps trn trn_nna uln rld; do
+for t in acc rps trn trn_nna uln ult rld; do
   aws s3 ls "s3://opal-data-bd/schwab/silver/$t/date=$LATEST/data.parquet"
 done
 ```
