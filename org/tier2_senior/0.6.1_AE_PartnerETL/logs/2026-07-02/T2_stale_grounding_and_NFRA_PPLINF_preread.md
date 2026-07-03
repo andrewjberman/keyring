@@ -102,6 +102,36 @@ LIVE source (TF+aws), and flag the advi-inf census for a refresh (2 stale claims
 | aws events/ec2/s3 (live) | producer liveness + artifact freshness (Rule 22a applied-layer) | PASS -- scheduler ENABLED, artifact frozen 05-05, fetcher launched thru 06-01 |
 | grep/Read (source) | INF_S_00 T2 read + inf-silver-chain sentinel reconciliation | PASS -- census claim falsified vs source |
 
+## NFRA_PPLINF DEBT LIST (pre-staged; COO steer 003406Z -- disposition at manifest un-stage)
+
+Owner: 0.6.1_AE_PartnerETL (I lead NFRA_PPLINF when it un-stages post-L7-Stage-2-GREEN). These
+grounded debt items fold into the resource-SSOT manifest; disposition in the decommission phase.
+
+- **DEBT-1 (T2 producer, ENABLED-but-dead):** historical-prices-fetcher EC2 = fire-and-forget
+  producer (scheduler start_instances, no completion check) SILENTLY write-failing since 05-05, NO
+  completion/freshness alarm, burning EC2 daily. Current-impact NIL (T1+T4 carry current pricing).
+  Disposition: FIX (repair yfinance fetch + ADD a freshness alarm on silver/historical_prices.parquet)
+  vs DECOMMISSION (disable historical-prices-daily, stop the EC2 burn, document T2 vestigial). Grounded
+  root-cause above. Precise yfinance error = fix-phase (do NOT deep-forensic now -- COO steer, NIL-impact).
+- **DEBT-2 (vestigial Lambda):** historical-prices-yfinance Lambda = 0 invocations/45d. Decommission
+  candidate (folds with DEBT-1 disposition).
+- **DEBT-3 (stub):** inf-client-detail = deployed STUB, UNREVIEWED, needs-consumer-trace (no API GW
+  integration; get-policy ResourceNotFound). Matches 0.7.0-base's source-map finding (one of the
+  real-but-mis-registered lambdas). Disposition: consumer-trace -> implement-or-decommission.
+- **DEBT-4 (census staleness):** advi-inf pipescript census (2026-06-15) carries 2 SOURCE-FALSIFIED
+  claims: (a) cron-time drift -- census 12:xx UTC vs live TF 13:xx UTC (a retiming); (b) inf-silver-chain
+  writes silver/api_dims/_chain_summary/ NOT silver/_silver_complete/ (validates L7 Q-B). The
+  live-source manifest supersedes the census; standalone census-refresh flagged to MSTR (graph-module
+  lane, low-pri).
+
+## WS-5 ROBUSTNESS-CONTRACT CANDIDATE (flagged to CTO 003406Z-per-COO)
+DURABLE LESSON (bigger than T2): **fire-and-forget producers need a completion/freshness alarm by
+default.** The SAME gap silent-froze T2 (fetcher start_instances, no completion check) AND is what the
+L7 DLQ-depth alarm just closed for the gold-trigger tier. Candidate WS-5 cross-cutting contract: every
+fire-and-forget producer (EC2-start / async-invoke with no completion barrier) carries a completion OR
+output-freshness alarm. Generalizes both findings into a default.
+
 ## Next
-RAVC COO both. T2: await fix-vs-decommission steer (low-urgency). NFRA_PPLINF: manifest pre-staged,
-finalize on un-stage (post-Stage-2-GREEN) from live source. Neither blocks the 07-03 L7 exercise.
+COO steer 003406Z LOGGED: T2 -> DEBT-1/2 (disposition at NFRA_PPLINF un-stage, no deep-forensic now);
+census -> DEBT-4 + MSTR flag; WS-5 lesson -> CTO flag. NFRA_PPLINF manifest pre-staged, finalize from
+live source on un-stage (post-Stage-2-GREEN). Nothing blocks the 07-03 L7 exercise (primary gate).
