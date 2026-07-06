@@ -12877,3 +12877,25 @@ Total: 38 PASS, 127 WARN, 165 PRDs scanned.
 
 | 2026-07-06T1326Z | 1.0.0_SA_CTO | registry-check.py (as-of pin x4), ds-commit-gate, safe-commit x3, git reconciliation | Monday boot: registry pin + P2 close + backlog reconcile. No comp-graph/blast -- governance+reporting-tool+TO-close, no data/infra surface. |
 | 2026-07-06 | 1.0.0_SA_CTO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-06 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript io D_00.portal_aggregates | PASS |
+| 2026-07-06 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/ADVI_COTMVP.json | PASS |
+| 2026-07-06 | 0.7.0_AE_CloudOps | (no-TO) | comp-iam | comp-iam service bd-49f-runner | PASS |
+| 2026-07-06 | 0.4.0_DS_ClientPlatform~A | (no-TO) | comp-pipescript | comp-pipescript io INF_D_04 | PASS |
+| 2026-07-06 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file lib/served_vintage.py | PASS |
+| 2026-07-06 | 0.4.0_DS_ClientPlatform~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file data/inf/scripts/gold/INF_D_04.client_p... | PASS |
+| 2026-07-06 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file data/black_diamond/scripts/gold/D_00.po... | PASS |
+| 2026-07-06 | 0.6.2_AE_PartnerETL | (no-TO) | comp-iam | comp-iam service canonical-schwab | PASS |
+| 2026-07-06 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript deployed D_00.portal_aggregates | PASS |
+| 2026-07-06 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-pipescript | comp-pipescript deployed INF_D_04.client_portal_summary | PASS |
+| 2026-07-06 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/projects/ADVI_COTMVP.json | PASS |
+| 2026-07-06 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+| 2026-07-06 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/terraform/bd-pipeline/bd-49f-... | PASS |
+| 2026-07-06 | 0.4.0_DS_ClientPlatform~A | (no-TO) | comp-pipescript | comp-pipescript deployed data/inf/scripts/gold/INF_D_04.client_portal_summary.py | PASS |
+| 2026-07-06 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file data/cot/scripts/gold/D_00.portal_aggre... | PASS |
+| 2026-07-06 | 0.6.2_AE_PartnerETL | ADVI_SCHWABAUTO.ae-fetch-by-date-selfheal-finish-the-box | comp-surface-check | comp-surface-check check --mode advisory --file docs/briefs/schwab-sdd-rest-ingest-apri... | PASS |
+| 2026-07-06 | 0.7.0_AE_CloudOps | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/change_management/20... | PASS |
+| 2026-07-06 | 0.7.0_AE_CloudOps~A | ADVI_BDAPIMIG.AUTHCHAIN-F3F6 | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.7.0_AE_CloudOps/task... | PASS |
+
+## 2026-07-06 0.4.0_DE_ClientPlatform -- WS-4 AC-2 DE-close + render-verifies
+comp-grep (portal role_breakdown/reconcile/cross-advisor-sum: 0 stale -> a58ff3a7 confirmed landed), comp-transform PASS (referenced, no consumer sums role_breakdown as firm total), comp-freshness (referenced: chain inf gold+platinum ~92h FAIL = gold-chain-frozen@07-02 gate), ds-commit-gate PASS (lib/served_vintage.py), safe-commit surface-check PASS (gold_freshness_config.yaml). Primary verification = live-S3 artifact reads (served JSON structure + deployed-code ETag) at field-granularity the comp-tools wrap but don't surface.
+| 2026-07-06 | 0.4.0_DE_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
