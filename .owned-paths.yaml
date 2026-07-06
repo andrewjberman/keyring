@@ -1057,6 +1057,10 @@ paths:
     lane: CLOUD_OPS_OR_ETL
     note: "BD gold dispatch orchestrator — AE-maintained, not a DS data script"
 
+  "data/black_diamond/scripts/gold/run_gold_layer.sh":
+    lane: CLOUD_OPS_OR_ETL
+    note: "BD gold-layer runner-dispatch orchestrator (runner-mode->script-flags mapping) -- AE-maintained, sibling to gold_dispatch.sh, NOT a DS data .py. Added 2026-07-06 by 2.0.0_SA_COO per CTO ruling (221022Z + 222947Z) blessing 0.6.0_AE's --full-rebuild durable #1 (removes the delete-the-dim hack): SoD line = AE owns HOW the chain dispatches (runner mode->flags), DS owns WHAT each .py computes; git-confirmed AE-authored (0.6.0 + 0.7.0 author the runner-dispatch .sh). 0.6.0 was blocked committing run_gold_layer.sh -- it had no carve so it fell to the POD4 '**' rule (DS-only); its sibling gold_dispatch.sh was already carved here. GRANTOR-LANDED (SoD: grantee 0.6.0 does not commit its own permission grant; owned-paths registry is COO-committed). Same tilde-lane/enum-gap pattern the registry catalogs (DE~A/~B, RD~B/~C). CC CTO."
+
   "data/black_diamond/scripts/gold/**":
     lane: POD4
     note: "BD gold scripts — DS 0.4.0 primary author (Rule 13/14 in CLAUDE.md)"
