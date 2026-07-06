@@ -13009,3 +13009,36 @@ comp-freshness chain inf (x3): localized the freeze (silver fresh 07-06 / gold+p
 | 2026-07-06 | 0.6.1_AE_PartnerETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/ci/lambda-source-map.j... | PASS |
 | 2026-07-06 | 0.8.0_AE_CloudComp | NFRA_TOOLHEALTH/log-open-lint | tool_probe --run/--ensure-fresh, comp_tool_health --effective-feed, log_open_lint --self-test/sweep(8396), ds-commit-gate block-mode | TH-A closed (cadence+F-1, CVO-validated); utf-8-log lint shipped to ds-commit-gate BLOCK-MODE (0-FP/8396, audited override + crash-fail-open) | PASS |
 | 2026-07-06 | 0.8.0_AE_CloudComp | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
+| 2026-07-06 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+| 2026-07-06 | 0.4.0_DS_ClientPlatform~A | ADHC_GLDINC.INF-incremental-full-parity | comp-surface-check | comp-surface-check check --mode advisory --file data/inf/scripts/gold/INF_D_04.client_p... | PASS |
+| 2026-07-06 | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .gitignore --file org/mcp/archive_messa... | PASS |
+| 2026-07-06 | 0.2.0_DE_PortfolioAnalytics | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file portal | PASS |
+| 2026-07-06 | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file .gitignore --file org/mcp/archive_messa... | PASS |
+| 2026-07-06 | 0.2.0_DE_PortfolioAnalytics | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.2.0_DT_PortfolioAnal... | PASS |
+| 2026-07-06 | 0.6.0_AE_PartnerETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/change_management/20... | PASS |
+| 2026-07-06 | 0.0.0_AB_MSTR | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/mcp/broker.py --file org/tier0/ledg... | PASS |
+| 2026-07-06 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+| 2026-07-06 | 0.8.0_AE_CloudComp | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/trace_graph.py | PASS |
+| 2026-07-06 | 0.4.0_DS_ClientPlatform | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file data/black_diamond/scripts/gold/C_07.ad... | PASS |
+| 2026-07-06 | 0.8.0_AE_CloudComp | (no-TO) | comp-blast | comp-blast YangDataPipeline | FAIL |
+| 2026-07-06 | 0.8.0_AE_CloudComp | (no-TO) | comp-build | comp-build | PASS |
+| 2026-07-06 | 0.8.0_AE_CloudComp | (no-TO) | comp-blast | comp-blast YangDataPipeline | FAIL |
+| 2026-07-06 | 0.8.0_AE_CloudComp | (no-TO) | comp-blast | comp-blast yang-generate-valuation --direction both | PASS |
+| 2026-07-06 | 0.2.0_DE_PortfolioAnalytics | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file portal | PASS |
+| 2026-07-06 | 0.7.0_AE_CloudOps~B | NFRA_CMTQUE | comp-surface-check | comp-surface-check check --mode advisory --file .tools/commit_queue_gc.py --file org/mc... | PASS |
+| 2026-07-06 | 0.8.0_AE_CloudComp | (no-TO) | comp-build | comp-build | PASS |
+| 2026-07-06 | 0.2.0_DE_PortfolioAnalytics | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.2.0_DT_PortfolioAnal... | PASS |
+| 2026-07-06 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+| 2026-07-06 | 0.8.0_AE_CloudComp | (no-TO) | comp-blast | comp-blast YangDataPipeline | PASS |
+| 2026-07-06 | 0.8.0_AE_CloudComp | (no-TO) | comp-blast | comp-blast yang-generate-valuation | PASS |
+| 2026-07-06 | 0.7.0_AE_CloudOps~B | NFRA_CMTQUE | comp-surface-check | comp-surface-check check --mode advisory --file .tools/commit_queue_gc.py --file .tools... | PASS |
+| 2026-07-06 | 0.8.0_AE_CloudComp | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/trace_graph.py --file... | PASS |
+| 2026-07-06 | 0.6.0_AE_PartnerETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/critical_paths/change_management/20... | PASS |
+| 2026-07-06 | 0.8.0_AE_CloudComp | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/modules/graph/extract_sfn.py --file... | PASS |
+| 2026-07-06 | 0.7.0_AE_CloudOps~B | NFRA_CMTQUE | comp-surface-check | comp-surface-check check --mode advisory --file org/tier2_senior/0.7.0_AE_CloudOps/deli... | PASS |
+| 2026-07-06 | 0.7.0_AE_CloudOps~A | (no-TO) | comp-iam | comp-iam service bd-49f-session-trigger | PASS |
+| 2026-07-06 | 0.7.0_AE_CloudOps~A | (no-TO) | comp-pipescript | comp-pipescript deployed infra/aws/lambda/bd-pipeline/bd-49f-session-trigger/lambda_fun... | PASS |
+| 2026-07-06 | 2.0.0_SA_COO | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/tier1_exec/2.0.0_SA_COO/drive_log_2... | PASS |
+| 2026-07-06 | 0.7.0_AE_CloudOps~A | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file infra/aws/lambda/bd-pipeline/bd-49f-ses... | PASS |
+2026-07-06 | 0.6.1_AE_PartnerETL | INF gold un-freeze P0 (env-bump v1.7.79 + WS-5 v1.7.80 + dims-fix v1.7.81) | comp-freshness inf (gold-frozen-07-02 vs silver-healthy ground truth) + comp-iam gaps (WS-5 IAM clean for my changes; 3 gaps=other lambdas, 210 deny=bd-cot separation) + comp-which HUD routing | Gap: no comp-tool asserts CW-alarm-dims MATCH emitter-dims (the deployed-but-deaf false-green caught via Rule-22a describe-alarms exercise, not config-read) -> comp-alarm-match candidate | rail: in-flight-chain SSM/runner-log/deployed-artifact grounding = raw-aws carve-out w/ inline # rail-checked markers
+| 2026-07-06 | 0.6.1_AE_PartnerETL | (no-TO) | comp-surface-check | comp-surface-check check --mode advisory --file org/compiler-tools-log.md --file org/ti... | PASS |
