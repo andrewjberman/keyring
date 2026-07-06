@@ -81,3 +81,30 @@ push -> DT batches the promote.
 ## Blockers
 None. Pixel-eyeball residual is the credential/auth-wall limit (handed to operator/DT), not a
 correctness gap — mechanically verified + pattern already exercised in-prod in this table.
+
+---
+
+## Follow-up — frozen-header bleed-through fix (portal DEV `7e8baa70`)
+Andrew observed the scrolling holdings rows showing THROUGH the frozen header rows.
+**Cause:** the sticky `<thead>` cells relied on the `<tr>` background or used translucent
+`bg-*-500/10` tints, and a **row-level background does not paint behind a sticky header in a
+`border-collapse` table** — so those cells were see-through. The tell: the Asset Class cell,
+the only one carrying its OWN opaque cell-level `bg-[...]`, was the only one that did NOT bleed.
+
+**Fix (mechanism-agnostic):** give every rendered header cell its own opaque background
+(mirrors Asset Class). Added module-level helpers — `solidHeaderStyle` (opaque navy =
+`--semantic-background-contentPanel`) for plain cells, and `tintHeaderStyle(rgba)` (opaque
+navy base + the color tint as a `linear-gradient` overlay) for the color-coded cells, so the
+exact tinted look is preserved while being fully opaque. Applied to all header cells that
+render in the two live views (characteristics group + column headers; performance group +
+period columns). Asset Class left as-is (already opaque). The dead `selectedPeriod!=='Current'`
+branch (never renders — `selectedPeriod` is a `'Current'` literal) left untouched.
+
+**Why not `border-separate`** (the usual 2-line sticky-table fix): the body's row dividers are
+`border-b`/`border-t` on `<tr>` elements, which do NOT render in the `border-separate` model —
+it would erase the holdings row separators. The opaque-cell fix stays contained to the header;
+the body border grid + `border-collapse` are unchanged.
+
+tsc -b --noEmit clean; eslint clean. Still auth-wall-blocked from a self pixel-eyeball →
+operator/DT confirm at promote. Now three DEV commits in the batch: `3b516623` (Positioning
+Summary freeze-pane) + `84b24af8` (Holdings center+freeze) + `7e8baa70` (Holdings bleed-through).
