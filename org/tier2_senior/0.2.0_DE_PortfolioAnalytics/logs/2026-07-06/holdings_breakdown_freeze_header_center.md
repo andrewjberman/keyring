@@ -105,6 +105,29 @@ branch (never renders — `selectedPeriod` is a `'Current'` literal) left untouc
 it would erase the holdings row separators. The opaque-cell fix stays contained to the header;
 the body border grid + `border-collapse` are unchanged.
 
-tsc -b --noEmit clean; eslint clean. Still auth-wall-blocked from a self pixel-eyeball →
-operator/DT confirm at promote. Now three DEV commits in the batch: `3b516623` (Positioning
-Summary freeze-pane) + `84b24af8` (Holdings center+freeze) + `7e8baa70` (Holdings bleed-through).
+tsc -b --noEmit clean; eslint clean.
+
+### Resolution — the opaque-cell fix was INSUFFICIENT; border-separate was the real fix (`043e8d21`, SMOKE-VERIFIED)
+Andrew smoked `7e8baa70` and the bleed persisted. His screenshot was the smoking gun: the
+holdings rows bled through the column-header row **even under the Asset Class cell, which has
+always carried an opaque cell-level background.** That falsified "opaque cells fix it" and
+pinned the true mechanism: **cell/header backgrounds do NOT paint on a `position: sticky`
+`<thead>` inside a `border-collapse` table** (Chromium) — so opaque backgrounds are simply not
+rendered while sticky.
+
+**Real fix:** switched the table to `border-separate border-spacing-0`, where the opaque header
+backgrounds DO paint under sticky → frozen rows are solid. Preserved the body row dividers
+(which were `border-b`/`border-t` on the `<tr>`, and don't render in the separate model) by
+moving them onto the cells via `[&>td]` arbitrary variants (holding `border-b`, subtotal
+`border-b-2`, grand-total `border-t-4`). Cell `border-r` + rounded corners unchanged.
+Andrew smoke-confirmed ("almost perfect"). Final tweak: removed `rounded-tl-lg` from the
+BASIC INFO group-header cell (square corner, Andrew-direct). tsc + eslint clean.
+
+**Lesson banked:** I shipped two blind CSS fixes (auth wall blocked self-verify) and the first
+mechanism hypothesis (opaque cells) was wrong. A sticky header in a `border-collapse` table is
+a known trap — reach for `border-separate` FIRST. And an unverifiable visual change should be
+smoke-verified before claiming done; Andrew's smoke loop was the ground truth.
+
+Batch now = FOUR DEV commits: `3b516623` (Positioning Summary freeze-pane) + `84b24af8`
+(Holdings center+freeze) + `7e8baa70` (Holdings opaque cells — kept, harmless belt-and-suspenders
+under border-separate) + `043e8d21` (Holdings border-separate bleed fix + square Basic Info corner).
