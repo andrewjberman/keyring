@@ -58,19 +58,32 @@ def _source_node(arn: str) -> tuple[str, str, str]:
     return f"eventsource:{name}", "EVENT_SOURCE", name
 
 
+def _warn_unverified(reason: str) -> None:
+    """CTO note 2026-07-06: when the live calls can't run, a MISSING invoke edge this build is could-not-
+    verify, NOT nonexistence. Emit a build-time signal so a creds-less rebuild is not misread as 'no such
+    invoker' (mirrors emit_stale_warn / grain-sentinel; never blocks)."""
+    import sys
+    print("WARN (extract_event_invoke): live-derived invoke edges (event-source/SNS -> Lambda) NOT "
+          "verified this build (%s) -- a MISSING SQS/stream/SNS invoke edge in comp-blast this build is "
+          "COULD-NOT-VERIFY, not nonexistence." % reason, file=sys.stderr)
+
+
 def _add_dual(graph: TraceGraph, source_id: str, source_type: str, source_label: str,
               lambda_name: str, fwd: str, rev: str, meta: dict) -> None:
     """Add the dual invoke edge (mirror extract_sfn): source -[fwd]-> lambda + lambda -[rev]-> source, so
-    blast resolves from either end. Creates the source + lambda nodes if absent (never clobbers existing)."""
+    blast resolves from either end. Creates the source + lambda nodes if absent (never clobbers existing).
+    Every edge/node carries provenance="live-derived" (CTO note): a consumer must be able to tell a
+    live-derived edge (conditionally present -- absent on a creds-less build) from a verified-absent one."""
+    edge_meta = {"provenance": "live-derived", **meta}
     if source_id not in graph.nodes:
         graph.add_node(Node(id=source_id, node_type=source_type, label=source_label,
-                            metadata={"source": "live"}))
+                            metadata={"provenance": "live-derived"}))
     lambda_id = f"lambda:{lambda_name}"
     if lambda_id not in graph.nodes:
         graph.add_node(Node(id=lambda_id, node_type="LAMBDA", label=lambda_name,
-                            metadata={"invoked_by": source_id}))
-    graph.add_edge(Edge(source=source_id, target=lambda_id, edge_type=fwd, metadata=meta))
-    graph.add_edge(Edge(source=lambda_id, target=source_id, edge_type=rev, metadata=meta))
+                            metadata={"invoked_by": source_id, "provenance": "live-derived"}))
+    graph.add_edge(Edge(source=source_id, target=lambda_id, edge_type=fwd, metadata=edge_meta))
+    graph.add_edge(Edge(source=lambda_id, target=source_id, edge_type=rev, metadata=edge_meta))
 
 
 def extract_event_invoke_edges(graph: TraceGraph, workspace_root: Path) -> None:
@@ -80,15 +93,18 @@ def extract_event_invoke_edges(graph: TraceGraph, workspace_root: Path) -> None:
     try:
         import boto3
     except Exception:  # noqa: BLE001 -- no boto -> no live edges, never break the build
+        _warn_unverified("boto3 unavailable")
         return
 
     seen: set[tuple[str, str]] = set()
+    reached_aws = False   # did ANY live list succeed? absent -> could-not-verify (not "no edges")
 
     for region in _REGIONS:
         # --- event-source-mappings (SQS / DynamoDB-stream / Kinesis -> Lambda) ---
         try:
             lam = boto3.client("lambda", region_name=region)
             for page in lam.get_paginator("list_event_source_mappings").paginate():
+                reached_aws = True
                 for esm in page.get("EventSourceMappings", []):
                     src_arn = esm.get("EventSourceArn") or ""
                     fn = _fn_name(esm.get("FunctionArn"))
@@ -108,6 +124,7 @@ def extract_event_invoke_edges(graph: TraceGraph, workspace_root: Path) -> None:
         try:
             sns = boto3.client("sns", region_name=region)
             for page in sns.get_paginator("list_subscriptions").paginate():
+                reached_aws = True
                 for sub in page.get("Subscriptions", []):
                     if sub.get("Protocol") != "lambda":
                         continue
@@ -124,3 +141,6 @@ def extract_event_invoke_edges(graph: TraceGraph, workspace_root: Path) -> None:
                               {"mechanism": "sns_subscription", "topic_arn": topic_arn, "region": region})
         except Exception:  # noqa: BLE001
             pass
+
+    if not reached_aws:
+        _warn_unverified("no creds / AWS unreachable")
