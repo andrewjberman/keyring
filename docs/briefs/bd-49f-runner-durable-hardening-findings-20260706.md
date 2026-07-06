@@ -26,22 +26,50 @@ the code path confirms the mechanism.)
 per-table completeness sidecar (the holdings-completeness-sidecar pattern), so a stub does NOT count
 as landed and re-pulls. Fail-open bias preserved (skip only on a *validated* landing).
 
-## Finding 2 — cookie-lifetime-vs-runtime race on the txn chunk sweep
+## Finding 2 — bearer-TOKEN expiry mid-txn-sweep, mis-classified as cookie-death (the durable blocker)
 
-**Grounded (runner log, `bd-49f-runner` 2026-07-06):** run 1 (invoked 00:02:43Z) ran the 5-tile txn
-chunk sweep for **Duration 574,531 ms (~9.6 min)** (one tile = 59 MB). The session cookie **died
-mid-run** → `AUTH ERROR ... HTTP 401` on the tables pulled AFTER transactions
-(allocations/realized/unrealized), `auth_dead: True`, `3/4 tables did not land`.
+**Precise mechanism (was loosely "cookie-lifetime"; it is the bearer TOKEN, not the cookie).**
+`bd-49f-runner` mints ONE DataMining bearer token at run-start (`lambda_function.py:124`
+`mod.get_datamining_token(cookie)`) and reuses it for the whole run. The txn chunk sweep pulls the
+newest tile first (85 MB on 07-02) then older tiles; the multi-minute sweep **outlives the token TTL**,
+so 401s **begin mid-sweep and persist** on every later call (older tiles + allocations/realized/unrealized).
 
-**Failure mode:** the heavy txn sweep can outlive the cookie's live window, starving the tables ordered
-after it. Currently self-heals via the session-complete event-chain re-mint (run 2 skips txn
-idempotently and completes the rest), but that is fragile — it depends on a second invoke firing on a
-freshly re-minted cookie, and on txn bronze having landed in run 1.
+**Grounded (reproduced 3× on 2026-07-06 — 13:59 / 14:05 / 14:15Z, identical):** each run — `auth OK`
+→ txn tile 1 (85 MB) OK → later tiles 401 → allocations `AUTH ERROR ... HTTP 401` → `auth_dead:True`
+→ 3/4 failed → RuntimeError → **sentinel correctly withheld**. The cookie is LIVE throughout
+(keepalive OK, minted 00:02:36Z, run-2 last night landed all 4 on it). So the 401 is **token-expiry,
+not cookie-death** — but the runner treats every 401 as fatal cookie-death.
 
-**Proposed fix options (pick at pairing):** (a) re-mint / re-auth immediately before the sweep, or
-refresh the token between tiles; (b) pull transactions in a separate invocation from the light tables
-so a txn-sweep timeout can't starve them; (c) shorten `BD_TXN_CHUNK_DAYS` window / parallelize tiles
-to keep total sweep under the cookie lifetime. (a) or (b) preferred — deterministic, not tuning-luck.
+**The bug is a WIRING gap, not missing capability.** The table-loop handler catches a 401 at
+`lambda_function.py:147` (`_is_auth_error`) and **short-circuits to `auth_dead=True` + break — no retry**.
+The re-mint-the-bearer recovery **already exists at L158-159** ("re-mint the bearer in case it lapsed
+mid-run") but sits in the transient branch **below** L147, so it is unreachable for a 401. The
+deliberate anti-401-storm design (docstring L23-28) never anticipated a re-mintable token-expiry 401.
+
+### Path A — the durable fix (CTO pre-approved-in-principle 2026-07-06; 0.6.0 authors runner .py / AE deploys via TF; CTO formal-gates the diff)
+On `_is_auth_error(exc)`: re-mint the bearer ONCE from the same (live) cookie and retry the call;
+only a re-mint that **itself** auth-fails (or a retry still 401-ing after `MAX_RETRIES=3`) is true
+cookie-death → the existing cookie-death path + alarm. Bounded by MAX_RETRIES → no storm; it's the
+L158 wiring made reachable for 401s. **CTO conditions to bake in:** (1) IDEMPOTENT mid-sweep resume —
+the retry must re-do only the failed tile, not double-write/corrupt partial progress (txn tiles write
+per-date `TRANSACTIONS_DAILY_{tiledate}.xlsx`, so a per-tile re-do is clean) — *the one real risk*;
+(2) crisp re-mint-succeeds→retry / re-mint-fails→cookie-death binary; (3) optional pre-emptive re-mint
+at the TTL boundary on a known-long sweep (enhancement, not required); (4) exercise-gated — not done
+until a clean all-real run emits the sentinel + silver rolls to parity + N-nightly. **Keep the
+classification consistent with A-prime's schwab OAuth-refresh (§2.3)** — same re-mintable-transient-vs-
+session-death discipline (CTO pattern note).
+
+### Path A2 — compute-tier (COO/CTO steer, Andrew-engaged; AE infra leg when sequenced)
+Move the heavy/backfill txn pull OFF the 15-min Lambda onto EC2/SSM (sequential, no retry-storm, no
+token-TTL race against a Lambda ceiling); keep the Lambda for the light daily delta. Removes the
+root time-pressure that the token TTL loses against.
+
+### Path B — immediate un-freeze tonight (0.6.0's invoke lane; AE verifies sentinel+merge)
+Pull the stub tables (allocations/unrealized) **individually** — short single-table pulls survive the
+token TTL — → **verify REAL @07-02 (not 3746 B/4591 B stubs) BEFORE** a `force=false` skip-all run
+(COO-bound guard, because `_already_landed()` is existence-only per Finding 1) → the skip-all run emits
+the sentinel on all-REAL → my `bd-v2.47.0` grant fires it → `bd-silver-merge` → silver. Un-freezes
+today without waiting on Path A; Path A prevents recurrence.
 
 ---
 
